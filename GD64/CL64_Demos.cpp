@@ -38,7 +38,18 @@ CL64_Demos::~CL64_Demos(void)
 // *************************************************************************
 void CL64_Demos::Demo_1(void)
 {
-	App->Say("Demo 1");
+	App->CL_Grid->Grid_SetVisible(0);
+	App->CL_Grid->ShowGridFlag = 0;
+
+	App->CL_Grid->ShowHair = 0;
+	App->CL_Grid->Hair_SetVisible(0);
+
+	App->CL_Ogre->flag_Hide_Test_Cube = 0;
+	App->CL_Ogre->Show_Test_Cube();
+
+	App->CL_Camera->Reset_View();
+	App->CL_Ogre->OgreListener->CameraMode = Enums::Cam_Mode_Free;
+
 }
 
 // *************************************************************************
