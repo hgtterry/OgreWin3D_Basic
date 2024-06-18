@@ -547,7 +547,7 @@ LRESULT CALLBACK CL64_TopDlg::Demos_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 
 		if (LOWORD(wParam) == IDC_BT_TD_DEMOS_DEMO1)
 		{
-			Debug
+			App->CL_Demos->Demo_1();
 			RedrawWindow(App->CL_TopDlg->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
 			return 1;
@@ -555,7 +555,7 @@ LRESULT CALLBACK CL64_TopDlg::Demos_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 
 		if (LOWORD(wParam) == IDC_BT_TD_DEMOS_DEMO2)
 		{
-			Debug
+			App->CL_Demos->Demo_2();
 			RedrawWindow(App->CL_TopDlg->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
 			return 1;

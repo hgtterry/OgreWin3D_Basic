@@ -29,5 +29,7 @@ public:
 	CL64_Demos(void);
 	~CL64_Demos(void);
 
+	void Demo_1(void);
+	void Demo_2(void);
 };
 
