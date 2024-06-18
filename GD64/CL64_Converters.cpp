@@ -69,7 +69,7 @@ void CL64_Converters::Set_Paths(void)
 // *************************************************************************
 // *	  		Convert_ToOgre3D:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
-void CL64_Converters::Convert_ToOgre3D(bool Create)
+Ogre::Entity* CL64_Converters::Convert_ToOgre3D(bool Create)
 {
 
 	Set_Paths();
@@ -205,18 +205,13 @@ void CL64_Converters::Convert_ToOgre3D(bool Create)
 	}
 
 	World_Ent = App->CL_Ogre->mSceneMgr->createEntity(Name);
-	World_Node = App->CL_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	
+	remove(mWorld_File_PathAndFile);
+	remove(Material_PathAndFile);
 
-	World_Node->attachObject(World_Ent);
+	return World_Ent;
 
-	World_Node->setPosition(0, 0, 0);
-	World_Node->setVisible(true);
-	World_Node->setScale(1, 1, 1);
-
-	//remove(mWorld_File_PathAndFile);
-	//remove(Material_PathAndFile);
-
-	App->Say("Converted");
+	//App->Say("Converted");
 }
 
 // *************************************************************************
@@ -236,7 +231,8 @@ void CL64_Converters::CreateMaterial_Resource(char* MatName)
 // *************************************************************************
 void CL64_Converters::CreateMaterialFile()
 {
-	char Material_PathAndFile[MAX_PATH];
+	Material_PathAndFile[0] = 0;
+
 	strcpy(Material_PathAndFile, mWorld_File_Path);
 	strcat(Material_PathAndFile, mWorld_Mesh_JustName);
 	strcat(Material_PathAndFile, ".material");

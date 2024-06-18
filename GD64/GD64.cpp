@@ -260,7 +260,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		case ID_IMPORT_WAVEFRONTOBJ:
 		{
 			App->CL_Assimp->SelectedPreset = 8 + 8388608 + 64 + aiProcess_PreTransformVertices;
-			App->CL_Importers->Assimp_Loader("Wavefront OBJ   *.obj\0*.obj\0", "Wavefront OBJ");
+			App->CL_Importers->Assimp_Loader(true,"Wavefront OBJ   *.obj\0*.obj\0", "Wavefront OBJ");
 			return TRUE;
 		}
 

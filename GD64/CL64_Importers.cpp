@@ -36,12 +36,15 @@ CL64_Importers::~CL64_Importers()
 // *************************************************************************
 // *			Assimp_Loader:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-bool CL64_Importers::Assimp_Loader(const char* Extension, const char* Extension2)
+bool CL64_Importers::Assimp_Loader(bool UseDialog,const char* Extension, const char* Extension2)
 {
-	int Result = App->CL_File_IO->Open_File_Model(Extension, Extension2, NULL);
-	if (Result == 0)
+	if (UseDialog == 1)
 	{
-		return 0;
+		int Result = App->CL_File_IO->Open_File_Model(Extension, Extension2, NULL);
+		if (Result == 0)
+		{
+			return 0;
+		}
 	}
 
 	App->CL_Scene->Clear_Model_And_Reset();
@@ -60,15 +63,13 @@ bool CL64_Importers::Assimp_Loader(const char* Extension, const char* Extension2
 
 	App->CL_Scene->Model_Type = Enums::LoadedFile_Assimp;
 
-	//Set_Equity();
-
-	//App->CL_Recent_Files->RecentFile_Models_History_Update();
-
-	//App->CL_Prefs->Update_User_File(Model_Path_And_File);
 
 	App->CL_Scene->Model_Loaded = 1;
 
-	App->Say("Imported");
+	if (UseDialog == 1)
+	{
+		App->Say("Imported");
+	}
 
 	return 1;
 }
