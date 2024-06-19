@@ -58,6 +58,7 @@ public:
 	// Ogre
 	int Ogre_Face_Count;
 
+	bool Player_Added;
 	bool Model_Loaded;
 
 	std::vector<Base_Player*> B_Player;

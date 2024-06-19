@@ -96,6 +96,36 @@ bool CL64_OgreListener::frameRenderingQueued(const FrameEvent& evt)
 		return 1;
 	}
 
+	if (Run_Physics == 1 && App->CL_Scene->Player_Added == 1)
+	{
+		btTransform trans;
+		App->CL_Scene->B_Player[0]->Phys_Body->getMotionState()->getWorldTransform(trans);
+		btQuaternion orientation = trans.getRotation();
+
+		App->CL_Scene->B_Player[0]->Player_Node->setPosition(Ogre::Vector3(trans.getOrigin().getX(), trans.getOrigin().getY(), trans.getOrigin().getZ()));
+		App->CL_Scene->B_Player[0]->Player_Node->setOrientation(Ogre::Quaternion(orientation.getW(), orientation.getX(), orientation.getY(), orientation.getZ()));
+		App->CL_Scene->B_Player[0]->Player_Node->pitch(Ogre::Degree(180));
+	}
+
+	if (CameraMode == Enums::Cam_Mode_First)
+	{
+		Ogre::Vector3 Pos;
+		Ogre::Radian mmPitch;
+		Ogre::Radian mYaw;
+
+		Pos = App->CL_Scene->B_Player[0]->Player_Node->getPosition();
+
+		mmPitch = App->CL_Scene->B_Player[0]->Player_Node->getOrientation().getPitch();
+		mYaw = App->CL_Scene->B_Player[0]->Player_Node->getOrientation().getYaw();
+		Pos.y = Pos.y + App->CL_Scene->B_Player[0]->PlayerHeight;
+
+		App->CL_Ogre->camNode->setPosition(Pos);
+		App->CL_Ogre->camNode->setOrientation(Ogre::Quaternion(1, 0, 0, 0));
+		App->CL_Ogre->camNode->yaw(mYaw);
+		App->CL_Ogre->camNode->pitch(mmPitch);
+		App->CL_Ogre->camNode->yaw(Ogre::Degree(180));
+	}
+
 	if (CameraMode == Enums::Cam_Mode_Model)
 	{
 		Mode_Camera_Model(evt.timeSinceLastFrame);

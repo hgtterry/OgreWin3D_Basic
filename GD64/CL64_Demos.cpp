@@ -75,6 +75,7 @@ void CL64_Demos::Demo_1(void)
 	World_Node->setScale(1, 1, 1);
 
 	App->CL_Scene->Model_Type = Enums::LoadedFile_None;
+	App->CL_Ogre->OgreListener->CameraMode = Enums::Cam_Mode_First;
 
 	App->CL_Bullet->create_New_Trimesh(World_Ent, World_Node);
 	App->CL_Ogre->OgreListener->Run_Physics = 1;

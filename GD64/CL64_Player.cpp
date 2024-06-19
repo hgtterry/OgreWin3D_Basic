@@ -63,7 +63,7 @@ void CL64_Player::Initialize()
 	Base_Player* pBase = App->CL_Scene->B_Player[Index];
 	
 	// ------------------- Ogre
-	/*if (pBase->Player_Ent && pBase->Player_Node)
+	if (pBase->Player_Ent && pBase->Player_Node)
 	{
 		App->CL_Ogre->mSceneMgr->destroySceneNode(pBase->Player_Node);
 		App->CL_Ogre->mSceneMgr->destroyEntity(pBase->Player_Ent);
@@ -71,12 +71,12 @@ void CL64_Player::Initialize()
 		pBase->Player_Ent = nullptr;
 		pBase->Player_Node = nullptr;
 		pBase->CameraPitch = nullptr;
-	}*/
+	}
 	
-	/*pBase->Player_Ent = App->CL_Ogre->mSceneMgr->createEntity("Player_1", "axes.mesh", App->CL_Ogre->App_Resource_Group);
+	pBase->Player_Ent = App->CL_Ogre->mSceneMgr->createEntity("Player_1", "axes.mesh", App->CL_Ogre->App_Resource_Group);
 	pBase->Player_Node = App->CL_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	pBase->Player_Node->attachObject(pBase->Player_Ent);
-	pBase->Player_Node->setVisible(false);*/
+	pBase->Player_Node->setVisible(true);
 
 	Pos.x = 0; //pBase->StartPos.x;
 	Pos.y = 0; //pBase->StartPos.y;
@@ -122,8 +122,8 @@ void CL64_Player::Initialize()
 	App->SBC_DCC->mShapeHalfHeight = pBase->Capsule_Height / 2;
 
 	App->SBC_DCC->setMovementDirection(btVector3(0, 0, 1));
-	App->SBC_DCC->updateAction(App->SBC_Bullet->dynamicsWorld, 1);
+	App->SBC_DCC->updateAction(App->SBC_Bullet->dynamicsWorld, 1);*/
 
-	App->SBC_Scene->Player_Added = 1;*/
+	App->CL_Scene->Player_Added = 1;
 
 }

@@ -34,6 +34,7 @@ CL64_Scene::CL64_Scene(void)
 	VerticeCount = 0;
 	FaceCount = 0;
 	Model_Loaded = 0;
+	Player_Added = 0;
 
 	// Ogre
 	Ogre_Face_Count = 0;
