@@ -58,6 +58,7 @@ CL64_OgreListener::CL64_OgreListener(void)
 	Wheel = 0;
 	StopOgre = 0;
 
+	Run_Physics = 0;
 	Bullet_Step = 2;
 }
 
@@ -72,7 +73,11 @@ bool CL64_OgreListener::frameStarted(const FrameEvent& evt)
 {
 	Get_View_Height_Width();
 
-	//App->CL_Bullet->dynamicsWorld->stepSimulation(evt.timeSinceLastFrame * Bullet_Step); //suppose you have 60 frames per second
+	if (Run_Physics == 1)
+	{
+		App->CL_Bullet->dynamicsWorld->stepSimulation(evt.timeSinceLastFrame * Bullet_Step); //suppose you have 60 frames per second
+	}
+
 	return true;
 }
 

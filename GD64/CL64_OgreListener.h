@@ -84,6 +84,7 @@ public:
 	bool Pl_LeftMouseDown;
 	bool Pl_RightMouseDown;
 
+	bool Run_Physics;
 	bool StopOgre;
 };
 

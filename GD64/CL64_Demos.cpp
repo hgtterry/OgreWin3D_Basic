@@ -66,7 +66,6 @@ void CL64_Demos::Demo_1(void)
 	Ogre::Entity* World_Ent = nullptr;
 	Ogre::SceneNode* World_Node = nullptr;
 
-
 	World_Ent = App->CL_Converters->Convert_ToOgre3D(1);
 	World_Node = App->CL_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	World_Node->attachObject(World_Ent);
@@ -78,7 +77,7 @@ void CL64_Demos::Demo_1(void)
 	App->CL_Scene->Model_Type = Enums::LoadedFile_None;
 
 	App->CL_Bullet->create_New_Trimesh(World_Ent, World_Node);
-
+	App->CL_Ogre->OgreListener->Run_Physics = 1;
 }
 
 // *************************************************************************
