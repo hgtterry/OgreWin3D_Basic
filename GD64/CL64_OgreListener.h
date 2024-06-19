@@ -49,6 +49,7 @@ public:
 	void Mode_Camera_Free(float DeltaTime);
 	bool Capture_Left_Mouse_Free(void);
 	bool Capture_Right_Mouse_Free(void);
+	bool Capture_Mouse_FirstPerson(float DeltaTime);
 
 	Ogre::Camera* mCam;
 	Ogre::SceneNode* mCamNode;
