@@ -77,6 +77,8 @@ void CL64_Demos::Demo_1(void)
 
 	App->CL_Scene->Model_Type = Enums::LoadedFile_None;
 
+	App->CL_Bullet->create_New_Trimesh(World_Ent, World_Node);
+
 }
 
 // *************************************************************************
