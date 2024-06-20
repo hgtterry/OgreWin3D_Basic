@@ -31,6 +31,9 @@ public:
 	void Rotate_FromCam(const Ogre::Vector3 axis, float delta, bool normalize);
 
 	Ogre::Camera*		CameraPitch;
+	Ogre::Entity*		CameraPitch_Ent;
+	Ogre::SceneNode*	CameraPitch_Node;
+
 	Ogre::Entity*		Player_Ent;
 	Ogre::SceneNode*	Player_Node;
 

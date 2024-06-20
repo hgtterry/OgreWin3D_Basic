@@ -30,7 +30,10 @@ Base_Player::Base_Player()
 {
 	mDummyCamera = App->CL_Ogre->mSceneMgr->createCamera("PlayerRay");
 
-	CameraPitch =	nullptr;
+	CameraPitch =		nullptr;
+	CameraPitch_Ent =	nullptr;;
+	CameraPitch_Node =	nullptr;;
+
 	Player_Ent =	nullptr;
 	Player_Node =	nullptr;
 

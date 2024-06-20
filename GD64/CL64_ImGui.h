@@ -44,11 +44,17 @@ public:
 	void Camera_Data_GUI(void);
 	void Model_Data_GUI(void);
 
+	void Demo_1_GUI(void);
+
 	bool StartPos;
 	bool Show_FPS;
 	bool Show_ImGui_Demo;
 	bool Show_Camera_Data_F;
 	bool Show_Model_Data_F;
+	bool Show_Demo_1_F;
+
+	// Demo 1
+	bool Show_Physics_Debug_F;
 
 	float Camera_Data_PosX;
 	float Camera_Data_Posy;

@@ -115,7 +115,7 @@ bool CL64_OgreListener::frameRenderingQueued(const FrameEvent& evt)
 
 		Pos = App->CL_Scene->B_Player[0]->Player_Node->getPosition();
 
-		mmPitch = App->CL_Scene->B_Player[0]->Player_Node->getOrientation().getPitch();
+		mmPitch = App->CL_Scene->B_Player[0]->CameraPitch_Node->getOrientation().getPitch();
 		mYaw = App->CL_Scene->B_Player[0]->Player_Node->getOrientation().getYaw();
 		Pos.y = Pos.y + App->CL_Scene->B_Player[0]->PlayerHeight;
 
@@ -546,7 +546,7 @@ bool CL64_OgreListener::Capture_Right_Mouse_Free(void)
 }
 
 // *************************************************************************
-// *				Capture_Mouse_FirstPerson_World   Terry Bernie		   *
+// *	Capture_Mouse_FirstPerson_World:- Terry and Hazel Flanigan 2024	   *
 // *************************************************************************
 bool CL64_OgreListener::Capture_Mouse_FirstPerson(float DeltaTime)
 {
@@ -595,39 +595,39 @@ bool CL64_OgreListener::Capture_Mouse_FirstPerson(float DeltaTime)
 	{
 		long test = Pl_Cent500Y - Pl_MouseY; // Look Up
 
-		/*if (test > 1)
+		if (test > 1)
 		{
-			if (App->CL_Scene->B_Player[0]->Player_Node->getOrientation().getPitch().valueDegrees() > App->CL_Scene->B_Player[0]->Limit_Look_Up)
+			if (App->CL_Scene->B_Player[0]->CameraPitch_Node->getOrientation().getPitch().valueDegrees() > App->CL_Scene->B_Player[0]->Limit_Look_Up)
 			{
 
 			}
 			else
 			{
 				Pl_DeltaMouse = float(Pl_Cent500Y - Pl_MouseY);
-				Ogre::Radian pp = Degree(Pl_DeltaMouse * DeltaTime) * 2;
-				App->CL_Scene->B_Player[0]->Player_Node->pitch(pp);
+				Ogre::Radian pp = Degree(-Pl_DeltaMouse * DeltaTime) * 1;
+				App->CL_Scene->B_Player[0]->CameraPitch_Node->pitch(pp);
 			}
 
-		}*/
+		}
 
-	//}
-	//else if (Pl_MouseY > Pl_Cent500Y)
-	//{
-	//	long test = Pl_MouseY - Pl_Cent500Y; // Look Down
+	}
+	else if (Pl_MouseY > Pl_Cent500Y)
+	{
+		long test = Pl_MouseY - Pl_Cent500Y; // Look Down
 
-	//	if (test > 1)
-	//	{
-	//		if (App->CL_Scene->B_Player[0]->CameraPitch->getOrientation().getPitch().valueDegrees() < App->SBC_Scene->B_Player[0]->Limit_Look_Down)
-	//		{
+		if (test > 1)
+		{
+			if (App->CL_Scene->B_Player[0]->CameraPitch_Node->getOrientation().getPitch().valueDegrees() < App->CL_Scene->B_Player[0]->Limit_Look_Down)
+			{
 
-	//		}
-	//		else
-	//		{
-	//			Pl_DeltaMouse = float(Pl_MouseY - Pl_Cent500Y);
-	//			Ogre::Radian pp = Degree(-Pl_DeltaMouse * DeltaTime) * 2;
-	//			App->CL_Scene->B_Player[0]->CameraPitch->pitch(pp);
-	//		}
-	//	}
+			}
+			else
+			{
+				Pl_DeltaMouse = float(Pl_MouseY - Pl_Cent500Y);
+				Ogre::Radian pp = Degree(Pl_DeltaMouse * DeltaTime) * 1;
+				App->CL_Scene->B_Player[0]->CameraPitch_Node->pitch(pp);
+			}
+		}
 	}
 
 	return 1;

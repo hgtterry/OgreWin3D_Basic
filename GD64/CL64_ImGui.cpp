@@ -35,6 +35,10 @@ CL64_ImGui::CL64_ImGui(void)
 	Show_ImGui_Demo = 0;
 	Show_Camera_Data_F = 0;
 	Show_Model_Data_F = 0;
+	Show_Demo_1_F = 0;
+
+	// Demo 1
+	Show_Physics_Debug_F = 0;
 
 	PosX = 500;
 	PosY = 500;
@@ -193,6 +197,12 @@ void CL64_ImGui::ImGui_Render_Loop(void)
 	{
 		Model_Data_GUI();
 	}
+
+	if (Show_Demo_1_F == 1)
+	{
+		Demo_1_GUI();
+	}
+	
 }
 
 // *************************************************************************
@@ -305,6 +315,54 @@ void CL64_ImGui::Model_Data_GUI(void)
 		if (ImGui::Button("Close"))
 		{
 			Show_Model_Data_F = 0;
+		}
+
+		ImGui::End();
+	}
+}
+
+// *************************************************************************
+// *			Demo_1_GUI:- Terry and Hazel Flanigan 2024				   *
+// *************************************************************************
+void CL64_ImGui::Demo_1_GUI(void)
+{
+	ImGui::SetNextWindowPos(ImVec2(Model_Data_PosX, Model_Data_PosY));
+
+	if (!ImGui::Begin("Demo_1", &Show_Demo_1_F, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoResize
+		| ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoTitleBar))
+	{
+		ImGui::End();
+	}
+	else
+	{
+	
+		if (ImGui::Checkbox("Show Debug Physics", &App->CL_TopDlg->Toggle_PhysicaDebug_Node_Flag))
+		{
+
+			if (App->CL_TopDlg->Toggle_PhysicaDebug_Node_Flag == 1)
+			{
+				App->CL_Ogre->BulletListener->btDebug_Node->setVisible(true);
+			}
+			else
+			{
+				App->CL_Ogre->BulletListener->btDebug_Node->setVisible(false);
+			}
+		}
+
+		if (ImGui::Button("Reset View"))
+		{
+			//App->CL_Camera->Reset_View();
+		}
+
+		ImVec2 Size = ImGui::GetWindowSize();
+		Model_Data_PosX = 10;// ((float)App->CL_Ogre->OgreListener->View_Width / 2) - (Size.x / 2);
+		Model_Data_PosY = 10;// ((float)App->CL_Ogre->OgreListener->View_Height / 2) - (Size.y / 2);;
+
+		ImGui::Separator();
+
+		if (ImGui::Button("Close"))
+		{
+			Show_Demo_1_F = 0;
 		}
 
 		ImGui::End();

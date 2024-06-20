@@ -52,7 +52,11 @@ void CL64_Player::Create_Player_Object(void)
 	Initialize();
 
 	App->CL_Scene->B_Player[Index]->CameraPitch = App->CL_Ogre->mSceneMgr->createCamera("PlayerPitch");
-	
+
+	App->CL_Scene->B_Player[Index]->CameraPitch_Node = App->CL_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	App->CL_Scene->B_Player[Index]->CameraPitch_Node->attachObject(App->CL_Scene->B_Player[Index]->CameraPitch);
+	App->CL_Scene->B_Player[Index]->CameraPitch_Node->setPosition(0, 0, 0);
+
 	Player_Count++;
 
 }
