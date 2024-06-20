@@ -36,6 +36,119 @@ CL64_Keyboard::~CL64_Keyboard(void)
 }
 
 // *************************************************************************
+// *					Keyboard_Mode_First Terry						   *
+// *************************************************************************
+void CL64_Keyboard::Keyboard_Mode_First(float deltaTime)
+{
+	//if (Block_Keyboard == 0)
+	{
+		//	------------------------------------------------ Move Forward
+		if (GetAsyncKeyState(87) < 0) // W Key
+		{
+
+			if (App->CL_Scene->Player_Added == 1)
+			{
+				//App->Flash_Window();
+				App->CL_Player->mMoveDirection = (btVector3(0, 0, -1));
+				//App->CL_Player->Check_Collisions_New();
+				App->CL_Scene->B_Player[0]->IsMOving = 1;
+			}
+
+		}
+		else
+		{
+			if (App->CL_Scene->Player_Added == 1 && App->CL_Scene->B_Player[0]->IsMOving == 1)
+			{
+				App->CL_Player->mMoveDirection = (btVector3(0, 0, 0));
+				App->CL_Scene->B_Player[0]->IsMOving = 0;
+			}
+		}
+
+		//	------------------------------------------------ Move Back
+		if (GetAsyncKeyState(83) < 0) // S Key	
+		{
+
+			if (App->CL_Scene->Player_Added == 1)
+			{
+				App->CL_Player->mMoveDirection = (btVector3(0, 0, 1));
+				App->CL_Scene->B_Player[0]->IsMOving_Back = 1;
+			}
+
+		}
+		else
+		{
+			if (App->CL_Scene->Player_Added == 1 && App->CL_Scene->B_Player[0]->IsMOving_Back == 1)
+			{
+				App->CL_Player->mMoveDirection = (btVector3(0, 0, 0));
+				App->CL_Scene->B_Player[0]->IsMOving_Back = 0;
+			}
+		}
+
+		//	------------------------------------------------ Move Right
+		if (GetAsyncKeyState(65) < 0)
+		{
+
+			if (App->CL_Scene->Player_Added == 1)
+			{
+				App->CL_Player->mMoveDirection = (btVector3(1, 0, 0));// walkDirection
+				App->CL_Scene->B_Player[0]->IsMOving_Right = 1;
+			}
+		}
+		else
+		{
+			if (App->CL_Scene->Player_Added == 1 && App->CL_Scene->B_Player[0]->IsMOving_Right == 1)
+			{
+				App->CL_Player->mMoveDirection = (btVector3(0, 0, 0));// walkDirection
+				App->CL_Scene->B_Player[0]->IsMOving_Right = 0;
+			}
+		}
+
+		//	------------------------------------------------ Move Left
+		if (GetAsyncKeyState(68) < 0)
+		{
+
+			if (App->CL_Scene->Player_Added == 1)
+			{
+				App->CL_Player->mMoveDirection = (btVector3(-1, 0, 0));// walkDirection
+				//App->CL_Player->Check_Collisions_New();
+				App->CL_Scene->B_Player[0]->IsMOving_Left = 1;
+			}
+
+		}
+		else
+		{
+			if (App->CL_Scene->Player_Added == 1 && App->CL_Scene->B_Player[0]->IsMOving_Left == 1)
+			{
+				App->CL_Player->mMoveDirection = (btVector3(0, 0, 0));// walkDirection
+				App->CL_Scene->B_Player[0]->IsMOving_Left = 0;
+			}
+		}
+
+		//------------------------------------------------ Escape 
+		if (GetAsyncKeyState(VK_ESCAPE) < 0) // Back to Editor mode;
+		{
+			/*if (Block_Keyboard == 0)
+			{
+				Block_Keyboard = 1;
+				if (App->BR_True3D_Mode_Active == 1)
+				{
+					App->CLSB_BR_Render->Go_BR_3D_Mode();
+				}
+				else
+				{
+					if (App->CLSB_Scene_Data->FullScreenMode_Flag == 1)
+					{
+						App->CLSB_Ogre_Setup->ExitFullScreen();
+					}
+				}
+			}*/
+
+			//Block_Keyboard = 0;
+		}
+	}
+}
+
+// *************************************************************************
 // *		Keyboard_Mode_Model:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
 void CL64_Keyboard::Keyboard_Mode_Model(float deltaTime)

@@ -27,6 +27,7 @@ distribution.
 
 CL64_Player::CL64_Player(void)
 {
+	mMoveDirection.setValue(0, 0, 0);
 	Player_Count = 0;
 }
 

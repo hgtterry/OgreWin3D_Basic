@@ -36,6 +36,8 @@ public:
 	btVector3 Physics_Position;
 	btQuaternion Physics_Rotation;
 
+	btVector3 mMoveDirection;
+
 	int Player_Count;
 
 };
