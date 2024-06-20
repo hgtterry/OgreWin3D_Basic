@@ -89,6 +89,7 @@ void CL64_Ogre_Init::InitOgre(void)
 	mTrayMgr->showAll();
 	mTrayMgr->showFrameStats(OgreBites::TL_TOPLEFT);
 	mTrayMgr->hideCursor();
+	
 
 	App->CL_ImGui->Init_ImGui();
 

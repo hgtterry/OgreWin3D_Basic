@@ -45,6 +45,8 @@ CL64_ImGui::CL64_ImGui(void)
 
 	Model_Data_PosX = 0;
 	Model_Data_PosY = 0;
+
+	Float_Step = 0.50f;
 }
 
 CL64_ImGui::~CL64_ImGui(void)
@@ -327,15 +329,17 @@ void CL64_ImGui::Model_Data_GUI(void)
 void CL64_ImGui::Demo_1_GUI(void)
 {
 	ImGui::SetNextWindowPos(ImVec2(Model_Data_PosX, Model_Data_PosY));
+	ImGui::SetNextWindowSize(ImVec2(200, 300), ImGuiCond_FirstUseEver);
 
 	if (!ImGui::Begin("Demo_1", &Show_Demo_1_F, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoResize
-		| ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoTitleBar))
+		| ImGuiWindowFlags_NoTitleBar))
 	{
 		ImGui::End();
 	}
 	else
 	{
-	
+		ImGui::InputFloat("", &App->CL_Scene->B_Player[0]->Ground_speed, Float_Step, 0, "%.1f");
+
 		if (ImGui::Checkbox("Show Debug Physics", &App->CL_TopDlg->Toggle_PhysicaDebug_Node_Flag))
 		{
 

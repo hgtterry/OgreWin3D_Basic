@@ -38,13 +38,13 @@ CL64_Demos::~CL64_Demos(void)
 // *************************************************************************
 void CL64_Demos::Demo_1(void)
 {
-	App->CL_Grid->Grid_SetVisible(0);
-	App->CL_Grid->ShowGridFlag = 0;
+	App->CL_Grid->Grid_SetVisible(false);
+	App->CL_Grid->ShowGridFlag = false;
 
-	App->CL_Grid->ShowHair = 0;
-	App->CL_Grid->Hair_SetVisible(0);
+	App->CL_Grid->ShowHair = false;
+	App->CL_Grid->Hair_SetVisible(false);
 
-	App->CL_Ogre->flag_Hide_Test_Cube = 0;
+	App->CL_Ogre->flag_Hide_Test_Cube = false;
 	App->CL_Ogre->Show_Test_Cube();
 
 	App->CL_Camera->Reset_View();
@@ -71,6 +71,8 @@ void CL64_Demos::Demo_1(void)
 	World_Node->attachObject(World_Ent);
 
 	World_Node->setPosition(0, 0, 0);
+	World_Node->setOrientation(Ogre::Quaternion::IDENTITY);
+
 	World_Node->setVisible(true);
 	World_Node->setScale(1, 1, 1);
 
@@ -83,6 +85,7 @@ void CL64_Demos::Demo_1(void)
 	App->CL_TopDlg->Toggle_PhysicaDebug_Node_Flag = 0;
 	App->CL_Ogre->BulletListener->btDebug_Node->setVisible(false);
 
+	App->CL_Ogre->mTrayMgr->hideAll();
 	App->CL_ImGui->Show_Demo_1_F = 1;
 }
 

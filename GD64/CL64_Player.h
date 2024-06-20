@@ -30,7 +30,7 @@ public:
 	~CL64_Player(void);
 
 	void Create_Player_Object(void);
-	void Initialize();
+	void Initialize() const;
 
 	void Update_Player(btCollisionWorld* collisionWorld, btScalar deltaTimeStep);
 	void Update_Velocity(float dt);
