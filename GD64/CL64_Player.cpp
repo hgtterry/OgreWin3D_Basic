@@ -29,6 +29,11 @@ CL64_Player::CL64_Player(void)
 {
 	mMoveDirection.setValue(0, 0, 0);
 	Player_Count = 0;
+
+	mWorld_Height.setValue(0, 0, 0);
+
+	AddGravity = 0;
+	Is_On_Ground = 0;
 }
 
 CL64_Player::~CL64_Player(void)
@@ -126,5 +131,108 @@ void CL64_Player::Initialize()
 	App->SBC_DCC->updateAction(App->SBC_Bullet->dynamicsWorld, 1);*/
 
 	App->CL_Scene->Player_Added = 1;
+
+}
+
+// *************************************************************************
+// *			Update_Player:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void CL64_Player::Update_Player(btCollisionWorld* collisionWorld, btScalar deltaTimeStep)
+{
+	mWorld_Height = App->CL_Scene->B_Player[0]->Phys_Body->getWorldTransform().getOrigin();
+
+	Get_Height();
+	//FindGroundAndSteps groundSteps(this, collisionWorld);
+	//collisionWorld->contactTest(mRigidBody, groundSteps);
+
+	//Is_On_Ground = groundSteps.mHaveGround;
+	//mGroundPoint = groundSteps.mGroundPoint;
+	//mWorld_Height = mRigidBody->getWorldTransform().getOrigin();
+
+	Update_Velocity(deltaTimeStep);
+	//if (mStepping || groundSteps.mHaveStep) {
+	//	if (!mStepping) {
+	//		mSteppingTo = groundSteps.mStepPoint;
+	//		mSteppingInvNormal = groundSteps.getInvNormal();
+	//	}
+	//	stepUp(deltaTimeStep);
+	//}
+
+	/*if (mOnGround || mStepping) {
+		mRigidBody->setGravity({ 0, 0, 0 });
+	} else {
+		mRigidBody->setGravity(mGravity);
+	}*/
+}
+
+// *************************************************************************
+// *			Update_Velocity:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void CL64_Player::Update_Velocity(float dt)
+{
+	btTransform transform;
+	App->CL_Scene->B_Player[0]->Phys_Body->getMotionState()->getWorldTransform(transform);
+	btMatrix3x3& basis = transform.getBasis();
+
+	btMatrix3x3 inv = basis.transpose();
+
+	btVector3 linearVelocity = inv * App->CL_Scene->B_Player[0]->Phys_Body->getLinearVelocity();
+
+
+	if (Is_On_Ground == 1)// || mJump == 1)
+	{
+		btVector3 dv = mMoveDirection * (App->CL_Scene->B_Player[0]->Ground_speed * dt);
+		linearVelocity = dv;
+	}
+	else
+	{
+		if (AddGravity == 1)
+		{
+			linearVelocity[1] = 100;
+
+		}
+		else
+		{
+			linearVelocity[1] = 10;
+		}
+	}
+
+	/*if (mJump)
+	{
+		Get_Height();
+		linearVelocity += mJumpSpeed * mJumpDir;
+
+		if (App->CL_Ogre->OgreListener->DistanceToCollision > 30)
+		{
+			mJump = false;
+		}
+		cancelStep();
+	}*/
+
+	App->CL_Scene->B_Player[0]->Phys_Body->setLinearVelocity(basis * linearVelocity);
+
+}
+
+// *************************************************************************
+// *				Get_Height:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void CL64_Player::Get_Height(void)
+{
+	btVector3 Origin = App->CL_Scene->B_Player[0]->Phys_Body->getWorldTransform().getOrigin();
+	btVector3 from = btVector3(Origin.getX(), Origin.getY(), Origin.getZ());
+	btVector3 to = btVector3(Origin.getX(), Origin.getY() - 15, Origin.getZ());
+
+	btCollisionWorld::ClosestRayResultCallback resultCallback(from, to);
+	App->CL_Bullet->dynamicsWorld->rayTest(from, to, resultCallback);
+	if (resultCallback.hasHit())
+	{
+		AddGravity = 0;
+		Is_On_Ground = 1;
+	}
+	else
+	{
+		AddGravity = 1;
+		Is_On_Ground = 0;
+	}
 
 }

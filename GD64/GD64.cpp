@@ -485,7 +485,7 @@ LRESULT CALLBACK Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
 				{
 					if (App->Block_Mouse_Buttons == 0)
 					{
-						//if (!ImGui::GetIO().WantCaptureMouse)
+						if (!ImGui::GetIO().WantCaptureMouse)
 						{
 							POINT p;
 							GetCursorPos(&p);
@@ -499,10 +499,10 @@ LRESULT CALLBACK Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
 							App->CL_Ogre->OgreListener->Pl_LeftMouseDown = 1;
 							App->CUR = SetCursor(NULL);
 						}
-						//else
-						//{
-							//App->CL_Ogre->OgreListener->Pl_LeftMouseDown = 1;
-						//}
+						else
+						{
+							App->CL_Ogre->OgreListener->Pl_LeftMouseDown = 1;
+						}
 					}
 
 					return 1;

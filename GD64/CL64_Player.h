@@ -32,13 +32,21 @@ public:
 	void Create_Player_Object(void);
 	void Initialize();
 
+	void Update_Player(btCollisionWorld* collisionWorld, btScalar deltaTimeStep);
+	void Update_Velocity(float dt);
+	void Get_Height(void);
+
 	Ogre::Vector3 Current_Position;
 	btVector3 Physics_Position;
 	btQuaternion Physics_Rotation;
 
 	btVector3 mMoveDirection;
+	btVector3 mWorld_Height;
 
 	int Player_Count;
+
+	bool AddGravity;
+	bool Is_On_Ground;
 
 };
 

@@ -124,13 +124,18 @@ bool CL64_OgreListener::frameRenderingQueued(const FrameEvent& evt)
 		App->CL_Ogre->camNode->yaw(mYaw);
 		App->CL_Ogre->camNode->pitch(mmPitch);
 		App->CL_Ogre->camNode->yaw(Ogre::Degree(180));
+
+		App->CL_Keyboard->Keyboard_Mode_First(evt.timeSinceLastFrame);
+
+		App->CL_Player->Update_Player(NULL, evt.timeSinceLastFrame);
+
+		if (Pl_LeftMouseDown == 1 && Pl_RightMouseDown == 0)
+		{
+			Capture_Mouse_FirstPerson(evt.timeSinceLastFrame);
+			SetCursorPos(App->CursorPosX, App->CursorPosY);
+		}
 	}
 
-	if (CameraMode == Enums::Cam_Mode_First)
-	{
-		Capture_Mouse_FirstPerson(evt.timeSinceLastFrame);
-		SetCursorPos(App->CursorPosX, App->CursorPosY);
-	}
 
 	if (CameraMode == Enums::Cam_Mode_Model)
 	{
