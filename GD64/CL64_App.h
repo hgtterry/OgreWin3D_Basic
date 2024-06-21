@@ -69,6 +69,7 @@ public:
 	CL64_Demos*			CL_Demos;
 
 	void InitApp(void);
+	void Init_Dialogs(void);
 
 	void Say(const char* Message);
 	void Say_Int(int Value);

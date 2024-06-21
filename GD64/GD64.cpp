@@ -63,8 +63,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     App->InitApp();
 
-	App->CL_Preferences->Read_Preferences();
-
     UNREFERENCED_PARAMETER(hPrevInstance);
     UNREFERENCED_PARAMETER(lpCmdLine);
 
@@ -81,20 +79,11 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         return FALSE;
     }
 
-	App->LoadProgramResource();
-
-    App->SetMainWinCentre();
-
-	App->CL_TopDlg->Start_TopBar();
-
-   /* App->CL_SplitterViews->Init_Views();
-    App->CL_SplitterViews->Create_Top_Left_Win();
-    App->CL_SplitterViews->Create_Top_Right_Win();
-    App->CL_SplitterViews->Create_Bottom_Left_Window();
-
-    App->CL_SplitterViews->Resize_Windows(App->Fdlg, App->CL_SplitterViews->nleftWnd_width, App->CL_SplitterViews->nleftWnd_Depth);*/
-	App->CL_Panels->Resize_TopDlg();
+	App->Init_Dialogs();
+	
 	App->CL_Bullet->Init_Bullet();
+
+	UpdateWindow(App->MainHwnd);
 
     SetTimer(App->MainHwnd, 1, 1, NULL);
 
@@ -173,7 +162,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 	   ShowWindow(App->MainHwnd, nCmdShow);
    }
   
-   UpdateWindow(App->MainHwnd);
+  // UpdateWindow(App->MainHwnd);
 
    return TRUE;
 }

@@ -115,6 +115,22 @@ void CL64_App::InitApp(void)
 	CL_Demos =			new CL64_Demos();
 
 	SetBrushes_Fonts();
+
+	App->CL_Preferences->Read_Preferences();
+}
+
+// *************************************************************************
+// *			Init_Dialogs:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void CL64_App::Init_Dialogs(void)
+{
+	App->LoadProgramResource();
+
+	App->SetMainWinCentre();
+
+	App->CL_TopDlg->Start_TopBar();
+	App->CL_Panels->Resize_TopDlg();
+
 }
 
 // *************************************************************************
