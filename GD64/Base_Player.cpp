@@ -51,8 +51,8 @@ Base_Player::Base_Player()
 	Forward_Timer = 0;
 	Ground_speed = 40;
 
-	Limit_Look_Up = 45;
-	Limit_Look_Down = -45;
+	Limit_Look_Up = -45;
+	Limit_Look_Down = 45;
 
 	Altered = 1;
 

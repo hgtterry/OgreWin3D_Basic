@@ -331,22 +331,14 @@ void CL64_ImGui::Demo_1_GUI(void)
 	ImGui::SetNextWindowPos(ImVec2(Model_Data_PosX, Model_Data_PosY));
 	ImGui::SetNextWindowSize(ImVec2(280, 300), ImGuiCond_FirstUseEver);
 
-	if (!ImGui::Begin("Demo_1", &Show_Demo_1_F, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoResize
-		| ImGuiWindowFlags_NoTitleBar))
+	if (!ImGui::Begin("Demo_1", &Show_Demo_1_F, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoResize))
 	{
 		ImGui::End();
 	}
 	else
 	{
-		ImGui::Indent();
-		
-		ImGui::PushItemWidth(120);
-		ImGui::InputFloat("", &App->CL_Scene->B_Player[0]->Ground_speed, Float_Step, 0, "%.1f");
-		ImGui::PopItemWidth();
-		ImGui::SameLine();
-		ImGui::Text("Ground Speed");
+		ImGui::Text("Keys WASD");
 		ImGui::Spacing();
-		ImGui::Unindent();
 
 		if (ImGui::Checkbox("Show Debug Physics", &App->CL_TopDlg->Toggle_PhysicaDebug_Node_Flag))
 		{
@@ -361,21 +353,29 @@ void CL64_ImGui::Demo_1_GUI(void)
 			}
 		}
 
-		if (ImGui::Button("Reset View"))
-		{
-			//App->CL_Camera->Reset_View();
-		}
-
-		ImVec2 Size = ImGui::GetWindowSize();
-		Model_Data_PosX = 10;// ((float)App->CL_Ogre->OgreListener->View_Width / 2) - (Size.x / 2);
-		Model_Data_PosY = 10;// ((float)App->CL_Ogre->OgreListener->View_Height / 2) - (Size.y / 2);;
-
+		ImGui::PushItemWidth(120);
+		ImGui::InputFloat("", &App->CL_Scene->B_Player[0]->Ground_speed, Float_Step, 0, "%.1f");
+		ImGui::PopItemWidth();
+		ImGui::SameLine();
+		ImGui::Text("Ground Speed");
+		ImGui::Spacing();
+		
+		ImGui::Text("Pitch:- %f", App->CL_Scene->B_Player[0]->CameraPitch_Node->getOrientation().getPitch().valueDegrees());
+		ImGui::Text("Yaw:- %f", App->CL_Ogre->camNode->getOrientation().getYaw().valueDegrees());
 		ImGui::Separator();
 
-		if (ImGui::Button("Close"))
+		if (ImGui::Button("Reset View"))
+		{
+			App->CL_Demos->Reset_View();
+		}
+
+		Model_Data_PosX = 10;
+		Model_Data_PosY = 10;
+
+		/*if (ImGui::Button("Close"))
 		{
 			Show_Demo_1_F = 0;
-		}
+		}*/
 
 		ImGui::End();
 	}

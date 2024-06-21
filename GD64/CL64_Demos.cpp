@@ -34,9 +34,9 @@ CL64_Demos::~CL64_Demos(void)
 }
 
 // *************************************************************************
-// *				Demo_1:- Terry and Hazel Flanigan 2024				   *
+// *			Start_Demo_1:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-void CL64_Demos::Demo_1(void)
+void CL64_Demos::Start_Demo_1(void)
 {
 	App->CL_Grid->Grid_SetVisible(false);
 	App->CL_Grid->ShowGridFlag = false;
@@ -90,9 +90,26 @@ void CL64_Demos::Demo_1(void)
 }
 
 // *************************************************************************
-// *				Demo_2:- Terry and Hazel Flanigan 2024				   *
+// *			Start_Demo_2:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-void CL64_Demos::Demo_2(void)
+void CL64_Demos::Start_Demo_2(void)
 {
 	App->Say("Demo 2");
+}
+
+// *************************************************************************
+// *				Reset_View:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void CL64_Demos::Reset_View(void)
+{
+	float x = App->CL_Scene->B_Player[0]->StartPos.x;
+	float y = App->CL_Scene->B_Player[0]->StartPos.y;
+	float z = App->CL_Scene->B_Player[0]->StartPos.z;
+
+	App->CL_Scene->B_Player[0]->Phys_Body->getWorldTransform().setOrigin(btVector3(x, y, z));
+	App->CL_Scene->B_Player[0]->Phys_Body->getWorldTransform().setRotation(App->CL_Scene->B_Player[0]->Physics_Rotation);
+
+	App->CL_Scene->B_Player[0]->CameraPitch_Node->setOrientation(Ogre::Quaternion::IDENTITY);
+
+
 }

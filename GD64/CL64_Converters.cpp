@@ -80,7 +80,7 @@ Ogre::Entity* CL64_Converters::Convert_ToOgre3D(bool Create)
 
 	if (Create == 1)
 	{
-		World_Manual = App->CL_Ogre->mSceneMgr->createManualObject("OgreManual2");
+		World_Manual = App->CL_Ogre->mSceneMgr->createManualObject();
 		World_Manual->setRenderQueueGroup(2);
 	}
 
@@ -194,7 +194,7 @@ Ogre::Entity* CL64_Converters::Convert_ToOgre3D(bool Create)
 		Ogre::ResourceGroupManager::getSingleton().createResourceGroup(App->CL_Ogre->World_Resource_Group);
 
 		Ogre::ResourceGroupManager::getSingleton().addResourceLocation(mWorld_File_Path, "FileSystem", App->CL_Ogre->World_Resource_Group);
-		Ogre::ResourceGroupManager::getSingleton().clearResourceGroup(App->CL_Ogre->World_Resource_Group);
+		//Ogre::ResourceGroupManager::getSingleton().clearResourceGroup(App->CL_Ogre->World_Resource_Group);
 		Ogre::ResourceGroupManager::getSingleton().initialiseResourceGroup(App->CL_Ogre->World_Resource_Group);
 
 	}
