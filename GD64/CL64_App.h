@@ -25,7 +25,6 @@ distribution.
 
 #include "CL64_Ogre_Init.h"
 #include "CL64_Grid.h"
-#include "CL64_SplitterViews.h"
 #include "CL64_Keyboard.h"
 #include "CL64_Camera.h"
 #include "CL64_Ini_File.h"
@@ -52,7 +51,6 @@ public:
 
 	CL64_Ogre_Init*		CL_Ogre;
 	CL64_Grid*			CL_Grid;
-	CL64_SplitterViews* CL_SplitterViews;
 	CL64_Keyboard*		CL_Keyboard;
 	CL64_Camera*		CL_Camera;
 	CL64_Ini_File*		CL_Ini_File;

@@ -71,3 +71,41 @@ void CL64_Panels::Resize_TopDlg(void)
 
 }
 
+// *************************************************************************
+// *			Resize_OgreWin:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void CL64_Panels::Resize_OgreWin(void)
+{
+	RECT rcl;
+
+	int WidthClient = 0;
+	int HeightClient;
+	int NewWidth = 0;
+	int NewHeight = 0;
+
+	GetClientRect(App->MainHwnd, &rcl);
+
+	WidthClient = rcl.right - rcl.left - 1010;
+	NewWidth = 417 + WidthClient + 200;
+
+	HeightClient = rcl.bottom - rcl.top;
+	NewHeight = HeightClient - 150;
+
+	//-----------------Ogre Window
+	SetWindowPos(App->ViewGLhWnd, NULL, 4, 4, NewWidth + 384, NewHeight + 68, SWP_NOZORDER);
+
+	if (App->OgreStarted == 1)
+	{
+		RECT rect;
+		GetClientRect(App->ViewGLhWnd, &rect);
+
+		if ((rect.bottom - rect.top) != 0 && App->CL_Ogre->mCamera != 0)
+		{
+			App->CL_Ogre->mWindow->windowMovedOrResized();
+			App->CL_Ogre->mCamera->setAspectRatio((Ogre::Real)App->CL_Ogre->mWindow->getWidth() / (Ogre::Real)App->CL_Ogre->mWindow->getHeight());
+			App->CL_Ogre->camNode->yaw(Radian(0));
+		}
+
+	}
+}
+

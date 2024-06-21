@@ -41,6 +41,7 @@ INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
 void StartOgre();
 void Close_App();
 LRESULT CALLBACK Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+LRESULT CALLBACK ViewerMain_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 int Block_Call = 0;
 
@@ -86,12 +87,12 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
 	App->CL_TopDlg->Start_TopBar();
 
-    App->CL_SplitterViews->Init_Views();
+   /* App->CL_SplitterViews->Init_Views();
     App->CL_SplitterViews->Create_Top_Left_Win();
     App->CL_SplitterViews->Create_Top_Right_Win();
     App->CL_SplitterViews->Create_Bottom_Left_Window();
 
-    App->CL_SplitterViews->Resize_Windows(App->Fdlg, App->CL_SplitterViews->nleftWnd_width, App->CL_SplitterViews->nleftWnd_Depth);
+    App->CL_SplitterViews->Resize_Windows(App->Fdlg, App->CL_SplitterViews->nleftWnd_width, App->CL_SplitterViews->nleftWnd_Depth);*/
 	App->CL_Panels->Resize_TopDlg();
 	App->CL_Bullet->Init_Bullet();
 
@@ -148,7 +149,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    App->MainHwnd = CreateWindow(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
        0, 0, 1200, 770, nullptr, nullptr, App->hInst, nullptr);
 
-   App->Fdlg = CreateDialog(App->hInst, (LPCTSTR)IDD_FILEVIEW, App->MainHwnd, (DLGPROC)App->CL_SplitterViews->ViewerMain_Proc);
+   App->Fdlg = CreateDialog(App->hInst, (LPCTSTR)IDD_FILEVIEW, App->MainHwnd, (DLGPROC)ViewerMain_Proc);
 
    int cx = GetSystemMetrics(SM_CXSCREEN);
    int cy = GetSystemMetrics(SM_CYSCREEN);
@@ -299,7 +300,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 		case ID_VIEW_MAX3DVIEW:
 		{
-			App->CL_SplitterViews->Max_3D_win();
+			
 			return TRUE;
 		}
 
@@ -333,22 +334,15 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 	case WM_SIZE:
 	{
-		if (App->CL_SplitterViews->Max_Window == 0)
-		{
-			App->CL_SplitterViews->Init_Views();
-		}
-
 		App->CL_Panels->Resize_Fldg();
-		App->CL_SplitterViews->Resize_OgreWin();
-
+		App->CL_Panels->Resize_OgreWin();
 		return 0;
 	}
 
 	case WM_WINDOWPOSCHANGED:
 	{
-		App->CL_SplitterViews->Init_Views();
 		App->CL_Panels->Resize_Fldg();
-		App->CL_SplitterViews->Resize_OgreWin();
+		App->CL_Panels->Resize_OgreWin();
 		return 0;
 	}
 	//break;
@@ -632,6 +626,33 @@ LRESULT CALLBACK Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
 }
 
 // *************************************************************************
+// *			ViewerMain_Proc:- Terry and Hazel Flanigan 2023			   *
+// *************************************************************************
+LRESULT CALLBACK ViewerMain_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+
+	switch (message)
+	{
+
+	case WM_INITDIALOG:
+	{
+		return TRUE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->AppBackground;
+	}
+	case WM_COMMAND:
+	{
+
+	}
+	break;
+	}
+	return FALSE;
+}
+
+// *************************************************************************
 // *						StartOgre Terry Bernie			  	 		   *
 // *************************************************************************
 void StartOgre()
@@ -644,11 +665,6 @@ void StartOgre()
     App->OgreStarted = 1;
 
     KillTimer(App->MainHwnd, 1);
-
-	if (App->CL_Preferences->Start_Full_3DWin == 1)
-	{
-		App->CL_SplitterViews->Max_3D_win();
-	}
 
     App->CL_Ogre->Ogre_Render_Loop();
 
