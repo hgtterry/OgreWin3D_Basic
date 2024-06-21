@@ -332,6 +332,19 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		EndPaint(hWnd, &ps);
 	}
 
+	case WM_MOVING:
+	{
+		App->CL_Panels->Resize_Fldg();
+		App->CL_Panels->Resize_OgreWin();
+
+		if (App->OgreStarted == 1)
+		{
+			Root::getSingletonPtr()->renderOneFrame();
+		}
+
+		return 0;
+	}
+
 	case WM_SIZE:
 	{
 		App->CL_Panels->Resize_Fldg();

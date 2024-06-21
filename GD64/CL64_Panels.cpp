@@ -92,7 +92,7 @@ void CL64_Panels::Resize_OgreWin(void)
 	NewHeight = HeightClient - 150;
 
 	//-----------------Ogre Window
-	SetWindowPos(App->ViewGLhWnd, NULL, 4, 4, NewWidth + 384, NewHeight + 68, SWP_NOZORDER);
+	SetWindowPos(App->ViewGLhWnd, NULL, 4, 2, NewWidth + 380, NewHeight + 58, SWP_NOZORDER);
 
 	if (App->OgreStarted == 1)
 	{
