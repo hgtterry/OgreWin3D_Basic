@@ -44,6 +44,9 @@ public:
 	
 	bool Toggle_PhysicaDebug_Node_Flag;
 
+	bool Demo_1_Running_Flag;
+	
+
 	void Init_Bmps_Globals(void);
 
 	HWND TabsHwnd;

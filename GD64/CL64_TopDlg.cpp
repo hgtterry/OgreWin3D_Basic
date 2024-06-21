@@ -47,6 +47,8 @@ CL64_TopDlg::CL64_TopDlg(void)
 	Toggle_Demos_Demo_1_Flag = 0;
 	Toggle_Demos_Demo_2_Flag = 0;
 
+	Demo_1_Running_Flag = 0;
+
 	Toggle_PhysicaDebug_Node_Flag = 1;
 }
 
@@ -568,16 +570,27 @@ LRESULT CALLBACK CL64_TopDlg::Demos_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 
 		if (LOWORD(wParam) == IDC_BT_TD_DEMOS_DEMO1)
 		{
-			App->CL_Demos->Demo_1();
-			RedrawWindow(App->CL_TopDlg->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			if (App->CL_TopDlg->Demo_1_Running_Flag == 0)
+			{
+				App->CL_TopDlg->Toggle_Demos_Demo_1_Flag = 1;
+				App->CL_TopDlg->Toggle_Demos_Demo_2_Flag = 0;
+
+				App->CL_Demos->Demo_1();
+
+				RedrawWindow(App->CL_TopDlg->Demos_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+				App->CL_TopDlg->Demo_1_Running_Flag = 1;
+			}
 
 			return 1;
 		}
 
 		if (LOWORD(wParam) == IDC_BT_TD_DEMOS_DEMO2)
 		{
+			App->CL_TopDlg->Toggle_Demos_Demo_2_Flag = 1;
+			App->CL_TopDlg->Toggle_Demos_Demo_1_Flag = 0;
+
 			App->CL_Demos->Demo_2();
-			RedrawWindow(App->CL_TopDlg->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			RedrawWindow(App->CL_TopDlg->Demos_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
 			return 1;
 		}
