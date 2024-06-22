@@ -36,6 +36,7 @@ public:
 	
 	void Get_Data(int Index, int FaceIndex);
 
+	void Create_Resource_Group();
 	void CreateMaterial_Resource(char* MatName);
 
 	Ogre::ManualObject* Export_Manual;

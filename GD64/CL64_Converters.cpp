@@ -180,6 +180,23 @@ Ogre::Entity* CL64_Converters::Convert_ToOgre3D(bool Create)
 	strcpy(Name, mWorld_Mesh_JustName);
 	strcat(Name, ".mesh");
 
+	Create_Resource_Group();
+	
+	World_Ent = App->CL_Ogre->mSceneMgr->createEntity(Name);
+	
+	remove(mWorld_File_PathAndFile);
+	remove(Material_PathAndFile);
+
+	return World_Ent;
+
+	//App->Say("Converted");
+}
+
+// *************************************************************************
+// *		Create_Resource_Group():- Terry and Hazel Flanigan 2024    	   *
+// *************************************************************************
+void CL64_Converters::Create_Resource_Group()
+{
 	if (World_Ent)
 	{
 		World_Node->detachAllObjects();
@@ -203,15 +220,7 @@ Ogre::Entity* CL64_Converters::Convert_ToOgre3D(bool Create)
 		Ogre::ResourceGroupManager::getSingleton().addResourceLocation(mWorld_File_Path, "FileSystem", App->CL_Ogre->World_Resource_Group);
 		Ogre::ResourceGroupManager::getSingleton().initialiseResourceGroup(App->CL_Ogre->World_Resource_Group);
 	}
-
-	World_Ent = App->CL_Ogre->mSceneMgr->createEntity(Name);
 	
-	remove(mWorld_File_PathAndFile);
-	remove(Material_PathAndFile);
-
-	return World_Ent;
-
-	//App->Say("Converted");
 }
 
 // *************************************************************************
