@@ -28,6 +28,8 @@
 #define IDD_TB_DEMOS                    139
 #define IDB_HAIRON                      140
 #define IDB_HAIROFF                     141
+#define IDD_DIALOG1                     142
+#define IDD_MESSAGE                     142
 #define IDC_CK_SU_FULLSCREEN            1000
 #define IDC_ST_STARTUP                  1001
 #define IDC_CK_SU_FULL3DVIEW            1002
@@ -49,6 +51,8 @@
 #define IDC_BT_TD_DEMOSTAB              1012
 #define IDC_BT_TD_DEMOS_DEMO1           1013
 #define IDC_BT_TD_DEMOS_DEMO2           1014
+#define IDC_BANNER                      1015
+#define IDC_STTEXT                      1016
 #define ID_VIEW_RESET                   32771
 #define ID_VIEW_MAX3DVIEW               32772
 #define ID_DEBUG_TESTPREFERANCE         32773
@@ -71,9 +75,9 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
-#define _APS_NEXT_RESOURCE_VALUE        142
+#define _APS_NEXT_RESOURCE_VALUE        143
 #define _APS_NEXT_COMMAND_VALUE         32786
-#define _APS_NEXT_CONTROL_VALUE         1015
+#define _APS_NEXT_CONTROL_VALUE         1017
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif

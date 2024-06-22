@@ -165,6 +165,7 @@
     <ClInclude Include="CL64_Converters.h" />
     <ClInclude Include="CL64_DebugBulletWorld.h" />
     <ClInclude Include="CL64_Demos.h" />
+    <ClInclude Include="CL64_Dialogs.h" />
     <ClInclude Include="CL64_File_IO.h" />
     <ClInclude Include="CL64_Grid.h" />
     <ClInclude Include="CL64_ImGui.h" />
@@ -197,6 +198,7 @@
     <ClCompile Include="CL64_Converters.cpp" />
     <ClCompile Include="CL64_DebugBulletWorld.cpp" />
     <ClCompile Include="CL64_Demos.cpp" />
+    <ClCompile Include="CL64_Dialogs.cpp" />
     <ClCompile Include="CL64_File_IO.cpp" />
     <ClCompile Include="CL64_Grid.cpp" />
     <ClCompile Include="CL64_ImGui.cpp" />

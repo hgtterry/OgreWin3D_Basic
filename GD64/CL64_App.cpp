@@ -45,6 +45,7 @@ CL64_App::CL64_App(void)
 	CL_Bullet =			nullptr;
 	CL_Player =			nullptr;
 	CL_Demos =			nullptr;
+	CL_Dialogs =		nullptr;
 
 	hInst =			nullptr;
 	MainHwnd =		nullptr;
@@ -113,6 +114,7 @@ void CL64_App::InitApp(void)
 	CL_Bullet =			new CL64_Bullet();
 	CL_Player =			new CL64_Player();
 	CL_Demos =			new CL64_Demos();
+	CL_Dialogs =		new CL64_Dialogs();
 
 	SetBrushes_Fonts();
 
@@ -140,8 +142,17 @@ void CL64_App::Say(const char* Message)
 {
 	char text[1024];
 	strcpy(text, Message);
-	MessageBox(MainHwnd, Message, Message, MB_OK);
-	//App->Cl_Dialogs->Message(text);
+	App->CL_Dialogs->Message(text);
+}
+
+// *************************************************************************
+// *			Debug_Text:- Terry and Hazel Flanigan 2024				   *
+// *************************************************************************
+void CL64_App::Debug_Text()
+{
+	char text[1024];
+	strcpy(text, "Here Debug");
+	App->CL_Dialogs->Message(text);
 }
 
 // *************************************************************************
@@ -189,14 +200,6 @@ bool CL64_App::SetMainWinCentre(void) const
 void CL64_App::Flash_Window()
 {
 	FlashWindow(App->MainHwnd, true);
-}
-
-// *************************************************************************
-// *			Debug_Text:- Terry and Hazel Flanigan 2024				   *
-// *************************************************************************
-void CL64_App::Debug_Text()
-{
-	MessageBox(App->MainHwnd, "Here", "Debug", MB_OK);
 }
 
 // *************************************************************************
