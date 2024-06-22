@@ -369,6 +369,19 @@ void CL64_ImGui::Demo_1_GUI(void)
 			App->CL_Demos->Reset_View();
 		}
 
+
+		if (ImGui::Button("1st view"))
+		{
+			App->CL_Ogre->OgreListener->CameraMode = Enums::Cam_Mode_First;
+		}
+
+		ImGui::SameLine();
+
+		if (ImGui::Button("Free view"))
+		{
+			App->CL_Ogre->OgreListener->CameraMode = Enums::Cam_Mode_Free;
+		}
+
 		Model_Data_PosX = 10;
 		Model_Data_PosY = 10;
 
