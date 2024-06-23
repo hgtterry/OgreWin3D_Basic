@@ -42,9 +42,8 @@ private:
 	void List_Folders(HWND List, char* StartFolder, char* FileName, bool ListDlg);
 	bool FindPath_New(char* File, char* Folder);
 
-	bool Show_App_Res();
-	bool Show_Project_Res();
-
+	bool Show_Resource_Group(Ogre::String* ResourceGroup);
+	
 	char ResourcePath[MAX_PATH];
 
 	bool Show_App_Res_Flag;

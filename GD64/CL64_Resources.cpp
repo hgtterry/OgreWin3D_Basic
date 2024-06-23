@@ -202,7 +202,7 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 			SetDlgItemText(hDlg, IDC_ST_BANNER, (LPCTSTR)"Demo Resources");
 			App->CL_Resources->Show_App_Res_Flag = 0;
 
-			App->CL_Resources->Show_Project_Res();
+			App->CL_Resources->Show_Resource_Group(&App->CL_Ogre->World_Resource_Group);
 
 			return TRUE;
 		}
@@ -212,7 +212,7 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 			SetDlgItemText(hDlg, IDC_ST_BANNER, (LPCTSTR)"App Resources");
 			App->CL_Resources->Show_App_Res_Flag = 1;
 
-			App->CL_Resources->Show_App_Res();
+			App->CL_Resources->Show_Resource_Group(&App->CL_Ogre->App_Resource_Group);
 
 			return TRUE;
 		}
@@ -425,13 +425,13 @@ bool CL64_Resources::ShowAllMaterials()
 }
 
 // **************************************************************************
-// *			Show_App_Res Terry:- Terry and Hazel Flanigan 2024			*
+// *			Show_Resource_Group:- Terry and Hazel Flanigan 2024			*
 // **************************************************************************
-bool CL64_Resources::Show_App_Res()
+bool CL64_Resources::Show_Resource_Group(Ogre::String* ResourceGroup)
 {
 	ListView_DeleteAllItems(FX_General_hLV);
 
-	bool Test = Ogre::ResourceGroupManager::getSingleton().resourceGroupExists(App->CL_Ogre->App_Resource_Group);
+	bool Test = Ogre::ResourceGroupManager::getSingleton().resourceGroupExists(*ResourceGroup);
 
 	if (Test == 1)
 	{
@@ -468,7 +468,7 @@ bool CL64_Resources::Show_App_Res()
 		char pPath[MAX_PATH];
 		char chr_Type[255];
 
-		Ogre::ResourceGroupManager::LocationList resLocationsList = Ogre::ResourceGroupManager::getSingleton().getResourceLocationList(App->CL_Ogre->App_Resource_Group);
+		Ogre::ResourceGroupManager::LocationList resLocationsList = Ogre::ResourceGroupManager::getSingleton().getResourceLocationList(*ResourceGroup);
 		Ogre::ResourceGroupManager::LocationList::iterator it = resLocationsList.begin();
 		Ogre::ResourceGroupManager::LocationList::iterator itEnd = resLocationsList.end();
 
@@ -476,78 +476,6 @@ bool CL64_Resources::Show_App_Res()
 		{
 			pitem.iItem = pRow;
 			pitem.pszText = (LPSTR)"App Resource Group";
-
-			strcpy(pPath, it->archive->getName().c_str());
-			strcpy(chr_Type, it->archive->getType().c_str());
-
-			ListView_InsertItem(FX_General_hLV, &pitem);
-			ListView_SetItemText(FX_General_hLV, pRow, 1, pPath);
-			ListView_SetItemText(FX_General_hLV, pRow, 2, chr_Type);
-			ListView_SetItemText(FX_General_hLV, pRow, 3, (LPSTR)" ");
-		}
-	}
-	else
-	{
-		App->Say("No Project Loaded");
-
-		return 0;
-	}
-
-	return 1;
-}
-
-// *************************************************************************
-// *		Show_Project_Res:- Terry and Hazel Flanigan 2024 		 	   *
-// *************************************************************************
-bool CL64_Resources::Show_Project_Res()
-{
-	ListView_DeleteAllItems(FX_General_hLV);
-
-	bool Test = Ogre::ResourceGroupManager::getSingleton().resourceGroupExists(App->CL_Ogre->World_Resource_Group);
-
-	if (Test == 1)
-	{
-
-		Ogre::String st;
-		int NUM_COLS = 4;
-
-		LV_ITEM pitem;
-		memset(&pitem, 0, sizeof(LV_ITEM));
-		pitem.mask = LVIF_TEXT;
-
-		LV_COLUMN lvC;
-		memset(&lvC, 0, sizeof(LV_COLUMN));
-		lvC.mask = LVCF_FMT | LVCF_WIDTH | LVCF_TEXT | LVCF_SUBITEM;
-		lvC.fmt = LVCFMT_LEFT;  // left-align the column
-		std::string headers[] =
-		{
-			"Resource Group", "Path","Type"," "
-		};
-		int headerSize[] =
-		{
-			165,380,170,250
-		};
-
-		for (int header = 0; header < NUM_COLS; header++)
-		{
-			lvC.iSubItem = header;
-			lvC.cx = headerSize[header]; // width of the column, in pixels
-			lvC.pszText = const_cast<char*>(headers[header].c_str());
-			ListView_SetColumn(FX_General_hLV, header, &lvC);
-		}
-
-		int	 pRow = 0;
-		char pPath[MAX_PATH];
-		char chr_Type[255];
-
-		Ogre::ResourceGroupManager::LocationList resLocationsList = Ogre::ResourceGroupManager::getSingleton().getResourceLocationList(App->CL_Ogre->World_Resource_Group);
-		Ogre::ResourceGroupManager::LocationList::iterator it = resLocationsList.begin();
-		Ogre::ResourceGroupManager::LocationList::iterator itEnd = resLocationsList.end();
-
-		for (; it != itEnd; ++it)
-		{
-			pitem.iItem = pRow;
-			pitem.pszText = (LPSTR)"Project_Resource_Group";
 
 			strcpy(pPath, it->archive->getName().c_str());
 			strcpy(chr_Type, it->archive->getType().c_str());
