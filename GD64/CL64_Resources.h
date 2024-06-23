@@ -43,7 +43,8 @@ private:
 	bool FindPath_New(char* File, char* Folder);
 
 	bool Show_Resource_Group(const Ogre::String& ResourceGroup);
-	
+	bool ShowAllMeshes();
+
 	char ResourcePath[MAX_PATH];
 
 	bool Show_App_Res_Flag;

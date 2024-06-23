@@ -191,15 +191,15 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 		{
 			App->SBC_Resources->ShowAllTextures();
 			return TRUE;
-		}
+		}*/
 
-		if (LOWORD(wParam) == IDC_MESH)
+		if (LOWORD(wParam) == IDC_ALLMESH)
 		{
-			App->SBC_Resources->ShowAllMeshes();
+			App->CL_Resources->ShowAllMeshes();
 			return TRUE;
 		}
 
-		if (LOWORD(wParam) == IDC_USED)
+		/*if (LOWORD(wParam) == IDC_USED)
 		{
 			App->SBC_Resources->ShowUsedMaterials();
 			return TRUE;
@@ -505,6 +505,103 @@ bool CL64_Resources::Show_Resource_Group(const Ogre::String& ResourceGroup)
 		App->Say("No Project Loaded");
 
 		return 0;
+	}
+
+	return 1;
+}
+
+#include <string.h>
+
+// *************************************************************************
+// *			ShowAllMeshes:- Terry and Hazel Flanigan 2024		 	   *
+// *************************************************************************
+bool CL64_Resources::ShowAllMeshes()
+{
+	Ogre::String st;
+	int NUM_COLS = 4;
+
+	LV_ITEM pitem;
+	memset(&pitem, 0, sizeof(LV_ITEM));
+	pitem.mask = LVIF_TEXT;
+
+	ListView_DeleteAllItems(FX_General_hLV);
+
+	LV_COLUMN lvC;
+	memset(&lvC, 0, sizeof(LV_COLUMN));
+	lvC.mask = LVCF_FMT | LVCF_WIDTH | LVCF_TEXT | LVCF_SUBITEM;
+	lvC.fmt = LVCFMT_LEFT;  // left-align the column
+	std::string headers[] =
+	{
+		"Mesh", "Has Skeleton","Material File","Path"
+	};
+	int headerSize[] =
+	{
+		165,180,170,250
+	};
+
+	for (int header = 0; header < NUM_COLS; header++)
+	{
+		lvC.iSubItem = header;
+		lvC.cx = headerSize[header]; // width of the column, in pixels
+		lvC.pszText = const_cast<char*>(headers[header].c_str());
+		ListView_SetColumn(FX_General_hLV, header, &lvC);
+	}
+
+	
+	int	 pRow = 0;
+	char pMeshName[255];
+	char chr_AsSkell[255];
+	char buff[255];
+	char Origin[MAX_PATH];
+	bool pHasSkel = 0;
+	Ogre::ResourcePtr pp;
+
+	Ogre::ResourceManager::ResourceMapIterator MeshIterator = Ogre::MeshManager::getSingleton().getResourceIterator();
+	
+	while (MeshIterator.hasMoreElements())
+	{
+		//strcpy(pMeshName,(static_cast<Ogre::MeshPtr>(MeshIterator.peekNextValue()))->getName().c_str());
+
+		strcpy(pMeshName, MeshIterator.peekNextValue()->getName().c_str());
+		
+		pp = Ogre::MeshManager::getSingleton().getByName(pMeshName);
+		
+		strcpy(Origin, MeshIterator.peekNextValue()->getGroup().c_str());
+		
+		Ogre::Entity* DummyEnt = App->CL_Ogre->mSceneMgr->createEntity("GDTemp1", pMeshName);
+		pHasSkel = DummyEnt->hasSkeleton();
+		App->CL_Ogre->mSceneMgr->destroyEntity(DummyEnt);
+
+		if (pHasSkel == 1)
+		{
+			strcpy(chr_AsSkell, "Yes");
+		}
+		else
+		{
+			strcpy(chr_AsSkell, "No");
+		}
+
+		strcpy(buff, pMeshName);
+		if (_stricmp(buff + strlen(buff) - 5, ".mesh") != 0)
+		{
+			strcpy(ResourcePath, "Internal");
+		}
+		else
+		{
+			Start_List_Folders(NULL, pMeshName, 0);
+		}
+
+		pitem.iItem = pRow;
+		pitem.pszText = pMeshName;
+
+		ListView_InsertItem(FX_General_hLV, &pitem);
+		ListView_SetItemText(FX_General_hLV, pRow, 1, chr_AsSkell);
+		ListView_SetItemText(FX_General_hLV, pRow, 2, ResourcePath);
+		ListView_SetItemText(FX_General_hLV, pRow, 3, Origin);
+
+		pRow++;
+
+		MeshIterator.moveNext();
 	}
 
 	return 1;
