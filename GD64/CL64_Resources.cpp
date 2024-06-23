@@ -198,17 +198,17 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 
 			App->SBC_Resources->Show_Project_Res();
 			return TRUE;
-		}
+		}*/
 
 		if (LOWORD(wParam) == IDC_BT_APPRESOURCES)
 		{
 			SetDlgItemText(hDlg, IDC_ST_BANNER, (LPCTSTR)"App Resources");
 
-			App->SBC_Resources->Show_App_Res();
+			//App->SBC_Resources->Show_App_Res();
 			return TRUE;
 		}
 
-		if (LOWORD(wParam) == IDC_BTMVRESOURCES)
+		/*if (LOWORD(wParam) == IDC_BTMVRESOURCES)
 		{
 			SetDlgItemText(hDlg, IDC_ST_BANNER, (LPCTSTR)"Mesh Viewer Resources");
 
