@@ -213,7 +213,7 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 
 			RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
-			App->CL_Resources->Show_Resource_Group(&App->CL_Ogre->World_Resource_Group);
+			App->CL_Resources->Show_Resource_Group(App->CL_Ogre->World_Resource_Group);
 
 			return TRUE;
 		}
@@ -226,7 +226,7 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 
 			RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
-			App->CL_Resources->Show_Resource_Group(&App->CL_Ogre->App_Resource_Group);
+			App->CL_Resources->Show_Resource_Group(App->CL_Ogre->App_Resource_Group);
 
 			return TRUE;
 		}
@@ -441,11 +441,11 @@ bool CL64_Resources::ShowAllMaterials()
 // **************************************************************************
 // *			Show_Resource_Group:- Terry and Hazel Flanigan 2024			*
 // **************************************************************************
-bool CL64_Resources::Show_Resource_Group(Ogre::String* ResourceGroup)
+bool CL64_Resources::Show_Resource_Group(const Ogre::String& ResourceGroup)
 {
 	ListView_DeleteAllItems(FX_General_hLV);
 
-	bool Test = Ogre::ResourceGroupManager::getSingleton().resourceGroupExists(*ResourceGroup);
+	bool Test = Ogre::ResourceGroupManager::getSingleton().resourceGroupExists(ResourceGroup);
 
 	if (Test == 1)
 	{
@@ -482,7 +482,7 @@ bool CL64_Resources::Show_Resource_Group(Ogre::String* ResourceGroup)
 		char pPath[MAX_PATH];
 		char chr_Type[255];
 
-		Ogre::ResourceGroupManager::LocationList resLocationsList = Ogre::ResourceGroupManager::getSingleton().getResourceLocationList(*ResourceGroup);
+		Ogre::ResourceGroupManager::LocationList resLocationsList = Ogre::ResourceGroupManager::getSingleton().getResourceLocationList(ResourceGroup);
 		Ogre::ResourceGroupManager::LocationList::iterator it = resLocationsList.begin();
 		Ogre::ResourceGroupManager::LocationList::iterator itEnd = resLocationsList.end();
 
