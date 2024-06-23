@@ -28,5 +28,22 @@ public:
 
 	CL64_Resources(void);
 	~CL64_Resources(void);
+
+	void Start_Resources();
+
+private:
+
+	static LRESULT CALLBACK Resources_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+
+	void CreateListGeneral_FX(HWND hDlg);
+
+	bool ShowAllMaterials();
+	void Start_List_Folders(HWND List, char* FileName, bool ListDlg);
+	void List_Folders(HWND List, char* StartFolder, char* FileName, bool ListDlg);
+	bool FindPath_New(char* File, char* Folder);
+
+	char ResourcePath[MAX_PATH];
+
+	HWND FX_General_hLV;
 };
 
