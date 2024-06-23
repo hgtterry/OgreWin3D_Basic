@@ -69,6 +69,7 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 
 		SendDlgItemMessage(hDlg, IDC_BT_APPRESOURCES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_DEMORESOURCES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
 		App->CL_Resources->CreateListGeneral_FX(hDlg);
 
@@ -119,6 +120,13 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 			return CDRF_DODEFAULT;
 		}
 
+		if (some_item->idFrom == IDCANCEL)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+		
 		/*if (some_item->idFrom == IDC_BTMVRESOURCES && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
@@ -200,7 +208,10 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 		if (LOWORD(wParam) == IDC_BT_DEMORESOURCES)
 		{
 			SetDlgItemText(hDlg, IDC_ST_BANNER, (LPCTSTR)"Demo Resources");
+			App->CL_Resources->Show_Demo_Res_Flag = 1;
 			App->CL_Resources->Show_App_Res_Flag = 0;
+
+			RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
 			App->CL_Resources->Show_Resource_Group(&App->CL_Ogre->World_Resource_Group);
 
@@ -211,6 +222,9 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 		{
 			SetDlgItemText(hDlg, IDC_ST_BANNER, (LPCTSTR)"App Resources");
 			App->CL_Resources->Show_App_Res_Flag = 1;
+			App->CL_Resources->Show_Demo_Res_Flag = 0;
+
+			RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
 			App->CL_Resources->Show_Resource_Group(&App->CL_Ogre->App_Resource_Group);
 
