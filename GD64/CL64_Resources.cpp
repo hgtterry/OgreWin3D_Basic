@@ -30,6 +30,8 @@ CL64_Resources::CL64_Resources(void)
 {
 	ResourcePath[0] = 0;
 
+	Show_App_Res_Flag = 0;
+
 	FX_General_hLV = nullptr;
 }
 
@@ -54,32 +56,35 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 	case WM_INITDIALOG:
 	{
 
-		/*App->SetTitleBar(hDlg);
+		//App->SetTitleBar(hDlg);
 
 		SendDlgItemMessage(hDlg, IDC_ST_BANNER, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
 
-		SendDlgItemMessage(hDlg, IDC_BT_SCENEMESH, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		/*SendDlgItemMessage(hDlg, IDC_BT_SCENEMESH, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_STCOUNT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BTMATSF, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BTMESHSF, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BTTEXTSF, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		*/
 
+		SendDlgItemMessage(hDlg, IDC_BT_APPRESOURCES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_DEMORESOURCES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
 		App->CL_Resources->CreateListGeneral_FX(hDlg);
 
 		return TRUE;
 	}
 	case WM_CTLCOLORSTATIC:
 	{
-		/*if (GetDlgItem(hDlg, IDC_ST_BANNER) == (HWND)lParam)
+		if (GetDlgItem(hDlg, IDC_ST_BANNER) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 0, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
 			SetBkMode((HDC)wParam, TRANSPARENT);
-			return (UINT)App->DialogBackGround;
+			return (UINT)App->AppBackground;
 		}
 
-		if (GetDlgItem(hDlg, IDC_STCOUNT) == (HWND)lParam)
+		/*if (GetDlgItem(hDlg, IDC_STCOUNT) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 0, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
@@ -100,21 +105,21 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 	{
 		LPNMHDR some_item = (LPNMHDR)lParam;
 
-		/*if (some_item->idFrom == IDC_BT_APPRESOURCES && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDC_BT_APPRESOURCES)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->SBC_Resources->Show_App_Res_Flag);
+			App->Custom_Button_Toggle(item, App->CL_Resources->Show_App_Res_Flag);
 			return CDRF_DODEFAULT;
 		}
 
-		if (some_item->idFrom == IDC_BT_PRJRESOURCES && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDC_BT_DEMORESOURCES)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->SBC_Resources->Show_Project_Res_Flag);
+			App->Custom_Button_Toggle(item, App->CL_Resources->Show_Demo_Res_Flag);
 			return CDRF_DODEFAULT;
 		}
 
-		if (some_item->idFrom == IDC_BTMVRESOURCES && some_item->code == NM_CUSTOMDRAW)
+		/*if (some_item->idFrom == IDC_BTMVRESOURCES && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Toggle(item, App->SBC_Resources->Show_MV_Res_Flag);
@@ -190,21 +195,25 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 		{
 			App->SBC_Resources->ShowUsedMaterials();
 			return TRUE;
-		}
-
-		if (LOWORD(wParam) == IDC_BT_PRJRESOURCES)
-		{
-			SetDlgItemText(hDlg, IDC_ST_BANNER, (LPCTSTR)"Project Resources");
-
-			App->SBC_Resources->Show_Project_Res();
-			return TRUE;
 		}*/
+
+		if (LOWORD(wParam) == IDC_BT_DEMORESOURCES)
+		{
+			SetDlgItemText(hDlg, IDC_ST_BANNER, (LPCTSTR)"Demo Resources");
+			App->CL_Resources->Show_App_Res_Flag = 0;
+
+			App->CL_Resources->Show_Project_Res();
+
+			return TRUE;
+		}
 
 		if (LOWORD(wParam) == IDC_BT_APPRESOURCES)
 		{
 			SetDlgItemText(hDlg, IDC_ST_BANNER, (LPCTSTR)"App Resources");
+			App->CL_Resources->Show_App_Res_Flag = 1;
 
-			//App->SBC_Resources->Show_App_Res();
+			App->CL_Resources->Show_App_Res();
+
 			return TRUE;
 		}
 
@@ -410,6 +419,150 @@ bool CL64_Resources::ShowAllMaterials()
 		pRow++;
 
 		materialIterator.moveNext();
+	}
+
+	return 1;
+}
+
+// **************************************************************************
+// *			Show_App_Res Terry:- Terry and Hazel Flanigan 2024			*
+// **************************************************************************
+bool CL64_Resources::Show_App_Res()
+{
+	ListView_DeleteAllItems(FX_General_hLV);
+
+	bool Test = Ogre::ResourceGroupManager::getSingleton().resourceGroupExists(App->CL_Ogre->App_Resource_Group);
+
+	if (Test == 1)
+	{
+
+		Ogre::String st;
+		int NUM_COLS = 4;
+
+		LV_ITEM pitem;
+		memset(&pitem, 0, sizeof(LV_ITEM));
+		pitem.mask = LVIF_TEXT;
+
+		LV_COLUMN lvC;
+		memset(&lvC, 0, sizeof(LV_COLUMN));
+		lvC.mask = LVCF_FMT | LVCF_WIDTH | LVCF_TEXT | LVCF_SUBITEM;
+		lvC.fmt = LVCFMT_LEFT;  // left-align the column
+		std::string headers[] =
+		{
+			"Resource Group", "Path","Type"," "
+		};
+		int headerSize[] =
+		{
+			165,380,170,250
+		};
+
+		for (int header = 0; header < NUM_COLS; header++)
+		{
+			lvC.iSubItem = header;
+			lvC.cx = headerSize[header]; // width of the column, in pixels
+			lvC.pszText = const_cast<char*>(headers[header].c_str());
+			ListView_SetColumn(FX_General_hLV, header, &lvC);
+		}
+
+		int	 pRow = 0;
+		char pPath[MAX_PATH];
+		char chr_Type[255];
+
+		Ogre::ResourceGroupManager::LocationList resLocationsList = Ogre::ResourceGroupManager::getSingleton().getResourceLocationList(App->CL_Ogre->App_Resource_Group);
+		Ogre::ResourceGroupManager::LocationList::iterator it = resLocationsList.begin();
+		Ogre::ResourceGroupManager::LocationList::iterator itEnd = resLocationsList.end();
+
+		for (; it != itEnd; ++it)
+		{
+			pitem.iItem = pRow;
+			pitem.pszText = (LPSTR)"App Resource Group";
+
+			strcpy(pPath, it->archive->getName().c_str());
+			strcpy(chr_Type, it->archive->getType().c_str());
+
+			ListView_InsertItem(FX_General_hLV, &pitem);
+			ListView_SetItemText(FX_General_hLV, pRow, 1, pPath);
+			ListView_SetItemText(FX_General_hLV, pRow, 2, chr_Type);
+			ListView_SetItemText(FX_General_hLV, pRow, 3, (LPSTR)" ");
+		}
+	}
+	else
+	{
+		App->Say("No Project Loaded");
+
+		return 0;
+	}
+
+	return 1;
+}
+
+// *************************************************************************
+// *		Show_Project_Res:- Terry and Hazel Flanigan 2024 		 	   *
+// *************************************************************************
+bool CL64_Resources::Show_Project_Res()
+{
+	ListView_DeleteAllItems(FX_General_hLV);
+
+	bool Test = Ogre::ResourceGroupManager::getSingleton().resourceGroupExists(App->CL_Ogre->World_Resource_Group);
+
+	if (Test == 1)
+	{
+
+		Ogre::String st;
+		int NUM_COLS = 4;
+
+		LV_ITEM pitem;
+		memset(&pitem, 0, sizeof(LV_ITEM));
+		pitem.mask = LVIF_TEXT;
+
+		LV_COLUMN lvC;
+		memset(&lvC, 0, sizeof(LV_COLUMN));
+		lvC.mask = LVCF_FMT | LVCF_WIDTH | LVCF_TEXT | LVCF_SUBITEM;
+		lvC.fmt = LVCFMT_LEFT;  // left-align the column
+		std::string headers[] =
+		{
+			"Resource Group", "Path","Type"," "
+		};
+		int headerSize[] =
+		{
+			165,380,170,250
+		};
+
+		for (int header = 0; header < NUM_COLS; header++)
+		{
+			lvC.iSubItem = header;
+			lvC.cx = headerSize[header]; // width of the column, in pixels
+			lvC.pszText = const_cast<char*>(headers[header].c_str());
+			ListView_SetColumn(FX_General_hLV, header, &lvC);
+		}
+
+		int	 pRow = 0;
+		char pPath[MAX_PATH];
+		char chr_Type[255];
+
+		Ogre::ResourceGroupManager::LocationList resLocationsList = Ogre::ResourceGroupManager::getSingleton().getResourceLocationList(App->CL_Ogre->World_Resource_Group);
+		Ogre::ResourceGroupManager::LocationList::iterator it = resLocationsList.begin();
+		Ogre::ResourceGroupManager::LocationList::iterator itEnd = resLocationsList.end();
+
+		for (; it != itEnd; ++it)
+		{
+			pitem.iItem = pRow;
+			pitem.pszText = (LPSTR)"Project_Resource_Group";
+
+			strcpy(pPath, it->archive->getName().c_str());
+			strcpy(chr_Type, it->archive->getType().c_str());
+
+			ListView_InsertItem(FX_General_hLV, &pitem);
+			ListView_SetItemText(FX_General_hLV, pRow, 1, pPath);
+			ListView_SetItemText(FX_General_hLV, pRow, 2, chr_Type);
+			ListView_SetItemText(FX_General_hLV, pRow, 3, (LPSTR)" ");
+		}
+	}
+	else
+	{
+		App->Say("No Project Loaded");
+
+		return 0;
 	}
 
 	return 1;

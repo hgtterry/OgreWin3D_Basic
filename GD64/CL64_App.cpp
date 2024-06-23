@@ -64,6 +64,7 @@ CL64_App::CL64_App(void)
 	AppBackground = 0;
 
 	Font_CB15 = 0;
+	Font_Arial20 = 0;
 
 	Hnd_HairOn_Bmp = NULL;
 	Hnd_HairOff_Bmp = NULL;
@@ -238,7 +239,8 @@ void CL64_App::SetBrushes_Fonts(void)
 	Brush_Tabs_UnSelected = CreateSolidBrush(RGB(190, 190, 190));
 
 	Font_CB15 = CreateFont(-15, 0, 0, 0, 0, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Courier Black");
-	
+	Font_Arial20 = CreateFont(-20, 0, 0, 0, 0, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Arial");
+
 }
 
 // *************************************************************************

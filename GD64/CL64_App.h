@@ -108,6 +108,7 @@ public:
 	bool Debug_App;
 
 	HFONT Font_CB15;
+	HFONT Font_Arial20;
 
 	HCURSOR CUR;
 	

@@ -42,6 +42,8 @@
 #define IDC_BT_APPRESOURCES             1007
 #define IDC_BUTTON2                     1008
 #define IDC_BT_TBH_CAMERA               1008
+#define IDC_BT_PRJRESOURCES             1008
+#define IDC_BT_DEMORESOURCES            1008
 #define IDC_BUTTON3                     1009
 #define IDC_BT_CAMERA_MODEL             1009
 #define IDC_BUTTON4                     1010
