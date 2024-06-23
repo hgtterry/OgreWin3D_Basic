@@ -42,6 +42,7 @@ distribution.
 #include "CL64_Player.h"
 #include "CL64_Demos.h"
 #include "CL64_Dialogs.h"
+#include "CL64_Resources.h"
 
 class CL64_App
 {
@@ -69,6 +70,7 @@ public:
 	CL64_Player*		CL_Player;
 	CL64_Demos*			CL_Demos;
 	CL64_Dialogs*		CL_Dialogs;
+	CL64_Resources*		CL_Resources;
 
 	void InitApp(void);
 	void Init_Dialogs(void);

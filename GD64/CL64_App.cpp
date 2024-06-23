@@ -46,6 +46,7 @@ CL64_App::CL64_App(void)
 	CL_Player =			nullptr;
 	CL_Demos =			nullptr;
 	CL_Dialogs =		nullptr;
+	CL_Resources =		nullptr;
 
 	hInst =			nullptr;
 	MainHwnd =		nullptr;
@@ -115,6 +116,7 @@ void CL64_App::InitApp(void)
 	CL_Player =			new CL64_Player();
 	CL_Demos =			new CL64_Demos();
 	CL_Dialogs =		new CL64_Dialogs();
+	CL_Resources =		new CL64_Resources();
 
 	SetBrushes_Fonts();
 

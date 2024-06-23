@@ -178,6 +178,7 @@
     <ClInclude Include="CL64_Panels.h" />
     <ClInclude Include="CL64_Player.h" />
     <ClInclude Include="CL64_Preferences.h" />
+    <ClInclude Include="CL64_Resources.h" />
     <ClInclude Include="CL64_Scene.h" />
     <ClInclude Include="CL64_Textures.h" />
     <ClInclude Include="CL64_TopDlg.h" />
@@ -211,6 +212,7 @@
     <ClCompile Include="CL64_Panels.cpp" />
     <ClCompile Include="CL64_Player.cpp" />
     <ClCompile Include="CL64_Preferences.cpp" />
+    <ClCompile Include="CL64_Resources.cpp" />
     <ClCompile Include="CL64_Scene.cpp" />
     <ClCompile Include="CL64_Textures.cpp" />
     <ClCompile Include="CL64_TopDlg.cpp" />
