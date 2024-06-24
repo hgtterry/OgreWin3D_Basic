@@ -203,13 +203,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 		case ID_DEBUG_HIDEOGRETESTCUBE:
 		{
-			if (App->CL_Ogre->flag_Hide_Test_Cube == 1)
+			if (App->CL_Ogre->flag_Show_Test_Cube == 1)
 			{
-				App->CL_Ogre->flag_Hide_Test_Cube = 0;
+				App->CL_Ogre->flag_Show_Test_Cube = 0;
 			}
 			else
 			{
-				App->CL_Ogre->flag_Hide_Test_Cube = 1;
+				App->CL_Ogre->flag_Show_Test_Cube = 1;
 			}
 
 			App->CL_Ogre->Show_Test_Cube();

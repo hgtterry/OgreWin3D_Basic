@@ -49,7 +49,8 @@ CL64_Ogre_Init::CL64_Ogre_Init(void)
 	App_Resource_Group = "App_Resource_Group";
 	World_Resource_Group = "World_Resource_Group";
 
-	flag_Hide_Test_Cube = 1;
+	flag_Show_Test_Cube = 1;
+	flag_Show_Trays = 1;
 }
 
 CL64_Ogre_Init::~CL64_Ogre_Init(void)
@@ -313,13 +314,30 @@ bool CL64_Ogre_Init::createFrameListener(void)
 // *************************************************************************
 void CL64_Ogre_Init::Show_Test_Cube(void)
 {
-	if (flag_Hide_Test_Cube == 1)
+	if (flag_Show_Test_Cube == 1)
 	{
 		OgreNode->setVisible(true);
 	}
 	else
 	{
 		OgreNode->setVisible(false);
+	}
+
+}
+
+// *************************************************************************
+// *			Show_Trays:- Terry and Hazel Flanigan 2024				   *
+// *************************************************************************
+void CL64_Ogre_Init::Show_Trays(void)
+{
+	if (flag_Show_Trays == 1)
+	{
+		mTrayMgr->showAll();
+		mTrayMgr->hideCursor();
+	}
+	else
+	{
+		mTrayMgr->hideAll();
 	}
 
 }

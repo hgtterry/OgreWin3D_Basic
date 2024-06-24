@@ -40,6 +40,7 @@
 #define IDC_BT_TD_DEBUG_IMGUIFPS        1006
 #define IDC_BUTTON1                     1007
 #define IDC_BT_APPRESOURCES             1007
+#define IDC_BT_TD_DEBUG_TRAYSFPS        1007
 #define IDC_BUTTON2                     1008
 #define IDC_BT_TBH_CAMERA               1008
 #define IDC_BT_DEMORESOURCES            1008
@@ -60,7 +61,6 @@
 #define IDC_BT_TD_DEBUG_RESOURCES       1017
 #define IDC_ST_BANNER                   1018
 #define IDC_USEDMATERIALS               1019
-#define IDC_BUTTON6                     1020
 #define IDC_ALLTEXTURES                 1020
 #define ID_VIEW_RESET                   32771
 #define ID_VIEW_MAX3DVIEW               32772

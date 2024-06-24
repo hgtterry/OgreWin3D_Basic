@@ -59,6 +59,7 @@ public:
 
 
 	void Show_Test_Cube(void);
+	void Show_Trays(void);
 
 	bool Ogre_Render_Loop(void);
 
@@ -94,7 +95,8 @@ public:
 
 	char Return_Chr[MAX_PATH];
 
-	bool flag_Hide_Test_Cube;
+	bool flag_Show_Test_Cube;
+	bool flag_Show_Trays;
 
 };
 

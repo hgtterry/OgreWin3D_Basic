@@ -308,6 +308,7 @@ LRESULT CALLBACK CL64_TopDlg::Debug_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 		SendDlgItemMessage(hDlg, IDC_BT_TD_DEBUG_IMGUIFPS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_TD_DEBUG_PHYSICSDEBUG, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_TD_DEBUG_RESOURCES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_TD_DEBUG_TRAYSFPS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
 		return TRUE;
 	}
@@ -331,7 +332,7 @@ LRESULT CALLBACK CL64_TopDlg::Debug_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 		if (some_item->idFrom == IDC_BT_TD_DEBUG_TESTCUBE)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CL_Ogre->flag_Hide_Test_Cube);
+			App->Custom_Button_Toggle(item, App->CL_Ogre->flag_Show_Test_Cube);
 			return CDRF_DODEFAULT;
 		}
 
@@ -339,6 +340,13 @@ LRESULT CALLBACK CL64_TopDlg::Debug_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Toggle(item, App->CL_ImGui->Show_FPS);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BT_TD_DEBUG_TRAYSFPS)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->CL_Ogre->flag_Show_Trays);
 			return CDRF_DODEFAULT;
 		}
 
@@ -389,15 +397,31 @@ LRESULT CALLBACK CL64_TopDlg::Debug_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 			return 1;
 		}
 
-		if (LOWORD(wParam) == IDC_BT_TD_DEBUG_TESTCUBE)
+		if (LOWORD(wParam) == IDC_BT_TD_DEBUG_TRAYSFPS)
 		{
-			if (App->CL_Ogre->flag_Hide_Test_Cube == 1)
+			if (App->CL_Ogre->flag_Show_Trays == 1)
 			{
-				App->CL_Ogre->flag_Hide_Test_Cube = 0;
+				App->CL_Ogre->flag_Show_Trays = 0;
 			}
 			else
 			{
-				App->CL_Ogre->flag_Hide_Test_Cube = 1;
+				App->CL_Ogre->flag_Show_Trays = 1;
+			}
+
+			App->CL_Ogre->Show_Trays();
+
+			return 1;
+		}
+		
+		if (LOWORD(wParam) == IDC_BT_TD_DEBUG_TESTCUBE)
+		{
+			if (App->CL_Ogre->flag_Show_Test_Cube == 1)
+			{
+				App->CL_Ogre->flag_Show_Test_Cube = 0;
+			}
+			else
+			{
+				App->CL_Ogre->flag_Show_Test_Cube = 1;
 			}
 
 			App->CL_Ogre->Show_Test_Cube();
