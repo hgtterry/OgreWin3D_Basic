@@ -402,10 +402,12 @@ LRESULT CALLBACK CL64_TopDlg::Debug_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 			if (App->CL_Ogre->flag_Show_Trays == 1)
 			{
 				App->CL_Ogre->flag_Show_Trays = 0;
+				App->CL_Player->Show_Debug_Player(0);
 			}
 			else
 			{
 				App->CL_Ogre->flag_Show_Trays = 1;
+				App->CL_Player->Show_Debug_Player(1);
 			}
 
 			App->CL_Ogre->Show_Trays();

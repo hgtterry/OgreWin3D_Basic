@@ -343,6 +343,14 @@ void CL64_Ogre_Init::Show_Trays(void)
 }
 
 // *************************************************************************
+// *			RenderFrame:- Terry and Hazel Flanigan 2024				   *
+// *************************************************************************
+void CL64_Ogre_Init::RenderFrame(void)
+{
+	Ogre::Root::getSingletonPtr()->renderOneFrame();
+}
+
+// *************************************************************************
 // *		Ogre_Render_Loop:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
 bool CL64_Ogre_Init::Ogre_Render_Loop(void)

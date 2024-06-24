@@ -61,6 +61,7 @@ public:
 	void Show_Test_Cube(void);
 	void Show_Trays(void);
 
+	void RenderFrame(void);
 	bool Ogre_Render_Loop(void);
 
 	bool ReverseBackSlash(char* buf);

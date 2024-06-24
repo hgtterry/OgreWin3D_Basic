@@ -31,6 +31,7 @@ public:
 
 	void Create_Player_Object(void);
 	void Initialize() const;
+	void Show_Debug_Player(bool Show);
 
 	void Update_Player(btCollisionWorld* collisionWorld, btScalar deltaTimeStep);
 	void Update_Velocity(float dt);

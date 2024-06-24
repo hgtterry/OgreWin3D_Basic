@@ -123,6 +123,28 @@ void CL64_Player::Initialize() const
 }
 
 // *************************************************************************
+// *			Show_Debug_Player:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+void CL64_Player::Show_Debug_Player(bool Show)
+{
+	int f = App->CL_Scene->B_Player[0]->Phys_Body->getCollisionFlags();
+
+	if (Show == 1)
+	{
+		App->CL_Scene->B_Player[0]->Phys_Body->setCollisionFlags(f & (~(1 << 5)));
+	}
+	else
+	{
+		App->CL_Scene->B_Player[0]->Phys_Body->setCollisionFlags(f | (1 << 5));
+
+		App->CL_Ogre->BulletListener->Render_Debug_Flag = 0;
+		App->CL_Ogre->RenderFrame();
+		App->CL_Ogre->BulletListener->Render_Debug_Flag = 1;
+	}
+
+}
+
+// *************************************************************************
 // *			Update_Player:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
 void CL64_Player::Update_Player(btCollisionWorld* collisionWorld, btScalar deltaTimeStep)
@@ -132,7 +154,6 @@ void CL64_Player::Update_Player(btCollisionWorld* collisionWorld, btScalar delta
 	Get_Height();
 	
 	Update_Velocity(deltaTimeStep);
-
 }
 
 // *************************************************************************
