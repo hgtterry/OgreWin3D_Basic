@@ -37,12 +37,14 @@ private:
 
 	void CreateListGeneral_FX(HWND hDlg);
 
-	bool ShowAllMaterials();
+	void ShowAllMaterials();
+	void ShowUsedMaterials();
+
 	void Start_List_Folders(HWND List, char* FileName, bool ListDlg);
 	void List_Folders(HWND List, char* StartFolder, char* FileName, bool ListDlg);
 	bool FindPath_New(char* File, char* Folder);
 
-	bool Show_Resource_Group(const Ogre::String& ResourceGroup);
+	void Show_Resource_Group(const Ogre::String& ResourceGroup);
 	bool ShowAllMeshes();
 
 	char ResourcePath[MAX_PATH];

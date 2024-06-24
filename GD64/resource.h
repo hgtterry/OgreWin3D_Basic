@@ -48,6 +48,7 @@
 #define IDC_ALLMESH                     1009
 #define IDC_BUTTON4                     1010
 #define IDC_BT_CAMERA_FREE              1010
+#define IDC_ALLMATERIALS                1010
 #define IDC_TBSHOWHAIR                  1011
 #define IDC_BT_TD_DEBUG_PHYSICSDEBUG    1011
 #define IDC_TBSHOWGRID                  1012
@@ -58,6 +59,8 @@
 #define IDC_STTEXT                      1016
 #define IDC_BT_TD_DEBUG_RESOURCES       1017
 #define IDC_ST_BANNER                   1018
+#define IDC_BUTTON5                     1019
+#define IDC_USEDMATERIALS               1019
 #define ID_VIEW_RESET                   32771
 #define ID_VIEW_MAX3DVIEW               32772
 #define ID_DEBUG_TESTPREFERANCE         32773
@@ -82,7 +85,7 @@
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        144
 #define _APS_NEXT_COMMAND_VALUE         32786
-#define _APS_NEXT_CONTROL_VALUE         1019
+#define _APS_NEXT_CONTROL_VALUE         1020
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif

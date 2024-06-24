@@ -181,13 +181,13 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 		//	return TRUE;
 		//}
 
-		/*if (LOWORD(wParam) == IDC_MATERIALS)
+		if (LOWORD(wParam) == IDC_ALLMATERIALS)
 		{
-			App->SBC_Resources->ShowAllMaterials();
+			App->CL_Resources->ShowAllMaterials();
 			return TRUE;
 		}
 
-		if (LOWORD(wParam) == IDC_TEXTURES)
+		/*if (LOWORD(wParam) == IDC_TEXTURES)
 		{
 			App->SBC_Resources->ShowAllTextures();
 			return TRUE;
@@ -199,11 +199,11 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 			return TRUE;
 		}
 
-		/*if (LOWORD(wParam) == IDC_USED)
+		if (LOWORD(wParam) == IDC_USEDMATERIALS)
 		{
-			App->SBC_Resources->ShowUsedMaterials();
+			App->CL_Resources->ShowUsedMaterials();
 			return TRUE;
-		}*/
+		}
 
 		if (LOWORD(wParam) == IDC_BT_DEMORESOURCES)
 		{
@@ -353,7 +353,7 @@ void CL64_Resources::CreateListGeneral_FX(HWND hDlg)
 // *************************************************************************
 // *			ShowAllMaterials:- Terry and Hazel Flanigan 2024	  	   *
 // *************************************************************************
-bool CL64_Resources::ShowAllMaterials()
+void CL64_Resources::ShowAllMaterials()
 {
 	LV_ITEM pitem;
 	memset(&pitem, 0, sizeof(LV_ITEM));
@@ -434,14 +434,93 @@ bool CL64_Resources::ShowAllMaterials()
 
 		materialIterator.moveNext();
 	}
+}
 
-	return 1;
+// *************************************************************************
+// *					ShowUsedMaterials Terry Bernie	 			 	   *
+// *************************************************************************
+void CL64_Resources::ShowUsedMaterials()
+{
+	LV_ITEM pitem;
+	memset(&pitem, 0, sizeof(LV_ITEM));
+	pitem.mask = LVIF_TEXT;
+
+	ListView_DeleteAllItems(FX_General_hLV);
+
+	int	 pRow = 0;
+	char pScriptName[255];
+	char pScriptFile[255];
+	char pUsed[255];
+	bool pIsLoaded = 0;
+	Ogre::String st;
+	Ogre::ResourcePtr pp;
+	Ogre::ResourceManager::ResourceMapIterator materialIterator = Ogre::MaterialManager::getSingleton().getResourceIterator();
+
+	while (materialIterator.hasMoreElements())
+	{
+
+		strcpy(pScriptName, materialIterator.peekNextValue()->getName().c_str());
+
+		pp = Ogre::MaterialManager::getSingleton().getByName(pScriptName);
+		st = pp->getOrigin();
+		pIsLoaded = pp->isLoaded();
+
+		if (pIsLoaded == 1)
+		{
+			strcpy(pUsed, "Yes");
+
+			//--------------------------------
+			if (st == "")
+			{
+				strcpy(pScriptFile, "Internal");
+			}
+			else if (st == "SdkTrays.material")
+			{
+				strcpy(pScriptFile, st.c_str());
+				strcpy(ResourcePath, "packs\\SdkTrays.zip");
+			}
+			else if (st == "OgreCore.material")
+			{
+				strcpy(pScriptFile, st.c_str());
+				strcpy(ResourcePath, "packs\\OgreCore.zip");
+			}
+			else if (st == "OgreProfiler.material")
+			{
+				strcpy(pScriptFile, st.c_str());
+				strcpy(ResourcePath, "packs\\OgreCore.zip");
+			}
+			else if (st == "PhysCore.material")
+			{
+				strcpy(pScriptFile, st.c_str());
+				strcpy(ResourcePath, "packs\\GDCore.zip");
+			}
+			else
+			{
+				strcpy(pScriptFile, st.c_str());
+				//SearchFolders(pScriptFile,"Media\\materials\\");
+				Start_List_Folders(NULL, pScriptFile, 0);
+			}
+
+			pitem.iItem = pRow;
+			pitem.pszText = pScriptName;
+
+			ListView_InsertItem(FX_General_hLV, &pitem);
+			ListView_SetItemText(FX_General_hLV, pRow, 1, pScriptFile);
+			ListView_SetItemText(FX_General_hLV, pRow, 2, pUsed);
+			ListView_SetItemText(FX_General_hLV, pRow, 3, ResourcePath);
+
+			pRow++;
+		}
+
+		materialIterator.moveNext();
+	}
+
 }
 
 // **************************************************************************
 // *			Show_Resource_Group:- Terry and Hazel Flanigan 2024			*
 // **************************************************************************
-bool CL64_Resources::Show_Resource_Group(const Ogre::String& ResourceGroup)
+void CL64_Resources::Show_Resource_Group(const Ogre::String& ResourceGroup)
 {
 	ListView_DeleteAllItems(FX_General_hLV);
 
@@ -503,11 +582,8 @@ bool CL64_Resources::Show_Resource_Group(const Ogre::String& ResourceGroup)
 	else
 	{
 		App->Say("No Project Loaded");
-
-		return 0;
 	}
 
-	return 1;
 }
 
 #include <string.h>
