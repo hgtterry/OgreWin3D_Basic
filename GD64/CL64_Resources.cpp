@@ -69,8 +69,14 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 
 		SendDlgItemMessage(hDlg, IDC_BT_APPRESOURCES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_DEMORESOURCES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
+		SendDlgItemMessage(hDlg, IDC_ALLMATERIALS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_ALLTEXTURES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_ALLMESH, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_USEDMATERIALS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
+		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
 		App->CL_Resources->CreateListGeneral_FX(hDlg);
 
 		return TRUE;
@@ -127,40 +133,33 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 			return CDRF_DODEFAULT;
 		}
 		
-		/*if (some_item->idFrom == IDC_BTMVRESOURCES && some_item->code == NM_CUSTOMDRAW)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->SBC_Resources->Show_MV_Res_Flag);
-			return CDRF_DODEFAULT;
-		}
-
-		if (some_item->idFrom == IDC_BT_SCENEMESH && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDC_ALLMATERIALS)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
 			return CDRF_DODEFAULT;
 		}
 
-		if (some_item->idFrom == IDC_BTMATSF && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDC_ALLTEXTURES)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
 			return CDRF_DODEFAULT;
 		}
 
-		if (some_item->idFrom == IDC_BTMESHSF && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDC_ALLMESH)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
 			return CDRF_DODEFAULT;
 		}
 
-		if (some_item->idFrom == IDC_BTTEXTSF && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDC_USEDMATERIALS)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
 			return CDRF_DODEFAULT;
-		}*/
+		}
 
 		return CDRF_DODEFAULT;
 	}
@@ -187,11 +186,11 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 			return TRUE;
 		}
 
-		/*if (LOWORD(wParam) == IDC_TEXTURES)
+		if (LOWORD(wParam) == IDC_ALLTEXTURES)
 		{
-			App->SBC_Resources->ShowAllTextures();
+			App->CL_Resources->ShowAllTextures();
 			return TRUE;
-		}*/
+		}
 
 		if (LOWORD(wParam) == IDC_ALLMESH)
 		{
@@ -348,6 +347,76 @@ void CL64_Resources::CreateListGeneral_FX(HWND hDlg)
 
 	ShowAllMaterials();
 	//ShowAllTextures();
+}
+
+// *************************************************************************
+// *			ShowAllTextures:- Terry and Hazel Flanigan 2024		 	   *
+// *************************************************************************
+void CL64_Resources::ShowAllTextures()
+{
+	LV_ITEM pitem;
+	memset(&pitem, 0, sizeof(LV_ITEM));
+	pitem.mask = LVIF_TEXT;
+
+	ListView_DeleteAllItems(FX_General_hLV);
+	bool pIsLoaded = 0;
+	int	 pRow = 0;
+	//	char buff[255];
+	char pUsed[255];
+	char pScriptName[255];
+	//	char pScriptFile[255];
+	//	char chr_AsSkell[255];
+	bool pHasSkel = 0;
+	Ogre::String st;
+	Ogre::ResourcePtr pp;
+
+	Ogre::ResourceManager::ResourceMapIterator TextureIterator = Ogre::TextureManager::getSingleton().getResourceIterator();
+
+	while (TextureIterator.hasMoreElements())
+	{
+		//strcpy(pScriptName,(static_cast<Ogre::MaterialPtr>(TextureIterator.peekNextValue()))->getName().c_str());
+
+		strcpy(pScriptName, TextureIterator.peekNextValue()->getName().c_str());
+
+		//pp = Ogre::TextureManager::getSingleton().getByName(pScriptName);
+		//pIsLoaded = pp->isLoaded();
+
+		if (pIsLoaded == 1)
+		{
+			strcpy(pUsed, "Yes");
+		}
+		else
+		{
+			strcpy(pUsed, "No");
+		}
+
+		char Filename[255];
+		char ext[255];
+		char JustFile[255];
+		char SubFolder[255];
+		_splitpath(pScriptName, NULL, SubFolder, Filename, ext);
+		strcpy(JustFile, Filename);
+		strcat(JustFile, ext);
+
+		/*if(SubFolder[0] > 0)
+		{
+		App->Say(SubFolder);
+		}*/
+
+		Start_List_Folders(NULL, JustFile, 0);
+
+		pitem.iItem = pRow;
+		pitem.pszText = JustFile;
+
+		ListView_InsertItem(FX_General_hLV, &pitem);
+		ListView_SetItemText(FX_General_hLV, pRow, 1, ResourcePath);
+		ListView_SetItemText(FX_General_hLV, pRow, 2, pUsed);
+
+		pRow++;
+
+		TextureIterator.moveNext();
+	}
+
 }
 
 // *************************************************************************
