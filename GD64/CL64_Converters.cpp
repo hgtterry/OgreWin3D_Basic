@@ -169,7 +169,7 @@ Ogre::Entity* CL64_Converters::Convert_ToOgre3D(bool Create)
 		App->Say("Can not create Ogre Sections");
 	}
 
-	Ogre::MeshPtr mesh = World_Manual->convertToMesh("TestMesh");
+	Ogre::MeshPtr mesh = World_Manual->convertToMesh("TestMesh", Temp_Resource_Group);
 
 	mesh->setAutoBuildEdgeLists(true);
 	mesh->buildEdgeList();

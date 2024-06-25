@@ -307,7 +307,7 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 // *************************************************************************
 void CL64_Resources::CreateListGeneral_FX(HWND hDlg)
 {
-	int NUM_COLS = 4;
+	int NUM_COLS = 5;
 	FX_General_hLV = CreateWindowEx(0, WC_LISTVIEW, "",
 		WS_CHILD | WS_VISIBLE | WS_BORDER | LVS_REPORT | LVS_SHOWSELALWAYS, 2, 2,
 		1280, 405, hDlg, 0, App->hInst, NULL);
@@ -325,11 +325,11 @@ void CL64_Resources::CreateListGeneral_FX(HWND hDlg)
 	lvC.fmt = LVCFMT_LEFT;  // left-align the column
 	std::string headers[] =
 	{
-		"Script", "Material File","Used","Path"
+		"Script","Resource Group","Used","Material File","Path"
 	};
 	int headerSize[] =
 	{
-		165,380,70,250
+		165,380,70,250,250
 	};
 
 	//Groups
@@ -362,6 +362,7 @@ void CL64_Resources::ShowAllTextures()
 	bool pIsLoaded = 0;
 	int	 pRow = 0;
 	//	char buff[255];
+	char Origin[MAX_PATH];
 	char pUsed[255];
 	char pScriptName[255];
 	//	char pScriptFile[255];
@@ -377,7 +378,7 @@ void CL64_Resources::ShowAllTextures()
 		//strcpy(pScriptName,(static_cast<Ogre::MaterialPtr>(TextureIterator.peekNextValue()))->getName().c_str());
 
 		strcpy(pScriptName, TextureIterator.peekNextValue()->getName().c_str());
-
+		strcpy(Origin, TextureIterator.peekNextValue()->getGroup().c_str());
 		//pp = Ogre::TextureManager::getSingleton().getByName(pScriptName);
 		//pIsLoaded = pp->isLoaded();
 
@@ -411,7 +412,8 @@ void CL64_Resources::ShowAllTextures()
 		ListView_InsertItem(FX_General_hLV, &pitem);
 		ListView_SetItemText(FX_General_hLV, pRow, 1, ResourcePath);
 		ListView_SetItemText(FX_General_hLV, pRow, 2, pUsed);
-
+		ListView_SetItemText(FX_General_hLV, pRow, 3, Origin);
+		
 		pRow++;
 
 		TextureIterator.moveNext();
@@ -431,7 +433,7 @@ void CL64_Resources::ShowAllMaterials()
 	ListView_DeleteAllItems(FX_General_hLV);
 
 	int	 pRow = 0;
-	char Origin[MAX_PATH];
+	char Group[MAX_PATH];
 	char pScriptName[255];
 	char pScriptFile[255];
 	char pUsed[255];
@@ -448,7 +450,7 @@ void CL64_Resources::ShowAllMaterials()
 		st = pp->getOrigin();
 		pIsLoaded = pp->isLoaded();
 
-		strcpy(Origin, materialIterator.peekNextValue()->getGroup().c_str());
+		strcpy(Group, materialIterator.peekNextValue()->getGroup().c_str());
 
 		if (pIsLoaded == 1)
 		{
@@ -498,9 +500,9 @@ void CL64_Resources::ShowAllMaterials()
 		pitem.pszText = pScriptName;
 
 		ListView_InsertItem(FX_General_hLV, &pitem);
-		ListView_SetItemText(FX_General_hLV, pRow, 1, pScriptFile);
+		ListView_SetItemText(FX_General_hLV, pRow, 1, Group);
 		ListView_SetItemText(FX_General_hLV, pRow, 2, pUsed);
-		ListView_SetItemText(FX_General_hLV, pRow, 3, Origin);
+		ListView_SetItemText(FX_General_hLV, pRow, 3, pScriptFile);
 		//ListView_SetItemText(FX_General_hLV, pRow, 3, ResourcePath);
 		
 		pRow++;
@@ -521,6 +523,7 @@ void CL64_Resources::ShowUsedMaterials()
 	ListView_DeleteAllItems(FX_General_hLV);
 
 	int	 pRow = 0;
+	char Origin[MAX_PATH];
 	char pScriptName[255];
 	char pScriptFile[255];
 	char pUsed[255];
@@ -533,6 +536,7 @@ void CL64_Resources::ShowUsedMaterials()
 	{
 
 		strcpy(pScriptName, materialIterator.peekNextValue()->getName().c_str());
+		strcpy(Origin, materialIterator.peekNextValue()->getGroup().c_str());
 
 		pp = Ogre::MaterialManager::getSingleton().getByName(pScriptName);
 		st = pp->getOrigin();
@@ -580,8 +584,9 @@ void CL64_Resources::ShowUsedMaterials()
 			ListView_InsertItem(FX_General_hLV, &pitem);
 			ListView_SetItemText(FX_General_hLV, pRow, 1, pScriptFile);
 			ListView_SetItemText(FX_General_hLV, pRow, 2, pUsed);
-			ListView_SetItemText(FX_General_hLV, pRow, 3, ResourcePath);
-
+			ListView_SetItemText(FX_General_hLV, pRow, 3, Origin);
+			//ListView_SetItemText(FX_General_hLV, pRow, 3, ResourcePath);
+			
 			pRow++;
 		}
 
