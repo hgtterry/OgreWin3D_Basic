@@ -31,6 +31,8 @@ public:
 	bool Open_File_Model(const char* Extension, const char* Title, const char* StartDirectory);
 	std::string Get_Model_Path_File_Name();
 
+	void Open_HTML(char* HelpTitle);
+
 	char Model_FileName[MAX_PATH];
 	char Model_Path_FileName[MAX_PATH];
 

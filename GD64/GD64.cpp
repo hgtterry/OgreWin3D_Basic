@@ -293,6 +293,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			return TRUE;
 		}
 
+		case ID_MOUSEANDKEYS:
+		{
+			App->CL_File_IO->Open_HTML((LPSTR)"Help\\MouseAndKeys.html");
+			return 1;
+		}
+
 		case IDM_ABOUT:
 			DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
 			break;

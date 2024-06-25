@@ -78,3 +78,17 @@ std::string CL64_File_IO::Get_Model_Path_File_Name()
 {
 	return Model_Path_FileName;
 }
+
+// *************************************************************************
+// *				Open_HTML:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void CL64_File_IO::Open_HTML(char* HelpTitle)
+{
+	char Path[1024];
+	strcpy(Path, App->GD_Directory_FullPath);
+	strcat(Path, "\\");
+	strcat(Path, HelpTitle);
+
+	ShellExecute(0, "open", Path, 0, 0, SW_SHOW);
+
+}
