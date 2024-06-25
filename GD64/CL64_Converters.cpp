@@ -41,6 +41,8 @@ CL64_Converters::CL64_Converters(void)
 	x, y, z = 0;
 	nx, ny, nz = 0;
 	u, v = 0;
+
+	Temp_Resource_Group = "Temp_Resource_Group";
 }
 
 CL64_Converters::~CL64_Converters(void)
@@ -71,7 +73,9 @@ void CL64_Converters::Set_Paths(void)
 // *************************************************************************
 Ogre::Entity* CL64_Converters::Convert_ToOgre3D(bool Create)
 {
-
+	Ogre::ResourceGroupManager::getSingleton().createResourceGroup(Temp_Resource_Group);
+	Ogre::ResourceGroupManager::getSingleton().initialiseResourceGroup(Temp_Resource_Group);
+	
 	Set_Paths();
 
 	CreateMaterialFile();
@@ -112,7 +116,7 @@ Ogre::Entity* CL64_Converters::Convert_ToOgre3D(bool Create)
 
 		CreateMaterial_Resource(MatName);
 		
-		World_Manual->begin(MatName, Ogre::RenderOperation::OT_TRIANGLE_LIST, App->CL_Ogre->App_Resource_Group);
+		World_Manual->begin(MatName, Ogre::RenderOperation::OT_TRIANGLE_LIST, Temp_Resource_Group);
 
 		FaceCount = 0;
 		FaceIndex = 0;
@@ -231,7 +235,7 @@ void CL64_Converters::CreateMaterial_Resource(char* MatName)
 
 	MaterialManager* omatMgr = MaterialManager::getSingletonPtr();
 
-	auto status = omatMgr->createOrRetrieve(MatName, App->CL_Ogre->App_Resource_Group);
+	auto status = omatMgr->createOrRetrieve(MatName, Temp_Resource_Group);
 
 }
 

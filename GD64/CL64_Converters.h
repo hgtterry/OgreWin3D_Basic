@@ -62,5 +62,7 @@ public:
 	float y;
 	float z;
 
+	Ogre::String Temp_Resource_Group;
+
 };
 

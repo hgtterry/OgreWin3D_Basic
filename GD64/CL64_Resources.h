@@ -31,6 +31,7 @@ public:
 
 	void Start_Resources();
 
+
 private:
 
 	static LRESULT CALLBACK Resources_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);

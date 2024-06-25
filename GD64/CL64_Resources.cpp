@@ -47,7 +47,7 @@ void CL64_Resources::Start_Resources()
 	DialogBox(App->hInst, (LPCTSTR)IDD_RESOURCESMATERIAL, App->Fdlg, (DLGPROC)Resources_Proc);
 }
 // *************************************************************************
-// *			Materials_Proc:- Terry and Hazel Flanigan 2024	  		   *
+// *			Resources_Proc:- Terry and Hazel Flanigan 2024	  		   *
 // *************************************************************************
 LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -431,6 +431,7 @@ void CL64_Resources::ShowAllMaterials()
 	ListView_DeleteAllItems(FX_General_hLV);
 
 	int	 pRow = 0;
+	char Origin[MAX_PATH];
 	char pScriptName[255];
 	char pScriptFile[255];
 	char pUsed[255];
@@ -446,6 +447,8 @@ void CL64_Resources::ShowAllMaterials()
 		pp = Ogre::MaterialManager::getSingleton().getByName(pScriptName);
 		st = pp->getOrigin();
 		pIsLoaded = pp->isLoaded();
+
+		strcpy(Origin, materialIterator.peekNextValue()->getGroup().c_str());
 
 		if (pIsLoaded == 1)
 		{
@@ -497,8 +500,9 @@ void CL64_Resources::ShowAllMaterials()
 		ListView_InsertItem(FX_General_hLV, &pitem);
 		ListView_SetItemText(FX_General_hLV, pRow, 1, pScriptFile);
 		ListView_SetItemText(FX_General_hLV, pRow, 2, pUsed);
-		ListView_SetItemText(FX_General_hLV, pRow, 3, ResourcePath);
-
+		ListView_SetItemText(FX_General_hLV, pRow, 3, Origin);
+		//ListView_SetItemText(FX_General_hLV, pRow, 3, ResourcePath);
+		
 		pRow++;
 
 		materialIterator.moveNext();
