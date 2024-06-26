@@ -151,14 +151,22 @@ bool CL64_Ogre_Init::SetUpResources(void)
 // *************************************************************************
 bool CL64_Ogre_Init::Configure(void)
 {
-	Ogre::RenderSystem* rs = mRoot->getRenderSystemByName("OpenGL Rendering Subsystem");
-	if (!(rs->getName() == "OpenGL Rendering Subsystem"))
+	try
 	{
-		return false; //No RenderSystem found
+		Ogre::RenderSystem* rs = mRoot->getRenderSystemByName("OpenGL Rendering Subsystem");
+		if (!(rs->getName() == "OpenGL Rendering Subsystem"))
+		{
+			App->Say("getRenderSystemByName Error1");
+			return false; //No RenderSystem found
+		}
+
+		mRoot->setRenderSystem(rs);
 	}
-
-	mRoot->setRenderSystem(rs);
-
+	catch (...)
+	{
+		App->Say("getRenderSystemByName Error2");
+	}
+	
 	mWindow = mRoot->initialise(false);
 	Ogre::NameValuePairList options;
 

@@ -29,5 +29,12 @@ public:
 	~CL64_Importers();
 
 	bool Assimp_Loader(bool UseDialog,const char* Extension, const char* Extension2);
+
+	void Load_Ogre_Model(void);
+
+	Ogre::Entity* OgreModel_Ent;
+	Ogre::SceneNode* OgreModel_Node;
+
+	Ogre::String Ogre_Loader_Resource_Group;
 };
 

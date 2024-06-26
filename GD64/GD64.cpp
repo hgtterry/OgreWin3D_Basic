@@ -247,6 +247,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		}
 		
 		// File -------------------------------------------------------
+		case ID_OGRE3D_MESH:
+		{
+			App->CL_Importers->Load_Ogre_Model();
+
+			return TRUE;
+		}
+
 		case ID_IMPORT_WAVEFRONTOBJ:
 		{
 			App->CL_Assimp->SelectedPreset = 8 + 8388608 + 64 + aiProcess_PreTransformVertices;
