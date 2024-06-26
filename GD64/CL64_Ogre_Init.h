@@ -57,6 +57,8 @@ public:
 	bool createFrameListener(void);
 	// --------------------------------------
 
+	void Log_Message_To_File(char* Message);
+	void Clear_ErrorLog();
 
 	void Show_Test_Cube(void);
 	void Show_Trays(void);

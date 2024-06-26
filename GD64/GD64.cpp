@@ -79,6 +79,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         return FALSE;
     }
 
+	App->CL_Ogre->Clear_ErrorLog();
+
 	App->Init_Dialogs();
 	
 	App->CL_Bullet->Init_Bullet();

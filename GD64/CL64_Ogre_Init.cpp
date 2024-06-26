@@ -111,13 +111,17 @@ bool CL64_Ogre_Init::OgreCreateRoot(void)
 	if (App->Debug_App == 1)
 	{
 		mRoot = OGRE_NEW Ogre::Root(pluginsPath, mResourcePath + "Equity_CFG.cfg", mResourcePath + "GD64_Ogre.log");
-		//Ogre::LogManager::getSingleton().createLog(mResourcePath + "App.log");
+		Ogre::LogManager::getSingleton().createLog(mResourcePath + "App.log");
 		Ogre::LogManager::getSingleton().setMinLogLevel(Ogre::LogMessageLevel::LML_NORMAL);
+
+		App->CL_Ogre->Log_Message_To_File((LPSTR)"Initialising");
 	}
 	else
 	{
 		mRoot = OGRE_NEW Ogre::Root(pluginsPath, mResourcePath + "Equity_CFG.cfg", mResourcePath + "");
 	}
+
+	App->CL_Ogre->Log_Message_To_File((LPSTR)"OgreCreateRoot");
 
 	return 1;
 }
@@ -143,6 +147,9 @@ bool CL64_Ogre_Init::SetUpResources(void)
 	Ogre::ResourceGroupManager::getSingleton().addResourceLocation("Media/Core_Data/SdkTrays.zip", "Zip", App_Resource_Group);
 	Ogre::ResourceGroupManager::getSingleton().addResourceLocation("Media/Core_Data/Cube.zip", "Zip", App_Resource_Group);
 	Ogre::ResourceGroupManager::getSingleton().addResourceLocation("Media/Core_Data/GDCore.zip", "Zip", App_Resource_Group);
+	
+	App->CL_Ogre->Log_Message_To_File((LPSTR)"SetUpResources");
+
 	return 1;
 }
 
@@ -175,10 +182,18 @@ bool CL64_Ogre_Init::Configure(void)
 	options["externalWindowHandle"] =
 		Ogre::StringConverter::toString((size_t)RenderHwnd);
 
-	mWindow = mRoot->createRenderWindow("Main RenderWindow", 1024, 768, false, &options);
+	try
+	{
+		mWindow = mRoot->createRenderWindow("Main RenderWindow", 1024, 768, false, &options);
+	}
+	catch (...)
+	{
+		App->Say("createRenderWindow Error1");
+	}
 
 	//App->CL_Panels->Width = mWindow->getWidth();
 	//App->CL_Panels->Height = mWindow->getHeight();
+	App->CL_Ogre->Log_Message_To_File((LPSTR)"Configure");
 
 	return true;
 }
@@ -200,6 +215,9 @@ bool CL64_Ogre_Init::chooseSceneManager(void)
 	//light->setType(Light::LT_SPOTLIGHT);
 	//light->setPosition(0, 0, 0);
 	//light->setSpecularColour(ColourValue::White);
+
+	App->CL_Ogre->Log_Message_To_File((LPSTR)"chooseSceneManager");
+
 	return 1;
 }
 
@@ -218,6 +236,8 @@ bool CL64_Ogre_Init::createCamera(void)
 	camNode->setPosition(0, 90, 100);
 	camNode->lookAt(Ogre::Vector3(0, 30, 0),Ogre::Node::TS_WORLD);
 
+	App->CL_Ogre->Log_Message_To_File((LPSTR)"createCamera");
+	
 	return 1;
 }
 
@@ -234,6 +254,8 @@ bool CL64_Ogre_Init::createViewports(void)
 
 	vp->setBackgroundColour(Ogre::ColourValue(0.5, 0.5, 0.5));
 
+	App->CL_Ogre->Log_Message_To_File((LPSTR)"createViewports");
+
 	return 1;
 }
 
@@ -244,6 +266,8 @@ bool CL64_Ogre_Init::Initialise_Resources(void)
 {
 	// Initialize, parse scripts etc
 	Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
+
+	App->CL_Ogre->Log_Message_To_File((LPSTR)"Initialise_Resources");
 
 	return 1;
 }
@@ -314,7 +338,49 @@ bool CL64_Ogre_Init::createFrameListener(void)
 		return FALSE;
 	}
 
+	App->CL_Ogre->Log_Message_To_File((LPSTR)"createFrameListener");
+
 	return TRUE;
+}
+
+// *************************************************************************
+// *			Log_Message_To_File:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+void CL64_Ogre_Init::Log_Message_To_File(char* Message)
+{
+	if (App->Debug_App == 1)
+	{
+		Ogre::LogManager::getSingleton().setDefaultLog(Ogre::LogManager::getSingleton().getLog("App.log"));
+		Ogre::LogManager::getSingleton().logMessage(Message);
+		Ogre::LogManager::getSingleton().setDefaultLog(Ogre::LogManager::getSingleton().getLog("GD64_Ogre.log"));
+
+	}
+}
+
+// *************************************************************************
+// *			Clear_ErrorLog:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void CL64_Ogre_Init::Clear_ErrorLog()
+{
+	FILE* fp = NULL;
+
+	char Path[MAX_PATH];
+	strcpy(Path, App->GD_Directory_FullPath);
+	strcat(Path, "\\");
+	strcat(Path, "App.log");
+
+	fp = fopen(Path, "w+");
+	if (!fp)
+	{
+		App->Say("Cant Find File");
+		return;
+	}
+
+	fprintf(fp, "Error File");
+
+	fclose(fp);
+
+	_unlink(Path);
 }
 
 // *************************************************************************
