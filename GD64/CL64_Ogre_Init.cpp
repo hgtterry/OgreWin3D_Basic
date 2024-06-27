@@ -27,7 +27,7 @@ distribution.
 
 #include "SdkSample.h"
 
-CL64_Ogre_Init::CL64_Ogre_Init(void)
+CL64_Ogre::CL64_Ogre(void)
 {
 	RenderHwnd = nullptr;
 
@@ -53,14 +53,14 @@ CL64_Ogre_Init::CL64_Ogre_Init(void)
 	flag_Show_Trays = 1;
 }
 
-CL64_Ogre_Init::~CL64_Ogre_Init(void)
+CL64_Ogre::~CL64_Ogre(void)
 {
 }
 
 // *************************************************************************
 // *				InitOgre:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-void CL64_Ogre_Init::InitOgre(void)
+void CL64_Ogre::InitOgre(void)
 {
 	OgreCreateRoot();
 	SetUpResources();
@@ -103,7 +103,7 @@ void CL64_Ogre_Init::InitOgre(void)
 // *************************************************************************
 // *		OgreCreateRoot:- Terry and Hazel Flanigan 2024				   *
 // *************************************************************************
-bool CL64_Ogre_Init::OgreCreateRoot(void)
+bool CL64_Ogre::OgreCreateRoot(void)
 {
 	Ogre::String pluginsPath;
 	pluginsPath = mResourcePath + "plugins.cfg";
@@ -129,7 +129,7 @@ bool CL64_Ogre_Init::OgreCreateRoot(void)
 // **************************************************************************
 // *			SetUpResources:- Terry and Hazel Flanigan 2024				*
 // **************************************************************************
-bool CL64_Ogre_Init::SetUpResources(void)
+bool CL64_Ogre::SetUpResources(void)
 {
 
 	Ogre::String File;
@@ -156,7 +156,7 @@ bool CL64_Ogre_Init::SetUpResources(void)
 // *************************************************************************
 // *				Configure:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-bool CL64_Ogre_Init::Configure(void)
+bool CL64_Ogre::Configure(void)
 {
 	try
 	{
@@ -201,7 +201,7 @@ bool CL64_Ogre_Init::Configure(void)
 // *************************************************************************
 // *		chooseSceneManager:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-bool CL64_Ogre_Init::chooseSceneManager(void)
+bool CL64_Ogre::chooseSceneManager(void)
 {
 	mSceneMgr = mRoot->createSceneManager("DefaultSceneManager"); // Temp
 	
@@ -224,7 +224,7 @@ bool CL64_Ogre_Init::chooseSceneManager(void)
 // *************************************************************************
 // *			createCamera:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-bool CL64_Ogre_Init::createCamera(void)
+bool CL64_Ogre::createCamera(void)
 {
 	camNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 
@@ -244,7 +244,7 @@ bool CL64_Ogre_Init::createCamera(void)
 // *************************************************************************
 // *		createViewports:- Terry and Hazel Flanigan 2024				   *
 // *************************************************************************
-bool CL64_Ogre_Init::createViewports(void)
+bool CL64_Ogre::createViewports(void)
 {
 	mWindow->removeAllViewports();
 	Ogre::Viewport* vp = mWindow->addViewport(mCamera);
@@ -262,7 +262,7 @@ bool CL64_Ogre_Init::createViewports(void)
 // *************************************************************************
 // *		Initialise_Resources:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
-bool CL64_Ogre_Init::Initialise_Resources(void)
+bool CL64_Ogre::Initialise_Resources(void)
 {
 	// Initialize, parse scripts etc
 	Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
@@ -275,7 +275,7 @@ bool CL64_Ogre_Init::Initialise_Resources(void)
 // *************************************************************************
 // *			ReverseBackSlash:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
-bool CL64_Ogre_Init::ReverseBackSlash(char* buf)
+bool CL64_Ogre::ReverseBackSlash(char* buf)
 {
 	strcpy(Return_Chr, "");
 	char bufnew[256];
@@ -310,7 +310,7 @@ bool CL64_Ogre_Init::ReverseBackSlash(char* buf)
 // *************************************************************************
 // *		createFrameListener:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-bool CL64_Ogre_Init::createFrameListener(void)
+bool CL64_Ogre::createFrameListener(void)
 {
 
 	Ogre::String RenderSystemName = mSceneMgr->getDestinationRenderSystem()->getName();
@@ -346,7 +346,7 @@ bool CL64_Ogre_Init::createFrameListener(void)
 // *************************************************************************
 // *			Log_Message_To_File:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
-void CL64_Ogre_Init::Log_Message_To_File(char* Message)
+void CL64_Ogre::Log_Message_To_File(char* Message)
 {
 	if (App->Debug_App == 1)
 	{
@@ -360,7 +360,7 @@ void CL64_Ogre_Init::Log_Message_To_File(char* Message)
 // *************************************************************************
 // *			Clear_ErrorLog:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-void CL64_Ogre_Init::Clear_ErrorLog()
+void CL64_Ogre::Clear_ErrorLog()
 {
 	FILE* fp = NULL;
 
@@ -386,7 +386,7 @@ void CL64_Ogre_Init::Clear_ErrorLog()
 // *************************************************************************
 // *			Show_Test_Cube:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-void CL64_Ogre_Init::Show_Test_Cube(void)
+void CL64_Ogre::Show_Test_Cube(void)
 {
 	if (flag_Show_Test_Cube == 1)
 	{
@@ -402,7 +402,7 @@ void CL64_Ogre_Init::Show_Test_Cube(void)
 // *************************************************************************
 // *			Show_Trays:- Terry and Hazel Flanigan 2024				   *
 // *************************************************************************
-void CL64_Ogre_Init::Show_Trays(void)
+void CL64_Ogre::Show_Trays(void)
 {
 	if (flag_Show_Trays == 1)
 	{
@@ -419,7 +419,7 @@ void CL64_Ogre_Init::Show_Trays(void)
 // *************************************************************************
 // *			RenderFrame:- Terry and Hazel Flanigan 2024				   *
 // *************************************************************************
-void CL64_Ogre_Init::RenderFrame(void)
+void CL64_Ogre::RenderFrame(void)
 {
 	Ogre::Root::getSingletonPtr()->renderOneFrame();
 }
@@ -427,7 +427,7 @@ void CL64_Ogre_Init::RenderFrame(void)
 // *************************************************************************
 // *		Ogre_Render_Loop:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-bool CL64_Ogre_Init::Ogre_Render_Loop(void)
+bool CL64_Ogre::Ogre_Render_Loop(void)
 {
 	mRoot->clearEventTimes();
 	

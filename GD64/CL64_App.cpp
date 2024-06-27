@@ -98,7 +98,7 @@ CL64_App::~CL64_App(void)
 void CL64_App::InitApp(void)
 {
 	
-	CL_Ogre =			new CL64_Ogre_Init();
+	CL_Ogre =			new CL64_Ogre();
 	CL_Grid =			new CL64_Grid();
 	CL_Keyboard =		new CL64_Keyboard();
 	CL_Camera =			new	CL64_Camera();

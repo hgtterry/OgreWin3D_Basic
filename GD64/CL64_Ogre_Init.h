@@ -38,12 +38,12 @@ distribution.
 using namespace Ogre;
 using namespace OgreBites;
 
-class CL64_Ogre_Init : public SdkSample, public RenderTargetListener
+class CL64_Ogre : public SdkSample, public RenderTargetListener
 {
 public:
 
-	CL64_Ogre_Init(void);
-	~CL64_Ogre_Init(void);
+	CL64_Ogre(void);
+	~CL64_Ogre(void);
 
 	// Setup --------------------------------
 	void InitOgre(void);

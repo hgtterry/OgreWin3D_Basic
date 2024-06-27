@@ -51,7 +51,7 @@ public:
 	CL64_App(void);
 	~CL64_App(void);
 
-	CL64_Ogre_Init*		CL_Ogre;
+	CL64_Ogre*			CL_Ogre;
 	CL64_Grid*			CL_Grid;
 	CL64_Keyboard*		CL_Keyboard;
 	CL64_Camera*		CL_Camera;
