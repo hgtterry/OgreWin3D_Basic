@@ -31,6 +31,7 @@ CL64_Importers::CL64_Importers()
 	OgreModel_Node = nullptr;
 
 	Ogre_Loader_Resource_Group = "Ogre_Loader_Resource_Group";
+	Ogre_CFG_Resource_Group = "Ogre_CFG_Resource_Group";
 }
 
 CL64_Importers::~CL64_Importers()
@@ -115,8 +116,8 @@ void CL64_Importers::Load_Ogre_Model(void)
 		OgreModel_Node = nullptr;
 	}
 
-	Ogre::ResourceGroupManager::getSingleton().destroyResourceGroup(Ogre_Loader_Resource_Group);
-	Ogre::ResourceGroupManager::getSingleton().createResourceGroup(Ogre_Loader_Resource_Group);
+	//Ogre::ResourceGroupManager::getSingleton().destroyResourceGroup(Ogre_Loader_Resource_Group);
+	//Ogre::ResourceGroupManager::getSingleton().createResourceGroup(Ogre_Loader_Resource_Group);
 
 	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(App->CL_Scene->Texture_FolderPath,
 		"FileSystem",Ogre_Loader_Resource_Group);
@@ -141,19 +142,21 @@ void CL64_Importers::Load_Ogre_Model(void)
 
 	App->CL_Ogre->flag_Show_Test_Cube = false;
 	App->CL_Ogre->Show_Test_Cube();
+	App->CL_Camera->Reset_View();
+
+	if (OgreModel_Ent)
+	{
+		Ogre::Vector3 vCenter = Ogre::Vector3(0.0f, (OgreModel_Ent->getBoundingBox().getMaximum().y +
+			OgreModel_Ent->getBoundingBox().getMinimum().y) * 0.5f,
+			0.0f);
+
+		App->CL_Ogre->camNode->setOrientation(Ogre::Quaternion::IDENTITY);
+		//App->CL_Ogre->camNode->getParent()->setPosition(vCenter);
+		App->CL_Ogre->camNode->setPosition(Ogre::Vector3(0,0, OgreModel_Ent->getBoundingRadius() * 2.8f));
+	}
 
 	App->CL_Ogre->OgreListener->Ogre_Model_Loaded = 1;
-	//if (OgreModel_Ent)
-	//{
-	//	Ogre::Vector3 vCenter = Ogre::Vector3(0.0f, (OgreModel_Ent->getBoundingBox().getMaximum().y +
-	//		OgreModel_Ent->getBoundingBox().getMinimum().y) * 0.5f,
-	//		0.0f);
-
-	//	App->CL_Ogre->camNode->setOrientation(Ogre::Quaternion::IDENTITY);
-	//	//App->CL_Ogre->camNode->getParent()->setPosition(vCenter);
-	//	App->CL_Ogre->camNode->setPosition(Ogre::Vector3(0,0, OgreModel_Ent->getBoundingRadius() * 2.8f));
-	//}
-
+	
 	//App->CL_Grid->Grid_SetVisible(1);
 	/*Create_MeshGroups();
 	Extract_Mesh_Two();*/
@@ -184,4 +187,24 @@ void CL64_Importers::Load_Ogre_Model(void)
 			App->CL_Ogre->Ogre_Listener->Animate_State = OgreModel_Ent->getAnimationState(App->CL_Motions->Selected_Motion_Name);
 		}
 	}*/
+}
+
+// *************************************************************************
+// *		Ogre_Resource_CFG_Loader:- Terry and Hazel Flanigan 2024	   *
+// *************************************************************************
+void CL64_Importers::Ogre_Resource_CFG_Loader(char* Extension, char* Extension2)
+{
+	int Result = App->CL_File_IO->Open_Resource_File((LPSTR)"Ogre Config   *.cfg\0*.cfg\0", (LPSTR)"Ogre Config", NULL);// App->CL_Model_Data->Path_FileName);
+	if (Result == 0)
+	{
+		return;
+	}
+	
+	App->CL_Resources->Load_OgreCFG_Resources(App->CL_File_IO->OgreCFG_Path_FileName);
+
+	/*if (App->Cl_Ogre->OgreModel_Ent)
+	{
+		App->CL_Import_Ogre->Ogre_Reload();
+	}*/
+
 }

@@ -868,3 +868,121 @@ bool CL64_Resources::FindPath_New(char* File, char* Folder)
 	return 1;
 }
 
+// *************************************************************************
+// *		Load_OgreCFG_Resources:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+void CL64_Resources::Load_OgreCFG_Resources(const Ogre::String& file)
+{
+	cf.clear();
+
+	//ExternalResourceLoaded = 1;
+	char ConfigFile1[255];
+	strcpy(ConfigFile1, "resources.cfg");
+
+	char Path[1024];
+	char Path2[1024];
+	strcpy(Path2, file.c_str());
+	strcpy(Path, file.c_str());
+
+	int Len = strlen(ConfigFile1);
+	int Len2 = strlen(Path2);
+	Path[Len2 - Len] = 0;
+
+	//strcpy(ResourcePathAndFile, file.c_str()); // Save for texture loading
+	//strcpy(ResourcePath, Path); // Save for texture loading
+
+	std::vector<Ogre::String> materialNames;
+
+	if (App->CL_Importers->OgreModel_Ent)
+	{
+		materialNames.reserve(App->CL_Importers->OgreModel_Ent->getNumSubEntities());
+		for (unsigned int i = 0; i < App->CL_Importers->OgreModel_Ent->getNumSubEntities(); ++i)
+		{
+			Ogre::SubEntity* subEnt = App->CL_Importers->OgreModel_Ent->getSubEntity(i);
+			materialNames.push_back(subEnt->getMaterialName());
+			subEnt->setMaterialName("Template/Alpha_Blend_GD64");
+		}
+	}
+
+	//UnloadUserResources();
+
+	if (Ogre::ResourceGroupManager::getSingleton().resourceGroupExists(App->CL_Importers->Ogre_CFG_Resource_Group) == NULL)
+	{
+		Ogre::ResourceGroupManager::getSingleton().createResourceGroup(App->CL_Importers->Ogre_CFG_Resource_Group);
+	}
+
+#pragma warning(disable : 4996) // Nightmare why
+
+	ResourcesCfgFile = file;
+
+	cf.load(ResourcesCfgFile);
+
+	Ogre::ConfigFile::SectionIterator index = cf.getSectionIterator();
+
+	Ogre::String secName, typeName, archName;
+	while (index.hasMoreElements())
+	{
+		secName = index.peekNextKey();
+		Ogre::ConfigFile::SettingsMultiMap* settings = index.getNext();
+		Ogre::ConfigFile::SettingsMultiMap::iterator i;
+		for (i = settings->begin(); i != settings->end(); ++i)
+		{
+			typeName = i->first;
+			archName = i->second;
+
+			if (!archName.empty())
+			{
+				if (archName[0] != '/')
+				{
+					archName = Path + archName;
+				}
+			}
+
+			Ogre::ResourceGroupManager::getSingleton().addResourceLocation(archName, typeName, App->CL_Importers->Ogre_Loader_Resource_Group);
+		}
+	}
+
+	try
+	{
+		Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
+		//ExternalResourceLoaded = 1;
+	}
+	catch (...)
+	{
+		//ExternalResourceLoaded = 0;
+	}
+
+	if (App->CL_Importers->OgreModel_Ent)
+	{
+		for (unsigned int i = 0; i < App->CL_Importers->OgreModel_Ent->getNumSubEntities(); ++i)
+		{
+			Ogre::MaterialPtr MatPtr = Ogre::MaterialManager::getSingleton().getByName(materialNames[i]);
+			MatPtr->reload();
+			App->CL_Importers->OgreModel_Ent->getSubEntity(i)->setMaterial(MatPtr);
+		}
+	}
+}
+
+// **************************************************************************
+// *		UnloadUserResources:- Terry and Hazel Flanigan 2024				*
+// **************************************************************************
+void CL64_Resources::UnloadUserResources()
+{
+	ResourcesCfgFile = "";
+	Ogre::StringVector resourceNames = Ogre::ResourceGroupManager::getSingleton().getResourceGroups();
+
+	Ogre::StringVector::const_iterator index = resourceNames.begin();
+	Ogre::StringVector::const_iterator end = resourceNames.end();
+
+	while (index != end)
+	{
+		if (*index != App->CL_Ogre->App_Resource_Group && *index != App->CL_Ogre->World_Resource_Group &&
+			*index != "Autodetect" && *index != "Internal")
+		{
+			Ogre::ResourceGroupManager::getSingleton().destroyResourceGroup(*index);
+		}
+
+		index++;
+	}
+}
+

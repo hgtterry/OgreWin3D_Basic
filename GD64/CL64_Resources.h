@@ -31,6 +31,7 @@ public:
 
 	void Start_Resources();
 
+	void Load_OgreCFG_Resources(const Ogre::String& file);
 
 private:
 
@@ -48,6 +49,10 @@ private:
 	void Show_Resource_Group(const Ogre::String& ResourceGroup);
 	bool ShowAllMeshes();
 	void ShowAllTextures();
+
+	void UnloadUserResources();
+	Ogre::ConfigFile cf;
+	std::string	ResourcesCfgFile;
 
 	char ResourcePath[MAX_PATH];
 
