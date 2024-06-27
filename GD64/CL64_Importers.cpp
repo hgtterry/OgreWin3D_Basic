@@ -70,6 +70,10 @@ bool CL64_Importers::Assimp_Loader(bool UseDialog,const char* Extension, const c
 
 	App->CL_Scene->Model_Type = Enums::LoadedFile_Assimp;
 
+	App->CL_Ogre->flag_Show_Test_Cube = false;
+	App->CL_Ogre->Show_Test_Cube();
+	App->CL_Camera->Reset_View();
+
 
 	App->CL_Scene->Model_Loaded = 1;
 

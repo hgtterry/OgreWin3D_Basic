@@ -188,6 +188,14 @@ LRESULT CALLBACK CL64_Dialogs::Import_Options_Dlg_Proc(HWND hDlg, UINT message, 
 	case WM_COMMAND:
 		if (LOWORD(wParam) == IDOK)
 		{
+			HWND temp = GetDlgItem(hDlg, IDC_CK_COVERT_TO_OGRE);
+
+			int test = SendMessage(temp, BM_GETCHECK, 0, 0);
+			if (test == BST_CHECKED)
+			{
+				App->CL_Converters->Convert_ToOgre3D(1);
+			}
+			
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}

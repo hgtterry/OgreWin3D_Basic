@@ -41,7 +41,7 @@ CL64_DebugBulletWorld::CL64_DebugBulletWorld(void)
 	btDebug_Manual->setDynamic(true);
 	btDebug_Manual->estimateVertexCount(2000);
 
-	btDebug_Manual->begin("Template/Alpha_Blend_GD64", Ogre::RenderOperation::OT_LINE_LIST,App->CL_Ogre->App_Resource_Group);
+	btDebug_Manual->begin("Template/White_Alpha_GD64", Ogre::RenderOperation::OT_LINE_LIST,App->CL_Ogre->App_Resource_Group);
 	btDebug_Manual->position(0, 0, 0);
 	btDebug_Manual->colour(ColourMain);
 	btDebug_Manual->position(0, 0, 0);
