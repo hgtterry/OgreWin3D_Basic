@@ -87,5 +87,7 @@ public:
 
 	bool Run_Physics;
 	bool StopOgre;
+
+	bool Ogre_Model_Loaded;
 };
 

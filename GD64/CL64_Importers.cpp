@@ -142,6 +142,18 @@ void CL64_Importers::Load_Ogre_Model(void)
 	App->CL_Ogre->flag_Show_Test_Cube = false;
 	App->CL_Ogre->Show_Test_Cube();
 
+	App->CL_Ogre->OgreListener->Ogre_Model_Loaded = 1;
+	//if (OgreModel_Ent)
+	//{
+	//	Ogre::Vector3 vCenter = Ogre::Vector3(0.0f, (OgreModel_Ent->getBoundingBox().getMaximum().y +
+	//		OgreModel_Ent->getBoundingBox().getMinimum().y) * 0.5f,
+	//		0.0f);
+
+	//	App->CL_Ogre->camNode->setOrientation(Ogre::Quaternion::IDENTITY);
+	//	//App->CL_Ogre->camNode->getParent()->setPosition(vCenter);
+	//	App->CL_Ogre->camNode->setPosition(Ogre::Vector3(0,0, OgreModel_Ent->getBoundingRadius() * 2.8f));
+	//}
+
 	//App->CL_Grid->Grid_SetVisible(1);
 	/*Create_MeshGroups();
 	Extract_Mesh_Two();*/
