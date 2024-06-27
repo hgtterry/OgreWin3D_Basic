@@ -173,8 +173,8 @@
     <ClInclude Include="CL64_Ini_File.h" />
     <ClInclude Include="CL64_Keyboard.h" />
     <ClInclude Include="CL64_OGL_Listener.h" />
+    <ClInclude Include="CL64_Ogre.h" />
     <ClInclude Include="CL64_OgreListener.h" />
-    <ClInclude Include="CL64_Ogre_Init.h" />
     <ClInclude Include="CL64_Panels.h" />
     <ClInclude Include="CL64_Player.h" />
     <ClInclude Include="CL64_Preferences.h" />
@@ -207,8 +207,8 @@
     <ClCompile Include="CL64_Ini_File.cpp" />
     <ClCompile Include="CL64_Keyboard.cpp" />
     <ClCompile Include="CL64_OGL_Listener.cpp" />
+    <ClCompile Include="CL64_Ogre.cpp" />
     <ClCompile Include="CL64_OgreListener.cpp" />
-    <ClCompile Include="CL64_Ogre_Init.cpp" />
     <ClCompile Include="CL64_Panels.cpp" />
     <ClCompile Include="CL64_Player.cpp" />
     <ClCompile Include="CL64_Preferences.cpp" />

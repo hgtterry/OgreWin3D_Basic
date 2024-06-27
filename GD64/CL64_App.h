@@ -23,7 +23,7 @@ distribution.
 
 #pragma once
 
-#include "CL64_Ogre_Init.h"
+#include "CL64_Ogre.h"
 #include "CL64_Grid.h"
 #include "CL64_Keyboard.h"
 #include "CL64_Camera.h"

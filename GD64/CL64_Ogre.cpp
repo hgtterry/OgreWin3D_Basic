@@ -23,7 +23,7 @@ distribution.
 
 #include "pch.h"
 #include "CL64_App.h"
-#include "CL64_Ogre_Init.h"
+#include "CL64_Ogre.h"
 
 #include "SdkSample.h"
 
