@@ -33,6 +33,8 @@ public:
 
 	void Load_OgreCFG_Resources(const Ogre::String& file);
 
+	bool Ogre_ExternalResourceLoaded;
+
 private:
 
 	static LRESULT CALLBACK Resources_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);

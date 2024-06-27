@@ -32,6 +32,8 @@ CL64_Resources::CL64_Resources(void)
 
 	Show_App_Res_Flag = 0;
 
+	Ogre_ExternalResourceLoaded = 0;
+
 	FX_General_hLV = nullptr;
 }
 
@@ -895,20 +897,23 @@ void CL64_Resources::Load_OgreCFG_Resources(const Ogre::String& file)
 
 	if (App->CL_Importers->OgreModel_Ent)
 	{
-		materialNames.reserve(App->CL_Importers->OgreModel_Ent->getNumSubEntities());
-		for (unsigned int i = 0; i < App->CL_Importers->OgreModel_Ent->getNumSubEntities(); ++i)
-		{
-			Ogre::SubEntity* subEnt = App->CL_Importers->OgreModel_Ent->getSubEntity(i);
-			materialNames.push_back(subEnt->getMaterialName());
-			subEnt->setMaterialName("Template/Alpha_Blend_GD64");
-		}
+		App->CL_Ogre->OgreListener->Ogre_Model_Loaded = 0;
+
+		App->CL_Importers->OgreModel_Node->detachAllObjects();
+		App->CL_Ogre->mSceneMgr->destroySceneNode(App->CL_Importers->OgreModel_Node);
+		App->CL_Ogre->mSceneMgr->destroyEntity(App->CL_Importers->OgreModel_Ent);
+		App->CL_Importers->OgreModel_Ent = nullptr;
+		App->CL_Importers->OgreModel_Node = nullptr;
+
+		UnloadUserResources();
+
+		App->CL_Importers->Flag_Reload_Ogre_Model = 1;
 	}
 
-	//UnloadUserResources();
-
-	if (Ogre::ResourceGroupManager::getSingleton().resourceGroupExists(App->CL_Importers->Ogre_CFG_Resource_Group) == NULL)
+	if (Ogre::ResourceGroupManager::getSingleton().resourceGroupExists(App->CL_Importers->Ogre_Loader_Resource_Group) == NULL)
 	{
-		Ogre::ResourceGroupManager::getSingleton().createResourceGroup(App->CL_Importers->Ogre_CFG_Resource_Group);
+		Ogre::ResourceGroupManager::getSingleton().createResourceGroup(App->CL_Importers->Ogre_Loader_Resource_Group);
+		App->Say("createResourceGroup");
 	}
 
 #pragma warning(disable : 4996) // Nightmare why
@@ -945,22 +950,13 @@ void CL64_Resources::Load_OgreCFG_Resources(const Ogre::String& file)
 	try
 	{
 		Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
-		//ExternalResourceLoaded = 1;
+		Ogre_ExternalResourceLoaded = 1;
 	}
 	catch (...)
 	{
-		//ExternalResourceLoaded = 0;
+		Ogre_ExternalResourceLoaded = 0;
 	}
 
-	if (App->CL_Importers->OgreModel_Ent)
-	{
-		for (unsigned int i = 0; i < App->CL_Importers->OgreModel_Ent->getNumSubEntities(); ++i)
-		{
-			Ogre::MaterialPtr MatPtr = Ogre::MaterialManager::getSingleton().getByName(materialNames[i]);
-			MatPtr->reload();
-			App->CL_Importers->OgreModel_Ent->getSubEntity(i)->setMaterial(MatPtr);
-		}
-	}
 }
 
 // **************************************************************************
@@ -968,6 +964,10 @@ void CL64_Resources::Load_OgreCFG_Resources(const Ogre::String& file)
 // **************************************************************************
 void CL64_Resources::UnloadUserResources()
 {
+	Ogre::ResourceGroupManager::getSingleton().destroyResourceGroup(App->CL_Importers->Ogre_Loader_Resource_Group);
+	Ogre_ExternalResourceLoaded = 0;
+	return;
+
 	ResourcesCfgFile = "";
 	Ogre::StringVector resourceNames = Ogre::ResourceGroupManager::getSingleton().getResourceGroups();
 

@@ -303,7 +303,7 @@ void CL64_ImGui::Model_Data_GUI(void)
 		ImGui::Text("Faces:- %i", App->CL_Scene->FaceCount);
 		ImGui::Text("Groups:- %i", App->CL_Scene->GroupCount);
 		ImGui::Text("Motions:- %i", App->CL_Scene->MotionCount);
-		
+		ImGui::Text("Loaded:- %i", App->CL_Resources->Ogre_ExternalResourceLoaded);
 		//ImGui::Text("Texture Count:- %i", App->CLSB_Mesh_Mgr->mTextureCount);
 
 		ImGui::Text("  ");

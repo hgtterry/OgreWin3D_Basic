@@ -30,6 +30,8 @@ CL64_Importers::CL64_Importers()
 	OgreModel_Ent = nullptr;
 	OgreModel_Node = nullptr;
 
+	Flag_Reload_Ogre_Model = 0;
+
 	Ogre_Loader_Resource_Group = "Ogre_Loader_Resource_Group";
 	Ogre_CFG_Resource_Group = "Ogre_CFG_Resource_Group";
 }
@@ -190,6 +192,50 @@ void CL64_Importers::Load_Ogre_Model(void)
 }
 
 // *************************************************************************
+// *			Reload_Ogre_Model:- Terry and Hazel Flanigan 2024 		   *
+// *************************************************************************
+void CL64_Importers::Reload_Ogre_Model(void)
+{
+	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(App->CL_Scene->Texture_FolderPath,
+		"FileSystem", Ogre_Loader_Resource_Group);
+
+	try
+	{
+		Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();// App->CL_Scene->Texture_FolderPath);
+	}
+	catch (...)
+	{
+
+	}
+
+	OgreModel_Ent = App->CL_Ogre->mSceneMgr->createEntity("UserMesh", App->CL_Scene->FileName, Ogre_Loader_Resource_Group);
+	OgreModel_Node = App->CL_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	OgreModel_Node->attachObject(OgreModel_Ent);
+
+	OgreModel_Node->setVisible(true);
+	OgreModel_Node->setOrientation(Ogre::Quaternion::IDENTITY);
+	OgreModel_Node->setPosition(0, 0, 0);
+	OgreModel_Node->setScale(1, 1, 1);
+
+	App->CL_Ogre->flag_Show_Test_Cube = false;
+	App->CL_Ogre->Show_Test_Cube();
+	App->CL_Camera->Reset_View();
+
+	if (OgreModel_Ent)
+	{
+		Ogre::Vector3 vCenter = Ogre::Vector3(0.0f, (OgreModel_Ent->getBoundingBox().getMaximum().y +
+			OgreModel_Ent->getBoundingBox().getMinimum().y) * 0.5f,
+			0.0f);
+
+		App->CL_Ogre->camNode->setOrientation(Ogre::Quaternion::IDENTITY);
+		App->CL_Ogre->camNode->setPosition(Ogre::Vector3(0, 0, OgreModel_Ent->getBoundingRadius() * 2.8f));
+	}
+
+	App->CL_Ogre->OgreListener->Ogre_Model_Loaded = 1;
+
+}
+
+// *************************************************************************
 // *		Ogre_Resource_CFG_Loader:- Terry and Hazel Flanigan 2024	   *
 // *************************************************************************
 void CL64_Importers::Ogre_Resource_CFG_Loader(char* Extension, char* Extension2)
@@ -202,9 +248,9 @@ void CL64_Importers::Ogre_Resource_CFG_Loader(char* Extension, char* Extension2)
 	
 	App->CL_Resources->Load_OgreCFG_Resources(App->CL_File_IO->OgreCFG_Path_FileName);
 
-	/*if (App->Cl_Ogre->OgreModel_Ent)
+	if (Flag_Reload_Ogre_Model == 1)
 	{
-		App->CL_Import_Ogre->Ogre_Reload();
-	}*/
-
+		Reload_Ogre_Model();
+	}
+	
 }

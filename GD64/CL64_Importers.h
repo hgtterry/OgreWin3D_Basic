@@ -31,6 +31,8 @@ public:
 	bool Assimp_Loader(bool UseDialog,const char* Extension, const char* Extension2);
 
 	void Load_Ogre_Model(void);
+	void Reload_Ogre_Model(void);
+
 	void Ogre_Resource_CFG_Loader(char* Extension, char* Extension2);
 
 	Ogre::Entity* OgreModel_Ent;
@@ -38,5 +40,7 @@ public:
 
 	Ogre::String Ogre_Loader_Resource_Group;
 	Ogre::String Ogre_CFG_Resource_Group;
+
+	bool Flag_Reload_Ogre_Model;
 }; 
 
