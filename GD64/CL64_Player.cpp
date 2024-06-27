@@ -88,7 +88,7 @@ void CL64_Player::Initialize() const
 	pBase->Player_Node->attachObject(pBase->Player_Ent);
 
 	pBase->Player_Node->setOrientation(Ogre::Quaternion::IDENTITY);
-	pBase->Player_Node->setVisible(true);
+	pBase->Player_Node->setVisible(false);
 
 	Pos.x = pBase->StartPos.x;
 	Pos.y = pBase->StartPos.y;

@@ -62,6 +62,7 @@
 #define IDC_ST_BANNER                   1018
 #define IDC_USEDMATERIALS               1019
 #define IDC_ALLTEXTURES                 1020
+#define IDC_ST_ABOUT_BANNER             1021
 #define ID_VIEW_RESET                   32771
 #define ID_VIEW_MAX3DVIEW               32772
 #define ID_DEBUG_TESTPREFERANCE         32773
@@ -89,7 +90,7 @@
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        144
 #define _APS_NEXT_COMMAND_VALUE         32789
-#define _APS_NEXT_CONTROL_VALUE         1021
+#define _APS_NEXT_CONTROL_VALUE         1022
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif
