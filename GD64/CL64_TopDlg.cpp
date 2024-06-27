@@ -50,7 +50,7 @@ CL64_TopDlg::CL64_TopDlg(void)
 	Demo_1_Running_Flag = 0;
 	Demo_2_Running_Flag = 0;
 
-	Toggle_PhysicaDebug_Node_Flag = 1;
+	Toggle_PhysicaDebug_Node_Flag = 0;
 }
 
 CL64_TopDlg::~CL64_TopDlg(void)

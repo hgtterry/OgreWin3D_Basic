@@ -139,6 +139,9 @@ void CL64_Importers::Load_Ogre_Model(void)
 	OgreModel_Node->setPosition(0, 0, 0);
 	OgreModel_Node->setScale(1, 1, 1);
 
+	App->CL_Ogre->flag_Show_Test_Cube = false;
+	App->CL_Ogre->Show_Test_Cube();
+
 	//App->CL_Grid->Grid_SetVisible(1);
 	/*Create_MeshGroups();
 	Extract_Mesh_Two();*/

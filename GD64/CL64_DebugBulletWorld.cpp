@@ -32,7 +32,7 @@ CL64_DebugBulletWorld::CL64_DebugBulletWorld(void)
 	Render_Debug_Flag = 1;
 	m_debugMode = (DebugDrawModes)DBG_DrawWireframe;
 
-	ColourMain = Ogre::ColourValue(0, 1, 0, 1);
+	ColourMain = Ogre::ColourValue(1, 1, 1, 1);
 	mLines = nullptr;
 
 	btDebug_Manual = App->CL_Ogre->mSceneMgr->createManualObject("btManual");
@@ -41,7 +41,7 @@ CL64_DebugBulletWorld::CL64_DebugBulletWorld(void)
 	btDebug_Manual->setDynamic(true);
 	btDebug_Manual->estimateVertexCount(2000);
 
-	btDebug_Manual->begin("Template/White_Alpha", Ogre::RenderOperation::OT_LINE_LIST,App->CL_Ogre->App_Resource_Group);
+	btDebug_Manual->begin("Template/Alpha_Blend_GD64", Ogre::RenderOperation::OT_LINE_LIST,App->CL_Ogre->App_Resource_Group);
 	btDebug_Manual->position(0, 0, 0);
 	btDebug_Manual->colour(ColourMain);
 	btDebug_Manual->position(0, 0, 0);
@@ -50,6 +50,7 @@ CL64_DebugBulletWorld::CL64_DebugBulletWorld(void)
 
 	btDebug_Node = App->CL_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	btDebug_Node->attachObject(btDebug_Manual);
+	btDebug_Node->setVisible(false);
 
 	vertex_From.resize(100000);
 	vertex_To.resize(100000);
