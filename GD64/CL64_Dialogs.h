@@ -30,12 +30,14 @@ public:
 	~CL64_Dialogs(void);
 
 	void Message(char* pString);
+	void Start_Import_Options_Dlg();
 
 	bool Canceled;
 
 private:
 
 	static LRESULT CALLBACK Message_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Import_Options_Dlg_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	char Message_Text[MAX_PATH];
 };

@@ -75,7 +75,12 @@ bool CL64_Importers::Assimp_Loader(bool UseDialog,const char* Extension, const c
 
 	if (UseDialog == 1)
 	{
-		App->Say("Imported");
+		App->CL_Ogre->RenderFrame();
+		App->CL_Ogre->RenderFrame();
+		App->CL_Ogre->RenderFrame();
+
+		App->CL_Dialogs->Start_Import_Options_Dlg();
+		
 	}
 
 	return 1;
@@ -104,11 +109,6 @@ void CL64_Importers::Load_Ogre_Model(void)
 		Ogre::ResourceGroupManager::getSingleton().createResourceGroup(Ogre_Loader_Resource_Group);
 	}
 
-	//NoTexture = 0;
-	//NoMaterialFileFound = 0;
-
-	//AddToScene();
-
 	if (OgreModel_Ent && OgreModel_Node)
 	{
 		OgreModel_Node->detachAllObjects();
@@ -117,9 +117,6 @@ void CL64_Importers::Load_Ogre_Model(void)
 		OgreModel_Ent = nullptr;
 		OgreModel_Node = nullptr;
 	}
-
-	//Ogre::ResourceGroupManager::getSingleton().destroyResourceGroup(Ogre_Loader_Resource_Group);
-	//Ogre::ResourceGroupManager::getSingleton().createResourceGroup(Ogre_Loader_Resource_Group);
 
 	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(App->CL_Scene->Texture_FolderPath,
 		"FileSystem",Ogre_Loader_Resource_Group);
@@ -153,7 +150,6 @@ void CL64_Importers::Load_Ogre_Model(void)
 			0.0f);
 
 		App->CL_Ogre->camNode->setOrientation(Ogre::Quaternion::IDENTITY);
-		//App->CL_Ogre->camNode->getParent()->setPosition(vCenter);
 		App->CL_Ogre->camNode->setPosition(Ogre::Vector3(0,0, OgreModel_Ent->getBoundingRadius() * 2.8f));
 	}
 

@@ -877,7 +877,6 @@ void CL64_Resources::Load_OgreCFG_Resources(const Ogre::String& file)
 {
 	cf.clear();
 
-	//ExternalResourceLoaded = 1;
 	char ConfigFile1[255];
 	strcpy(ConfigFile1, "resources.cfg");
 
@@ -889,9 +888,6 @@ void CL64_Resources::Load_OgreCFG_Resources(const Ogre::String& file)
 	int Len = strlen(ConfigFile1);
 	int Len2 = strlen(Path2);
 	Path[Len2 - Len] = 0;
-
-	//strcpy(ResourcePathAndFile, file.c_str()); // Save for texture loading
-	//strcpy(ResourcePath, Path); // Save for texture loading
 
 	std::vector<Ogre::String> materialNames;
 
@@ -913,7 +909,6 @@ void CL64_Resources::Load_OgreCFG_Resources(const Ogre::String& file)
 	if (Ogre::ResourceGroupManager::getSingleton().resourceGroupExists(App->CL_Importers->Ogre_Loader_Resource_Group) == NULL)
 	{
 		Ogre::ResourceGroupManager::getSingleton().createResourceGroup(App->CL_Importers->Ogre_Loader_Resource_Group);
-		App->Say("createResourceGroup");
 	}
 
 #pragma warning(disable : 4996) // Nightmare why
@@ -966,23 +961,6 @@ void CL64_Resources::UnloadUserResources()
 {
 	Ogre::ResourceGroupManager::getSingleton().destroyResourceGroup(App->CL_Importers->Ogre_Loader_Resource_Group);
 	Ogre_ExternalResourceLoaded = 0;
-	return;
 
-	ResourcesCfgFile = "";
-	Ogre::StringVector resourceNames = Ogre::ResourceGroupManager::getSingleton().getResourceGroups();
-
-	Ogre::StringVector::const_iterator index = resourceNames.begin();
-	Ogre::StringVector::const_iterator end = resourceNames.end();
-
-	while (index != end)
-	{
-		if (*index != App->CL_Ogre->App_Resource_Group && *index != App->CL_Ogre->World_Resource_Group &&
-			*index != "Autodetect" && *index != "Internal")
-		{
-			Ogre::ResourceGroupManager::getSingleton().destroyResourceGroup(*index);
-		}
-
-		index++;
-	}
 }
 
