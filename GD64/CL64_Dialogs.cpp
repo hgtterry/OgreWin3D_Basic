@@ -50,18 +50,14 @@ void CL64_Dialogs::Message(char* pString)
 // *************************************************************************
 LRESULT CALLBACK CL64_Dialogs::Message_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
-
 	switch (message)
 	{
 	case WM_INITDIALOG:
 	{
-		//App->SetTitleBar(hDlg);
-
-		HFONT Font;
-		Font = CreateFont(-20, 0, 0, 0, FW_BOLD, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Courier Black");
-		SendDlgItemMessage(hDlg, IDC_STTEXT, WM_SETFONT, (WPARAM)Font, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_BANNER, WM_SETFONT, (WPARAM)Font, MAKELPARAM(TRUE, 0));
-
+		SendDlgItemMessage(hDlg, IDC_STTEXT, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BANNER, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
 		SetDlgItemText(hDlg, IDC_STTEXT, App->CL_Dialogs->Message_Text);
 
 		return TRUE;
@@ -94,7 +90,7 @@ LRESULT CALLBACK CL64_Dialogs::Message_Proc(HWND hDlg, UINT message, WPARAM wPar
 	{
 		LPNMHDR some_item = (LPNMHDR)lParam;
 
-		if (some_item->idFrom == IDOK && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDOK)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
@@ -102,17 +98,16 @@ LRESULT CALLBACK CL64_Dialogs::Message_Proc(HWND hDlg, UINT message, WPARAM wPar
 		}
 		return CDRF_DODEFAULT;
 	}
+
 	case WM_COMMAND:
 		if (LOWORD(wParam) == IDOK)
 		{
-			App->CL_Dialogs->Canceled = 0;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == IDCANCEL)
 		{
-			App->CL_Dialogs->Canceled = 1;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
@@ -142,6 +137,7 @@ LRESULT CALLBACK CL64_Dialogs::Import_Options_Dlg_Proc(HWND hDlg, UINT message, 
 	{
 		SendDlgItemMessage(hDlg, IDC_CK_COVERT_TO_OGRE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_CK_CREATEPHYSICS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
 		return TRUE;
 	}
@@ -173,14 +169,14 @@ LRESULT CALLBACK CL64_Dialogs::Import_Options_Dlg_Proc(HWND hDlg, UINT message, 
 
 	case WM_NOTIFY:
 	{
-		/*LPNMHDR some_item = (LPNMHDR)lParam;
+		LPNMHDR some_item = (LPNMHDR)lParam;
 
-		if (some_item->idFrom == IDOK && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDOK)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
 			return CDRF_DODEFAULT;
-		}*/
+		}
 
 		return CDRF_DODEFAULT;
 	}
