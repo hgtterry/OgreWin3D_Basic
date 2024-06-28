@@ -96,6 +96,7 @@ public:
 	HWND MainHwnd;
 	HWND Fdlg;
 	HWND ViewGLhWnd;
+	HWND ViewPLeaseWait;
 
 	int CursorPosX;
 	int CursorPosY;

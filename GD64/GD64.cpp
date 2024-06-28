@@ -87,6 +87,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
 	UpdateWindow(App->MainHwnd);
 
+	App->CL_Dialogs->PleaseWait();
+
     SetTimer(App->MainHwnd, 1, 1, NULL);
 
 	HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_GD64));
@@ -421,7 +423,6 @@ LRESULT CALLBACK Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
 
 	case WM_INITDIALOG:
 	{
-		//App->ViewPLeaseWait = CreateDialog(App->hInst, (LPCTSTR)IDD_PLEASEWAIT, App->Fdlg, (DLGPROC)PleaseWait_Proc);
 		return TRUE;
 	}
 
@@ -683,8 +684,9 @@ void StartOgre()
 {
     App->CL_Ogre->InitOgre();
 
-    Ogre::Root::getSingletonPtr()->renderOneFrame();
-    //EndDialog(App->ViewPLeaseWait, LOWORD(0));
+	Sleep(500);
+
+    EndDialog(App->ViewPLeaseWait, LOWORD(0));
 
     App->OgreStarted = 1;
 

@@ -31,6 +31,8 @@
 #define IDD_MESSAGE                     142
 #define IDD_RESOURCESMATERIAL           143
 #define IDD_IMPORT_OPTIONS              144
+#define IDD_DIALOG1                     145
+#define IDD_PLEASEWAIT                  145
 #define IDC_CK_SU_FULLSCREEN            1000
 #define IDC_ST_STARTUP                  1001
 #define IDC_CK_SU_FULL3DVIEW            1002
@@ -65,8 +67,8 @@
 #define IDC_ALLTEXTURES                 1020
 #define IDC_ST_ABOUT_BANNER             1021
 #define IDC_CK_COVERT_TO_OGRE           1022
-#define IDC_CHECK2                      1023
 #define IDC_CK_CREATEPHYSICS            1023
+#define IDC_STWAIT                      1023
 #define ID_VIEW_RESET                   32771
 #define ID_VIEW_MAX3DVIEW               32772
 #define ID_DEBUG_TESTPREFERANCE         32773
@@ -93,9 +95,9 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
-#define _APS_NEXT_RESOURCE_VALUE        145
+#define _APS_NEXT_RESOURCE_VALUE        146
 #define _APS_NEXT_COMMAND_VALUE         32790
-#define _APS_NEXT_CONTROL_VALUE         1023
+#define _APS_NEXT_CONTROL_VALUE         1024
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif

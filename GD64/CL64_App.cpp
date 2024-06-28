@@ -48,10 +48,11 @@ CL64_App::CL64_App(void)
 	CL_Dialogs =		nullptr;
 	CL_Resources =		nullptr;
 
-	hInst =			nullptr;
-	MainHwnd =		nullptr;
-	Fdlg =			nullptr;
-	ViewGLhWnd =	nullptr;
+	hInst =				nullptr;
+	MainHwnd =			nullptr;
+	Fdlg =				nullptr;
+	ViewGLhWnd =		nullptr;
+	ViewPLeaseWait =	nullptr;
 
 	GD_Directory_FullPath[0] = 0;
 
