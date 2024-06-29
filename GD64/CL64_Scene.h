@@ -39,6 +39,7 @@ public:
 	void Clear_Model_And_Reset(void);
 	void Set_Paths(void);
 	void Reset_Main_Entity(void);
+	void Main_Entity_Set_Default(void);
 
 	Ogre::Entity* Main_Ent;
 	Ogre::SceneNode* Main_Node;

@@ -81,6 +81,26 @@ bool CL64_Importers::Assimp_Loader(bool UseDialog,const char* Extension, const c
 		App->CL_Ogre->RenderFrame();
 
 		App->CL_Dialogs->Start_Import_Options_Dlg();
+
+		if (App->CL_Dialogs->Flag_Convert_to_Ogre == 1)
+		{
+			/*App->CL_Scene->Reset_Main_Entity();
+
+			App->CL_Scene->Main_Ent = App->CL_Converters->Convert_ToOgre3D(1);
+
+			App->CL_Scene->Main_Node = App->CL_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+			App->CL_Scene->Main_Node->attachObject(App->CL_Scene->Main_Ent);
+
+			App->CL_Scene->Main_Node->setVisible(true);
+			App->CL_Scene->Main_Node->setOrientation(Ogre::Quaternion::IDENTITY);
+			App->CL_Scene->Main_Node->setPosition(0, 0, 0);
+			App->CL_Scene->Main_Node->setScale(1, 1, 1);
+
+			App->CL_Scene->Model_Type = Enums::LoadedFile_None;
+
+			App->CL_Ogre->OgreListener->Ogre_Model_Loaded = 1;*/
+		
+		}
 		
 	}
 
@@ -124,14 +144,16 @@ void CL64_Importers::Load_Ogre_Model(void)
 
 	}
 
-	App->CL_Scene->Main_Ent = App->CL_Ogre->mSceneMgr->createEntity("UserMesh", App->CL_Scene->FileName, Ogre_Loader_Resource_Group);
+	App->CL_Scene->Main_Entity_Set_Default();
+
+	/*App->CL_Scene->Main_Ent = App->CL_Ogre->mSceneMgr->createEntity("UserMesh", App->CL_Scene->FileName, Ogre_Loader_Resource_Group);
 	App->CL_Scene->Main_Node = App->CL_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	App->CL_Scene->Main_Node->attachObject(App->CL_Scene->Main_Ent);
 
 	App->CL_Scene->Main_Node->setVisible(true);
 	App->CL_Scene->Main_Node->setOrientation(Ogre::Quaternion::IDENTITY);
 	App->CL_Scene->Main_Node->setPosition(0, 0, 0);
-	App->CL_Scene->Main_Node->setScale(1, 1, 1);
+	App->CL_Scene->Main_Node->setScale(1, 1, 1);*/
 
 	App->CL_Ogre->flag_Show_Test_Cube = false;
 	App->CL_Ogre->Show_Test_Cube();

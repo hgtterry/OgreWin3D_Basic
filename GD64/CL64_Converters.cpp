@@ -186,6 +186,17 @@ Ogre::Entity* CL64_Converters::Convert_ToOgre3D(bool Create)
 
 	Create_Resource_Group();
 	
+	/*if (World_Ent)
+	{
+		App->CL_Ogre->OgreListener->Ogre_Model_Loaded = 0;
+
+		World_Node->detachAllObjects();
+		App->CL_Ogre->mSceneMgr->destroySceneNode(World_Node);
+		App->CL_Ogre->mSceneMgr->destroyEntity(World_Ent);
+		World_Ent = nullptr;
+		World_Node = nullptr;
+	}*/
+
 	World_Ent = App->CL_Ogre->mSceneMgr->createEntity(Name);
 	
 	remove(mWorld_File_PathAndFile);

@@ -148,16 +148,31 @@ void CL64_Scene::Clear_Model_And_Reset(void)
 // *************************************************************************
 void CL64_Scene::Reset_Main_Entity(void)
 {
-	if (App->CL_Scene->Main_Ent && App->CL_Scene->Main_Node)
+	if (Main_Ent && Main_Node)
 	{
-		App->CL_Scene->Main_Node->detachAllObjects();
+		Main_Node->detachAllObjects();
 		App->CL_Ogre->mSceneMgr->destroySceneNode(App->CL_Scene->Main_Node);
 		App->CL_Ogre->mSceneMgr->destroyEntity(App->CL_Scene->Main_Ent);
-		App->CL_Scene->Main_Ent = nullptr;
-		App->CL_Scene->Main_Node = nullptr;
+		Main_Ent = nullptr;
+		Main_Node = nullptr;
 	}
 
 	App->CL_Ogre->OgreListener->Ogre_Model_Loaded = 0;
+}
+
+// *************************************************************************
+// *		Main_Entity_Set_Default:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+void CL64_Scene::Main_Entity_Set_Default(void)
+{
+	Main_Ent = App->CL_Ogre->mSceneMgr->createEntity("UserMesh", App->CL_Scene->FileName, App->CL_Importers->Ogre_Loader_Resource_Group);
+	Main_Node = App->CL_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	Main_Node->attachObject(App->CL_Scene->Main_Ent);
+
+	Main_Node->setVisible(true);
+	Main_Node->setOrientation(Ogre::Quaternion::IDENTITY);
+	Main_Node->setPosition(0, 0, 0);
+	Main_Node->setScale(1, 1, 1);
 }
 
 // *************************************************************************

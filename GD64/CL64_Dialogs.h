@@ -34,6 +34,8 @@ public:
 	void PleaseWait();
 
 	bool Canceled;
+	bool Flag_Convert_to_Ogre;
+
 
 private:
 

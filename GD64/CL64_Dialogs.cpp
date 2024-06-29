@@ -30,6 +30,8 @@ CL64_Dialogs::CL64_Dialogs(void)
 {
 	Message_Text[0] = 0;
 	Canceled = 0;
+
+	Flag_Convert_to_Ogre = 0;
 }
 
 CL64_Dialogs::~CL64_Dialogs(void)
@@ -168,6 +170,8 @@ LRESULT CALLBACK CL64_Dialogs::PleaseWait_Proc(HWND hDlg, UINT message, WPARAM w
 // *************************************************************************
 void CL64_Dialogs::Start_Import_Options_Dlg()
 {
+	Flag_Convert_to_Ogre = 0;
+
 	DialogBox(App->hInst, (LPCTSTR)IDD_IMPORT_OPTIONS, App->Fdlg, (DLGPROC)Import_Options_Dlg_Proc);
 }
 
@@ -235,7 +239,7 @@ LRESULT CALLBACK CL64_Dialogs::Import_Options_Dlg_Proc(HWND hDlg, UINT message, 
 			int test = SendMessage(temp, BM_GETCHECK, 0, 0);
 			if (test == BST_CHECKED)
 			{
-				App->CL_Converters->Convert_ToOgre3D(1);
+				App->CL_Dialogs->Flag_Convert_to_Ogre = 1;
 			}
 			
 			EndDialog(hDlg, LOWORD(wParam));
