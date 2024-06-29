@@ -61,7 +61,8 @@ bool CL64_Importers::Assimp_Loader(bool UseDialog,const char* Extension, const c
 	bool Test = App->CL_Assimp->LoadFile(Model_Path_And_File);
 	if (Test == 0)
 	{
-		//App->Say_Win("Failed To Load");
+		App->Say("Failed To Load");
+
 		return 0;
 	}
 
@@ -70,7 +71,6 @@ bool CL64_Importers::Assimp_Loader(bool UseDialog,const char* Extension, const c
 	App->CL_Ogre->flag_Show_Test_Cube = false;
 	App->CL_Ogre->Show_Test_Cube();
 	App->CL_Camera->Reset_View();
-
 
 	App->CL_Scene->Model_Loaded = 1;
 

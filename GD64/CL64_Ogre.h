@@ -63,7 +63,10 @@ public:
 	void Show_Test_Cube(void);
 	void Show_Trays(void);
 
+	// Renders a Single Frame
 	void RenderFrame(void);
+
+	// Custom Render Loop returns to where it was called from
 	bool Ogre_Render_Loop(void);
 
 	bool ReverseBackSlash(char* buf);
