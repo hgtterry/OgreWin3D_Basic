@@ -54,6 +54,9 @@ CL64_Scene::CL64_Scene(void)
 		Count++;
 	}
 
+	Main_Ent = nullptr;
+	Main_Node = nullptr;
+
 	B_Player.reserve(20);
 }
 
@@ -138,6 +141,23 @@ void CL64_Scene::Clear_Model_And_Reset(void)
 	//App->CL_Export_Ogre3D->Export_As_RF = 0;
 
 	SetWindowText(App->MainHwnd, "Equity_ME");
+}
+
+// *************************************************************************
+// *			Reset_Main_Entity:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+void CL64_Scene::Reset_Main_Entity(void)
+{
+	if (App->CL_Scene->Main_Ent && App->CL_Scene->Main_Node)
+	{
+		App->CL_Scene->Main_Node->detachAllObjects();
+		App->CL_Ogre->mSceneMgr->destroySceneNode(App->CL_Scene->Main_Node);
+		App->CL_Ogre->mSceneMgr->destroyEntity(App->CL_Scene->Main_Ent);
+		App->CL_Scene->Main_Ent = nullptr;
+		App->CL_Scene->Main_Node = nullptr;
+	}
+
+	App->CL_Ogre->OgreListener->Ogre_Model_Loaded = 0;
 }
 
 // *************************************************************************

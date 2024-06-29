@@ -27,9 +27,6 @@ distribution.
 
 CL64_Importers::CL64_Importers()
 {
-	OgreModel_Ent = nullptr;
-	OgreModel_Node = nullptr;
-
 	Flag_Reload_Ogre_Model = 0;
 
 	Ogre_Loader_Resource_Group = "Ogre_Loader_Resource_Group";
@@ -113,15 +110,8 @@ void CL64_Importers::Load_Ogre_Model(void)
 		Ogre::ResourceGroupManager::getSingleton().createResourceGroup(Ogre_Loader_Resource_Group);
 	}
 
-	if (OgreModel_Ent && OgreModel_Node)
-	{
-		OgreModel_Node->detachAllObjects();
-		App->CL_Ogre->mSceneMgr->destroySceneNode(OgreModel_Node);
-		App->CL_Ogre->mSceneMgr->destroyEntity(OgreModel_Ent);
-		OgreModel_Ent = nullptr;
-		OgreModel_Node = nullptr;
-	}
-
+	App->CL_Scene->Reset_Main_Entity();
+	
 	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(App->CL_Scene->Texture_FolderPath,
 		"FileSystem",Ogre_Loader_Resource_Group);
 
@@ -134,27 +124,27 @@ void CL64_Importers::Load_Ogre_Model(void)
 
 	}
 
-	OgreModel_Ent = App->CL_Ogre->mSceneMgr->createEntity("UserMesh", App->CL_Scene->FileName, Ogre_Loader_Resource_Group);
-	OgreModel_Node = App->CL_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
-	OgreModel_Node->attachObject(OgreModel_Ent);
+	App->CL_Scene->Main_Ent = App->CL_Ogre->mSceneMgr->createEntity("UserMesh", App->CL_Scene->FileName, Ogre_Loader_Resource_Group);
+	App->CL_Scene->Main_Node = App->CL_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	App->CL_Scene->Main_Node->attachObject(App->CL_Scene->Main_Ent);
 
-	OgreModel_Node->setVisible(true);
-	OgreModel_Node->setOrientation(Ogre::Quaternion::IDENTITY);
-	OgreModel_Node->setPosition(0, 0, 0);
-	OgreModel_Node->setScale(1, 1, 1);
+	App->CL_Scene->Main_Node->setVisible(true);
+	App->CL_Scene->Main_Node->setOrientation(Ogre::Quaternion::IDENTITY);
+	App->CL_Scene->Main_Node->setPosition(0, 0, 0);
+	App->CL_Scene->Main_Node->setScale(1, 1, 1);
 
 	App->CL_Ogre->flag_Show_Test_Cube = false;
 	App->CL_Ogre->Show_Test_Cube();
 	App->CL_Camera->Reset_View();
 
-	if (OgreModel_Ent)
+	if (App->CL_Scene->Main_Ent)
 	{
-		Ogre::Vector3 vCenter = Ogre::Vector3(0.0f, (OgreModel_Ent->getBoundingBox().getMaximum().y +
-			OgreModel_Ent->getBoundingBox().getMinimum().y) * 0.5f,
+		Ogre::Vector3 vCenter = Ogre::Vector3(0.0f, (App->CL_Scene->Main_Ent->getBoundingBox().getMaximum().y +
+			App->CL_Scene->Main_Ent->getBoundingBox().getMinimum().y) * 0.5f,
 			0.0f);
 
 		App->CL_Ogre->camNode->setOrientation(Ogre::Quaternion::IDENTITY);
-		App->CL_Ogre->camNode->setPosition(Ogre::Vector3(0,0, OgreModel_Ent->getBoundingRadius() * 2.8f));
+		App->CL_Ogre->camNode->setPosition(Ogre::Vector3(0,0, App->CL_Scene->Main_Ent->getBoundingRadius() * 2.8f));
 	}
 
 	App->CL_Ogre->OgreListener->Ogre_Model_Loaded = 1;
@@ -208,27 +198,27 @@ void CL64_Importers::Reload_Ogre_Model(void)
 
 	}
 
-	OgreModel_Ent = App->CL_Ogre->mSceneMgr->createEntity("UserMesh", App->CL_Scene->FileName, Ogre_Loader_Resource_Group);
-	OgreModel_Node = App->CL_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
-	OgreModel_Node->attachObject(OgreModel_Ent);
+	App->CL_Scene->Main_Ent = App->CL_Ogre->mSceneMgr->createEntity("UserMesh", App->CL_Scene->FileName, Ogre_Loader_Resource_Group);
+	App->CL_Scene->Main_Node = App->CL_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	App->CL_Scene->Main_Node->attachObject(App->CL_Scene->Main_Ent);
 
-	OgreModel_Node->setVisible(true);
-	OgreModel_Node->setOrientation(Ogre::Quaternion::IDENTITY);
-	OgreModel_Node->setPosition(0, 0, 0);
-	OgreModel_Node->setScale(1, 1, 1);
+	App->CL_Scene->Main_Node->setVisible(true);
+	App->CL_Scene->Main_Node->setOrientation(Ogre::Quaternion::IDENTITY);
+	App->CL_Scene->Main_Node->setPosition(0, 0, 0);
+	App->CL_Scene->Main_Node->setScale(1, 1, 1);
 
 	App->CL_Ogre->flag_Show_Test_Cube = false;
 	App->CL_Ogre->Show_Test_Cube();
 	App->CL_Camera->Reset_View();
 
-	if (OgreModel_Ent)
+	if (App->CL_Scene->Main_Ent)
 	{
-		Ogre::Vector3 vCenter = Ogre::Vector3(0.0f, (OgreModel_Ent->getBoundingBox().getMaximum().y +
-			OgreModel_Ent->getBoundingBox().getMinimum().y) * 0.5f,
+		Ogre::Vector3 vCenter = Ogre::Vector3(0.0f, (App->CL_Scene->Main_Ent->getBoundingBox().getMaximum().y +
+			App->CL_Scene->Main_Ent->getBoundingBox().getMinimum().y) * 0.5f,
 			0.0f);
 
 		App->CL_Ogre->camNode->setOrientation(Ogre::Quaternion::IDENTITY);
-		App->CL_Ogre->camNode->setPosition(Ogre::Vector3(0, 0, OgreModel_Ent->getBoundingRadius() * 2.8f));
+		App->CL_Ogre->camNode->setPosition(Ogre::Vector3(0, 0, App->CL_Scene->Main_Ent->getBoundingRadius() * 2.8f));
 	}
 
 	App->CL_Ogre->OgreListener->Ogre_Model_Loaded = 1;

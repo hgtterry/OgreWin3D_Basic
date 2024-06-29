@@ -38,6 +38,10 @@ public:
 	void Create_Mesh_Group(int Index);
 	void Clear_Model_And_Reset(void);
 	void Set_Paths(void);
+	void Reset_Main_Entity(void);
+
+	Ogre::Entity* Main_Ent;
+	Ogre::SceneNode* Main_Node;
 
 	Base_Group* Group[100];
 

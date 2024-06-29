@@ -56,7 +56,7 @@ void CL64_Camera::Reset_View(void)
 
 	if (App->CL_Ogre->OgreListener->Ogre_Model_Loaded == 1)
 	{
-		App->CL_Importers->OgreModel_Node->setOrientation(Ogre::Quaternion::IDENTITY);
-		App->CL_Importers->OgreModel_Node->setPosition(0, 0, 0);
+		App->CL_Scene->Main_Node->setOrientation(Ogre::Quaternion::IDENTITY);
+		App->CL_Scene->Main_Node->setPosition(0, 0, 0);
 	}
 }
