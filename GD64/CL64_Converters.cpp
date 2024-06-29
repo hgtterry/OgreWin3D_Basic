@@ -73,6 +73,14 @@ void CL64_Converters::Set_Paths(void)
 // *************************************************************************
 Ogre::Entity* CL64_Converters::Convert_ToOgre3D(bool Create)
 {
+	App->CL_Ogre->OgreListener->Ogre_Model_Loaded = 0;
+
+	if (Ogre::ResourceGroupManager::getSingleton().resourceGroupExists(Temp_Resource_Group))
+	{
+		Ogre::ResourceGroupManager::getSingleton().destroyResourceGroup(Temp_Resource_Group);
+	}
+
+	
 	Ogre::ResourceGroupManager::getSingleton().createResourceGroup(Temp_Resource_Group);
 	Ogre::ResourceGroupManager::getSingleton().initialiseResourceGroup(Temp_Resource_Group);
 	
@@ -81,13 +89,13 @@ Ogre::Entity* CL64_Converters::Convert_ToOgre3D(bool Create)
 	CreateMaterialFile();
 
 	App->CL_Scene->Ogre_Face_Count = 0;
-
+	
 	if (Create == 1)
 	{
 		World_Manual = App->CL_Ogre->mSceneMgr->createManualObject();
 		World_Manual->setRenderQueueGroup(2);
 	}
-
+	
 	int A = 0;
 	int B = 0;
 	int C = 0;
@@ -117,7 +125,7 @@ Ogre::Entity* CL64_Converters::Convert_ToOgre3D(bool Create)
 		CreateMaterial_Resource(MatName);
 		
 		World_Manual->begin(MatName, Ogre::RenderOperation::OT_TRIANGLE_LIST, Temp_Resource_Group);
-
+		
 		FaceCount = 0;
 		FaceIndex = 0;
 
@@ -161,7 +169,8 @@ Ogre::Entity* CL64_Converters::Convert_ToOgre3D(bool Create)
 		World_Manual->end();
 		Count++;
 	}
-
+	
+	
 	App->CL_Scene->Ogre_Face_Count = TotalFaces;
 
 	if (World_Manual->getNumSections() == 0)
@@ -183,9 +192,9 @@ Ogre::Entity* CL64_Converters::Convert_ToOgre3D(bool Create)
 	char Name[MAX_PATH];
 	strcpy(Name, mWorld_Mesh_JustName);
 	strcat(Name, ".mesh");
-
-	Create_Resource_Group();
 	
+	//Create_Resource_Group();
+	//Debug
 	/*if (World_Ent)
 	{
 		App->CL_Ogre->OgreListener->Ogre_Model_Loaded = 0;
@@ -196,7 +205,9 @@ Ogre::Entity* CL64_Converters::Convert_ToOgre3D(bool Create)
 		World_Ent = nullptr;
 		World_Node = nullptr;
 	}*/
-
+	//Debug
+	Create_Resource_Group();
+	
 	World_Ent = App->CL_Ogre->mSceneMgr->createEntity(Name);
 	
 	remove(mWorld_File_PathAndFile);
@@ -214,13 +225,13 @@ void CL64_Converters::Create_Resource_Group()
 {
 	if (World_Ent)
 	{
-		World_Node->detachAllObjects();
+		/*World_Node->detachAllObjects();
 
 		App->CL_Ogre->mSceneMgr->destroySceneNode(World_Node);
 		App->CL_Ogre->mSceneMgr->destroyEntity(World_Ent);
 
 		World_Node = NULL;
-		World_Ent = NULL;
+		World_Ent = NULL;*/
 
 		Ogre::ResourceGroupManager::getSingleton().destroyResourceGroup(App->CL_Ogre->World_Resource_Group);
 		Ogre::ResourceGroupManager::getSingleton().createResourceGroup(App->CL_Ogre->World_Resource_Group);
@@ -287,8 +298,7 @@ void CL64_Converters::CreateMaterialFile()
 		OMatName = MatName;
 		OFile = File;
 
-		Ogre::MaterialPtr ogremat = matMgrSgl.create(OMatName,
-			Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+		Ogre::MaterialPtr ogremat = matMgrSgl.create(OMatName, Temp_Resource_Group);
 
 
 		if (0 < strlen(File))

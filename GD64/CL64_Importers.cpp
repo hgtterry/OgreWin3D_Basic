@@ -84,7 +84,7 @@ bool CL64_Importers::Assimp_Loader(bool UseDialog,const char* Extension, const c
 
 		if (App->CL_Dialogs->Flag_Convert_to_Ogre == 1)
 		{
-			/*App->CL_Scene->Reset_Main_Entity();
+			App->CL_Scene->Reset_Main_Entity();
 
 			App->CL_Scene->Main_Ent = App->CL_Converters->Convert_ToOgre3D(1);
 
@@ -98,7 +98,7 @@ bool CL64_Importers::Assimp_Loader(bool UseDialog,const char* Extension, const c
 
 			App->CL_Scene->Model_Type = Enums::LoadedFile_None;
 
-			App->CL_Ogre->OgreListener->Ogre_Model_Loaded = 1;*/
+			App->CL_Ogre->OgreListener->Ogre_Model_Loaded = 1;
 		
 		}
 		
