@@ -86,7 +86,7 @@ bool CL64_Importers::Assimp_Loader(bool UseDialog,const char* Extension, const c
 		{
 			App->CL_Scene->Reset_Main_Entity();
 
-			App->CL_Scene->Main_Ent = App->CL_Converters->Convert_ToOgre3D(1);
+			App->CL_Scene->Main_Ent = App->CL_Converters->Convert_To_Ogre3D(1);
 
 			App->CL_Scene->Main_Node = App->CL_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 			App->CL_Scene->Main_Node->attachObject(App->CL_Scene->Main_Ent);
@@ -146,15 +146,6 @@ void CL64_Importers::Load_Ogre_Model(void)
 
 	App->CL_Scene->Main_Entity_Set_Default();
 
-	/*App->CL_Scene->Main_Ent = App->CL_Ogre->mSceneMgr->createEntity("UserMesh", App->CL_Scene->FileName, Ogre_Loader_Resource_Group);
-	App->CL_Scene->Main_Node = App->CL_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
-	App->CL_Scene->Main_Node->attachObject(App->CL_Scene->Main_Ent);
-
-	App->CL_Scene->Main_Node->setVisible(true);
-	App->CL_Scene->Main_Node->setOrientation(Ogre::Quaternion::IDENTITY);
-	App->CL_Scene->Main_Node->setPosition(0, 0, 0);
-	App->CL_Scene->Main_Node->setScale(1, 1, 1);*/
-
 	App->CL_Ogre->flag_Show_Test_Cube = false;
 	App->CL_Ogre->Show_Test_Cube();
 	App->CL_Camera->Reset_View();
@@ -172,8 +163,8 @@ void CL64_Importers::Load_Ogre_Model(void)
 	App->CL_Ogre->OgreListener->Ogre_Model_Loaded = 1;
 	
 	//App->CL_Grid->Grid_SetVisible(1);
-	/*Create_MeshGroups();
-	Extract_Mesh_Two();*/
+	App->CL_Converters->Create_MeshGroups();
+	App->CL_Converters->Ogre_To_Mesh_Data();
 
 	//App->CL_Model_Data->HasMesh = 1;
 

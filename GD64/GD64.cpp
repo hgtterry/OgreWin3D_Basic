@@ -274,7 +274,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 		case ID_FILE_CONVERTTOOGRE3D:
 		{
-			App->CL_Converters->Convert_ToOgre3D(1);
+			App->CL_Converters->Convert_To_Ogre3D(1);
 			return TRUE;
 		}
 		

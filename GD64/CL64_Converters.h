@@ -29,7 +29,7 @@ public:
 	CL64_Converters(void);
 	~CL64_Converters(void);
 
-	Ogre::Entity* Convert_ToOgre3D(bool Create);
+	Ogre::Entity* Convert_To_Ogre3D(bool Create);
 
 	void Set_Paths(void);
 	void CreateMaterialFile();
@@ -39,11 +39,28 @@ public:
 	void Create_Resource_Group();
 	void CreateMaterial_Resource(char* MatName);
 
+	// Ogre to Mesh Groups
+	void Create_MeshGroups();
+	bool Ogre_To_Mesh_Data();
+	void Get_SubPose_MeshInstance(Ogre::MeshPtr mesh,
+		size_t& vertex_count, Ogre::Vector3*& vertices,
+		size_t& index_count, unsigned long*& indices,
+		int SubMesh, Ogre::int16*& BoneIndices);
+	bool GetBoneAssignment(Ogre::MeshPtr mesh, int SubMesh, HWND hDlg);
+	bool NewGet_SubPoseTextureUV(Ogre::MeshPtr mesh, int SubMesh);
+	bool NewGet_SubPoseNormals(Ogre::MeshPtr mesh,
+		size_t& vertex_count,Ogre::Vector3*& Normals,int SubMesh);
+
+
+
 	Ogre::ManualObject* Export_Manual;
 	Ogre::ManualObject* World_Manual;
 
 	Ogre::SceneNode*	World_Node;
 	Ogre::Entity*		World_Ent;
+
+	std::vector<Vector2> MeshTextureCoords;
+	std::vector<Vector3> MeshNormals;
 
 	char mWorld_Mesh_JustName[MAX_PATH];
 	char mWorld_File_PathAndFile[MAX_PATH];
