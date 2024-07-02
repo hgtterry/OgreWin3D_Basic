@@ -167,6 +167,32 @@ LRESULT CALLBACK CL64_TopDlg::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam
 			return TRUE;
 		}
 
+		// Show Hide Mesh/Faces
+		if (LOWORD(wParam) == IDC_TBSHOWFACES)
+		{
+			//if (App->CL_Scene->Model_Loaded == 1)
+			{
+				HWND Temp = GetDlgItem(hDlg, IDC_TBSHOWFACES);
+
+				if (App->CL_Ogre->RenderListener->ShowFaces == 1)
+				{
+					if (App->CL_Ogre->RenderListener->ShowFaces == 1)
+						App->CL_Ogre->RenderListener->ShowFaces = 0;
+
+					//App->CL_TopBar->Toggle_Faces_Flag = 0;
+
+					//SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshOff_Bmp);
+				}
+				else
+				{
+					App->CL_Ogre->RenderListener->ShowFaces = 1;
+					//App->CL_TopBar->Toggle_Faces_Flag = 1;
+
+					//SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshOn_Bmp);
+				}
+			}
+			return TRUE;
+		}
 		break;
 	}
 	return FALSE;

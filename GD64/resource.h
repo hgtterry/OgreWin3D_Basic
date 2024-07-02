@@ -31,7 +31,6 @@
 #define IDD_MESSAGE                     142
 #define IDD_RESOURCESMATERIAL           143
 #define IDD_IMPORT_OPTIONS              144
-#define IDD_DIALOG1                     145
 #define IDD_PLEASEWAIT                  145
 #define IDC_CK_SU_FULLSCREEN            1000
 #define IDC_ST_STARTUP                  1001
@@ -50,6 +49,7 @@
 #define IDC_BUTTON3                     1009
 #define IDC_BT_CAMERA_MODEL             1009
 #define IDC_ALLMESH                     1009
+#define IDC_TBSHOWFACES                 1009
 #define IDC_BUTTON4                     1010
 #define IDC_BT_CAMERA_FREE              1010
 #define IDC_ALLMATERIALS                1010
@@ -58,9 +58,13 @@
 #define IDC_TBSHOWGRID                  1012
 #define IDC_BT_TD_DEMOSTAB              1012
 #define IDC_BT_TD_DEMOS_DEMO1           1013
+#define IDC_BUTTON5                     1013
 #define IDC_BT_TD_DEMOS_DEMO2           1014
+#define IDC_BUTTON6                     1014
 #define IDC_BANNER                      1015
+#define IDC_BUTTON7                     1015
 #define IDC_STTEXT                      1016
+#define IDC_BUTTON8                     1016
 #define IDC_BT_TD_DEBUG_RESOURCES       1017
 #define IDC_ST_BANNER                   1018
 #define IDC_USEDMATERIALS               1019

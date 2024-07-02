@@ -34,6 +34,8 @@ public:
 	float RX;
 	float RZ;
 
+	bool ShowFaces;
+
 private:
 
 	virtual void renderQueueStarted(Ogre::uint8 queueGroupId, const Ogre::String& invocation,
@@ -63,7 +65,6 @@ private:
 	float Hair_1RotY;
 	float Hair_1RotZ;
 
-	bool ShowFaces;
 	bool Light_Activated;
 };
 

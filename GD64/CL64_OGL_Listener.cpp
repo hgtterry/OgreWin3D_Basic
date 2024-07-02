@@ -38,7 +38,7 @@ CL64_OGL_Listener::CL64_OGL_Listener(void)
 	Hair_1RotY = 0;
 	Hair_1RotZ = 0;
 
-	ShowFaces = 1;
+	ShowFaces = 0;
 	Light_Activated = 0;
 }
 
@@ -174,6 +174,15 @@ void CL64_OGL_Listener::Render_Loop()
 		{
 			Assimp_Render_Textures();
 		}
+	}
+
+	// ---------------------- Mesh
+	if (ShowFaces == 1)
+	{
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
+		Assimp_Render_Faces();
+
 	}
 
 	// ---------------------- Crosshair
