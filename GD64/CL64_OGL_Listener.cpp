@@ -25,6 +25,8 @@ distribution.
 #include "CL64_App.h"
 #include "CL64_OGL_Listener.h"
 
+#define Normal_Scaler 2
+
 CL64_OGL_Listener::CL64_OGL_Listener(void)
 {
 	RX = 0;
@@ -42,6 +44,7 @@ CL64_OGL_Listener::CL64_OGL_Listener(void)
 	Flag_ShowBoundingBox = 0;
 	Flag_ShowPoints = 0;
 	Flag_ShowBones = 0;
+	Flag_ShowNormals = 0;
 
 	Light_Activated = 0;
 }
@@ -195,7 +198,13 @@ void CL64_OGL_Listener::Render_Loop()
 		Render_BoundingBoxModel();
 	}
 
-	//// ---------------------- Bones
+	// ---------------------- Normals
+	if (App->CL_Scene->Model_Loaded == 1 && Flag_ShowNormals == 1)
+	{
+		Assimp_Render_Normals();
+	}
+
+	// ---------------------- Bones
 	if (App->CL_Scene->Model_Loaded == 1 && Flag_ShowBones == 1)
 	{
 		As_RenderBones();
@@ -405,6 +414,50 @@ void CL64_OGL_Listener::Render_As_Points_Parts(int Count)
 
 		VertCount++;
 	}
+}
+
+//**************************************************************************
+// *		Assimp_Render_Normals:- Terry and Hazel Flanigan 2024   	   *
+// *************************************************************************
+void CL64_OGL_Listener::Assimp_Render_Normals(void)
+{
+	int Count = 0;
+
+	glColor3f(1, 1, 1);
+
+	int GroupCount = App->CL_Scene->GroupCount;
+
+	while (Count < GroupCount)
+	{
+		Render_As_Normals_Parts(Count);
+		Count++;
+	}
+}
+
+// *************************************************************************
+// *		Render_AsNormals_Part:- Terry and Hazel Flanigan 2024	 	   *
+// *************************************************************************
+void CL64_OGL_Listener::Render_As_Normals_Parts(int Count)
+{
+	int VertCount = 0;
+
+	glPointSize(3);
+	glBegin(GL_LINES);
+
+	while (VertCount < App->CL_Scene->Group[Count]->GroupVertCount)
+	{
+		//-----------------------------------------------
+		glVertex3fv(&App->CL_Scene->Group[Count]->vertex_Data[VertCount].x);
+
+		glVertex3f(App->CL_Scene->Group[Count]->vertex_Data[VertCount].x + App->CL_Scene->Group[Count]->Normal_Data[VertCount].x * Normal_Scaler,
+			App->CL_Scene->Group[Count]->vertex_Data[VertCount].y + App->CL_Scene->Group[Count]->Normal_Data[VertCount].y * Normal_Scaler,
+			App->CL_Scene->Group[Count]->vertex_Data[VertCount].z + App->CL_Scene->Group[Count]->Normal_Data[VertCount].z * Normal_Scaler);
+
+		VertCount++;
+
+	}
+
+	glEnd();
 }
 
 // *************************************************************************

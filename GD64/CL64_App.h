@@ -126,7 +126,10 @@ public:
 	HANDLE Hnd_GridOn_Bmp;
 	HANDLE Hnd_GridOff_Bmp;
 	HANDLE Hnd_ModelInfo_Bmp;
+	HANDLE Hnd_NormalsOn_Bmp;
+	HANDLE Hnd_NormalsOff_Bmp;
 	HANDLE Hnd_ModelInfoOn_Bmp;
+
 
 	HBRUSH AppBackground;
 	HBRUSH BlackBrush;

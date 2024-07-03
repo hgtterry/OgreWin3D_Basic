@@ -41,8 +41,10 @@
 #define IDB_MESHPOINTSON                152
 #define IDB_MESHPOINTSOFF               153
 #define IDB_BONESON                     154
-#define IDB_BITMAP1                     155
 #define IDB_BONESOFF                    155
+#define IDB_NORMALSON                   156
+#define IDB_BITMAP1                     157
+#define IDB_NORMALSOFF                  157
 #define IDC_CK_SU_FULLSCREEN            1000
 #define IDC_ST_STARTUP                  1001
 #define IDC_CK_SU_FULL3DVIEW            1002
@@ -57,6 +59,7 @@
 #define IDC_BUTTON2                     1008
 #define IDC_BT_TBH_CAMERA               1008
 #define IDC_BT_DEMORESOURCES            1008
+#define IDC_BTSHOWNORMALS               1008
 #define IDC_BUTTON3                     1009
 #define IDC_BT_CAMERA_MODEL             1009
 #define IDC_ALLMESH                     1009
@@ -111,7 +114,7 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
-#define _APS_NEXT_RESOURCE_VALUE        156
+#define _APS_NEXT_RESOURCE_VALUE        158
 #define _APS_NEXT_COMMAND_VALUE         32790
 #define _APS_NEXT_CONTROL_VALUE         1024
 #define _APS_NEXT_SYMED_VALUE           110

@@ -153,6 +153,13 @@ LRESULT CALLBACK CL64_TopDlg::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam
 			return CDRF_DODEFAULT;
 		}
 		
+		if (some_item->idFrom == IDC_BTSHOWNORMALS)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+		
 		return CDRF_DODEFAULT;
 	}
 
@@ -292,6 +299,29 @@ LRESULT CALLBACK CL64_TopDlg::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam
 					App->CL_Ogre->RenderListener->Flag_ShowBones = 1;
 
 					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_BonesOn_Bmp);
+				}
+			}
+			return TRUE;
+		}
+
+		//-------------------------------------------------------- Show Normals
+		if (LOWORD(wParam) == IDC_BTSHOWNORMALS)
+		{
+			if (App->CL_Scene->Model_Loaded == 1)
+			{
+				HWND Temp = GetDlgItem(hDlg, IDC_BTSHOWNORMALS);
+
+				if (App->CL_Ogre->RenderListener->Flag_ShowNormals == 1)
+				{
+					App->CL_Ogre->RenderListener->Flag_ShowNormals = 0;
+
+					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_NormalsOff_Bmp);
+				}
+				else
+				{
+					App->CL_Ogre->RenderListener->Flag_ShowNormals = 1;
+
+					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_NormalsOn_Bmp);
 				}
 			}
 			return TRUE;
@@ -829,6 +859,9 @@ void CL64_TopDlg::Init_Bmps_Globals(void)
 	Temp = GetDlgItem(TabsHwnd, IDC_BTSHOWBONES);
 	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_BonesOff_Bmp);
 
+	Temp = GetDlgItem(TabsHwnd, IDC_BTSHOWNORMALS);
+	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_NormalsOff_Bmp);
+
 	HWND hTooltip_TB_2 = CreateWindowEx(0, TOOLTIPS_CLASS, "", TTS_ALWAYSTIP | TTS_BALLOON, 0, 0, 0, 0, App->MainHwnd, 0, App->hInst, 0);
 
 	Temp = GetDlgItem(TabsHwnd, IDC_TBSHOWHAIR);
@@ -893,5 +926,14 @@ void CL64_TopDlg::Init_Bmps_Globals(void)
 	ti7.lpszText = (LPSTR) "Toggle Show Bones/Joints";
 	ti7.hwnd = App->MainHwnd;
 	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti7);
+
+	Temp = GetDlgItem(TabsHwnd, IDC_BTSHOWNORMALS);
+	TOOLINFO ti8 = { 0 };
+	ti8.cbSize = sizeof(ti8);
+	ti8.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti8.uId = (UINT_PTR)Temp;
+	ti8.lpszText = (LPSTR) "Toggle Show Normals";
+	ti8.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti8);
 }
 
