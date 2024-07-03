@@ -237,5 +237,11 @@
     <Image Include="res\MenuBar\ModelData.bmp">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="res\MenuBar\BondingBoxOn.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\MenuBar\BondingBoxOff.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

@@ -78,7 +78,7 @@ bool CL64_Assimp::LoadFile(const char* pFile)
 
 		LoadTextures();
 
-		//App->CL_Scene->Set_BondingBox_Model(1); // Create
+		App->CL_Scene->Set_BondingBox_Model(1); // Create
 
 	}
 

@@ -34,7 +34,8 @@ public:
 	float RX;
 	float RZ;
 
-	bool ShowFaces;
+	bool Flag_ShowFaces;
+	bool Flag_ShowBoundingBox;
 
 private:
 
@@ -52,8 +53,10 @@ private:
 	bool Assimp_Render_Textures(void);
 	bool Assimp_Textured_Parts(int Count);
 
-	bool Assimp_Render_Faces(void);
-	bool Assimp_Face_Parts(int Count);
+	void Assimp_Render_Faces(void);
+	void Assimp_Face_Parts(int Count);
+
+	void Render_BoundingBoxModel(void);
 
 	void RenderCrossHair(void);
 

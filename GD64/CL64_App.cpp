@@ -76,6 +76,9 @@ CL64_App::CL64_App(void)
 	Hnd_ModelInfoOn_Bmp = NULL;
 	Hnd_GridOn_Bmp = NULL;
 	Hnd_GridOff_Bmp = NULL;
+	Hnd_BBOn_Bmp = NULL;
+	Hnd_BBOff_Bmp = NULL;
+
 
 	BlackBrush = 0;
 	Brush_But_Normal = 0;
@@ -226,6 +229,9 @@ void CL64_App::LoadProgramResource(void)
 
 	Hnd_ModelInfo_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_TB_MODELDATAOFF);
 	Hnd_ModelInfoOn_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_TB_MODELDATAON);
+
+	Hnd_BBOn_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_BONDINGBOXON);
+	Hnd_BBOff_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_BONDINGBOXOFF);
 }
 
 // *************************************************************************

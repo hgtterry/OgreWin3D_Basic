@@ -38,7 +38,9 @@ CL64_OGL_Listener::CL64_OGL_Listener(void)
 	Hair_1RotY = 0;
 	Hair_1RotZ = 0;
 
-	ShowFaces = 0;
+	Flag_ShowFaces = 0;
+	Flag_ShowBoundingBox = 0;
+
 	Light_Activated = 0;
 }
 
@@ -177,12 +179,26 @@ void CL64_OGL_Listener::Render_Loop()
 	}
 
 	// ---------------------- Mesh
-	if (ShowFaces == 1)
+	if (Flag_ShowFaces == 1)
 	{
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
 		Assimp_Render_Faces();
 
+	}
+
+	// ---------------------- Bounding Box
+	//if (App->CL_Model->Model_Loaded == 1 &&
+	if (Flag_ShowBoundingBox == 1)
+	{
+		//if (App->CL_Vm_Model->Model_Type == LoadedFile_Obj)
+		{
+			Render_BoundingBoxModel();
+		}
+		/*if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
+		{
+		RenderPoints();
+		}*/
 	}
 
 	// ---------------------- Crosshair
@@ -296,7 +312,7 @@ bool CL64_OGL_Listener::Assimp_Textured_Parts(int Count)
 // *************************************************************************
 // *		Assimp_Render_Faces:- Terry and Hazel Flanigan 2024	   		   *
 // *************************************************************************
-bool CL64_OGL_Listener::Assimp_Render_Faces(void)
+void CL64_OGL_Listener::Assimp_Render_Faces(void)
 {
 	int Count = 0;
 
@@ -310,13 +326,12 @@ bool CL64_OGL_Listener::Assimp_Render_Faces(void)
 		Count++;
 	}
 
-	return 1;
 }
 
 // *************************************************************************
 // *		Assimp_Face_Parts:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-bool CL64_OGL_Listener::Assimp_Face_Parts(int Count)
+void CL64_OGL_Listener::Assimp_Face_Parts(int Count)
 {
 	int FaceCount = 0;
 	int A = 0;
@@ -347,7 +362,63 @@ bool CL64_OGL_Listener::Assimp_Face_Parts(int Count)
 		glEnd();
 	}
 
-	return 1;
+}
+
+// *************************************************************************
+// *		Render_BoundingBoxModel:- Terry and Hazel Flanigan 2024	  	   *
+// *************************************************************************
+void CL64_OGL_Listener::Render_BoundingBoxModel(void)
+{
+	float m_xMin = App->CL_Scene->S_BoundingBox[0]->BB_Min[0].x;
+	float m_yMin = App->CL_Scene->S_BoundingBox[0]->BB_Min[0].y;
+	float m_zMin = App->CL_Scene->S_BoundingBox[0]->BB_Min[0].z;
+
+	float m_xMax = App->CL_Scene->S_BoundingBox[0]->BB_Max[0].x;
+	float m_yMax = App->CL_Scene->S_BoundingBox[0]->BB_Max[0].y;
+	float m_zMax = App->CL_Scene->S_BoundingBox[0]->BB_Max[0].z;
+
+	glDisable(GL_TEXTURE_2D);
+	glColor3f(1.0f, 0.0f, 0.0f);
+	glBegin(GL_LINES);
+
+	glVertex3f(m_xMin, m_yMin, m_zMin);
+	glVertex3f(m_xMin, m_yMin, m_zMax);
+
+	glVertex3f(m_xMax, m_yMin, m_zMin);
+	glVertex3f(m_xMax, m_yMin, m_zMax);
+
+	glVertex3f(m_xMin, m_yMax, m_zMin);
+	glVertex3f(m_xMin, m_yMax, m_zMax);
+
+	glVertex3f(m_xMax, m_yMax, m_zMin);
+	glVertex3f(m_xMax, m_yMax, m_zMax);
+
+	glVertex3f(m_xMin, m_yMin, m_zMin);
+	glVertex3f(m_xMax, m_yMin, m_zMin);
+
+	glVertex3f(m_xMin, m_yMin, m_zMin);
+	glVertex3f(m_xMin, m_yMax, m_zMin);
+
+	glVertex3f(m_xMax, m_yMin, m_zMin);
+	glVertex3f(m_xMax, m_yMax, m_zMin);
+
+	glVertex3f(m_xMin, m_yMax, m_zMin);
+	glVertex3f(m_xMax, m_yMax, m_zMin);
+
+	glVertex3f(m_xMin, m_yMin, m_zMax);
+	glVertex3f(m_xMax, m_yMin, m_zMax);
+
+	glVertex3f(m_xMin, m_yMin, m_zMax);
+	glVertex3f(m_xMin, m_yMax, m_zMax);
+
+	glVertex3f(m_xMax, m_yMin, m_zMax);
+	glVertex3f(m_xMax, m_yMax, m_zMax);
+
+	glVertex3f(m_xMin, m_yMax, m_zMax);
+	glVertex3f(m_xMax, m_yMax, m_zMax);
+
+	glEnd();
+	glEnable(GL_TEXTURE_2D);
 }
 
 // **************************************************************************

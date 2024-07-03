@@ -229,6 +229,8 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="GD64.ico" />
+    <Image Include="res\MenuBar\BondingBoxOff.bmp" />
+    <Image Include="res\MenuBar\BondingBoxOn.bmp" />
     <Image Include="res\MenuBar\CrossHairOff.bmp" />
     <Image Include="res\MenuBar\CrossHairOn.bmp" />
     <Image Include="res\MenuBar\GridOff.bmp" />

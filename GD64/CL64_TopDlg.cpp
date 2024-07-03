@@ -132,6 +132,13 @@ LRESULT CALLBACK CL64_TopDlg::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam
 			return CDRF_DODEFAULT;
 		}
 
+		if (some_item->idFrom == IDC_TBBOUNDBOX)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+		
 		return CDRF_DODEFAULT;
 	}
 
@@ -188,16 +195,16 @@ LRESULT CALLBACK CL64_TopDlg::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam
 			{
 				HWND Temp = GetDlgItem(hDlg, IDC_TBSHOWFACES);
 
-				if (App->CL_Ogre->RenderListener->ShowFaces == 1)
+				if (App->CL_Ogre->RenderListener->Flag_ShowFaces == 1)
 				{
-					App->CL_Ogre->RenderListener->ShowFaces = 0;
+					App->CL_Ogre->RenderListener->Flag_ShowFaces = 0;
 
 					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshOff_Bmp);
 
 				}
 				else
 				{
-					App->CL_Ogre->RenderListener->ShowFaces = 1;
+					App->CL_Ogre->RenderListener->Flag_ShowFaces = 1;
 
 					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshOn_Bmp);
 
@@ -227,6 +234,31 @@ LRESULT CALLBACK CL64_TopDlg::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam
 				SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_ModelInfoOn_Bmp);
 			}
 
+			return TRUE;
+		}
+
+		//-------------------------------------------------------- Show Bound Box
+		if (LOWORD(wParam) == IDC_TBBOUNDBOX)
+		{
+			//if (App->CL_Model->Model_Loaded == 1)
+			{
+				HWND Temp = GetDlgItem(hDlg, IDC_TBBOUNDBOX);
+
+				if (App->CL_Ogre->RenderListener->Flag_ShowBoundingBox == 1)
+				{
+					App->CL_Ogre->RenderListener->Flag_ShowBoundingBox = 0;
+					//App->CL_TopBar->Toggle_BBox_Flag = 0;
+
+					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_BBOff_Bmp);
+				}
+				else
+				{
+					App->CL_Ogre->RenderListener->Flag_ShowBoundingBox = 1;
+					//App->CL_TopBar->Toggle_BBox_Flag = 1;
+
+					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_BBOn_Bmp);
+				}
+			}
 			return TRUE;
 		}
 
@@ -730,6 +762,9 @@ void CL64_TopDlg::Init_Bmps_Globals(void)
 	Temp = GetDlgItem(TabsHwnd, IDC_TBINFO);
 	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_ModelInfo_Bmp);
 
+	Temp = GetDlgItem(TabsHwnd, IDC_TBBOUNDBOX);
+	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_BBOff_Bmp);
+
 	HWND hTooltip_TB_2 = CreateWindowEx(0, TOOLTIPS_CLASS, "", TTS_ALWAYSTIP | TTS_BALLOON, 0, 0, 0, 0, App->MainHwnd, 0, App->hInst, 0);
 
 	Temp = GetDlgItem(TabsHwnd, IDC_TBSHOWHAIR);
@@ -768,5 +803,13 @@ void CL64_TopDlg::Init_Bmps_Globals(void)
 	ti4.hwnd = App->MainHwnd;
 	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti4);
 
+	Temp = GetDlgItem(TabsHwnd, IDC_TBBOUNDBOX);
+	TOOLINFO ti5 = { 0 };
+	ti5.cbSize = sizeof(ti5);
+	ti5.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti5.uId = (UINT_PTR)Temp;
+	ti5.lpszText = (LPSTR) "Toggle Bounding Box";
+	ti5.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti5);
 }
 

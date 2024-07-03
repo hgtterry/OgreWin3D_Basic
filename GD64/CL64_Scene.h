@@ -26,6 +26,14 @@ distribution.
 #include "Base_Player.h"
 #include "Base_Group.h"
 
+typedef struct AABB_Type {
+	vertex_type BB_Max[1];
+	vertex_type BB_Min[1];
+	vertex_type Size[1];
+	vertex_type Centre[1];
+	float radius;
+} AABB_Type;
+
 class CL64_Scene
 {
 public:
@@ -40,11 +48,14 @@ public:
 	void Set_Paths(void);
 	void Reset_Main_Entity(void);
 	void Main_Entity_Set_Default(void);
+	void Set_BondingBox_Model(bool Create);
 
 	Ogre::Entity* Main_Ent;
 	Ogre::SceneNode* Main_Node;
 
 	Base_Group* Group[100];
+	AABB_Type* S_BoundingBox[1];
+
 
 	char FileName[MAX_PATH];
 	char Path_FileName[MAX_PATH];
