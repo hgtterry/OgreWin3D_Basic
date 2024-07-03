@@ -747,3 +747,52 @@ bool CL64_Converters::NewGet_SubPoseNormals(Ogre::MeshPtr mesh,size_t& vertex_co
 	return 1;
 }
 
+// *************************************************************************
+// *		Get_SkeletonInstance:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+bool CL64_Converters::Get_SkeletonInstance(void)
+{
+
+	int Loop = 0;
+	if (!App->CL_Scene->Main_Ent)
+	{
+		return 0;
+	}
+
+	Ogre::SkeletonInstance* skeletonInstance = App->CL_Scene->Main_Ent->getSkeleton();
+
+	if (skeletonInstance)
+	{
+		App->CL_Scene->BoneCount = skeletonInstance->getNumBones();
+
+		Ogre::Skeleton::BoneIterator itor = skeletonInstance->getBoneIterator();
+		while (itor.hasMoreElements())
+		{
+			Ogre::Bone* bone = itor.getNext();
+
+			App->CL_Scene->S_Bones[Loop] = new Bone_Type;
+
+			Ogre::Node* Parent = bone->getParent();
+			if (Parent == NULL)
+			{
+				App->CL_Scene->S_Bones[Loop]->Parent = -1;
+			}
+			else
+			{
+				Ogre::String ParentName = Parent->getName();
+				Ogre::Bone* Parentbone = skeletonInstance->getBone(ParentName);
+				App->CL_Scene->S_Bones[Loop]->Parent = Parentbone->getHandle();
+			}
+
+			strcpy(App->CL_Scene->S_Bones[Loop]->BoneName, bone->getName().c_str());
+
+			App->CL_Scene->S_Bones[Loop]->TranslationStart.X = bone->_getDerivedPosition().x;
+			App->CL_Scene->S_Bones[Loop]->TranslationStart.Y = bone->_getDerivedPosition().y;
+			App->CL_Scene->S_Bones[Loop]->TranslationStart.Z = bone->_getDerivedPosition().z;
+
+			Loop++;
+		}
+	}
+	return 1;
+}
+

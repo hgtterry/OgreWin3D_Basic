@@ -249,5 +249,11 @@
     <Image Include="res\MenuBar\MeshPointsOff.bmp">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="res\MenuBar\BonesOn.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\MenuBar\BonesOff.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

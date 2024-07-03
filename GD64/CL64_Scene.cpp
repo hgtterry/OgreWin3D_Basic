@@ -33,6 +33,8 @@ CL64_Scene::CL64_Scene(void)
 	MotionCount = 0;
 	VerticeCount = 0;
 	FaceCount = 0;
+	BoneCount = 0;
+
 	Model_Loaded = 0;
 	Player_Added = 0;
 

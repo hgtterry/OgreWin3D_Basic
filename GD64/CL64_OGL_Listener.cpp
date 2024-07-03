@@ -41,6 +41,7 @@ CL64_OGL_Listener::CL64_OGL_Listener(void)
 	Flag_ShowFaces = 0;
 	Flag_ShowBoundingBox = 0;
 	Flag_ShowPoints = 0;
+	Flag_ShowBones = 0;
 
 	Light_Activated = 0;
 }
@@ -192,6 +193,12 @@ void CL64_OGL_Listener::Render_Loop()
 	if (App->CL_Scene->Model_Loaded && Flag_ShowBoundingBox == 1)
 	{
 		Render_BoundingBoxModel();
+	}
+
+	//// ---------------------- Bones
+	if (App->CL_Scene->Model_Loaded == 1 && Flag_ShowBones == 1)
+	{
+		As_RenderBones();
 	}
 
 	// ---------------------- Crosshair
@@ -398,6 +405,72 @@ void CL64_OGL_Listener::Render_As_Points_Parts(int Count)
 
 		VertCount++;
 	}
+}
+
+// *************************************************************************
+// *				RenderBones:- Terry and Hazel Flanigan 2024 	  	   *
+// *************************************************************************
+void CL64_OGL_Listener::As_RenderBones()
+{
+
+	glDisable(GL_TEXTURE_2D);
+	glDisable(GL_DEPTH_TEST);
+	int Start = 0;
+
+	glColor3f(1, 1, 0);
+	glPointSize(6);//PointSize
+	int Point = 0;
+
+	while (Start < App->CL_Scene->BoneCount)
+	{
+
+		if (App->CL_Scene->S_Bones[Start]->Parent == -1)
+		{
+			glColor3f(1, 0, 0);			// Root Joint Colour
+		}
+		else { glColor3f(0, 0, 1); }		// Joint Colours
+
+		glBegin(GL_POINTS);
+		glVertex3f(App->CL_Scene->S_Bones[Start]->TranslationStart.X,
+			App->CL_Scene->S_Bones[Start]->TranslationStart.Y,
+			App->CL_Scene->S_Bones[Start]->TranslationStart.Z);
+
+		glEnd();
+		Start++;
+	}
+
+	Start = 0;
+	while (Start < App->CL_Scene->BoneCount)
+	{
+
+		if (App->CL_Scene->S_Bones[Start]->Parent == -1)
+		{
+			glColor3f(1, 0, 0);			// Root Joint Color Again Both the same
+			glBegin(GL_POINTS);
+			glVertex3f(App->CL_Scene->S_Bones[Start]->TranslationStart.X,
+				App->CL_Scene->S_Bones[Start]->TranslationStart.Y,
+				App->CL_Scene->S_Bones[Start]->TranslationStart.Z);
+			glEnd();
+		}
+		else
+		{
+			glLineWidth(3);
+			glBegin(GL_LINES);
+			glColor3f(1, 1, 0);			// Bone Colours Between Joints
+			glVertex3f(App->CL_Scene->S_Bones[Start]->TranslationStart.X,
+				App->CL_Scene->S_Bones[Start]->TranslationStart.Y,
+				App->CL_Scene->S_Bones[Start]->TranslationStart.Z);
+
+			glVertex3f(App->CL_Scene->S_Bones[App->CL_Scene->S_Bones[Start]->Parent]->TranslationStart.X,
+				App->CL_Scene->S_Bones[App->CL_Scene->S_Bones[Start]->Parent]->TranslationStart.Y,
+				App->CL_Scene->S_Bones[App->CL_Scene->S_Bones[Start]->Parent]->TranslationStart.Z);
+
+			glEnd();
+		}
+
+		Start++;
+	}
+
 }
 
 // *************************************************************************

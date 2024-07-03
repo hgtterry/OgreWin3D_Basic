@@ -162,18 +162,16 @@ void CL64_Importers::Load_Ogre_Model(void)
 
 	App->CL_Ogre->OgreListener->Ogre_Model_Loaded = 1;
 	
-	//App->CL_Grid->Grid_SetVisible(1);
 	App->CL_Converters->Create_MeshGroups();
 	App->CL_Converters->Ogre_To_Mesh_Data();
 
-	//App->CL_Model_Data->HasMesh = 1;
-
 	App->CL_Scene->Set_BondingBox_Model(1);
 
-	App->CL_Scene->Model_Loaded = 1;
-	/*Get_SkeletonInstance();
+	App->CL_Converters->Get_SkeletonInstance();
 
-	Get_BoneNames();
+	App->CL_Scene->Model_Loaded = 1;
+
+	/*Get_BoneNames();
 
 	Get_Motions();
 

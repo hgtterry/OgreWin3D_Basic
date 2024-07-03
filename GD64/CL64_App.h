@@ -119,6 +119,8 @@ public:
 	HANDLE Hnd_MeshPointsOff_Bmp;
 	HANDLE Hnd_BBOn_Bmp;
 	HANDLE Hnd_BBOff_Bmp;
+	HANDLE Hnd_BonesOn_Bmp;
+	HANDLE Hnd_BonesOff_Bmp;
 	HANDLE Hnd_HairOn_Bmp;
 	HANDLE Hnd_HairOff_Bmp;
 	HANDLE Hnd_GridOn_Bmp;

@@ -146,6 +146,13 @@ LRESULT CALLBACK CL64_TopDlg::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam
 			return CDRF_DODEFAULT;
 		}
 		
+		if (some_item->idFrom == IDC_BTSHOWBONES)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+		
 		return CDRF_DODEFAULT;
 	}
 
@@ -264,6 +271,29 @@ LRESULT CALLBACK CL64_TopDlg::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam
 				SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_ModelInfoOn_Bmp);
 			}
 
+			return TRUE;
+		}
+
+		//-------------------------------------------------------- Show Bones
+		if (LOWORD(wParam) == IDC_BTSHOWBONES)
+		{
+			if (App->CL_Scene->Model_Loaded == 1)
+			{
+				HWND Temp = GetDlgItem(hDlg, IDC_BTSHOWBONES);
+
+				if (App->CL_Ogre->RenderListener->Flag_ShowBones == 1)
+				{
+					App->CL_Ogre->RenderListener->Flag_ShowBones = 0;
+
+					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_BonesOff_Bmp);
+				}
+				else
+				{
+					App->CL_Ogre->RenderListener->Flag_ShowBones = 1;
+
+					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_BonesOn_Bmp);
+				}
+			}
 			return TRUE;
 		}
 
@@ -796,6 +826,9 @@ void CL64_TopDlg::Init_Bmps_Globals(void)
 	Temp = GetDlgItem(TabsHwnd, IDC_BTSHOWPOINTS);
 	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshPointsOff_Bmp);
 
+	Temp = GetDlgItem(TabsHwnd, IDC_BTSHOWBONES);
+	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_BonesOff_Bmp);
+
 	HWND hTooltip_TB_2 = CreateWindowEx(0, TOOLTIPS_CLASS, "", TTS_ALWAYSTIP | TTS_BALLOON, 0, 0, 0, 0, App->MainHwnd, 0, App->hInst, 0);
 
 	Temp = GetDlgItem(TabsHwnd, IDC_TBSHOWHAIR);
@@ -851,5 +884,14 @@ void CL64_TopDlg::Init_Bmps_Globals(void)
 	ti6.lpszText = (LPSTR) "Toggle Show Mesh Points";
 	ti6.hwnd = App->MainHwnd;
 	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti6);
+
+	Temp = GetDlgItem(TabsHwnd, IDC_BTSHOWBONES);
+	TOOLINFO ti7 = { 0 };
+	ti7.cbSize = sizeof(ti7);
+	ti7.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti7.uId = (UINT_PTR)Temp;
+	ti7.lpszText = (LPSTR) "Toggle Show Bones/Joints";
+	ti7.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti7);
 }
 

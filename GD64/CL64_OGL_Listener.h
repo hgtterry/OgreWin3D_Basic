@@ -37,6 +37,7 @@ public:
 	bool Flag_ShowFaces;
 	bool Flag_ShowBoundingBox;
 	bool Flag_ShowPoints;
+	bool Flag_ShowBones;
 
 private:
 
@@ -59,6 +60,8 @@ private:
 
 	void Assimp_Render_Points(void);
 	void Render_As_Points_Parts(int Count);
+
+	void As_RenderBones();
 
 	void Render_BoundingBoxModel(void);
 

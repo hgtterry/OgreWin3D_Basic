@@ -34,6 +34,18 @@ typedef struct AABB_Type {
 	float radius;
 } AABB_Type;
 
+typedef struct Bone_Vert { float x, y, z; }Bone_Vert;
+typedef struct Translation_Type { float X, Y, Z; }Translation_Type;
+typedef struct rgb_Type { int Index; }rgb_Type;
+typedef struct Char_type { char Name[256]; }Char_type;
+
+typedef struct Bone_Type {
+	int Parent;
+	Bone_Vert Boneverts;
+	char BoneName[200];
+	Translation_Type TranslationStart;
+}Bone_Type;
+
 class CL64_Scene
 {
 public:
@@ -55,7 +67,7 @@ public:
 
 	Base_Group* Group[100];
 	AABB_Type* S_BoundingBox[1];
-
+	Bone_Type* S_Bones[200];
 
 	char FileName[MAX_PATH];
 	char Path_FileName[MAX_PATH];
@@ -70,6 +82,7 @@ public:
 	int VerticeCount;
 	int FaceCount;
 	int Model_Type;
+	int BoneCount;
 
 	// Ogre
 	int Ogre_Face_Count;
