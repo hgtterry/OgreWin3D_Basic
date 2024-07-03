@@ -243,5 +243,11 @@
     <Image Include="res\MenuBar\BondingBoxOff.bmp">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="res\MenuBar\MeshPointsOn.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\MenuBar\MeshPointsOff.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

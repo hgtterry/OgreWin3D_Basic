@@ -37,8 +37,10 @@
 #define IDB_TB_MODELDATAON              148
 #define IDB_TB_MODELDATAOFF             149
 #define IDB_BONDINGBOXON                150
-#define IDB_BITMAP1                     151
 #define IDB_BONDINGBOXOFF               151
+#define IDB_MESHPOINTSON                152
+#define IDB_BITMAP1                     153
+#define IDB_MESHPOINTSOFF               153
 #define IDC_CK_SU_FULLSCREEN            1000
 #define IDC_ST_STARTUP                  1001
 #define IDC_CK_SU_FULL3DVIEW            1002
@@ -65,7 +67,7 @@
 #define IDC_TBSHOWGRID                  1012
 #define IDC_BT_TD_DEMOSTAB              1012
 #define IDC_BT_TD_DEMOS_DEMO1           1013
-#define IDC_BUTTON5                     1013
+#define IDC_BTSHOWPOINTS                1013
 #define IDC_BT_TD_DEMOS_DEMO2           1014
 #define IDC_TBBOUNDBOX                  1014
 #define IDC_BANNER                      1015
@@ -106,7 +108,7 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
-#define _APS_NEXT_RESOURCE_VALUE        152
+#define _APS_NEXT_RESOURCE_VALUE        154
 #define _APS_NEXT_COMMAND_VALUE         32790
 #define _APS_NEXT_CONTROL_VALUE         1024
 #define _APS_NEXT_SYMED_VALUE           110

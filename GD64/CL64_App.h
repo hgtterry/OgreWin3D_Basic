@@ -115,9 +115,10 @@ public:
 	
 	HANDLE Hnd_MeshOn_Bmp;
 	HANDLE Hnd_MeshOff_Bmp;
+	HANDLE Hnd_MeshPointsOn_Bmp;
+	HANDLE Hnd_MeshPointsOff_Bmp;
 	HANDLE Hnd_BBOn_Bmp;
 	HANDLE Hnd_BBOff_Bmp;
-
 	HANDLE Hnd_HairOn_Bmp;
 	HANDLE Hnd_HairOff_Bmp;
 	HANDLE Hnd_GridOn_Bmp;

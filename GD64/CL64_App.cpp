@@ -69,7 +69,8 @@ CL64_App::CL64_App(void)
 
 	Hnd_MeshOff_Bmp = NULL;
 	Hnd_HairOn_Bmp = NULL;
-
+	Hnd_MeshPointsOn_Bmp = NULL;
+	Hnd_MeshPointsOff_Bmp = NULL;
 	Hnd_HairOn_Bmp = NULL;
 	Hnd_HairOff_Bmp = NULL;
 	Hnd_ModelInfo_Bmp = NULL;
@@ -226,6 +227,9 @@ void CL64_App::LoadProgramResource(void)
 
 	Hnd_MeshOn_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_MESHON);
 	Hnd_MeshOff_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_MESHOFF);
+
+	Hnd_MeshPointsOn_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_MESHPOINTSON);
+	Hnd_MeshPointsOff_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_MESHPOINTSOFF);
 
 	Hnd_ModelInfo_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_TB_MODELDATAOFF);
 	Hnd_ModelInfoOn_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_TB_MODELDATAON);

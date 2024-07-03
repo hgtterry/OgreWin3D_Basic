@@ -40,6 +40,7 @@ CL64_OGL_Listener::CL64_OGL_Listener(void)
 
 	Flag_ShowFaces = 0;
 	Flag_ShowBoundingBox = 0;
+	Flag_ShowPoints = 0;
 
 	Light_Activated = 0;
 }
@@ -167,11 +168,6 @@ void CL64_OGL_Listener::Render_Loop()
 
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
-		/*if (App->CL_Scene->Model_Type == Enums::LoadedFile_Actor)
-		{
-			RenderByTexture();
-		}*/
-
 		if (App->CL_Scene->Model_Type == Enums::LoadedFile_Assimp)
 		{
 			Assimp_Render_Textures();
@@ -184,7 +180,12 @@ void CL64_OGL_Listener::Render_Loop()
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
 		Assimp_Render_Faces();
+	}
 
+	// ---------------------- Points
+	if (App->CL_Scene->Model_Loaded == 1 && Flag_ShowPoints == 1)
+	{
+		Assimp_Render_Points();
 	}
 
 	// ---------------------- Bounding Box
@@ -354,6 +355,49 @@ void CL64_OGL_Listener::Assimp_Face_Parts(int Count)
 		glEnd();
 	}
 
+}
+
+// *************************************************************************
+// *		Assimp_Render_Points:- Terry and Hazel Flanigan 2024	  	   *
+// *************************************************************************
+void CL64_OGL_Listener::Assimp_Render_Points(void)
+{
+	int Count = 0;
+
+	glColor3f(1.0f, 1.0f, 0.0f);
+
+	int GroupCount = App->CL_Scene->GroupCount;
+
+	while (Count < GroupCount)
+	{
+		Render_As_Points_Parts(Count);
+		Count++;
+	}
+}
+
+// *************************************************************************
+// *		Render_As_Points_Parts:- Terry and Hazel Flanigan 2024	   	   *
+// *************************************************************************
+void CL64_OGL_Listener::Render_As_Points_Parts(int Count)
+{
+	glPointSize(5);
+
+	int VertCount = 0;
+
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
+	int GroupVertCount = App->CL_Scene->Group[Count]->GroupVertCount;
+
+	while (VertCount < GroupVertCount)
+	{
+		glBegin(GL_POINTS);
+
+		glVertex3fv(&App->CL_Scene->Group[Count]->vertex_Data[VertCount].x);
+
+		glEnd();
+
+		VertCount++;
+	}
 }
 
 // *************************************************************************
