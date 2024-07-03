@@ -225,5 +225,11 @@
     <Image Include="res\MenuBar\CrossHairOff.bmp">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="res\MenuBar\ShowMeshOn.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\MenuBar\ShowMeshOff.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

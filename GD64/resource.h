@@ -32,6 +32,9 @@
 #define IDD_RESOURCESMATERIAL           143
 #define IDD_IMPORT_OPTIONS              144
 #define IDD_PLEASEWAIT                  145
+#define IDB_MESHON                      146
+#define IDB_BITMAP2                     147
+#define IDB_MESHOFF                     147
 #define IDC_CK_SU_FULLSCREEN            1000
 #define IDC_ST_STARTUP                  1001
 #define IDC_CK_SU_FULL3DVIEW            1002
@@ -99,7 +102,7 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
-#define _APS_NEXT_RESOURCE_VALUE        146
+#define _APS_NEXT_RESOURCE_VALUE        148
 #define _APS_NEXT_COMMAND_VALUE         32790
 #define _APS_NEXT_CONTROL_VALUE         1024
 #define _APS_NEXT_SYMED_VALUE           110

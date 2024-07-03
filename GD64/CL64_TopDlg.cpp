@@ -47,6 +47,8 @@ CL64_TopDlg::CL64_TopDlg(void)
 	Toggle_Demos_Demo_1_Flag = 0;
 	Toggle_Demos_Demo_2_Flag = 0;
 
+	Toggle_Faces_Flag = 0;
+
 	Demo_1_Running_Flag = 0;
 	Demo_2_Running_Flag = 0;
 
@@ -179,16 +181,16 @@ LRESULT CALLBACK CL64_TopDlg::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam
 					if (App->CL_Ogre->RenderListener->ShowFaces == 1)
 						App->CL_Ogre->RenderListener->ShowFaces = 0;
 
-					//App->CL_TopBar->Toggle_Faces_Flag = 0;
+					App->CL_TopDlg->Toggle_Faces_Flag = 0;
 
-					//SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshOff_Bmp);
+					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshOff_Bmp);
 				}
 				else
 				{
 					App->CL_Ogre->RenderListener->ShowFaces = 1;
-					//App->CL_TopBar->Toggle_Faces_Flag = 1;
+					App->CL_TopDlg->Toggle_Faces_Flag = 1;
 
-					//SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshOn_Bmp);
+					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshOn_Bmp);
 				}
 			}
 			return TRUE;

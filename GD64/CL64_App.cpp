@@ -67,6 +67,9 @@ CL64_App::CL64_App(void)
 	Font_CB15 = 0;
 	Font_Arial20 = 0;
 
+	Hnd_MeshOff_Bmp = NULL;
+	Hnd_HairOn_Bmp = NULL;
+
 	Hnd_HairOn_Bmp = NULL;
 	Hnd_HairOff_Bmp = NULL;
 	Hnd_ModelInfo_Bmp = NULL;
@@ -217,6 +220,9 @@ void CL64_App::LoadProgramResource(void)
 
 	Hnd_HairOn_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_HAIRON);
 	Hnd_HairOff_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_HAIROFF);
+
+	Hnd_MeshOn_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_MESHON);
+	Hnd_MeshOff_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_MESHOFF);
 
 	/*Hnd_ModelInfo_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_TB_MODELDATA);
 	Hnd_ModelInfoOn_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_TB_MODELDATAON);*/
