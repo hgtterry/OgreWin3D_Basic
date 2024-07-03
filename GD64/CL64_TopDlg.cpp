@@ -160,6 +160,13 @@ LRESULT CALLBACK CL64_TopDlg::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam
 			return CDRF_DODEFAULT;
 		}
 		
+		if (some_item->idFrom == IDC_BTSHOWTEXTURES)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+		
 		return CDRF_DODEFAULT;
 	}
 
@@ -205,6 +212,29 @@ LRESULT CALLBACK CL64_TopDlg::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam
 				App->CL_Grid->Hair_SetVisible(1);
 
 				SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_HairOn_Bmp);
+			}
+			return TRUE;
+		}
+
+		//-------------------------------------------------------- Show Textures
+		if (LOWORD(wParam) == IDC_BTSHOWTEXTURES)
+		{
+			if (App->CL_Scene->Model_Loaded == 1)
+			{
+				HWND Temp = GetDlgItem(hDlg, IDC_BTSHOWTEXTURES);
+
+				if (App->CL_Ogre->RenderListener->Flag_ShowTextured == 1)
+				{
+					App->CL_Ogre->RenderListener->Flag_ShowTextured = 0;
+
+					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_TexturesOff_Bmp);
+				}
+				else
+				{
+					App->CL_Ogre->RenderListener->Flag_ShowTextured = 1;
+
+					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_TexturesOn_Bmp);
+				}
 			}
 			return TRUE;
 		}
@@ -844,6 +874,12 @@ void CL64_TopDlg::Init_Bmps_Globals(void)
 	Temp = GetDlgItem(TabsHwnd, IDC_TBSHOWHAIR);
 	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_HairOn_Bmp);
 
+	Temp = GetDlgItem(TabsHwnd, IDC_BTSHOWTEXTURES);
+	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_TexturesOff_Bmp);
+
+	Temp = GetDlgItem(TabsHwnd, IDC_TBSHOWFACES);
+	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshOff_Bmp);
+
 	Temp = GetDlgItem(TabsHwnd, IDC_TBSHOWFACES);
 	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshOff_Bmp);
 
@@ -935,5 +971,14 @@ void CL64_TopDlg::Init_Bmps_Globals(void)
 	ti8.lpszText = (LPSTR) "Toggle Show Normals";
 	ti8.hwnd = App->MainHwnd;
 	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti8);
+
+	Temp = GetDlgItem(TabsHwnd, IDC_BTSHOWTEXTURES);
+	TOOLINFO ti9 = { 0 };
+	ti9.cbSize = sizeof(ti9);
+	ti9.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti9.uId = (UINT_PTR)Temp;
+	ti9.lpszText = (LPSTR) "Toggle Show Textures";
+	ti9.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti9);
 }
 

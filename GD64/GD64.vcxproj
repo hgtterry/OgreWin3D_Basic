@@ -245,6 +245,8 @@
     <Image Include="res\MenuBar\ModelDataOn.bmp" />
     <Image Include="res\MenuBar\ShowMeshOff.bmp" />
     <Image Include="res\MenuBar\ShowMeshOn.bmp" />
+    <Image Include="res\MenuBar\TexturesOff.bmp" />
+    <Image Include="res\MenuBar\TexturesOn.bmp" />
     <Image Include="small.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

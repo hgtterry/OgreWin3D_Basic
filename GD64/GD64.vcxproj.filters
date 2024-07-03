@@ -261,5 +261,11 @@
     <Image Include="res\MenuBar\bitmap1.bmp">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="res\MenuBar\TexturesOn.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\MenuBar\TexturesOff.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

@@ -45,6 +45,7 @@ CL64_OGL_Listener::CL64_OGL_Listener(void)
 	Flag_ShowPoints = 0;
 	Flag_ShowBones = 0;
 	Flag_ShowNormals = 0;
+	Flag_ShowTextured = 1;
 
 	Light_Activated = 0;
 }
@@ -165,17 +166,14 @@ void CL64_OGL_Listener::Render_Loop()
 	Translate();
 
 	//---------------------- Textured
-	//if (App->CL_Scene->Model_Loaded == 1 && ShowTextured == 1)
+	if (App->CL_Scene->Model_Loaded == 1 && Flag_ShowTextured == 1)
 	{
 		glEnable(GL_DEPTH_TEST);
 		glShadeModel(GL_SMOOTH);
 
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
-		if (App->CL_Scene->Model_Type == Enums::LoadedFile_Assimp)
-		{
-			Assimp_Render_Textures();
-		}
+		Assimp_Render_Textures();
 	}
 
 	// ---------------------- Mesh
@@ -454,7 +452,6 @@ void CL64_OGL_Listener::Render_As_Normals_Parts(int Count)
 			App->CL_Scene->Group[Count]->vertex_Data[VertCount].z + App->CL_Scene->Group[Count]->Normal_Data[VertCount].z * Normal_Scaler);
 
 		VertCount++;
-
 	}
 
 	glEnd();

@@ -254,5 +254,4 @@ void CL64_Importers::Ogre_Resource_CFG_Loader(char* Extension, char* Extension2)
 	{
 		Reload_Ogre_Model();
 	}
-	
 }

@@ -113,6 +113,8 @@ public:
 
 	HCURSOR CUR;
 	
+	HANDLE Hnd_TexturesOn_Bmp;
+	HANDLE Hnd_TexturesOff_Bmp;
 	HANDLE Hnd_MeshOn_Bmp;
 	HANDLE Hnd_MeshOff_Bmp;
 	HANDLE Hnd_MeshPointsOn_Bmp;

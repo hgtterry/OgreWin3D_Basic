@@ -39,6 +39,7 @@ public:
 	bool Flag_ShowPoints;
 	bool Flag_ShowBones;
 	bool Flag_ShowNormals;
+	bool Flag_ShowTextured;
 
 private:
 
