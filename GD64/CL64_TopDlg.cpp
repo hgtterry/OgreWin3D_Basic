@@ -689,6 +689,9 @@ void CL64_TopDlg::Init_Bmps_Globals(void)
 	Temp = GetDlgItem(TabsHwnd, IDC_TBSHOWHAIR);
 	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_HairOn_Bmp);
 
+	Temp = GetDlgItem(TabsHwnd, IDC_TBSHOWFACES);
+	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshOff_Bmp);
+
 	//Temp = GetDlgItem(TabsHwnd, IDC_TBINFO);
 	//SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_ModelInfo_Bmp);
 
@@ -711,6 +714,15 @@ void CL64_TopDlg::Init_Bmps_Globals(void)
 	ti2.lpszText = (LPSTR) "Toggle Main Grid";
 	ti2.hwnd = App->MainHwnd;
 	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti2);
+
+	Temp = GetDlgItem(TabsHwnd, IDC_TBSHOWFACES);
+	TOOLINFO ti3 = { 0 };
+	ti3.cbSize = sizeof(ti3);
+	ti3.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti3.uId = (UINT_PTR)Temp;
+	ti3.lpszText = (LPSTR) "Toggle Show Mesh/Faces";
+	ti3.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti3);
 
 	/*Temp = GetDlgItem(TabsHwnd, IDC_TBINFO);
 	TOOLINFO ti8 = { 0 };
