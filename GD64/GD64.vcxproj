@@ -82,7 +82,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>..\Bin64\</OutDir>
-    <TargetName>GD64</TargetName>
+    <TargetName>OgreWin3D_Basic</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -148,7 +148,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>false</GenerateDebugInformation>
-      <OutputFile>$(OutDir)GD64.exe</OutputFile>
+      <OutputFile>$(OutDir)OgreWin3D_Basic.exe</OutputFile>
       <AdditionalDependencies>comctl32.lib;OgreMain.lib;OgreOverlay.lib;OgreRTShaderSystem.lib;OgreBites.lib;opengl32.lib;glu32.lib;assimp-vc143-mt.lib;BulletDynamics.lib;BulletCollision.lib;LinearMath.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\Common_64\Ogre3D\libs;..\Common_64\Assimp\Lib;..\Common_64\Bullet\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>LIBCMT.lib;libcpmt.lib</IgnoreSpecificDefaultLibraries>
