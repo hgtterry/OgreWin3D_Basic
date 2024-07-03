@@ -191,7 +191,7 @@ LRESULT CALLBACK CL64_TopDlg::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam
 		// Show Hide Mesh/Faces
 		if (LOWORD(wParam) == IDC_TBSHOWFACES)
 		{
-			//if (App->CL_Scene->Model_Loaded == 1)
+			if (App->CL_Scene->Model_Loaded == 1)
 			{
 				HWND Temp = GetDlgItem(hDlg, IDC_TBSHOWFACES);
 
@@ -240,22 +240,20 @@ LRESULT CALLBACK CL64_TopDlg::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam
 		//-------------------------------------------------------- Show Bound Box
 		if (LOWORD(wParam) == IDC_TBBOUNDBOX)
 		{
-			//if (App->CL_Model->Model_Loaded == 1)
+			if (App->CL_Scene->Model_Loaded == 1)
 			{
 				HWND Temp = GetDlgItem(hDlg, IDC_TBBOUNDBOX);
 
 				if (App->CL_Ogre->RenderListener->Flag_ShowBoundingBox == 1)
 				{
 					App->CL_Ogre->RenderListener->Flag_ShowBoundingBox = 0;
-					//App->CL_TopBar->Toggle_BBox_Flag = 0;
-
+				
 					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_BBOff_Bmp);
 				}
 				else
 				{
 					App->CL_Ogre->RenderListener->Flag_ShowBoundingBox = 1;
-					//App->CL_TopBar->Toggle_BBox_Flag = 1;
-
+					
 					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_BBOn_Bmp);
 				}
 			}

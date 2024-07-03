@@ -179,7 +179,7 @@ void CL64_OGL_Listener::Render_Loop()
 	}
 
 	// ---------------------- Mesh
-	if (Flag_ShowFaces == 1)
+	if (App->CL_Scene->Model_Loaded && Flag_ShowFaces == 1)
 	{
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
@@ -188,17 +188,9 @@ void CL64_OGL_Listener::Render_Loop()
 	}
 
 	// ---------------------- Bounding Box
-	//if (App->CL_Model->Model_Loaded == 1 &&
-	if (Flag_ShowBoundingBox == 1)
+	if (App->CL_Scene->Model_Loaded && Flag_ShowBoundingBox == 1)
 	{
-		//if (App->CL_Vm_Model->Model_Type == LoadedFile_Obj)
-		{
-			Render_BoundingBoxModel();
-		}
-		/*if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
-		{
-		RenderPoints();
-		}*/
+		Render_BoundingBoxModel();
 	}
 
 	// ---------------------- Crosshair
