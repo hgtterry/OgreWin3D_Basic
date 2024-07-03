@@ -233,6 +233,8 @@
     <Image Include="res\MenuBar\CrossHairOn.bmp" />
     <Image Include="res\MenuBar\GridOff.bmp" />
     <Image Include="res\MenuBar\GridOn.bmp" />
+    <Image Include="res\MenuBar\ModelData.bmp" />
+    <Image Include="res\MenuBar\ModelDataOn.bmp" />
     <Image Include="res\MenuBar\ShowMeshOff.bmp" />
     <Image Include="res\MenuBar\ShowMeshOn.bmp" />
     <Image Include="small.ico" />

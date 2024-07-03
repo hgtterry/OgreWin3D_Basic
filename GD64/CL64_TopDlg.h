@@ -44,8 +44,6 @@ public:
 	
 	bool Toggle_PhysicaDebug_Node_Flag;
 
-	bool Toggle_Faces_Flag;
-
 	bool Demo_1_Running_Flag;
 	bool Demo_2_Running_Flag;
 

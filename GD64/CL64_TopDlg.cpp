@@ -47,8 +47,6 @@ CL64_TopDlg::CL64_TopDlg(void)
 	Toggle_Demos_Demo_1_Flag = 0;
 	Toggle_Demos_Demo_2_Flag = 0;
 
-	Toggle_Faces_Flag = 0;
-
 	Demo_1_Running_Flag = 0;
 	Demo_2_Running_Flag = 0;
 
@@ -120,6 +118,20 @@ LRESULT CALLBACK CL64_TopDlg::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam
 			return CDRF_DODEFAULT;
 		}
 
+		if (some_item->idFrom == IDC_TBSHOWFACES)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_TBINFO)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
 		return CDRF_DODEFAULT;
 	}
 
@@ -178,23 +190,46 @@ LRESULT CALLBACK CL64_TopDlg::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam
 
 				if (App->CL_Ogre->RenderListener->ShowFaces == 1)
 				{
-					if (App->CL_Ogre->RenderListener->ShowFaces == 1)
-						App->CL_Ogre->RenderListener->ShowFaces = 0;
-
-					App->CL_TopDlg->Toggle_Faces_Flag = 0;
+					App->CL_Ogre->RenderListener->ShowFaces = 0;
 
 					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshOff_Bmp);
+
 				}
 				else
 				{
 					App->CL_Ogre->RenderListener->ShowFaces = 1;
-					App->CL_TopDlg->Toggle_Faces_Flag = 1;
 
 					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshOn_Bmp);
+
 				}
+
 			}
+
 			return TRUE;
 		}
+
+		//-------------------------------------------------------- Show Info
+		if (LOWORD(wParam) == IDC_TBINFO)
+		{
+			
+			HWND Temp = GetDlgItem(hDlg, IDC_TBINFO);
+
+			if (App->CL_ImGui->Show_Model_Data_F == 1)
+			{
+				App->CL_ImGui->Show_Model_Data_F = 0;
+
+				SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_ModelInfo_Bmp);
+			}
+			else
+			{
+				App->CL_ImGui->Show_Model_Data_F = 1;
+
+				SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_ModelInfoOn_Bmp);
+			}
+
+			return TRUE;
+		}
+
 		break;
 	}
 	return FALSE;
@@ -692,8 +727,8 @@ void CL64_TopDlg::Init_Bmps_Globals(void)
 	Temp = GetDlgItem(TabsHwnd, IDC_TBSHOWFACES);
 	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshOff_Bmp);
 
-	//Temp = GetDlgItem(TabsHwnd, IDC_TBINFO);
-	//SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_ModelInfo_Bmp);
+	Temp = GetDlgItem(TabsHwnd, IDC_TBINFO);
+	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_ModelInfo_Bmp);
 
 	HWND hTooltip_TB_2 = CreateWindowEx(0, TOOLTIPS_CLASS, "", TTS_ALWAYSTIP | TTS_BALLOON, 0, 0, 0, 0, App->MainHwnd, 0, App->hInst, 0);
 
@@ -724,14 +759,14 @@ void CL64_TopDlg::Init_Bmps_Globals(void)
 	ti3.hwnd = App->MainHwnd;
 	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti3);
 
-	/*Temp = GetDlgItem(TabsHwnd, IDC_TBINFO);
-	TOOLINFO ti8 = { 0 };
-	ti8.cbSize = sizeof(ti8);
-	ti8.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
-	ti8.uId = (UINT_PTR)Temp;
-	ti8.lpszText = (LPSTR) "Show Model Information";
-	ti8.hwnd = App->MainHwnd;
-	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti8);*/
+	Temp = GetDlgItem(TabsHwnd, IDC_TBINFO);
+	TOOLINFO ti4 = { 0 };
+	ti4.cbSize = sizeof(ti4);
+	ti4.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti4.uId = (UINT_PTR)Temp;
+	ti4.lpszText = (LPSTR) "Show Information";
+	ti4.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti4);
 
 }
 

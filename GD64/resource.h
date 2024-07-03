@@ -33,8 +33,10 @@
 #define IDD_IMPORT_OPTIONS              144
 #define IDD_PLEASEWAIT                  145
 #define IDB_MESHON                      146
-#define IDB_BITMAP2                     147
 #define IDB_MESHOFF                     147
+#define IDB_TB_MODELDATAON              148
+#define IDB_BITMAP1                     149
+#define IDB_TB_MODELDATAOFF             149
 #define IDC_CK_SU_FULLSCREEN            1000
 #define IDC_ST_STARTUP                  1001
 #define IDC_CK_SU_FULL3DVIEW            1002
@@ -67,7 +69,7 @@
 #define IDC_BANNER                      1015
 #define IDC_BUTTON7                     1015
 #define IDC_STTEXT                      1016
-#define IDC_BUTTON8                     1016
+#define IDC_TBINFO                      1016
 #define IDC_BT_TD_DEBUG_RESOURCES       1017
 #define IDC_ST_BANNER                   1018
 #define IDC_USEDMATERIALS               1019
@@ -102,7 +104,7 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
-#define _APS_NEXT_RESOURCE_VALUE        148
+#define _APS_NEXT_RESOURCE_VALUE        150
 #define _APS_NEXT_COMMAND_VALUE         32790
 #define _APS_NEXT_CONTROL_VALUE         1024
 #define _APS_NEXT_SYMED_VALUE           110
