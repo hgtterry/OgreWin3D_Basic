@@ -168,9 +168,10 @@ void CL64_Importers::Load_Ogre_Model(void)
 
 	//App->CL_Model_Data->HasMesh = 1;
 
-	/*App->CL_Model->Set_BondingBox_Model(1);
+	App->CL_Scene->Set_BondingBox_Model(1);
 
-	Get_SkeletonInstance();
+	App->CL_Scene->Model_Loaded = 1;
+	/*Get_SkeletonInstance();
 
 	Get_BoneNames();
 
