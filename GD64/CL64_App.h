@@ -89,7 +89,7 @@ public:
 
 	bool Custom_Button_Toggle_Tabs(LPNMCUSTOMDRAW item, bool Toggle);
 	bool Custom_Button_Normal(LPNMCUSTOMDRAW item);
-	void Custom_Button_Toggle(LPNMCUSTOMDRAW item, bool Toggle);
+	void Custom_Button_Toggle(LPNMCUSTOMDRAW item, bool Toggle) const;
 	
 	HINSTANCE hInst;
 	HWND MainHwnd;
@@ -131,6 +131,7 @@ public:
 	HANDLE Hnd_NormalsOff_Bmp;
 	HANDLE Hnd_ModelInfoOn_Bmp;
 
+	HPEN BlackPen;
 
 	HBRUSH AppBackground;
 	HBRUSH BlackBrush;
