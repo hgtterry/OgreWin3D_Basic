@@ -96,8 +96,8 @@ public:
 	Ogre::ManualObject* manObj;
 	Ogre::SceneNode* ModelNode;
 
-	Ogre::Entity* OgreEntity;
-	Ogre::SceneNode* OgreNode;
+	Ogre::Entity* TestMesh_Entity;
+	Ogre::SceneNode* TestMesh_Node;
 
 	char Return_Chr[MAX_PATH];
 

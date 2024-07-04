@@ -42,8 +42,8 @@ CL64_Ogre::CL64_Ogre(void)
 	manObj = nullptr;
 	ModelNode = nullptr;
 
-	OgreEntity = nullptr;
-	OgreNode = nullptr;
+	TestMesh_Entity = nullptr;
+	TestMesh_Node = nullptr;
 
 	mResourcePath = "";
 	App_Resource_Group = "App_Resource_Group";
@@ -80,11 +80,15 @@ void CL64_Ogre::InitOgre(void)
 	App->CL_Grid->Grid_Update(1);
 	App->CL_Grid->Hair_Update(1);
 
-	OgreEntity = mSceneMgr->createEntity("Sinbad.mesh");
-	OgreNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
-	OgreNode->attachObject(OgreEntity);
+	TestMesh_Entity = mSceneMgr->createEntity("Sinbad.mesh");
+	TestMesh_Node = mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	TestMesh_Node->attachObject(TestMesh_Entity);
+
 
 	Show_Test_Mesh();
+
+	App->CL_Converters->Ogre_To_Mesh_Data(TestMesh_Entity);
+	App->CL_Scene->Model_Loaded = 1;
 
 	mTrayMgr = new OgreBites::TrayManager("InterfaceName", mWindow);
 
@@ -97,8 +101,6 @@ void CL64_Ogre::InitOgre(void)
 
 	App->CL_Player->Create_Player_Object();
 
-	//Ogre::Entity* Poo = mSceneMgr->createEntity("C:\\Users\\Terry\\Desktop\\Models\\Obj_Models\\crate.obj");
-	
 }
 
 // *************************************************************************
@@ -392,11 +394,11 @@ void CL64_Ogre::Show_Test_Mesh(void)
 {
 	if (flag_Show_Test_Mesh == 1)
 	{
-		OgreNode->setVisible(true);
+		TestMesh_Node->setVisible(true);
 	}
 	else
 	{
-		OgreNode->setVisible(false);
+		TestMesh_Node->setVisible(false);
 	}
 
 }

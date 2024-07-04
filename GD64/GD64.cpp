@@ -188,6 +188,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		// Debug -------------------------------------------------------
 		case ID_DEBUG_CAMERADATA:
 		{
+			
 			if (App->CL_ImGui->Show_Camera_Data_F == 1)
 			{
 				App->CL_ImGui->Show_Camera_Data_F = 0;

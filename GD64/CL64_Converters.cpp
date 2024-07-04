@@ -337,12 +337,12 @@ void CL64_Converters::Get_Data(int Index, int FaceIndex)
 // *************************************************************************
 // *			Create_MeshGroups:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
-void CL64_Converters::Create_MeshGroups()
+void CL64_Converters::Create_MeshGroups(Ogre::Entity* Ogre_Entity)
 {
-	char GroupName[255];
-	char GroupNum[255];
+	char GroupName[MAX_PATH];
+	char GroupNum[MAX_PATH];
 
-	int SubMeshCount = App->CL_Scene->Main_Ent->getNumSubEntities();
+	int SubMeshCount = Ogre_Entity->getNumSubEntities();
 
 	int Count = 0;
 	while (Count < SubMeshCount)
@@ -366,10 +366,8 @@ void CL64_Converters::Create_MeshGroups()
 		strcpy(App->CL_Scene->Group[Count]->GroupName, GroupName);
 
 		//---------------
-		Ogre::SubMesh const* subMesh = App->CL_Scene->Main_Ent->getSubEntity(Count)->getSubMesh();
+		Ogre::SubMesh const* subMesh = Ogre_Entity->getSubEntity(Count)->getSubMesh();
 		strcpy(App->CL_Scene->Group[Count]->MaterialName, subMesh->getMaterialName().c_str());
-
-		//subMesh->useSharedVertices;
 
 		App->CL_Scene->Group[Count]->GroupVertCount = subMesh->vertexData->vertexCount;
 		App->CL_Scene->Group[Count]->IndicesCount = subMesh->vertexData->vertexCount;
@@ -385,8 +383,10 @@ void CL64_Converters::Create_MeshGroups()
 // *************************************************************************
 // *			Ogre_To_Mesh_Data:- Terry and Hazel Flanigan 2024	   	   *
 // *************************************************************************
-bool CL64_Converters::Ogre_To_Mesh_Data()
+bool CL64_Converters::Ogre_To_Mesh_Data(Ogre::Entity* Ogre_Entity)
 {
+	App->CL_Converters->Create_MeshGroups(Ogre_Entity);
+	
 	int FaceCount = 0;
 	int FaceNum = 0;
 	int FaceIndexNum = 0;
@@ -399,7 +399,7 @@ bool CL64_Converters::Ogre_To_Mesh_Data()
 
 	Ogre::int16* BoneIndices;	// Bone Index
 
-	int SubMeshCount = App->CL_Scene->Main_Ent->getNumSubEntities();
+	int SubMeshCount = Ogre_Entity->getNumSubEntities();
 
 	unsigned int Vertloop = 0;
 	unsigned int Faceloop = 0;
@@ -407,11 +407,9 @@ bool CL64_Converters::Ogre_To_Mesh_Data()
 
 	while (Count < SubMeshCount)
 	{
-		Get_SubPose_MeshInstance(App->CL_Scene->Main_Ent->getMesh(), vertex_count, vertices, index_count, indices, Count, BoneIndices);
-
-		int mUVTest = NewGet_SubPoseTextureUV(App->CL_Scene->Main_Ent->getMesh(), Count);
-		NewGet_SubPoseNormals(App->CL_Scene->Main_Ent->getMesh(), vertex_count, normals, Count);
-
+		Get_SubPose_MeshInstance(Ogre_Entity->getMesh(), vertex_count, vertices, index_count, indices, Count, BoneIndices);
+		int mUVTest = NewGet_SubPoseTextureUV(Ogre_Entity->getMesh(), Count);
+		NewGet_SubPoseNormals(Ogre_Entity->getMesh(), vertex_count, normals, Count);
 
 		App->CL_Scene->Group[Count]->vertex_Data.resize(index_count);
 		App->CL_Scene->Group[Count]->Normal_Data.resize(index_count);
@@ -474,10 +472,13 @@ bool CL64_Converters::Ogre_To_Mesh_Data()
 		App->CL_Scene->FaceCount = App->CL_Scene->FaceCount + FaceIndexNum;
 
 
-		GetBoneAssignment(App->CL_Scene->Main_Ent->getMesh(), Count, 0);
+		GetBoneAssignment(Ogre_Entity->getMesh(), Count, 0);
 
 		Count++;
 	}
+	
+	App->CL_Scene->Set_BondingBox_Model(true);
+	App->CL_Converters->Get_SkeletonInstance(Ogre_Entity);
 
 	return 1;
 }
@@ -538,7 +539,7 @@ void CL64_Converters::Get_SubPose_MeshInstance(Ogre::MeshPtr mesh,
 
 		float* pReal;
 
-		if (App->CL_Scene->Main_Ent->hasSkeleton() == 1)
+		if (mesh->hasSkeleton() == 1)
 		{
 			Ogre::SubMesh::BoneAssignmentIterator itor = submesh->getBoneAssignmentIterator();
 
@@ -750,16 +751,16 @@ bool CL64_Converters::NewGet_SubPoseNormals(Ogre::MeshPtr mesh,size_t& vertex_co
 // *************************************************************************
 // *		Get_SkeletonInstance:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
-bool CL64_Converters::Get_SkeletonInstance(void)
+bool CL64_Converters::Get_SkeletonInstance(Ogre::Entity* Ogre_Entity)
 {
 
 	int Loop = 0;
-	if (!App->CL_Scene->Main_Ent)
+	if (!Ogre_Entity)
 	{
 		return 0;
 	}
 
-	Ogre::SkeletonInstance* skeletonInstance = App->CL_Scene->Main_Ent->getSkeleton();
+	Ogre::SkeletonInstance* skeletonInstance = Ogre_Entity->getSkeleton();
 
 	if (skeletonInstance)
 	{

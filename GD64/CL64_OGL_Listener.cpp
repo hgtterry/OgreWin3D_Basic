@@ -45,7 +45,7 @@ CL64_OGL_Listener::CL64_OGL_Listener(void)
 	Flag_ShowPoints = 0;
 	Flag_ShowBones = 0;
 	Flag_ShowNormals = 0;
-	Flag_ShowTextured = 1;
+	Flag_ShowTextured = 0;
 
 	Light_Activated = 0;
 }
