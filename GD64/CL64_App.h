@@ -105,6 +105,7 @@ public:
 	bool Block_Mouse_Buttons;
 
 	char GD_Directory_FullPath[MAX_PATH];
+	char App_Version[MAX_PATH];
 
 	bool Debug_App;
 

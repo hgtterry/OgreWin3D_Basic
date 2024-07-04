@@ -743,14 +743,35 @@ INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 	{
 		SendDlgItemMessage(hDlg, IDC_ST_ABOUT_BANNER, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ST_ABOUT_VERSION, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_LIST_ABOUT_VERSIONS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
-		char Ver[MAX_PATH];
-		LoadString(App->hInst, IDS_VERSION,Ver, MAX_LOADSTRING);
-		
-		SetDlgItemText(hDlg, IDC_ST_ABOUT_VERSION, Ver);
+		char buf[MAX_PATH];
 
-		//IDC_LIST_ABOUT_VERSIONS
+		SetDlgItemText(hDlg, IDC_ST_ABOUT_VERSION, App->App_Version);
+
+		strcpy(buf, "OgreWin3D_Basic Version:- ");
+		strcat(buf, App->App_Version);
+		strcat(buf, "  (64bit Build)");
+		SendDlgItemMessage(hDlg, IDC_LIST_ABOUT_VERSIONS, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+
+		SendDlgItemMessage(hDlg, IDC_LIST_ABOUT_VERSIONS, LB_ADDSTRING, (WPARAM)0, (LPARAM)" ");
+
+		sprintf(buf, "%s", "Ogre Version:- 14.2.5 (Tsathoggua)");
+		SendDlgItemMessage(hDlg, IDC_LIST_ABOUT_VERSIONS, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+
+		sprintf(buf, "%s", "Imgui Version:- 1.90.4");
+		SendDlgItemMessage(hDlg, IDC_LIST_ABOUT_VERSIONS, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+
+		sprintf(buf, "%s", "Bullet Version:- 2.86.1");
+		SendDlgItemMessage(hDlg, IDC_LIST_ABOUT_VERSIONS, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+
+		SendDlgItemMessage(hDlg, IDC_LIST_ABOUT_VERSIONS, LB_ADDSTRING, (WPARAM)0, (LPARAM)" ");
+		SendDlgItemMessage(hDlg, IDC_LIST_ABOUT_VERSIONS, LB_ADDSTRING, (WPARAM)0, (LPARAM)" ");
+
+		sprintf(buf, "%s", "Terry and Hazel Flanigan (Inflanite_HGT)");
+		SendDlgItemMessage(hDlg, IDC_LIST_ABOUT_VERSIONS, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+
 		return (INT_PTR)TRUE;
 	}
 

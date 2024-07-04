@@ -141,6 +141,8 @@ void CL64_App::InitApp(void)
 
 	SetBrushes_Fonts();
 
+	LoadString(App->hInst, IDS_VERSION, App_Version, MAX_PATH);
+
 	App->CL_Preferences->Read_Preferences();
 }
 
