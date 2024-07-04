@@ -87,9 +87,10 @@ public:
 	void LoadProgramResource(void);
 	void SetBrushes_Fonts(void);
 
-	bool Custom_Button_Toggle_Tabs(LPNMCUSTOMDRAW item, bool Toggle);
-	bool Custom_Button_Normal(LPNMCUSTOMDRAW item);
 	void Custom_Button_Toggle(LPNMCUSTOMDRAW item, bool Toggle) const;
+	void Custom_Button_Toggle_Tabs(LPNMCUSTOMDRAW item, bool Toggle) const;
+	bool Custom_Button_Normal(LPNMCUSTOMDRAW item) const;
+	bool Custom_Button_Globals(LPNMCUSTOMDRAW item) const;
 	
 	HINSTANCE hInst;
 	HWND MainHwnd;
@@ -132,7 +133,7 @@ public:
 	HANDLE Hnd_ModelInfoOn_Bmp;
 
 	HPEN BlackPen;
-
+	HPEN GreenPen;
 	HBRUSH AppBackground;
 	HBRUSH BlackBrush;
 	HBRUSH Brush_But_Normal;

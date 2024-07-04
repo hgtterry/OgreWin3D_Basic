@@ -88,6 +88,8 @@ CL64_App::CL64_App(void)
 	Hnd_BBOff_Bmp = NULL;
 
 	BlackPen = 0;
+	GreenPen = 0;
+
 	BlackBrush = 0;
 	Brush_But_Normal = 0;
 	Brush_But_Normal = 0;
@@ -274,6 +276,7 @@ void CL64_App::SetBrushes_Fonts(void)
 	Brush_Tabs_UnSelected = CreateSolidBrush(RGB(190, 190, 190));
 
 	BlackPen = CreatePen(PS_INSIDEFRAME, 0, RGB(0, 0, 0));
+	GreenPen = CreatePen(PS_INSIDEFRAME, 0, RGB(0, 255, 0));
 
 	HotBrush_1 = CreateSolidBrush(RGB(0, 240, 0));
 	HotBrush_2 = CreateSolidBrush(RGB(240, 240, 240));
@@ -284,138 +287,13 @@ void CL64_App::SetBrushes_Fonts(void)
 }
 
 // *************************************************************************
-// *	Custom_Button_Toggle_Tabs:- Terry and Hazel Flanigan 2024  	  	   *
-// *************************************************************************
-bool CL64_App::Custom_Button_Toggle_Tabs(LPNMCUSTOMDRAW item, bool Toggle)
-{
-	static HBRUSH defaultbrush = NULL;
-	static HBRUSH hotbrush = NULL;
-	static HBRUSH selectbrush = NULL;
-
-	{
-		if (item->uItemState & CDIS_HOT) //Our mouse is over the button
-		{
-			//Select our colour when the mouse hovers our button
-
-			if (Toggle == 1)
-			{
-				hotbrush = HotBrush_2; // Gray
-			}
-			else
-			{
-				hotbrush = HotBrush_2; // Gray
-			}
-
-			HPEN pen = CreatePen(PS_INSIDEFRAME, 0, RGB(240, 240, 240));
-
-			HGDIOBJ old_pen = SelectObject(item->hdc, pen);
-			HGDIOBJ old_brush = SelectObject(item->hdc, hotbrush);
-
-			RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 0, 0);
-
-			SelectObject(item->hdc, old_pen);
-			SelectObject(item->hdc, old_brush);
-			DeleteObject(pen);
-
-			return CDRF_DODEFAULT;
-		}
-
-		//Select our colour when our button is doing nothing
-
-		if (Toggle == 1)
-		{
-			defaultbrush = App->Brush_Tabs; // Selected
-		}
-		else
-		{
-			defaultbrush = Brush_Tabs_UnSelected; // Unselected 
-		}
-
-		HPEN pen = CreatePen(PS_INSIDEFRAME, 0, RGB(255, 255, 255));
-
-		HGDIOBJ old_pen = SelectObject(item->hdc, pen);
-		HGDIOBJ old_brush = SelectObject(item->hdc, defaultbrush);
-
-		RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 0, 0);
-
-		SelectObject(item->hdc, old_pen);
-		SelectObject(item->hdc, old_brush);
-		DeleteObject(pen);
-
-		return CDRF_DODEFAULT;
-	}
-
-	return CDRF_DODEFAULT;
-}
-
-// *************************************************************************
-// *		Custom_Button_Normal:- Terry and Hazel Flanigan 2024  	  	   *
-// *************************************************************************
-bool CL64_App::Custom_Button_Normal(LPNMCUSTOMDRAW item)
-{
-
-	if (item->uItemState & CDIS_SELECTED) // Push Down
-	{
-		//Create pen for button border
-		HPEN pen = CreatePen(PS_INSIDEFRAME, 0, RGB(0, 0, 0));
-
-		//Select our brush into hDC
-		HGDIOBJ old_pen = SelectObject(item->hdc, pen);
-		HGDIOBJ old_brush = SelectObject(item->hdc, App->Brush_But_Pressed);
-
-		RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 5, 5);
-
-		//Clean up
-		SelectObject(item->hdc, old_pen);
-		SelectObject(item->hdc, old_brush);
-		DeleteObject(pen);
-
-		return CDRF_DODEFAULT;
-	}
-	else
-	{
-		if (item->uItemState & CDIS_HOT) //Our mouse is over the button
-		{
-
-			HPEN pen = CreatePen(PS_INSIDEFRAME, 0, RGB(0, 255, 0));
-
-			HGDIOBJ old_pen = SelectObject(item->hdc, pen);
-			HGDIOBJ old_brush = SelectObject(item->hdc, App->Brush_But_Hover);
-
-			RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 5, 5);
-
-			SelectObject(item->hdc, old_pen);
-			SelectObject(item->hdc, old_brush);
-			DeleteObject(pen);
-
-			return CDRF_DODEFAULT;
-		}
-
-		HPEN pen = CreatePen(PS_INSIDEFRAME, 0, RGB(0, 0, 0)); // Idle 
-
-		HGDIOBJ old_pen = SelectObject(item->hdc, pen);
-		HGDIOBJ old_brush = SelectObject(item->hdc, App->Brush_But_Normal);
-
-		RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 5, 5);
-
-		SelectObject(item->hdc, old_pen);
-		SelectObject(item->hdc, old_brush);
-		DeleteObject(pen);
-
-		return CDRF_DODEFAULT;
-	}
-
-	return CDRF_DODEFAULT;
-}
-
-// *************************************************************************
 // *		Custom_Button_Toggle:- Terry and Hazel Flanigan 2024   	 	   *
 // *************************************************************************
 void CL64_App::Custom_Button_Toggle(LPNMCUSTOMDRAW item, bool Toggle) const
 {
 	static HBRUSH defaultbrush = NULL;
 	static HBRUSH hotbrush = NULL;
-	
+
 	// ---------------------------------------------- Hover
 	if (item->uItemState & CDIS_HOT) // Hover States
 	{
@@ -428,14 +306,11 @@ void CL64_App::Custom_Button_Toggle(LPNMCUSTOMDRAW item, bool Toggle) const
 			hotbrush = App->HotBrush_2; // Gray
 		}
 
-		HGDIOBJ old_pen = SelectObject(item->hdc, BlackPen);
-		HGDIOBJ old_brush = SelectObject(item->hdc, hotbrush);
-
 		RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 5, 5);
 
-		SelectObject(item->hdc, old_pen);
-		SelectObject(item->hdc, old_brush);
-		
+		SelectObject(item->hdc, BlackPen);
+		SelectObject(item->hdc, hotbrush);
+
 		return;
 	}
 
@@ -449,12 +324,165 @@ void CL64_App::Custom_Button_Toggle(LPNMCUSTOMDRAW item, bool Toggle) const
 		defaultbrush = Brush_But_Normal;
 	}
 
-	HGDIOBJ old_pen = SelectObject(item->hdc, BlackPen);
-	HGDIOBJ old_brush = SelectObject(item->hdc, defaultbrush);
+	SelectObject(item->hdc, BlackPen);
+	SelectObject(item->hdc, defaultbrush);
 
 	RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 5, 5);
 
+	SelectObject(item->hdc, BlackPen);
+	SelectObject(item->hdc, defaultbrush);
+
+}
+
+// *************************************************************************
+// *	Custom_Button_Toggle_Tabs:- Terry and Hazel Flanigan 2024  	  	   *
+// *************************************************************************
+void CL64_App::Custom_Button_Toggle_Tabs(LPNMCUSTOMDRAW item, bool Toggle) const
+{
+	static HBRUSH defaultbrush = NULL;
+	static HBRUSH hotbrush = NULL;
+
+	// ---------------------------------------------- Hover
+	if (item->uItemState & CDIS_HOT)
+	{
+		if (Toggle == 1)
+		{
+			hotbrush = HotBrush_2; // Gray
+		}
+		else
+		{
+			hotbrush = HotBrush_2; // Gray
+		}
+
+		HPEN pen = CreatePen(PS_INSIDEFRAME, 0, RGB(240, 240, 240));
+
+		HGDIOBJ old_pen = SelectObject(item->hdc, pen);
+		HGDIOBJ old_brush = SelectObject(item->hdc, hotbrush);
+
+		RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 0, 0);
+
+		SelectObject(item->hdc, old_pen);
+		SelectObject(item->hdc, old_brush);
+		DeleteObject(pen);
+
+		return;
+	}
+
+	// ---------------------------------------------- Selectd States
+	if (Toggle == 1)
+	{
+		defaultbrush = App->Brush_Tabs; // Selected
+	}
+	else
+	{
+		defaultbrush = Brush_Tabs_UnSelected; // Unselected 
+	}
+
+	HPEN pen = CreatePen(PS_INSIDEFRAME, 0, RGB(255, 255, 255));
+
+	HGDIOBJ old_pen = SelectObject(item->hdc, pen);
+	HGDIOBJ old_brush = SelectObject(item->hdc, defaultbrush);
+
+	RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 0, 0);
+
 	SelectObject(item->hdc, old_pen);
 	SelectObject(item->hdc, old_brush);
-	
+	DeleteObject(pen);
+
 }
+
+// *************************************************************************
+// *		Custom_Button_Normal:- Terry and Hazel Flanigan 2024  	  	   *
+// *************************************************************************
+bool CL64_App::Custom_Button_Normal(LPNMCUSTOMDRAW item) const
+{
+	if (item->uItemState & CDIS_SELECTED) // Push Down
+	{
+		SelectObject(item->hdc, BlackPen);
+		SelectObject(item->hdc, Brush_But_Pressed);
+
+		RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 5, 5);
+
+		SelectObject(item->hdc, BlackPen);
+		SelectObject(item->hdc, Brush_But_Pressed);
+	
+		return CDRF_DODEFAULT;
+	}
+	else
+	{
+		if (item->uItemState & CDIS_HOT) //Our mouse is over the button
+		{
+
+			SelectObject(item->hdc, GreenPen);
+			SelectObject(item->hdc, Brush_But_Hover);
+
+			RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 5, 5);
+
+			SelectObject(item->hdc, GreenPen);
+			SelectObject(item->hdc, Brush_But_Hover);
+	
+			return CDRF_DODEFAULT;
+		}
+
+		SelectObject(item->hdc, BlackPen);
+		SelectObject(item->hdc, App->Brush_But_Normal);
+
+		RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 5, 5);
+
+		SelectObject(item->hdc, BlackPen);
+		SelectObject(item->hdc, Brush_But_Normal);
+		
+		return CDRF_DODEFAULT;
+	}
+
+	return CDRF_DODEFAULT;
+}
+
+// *************************************************************************
+// *		Custom_Button_Globals:- Terry and Hazel Flanigan 2024  	  	   *
+// *************************************************************************
+bool CL64_App::Custom_Button_Globals(LPNMCUSTOMDRAW item) const
+{
+
+	if (item->uItemState & CDIS_SELECTED) // Push Down
+	{
+		SelectObject(item->hdc, BlackPen);
+		SelectObject(item->hdc, App->Brush_But_Pressed);
+
+		RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 5, 5);
+
+		SelectObject(item->hdc, BlackPen);
+		SelectObject(item->hdc, App->Brush_But_Pressed);
+
+		return CDRF_DODEFAULT;
+	}
+	else
+	{
+		if (item->uItemState & CDIS_HOT) //Our mouse is over the button
+		{
+
+			SelectObject(item->hdc, GreenPen);
+			SelectObject(item->hdc, Brush_But_Hover);
+
+			RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 5, 5);
+
+			SelectObject(item->hdc, GreenPen);
+			SelectObject(item->hdc, Brush_But_Hover);
+
+			return CDRF_DODEFAULT;
+		}
+
+		HGDIOBJ old_pen = SelectObject(item->hdc, BlackPen);
+		HGDIOBJ old_brush = SelectObject(item->hdc, Brush_But_Normal);
+
+		RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 5, 5);
+
+		SelectObject(item->hdc, old_pen);
+		SelectObject(item->hdc, old_brush);
+
+		return CDRF_DODEFAULT;
+	}
+
+	return CDRF_DODEFAULT;
+}
+
