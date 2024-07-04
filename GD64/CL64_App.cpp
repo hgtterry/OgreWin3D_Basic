@@ -273,7 +273,7 @@ void CL64_App::SetBrushes_Fonts(void)
 	Brush_Tabs = CreateSolidBrush(RGB(255, 255, 255));
 	Brush_Tabs_UnSelected = CreateSolidBrush(RGB(190, 190, 190));
 
-	BlackPen = CreatePen(PS_INSIDEFRAME, 0, RGB(0, 255, 0));
+	BlackPen = CreatePen(PS_INSIDEFRAME, 0, RGB(0, 0, 0));
 
 	HotBrush_1 = CreateSolidBrush(RGB(0, 240, 0));
 	HotBrush_2 = CreateSolidBrush(RGB(240, 240, 240));
@@ -431,7 +431,7 @@ void CL64_App::Custom_Button_Toggle(LPNMCUSTOMDRAW item, bool Toggle) const
 		HGDIOBJ old_pen = SelectObject(item->hdc, BlackPen);
 		HGDIOBJ old_brush = SelectObject(item->hdc, hotbrush);
 
-		RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 0, 0);
+		RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 5, 5);
 
 		SelectObject(item->hdc, old_pen);
 		SelectObject(item->hdc, old_brush);
@@ -452,7 +452,7 @@ void CL64_App::Custom_Button_Toggle(LPNMCUSTOMDRAW item, bool Toggle) const
 	HGDIOBJ old_pen = SelectObject(item->hdc, BlackPen);
 	HGDIOBJ old_brush = SelectObject(item->hdc, defaultbrush);
 
-	RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 0, 0);
+	RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 5, 5);
 
 	SelectObject(item->hdc, old_pen);
 	SelectObject(item->hdc, old_brush);
