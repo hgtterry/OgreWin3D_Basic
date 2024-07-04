@@ -27,16 +27,7 @@
 #include "OgreConfigFile.h"
 #include "OgreStringConverter.h"
 #include "OgreException.h"
-//#include "OgreTerrain.h"
-//#include "OgreTerrainGroup.h"
-//#include "OgreTerrainMaterialGeneratorA.h"
 #include "OgreTextAreaOverlayElement.h"
-//#include "OgreBillboardParticleRenderer.h"
-//#include "OgreStringConverter.h"
-//#include "OgreDefaultHardwareBufferManager.h"
-//#include "OgreHardwareVertexBuffer.h"
-//#include "OgreVertexIndexData.h"
-//#include "OgreResourceGroupManager.h"
 
 #include <gl/gl.h>
 #include <gl/glu.h>
@@ -67,6 +58,15 @@ namespace Enums
 		Usage_Player = 2
 		
 	};
+
+	enum Scene_Mode
+	{
+		Scene_Mode_None = 0,		// No Scene Mode Set
+		Scene_Mode_TestMesh = 2,	// Test Mesh at startup
+		Scene_Mode_ExtMesh = 3,
+		Scene_Mode_MeshData = 4
+	};
+
 }
 
 #define Debug App->Debug_Text();

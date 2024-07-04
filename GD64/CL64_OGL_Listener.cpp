@@ -173,7 +173,7 @@ void CL64_OGL_Listener::Render_Loop()
 
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
-		Assimp_Render_Textures();
+		MeshData_Render_Textures();
 	}
 
 	// ---------------------- Mesh
@@ -181,31 +181,31 @@ void CL64_OGL_Listener::Render_Loop()
 	{
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-		Assimp_Render_Faces();
+		MeshData_Render_Faces();
 	}
 
 	// ---------------------- Points
 	if (App->CL_Scene->Model_Loaded == 1 && Flag_ShowPoints == 1)
 	{
-		Assimp_Render_Points();
+		MeshData_Render_Points();
 	}
 
 	// ---------------------- Bounding Box
 	if (App->CL_Scene->Model_Loaded && Flag_ShowBoundingBox == 1)
 	{
-		Render_BoundingBoxModel();
+		MeshData_Render_BoundingBox();
 	}
 
 	// ---------------------- Normals
 	if (App->CL_Scene->Model_Loaded == 1 && Flag_ShowNormals == 1)
 	{
-		Assimp_Render_Normals();
+		MeshData_Render_Normals();
 	}
 
 	// ---------------------- Bones
 	if (App->CL_Scene->Model_Loaded == 1 && Flag_ShowBones == 1)
 	{
-		As_RenderBones();
+		MeshData_RenderBones();
 	}
 
 	// ---------------------- Crosshair
@@ -237,9 +237,9 @@ void CL64_OGL_Listener::Translate(void)
 }
 
 // *************************************************************************
-// *		Assimp_Render_Textures:- Terry and Hazel Flanigan 2024	   	   *
+// *		MeshData_Render_Textures:- Terry and Hazel Flanigan 2024	   *
 // *************************************************************************
-bool CL64_OGL_Listener::Assimp_Render_Textures(void)
+bool CL64_OGL_Listener::MeshData_Render_Textures(void)
 {
 	int Count = 0;
 	glEnable(GL_BLEND);
@@ -253,7 +253,7 @@ bool CL64_OGL_Listener::Assimp_Render_Textures(void)
 	Count = 0;
 	while (Count < GroupCount)
 	{
-		Assimp_Textured_Parts(Count);
+		MeshData_Textured_Groups(Count);
 		Count++;
 	}
 
@@ -262,9 +262,9 @@ bool CL64_OGL_Listener::Assimp_Render_Textures(void)
 	return 1;
 }
 // *************************************************************************
-// *		Assimp_Textured_Parts:- Terry and Hazel Flanigan 2024		   *
+// *		MeshData_Textured_Groups:- Terry and Hazel Flanigan 2024	   *
 // *************************************************************************
-bool CL64_OGL_Listener::Assimp_Textured_Parts(int Count)
+bool CL64_OGL_Listener::MeshData_Textured_Groups(int Count)
 {
 	int VertCount = 0;
 	int A = 0;
@@ -317,9 +317,9 @@ bool CL64_OGL_Listener::Assimp_Textured_Parts(int Count)
 }
 
 // *************************************************************************
-// *		Assimp_Render_Faces:- Terry and Hazel Flanigan 2024	   		   *
+// *		MeshData_Render_Faces:- Terry and Hazel Flanigan 2024	 	   *
 // *************************************************************************
-void CL64_OGL_Listener::Assimp_Render_Faces(void)
+void CL64_OGL_Listener::MeshData_Render_Faces(void)
 {
 	int Count = 0;
 
@@ -329,16 +329,16 @@ void CL64_OGL_Listener::Assimp_Render_Faces(void)
 
 	while (Count < GroupCount)
 	{
-		Assimp_Face_Parts(Count);
+		MeshData_Face_Groups(Count);
 		Count++;
 	}
 
 }
 
 // *************************************************************************
-// *		Assimp_Face_Parts:- Terry and Hazel Flanigan 2024			   *
+// *		MeshData_Face_Groups:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
-void CL64_OGL_Listener::Assimp_Face_Parts(int Count)
+void CL64_OGL_Listener::MeshData_Face_Groups(int Count)
 {
 	int FaceCount = 0;
 	int A = 0;
@@ -372,9 +372,9 @@ void CL64_OGL_Listener::Assimp_Face_Parts(int Count)
 }
 
 // *************************************************************************
-// *		Assimp_Render_Points:- Terry and Hazel Flanigan 2024	  	   *
+// *		MeshData_Render_Points:- Terry and Hazel Flanigan 2024	  	   *
 // *************************************************************************
-void CL64_OGL_Listener::Assimp_Render_Points(void)
+void CL64_OGL_Listener::MeshData_Render_Points(void)
 {
 	int Count = 0;
 
@@ -384,15 +384,15 @@ void CL64_OGL_Listener::Assimp_Render_Points(void)
 
 	while (Count < GroupCount)
 	{
-		Render_As_Points_Parts(Count);
+		MeshData_Points_Groups(Count);
 		Count++;
 	}
 }
 
 // *************************************************************************
-// *		Render_As_Points_Parts:- Terry and Hazel Flanigan 2024	   	   *
+// *		MeshData_Points_Groups:- Terry and Hazel Flanigan 2024	   	   *
 // *************************************************************************
-void CL64_OGL_Listener::Render_As_Points_Parts(int Count)
+void CL64_OGL_Listener::MeshData_Points_Groups(int Count)
 {
 	glPointSize(5);
 
@@ -415,9 +415,9 @@ void CL64_OGL_Listener::Render_As_Points_Parts(int Count)
 }
 
 //**************************************************************************
-// *		Assimp_Render_Normals:- Terry and Hazel Flanigan 2024   	   *
+// *		MeshData_Render_Normals:- Terry and Hazel Flanigan 2024   	   *
 // *************************************************************************
-void CL64_OGL_Listener::Assimp_Render_Normals(void)
+void CL64_OGL_Listener::MeshData_Render_Normals(void)
 {
 	int Count = 0;
 
@@ -427,15 +427,15 @@ void CL64_OGL_Listener::Assimp_Render_Normals(void)
 
 	while (Count < GroupCount)
 	{
-		Render_As_Normals_Parts(Count);
+		MeshData_Normals_Groups(Count);
 		Count++;
 	}
 }
 
 // *************************************************************************
-// *		Render_AsNormals_Part:- Terry and Hazel Flanigan 2024	 	   *
+// *		MeshData_Normals_Groups:- Terry and Hazel Flanigan 2024	 	   *
 // *************************************************************************
-void CL64_OGL_Listener::Render_As_Normals_Parts(int Count)
+void CL64_OGL_Listener::MeshData_Normals_Groups(int Count)
 {
 	int VertCount = 0;
 
@@ -458,17 +458,16 @@ void CL64_OGL_Listener::Render_As_Normals_Parts(int Count)
 }
 
 // *************************************************************************
-// *				RenderBones:- Terry and Hazel Flanigan 2024 	  	   *
+// *		MeshData_RenderBones:- Terry and Hazel Flanigan 2024 	  	   *
 // *************************************************************************
-void CL64_OGL_Listener::As_RenderBones()
+void CL64_OGL_Listener::MeshData_RenderBones()
 {
-
 	glDisable(GL_TEXTURE_2D);
 	glDisable(GL_DEPTH_TEST);
 	int Start = 0;
 
 	glColor3f(1, 1, 0);
-	glPointSize(6);//PointSize
+	glPointSize(6); //PointSize
 	int Point = 0;
 
 	while (Start < App->CL_Scene->BoneCount)
@@ -490,6 +489,7 @@ void CL64_OGL_Listener::As_RenderBones()
 	}
 
 	Start = 0;
+
 	while (Start < App->CL_Scene->BoneCount)
 	{
 
@@ -524,9 +524,9 @@ void CL64_OGL_Listener::As_RenderBones()
 }
 
 // *************************************************************************
-// *		Render_BoundingBoxModel:- Terry and Hazel Flanigan 2024	  	   *
+// *	MeshData_Render_BoundingBox:- Terry and Hazel Flanigan 2024	  	   *
 // *************************************************************************
-void CL64_OGL_Listener::Render_BoundingBoxModel(void)
+void CL64_OGL_Listener::MeshData_Render_BoundingBox(void)
 {
 	float m_xMin = App->CL_Scene->S_BoundingBox[0]->BB_Min[0].x;
 	float m_yMin = App->CL_Scene->S_BoundingBox[0]->BB_Min[0].y;

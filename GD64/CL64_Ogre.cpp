@@ -84,19 +84,17 @@ void CL64_Ogre::InitOgre(void)
 	TestMesh_Node = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	TestMesh_Node->attachObject(TestMesh_Entity);
 
-
 	Show_Test_Mesh();
 
 	App->CL_Converters->Ogre_To_Mesh_Data(TestMesh_Entity);
+	App->CL_Scene->Scene_Mode = Enums::Scene_Mode_TestMesh;
 	App->CL_Scene->Model_Loaded = 1;
 
 	mTrayMgr = new OgreBites::TrayManager("InterfaceName", mWindow);
-
 	mTrayMgr->showAll();
 	mTrayMgr->showFrameStats(OgreBites::TL_TOPLEFT);
 	mTrayMgr->hideCursor();
 	
-
 	App->CL_ImGui->Init_ImGui();
 
 	App->CL_Player->Create_Player_Object();

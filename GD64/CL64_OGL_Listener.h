@@ -54,21 +54,21 @@ private:
 	void Render_Loop();
 	void Translate(void);
 
-	bool Assimp_Render_Textures(void);
-	bool Assimp_Textured_Parts(int Count);
+	bool MeshData_Render_Textures(void);
+	bool MeshData_Textured_Groups(int Count);
 
-	void Assimp_Render_Faces(void);
-	void Assimp_Face_Parts(int Count);
+	void MeshData_Render_Faces(void);
+	void MeshData_Face_Groups(int Count);
 
-	void Assimp_Render_Points(void);
-	void Render_As_Points_Parts(int Count);
+	void MeshData_Render_Points(void);
+	void MeshData_Points_Groups(int Count);
 
-	void Assimp_Render_Normals(void);
-	void Render_As_Normals_Parts(int Count);
+	void MeshData_Render_Normals(void);
+	void MeshData_Normals_Groups(int Count);
 
-	void As_RenderBones();
+	void MeshData_RenderBones();
 
-	void Render_BoundingBoxModel(void);
+	void MeshData_Render_BoundingBox(void);
 
 	void RenderCrossHair(void);
 

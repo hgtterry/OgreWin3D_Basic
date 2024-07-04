@@ -84,6 +84,8 @@ public:
 	int Model_Type;
 	int BoneCount;
 
+	int Scene_Mode;
+
 	// Ogre
 	int Ogre_Face_Count;
 

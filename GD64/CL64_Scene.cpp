@@ -42,6 +42,7 @@ CL64_Scene::CL64_Scene(void)
 	Ogre_Face_Count = 0;
 
 	Model_Type = Enums::LoadedFile_None;
+	Scene_Mode = Enums::Scene_Mode_None;
 
 	strcpy(Texture_FolderPath, "No Model Loaded");
 	strcpy(FileName, "No Model Loaded");
