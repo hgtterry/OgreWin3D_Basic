@@ -219,10 +219,30 @@ LRESULT CALLBACK CL64_TopDlg::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam
 		//-------------------------------------------------------- Show Textures
 		if (LOWORD(wParam) == IDC_BTSHOWTEXTURES)
 		{
+			HWND Temp = GetDlgItem(hDlg, IDC_BTSHOWTEXTURES);
+
+			if (App->CL_Scene->Scene_Mode == Enums::Scene_Mode_TestMesh)
+			{
+
+				if (App->CL_Ogre->flag_Show_Test_Mesh == 1)
+				{
+					App->CL_Ogre->flag_Show_Test_Mesh = 0;
+					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_TexturesOff_Bmp);
+				}
+				else
+				{
+					App->CL_Ogre->flag_Show_Test_Mesh = 1;
+					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_TexturesOn_Bmp);
+				}
+
+				App->CL_Ogre->Show_Test_Mesh();
+
+				return TRUE;
+			}
+
 			if (App->CL_Scene->Model_Loaded == 1)
 			{
-				HWND Temp = GetDlgItem(hDlg, IDC_BTSHOWTEXTURES);
-
+	
 				if (App->CL_Ogre->RenderListener->Flag_ShowTextured == 1)
 				{
 					App->CL_Ogre->RenderListener->Flag_ShowTextured = 0;
@@ -875,7 +895,7 @@ void CL64_TopDlg::Init_Bmps_Globals(void)
 	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_HairOn_Bmp);
 
 	Temp = GetDlgItem(TabsHwnd, IDC_BTSHOWTEXTURES);
-	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_TexturesOff_Bmp);
+	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_TexturesOn_Bmp);
 
 	Temp = GetDlgItem(TabsHwnd, IDC_TBSHOWFACES);
 	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshOff_Bmp);
