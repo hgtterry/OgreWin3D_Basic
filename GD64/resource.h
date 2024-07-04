@@ -7,6 +7,7 @@
 #define IDS_APP_TITLE                   103
 #define IDD_ABOUTBOX                    103
 #define IDM_ABOUT                       104
+#define IDS_VERSION                     104
 #define IDM_EXIT                        105
 #define IDI_GD64                        107
 #define IDI_SMALL                       108
@@ -90,6 +91,9 @@
 #define IDC_CK_COVERT_TO_OGRE           1022
 #define IDC_CK_CREATEPHYSICS            1023
 #define IDC_STWAIT                      1023
+#define IDC_ST_ABOUT_VERSION            1024
+#define IDC_LIST1                       1025
+#define IDC_LIST_ABOUT_VERSIONS         1025
 #define ID_VIEW_RESET                   32771
 #define ID_VIEW_MAX3DVIEW               32772
 #define ID_DEBUG_TESTPREFERANCE         32773
@@ -119,7 +123,7 @@
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        160
 #define _APS_NEXT_COMMAND_VALUE         32791
-#define _APS_NEXT_CONTROL_VALUE         1024
+#define _APS_NEXT_CONTROL_VALUE         1026
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif
