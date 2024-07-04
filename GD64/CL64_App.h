@@ -90,8 +90,7 @@ public:
 	bool Custom_Button_Toggle_Tabs(LPNMCUSTOMDRAW item, bool Toggle);
 	bool Custom_Button_Normal(LPNMCUSTOMDRAW item);
 	bool Custom_Button_Toggle(LPNMCUSTOMDRAW item, bool Toggle);
-	HBRUSH CreateGradientBrush(COLORREF top, COLORREF bottom, LPNMCUSTOMDRAW item);
-
+	
 	HINSTANCE hInst;
 	HWND MainHwnd;
 	HWND Fdlg;
@@ -141,6 +140,9 @@ public:
 	HBRUSH Brush_Green;
 	HBRUSH Brush_Tabs;
 	HBRUSH Brush_Tabs_UnSelected;
+
+	HBRUSH HotBrush_1;
+	HBRUSH HotBrush_2;
 };
 
 extern CL64_App* App;

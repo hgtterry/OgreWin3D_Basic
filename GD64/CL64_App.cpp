@@ -70,6 +70,7 @@ CL64_App::CL64_App(void)
 	Hnd_TexturesOn_Bmp = NULL;
 	Hnd_TexturesOff_Bmp = NULL;
 	Hnd_MeshOff_Bmp = NULL;
+	Hnd_MeshOn_Bmp = NULL;
 	Hnd_HairOn_Bmp = NULL;
 	Hnd_MeshPointsOn_Bmp = NULL;
 	Hnd_MeshPointsOff_Bmp = NULL;
@@ -95,6 +96,8 @@ CL64_App::CL64_App(void)
 	Brush_Green = 0;
 	Brush_Tabs = 0;
 	Brush_Tabs_UnSelected = 0;
+	HotBrush_1 = 0;
+	HotBrush_2 = 0;
 
 	Debug_App = 1;
 
@@ -270,6 +273,9 @@ void CL64_App::SetBrushes_Fonts(void)
 	Brush_Tabs = CreateSolidBrush(RGB(255, 255, 255));
 	Brush_Tabs_UnSelected = CreateSolidBrush(RGB(190, 190, 190));
 
+	HotBrush_1 = CreateSolidBrush(RGB(0, 240, 0));
+	HotBrush_2 = CreateSolidBrush(RGB(240, 240, 240));
+
 	Font_CB15 = CreateFont(-15, 0, 0, 0, 0, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Courier Black");
 	Font_Arial20 = CreateFont(-20, 0, 0, 0, 0, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Arial");
 
@@ -291,12 +297,12 @@ bool CL64_App::Custom_Button_Toggle_Tabs(LPNMCUSTOMDRAW item, bool Toggle)
 
 			if (Toggle == 1)
 			{
-				hotbrush = CreateGradientBrush(RGB(240, 240, 240), RGB(240, 240, 240), item);
+				hotbrush = HotBrush_2; // Gray
 			}
 			else
 			{
 				//hotbrush = Brush_Tabs_UnSelected; // Unselected 
-				hotbrush = CreateGradientBrush(RGB(240, 240, 240), RGB(240, 240, 240), item);;
+				hotbrush = HotBrush_2; // Gray
 			}
 
 			HPEN pen = CreatePen(PS_INSIDEFRAME, 0, RGB(240, 240, 240));
@@ -417,11 +423,11 @@ bool CL64_App::Custom_Button_Toggle(LPNMCUSTOMDRAW item, bool Toggle)
 
 			if (Toggle == 1)
 			{
-				hotbrush = CreateGradientBrush(RGB(0, 240, 0), RGB(0, 240, 0), item);
+				hotbrush = App->HotBrush_1; // Soft Green
 			}
 			else
 			{
-				hotbrush = CreateGradientBrush(RGB(240, 240, 240), RGB(240, 240, 240), item);;
+				hotbrush = App->HotBrush_2; // Gray
 			}
 
 			HPEN pen = CreatePen(PS_INSIDEFRAME, 0, RGB(0, 0, 0));
@@ -464,39 +470,4 @@ bool CL64_App::Custom_Button_Toggle(LPNMCUSTOMDRAW item, bool Toggle)
 	}
 
 	return CDRF_DODEFAULT;
-}
-
-// *************************************************************************
-// *						CreateGradientBrush					 	 	   *
-// *************************************************************************
-HBRUSH CL64_App::CreateGradientBrush(COLORREF top, COLORREF bottom, LPNMCUSTOMDRAW item)
-{
-	HBRUSH Brush = NULL;
-	HDC hdcmem = CreateCompatibleDC(item->hdc);
-	HBITMAP hbitmap = CreateCompatibleBitmap(item->hdc, item->rc.right - item->rc.left, item->rc.bottom - item->rc.top);
-	SelectObject(hdcmem, hbitmap);
-
-	int r1 = GetRValue(top), r2 = GetRValue(bottom), g1 = GetGValue(top), g2 = GetGValue(bottom), b1 = GetBValue(top), b2 = GetBValue(bottom);
-	for (int i = 0; i < item->rc.bottom - item->rc.top; i++)
-	{
-		RECT temp;
-		int r, g, b;
-		r = int(r1 + double(i * (r2 - r1) / item->rc.bottom - item->rc.top));
-		g = int(g1 + double(i * (g2 - g1) / item->rc.bottom - item->rc.top));
-		b = int(b1 + double(i * (b2 - b1) / item->rc.bottom - item->rc.top));
-		Brush = CreateSolidBrush(RGB(r, g, b));
-		temp.left = 0;
-		temp.top = i;
-		temp.right = item->rc.right - item->rc.left;
-		temp.bottom = i + 1;
-		FillRect(hdcmem, &temp, Brush);
-		DeleteObject(Brush);
-	}
-
-	HBRUSH pattern = CreatePatternBrush(hbitmap);
-
-	DeleteDC(hdcmem);
-	DeleteObject(hbitmap);
-
-	return pattern;
 }
