@@ -301,7 +301,6 @@ bool CL64_App::Custom_Button_Toggle_Tabs(LPNMCUSTOMDRAW item, bool Toggle)
 			}
 			else
 			{
-				//hotbrush = Brush_Tabs_UnSelected; // Unselected 
 				hotbrush = HotBrush_2; // Gray
 			}
 
@@ -410,55 +409,29 @@ bool CL64_App::Custom_Button_Normal(LPNMCUSTOMDRAW item)
 // *************************************************************************
 // *		Custom_Button_Toggle:- Terry and Hazel Flanigan 2024   	 	   *
 // *************************************************************************
-bool CL64_App::Custom_Button_Toggle(LPNMCUSTOMDRAW item, bool Toggle)
+void CL64_App::Custom_Button_Toggle(LPNMCUSTOMDRAW item, bool Toggle)
 {
 	static HBRUSH defaultbrush = NULL;
 	static HBRUSH hotbrush = NULL;
 	static HBRUSH selectbrush = NULL;
 
+	// ---------------------------------------------- Hover
+
+	if (item->uItemState & CDIS_HOT) // Hover
 	{
-		if (item->uItemState & CDIS_HOT) //Our mouse is over the button
+		if (Toggle == 1) // Selected
 		{
-			//Select our colour when the mouse hovers our button
-
-			if (Toggle == 1)
-			{
-				hotbrush = App->HotBrush_1; // Soft Green
-			}
-			else
-			{
-				hotbrush = App->HotBrush_2; // Gray
-			}
-
-			HPEN pen = CreatePen(PS_INSIDEFRAME, 0, RGB(0, 0, 0));
-
-			HGDIOBJ old_pen = SelectObject(item->hdc, pen);
-			HGDIOBJ old_brush = SelectObject(item->hdc, hotbrush);
-
-			RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 0, 0);
-
-			SelectObject(item->hdc, old_pen);
-			SelectObject(item->hdc, old_brush);
-			DeleteObject(pen);
-
-			return CDRF_DODEFAULT;
-		}
-
-		//Select our colour when our button is doing nothing
-
-		if (Toggle == 1)
-		{
-			defaultbrush = App->Brush_Green;
+			hotbrush = App->HotBrush_1; // Soft Green
 		}
 		else
 		{
-			defaultbrush = Brush_But_Normal;
+			hotbrush = App->HotBrush_2; // Gray
 		}
 
 		HPEN pen = CreatePen(PS_INSIDEFRAME, 0, RGB(0, 0, 0));
-
 		HGDIOBJ old_pen = SelectObject(item->hdc, pen);
-		HGDIOBJ old_brush = SelectObject(item->hdc, defaultbrush);
+
+		HGDIOBJ old_brush = SelectObject(item->hdc, hotbrush);
 
 		RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 0, 0);
 
@@ -466,8 +439,29 @@ bool CL64_App::Custom_Button_Toggle(LPNMCUSTOMDRAW item, bool Toggle)
 		SelectObject(item->hdc, old_brush);
 		DeleteObject(pen);
 
-		return CDRF_DODEFAULT;
+		return;
 	}
 
-	return CDRF_DODEFAULT;
+	// ---------------------------------------------- Selectd
+
+	if (Toggle == 1) // Selected
+	{
+		defaultbrush = App->Brush_Green;
+	}
+	else
+	{
+		defaultbrush = Brush_But_Normal;
+	}
+
+	HPEN pen = CreatePen(PS_INSIDEFRAME, 0, RGB(0, 0, 0));
+
+	HGDIOBJ old_pen = SelectObject(item->hdc, pen);
+	HGDIOBJ old_brush = SelectObject(item->hdc, defaultbrush);
+
+	RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 0, 0);
+
+	SelectObject(item->hdc, old_pen);
+	SelectObject(item->hdc, old_brush);
+	DeleteObject(pen);
+
 }
