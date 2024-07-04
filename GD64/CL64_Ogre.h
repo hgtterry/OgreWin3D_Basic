@@ -51,7 +51,7 @@ public:
 	bool SetUpResources(void);
 	bool Configure(void);
 	bool chooseSceneManager(void);
-	bool createCamera(void);
+	bool CreateCamera(void);
 	bool createViewports(void);
 	bool Initialise_Resources(void);
 	bool createFrameListener(void);
@@ -60,7 +60,7 @@ public:
 	void Log_Message_To_File(char* Message);
 	void Clear_ErrorLog();
 
-	void Show_Test_Cube(void);
+	void Show_Test_Mesh(void);
 	void Show_Trays(void);
 
 	// Renders a Single Frame
@@ -101,7 +101,7 @@ public:
 
 	char Return_Chr[MAX_PATH];
 
-	bool flag_Show_Test_Cube;
+	bool flag_Show_Test_Mesh;
 	bool flag_Show_Trays;
 
 };

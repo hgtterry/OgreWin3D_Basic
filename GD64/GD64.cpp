@@ -207,16 +207,16 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 		case ID_DEBUG_HIDEOGRETESTCUBE:
 		{
-			if (App->CL_Ogre->flag_Show_Test_Cube == 1)
+			if (App->CL_Ogre->flag_Show_Test_Mesh == 1)
 			{
-				App->CL_Ogre->flag_Show_Test_Cube = 0;
+				App->CL_Ogre->flag_Show_Test_Mesh = 0;
 			}
 			else
 			{
-				App->CL_Ogre->flag_Show_Test_Cube = 1;
+				App->CL_Ogre->flag_Show_Test_Mesh = 1;
 			}
 
-			App->CL_Ogre->Show_Test_Cube();
+			App->CL_Ogre->Show_Test_Mesh();
 
 			return TRUE;
 		}

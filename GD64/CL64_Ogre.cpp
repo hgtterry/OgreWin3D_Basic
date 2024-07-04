@@ -49,7 +49,7 @@ CL64_Ogre::CL64_Ogre(void)
 	App_Resource_Group = "App_Resource_Group";
 	World_Resource_Group = "World_Resource_Group";
 
-	flag_Show_Test_Cube = 1;
+	flag_Show_Test_Mesh = 1;
 	flag_Show_Trays = 1;
 }
 
@@ -66,7 +66,7 @@ void CL64_Ogre::InitOgre(void)
 	SetUpResources();
 	Configure();
 	chooseSceneManager();
-	createCamera();
+	CreateCamera();
 	createViewports();
 	Initialise_Resources();
 
@@ -80,10 +80,11 @@ void CL64_Ogre::InitOgre(void)
 	App->CL_Grid->Grid_Update(1);
 	App->CL_Grid->Hair_Update(1);
 
-	OgreEntity = mSceneMgr->createEntity("Cube.mesh");
+	OgreEntity = mSceneMgr->createEntity("Sinbad.mesh");
 	OgreNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	OgreNode->attachObject(OgreEntity);
-	Show_Test_Cube();
+
+	Show_Test_Mesh();
 
 	mTrayMgr = new OgreBites::TrayManager("InterfaceName", mWindow);
 
@@ -222,9 +223,9 @@ bool CL64_Ogre::chooseSceneManager(void)
 }
 
 // *************************************************************************
-// *			createCamera:- Terry and Hazel Flanigan 2024			   *
+// *			CreateCamera:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-bool CL64_Ogre::createCamera(void)
+bool CL64_Ogre::CreateCamera(void)
 {
 	camNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 
@@ -233,8 +234,9 @@ bool CL64_Ogre::createCamera(void)
 	mCamera->setFarClipDistance(Ogre::Real(8000));
 
 	camNode->attachObject(mCamera);
-	camNode->setPosition(0, 90, 100);
-	camNode->lookAt(Ogre::Vector3(0, 30, 0),Ogre::Node::TS_WORLD);
+
+	camNode->setPosition(Ogre::Vector3(0, 5, 15));
+	camNode->lookAt(Ogre::Vector3(0, 0, 0), Ogre::Node::TS_WORLD);
 
 	App->CL_Ogre->Log_Message_To_File((LPSTR)"createCamera");
 	
@@ -384,11 +386,11 @@ void CL64_Ogre::Clear_ErrorLog()
 }
 
 // *************************************************************************
-// *			Show_Test_Cube:- Terry and Hazel Flanigan 2024			   *
+// *			Show_Test_Mesh:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-void CL64_Ogre::Show_Test_Cube(void)
+void CL64_Ogre::Show_Test_Mesh(void)
 {
-	if (flag_Show_Test_Cube == 1)
+	if (flag_Show_Test_Mesh == 1)
 	{
 		OgreNode->setVisible(true);
 	}

@@ -545,7 +545,7 @@ LRESULT CALLBACK CL64_TopDlg::Debug_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 		if (some_item->idFrom == IDC_BT_TD_DEBUG_TESTCUBE)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CL_Ogre->flag_Show_Test_Cube);
+			App->Custom_Button_Toggle(item, App->CL_Ogre->flag_Show_Test_Mesh);
 			return CDRF_DODEFAULT;
 		}
 
@@ -630,16 +630,16 @@ LRESULT CALLBACK CL64_TopDlg::Debug_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 		
 		if (LOWORD(wParam) == IDC_BT_TD_DEBUG_TESTCUBE)
 		{
-			if (App->CL_Ogre->flag_Show_Test_Cube == 1)
+			if (App->CL_Ogre->flag_Show_Test_Mesh == 1)
 			{
-				App->CL_Ogre->flag_Show_Test_Cube = 0;
+				App->CL_Ogre->flag_Show_Test_Mesh = 0;
 			}
 			else
 			{
-				App->CL_Ogre->flag_Show_Test_Cube = 1;
+				App->CL_Ogre->flag_Show_Test_Mesh = 1;
 			}
 
-			App->CL_Ogre->Show_Test_Cube();
+			App->CL_Ogre->Show_Test_Mesh();
 			return 1;
 		}
 

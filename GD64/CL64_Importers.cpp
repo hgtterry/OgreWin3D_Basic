@@ -68,8 +68,8 @@ bool CL64_Importers::Assimp_Loader(bool UseDialog,const char* Extension, const c
 
 	App->CL_Scene->Model_Type = Enums::LoadedFile_Assimp;
 
-	App->CL_Ogre->flag_Show_Test_Cube = false;
-	App->CL_Ogre->Show_Test_Cube();
+	App->CL_Ogre->flag_Show_Test_Mesh = false;
+	App->CL_Ogre->Show_Test_Mesh();
 	App->CL_Camera->Reset_View();
 
 	App->CL_Scene->Model_Loaded = 1;
@@ -146,8 +146,8 @@ void CL64_Importers::Load_Ogre_Model(void)
 
 	App->CL_Scene->Main_Entity_Set_Default();
 
-	App->CL_Ogre->flag_Show_Test_Cube = false;
-	App->CL_Ogre->Show_Test_Cube();
+	App->CL_Ogre->flag_Show_Test_Mesh = false;
+	App->CL_Ogre->Show_Test_Mesh();
 	App->CL_Camera->Reset_View();
 
 	if (App->CL_Scene->Main_Ent)
@@ -219,8 +219,8 @@ void CL64_Importers::Reload_Ogre_Model(void)
 	App->CL_Scene->Main_Node->setPosition(0, 0, 0);
 	App->CL_Scene->Main_Node->setScale(1, 1, 1);
 
-	App->CL_Ogre->flag_Show_Test_Cube = false;
-	App->CL_Ogre->Show_Test_Cube();
+	App->CL_Ogre->flag_Show_Test_Mesh = false;
+	App->CL_Ogre->Show_Test_Mesh();
 	App->CL_Camera->Reset_View();
 
 	if (App->CL_Scene->Main_Ent)
