@@ -89,8 +89,8 @@ public:
 
 	void Custom_Button_Toggle(LPNMCUSTOMDRAW item, bool Toggle) const;
 	void Custom_Button_Toggle_Tabs(LPNMCUSTOMDRAW item, bool Toggle) const;
-	bool Custom_Button_Normal(LPNMCUSTOMDRAW item) const;
-	bool Custom_Button_Globals(LPNMCUSTOMDRAW item) const;
+	void Custom_Button_Normal(LPNMCUSTOMDRAW item) const;
+	void Custom_Button_Globals(LPNMCUSTOMDRAW item) const;
 	
 	HINSTANCE hInst;
 	HWND MainHwnd;
