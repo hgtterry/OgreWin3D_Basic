@@ -134,6 +134,8 @@ public:
 
 	HPEN BlackPen;
 	HPEN GreenPen;
+	HPEN WhitePen;
+
 	HBRUSH AppBackground;
 	HBRUSH BlackBrush;
 	HBRUSH Brush_But_Normal;

@@ -107,63 +107,63 @@ LRESULT CALLBACK CL64_TopDlg::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam
 		if (some_item->idFrom == IDC_TBSHOWHAIR)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Normal(item);
+			App->Custom_Button_Globals(item);
 			return CDRF_DODEFAULT;
 		}
 
 		if (some_item->idFrom == IDC_TBSHOWGRID)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Normal(item);
+			App->Custom_Button_Globals(item);
 			return CDRF_DODEFAULT;
 		}
 
 		if (some_item->idFrom == IDC_TBSHOWFACES)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Normal(item);
+			App->Custom_Button_Globals(item);
 			return CDRF_DODEFAULT;
 		}
 
 		if (some_item->idFrom == IDC_TBINFO)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Normal(item);
+			App->Custom_Button_Globals(item);
 			return CDRF_DODEFAULT;
 		}
 
 		if (some_item->idFrom == IDC_TBBOUNDBOX)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Normal(item);
+			App->Custom_Button_Globals(item);
 			return CDRF_DODEFAULT;
 		}
 		
 		if (some_item->idFrom == IDC_BTSHOWPOINTS)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Normal(item);
+			App->Custom_Button_Globals(item);
 			return CDRF_DODEFAULT;
 		}
 		
 		if (some_item->idFrom == IDC_BTSHOWBONES)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Normal(item);
+			App->Custom_Button_Globals(item);
 			return CDRF_DODEFAULT;
 		}
 		
 		if (some_item->idFrom == IDC_BTSHOWNORMALS)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Normal(item);
+			App->Custom_Button_Globals(item);
 			return CDRF_DODEFAULT;
 		}
 		
 		if (some_item->idFrom == IDC_BTSHOWTEXTURES)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Normal(item);
+			App->Custom_Button_Globals(item);
 			return CDRF_DODEFAULT;
 		}
 		

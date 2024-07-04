@@ -89,6 +89,7 @@ CL64_App::CL64_App(void)
 
 	BlackPen = 0;
 	GreenPen = 0;
+	WhitePen = 0;
 
 	BlackBrush = 0;
 	Brush_But_Normal = 0;
@@ -277,6 +278,7 @@ void CL64_App::SetBrushes_Fonts(void)
 
 	BlackPen = CreatePen(PS_INSIDEFRAME, 0, RGB(0, 0, 0));
 	GreenPen = CreatePen(PS_INSIDEFRAME, 0, RGB(0, 255, 0));
+	WhitePen = CreatePen(PS_INSIDEFRAME, 0, RGB(255, 255, 255));
 
 	HotBrush_1 = CreateSolidBrush(RGB(0, 240, 0));
 	HotBrush_2 = CreateSolidBrush(RGB(240, 240, 240));
@@ -446,12 +448,12 @@ bool CL64_App::Custom_Button_Globals(LPNMCUSTOMDRAW item) const
 
 	if (item->uItemState & CDIS_SELECTED) // Push Down
 	{
-		SelectObject(item->hdc, BlackPen);
+		SelectObject(item->hdc, GreenPen);
 		SelectObject(item->hdc, App->Brush_But_Pressed);
 
 		RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 5, 5);
 
-		SelectObject(item->hdc, BlackPen);
+		SelectObject(item->hdc, GreenPen);
 		SelectObject(item->hdc, App->Brush_But_Pressed);
 
 		return CDRF_DODEFAULT;
@@ -472,7 +474,7 @@ bool CL64_App::Custom_Button_Globals(LPNMCUSTOMDRAW item) const
 			return CDRF_DODEFAULT;
 		}
 
-		HGDIOBJ old_pen = SelectObject(item->hdc, BlackPen);
+		HGDIOBJ old_pen = SelectObject(item->hdc, WhitePen);
 		HGDIOBJ old_brush = SelectObject(item->hdc, Brush_But_Normal);
 
 		RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 5, 5);

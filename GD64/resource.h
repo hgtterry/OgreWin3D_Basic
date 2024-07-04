@@ -45,7 +45,6 @@
 #define IDB_NORMALSON                   156
 #define IDB_NORMALSOFF                  157
 #define IDB_TEXTURESON                  158
-#define IDB_BITMAP1                     159
 #define IDB_TEXTURESOFF                 159
 #define IDC_CK_SU_FULLSCREEN            1000
 #define IDC_ST_STARTUP                  1001
@@ -110,6 +109,7 @@
 #define ID_IMPORT_OGRE3D                32787
 #define ID_OGRE3D_MESH                  32788
 #define ID_OGRE3D_RESOURCEFILE          32789
+#define ID_FILE_OPEN                    32790
 #define IDC_STATIC                      -1
 
 // Next default values for new objects
@@ -118,7 +118,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        160
-#define _APS_NEXT_COMMAND_VALUE         32790
+#define _APS_NEXT_COMMAND_VALUE         32791
 #define _APS_NEXT_CONTROL_VALUE         1024
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
