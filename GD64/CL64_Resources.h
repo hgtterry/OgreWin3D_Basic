@@ -39,6 +39,7 @@ private:
 
 	static LRESULT CALLBACK Resources_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
+	void Reset_Flags();
 	void CreateListGeneral_FX(HWND hDlg);
 
 	void ShowAllMaterials();
@@ -58,8 +59,9 @@ private:
 
 	char ResourcePath[MAX_PATH];
 
-	bool Show_App_Res_Flag;
-	bool Show_Demo_Res_Flag;
+	bool flag_Show_App_Res;
+	bool flag_Show_Demo_Res;
+	bool flag_Show_All_Materials;
 
 	HWND FX_General_hLV;
 };

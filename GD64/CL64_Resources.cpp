@@ -30,7 +30,9 @@ CL64_Resources::CL64_Resources(void)
 {
 	ResourcePath[0] = 0;
 
-	Show_App_Res_Flag = 0;
+	flag_Show_App_Res = 0;
+	flag_Show_Demo_Res = 0;
+	flag_Show_All_Materials = 1;
 
 	Ogre_ExternalResourceLoaded = 0;
 
@@ -48,6 +50,7 @@ void CL64_Resources::Start_Resources()
 {
 	DialogBox(App->hInst, (LPCTSTR)IDD_RESOURCESMATERIAL, App->Fdlg, (DLGPROC)Resources_Proc);
 }
+
 // *************************************************************************
 // *			Resources_Proc:- Terry and Hazel Flanigan 2024	  		   *
 // *************************************************************************
@@ -117,14 +120,14 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 		if (some_item->idFrom == IDC_BT_APPRESOURCES)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CL_Resources->Show_App_Res_Flag);
+			App->Custom_Button_Toggle(item, App->CL_Resources->flag_Show_App_Res);
 			return CDRF_DODEFAULT;
 		}
 
 		if (some_item->idFrom == IDC_BT_DEMORESOURCES)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CL_Resources->Show_Demo_Res_Flag);
+			App->Custom_Button_Toggle(item, App->CL_Resources->flag_Show_Demo_Res);
 			return CDRF_DODEFAULT;
 		}
 
@@ -138,7 +141,7 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 		if (some_item->idFrom == IDC_ALLMATERIALS)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Normal(item);
+			App->Custom_Button_Toggle(item, App->CL_Resources->flag_Show_All_Materials);
 			return CDRF_DODEFAULT;
 		}
 
@@ -184,6 +187,12 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 
 		if (LOWORD(wParam) == IDC_ALLMATERIALS)
 		{
+			SetDlgItemText(hDlg, IDC_ST_BANNER, (LPCTSTR)"All Materials");
+			App->CL_Resources->Reset_Flags();
+			App->CL_Resources->flag_Show_All_Materials = 1;
+
+			RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
 			App->CL_Resources->ShowAllMaterials();
 			return TRUE;
 		}
@@ -209,9 +218,9 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 		if (LOWORD(wParam) == IDC_BT_DEMORESOURCES)
 		{
 			SetDlgItemText(hDlg, IDC_ST_BANNER, (LPCTSTR)"Demo Resources");
-			App->CL_Resources->Show_Demo_Res_Flag = 1;
-			App->CL_Resources->Show_App_Res_Flag = 0;
-
+			App->CL_Resources->Reset_Flags();
+			App->CL_Resources->flag_Show_Demo_Res = 1;
+			
 			RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
 			App->CL_Resources->Show_Resource_Group(App->CL_Ogre->World_Resource_Group);
@@ -222,9 +231,9 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 		if (LOWORD(wParam) == IDC_BT_APPRESOURCES)
 		{
 			SetDlgItemText(hDlg, IDC_ST_BANNER, (LPCTSTR)"App Resources");
-			App->CL_Resources->Show_App_Res_Flag = 1;
-			App->CL_Resources->Show_Demo_Res_Flag = 0;
-
+			App->CL_Resources->Reset_Flags();
+			App->CL_Resources->flag_Show_App_Res = 1;
+			
 			RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
 			App->CL_Resources->Show_Resource_Group(App->CL_Ogre->App_Resource_Group);
@@ -302,6 +311,16 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 
 	}
 	return FALSE;
+}
+
+// *************************************************************************
+// *			Reset_Flags:- Terry and Hazel Flanigan 2024				   *
+// *************************************************************************
+void CL64_Resources::Reset_Flags()
+{
+	flag_Show_App_Res = 0;
+	flag_Show_Demo_Res = 0;
+	flag_Show_All_Materials = 0;
 }
 
 // *************************************************************************
@@ -420,7 +439,6 @@ void CL64_Resources::ShowAllTextures()
 
 		TextureIterator.moveNext();
 	}
-
 }
 
 // *************************************************************************
@@ -428,11 +446,35 @@ void CL64_Resources::ShowAllTextures()
 // *************************************************************************
 void CL64_Resources::ShowAllMaterials()
 {
+	ListView_DeleteAllItems(FX_General_hLV);
+
+	int NUM_COLS = 5;
+
 	LV_ITEM pitem;
 	memset(&pitem, 0, sizeof(LV_ITEM));
 	pitem.mask = LVIF_TEXT;
 
-	ListView_DeleteAllItems(FX_General_hLV);
+	LV_COLUMN lvC;
+	memset(&lvC, 0, sizeof(LV_COLUMN));
+	lvC.mask = LVCF_FMT | LVCF_WIDTH | LVCF_TEXT | LVCF_SUBITEM;
+	lvC.fmt = LVCFMT_LEFT;  // left-align the column
+	std::string headers[] =
+	{
+		"Material", "Material File","Resource Group","Used"," "
+	};
+	int headerSize[] =
+	{
+		165,250,170,50
+	};
+
+	for (int header = 0; header < NUM_COLS; header++)
+	{
+		lvC.iSubItem = header;
+		lvC.cx = headerSize[header]; // width of the column, in pixels
+		lvC.pszText = const_cast<char*>(headers[header].c_str());
+		ListView_SetColumn(FX_General_hLV, header, &lvC);
+	}
+	
 
 	int	 pRow = 0;
 	char Group[MAX_PATH];
@@ -502,9 +544,9 @@ void CL64_Resources::ShowAllMaterials()
 		pitem.pszText = pScriptName;
 
 		ListView_InsertItem(FX_General_hLV, &pitem);
-		ListView_SetItemText(FX_General_hLV, pRow, 1, Group);
-		ListView_SetItemText(FX_General_hLV, pRow, 2, pUsed);
-		ListView_SetItemText(FX_General_hLV, pRow, 3, pScriptFile);
+		ListView_SetItemText(FX_General_hLV, pRow, 1, pScriptFile);
+		ListView_SetItemText(FX_General_hLV, pRow, 2, Group);
+		ListView_SetItemText(FX_General_hLV, pRow, 3, pUsed);
 		//ListView_SetItemText(FX_General_hLV, pRow, 3, ResourcePath);
 		
 		pRow++;
@@ -585,7 +627,7 @@ void CL64_Resources::ShowUsedMaterials()
 
 			ListView_InsertItem(FX_General_hLV, &pitem);
 			ListView_SetItemText(FX_General_hLV, pRow, 1, pScriptFile);
-			ListView_SetItemText(FX_General_hLV, pRow, 2, pUsed);
+			ListView_SetItemText(FX_General_hLV, pRow, 2, Origin);
 			ListView_SetItemText(FX_General_hLV, pRow, 3, Origin);
 			//ListView_SetItemText(FX_General_hLV, pRow, 3, ResourcePath);
 			
@@ -594,7 +636,6 @@ void CL64_Resources::ShowUsedMaterials()
 
 		materialIterator.moveNext();
 	}
-
 }
 
 // **************************************************************************
@@ -703,7 +744,6 @@ bool CL64_Resources::ShowAllMeshes()
 		ListView_SetColumn(FX_General_hLV, header, &lvC);
 	}
 
-	
 	int	 pRow = 0;
 	char pMeshName[255];
 	char chr_AsSkell[255];
@@ -961,6 +1001,5 @@ void CL64_Resources::UnloadUserResources()
 {
 	Ogre::ResourceGroupManager::getSingleton().destroyResourceGroup(App->CL_Importers->Ogre_Loader_Resource_Group);
 	Ogre_ExternalResourceLoaded = 0;
-
 }
 
