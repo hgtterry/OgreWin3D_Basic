@@ -32,6 +32,7 @@ CL64_Resources::CL64_Resources(void)
 
 	flag_Show_App_Res = 0;
 	flag_Show_Demo_Res = 0;
+	flag_Show_Used_Materials = 0;
 	flag_Show_All_Materials = 1;
 
 	Ogre_ExternalResourceLoaded = 0;
@@ -162,7 +163,7 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 		if (some_item->idFrom == IDC_USEDMATERIALS)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Normal(item);
+			App->Custom_Button_Toggle(item, App->CL_Resources->flag_Show_Used_Materials);
 			return CDRF_DODEFAULT;
 		}
 
@@ -211,7 +212,14 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 
 		if (LOWORD(wParam) == IDC_USEDMATERIALS)
 		{
+			SetDlgItemText(hDlg, IDC_ST_BANNER, (LPCTSTR)"Used Materials");
+			App->CL_Resources->Reset_Flags();
+			App->CL_Resources->flag_Show_Used_Materials = 1;
+
+			RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
 			App->CL_Resources->ShowUsedMaterials();
+
 			return TRUE;
 		}
 
@@ -321,6 +329,7 @@ void CL64_Resources::Reset_Flags()
 	flag_Show_App_Res = 0;
 	flag_Show_Demo_Res = 0;
 	flag_Show_All_Materials = 0;
+	flag_Show_Used_Materials = 0;
 }
 
 // *************************************************************************

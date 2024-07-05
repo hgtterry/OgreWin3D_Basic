@@ -62,6 +62,7 @@ private:
 	bool flag_Show_App_Res;
 	bool flag_Show_Demo_Res;
 	bool flag_Show_All_Materials;
+	bool flag_Show_Used_Materials;
 
 	HWND FX_General_hLV;
 };
