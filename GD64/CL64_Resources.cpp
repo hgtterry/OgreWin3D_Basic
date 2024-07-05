@@ -34,7 +34,8 @@ CL64_Resources::CL64_Resources(void)
 	flag_Show_Demo_Res = 0;
 	flag_Show_Used_Materials = 0;
 	flag_Show_All_Meshes = 0;
-	flag_Show_All_Materials = 1;
+	flag_Show_All_Textures = 0;
+	flag_Show_All_Materials = 0;
 	
 	Ogre_ExternalResourceLoaded = 0;
 
@@ -62,18 +63,9 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 	{
 	case WM_INITDIALOG:
 	{
-
-		//App->SetTitleBar(hDlg);
-
 		SendDlgItemMessage(hDlg, IDC_ST_BANNER, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
-
-		/*SendDlgItemMessage(hDlg, IDC_BT_SCENEMESH, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_STCOUNT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_BTMATSF, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_BTMESHSF, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_BTTEXTSF, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		*/
-
+		SendDlgItemMessage(hDlg, IDC_STCOUNT, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
+		
 		SendDlgItemMessage(hDlg, IDC_BT_APPRESOURCES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_DEMORESOURCES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
@@ -86,7 +78,9 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 
 		App->CL_Resources->CreateListGeneral_FX(hDlg);
 
-		App->CL_Resources->ShowAllMaterials();
+		App->CL_Resources->flag_Show_All_Materials = 1;
+		int Items = App->CL_Resources->ShowAllMaterials();
+		App->CL_Resources->Update_Counter(Items, hDlg);
 		SetDlgItemText(hDlg, IDC_ST_BANNER, (LPCTSTR)"Resources:- All Materials");
 
 		return TRUE;
@@ -101,13 +95,13 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 			return (UINT)App->AppBackground;
 		}
 
-		/*if (GetDlgItem(hDlg, IDC_STCOUNT) == (HWND)lParam)
+		if (GetDlgItem(hDlg, IDC_STCOUNT) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 0, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
 			SetBkMode((HDC)wParam, TRANSPARENT);
-			return (UINT)App->Brush_White;
-		}*/
+			return (UINT)App->AppBackground;
+		}
 
 
 		return FALSE;
@@ -153,7 +147,7 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 		if (some_item->idFrom == IDC_ALLTEXTURES)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Normal(item);
+			App->Custom_Button_Toggle(item, App->CL_Resources->flag_Show_All_Textures);
 			return CDRF_DODEFAULT;
 		}
 
@@ -198,13 +192,23 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 
 			RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
-			App->CL_Resources->ShowAllMaterials();
+			int Items = App->CL_Resources->ShowAllMaterials();
+			App->CL_Resources->Update_Counter(Items, hDlg);
+
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == IDC_ALLTEXTURES)
 		{
-			App->CL_Resources->ShowAllTextures();
+			SetDlgItemText(hDlg, IDC_ST_BANNER, (LPCTSTR)"Resources:- All Textures");
+			App->CL_Resources->Reset_Flags();
+			App->CL_Resources->flag_Show_All_Textures = 1;
+
+			RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+			int Items = App->CL_Resources->ShowAllTextures();
+			App->CL_Resources->Update_Counter(Items, hDlg);
+
 			return TRUE;
 		}
 
@@ -216,7 +220,9 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 
 			RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
-			App->CL_Resources->ShowAllMeshes();
+			int Items = App->CL_Resources->ShowAllMeshes();
+			App->CL_Resources->Update_Counter(Items, hDlg);
+
 			return TRUE;
 		}
 
@@ -228,7 +234,8 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 
 			RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
-			App->CL_Resources->ShowUsedMaterials();
+			int Items = App->CL_Resources->ShowUsedMaterials();
+			App->CL_Resources->Update_Counter(Items, hDlg);
 
 			return TRUE;
 		}
@@ -340,7 +347,22 @@ void CL64_Resources::Reset_Flags()
 	flag_Show_Demo_Res = 0;
 	flag_Show_All_Materials = 0;
 	flag_Show_Used_Materials = 0;
+	flag_Show_All_Textures = 0;
 	flag_Show_All_Meshes = 0;
+}
+
+// *************************************************************************
+// *			Update_Counter:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void CL64_Resources::Update_Counter(int Value, HWND hDlg)
+{
+	char buf[100];
+	char num[100];
+	_itoa(Value, num, 10);
+
+	strcpy(buf, "Items:- ");
+	strcat(buf, num);
+	SetDlgItemText(hDlg, IDC_STCOUNT, (LPCTSTR)buf);
 }
 
 // *************************************************************************
@@ -391,7 +413,7 @@ void CL64_Resources::CreateListGeneral_FX(HWND hDlg)
 // *************************************************************************
 // *			ShowAllTextures:- Terry and Hazel Flanigan 2024		 	   *
 // *************************************************************************
-void CL64_Resources::ShowAllTextures()
+int CL64_Resources::ShowAllTextures()
 {
 	LV_ITEM pitem;
 	memset(&pitem, 0, sizeof(LV_ITEM));
@@ -400,13 +422,11 @@ void CL64_Resources::ShowAllTextures()
 	ListView_DeleteAllItems(FX_General_hLV);
 	bool pIsLoaded = 0;
 	int	 pRow = 0;
-	//	char buff[255];
 	char Origin[MAX_PATH];
 	char pUsed[255];
 	char pScriptName[255];
-	//	char pScriptFile[255];
-	//	char chr_AsSkell[255];
 	bool pHasSkel = 0;
+
 	Ogre::String st;
 	Ogre::ResourcePtr pp;
 
@@ -457,12 +477,14 @@ void CL64_Resources::ShowAllTextures()
 
 		TextureIterator.moveNext();
 	}
+
+	return pRow;
 }
 
 // *************************************************************************
 // *			ShowAllMaterials:- Terry and Hazel Flanigan 2024	  	   *
 // *************************************************************************
-void CL64_Resources::ShowAllMaterials()
+int CL64_Resources::ShowAllMaterials()
 {
 	ListView_DeleteAllItems(FX_General_hLV);
 
@@ -571,12 +593,14 @@ void CL64_Resources::ShowAllMaterials()
 
 		materialIterator.moveNext();
 	}
+
+	return pRow;
 }
 
 // *************************************************************************
 // *					ShowUsedMaterials Terry Bernie	 			 	   *
 // *************************************************************************
-void CL64_Resources::ShowUsedMaterials()
+int CL64_Resources::ShowUsedMaterials()
 {
 	LV_ITEM pitem;
 	memset(&pitem, 0, sizeof(LV_ITEM));
@@ -654,6 +678,8 @@ void CL64_Resources::ShowUsedMaterials()
 
 		materialIterator.moveNext();
 	}
+
+	return pRow;
 }
 
 // **************************************************************************
@@ -730,7 +756,7 @@ void CL64_Resources::Show_Resource_Group(const Ogre::String& ResourceGroup)
 // *************************************************************************
 // *			ShowAllMeshes:- Terry and Hazel Flanigan 2024		 	   *
 // *************************************************************************
-bool CL64_Resources::ShowAllMeshes()
+int CL64_Resources::ShowAllMeshes()
 {
 	Ogre::String st;
 	int NUM_COLS = 4;
@@ -818,7 +844,7 @@ bool CL64_Resources::ShowAllMeshes()
 		MeshIterator.moveNext();
 	}
 
-	return 1;
+	return pRow;
 }
 
 // *************************************************************************

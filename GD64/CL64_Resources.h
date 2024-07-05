@@ -41,17 +41,18 @@ private:
 
 	void Reset_Flags();
 	void CreateListGeneral_FX(HWND hDlg);
+	void Update_Counter(int Value, HWND hDlg);
 
-	void ShowAllMaterials();
-	void ShowUsedMaterials();
+	int ShowAllMaterials();
+	int ShowUsedMaterials();
 
 	void Start_List_Folders(HWND List, char* FileName, bool ListDlg);
 	void List_Folders(HWND List, char* StartFolder, char* FileName, bool ListDlg);
 	bool FindPath_New(char* File, char* Folder);
 
 	void Show_Resource_Group(const Ogre::String& ResourceGroup);
-	bool ShowAllMeshes();
-	void ShowAllTextures();
+	int ShowAllMeshes();
+	int ShowAllTextures();
 
 	void UnloadUserResources();
 	Ogre::ConfigFile cf;
@@ -64,6 +65,7 @@ private:
 	bool flag_Show_All_Materials;
 	bool flag_Show_Used_Materials;
 	bool flag_Show_All_Meshes;
+	bool flag_Show_All_Textures;
 
 	HWND FX_General_hLV;
 };
