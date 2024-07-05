@@ -1,5 +1,5 @@
 /*
-Copyright (c) GameDirector 2019 To 2024 HGT Software W.T.Flanigan H.C.Flanigan
+Copyright (c) OgreWin3D_Basic 2024 W.T.Flanigan H.C.Flanigan Inflanite_HGT
 
 This software is provided 'as-is', without any express or implied
 warranty. In no event will the authors be held liable for any damages
@@ -102,7 +102,6 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->AppBackground;
 		}
-
 
 		return FALSE;
 	}
@@ -266,49 +265,7 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 			return TRUE;
 		}
 
-		/*if (LOWORD(wParam) == IDC_BTMVRESOURCES)
-		{
-			SetDlgItemText(hDlg, IDC_ST_BANNER, (LPCTSTR)"Mesh Viewer Resources");
-
-			App->SBC_Resources->Show_MV_Res();
-			return TRUE;
-		}
-
-		if (LOWORD(wParam) == IDC_BT_SCENEMESH)
-		{
-			SetDlgItemText(hDlg, IDC_ST_BANNER, (LPCTSTR)"Scene Meshes");
-			App->SBC_Resources->Show_Scene_Meshes(hDlg);
-
-			return TRUE;
-		}
-
-		if (LOWORD(wParam) == IDC_BTMATSF)
-		{
-			char Message[MAX_PATH];
-			strcpy(Message, "Scene Folder Materials - ");
-			strcat(Message, App->SBC_Project->m_Main_Assets_Path);
-
-			SetDlgItemText(hDlg, IDC_ST_BANNER, (LPCTSTR)Message);
-
-			ListView_DeleteAllItems(App->SBC_Resources->FX_General_hLV);
-			App->SBC_Resources->SearchFolders("*.material");
-			return TRUE;
-		}
-
-		if (LOWORD(wParam) == IDC_BTMESHSF)
-		{
-			char Message[MAX_PATH];
-			strcpy(Message, "Scene Folder Mesh - ");
-			strcat(Message, App->SBC_Project->m_Main_Assets_Path);
-
-			SetDlgItemText(hDlg, IDC_ST_BANNER, (LPCTSTR)Message);
-
-			ListView_DeleteAllItems(App->SBC_Resources->FX_General_hLV);
-			App->SBC_Resources->SearchFolders("*.mesh");
-			return TRUE;
-		}
-
-		if (LOWORD(wParam) == IDC_BTTEXTSF)
+		/*/if (LOWORD(wParam) == IDC_BTTEXTSF)
 		{
 			char Message[MAX_PATH];
 			strcpy(Message, "Scene Folder Textures - ");
@@ -872,7 +829,6 @@ void CL64_Resources::Start_List_Folders(HWND List, char* FileName, bool ListDlg)
 // *************************************************************************
 void CL64_Resources::List_Folders(HWND List, char* StartFolder, char* FileName, bool ListDlg)
 {
-
 	char SearchPath[2048];
 
 	if (ListDlg == 1)
