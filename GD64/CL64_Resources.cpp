@@ -33,8 +33,9 @@ CL64_Resources::CL64_Resources(void)
 	flag_Show_App_Res = 0;
 	flag_Show_Demo_Res = 0;
 	flag_Show_Used_Materials = 0;
+	flag_Show_All_Meshes = 0;
 	flag_Show_All_Materials = 1;
-
+	
 	Ogre_ExternalResourceLoaded = 0;
 
 	FX_General_hLV = nullptr;
@@ -84,6 +85,9 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		App->CL_Resources->CreateListGeneral_FX(hDlg);
+
+		App->CL_Resources->ShowAllMaterials();
+		SetDlgItemText(hDlg, IDC_ST_BANNER, (LPCTSTR)"Resources:- All Materials");
 
 		return TRUE;
 	}
@@ -156,7 +160,7 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 		if (some_item->idFrom == IDC_ALLMESH)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Normal(item);
+			App->Custom_Button_Toggle(item, App->CL_Resources->flag_Show_All_Meshes);
 			return CDRF_DODEFAULT;
 		}
 
@@ -188,7 +192,7 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 
 		if (LOWORD(wParam) == IDC_ALLMATERIALS)
 		{
-			SetDlgItemText(hDlg, IDC_ST_BANNER, (LPCTSTR)"All Materials");
+			SetDlgItemText(hDlg, IDC_ST_BANNER, (LPCTSTR)"Resources:- All Materials");
 			App->CL_Resources->Reset_Flags();
 			App->CL_Resources->flag_Show_All_Materials = 1;
 
@@ -206,13 +210,19 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 
 		if (LOWORD(wParam) == IDC_ALLMESH)
 		{
+			SetDlgItemText(hDlg, IDC_ST_BANNER, (LPCTSTR)"Resources:- All Meshes");
+			App->CL_Resources->Reset_Flags();
+			App->CL_Resources->flag_Show_All_Meshes = 1;
+
+			RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
 			App->CL_Resources->ShowAllMeshes();
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == IDC_USEDMATERIALS)
 		{
-			SetDlgItemText(hDlg, IDC_ST_BANNER, (LPCTSTR)"Used Materials");
+			SetDlgItemText(hDlg, IDC_ST_BANNER, (LPCTSTR)"Resources:- Used Materials");
 			App->CL_Resources->Reset_Flags();
 			App->CL_Resources->flag_Show_Used_Materials = 1;
 
@@ -225,7 +235,7 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 
 		if (LOWORD(wParam) == IDC_BT_DEMORESOURCES)
 		{
-			SetDlgItemText(hDlg, IDC_ST_BANNER, (LPCTSTR)"Demo Resources");
+			SetDlgItemText(hDlg, IDC_ST_BANNER, (LPCTSTR)"Resources:- Demo Resources");
 			App->CL_Resources->Reset_Flags();
 			App->CL_Resources->flag_Show_Demo_Res = 1;
 			
@@ -238,7 +248,7 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 
 		if (LOWORD(wParam) == IDC_BT_APPRESOURCES)
 		{
-			SetDlgItemText(hDlg, IDC_ST_BANNER, (LPCTSTR)"App Resources");
+			SetDlgItemText(hDlg, IDC_ST_BANNER, (LPCTSTR)"Resources:- App Resources");
 			App->CL_Resources->Reset_Flags();
 			App->CL_Resources->flag_Show_App_Res = 1;
 			
@@ -330,6 +340,7 @@ void CL64_Resources::Reset_Flags()
 	flag_Show_Demo_Res = 0;
 	flag_Show_All_Materials = 0;
 	flag_Show_Used_Materials = 0;
+	flag_Show_All_Meshes = 0;
 }
 
 // *************************************************************************
@@ -339,8 +350,8 @@ void CL64_Resources::CreateListGeneral_FX(HWND hDlg)
 {
 	int NUM_COLS = 5;
 	FX_General_hLV = CreateWindowEx(0, WC_LISTVIEW, "",
-		WS_CHILD | WS_VISIBLE | WS_BORDER | LVS_REPORT | LVS_SHOWSELALWAYS, 2, 2,
-		1280, 405, hDlg, 0, App->hInst, NULL);
+		WS_CHILD | WS_VISIBLE | WS_BORDER | LVS_REPORT | LVS_SHOWSELALWAYS, 2, 50,
+		1280, 430, hDlg, 0, App->hInst, NULL);
 
 	DWORD exStyles = LVS_EX_GRIDLINES;
 
@@ -375,8 +386,6 @@ void CL64_Resources::CreateListGeneral_FX(HWND hDlg)
 	Font = CreateFont(-12, 0, 0, 0, FW_NORMAL, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Aerial Black");
 	SendMessage(FX_General_hLV, WM_SETFONT, (WPARAM)Font, MAKELPARAM(TRUE, 0));
 
-	ShowAllMaterials();
-	//ShowAllTextures();
 }
 
 // *************************************************************************
