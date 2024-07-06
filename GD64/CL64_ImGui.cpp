@@ -282,36 +282,61 @@ void CL64_ImGui::Camera_Data_GUI(void)
 // *************************************************************************
 void CL64_ImGui::Model_Data_GUI(void)
 {
-	ImGui::SetNextWindowPos(ImVec2(Model_Data_PosX, Model_Data_PosY));
+	//ImGui::SetNextWindowPos(ImVec2(Model_Data_PosX, Model_Data_PosY));
+	ImGui::SetNextWindowPos(ImVec2(70, 10), ImGuiCond_FirstUseEver);
+	ImGui::SetNextWindowSize(ImVec2(200, 200), ImGuiCond_FirstUseEver);
 
 	if (!ImGui::Begin("Model Data", &Show_Model_Data_F, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoResize
-		| ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoTitleBar))
+		| ImGuiWindowFlags_AlwaysAutoResize))
 	{
 		ImGui::End();
 	}
 	else
 	{
-		ImGui::Spacing();
+		
 		ImGui::Text("Model Info");
-		ImGui::Text("  ");
+
+		ImGui::Indent();
 		ImGui::Text("Model Name:- %s", App->CL_Scene->JustName);
 		ImGui::Text("Model File Name:- %s", App->CL_Scene->FileName);
 		ImGui::Text("Model Path:- %s", App->CL_Scene->Path_FileName);
 		ImGui::Text("Texture Path:- %s", App->CL_Scene->Texture_FolderPath);
-		ImGui::Text("  ");
-		ImGui::Text("Vertices:- %i", App->CL_Scene->VerticeCount);
-		ImGui::Text("Faces:- %i", App->CL_Scene->FaceCount);
-		ImGui::Text("Groups:- %i", App->CL_Scene->GroupCount);
-		ImGui::Text("Bones:- %i", App->CL_Scene->BoneCount);
-		ImGui::Text("Motions:- %i", App->CL_Scene->MotionCount);
-		ImGui::Text("Loaded:- %i", App->CL_Resources->Ogre_ExternalResourceLoaded);
-		//ImGui::Text("Texture Count:- %i", App->CLSB_Mesh_Mgr->mTextureCount);
+		ImGui::Unindent();
 
+
+		if (ImGui::TreeNode("Mesh Data"))
+		{
+			ImGui::Indent();
+			ImGui::Text("Vertices:- %i", App->CL_Scene->VerticeCount);
+			ImGui::Text("Faces:- %i", App->CL_Scene->FaceCount);
+			ImGui::Text("Groups:- %i", App->CL_Scene->GroupCount);
+			ImGui::Text("Bones:- %i", App->CL_Scene->BoneCount);
+			ImGui::Text("Motions:- %i", App->CL_Scene->MotionCount);
+			ImGui::Text("Loaded:- %i", App->CL_Resources->Ogre_ExternalResourceLoaded);
+			ImGui::Unindent();
+
+			ImGui::TreePop();
+		}
+
+		if (ImGui::TreeNode("Tree view"))
+		{
+			if (ImGui::TreeNode("Materials"))
+			{
+				ImGui::Text("Poo");
+				ImGui::Text("Faces:- %i", App->CL_Scene->FaceCount);
+				ImGui::TreePop();
+			}
+
+			ImGui::TreePop();
+		}
+
+		ImGui::Text("  ");
+		ImGui::Text("  ");
 		ImGui::Text("  ");
 
 		ImVec2 Size = ImGui::GetWindowSize();
-		Model_Data_PosX = ((float)App->CL_Ogre->OgreListener->View_Width / 2) - (Size.x / 2);
-		Model_Data_PosY = ((float)App->CL_Ogre->OgreListener->View_Height / 2) - (Size.y / 2);;
+		//Model_Data_PosX = ((float)App->CL_Ogre->OgreListener->View_Width / 2) - (Size.x / 2);
+		//Model_Data_PosY = ((float)App->CL_Ogre->OgreListener->View_Height / 2) - (Size.y / 2);;
 
 		ImGui::Separator();
 
