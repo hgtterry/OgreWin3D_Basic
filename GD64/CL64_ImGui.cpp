@@ -334,6 +334,20 @@ void CL64_ImGui::Model_Data_GUI(void)
 				ImGui::TreePop();
 			}
 
+			if (ImGui::TreeNode("Geometry"))
+			{
+				
+
+				ImGui::TreePop();
+			}
+
+			if (ImGui::TreeNode("Bounds"))
+			{
+				
+
+				ImGui::TreePop();
+			}
+
 			ImGui::TreePop();
 		}
 
