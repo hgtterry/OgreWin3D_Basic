@@ -342,8 +342,13 @@ void CL64_ImGui::Model_Data_GUI(void)
 
 			if (ImGui::TreeNode("Bounds"))
 			{
-				
+				ImGui::Text("Min:- %.5f  %.5f  %.5f", App->CL_Scene->S_OgreMeshData[0]->vMin.x, App->CL_Scene->S_OgreMeshData[0]->vMin.y, App->CL_Scene->S_OgreMeshData[0]->vMin.z);
+				ImGui::Text("Max:- %.5f  %.5f  %.5f", App->CL_Scene->S_OgreMeshData[0]->vMax.x, App->CL_Scene->S_OgreMeshData[0]->vMax.y, App->CL_Scene->S_OgreMeshData[0]->vMax.z);
+				ImGui::Text("Centre:- %.5f  %.5f  %.5f", App->CL_Scene->S_OgreMeshData[0]->Center.x, App->CL_Scene->S_OgreMeshData[0]->Center.y, App->CL_Scene->S_OgreMeshData[0]->Center.z);
 
+				ImGui::Text("Width:- %f", App->CL_Scene->S_OgreMeshData[0]->Width);
+				ImGui::Text("Height:- %f", App->CL_Scene->S_OgreMeshData[0]->Height);
+				ImGui::Text("Depth:- %f", App->CL_Scene->S_OgreMeshData[0]->Depth);
 				ImGui::TreePop();
 			}
 

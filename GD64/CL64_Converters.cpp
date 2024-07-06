@@ -828,5 +828,17 @@ void CL64_Converters::Get_Ogre3D_MeshData(Ogre::Entity* Ogre_Entity)
 		App->CL_Scene->S_OgreMeshData[0]->mMaterials.push_back(subMesh->getMaterialName());
 		Count++;
 	}
+
+	Ogre::Vector3 vMin(Ogre_Entity->getBoundingBox().getMinimum());
+	Ogre::Vector3 vMax(Ogre_Entity->getBoundingBox().getMaximum());
+	Ogre::Vector3 Center((vMin + vMax) * 0.5f );
+
+	App->CL_Scene->S_OgreMeshData[0]->vMin = vMin;
+	App->CL_Scene->S_OgreMeshData[0]->vMax = vMax;
+	App->CL_Scene->S_OgreMeshData[0]->Center = Center;
+
+	App->CL_Scene->S_OgreMeshData[0]->Width = ((vMax - vMin).x);
+	App->CL_Scene->S_OgreMeshData[0]->Height =((vMax - vMin).y);
+	App->CL_Scene->S_OgreMeshData[0]->Depth = ((vMax - vMin).z);
 }
 

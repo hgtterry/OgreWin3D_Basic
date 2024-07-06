@@ -51,6 +51,12 @@ typedef struct OgreMeshData_Type {
 	Ogre::String mEdgeList;
 	std::vector<std::string> mMaterials;
 	int mSubMeshCount;
+	Ogre::Vector3 Center;
+	Ogre::Vector3 vMin;
+	Ogre::Vector3 vMax;
+	float Width;
+	float Height;
+	float Depth;
 }OgreMeshData_Type;
 
 class CL64_Scene
