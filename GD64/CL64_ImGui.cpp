@@ -318,8 +318,9 @@ void CL64_ImGui::Model_Data_GUI(void)
 			ImGui::TreePop();
 		}
 
-		if (ImGui::TreeNode("Ogre3D Model"))
+		if (ImGui::TreeNode(App->CL_Scene->FileName))
 		{
+			ImGui::Text("Name:- %s",App->CL_Scene->S_OgreMeshData[0]->mName.c_str());
 			if (ImGui::TreeNode("Materials"))
 			{
 				int Count = 0;

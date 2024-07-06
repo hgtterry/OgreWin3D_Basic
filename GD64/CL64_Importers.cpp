@@ -87,7 +87,7 @@ bool CL64_Importers::Assimp_Loader(bool UseDialog,const char* Extension, const c
 			App->CL_Scene->Reset_Main_Entity();
 
 			App->CL_Scene->Main_Ent = App->CL_Converters->Convert_To_Ogre3D(1);
-
+			
 			App->CL_Scene->Main_Node = App->CL_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 			App->CL_Scene->Main_Node->attachObject(App->CL_Scene->Main_Ent);
 
@@ -163,7 +163,7 @@ void CL64_Importers::Load_Ogre_Model(void)
 	App->CL_Ogre->OgreListener->Ogre_Model_Loaded = 1;
 	
 	App->CL_Converters->Ogre_To_Mesh_Data(App->CL_Scene->Main_Ent);
-	App->CL_Converters->Get_Ogre3D_MeshData(App->CL_Scene->Main_Ent);
+	
 
 	App->CL_Scene->Model_Loaded = 1;
 

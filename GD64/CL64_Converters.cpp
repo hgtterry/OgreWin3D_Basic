@@ -193,19 +193,6 @@ Ogre::Entity* CL64_Converters::Convert_To_Ogre3D(bool Create)
 	strcpy(Name, mWorld_Mesh_JustName);
 	strcat(Name, ".mesh");
 	
-	//Create_Resource_Group();
-	//Debug
-	/*if (World_Ent)
-	{
-		App->CL_Ogre->OgreListener->Ogre_Model_Loaded = 0;
-
-		World_Node->detachAllObjects();
-		App->CL_Ogre->mSceneMgr->destroySceneNode(World_Node);
-		App->CL_Ogre->mSceneMgr->destroyEntity(World_Ent);
-		World_Ent = nullptr;
-		World_Node = nullptr;
-	}*/
-	//Debug
 	Create_Resource_Group();
 	
 	World_Ent = App->CL_Ogre->mSceneMgr->createEntity(Name);
@@ -213,9 +200,9 @@ Ogre::Entity* CL64_Converters::Convert_To_Ogre3D(bool Create)
 	remove(mWorld_File_PathAndFile);
 	remove(Material_PathAndFile);
 
-	return World_Ent;
+	App->CL_Converters->Get_Ogre3D_MeshData(World_Ent);
 
-	//App->Say("Converted");
+	return World_Ent;
 }
 
 // *************************************************************************
@@ -225,19 +212,10 @@ void CL64_Converters::Create_Resource_Group()
 {
 	if (World_Ent)
 	{
-		/*World_Node->detachAllObjects();
-
-		App->CL_Ogre->mSceneMgr->destroySceneNode(World_Node);
-		App->CL_Ogre->mSceneMgr->destroyEntity(World_Ent);
-
-		World_Node = NULL;
-		World_Ent = NULL;*/
-
 		Ogre::ResourceGroupManager::getSingleton().destroyResourceGroup(App->CL_Ogre->World_Resource_Group);
 		Ogre::ResourceGroupManager::getSingleton().createResourceGroup(App->CL_Ogre->World_Resource_Group);
 
 		Ogre::ResourceGroupManager::getSingleton().addResourceLocation(mWorld_File_Path, "FileSystem", App->CL_Ogre->World_Resource_Group);
-		//Ogre::ResourceGroupManager::getSingleton().clearResourceGroup(App->CL_Ogre->World_Resource_Group);
 		Ogre::ResourceGroupManager::getSingleton().initialiseResourceGroup(App->CL_Ogre->World_Resource_Group);
 
 	}
@@ -479,6 +457,7 @@ bool CL64_Converters::Ogre_To_Mesh_Data(Ogre::Entity* Ogre_Entity)
 	
 	App->CL_Scene->Set_BondingBox_Model(true);
 	App->CL_Converters->Get_SkeletonInstance(Ogre_Entity);
+	App->CL_Converters->Get_Ogre3D_MeshData(Ogre_Entity);
 
 	return 1;
 }
@@ -828,6 +807,8 @@ void CL64_Converters::Get_Ogre3D_MeshData(Ogre::Entity* Ogre_Entity)
 		App->CL_Scene->S_OgreMeshData[0]->mMaterials.push_back(subMesh->getMaterialName());
 		Count++;
 	}
+
+	App->CL_Scene->S_OgreMeshData[0]->mName = Ogre_Entity->getName();
 
 	Ogre::Vector3 vMin(Ogre_Entity->getBoundingBox().getMinimum());
 	Ogre::Vector3 vMax(Ogre_Entity->getBoundingBox().getMaximum());
