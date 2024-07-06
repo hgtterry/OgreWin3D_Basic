@@ -803,9 +803,23 @@ bool CL64_Converters::Get_SkeletonInstance(Ogre::Entity* Ogre_Entity)
 void CL64_Converters::Get_Ogre3D_MeshData(Ogre::Entity* Ogre_Entity)
 {
 	bool Edge = Ogre_Entity->hasEdgeList();
+	if (Edge == 1)
+	{
+		App->CL_Scene->S_OgreMeshData[0]->mEdgeList = "Yes";
+	}
+	else
+	{
+		App->CL_Scene->S_OgreMeshData[0]->mEdgeList = "No";
+	}
+
+	// ---------------------------------------------------------------
+
+	App->CL_Scene->S_OgreMeshData[0]->mMaterials.resize(0);
 
 	int SubMeshCount = Ogre_Entity->getNumSubEntities();
-	
+	App->CL_Scene->S_OgreMeshData[0]->mSubMeshCount = SubMeshCount;
+
+
 	int Count = 0;
 	while (Count < SubMeshCount)
 	{

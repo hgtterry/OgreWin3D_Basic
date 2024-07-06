@@ -47,7 +47,10 @@ typedef struct Bone_Type {
 }Bone_Type;
 
 typedef struct OgreMeshData_Type {
+
+	Ogre::String mEdgeList;
 	std::vector<std::string> mMaterials;
+	int mSubMeshCount;
 }OgreMeshData_Type;
 
 class CL64_Scene

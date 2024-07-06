@@ -336,8 +336,7 @@ void CL64_ImGui::Model_Data_GUI(void)
 
 			if (ImGui::TreeNode("Geometry"))
 			{
-				
-
+				ImGui::Text("Edge List:- %s", App->CL_Scene->S_OgreMeshData[0]->mEdgeList.c_str());
 				ImGui::TreePop();
 			}
 

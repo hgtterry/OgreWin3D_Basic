@@ -163,6 +163,7 @@ void CL64_Importers::Load_Ogre_Model(void)
 	App->CL_Ogre->OgreListener->Ogre_Model_Loaded = 1;
 	
 	App->CL_Converters->Ogre_To_Mesh_Data(App->CL_Scene->Main_Ent);
+	App->CL_Converters->Get_Ogre3D_MeshData(App->CL_Scene->Main_Ent);
 
 	App->CL_Scene->Model_Loaded = 1;
 
