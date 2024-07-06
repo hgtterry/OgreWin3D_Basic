@@ -797,3 +797,12 @@ bool CL64_Converters::Get_SkeletonInstance(Ogre::Entity* Ogre_Entity)
 	return 1;
 }
 
+// *************************************************************************
+// *	  	Get_Ogre3D_MeshData:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void CL64_Converters::Get_Ogre3D_MeshData(Ogre::Entity* Ogre_Entity)
+{
+	App->CL_Scene->S_OgreMeshData[0]->mMaterials.push_back("poo1");
+	App->CL_Scene->S_OgreMeshData[0]->mMaterials.push_back("poo2");
+}
+

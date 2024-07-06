@@ -50,6 +50,8 @@ CL64_Scene::CL64_Scene(void)
 	strcpy(Model_FolderPath, "No Model Loaded");
 	strcpy(JustName, "No Model Loaded");
 
+	S_OgreMeshData[0] = new OgreMeshData_Type;
+
 	S_BoundingBox[0] = nullptr;
 
 	int Count = 0;

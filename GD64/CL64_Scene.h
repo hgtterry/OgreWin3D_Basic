@@ -46,6 +46,10 @@ typedef struct Bone_Type {
 	Translation_Type TranslationStart;
 }Bone_Type;
 
+typedef struct OgreMeshData_Type {
+	std::vector<std::string> mMaterials;
+}OgreMeshData_Type;
+
 class CL64_Scene
 {
 public:
@@ -68,6 +72,7 @@ public:
 	Base_Group* Group[100];
 	AABB_Type* S_BoundingBox[1];
 	Bone_Type* S_Bones[200];
+	OgreMeshData_Type* S_OgreMeshData[1];
 
 	char FileName[MAX_PATH];
 	char Path_FileName[MAX_PATH];

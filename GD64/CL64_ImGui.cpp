@@ -318,12 +318,19 @@ void CL64_ImGui::Model_Data_GUI(void)
 			ImGui::TreePop();
 		}
 
-		if (ImGui::TreeNode("Tree view"))
+		if (ImGui::TreeNode("Ogre3D Model"))
 		{
 			if (ImGui::TreeNode("Materials"))
 			{
-				ImGui::Text("Poo");
-				ImGui::Text("Faces:- %i", App->CL_Scene->FaceCount);
+				int Count = 0;
+				int Size = App->CL_Scene->S_OgreMeshData[0]->mMaterials.size();
+
+				while (Count < Size)
+				{
+					ImGui::Text(App->CL_Scene->S_OgreMeshData[0]->mMaterials[Count].c_str());
+					Count++;
+				}
+
 				ImGui::TreePop();
 			}
 
