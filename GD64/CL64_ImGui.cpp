@@ -349,6 +349,10 @@ void CL64_ImGui::Model_Data_GUI(void)
 				ImGui::Text("Width:- %f", App->CL_Scene->S_OgreMeshData[0]->Width);
 				ImGui::Text("Height:- %f", App->CL_Scene->S_OgreMeshData[0]->Height);
 				ImGui::Text("Depth:- %f", App->CL_Scene->S_OgreMeshData[0]->Depth);
+				ImGui::Text("Area:- %f", App->CL_Scene->S_OgreMeshData[0]->Area);
+				ImGui::Text("Volume:- %f", App->CL_Scene->S_OgreMeshData[0]->Volume);
+				ImGui::Text("Radius:- %f", App->CL_Scene->S_OgreMeshData[0]->Radius);
+
 				ImGui::TreePop();
 			}
 

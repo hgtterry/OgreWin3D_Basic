@@ -837,8 +837,11 @@ void CL64_Converters::Get_Ogre3D_MeshData(Ogre::Entity* Ogre_Entity)
 	App->CL_Scene->S_OgreMeshData[0]->vMax = vMax;
 	App->CL_Scene->S_OgreMeshData[0]->Center = Center;
 
-	App->CL_Scene->S_OgreMeshData[0]->Width = ((vMax - vMin).x);
-	App->CL_Scene->S_OgreMeshData[0]->Height =((vMax - vMin).y);
-	App->CL_Scene->S_OgreMeshData[0]->Depth = ((vMax - vMin).z);
+	App->CL_Scene->S_OgreMeshData[0]->Width = (vMax - vMin).x;
+	App->CL_Scene->S_OgreMeshData[0]->Height =(vMax - vMin).y;
+	App->CL_Scene->S_OgreMeshData[0]->Depth = (vMax - vMin).z;
+	App->CL_Scene->S_OgreMeshData[0]->Area = (vMax - vMin).x * (vMax - vMin).y;
+	App->CL_Scene->S_OgreMeshData[0]->Volume = (vMax - vMin).x * (vMax - vMin).y * (vMax - vMin).z;
+	App->CL_Scene->S_OgreMeshData[0]->Radius = Ogre_Entity->getBoundingRadius();
 }
 

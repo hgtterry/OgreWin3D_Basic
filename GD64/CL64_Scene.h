@@ -57,6 +57,9 @@ typedef struct OgreMeshData_Type {
 	float Width;
 	float Height;
 	float Depth;
+	float Area;
+	float Volume;
+	float Radius;
 }OgreMeshData_Type;
 
 class CL64_Scene
