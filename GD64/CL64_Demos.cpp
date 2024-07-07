@@ -48,7 +48,7 @@ void CL64_Demos::Start_Demo_1(void)
 	App->CL_Ogre->Show_Test_Mesh();
 
 	App->CL_Camera->Reset_View();
-	App->CL_Ogre->OgreListener->CameraMode = Enums::Cam_Mode_Free;
+	App->CL_Ogre->Ogre_Listener->CameraMode = Enums::Cam_Mode_Free;
 
 
 	char Path_And_File[MAX_PATH];
@@ -78,10 +78,10 @@ void CL64_Demos::Start_Demo_1(void)
 	World_Node->setScale(1, 1, 1);
 
 	App->CL_Scene->Model_Type = Enums::LoadedFile_None;
-	App->CL_Ogre->OgreListener->CameraMode = Enums::Cam_Mode_First;
+	App->CL_Ogre->Ogre_Listener->CameraMode = Enums::Cam_Mode_First;
 
 	App->CL_Bullet->create_New_Trimesh(World_Ent, World_Node);
-	App->CL_Ogre->OgreListener->Run_Physics = 1;
+	App->CL_Ogre->Ogre_Listener->Run_Physics = 1;
 
 	App->CL_TopDlg->Toggle_PhysicaDebug_Node_Flag = 0;
 	App->CL_Ogre->Bullet_Debug_Listener->btDebug_Node->setVisible(false);

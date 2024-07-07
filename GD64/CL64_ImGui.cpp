@@ -232,7 +232,7 @@ void CL64_ImGui::ImGui_FPS(void)
 		ImGui::Text("FPS average %.0f", ImGui::GetIO().Framerate);
 
 		ImVec2 Size = ImGui::GetWindowSize();
-		PosX = ((float)App->CL_Ogre->OgreListener->View_Width / 2) - (Size.x / 2);
+		PosX = ((float)App->CL_Ogre->Ogre_Listener->View_Width / 2) - (Size.x / 2);
 		PosY = 10;
 
 		ImGui::End();
@@ -257,14 +257,14 @@ void CL64_ImGui::Camera_Data_GUI(void)
 		ImGui::Text("Camera Data");
 		ImGui::Text("  ");
 		ImGui::Text("Rotation");
-		ImGui::Text("Yaw:- %f", App->CL_Ogre->OgreListener->mCamNode->getOrientation().getYaw().valueDegrees());
-		ImGui::Text("Pitch:- %f", App->CL_Ogre->OgreListener->mCamNode->getOrientation().getPitch().valueDegrees());
-		ImGui::Text("Roll:- %f", App->CL_Ogre->OgreListener->mCamNode->getOrientation().getRoll().valueDegrees());
+		ImGui::Text("Yaw:- %f", App->CL_Ogre->Ogre_Listener->mCamNode->getOrientation().getYaw().valueDegrees());
+		ImGui::Text("Pitch:- %f", App->CL_Ogre->Ogre_Listener->mCamNode->getOrientation().getPitch().valueDegrees());
+		ImGui::Text("Roll:- %f", App->CL_Ogre->Ogre_Listener->mCamNode->getOrientation().getRoll().valueDegrees());
 		ImGui::Text("  ");
 		ImGui::Text("Position");
-		ImGui::Text("X:- %f", App->CL_Ogre->OgreListener->mCamNode->getPosition().x);
-		ImGui::Text("Y:- %f", App->CL_Ogre->OgreListener->mCamNode->getPosition().y);
-		ImGui::Text("Z:- %f", App->CL_Ogre->OgreListener->mCamNode->getPosition().z);
+		ImGui::Text("X:- %f", App->CL_Ogre->Ogre_Listener->mCamNode->getPosition().x);
+		ImGui::Text("Y:- %f", App->CL_Ogre->Ogre_Listener->mCamNode->getPosition().y);
+		ImGui::Text("Z:- %f", App->CL_Ogre->Ogre_Listener->mCamNode->getPosition().z);
 		ImGui::Separator();
 
 		if (ImGui::Button("Close"))
@@ -428,14 +428,14 @@ void CL64_ImGui::Demo_1_GUI(void)
 
 		if (ImGui::Button("1st view"))
 		{
-			App->CL_Ogre->OgreListener->CameraMode = Enums::Cam_Mode_First;
+			App->CL_Ogre->Ogre_Listener->CameraMode = Enums::Cam_Mode_First;
 		}
 
 		ImGui::SameLine();
 
 		if (ImGui::Button("Free view"))
 		{
-			App->CL_Ogre->OgreListener->CameraMode = Enums::Cam_Mode_Free;
+			App->CL_Ogre->Ogre_Listener->CameraMode = Enums::Cam_Mode_Free;
 		}
 
 		Model_Data_PosX = 10;

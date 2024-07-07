@@ -1,5 +1,5 @@
 /*
-Copyright (c) GameDirector 2019 To 2024 HGT Software W.T.Flanigan H.C.Flanigan
+Copyright (c) OgreWin3D_Basic 2024 W.T.Flanigan H.C.Flanigan Inflanite_HGT
 
 This software is provided 'as-is', without any express or implied
 warranty. In no event will the authors be held liable for any damages
@@ -55,6 +55,7 @@ CL64_Bullet_Debug_World::CL64_Bullet_Debug_World(void)
 	vertex_From.resize(100000);
 	vertex_To.resize(100000);
 	vertex_Colour.resize(100000);
+
 	V_Count = 0;
 }
 
@@ -92,22 +93,22 @@ void CL64_Bullet_Debug_World::drawLine(const btVector3& from, const btVector3& t
 
 void CL64_Bullet_Debug_World::drawTriangle(const btVector3& v0, const btVector3& v1, const btVector3& v2, const btVector3& color, btScalar)
 {
-	//FlashWindow(App->MainHwnd,true);
+
 }
 
 void CL64_Bullet_Debug_World::drawContactPoint(const btVector3& PointOnB, const btVector3& normalOnB, btScalar distance, int lifeTime, const btVector3& color)
 {
-	//FlashWindow(App->MainHwnd,true);
+	
 }
 
 void CL64_Bullet_Debug_World::reportErrorWarning(const char* warningString)
 {
-	//FlashWindow(App->MainHwnd,true);
+	
 }
 
 void CL64_Bullet_Debug_World::draw3dText(const btVector3& location, const char* textString)
 {
-	//FlashWindow(App->MainHwnd,true);
+	
 }
 
 void CL64_Bullet_Debug_World::setDebugMode(int debugMode)

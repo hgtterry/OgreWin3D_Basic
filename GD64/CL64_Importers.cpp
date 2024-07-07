@@ -72,7 +72,7 @@ bool CL64_Importers::Assimp_Loader(bool UseDialog,const char* Extension, const c
 	App->CL_Ogre->Show_Test_Mesh();
 	App->CL_Camera->Reset_View();
 
-	App->CL_Ogre->RenderListener->Flag_ShowTextured = 1;
+	App->CL_Ogre->OGL_Listener->Flag_ShowTextured = 1;
 	App->CL_Scene->Scene_Mode = Enums::Scene_Mode_MeshData;
 
 	App->CL_Scene->Model_Loaded = 1;
@@ -101,7 +101,7 @@ bool CL64_Importers::Assimp_Loader(bool UseDialog,const char* Extension, const c
 
 			App->CL_Scene->Model_Type = Enums::LoadedFile_None;
 
-			App->CL_Ogre->OgreListener->Ogre_Model_Loaded = 1;
+			App->CL_Ogre->Ogre_Listener->Ogre_Model_Loaded = 1;
 		
 		}
 		
@@ -163,7 +163,7 @@ void CL64_Importers::Load_Ogre_Model(void)
 		App->CL_Ogre->camNode->setPosition(Ogre::Vector3(0,0, App->CL_Scene->Main_Ent->getBoundingRadius() * 2.8f));
 	}
 
-	App->CL_Ogre->OgreListener->Ogre_Model_Loaded = 1;
+	App->CL_Ogre->Ogre_Listener->Ogre_Model_Loaded = 1;
 	
 	App->CL_Converters->Ogre_To_Mesh_Data(App->CL_Scene->Main_Ent);
 	
@@ -232,7 +232,7 @@ void CL64_Importers::Reload_Ogre_Model(void)
 		App->CL_Ogre->camNode->setPosition(Ogre::Vector3(0, 0, App->CL_Scene->Main_Ent->getBoundingRadius() * 2.8f));
 	}
 
-	App->CL_Ogre->OgreListener->Ogre_Model_Loaded = 1;
+	App->CL_Ogre->Ogre_Listener->Ogre_Model_Loaded = 1;
 
 }
 

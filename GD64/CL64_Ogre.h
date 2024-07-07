@@ -86,8 +86,8 @@ public:
 
 	OgreBites::TrayManager* mTrayMgr;
 
-	CL64_OgreListener*			OgreListener;
-	CL64_OGL_Listener*			RenderListener;
+	CL64_OgreListener*			Ogre_Listener;
+	CL64_OGL_Listener*			OGL_Listener;
 	CL64_Bullet_Debug_World*	Bullet_Debug_Listener;
 
 

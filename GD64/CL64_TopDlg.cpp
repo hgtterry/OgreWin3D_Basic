@@ -243,15 +243,15 @@ LRESULT CALLBACK CL64_TopDlg::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam
 			if (App->CL_Scene->Model_Loaded == 1)
 			{
 	
-				if (App->CL_Ogre->RenderListener->Flag_ShowTextured == 1)
+				if (App->CL_Ogre->OGL_Listener->Flag_ShowTextured == 1)
 				{
-					App->CL_Ogre->RenderListener->Flag_ShowTextured = 0;
+					App->CL_Ogre->OGL_Listener->Flag_ShowTextured = 0;
 
 					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_TexturesOff_Bmp);
 				}
 				else
 				{
-					App->CL_Ogre->RenderListener->Flag_ShowTextured = 1;
+					App->CL_Ogre->OGL_Listener->Flag_ShowTextured = 1;
 
 					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_TexturesOn_Bmp);
 				}
@@ -266,16 +266,16 @@ LRESULT CALLBACK CL64_TopDlg::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam
 			{
 				HWND Temp = GetDlgItem(hDlg, IDC_TBSHOWFACES);
 
-				if (App->CL_Ogre->RenderListener->Flag_ShowFaces == 1)
+				if (App->CL_Ogre->OGL_Listener->Flag_ShowFaces == 1)
 				{
-					App->CL_Ogre->RenderListener->Flag_ShowFaces = 0;
+					App->CL_Ogre->OGL_Listener->Flag_ShowFaces = 0;
 
 					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshOff_Bmp);
 
 				}
 				else
 				{
-					App->CL_Ogre->RenderListener->Flag_ShowFaces = 1;
+					App->CL_Ogre->OGL_Listener->Flag_ShowFaces = 1;
 
 					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshOn_Bmp);
 
@@ -293,15 +293,15 @@ LRESULT CALLBACK CL64_TopDlg::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam
 			{
 				HWND Temp = GetDlgItem(hDlg, IDC_BTSHOWPOINTS);
 
-				if (App->CL_Ogre->RenderListener->Flag_ShowPoints == 1)
+				if (App->CL_Ogre->OGL_Listener->Flag_ShowPoints == 1)
 				{
-					App->CL_Ogre->RenderListener->Flag_ShowPoints = 0;
+					App->CL_Ogre->OGL_Listener->Flag_ShowPoints = 0;
 
 					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshPointsOff_Bmp);
 				}
 				else
 				{
-					App->CL_Ogre->RenderListener->Flag_ShowPoints = 1;
+					App->CL_Ogre->OGL_Listener->Flag_ShowPoints = 1;
 
 					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshPointsOn_Bmp);
 				}
@@ -338,15 +338,15 @@ LRESULT CALLBACK CL64_TopDlg::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam
 			{
 				HWND Temp = GetDlgItem(hDlg, IDC_BTSHOWBONES);
 
-				if (App->CL_Ogre->RenderListener->Flag_ShowBones == 1)
+				if (App->CL_Ogre->OGL_Listener->Flag_ShowBones == 1)
 				{
-					App->CL_Ogre->RenderListener->Flag_ShowBones = 0;
+					App->CL_Ogre->OGL_Listener->Flag_ShowBones = 0;
 
 					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_BonesOff_Bmp);
 				}
 				else
 				{
-					App->CL_Ogre->RenderListener->Flag_ShowBones = 1;
+					App->CL_Ogre->OGL_Listener->Flag_ShowBones = 1;
 
 					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_BonesOn_Bmp);
 				}
@@ -361,15 +361,15 @@ LRESULT CALLBACK CL64_TopDlg::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam
 			{
 				HWND Temp = GetDlgItem(hDlg, IDC_BTSHOWNORMALS);
 
-				if (App->CL_Ogre->RenderListener->Flag_ShowNormals == 1)
+				if (App->CL_Ogre->OGL_Listener->Flag_ShowNormals == 1)
 				{
-					App->CL_Ogre->RenderListener->Flag_ShowNormals = 0;
+					App->CL_Ogre->OGL_Listener->Flag_ShowNormals = 0;
 
 					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_NormalsOff_Bmp);
 				}
 				else
 				{
-					App->CL_Ogre->RenderListener->Flag_ShowNormals = 1;
+					App->CL_Ogre->OGL_Listener->Flag_ShowNormals = 1;
 
 					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_NormalsOn_Bmp);
 				}
@@ -384,15 +384,15 @@ LRESULT CALLBACK CL64_TopDlg::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam
 			{
 				HWND Temp = GetDlgItem(hDlg, IDC_TBBOUNDBOX);
 
-				if (App->CL_Ogre->RenderListener->Flag_ShowBoundingBox == 1)
+				if (App->CL_Ogre->OGL_Listener->Flag_ShowBoundingBox == 1)
 				{
-					App->CL_Ogre->RenderListener->Flag_ShowBoundingBox = 0;
+					App->CL_Ogre->OGL_Listener->Flag_ShowBoundingBox = 0;
 				
 					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_BBOff_Bmp);
 				}
 				else
 				{
-					App->CL_Ogre->RenderListener->Flag_ShowBoundingBox = 1;
+					App->CL_Ogre->OGL_Listener->Flag_ShowBoundingBox = 1;
 					
 					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_BBOn_Bmp);
 				}
@@ -754,7 +754,7 @@ LRESULT CALLBACK CL64_TopDlg::Camera_TB_Proc(HWND hDlg, UINT message, WPARAM wPa
 		if (LOWORD(wParam) == IDC_BT_CAMERA_MODEL)
 		{
 			App->CL_Camera->Reset_View();
-			App->CL_Ogre->OgreListener->CameraMode = Enums::Cam_Mode_Model;
+			App->CL_Ogre->Ogre_Listener->CameraMode = Enums::Cam_Mode_Model;
 
 			App->CL_TopDlg->Toggle_Cam_ModelMode_Flag = 1;
 			App->CL_TopDlg->Toggle_Cam_FreeMode_Flag = 0;
@@ -767,7 +767,7 @@ LRESULT CALLBACK CL64_TopDlg::Camera_TB_Proc(HWND hDlg, UINT message, WPARAM wPa
 		if (LOWORD(wParam) == IDC_BT_CAMERA_FREE)
 		{
 			App->CL_Camera->Reset_View();
-			App->CL_Ogre->OgreListener->CameraMode = Enums::Cam_Mode_Free;
+			App->CL_Ogre->Ogre_Listener->CameraMode = Enums::Cam_Mode_Free;
 
 			App->CL_TopDlg->Toggle_Cam_FreeMode_Flag = 1;
 			App->CL_TopDlg->Toggle_Cam_ModelMode_Flag = 0;

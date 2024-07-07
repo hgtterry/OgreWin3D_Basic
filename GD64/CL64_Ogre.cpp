@@ -37,7 +37,7 @@ CL64_Ogre::CL64_Ogre(void)
 	mCamera =	nullptr;
 	camNode =	nullptr;
 
-	OgreListener = nullptr;
+	Ogre_Listener = nullptr;
 
 	manObj = nullptr;
 	ModelNode = nullptr;
@@ -320,14 +320,13 @@ bool CL64_Ogre::createFrameListener(void)
 
 	if (RenderSystemName == "OpenGL Rendering Subsystem")
 	{
-		OgreListener = new CL64_OgreListener();
-		mRoot->addFrameListener(OgreListener);
+		Ogre_Listener = new CL64_OgreListener();
+		mRoot->addFrameListener(Ogre_Listener);
 
-		RenderListener = new CL64_OGL_Listener();
-		mSceneMgr->addRenderQueueListener(RenderListener);
+		OGL_Listener = new CL64_OGL_Listener();
+		mSceneMgr->addRenderQueueListener(OGL_Listener);
 
 		Bullet_Debug_Listener = new CL64_Bullet_Debug_World();
-
 		mSceneMgr->addRenderQueueListener(Bullet_Debug_Listener);
 
 		Bullet_Debug_Listener->setDebugMode(Bullet_Debug_Listener->getDebugMode()
