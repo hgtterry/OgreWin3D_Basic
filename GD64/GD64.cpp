@@ -728,7 +728,9 @@ void Close_App()
         App->CL_Ogre->mRoot = NULL;
     }
 
-   // ImGui::DestroyContext();
+	App->CL_Bullet->Destroy_Bullet();
+
+    ImGui::DestroyContext();
 }
 
 // *************************************************************************

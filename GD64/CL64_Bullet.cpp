@@ -44,7 +44,7 @@ CL64_Bullet::~CL64_Bullet(void)
 // *************************************************************************
 // *			Init_Bullet:- Terry and Hazel Flanigan 2024   	 	 	   *
 // *************************************************************************
-bool CL64_Bullet::Init_Bullet()
+void CL64_Bullet::Init_Bullet()
 {
 	collisionConfiguration = new btDefaultCollisionConfiguration();
 
@@ -64,7 +64,46 @@ bool CL64_Bullet::Init_Bullet()
 
 	btAlignedObjectArray<btCollisionShape*> collisionShapes;
 
-	return 0;
+}
+
+// *************************************************************************
+// *			Destroy_Bullet:- Terry and Hazel Flanigan 2024   	  	   *
+// *************************************************************************
+void CL64_Bullet::Destroy_Bullet()
+{
+	int i = 0;
+
+	//remove the rigidbodies from the dynamics world and delete them
+	for (i = dynamicsWorld->getNumCollisionObjects() - 1; i >= 0; i--)
+	{
+		btCollisionObject* obj = dynamicsWorld->getCollisionObjectArray()[i];
+		btRigidBody* body = btRigidBody::upcast(obj);
+		if (body && body->getMotionState())
+		{
+			delete body->getMotionState();
+		}
+
+		dynamicsWorld->removeCollisionObject(obj);
+
+		delete obj;
+	}
+
+	//delete collision shapes
+	for (int j = 0; j < collisionShapes.size(); j++)
+	{
+		btCollisionShape* shape = collisionShapes[j];
+		collisionShapes[j] = 0;
+		delete shape;
+	}
+
+	delete dynamicsWorld;
+	delete solver;
+	delete overlappingPairCache;
+	delete dispatcher;
+
+	delete collisionConfiguration;
+
+	collisionShapes.clear();
 }
 
 // *************************************************************************

@@ -29,7 +29,8 @@ public:
 	CL64_Bullet(void);
 	~CL64_Bullet(void);
 
-	bool Init_Bullet();
+	void Init_Bullet();
+	void Destroy_Bullet();
 
 	btDefaultCollisionConfiguration* collisionConfiguration;
 	btCollisionDispatcher* dispatcher;
