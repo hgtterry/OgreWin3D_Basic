@@ -23,11 +23,11 @@ distribution.
 
 #include "pch.h"
 #include "CL64_App.h"
-#include "CL64_DebugBulletWorld.h"
+#include "CL64_Bullet_Debug_World.h"
 
 #pragma warning( disable : 4305)
 
-CL64_DebugBulletWorld::CL64_DebugBulletWorld(void)
+CL64_Bullet_Debug_World::CL64_Bullet_Debug_World(void)
 {
 	Render_Debug_Flag = 1;
 	m_debugMode = (DebugDrawModes)DBG_DrawWireframe;
@@ -58,21 +58,21 @@ CL64_DebugBulletWorld::CL64_DebugBulletWorld(void)
 	V_Count = 0;
 }
 
-CL64_DebugBulletWorld::~CL64_DebugBulletWorld(void)
+CL64_Bullet_Debug_World::~CL64_Bullet_Debug_World(void)
 {
 }
 
-void CL64_DebugBulletWorld::drawSphere(const btVector3& p, btScalar radius, const btVector3& color)
+void CL64_Bullet_Debug_World::drawSphere(const btVector3& p, btScalar radius, const btVector3& color)
 {
 	//FlashWindow(App->MainHwnd,true);
 }
 
-void CL64_DebugBulletWorld::drawLine(const btVector3& from, const btVector3& to, const btVector3& fromColor, const btVector3& toColor)
+void CL64_Bullet_Debug_World::drawLine(const btVector3& from, const btVector3& to, const btVector3& fromColor, const btVector3& toColor)
 {
 
 }
 
-void CL64_DebugBulletWorld::drawLine(const btVector3& from, const btVector3& to, const btVector3& color)
+void CL64_Bullet_Debug_World::drawLine(const btVector3& from, const btVector3& to, const btVector3& color)
 {
 
 	vertex_Colour[V_Count].x = color.getX();
@@ -90,32 +90,32 @@ void CL64_DebugBulletWorld::drawLine(const btVector3& from, const btVector3& to,
 
 }
 
-void CL64_DebugBulletWorld::drawTriangle(const btVector3& v0, const btVector3& v1, const btVector3& v2, const btVector3& color, btScalar)
+void CL64_Bullet_Debug_World::drawTriangle(const btVector3& v0, const btVector3& v1, const btVector3& v2, const btVector3& color, btScalar)
 {
 	//FlashWindow(App->MainHwnd,true);
 }
 
-void CL64_DebugBulletWorld::drawContactPoint(const btVector3& PointOnB, const btVector3& normalOnB, btScalar distance, int lifeTime, const btVector3& color)
+void CL64_Bullet_Debug_World::drawContactPoint(const btVector3& PointOnB, const btVector3& normalOnB, btScalar distance, int lifeTime, const btVector3& color)
 {
 	//FlashWindow(App->MainHwnd,true);
 }
 
-void CL64_DebugBulletWorld::reportErrorWarning(const char* warningString)
+void CL64_Bullet_Debug_World::reportErrorWarning(const char* warningString)
 {
 	//FlashWindow(App->MainHwnd,true);
 }
 
-void CL64_DebugBulletWorld::draw3dText(const btVector3& location, const char* textString)
+void CL64_Bullet_Debug_World::draw3dText(const btVector3& location, const char* textString)
 {
 	//FlashWindow(App->MainHwnd,true);
 }
 
-void CL64_DebugBulletWorld::setDebugMode(int debugMode)
+void CL64_Bullet_Debug_World::setDebugMode(int debugMode)
 {
 	m_debugMode = (DebugDrawModes)DBG_DrawWireframe;
 }
 
-int CL64_DebugBulletWorld::getDebugMode() const {
+int CL64_Bullet_Debug_World::getDebugMode() const {
 
 	return DBG_DrawWireframe;
 }
@@ -123,14 +123,14 @@ int CL64_DebugBulletWorld::getDebugMode() const {
 // *************************************************************************
 // *		renderQueueStarted:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-void CL64_DebugBulletWorld::renderQueueStarted(Ogre::uint8 queueGroupId, const String& invocation, bool& skipThisInvocation)
+void CL64_Bullet_Debug_World::renderQueueStarted(Ogre::uint8 queueGroupId, const String& invocation, bool& skipThisInvocation)
 {
 	Render_Debug();
 }
 // *************************************************************************
 // *			renderQueueEnded:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
-void CL64_DebugBulletWorld::renderQueueEnded(Ogre::uint8 queueGroupId, const String& invocation, bool& repeatThisInvocation)
+void CL64_Bullet_Debug_World::renderQueueEnded(Ogre::uint8 queueGroupId, const String& invocation, bool& repeatThisInvocation)
 {
 	if (queueGroupId != RENDER_QUEUE_MAIN)
 	{
@@ -142,7 +142,7 @@ void CL64_DebugBulletWorld::renderQueueEnded(Ogre::uint8 queueGroupId, const Str
 // *************************************************************************
 // *				PreRender:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-void CL64_DebugBulletWorld::PreRender()
+void CL64_Bullet_Debug_World::PreRender()
 {
 
 }
@@ -150,7 +150,7 @@ void CL64_DebugBulletWorld::PreRender()
 // *************************************************************************
 // *				PostRender:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-void CL64_DebugBulletWorld::PostRender()
+void CL64_Bullet_Debug_World::PostRender()
 {
 
 }
@@ -158,7 +158,7 @@ void CL64_DebugBulletWorld::PostRender()
 // *************************************************************************
 // *		Render_Debug_Bullet:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-void CL64_DebugBulletWorld::Render_Debug_Bullet()
+void CL64_Bullet_Debug_World::Render_Debug_Bullet()
 {
 	Render_Debug();
 }
@@ -166,7 +166,7 @@ void CL64_DebugBulletWorld::Render_Debug_Bullet()
 // *************************************************************************
 // *				Render_Debug:- Terry and Hazel Flanigan 2024	  	   *
 // *************************************************************************
-bool CL64_DebugBulletWorld::Render_Debug(void)
+bool CL64_Bullet_Debug_World::Render_Debug(void)
 {
 	if (Render_Debug_Flag == 1)
 	{
@@ -203,7 +203,7 @@ bool CL64_DebugBulletWorld::Render_Debug(void)
 // *************************************************************************
 // *			Clear_Debug_Render:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
-void CL64_DebugBulletWorld::Clear_Debug_Render()
+void CL64_Bullet_Debug_World::Clear_Debug_Render()
 {
 	btDebug_Manual->beginUpdate(0);
 	btDebug_Manual->position(0, 0, 0);

@@ -401,11 +401,11 @@ void CL64_ImGui::Demo_1_GUI(void)
 
 			if (App->CL_TopDlg->Toggle_PhysicaDebug_Node_Flag == 1)
 			{
-				App->CL_Ogre->BulletListener->btDebug_Node->setVisible(true);
+				App->CL_Ogre->Bullet_Debug_Listener->btDebug_Node->setVisible(true);
 			}
 			else
 			{
-				App->CL_Ogre->BulletListener->btDebug_Node->setVisible(false);
+				App->CL_Ogre->Bullet_Debug_Listener->btDebug_Node->setVisible(false);
 			}
 		}
 

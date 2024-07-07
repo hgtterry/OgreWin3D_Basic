@@ -137,9 +137,9 @@ void CL64_Player::Show_Debug_Player(bool Show)
 	{
 		App->CL_Scene->B_Player[0]->Phys_Body->setCollisionFlags(f | (1 << 5));
 
-		App->CL_Ogre->BulletListener->Render_Debug_Flag = 0;
+		App->CL_Ogre->Bullet_Debug_Listener->Render_Debug_Flag = 0;
 		App->CL_Ogre->RenderFrame();
-		App->CL_Ogre->BulletListener->Render_Debug_Flag = 1;
+		App->CL_Ogre->Bullet_Debug_Listener->Render_Debug_Flag = 1;
 	}
 
 }

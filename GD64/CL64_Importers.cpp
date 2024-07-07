@@ -72,6 +72,9 @@ bool CL64_Importers::Assimp_Loader(bool UseDialog,const char* Extension, const c
 	App->CL_Ogre->Show_Test_Mesh();
 	App->CL_Camera->Reset_View();
 
+	App->CL_Ogre->RenderListener->Flag_ShowTextured = 1;
+	App->CL_Scene->Scene_Mode = Enums::Scene_Mode_MeshData;
+
 	App->CL_Scene->Model_Loaded = 1;
 
 	if (UseDialog == 1)

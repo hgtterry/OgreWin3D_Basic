@@ -33,7 +33,7 @@ distribution.
 #include "OgreImGuiOverlay.h"
 #include <OgreImGuiInputListener.h>
 
-#include "CL64_DebugBulletWorld.h"
+#include "CL64_Bullet_Debug_World.h"
 
 using namespace Ogre;
 using namespace OgreBites;
@@ -86,9 +86,9 @@ public:
 
 	OgreBites::TrayManager* mTrayMgr;
 
-	CL64_OgreListener*		OgreListener;
-	CL64_OGL_Listener*		RenderListener;
-	CL64_DebugBulletWorld*	BulletListener;
+	CL64_OgreListener*			OgreListener;
+	CL64_OGL_Listener*			RenderListener;
+	CL64_Bullet_Debug_World*	Bullet_Debug_Listener;
 
 
 	Ogre::OverlaySystem* mOverlaySystem;

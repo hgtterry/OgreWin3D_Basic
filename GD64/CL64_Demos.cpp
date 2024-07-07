@@ -84,7 +84,7 @@ void CL64_Demos::Start_Demo_1(void)
 	App->CL_Ogre->OgreListener->Run_Physics = 1;
 
 	App->CL_TopDlg->Toggle_PhysicaDebug_Node_Flag = 0;
-	App->CL_Ogre->BulletListener->btDebug_Node->setVisible(false);
+	App->CL_Ogre->Bullet_Debug_Listener->btDebug_Node->setVisible(false);
 
 	App->CL_Ogre->mTrayMgr->hideAll();
 	App->CL_ImGui->Show_Demo_1_F = 1;

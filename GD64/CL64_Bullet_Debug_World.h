@@ -30,11 +30,11 @@ typedef struct Mvertex_type
 	float x, y, z;
 }Mvertex_type;
 
-class CL64_DebugBulletWorld : public btIDebugDraw, public RenderQueueListener
+class CL64_Bullet_Debug_World : public btIDebugDraw, public RenderQueueListener
 {
 public:
-	CL64_DebugBulletWorld(void);
-	~CL64_DebugBulletWorld(void);
+	CL64_Bullet_Debug_World(void);
+	~CL64_Bullet_Debug_World(void);
 
 	virtual void   drawLine(const btVector3& from, const btVector3& to, const btVector3& fromColor, const btVector3& toColor);
 
