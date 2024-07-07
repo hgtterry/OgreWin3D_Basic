@@ -226,16 +226,14 @@ LRESULT CALLBACK CL64_TopDlg::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam
 
 				if (App->CL_Ogre->flag_Show_Test_Mesh == 1)
 				{
-					App->CL_Ogre->flag_Show_Test_Mesh = 0;
+					App->CL_Ogre->Show_Test_Mesh(false);
 					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_TexturesOff_Bmp);
 				}
 				else
 				{
-					App->CL_Ogre->flag_Show_Test_Mesh = 1;
+					App->CL_Ogre->Show_Test_Mesh(true);
 					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_TexturesOn_Bmp);
 				}
-
-				App->CL_Ogre->Show_Test_Mesh();
 
 				return TRUE;
 			}
@@ -256,6 +254,7 @@ LRESULT CALLBACK CL64_TopDlg::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam
 					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_TexturesOn_Bmp);
 				}
 			}
+
 			return TRUE;
 		}
 
@@ -652,14 +651,13 @@ LRESULT CALLBACK CL64_TopDlg::Debug_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 		{
 			if (App->CL_Ogre->flag_Show_Test_Mesh == 1)
 			{
-				App->CL_Ogre->flag_Show_Test_Mesh = 0;
+				App->CL_Ogre->Show_Test_Mesh(false);
 			}
 			else
 			{
-				App->CL_Ogre->flag_Show_Test_Mesh = 1;
+				App->CL_Ogre->Show_Test_Mesh(true);
 			}
 
-			App->CL_Ogre->Show_Test_Mesh();
 			return 1;
 		}
 

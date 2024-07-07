@@ -84,7 +84,7 @@ void CL64_Ogre::InitOgre(void)
 	TestMesh_Node = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	TestMesh_Node->attachObject(TestMesh_Entity);
 
-	Show_Test_Mesh();
+	Show_Test_Mesh(true);
 
 	App->CL_Converters->Ogre_To_Mesh_Data(TestMesh_Entity);
 	
@@ -388,15 +388,17 @@ void CL64_Ogre::Clear_ErrorLog()
 // *************************************************************************
 // *			Show_Test_Mesh:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-void CL64_Ogre::Show_Test_Mesh(void)
+void CL64_Ogre::Show_Test_Mesh(bool Show)
 {
-	if (flag_Show_Test_Mesh == 1)
+	if (Show == 1)
 	{
 		TestMesh_Node->setVisible(true);
+		flag_Show_Test_Mesh = 1;
 	}
 	else
 	{
 		TestMesh_Node->setVisible(false);
+		flag_Show_Test_Mesh = 0;
 	}
 
 }

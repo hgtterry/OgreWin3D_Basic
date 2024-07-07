@@ -60,7 +60,7 @@ public:
 	void Log_Message_To_File(char* Message);
 	void Clear_ErrorLog();
 
-	void Show_Test_Mesh(void);
+	void Show_Test_Mesh(bool Show);
 	void Show_Trays(void);
 
 	// Renders a Single Frame

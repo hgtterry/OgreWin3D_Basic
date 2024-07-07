@@ -44,8 +44,7 @@ void CL64_Demos::Start_Demo_1(void)
 	App->CL_Grid->ShowHair = false;
 	App->CL_Grid->Hair_SetVisible(false);
 
-	App->CL_Ogre->flag_Show_Test_Mesh = false;
-	App->CL_Ogre->Show_Test_Mesh();
+	App->CL_Ogre->Show_Test_Mesh(false);
 
 	App->CL_Camera->Reset_View();
 	App->CL_Ogre->Ogre_Listener->CameraMode = Enums::Cam_Mode_Free;

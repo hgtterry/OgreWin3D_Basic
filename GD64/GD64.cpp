@@ -210,14 +210,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		{
 			if (App->CL_Ogre->flag_Show_Test_Mesh == 1)
 			{
-				App->CL_Ogre->flag_Show_Test_Mesh = 0;
+				App->CL_Ogre->Show_Test_Mesh(false);
 			}
 			else
 			{
-				App->CL_Ogre->flag_Show_Test_Mesh = 1;
+				App->CL_Ogre->Show_Test_Mesh(true);
 			}
 
-			App->CL_Ogre->Show_Test_Mesh();
+			
 
 			return TRUE;
 		}
