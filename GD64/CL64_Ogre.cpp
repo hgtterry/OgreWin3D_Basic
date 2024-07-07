@@ -80,7 +80,7 @@ void CL64_Ogre::InitOgre(void)
 	App->CL_Grid->Grid_Update(1);
 	App->CL_Grid->Hair_Update(1);
 
-	TestMesh_Entity = mSceneMgr->createEntity("Sinbad.mesh");
+	TestMesh_Entity = mSceneMgr->createEntity("Test_Mesh","Sinbad.mesh");
 	TestMesh_Node = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	TestMesh_Node->attachObject(TestMesh_Entity);
 

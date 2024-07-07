@@ -283,7 +283,7 @@ void CL64_ImGui::Camera_Data_GUI(void)
 void CL64_ImGui::Model_Data_GUI(void)
 {
 	//ImGui::SetNextWindowPos(ImVec2(Model_Data_PosX, Model_Data_PosY));
-	ImGui::SetNextWindowPos(ImVec2(70, 10), ImGuiCond_FirstUseEver);
+	ImGui::SetNextWindowPos(ImVec2(5, 5), ImGuiCond_FirstUseEver);
 	ImGui::SetNextWindowSize(ImVec2(200, 200), ImGuiCond_FirstUseEver);
 
 	if (!ImGui::Begin("Model Data", &Show_Model_Data_F, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoResize
@@ -298,27 +298,12 @@ void CL64_ImGui::Model_Data_GUI(void)
 
 		ImGui::Indent();
 		ImGui::Text("Model Name:- %s", App->CL_Scene->JustName);
-		ImGui::Text("Model File Name:- %s", App->CL_Scene->FileName);
+		ImGui::Text("Model File:- %s", App->CL_Scene->FileName);
 		ImGui::Text("Model Path:- %s", App->CL_Scene->Path_FileName);
 		ImGui::Text("Texture Path:- %s", App->CL_Scene->Texture_FolderPath);
 		ImGui::Unindent();
 
-
-		if (ImGui::TreeNode("Mesh Data"))
-		{
-			ImGui::Indent();
-			ImGui::Text("Vertices:- %i", App->CL_Scene->VerticeCount);
-			ImGui::Text("Faces:- %i", App->CL_Scene->FaceCount);
-			ImGui::Text("Groups:- %i", App->CL_Scene->GroupCount);
-			ImGui::Text("Bones:- %i", App->CL_Scene->BoneCount);
-			ImGui::Text("Motions:- %i", App->CL_Scene->MotionCount);
-			ImGui::Text("Loaded:- %i", App->CL_Resources->Ogre_ExternalResourceLoaded);
-			ImGui::Unindent();
-
-			ImGui::TreePop();
-		}
-
-		if (ImGui::TreeNode(App->CL_Scene->FileName))
+		if (ImGui::TreeNode("Ogre3D Model"))
 		{
 			ImGui::Text("Name:- %s",App->CL_Scene->S_OgreMeshData[0]->mName.c_str());
 			if (ImGui::TreeNode("Materials"))
@@ -360,10 +345,23 @@ void CL64_ImGui::Model_Data_GUI(void)
 			ImGui::TreePop();
 		}
 
-		ImGui::Text("  ");
-		ImGui::Text("  ");
-		ImGui::Text("  ");
+		if (ImGui::TreeNode("Mesh Data"))
+		{
+			ImGui::Indent();
+			ImGui::Text("Vertices:- %i", App->CL_Scene->VerticeCount);
+			ImGui::Text("Faces:- %i", App->CL_Scene->FaceCount);
+			ImGui::Text("Groups:- %i", App->CL_Scene->GroupCount);
+			ImGui::Text("Bones:- %i", App->CL_Scene->BoneCount);
+			ImGui::Text("Motions:- %i", App->CL_Scene->MotionCount);
+			ImGui::Text("Loaded:- %i", App->CL_Resources->Ogre_ExternalResourceLoaded);
+			ImGui::Unindent();
 
+			ImGui::TreePop();
+		}
+
+		ImGui::Text("  ");
+		ImGui::Text("  ");
+		
 		ImVec2 Size = ImGui::GetWindowSize();
 		//Model_Data_PosX = ((float)App->CL_Ogre->OgreListener->View_Width / 2) - (Size.x / 2);
 		//Model_Data_PosY = ((float)App->CL_Ogre->OgreListener->View_Height / 2) - (Size.y / 2);;
