@@ -156,54 +156,54 @@ void CL64_Keyboard::Keyboard_Mode_Model(float deltaTime)
 	//	Pan Up
 	if (GetAsyncKeyState(69) < 0) // E key 
 	{
-		Rate = (App->CL_Ogre->Ogre_Listener->mMoveSensitivity / 1000) * 2;
-		OldPos = App->CL_Ogre->Ogre_Listener->mCamNode->getPosition();
+		Rate = (App->CL_Ogre->Ogre3D_Listener->mMoveSensitivity / 1000) * 2;
+		OldPos = App->CL_Ogre->Ogre3D_Listener->mCamNode->getPosition();
 
 		OldPos.y += Rate;
-		App->CL_Ogre->Ogre_Listener->mCamNode->setPosition(OldPos);
+		App->CL_Ogre->Ogre3D_Listener->mCamNode->setPosition(OldPos);
 	}
 
 	// Pan Down
 	if (GetAsyncKeyState(81) < 0)  // Q Key
 	{
-		Rate = (App->CL_Ogre->Ogre_Listener->mMoveSensitivity / 1000) * 2;
+		Rate = (App->CL_Ogre->Ogre3D_Listener->mMoveSensitivity / 1000) * 2;
 
-		OldPos = App->CL_Ogre->Ogre_Listener->mCamNode->getPosition();
+		OldPos = App->CL_Ogre->Ogre3D_Listener->mCamNode->getPosition();
 
 		OldPos.y -= Rate;
-		App->CL_Ogre->Ogre_Listener->mCamNode->setPosition(OldPos);
+		App->CL_Ogre->Ogre3D_Listener->mCamNode->setPosition(OldPos);
 	}
 
 	// Forward
-	if (App->CL_Ogre->Ogre_Listener->Wheel < 0) // Mouse Wheel Forward
+	if (App->CL_Ogre->Ogre3D_Listener->Wheel < 0) // Mouse Wheel Forward
 	{
-		App->CL_Ogre->Ogre_Listener->mTranslateVector.z = -App->CL_Ogre->Ogre_Listener->mMoveScale * 25;
+		App->CL_Ogre->Ogre3D_Listener->mTranslateVector.z = -App->CL_Ogre->Ogre3D_Listener->mMoveScale * 25;
 	}
 	if (GetAsyncKeyState(87) < 0) // W Key
 	{
-		App->CL_Ogre->Ogre_Listener->mTranslateVector.z = -App->CL_Ogre->Ogre_Listener->mMoveScale;
+		App->CL_Ogre->Ogre3D_Listener->mTranslateVector.z = -App->CL_Ogre->Ogre3D_Listener->mMoveScale;
 	}
 
 	// Back
-	if (App->CL_Ogre->Ogre_Listener->Wheel > 0) // Mouse Wheel Back
+	if (App->CL_Ogre->Ogre3D_Listener->Wheel > 0) // Mouse Wheel Back
 	{
-		App->CL_Ogre->Ogre_Listener->mTranslateVector.z = App->CL_Ogre->Ogre_Listener->mMoveScale * 25;
+		App->CL_Ogre->Ogre3D_Listener->mTranslateVector.z = App->CL_Ogre->Ogre3D_Listener->mMoveScale * 25;
 	}
 	if (GetAsyncKeyState(83) < 0) // S Key	
 	{
-		App->CL_Ogre->Ogre_Listener->mTranslateVector.z = App->CL_Ogre->Ogre_Listener->mMoveScale;
+		App->CL_Ogre->Ogre3D_Listener->mTranslateVector.z = App->CL_Ogre->Ogre3D_Listener->mMoveScale;
 	}
 
 	// Pan Left
 	if (GetAsyncKeyState(65) < 0) // A Key
 	{
-		App->CL_Ogre->Ogre_Listener->mTranslateVector.x = App->CL_Ogre->Ogre_Listener->mMoveScale;
+		App->CL_Ogre->Ogre3D_Listener->mTranslateVector.x = App->CL_Ogre->Ogre3D_Listener->mMoveScale;
 	}
 
 	// Pan Right
 	if (GetAsyncKeyState(68) < 0)  // D Key
 	{
-		App->CL_Ogre->Ogre_Listener->mTranslateVector.x = -App->CL_Ogre->Ogre_Listener->mMoveScale;
+		App->CL_Ogre->Ogre3D_Listener->mTranslateVector.x = -App->CL_Ogre->Ogre3D_Listener->mMoveScale;
 	}
 
 	//------------------------------------------------ Escape 
@@ -219,28 +219,28 @@ void CL64_Keyboard::Keyboard_Mode_Model(float deltaTime)
 void CL64_Keyboard::Keyboard_Mode_Free(float deltaTime)
 {
 	// Forward
-	if (App->CL_Ogre->Ogre_Listener->Wheel < 0) // Mouse Wheel Forward
+	if (App->CL_Ogre->Ogre3D_Listener->Wheel < 0) // Mouse Wheel Forward
 	{
-		App->CL_Ogre->Ogre_Listener->mTranslateVector.z = -App->CL_Ogre->Ogre_Listener->mMoveScale * 30;
+		App->CL_Ogre->Ogre3D_Listener->mTranslateVector.z = -App->CL_Ogre->Ogre3D_Listener->mMoveScale * 30;
 	}
 	if (GetAsyncKeyState(87) < 0) // W Key
 	{
-		if (App->CL_Ogre->Ogre_Listener->CameraMode == Enums::Cam_Mode_Free)
+		if (App->CL_Ogre->Ogre3D_Listener->CameraMode == Enums::Cam_Mode_Free)
 		{
-			App->CL_Ogre->Ogre_Listener->mTranslateVector.z = -App->CL_Ogre->Ogre_Listener->mMoveScale;
+			App->CL_Ogre->Ogre3D_Listener->mTranslateVector.z = -App->CL_Ogre->Ogre3D_Listener->mMoveScale;
 		}
 	}
 
 	// Back
-	if (App->CL_Ogre->Ogre_Listener->Wheel > 0) // Mouse Wheel Back
+	if (App->CL_Ogre->Ogre3D_Listener->Wheel > 0) // Mouse Wheel Back
 	{
-		App->CL_Ogre->Ogre_Listener->mTranslateVector.z = App->CL_Ogre->Ogre_Listener->mMoveScale * 30;
+		App->CL_Ogre->Ogre3D_Listener->mTranslateVector.z = App->CL_Ogre->Ogre3D_Listener->mMoveScale * 30;
 	}
 	if (GetAsyncKeyState(83) < 0) // S Key	
 	{
-		if (App->CL_Ogre->Ogre_Listener->CameraMode == Enums::Cam_Mode_Free)
+		if (App->CL_Ogre->Ogre3D_Listener->CameraMode == Enums::Cam_Mode_Free)
 		{
-			App->CL_Ogre->Ogre_Listener->mTranslateVector.z = App->CL_Ogre->Ogre_Listener->mMoveScale;
+			App->CL_Ogre->Ogre3D_Listener->mTranslateVector.z = App->CL_Ogre->Ogre3D_Listener->mMoveScale;
 		}
 
 	}
@@ -248,48 +248,48 @@ void CL64_Keyboard::Keyboard_Mode_Free(float deltaTime)
 	// Pan Down
 	if (GetAsyncKeyState(81) < 0) // Q Key	
 	{
-		if (App->CL_Ogre->Ogre_Listener->CameraMode == Enums::Cam_Mode_Free)
+		if (App->CL_Ogre->Ogre3D_Listener->CameraMode == Enums::Cam_Mode_Free)
 		{
-			Rate = (App->CL_Ogre->Ogre_Listener->mMoveSensitivity / 1000) * 2; //FlyRate;
+			Rate = (App->CL_Ogre->Ogre3D_Listener->mMoveSensitivity / 1000) * 2; //FlyRate;
 
-			OldPos = App->CL_Ogre->Ogre_Listener->mCamNode->getPosition();
+			OldPos = App->CL_Ogre->Ogre3D_Listener->mCamNode->getPosition();
 
 			OldPos.y -= Rate;
 
-			App->CL_Ogre->Ogre_Listener->mCamNode->setPosition(OldPos);
+			App->CL_Ogre->Ogre3D_Listener->mCamNode->setPosition(OldPos);
 		}
 	}
 
 	//	Pan Up
 	if (GetAsyncKeyState(69) < 0) // E Key
 	{
-		if (App->CL_Ogre->Ogre_Listener->CameraMode == Enums::Cam_Mode_Free)
+		if (App->CL_Ogre->Ogre3D_Listener->CameraMode == Enums::Cam_Mode_Free)
 		{
-			Rate = (App->CL_Ogre->Ogre_Listener->mMoveSensitivity / 1000) * 2; //FlyRate;
+			Rate = (App->CL_Ogre->Ogre3D_Listener->mMoveSensitivity / 1000) * 2; //FlyRate;
 
-			OldPos = App->CL_Ogre->Ogre_Listener->mCamNode->getPosition();
+			OldPos = App->CL_Ogre->Ogre3D_Listener->mCamNode->getPosition();
 
 			OldPos.y += Rate;
 
-			App->CL_Ogre->Ogre_Listener->mCamNode->setPosition(OldPos);
+			App->CL_Ogre->Ogre3D_Listener->mCamNode->setPosition(OldPos);
 		}
 	}
 
 	// Pan Left
 	if (GetAsyncKeyState(65) < 0) // A Key
 	{
-		if (App->CL_Ogre->Ogre_Listener->CameraMode == Enums::Cam_Mode_Free)
+		if (App->CL_Ogre->Ogre3D_Listener->CameraMode == Enums::Cam_Mode_Free)
 		{
-			App->CL_Ogre->Ogre_Listener->mTranslateVector.x = -App->CL_Ogre->Ogre_Listener->mMoveScale;
+			App->CL_Ogre->Ogre3D_Listener->mTranslateVector.x = -App->CL_Ogre->Ogre3D_Listener->mMoveScale;
 		}
 	}
 
 	// Pan Right
 	if (GetAsyncKeyState(68) < 0) // D Key
 	{
-		if (App->CL_Ogre->Ogre_Listener->CameraMode == Enums::Cam_Mode_Free)
+		if (App->CL_Ogre->Ogre3D_Listener->CameraMode == Enums::Cam_Mode_Free)
 		{
-			App->CL_Ogre->Ogre_Listener->mTranslateVector.x = App->CL_Ogre->Ogre_Listener->mMoveScale;
+			App->CL_Ogre->Ogre3D_Listener->mTranslateVector.x = App->CL_Ogre->Ogre3D_Listener->mMoveScale;
 		}
 	}
 

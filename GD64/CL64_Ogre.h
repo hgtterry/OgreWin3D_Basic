@@ -23,7 +23,7 @@ distribution.
 
 #pragma once
 
-#include "CL64_OgreListener.h"
+#include "CL64_Ogre3D_Listener.h"
 #include "CL64_OGL_Listener.h"
 #include "OgreOverlaySystem.h"
 #include "OgreImGuiOverlay.h"
@@ -86,7 +86,7 @@ public:
 
 	OgreBites::TrayManager* mTrayMgr;
 
-	CL64_OgreListener*			Ogre_Listener;
+	CL64_Ogre3D_Listener*		Ogre3D_Listener;
 	CL64_OGL_Listener*			OGL_Listener;
 	CL64_Bullet_Debug_World*	Bullet_Debug_Listener;
 

@@ -23,11 +23,11 @@ distribution.
 
 #include "pch.h"
 #include "CL64_App.h"
-#include "CL64_OgreListener.h"
+#include "CL64_Ogre3D_Listener.h"
 
 
 
-CL64_OgreListener::CL64_OgreListener(void)
+CL64_Ogre3D_Listener::CL64_Ogre3D_Listener(void)
 {
 	mCam = App->CL_Ogre->mCamera;
 	mCamNode = App->CL_Ogre->camNode;
@@ -64,14 +64,14 @@ CL64_OgreListener::CL64_OgreListener(void)
 	Bullet_Step = 2;
 }
 
-CL64_OgreListener::~CL64_OgreListener(void)
+CL64_Ogre3D_Listener::~CL64_Ogre3D_Listener(void)
 {
 }
 
 // *************************************************************************
 // *			frameStarted:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-bool CL64_OgreListener::frameStarted(const FrameEvent& evt)
+bool CL64_Ogre3D_Listener::frameStarted(const FrameEvent& evt)
 {
 	Get_View_Height_Width();
 
@@ -86,7 +86,7 @@ bool CL64_OgreListener::frameStarted(const FrameEvent& evt)
 // *************************************************************************
 // *		frameRenderingQueued:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
-bool CL64_OgreListener::frameRenderingQueued(const FrameEvent& evt)
+bool CL64_Ogre3D_Listener::frameRenderingQueued(const FrameEvent& evt)
 {
 	App->CL_Ogre->mTrayMgr->frameRendered(evt);
 
@@ -157,7 +157,7 @@ bool CL64_OgreListener::frameRenderingQueued(const FrameEvent& evt)
 // *************************************************************************
 // *			frameEnded:- Terry and Hazel Flanigan 2024				   *
 // *************************************************************************
-bool CL64_OgreListener::frameEnded(const FrameEvent& evt)
+bool CL64_Ogre3D_Listener::frameEnded(const FrameEvent& evt)
 {
 
 	if (StopOgre == 1)
@@ -169,23 +169,20 @@ bool CL64_OgreListener::frameEnded(const FrameEvent& evt)
 }
 
 // *************************************************************************
-// *			moveCamera:- Terry and Hazel Flanigan 2023 				   *
+// *			MoveCamera:- Terry and Hazel Flanigan 2023 				   *
 // *************************************************************************
-void CL64_OgreListener::MoveCamera(void)
+void CL64_Ogre3D_Listener::MoveCamera(void)
 {
-	//mCamNode->resetOrientation();// roll(Ogre::Radian(0));
-	//mCamNode->setFixedYawAxis(true);// roll(Ogre::Radian(0));
 	mCamNode->yaw(mRotX, Ogre::Node::TS_PARENT);
 	mCamNode->pitch(mRotY);
 	mCamNode->translate(mTranslateVector, Ogre::Node::TS_LOCAL); // Position Relative
 	Wheel = 0;
-
 }
 
 // *************************************************************************
 // *		Get_View_Height_Width:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
-void CL64_OgreListener::Get_View_Height_Width(void)
+void CL64_Ogre3D_Listener::Get_View_Height_Width(void)
 {
 	Ogre::Viewport* vp = App->CL_Ogre->mWindow->getViewport(0);
 
@@ -196,7 +193,7 @@ void CL64_OgreListener::Get_View_Height_Width(void)
 // *************************************************************************
 // *		Mode_Camera_Model:- Terry and Hazel Flanigan 2024  			   *
 // *************************************************************************
-void CL64_OgreListener::Mode_Camera_Model(float DeltaTime)
+void CL64_Ogre3D_Listener::Mode_Camera_Model(float DeltaTime)
 {
 	//App->CL_Ogre->m_imgui.render();
 
@@ -227,7 +224,7 @@ void CL64_OgreListener::Mode_Camera_Model(float DeltaTime)
 // *************************************************************************
 // *		Capture_LeftMouse_Model:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
-bool CL64_OgreListener::Capture_LeftMouse_Model(void)
+bool CL64_Ogre3D_Listener::Capture_LeftMouse_Model(void)
 {
 	GetCursorPos(&Mouse_point);
 
@@ -325,7 +322,7 @@ bool CL64_OgreListener::Capture_LeftMouse_Model(void)
 // *************************************************************************
 // *	Capture_RightMouse_Model:- Terry and Hazel Flanigan 2023 		   *
 // *************************************************************************
-bool CL64_OgreListener::Capture_RightMouse_Model(void)
+bool CL64_Ogre3D_Listener::Capture_RightMouse_Model(void)
 {
 	GetCursorPos(&Mouse_point);
 
@@ -404,7 +401,7 @@ bool CL64_OgreListener::Capture_RightMouse_Model(void)
 // *************************************************************************
 // *		Mode_Camera_Free:- Terry and Hazel Flanigan 2023   			   *
 // *************************************************************************
-void CL64_OgreListener::Mode_Camera_Free(float DeltaTime)
+void CL64_Ogre3D_Listener::Mode_Camera_Free(float DeltaTime)
 {
 	mRotX = 0;
 	mRotY = 0;
@@ -432,7 +429,7 @@ void CL64_OgreListener::Mode_Camera_Free(float DeltaTime)
 // *************************************************************************
 // *		Capture_Left_Mouse_Free:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
-bool CL64_OgreListener::Capture_Left_Mouse_Free(void)
+bool CL64_Ogre3D_Listener::Capture_Left_Mouse_Free(void)
 {
 	GetCursorPos(&Mouse_point);
 	Pl_MouseX = (int(Mouse_point.x));
@@ -487,7 +484,7 @@ bool CL64_OgreListener::Capture_Left_Mouse_Free(void)
 // *************************************************************************
 // *		Capture_Right_Mouse_Free:- Terry and Hazel Flanigan 2024	   *
 // *************************************************************************
-bool CL64_OgreListener::Capture_Right_Mouse_Free(void)
+bool CL64_Ogre3D_Listener::Capture_Right_Mouse_Free(void)
 {
 	//if (CameraMode == Enums::CamDetached)
 	{
@@ -570,7 +567,7 @@ bool CL64_OgreListener::Capture_Right_Mouse_Free(void)
 // *************************************************************************
 // *	Capture_Mouse_FirstPerson_World:- Terry and Hazel Flanigan 2024	   *
 // *************************************************************************
-bool CL64_OgreListener::Capture_Mouse_FirstPerson(float DeltaTime)
+bool CL64_Ogre3D_Listener::Capture_Mouse_FirstPerson(float DeltaTime)
 {
 	/*if (Block_Mouse == 1)
 	{

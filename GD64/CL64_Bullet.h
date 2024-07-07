@@ -30,7 +30,7 @@ public:
 	~CL64_Bullet(void);
 
 	void Init_Bullet();
-	void Destroy_Bullet();
+	void ShutDown_Bullet();
 
 	btDefaultCollisionConfiguration* collisionConfiguration;
 	btCollisionDispatcher* dispatcher;

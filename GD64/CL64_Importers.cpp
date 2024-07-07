@@ -100,7 +100,7 @@ bool CL64_Importers::Assimp_Loader(bool UseDialog,const char* Extension, const c
 
 			App->CL_Scene->Model_Type = Enums::LoadedFile_None;
 
-			App->CL_Ogre->Ogre_Listener->Ogre_Model_Loaded = 1;
+			App->CL_Ogre->Ogre3D_Listener->Ogre_Model_Loaded = 1;
 		
 		}
 		
@@ -161,7 +161,7 @@ void CL64_Importers::Load_Ogre_Model(void)
 		App->CL_Ogre->camNode->setPosition(Ogre::Vector3(0,0, App->CL_Scene->Main_Ent->getBoundingRadius() * 2.8f));
 	}
 
-	App->CL_Ogre->Ogre_Listener->Ogre_Model_Loaded = 1;
+	App->CL_Ogre->Ogre3D_Listener->Ogre_Model_Loaded = 1;
 	
 	App->CL_Converters->Ogre_To_Mesh_Data(App->CL_Scene->Main_Ent);
 	
@@ -229,7 +229,7 @@ void CL64_Importers::Reload_Ogre_Model(void)
 		App->CL_Ogre->camNode->setPosition(Ogre::Vector3(0, 0, App->CL_Scene->Main_Ent->getBoundingRadius() * 2.8f));
 	}
 
-	App->CL_Ogre->Ogre_Listener->Ogre_Model_Loaded = 1;
+	App->CL_Ogre->Ogre3D_Listener->Ogre_Model_Loaded = 1;
 
 }
 

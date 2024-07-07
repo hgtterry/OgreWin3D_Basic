@@ -282,14 +282,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		// Camera -------------------------------------------------------
 		case ID_MODE_MODEL:
 		{
-			App->CL_Ogre->Ogre_Listener->CameraMode = Enums::Cam_Mode_Model;
+			App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_Model;
 			//App->CL_Ogre->camNode->resetOrientation();
 			return TRUE;
 		}
 
 		case ID_MODE_FREE:
 		{
-			App->CL_Ogre->Ogre_Listener->CameraMode = Enums::Cam_Mode_Free;
+			App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_Free;
 			return TRUE;
 		}
 
@@ -324,9 +324,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 		case IDM_EXIT:
 
-			if (App->CL_Ogre->Ogre_Listener->StopOgre == 0)
+			if (App->CL_Ogre->Ogre3D_Listener->StopOgre == 0)
 			{
-				App->CL_Ogre->Ogre_Listener->StopOgre = 1;
+				App->CL_Ogre->Ogre3D_Listener->StopOgre = 1;
 			}
 
 			PostQuitMessage(0);
@@ -376,9 +376,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	case WM_CLOSE:
 	{
 
-		if (App->CL_Ogre->Ogre_Listener->StopOgre == 0)
+		if (App->CL_Ogre->Ogre3D_Listener->StopOgre == 0)
 		{
-			App->CL_Ogre->Ogre_Listener->StopOgre = 1;
+			App->CL_Ogre->Ogre3D_Listener->StopOgre = 1;
 		}
 
 		PostQuitMessage(0);
@@ -441,17 +441,17 @@ LRESULT CALLBACK Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
 		/*ImGuiIO& io = ImGui::GetIO();
 		io.*/
 		//if (App->FullScreen == 1)
-		if (App->CL_Ogre->Ogre_Listener->Pl_LeftMouseDown == 0)
+		if (App->CL_Ogre->Ogre3D_Listener->Pl_LeftMouseDown == 0)
 		{
 			int zDelta = (short)HIWORD(wParam);    // wheel rotation
 
 			if (zDelta > 0)
 			{
-				App->CL_Ogre->Ogre_Listener->Wheel = -1;
+				App->CL_Ogre->Ogre3D_Listener->Wheel = -1;
 			}
 			else if (zDelta < 0)
 			{
-				App->CL_Ogre->Ogre_Listener->Wheel = 1;
+				App->CL_Ogre->Ogre3D_Listener->Wheel = 1;
 			}
 			return 1;
 
@@ -511,17 +511,17 @@ LRESULT CALLBACK Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
 							GetCursorPos(&p);
 							App->CursorPosX = p.x;
 							App->CursorPosY = p.y;
-							App->CL_Ogre->Ogre_Listener->Pl_Cent500X = p.x;
-							App->CL_Ogre->Ogre_Listener->Pl_Cent500Y = p.y;
+							App->CL_Ogre->Ogre3D_Listener->Pl_Cent500X = p.x;
+							App->CL_Ogre->Ogre3D_Listener->Pl_Cent500Y = p.y;
 
 							SetCapture(App->ViewGLhWnd);// Bernie
 							SetCursorPos(App->CursorPosX, App->CursorPosY);
-							App->CL_Ogre->Ogre_Listener->Pl_LeftMouseDown = 1;
+							App->CL_Ogre->Ogre3D_Listener->Pl_LeftMouseDown = 1;
 							App->CUR = SetCursor(NULL);
 						}
 						else
 						{
-							App->CL_Ogre->Ogre_Listener->Pl_LeftMouseDown = 1;
+							App->CL_Ogre->Ogre3D_Listener->Pl_LeftMouseDown = 1;
 						}
 					}
 
@@ -541,7 +541,7 @@ LRESULT CALLBACK Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
 		if (App->OgreStarted == 1)
 		{
 			ReleaseCapture();
-			App->CL_Ogre->Ogre_Listener->Pl_LeftMouseDown = 0;
+			App->CL_Ogre->Ogre3D_Listener->Pl_LeftMouseDown = 0;
 			SetCursor(App->CUR);
 			return 1;
 		}
@@ -571,11 +571,11 @@ LRESULT CALLBACK Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
 					GetCursorPos(&p);
 					App->CursorPosX = p.x;
 					App->CursorPosY = p.y;
-					App->CL_Ogre->Ogre_Listener->Pl_Cent500X = p.x;
-					App->CL_Ogre->Ogre_Listener->Pl_Cent500Y = p.y;
+					App->CL_Ogre->Ogre3D_Listener->Pl_Cent500X = p.x;
+					App->CL_Ogre->Ogre3D_Listener->Pl_Cent500Y = p.y;
 					SetCapture(App->ViewGLhWnd);// Bernie
 					SetCursorPos(App->CursorPosX, App->CursorPosY);
-					App->CL_Ogre->Ogre_Listener->Pl_RightMouseDown = 1;
+					App->CL_Ogre->Ogre3D_Listener->Pl_RightMouseDown = 1;
 					App->CUR = SetCursor(NULL);
 					return 1;
 				}
@@ -593,7 +593,7 @@ LRESULT CALLBACK Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
 		if (App->OgreStarted == 1)
 		{
 			ReleaseCapture();
-			App->CL_Ogre->Ogre_Listener->Pl_RightMouseDown = 0;
+			App->CL_Ogre->Ogre3D_Listener->Pl_RightMouseDown = 0;
 			SetCursor(App->CUR);
 			return 1;
 		}
@@ -679,7 +679,7 @@ LRESULT CALLBACK ViewerMain_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM 
 }
 
 // *************************************************************************
-// *						StartOgre Terry Bernie			  	 		   *
+// *				StartOgre:- Terry and Hazel Flanigan 2024		 	   *
 // *************************************************************************
 void StartOgre()
 {
@@ -701,7 +701,7 @@ void StartOgre()
 }
 
 // *************************************************************************
-// *						Close_App Terry Bernie			  	 		   *
+// *				Close_App:- Terry and Hazel Flanigan 2024	  		   *
 // *************************************************************************
 void Close_App()
 {
@@ -728,7 +728,7 @@ void Close_App()
         App->CL_Ogre->mRoot = NULL;
     }
 
-	App->CL_Bullet->Destroy_Bullet();
+	App->CL_Bullet->ShutDown_Bullet();
 
     ImGui::DestroyContext();
 }

@@ -28,11 +28,11 @@ distribution.
 
 using namespace Ogre;
 
-class CL64_OgreListener : public FrameListener
+class CL64_Ogre3D_Listener : public FrameListener
 {
 public:
-	CL64_OgreListener(void);
-	~CL64_OgreListener(void);
+	CL64_Ogre3D_Listener(void);
+	~CL64_Ogre3D_Listener(void);
 
 	bool frameStarted(const FrameEvent& evt);
 	bool frameEnded(const FrameEvent& evt);

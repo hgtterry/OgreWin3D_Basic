@@ -67,9 +67,9 @@ void CL64_Bullet::Init_Bullet()
 }
 
 // *************************************************************************
-// *			Destroy_Bullet:- Terry and Hazel Flanigan 2024   	  	   *
+// *			ShutDown_Bullet:- Terry and Hazel Flanigan 2024   	  	   *
 // *************************************************************************
-void CL64_Bullet::Destroy_Bullet()
+void CL64_Bullet::ShutDown_Bullet()
 {
 	int i = 0;
 

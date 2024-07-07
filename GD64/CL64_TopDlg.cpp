@@ -752,7 +752,7 @@ LRESULT CALLBACK CL64_TopDlg::Camera_TB_Proc(HWND hDlg, UINT message, WPARAM wPa
 		if (LOWORD(wParam) == IDC_BT_CAMERA_MODEL)
 		{
 			App->CL_Camera->Reset_View();
-			App->CL_Ogre->Ogre_Listener->CameraMode = Enums::Cam_Mode_Model;
+			App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_Model;
 
 			App->CL_TopDlg->Toggle_Cam_ModelMode_Flag = 1;
 			App->CL_TopDlg->Toggle_Cam_FreeMode_Flag = 0;
@@ -765,7 +765,7 @@ LRESULT CALLBACK CL64_TopDlg::Camera_TB_Proc(HWND hDlg, UINT message, WPARAM wPa
 		if (LOWORD(wParam) == IDC_BT_CAMERA_FREE)
 		{
 			App->CL_Camera->Reset_View();
-			App->CL_Ogre->Ogre_Listener->CameraMode = Enums::Cam_Mode_Free;
+			App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_Free;
 
 			App->CL_TopDlg->Toggle_Cam_FreeMode_Flag = 1;
 			App->CL_TopDlg->Toggle_Cam_ModelMode_Flag = 0;

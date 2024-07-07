@@ -164,7 +164,7 @@ void CL64_Scene::Reset_Main_Entity(void)
 		Main_Node = nullptr;
 	}
 
-	App->CL_Ogre->Ogre_Listener->Ogre_Model_Loaded = 0;
+	App->CL_Ogre->Ogre3D_Listener->Ogre_Model_Loaded = 0;
 }
 
 // *************************************************************************
