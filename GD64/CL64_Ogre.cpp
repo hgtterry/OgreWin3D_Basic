@@ -51,6 +51,8 @@ CL64_Ogre::CL64_Ogre(void)
 
 	flag_Show_Test_Mesh = 1;
 	flag_Show_Trays = 1;
+
+	FPStimer.reset();
 }
 
 CL64_Ogre::~CL64_Ogre(void)
@@ -446,30 +448,30 @@ bool CL64_Ogre::Ogre_Render_Loop(void)
 
 		if (mWindow->isClosed()) return false;
 
-		//if (FPStimer.getMicroseconds() > Fps_Tick) // FPSLock)
-		//{
-		//	if (Block_RenderingQueued == 0)
-		//	{
-
-		if (!mRoot->_fireFrameStarted())
+		if (FPStimer.getMicroseconds() > 14000)// Fps_Tick) // FPSLock)
 		{
-			return false;
+			//if (Block_RenderingQueued == 0)
+			//{
+
+				if (!mRoot->_fireFrameStarted())
+				{
+					return false;
+				}
+
+				if (!mRoot->_updateAllRenderTargets())
+				{
+					return false;
+				}
+
+				if (!mRoot->_fireFrameEnded())
+				{
+					return false;
+				}
+
+				FPStimer.reset();
+
+			//}
 		}
-
-		if (!mRoot->_updateAllRenderTargets())
-		{
-			return false;
-		}
-
-		if (!mRoot->_fireFrameEnded())
-		{
-			return false;
-		}
-
-		//		FPStimer.reset();
-
-		//	}
-		//}
 	}
 
 	return 1;

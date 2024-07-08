@@ -73,6 +73,8 @@ public:
 	
 	HWND RenderHwnd;
 
+	Ogre::Timer FPStimer;
+
 	Ogre::Root* mRoot;
 	Ogre::RenderWindow* mWindow;
 	Ogre::SceneManager* mSceneMgr;

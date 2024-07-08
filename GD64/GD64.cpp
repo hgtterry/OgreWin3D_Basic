@@ -79,12 +79,10 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         return FALSE;
     }
 
-	//App->CL_Ogre->Clear_ErrorLog();
+	App->CL_Ogre->Clear_ErrorLog();
 	
 	App->Init_Dialogs();
 	
-	//UpdateWindow(App->MainHwnd);
-
 	MSG  msg;
 	while (PeekMessage(&msg, NULL, 0U, 0U, PM_REMOVE))
 	{
@@ -95,8 +93,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     SetTimer(App->MainHwnd, 1, 100, NULL);
 
 	HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_GD64));
-
-    //MSG msg;
 
     // Main message loop:
     while (GetMessage(&msg, nullptr, 0, 0))
