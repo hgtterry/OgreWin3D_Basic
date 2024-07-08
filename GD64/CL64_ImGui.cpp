@@ -27,6 +27,8 @@ distribution.
 
 CL64_ImGui::CL64_ImGui(void)
 {
+	Imgui_Initialized = 0;
+
 	Camera_Data_PosX = 10;
 	Camera_Data_Posy = 10;
 
@@ -78,6 +80,8 @@ void CL64_ImGui::Init_ImGui(void)
 				ImGui_Set_Colours();
 				Ogre::ImGuiOverlay::NewFrame();
 			}
+
+			Imgui_Initialized = 1;
 		}
 		else
 		{

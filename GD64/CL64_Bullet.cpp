@@ -33,7 +33,7 @@ CL64_Bullet::CL64_Bullet(void)
 	solver = NULL;
 	dynamicsWorld = NULL;
 
-	GD_Physics_On = 1;
+	GD_Physics_On = 0;
 	Physics_Dlg_Active = 0;
 }
 

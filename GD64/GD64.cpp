@@ -79,21 +79,24 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         return FALSE;
     }
 
-	App->CL_Ogre->Clear_ErrorLog();
-
+	//App->CL_Ogre->Clear_ErrorLog();
+	
 	App->Init_Dialogs();
 	
-	App->CL_Bullet->Init_Bullet();
+	//UpdateWindow(App->MainHwnd);
 
-	UpdateWindow(App->MainHwnd);
-
-	App->CL_Dialogs->PleaseWait();
-
-    SetTimer(App->MainHwnd, 1, 1, NULL);
+	MSG  msg;
+	while (PeekMessage(&msg, NULL, 0U, 0U, PM_REMOVE))
+	{
+		TranslateMessage(&msg);
+		DispatchMessage(&msg);
+	}
+	
+    SetTimer(App->MainHwnd, 1, 100, NULL);
 
 	HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_GD64));
 
-    MSG msg;
+    //MSG msg;
 
     // Main message loop:
     while (GetMessage(&msg, nullptr, 0, 0))
@@ -166,7 +169,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 	   ShowWindow(App->MainHwnd, nCmdShow);
    }
   
-  // UpdateWindow(App->MainHwnd);
+   UpdateWindow(App->MainHwnd);
 
    return TRUE;
 }
@@ -390,17 +393,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		{
 			if (App->OgreStarted == 0)
 			{
+				App->CL_Dialogs->PleaseWait();
+
 				if (Block_Call == 0)
 				{
 					Block_Call = 1;
 					StartOgre();
 				}
 			}
-
-			/*if (App->RenderBackGround == 1 && App->OgreStarted == 1)
-			{
-				Ogre::Root::getSingletonPtr()->renderOneFrame();
-			}*/
 
 			break;
 		}
@@ -438,9 +438,6 @@ LRESULT CALLBACK Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
 	}
 	case WM_MOUSEWHEEL:
 	{
-		/*ImGuiIO& io = ImGui::GetIO();
-		io.*/
-		//if (App->FullScreen == 1)
 		if (App->CL_Ogre->Ogre3D_Listener->Pl_LeftMouseDown == 0)
 		{
 			int zDelta = (short)HIWORD(wParam);    // wheel rotation
@@ -453,36 +450,34 @@ LRESULT CALLBACK Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
 			{
 				App->CL_Ogre->Ogre3D_Listener->Wheel = 1;
 			}
-			return 1;
 
+			return 1;
 		}
 	}
 
 	case WM_MOUSEMOVE: // ok up and running and we have a loop for mouse
 	{
-		POINT p;
-
-		ImGuiIO& io = ImGui::GetIO();
-
 		POINT pos;
-
 		GetCursorPos(&pos);
 		ScreenToClient(App->ViewGLhWnd, &pos);
-		io.MousePos.x = static_cast<float>(pos.x);
-		io.MousePos.y = static_cast<float>(pos.y);
-		//App->CL_Ogre->m_imgui.mouseMoved();
 
-
-		if (GetCursorPos(&p) && App->OgreStarted == 1)// && App->CL10_Dimensions->Mouse_Move_Mode == Enums::Edit_Mouse_None)
+		if (App->CL_ImGui->Imgui_Initialized == 1)
 		{
-			if (ScreenToClient(App->ViewGLhWnd, &p))
+			ImGuiIO& io = ImGui::GetIO();
+			io.MousePos.x = static_cast<float>(pos.x);
+			io.MousePos.y = static_cast<float>(pos.y);
+		}
+
+		if (GetCursorPos(&pos) && App->OgreStarted == 1)// && App->CL10_Dimensions->Mouse_Move_Mode == Enums::Edit_Mouse_None)
+		{
+			if (ScreenToClient(App->ViewGLhWnd, &pos))
 			{
 				RECT rc;
 				GetClientRect(App->ViewGLhWnd, &rc);
 				int width = rc.right - rc.left;
 				int height = rc.bottom - rc.top;
 
-				float tx = ((float)width / 2) - (float)p.x;
+				float tx = ((float)width / 2) - (float)pos.x;
 			}
 		}
 
@@ -683,6 +678,7 @@ LRESULT CALLBACK ViewerMain_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM 
 // *************************************************************************
 void StartOgre()
 {
+	App->CL_Bullet->Init_Bullet();
     App->CL_Ogre->InitOgre();
 
 	Sleep(500);

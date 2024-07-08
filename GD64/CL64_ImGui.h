@@ -46,6 +46,7 @@ public:
 
 	void Demo_1_GUI(void);
 
+	bool Imgui_Initialized;
 	bool StartPos;
 	bool Show_FPS;
 	bool Show_ImGui_Demo;
