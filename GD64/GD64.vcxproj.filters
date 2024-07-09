@@ -267,5 +267,8 @@
     <Image Include="res\MenuBar\TexturesOff.bmp">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="res\Dummy.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

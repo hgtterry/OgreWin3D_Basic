@@ -47,6 +47,8 @@
 #define IDB_NORMALSOFF                  157
 #define IDB_TEXTURESON                  158
 #define IDB_TEXTURESOFF                 159
+#define IDB_BITMAP1                     160
+#define IDB_DUMMY                       160
 #define IDC_CK_SU_FULLSCREEN            1000
 #define IDC_ST_STARTUP                  1001
 #define IDC_CK_SU_FULL3DVIEW            1002
@@ -121,7 +123,7 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
-#define _APS_NEXT_RESOURCE_VALUE        160
+#define _APS_NEXT_RESOURCE_VALUE        161
 #define _APS_NEXT_COMMAND_VALUE         32791
 #define _APS_NEXT_CONTROL_VALUE         1027
 #define _APS_NEXT_SYMED_VALUE           110
