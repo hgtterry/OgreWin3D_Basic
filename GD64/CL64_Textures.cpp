@@ -49,7 +49,10 @@ void CL64_Textures::Load_Textures_Assimp()
 
 	int mGroupCount = App->CL_Scene->GroupCount;
 
-	App->CL_Textures->Create_DummyTexture(App->CL_Scene->Texture_FolderPath);
+	if (App->Debug_Textures == 1)
+	{
+		App->CL_Textures->Create_DummyTexture(App->CL_Scene->Texture_FolderPath);
+	}
 
 	while (Count < mGroupCount)
 	{
@@ -123,7 +126,10 @@ void CL64_Textures::Load_Textures_Assimp()
 // *************************************************************************
 bool CL64_Textures::Load_OpenGL_Textures(int TextureID)
 {
-	MessageBox(App->MainHwnd,TextureFileName,"poo",MB_OK);
+	if (App->Debug_Textures == 1)
+	{
+		MessageBox(App->MainHwnd, TextureFileName, "poo", MB_OK);
+	}
 
 	int Index = 0;
 	int Dont = 0;

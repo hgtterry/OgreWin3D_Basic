@@ -457,7 +457,7 @@ void CL64_ImGui::Demo_1_GUI(void)
 // *************************************************************************
 void CL64_ImGui::App_Debug(void)
 {
-	ImGui::SetNextWindowPos(ImVec2(Model_Data_PosX, Model_Data_PosY));
+	ImGui::SetNextWindowPos(ImVec2(10,10), ImGuiCond_FirstUseEver);
 	ImGui::SetNextWindowSize(ImVec2(280, 300), ImGuiCond_FirstUseEver);
 
 	if (!ImGui::Begin("App_Debug", &flag_Show_App_Debug, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoResize))
@@ -466,58 +466,18 @@ void CL64_ImGui::App_Debug(void)
 	}
 	else
 	{
-		ImGui::Text("Keys WASD");
-		ImGui::Spacing();
-
-		if (ImGui::Checkbox("Show Debug Physics", &App->CL_TopDlg->Toggle_PhysicaDebug_Node_Flag))
+		
+		if (ImGui::Checkbox("Debug_Textures", &App->Debug_Textures))
 		{
 
-			if (App->CL_TopDlg->Toggle_PhysicaDebug_Node_Flag == 1)
-			{
-				App->CL_Ogre->Bullet_Debug_Listener->btDebug_Node->setVisible(true);
-			}
-			else
-			{
-				App->CL_Ogre->Bullet_Debug_Listener->btDebug_Node->setVisible(false);
-			}
 		}
 
-		ImGui::PushItemWidth(120);
-		ImGui::InputFloat("", &App->CL_Scene->B_Player[0]->Ground_speed, Float_Step, 0, "%.1f");
-		ImGui::PopItemWidth();
-		ImGui::SameLine();
-		ImGui::Text("Ground Speed");
-		ImGui::Spacing();
+		ImGui::Text("Debug Textures:- %i", App->Debug_Textures);
 
-		ImGui::Text("Pitch:- %f", App->CL_Scene->B_Player[0]->CameraPitch_Node->getOrientation().getPitch().valueDegrees());
-		ImGui::Text("Yaw:- %f", App->CL_Ogre->camNode->getOrientation().getYaw().valueDegrees());
-		ImGui::Separator();
-
-		if (ImGui::Button("Reset View"))
+		if (ImGui::Button("Close"))
 		{
-			App->CL_Demos->Reset_View();
+			flag_Show_App_Debug = 0;
 		}
-
-
-		if (ImGui::Button("1st view"))
-		{
-			App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_First;
-		}
-
-		ImGui::SameLine();
-
-		if (ImGui::Button("Free view"))
-		{
-			App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_Free;
-		}
-
-		Model_Data_PosX = 10;
-		Model_Data_PosY = 10;
-
-		/*if (ImGui::Button("Close"))
-		{
-			Show_Demo_1_F = 0;
-		}*/
 
 		ImGui::End();
 	}

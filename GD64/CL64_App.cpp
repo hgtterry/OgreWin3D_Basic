@@ -103,6 +103,7 @@ CL64_App::CL64_App(void)
 	HotBrush_2 = 0;
 
 	Debug_App = 1;
+	Debug_Textures = 0;
 
 	Block_Mouse_Buttons = 0;
 }

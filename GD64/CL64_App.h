@@ -108,6 +108,7 @@ public:
 	char App_Version[MAX_PATH];
 
 	bool Debug_App;
+	bool Debug_Textures;
 
 	HFONT Font_CB15;
 	HFONT Font_Arial20;
