@@ -116,6 +116,7 @@
 #define ID_OGRE3D_MESH                  32788
 #define ID_OGRE3D_RESOURCEFILE          32789
 #define ID_FILE_OPEN                    32790
+#define ID_DEBUG_APP                    32791
 #define IDC_STATIC                      -1
 
 // Next default values for new objects
@@ -124,7 +125,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        161
-#define _APS_NEXT_COMMAND_VALUE         32791
+#define _APS_NEXT_COMMAND_VALUE         32792
 #define _APS_NEXT_CONTROL_VALUE         1027
 #define _APS_NEXT_SYMED_VALUE           110
 #endif

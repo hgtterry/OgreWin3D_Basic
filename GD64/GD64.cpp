@@ -185,9 +185,21 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		switch (wmId)
 		{
 		// Debug -------------------------------------------------------
-		case ID_DEBUG_CAMERADATA:
+		case ID_DEBUG_APP:
 		{
+			if (App->CL_ImGui->flag_Show_App_Debug == 1)
+			{
+				App->CL_ImGui->flag_Show_App_Debug = 0;
+			}
+			else
+			{
+				App->CL_ImGui->flag_Show_App_Debug = 1;
+			}
+			return TRUE;
+		}
 			
+		case ID_DEBUG_CAMERADATA:
+		{	
 			if (App->CL_ImGui->Show_Camera_Data_F == 1)
 			{
 				App->CL_ImGui->Show_Camera_Data_F = 0;

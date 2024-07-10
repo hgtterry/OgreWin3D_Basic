@@ -43,6 +43,7 @@ public:
 	void ImGui_FPS(void);
 	void Camera_Data_GUI(void);
 	void Model_Data_GUI(void);
+	void App_Debug(void);
 
 	void Demo_1_GUI(void);
 
@@ -53,6 +54,7 @@ public:
 	bool Show_Camera_Data_F;
 	bool Show_Model_Data_F;
 	bool Show_Demo_1_F;
+	bool flag_Show_App_Debug;
 
 	// Demo 1
 	bool Show_Physics_Debug_F;
