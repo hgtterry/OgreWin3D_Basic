@@ -1,5 +1,5 @@
 /*
-Copyright (c) GameDirector 2019 To 2024 HGT Software W.T.Flanigan H.C.Flanigan
+Copyright (c) OgreWin3D_Basic 2024 W.T.Flanigan H.C.Flanigan Inflanite_HGT
 
 This software is provided 'as-is', without any express or implied
 warranty. In no event will the authors be held liable for any damages
@@ -51,6 +51,8 @@ CL64_Ogre::CL64_Ogre(void)
 
 	flag_Show_Test_Mesh = 1;
 	flag_Show_Trays = 1;
+
+	FPSLock = 16666; // Default 60 FPS
 
 	FPStimer.reset();
 }
@@ -448,7 +450,7 @@ bool CL64_Ogre::Ogre_Render_Loop(void)
 
 		if (mWindow->isClosed()) return false;
 
-		if (FPStimer.getMicroseconds() > 16666)// Fps_Tick) // FPSLock)
+		if (FPStimer.getMicroseconds() > FPSLock)
 		{
 			FPStimer.reset();
 
@@ -469,8 +471,6 @@ bool CL64_Ogre::Ogre_Render_Loop(void)
 				{
 					return false;
 				}
-
-				
 
 			//}
 		}
