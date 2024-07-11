@@ -217,22 +217,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			return TRUE;
 		}
 
-		case ID_DEBUG_HIDEOGRETESTCUBE:
-		{
-			if (App->CL_Ogre->flag_Show_Test_Mesh == 1)
-			{
-				App->CL_Ogre->Show_Test_Mesh(false);
-			}
-			else
-			{
-				App->CL_Ogre->Show_Test_Mesh(true);
-			}
-
-			
-
-			return TRUE;
-		}
-
 		case ID_IMGUI_IMGUIDEMO:
 		{
 			if (App->CL_ImGui->Show_ImGui_Demo == 1)

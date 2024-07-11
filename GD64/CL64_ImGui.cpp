@@ -474,6 +474,7 @@ void CL64_ImGui::App_Debug(void)
 		}
 
 		ImGui::Text("Debug Textures:- %i", App->Debug_Textures);
+		ImGui::Text("TestMesh_Deleted:- %i", App->CL_Ogre->flag_TestMesh_Deleted);
 
 		if (ImGui::Button("Close"))
 		{
