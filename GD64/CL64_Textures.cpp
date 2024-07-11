@@ -1,5 +1,5 @@
 /*
-Copyright (c) GameDirector 2019 To 2024 HGT Software W.T.Flanigan H.C.Flanigan
+Copyright (c) OgreWin3D_Basic 2024 W.T.Flanigan H.C.Flanigan Inflanite_HGT
 
 This software is provided 'as-is', without any express or implied
 warranty. In no event will the authors be held liable for any damages
@@ -33,6 +33,14 @@ CL64_Textures::CL64_Textures(void)
 {
 	TextureFileName[0] = 0;
 	Just_Texture_FileName[0] = 0;
+
+	int Count = 0;
+	while (Count < 499)
+	{
+		g_Texture[0] = 0; // Texture IDs
+		Count++;
+	}
+
 }
 
 CL64_Textures::~CL64_Textures(void)
@@ -44,7 +52,6 @@ CL64_Textures::~CL64_Textures(void)
 // *************************************************************************
 void CL64_Textures::Load_Textures_Assimp()
 {
-
 	int v = 0;
 	int Count = 0;
 	bool DummyCreated = 0;
@@ -52,15 +59,10 @@ void CL64_Textures::Load_Textures_Assimp()
 
 	int mGroupCount = App->CL_Scene->GroupCount;
 
-	if (App->Debug_Textures == 1)
-	{
-		App->CL_Textures->Create_DummyTexture(App->CL_Scene->Texture_FolderPath);
-	}
-
 	while (Count < mGroupCount)
 	{
 
-		CheckPath(App->CL_Scene->Group[Count]->Text_FileName, App->CL_Scene->Group[Count]->Text_FileName);
+		Get_Just_FileName(App->CL_Scene->Group[Count]->Text_FileName, App->CL_Scene->Group[Count]->Text_FileName);
 		strcpy(App->CL_Scene->Group[Count]->Text_FileName, Just_Texture_FileName);
 
 		int Test = strcmp(Just_Texture_FileName, "No_Texture");
@@ -87,7 +89,7 @@ void CL64_Textures::Load_Textures_Assimp()
 				strcpy(buf, App->CL_Scene->Texture_FolderPath);
 				strcat(buf, "TTemp.bmp");
 				UINT* Texture_List = g_Texture;
-				Soil_Load_Texture(Texture_List, buf, App->CL_Scene->Group[Count]->MaterialIndex);
+				Import_OpenGL_Texture(Texture_List, buf, App->CL_Scene->Group[Count]->MaterialIndex);
 
 				//App->CL_Loader->LoadError = 1;
 				DummyCreated = 1;
@@ -104,7 +106,7 @@ void CL64_Textures::Load_Textures_Assimp()
 			strcpy(buf, App->CL_Scene->Texture_FolderPath);
 			strcat(buf, "TTemp.bmp");
 			UINT* Texture_List = g_Texture;
-			Soil_Load_Texture(Texture_List, buf, App->CL_Scene->Group[Count]->MaterialIndex);
+			Import_OpenGL_Texture(Texture_List, buf, App->CL_Scene->Group[Count]->MaterialIndex);
 
 			//App->CL_Loader->LoadError = 1;
 			DummyCreated = 1;
@@ -129,11 +131,6 @@ void CL64_Textures::Load_Textures_Assimp()
 // *************************************************************************
 bool CL64_Textures::Load_OpenGL_Textures(int TextureID)
 {
-	if (App->Debug_Textures == 1)
-	{
-		//MessageBox(App->MainHwnd, TextureFileName, "poo", MB_OK);
-	}
-
 	int Index = 0;
 	int Dont = 0;
 	int jpg = 0;
@@ -149,58 +146,55 @@ bool CL64_Textures::Load_OpenGL_Textures(int TextureID)
 	// ----------------------------------- Bitmap
 	if (_stricmp(TextureFileName + strlen(TextureFileName) - 4, ".BMP") == 0)
 	{
-		bool test = Soil_Load_Texture(Texture_List, TextureFileName, TextureID);
-		if (test == 0)
-		{
-			App->Say("Failed to load Bmp");
-			return 0;
-		}
+		bool test = Import_OpenGL_Texture(Texture_List, TextureFileName, TextureID);
 
+		if (test == 0){App->Say("Failed to load Bmp");return 0;}
 		return 1;
 	}
 	// ------------------------------------ JPEG
 	if (_stricmp(TextureFileName + strlen(TextureFileName) - 4, ".JPG") == 0)
 	{
-		bool test = Soil_Load_Texture(Texture_List, TextureFileName, TextureID);
+		bool test = Import_OpenGL_Texture(Texture_List, TextureFileName, TextureID);
 
-		if (test == 0)
-		{
-			App->Say("Failed to load JPG");
-			return 0;
-		}
-
+		if (test == 0){App->Say("Failed to load JPG");return 0;}
 		return 1;
 	}
 	// ------------------------------------ TGA
 	if (_stricmp(TextureFileName + strlen(TextureFileName) - 4, ".TGA") == 0)
 	{
-		Soil_Load_Texture(Texture_List, TextureFileName, TextureID);
+		bool test = Import_OpenGL_Texture(Texture_List, TextureFileName, TextureID);
+
+		if (test == 0) { App->Say("Failed to load TGA"); return 0; }
 		return 1;
 	}
-	//// ------------------------------------ DDS
+	// ------------------------------------ DDS
 	if (_stricmp(TextureFileName + strlen(TextureFileName) - 4, ".DDS") == 0)
 	{
-		Soil_Load_Texture(Texture_List, TextureFileName, TextureID);
+		bool test = Import_OpenGL_Texture(Texture_List, TextureFileName, TextureID);
+
+		if (test == 0) { App->Say("Failed to load DDS"); return 0; }
 		return 1;
 	}
-	//// ------------------------------------ PNG
+	// ------------------------------------ PNG
 	if (_stricmp(TextureFileName + strlen(TextureFileName) - 4, ".PNG") == 0)
 	{
-		Soil_Load_Texture(Texture_List, TextureFileName, TextureID);
+		bool test = Import_OpenGL_Texture(Texture_List, TextureFileName, TextureID);
+
+		if (test == 0) { App->Say("Failed to load PNG"); return 0; }
 		return 1;
 	}
 
-	/*CreateDummyTexture();
-	Soil_Load_Texture(g_Texture, buf, TextureID);
-	remove(buf);*/
+	Create_DummyTexture(App->CL_Scene->Texture_FolderPath);
+	Import_OpenGL_Texture(g_Texture, buf, TextureID);
+	remove(buf);
 
 	return 1;
 }
 
 // *************************************************************************
-// *		 Soil_Load_Texture:- Terry and Hazel Flanigan 2024		  	   *
+// *		 Import_OpenGL_Texture:- Terry and Hazel Flanigan 2024	 	   *
 // *************************************************************************
-bool CL64_Textures::Soil_Load_Texture(UINT textureArray[], LPSTR strFileName, int textureID)
+bool CL64_Textures::Import_OpenGL_Texture(UINT textureArray[], LPSTR strFileName, int textureID)
 {
 	int image_width = 0;
 	int image_height = 0;
@@ -210,7 +204,7 @@ bool CL64_Textures::Soil_Load_Texture(UINT textureArray[], LPSTR strFileName, in
 	unsigned char* image_data = stbi_load(strFileName, &image_width, &image_height, &channels, force_channels);
 	if (image_data == NULL)
 	{
-		//App->Say("Cant Create Texture");
+		App->Say("Cant Create Texture");
 		return 0;
 	}
 
@@ -320,8 +314,9 @@ bool CL64_Textures::HBITMAP_TO_BmpFile(HBITMAP Bitmap, char* Filename, char* Sav
 	bi.biYPelsPerMeter = 0;
 	bi.biClrImportant = 0;
 	bi.biClrUsed = 256;
-	dwBmBitsSize = ((Bitmap0.bmWidth * wBitCount + 31) & ~31) / 8
-		* Bitmap0.bmHeight;
+
+	dwBmBitsSize = ((Bitmap0.bmWidth * wBitCount + 31) & ~31) / 8* Bitmap0.bmHeight;
+
 	hDib = GlobalAlloc(GHND, dwBmBitsSize + dwPaletteSize + sizeof(BITMAPINFOHEADER));
 	lpbi = (LPBITMAPINFOHEADER)GlobalLock(hDib);
 	*lpbi = bi;
@@ -369,9 +364,9 @@ bool CL64_Textures::HBITMAP_TO_BmpFile(HBITMAP Bitmap, char* Filename, char* Sav
 }
 
 // *************************************************************************
-// *						CheckPath Terry Bernie	   					   *
+// *		Get_Just_FileName:- Terry and Hazel Flanigan 2024	  		   *
 // *************************************************************************
-void CL64_Textures::CheckPath(char* pString, char* FileName)
+void CL64_Textures::Get_Just_FileName(char* pString, char* FileName)
 {
 	int Count = 0;
 	int Mark = 0;

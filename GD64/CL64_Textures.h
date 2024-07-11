@@ -1,5 +1,5 @@
 /*
-Copyright (c) GameDirector 2019 To 2024 HGT Software W.T.Flanigan H.C.Flanigan
+Copyright (c) OgreWin3D_Basic 2024 W.T.Flanigan H.C.Flanigan Inflanite_HGT
 
 This software is provided 'as-is', without any express or implied
 warranty. In no event will the authors be held liable for any damages
@@ -32,16 +32,16 @@ public:
 	void Load_Textures_Assimp();
 
 	bool Load_OpenGL_Textures(int TextureID);
-	bool Soil_Load_Texture(UINT textureArray[], LPSTR strFileName, int textureID);
+	bool Import_OpenGL_Texture(UINT textureArray[], LPSTR strFileName, int textureID);
 
 	bool Create_DummyTexture(char* Folder);
 	bool HBITMAP_TO_BmpFile(HBITMAP Bitmap, char* Filename, char* SaveFolder);
 
-	void CheckPath(char* pString, char* FileName);
+	void Get_Just_FileName(char* pString, char* FileName);
 
 	char TextureFileName[MAX_PATH];
 	char Just_Texture_FileName[MAX_PATH];
 
-	UINT  g_Texture[400];
+	UINT  g_Texture[400]; //Texture IDs for loaded textures OpenGL
 };
 

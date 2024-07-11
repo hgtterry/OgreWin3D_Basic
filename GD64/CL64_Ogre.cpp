@@ -448,8 +448,10 @@ bool CL64_Ogre::Ogre_Render_Loop(void)
 
 		if (mWindow->isClosed()) return false;
 
-		if (FPStimer.getMicroseconds() > 14000)// Fps_Tick) // FPSLock)
+		if (FPStimer.getMicroseconds() > 16666)// Fps_Tick) // FPSLock)
 		{
+			FPStimer.reset();
+
 			//if (Block_RenderingQueued == 0)
 			//{
 
@@ -468,7 +470,7 @@ bool CL64_Ogre::Ogre_Render_Loop(void)
 					return false;
 				}
 
-				FPStimer.reset();
+				
 
 			//}
 		}
