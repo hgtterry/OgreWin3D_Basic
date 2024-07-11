@@ -37,7 +37,10 @@ public:
 	bool Create_DummyTexture(char* Folder);
 	bool HBITMAP_TO_BmpFile(HBITMAP Bitmap, char* Filename, char* SaveFolder);
 
+	void CheckPath(char* pString, char* FileName);
+
 	char TextureFileName[MAX_PATH];
+	char Just_Texture_FileName[MAX_PATH];
 
 	UINT  g_Texture[400];
 };

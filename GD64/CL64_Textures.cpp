@@ -32,6 +32,7 @@ distribution.
 CL64_Textures::CL64_Textures(void)
 {
 	TextureFileName[0] = 0;
+	Just_Texture_FileName[0] = 0;
 }
 
 CL64_Textures::~CL64_Textures(void)
@@ -43,9 +44,11 @@ CL64_Textures::~CL64_Textures(void)
 // *************************************************************************
 void CL64_Textures::Load_Textures_Assimp()
 {
+
 	int v = 0;
 	int Count = 0;
 	bool DummyCreated = 0;
+	Just_Texture_FileName[0] = 0;
 
 	int mGroupCount = App->CL_Scene->GroupCount;
 
@@ -56,11 +59,11 @@ void CL64_Textures::Load_Textures_Assimp()
 
 	while (Count < mGroupCount)
 	{
-		char JustFileName[MAX_PATH];
-		GetFileTitleA(App->CL_Scene->Group[Count]->Text_FileName, JustFileName, MAX_PATH);
-		strcpy(App->CL_Scene->Group[Count]->Text_FileName, JustFileName);
 
-		int Test = strcmp(JustFileName, "No_Texture");
+		CheckPath(App->CL_Scene->Group[Count]->Text_FileName, App->CL_Scene->Group[Count]->Text_FileName);
+		strcpy(App->CL_Scene->Group[Count]->Text_FileName, Just_Texture_FileName);
+
+		int Test = strcmp(Just_Texture_FileName, "No_Texture");
 		if (Test != 0) // not a match
 		{
 
@@ -128,7 +131,7 @@ bool CL64_Textures::Load_OpenGL_Textures(int TextureID)
 {
 	if (App->Debug_Textures == 1)
 	{
-		MessageBox(App->MainHwnd, TextureFileName, "poo", MB_OK);
+		//MessageBox(App->MainHwnd, TextureFileName, "poo", MB_OK);
 	}
 
 	int Index = 0;
@@ -363,4 +366,43 @@ bool CL64_Textures::HBITMAP_TO_BmpFile(HBITMAP Bitmap, char* Filename, char* Sav
 	CloseHandle(fh);
 
 	return 1;
+}
+
+// *************************************************************************
+// *						CheckPath Terry Bernie	   					   *
+// *************************************************************************
+void CL64_Textures::CheckPath(char* pString, char* FileName)
+{
+	int Count = 0;
+	int Mark = 0;
+	bool Test = 0;
+
+	while (*pString != 0)
+	{
+		if (*pString == '\\' || *pString == '/')
+		{
+			Test = 1;
+			Mark = Count;
+		}
+
+		Count++;
+		pString++;
+	}
+
+	if (Mark == 0 && Test == 0)
+	{
+		strcpy(Just_Texture_FileName, FileName);
+	}
+	else
+	{
+		if (Mark == 0 && Test == 1)
+		{
+			Mark = 1;
+			strcpy(Just_Texture_FileName, (FileName + Mark));
+		}
+		else
+		{
+			strcpy(Just_Texture_FileName, (FileName + Mark) + 1);
+		}
+	}
 }
