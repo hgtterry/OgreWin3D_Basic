@@ -47,7 +47,6 @@ typedef struct Bone_Type {
 }Bone_Type;
 
 typedef struct OgreMeshData_Type {
-
 	Ogre::String mEdgeList;
 	Ogre::String mName;
 	std::vector<std::string> mMaterials;

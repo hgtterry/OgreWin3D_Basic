@@ -120,7 +120,7 @@ void CL64_Importers::Load_Ogre_Model(void)
 		return;
 	}
 
-	//App->CL_Model->Clear_Model_And_Reset();
+	App->CL_Scene->Clear_Model_And_Reset();
 
 	char Model_Path_And_File[MAX_PATH];
 	strcpy(Model_Path_And_File, App->CL_File_IO->Get_Model_Path_File_Name().c_str());
@@ -228,6 +228,8 @@ void CL64_Importers::Reload_Ogre_Model(void)
 		App->CL_Ogre->camNode->setOrientation(Ogre::Quaternion::IDENTITY);
 		App->CL_Ogre->camNode->setPosition(Ogre::Vector3(0, 0, App->CL_Scene->Main_Ent->getBoundingRadius() * 2.8f));
 	}
+
+	App->CL_Converters->Ogre_To_Mesh_Data(App->CL_Scene->Main_Ent);
 
 	App->CL_Ogre->Ogre3D_Listener->Ogre_Model_Loaded = 1;
 

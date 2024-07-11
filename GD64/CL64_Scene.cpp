@@ -141,20 +141,21 @@ void CL64_Scene::Create_Mesh_Group(int Index)
 // *************************************************************************
 void CL64_Scene::Clear_Model_And_Reset(void)
 {
+	// Clear any Mesh Data
 	Reset_Class(); // Reset this Class
 
-	//App->CL_FileView->Reset_Class(); // Reset List View
-
-	//App->CL_Groups->Reset_Class();
-
-	//App->CL_Grid->Reset_Class();
-
-	//App->CL_TopBar->Reset_Class();
-
-	//App->CL_Ogre->Ogre_Listener->ImGui_Render_Tab = Enums::ImGui_Render_Model;
-
-	//App->CL_Export_Ogre3D->Export_As_RF = 0;
+	// Remove the Test Mesh
 	App->CL_Ogre->Delete_TestMesh();
+
+	// Clear Stored data about any loaded Ogre Models
+	if (S_OgreMeshData[0])
+	{
+		delete S_OgreMeshData[0];
+		S_OgreMeshData[0] = nullptr;
+
+		S_OgreMeshData[0] = new OgreMeshData_Type;
+	}
+	
 
 	SetWindowText(App->MainHwnd, "OgreWin3D_Basic");
 }
