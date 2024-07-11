@@ -297,15 +297,16 @@ void CL64_ImGui::Model_Data_GUI(void)
 	}
 	else
 	{
-		
 		ImGui::Text("Model Info");
+		if (ImGui::TreeNode("Paths"))
+		{
+			ImGui::Text("Model Name:- %s", App->CL_Scene->JustName);
+			ImGui::Text("Model File:- %s", App->CL_Scene->FileName);
+			ImGui::Text("Model Path:- %s", App->CL_Scene->Path_FileName);
+			ImGui::Text("Texture Path:- %s", App->CL_Scene->Texture_FolderPath);
 
-		ImGui::Indent();
-		ImGui::Text("Model Name:- %s", App->CL_Scene->JustName);
-		ImGui::Text("Model File:- %s", App->CL_Scene->FileName);
-		ImGui::Text("Model Path:- %s", App->CL_Scene->Path_FileName);
-		ImGui::Text("Texture Path:- %s", App->CL_Scene->Texture_FolderPath);
-		ImGui::Unindent();
+			ImGui::TreePop();
+		}
 
 		if (ImGui::TreeNode("Ogre3D Model"))
 		{
