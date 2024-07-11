@@ -290,20 +290,23 @@ LRESULT CALLBACK CL64_Dialogs::YesNo_Proc(HWND hDlg, UINT message, WPARAM wParam
 		SendDlgItemMessage(hDlg, IDC_BANNER_YN, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_STTEXT_YN, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
 
+		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
 		SetDlgItemText(hDlg, IDC_BANNER_YN, App->CL_Dialogs->MessageString);
 		SetDlgItemText(hDlg, IDC_STTEXT_YN, App->CL_Dialogs->MessageString2);
 		return TRUE;
 	}
 	case WM_CTLCOLORSTATIC:
 	{
-		if (GetDlgItem(hDlg, IDC_BANNER) == (HWND)lParam)
+		if (GetDlgItem(hDlg, IDC_BANNER_YN) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 255, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 255));
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->AppBackground;
 		}
-		if (GetDlgItem(hDlg, IDC_STTEXT) == (HWND)lParam)
+		if (GetDlgItem(hDlg, IDC_STTEXT_YN) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 255, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
@@ -317,6 +320,28 @@ LRESULT CALLBACK CL64_Dialogs::YesNo_Proc(HWND hDlg, UINT message, WPARAM wParam
 	{
 		return (LONG)App->AppBackground;
 	}
+
+	case WM_NOTIFY:
+	{
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		if (some_item->idFrom == IDOK)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDCANCEL)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		return CDRF_DODEFAULT;
+	}
+
 	case WM_COMMAND:
 
 		if (LOWORD(wParam) == IDOK)

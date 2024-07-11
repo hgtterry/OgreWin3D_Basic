@@ -286,7 +286,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 		case ID_FILE_CLEAR:
 		{
-			App->CL_Scene->Clear_Model_And_Reset();
+			App->CL_Dialogs->Show_YesNo_Dlg((LPSTR) "Clear Scene/Model", (LPSTR) "Are you sure");
+
+			if (App->CL_Dialogs->Canceled == 0)
+			{
+				Debug
+				App->CL_Scene->Clear_Model_And_Reset();
+			}
+
 			return TRUE;
 		}
 
