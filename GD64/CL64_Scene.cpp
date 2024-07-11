@@ -72,7 +72,7 @@ CL64_Scene::~CL64_Scene(void)
 }
 
 // *************************************************************************
-// *			Reaet_Class:- Terry and Hazel Flanigan 2024				   *
+// *			Reset_Class:- Terry and Hazel Flanigan 2024				   *
 // *************************************************************************
 void CL64_Scene::Reset_Class(void)
 {
@@ -105,12 +105,20 @@ void CL64_Scene::Reset_Class(void)
 		Count++;
 	}
 
+	//--------------------- Reset Counters and Strings
 	Texture_FolderPath[0] = 0;
 	GroupCount = 0;
 	TextureCount = 0;
 	VerticeCount = 0;
 	FaceCount = 0;
 	MotionCount = 0;
+	BoneCount = 0;
+
+	FileName[0] = 0;
+	Path_FileName[0] = 0;
+	Model_FolderPath[0] = 0;
+	Texture_FolderPath[0] = 0;
+	JustName[0] = 0;
 
 }
 
@@ -146,6 +154,7 @@ void CL64_Scene::Clear_Model_And_Reset(void)
 	//App->CL_Ogre->Ogre_Listener->ImGui_Render_Tab = Enums::ImGui_Render_Model;
 
 	//App->CL_Export_Ogre3D->Export_As_RF = 0;
+	App->CL_Ogre->Delete_TestMesh();
 
 	SetWindowText(App->MainHwnd, "OgreWin3D_Basic");
 }

@@ -62,6 +62,7 @@ public:
 
 	void Show_Test_Mesh(bool Show);
 	void Show_Trays(void);
+	void Delete_TestMesh(void);
 
 	// Renders a Single Frame
 	void RenderFrame(void);
@@ -107,6 +108,6 @@ public:
 
 	bool flag_Show_Test_Mesh;
 	bool flag_Show_Trays;
-
+	bool flag_TestMesh_Deleted; // Does the test mesh Exist
 };
 

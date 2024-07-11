@@ -51,6 +51,7 @@ CL64_Ogre::CL64_Ogre(void)
 
 	flag_Show_Test_Mesh = 1;
 	flag_Show_Trays = 1;
+	flag_TestMesh_Deleted = 0;
 
 	FPSLock = 16666; // Default 60 FPS
 
@@ -394,17 +395,19 @@ void CL64_Ogre::Clear_ErrorLog()
 // *************************************************************************
 void CL64_Ogre::Show_Test_Mesh(bool Show)
 {
-	if (Show == 1)
+	if (App->CL_Ogre->flag_TestMesh_Deleted == 0)
 	{
-		TestMesh_Node->setVisible(true);
-		flag_Show_Test_Mesh = 1;
+		if (Show == 1)
+		{
+			TestMesh_Node->setVisible(true);
+			flag_Show_Test_Mesh = 1;
+		}
+		else
+		{
+			TestMesh_Node->setVisible(false);
+			flag_Show_Test_Mesh = 0;
+		}
 	}
-	else
-	{
-		TestMesh_Node->setVisible(false);
-		flag_Show_Test_Mesh = 0;
-	}
-
 }
 
 // *************************************************************************
@@ -421,6 +424,24 @@ void CL64_Ogre::Show_Trays(void)
 	{
 		mTrayMgr->hideAll();
 	}
+}
+
+// *************************************************************************
+// *			Delete_TestMesh:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void CL64_Ogre::Delete_TestMesh(void)
+{
+	if (TestMesh_Entity && TestMesh_Node)
+	{
+		flag_TestMesh_Deleted = 1;
+
+		TestMesh_Node->detachAllObjects();
+		App->CL_Ogre->mSceneMgr->destroySceneNode(TestMesh_Node);
+		App->CL_Ogre->mSceneMgr->destroyEntity(TestMesh_Entity);
+		TestMesh_Entity = nullptr;
+		TestMesh_Node = nullptr;
+	}
+
 
 }
 
