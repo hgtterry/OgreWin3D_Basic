@@ -49,6 +49,7 @@
 #define IDB_TEXTURESOFF                 159
 #define IDB_BITMAP1                     160
 #define IDB_DUMMY                       160
+#define IDD_YESNO                       161
 #define IDC_CK_SU_FULLSCREEN            1000
 #define IDC_ST_STARTUP                  1001
 #define IDC_CK_SU_FULL3DVIEW            1002
@@ -96,6 +97,8 @@
 #define IDC_ST_ABOUT_VERSION            1024
 #define IDC_LIST_ABOUT_VERSIONS         1025
 #define IDC_STCOUNT                     1026
+#define IDC_BANNER_YN                   1027
+#define IDC_STTEXT_YN                   1028
 #define ID_VIEW_RESET                   32771
 #define ID_VIEW_MAX3DVIEW               32772
 #define ID_DEBUG_TESTPREFERANCE         32773
@@ -117,6 +120,8 @@
 #define ID_OGRE3D_RESOURCEFILE          32789
 #define ID_FILE_OPEN                    32790
 #define ID_DEBUG_APP                    32791
+#define ID_FILE_CLEAR                   32792
+#define ID_FILE_EXPORT                  32793
 #define IDC_STATIC                      -1
 
 // Next default values for new objects
@@ -124,9 +129,9 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
-#define _APS_NEXT_RESOURCE_VALUE        161
-#define _APS_NEXT_COMMAND_VALUE         32792
-#define _APS_NEXT_CONTROL_VALUE         1027
+#define _APS_NEXT_RESOURCE_VALUE        162
+#define _APS_NEXT_COMMAND_VALUE         32794
+#define _APS_NEXT_CONTROL_VALUE         1029
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif

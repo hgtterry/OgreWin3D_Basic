@@ -284,12 +284,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			return TRUE;
 		}
 
-		case ID_FILE_CONVERTTOOGRE3D:
+		case ID_FILE_CLEAR:
 		{
-			App->CL_Converters->Convert_To_Ogre3D(1);
+			App->CL_Scene->Clear_Model_And_Reset();
 			return TRUE;
 		}
-		
+
 		// Camera -------------------------------------------------------
 		case ID_MODE_MODEL:
 		{

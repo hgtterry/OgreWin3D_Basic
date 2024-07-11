@@ -29,6 +29,9 @@ distribution.
 CL64_Dialogs::CL64_Dialogs(void)
 {
 	Message_Text[0] = 0;
+	MessageString[0] = 0;
+	MessageString2[0] = 0;
+
 	Canceled = 0;
 
 	Flag_Convert_to_Ogre = 0;
@@ -253,6 +256,85 @@ LRESULT CALLBACK CL64_Dialogs::Import_Options_Dlg_Proc(HWND hDlg, UINT message, 
 		}
 
 		break;
+	}
+	return FALSE;
+}
+
+// *************************************************************************
+// *	  		Show_YesNo_Dlg:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void CL64_Dialogs::Show_YesNo_Dlg(char* Text, char* Text2)
+{
+	Canceled = 0;
+
+	MessageString[0] = 0;
+	MessageString2[0] = 0;
+
+	strcpy(MessageString, Text);
+	strcpy(MessageString2, Text2);
+
+	DialogBox(App->hInst, (LPCTSTR)IDD_YESNO, App->Fdlg, (DLGPROC)YesNo_Proc);
+
+}
+
+// *************************************************************************
+// *			YesNo_Proc_Proc:- Terry and Hazel Flanigan 2024	  		   *
+// *************************************************************************
+LRESULT CALLBACK CL64_Dialogs::YesNo_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+
+	switch (message)
+	{
+	case WM_INITDIALOG:
+	{
+		SendDlgItemMessage(hDlg, IDC_BANNER_YN, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_STTEXT_YN, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
+
+		SetDlgItemText(hDlg, IDC_BANNER_YN, App->CL_Dialogs->MessageString);
+		SetDlgItemText(hDlg, IDC_STTEXT_YN, App->CL_Dialogs->MessageString2);
+		return TRUE;
+	}
+	case WM_CTLCOLORSTATIC:
+	{
+		if (GetDlgItem(hDlg, IDC_BANNER) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 255));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+		if (GetDlgItem(hDlg, IDC_STTEXT) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+		return FALSE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->AppBackground;
+	}
+	case WM_COMMAND:
+
+		if (LOWORD(wParam) == IDOK)
+		{
+			App->CL_Dialogs->Canceled = 0;
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDCANCEL)
+		{
+			App->CL_Dialogs->Canceled = 1;
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+
+		break;
+
 	}
 	return FALSE;
 }

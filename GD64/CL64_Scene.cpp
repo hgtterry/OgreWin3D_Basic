@@ -147,7 +147,7 @@ void CL64_Scene::Clear_Model_And_Reset(void)
 
 	//App->CL_Export_Ogre3D->Export_As_RF = 0;
 
-	SetWindowText(App->MainHwnd, "Equity_ME");
+	SetWindowText(App->MainHwnd, "OgreWin3D_Basic");
 }
 
 // *************************************************************************

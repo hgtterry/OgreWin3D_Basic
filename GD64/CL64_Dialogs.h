@@ -32,6 +32,7 @@ public:
 	void Message(char* pString);
 	void Start_Import_Options_Dlg();
 	void PleaseWait();
+	void Show_YesNo_Dlg(char* Text, char* Text2);
 
 	bool Canceled;
 	bool Flag_Convert_to_Ogre;
@@ -42,7 +43,11 @@ private:
 	static LRESULT CALLBACK Message_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Import_Options_Dlg_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK PleaseWait_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK YesNo_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	char Message_Text[MAX_PATH];
+
+	char MessageString[MAX_PATH];	// Yes No Dialog
+	char MessageString2[MAX_PATH];	// Yes No Dialog
 };
 
