@@ -94,7 +94,7 @@ void CL64_Ogre::InitOgre(void)
 	App->CL_Converters->Ogre_To_Mesh_Data(TestMesh_Entity);
 	
 	App->CL_Scene->Scene_Mode = Enums::Scene_Mode_TestMesh;
-	App->CL_Scene->Model_Loaded = 1;
+	App->CL_Scene->flag_Model_Loaded = 1;
 
 	mTrayMgr = new OgreBites::TrayManager("InterfaceName", mWindow);
 	mTrayMgr->showAll();

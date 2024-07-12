@@ -98,7 +98,7 @@ bool CL64_Ogre3D_Listener::frameRenderingQueued(const FrameEvent& evt)
 		return 1;
 	}
 
-	if (Run_Physics == 1 && App->CL_Scene->Player_Added == 1)
+	if (Run_Physics == 1 && App->CL_Scene->flag_Player_Added == 1)
 	{
 		btTransform trans;
 		App->CL_Scene->B_Player[0]->Phys_Body->getMotionState()->getWorldTransform(trans);

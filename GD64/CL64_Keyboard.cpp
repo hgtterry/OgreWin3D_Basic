@@ -46,7 +46,7 @@ void CL64_Keyboard::Keyboard_Mode_First(float deltaTime)
 		if (GetAsyncKeyState(87) < 0) // W Key
 		{
 
-			if (App->CL_Scene->Player_Added == 1)
+			if (App->CL_Scene->flag_Player_Added == 1)
 			{
 				//App->Flash_Window();
 				App->CL_Player->mMoveDirection = (btVector3(0, 0, -1));
@@ -57,7 +57,7 @@ void CL64_Keyboard::Keyboard_Mode_First(float deltaTime)
 		}
 		else
 		{
-			if (App->CL_Scene->Player_Added == 1 && App->CL_Scene->B_Player[0]->IsMOving == 1)
+			if (App->CL_Scene->flag_Player_Added == 1 && App->CL_Scene->B_Player[0]->IsMOving == 1)
 			{
 				App->CL_Player->mMoveDirection = (btVector3(0, 0, 0));
 				App->CL_Scene->B_Player[0]->IsMOving = 0;
@@ -68,7 +68,7 @@ void CL64_Keyboard::Keyboard_Mode_First(float deltaTime)
 		if (GetAsyncKeyState(83) < 0) // S Key	
 		{
 
-			if (App->CL_Scene->Player_Added == 1)
+			if (App->CL_Scene->flag_Player_Added == 1)
 			{
 				App->CL_Player->mMoveDirection = (btVector3(0, 0, 1));
 				App->CL_Scene->B_Player[0]->IsMOving_Back = 1;
@@ -77,7 +77,7 @@ void CL64_Keyboard::Keyboard_Mode_First(float deltaTime)
 		}
 		else
 		{
-			if (App->CL_Scene->Player_Added == 1 && App->CL_Scene->B_Player[0]->IsMOving_Back == 1)
+			if (App->CL_Scene->flag_Player_Added == 1 && App->CL_Scene->B_Player[0]->IsMOving_Back == 1)
 			{
 				App->CL_Player->mMoveDirection = (btVector3(0, 0, 0));
 				App->CL_Scene->B_Player[0]->IsMOving_Back = 0;
@@ -88,7 +88,7 @@ void CL64_Keyboard::Keyboard_Mode_First(float deltaTime)
 		if (GetAsyncKeyState(65) < 0)
 		{
 
-			if (App->CL_Scene->Player_Added == 1)
+			if (App->CL_Scene->flag_Player_Added == 1)
 			{
 				App->CL_Player->mMoveDirection = (btVector3(1, 0, 0));// walkDirection
 				App->CL_Scene->B_Player[0]->IsMOving_Right = 1;
@@ -96,7 +96,7 @@ void CL64_Keyboard::Keyboard_Mode_First(float deltaTime)
 		}
 		else
 		{
-			if (App->CL_Scene->Player_Added == 1 && App->CL_Scene->B_Player[0]->IsMOving_Right == 1)
+			if (App->CL_Scene->flag_Player_Added == 1 && App->CL_Scene->B_Player[0]->IsMOving_Right == 1)
 			{
 				App->CL_Player->mMoveDirection = (btVector3(0, 0, 0));// walkDirection
 				App->CL_Scene->B_Player[0]->IsMOving_Right = 0;
@@ -107,7 +107,7 @@ void CL64_Keyboard::Keyboard_Mode_First(float deltaTime)
 		if (GetAsyncKeyState(68) < 0)
 		{
 
-			if (App->CL_Scene->Player_Added == 1)
+			if (App->CL_Scene->flag_Player_Added == 1)
 			{
 				App->CL_Player->mMoveDirection = (btVector3(-1, 0, 0));// walkDirection
 				//App->CL_Player->Check_Collisions_New();
@@ -117,7 +117,7 @@ void CL64_Keyboard::Keyboard_Mode_First(float deltaTime)
 		}
 		else
 		{
-			if (App->CL_Scene->Player_Added == 1 && App->CL_Scene->B_Player[0]->IsMOving_Left == 1)
+			if (App->CL_Scene->flag_Player_Added == 1 && App->CL_Scene->B_Player[0]->IsMOving_Left == 1)
 			{
 				App->CL_Player->mMoveDirection = (btVector3(0, 0, 0));// walkDirection
 				App->CL_Scene->B_Player[0]->IsMOving_Left = 0;

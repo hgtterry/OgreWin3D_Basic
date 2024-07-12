@@ -74,7 +74,7 @@ bool CL64_Importers::Assimp_Loader(bool UseDialog,const char* Extension, const c
 	App->CL_Ogre->OGL_Listener->Flag_ShowTextured = 1;
 	App->CL_Scene->Scene_Mode = Enums::Scene_Mode_MeshData;
 
-	App->CL_Scene->Model_Loaded = 1;
+	App->CL_Scene->flag_Model_Loaded = 1;
 
 	if (UseDialog == 1)
 	{
@@ -166,7 +166,7 @@ void CL64_Importers::Load_Ogre_Model(void)
 	App->CL_Converters->Ogre_To_Mesh_Data(App->CL_Scene->Main_Ent);
 	
 
-	App->CL_Scene->Model_Loaded = 1;
+	App->CL_Scene->flag_Model_Loaded = 1;
 
 	/*Get_BoneNames();
 

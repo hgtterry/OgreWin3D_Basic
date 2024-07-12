@@ -1,5 +1,5 @@
 /*
-Copyright (c) GameDirector 2019 To 2024 HGT Software W.T.Flanigan H.C.Flanigan
+Copyright (c) OgreWin3D_Basic 2024 W.T.Flanigan H.C.Flanigan Inflanite_HGT
 
 This software is provided 'as-is', without any express or implied
 warranty. In no event will the authors be held liable for any damages
@@ -7,18 +7,10 @@ arising from the use of this software.
 
 Permission is granted to anyone to use this software for any purpose,
 including commercial applications, and to alter it and redistribute it
-freely, subject to the following restrictions:
+freely.
 
-1. The origin of this software must not be misrepresented; you must not
-claim that you wrote the original software. If you use this software
-in a product, an acknowledgment in the product documentation would be
+An acknowledgment in the product documentation would be
 appreciated but is not required.
-
-2. Altered source versions must be plainly marked as such, and must not be
-misrepresented as being the original software.
-
-3. This notice may not be removed or altered from any source
-distribution.
 */
 
 #include "pch.h"
@@ -37,9 +29,9 @@ CL64_TopDlg::CL64_TopDlg(void)
 	Demos_TB_hWnd =		nullptr;
 
 
-	Toggle_Tabs_Camera_Flag = 0;
-	Toggle_Tabs_Debug_Flag = 1;
-	Toggle_Tabs_Demos_Flag = 0;
+	flag_Toggle_Tabs_Camera = 0;
+	flag_Toggle_Tabs_Debug = 1;
+	flag_Toggle_Tabs_Demos = 0;
 
 	Toggle_Cam_ModelMode_Flag = 1;
 	Toggle_Cam_FreeMode_Flag = 0;
@@ -85,7 +77,7 @@ LRESULT CALLBACK CL64_TopDlg::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam
 		App->CL_TopDlg->Hide_Tabs();
 
 		// Default Tab
-		App->CL_TopDlg->Toggle_Tabs_Debug_Flag = 1;
+		App->CL_TopDlg->flag_Toggle_Tabs_Debug = 1;
 		ShowWindow(App->CL_TopDlg->Debug_TB_hWnd, SW_SHOW);
 
 		return TRUE;
@@ -238,7 +230,7 @@ LRESULT CALLBACK CL64_TopDlg::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam
 				return TRUE;
 			}
 
-			if (App->CL_Scene->Model_Loaded == 1)
+			if (App->CL_Scene->flag_Model_Loaded == 1)
 			{
 	
 				if (App->CL_Ogre->OGL_Listener->Flag_ShowTextured == 1)
@@ -261,7 +253,7 @@ LRESULT CALLBACK CL64_TopDlg::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam
 		// Show Hide Mesh/Faces
 		if (LOWORD(wParam) == IDC_TBSHOWFACES)
 		{
-			if (App->CL_Scene->Model_Loaded == 1)
+			if (App->CL_Scene->flag_Model_Loaded == 1)
 			{
 				HWND Temp = GetDlgItem(hDlg, IDC_TBSHOWFACES);
 
@@ -288,7 +280,7 @@ LRESULT CALLBACK CL64_TopDlg::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam
 		//-------------------------------------------------------- Show Points
 		if (LOWORD(wParam) == IDC_BTSHOWPOINTS)
 		{
-			if (App->CL_Scene->Model_Loaded == 1)
+			if (App->CL_Scene->flag_Model_Loaded == 1)
 			{
 				HWND Temp = GetDlgItem(hDlg, IDC_BTSHOWPOINTS);
 
@@ -333,7 +325,7 @@ LRESULT CALLBACK CL64_TopDlg::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam
 		//-------------------------------------------------------- Show Bones
 		if (LOWORD(wParam) == IDC_BTSHOWBONES)
 		{
-			if (App->CL_Scene->Model_Loaded == 1)
+			if (App->CL_Scene->flag_Model_Loaded == 1)
 			{
 				HWND Temp = GetDlgItem(hDlg, IDC_BTSHOWBONES);
 
@@ -356,7 +348,7 @@ LRESULT CALLBACK CL64_TopDlg::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam
 		//-------------------------------------------------------- Show Normals
 		if (LOWORD(wParam) == IDC_BTSHOWNORMALS)
 		{
-			if (App->CL_Scene->Model_Loaded == 1)
+			if (App->CL_Scene->flag_Model_Loaded == 1)
 			{
 				HWND Temp = GetDlgItem(hDlg, IDC_BTSHOWNORMALS);
 
@@ -379,7 +371,7 @@ LRESULT CALLBACK CL64_TopDlg::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam
 		//-------------------------------------------------------- Show Bound Box
 		if (LOWORD(wParam) == IDC_TBBOUNDBOX)
 		{
-			if (App->CL_Scene->Model_Loaded == 1)
+			if (App->CL_Scene->flag_Model_Loaded == 1)
 			{
 				HWND Temp = GetDlgItem(hDlg, IDC_TBBOUNDBOX);
 
@@ -441,21 +433,21 @@ LRESULT CALLBACK CL64_TopDlg::Tabs_Headers_Proc(HWND hDlg, UINT message, WPARAM 
 		if (some_item->idFrom == IDC_BT_TDH_DEBUG)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle_Tabs(item, App->CL_TopDlg->Toggle_Tabs_Debug_Flag);
+			App->Custom_Button_Toggle_Tabs(item, App->CL_TopDlg->flag_Toggle_Tabs_Debug);
 			return CDRF_DODEFAULT;
 		}
 
 		if (some_item->idFrom == IDC_BT_TBH_CAMERA)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle_Tabs(item, App->CL_TopDlg->Toggle_Tabs_Camera_Flag);
+			App->Custom_Button_Toggle_Tabs(item, App->CL_TopDlg->flag_Toggle_Tabs_Camera);
 			return CDRF_DODEFAULT;
 		}
 
 		if (some_item->idFrom == IDC_BT_TD_DEMOSTAB)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle_Tabs(item, App->CL_TopDlg->Toggle_Tabs_Demos_Flag);
+			App->Custom_Button_Toggle_Tabs(item, App->CL_TopDlg->flag_Toggle_Tabs_Demos);
 			return CDRF_DODEFAULT;
 		}
 
@@ -469,7 +461,7 @@ LRESULT CALLBACK CL64_TopDlg::Tabs_Headers_Proc(HWND hDlg, UINT message, WPARAM 
 		{
 			App->CL_TopDlg->Hide_Tabs();
 			ShowWindow(App->CL_TopDlg->Debug_TB_hWnd, SW_SHOW);
-			App->CL_TopDlg->Toggle_Tabs_Debug_Flag = 1;
+			App->CL_TopDlg->flag_Toggle_Tabs_Debug = 1;
 
 			RedrawWindow(App->CL_TopDlg->Tabs_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
@@ -480,7 +472,7 @@ LRESULT CALLBACK CL64_TopDlg::Tabs_Headers_Proc(HWND hDlg, UINT message, WPARAM 
 		{
 			App->CL_TopDlg->Hide_Tabs();
 			ShowWindow(App->CL_TopDlg->Camera_TB_hWnd, SW_SHOW);
-			App->CL_TopDlg->Toggle_Tabs_Camera_Flag = 1;
+			App->CL_TopDlg->flag_Toggle_Tabs_Camera = 1;
 
 			RedrawWindow(App->CL_TopDlg->Tabs_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
@@ -491,7 +483,7 @@ LRESULT CALLBACK CL64_TopDlg::Tabs_Headers_Proc(HWND hDlg, UINT message, WPARAM 
 		{
 			App->CL_TopDlg->Hide_Tabs();
 			ShowWindow(App->CL_TopDlg->Demos_TB_hWnd, SW_SHOW);
-			App->CL_TopDlg->Toggle_Tabs_Demos_Flag = 1;
+			App->CL_TopDlg->flag_Toggle_Tabs_Demos = 1;
 
 			RedrawWindow(App->CL_TopDlg->Tabs_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
@@ -512,9 +504,9 @@ void CL64_TopDlg::Hide_Tabs(void)
 	ShowWindow(Camera_TB_hWnd, SW_HIDE);
 	ShowWindow(Demos_TB_hWnd, SW_HIDE);
 
-	Toggle_Tabs_Debug_Flag = 0;
-	Toggle_Tabs_Camera_Flag = 0;
-	Toggle_Tabs_Demos_Flag = 0;
+	flag_Toggle_Tabs_Debug = 0;
+	flag_Toggle_Tabs_Camera = 0;
+	flag_Toggle_Tabs_Demos = 0;
 }
 
 // *************************************************************************

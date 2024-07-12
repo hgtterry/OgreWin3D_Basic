@@ -1,5 +1,5 @@
 /*
-Copyright (c) GameDirector 2019 To 2024 HGT Software W.T.Flanigan H.C.Flanigan
+Copyright (c) OgreWin3D_Basic 2024 W.T.Flanigan H.C.Flanigan Inflanite_HGT
 
 This software is provided 'as-is', without any express or implied
 warranty. In no event will the authors be held liable for any damages
@@ -7,18 +7,10 @@ arising from the use of this software.
 
 Permission is granted to anyone to use this software for any purpose,
 including commercial applications, and to alter it and redistribute it
-freely, subject to the following restrictions:
+freely.
 
-1. The origin of this software must not be misrepresented; you must not
-claim that you wrote the original software. If you use this software
-in a product, an acknowledgment in the product documentation would be
+An acknowledgment in the product documentation would be
 appreciated but is not required.
-
-2. Altered source versions must be plainly marked as such, and must not be
-misrepresented as being the original software.
-
-3. This notice may not be removed or altered from any source
-distribution.
 */
 
 #include "pch.h"
@@ -35,8 +27,8 @@ CL64_Scene::CL64_Scene(void)
 	FaceCount = 0;
 	BoneCount = 0;
 
-	Model_Loaded = 0;
-	Player_Added = 0;
+	flag_Model_Loaded = 0;
+	flag_Player_Added = 0;
 
 	// Ogre
 	Ogre_Face_Count = 0;
@@ -76,7 +68,7 @@ CL64_Scene::~CL64_Scene(void)
 // *************************************************************************
 void CL64_Scene::Reset_Class(void)
 {
-	Model_Loaded = 0;
+	flag_Model_Loaded = 0;
 	Model_Type = Enums::LoadedFile_None;
 
 	int Count = 0;

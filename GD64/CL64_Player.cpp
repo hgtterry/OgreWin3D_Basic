@@ -119,7 +119,7 @@ void CL64_Player::Initialize() const
 	App->CL_Scene->B_Player[0]->Phys_Body->getWorldTransform().setRotation(App->CL_Scene->B_Player[0]->Physics_Rotation);
 	App->CL_Bullet->dynamicsWorld->addRigidBody(pBase->Phys_Body);
 
-	App->CL_Scene->Player_Added = 1;
+	App->CL_Scene->flag_Player_Added = 1;
 }
 
 // *************************************************************************
