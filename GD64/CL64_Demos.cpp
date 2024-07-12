@@ -119,7 +119,9 @@ void CL64_Demos::Start_Demo_2(void)
 
 	App->CL_Importers->Load_Ogre_Model(false);
 
-	App->Say("Demo 2");
+	App->CL_Ogre->camNode->setPosition(-237, -6, 800);
+
+	//App->Say("Demo 2");
 }
 
 // *************************************************************************
