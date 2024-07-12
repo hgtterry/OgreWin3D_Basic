@@ -352,7 +352,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		App->CL_Panels->Resize_Fldg();
 		App->CL_Panels->Resize_OgreWin();
 
-		if (App->OgreStarted == 1)
+		if (App->flag_OgreStarted == 1)
 		{
 			Root::getSingletonPtr()->renderOneFrame();
 		}
@@ -389,7 +389,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	case WM_TIMER:
 		if (wParam == 1)
 		{
-			if (App->OgreStarted == 0)
+			if (App->flag_OgreStarted == 0)
 			{
 				App->CL_Dialogs->PleaseWait();
 
@@ -427,7 +427,7 @@ LRESULT CALLBACK Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
 
 	case WM_CTLCOLORDLG:
 	{
-		if (App->OgreStarted == 0)
+		if (App->flag_OgreStarted == 0)
 		{
 			return (LONG)App->BlackBrush;
 		}
@@ -466,7 +466,7 @@ LRESULT CALLBACK Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
 			io.MousePos.y = static_cast<float>(pos.y);
 		}
 
-		if (GetCursorPos(&pos) && App->OgreStarted == 1)// && App->CL10_Dimensions->Mouse_Move_Mode == Enums::Edit_Mouse_None)
+		if (GetCursorPos(&pos) && App->flag_OgreStarted == 1)// && App->CL10_Dimensions->Mouse_Move_Mode == Enums::Edit_Mouse_None)
 		{
 			if (ScreenToClient(App->ViewGLhWnd, &pos))
 			{
@@ -494,9 +494,9 @@ LRESULT CALLBACK Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
 		{
 
 			{
-				if (App->OgreStarted == 1)
+				if (App->flag_OgreStarted == 1)
 				{
-					if (App->Block_Mouse_Buttons == 0)
+					if (App->flag_Block_Mouse_Buttons == 0)
 					{
 						if (!ImGui::GetIO().WantCaptureMouse)
 						{
@@ -531,7 +531,7 @@ LRESULT CALLBACK Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
 		ImGuiIO& io = ImGui::GetIO();
 		io.MouseDown[0] = false;
 
-		if (App->OgreStarted == 1)
+		if (App->flag_OgreStarted == 1)
 		{
 			ReleaseCapture();
 			App->CL_Ogre->Ogre3D_Listener->Pl_LeftMouseDown = 0;
@@ -558,7 +558,7 @@ LRESULT CALLBACK Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
 
 			//if (App->SBC_Scene->GameMode_Running_Flag == 0)
 			{
-				if (App->OgreStarted == 1)
+				if (App->flag_OgreStarted == 1)
 				{
 					POINT p;
 					GetCursorPos(&p);
@@ -583,7 +583,7 @@ LRESULT CALLBACK Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
 		io.MouseDown[0] = false;
 		//App->CL_Ogre->m_imgui.mouseReleased();
 
-		if (App->OgreStarted == 1)
+		if (App->flag_OgreStarted == 1)
 		{
 			ReleaseCapture();
 			App->CL_Ogre->Ogre3D_Listener->Pl_RightMouseDown = 0;
@@ -683,7 +683,7 @@ void StartOgre()
 
     EndDialog(App->ViewPLeaseWait, LOWORD(0));
 
-    App->OgreStarted = 1;
+    App->flag_OgreStarted = 1;
 
     KillTimer(App->MainHwnd, 1);
 

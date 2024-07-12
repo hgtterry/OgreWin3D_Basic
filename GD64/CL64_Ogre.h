@@ -106,8 +106,9 @@ public:
 
 	int FPSLock; // FPS Lock Setable (60 FPS Default)
 
-	bool flag_Show_Test_Mesh;
-	bool flag_Show_Trays;
+	bool flag_Show_Test_Mesh;	// is Test Mesh Visable
+	bool flag_Show_Trays;		// is Trays Visable
 	bool flag_TestMesh_Deleted; // Does the test mesh Exist
+
 };
 

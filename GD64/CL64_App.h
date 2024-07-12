@@ -101,14 +101,13 @@ public:
 	int CursorPosX;
 	int CursorPosY;
 
-	bool OgreStarted;
-	bool Block_Mouse_Buttons;
-
 	char GD_Directory_FullPath[MAX_PATH];
 	char App_Version[MAX_PATH];
 
-	bool Debug_App;
-	bool Debug_Textures;
+	bool flag_OgreStarted;			//Has Ogre3D started properly
+	bool flag_Block_Mouse_Buttons;	//Block Mouse Buttons
+	bool flag_Debug_App;			//App Debug Mode 
+	bool flag_Debug_Textures;		//App Debug Textures
 
 	HFONT Font_CB15;
 	HFONT Font_Arial20;

@@ -115,7 +115,7 @@ bool CL64_Ogre::OgreCreateRoot(void)
 	Ogre::String pluginsPath;
 	pluginsPath = mResourcePath + "plugins.cfg";
 
-	if (App->Debug_App == 1)
+	if (App->flag_Debug_App == 1)
 	{
 		mRoot = OGRE_NEW Ogre::Root(pluginsPath, mResourcePath + "Equity_CFG.cfg", mResourcePath + "GD64_Ogre.log");
 		Ogre::LogManager::getSingleton().createLog(mResourcePath + "App.log");
@@ -355,7 +355,7 @@ bool CL64_Ogre::createFrameListener(void)
 // *************************************************************************
 void CL64_Ogre::Log_Message_To_File(char* Message)
 {
-	if (App->Debug_App == 1)
+	if (App->flag_Debug_App == 1)
 	{
 		Ogre::LogManager::getSingleton().setDefaultLog(Ogre::LogManager::getSingleton().getLog("App.log"));
 		Ogre::LogManager::getSingleton().logMessage(Message);

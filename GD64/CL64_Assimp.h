@@ -1,5 +1,5 @@
 /*
-Copyright (c) GameDirector 2019 To 2024 HGT Software W.T.Flanigan H.C.Flanigan
+Copyright (c) OgreWin3D_Basic 2024 W.T.Flanigan H.C.Flanigan Inflanite_HGT
 
 This software is provided 'as-is', without any express or implied
 warranty. In no event will the authors be held liable for any damages
@@ -24,8 +24,6 @@ distribution.
 #pragma once
 
 #include "cimport.h"
-//#include "Importer.hpp"
-//#include "Exporter.hpp"
 #include "PostProcess.h"
 #include "Scene.h"
 #include "DefaultLogger.hpp"
@@ -54,5 +52,6 @@ public:
 
 	long int SelectedPreset;	// Switchs 
 	int mTotalVertices;			// Total Vertice Count of Model
+
 };
 
