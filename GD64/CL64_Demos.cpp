@@ -38,6 +38,8 @@ CL64_Demos::~CL64_Demos(void)
 // *************************************************************************
 void CL64_Demos::Start_Demo_1(void)
 {
+	App->CL_Scene->Clear_Model_And_Reset();
+
 	App->CL_Grid->Grid_SetVisible(false);
 	App->CL_Grid->ShowGridFlag = false;
 
@@ -94,6 +96,29 @@ void CL64_Demos::Start_Demo_1(void)
 // *************************************************************************
 void CL64_Demos::Start_Demo_2(void)
 {
+	App->CL_Scene->Clear_Model_And_Reset();
+
+	App->CL_Grid->Grid_SetVisible(false);
+	App->CL_Grid->ShowGridFlag = false;
+
+	App->CL_Grid->ShowHair = false;
+	App->CL_Grid->Hair_SetVisible(false);
+
+	App->CL_Ogre->Show_Test_Mesh(false);
+
+	App->CL_Camera->Reset_View();
+	App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_Free;
+
+
+	char FolderPath[MAX_PATH];
+	strcpy(FolderPath,App->GD_Directory_FullPath);
+	strcat(FolderPath, "\\Media\\Demo2\\RF_Level\\New_Room.mesh");
+
+	strcpy(App->CL_File_IO->Model_Path_FileName, FolderPath);
+	strcpy(App->CL_File_IO->Model_FileName,"New_Room.mesh");
+
+	App->CL_Importers->Load_Ogre_Model(false);
+
 	App->Say("Demo 2");
 }
 

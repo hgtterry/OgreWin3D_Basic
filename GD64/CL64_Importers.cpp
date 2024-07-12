@@ -112,12 +112,15 @@ bool CL64_Importers::Assimp_Loader(bool UseDialog,const char* Extension, const c
 // *************************************************************************
 // *			Load_Ogre_Model:- Terry and Hazel Flanigan 2024 		   *
 // *************************************************************************
-void CL64_Importers::Load_Ogre_Model(void)
+void CL64_Importers::Load_Ogre_Model(bool Use_File_Dialog)
 {
-	int Result = App->CL_File_IO->Open_File_Model("Ogre3D   *.mesh\0*.mesh\0", "Ogre3D", NULL);
-	if (Result == 0)
+	if (Use_File_Dialog == 1)
 	{
-		return;
+		int Result = App->CL_File_IO->Open_File_Model("Ogre3D   *.mesh\0*.mesh\0", "Ogre3D", NULL);
+		if (Result == 0)
+		{
+			return;
+		}
 	}
 
 	App->CL_Scene->Clear_Model_And_Reset();

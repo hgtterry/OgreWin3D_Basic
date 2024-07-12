@@ -246,10 +246,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			return TRUE;
 		}
 		
-		// File -------------------------------------------------------
+		// File Import ------------------------------------------------
 		case ID_OGRE3D_MESH:
 		{
-			App->CL_Importers->Load_Ogre_Model();
+			App->CL_Importers->Load_Ogre_Model(true);
 
 			return TRUE;
 		}
@@ -268,6 +268,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			return TRUE;
 		}
 
+		// File Export ------------------------------------------------
+		case ID_EXPORT_WAVEFRONTOBJ:
+		{
+			Debug
+			return TRUE;
+		}
+		
+		// File Others ------------------------------------------------
 		case ID_FILE_CLEAR:
 		{
 			App->CL_Dialogs->Show_YesNo_Dlg((LPSTR) "Clear Scene/Model", (LPSTR) "Are you sure");

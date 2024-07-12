@@ -30,7 +30,7 @@ public:
 
 	bool Assimp_Loader(bool UseDialog,const char* Extension, const char* Extension2);
 
-	void Load_Ogre_Model(void);
+	void Load_Ogre_Model(bool Use_File_Dialog);
 	void Reload_Ogre_Model(void);
 
 	void Ogre_Resource_CFG_Loader(char* Extension, char* Extension2);
