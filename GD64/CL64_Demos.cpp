@@ -119,7 +119,9 @@ void CL64_Demos::Start_Demo_2(void)
 
 	App->CL_Importers->Load_Ogre_Model(false);
 
-	App->CL_Ogre->camNode->setPosition(-237, -6, 800);
+	App->CL_Ogre->camNode->setOrientation(Ogre::Quaternion::IDENTITY);
+	App->CL_Ogre->camNode->yaw(Ogre::Degree(90));
+	App->CL_Ogre->camNode->setPosition(-237, -68, 800);
 
 	//App->Say("Demo 2");
 }
