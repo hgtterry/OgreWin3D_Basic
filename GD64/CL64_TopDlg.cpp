@@ -556,7 +556,17 @@ LRESULT CALLBACK CL64_TopDlg::Debug_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 		if (some_item->idFrom == IDC_BT_TD_DEBUG_TESTCUBE)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CL_Ogre->flag_Show_Test_Mesh);
+
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_TD_DEBUG_TESTCUBE));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
+			else
+			{
+				App->Custom_Button_Toggle(item, App->CL_Ogre->flag_Show_Test_Mesh);
+			}
+
 			return CDRF_DODEFAULT;
 		}
 
@@ -681,6 +691,14 @@ LRESULT CALLBACK CL64_TopDlg::Debug_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 
 	}
 	return FALSE;
+}
+
+// *************************************************************************
+// *		Enable_TestMesh_Button:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+void CL64_TopDlg::Enable_TestMesh_Button(bool Enable)
+{
+	EnableWindow(GetDlgItem(App->CL_TopDlg->Debug_TB_hWnd, IDC_BT_TD_DEBUG_TESTCUBE), Enable);
 }
 
 // *************************************************************************

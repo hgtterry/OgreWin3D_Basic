@@ -329,7 +329,6 @@ void CL64_App::Custom_Button_Toggle(LPNMCUSTOMDRAW item, bool Toggle) const
 
 	SelectObject(item->hdc, BlackPen);
 	SelectObject(item->hdc, defaultbrush);
-
 }
 
 // *************************************************************************
@@ -427,7 +426,6 @@ void CL64_App::Custom_Button_Normal(LPNMCUSTOMDRAW item) const
 		
 		return;
 	}
-
 }
 
 // *************************************************************************
@@ -472,6 +470,22 @@ void CL64_App::Custom_Button_Globals(LPNMCUSTOMDRAW item) const
 
 		return;
 	}
+}
 
+// *************************************************************************
+// *		Custom_Button_Greyed:- Terry and Hazel Flanigan 2024   	  	   *
+// *************************************************************************
+void CL64_App::Custom_Button_Greyed(LPNMCUSTOMDRAW item)
+{
+	HPEN pen = CreatePen(PS_INSIDEFRAME, 0, RGB(0, 0, 255)); // Idle 
+
+	HGDIOBJ old_pen = SelectObject(item->hdc, pen);
+	HGDIOBJ old_brush = SelectObject(item->hdc, Brush_Tabs_UnSelected);
+
+	RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 5, 5);
+
+	SelectObject(item->hdc, old_pen);
+	SelectObject(item->hdc, old_brush);
+	DeleteObject(pen);
 }
 

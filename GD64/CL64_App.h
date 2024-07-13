@@ -83,7 +83,8 @@ public:
 	void Custom_Button_Toggle_Tabs(LPNMCUSTOMDRAW item, bool Toggle) const;
 	void Custom_Button_Normal(LPNMCUSTOMDRAW item) const;
 	void Custom_Button_Globals(LPNMCUSTOMDRAW item) const;
-	
+	void Custom_Button_Greyed(LPNMCUSTOMDRAW item);
+
 	HINSTANCE hInst;
 	HWND MainHwnd;
 	HWND Fdlg;

@@ -24,6 +24,7 @@ public:
 	void Start_TopBar();
 	void Start_Tabs_Headers(void);
 	void Hide_Tabs(void);
+	void Enable_TestMesh_Button(bool Enable);
 
 	// Tab Options
 	void Start_Debug_TB(void);

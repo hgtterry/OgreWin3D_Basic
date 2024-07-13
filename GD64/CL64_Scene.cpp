@@ -53,6 +53,13 @@ CL64_Scene::CL64_Scene(void)
 		Count++;
 	}
 
+	Count = 0;
+	while (Count < 199)
+	{
+		S_Bones[Count] = nullptr;
+		Count++;
+	}
+	
 	Main_Ent = nullptr;
 	Main_Node = nullptr;
 
@@ -85,7 +92,6 @@ void CL64_Scene::Reset_Class(void)
 			Group[Count]->Normal_Data.resize(0);
 			Group[Count]->MapCord_Data.resize(0);
 
-
 			if (Group[Count]->Base_Bitmap)
 			{
 				DeleteObject(Group[Count]->Base_Bitmap);
@@ -94,6 +100,7 @@ void CL64_Scene::Reset_Class(void)
 			delete Group[Count];
 			Group[Count] = nullptr;
 		}
+
 		Count++;
 	}
 
@@ -111,6 +118,8 @@ void CL64_Scene::Reset_Class(void)
 	Model_FolderPath[0] = 0;
 	Texture_FolderPath[0] = 0;
 	JustName[0] = 0;
+
+	flag_Model_Loaded = 0;
 
 }
 
@@ -138,6 +147,8 @@ void CL64_Scene::Clear_Model_And_Reset(void)
 
 	// Remove the Test Mesh
 	App->CL_Ogre->Delete_TestMesh();
+
+	Reset_Main_Entity();
 
 	// Clear Stored data about any loaded Ogre Models
 	if (S_OgreMeshData[0])
