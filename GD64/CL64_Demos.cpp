@@ -84,7 +84,7 @@ void CL64_Demos::Start_Demo_1(void)
 	App->CL_Bullet->create_New_Trimesh(World_Ent, World_Node);
 	App->CL_Ogre->Ogre3D_Listener->Run_Physics = 1;
 
-	App->CL_TopDlg->Toggle_PhysicaDebug_Node_Flag = 0;
+	App->CL_TopDlg->flag_Toggle_PhysicaDebug_Node = 0;
 	App->CL_Ogre->Bullet_Debug_Listener->btDebug_Node->setVisible(false);
 
 	App->CL_Ogre->mTrayMgr->hideAll();

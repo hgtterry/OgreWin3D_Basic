@@ -33,16 +33,17 @@ CL64_TopDlg::CL64_TopDlg(void)
 	flag_Toggle_Tabs_Debug = 1;
 	flag_Toggle_Tabs_Demos = 0;
 
-	Toggle_Cam_ModelMode_Flag = 1;
-	Toggle_Cam_FreeMode_Flag = 0;
+	flag_Toggle_Cam_ModelMode = 1;
+	flag_Toggle_Cam_FreeMode = 0;
+	flag_Toggle_Cam_FirstMode = 0;
 
-	Toggle_Demos_Demo_1_Flag = 0;
-	Toggle_Demos_Demo_2_Flag = 0;
+	flag_Toggle_Demos_Demo_1 = 0;
+	flag_Toggle_Demos_Demo_2 = 0;
 
 	Demo_1_Running_Flag = 0;
 	Demo_2_Running_Flag = 0;
 
-	Toggle_PhysicaDebug_Node_Flag = 0;
+	flag_Toggle_PhysicaDebug_Node = 0;
 }
 
 CL64_TopDlg::~CL64_TopDlg(void)
@@ -587,7 +588,7 @@ LRESULT CALLBACK CL64_TopDlg::Debug_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 		if (some_item->idFrom == IDC_BT_TD_DEBUG_PHYSICSDEBUG)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CL_TopDlg->Toggle_PhysicaDebug_Node_Flag);
+			App->Custom_Button_Toggle(item, App->CL_TopDlg->flag_Toggle_PhysicaDebug_Node);
 			return CDRF_DODEFAULT;
 		}
 
@@ -605,14 +606,14 @@ LRESULT CALLBACK CL64_TopDlg::Debug_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 	{
 		if (LOWORD(wParam) == IDC_BT_TD_DEBUG_PHYSICSDEBUG)
 		{
-			if (App->CL_TopDlg->Toggle_PhysicaDebug_Node_Flag == 1)
+			if (App->CL_TopDlg->flag_Toggle_PhysicaDebug_Node == 1)
 			{
-				App->CL_TopDlg->Toggle_PhysicaDebug_Node_Flag = 0;
+				App->CL_TopDlg->flag_Toggle_PhysicaDebug_Node = 0;
 				App->CL_Ogre->Bullet_Debug_Listener->btDebug_Node->setVisible(false);
 			}
 			else
 			{
-				App->CL_TopDlg->Toggle_PhysicaDebug_Node_Flag = 1;
+				App->CL_TopDlg->flag_Toggle_PhysicaDebug_Node = 1;
 				App->CL_Ogre->Bullet_Debug_Listener->btDebug_Node->setVisible(true);
 			}
 			return 1;
@@ -723,6 +724,8 @@ LRESULT CALLBACK CL64_TopDlg::Camera_TB_Proc(HWND hDlg, UINT message, WPARAM wPa
 		SendDlgItemMessage(hDlg, IDC_BT_CAMERA_FREE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_TD_DEBUG_RESETVIEW, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_CAMERA_CAMDATA, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_CAMERA_FIRST, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_CAMERA_SPEED1, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
 		return TRUE;
 	}
@@ -739,14 +742,21 @@ LRESULT CALLBACK CL64_TopDlg::Camera_TB_Proc(HWND hDlg, UINT message, WPARAM wPa
 		if (some_item->idFrom == IDC_BT_CAMERA_MODEL)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CL_TopDlg->Toggle_Cam_ModelMode_Flag);
+			App->Custom_Button_Toggle(item, App->CL_TopDlg->flag_Toggle_Cam_ModelMode);
 			return CDRF_DODEFAULT;
 		}
 
 		if (some_item->idFrom == IDC_BT_CAMERA_FREE)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CL_TopDlg->Toggle_Cam_FreeMode_Flag);
+			App->Custom_Button_Toggle(item, App->CL_TopDlg->flag_Toggle_Cam_FreeMode);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BT_CAMERA_FIRST)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->CL_TopDlg->flag_Toggle_Cam_FirstMode);
 			return CDRF_DODEFAULT;
 		}
 
@@ -754,6 +764,13 @@ LRESULT CALLBACK CL64_TopDlg::Camera_TB_Proc(HWND hDlg, UINT message, WPARAM wPa
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Toggle(item, App->CL_ImGui->Show_Camera_Data_F);
+			return CDRF_DODEFAULT;
+		}
+		
+		if (some_item->idFrom == IDC_BT_CAMERA_SPEED1)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
 			return CDRF_DODEFAULT;
 		}
 		
@@ -775,8 +792,8 @@ LRESULT CALLBACK CL64_TopDlg::Camera_TB_Proc(HWND hDlg, UINT message, WPARAM wPa
 			App->CL_Camera->Reset_View();
 			App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_Model;
 
-			App->CL_TopDlg->Toggle_Cam_ModelMode_Flag = 1;
-			App->CL_TopDlg->Toggle_Cam_FreeMode_Flag = 0;
+			App->CL_TopDlg->flag_Toggle_Cam_ModelMode = 1;
+			App->CL_TopDlg->flag_Toggle_Cam_FreeMode = 0;
 
 			RedrawWindow(App->CL_TopDlg->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
@@ -788,8 +805,8 @@ LRESULT CALLBACK CL64_TopDlg::Camera_TB_Proc(HWND hDlg, UINT message, WPARAM wPa
 			App->CL_Camera->Reset_View();
 			App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_Free;
 
-			App->CL_TopDlg->Toggle_Cam_FreeMode_Flag = 1;
-			App->CL_TopDlg->Toggle_Cam_ModelMode_Flag = 0;
+			App->CL_TopDlg->flag_Toggle_Cam_FreeMode = 1;
+			App->CL_TopDlg->flag_Toggle_Cam_ModelMode = 0;
 			
 			RedrawWindow(App->CL_TopDlg->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			return 1;
@@ -858,14 +875,14 @@ LRESULT CALLBACK CL64_TopDlg::Demos_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 		if (some_item->idFrom == IDC_BT_TD_DEMOS_DEMO1)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CL_TopDlg->Toggle_Demos_Demo_1_Flag);
+			App->Custom_Button_Toggle(item, App->CL_TopDlg->flag_Toggle_Demos_Demo_1);
 			return CDRF_DODEFAULT;
 		}
 
 		if (some_item->idFrom == IDC_BT_TD_DEMOS_DEMO2)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CL_TopDlg->Toggle_Demos_Demo_2_Flag);
+			App->Custom_Button_Toggle(item, App->CL_TopDlg->flag_Toggle_Demos_Demo_2);
 			return CDRF_DODEFAULT;
 		}
 
@@ -879,8 +896,8 @@ LRESULT CALLBACK CL64_TopDlg::Demos_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 		{
 			if (App->CL_TopDlg->Demo_1_Running_Flag == 0)
 			{
-				App->CL_TopDlg->Toggle_Demos_Demo_1_Flag = 1;
-				App->CL_TopDlg->Toggle_Demos_Demo_2_Flag = 0;
+				App->CL_TopDlg->flag_Toggle_Demos_Demo_1 = 1;
+				App->CL_TopDlg->flag_Toggle_Demos_Demo_2 = 0;
 
 				App->CL_Demos->Start_Demo_1();
 
@@ -895,8 +912,8 @@ LRESULT CALLBACK CL64_TopDlg::Demos_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 
 		if (LOWORD(wParam) == IDC_BT_TD_DEMOS_DEMO2)
 		{
-			App->CL_TopDlg->Toggle_Demos_Demo_2_Flag = 1;
-			App->CL_TopDlg->Toggle_Demos_Demo_1_Flag = 0;
+			App->CL_TopDlg->flag_Toggle_Demos_Demo_2 = 1;
+			App->CL_TopDlg->flag_Toggle_Demos_Demo_1 = 0;
 
 			App->CL_Demos->Start_Demo_2();
 

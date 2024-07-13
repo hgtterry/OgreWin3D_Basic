@@ -410,10 +410,10 @@ void CL64_ImGui::Demo_1_GUI(void)
 		ImGui::Text("Keys WASD");
 		ImGui::Spacing();
 
-		if (ImGui::Checkbox("Show Debug Physics", &App->CL_TopDlg->Toggle_PhysicaDebug_Node_Flag))
+		if (ImGui::Checkbox("Show Debug Physics", &App->CL_TopDlg->flag_Toggle_PhysicaDebug_Node))
 		{
 
-			if (App->CL_TopDlg->Toggle_PhysicaDebug_Node_Flag == 1)
+			if (App->CL_TopDlg->flag_Toggle_PhysicaDebug_Node == 1)
 			{
 				App->CL_Ogre->Bullet_Debug_Listener->btDebug_Node->setVisible(true);
 			}

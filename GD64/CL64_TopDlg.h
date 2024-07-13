@@ -35,7 +35,7 @@ public:
 	bool flag_Toggle_Tabs_Camera;
 	bool flag_Toggle_Tabs_Demos;
 	
-	bool Toggle_PhysicaDebug_Node_Flag;
+	bool flag_Toggle_PhysicaDebug_Node;
 
 	bool Demo_1_Running_Flag;
 	bool Demo_2_Running_Flag;
@@ -60,11 +60,12 @@ private:
 	static LRESULT CALLBACK Camera_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Demos_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
-	bool Toggle_Cam_ModelMode_Flag;
-	bool Toggle_Cam_FreeMode_Flag;
+	bool flag_Toggle_Cam_ModelMode;
+	bool flag_Toggle_Cam_FreeMode;
+	bool flag_Toggle_Cam_FirstMode;
 
-	bool Toggle_Demos_Demo_1_Flag;
-	bool Toggle_Demos_Demo_2_Flag;
+	bool flag_Toggle_Demos_Demo_1;
+	bool flag_Toggle_Demos_Demo_2;
 
 };
 

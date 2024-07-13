@@ -67,6 +67,7 @@
 #define IDC_BT_TBH_CAMERA               1008
 #define IDC_BT_DEMORESOURCES            1008
 #define IDC_BTSHOWNORMALS               1008
+#define IDC_BT_CAMERA_FIRST             1008
 #define IDC_BUTTON3                     1009
 #define IDC_BT_CAMERA_MODEL             1009
 #define IDC_ALLMESH                     1009
@@ -100,6 +101,8 @@
 #define IDC_STCOUNT                     1026
 #define IDC_BANNER_YN                   1027
 #define IDC_STTEXT_YN                   1028
+#define IDC_BUTTON5                     1029
+#define IDC_BT_CAMERA_SPEED1            1029
 #define ID_VIEW_RESET                   32771
 #define ID_VIEW_MAX3DVIEW               32772
 #define ID_DEBUG_TESTPREFERANCE         32773
@@ -133,7 +136,7 @@
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        162
 #define _APS_NEXT_COMMAND_VALUE         32795
-#define _APS_NEXT_CONTROL_VALUE         1029
+#define _APS_NEXT_CONTROL_VALUE         1030
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif
