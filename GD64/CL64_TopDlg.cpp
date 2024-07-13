@@ -951,7 +951,8 @@ void CL64_TopDlg::Init_Bmps_Globals(void)
 	Temp = GetDlgItem(TabsHwnd, IDC_BTSHOWNORMALS);
 	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_NormalsOff_Bmp);
 
-	HWND hTooltip_TB_2 = CreateWindowEx(0, TOOLTIPS_CLASS, "", TTS_ALWAYSTIP | TTS_BALLOON, 0, 0, 0, 0, App->MainHwnd, 0, App->hInst, 0);
+	HWND hTooltip_TB_2 = CreateWindowEx(0, TOOLTIPS_CLASS, "", TTS_ALWAYSTIP | TTS_BALLOON | TTS_NOFADE, 0, 0, 0, 0, App->MainHwnd, 0, App->hInst, 0);
+	SendMessage(hTooltip_TB_2, TTM_SETMAXTIPWIDTH, 0, 250);
 
 	Temp = GetDlgItem(TabsHwnd, IDC_TBSHOWHAIR);
 	TOOLINFO ti1 = { 0 };
@@ -976,7 +977,7 @@ void CL64_TopDlg::Init_Bmps_Globals(void)
 	ti3.cbSize = sizeof(ti3);
 	ti3.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
 	ti3.uId = (UINT_PTR)Temp;
-	ti3.lpszText = (LPSTR) "Toggle Show Mesh/Faces";
+	ti3.lpszText = (LPSTR) "Toggle Mesh/Faces";
 	ti3.hwnd = App->MainHwnd;
 	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti3);
 
@@ -1003,7 +1004,7 @@ void CL64_TopDlg::Init_Bmps_Globals(void)
 	ti6.cbSize = sizeof(ti6);
 	ti6.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
 	ti6.uId = (UINT_PTR)Temp;
-	ti6.lpszText = (LPSTR) "Toggle Show Mesh Points";
+	ti6.lpszText = (LPSTR) "Toggle Mesh Points";
 	ti6.hwnd = App->MainHwnd;
 	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti6);
 
@@ -1012,7 +1013,7 @@ void CL64_TopDlg::Init_Bmps_Globals(void)
 	ti7.cbSize = sizeof(ti7);
 	ti7.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
 	ti7.uId = (UINT_PTR)Temp;
-	ti7.lpszText = (LPSTR) "Toggle Show Bones/Joints";
+	ti7.lpszText = (LPSTR) "Toggle Bones/Joints";
 	ti7.hwnd = App->MainHwnd;
 	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti7);
 
@@ -1021,7 +1022,7 @@ void CL64_TopDlg::Init_Bmps_Globals(void)
 	ti8.cbSize = sizeof(ti8);
 	ti8.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
 	ti8.uId = (UINT_PTR)Temp;
-	ti8.lpszText = (LPSTR) "Toggle Show Normals";
+	ti8.lpszText = (LPSTR) "Toggle Normals";
 	ti8.hwnd = App->MainHwnd;
 	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti8);
 
@@ -1030,8 +1031,65 @@ void CL64_TopDlg::Init_Bmps_Globals(void)
 	ti9.cbSize = sizeof(ti9);
 	ti9.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
 	ti9.uId = (UINT_PTR)Temp;
-	ti9.lpszText = (LPSTR) "Toggle Show Textures";
+	ti9.lpszText = (LPSTR) "Toggle Textures";
 	ti9.hwnd = App->MainHwnd;
 	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti9);
+
+	// ------------------------- Debug Panel
+
+	Temp = GetDlgItem(Debug_TB_hWnd, IDC_BT_TD_DEBUG_TESTCUBE);
+	TOOLINFO ti20 = { 0 };
+	ti20.cbSize = sizeof(ti20);
+	ti20.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti20.uId = (UINT_PTR)Temp;
+	ti20.lpszText = (LPSTR)"Toggle Test Mesh.\rCreated as the program starts";
+	ti20.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti20);
+
+	Temp = GetDlgItem(Debug_TB_hWnd, IDC_BT_TD_DEBUG_IMGUIFPS);
+	TOOLINFO ti21 = { 0 };
+	ti21.cbSize = sizeof(ti21);
+	ti21.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti21.uId = (UINT_PTR)Temp;
+	ti21.lpszText = (LPSTR)"Toggle Imgui FPS.\rImGui Version for FPS";
+	ti21.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti21);
+
+	Temp = GetDlgItem(Debug_TB_hWnd, IDC_BT_TD_DEBUG_TRAYSFPS);
+	TOOLINFO ti22 = { 0 };
+	ti22.cbSize = sizeof(ti22);
+	ti22.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti22.uId = (UINT_PTR)Temp;
+	ti22.lpszText = (LPSTR)"Toggle Trays FPS.\rOgre3D Version for FPS";
+	ti22.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti22);
+
+	Temp = GetDlgItem(Debug_TB_hWnd, IDC_BT_TD_DEBUG_PHYSICSDEBUG);
+	TOOLINFO ti23 = { 0 };
+	ti23.cbSize = sizeof(ti23);
+	ti23.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti23.uId = (UINT_PTR)Temp;
+	ti23.lpszText = (LPSTR)"Toggle Physics Debug.\rDebug Bullet Shows the Capsule outline of the player";
+	ti23.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti23);
+
+	Temp = GetDlgItem(Debug_TB_hWnd, IDC_BT_TD_DEBUG_IMGUIDEMO);
+	TOOLINFO ti24 = { 0 };
+	ti24.cbSize = sizeof(ti24);
+	ti24.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti24.uId = (UINT_PTR)Temp;
+	ti24.lpszText = (LPSTR)"Toggle Dear ImGui Demo";
+	ti24.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti24);
+
+	Temp = GetDlgItem(Debug_TB_hWnd, IDC_BT_TD_DEBUG_RESOURCES);
+	TOOLINFO ti25 = { 0 };
+	ti25.cbSize = sizeof(ti25);
+	ti25.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti25.uId = (UINT_PTR)Temp;
+	ti25.lpszText = (LPSTR)"Show Resource used by the App";
+	ti25.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti25);
+	
 }
 
