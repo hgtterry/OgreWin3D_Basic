@@ -818,6 +818,12 @@ LRESULT CALLBACK CL64_TopDlg::Camera_TB_Proc(HWND hDlg, UINT message, WPARAM wPa
 			return 1;
 		}
 		
+		if (LOWORD(wParam) == IDC_BT_CAMERA_SPEED1)
+		{
+			App->CL_Dialogs->Start_Speed_Camera_Dlg();
+			return 1;
+		}
+
 		if (LOWORD(wParam) == IDC_BT_CAMERA_CAMDATA)
 		{
 			if (App->CL_ImGui->Show_Camera_Data_F == 1)

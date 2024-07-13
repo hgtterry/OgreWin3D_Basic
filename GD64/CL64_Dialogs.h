@@ -33,6 +33,7 @@ public:
 	void Start_Import_Options_Dlg();
 	void PleaseWait();
 	void Show_YesNo_Dlg(char* Text, char* Text2);
+	void Start_Speed_Camera_Dlg();
 
 	bool Canceled;
 	bool Flag_Convert_to_Ogre;
@@ -44,10 +45,18 @@ private:
 	static LRESULT CALLBACK Import_Options_Dlg_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK PleaseWait_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK YesNo_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Speed_Camera_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+
+	void UnCheck_All_SpeedMouseOption();
 
 	char Message_Text[MAX_PATH];
 
 	char MessageString[MAX_PATH];	// Yes No Dialog
 	char MessageString2[MAX_PATH];	// Yes No Dialog
+
+	bool flag_Mouse_Normal;
+	bool flag_Mouse_Slow;
+	bool flag_Mouse_VerySlow;
+	bool flag_Mouse_Fast;
 };
 
