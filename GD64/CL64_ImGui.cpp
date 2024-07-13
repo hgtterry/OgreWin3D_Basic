@@ -257,7 +257,9 @@ void CL64_ImGui::Camera_Data_GUI(void)
 	}
 	else
 	{
-		auto windowWidth = ImGui::GetWindowSize().x;
+		ImVec2 Size = ImGui::GetWindowSize();
+
+		auto windowHeight = ImGui::GetWindowSize().y;
 		auto textWidth = ImGui::CalcTextSize("Camera Data").x;
 
 		float Yaw = App->CL_Ogre->Ogre3D_Listener->mCamNode->getOrientation().getYaw().valueDegrees();
@@ -269,20 +271,22 @@ void CL64_ImGui::Camera_Data_GUI(void)
 		float Z = App->CL_Ogre->Ogre3D_Listener->mCamNode->getPosition().z;
 
 		ImGui::Spacing();
-		ImGui::SetCursorPosX((windowWidth - textWidth) * 0.5f);
+		ImGui::SetCursorPosX((Size.x - textWidth) * 0.5f);
 		ImGui::TextColored(ImVec4(0,0,1,1),"Camera Data");
 		
 		textWidth = ImGui::CalcTextSize("Position").x;
-		ImGui::SetCursorPosX((windowWidth - textWidth) * 0.5f);
+		ImGui::SetCursorPosX((Size.x - textWidth) * 0.5f);
 		ImGui::Text("Position");
 		ImGui::Text("X: %f Y: %f Z: %f",X,Y,Z);
 
 		ImGui::Separator();
 
 		textWidth = ImGui::CalcTextSize("Rotation").x;
-		ImGui::SetCursorPosX((windowWidth - textWidth) * 0.5f);
+		ImGui::SetCursorPosX((Size.x - textWidth) * 0.5f);
 		ImGui::Text("Rotation");
 		ImGui::Text("X: %f Y: %f Z: %f", Yaw, Pitch, Roll);
+
+		Camera_Data_Posy = ((float)App->CL_Ogre->Ogre3D_Listener->View_Height) - (Size.y)-10;
 
 		ImGui::End();
 	}
@@ -376,7 +380,7 @@ void CL64_ImGui::Model_Data_GUI(void)
 		
 		ImVec2 Size = ImGui::GetWindowSize();
 		//Model_Data_PosX = ((float)App->CL_Ogre->OgreListener->View_Width / 2) - (Size.x / 2);
-		//Model_Data_PosY = ((float)App->CL_Ogre->OgreListener->View_Height / 2) - (Size.y / 2);;
+		//Model_Data_PosY = ((float)App->CL_Ogre->OgreListener->View_Height / 2) - (Size.y / 2);
 
 		ImGui::Separator();
 
