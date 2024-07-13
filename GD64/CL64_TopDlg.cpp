@@ -756,7 +756,17 @@ LRESULT CALLBACK CL64_TopDlg::Camera_TB_Proc(HWND hDlg, UINT message, WPARAM wPa
 		if (some_item->idFrom == IDC_BT_CAMERA_FIRST)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CL_TopDlg->flag_Toggle_Cam_FirstMode);
+
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_CAMERA_FIRST));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
+			else
+			{
+				App->Custom_Button_Toggle(item, App->CL_TopDlg->flag_Toggle_Cam_FirstMode);
+			}
+
 			return CDRF_DODEFAULT;
 		}
 
