@@ -959,7 +959,7 @@ void CL64_TopDlg::Init_Bmps_Globals(void)
 	ti1.cbSize = sizeof(ti1);
 	ti1.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
 	ti1.uId = (UINT_PTR)Temp;
-	ti1.lpszText = (LPSTR) "Toggle Main Cross Hair";
+	ti1.lpszText = (LPSTR) "Toggle Main Cross Hair.";
 	ti1.hwnd = App->MainHwnd;
 	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti1);
 
@@ -968,7 +968,7 @@ void CL64_TopDlg::Init_Bmps_Globals(void)
 	ti2.cbSize = sizeof(ti2);
 	ti2.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
 	ti2.uId = (UINT_PTR)Temp;
-	ti2.lpszText = (LPSTR) "Toggle Main Grid";
+	ti2.lpszText = (LPSTR) "Toggle Main Grid.";
 	ti2.hwnd = App->MainHwnd;
 	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti2);
 
@@ -977,7 +977,7 @@ void CL64_TopDlg::Init_Bmps_Globals(void)
 	ti3.cbSize = sizeof(ti3);
 	ti3.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
 	ti3.uId = (UINT_PTR)Temp;
-	ti3.lpszText = (LPSTR) "Toggle Mesh/Faces";
+	ti3.lpszText = (LPSTR) "Toggle Mesh/Faces.";
 	ti3.hwnd = App->MainHwnd;
 	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti3);
 
@@ -986,7 +986,7 @@ void CL64_TopDlg::Init_Bmps_Globals(void)
 	ti4.cbSize = sizeof(ti4);
 	ti4.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
 	ti4.uId = (UINT_PTR)Temp;
-	ti4.lpszText = (LPSTR) "Show Information";
+	ti4.lpszText = (LPSTR) "Show Information.";
 	ti4.hwnd = App->MainHwnd;
 	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti4);
 
@@ -995,7 +995,7 @@ void CL64_TopDlg::Init_Bmps_Globals(void)
 	ti5.cbSize = sizeof(ti5);
 	ti5.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
 	ti5.uId = (UINT_PTR)Temp;
-	ti5.lpszText = (LPSTR) "Toggle Bounding Box";
+	ti5.lpszText = (LPSTR) "Toggle Bounding Box.";
 	ti5.hwnd = App->MainHwnd;
 	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti5);
 
@@ -1004,7 +1004,7 @@ void CL64_TopDlg::Init_Bmps_Globals(void)
 	ti6.cbSize = sizeof(ti6);
 	ti6.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
 	ti6.uId = (UINT_PTR)Temp;
-	ti6.lpszText = (LPSTR) "Toggle Mesh Points";
+	ti6.lpszText = (LPSTR) "Toggle Mesh Points.";
 	ti6.hwnd = App->MainHwnd;
 	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti6);
 
@@ -1013,7 +1013,7 @@ void CL64_TopDlg::Init_Bmps_Globals(void)
 	ti7.cbSize = sizeof(ti7);
 	ti7.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
 	ti7.uId = (UINT_PTR)Temp;
-	ti7.lpszText = (LPSTR) "Toggle Bones/Joints";
+	ti7.lpszText = (LPSTR) "Toggle Bones/Joints.";
 	ti7.hwnd = App->MainHwnd;
 	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti7);
 
@@ -1022,7 +1022,7 @@ void CL64_TopDlg::Init_Bmps_Globals(void)
 	ti8.cbSize = sizeof(ti8);
 	ti8.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
 	ti8.uId = (UINT_PTR)Temp;
-	ti8.lpszText = (LPSTR) "Toggle Normals";
+	ti8.lpszText = (LPSTR) "Toggle Normals.";
 	ti8.hwnd = App->MainHwnd;
 	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti8);
 
@@ -1031,7 +1031,7 @@ void CL64_TopDlg::Init_Bmps_Globals(void)
 	ti9.cbSize = sizeof(ti9);
 	ti9.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
 	ti9.uId = (UINT_PTR)Temp;
-	ti9.lpszText = (LPSTR) "Toggle Textures";
+	ti9.lpszText = (LPSTR) "Toggle Textures.";
 	ti9.hwnd = App->MainHwnd;
 	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti9);
 
@@ -1042,7 +1042,7 @@ void CL64_TopDlg::Init_Bmps_Globals(void)
 	ti20.cbSize = sizeof(ti20);
 	ti20.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
 	ti20.uId = (UINT_PTR)Temp;
-	ti20.lpszText = (LPSTR)"Toggle Test Mesh.\rCreated as the program starts";
+	ti20.lpszText = (LPSTR)"Toggle Test Mesh.\rCreated as the program starts.";
 	ti20.hwnd = App->MainHwnd;
 	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti20);
 
@@ -1051,7 +1051,7 @@ void CL64_TopDlg::Init_Bmps_Globals(void)
 	ti21.cbSize = sizeof(ti21);
 	ti21.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
 	ti21.uId = (UINT_PTR)Temp;
-	ti21.lpszText = (LPSTR)"Toggle Imgui FPS.\rImGui Version for FPS";
+	ti21.lpszText = (LPSTR)"Toggle Imgui FPS.\rImGui Version for FPS.";
 	ti21.hwnd = App->MainHwnd;
 	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti21);
 
@@ -1060,7 +1060,7 @@ void CL64_TopDlg::Init_Bmps_Globals(void)
 	ti22.cbSize = sizeof(ti22);
 	ti22.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
 	ti22.uId = (UINT_PTR)Temp;
-	ti22.lpszText = (LPSTR)"Toggle Trays FPS.\rOgre3D Version for FPS";
+	ti22.lpszText = (LPSTR)"Toggle Trays FPS.\rOgre3D Version for FPS.";
 	ti22.hwnd = App->MainHwnd;
 	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti22);
 
@@ -1069,7 +1069,7 @@ void CL64_TopDlg::Init_Bmps_Globals(void)
 	ti23.cbSize = sizeof(ti23);
 	ti23.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
 	ti23.uId = (UINT_PTR)Temp;
-	ti23.lpszText = (LPSTR)"Toggle Physics Debug.\rDebug Bullet Shows the Capsule outline of the player";
+	ti23.lpszText = (LPSTR)"Toggle Physics Debug.\rDebug Bullet Shows the Capsule outline of the player.";
 	ti23.hwnd = App->MainHwnd;
 	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti23);
 
@@ -1078,7 +1078,7 @@ void CL64_TopDlg::Init_Bmps_Globals(void)
 	ti24.cbSize = sizeof(ti24);
 	ti24.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
 	ti24.uId = (UINT_PTR)Temp;
-	ti24.lpszText = (LPSTR)"Toggle Dear ImGui Demo";
+	ti24.lpszText = (LPSTR)"Toggle Dear ImGui Demo.";
 	ti24.hwnd = App->MainHwnd;
 	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti24);
 
@@ -1087,9 +1087,38 @@ void CL64_TopDlg::Init_Bmps_Globals(void)
 	ti25.cbSize = sizeof(ti25);
 	ti25.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
 	ti25.uId = (UINT_PTR)Temp;
-	ti25.lpszText = (LPSTR)"Show Resource used by the App";
+	ti25.lpszText = (LPSTR)"Show Resources used by the App.";
 	ti25.hwnd = App->MainHwnd;
 	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti25);
 	
+	// ------------------------- Camera Panel
+
+	Temp = GetDlgItem(Camera_TB_hWnd, IDC_BT_TD_DEBUG_RESETVIEW);
+	TOOLINFO ti30 = { 0 };
+	ti30.cbSize = sizeof(ti30);
+	ti30.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti30.uId = (UINT_PTR)Temp;
+	ti30.lpszText = (LPSTR)"Reset Camera\rResets Camera View Based on whats Loaded.";
+	ti30.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti30);
+
+	Temp = GetDlgItem(Camera_TB_hWnd, IDC_BT_CAMERA_MODEL);
+	TOOLINFO ti31 = { 0 };
+	ti31.cbSize = sizeof(ti31);
+	ti31.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti31.uId = (UINT_PTR)Temp;
+	ti31.lpszText = (LPSTR)"Sets the Camera into Model Mode.\rModel Mode is like a Model Editor View.";
+	ti31.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti31);
+
+	Temp = GetDlgItem(Camera_TB_hWnd, IDC_BT_CAMERA_FREE);
+	TOOLINFO ti32 = { 0 };
+	ti32.cbSize = sizeof(ti32);
+	ti32.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti32.uId = (UINT_PTR)Temp;
+	ti32.lpszText = (LPSTR)"Sets the Camera into Free Mode.\rFree Mode is like a Game where you can roam around freely there is no Physics so you can go through walls and things.";
+	ti32.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti32);
+
 }
 
