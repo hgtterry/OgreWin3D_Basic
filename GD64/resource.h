@@ -62,6 +62,7 @@
 #define IDC_BT_APPRESOURCES             1007
 #define IDC_BT_TD_DEBUG_TRAYSFPS        1007
 #define IDC_BTSHOWTEXTURES              1007
+#define IDC_BT_CAMERA_CAMDATA           1007
 #define IDC_BUTTON2                     1008
 #define IDC_BT_TBH_CAMERA               1008
 #define IDC_BT_DEMORESOURCES            1008

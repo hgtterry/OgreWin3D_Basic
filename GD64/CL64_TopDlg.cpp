@@ -722,6 +722,7 @@ LRESULT CALLBACK CL64_TopDlg::Camera_TB_Proc(HWND hDlg, UINT message, WPARAM wPa
 		SendDlgItemMessage(hDlg, IDC_BT_CAMERA_MODEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_CAMERA_FREE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_TD_DEBUG_RESETVIEW, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_CAMERA_CAMDATA, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
 		return TRUE;
 	}
@@ -749,6 +750,13 @@ LRESULT CALLBACK CL64_TopDlg::Camera_TB_Proc(HWND hDlg, UINT message, WPARAM wPa
 			return CDRF_DODEFAULT;
 		}
 
+		if (some_item->idFrom == IDC_BT_CAMERA_CAMDATA)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->CL_ImGui->Show_Camera_Data_F);
+			return CDRF_DODEFAULT;
+		}
+		
 		if (some_item->idFrom == IDC_BT_TD_DEBUG_RESETVIEW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
@@ -793,6 +801,20 @@ LRESULT CALLBACK CL64_TopDlg::Camera_TB_Proc(HWND hDlg, UINT message, WPARAM wPa
 			return 1;
 		}
 		
+		if (LOWORD(wParam) == IDC_BT_CAMERA_CAMDATA)
+		{
+			if (App->CL_ImGui->Show_Camera_Data_F == 1)
+			{
+				App->CL_ImGui->Show_Camera_Data_F = 0;
+			}
+			else
+			{
+				App->CL_ImGui->Show_Camera_Data_F = 1;
+			}
+
+			return 1;
+		}
+
 		return FALSE;
 	}
 

@@ -30,7 +30,7 @@ CL64_ImGui::CL64_ImGui(void)
 	Imgui_Initialized = 0;
 
 	Camera_Data_PosX = 10;
-	Camera_Data_Posy = 10;
+	Camera_Data_Posy = 100;
 
 	StartPos = 0;
 	Show_FPS = 1;
@@ -257,25 +257,32 @@ void CL64_ImGui::Camera_Data_GUI(void)
 	}
 	else
 	{
+		auto windowWidth = ImGui::GetWindowSize().x;
+		auto textWidth = ImGui::CalcTextSize("Camera Data").x;
+
+		float Yaw = App->CL_Ogre->Ogre3D_Listener->mCamNode->getOrientation().getYaw().valueDegrees();
+		float Pitch = App->CL_Ogre->Ogre3D_Listener->mCamNode->getOrientation().getPitch().valueDegrees();
+		float Roll = App->CL_Ogre->Ogre3D_Listener->mCamNode->getOrientation().getRoll().valueDegrees();
+
+		float X = App->CL_Ogre->Ogre3D_Listener->mCamNode->getPosition().x;
+		float Y = App->CL_Ogre->Ogre3D_Listener->mCamNode->getPosition().y;
+		float Z = App->CL_Ogre->Ogre3D_Listener->mCamNode->getPosition().z;
+
 		ImGui::Spacing();
-		ImGui::Text("Camera Data");
-		ImGui::Text("  ");
-		ImGui::Text("Rotation");
-		ImGui::Text("Yaw: %f", App->CL_Ogre->Ogre3D_Listener->mCamNode->getOrientation().getYaw().valueDegrees());
-		ImGui::Text("Pitch: %f", App->CL_Ogre->Ogre3D_Listener->mCamNode->getOrientation().getPitch().valueDegrees());
-		ImGui::Text("Roll: %f", App->CL_Ogre->Ogre3D_Listener->mCamNode->getOrientation().getRoll().valueDegrees());
-		ImGui::Text("  ");
+		ImGui::SetCursorPosX((windowWidth - textWidth) * 0.5f);
+		ImGui::TextColored(ImVec4(0,0,1,1),"Camera Data");
+		
+		textWidth = ImGui::CalcTextSize("Position").x;
+		ImGui::SetCursorPosX((windowWidth - textWidth) * 0.5f);
 		ImGui::Text("Position");
-		ImGui::Text("X: %f", App->CL_Ogre->Ogre3D_Listener->mCamNode->getPosition().x);
-		ImGui::Text("Y: %f", App->CL_Ogre->Ogre3D_Listener->mCamNode->getPosition().y);
-		ImGui::Text("Z: %f", App->CL_Ogre->Ogre3D_Listener->mCamNode->getPosition().z);
+		ImGui::Text("X: %f Y: %f Z: %f",X,Y,Z);
+
 		ImGui::Separator();
 
-		if (ImGui::Button("Close"))
-		{
-			Show_Camera_Data_F = 0;
-			//Close_BB_Data();
-		}
+		textWidth = ImGui::CalcTextSize("Rotation").x;
+		ImGui::SetCursorPosX((windowWidth - textWidth) * 0.5f);
+		ImGui::Text("Rotation");
+		ImGui::Text("X: %f Y: %f Z: %f", Yaw, Pitch, Roll);
 
 		ImGui::End();
 	}
