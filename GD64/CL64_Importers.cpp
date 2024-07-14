@@ -43,7 +43,7 @@ bool CL64_Importers::Assimp_Loader(bool UseDialog,const char* Extension, const c
 		}
 	}
 
-	App->CL_Scene->Clear_Model_And_Reset();
+	App->CL_Scene->Clear_Scene_And_Reset();
 
 	char Model_Path_And_File[MAX_PATH];
 	strcpy(Model_Path_And_File, App->CL_File_IO->Get_Model_Path_File_Name().c_str());
@@ -115,7 +115,7 @@ void CL64_Importers::Load_Ogre_Model(bool Use_File_Dialog)
 		}
 	}
 
-	App->CL_Scene->Clear_Model_And_Reset();
+	App->CL_Scene->Clear_Scene_And_Reset();
 
 	char Model_Path_And_File[MAX_PATH];
 	strcpy(Model_Path_And_File, App->CL_File_IO->Get_Model_Path_File_Name().c_str());

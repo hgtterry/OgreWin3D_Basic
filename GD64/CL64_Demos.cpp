@@ -38,7 +38,7 @@ CL64_Demos::~CL64_Demos(void)
 // *************************************************************************
 void CL64_Demos::Start_Demo_1(void)
 {
-	App->CL_Scene->Clear_Model_And_Reset();
+	App->CL_Scene->Clear_Scene_And_Reset();
 
 	App->CL_Grid->Grid_SetVisible(false);
 	App->CL_Grid->ShowGridFlag = false;
@@ -96,7 +96,7 @@ void CL64_Demos::Start_Demo_1(void)
 // *************************************************************************
 void CL64_Demos::Start_Demo_2(void)
 {
-	App->CL_Scene->Clear_Model_And_Reset();
+	App->CL_Scene->Clear_Scene_And_Reset();
 
 	App->CL_Grid->Grid_SetVisible(false);
 	App->CL_Grid->ShowGridFlag = false;

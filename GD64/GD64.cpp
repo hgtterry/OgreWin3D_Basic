@@ -293,7 +293,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 			if (App->CL_Dialogs->Canceled == 0)
 			{
-				App->CL_Scene->Clear_Model_And_Reset();
+				App->CL_Scene->Clear_Scene_And_Reset();
 			}
 
 			return TRUE;

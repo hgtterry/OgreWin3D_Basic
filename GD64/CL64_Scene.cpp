@@ -125,23 +125,9 @@ void CL64_Scene::Reset_Class(void)
 }
 
 // *************************************************************************
-// *		Create_Mesh_Group:- Terry and Hazel Flanigan 2024		 	   *
+// *		Clear_Scene_And_Reset:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
-void CL64_Scene::Create_Mesh_Group(int Index)
-{
-	if (Group[Index] != nullptr)
-	{
-		delete Group[Index];
-		Group[Index] = nullptr;
-	}
-
-	App->CL_Scene->Group[Index] = new Base_Group();
-}
-
-// *************************************************************************
-// *			Clear Model:- Terry and Hazel Flanigan 2024				   *
-// *************************************************************************
-void CL64_Scene::Clear_Model_And_Reset(void)
+void CL64_Scene::Clear_Scene_And_Reset(void)
 {
 	// Clear any Mesh Data
 	Reset_Class(); // Reset this Class
@@ -159,9 +145,30 @@ void CL64_Scene::Clear_Model_And_Reset(void)
 
 		S_OgreMeshData[0] = new OgreMeshData_Type;
 	}
-	
 
 	SetWindowText(App->MainHwnd, "OgreWin3D_Basic");
+}
+
+// *************************************************************************
+// *			Set_Scene:- Terry and Hazel Flanigan 2024				   *
+// *************************************************************************
+void CL64_Scene::Set_Scene(void)
+{
+	
+}
+
+// *************************************************************************
+// *		Create_Mesh_Group:- Terry and Hazel Flanigan 2024		 	   *
+// *************************************************************************
+void CL64_Scene::Create_Mesh_Group(int Index)
+{
+	if (Group[Index] != nullptr)
+	{
+		delete Group[Index];
+		Group[Index] = nullptr;
+	}
+
+	App->CL_Scene->Group[Index] = new Base_Group();
 }
 
 // *************************************************************************
