@@ -71,8 +71,8 @@ public:
 	void Main_Entity_Set_Default(void);
 	void Set_BondingBox_Model(bool Create);
 
-	Ogre::Entity* Main_Ent;
-	Ogre::SceneNode* Main_Node;
+	Ogre::Entity* Imported_Ogre_Ent;
+	Ogre::SceneNode* Imported_Ogre_Node;
 
 	Base_Group* Group[100];
 	AABB_Type* S_BoundingBox[1];

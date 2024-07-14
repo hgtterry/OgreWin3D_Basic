@@ -931,15 +931,15 @@ void CL64_Resources::Load_OgreCFG_Resources(const Ogre::String& file)
 
 	std::vector<Ogre::String> materialNames;
 
-	if (App->CL_Scene->Main_Node)
+	if (App->CL_Scene->Imported_Ogre_Node)
 	{
 		App->CL_Ogre->Ogre3D_Listener->Ogre_Model_Loaded = 0;
 
-		App->CL_Scene->Main_Node->detachAllObjects();
-		App->CL_Ogre->mSceneMgr->destroySceneNode(App->CL_Scene->Main_Node);
-		App->CL_Ogre->mSceneMgr->destroyEntity(App->CL_Scene->Main_Ent);
-		App->CL_Scene->Main_Ent = nullptr;
-		App->CL_Scene->Main_Node = nullptr;
+		App->CL_Scene->Imported_Ogre_Node->detachAllObjects();
+		App->CL_Ogre->mSceneMgr->destroySceneNode(App->CL_Scene->Imported_Ogre_Node);
+		App->CL_Ogre->mSceneMgr->destroyEntity(App->CL_Scene->Imported_Ogre_Ent);
+		App->CL_Scene->Imported_Ogre_Ent = nullptr;
+		App->CL_Scene->Imported_Ogre_Node = nullptr;
 
 		UnloadUserResources();
 

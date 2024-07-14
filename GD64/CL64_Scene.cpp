@@ -61,8 +61,8 @@ CL64_Scene::CL64_Scene(void)
 		Count++;
 	}
 	
-	Main_Ent = nullptr;
-	Main_Node = nullptr;
+	Imported_Ogre_Ent = nullptr;
+	Imported_Ogre_Node = nullptr;
 
 	B_Player.reserve(20);
 }
@@ -186,13 +186,13 @@ void CL64_Scene::Create_Mesh_Group(int Index)
 // *************************************************************************
 void CL64_Scene::Reset_Main_Entity(void)
 {
-	if (Main_Ent && Main_Node)
+	if (Imported_Ogre_Ent && Imported_Ogre_Node)
 	{
-		Main_Node->detachAllObjects();
-		App->CL_Ogre->mSceneMgr->destroySceneNode(App->CL_Scene->Main_Node);
-		App->CL_Ogre->mSceneMgr->destroyEntity(App->CL_Scene->Main_Ent);
-		Main_Ent = nullptr;
-		Main_Node = nullptr;
+		Imported_Ogre_Node->detachAllObjects();
+		App->CL_Ogre->mSceneMgr->destroySceneNode(App->CL_Scene->Imported_Ogre_Node);
+		App->CL_Ogre->mSceneMgr->destroyEntity(App->CL_Scene->Imported_Ogre_Ent);
+		Imported_Ogre_Ent = nullptr;
+		Imported_Ogre_Node = nullptr;
 	}
 
 	App->CL_Ogre->Ogre3D_Listener->Ogre_Model_Loaded = 0;
@@ -203,14 +203,14 @@ void CL64_Scene::Reset_Main_Entity(void)
 // *************************************************************************
 void CL64_Scene::Main_Entity_Set_Default(void)
 {
-	Main_Ent = App->CL_Ogre->mSceneMgr->createEntity("UserMesh", App->CL_Scene->FileName, App->CL_Importers->Ogre_Loader_Resource_Group);
-	Main_Node = App->CL_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
-	Main_Node->attachObject(App->CL_Scene->Main_Ent);
+	Imported_Ogre_Ent = App->CL_Ogre->mSceneMgr->createEntity("Imported_Entity", App->CL_Scene->FileName, App->CL_Importers->Ogre_Loader_Resource_Group);
+	Imported_Ogre_Node = App->CL_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	Imported_Ogre_Node->attachObject(App->CL_Scene->Imported_Ogre_Ent);
 
-	Main_Node->setVisible(true);
-	Main_Node->setOrientation(Ogre::Quaternion::IDENTITY);
-	Main_Node->setPosition(0, 0, 0);
-	Main_Node->setScale(1, 1, 1);
+	Imported_Ogre_Node->setVisible(true);
+	Imported_Ogre_Node->setOrientation(Ogre::Quaternion::IDENTITY);
+	Imported_Ogre_Node->setPosition(0, 0, 0);
+	Imported_Ogre_Node->setScale(1, 1, 1);
 }
 
 // *************************************************************************
@@ -218,16 +218,16 @@ void CL64_Scene::Main_Entity_Set_Default(void)
 // *************************************************************************
 void CL64_Scene::Show_Main_Entity(bool Show)
 {
-	if (Main_Node)
+	if (Imported_Ogre_Node)
 	{
 		if (Show == 1)
 		{
-			Main_Node->setVisible(true);
+			Imported_Ogre_Node->setVisible(true);
 			flag_Show_Main_Entity = 1;
 		}
 		else
 		{
-			Main_Node->setVisible(false);
+			Imported_Ogre_Node->setVisible(false);
 			flag_Show_Main_Entity = 0;
 		}
 	}

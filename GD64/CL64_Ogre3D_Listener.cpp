@@ -250,7 +250,7 @@ bool CL64_Ogre3D_Listener::Capture_LeftMouse_Model(void)
 
 			if (Ogre_Model_Loaded == 1)
 			{
-				App->CL_Scene->Main_Node->yaw(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
+				App->CL_Scene->Imported_Ogre_Node->yaw(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
 			}
 
 			SetCursorPos(App->CursorPosX, App->CursorPosY);
@@ -274,7 +274,7 @@ bool CL64_Ogre3D_Listener::Capture_LeftMouse_Model(void)
 
 			if (Ogre_Model_Loaded == 1)
 			{
-				App->CL_Scene->Main_Node->yaw(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
+				App->CL_Scene->Imported_Ogre_Node->yaw(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
 			}
 
 			SetCursorPos(App->CursorPosX, App->CursorPosY);
@@ -300,7 +300,7 @@ bool CL64_Ogre3D_Listener::Capture_LeftMouse_Model(void)
 
 			if (Ogre_Model_Loaded == 1)
 			{
-				App->CL_Scene->Main_Node->pitch(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
+				App->CL_Scene->Imported_Ogre_Node->pitch(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
 			}
 
 			SetCursorPos(App->CursorPosX, App->CursorPosY);
@@ -324,7 +324,7 @@ bool CL64_Ogre3D_Listener::Capture_LeftMouse_Model(void)
 
 			if (Ogre_Model_Loaded == 1)
 			{
-				App->CL_Scene->Main_Node->pitch(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
+				App->CL_Scene->Imported_Ogre_Node->pitch(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
 			}
 
 			SetCursorPos(App->CursorPosX, App->CursorPosY);
