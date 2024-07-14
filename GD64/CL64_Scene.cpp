@@ -29,6 +29,7 @@ CL64_Scene::CL64_Scene(void)
 
 	flag_Model_Loaded = 0;
 	flag_Player_Added = 0;
+	flag_Show_Main_Entity = 0;
 
 	// Ogre
 	Ogre_Face_Count = 0;
@@ -193,6 +194,26 @@ void CL64_Scene::Main_Entity_Set_Default(void)
 	Main_Node->setOrientation(Ogre::Quaternion::IDENTITY);
 	Main_Node->setPosition(0, 0, 0);
 	Main_Node->setScale(1, 1, 1);
+}
+
+// *************************************************************************
+// *			Show_Main_Entity:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+void CL64_Scene::Show_Main_Entity(bool Show)
+{
+	if (App->CL_Ogre->flag_TestMesh_Deleted == 0)
+	{
+		if (Show == 1)
+		{
+			Main_Node->setVisible(true);
+			flag_Show_Main_Entity = 1;
+		}
+		else
+		{
+			Main_Node->setVisible(false);
+			flag_Show_Main_Entity = 0;
+		}
+	}
 }
 
 // *************************************************************************
