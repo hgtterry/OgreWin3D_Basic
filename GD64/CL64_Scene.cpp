@@ -152,7 +152,7 @@ void CL64_Scene::Clear_Scene_And_Reset(void)
 // *************************************************************************
 // *			Set_Scene:- Terry and Hazel Flanigan 2024				   *
 // *************************************************************************
-void CL64_Scene::Set_Scene(void)
+void CL64_Scene::Set_Scene(int Mode)
 {
 	
 }

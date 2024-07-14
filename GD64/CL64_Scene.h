@@ -62,7 +62,7 @@ public:
 	~CL64_Scene(void);
 
 	void Reset_Class(void);
-	void Set_Scene(void);
+	void Set_Scene(int Mode);
 	void Create_Mesh_Group(int Index);
 	void Clear_Scene_And_Reset(void);
 	void Set_Paths(void);

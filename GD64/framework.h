@@ -63,7 +63,7 @@ namespace Enums
 	{
 		Scene_Mode_None = 0,		// No Scene Mode Set
 		Scene_Mode_TestMesh = 2,	// Test Mesh at startup
-		Scene_Mode_ExtMesh = 3,
+		Scene_Mode_Imported_Entity = 3,
 		Scene_Mode_MeshData = 4
 	};
 
