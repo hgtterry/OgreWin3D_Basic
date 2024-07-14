@@ -216,7 +216,6 @@ LRESULT CALLBACK CL64_TopDlg::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam
 
 			if (App->CL_Scene->Scene_Mode == Enums::Scene_Mode_TestMesh)
 			{
-
 				if (App->CL_Ogre->flag_Show_Test_Mesh == 1)
 				{
 					App->CL_Ogre->Show_Test_Mesh(false);
@@ -227,6 +226,13 @@ LRESULT CALLBACK CL64_TopDlg::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam
 					App->CL_Ogre->Show_Test_Mesh(true);
 					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_TexturesOn_Bmp);
 				}
+
+				return TRUE;
+			}
+
+			if (App->CL_Scene->Scene_Mode == Enums::Scene_Mode_ExtMesh)
+			{
+				App->CL_Ogre->OGL_Listener->Flag_ShowTextured = 0;
 
 				return TRUE;
 			}

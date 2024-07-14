@@ -160,6 +160,8 @@ void CL64_Importers::Load_Ogre_Model(bool Use_File_Dialog)
 	
 	App->CL_Converters->Ogre_To_Mesh_Data(App->CL_Scene->Main_Ent);
 	
+	App->CL_Scene->Scene_Mode = Enums::Scene_Mode_ExtMesh;
+	App->CL_Ogre->OGL_Listener->Flag_ShowTextured = 0;
 
 	App->CL_Scene->flag_Model_Loaded = 1;
 
