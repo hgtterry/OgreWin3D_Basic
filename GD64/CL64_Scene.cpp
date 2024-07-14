@@ -154,7 +154,17 @@ void CL64_Scene::Clear_Scene_And_Reset(void)
 // *************************************************************************
 void CL64_Scene::Set_Scene(int Mode)
 {
-	
+	if (Mode == Enums::Scene_Mode_Imported_Entity)
+	{
+		App->CL_Scene->Scene_Mode = Enums::Scene_Mode_Imported_Entity;
+
+		App->CL_Ogre->Ogre3D_Listener->Ogre_Model_Loaded = 1;
+
+		App->CL_Ogre->OGL_Listener->Flag_ShowTextured = 0;
+		App->CL_Scene->flag_Show_Main_Entity = 1;
+
+		return;
+	}
 }
 
 // *************************************************************************
@@ -208,7 +218,7 @@ void CL64_Scene::Main_Entity_Set_Default(void)
 // *************************************************************************
 void CL64_Scene::Show_Main_Entity(bool Show)
 {
-	if (App->CL_Ogre->flag_TestMesh_Deleted == 0)
+	if (Main_Node)
 	{
 		if (Show == 1)
 		{

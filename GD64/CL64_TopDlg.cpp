@@ -234,6 +234,17 @@ LRESULT CALLBACK CL64_TopDlg::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam
 			{
 				App->CL_Ogre->OGL_Listener->Flag_ShowTextured = 0;
 
+				if (App->CL_Scene->flag_Show_Main_Entity == 1)
+				{
+					App->CL_Scene->Show_Main_Entity(false);
+					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_TexturesOff_Bmp);
+				}
+				else
+				{
+					App->CL_Scene->Show_Main_Entity(true);
+					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_TexturesOn_Bmp);
+				}
+
 				return TRUE;
 			}
 

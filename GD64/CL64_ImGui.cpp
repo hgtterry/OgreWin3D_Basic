@@ -484,9 +484,11 @@ void CL64_ImGui::App_Debug(void)
 
 		}
 
-		ImGui::Text("Debug Textures:- %i", App->flag_Debug_Textures);
-		ImGui::Text("TestMesh_Deleted:- %i", App->CL_Ogre->flag_TestMesh_Deleted);
-
+		ImGui::Text("Debug Textures: %i", App->flag_Debug_Textures);
+		ImGui::Text("TestMesh_Deleted: %i", App->CL_Ogre->flag_TestMesh_Deleted);
+		ImGui::Text("Ogre_Model_Loaded: %i", App->CL_Ogre->Ogre3D_Listener->Ogre_Model_Loaded);
+		ImGui::Text("Ogre_Resources_Loaded: %i", App->CL_Resources->Ogre_ExternalResourceLoaded);
+		
 		if (ImGui::Button("Close"))
 		{
 			flag_Show_App_Debug = 0;
