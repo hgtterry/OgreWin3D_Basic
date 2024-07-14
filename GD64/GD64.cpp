@@ -185,6 +185,17 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		switch (wmId)
 		{
 		// Debug -------------------------------------------------------
+		case ID_DEBUG_GENERAL:
+		{
+			int fps = 120;
+			float test = static_cast<float>(1) / fps;
+
+			test = test * 1000000;
+
+			App->CL_Ogre->FPSLock = (int)test;
+			return TRUE;
+		}
+		
 		case ID_DEBUG_APP:
 		{
 			if (App->CL_ImGui->flag_Show_App_Debug == 1)
