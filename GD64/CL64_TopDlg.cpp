@@ -1159,5 +1159,32 @@ void CL64_TopDlg::Init_Bmps_Globals(void)
 	ti32.hwnd = App->MainHwnd;
 	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti32);
 
+	Temp = GetDlgItem(Camera_TB_hWnd, IDC_BT_CAMERA_FIRST);
+	TOOLINFO ti33 = { 0 };
+	ti33.cbSize = sizeof(ti33);
+	ti33.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti33.uId = (UINT_PTR)Temp;
+	ti33.lpszText = (LPSTR)"Sets the Camera into 1st Viewer Mode.\r1st Viewer Mode sets the camera as the Player and folows the Physics Player.";
+	ti33.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti33);
+	//
+	Temp = GetDlgItem(Camera_TB_hWnd, IDC_BT_CAMERA_SPEED1);
+	TOOLINFO ti34 = { 0 };
+	ti34.cbSize = sizeof(ti34);
+	ti34.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti34.uId = (UINT_PTR)Temp;
+	ti34.lpszText = (LPSTR)"Speed Options.\r.";
+	ti34.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti34);
+
+	Temp = GetDlgItem(Camera_TB_hWnd, IDC_BT_CAMERA_CAMDATA);
+	TOOLINFO ti35 = { 0 };
+	ti35.cbSize = sizeof(ti35);
+	ti35.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti35.uId = (UINT_PTR)Temp;
+	ti35.lpszText = (LPSTR)"Shows Camera Data.\rPosition and Rotation.";
+	ti35.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti35);
+
 }
 
