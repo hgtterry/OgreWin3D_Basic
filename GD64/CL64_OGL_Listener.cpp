@@ -536,8 +536,10 @@ void CL64_OGL_Listener::MeshData_Render_BoundingBox(void)
 	float m_yMax = App->CL_Scene->S_BoundingBox[0]->BB_Max[0].y;
 	float m_zMax = App->CL_Scene->S_BoundingBox[0]->BB_Max[0].z;
 
+	glLineWidth(2);
+
 	glDisable(GL_TEXTURE_2D);
-	glColor3f(1.0f, 0.0f, 0.0f);
+	glColor3f(0.0f, 1.0f, 0.0f);
 	glBegin(GL_LINES);
 
 	glVertex3f(m_xMin, m_yMin, m_zMin);

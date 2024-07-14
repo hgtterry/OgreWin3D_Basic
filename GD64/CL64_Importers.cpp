@@ -36,7 +36,16 @@ bool CL64_Importers::Assimp_Loader(bool UseDialog,const char* Extension, const c
 {
 	if (UseDialog == 1)
 	{
-		int Result = App->CL_File_IO->Open_File_Model(Extension, Extension2, NULL);
+		char Start_Directory[MAX_PATH];
+		strcpy(Start_Directory, "");
+
+		if (App->CL_Preferences->Use_Default_Directorys == 1)
+		{
+			strcpy(Start_Directory, App->GD_Directory_FullPath);
+			strcat(Start_Directory, "\\Models\\Wavefront_Obj_Models");
+		}
+
+		int Result = App->CL_File_IO->Open_File_Model(Extension, Extension2, Start_Directory);
 		if (Result == 0)
 		{
 			return 0;
@@ -108,7 +117,16 @@ void CL64_Importers::Load_Ogre_Model(bool Use_File_Dialog)
 {
 	if (Use_File_Dialog == 1)
 	{
-		int Result = App->CL_File_IO->Open_File_Model("Ogre3D   *.mesh\0*.mesh\0", "Ogre3D", NULL);
+		char Start_Directory[MAX_PATH];
+		strcpy(Start_Directory,"");
+
+		if (App->CL_Preferences->Use_Default_Directorys == 1)
+		{
+			strcpy(Start_Directory, App->GD_Directory_FullPath);
+			strcat(Start_Directory, "\\Models\\Ogre3D_Models");
+		}
+
+		int Result = App->CL_File_IO->Open_File_Model("Ogre3D   *.mesh\0*.mesh\0", "Ogre3D", Start_Directory);
 		if (Result == 0)
 		{
 			return;

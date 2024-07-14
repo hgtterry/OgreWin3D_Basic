@@ -37,6 +37,7 @@ public:
 
 	bool Start_FullScreen;
 	bool Start_Full_3DWin;
+	bool Use_Default_Directorys;
 
 private:
 

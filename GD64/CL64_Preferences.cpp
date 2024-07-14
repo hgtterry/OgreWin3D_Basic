@@ -30,6 +30,7 @@ CL64_Preferences::CL64_Preferences(void)
 {
 	Start_FullScreen = 0;
 	Start_Full_3DWin = 0;
+	Use_Default_Directorys = 1;
 
 	WriteData = nullptr;
 }
@@ -71,7 +72,9 @@ LRESULT CALLBACK CL64_Preferences::Preferences_Dlg_Proc(HWND hDlg, UINT message,
 		SendDlgItemMessage(hDlg, IDC_CK_SU_FULL3DVIEW, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_CK_SU_FULLSCREEN, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
-		
+		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
 		// Start in Full Screen App
 		if (App->CL_Preferences->Start_FullScreen == 1)
 		{
@@ -126,7 +129,6 @@ LRESULT CALLBACK CL64_Preferences::Preferences_Dlg_Proc(HWND hDlg, UINT message,
 			return (UINT)App->AppBackground;
 		}
 
-
 		return FALSE;
 	}
 
@@ -138,6 +140,20 @@ LRESULT CALLBACK CL64_Preferences::Preferences_Dlg_Proc(HWND hDlg, UINT message,
 	case WM_NOTIFY:
 	{
 		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		if (some_item->idFrom == IDOK)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDCANCEL)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
 
 		return CDRF_DODEFAULT;
 	}
@@ -210,11 +226,8 @@ void CL64_Preferences::Read_Preferences()
 	char Preferences_Path[MAX_PATH];
 
 	strcpy(Preferences_Path, App->GD_Directory_FullPath);
-	strcat(Preferences_Path, "\\");
-	strcat(Preferences_Path, "Data");
-	strcat(Preferences_Path, "\\");
-	strcat(Preferences_Path, "Preferences.ini");
-
+	strcat(Preferences_Path, "\\Data\\Preferences.ini");
+	
 	App->CL_Ini_File->SetPathName(Preferences_Path);
 
 	Start_FullScreen = App->CL_Ini_File->GetInt("Startup", "Full_Screen", 0, 10);
