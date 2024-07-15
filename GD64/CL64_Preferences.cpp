@@ -271,7 +271,7 @@ void CL64_Preferences::Read_Preferences()
 
 	Start_FullScreen = App->CL_Ini_File->GetInt("Startup", "Full_Screen", 0, 10);
 	Start_Full_3DWin = App->CL_Ini_File->GetInt("Startup", "Full_3DWin", 0, 10);
-
+	Use_Default_Directories = App->CL_Ini_File->GetInt("Startup", "Default_Directories", 0, 10);
 }
 
 // *************************************************************************
@@ -284,13 +284,8 @@ bool CL64_Preferences::Write_Preferences()
 	char Preferences_Path[MAX_PATH];
 
 	strcpy(Preferences_Path, App->GD_Directory_FullPath);
-	strcat(Preferences_Path, "\\");
-	strcat(Preferences_Path, "Data");
-	strcat(Preferences_Path, "\\");
-	strcat(Preferences_Path, "Preferences.ini");
-
-	//App->Say(Preferences_Path);
-
+	strcat(Preferences_Path, "\\Data\\Preferences.ini");
+	
 	WriteData = fopen(Preferences_Path, "wt");
 	if (!WriteData)
 	{
