@@ -30,7 +30,7 @@ CL64_Preferences::CL64_Preferences(void)
 {
 	Start_FullScreen = 0;
 	Start_Full_3DWin = 0;
-	Use_Default_Directorys = 1;
+	Use_Default_Directories = 1;
 
 	WriteData = nullptr;
 }
@@ -71,6 +71,7 @@ LRESULT CALLBACK CL64_Preferences::Preferences_Dlg_Proc(HWND hDlg, UINT message,
 
 		SendDlgItemMessage(hDlg, IDC_CK_SU_FULL3DVIEW, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_CK_SU_FULLSCREEN, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_CK_SU_DIRECTORIES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
@@ -99,6 +100,17 @@ LRESULT CALLBACK CL64_Preferences::Preferences_Dlg_Proc(HWND hDlg, UINT message,
 			SendMessage(temp, BM_SETCHECK, 0, 0);
 		}
 
+		// Start in Full 3D Screen
+		if (App->CL_Preferences->Use_Default_Directories == 1)
+		{
+			HWND temp = GetDlgItem(hDlg, IDC_CK_SU_DIRECTORIES);
+			SendMessage(temp, BM_SETCHECK, 1, 0);
+		}
+		else
+		{
+			HWND temp = GetDlgItem(hDlg, IDC_CK_SU_DIRECTORIES);
+			SendMessage(temp, BM_SETCHECK, 0, 0);
+		}
 
 		return TRUE;
 
@@ -114,6 +126,14 @@ LRESULT CALLBACK CL64_Preferences::Preferences_Dlg_Proc(HWND hDlg, UINT message,
 		}
 
 		if (GetDlgItem(hDlg, IDC_CK_SU_FULL3DVIEW) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+		
+		if (GetDlgItem(hDlg, IDC_CK_SU_DIRECTORIES) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 255, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
@@ -198,6 +218,25 @@ LRESULT CALLBACK CL64_Preferences::Preferences_Dlg_Proc(HWND hDlg, UINT message,
 			return TRUE;
 		}
 
+		if (LOWORD(wParam) == IDC_CK_SU_DIRECTORIES)
+		{
+			HWND temp = GetDlgItem(hDlg, IDC_CK_SU_DIRECTORIES);
+
+			int test = SendMessage(temp, BM_GETCHECK, 0, 0);
+			if (test == BST_CHECKED)
+			{
+				App->CL_Preferences->Use_Default_Directories = 1;
+				return 1;
+			}
+			else
+			{
+				App->CL_Preferences->Use_Default_Directories = 0;
+				return 1;
+			}
+
+			return TRUE;
+		}
+		
 		if (LOWORD(wParam) == IDOK)
 		{
 			App->CL_Preferences->Write_Preferences();
@@ -262,6 +301,7 @@ bool CL64_Preferences::Write_Preferences()
 	fprintf(WriteData, "%s\n", "[Startup]");
 	fprintf(WriteData, "%s%i\n", "Full_Screen=", Start_FullScreen);
 	fprintf(WriteData, "%s%i\n", "Full_3DWin=", Start_Full_3DWin);
+	fprintf(WriteData, "%s%i\n", "Default_Directories=", Use_Default_Directories);
 
 	fclose(WriteData);
 

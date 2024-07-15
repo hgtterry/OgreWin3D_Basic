@@ -108,6 +108,8 @@
 #define IDC_STTEXT_YN                   1028
 #define IDC_BT_CAMERA_SPEED1            1029
 #define IDC_STBANNER                    1030
+#define IDC_CHECK1                      1031
+#define IDC_CK_SU_DIRECTORIES           1031
 #define ID_VIEW_RESET                   32771
 #define ID_VIEW_MAX3DVIEW               32772
 #define ID_DEBUG_TESTPREFERANCE         32773
@@ -142,7 +144,7 @@
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        163
 #define _APS_NEXT_COMMAND_VALUE         32796
-#define _APS_NEXT_CONTROL_VALUE         1031
+#define _APS_NEXT_CONTROL_VALUE         1032
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif

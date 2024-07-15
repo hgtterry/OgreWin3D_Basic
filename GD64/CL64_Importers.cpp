@@ -39,7 +39,7 @@ bool CL64_Importers::Assimp_Loader(bool UseDialog,const char* Extension, const c
 		char Start_Directory[MAX_PATH];
 		strcpy(Start_Directory, "");
 
-		if (App->CL_Preferences->Use_Default_Directorys == 1)
+		if (App->CL_Preferences->Use_Default_Directories == 1)
 		{
 			strcpy(Start_Directory, App->GD_Directory_FullPath);
 			strcat(Start_Directory, "\\Models\\Wavefront_Obj_Models");
@@ -120,7 +120,7 @@ void CL64_Importers::Load_Ogre_Model(bool Use_File_Dialog)
 		char Start_Directory[MAX_PATH];
 		strcpy(Start_Directory,"");
 
-		if (App->CL_Preferences->Use_Default_Directorys == 1)
+		if (App->CL_Preferences->Use_Default_Directories == 1)
 		{
 			strcpy(Start_Directory, App->GD_Directory_FullPath);
 			strcat(Start_Directory, "\\Models\\Ogre3D_Models");
