@@ -923,7 +923,17 @@ LRESULT CALLBACK CL64_TopDlg::Demos_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 		if (some_item->idFrom == IDC_BT_TD_DEMOS_OPTIONS)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CL_ImGui->flag_Show_Demo_Options);
+
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_TD_DEMOS_OPTIONS));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
+			else
+			{
+				App->Custom_Button_Toggle(item, App->CL_ImGui->flag_Show_Demo_Options);
+			}
+
 			return CDRF_DODEFAULT;
 		}
 		
@@ -943,6 +953,7 @@ LRESULT CALLBACK CL64_TopDlg::Demos_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 				App->CL_Demos->Start_Demo_1();
 
 				RedrawWindow(App->CL_TopDlg->Demos_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+				EnableWindow(GetDlgItem(hDlg, IDC_BT_TD_DEMOS_OPTIONS), true);
 
 				App->CL_TopDlg->flag_Demo_1_Running = 1;
 				App->CL_TopDlg->flag_Demo_2_Running = 0;
@@ -961,6 +972,7 @@ LRESULT CALLBACK CL64_TopDlg::Demos_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 				App->CL_Demos->Start_Demo_2();
 
 				RedrawWindow(App->CL_TopDlg->Demos_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+				EnableWindow(GetDlgItem(hDlg, IDC_BT_TD_DEMOS_OPTIONS), true);
 
 				App->CL_TopDlg->flag_Demo_2_Running = 1;
 				App->CL_TopDlg->flag_Demo_1_Running = 0;
