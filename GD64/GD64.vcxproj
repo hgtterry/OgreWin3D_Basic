@@ -84,6 +84,9 @@
     <OutDir>..\Bin64\</OutDir>
     <TargetName>OgreWin3D_Basic</TargetName>
   </PropertyGroup>
+   <PropertyGroup>
+    <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
