@@ -1,5 +1,5 @@
 /*
-Copyright (c) GameDirector 2019 To 2024 HGT Software W.T.Flanigan H.C.Flanigan
+Copyright (c) OgreWin3D_Basic 2024 W.T.Flanigan H.C.Flanigan Inflanite_HGT
 
 This software is provided 'as-is', without any express or implied
 warranty. In no event will the authors be held liable for any damages
@@ -7,18 +7,10 @@ arising from the use of this software.
 
 Permission is granted to anyone to use this software for any purpose,
 including commercial applications, and to alter it and redistribute it
-freely, subject to the following restrictions:
+freely.
 
-1. The origin of this software must not be misrepresented; you must not
-claim that you wrote the original software. If you use this software
-in a product, an acknowledgment in the product documentation would be
+An acknowledgment in the product documentation would be
 appreciated but is not required.
-
-2. Altered source versions must be plainly marked as such, and must not be
-misrepresented as being the original software.
-
-3. This notice may not be removed or altered from any source
-distribution.
 */
 
 #include "pch.h"
@@ -52,9 +44,7 @@ void CL64_Preferences::Clean_Up(void)
 // *************************************************************************
 void CL64_Preferences::Start_Preferences_Dlg()
 {
-
 	DialogBox(App->hInst, (LPCTSTR)IDD_PREFERENCES, App->MainHwnd, (DLGPROC)Preferences_Dlg_Proc);
-
 }
 
 // *************************************************************************
@@ -67,9 +57,8 @@ LRESULT CALLBACK CL64_Preferences::Preferences_Dlg_Proc(HWND hDlg, UINT message,
 	{
 	case WM_INITDIALOG:
 	{
-		SendDlgItemMessage(hDlg, IDC_ST_STARTUP, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_ST_STARTUP, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
 
-		SendDlgItemMessage(hDlg, IDC_CK_SU_FULL3DVIEW, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_CK_SU_FULLSCREEN, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_CK_SU_DIRECTORIES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
@@ -88,19 +77,7 @@ LRESULT CALLBACK CL64_Preferences::Preferences_Dlg_Proc(HWND hDlg, UINT message,
 			SendMessage(temp, BM_SETCHECK, 0, 0);
 		}
 
-		// Start in Full 3D Screen
-		if (App->CL_Preferences->Start_Full_3DWin == 1)
-		{
-			HWND temp = GetDlgItem(hDlg, IDC_CK_SU_FULL3DVIEW);
-			SendMessage(temp, BM_SETCHECK, 1, 0);
-		}
-		else
-		{
-			HWND temp = GetDlgItem(hDlg, IDC_CK_SU_FULL3DVIEW);
-			SendMessage(temp, BM_SETCHECK, 0, 0);
-		}
-
-		// Start in Full 3D Screen
+		// Use Default Directories
 		if (App->CL_Preferences->Use_Default_Directories == 1)
 		{
 			HWND temp = GetDlgItem(hDlg, IDC_CK_SU_DIRECTORIES);
@@ -125,14 +102,6 @@ LRESULT CALLBACK CL64_Preferences::Preferences_Dlg_Proc(HWND hDlg, UINT message,
 			return (UINT)App->AppBackground;
 		}
 
-		if (GetDlgItem(hDlg, IDC_CK_SU_FULL3DVIEW) == (HWND)lParam)
-		{
-			SetBkColor((HDC)wParam, RGB(0, 255, 0));
-			SetTextColor((HDC)wParam, RGB(0, 0, 0));
-			SetBkMode((HDC)wParam, TRANSPARENT);
-			return (UINT)App->AppBackground;
-		}
-		
 		if (GetDlgItem(hDlg, IDC_CK_SU_DIRECTORIES) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 255, 0));
@@ -193,25 +162,6 @@ LRESULT CALLBACK CL64_Preferences::Preferences_Dlg_Proc(HWND hDlg, UINT message,
 			else
 			{
 				App->CL_Preferences->Start_FullScreen = 0;
-				return 1;
-			}
-
-			return TRUE;
-		}
-
-		if (LOWORD(wParam) == IDC_CK_SU_FULL3DVIEW)
-		{
-			HWND temp = GetDlgItem(hDlg, IDC_CK_SU_FULL3DVIEW);
-
-			int test = SendMessage(temp, BM_GETCHECK, 0, 0);
-			if (test == BST_CHECKED)
-			{
-				App->CL_Preferences->Start_Full_3DWin = 1;
-				return 1;
-			}
-			else
-			{
-				App->CL_Preferences->Start_Full_3DWin = 0;
 				return 1;
 			}
 
