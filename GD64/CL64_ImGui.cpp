@@ -489,6 +489,13 @@ void CL64_ImGui::App_Debug(void)
 		ImGui::Text("Ogre_Model_Loaded: %i", App->CL_Ogre->Ogre3D_Listener->Ogre_Model_Loaded);
 		ImGui::Text("Ogre_Resources_Loaded: %i", App->CL_Resources->Ogre_ExternalResourceLoaded);
 		
+		ImGui::Text(" ");
+
+		ImGui::Text("x: %f", App->CL_Scene->B_Player[0]->Phys_Body->getWorldTransform().getRotation().getX());
+		ImGui::Text("y: %f", App->CL_Scene->B_Player[0]->Phys_Body->getWorldTransform().getRotation().getY());
+		ImGui::Text("z: %f", App->CL_Scene->B_Player[0]->Phys_Body->getWorldTransform().getRotation().getZ());
+		ImGui::Text("w: %f", App->CL_Scene->B_Player[0]->Phys_Body->getWorldTransform().getRotation().getW());
+
 		if (ImGui::Button("Close"))
 		{
 			flag_Show_App_Debug = 0;

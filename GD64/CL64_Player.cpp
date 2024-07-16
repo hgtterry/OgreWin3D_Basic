@@ -231,14 +231,7 @@ void CL64_Player::Set_Player_Position(Ogre::Vector3 Position)
 // *************************************************************************
 // *		Set_Player_Rotation:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-void CL64_Player::Set_Player_Rotation(Ogre::Vector3 Rotation)
+void CL64_Player::Set_Player_Rotation(btQuaternion Rotation)
 {
-	float rx = Rotation.x;
-	float ry = Rotation.y;
-	float rz = Rotation.z;
-
-	btQuaternion Rot = btQuaternion(0.0f, 0.0f, 0.0f, 1);
-
-	App->CL_Scene->B_Player[0]->Phys_Body->getWorldTransform().setRotation(Rot);
-
+	App->CL_Scene->B_Player[0]->Phys_Body->getWorldTransform().setRotation(Rotation);
 }
