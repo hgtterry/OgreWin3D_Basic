@@ -57,7 +57,8 @@ public:
 	void Delete_TestMesh(void);
 
 	// Renders a Single Frame
-	void RenderFrame(void);
+	// How_Many = How any times you want it to render a Frame
+	void RenderFrame(int How_Many);
 
 	// Custom Render Loop returns to where it was called from
 	bool Ogre_Render_Loop(void);

@@ -72,17 +72,13 @@ bool CL64_Importers::Assimp_Loader(bool UseDialog,const char* Extension, const c
 	App->CL_Ogre->Show_Test_Mesh(false);
 	App->CL_Camera->Reset_View();
 
-	App->CL_Ogre->OGL_Listener->Flag_ShowTextured = 1;
-	App->CL_Scene->Scene_Mode = Enums::Scene_Mode_MeshData;
+	App->CL_Scene->Set_Scene(Enums::Scene_Mode_MeshData);
 
-	App->CL_Scene->flag_Model_Loaded = 1;
 
 	if (UseDialog == 1)
 	{
-		App->CL_Ogre->RenderFrame();
-		App->CL_Ogre->RenderFrame();
-		App->CL_Ogre->RenderFrame();
-
+		App->CL_Ogre->RenderFrame(3);
+		
 		App->CL_Dialogs->Start_Import_Options_Dlg();
 
 		if (App->CL_Dialogs->Flag_Convert_to_Ogre == 1)

@@ -154,6 +154,9 @@ void CL64_Scene::Clear_Scene_And_Reset(void)
 // *************************************************************************
 void CL64_Scene::Set_Scene(int Mode)
 {
+	// Set up Application and Scene
+	
+	// Imported Ogre3D Model
 	if (Mode == Enums::Scene_Mode_Imported_Entity)
 	{
 		App->CL_Scene->Scene_Mode = Enums::Scene_Mode_Imported_Entity;
@@ -163,6 +166,17 @@ void CL64_Scene::Set_Scene(int Mode)
 		App->CL_Ogre->OGL_Listener->Flag_ShowTextured = 0;
 		App->CL_Scene->flag_Show_Main_Entity = 1;
 
+		return;
+	}
+
+	// Imported Assimp Imported Model
+	if (Mode == Enums::Scene_Mode_MeshData)
+	{
+		App->CL_Scene->Scene_Mode = Enums::Scene_Mode_MeshData;
+
+		App->CL_Ogre->OGL_Listener->Flag_ShowTextured = 1;
+		App->CL_Scene->flag_Model_Loaded = 1;
+		
 		return;
 	}
 }

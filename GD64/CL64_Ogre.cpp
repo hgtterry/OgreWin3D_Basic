@@ -441,9 +441,15 @@ void CL64_Ogre::Delete_TestMesh(void)
 // *************************************************************************
 // *			RenderFrame:- Terry and Hazel Flanigan 2024				   *
 // *************************************************************************
-void CL64_Ogre::RenderFrame(void)
+void CL64_Ogre::RenderFrame(int How_Many)
 {
-	Ogre::Root::getSingletonPtr()->renderOneFrame();
+	int Count = 0;
+	while (Count < How_Many)
+	{
+		Ogre::Root::getSingletonPtr()->renderOneFrame();
+		Count++;
+	}
+
 }
 
 // *************************************************************************
