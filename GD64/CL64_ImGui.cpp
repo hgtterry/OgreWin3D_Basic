@@ -29,7 +29,7 @@ CL64_ImGui::CL64_ImGui(void)
 	Show_ImGui_Demo = 0;
 	Show_Camera_Data_F = 0;
 	Show_Model_Data_F = 0;
-	flag_Show_Demo_1 = 0;
+	flag_Show_Demo_Options = 0;
 	flag_Show_App_Debug = 0;
 
 	// Demo 1
@@ -192,9 +192,9 @@ void CL64_ImGui::ImGui_Render_Loop(void)
 		Model_Data_GUI();
 	}
 
-	if (flag_Show_Demo_1 == 1)
+	if (flag_Show_Demo_Options == 1)
 	{
-		Demo_1_GUI();
+		Demo_Options_Gui();
 	}
 
 	if (flag_Show_App_Debug == 1)
@@ -386,32 +386,36 @@ void CL64_ImGui::Model_Data_GUI(void)
 }
 
 // *************************************************************************
-// *			Demo_1_GUI:- Terry and Hazel Flanigan 2024				   *
+// *			Demo_Options_Gui:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
-void CL64_ImGui::Demo_1_GUI(void)
+void CL64_ImGui::Demo_Options_Gui(void)
 {
-	ImGui::SetNextWindowPos(ImVec2(Model_Data_PosX, Model_Data_PosY));
+	ImGui::SetNextWindowPos(ImVec2(10, 10), ImGuiCond_FirstUseEver);
 	ImGui::SetNextWindowSize(ImVec2(280, 300), ImGuiCond_FirstUseEver);
 
-	if (!ImGui::Begin("Demo_1", &flag_Show_Demo_1, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoResize))
+	if (!ImGui::Begin("Demo_1", &flag_Show_Demo_Options, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar))
 	{
 		ImGui::End();
 	}
 	else
 	{
+		// -------------------------------------- Title Bar
+		ImGui::Text("Options");
+		ImGui::SameLine(0, 180);
+		if (ImGui::Button("X"))
+		{
+			flag_Show_Demo_Options = 0;
+			RedrawWindow(App->CL_TopDlg->Demos_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+		}
+		ImGui::Separator();
+		// ---------------------------------------------
+
 		ImGui::Text("Keys WASD");
 		ImGui::Spacing();
 
 		if (ImGui::Checkbox("Show Fog", &App->CL_Ogre->flag_Show_Fog))
 		{
-			//if (App->CL_Ogre->flag_Show_Fog == 1)
-			{
-				App->CL_Ogre->Enable_Fog(App->CL_Ogre->flag_Show_Fog);
-			}
-			//else
-			{
-			//	App->CL_Ogre->Enable_Fog(true);
-			}
+			App->CL_Ogre->Enable_Fog(App->CL_Ogre->flag_Show_Fog);
 		}
 
 		ImGui::PushItemWidth(120);
@@ -430,26 +434,8 @@ void CL64_ImGui::Demo_1_GUI(void)
 			App->CL_Demos->Reset_View();
 		}
 
-
-		if (ImGui::Button("1st view"))
-		{
-			App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_First;
-		}
-
-		ImGui::SameLine();
-
-		if (ImGui::Button("Free view"))
-		{
-			App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_Free;
-		}
-
 		Model_Data_PosX = 10;
 		Model_Data_PosY = 10;
-
-		/*if (ImGui::Button("Close"))
-		{
-			Show_Demo_1_F = 0;
-		}*/
 
 		ImGui::End();
 	}

@@ -37,7 +37,7 @@ public:
 	void Model_Data_GUI(void);
 	void App_Debug(void);
 
-	void Demo_1_GUI(void);
+	void Demo_Options_Gui(void);
 
 	bool Imgui_Initialized;
 	bool StartPos;
@@ -45,7 +45,7 @@ public:
 	bool Show_ImGui_Demo;
 	bool Show_Camera_Data_F;
 	bool Show_Model_Data_F;
-	bool flag_Show_Demo_1;
+	bool flag_Show_Demo_Options;
 	bool flag_Show_App_Debug;
 
 	// Demo 1

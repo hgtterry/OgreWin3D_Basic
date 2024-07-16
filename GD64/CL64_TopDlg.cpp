@@ -40,8 +40,7 @@ CL64_TopDlg::CL64_TopDlg(void)
 
 	flag_Toggle_Demos_Demo_1 = 0;
 	flag_Toggle_Demos_Demo_2 = 0;
-	flag_Toggle_Demos_Options = 0;
-
+	
 	flag_Demo_1_Running = 0;
 	flag_Demo_2_Running = 0;
 
@@ -924,7 +923,7 @@ LRESULT CALLBACK CL64_TopDlg::Demos_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 		if (some_item->idFrom == IDC_BT_TD_DEMOS_OPTIONS)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CL_TopDlg->flag_Toggle_Demos_Options);
+			App->Custom_Button_Toggle(item, App->CL_ImGui->flag_Show_Demo_Options);
 			return CDRF_DODEFAULT;
 		}
 		
@@ -972,15 +971,13 @@ LRESULT CALLBACK CL64_TopDlg::Demos_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 
 		if (LOWORD(wParam) == IDC_BT_TD_DEMOS_OPTIONS)
 		{
-			if (App->CL_TopDlg->flag_Toggle_Demos_Options == 1)
+			if (App->CL_ImGui->flag_Show_Demo_Options == 1)
 			{
-				App->CL_TopDlg->flag_Toggle_Demos_Options = 0;
-				App->CL_ImGui->flag_Show_Demo_1 = 0;
+				App->CL_ImGui->flag_Show_Demo_Options = 0;
 			}
 			else
 			{
-				App->CL_TopDlg->flag_Toggle_Demos_Options = 1;
-				App->CL_ImGui->flag_Show_Demo_1 = 1;
+				App->CL_ImGui->flag_Show_Demo_Options = 1;
 			}
 
 			return 1;

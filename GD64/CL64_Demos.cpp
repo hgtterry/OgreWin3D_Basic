@@ -88,7 +88,7 @@ void CL64_Demos::Start_Demo_1(void)
 	App->CL_Ogre->Bullet_Debug_Listener->btDebug_Node->setVisible(false);
 
 	App->CL_Ogre->mTrayMgr->hideAll();
-	App->CL_ImGui->flag_Show_Demo_1 = 1;
+	App->CL_ImGui->flag_Show_Demo_Options = 1;
 
 }
 
@@ -132,7 +132,7 @@ void CL64_Demos::Start_Demo_2(void)
 	App->CL_Ogre->Ogre3D_Listener->Run_Physics = 1;
 	App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_First;
 
-	App->CL_ImGui->flag_Show_Demo_1 = 1;
+	App->CL_ImGui->flag_Show_Demo_Options = 1;
 }
 
 // *************************************************************************

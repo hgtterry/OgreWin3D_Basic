@@ -70,7 +70,6 @@ private:
 
 	bool flag_Toggle_Demos_Demo_1;
 	bool flag_Toggle_Demos_Demo_2;
-	bool flag_Toggle_Demos_Options;
-
+	
 };
 
