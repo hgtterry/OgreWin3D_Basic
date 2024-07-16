@@ -125,8 +125,8 @@ void CL64_Demos::Start_Demo_2(void)
 	App->CL_Ogre->camNode->setPosition(-237, -120, 800);
 
 	App->CL_Bullet->Create_New_Trimesh(App->CL_Scene->Imported_Ogre_Ent, App->CL_Scene->Imported_Ogre_Node);
-	App->CL_Player->Set_Player_Position(Ogre::Vector3( -237, -120, 800));
 
+	App->CL_Player->Set_Player_Position(Ogre::Vector3( -237, -120, 800));
 	App->CL_Player->Set_Player_Rotation(btQuaternion(0.7071068, 0, 0.7071068, 0));
 	
 	App->CL_Ogre->Ogre3D_Listener->Run_Physics = 1;

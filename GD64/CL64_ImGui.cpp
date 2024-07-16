@@ -468,11 +468,10 @@ void CL64_ImGui::App_Debug(void)
 		
 		ImGui::Text(" ");
 
-		ImGui::Text("x: %f", App->CL_Scene->B_Player[0]->Phys_Body->getWorldTransform().getRotation().getX());
-		ImGui::Text("y: %f", App->CL_Scene->B_Player[0]->Phys_Body->getWorldTransform().getRotation().getY());
-		ImGui::Text("z: %f", App->CL_Scene->B_Player[0]->Phys_Body->getWorldTransform().getRotation().getZ());
-		ImGui::Text("w: %f", App->CL_Scene->B_Player[0]->Phys_Body->getWorldTransform().getRotation().getW());
-
+		ImGui::Text("Physics Running: %i", App->CL_Ogre->Ogre3D_Listener->Run_Physics);
+		ImGui::Text("Fog Enabled: %i", App->CL_Ogre->flag_Show_Fog);
+		ImGui::Text("Camera Mode: %i", App->CL_Ogre->Ogre3D_Listener->CameraMode);
+		
 		if (ImGui::Button("Close"))
 		{
 			flag_Show_App_Debug = 0;
