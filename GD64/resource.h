@@ -51,7 +51,6 @@
 #define IDB_DUMMY                       160
 #define IDD_YESNO                       161
 #define IDD_MOUSESENSITIVITY            162
-#define IDD_TB_DEMOS1                   163
 #define IDD_TB_PHYSICS                  163
 #define IDC_CK_SU_FULLSCREEN            1000
 #define IDC_ST_STARTUP                  1001
@@ -68,6 +67,7 @@
 #define IDC_BT_CAMERA_CAMDATA           1007
 #define IDC_CKNORMAL                    1007
 #define IDC_BT_TD_PHYSICSTAB            1007
+#define IDC_BT_TD_DEMOS_OPTIONS         1007
 #define IDC_BUTTON2                     1008
 #define IDC_BT_TBH_CAMERA               1008
 #define IDC_BT_DEMORESOURCES            1008

@@ -40,6 +40,7 @@ CL64_TopDlg::CL64_TopDlg(void)
 
 	flag_Toggle_Demos_Demo_1 = 0;
 	flag_Toggle_Demos_Demo_2 = 0;
+	flag_Toggle_Demos_Options = 0;
 
 	flag_Demo_1_Running = 0;
 	flag_Demo_2_Running = 0;
@@ -892,7 +893,8 @@ LRESULT CALLBACK CL64_TopDlg::Demos_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 	{
 		SendDlgItemMessage(hDlg, IDC_BT_TD_DEMOS_DEMO1, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_TD_DEMOS_DEMO2, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-
+		SendDlgItemMessage(hDlg, IDC_BT_TD_DEMOS_OPTIONS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
 		return TRUE;
 	}
 
@@ -919,6 +921,13 @@ LRESULT CALLBACK CL64_TopDlg::Demos_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 			return CDRF_DODEFAULT;
 		}
 
+		if (some_item->idFrom == IDC_BT_TD_DEMOS_OPTIONS)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->CL_TopDlg->flag_Toggle_Demos_Options);
+			return CDRF_DODEFAULT;
+		}
+		
 		return CDRF_DODEFAULT;
 	}
 
@@ -956,6 +965,22 @@ LRESULT CALLBACK CL64_TopDlg::Demos_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 
 				App->CL_TopDlg->flag_Demo_2_Running = 1;
 				App->CL_TopDlg->flag_Demo_1_Running = 0;
+			}
+
+			return 1;
+		}
+
+		if (LOWORD(wParam) == IDC_BT_TD_DEMOS_OPTIONS)
+		{
+			if (App->CL_TopDlg->flag_Toggle_Demos_Options == 1)
+			{
+				App->CL_TopDlg->flag_Toggle_Demos_Options = 0;
+				App->CL_ImGui->flag_Show_Demo_1 = 0;
+			}
+			else
+			{
+				App->CL_TopDlg->flag_Toggle_Demos_Options = 1;
+				App->CL_ImGui->flag_Show_Demo_1 = 1;
 			}
 
 			return 1;
