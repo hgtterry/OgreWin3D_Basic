@@ -40,8 +40,8 @@ CL64_TopDlg::CL64_TopDlg(void)
 	flag_Toggle_Demos_Demo_1 = 0;
 	flag_Toggle_Demos_Demo_2 = 0;
 
-	Demo_1_Running_Flag = 0;
-	Demo_2_Running_Flag = 0;
+	flag_Demo_1_Running = 0;
+	flag_Demo_2_Running = 0;
 
 	flag_Toggle_PhysicaDebug_Node = 0;
 }
@@ -928,7 +928,7 @@ LRESULT CALLBACK CL64_TopDlg::Demos_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 
 		if (LOWORD(wParam) == IDC_BT_TD_DEMOS_DEMO1)
 		{
-			if (App->CL_TopDlg->Demo_1_Running_Flag == 0)
+			if (App->CL_TopDlg->flag_Demo_1_Running == 0)
 			{
 				App->CL_TopDlg->flag_Toggle_Demos_Demo_1 = 1;
 				App->CL_TopDlg->flag_Toggle_Demos_Demo_2 = 0;
@@ -937,8 +937,8 @@ LRESULT CALLBACK CL64_TopDlg::Demos_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 
 				RedrawWindow(App->CL_TopDlg->Demos_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
-				App->CL_TopDlg->Demo_1_Running_Flag = 1;
-				App->CL_TopDlg->Demo_2_Running_Flag = 0;
+				App->CL_TopDlg->flag_Demo_1_Running = 1;
+				App->CL_TopDlg->flag_Demo_2_Running = 0;
 			}
 
 			return 1;
@@ -946,15 +946,18 @@ LRESULT CALLBACK CL64_TopDlg::Demos_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 
 		if (LOWORD(wParam) == IDC_BT_TD_DEMOS_DEMO2)
 		{
-			App->CL_TopDlg->flag_Toggle_Demos_Demo_2 = 1;
-			App->CL_TopDlg->flag_Toggle_Demos_Demo_1 = 0;
+			if (App->CL_TopDlg->flag_Demo_2_Running == 0)
+			{
+				App->CL_TopDlg->flag_Toggle_Demos_Demo_2 = 1;
+				App->CL_TopDlg->flag_Toggle_Demos_Demo_1 = 0;
 
-			App->CL_Demos->Start_Demo_2();
+				App->CL_Demos->Start_Demo_2();
 
-			RedrawWindow(App->CL_TopDlg->Demos_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+				RedrawWindow(App->CL_TopDlg->Demos_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
-			App->CL_TopDlg->Demo_2_Running_Flag = 1;
-			App->CL_TopDlg->Demo_1_Running_Flag = 0;
+				App->CL_TopDlg->flag_Demo_2_Running = 1;
+				App->CL_TopDlg->flag_Demo_1_Running = 0;
+			}
 
 			return 1;
 		}

@@ -37,8 +37,8 @@ public:
 	
 	bool flag_Toggle_PhysicaDebug_Node;
 
-	bool Demo_1_Running_Flag;
-	bool Demo_2_Running_Flag;
+	bool flag_Demo_1_Running;
+	bool flag_Demo_2_Running;
 
 	void Init_Bmps_Globals(void);
 

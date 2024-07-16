@@ -1,5 +1,5 @@
 /*
-Copyright (c) GameDirector 2019 To 2024 HGT Software W.T.Flanigan H.C.Flanigan
+Copyright (c) OgreWin3D_Basic 2024 W.T.Flanigan H.C.Flanigan Inflanite_HGT
 
 This software is provided 'as-is', without any express or implied
 warranty. In no event will the authors be held liable for any damages
@@ -7,18 +7,10 @@ arising from the use of this software.
 
 Permission is granted to anyone to use this software for any purpose,
 including commercial applications, and to alter it and redistribute it
-freely, subject to the following restrictions:
+freely.
 
-1. The origin of this software must not be misrepresented; you must not
-claim that you wrote the original software. If you use this software
-in a product, an acknowledgment in the product documentation would be
+An acknowledgment in the product documentation would be
 appreciated but is not required.
-
-2. Altered source versions must be plainly marked as such, and must not be
-misrepresented as being the original software.
-
-3. This notice may not be removed or altered from any source
-distribution.
 */
 
 #include "pch.h"
@@ -37,7 +29,7 @@ CL64_ImGui::CL64_ImGui(void)
 	Show_ImGui_Demo = 0;
 	Show_Camera_Data_F = 0;
 	Show_Model_Data_F = 0;
-	Show_Demo_1_F = 0;
+	flag_Show_Demo_1 = 0;
 	flag_Show_App_Debug = 0;
 
 	// Demo 1
@@ -200,7 +192,7 @@ void CL64_ImGui::ImGui_Render_Loop(void)
 		Model_Data_GUI();
 	}
 
-	if (Show_Demo_1_F == 1)
+	if (flag_Show_Demo_1 == 1)
 	{
 		Demo_1_GUI();
 	}
@@ -401,7 +393,7 @@ void CL64_ImGui::Demo_1_GUI(void)
 	ImGui::SetNextWindowPos(ImVec2(Model_Data_PosX, Model_Data_PosY));
 	ImGui::SetNextWindowSize(ImVec2(280, 300), ImGuiCond_FirstUseEver);
 
-	if (!ImGui::Begin("Demo_1", &Show_Demo_1_F, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoResize))
+	if (!ImGui::Begin("Demo_1", &flag_Show_Demo_1, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoResize))
 	{
 		ImGui::End();
 	}
