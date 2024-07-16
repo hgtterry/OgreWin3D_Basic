@@ -402,16 +402,15 @@ void CL64_ImGui::Demo_1_GUI(void)
 		ImGui::Text("Keys WASD");
 		ImGui::Spacing();
 
-		if (ImGui::Checkbox("Show Debug Physics", &App->CL_TopDlg->flag_Toggle_PhysicaDebug_Node))
+		if (ImGui::Checkbox("Show Fog", &App->CL_Ogre->flag_Show_Fog))
 		{
-
-			if (App->CL_TopDlg->flag_Toggle_PhysicaDebug_Node == 1)
+			//if (App->CL_Ogre->flag_Show_Fog == 1)
 			{
-				App->CL_Ogre->Bullet_Debug_Listener->btDebug_Node->setVisible(true);
+				App->CL_Ogre->Enable_Fog(App->CL_Ogre->flag_Show_Fog);
 			}
-			else
+			//else
 			{
-				App->CL_Ogre->Bullet_Debug_Listener->btDebug_Node->setVisible(false);
+			//	App->CL_Ogre->Enable_Fog(true);
 			}
 		}
 

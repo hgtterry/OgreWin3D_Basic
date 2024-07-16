@@ -44,6 +44,7 @@ CL64_Ogre::CL64_Ogre(void)
 	flag_Show_Test_Mesh = 1;
 	flag_Show_Trays = 1;
 	flag_TestMesh_Deleted = 0;
+	flag_Show_Fog = 0;
 
 	FPSLock = 16666; // Default 60 FPS
 
@@ -97,6 +98,7 @@ void CL64_Ogre::InitOgre(void)
 
 	App->CL_Player->Create_Player_Object();
 
+	
 }
 
 // *************************************************************************
@@ -209,10 +211,15 @@ bool CL64_Ogre::chooseSceneManager(void)
 	mSceneMgr->setAmbientLight(Ogre::ColourValue(1, 1, 1));
 
 	// add a bright light above the scene
-	//Light* light = mSceneMgr->createLight();
-	//light->setType(Light::LT_SPOTLIGHT);
-	//light->setPosition(0, 0, 0);
-	//light->setSpecularColour(ColourValue::White);
+	/*Light* spotLight = mSceneMgr->createLight("SpotLight");
+	spotLight->setDiffuseColour(0, 0, 1.0);
+	spotLight->setSpecularColour(0, 0, 1.0);
+	spotLight->setType(Light::LT_SPOTLIGHT);
+
+	SceneNode* spotLightNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	spotLightNode->attachObject(spotLight);
+	spotLightNode->setDirection(-1, -1, 0);
+	spotLightNode->setPosition(Vector3(200, 200, 0));*/
 
 	App->CL_Ogre->Log_Message_To_File((LPSTR)"chooseSceneManager");
 
@@ -251,8 +258,9 @@ bool CL64_Ogre::createViewports(void)
 
 	Ogre::TextureManager::getSingleton().setDefaultNumMipmaps(0);
 
-	vp->setBackgroundColour(Ogre::ColourValue(0.5, 0.5, 0.5));
-
+	Ogre::ColourValue fadeColour(0.5, 0.5, 0.5);
+	mWindow->getViewport(0)->setBackgroundColour(fadeColour);
+	
 	App->CL_Ogre->Log_Message_To_File((LPSTR)"createViewports");
 
 	return 1;
@@ -435,7 +443,6 @@ void CL64_Ogre::Delete_TestMesh(void)
 		App->CL_TopDlg->Enable_TestMesh_Button(false);
 	}
 
-
 }
 
 // *************************************************************************
@@ -448,6 +455,24 @@ void CL64_Ogre::RenderFrame(int How_Many)
 	{
 		Ogre::Root::getSingletonPtr()->renderOneFrame();
 		Count++;
+	}
+
+}
+
+// *************************************************************************
+// *			Enable_Fog:- Terry and Hazel Flanigan 2024				   *
+// *************************************************************************
+void CL64_Ogre::Enable_Fog(bool Enable)
+{
+	if (Enable == 1)
+	{
+		App->CL_Ogre->mSceneMgr->setFog(FOG_LINEAR, ColourValue(1, 1, 1), 0, 100, 1000);
+		flag_Show_Fog = 1;
+	}
+	else
+	{
+		App->CL_Ogre->mSceneMgr->setFog(FOG_NONE, ColourValue(0.7, 0.7, 0.8), 0, 100, 1000);
+		flag_Show_Fog = 0;
 	}
 
 }

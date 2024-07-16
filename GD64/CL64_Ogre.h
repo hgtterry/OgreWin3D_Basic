@@ -55,6 +55,7 @@ public:
 	void Show_Test_Mesh(bool Show);
 	void Show_Trays(void);
 	void Delete_TestMesh(void);
+	void Enable_Fog(bool Enable);
 
 	// Renders a Single Frame
 	// How_Many = How any times you want it to render a Frame
@@ -102,6 +103,7 @@ public:
 	bool flag_Show_Test_Mesh;	// is Test Mesh Visable
 	bool flag_Show_Trays;		// is Trays Visable
 	bool flag_TestMesh_Deleted; // Does the test mesh Exist
+	bool flag_Show_Fog;			// Is the fog Enabled
 
 };
 
