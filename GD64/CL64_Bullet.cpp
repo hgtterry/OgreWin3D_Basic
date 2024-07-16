@@ -109,7 +109,7 @@ void CL64_Bullet::ShutDown_Bullet()
 // *************************************************************************
 //			Create_New_Trimesh:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-btBvhTriangleMeshShape* CL64_Bullet::create_New_Trimesh(Ogre::Entity* Entity, Ogre::SceneNode* Node)
+btBvhTriangleMeshShape* CL64_Bullet::Create_New_Trimesh(Ogre::Entity* Entity, Ogre::SceneNode* Node)
 {
 #pragma warning(disable : 4996) // Nightmare why
 

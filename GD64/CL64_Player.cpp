@@ -213,5 +213,17 @@ void CL64_Player::Get_Height(void)
 		AddGravity = 1;
 		Is_On_Ground = 0;
 	}
+}
+
+// *************************************************************************
+// *		Set_Player_Position:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void CL64_Player::Set_Player_Position(Ogre::Vector3 Position)
+{
+	float x = Position.x;
+	float y = Position.y;
+	float z = Position.z;
+
+	App->CL_Scene->B_Player[0]->Phys_Body->getWorldTransform().setOrigin(btVector3(x, y, z));
 
 }

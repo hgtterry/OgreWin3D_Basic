@@ -81,7 +81,7 @@ void CL64_Demos::Start_Demo_1(void)
 	App->CL_Scene->Model_Type = Enums::LoadedFile_None;
 	App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_First;
 
-	App->CL_Bullet->create_New_Trimesh(World_Ent, World_Node);
+	App->CL_Bullet->Create_New_Trimesh(World_Ent, World_Node);
 	App->CL_Ogre->Ogre3D_Listener->Run_Physics = 1;
 
 	App->CL_TopDlg->flag_Toggle_PhysicaDebug_Node = 0;
@@ -123,11 +123,11 @@ void CL64_Demos::Start_Demo_2(void)
 	App->CL_Ogre->camNode->yaw(Ogre::Degree(90));
 	App->CL_Ogre->camNode->setPosition(-237, -68, 800);
 
-	App->CL_Bullet->create_New_Trimesh(App->CL_Scene->Imported_Ogre_Ent, App->CL_Scene->Imported_Ogre_Node);
-
-	//App->CL_Bullet->create_New_Trimesh(World_Ent, World_Node);
-	//App->CL_Ogre->Ogre3D_Listener->Run_Physics = 1;
-
+	App->CL_Bullet->Create_New_Trimesh(App->CL_Scene->Imported_Ogre_Ent, App->CL_Scene->Imported_Ogre_Node);
+	App->CL_Player->Set_Player_Position(Ogre::Vector3( - 237, -68, 800));
+	
+	App->CL_Ogre->Ogre3D_Listener->Run_Physics = 1;
+	App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_First;
 	//App->Say("Demo 2");
 }
 

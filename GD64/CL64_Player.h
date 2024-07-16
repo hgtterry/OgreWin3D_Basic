@@ -32,10 +32,11 @@ public:
 	void Create_Player_Object(void);
 	void Initialize() const;
 	void Show_Debug_Player(bool Show);
-
+	
 	void Update_Player(btCollisionWorld* collisionWorld, btScalar deltaTimeStep);
 	void Update_Velocity(float dt);
 	void Get_Height(void);
+	void Set_Player_Position(Ogre::Vector3 Position);
 
 	Ogre::Vector3 Current_Position;
 	btVector3 Physics_Position;
