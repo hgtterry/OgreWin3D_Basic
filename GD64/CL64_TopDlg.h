@@ -30,10 +30,12 @@ public:
 	void Start_Debug_TB(void);
 	void Start_Camera_TB(void);
 	void Start_Demos_TB(void);
+	void Start_Physics_TB(void);
 
 	bool flag_Toggle_Tabs_Debug;
 	bool flag_Toggle_Tabs_Camera;
 	bool flag_Toggle_Tabs_Demos;
+	bool flag_Toggle_Tabs_Physics;
 	
 	bool flag_Toggle_PhysicaDebug_Node;
 
@@ -49,6 +51,7 @@ public:
 	HWND Debug_TB_hWnd;
 	HWND Camera_TB_hWnd;
 	HWND Demos_TB_hWnd;
+	HWND Physics_TB_hWnd;
 
 private:
 
@@ -59,6 +62,7 @@ private:
 	static LRESULT CALLBACK Debug_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Camera_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Demos_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Physics_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	bool flag_Toggle_Cam_ModelMode;
 	bool flag_Toggle_Cam_FreeMode;

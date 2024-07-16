@@ -27,11 +27,12 @@ CL64_TopDlg::CL64_TopDlg(void)
 	Debug_TB_hWnd =		nullptr;
 	Camera_TB_hWnd =	nullptr;
 	Demos_TB_hWnd =		nullptr;
-
+	Physics_TB_hWnd =	nullptr;
 
 	flag_Toggle_Tabs_Camera = 0;
 	flag_Toggle_Tabs_Debug = 1;
 	flag_Toggle_Tabs_Demos = 0;
+	flag_Toggle_Tabs_Physics = 0;
 
 	flag_Toggle_Cam_ModelMode = 1;
 	flag_Toggle_Cam_FreeMode = 0;
@@ -74,6 +75,7 @@ LRESULT CALLBACK CL64_TopDlg::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam
 		App->CL_TopDlg->Start_Debug_TB();
 		App->CL_TopDlg->Start_Camera_TB();
 		App->CL_TopDlg->Start_Demos_TB();
+		App->CL_TopDlg->Start_Physics_TB();
 
 		App->CL_TopDlg->Hide_Tabs();
 
@@ -436,7 +438,8 @@ LRESULT CALLBACK CL64_TopDlg::Tabs_Headers_Proc(HWND hDlg, UINT message, WPARAM 
 		SendDlgItemMessage(hDlg, IDC_BT_TDH_DEBUG, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_TBH_CAMERA, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_TD_DEMOSTAB, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		
+		SendDlgItemMessage(hDlg, IDC_BT_TD_PHYSICSTAB, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
 		return TRUE;
 	}
 
@@ -470,7 +473,13 @@ LRESULT CALLBACK CL64_TopDlg::Tabs_Headers_Proc(HWND hDlg, UINT message, WPARAM 
 			return CDRF_DODEFAULT;
 		}
 
-		
+		if (some_item->idFrom == IDC_BT_TD_PHYSICSTAB)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle_Tabs(item, App->CL_TopDlg->flag_Toggle_Tabs_Physics);
+			return CDRF_DODEFAULT;
+		}
+
 		return CDRF_DODEFAULT;
 	}
 
@@ -508,6 +517,17 @@ LRESULT CALLBACK CL64_TopDlg::Tabs_Headers_Proc(HWND hDlg, UINT message, WPARAM 
 
 			return TRUE;
 		}
+
+		if (LOWORD(wParam) == IDC_BT_TD_PHYSICSTAB)
+		{
+			App->CL_TopDlg->Hide_Tabs();
+			ShowWindow(App->CL_TopDlg->Physics_TB_hWnd, SW_SHOW);
+			App->CL_TopDlg->flag_Toggle_Tabs_Physics = 1;
+
+			RedrawWindow(App->CL_TopDlg->Tabs_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+			return TRUE;
+		}
 		
 	}
 	}
@@ -522,10 +542,12 @@ void CL64_TopDlg::Hide_Tabs(void)
 	ShowWindow(Debug_TB_hWnd, SW_HIDE);
 	ShowWindow(Camera_TB_hWnd, SW_HIDE);
 	ShowWindow(Demos_TB_hWnd, SW_HIDE);
-
+	ShowWindow(Physics_TB_hWnd, SW_HIDE);
+	
 	flag_Toggle_Tabs_Debug = 0;
 	flag_Toggle_Tabs_Camera = 0;
 	flag_Toggle_Tabs_Demos = 0;
+	flag_Toggle_Tabs_Physics = 0;
 }
 
 // *************************************************************************
@@ -549,7 +571,6 @@ LRESULT CALLBACK CL64_TopDlg::Debug_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 		SendDlgItemMessage(hDlg, IDC_BT_TD_DEBUG_IMGUIDEMO, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_TD_DEBUG_TESTCUBE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_TD_DEBUG_IMGUIFPS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_BT_TD_DEBUG_PHYSICSDEBUG, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_TD_DEBUG_RESOURCES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_TD_DEBUG_TRAYSFPS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
@@ -603,13 +624,6 @@ LRESULT CALLBACK CL64_TopDlg::Debug_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 			return CDRF_DODEFAULT;
 		}
 
-		if (some_item->idFrom == IDC_BT_TD_DEBUG_PHYSICSDEBUG)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CL_TopDlg->flag_Toggle_PhysicaDebug_Node);
-			return CDRF_DODEFAULT;
-		}
-
 		if (some_item->idFrom == IDC_BT_TD_DEBUG_RESOURCES)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
@@ -622,21 +636,6 @@ LRESULT CALLBACK CL64_TopDlg::Debug_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 
 	case WM_COMMAND:
 	{
-		if (LOWORD(wParam) == IDC_BT_TD_DEBUG_PHYSICSDEBUG)
-		{
-			if (App->CL_TopDlg->flag_Toggle_PhysicaDebug_Node == 1)
-			{
-				App->CL_TopDlg->flag_Toggle_PhysicaDebug_Node = 0;
-				App->CL_Ogre->Bullet_Debug_Listener->btDebug_Node->setVisible(false);
-			}
-			else
-			{
-				App->CL_TopDlg->flag_Toggle_PhysicaDebug_Node = 1;
-				App->CL_Ogre->Bullet_Debug_Listener->btDebug_Node->setVisible(true);
-			}
-			return 1;
-		}
-		
 		if (LOWORD(wParam) == IDC_BT_TD_DEBUG_IMGUIDEMO)
 		{
 			if (App->CL_ImGui->Show_ImGui_Demo == 1)
@@ -961,6 +960,91 @@ LRESULT CALLBACK CL64_TopDlg::Demos_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 
 			return 1;
 		}
+
+		return FALSE;
+	}
+
+	}
+	return FALSE;
+}
+
+// *************************************************************************
+// *			Start_Physics_TB:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+void CL64_TopDlg::Start_Physics_TB(void)
+{
+	Physics_TB_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_TB_PHYSICS, Tabs_TB_hWnd, (DLGPROC)Physics_TB_Proc);
+}
+
+// *************************************************************************
+// *			Physics_TB_Proc:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+LRESULT CALLBACK CL64_TopDlg::Physics_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+
+	switch (message)
+	{
+	case WM_INITDIALOG:
+	{
+		SendDlgItemMessage(hDlg, IDC_BT_TD_DEBUG_PHYSICSDEBUG, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
+		return TRUE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->Brush_Tabs;
+	}
+
+	case WM_NOTIFY:
+	{
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		if (some_item->idFrom == IDC_BT_TD_DEBUG_PHYSICSDEBUG)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->CL_TopDlg->flag_Toggle_PhysicaDebug_Node);
+			return CDRF_DODEFAULT;
+		}
+
+		return CDRF_DODEFAULT;
+	}
+
+	case WM_COMMAND:
+	{
+
+		if (LOWORD(wParam) == IDC_BT_TD_DEBUG_PHYSICSDEBUG)
+		{
+			if (App->CL_TopDlg->flag_Toggle_PhysicaDebug_Node == 1)
+			{
+				App->CL_TopDlg->flag_Toggle_PhysicaDebug_Node = 0;
+				App->CL_Ogre->Bullet_Debug_Listener->btDebug_Node->setVisible(false);
+			}
+			else
+			{
+				App->CL_TopDlg->flag_Toggle_PhysicaDebug_Node = 1;
+				App->CL_Ogre->Bullet_Debug_Listener->btDebug_Node->setVisible(true);
+			}
+			return 1;
+		}
+
+		/*if (LOWORD(wParam) == IDC_BT_TD_DEMOS_DEMO2)
+		{
+			if (App->CL_TopDlg->flag_Demo_2_Running == 0)
+			{
+				App->CL_TopDlg->flag_Toggle_Demos_Demo_2 = 1;
+				App->CL_TopDlg->flag_Toggle_Demos_Demo_1 = 0;
+
+				App->CL_Demos->Start_Demo_2();
+
+				RedrawWindow(App->CL_TopDlg->Demos_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+				App->CL_TopDlg->flag_Demo_2_Running = 1;
+				App->CL_TopDlg->flag_Demo_1_Running = 0;
+			}
+
+			return 1;
+		}*/
 
 		return FALSE;
 	}
