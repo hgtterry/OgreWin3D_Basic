@@ -220,10 +220,25 @@ void CL64_Player::Get_Height(void)
 // *************************************************************************
 void CL64_Player::Set_Player_Position(Ogre::Vector3 Position)
 {
-	float x = Position.x;
-	float y = Position.y;
-	float z = Position.z;
+	float px = Position.x;
+	float py = Position.y;
+	float pz = Position.z;
 
-	App->CL_Scene->B_Player[0]->Phys_Body->getWorldTransform().setOrigin(btVector3(x, y, z));
+	App->CL_Scene->B_Player[0]->Phys_Body->getWorldTransform().setOrigin(btVector3(px, py, pz));
+
+}
+
+// *************************************************************************
+// *		Set_Player_Rotation:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void CL64_Player::Set_Player_Rotation(Ogre::Vector3 Rotation)
+{
+	float rx = Rotation.x;
+	float ry = Rotation.y;
+	float rz = Rotation.z;
+
+	btQuaternion Rot = btQuaternion(0.0f, 0.0f, 0.0f, 1);
+
+	App->CL_Scene->B_Player[0]->Phys_Body->getWorldTransform().setRotation(Rot);
 
 }

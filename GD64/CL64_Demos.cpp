@@ -128,7 +128,6 @@ void CL64_Demos::Start_Demo_2(void)
 	
 	App->CL_Ogre->Ogre3D_Listener->Run_Physics = 1;
 	App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_First;
-	//App->Say("Demo 2");
 }
 
 // *************************************************************************
