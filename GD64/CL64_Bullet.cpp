@@ -33,6 +33,11 @@ CL64_Bullet::CL64_Bullet(void)
 	solver = NULL;
 	dynamicsWorld = NULL;
 
+	mShape = NULL;
+	myMotionState = NULL;
+	Phys_Body = NULL;
+	triMesh = NULL;
+
 	GD_Physics_On = 0;
 	Physics_Dlg_Active = 0;
 }
@@ -113,12 +118,13 @@ btBvhTriangleMeshShape* CL64_Bullet::Create_New_Trimesh(Ogre::Entity* Entity, Og
 {
 #pragma warning(disable : 4996) // Nightmare why
 
+	Clear_Trimesh();
+
 	// Get the mesh from the entity
 	Ogre::MeshPtr myMesh = Entity->getMesh();
 	Ogre::Mesh::SubMeshIterator SubMeshIter = myMesh->getSubMeshIterator();
 
 	// Create the triangle mesh
-	btTriangleMesh* triMesh = NULL;
 	btVector3 vert0, vert1, vert2;
 	int i = 0;
 
@@ -199,14 +205,13 @@ btBvhTriangleMeshShape* CL64_Bullet::Create_New_Trimesh(Ogre::Entity* Entity, Og
 			// Increase index count
 			i += 3;
 		}
-
-		//App->Say("here");
 	}
 
-	btRigidBody* Phys_Body;
-
 	const bool useQuantizedAABB = true;
-	btBvhTriangleMeshShape* mShape = new btBvhTriangleMeshShape(triMesh, false, true);
+	mShape = new btBvhTriangleMeshShape(triMesh, false, true);
+	//collisionShapes.push_back(mShape);
+
+	//App->Say(mShape->getName());
 	//mShape->buildOptimizedBvh();
 
 	float x = Node->getPosition().x;
@@ -222,7 +227,7 @@ btBvhTriangleMeshShape* CL64_Bullet::Create_New_Trimesh(Ogre::Entity* Entity, Og
 	btVector3 initialPosition(x, y, z);
 	startTransform.setOrigin(initialPosition);
 
-	btDefaultMotionState* myMotionState = new btDefaultMotionState(startTransform);
+	myMotionState = new btDefaultMotionState(startTransform);
 
 
 	btRigidBody::btRigidBodyConstructionInfo rigidBodyCI
@@ -249,4 +254,24 @@ btBvhTriangleMeshShape* CL64_Bullet::Create_New_Trimesh(Ogre::Entity* Entity, Og
 	//App->SBC_Physics->Set_Physics(Index);
 
 	return mShape;
+}
+
+// *************************************************************************
+// *			Clear_Trimesh:- Terry and Hazel Flanigan 2024   	  	   *
+// *************************************************************************
+void CL64_Bullet::Clear_Trimesh()
+{
+	if (mShape)
+	{
+		delete mShape;
+		mShape = NULL;
+
+		delete myMotionState;
+		myMotionState = NULL;
+
+		dynamicsWorld->removeCollisionObject(Phys_Body);
+
+		delete triMesh;
+		triMesh = NULL;
+	}
 }

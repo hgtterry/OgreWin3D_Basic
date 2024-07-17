@@ -970,12 +970,14 @@ LRESULT CALLBACK CL64_TopDlg::Demos_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 				App->CL_TopDlg->flag_Toggle_Demos_Demo_1 = 0;
 
 				App->CL_Demos->Start_Demo_2();
-
+				
 				RedrawWindow(App->CL_TopDlg->Demos_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 				EnableWindow(GetDlgItem(hDlg, IDC_BT_TD_DEMOS_OPTIONS), true);
 
 				App->CL_TopDlg->flag_Demo_2_Running = 1;
 				App->CL_TopDlg->flag_Demo_1_Running = 0;
+
+				Debug
 			}
 
 			return 1;

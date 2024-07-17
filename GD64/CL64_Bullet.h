@@ -31,6 +31,7 @@ public:
 
 	void Init_Bullet();
 	void ShutDown_Bullet();
+	void Clear_Trimesh();
 
 	btDefaultCollisionConfiguration* collisionConfiguration;
 	btCollisionDispatcher* dispatcher;
@@ -38,6 +39,11 @@ public:
 	btSequentialImpulseConstraintSolver* solver;
 	btDiscreteDynamicsWorld* dynamicsWorld;
 	std::vector<btCollisionShape*> collisionShapes;
+
+	btBvhTriangleMeshShape* mShape;
+	btDefaultMotionState* myMotionState;
+	btRigidBody* Phys_Body;
+	btTriangleMesh* triMesh;
 
 	bool GD_Physics_On;
 	bool Physics_Dlg_Active;

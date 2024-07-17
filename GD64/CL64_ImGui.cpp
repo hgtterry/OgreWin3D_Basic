@@ -447,7 +447,7 @@ void CL64_ImGui::Demo_Options_Gui(void)
 void CL64_ImGui::App_Debug(void)
 {
 	ImGui::SetNextWindowPos(ImVec2(10,10), ImGuiCond_FirstUseEver);
-	ImGui::SetNextWindowSize(ImVec2(280, 300), ImGuiCond_FirstUseEver);
+	ImGui::SetNextWindowSize(ImVec2(280, 500), ImGuiCond_FirstUseEver);
 
 	if (!ImGui::Begin("App_Debug", &flag_Show_App_Debug, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoResize))
 	{
@@ -471,6 +471,9 @@ void CL64_ImGui::App_Debug(void)
 		ImGui::Text("Physics Running: %i", App->CL_Ogre->Ogre3D_Listener->Run_Physics);
 		ImGui::Text("Fog Enabled: %i", App->CL_Ogre->flag_Show_Fog);
 		ImGui::Text("Camera Mode: %i", App->CL_Ogre->Ogre3D_Listener->CameraMode);
+		ImGui::Text(" ");
+		ImGui::Text("Colision Shapes: %i", App->CL_Bullet->collisionShapes.size());
+		ImGui::Text("Colision Objects: %i", App->CL_Bullet->dynamicsWorld->getNumCollisionObjects());
 		
 		if (ImGui::Button("Close"))
 		{

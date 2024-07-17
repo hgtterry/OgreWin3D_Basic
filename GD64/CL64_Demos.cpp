@@ -119,13 +119,13 @@ void CL64_Demos::Start_Demo_2(void)
 	strcpy(App->CL_File_IO->Model_FileName,"New_Room.mesh");
 
 	App->CL_Importers->Load_Ogre_Model(false);
-
+	
 	App->CL_Ogre->camNode->setOrientation(Ogre::Quaternion::IDENTITY);
 	App->CL_Ogre->camNode->yaw(Ogre::Degree(90));
 	App->CL_Ogre->camNode->setPosition(-237, -120, 800);
 
 	App->CL_Bullet->Create_New_Trimesh(App->CL_Scene->Imported_Ogre_Ent, App->CL_Scene->Imported_Ogre_Node);
-
+	
 	App->CL_Player->Set_Player_Position(Ogre::Vector3( -237, -120, 800));
 	App->CL_Player->Set_Player_Rotation(btQuaternion(0.7071068, 0, 0.7071068, 0));
 	
@@ -133,6 +133,7 @@ void CL64_Demos::Start_Demo_2(void)
 	App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_First;
 
 	App->CL_ImGui->flag_Show_Demo_Options = 1;
+
 }
 
 // *************************************************************************

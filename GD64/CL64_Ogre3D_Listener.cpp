@@ -88,6 +88,7 @@ bool CL64_Ogre3D_Listener::frameStarted(const FrameEvent& evt)
 // *************************************************************************
 bool CL64_Ogre3D_Listener::frameRenderingQueued(const FrameEvent& evt)
 {
+
 	App->CL_Ogre->mTrayMgr->frameRendered(evt);
 
 	Ogre::ImGuiOverlay::NewFrame();
@@ -108,7 +109,7 @@ bool CL64_Ogre3D_Listener::frameRenderingQueued(const FrameEvent& evt)
 		App->CL_Scene->B_Player[0]->Player_Node->setOrientation(Ogre::Quaternion(orientation.getW(), orientation.getX(), orientation.getY(), orientation.getZ()));
 		App->CL_Scene->B_Player[0]->Player_Node->pitch(Ogre::Degree(180));
 	}
-
+	
 	if (CameraMode == Enums::Cam_Mode_First)
 	{
 		Ogre::Vector3 Pos;
@@ -138,17 +139,17 @@ bool CL64_Ogre3D_Listener::frameRenderingQueued(const FrameEvent& evt)
 		}
 	}
 
-
+	
 	if (CameraMode == Enums::Cam_Mode_Model)
 	{
 		Mode_Camera_Model(evt.timeSinceLastFrame);
 	}
-
+	
 	if (CameraMode == Enums::Cam_Mode_Free)
 	{
 		Mode_Camera_Free(evt.timeSinceLastFrame);
 	}
-
+	
 	App->CL_Bullet->dynamicsWorld->debugDrawWorld();
 
 	return 1;
