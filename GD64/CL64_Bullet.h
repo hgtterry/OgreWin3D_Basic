@@ -47,6 +47,7 @@ public:
 
 	bool GD_Physics_On;
 	bool Physics_Dlg_Active;
+	bool flag_TriMesh_Created;
 
 	btBvhTriangleMeshShape* Create_New_Trimesh(Ogre::Entity* Entity, Ogre::SceneNode* Node);
 };

@@ -977,7 +977,6 @@ LRESULT CALLBACK CL64_TopDlg::Demos_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 				App->CL_TopDlg->flag_Demo_2_Running = 1;
 				App->CL_TopDlg->flag_Demo_1_Running = 0;
 
-				Debug
 			}
 
 			return 1;

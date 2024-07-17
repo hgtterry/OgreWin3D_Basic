@@ -40,6 +40,7 @@ CL64_Bullet::CL64_Bullet(void)
 
 	GD_Physics_On = 0;
 	Physics_Dlg_Active = 0;
+	flag_TriMesh_Created = 0;
 }
 
 CL64_Bullet::~CL64_Bullet(void)
@@ -117,8 +118,6 @@ void CL64_Bullet::ShutDown_Bullet()
 btBvhTriangleMeshShape* CL64_Bullet::Create_New_Trimesh(Ogre::Entity* Entity, Ogre::SceneNode* Node)
 {
 #pragma warning(disable : 4996) // Nightmare why
-
-	Clear_Trimesh();
 
 	// Get the mesh from the entity
 	Ogre::MeshPtr myMesh = Entity->getMesh();
@@ -249,7 +248,7 @@ btBvhTriangleMeshShape* CL64_Bullet::Create_New_Trimesh(Ogre::Entity* Entity, Og
 
 	dynamicsWorld->addRigidBody(Phys_Body);
 
-	
+	flag_TriMesh_Created = 1;
 
 	//App->SBC_Physics->Set_Physics(Index);
 
@@ -261,7 +260,7 @@ btBvhTriangleMeshShape* CL64_Bullet::Create_New_Trimesh(Ogre::Entity* Entity, Og
 // *************************************************************************
 void CL64_Bullet::Clear_Trimesh()
 {
-	if (mShape)
+	if (mShape && flag_TriMesh_Created == 1)
 	{
 		delete mShape;
 		mShape = NULL;
@@ -273,5 +272,7 @@ void CL64_Bullet::Clear_Trimesh()
 
 		delete triMesh;
 		triMesh = NULL;
+
+		flag_TriMesh_Created = 0;
 	}
 }

@@ -165,6 +165,8 @@ void CL64_Scene::Clear_Scene_And_Reset(void)
 
 	App->CL_Camera->Reset_View();
 
+	App->CL_Bullet->Clear_Trimesh();
+
 	SetWindowText(App->MainHwnd, "OgreWin3D_Basic");
 }
 

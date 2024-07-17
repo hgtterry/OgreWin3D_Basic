@@ -472,7 +472,7 @@ void CL64_ImGui::App_Debug(void)
 		ImGui::Text("Fog Enabled: %i", App->CL_Ogre->flag_Show_Fog);
 		ImGui::Text("Camera Mode: %i", App->CL_Ogre->Ogre3D_Listener->CameraMode);
 		ImGui::Text(" ");
-		ImGui::Text("Colision Shapes: %i", App->CL_Bullet->collisionShapes.size());
+		ImGui::Text("TriMesh_Created: %i", App->CL_Bullet->flag_TriMesh_Created);
 		ImGui::Text("Colision Objects: %i", App->CL_Bullet->dynamicsWorld->getNumCollisionObjects());
 		
 		if (ImGui::Button("Close"))
