@@ -174,7 +174,7 @@ void CL64_ImGui::Load_Font(void)
 
 	//font2 = io.Fonts->AddFontDefault().;
 
-	//io.IniFilename = NULL;
+	io.IniFilename = NULL;
 }
 
 // **************************************************************************
