@@ -62,12 +62,30 @@ void CL64_TopDlg::Reset_Class(void) const
 	App->CL_TopDlg->flag_Demo_1_Running = 0;
 	App->CL_TopDlg->flag_Demo_2_Running = 0;
 
-	RedrawWindow(Demos_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+	App->CL_Ogre->Show_Test_Mesh(false);
+
+	App->CL_Ogre->flag_Show_Test_Mesh = 0;
+	App->CL_Ogre->OGL_Listener->Flag_ShowFaces = 0;
+	App->CL_Ogre->OGL_Listener->Flag_ShowPoints = 0;
+	App->CL_ImGui->Show_Model_Data_F = 0;
+	App->CL_Ogre->OGL_Listener->Flag_ShowBones = 0;
+	App->CL_Ogre->OGL_Listener->Flag_ShowNormals = 0;
+	App->CL_Ogre->OGL_Listener->Flag_ShowBoundingBox = 0;
+
+	SendMessage(GetDlgItem(TabsHwnd, IDC_BTSHOWTEXTURES), BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_TexturesOff_Bmp);
+	SendMessage(GetDlgItem(TabsHwnd, IDC_TBSHOWFACES), BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshOff_Bmp);
+	SendMessage(GetDlgItem(TabsHwnd, IDC_BTSHOWPOINTS), BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshPointsOff_Bmp);
+	SendMessage(GetDlgItem(TabsHwnd, IDC_TBINFO), BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_ModelInfo_Bmp);
+	SendMessage(GetDlgItem(TabsHwnd, IDC_BTSHOWBONES), BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_BonesOff_Bmp);
+	SendMessage(GetDlgItem(TabsHwnd, IDC_BTSHOWNORMALS), BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_NormalsOff_Bmp);
+	SendMessage(GetDlgItem(TabsHwnd, IDC_TBBOUNDBOX), BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_BBOff_Bmp);
+
 	EnableWindow(GetDlgItem(Demos_TB_hWnd, IDC_BT_TD_DEMOS_OPTIONS), false);
 
 	SendMessage(GetDlgItem(TabsHwnd, IDC_TBSHOWGRID), BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_GridOn_Bmp);
 	SendMessage(GetDlgItem(TabsHwnd, IDC_TBSHOWHAIR), BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_GridOn_Bmp);
 
+	RedrawWindow(Demos_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 }
 
 // **************************************************************************

@@ -55,6 +55,7 @@ CL64_ImGui::~CL64_ImGui(void)
 void CL64_ImGui::Reset_Class(void)
 {
 	flag_Show_Demo_Options = 0;
+	Show_Model_Data_F = 0;
 }
 
 // *************************************************************************
