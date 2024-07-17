@@ -113,7 +113,10 @@ bool CL64_Ogre::OgreCreateRoot(void)
 	{
 		mRoot = OGRE_NEW Ogre::Root(pluginsPath, mResourcePath + "Equity_CFG.cfg", mResourcePath + "GD64_Ogre.log");
 		Ogre::LogManager::getSingleton().createLog(mResourcePath + "App.log");
-		Ogre::LogManager::getSingleton().setMinLogLevel(Ogre::LogMessageLevel::LML_NORMAL);
+		Ogre::LogManager::getSingleton().setMinLogLevel(Ogre::LogMessageLevel::LML_TRIVIAL);
+
+#pragma warning(disable : 4996) // Nightmare why
+		Ogre::LogManager::getSingleton().setLogDetail(Ogre::LoggingLevel::LL_BOREME);
 
 		App->CL_Ogre->Log_Message_To_File((LPSTR)"Initialising");
 	}
