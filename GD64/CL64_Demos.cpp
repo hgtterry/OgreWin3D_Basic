@@ -45,7 +45,6 @@ void CL64_Demos::Start_Demo_1(void)
 	App->CL_Camera->Reset_View();
 	App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_Free;
 
-
 	char Path_And_File[MAX_PATH];
 
 	strcpy(Path_And_File, App->GD_Directory_FullPath);
@@ -67,6 +66,9 @@ void CL64_Demos::Start_Demo_1(void)
 
 	World_Node->setVisible(true);
 	World_Node->setScale(1, 1, 1);
+
+	App->CL_Player->Set_Player_Position(Ogre::Vector3(0,0,0));
+	App->CL_Player->Set_Player_Rotation(btQuaternion(1, 0, 0, 0));
 
 	App->CL_Scene->Model_Type = Enums::LoadedFile_None;
 	App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_First;

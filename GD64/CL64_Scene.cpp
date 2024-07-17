@@ -163,6 +163,24 @@ void CL64_Scene::Clear_Scene_And_Reset(void)
 
 	App->CL_ImGui->Reset_Class();
 
+	App->CL_Ogre->Ogre3D_Listener->Ogre_Model_Loaded = 0;
+
+	if (App->CL_Converters->World_Ent)
+	{
+		App->CL_Ogre->mSceneMgr->destroyEntity(App->CL_Converters->World_Ent);
+		App->CL_Converters->World_Ent = nullptr;
+	}
+
+	if (Ogre::ResourceGroupManager::getSingleton().resourceGroupExists(App->CL_Converters->Temp_Resource_Group))
+	{
+		Ogre::ResourceGroupManager::getSingleton().destroyResourceGroup(App->CL_Converters->Temp_Resource_Group);
+	}
+
+	if (Ogre::ResourceGroupManager::getSingleton().resourceGroupExists(App->CL_Ogre->World_Resource_Group))
+	{
+		Ogre::ResourceGroupManager::getSingleton().destroyResourceGroup(App->CL_Ogre->World_Resource_Group);
+	}
+
 	SetWindowText(App->MainHwnd, "OgreWin3D_Basic");
 }
 
