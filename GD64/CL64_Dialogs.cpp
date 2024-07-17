@@ -166,6 +166,169 @@ LRESULT CALLBACK CL64_Dialogs::PleaseWait_Proc(HWND hDlg, UINT message, WPARAM w
 }
 
 // *************************************************************************
+// *	  		Start_FPSLock_Dlg:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+void CL64_Dialogs::Start_FPSLock_Dlg()
+{
+	CreateDialog(App->hInst, (LPCTSTR)IDD_FPSLOCK, App->Fdlg, (DLGPROC)FPSLock_Proc);
+}
+
+// *************************************************************************
+// *			FPSLock_Proc:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+LRESULT CALLBACK CL64_Dialogs::FPSLock_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+	switch (message)
+	{
+
+	case WM_INITDIALOG:
+	{
+		SendDlgItemMessage(hDlg, IDC_ST_FPSSETTINGS, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_CK_FPSNOLOCK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_CB_FPSLIST, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		App->CL_Dialogs->Fill_Face_Combo(hDlg);
+
+		return TRUE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->AppBackground;
+	}
+
+	case WM_CTLCOLORSTATIC:
+	{
+		if (GetDlgItem(hDlg, IDC_ST_FPSSETTINGS) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		if (GetDlgItem(hDlg, IDC_CK_FPSNOLOCK) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		return FALSE;
+	}
+
+	case WM_NOTIFY:
+	{
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		if (some_item->idFrom == IDCANCEL)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		return CDRF_DODEFAULT;
+	}
+
+	case WM_COMMAND:
+
+		if (LOWORD(wParam) == IDC_CB_FPSLIST)
+		{
+			switch (HIWORD(wParam)) // Find out what message it was
+			{
+			case CBN_DROPDOWN:
+				break;
+			case CBN_CLOSEUP:
+			{
+				char buff[MAX_PATH]{ 0 };
+
+				HWND temp = GetDlgItem(hDlg, IDC_CB_FPSLIST);
+				int Index = SendMessage(temp, CB_GETCURSEL, 0, 0);
+				SendMessage(temp, CB_GETLBTEXT, Index, (LPARAM)buff);
+
+				int Num = atof(buff);
+
+				float test = static_cast<float>(1) / Num;
+				test = test * 1000000;
+				App->CL_Ogre->FPSLock = (int)test;
+
+			}
+			}
+
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_CK_FPSNOLOCK)
+		{
+			HWND temp = GetDlgItem(hDlg, IDC_CK_FPSNOLOCK);
+			HWND temp1 = GetDlgItem(hDlg, IDC_CB_FPSLIST);
+
+			int test = SendMessage(temp, BM_GETCHECK, 0, 0);
+			if (test == BST_CHECKED)
+			{
+				App->CL_Ogre->FPSLock = 0;
+				EnableWindow(temp1, false);
+				return 1;
+			}
+			else
+			{
+				char buff[MAX_PATH]{ 0 };
+
+				HWND temp = GetDlgItem(hDlg, IDC_CB_FPSLIST);
+				int Index = SendMessage(temp, CB_GETCURSEL, 0, 0);
+				SendMessage(temp, CB_GETLBTEXT, Index, (LPARAM)buff);
+
+				int Num = atof(buff);
+
+				float test = static_cast<float>(1) / Num;
+				test = test * 1000000;
+				App->CL_Ogre->FPSLock = (int)test;
+
+				EnableWindow(temp1, true);
+				return 1;
+			}
+
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDOK)
+		{
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDCANCEL)
+		{
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+
+		break;
+	}
+
+	return FALSE;
+}
+
+// *************************************************************************
+// *		  	Fill_Face_Combo:- Terry and Hazel Flanigan 2024	    	   *
+// *************************************************************************
+void CL64_Dialogs::Fill_Face_Combo(HWND hDlg)
+{
+	SendDlgItemMessage(hDlg, IDC_CB_FPSLIST, CB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
+
+	SendDlgItemMessage(hDlg, IDC_CB_FPSLIST, CB_ADDSTRING, (WPARAM)0, (LPARAM)(LPSTR)"60");
+	SendDlgItemMessage(hDlg, IDC_CB_FPSLIST, CB_ADDSTRING, (WPARAM)0, (LPARAM)"100");
+	SendDlgItemMessage(hDlg, IDC_CB_FPSLIST, CB_ADDSTRING, (WPARAM)0, (LPARAM)"120");
+
+	SendDlgItemMessage(hDlg, IDC_CB_FPSLIST, CB_SETCURSEL, (WPARAM)0, (LPARAM)0);
+
+}
+
+// *************************************************************************
 // *	  Start_Import_Options_Dlg:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
 void CL64_Dialogs::Start_Import_Options_Dlg()
@@ -232,6 +395,8 @@ LRESULT CALLBACK CL64_Dialogs::Import_Options_Dlg_Proc(HWND hDlg, UINT message, 
 	}
 
 	case WM_COMMAND:
+
+
 		if (LOWORD(wParam) == IDOK)
 		{
 			HWND temp = GetDlgItem(hDlg, IDC_CK_COVERT_TO_OGRE);

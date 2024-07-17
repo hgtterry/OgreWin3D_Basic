@@ -344,6 +344,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			return TRUE;
 		}
 
+		case ID_OPTIONS_FPSLOCK:
+		{
+			App->CL_Dialogs->Start_FPSLock_Dlg();
+			return TRUE;
+		}
+		
 		case ID_VIEW_RESET:
 		{
 			App->CL_Camera->Reset_View();
