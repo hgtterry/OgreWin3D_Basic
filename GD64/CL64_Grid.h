@@ -6,6 +6,7 @@ public:
 	CL64_Grid(void);
 	~CL64_Grid(void);
 
+	void Reset_Class(void) const;
 	void Grid_Update(bool Create);
 	void Grid_SetVisible(bool Option);
 

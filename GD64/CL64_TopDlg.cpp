@@ -51,6 +51,25 @@ CL64_TopDlg::~CL64_TopDlg(void)
 {
 }
 
+// *************************************************************************
+// *			Reset_Class:- Terry and Hazel Flanigan 2024				   *
+// *************************************************************************
+void CL64_TopDlg::Reset_Class(void) const
+{
+	App->CL_TopDlg->flag_Toggle_Demos_Demo_1 = 0;
+	App->CL_TopDlg->flag_Toggle_Demos_Demo_2 = 0;
+
+	App->CL_TopDlg->flag_Demo_1_Running = 0;
+	App->CL_TopDlg->flag_Demo_2_Running = 0;
+
+	RedrawWindow(Demos_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+	EnableWindow(GetDlgItem(Demos_TB_hWnd, IDC_BT_TD_DEMOS_OPTIONS), false);
+
+	SendMessage(GetDlgItem(TabsHwnd, IDC_TBSHOWGRID), BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_GridOn_Bmp);
+	SendMessage(GetDlgItem(TabsHwnd, IDC_TBSHOWHAIR), BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_GridOn_Bmp);
+
+}
+
 // **************************************************************************
 // *	  		 Start_TopBar:- Terry and Hazel Flanigan 2024				*
 // **************************************************************************
@@ -184,8 +203,8 @@ LRESULT CALLBACK CL64_TopDlg::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam
 				App->CL_Grid->ShowGridFlag = 1;
 
 				SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_GridOn_Bmp);
-
 			}
+
 			return TRUE;
 		}
 
@@ -947,10 +966,10 @@ LRESULT CALLBACK CL64_TopDlg::Demos_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 		{
 			if (App->CL_TopDlg->flag_Demo_1_Running == 0)
 			{
+				App->CL_Demos->Start_Demo_1();
+
 				App->CL_TopDlg->flag_Toggle_Demos_Demo_1 = 1;
 				App->CL_TopDlg->flag_Toggle_Demos_Demo_2 = 0;
-
-				App->CL_Demos->Start_Demo_1();
 
 				RedrawWindow(App->CL_TopDlg->Demos_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 				EnableWindow(GetDlgItem(hDlg, IDC_BT_TD_DEMOS_OPTIONS), true);
@@ -966,11 +985,11 @@ LRESULT CALLBACK CL64_TopDlg::Demos_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 		{
 			if (App->CL_TopDlg->flag_Demo_2_Running == 0)
 			{
+				App->CL_Demos->Start_Demo_2();
+				
 				App->CL_TopDlg->flag_Toggle_Demos_Demo_2 = 1;
 				App->CL_TopDlg->flag_Toggle_Demos_Demo_1 = 0;
 
-				App->CL_Demos->Start_Demo_2();
-				
 				RedrawWindow(App->CL_TopDlg->Demos_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 				EnableWindow(GetDlgItem(hDlg, IDC_BT_TD_DEMOS_OPTIONS), true);
 

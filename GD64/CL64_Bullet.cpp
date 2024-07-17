@@ -115,7 +115,7 @@ void CL64_Bullet::ShutDown_Bullet()
 // *************************************************************************
 //			Create_New_Trimesh:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-btBvhTriangleMeshShape* CL64_Bullet::Create_New_Trimesh(Ogre::Entity* Entity, Ogre::SceneNode* Node)
+bool CL64_Bullet::Create_New_Trimesh(Ogre::Entity* Entity, Ogre::SceneNode* Node)
 {
 #pragma warning(disable : 4996) // Nightmare why
 
@@ -208,10 +208,7 @@ btBvhTriangleMeshShape* CL64_Bullet::Create_New_Trimesh(Ogre::Entity* Entity, Og
 
 	const bool useQuantizedAABB = true;
 	mShape = new btBvhTriangleMeshShape(triMesh, false, true);
-	//collisionShapes.push_back(mShape);
-
-	//App->Say(mShape->getName());
-	//mShape->buildOptimizedBvh();
+	//collisionShapes.push_back(mShape); Not Needed in this Application
 
 	float x = Node->getPosition().x;
 	float y = Node->getPosition().y;
@@ -231,10 +228,10 @@ btBvhTriangleMeshShape* CL64_Bullet::Create_New_Trimesh(Ogre::Entity* Entity, Og
 
 	btRigidBody::btRigidBodyConstructionInfo rigidBodyCI
 	(
-		0,  // mass
-		myMotionState,// initial position
-		mShape,      // collision shape of body
-		inertia   // local inertia
+		0,				// mass
+		myMotionState,	// initial position
+		mShape,			// collision shape of body
+		inertia			// local inertia
 	);
 
 	Phys_Body = new btRigidBody(rigidBodyCI);
@@ -250,9 +247,7 @@ btBvhTriangleMeshShape* CL64_Bullet::Create_New_Trimesh(Ogre::Entity* Entity, Og
 
 	flag_TriMesh_Created = 1;
 
-	//App->SBC_Physics->Set_Physics(Index);
-
-	return mShape;
+	return 1;
 }
 
 // *************************************************************************

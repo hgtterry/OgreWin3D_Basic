@@ -47,6 +47,19 @@ CL64_Grid::~CL64_Grid(void)
 }
 
 // *************************************************************************
+// *			Reset_Class:- Terry and Hazel Flanigan 2024				   *
+// *************************************************************************
+void CL64_Grid::Reset_Class(void) const
+{
+	App->CL_Grid->Grid_SetVisible(true);
+	App->CL_Grid->ShowGridFlag = true;
+
+	App->CL_Grid->ShowHair = true;
+	App->CL_Grid->Hair_SetVisible(true);
+
+}
+
+// *************************************************************************
 // *	  		Grid_Update:- Terry and Hazel Flanigan 2024				   *
 // *************************************************************************
 void CL64_Grid::Grid_Update(bool Create)

@@ -21,6 +21,8 @@ public:
 	CL64_TopDlg(void);
 	~CL64_TopDlg(void);
 
+	void Reset_Class(void) const;
+
 	void Start_TopBar();
 	void Start_Tabs_Headers(void);
 	void Hide_Tabs(void);

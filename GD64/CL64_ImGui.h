@@ -22,6 +22,7 @@ public:
 	~CL64_ImGui(void);
 
 	// Setup -----------------------------------
+	void Reset_Class(void);
 	void Init_ImGui(void);
 	void ImGui_Set_Colours(void);
 	void Load_Font(void);

@@ -121,7 +121,6 @@ void CL64_Scene::Reset_Class(void)
 	JustName[0] = 0;
 
 	flag_Model_Loaded = 0;
-
 }
 
 // *************************************************************************
@@ -152,20 +151,17 @@ void CL64_Scene::Clear_Scene_And_Reset(void)
 	App->CL_Ogre->Ogre3D_Listener->Run_Physics = 0;
 	App->CL_Ogre->Enable_Fog(false);
 
-	App->CL_TopDlg->flag_Demo_1_Running = 0;
-	App->CL_TopDlg->flag_Demo_2_Running = 0;
+	App->CL_TopDlg->Reset_Class();
 
 	App->CL_Ogre->camNode->setOrientation(Ogre::Quaternion::IDENTITY);
 
-	App->CL_Grid->Grid_SetVisible(true);
-	App->CL_Grid->ShowGridFlag = true;
-
-	App->CL_Grid->ShowHair = true;
-	App->CL_Grid->Hair_SetVisible(true);
-
+	App->CL_Grid->Reset_Class();
+	
 	App->CL_Camera->Reset_View();
 
 	App->CL_Bullet->Clear_Trimesh();
+
+	App->CL_ImGui->Reset_Class();
 
 	SetWindowText(App->MainHwnd, "OgreWin3D_Basic");
 }
