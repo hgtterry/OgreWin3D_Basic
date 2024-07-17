@@ -179,44 +179,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		// Debug -------------------------------------------------------
 		case ID_DEBUG_GENERAL:
 		{
-			/*int fps = 120;
-			float test = static_cast<float>(1) / fps;
-
-			test = test * 1000000;
-
-			App->CL_Ogre->FPSLock = (int)test;*/
-			App->CL_Ogre->Ogre3D_Listener->Ogre_Model_Loaded = 0;
-
-			if (App->CL_Converters->World_Ent)
-			{
-				//App->CL_Ogre->mSceneMgr->destroySceneNode(App->CL_Converters->World_Node);
-				App->CL_Ogre->mSceneMgr->destroyEntity(App->CL_Converters->World_Ent);
-				App->CL_Converters->World_Ent = nullptr;
-				//App->CL_Converters->World_Node = nullptr;
-			}
-
-			/*if (App->CL_Demos->World_Node)
-			{
-				App->CL_Ogre->mSceneMgr->destroySceneNode(App->CL_Demos->World_Node);
-				App->CL_Ogre->mSceneMgr->destroyEntity(App->CL_Demos->World_Ent);
-				App->CL_Demos->World_Ent = nullptr;
-				App->CL_Demos->World_Node = nullptr;
-
-				Debug
-			}*/
-
-			if (Ogre::ResourceGroupManager::getSingleton().resourceGroupExists(App->CL_Converters->Temp_Resource_Group))
-			{
-				Ogre::ResourceGroupManager::getSingleton().destroyResourceGroup(App->CL_Converters->Temp_Resource_Group);
-			}
-
-			if (Ogre::ResourceGroupManager::getSingleton().resourceGroupExists(App->CL_Ogre->World_Resource_Group))
-			{
-				Ogre::ResourceGroupManager::getSingleton().destroyResourceGroup(App->CL_Ogre->World_Resource_Group);
-			}
-
-			App->CL_Scene->Clear_Scene_And_Reset();
-
+			
 			return TRUE;
 		}
 		
