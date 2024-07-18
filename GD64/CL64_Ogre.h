@@ -53,7 +53,7 @@ public:
 	void Clear_ErrorLog();
 
 	void Show_Test_Mesh(bool Show);
-	void Show_Trays(void);
+	void Show_Trays(bool Enable);
 	void Delete_TestMesh(void);
 	void Enable_Fog(bool Enable);
 

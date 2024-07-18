@@ -415,16 +415,18 @@ void CL64_Ogre::Show_Test_Mesh(bool Show)
 // *************************************************************************
 // *			Show_Trays:- Terry and Hazel Flanigan 2024				   *
 // *************************************************************************
-void CL64_Ogre::Show_Trays(void)
+void CL64_Ogre::Show_Trays(bool Enable)
 {
-	if (flag_Show_Trays == 1)
+	if (Enable == 1)
 	{
 		mTrayMgr->showAll();
 		mTrayMgr->hideCursor();
+		flag_Show_Trays = 1;
 	}
 	else
 	{
 		mTrayMgr->hideAll();
+		flag_Show_Trays = 0;
 	}
 }
 
