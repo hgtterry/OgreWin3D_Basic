@@ -50,9 +50,9 @@ CL64_Grid::CL64_Grid(void)
 	Scale_Y = 4;
 	Scale_Z = 4;
 
-	ShowGridFlag = 1;
-	ShowDivisions = 1;
-	ShowHair = 1;
+	flag_ShowGrid = 1;
+	flag_ShowDivisions = 1;
+	flag_ShowHair = 1;
 
 }
 
@@ -64,13 +64,13 @@ CL64_Grid::~CL64_Grid(void)
 // *************************************************************************
 // *			Reset_Class:- Terry and Hazel Flanigan 2024				   *
 // *************************************************************************
-void CL64_Grid::Reset_Class(void) const
+void CL64_Grid::Reset_Class(void)
 {
-	App->CL_Grid->Grid_SetVisible(true);
-	App->CL_Grid->ShowGridFlag = true;
+	Grid_SetVisible(true);
+	flag_ShowGrid = true;
 
-	App->CL_Grid->ShowHair = true;
-	App->CL_Grid->Hair_SetVisible(true);
+	flag_ShowHair = true;
+	Hair_SetVisible(true);
 
 }
 
@@ -90,7 +90,7 @@ void CL64_Grid::Grid_Update(bool Create)
 	GridManual->clear();
 	GridManual->begin("Template/Alpha_Blend_GD64", Ogre::RenderOperation::OT_LINE_LIST, App->CL_Ogre->App_Resource_Group);
 	
-	if (ShowGridFlag == 1)
+	if (flag_ShowGrid == 1)
 	{
 		for (int x = XAxis_min; x <= XAxis_max; ++x)
 		{
@@ -98,7 +98,7 @@ void CL64_Grid::Grid_Update(bool Create)
 			GridManual->colour(ColourMain);
 			GridManual->position(x, 0, ZAxis_max);
 			GridManual->colour(ColourMain);
-			if (x < XAxis_max && ShowDivisions == 1)
+			if (x < XAxis_max && flag_ShowDivisions == 1)
 			{
 				for (int d = 0; d < Division_X; ++d)
 				{
@@ -117,7 +117,7 @@ void CL64_Grid::Grid_Update(bool Create)
 			GridManual->colour(ColourMain);
 			GridManual->position(Ogre::Vector3(XAxis_max, 0, z));
 			GridManual->colour(ColourMain);
-			if (z < ZAxis_max && ShowDivisions == 1)
+			if (z < ZAxis_max && flag_ShowDivisions == 1)
 			{
 				for (int d = 1; d < Division_Y; ++d)
 				{
@@ -148,9 +148,10 @@ void CL64_Grid::Grid_Update(bool Create)
 // *************************************************************************
 // *	  		Grid_SetVisiable:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
-void CL64_Grid::Grid_SetVisible(bool Option)
+void CL64_Grid::Grid_SetVisible(bool Enable)
 {
-	GridNode->setVisible(Option);
+	GridNode->setVisible(Enable);
+	flag_ShowGrid = Enable;
 }
 
 // *************************************************************************
@@ -201,7 +202,20 @@ void CL64_Grid::Hair_Update(bool Create)
 // *************************************************************************
 // *	  		Hair_SetVisiable:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
-void CL64_Grid::Hair_SetVisible(bool Option)
+void CL64_Grid::Hair_SetVisible(bool Enable)
 {
-	HairNode->setVisible(Option);
+	HairNode->setVisible(Enable);
+	flag_ShowHair = Enable;
+}
+
+// *************************************************************************
+// *	  	Enable_Grid_And_Hair:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+void CL64_Grid::Enable_Grid_And_Hair(bool Enable)
+{
+	GridNode->setVisible(Enable);
+	HairNode->setVisible(Enable);
+
+	flag_ShowGrid = Enable;
+	flag_ShowHair = Enable;
 }

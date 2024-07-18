@@ -55,3 +55,23 @@ void CL64_Camera::Reset_View(void)
 		App->CL_Scene->Imported_Ogre_Node->setPosition(0, 0, 0);
 	}
 }
+
+// *************************************************************************
+// *		Set_Camera_Position:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void CL64_Camera::Set_Camera_Position(float X, float Y, float Z)
+{
+	App->CL_Ogre->camNode->setPosition(X, Y, Z);
+}
+
+// *************************************************************************
+// *		Set_Camera_Rotation:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void CL64_Camera::Set_Camera_Rotation(float Pitch, float Yaw, float Roll)
+{
+	App->CL_Ogre->camNode->setOrientation(Ogre::Quaternion::IDENTITY);
+
+	App->CL_Ogre->camNode->pitch(Ogre::Degree(Pitch));
+	App->CL_Ogre->camNode->yaw(Ogre::Degree(Yaw));
+	App->CL_Ogre->camNode->roll(Ogre::Degree(Roll));
+}

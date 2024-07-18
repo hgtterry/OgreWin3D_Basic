@@ -21,12 +21,13 @@ public:
 	CL64_Grid(void);
 	~CL64_Grid(void);
 
-	void Reset_Class(void) const;
+	void Reset_Class(void);
 	void Grid_Update(bool Create);
-	void Grid_SetVisible(bool Option);
+	void Grid_SetVisible(bool Enable);
 
 	void Hair_Update(bool Create);
-	void Hair_SetVisible(bool Option);
+	void Hair_SetVisible(bool Enable);
+	void Enable_Grid_And_Hair(bool Enable);
 
 	Ogre::ManualObject* GridManual;
 	Ogre::SceneNode* GridNode;
@@ -57,8 +58,8 @@ public:
 	Ogre::ColourValue ColourHairX;
 	Ogre::ColourValue ColourHairY;
 
-	bool ShowGridFlag;
-	bool ShowDivisions;
-	bool ShowHair;
+	bool flag_ShowGrid;
+	bool flag_ShowDivisions;
+	bool flag_ShowHair;
 };
 

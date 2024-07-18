@@ -38,6 +38,7 @@ public:
 	void Get_Height(void);
 	void Set_Player_Position(Ogre::Vector3 Position);
 	void Set_Player_Rotation(btQuaternion Rotation);
+	void Set_Player_GroundSpeed(float GroundSpeed);
 
 	Ogre::Vector3 Current_Position;
 	btVector3 Physics_Position;

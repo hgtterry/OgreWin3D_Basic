@@ -235,3 +235,11 @@ void CL64_Player::Set_Player_Rotation(btQuaternion Rotation)
 {
 	App->CL_Scene->B_Player[0]->Phys_Body->getWorldTransform().setRotation(Rotation);
 }
+
+// *************************************************************************
+// *		Set_Player_GroundSpeed:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+void CL64_Player::Set_Player_GroundSpeed(float GroundSpeed)
+{
+	App->CL_Scene->B_Player[0]->Ground_speed = GroundSpeed;
+}

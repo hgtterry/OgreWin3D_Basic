@@ -22,6 +22,8 @@ public:
 	~CL64_Camera(void);
 
 	void Reset_View(void);
+	void Set_Camera_Position(float X,float Y,float Z);
+	void Set_Camera_Rotation(float Pitch, float Yaw, float Roll);
 
 };
 

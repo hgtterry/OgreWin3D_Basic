@@ -83,7 +83,7 @@ void CL64_TopDlg::Reset_Class(void) const
 	EnableWindow(GetDlgItem(Demos_TB_hWnd, IDC_BT_TD_DEMOS_OPTIONS), false);
 
 	SendMessage(GetDlgItem(TabsHwnd, IDC_TBSHOWGRID), BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_GridOn_Bmp);
-	SendMessage(GetDlgItem(TabsHwnd, IDC_TBSHOWHAIR), BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_GridOn_Bmp);
+	SendMessage(GetDlgItem(TabsHwnd, IDC_TBSHOWHAIR), BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_HairOn_Bmp);
 
 	RedrawWindow(Demos_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 }
@@ -208,18 +208,16 @@ LRESULT CALLBACK CL64_TopDlg::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam
 		{
 			HWND Temp = GetDlgItem(hDlg, IDC_TBSHOWGRID);
 
-			if (App->CL_Grid->ShowGridFlag == 1)
+			if (App->CL_Grid->flag_ShowGrid == 1)
 			{
 				App->CL_Grid->Grid_SetVisible(0);
-				App->CL_Grid->ShowGridFlag = 0;
-
+				
 				SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_GridOff_Bmp);
 			}
 			else
 			{
 				App->CL_Grid->Grid_SetVisible(1);
-				App->CL_Grid->ShowGridFlag = 1;
-
+				
 				SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_GridOn_Bmp);
 			}
 
@@ -231,16 +229,14 @@ LRESULT CALLBACK CL64_TopDlg::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam
 		{
 			HWND Temp = GetDlgItem(hDlg, IDC_TBSHOWHAIR);
 
-			if (App->CL_Grid->ShowHair == 1)
+			if (App->CL_Grid->flag_ShowHair == 1)
 			{
-				App->CL_Grid->ShowHair = 0;
 				App->CL_Grid->Hair_SetVisible(0);
 
 				SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_HairOff_Bmp);
 			}
 			else
 			{
-				App->CL_Grid->ShowHair = 1;
 				App->CL_Grid->Hair_SetVisible(1);
 
 				SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_HairOn_Bmp);
