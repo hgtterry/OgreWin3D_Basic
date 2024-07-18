@@ -218,4 +218,6 @@ void CL64_Grid::Enable_Grid_And_Hair(bool Enable)
 
 	flag_ShowGrid = Enable;
 	flag_ShowHair = Enable;
+
+	App->CL_TopDlg->Enable_Grid_Hair_Icons(Enable);
 }

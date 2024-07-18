@@ -27,6 +27,7 @@ public:
 	void Start_Tabs_Headers(void);
 	void Hide_Tabs(void);
 	void Enable_TestMesh_Button(bool Enable);
+	void Enable_Grid_Hair_Icons(bool Enable) const;
 
 	// Tab Options
 	void Start_Debug_TB(void);

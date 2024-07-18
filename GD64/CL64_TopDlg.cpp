@@ -82,9 +82,8 @@ void CL64_TopDlg::Reset_Class(void) const
 
 	EnableWindow(GetDlgItem(Demos_TB_hWnd, IDC_BT_TD_DEMOS_OPTIONS), false);
 
-	SendMessage(GetDlgItem(TabsHwnd, IDC_TBSHOWGRID), BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_GridOn_Bmp);
-	SendMessage(GetDlgItem(TabsHwnd, IDC_TBSHOWHAIR), BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_HairOn_Bmp);
-
+	Enable_Grid_Hair_Icons(true);
+	
 	RedrawWindow(Demos_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 }
 
@@ -1353,5 +1352,22 @@ void CL64_TopDlg::Init_Bmps_Globals(void)
 	ti35.hwnd = App->MainHwnd;
 	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti35);
 
+}
+
+// **************************************************************************
+// *	  		 Start_TopBar:- Terry and Hazel Flanigan 2024				*
+// **************************************************************************
+void CL64_TopDlg::Enable_Grid_Hair_Icons(bool Enable) const
+{
+	if (Enable == 1)
+	{
+		SendMessage(GetDlgItem(TabsHwnd, IDC_TBSHOWGRID), BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_GridOn_Bmp);
+		SendMessage(GetDlgItem(TabsHwnd, IDC_TBSHOWHAIR), BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_HairOn_Bmp);
+	}
+	else
+	{
+		SendMessage(GetDlgItem(TabsHwnd, IDC_TBSHOWGRID), BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_GridOff_Bmp);
+		SendMessage(GetDlgItem(TabsHwnd, IDC_TBSHOWHAIR), BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_HairOff_Bmp);
+	}
 }
 
