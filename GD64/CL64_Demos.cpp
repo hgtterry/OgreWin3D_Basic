@@ -138,6 +138,8 @@ void CL64_Demos::Start_Demo_2(void)
 
 	App->CL_Grid->Enable_Grid_And_Hair(false);
 
+	App->CL_Ogre->Enable_Fog(true);
+
 	flag_Demo_2_Running = 1;
 }
 
@@ -149,6 +151,7 @@ void CL64_Demos::Reset_View(void)
 	if (flag_Demo_1_Running == 1)
 	{
 		App->CL_Camera->Reset_View();
+		App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_Free;
 
 		App->CL_Player->Set_Player_Position(Ogre::Vector3(0, 0, 0));
 		App->CL_Player->Set_Player_Rotation(btQuaternion(1, 0, 0, 0));

@@ -75,6 +75,7 @@
 #define IDC_BTSHOWNORMALS               1008
 #define IDC_BT_CAMERA_FIRST             1008
 #define IDC_CKSLOW                      1008
+#define IDC_BT_TD_DEBUG_FPSLOCK         1008
 #define IDC_BUTTON3                     1009
 #define IDC_BT_CAMERA_MODEL             1009
 #define IDC_ALLMESH                     1009
@@ -117,7 +118,6 @@
 #define IDC_CK_FPSNOLOCK                1031
 #define IDC_CB_FPSLIST                  1032
 #define IDC_ST_FPSSETTINGS              1033
-#define IDC_COMBO1                      1034
 #define ID_VIEW_RESET                   32771
 #define ID_VIEW_MAX3DVIEW               32772
 #define ID_DEBUG_TESTPREFERANCE         32773
