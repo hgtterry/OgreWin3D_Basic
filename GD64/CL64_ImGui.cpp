@@ -261,7 +261,6 @@ void CL64_ImGui::Camera_Data_GUI(void)
 	{
 		ImVec2 Size = ImGui::GetWindowSize();
 
-		auto windowHeight = ImGui::GetWindowSize().y;
 		auto textWidth = ImGui::CalcTextSize("Camera Data").x;
 
 		float Yaw = App->CL_Ogre->Ogre3D_Listener->mCamNode->getOrientation().getYaw().valueDegrees();
@@ -401,7 +400,7 @@ void CL64_ImGui::Model_Data_GUI(void)
 void CL64_ImGui::Demo_Options_Gui(void)
 {
 	ImGui::SetNextWindowPos(ImVec2(10, 10), ImGuiCond_FirstUseEver);
-	ImGui::SetNextWindowSize(ImVec2(280, 300), ImGuiCond_FirstUseEver);
+	ImGui::SetNextWindowSize(ImVec2(280, 250), ImGuiCond_FirstUseEver);
 
 	if (!ImGui::Begin("Demo_1", &flag_Show_Demo_Options, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar))
 	{
@@ -439,7 +438,12 @@ void CL64_ImGui::Demo_Options_Gui(void)
 		ImGui::Text("Yaw:- %f", App->CL_Ogre->camNode->getOrientation().getYaw().valueDegrees());
 		ImGui::Separator();
 
-		if (ImGui::Button("Reset View"))
+		ImGui::Text("");
+
+		ImVec2 Size = ImGui::GetWindowSize();
+		auto textWidth = ImGui::CalcTextSize("Reset Scene").x;
+		ImGui::SetCursorPosX((Size.x - textWidth) * 0.5f);
+		if (ImGui::Button("Reset Scene"))
 		{
 			App->CL_Demos->Reset_View();
 		}

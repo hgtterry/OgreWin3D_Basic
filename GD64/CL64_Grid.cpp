@@ -71,7 +71,6 @@ void CL64_Grid::Reset_Class(void)
 
 	flag_ShowHair = true;
 	Hair_SetVisible(true);
-
 }
 
 // *************************************************************************

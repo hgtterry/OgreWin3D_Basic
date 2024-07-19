@@ -21,10 +21,23 @@ CL64_Demos::CL64_Demos(void)
 {
 	World_Ent = NULL;
 	World_Node = NULL;
+
+	flag_Demo_1_Running = 0;
+	flag_Demo_2_Running = 0;
+
 }
 
 CL64_Demos::~CL64_Demos(void)
 {
+}
+
+// *************************************************************************
+// *			Reset_Class:- Terry and Hazel Flanigan 2024				   *
+// *************************************************************************
+void CL64_Demos::Reset_Class(void)
+{
+	flag_Demo_1_Running = 0;
+	flag_Demo_2_Running = 0;
 }
 
 // *************************************************************************
@@ -77,6 +90,8 @@ void CL64_Demos::Start_Demo_1(void)
 	App->CL_ImGui->flag_Show_Demo_Options = 1;
 
 	App->CL_Grid->Enable_Grid_And_Hair(false);
+
+	flag_Demo_1_Running = 1;
 }
 
 // *************************************************************************
@@ -122,6 +137,8 @@ void CL64_Demos::Start_Demo_2(void)
 	App->CL_ImGui->flag_Show_Demo_Options = 1;
 
 	App->CL_Grid->Enable_Grid_And_Hair(false);
+
+	flag_Demo_2_Running = 1;
 }
 
 // *************************************************************************
@@ -129,13 +146,33 @@ void CL64_Demos::Start_Demo_2(void)
 // *************************************************************************
 void CL64_Demos::Reset_View(void)
 {
-	float x = App->CL_Scene->B_Player[0]->StartPos.x;
-	float y = App->CL_Scene->B_Player[0]->StartPos.y;
-	float z = App->CL_Scene->B_Player[0]->StartPos.z;
+	if (flag_Demo_1_Running == 1)
+	{
+		App->CL_Camera->Reset_View();
 
-	App->CL_Scene->B_Player[0]->Phys_Body->getWorldTransform().setOrigin(btVector3(x, y, z));
-	App->CL_Scene->B_Player[0]->Phys_Body->getWorldTransform().setRotation(App->CL_Scene->B_Player[0]->Physics_Rotation);
+		App->CL_Player->Set_Player_Position(Ogre::Vector3(0, 0, 0));
+		App->CL_Player->Set_Player_Rotation(btQuaternion(1, 0, 0, 0));
 
-	App->CL_Scene->B_Player[0]->CameraPitch_Node->setOrientation(Ogre::Quaternion::IDENTITY);
+		App->CL_Scene->B_Player[0]->Phys_Body->getWorldTransform().setRotation(App->CL_Scene->B_Player[0]->Physics_Rotation);
+		App->CL_Scene->B_Player[0]->CameraPitch_Node->setOrientation(Ogre::Quaternion::IDENTITY);
+	}
+
+	if (flag_Demo_2_Running == 1)
+	{
+		App->CL_Camera->Set_Camera_Rotation(0, 90, 0);
+		App->CL_Camera->Set_Camera_Position(-237, -120, 800);
+
+		App->CL_Player->Set_Player_Position(Ogre::Vector3(-237, -120, 800));
+		App->CL_Player->Set_Player_Rotation(btQuaternion(0.7071068, 0, 0.7071068, 0));
+	}
+
+	//float x = App->CL_Scene->B_Player[0]->StartPos.x;
+	//float y = App->CL_Scene->B_Player[0]->StartPos.y;
+	//float z = App->CL_Scene->B_Player[0]->StartPos.z;
+
+	//App->CL_Scene->B_Player[0]->Phys_Body->getWorldTransform().setOrigin(btVector3(x, y, z));
+	//App->CL_Scene->B_Player[0]->Phys_Body->getWorldTransform().setRotation(App->CL_Scene->B_Player[0]->Physics_Rotation);
+
+	//App->CL_Scene->B_Player[0]->CameraPitch_Node->setOrientation(Ogre::Quaternion::IDENTITY);
 
 }
