@@ -41,7 +41,7 @@ public:
 	bool flag_Toggle_Tabs_Physics;
 	
 	bool flag_Toggle_PhysicaDebug_Node;
-
+	bool flag_FPS_Dlg_Running;
 	bool flag_Demo_1_Running;
 	bool flag_Demo_2_Running;
 

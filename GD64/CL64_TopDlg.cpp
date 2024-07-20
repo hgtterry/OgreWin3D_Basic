@@ -29,6 +29,8 @@ CL64_TopDlg::CL64_TopDlg(void)
 	Demos_TB_hWnd =		nullptr;
 	Physics_TB_hWnd =	nullptr;
 
+	flag_FPS_Dlg_Running = 0
+		;
 	flag_Toggle_Tabs_Camera = 0;
 	flag_Toggle_Tabs_Debug = 1;
 	flag_Toggle_Tabs_Demos = 0;
@@ -737,8 +739,9 @@ LRESULT CALLBACK CL64_TopDlg::Debug_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 
 		if (LOWORD(wParam) == IDC_BT_TD_DEBUG_FPSLOCK)
 		{
+		
 			App->CL_Dialogs->Start_FPSLock_Dlg();
-
+			
 			return 1;
 		}
 		

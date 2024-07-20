@@ -170,7 +170,11 @@ LRESULT CALLBACK CL64_Dialogs::PleaseWait_Proc(HWND hDlg, UINT message, WPARAM w
 // *************************************************************************
 void CL64_Dialogs::Start_FPSLock_Dlg()
 {
-	CreateDialog(App->hInst, (LPCTSTR)IDD_FPSLOCK, App->Fdlg, (DLGPROC)FPSLock_Proc);
+	if (App->CL_TopDlg->flag_FPS_Dlg_Running == 0)
+	{
+		CreateDialog(App->hInst, (LPCTSTR)IDD_FPSLOCK, App->Fdlg, (DLGPROC)FPSLock_Proc);
+		App->CL_TopDlg->flag_FPS_Dlg_Running = 1;
+	}
 }
 
 // *************************************************************************
@@ -297,12 +301,14 @@ LRESULT CALLBACK CL64_Dialogs::FPSLock_Proc(HWND hDlg, UINT message, WPARAM wPar
 
 		if (LOWORD(wParam) == IDOK)
 		{
+			App->CL_TopDlg->flag_FPS_Dlg_Running = 0;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == IDCANCEL)
 		{
+			App->CL_TopDlg->flag_FPS_Dlg_Running = 0;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
