@@ -26,12 +26,16 @@ public:
 	float RX;
 	float RZ;
 
+	int Selected_Face_Group;
+
 	bool Flag_ShowFaces;
 	bool Flag_ShowBoundingBox;
 	bool Flag_ShowPoints;
 	bool Flag_ShowBones;
 	bool Flag_ShowNormals;
 	bool Flag_ShowTextured;
+
+	bool flag_ShowOnlySubFaces;
 
 private:
 

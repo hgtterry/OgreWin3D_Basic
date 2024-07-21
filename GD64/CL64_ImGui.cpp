@@ -42,6 +42,8 @@ CL64_ImGui::CL64_ImGui(void)
 	Model_Data_PosY = 0;
 
 	Float_Step = 0.50f;
+	PreviouseMaterial = 0;
+	PreviouseSubMesh = 0;
 }
 
 CL64_ImGui::~CL64_ImGui(void)
@@ -310,19 +312,23 @@ void CL64_ImGui::Model_Data_GUI(void)
 	else
 	{
 		ImGui::Text("Model Info");
+		ImGui::Separator();
+
 		if (ImGui::TreeNode("Paths"))
 		{
-			ImGui::Text("Model Name:- %s", App->CL_Scene->JustName);
-			ImGui::Text("Model File:- %s", App->CL_Scene->FileName);
-			ImGui::Text("Model Path:- %s", App->CL_Scene->Path_FileName);
+			ImGui::Text("Model Name: %s", App->CL_Scene->JustName);
+			ImGui::Text("Model File: %s", App->CL_Scene->FileName);
+			ImGui::Text("Model Path: %s", App->CL_Scene->Path_FileName);
 			ImGui::Text("Texture Path:- %s", App->CL_Scene->Texture_FolderPath);
 
 			ImGui::TreePop();
 		}
 
-		if (ImGui::TreeNode("Ogre3D Model"))
+		ImGui::Separator();
+
+		if (ImGui::TreeNode("Ogre3D Model","Ogre3D Model:  %s", App->CL_Scene->FileName))
 		{
-			ImGui::Text("Name:- %s",App->CL_Scene->S_OgreMeshData[0]->mName.c_str());
+			ImGui::Text("User Name:- %s",App->CL_Scene->S_OgreMeshData[0]->mName.c_str());
 			if (ImGui::TreeNode("Materials"))
 			{
 				int Count = 0;
@@ -330,7 +336,13 @@ void CL64_ImGui::Model_Data_GUI(void)
 
 				while (Count < Size)
 				{
-					ImGui::Text(App->CL_Scene->S_OgreMeshData[0]->mMaterials[Count].c_str());
+					if (ImGui::Selectable(App->CL_Scene->S_OgreMeshData[0]->mMaterials[Count].c_str(), listMaterialItems[Count]))
+					{
+						listMaterialItems[PreviouseMaterial] = 0;
+						listMaterialItems[Count] = 1;
+						PreviouseMaterial = Count;
+					}
+
 					Count++;
 				}
 
@@ -339,7 +351,35 @@ void CL64_ImGui::Model_Data_GUI(void)
 
 			if (ImGui::TreeNode("Geometry"))
 			{
+				
 				ImGui::Text("Edge List:- %s", App->CL_Scene->S_OgreMeshData[0]->mEdgeList.c_str());
+				int Count = 0;
+				int Size = App->CL_Scene->S_OgreMeshData[0]->mMaterials.size();
+
+				while (Count < Size)
+				{
+					char Num[MAX_PATH];
+					char strSubMesh[MAX_PATH];
+					strcpy(strSubMesh, "Sub Mesh_");
+					_itoa(Count,Num,10);
+					strcat(strSubMesh, Num);
+
+					if (ImGui::Selectable(strSubMesh, listSubMeshItems[Count]))
+					{
+						listSubMeshItems[PreviouseSubMesh] = 0;
+						listSubMeshItems[Count] = 1;
+						PreviouseSubMesh = Count;
+
+						App->CL_Ogre->OGL_Listener->Flag_ShowFaces = 1;
+						App->CL_Ogre->OGL_Listener->flag_ShowOnlySubFaces = 1;
+						App->CL_Ogre->OGL_Listener->Selected_Face_Group = Count;
+					}
+
+					Count++;
+				}
+
+				ImGui::Text("Count:- %i", PreviouseSubMesh);
+
 				ImGui::TreePop();
 			}
 
@@ -362,6 +402,8 @@ void CL64_ImGui::Model_Data_GUI(void)
 			ImGui::TreePop();
 		}
 
+		ImGui::Separator();
+
 		if (ImGui::TreeNode("Mesh Data"))
 		{
 			ImGui::Indent();
@@ -376,14 +418,11 @@ void CL64_ImGui::Model_Data_GUI(void)
 			ImGui::TreePop();
 		}
 
-		ImGui::Text("  ");
-		ImGui::Text("  ");
+		ImGui::Separator();
 		
 		ImVec2 Size = ImGui::GetWindowSize();
 		//Model_Data_PosX = ((float)App->CL_Ogre->OgreListener->View_Width / 2) - (Size.x / 2);
 		//Model_Data_PosY = ((float)App->CL_Ogre->OgreListener->View_Height / 2) - (Size.y / 2);
-
-		ImGui::Separator();
 
 		if (ImGui::Button("Close"))
 		{

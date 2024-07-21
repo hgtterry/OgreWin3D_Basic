@@ -29,6 +29,8 @@ distribution.
 
 CL64_OGL_Listener::CL64_OGL_Listener(void)
 {
+	Selected_Face_Group = 0;
+
 	RX = 0;
 	RZ = 0;
 
@@ -48,6 +50,8 @@ CL64_OGL_Listener::CL64_OGL_Listener(void)
 	Flag_ShowTextured = 0;
 
 	Light_Activated = 0;
+
+	flag_ShowOnlySubFaces = 0;
 }
 
 CL64_OGL_Listener::~CL64_OGL_Listener(void)
@@ -326,6 +330,13 @@ void CL64_OGL_Listener::MeshData_Render_Faces(void)
 	glColor3f(1, 1, 1);
 
 	int GroupCount = App->CL_Scene->GroupCount;
+
+	
+	if (flag_ShowOnlySubFaces == 1) // Show Only Selected SubMesh
+	{
+		MeshData_Face_Groups(Selected_Face_Group);
+		return;
+	}
 
 	while (Count < GroupCount)
 	{

@@ -59,5 +59,11 @@ public:
 	float Model_Data_PosY;
 
 	float Float_Step;
+
+	bool listMaterialItems[20] = { 0 };
+	int PreviouseMaterial;
+
+	bool listSubMeshItems[20] = { 0 };
+	int PreviouseSubMesh;
 };
 

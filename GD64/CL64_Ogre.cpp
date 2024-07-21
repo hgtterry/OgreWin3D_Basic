@@ -81,6 +81,7 @@ void CL64_Ogre::InitOgre(void)
 	TestMesh_Entity = mSceneMgr->createEntity("Test_Mesh","Sinbad.mesh");
 	TestMesh_Node = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	TestMesh_Node->attachObject(TestMesh_Entity);
+	strcpy(App->CL_Scene->FileName, "Sinbad.mesh");
 
 	Show_Test_Mesh(true);
 
