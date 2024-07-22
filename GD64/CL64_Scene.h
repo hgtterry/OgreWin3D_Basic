@@ -40,6 +40,8 @@ typedef struct Bone_Type {
 
 typedef struct Ogre_SubMesh_Type {
 	std::string Name;
+	std::string MatrialName;
+	Ogre::String strHasSharedVertices;
 }Ogre_SubMesh_Type;
 
 typedef struct OgreMeshData_Type {

@@ -43,7 +43,7 @@ CL64_ImGui::CL64_ImGui(void)
 
 	Float_Step = 0.50f;
 	PreviouseMaterial = 0;
-	PreviouseSubMesh = 0;
+	PreviouseSubMesh = -1;
 }
 
 CL64_ImGui::~CL64_ImGui(void)
@@ -358,22 +358,28 @@ void CL64_ImGui::Model_Data_GUI(void)
 
 				while (Count < Size)
 				{
-					if (ImGui::Selectable(App->CL_Scene->S_OgreMeshData[0]->mSubmeshes[Count].Name.c_str(), 
-						listSubMeshItems[Count]))
+					if (ImGui::TreeNode(App->CL_Scene->S_OgreMeshData[0]->mSubmeshes[Count].Name.c_str()))
 					{
-						listSubMeshItems[PreviouseSubMesh] = 0;
-						listSubMeshItems[Count] = 1;
-						PreviouseSubMesh = Count;
+						ImGui::Text("Dedicated vertices:  %s", App->CL_Scene->S_OgreMeshData[0]->mSubmeshes[Count].strHasSharedVertices.c_str());
+						ImGui::Text("Material Name: %s", App->CL_Scene->S_OgreMeshData[0]->mSubmeshes[Count].MatrialName);
+						
+						if (ImGui::Checkbox("Show Mesh", &listSubMeshItems[Count]))
+						{
+							App->CL_Ogre->OGL_Listener->Flag_ShowFaces = 1;
+							App->CL_Ogre->OGL_Listener->flag_ShowOnlySubFaces = 1;
+							App->CL_Ogre->OGL_Listener->Selected_Face_Group = Count;
 
-						App->CL_Ogre->OGL_Listener->Flag_ShowFaces = 1;
-						App->CL_Ogre->OGL_Listener->flag_ShowOnlySubFaces = 1;
-						App->CL_Ogre->OGL_Listener->Selected_Face_Group = Count;
+							listSubMeshItems[PreviouseSubMesh] = 0;
+							PreviouseSubMesh = Count;
+						}
+						
+						ImGui::TreePop();
 					}
 
 					Count++;
 				}
 
-				ImGui::Text("Count:- %i", PreviouseSubMesh);
+				//ImGui::Text("Count:- %i", PreviouseSubMesh);
 
 				ImGui::TreePop();
 			}

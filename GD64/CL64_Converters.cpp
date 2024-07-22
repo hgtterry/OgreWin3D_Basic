@@ -819,6 +819,19 @@ void CL64_Converters::Get_Ogre3D_MeshData(Ogre::Entity* Ogre_Entity)
 
 		App->CL_Scene->S_OgreMeshData[0]->mSubmeshes[Count].Name = strSubMesh;
 
+		
+		Ogre::SubMesh const* subMesh = Ogre_Entity->getSubEntity(Count)->getSubMesh();
+		if (subMesh->useSharedVertices)
+		{
+			App->CL_Scene->S_OgreMeshData[0]->mSubmeshes[Count].strHasSharedVertices = "No";
+		}
+		else
+		{
+			App->CL_Scene->S_OgreMeshData[0]->mSubmeshes[Count].strHasSharedVertices = "Yes";
+		}
+
+		App->CL_Scene->S_OgreMeshData[0]->mSubmeshes[Count].MatrialName = subMesh->getMaterialName();
+
 		Count++;
 	}
 
