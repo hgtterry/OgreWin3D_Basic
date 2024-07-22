@@ -43,6 +43,7 @@ typedef struct Ogre_SubMesh_Type {
 	std::string MatrialName;
 	Ogre::String strHasSharedVertices;
 	unsigned int VerticesCount;
+	int BonesCount;
 }Ogre_SubMesh_Type;
 
 typedef struct OgreMeshData_Type {
