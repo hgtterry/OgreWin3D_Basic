@@ -379,6 +379,13 @@ void CL64_ImGui::Model_Data_GUI(void)
 					Count++;
 				}
 
+				if (listSubMeshItems[PreviouseSubMesh] == 0)
+				{
+					App->CL_Ogre->OGL_Listener->Flag_ShowFaces = 0;
+					App->CL_Ogre->OGL_Listener->flag_ShowOnlySubFaces = 0;
+					PreviouseSubMesh = -1;
+				}
+
 				//ImGui::Text("Count:- %i", PreviouseSubMesh);
 
 				ImGui::TreePop();
