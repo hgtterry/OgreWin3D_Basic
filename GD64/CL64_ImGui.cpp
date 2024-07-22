@@ -354,17 +354,12 @@ void CL64_ImGui::Model_Data_GUI(void)
 				
 				ImGui::Text("Edge List:- %s", App->CL_Scene->S_OgreMeshData[0]->mEdgeList.c_str());
 				int Count = 0;
-				int Size = App->CL_Scene->S_OgreMeshData[0]->mMaterials.size();
+				int Size = App->CL_Scene->S_OgreMeshData[0]->mSubMeshCount;
 
 				while (Count < Size)
 				{
-					char Num[MAX_PATH];
-					char strSubMesh[MAX_PATH];
-					strcpy(strSubMesh, "Sub Mesh_");
-					_itoa(Count,Num,10);
-					strcat(strSubMesh, Num);
-
-					if (ImGui::Selectable(strSubMesh, listSubMeshItems[Count]))
+					if (ImGui::Selectable(App->CL_Scene->S_OgreMeshData[0]->mSubmeshes[Count].Name.c_str(), 
+						listSubMeshItems[Count]))
 					{
 						listSubMeshItems[PreviouseSubMesh] = 0;
 						listSubMeshItems[Count] = 1;

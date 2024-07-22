@@ -38,10 +38,15 @@ typedef struct Bone_Type {
 	Translation_Type TranslationStart;
 }Bone_Type;
 
+typedef struct Ogre_SubMesh_Type {
+	std::string Name;
+}Ogre_SubMesh_Type;
+
 typedef struct OgreMeshData_Type {
 	Ogre::String mEdgeList;
 	Ogre::String mName;
 	std::vector<std::string> mMaterials;
+	std::vector<Ogre_SubMesh_Type> mSubmeshes;
 	int mSubMeshCount;
 	Ogre::Vector3 Center;
 	Ogre::Vector3 vMin;

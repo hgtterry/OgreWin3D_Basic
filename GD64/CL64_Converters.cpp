@@ -802,9 +802,30 @@ void CL64_Converters::Get_Ogre3D_MeshData(Ogre::Entity* Ogre_Entity)
 
 	App->CL_Scene->S_OgreMeshData[0]->mName = Ogre_Entity->getName();
 
+	
+	// ------------------------------------ Sub Meshes
+
+	Count = 0;
+	
+	App->CL_Scene->S_OgreMeshData[0]->mSubmeshes.resize(SubMeshCount);
+
+	while (Count < SubMeshCount)
+	{
+		char Num[MAX_PATH];
+		char strSubMesh[MAX_PATH];
+		strcpy(strSubMesh, "SubMesh_");
+		_itoa(Count, Num, 10);
+		strcat(strSubMesh, Num);
+
+		App->CL_Scene->S_OgreMeshData[0]->mSubmeshes[Count].Name = strSubMesh;
+
+		Count++;
+	}
+
+	// ------------------------------------ Bounds
 	Ogre::Vector3 vMin(Ogre_Entity->getBoundingBox().getMinimum());
 	Ogre::Vector3 vMax(Ogre_Entity->getBoundingBox().getMaximum());
-	Ogre::Vector3 Center((vMin + vMax) * 0.5f );
+	Ogre::Vector3 Center((vMin + vMax) * 0.5f);
 
 	App->CL_Scene->S_OgreMeshData[0]->vMin = vMin;
 	App->CL_Scene->S_OgreMeshData[0]->vMax = vMax;
