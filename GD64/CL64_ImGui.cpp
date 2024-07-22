@@ -362,6 +362,7 @@ void CL64_ImGui::Model_Data_GUI(void)
 					{
 						ImGui::Text("Dedicated vertices:  %s", App->CL_Scene->S_OgreMeshData[0]->mSubmeshes[Count].strHasSharedVertices.c_str());
 						ImGui::Text("Material Name: %s", App->CL_Scene->S_OgreMeshData[0]->mSubmeshes[Count].MatrialName);
+						ImGui::Text("Vertices Count: %i", App->CL_Scene->S_OgreMeshData[0]->mSubmeshes[Count].VerticesCount);
 						
 						if (ImGui::Checkbox("Show Mesh", &listSubMeshItems[Count]))
 						{

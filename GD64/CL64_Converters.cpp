@@ -832,6 +832,8 @@ void CL64_Converters::Get_Ogre3D_MeshData(Ogre::Entity* Ogre_Entity)
 
 		App->CL_Scene->S_OgreMeshData[0]->mSubmeshes[Count].MatrialName = subMesh->getMaterialName();
 
+		App->CL_Scene->S_OgreMeshData[0]->mSubmeshes[Count].VerticesCount = subMesh->vertexData->vertexCount;
+
 		Count++;
 	}
 
