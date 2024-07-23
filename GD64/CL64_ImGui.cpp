@@ -380,7 +380,7 @@ void CL64_ImGui::Model_Data_GUI(void)
 					Count++;
 				}
 
-				if (listSubMeshItems[PreviouseSubMesh] == 0)
+				if (listSubMeshItems[PreviouseSubMesh] == 0 && App->CL_Ogre->OGL_Listener->flag_ShowOnlySubFaces == 1)
 				{
 					App->CL_Ogre->OGL_Listener->Flag_ShowFaces = 0;
 					App->CL_Ogre->OGL_Listener->flag_ShowOnlySubFaces = 0;

@@ -47,6 +47,8 @@ CL64_TopDlg::CL64_TopDlg(void)
 	flag_Demo_2_Running = 0;
 
 	flag_Toggle_PhysicaDebug_Node = 0;
+
+	flag_ShowOnlySubFaces_Saved = 0;
 }
 
 CL64_TopDlg::~CL64_TopDlg(void)
@@ -312,8 +314,25 @@ LRESULT CALLBACK CL64_TopDlg::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam
 			{
 				HWND Temp = GetDlgItem(hDlg, IDC_TBSHOWFACES);
 
+				if (App->CL_Ogre->OGL_Listener->flag_ShowOnlySubFaces == 1)
+				{
+					App->CL_TopDlg->flag_ShowOnlySubFaces_Saved = 1;
+					App->CL_Ogre->OGL_Listener->flag_ShowOnlySubFaces = 0;
+					App->CL_Ogre->OGL_Listener->Flag_ShowFaces = 1;
+					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshOn_Bmp);
+					return TRUE;
+				}
+
 				if (App->CL_Ogre->OGL_Listener->Flag_ShowFaces == 1)
 				{
+					if (App->CL_TopDlg->flag_ShowOnlySubFaces_Saved == 1)
+					{
+						App->CL_Ogre->OGL_Listener->flag_ShowOnlySubFaces = 1;
+						App->CL_Ogre->OGL_Listener->Flag_ShowFaces = 1;
+						SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshOff_Bmp);
+						return TRUE;
+					}
+
 					App->CL_Ogre->OGL_Listener->Flag_ShowFaces = 0;
 
 					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshOff_Bmp);
@@ -321,6 +340,11 @@ LRESULT CALLBACK CL64_TopDlg::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam
 				}
 				else
 				{
+					/*if (App->CL_TopDlg->flag_ShowOnlySubFaces_Saved == 1)
+					{
+						App->CL_Ogre->OGL_Listener->flag_ShowOnlySubFaces = 1;
+					}*/
+
 					App->CL_Ogre->OGL_Listener->Flag_ShowFaces = 1;
 
 					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshOn_Bmp);

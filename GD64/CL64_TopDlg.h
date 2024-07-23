@@ -45,6 +45,8 @@ public:
 	bool flag_Demo_1_Running;
 	bool flag_Demo_2_Running;
 
+	bool flag_ShowOnlySubFaces_Saved;
+
 	void Init_Bmps_Globals(void);
 
 	HWND TabsHwnd;
