@@ -28,8 +28,8 @@ CL64_Dialogs::CL64_Dialogs(void)
 
 	Flag_Convert_to_Ogre = 0;
 
-	flag_Mouse_Normal = 1;
-	flag_Mouse_Slow = 0;
+	flag_Mouse_Normal = 0;
+	flag_Mouse_Slow = 1;
 	flag_Mouse_VerySlow = 0;
 	flag_Mouse_Fast = 0;
 }
@@ -557,7 +557,8 @@ LRESULT CALLBACK CL64_Dialogs::Speed_Camera_Proc(HWND hDlg, UINT message, WPARAM
 		SendDlgItemMessage(hDlg, IDC_CKSLOW, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_CKVERYSLOW, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_CKFAST, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-
+		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
 		return TRUE;
 	}
 
@@ -582,35 +583,35 @@ LRESULT CALLBACK CL64_Dialogs::Speed_Camera_Proc(HWND hDlg, UINT message, WPARAM
 	{
 		LPNMHDR some_item = (LPNMHDR)lParam;
 
-		if (some_item->idFrom == IDC_CKNORMAL && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDC_CKNORMAL)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Toggle(item, App->CL_Dialogs->flag_Mouse_Normal);
 			return CDRF_DODEFAULT;
 		}
 
-		if (some_item->idFrom == IDC_CKSLOW && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDC_CKSLOW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Toggle(item, App->CL_Dialogs->flag_Mouse_Slow);
 			return CDRF_DODEFAULT;
 		}
 
-		if (some_item->idFrom == IDC_CKVERYSLOW && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDC_CKVERYSLOW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Toggle(item, App->CL_Dialogs->flag_Mouse_VerySlow);
 			return CDRF_DODEFAULT;
 		}
 
-		if (some_item->idFrom == IDC_CKFAST && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDC_CKFAST)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Toggle(item, App->CL_Dialogs->flag_Mouse_Fast);
 			return CDRF_DODEFAULT;
 		}
 
-		if (some_item->idFrom == IDCANCEL && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDCANCEL)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
@@ -638,7 +639,7 @@ LRESULT CALLBACK CL64_Dialogs::Speed_Camera_Proc(HWND hDlg, UINT message, WPARAM
 		if (LOWORD(wParam) == IDC_CKSLOW)
 		{
 			App->CL_Ogre->Ogre3D_Listener->mMoveSensitivity = 5;
-			App->CL_Ogre->Ogre3D_Listener->mMoveSensitivityMouse = 5;
+			App->CL_Ogre->Ogre3D_Listener->mMoveSensitivityMouse = 20;
 			
 			App->CL_Dialogs->UnCheck_All_SpeedMouseOption();
 			App->CL_Dialogs->flag_Mouse_Slow = 1;
