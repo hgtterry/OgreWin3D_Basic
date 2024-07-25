@@ -71,7 +71,7 @@ void CL64_TopDlg::Reset_Class(void) const
 	App->CL_Ogre->flag_Show_Test_Mesh = 0;
 	App->CL_Ogre->OGL_Listener->Flag_ShowFaces = 0;
 	App->CL_Ogre->OGL_Listener->Flag_ShowPoints = 0;
-	App->CL_ImGui->Show_Model_Data_F = 0;
+	App->CL_ImGui->flag_Show_Model_Data = 0;
 	App->CL_Ogre->OGL_Listener->Flag_ShowBones = 0;
 	App->CL_Ogre->OGL_Listener->Flag_ShowNormals = 0;
 	App->CL_Ogre->OGL_Listener->Flag_ShowBoundingBox = 0;
@@ -385,15 +385,15 @@ LRESULT CALLBACK CL64_TopDlg::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam
 			
 			HWND Temp = GetDlgItem(hDlg, IDC_TBINFO);
 
-			if (App->CL_ImGui->Show_Model_Data_F == 1)
+			if (App->CL_ImGui->flag_Show_Model_Data == 1)
 			{
-				App->CL_ImGui->Show_Model_Data_F = 0;
+				App->CL_ImGui->flag_Show_Model_Data = 0;
 
 				SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_ModelInfo_Bmp);
 			}
 			else
 			{
-				App->CL_ImGui->Show_Model_Data_F = 1;
+				App->CL_ImGui->flag_Show_Model_Data = 1;
 
 				SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_ModelInfoOn_Bmp);
 			}
@@ -648,7 +648,7 @@ LRESULT CALLBACK CL64_TopDlg::Debug_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 		if (some_item->idFrom == IDC_BT_TD_DEBUG_IMGUIDEMO)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CL_ImGui->Show_ImGui_Demo);
+			App->Custom_Button_Toggle(item, App->CL_ImGui->flag_Show_ImGui_Demo);
 			return CDRF_DODEFAULT;
 		}
 
@@ -672,7 +672,7 @@ LRESULT CALLBACK CL64_TopDlg::Debug_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 		if (some_item->idFrom == IDC_BT_TD_DEBUG_IMGUIFPS)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CL_ImGui->Show_FPS);
+			App->Custom_Button_Toggle(item, App->CL_ImGui->flag_Show_FPS);
 			return CDRF_DODEFAULT;
 		}
 
@@ -704,13 +704,13 @@ LRESULT CALLBACK CL64_TopDlg::Debug_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 	{
 		if (LOWORD(wParam) == IDC_BT_TD_DEBUG_IMGUIDEMO)
 		{
-			if (App->CL_ImGui->Show_ImGui_Demo == 1)
+			if (App->CL_ImGui->flag_Show_ImGui_Demo == 1)
 			{
-				App->CL_ImGui->Show_ImGui_Demo = 0;
+				App->CL_ImGui->flag_Show_ImGui_Demo = 0;
 			}
 			else
 			{
-				App->CL_ImGui->Show_ImGui_Demo = 1;
+				App->CL_ImGui->flag_Show_ImGui_Demo = 1;
 			}
 			return 1;
 		}
@@ -750,13 +750,13 @@ LRESULT CALLBACK CL64_TopDlg::Debug_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 
 		if (LOWORD(wParam) == IDC_BT_TD_DEBUG_IMGUIFPS)
 		{
-			if (App->CL_ImGui->Show_FPS == 1)
+			if (App->CL_ImGui->flag_Show_FPS == 1)
 			{
-				App->CL_ImGui->Show_FPS = 0;
+				App->CL_ImGui->flag_Show_FPS = 0;
 			}
 			else
 			{
-				App->CL_ImGui->Show_FPS = 1;
+				App->CL_ImGui->flag_Show_FPS = 1;
 			}
 			return 1;
 		}
@@ -862,7 +862,7 @@ LRESULT CALLBACK CL64_TopDlg::Camera_TB_Proc(HWND hDlg, UINT message, WPARAM wPa
 		if (some_item->idFrom == IDC_BT_CAMERA_CAMDATA)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CL_ImGui->Show_Camera_Data_F);
+			App->Custom_Button_Toggle(item, App->CL_ImGui->flag_Show_Camera_Data);
 			return CDRF_DODEFAULT;
 		}
 		
@@ -925,13 +925,13 @@ LRESULT CALLBACK CL64_TopDlg::Camera_TB_Proc(HWND hDlg, UINT message, WPARAM wPa
 
 		if (LOWORD(wParam) == IDC_BT_CAMERA_CAMDATA)
 		{
-			if (App->CL_ImGui->Show_Camera_Data_F == 1)
+			if (App->CL_ImGui->flag_Show_Camera_Data == 1)
 			{
-				App->CL_ImGui->Show_Camera_Data_F = 0;
+				App->CL_ImGui->flag_Show_Camera_Data = 0;
 			}
 			else
 			{
-				App->CL_ImGui->Show_Camera_Data_F = 1;
+				App->CL_ImGui->flag_Show_Camera_Data = 1;
 			}
 
 			return 1;
@@ -1182,7 +1182,7 @@ void CL64_TopDlg::Init_Bmps_Globals(void)
 	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshOff_Bmp);
 
 	Temp = GetDlgItem(TabsHwnd, IDC_TBINFO);
-	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_ModelInfo_Bmp);
+	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_ModelInfoOn_Bmp);
 
 	Temp = GetDlgItem(TabsHwnd, IDC_TBBOUNDBOX);
 	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_BBOff_Bmp);
@@ -1395,7 +1395,7 @@ void CL64_TopDlg::Init_Bmps_Globals(void)
 }
 
 // **************************************************************************
-// *	  		 Start_TopBar:- Terry and Hazel Flanigan 2024				*
+// *	  	Enable_Grid_Hair_Icons:- Terry and Hazel Flanigan 2024			*
 // **************************************************************************
 void CL64_TopDlg::Enable_Grid_Hair_Icons(bool Enable) const
 {
@@ -1408,6 +1408,21 @@ void CL64_TopDlg::Enable_Grid_Hair_Icons(bool Enable) const
 	{
 		SendMessage(GetDlgItem(TabsHwnd, IDC_TBSHOWGRID), BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_GridOff_Bmp);
 		SendMessage(GetDlgItem(TabsHwnd, IDC_TBSHOWHAIR), BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_HairOff_Bmp);
+	}
+}
+
+// **************************************************************************
+// *	  		 Enable_Info_Icon:- Terry and Hazel Flanigan 2024			*
+// **************************************************************************
+void CL64_TopDlg::Enable_Info_Icon(bool Enable) const
+{
+	if (Enable == 1)
+	{
+		SendMessage(GetDlgItem(TabsHwnd, IDC_TBINFO), BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_ModelInfoOn_Bmp);
+	}
+	else
+	{
+		SendMessage(GetDlgItem(TabsHwnd, IDC_TBINFO), BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_ModelInfo_Bmp);
 	}
 }
 

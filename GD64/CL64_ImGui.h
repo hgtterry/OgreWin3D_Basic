@@ -40,17 +40,17 @@ public:
 
 	void Demo_Options_Gui(void);
 
-	bool Imgui_Initialized;
+	bool flag_Imgui_Initialized;
 	bool StartPos;
-	bool Show_FPS;
-	bool Show_ImGui_Demo;
-	bool Show_Camera_Data_F;
-	bool Show_Model_Data_F;
+	bool flag_Show_FPS;
+	bool flag_Show_ImGui_Demo;
+	bool flag_Show_Camera_Data;
+	bool flag_Show_Model_Data;
 	bool flag_Show_Demo_Options;
 	bool flag_Show_App_Debug;
 
 	// Demo 1
-	bool Show_Physics_Debug_F;
+	bool flag_Show_Physics_Debug;
 
 	float Camera_Data_PosX;
 	float Camera_Data_Posy;

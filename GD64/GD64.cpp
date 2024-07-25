@@ -198,13 +198,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			
 		case ID_DEBUG_CAMERADATA:
 		{	
-			if (App->CL_ImGui->Show_Camera_Data_F == 1)
+			if (App->CL_ImGui->flag_Show_Camera_Data == 1)
 			{
-				App->CL_ImGui->Show_Camera_Data_F = 0;
+				App->CL_ImGui->flag_Show_Camera_Data = 0;
 			}
 			else
 			{
-				App->CL_ImGui->Show_Camera_Data_F = 1;
+				App->CL_ImGui->flag_Show_Camera_Data = 1;
 			}
 			return TRUE;
 		}
@@ -217,13 +217,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 		case ID_IMGUI_IMGUIDEMO:
 		{
-			if (App->CL_ImGui->Show_ImGui_Demo == 1)
+			if (App->CL_ImGui->flag_Show_ImGui_Demo == 1)
 			{
-				App->CL_ImGui->Show_ImGui_Demo = 0;
+				App->CL_ImGui->flag_Show_ImGui_Demo = 0;
 			}
 			else
 			{
-				App->CL_ImGui->Show_ImGui_Demo = 1;
+				App->CL_ImGui->flag_Show_ImGui_Demo = 1;
 			}
 
 			return TRUE;
@@ -232,13 +232,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		// Info -------------------------------------------------------
 		case ID_INFO_ASSIMPMODELDATA:
 		{
-			if (App->CL_ImGui->Show_Model_Data_F == 1)
+			if (App->CL_ImGui->flag_Show_Model_Data == 1)
 			{
-				App->CL_ImGui->Show_Model_Data_F = 0;
+				App->CL_ImGui->flag_Show_Model_Data = 0;
 			}
 			else
 			{
-				App->CL_ImGui->Show_Model_Data_F = 1;
+				App->CL_ImGui->flag_Show_Model_Data = 1;
 			}
 
 			return TRUE;
@@ -471,7 +471,7 @@ LRESULT CALLBACK Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
 		GetCursorPos(&pos);
 		ScreenToClient(App->ViewGLhWnd, &pos);
 
-		if (App->CL_ImGui->Imgui_Initialized == 1)
+		if (App->CL_ImGui->flag_Imgui_Initialized == 1)
 		{
 			ImGuiIO& io = ImGui::GetIO();
 			io.MousePos.x = static_cast<float>(pos.x);

@@ -92,7 +92,7 @@ void CL64_Ogre::InitOgre(void)
 
 	mTrayMgr = new OgreBites::TrayManager("InterfaceName", mWindow);
 	mTrayMgr->showAll();
-	mTrayMgr->showFrameStats(OgreBites::TL_TOPLEFT);
+	mTrayMgr->showFrameStats(OgreBites::TL_BOTTOMLEFT);
 	mTrayMgr->hideCursor();
 	
 	App->CL_ImGui->Init_ImGui();

@@ -19,21 +19,21 @@ appreciated but is not required.
 
 CL64_ImGui::CL64_ImGui(void)
 {
-	Imgui_Initialized = 0;
+	flag_Imgui_Initialized = 0;
 
 	Camera_Data_PosX = 10;
 	Camera_Data_Posy = 100;
 
 	StartPos = 0;
-	Show_FPS = 1;
-	Show_ImGui_Demo = 0;
-	Show_Camera_Data_F = 0;
-	Show_Model_Data_F = 0;
+	flag_Show_FPS = 1;
+	flag_Show_ImGui_Demo = 0;
+	flag_Show_Camera_Data = 0;
+	flag_Show_Model_Data = 1;
 	flag_Show_Demo_Options = 0;
 	flag_Show_App_Debug = 0;
 
 	// Demo 1
-	Show_Physics_Debug_F = 0;
+	flag_Show_Physics_Debug = 0;
 
 	PosX = 500;
 	PosY = 500;
@@ -57,7 +57,7 @@ CL64_ImGui::~CL64_ImGui(void)
 void CL64_ImGui::Reset_Class(void)
 {
 	flag_Show_Demo_Options = 0;
-	Show_Model_Data_F = 0;
+	flag_Show_Model_Data = 0;
 }
 
 // *************************************************************************
@@ -86,7 +86,7 @@ void CL64_ImGui::Init_ImGui(void)
 				Ogre::ImGuiOverlay::NewFrame();
 			}
 
-			Imgui_Initialized = 1;
+			flag_Imgui_Initialized = 1;
 		}
 		else
 		{
@@ -184,22 +184,22 @@ void CL64_ImGui::Load_Font(void)
 // **************************************************************************
 void CL64_ImGui::ImGui_Render_Loop(void)
 {
-	if (Show_FPS == 1)
+	if (flag_Show_FPS == 1)
 	{
 		ImGui_FPS();
 	}
 
-	if (Show_ImGui_Demo == 1)
+	if (flag_Show_ImGui_Demo == 1)
 	{
 		ImGui::ShowDemoWindow();
 	}
 
-	if (Show_Camera_Data_F == 1)
+	if (flag_Show_Camera_Data == 1)
 	{
 		Camera_Data_GUI();
 	}
 
-	if (Show_Model_Data_F == 1)
+	if (flag_Show_Model_Data == 1)
 	{
 		Model_Data_GUI();
 	}
@@ -222,7 +222,7 @@ void CL64_ImGui::ImGui_FPS(void)
 {
 	ImGui::SetNextWindowPos(ImVec2(PosX, PosY));
 
-	if (!ImGui::Begin("Ogre Data", &Show_FPS, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize
+	if (!ImGui::Begin("Ogre Data", &flag_Show_FPS, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize
 		| ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoTitleBar))
 	{
 		ImGui::End();
@@ -254,7 +254,7 @@ void CL64_ImGui::Camera_Data_GUI(void)
 {
 	ImGui::SetNextWindowPos(ImVec2(Camera_Data_PosX, Camera_Data_Posy));
 
-	if (!ImGui::Begin("Camera Data", &Show_Camera_Data_F, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoResize
+	if (!ImGui::Begin("Camera Data", &flag_Show_Camera_Data, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoResize
 		| ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoTitleBar))
 	{
 		ImGui::End();
@@ -300,11 +300,11 @@ void CL64_ImGui::Camera_Data_GUI(void)
 // *************************************************************************
 void CL64_ImGui::Model_Data_GUI(void)
 {
-	//ImGui::SetNextWindowPos(ImVec2(Model_Data_PosX, Model_Data_PosY));
+
 	ImGui::SetNextWindowPos(ImVec2(5, 5), ImGuiCond_FirstUseEver);
 	ImGui::SetNextWindowSize(ImVec2(200, 200), ImGuiCond_FirstUseEver);
 
-	if (!ImGui::Begin("Model Data", &Show_Model_Data_F, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoResize
+	if (!ImGui::Begin("Model Data", NULL, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoResize
 		| ImGuiWindowFlags_AlwaysAutoResize))
 	{
 		ImGui::End();
@@ -429,13 +429,10 @@ void CL64_ImGui::Model_Data_GUI(void)
 
 		ImGui::Separator();
 		
-		ImVec2 Size = ImGui::GetWindowSize();
-		//Model_Data_PosX = ((float)App->CL_Ogre->OgreListener->View_Width / 2) - (Size.x / 2);
-		//Model_Data_PosY = ((float)App->CL_Ogre->OgreListener->View_Height / 2) - (Size.y / 2);
-
 		if (ImGui::Button("Close"))
 		{
-			Show_Model_Data_F = 0;
+			App->CL_TopDlg->Enable_Info_Icon(false);
+			flag_Show_Model_Data = 0;
 		}
 
 		ImGui::End();
