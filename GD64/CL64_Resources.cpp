@@ -92,7 +92,7 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		App->CL_Resources->CreateListGeneral_FX(hDlg);
-
+		App->CL_Resources->Reset_Flags();
 		App->CL_Resources->flag_Show_All_Materials = 1;
 		int Items = App->CL_Resources->ShowAllMaterials();
 		App->CL_Resources->Update_Counter(Items, hDlg);
@@ -387,11 +387,35 @@ void CL64_Resources::CreateListGeneral_FX(HWND hDlg)
 // *************************************************************************
 int CL64_Resources::ShowAllTextures()
 {
+	ListView_DeleteAllItems(FX_General_hLV);
+
+	int NUM_COLS = 5;
+
 	LV_ITEM pitem;
 	memset(&pitem, 0, sizeof(LV_ITEM));
 	pitem.mask = LVIF_TEXT;
 
-	ListView_DeleteAllItems(FX_General_hLV);
+	LV_COLUMN lvC;
+	memset(&lvC, 0, sizeof(LV_COLUMN));
+	lvC.mask = LVCF_FMT | LVCF_WIDTH | LVCF_TEXT | LVCF_SUBITEM;
+	lvC.fmt = LVCFMT_LEFT;  // left-align the column
+	std::string headers[] =
+	{
+		"Texture", "Resource Group","Path",""," "
+	};
+	int headerSize[] =
+	{
+		165,250,170,150
+	};
+
+	for (int header = 0; header < NUM_COLS; header++)
+	{
+		lvC.iSubItem = header;
+		lvC.cx = headerSize[header]; // width of the column, in pixels
+		lvC.pszText = const_cast<char*>(headers[header].c_str());
+		ListView_SetColumn(FX_General_hLV, header, &lvC);
+	}
+
 	bool pIsLoaded = 0;
 	int	 pRow = 0;
 	char Origin[MAX_PATH];
@@ -441,9 +465,9 @@ int CL64_Resources::ShowAllTextures()
 		pitem.pszText = JustFile;
 
 		ListView_InsertItem(FX_General_hLV, &pitem);
-		ListView_SetItemText(FX_General_hLV, pRow, 1, ResourcePath);
-		ListView_SetItemText(FX_General_hLV, pRow, 2, pUsed);
-		ListView_SetItemText(FX_General_hLV, pRow, 3, Origin);
+		ListView_SetItemText(FX_General_hLV, pRow, 1, Origin);
+		ListView_SetItemText(FX_General_hLV, pRow, 2, ResourcePath);
+		ListView_SetItemText(FX_General_hLV, pRow, 3, (LPSTR)" ");
 		
 		pRow++;
 
@@ -824,7 +848,7 @@ int CL64_Resources::ShowAllMeshes()
 // *************************************************************************
 void CL64_Resources::Start_List_Folders(HWND List, char* FileName, bool ListDlg)
 {
-	char StartFolder[2048];
+	char StartFolder[MAX_PATH];
 
 	if (ListDlg == 1)
 	{
@@ -910,13 +934,13 @@ void CL64_Resources::List_Folders(HWND List, char* StartFolder, char* FileName, 
 // *************************************************************************
 bool CL64_Resources::FindPath_New(char* File, char* Folder)
 {
-	char pSearchPath[1024];
-	char pReturnPath[1024];
+	char pSearchPath[MAX_PATH];
+	char pReturnPath[MAX_PATH];
 	char* pPartPath;
 
 	strcpy(pSearchPath, Folder);
 
-	int result = SearchPath((LPCTSTR)pSearchPath, (LPCTSTR)File, NULL, 1024, pReturnPath, &pPartPath);
+	int result = SearchPath((LPCTSTR)pSearchPath, (LPCTSTR)File, NULL, MAX_PATH, pReturnPath, &pPartPath);
 	if (result == 0)
 	{
 		return 0;
