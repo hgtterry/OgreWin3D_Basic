@@ -33,18 +33,7 @@ public:
 
 	// Ogre to Mesh Groups
 	void Create_MeshGroups(Ogre::Entity* Ogre_Entity);
-	bool Ogre_To_Mesh_Data(Ogre::Entity* Ogre_Entity);
-
-	void Get_SubPose_MeshInstance(Ogre::MeshPtr mesh,size_t& vertex_count, 
-		Ogre::Vector3*& vertices,size_t& index_count,
-		unsigned long*& indices,int SubMesh, Ogre::int16*& BoneIndices);
-
-	bool GetBoneAssignment(Ogre::MeshPtr mesh, int SubMesh, HWND hDlg);
-	bool NewGet_SubPoseTextureUV(Ogre::MeshPtr mesh, int SubMesh);
-
-	bool NewGet_SubPoseNormals(Ogre::MeshPtr mesh,
-		size_t& vertex_count,Ogre::Vector3*& Normals,int SubMesh);
-
+	
 	bool Get_SkeletonInstance(Ogre::Entity* Ogre_Entity);
 	void Get_Ogre3D_MeshData(Ogre::Entity* Ogre_Entity);
 
@@ -56,7 +45,6 @@ public:
 	Ogre::SceneNode*	World_Node;
 	Ogre::Entity*		World_Ent;
 
-	std::vector<Vector2> MeshTextureCoords;
 	std::vector<Vector3> MeshNormals;
 
 	char mWorld_Mesh_JustName[MAX_PATH];
