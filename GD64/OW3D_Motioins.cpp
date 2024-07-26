@@ -36,6 +36,14 @@ void OW3D_Motioins::Play_SelectedMotion(void)
 		App->CL_Ogre->Ogre3D_Listener->Animate_State->setEnabled(true);
 		App->CL_Ogre->Ogre3D_Listener->flag_Animate_Ogre = 1;
 	}
+
+	if (App->CL_Scene->Imported_Ogre_Ent)
+	{
+		App->CL_Ogre->Ogre3D_Listener->Animate_State = App->CL_Scene->Imported_Ogre_Ent->getAnimationState(App->CL_TopDlg->Selected_Motion_Name);
+		App->CL_Ogre->Ogre3D_Listener->Animate_State->setEnabled(true);
+		App->CL_Ogre->Ogre3D_Listener->flag_Animate_Ogre = 1;
+	}
+	
 }
 
 // *************************************************************************
@@ -44,6 +52,12 @@ void OW3D_Motioins::Play_SelectedMotion(void)
 void OW3D_Motioins::Stop_SelectedMotion(void)
 {
 	if (App->CL_Ogre->TestMesh_Entity)
+	{
+		App->CL_Ogre->Ogre3D_Listener->flag_Animate_Ogre = 0;
+		App->CL_Ogre->Ogre3D_Listener->Animate_State->setEnabled(false);
+	}
+
+	if (App->CL_Scene->Imported_Ogre_Ent)
 	{
 		App->CL_Ogre->Ogre3D_Listener->flag_Animate_Ogre = 0;
 		App->CL_Ogre->Ogre3D_Listener->Animate_State->setEnabled(false);

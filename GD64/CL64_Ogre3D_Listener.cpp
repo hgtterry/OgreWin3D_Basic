@@ -89,8 +89,15 @@ bool CL64_Ogre3D_Listener::frameStarted(const FrameEvent& evt)
 			//App->CL_Model->Set_BondingBox_Model(0);
 		}
 
-		App->CL_Ogre->TestMesh_Entity->_updateAnimation();
+		if (App->CL_Ogre->TestMesh_Entity)
+		{
+			App->CL_Ogre->TestMesh_Entity->_updateAnimation();
+		}
 
+		if (App->CL_Scene->Imported_Ogre_Ent)
+		{
+			App->CL_Scene->Imported_Ogre_Ent->_updateAnimation();
+		}
 		/*if (App->Cl_Ogre->RenderListener->Show_Crosshair == 1)
 		{
 			App->Cl_Bones->Move_BoneCrosshair();
