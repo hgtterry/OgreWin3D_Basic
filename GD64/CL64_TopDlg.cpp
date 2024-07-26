@@ -1213,20 +1213,30 @@ LRESULT CALLBACK CL64_TopDlg::Motions_TB_Proc(HWND hDlg, UINT message, WPARAM wP
 	case WM_COMMAND:
 	{
 
-		/*if (LOWORD(wParam) == IDC_BT_TD_DEBUG_PHYSICSDEBUG)
+		if (LOWORD(wParam) == IDC_BT_MOTIONS_PLAY)
 		{
-			if (App->CL_TopDlg->flag_Toggle_PhysicaDebug_Node == 1)
-			{
-				App->CL_TopDlg->flag_Toggle_PhysicaDebug_Node = 0;
-				App->CL_Ogre->Bullet_Debug_Listener->btDebug_Node->setVisible(false);
-			}
-			else
-			{
-				App->CL_TopDlg->flag_Toggle_PhysicaDebug_Node = 1;
-				App->CL_Ogre->Bullet_Debug_Listener->btDebug_Node->setVisible(true);
-			}
+			App->CL_Ogre->Ogre3D_Listener->Animate_State = App->CL_Ogre->TestMesh_Entity->getAnimationState(App->CL_TopDlg->Selected_Motion_Name);
+			App->CL_Ogre->Ogre3D_Listener->Animate_State->setEnabled(true);
+			App->CL_Ogre->Ogre3D_Listener->flag_Animate_Ogre = 1;
+
+			////OgreMotionIsPlaying = 1;
+
+			//App->CL_Ogre3D->AnimationExtract_Mesh(1); // Get Default Pose Mesh
+			//App->CL_Ogre->Ogre_Listener->Animate_Ogre = 1;
 			return 1;
-		}*/
+		}
+
+		if (LOWORD(wParam) == IDC_BT_MOTIONS_STOP)
+		{
+			App->CL_Ogre->Ogre3D_Listener->flag_Animate_Ogre = 0;
+			App->CL_Ogre->Ogre3D_Listener->Animate_State->setEnabled(false);
+
+			////OgreMotionIsPlaying = 1;
+
+			//App->CL_Ogre3D->AnimationExtract_Mesh(1); // Get Default Pose Mesh
+			//App->CL_Ogre->Ogre_Listener->Animate_Ogre = 1;
+			return 1;
+		}
 
 		return FALSE;
 	}
@@ -1252,6 +1262,8 @@ void CL64_TopDlg::Update_Motions_Combo(void)
 			SendDlgItemMessage(Motions_TB_hWnd, IDC_CB_MOTIONS_MOTIONS, CB_ADDSTRING, (WPARAM)0, (LPARAM)App->CL_Scene->S_OgreMeshData[0]->mMotionNames[Count].c_str());
 			Count++;
 		}
+
+		strcpy(Selected_Motion_Name, App->CL_Scene->S_OgreMeshData[0]->mMotionNames[0].c_str());
 	}
 	else
 	{

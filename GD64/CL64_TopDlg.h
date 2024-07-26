@@ -39,6 +39,8 @@ public:
 
 	void Update_Motions_Combo(void);
 
+	char Selected_Motion_Name[MAX_PATH];
+
 	bool flag_Toggle_Tabs_Debug;
 	bool flag_Toggle_Tabs_Camera;
 	bool flag_Toggle_Tabs_Demos;

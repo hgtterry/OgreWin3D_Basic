@@ -24,6 +24,9 @@ CL64_Ogre3D_Listener::CL64_Ogre3D_Listener(void)
 	mCam = App->CL_Ogre->mCamera;
 	mCamNode = App->CL_Ogre->camNode;
 
+	Animate_State = nullptr;
+	AnimationScale = 1;
+
 	CameraMode = Enums::Cam_Mode_Model;
 
 	mRotX = 0;;
@@ -54,6 +57,8 @@ CL64_Ogre3D_Listener::CL64_Ogre3D_Listener(void)
 
 	Run_Physics = 0;
 	Bullet_Step = 2;
+
+	flag_Animate_Ogre = 0;
 }
 
 CL64_Ogre3D_Listener::~CL64_Ogre3D_Listener(void)
@@ -70,6 +75,26 @@ bool CL64_Ogre3D_Listener::frameStarted(const FrameEvent& evt)
 	if (Run_Physics == 1)
 	{
 		App->CL_Bullet->dynamicsWorld->stepSimulation(evt.timeSinceLastFrame * Bullet_Step); //suppose you have 60 frames per second
+	}
+
+	// ------------------------ Animation
+	if (flag_Animate_Ogre == 1)
+	{
+		Animate_State->addTime(evt.timeSinceLastFrame * AnimationScale);
+		//App->CL_Ogre3D->UpdateBones_Orge(0);
+
+		//if (App->CL_Model->HasMesh == 1)
+		{
+			//App->CL_Ogre3D->AnimationExtract_Mesh(0);
+			//App->CL_Model->Set_BondingBox_Model(0);
+		}
+
+		App->CL_Ogre->TestMesh_Entity->_updateAnimation();
+
+		/*if (App->Cl_Ogre->RenderListener->Show_Crosshair == 1)
+		{
+			App->Cl_Bones->Move_BoneCrosshair();
+		}*/
 	}
 
 	return true;

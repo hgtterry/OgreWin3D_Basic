@@ -54,6 +54,8 @@ public:
 	Ogre::Camera* mCam;
 	Ogre::SceneNode* mCamNode;
 
+	Ogre::AnimationState* Animate_State;
+
 	POINT		Mouse_point;
 	//Ogre::Overlay* mDebugOverlay;
 
@@ -64,6 +66,7 @@ public:
 	float		mMoveScale;
 	float		mMoveSensitivity; 
 	float		mMoveSensitivityMouse;
+	float		AnimationScale;
 
 	int	View_Height; // Ogre window Height
 	int	View_Width;	 // Ogre window WIdth
@@ -89,5 +92,7 @@ public:
 	bool StopOgre;
 
 	bool Ogre_Model_Loaded;
+
+	bool flag_Animate_Ogre;
 };
 

@@ -70,6 +70,7 @@
 #define IDC_CKNORMAL                    1007
 #define IDC_BT_TD_PHYSICSTAB            1007
 #define IDC_BT_TD_DEMOS_OPTIONS         1007
+#define IDC_BT_MOTIONS_PLAY             1007
 #define IDC_BUTTON2                     1008
 #define IDC_BT_TBH_CAMERA               1008
 #define IDC_BT_DEMORESOURCES            1008
@@ -77,6 +78,7 @@
 #define IDC_BT_CAMERA_FIRST             1008
 #define IDC_CKSLOW                      1008
 #define IDC_BT_TD_DEBUG_FPSLOCK         1008
+#define IDC_BT_MOTIONS_STOP             1008
 #define IDC_BUTTON3                     1009
 #define IDC_BT_CAMERA_MODEL             1009
 #define IDC_ALLMESH                     1009
@@ -120,7 +122,6 @@
 #define IDC_CK_FPSNOLOCK                1031
 #define IDC_CB_FPSLIST                  1032
 #define IDC_ST_FPSSETTINGS              1033
-#define IDC_COMBO1                      1036
 #define IDC_CB_MOTIONS_MOTIONS          1036
 #define ID_VIEW_RESET                   32771
 #define ID_VIEW_MAX3DVIEW               32772
