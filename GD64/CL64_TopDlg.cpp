@@ -85,6 +85,8 @@ void CL64_TopDlg::Reset_Class(void) const
 	SendMessage(GetDlgItem(TabsHwnd, IDC_BTSHOWNORMALS), BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_NormalsOff_Bmp);
 	SendMessage(GetDlgItem(TabsHwnd, IDC_TBBOUNDBOX), BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_BBOff_Bmp);
 
+	App->CL_TopDlg->Update_Motions_Combo();
+
 	EnableWindow(GetDlgItem(Demos_TB_hWnd, IDC_BT_TD_DEMOS_OPTIONS), false);
 
 	Enable_Grid_Hair_Icons(true);
@@ -1240,13 +1242,20 @@ void CL64_TopDlg::Update_Motions_Combo(void)
 {
 	SendDlgItemMessage(Motions_TB_hWnd, IDC_CB_MOTIONS_MOTIONS, CB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
 
-	int Count = 0;
-	int Size = App->CL_Scene->MotionCount;
-
-	while (Count < Size)
+	if (App->CL_Scene->MotionCount > 0)
 	{
-		SendDlgItemMessage(Motions_TB_hWnd, IDC_CB_MOTIONS_MOTIONS, CB_ADDSTRING, (WPARAM)0, (LPARAM)App->CL_Scene->S_OgreMeshData[0]->mMotionNames[Count].c_str());
-		Count++;
+		int Count = 0;
+		int Size = App->CL_Scene->MotionCount;
+
+		while (Count < Size)
+		{
+			SendDlgItemMessage(Motions_TB_hWnd, IDC_CB_MOTIONS_MOTIONS, CB_ADDSTRING, (WPARAM)0, (LPARAM)App->CL_Scene->S_OgreMeshData[0]->mMotionNames[Count].c_str());
+			Count++;
+		}
+	}
+	else
+	{
+		SendDlgItemMessage(Motions_TB_hWnd, IDC_CB_MOTIONS_MOTIONS, CB_ADDSTRING, (WPARAM)0, (LPARAM)"None");
 	}
 
 	SendDlgItemMessage(Motions_TB_hWnd, IDC_CB_MOTIONS_MOTIONS, CB_SETCURSEL, (WPARAM)0, (LPARAM)0);
