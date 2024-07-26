@@ -20,5 +20,9 @@ public:
 
 	OW3D_Import_Ogre3D(void);
 	~OW3D_Import_Ogre3D(void);
+
+	void Get_Motions(Ogre::Entity* Ogre_Entity);
+
+	bool flag_IsAnimated;
 };
 

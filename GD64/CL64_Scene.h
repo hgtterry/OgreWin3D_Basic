@@ -50,6 +50,7 @@ typedef struct OgreMeshData_Type {
 	Ogre::String mEdgeList;
 	Ogre::String mName;
 	std::vector<std::string> mMaterials;
+	std::vector<std::string> mMotionNames;
 	std::vector<Ogre_SubMesh_Type> mSubmeshes;
 	int mSubMeshCount;
 	Ogre::Vector3 Center;

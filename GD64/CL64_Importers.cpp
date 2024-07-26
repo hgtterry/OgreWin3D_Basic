@@ -176,11 +176,11 @@ void CL64_Importers::Load_Ogre_Model(bool Use_File_Dialog)
 
 	App->CL_Scene->Set_Scene(Enums::Scene_Mode_Imported_Entity);
 
-	/*Get_BoneNames();
+	//Get_BoneNames();
 
-	Get_Motions();
+	App->CL_Import_Ogre3D->Get_Motions(App->CL_Scene->Imported_Ogre_Ent);
 
-	Get_Textures();*/
+	//Get_Textures();
 
 	/*bool SkellAnimation = OgreModel_Ent->hasSkeleton();
 	Ogre::SkeletonInstance* skeletonInstance = OgreModel_Ent->getSkeleton();

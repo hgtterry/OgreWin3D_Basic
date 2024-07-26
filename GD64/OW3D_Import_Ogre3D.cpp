@@ -19,8 +19,49 @@ appreciated but is not required.
 
 OW3D_Import_Ogre3D::OW3D_Import_Ogre3D(void)
 {
+	flag_IsAnimated = 0;
 }
 
 OW3D_Import_Ogre3D::~OW3D_Import_Ogre3D(void)
 {
+}
+
+// *************************************************************************
+// *	  			Get_Motions:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void OW3D_Import_Ogre3D::Get_Motions(Ogre::Entity* Ogre_Entity)
+{
+	Ogre::SkeletonInstance* skeletonInstance = Ogre_Entity->getSkeleton();
+
+	int Count = 0;
+	if (skeletonInstance)
+	{
+		int AnimationCount = skeletonInstance->getNumAnimations();
+		if (AnimationCount == 0)
+		{
+			flag_IsAnimated = 0;
+			App->CL_Scene->MotionCount = 0;
+		}
+		else
+		{
+
+			flag_IsAnimated = 1;
+
+			for (unsigned short i = 0; i < skeletonInstance->getNumAnimations(); ++i)
+			{
+				Ogre::Animation* animation = skeletonInstance->getAnimation(i);
+				App->CL_Scene->S_OgreMeshData[0]->mMotionNames.push_back(animation->getName());
+
+				Count = i;
+			}
+
+			App->CL_Scene->MotionCount = Count + 1;
+
+		}
+	}
+	else
+	{
+		flag_IsAnimated = 0;
+		App->CL_Scene->MotionCount = 0;
+	}
 }

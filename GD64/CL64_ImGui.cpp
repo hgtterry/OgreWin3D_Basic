@@ -408,6 +408,19 @@ void CL64_ImGui::Model_Data_GUI(void)
 				ImGui::TreePop();
 			}
 
+			if (ImGui::TreeNode("Motions"))
+			{
+				int Count = 0;
+				int Size = App->CL_Scene->MotionCount;
+
+				while (Count < Size)
+				{
+					ImGui::Text(App->CL_Scene->S_OgreMeshData[0]->mMotionNames[Count].c_str());
+					Count++;
+				}
+				ImGui::TreePop();
+			}
+
 			ImGui::TreePop();
 		}
 
