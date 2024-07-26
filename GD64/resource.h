@@ -53,6 +53,7 @@
 #define IDD_MOUSESENSITIVITY            162
 #define IDD_TB_PHYSICS                  163
 #define IDD_FPSLOCK                     164
+#define IDD_TB_MOTIONS                  165
 #define IDC_CK_SU_FULLSCREEN            1000
 #define IDC_ST_STARTUP                  1001
 #define IDC_CK_SU_FULL3DVIEW            1002
@@ -119,6 +120,8 @@
 #define IDC_CK_FPSNOLOCK                1031
 #define IDC_CB_FPSLIST                  1032
 #define IDC_ST_FPSSETTINGS              1033
+#define IDC_COMBO1                      1036
+#define IDC_CB_MOTIONS_MOTIONS          1036
 #define ID_VIEW_RESET                   32771
 #define ID_VIEW_MAX3DVIEW               32772
 #define ID_DEBUG_TESTPREFERANCE         32773
@@ -154,7 +157,7 @@
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        165
 #define _APS_NEXT_COMMAND_VALUE         32797
-#define _APS_NEXT_CONTROL_VALUE         1036
+#define _APS_NEXT_CONTROL_VALUE         1037
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif

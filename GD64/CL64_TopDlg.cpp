@@ -117,6 +117,7 @@ LRESULT CALLBACK CL64_TopDlg::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam
 		App->CL_TopDlg->Start_Camera_TB();
 		App->CL_TopDlg->Start_Demos_TB();
 		App->CL_TopDlg->Start_Physics_TB();
+		App->CL_TopDlg->Start_Motions_TB();
 
 		App->CL_TopDlg->Hide_Tabs();
 
@@ -595,6 +596,17 @@ LRESULT CALLBACK CL64_TopDlg::Tabs_Headers_Proc(HWND hDlg, UINT message, WPARAM 
 
 			return TRUE;
 		}
+
+		if (LOWORD(wParam) == IDC_BT_TD_MOTIONSTAB)
+		{
+			App->CL_TopDlg->Hide_Tabs();
+			ShowWindow(App->CL_TopDlg->Motions_TB_hWnd, SW_SHOW);
+			App->CL_TopDlg->flag_Toggle_Tabs_Motions = 1;
+
+			RedrawWindow(App->CL_TopDlg->Tabs_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+			return TRUE;
+		}
 		
 	}
 	}
@@ -610,11 +622,13 @@ void CL64_TopDlg::Hide_Tabs(void)
 	ShowWindow(Camera_TB_hWnd, SW_HIDE);
 	ShowWindow(Demos_TB_hWnd, SW_HIDE);
 	ShowWindow(Physics_TB_hWnd, SW_HIDE);
-	
+	ShowWindow(Motions_TB_hWnd, SW_HIDE);
+
 	flag_Toggle_Tabs_Debug = 0;
 	flag_Toggle_Tabs_Camera = 0;
 	flag_Toggle_Tabs_Demos = 0;
 	flag_Toggle_Tabs_Physics = 0;
+	flag_Toggle_Tabs_Motions = 0;
 }
 
 // *************************************************************************
@@ -1144,21 +1158,71 @@ LRESULT CALLBACK CL64_TopDlg::Physics_TB_Proc(HWND hDlg, UINT message, WPARAM wP
 			return 1;
 		}
 
-		/*if (LOWORD(wParam) == IDC_BT_TD_DEMOS_DEMO2)
+		return FALSE;
+	}
+
+	}
+	return FALSE;
+}
+
+// *************************************************************************
+// *			Start_Motions_TB:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+void CL64_TopDlg::Start_Motions_TB(void)
+{
+	Motions_TB_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_TB_MOTIONS, Tabs_TB_hWnd, (DLGPROC)Motions_TB_Proc);
+	Update_Motions_Combo();
+}
+
+// *************************************************************************
+// *			Motions_TB_Proc:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+LRESULT CALLBACK CL64_TopDlg::Motions_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+
+	switch (message)
+	{
+	case WM_INITDIALOG:
+	{
+		SendDlgItemMessage(hDlg, IDC_CB_MOTIONS_MOTIONS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		return TRUE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->Brush_Tabs;
+	}
+
+	case WM_NOTIFY:
+	{
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		/*if (some_item->idFrom == IDC_BT_TD_DEBUG_PHYSICSDEBUG)
 		{
-			if (App->CL_TopDlg->flag_Demo_2_Running == 0)
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->CL_TopDlg->flag_Toggle_PhysicaDebug_Node);
+			return CDRF_DODEFAULT;
+		}*/
+
+		return CDRF_DODEFAULT;
+	}
+
+	case WM_COMMAND:
+	{
+
+		/*if (LOWORD(wParam) == IDC_BT_TD_DEBUG_PHYSICSDEBUG)
+		{
+			if (App->CL_TopDlg->flag_Toggle_PhysicaDebug_Node == 1)
 			{
-				App->CL_TopDlg->flag_Toggle_Demos_Demo_2 = 1;
-				App->CL_TopDlg->flag_Toggle_Demos_Demo_1 = 0;
-
-				App->CL_Demos->Start_Demo_2();
-
-				RedrawWindow(App->CL_TopDlg->Demos_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-
-				App->CL_TopDlg->flag_Demo_2_Running = 1;
-				App->CL_TopDlg->flag_Demo_1_Running = 0;
+				App->CL_TopDlg->flag_Toggle_PhysicaDebug_Node = 0;
+				App->CL_Ogre->Bullet_Debug_Listener->btDebug_Node->setVisible(false);
 			}
-
+			else
+			{
+				App->CL_TopDlg->flag_Toggle_PhysicaDebug_Node = 1;
+				App->CL_Ogre->Bullet_Debug_Listener->btDebug_Node->setVisible(true);
+			}
 			return 1;
 		}*/
 
@@ -1170,7 +1234,26 @@ LRESULT CALLBACK CL64_TopDlg::Physics_TB_Proc(HWND hDlg, UINT message, WPARAM wP
 }
 
 // *************************************************************************
-// *						Init_Bmps_Globals Terry Bernie				   *
+// *		Update_Motions_Combo:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+void CL64_TopDlg::Update_Motions_Combo(void)
+{
+	SendDlgItemMessage(Motions_TB_hWnd, IDC_CB_MOTIONS_MOTIONS, CB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
+
+	int Count = 0;
+	int Size = App->CL_Scene->MotionCount;
+
+	while (Count < Size)
+	{
+		SendDlgItemMessage(Motions_TB_hWnd, IDC_CB_MOTIONS_MOTIONS, CB_ADDSTRING, (WPARAM)0, (LPARAM)App->CL_Scene->S_OgreMeshData[0]->mMotionNames[Count].c_str());
+		Count++;
+	}
+
+	SendDlgItemMessage(Motions_TB_hWnd, IDC_CB_MOTIONS_MOTIONS, CB_SETCURSEL, (WPARAM)0, (LPARAM)0);
+}
+
+// *************************************************************************
+// *			Init_Bmps_Globals:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
 void CL64_TopDlg::Init_Bmps_Globals(void)
 {

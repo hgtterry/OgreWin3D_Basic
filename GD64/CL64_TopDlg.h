@@ -35,6 +35,9 @@ public:
 	void Start_Camera_TB(void);
 	void Start_Demos_TB(void);
 	void Start_Physics_TB(void);
+	void Start_Motions_TB(void);
+
+	void Update_Motions_Combo(void);
 
 	bool flag_Toggle_Tabs_Debug;
 	bool flag_Toggle_Tabs_Camera;
@@ -59,6 +62,7 @@ public:
 	HWND Camera_TB_hWnd;
 	HWND Demos_TB_hWnd;
 	HWND Physics_TB_hWnd;
+	HWND Motions_TB_hWnd;
 
 private:
 
@@ -70,6 +74,7 @@ private:
 	static LRESULT CALLBACK Camera_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Demos_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Physics_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Motions_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	bool flag_Toggle_Cam_ModelMode;
 	bool flag_Toggle_Cam_FreeMode;

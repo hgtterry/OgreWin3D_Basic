@@ -448,6 +448,7 @@ void OW3D_Import_Ogre3D::Get_Motions(Ogre::Entity* Ogre_Entity)
 		{
 			flag_IsAnimated = 0;
 			App->CL_Scene->MotionCount = 0;
+			App->CL_TopDlg->Update_Motions_Combo();
 		}
 		else
 		{
@@ -463,12 +464,13 @@ void OW3D_Import_Ogre3D::Get_Motions(Ogre::Entity* Ogre_Entity)
 			}
 
 			App->CL_Scene->MotionCount = Count + 1;
-
+			App->CL_TopDlg->Update_Motions_Combo();
 		}
 	}
 	else
 	{
 		flag_IsAnimated = 0;
 		App->CL_Scene->MotionCount = 0;
+		App->CL_TopDlg->Update_Motions_Combo();
 	}
 }
