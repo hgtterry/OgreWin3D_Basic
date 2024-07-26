@@ -23,5 +23,17 @@ public:
 
 	void Play_SelectedMotion(void);
 	void Stop_SelectedMotion(void);
+
+	void UpdateBones_Orge(bool Reset);
+	void AnimationExtract_Mesh(bool DefaultPose);
+
+	void Get_AnimationInstance(Ogre::MeshPtr mesh,
+		size_t& vertex_count,
+		Ogre::Vector3*& vertices,
+		size_t& index_count,
+		unsigned long*& indices,
+		int SubMesh,
+		bool DefaultPose);
+
 };
 

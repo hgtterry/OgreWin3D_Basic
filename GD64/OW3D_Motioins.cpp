@@ -50,3 +50,186 @@ void OW3D_Motioins::Stop_SelectedMotion(void)
 		App->CL_Ogre->Ogre3D_Listener->Animate_State->setEnabled(false);
 	}
 }
+
+#pragma warning(disable:4996)
+
+// *************************************************************************
+// *		   UpdateBones_Orge:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void OW3D_Motioins::UpdateBones_Orge(bool Reset)
+{
+	int Loop = 0;
+	if (!App->CL_Scene->Imported_Ogre_Ent)
+	{
+		return;
+	}
+
+	Ogre::SkeletonInstance* skeletonInstance = App->CL_Scene->Imported_Ogre_Ent->getSkeleton();
+
+	if (skeletonInstance)
+	{
+		if (Reset == 1)
+		{
+			skeletonInstance->reset(false);
+		}
+
+		Ogre::Skeleton::BoneIterator itor = skeletonInstance->getBoneIterator();
+		while (itor.hasMoreElements())
+		{
+			Ogre::Bone* bone = itor.getNext();
+
+			App->CL_Scene->S_Bones[Loop]->TranslationStart.X = bone->_getDerivedPosition().x;
+			App->CL_Scene->S_Bones[Loop]->TranslationStart.Y = bone->_getDerivedPosition().y;
+			App->CL_Scene->S_Bones[Loop]->TranslationStart.Z = bone->_getDerivedPosition().z;
+
+			//App->CL_Model_Data->S_Bones[Loop]->TranslationStart.X = bone->_getDerivedOrientation().
+
+			Loop++;
+		}
+	}
+
+	return;
+}
+
+// *************************************************************************
+// *							AnimationExtract_Mesh			   	 	   *
+// *************************************************************************
+void OW3D_Motioins::AnimationExtract_Mesh(bool DefaultPose)
+{
+	int FaceCount = 0;
+	int FaceNum = 0;
+	int FaceIndexNum = 0;
+	size_t vertex_count, index_count;
+	Vector3* vertices;
+	//	Vector3* normals;
+	unsigned long* indices;
+
+	int SubMeshCount = App->CL_Scene->Imported_Ogre_Ent->getNumSubEntities();
+	int loop = 0;
+	int Count = 0;
+
+	while (Count < SubMeshCount)
+	{
+		Get_AnimationInstance(App->CL_Scene->Imported_Ogre_Ent->getMesh(), vertex_count, vertices, index_count, indices, Count, DefaultPose);
+		Count++;
+	}
+
+	return;
+}
+// *************************************************************************
+// *					Get_AnimationInstance Terry Bernie				   *
+// *************************************************************************
+void OW3D_Motioins::Get_AnimationInstance(Ogre::MeshPtr mesh,
+	size_t& vertex_count,
+	Ogre::Vector3*& vertices,
+	size_t& index_count,
+	unsigned long*& indices,
+	int SubMesh,
+	bool DefaultPose)
+{
+	bool added_shared = false;
+	size_t current_offset = 0;
+	size_t shared_offset = 0;
+	size_t next_offset = 0;
+	size_t index_offset = 0;
+
+	const Vector3& position = Vector3::ZERO;
+	const Quaternion& orient = Quaternion::IDENTITY;
+	const Vector3& scale = Vector3::UNIT_SCALE;
+
+	vertex_count = index_count = 0;
+	Ogre::SubMesh* submesh = mesh->getSubMesh(SubMesh);
+
+	vertex_count = submesh->vertexData->vertexCount;
+
+	index_count = submesh->indexData->indexCount;
+
+	// Allocate space for the vertices and indices
+	vertices = new Ogre::Vector3[vertex_count];
+	indices = new unsigned long[index_count];
+
+	Ogre::VertexData* vertex_data;
+
+	//-------------------- Get Data
+	if (DefaultPose == 0)
+	{
+		vertex_data = submesh->useSharedVertices ? App->CL_Scene->Imported_Ogre_Ent->_getSkelAnimVertexData() : App->CL_Scene->Imported_Ogre_Ent->getSubEntity(SubMesh)->_getSkelAnimVertexData();
+	}
+	else
+	{
+		vertex_data = submesh->useSharedVertices ? mesh->sharedVertexData : submesh->vertexData;
+	}
+
+	if ((!submesh->useSharedVertices) || (submesh->useSharedVertices && !added_shared))
+	{
+		if (submesh->useSharedVertices)
+		{
+			added_shared = true;
+			shared_offset = current_offset;
+		}
+
+		const Ogre::VertexElement* posElem =
+			vertex_data->vertexDeclaration->findElementBySemantic(Ogre::VES_POSITION);
+
+		Ogre::HardwareVertexBufferSharedPtr vbuf =
+			vertex_data->vertexBufferBinding->getBuffer(posElem->getSource());
+
+		unsigned char* vertex =
+			static_cast<unsigned char*>(vbuf->lock(Ogre::HardwareBuffer::HBL_READ_ONLY));
+
+		float* pReal;
+
+		for (size_t j = 0; j < vertex_data->vertexCount; ++j, vertex += vbuf->getVertexSize())
+		{
+			posElem->baseVertexPointerToElement(vertex, &pReal);
+			Ogre::Vector3 pt(pReal[0], pReal[1], pReal[2]);
+			vertices[current_offset + j] = (orient * (pt * scale)) + position;
+		}
+
+		vbuf->unlock();
+		next_offset += vertex_data->vertexCount;
+	}
+
+	Ogre::IndexData* index_data = submesh->indexData;
+	size_t numTris = index_data->indexCount / 3;
+	Ogre::HardwareIndexBufferSharedPtr ibuf = index_data->indexBuffer;
+
+	bool use32bitindexes = (ibuf->getType() == Ogre::HardwareIndexBuffer::IT_32BIT);
+
+	unsigned long* pLong = static_cast<unsigned long*>(ibuf->lock(Ogre::HardwareBuffer::HBL_READ_ONLY));
+	unsigned short* pShort = reinterpret_cast<unsigned short*>(pLong);
+
+	size_t offset = (submesh->useSharedVertices) ? shared_offset : current_offset;
+
+	if (use32bitindexes)
+	{
+		for (size_t k = 0; k < numTris * 3; ++k)
+		{
+			indices[index_offset++] = pLong[k] + static_cast<unsigned long>(offset);
+		}
+	}
+	else
+	{
+		for (size_t k = 0; k < numTris * 3; ++k)
+		{
+			indices[index_offset++] = static_cast<unsigned long>(pShort[k]) +
+				static_cast<unsigned long>(offset);
+		}
+	}
+
+	ibuf->unlock();
+	current_offset = next_offset;
+
+	int loop = 0;
+	while (loop < vertex_count)
+	{
+		App->CL_Scene->Group[SubMesh]->vertex_Data[loop].x = vertices[loop].x;
+		App->CL_Scene->Group[SubMesh]->vertex_Data[loop].y = vertices[loop].y;
+		App->CL_Scene->Group[SubMesh]->vertex_Data[loop].z = vertices[loop].z;
+
+		loop++;
+	}
+
+	delete vertices;
+	delete indices;
+}

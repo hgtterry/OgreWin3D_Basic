@@ -81,12 +81,12 @@ bool CL64_Ogre3D_Listener::frameStarted(const FrameEvent& evt)
 	if (flag_Animate_Ogre == 1)
 	{
 		Animate_State->addTime(evt.timeSinceLastFrame * AnimationScale);
-		//App->CL_Ogre3D->UpdateBones_Orge(0);
+		App->CL_Motions->UpdateBones_Orge(0);
 
 		//if (App->CL_Model->HasMesh == 1)
 		{
-			//App->CL_Ogre3D->AnimationExtract_Mesh(0);
-			//App->CL_Model->Set_BondingBox_Model(0);
+			App->CL_Motions->AnimationExtract_Mesh(0);
+			App->CL_Scene->Set_BondingBox_Model(0);
 		}
 
 		if (App->CL_Scene->Imported_Ogre_Ent)
