@@ -41,6 +41,7 @@ CL64_App::CL64_App(void)
 	CL_Resources =		nullptr;
 
 	CL_Import_Ogre3D =	nullptr;
+	CL_Motions =		nullptr;
 
 	hInst =				nullptr;
 	MainHwnd =			nullptr;

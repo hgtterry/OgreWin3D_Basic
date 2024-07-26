@@ -37,6 +37,7 @@ appreciated but is not required.
 #include "CL64_Resources.h"
 
 #include "OW3D_Import_Ogre3D.h"
+#include "OW3D_Motioins.h"
 
 class CL64_App
 {
@@ -65,8 +66,9 @@ public:
 	CL64_Demos*			CL_Demos;
 	CL64_Dialogs*		CL_Dialogs;
 	CL64_Resources*		CL_Resources;
-
+	
 	OW3D_Import_Ogre3D* CL_Import_Ogre3D;
+	OW3D_Motioins*		CL_Motions;
 
 	void InitApp(void);
 	void Init_Dialogs(void);

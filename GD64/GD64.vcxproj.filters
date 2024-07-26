@@ -114,6 +114,9 @@
     <ClInclude Include="OW3D_Import_Ogre3D.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="OW3D_Motioins.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GD64.cpp">
@@ -204,6 +207,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="OW3D_Import_Ogre3D.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="OW3D_Motioins.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
