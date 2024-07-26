@@ -37,11 +37,6 @@ void CL64_Camera::Reset_View(void)
 	App->CL_Grid->HairNode->setPosition(0, 0, 0);
 	App->CL_Grid->HairNode->resetOrientation();
 
-	if (App->CL_Ogre->flag_TestMesh_Deleted == 0)
-	{
-		App->CL_Ogre->TestMesh_Node->resetOrientation();
-	}
-
 	App->CL_Ogre->OGL_Listener->RX = 0;
 	App->CL_Ogre->OGL_Listener->RZ = 0;
 

@@ -34,9 +34,6 @@ CL64_Ogre::CL64_Ogre(void)
 	manObj = nullptr;
 	ModelNode = nullptr;
 
-	TestMesh_Entity = nullptr;
-	TestMesh_Node = nullptr;
-
 	mResourcePath = "";
 	App_Resource_Group = "App_Resource_Group";
 	World_Resource_Group = "World_Resource_Group";
@@ -78,18 +75,26 @@ void CL64_Ogre::InitOgre(void)
 	App->CL_Grid->Grid_Update(1);
 	App->CL_Grid->Hair_Update(1);
 
-	TestMesh_Entity = mSceneMgr->createEntity("Test_Mesh","Sinbad.mesh");
+	
+
+	App->CL_Scene->Imported_Ogre_Ent = mSceneMgr->createEntity("Test_Mesh", "Sinbad.mesh");
+	App->CL_Scene->Imported_Ogre_Node = mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	App->CL_Scene->Imported_Ogre_Node->attachObject(App->CL_Scene->Imported_Ogre_Ent);
+
+	/*TestMesh_Entity = mSceneMgr->createEntity("Test_Mesh","Sinbad.mesh");
 	TestMesh_Node = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	TestMesh_Node->attachObject(TestMesh_Entity);
-	strcpy(App->CL_Scene->FileName, "Sinbad.mesh");
+	strcpy(App->CL_Scene->FileName, "Sinbad.mesh");*/
 
-	Show_Test_Mesh(true);
+	//Show_Test_Mesh(true);
 
-	App->CL_Import_Ogre3D->Ogre_To_Mesh_Data(TestMesh_Entity);
-	App->CL_Import_Ogre3D->Get_Motions(TestMesh_Entity);
+	App->CL_Import_Ogre3D->Ogre_To_Mesh_Data(App->CL_Scene->Imported_Ogre_Ent);
+	App->CL_Import_Ogre3D->Get_Motions(App->CL_Scene->Imported_Ogre_Ent);
 	App->CL_Import_Ogre3D->flag_Ogre_Model_Loaded = 1;
 
-	App->CL_Scene->Scene_Mode = Enums::Scene_Mode_TestMesh;
+	//App->CL_Scene->Scene_Mode = Enums::Scene_Mode_TestMesh;
+	App->CL_Ogre->flag_TestMesh_Deleted = 1;
+	App->CL_Ogre->Ogre3D_Listener->Ogre_Model_Loaded = 1;
 	App->CL_Scene->flag_Model_Loaded = 1;
 
 	mTrayMgr = new OgreBites::TrayManager("InterfaceName", mWindow);
@@ -404,12 +409,12 @@ void CL64_Ogre::Show_Test_Mesh(bool Show)
 	{
 		if (Show == 1)
 		{
-			TestMesh_Node->setVisible(true);
+			App->CL_Scene->Imported_Ogre_Ent->setVisible(true);
 			flag_Show_Test_Mesh = 1;
 		}
 		else
 		{
-			TestMesh_Node->setVisible(false);
+			App->CL_Scene->Imported_Ogre_Ent->setVisible(false);
 			flag_Show_Test_Mesh = 0;
 		}
 	}
@@ -438,7 +443,8 @@ void CL64_Ogre::Show_Trays(bool Enable)
 // *************************************************************************
 void CL64_Ogre::Delete_TestMesh(void)
 {
-	if (TestMesh_Entity && TestMesh_Node)
+	
+	/*if (TestMesh_Entity && TestMesh_Node)
 	{
 		flag_TestMesh_Deleted = 1;
 
@@ -449,7 +455,7 @@ void CL64_Ogre::Delete_TestMesh(void)
 		TestMesh_Node = nullptr;
 
 		App->CL_TopDlg->Enable_TestMesh_Button(false);
-	}
+	}*/
 
 }
 

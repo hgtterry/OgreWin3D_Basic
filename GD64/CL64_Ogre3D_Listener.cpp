@@ -89,15 +89,11 @@ bool CL64_Ogre3D_Listener::frameStarted(const FrameEvent& evt)
 			//App->CL_Model->Set_BondingBox_Model(0);
 		}
 
-		if (App->CL_Ogre->TestMesh_Entity)
-		{
-			App->CL_Ogre->TestMesh_Entity->_updateAnimation();
-		}
-
 		if (App->CL_Scene->Imported_Ogre_Ent)
 		{
 			App->CL_Scene->Imported_Ogre_Ent->_updateAnimation();
 		}
+
 		/*if (App->Cl_Ogre->RenderListener->Show_Crosshair == 1)
 		{
 			App->Cl_Bones->Move_BoneCrosshair();
@@ -268,11 +264,6 @@ bool CL64_Ogre3D_Listener::Capture_LeftMouse_Model(void)
 			App->CL_Grid->HairNode->yaw(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
 			App->CL_Ogre->OGL_Listener->RZ = App->CL_Ogre->OGL_Listener->RZ - (Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2);
 
-			if (App->CL_Ogre->flag_TestMesh_Deleted == 0)
-			{
-				App->CL_Ogre->TestMesh_Node->yaw(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
-			}
-
 			if (Ogre_Model_Loaded == 1)
 			{
 				App->CL_Scene->Imported_Ogre_Node->yaw(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
@@ -291,11 +282,6 @@ bool CL64_Ogre3D_Listener::Capture_LeftMouse_Model(void)
 			App->CL_Grid->GridNode->yaw(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
 			App->CL_Grid->HairNode->yaw(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
 			App->CL_Ogre->OGL_Listener->RZ = App->CL_Ogre->OGL_Listener->RZ + (Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2);
-
-			if (App->CL_Ogre->flag_TestMesh_Deleted == 0)
-			{
-				App->CL_Ogre->TestMesh_Node->yaw(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
-			}
 
 			if (Ogre_Model_Loaded == 1)
 			{
@@ -318,11 +304,6 @@ bool CL64_Ogre3D_Listener::Capture_LeftMouse_Model(void)
 			App->CL_Grid->HairNode->pitch(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
 			App->CL_Ogre->OGL_Listener->RX = App->CL_Ogre->OGL_Listener->RX - (Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2);
 
-			if (App->CL_Ogre->flag_TestMesh_Deleted == 0)
-			{
-				App->CL_Ogre->TestMesh_Node->pitch(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
-			}
-
 			if (Ogre_Model_Loaded == 1)
 			{
 				App->CL_Scene->Imported_Ogre_Node->pitch(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
@@ -341,11 +322,6 @@ bool CL64_Ogre3D_Listener::Capture_LeftMouse_Model(void)
 			App->CL_Grid->GridNode->pitch(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
 			App->CL_Grid->HairNode->pitch(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
 			App->CL_Ogre->OGL_Listener->RX = App->CL_Ogre->OGL_Listener->RX + (Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2);
-
-			if (App->CL_Ogre->flag_TestMesh_Deleted == 0)
-			{
-				App->CL_Ogre->TestMesh_Node->pitch(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
-			}
 
 			if (Ogre_Model_Loaded == 1)
 			{
