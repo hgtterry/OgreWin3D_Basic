@@ -114,11 +114,11 @@ void CL64_Scene::Reset_Class(void)
 	MotionCount = 0;
 	BoneCount = 0;
 
-	FileName[0] = 0;
-	Path_FileName[0] = 0;
-	Model_FolderPath[0] = 0;
-	Texture_FolderPath[0] = 0;
-	JustName[0] = 0;
+	strcpy(FileName, "None");
+	strcpy(Path_FileName, "None");
+	strcpy(Model_FolderPath, "None");
+	strcpy(Texture_FolderPath, "None");
+	strcpy(JustName, "None");
 
 	flag_Model_Loaded = 0;
 }
@@ -138,15 +138,8 @@ void CL64_Scene::Clear_Scene_And_Reset(void)
 
 	Reset_Main_Entity();
 
-	// Clear Stored data about any loaded Ogre Models
-	if (S_OgreMeshData[0])
-	{
-		delete S_OgreMeshData[0];
-		S_OgreMeshData[0] = nullptr;
-
-		S_OgreMeshData[0] = new OgreMeshData_Type;
-	}
-
+	App->CL_Import_Ogre3D->Reset_Class();
+	
 	App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_Model;
 	App->CL_Ogre->Ogre3D_Listener->Run_Physics = 0;
 	App->CL_Ogre->Enable_Fog(false);

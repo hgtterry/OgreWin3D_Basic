@@ -87,6 +87,7 @@ void CL64_Ogre::InitOgre(void)
 
 	App->CL_Import_Ogre3D->Ogre_To_Mesh_Data(TestMesh_Entity);
 	App->CL_Import_Ogre3D->Get_Motions(TestMesh_Entity);
+	App->CL_Import_Ogre3D->flag_Ogre_Model_Loaded = 1;
 
 	App->CL_Scene->Scene_Mode = Enums::Scene_Mode_TestMesh;
 	App->CL_Scene->flag_Model_Loaded = 1;

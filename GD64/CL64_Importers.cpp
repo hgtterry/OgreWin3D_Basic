@@ -172,6 +172,7 @@ void CL64_Importers::Load_Ogre_Model(bool Use_File_Dialog)
 
 	App->CL_Import_Ogre3D->Ogre_To_Mesh_Data(App->CL_Scene->Imported_Ogre_Ent);
 	
+	App->CL_Import_Ogre3D->flag_Ogre_Model_Loaded = 1;
 	App->CL_Scene->flag_Model_Loaded = 1;
 
 	App->CL_Scene->Set_Scene(Enums::Scene_Mode_Imported_Entity);
@@ -239,6 +240,7 @@ void CL64_Importers::Reload_Ogre_Model(void)
 
 	App->CL_Import_Ogre3D->Ogre_To_Mesh_Data(App->CL_Scene->Imported_Ogre_Ent);
 
+	App->CL_Import_Ogre3D->flag_Ogre_Model_Loaded = 1;
 	App->CL_Ogre->Ogre3D_Listener->Ogre_Model_Loaded = 1;
 
 }

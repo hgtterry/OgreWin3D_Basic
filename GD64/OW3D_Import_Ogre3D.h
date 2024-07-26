@@ -21,6 +21,8 @@ public:
 	OW3D_Import_Ogre3D(void);
 	~OW3D_Import_Ogre3D(void);
 
+	void Reset_Class(void);
+
 	bool Ogre_To_Mesh_Data(Ogre::Entity* Ogre_Entity);
 
 	void Get_SubPose_MeshInstance(Ogre::MeshPtr mesh,
@@ -39,5 +41,6 @@ public:
 	std::vector<Ogre::Vector2> MeshTextureCoords;
 
 	bool flag_IsAnimated;
+	bool flag_Ogre_Model_Loaded;
 };
 

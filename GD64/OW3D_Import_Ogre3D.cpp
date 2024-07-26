@@ -22,10 +22,46 @@ appreciated but is not required.
 OW3D_Import_Ogre3D::OW3D_Import_Ogre3D(void)
 {
 	flag_IsAnimated = 0;
+	flag_Ogre_Model_Loaded = 0;
 }
 
 OW3D_Import_Ogre3D::~OW3D_Import_Ogre3D(void)
 {
+}
+
+// *************************************************************************
+// *			Reset_Class:- Terry and Hazel Flanigan 2024				   *
+// *************************************************************************
+void OW3D_Import_Ogre3D::Reset_Class(void)
+{
+	// Clear Stored data about any loaded Ogre Models
+	if (App->CL_Scene->S_OgreMeshData[0])
+	{
+		delete App->CL_Scene->S_OgreMeshData[0];
+		App->CL_Scene->S_OgreMeshData[0] = nullptr;
+
+		App->CL_Scene->S_OgreMeshData[0] = new OgreMeshData_Type;
+
+		App->CL_Scene->S_OgreMeshData[0]->mMaterials.resize(0);
+		App->CL_Scene->S_OgreMeshData[0]->mMotionNames.resize(0);
+
+		App->CL_Scene->S_OgreMeshData[0]->mName = "Empty";
+
+		App->CL_Scene->S_OgreMeshData[0]->mSubMeshCount = 0;
+		App->CL_Scene->S_OgreMeshData[0]->Area = 0;
+		App->CL_Scene->S_OgreMeshData[0]->Depth = 0;
+		App->CL_Scene->S_OgreMeshData[0]->Height = 0;
+		App->CL_Scene->S_OgreMeshData[0]->Width = 0;
+		App->CL_Scene->S_OgreMeshData[0]->Volume = 0;
+		App->CL_Scene->S_OgreMeshData[0]->Radius = 0;
+
+		App->CL_Scene->S_OgreMeshData[0]->Center = (Ogre::Vector3::ZERO);
+		App->CL_Scene->S_OgreMeshData[0]->vMin = (Ogre::Vector3::ZERO);
+		App->CL_Scene->S_OgreMeshData[0]->vMax = (Ogre::Vector3::ZERO);
+
+		flag_Ogre_Model_Loaded = 0;
+		
+	}
 }
 
 // *************************************************************************
