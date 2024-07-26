@@ -23,6 +23,5 @@ public:
 
 	void Play_SelectedMotion(void);
 	void Stop_SelectedMotion(void);
-
 };
 

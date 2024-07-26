@@ -1225,6 +1225,29 @@ LRESULT CALLBACK CL64_TopDlg::Motions_TB_Proc(HWND hDlg, UINT message, WPARAM wP
 			return 1;
 		}
 
+		if (LOWORD(wParam) == IDC_CB_MOTIONS_MOTIONS)
+		{
+			switch (HIWORD(wParam)) // Find out what message it was
+			{
+			case CBN_DROPDOWN:
+				break;
+			case CBN_CLOSEUP:
+			{
+				char buff[MAX_PATH]{ 0 };
+
+				HWND temp = GetDlgItem(hDlg, IDC_CB_MOTIONS_MOTIONS);
+				int Index = SendMessage(temp, CB_GETCURSEL, 0, 0);
+				SendMessage(temp, CB_GETLBTEXT, Index, (LPARAM)buff);
+				strcpy(App->CL_TopDlg->Selected_Motion_Name,buff);
+
+				App->CL_Motions->Stop_SelectedMotion();
+				App->CL_Motions->Play_SelectedMotion();
+			}
+			}
+
+			return TRUE;
+		}
+
 		return FALSE;
 	}
 
