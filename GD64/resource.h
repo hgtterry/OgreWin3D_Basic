@@ -81,6 +81,7 @@
 #define IDC_ALLMESH                     1009
 #define IDC_TBSHOWFACES                 1009
 #define IDC_CKFAST                      1009
+#define IDC_BT_TD_MOTIONSTAB            1009
 #define IDC_BUTTON4                     1010
 #define IDC_BT_CAMERA_FREE              1010
 #define IDC_ALLMATERIALS                1010

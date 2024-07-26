@@ -54,7 +54,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	char* a_cwd = _getcwd(App->GD_Directory_FullPath, MAX_PATH);
 
     App->InitApp();
-
+	
     UNREFERENCED_PARAMETER(hPrevInstance);
     UNREFERENCED_PARAMETER(lpCmdLine);
 
@@ -75,6 +75,10 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	
 	App->Init_Dialogs();
 	
+	/*char buff[1000];
+	strcpy(buff, GetCommandLineA());
+	MessageBox(NULL, buff, "OK", MB_OK);*/
+
 	MSG  msg;
 	while (PeekMessage(&msg, NULL, 0U, 0U, PM_REMOVE))
 	{

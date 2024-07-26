@@ -40,6 +40,7 @@ public:
 	bool flag_Toggle_Tabs_Camera;
 	bool flag_Toggle_Tabs_Demos;
 	bool flag_Toggle_Tabs_Physics;
+	bool flag_Toggle_Tabs_Motions;
 	
 	bool flag_Toggle_PhysicaDebug_Node;
 	bool flag_FPS_Dlg_Running;

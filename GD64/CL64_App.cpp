@@ -40,6 +40,8 @@ CL64_App::CL64_App(void)
 	CL_Dialogs =		nullptr;
 	CL_Resources =		nullptr;
 
+	CL_Import_Ogre3D =	nullptr;
+
 	hInst =				nullptr;
 	MainHwnd =			nullptr;
 	Fdlg =				nullptr;
@@ -47,6 +49,7 @@ CL64_App::CL64_App(void)
 	ViewPLeaseWait =	nullptr;
 
 	GD_Directory_FullPath[0] = 0;
+	App_Version[0] = 0;
 
 	CUR = 0;
 
@@ -133,6 +136,9 @@ void CL64_App::InitApp(void)
 	CL_Dialogs =		new CL64_Dialogs();
 	CL_Resources =		new CL64_Resources();
 
+	CL_Import_Ogre3D =	new OW3D_Import_Ogre3D();
+
+	
 	SetBrushes_Fonts();
 
 	LoadString(App->hInst, IDS_VERSION, App_Version, MAX_PATH);

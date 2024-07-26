@@ -84,7 +84,7 @@
     <OutDir>..\Bin64\</OutDir>
     <TargetName>OgreWin3D_Basic</TargetName>
   </PropertyGroup>
-   <PropertyGroup>
+  <PropertyGroup>
     <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -191,6 +191,7 @@
     <ClInclude Include="CL64_TopDlg.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="GD64.h" />
+    <ClInclude Include="OW3D_Import_Ogre3D.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="targetver.h" />
@@ -224,6 +225,7 @@
     <ClCompile Include="CL64_Textures.cpp" />
     <ClCompile Include="CL64_TopDlg.cpp" />
     <ClCompile Include="GD64.cpp" />
+    <ClCompile Include="OW3D_Import_Ogre3D.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

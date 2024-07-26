@@ -35,6 +35,7 @@ CL64_TopDlg::CL64_TopDlg(void)
 	flag_Toggle_Tabs_Debug = 1;
 	flag_Toggle_Tabs_Demos = 0;
 	flag_Toggle_Tabs_Physics = 0;
+	flag_Toggle_Tabs_Motions = 0;
 
 	flag_Toggle_Cam_ModelMode = 1;
 	flag_Toggle_Cam_FreeMode = 0;
@@ -497,7 +498,8 @@ LRESULT CALLBACK CL64_TopDlg::Tabs_Headers_Proc(HWND hDlg, UINT message, WPARAM 
 		SendDlgItemMessage(hDlg, IDC_BT_TBH_CAMERA, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_TD_DEMOSTAB, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_TD_PHYSICSTAB, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-
+		SendDlgItemMessage(hDlg, IDC_BT_TD_MOTIONSTAB, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
 		return TRUE;
 	}
 
@@ -538,6 +540,13 @@ LRESULT CALLBACK CL64_TopDlg::Tabs_Headers_Proc(HWND hDlg, UINT message, WPARAM 
 			return CDRF_DODEFAULT;
 		}
 
+		if (some_item->idFrom == IDC_BT_TD_MOTIONSTAB)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle_Tabs(item, App->CL_TopDlg->flag_Toggle_Tabs_Motions);
+			return CDRF_DODEFAULT;
+		}
+		
 		return CDRF_DODEFAULT;
 	}
 
