@@ -99,7 +99,6 @@ public:
 
 	bool flag_Show_Test_Mesh;	// is Test Mesh Visable
 	bool flag_Show_Trays;		// is Trays Visable
-	bool flag_TestMesh_Deleted; // Does the test mesh Exist
 	bool flag_Show_Fog;			// Is the fog Enabled
 	bool flag_Test_Mesh_Active;
 };

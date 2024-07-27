@@ -40,7 +40,6 @@ CL64_Ogre::CL64_Ogre(void)
 
 	flag_Show_Test_Mesh = 1;
 	flag_Show_Trays = 1;
-	flag_TestMesh_Deleted = 0;
 	flag_Show_Fog = 0;
 	flag_Test_Mesh_Active = 0;
 
@@ -87,7 +86,6 @@ void CL64_Ogre::InitOgre(void)
 	App->CL_Import_Ogre3D->flag_Ogre_Model_Loaded = 1;
 
 	App->CL_Scene->Scene_Mode = Enums::Scene_Mode_TestMesh;
-	App->CL_Ogre->flag_TestMesh_Deleted = 1;
 	App->CL_Ogre->Ogre3D_Listener->Ogre_Model_Loaded = 1;
 	App->CL_Scene->flag_Model_Loaded = 1;
 
