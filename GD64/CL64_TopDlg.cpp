@@ -67,15 +67,13 @@ void CL64_TopDlg::Reset_Class(void) const
 	App->CL_TopDlg->flag_Demo_1_Running = 0;
 	App->CL_TopDlg->flag_Demo_2_Running = 0;
 
-	App->CL_Ogre->Show_Test_Mesh(false);
-
-	App->CL_Ogre->flag_Show_Test_Mesh = 0;
 	App->CL_Ogre->OGL_Listener->Flag_ShowFaces = 0;
 	App->CL_Ogre->OGL_Listener->Flag_ShowPoints = 0;
 	App->CL_ImGui->flag_Show_Model_Data = 1;
 	App->CL_Ogre->OGL_Listener->Flag_ShowBones = 0;
 	App->CL_Ogre->OGL_Listener->Flag_ShowNormals = 0;
 	App->CL_Ogre->OGL_Listener->Flag_ShowBoundingBox = 0;
+	App->CL_Ogre->OGL_Listener->Flag_ShowTextured = 1;
 
 	SendMessage(GetDlgItem(TabsHwnd, IDC_BTSHOWTEXTURES), BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_TexturesOff_Bmp);
 	SendMessage(GetDlgItem(TabsHwnd, IDC_TBSHOWFACES), BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshOff_Bmp);
@@ -758,7 +756,7 @@ LRESULT CALLBACK CL64_TopDlg::Debug_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 		
 		if (LOWORD(wParam) == IDC_BT_TD_DEBUG_TESTCUBE)
 		{
-			if (App->CL_Ogre->flag_TestMesh_Deleted == 0)
+			if (App->CL_Ogre->flag_Test_Mesh_Active == 1)
 			{
 				if (App->CL_Ogre->flag_Show_Test_Mesh == 1)
 				{

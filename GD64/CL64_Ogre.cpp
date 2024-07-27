@@ -42,6 +42,7 @@ CL64_Ogre::CL64_Ogre(void)
 	flag_Show_Trays = 1;
 	flag_TestMesh_Deleted = 0;
 	flag_Show_Fog = 0;
+	flag_Test_Mesh_Active = 0;
 
 	FPSLock = 16666; // Default 60 FPS
 
@@ -81,21 +82,16 @@ void CL64_Ogre::InitOgre(void)
 	App->CL_Scene->Imported_Ogre_Node = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	App->CL_Scene->Imported_Ogre_Node->attachObject(App->CL_Scene->Imported_Ogre_Ent);
 
-	/*TestMesh_Entity = mSceneMgr->createEntity("Test_Mesh","Sinbad.mesh");
-	TestMesh_Node = mSceneMgr->getRootSceneNode()->createChildSceneNode();
-	TestMesh_Node->attachObject(TestMesh_Entity);
-	strcpy(App->CL_Scene->FileName, "Sinbad.mesh");*/
-
-	//Show_Test_Mesh(true);
-
 	App->CL_Import_Ogre3D->Ogre_To_Mesh_Data(App->CL_Scene->Imported_Ogre_Ent);
 	App->CL_Import_Ogre3D->Get_Motions(App->CL_Scene->Imported_Ogre_Ent);
 	App->CL_Import_Ogre3D->flag_Ogre_Model_Loaded = 1;
 
-	//App->CL_Scene->Scene_Mode = Enums::Scene_Mode_TestMesh;
+	App->CL_Scene->Scene_Mode = Enums::Scene_Mode_TestMesh;
 	App->CL_Ogre->flag_TestMesh_Deleted = 1;
 	App->CL_Ogre->Ogre3D_Listener->Ogre_Model_Loaded = 1;
 	App->CL_Scene->flag_Model_Loaded = 1;
+
+	flag_Test_Mesh_Active = 1;
 
 	mTrayMgr = new OgreBites::TrayManager("InterfaceName", mWindow);
 	mTrayMgr->showAll();
@@ -405,7 +401,7 @@ void CL64_Ogre::Clear_ErrorLog()
 // *************************************************************************
 void CL64_Ogre::Show_Test_Mesh(bool Show)
 {
-	if (App->CL_Ogre->flag_TestMesh_Deleted == 0)
+	if (flag_Test_Mesh_Active == 1 && App->CL_Scene->Imported_Ogre_Ent)
 	{
 		if (Show == 1)
 		{
@@ -444,18 +440,11 @@ void CL64_Ogre::Show_Trays(bool Enable)
 void CL64_Ogre::Delete_TestMesh(void)
 {
 	
-	/*if (TestMesh_Entity && TestMesh_Node)
+	if (App->CL_Ogre->flag_Test_Mesh_Active == 1)
 	{
-		flag_TestMesh_Deleted = 1;
-
-		TestMesh_Node->detachAllObjects();
-		App->CL_Ogre->mSceneMgr->destroySceneNode(TestMesh_Node);
-		App->CL_Ogre->mSceneMgr->destroyEntity(TestMesh_Entity);
-		TestMesh_Entity = nullptr;
-		TestMesh_Node = nullptr;
-
 		App->CL_TopDlg->Enable_TestMesh_Button(false);
-	}*/
+		App->CL_Ogre->flag_Test_Mesh_Active = 0;
+	}
 
 }
 
