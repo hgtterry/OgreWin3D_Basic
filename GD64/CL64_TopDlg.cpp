@@ -1201,12 +1201,19 @@ LRESULT CALLBACK CL64_TopDlg::Motions_TB_Proc(HWND hDlg, UINT message, WPARAM wP
 	{
 		LPNMHDR some_item = (LPNMHDR)lParam;
 
-		/*if (some_item->idFrom == IDC_BT_TD_DEBUG_PHYSICSDEBUG)
+		if (some_item->idFrom == IDC_BT_MOTIONS_PLAY)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CL_TopDlg->flag_Toggle_PhysicaDebug_Node);
+			App->Custom_Button_Toggle(item, App->CL_Motions->flag_Motion_Playing);
 			return CDRF_DODEFAULT;
-		}*/
+		}
+
+		if (some_item->idFrom == IDC_BT_MOTIONS_STOP)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
 
 		return CDRF_DODEFAULT;
 	}
@@ -1243,6 +1250,8 @@ LRESULT CALLBACK CL64_TopDlg::Motions_TB_Proc(HWND hDlg, UINT message, WPARAM wP
 
 				App->CL_Motions->Stop_SelectedMotion();
 				App->CL_Motions->Play_SelectedMotion();
+
+				RedrawWindow(App->CL_TopDlg->Motions_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			}
 			}
 
@@ -1254,6 +1263,33 @@ LRESULT CALLBACK CL64_TopDlg::Motions_TB_Proc(HWND hDlg, UINT message, WPARAM wP
 
 	}
 	return FALSE;
+}
+
+// *************************************************************************
+// *		Update_Motions_By_Name:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+void CL64_TopDlg::Update_Motions_By_Name(const char* Name)
+{
+	SendDlgItemMessage(Motions_TB_hWnd, IDC_CB_MOTIONS_MOTIONS, CB_SELECTSTRING, (WPARAM) -1, (LPARAM) Name);
+
+	strcpy(App->CL_TopDlg->Selected_Motion_Name, Name);
+
+	App->CL_Motions->Stop_SelectedMotion();
+	App->CL_Motions->Play_SelectedMotion();
+
+	RedrawWindow(App->CL_TopDlg->Tabs_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+}
+
+// *************************************************************************
+// *		Switch_To_Motions_Dlg:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+void CL64_TopDlg::Switch_To_Motions_Dlg(void)
+{
+	App->CL_TopDlg->Hide_Tabs();
+	ShowWindow(App->CL_TopDlg->Motions_TB_hWnd, SW_SHOW);
+	App->CL_TopDlg->flag_Toggle_Tabs_Motions = 1;
+
+	RedrawWindow(App->CL_TopDlg->Tabs_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 }
 
 // *************************************************************************

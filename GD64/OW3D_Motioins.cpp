@@ -20,10 +20,39 @@ appreciated but is not required.
 OW3D_Motioins::OW3D_Motioins(void)
 {
 	flag_Motion_Playing = 0;
+	AnimationScale = 1;
+	Animate_State = nullptr;
+
 }
 
 OW3D_Motioins::~OW3D_Motioins(void)
 {
+}
+
+// *************************************************************************
+// *			Update_Motion:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void OW3D_Motioins::Update_Motion(float deltaTime)
+{
+	Animate_State->addTime(deltaTime * AnimationScale);
+	App->CL_Motions->UpdateBones_Orge(false);
+
+	//if (App->CL_Model->HasMesh == 1)
+	{
+		App->CL_Motions->AnimationExtract_Mesh(false);
+		App->CL_Scene->Set_BondingBox_Model(false);
+	}
+
+	if (App->CL_Scene->Imported_Ogre_Ent)
+	{
+		App->CL_Scene->Imported_Ogre_Ent->_updateAnimation();
+	}
+
+	/*if (App->Cl_Ogre->RenderListener->Show_Crosshair == 1)
+	{
+		App->Cl_Bones->Move_BoneCrosshair();
+	}*/
+
 }
 
 // *************************************************************************
@@ -35,8 +64,8 @@ void OW3D_Motioins::Play_SelectedMotion(void)
 	{
 		if (App->CL_Scene->Imported_Ogre_Ent)
 		{
-			App->CL_Ogre->Ogre3D_Listener->Animate_State = App->CL_Scene->Imported_Ogre_Ent->getAnimationState(App->CL_TopDlg->Selected_Motion_Name);
-			App->CL_Ogre->Ogre3D_Listener->Animate_State->setEnabled(true);
+			Animate_State = App->CL_Scene->Imported_Ogre_Ent->getAnimationState(App->CL_TopDlg->Selected_Motion_Name);
+			Animate_State->setEnabled(true);
 			App->CL_Ogre->Ogre3D_Listener->flag_Animate_Ogre = 1;
 
 			flag_Motion_Playing = 1;
@@ -56,11 +85,12 @@ void OW3D_Motioins::Stop_SelectedMotion(void)
 			if (flag_Motion_Playing == 1)
 			{
 				App->CL_Ogre->Ogre3D_Listener->flag_Animate_Ogre = 0;
-				App->CL_Ogre->Ogre3D_Listener->Animate_State->setEnabled(false);
+				Animate_State->setEnabled(false);
 				Motion_Set_Pose();
 			}
 
 			flag_Motion_Playing = 0;
+			RedrawWindow(App->CL_TopDlg->Motions_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 		}
 	}
 }

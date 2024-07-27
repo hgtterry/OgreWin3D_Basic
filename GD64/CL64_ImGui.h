@@ -60,10 +60,13 @@ public:
 
 	float Float_Step;
 
-	bool listMaterialItems[20] = { 0 };
+	bool listMaterialItems[50] = { 0 };
 	int PreviouseMaterial;
 
-	bool listSubMeshItems[20] = { 0 };
+	bool listSubMeshItems[50] = { 0 };
 	int PreviouseSubMesh;
+
+	bool listMotionItems[50] = { 0 };
+	int PreviouseMotion;
 };
 

@@ -42,8 +42,10 @@ CL64_ImGui::CL64_ImGui(void)
 	Model_Data_PosY = 0;
 
 	Float_Step = 0.50f;
+
 	PreviouseMaterial = 0;
 	PreviouseSubMesh = -1;
+	PreviouseMotion = 0;
 }
 
 CL64_ImGui::~CL64_ImGui(void)
@@ -417,7 +419,17 @@ void CL64_ImGui::Model_Data_GUI(void)
 
 					while (Count < Size)
 					{
-						ImGui::Text(App->CL_Scene->S_OgreMeshData[0]->mMotionNames[Count].c_str());
+						if (ImGui::Selectable(App->CL_Scene->S_OgreMeshData[0]->mMotionNames[Count].c_str(), listMotionItems[Count]))
+						{
+							App->CL_TopDlg->Switch_To_Motions_Dlg();
+							App->CL_TopDlg->Update_Motions_By_Name(App->CL_Scene->S_OgreMeshData[0]->mMotionNames[Count].c_str());
+
+							listMotionItems[PreviouseMotion] = 0;
+							listMotionItems[Count] = 1;
+							PreviouseMotion = Count;
+						}
+
+						//ImGui::Text(App->CL_Scene->S_OgreMeshData[0]->mMotionNames[Count].c_str());
 						Count++;
 					}
 					ImGui::TreePop();

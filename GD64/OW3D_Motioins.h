@@ -21,6 +21,8 @@ public:
 	OW3D_Motioins(void);
 	~OW3D_Motioins(void);
 
+	void Update_Motion(float deltaTime);
+
 	void Play_SelectedMotion(void);
 	void Stop_SelectedMotion(void);
 	void Motion_Set_Pose(void);
@@ -36,6 +38,10 @@ public:
 		int SubMesh,
 		bool DefaultPose);
 
+	Ogre::AnimationState* Animate_State;
+
 	bool flag_Motion_Playing;
+
+	float AnimationScale;
 };
 

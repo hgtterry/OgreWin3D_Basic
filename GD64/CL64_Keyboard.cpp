@@ -19,7 +19,7 @@ appreciated but is not required.
 
 CL64_Keyboard::CL64_Keyboard(void)
 {
-	Real Rate = 0;
+	Rate = 0;
 	OldPos = Ogre::Vector3::ZERO;
 }
 
@@ -28,7 +28,7 @@ CL64_Keyboard::~CL64_Keyboard(void)
 }
 
 // *************************************************************************
-// *					Keyboard_Mode_First Terry						   *
+// *		Keyboard_Mode_First:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
 void CL64_Keyboard::Keyboard_Mode_First(float deltaTime)
 {

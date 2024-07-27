@@ -75,11 +75,11 @@ void CL64_Ogre::InitOgre(void)
 	App->CL_Grid->Grid_Update(1);
 	App->CL_Grid->Hair_Update(1);
 
-	
-
 	App->CL_Scene->Imported_Ogre_Ent = mSceneMgr->createEntity("Test_Mesh", "Sinbad.mesh");
 	App->CL_Scene->Imported_Ogre_Node = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	App->CL_Scene->Imported_Ogre_Node->attachObject(App->CL_Scene->Imported_Ogre_Ent);
+
+	strcpy(App->CL_Scene->FileName, "Sinbad.mesh");
 
 	App->CL_Import_Ogre3D->Ogre_To_Mesh_Data(App->CL_Scene->Imported_Ogre_Ent);
 	App->CL_Import_Ogre3D->Get_Motions(App->CL_Scene->Imported_Ogre_Ent);

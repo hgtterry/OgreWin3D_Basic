@@ -24,9 +24,6 @@ CL64_Ogre3D_Listener::CL64_Ogre3D_Listener(void)
 	mCam = App->CL_Ogre->mCamera;
 	mCamNode = App->CL_Ogre->camNode;
 
-	Animate_State = nullptr;
-	AnimationScale = 1;
-
 	CameraMode = Enums::Cam_Mode_Model;
 
 	mRotX = 0;;
@@ -80,24 +77,7 @@ bool CL64_Ogre3D_Listener::frameStarted(const FrameEvent& evt)
 	// ------------------------ Animation
 	if (flag_Animate_Ogre == 1)
 	{
-		Animate_State->addTime(evt.timeSinceLastFrame * AnimationScale);
-		App->CL_Motions->UpdateBones_Orge(false);
-
-		//if (App->CL_Model->HasMesh == 1)
-		{
-			App->CL_Motions->AnimationExtract_Mesh(false);
-			App->CL_Scene->Set_BondingBox_Model(false);
-		}
-
-		if (App->CL_Scene->Imported_Ogre_Ent)
-		{
-			App->CL_Scene->Imported_Ogre_Ent->_updateAnimation();
-		}
-
-		/*if (App->Cl_Ogre->RenderListener->Show_Crosshair == 1)
-		{
-			App->Cl_Bones->Move_BoneCrosshair();
-		}*/
+		App->CL_Motions->Update_Motion(evt.timeSinceLastFrame);
 	}
 
 	return true;

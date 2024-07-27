@@ -37,11 +37,11 @@ CL64_Scene::CL64_Scene(void)
 	Model_Type = Enums::LoadedFile_None;
 	Scene_Mode = Enums::Scene_Mode_None;
 
-	strcpy(Texture_FolderPath, "No Model Loaded");
-	strcpy(FileName, "No Model Loaded");
-	strcpy(Path_FileName, "No Model Loaded");
-	strcpy(Model_FolderPath, "No Model Loaded");
-	strcpy(JustName, "No Model Loaded");
+	strcpy(Texture_FolderPath, "None");
+	strcpy(FileName, "None");
+	strcpy(Path_FileName, "None");
+	strcpy(Model_FolderPath, "None");
+	strcpy(JustName, "None");
 
 	S_OgreMeshData[0] = new OgreMeshData_Type;
 
