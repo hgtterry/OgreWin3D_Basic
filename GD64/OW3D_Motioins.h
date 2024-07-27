@@ -23,6 +23,7 @@ public:
 
 	void Play_SelectedMotion(void);
 	void Stop_SelectedMotion(void);
+	void Motion_Set_Pose(void);
 
 	void UpdateBones_Orge(bool Reset);
 	void AnimationExtract_Mesh(bool DefaultPose);
