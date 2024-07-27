@@ -19,6 +19,7 @@ appreciated but is not required.
 
 OW3D_Motioins::OW3D_Motioins(void)
 {
+	flag_Motion_Playing = 0;
 }
 
 OW3D_Motioins::~OW3D_Motioins(void)
@@ -37,6 +38,8 @@ void OW3D_Motioins::Play_SelectedMotion(void)
 			App->CL_Ogre->Ogre3D_Listener->Animate_State = App->CL_Scene->Imported_Ogre_Ent->getAnimationState(App->CL_TopDlg->Selected_Motion_Name);
 			App->CL_Ogre->Ogre3D_Listener->Animate_State->setEnabled(true);
 			App->CL_Ogre->Ogre3D_Listener->flag_Animate_Ogre = 1;
+
+			flag_Motion_Playing = 1;
 		}
 	}
 }
@@ -50,9 +53,14 @@ void OW3D_Motioins::Stop_SelectedMotion(void)
 	{
 		if (App->CL_Scene->Imported_Ogre_Ent)
 		{
-			App->CL_Ogre->Ogre3D_Listener->flag_Animate_Ogre = 0;
-			App->CL_Ogre->Ogre3D_Listener->Animate_State->setEnabled(false);
-			Motion_Set_Pose();
+			if (flag_Motion_Playing == 1)
+			{
+				App->CL_Ogre->Ogre3D_Listener->flag_Animate_Ogre = 0;
+				App->CL_Ogre->Ogre3D_Listener->Animate_State->setEnabled(false);
+				Motion_Set_Pose();
+			}
+
+			flag_Motion_Playing = 0;
 		}
 	}
 }

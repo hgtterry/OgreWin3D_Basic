@@ -36,5 +36,6 @@ public:
 		int SubMesh,
 		bool DefaultPose);
 
+	bool flag_Motion_Playing;
 };
 

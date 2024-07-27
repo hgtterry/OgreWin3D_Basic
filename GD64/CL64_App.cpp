@@ -138,7 +138,8 @@ void CL64_App::InitApp(void)
 	CL_Resources =		new CL64_Resources();
 
 	CL_Import_Ogre3D =	new OW3D_Import_Ogre3D();
-
+	CL_Motions =		new OW3D_Motioins();
+	
 	
 	SetBrushes_Fonts();
 
