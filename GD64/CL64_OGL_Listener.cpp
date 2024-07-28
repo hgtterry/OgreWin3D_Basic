@@ -547,9 +547,12 @@ void CL64_OGL_Listener::MeshData_Render_BoundingBox(void)
 	float m_yMax = App->CL_Scene->S_BoundingBox[0]->BB_Max[0].y;
 	float m_zMax = App->CL_Scene->S_BoundingBox[0]->BB_Max[0].z;
 
+	glDisable(GL_TEXTURE_2D);
+	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_STENCIL_TEST);
+
 	glLineWidth(2);
 
-	glDisable(GL_TEXTURE_2D);
 	glColor3f(0.0f, 1.0f, 0.0f);
 	glBegin(GL_LINES);
 
@@ -591,6 +594,8 @@ void CL64_OGL_Listener::MeshData_Render_BoundingBox(void)
 
 	glEnd();
 	glEnable(GL_TEXTURE_2D);
+	glDisable(GL_DEPTH_TEST);
+	glDisable(GL_STENCIL_TEST);
 }
 
 // **************************************************************************
@@ -599,8 +604,7 @@ void CL64_OGL_Listener::MeshData_Render_BoundingBox(void)
 void CL64_OGL_Listener::RenderCrossHair(void)
 {
 	glDisable(GL_TEXTURE_2D);
-	//glDisable(GL_DEPTH_TEST);
-
+	
 	float Length = 40;
 	glLineWidth(3);
 

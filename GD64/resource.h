@@ -123,6 +123,10 @@
 #define IDC_CB_FPSLIST                  1032
 #define IDC_ST_FPSSETTINGS              1033
 #define IDC_CB_MOTIONS_MOTIONS          1036
+#define IDC_ST_MOTIONS_MOTIOINS         1037
+#define IDC_CB_MOTIONS_SPEED            1038
+#define IDC_ST_MOTIONS_MOTIOINS2        1039
+#define IDC_ST_MOTIONS_SPEED            1039
 #define ID_VIEW_RESET                   32771
 #define ID_VIEW_MAX3DVIEW               32772
 #define ID_DEBUG_TESTPREFERANCE         32773
@@ -158,7 +162,7 @@
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        165
 #define _APS_NEXT_COMMAND_VALUE         32797
-#define _APS_NEXT_CONTROL_VALUE         1037
+#define _APS_NEXT_CONTROL_VALUE         1039
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif

@@ -1176,6 +1176,7 @@ void CL64_TopDlg::Start_Motions_TB(void)
 {
 	Motions_TB_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_TB_MOTIONS, Tabs_TB_hWnd, (DLGPROC)Motions_TB_Proc);
 	Update_Motions_Combo();
+	Update_Speed_Combo();
 }
 
 // *************************************************************************
@@ -1189,18 +1190,49 @@ LRESULT CALLBACK CL64_TopDlg::Motions_TB_Proc(HWND hDlg, UINT message, WPARAM wP
 	case WM_INITDIALOG:
 	{
 		SendDlgItemMessage(hDlg, IDC_CB_MOTIONS_MOTIONS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_CB_MOTIONS_SPEED, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_MOTIONS_PLAY, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_MOTIONS_STOP, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-
-
+		SendDlgItemMessage(hDlg, IDC_ST_MOTIONS_MOTIOINS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_ST_MOTIONS_SPEED, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
 		return TRUE;
+	}
+
+	case WM_CTLCOLORSTATIC:
+	{
+		if (GetDlgItem(hDlg, IDC_ST_MOTIONS_MOTIOINS) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->Brush_Tabs;
+		}
+
+		if (GetDlgItem(hDlg, IDC_ST_MOTIONS_SPEED) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->Brush_Tabs;
+		}
+
+		if (GetDlgItem(hDlg, IDC_CB_MOTIONS_SPEED) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->Brush_Tabs;
+		}
+
+		return FALSE;
 	}
 
 	case WM_CTLCOLORDLG:
 	{
 		return (LONG)App->Brush_Tabs;
 	}
-
+	
 	case WM_NOTIFY:
 	{
 		LPNMHDR some_item = (LPNMHDR)lParam;
@@ -1256,6 +1288,28 @@ LRESULT CALLBACK CL64_TopDlg::Motions_TB_Proc(HWND hDlg, UINT message, WPARAM wP
 				App->CL_Motions->Play_SelectedMotion();
 
 				RedrawWindow(App->CL_TopDlg->Motions_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			}
+			}
+
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_CB_MOTIONS_SPEED)
+		{
+			switch (HIWORD(wParam)) // Find out what message it was
+			{
+			case CBN_DROPDOWN:
+				break;
+			case CBN_CLOSEUP:
+			{
+				char buff[MAX_PATH]{ 0 };
+
+				HWND temp = GetDlgItem(hDlg, IDC_CB_MOTIONS_SPEED);
+				int Index = SendMessage(temp, CB_GETCURSEL, 0, 0);
+				SendMessage(temp, CB_GETLBTEXT, Index, (LPARAM)buff);
+				
+				App->CL_Motions->AnimationScale = atof(buff);
+
 			}
 			}
 
@@ -1322,6 +1376,24 @@ void CL64_TopDlg::Update_Motions_Combo(void)
 	}
 
 	SendDlgItemMessage(Motions_TB_hWnd, IDC_CB_MOTIONS_MOTIONS, CB_SETCURSEL, (WPARAM)0, (LPARAM)0);
+}
+
+// *************************************************************************
+// *		Update_Speed_Combo:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void CL64_TopDlg::Update_Speed_Combo(void)
+{
+	SendDlgItemMessage(Motions_TB_hWnd, IDC_CB_MOTIONS_SPEED, CB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
+
+	SendDlgItemMessage(Motions_TB_hWnd, IDC_CB_MOTIONS_SPEED, CB_ADDSTRING, (WPARAM)0, (LPARAM)"2");
+	SendDlgItemMessage(Motions_TB_hWnd, IDC_CB_MOTIONS_SPEED, CB_ADDSTRING, (WPARAM)0, (LPARAM)"1.5");
+	SendDlgItemMessage(Motions_TB_hWnd, IDC_CB_MOTIONS_SPEED, CB_ADDSTRING, (WPARAM)0, (LPARAM)"1");
+	SendDlgItemMessage(Motions_TB_hWnd, IDC_CB_MOTIONS_SPEED, CB_ADDSTRING, (WPARAM)0, (LPARAM)"0.5");
+	SendDlgItemMessage(Motions_TB_hWnd, IDC_CB_MOTIONS_SPEED, CB_ADDSTRING, (WPARAM)0, (LPARAM)"0.2");
+	SendDlgItemMessage(Motions_TB_hWnd, IDC_CB_MOTIONS_SPEED, CB_ADDSTRING, (WPARAM)0, (LPARAM)"0.1");
+	SendDlgItemMessage(Motions_TB_hWnd, IDC_CB_MOTIONS_SPEED, CB_ADDSTRING, (WPARAM)0, (LPARAM)"0.01");
+
+	SendDlgItemMessage(Motions_TB_hWnd, IDC_CB_MOTIONS_SPEED, CB_SETCURSEL, (WPARAM)2, (LPARAM)0);
 }
 
 // *************************************************************************
