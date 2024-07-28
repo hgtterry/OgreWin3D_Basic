@@ -28,6 +28,7 @@ CL64_TopDlg::CL64_TopDlg(void)
 	Camera_TB_hWnd =	nullptr;
 	Demos_TB_hWnd =		nullptr;
 	Physics_TB_hWnd =	nullptr;
+	Motions_TB_hWnd =	nullptr;
 
 	flag_FPS_Dlg_Running = 0
 		;
@@ -50,6 +51,9 @@ CL64_TopDlg::CL64_TopDlg(void)
 	flag_Toggle_PhysicaDebug_Node = 0;
 
 	flag_ShowOnlySubFaces_Saved = 0;
+
+	Selected_Motion_Name[0] = 0;
+
 }
 
 CL64_TopDlg::~CL64_TopDlg(void)
@@ -406,7 +410,7 @@ LRESULT CALLBACK CL64_TopDlg::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam
 		//-------------------------------------------------------- Show Bones
 		if (LOWORD(wParam) == IDC_BTSHOWBONES)
 		{
-			if (App->CL_Scene->flag_Model_Loaded == 1)
+			if (App->CL_Scene->flag_Model_Loaded == 1 && App->CL_Scene->BoneCount > 0)
 			{
 				HWND Temp = GetDlgItem(hDlg, IDC_BTSHOWBONES);
 

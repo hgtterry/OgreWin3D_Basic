@@ -21,6 +21,8 @@ public:
 	OW3D_Motioins(void);
 	~OW3D_Motioins(void);
 
+	void Reset_Class(void);
+
 	void Update_Motion(float deltaTime);
 
 	void Play_SelectedMotion(void);

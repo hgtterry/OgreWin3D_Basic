@@ -128,6 +128,8 @@ void CL64_Scene::Reset_Class(void)
 // *************************************************************************
 void CL64_Scene::Clear_Scene_And_Reset(void)
 {
+	App->CL_Motions->Reset_Class(); // Call First in case animations in Progress
+
 	App->CL_Ogre->Ogre3D_Listener->Ogre_Model_Loaded = 0;
 
 	// Clear any Mesh Data

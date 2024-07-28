@@ -30,6 +30,16 @@ OW3D_Motioins::~OW3D_Motioins(void)
 }
 
 // *************************************************************************
+// *			Reset_Class:- Terry and Hazel Flanigan 2024				   *
+// *************************************************************************
+void OW3D_Motioins::Reset_Class(void)
+{
+	App->CL_Ogre->Ogre3D_Listener->flag_Animate_Ogre = 0;
+	Stop_SelectedMotion();
+	flag_Motion_Playing = 0;
+}
+
+// *************************************************************************
 // *			Update_Motion:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
 void OW3D_Motioins::Update_Motion(float deltaTime)
