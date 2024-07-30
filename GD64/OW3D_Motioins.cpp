@@ -107,7 +107,10 @@ void OW3D_Motioins::Play_SelectedMotion(void)
 			Animate_State->setEnabled(true);
 			App->CL_Ogre->Ogre3D_Listener->flag_Animate_Ogre = 1;
 
+			flag_Motion_Paused = 0;
 			flag_Motion_Playing = 1;
+
+			RedrawWindow(App->CL_TopDlg->Motions_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 		}
 	}
 }
@@ -125,6 +128,7 @@ void OW3D_Motioins::Stop_SelectedMotion(void)
 			{
 				App->CL_Ogre->Ogre3D_Listener->flag_Animate_Ogre = 0;
 				Animate_State->setEnabled(false);
+				Animate_State->setTimePosition(0);
 				Motion_Set_Pose();
 			}
 
