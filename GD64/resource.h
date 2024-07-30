@@ -85,6 +85,7 @@
 #define IDC_TBSHOWFACES                 1009
 #define IDC_CKFAST                      1009
 #define IDC_BT_TD_MOTIONSTAB            1009
+#define IDC_BT_MOTIONS_PAUSE            1009
 #define IDC_BUTTON4                     1010
 #define IDC_BT_CAMERA_FREE              1010
 #define IDC_ALLMATERIALS                1010
@@ -125,7 +126,6 @@
 #define IDC_CB_MOTIONS_MOTIONS          1036
 #define IDC_ST_MOTIONS_MOTIOINS         1037
 #define IDC_CB_MOTIONS_SPEED            1038
-#define IDC_ST_MOTIONS_MOTIOINS2        1039
 #define IDC_ST_MOTIONS_SPEED            1039
 #define ID_VIEW_RESET                   32771
 #define ID_VIEW_MAX3DVIEW               32772

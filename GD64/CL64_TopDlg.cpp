@@ -1191,6 +1191,7 @@ LRESULT CALLBACK CL64_TopDlg::Motions_TB_Proc(HWND hDlg, UINT message, WPARAM wP
 	{
 		SendDlgItemMessage(hDlg, IDC_CB_MOTIONS_MOTIONS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_CB_MOTIONS_SPEED, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_MOTIONS_PAUSE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_MOTIONS_PLAY, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_MOTIONS_STOP, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ST_MOTIONS_MOTIOINS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
@@ -1251,12 +1252,36 @@ LRESULT CALLBACK CL64_TopDlg::Motions_TB_Proc(HWND hDlg, UINT message, WPARAM wP
 			return CDRF_DODEFAULT;
 		}
 
+		if (some_item->idFrom == IDC_BT_MOTIONS_PAUSE)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->CL_Motions->flag_Motion_Paused);
+			return CDRF_DODEFAULT;
+		}
+
 		return CDRF_DODEFAULT;
 	}
 
 	case WM_COMMAND:
 	{
+		if (LOWORD(wParam) == IDC_BT_MOTIONS_PAUSE)
+		{
+			if (App->CL_Motions->flag_Motion_Playing == 1)
+			{
+				if (App->CL_Motions->flag_Motion_Paused == 0)
+				{
+					App->CL_Motions->Pause_SelectedMotion();
+				}
+				else
+				{
+					App->CL_Motions->flag_Motion_Paused = 0;
+					App->CL_Motions->Play_SelectedMotion();
+				}
+			}
 
+			return 1;
+		}
+		
 		if (LOWORD(wParam) == IDC_BT_MOTIONS_PLAY)
 		{
 			App->CL_Motions->Play_SelectedMotion();

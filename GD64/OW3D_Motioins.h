@@ -25,10 +25,12 @@ public:
 
 	void Update_Motion(float deltaTime);
 
+	void Pause_SelectedMotion(void);
 	void Play_SelectedMotion(void);
 	void Stop_SelectedMotion(void);
 	void Motion_Set_Pose(void);
 
+	void Update_MeshData(void);
 	void UpdateBones_Orge(bool Reset);
 	void AnimationExtract_Mesh(bool DefaultPose);
 
@@ -43,6 +45,7 @@ public:
 	Ogre::AnimationState* Animate_State;
 
 	bool flag_Motion_Playing;
+	bool flag_Motion_Paused;
 
 	float AnimationScale;
 };
