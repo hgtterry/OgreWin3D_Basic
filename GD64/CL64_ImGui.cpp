@@ -362,7 +362,6 @@ void CL64_ImGui::Model_Data_GUI(void)
 
 					while (Count < Size)
 					{
-
 						ImGui::PushID("foo");
 						if (ImGui::BeginMenu(App->CL_Scene->S_OgreMeshData[0]->mSubmeshes[Count].Name.c_str()))
 						{
@@ -386,7 +385,6 @@ void CL64_ImGui::Model_Data_GUI(void)
 
 						ImGui::PopID();
 
-
 						Count++;
 					}
 
@@ -396,8 +394,6 @@ void CL64_ImGui::Model_Data_GUI(void)
 						App->CL_Ogre->OGL_Listener->flag_ShowOnlySubFaces = 0;
 						PreviouseSubMesh = -1;
 					}
-
-					//ImGui::Text("Count:- %i", PreviouseSubMesh);
 
 					ImGui::TreePop();
 				}
@@ -435,9 +431,10 @@ void CL64_ImGui::Model_Data_GUI(void)
 							PreviouseMotion = Count;
 						}
 
-						//ImGui::Text(App->CL_Scene->S_OgreMeshData[0]->mMotionNames[Count].c_str());
 						Count++;
+
 					}
+
 					ImGui::TreePop();
 				}
 			}
