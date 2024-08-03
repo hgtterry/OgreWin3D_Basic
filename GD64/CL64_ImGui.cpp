@@ -362,12 +362,15 @@ void CL64_ImGui::Model_Data_GUI(void)
 
 					while (Count < Size)
 					{
-						if (ImGui::TreeNode(App->CL_Scene->S_OgreMeshData[0]->mSubmeshes[Count].Name.c_str()))
+
+						ImGui::PushID("foo");
+						if (ImGui::BeginMenu(App->CL_Scene->S_OgreMeshData[0]->mSubmeshes[Count].Name.c_str()))
 						{
 							ImGui::Text("Dedicated vertices:  %s", App->CL_Scene->S_OgreMeshData[0]->mSubmeshes[Count].strHasSharedVertices.c_str());
 							ImGui::Text("Material Name: %s", App->CL_Scene->S_OgreMeshData[0]->mSubmeshes[Count].MatrialName);
 							ImGui::Text("Vertices Count: %i", App->CL_Scene->S_OgreMeshData[0]->mSubmeshes[Count].VerticesCount);
 							ImGui::Text("Bones Used: %i", App->CL_Scene->S_OgreMeshData[0]->mSubmeshes[Count].BonesCount);
+
 							if (ImGui::Checkbox("Show Mesh", &listSubMeshItems[Count]))
 							{
 								App->CL_Ogre->OGL_Listener->Flag_ShowFaces = 1;
@@ -378,8 +381,11 @@ void CL64_ImGui::Model_Data_GUI(void)
 								PreviouseSubMesh = Count;
 							}
 
-							ImGui::TreePop();
+							ImGui::EndMenu();
 						}
+
+						ImGui::PopID();
+
 
 						Count++;
 					}
