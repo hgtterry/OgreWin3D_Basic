@@ -318,12 +318,40 @@ void CL64_ImGui::Model_Data_GUI(void)
 
 		if (ImGui::TreeNode("Paths"))
 		{
-			ImGui::Text("Model Name: %s", App->CL_Scene->JustName);
-			ImGui::Text("Model File: %s", App->CL_Scene->FileName);
-			ImGui::Text("Model Path: %s", App->CL_Scene->Path_FileName);
-			ImGui::Text("Texture Path:- %s", App->CL_Scene->Texture_FolderPath);
+			ImGui::PushID("foo");
+			if (ImGui::BeginMenu("Model Name"))
+			{
+				ImGui::Text("%s", App->CL_Scene->JustName);
+				ImGui::EndMenu();
+			}
+			ImGui::PopID();
+
+			ImGui::PushID("foo");
+			if (ImGui::BeginMenu("Model File"))
+			{
+				ImGui::Text("%s", App->CL_Scene->FileName);
+				ImGui::EndMenu();
+			}
+			ImGui::PopID();
+
+			ImGui::PushID("foo");
+			if (ImGui::BeginMenu("Model Path"))
+			{
+				ImGui::Text("%s", App->CL_Scene->Path_FileName);
+				ImGui::EndMenu();
+			}
+			ImGui::PopID();
+	
+			ImGui::PushID("foo");
+			if (ImGui::BeginMenu("Texture Path"))
+			{
+				ImGui::Text("%s", App->CL_Scene->Texture_FolderPath);
+				ImGui::EndMenu();
+			}
+			ImGui::PopID();
 
 			ImGui::TreePop();
+			
 		}
 
 		ImGui::Separator();
@@ -366,7 +394,6 @@ void CL64_ImGui::Model_Data_GUI(void)
 
 						ImGui::EndMenu();
 					}
-
 					ImGui::PopID();
 
 					while (Count < Size)
@@ -378,6 +405,8 @@ void CL64_ImGui::Model_Data_GUI(void)
 							ImGui::Text("Material Name: %s", App->CL_Scene->S_OgreMeshData[0]->mSubmeshes[Count].MatrialName);
 							ImGui::Text("Vertices Count: %i", App->CL_Scene->S_OgreMeshData[0]->mSubmeshes[Count].VerticesCount);
 							ImGui::Text("Bones Used: %i", App->CL_Scene->S_OgreMeshData[0]->mSubmeshes[Count].BonesCount);
+
+							ImGui::Separator();
 
 							if (ImGui::Checkbox("Show Mesh", &listSubMeshItems[Count]))
 							{
@@ -473,6 +502,12 @@ void CL64_ImGui::Model_Data_GUI(void)
 		{
 			App->CL_TopDlg->Enable_Info_Icon(false);
 			flag_Show_Model_Data = 0;
+		}
+
+		ImGuiIO& io = ImGui::GetIO();
+		if (io.WantCaptureMouseUnlessPopupClose == 0)
+		{
+			ImGui::SetWindowFocus(nullptr);
 		}
 
 		ImGui::End();
