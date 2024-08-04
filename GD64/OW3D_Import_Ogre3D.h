@@ -14,12 +14,12 @@ appreciated but is not required.
 */
 
 #pragma once
-class OW3D_Import_Ogre3D
+class CLOW_Imp_Ogre3D
 {
 public:
 
-	OW3D_Import_Ogre3D(void);
-	~OW3D_Import_Ogre3D(void);
+	CLOW_Imp_Ogre3D(void);
+	~CLOW_Imp_Ogre3D(void);
 
 	void Reset_Class(void);
 
@@ -36,6 +36,7 @@ public:
 	bool NewGet_SubPoseNormals(Ogre::MeshPtr mesh, size_t& vertex_count, Ogre::Vector3*& Normals,
 		int SubMesh);
 
+	void Get_Ogre_Mesh_Data(Ogre::Entity* Ogre_Entity);
 	void Get_Motions(Ogre::Entity* Ogre_Entity);
 
 	std::vector<Ogre::Vector2> MeshTextureCoords;

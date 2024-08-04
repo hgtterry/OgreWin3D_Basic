@@ -35,10 +35,7 @@ public:
 	void Create_MeshGroups(Ogre::Entity* Ogre_Entity);
 	
 	bool Get_SkeletonInstance(Ogre::Entity* Ogre_Entity);
-	void Get_Ogre3D_MeshData(Ogre::Entity* Ogre_Entity);
-
-
-
+	
 	Ogre::ManualObject* Export_Manual;
 	Ogre::ManualObject* World_Manual;
 

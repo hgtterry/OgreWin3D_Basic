@@ -19,20 +19,20 @@ appreciated but is not required.
 
 #pragma warning(disable:4996)
 
-OW3D_Import_Ogre3D::OW3D_Import_Ogre3D(void)
+CLOW_Imp_Ogre3D::CLOW_Imp_Ogre3D(void)
 {
 	flag_IsAnimated = 0;
 	flag_Ogre_Model_Loaded = 0;
 }
 
-OW3D_Import_Ogre3D::~OW3D_Import_Ogre3D(void)
+CLOW_Imp_Ogre3D::~CLOW_Imp_Ogre3D(void)
 {
 }
 
 // *************************************************************************
 // *			Reset_Class:- Terry and Hazel Flanigan 2024				   *
 // *************************************************************************
-void OW3D_Import_Ogre3D::Reset_Class(void)
+void CLOW_Imp_Ogre3D::Reset_Class(void)
 {
 	// Clear Stored data about any loaded Ogre Models
 	if (App->CL_Scene->S_OgreMeshData[0])
@@ -67,7 +67,7 @@ void OW3D_Import_Ogre3D::Reset_Class(void)
 // *************************************************************************
 // *			Ogre_To_Mesh_Data:- Terry and Hazel Flanigan 2024	   	   *
 // *************************************************************************
-bool OW3D_Import_Ogre3D::Ogre_To_Mesh_Data(Ogre::Entity* Ogre_Entity)
+bool CLOW_Imp_Ogre3D::Ogre_To_Mesh_Data(Ogre::Entity* Ogre_Entity)
 {
 	App->CL_Converters->Create_MeshGroups(Ogre_Entity);
 
@@ -163,7 +163,7 @@ bool OW3D_Import_Ogre3D::Ogre_To_Mesh_Data(Ogre::Entity* Ogre_Entity)
 
 	App->CL_Scene->Set_BondingBox_Model(true);
 	App->CL_Converters->Get_SkeletonInstance(Ogre_Entity);
-	App->CL_Converters->Get_Ogre3D_MeshData(Ogre_Entity);
+	Get_Ogre_Mesh_Data(Ogre_Entity);
 
 	return 1;
 }
@@ -171,7 +171,7 @@ bool OW3D_Import_Ogre3D::Ogre_To_Mesh_Data(Ogre::Entity* Ogre_Entity)
 // *************************************************************************
 // *	   Get_SubPose_MeshInstance:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
-void OW3D_Import_Ogre3D::Get_SubPose_MeshInstance(Ogre::MeshPtr mesh,
+void CLOW_Imp_Ogre3D::Get_SubPose_MeshInstance(Ogre::MeshPtr mesh,
 	size_t& vertex_count, Ogre::Vector3*& vertices,
 	size_t& index_count, unsigned long*& indices,
 	int SubMesh, Ogre::int16*& BoneIndices)
@@ -285,7 +285,7 @@ void OW3D_Import_Ogre3D::Get_SubPose_MeshInstance(Ogre::MeshPtr mesh,
 // *************************************************************************
 // *		NewGet_SubPoseTextureUV:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
-bool OW3D_Import_Ogre3D::NewGet_SubPoseTextureUV(Ogre::MeshPtr mesh, int SubMesh)
+bool CLOW_Imp_Ogre3D::NewGet_SubPoseTextureUV(Ogre::MeshPtr mesh, int SubMesh)
 {
 	Ogre::SubMesh* submesh = mesh->getSubMesh(SubMesh);
 	int m_iCoordSet = 0;
@@ -331,7 +331,7 @@ bool OW3D_Import_Ogre3D::NewGet_SubPoseTextureUV(Ogre::MeshPtr mesh, int SubMesh
 // *************************************************************************
 // *		NewGet_SubPoseNormals:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
-bool OW3D_Import_Ogre3D::NewGet_SubPoseNormals(Ogre::MeshPtr mesh, size_t& vertex_count, Ogre::Vector3*& Normals,
+bool CLOW_Imp_Ogre3D::NewGet_SubPoseNormals(Ogre::MeshPtr mesh, size_t& vertex_count, Ogre::Vector3*& Normals,
 	int SubMesh)
 {
 
@@ -390,7 +390,7 @@ bool OW3D_Import_Ogre3D::NewGet_SubPoseNormals(Ogre::MeshPtr mesh, size_t& verte
 // *************************************************************************
 // *			GetBoneAssignment:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
-bool OW3D_Import_Ogre3D::GetBoneAssignment(Ogre::MeshPtr mesh, int SubMesh, HWND hDlg)
+bool CLOW_Imp_Ogre3D::GetBoneAssignment(Ogre::MeshPtr mesh, int SubMesh, HWND hDlg)
 {
 	int Count = 0;
 	Ogre::SubMesh* mSubmesh = mesh->getSubMesh(SubMesh);
@@ -434,9 +434,97 @@ bool OW3D_Import_Ogre3D::GetBoneAssignment(Ogre::MeshPtr mesh, int SubMesh, HWND
 }
 
 // *************************************************************************
+// *	    	Get_Ogre_Mesh_Data:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+void CLOW_Imp_Ogre3D::Get_Ogre_Mesh_Data(Ogre::Entity* Ogre_Entity)
+{
+	bool Edge = Ogre_Entity->hasEdgeList();
+	if (Edge == 1)
+	{
+		App->CL_Scene->S_OgreMeshData[0]->mEdgeList = "Yes";
+	}
+	else
+	{
+		App->CL_Scene->S_OgreMeshData[0]->mEdgeList = "No";
+	}
+
+	// ---------------------------------------------------------------
+
+	App->CL_Scene->S_OgreMeshData[0]->mMaterials.resize(0);
+
+	int SubMeshCount = Ogre_Entity->getNumSubEntities();
+	App->CL_Scene->S_OgreMeshData[0]->mSubMeshCount = SubMeshCount;
+
+
+	int Count = 0;
+	while (Count < SubMeshCount)
+	{
+		Ogre::SubMesh const* subMesh = Ogre_Entity->getSubEntity(Count)->getSubMesh();
+
+		App->CL_Scene->S_OgreMeshData[0]->mMaterials.push_back(subMesh->getMaterialName());
+		Count++;
+	}
+
+	App->CL_Scene->S_OgreMeshData[0]->mName = Ogre_Entity->getName();
+
+
+	// ------------------------------------ Sub Meshes
+
+	Count = 0;
+
+	App->CL_Scene->S_OgreMeshData[0]->mSubmeshes.resize(SubMeshCount);
+
+	while (Count < SubMeshCount)
+	{
+		char Num[MAX_PATH];
+		char strSubMesh[MAX_PATH];
+		strcpy(strSubMesh, "SubMesh_");
+		_itoa(Count, Num, 10);
+		strcat(strSubMesh, Num);
+
+		App->CL_Scene->S_OgreMeshData[0]->mSubmeshes[Count].Name = strSubMesh;
+
+
+		Ogre::SubMesh const* subMesh = Ogre_Entity->getSubEntity(Count)->getSubMesh();
+		if (subMesh->useSharedVertices)
+		{
+			App->CL_Scene->S_OgreMeshData[0]->mSubmeshes[Count].strHasSharedVertices = "No";
+		}
+		else
+		{
+			App->CL_Scene->S_OgreMeshData[0]->mSubmeshes[Count].strHasSharedVertices = "Yes";
+		}
+
+		App->CL_Scene->S_OgreMeshData[0]->mSubmeshes[Count].MatrialName = subMesh->getMaterialName();
+
+		App->CL_Scene->S_OgreMeshData[0]->mSubmeshes[Count].VerticesCount = subMesh->vertexData->vertexCount;
+
+		App->CL_Scene->S_OgreMeshData[0]->mSubmeshes[Count].BonesCount = subMesh->blendIndexToBoneIndexMap.size();
+
+		Count++;
+	}
+
+	// ------------------------------------ Bounds
+	Ogre::Vector3 vMin(Ogre_Entity->getBoundingBox().getMinimum());
+	Ogre::Vector3 vMax(Ogre_Entity->getBoundingBox().getMaximum());
+	Ogre::Vector3 Center((vMin + vMax) * 0.5f);
+
+	App->CL_Scene->S_OgreMeshData[0]->vMin = vMin;
+	App->CL_Scene->S_OgreMeshData[0]->vMax = vMax;
+	App->CL_Scene->S_OgreMeshData[0]->Center = Center;
+
+	App->CL_Scene->S_OgreMeshData[0]->Width = (vMax - vMin).x;
+	App->CL_Scene->S_OgreMeshData[0]->Height = (vMax - vMin).y;
+	App->CL_Scene->S_OgreMeshData[0]->Depth = (vMax - vMin).z;
+	App->CL_Scene->S_OgreMeshData[0]->Area = (vMax - vMin).x * (vMax - vMin).y;
+	App->CL_Scene->S_OgreMeshData[0]->Volume = (vMax - vMin).x * (vMax - vMin).y * (vMax - vMin).z;
+	App->CL_Scene->S_OgreMeshData[0]->Radius = Ogre_Entity->getBoundingRadius();
+}
+
+// *************************************************************************
 // *	  			Get_Motions:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-void OW3D_Import_Ogre3D::Get_Motions(Ogre::Entity* Ogre_Entity)
+void CLOW_Imp_Ogre3D::Get_Motions(Ogre::Entity* Ogre_Entity)
 {
 	Ogre::SkeletonInstance* skeletonInstance = Ogre_Entity->getSkeleton();
 

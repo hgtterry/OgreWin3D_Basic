@@ -194,7 +194,7 @@ Ogre::Entity* CL64_Converters::Convert_To_Ogre3D(bool Create)
 	remove(mWorld_File_PathAndFile);
 	remove(Material_PathAndFile);
 
-	App->CL_Converters->Get_Ogre3D_MeshData(World_Ent);
+	App->CL_Import_Ogre3D->Get_Ogre_Mesh_Data(World_Ent);
 
 	return World_Ent;
 }
@@ -399,93 +399,5 @@ bool CL64_Converters::Get_SkeletonInstance(Ogre::Entity* Ogre_Entity)
 		}
 	}
 	return 1;
-}
-
-// *************************************************************************
-// *	  	Get_Ogre3D_MeshData:- Terry and Hazel Flanigan 2024			   *
-// *************************************************************************
-void CL64_Converters::Get_Ogre3D_MeshData(Ogre::Entity* Ogre_Entity)
-{
-	bool Edge = Ogre_Entity->hasEdgeList();
-	if (Edge == 1)
-	{
-		App->CL_Scene->S_OgreMeshData[0]->mEdgeList = "Yes";
-	}
-	else
-	{
-		App->CL_Scene->S_OgreMeshData[0]->mEdgeList = "No";
-	}
-
-	// ---------------------------------------------------------------
-
-	App->CL_Scene->S_OgreMeshData[0]->mMaterials.resize(0);
-
-	int SubMeshCount = Ogre_Entity->getNumSubEntities();
-	App->CL_Scene->S_OgreMeshData[0]->mSubMeshCount = SubMeshCount;
-
-
-	int Count = 0;
-	while (Count < SubMeshCount)
-	{
-		Ogre::SubMesh const* subMesh = Ogre_Entity->getSubEntity(Count)->getSubMesh();
-
-		App->CL_Scene->S_OgreMeshData[0]->mMaterials.push_back(subMesh->getMaterialName());
-		Count++;
-	}
-
-	App->CL_Scene->S_OgreMeshData[0]->mName = Ogre_Entity->getName();
-
-	
-	// ------------------------------------ Sub Meshes
-
-	Count = 0;
-	
-	App->CL_Scene->S_OgreMeshData[0]->mSubmeshes.resize(SubMeshCount);
-
-	while (Count < SubMeshCount)
-	{
-		char Num[MAX_PATH];
-		char strSubMesh[MAX_PATH];
-		strcpy(strSubMesh, "SubMesh_");
-		_itoa(Count, Num, 10);
-		strcat(strSubMesh, Num);
-
-		App->CL_Scene->S_OgreMeshData[0]->mSubmeshes[Count].Name = strSubMesh;
-
-		
-		Ogre::SubMesh const* subMesh = Ogre_Entity->getSubEntity(Count)->getSubMesh();
-		if (subMesh->useSharedVertices)
-		{
-			App->CL_Scene->S_OgreMeshData[0]->mSubmeshes[Count].strHasSharedVertices = "No";
-		}
-		else
-		{
-			App->CL_Scene->S_OgreMeshData[0]->mSubmeshes[Count].strHasSharedVertices = "Yes";
-		}
-
-		App->CL_Scene->S_OgreMeshData[0]->mSubmeshes[Count].MatrialName = subMesh->getMaterialName();
-
-		App->CL_Scene->S_OgreMeshData[0]->mSubmeshes[Count].VerticesCount = subMesh->vertexData->vertexCount;
-
-		App->CL_Scene->S_OgreMeshData[0]->mSubmeshes[Count].BonesCount = subMesh->blendIndexToBoneIndexMap.size();
-
-		Count++;
-	}
-
-	// ------------------------------------ Bounds
-	Ogre::Vector3 vMin(Ogre_Entity->getBoundingBox().getMinimum());
-	Ogre::Vector3 vMax(Ogre_Entity->getBoundingBox().getMaximum());
-	Ogre::Vector3 Center((vMin + vMax) * 0.5f);
-
-	App->CL_Scene->S_OgreMeshData[0]->vMin = vMin;
-	App->CL_Scene->S_OgreMeshData[0]->vMax = vMax;
-	App->CL_Scene->S_OgreMeshData[0]->Center = Center;
-
-	App->CL_Scene->S_OgreMeshData[0]->Width = (vMax - vMin).x;
-	App->CL_Scene->S_OgreMeshData[0]->Height =(vMax - vMin).y;
-	App->CL_Scene->S_OgreMeshData[0]->Depth = (vMax - vMin).z;
-	App->CL_Scene->S_OgreMeshData[0]->Area = (vMax - vMin).x * (vMax - vMin).y;
-	App->CL_Scene->S_OgreMeshData[0]->Volume = (vMax - vMin).x * (vMax - vMin).y * (vMax - vMin).z;
-	App->CL_Scene->S_OgreMeshData[0]->Radius = Ogre_Entity->getBoundingRadius();
 }
 

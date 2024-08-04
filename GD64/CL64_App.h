@@ -67,7 +67,7 @@ public:
 	CL64_Dialogs*		CL_Dialogs;
 	CL64_Resources*		CL_Resources;
 	
-	OW3D_Import_Ogre3D* CL_Import_Ogre3D;
+	CLOW_Imp_Ogre3D* CL_Import_Ogre3D;
 	OW3D_Motioins*		CL_Motions;
 
 	void InitApp(void);

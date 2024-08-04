@@ -355,10 +355,17 @@ void CL64_ImGui::Model_Data_GUI(void)
 
 				if (ImGui::TreeNode("Geometry"))
 				{
-
-					ImGui::Text("Edge List:- %s", App->CL_Scene->S_OgreMeshData[0]->mEdgeList.c_str());
 					int Count = 0;
 					int Size = App->CL_Scene->S_OgreMeshData[0]->mSubMeshCount;
+
+					ImGui::PushID("foo");
+					if (ImGui::BeginMenu("Status"))
+					{
+						ImGui::Text("Edge List:- %s", App->CL_Scene->S_OgreMeshData[0]->mEdgeList.c_str());
+						ImGui::EndMenu();
+					}
+
+					ImGui::PopID();
 
 					while (Count < Size)
 					{
