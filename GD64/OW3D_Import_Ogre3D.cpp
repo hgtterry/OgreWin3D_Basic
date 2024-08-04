@@ -448,6 +448,16 @@ void CLOW_Imp_Ogre3D::Get_Ogre_Mesh_Data(Ogre::Entity* Ogre_Entity)
 		App->CL_Scene->S_OgreMeshData[0]->mEdgeList = "No";
 	}
 
+	bool Skel = Ogre_Entity->hasSkeleton();
+	if (Skel == 1)
+	{
+		App->CL_Scene->S_OgreMeshData[0]->mSkeleton = "Yes";
+	}
+	else
+	{
+		App->CL_Scene->S_OgreMeshData[0]->mSkeleton = "No";
+	}
+
 	// ---------------------------------------------------------------
 
 	App->CL_Scene->S_OgreMeshData[0]->mMaterials.resize(0);

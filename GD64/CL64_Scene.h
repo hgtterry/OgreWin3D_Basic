@@ -47,6 +47,7 @@ typedef struct Ogre_SubMesh_Type {
 }Ogre_SubMesh_Type;
 
 typedef struct OgreMeshData_Type {
+	Ogre::String mSkeleton;
 	Ogre::String mEdgeList;
 	Ogre::String mName;
 	std::vector<std::string> mMaterials;
