@@ -20,5 +20,30 @@ public:
 
 	CLOW_Exp_Ogre3D(void);
 	~CLOW_Exp_Ogre3D(void);
+
+	void Export_To_Ogre3D(bool Create);
+
+private:
+
+	void Get_Data(int Index, int FaceIndex);
+	void CreateMaterialFile(char* MatFileName);
+
+	Ogre::ManualObject* Export_Manual;
+
+	float nx;
+	float ny;
+	float nz;
+
+	float u;
+	float v;
+
+	float x;
+	float y;
+	float z;
+
+	char mExport_Just_Name[MAX_PATH];
+	char mExport_PathAndFile_Mesh[MAX_PATH];
+	char mExport_PathAndFile_Material[MAX_PATH];
+
 };
 
