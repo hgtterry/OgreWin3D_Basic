@@ -42,10 +42,10 @@ void CLOW_Imp_Ogre3D::Reset_Class(void)
 
 		App->CL_Scene->S_OgreMeshData[0] = new OgreMeshData_Type;
 
-		App->CL_Scene->S_OgreMeshData[0]->mMaterials.resize(0);
-		App->CL_Scene->S_OgreMeshData[0]->mMotionNames.resize(0);
+		App->CL_Scene->S_OgreMeshData[0]->mStrMaterials.resize(0);
+		App->CL_Scene->S_OgreMeshData[0]->mStrMotionNames.resize(0);
 
-		App->CL_Scene->S_OgreMeshData[0]->mName = "Empty";
+		App->CL_Scene->S_OgreMeshData[0]->mStrName = "Empty";
 
 		App->CL_Scene->S_OgreMeshData[0]->mSubMeshCount = 0;
 		App->CL_Scene->S_OgreMeshData[0]->Area = 0;
@@ -441,26 +441,27 @@ void CLOW_Imp_Ogre3D::Get_Ogre_Mesh_Data(Ogre::Entity* Ogre_Entity)
 	bool Edge = Ogre_Entity->hasEdgeList();
 	if (Edge == 1)
 	{
-		App->CL_Scene->S_OgreMeshData[0]->mEdgeList = "Yes";
+		App->CL_Scene->S_OgreMeshData[0]->mStrEdgeList = "Yes";
 	}
 	else
 	{
-		App->CL_Scene->S_OgreMeshData[0]->mEdgeList = "No";
+		App->CL_Scene->S_OgreMeshData[0]->mStrEdgeList = "No";
 	}
 
 	bool Skel = Ogre_Entity->hasSkeleton();
 	if (Skel == 1)
 	{
-		App->CL_Scene->S_OgreMeshData[0]->mSkeleton = "Yes";
+		App->CL_Scene->S_OgreMeshData[0]->mStrSkeleton = "Yes";
 	}
 	else
 	{
-		App->CL_Scene->S_OgreMeshData[0]->mSkeleton = "No";
+		App->CL_Scene->S_OgreMeshData[0]->mStrSkeleton = "No";
 	}
 
 	// ---------------------------------------------------------------
 
-	App->CL_Scene->S_OgreMeshData[0]->mMaterials.resize(0);
+	App->CL_Scene->S_OgreMeshData[0]->mStrMaterials.resize(0);
+	App->CL_Scene->S_OgreMeshData[0]->mSubmeshes.resize(0);
 
 	int SubMeshCount = Ogre_Entity->getNumSubEntities();
 	App->CL_Scene->S_OgreMeshData[0]->mSubMeshCount = SubMeshCount;
@@ -471,11 +472,11 @@ void CLOW_Imp_Ogre3D::Get_Ogre_Mesh_Data(Ogre::Entity* Ogre_Entity)
 	{
 		Ogre::SubMesh const* subMesh = Ogre_Entity->getSubEntity(Count)->getSubMesh();
 
-		App->CL_Scene->S_OgreMeshData[0]->mMaterials.push_back(subMesh->getMaterialName());
+		App->CL_Scene->S_OgreMeshData[0]->mStrMaterials.push_back(subMesh->getMaterialName());
 		Count++;
 	}
 
-	App->CL_Scene->S_OgreMeshData[0]->mName = Ogre_Entity->getName();
+	App->CL_Scene->S_OgreMeshData[0]->mStrName = Ogre_Entity->getName();
 
 
 	// ------------------------------------ Sub Meshes
@@ -492,7 +493,7 @@ void CLOW_Imp_Ogre3D::Get_Ogre_Mesh_Data(Ogre::Entity* Ogre_Entity)
 		_itoa(Count, Num, 10);
 		strcat(strSubMesh, Num);
 
-		App->CL_Scene->S_OgreMeshData[0]->mSubmeshes[Count].Name = strSubMesh;
+		App->CL_Scene->S_OgreMeshData[0]->mSubmeshes[Count].StrName = strSubMesh;
 
 
 		Ogre::SubMesh const* subMesh = Ogre_Entity->getSubEntity(Count)->getSubMesh();
@@ -505,7 +506,7 @@ void CLOW_Imp_Ogre3D::Get_Ogre_Mesh_Data(Ogre::Entity* Ogre_Entity)
 			App->CL_Scene->S_OgreMeshData[0]->mSubmeshes[Count].strHasSharedVertices = "Yes";
 		}
 
-		App->CL_Scene->S_OgreMeshData[0]->mSubmeshes[Count].MatrialName = subMesh->getMaterialName();
+		App->CL_Scene->S_OgreMeshData[0]->mSubmeshes[Count].StrMatrialName = subMesh->getMaterialName();
 
 		App->CL_Scene->S_OgreMeshData[0]->mSubmeshes[Count].VerticesCount = subMesh->vertexData->vertexCount;
 
@@ -556,7 +557,7 @@ void CLOW_Imp_Ogre3D::Get_Motions(Ogre::Entity* Ogre_Entity)
 			for (unsigned short i = 0; i < skeletonInstance->getNumAnimations(); ++i)
 			{
 				Ogre::Animation* animation = skeletonInstance->getAnimation(i);
-				App->CL_Scene->S_OgreMeshData[0]->mMotionNames.push_back(animation->getName());
+				App->CL_Scene->S_OgreMeshData[0]->mStrMotionNames.push_back(animation->getName());
 
 				Count = i;
 			}

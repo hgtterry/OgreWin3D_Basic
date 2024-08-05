@@ -95,9 +95,6 @@ bool CL64_Importers::Assimp_Loader(bool UseDialog,const char* Extension, const c
 			App->CL_Scene->Imported_Ogre_Node->setPosition(0, 0, 0);
 			App->CL_Scene->Imported_Ogre_Node->setScale(1, 1, 1);
 
-			App->CL_Import_Ogre3D->Ogre_To_Mesh_Data(App->CL_Scene->Imported_Ogre_Ent);
-
-			//App->CL_Scene->Model_Type = Enums::LoadedFile_None;
 			App->CL_Scene->Set_Scene(Enums::Scene_Mode_Imported_Entity);
 
 			App->CL_Import_Ogre3D->flag_Ogre_Model_Loaded = 1;

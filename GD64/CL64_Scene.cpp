@@ -162,6 +162,7 @@ void CL64_Scene::Clear_Scene_And_Reset(void)
 	
 	if (App->CL_Converters->World_Ent)
 	{
+		// Needs Looking At
 		App->CL_Ogre->mSceneMgr->destroyAllEntities();
 		App->CL_Converters->World_Ent = nullptr;
 	}

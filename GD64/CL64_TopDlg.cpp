@@ -1389,11 +1389,11 @@ void CL64_TopDlg::Update_Motions_Combo(void)
 
 		while (Count < Size)
 		{
-			SendDlgItemMessage(Motions_TB_hWnd, IDC_CB_MOTIONS_MOTIONS, CB_ADDSTRING, (WPARAM)0, (LPARAM)App->CL_Scene->S_OgreMeshData[0]->mMotionNames[Count].c_str());
+			SendDlgItemMessage(Motions_TB_hWnd, IDC_CB_MOTIONS_MOTIONS, CB_ADDSTRING, (WPARAM)0, (LPARAM)App->CL_Scene->S_OgreMeshData[0]->mStrMotionNames[Count].c_str());
 			Count++;
 		}
 
-		strcpy(Selected_Motion_Name, App->CL_Scene->S_OgreMeshData[0]->mMotionNames[0].c_str());
+		strcpy(Selected_Motion_Name, App->CL_Scene->S_OgreMeshData[0]->mStrMotionNames[0].c_str());
 	}
 	else
 	{

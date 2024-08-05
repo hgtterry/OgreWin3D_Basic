@@ -360,15 +360,15 @@ void CL64_ImGui::Model_Data_GUI(void)
 		{
 			if (App->CL_Import_Ogre3D->flag_Ogre_Model_Loaded == 1)
 			{
-				ImGui::Text("User Name:- %s", App->CL_Scene->S_OgreMeshData[0]->mName.c_str());
+				ImGui::Text("User Name:- %s", App->CL_Scene->S_OgreMeshData[0]->mStrName.c_str());
 				if (ImGui::TreeNode("Materials"))
 				{
 					int Count = 0;
-					int Size = App->CL_Scene->S_OgreMeshData[0]->mMaterials.size();
+					int Size = App->CL_Scene->S_OgreMeshData[0]->mStrMaterials.size();
 
 					while (Count < Size)
 					{
-						if (ImGui::Selectable(App->CL_Scene->S_OgreMeshData[0]->mMaterials[Count].c_str(), listMaterialItems[Count]))
+						if (ImGui::Selectable(App->CL_Scene->S_OgreMeshData[0]->mStrMaterials[Count].c_str(), listMaterialItems[Count]))
 						{
 							listMaterialItems[PreviouseMaterial] = 0;
 							listMaterialItems[Count] = 1;
@@ -389,8 +389,8 @@ void CL64_ImGui::Model_Data_GUI(void)
 					ImGui::PushID("foo");
 					if (ImGui::BeginMenu("Status"))
 					{
-						ImGui::Text("Edge List:- %s", App->CL_Scene->S_OgreMeshData[0]->mEdgeList.c_str());
-						ImGui::Text("Skeleton:- %s", App->CL_Scene->S_OgreMeshData[0]->mSkeleton.c_str());
+						ImGui::Text("Edge List:- %s", App->CL_Scene->S_OgreMeshData[0]->mStrEdgeList.c_str());
+						ImGui::Text("Skeleton:- %s", App->CL_Scene->S_OgreMeshData[0]->mStrSkeleton.c_str());
 
 						ImGui::EndMenu();
 					}
@@ -399,10 +399,10 @@ void CL64_ImGui::Model_Data_GUI(void)
 					while (Count < Size)
 					{
 						ImGui::PushID("foo");
-						if (ImGui::BeginMenu(App->CL_Scene->S_OgreMeshData[0]->mSubmeshes[Count].Name.c_str()))
+						if (ImGui::BeginMenu(App->CL_Scene->S_OgreMeshData[0]->mSubmeshes[Count].StrName.c_str()))
 						{
 							ImGui::Text("Dedicated vertices:  %s", App->CL_Scene->S_OgreMeshData[0]->mSubmeshes[Count].strHasSharedVertices.c_str());
-							ImGui::Text("Material Name: %s", App->CL_Scene->S_OgreMeshData[0]->mSubmeshes[Count].MatrialName);
+							ImGui::Text("Material Name: %s", App->CL_Scene->S_OgreMeshData[0]->mSubmeshes[Count].StrMatrialName.c_str());
 							ImGui::Text("Vertices Count: %i", App->CL_Scene->S_OgreMeshData[0]->mSubmeshes[Count].VerticesCount);
 							ImGui::Text("Bones Used: %i", App->CL_Scene->S_OgreMeshData[0]->mSubmeshes[Count].BonesCount);
 
@@ -459,10 +459,10 @@ void CL64_ImGui::Model_Data_GUI(void)
 
 					while (Count < Size)
 					{
-						if (ImGui::Selectable(App->CL_Scene->S_OgreMeshData[0]->mMotionNames[Count].c_str(), listMotionItems[Count]))
+						if (ImGui::Selectable(App->CL_Scene->S_OgreMeshData[0]->mStrMotionNames[Count].c_str(), listMotionItems[Count]))
 						{
 							App->CL_TopDlg->Switch_To_Motions_Dlg();
-							App->CL_TopDlg->Update_Motions_By_Name(App->CL_Scene->S_OgreMeshData[0]->mMotionNames[Count].c_str());
+							App->CL_TopDlg->Update_Motions_By_Name(App->CL_Scene->S_OgreMeshData[0]->mStrMotionNames[Count].c_str());
 
 							listMotionItems[PreviouseMotion] = 0;
 							listMotionItems[Count] = 1;
