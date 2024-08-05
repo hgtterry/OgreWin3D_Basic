@@ -215,17 +215,6 @@ bool CL64_Ogre::chooseSceneManager(void)
 
 	mSceneMgr->setAmbientLight(Ogre::ColourValue(1, 1, 1));
 
-	// add a bright light above the scene
-	/*Light* spotLight = mSceneMgr->createLight("SpotLight");
-	spotLight->setDiffuseColour(0, 0, 1.0);
-	spotLight->setSpecularColour(0, 0, 1.0);
-	spotLight->setType(Light::LT_SPOTLIGHT);
-
-	SceneNode* spotLightNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
-	spotLightNode->attachObject(spotLight);
-	spotLightNode->setDirection(-1, -1, 0);
-	spotLightNode->setPosition(Vector3(200, 200, 0));*/
-
 	App->CL_Ogre->Log_Message_To_File((LPSTR)"chooseSceneManager");
 
 	return 1;

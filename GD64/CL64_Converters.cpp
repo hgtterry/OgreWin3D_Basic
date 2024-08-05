@@ -24,7 +24,6 @@ CL64_Converters::CL64_Converters(void)
 	Export_Manual = nullptr;
 	World_Manual =	nullptr;
 
-	World_Node =	nullptr;
 	World_Ent =		nullptr;
 
 	mWorld_Mesh_JustName[0] = 0;
@@ -68,6 +67,13 @@ void CL64_Converters::Set_Paths(void)
 Ogre::Entity* CL64_Converters::Convert_To_Ogre3D(bool Create)
 {
 	App->CL_Ogre->Ogre3D_Listener->Ogre_Model_Loaded = 0;
+
+	if (World_Ent)
+	{
+		App->CL_Ogre->mSceneMgr->destroyEntity(World_Ent);
+		World_Ent = nullptr;
+
+	}
 
 	if (Ogre::ResourceGroupManager::getSingleton().resourceGroupExists(Temp_Resource_Group))
 	{

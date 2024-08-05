@@ -39,7 +39,6 @@ public:
 	Ogre::ManualObject* Export_Manual;
 	Ogre::ManualObject* World_Manual;
 
-	Ogre::SceneNode*	World_Node;
 	Ogre::Entity*		World_Ent;
 
 	std::vector<Vector3> MeshNormals;

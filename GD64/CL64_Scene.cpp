@@ -159,13 +159,13 @@ void CL64_Scene::Clear_Scene_And_Reset(void)
 	App->CL_ImGui->Reset_Class();
 
 	App->CL_Ogre->Ogre3D_Listener->Ogre_Model_Loaded = 0;
-
+	
 	if (App->CL_Converters->World_Ent)
 	{
-		App->CL_Ogre->mSceneMgr->destroyEntity(App->CL_Converters->World_Ent);
+		App->CL_Ogre->mSceneMgr->destroyAllEntities();
 		App->CL_Converters->World_Ent = nullptr;
 	}
-
+	
 	App->CL_Resources->Reset_Class();
 	
 	SetWindowText(App->MainHwnd, "OgreWin3D_Basic");
