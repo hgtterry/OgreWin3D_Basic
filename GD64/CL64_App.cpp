@@ -42,6 +42,7 @@ CL64_App::CL64_App(void)
 
 	CL_Import_Ogre3D =	nullptr;
 	CL_Motions =		nullptr;
+	CL_Exp_Ogre =		nullptr;
 
 	hInst =				nullptr;
 	MainHwnd =			nullptr;
@@ -140,6 +141,8 @@ void CL64_App::InitApp(void)
 	CL_Import_Ogre3D =	new CLOW_Imp_Ogre3D();
 	CL_Motions =		new OW3D_Motioins();
 	
+
+	CL_Exp_Ogre =		new CLOW_Exp_Ogre3D(); // Create Here for Now
 	
 	SetBrushes_Fonts();
 
