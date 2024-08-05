@@ -39,9 +39,9 @@ typedef struct Bone_Type {
 }Bone_Type;
 
 typedef struct Ogre_SubMesh_Type {
-	std::string StrName;
-	std::string StrMatrialName;
-	Ogre::String strHasSharedVertices;
+	std::string m_SubMesh_Name_str;
+	std::string m_Matrial_Name_str;
+	Ogre::String m_HasSharedVertices_str;
 	unsigned int VerticesCount;
 	int BonesCount;
 }Ogre_SubMesh_Type;
@@ -50,8 +50,8 @@ typedef struct OgreMeshData_Type {
 	Ogre::String mStrSkeleton;
 	Ogre::String mStrEdgeList;
 	Ogre::String mStrName;
-	std::vector<std::string> mStrMaterials;
-	std::vector<std::string> mStrMotionNames;
+	std::vector<std::string> m_Materials_Names;
+	std::vector<std::string> m_Motion_Names;
 	std::vector<Ogre_SubMesh_Type> mSubmeshes;
 	int mSubMeshCount;
 	Ogre::Vector3 Center;
