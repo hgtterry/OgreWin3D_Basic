@@ -277,6 +277,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			return TRUE;
 		}
 		
+		case ID_EXPORT_OGRE3D:
+		{
+			App->CL_Exporters->Export_Ogre(1);
+			return TRUE;
+		}
+		
 		// File Others ------------------------------------------------
 		case ID_FILE_CLEAR:
 		{

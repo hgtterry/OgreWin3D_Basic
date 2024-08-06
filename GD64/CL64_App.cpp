@@ -89,6 +89,7 @@ CL64_App::CL64_App(void)
 	WhitePen = 0;
 
 	BlackBrush = 0;
+	Brush_White = 0;
 	Brush_But_Normal = 0;
 	Brush_But_Normal = 0;
 	Brush_But_Hover = 0;
@@ -175,6 +176,16 @@ void CL64_App::Say(const char* Message)
 	char text[1024];
 	strcpy(text, Message);
 	App->CL_Dialogs->Message(text);
+}
+
+// *************************************************************************
+// *				Say_Win:- Terry and Hazel Flanigan 2024				   *
+// *************************************************************************
+void CL64_App::Say_Win(const char* Message)
+{
+	char text[1024];
+	strcpy(text, Message);
+	MessageBox(App->MainHwnd, Message, "poo", MB_OK);
 }
 
 // *************************************************************************
@@ -275,6 +286,7 @@ void CL64_App::SetBrushes_Fonts(void)
 {
 	AppBackground = CreateSolidBrush(RGB(213, 222, 242));
 	BlackBrush = CreateSolidBrush(RGB(0, 0, 0));
+	Brush_White = CreateSolidBrush(RGB(255, 255, 255));
 	Brush_But_Normal = CreateSolidBrush(RGB(255, 255, 180));
 	
 	Brush_Green = CreateSolidBrush(RGB(0, 255, 0));

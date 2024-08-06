@@ -80,6 +80,7 @@ public:
 	void Init_Dialogs(void);
 
 	void Say(const char* Message);
+	void Say_Win(const char* Message);
 	void Say_Int(int Value);
 	void Say_Float(float Value);
 
@@ -144,6 +145,7 @@ public:
 
 	HBRUSH AppBackground;
 	HBRUSH BlackBrush;
+	HBRUSH Brush_White;
 	HBRUSH Brush_But_Normal;
 	HBRUSH Brush_But_Hover;
 	HBRUSH Brush_But_Pressed;

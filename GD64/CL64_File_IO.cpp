@@ -17,10 +17,15 @@ appreciated but is not required.
 #include "CL64_App.h"
 #include "CL64_File_IO.h"
 
+#include "Shlobj.h"
+#include "io.h"
+
 CL64_File_IO::CL64_File_IO()
 {
 	Model_FileName[0] = 0;
 	Model_Path_FileName[0] = 0;
+	szSelectedDir[0] = 0;
+	BrowserMessage[0] = 0;
 
 	OgreCFG_FileName[0] = 0;
 	OgreCFG_Path_FileName[0] = 0;
@@ -121,5 +126,89 @@ void CL64_File_IO::Open_HTML(char* HelpTitle)
 	strcat(Path, HelpTitle);
 
 	ShellExecute(0, "open", Path, 0, 0, SW_SHOW);
+}
+
+#pragma warning( disable : 4090)
+// *************************************************************************
+// *							StartBrowser   							   *
+// *************************************************************************
+bool CL64_File_IO::StartBrowser(char* szInitDir)
+{
+	TCHAR dname[MAX_PATH * 2] = { 0 };
+	IMalloc* imalloc; 
+	HRESULT Test1 = SHGetMalloc(&imalloc);
+	BROWSEINFO bi; ZeroMemory(&bi, sizeof(bi));
+
+	bi.hwndOwner = App->MainHwnd;
+	bi.pszDisplayName = dname;
+	bi.lpszTitle = BrowserMessage;
+	bi.lParam = (LPARAM)szInitDir;
+	bi.ulFlags = BIF_RETURNONLYFSDIRS | BIF_USENEWUI;
+	bi.lpfn = BrowseCallbackProc;
+
+	HRESULT Test2 = CoInitialize(NULL);
+	ITEMIDLIST* pidl = SHBrowseForFolder(&bi);
+
+	if (pidl)
+	{
+		imalloc->Free(pidl);
+		imalloc->Release();
+		return 1;
+	}
+
+	imalloc->Free(pidl);
+	imalloc->Release();
+
+	return 0;
+}
+
+// *************************************************************************
+// *						BrowseCallbackProc   						   *
+// *************************************************************************
+int __stdcall CL64_File_IO::BrowseCallbackProc(HWND  hwnd, UINT  uMsg, LPARAM  lParam, LPARAM  lpData)
+{
+	//Initialization callback message
+	if (uMsg == BFFM_INITIALIZED)
+	{
+		//SendMessage(hWnd, BFFM_SETSELECTION, 1, (LPARAM) szInitialPathName); 
+
+		LPCTSTR path = reinterpret_cast<LPCTSTR>(lpData);
+
+		SendMessage(hwnd, BFFM_SETSELECTION, TRUE, (LPARAM)path);
+
+	}
+
+	if (uMsg == BFFM_SELCHANGED)
+	{
+		TCHAR szDir[MAX_PATH * 2] = { 0 };
+
+		BOOL bRet = SHGetPathFromIDList((LPITEMIDLIST)lParam, szDir);
+		if (bRet)
+		{
+			if (_taccess(szDir, 00) != 0)
+			{
+				bRet = FALSE;
+			}
+			else
+			{
+				SHFILEINFO sfi;
+				::SHGetFileInfo((LPCTSTR)lParam, 0, &sfi, sizeof(sfi),
+					SHGFI_PIDL | SHGFI_ATTRIBUTES);
+
+				if (sfi.dwAttributes & SFGAO_LINK)
+					bRet = FALSE;
+			}
+		}
+
+		if (!bRet)
+		{
+			::EnableWindow(GetDlgItem(hwnd, IDOK), FALSE);
+			strcpy(App->CL_File_IO->szSelectedDir, "");
+		}
+		else
+			strcpy(App->CL_File_IO->szSelectedDir, szDir);
+	}
+
+	return 0;
 }
 

@@ -54,6 +54,7 @@
 #define IDD_TB_PHYSICS                  163
 #define IDD_FPSLOCK                     164
 #define IDD_TB_MOTIONS                  165
+#define IDD_EXPORT_OGRE_OPTIONS         166
 #define IDC_CK_SU_FULLSCREEN            1000
 #define IDC_ST_STARTUP                  1001
 #define IDC_CK_SU_FULL3DVIEW            1002
@@ -127,6 +128,10 @@
 #define IDC_ST_MOTIONS_MOTIOINS         1037
 #define IDC_CB_MOTIONS_SPEED            1038
 #define IDC_ST_MOTIONS_SPEED            1039
+#define IDC_ST_FOLDER                   1039
+#define IDC_ST_NAME                     1040
+#define IDC_ST_FOLDER2                  1041
+#define IDC_ST_SUBFOLDER_NAME           1041
 #define ID_VIEW_RESET                   32771
 #define ID_VIEW_MAX3DVIEW               32772
 #define ID_DEBUG_TESTPREFERANCE         32773
@@ -153,6 +158,7 @@
 #define ID_EXPORT_WAVEFRONTOBJ          32794
 #define ID_DEBUG_GENERAL                32795
 #define ID_OPTIONS_FPSLOCK              32796
+#define ID_EXPORT_OGRE3D                32797
 #define IDC_STATIC                      -1
 
 // Next default values for new objects
@@ -160,9 +166,9 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
-#define _APS_NEXT_RESOURCE_VALUE        165
-#define _APS_NEXT_COMMAND_VALUE         32797
-#define _APS_NEXT_CONTROL_VALUE         1039
+#define _APS_NEXT_RESOURCE_VALUE        167
+#define _APS_NEXT_COMMAND_VALUE         32798
+#define _APS_NEXT_CONTROL_VALUE         1040
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif

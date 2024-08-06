@@ -21,9 +21,17 @@ public:
 	CLOW_Exporters(void);
 	~CLOW_Exporters(void);
 
+	bool Export_Ogre(bool Use_FileDialog);
+	void Start_Ogre_Export_Dlg();
+
 	char mJustName[MAX_PATH];
 	char mDirectory_Name[MAX_PATH];
 	char mFolder_Path[MAX_PATH];
 
+private:
+	static LRESULT CALLBACK Export_Ogre_Dlg_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+
+	void Set_Dialog_Data(HWND m_hDlg);
+	int Is_Canceled;
 };
 

@@ -20,6 +20,7 @@ appreciated but is not required.
 CLOW_Exp_Ogre3D::CLOW_Exp_Ogre3D(void)
 {
 	Export_Manual = NULL;
+	Export_Resource_Group = "Export_Resource_Group";
 
 	x, y, z = 0;
 	nx, ny, nz = 0;
@@ -43,9 +44,23 @@ CLOW_Exp_Ogre3D::~CLOW_Exp_Ogre3D(void)
 // *************************************************************************
 void CLOW_Exp_Ogre3D::Export_To_Ogre3D(bool Create)
 {
-	//Set_Export_Paths();
+	if (Ogre::ResourceGroupManager::getSingleton().resourceGroupExists(Export_Resource_Group))
+	{
+		Ogre::ResourceGroupManager::getSingleton().destroyResourceGroup(Export_Resource_Group);
+	}
 
-	//CreateDirectory(mExport_Path, NULL);
+
+	Ogre::ResourceGroupManager::getSingleton().createResourceGroup(Export_Resource_Group);
+	Ogre::ResourceGroupManager::getSingleton().initialiseResourceGroup(Export_Resource_Group);
+
+
+	Set_Export_Paths();
+
+	CreateMaterialFile(mExport_PathAndFile_Material);
+
+	//App->Say_Win(mExport_PathAndFile_Mesh);
+
+	CreateDirectory(mExport_Path, NULL);
 
 	if (Create == 1)
 	{
@@ -78,7 +93,7 @@ void CLOW_Exp_Ogre3D::Export_To_Ogre3D(bool Create)
 		strcat(MatName, "_Material_");
 		strcat(MatName, MaterialNumber);
 
-		Export_Manual->begin(MatName, Ogre::RenderOperation::OT_TRIANGLE_LIST);
+		Export_Manual->begin(MatName, Ogre::RenderOperation::OT_TRIANGLE_LIST, Export_Resource_Group);
 
 		FaceCount = 0;
 		FaceIndex = 0;
@@ -143,7 +158,7 @@ void CLOW_Exp_Ogre3D::Export_To_Ogre3D(bool Create)
 
 	//DecompileTextures_TXL(mExport_Path);
 
-	CreateMaterialFile(mExport_PathAndFile_Material);
+	//CreateMaterialFile(mExport_PathAndFile_Material);
 }
 
 // *************************************************************************
@@ -194,10 +209,8 @@ void CLOW_Exp_Ogre3D::CreateMaterialFile(char* MatFileName)
 		OMatName = MatName;
 		OFile = File;
 
-		Ogre::MaterialPtr ogremat = matMgrSgl.create(OMatName,
-			Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
-
-
+		Ogre::MaterialPtr ogremat = matMgrSgl.create(OMatName, Export_Resource_Group);
+			
 		if (0 < strlen(File))
 		{
 			ogremat->getTechnique(0)->getPass(0)->createTextureUnitState(File);

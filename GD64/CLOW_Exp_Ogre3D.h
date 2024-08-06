@@ -30,6 +30,7 @@ private:
 	void Set_Export_Paths(void);
 
 	Ogre::ManualObject* Export_Manual;
+	Ogre::String Export_Resource_Group;
 
 	float nx;
 	float ny;

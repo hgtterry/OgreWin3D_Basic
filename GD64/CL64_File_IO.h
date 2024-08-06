@@ -19,6 +19,7 @@ class CL64_File_IO
 public:
 	CL64_File_IO();
 	~CL64_File_IO();
+	bool StartBrowser(char* szInitDir);
 
 	bool Open_File_Model(const char* Extension, const char* Title, const char* StartDirectory);
 	bool Open_Resource_File(char* Extension, char* Title, char* StartDirectory);
@@ -29,10 +30,16 @@ public:
 
 	char Model_FileName[MAX_PATH];
 	char Model_Path_FileName[MAX_PATH];
+	TCHAR szSelectedDir[MAX_PATH];
+	char BrowserMessage[MAX_PATH];
 
 	char OgreCFG_FileName[MAX_PATH];
 	char OgreCFG_Path_FileName[MAX_PATH];
 
 	OPENFILENAME ofn;
+
+private:
+	static int __stdcall BrowseCallbackProc(HWND  hwnd, UINT  uMsg, LPARAM  lParam, LPARAM  lpData);
+
 };
 
