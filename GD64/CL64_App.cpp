@@ -43,6 +43,7 @@ CL64_App::CL64_App(void)
 	CL_Import_Ogre3D =	nullptr;
 	CL_Motions =		nullptr;
 	CL_Exp_Ogre =		nullptr;
+	CL_Exporters =		nullptr;
 
 	hInst =				nullptr;
 	MainHwnd =			nullptr;
@@ -143,6 +144,7 @@ void CL64_App::InitApp(void)
 	
 
 	CL_Exp_Ogre =		new CLOW_Exp_Ogre3D(); // Create Here for Now
+	CL_Exporters =		new CLOW_Exporters();
 	
 	SetBrushes_Fonts();
 

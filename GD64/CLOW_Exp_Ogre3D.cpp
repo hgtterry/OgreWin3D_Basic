@@ -28,6 +28,9 @@ CLOW_Exp_Ogre3D::CLOW_Exp_Ogre3D(void)
 	mExport_Just_Name[0] = 0;
 	mExport_PathAndFile_Mesh[0] = 0;
 	mExport_PathAndFile_Material[0] = 0;;
+	mExport_Path[0] = 0;
+	mSelected_Directory[0] = 0;
+	mDirectory_Name[0] = 0;
 
 }
 
@@ -209,4 +212,34 @@ void CLOW_Exp_Ogre3D::CreateMaterialFile(char* MatFileName)
 	}
 
 	matSer.exportQueued(OMatFileName);
+}
+
+// *************************************************************************
+// *		Set_Export_Paths:- Terry and Hazel Flanigan 2023		 	   *
+// *************************************************************************
+void CLOW_Exp_Ogre3D::Set_Export_Paths(void)
+{
+	char ExportFolder[MAX_PATH];
+
+	strcpy(mSelected_Directory, App->CL_Exporters->mFolder_Path);
+	strcpy(mDirectory_Name, App->CL_Exporters->mDirectory_Name);
+	strcpy(mExport_Just_Name, App->CL_Exporters->mJustName);
+
+	strcpy(mExport_Path, mSelected_Directory);
+	strcat(mExport_Path, "\\");
+	strcat(mExport_Path, mDirectory_Name);
+	strcat(mExport_Path, "\\");
+
+	strcpy(mExport_PathAndFile_Mesh, mExport_Path);
+	strcat(mExport_PathAndFile_Mesh, mExport_Just_Name);
+	strcat(mExport_PathAndFile_Mesh, ".mesh");
+
+	strcpy(mExport_PathAndFile_Material, mExport_Path);
+	strcat(mExport_PathAndFile_Material, mExport_Just_Name);
+	strcat(mExport_PathAndFile_Material, ".material");
+
+	x, y, z = 0;
+	nx, ny, nz = 0;
+	u, v = 0;
+
 }

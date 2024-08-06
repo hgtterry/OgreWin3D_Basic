@@ -14,39 +14,16 @@ appreciated but is not required.
 */
 
 #pragma once
-class CLOW_Exp_Ogre3D
+class CLOW_Exporters
 {
 public:
 
-	CLOW_Exp_Ogre3D(void);
-	~CLOW_Exp_Ogre3D(void);
+	CLOW_Exporters(void);
+	~CLOW_Exporters(void);
 
-	void Export_To_Ogre3D(bool Create);
-
-private:
-
-	void Get_Data(int Index, int FaceIndex);
-	void CreateMaterialFile(char* MatFileName);
-	void Set_Export_Paths(void);
-
-	Ogre::ManualObject* Export_Manual;
-
-	float nx;
-	float ny;
-	float nz;
-
-	float u;
-	float v;
-
-	float x;
-	float y;
-	float z;
-
-	char mExport_Just_Name[MAX_PATH];
-	char mExport_PathAndFile_Mesh[MAX_PATH];
-	char mExport_PathAndFile_Material[MAX_PATH];
-	char mExport_Path[MAX_PATH];
+	char mJustName[MAX_PATH];
 	char mDirectory_Name[MAX_PATH];
-	char mSelected_Directory[MAX_PATH];
+	char mFolder_Path[MAX_PATH];
+
 };
 

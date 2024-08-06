@@ -40,6 +40,7 @@ appreciated but is not required.
 #include "OW3D_Motioins.h"
 
 #include "CLOW_Exp_Ogre3D.h"
+#include "CLOW_Exporters.h"
 
 class CL64_App
 {
@@ -73,6 +74,7 @@ public:
 	OW3D_Motioins*		CL_Motions;
 
 	CLOW_Exp_Ogre3D*	CL_Exp_Ogre;
+	CLOW_Exporters*		CL_Exporters;
 
 	void InitApp(void);
 	void Init_Dialogs(void);

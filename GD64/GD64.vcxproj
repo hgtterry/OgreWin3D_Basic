@@ -189,6 +189,7 @@
     <ClInclude Include="CL64_Scene.h" />
     <ClInclude Include="CL64_Textures.h" />
     <ClInclude Include="CL64_TopDlg.h" />
+    <ClInclude Include="CLOW_Exporters.h" />
     <ClInclude Include="CLOW_Exp_Ogre3D.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="GD64.h" />
@@ -226,6 +227,7 @@
     <ClCompile Include="CL64_Scene.cpp" />
     <ClCompile Include="CL64_Textures.cpp" />
     <ClCompile Include="CL64_TopDlg.cpp" />
+    <ClCompile Include="CLOW_Exporters.cpp" />
     <ClCompile Include="CLOW_Exp_Ogre3D.cpp" />
     <ClCompile Include="GD64.cpp" />
     <ClCompile Include="OW3D_Import_Ogre3D.cpp" />
