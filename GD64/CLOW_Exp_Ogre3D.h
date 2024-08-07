@@ -28,6 +28,7 @@ private:
 	void Get_Data(int Index, int FaceIndex);
 	void CreateMaterialFile(char* MatFileName);
 	void Set_Export_Paths(void);
+	void Copy_Textures(void);
 
 	Ogre::ManualObject* Export_Manual;
 	Ogre::String Export_Resource_Group;

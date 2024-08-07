@@ -42,31 +42,19 @@ bool CLOW_Exporters::Export_Ogre(bool Use_FileDialog)
 
 		if (Test == 0)
 		{
-			//App->Enable_Dialogs(1);
 			return 1;
 		}
 	}
-
-	//App->Say(App->CL_File_IO->szSelectedDir);
 
 	Start_Ogre_Export_Dlg();
 
 	if (Is_Canceled == 1)
 	{
-		App->Say("Canceled");
-		//App->Enable_Dialogs(1);
 		return 1;
 	}
 
 	App->CL_Exp_Ogre->Export_To_Ogre3D(1);
-
-	/*if (Is_Canceled == 2)
-	{
-		Start_Export(0);
-		return 1;
-	}
-
-	App->Enable_Dialogs(1);*/
+	App->Say("Exported");
 
 	return 1;
 }

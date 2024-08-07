@@ -88,6 +88,8 @@ void CLOW_Exp_Ogre3D::Export_To_Ogre3D(bool Create)
 
 	while (Count < GroupCountTotal)
 	{
+		//App->Say_Win(App->CL_Scene->Group[Count]->Text_FileName);
+
 		_itoa(Count, MaterialNumber, 10);
 		strcpy(MatName, mExport_Just_Name);
 		strcat(MatName, "_Material_");
@@ -156,9 +158,8 @@ void CLOW_Exp_Ogre3D::Export_To_Ogre3D(bool Create)
 	ms->exportMesh(mesh.get(), mExport_PathAndFile_Mesh);
 	delete(ms);
 
-	//DecompileTextures_TXL(mExport_Path);
+	Copy_Textures();
 
-	//CreateMaterialFile(mExport_PathAndFile_Material);
 }
 
 // *************************************************************************
@@ -254,5 +255,29 @@ void CLOW_Exp_Ogre3D::Set_Export_Paths(void)
 	x, y, z = 0;
 	nx, ny, nz = 0;
 	u, v = 0;
+}
 
+// *************************************************************************
+// *			Copy_Textures:- Terry and Hazel Flanigan 2024		 	   *
+// *************************************************************************
+void CLOW_Exp_Ogre3D::Copy_Textures(void)
+{
+	char SourceFile[MAX_PATH];
+	char Destination[MAX_PATH];
+
+	int numTextures = App->CL_Scene->GroupCount;
+	int Count = 0;
+
+	while (Count < numTextures)
+	{
+		strcpy(SourceFile, App->CL_Scene->Texture_FolderPath);
+		strcat(SourceFile, App->CL_Scene->Group[Count]->Text_FileName);
+
+		strcpy(Destination, mExport_Path);
+		strcat(Destination, App->CL_Scene->Group[Count]->Text_FileName);
+
+		CopyFile(SourceFile, Destination, false);
+
+		Count++;
+	}
 }
