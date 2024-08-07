@@ -53,14 +53,14 @@ void CLOW_Exp_Ogre3D::Export_To_Ogre3D(bool Create)
 	Ogre::ResourceGroupManager::getSingleton().createResourceGroup(Export_Resource_Group);
 	Ogre::ResourceGroupManager::getSingleton().initialiseResourceGroup(Export_Resource_Group);
 
-
+	
 	Set_Export_Paths();
 
-	CreateMaterialFile(mExport_PathAndFile_Material);
-
-	//App->Say_Win(mExport_PathAndFile_Mesh);
-
 	CreateDirectory(mExport_Path, NULL);
+
+	CreateMaterialFile(mExport_PathAndFile_Material);
+	
+	//App->Say_Win(mExport_PathAndFile_Mesh);
 
 	if (Create == 1)
 	{
@@ -138,20 +138,20 @@ void CLOW_Exp_Ogre3D::Export_To_Ogre3D(bool Create)
 		Count++;
 	}
 
-
+	
 	if (Export_Manual->getNumSections() == 0)
 	{
 		App->Say("Can not create Ogre Sections");
 		return;
 	}
 
-	Ogre::MeshPtr mesh = Export_Manual->convertToMesh("TestMesh");
-
+	Ogre::MeshPtr mesh = Export_Manual->convertToMesh("TestMesh", Export_Resource_Group);
+	
 	mesh->setAutoBuildEdgeLists(true);
 	mesh->buildEdgeList();
 
 	App->CL_Ogre->mSceneMgr->destroyManualObject(Export_Manual);
-
+	
 	Ogre::MeshSerializer* ms = new Ogre::MeshSerializer();
 	ms->exportMesh(mesh.get(), mExport_PathAndFile_Mesh);
 	delete(ms);
