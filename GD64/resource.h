@@ -122,6 +122,7 @@
 #define IDC_CHECK1                      1031
 #define IDC_CK_SU_DIRECTORIES           1031
 #define IDC_CK_FPSNOLOCK                1031
+#define IDC_CK_EXPORT_TO_OGRE           1031
 #define IDC_CB_FPSLIST                  1032
 #define IDC_ST_FPSSETTINGS              1033
 #define IDC_CB_MOTIONS_MOTIONS          1036
@@ -130,7 +131,6 @@
 #define IDC_ST_MOTIONS_SPEED            1039
 #define IDC_ST_FOLDER                   1039
 #define IDC_ST_NAME                     1040
-#define IDC_ST_FOLDER2                  1041
 #define IDC_ST_SUBFOLDER_NAME           1041
 #define ID_VIEW_RESET                   32771
 #define ID_VIEW_MAX3DVIEW               32772

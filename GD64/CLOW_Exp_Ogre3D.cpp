@@ -233,8 +233,6 @@ void CLOW_Exp_Ogre3D::CreateMaterialFile(char* MatFileName)
 // *************************************************************************
 void CLOW_Exp_Ogre3D::Set_Export_Paths(void)
 {
-	char ExportFolder[MAX_PATH];
-
 	strcpy(mSelected_Directory, App->CL_Exporters->mFolder_Path);
 	strcpy(mDirectory_Name, App->CL_Exporters->mDirectory_Name);
 	strcpy(mExport_Just_Name, App->CL_Exporters->mJustName);
