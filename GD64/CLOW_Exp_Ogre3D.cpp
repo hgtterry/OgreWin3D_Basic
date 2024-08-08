@@ -33,6 +33,7 @@ CLOW_Exp_Ogre3D::CLOW_Exp_Ogre3D(void)
 	mSelected_Directory[0] = 0;
 	mDirectory_Name[0] = 0;
 
+	flag_Create_Edge_List = 1;
 }
 
 CLOW_Exp_Ogre3D::~CLOW_Exp_Ogre3D(void)
@@ -149,8 +150,11 @@ void CLOW_Exp_Ogre3D::Export_To_Ogre3D(bool Create)
 
 	Ogre::MeshPtr mesh = Export_Manual->convertToMesh("TestMesh", Export_Resource_Group);
 	
-	mesh->setAutoBuildEdgeLists(true);
-	mesh->buildEdgeList();
+	if (flag_Create_Edge_List == 1)
+	{
+		mesh->setAutoBuildEdgeLists(true);
+		mesh->buildEdgeList();
+	}
 
 	App->CL_Ogre->mSceneMgr->destroyManualObject(Export_Manual);
 	

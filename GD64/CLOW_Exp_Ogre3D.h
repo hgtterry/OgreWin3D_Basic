@@ -23,6 +23,8 @@ public:
 
 	void Export_To_Ogre3D(bool Create);
 
+	bool flag_Create_Edge_List;
+
 private:
 
 	void Get_Data(int Index, int FaceIndex);

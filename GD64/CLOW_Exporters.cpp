@@ -86,6 +86,7 @@ LRESULT CALLBACK CLOW_Exporters::Export_Ogre_Dlg_Proc(HWND hDlg, UINT message, W
 		SendDlgItemMessage(hDlg, IDC_BT_CHANGE_NAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_CK_SUBFOLDER, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ST_SUBFOLDER_NAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_CK_EDGE_LIST, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_FOLDER_NAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		SendDlgItemMessage(hDlg, IDC_ST_FLD, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
@@ -98,6 +99,10 @@ LRESULT CALLBACK CLOW_Exporters::Export_Ogre_Dlg_Proc(HWND hDlg, UINT message, W
 
 		HWND Temp = GetDlgItem(hDlg, IDC_CK_SUBFOLDER);
 		SendMessage(Temp, BM_SETCHECK, BST_CHECKED, 0);
+
+		Temp = GetDlgItem(hDlg, IDC_CK_EDGE_LIST);
+		SendMessage(Temp, BM_SETCHECK, BST_CHECKED, 0);
+		App->CL_Exp_Ogre->flag_Create_Edge_List = 1;
 
 		// Just for Now
 		EnableWindow(GetDlgItem(hDlg, IDC_ST_SUBFOLDER_NAME), 0);
@@ -134,6 +139,14 @@ LRESULT CALLBACK CLOW_Exporters::Export_Ogre_Dlg_Proc(HWND hDlg, UINT message, W
 		}
 
 		if (GetDlgItem(hDlg, IDC_CK_SUBFOLDER) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		if (GetDlgItem(hDlg, IDC_CK_EDGE_LIST) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 0, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
@@ -238,6 +251,24 @@ LRESULT CALLBACK CLOW_Exporters::Export_Ogre_Dlg_Proc(HWND hDlg, UINT message, W
 			return 1;
 		}
 
+		if (LOWORD(wParam) == IDC_CK_EDGE_LIST)
+		{
+			HWND temp = GetDlgItem(hDlg, IDC_CK_EDGE_LIST);
+			int test = SendMessage(temp, BM_GETCHECK, 0, 0);
+			if (test == BST_CHECKED)
+			{
+				App->CL_Exp_Ogre->flag_Create_Edge_List = 1;
+				return 1;
+			}
+			else
+			{
+				App->CL_Exp_Ogre->flag_Create_Edge_List = 0;
+				return 1;
+			}
+
+			return 1;
+		}
+		
 		if (LOWORD(wParam) == IDC_BT_CHANGE_NAME)
 		{
 			strcpy(App->CL_Dialogs->btext, "Change File Name");
