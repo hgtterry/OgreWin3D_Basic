@@ -79,59 +79,36 @@ LRESULT CALLBACK CLOW_Exporters::Export_Ogre_Dlg_Proc(HWND hDlg, UINT message, W
 	{
 	case WM_INITDIALOG:
 	{
-
 		SendDlgItemMessage(hDlg, IDC_ST_BANNER, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ST_FOLDER, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		//SendDlgItemMessage(hDlg, IDC_BT_BROWSE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_BROWSE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ST_NAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_CHANGE_NAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		//SendDlgItemMessage(hDlg, IDC_CK_SUBFOLDER, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_CK_SUBFOLDER, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ST_SUBFOLDER_NAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		//SendDlgItemMessage(hDlg, IDC_BT_FOLDER_NAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_FOLDER_NAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
-		//SendDlgItemMessage(hDlg, IDC_ST_FLD, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_ST_FLD, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ST_FN, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-
-		/*SendDlgItemMessage(hDlg, IDC_LST_FILEFORMATS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-
-		SendDlgItemMessage(hDlg, IDC_CK_EXPORTALL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_CK_EXPORTSELECTED, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-
-		SendDlgItemMessage(hDlg, IDC_ST_SELECTEDFORMAT, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));*/
-
 
 		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		App->CL_Exporters->Set_Dialog_Data(hDlg);
 
-		/*App->CLSB_Exporter->Selected_Index = 0;
-		App->CLSB_Exporter->Set_Dialog_Data_FromIndex(hDlg);
-
 		HWND Temp = GetDlgItem(hDlg, IDC_CK_SUBFOLDER);
 		SendMessage(Temp, BM_SETCHECK, BST_CHECKED, 0);
 
-		App->CLSB_Exporter->List_File_Formats(hDlg);
-
-		Temp = GetDlgItem(hDlg, IDC_CK_EXPORTALL);
-		SendMessage(Temp, BM_SETCHECK, 1, 0);
-		App->CLSB_Exporter->Export_Selected = 0;
-
-		App->CLSB_Exporter->Export_Dlg_Hwnd = hDlg;*/
+		// Just for Now
+		EnableWindow(GetDlgItem(hDlg, IDC_ST_SUBFOLDER_NAME), 0);
+		EnableWindow(GetDlgItem(hDlg, IDC_BT_FOLDER_NAME), 0);
+		EnableWindow(GetDlgItem(hDlg, IDC_CK_SUBFOLDER), 0);
 
 		return TRUE;
 	}
 
 	case WM_CTLCOLORSTATIC:
 	{
-		/*if (GetDlgItem(hDlg, IDC_ST_SELECTEDFORMAT) == (HWND)lParam)
-		{
-			SetBkColor((HDC)wParam, RGB(0, 0, 0));
-			SetTextColor((HDC)wParam, RGB(200, 102, 0));
-			SetBkMode((HDC)wParam, TRANSPARENT);
-			return (UINT)App->AppBackground;
-		}*/
-
 		if (GetDlgItem(hDlg, IDC_ST_FOLDER) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 0, 0));
@@ -156,13 +133,13 @@ LRESULT CALLBACK CLOW_Exporters::Export_Ogre_Dlg_Proc(HWND hDlg, UINT message, W
 			return (UINT)App->Brush_White;
 		}
 
-		/*if (GetDlgItem(hDlg, IDC_CK_SUBFOLDER) == (HWND)lParam)
+		if (GetDlgItem(hDlg, IDC_CK_SUBFOLDER) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 0, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->AppBackground;
-		}*/
+		}
 
 		if (GetDlgItem(hDlg, IDC_ST_BANNER) == (HWND)lParam)
 		{
@@ -172,13 +149,13 @@ LRESULT CALLBACK CLOW_Exporters::Export_Ogre_Dlg_Proc(HWND hDlg, UINT message, W
 			return (UINT)App->AppBackground;
 		}
 
-		/*if (GetDlgItem(hDlg, IDC_ST_FLD) == (HWND)lParam)
+		if (GetDlgItem(hDlg, IDC_ST_FLD) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 0, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->AppBackground;
-		}*/
+		}
 
 		if (GetDlgItem(hDlg, IDC_ST_FN) == (HWND)lParam)
 		{
@@ -187,22 +164,6 @@ LRESULT CALLBACK CLOW_Exporters::Export_Ogre_Dlg_Proc(HWND hDlg, UINT message, W
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->AppBackground;
 		}
-
-		/*if (GetDlgItem(hDlg, IDC_CK_EXPORTALL) == (HWND)lParam)
-		{
-			SetBkColor((HDC)wParam, RGB(0, 0, 0));
-			SetTextColor((HDC)wParam, RGB(0, 0, 0));
-			SetBkMode((HDC)wParam, TRANSPARENT);
-			return (UINT)App->AppBackground;
-		}
-
-		if (GetDlgItem(hDlg, IDC_CK_EXPORTSELECTED) == (HWND)lParam)
-		{
-			SetBkColor((HDC)wParam, RGB(0, 0, 0));
-			SetTextColor((HDC)wParam, RGB(0, 0, 0));
-			SetBkMode((HDC)wParam, TRANSPARENT);
-			return (UINT)App->AppBackground;
-		}*/
 
 		return FALSE;
 	}
@@ -217,12 +178,12 @@ LRESULT CALLBACK CLOW_Exporters::Export_Ogre_Dlg_Proc(HWND hDlg, UINT message, W
 		LPNMHDR some_item = (LPNMHDR)lParam;
 
 
-		/*if (some_item->idFrom == IDC_BT_FOLDER_NAME && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDC_BT_FOLDER_NAME && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
 			return CDRF_DODEFAULT;
-		}*/
+		}
 
 		if (some_item->idFrom == IDC_BT_CHANGE_NAME && some_item->code == NM_CUSTOMDRAW)
 		{
@@ -231,12 +192,12 @@ LRESULT CALLBACK CLOW_Exporters::Export_Ogre_Dlg_Proc(HWND hDlg, UINT message, W
 			return CDRF_DODEFAULT;
 		}
 
-		/*if (some_item->idFrom == IDC_BT_BROWSE && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDC_BT_BROWSE && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
 			return CDRF_DODEFAULT;
-		}*/
+		}
 
 		if (some_item->idFrom == IDOK && some_item->code == NM_CUSTOMDRAW)
 		{
@@ -257,65 +218,25 @@ LRESULT CALLBACK CLOW_Exporters::Export_Ogre_Dlg_Proc(HWND hDlg, UINT message, W
 
 	case WM_COMMAND:
 	{
-		//if (LOWORD(wParam) == IDC_CK_EXPORTALL)
-		//{
-		//	HWND temp = GetDlgItem(hDlg, IDC_CK_EXPORTALL);
-		//	SendMessage(temp, BM_SETCHECK, 1, 0);
+		if (LOWORD(wParam) == IDC_CK_SUBFOLDER)
+		{
+			HWND temp = GetDlgItem(hDlg, IDC_CK_SUBFOLDER);
+			int test = SendMessage(temp, BM_GETCHECK, 0, 0);
+			if (test == BST_CHECKED)
+			{
+				EnableWindow(GetDlgItem(hDlg, IDC_ST_SUBFOLDER_NAME), 1);
+				EnableWindow(GetDlgItem(hDlg, IDC_BT_FOLDER_NAME), 1);
+				return 1;
+			}
+			else
+			{
+				EnableWindow(GetDlgItem(hDlg, IDC_ST_SUBFOLDER_NAME), 0);
+				EnableWindow(GetDlgItem(hDlg, IDC_BT_FOLDER_NAME), 0);
+				return 1;
+			}
 
-		//	temp = GetDlgItem(hDlg, IDC_CK_EXPORTSELECTED);
-		//	SendMessage(temp, BM_SETCHECK, 0, 0);
-
-		//	App->CLSB_Exporter->Export_Selected = 0;
-
-		//	App->CLSB_Exporter->Set_Dialog_Data_FromIndex(hDlg);
-		//	return TRUE;
-		//}
-
-		//if (LOWORD(wParam) == IDC_CK_EXPORTSELECTED)
-		//{
-		//	int NumSelBrushes = SelBrushList_GetSize(App->CLSB_Doc->pSelBrushes);
-
-		//	if (NumSelBrushes == 0)
-		//	{
-		//		HWND temp = GetDlgItem(hDlg, IDC_CK_EXPORTSELECTED);
-		//		SendMessage(temp, BM_SETCHECK, 0, 0);
-		//		App->CLSB_Exporter->Export_Selected = 0;
-
-		//		App->Say("No Brushes Selected");
-		//		return TRUE;
-		//	}
-
-		//	HWND temp = GetDlgItem(hDlg, IDC_CK_EXPORTSELECTED);
-		//	SendMessage(temp, BM_SETCHECK, 1, 0);
-
-		//	temp = GetDlgItem(hDlg, IDC_CK_EXPORTALL);
-		//	SendMessage(temp, BM_SETCHECK, 0, 0);
-
-		//	App->CLSB_Exporter->Export_Selected = 1;
-
-		//	App->CLSB_Exporter->Set_Dialog_Data_FromIndex(hDlg);
-		//	return TRUE;
-		//}
-
-		//if (LOWORD(wParam) == IDC_CK_SUBFOLDER)
-		//{
-		//	HWND temp = GetDlgItem(hDlg, IDC_CK_SUBFOLDER);
-		//	int test = SendMessage(temp, BM_GETCHECK, 0, 0);
-		//	if (test == BST_CHECKED)
-		//	{
-		//		EnableWindow(GetDlgItem(hDlg, IDC_ST_SUBFOLDER_NAME), 1);
-		//		EnableWindow(GetDlgItem(hDlg, IDC_BT_FOLDER_NAME), 1);
-		//		return 1;
-		//	}
-		//	else
-		//	{
-		//		EnableWindow(GetDlgItem(hDlg, IDC_ST_SUBFOLDER_NAME), 0);
-		//		EnableWindow(GetDlgItem(hDlg, IDC_BT_FOLDER_NAME), 0);
-		//		return 1;
-		//	}
-
-		//	return 1;
-		//}
+			return 1;
+		}
 
 		if (LOWORD(wParam) == IDC_BT_CHANGE_NAME)
 		{
@@ -331,58 +252,38 @@ LRESULT CALLBACK CLOW_Exporters::Export_Ogre_Dlg_Proc(HWND hDlg, UINT message, W
 
 			SetDlgItemText(hDlg, IDC_ST_NAME, App->CL_Exporters->mJustName);
 
-			//App->CL_Exporters->Set_Dialog_Data_FromIndex(hDlg);*/
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_BT_FOLDER_NAME)
+		{
+			/*strcpy(App->CL_Dialogs->btext, "Change Folder Name");
+			strcpy(App->CL_Dialogs->Chr_Text, App->CL_Export_Ogre3D->Directory_Name);
+
+			App->CL_Dialogs->Dialog_Text();
+
+			if (App->CL_Dialogs->Is_Canceled == 0)
+			{
+				strcpy(App->CLSB_Export_Ogre3D->Directory_Name, App->CL_Dialogs->Chr_Text);
+			}
+
+			SetDlgItemText(hDlg, IDC_ST_SUBFOLDER_NAME, App->CL_Export_Ogre3D->Directory_Name);*/
 
 			return TRUE;
 		}
 
-		//if (LOWORD(wParam) == IDC_BT_FOLDER_NAME)
-		//{
-		//	/*strcpy(App->CL_Dialogs->btext, "Change Folder Name");
-		//	strcpy(App->CL_Dialogs->Chr_Text, App->CL_Export_Ogre3D->Directory_Name);
+		if (LOWORD(wParam) == IDC_BT_BROWSE)
+		{
+			strcpy(App->CL_File_IO->BrowserMessage, "Select Folder To Place Ogre Files");
+			int Test = App->CL_File_IO->StartBrowser((LPSTR)"");
+			if (Test == 0) { return 1; }
 
-		//	App->CL_Dialogs->Dialog_Text();
+			SetDlgItemText(hDlg, IDC_ST_FOLDER, App->CL_File_IO->szSelectedDir);
 
-		//	if (App->CL_Dialogs->Is_Canceled == 0)
-		//	{
-		//		strcpy(App->CLSB_Export_Ogre3D->Directory_Name, App->CL_Dialogs->Chr_Text);
-		//	}
+			strcpy(App->CL_Exporters->mFolder_Path, App->CL_File_IO->szSelectedDir);
 
-		//	SetDlgItemText(hDlg, IDC_ST_SUBFOLDER_NAME, App->CL_Export_Ogre3D->Directory_Name);*/
-
-		//	return TRUE;
-		//}
-
-		//if (LOWORD(wParam) == IDC_BT_BROWSE)
-		//{
-		//	strcpy(App->CLSB_FileIO->BrowserMessage, "Select Folder To Place Ogre Files");
-		//	int Test = App->CLSB_FileIO->StartBrowser("");
-		//	if (Test == 0) { return 1; }
-
-		//	SetDlgItemText(hDlg, IDC_ST_FOLDER, App->CLSB_FileIO->szSelectedDir);
-
-		//	strcpy(App->CLSB_Exporter->mFolder_Path, App->CLSB_FileIO->szSelectedDir);
-
-		//	return TRUE;
-		//}
-
-		//if (LOWORD(wParam) == IDC_LST_FILEFORMATS)
-		//{
-		//	char buff[256];
-		//	int Index = 0;
-		//	Index = SendDlgItemMessage(hDlg, IDC_LST_FILEFORMATS, LB_GETCURSEL, (WPARAM)0, (LPARAM)0);
-
-		//	if (Index == -1)
-		//	{
-		//		return 1;
-		//	}
-
-		//	App->CLSB_Exporter->Selected_Index = Index;
-		//	App->CLSB_Exporter->Set_Dialog_Data_FromIndex(hDlg);
-
-
-		//	return TRUE;
-		//}
+			return TRUE;
+		}
 
 		if (LOWORD(wParam) == IDOK)
 		{

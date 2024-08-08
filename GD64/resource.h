@@ -82,6 +82,7 @@
 #define IDC_CKSLOW                      1008
 #define IDC_BT_TD_DEBUG_FPSLOCK         1008
 #define IDC_BT_MOTIONS_STOP             1008
+#define IDC_BT_BROWSE                   1008
 #define IDC_BUTTON3                     1009
 #define IDC_BT_CAMERA_MODEL             1009
 #define IDC_ALLMESH                     1009
@@ -89,6 +90,7 @@
 #define IDC_CKFAST                      1009
 #define IDC_BT_TD_MOTIONSTAB            1009
 #define IDC_BT_MOTIONS_PAUSE            1009
+#define IDC_BT_FOLDER_NAME              1009
 #define IDC_BUTTON4                     1010
 #define IDC_BT_CAMERA_FREE              1010
 #define IDC_ALLMATERIALS                1010
@@ -125,6 +127,7 @@
 #define IDC_CK_SU_DIRECTORIES           1031
 #define IDC_CK_FPSNOLOCK                1031
 #define IDC_CK_EXPORT_TO_OGRE           1031
+#define IDC_CK_SUBFOLDER                1031
 #define IDC_CB_FPSLIST                  1032
 #define IDC_ST_FPSSETTINGS              1033
 #define IDC_CB_MOTIONS_MOTIONS          1036
@@ -137,6 +140,7 @@
 #define IDC_ST_FN                       1042
 #define IDC_EDITTEXT                    1043
 #define IDC_TITLENAME                   1044
+#define IDC_ST_FLD                      1044
 #define ID_VIEW_RESET                   32771
 #define ID_VIEW_MAX3DVIEW               32772
 #define ID_DEBUG_TESTPREFERANCE         32773
