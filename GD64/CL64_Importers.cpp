@@ -73,9 +73,9 @@ bool CL64_Importers::Assimp_Loader(bool UseDialog,const char* Extension, const c
 	App->CL_Camera->Reset_View();
 
 	App->CL_Scene->Set_Scene(Enums::Scene_Mode_MeshData);
+
 	App->Set_Title();
 	App->CL_Ogre->RenderFrame(3);
-
 	App->Say("Imported");
 
 	return 1;
@@ -188,22 +188,13 @@ void CL64_Importers::Load_Ogre_Model(bool Use_File_Dialog)
 
 	App->CL_Import_Ogre3D->Get_Motions(App->CL_Scene->Imported_Ogre_Ent);
 
+	App->CL_Scene->S_OgreMeshData[0]->mFileName_Str = App->CL_Scene->FileName;
+	App->Set_Title();
+	App->CL_Ogre->RenderFrame(3);
+	App->Say("Imported");
+
 	//Get_Textures();
 
-	/*bool SkellAnimation = OgreModel_Ent->hasSkeleton();
-	Ogre::SkeletonInstance* skeletonInstance = OgreModel_Ent->getSkeleton();
-
-	if (skeletonInstance && SkellAnimation == 1)
-	{
-		if (App->CL_Model->MotionCount > 0)
-		{
-			Ogre::Animation* animation = skeletonInstance->getAnimation(0);
-			strcpy(App->CL_Motions->Selected_Motion_Name, animation->getName().c_str());
-
-			strcpy(App->CL_Motions->Decode_MotionByName, App->CL_Motions->Selected_Motion_Name);
-			App->CL_Ogre->Ogre_Listener->Animate_State = OgreModel_Ent->getAnimationState(App->CL_Motions->Selected_Motion_Name);
-		}
-	}*/
 }
 
 // *************************************************************************

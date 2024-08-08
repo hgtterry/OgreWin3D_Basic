@@ -478,8 +478,7 @@ void CLOW_Imp_Ogre3D::Get_Ogre_Mesh_Data(Ogre::Entity* Ogre_Entity)
 	}
 
 	App->CL_Scene->S_OgreMeshData[0]->mStrName = Ogre_Entity->getName();
-
-
+	
 	// ------------------------------------ Sub Meshes
 
 	Count = 0;
