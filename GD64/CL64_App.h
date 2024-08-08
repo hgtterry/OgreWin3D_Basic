@@ -83,7 +83,7 @@ public:
 	void Say_Win(const char* Message);
 	void Say_Int(int Value);
 	void Say_Float(float Value);
-
+	void Set_Title();
 
 	bool SetMainWinCentre(void) const;
 	void Flash_Window();

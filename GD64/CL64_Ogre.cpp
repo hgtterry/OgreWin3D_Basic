@@ -79,7 +79,7 @@ void CL64_Ogre::InitOgre(void)
 	App->CL_Scene->Imported_Ogre_Node = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	App->CL_Scene->Imported_Ogre_Node->attachObject(App->CL_Scene->Imported_Ogre_Ent);
 
-	strcpy(App->CL_Scene->FileName, "Sinbad.mesh");
+	App->CL_Scene->S_OgreMeshData[0]->mFileName_Str = "Sinbad.mesh";
 
 	App->CL_Import_Ogre3D->Ogre_To_Mesh_Data(App->CL_Scene->Imported_Ogre_Ent);
 	App->CL_Import_Ogre3D->Get_Motions(App->CL_Scene->Imported_Ogre_Ent);
@@ -100,7 +100,6 @@ void CL64_Ogre::InitOgre(void)
 
 	App->CL_Player->Create_Player_Object();
 
-	
 }
 
 // *************************************************************************
@@ -182,7 +181,7 @@ bool CL64_Ogre::Configure(void)
 	mWindow = mRoot->initialise(false);
 	Ogre::NameValuePairList options;
 
-	options["vsync"] = true;
+	//options["vsync"] = false;
 
 	options["externalWindowHandle"] =
 		Ogre::StringConverter::toString((size_t)RenderHwnd);
@@ -198,6 +197,7 @@ bool CL64_Ogre::Configure(void)
 
 	//App->CL_Panels->Width = mWindow->getWidth();
 	//App->CL_Panels->Height = mWindow->getHeight();
+
 	App->CL_Ogre->Log_Message_To_File((LPSTR)"Configure");
 
 	return true;

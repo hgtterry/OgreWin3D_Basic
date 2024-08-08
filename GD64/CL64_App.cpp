@@ -189,6 +189,18 @@ void CL64_App::Say_Win(const char* Message)
 }
 
 // *************************************************************************
+// *				Set_Title:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void CL64_App::Set_Title()
+{
+	char TitleBar[260];
+	strcpy(TitleBar, "OgreWin3D_Basic");
+	strcat(TitleBar, "    ");
+	strcat(TitleBar, App->CL_Scene->Path_FileName);
+	SetWindowText(App->MainHwnd, TitleBar);
+}
+
+// *************************************************************************
 // *			Debug_Text:- Terry and Hazel Flanigan 2024				   *
 // *************************************************************************
 void CL64_App::Debug_Text()

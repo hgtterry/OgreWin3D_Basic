@@ -46,6 +46,7 @@ void CLOW_Imp_Ogre3D::Reset_Class(void)
 		App->CL_Scene->S_OgreMeshData[0]->m_Motion_Names.resize(0);
 
 		App->CL_Scene->S_OgreMeshData[0]->mStrName = "Empty";
+		App->CL_Scene->S_OgreMeshData[0]->mFileName_Str = "Empty";
 
 		App->CL_Scene->S_OgreMeshData[0]->mSubMeshCount = 0;
 		App->CL_Scene->S_OgreMeshData[0]->Area = 0;
