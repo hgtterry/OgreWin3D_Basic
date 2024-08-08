@@ -27,10 +27,15 @@ public:
 	void Show_YesNo_Dlg(char* Text, char* Text2);
 	void Start_Speed_Camera_Dlg();
 	void Start_FPSLock_Dlg();
+	bool Dialog_Text(int What_Check);
 
 	bool Canceled;
 	bool Flag_Convert_to_Ogre;
 
+	char btext[MAX_PATH];
+	char Chr_Text[MAX_PATH];
+
+	int What_Check_Name;
 
 private:
 
@@ -40,6 +45,7 @@ private:
 	static LRESULT CALLBACK YesNo_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Speed_Camera_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK FPSLock_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Dialog_Text_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	void UnCheck_All_SpeedMouseOption();
 	void Fill_Face_Combo(HWND hDlg);

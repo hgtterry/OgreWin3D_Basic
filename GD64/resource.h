@@ -55,6 +55,7 @@
 #define IDD_FPSLOCK                     164
 #define IDD_TB_MOTIONS                  165
 #define IDD_EXPORT_OGRE_OPTIONS         166
+#define IDD_TEXT_DIALOG                 167
 #define IDC_CK_SU_FULLSCREEN            1000
 #define IDC_ST_STARTUP                  1001
 #define IDC_CK_SU_FULL3DVIEW            1002
@@ -72,6 +73,7 @@
 #define IDC_BT_TD_PHYSICSTAB            1007
 #define IDC_BT_TD_DEMOS_OPTIONS         1007
 #define IDC_BT_MOTIONS_PLAY             1007
+#define IDC_BT_CHANGE_NAME              1007
 #define IDC_BUTTON2                     1008
 #define IDC_BT_TBH_CAMERA               1008
 #define IDC_BT_DEMORESOURCES            1008
@@ -132,6 +134,9 @@
 #define IDC_ST_FOLDER                   1039
 #define IDC_ST_NAME                     1040
 #define IDC_ST_SUBFOLDER_NAME           1041
+#define IDC_ST_FN                       1042
+#define IDC_EDITTEXT                    1043
+#define IDC_TITLENAME                   1044
 #define ID_VIEW_RESET                   32771
 #define ID_VIEW_MAX3DVIEW               32772
 #define ID_DEBUG_TESTPREFERANCE         32773
@@ -166,9 +171,9 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
-#define _APS_NEXT_RESOURCE_VALUE        167
+#define _APS_NEXT_RESOURCE_VALUE        168
 #define _APS_NEXT_COMMAND_VALUE         32798
-#define _APS_NEXT_CONTROL_VALUE         1040
+#define _APS_NEXT_CONTROL_VALUE         1045
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif

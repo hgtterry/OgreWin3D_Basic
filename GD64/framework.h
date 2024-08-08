@@ -82,6 +82,11 @@ namespace Enums
 		Scene_Mode_MeshData = 4
 	};
 
+	enum Check_Text
+	{
+		Check_Name_None = 0,
+	};
+
 }
 
 #define Debug App->Debug_Text();
