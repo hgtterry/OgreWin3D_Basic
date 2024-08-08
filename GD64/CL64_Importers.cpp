@@ -74,7 +74,10 @@ bool CL64_Importers::Assimp_Loader(bool UseDialog,const char* Extension, const c
 
 	App->CL_Scene->Set_Scene(Enums::Scene_Mode_MeshData);
 
+	App->CL_Ogre->RenderFrame(3);
+	App->Say("Imported");
 
+	return 1;
 	if (UseDialog == 1)
 	{
 		App->CL_Ogre->RenderFrame(3);
