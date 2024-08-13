@@ -253,7 +253,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		case ID_OGRE3D_MESH:
 		{
 			App->CL_Importers->Load_Ogre_Model(true);
-
+			App->Say("Imported");
 			return TRUE;
 		}
 
@@ -266,15 +266,31 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		
 		case ID_IMPORT_WAVEFRONTOBJ:
 		{
-			App->CL_Assimp->SelectedPreset = 8 + 8388608 + 64 + aiProcess_PreTransformVertices;
-			App->CL_Importers->Assimp_Loader(true,"Wavefront OBJ   *.obj\0*.obj\0", "Wavefront OBJ");
+			App->CL_Assimp->Options.SelectedPreset = 8 + 8388608 + 64 + aiProcess_PreTransformVertices;
+			App->CL_Assimp->Options.Model_Type = Enums::Model_Type_Obj;
+
+			bool test = App->CL_Importers->Assimp_Loader(true,"Wavefront OBJ   *.obj\0*.obj\0", "Wavefront OBJ");
+
+			if (test == 1)
+			{
+				App->Say("Imported");
+			}
+
 			return TRUE;
 		}
 
 		case ID_IMPORT_AUTODESK3DS:
 		{
-			App->CL_Assimp->SelectedPreset = 8 + 8388608 + 64 + aiProcess_PreTransformVertices;
-			App->CL_Importers->Assimp_Loader(true, "Autodesk 3DS   *.3ds\0*.3ds\0", "Autodesk 3DS");
+			App->CL_Assimp->Options.SelectedPreset = 8 + 8388608 + 64 + aiProcess_PreTransformVertices;
+			App->CL_Assimp->Options.Model_Type = Enums::Model_Type_3ds;
+
+			bool test = App->CL_Importers->Assimp_Loader(true, "Autodesk 3DS   *.3ds\0*.3ds\0", "Autodesk 3DS");
+
+			if (test == 1)
+			{
+				App->Say("Imported");
+			}
+
 			return TRUE;
 		}
 

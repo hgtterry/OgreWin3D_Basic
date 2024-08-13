@@ -19,7 +19,9 @@ appreciated but is not required.
 
 CL64_Assimp::CL64_Assimp(void)
 {
-	SelectedPreset = 8 + 8388608 + 64 + aiProcess_PreTransformVertices;
+	Options.SelectedPreset = 8 + 8388608 + 64 + aiProcess_PreTransformVertices;
+	Options.Model_Type = Enums::Model_Type_None;
+	
 	mTotalVertices = 0;
 }
 
@@ -48,7 +50,15 @@ void CL64_Assimp::logDebug(const char* logString)
 // *************************************************************************
 bool CL64_Assimp::LoadFile(const char* pFile)
 {
-	const aiScene* scene = aiImportFile(pFile, SelectedPreset);
+	//uint32 flags = aiProcessPreset_TargetRealtime_Fast | aiProcess_TransformUVCoords | aiProcess_FlipUVs;
+	//flags &= ~(aiProcess_JoinIdenticalVertices | aiProcess_CalcTangentSpace); // optimize for fast loading
+
+	//flags |= aiProcessPreset_TargetRealtime_Quality;
+
+	//if ((flags & (aiProcess_GenSmoothNormals | aiProcess_GenNormals)) != aiProcess_GenNormals)
+	//	flags &= ~aiProcess_GenNormals; // prefer smooth normals
+
+	const aiScene* scene = aiImportFile(pFile, Options.SelectedPreset);
 
 	if (!scene)
 	{

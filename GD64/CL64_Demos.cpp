@@ -59,7 +59,7 @@ void CL64_Demos::Start_Demo_1(void)
 	strcpy(App->CL_File_IO->Model_FileName,"StartRoom.obj");
 	strcpy(App->CL_File_IO->Model_Path_FileName, Path_And_File);
 
-	App->CL_Assimp->SelectedPreset = 8 + 8388608 + 64 + aiProcess_PreTransformVertices;
+	App->CL_Assimp->Options.SelectedPreset = 8 + 8388608 + 64 + aiProcess_PreTransformVertices;
 	App->CL_Importers->Assimp_Loader(false, "", "");
 
 	World_Ent = App->CL_Converters->Convert_To_Ogre3D(1);

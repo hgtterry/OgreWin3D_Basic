@@ -16,12 +16,18 @@ appreciated but is not required.
 #pragma once
 
 #include "cimport.h"
+//#include "Importer.hpp"
 #include "PostProcess.h"
 #include "Scene.h"
 #include "DefaultLogger.hpp"
 #include "LogStream.hpp"
 #include "matrix4x4.h"
 
+struct Assimp_Options
+{
+	long int SelectedPreset;	// Switchs 
+	int Model_Type;
+};
 
 class CL64_Assimp
 {
@@ -42,8 +48,8 @@ public:
 	void StoreMeshData(const aiScene* pScene);
 	void LoadTextures();
 
-	long int SelectedPreset;	// Switchs 
-	int mTotalVertices;			// Total Vertice Count of Model
+	Assimp_Options Options;
 
+	int mTotalVertices;			// Total Vertice Count of Model
 };
 

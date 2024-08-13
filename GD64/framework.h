@@ -87,6 +87,13 @@ namespace Enums
 		Check_Name_None = 0,
 	};
 
+	enum Model_Type
+	{
+		Model_Type_None = 0,
+		Model_Type_Obj = 1,
+		Model_Type_3ds = 2
+	};
+
 }
 
 #define Debug App->Debug_Text();
