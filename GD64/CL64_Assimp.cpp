@@ -82,6 +82,13 @@ bool CL64_Assimp::LoadFile(const char* pFile)
 
 		App->CL_Scene->Set_BondingBox_Model(1); // Create
 
+		if (Options.Model_Type == Enums::Model_Type_3ds)
+		{
+			App->CL_Dimensions->Centre_Model_Mid_Assimp();
+			App->CL_Dimensions->Rotate_Z_Assimp(90);
+			App->CL_Dimensions->Centre_Model_Mid_Assimp();
+		}
+
 	}
 
 	aiReleaseImport(scene);

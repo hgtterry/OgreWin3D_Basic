@@ -20,5 +20,9 @@ public:
 
 	CLOW_Dimensions(void);
 	~CLOW_Dimensions(void);
+
+	void Centre_Model_Mid_Assimp(void);
+	void Rotate_Z_Assimp(float Z);
+
 };
 
