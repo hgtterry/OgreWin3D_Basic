@@ -123,6 +123,9 @@
     <ClInclude Include="CLOW_Exporters.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="CLOW_Dimensions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GD64.cpp">
@@ -222,6 +225,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CLOW_Exporters.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CLOW_Dimensions.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
