@@ -141,7 +141,6 @@
 #define IDC_EDITTEXT                    1043
 #define IDC_TITLENAME                   1044
 #define IDC_ST_FLD                      1044
-#define IDC_CHECK2                      1045
 #define IDC_CK_EDGE_LIST                1045
 #define ID_VIEW_RESET                   32771
 #define ID_VIEW_MAX3DVIEW               32772
@@ -170,6 +169,7 @@
 #define ID_DEBUG_GENERAL                32795
 #define ID_OPTIONS_FPSLOCK              32796
 #define ID_EXPORT_OGRE3D                32797
+#define ID_IMPORT_AUTODESK3DS           32798
 #define IDC_STATIC                      -1
 
 // Next default values for new objects
@@ -178,7 +178,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        168
-#define _APS_NEXT_COMMAND_VALUE         32798
+#define _APS_NEXT_COMMAND_VALUE         32799
 #define _APS_NEXT_CONTROL_VALUE         1046
 #define _APS_NEXT_SYMED_VALUE           110
 #endif

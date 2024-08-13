@@ -271,6 +271,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			return TRUE;
 		}
 
+		case ID_IMPORT_AUTODESK3DS:
+		{
+			App->CL_Assimp->SelectedPreset = 8 + 8388608 + 64 + aiProcess_PreTransformVertices;
+			App->CL_Importers->Assimp_Loader(true, "Autodesk 3DS   *.3ds\0*.3ds\0", "Autodesk 3DS");
+			return TRUE;
+		}
+
 		// File Export ------------------------------------------------
 		case ID_EXPORT_WAVEFRONTOBJ:
 		{

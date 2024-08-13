@@ -739,6 +739,7 @@ LRESULT CALLBACK CL64_TopDlg::Debug_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 			{
 				App->CL_ImGui->flag_Show_ImGui_Demo = 1;
 			}
+
 			return 1;
 		}
 
@@ -747,12 +748,10 @@ LRESULT CALLBACK CL64_TopDlg::Debug_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 			if (App->CL_Ogre->flag_Show_Trays == 1)
 			{
 				App->CL_Ogre->Show_Trays(false);
-				//App->CL_Player->Show_Debug_Player(0);
 			}
 			else
 			{
 				App->CL_Ogre->Show_Trays(true);
-				//App->CL_Player->Show_Debug_Player(1);
 			}
 
 			return 1;
@@ -785,6 +784,7 @@ LRESULT CALLBACK CL64_TopDlg::Debug_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 			{
 				App->CL_ImGui->flag_Show_FPS = 1;
 			}
+
 			return 1;
 		}
 
