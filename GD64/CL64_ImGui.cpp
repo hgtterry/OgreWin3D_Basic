@@ -490,7 +490,7 @@ void CL64_ImGui::Model_Data_GUI(void)
 			ImGui::Text("Groups:- %i", App->CL_Scene->GroupCount);
 			ImGui::Text("Bones:- %i", App->CL_Scene->BoneCount);
 			ImGui::Text("Motions:- %i", App->CL_Scene->MotionCount);
-			ImGui::Text("Loaded:- %i", App->CL_Resources->Ogre_ExternalResourceLoaded);
+			ImGui::Text("Loaded:- %i", App->CL_Scene->flag_Model_Loaded);
 			ImGui::Unindent();
 
 			ImGui::TreePop();
