@@ -45,6 +45,7 @@ CL64_App::CL64_App(void)
 	CL_Exp_Ogre =		nullptr;
 	CL_Exporters =		nullptr;
 	CL_Dimensions =		nullptr;
+	CL_Exp_Obj =		nullptr;
 
 	hInst =				nullptr;
 	MainHwnd =			nullptr;
@@ -148,6 +149,7 @@ void CL64_App::InitApp(void)
 	CL_Exp_Ogre =		new CLOW_Exp_Ogre3D(); // Create Here for Now
 	CL_Exporters =		new CLOW_Exporters();
 	CL_Dimensions =		new CLOW_Dimensions();
+	CL_Exp_Obj =		new OW3D_Exp_Obj();
 	
 	SetBrushes_Fonts();
 

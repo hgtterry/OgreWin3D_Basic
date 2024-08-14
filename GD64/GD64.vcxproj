@@ -194,6 +194,7 @@
     <ClInclude Include="CLOW_Exp_Ogre3D.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="GD64.h" />
+    <ClInclude Include="OW3D_Exp_Obj.h" />
     <ClInclude Include="OW3D_Import_Ogre3D.h" />
     <ClInclude Include="OW3D_Motioins.h" />
     <ClInclude Include="pch.h" />
@@ -232,6 +233,7 @@
     <ClCompile Include="CLOW_Exporters.cpp" />
     <ClCompile Include="CLOW_Exp_Ogre3D.cpp" />
     <ClCompile Include="GD64.cpp" />
+    <ClCompile Include="OW3D_Exp_Obj.cpp" />
     <ClCompile Include="OW3D_Import_Ogre3D.cpp" />
     <ClCompile Include="OW3D_Motioins.cpp" />
     <ClCompile Include="pch.cpp">
