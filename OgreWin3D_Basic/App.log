@@ -1,0 +1,9 @@
+12:11:57: Initialising
+12:11:57: OgreCreateRoot
+12:11:57: SetUpResources
+12:11:57: Configure
+12:11:57: chooseSceneManager
+12:11:57: createCamera
+12:11:57: createViewports
+12:11:57: Initialise_Resources
+12:11:57: createFrameListener
