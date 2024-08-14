@@ -41,16 +41,21 @@ bool CL64_Importers::Assimp_Loader(bool UseDialog,const char* Extension, const c
 
 		if (App->CL_Preferences->Use_Default_Directories == 1)
 		{
+			strcpy(Start_Directory, App->GD_Directory_FullPath);
+
 			if (App->CL_Assimp->Options.Model_Type == Enums::Model_Type_Obj)
 			{
-				strcpy(Start_Directory, App->GD_Directory_FullPath);
 				strcat(Start_Directory, "\\Models\\Wavefront_Obj_Models");
 			}
 
 			if (App->CL_Assimp->Options.Model_Type == Enums::Model_Type_3ds)
 			{
-				strcpy(Start_Directory, App->GD_Directory_FullPath);
 				strcat(Start_Directory, "\\Models\\3ds_Models");
+			}
+
+			if (App->CL_Assimp->Options.Model_Type == Enums::Model_Type_Milk)
+			{
+				strcat(Start_Directory, "\\Models\\Milkshape_Models");
 			}
 		}
 
