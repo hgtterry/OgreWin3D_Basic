@@ -20,5 +20,20 @@ public:
 
 	OW3D_Exp_Obj(void);
 	~OW3D_Exp_Obj(void);
+
+	bool Create_ObjectFile(void);
+	void Write_ObjectFile(void);
+	void Write_ObjectFile_Commit(void);
+	bool WriteMTLFile(void);
+
+	char OutputFolder[1024];
+
+	char Object_FileName[255];
+	char mtl_FileName[255];
+	char Just_mtl_FileName[255];
+
+	FILE* Write_OBJECTFILE;
+	FILE* Write_MTLFile;
+
 };
 
