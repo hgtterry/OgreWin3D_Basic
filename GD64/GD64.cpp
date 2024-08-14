@@ -294,6 +294,21 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			return TRUE;
 		}
 
+		case ID_IMPORT_MILKSHAPEMS3D:
+		{
+			App->CL_Assimp->Options.SelectedPreset = 8 + 8388608 + 64 + aiProcess_PreTransformVertices;
+			App->CL_Assimp->Options.Model_Type = Enums::Model_Type_Milk;
+
+			bool test = App->CL_Importers->Assimp_Loader(true, "MilkShape Files   *.ms3d\0*.ms3d\0", "Load MilkShape File");
+
+			if (test == 1)
+			{
+				App->Say("Imported");
+			}
+
+			return TRUE;
+		}
+
 		// File Export ------------------------------------------------
 		case ID_EXPORT_WAVEFRONTOBJ:
 		{

@@ -91,7 +91,8 @@ namespace Enums
 	{
 		Model_Type_None = 0,
 		Model_Type_Obj = 1,
-		Model_Type_3ds = 2
+		Model_Type_3ds = 2,
+		Model_Type_Milk = 3
 	};
 
 }
