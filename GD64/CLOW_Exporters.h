@@ -23,6 +23,7 @@ public:
 
 	bool Export_Ogre(bool Use_FileDialog);
 	void Start_Ogre_Export_Dlg();
+	void Object_Model(void);
 
 	char mJustName[MAX_PATH];
 	char mDirectory_Name[MAX_PATH];

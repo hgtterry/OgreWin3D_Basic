@@ -437,6 +437,10 @@ int CL64_Resources::ShowAllTextures()
 		//pp = Ogre::TextureManager::getSingleton().getByName(pScriptName);
 		//pIsLoaded = pp->isLoaded();
 
+		//Ogre::TexturePtr texture = Ogre::TextureManager::getSingletonPtr()->getByName(pScriptName);
+		//Ogre::HardwarePixelBufferSharedPtr buffer = texture->getBuffer();
+		//texture->getSrcDepth();
+		
 		if (pIsLoaded == 1)
 		{
 			strcpy(pUsed, "Yes");

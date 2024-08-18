@@ -312,7 +312,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		// File Export ------------------------------------------------
 		case ID_EXPORT_WAVEFRONTOBJ:
 		{
-			Debug
+			App->CL_Exporters->Object_Model();
 			return TRUE;
 		}
 		

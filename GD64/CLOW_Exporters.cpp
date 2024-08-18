@@ -339,7 +339,7 @@ LRESULT CALLBACK CLOW_Exporters::Export_Ogre_Dlg_Proc(HWND hDlg, UINT message, W
 }
 
 // *************************************************************************
-// *			Set_Dialog_Data:- Terry and Hazel Flanigan 2023 		   *
+// *			Set_Dialog_Data:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
 void CLOW_Exporters::Set_Dialog_Data(HWND m_hDlg)
 {
@@ -360,4 +360,23 @@ void CLOW_Exporters::Set_Dialog_Data(HWND m_hDlg)
 	strcat(mDirectory_Name, "_Ogre_All");
 	SetDlgItemText(m_hDlg, IDC_ST_SUBFOLDER_NAME, App->CL_Exporters->mDirectory_Name);
 
+}
+
+// *************************************************************************
+// *			Object_Model:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void CLOW_Exporters::Object_Model(void)
+{
+	if (App->CL_Scene->flag_Model_Loaded == 0)
+	{
+		App->Say("No Model Loaded to Export");
+		return;
+	}
+
+	bool test = App->CL_Exp_Obj->Create_ObjectFile();
+
+	if (test == 1)
+	{
+		App->Say("Wavefront Object file Created successfully");
+	}
 }

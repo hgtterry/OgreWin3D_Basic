@@ -143,7 +143,7 @@ bool CL64_File_IO::StartBrowser(char* szInitDir)
 	bi.pszDisplayName = dname;
 	bi.lpszTitle = BrowserMessage;
 	bi.lParam = (LPARAM)szInitDir;
-	bi.ulFlags = BIF_RETURNONLYFSDIRS | BIF_USENEWUI;
+	bi.ulFlags = BIF_RETURNONLYFSDIRS | BIF_NONEWFOLDERBUTTON | BIF_USENEWUI;
 	bi.lpfn = BrowseCallbackProc;
 
 	HRESULT Test2 = CoInitialize(NULL);
@@ -161,7 +161,9 @@ bool CL64_File_IO::StartBrowser(char* szInitDir)
 
 	return 0;
 }
-
+HWND g_hMyEditBox;
+#define BROWSE_WIDTH      380
+#define BROWSE_HEIGHT     530
 // *************************************************************************
 // *						BrowseCallbackProc   						   *
 // *************************************************************************
@@ -170,12 +172,51 @@ int __stdcall CL64_File_IO::BrowseCallbackProc(HWND  hwnd, UINT  uMsg, LPARAM  l
 	//Initialization callback message
 	if (uMsg == BFFM_INITIALIZED)
 	{
-		//SendMessage(hWnd, BFFM_SETSELECTION, 1, (LPARAM) szInitialPathName); 
+		HWND tt = FindWindowEx(hwnd, NULL, "Static", NULL);
+		SendMessage(tt, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		//RECT rtDialog, rtButton;
+		//RECT DesktopRect;
+		//HWND hDesktop = ::GetDesktopWindow();
+		//::GetWindowRect(hDesktop, &DesktopRect);
+		//::MoveWindow(hwnd, (DesktopRect.right / 2) - (BROWSE_WIDTH / 2), (DesktopRect.bottom / 2) - (BROWSE_HEIGHT / 2), BROWSE_WIDTH, BROWSE_HEIGHT, TRUE);
+		////SendMessage(hwnd, BFFM_SETSELECTION, 1, (LPARAM)lParam);
+		//SetWindowPos(hwnd, NULL, 2, 2,200, 200, SWP_NOZORDER);
 
-		LPCTSTR path = reinterpret_cast<LPCTSTR>(lpData);
+		HWND hListView = FindWindowEx(hwnd, NULL, "TreeView", NULL);
+		SetWindowPos(hListView, NULL, 2, 2, 100, 100, SWP_NOZORDER);
+		//MoveWindow(hListView, 20, 20, 200, 200, TRUE);
+		////Find the handles of OK and Cancel buttons
+		//HWND hOKButton = FindWindowEx(hwnd, NULL, "Button", NULL);
+		//HWND hCancelButton = FindWindowEx(hwnd,hOKButton, "Button", NULL);
 
-		SendMessage(hwnd, BFFM_SETSELECTION, TRUE, (LPARAM)path);
+		////Gets the OK button position
+		//::GetClientRect(hOKButton, &rtButton);
 
+		////Gets the dimensions BrowseForFolder dialog
+		//::GetClientRect(hwnd, &rtDialog);
+
+		////Relocate the SysTreeView32 control
+		//::SetWindowPos(hListView, 0, 10, 43, 360, 300, 0);
+
+		////Relocate the OK button
+		//::SetWindowPos(hOKButton, 0, 230, 460, 60, 30, 0);
+
+		////Relocate the Cancel buttton
+		//::SetWindowPos(hCancelButton, 0, 300, 460, 60, 30, 0);
+
+		////Create a static control
+		//HWND hMyStaticCtrl = CreateWindowEx(0, "STATIC", "My Custom Controls", SS_NOTIFY | WS_CHILD | WS_VISIBLE, 20, 370, 200, 25, hwnd, 0, NULL, NULL);
+
+		////Create a radio button
+		//HWND hMyRaioBtn = CreateWindowEx(0, "BUTTON", "RadioButton", SS_NOTIFY | WS_CHILD | WS_VISIBLE | BS_AUTORADIOBUTTON, 20, 400, 200, 20, hwnd, 0, NULL, NULL);
+
+		////Create an Edit box
+		//g_hMyEditBox = CreateWindowEx(0, "EDIT", "", SS_NOTIFY | WS_CHILD | WS_VISIBLE | WS_BORDER, 20, 430, 340, 20, hwnd, 0, NULL, NULL);
+		//
+		//LPCTSTR path = reinterpret_cast<LPCTSTR>(lpData);
+
+		//SendMessage(hwnd, BFFM_SETSELECTION, TRUE, (LPARAM)path);
+	
 	}
 
 	if (uMsg == BFFM_SELCHANGED)

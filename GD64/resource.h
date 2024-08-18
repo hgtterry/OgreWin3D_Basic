@@ -142,6 +142,7 @@
 #define IDC_TITLENAME                   1044
 #define IDC_ST_FLD                      1044
 #define IDC_CK_EDGE_LIST                1045
+#define IDC_TREE1                       1046
 #define ID_VIEW_RESET                   32771
 #define ID_VIEW_MAX3DVIEW               32772
 #define ID_DEBUG_TESTPREFERANCE         32773
@@ -180,7 +181,7 @@
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        168
 #define _APS_NEXT_COMMAND_VALUE         32800
-#define _APS_NEXT_CONTROL_VALUE         1046
+#define _APS_NEXT_CONTROL_VALUE         1047
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif
