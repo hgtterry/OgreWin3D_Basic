@@ -12,9 +12,10 @@ freely.
 An acknowledgment in the product documentation would be
 appreciated but is not required.
 */
+#include <OgreSerializer.h>
 
 #pragma once
-class CL64_Resources
+class CL64_Resources : public Ogre::Serializer
 {
 public:
 
