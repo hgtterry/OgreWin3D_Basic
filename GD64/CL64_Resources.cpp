@@ -581,7 +581,7 @@ int CL64_Resources::ShowAllTextures()
 		
 		char File[MAX_PATH];
 		strcpy(File, App->GD_Directory_FullPath);
-		strcat(File, "\\test.tga");
+		strcat(File, "\\Media\\test.png");
 
 		Ogre::FileInfoListPtr hh = ResourceGroupManager::getSingleton().listResourceFileInfo(App->CL_Ogre->App_Resource_Group, false);
 		Ogre::FileInfoList::const_iterator i, iend;
@@ -589,14 +589,14 @@ int CL64_Resources::ShowAllTextures()
 
 		for (i = hh->begin(); i != iend; ++i)
 		{
-			if (i->filename == "sinbad_clothes.tga")
+			if (i->filename == "sdk_track.png")
 			{
 				App->Say(i->filename.c_str());
 				App->Say(i->archive->getName().c_str());
 
 				Ogre::DataStreamPtr ff = i->archive->open(i->filename);
 				
-				App->Say_Int(ff->size());
+				//App->Say_Int(ff->size());
 				
 				Ogre::String mString = ff->getAsString();
 
