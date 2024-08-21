@@ -30,6 +30,9 @@ public:
 	bool Scan_Resource_Group(Ogre::String ResourceGroup);
 	bool Export_Texture(char* FileName) const;
 
+	void Get_Resource_Groups();
+	void Update_Resource_Groups_Combo(HWND hDlg);
+
 	bool Ogre_ExternalResourceLoaded;
 
 	Ogre::String Ogre_Loader_Resource_Group;

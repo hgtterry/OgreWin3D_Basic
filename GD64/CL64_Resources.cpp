@@ -92,8 +92,11 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 		SendDlgItemMessage(hDlg, IDC_ALLTEXTURES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ALLMESH, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_USEDMATERIALS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_CB_RESOURCEGROUPS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
 		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		App->CL_Resources->Update_Resource_Groups_Combo(hDlg);
 
 		App->CL_Resources->CreateListGeneral_FX(hDlg);
 		App->CL_Resources->Reset_Flags();
@@ -384,6 +387,42 @@ void CL64_Resources::CreateListGeneral_FX(HWND hDlg)
 	Font = CreateFont(-12, 0, 0, 0, FW_NORMAL, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Aerial Black");
 	SendMessage(FX_General_hLV, WM_SETFONT, (WPARAM)Font, MAKELPARAM(TRUE, 0));
 
+}
+
+// *************************************************************************
+// *	Update_Resource_Groups_Combo:- Terry and Hazel Flanigan 2024	   *
+// *************************************************************************
+void CL64_Resources::Update_Resource_Groups_Combo(HWND hDlg)
+{
+	SendDlgItemMessage(hDlg, IDC_CB_RESOURCEGROUPS, CB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
+
+	Ogre::StringVector sv = Ogre::ResourceGroupManager::getSingleton().getResourceGroups();
+
+	int Count = 0;
+	int Size = sv.size();
+
+	while (Count < Size)
+	{
+		SendDlgItemMessage(hDlg, IDC_CB_RESOURCEGROUPS, CB_ADDSTRING, (WPARAM)0, (LPARAM)sv[Count].c_str());
+		Count++;
+	}
+
+	SendDlgItemMessage(hDlg, IDC_CB_RESOURCEGROUPS, CB_SETCURSEL, (WPARAM)0, (LPARAM)0);
+}
+
+// *************************************************************************
+// *			Get_Resource_Groups:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+void CL64_Resources::Get_Resource_Groups()
+{
+	Ogre::StringVector sv = Ogre::ResourceGroupManager::getSingleton().getResourceGroups();
+
+	int Count = 0;
+	while (Count < sv.size())
+	{
+		App->Say(sv[Count].c_str());
+		Count++;
+	}
 }
 
 // *************************************************************************
