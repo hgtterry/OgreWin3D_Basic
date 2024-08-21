@@ -240,7 +240,7 @@ void CL64_Scene::Reset_Main_Entity(void)
 // *************************************************************************
 void CL64_Scene::Main_Entity_Set_Default(void)
 {
-	Imported_Ogre_Ent = App->CL_Ogre->mSceneMgr->createEntity("Imported_Entity", App->CL_Scene->FileName, App->CL_Importers->Ogre_Loader_Resource_Group);
+	Imported_Ogre_Ent = App->CL_Ogre->mSceneMgr->createEntity("Imported_Entity", App->CL_Scene->FileName, App->CL_Resources->Ogre_Loader_Resource_Group);
 	Imported_Ogre_Node = App->CL_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	Imported_Ogre_Node->attachObject(App->CL_Scene->Imported_Ogre_Ent);
 

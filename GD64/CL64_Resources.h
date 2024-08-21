@@ -32,6 +32,8 @@ public:
 
 	bool Ogre_ExternalResourceLoaded;
 
+	Ogre::String Ogre_Loader_Resource_Group;
+
 private:
 
 	static LRESULT CALLBACK Resources_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);

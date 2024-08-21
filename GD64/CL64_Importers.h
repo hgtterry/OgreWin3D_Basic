@@ -27,7 +27,6 @@ public:
 
 	void Ogre_Resource_CFG_Loader(char* Extension, char* Extension2);
 
-	Ogre::String Ogre_Loader_Resource_Group;
 	Ogre::String Ogre_CFG_Resource_Group;
 
 	bool Flag_Reload_Ogre_Model;

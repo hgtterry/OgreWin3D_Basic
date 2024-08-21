@@ -177,7 +177,7 @@ void CL64_App::Init_Dialogs(void)
 // *************************************************************************
 void CL64_App::Say(const char* Message)
 {
-	char text[1024];
+	char text[MAX_PATH];
 	strcpy(text, Message);
 	App->CL_Dialogs->Message(text);
 }
@@ -187,9 +187,9 @@ void CL64_App::Say(const char* Message)
 // *************************************************************************
 void CL64_App::Say_Win(const char* Message)
 {
-	char text[1024];
+	char text[MAX_PATH];
 	strcpy(text, Message);
-	MessageBox(App->MainHwnd, Message, "poo", MB_OK);
+	MessageBox(App->MainHwnd, Message, "Message", MB_OK);
 }
 
 // *************************************************************************
@@ -197,7 +197,7 @@ void CL64_App::Say_Win(const char* Message)
 // *************************************************************************
 void CL64_App::Set_Title()
 {
-	char TitleBar[260];
+	char TitleBar[MAX_PATH];
 	strcpy(TitleBar, "OgreWin3D_Basic");
 	strcat(TitleBar, "    ");
 	strcat(TitleBar, App->CL_Scene->Path_FileName);
@@ -209,7 +209,7 @@ void CL64_App::Set_Title()
 // *************************************************************************
 void CL64_App::Debug_Text()
 {
-	char text[1024];
+	char text[MAX_PATH];
 	strcpy(text, "Here Debug");
 	App->CL_Dialogs->Message(text);
 }
@@ -219,7 +219,7 @@ void CL64_App::Debug_Text()
 // *************************************************************************
 void CL64_App::Say_Int(int Value)
 {
-	char buf[255];
+	char buf[MAX_PATH];
 	_itoa(Value, buf, 10);
 	MessageBox(MainHwnd, buf, "Equity Notice", MB_OK);
 }
@@ -229,7 +229,7 @@ void CL64_App::Say_Int(int Value)
 // *************************************************************************
 void CL64_App::Say_Float(float Value)
 {
-	char buf[255];
+	char buf[MAX_PATH];
 	sprintf(buf, "%f", Value);
 	MessageBox(MainHwnd, buf, "Equity Notice", MB_OK);
 }

@@ -20,9 +20,8 @@ appreciated but is not required.
 CL64_Importers::CL64_Importers()
 {
 	Flag_Reload_Ogre_Model = 0;
-
-	Ogre_Loader_Resource_Group = "Ogre_Loader_Resource_Group";
 	Ogre_CFG_Resource_Group = "Ogre_CFG_Resource_Group";
+
 }
 
 CL64_Importers::~CL64_Importers()
@@ -156,15 +155,15 @@ void CL64_Importers::Load_Ogre_Model(bool Use_File_Dialog)
 
 	App->CL_Scene->Set_Paths();
 
-	if (Ogre::ResourceGroupManager::getSingleton().resourceGroupExists(Ogre_Loader_Resource_Group) == NULL)
+	if (Ogre::ResourceGroupManager::getSingleton().resourceGroupExists(App->CL_Resources->Ogre_Loader_Resource_Group) == NULL)
 	{
-		Ogre::ResourceGroupManager::getSingleton().createResourceGroup(Ogre_Loader_Resource_Group);
+		Ogre::ResourceGroupManager::getSingleton().createResourceGroup(App->CL_Resources->Ogre_Loader_Resource_Group);
 	}
 
 	App->CL_Scene->Reset_Main_Entity();
 	
 	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(App->CL_Scene->Texture_FolderPath,
-		"FileSystem",Ogre_Loader_Resource_Group);
+		"FileSystem", App->CL_Resources->Ogre_Loader_Resource_Group);
 
 	try
 	{
@@ -215,7 +214,7 @@ void CL64_Importers::Load_Ogre_Model(bool Use_File_Dialog)
 void CL64_Importers::Reload_Ogre_Model(void)
 {
 	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(App->CL_Scene->Texture_FolderPath,
-		"FileSystem", Ogre_Loader_Resource_Group);
+		"FileSystem", App->CL_Resources->Ogre_Loader_Resource_Group);
 
 	try
 	{
@@ -226,7 +225,7 @@ void CL64_Importers::Reload_Ogre_Model(void)
 
 	}
 
-	App->CL_Scene->Imported_Ogre_Ent = App->CL_Ogre->mSceneMgr->createEntity("UserMesh", App->CL_Scene->FileName, Ogre_Loader_Resource_Group);
+	App->CL_Scene->Imported_Ogre_Ent = App->CL_Ogre->mSceneMgr->createEntity("UserMesh", App->CL_Scene->FileName, App->CL_Resources->Ogre_Loader_Resource_Group);
 	App->CL_Scene->Imported_Ogre_Node = App->CL_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	App->CL_Scene->Imported_Ogre_Node->attachObject(App->CL_Scene->Imported_Ogre_Ent);
 

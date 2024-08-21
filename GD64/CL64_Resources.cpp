@@ -33,6 +33,8 @@ CL64_Resources::CL64_Resources(void)
 
 	Ogre_ExternalResourceLoaded = 0;
 
+	Ogre_Loader_Resource_Group = "Ogre_Loader_Resource_Group";
+
 	FX_General_hLV = nullptr;
 }
 
@@ -55,9 +57,9 @@ void CL64_Resources::Reset_Class(void) const
 		Ogre::ResourceGroupManager::getSingleton().destroyResourceGroup(App->CL_Ogre->World_Resource_Group);
 	}
 
-	if (Ogre::ResourceGroupManager::getSingleton().resourceGroupExists(App->CL_Importers->Ogre_Loader_Resource_Group))
+	if (Ogre::ResourceGroupManager::getSingleton().resourceGroupExists(App->CL_Resources->Ogre_Loader_Resource_Group))
 	{
-		Ogre::ResourceGroupManager::getSingleton().destroyResourceGroup(App->CL_Importers->Ogre_Loader_Resource_Group);
+		Ogre::ResourceGroupManager::getSingleton().destroyResourceGroup(App->CL_Resources->Ogre_Loader_Resource_Group);
 	}
 
 	//Debug
@@ -524,8 +526,8 @@ bool CL64_Resources::Scan_Resource_Group(Ogre::String ResourceGroup)
 
 	for (i = RFI->begin(); i != iend; ++i)
 	{
-		App->Say(i->filename.c_str());
-		App->Say(i->archive->getName().c_str());
+		App->Say_Win(i->filename.c_str());
+		App->Say_Win(i->archive->getName().c_str());
 
 		Ogre::DataStreamPtr ff = i->archive->open(i->filename);
 	}
@@ -1054,9 +1056,9 @@ void CL64_Resources::Load_OgreCFG_Resources(const Ogre::String& file)
 		App->CL_Importers->Flag_Reload_Ogre_Model = 1;
 	}
 
-	if (Ogre::ResourceGroupManager::getSingleton().resourceGroupExists(App->CL_Importers->Ogre_Loader_Resource_Group) == NULL)
+	if (Ogre::ResourceGroupManager::getSingleton().resourceGroupExists(App->CL_Resources->Ogre_Loader_Resource_Group) == NULL)
 	{
-		Ogre::ResourceGroupManager::getSingleton().createResourceGroup(App->CL_Importers->Ogre_Loader_Resource_Group);
+		Ogre::ResourceGroupManager::getSingleton().createResourceGroup(App->CL_Resources->Ogre_Loader_Resource_Group);
 	}
 
 #pragma warning(disable : 4996) // Nightmare why
@@ -1086,7 +1088,7 @@ void CL64_Resources::Load_OgreCFG_Resources(const Ogre::String& file)
 				}
 			}
 
-			Ogre::ResourceGroupManager::getSingleton().addResourceLocation(archName, typeName, App->CL_Importers->Ogre_Loader_Resource_Group);
+			Ogre::ResourceGroupManager::getSingleton().addResourceLocation(archName, typeName, App->CL_Resources->Ogre_Loader_Resource_Group);
 		}
 	}
 
@@ -1107,7 +1109,7 @@ void CL64_Resources::Load_OgreCFG_Resources(const Ogre::String& file)
 // **************************************************************************
 void CL64_Resources::UnloadUserResources()
 {
-	Ogre::ResourceGroupManager::getSingleton().destroyResourceGroup(App->CL_Importers->Ogre_Loader_Resource_Group);
+	Ogre::ResourceGroupManager::getSingleton().destroyResourceGroup(App->CL_Resources->Ogre_Loader_Resource_Group);
 	Ogre_ExternalResourceLoaded = 0;
 }
 

@@ -183,7 +183,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		// Debug -------------------------------------------------------
 		case ID_DEBUG_GENERAL:
 		{
-			App->CL_Exporters->Start_Ogre_Export_Dlg();
+			//App->CL_Exporters->Start_Ogre_Export_Dlg();
+			App->CL_Resources->Scan_Resource_Group(App->CL_Resources->Ogre_Loader_Resource_Group);
 
 			return TRUE;
 		}
