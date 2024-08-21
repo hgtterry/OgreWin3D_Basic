@@ -27,6 +27,9 @@ public:
 
 	void Load_OgreCFG_Resources(const Ogre::String& file);
 
+	bool Scan_Resource_Group(Ogre::String ResourceGroup);
+	bool Export_Texture(char* FileName) const;
+
 	bool Ogre_ExternalResourceLoaded;
 
 private:
@@ -51,6 +54,8 @@ private:
 	void UnloadUserResources();
 	Ogre::ConfigFile cf;
 	std::string	ResourcesCfgFile;
+
+	Ogre::String mFileString;
 
 	char ResourcePath[MAX_PATH];
 

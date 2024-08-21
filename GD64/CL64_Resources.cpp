@@ -29,6 +29,8 @@ CL64_Resources::CL64_Resources(void)
 	flag_Show_All_Textures = 0;
 	flag_Show_All_Materials = 0;
 	
+	mFileString.clear();
+
 	Ogre_ExternalResourceLoaded = 0;
 
 	FX_General_hLV = nullptr;
@@ -481,134 +483,67 @@ int CL64_Resources::ShowAllTextures()
 
 		TextureIterator.moveNext();
 	}
-	Ogre::TexturePtr texture = nullptr;
 
-	//texture = Ogre::TextureManager::getSingletonPtr()->getByName("sinbad_body.tga",App->CL_Ogre->App_Resource_Group);
-	//if (texture)
+
+	char File[MAX_PATH];
+	strcpy(File, App->GD_Directory_FullPath);
+	strcat(File, "\\Media\\test.tga");
+
+	Ogre::FileInfoListPtr RFI = ResourceGroupManager::getSingleton().listResourceFileInfo(App->CL_Ogre->App_Resource_Group, false);
+	Ogre::FileInfoList::const_iterator i, iend;
+	iend = RFI->end();
+
+	for (i = RFI->begin(); i != iend; ++i)
 	{
-		//Ogre::HardwarePixelBufferSharedPtr buffer = texture->getBuffer();
-
-		////const size_t buffSize = texture->getSize();
-		//const size_t buffSize = (texture->getWidth() * texture->getHeight() * 4);
-		//unsigned char* data = OGRE_ALLOC_T(unsigned char, buffSize, Ogre::MEMCATEGORY_GENERAL);
-
-		//// Clear buffer
-		//memset(data, 0, buffSize);
-
-		//Ogre::Image i;
-		////i.loadDynamicImage(data, texture->getWidth(), texture->getHeight() *4, 1, texture->getFormat(), true);
-
-		////// Copy Texture buffer contents to image buffer
-		////Ogre::HardwarePixelBufferSharedPtr buf = texture->getBuffer();
-		////const Ogre::PixelBox destBox = i.getPixelBox();
-
-		//texture->convertToImage(i,false);
-		//buf->blitToMemory(destBox);
-
-		//i.save(File);
-
-		/*Ogre::HardwarePixelBufferSharedPtr readbuffer;
-		readbuffer = texture->getBuffer();
-		readbuffer->lock(HardwareBuffer::HBL_NORMAL);
-		const PixelBox& readrefpb = readbuffer->getCurrentLock();
-		uchar* readrefdata = static_cast<uchar*>(readrefpb.data);
-
-		Image img;
-		img = img.loadDynamicImage(readrefdata, texture->getWidth(),
-			texture->getHeight(), texture->getFormat());*/
-			//img.save(File);
-
-			//readbuffer->unlock();
-			//OgreUtil::saveImage(t, pathName);
-			//Debug
-
-			//Ogre::TextureManager::load("sinbad_body.tga", App->CL_Ogre->App_Resource_Group);
-
-	//	char File[MAX_PATH];
-	//	strcpy(File, App->GD_Directory_FullPath);
-	//	strcat(File, "\\poo2.tga");
-
-	//	Ogre::TexturePtr photo = nullptr;
-
-	//	photo = Ogre::TextureManager::getSingleton().getByName("sinbad_body.tga", App->CL_Ogre->App_Resource_Group);
-	//	//photo->load();
-	//	Ogre::Image img;
-	//	if (photo)
-	//	{
-	//
-	//		photo->convertToImage(img);
-	//		//img.resize(256, 256);
-	//		//img.save(File);
-	//		//img.setTo(Ogre::ColourValue(0,1,0,1));
-	//		//img.encode(Ogre::String("jpg"));
-	//		//img.save(File);
-	//		//App->Say(photo->getName().c_str());
-	//		
-	//	}
-	//
-
-	//	Ogre::HardwarePixelBufferSharedPtr readbuffer;
-	//	readbuffer = photo->getBuffer(0,0);
-	//	readbuffer->lock(HardwareBuffer::HBL_NORMAL);
-	//	const PixelBox& readrefpb = readbuffer->getCurrentLock();
-	//	uchar* readrefdata = static_cast<uchar*>(readrefpb.data);
-
-	//	Image img2;
-	//	img2.loadDynamicImage(readrefdata, photo->getWidth(),
-	//		photo->getHeight(), photo->getDepth(), photo->getFormat(),false, photo->getNumFaces()
-	//	, photo->getNumMipmaps());
-
-	//	img2.save(File);
-
-	//	readbuffer->unlock();
-	//	//imgflipped = img.flipAroundY();
-	//	//img2.save(File);
-	//}
-
-		
-
-		//Ogre::FileInfoListPtr hh = ResourceGroupManager::getSingleton().listResourceFileInfo(App->CL_Ogre->App_Resource_Group, false);
-
-		/*App->Say_Int(hh->size());
-		FileInfoList::iterator it = hh->begin();*/
-
-		/*if (it != hh->end())
+		if (i->filename == "sinbad_body.tga")
 		{
-			App->Say(it->archive->getType().c_str());
-			
-		}*/
-		//Ogre::FileInfoList* fil = OGRE_NEW_T(Ogre::FileInfoList, Ogre::MEMCATEGORY_GENERAL)();
-		
-		char File[MAX_PATH];
-		strcpy(File, App->GD_Directory_FullPath);
-		strcat(File, "\\Media\\test.png");
+			App->Say(i->filename.c_str());
+			App->Say(i->archive->getName().c_str());
 
-		Ogre::FileInfoListPtr hh = ResourceGroupManager::getSingleton().listResourceFileInfo(App->CL_Ogre->App_Resource_Group, false);
-		Ogre::FileInfoList::const_iterator i, iend;
-		iend = hh->end();
+			Ogre::DataStreamPtr ff = i->archive->open(i->filename);
 
-		for (i = hh->begin(); i != iend; ++i)
-		{
-			if (i->filename == "sdk_track.png")
-			{
-				App->Say(i->filename.c_str());
-				App->Say(i->archive->getName().c_str());
+			mFileString = ff->getAsString();
 
-				Ogre::DataStreamPtr ff = i->archive->open(i->filename);
-				
-				//App->Say_Int(ff->size());
-				
-				Ogre::String mString = ff->getAsString();
+			Export_Texture(File);
 
-				std::ofstream outFile;
-				outFile.open(File, std::ios::binary);
-				outFile << mString;
-				outFile.close();
-			}
+			mFileString.clear();
 		}
-		
-		return pRow;
 	}
+
+	return pRow;
+}
+
+// *************************************************************************
+// *			Scan_Resource_Group:- Terry and Hazel Flanigan 2024	 	   *
+// *************************************************************************
+bool CL64_Resources::Scan_Resource_Group(Ogre::String ResourceGroup)
+{
+	Ogre::FileInfoListPtr RFI = ResourceGroupManager::getSingleton().listResourceFileInfo(ResourceGroup, false);
+	Ogre::FileInfoList::const_iterator i, iend;
+	iend = RFI->end();
+
+	for (i = RFI->begin(); i != iend; ++i)
+	{
+		App->Say(i->filename.c_str());
+		App->Say(i->archive->getName().c_str());
+
+		Ogre::DataStreamPtr ff = i->archive->open(i->filename);
+	}
+
+	return 1;
+}
+
+// *************************************************************************
+// *			Export_Texture:- Terry and Hazel Flanigan 2024		  	   *
+// *************************************************************************
+bool CL64_Resources::Export_Texture(char* FileName) const
+{
+	std::ofstream outFile;
+	outFile.open(FileName, std::ios::binary);
+	outFile << mFileString;
+	outFile.close();
+
+	return 1;
 }
 
 // *************************************************************************
