@@ -34,6 +34,7 @@ CL64_Resources::CL64_Resources(void)
 	Ogre_ExternalResourceLoaded = 0;
 
 	Ogre_Loader_Resource_Group = "Ogre_Loader_Resource_Group";
+	Selected_Resource_Group = "App_Resource_Group";
 
 	FX_General_hLV = nullptr;
 }
@@ -87,6 +88,7 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 		
 		SendDlgItemMessage(hDlg, IDC_BT_APPRESOURCES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_DEMORESOURCES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_RE_SCAN, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
 		SendDlgItemMessage(hDlg, IDC_ALLMATERIALS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ALLTEXTURES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
@@ -158,6 +160,13 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 			return CDRF_DODEFAULT;
 		}
 		
+		if (some_item->idFrom == IDC_BT_RE_SCAN)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+		
 		if (some_item->idFrom == IDC_ALLMATERIALS)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
@@ -191,19 +200,6 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 
 
 	case WM_COMMAND:
-
-
-		//if (LOWORD(wParam) == IDC_MESHMATERIALS)
-		//{
-		//	App->GDCL_Dialogs->Start_Gen_ListBox(Enums::ListBox_Resource_MeshMaterials);
-		//	return TRUE;
-		//}
-
-		//if (LOWORD(wParam) == IDC_Paths)
-		//{
-		//	App->GDCL_Dialogs->Start_Gen_ListBox(Enums::ListBox_Resource_Paths);
-		//	return TRUE;
-		//}
 
 		if (LOWORD(wParam) == IDC_ALLMATERIALS)
 		{
@@ -287,24 +283,33 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 			return TRUE;
 		}
 
-		/*/if (LOWORD(wParam) == IDC_BTTEXTSF)
+		if (LOWORD(wParam) == IDC_CB_RESOURCEGROUPS)
 		{
-			char Message[MAX_PATH];
-			strcpy(Message, "Scene Folder Textures - ");
-			strcat(Message, App->SBC_Project->m_Main_Assets_Path);
+			switch (HIWORD(wParam)) // Find out what message it was
+			{
+			case CBN_DROPDOWN:
+				break;
+			case CBN_CLOSEUP:
+			{
+				char buff[MAX_PATH]{ 0 };
 
-			SetDlgItemText(hDlg, IDC_ST_BANNER, (LPCTSTR)Message);
-
-			ListView_DeleteAllItems(App->SBC_Resources->FX_General_hLV);
-			App->SBC_Resources->SearchFolders("*.bmp");
-			App->SBC_Resources->SearchFolders("*.tga");
-			App->SBC_Resources->SearchFolders("*.jpg");
-			App->SBC_Resources->SearchFolders("*.png");
-			App->SBC_Resources->SearchFolders("*.dds");
+				HWND temp = GetDlgItem(hDlg, IDC_CB_RESOURCEGROUPS);
+				int Index = SendMessage(temp, CB_GETCURSEL, 0, 0);
+				SendMessage(temp, CB_GETLBTEXT, Index, (LPARAM)buff);
+				App->CL_Resources->Selected_Resource_Group = buff;
+				
+			}
+			}
 
 			return TRUE;
-		}*/
+		}
 
+		if (LOWORD(wParam) == IDC_BT_RE_SCAN)
+		{
+			App->Say(App->CL_Resources->Selected_Resource_Group.c_str());
+			return TRUE;
+		}
+		
 		if (LOWORD(wParam) == IDCANCEL)
 		{
 			EndDialog(hDlg, LOWORD(wParam));

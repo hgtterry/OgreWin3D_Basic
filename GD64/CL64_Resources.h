@@ -36,6 +36,7 @@ public:
 	bool Ogre_ExternalResourceLoaded;
 
 	Ogre::String Ogre_Loader_Resource_Group;
+	Ogre::String Selected_Resource_Group;
 
 private:
 
