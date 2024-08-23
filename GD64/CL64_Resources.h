@@ -36,7 +36,7 @@ public:
 	bool Ogre_ExternalResourceLoaded;
 
 	Ogre::String Ogre_Loader_Resource_Group;
-	Ogre::String Selected_Resource_Group;
+	Ogre::String mSelected_Resource_Group;
 
 private:
 
@@ -56,6 +56,7 @@ private:
 	void Show_Resource_Group(const Ogre::String& ResourceGroup);
 	int ShowAllMeshes();
 	int ShowAllTextures();
+	int Show_Scaned_Resource_Group();
 
 	void UnloadUserResources();
 	Ogre::ConfigFile cf;

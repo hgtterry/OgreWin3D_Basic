@@ -34,7 +34,7 @@ CL64_Resources::CL64_Resources(void)
 	Ogre_ExternalResourceLoaded = 0;
 
 	Ogre_Loader_Resource_Group = "Ogre_Loader_Resource_Group";
-	Selected_Resource_Group = "App_Resource_Group";
+	mSelected_Resource_Group = "App_Resource_Group";
 
 	FX_General_hLV = nullptr;
 }
@@ -296,7 +296,7 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 				HWND temp = GetDlgItem(hDlg, IDC_CB_RESOURCEGROUPS);
 				int Index = SendMessage(temp, CB_GETCURSEL, 0, 0);
 				SendMessage(temp, CB_GETLBTEXT, Index, (LPARAM)buff);
-				App->CL_Resources->Selected_Resource_Group = buff;
+				App->CL_Resources->mSelected_Resource_Group = buff;
 				
 			}
 			}
@@ -306,7 +306,7 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 
 		if (LOWORD(wParam) == IDC_BT_RE_SCAN)
 		{
-			App->Say(App->CL_Resources->Selected_Resource_Group.c_str());
+			App->CL_Resources->Show_Scaned_Resource_Group();
 			return TRUE;
 		}
 		
@@ -408,7 +408,15 @@ void CL64_Resources::Update_Resource_Groups_Combo(HWND hDlg)
 
 	while (Count < Size)
 	{
-		SendDlgItemMessage(hDlg, IDC_CB_RESOURCEGROUPS, CB_ADDSTRING, (WPARAM)0, (LPARAM)sv[Count].c_str());
+		if (sv[Count] == "General" || sv[Count] == "OgreInternal" || sv[Count] == "AutoDetect")
+		{
+
+		}
+		else
+		{
+			SendDlgItemMessage(hDlg, IDC_CB_RESOURCEGROUPS, CB_ADDSTRING, (WPARAM)0, (LPARAM)sv[Count].c_str());
+		}
+
 		Count++;
 	}
 
@@ -428,6 +436,63 @@ void CL64_Resources::Get_Resource_Groups()
 		App->Say(sv[Count].c_str());
 		Count++;
 	}
+}
+
+// *************************************************************************
+// *	   Show_Scaned_Resource_Group:- Terry and Hazel Flanigan 2024 	   *
+// *************************************************************************
+int CL64_Resources::Show_Scaned_Resource_Group()
+{
+	ListView_DeleteAllItems(FX_General_hLV);
+
+	int	 pRow = 0;
+	int NUM_COLS = 5;
+
+	LV_ITEM pitem;
+	memset(&pitem, 0, sizeof(LV_ITEM));
+	pitem.mask = LVIF_TEXT;
+
+	LV_COLUMN lvC;
+	memset(&lvC, 0, sizeof(LV_COLUMN));
+	lvC.mask = LVCF_FMT | LVCF_WIDTH | LVCF_TEXT | LVCF_SUBITEM;
+	lvC.fmt = LVCFMT_LEFT;  // left-align the column
+	std::string headers[] =
+	{
+		"File", "Archive Type","Path"," "," "
+	};
+	int headerSize[] =
+	{
+		165,120,270,150
+	};
+
+	for (int header = 0; header < NUM_COLS; header++)
+	{
+		lvC.iSubItem = header;
+		lvC.cx = headerSize[header]; // width of the column, in pixels
+		lvC.pszText = const_cast<char*>(headers[header].c_str());
+		ListView_SetColumn(FX_General_hLV, header, &lvC);
+	}
+
+	Ogre::FileInfoListPtr RFI = ResourceGroupManager::getSingleton().listResourceFileInfo(mSelected_Resource_Group, false);
+	Ogre::FileInfoList::const_iterator i, iend;
+	iend = RFI->end();
+
+	for (i = RFI->begin(); i != iend; ++i)
+	{
+
+		pitem.iItem = pRow;
+		pitem.pszText = (LPSTR)i->filename.c_str();
+
+		ListView_InsertItem(FX_General_hLV, &pitem);
+		ListView_SetItemText(FX_General_hLV, pRow, 1, (LPSTR)i->archive->getType().c_str());
+		ListView_SetItemText(FX_General_hLV, pRow, 2, (LPSTR)i->archive->getName().c_str());
+		//ListView_SetItemText(FX_General_hLV, pRow, 3, (LPSTR)" ");
+
+		pRow++;
+
+	}
+
+	return pRow;
 }
 
 // *************************************************************************
