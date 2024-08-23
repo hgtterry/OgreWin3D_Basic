@@ -408,7 +408,7 @@ void CL64_Resources::Update_Resource_Groups_Combo(HWND hDlg)
 
 	while (Count < Size)
 	{
-		if (sv[Count] == "General" || sv[Count] == "OgreInternal" || sv[Count] == "AutoDetect")
+		if (sv[Count] == "General" || sv[Count] == "OgreInternal" || sv[Count] == "OgreAutodetect")
 		{
 
 		}
