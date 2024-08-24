@@ -85,6 +85,7 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 	{
 		SendDlgItemMessage(hDlg, IDC_ST_BANNER, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_STCOUNT, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_ST_RESOURCE_GROUP, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
 		
 		SendDlgItemMessage(hDlg, IDC_BT_APPRESOURCES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_DEMORESOURCES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
@@ -120,6 +121,14 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 		}
 
 		if (GetDlgItem(hDlg, IDC_STCOUNT) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		if (GetDlgItem(hDlg, IDC_ST_RESOURCE_GROUP) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 0, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
@@ -297,6 +306,9 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 				int Index = SendMessage(temp, CB_GETCURSEL, 0, 0);
 				SendMessage(temp, CB_GETLBTEXT, Index, (LPARAM)buff);
 				App->CL_Resources->mSelected_Resource_Group = buff;
+
+				int Items = App->CL_Resources->Show_Scaned_Resource_Group();
+				App->CL_Resources->Update_Counter(Items, hDlg);
 				
 			}
 			}
@@ -306,7 +318,8 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 
 		if (LOWORD(wParam) == IDC_BT_RE_SCAN)
 		{
-			App->CL_Resources->Show_Scaned_Resource_Group();
+			int Items = App->CL_Resources->Show_Scaned_Resource_Group();
+			App->CL_Resources->Update_Counter(Items, hDlg);
 			return TRUE;
 		}
 		
