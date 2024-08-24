@@ -87,6 +87,8 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 		SendDlgItemMessage(hDlg, IDC_ST_BANNER, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_STCOUNT, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ST_RESOURCE_GROUP, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_ST_GB_LISTOPTIONS, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_ST_GB_OPTIONS, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
 		
 		SendDlgItemMessage(hDlg, IDC_BT_APPRESOURCES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_DEMORESOURCES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
@@ -105,8 +107,13 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 		App->CL_Resources->CreateListGeneral_FX(hDlg);
 		App->CL_Resources->Reset_Flags();
 		App->CL_Resources->flag_Show_All_Materials = 1;
-		int Items = App->CL_Resources->ShowAllMaterials();
+
+		/*int Items = App->CL_Resources->ShowAllMaterials();
+		App->CL_Resources->Update_Counter(Items, hDlg);*/
+
+		int Items = App->CL_Resources->Show_Resource_Group_All();
 		App->CL_Resources->Update_Counter(Items, hDlg);
+
 		SetDlgItemText(hDlg, IDC_ST_BANNER, (LPCTSTR)"Resources:- All Materials");
 
 		return TRUE;
@@ -137,6 +144,22 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 			return (UINT)App->AppBackground;
 		}
 
+		if (GetDlgItem(hDlg, IDC_ST_GB_LISTOPTIONS) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		if (GetDlgItem(hDlg, IDC_ST_GB_OPTIONS) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+		
 		return FALSE;
 	}
 
@@ -231,7 +254,8 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 
 			RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
-			int Items = App->CL_Resources->ShowAllMaterials();
+			//int Items = App->CL_Resources->ShowAllMaterials();
+			int Items = App->CL_Resources->Show_Resource_Group_Materials();
 			App->CL_Resources->Update_Counter(Items, hDlg);
 
 			return TRUE;
@@ -326,7 +350,7 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 
 				SetDlgItemText(hDlg, IDC_ST_BANNER, (LPCTSTR)Title);
 
-				int Items = App->CL_Resources->Show_Scaned_Resource_Group();
+				int Items = App->CL_Resources->Show_Resource_Group_All();
 				App->CL_Resources->Update_Counter(Items, hDlg);
 				
 			}
@@ -337,7 +361,7 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 
 		if (LOWORD(wParam) == IDC_BT_RE_SCAN)
 		{
-			int Items = App->CL_Resources->Show_Scaned_Resource_Group();
+			int Items = App->CL_Resources->Show_Resource_Group_All();
 			App->CL_Resources->Update_Counter(Items, hDlg);
 			return TRUE;
 		}
@@ -485,9 +509,9 @@ void CL64_Resources::Get_Resource_Groups()
 }
 
 // *************************************************************************
-// *	   Show_Scaned_Resource_Group:- Terry and Hazel Flanigan 2024 	   *
+// *	   Show_Resource_Group_All:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
-int CL64_Resources::Show_Scaned_Resource_Group()
+int CL64_Resources::Show_Resource_Group_All()
 {
 	ListView_DeleteAllItems(FX_General_hLV);
 
@@ -532,12 +556,72 @@ int CL64_Resources::Show_Scaned_Resource_Group()
 		ListView_InsertItem(FX_General_hLV, &pitem);
 		ListView_SetItemText(FX_General_hLV, pRow, 1, (LPSTR)i->archive->getType().c_str());
 		ListView_SetItemText(FX_General_hLV, pRow, 2, (LPSTR)i->archive->getName().c_str());
-		//ListView_SetItemText(FX_General_hLV, pRow, 3, (LPSTR)" ");
-
+		
 		pRow++;
 
 	}
 
+	return pRow;
+}
+
+// *************************************************************************
+// *	  Show_Resource_Group_Materials:- Terry and Hazel Flanigan 2024	   *
+// *************************************************************************
+int CL64_Resources::Show_Resource_Group_Materials()
+{
+	ListView_DeleteAllItems(FX_General_hLV);
+
+	int	 pRow = 0;
+	int NUM_COLS = 4;
+
+	LV_ITEM pitem;
+	memset(&pitem, 0, sizeof(LV_ITEM));
+	pitem.mask = LVIF_TEXT;
+
+	LV_COLUMN lvC;
+	memset(&lvC, 0, sizeof(LV_COLUMN));
+	lvC.mask = LVCF_FMT | LVCF_WIDTH | LVCF_TEXT | LVCF_SUBITEM;
+	lvC.fmt = LVCFMT_LEFT;  // left-align the column
+	std::string headers[] =
+	{
+		"File", "Archive Type","Path"," "
+	};
+	int headerSize[] =
+	{
+		165,120,470,150
+	};
+
+	for (int header = 0; header < NUM_COLS; header++)
+	{
+		lvC.iSubItem = header;
+		lvC.cx = headerSize[header]; // width of the column, in pixels
+		lvC.pszText = const_cast<char*>(headers[header].c_str());
+		ListView_SetColumn(FX_General_hLV, header, &lvC);
+	}
+
+	Ogre::FileInfoListPtr RFI = ResourceGroupManager::getSingleton().listResourceFileInfo(mSelected_Resource_Group, false);
+	Ogre::FileInfoList::const_iterator i, iend;
+	iend = RFI->end();
+
+	for (i = RFI->begin(); i != iend; ++i)
+	{
+
+		int test = i->filename.find(".material");
+
+		if (test > 0)
+		{
+			pitem.iItem = pRow;
+			pitem.pszText = (LPSTR)i->filename.c_str();
+
+			ListView_InsertItem(FX_General_hLV, &pitem);
+			ListView_SetItemText(FX_General_hLV, pRow, 1, (LPSTR)i->archive->getType().c_str());
+			ListView_SetItemText(FX_General_hLV, pRow, 2, (LPSTR)i->archive->getName().c_str());
+
+			pRow++;
+		}
+	}
+
+	RedrawWindow(FX_General_hLV, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 	return pRow;
 }
 
@@ -642,7 +726,7 @@ int CL64_Resources::ShowAllTextures()
 	}
 
 
-	char File[MAX_PATH];
+	/*char File[MAX_PATH];
 	strcpy(File, App->GD_Directory_FullPath);
 	strcat(File, "\\Media\\test.tga");
 
@@ -665,7 +749,7 @@ int CL64_Resources::ShowAllTextures()
 
 			mFileString.clear();
 		}
-	}
+	}*/
 
 	return pRow;
 }

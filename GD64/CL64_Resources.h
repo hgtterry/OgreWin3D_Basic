@@ -59,7 +59,10 @@ private:
 	void Show_Resource_Group(const Ogre::String& ResourceGroup);
 	int ShowAllMeshes();
 	int ShowAllTextures();
-	int Show_Scaned_Resource_Group();
+
+
+	int Show_Resource_Group_All();
+	int Show_Resource_Group_Materials();
 
 	void UnloadUserResources();
 	Ogre::ConfigFile cf;
