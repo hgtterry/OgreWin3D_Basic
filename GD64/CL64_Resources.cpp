@@ -740,16 +740,6 @@ int CL64_Resources::ShowAllTextures()
 		strcpy(pScriptName, TextureIterator.peekNextValue()->getName().c_str());
 		strcpy(Origin, TextureIterator.peekNextValue()->getGroup().c_str());
 		
-		//App->Say(TextureIterator.peekNextValue()->.c_str());
-		//Ogre::ResourceHandle bb = TextureIterator.peekNextValue()->getHandle();
-		
-		//pp = Ogre::TextureManager::getSingleton().getByName(pScriptName);
-		//pIsLoaded = pp->isLoaded();
-
-		//Ogre::TexturePtr texture = Ogre::TextureManager::getSingletonPtr()->getByName(pScriptName);
-		//Ogre::HardwarePixelBufferSharedPtr buffer = texture->getBuffer();
-		//texture->getSrcDepth();
-		
 		if (pIsLoaded == 1)
 		{
 			strcpy(pUsed, "Yes");
@@ -772,17 +762,22 @@ int CL64_Resources::ShowAllTextures()
 		App->Say(SubFolder);
 		}*/
 
-		Start_List_Folders(NULL, JustFile, 0);
+		//Start_List_Folders(NULL, JustFile, 0);
 
-		pitem.iItem = pRow;
-		pitem.pszText = JustFile;
+		int test = strcmp(Origin, mSelected_Resource_Group.c_str());
 
-		ListView_InsertItem(FX_General_hLV, &pitem);
-		ListView_SetItemText(FX_General_hLV, pRow, 1, Origin);
-		ListView_SetItemText(FX_General_hLV, pRow, 2, ResourcePath);
-		ListView_SetItemText(FX_General_hLV, pRow, 3, (LPSTR)" ");
-		
-		pRow++;
+		if (test == 0)
+		{
+			pitem.iItem = pRow;
+			pitem.pszText = JustFile;
+
+			ListView_InsertItem(FX_General_hLV, &pitem);
+			ListView_SetItemText(FX_General_hLV, pRow, 1, Origin);
+			ListView_SetItemText(FX_General_hLV, pRow, 2, ResourcePath);
+			ListView_SetItemText(FX_General_hLV, pRow, 3, (LPSTR)" ");
+
+			pRow++;
+		}
 
 		TextureIterator.moveNext();
 	}
