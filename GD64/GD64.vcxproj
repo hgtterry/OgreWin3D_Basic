@@ -178,6 +178,7 @@
     <ClInclude Include="CL64_Grid.h" />
     <ClInclude Include="CL64_ImGui.h" />
     <ClInclude Include="CL64_Importers.h" />
+    <ClInclude Include="CL64_Import_Ogre3D.h" />
     <ClInclude Include="CL64_Ini_File.h" />
     <ClInclude Include="CL64_Keyboard.h" />
     <ClInclude Include="CL64_OGL_Listener.h" />
@@ -195,7 +196,6 @@
     <ClInclude Include="framework.h" />
     <ClInclude Include="GD64.h" />
     <ClInclude Include="OW3D_Exp_Obj.h" />
-    <ClInclude Include="OW3D_Import_Ogre3D.h" />
     <ClInclude Include="OW3D_Motioins.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Resource.h" />
@@ -218,6 +218,7 @@
     <ClCompile Include="CL64_Grid.cpp" />
     <ClCompile Include="CL64_ImGui.cpp" />
     <ClCompile Include="CL64_Importers.cpp" />
+    <ClCompile Include="CL64_Import_Ogre3D.cpp" />
     <ClCompile Include="CL64_Ini_File.cpp" />
     <ClCompile Include="CL64_Keyboard.cpp" />
     <ClCompile Include="CL64_OGL_Listener.cpp" />
@@ -234,7 +235,6 @@
     <ClCompile Include="CLOW_Exp_Ogre3D.cpp" />
     <ClCompile Include="GD64.cpp" />
     <ClCompile Include="OW3D_Exp_Obj.cpp" />
-    <ClCompile Include="OW3D_Import_Ogre3D.cpp" />
     <ClCompile Include="OW3D_Motioins.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

@@ -403,7 +403,7 @@ void CL64_Resources::CreateListGeneral_FX(HWND hDlg)
 	}
 	HFONT Font;
 	Font = CreateFont(-12, 0, 0, 0, FW_NORMAL, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Aerial Black");
-	SendMessage(FX_General_hLV, WM_SETFONT, (WPARAM)Font, MAKELPARAM(TRUE, 0));
+	SendMessage(FX_General_hLV, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 }
 
@@ -1162,7 +1162,7 @@ void CL64_Resources::Load_OgreCFG_Resources(const Ogre::String& file)
 	Path[Len2 - Len] = 0;
 
 	std::vector<Ogre::String> materialNames;
-
+	
 	if (App->CL_Scene->Imported_Ogre_Node)
 	{
 		App->CL_Ogre->Ogre3D_Listener->Ogre_Model_Loaded = 0;

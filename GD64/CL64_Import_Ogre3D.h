@@ -14,12 +14,12 @@ appreciated but is not required.
 */
 
 #pragma once
-class CLOW_Imp_Ogre3D
+class CL64_Imp_Ogre3D
 {
 public:
 
-	CLOW_Imp_Ogre3D(void);
-	~CLOW_Imp_Ogre3D(void);
+	CL64_Imp_Ogre3D(void);
+	~CL64_Imp_Ogre3D(void);
 
 	void Reset_Class(void);
 

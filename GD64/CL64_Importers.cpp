@@ -267,7 +267,7 @@ void CL64_Importers::Ogre_Resource_CFG_Loader(char* Extension, char* Extension2)
 	
 	App->CL_Resources->Load_OgreCFG_Resources(App->CL_File_IO->OgreCFG_Path_FileName);
 
-	if (Flag_Reload_Ogre_Model == 1)
+	if (Flag_Reload_Ogre_Model == 1 && App->CL_Import_Ogre3D->flag_Ogre_Model_Loaded == 1)
 	{
 		Reload_Ogre_Model();
 	}

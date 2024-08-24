@@ -15,24 +15,24 @@ appreciated but is not required.
 
 #include "pch.h"
 #include "CL64_App.h"
-#include "OW3D_Import_Ogre3D.h"
+#include "CL64_Import_Ogre3D.h"
 
 #pragma warning(disable:4996)
 
-CLOW_Imp_Ogre3D::CLOW_Imp_Ogre3D(void)
+CL64_Imp_Ogre3D::CL64_Imp_Ogre3D(void)
 {
 	flag_IsAnimated = 0;
 	flag_Ogre_Model_Loaded = 0;
 }
 
-CLOW_Imp_Ogre3D::~CLOW_Imp_Ogre3D(void)
+CL64_Imp_Ogre3D::~CL64_Imp_Ogre3D(void)
 {
 }
 
 // *************************************************************************
 // *			Reset_Class:- Terry and Hazel Flanigan 2024				   *
 // *************************************************************************
-void CLOW_Imp_Ogre3D::Reset_Class(void)
+void CL64_Imp_Ogre3D::Reset_Class(void)
 {
 	// Clear Stored data about any loaded Ogre Models
 	if (App->CL_Scene->S_OgreMeshData[0])
@@ -68,7 +68,7 @@ void CLOW_Imp_Ogre3D::Reset_Class(void)
 // *************************************************************************
 // *			Ogre_To_Mesh_Data:- Terry and Hazel Flanigan 2024	   	   *
 // *************************************************************************
-bool CLOW_Imp_Ogre3D::Ogre_To_Mesh_Data(Ogre::Entity* Ogre_Entity)
+bool CL64_Imp_Ogre3D::Ogre_To_Mesh_Data(Ogre::Entity* Ogre_Entity)
 {
 	App->CL_Converters->Create_MeshGroups(Ogre_Entity);
 
@@ -172,7 +172,7 @@ bool CLOW_Imp_Ogre3D::Ogre_To_Mesh_Data(Ogre::Entity* Ogre_Entity)
 // *************************************************************************
 // *	   Get_SubPose_MeshInstance:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
-void CLOW_Imp_Ogre3D::Get_SubPose_MeshInstance(Ogre::MeshPtr mesh,
+void CL64_Imp_Ogre3D::Get_SubPose_MeshInstance(Ogre::MeshPtr mesh,
 	size_t& vertex_count, Ogre::Vector3*& vertices,
 	size_t& index_count, unsigned long*& indices,
 	int SubMesh, Ogre::int16*& BoneIndices)
@@ -286,7 +286,7 @@ void CLOW_Imp_Ogre3D::Get_SubPose_MeshInstance(Ogre::MeshPtr mesh,
 // *************************************************************************
 // *		NewGet_SubPoseTextureUV:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
-bool CLOW_Imp_Ogre3D::NewGet_SubPoseTextureUV(Ogre::MeshPtr mesh, int SubMesh)
+bool CL64_Imp_Ogre3D::NewGet_SubPoseTextureUV(Ogre::MeshPtr mesh, int SubMesh)
 {
 	Ogre::SubMesh* submesh = mesh->getSubMesh(SubMesh);
 	int m_iCoordSet = 0;
@@ -332,7 +332,7 @@ bool CLOW_Imp_Ogre3D::NewGet_SubPoseTextureUV(Ogre::MeshPtr mesh, int SubMesh)
 // *************************************************************************
 // *		NewGet_SubPoseNormals:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
-bool CLOW_Imp_Ogre3D::NewGet_SubPoseNormals(Ogre::MeshPtr mesh, size_t& vertex_count, Ogre::Vector3*& Normals,
+bool CL64_Imp_Ogre3D::NewGet_SubPoseNormals(Ogre::MeshPtr mesh, size_t& vertex_count, Ogre::Vector3*& Normals,
 	int SubMesh)
 {
 
@@ -391,7 +391,7 @@ bool CLOW_Imp_Ogre3D::NewGet_SubPoseNormals(Ogre::MeshPtr mesh, size_t& vertex_c
 // *************************************************************************
 // *			GetBoneAssignment:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
-bool CLOW_Imp_Ogre3D::GetBoneAssignment(Ogre::MeshPtr mesh, int SubMesh, HWND hDlg)
+bool CL64_Imp_Ogre3D::GetBoneAssignment(Ogre::MeshPtr mesh, int SubMesh, HWND hDlg)
 {
 	int Count = 0;
 	Ogre::SubMesh* mSubmesh = mesh->getSubMesh(SubMesh);
@@ -437,7 +437,7 @@ bool CLOW_Imp_Ogre3D::GetBoneAssignment(Ogre::MeshPtr mesh, int SubMesh, HWND hD
 // *************************************************************************
 // *	    	Get_Ogre_Mesh_Data:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
-void CLOW_Imp_Ogre3D::Get_Ogre_Mesh_Data(Ogre::Entity* Ogre_Entity)
+void CL64_Imp_Ogre3D::Get_Ogre_Mesh_Data(Ogre::Entity* Ogre_Entity)
 {
 	bool Edge = Ogre_Entity->hasEdgeList();
 	if (Edge == 1)
@@ -535,7 +535,7 @@ void CLOW_Imp_Ogre3D::Get_Ogre_Mesh_Data(Ogre::Entity* Ogre_Entity)
 // *************************************************************************
 // *	  			Get_Motions:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-void CLOW_Imp_Ogre3D::Get_Motions(Ogre::Entity* Ogre_Entity)
+void CL64_Imp_Ogre3D::Get_Motions(Ogre::Entity* Ogre_Entity)
 {
 	Ogre::SkeletonInstance* skeletonInstance = Ogre_Entity->getSkeleton();
 
