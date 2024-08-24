@@ -63,6 +63,7 @@ private:
 
 	int Show_Resource_Group_All();
 	int Show_Resource_Group_Materials();
+	int Show_Resource_Group_Meshes();
 
 	void UnloadUserResources();
 	Ogre::ConfigFile cf;

@@ -283,7 +283,8 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 
 			RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
-			int Items = App->CL_Resources->ShowAllMeshes();
+			//int Items = App->CL_Resources->ShowAllMeshes();
+			int Items = App->CL_Resources->Show_Resource_Group_Meshes();
 			App->CL_Resources->Update_Counter(Items, hDlg);
 
 			return TRUE;
@@ -607,6 +608,67 @@ int CL64_Resources::Show_Resource_Group_Materials()
 	{
 
 		int test = i->filename.find(".material");
+
+		if (test > 0)
+		{
+			pitem.iItem = pRow;
+			pitem.pszText = (LPSTR)i->filename.c_str();
+
+			ListView_InsertItem(FX_General_hLV, &pitem);
+			ListView_SetItemText(FX_General_hLV, pRow, 1, (LPSTR)i->archive->getType().c_str());
+			ListView_SetItemText(FX_General_hLV, pRow, 2, (LPSTR)i->archive->getName().c_str());
+
+			pRow++;
+		}
+	}
+
+	RedrawWindow(FX_General_hLV, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+	return pRow;
+}
+
+// *************************************************************************
+// *	  Show_Resource_Group_Meshes:- Terry and Hazel Flanigan 2024	   *
+// *************************************************************************
+int CL64_Resources::Show_Resource_Group_Meshes()
+{
+	ListView_DeleteAllItems(FX_General_hLV);
+
+	int	 pRow = 0;
+	int NUM_COLS = 4;
+
+	LV_ITEM pitem;
+	memset(&pitem, 0, sizeof(LV_ITEM));
+	pitem.mask = LVIF_TEXT;
+
+	LV_COLUMN lvC;
+	memset(&lvC, 0, sizeof(LV_COLUMN));
+	lvC.mask = LVCF_FMT | LVCF_WIDTH | LVCF_TEXT | LVCF_SUBITEM;
+	lvC.fmt = LVCFMT_LEFT;  // left-align the column
+	std::string headers[] =
+	{
+		"File", "Archive Type","Path"," "
+	};
+	int headerSize[] =
+	{
+		165,120,470,150
+	};
+
+	for (int header = 0; header < NUM_COLS; header++)
+	{
+		lvC.iSubItem = header;
+		lvC.cx = headerSize[header]; // width of the column, in pixels
+		lvC.pszText = const_cast<char*>(headers[header].c_str());
+		ListView_SetColumn(FX_General_hLV, header, &lvC);
+	}
+
+	Ogre::FileInfoListPtr RFI = ResourceGroupManager::getSingleton().listResourceFileInfo(mSelected_Resource_Group, false);
+	Ogre::FileInfoList::const_iterator i, iend;
+	iend = RFI->end();
+
+	for (i = RFI->begin(); i != iend; ++i)
+	{
+
+		int test = i->filename.find(".mesh");
 
 		if (test > 0)
 		{
