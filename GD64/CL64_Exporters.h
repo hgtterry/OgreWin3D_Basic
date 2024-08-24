@@ -14,12 +14,12 @@ appreciated but is not required.
 */
 
 #pragma once
-class CLOW_Exporters
+class CL64_Exporters
 {
 public:
 
-	CLOW_Exporters(void);
-	~CLOW_Exporters(void);
+	CL64_Exporters(void);
+	~CL64_Exporters(void);
 
 	bool Export_Ogre(bool Use_FileDialog);
 	void Start_Ogre_Export_Dlg();

@@ -147,7 +147,7 @@ void CL64_App::InitApp(void)
 	
 
 	CL_Exp_Ogre =		new CLOW_Exp_Ogre3D(); // Create Here for Now
-	CL_Exporters =		new CLOW_Exporters();
+	CL_Exporters =		new CL64_Exporters();
 	CL_Dimensions =		new CLOW_Dimensions();
 	CL_Exp_Obj =		new OW3D_Exp_Obj();
 	

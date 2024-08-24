@@ -40,7 +40,7 @@ appreciated but is not required.
 #include "OW3D_Motioins.h"
 
 #include "CLOW_Exp_Ogre3D.h"
-#include "CLOW_Exporters.h"
+#include "CL64_Exporters.h"
 #include "CLOW_Dimensions.h"
 #include "OW3D_Exp_Obj.h"
 
@@ -76,7 +76,7 @@ public:
 	OW3D_Motioins*		CL_Motions;
 
 	CLOW_Exp_Ogre3D*	CL_Exp_Ogre;
-	CLOW_Exporters*		CL_Exporters;
+	CL64_Exporters*		CL_Exporters;
 	CLOW_Dimensions*	CL_Dimensions;
 	OW3D_Exp_Obj*		CL_Exp_Obj;
 

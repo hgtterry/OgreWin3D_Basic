@@ -16,9 +16,9 @@ appreciated but is not required.
 #include "pch.h"
 #include "CL64_App.h"
 #include "resource.h"
-#include "CLOW_Exporters.h"
+#include "CL64_Exporters.h"
 
-CLOW_Exporters::CLOW_Exporters(void)
+CL64_Exporters::CL64_Exporters(void)
 {
 	mJustName[0] = 0;
 	mDirectory_Name[0] = 0;
@@ -26,14 +26,14 @@ CLOW_Exporters::CLOW_Exporters(void)
 	Is_Canceled = 0;
 }
 
-CLOW_Exporters::~CLOW_Exporters(void)
+CL64_Exporters::~CL64_Exporters(void)
 {
 }
 
 // *************************************************************************
 // *			Start_Export:- Terry and Hazel Flanigan 2024 			   *
 // *************************************************************************
-bool CLOW_Exporters::Export_Ogre(bool Use_FileDialog)
+bool CL64_Exporters::Export_Ogre(bool Use_FileDialog)
 {
 	if (Use_FileDialog == 1)
 	{
@@ -62,7 +62,7 @@ bool CLOW_Exporters::Export_Ogre(bool Use_FileDialog)
 // *************************************************************************
 // *	  	Start_Ogre_Export_Dlg:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
-void CLOW_Exporters::Start_Ogre_Export_Dlg()
+void CL64_Exporters::Start_Ogre_Export_Dlg()
 {
 	Is_Canceled = 0;
 
@@ -72,7 +72,7 @@ void CLOW_Exporters::Start_Ogre_Export_Dlg()
 // *************************************************************************
 // *        Export_Dlg_Proc:- Terry and Hazel Flanigan 2024				   *
 // *************************************************************************
-LRESULT CALLBACK CLOW_Exporters::Export_Ogre_Dlg_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK CL64_Exporters::Export_Ogre_Dlg_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
 
 	switch (message)
@@ -341,7 +341,7 @@ LRESULT CALLBACK CLOW_Exporters::Export_Ogre_Dlg_Proc(HWND hDlg, UINT message, W
 // *************************************************************************
 // *			Set_Dialog_Data:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-void CLOW_Exporters::Set_Dialog_Data(HWND m_hDlg)
+void CL64_Exporters::Set_Dialog_Data(HWND m_hDlg)
 {
 	// Just Name
 	char buf[MAX_PATH];
@@ -365,7 +365,7 @@ void CLOW_Exporters::Set_Dialog_Data(HWND m_hDlg)
 // *************************************************************************
 // *			Object_Model:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-void CLOW_Exporters::Object_Model(void)
+void CL64_Exporters::Object_Model(void)
 {
 	if (App->CL_Scene->flag_Model_Loaded == 0)
 	{

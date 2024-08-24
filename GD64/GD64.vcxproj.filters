@@ -120,13 +120,13 @@
     <ClInclude Include="CLOW_Exp_Ogre3D.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CLOW_Exporters.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="CLOW_Dimensions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="OW3D_Exp_Obj.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CL64_Exporters.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -227,13 +227,13 @@
     <ClCompile Include="CLOW_Exp_Ogre3D.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CLOW_Exporters.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="CLOW_Dimensions.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="OW3D_Exp_Obj.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CL64_Exporters.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
