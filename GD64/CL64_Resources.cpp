@@ -37,6 +37,7 @@ CL64_Resources::CL64_Resources(void)
 	mSelected_Resource_Group = "App_Resource_Group";
 
 	FX_General_hLV = nullptr;
+	btext[0] = 0;
 }
 
 CL64_Resources::~CL64_Resources(void)
@@ -147,6 +148,18 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 	case WM_NOTIFY:
 	{
 		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		if (some_item->hwndFrom == App->CL_Resources->FX_General_hLV)
+		{
+			switch (some_item->code)
+			{
+			case NM_CLICK:
+			{
+				App->CL_Resources->ListView_OnClickOptions(lParam);
+				
+			}
+			}
+		}
 
 		if (some_item->idFrom == IDC_BT_APPRESOURCES)
 		{
@@ -301,11 +314,17 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 			case CBN_CLOSEUP:
 			{
 				char buff[MAX_PATH]{ 0 };
+				char Title[MAX_PATH]{ 0 };
 
 				HWND temp = GetDlgItem(hDlg, IDC_CB_RESOURCEGROUPS);
 				int Index = SendMessage(temp, CB_GETCURSEL, 0, 0);
 				SendMessage(temp, CB_GETLBTEXT, Index, (LPARAM)buff);
 				App->CL_Resources->mSelected_Resource_Group = buff;
+
+				strcpy(Title, "Resource Group:  ");
+				strcat(Title, buff);
+
+				SetDlgItemText(hDlg, IDC_ST_BANNER, (LPCTSTR)Title);
 
 				int Items = App->CL_Resources->Show_Scaned_Resource_Group();
 				App->CL_Resources->Update_Counter(Items, hDlg);
@@ -408,6 +427,20 @@ void CL64_Resources::CreateListGeneral_FX(HWND hDlg)
 }
 
 // *************************************************************************
+// *			ListView_OnClickOptions  Terry Bernie			 		   *
+// *************************************************************************
+void CL64_Resources::ListView_OnClickOptions(LPARAM lParam)
+{
+	int List_Index;
+
+	LPNMLISTVIEW List = (LPNMLISTVIEW)lParam;
+	List_Index = List->iItem;
+	ListView_GetItemText(FX_General_hLV, List_Index, 0, btext, MAX_PATH);
+
+	//App->Say(btext);
+}
+
+// *************************************************************************
 // *	Update_Resource_Groups_Combo:- Terry and Hazel Flanigan 2024	   *
 // *************************************************************************
 void CL64_Resources::Update_Resource_Groups_Combo(HWND hDlg)
@@ -475,7 +508,7 @@ int CL64_Resources::Show_Scaned_Resource_Group()
 	};
 	int headerSize[] =
 	{
-		165,120,270,150
+		165,120,470,150
 	};
 
 	for (int header = 0; header < NUM_COLS; header++)

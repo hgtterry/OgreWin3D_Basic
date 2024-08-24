@@ -43,7 +43,10 @@ private:
 	static LRESULT CALLBACK Resources_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	void Reset_Flags();
+
 	void CreateListGeneral_FX(HWND hDlg);
+	void ListView_OnClickOptions(LPARAM lParam);
+
 	void Update_Counter(int Value, HWND hDlg);
 
 	int ShowAllMaterials();
@@ -74,5 +77,7 @@ private:
 	bool flag_Show_All_Textures;
 
 	HWND FX_General_hLV;
+
+	char btext[MAX_PATH];
 };
 
