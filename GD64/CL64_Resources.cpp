@@ -24,11 +24,11 @@ CL64_Resources::CL64_Resources(void)
 
 	flag_Show_App_Res = 0;
 	flag_Show_Demo_Res = 0;
-	flag_Show_Used_Materials = 0;
 	flag_Show_All_Meshes = 0;
 	flag_Show_All_Textures = 0;
 	flag_Show_All_Materials = 0;
-	
+	flag_Show_Group_All = 0;
+
 	mFileString.clear();
 
 	Ogre_ExternalResourceLoaded = 0;
@@ -95,10 +95,11 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 		SendDlgItemMessage(hDlg, IDC_BT_DEMORESOURCES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_RE_SCAN, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
+		
+		SendDlgItemMessage(hDlg, IDC_GROUPALL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ALLMATERIALS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ALLTEXTURES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ALLMESH, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_USEDMATERIALS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_CB_RESOURCEGROUPS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
 		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
@@ -107,7 +108,7 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 
 		App->CL_Resources->CreateListGeneral_FX(hDlg);
 		App->CL_Resources->Reset_Flags();
-		App->CL_Resources->flag_Show_All_Materials = 1;
+		App->CL_Resources->flag_Show_Group_All = 1;
 
 		App->CL_Resources->mSelected_Resource_Group = "App_Resource_Group";
 		App->CL_Resources->Scan_Resource_Group(App->CL_Resources->mSelected_Resource_Group);
@@ -115,7 +116,7 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 		int Items = App->CL_Resources->Show_Resource_Group_All();
 		App->CL_Resources->Update_Counter(Items, hDlg);
 
-		SetDlgItemText(hDlg, IDC_ST_BANNER, (LPCTSTR)"Resources:- All Materials");
+		App->CL_Resources->Set_Title(hDlg, (LPSTR)"All");
 
 		return TRUE;
 	}
@@ -213,6 +214,13 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 			return CDRF_DODEFAULT;
 		}
 		
+		if (some_item->idFrom == IDC_GROUPALL)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->CL_Resources->flag_Show_Group_All);
+			return CDRF_DODEFAULT;
+		}
+
 		if (some_item->idFrom == IDC_ALLMATERIALS)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
@@ -234,22 +242,31 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 			return CDRF_DODEFAULT;
 		}
 
-		if (some_item->idFrom == IDC_USEDMATERIALS)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CL_Resources->flag_Show_Used_Materials);
-			return CDRF_DODEFAULT;
-		}
-
 		return CDRF_DODEFAULT;
 	}
 
 
 	case WM_COMMAND:
 
+		if (LOWORD(wParam) == IDC_GROUPALL)
+		{
+			App->CL_Resources->Set_Title(hDlg, (LPSTR)"All");
+
+			App->CL_Resources->Reset_Flags();
+			App->CL_Resources->flag_Show_Group_All = 1;
+
+			RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+			int Items = App->CL_Resources->Show_Resource_Group_All();
+			App->CL_Resources->Update_Counter(Items, hDlg);
+
+			return TRUE;
+		}
+
 		if (LOWORD(wParam) == IDC_ALLMATERIALS)
 		{
-			SetDlgItemText(hDlg, IDC_ST_BANNER, (LPCTSTR)"Resources:- All Materials");
+			App->CL_Resources->Set_Title(hDlg, (LPSTR)"Materials");
+
 			App->CL_Resources->Reset_Flags();
 			App->CL_Resources->flag_Show_All_Materials = 1;
 
@@ -264,7 +281,8 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 
 		if (LOWORD(wParam) == IDC_ALLTEXTURES)
 		{
-			SetDlgItemText(hDlg, IDC_ST_BANNER, (LPCTSTR)"Resources:- All Textures");
+			App->CL_Resources->Set_Title(hDlg, (LPSTR)"Textures");
+
 			App->CL_Resources->Reset_Flags();
 			App->CL_Resources->flag_Show_All_Textures = 1;
 
@@ -278,28 +296,16 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 
 		if (LOWORD(wParam) == IDC_ALLMESH)
 		{
-			SetDlgItemText(hDlg, IDC_ST_BANNER, (LPCTSTR)"Resources:- All Meshes");
 			App->CL_Resources->Reset_Flags();
 			App->CL_Resources->flag_Show_All_Meshes = 1;
 
 			RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
 			//int Items = App->CL_Resources->ShowAllMeshes();
+			
+			App->CL_Resources->Set_Title(hDlg,(LPSTR)"Meshes");
+
 			int Items = App->CL_Resources->Show_Resource_Group_Meshes();
-			App->CL_Resources->Update_Counter(Items, hDlg);
-
-			return TRUE;
-		}
-
-		if (LOWORD(wParam) == IDC_USEDMATERIALS)
-		{
-			SetDlgItemText(hDlg, IDC_ST_BANNER, (LPCTSTR)"Resources:- Used Materials");
-			App->CL_Resources->Reset_Flags();
-			App->CL_Resources->flag_Show_Used_Materials = 1;
-
-			RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-
-			int Items = App->CL_Resources->ShowUsedMaterials();
 			App->CL_Resources->Update_Counter(Items, hDlg);
 
 			return TRUE;
@@ -347,14 +353,16 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 				SendMessage(temp, CB_GETLBTEXT, Index, (LPARAM)buff);
 				App->CL_Resources->mSelected_Resource_Group = buff;
 
-				strcpy(Title, "Resource Group:  ");
-				strcat(Title, buff);
-
-				SetDlgItemText(hDlg, IDC_ST_BANNER, (LPCTSTR)Title);
+				App->CL_Resources->Set_Title(hDlg, (LPSTR)"All");
 
 				App->CL_Resources->Scan_Resource_Group(App->CL_Resources->mSelected_Resource_Group);
 				int Items = App->CL_Resources->Show_Resource_Group_All();
 				App->CL_Resources->Update_Counter(Items, hDlg);
+
+				App->CL_Resources->Reset_Flags();
+				App->CL_Resources->flag_Show_Group_All = 1;
+
+				RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 				
 			}
 			}
@@ -382,6 +390,21 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 }
 
 // *************************************************************************
+// *			Set_Title:- Terry and Hazel Flanigan 2024				   *
+// *************************************************************************
+void CL64_Resources::Set_Title(HWND hDlg,char* Title)
+{
+	char mTitle[MAX_PATH]{ 0 };
+	
+	strcpy(mTitle, App->CL_Resources->mSelected_Resource_Group.c_str());
+	strcat(mTitle, ":  ( ");
+	strcat(mTitle, Title);
+	strcat(mTitle, " )");
+
+	SetDlgItemText(hDlg, IDC_ST_BANNER, (LPCTSTR)mTitle);
+}
+
+// *************************************************************************
 // *			Reset_Flags:- Terry and Hazel Flanigan 2024				   *
 // *************************************************************************
 void CL64_Resources::Reset_Flags()
@@ -389,9 +412,9 @@ void CL64_Resources::Reset_Flags()
 	flag_Show_App_Res = 0;
 	flag_Show_Demo_Res = 0;
 	flag_Show_All_Materials = 0;
-	flag_Show_Used_Materials = 0;
 	flag_Show_All_Textures = 0;
 	flag_Show_All_Meshes = 0;
+	flag_Show_Group_All = 0;
 }
 
 // *************************************************************************
@@ -960,91 +983,6 @@ int CL64_Resources::ShowAllMaterials()
 		//ListView_SetItemText(FX_General_hLV, pRow, 3, ResourcePath);
 		
 		pRow++;
-
-		materialIterator.moveNext();
-	}
-
-	return pRow;
-}
-
-// *************************************************************************
-// *					ShowUsedMaterials Terry Bernie	 			 	   *
-// *************************************************************************
-int CL64_Resources::ShowUsedMaterials()
-{
-	LV_ITEM pitem;
-	memset(&pitem, 0, sizeof(LV_ITEM));
-	pitem.mask = LVIF_TEXT;
-
-	ListView_DeleteAllItems(FX_General_hLV);
-
-	int	 pRow = 0;
-	char Origin[MAX_PATH];
-	char pScriptName[255];
-	char pScriptFile[255];
-	char pUsed[255];
-	bool pIsLoaded = 0;
-	Ogre::String st;
-	Ogre::ResourcePtr pp;
-	Ogre::ResourceManager::ResourceMapIterator materialIterator = Ogre::MaterialManager::getSingleton().getResourceIterator();
-
-	while (materialIterator.hasMoreElements())
-	{
-
-		strcpy(pScriptName, materialIterator.peekNextValue()->getName().c_str());
-		strcpy(Origin, materialIterator.peekNextValue()->getGroup().c_str());
-
-		pp = Ogre::MaterialManager::getSingleton().getByName(pScriptName);
-		st = pp->getOrigin();
-		pIsLoaded = pp->isLoaded();
-
-		if (pIsLoaded == 1)
-		{
-			strcpy(pUsed, "Yes");
-
-			//--------------------------------
-			if (st == "")
-			{
-				strcpy(pScriptFile, "Internal");
-			}
-			else if (st == "SdkTrays.material")
-			{
-				strcpy(pScriptFile, st.c_str());
-				strcpy(ResourcePath, "packs\\SdkTrays.zip");
-			}
-			else if (st == "OgreCore.material")
-			{
-				strcpy(pScriptFile, st.c_str());
-				strcpy(ResourcePath, "packs\\OgreCore.zip");
-			}
-			else if (st == "OgreProfiler.material")
-			{
-				strcpy(pScriptFile, st.c_str());
-				strcpy(ResourcePath, "packs\\OgreCore.zip");
-			}
-			else if (st == "PhysCore.material")
-			{
-				strcpy(pScriptFile, st.c_str());
-				strcpy(ResourcePath, "packs\\GDCore.zip");
-			}
-			else
-			{
-				strcpy(pScriptFile, st.c_str());
-				//SearchFolders(pScriptFile,"Media\\materials\\");
-				Start_List_Folders(NULL, pScriptFile, 0);
-			}
-
-			pitem.iItem = pRow;
-			pitem.pszText = pScriptName;
-
-			ListView_InsertItem(FX_General_hLV, &pitem);
-			ListView_SetItemText(FX_General_hLV, pRow, 1, pScriptFile);
-			ListView_SetItemText(FX_General_hLV, pRow, 2, Origin);
-			ListView_SetItemText(FX_General_hLV, pRow, 3, Origin);
-			//ListView_SetItemText(FX_General_hLV, pRow, 3, ResourcePath);
-			
-			pRow++;
-		}
 
 		materialIterator.moveNext();
 	}

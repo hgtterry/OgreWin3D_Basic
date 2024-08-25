@@ -52,6 +52,7 @@ private:
 
 	static LRESULT CALLBACK Resources_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
+	void Set_Title(HWND hDlg,char* Title);
 	void Reset_Flags();
 
 	void CreateListGeneral_FX(HWND hDlg);
@@ -60,8 +61,7 @@ private:
 	void Update_Counter(int Value, HWND hDlg);
 
 	int ShowAllMaterials();
-	int ShowUsedMaterials();
-
+	
 	void Start_List_Folders(HWND List, char* FileName, bool ListDlg);
 	void List_Folders(HWND List, char* StartFolder, char* FileName, bool ListDlg);
 	bool FindPath_New(char* File, char* Folder);
@@ -83,10 +83,10 @@ private:
 
 	char ResourcePath[MAX_PATH];
 
+	bool flag_Show_Group_All;
 	bool flag_Show_App_Res;
 	bool flag_Show_Demo_Res;
 	bool flag_Show_All_Materials;
-	bool flag_Show_Used_Materials;
 	bool flag_Show_All_Meshes;
 	bool flag_Show_All_Textures;
 
