@@ -38,6 +38,7 @@ CL64_Resources::CL64_Resources(void)
 
 	FX_General_hLV = nullptr;
 	btext[0] = 0;
+	RV_Size = 0;
 }
 
 CL64_Resources::~CL64_Resources(void)
@@ -108,8 +109,8 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 		App->CL_Resources->Reset_Flags();
 		App->CL_Resources->flag_Show_All_Materials = 1;
 
-		/*int Items = App->CL_Resources->ShowAllMaterials();
-		App->CL_Resources->Update_Counter(Items, hDlg);*/
+		App->CL_Resources->mSelected_Resource_Group = "App_Resource_Group";
+		App->CL_Resources->Scan_Resource_Group(App->CL_Resources->mSelected_Resource_Group);
 
 		int Items = App->CL_Resources->Show_Resource_Group_All();
 		App->CL_Resources->Update_Counter(Items, hDlg);
@@ -351,6 +352,7 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 
 				SetDlgItemText(hDlg, IDC_ST_BANNER, (LPCTSTR)Title);
 
+				App->CL_Resources->Scan_Resource_Group(App->CL_Resources->mSelected_Resource_Group);
 				int Items = App->CL_Resources->Show_Resource_Group_All();
 				App->CL_Resources->Update_Counter(Items, hDlg);
 				
@@ -516,7 +518,6 @@ int CL64_Resources::Show_Resource_Group_All()
 {
 	ListView_DeleteAllItems(FX_General_hLV);
 
-	int	 pRow = 0;
 	int NUM_COLS = 5;
 
 	LV_ITEM pitem;
@@ -544,25 +545,23 @@ int CL64_Resources::Show_Resource_Group_All()
 		ListView_SetColumn(FX_General_hLV, header, &lvC);
 	}
 
-	Ogre::FileInfoListPtr RFI = ResourceGroupManager::getSingleton().listResourceFileInfo(mSelected_Resource_Group, false);
-	Ogre::FileInfoList::const_iterator i, iend;
-	iend = RFI->end();
+	int Count = 0;
+	int End = RV_Size;
 
-	for (i = RFI->begin(); i != iend; ++i)
+	while (Count < End)
 	{
-
-		pitem.iItem = pRow;
-		pitem.pszText = (LPSTR)i->filename.c_str();
+		pitem.iItem = Count;
+		pitem.pszText = (LPSTR)RV_FileName[Count].c_str();
 
 		ListView_InsertItem(FX_General_hLV, &pitem);
-		ListView_SetItemText(FX_General_hLV, pRow, 1, (LPSTR)i->archive->getType().c_str());
-		ListView_SetItemText(FX_General_hLV, pRow, 2, (LPSTR)i->archive->getName().c_str());
-		
-		pRow++;
+		ListView_SetItemText(FX_General_hLV, Count, 1, (LPSTR)RV_Archive_GetType[Count].c_str());
+		ListView_SetItemText(FX_General_hLV, Count, 2, (LPSTR)RV_Archive_GetName[Count].c_str());
+
+		Count++;
 
 	}
 
-	return pRow;
+	return Count;
 }
 
 // *************************************************************************
@@ -600,29 +599,29 @@ int CL64_Resources::Show_Resource_Group_Materials()
 		ListView_SetColumn(FX_General_hLV, header, &lvC);
 	}
 
-	Ogre::FileInfoListPtr RFI = ResourceGroupManager::getSingleton().listResourceFileInfo(mSelected_Resource_Group, false);
-	Ogre::FileInfoList::const_iterator i, iend;
-	iend = RFI->end();
-
-	for (i = RFI->begin(); i != iend; ++i)
+	int Count = 0;
+	int End = RV_Size;
+	while (Count < End)
 	{
-
-		int test = i->filename.find(".material");
+		int test = RV_FileName[Count].find(".material");
 
 		if (test > 0)
 		{
 			pitem.iItem = pRow;
-			pitem.pszText = (LPSTR)i->filename.c_str();
+			pitem.pszText = (LPSTR)RV_FileName[Count].c_str();
 
 			ListView_InsertItem(FX_General_hLV, &pitem);
-			ListView_SetItemText(FX_General_hLV, pRow, 1, (LPSTR)i->archive->getType().c_str());
-			ListView_SetItemText(FX_General_hLV, pRow, 2, (LPSTR)i->archive->getName().c_str());
+			ListView_SetItemText(FX_General_hLV, pRow, 1, (LPSTR)RV_Archive_GetType[Count].c_str());
+			ListView_SetItemText(FX_General_hLV, pRow, 2, (LPSTR)RV_Archive_GetName[Count].c_str());
 
 			pRow++;
 		}
+
+		Count++;
 	}
 
 	RedrawWindow(FX_General_hLV, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+	
 	return pRow;
 }
 
@@ -661,26 +660,26 @@ int CL64_Resources::Show_Resource_Group_Meshes()
 		ListView_SetColumn(FX_General_hLV, header, &lvC);
 	}
 
-	Ogre::FileInfoListPtr RFI = ResourceGroupManager::getSingleton().listResourceFileInfo(mSelected_Resource_Group, false);
-	Ogre::FileInfoList::const_iterator i, iend;
-	iend = RFI->end();
-
-	for (i = RFI->begin(); i != iend; ++i)
+	int Count = 0;
+	int End = RV_Size;
+	while (Count < End)
 	{
-
-		int test = i->filename.find(".mesh");
+		int test = RV_FileName[Count].find(".mesh");
 
 		if (test > 0)
 		{
 			pitem.iItem = pRow;
-			pitem.pszText = (LPSTR)i->filename.c_str();
+			pitem.pszText = (LPSTR)RV_FileName[Count].c_str();
 
 			ListView_InsertItem(FX_General_hLV, &pitem);
-			ListView_SetItemText(FX_General_hLV, pRow, 1, (LPSTR)i->archive->getType().c_str());
-			ListView_SetItemText(FX_General_hLV, pRow, 2, (LPSTR)i->archive->getName().c_str());
+			ListView_SetItemText(FX_General_hLV, pRow, 1, (LPSTR)RV_Archive_GetType[Count].c_str());
+			ListView_SetItemText(FX_General_hLV, pRow, 2, (LPSTR)RV_Archive_GetName[Count].c_str());
 
 			pRow++;
 		}
+
+		Count++;
+
 	}
 
 	RedrawWindow(FX_General_hLV, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
@@ -762,7 +761,7 @@ int CL64_Resources::ShowAllTextures()
 		App->Say(SubFolder);
 		}*/
 
-		//Start_List_Folders(NULL, JustFile, 0);
+		Start_List_Folders(NULL, JustFile, 0);
 
 		int test = strcmp(Origin, mSelected_Resource_Group.c_str());
 
@@ -773,7 +772,7 @@ int CL64_Resources::ShowAllTextures()
 
 			ListView_InsertItem(FX_General_hLV, &pitem);
 			ListView_SetItemText(FX_General_hLV, pRow, 1, Origin);
-			ListView_SetItemText(FX_General_hLV, pRow, 2, ResourcePath);
+			ListView_SetItemText(FX_General_hLV, pRow, 2, (LPSTR)"----");// ResourcePath);
 			ListView_SetItemText(FX_General_hLV, pRow, 3, (LPSTR)" ");
 
 			pRow++;
@@ -816,17 +815,25 @@ int CL64_Resources::ShowAllTextures()
 // *************************************************************************
 bool CL64_Resources::Scan_Resource_Group(Ogre::String ResourceGroup)
 {
+	RV_FileName.resize(0);
+	RV_Archive_GetName.resize(0);
+	RV_Archive_GetType.resize(0);
+
 	Ogre::FileInfoListPtr RFI = ResourceGroupManager::getSingleton().listResourceFileInfo(ResourceGroup, false);
 	Ogre::FileInfoList::const_iterator i, iend;
 	iend = RFI->end();
-
+	int Count = 0;
+	
 	for (i = RFI->begin(); i != iend; ++i)
 	{
-		App->Say_Win(i->filename.c_str());
-		App->Say_Win(i->archive->getName().c_str());
-
-		Ogre::DataStreamPtr ff = i->archive->open(i->filename);
+		RV_FileName.push_back(i->filename);
+		RV_Archive_GetName.push_back(i->archive->getName());
+		RV_Archive_GetType.push_back(i->archive->getType());
+	
+		Count++;
 	}
+
+	RV_Size = Count;
 
 	return 1;
 }

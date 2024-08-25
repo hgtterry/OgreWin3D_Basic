@@ -14,6 +14,16 @@ appreciated but is not required.
 */
 
 #pragma once
+
+typedef struct Resource_Type {
+	std::vector<Ogre::String*> FileName2;
+	/*Ogre::String FileName;
+	Ogre::String Archive_GetName;
+	Ogre::String Archive_GetType;*/
+}Resource_Type;
+
+
+
 class CL64_Resources
 {
 public:
@@ -83,5 +93,10 @@ private:
 	HWND FX_General_hLV;
 
 	char btext[MAX_PATH];
+	
+	int RV_Size;
+	std::vector<std::string> RV_FileName;
+	std::vector<std::string> RV_Archive_GetName;
+	std::vector<std::string> RV_Archive_GetType;
 };
 
