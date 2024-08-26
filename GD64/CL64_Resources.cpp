@@ -37,7 +37,10 @@ CL64_Resources::CL64_Resources(void)
 	mSelected_Resource_Group = "App_Resource_Group";
 
 	FX_General_hLV = nullptr;
-	btext[0] = 0;
+	Export_Button = nullptr;
+
+	mbtext[0] = 0;
+	mSelected_File[0] = 0;
 	RV_Size = 0;
 }
 
@@ -94,7 +97,7 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 		SendDlgItemMessage(hDlg, IDC_BT_APPRESOURCES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_DEMORESOURCES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_RE_SCAN, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		
+		SendDlgItemMessage(hDlg, IDC_BT_EXPORT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
 		SendDlgItemMessage(hDlg, IDC_GROUPALL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ALLMATERIALS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
@@ -103,6 +106,9 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 		SendDlgItemMessage(hDlg, IDC_CB_RESOURCEGROUPS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
 		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		App->CL_Resources->Export_Button = GetDlgItem(hDlg, IDC_BT_EXPORT);
+		EnableWindow(App->CL_Resources->Export_Button, false);
 
 		App->CL_Resources->Update_Resource_Groups_Combo(hDlg);
 
@@ -213,7 +219,24 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 			App->Custom_Button_Normal(item);
 			return CDRF_DODEFAULT;
 		}
-		
+
+		if (some_item->idFrom == IDC_BT_EXPORT)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_EXPORT));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
+			else
+			{
+				App->Custom_Button_Normal(item);
+			}
+
+			return CDRF_DODEFAULT;
+		}
+
 		if (some_item->idFrom == IDC_GROUPALL)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
@@ -248,6 +271,13 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 
 	case WM_COMMAND:
 
+		if (LOWORD(wParam) == IDC_BT_EXPORT)
+		{
+			App->CL_Resources->Get_File(App->CL_Resources->mSelected_File);
+
+			return TRUE;
+		}
+
 		if (LOWORD(wParam) == IDC_GROUPALL)
 		{
 			App->CL_Resources->Set_Title(hDlg, (LPSTR)"All");
@@ -262,7 +292,7 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 
 			return TRUE;
 		}
-
+		
 		if (LOWORD(wParam) == IDC_ALLMATERIALS)
 		{
 			App->CL_Resources->Set_Title(hDlg, (LPSTR)"Materials");
@@ -485,9 +515,11 @@ void CL64_Resources::ListView_OnClickOptions(LPARAM lParam)
 
 	LPNMLISTVIEW List = (LPNMLISTVIEW)lParam;
 	List_Index = List->iItem;
-	ListView_GetItemText(FX_General_hLV, List_Index, 0, btext, MAX_PATH);
+	ListView_GetItemText(FX_General_hLV, List_Index, 0, mbtext, MAX_PATH);
 
-	//App->Say(btext);
+	strcpy(mSelected_File, mbtext);
+	EnableWindow(Export_Button, true);
+
 }
 
 // *************************************************************************
@@ -857,6 +889,41 @@ bool CL64_Resources::Scan_Resource_Group(Ogre::String ResourceGroup)
 	}
 
 	RV_Size = Count;
+
+	return 1;
+}
+
+// *************************************************************************
+// *				Get_File:- Terry and Hazel Flanigan 2024		  	   *
+// *************************************************************************
+bool CL64_Resources::Get_File(char* FileName)
+{
+	char File[MAX_PATH];
+	strcpy(File, App->GD_Directory_FullPath);
+	strcat(File, "\\Media\\");
+	strcat(File, FileName);
+
+	Ogre::FileInfoListPtr RFI = ResourceGroupManager::getSingleton().listResourceFileInfo(mSelected_Resource_Group, false);
+	Ogre::FileInfoList::const_iterator i, iend;
+	iend = RFI->end();
+
+	for (i = RFI->begin(); i != iend; ++i)
+	{
+		if (i->filename == FileName)
+		{
+			Ogre::DataStreamPtr ff = i->archive->open(i->filename);
+
+			mFileString = ff->getAsString();
+
+			Export_Texture(File);
+
+			mFileString.clear();
+
+			App->Say("Exported");
+
+			return 1;
+		}
+	}
 
 	return 1;
 }

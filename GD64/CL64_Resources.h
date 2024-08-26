@@ -70,6 +70,7 @@ private:
 	int ShowAllMeshes();
 	int ShowAllTextures();
 
+	bool Get_File(char* FileName);
 
 	int Show_Resource_Group_All();
 	int Show_Resource_Group_Materials();
@@ -91,8 +92,10 @@ private:
 	bool flag_Show_All_Textures;
 
 	HWND FX_General_hLV;
+	HWND Export_Button;
 
-	char btext[MAX_PATH];
+	char mbtext[MAX_PATH];
+	char mSelected_File[MAX_PATH];
 	
 	int RV_Size;
 	std::vector<std::string> RV_FileName;
