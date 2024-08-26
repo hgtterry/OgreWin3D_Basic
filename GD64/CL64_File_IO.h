@@ -23,6 +23,7 @@ public:
 
 	bool Open_File_Model(const char* Extension, const char* Title, const char* StartDirectory);
 	bool Open_Resource_File(char* Extension, char* Title, char* StartDirectory);
+	bool SaveSelectedFile(char* Extension, char* File);
 
 	std::string Get_Model_Path_File_Name();
 
@@ -30,6 +31,10 @@ public:
 
 	char Model_FileName[MAX_PATH];
 	char Model_Path_FileName[MAX_PATH];
+
+	char Save_PathFileName[MAX_PATH];
+	char Save_FileName[MAX_PATH];
+
 	TCHAR szSelectedDir[MAX_PATH];
 	char BrowserMessage[MAX_PATH];
 

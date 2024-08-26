@@ -898,11 +898,6 @@ bool CL64_Resources::Scan_Resource_Group(Ogre::String ResourceGroup)
 // *************************************************************************
 bool CL64_Resources::Get_File(char* FileName)
 {
-	char File[MAX_PATH];
-	strcpy(File, App->GD_Directory_FullPath);
-	strcat(File, "\\Media\\");
-	strcat(File, FileName);
-
 	Ogre::FileInfoListPtr RFI = ResourceGroupManager::getSingleton().listResourceFileInfo(mSelected_Resource_Group, false);
 	Ogre::FileInfoList::const_iterator i, iend;
 	iend = RFI->end();
@@ -915,7 +910,7 @@ bool CL64_Resources::Get_File(char* FileName)
 
 			mFileString = ff->getAsString();
 
-			Export_Texture(File);
+			Export_Resource(FileName);
 
 			mFileString.clear();
 
@@ -929,12 +924,17 @@ bool CL64_Resources::Get_File(char* FileName)
 }
 
 // *************************************************************************
-// *			Export_Texture:- Terry and Hazel Flanigan 2024		  	   *
+// *			Export_Resource:- Terry and Hazel Flanigan 2024		  	   *
 // *************************************************************************
-bool CL64_Resources::Export_Texture(char* FileName) const
+bool CL64_Resources::Export_Resource(char* FileName) const
 {
+	strcpy(App->CL_File_IO->Save_FileName, FileName);
+	strcpy(App->CL_File_IO->Save_PathFileName, FileName);
+	
+	App->CL_File_IO->SaveSelectedFile((LPSTR)"*.*", NULL);
+
 	std::ofstream outFile;
-	outFile.open(FileName, std::ios::binary);
+	outFile.open(App->CL_File_IO->Save_PathFileName, std::ios::binary);
 	outFile << mFileString;
 	outFile.close();
 

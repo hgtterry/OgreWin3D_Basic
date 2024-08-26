@@ -24,11 +24,17 @@ CL64_File_IO::CL64_File_IO()
 {
 	Model_FileName[0] = 0;
 	Model_Path_FileName[0] = 0;
+
+	Save_PathFileName[0] = 0;;
+	Save_FileName[0] = 0;;
+
 	szSelectedDir[0] = 0;
 	BrowserMessage[0] = 0;
 
 	OgreCFG_FileName[0] = 0;
 	OgreCFG_Path_FileName[0] = 0;
+
+	ofn = { 0 };
 }
 
 CL64_File_IO::~CL64_File_IO()
@@ -130,7 +136,7 @@ void CL64_File_IO::Open_HTML(char* HelpTitle)
 
 #pragma warning( disable : 4090)
 // *************************************************************************
-// *							StartBrowser   							   *
+// *				StartBrowser:- Terry and Hazel Flanigan 2024   		   *
 // *************************************************************************
 bool CL64_File_IO::StartBrowser(char* szInitDir)
 {
@@ -165,7 +171,7 @@ HWND g_hMyEditBox;
 #define BROWSE_WIDTH      380
 #define BROWSE_HEIGHT     530
 // *************************************************************************
-// *						BrowseCallbackProc   						   *
+// *			BrowseCallbackProc:- Terry and Hazel Flanigan 2024 		   *
 // *************************************************************************
 int __stdcall CL64_File_IO::BrowseCallbackProc(HWND  hwnd, UINT  uMsg, LPARAM  lParam, LPARAM  lpData)
 {
@@ -251,5 +257,41 @@ int __stdcall CL64_File_IO::BrowseCallbackProc(HWND  hwnd, UINT  uMsg, LPARAM  l
 	}
 
 	return 0;
+}
+
+// *************************************************************************
+// *			SaveSelectedFile:- Terry and Hazel Flanigan 2024   		   *
+// *************************************************************************
+bool CL64_File_IO::SaveSelectedFile(char* Extension, char* File)
+{
+	OPENFILENAME ofn;
+
+	ZeroMemory(&ofn, sizeof(ofn));
+	ofn.lStructSize = sizeof(ofn);
+	ofn.hwndOwner = App->MainHwnd;
+	ofn.hInstance = App->hInst;
+	ofn.lpstrFile = Save_PathFileName;
+	ofn.nMaxFile = sizeof(Save_PathFileName);
+	ofn.lpstrFilter = Extension;
+
+	ofn.nFilterIndex = 1;
+	ofn.lpstrFileTitle = Save_FileName;
+	ofn.nMaxFileTitle = sizeof(Save_FileName);
+	ofn.lpstrInitialDir = File;
+	ofn.lpstrTitle = "Save File";
+
+	ofn.Flags =
+		OFN_PATHMUSTEXIST |
+		OFN_FILEMUSTEXIST |
+		OFN_EXPLORER |
+		OFN_HIDEREADONLY |
+		OFN_OVERWRITEPROMPT;
+	if (GetSaveFileName(&ofn) == TRUE)
+	{
+		return 1;
+	}
+
+	return 0;
+
 }
 

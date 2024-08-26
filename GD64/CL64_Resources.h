@@ -38,8 +38,7 @@ public:
 	void Load_OgreCFG_Resources(const Ogre::String& file);
 
 	bool Scan_Resource_Group(Ogre::String ResourceGroup);
-	bool Export_Texture(char* FileName) const;
-
+	
 	void Get_Resource_Groups();
 	void Update_Resource_Groups_Combo(HWND hDlg);
 
@@ -71,6 +70,7 @@ private:
 	int ShowAllTextures();
 
 	bool Get_File(char* FileName);
+	bool Export_Resource(char* FileName) const;
 
 	int Show_Resource_Group_All();
 	int Show_Resource_Group_Materials();
