@@ -898,6 +898,7 @@ bool CL64_Resources::Scan_Resource_Group(Ogre::String ResourceGroup)
 // *************************************************************************
 bool CL64_Resources::Get_File(char* FileName)
 {
+	
 	Ogre::FileInfoListPtr RFI = ResourceGroupManager::getSingleton().listResourceFileInfo(mSelected_Resource_Group, false);
 	Ogre::FileInfoList::const_iterator i, iend;
 	iend = RFI->end();
@@ -910,7 +911,12 @@ bool CL64_Resources::Get_File(char* FileName)
 
 			mFileString = ff->getAsString();
 
-			Export_Resource(FileName);
+			bool test = Export_Resource(FileName);
+			if (test == 0)
+			{
+				mFileString.clear();
+				return 0;
+			}
 
 			mFileString.clear();
 
@@ -920,6 +926,7 @@ bool CL64_Resources::Get_File(char* FileName)
 		}
 	}
 
+	Debug
 	return 1;
 }
 
@@ -931,7 +938,11 @@ bool CL64_Resources::Export_Resource(char* FileName) const
 	strcpy(App->CL_File_IO->Save_FileName, FileName);
 	strcpy(App->CL_File_IO->Save_PathFileName, FileName);
 	
-	App->CL_File_IO->SaveSelectedFile((LPSTR)"*.*", NULL);
+	bool test = App->CL_File_IO->SaveSelectedFile((LPSTR)"*.*", NULL);
+	if (test == 0)
+	{
+		return 0;
+	}
 
 	std::ofstream outFile;
 	outFile.open(App->CL_File_IO->Save_PathFileName, std::ios::binary);
