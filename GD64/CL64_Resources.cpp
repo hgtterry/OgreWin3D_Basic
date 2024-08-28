@@ -103,7 +103,8 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 		SendDlgItemMessage(hDlg, IDC_ALLMATERIALS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ALLTEXTURES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ALLMESH, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_CB_RESOURCEGROUPS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
+		SendDlgItemMessage(hDlg, IDC_LST_GROUPS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
 		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
@@ -167,7 +168,7 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->AppBackground;
 		}
-		
+
 		return FALSE;
 	}
 
@@ -367,20 +368,21 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 			return TRUE;
 		}
 
-		if (LOWORD(wParam) == IDC_CB_RESOURCEGROUPS)
+		if (LOWORD(wParam) == IDC_LST_GROUPS)
 		{
-			switch (HIWORD(wParam)) // Find out what message it was
-			{
-			case CBN_DROPDOWN:
-				break;
-			case CBN_CLOSEUP:
-			{
+			
 				char buff[MAX_PATH]{ 0 };
 				char Title[MAX_PATH]{ 0 };
 
-				HWND temp = GetDlgItem(hDlg, IDC_CB_RESOURCEGROUPS);
-				int Index = SendMessage(temp, CB_GETCURSEL, 0, 0);
-				SendMessage(temp, CB_GETLBTEXT, Index, (LPARAM)buff);
+				int Index = SendDlgItemMessage(hDlg, IDC_LST_GROUPS, LB_GETCURSEL, (WPARAM)0, (LPARAM)0);
+
+				if (Index == -1)
+				{
+					return 1;
+				}
+
+				SendDlgItemMessage(hDlg, IDC_LST_GROUPS, LB_GETTEXT, (WPARAM)Index, (LPARAM)buff);
+
 				App->CL_Resources->mSelected_Resource_Group = buff;
 
 				App->CL_Resources->Set_Title(hDlg, (LPSTR)"All");
@@ -392,11 +394,8 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 				App->CL_Resources->Reset_Flags();
 				App->CL_Resources->flag_Show_Group_All = 1;
 
-				RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+				//RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 				
-			}
-			}
-
 			return TRUE;
 		}
 
@@ -527,7 +526,7 @@ void CL64_Resources::ListView_OnClickOptions(LPARAM lParam)
 // *************************************************************************
 void CL64_Resources::Update_Resource_Groups_Combo(HWND hDlg)
 {
-	SendDlgItemMessage(hDlg, IDC_CB_RESOURCEGROUPS, CB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
+	SendDlgItemMessage(hDlg, IDC_LST_GROUPS, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
 
 	Ogre::StringVector sv = Ogre::ResourceGroupManager::getSingleton().getResourceGroups();
 
@@ -542,13 +541,12 @@ void CL64_Resources::Update_Resource_Groups_Combo(HWND hDlg)
 		}
 		else
 		{
-			SendDlgItemMessage(hDlg, IDC_CB_RESOURCEGROUPS, CB_ADDSTRING, (WPARAM)0, (LPARAM)sv[Count].c_str());
+			SendDlgItemMessage(hDlg, IDC_LST_GROUPS, LB_ADDSTRING, (WPARAM)0, (LPARAM)sv[Count].c_str());
 		}
 
 		Count++;
 	}
 
-	SendDlgItemMessage(hDlg, IDC_CB_RESOURCEGROUPS, CB_SETCURSEL, (WPARAM)0, (LPARAM)0);
 }
 
 // *************************************************************************
