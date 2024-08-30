@@ -63,9 +63,13 @@ void CL64_Resources::Reset_Class(void) const
 		Ogre::ResourceGroupManager::getSingleton().destroyResourceGroup(App->CL_Ogre->World_Resource_Group);
 	}
 
-	if (Ogre::ResourceGroupManager::getSingleton().resourceGroupExists(App->CL_Resources->Ogre_Loader_Resource_Group))
+	if (Ogre_ExternalResourceLoaded == 0)
 	{
-		Ogre::ResourceGroupManager::getSingleton().destroyResourceGroup(App->CL_Resources->Ogre_Loader_Resource_Group);
+		if (Ogre::ResourceGroupManager::getSingleton().resourceGroupExists(App->CL_Resources->Ogre_Loader_Resource_Group))
+		{
+			Ogre::ResourceGroupManager::getSingleton().destroyResourceGroup(App->CL_Resources->Ogre_Loader_Resource_Group);
+			//Ogre_ExternalResourceLoaded = 0;
+		}
 	}
 
 	//Debug

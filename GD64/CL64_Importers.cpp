@@ -160,7 +160,18 @@ void CL64_Importers::Load_Ogre_Model(bool Use_File_Dialog)
 		Ogre::ResourceGroupManager::getSingleton().createResourceGroup(App->CL_Resources->Ogre_Loader_Resource_Group);
 	}
 
-	App->CL_Scene->Reset_Main_Entity();
+	if (App->CL_Scene->Imported_Ogre_Ent && App->CL_Scene->Imported_Ogre_Node)
+	{
+		App->CL_Scene->Imported_Ogre_Node->detachAllObjects();
+		App->CL_Ogre->mSceneMgr->destroySceneNode(App->CL_Scene->Imported_Ogre_Node);
+		App->CL_Ogre->mSceneMgr->destroyEntity(App->CL_Scene->Imported_Ogre_Ent);
+		App->CL_Scene->Imported_Ogre_Ent = nullptr;
+		App->CL_Scene->Imported_Ogre_Node = nullptr;
+	}
+
+	App->CL_Ogre->Ogre3D_Listener->Ogre_Model_Loaded = 0;
+
+	//App->CL_Scene->Reset_Main_Entity();
 	
 	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(App->CL_Scene->Texture_FolderPath,
 		"FileSystem", App->CL_Resources->Ogre_Loader_Resource_Group);
@@ -174,7 +185,31 @@ void CL64_Importers::Load_Ogre_Model(bool Use_File_Dialog)
 
 	}
 
-	App->CL_Scene->Main_Entity_Set_Default();
+	App->CL_Scene->Imported_Ogre_Ent = App->CL_Ogre->mSceneMgr->createEntity("Imported_Entity", App->CL_Scene->FileName, App->CL_Resources->Ogre_Loader_Resource_Group);
+	App->CL_Scene->Imported_Ogre_Node = App->CL_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	App->CL_Scene->Imported_Ogre_Node->attachObject(App->CL_Scene->Imported_Ogre_Ent);
+
+	App->CL_Scene->Imported_Ogre_Node->setVisible(true);
+	App->CL_Scene->Imported_Ogre_Node->setOrientation(Ogre::Quaternion::IDENTITY);
+	App->CL_Scene->Imported_Ogre_Node->setPosition(0, 0, 0);
+	App->CL_Scene->Imported_Ogre_Node->setScale(1, 1, 1);
+
+	/*if (App->CL_Resources->Ogre_ExternalResourceLoaded == 0)
+	{
+		std::vector<Ogre::String> materialNames;
+		if (App->CL_Scene->Imported_Ogre_Ent)
+		{
+			materialNames.reserve(App->CL_Scene->Imported_Ogre_Ent->getNumSubEntities());
+			for (unsigned int i = 0; i < App->CL_Scene->Imported_Ogre_Ent->getNumSubEntities(); ++i)
+			{
+				Ogre::SubEntity* subEnt = App->CL_Scene->Imported_Ogre_Ent->getSubEntity(i);
+				materialNames.push_back(subEnt->getMaterialName());
+				subEnt->setMaterialName("Template/Red_Alpha_GD64", App->CL_Ogre->App_Resource_Group);
+			}
+		}
+	}*/
+
+	//App->CL_Scene->Main_Entity_Set_Default();
 
 	App->CL_Ogre->Show_Test_Mesh(false);
 	App->CL_Camera->Reset_View();
@@ -201,6 +236,7 @@ void CL64_Importers::Load_Ogre_Model(bool Use_File_Dialog)
 	App->CL_Import_Ogre3D->Get_Motions(App->CL_Scene->Imported_Ogre_Ent);
 
 	App->CL_Scene->S_OgreMeshData[0]->mFileName_Str = App->CL_Scene->FileName;
+	
 	App->Set_Title();
 	App->CL_Ogre->RenderFrame(3);
 
