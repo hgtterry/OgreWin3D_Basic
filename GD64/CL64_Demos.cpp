@@ -62,6 +62,7 @@ void CL64_Demos::Start_Demo_1(void)
 	App->CL_Assimp->Options.SelectedPreset = 8 + 8388608 + 64 + aiProcess_PreTransformVertices;
 	App->CL_Importers->Assimp_Loader(false, "", "");
 
+	
 	World_Ent = App->CL_Converters->Convert_To_Ogre3D(1);
 	
 	World_Node = App->CL_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();

@@ -87,7 +87,7 @@ Ogre::Entity* CL64_Converters::Convert_To_Ogre3D(bool Create)
 	Set_Paths();
 
 	CreateMaterialFile();
-
+	
 	App->CL_Scene->Ogre_Face_Count = 0;
 	
 	if (Create == 1)
@@ -199,8 +199,9 @@ Ogre::Entity* CL64_Converters::Convert_To_Ogre3D(bool Create)
 	
 	remove(mWorld_File_PathAndFile);
 	remove(Material_PathAndFile);
-
-	App->CL_Import_Ogre3D->Get_Ogre_Mesh_Data(World_Ent);
+	
+	// Needs Looking At
+	//App->CL_Import_Ogre3D->Get_Ogre_Mesh_Data(World_Ent);
 
 	return World_Ent;
 }
