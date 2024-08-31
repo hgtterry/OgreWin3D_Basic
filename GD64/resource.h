@@ -56,6 +56,7 @@
 #define IDD_TB_MOTIONS                  165
 #define IDD_EXPORT_OGRE_OPTIONS         166
 #define IDD_TEXT_DIALOG                 167
+#define IDD_TEXTUREVIEWER               168
 #define IDC_CK_SU_FULLSCREEN            1000
 #define IDC_ST_STARTUP                  1001
 #define IDC_CK_SU_FULL3DVIEW            1002
@@ -150,7 +151,8 @@
 #define IDC_GROUPALL                    1052
 #define IDC_BT_EXPORT                   1053
 #define IDC_LST_GROUPS                  1054
-#define IDC_ST_SELECTED_GROUP           1055
+#define IDC_BT_VIEWFILE                 1056
+#define IDC_BASETEXTURE                 1057
 #define ID_VIEW_RESET                   32771
 #define ID_VIEW_MAX3DVIEW               32772
 #define ID_DEBUG_TESTPREFERANCE         32773
@@ -187,9 +189,9 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
-#define _APS_NEXT_RESOURCE_VALUE        168
+#define _APS_NEXT_RESOURCE_VALUE        169
 #define _APS_NEXT_COMMAND_VALUE         32800
-#define _APS_NEXT_CONTROL_VALUE         1056
+#define _APS_NEXT_CONTROL_VALUE         1058
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif

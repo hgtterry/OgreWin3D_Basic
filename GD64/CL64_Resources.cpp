@@ -276,6 +276,13 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 
 	case WM_COMMAND:
 
+		if (LOWORD(wParam) == IDC_BT_VIEWFILE)
+		{
+			App->CL_Dialogs->Start_TextureViewer_Dialog();
+
+			return TRUE;
+		}
+		
 		if (LOWORD(wParam) == IDC_BT_EXPORT)
 		{
 			App->CL_Resources->Get_File(App->CL_Resources->mSelected_File);

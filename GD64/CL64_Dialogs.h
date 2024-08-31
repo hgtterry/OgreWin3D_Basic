@@ -28,6 +28,8 @@ public:
 	void Start_Speed_Camera_Dlg();
 	void Start_FPSLock_Dlg();
 	bool Dialog_Text(int What_Check);
+	void Start_TextureViewer_Dialog();
+	bool RenderTexture_Blit(HDC hDC, HBITMAP Bmp, const RECT* SourceRect, const RECT* DestRect);
 
 	bool Canceled;
 	bool Flag_Convert_to_Ogre;
@@ -46,6 +48,9 @@ private:
 	static LRESULT CALLBACK Speed_Camera_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK FPSLock_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Dialog_Text_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK TextureViewer_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+
+	static bool CALLBACK ViewerBasePic(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 	void UnCheck_All_SpeedMouseOption();
 	void Fill_Face_Combo(HWND hDlg);
@@ -59,5 +64,9 @@ private:
 	bool flag_Mouse_Slow;
 	bool flag_Mouse_VerySlow;
 	bool flag_Mouse_Fast;
+
+	HBITMAP	Sel_BaseBitmap;
+	long BasePicWidth;
+	long BasePicHeight;
 };
 

@@ -37,6 +37,10 @@ CL64_Dialogs::CL64_Dialogs(void)
 
 	btext[0] = 0;
 	Chr_Text[0] = 0;
+
+	Sel_BaseBitmap = nullptr;
+	BasePicWidth = 0;
+	BasePicHeight = 0;
 }
 
 CL64_Dialogs::~CL64_Dialogs(void)
@@ -816,4 +820,180 @@ LRESULT CALLBACK CL64_Dialogs::Dialog_Text_Proc(HWND hDlg, UINT message, WPARAM 
 
 	}
 	return FALSE;
+}
+
+// *************************************************************************
+// *	  Start_TextureViewer_Dialog:- Terry and Hazel Flanigan 2024	   *
+// *************************************************************************
+void CL64_Dialogs::Start_TextureViewer_Dialog()
+{
+	CreateDialog(App->hInst, (LPCTSTR)IDD_TEXTUREVIEWER, App->MainHwnd, (DLGPROC)TextureViewer_Proc);
+}
+
+// **************************************************************************
+// *		TextureViewer_Proc:- Terry and Hazel Flanigan 2024				*
+// **************************************************************************
+LRESULT CALLBACK CL64_Dialogs::TextureViewer_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+	switch (message)
+	{
+	case WM_INITDIALOG:
+	{
+		/*
+		SendDlgItemMessage(hDlg, IDC_TITLENAME, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_EDITTEXT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		SetDlgItemText(hDlg, IDC_TITLENAME, (LPCTSTR)App->CL_Dialogs->btext);
+		SetDlgItemText(hDlg, IDC_EDITTEXT, (LPCTSTR)App->CL_Dialogs->Chr_Text);*/
+
+		SetWindowLongPtr(GetDlgItem(hDlg, IDC_BASETEXTURE), GWLP_WNDPROC, (LONG_PTR)ViewerBasePic);
+
+		return TRUE;
+	}
+	case WM_CTLCOLORSTATIC:
+	{
+		/*if (GetDlgItem(hDlg, IDC_TITLENAME) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 255));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}*/
+
+		return FALSE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->AppBackground;
+	}
+
+	case WM_NOTIFY:
+	{
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		/*if (some_item->idFrom == IDOK && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDCANCEL && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}*/
+
+		return CDRF_DODEFAULT;
+	}
+
+	case WM_COMMAND:
+	{
+		if (LOWORD(wParam) == IDOK)
+		{
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDCANCEL)
+		{
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+	}
+
+	break;
+
+	}
+	return FALSE;
+}
+
+// *************************************************************************
+// *						ViewerBasePic Terry Flanigan	  			   *
+// *************************************************************************
+bool CALLBACK CL64_Dialogs::ViewerBasePic(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
+{
+
+	if (msg == WM_PAINT)
+	{
+		PAINTSTRUCT	ps;
+		HDC			hDC;
+		RECT		Rect;
+
+		hDC = BeginPaint(hwnd, &ps);
+		GetClientRect(hwnd, &Rect);
+		Rect.left--;
+		Rect.bottom--;
+		FillRect(hDC, &Rect, (HBRUSH)(RGB(0, 255, 0)));
+
+		/*if (App->CL_Dialogs->Sel_BaseBitmap != NULL)
+		{
+			RECT	Source;
+			RECT	Dest;
+			HDC		hDC;
+
+			Source.left = 0;
+			Source.top = 0;
+			Source.bottom = App->CL_Dialogs->BasePicHeight;
+			Source.right = App->CL_Dialogs->BasePicWidth;
+
+			Dest = Rect;
+
+			hDC = GetDC(hwnd);
+			SetStretchBltMode(hDC, HALFTONE);
+
+			App->CL_Dialogs->RenderTexture_Blit(hDC, App->CL_Dialogs->Sel_BaseBitmap, &Source, &Dest);
+			ReleaseDC(hwnd, hDC);
+		}*/
+
+		EndPaint(hwnd, &ps);
+		return 0;
+	}
+	return 0;// DefWindowProc(hwnd, msg, wParam, lParam);
+}
+
+// *************************************************************************
+// *					RenderTexture_Blit Terry Bernie		  		   *
+// *************************************************************************
+bool CL64_Dialogs::RenderTexture_Blit(HDC hDC, HBITMAP Bmp, const RECT* SourceRect, const RECT* DestRect)
+{
+	HDC		MemDC;
+	int		SourceWidth;
+	int		SourceHeight;
+	int		DestWidth;
+	int		DestHeight;
+
+	MemDC = CreateCompatibleDC(hDC);
+	if (MemDC == NULL)
+		return FALSE;
+
+	if (Bmp)
+	{
+		SelectObject(MemDC, Bmp);
+
+		SourceWidth = SourceRect->right - SourceRect->left;
+		SourceHeight = SourceRect->bottom - SourceRect->top;
+		DestWidth = DestRect->right - DestRect->left;
+		DestHeight = DestRect->bottom - DestRect->top;
+		SetStretchBltMode(hDC, COLORONCOLOR);
+		StretchBlt(hDC,
+			DestRect->left,
+			DestRect->top,
+			DestHeight,
+			DestHeight,
+			MemDC,
+			SourceRect->left,
+			SourceRect->top,
+			SourceWidth,
+			SourceHeight,
+			SRCCOPY);
+	}
+
+	DeleteDC(MemDC);
+
+	return TRUE;
 }
