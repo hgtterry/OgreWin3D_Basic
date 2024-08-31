@@ -39,6 +39,11 @@ public:
 
 	int What_Check_Name;
 
+	HBITMAP	Sel_BaseBitmap;
+	long BasePicWidth;
+	long BasePicHeight;
+	HWND RightGroups_Hwnd;
+
 private:
 
 	static LRESULT CALLBACK Message_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
@@ -65,8 +70,5 @@ private:
 	bool flag_Mouse_VerySlow;
 	bool flag_Mouse_Fast;
 
-	HBITMAP	Sel_BaseBitmap;
-	long BasePicWidth;
-	long BasePicHeight;
 };
 

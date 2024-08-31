@@ -185,8 +185,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		{
 			//App->CL_Exporters->Start_Ogre_Export_Dlg();
 			//App->CL_Resources->Scan_Resource_Group(App->CL_Resources->Ogre_Loader_Resource_Group);
-			App->CL_Resources->Get_Resource_Groups();
-			
+			//App->CL_Resources->Get_Resource_Groups();
+			App->CL_Textures->Texture_To_HBITMP();
+
 			return TRUE;
 		}
 		

@@ -18,11 +18,17 @@ appreciated but is not required.
 #include "CL64_App.h"
 #include "CL64_Textures.h"
 
+#include "il.h"
+#include "ilu.h"
+#include "ilut.h"
+
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 
 CL64_Textures::CL64_Textures(void)
 {
+	ilInit();
+
 	TextureFileName[0] = 0;
 	Just_Texture_FileName[0] = 0;
 
@@ -116,6 +122,8 @@ void CL64_Textures::Load_Textures_Assimp()
 		strcat(buf, "TTemp.bmp");
 		remove(buf);
 	}
+
+	//ilutWinLoadImage(NULL, NULL);
 }
 
 // *************************************************************************
@@ -183,6 +191,26 @@ bool CL64_Textures::Load_OpenGL_Textures(int TextureID)
 	return 1;
 }
 
+#include <gdiplus.h>
+#pragma comment( lib, "Gdiplus.lib")
+
+// *************************************************************************
+// *			 Texture_To_HBITMP:- Terry and Hazel Flanigan 2024	 	   *
+// *************************************************************************
+void CL64_Textures::Texture_To_HBITMP()
+{
+	HWND PreviewWnd = GetDlgItem(App->CL_Dialogs->RightGroups_Hwnd, IDC_BASETEXTURE);
+	HDC	hDC = GetDC(PreviewWnd);
+
+	char mFileName[MAX_PATH];
+	strcpy(mFileName, App->GD_Directory_FullPath);
+	strcat(mFileName, "\\Dummy.bmp");
+	App->CL_Dialogs->BasePicHeight = 256;
+	App->CL_Dialogs->BasePicWidth = 256;
+	App->CL_Dialogs->Sel_BaseBitmap = ilutWinLoadImage(mFileName, hDC);
+	Debug
+}
+
 // *************************************************************************
 // *		 Import_OpenGL_Texture:- Terry and Hazel Flanigan 2024	 	   *
 // *************************************************************************
@@ -248,7 +276,7 @@ bool CL64_Textures::Import_OpenGL_Texture(UINT textureArray[], LPSTR strFileName
 		//Texture_To_Bmp(strFileName);
 		remove("Etemp.bmp");
 	}
-
+	
 	return 1;
 }
 

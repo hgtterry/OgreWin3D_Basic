@@ -41,6 +41,8 @@ CL64_Dialogs::CL64_Dialogs(void)
 	Sel_BaseBitmap = nullptr;
 	BasePicWidth = 0;
 	BasePicHeight = 0;
+
+	RightGroups_Hwnd = NULL;
 }
 
 CL64_Dialogs::~CL64_Dialogs(void)
@@ -827,7 +829,7 @@ LRESULT CALLBACK CL64_Dialogs::Dialog_Text_Proc(HWND hDlg, UINT message, WPARAM 
 // *************************************************************************
 void CL64_Dialogs::Start_TextureViewer_Dialog()
 {
-	CreateDialog(App->hInst, (LPCTSTR)IDD_TEXTUREVIEWER, App->MainHwnd, (DLGPROC)TextureViewer_Proc);
+	RightGroups_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_TEXTUREVIEWER, App->MainHwnd, (DLGPROC)TextureViewer_Proc);
 }
 
 // **************************************************************************
@@ -930,7 +932,7 @@ bool CALLBACK CL64_Dialogs::ViewerBasePic(HWND hwnd, UINT msg, WPARAM wParam, LP
 		Rect.bottom--;
 		FillRect(hDC, &Rect, (HBRUSH)(RGB(0, 255, 0)));
 
-		/*if (App->CL_Dialogs->Sel_BaseBitmap != NULL)
+		if (App->CL_Dialogs->Sel_BaseBitmap != NULL)
 		{
 			RECT	Source;
 			RECT	Dest;
@@ -948,7 +950,7 @@ bool CALLBACK CL64_Dialogs::ViewerBasePic(HWND hwnd, UINT msg, WPARAM wParam, LP
 
 			App->CL_Dialogs->RenderTexture_Blit(hDC, App->CL_Dialogs->Sel_BaseBitmap, &Source, &Dest);
 			ReleaseDC(hwnd, hDC);
-		}*/
+		}
 
 		EndPaint(hwnd, &ps);
 		return 0;
