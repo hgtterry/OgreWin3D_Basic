@@ -265,7 +265,7 @@ void CL64_Importers::Scan_Material_Files(void)
 		}
 		else
 		{
-			subEnt->setMaterialName("Sinbad/Body", App->CL_Ogre->App_Resource_Group);
+			subEnt->setMaterialName("GD_Core/No_Material", App->CL_Ogre->App_Resource_Group);
 		}
 	}
 
