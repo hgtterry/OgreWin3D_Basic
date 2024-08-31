@@ -70,6 +70,7 @@ private:
 	int ShowAllTextures();
 
 	bool Get_File(char* FileName);
+	bool View_Texture(char* FileName);
 	bool Export_Resource(char* FileName) const;
 
 	int Show_Resource_Group_All();

@@ -28,7 +28,7 @@ public:
 	void Start_Speed_Camera_Dlg();
 	void Start_FPSLock_Dlg();
 	bool Dialog_Text(int What_Check);
-	void Start_TextureViewer_Dialog();
+	void Start_TextureViewer_Dialog(char* TextureFile);
 	
 	bool Canceled;
 	bool Flag_Convert_to_Ogre;

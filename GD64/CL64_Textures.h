@@ -28,7 +28,7 @@ public:
 
 	bool Create_DummyTexture(char* Folder);
 	bool HBITMAP_TO_BmpFile(HBITMAP Bitmap, char* Filename, char* SaveFolder);
-	void Texture_To_HBITMP();
+	void Texture_To_HBITMP(char* TextureFileName);
 
 	void Get_Just_FileName(char* pString, char* FileName);
 

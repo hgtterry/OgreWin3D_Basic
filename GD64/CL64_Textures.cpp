@@ -194,19 +194,18 @@ bool CL64_Textures::Load_OpenGL_Textures(int TextureID)
 // *************************************************************************
 // *			 Texture_To_HBITMP:- Terry and Hazel Flanigan 2024	 	   *
 // *************************************************************************
-void CL64_Textures::Texture_To_HBITMP()
+void CL64_Textures::Texture_To_HBITMP(char* TextureFileName)
 {
 	HWND PreviewWnd = GetDlgItem(App->CL_Dialogs->RightGroups_Hwnd, IDC_BASETEXTURE);
 	HDC	hDC = GetDC(PreviewWnd);
 
-	char mFileName[MAX_PATH];
-	strcpy(mFileName, App->GD_Directory_FullPath);
-	strcat(mFileName, "\\Media\\Core_Data\\Files\\Material0.bmp");
 	App->CL_Dialogs->BasePicHeight = 256;
 	App->CL_Dialogs->BasePicWidth = 256;
-	App->CL_Dialogs->Sel_BaseBitmap = ilutWinLoadImage(mFileName, hDC);
+	App->CL_Dialogs->Sel_BaseBitmap = ilutWinLoadImage(TextureFileName, hDC);
 
 	RedrawWindow(App->CL_Dialogs->RightGroups_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+
 }
 
 // *************************************************************************
