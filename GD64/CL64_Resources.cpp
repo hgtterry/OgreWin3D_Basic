@@ -1364,24 +1364,33 @@ void CL64_Resources::Load_OgreCFG_Resources(const Ogre::String& file)
 	
 	if (App->CL_Scene->Imported_Ogre_Node)
 	{
-		App->CL_Ogre->Ogre3D_Listener->Ogre_Model_Loaded = 0;
+		if (App->CL_Scene->Scene_Mode == Enums::Scene_Mode_TestMesh)
+		{
 
-		App->CL_Scene->Imported_Ogre_Node->detachAllObjects();
-		App->CL_Ogre->mSceneMgr->destroySceneNode(App->CL_Scene->Imported_Ogre_Node);
-		App->CL_Ogre->mSceneMgr->destroyEntity(App->CL_Scene->Imported_Ogre_Ent);
-		App->CL_Scene->Imported_Ogre_Ent = nullptr;
-		App->CL_Scene->Imported_Ogre_Node = nullptr;
+		}
+		else
+		{
+			App->CL_Ogre->Ogre3D_Listener->Ogre_Model_Loaded = 0;
 
-		UnloadUserResources();
+			App->CL_Scene->Imported_Ogre_Node->detachAllObjects();
+			App->CL_Ogre->mSceneMgr->destroySceneNode(App->CL_Scene->Imported_Ogre_Node);
+			App->CL_Ogre->mSceneMgr->destroyEntity(App->CL_Scene->Imported_Ogre_Ent);
+			App->CL_Scene->Imported_Ogre_Ent = nullptr;
+			App->CL_Scene->Imported_Ogre_Node = nullptr;
 
-		App->CL_Importers->Flag_Reload_Ogre_Model = 1;
+			UnloadUserResources();
+			App->CL_Importers->Flag_Reload_Ogre_Model = 1;
+		}
+
 	}
 
+	
 	if (Ogre::ResourceGroupManager::getSingleton().resourceGroupExists(App->CL_Resources->Ogre_Loader_Resource_Group) == NULL)
 	{
 		Ogre::ResourceGroupManager::getSingleton().createResourceGroup(App->CL_Resources->Ogre_Loader_Resource_Group);
 	}
 
+	
 #pragma warning(disable : 4996) // Nightmare why
 
 	ResourcesCfgFile = file;
