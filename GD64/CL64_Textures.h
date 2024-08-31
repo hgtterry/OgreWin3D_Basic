@@ -32,6 +32,8 @@ public:
 
 	void Get_Just_FileName(char* pString, char* FileName);
 
+	void RenderTexture_Blit(HDC hDC, HBITMAP Bmp, const RECT* SourceRect, const RECT* DestRect);
+
 	char TextureFileName[MAX_PATH];
 	char Just_Texture_FileName[MAX_PATH];
 

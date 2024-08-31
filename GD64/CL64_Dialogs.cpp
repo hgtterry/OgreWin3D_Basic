@@ -916,7 +916,7 @@ LRESULT CALLBACK CL64_Dialogs::TextureViewer_Proc(HWND hDlg, UINT message, WPARA
 }
 
 // *************************************************************************
-// *						ViewerBasePic Terry Flanigan	  			   *
+// *			ViewerBasePic:- Terry and Hazel Flanigan 2024	  		   *
 // *************************************************************************
 bool CALLBACK CL64_Dialogs::ViewerBasePic(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
@@ -949,7 +949,7 @@ bool CALLBACK CL64_Dialogs::ViewerBasePic(HWND hwnd, UINT msg, WPARAM wParam, LP
 			hDC = GetDC(hwnd);
 			SetStretchBltMode(hDC, HALFTONE);
 
-			App->CL_Dialogs->RenderTexture_Blit(hDC, App->CL_Dialogs->Sel_BaseBitmap, &Source, &Dest);
+			App->CL_Textures->RenderTexture_Blit(hDC, App->CL_Dialogs->Sel_BaseBitmap, &Source, &Dest);
 			ReleaseDC(hwnd, hDC);
 		}
 
@@ -957,46 +957,4 @@ bool CALLBACK CL64_Dialogs::ViewerBasePic(HWND hwnd, UINT msg, WPARAM wParam, LP
 		return 0;
 	}
 	return 0;// DefWindowProc(hwnd, msg, wParam, lParam);
-}
-
-// *************************************************************************
-// *					RenderTexture_Blit Terry Bernie		  		   *
-// *************************************************************************
-bool CL64_Dialogs::RenderTexture_Blit(HDC hDC, HBITMAP Bmp, const RECT* SourceRect, const RECT* DestRect)
-{
-	HDC		MemDC;
-	int		SourceWidth;
-	int		SourceHeight;
-	int		DestWidth;
-	int		DestHeight;
-
-	MemDC = CreateCompatibleDC(hDC);
-	if (MemDC == NULL)
-		return FALSE;
-
-	if (Bmp)
-	{
-		SelectObject(MemDC, Bmp);
-
-		SourceWidth = SourceRect->right - SourceRect->left;
-		SourceHeight = SourceRect->bottom - SourceRect->top;
-		DestWidth = DestRect->right - DestRect->left;
-		DestHeight = DestRect->bottom - DestRect->top;
-		SetStretchBltMode(hDC, COLORONCOLOR);
-		StretchBlt(hDC,
-			DestRect->left,
-			DestRect->top,
-			DestHeight,
-			DestHeight,
-			MemDC,
-			SourceRect->left,
-			SourceRect->top,
-			SourceWidth,
-			SourceHeight,
-			SRCCOPY);
-	}
-
-	DeleteDC(MemDC);
-
-	return TRUE;
 }

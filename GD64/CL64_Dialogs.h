@@ -29,8 +29,7 @@ public:
 	void Start_FPSLock_Dlg();
 	bool Dialog_Text(int What_Check);
 	void Start_TextureViewer_Dialog();
-	bool RenderTexture_Blit(HDC hDC, HBITMAP Bmp, const RECT* SourceRect, const RECT* DestRect);
-
+	
 	bool Canceled;
 	bool Flag_Convert_to_Ogre;
 

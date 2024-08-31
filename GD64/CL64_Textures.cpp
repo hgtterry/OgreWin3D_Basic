@@ -201,7 +201,7 @@ void CL64_Textures::Texture_To_HBITMP()
 
 	char mFileName[MAX_PATH];
 	strcpy(mFileName, App->GD_Directory_FullPath);
-	strcat(mFileName, "\\Dummy.bmp");
+	strcat(mFileName, "\\Media\\Core_Data\\Files\\Material0.bmp");
 	App->CL_Dialogs->BasePicHeight = 256;
 	App->CL_Dialogs->BasePicWidth = 256;
 	App->CL_Dialogs->Sel_BaseBitmap = ilutWinLoadImage(mFileName, hDC);
@@ -418,4 +418,49 @@ void CL64_Textures::Get_Just_FileName(char* pString, char* FileName)
 			strcpy(Just_Texture_FileName, (FileName + Mark) + 1);
 		}
 	}
+}
+
+// *************************************************************************
+// *			RenderTexture_Blit:- Terry and Hazel Flanigan 2024	  	   *
+// *************************************************************************
+void CL64_Textures::RenderTexture_Blit(HDC hDC, HBITMAP Bmp, const RECT* SourceRect, const RECT* DestRect)
+{
+	HDC		MemDC;
+	int		SourceWidth;
+	int		SourceHeight;
+	int		DestWidth;
+	int		DestHeight;
+
+	MemDC = CreateCompatibleDC(hDC);
+	if (MemDC == NULL)
+	{
+		App->Say("Can not create MemDC");
+		return;
+	}
+
+
+	if (Bmp)
+	{
+		SelectObject(MemDC, Bmp);
+
+		SourceWidth = SourceRect->right - SourceRect->left;
+		SourceHeight = SourceRect->bottom - SourceRect->top;
+		DestWidth = DestRect->right - DestRect->left;
+		DestHeight = DestRect->bottom - DestRect->top;
+		SetStretchBltMode(hDC, COLORONCOLOR);
+		StretchBlt(hDC,
+			DestRect->left,
+			DestRect->top,
+			DestHeight,
+			DestHeight,
+			MemDC,
+			SourceRect->left,
+			SourceRect->top,
+			SourceWidth,
+			SourceHeight,
+			SRCCOPY);
+	}
+
+	DeleteDC(MemDC);
+
 }
