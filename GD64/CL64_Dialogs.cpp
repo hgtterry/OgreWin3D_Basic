@@ -830,6 +830,7 @@ LRESULT CALLBACK CL64_Dialogs::Dialog_Text_Proc(HWND hDlg, UINT message, WPARAM 
 void CL64_Dialogs::Start_TextureViewer_Dialog()
 {
 	RightGroups_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_TEXTUREVIEWER, App->MainHwnd, (DLGPROC)TextureViewer_Proc);
+	App->CL_Textures->Texture_To_HBITMP();
 }
 
 // **************************************************************************

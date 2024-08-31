@@ -191,9 +191,6 @@ bool CL64_Textures::Load_OpenGL_Textures(int TextureID)
 	return 1;
 }
 
-#include <gdiplus.h>
-#pragma comment( lib, "Gdiplus.lib")
-
 // *************************************************************************
 // *			 Texture_To_HBITMP:- Terry and Hazel Flanigan 2024	 	   *
 // *************************************************************************
@@ -208,7 +205,8 @@ void CL64_Textures::Texture_To_HBITMP()
 	App->CL_Dialogs->BasePicHeight = 256;
 	App->CL_Dialogs->BasePicWidth = 256;
 	App->CL_Dialogs->Sel_BaseBitmap = ilutWinLoadImage(mFileName, hDC);
-	Debug
+
+	RedrawWindow(App->CL_Dialogs->RightGroups_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 }
 
 // *************************************************************************
