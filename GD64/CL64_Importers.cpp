@@ -250,16 +250,6 @@ void CL64_Importers::Load_Ogre_Model(bool Use_File_Dialog)
 // *************************************************************************
 void CL64_Importers::Scan_Material_Files(void)
 {
-	
-	Ogre::MaterialManager& matMgrSgl = Ogre::MaterialManager::getSingleton();
-	Ogre::MaterialPtr ogremat = matMgrSgl.create("No_Material", App->CL_Resources->Ogre_Loader_Resource_Group);
-	ogremat->getTechnique(0)->getPass(0)->createTextureUnitState("po.jpg");
-
-	MaterialManager* omatMgr = MaterialManager::getSingletonPtr();
-
-	auto status = omatMgr->createOrRetrieve("No_Material", App->CL_Resources->Ogre_Loader_Resource_Group);
-
-
 	Ogre::String Material;
 
 	for (unsigned int i = 0; i < App->CL_Scene->Imported_Ogre_Ent->getNumSubEntities(); ++i)
@@ -271,12 +261,11 @@ void CL64_Importers::Scan_Material_Files(void)
 		bool Test = Ogre::MaterialManager::getSingleton().resourceExists(subEnt->getMaterialName(), App->CL_Resources->Ogre_Loader_Resource_Group);
 		if (Test == 1)
 		{
-			//App->Say(subEnt->getMaterialName().c_str());
+
 		}
 		else
 		{
-			subEnt->setMaterialName("No_Material", App->CL_Resources->Ogre_Loader_Resource_Group);
-			//App->Say(subEnt->getMaterialName().c_str());
+			subEnt->setMaterialName("Sinbad/Body", App->CL_Ogre->App_Resource_Group);
 		}
 	}
 
