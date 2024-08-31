@@ -396,13 +396,14 @@ void CL64_ImGui::Model_Data_GUI(void)
 					}
 					ImGui::PopID();
 
+					Count = 0;
 					while (Count < Size)
 					{
 						ImGui::PushID("foo");
 						if (ImGui::BeginMenu(App->CL_Scene->S_OgreMeshData[0]->mSubmeshes[Count].m_SubMesh_Name_str.c_str()))
 						{
 							ImGui::Text("Dedicated vertices:  %s", App->CL_Scene->S_OgreMeshData[0]->mSubmeshes[Count].m_HasSharedVertices_str.c_str());
-							ImGui::Text("Material Name: %s", App->CL_Scene->S_OgreMeshData[0]->mSubmeshes[Count].m_Matrial_Name_str.c_str());
+							ImGui::Text("Material Name: %s", App->CL_Scene->S_OgreMeshData[0]->m_Materials_Names[Count].c_str());
 							ImGui::Text("Vertices Count: %i", App->CL_Scene->S_OgreMeshData[0]->mSubmeshes[Count].VerticesCount);
 							ImGui::Text("Bones Used: %i", App->CL_Scene->S_OgreMeshData[0]->mSubmeshes[Count].BonesCount);
 

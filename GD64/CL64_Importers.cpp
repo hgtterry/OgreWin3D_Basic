@@ -252,12 +252,12 @@ void CL64_Importers::Scan_Material_Files(void)
 {
 	
 	Ogre::MaterialManager& matMgrSgl = Ogre::MaterialManager::getSingleton();
-	Ogre::MaterialPtr ogremat = matMgrSgl.create("Test_Material", App->CL_Resources->Ogre_Loader_Resource_Group);
+	Ogre::MaterialPtr ogremat = matMgrSgl.create("No_Material", App->CL_Resources->Ogre_Loader_Resource_Group);
 	ogremat->getTechnique(0)->getPass(0)->createTextureUnitState("po.jpg");
 
 	MaterialManager* omatMgr = MaterialManager::getSingletonPtr();
 
-	auto status = omatMgr->createOrRetrieve("Test_Material", App->CL_Resources->Ogre_Loader_Resource_Group);
+	auto status = omatMgr->createOrRetrieve("No_Material", App->CL_Resources->Ogre_Loader_Resource_Group);
 
 
 	Ogre::String Material;
@@ -267,7 +267,7 @@ void CL64_Importers::Scan_Material_Files(void)
 		Ogre::SubEntity* subEnt = App->CL_Scene->Imported_Ogre_Ent->getSubEntity(i);
 		
 		Material = subEnt->getMaterialName();
-
+		
 		bool Test = Ogre::MaterialManager::getSingleton().resourceExists(subEnt->getMaterialName(), App->CL_Resources->Ogre_Loader_Resource_Group);
 		if (Test == 1)
 		{
@@ -275,7 +275,8 @@ void CL64_Importers::Scan_Material_Files(void)
 		}
 		else
 		{
-			subEnt->setMaterialName("Test_Material", App->CL_Resources->Ogre_Loader_Resource_Group);
+			subEnt->setMaterialName("No_Material", App->CL_Resources->Ogre_Loader_Resource_Group);
+			//App->Say(subEnt->getMaterialName().c_str());
 		}
 	}
 

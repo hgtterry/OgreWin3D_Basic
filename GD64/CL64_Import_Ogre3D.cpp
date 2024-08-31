@@ -467,16 +467,14 @@ void CL64_Imp_Ogre3D::Get_Ogre_Mesh_Data(Ogre::Entity* Ogre_Entity)
 	int SubMeshCount = Ogre_Entity->getNumSubEntities();
 	App->CL_Scene->S_OgreMeshData[0]->mSubMeshCount = SubMeshCount;
 
-
-	int Count = 0;
-	while (Count < SubMeshCount)
+	for (unsigned int i = 0; i < App->CL_Scene->Imported_Ogre_Ent->getNumSubEntities(); ++i)
 	{
-		Ogre::SubMesh const* subMesh = Ogre_Entity->getSubEntity(Count)->getSubMesh();
-
-		App->CL_Scene->S_OgreMeshData[0]->m_Materials_Names.push_back(subMesh->getMaterialName());
-		Count++;
+		Ogre::SubEntity* subEnt = App->CL_Scene->Imported_Ogre_Ent->getSubEntity(i);
+		App->CL_Scene->S_OgreMeshData[0]->m_Materials_Names.push_back(subEnt->getMaterialName());
 	}
 
+	int Count = 0;
+	
 	App->CL_Scene->S_OgreMeshData[0]->mStrName = Ogre_Entity->getName();
 	
 	// ------------------------------------ Sub Meshes
