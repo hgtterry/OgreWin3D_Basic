@@ -113,8 +113,10 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		App->CL_Resources->Export_Button = GetDlgItem(hDlg, IDC_BT_EXPORT);
-		EnableWindow(App->CL_Resources->Export_Button, false);
 
+		EnableWindow(GetDlgItem(hDlg, IDC_BT_VIEWFILE), false);
+		EnableWindow(GetDlgItem(hDlg, IDC_BT_EXPORT), false);
+		
 		App->CL_Resources->Update_Resource_Groups_Combo(hDlg);
 
 		App->CL_Resources->CreateListGeneral_FX(hDlg);
@@ -580,6 +582,8 @@ void CL64_Resources::Update_Resource_Groups_Combo(HWND hDlg)
 
 		Count++;
 	}
+
+	SendDlgItemMessage(hDlg, IDC_LST_GROUPS, LB_SETCURSEL, (WPARAM)0, (LPARAM)sv[Count].c_str());
 
 }
 
