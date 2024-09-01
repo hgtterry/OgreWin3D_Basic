@@ -104,7 +104,7 @@ LRESULT CALLBACK CL64_Exporters::Export_Ogre_Dlg_Proc(HWND hDlg, UINT message, W
 		SendMessage(Temp, BM_SETCHECK, BST_CHECKED, 0);
 		App->CL_Exp_Ogre->flag_Create_Edge_List = 1;
 
-		// Just for Now
+		// Needs Looking At
 		EnableWindow(GetDlgItem(hDlg, IDC_ST_SUBFOLDER_NAME), 0);
 		EnableWindow(GetDlgItem(hDlg, IDC_BT_FOLDER_NAME), 0);
 		EnableWindow(GetDlgItem(hDlg, IDC_CK_SUBFOLDER), 0);

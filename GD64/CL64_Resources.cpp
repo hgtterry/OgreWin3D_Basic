@@ -36,8 +36,9 @@ CL64_Resources::CL64_Resources(void)
 	Ogre_Loader_Resource_Group = "Ogre_Loader_Resource_Group";
 	mSelected_Resource_Group = "App_Resource_Group";
 
-	FX_General_hLV = nullptr;
-	Export_Button = nullptr;
+	FX_General_hLV =	nullptr;
+	Export_Button =		nullptr;
+	Resource_Dlg_hWnd = nullptr;
 
 	mbtext[0] = 0;
 	mSelected_File[0] = 0;
@@ -129,6 +130,8 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 		App->CL_Resources->Update_Counter(Items, hDlg);
 
 		App->CL_Resources->Set_Title(hDlg, (LPSTR)"All");
+
+		App->CL_Resources->Resource_Dlg_hWnd = hDlg;
 
 		return TRUE;
 	}
@@ -350,6 +353,8 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 			int Items = App->CL_Resources->ShowAllTextures();
 			App->CL_Resources->Update_Counter(Items, hDlg);
 
+			EnableWindow(GetDlgItem(hDlg, IDC_BT_VIEWFILE), true);
+
 			return TRUE;
 		}
 
@@ -472,6 +477,9 @@ void CL64_Resources::Reset_Flags()
 	flag_Show_All_Textures = 0;
 	flag_Show_All_Meshes = 0;
 	flag_Show_Group_All = 0;
+
+	EnableWindow(GetDlgItem(Resource_Dlg_hWnd, IDC_BT_VIEWFILE), false);
+
 }
 
 // *************************************************************************

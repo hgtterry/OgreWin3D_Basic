@@ -94,6 +94,7 @@ private:
 
 	HWND FX_General_hLV;
 	HWND Export_Button;
+	HWND Resource_Dlg_hWnd;
 
 	char mbtext[MAX_PATH];
 	char mSelected_File[MAX_PATH];

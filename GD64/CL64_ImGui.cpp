@@ -313,10 +313,9 @@ void CL64_ImGui::Model_Data_GUI(void)
 	}
 	else
 	{
-		ImGui::Text("Model Info");
-		ImGui::Separator();
-
-		if (ImGui::TreeNode("Paths"))
+		ImGui::Text("Ogre3D Model");
+		
+		/*if (ImGui::TreeNode("Paths"))
 		{
 			ImGui::PushID("foo");
 			if (ImGui::BeginMenu("Model Name"))
@@ -352,15 +351,15 @@ void CL64_ImGui::Model_Data_GUI(void)
 
 			ImGui::TreePop();
 			
-		}
+		}*/
 
 		ImGui::Separator();
 
-		if (ImGui::TreeNode("Ogre3D Model","Ogre3D Model:  %s", App->CL_Scene->S_OgreMeshData[0]->mFileName_Str.c_str()))
+		if (ImGui::TreeNode("Ogre3D Model","%s", App->CL_Scene->S_OgreMeshData[0]->mFileName_Str.c_str()))
 		{
 			if (App->CL_Import_Ogre3D->flag_Ogre_Model_Loaded == 1)
 			{
-				ImGui::Text("User Name:- %s", App->CL_Scene->S_OgreMeshData[0]->mStrName.c_str());
+				//ImGui::Text("User Name:- %s", App->CL_Scene->S_OgreMeshData[0]->mStrName.c_str());
 				if (ImGui::TreeNode("Materials"))
 				{
 					int Count = 0;
@@ -481,9 +480,7 @@ void CL64_ImGui::Model_Data_GUI(void)
 			ImGui::TreePop();
 		}
 
-		ImGui::Separator();
-
-		if (ImGui::TreeNode("Mesh Data"))
+		/*if (ImGui::TreeNode("Mesh Data"))
 		{
 			ImGui::Indent();
 			ImGui::Text("Vertices:- %i", App->CL_Scene->VerticeCount);
@@ -495,7 +492,7 @@ void CL64_ImGui::Model_Data_GUI(void)
 			ImGui::Unindent();
 
 			ImGui::TreePop();
-		}
+		}*/
 
 		ImGui::Separator();
 		
