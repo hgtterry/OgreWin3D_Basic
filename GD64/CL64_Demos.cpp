@@ -102,6 +102,8 @@ void CL64_Demos::Start_Demo_2(void)
 {
 	App->CL_Scene->Clear_Scene_And_Reset();
 
+	App->CL_Resources->Destroy_Resources_Group(App->CL_Resources->Ogre_Loader_Resource_Group);
+	
 	App->CL_Camera->Reset_View();
 
 	App->CL_Grid->Enable_Grid_And_Hair(false);

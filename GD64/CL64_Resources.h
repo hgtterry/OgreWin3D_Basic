@@ -31,16 +31,18 @@ public:
 	CL64_Resources(void);
 	~CL64_Resources(void);
 
-	void Reset_Class(void) const;
+	void Reset_Class(void);
 
 	void Start_Resources();
 
 	void Load_OgreCFG_Resources(const Ogre::String& file);
 
 	bool Scan_Resource_Group(Ogre::String ResourceGroup);
-	
+	void Destroy_Resources_Group(Ogre::String ResourceGroup);
+
 	void Get_Resource_Groups();
 	void Update_Resource_Groups_Combo(HWND hDlg);
+	
 
 	bool Ogre_ExternalResourceLoaded;
 

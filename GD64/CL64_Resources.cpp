@@ -52,28 +52,26 @@ CL64_Resources::~CL64_Resources(void)
 // *************************************************************************
 // *			Reset_Class:- Terry and Hazel Flanigan 2024				   *
 // *************************************************************************
-void CL64_Resources::Reset_Class(void) const
+void CL64_Resources::Reset_Class(void)
 {
-	if (Ogre::ResourceGroupManager::getSingleton().resourceGroupExists(App->CL_Converters->Temp_Resource_Group))
-	{
-		Ogre::ResourceGroupManager::getSingleton().destroyResourceGroup(App->CL_Converters->Temp_Resource_Group);
-	}
-
-	if (Ogre::ResourceGroupManager::getSingleton().resourceGroupExists(App->CL_Ogre->World_Resource_Group))
-	{
-		Ogre::ResourceGroupManager::getSingleton().destroyResourceGroup(App->CL_Ogre->World_Resource_Group);
-	}
+	Destroy_Resources_Group(App->CL_Converters->Temp_Resource_Group);
+	Destroy_Resources_Group(App->CL_Ogre->World_Resource_Group);
 
 	if (Ogre_ExternalResourceLoaded == 0)
 	{
-		if (Ogre::ResourceGroupManager::getSingleton().resourceGroupExists(App->CL_Resources->Ogre_Loader_Resource_Group))
-		{
-			Ogre::ResourceGroupManager::getSingleton().destroyResourceGroup(App->CL_Resources->Ogre_Loader_Resource_Group);
-			//Ogre_ExternalResourceLoaded = 0;
-		}
+		Destroy_Resources_Group(App->CL_Resources->Ogre_Loader_Resource_Group);
 	}
+}
 
-	//Debug
+// *************************************************************************
+// *	  	Destroy_Resources_Group:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+void CL64_Resources::Destroy_Resources_Group(Ogre::String ResourceGroup)
+{
+	if (Ogre::ResourceGroupManager::getSingleton().resourceGroupExists(ResourceGroup))
+	{
+		Ogre::ResourceGroupManager::getSingleton().destroyResourceGroup(ResourceGroup);
+	}
 }
 
 // *************************************************************************
