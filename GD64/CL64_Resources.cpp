@@ -425,7 +425,7 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 				App->CL_Resources->Reset_Flags();
 				App->CL_Resources->flag_Show_Group_All = 1;
 
-				//RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+				RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 				
 			return TRUE;
 		}

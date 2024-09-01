@@ -37,6 +37,7 @@ CL64_TopDlg::CL64_TopDlg(void)
 	flag_Toggle_Tabs_Demos = 0;
 	flag_Toggle_Tabs_Physics = 0;
 	flag_Toggle_Tabs_Motions = 0;
+	flag_Toggle_Tabs_Resources = 0;
 
 	flag_Toggle_Cam_ModelMode = 1;
 	flag_Toggle_Cam_FreeMode = 0;
@@ -504,6 +505,7 @@ LRESULT CALLBACK CL64_TopDlg::Tabs_Headers_Proc(HWND hDlg, UINT message, WPARAM 
 		SendDlgItemMessage(hDlg, IDC_BT_TD_DEMOSTAB, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_TD_PHYSICSTAB, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_TD_MOTIONSTAB, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_TD_RESOURCETAB, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
 		return TRUE;
 	}
@@ -549,6 +551,13 @@ LRESULT CALLBACK CL64_TopDlg::Tabs_Headers_Proc(HWND hDlg, UINT message, WPARAM 
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Toggle_Tabs(item, App->CL_TopDlg->flag_Toggle_Tabs_Motions);
+			return CDRF_DODEFAULT;
+		}
+		
+		if (some_item->idFrom == IDC_BT_TD_RESOURCETAB)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle_Tabs(item, App->CL_TopDlg->flag_Toggle_Tabs_Resources);
 			return CDRF_DODEFAULT;
 		}
 		
@@ -612,6 +621,12 @@ LRESULT CALLBACK CL64_TopDlg::Tabs_Headers_Proc(HWND hDlg, UINT message, WPARAM 
 			return TRUE;
 		}
 		
+		if (LOWORD(wParam) == IDC_BT_TD_RESOURCETAB)
+		{
+			App->CL_Resources->Start_Resources();
+			return TRUE;
+		}
+		
 	}
 	}
 	return FALSE;
@@ -656,7 +671,6 @@ LRESULT CALLBACK CL64_TopDlg::Debug_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 		SendDlgItemMessage(hDlg, IDC_BT_TD_DEBUG_IMGUIDEMO, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_TD_DEBUG_TESTCUBE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_TD_DEBUG_IMGUIFPS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_BT_TD_DEBUG_RESOURCES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_TD_DEBUG_TRAYSFPS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_TD_DEBUG_FPSLOCK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
@@ -710,13 +724,6 @@ LRESULT CALLBACK CL64_TopDlg::Debug_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 			return CDRF_DODEFAULT;
 		}
 
-		if (some_item->idFrom == IDC_BT_TD_DEBUG_RESOURCES)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Normal(item);
-			return CDRF_DODEFAULT;
-		}
-		
 		if (some_item->idFrom == IDC_BT_TD_DEBUG_FPSLOCK)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
@@ -790,19 +797,10 @@ LRESULT CALLBACK CL64_TopDlg::Debug_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 
 		if (LOWORD(wParam) == IDC_BT_TD_DEBUG_FPSLOCK)
 		{
-		
 			App->CL_Dialogs->Start_FPSLock_Dlg();
-			
 			return 1;
 		}
 		
-		if (LOWORD(wParam) == IDC_BT_TD_DEBUG_RESOURCES)
-		{
-			App->CL_Resources->Start_Resources();
-
-			return 1;
-		}
-
 		return FALSE;
 	}
 
@@ -1588,14 +1586,14 @@ void CL64_TopDlg::Init_Bmps_Globals(void)
 	ti24.hwnd = App->MainHwnd;
 	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti24);
 
-	Temp = GetDlgItem(Debug_TB_hWnd, IDC_BT_TD_DEBUG_RESOURCES);
+	/*Temp = GetDlgItem(Debug_TB_hWnd, IDC_BT_TD_DEBUG_RESOURCES);
 	TOOLINFO ti25 = { 0 };
 	ti25.cbSize = sizeof(ti25);
 	ti25.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
 	ti25.uId = (UINT_PTR)Temp;
 	ti25.lpszText = (LPSTR)"Show Resources used by the App.";
 	ti25.hwnd = App->MainHwnd;
-	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti25);
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti25);*/
 	
 	// ------------------------- Camera Panel
 

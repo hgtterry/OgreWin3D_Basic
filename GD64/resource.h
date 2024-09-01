@@ -97,6 +97,7 @@
 #define IDC_ALLMATERIALS                1010
 #define IDC_BTSHOWBONES                 1010
 #define IDC_CKVERYSLOW                  1010
+#define IDC_BT_TD_RESOURCETAB           1010
 #define IDC_TBSHOWHAIR                  1011
 #define IDC_BT_TD_DEBUG_PHYSICSDEBUG    1011
 #define IDC_TBSHOWGRID                  1012
