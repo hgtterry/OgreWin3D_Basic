@@ -542,7 +542,7 @@ void CL64_Resources::CreateListGeneral_FX(HWND hDlg)
 }
 
 // *************************************************************************
-// *			ListView_OnClickOptions  Terry Bernie			 		   *
+// *		ListView_OnClickOptions:- Terry and Hazel Flanigan 2024	 	   *
 // *************************************************************************
 void CL64_Resources::ListView_OnClickOptions(LPARAM lParam)
 {

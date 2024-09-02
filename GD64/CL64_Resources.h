@@ -37,12 +37,7 @@ public:
 
 	void Load_OgreCFG_Resources(const Ogre::String& file);
 
-	bool Scan_Resource_Group(Ogre::String ResourceGroup);
 	void Destroy_Resources_Group(Ogre::String ResourceGroup);
-
-	void Get_Resource_Groups();
-	void Update_Resource_Groups_Combo(HWND hDlg);
-	
 
 	bool Ogre_ExternalResourceLoaded;
 
@@ -52,6 +47,10 @@ public:
 private:
 
 	static LRESULT CALLBACK Resources_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+
+	bool Scan_Resource_Group(Ogre::String ResourceGroup);
+	void Get_Resource_Groups();
+	void Update_Resource_Groups_Combo(HWND hDlg);
 
 	void Set_Title(HWND hDlg,char* Title);
 	void Reset_Flags();
