@@ -74,7 +74,6 @@ void CL64_TopDlg::Reset_Class(void) const
 
 	App->CL_Ogre->OGL_Listener->Flag_ShowFaces = 0;
 	App->CL_Ogre->OGL_Listener->Flag_ShowPoints = 0;
-	App->CL_ImGui->flag_Show_Model_Data = 1;
 	App->CL_Ogre->OGL_Listener->Flag_ShowBones = 0;
 	App->CL_Ogre->OGL_Listener->Flag_ShowNormals = 0;
 	App->CL_Ogre->OGL_Listener->Flag_ShowBoundingBox = 0;
@@ -83,11 +82,12 @@ void CL64_TopDlg::Reset_Class(void) const
 	SendMessage(GetDlgItem(TabsHwnd, IDC_BTSHOWTEXTURES), BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_TexturesOn_Bmp);
 	SendMessage(GetDlgItem(TabsHwnd, IDC_TBSHOWFACES), BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshOff_Bmp);
 	SendMessage(GetDlgItem(TabsHwnd, IDC_BTSHOWPOINTS), BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshPointsOff_Bmp);
-	SendMessage(GetDlgItem(TabsHwnd, IDC_TBINFO), BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_ModelInfoOn_Bmp);
 	SendMessage(GetDlgItem(TabsHwnd, IDC_BTSHOWBONES), BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_BonesOff_Bmp);
 	SendMessage(GetDlgItem(TabsHwnd, IDC_BTSHOWNORMALS), BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_NormalsOff_Bmp);
 	SendMessage(GetDlgItem(TabsHwnd, IDC_TBBOUNDBOX), BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_BBOff_Bmp);
 
+	App->CL_TopDlg->Show_Info_Panel(true);
+	
 	App->CL_TopDlg->Update_Motions_Combo();
 
 	EnableWindow(GetDlgItem(Demos_TB_hWnd, IDC_BT_TD_DEMOS_OPTIONS), false);
@@ -389,20 +389,15 @@ LRESULT CALLBACK CL64_TopDlg::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam
 		//-------------------------------------------------------- Show Info
 		if (LOWORD(wParam) == IDC_TBINFO)
 		{
-			
 			HWND Temp = GetDlgItem(hDlg, IDC_TBINFO);
 
 			if (App->CL_ImGui->flag_Show_Model_Data == 1)
 			{
-				App->CL_ImGui->flag_Show_Model_Data = 0;
-
-				SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_ModelInfo_Bmp);
+				App->CL_TopDlg->Show_Info_Panel(false);
 			}
 			else
 			{
-				App->CL_ImGui->flag_Show_Model_Data = 1;
-
-				SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_ModelInfoOn_Bmp);
+				App->CL_TopDlg->Show_Info_Panel(true);
 			}
 
 			return TRUE;
@@ -1682,6 +1677,27 @@ void CL64_TopDlg::Enable_Info_Icon(bool Enable) const
 	else
 	{
 		SendMessage(GetDlgItem(TabsHwnd, IDC_TBINFO), BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_ModelInfo_Bmp);
+	}
+}
+
+// **************************************************************************
+// *	  		 Show_Info_Panel:- Terry and Hazel Flanigan 2024			*
+// **************************************************************************
+void CL64_TopDlg::Show_Info_Panel(bool Enable)
+{
+	HWND Temp = GetDlgItem(TabsHwnd, IDC_TBINFO);
+
+	if (Enable == 1)
+	{
+		App->CL_ImGui->flag_Show_Model_Data = 1;
+
+		SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_ModelInfoOn_Bmp);
+	}
+	else
+	{
+		App->CL_ImGui->flag_Show_Model_Data = 0;
+
+		SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_ModelInfo_Bmp);
 	}
 }
 

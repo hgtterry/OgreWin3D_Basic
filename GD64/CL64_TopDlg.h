@@ -29,6 +29,7 @@ public:
 	void Enable_TestMesh_Button(bool Enable);
 	void Enable_Grid_Hair_Icons(bool Enable) const;
 	void Enable_Info_Icon(bool Enable) const;
+	void Show_Info_Panel(bool Enable);
 
 	// Tab Options
 	void Start_Debug_TB(void);
