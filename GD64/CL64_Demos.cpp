@@ -174,13 +174,4 @@ void CL64_Demos::Reset_View(void)
 		App->CL_Player->Set_Player_Rotation(btQuaternion(0.7071068, 0, 0.7071068, 0));
 	}
 
-	//float x = App->CL_Scene->B_Player[0]->StartPos.x;
-	//float y = App->CL_Scene->B_Player[0]->StartPos.y;
-	//float z = App->CL_Scene->B_Player[0]->StartPos.z;
-
-	//App->CL_Scene->B_Player[0]->Phys_Body->getWorldTransform().setOrigin(btVector3(x, y, z));
-	//App->CL_Scene->B_Player[0]->Phys_Body->getWorldTransform().setRotation(App->CL_Scene->B_Player[0]->Physics_Rotation);
-
-	//App->CL_Scene->B_Player[0]->CameraPitch_Node->setOrientation(Ogre::Quaternion::IDENTITY);
-
 }

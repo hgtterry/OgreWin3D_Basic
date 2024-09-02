@@ -22,17 +22,17 @@ public:
 	~CL64_Demos(void);
 
 	void Reset_Class(void);
+	void Reset_View(void);
 
 	void Start_Demo_1(void);
 	void Start_Demo_2(void);
 
-	void Reset_View(void);
+private:
 
 	Ogre::Entity* World_Ent;
 	Ogre::SceneNode* World_Node;
 
 	bool flag_Demo_1_Running;
 	bool flag_Demo_2_Running;
-
 };
 

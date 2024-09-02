@@ -41,7 +41,7 @@ appreciated but is not required.
 
 #include "CLOW_Exp_Ogre3D.h"
 #include "CL64_Exporters.h"
-#include "CLOW_Dimensions.h"
+#include "CL64_Dimensions.h"
 #include "OW3D_Exp_Obj.h"
 
 class CL64_App
@@ -77,7 +77,7 @@ public:
 
 	CLOW_Exp_Ogre3D*	CL_Exp_Ogre;
 	CL64_Exporters*		CL_Exporters;
-	CLOW_Dimensions*	CL_Dimensions;
+	CL64_Dimensions*	CL_Dimensions;
 	OW3D_Exp_Obj*		CL_Exp_Obj;
 
 	void InitApp(void);

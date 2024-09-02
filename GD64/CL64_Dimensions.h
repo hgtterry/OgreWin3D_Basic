@@ -14,12 +14,12 @@ appreciated but is not required.
 */
 
 #pragma once
-class CLOW_Dimensions
+class CL64_Dimensions
 {
 public:
 
-	CLOW_Dimensions(void);
-	~CLOW_Dimensions(void);
+	CL64_Dimensions(void);
+	~CL64_Dimensions(void);
 
 	void Centre_Model_Mid_Assimp(void);
 	void Rotate_Z_Assimp(float Z);

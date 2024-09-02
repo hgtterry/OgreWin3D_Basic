@@ -15,20 +15,20 @@ appreciated but is not required.
 
 #include "pch.h"
 #include "CL64_App.h"
-#include "CLOW_Dimensions.h"
+#include "CL64_Dimensions.h"
 
-CLOW_Dimensions::CLOW_Dimensions(void)
+CL64_Dimensions::CL64_Dimensions(void)
 {
 }
 
-CLOW_Dimensions::~CLOW_Dimensions(void)
+CL64_Dimensions::~CL64_Dimensions(void)
 {
 }
 
 // *************************************************************************
 // *	  Centre_Model_Mid_Assimp:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
-void CLOW_Dimensions::Centre_Model_Mid_Assimp(void)
+void CL64_Dimensions::Centre_Model_Mid_Assimp(void)
 {
 	//if (App->CL_Scene->flag_Model_Loaded == 1)
 	{
@@ -63,7 +63,7 @@ void CLOW_Dimensions::Centre_Model_Mid_Assimp(void)
 // *************************************************************************
 // *	  		Rotate_Z_Assimp:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-void CLOW_Dimensions::Rotate_Z_Assimp(float Z)
+void CL64_Dimensions::Rotate_Z_Assimp(float Z)
 {
 	//if (App->CL_Scene->flag_Model_Loaded == 1)
 	{
