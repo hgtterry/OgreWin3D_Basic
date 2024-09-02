@@ -5,6 +5,12 @@ VisualStudioVersion = 17.9.34902.65
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GD64", "GD64\GD64.vcxproj", "{AA7249A4-F0E4-45D0-B364-57BF5538AE19}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{33DCA4DB-0A14-443E-B1E6-ED0479DB9AFA}"
+	ProjectSection(SolutionItems) = preProject
+		GD64\CL64_Motioins.cpp = GD64\CL64_Motioins.cpp
+		GD64\CL64_Motioins.h = GD64\CL64_Motioins.h
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Release|x64 = Release|x64

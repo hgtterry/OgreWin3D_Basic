@@ -14,12 +14,12 @@ appreciated but is not required.
 */
 
 #pragma once
-class OW3D_Motioins
+class CL64_Motioins
 {
 public:
 
-	OW3D_Motioins(void);
-	~OW3D_Motioins(void);
+	CL64_Motioins(void);
+	~CL64_Motioins(void);
 
 	void Reset_Class(void);
 

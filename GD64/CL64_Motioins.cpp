@@ -15,9 +15,9 @@ appreciated but is not required.
 
 #include "pch.h"
 #include "CL64_App.h"
-#include "OW3D_Motioins.h"
+#include "CL64_Motioins.h"
 
-OW3D_Motioins::OW3D_Motioins(void)
+CL64_Motioins::CL64_Motioins(void)
 {
 	flag_Motion_Playing = 0;
 	flag_Motion_Paused = 0;
@@ -27,14 +27,14 @@ OW3D_Motioins::OW3D_Motioins(void)
 
 }
 
-OW3D_Motioins::~OW3D_Motioins(void)
+CL64_Motioins::~CL64_Motioins(void)
 {
 }
 
 // *************************************************************************
 // *			Reset_Class:- Terry and Hazel Flanigan 2024				   *
 // *************************************************************************
-void OW3D_Motioins::Reset_Class(void)
+void CL64_Motioins::Reset_Class(void)
 {
 	App->CL_Ogre->Ogre3D_Listener->flag_Animate_Ogre = 0;
 	Stop_SelectedMotion();
@@ -44,7 +44,7 @@ void OW3D_Motioins::Reset_Class(void)
 // *************************************************************************
 // *			Update_Motion:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-void OW3D_Motioins::Update_Motion(float deltaTime)
+void CL64_Motioins::Update_Motion(float deltaTime)
 {
 	Animate_State->addTime(deltaTime * AnimationScale);
 
@@ -66,7 +66,7 @@ void OW3D_Motioins::Update_Motion(float deltaTime)
 // *************************************************************************
 // *			Update_MeshData:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-void OW3D_Motioins::Update_MeshData(void)
+void CL64_Motioins::Update_MeshData(void)
 {
 	App->CL_Motions->UpdateBones_Orge(false);
 	App->CL_Motions->AnimationExtract_Mesh(false);
@@ -76,7 +76,7 @@ void OW3D_Motioins::Update_MeshData(void)
 // *************************************************************************
 // *		Pause_SelectedMotion:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
-void OW3D_Motioins::Pause_SelectedMotion(void)
+void CL64_Motioins::Pause_SelectedMotion(void)
 {
 	if (App->CL_Scene->MotionCount > 0)
 	{
@@ -97,7 +97,7 @@ void OW3D_Motioins::Pause_SelectedMotion(void)
 // *************************************************************************
 // *		Play_SelectedMotion:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-void OW3D_Motioins::Play_SelectedMotion(void)
+void CL64_Motioins::Play_SelectedMotion(void)
 {
 	if (App->CL_Scene->MotionCount > 0)
 	{
@@ -118,7 +118,7 @@ void OW3D_Motioins::Play_SelectedMotion(void)
 // *************************************************************************
 // *		Stop_SelectedMotion:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-void OW3D_Motioins::Stop_SelectedMotion(void)
+void CL64_Motioins::Stop_SelectedMotion(void)
 {
 	if (App->CL_Scene->MotionCount > 0)
 	{
@@ -142,7 +142,7 @@ void OW3D_Motioins::Stop_SelectedMotion(void)
 // *************************************************************************
 // *			Motion_Set_Pose:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-void OW3D_Motioins::Motion_Set_Pose(void)
+void CL64_Motioins::Motion_Set_Pose(void)
 {
 	if (App->CL_Scene->MotionCount > 0)
 	{
@@ -160,7 +160,7 @@ void OW3D_Motioins::Motion_Set_Pose(void)
 // *************************************************************************
 // *		   UpdateBones_Orge:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-void OW3D_Motioins::UpdateBones_Orge(bool Reset)
+void CL64_Motioins::UpdateBones_Orge(bool Reset)
 {
 	int Loop = 0;
 	if (!App->CL_Scene->Imported_Ogre_Ent)
@@ -198,7 +198,7 @@ void OW3D_Motioins::UpdateBones_Orge(bool Reset)
 // *************************************************************************
 // *							AnimationExtract_Mesh			   	 	   *
 // *************************************************************************
-void OW3D_Motioins::AnimationExtract_Mesh(bool DefaultPose)
+void CL64_Motioins::AnimationExtract_Mesh(bool DefaultPose)
 {
 	int FaceCount = 0;
 	int FaceNum = 0;
@@ -223,7 +223,7 @@ void OW3D_Motioins::AnimationExtract_Mesh(bool DefaultPose)
 // *************************************************************************
 // *					Get_AnimationInstance Terry Bernie				   *
 // *************************************************************************
-void OW3D_Motioins::Get_AnimationInstance(Ogre::MeshPtr mesh,
+void CL64_Motioins::Get_AnimationInstance(Ogre::MeshPtr mesh,
 	size_t& vertex_count,
 	Ogre::Vector3*& vertices,
 	size_t& index_count,
