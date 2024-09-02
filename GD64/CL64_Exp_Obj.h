@@ -14,12 +14,12 @@ appreciated but is not required.
 */
 
 #pragma once
-class OW3D_Exp_Obj
+class CL64_Exp_Obj
 {
 public:
 
-	OW3D_Exp_Obj(void);
-	~OW3D_Exp_Obj(void);
+	CL64_Exp_Obj(void);
+	~CL64_Exp_Obj(void);
 
 	bool Create_ObjectFile(void);
 	void Write_ObjectFile(void);

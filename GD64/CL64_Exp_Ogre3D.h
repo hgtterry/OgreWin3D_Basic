@@ -14,12 +14,13 @@ appreciated but is not required.
 */
 
 #pragma once
-class CLOW_Exp_Ogre3D
+class CL64_Exp_Ogre3D
 {
+
 public:
 
-	CLOW_Exp_Ogre3D(void);
-	~CLOW_Exp_Ogre3D(void);
+	CL64_Exp_Ogre3D(void);
+	~CL64_Exp_Ogre3D(void);
 
 	void Export_To_Ogre3D(bool Create);
 

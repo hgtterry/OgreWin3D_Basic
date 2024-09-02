@@ -15,9 +15,9 @@ appreciated but is not required.
 
 #include "pch.h"
 #include "CL64_App.h"
-#include "CLOW_Exp_Ogre3D.h"
+#include "CL64_Exp_Ogre3D.h"
 
-CLOW_Exp_Ogre3D::CLOW_Exp_Ogre3D(void)
+CL64_Exp_Ogre3D::CL64_Exp_Ogre3D(void)
 {
 	Export_Manual = NULL;
 	Export_Resource_Group = "Export_Resource_Group";
@@ -36,14 +36,14 @@ CLOW_Exp_Ogre3D::CLOW_Exp_Ogre3D(void)
 	flag_Create_Edge_List = 1;
 }
 
-CLOW_Exp_Ogre3D::~CLOW_Exp_Ogre3D(void)
+CL64_Exp_Ogre3D::~CL64_Exp_Ogre3D(void)
 {
 }
 
 // *************************************************************************
 // *	  		Export_To_Ogre3D:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
-void CLOW_Exp_Ogre3D::Export_To_Ogre3D(bool Create)
+void CL64_Exp_Ogre3D::Export_To_Ogre3D(bool Create)
 {
 	if (Ogre::ResourceGroupManager::getSingleton().resourceGroupExists(Export_Resource_Group))
 	{
@@ -169,7 +169,7 @@ void CLOW_Exp_Ogre3D::Export_To_Ogre3D(bool Create)
 // *************************************************************************
 // *			Get_Data:- Terry and Hazel Flanigan 2024  			   	   *
 // *************************************************************************
-void CLOW_Exp_Ogre3D::Get_Data(int Index, int FaceIndex)
+void CL64_Exp_Ogre3D::Get_Data(int Index, int FaceIndex)
 {
 	x = App->CL_Scene->Group[Index]->vertex_Data[FaceIndex].x;
 	y = App->CL_Scene->Group[Index]->vertex_Data[FaceIndex].y;
@@ -186,7 +186,7 @@ void CLOW_Exp_Ogre3D::Get_Data(int Index, int FaceIndex)
 // *************************************************************************
 // *		CreateMaterialFile:- Terry and Hazel Flanigan 2023		   	   *
 // *************************************************************************
-void CLOW_Exp_Ogre3D::CreateMaterialFile(char* MatFileName)
+void CL64_Exp_Ogre3D::CreateMaterialFile(char* MatFileName)
 {
 	char MatName[255];
 	char File[255];
@@ -235,7 +235,7 @@ void CLOW_Exp_Ogre3D::CreateMaterialFile(char* MatFileName)
 // *************************************************************************
 // *		Set_Export_Paths:- Terry and Hazel Flanigan 2023		 	   *
 // *************************************************************************
-void CLOW_Exp_Ogre3D::Set_Export_Paths(void)
+void CL64_Exp_Ogre3D::Set_Export_Paths(void)
 {
 	strcpy(mSelected_Directory, App->CL_Exporters->mFolder_Path);
 	strcpy(mDirectory_Name, App->CL_Exporters->mDirectory_Name);
@@ -262,7 +262,7 @@ void CLOW_Exp_Ogre3D::Set_Export_Paths(void)
 // *************************************************************************
 // *			Copy_Textures:- Terry and Hazel Flanigan 2024		 	   *
 // *************************************************************************
-void CLOW_Exp_Ogre3D::Copy_Textures(void)
+void CL64_Exp_Ogre3D::Copy_Textures(void)
 {
 	char SourceFile[MAX_PATH];
 	char Destination[MAX_PATH];

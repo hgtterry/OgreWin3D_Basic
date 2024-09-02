@@ -146,10 +146,10 @@ void CL64_App::InitApp(void)
 	CL_Motions =		new CL64_Motioins();
 	
 
-	CL_Exp_Ogre =		new CLOW_Exp_Ogre3D(); // Create Here for Now
+	CL_Exp_Ogre =		new CL64_Exp_Ogre3D(); // Create Here for Now
 	CL_Exporters =		new CL64_Exporters();
 	CL_Dimensions =		new CL64_Dimensions();
-	CL_Exp_Obj =		new OW3D_Exp_Obj();
+	CL_Exp_Obj =		new CL64_Exp_Obj();
 	
 	SetBrushes_Fonts();
 

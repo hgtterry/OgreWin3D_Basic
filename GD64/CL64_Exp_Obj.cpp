@@ -15,20 +15,20 @@ appreciated but is not required.
 
 #include "pch.h"
 #include "CL64_App.h"
-#include "OW3D_Exp_Obj.h"
+#include "CL64_Exp_Obj.h"
 
-OW3D_Exp_Obj::OW3D_Exp_Obj(void)
+CL64_Exp_Obj::CL64_Exp_Obj(void)
 {
 }
 
-OW3D_Exp_Obj::~OW3D_Exp_Obj(void)
+CL64_Exp_Obj::~CL64_Exp_Obj(void)
 {
 }
 
 // *************************************************************************
 // *			Create_ObjectFile:- Terry and Hazel Flanigan 2024  	 	   *
 // *************************************************************************
-bool OW3D_Exp_Obj::Create_ObjectFile(void)
+bool CL64_Exp_Obj::Create_ObjectFile(void)
 {
 
 	strcpy(App->CL_File_IO->BrowserMessage, "Select Folder To Place Object Files a sub folder will be created");
@@ -75,7 +75,7 @@ bool OW3D_Exp_Obj::Create_ObjectFile(void)
 // *************************************************************************
 // *		Write_ObjectFile:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-void OW3D_Exp_Obj::Write_ObjectFile(void)
+void CL64_Exp_Obj::Write_ObjectFile(void)
 {
 	Write_OBJECTFILE = 0;
 
@@ -98,7 +98,7 @@ void OW3D_Exp_Obj::Write_ObjectFile(void)
 // *************************************************************************
 // *		Write_ObjectFile_Commit:- Terry and Hazel Flanigan 2024  	   *
 // *************************************************************************
-void OW3D_Exp_Obj::Write_ObjectFile_Commit(void)
+void CL64_Exp_Obj::Write_ObjectFile_Commit(void)
 {
 
 	fprintf(Write_OBJECTFILE, "#\n");
@@ -230,7 +230,7 @@ void OW3D_Exp_Obj::Write_ObjectFile_Commit(void)
 // *************************************************************************
 // *				WriteMTLFile:- Terry and Hazel Flanigan 2024       	   *
 // *************************************************************************
-bool OW3D_Exp_Obj::WriteMTLFile(void)
+bool CL64_Exp_Obj::WriteMTLFile(void)
 {
 	Write_MTLFile = 0;
 
