@@ -86,8 +86,10 @@ void CL64_TopDlg::Reset_Class(void) const
 	SendMessage(GetDlgItem(TabsHwnd, IDC_BTSHOWNORMALS), BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_NormalsOff_Bmp);
 	SendMessage(GetDlgItem(TabsHwnd, IDC_TBBOUNDBOX), BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_BBOff_Bmp);
 
-	App->CL_TopDlg->Show_Info_Panel(true);
-	
+	App->CL_TopDlg->Enable_Info_Panel(true);
+	App->CL_TopDlg->Enable_ImGui_Demo_Panel(false);
+	App->CL_TopDlg->Enable_FPSLock_Dlg_Panel(false);
+
 	App->CL_TopDlg->Update_Motions_Combo();
 
 	EnableWindow(GetDlgItem(Demos_TB_hWnd, IDC_BT_TD_DEMOS_OPTIONS), false);
@@ -393,11 +395,11 @@ LRESULT CALLBACK CL64_TopDlg::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam
 
 			if (App->CL_ImGui->flag_Show_Model_Data == 1)
 			{
-				App->CL_TopDlg->Show_Info_Panel(false);
+				App->CL_TopDlg->Enable_Info_Panel(false);
 			}
 			else
 			{
-				App->CL_TopDlg->Show_Info_Panel(true);
+				App->CL_TopDlg->Enable_Info_Panel(true);
 			}
 
 			return TRUE;
@@ -722,7 +724,7 @@ LRESULT CALLBACK CL64_TopDlg::Debug_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 		if (some_item->idFrom == IDC_BT_TD_DEBUG_FPSLOCK)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Normal(item);
+			App->Custom_Button_Toggle(item, App->CL_TopDlg->flag_FPS_Dlg_Running);
 			return CDRF_DODEFAULT;
 		}
 		
@@ -735,11 +737,11 @@ LRESULT CALLBACK CL64_TopDlg::Debug_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 		{
 			if (App->CL_ImGui->flag_Show_ImGui_Demo == 1)
 			{
-				App->CL_ImGui->flag_Show_ImGui_Demo = 0;
+				App->CL_TopDlg->Enable_ImGui_Demo_Panel(false);
 			}
 			else
 			{
-				App->CL_ImGui->flag_Show_ImGui_Demo = 1;
+				App->CL_TopDlg->Enable_ImGui_Demo_Panel(true);
 			}
 
 			return 1;
@@ -792,7 +794,15 @@ LRESULT CALLBACK CL64_TopDlg::Debug_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 
 		if (LOWORD(wParam) == IDC_BT_TD_DEBUG_FPSLOCK)
 		{
-			App->CL_Dialogs->Start_FPSLock_Dlg();
+			if (App->CL_TopDlg->flag_FPS_Dlg_Running == 1)
+			{
+				App->CL_TopDlg->Enable_FPSLock_Dlg_Panel(false);
+			}
+			else
+			{
+				App->CL_TopDlg->Enable_FPSLock_Dlg_Panel(true);
+			}
+
 			return 1;
 		}
 		
@@ -1681,9 +1691,9 @@ void CL64_TopDlg::Enable_Info_Icon(bool Enable) const
 }
 
 // **************************************************************************
-// *	  		 Show_Info_Panel:- Terry and Hazel Flanigan 2024			*
+// *	  		 Enable_Info_Panel:- Terry and Hazel Flanigan 2024			*
 // **************************************************************************
-void CL64_TopDlg::Show_Info_Panel(bool Enable)
+void CL64_TopDlg::Enable_Info_Panel(bool Enable)
 {
 	HWND Temp = GetDlgItem(TabsHwnd, IDC_TBINFO);
 
@@ -1699,5 +1709,43 @@ void CL64_TopDlg::Show_Info_Panel(bool Enable)
 
 		SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_ModelInfo_Bmp);
 	}
+}
+
+// **************************************************************************
+// *	  	Enable_ImGui_Demo_Panel:- Terry and Hazel Flanigan 2024			*
+// **************************************************************************
+void CL64_TopDlg::Enable_ImGui_Demo_Panel(bool Enable)
+{
+	if (Enable == 1)
+	{
+		App->CL_ImGui->flag_Show_ImGui_Demo = 1;
+	}
+	else
+	{
+		App->CL_ImGui->flag_Show_ImGui_Demo = 0;
+	}
+
+	RedrawWindow(Debug_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+}
+
+// **************************************************************************
+// *	  	Enable_FPSLock_Dlg_Panel:- Terry and Hazel Flanigan 2024		*
+// **************************************************************************
+void CL64_TopDlg::Enable_FPSLock_Dlg_Panel(bool Enable)
+{
+	if (Enable == 1)
+	{
+		App->CL_Dialogs->Start_FPSLock_Dlg();
+	}
+	else
+	{
+		if (App->CL_TopDlg->flag_FPS_Dlg_Running == 1)
+		{
+			EndDialog(App->CL_Dialogs->FPSLock_Dlg_hWnd, 0);
+			App->CL_TopDlg->flag_FPS_Dlg_Running = 0;
+		}
+	}
+
+	RedrawWindow(Debug_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 }
 

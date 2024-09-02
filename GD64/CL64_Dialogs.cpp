@@ -42,7 +42,8 @@ CL64_Dialogs::CL64_Dialogs(void)
 	BasePicWidth = 0;
 	BasePicHeight = 0;
 
-	RightGroups_Hwnd = NULL;
+	RightGroups_Hwnd = nullptr;
+	FPSLock_Dlg_hWnd = nullptr;
 }
 
 CL64_Dialogs::~CL64_Dialogs(void)
@@ -183,7 +184,7 @@ void CL64_Dialogs::Start_FPSLock_Dlg()
 {
 	if (App->CL_TopDlg->flag_FPS_Dlg_Running == 0)
 	{
-		CreateDialog(App->hInst, (LPCTSTR)IDD_FPSLOCK, App->Fdlg, (DLGPROC)FPSLock_Proc);
+		FPSLock_Dlg_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_FPSLOCK, App->Fdlg, (DLGPROC)FPSLock_Proc);
 		App->CL_TopDlg->flag_FPS_Dlg_Running = 1;
 	}
 }
@@ -205,6 +206,20 @@ LRESULT CALLBACK CL64_Dialogs::FPSLock_Proc(HWND hDlg, UINT message, WPARAM wPar
 		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		App->CL_Dialogs->Fill_Face_Combo(hDlg);
+
+		HWND temp = GetDlgItem(hDlg, IDC_CK_FPSNOLOCK);
+		HWND temp1 = GetDlgItem(hDlg, IDC_CB_FPSLIST);
+
+		if (App->CL_Ogre->FPSLock == 0)
+		{
+			SendMessage(temp, BM_SETCHECK, 1, 0);
+			EnableWindow(temp1, false);
+		}
+		else
+		{
+			SendMessage(temp, BM_SETCHECK, 0, 0);
+			EnableWindow(temp1, true);
+		}
 
 		return TRUE;
 	}
@@ -313,6 +328,7 @@ LRESULT CALLBACK CL64_Dialogs::FPSLock_Proc(HWND hDlg, UINT message, WPARAM wPar
 		if (LOWORD(wParam) == IDOK)
 		{
 			App->CL_TopDlg->flag_FPS_Dlg_Running = 0;
+			RedrawWindow(App->CL_TopDlg->Debug_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
@@ -320,6 +336,7 @@ LRESULT CALLBACK CL64_Dialogs::FPSLock_Proc(HWND hDlg, UINT message, WPARAM wPar
 		if (LOWORD(wParam) == IDCANCEL)
 		{
 			App->CL_TopDlg->flag_FPS_Dlg_Running = 0;
+			RedrawWindow(App->CL_TopDlg->Debug_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}

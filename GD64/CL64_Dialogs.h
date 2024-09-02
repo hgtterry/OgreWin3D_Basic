@@ -42,7 +42,7 @@ public:
 	long BasePicWidth;
 	long BasePicHeight;
 	HWND RightGroups_Hwnd;
-
+	HWND FPSLock_Dlg_hWnd;
 private:
 
 	static LRESULT CALLBACK Message_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
