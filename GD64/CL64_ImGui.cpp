@@ -46,8 +46,6 @@ CL64_ImGui::CL64_ImGui(void)
 
 	PreviouseMaterial = 0;
 	PreviouseSubMesh = -1;
-	PreviouseTexture = -1;
-
 }
 
 CL64_ImGui::~CL64_ImGui(void)
@@ -374,12 +372,9 @@ void CL64_ImGui::Model_Data_GUI(void)
 
 							if (ImGui::Button("View Texture"))
 							{
-							/*if (ImGui::Checkbox("View Texture", &listSubTextureItems[Count]))
-							{*/
 								Model_Data_disable_all = true;
 								App->CL_Resources->View_Texture(Texture);
-								listSubTextureItems[PreviouseTexture] = 0;
-								PreviouseTexture = Count;
+
 							}
 
 							ImGui::EndMenu();
