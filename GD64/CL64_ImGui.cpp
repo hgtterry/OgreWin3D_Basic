@@ -347,18 +347,25 @@ void CL64_ImGui::Model_Data_GUI(void)
 							char Texture[256];
 							strcpy(Texture, MatCurent->getTechnique(0)->getPass(0)->getTextureUnitState(0)->getTextureName().c_str());
 
+							int Width = MatCurent->getTechnique(0)->getPass(0)->getTextureUnitState(0)->getTextureDimensions().first;
+							int Height = MatCurent->getTechnique(0)->getPass(0)->getTextureUnitState(0)->getTextureDimensions().second;
+							int Mips = MatCurent->getTechnique(0)->getPass(0)->getTextureUnitState(0)->getNumMipmaps();
+
 
 							ImGui::Text("Material Name:  %s", App->CL_Scene->S_OgreMeshData[0]->m_Materials_Names[Count].c_str());
 						
 							ImGui::Separator();
 							ImGui::Text("Texture:  %s", Texture);
 
-							if (ImGui::Checkbox("View Texture", &listSubMeshItems[Count]))
-							{
-								/*App->CL_Ogre->OGL_Listener->Flag_ShowFaces = 1;
-								App->CL_Ogre->OGL_Listener->flag_ShowOnlySubFaces = 1;
-								App->CL_Ogre->OGL_Listener->Selected_Face_Group = Count;*/
+							ImGui::Text("Width:  %i", Width);
+							ImGui::Text("Height:  %i", Height);
+							ImGui::Text("Mipmaps:  %i", Mips);
 
+							if (ImGui::Button("View Texture"))
+							{
+							/*if (ImGui::Checkbox("View Texture", &listSubTextureItems[Count]))
+							{*/
+								App->CL_Resources->View_Texture(Texture);
 								listSubTextureItems[PreviouseTexture] = 0;
 								PreviouseTexture = Count;
 							}

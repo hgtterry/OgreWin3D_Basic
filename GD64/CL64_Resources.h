@@ -32,12 +32,10 @@ public:
 	~CL64_Resources(void);
 
 	void Reset_Class(void);
-
 	void Start_Resources();
-
 	void Load_OgreCFG_Resources(const Ogre::String& file);
-
 	void Destroy_Resources_Group(Ogre::String ResourceGroup);
+	bool View_Texture(char* FileName);
 
 	bool Ogre_ExternalResourceLoaded;
 
@@ -71,7 +69,6 @@ private:
 	int ShowAllTextures();
 
 	bool Get_File(char* FileName);
-	bool View_Texture(char* FileName);
 	bool Export_Resource(char* FileName) const;
 
 	int Show_Resource_Group_All();

@@ -44,6 +44,8 @@ CL64_Dialogs::CL64_Dialogs(void)
 
 	RightGroups_Hwnd = nullptr;
 	FPSLock_Dlg_hWnd = nullptr;
+
+	flag_TextureViewer_Dlg_Active = 0;
 }
 
 CL64_Dialogs::~CL64_Dialogs(void)
@@ -846,7 +848,12 @@ LRESULT CALLBACK CL64_Dialogs::Dialog_Text_Proc(HWND hDlg, UINT message, WPARAM 
 // *************************************************************************
 void CL64_Dialogs::Start_TextureViewer_Dialog(char* TextureFile)
 {
-	RightGroups_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_TEXTUREVIEWER, App->MainHwnd, (DLGPROC)TextureViewer_Proc);
+	if (flag_TextureViewer_Dlg_Active == 0)
+	{
+		RightGroups_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_TEXTUREVIEWER, App->MainHwnd, (DLGPROC)TextureViewer_Proc);
+		flag_TextureViewer_Dlg_Active = 1;
+	}
+
 	App->CL_Textures->Texture_To_HBITMP(TextureFile);
 	remove(TextureFile);
 }
@@ -894,12 +901,14 @@ LRESULT CALLBACK CL64_Dialogs::TextureViewer_Proc(HWND hDlg, UINT message, WPARA
 	{
 		if (LOWORD(wParam) == IDOK)
 		{
+			App->CL_Dialogs->flag_TextureViewer_Dlg_Active = 0;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == IDCANCEL)
 		{
+			App->CL_Dialogs->flag_TextureViewer_Dlg_Active = 0;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}

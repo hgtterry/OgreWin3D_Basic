@@ -43,6 +43,9 @@ public:
 	long BasePicHeight;
 	HWND RightGroups_Hwnd;
 	HWND FPSLock_Dlg_hWnd;
+
+	bool flag_TextureViewer_Dlg_Active;
+
 private:
 
 	static LRESULT CALLBACK Message_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
