@@ -45,7 +45,8 @@ CL64_ImGui::CL64_ImGui(void)
 
 	PreviouseMaterial = 0;
 	PreviouseSubMesh = -1;
-	PreviouseMotion = 0;
+	PreviouseTexture = -1;
+
 }
 
 CL64_ImGui::~CL64_ImGui(void)
@@ -315,51 +316,14 @@ void CL64_ImGui::Model_Data_GUI(void)
 	{
 		ImGui::Text("Ogre3D Model");
 		
-		/*if (ImGui::TreeNode("Paths"))
-		{
-			ImGui::PushID("foo");
-			if (ImGui::BeginMenu("Model Name"))
-			{
-				ImGui::Text("%s", App->CL_Scene->JustName);
-				ImGui::EndMenu();
-			}
-			ImGui::PopID();
-
-			ImGui::PushID("foo");
-			if (ImGui::BeginMenu("Model File"))
-			{
-				ImGui::Text("%s", App->CL_Scene->FileName);
-				ImGui::EndMenu();
-			}
-			ImGui::PopID();
-
-			ImGui::PushID("foo");
-			if (ImGui::BeginMenu("Model Path"))
-			{
-				ImGui::Text("%s", App->CL_Scene->Path_FileName);
-				ImGui::EndMenu();
-			}
-			ImGui::PopID();
-	
-			ImGui::PushID("foo");
-			if (ImGui::BeginMenu("Texture Path"))
-			{
-				ImGui::Text("%s", App->CL_Scene->Texture_FolderPath);
-				ImGui::EndMenu();
-			}
-			ImGui::PopID();
-
-			ImGui::TreePop();
-			
-		}*/
-
 		ImGui::Separator();
 
 		if (ImGui::TreeNode("Ogre3D Model","%s", App->CL_Scene->S_OgreMeshData[0]->mFileName_Str.c_str()))
 		{
 			if (App->CL_Import_Ogre3D->flag_Ogre_Model_Loaded == 1)
 			{
-				//ImGui::Text("User Name:- %s", App->CL_Scene->S_OgreMeshData[0]->mStrName.c_str());
+				// Materials / Textures
+
 				if (ImGui::TreeNode("Materials"))
 				{
 					int Count = 0;
@@ -367,19 +331,49 @@ void CL64_ImGui::Model_Data_GUI(void)
 
 					while (Count < Size)
 					{
-						if (ImGui::Selectable(App->CL_Scene->S_OgreMeshData[0]->m_Materials_Names[Count].c_str(), listMaterialItems[Count]))
+						/*if (ImGui::Selectable(App->CL_Scene->S_OgreMeshData[0]->m_Materials_Names[Count].c_str(), listMaterialItems[Count]))
 						{
 							listMaterialItems[PreviouseMaterial] = 0;
 							listMaterialItems[Count] = 1;
 							PreviouseMaterial = Count;
+						}*/
+
+						ImGui::PushID("foo");
+						if (ImGui::BeginMenu(App->CL_Scene->S_OgreMeshData[0]->m_Materials_Names[Count].c_str()))
+						{
+							Ogre::MaterialPtr MatCurent;
+
+							MatCurent = static_cast<Ogre::MaterialPtr> (Ogre::MaterialManager::getSingleton().getByName(App->CL_Scene->S_OgreMeshData[0]->m_Materials_Names[Count].c_str()));
+							char Texture[256];
+							strcpy(Texture, MatCurent->getTechnique(0)->getPass(0)->getTextureUnitState(0)->getTextureName().c_str());
+
+
+							ImGui::Text("Material Name:  %s", App->CL_Scene->S_OgreMeshData[0]->m_Materials_Names[Count].c_str());
+						
+							ImGui::Separator();
+							ImGui::Text("Texture:  %s", Texture);
+
+							if (ImGui::Checkbox("View Texture", &listSubMeshItems[Count]))
+							{
+								/*App->CL_Ogre->OGL_Listener->Flag_ShowFaces = 1;
+								App->CL_Ogre->OGL_Listener->flag_ShowOnlySubFaces = 1;
+								App->CL_Ogre->OGL_Listener->Selected_Face_Group = Count;*/
+
+								listSubTextureItems[PreviouseTexture] = 0;
+								PreviouseTexture = Count;
+							}
+
+							ImGui::EndMenu();
 						}
 
+						ImGui::PopID();
 						Count++;
 					}
 
 					ImGui::TreePop();
 				}
 
+				// Geometry
 				if (ImGui::TreeNode("Geometry"))
 				{
 					int Count = 0;
@@ -436,6 +430,7 @@ void CL64_ImGui::Model_Data_GUI(void)
 					ImGui::TreePop();
 				}
 
+				// Bounds
 				if (ImGui::TreeNode("Bounds"))
 				{
 					ImGui::Text("Min:- %.5f  %.5f  %.5f", App->CL_Scene->S_OgreMeshData[0]->vMin.x, App->CL_Scene->S_OgreMeshData[0]->vMin.y, App->CL_Scene->S_OgreMeshData[0]->vMin.z);
@@ -452,6 +447,7 @@ void CL64_ImGui::Model_Data_GUI(void)
 					ImGui::TreePop();
 				}
 
+				// Motions
 				if (ImGui::TreeNode("Motions"))
 				{
 					int Count = 0;
@@ -479,20 +475,6 @@ void CL64_ImGui::Model_Data_GUI(void)
 
 			ImGui::TreePop();
 		}
-
-		/*if (ImGui::TreeNode("Mesh Data"))
-		{
-			ImGui::Indent();
-			ImGui::Text("Vertices:- %i", App->CL_Scene->VerticeCount);
-			ImGui::Text("Faces:- %i", App->CL_Scene->FaceCount);
-			ImGui::Text("Groups:- %i", App->CL_Scene->GroupCount);
-			ImGui::Text("Bones:- %i", App->CL_Scene->BoneCount);
-			ImGui::Text("Motions:- %i", App->CL_Scene->MotionCount);
-			ImGui::Text("Loaded:- %i", App->CL_Scene->flag_Model_Loaded);
-			ImGui::Unindent();
-
-			ImGui::TreePop();
-		}*/
 
 		ImGui::Separator();
 		
@@ -615,3 +597,55 @@ void CL64_ImGui::App_Debug(void)
 		ImGui::End();
 	}
 }
+
+/*if (ImGui::TreeNode("Paths"))
+		{
+			ImGui::PushID("foo");
+			if (ImGui::BeginMenu("Model Name"))
+			{
+				ImGui::Text("%s", App->CL_Scene->JustName);
+				ImGui::EndMenu();
+			}
+			ImGui::PopID();
+
+			ImGui::PushID("foo");
+			if (ImGui::BeginMenu("Model File"))
+			{
+				ImGui::Text("%s", App->CL_Scene->FileName);
+				ImGui::EndMenu();
+			}
+			ImGui::PopID();
+
+			ImGui::PushID("foo");
+			if (ImGui::BeginMenu("Model Path"))
+			{
+				ImGui::Text("%s", App->CL_Scene->Path_FileName);
+				ImGui::EndMenu();
+			}
+			ImGui::PopID();
+
+			ImGui::PushID("foo");
+			if (ImGui::BeginMenu("Texture Path"))
+			{
+				ImGui::Text("%s", App->CL_Scene->Texture_FolderPath);
+				ImGui::EndMenu();
+			}
+			ImGui::PopID();
+
+			ImGui::TreePop();
+
+		}*/
+
+		/*if (ImGui::TreeNode("Mesh Data"))
+				{
+					ImGui::Indent();
+					ImGui::Text("Vertices:- %i", App->CL_Scene->VerticeCount);
+					ImGui::Text("Faces:- %i", App->CL_Scene->FaceCount);
+					ImGui::Text("Groups:- %i", App->CL_Scene->GroupCount);
+					ImGui::Text("Bones:- %i", App->CL_Scene->BoneCount);
+					ImGui::Text("Motions:- %i", App->CL_Scene->MotionCount);
+					ImGui::Text("Loaded:- %i", App->CL_Scene->flag_Model_Loaded);
+					ImGui::Unindent();
+
+					ImGui::TreePop();
+				}*/
