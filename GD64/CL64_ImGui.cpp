@@ -31,6 +31,7 @@ CL64_ImGui::CL64_ImGui(void)
 	flag_Show_Model_Data = 1;
 	flag_Show_Demo_Options = 0;
 	flag_Show_App_Debug = 0;
+	Model_Data_disable_all = 0;
 
 	// Demo 1
 	flag_Show_Physics_Debug = 0;
@@ -306,6 +307,16 @@ void CL64_ImGui::Model_Data_GUI(void)
 
 	ImGui::SetNextWindowPos(ImVec2(5, 5), ImGuiCond_FirstUseEver);
 	ImGui::SetNextWindowSize(ImVec2(200, 200), ImGuiCond_FirstUseEver);
+	
+
+	if (Model_Data_disable_all)
+	{
+		ImGui::BeginDisabled();
+	}
+	else
+	{
+		ImGui::EndDisabled();
+	}
 
 	if (!ImGui::Begin("Model Data", NULL, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoResize
 		| ImGuiWindowFlags_AlwaysAutoResize))
@@ -365,6 +376,7 @@ void CL64_ImGui::Model_Data_GUI(void)
 							{
 							/*if (ImGui::Checkbox("View Texture", &listSubTextureItems[Count]))
 							{*/
+								Model_Data_disable_all = true;
 								App->CL_Resources->View_Texture(Texture);
 								listSubTextureItems[PreviouseTexture] = 0;
 								PreviouseTexture = Count;

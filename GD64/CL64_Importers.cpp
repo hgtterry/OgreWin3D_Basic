@@ -195,23 +195,7 @@ void CL64_Importers::Load_Ogre_Model(bool Use_File_Dialog)
 	App->CL_Scene->Imported_Ogre_Node->setScale(1, 1, 1);
 
 	Scan_Material_Files();
-	/*if (App->CL_Resources->Ogre_ExternalResourceLoaded == 0)
-	{
-		std::vector<Ogre::String> materialNames;
-		if (App->CL_Scene->Imported_Ogre_Ent)
-		{
-			materialNames.reserve(App->CL_Scene->Imported_Ogre_Ent->getNumSubEntities());
-			for (unsigned int i = 0; i < App->CL_Scene->Imported_Ogre_Ent->getNumSubEntities(); ++i)
-			{
-				Ogre::SubEntity* subEnt = App->CL_Scene->Imported_Ogre_Ent->getSubEntity(i);
-				materialNames.push_back(subEnt->getMaterialName());
-				subEnt->setMaterialName("Template/Red_Alpha_GD64", App->CL_Ogre->App_Resource_Group);
-			}
-		}
-	}*/
-
-	//App->CL_Scene->Main_Entity_Set_Default();
-
+	
 	App->CL_Ogre->Show_Test_Mesh(false);
 	App->CL_Camera->Reset_View();
 
@@ -226,7 +210,9 @@ void CL64_Importers::Load_Ogre_Model(bool Use_File_Dialog)
 	}
 
 	App->CL_Import_Ogre3D->Ogre_To_Mesh_Data(App->CL_Scene->Imported_Ogre_Ent);
-	
+
+	App->CL_Resources->mSelected_Resource_Group = App->CL_Resources->Ogre_Loader_Resource_Group;
+
 	App->CL_Import_Ogre3D->flag_Ogre_Model_Loaded = 1;
 	App->CL_Scene->flag_Model_Loaded = 1;
 
@@ -331,6 +317,8 @@ void CL64_Importers::Ogre_Resource_CFG_Loader(char* Extension, char* Extension2)
 	}
 	
 	App->CL_Resources->Load_OgreCFG_Resources(App->CL_File_IO->OgreCFG_Path_FileName);
+
+	App->CL_Resources->mSelected_Resource_Group = App->CL_Resources->Ogre_Loader_Resource_Group;
 
 	if (Flag_Reload_Ogre_Model == 1 && App->CL_Import_Ogre3D->flag_Ogre_Model_Loaded == 1)
 	{

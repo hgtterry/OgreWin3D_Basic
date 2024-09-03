@@ -123,10 +123,11 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 		App->CL_Resources->Reset_Flags();
 		App->CL_Resources->flag_Show_Group_All = 1;
 
-		App->CL_Resources->mSelected_Resource_Group = "App_Resource_Group";
+		//App->CL_Resources->mSelected_Resource_Group = "App_Resource_Group";
 		App->CL_Resources->Scan_Resource_Group(App->CL_Resources->mSelected_Resource_Group);
 
 		int Items = App->CL_Resources->Show_Resource_Group_All();
+
 		App->CL_Resources->Update_Counter(Items, hDlg);
 
 		App->CL_Resources->Set_Title(hDlg, (LPSTR)"All");
@@ -583,7 +584,7 @@ void CL64_Resources::Update_Resource_Groups_Combo(HWND hDlg)
 		Count++;
 	}
 
-	SendDlgItemMessage(hDlg, IDC_LST_GROUPS, LB_SETCURSEL, (WPARAM)0, (LPARAM)sv[Count].c_str());
+	SendDlgItemMessage(hDlg, IDC_LST_GROUPS, LB_SELECTSTRING, (WPARAM)-1, (LPARAM)mSelected_Resource_Group.c_str());
 
 }
 

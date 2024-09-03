@@ -901,6 +901,7 @@ LRESULT CALLBACK CL64_Dialogs::TextureViewer_Proc(HWND hDlg, UINT message, WPARA
 	{
 		if (LOWORD(wParam) == IDOK)
 		{
+			App->CL_ImGui->Model_Data_disable_all = 0;
 			App->CL_Dialogs->flag_TextureViewer_Dlg_Active = 0;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
@@ -908,6 +909,7 @@ LRESULT CALLBACK CL64_Dialogs::TextureViewer_Proc(HWND hDlg, UINT message, WPARA
 
 		if (LOWORD(wParam) == IDCANCEL)
 		{
+			App->CL_ImGui->Model_Data_disable_all = 0;
 			App->CL_Dialogs->flag_TextureViewer_Dlg_Active = 0;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;

@@ -60,6 +60,8 @@ public:
 
 	float Float_Step;
 
+	bool Model_Data_disable_all;
+
 	bool listMaterialItems[50] = { 0 };
 	int PreviouseMaterial;
 
