@@ -300,7 +300,10 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 
 		if (LOWORD(wParam) == IDC_BT_VIEWFILE)
 		{
-			App->CL_Resources->View_Texture(App->CL_Resources->mSelected_File);
+			App->CL_Dialogs->BasePicHeight = 256; // Temp
+			App->CL_Dialogs->BasePicWidth = 256; // Temp
+
+			App->CL_Resources->View_Texture(App->CL_Resources->mSelected_File,hDlg);
 			return TRUE;
 		}
 		
@@ -969,7 +972,7 @@ bool CL64_Resources::Get_File(char* FileName)
 // *************************************************************************
 // *				View_Texture:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
-bool CL64_Resources::View_Texture(char* FileName)
+bool CL64_Resources::View_Texture(char* FileName, HWND Owner_hDlg)
 {
 
 	Ogre::FileInfoListPtr RFI = ResourceGroupManager::getSingleton().listResourceFileInfo(mSelected_Resource_Group, false);
@@ -996,7 +999,7 @@ bool CL64_Resources::View_Texture(char* FileName)
 
 			mFileString.clear();
 
-			App->CL_Dialogs->Start_TextureViewer_Dialog(mFileName);
+			App->CL_Dialogs->Start_TextureViewer_Dialog(mFileName, Owner_hDlg);
 
 			return 1;
 		}

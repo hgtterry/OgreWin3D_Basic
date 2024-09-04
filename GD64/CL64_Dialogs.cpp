@@ -39,13 +39,13 @@ CL64_Dialogs::CL64_Dialogs(void)
 	Chr_Text[0] = 0;
 
 	Sel_BaseBitmap = nullptr;
+
 	BasePicWidth = 0;
 	BasePicHeight = 0;
 
 	RightGroups_Hwnd = nullptr;
 	FPSLock_Dlg_hWnd = nullptr;
 
-	flag_TextureViewer_Dlg_Active = 0;
 }
 
 CL64_Dialogs::~CL64_Dialogs(void)
@@ -846,16 +846,12 @@ LRESULT CALLBACK CL64_Dialogs::Dialog_Text_Proc(HWND hDlg, UINT message, WPARAM 
 // *************************************************************************
 // *	  Start_TextureViewer_Dialog:- Terry and Hazel Flanigan 2024	   *
 // *************************************************************************
-void CL64_Dialogs::Start_TextureViewer_Dialog(char* TextureFile)
+void CL64_Dialogs::Start_TextureViewer_Dialog(char* TextureFile, HWND Owner_hDlg)
 {
-	if (flag_TextureViewer_Dlg_Active == 0)
-	{
-		RightGroups_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_TEXTUREVIEWER, App->MainHwnd, (DLGPROC)TextureViewer_Proc);
-		flag_TextureViewer_Dlg_Active = 1;
-	}
 
-	App->CL_Textures->Texture_To_HBITMP(TextureFile);
-	remove(TextureFile);
+	strcpy(mTextureFile, TextureFile);
+	DialogBox(App->hInst, (LPCTSTR)IDD_TEXTUREVIEWER, Owner_hDlg, (DLGPROC)TextureViewer_Proc);
+
 }
 
 // **************************************************************************
@@ -870,6 +866,10 @@ LRESULT CALLBACK CL64_Dialogs::TextureViewer_Proc(HWND hDlg, UINT message, WPARA
 		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		SetWindowLongPtr(GetDlgItem(hDlg, IDC_BASETEXTURE), GWLP_WNDPROC, (LONG_PTR)ViewerBasePic);
+
+		App->CL_Dialogs->RightGroups_Hwnd = hDlg;
+		App->CL_Textures->Texture_To_HBITMP(App->CL_Dialogs->mTextureFile);
+		App->CL_Ogre->RenderFrame(8);
 
 		return TRUE;
 	}
@@ -887,7 +887,7 @@ LRESULT CALLBACK CL64_Dialogs::TextureViewer_Proc(HWND hDlg, UINT message, WPARA
 	{
 		LPNMHDR some_item = (LPNMHDR)lParam;
 
-		if (some_item->idFrom == IDCANCEL && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDCANCEL)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
@@ -901,16 +901,16 @@ LRESULT CALLBACK CL64_Dialogs::TextureViewer_Proc(HWND hDlg, UINT message, WPARA
 	{
 		if (LOWORD(wParam) == IDOK)
 		{
+			remove(App->CL_Dialogs->mTextureFile);
 			App->CL_ImGui->Model_Data_disable_all = 0;
-			App->CL_Dialogs->flag_TextureViewer_Dlg_Active = 0;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == IDCANCEL)
 		{
+			remove(App->CL_Dialogs->mTextureFile);
 			App->CL_ImGui->Model_Data_disable_all = 0;
-			App->CL_Dialogs->flag_TextureViewer_Dlg_Active = 0;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}

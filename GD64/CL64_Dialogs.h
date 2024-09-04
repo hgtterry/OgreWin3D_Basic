@@ -28,7 +28,7 @@ public:
 	void Start_Speed_Camera_Dlg();
 	void Start_FPSLock_Dlg();
 	bool Dialog_Text(int What_Check);
-	void Start_TextureViewer_Dialog(char* TextureFile);
+	void Start_TextureViewer_Dialog(char* TextureFile, HWND Owner_hDlg);
 	
 	bool Canceled;
 	bool Flag_Convert_to_Ogre;
@@ -43,8 +43,6 @@ public:
 	long BasePicHeight;
 	HWND RightGroups_Hwnd;
 	HWND FPSLock_Dlg_hWnd;
-
-	bool flag_TextureViewer_Dlg_Active;
 
 private:
 
@@ -66,7 +64,7 @@ private:
 
 	char MessageString[MAX_PATH];	// Yes No Dialog
 	char MessageString2[MAX_PATH];	// Yes No Dialog
-
+	char mTextureFile[MAX_PATH];
 	bool flag_Mouse_Normal;
 	bool flag_Mouse_Slow;
 	bool flag_Mouse_VerySlow;

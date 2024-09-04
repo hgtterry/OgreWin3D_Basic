@@ -35,9 +35,11 @@ public:
 	void Start_Resources();
 	void Load_OgreCFG_Resources(const Ogre::String& file);
 	void Destroy_Resources_Group(Ogre::String ResourceGroup);
-	bool View_Texture(char* FileName);
+	bool View_Texture(char* FileName, HWND Owner_hDlg);
 
 	bool Ogre_ExternalResourceLoaded;
+
+	HWND Resource_Dlg_hWnd;
 
 	Ogre::String Ogre_Loader_Resource_Group;
 	Ogre::String mSelected_Resource_Group;
@@ -92,7 +94,6 @@ private:
 
 	HWND FX_General_hLV;
 	HWND Export_Button;
-	HWND Resource_Dlg_hWnd;
 
 	char mbtext[MAX_PATH];
 	char mSelected_File[MAX_PATH];

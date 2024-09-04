@@ -372,8 +372,11 @@ void CL64_ImGui::Model_Data_GUI(void)
 
 							if (ImGui::Button("View Texture"))
 							{
+								App->CL_Dialogs->BasePicHeight = Height;
+								App->CL_Dialogs->BasePicWidth = Width;
+
 								Model_Data_disable_all = true;
-								App->CL_Resources->View_Texture(Texture);
+								App->CL_Resources->View_Texture(Texture,App->Fdlg);
 
 							}
 

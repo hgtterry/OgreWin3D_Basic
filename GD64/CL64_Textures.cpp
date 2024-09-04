@@ -199,8 +199,6 @@ void CL64_Textures::Texture_To_HBITMP(char* TextureFileName)
 	HWND PreviewWnd = GetDlgItem(App->CL_Dialogs->RightGroups_Hwnd, IDC_BASETEXTURE);
 	HDC	hDC = GetDC(PreviewWnd);
 
-	App->CL_Dialogs->BasePicHeight = 256;
-	App->CL_Dialogs->BasePicWidth = 256;
 	App->CL_Dialogs->Sel_BaseBitmap = ilutWinLoadImage(TextureFileName, hDC);
 
 	RedrawWindow(App->CL_Dialogs->RightGroups_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
