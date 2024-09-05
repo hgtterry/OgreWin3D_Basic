@@ -71,11 +71,15 @@ private:
 	int ShowAllTextures();
 
 	bool Get_File(char* FileName);
+	bool Get_File_Type(char* FileName, int Index);
+
 	bool Export_Resource(char* FileName) const;
 
 	int Show_Resource_Group_All();
 	int Show_Resource_Group_Materials();
 	int Show_Resource_Group_Meshes();
+	int Show_Resource_Group_Textures();
+	int Show_Resource_Group_Skeletons();
 
 	void UnloadUserResources();
 	Ogre::ConfigFile cf;
@@ -91,6 +95,7 @@ private:
 	bool flag_Show_All_Materials;
 	bool flag_Show_All_Meshes;
 	bool flag_Show_All_Textures;
+	bool flag_Show_All_Skeleton;
 
 	HWND FX_General_hLV;
 	HWND Export_Button;
@@ -102,5 +107,6 @@ private:
 	std::vector<std::string> RV_FileName;
 	std::vector<std::string> RV_Archive_GetName;
 	std::vector<std::string> RV_Archive_GetType;
+	std::vector<int> RV_File_Extension;
 };
 

@@ -27,6 +27,7 @@ CL64_Resources::CL64_Resources(void)
 	flag_Show_All_Meshes = 0;
 	flag_Show_All_Textures = 0;
 	flag_Show_All_Materials = 0;
+	flag_Show_All_Skeleton = 0;
 	flag_Show_Group_All = 0;
 
 	mFileString.clear();
@@ -91,6 +92,7 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 	{
 	case WM_INITDIALOG:
 	{
+
 		SendDlgItemMessage(hDlg, IDC_ST_BANNER, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_STCOUNT, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ST_RESOURCE_GROUP, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
@@ -103,11 +105,14 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 		SendDlgItemMessage(hDlg, IDC_BT_EXPORT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_VIEWFILE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
+		// -------------------------- Show Resource
 		SendDlgItemMessage(hDlg, IDC_GROUPALL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ALLMATERIALS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ALLTEXTURES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ALLMESH, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_LIST_SKELETON, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
+		// -------------------------- 
 		SendDlgItemMessage(hDlg, IDC_LST_GROUPS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
 		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
@@ -292,6 +297,13 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 			return CDRF_DODEFAULT;
 		}
 
+		if (some_item->idFrom == IDC_BT_LIST_SKELETON)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->CL_Resources->flag_Show_All_Skeleton);
+			return CDRF_DODEFAULT;
+		}
+
 		return CDRF_DODEFAULT;
 	}
 
@@ -354,7 +366,9 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 
 			RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
-			int Items = App->CL_Resources->ShowAllTextures();
+			//int Items = App->CL_Resources->ShowAllTextures();
+			int Items = App->CL_Resources->Show_Resource_Group_Textures();
+			
 			App->CL_Resources->Update_Counter(Items, hDlg);
 
 			EnableWindow(GetDlgItem(hDlg, IDC_BT_VIEWFILE), true);
@@ -374,6 +388,23 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 			App->CL_Resources->Set_Title(hDlg,(LPSTR)"Meshes");
 
 			int Items = App->CL_Resources->Show_Resource_Group_Meshes();
+			App->CL_Resources->Update_Counter(Items, hDlg);
+
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_BT_LIST_SKELETON)
+		{
+			App->CL_Resources->Reset_Flags();
+			App->CL_Resources->flag_Show_All_Skeleton = 1;
+
+			RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+			//int Items = App->CL_Resources->ShowAllMeshes();
+
+			App->CL_Resources->Set_Title(hDlg, (LPSTR)"Skeletons");
+
+			int Items = App->CL_Resources->Show_Resource_Group_Skeletons();
 			App->CL_Resources->Update_Counter(Items, hDlg);
 
 			return TRUE;
@@ -481,6 +512,7 @@ void CL64_Resources::Reset_Flags()
 	flag_Show_All_Textures = 0;
 	flag_Show_All_Meshes = 0;
 	flag_Show_Group_All = 0;
+	flag_Show_All_Skeleton = 0;
 
 	EnableWindow(GetDlgItem(Resource_Dlg_hWnd, IDC_BT_VIEWFILE), false);
 
@@ -698,9 +730,7 @@ int CL64_Resources::Show_Resource_Group_Materials()
 	int End = RV_Size;
 	while (Count < End)
 	{
-		int test = RV_FileName[Count].find(".material");
-
-		if (test > 0)
+		if (RV_File_Extension[Count] == Enums::Resource_File_Type_Material)
 		{
 			pitem.iItem = pRow;
 			pitem.pszText = (LPSTR)RV_FileName[Count].c_str();
@@ -759,9 +789,125 @@ int CL64_Resources::Show_Resource_Group_Meshes()
 	int End = RV_Size;
 	while (Count < End)
 	{
-		int test = RV_FileName[Count].find(".mesh");
+		if (RV_File_Extension[Count] == Enums::Resource_File_Type_Mesh)
+		{
+			pitem.iItem = pRow;
+			pitem.pszText = (LPSTR)RV_FileName[Count].c_str();
 
-		if (test > 0)
+			ListView_InsertItem(FX_General_hLV, &pitem);
+			ListView_SetItemText(FX_General_hLV, pRow, 1, (LPSTR)RV_Archive_GetType[Count].c_str());
+			ListView_SetItemText(FX_General_hLV, pRow, 2, (LPSTR)RV_Archive_GetName[Count].c_str());
+
+			pRow++;
+		}
+
+		Count++;
+
+	}
+
+	RedrawWindow(FX_General_hLV, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+	return pRow;
+}
+
+// *************************************************************************
+// *	  Show_Resource_Group_Textures:- Terry and Hazel Flanigan 2024	   *
+// *************************************************************************
+int CL64_Resources::Show_Resource_Group_Textures()
+{
+	ListView_DeleteAllItems(FX_General_hLV);
+
+	int	 pRow = 0;
+	int NUM_COLS = 4;
+
+	LV_ITEM pitem;
+	memset(&pitem, 0, sizeof(LV_ITEM));
+	pitem.mask = LVIF_TEXT;
+
+	LV_COLUMN lvC;
+	memset(&lvC, 0, sizeof(LV_COLUMN));
+	lvC.mask = LVCF_FMT | LVCF_WIDTH | LVCF_TEXT | LVCF_SUBITEM;
+	lvC.fmt = LVCFMT_LEFT;  // left-align the column
+	std::string headers[] =
+	{
+		"File", "Archive Type","Path"," "
+	};
+	int headerSize[] =
+	{
+		165,120,470,150
+	};
+
+	for (int header = 0; header < NUM_COLS; header++)
+	{
+		lvC.iSubItem = header;
+		lvC.cx = headerSize[header]; // width of the column, in pixels
+		lvC.pszText = const_cast<char*>(headers[header].c_str());
+		ListView_SetColumn(FX_General_hLV, header, &lvC);
+	}
+
+	int Count = 0;
+	int End = RV_Size;
+	while (Count < End)
+	{
+		if (RV_File_Extension[Count] == Enums::Resource_File_Type_Texture)
+		{
+			pitem.iItem = pRow;
+			pitem.pszText = (LPSTR)RV_FileName[Count].c_str();
+
+			ListView_InsertItem(FX_General_hLV, &pitem);
+			ListView_SetItemText(FX_General_hLV, pRow, 1, (LPSTR)RV_Archive_GetType[Count].c_str());
+			ListView_SetItemText(FX_General_hLV, pRow, 2, (LPSTR)RV_Archive_GetName[Count].c_str());
+
+			pRow++;
+		}
+
+		Count++;
+
+	}
+
+	RedrawWindow(FX_General_hLV, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+	return pRow;
+}
+
+// *************************************************************************
+// *	  Show_Resource_Group_Skeletons:- Terry and Hazel Flanigan 2024	   *
+// *************************************************************************
+int CL64_Resources::Show_Resource_Group_Skeletons()
+{
+	ListView_DeleteAllItems(FX_General_hLV);
+
+	int	 pRow = 0;
+	int NUM_COLS = 4;
+
+	LV_ITEM pitem;
+	memset(&pitem, 0, sizeof(LV_ITEM));
+	pitem.mask = LVIF_TEXT;
+
+	LV_COLUMN lvC;
+	memset(&lvC, 0, sizeof(LV_COLUMN));
+	lvC.mask = LVCF_FMT | LVCF_WIDTH | LVCF_TEXT | LVCF_SUBITEM;
+	lvC.fmt = LVCFMT_LEFT;  // left-align the column
+	std::string headers[] =
+	{
+		"File", "Archive Type","Path"," "
+	};
+	int headerSize[] =
+	{
+		165,120,470,150
+	};
+
+	for (int header = 0; header < NUM_COLS; header++)
+	{
+		lvC.iSubItem = header;
+		lvC.cx = headerSize[header]; // width of the column, in pixels
+		lvC.pszText = const_cast<char*>(headers[header].c_str());
+		ListView_SetColumn(FX_General_hLV, header, &lvC);
+	}
+
+	int Count = 0;
+	int End = RV_Size;
+	while (Count < End)
+	{
+		if (RV_File_Extension[Count] == Enums::Resource_File_Type_Skeleton)
 		{
 			pitem.iItem = pRow;
 			pitem.pszText = (LPSTR)RV_FileName[Count].c_str();
@@ -913,6 +1059,9 @@ bool CL64_Resources::Scan_Resource_Group(Ogre::String ResourceGroup)
 	RV_FileName.resize(0);
 	RV_Archive_GetName.resize(0);
 	RV_Archive_GetType.resize(0);
+	RV_File_Extension.resize(0);
+
+	char mFilename[MAX_PATH];
 
 	Ogre::FileInfoListPtr RFI = ResourceGroupManager::getSingleton().listResourceFileInfo(ResourceGroup, false);
 	Ogre::FileInfoList::const_iterator i, iend;
@@ -922,6 +1071,10 @@ bool CL64_Resources::Scan_Resource_Group(Ogre::String ResourceGroup)
 	for (i = RFI->begin(); i != iend; ++i)
 	{
 		RV_FileName.push_back(i->filename);
+
+		strcpy(mFilename,i->filename.c_str());
+		Get_File_Type(mFilename, Count);
+
 		RV_Archive_GetName.push_back(i->archive->getName());
 		RV_Archive_GetType.push_back(i->archive->getType());
 	
@@ -931,6 +1084,71 @@ bool CL64_Resources::Scan_Resource_Group(Ogre::String ResourceGroup)
 	RV_Size = Count;
 
 	return 1;
+}
+
+// *************************************************************************
+// *			Get_File_Type:- Terry and Hazel Flanigan 2024		  	   *
+// *************************************************************************
+bool CL64_Resources::Get_File_Type(char* FileName, int Index)
+{
+	if (_stricmp(FileName + strlen(FileName) - 9, ".material") == 0)
+	{
+		RV_File_Extension.push_back(Enums::Resource_File_Type_Material);
+		return 1;
+	}
+
+	if (_stricmp(FileName + strlen(FileName) - 5, ".mesh") == 0)
+	{
+		RV_File_Extension.push_back(Enums::Resource_File_Type_Mesh);
+		return 1;
+	}
+
+	if (_stricmp(FileName + strlen(FileName) - 9, ".skeleton") == 0)
+	{
+		RV_File_Extension.push_back(Enums::Resource_File_Type_Skeleton);
+		return 1;
+	}
+
+	// Textures
+	if (_stricmp(FileName + strlen(FileName) - 4, ".png") == 0)
+	{
+		RV_File_Extension.push_back(Enums::Resource_File_Type_Texture);
+		return 1;
+	}
+
+	if (_stricmp(FileName + strlen(FileName) - 4, ".tga") == 0)
+	{
+		RV_File_Extension.push_back(Enums::Resource_File_Type_Texture);
+		return 1;
+	}
+
+	if (_stricmp(FileName + strlen(FileName) - 4, ".bmp") == 0)
+	{
+		RV_File_Extension.push_back(Enums::Resource_File_Type_Texture);
+		return 1;
+	}
+
+	if (_stricmp(FileName + strlen(FileName) - 4, ".jpg") == 0)
+	{
+		RV_File_Extension.push_back(Enums::Resource_File_Type_Texture);
+		return 1;
+	}
+
+	if (_stricmp(FileName + strlen(FileName) - 4, ".dds") == 0)
+	{
+		RV_File_Extension.push_back(Enums::Resource_File_Type_Texture);
+		return 1;
+	}
+
+	if (_stricmp(FileName + strlen(FileName) - 4, ".ico") == 0)
+	{
+		RV_File_Extension.push_back(Enums::Resource_File_Type_Texture);
+		return 1;
+	}
+
+	RV_File_Extension.push_back(Enums::Resource_File_Type_None);
+
+	return 0;
 }
 
 // *************************************************************************

@@ -95,6 +95,17 @@ namespace Enums
 		Model_Type_Milk = 3
 	};
 
+	enum Resource_File_Type
+	{
+		Resource_File_Type_None = 0,
+		Resource_File_Type_Material = 1,
+		Resource_File_Type_Mesh = 2,
+		Resource_File_Type_Skeleton = 3,
+		Resource_File_Type_Texture = 4
+		//Model_Type_3ds = 2,
+		//Model_Type_Milk = 3
+	};
+
 }
 
 #define Debug App->Debug_Text();

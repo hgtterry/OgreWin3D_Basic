@@ -307,14 +307,14 @@ void CL64_ImGui::Model_Data_GUI(void)
 	ImGui::SetNextWindowSize(ImVec2(200, 200), ImGuiCond_FirstUseEver);
 	
 
-	if (Model_Data_disable_all)
+	/*if (Model_Data_disable_all)
 	{
 		ImGui::BeginDisabled();
 	}
 	else
 	{
 		ImGui::EndDisabled();
-	}
+	}*/
 
 	if (!ImGui::Begin("Model Data", NULL, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoResize
 		| ImGuiWindowFlags_AlwaysAutoResize))
