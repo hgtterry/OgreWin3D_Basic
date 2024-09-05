@@ -312,9 +312,6 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 
 		if (LOWORD(wParam) == IDC_BT_VIEWFILE)
 		{
-			App->CL_Dialogs->BasePicHeight = 256; // Temp
-			App->CL_Dialogs->BasePicWidth = 256; // Temp
-
 			App->CL_Resources->View_Texture(App->CL_Resources->mSelected_File,hDlg);
 			return TRUE;
 		}
@@ -979,7 +976,12 @@ int CL64_Resources::ShowAllTextures()
 
 		strcpy(pScriptName, TextureIterator.peekNextValue()->getName().c_str());
 		strcpy(Origin, TextureIterator.peekNextValue()->getGroup().c_str());
-		
+
+		/*pp = Ogre::TextureManager::getSingleton().getByName(pScriptName);
+		Ogre::Resource *gg = pp.get();
+		Ogre::ParameterList dd = gg->getParameters();
+		dd.*/
+
 		if (pIsLoaded == 1)
 		{
 			strcpy(pUsed, "Yes");
@@ -1021,32 +1023,6 @@ int CL64_Resources::ShowAllTextures()
 
 		TextureIterator.moveNext();
 	}
-
-
-	/*char File[MAX_PATH];
-	strcpy(File, App->GD_Directory_FullPath);
-	strcat(File, "\\Media\\test.tga");
-
-	Ogre::FileInfoListPtr RFI = ResourceGroupManager::getSingleton().listResourceFileInfo(App->CL_Ogre->App_Resource_Group, false);
-	Ogre::FileInfoList::const_iterator i, iend;
-	iend = RFI->end();
-
-	for (i = RFI->begin(); i != iend; ++i)
-	{
-		if (i->filename == "sinbad_body.tga")
-		{
-			App->Say(i->filename.c_str());
-			App->Say(i->archive->getName().c_str());
-
-			Ogre::DataStreamPtr ff = i->archive->open(i->filename);
-
-			mFileString = ff->getAsString();
-
-			Export_Texture(File);
-
-			mFileString.clear();
-		}
-	}*/
 
 	return pRow;
 }

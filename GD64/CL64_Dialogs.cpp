@@ -40,9 +40,6 @@ CL64_Dialogs::CL64_Dialogs(void)
 
 	Sel_BaseBitmap = nullptr;
 
-	BasePicWidth = 0;
-	BasePicHeight = 0;
-
 	RightGroups_Hwnd = nullptr;
 	FPSLock_Dlg_hWnd = nullptr;
 
@@ -864,17 +861,34 @@ LRESULT CALLBACK CL64_Dialogs::TextureViewer_Proc(HWND hDlg, UINT message, WPARA
 	case WM_INITDIALOG:
 	{
 		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-
+		SendDlgItemMessage(hDlg, IDC_ST_DETAILS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
 		SetWindowLongPtr(GetDlgItem(hDlg, IDC_BASETEXTURE), GWLP_WNDPROC, (LONG_PTR)ViewerBasePic);
 
 		App->CL_Dialogs->RightGroups_Hwnd = hDlg;
 		App->CL_Textures->Texture_To_HBITMP(App->CL_Dialogs->mTextureFile);
+
+		char buf[MAX_PATH];
+		sprintf(buf, "%i X %i   %s", App->CL_Textures->BasePicWidth
+			, App->CL_Textures->BasePicHeight, App->CL_Resources->mSelected_File);
+			//,App->CL_Textures->BasePicDepth);
+
+		SetDlgItemText(hDlg, IDC_ST_DETAILS, (LPCTSTR)buf);
+
 		App->CL_Ogre->RenderFrame(8);
 
 		return TRUE;
 	}
 	case WM_CTLCOLORSTATIC:
 	{
+		if (GetDlgItem(hDlg, IDC_ST_DETAILS) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+		
 		return FALSE;
 	}
 
@@ -948,8 +962,8 @@ bool CALLBACK CL64_Dialogs::ViewerBasePic(HWND hwnd, UINT msg, WPARAM wParam, LP
 
 			Source.left = 0;
 			Source.top = 0;
-			Source.bottom = App->CL_Dialogs->BasePicHeight;
-			Source.right = App->CL_Dialogs->BasePicWidth;
+			Source.bottom = App->CL_Textures->BasePicHeight;
+			Source.right = App->CL_Textures->BasePicWidth;
 
 			Dest = Rect;
 

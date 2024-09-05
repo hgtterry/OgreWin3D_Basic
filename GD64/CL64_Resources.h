@@ -37,6 +37,8 @@ public:
 	void Destroy_Resources_Group(Ogre::String ResourceGroup);
 	bool View_Texture(char* FileName, HWND Owner_hDlg);
 
+	char mSelected_File[MAX_PATH];
+
 	bool Ogre_ExternalResourceLoaded;
 
 	HWND Resource_Dlg_hWnd;
@@ -101,7 +103,6 @@ private:
 	HWND Export_Button;
 
 	char mbtext[MAX_PATH];
-	char mSelected_File[MAX_PATH];
 	
 	int RV_Size;
 	std::vector<std::string> RV_FileName;

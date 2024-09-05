@@ -32,6 +32,10 @@ CL64_Textures::CL64_Textures(void)
 	TextureFileName[0] = 0;
 	Just_Texture_FileName[0] = 0;
 
+	BasePicWidth = 0;
+	BasePicHeight = 0;
+	BasePicDepth = 0;
+
 	int Count = 0;
 	while (Count < 499)
 	{
@@ -200,9 +204,12 @@ void CL64_Textures::Texture_To_HBITMP(char* TextureFileName)
 	HDC	hDC = GetDC(PreviewWnd);
 
 	App->CL_Dialogs->Sel_BaseBitmap = ilutWinLoadImage(TextureFileName, hDC);
+	
+	BasePicWidth = ilGetInteger(IL_IMAGE_WIDTH);
+	BasePicHeight = ilGetInteger(IL_IMAGE_HEIGHT);
+	//BasePicDepth = ilGetInteger(IL_IMAGE_DEPTH);
 
 	RedrawWindow(App->CL_Dialogs->RightGroups_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-
 
 }
 

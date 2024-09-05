@@ -39,8 +39,7 @@ public:
 	int What_Check_Name;
 
 	HBITMAP	Sel_BaseBitmap;
-	long BasePicWidth;
-	long BasePicHeight;
+
 	HWND RightGroups_Hwnd;
 	HWND FPSLock_Dlg_hWnd;
 

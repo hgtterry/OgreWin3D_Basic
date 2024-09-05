@@ -340,13 +340,6 @@ void CL64_ImGui::Model_Data_GUI(void)
 
 					while (Count < Size)
 					{
-						/*if (ImGui::Selectable(App->CL_Scene->S_OgreMeshData[0]->m_Materials_Names[Count].c_str(), listMaterialItems[Count]))
-						{
-							listMaterialItems[PreviouseMaterial] = 0;
-							listMaterialItems[Count] = 1;
-							PreviouseMaterial = Count;
-						}*/
-
 						ImGui::PushID("foo");
 						if (ImGui::BeginMenu(App->CL_Scene->S_OgreMeshData[0]->m_Materials_Names[Count].c_str()))
 						{
@@ -372,12 +365,9 @@ void CL64_ImGui::Model_Data_GUI(void)
 
 							if (ImGui::Button("View Texture"))
 							{
-								App->CL_Dialogs->BasePicHeight = Height;
-								App->CL_Dialogs->BasePicWidth = Width;
-
 								Model_Data_disable_all = true;
+								strcpy(App->CL_Resources->mSelected_File, Texture);
 								App->CL_Resources->View_Texture(Texture,App->Fdlg);
-
 							}
 
 							ImGui::EndMenu();

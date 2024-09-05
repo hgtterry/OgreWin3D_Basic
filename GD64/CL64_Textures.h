@@ -37,6 +37,10 @@ public:
 	char TextureFileName[MAX_PATH];
 	char Just_Texture_FileName[MAX_PATH];
 
+	long BasePicWidth;
+	long BasePicHeight;
+	long BasePicDepth;
+
 	UINT  g_Texture[400]; //Texture IDs for loaded textures OpenGL
 };
 
