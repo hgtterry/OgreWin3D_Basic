@@ -327,7 +327,8 @@ void CL64_ImGui::Model_Data_GUI(void)
 		
 		ImGui::Separator();
 
-		if (ImGui::TreeNode("Ogre3D Model","%s", App->CL_Scene->S_OgreMeshData[0]->mFileName_Str.c_str()))
+		// Open for now
+		ImGui::TreeNode("Ogre3D Model", "%s", App->CL_Scene->S_OgreMeshData[0]->mFileName_Str.c_str());
 		{
 			if (App->CL_Import_Ogre3D->flag_Ogre_Model_Loaded == 1)
 			{

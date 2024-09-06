@@ -108,7 +108,9 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 		SendDlgItemMessage(hDlg, IDC_ST_RESOURCE_GROUP, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ST_GB_LISTOPTIONS, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ST_GB_OPTIONS, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
-		
+
+
+		SendDlgItemMessage(hDlg, IDC_ST_SELECTEDFILE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_EXPORT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_VIEWFILE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
@@ -123,6 +125,10 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 		SendDlgItemMessage(hDlg, IDC_LST_GROUPS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
 		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		SetDlgItemText(hDlg, IDC_ST_SELECTEDFILE, (LPCTSTR)App->CL_Resources->mSelected_File);
+
+		App->CL_Resources->Resource_Dlg_hWnd = hDlg;
 
 		App->CL_Resources->Export_Button = GetDlgItem(hDlg, IDC_BT_EXPORT);
 
@@ -142,8 +148,6 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 		App->CL_Resources->Update_Counter(Items, hDlg);
 
 		App->CL_Resources->Set_Title(hDlg, (LPSTR)"All");
-
-		App->CL_Resources->Resource_Dlg_hWnd = hDlg;
 
 		return TRUE;
 	}
@@ -189,6 +193,14 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 			return (UINT)App->AppBackground;
 		}
 
+		if (GetDlgItem(hDlg, IDC_ST_SELECTEDFILE) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->Brush_White;
+		}
+		
 		return FALSE;
 	}
 
@@ -208,7 +220,7 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 			case NM_CLICK:
 			{
 				App->CL_Resources->ListView_OnClickOptions(lParam);
-				
+				SetDlgItemText(hDlg, IDC_ST_SELECTEDFILE, (LPCTSTR)App->CL_Resources->mSelected_File);
 			}
 			}
 		}
@@ -479,8 +491,6 @@ void CL64_Resources::ListView_OnClickOptions(LPARAM lParam)
 	LPNMLISTVIEW List = (LPNMLISTVIEW)lParam;
 	List_Index = List->iItem;
 	ListView_GetItemText(FX_General_hLV, List_Index, 0, mbtext, MAX_PATH);
-
-	//ListView_SetCheckState(FX_General_hLV, List_Index,true);
 
 	strcpy(mSelected_File, mbtext);
 	EnableWindow(Export_Button, true);
@@ -775,6 +785,23 @@ bool CL64_Resources::Export_Resource(char* FileName) const
 }
 
 // *************************************************************************
+// *			Set_Selection:- Terry and Hazel Flanigan 2024		  	   *
+// *************************************************************************
+void CL64_Resources::Set_Selection(int Index)
+{
+	ListView_SetItemState(FX_General_hLV, Index, LVNI_SELECTED, LVNI_SELECTED);
+	ListView_SetSelectionMark(FX_General_hLV, Index);
+	ListView_EnsureVisible(FX_General_hLV, Index, false);
+
+	ListView_GetItemText(FX_General_hLV, Index, 0, mbtext, MAX_PATH);
+
+	strcpy(mSelected_File, mbtext);
+	SetDlgItemText(Resource_Dlg_hWnd, IDC_ST_SELECTEDFILE, (LPCTSTR)App->CL_Resources->mSelected_File);
+	RedrawWindow(Resource_Dlg_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+	SetFocus(FX_General_hLV);
+}
+
+// *************************************************************************
 // *	   Show_Resource_Group_All:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
 int CL64_Resources::Show_Resource_Group_All()
@@ -800,6 +827,8 @@ int CL64_Resources::Show_Resource_Group_All()
 		Count++;
 
 	}
+
+	Set_Selection(0);
 
 	return Count;
 }
@@ -835,6 +864,8 @@ int CL64_Resources::Show_Resource_Group_Materials()
 
 		Count++;
 	}
+
+	Set_Selection(0);
 
 	RedrawWindow(FX_General_hLV, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 	

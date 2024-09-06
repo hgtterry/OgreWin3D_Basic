@@ -53,6 +53,7 @@ private:
 
 	void Set_Title(HWND hDlg,char* Title);
 	void Reset_Flags();
+	void Set_Selection(int Index);
 
 	void CreateListGeneral_FX(HWND hDlg);
 	void ListView_OnClickOptions(LPARAM lParam);

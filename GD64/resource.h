@@ -157,6 +157,7 @@
 #define IDC_BASETEXTURE                 1057
 #define IDC_BT_LIST_SKELETON            1058
 #define IDC_ST_DETAILS                  1059
+#define IDC_ST_SELECTEDFILE             1060
 #define ID_VIEW_RESET                   32771
 #define ID_VIEW_MAX3DVIEW               32772
 #define ID_DEBUG_TESTPREFERANCE         32773
@@ -195,7 +196,7 @@
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        169
 #define _APS_NEXT_COMMAND_VALUE         32800
-#define _APS_NEXT_CONTROL_VALUE         1060
+#define _APS_NEXT_CONTROL_VALUE         1061
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif
