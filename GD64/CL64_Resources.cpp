@@ -536,7 +536,7 @@ void CL64_Resources::CreateListGeneral_FX(HWND hDlg)
 {
 	int NUM_COLS = 5;
 	FX_General_hLV = CreateWindowEx(0, WC_LISTVIEW, "",
-		WS_CHILD | WS_VISIBLE | WS_BORDER | LVS_REPORT | LVS_SHOWSELALWAYS, 2, 50,
+		WS_CHILD | WS_VISIBLE | WS_BORDER | LVS_REPORT | LVS_SHOWSELALWAYS | LVS_SINGLESEL , 2, 50,
 		1280, 430, hDlg, 0, App->hInst, NULL);
 
 	DWORD exStyles = LVS_EX_GRIDLINES;
@@ -584,6 +584,8 @@ void CL64_Resources::ListView_OnClickOptions(LPARAM lParam)
 	LPNMLISTVIEW List = (LPNMLISTVIEW)lParam;
 	List_Index = List->iItem;
 	ListView_GetItemText(FX_General_hLV, List_Index, 0, mbtext, MAX_PATH);
+
+	//ListView_SetCheckState(FX_General_hLV, List_Index,true);
 
 	strcpy(mSelected_File, mbtext);
 	EnableWindow(Export_Button, true);

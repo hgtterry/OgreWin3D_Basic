@@ -75,6 +75,7 @@
 #define IDC_BT_TD_DEMOS_OPTIONS         1007
 #define IDC_BT_MOTIONS_PLAY             1007
 #define IDC_BT_CHANGE_NAME              1007
+#define IDC_BT_VIEWEXPORT               1007
 #define IDC_BUTTON2                     1008
 #define IDC_BT_TBH_CAMERA               1008
 #define IDC_BT_DEMORESOURCES            1008
