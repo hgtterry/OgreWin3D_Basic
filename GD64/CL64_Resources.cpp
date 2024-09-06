@@ -133,7 +133,7 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 		App->CL_Resources->Export_Button = GetDlgItem(hDlg, IDC_BT_EXPORT);
 
 		EnableWindow(GetDlgItem(hDlg, IDC_BT_VIEWFILE), false);
-		EnableWindow(GetDlgItem(hDlg, IDC_BT_EXPORT), false);
+		EnableWindow(GetDlgItem(hDlg, IDC_BT_EXPORT), true);
 		
 		App->CL_Resources->Update_Resource_Groups_Combo(hDlg);
 
@@ -492,9 +492,27 @@ void CL64_Resources::ListView_OnClickOptions(LPARAM lParam)
 	List_Index = List->iItem;
 	ListView_GetItemText(FX_General_hLV, List_Index, 0, mbtext, MAX_PATH);
 
-	strcpy(mSelected_File, mbtext);
-	EnableWindow(Export_Button, true);
+	int Count = 0;
+	int End = RV_Size;
 
+	strcpy(mSelected_File, mbtext);
+
+	while (Count < End)
+	{
+		bool test = strcmp(RV_FileName[Count].c_str(), mbtext);
+		if (test == 0)
+		{
+			if (RV_File_Extension[Count] == Enums::Resource_File_Type_Texture)
+			{
+				EnableWindow(GetDlgItem(Resource_Dlg_hWnd, IDC_BT_VIEWFILE), true);
+				return;
+			}	
+		}
+
+		Count++;
+	}
+
+	EnableWindow(GetDlgItem(Resource_Dlg_hWnd, IDC_BT_VIEWFILE), false);
 }
 
 // *************************************************************************
@@ -905,6 +923,8 @@ int CL64_Resources::Show_Resource_Group_Meshes()
 
 	}
 
+	Set_Selection(0);
+
 	RedrawWindow(FX_General_hLV, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 	return pRow;
 }
@@ -942,6 +962,8 @@ int CL64_Resources::Show_Resource_Group_Textures()
 
 	}
 
+	Set_Selection(0);
+
 	RedrawWindow(FX_General_hLV, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 	return pRow;
 }
@@ -960,6 +982,7 @@ int CL64_Resources::Show_Resource_Group_Skeletons()
 	int	 pRow = 0;
 	int Count = 0;
 	int End = RV_Size;
+
 	while (Count < End)
 	{
 		if (RV_File_Extension[Count] == Enums::Resource_File_Type_Skeleton)
@@ -978,114 +1001,10 @@ int CL64_Resources::Show_Resource_Group_Skeletons()
 
 	}
 
+	Set_Selection(0);
+
 	RedrawWindow(FX_General_hLV, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 	return pRow;
-}
-
-// *************************************************************************
-// *			Start_List_Folders:- Terry and Hazel Flanigan 2024	  	   *
-// *************************************************************************
-void CL64_Resources::Start_List_Folders(HWND List, char* FileName, bool ListDlg)
-{
-	char StartFolder[MAX_PATH];
-
-	if (ListDlg == 1)
-	{
-		SendMessage(List, LB_RESETCONTENT, 0, 0);
-	}
-
-	strcpy(StartFolder, App->GD_Directory_FullPath);
-	strcat(StartFolder, "\\");
-	strcat(StartFolder, "Media\\");
-
-	List_Folders(List, StartFolder, FileName, ListDlg);
-	return;
-}
-
-// *************************************************************************
-// *			List_Folders:- Terry and Hazel Flanigan 2024	 	 	   *
-// *************************************************************************
-void CL64_Resources::List_Folders(HWND List, char* StartFolder, char* FileName, bool ListDlg)
-{
-	char SearchPath[2048];
-
-	if (ListDlg == 1)
-	{
-		SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)StartFolder);
-	}
-
-	int Result = FindPath_New(FileName, StartFolder);
-	if (Result == 1)
-	{
-		ResourcePath[0] = 0;
-		strcat(ResourcePath, StartFolder);
-
-		if (ListDlg == 1)
-		{
-			SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)StartFolder);
-		}
-
-		return;
-	}
-
-	strcpy(SearchPath, StartFolder);
-	strcat(SearchPath, "*.*");
-
-	WIN32_FIND_DATA FindFileData;
-	HANDLE hFind;
-
-	hFind = FindFirstFile(SearchPath, &FindFileData);
-	if (hFind == INVALID_HANDLE_VALUE)
-	{
-		//App->Say("Cant Find File");
-		return;
-	}
-
-	do
-	{
-		if (FindFileData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
-		{
-
-			if (strcmp(FindFileData.cFileName, "."))
-			{
-				if (strcmp(FindFileData.cFileName, ".."))
-				{
-					char NewPath[2048];
-					strcpy(NewPath, StartFolder);
-					strcat(NewPath, FindFileData.cFileName);
-					strcat(NewPath, "\\");
-
-					List_Folders(List, NewPath, FileName, ListDlg);
-
-				}
-			}
-		}
-	}
-
-	while (FindNextFile(hFind, &FindFileData));
-	FindClose(hFind);
-
-	return;
-}
-
-// *************************************************************************
-// *			FindPath_New:- Terry and Hazel Flanigan 2024		 	   *
-// *************************************************************************
-bool CL64_Resources::FindPath_New(char* File, char* Folder)
-{
-	char pSearchPath[MAX_PATH];
-	char pReturnPath[MAX_PATH];
-	char* pPartPath;
-
-	strcpy(pSearchPath, Folder);
-
-	int result = SearchPath((LPCTSTR)pSearchPath, (LPCTSTR)File, NULL, MAX_PATH, pReturnPath, &pPartPath);
-	if (result == 0)
-	{
-		return 0;
-	}
-
-	return 1;
 }
 
 // *************************************************************************

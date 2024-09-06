@@ -60,10 +60,6 @@ private:
 
 	void Update_Counter(int Value, HWND hDlg);
 
-	void Start_List_Folders(HWND List, char* FileName, bool ListDlg);
-	void List_Folders(HWND List, char* StartFolder, char* FileName, bool ListDlg);
-	bool FindPath_New(char* File, char* Folder);
-
 	bool Get_File_Type(char* FileName, int Index);
 
 	bool Export_Resource(char* FileName) const;
