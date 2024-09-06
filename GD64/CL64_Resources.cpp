@@ -17,6 +17,7 @@ appreciated but is not required.
 #include "resource.h"
 #include "CL64_App.h"
 #include "CL64_Resources.h"
+#include <string.h>
 
 CL64_Resources::CL64_Resources(void)
 {
@@ -75,6 +76,15 @@ void CL64_Resources::Destroy_Resources_Group(Ogre::String ResourceGroup)
 	}
 }
 
+// **************************************************************************
+// *		UnloadUserResources:- Terry and Hazel Flanigan 2024				*
+// **************************************************************************
+void CL64_Resources::UnloadUserResources()
+{
+	Ogre::ResourceGroupManager::getSingleton().destroyResourceGroup(App->CL_Resources->Ogre_Loader_Resource_Group);
+	Ogre_ExternalResourceLoaded = 0;
+}
+
 // *************************************************************************
 // *	  		Start_Resources:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
@@ -125,7 +135,6 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 		App->CL_Resources->Reset_Flags();
 		App->CL_Resources->flag_Show_Group_All = 1;
 
-		//App->CL_Resources->mSelected_Resource_Group = "App_Resource_Group";
 		App->CL_Resources->Scan_Resource_Group(App->CL_Resources->mSelected_Resource_Group);
 
 		int Items = App->CL_Resources->Show_Resource_Group_All();
@@ -283,7 +292,6 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 		return CDRF_DODEFAULT;
 	}
 
-
 	case WM_COMMAND:
 
 		if (LOWORD(wParam) == IDC_BT_VIEWFILE)
@@ -379,32 +387,31 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 
 		if (LOWORD(wParam) == IDC_LST_GROUPS)
 		{
-			
-				char buff[MAX_PATH]{ 0 };
-				char Title[MAX_PATH]{ 0 };
+			char buff[MAX_PATH]{ 0 };
+			char Title[MAX_PATH]{ 0 };
 
-				int Index = SendDlgItemMessage(hDlg, IDC_LST_GROUPS, LB_GETCURSEL, (WPARAM)0, (LPARAM)0);
+			int Index = SendDlgItemMessage(hDlg, IDC_LST_GROUPS, LB_GETCURSEL, (WPARAM)0, (LPARAM)0);
 
-				if (Index == -1)
-				{
-					return 1;
-				}
+			if (Index == -1)
+			{
+				return 1;
+			}
 
-				SendDlgItemMessage(hDlg, IDC_LST_GROUPS, LB_GETTEXT, (WPARAM)Index, (LPARAM)buff);
+			SendDlgItemMessage(hDlg, IDC_LST_GROUPS, LB_GETTEXT, (WPARAM)Index, (LPARAM)buff);
 
-				App->CL_Resources->mSelected_Resource_Group = buff;
+			App->CL_Resources->mSelected_Resource_Group = buff;
 
-				App->CL_Resources->Set_Title(hDlg, (LPSTR)"All");
+			App->CL_Resources->Set_Title(hDlg, (LPSTR)"All");
 
-				App->CL_Resources->Scan_Resource_Group(App->CL_Resources->mSelected_Resource_Group);
-				int Items = App->CL_Resources->Show_Resource_Group_All();
-				App->CL_Resources->Update_Counter(Items, hDlg);
+			App->CL_Resources->Scan_Resource_Group(App->CL_Resources->mSelected_Resource_Group);
+			int Items = App->CL_Resources->Show_Resource_Group_All();
+			App->CL_Resources->Update_Counter(Items, hDlg);
 
-				App->CL_Resources->Reset_Flags();
-				App->CL_Resources->flag_Show_Group_All = 1;
+			App->CL_Resources->Reset_Flags();
+			App->CL_Resources->flag_Show_Group_All = 1;
 
-				RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-				
+			RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
 			return TRUE;
 		}
 
@@ -418,6 +425,66 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 
 	}
 	return FALSE;
+}
+
+// *************************************************************************
+// *		CreateListGeneral_FX:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+void CL64_Resources::CreateListGeneral_FX(HWND hDlg)
+{
+	int NUM_COLS = 5;
+	FX_General_hLV = CreateWindowEx(0, WC_LISTVIEW, "",
+		WS_CHILD | WS_VISIBLE | WS_BORDER | LVS_REPORT | LVS_SHOWSELALWAYS | LVS_SINGLESEL, 2, 50,
+		1280, 430, hDlg, 0, App->hInst, NULL);
+
+	DWORD exStyles = LVS_EX_GRIDLINES;
+
+	ListView_SetExtendedListViewStyleEx(FX_General_hLV, exStyles, exStyles);
+
+	ListView_SetBkColor(FX_General_hLV, RGB(250, 250, 250));
+	ListView_SetTextBkColor(FX_General_hLV, RGB(250, 250, 250));
+
+	LV_COLUMN lvC;
+	memset(&lvC, 0, sizeof(LV_COLUMN));
+	lvC.mask = LVCF_FMT | LVCF_WIDTH | LVCF_TEXT | LVCF_SUBITEM;
+	lvC.fmt = LVCFMT_LEFT;  // left-align the column
+	std::string headers[] =
+	{
+		"File", "Archive Type","Path"," "," "
+	};
+	int headerSize[] =
+	{
+		165,120,470,150
+	};
+
+	for (int header = 0; header < NUM_COLS; header++)
+	{
+		lvC.iSubItem = header;
+		lvC.cx = headerSize[header]; // width of the column, in pixels
+		lvC.pszText = const_cast<char*>(headers[header].c_str());
+		ListView_InsertColumn(FX_General_hLV, header, &lvC);
+	}
+	
+	SendMessage(FX_General_hLV, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+}
+
+// *************************************************************************
+// *		ListView_OnClickOptions:- Terry and Hazel Flanigan 2024	 	   *
+// *************************************************************************
+void CL64_Resources::ListView_OnClickOptions(LPARAM lParam)
+{
+	int List_Index;
+
+	LPNMLISTVIEW List = (LPNMLISTVIEW)lParam;
+	List_Index = List->iItem;
+	ListView_GetItemText(FX_General_hLV, List_Index, 0, mbtext, MAX_PATH);
+
+	//ListView_SetCheckState(FX_General_hLV, List_Index,true);
+
+	strcpy(mSelected_File, mbtext);
+	EnableWindow(Export_Button, true);
+
 }
 
 // *************************************************************************
@@ -467,69 +534,6 @@ void CL64_Resources::Update_Counter(int Value, HWND hDlg)
 }
 
 // *************************************************************************
-// *		CreateListGeneral_FX:- Terry and Hazel Flanigan 2024		   *
-// *************************************************************************
-void CL64_Resources::CreateListGeneral_FX(HWND hDlg)
-{
-	int NUM_COLS = 5;
-	FX_General_hLV = CreateWindowEx(0, WC_LISTVIEW, "",
-		WS_CHILD | WS_VISIBLE | WS_BORDER | LVS_REPORT | LVS_SHOWSELALWAYS | LVS_SINGLESEL , 2, 50,
-		1280, 430, hDlg, 0, App->hInst, NULL);
-
-	DWORD exStyles = LVS_EX_GRIDLINES;
-
-	ListView_SetExtendedListViewStyleEx(FX_General_hLV, exStyles, exStyles);
-
-	ListView_SetBkColor(FX_General_hLV, RGB(250, 250, 250));
-	ListView_SetTextBkColor(FX_General_hLV, RGB(250, 250, 250));
-
-	LV_COLUMN lvC;
-	memset(&lvC, 0, sizeof(LV_COLUMN));
-	lvC.mask = LVCF_FMT | LVCF_WIDTH | LVCF_TEXT | LVCF_SUBITEM;
-	lvC.fmt = LVCFMT_LEFT;  // left-align the column
-	std::string headers[] =
-	{
-		"Script","Resource Group","Used","Material File","Path"
-	};
-	int headerSize[] =
-	{
-		165,380,70,250,250
-	};
-
-	//Groups
-
-	for (int header = 0; header < NUM_COLS; header++)
-	{
-		lvC.iSubItem = header;
-		lvC.cx = headerSize[header]; // width of the column, in pixels
-		lvC.pszText = const_cast<char*>(headers[header].c_str());
-		ListView_InsertColumn(FX_General_hLV, header, &lvC);
-	}
-	HFONT Font;
-	Font = CreateFont(-12, 0, 0, 0, FW_NORMAL, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Aerial Black");
-	SendMessage(FX_General_hLV, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-
-}
-
-// *************************************************************************
-// *		ListView_OnClickOptions:- Terry and Hazel Flanigan 2024	 	   *
-// *************************************************************************
-void CL64_Resources::ListView_OnClickOptions(LPARAM lParam)
-{
-	int List_Index;
-
-	LPNMLISTVIEW List = (LPNMLISTVIEW)lParam;
-	List_Index = List->iItem;
-	ListView_GetItemText(FX_General_hLV, List_Index, 0, mbtext, MAX_PATH);
-
-	//ListView_SetCheckState(FX_General_hLV, List_Index,true);
-
-	strcpy(mSelected_File, mbtext);
-	EnableWindow(Export_Button, true);
-
-}
-
-// *************************************************************************
 // *	Update_Resource_Groups_Combo:- Terry and Hazel Flanigan 2024	   *
 // *************************************************************************
 void CL64_Resources::Update_Resource_Groups_Combo(HWND hDlg)
@@ -575,295 +579,6 @@ void CL64_Resources::Get_Resource_Groups()
 }
 
 // *************************************************************************
-// *	   Show_Resource_Group_All:- Terry and Hazel Flanigan 2024		   *
-// *************************************************************************
-int CL64_Resources::Show_Resource_Group_All()
-{
-	ListView_DeleteAllItems(FX_General_hLV);
-
-	int NUM_COLS = 5;
-
-	LV_ITEM pitem;
-	memset(&pitem, 0, sizeof(LV_ITEM));
-	pitem.mask = LVIF_TEXT;
-
-	LV_COLUMN lvC;
-	memset(&lvC, 0, sizeof(LV_COLUMN));
-	lvC.mask = LVCF_FMT | LVCF_WIDTH | LVCF_TEXT | LVCF_SUBITEM;
-	lvC.fmt = LVCFMT_LEFT;  // left-align the column
-	std::string headers[] =
-	{
-		"File", "Archive Type","Path"," "," "
-	};
-	int headerSize[] =
-	{
-		165,120,470,150
-	};
-
-	for (int header = 0; header < NUM_COLS; header++)
-	{
-		lvC.iSubItem = header;
-		lvC.cx = headerSize[header]; // width of the column, in pixels
-		lvC.pszText = const_cast<char*>(headers[header].c_str());
-		ListView_SetColumn(FX_General_hLV, header, &lvC);
-	}
-
-	int Count = 0;
-	int End = RV_Size;
-
-	while (Count < End)
-	{
-		pitem.iItem = Count;
-		pitem.pszText = (LPSTR)RV_FileName[Count].c_str();
-
-		ListView_InsertItem(FX_General_hLV, &pitem);
-		ListView_SetItemText(FX_General_hLV, Count, 1, (LPSTR)RV_Archive_GetType[Count].c_str());
-		ListView_SetItemText(FX_General_hLV, Count, 2, (LPSTR)RV_Archive_GetName[Count].c_str());
-
-		Count++;
-
-	}
-
-	return Count;
-}
-
-// *************************************************************************
-// *	  Show_Resource_Group_Materials:- Terry and Hazel Flanigan 2024	   *
-// *************************************************************************
-int CL64_Resources::Show_Resource_Group_Materials()
-{
-	ListView_DeleteAllItems(FX_General_hLV);
-
-	int	 pRow = 0;
-	int NUM_COLS = 4;
-
-	LV_ITEM pitem;
-	memset(&pitem, 0, sizeof(LV_ITEM));
-	pitem.mask = LVIF_TEXT;
-
-	LV_COLUMN lvC;
-	memset(&lvC, 0, sizeof(LV_COLUMN));
-	lvC.mask = LVCF_FMT | LVCF_WIDTH | LVCF_TEXT | LVCF_SUBITEM;
-	lvC.fmt = LVCFMT_LEFT;  // left-align the column
-	std::string headers[] =
-	{
-		"File", "Archive Type","Path"," "
-	};
-	int headerSize[] =
-	{
-		165,120,470,150
-	};
-
-	for (int header = 0; header < NUM_COLS; header++)
-	{
-		lvC.iSubItem = header;
-		lvC.cx = headerSize[header]; // width of the column, in pixels
-		lvC.pszText = const_cast<char*>(headers[header].c_str());
-		ListView_SetColumn(FX_General_hLV, header, &lvC);
-	}
-
-	int Count = 0;
-	int End = RV_Size;
-	while (Count < End)
-	{
-		if (RV_File_Extension[Count] == Enums::Resource_File_Type_Material)
-		{
-			pitem.iItem = pRow;
-			pitem.pszText = (LPSTR)RV_FileName[Count].c_str();
-
-			ListView_InsertItem(FX_General_hLV, &pitem);
-			ListView_SetItemText(FX_General_hLV, pRow, 1, (LPSTR)RV_Archive_GetType[Count].c_str());
-			ListView_SetItemText(FX_General_hLV, pRow, 2, (LPSTR)RV_Archive_GetName[Count].c_str());
-
-			pRow++;
-		}
-
-		Count++;
-	}
-
-	RedrawWindow(FX_General_hLV, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-	
-	return pRow;
-}
-
-// *************************************************************************
-// *	  Show_Resource_Group_Meshes:- Terry and Hazel Flanigan 2024	   *
-// *************************************************************************
-int CL64_Resources::Show_Resource_Group_Meshes()
-{
-	ListView_DeleteAllItems(FX_General_hLV);
-
-	int	 pRow = 0;
-	int NUM_COLS = 4;
-
-	LV_ITEM pitem;
-	memset(&pitem, 0, sizeof(LV_ITEM));
-	pitem.mask = LVIF_TEXT;
-
-	LV_COLUMN lvC;
-	memset(&lvC, 0, sizeof(LV_COLUMN));
-	lvC.mask = LVCF_FMT | LVCF_WIDTH | LVCF_TEXT | LVCF_SUBITEM;
-	lvC.fmt = LVCFMT_LEFT;  // left-align the column
-	std::string headers[] =
-	{
-		"File", "Archive Type","Path"," "
-	};
-	int headerSize[] =
-	{
-		165,120,470,150
-	};
-
-	for (int header = 0; header < NUM_COLS; header++)
-	{
-		lvC.iSubItem = header;
-		lvC.cx = headerSize[header]; // width of the column, in pixels
-		lvC.pszText = const_cast<char*>(headers[header].c_str());
-		ListView_SetColumn(FX_General_hLV, header, &lvC);
-	}
-
-	int Count = 0;
-	int End = RV_Size;
-	while (Count < End)
-	{
-		if (RV_File_Extension[Count] == Enums::Resource_File_Type_Mesh)
-		{
-			pitem.iItem = pRow;
-			pitem.pszText = (LPSTR)RV_FileName[Count].c_str();
-
-			ListView_InsertItem(FX_General_hLV, &pitem);
-			ListView_SetItemText(FX_General_hLV, pRow, 1, (LPSTR)RV_Archive_GetType[Count].c_str());
-			ListView_SetItemText(FX_General_hLV, pRow, 2, (LPSTR)RV_Archive_GetName[Count].c_str());
-
-			pRow++;
-		}
-
-		Count++;
-
-	}
-
-	RedrawWindow(FX_General_hLV, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-	return pRow;
-}
-
-// *************************************************************************
-// *	  Show_Resource_Group_Textures:- Terry and Hazel Flanigan 2024	   *
-// *************************************************************************
-int CL64_Resources::Show_Resource_Group_Textures()
-{
-	ListView_DeleteAllItems(FX_General_hLV);
-
-	int	 pRow = 0;
-	int NUM_COLS = 4;
-
-	LV_ITEM pitem;
-	memset(&pitem, 0, sizeof(LV_ITEM));
-	pitem.mask = LVIF_TEXT;
-
-	LV_COLUMN lvC;
-	memset(&lvC, 0, sizeof(LV_COLUMN));
-	lvC.mask = LVCF_FMT | LVCF_WIDTH | LVCF_TEXT | LVCF_SUBITEM;
-	lvC.fmt = LVCFMT_LEFT;  // left-align the column
-	std::string headers[] =
-	{
-		"File", "Archive Type","Path"," "
-	};
-	int headerSize[] =
-	{
-		165,120,470,150
-	};
-
-	for (int header = 0; header < NUM_COLS; header++)
-	{
-		lvC.iSubItem = header;
-		lvC.cx = headerSize[header]; // width of the column, in pixels
-		lvC.pszText = const_cast<char*>(headers[header].c_str());
-		ListView_SetColumn(FX_General_hLV, header, &lvC);
-	}
-
-	int Count = 0;
-	int End = RV_Size;
-	while (Count < End)
-	{
-		if (RV_File_Extension[Count] == Enums::Resource_File_Type_Texture)
-		{
-			pitem.iItem = pRow;
-			pitem.pszText = (LPSTR)RV_FileName[Count].c_str();
-
-			ListView_InsertItem(FX_General_hLV, &pitem);
-			ListView_SetItemText(FX_General_hLV, pRow, 1, (LPSTR)RV_Archive_GetType[Count].c_str());
-			ListView_SetItemText(FX_General_hLV, pRow, 2, (LPSTR)RV_Archive_GetName[Count].c_str());
-
-			pRow++;
-		}
-
-		Count++;
-
-	}
-
-	RedrawWindow(FX_General_hLV, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-	return pRow;
-}
-
-// *************************************************************************
-// *	  Show_Resource_Group_Skeletons:- Terry and Hazel Flanigan 2024	   *
-// *************************************************************************
-int CL64_Resources::Show_Resource_Group_Skeletons()
-{
-	ListView_DeleteAllItems(FX_General_hLV);
-
-	int	 pRow = 0;
-	int NUM_COLS = 4;
-
-	LV_ITEM pitem;
-	memset(&pitem, 0, sizeof(LV_ITEM));
-	pitem.mask = LVIF_TEXT;
-
-	LV_COLUMN lvC;
-	memset(&lvC, 0, sizeof(LV_COLUMN));
-	lvC.mask = LVCF_FMT | LVCF_WIDTH | LVCF_TEXT | LVCF_SUBITEM;
-	lvC.fmt = LVCFMT_LEFT;  // left-align the column
-	std::string headers[] =
-	{
-		"File", "Archive Type","Path"," "
-	};
-	int headerSize[] =
-	{
-		165,120,470,150
-	};
-
-	for (int header = 0; header < NUM_COLS; header++)
-	{
-		lvC.iSubItem = header;
-		lvC.cx = headerSize[header]; // width of the column, in pixels
-		lvC.pszText = const_cast<char*>(headers[header].c_str());
-		ListView_SetColumn(FX_General_hLV, header, &lvC);
-	}
-
-	int Count = 0;
-	int End = RV_Size;
-	while (Count < End)
-	{
-		if (RV_File_Extension[Count] == Enums::Resource_File_Type_Skeleton)
-		{
-			pitem.iItem = pRow;
-			pitem.pszText = (LPSTR)RV_FileName[Count].c_str();
-
-			ListView_InsertItem(FX_General_hLV, &pitem);
-			ListView_SetItemText(FX_General_hLV, pRow, 1, (LPSTR)RV_Archive_GetType[Count].c_str());
-			ListView_SetItemText(FX_General_hLV, pRow, 2, (LPSTR)RV_Archive_GetName[Count].c_str());
-
-			pRow++;
-		}
-
-		Count++;
-
-	}
-
-	RedrawWindow(FX_General_hLV, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-	return pRow;
-}
-
-// *************************************************************************
 // *			Scan_Resource_Group:- Terry and Hazel Flanigan 2024	 	   *
 // *************************************************************************
 bool CL64_Resources::Scan_Resource_Group(Ogre::String ResourceGroup)
@@ -879,17 +594,17 @@ bool CL64_Resources::Scan_Resource_Group(Ogre::String ResourceGroup)
 	Ogre::FileInfoList::const_iterator i, iend;
 	iend = RFI->end();
 	int Count = 0;
-	
+
 	for (i = RFI->begin(); i != iend; ++i)
 	{
 		RV_FileName.push_back(i->filename);
 
-		strcpy(mFilename,i->filename.c_str());
+		strcpy(mFilename, i->filename.c_str());
 		Get_File_Type(mFilename, Count);
 
 		RV_Archive_GetName.push_back(i->archive->getName());
 		RV_Archive_GetType.push_back(i->archive->getType());
-	
+
 		Count++;
 	}
 
@@ -1044,7 +759,7 @@ bool CL64_Resources::Export_Resource(char* FileName) const
 {
 	strcpy(App->CL_File_IO->Save_FileName, FileName);
 	strcpy(App->CL_File_IO->Save_PathFileName, FileName);
-	
+
 	bool test = App->CL_File_IO->SaveSelectedFile((LPSTR)"*.*", NULL);
 	if (test == 0)
 	{
@@ -1059,76 +774,182 @@ bool CL64_Resources::Export_Resource(char* FileName) const
 	return 1;
 }
 
-// **************************************************************************
-// *			Show_Resource_Group:- Terry and Hazel Flanigan 2024			*
-// **************************************************************************
-void CL64_Resources::Show_Resource_Group(const Ogre::String& ResourceGroup)
+// *************************************************************************
+// *	   Show_Resource_Group_All:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+int CL64_Resources::Show_Resource_Group_All()
 {
 	ListView_DeleteAllItems(FX_General_hLV);
 
-	bool Test = Ogre::ResourceGroupManager::getSingleton().resourceGroupExists(ResourceGroup);
+	LV_ITEM pitem;
+	memset(&pitem, 0, sizeof(LV_ITEM));
+	pitem.mask = LVIF_TEXT;
 
-	if (Test == 1)
+	int Count = 0;
+	int End = RV_Size;
+
+	while (Count < End)
 	{
+		pitem.iItem = Count;
+		pitem.pszText = (LPSTR)RV_FileName[Count].c_str();
 
-		Ogre::String st;
-		int NUM_COLS = 4;
+		ListView_InsertItem(FX_General_hLV, &pitem);
+		ListView_SetItemText(FX_General_hLV, Count, 1, (LPSTR)RV_Archive_GetType[Count].c_str());
+		ListView_SetItemText(FX_General_hLV, Count, 2, (LPSTR)RV_Archive_GetName[Count].c_str());
 
-		LV_ITEM pitem;
-		memset(&pitem, 0, sizeof(LV_ITEM));
-		pitem.mask = LVIF_TEXT;
+		Count++;
 
-		LV_COLUMN lvC;
-		memset(&lvC, 0, sizeof(LV_COLUMN));
-		lvC.mask = LVCF_FMT | LVCF_WIDTH | LVCF_TEXT | LVCF_SUBITEM;
-		lvC.fmt = LVCFMT_LEFT;  // left-align the column
-		std::string headers[] =
-		{
-			"Resource Group", "Path","Type"," "
-		};
-		int headerSize[] =
-		{
-			165,380,170,250
-		};
-
-		for (int header = 0; header < NUM_COLS; header++)
-		{
-			lvC.iSubItem = header;
-			lvC.cx = headerSize[header]; // width of the column, in pixels
-			lvC.pszText = const_cast<char*>(headers[header].c_str());
-			ListView_SetColumn(FX_General_hLV, header, &lvC);
-		}
-
-		int	 pRow = 0;
-		char pPath[MAX_PATH];
-		char chr_Type[255];
-
-		Ogre::ResourceGroupManager::LocationList resLocationsList = Ogre::ResourceGroupManager::getSingleton().getResourceLocationList(ResourceGroup);
-		Ogre::ResourceGroupManager::LocationList::iterator it = resLocationsList.begin();
-		Ogre::ResourceGroupManager::LocationList::iterator itEnd = resLocationsList.end();
-
-		for (; it != itEnd; ++it)
-		{
-			pitem.iItem = pRow;
-			pitem.pszText = (LPSTR)"App Resource Group";
-
-			strcpy(pPath, it->archive->getName().c_str());
-			strcpy(chr_Type, it->archive->getType().c_str());
-
-			ListView_InsertItem(FX_General_hLV, &pitem);
-			ListView_SetItemText(FX_General_hLV, pRow, 1, pPath);
-			ListView_SetItemText(FX_General_hLV, pRow, 2, chr_Type);
-			ListView_SetItemText(FX_General_hLV, pRow, 3, (LPSTR)" ");
-		}
-	}
-	else
-	{
-		App->Say("No Project Loaded");
 	}
 
+	return Count;
 }
 
-#include <string.h>
+// *************************************************************************
+// *	  Show_Resource_Group_Materials:- Terry and Hazel Flanigan 2024	   *
+// *************************************************************************
+int CL64_Resources::Show_Resource_Group_Materials()
+{
+	ListView_DeleteAllItems(FX_General_hLV);
+
+	LV_ITEM pitem;
+	memset(&pitem, 0, sizeof(LV_ITEM));
+	pitem.mask = LVIF_TEXT;
+
+	int	 pRow = 0;
+	int Count = 0;
+	int End = RV_Size;
+
+	while (Count < End)
+	{
+		if (RV_File_Extension[Count] == Enums::Resource_File_Type_Material)
+		{
+			pitem.iItem = pRow;
+			pitem.pszText = (LPSTR)RV_FileName[Count].c_str();
+
+			ListView_InsertItem(FX_General_hLV, &pitem);
+			ListView_SetItemText(FX_General_hLV, pRow, 1, (LPSTR)RV_Archive_GetType[Count].c_str());
+			ListView_SetItemText(FX_General_hLV, pRow, 2, (LPSTR)RV_Archive_GetName[Count].c_str());
+
+			pRow++;
+		}
+
+		Count++;
+	}
+
+	RedrawWindow(FX_General_hLV, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+	
+	return pRow;
+}
+
+// *************************************************************************
+// *	  Show_Resource_Group_Meshes:- Terry and Hazel Flanigan 2024	   *
+// *************************************************************************
+int CL64_Resources::Show_Resource_Group_Meshes()
+{
+	ListView_DeleteAllItems(FX_General_hLV);
+
+	LV_ITEM pitem;
+	memset(&pitem, 0, sizeof(LV_ITEM));
+	pitem.mask = LVIF_TEXT;
+
+	int	 pRow = 0;
+	int Count = 0;
+	int End = RV_Size;
+
+	while (Count < End)
+	{
+		if (RV_File_Extension[Count] == Enums::Resource_File_Type_Mesh)
+		{
+			pitem.iItem = pRow;
+			pitem.pszText = (LPSTR)RV_FileName[Count].c_str();
+
+			ListView_InsertItem(FX_General_hLV, &pitem);
+			ListView_SetItemText(FX_General_hLV, pRow, 1, (LPSTR)RV_Archive_GetType[Count].c_str());
+			ListView_SetItemText(FX_General_hLV, pRow, 2, (LPSTR)RV_Archive_GetName[Count].c_str());
+
+			pRow++;
+		}
+
+		Count++;
+
+	}
+
+	RedrawWindow(FX_General_hLV, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+	return pRow;
+}
+
+// *************************************************************************
+// *	  Show_Resource_Group_Textures:- Terry and Hazel Flanigan 2024	   *
+// *************************************************************************
+int CL64_Resources::Show_Resource_Group_Textures()
+{
+	ListView_DeleteAllItems(FX_General_hLV);
+
+	LV_ITEM pitem;
+	memset(&pitem, 0, sizeof(LV_ITEM));
+	pitem.mask = LVIF_TEXT;
+
+	int	 pRow = 0;
+	int Count = 0;
+	int End = RV_Size;
+
+	while (Count < End)
+	{
+		if (RV_File_Extension[Count] == Enums::Resource_File_Type_Texture)
+		{
+			pitem.iItem = pRow;
+			pitem.pszText = (LPSTR)RV_FileName[Count].c_str();
+
+			ListView_InsertItem(FX_General_hLV, &pitem);
+			ListView_SetItemText(FX_General_hLV, pRow, 1, (LPSTR)RV_Archive_GetType[Count].c_str());
+			ListView_SetItemText(FX_General_hLV, pRow, 2, (LPSTR)RV_Archive_GetName[Count].c_str());
+
+			pRow++;
+		}
+
+		Count++;
+
+	}
+
+	RedrawWindow(FX_General_hLV, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+	return pRow;
+}
+
+// *************************************************************************
+// *	  Show_Resource_Group_Skeletons:- Terry and Hazel Flanigan 2024	   *
+// *************************************************************************
+int CL64_Resources::Show_Resource_Group_Skeletons()
+{
+	ListView_DeleteAllItems(FX_General_hLV);
+
+	LV_ITEM pitem;
+	memset(&pitem, 0, sizeof(LV_ITEM));
+	pitem.mask = LVIF_TEXT;
+
+	int	 pRow = 0;
+	int Count = 0;
+	int End = RV_Size;
+	while (Count < End)
+	{
+		if (RV_File_Extension[Count] == Enums::Resource_File_Type_Skeleton)
+		{
+			pitem.iItem = pRow;
+			pitem.pszText = (LPSTR)RV_FileName[Count].c_str();
+
+			ListView_InsertItem(FX_General_hLV, &pitem);
+			ListView_SetItemText(FX_General_hLV, pRow, 1, (LPSTR)RV_Archive_GetType[Count].c_str());
+			ListView_SetItemText(FX_General_hLV, pRow, 2, (LPSTR)RV_Archive_GetName[Count].c_str());
+
+			pRow++;
+		}
+
+		Count++;
+
+	}
+
+	RedrawWindow(FX_General_hLV, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+	return pRow;
+}
 
 // *************************************************************************
 // *			Start_List_Folders:- Terry and Hazel Flanigan 2024	  	   *
@@ -1329,12 +1150,4 @@ void CL64_Resources::Load_OgreCFG_Resources(const Ogre::String& file)
 
 }
 
-// **************************************************************************
-// *		UnloadUserResources:- Terry and Hazel Flanigan 2024				*
-// **************************************************************************
-void CL64_Resources::UnloadUserResources()
-{
-	Ogre::ResourceGroupManager::getSingleton().destroyResourceGroup(App->CL_Resources->Ogre_Loader_Resource_Group);
-	Ogre_ExternalResourceLoaded = 0;
-}
 
