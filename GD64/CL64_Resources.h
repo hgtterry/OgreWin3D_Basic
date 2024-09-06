@@ -36,7 +36,7 @@ public:
 	void Load_OgreCFG_Resources(const Ogre::String& file);
 	void Destroy_Resources_Group(Ogre::String ResourceGroup);
 	bool View_Texture(char* FileName, HWND Owner_hDlg);
-	bool Get_File(char* FileName);
+	bool Export_File(char* FileName);
 
 	char mSelected_File[MAX_PATH];
 

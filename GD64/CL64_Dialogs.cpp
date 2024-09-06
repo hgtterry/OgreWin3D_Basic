@@ -924,7 +924,7 @@ LRESULT CALLBACK CL64_Dialogs::TextureViewer_Proc(HWND hDlg, UINT message, WPARA
 		
 		if (LOWORD(wParam) == IDC_BT_VIEWEXPORT)
 		{
-			App->CL_Resources->Get_File(App->CL_Resources->mSelected_File);
+			App->CL_Resources->Export_File(App->CL_Resources->mSelected_File);
 			return TRUE;
 		}
 

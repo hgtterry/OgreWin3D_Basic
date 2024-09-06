@@ -318,7 +318,7 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 		
 		if (LOWORD(wParam) == IDC_BT_EXPORT)
 		{
-			App->CL_Resources->Get_File(App->CL_Resources->mSelected_File);
+			App->CL_Resources->Export_File(App->CL_Resources->mSelected_File);
 
 			return TRUE;
 		}
@@ -1130,11 +1130,10 @@ bool CL64_Resources::Get_File_Type(char* FileName, int Index)
 }
 
 // *************************************************************************
-// *				Get_File:- Terry and Hazel Flanigan 2024		  	   *
+// *				Export_File:- Terry and Hazel Flanigan 2024		  	   *
 // *************************************************************************
-bool CL64_Resources::Get_File(char* FileName)
+bool CL64_Resources::Export_File(char* FileName)
 {
-	
 	Ogre::FileInfoListPtr RFI = ResourceGroupManager::getSingleton().listResourceFileInfo(mSelected_Resource_Group, false);
 	Ogre::FileInfoList::const_iterator i, iend;
 	iend = RFI->end();
