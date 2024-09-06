@@ -31,7 +31,10 @@ public:
 	void Start_Resources();
 	void Load_OgreCFG_Resources(const Ogre::String& file);
 	void Destroy_Resources_Group(Ogre::String ResourceGroup);
+
 	bool View_Texture(char* FileName, HWND Owner_hDlg);
+	bool View_File(char* FileName, HWND Owner_hDlg);
+
 	bool Export_File(char* FileName);
 
 	char mSelected_File[MAX_PATH];
@@ -70,7 +73,10 @@ private:
 	int Show_Resource_Group_Textures();
 	int Show_Resource_Group_Skeletons();
 
+	int Extension_Type;
+
 	void UnloadUserResources();
+
 	Ogre::ConfigFile cf;
 	std::string	ResourcesCfgFile;
 

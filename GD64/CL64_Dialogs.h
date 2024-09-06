@@ -29,7 +29,8 @@ public:
 	void Start_FPSLock_Dlg();
 	bool Dialog_Text(int What_Check);
 	void Start_TextureViewer_Dialog(char* TextureFile, HWND Owner_hDlg);
-	
+	void Start_FileViewer_Dialog(char* FFile, HWND Owner_hDlg);
+
 	bool Canceled;
 	bool Flag_Convert_to_Ogre;
 
@@ -40,6 +41,7 @@ public:
 
 	HBITMAP	Sel_BaseBitmap;
 
+	HWND FileViewer_Hwnd;
 	HWND RightGroups_Hwnd;
 	HWND FPSLock_Dlg_hWnd;
 
@@ -53,17 +55,22 @@ private:
 	static LRESULT CALLBACK FPSLock_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Dialog_Text_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK TextureViewer_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK FileViewer_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	static bool CALLBACK ViewerBasePic(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 	void UnCheck_All_SpeedMouseOption();
 	void Fill_Face_Combo(HWND hDlg);
+	void Read_File(char* mFile, HWND hDlg);
 
 	char Message_Text[MAX_PATH];
 
 	char MessageString[MAX_PATH];	// Yes No Dialog
 	char MessageString2[MAX_PATH];	// Yes No Dialog
+
 	char mTextureFile[MAX_PATH];
+	char mFile[MAX_PATH];
+
 	bool flag_Mouse_Normal;
 	bool flag_Mouse_Slow;
 	bool flag_Mouse_VerySlow;

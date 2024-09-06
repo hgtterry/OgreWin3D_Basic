@@ -37,11 +37,13 @@ CL64_Dialogs::CL64_Dialogs(void)
 
 	btext[0] = 0;
 	Chr_Text[0] = 0;
+	mTextureFile[0] = 0;
+	mFile[0] = 0;
 
-	Sel_BaseBitmap = nullptr;
-
-	RightGroups_Hwnd = nullptr;
-	FPSLock_Dlg_hWnd = nullptr;
+	Sel_BaseBitmap =	nullptr;
+	RightGroups_Hwnd =	nullptr;
+	FileViewer_Hwnd =	nullptr;
+	FPSLock_Dlg_hWnd =	nullptr;
 
 }
 
@@ -845,10 +847,8 @@ LRESULT CALLBACK CL64_Dialogs::Dialog_Text_Proc(HWND hDlg, UINT message, WPARAM 
 // *************************************************************************
 void CL64_Dialogs::Start_TextureViewer_Dialog(char* TextureFile, HWND Owner_hDlg)
 {
-
 	strcpy(mTextureFile, TextureFile);
 	DialogBox(App->hInst, (LPCTSTR)IDD_TEXTUREVIEWER, Owner_hDlg, (DLGPROC)TextureViewer_Proc);
-
 }
 
 // **************************************************************************
@@ -993,4 +993,171 @@ bool CALLBACK CL64_Dialogs::ViewerBasePic(HWND hwnd, UINT msg, WPARAM wParam, LP
 		return 0;
 	}
 	return 0;// DefWindowProc(hwnd, msg, wParam, lParam);
+}
+
+// *************************************************************************
+// *	  Start_FileViewer_Dialog:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+void CL64_Dialogs::Start_FileViewer_Dialog(char* FFile, HWND Owner_hDlg)
+{
+	strcpy(mFile, FFile);
+	DialogBox(App->hInst, (LPCTSTR)IDD_FILEVIEWER, Owner_hDlg, (DLGPROC)FileViewer_Proc);
+}
+
+// **************************************************************************
+// *			FileViewer_Proc:- Terry and Hazel Flanigan 2024				*
+// **************************************************************************
+LRESULT CALLBACK CL64_Dialogs::FileViewer_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+	switch (message)
+	{
+	case WM_INITDIALOG:
+	{
+		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_ST_DETAILS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_VIEWEXPORT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_LST_FILE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		App->CL_Dialogs->FileViewer_Hwnd = hDlg;
+		
+		SetDlgItemText(hDlg, IDC_ST_DETAILS, (LPCTSTR)App->CL_Resources->mSelected_File);
+
+		App->CL_Dialogs->Read_File(App->CL_Dialogs->mFile, hDlg);
+
+		App->CL_Ogre->RenderFrame(8);
+
+		return TRUE;
+	}
+	case WM_CTLCOLORSTATIC:
+	{
+		if (GetDlgItem(hDlg, IDC_ST_DETAILS) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		return FALSE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->AppBackground;
+	}
+
+	case WM_NOTIFY:
+	{
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		if (some_item->idFrom == IDC_BT_VIEWEXPORT)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDCANCEL)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		return CDRF_DODEFAULT;
+	}
+
+	case WM_COMMAND:
+	{
+
+		if (LOWORD(wParam) == IDC_BT_VIEWEXPORT)
+		{
+			App->CL_Resources->Export_File(App->CL_Resources->mSelected_File);
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDOK)
+		{
+			remove(App->CL_Dialogs->mFile);
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDCANCEL)
+		{
+			remove(App->CL_Dialogs->mFile);
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+	}
+
+	break;
+
+	}
+	return FALSE;
+}
+
+// *************************************************************************
+// *		 	Read_File:- Terry and Hazel Flanigan 2024				   *
+// *************************************************************************
+void CL64_Dialogs::Read_File(char* mFile, HWND hDlg)
+{
+	FILE* fp = NULL;
+
+	char buffer[MAX_PATH]{ 0 };
+	char bufTabs[MAX_PATH]{ 0 };
+	char bufferOut[MAX_PATH]{ 0 };
+
+	int TabCount = 0;
+	int Count = 0;
+	int len = 0;
+
+	strcpy(bufTabs, "");
+
+	fp = fopen(mFile, "r");
+	if (!fp)
+	{
+		App->Say("Cant Find File");
+		return;
+	}
+
+	while (!feof(fp))
+	{
+		bufTabs[0] = 0;
+		buffer[0] = 0;
+		bufferOut[0] = 0;
+
+		fgets(buffer, MAX_PATH, fp);
+
+		TabCount = 0;
+		Count = 0;
+		len = strlen(buffer);
+
+		while (Count < len)
+		{
+			if (buffer[Count] == '\t')
+			{
+				TabCount++;
+			}
+
+			Count++;
+		}
+
+		Count = 0;
+		while (Count < TabCount)
+		{
+			strcat(bufTabs, "    ");
+			Count++;
+		}
+
+		strcat(bufTabs, buffer);
+		strcpy(bufferOut, bufTabs);
+	
+		SendDlgItemMessage(hDlg, IDC_LST_FILE, LB_ADDSTRING, (WPARAM)0, (LPARAM)bufferOut);
+	}
+
+	fclose(fp);
+
+	_unlink(mFile);
+
 }

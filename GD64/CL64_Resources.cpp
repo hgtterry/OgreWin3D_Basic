@@ -42,6 +42,8 @@ CL64_Resources::CL64_Resources(void)
 	Export_Button =		nullptr;
 	Resource_Dlg_hWnd = nullptr;
 
+	Extension_Type = Enums::Resource_File_Type_None;
+
 	mbtext[0] = 0;
 	mSelected_File[0] = 0;
 	RV_Size = 0;
@@ -308,7 +310,16 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 
 		if (LOWORD(wParam) == IDC_BT_VIEWFILE)
 		{
-			App->CL_Resources->View_Texture(App->CL_Resources->mSelected_File,hDlg);
+			if (App->CL_Resources->Extension_Type == Enums::Resource_File_Type_Texture)
+			{
+				App->CL_Resources->View_Texture(App->CL_Resources->mSelected_File, hDlg);
+			}
+
+			if (App->CL_Resources->Extension_Type == Enums::Resource_File_Type_Material)
+			{
+				App->CL_Resources->View_File(App->CL_Resources->mSelected_File, hDlg);
+			}
+
 			return TRUE;
 		}
 		
@@ -504,9 +515,17 @@ void CL64_Resources::ListView_OnClickOptions(LPARAM lParam)
 		{
 			if (RV_File_Extension[Count] == Enums::Resource_File_Type_Texture)
 			{
+				Extension_Type = Enums::Resource_File_Type_Texture;
 				EnableWindow(GetDlgItem(Resource_Dlg_hWnd, IDC_BT_VIEWFILE), true);
 				return;
-			}	
+			}
+
+			if (RV_File_Extension[Count] == Enums::Resource_File_Type_Material)
+			{
+				Extension_Type = Enums::Resource_File_Type_Material;
+				EnableWindow(GetDlgItem(Resource_Dlg_hWnd, IDC_BT_VIEWFILE), true);
+				return;
+			}
 		}
 
 		Count++;
@@ -772,6 +791,45 @@ bool CL64_Resources::View_Texture(char* FileName, HWND Owner_hDlg)
 			mFileString.clear();
 
 			App->CL_Dialogs->Start_TextureViewer_Dialog(mFileName, Owner_hDlg);
+
+			return 1;
+		}
+	}
+
+	return 1;
+}
+
+// *************************************************************************
+// *				View_File:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+bool CL64_Resources::View_File(char* FileName, HWND Owner_hDlg)
+{
+
+	Ogre::FileInfoListPtr RFI = ResourceGroupManager::getSingleton().listResourceFileInfo(mSelected_Resource_Group, false);
+	Ogre::FileInfoList::const_iterator i, iend;
+	iend = RFI->end();
+
+	for (i = RFI->begin(); i != iend; ++i)
+	{
+		if (i->filename == FileName)
+		{
+			Ogre::DataStreamPtr ff = i->archive->open(i->filename);
+
+			mFileString = ff->getAsString();
+
+			char mFileName[MAX_PATH];
+			strcpy(mFileName, App->GD_Directory_FullPath);
+			strcat(mFileName, "\\Data\\");
+			strcat(mFileName, FileName);
+
+			std::ofstream outFile;
+			outFile.open(mFileName, std::ios::binary);
+			outFile << mFileString;
+			outFile.close();
+
+			mFileString.clear();
+
+			App->CL_Dialogs->Start_FileViewer_Dialog(mFileName, Owner_hDlg);
 
 			return 1;
 		}
