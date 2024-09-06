@@ -17,11 +17,7 @@ appreciated but is not required.
 
 typedef struct Resource_Type {
 	std::vector<Ogre::String*> FileName2;
-	/*Ogre::String FileName;
-	Ogre::String Archive_GetName;
-	Ogre::String Archive_GetType;*/
 }Resource_Type;
-
 
 
 class CL64_Resources
@@ -63,16 +59,12 @@ private:
 
 	void Update_Counter(int Value, HWND hDlg);
 
-	int ShowAllMaterials();
-	
 	void Start_List_Folders(HWND List, char* FileName, bool ListDlg);
 	void List_Folders(HWND List, char* StartFolder, char* FileName, bool ListDlg);
 	bool FindPath_New(char* File, char* Folder);
 
 	void Show_Resource_Group(const Ogre::String& ResourceGroup);
-	int ShowAllMeshes();
-	int ShowAllTextures();
-
+	
 	bool Get_File_Type(char* FileName, int Index);
 
 	bool Export_Resource(char* FileName) const;

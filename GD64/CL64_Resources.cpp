@@ -99,9 +99,6 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 		SendDlgItemMessage(hDlg, IDC_ST_GB_LISTOPTIONS, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ST_GB_OPTIONS, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
 		
-		SendDlgItemMessage(hDlg, IDC_BT_APPRESOURCES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_BT_DEMORESOURCES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_BT_RE_SCAN, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_EXPORT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_VIEWFILE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
@@ -207,20 +204,6 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 			}
 		}
 
-		if (some_item->idFrom == IDC_BT_APPRESOURCES)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CL_Resources->flag_Show_App_Res);
-			return CDRF_DODEFAULT;
-		}
-
-		if (some_item->idFrom == IDC_BT_DEMORESOURCES)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CL_Resources->flag_Show_Demo_Res);
-			return CDRF_DODEFAULT;
-		}
-
 		if (some_item->idFrom == IDCANCEL)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
@@ -228,13 +211,6 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 			return CDRF_DODEFAULT;
 		}
 		
-		if (some_item->idFrom == IDC_BT_RE_SCAN)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Normal(item);
-			return CDRF_DODEFAULT;
-		}
-
 		if (some_item->idFrom == IDC_BT_EXPORT)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
@@ -347,7 +323,6 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 
 			RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
-			//int Items = App->CL_Resources->ShowAllMaterials();
 			int Items = App->CL_Resources->Show_Resource_Group_Materials();
 			App->CL_Resources->Update_Counter(Items, hDlg);
 
@@ -363,7 +338,6 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 
 			RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
-			//int Items = App->CL_Resources->ShowAllTextures();
 			int Items = App->CL_Resources->Show_Resource_Group_Textures();
 			
 			App->CL_Resources->Update_Counter(Items, hDlg);
@@ -380,8 +354,6 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 
 			RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
-			//int Items = App->CL_Resources->ShowAllMeshes();
-			
 			App->CL_Resources->Set_Title(hDlg,(LPSTR)"Meshes");
 
 			int Items = App->CL_Resources->Show_Resource_Group_Meshes();
@@ -397,38 +369,10 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 
 			RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
-			//int Items = App->CL_Resources->ShowAllMeshes();
-
 			App->CL_Resources->Set_Title(hDlg, (LPSTR)"Skeletons");
 
 			int Items = App->CL_Resources->Show_Resource_Group_Skeletons();
 			App->CL_Resources->Update_Counter(Items, hDlg);
-
-			return TRUE;
-		}
-
-		if (LOWORD(wParam) == IDC_BT_DEMORESOURCES)
-		{
-			SetDlgItemText(hDlg, IDC_ST_BANNER, (LPCTSTR)"Resources:- Demo Resources");
-			App->CL_Resources->Reset_Flags();
-			App->CL_Resources->flag_Show_Demo_Res = 1;
-			
-			RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-
-			App->CL_Resources->Show_Resource_Group(App->CL_Ogre->World_Resource_Group);
-
-			return TRUE;
-		}
-
-		if (LOWORD(wParam) == IDC_BT_APPRESOURCES)
-		{
-			SetDlgItemText(hDlg, IDC_ST_BANNER, (LPCTSTR)"Resources:- App Resources");
-			App->CL_Resources->Reset_Flags();
-			App->CL_Resources->flag_Show_App_Res = 1;
-			
-			RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-
-			App->CL_Resources->Show_Resource_Group(App->CL_Ogre->App_Resource_Group);
 
 			return TRUE;
 		}
@@ -464,13 +408,6 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 			return TRUE;
 		}
 
-		if (LOWORD(wParam) == IDC_BT_RE_SCAN)
-		{
-			int Items = App->CL_Resources->Show_Resource_Group_All();
-			App->CL_Resources->Update_Counter(Items, hDlg);
-			return TRUE;
-		}
-		
 		if (LOWORD(wParam) == IDCANCEL)
 		{
 			EndDialog(hDlg, LOWORD(wParam));
@@ -927,109 +864,6 @@ int CL64_Resources::Show_Resource_Group_Skeletons()
 }
 
 // *************************************************************************
-// *			ShowAllTextures:- Terry and Hazel Flanigan 2024		 	   *
-// *************************************************************************
-int CL64_Resources::ShowAllTextures()
-{
-	ListView_DeleteAllItems(FX_General_hLV);
-
-	int NUM_COLS = 5;
-
-	LV_ITEM pitem;
-	memset(&pitem, 0, sizeof(LV_ITEM));
-	pitem.mask = LVIF_TEXT;
-
-	LV_COLUMN lvC;
-	memset(&lvC, 0, sizeof(LV_COLUMN));
-	lvC.mask = LVCF_FMT | LVCF_WIDTH | LVCF_TEXT | LVCF_SUBITEM;
-	lvC.fmt = LVCFMT_LEFT;  // left-align the column
-	std::string headers[] =
-	{
-		"Texture", "Resource Group","Path",""," "
-	};
-	int headerSize[] =
-	{
-		165,250,170,150
-	};
-
-	for (int header = 0; header < NUM_COLS; header++)
-	{
-		lvC.iSubItem = header;
-		lvC.cx = headerSize[header]; // width of the column, in pixels
-		lvC.pszText = const_cast<char*>(headers[header].c_str());
-		ListView_SetColumn(FX_General_hLV, header, &lvC);
-	}
-
-	bool pIsLoaded = 0;
-	int	 pRow = 0;
-	char Origin[MAX_PATH];
-	char pUsed[255];
-	char pScriptName[255];
-	bool pHasSkel = 0;
-
-	Ogre::String st;
-	Ogre::ResourcePtr pp;
-
-	Ogre::ResourceManager::ResourceMapIterator TextureIterator = Ogre::TextureManager::getSingleton().getResourceIterator();
-
-	while (TextureIterator.hasMoreElements())
-	{
-		//strcpy(pScriptName,(static_cast<Ogre::MaterialPtr>(TextureIterator.peekNextValue()))->getName().c_str());
-
-		strcpy(pScriptName, TextureIterator.peekNextValue()->getName().c_str());
-		strcpy(Origin, TextureIterator.peekNextValue()->getGroup().c_str());
-
-		/*pp = Ogre::TextureManager::getSingleton().getByName(pScriptName);
-		Ogre::Resource *gg = pp.get();
-		Ogre::ParameterList dd = gg->getParameters();
-		dd.*/
-
-		if (pIsLoaded == 1)
-		{
-			strcpy(pUsed, "Yes");
-		}
-		else
-		{
-			strcpy(pUsed, "No");
-		}
-
-		char Filename[255];
-		char ext[255];
-		char JustFile[255];
-		char SubFolder[255];
-		_splitpath(pScriptName, NULL, SubFolder, Filename, ext);
-		strcpy(JustFile, Filename);
-		strcat(JustFile, ext);
-
-		/*if(SubFolder[0] > 0)
-		{
-		App->Say(SubFolder);
-		}*/
-
-		Start_List_Folders(NULL, JustFile, 0);
-
-		int test = strcmp(Origin, mSelected_Resource_Group.c_str());
-
-		if (test == 0)
-		{
-			pitem.iItem = pRow;
-			pitem.pszText = JustFile;
-
-			ListView_InsertItem(FX_General_hLV, &pitem);
-			ListView_SetItemText(FX_General_hLV, pRow, 1, Origin);
-			ListView_SetItemText(FX_General_hLV, pRow, 2, (LPSTR)"----");// ResourcePath);
-			ListView_SetItemText(FX_General_hLV, pRow, 3, (LPSTR)" ");
-
-			pRow++;
-		}
-
-		TextureIterator.moveNext();
-	}
-
-	return pRow;
-}
-
-// *************************************************************************
 // *			Scan_Resource_Group:- Terry and Hazel Flanigan 2024	 	   *
 // *************************************************************************
 bool CL64_Resources::Scan_Resource_Group(Ogre::String ResourceGroup)
@@ -1225,122 +1059,6 @@ bool CL64_Resources::Export_Resource(char* FileName) const
 	return 1;
 }
 
-// *************************************************************************
-// *			ShowAllMaterials:- Terry and Hazel Flanigan 2024	  	   *
-// *************************************************************************
-int CL64_Resources::ShowAllMaterials()
-{
-	ListView_DeleteAllItems(FX_General_hLV);
-
-	int NUM_COLS = 5;
-
-	LV_ITEM pitem;
-	memset(&pitem, 0, sizeof(LV_ITEM));
-	pitem.mask = LVIF_TEXT;
-
-	LV_COLUMN lvC;
-	memset(&lvC, 0, sizeof(LV_COLUMN));
-	lvC.mask = LVCF_FMT | LVCF_WIDTH | LVCF_TEXT | LVCF_SUBITEM;
-	lvC.fmt = LVCFMT_LEFT;  // left-align the column
-	std::string headers[] =
-	{
-		"Material", "Material File","Resource Group","Used"," "
-	};
-	int headerSize[] =
-	{
-		165,250,170,50
-	};
-
-	for (int header = 0; header < NUM_COLS; header++)
-	{
-		lvC.iSubItem = header;
-		lvC.cx = headerSize[header]; // width of the column, in pixels
-		lvC.pszText = const_cast<char*>(headers[header].c_str());
-		ListView_SetColumn(FX_General_hLV, header, &lvC);
-	}
-	
-
-	int	 pRow = 0;
-	char Group[MAX_PATH];
-	char pScriptName[255];
-	char pScriptFile[255];
-	char pUsed[255];
-	bool pIsLoaded = 0;
-	Ogre::String st;
-	Ogre::ResourcePtr pp;
-	Ogre::ResourceManager::ResourceMapIterator materialIterator = Ogre::MaterialManager::getSingleton().getResourceIterator();
-
-	while (materialIterator.hasMoreElements())
-	{
-		strcpy(pScriptName, materialIterator.peekNextValue()->getName().c_str());
-
-		pp = Ogre::MaterialManager::getSingleton().getByName(pScriptName);
-		st = pp->getOrigin();
-		pIsLoaded = pp->isLoaded();
-
-		strcpy(Group, materialIterator.peekNextValue()->getGroup().c_str());
-
-		if (pIsLoaded == 1)
-		{
-			strcpy(pUsed, "Yes");
-		}
-		else
-		{
-			strcpy(pUsed, "No");
-		}
-
-		//--------------------------------
-		if (st == "")
-		{
-			strcpy(pScriptFile, "Internal");
-			strcpy(ResourcePath, "Internal");
-
-		}
-		else if (st == "SdkTrays.material")
-		{
-			strcpy(pScriptFile, st.c_str());
-			strcpy(ResourcePath, "packs\\SdkTrays.zip");
-		}
-		else if (st == "OgreCore.material")
-		{
-			strcpy(pScriptFile, st.c_str());
-			strcpy(ResourcePath, "packs\\OgreCore.zip");
-		}
-		else if (st == "OgreProfiler.material")
-		{
-			strcpy(pScriptFile, st.c_str());
-			strcpy(ResourcePath, "packs\\OgreCore.zip");
-		}
-		else if (st == "PhysCore.material")
-		{
-			strcpy(pScriptFile, st.c_str());
-			strcpy(ResourcePath, "packs\\GDCore.zip");
-		}
-		else
-		{
-			strcpy(pScriptFile, st.c_str());
-			//App->GDCL_Resources->SearchFolders(pScriptFile,"Media\\materials\\");
-			Start_List_Folders(NULL, pScriptFile, 0);
-
-		}
-
-		pitem.iItem = pRow;
-		pitem.pszText = pScriptName;
-
-		ListView_InsertItem(FX_General_hLV, &pitem);
-		ListView_SetItemText(FX_General_hLV, pRow, 1, pScriptFile);
-		ListView_SetItemText(FX_General_hLV, pRow, 2, Group);
-		ListView_SetItemText(FX_General_hLV, pRow, 3, pUsed);
-		//ListView_SetItemText(FX_General_hLV, pRow, 3, ResourcePath);
-		
-		pRow++;
-
-		materialIterator.moveNext();
-	}
-
-	return pRow;
-}
-
 // **************************************************************************
 // *			Show_Resource_Group:- Terry and Hazel Flanigan 2024			*
 // **************************************************************************
@@ -1411,100 +1129,6 @@ void CL64_Resources::Show_Resource_Group(const Ogre::String& ResourceGroup)
 }
 
 #include <string.h>
-
-// *************************************************************************
-// *			ShowAllMeshes:- Terry and Hazel Flanigan 2024		 	   *
-// *************************************************************************
-int CL64_Resources::ShowAllMeshes()
-{
-	Ogre::String st;
-	int NUM_COLS = 4;
-
-	LV_ITEM pitem;
-	memset(&pitem, 0, sizeof(LV_ITEM));
-	pitem.mask = LVIF_TEXT;
-
-	ListView_DeleteAllItems(FX_General_hLV);
-
-	LV_COLUMN lvC;
-	memset(&lvC, 0, sizeof(LV_COLUMN));
-	lvC.mask = LVCF_FMT | LVCF_WIDTH | LVCF_TEXT | LVCF_SUBITEM;
-	lvC.fmt = LVCFMT_LEFT;  // left-align the column
-	std::string headers[] =
-	{
-		"Mesh", "Has Skeleton","Material File","Path"
-	};
-	int headerSize[] =
-	{
-		165,180,170,250
-	};
-
-	for (int header = 0; header < NUM_COLS; header++)
-	{
-		lvC.iSubItem = header;
-		lvC.cx = headerSize[header]; // width of the column, in pixels
-		lvC.pszText = const_cast<char*>(headers[header].c_str());
-		ListView_SetColumn(FX_General_hLV, header, &lvC);
-	}
-
-	int	 pRow = 0;
-	char pMeshName[255];
-	char chr_AsSkell[255];
-	char buff[255];
-	char Origin[MAX_PATH];
-	bool pHasSkel = 0;
-	Ogre::ResourcePtr pp;
-
-	Ogre::ResourceManager::ResourceMapIterator MeshIterator = Ogre::MeshManager::getSingleton().getResourceIterator();
-	
-	while (MeshIterator.hasMoreElements())
-	{
-		//strcpy(pMeshName,(static_cast<Ogre::MeshPtr>(MeshIterator.peekNextValue()))->getName().c_str());
-
-		strcpy(pMeshName, MeshIterator.peekNextValue()->getName().c_str());
-		
-		pp = Ogre::MeshManager::getSingleton().getByName(pMeshName);
-		
-		strcpy(Origin, MeshIterator.peekNextValue()->getGroup().c_str());
-		
-		Ogre::Entity* DummyEnt = App->CL_Ogre->mSceneMgr->createEntity("GDTemp1", pMeshName);
-		pHasSkel = DummyEnt->hasSkeleton();
-		App->CL_Ogre->mSceneMgr->destroyEntity(DummyEnt);
-
-		if (pHasSkel == 1)
-		{
-			strcpy(chr_AsSkell, "Yes");
-		}
-		else
-		{
-			strcpy(chr_AsSkell, "No");
-		}
-
-		strcpy(buff, pMeshName);
-		if (_stricmp(buff + strlen(buff) - 5, ".mesh") != 0)
-		{
-			strcpy(ResourcePath, "Internal");
-		}
-		else
-		{
-			Start_List_Folders(NULL, pMeshName, 0);
-		}
-
-		pitem.iItem = pRow;
-		pitem.pszText = pMeshName;
-
-		ListView_InsertItem(FX_General_hLV, &pitem);
-		ListView_SetItemText(FX_General_hLV, pRow, 1, chr_AsSkell);
-		ListView_SetItemText(FX_General_hLV, pRow, 2, ResourcePath);
-		ListView_SetItemText(FX_General_hLV, pRow, 3, Origin);
-
-		pRow++;
-
-		MeshIterator.moveNext();
-	}
-
-	return pRow;
-}
 
 // *************************************************************************
 // *			Start_List_Folders:- Terry and Hazel Flanigan 2024	  	   *
