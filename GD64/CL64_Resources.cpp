@@ -357,6 +357,9 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 			int Items = App->CL_Resources->Show_Resource_Group_Materials();
 			App->CL_Resources->Update_Counter(Items, hDlg);
 
+			App->CL_Resources->Extension_Type = Enums::Resource_File_Type_Material;
+			EnableWindow(GetDlgItem(hDlg, IDC_BT_VIEWFILE), true);
+
 			return TRUE;
 		}
 
@@ -373,6 +376,7 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 			
 			App->CL_Resources->Update_Counter(Items, hDlg);
 
+			App->CL_Resources->Extension_Type = Enums::Resource_File_Type_Texture;
 			EnableWindow(GetDlgItem(hDlg, IDC_BT_VIEWFILE), true);
 
 			return TRUE;
