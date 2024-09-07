@@ -22,11 +22,11 @@ public:
 
 	bool Assimp_Loader(bool UseDialog,const char* Extension, const char* Extension2);
 
-	void Load_Ogre_Model(bool Use_File_Dialog);
+	bool Load_Ogre_Model(bool Use_File_Dialog);
 	void Reload_Ogre_Model(void);
 	void Scan_Material_Files(void);
 
-	void Ogre_Resource_CFG_Loader(char* Extension, char* Extension2);
+	bool Ogre_Resource_CFG_Loader(char* Extension, char* Extension2);
 
 	Ogre::String Ogre_CFG_Resource_Group;
 

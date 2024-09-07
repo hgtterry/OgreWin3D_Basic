@@ -128,7 +128,7 @@ bool CL64_Importers::Assimp_Loader(bool UseDialog,const char* Extension, const c
 // *************************************************************************
 // *			Load_Ogre_Model:- Terry and Hazel Flanigan 2024 		   *
 // *************************************************************************
-void CL64_Importers::Load_Ogre_Model(bool Use_File_Dialog)
+bool CL64_Importers::Load_Ogre_Model(bool Use_File_Dialog)
 {
 	if (Use_File_Dialog == 1)
 	{
@@ -139,12 +139,14 @@ void CL64_Importers::Load_Ogre_Model(bool Use_File_Dialog)
 		{
 			strcpy(Start_Directory, App->GD_Directory_FullPath);
 			strcat(Start_Directory, "\\Models\\Ogre3D_Models");
+
+			App->CL_Preferences->Use_Default_Directories = 0;
 		}
 
 		int Result = App->CL_File_IO->Open_File_Model("Ogre3D   *.mesh\0*.mesh\0", "Ogre3D", Start_Directory);
 		if (Result == 0)
 		{
-			return;
+			return 0;
 		}
 	}
 
@@ -229,6 +231,7 @@ void CL64_Importers::Load_Ogre_Model(bool Use_File_Dialog)
 
 	//Get_Textures();
 
+	return 1;
 }
 
 // *************************************************************************
@@ -308,12 +311,23 @@ void CL64_Importers::Reload_Ogre_Model(void)
 // *************************************************************************
 // *		Ogre_Resource_CFG_Loader:- Terry and Hazel Flanigan 2024	   *
 // *************************************************************************
-void CL64_Importers::Ogre_Resource_CFG_Loader(char* Extension, char* Extension2)
+bool CL64_Importers::Ogre_Resource_CFG_Loader(char* Extension, char* Extension2)
 {
-	int Result = App->CL_File_IO->Open_Resource_File((LPSTR)"Ogre Config   *.cfg\0*.cfg\0", (LPSTR)"Ogre Config", NULL);// App->CL_Model_Data->Path_FileName);
+	char Start_Directory[MAX_PATH];
+	strcpy(Start_Directory, "");
+
+	if (App->CL_Preferences->Use_Default_Directories == 1)
+	{
+		strcpy(Start_Directory, App->GD_Directory_FullPath);
+		strcat(Start_Directory, "\\Models\\Ogre3D_Models");
+
+		App->CL_Preferences->Use_Default_Directories = 0;
+	}
+
+	int Result = App->CL_File_IO->Open_Resource_File((LPSTR)"Ogre Config   *.cfg\0*.cfg\0", (LPSTR)"Ogre Config", Start_Directory);
 	if (Result == 0)
 	{
-		return;
+		return 0;
 	}
 	
 	App->CL_Dialogs->PleaseWait();
@@ -328,4 +342,6 @@ void CL64_Importers::Ogre_Resource_CFG_Loader(char* Extension, char* Extension2)
 	}
 
 	EndDialog(App->ViewPLeaseWait, LOWORD(0));
+
+	return 1;
 }

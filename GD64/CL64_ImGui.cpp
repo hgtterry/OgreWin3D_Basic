@@ -322,7 +322,7 @@ void CL64_ImGui::Model_Data_GUI(void)
 	}
 	else
 	{
-		ImGui::Text("Ogre3D Model");
+		ImGui::Text("Model");
 		
 		ImGui::Separator();
 
@@ -462,6 +462,11 @@ void CL64_ImGui::Model_Data_GUI(void)
 					int Count = 0;
 					int Size = App->CL_Scene->S_OgreMeshData[0]->m_Motion_Names.size();
 					
+					if (Size == 0)
+					{
+						ImGui::Text("No Motions:");
+					}
+
 					while (Count < Size)
 					{
 						ImGui::PushID("foo");

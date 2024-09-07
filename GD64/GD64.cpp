@@ -237,6 +237,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			return TRUE;
 		}
 
+		// Tools -------------------------------------------------------
+		case ID_TOOLS_RESOURCEVIEWER:
+		{
+			App->CL_Resources->Start_Resources();
+			return TRUE;
+		}
+		
 		// Info -------------------------------------------------------
 		case ID_INFO_ASSIMPMODELDATA:
 		{
@@ -255,15 +262,25 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		// File Import ------------------------------------------------
 		case ID_OGRE3D_MESH:
 		{
-			App->CL_Importers->Load_Ogre_Model(true);
-			App->Say("Mesh Imported");
+			bool test = App->CL_Importers->Load_Ogre_Model(true);
+
+			if (test == 1)
+			{
+				App->Say("Mesh Imported");
+			}
+
 			return TRUE;
 		}
 
 		case ID_OGRE3D_RESOURCEFILE:
 		{
-			App->CL_Importers->Ogre_Resource_CFG_Loader((LPSTR)"Ogre Config   *.cfg\0*.cfg\0", (LPSTR)"Ogre Config");
-			App->Say("CFG Imported");
+			bool test = App->CL_Importers->Ogre_Resource_CFG_Loader((LPSTR)"Ogre Config   *.cfg\0*.cfg\0", (LPSTR)"Ogre Config");
+			
+			if (test == 1)
+			{
+				App->Say("CFG Imported");
+			}
+
 			return TRUE;
 		}
 		
