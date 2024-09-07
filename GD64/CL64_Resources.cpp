@@ -923,8 +923,6 @@ void CL64_Resources::Set_Selection(int Index)
 
 	strcpy(mSelected_File, mbtext);
 	SetDlgItemText(Resource_Dlg_hWnd, IDC_ST_SELECTEDFILE, (LPCTSTR)App->CL_Resources->mSelected_File);
-	RedrawWindow(Resource_Dlg_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-	SetFocus(FX_General_hLV);
 }
 
 // *************************************************************************
