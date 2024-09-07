@@ -587,10 +587,10 @@ void CL64_ImGui::Show_Assimp_Model_Data_GUI(void)
 		// Geometry
 		if (ImGui::TreeNode("Geometry"))
 		{
-			/*int Count = 0;
-			int Size = App->CL_Scene->S_OgreMeshData[0]->mSubMeshCount;
+			int Count = 0;
+			int Size = App->CL_Scene->GroupCount;
 
-			ImGui::PushID("foo");
+			/*ImGui::PushID("foo");
 			if (ImGui::BeginMenu("Status"))
 			{
 				ImGui::Text("Edge List:- %s", App->CL_Scene->S_OgreMeshData[0]->mStrEdgeList.c_str());
@@ -598,18 +598,18 @@ void CL64_ImGui::Show_Assimp_Model_Data_GUI(void)
 
 				ImGui::EndMenu();
 			}
-			ImGui::PopID();
+			ImGui::PopID();*/
 
 			Count = 0;
 			while (Count < Size)
 			{
 				ImGui::PushID("foo");
-				if (ImGui::BeginMenu(App->CL_Scene->S_OgreMeshData[0]->mSubmeshes[Count].m_SubMesh_Name_str.c_str()))
+				if (ImGui::BeginMenu(App->CL_Scene->Group[Count]->GroupName))
 				{
-					ImGui::Text("Dedicated vertices:  %s", App->CL_Scene->S_OgreMeshData[0]->mSubmeshes[Count].m_HasSharedVertices_str.c_str());
-					ImGui::Text("Material Name: %s", App->CL_Scene->S_OgreMeshData[0]->m_Materials_Names[Count].c_str());
-					ImGui::Text("Vertices Count: %i", App->CL_Scene->S_OgreMeshData[0]->mSubmeshes[Count].VerticesCount);
-					ImGui::Text("Bones Used: %i", App->CL_Scene->S_OgreMeshData[0]->mSubmeshes[Count].BonesCount);
+					ImGui::Text("Dedicated vertices:  %s", "Yes");
+					ImGui::Text("Material Name: %s", App->CL_Scene->Group[Count]->MaterialName);
+					ImGui::Text("Vertices Count: %i", App->CL_Scene->Group[Count]->GroupVertCount);
+					ImGui::Text("Bones Used: %i", 0);// App->CL_Scene->S_OgreMeshData[0]->mSubmeshes[Count].BonesCount);
 
 					ImGui::Separator();
 
@@ -636,7 +636,7 @@ void CL64_ImGui::Show_Assimp_Model_Data_GUI(void)
 				App->CL_Ogre->OGL_Listener->Flag_ShowFaces = 0;
 				App->CL_Ogre->OGL_Listener->flag_ShowOnlySubFaces = 0;
 				PreviouseSubMesh = -1;
-			}*/
+			}
 
 			ImGui::TreePop();
 		}
@@ -644,32 +644,31 @@ void CL64_ImGui::Show_Assimp_Model_Data_GUI(void)
 		// Bounds
 		if (ImGui::TreeNode("Bounds"))
 		{
-			/*ImGui::Text("Min:- %.5f  %.5f  %.5f", App->CL_Scene->S_OgreMeshData[0]->vMin.x, App->CL_Scene->S_OgreMeshData[0]->vMin.y, App->CL_Scene->S_OgreMeshData[0]->vMin.z);
-			ImGui::Text("Max:- %.5f  %.5f  %.5f", App->CL_Scene->S_OgreMeshData[0]->vMax.x, App->CL_Scene->S_OgreMeshData[0]->vMax.y, App->CL_Scene->S_OgreMeshData[0]->vMax.z);
-			ImGui::Text("Centre:- %.5f  %.5f  %.5f", App->CL_Scene->S_OgreMeshData[0]->Center.x, App->CL_Scene->S_OgreMeshData[0]->Center.y, App->CL_Scene->S_OgreMeshData[0]->Center.z);
+			ImGui::Text("Width:- %f", App->CL_Scene->S_BoundingBox[0]->Size->x);
+			ImGui::Text("Height:- %f", App->CL_Scene->S_BoundingBox[0]->Size->y);
+			ImGui::Text("Depth:- %f", App->CL_Scene->S_BoundingBox[0]->Size->z);
 
-			ImGui::Text("Width:- %f", App->CL_Scene->S_OgreMeshData[0]->Width);
-			ImGui::Text("Height:- %f", App->CL_Scene->S_OgreMeshData[0]->Height);
-			ImGui::Text("Depth:- %f", App->CL_Scene->S_OgreMeshData[0]->Depth);
-			ImGui::Text("Area:- %f", App->CL_Scene->S_OgreMeshData[0]->Area);
-			ImGui::Text("Volume:- %f", App->CL_Scene->S_OgreMeshData[0]->Volume);
-			ImGui::Text("Radius:- %f", App->CL_Scene->S_OgreMeshData[0]->Radius);*/
+			ImGui::Text("Min:- %.5f  %.5f  %.5f", App->CL_Scene->S_BoundingBox[0]->BB_Min->x, App->CL_Scene->S_BoundingBox[0]->BB_Min->y, App->CL_Scene->S_BoundingBox[0]->BB_Min->z);
+			ImGui::Text("Max:- %.5f  %.5f  %.5f", App->CL_Scene->S_BoundingBox[0]->BB_Max->x, App->CL_Scene->S_BoundingBox[0]->BB_Max->y, App->CL_Scene->S_BoundingBox[0]->BB_Max->z);
 
+			ImGui::Text("Centre:- %.5f  %.5f  %.5f", App->CL_Scene->S_BoundingBox[0]->Centre->x, App->CL_Scene->S_BoundingBox[0]->Centre->y, App->CL_Scene->S_BoundingBox[0]->Centre->z);
+			ImGui::Text("Radius:- %f", App->CL_Scene->S_BoundingBox[0]->radius);
+			
 			ImGui::TreePop();
 		}
 
 		// Motions
 		if (ImGui::TreeNode("Motions"))
 		{
-			/*int Count = 0;
-			int Size = App->CL_Scene->S_OgreMeshData[0]->m_Motion_Names.size();
+			int Count = 0;
+			int Size = App->CL_Scene->MotionCount;
 
 			if (Size == 0)
 			{
 				ImGui::Text("No Motions:");
 			}
 
-			while (Count < Size)
+			/*while (Count < Size)
 			{
 				ImGui::PushID("foo");
 				if (ImGui::BeginMenu(App->CL_Scene->S_OgreMeshData[0]->m_Motion_Names[Count].c_str()))

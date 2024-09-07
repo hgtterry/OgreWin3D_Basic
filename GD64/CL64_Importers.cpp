@@ -67,6 +67,11 @@ bool CL64_Importers::Assimp_Loader(bool UseDialog,const char* Extension, const c
 
 	App->CL_Scene->Clear_Scene_And_Reset();
 
+	// Needs Looking At Here Temp 
+	App->CL_Resources->Destroy_Resources_Group(App->CL_Resources->Ogre_Loader_Resource_Group);
+	App->CL_Resources->Ogre_ExternalResourceLoaded = 0;
+	App->CL_Resources->mSelected_Resource_Group = "App_Resource_Group";
+
 	char Model_Path_And_File[MAX_PATH];
 	strcpy(Model_Path_And_File, App->CL_File_IO->Get_Model_Path_File_Name().c_str());
 
@@ -122,6 +127,7 @@ bool CL64_Importers::Assimp_Loader(bool UseDialog,const char* Extension, const c
 		
 	}
 
+	
 	return 1;
 }
 
