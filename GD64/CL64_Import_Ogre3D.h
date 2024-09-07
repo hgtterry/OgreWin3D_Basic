@@ -37,11 +37,9 @@ public:
 		int SubMesh);
 
 	void Get_Ogre_Mesh_Data(Ogre::Entity* Ogre_Entity);
-	void Get_Motions(Ogre::Entity* Ogre_Entity);
-
+	
 	std::vector<Ogre::Vector2> MeshTextureCoords;
 
-	bool flag_IsAnimated;
 	bool flag_Ogre_Model_Loaded;
 };
 

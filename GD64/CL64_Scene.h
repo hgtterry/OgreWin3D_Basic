@@ -53,6 +53,9 @@ typedef struct OgreMeshData_Type {
 	Ogre::String mFileName_Str;
 	std::vector<std::string> m_Materials_Names;
 	std::vector<std::string> m_Motion_Names;
+	std::vector<std::float_t> m_Motion_Length;
+	std::vector<std::int16_t> m_Motion_Num_Of_Tracks;
+
 	std::vector<Ogre_SubMesh_Type> mSubmeshes;
 	int mSubMeshCount;
 	Ogre::Vector3 Center;

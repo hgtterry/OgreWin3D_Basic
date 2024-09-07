@@ -82,7 +82,7 @@ void CL64_Ogre::InitOgre(void)
 	App->CL_Scene->S_OgreMeshData[0]->mFileName_Str = "Sinbad.mesh";
 
 	App->CL_Import_Ogre3D->Ogre_To_Mesh_Data(App->CL_Scene->Imported_Ogre_Ent);
-	App->CL_Import_Ogre3D->Get_Motions(App->CL_Scene->Imported_Ogre_Ent);
+	App->CL_Motions->Get_Motions(App->CL_Scene->Imported_Ogre_Ent);
 	App->CL_Import_Ogre3D->flag_Ogre_Model_Loaded = 1;
 
 	App->CL_Scene->Scene_Mode = Enums::Scene_Mode_TestMesh;

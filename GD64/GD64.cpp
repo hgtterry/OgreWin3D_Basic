@@ -256,14 +256,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		case ID_OGRE3D_MESH:
 		{
 			App->CL_Importers->Load_Ogre_Model(true);
-			App->Say("Imported");
+			App->Say("Mesh Imported");
 			return TRUE;
 		}
 
 		case ID_OGRE3D_RESOURCEFILE:
 		{
 			App->CL_Importers->Ogre_Resource_CFG_Loader((LPSTR)"Ogre Config   *.cfg\0*.cfg\0", (LPSTR)"Ogre Config");
-
+			App->Say("CFG Imported");
 			return TRUE;
 		}
 		

@@ -23,6 +23,7 @@ public:
 
 	void Reset_Class(void);
 
+	void Get_Motions(Ogre::Entity* Ogre_Entity);
 	void Update_Motion(float deltaTime);
 
 	void Pause_SelectedMotion(void);
@@ -46,6 +47,7 @@ public:
 
 	bool flag_Motion_Playing;
 	bool flag_Motion_Paused;
+	bool flag_IsAnimated;
 
 	float AnimationScale;
 };

@@ -220,7 +220,7 @@ void CL64_Importers::Load_Ogre_Model(bool Use_File_Dialog)
 
 	//Get_BoneNames();
 
-	App->CL_Import_Ogre3D->Get_Motions(App->CL_Scene->Imported_Ogre_Ent);
+	App->CL_Motions->Get_Motions(App->CL_Scene->Imported_Ogre_Ent);
 
 	App->CL_Scene->S_OgreMeshData[0]->mFileName_Str = App->CL_Scene->FileName;
 	
@@ -316,6 +316,8 @@ void CL64_Importers::Ogre_Resource_CFG_Loader(char* Extension, char* Extension2)
 		return;
 	}
 	
+	App->CL_Dialogs->PleaseWait();
+
 	App->CL_Resources->Load_OgreCFG_Resources(App->CL_File_IO->OgreCFG_Path_FileName);
 
 	App->CL_Resources->mSelected_Resource_Group = App->CL_Resources->Ogre_Loader_Resource_Group;
@@ -324,4 +326,6 @@ void CL64_Importers::Ogre_Resource_CFG_Loader(char* Extension, char* Extension2)
 	{
 		Reload_Ogre_Model();
 	}
+
+	EndDialog(App->ViewPLeaseWait, LOWORD(0));
 }

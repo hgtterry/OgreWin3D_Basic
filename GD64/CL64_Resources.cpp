@@ -48,6 +48,8 @@ CL64_Resources::CL64_Resources(void)
 	mbtext[0] = 0;
 	mSelected_File[0] = 0;
 	RV_Size = 0;
+
+	GroupSelIndex = 0;
 }
 
 CL64_Resources::~CL64_Resources(void)
@@ -455,6 +457,13 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 			{
 				return 1;
 			}
+
+			if (App->CL_Resources->GroupSelIndex == Index)
+			{
+				return 1;
+			}
+			
+			App->CL_Resources->GroupSelIndex = Index;
 
 			SendDlgItemMessage(hDlg, IDC_LST_GROUPS, LB_GETTEXT, (WPARAM)Index, (LPARAM)buff);
 

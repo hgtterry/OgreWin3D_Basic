@@ -21,7 +21,6 @@ appreciated but is not required.
 
 CL64_Imp_Ogre3D::CL64_Imp_Ogre3D(void)
 {
-	flag_IsAnimated = 0;
 	flag_Ogre_Model_Loaded = 0;
 }
 
@@ -529,46 +528,3 @@ void CL64_Imp_Ogre3D::Get_Ogre_Mesh_Data(Ogre::Entity* Ogre_Entity)
 	App->CL_Scene->S_OgreMeshData[0]->Volume = (vMax - vMin).x * (vMax - vMin).y * (vMax - vMin).z;
 	App->CL_Scene->S_OgreMeshData[0]->Radius = Ogre_Entity->getBoundingRadius();
 }
-
-// *************************************************************************
-// *	  			Get_Motions:- Terry and Hazel Flanigan 2024			   *
-// *************************************************************************
-void CL64_Imp_Ogre3D::Get_Motions(Ogre::Entity* Ogre_Entity)
-{
-	Ogre::SkeletonInstance* skeletonInstance = Ogre_Entity->getSkeleton();
-
-	int Count = 0;
-	if (skeletonInstance)
-	{
-		int AnimationCount = skeletonInstance->getNumAnimations();
-		if (AnimationCount == 0)
-		{
-			flag_IsAnimated = 0;
-			App->CL_Scene->MotionCount = 0;
-			App->CL_TopDlg->Update_Motions_Combo();
-		}
-		else
-		{
-
-			flag_IsAnimated = 1;
-
-			for (unsigned short i = 0; i < skeletonInstance->getNumAnimations(); ++i)
-			{
-				Ogre::Animation* animation = skeletonInstance->getAnimation(i);
-				App->CL_Scene->S_OgreMeshData[0]->m_Motion_Names.push_back(animation->getName());
-
-				Count = i;
-			}
-
-			App->CL_Scene->MotionCount = Count + 1;
-			App->CL_TopDlg->Update_Motions_Combo();
-		}
-	}
-	else
-	{
-		flag_IsAnimated = 0;
-		App->CL_Scene->MotionCount = 0;
-		App->CL_TopDlg->Update_Motions_Combo();
-	}
-}
-

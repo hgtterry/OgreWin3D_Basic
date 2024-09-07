@@ -469,6 +469,8 @@ void CL64_ImGui::Model_Data_GUI(void)
 						{
 
 							ImGui::Text("Motion Name:  %s", App->CL_Scene->S_OgreMeshData[0]->m_Motion_Names[Count].c_str());
+							ImGui::Text("Length:  %f", App->CL_Scene->S_OgreMeshData[0]->m_Motion_Length[Count]);
+							ImGui::Text("Tracks: ( Bones )  %i", App->CL_Scene->S_OgreMeshData[0]->m_Motion_Num_Of_Tracks[Count]);
 
 							if (ImGui::Button("Play Motion"))
 							{

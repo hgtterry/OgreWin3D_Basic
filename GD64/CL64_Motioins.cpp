@@ -21,6 +21,7 @@ CL64_Motioins::CL64_Motioins(void)
 {
 	flag_Motion_Playing = 0;
 	flag_Motion_Paused = 0;
+	flag_IsAnimated = 0;
 
 	AnimationScale = 1;
 	Animate_State = nullptr;
@@ -39,6 +40,52 @@ void CL64_Motioins::Reset_Class(void)
 	App->CL_Ogre->Ogre3D_Listener->flag_Animate_Ogre = 0;
 	Stop_SelectedMotion();
 	flag_Motion_Playing = 0;
+}
+
+// *************************************************************************
+// *	  			Get_Motions:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void CL64_Motioins::Get_Motions(Ogre::Entity* Ogre_Entity)
+{
+	Ogre::SkeletonInstance* skeletonInstance = Ogre_Entity->getSkeleton();
+
+	int Count = 0;
+	if (skeletonInstance)
+	{
+		int AnimationCount = skeletonInstance->getNumAnimations();
+		if (AnimationCount == 0)
+		{
+			flag_IsAnimated = 0;
+			App->CL_Scene->MotionCount = 0;
+			App->CL_TopDlg->Update_Motions_Combo();
+		}
+		else
+		{
+
+			flag_IsAnimated = 1;
+
+			for (unsigned short i = 0; i < skeletonInstance->getNumAnimations(); ++i)
+			{
+				Ogre::Animation* animation = skeletonInstance->getAnimation(i);
+				App->CL_Scene->S_OgreMeshData[0]->m_Motion_Names.push_back(animation->getName());
+				App->CL_Scene->S_OgreMeshData[0]->m_Motion_Length.push_back(animation->getLength());
+				App->CL_Scene->S_OgreMeshData[0]->m_Motion_Num_Of_Tracks.push_back(animation->getNumNodeTracks());
+				
+				//animation->getNumNodeTracks();
+				
+				Count = i;
+			}
+
+			App->CL_Scene->MotionCount = Count + 1;
+			App->CL_TopDlg->Update_Motions_Combo();
+		}
+	}
+	else
+	{
+		flag_IsAnimated = 0;
+		App->CL_Scene->MotionCount = 0;
+		App->CL_TopDlg->Update_Motions_Combo();
+	}
 }
 
 // *************************************************************************

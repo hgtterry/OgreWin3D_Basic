@@ -71,6 +71,7 @@ private:
 	int Show_Resource_Group_All();
 
 	int Extension_Type;
+	int GroupSelIndex;
 
 	void UnloadUserResources();
 
