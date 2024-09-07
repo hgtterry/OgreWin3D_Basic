@@ -46,13 +46,15 @@ void CL64_Motioins::Reset_Class(void)
 // *************************************************************************
 void CL64_Motioins::Update_Motion(float deltaTime)
 {
-	Animate_State->addTime(deltaTime * AnimationScale);
-
-	
 	if (App->CL_Scene->Imported_Ogre_Ent)
 	{
-		App->CL_Scene->Imported_Ogre_Ent->_updateAnimation();
-		Update_MeshData();
+		if (Animate_State)
+		{
+			Animate_State->addTime(deltaTime * AnimationScale);
+
+			App->CL_Scene->Imported_Ogre_Ent->_updateAnimation();
+			Update_MeshData();
+		}
 	}
 
 	
@@ -99,16 +101,22 @@ void CL64_Motioins::Pause_SelectedMotion(void)
 // *************************************************************************
 void CL64_Motioins::Play_SelectedMotion(void)
 {
+	Animate_State = nullptr;
+
 	if (App->CL_Scene->MotionCount > 0)
 	{
 		if (App->CL_Scene->Imported_Ogre_Ent)
 		{
 			Animate_State = App->CL_Scene->Imported_Ogre_Ent->getAnimationState(App->CL_TopDlg->Selected_Motion_Name);
-			Animate_State->setEnabled(true);
-			App->CL_Ogre->Ogre3D_Listener->flag_Animate_Ogre = 1;
 
-			flag_Motion_Paused = 0;
-			flag_Motion_Playing = 1;
+			if (Animate_State)
+			{
+				Animate_State->setEnabled(true);
+				App->CL_Ogre->Ogre3D_Listener->flag_Animate_Ogre = 1;
+
+				flag_Motion_Paused = 0;
+				flag_Motion_Playing = 1;
+			}
 
 			RedrawWindow(App->CL_TopDlg->Motions_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 		}

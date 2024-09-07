@@ -68,7 +68,5 @@ public:
 	bool listSubMeshItems[50] = { 0 };
 	int PreviouseSubMesh;
 
-	bool listMotionItems[50] = { 0 };
-	int PreviouseMotion;
 };
 

@@ -461,22 +461,27 @@ void CL64_ImGui::Model_Data_GUI(void)
 				if (ImGui::TreeNode("Motions"))
 				{
 					int Count = 0;
-					int Size = App->CL_Scene->MotionCount;
-
+					int Size = App->CL_Scene->S_OgreMeshData[0]->m_Motion_Names.size();
+					
 					while (Count < Size)
 					{
-						if (ImGui::Selectable(App->CL_Scene->S_OgreMeshData[0]->m_Motion_Names[Count].c_str(), listMotionItems[Count]))
+						ImGui::PushID("foo");
+						if (ImGui::BeginMenu(App->CL_Scene->S_OgreMeshData[0]->m_Motion_Names[Count].c_str()))
 						{
-							App->CL_TopDlg->Switch_To_Motions_Dlg();
-							App->CL_TopDlg->Update_Motions_By_Name(App->CL_Scene->S_OgreMeshData[0]->m_Motion_Names[Count].c_str());
 
-							listMotionItems[PreviouseMotion] = 0;
-							listMotionItems[Count] = 1;
-							PreviouseMotion = Count;
+							ImGui::Text("Motion Name:  %s", App->CL_Scene->S_OgreMeshData[0]->m_Motion_Names[Count].c_str());
+
+							if (ImGui::Button("Play Motion"))
+							{
+								App->CL_TopDlg->Switch_To_Motions_Dlg();
+								App->CL_TopDlg->Update_Motions_By_Name(App->CL_Scene->S_OgreMeshData[0]->m_Motion_Names[Count].c_str());
+							}
+
+							ImGui::EndMenu();
 						}
 
+						ImGui::PopID();
 						Count++;
-
 					}
 
 					ImGui::TreePop();
