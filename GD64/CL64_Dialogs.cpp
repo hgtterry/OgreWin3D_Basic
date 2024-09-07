@@ -870,11 +870,21 @@ LRESULT CALLBACK CL64_Dialogs::TextureViewer_Proc(HWND hDlg, UINT message, WPARA
 		App->CL_Textures->Texture_To_HBITMP(App->CL_Dialogs->mTextureFile);
 
 		char buf[MAX_PATH];
-		sprintf(buf, "%i X %i   %s", App->CL_Textures->BasePicWidth
-			, App->CL_Textures->BasePicHeight, App->CL_Resources->mSelected_File);
-			//,App->CL_Textures->BasePicDepth);
+		if (App->CL_Scene->Model_Type == Enums::LoadedFile_Assimp)
+		{
+			EnableWindow(GetDlgItem(hDlg, IDC_BT_VIEWEXPORT),false);
+
+			sprintf(buf, "%i X %i", App->CL_Textures->BasePicWidth
+				, App->CL_Textures->BasePicHeight);// , App->CL_Dialogs->mTextureFile);
+		}
+		else
+		{
+			sprintf(buf, "%i X %i   %s", App->CL_Textures->BasePicWidth
+				, App->CL_Textures->BasePicHeight, App->CL_Resources->mSelected_File);
+		}
 
 		SetDlgItemText(hDlg, IDC_ST_DETAILS, (LPCTSTR)buf);
+		
 
 		App->CL_Ogre->RenderFrame(8);
 
@@ -905,7 +915,17 @@ LRESULT CALLBACK CL64_Dialogs::TextureViewer_Proc(HWND hDlg, UINT message, WPARA
 		if (some_item->idFrom == IDC_BT_VIEWEXPORT)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Normal(item);
+
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_VIEWEXPORT));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
+			else
+			{
+				App->Custom_Button_Normal(item);
+			}
+
 			return CDRF_DODEFAULT;
 		}
 		
@@ -930,7 +950,14 @@ LRESULT CALLBACK CL64_Dialogs::TextureViewer_Proc(HWND hDlg, UINT message, WPARA
 
 		if (LOWORD(wParam) == IDOK)
 		{
-			remove(App->CL_Dialogs->mTextureFile);
+			if (App->CL_Scene->Model_Type == Enums::LoadedFile_Assimp)
+			{
+			}
+			else
+			{
+				remove(App->CL_Dialogs->mTextureFile);
+			}
+
 			App->CL_ImGui->Model_Data_disable_all = 0;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
@@ -938,7 +965,14 @@ LRESULT CALLBACK CL64_Dialogs::TextureViewer_Proc(HWND hDlg, UINT message, WPARA
 
 		if (LOWORD(wParam) == IDCANCEL)
 		{
-			remove(App->CL_Dialogs->mTextureFile);
+			if (App->CL_Scene->Model_Type == Enums::LoadedFile_Assimp)
+			{
+			}
+			else
+			{
+				remove(App->CL_Dialogs->mTextureFile);
+			}
+
 			App->CL_ImGui->Model_Data_disable_all = 0;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;

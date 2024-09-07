@@ -35,7 +35,11 @@ public:
 	void ImGui_Render_Loop(void);
 	void ImGui_FPS(void);
 	void Camera_Data_GUI(void);
+
 	void Model_Data_GUI(void);
+	void Show_Ogre_Model_Data_GUI(void);
+	void Show_Assimp_Model_Data_GUI(void);
+
 	void App_Debug(void);
 
 	void Demo_Options_Gui(void);
@@ -48,6 +52,8 @@ public:
 	bool flag_Show_Model_Data;
 	bool flag_Show_Demo_Options;
 	bool flag_Show_App_Debug;
+
+	bool flag_Show_Ogre_Data;
 
 	// Demo 1
 	bool flag_Show_Physics_Debug;
