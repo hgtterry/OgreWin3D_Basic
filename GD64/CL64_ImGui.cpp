@@ -44,7 +44,6 @@ CL64_ImGui::CL64_ImGui(void)
 
 	Float_Step = 0.50f;
 
-	PreviouseMaterial = 0;
 	PreviouseSubMesh = -1;
 }
 

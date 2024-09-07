@@ -62,9 +62,6 @@ public:
 
 	bool Model_Data_disable_all;
 
-	bool listMaterialItems[50] = { 0 };
-	int PreviouseMaterial;
-
 	bool listSubMeshItems[50] = { 0 };
 	int PreviouseSubMesh;
 

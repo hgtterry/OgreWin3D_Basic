@@ -63,7 +63,7 @@ private:
 
 	void Update_Counter(int Value, HWND hDlg);
 
-	bool Get_File_Type(char* FileName, int Index);
+	bool Get_File_Extensions(char* FileName, int Index);
 
 	bool Export_Resource(char* FileName) const;
 
@@ -72,6 +72,7 @@ private:
 	int Show_Resource_Group_Meshes();
 	int Show_Resource_Group_Textures();
 	int Show_Resource_Group_Skeletons();
+	int Show_Resource_Group_Overlays();
 
 	int Extension_Type;
 
@@ -91,6 +92,7 @@ private:
 	bool flag_Show_All_Meshes;
 	bool flag_Show_All_Textures;
 	bool flag_Show_All_Skeleton;
+	bool flag_Show_All_Overlays;
 
 	HWND FX_General_hLV;
 	HWND Export_Button;

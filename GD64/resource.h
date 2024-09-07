@@ -77,6 +77,7 @@
 #define IDC_BT_MOTIONS_PLAY             1007
 #define IDC_BT_CHANGE_NAME              1007
 #define IDC_BT_VIEWEXPORT               1007
+#define IDC_BT_LIST_OVERLAY             1007
 #define IDC_BUTTON2                     1008
 #define IDC_BT_TBH_CAMERA               1008
 #define IDC_BT_DEMORESOURCES            1008
@@ -159,7 +160,6 @@
 #define IDC_BT_LIST_SKELETON            1058
 #define IDC_ST_DETAILS                  1059
 #define IDC_ST_SELECTEDFILE             1060
-#define IDC_LIST1                       1061
 #define IDC_LST_FILE                    1061
 #define ID_VIEW_RESET                   32771
 #define ID_VIEW_MAX3DVIEW               32772

@@ -101,9 +101,8 @@ namespace Enums
 		Resource_File_Type_Material = 1,
 		Resource_File_Type_Mesh = 2,
 		Resource_File_Type_Skeleton = 3,
-		Resource_File_Type_Texture = 4
-		//Model_Type_3ds = 2,
-		//Model_Type_Milk = 3
+		Resource_File_Type_Texture = 4,
+		Resource_File_Type_Overlay = 5
 	};
 
 }

@@ -29,6 +29,7 @@ CL64_Resources::CL64_Resources(void)
 	flag_Show_All_Textures = 0;
 	flag_Show_All_Materials = 0;
 	flag_Show_All_Skeleton = 0;
+	flag_Show_All_Overlays = 0;
 	flag_Show_Group_All = 0;
 
 	mFileString.clear();
@@ -122,6 +123,7 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 		SendDlgItemMessage(hDlg, IDC_ALLTEXTURES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ALLMESH, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_LIST_SKELETON, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_LIST_OVERLAY, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
 		// -------------------------- 
 		SendDlgItemMessage(hDlg, IDC_LST_GROUPS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
@@ -303,6 +305,13 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 			return CDRF_DODEFAULT;
 		}
 
+		if (some_item->idFrom == IDC_BT_LIST_OVERLAY)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->CL_Resources->flag_Show_All_Overlays);
+			return CDRF_DODEFAULT;
+		}
+		
 		return CDRF_DODEFAULT;
 	}
 
@@ -316,6 +325,11 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 			}
 
 			if (App->CL_Resources->Extension_Type == Enums::Resource_File_Type_Material)
+			{
+				App->CL_Resources->View_File(App->CL_Resources->mSelected_File, hDlg);
+			}
+
+			if (App->CL_Resources->Extension_Type == Enums::Resource_File_Type_Overlay)
 			{
 				App->CL_Resources->View_File(App->CL_Resources->mSelected_File, hDlg);
 			}
@@ -412,6 +426,24 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 			return TRUE;
 		}
 
+		if (LOWORD(wParam) == IDC_BT_LIST_OVERLAY)
+		{
+			App->CL_Resources->Reset_Flags();
+			App->CL_Resources->flag_Show_All_Overlays = 1;
+
+			RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+			App->CL_Resources->Set_Title(hDlg, (LPSTR)"Overlays");
+
+			int Items = App->CL_Resources->Show_Resource_Group_Overlays();
+			App->CL_Resources->Update_Counter(Items, hDlg);
+			
+			App->CL_Resources->Extension_Type = Enums::Resource_File_Type_Overlay;
+			EnableWindow(GetDlgItem(hDlg, IDC_BT_VIEWFILE), true);
+			return TRUE;
+		}
+
+		
 		if (LOWORD(wParam) == IDC_LST_GROUPS)
 		{
 			char buff[MAX_PATH]{ 0 };
@@ -530,6 +562,13 @@ void CL64_Resources::ListView_OnClickOptions(LPARAM lParam)
 				EnableWindow(GetDlgItem(Resource_Dlg_hWnd, IDC_BT_VIEWFILE), true);
 				return;
 			}
+
+			if (RV_File_Extension[Count] == Enums::Resource_File_Type_Overlay)
+			{
+				Extension_Type = Enums::Resource_File_Type_Overlay;
+				EnableWindow(GetDlgItem(Resource_Dlg_hWnd, IDC_BT_VIEWFILE), true);
+				return;
+			}
 		}
 
 		Count++;
@@ -565,6 +604,7 @@ void CL64_Resources::Reset_Flags()
 	flag_Show_All_Meshes = 0;
 	flag_Show_Group_All = 0;
 	flag_Show_All_Skeleton = 0;
+	flag_Show_All_Overlays = 0;
 
 	EnableWindow(GetDlgItem(Resource_Dlg_hWnd, IDC_BT_VIEWFILE), false);
 
@@ -651,7 +691,7 @@ bool CL64_Resources::Scan_Resource_Group(Ogre::String ResourceGroup)
 		RV_FileName.push_back(i->filename);
 
 		strcpy(mFilename, i->filename.c_str());
-		Get_File_Type(mFilename, Count);
+		Get_File_Extensions(mFilename, Count);
 
 		RV_Archive_GetName.push_back(i->archive->getName());
 		RV_Archive_GetType.push_back(i->archive->getType());
@@ -665,9 +705,9 @@ bool CL64_Resources::Scan_Resource_Group(Ogre::String ResourceGroup)
 }
 
 // *************************************************************************
-// *			Get_File_Type:- Terry and Hazel Flanigan 2024		  	   *
+// *		Get_File_Extensions:- Terry and Hazel Flanigan 2024		  	   *
 // *************************************************************************
-bool CL64_Resources::Get_File_Type(char* FileName, int Index)
+bool CL64_Resources::Get_File_Extensions(char* FileName, int Index)
 {
 	if (_stricmp(FileName + strlen(FileName) - 9, ".material") == 0)
 	{
@@ -684,6 +724,12 @@ bool CL64_Resources::Get_File_Type(char* FileName, int Index)
 	if (_stricmp(FileName + strlen(FileName) - 9, ".skeleton") == 0)
 	{
 		RV_File_Extension.push_back(Enums::Resource_File_Type_Skeleton);
+		return 1;
+	}
+
+	if (_stricmp(FileName + strlen(FileName) - 8, ".overlay") == 0)
+	{
+		RV_File_Extension.push_back(Enums::Resource_File_Type_Overlay);
 		return 1;
 	}
 
@@ -1048,6 +1094,45 @@ int CL64_Resources::Show_Resource_Group_Skeletons()
 	while (Count < End)
 	{
 		if (RV_File_Extension[Count] == Enums::Resource_File_Type_Skeleton)
+		{
+			pitem.iItem = pRow;
+			pitem.pszText = (LPSTR)RV_FileName[Count].c_str();
+
+			ListView_InsertItem(FX_General_hLV, &pitem);
+			ListView_SetItemText(FX_General_hLV, pRow, 1, (LPSTR)RV_Archive_GetType[Count].c_str());
+			ListView_SetItemText(FX_General_hLV, pRow, 2, (LPSTR)RV_Archive_GetName[Count].c_str());
+
+			pRow++;
+		}
+
+		Count++;
+
+	}
+
+	Set_Selection(0);
+
+	RedrawWindow(FX_General_hLV, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+	return pRow;
+}
+
+// *************************************************************************
+// *	  Show_Resource_Group_Overlays:- Terry and Hazel Flanigan 2024	   *
+// *************************************************************************
+int CL64_Resources::Show_Resource_Group_Overlays()
+{
+	ListView_DeleteAllItems(FX_General_hLV);
+
+	LV_ITEM pitem;
+	memset(&pitem, 0, sizeof(LV_ITEM));
+	pitem.mask = LVIF_TEXT;
+
+	int	 pRow = 0;
+	int Count = 0;
+	int End = RV_Size;
+
+	while (Count < End)
+	{
+		if (RV_File_Extension[Count] == Enums::Resource_File_Type_Overlay)
 		{
 			pitem.iItem = pRow;
 			pitem.pszText = (LPSTR)RV_FileName[Count].c_str();
