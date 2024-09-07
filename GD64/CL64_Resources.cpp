@@ -368,7 +368,7 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 
 			RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
-			int Items = App->CL_Resources->Show_Resource_Group_Materials();
+			int Items = App->CL_Resources->Show_Resource_Group_Type(Enums::Resource_File_Type_Material);
 			App->CL_Resources->Update_Counter(Items, hDlg);
 
 			App->CL_Resources->Extension_Type = Enums::Resource_File_Type_Material;
@@ -386,7 +386,7 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 
 			RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
-			int Items = App->CL_Resources->Show_Resource_Group_Textures();
+			int Items = App->CL_Resources->Show_Resource_Group_Type(Enums::Resource_File_Type_Texture);
 			
 			App->CL_Resources->Update_Counter(Items, hDlg);
 
@@ -405,7 +405,7 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 
 			App->CL_Resources->Set_Title(hDlg,(LPSTR)"Meshes");
 
-			int Items = App->CL_Resources->Show_Resource_Group_Meshes();
+			int Items = App->CL_Resources->Show_Resource_Group_Type(Enums::Resource_File_Type_Mesh);
 			App->CL_Resources->Update_Counter(Items, hDlg);
 
 			return TRUE;
@@ -420,7 +420,7 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 
 			App->CL_Resources->Set_Title(hDlg, (LPSTR)"Skeletons");
 
-			int Items = App->CL_Resources->Show_Resource_Group_Skeletons();
+			int Items = App->CL_Resources->Show_Resource_Group_Type(Enums::Resource_File_Type_Skeleton);
 			App->CL_Resources->Update_Counter(Items, hDlg);
 
 			return TRUE;
@@ -435,7 +435,7 @@ LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM 
 
 			App->CL_Resources->Set_Title(hDlg, (LPSTR)"Overlays");
 
-			int Items = App->CL_Resources->Show_Resource_Group_Overlays();
+			int Items = App->CL_Resources->Show_Resource_Group_Type(Enums::Resource_File_Type_Overlay);
 			App->CL_Resources->Update_Counter(Items, hDlg);
 			
 			App->CL_Resources->Extension_Type = Enums::Resource_File_Type_Overlay;
@@ -960,9 +960,9 @@ int CL64_Resources::Show_Resource_Group_All()
 }
 
 // *************************************************************************
-// *	  Show_Resource_Group_Materials:- Terry and Hazel Flanigan 2024	   *
+// *	  Show_Resource_Group_Type:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
-int CL64_Resources::Show_Resource_Group_Materials()
+int CL64_Resources::Show_Resource_Group_Type(int mType)
 {
 	ListView_DeleteAllItems(FX_General_hLV);
 
@@ -976,163 +976,7 @@ int CL64_Resources::Show_Resource_Group_Materials()
 
 	while (Count < End)
 	{
-		if (RV_File_Extension[Count] == Enums::Resource_File_Type_Material)
-		{
-			pitem.iItem = pRow;
-			pitem.pszText = (LPSTR)RV_FileName[Count].c_str();
-
-			ListView_InsertItem(FX_General_hLV, &pitem);
-			ListView_SetItemText(FX_General_hLV, pRow, 1, (LPSTR)RV_Archive_GetType[Count].c_str());
-			ListView_SetItemText(FX_General_hLV, pRow, 2, (LPSTR)RV_Archive_GetName[Count].c_str());
-
-			pRow++;
-		}
-
-		Count++;
-	}
-
-	Set_Selection(0);
-
-	RedrawWindow(FX_General_hLV, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-	
-	return pRow;
-}
-
-// *************************************************************************
-// *	  Show_Resource_Group_Meshes:- Terry and Hazel Flanigan 2024	   *
-// *************************************************************************
-int CL64_Resources::Show_Resource_Group_Meshes()
-{
-	ListView_DeleteAllItems(FX_General_hLV);
-
-	LV_ITEM pitem;
-	memset(&pitem, 0, sizeof(LV_ITEM));
-	pitem.mask = LVIF_TEXT;
-
-	int	 pRow = 0;
-	int Count = 0;
-	int End = RV_Size;
-
-	while (Count < End)
-	{
-		if (RV_File_Extension[Count] == Enums::Resource_File_Type_Mesh)
-		{
-			pitem.iItem = pRow;
-			pitem.pszText = (LPSTR)RV_FileName[Count].c_str();
-
-			ListView_InsertItem(FX_General_hLV, &pitem);
-			ListView_SetItemText(FX_General_hLV, pRow, 1, (LPSTR)RV_Archive_GetType[Count].c_str());
-			ListView_SetItemText(FX_General_hLV, pRow, 2, (LPSTR)RV_Archive_GetName[Count].c_str());
-
-			pRow++;
-		}
-
-		Count++;
-
-	}
-
-	Set_Selection(0);
-
-	RedrawWindow(FX_General_hLV, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-	return pRow;
-}
-
-// *************************************************************************
-// *	  Show_Resource_Group_Textures:- Terry and Hazel Flanigan 2024	   *
-// *************************************************************************
-int CL64_Resources::Show_Resource_Group_Textures()
-{
-	ListView_DeleteAllItems(FX_General_hLV);
-
-	LV_ITEM pitem;
-	memset(&pitem, 0, sizeof(LV_ITEM));
-	pitem.mask = LVIF_TEXT;
-
-	int	 pRow = 0;
-	int Count = 0;
-	int End = RV_Size;
-
-	while (Count < End)
-	{
-		if (RV_File_Extension[Count] == Enums::Resource_File_Type_Texture)
-		{
-			pitem.iItem = pRow;
-			pitem.pszText = (LPSTR)RV_FileName[Count].c_str();
-
-			ListView_InsertItem(FX_General_hLV, &pitem);
-			ListView_SetItemText(FX_General_hLV, pRow, 1, (LPSTR)RV_Archive_GetType[Count].c_str());
-			ListView_SetItemText(FX_General_hLV, pRow, 2, (LPSTR)RV_Archive_GetName[Count].c_str());
-
-			pRow++;
-		}
-
-		Count++;
-
-	}
-
-	Set_Selection(0);
-
-	RedrawWindow(FX_General_hLV, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-	return pRow;
-}
-
-// *************************************************************************
-// *	  Show_Resource_Group_Skeletons:- Terry and Hazel Flanigan 2024	   *
-// *************************************************************************
-int CL64_Resources::Show_Resource_Group_Skeletons()
-{
-	ListView_DeleteAllItems(FX_General_hLV);
-
-	LV_ITEM pitem;
-	memset(&pitem, 0, sizeof(LV_ITEM));
-	pitem.mask = LVIF_TEXT;
-
-	int	 pRow = 0;
-	int Count = 0;
-	int End = RV_Size;
-
-	while (Count < End)
-	{
-		if (RV_File_Extension[Count] == Enums::Resource_File_Type_Skeleton)
-		{
-			pitem.iItem = pRow;
-			pitem.pszText = (LPSTR)RV_FileName[Count].c_str();
-
-			ListView_InsertItem(FX_General_hLV, &pitem);
-			ListView_SetItemText(FX_General_hLV, pRow, 1, (LPSTR)RV_Archive_GetType[Count].c_str());
-			ListView_SetItemText(FX_General_hLV, pRow, 2, (LPSTR)RV_Archive_GetName[Count].c_str());
-
-			pRow++;
-		}
-
-		Count++;
-
-	}
-
-	Set_Selection(0);
-
-	RedrawWindow(FX_General_hLV, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-	return pRow;
-}
-
-// *************************************************************************
-// *	  Show_Resource_Group_Overlays:- Terry and Hazel Flanigan 2024	   *
-// *************************************************************************
-int CL64_Resources::Show_Resource_Group_Overlays()
-{
-	ListView_DeleteAllItems(FX_General_hLV);
-
-	LV_ITEM pitem;
-	memset(&pitem, 0, sizeof(LV_ITEM));
-	pitem.mask = LVIF_TEXT;
-
-	int	 pRow = 0;
-	int Count = 0;
-	int End = RV_Size;
-
-	while (Count < End)
-	{
-		if (RV_File_Extension[Count] == Enums::Resource_File_Type_Overlay)
+		if (RV_File_Extension[Count] == mType)
 		{
 			pitem.iItem = pRow;
 			pitem.pszText = (LPSTR)RV_FileName[Count].c_str();

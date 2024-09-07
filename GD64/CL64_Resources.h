@@ -67,12 +67,8 @@ private:
 
 	bool Export_Resource(char* FileName) const;
 
+	int Show_Resource_Group_Type(int mType);
 	int Show_Resource_Group_All();
-	int Show_Resource_Group_Materials();
-	int Show_Resource_Group_Meshes();
-	int Show_Resource_Group_Textures();
-	int Show_Resource_Group_Skeletons();
-	int Show_Resource_Group_Overlays();
 
 	int Extension_Type;
 
