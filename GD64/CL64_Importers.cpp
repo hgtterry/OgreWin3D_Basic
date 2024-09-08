@@ -235,6 +235,7 @@ bool CL64_Importers::Load_Ogre_Model(bool Use_File_Dialog)
 	App->Set_Title();
 
 	App->CL_ImGui->flag_Open_Textures_List = 1;
+	App->CL_Props_Textures->Get_First_Texture_Ogre();
 	App->CL_Ogre->RenderFrame(3);
 
 	//Get_Textures();
@@ -313,7 +314,7 @@ void CL64_Importers::Reload_Ogre_Model(void)
 
 	App->CL_Import_Ogre3D->flag_Ogre_Model_Loaded = 1;
 	App->CL_Ogre->Ogre3D_Listener->Ogre_Model_Loaded = 1;
-
+	App->CL_Props_Textures->Get_First_Texture_Ogre();
 }
 
 // *************************************************************************

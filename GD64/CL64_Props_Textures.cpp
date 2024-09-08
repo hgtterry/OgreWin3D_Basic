@@ -372,7 +372,7 @@ void CL64_Props_Textures::Texture_To_HBITMP(char* TextureFileName)
 }
 
 // *************************************************************************
-// *			 Texture_To_HBITMP:- Terry and Hazel Flanigan 2024	 	   *
+// *			 Get_First_Texture_Ogre:- Terry and Hazel Flanigan 2024	 	   *
 // *************************************************************************
 void CL64_Props_Textures::Get_First_Texture_Ogre()
 {
@@ -382,6 +382,12 @@ void CL64_Props_Textures::Get_First_Texture_Ogre()
 	strcpy(mTextureName, MatCurent->getTechnique(0)->getPass(0)->getTextureUnitState(0)->getTextureName().c_str());
 
 	strcpy(mMaterialName, App->CL_Scene->S_OgreMeshData[0]->m_Materials_Names[0].c_str());
+	
+	bool test = strcmp(mMaterialName,"No_Material_Loaded");
+	if (test == 0)
+	{
+		App->CL_Resources->mSelected_Resource_Group = "App_Resource_Group";
+	}
 
 	App->CL_Props_Textures->View_Texture(mTextureName, mMaterialName);
 }
