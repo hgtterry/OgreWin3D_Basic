@@ -70,6 +70,7 @@ bool CL64_Props_Textures::Start_Props_Textures_Dialog()
 	App->CL_Props_Textures->Enable_Export_Button(false);
 	ShowWindow(Props_Dlg_Hwnd, 1);
 	RightGroups_Visable = 1;
+
 	return 1;
 }
 
@@ -368,9 +369,20 @@ void CL64_Props_Textures::Texture_To_HBITMP(char* TextureFileName)
 	HDC	hDC = GetDC(PreviewWnd);
 
 	Sel_BaseBitmap = ilutWinLoadImage(TextureFileName, hDC);
+}
 
-	//BasePicWidth = ilGetInteger(IL_IMAGE_WIDTH);
-	//BasePicHeight = ilGetInteger(IL_IMAGE_HEIGHT);
-	//BasePicDepth = ilGetInteger(IL_IMAGE_DEPTH);
+// *************************************************************************
+// *			 Texture_To_HBITMP:- Terry and Hazel Flanigan 2024	 	   *
+// *************************************************************************
+void CL64_Props_Textures::Get_First_Texture_Ogre()
+{
+	Ogre::MaterialPtr MatCurent;
+
+	MatCurent = static_cast<Ogre::MaterialPtr> (Ogre::MaterialManager::getSingleton().getByName(App->CL_Scene->S_OgreMeshData[0]->m_Materials_Names[0].c_str()));
+	strcpy(mTextureName, MatCurent->getTechnique(0)->getPass(0)->getTextureUnitState(0)->getTextureName().c_str());
+
+	strcpy(mMaterialName, App->CL_Scene->S_OgreMeshData[0]->m_Materials_Names[0].c_str());
+
+	App->CL_Props_Textures->View_Texture(mTextureName, mMaterialName);
 }
 

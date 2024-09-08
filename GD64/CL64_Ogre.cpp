@@ -89,7 +89,7 @@ void CL64_Ogre::InitOgre(void)
 	App->CL_Scene->Scene_Mode = Enums::Scene_Mode_TestMesh;
 	App->CL_Ogre->Ogre3D_Listener->Ogre_Model_Loaded = 1;
 	App->CL_Scene->flag_Model_Loaded = 1;
-
+	
 	flag_Test_Mesh_Active = 1;
 
 	mTrayMgr = new OgreBites::TrayManager("InterfaceName", mWindow);

@@ -54,7 +54,7 @@ public:
 	bool flag_Show_App_Debug;
 
 	bool flag_Show_Ogre_Data;
-
+	bool flag_Open_Textures_List;
 	// Demo 1
 	bool flag_Show_Physics_Debug;
 

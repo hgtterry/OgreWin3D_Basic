@@ -32,6 +32,7 @@ CL64_ImGui::CL64_ImGui(void)
 	flag_Show_Demo_Options = 0;
 	flag_Show_App_Debug = 0;
 	flag_Show_Ogre_Data = 1;
+	flag_Open_Textures_List = 1;
 
 	Model_Data_disable_all = 0;
 
@@ -358,6 +359,13 @@ void CL64_ImGui::Show_Ogre_Model_Data_GUI(void)
 	{
 		if (App->CL_Import_Ogre3D->flag_Ogre_Model_Loaded == 1)
 		{
+		
+			if (flag_Open_Textures_List == 1)
+			{
+				ImGui::SetNextItemOpen(true, ImGuiCond_Always);
+				flag_Open_Textures_List = 0;
+			}
+		
 			// Materials / Textures
 			if (ImGui::TreeNode("Materials"))
 			{

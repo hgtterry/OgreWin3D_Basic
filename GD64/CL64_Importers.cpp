@@ -233,6 +233,8 @@ bool CL64_Importers::Load_Ogre_Model(bool Use_File_Dialog)
 	App->CL_Scene->S_OgreMeshData[0]->mFileName_Str = App->CL_Scene->FileName;
 	
 	App->Set_Title();
+
+	App->CL_ImGui->flag_Open_Textures_List = 1;
 	App->CL_Ogre->RenderFrame(3);
 
 	//Get_Textures();

@@ -29,6 +29,8 @@ public:
 	void Texture_To_HBITMP(char* TextureFileName);
 	void Enable_Export_Button(bool Enable);
 
+	void Get_First_Texture_Ogre();
+
 	int Selected_Group;
 
 	bool RightGroups_Visable;

@@ -188,6 +188,15 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			//App->CL_Resources->Get_Resource_Groups();
 			//App->CL_Textures->Texture_To_HBITMP();
 
+			if (App->CL_ImGui->flag_Open_Textures_List == 1)
+			{
+				App->CL_ImGui->flag_Open_Textures_List = 0;
+			}
+			else
+			{
+				App->CL_ImGui->flag_Open_Textures_List = 1;
+			}
+
 			return TRUE;
 		}
 		
@@ -767,6 +776,8 @@ void StartOgre()
     App->flag_OgreStarted = 1;
 
     KillTimer(App->MainHwnd, 1);
+
+	App->CL_Props_Textures->Get_First_Texture_Ogre();
 
     App->CL_Ogre->Ogre_Render_Loop();
 
