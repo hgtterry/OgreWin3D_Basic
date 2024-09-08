@@ -33,6 +33,7 @@ CL64_Props_Textures::CL64_Props_Textures(void)
 	BasePicWidth = 0;
 	BasePicHeight = 0;
 
+	mExport_PathAndName[0] = 0;
 	strcpy(mTextureName, "Texture Name");
 	strcpy(mMaterialName, "Material Name");
 }
@@ -65,6 +66,8 @@ void CL64_Props_Textures::Reset_Class(void)
 bool CL64_Props_Textures::Start_Props_Textures_Dialog()
 {
 	Props_Dlg_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_PROPS_TEXTURES, App->MainHwnd, (DLGPROC)Proc_Textures_Dialog);
+
+	App->CL_Props_Textures->Enable_Export_Button(false);
 	ShowWindow(Props_Dlg_Hwnd, 1);
 	RightGroups_Visable = 1;
 	return 1;
@@ -79,10 +82,16 @@ LRESULT CALLBACK CL64_Props_Textures::Proc_Textures_Dialog(HWND hDlg, UINT messa
 	{
 	case WM_INITDIALOG:
 	{
+		SendDlgItemMessage(hDlg, IDC_ST_MATERIAL, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ST_PT_MATERIAL, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
+		
+		SendDlgItemMessage(hDlg, IDC_ST_TEXURENAME, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_PT_TEXTURENAME, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
-		//SendDlgItemMessage(hDlg, IDC_RGTEXTURENAME, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
 
+		SendDlgItemMessage(hDlg, IDC_ST_PT_DIMENSIONS, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
+		
+		SendDlgItemMessage(hDlg, IDC_BT_PT_EXPORT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
 		//SendDlgItemMessage(hDlg, IDC_BTCHANGETEXTURE, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
 		//SendDlgItemMessage(hDlg, IDC_BTGROUPINFO, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0))
 
@@ -92,13 +101,20 @@ LRESULT CALLBACK CL64_Props_Textures::Proc_Textures_Dialog(HWND hDlg, UINT messa
 
 	case WM_CTLCOLORSTATIC:
 	{
-		/*if (GetDlgItem(hDlg, IDC_RGGROUPNAME) == (HWND)lParam)
+		if (GetDlgItem(hDlg, IDC_ST_PT_DIMENSIONS) == (HWND)lParam)
 		{
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->AppBackground;
-		}*/
+		}
 
+		if (GetDlgItem(hDlg, IDC_ST_TEXURENAME) == (HWND)lParam)
+		{
+			SetTextColor((HDC)wParam, RGB(0, 0, 255));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+		
 		if (GetDlgItem(hDlg, IDC_PT_TEXTURENAME) == (HWND)lParam)
 		{
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
@@ -106,6 +122,13 @@ LRESULT CALLBACK CL64_Props_Textures::Proc_Textures_Dialog(HWND hDlg, UINT messa
 			return (UINT)App->AppBackground;
 		}
 
+		if (GetDlgItem(hDlg, IDC_ST_MATERIAL) == (HWND)lParam)
+		{
+			SetTextColor((HDC)wParam, RGB(0, 0, 255));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+		
 		if (GetDlgItem(hDlg, IDC_ST_PT_MATERIAL) == (HWND)lParam)
 		{
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
@@ -134,59 +157,31 @@ LRESULT CALLBACK CL64_Props_Textures::Proc_Textures_Dialog(HWND hDlg, UINT messa
 	{
 		LPNMHDR some_item = (LPNMHDR)lParam;
 
-		/*if (some_item->idFrom == IDC_BTCHANGETEXTURE && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDC_BT_PT_EXPORT)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Normal(item);
-			return CDRF_DODEFAULT;
-		}*/
 
-		/*if (some_item->idFrom == IDC_BTGROUPINFO && some_item->code == NM_CUSTOMDRAW)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CL_Editor_Gui->Show_Group_Data_F);
-			return CDRF_DODEFAULT;
-		}*/
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_PT_EXPORT));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
+			else
+			{
+				App->Custom_Button_Normal(item);
+			}
+		}
 
 		return CDRF_DODEFAULT;
 	}
 
 	case WM_COMMAND:
 	{
-		/*if (LOWORD(wParam) == IDC_BTCHANGETEXTURE)
+		if (LOWORD(wParam) == IDC_BT_PT_EXPORT)
 		{
-			if (App->CL_Model->Model_Loaded == 1)
-			{
-				App->CL_Panels->Enable_Panels(0);
-				App->CL_Textures->ChangeTexture_Model();
-				App->CL_Panels->Enable_Panels(1);
-			}
+			App->CL_Resources->Export_File(App->CL_Props_Textures->mTextureName);
 			return TRUE;
-		}*/
-
-		//if (LOWORD(wParam) == IDC_BTGROUPINFO)
-		//{
-		//	//if (App->CL_Model->Model_Loaded == 1)
-		//	//{
-		//	//	if (App->CL_Editor_Gui->Show_Group_Data_F == 1)
-		//	//	{
-		//	//		App->CL_Editor_Gui->Close_Group_Data();
-		//	//	}
-		//	//	else
-		//	//	{
-		//	//		App->CL_Editor_Gui->Start_Group_Data();
-		//	//	}
-
-
-		//	//	/*App->CL_Panels->Enable_Panels(0);
-
-		//	//	App->CL_Dialogs->What_List = Enums::Show_List_Group;
-		//	//	App->CL_Dialogs->Show_ListData();
-
-		//	//	App->CL_Panels->Enable_Panels(1);*/
-		//	//}
-		//	return TRUE;
-		//}
+		}
 	}
 
 	}
@@ -194,7 +189,15 @@ LRESULT CALLBACK CL64_Props_Textures::Proc_Textures_Dialog(HWND hDlg, UINT messa
 }
 
 // *************************************************************************
-// *						ViewerBasePic Terry Flanigan	  			   *
+// *		Enable_Export_Button:- Terry and Hazel Flanigan 2024	  	   *
+// *************************************************************************
+void CL64_Props_Textures::Enable_Export_Button(bool Enable)
+{
+	EnableWindow(GetDlgItem(Props_Dlg_Hwnd, IDC_BT_PT_EXPORT), Enable);
+}
+
+// *************************************************************************
+// *			ViewerBasePic:- Terry and Hazel Flanigan 2024	  		   *
 // *************************************************************************
 bool CALLBACK CL64_Props_Textures::ViewerBasePic(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
@@ -237,7 +240,7 @@ bool CALLBACK CL64_Props_Textures::ViewerBasePic(HWND hwnd, UINT msg, WPARAM wPa
 }
 
 // *************************************************************************
-// *					RenderTexture_Blit Terry Bernie		  		   *
+// *		RenderTexture_Blit:- Terry and Hazel Flanigan 2024		  	   *
 // *************************************************************************
 bool CL64_Props_Textures::RenderTexture_Blit(HDC hDC, HBITMAP Bmp, const RECT* SourceRect, const RECT* DestRect)
 {
@@ -279,13 +282,11 @@ bool CL64_Props_Textures::RenderTexture_Blit(HDC hDC, HBITMAP Bmp, const RECT* S
 }
 
 // *************************************************************************
-// *					Update_Groups  Terry Flanigan		  		 	   *
+// *				Update_Groups:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
 bool CL64_Props_Textures::Update_Groups()
 {
 	int Index = Selected_Group;
-
-	//SetDlgItemText(RightGroups_Hwnd, IDC_RGGROUPNAME, App->CL_Scene->Group[Index]->GroupName);
 
 	SetDlgItemText(Props_Dlg_Hwnd, IDC_ST_PT_MATERIAL, mMaterialName);
 	SetDlgItemText(Props_Dlg_Hwnd, IDC_PT_TEXTURENAME, mTextureName);
@@ -301,6 +302,10 @@ bool CL64_Props_Textures::Update_Groups()
 
 	BasePicWidth = bm.bmWidth;
 	BasePicHeight = bm.bmHeight;
+
+	char Dimensions[MAX_PATH];
+	sprintf(Dimensions, "%i X %i", BasePicWidth, BasePicHeight);// , bm.bmBitsPixel);
+	SetDlgItemText(Props_Dlg_Hwnd, IDC_ST_PT_DIMENSIONS, Dimensions);
 
 	ShowWindow(GetDlgItem(Props_Dlg_Hwnd, IDC_PROP_BASETEXTURE), 0);
 	ShowWindow(GetDlgItem(Props_Dlg_Hwnd, IDC_PROP_BASETEXTURE), 1);
@@ -333,6 +338,8 @@ bool CL64_Props_Textures::View_Texture(char* TextureName, char* MaterialName)
 			strcat(mFileName, "\\Data\\");
 			strcat(mFileName, TextureName);
 
+			strcpy(mExport_PathAndName, mFileName);
+
 			std::ofstream outFile;
 			outFile.open(mFileName, std::ios::binary);
 			outFile << App->CL_Resources->mFileString;
@@ -344,11 +351,12 @@ bool CL64_Props_Textures::View_Texture(char* TextureName, char* MaterialName)
 
 			Update_Groups();
 
+			App->CL_Props_Textures->Enable_Export_Button(true);
 			return 1;
 		}
 	}
 
-	return 1;
+	return 0;
 }
 
 // *************************************************************************

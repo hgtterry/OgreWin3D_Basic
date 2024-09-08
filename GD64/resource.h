@@ -79,6 +79,7 @@
 #define IDC_BT_CHANGE_NAME              1007
 #define IDC_BT_VIEWEXPORT               1007
 #define IDC_BT_LIST_OVERLAY             1007
+#define IDC_BT_PT_EXPORT                1007
 #define IDC_BUTTON2                     1008
 #define IDC_BT_TBH_CAMERA               1008
 #define IDC_BT_DEMORESOURCES            1008
@@ -166,6 +167,8 @@
 #define IDC_PT_TEXTURENAME              1063
 #define IDC_ST_PT_MATERIAL              1064
 #define IDC_ST_PT_DIMENSIONS            1065
+#define IDC_ST_MATERIAL                 1066
+#define IDC_ST_TEXURENAME               1067
 #define ID_VIEW_RESET                   32771
 #define ID_VIEW_MAX3DVIEW               32772
 #define ID_DEBUG_TESTPREFERANCE         32773
@@ -205,7 +208,7 @@
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        171
 #define _APS_NEXT_COMMAND_VALUE         32801
-#define _APS_NEXT_CONTROL_VALUE         1066
+#define _APS_NEXT_CONTROL_VALUE         1067
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif

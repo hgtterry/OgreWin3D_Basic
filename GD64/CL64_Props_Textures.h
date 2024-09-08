@@ -27,6 +27,7 @@ public:
 	bool Update_Groups();
 	bool View_Texture(char* TextureName, char* MaterialName);
 	void Texture_To_HBITMP(char* TextureFileName);
+	void Enable_Export_Button(bool Enable);
 
 	int Selected_Group;
 
@@ -47,6 +48,7 @@ protected:
 
 	char mTextureName[MAX_PATH];
 	char mMaterialName[MAX_PATH];
+	char mExport_PathAndName[MAX_PATH];
 
 };
 
