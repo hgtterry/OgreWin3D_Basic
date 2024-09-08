@@ -43,7 +43,7 @@ CL64_Props_Textures::~CL64_Props_Textures(void)
 }
 
 // *************************************************************************
-// *					Reaet_Class Terry Flanigan						   *
+// *			Reset_Class:- Terry and Hazel Flanigan 2024				   *
 // *************************************************************************
 void CL64_Props_Textures::Reset_Class(void)
 {
@@ -55,9 +55,10 @@ void CL64_Props_Textures::Reset_Class(void)
 	ShowWindow(GetDlgItem(Props_Dlg_Hwnd, IDC_PROP_BASETEXTURE), 0);
 	ShowWindow(GetDlgItem(Props_Dlg_Hwnd, IDC_PROP_BASETEXTURE), 1);
 
-	//SetDlgItemText(RightGroups_Hwnd, IDC_RGGROUPNAME, "Group Name");
-	SetDlgItemText(Props_Dlg_Hwnd, IDC_PT_TEXTURENAME, "Texture Name");
-	SetDlgItemText(Props_Dlg_Hwnd, IDC_PT_TEXTURENAME, "Material Name");
+	SetDlgItemText(Props_Dlg_Hwnd, IDC_PT_TEXTURENAME, "-----------");
+	SetDlgItemText(Props_Dlg_Hwnd, IDC_ST_PT_MATERIAL, "-----------");
+	SetDlgItemText(Props_Dlg_Hwnd, IDC_ST_PT_DIMENSIONS,"0 x 0");
+	Enable_Export_Button(false);
 }
 
 // *************************************************************************

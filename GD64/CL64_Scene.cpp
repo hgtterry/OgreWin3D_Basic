@@ -168,7 +168,8 @@ void CL64_Scene::Clear_Scene_And_Reset(void)
 	}
 	
 	App->CL_Resources->Reset_Class();
-	
+	App->CL_Props_Textures->Reset_Class();
+
 	SetWindowText(App->MainHwnd, "OgreWin3D_Basic");
 }
 
