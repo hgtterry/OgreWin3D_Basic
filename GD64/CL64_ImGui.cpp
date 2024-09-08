@@ -766,33 +766,58 @@ void CL64_ImGui::Demo_Options_Gui(void)
 void CL64_ImGui::App_Debug(void)
 {
 	ImGui::SetNextWindowPos(ImVec2(10,10), ImGuiCond_FirstUseEver);
-	ImGui::SetNextWindowSize(ImVec2(280, 500), ImGuiCond_FirstUseEver);
-
-	if (!ImGui::Begin("App_Debug", &flag_Show_App_Debug, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoResize))
+	
+	if (!ImGui::Begin("App_Debug", &flag_Show_App_Debug, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_AlwaysAutoResize))
 	{
 		ImGui::End();
 	}
 	else
 	{
-		
-		if (ImGui::Checkbox("Debug_Textures", &App->flag_Debug_Textures))
+		ImGui::SetNextItemOpen(true, ImGuiCond_Always);
+		if (ImGui::TreeNode("Debug"))
 		{
 
+			// File Names
+			if (ImGui::TreeNode("File Names"))
+			{
+				ImGui::Separator();
+				ImGui::Text("Scene Just Name: %s", App->CL_Scene->JustName);
+				ImGui::Text("Scene File Name: %s", App->CL_Scene->FileName);
+				ImGui::Text("Texture Path Full: %s", App->CL_Scene->Path_FileName);
+				ImGui::Text("Model Folder: %s", App->CL_Scene->Model_FolderPath);
+				ImGui::Text("Texture Folder: %s", App->CL_Scene->Texture_FolderPath);
+				ImGui::Separator();
+				ImGui::TreePop();
+			}
+
+			// Mesh Data
+			if (ImGui::TreeNode("Scene Mesh Data"))
+			{
+				ImGui::Separator();
+				ImGui::Text("Vertices Count: %i", App->CL_Scene->VerticeCount);
+				ImGui::Text("Face Count: %i", App->CL_Scene->FaceCount);
+				ImGui::Text("Group Count: %i", App->CL_Scene->GroupCount);
+				ImGui::Text("Texture Count: %i", App->CL_Scene->TextureCount);
+
+				ImGui::Text("Motion Count: %i", App->CL_Scene->MotionCount);
+				ImGui::Text("Bone Count: %i", App->CL_Scene->BoneCount);
+				ImGui::Separator();
+				ImGui::TreePop();
+			}
+
+			// Bounds
+			if (ImGui::TreeNode("Bounds"))
+			{
+				ImGui::Text("Test:");
+				ImGui::TreePop();
+			}
+
+			// Motions
+			if (ImGui::TreeNode("Motions"))
+			{
+				ImGui::TreePop();
+			}
 		}
-
-		ImGui::Text("Debug Textures: %i", App->flag_Debug_Textures);
-		ImGui::Text("TestMesh_Active: %i", App->CL_Ogre->flag_Test_Mesh_Active);
-		ImGui::Text("Ogre_Model_Loaded: %i", App->CL_Ogre->Ogre3D_Listener->Ogre_Model_Loaded);
-		ImGui::Text("Ogre_Resources_Loaded: %i", App->CL_Resources->Ogre_ExternalResourceLoaded);
-		
-		ImGui::Text(" ");
-
-		ImGui::Text("Physics Running: %i", App->CL_Ogre->Ogre3D_Listener->Run_Physics);
-		ImGui::Text("Fog Enabled: %i", App->CL_Ogre->flag_Show_Fog);
-		ImGui::Text("Camera Mode: %i", App->CL_Ogre->Ogre3D_Listener->CameraMode);
-		ImGui::Text(" ");
-		ImGui::Text("TriMesh_Created: %i", App->CL_Bullet->flag_TriMesh_Created);
-		ImGui::Text("Colision Objects: %i", App->CL_Bullet->dynamicsWorld->getNumCollisionObjects());
 		
 		if (ImGui::Button("Close"))
 		{

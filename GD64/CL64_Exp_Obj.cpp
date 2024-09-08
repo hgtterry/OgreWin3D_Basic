@@ -87,7 +87,8 @@ void CL64_Exp_Obj::Write_ObjectFile(void)
 	{
 		return;
 	}
-	if (App->CL_Scene->Loaded_File_Type == Enums::Loaded_File_Type_Assimp)
+
+	//if (App->CL_Scene->Loaded_File_Type == Enums::Loaded_File_Type_Assimp)
 	{
 		Write_ObjectFile_Commit();
 	}
@@ -103,7 +104,7 @@ void CL64_Exp_Obj::Write_ObjectFile_Commit(void)
 
 	fprintf(Write_OBJECTFILE, "#\n");
 	fprintf(Write_OBJECTFILE, "# Wavefront OBJ file\n");
-	fprintf(Write_OBJECTFILE, "# Created with Equity_XL\n");
+	fprintf(Write_OBJECTFILE, "# Created with OgreWin3D\n");
 	fprintf(Write_OBJECTFILE, "#\n");
 	fprintf(Write_OBJECTFILE, "mtllib %s\n", Just_mtl_FileName);
 	fprintf(Write_OBJECTFILE, "%s \n", " ");
@@ -117,8 +118,7 @@ void CL64_Exp_Obj::Write_ObjectFile_Commit(void)
 
 	int GroupCountTotal = App->CL_Scene->GroupCount;
 
-	//	char GroupName[255];
-	char MaterialName[255];
+	char MaterialName[MAX_PATH];
 
 	//--------------------------------------------- Vertices v-
 

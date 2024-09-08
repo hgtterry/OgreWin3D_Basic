@@ -176,7 +176,7 @@ void CL64_Imp_Ogre3D::Get_SubPose_MeshInstance(Ogre::MeshPtr mesh,
 	size_t& index_count, unsigned long*& indices,
 	int SubMesh, Ogre::int16*& BoneIndices)
 {
-#pragma warning(disable : 4996) // Nightmare why
+//#pragma warning(disable : 4996) // Nightmare why
 
 	bool added_shared = false;
 	size_t current_offset = 0;
