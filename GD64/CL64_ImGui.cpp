@@ -806,9 +806,15 @@ void CL64_ImGui::App_Debug(void)
 			}
 
 			// Bounds
-			if (ImGui::TreeNode("Bounds"))
+			if (ImGui::TreeNode("State Flags"))
 			{
-				ImGui::Text("Test:");
+				ImGui::Separator();
+				ImGui::Text("Model Loaded: %i", App->CL_Scene->flag_Model_Loaded);
+				ImGui::Text("Player Added: %i", App->CL_Scene->flag_Player_Added);
+				ImGui::Text("Main Entity: %i", App->CL_Scene->flag_Show_Main_Entity);
+				ImGui::Text("Loaded File Type: %i", App->CL_Scene->Loaded_File_Type);
+				ImGui::Text("Scene Mode: %i", App->CL_Scene->Scene_Mode);
+				ImGui::Separator();
 				ImGui::TreePop();
 			}
 

@@ -14,8 +14,8 @@ appreciated but is not required.
 */
 
 #include "pch.h"
-#include "resource.h"
 #include "CL64_App.h"
+#include "resource.h"
 #include "CL64_Dialogs.h"
 
 CL64_Dialogs::CL64_Dialogs(void)

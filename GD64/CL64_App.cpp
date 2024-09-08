@@ -46,6 +46,8 @@ CL64_App::CL64_App(void)
 	CL_Exporters =		nullptr;
 	CL_Dimensions =		nullptr;
 	CL_Exp_Obj =		nullptr;
+	CL_Props_Textures = nullptr;
+
 
 	hInst =				nullptr;
 	MainHwnd =			nullptr;
@@ -150,6 +152,7 @@ void CL64_App::InitApp(void)
 	CL_Exporters =		new CL64_Exporters();
 	CL_Dimensions =		new CL64_Dimensions();
 	CL_Exp_Obj =		new CL64_Exp_Obj();
+	CL_Props_Textures = new CL64_Props_Textures();
 	
 	SetBrushes_Fonts();
 

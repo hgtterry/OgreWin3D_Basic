@@ -43,6 +43,7 @@ appreciated but is not required.
 #include "CL64_Exporters.h"
 #include "CL64_Dimensions.h"
 #include "CL64_Exp_Obj.h"
+#include "CL64_Props_Textures.h"
 
 class CL64_App
 {
@@ -51,34 +52,35 @@ public:
 	CL64_App(void);
 	~CL64_App(void);
 
-	CL64_Ogre*			CL_Ogre;
-	CL64_Grid*			CL_Grid;
-	CL64_Keyboard*		CL_Keyboard;
-	CL64_Camera*		CL_Camera;
-	CL64_Ini_File*		CL_Ini_File;
-	CL64_Preferences*	CL_Preferences;
-	CL64_Assimp*		CL_Assimp;
-	CL64_Scene*			CL_Scene;
-	CL64_Importers*		CL_Importers;
-	CL64_File_IO*		CL_File_IO;
-	CL64_ImGui*			CL_ImGui;
-	CL64_Textures*		CL_Textures;
-	CL64_TopDlg*		CL_TopDlg;
-	CL64_Panels*		CL_Panels;
-	CL64_Converters*	CL_Converters;
-	CL64_Bullet*		CL_Bullet;
-	CL64_Player*		CL_Player;
-	CL64_Demos*			CL_Demos;
-	CL64_Dialogs*		CL_Dialogs;
-	CL64_Resources*		CL_Resources;
+	CL64_Ogre*				CL_Ogre;
+	CL64_Grid*				CL_Grid;
+	CL64_Keyboard*			CL_Keyboard;
+	CL64_Camera*			CL_Camera;
+	CL64_Ini_File*			CL_Ini_File;
+	CL64_Preferences*		CL_Preferences;
+	CL64_Assimp*			CL_Assimp;
+	CL64_Scene*				CL_Scene;
+	CL64_Importers*			CL_Importers;
+	CL64_File_IO*			CL_File_IO;
+	CL64_ImGui*				CL_ImGui;
+	CL64_Textures*			CL_Textures;
+	CL64_TopDlg*			CL_TopDlg;
+	CL64_Panels*			CL_Panels;
+	CL64_Converters*		CL_Converters;
+	CL64_Bullet*			CL_Bullet;
+	CL64_Player*			CL_Player;
+	CL64_Demos*				CL_Demos;
+	CL64_Dialogs*			CL_Dialogs;
+	CL64_Resources*			CL_Resources;
 	
-	CL64_Imp_Ogre3D*	CL_Import_Ogre3D;
-	CL64_Motioins*		CL_Motions;
+	CL64_Imp_Ogre3D*		CL_Import_Ogre3D;
+	CL64_Motioins*			CL_Motions;
 
-	CL64_Exp_Ogre3D*	CL_Exp_Ogre;
-	CL64_Exporters*		CL_Exporters;
-	CL64_Dimensions*	CL_Dimensions;
-	CL64_Exp_Obj*		CL_Exp_Obj;
+	CL64_Exp_Ogre3D*		CL_Exp_Ogre;
+	CL64_Exporters*			CL_Exporters;
+	CL64_Dimensions*		CL_Dimensions;
+	CL64_Exp_Obj*			CL_Exp_Obj;
+	CL64_Props_Textures*	CL_Props_Textures;
 
 	void InitApp(void);
 	void Init_Dialogs(void);
