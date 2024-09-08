@@ -319,7 +319,7 @@ void CL64_ImGui::Model_Data_GUI(void)
 		
 		ImGui::Separator();
 
-		if (App->CL_Scene->Model_Type == Enums::LoadedFile_Assimp)
+		if (App->CL_Scene->Loaded_File_Type == Enums::Loaded_File_Type_Assimp)
 		{
 			Show_Assimp_Model_Data_GUI();
 		}

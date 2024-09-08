@@ -87,7 +87,7 @@ void CL64_Exp_Obj::Write_ObjectFile(void)
 	{
 		return;
 	}
-	if (App->CL_Scene->Model_Type == Enums::LoadedFile_Assimp)
+	if (App->CL_Scene->Loaded_File_Type == Enums::Loaded_File_Type_Assimp)
 	{
 		Write_ObjectFile_Commit();
 	}

@@ -34,7 +34,7 @@ CL64_Scene::CL64_Scene(void)
 	// Ogre
 	Ogre_Face_Count = 0;
 
-	Model_Type = Enums::LoadedFile_None;
+	Loaded_File_Type = Enums::Loaded_File_Type_None;
 	Scene_Mode = Enums::Scene_Mode_None;
 
 	strcpy(Texture_FolderPath, "None");
@@ -77,7 +77,7 @@ CL64_Scene::~CL64_Scene(void)
 void CL64_Scene::Reset_Class(void)
 {
 	flag_Model_Loaded = 0;
-	Model_Type = Enums::LoadedFile_None;
+	Loaded_File_Type = Enums::Loaded_File_Type_None;
 
 	int Count = 0;
 	int Index = GroupCount;

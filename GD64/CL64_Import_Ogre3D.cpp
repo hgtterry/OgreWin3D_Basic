@@ -44,8 +44,8 @@ void CL64_Imp_Ogre3D::Reset_Class(void)
 		App->CL_Scene->S_OgreMeshData[0]->m_Materials_Names.resize(0);
 		App->CL_Scene->S_OgreMeshData[0]->m_Motion_Names.resize(0);
 
-		App->CL_Scene->S_OgreMeshData[0]->mStrName = "Empty";
-		App->CL_Scene->S_OgreMeshData[0]->mFileName_Str = "Empty";
+		App->CL_Scene->S_OgreMeshData[0]->mStrName = "No Model Loaded";
+		App->CL_Scene->S_OgreMeshData[0]->mFileName_Str = "No Model Loaded";
 
 		App->CL_Scene->S_OgreMeshData[0]->mSubMeshCount = 0;
 		App->CL_Scene->S_OgreMeshData[0]->Area = 0;

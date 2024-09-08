@@ -49,13 +49,19 @@ appreciated but is not required.
 
 namespace Enums
 {
-	enum LoadedFile
+	enum Loaded_File_Type
 	{
-		LoadedFile_None = 0,
-		LoadedFile_Actor = 1,
-		LoadedFile_Assimp = 2,
-		LoadedFile_Ogre = 3,
-		LoadedFile_STL = 4
+		Loaded_File_Type_None = 0,
+		Loaded_File_Type_Assimp = 1,
+		Loaded_File_Type_Ogre = 2
+	};
+
+	enum Model_Type
+	{
+		Model_Type_None = 0,
+		Model_Type_Obj = 1,
+		Model_Type_3ds = 2,
+		Model_Type_Milk = 3
 	};
 
 	enum Camera
@@ -85,14 +91,6 @@ namespace Enums
 	enum Check_Text
 	{
 		Check_Name_None = 0,
-	};
-
-	enum Model_Type
-	{
-		Model_Type_None = 0,
-		Model_Type_Obj = 1,
-		Model_Type_3ds = 2,
-		Model_Type_Milk = 3
 	};
 
 	enum Resource_File_Type

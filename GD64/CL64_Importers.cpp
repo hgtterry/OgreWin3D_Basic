@@ -85,7 +85,7 @@ bool CL64_Importers::Assimp_Loader(bool UseDialog,const char* Extension, const c
 		return 0;
 	}
 
-	App->CL_Scene->Model_Type = Enums::LoadedFile_Assimp;
+	App->CL_Scene->Loaded_File_Type = Enums::Loaded_File_Type_Assimp;
 
 	App->CL_Ogre->Show_Test_Mesh(false);
 	App->CL_Camera->Reset_View();

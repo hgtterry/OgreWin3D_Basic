@@ -77,7 +77,7 @@ void CL64_Demos::Start_Demo_1(void)
 	App->CL_Player->Set_Player_Position(Ogre::Vector3(0,0,0));
 	App->CL_Player->Set_Player_Rotation(btQuaternion(1, 0, 0, 0));
 
-	App->CL_Scene->Model_Type = Enums::LoadedFile_None;
+	App->CL_Scene->Loaded_File_Type = Enums::Loaded_File_Type_None;
 	App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_First;
 
 	App->CL_Bullet->Create_New_Trimesh(World_Ent, World_Node);
