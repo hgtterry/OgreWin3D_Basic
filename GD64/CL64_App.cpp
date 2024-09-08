@@ -66,6 +66,7 @@ CL64_App::CL64_App(void)
 	AppBackground = 0;
 
 	Font_CB15 = 0;
+	Font_CB18 = 0;
 	Font_Arial20 = 0;
 
 	Hnd_TexturesOn_Bmp = NULL;
@@ -173,6 +174,8 @@ void CL64_App::Init_Dialogs(void)
 	App->CL_TopDlg->Start_TopBar();
 	App->CL_Panels->Resize_TopDlg();
 
+	App->CL_Props_Textures->Start_Props_Textures_Dialog();
+	App->CL_Panels->Move_Panels();
 }
 
 // *************************************************************************
@@ -324,6 +327,7 @@ void CL64_App::SetBrushes_Fonts(void)
 	HotBrush_2 = CreateSolidBrush(RGB(240, 240, 240));
 
 	Font_CB15 = CreateFont(-15, 0, 0, 0, 0, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Courier Black");
+	Font_CB18 = CreateFont(-18, 0, 0, 0, 0, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Courier Black");
 	Font_Arial20 = CreateFont(-20, 0, 0, 0, 0, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Arial");
 
 }

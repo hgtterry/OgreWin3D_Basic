@@ -391,9 +391,14 @@ void CL64_ImGui::Show_Ogre_Model_Data_GUI(void)
 
 						if (ImGui::Button("View Texture"))
 						{
+							char mMaterial[MAX_PATH];
+
 							Model_Data_disable_all = true;
 							strcpy(App->CL_Resources->mSelected_File, Texture);
-							App->CL_Resources->View_Texture(Texture, App->Fdlg);
+							//App->CL_Resources->View_Texture(Texture, App->Fdlg);
+							strcpy(mMaterial, App->CL_Scene->S_OgreMeshData[0]->m_Materials_Names[Count].c_str());
+
+							App->CL_Props_Textures->View_Texture(Texture, mMaterial);
 						}
 
 						ImGui::EndMenu();

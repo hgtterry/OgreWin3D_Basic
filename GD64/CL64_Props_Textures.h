@@ -23,14 +23,16 @@ public:
 
 	void Reset_Class(void);
 
-	bool Start_Groups_Dialog();
+	bool Start_Props_Textures_Dialog();
 	bool Update_Groups();
+	bool View_Texture(char* TextureName, char* MaterialName);
+	void Texture_To_HBITMP(char* TextureFileName);
 
 	int Selected_Group;
 
 	bool RightGroups_Visable;
 
-	HWND RightGroups_Hwnd;
+	HWND Props_Dlg_Hwnd;
 
 	HBITMAP	Sel_BaseBitmap;
 	long BasePicWidth;
@@ -38,9 +40,13 @@ public:
 
 protected:
 
-	static LRESULT CALLBACK Groups_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Proc_Textures_Dialog(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static bool CALLBACK ViewerBasePic(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 	bool RenderTexture_Blit(HDC hDC, HBITMAP Bmp, const RECT* SourceRect, const RECT* DestRect);
+
+	char mTextureName[MAX_PATH];
+	char mMaterialName[MAX_PATH];
+
 };
 

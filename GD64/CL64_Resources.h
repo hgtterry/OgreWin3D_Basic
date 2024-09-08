@@ -45,6 +45,7 @@ public:
 
 	Ogre::String Ogre_Loader_Resource_Group;
 	Ogre::String mSelected_Resource_Group;
+	Ogre::String mFileString;
 
 private:
 
@@ -77,8 +78,6 @@ private:
 
 	Ogre::ConfigFile cf;
 	std::string	ResourcesCfgFile;
-
-	Ogre::String mFileString;
 
 	char ResourcePath[MAX_PATH];
 

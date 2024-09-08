@@ -58,7 +58,6 @@
 #define IDD_TEXT_DIALOG                 167
 #define IDD_TEXTUREVIEWER               168
 #define IDD_FILEVIEWER                  169
-#define IDD_DIALOG1                     170
 #define IDD_PROPS_TEXTURES              170
 #define IDC_CK_SU_FULLSCREEN            1000
 #define IDC_ST_STARTUP                  1001
@@ -164,6 +163,9 @@
 #define IDC_ST_SELECTEDFILE             1060
 #define IDC_LST_FILE                    1061
 #define IDC_PROP_BASETEXTURE            1062
+#define IDC_PT_TEXTURENAME              1063
+#define IDC_ST_PT_MATERIAL              1064
+#define IDC_ST_PT_DIMENSIONS            1065
 #define ID_VIEW_RESET                   32771
 #define ID_VIEW_MAX3DVIEW               32772
 #define ID_DEBUG_TESTPREFERANCE         32773
@@ -203,7 +205,7 @@
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        171
 #define _APS_NEXT_COMMAND_VALUE         32801
-#define _APS_NEXT_CONTROL_VALUE         1063
+#define _APS_NEXT_CONTROL_VALUE         1066
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif

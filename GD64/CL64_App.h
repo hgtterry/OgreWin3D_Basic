@@ -122,6 +122,7 @@ public:
 	bool flag_Debug_Textures;		//App Debug Textures
 
 	HFONT Font_CB15;
+	HFONT Font_CB18;
 	HFONT Font_Arial20;
 
 	HCURSOR CUR;

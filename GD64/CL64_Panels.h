@@ -24,6 +24,7 @@ public:
 	void Resize_Fldg(void);
 	void Resize_OgreWin(void);
 	void Resize_TopDlg(void);
+	bool Move_Panels(void);
 
 };
 
