@@ -71,7 +71,8 @@ bool CL64_Props_Textures::Start_Props_Textures_Dialog()
 	App->CL_Props_Textures->Enable_Export_Button(false);
 	ShowWindow(Props_Dlg_Hwnd, 1);
 	RightGroups_Visable = 1;
-
+	CheckMenuItem(App->mMenu, ID_WINDOWS_TEXTURESDIALOG, MF_BYCOMMAND | MF_CHECKED);
+	
 	return 1;
 }
 
@@ -95,8 +96,7 @@ LRESULT CALLBACK CL64_Props_Textures::Proc_Textures_Dialog(HWND hDlg, UINT messa
 		SendDlgItemMessage(hDlg, IDC_BT_PT_EXPORT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
 		//SendDlgItemMessage(hDlg, IDC_BTCHANGETEXTURE, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
-		//SendDlgItemMessage(hDlg, IDC_BTGROUPINFO, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0))
-
+		
 		SetWindowLongPtr(GetDlgItem(hDlg, IDC_PROP_BASETEXTURE), GWLP_WNDPROC, (LONG_PTR)ViewerBasePic);
 		
 	}
@@ -150,7 +150,7 @@ LRESULT CALLBACK CL64_Props_Textures::Proc_Textures_Dialog(HWND hDlg, UINT messa
 	{
 		ShowWindow(App->CL_Props_Textures->Props_Dlg_Hwnd, 0);
 		App->CL_Props_Textures->RightGroups_Visable = 0;
-		//CheckMenuItem(App->mMenu, ID_WINDOWS_GROUPS, MF_BYCOMMAND | MF_UNCHECKED);
+		CheckMenuItem(App->mMenu, ID_WINDOWS_TEXTURESDIALOG, MF_BYCOMMAND | MF_UNCHECKED);
 		break;
 	}
 
@@ -284,9 +284,42 @@ bool CL64_Props_Textures::RenderTexture_Blit(HDC hDC, HBITMAP Bmp, const RECT* S
 }
 
 // *************************************************************************
-// *				Update_Groups:- Terry and Hazel Flanigan 2024		   *
+// *			Update_Texture_Assimp:- Terry and Hazel Flanigan 2024      *
 // *************************************************************************
-bool CL64_Props_Textures::Update_Groups()
+bool CL64_Props_Textures::Update_Texture_Assimp()
+{
+	int Index = Selected_Group;
+
+	SetDlgItemText(Props_Dlg_Hwnd, IDC_ST_PT_MATERIAL, mMaterialName);
+	SetDlgItemText(Props_Dlg_Hwnd, IDC_PT_TEXTURENAME, mTextureName);
+
+	RightGroups_Visable = 1;
+	ShowWindow(Props_Dlg_Hwnd, 1);
+
+	//CheckMenuItem(App->mMenu, ID_WINDOWS_GROUPS, MF_BYCOMMAND | MF_CHECKED);
+
+	Sel_BaseBitmap = App->CL_Dialogs->Sel_BaseBitmap;
+
+	BITMAP bm;
+	GetObject(Sel_BaseBitmap, sizeof(bm), &bm);
+
+	BasePicWidth = bm.bmWidth;
+	BasePicHeight = bm.bmHeight;
+
+	char Dimensions[MAX_PATH];
+	sprintf(Dimensions, "%i X %i", BasePicWidth, BasePicHeight);// , bm.bmBitsPixel);
+	SetDlgItemText(Props_Dlg_Hwnd, IDC_ST_PT_DIMENSIONS, Dimensions);
+
+	ShowWindow(GetDlgItem(Props_Dlg_Hwnd, IDC_PROP_BASETEXTURE), 0);
+	ShowWindow(GetDlgItem(Props_Dlg_Hwnd, IDC_PROP_BASETEXTURE), 1);
+
+	return 1;
+}
+
+// *************************************************************************
+// *			Update_Texture_Ogre:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+bool CL64_Props_Textures::Update_Texture_Ogre()
 {
 	int Index = Selected_Group;
 
@@ -351,7 +384,7 @@ bool CL64_Props_Textures::View_Texture(char* TextureName, char* MaterialName)
 
 			Texture_To_HBITMP(mFileName);
 
-			Update_Groups();
+			Update_Texture_Ogre();
 
 			App->CL_Props_Textures->Enable_Export_Button(true);
 			return 1;

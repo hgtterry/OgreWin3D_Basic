@@ -22,11 +22,14 @@ public:
 	~CL64_Textures(void);
 
 	void Load_Textures_Assimp();
+	bool Windows_Preview_FullPath(int Index, char* FullPath);
 
 	bool Load_OpenGL_Textures(int TextureID);
 	bool Import_OpenGL_Texture(UINT textureArray[], LPSTR strFileName, int textureID);
 
 	bool Create_DummyTexture(char* Folder);
+	bool LoadDummyTexture(int Index);
+
 	bool HBITMAP_TO_BmpFile(HBITMAP Bitmap, char* Filename, char* SaveFolder);
 	void Texture_To_HBITMP(char* TextureFileName);
 

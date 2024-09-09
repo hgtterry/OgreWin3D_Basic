@@ -59,6 +59,7 @@ CL64_App::CL64_App(void)
 	App_Version[0] = 0;
 
 	CUR = 0;
+	mMenu = 0;
 
 	CursorPosX = 500;
 	CursorPosY = 500;

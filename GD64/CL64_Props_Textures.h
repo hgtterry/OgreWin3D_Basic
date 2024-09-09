@@ -24,7 +24,10 @@ public:
 	void Reset_Class(void);
 
 	bool Start_Props_Textures_Dialog();
-	bool Update_Groups();
+
+	bool Update_Texture_Ogre();
+	bool Update_Texture_Assimp(); // Needs Looking At Repeated Code for Now
+
 	bool View_Texture(char* TextureName, char* MaterialName);
 	void Texture_To_HBITMP(char* TextureFileName);
 	void Enable_Export_Button(bool Enable);

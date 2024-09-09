@@ -71,14 +71,10 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         return FALSE;
     }
 
+	App->mMenu = GetMenu(App->MainHwnd);
 	App->CL_Ogre->Clear_ErrorLog();
-	
 	App->Init_Dialogs();
 	
-	/*char buff[1000];
-	strcpy(buff, GetCommandLineA());
-	MessageBox(NULL, buff, "OK", MB_OK);*/
-
 	MSG  msg;
 	while (PeekMessage(&msg, NULL, 0U, 0U, PM_REMOVE))
 	{
@@ -245,6 +241,28 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 			return TRUE;
 		}
+
+		// Windows -------------------------------------------------------
+		case ID_WINDOWS_TEXTURESDIALOG:
+		{
+			ShowWindow(App->CL_Props_Textures->Props_Dlg_Hwnd, 1);
+
+			if (App->CL_Props_Textures->RightGroups_Visable == 1)
+			{
+				App->CL_Props_Textures->RightGroups_Visable = 0;
+				ShowWindow(App->CL_Props_Textures->Props_Dlg_Hwnd, 0);
+				CheckMenuItem(App->mMenu, ID_WINDOWS_TEXTURESDIALOG, MF_BYCOMMAND | MF_UNCHECKED);
+			}
+			else
+			{
+				App->CL_Props_Textures->RightGroups_Visable = 1;
+				ShowWindow(App->CL_Props_Textures->Props_Dlg_Hwnd, 1);
+				CheckMenuItem(App->mMenu, ID_WINDOWS_TEXTURESDIALOG, MF_BYCOMMAND | MF_CHECKED);
+			}
+
+			return TRUE;
+		}
+		
 
 		// Tools -------------------------------------------------------
 		case ID_TOOLS_RESOURCEVIEWER:

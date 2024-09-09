@@ -125,8 +125,6 @@ public:
 	HFONT Font_CB18;
 	HFONT Font_Arial20;
 
-	HCURSOR CUR;
-	
 	HANDLE Hnd_TexturesOn_Bmp;
 	HANDLE Hnd_TexturesOff_Bmp;
 	HANDLE Hnd_MeshOn_Bmp;
@@ -162,6 +160,9 @@ public:
 
 	HBRUSH HotBrush_1;
 	HBRUSH HotBrush_2;
+
+	HCURSOR CUR;
+	HMENU mMenu;
 };
 
 extern CL64_App* App;
