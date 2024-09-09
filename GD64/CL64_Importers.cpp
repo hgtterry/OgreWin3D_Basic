@@ -95,6 +95,9 @@ bool CL64_Importers::Assimp_Loader(bool UseDialog,const char* Extension, const c
 	App->Set_Title();
 	App->CL_Ogre->RenderFrame(3);
 
+	App->CL_Props_Textures->Selected_Group = 0;
+	App->CL_Props_Textures->Update_Texture_Assimp();
+
 	return 1;
 
 	if (UseDialog == 1)
@@ -124,10 +127,8 @@ bool CL64_Importers::Assimp_Loader(bool UseDialog,const char* Extension, const c
 			App->CL_Scene->flag_Model_Loaded = 1;
 
 		}
-		
 	}
 
-	
 	return 1;
 }
 

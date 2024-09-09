@@ -34,6 +34,10 @@ public:
 
 	void Get_First_Texture_Ogre();
 
+	char mTextureName[MAX_PATH];
+	char mMaterialName[MAX_PATH];
+	char mExport_PathAndName[MAX_PATH];
+
 	int Selected_Group;
 
 	bool RightGroups_Visable;
@@ -50,10 +54,6 @@ protected:
 	static bool CALLBACK ViewerBasePic(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 	bool RenderTexture_Blit(HDC hDC, HBITMAP Bmp, const RECT* SourceRect, const RECT* DestRect);
-
-	char mTextureName[MAX_PATH];
-	char mMaterialName[MAX_PATH];
-	char mExport_PathAndName[MAX_PATH];
 
 };
 

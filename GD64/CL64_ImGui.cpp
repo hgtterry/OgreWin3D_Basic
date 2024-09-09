@@ -558,33 +558,16 @@ void CL64_ImGui::Show_Assimp_Model_Data_GUI(void)
 				ImGui::PushID("foo");
 				if (ImGui::BeginMenu(App->CL_Scene->Group[Count]->MaterialName))
 				{
-					Ogre::MaterialPtr MatCurent;
-
-					/*MatCurent = static_cast<Ogre::MaterialPtr> (Ogre::MaterialManager::getSingleton().getByName(App->CL_Scene->S_OgreMeshData[0]->m_Materials_Names[Count].c_str()));
-					char Texture[256];
-					strcpy(Texture, MatCurent->getTechnique(0)->getPass(0)->getTextureUnitState(0)->getTextureName().c_str());
-
-					int Width = MatCurent->getTechnique(0)->getPass(0)->getTextureUnitState(0)->getTextureDimensions().first;
-					int Height = MatCurent->getTechnique(0)->getPass(0)->getTextureUnitState(0)->getTextureDimensions().second;
-					int Mips = MatCurent->getTechnique(0)->getPass(0)->getTextureUnitState(0)->getNumMipmaps();*/
-
 
 					ImGui::Text("Material Name:  %s", App->CL_Scene->Group[Count]->MaterialName);
 
 					ImGui::Separator();
 					ImGui::Text("Texture:  %s", App->CL_Scene->Group[Count]->Text_FileName);
 
-					/*ImGui::Text("Width:  %i", Width);
-					ImGui::Text("Height:  %i", Height);
-					ImGui::Text("Mipmaps:  %i", Mips);*/
-
 					if (ImGui::Button("View Texture"))
 					{
-						/*Model_Data_disable_all = true;
-						strcpy(App->CL_Resources->mSelected_File, Texture);
-						App->CL_Resources->View_Texture(Texture, App->Fdlg);*/
-
-						App->CL_Dialogs->Start_TextureViewer_Dialog(App->CL_Scene->Group[Count]->Texture_PathFileName, App->Fdlg);
+						App->CL_Props_Textures->Selected_Group = Count;
+						App->CL_Props_Textures->Update_Texture_Assimp();
 					}
 
 					ImGui::EndMenu();

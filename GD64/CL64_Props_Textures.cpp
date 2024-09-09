@@ -290,15 +290,18 @@ bool CL64_Props_Textures::Update_Texture_Assimp()
 {
 	int Index = Selected_Group;
 
+	strcpy(mMaterialName, App->CL_Scene->Group[Index]->MaterialName);
+	strcpy(mTextureName, App->CL_Scene->Group[Index]->Text_FileName);
+
 	SetDlgItemText(Props_Dlg_Hwnd, IDC_ST_PT_MATERIAL, mMaterialName);
 	SetDlgItemText(Props_Dlg_Hwnd, IDC_PT_TEXTURENAME, mTextureName);
 
 	RightGroups_Visable = 1;
 	ShowWindow(Props_Dlg_Hwnd, 1);
 
-	//CheckMenuItem(App->mMenu, ID_WINDOWS_GROUPS, MF_BYCOMMAND | MF_CHECKED);
+	CheckMenuItem(App->mMenu, ID_WINDOWS_TEXTURESDIALOG, MF_BYCOMMAND | MF_CHECKED);
 
-	Sel_BaseBitmap = App->CL_Dialogs->Sel_BaseBitmap;
+	Sel_BaseBitmap = App->CL_Scene->Group[Index]->Base_Bitmap;;
 
 	BITMAP bm;
 	GetObject(Sel_BaseBitmap, sizeof(bm), &bm);
@@ -312,7 +315,7 @@ bool CL64_Props_Textures::Update_Texture_Assimp()
 
 	ShowWindow(GetDlgItem(Props_Dlg_Hwnd, IDC_PROP_BASETEXTURE), 0);
 	ShowWindow(GetDlgItem(Props_Dlg_Hwnd, IDC_PROP_BASETEXTURE), 1);
-
+	
 	return 1;
 }
 
