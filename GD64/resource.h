@@ -97,6 +97,7 @@
 #define IDC_BT_TD_MOTIONSTAB            1009
 #define IDC_BT_MOTIONS_PAUSE            1009
 #define IDC_BT_FOLDER_NAME              1009
+#define IDC_BT_PT_VIEWMESH              1009
 #define IDC_BUTTON4                     1010
 #define IDC_BT_CAMERA_FREE              1010
 #define IDC_ALLMATERIALS                1010

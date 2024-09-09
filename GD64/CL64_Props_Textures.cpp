@@ -94,6 +94,7 @@ LRESULT CALLBACK CL64_Props_Textures::Proc_Textures_Dialog(HWND hDlg, UINT messa
 		SendDlgItemMessage(hDlg, IDC_ST_PT_DIMENSIONS, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
 		
 		SendDlgItemMessage(hDlg, IDC_BT_PT_EXPORT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_PT_VIEWMESH, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
 		//SendDlgItemMessage(hDlg, IDC_BTCHANGETEXTURE, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
 		
@@ -174,6 +175,21 @@ LRESULT CALLBACK CL64_Props_Textures::Proc_Textures_Dialog(HWND hDlg, UINT messa
 			}
 		}
 
+		if (some_item->idFrom == IDC_BT_PT_VIEWMESH)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_PT_VIEWMESH));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
+			else
+			{
+				App->Custom_Button_Normal(item);
+			}
+		}
+
 		return CDRF_DODEFAULT;
 	}
 
@@ -184,6 +200,25 @@ LRESULT CALLBACK CL64_Props_Textures::Proc_Textures_Dialog(HWND hDlg, UINT messa
 			App->CL_Resources->Export_File(App->CL_Props_Textures->mTextureName);
 			return TRUE;
 		}
+
+		if (LOWORD(wParam) == IDC_BT_PT_VIEWMESH)
+		{
+			if (App->CL_Ogre->OGL_Listener->Flag_ShowFaces == 1)
+			{
+				App->CL_Ogre->OGL_Listener->Flag_ShowFaces = 0;
+				App->CL_Ogre->OGL_Listener->flag_ShowOnlySubFaces = 0;
+			}
+			else
+			{
+				App->CL_Ogre->OGL_Listener->Flag_ShowFaces = 1;
+				App->CL_Ogre->OGL_Listener->flag_ShowOnlySubFaces = 1;
+				App->CL_Ogre->OGL_Listener->Selected_Face_Group = App->CL_Props_Textures->Selected_Group;
+			}
+			
+
+			return TRUE;
+		}
+
 	}
 
 	}
