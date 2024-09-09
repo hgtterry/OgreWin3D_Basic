@@ -381,7 +381,10 @@ void CL64_ImGui::Show_Ogre_Model_Data_GUI(void)
 				int Size = App->CL_Scene->S_OgreMeshData[0]->m_Materials_Names.size();
 				while (Count < Size)
 				{
-					if (ImGui::Selectable(App->CL_Scene->S_OgreMeshData[0]->m_Materials_Names[Count].c_str(), listMaterialItems[Count]))
+					char nn[25];
+					Ogre::String sid = App->CL_Scene->S_OgreMeshData[0]->m_Materials_Names[Count] + "##" + _itoa(Count, nn, 10);
+
+					if (ImGui::Selectable(sid.c_str(), listMaterialItems[Count]))
 					{
 						char mMaterial[MAX_PATH];
 						Ogre::MaterialPtr MatCurent;
