@@ -48,6 +48,9 @@ CL64_ImGui::CL64_ImGui(void)
 	Float_Step = 0.50f;
 
 	PreviouseSubMesh = -1;
+
+	listMaterialItems[0] = { 1 };
+	PreviouseMaterial = 0;
 }
 
 CL64_ImGui::~CL64_ImGui(void)
@@ -353,8 +356,11 @@ void CL64_ImGui::Model_Data_GUI(void)
 void CL64_ImGui::Show_Ogre_Model_Data_GUI(void)
 {
 	// Open for now
-	ImGui::SetNextItemOpen(true, ImGuiCond_Always);
+	
+	ImVec4* colors = ImGui::GetStyle().Colors;
+	colors[ImGuiCol_Header] = ImVec4(0, 1, 0.4, 0.7);
 
+	ImGui::SetNextItemOpen(true, ImGuiCond_Always);
 	if (ImGui::TreeNode("Ogre3D Model", "%s", App->CL_Scene->S_OgreMeshData[0]->mFileName_Str.c_str()))
 	{
 		if (App->CL_Import_Ogre3D->flag_Ogre_Model_Loaded == 1)
@@ -365,56 +371,43 @@ void CL64_ImGui::Show_Ogre_Model_Data_GUI(void)
 				ImGui::SetNextItemOpen(true, ImGuiCond_Always);
 				flag_Open_Textures_List = 0;
 			}
-		
+			
 			// Materials / Textures
 			if (ImGui::TreeNode("Materials"))
 			{
+				//colors[ImGuiCol_Header] = ImVec4(0, 0, 1, 0.2);
+				
 				int Count = 0;
 				int Size = App->CL_Scene->S_OgreMeshData[0]->m_Materials_Names.size();
-
 				while (Count < Size)
 				{
-					ImGui::PushID("foo");
-					if (ImGui::BeginMenu(App->CL_Scene->S_OgreMeshData[0]->m_Materials_Names[Count].c_str()))
+					if (ImGui::Selectable(App->CL_Scene->S_OgreMeshData[0]->m_Materials_Names[Count].c_str(), listMaterialItems[Count]))
 					{
+						char mMaterial[MAX_PATH];
 						Ogre::MaterialPtr MatCurent;
 
 						MatCurent = static_cast<Ogre::MaterialPtr> (Ogre::MaterialManager::getSingleton().getByName(App->CL_Scene->S_OgreMeshData[0]->m_Materials_Names[Count].c_str()));
 						char Texture[256];
 						strcpy(Texture, MatCurent->getTechnique(0)->getPass(0)->getTextureUnitState(0)->getTextureName().c_str());
 
-						int Width = MatCurent->getTechnique(0)->getPass(0)->getTextureUnitState(0)->getTextureDimensions().first;
-						int Height = MatCurent->getTechnique(0)->getPass(0)->getTextureUnitState(0)->getTextureDimensions().second;
-						int Mips = MatCurent->getTechnique(0)->getPass(0)->getTextureUnitState(0)->getNumMipmaps();
+						//int Mips = MatCurent->getTechnique(0)->getPass(0)->getTextureUnitState(0)->getNumMipmaps();
 
+						Model_Data_disable_all = true;
+						strcpy(App->CL_Resources->mSelected_File, Texture);
+						strcpy(mMaterial, App->CL_Scene->S_OgreMeshData[0]->m_Materials_Names[Count].c_str());
+						App->CL_Props_Textures->Selected_Group = Count;
+						App->CL_Ogre->OGL_Listener->Selected_Face_Group = Count;
+						App->CL_Props_Textures->View_Texture(Texture, mMaterial);
 
-						ImGui::Text("Material Name:  %s", App->CL_Scene->S_OgreMeshData[0]->m_Materials_Names[Count].c_str());
+						listMaterialItems[PreviouseMaterial] = 0;
+						listMaterialItems[Count] = 1;
+						PreviouseMaterial = Count;
 
-						ImGui::Separator();
-						ImGui::Text("Texture:  %s", Texture);
-
-						ImGui::Text("Width:  %i", Width);
-						ImGui::Text("Height:  %i", Height);
-						ImGui::Text("Mipmaps:  %i", Mips);
-
-						if (ImGui::Button("View Texture"))
-						{
-							char mMaterial[MAX_PATH];
-
-							Model_Data_disable_all = true;
-							strcpy(App->CL_Resources->mSelected_File, Texture);
-							strcpy(mMaterial, App->CL_Scene->S_OgreMeshData[0]->m_Materials_Names[Count].c_str());
-							App->CL_Props_Textures->Selected_Group = Count;
-							App->CL_Props_Textures->View_Texture(Texture, mMaterial);
-						}
-
-						ImGui::EndMenu();
 					}
 
-					ImGui::PopID();
 					Count++;
 				}
-
+				//ImGui::PopStyleVar();
 				ImGui::TreePop();
 			}
 
@@ -571,6 +564,7 @@ void CL64_ImGui::Show_Assimp_Model_Data_GUI(void)
 					if (ImGui::Button("View Texture"))
 					{
 						App->CL_Props_Textures->Selected_Group = Count;
+						App->CL_Ogre->OGL_Listener->Selected_Face_Group = Count;
 						App->CL_Props_Textures->Update_Texture_Assimp();
 					}
 

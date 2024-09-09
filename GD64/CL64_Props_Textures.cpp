@@ -69,7 +69,7 @@ bool CL64_Props_Textures::Start_Props_Textures_Dialog()
 	Props_Dlg_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_PROPS_TEXTURES, App->MainHwnd, (DLGPROC)Proc_Textures_Dialog);
 
 	App->CL_Props_Textures->Enable_Export_Button(false);
-	ShowWindow(Props_Dlg_Hwnd, 1);
+	//ShowWindow(Props_Dlg_Hwnd, 1);
 	RightGroups_Visable = 1;
 	CheckMenuItem(App->mMenu, ID_WINDOWS_TEXTURESDIALOG, MF_BYCOMMAND | MF_CHECKED);
 	
@@ -186,7 +186,10 @@ LRESULT CALLBACK CL64_Props_Textures::Proc_Textures_Dialog(HWND hDlg, UINT messa
 			}
 			else
 			{
-				App->Custom_Button_Normal(item);
+				if (App->flag_OgreStarted == 1)
+				{
+					App->Custom_Button_Toggle(item, App->CL_Ogre->OGL_Listener->Flag_ShowFaces);
+				}
 			}
 		}
 

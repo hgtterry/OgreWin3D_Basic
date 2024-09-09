@@ -71,5 +71,7 @@ public:
 	bool listSubMeshItems[50] = { 0 };
 	int PreviouseSubMesh;
 
+	bool listMaterialItems[50] = { 0 };
+	int PreviouseMaterial;
 };
 
