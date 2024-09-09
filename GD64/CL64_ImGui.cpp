@@ -546,6 +546,11 @@ void CL64_ImGui::Show_Assimp_Model_Data_GUI(void)
 
 	if (ImGui::TreeNode("Assimp Model", "%s", App->CL_Scene->FileName))
 	{
+		if (flag_Open_Textures_List == 1)
+		{
+			ImGui::SetNextItemOpen(true, ImGuiCond_Always);
+			flag_Open_Textures_List = 0;
+		}
 
 		// Materials / Textures
 		if (ImGui::TreeNode("Materials"))

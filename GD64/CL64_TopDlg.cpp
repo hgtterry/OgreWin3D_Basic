@@ -1683,10 +1683,12 @@ void CL64_TopDlg::Enable_Info_Icon(bool Enable) const
 	if (Enable == 1)
 	{
 		SendMessage(GetDlgItem(TabsHwnd, IDC_TBINFO), BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_ModelInfoOn_Bmp);
+		CheckMenuItem(App->mMenu, ID_WINDOWS_MODELDATA, MF_BYCOMMAND | MF_CHECKED);
 	}
 	else
 	{
 		SendMessage(GetDlgItem(TabsHwnd, IDC_TBINFO), BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_ModelInfo_Bmp);
+		CheckMenuItem(App->mMenu, ID_WINDOWS_MODELDATA, MF_BYCOMMAND | MF_UNCHECKED);
 	}
 }
 
@@ -1702,12 +1704,14 @@ void CL64_TopDlg::Enable_Info_Panel(bool Enable)
 		App->CL_ImGui->flag_Show_Model_Data = 1;
 
 		SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_ModelInfoOn_Bmp);
+		CheckMenuItem(App->mMenu, ID_WINDOWS_MODELDATA, MF_BYCOMMAND | MF_CHECKED);
 	}
 	else
 	{
 		App->CL_ImGui->flag_Show_Model_Data = 0;
 
 		SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_ModelInfo_Bmp);
+		CheckMenuItem(App->mMenu, ID_WINDOWS_MODELDATA, MF_BYCOMMAND | MF_UNCHECKED);
 	}
 }
 

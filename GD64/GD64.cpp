@@ -243,6 +243,23 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		}
 
 		// Windows -------------------------------------------------------
+
+		case ID_WINDOWS_MODELDATA:
+		{
+			if (App->CL_ImGui->flag_Show_Model_Data == 1)
+			{
+				App->CL_ImGui->flag_Show_Model_Data = 0;
+				CheckMenuItem(App->mMenu, ID_WINDOWS_MODELDATA, MF_BYCOMMAND | MF_UNCHECKED);
+			}
+			else
+			{
+				App->CL_ImGui->flag_Show_Model_Data = 1;
+				CheckMenuItem(App->mMenu, ID_WINDOWS_MODELDATA, MF_BYCOMMAND | MF_CHECKED);
+			}
+
+			return TRUE;
+		}
+
 		case ID_WINDOWS_TEXTURESDIALOG:
 		{
 			ShowWindow(App->CL_Props_Textures->Props_Dlg_Hwnd, 1);
@@ -268,21 +285,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		case ID_TOOLS_RESOURCEVIEWER:
 		{
 			App->CL_Resources->Start_Resources();
-			return TRUE;
-		}
-		
-		// Info -------------------------------------------------------
-		case ID_INFO_ASSIMPMODELDATA:
-		{
-			if (App->CL_ImGui->flag_Show_Model_Data == 1)
-			{
-				App->CL_ImGui->flag_Show_Model_Data = 0;
-			}
-			else
-			{
-				App->CL_ImGui->flag_Show_Model_Data = 1;
-			}
-
 			return TRUE;
 		}
 		
