@@ -39,6 +39,12 @@ Base_Group::Base_Group()
 	Base_Bitmap = NULL;
 	//RF_Bitmap = NULL;
 	ListView_Item = NULL;
+
+	// Ogre Data
+	Ogre_TextureName[0] = 0;
+	Ogre_Material[0] = 0;
+	Ogre_ImGui_MatId[0] = 0;
+	Ogre_MipMaps = 0;
 }
 
 

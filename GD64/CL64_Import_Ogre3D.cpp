@@ -41,7 +41,6 @@ void CL64_Imp_Ogre3D::Reset_Class(void)
 
 		App->CL_Scene->S_OgreMeshData[0] = new OgreMeshData_Type;
 
-		App->CL_Scene->S_OgreMeshData[0]->m_Materials_Names.resize(0);
 		App->CL_Scene->S_OgreMeshData[0]->m_Motion_Names.resize(0);
 
 		App->CL_Scene->S_OgreMeshData[0]->mStrName = "No Model Loaded";
@@ -438,6 +437,8 @@ bool CL64_Imp_Ogre3D::GetBoneAssignment(Ogre::MeshPtr mesh, int SubMesh, HWND hD
 // *************************************************************************
 void CL64_Imp_Ogre3D::Get_Ogre_Mesh_Data(Ogre::Entity* Ogre_Entity)
 {
+	int Count = 0;
+
 	bool Edge = Ogre_Entity->hasEdgeList();
 	if (Edge == 1)
 	{
@@ -460,20 +461,43 @@ void CL64_Imp_Ogre3D::Get_Ogre_Mesh_Data(Ogre::Entity* Ogre_Entity)
 
 	// ---------------------------------------------------------------
 
-	App->CL_Scene->S_OgreMeshData[0]->m_Materials_Names.resize(0);
 	App->CL_Scene->S_OgreMeshData[0]->mSubmeshes.resize(0);
 
 	int SubMeshCount = Ogre_Entity->getNumSubEntities();
 	App->CL_Scene->S_OgreMeshData[0]->mSubMeshCount = SubMeshCount;
 
-	for (unsigned int i = 0; i < Ogre_Entity->getNumSubEntities(); ++i)
+	// ------------------------------- Materials 
+	Count = 0;
+	int NumSubEnts = Ogre_Entity->getNumSubEntities();
+
+	while(Count < NumSubEnts)
 	{
-		Ogre::SubEntity* subEnt = Ogre_Entity->getSubEntity(i);
-		App->CL_Scene->S_OgreMeshData[0]->m_Materials_Names.push_back(subEnt->getMaterialName());
+		// Materail
+		char mMaterial[MAX_PATH];
+		Ogre::SubEntity* subEnt = Ogre_Entity->getSubEntity(Count);
+		strcpy(mMaterial, subEnt->getMaterialName().c_str());
+		strcpy(App->CL_Scene->Group[Count]->Ogre_Material, mMaterial);
+
+		char nn[25];
+		char MatId[MAX_PATH];
+		strcpy(MatId, mMaterial);
+		strcat(MatId, "##");
+		strcat(MatId, _itoa(Count, nn, 10));
+		strcpy(App->CL_Scene->Group[Count]->Ogre_ImGui_MatId, MatId);
+
+		// Texture
+		char mTexture[MAX_PATH];
+		Ogre::MaterialPtr MatCurent;
+		MatCurent = static_cast<Ogre::MaterialPtr> (Ogre::MaterialManager::getSingleton().getByName(mMaterial));
+		strcpy(mTexture, MatCurent->getTechnique(0)->getPass(0)->getTextureUnitState(0)->getTextureName().c_str());
+		strcpy(App->CL_Scene->Group[Count]->Ogre_TextureName, mTexture);
+
+		App->CL_Scene->Group[Count]->Ogre_MipMaps = MatCurent->getTechnique(0)->getPass(0)->getTextureUnitState(0)->getNumMipmaps();
+		
+		Count++;
 	}
 
-	int Count = 0;
-	
+	Count = 0;
 	App->CL_Scene->S_OgreMeshData[0]->mStrName = Ogre_Entity->getName();
 	
 	// ------------------------------------ Sub Meshes

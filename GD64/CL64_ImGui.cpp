@@ -34,8 +34,6 @@ CL64_ImGui::CL64_ImGui(void)
 	flag_Show_Ogre_Data = 1;
 	flag_Open_Textures_List = 1;
 
-	Model_Data_disable_all = 0;
-
 	// Demo 1
 	flag_Show_Physics_Debug = 0;
 
@@ -375,29 +373,20 @@ void CL64_ImGui::Show_Ogre_Model_Data_GUI(void)
 			// Materials / Textures
 			if (ImGui::TreeNode("Materials"))
 			{
-				//colors[ImGuiCol_Header] = ImVec4(0, 0, 1, 0.2);
-				
 				int Count = 0;
-				int Size = App->CL_Scene->S_OgreMeshData[0]->m_Materials_Names.size();
+				int Size = App->CL_Scene->GroupCount;
 				while (Count < Size)
 				{
-					char nn[25];
-					Ogre::String sid = App->CL_Scene->S_OgreMeshData[0]->m_Materials_Names[Count] + "##" + _itoa(Count, nn, 10);
-
-					if (ImGui::Selectable(sid.c_str(), listMaterialItems[Count]))
+					if (ImGui::Selectable(App->CL_Scene->Group[Count]->Ogre_ImGui_MatId, listMaterialItems[Count]))
 					{
 						char mMaterial[MAX_PATH];
-						Ogre::MaterialPtr MatCurent;
-
-						MatCurent = static_cast<Ogre::MaterialPtr> (Ogre::MaterialManager::getSingleton().getByName(App->CL_Scene->S_OgreMeshData[0]->m_Materials_Names[Count].c_str()));
-						char Texture[256];
-						strcpy(Texture, MatCurent->getTechnique(0)->getPass(0)->getTextureUnitState(0)->getTextureName().c_str());
-
-						//int Mips = MatCurent->getTechnique(0)->getPass(0)->getTextureUnitState(0)->getNumMipmaps();
-
-						Model_Data_disable_all = true;
-						strcpy(App->CL_Resources->mSelected_File, Texture);
-						strcpy(mMaterial, App->CL_Scene->S_OgreMeshData[0]->m_Materials_Names[Count].c_str());
+						char Texture[MAX_PATH];
+						
+						strcpy(App->CL_Resources->mSelected_File, App->CL_Scene->Group[Count]->Ogre_TextureName);
+						
+						strcpy(Texture, App->CL_Scene->Group[Count]->Ogre_TextureName);
+						strcpy(mMaterial, App->CL_Scene->Group[Count]->Ogre_Material);
+						
 						App->CL_Props_Textures->Selected_Group = Count;
 						App->CL_Ogre->OGL_Listener->Selected_Face_Group = Count;
 						App->CL_Props_Textures->View_Texture(Texture, mMaterial);
@@ -437,7 +426,7 @@ void CL64_ImGui::Show_Ogre_Model_Data_GUI(void)
 					if (ImGui::BeginMenu(App->CL_Scene->S_OgreMeshData[0]->mSubmeshes[Count].m_SubMesh_Name_str.c_str()))
 					{
 						ImGui::Text("Dedicated vertices:  %s", App->CL_Scene->S_OgreMeshData[0]->mSubmeshes[Count].m_HasSharedVertices_str.c_str());
-						ImGui::Text("Material Name: %s", App->CL_Scene->S_OgreMeshData[0]->m_Materials_Names[Count].c_str());
+						ImGui::Text("Material Name: %s", App->CL_Scene->Group[Count]->Ogre_Material);
 						ImGui::Text("Vertices Count: %i", App->CL_Scene->S_OgreMeshData[0]->mSubmeshes[Count].VerticesCount);
 						ImGui::Text("Bones Used: %i", App->CL_Scene->S_OgreMeshData[0]->mSubmeshes[Count].BonesCount);
 

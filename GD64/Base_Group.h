@@ -67,5 +67,11 @@ public:
 
 	HBITMAP Base_Bitmap;
 	HTREEITEM ListView_Item;
+
+	// Ogre Data
+	char Ogre_TextureName[MAX_PATH];
+	char Ogre_Material[MAX_PATH];
+	char Ogre_ImGui_MatId[MAX_PATH];
+	int Ogre_MipMaps;
 };
 

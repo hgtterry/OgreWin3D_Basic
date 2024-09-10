@@ -451,10 +451,10 @@ void CL64_Props_Textures::Get_First_Texture_Ogre()
 {
 	Ogre::MaterialPtr MatCurent;
 
-	MatCurent = static_cast<Ogre::MaterialPtr> (Ogre::MaterialManager::getSingleton().getByName(App->CL_Scene->S_OgreMeshData[0]->m_Materials_Names[0].c_str()));
+	MatCurent = static_cast<Ogre::MaterialPtr> (Ogre::MaterialManager::getSingleton().getByName(App->CL_Scene->Group[0]->Ogre_Material));
 	strcpy(mTextureName, MatCurent->getTechnique(0)->getPass(0)->getTextureUnitState(0)->getTextureName().c_str());
 
-	strcpy(mMaterialName, App->CL_Scene->S_OgreMeshData[0]->m_Materials_Names[0].c_str());
+	strcpy(mMaterialName, App->CL_Scene->Group[0]->Ogre_Material);
 	
 	bool test = strcmp(mMaterialName,"No_Material_Loaded");
 	if (test == 0)

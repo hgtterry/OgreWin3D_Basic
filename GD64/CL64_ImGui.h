@@ -66,8 +66,6 @@ public:
 
 	float Float_Step;
 
-	bool Model_Data_disable_all;
-
 	bool listSubMeshItems[50] = { 0 };
 	int PreviouseSubMesh;
 

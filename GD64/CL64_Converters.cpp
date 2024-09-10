@@ -331,11 +331,6 @@ void CL64_Converters::Create_MeshGroups(Ogre::Entity* Ogre_Entity)
 		App->CL_Scene->Group[Count]->GroupVertCount = 0;
 		App->CL_Scene->Group[Count]->MaterialIndex = -1;
 
-		//App->CL_Model_Data->S_MeshGroup[Count]->EqIndex = Count+1;
-		//App->CL_FBX->EqIndexCount++;
-
-		//App->S_MeshGroup[Count]->MaterialIndex = mesh->mMaterialIndex;
-
 		strcpy(App->CL_Scene->Group[Count]->Text_FileName, "No_Texture");
 
 		_itoa(Count, GroupNum, 10);

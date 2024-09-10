@@ -958,7 +958,6 @@ LRESULT CALLBACK CL64_Dialogs::TextureViewer_Proc(HWND hDlg, UINT message, WPARA
 				remove(App->CL_Dialogs->mTextureFile);
 			}
 
-			App->CL_ImGui->Model_Data_disable_all = 0;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
@@ -973,7 +972,6 @@ LRESULT CALLBACK CL64_Dialogs::TextureViewer_Proc(HWND hDlg, UINT message, WPARA
 				remove(App->CL_Dialogs->mTextureFile);
 			}
 
-			App->CL_ImGui->Model_Data_disable_all = 0;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
