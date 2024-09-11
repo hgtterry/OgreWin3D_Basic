@@ -135,7 +135,7 @@ void CL64_Textures::Load_Textures_Assimp()
 // *************************************************************************
 bool CL64_Textures::Windows_Preview_FullPath(int Index, char* FullPath)
 {
-
+	
 	char mFileName[MAX_PATH];
 	strcpy(mFileName, FullPath);
 

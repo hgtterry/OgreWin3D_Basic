@@ -68,113 +68,113 @@ void CL64_Imp_Ogre3D::Reset_Class(void)
 // *************************************************************************
 bool CL64_Imp_Ogre3D::Ogre_To_Mesh_Data(Ogre::Entity* Ogre_Entity)
 {
-	App->CL_Converters->Create_MeshGroups(Ogre_Entity);
+	//App->CL_Converters->Create_MeshGroups(Ogre_Entity);
 
-	int FaceCount = 0;
-	int FaceNum = 0;
-	int FaceIndexNum = 0;
-	int mFaceIndex = 0;
-	int xx = 0;
-	size_t vertex_count = 0;
-	size_t  index_count = 0;
+	//int FaceCount = 0;
+	//int FaceNum = 0;
+	//int FaceIndexNum = 0;
+	//int mFaceIndex = 0;
+	//int xx = 0;
+	//size_t vertex_count = 0;
+	//size_t  index_count = 0;
 
-	Vector3* vertices = { 0 };
-	
-	Vector3* normals = { 0 };
-	unsigned long* indices = 0;
+	//Vector3* vertices = { 0 };
+	//
+	//Vector3* normals = { 0 };
+	//unsigned long* indices = 0;
 
-	Ogre::int16* BoneIndices = 0;	// Bone Index
+	//Ogre::int16* BoneIndices = 0;	// Bone Index
 
-	int SubMeshCount = Ogre_Entity->getNumSubEntities();
+	//int SubMeshCount = Ogre_Entity->getNumSubEntities();
 
-	unsigned int Vertloop = 0;
-	unsigned int Faceloop = 0;
-	int Count = 0;
+	//unsigned int Vertloop = 0;
+	//unsigned int Faceloop = 0;
+	//int Count = 0;
 
-	
-	bool poo = 0;
+	//
+	//bool poo = 0;
 
-	while (Count < SubMeshCount)
-	{
-		Get_SubPose_MeshInstance(Ogre_Entity->getMesh(), vertex_count, vertices, index_count, indices, Count, BoneIndices);
-		
-		int mUVTest = NewGet_SubPoseTextureUV(Ogre_Entity->getMesh(), Count);
-		
-		NewGet_SubPoseNormals(Ogre_Entity->getMesh(), vertex_count, normals, Count);
+	//while (Count < SubMeshCount)
+	//{
+	//	Get_SubPose_MeshInstance(Ogre_Entity->getMesh(), vertex_count, vertices, index_count, indices, Count, BoneIndices);
+	//	
+	//	int mUVTest = NewGet_SubPoseTextureUV(Ogre_Entity->getMesh(), Count);
+	//	
+	//	NewGet_SubPoseNormals(Ogre_Entity->getMesh(), vertex_count, normals, Count);
 
-		App->CL_Scene->Group[Count]->vertex_Data.resize(index_count);
-		App->CL_Scene->Group[Count]->Normal_Data.resize(index_count);
-		App->CL_Scene->Group[Count]->MapCord_Data.resize(index_count);
-		App->CL_Scene->Group[Count]->Face_Data.resize(index_count);
-		App->CL_Scene->Group[Count]->FaceIndex_Data.resize(index_count);
+	//	App->CL_Scene->Group[Count]->vertex_Data.resize(index_count);
+	//	App->CL_Scene->Group[Count]->Normal_Data.resize(index_count);
+	//	App->CL_Scene->Group[Count]->MapCord_Data.resize(index_count);
+	//	App->CL_Scene->Group[Count]->Face_Data.resize(index_count);
+	//	App->CL_Scene->Group[Count]->FaceIndex_Data.resize(index_count);
 
-		App->CL_Scene->Group[Count]->BoneIndex_Data.resize(index_count);
+	//	App->CL_Scene->Group[Count]->BoneIndex_Data.resize(index_count);
 
-		FaceIndexNum = 0;
-		int Faceit = 0;
-		FaceCount = 0;
-		Vertloop = 0;
-		xx = 0;
+	//	FaceIndexNum = 0;
+	//	int Faceit = 0;
+	//	FaceCount = 0;
+	//	Vertloop = 0;
+	//	xx = 0;
 
-		while (Vertloop < vertex_count) // Process Vertices
-		{
-			App->CL_Scene->Group[Count]->vertex_Data[Vertloop].x = vertices[Vertloop].x;
-			App->CL_Scene->Group[Count]->vertex_Data[Vertloop].y = vertices[Vertloop].y;
-			App->CL_Scene->Group[Count]->vertex_Data[Vertloop].z = vertices[Vertloop].z;
+	//	while (Vertloop < vertex_count) // Process Vertices
+	//	{
+	//		App->CL_Scene->Group[Count]->vertex_Data[Vertloop].x = vertices[Vertloop].x;
+	//		App->CL_Scene->Group[Count]->vertex_Data[Vertloop].y = vertices[Vertloop].y;
+	//		App->CL_Scene->Group[Count]->vertex_Data[Vertloop].z = vertices[Vertloop].z;
 
-			App->CL_Scene->Group[Count]->BoneIndex_Data[Vertloop].Index = BoneIndices[Vertloop]; // Bone Index 
+	//		App->CL_Scene->Group[Count]->BoneIndex_Data[Vertloop].Index = BoneIndices[Vertloop]; // Bone Index 
 
-			if (mUVTest)
-			{
-				App->CL_Scene->Group[Count]->MapCord_Data[Vertloop].u = MeshTextureCoords[Vertloop].x;
-				App->CL_Scene->Group[Count]->MapCord_Data[Vertloop].v = 1 - MeshTextureCoords[Vertloop].y;
-			}
+	//		if (mUVTest)
+	//		{
+	//			App->CL_Scene->Group[Count]->MapCord_Data[Vertloop].u = MeshTextureCoords[Vertloop].x;
+	//			App->CL_Scene->Group[Count]->MapCord_Data[Vertloop].v = 1 - MeshTextureCoords[Vertloop].y;
+	//		}
 
-			App->CL_Scene->Group[Count]->Normal_Data[Vertloop].x = normals[Vertloop].x;
-			App->CL_Scene->Group[Count]->Normal_Data[Vertloop].y = normals[Vertloop].y;
-			App->CL_Scene->Group[Count]->Normal_Data[Vertloop].z = normals[Vertloop].z;
+	//		App->CL_Scene->Group[Count]->Normal_Data[Vertloop].x = normals[Vertloop].x;
+	//		App->CL_Scene->Group[Count]->Normal_Data[Vertloop].y = normals[Vertloop].y;
+	//		App->CL_Scene->Group[Count]->Normal_Data[Vertloop].z = normals[Vertloop].z;
 
-			Vertloop++;
-		}
+	//		Vertloop++;
+	//	}
 
-		FaceIndexNum = 0;
-		Faceloop = 0;
-		while (Faceloop < index_count) // Process Faces
-		{
-			App->CL_Scene->Group[Count]->Face_Data[FaceIndexNum].a = indices[Faceloop];
-			Faceloop++;
-			App->CL_Scene->Group[Count]->Face_Data[FaceIndexNum].b = indices[Faceloop];
-			Faceloop++;
-			App->CL_Scene->Group[Count]->Face_Data[FaceIndexNum].c = indices[Faceloop];
-			Faceloop++;
+	//	FaceIndexNum = 0;
+	//	Faceloop = 0;
+	//	while (Faceloop < index_count) // Process Faces
+	//	{
+	//		App->CL_Scene->Group[Count]->Face_Data[FaceIndexNum].a = indices[Faceloop];
+	//		Faceloop++;
+	//		App->CL_Scene->Group[Count]->Face_Data[FaceIndexNum].b = indices[Faceloop];
+	//		Faceloop++;
+	//		App->CL_Scene->Group[Count]->Face_Data[FaceIndexNum].c = indices[Faceloop];
+	//		Faceloop++;
 
-			FaceIndexNum++;
+	//		FaceIndexNum++;
 
-			App->CL_Scene->Group[Count]->FaceIndex_Data[xx].Index = mFaceIndex;
+	//		App->CL_Scene->Group[Count]->FaceIndex_Data[xx].Index = mFaceIndex;
 
-			xx++;
-			mFaceIndex++;
-		}
+	//		xx++;
+	//		mFaceIndex++;
+	//	}
 
-		App->CL_Scene->Group[Count]->GroupFaceCount = FaceIndexNum;
-		App->CL_Scene->Group[Count]->GroupVertCount = Vertloop;
-		App->CL_Scene->Group[Count]->IndicesCount = Vertloop;
+	//	App->CL_Scene->Group[Count]->GroupFaceCount = FaceIndexNum;
+	//	App->CL_Scene->Group[Count]->GroupVertCount = Vertloop;
+	//	App->CL_Scene->Group[Count]->IndicesCount = Vertloop;
 
-		App->CL_Scene->VerticeCount = App->CL_Scene->VerticeCount + Vertloop;
-		App->CL_Scene->FaceCount = App->CL_Scene->FaceCount + FaceIndexNum;
+	//	App->CL_Scene->VerticeCount = App->CL_Scene->VerticeCount + Vertloop;
+	//	App->CL_Scene->FaceCount = App->CL_Scene->FaceCount + FaceIndexNum;
 
 
-		GetBoneAssignment(Ogre_Entity->getMesh(), Count, 0);
+	//	GetBoneAssignment(Ogre_Entity->getMesh(), Count, 0);
 
-		Count++;
-	}
+	//	Count++;
+	//}
 
-	App->CL_Scene->Set_BondingBox_Model(true);
-	App->CL_Converters->Get_SkeletonInstance(Ogre_Entity);
-	Get_Ogre_Mesh_Data(Ogre_Entity);
-	
-	App->CL_ImGui->flag_Show_Model_Data = 1;
-	App->CL_ImGui->flag_Show_Ogre_Data = 1;
+	//App->CL_Scene->Set_BondingBox_Model(true);
+	//App->CL_Converters->Get_SkeletonInstance(Ogre_Entity);
+	//Get_Ogre_Mesh_Data(Ogre_Entity);
+	//
+	//App->CL_ImGui->flag_Show_Model_Data = 1;
+	//App->CL_ImGui->flag_Show_Ogre_Data = 1;
 
 	return 1;
 }
@@ -403,6 +403,7 @@ bool CL64_Imp_Ogre3D::NewGet_SubPoseNormals(Ogre::MeshPtr mesh, size_t& vertex_c
 // *************************************************************************
 bool CL64_Imp_Ogre3D::GetBoneAssignment(Ogre::MeshPtr mesh, int SubMesh, HWND hDlg)
 {
+	
 	int Count = 0;
 	Ogre::SubMesh* mSubmesh = mesh->getSubMesh(SubMesh);
 
