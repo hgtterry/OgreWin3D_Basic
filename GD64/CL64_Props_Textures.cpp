@@ -57,7 +57,10 @@ void CL64_Props_Textures::Reset_Class(void)
 
 	SetDlgItemText(Props_Dlg_Hwnd, IDC_PT_TEXTURENAME, "-----------");
 	SetDlgItemText(Props_Dlg_Hwnd, IDC_ST_PT_MATERIAL, "-----------");
+	SetDlgItemText(Props_Dlg_Hwnd, IDC_ST_PT_MATERIALFILE, "-----------");
+	
 	SetDlgItemText(Props_Dlg_Hwnd, IDC_ST_PT_DIMENSIONS,"0 x 0");
+
 	Enable_Export_Button(false);
 }
 
@@ -462,6 +465,17 @@ void CL64_Props_Textures::Get_First_Texture_Ogre()
 	if (test == 0)
 	{
 		App->Say("Check Here No Material");
+
+		if (App->CL_Scene->GroupCount > 0)
+		{
+			strcpy(mTextureName, App->CL_Scene->Group[0]->Ogre_TextureName);
+			strcpy(mMaterialName, App->CL_Scene->Group[0]->Ogre_Material);
+			strcpy(App->CL_Resources->mSelected_File, mTextureName);
+		}
+		
+		App->CL_Props_Textures->Selected_Group = 0;
+		App->CL_Ogre->OGL_Listener->Selected_Face_Group = 0;
+
 		App->CL_Resources->mSelected_Resource_Group = "App_Resource_Group";
 		App->CL_Props_Textures->View_Texture(mTextureName, mMaterialName);
 	}
