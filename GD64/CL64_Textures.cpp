@@ -135,153 +135,156 @@ void CL64_Textures::Load_Textures_Assimp()
 // *************************************************************************
 bool CL64_Textures::Windows_Preview_FullPath(int Index, char* FullPath)
 {
-	
-	char mFileName[MAX_PATH];
-	strcpy(mFileName, FullPath);
-
-	HWND PreviewWnd = GetDlgItem(App->CL_Props_Textures->Props_Dlg_Hwnd, IDC_PROP_BASETEXTURE);
-	HDC	hDC = GetDC(PreviewWnd);
-
-	App->CL_Scene->Group[Index]->Base_Bitmap = NULL;
-
-	// ----------------------------------- Bitmap
-	if (_stricmp(mFileName + strlen(mFileName) - 4, ".BMP") == 0)
+	if (App->CL_Scene->GroupCount > 0)
 	{
 
-		App->CL_Scene->Group[Index]->Base_Bitmap = ilutWinLoadImage(mFileName, hDC);
-		ReleaseDC(PreviewWnd, hDC);
+		char mFileName[MAX_PATH];
+		strcpy(mFileName, FullPath);
 
-		if (App->CL_Scene->Group[Index]->Base_Bitmap == NULL)
+		HWND PreviewWnd = GetDlgItem(App->CL_Props_Textures->Props_Dlg_Hwnd, IDC_PROP_BASETEXTURE);
+		HDC	hDC = GetDC(PreviewWnd);
+
+		App->CL_Scene->Group[Index]->Base_Bitmap = NULL;
+
+		// ----------------------------------- Bitmap
+		if (_stricmp(mFileName + strlen(mFileName) - 4, ".BMP") == 0)
 		{
 
-			LoadDummyTexture(Index);
+			App->CL_Scene->Group[Index]->Base_Bitmap = ilutWinLoadImage(mFileName, hDC);
+			ReleaseDC(PreviewWnd, hDC);
+
+			if (App->CL_Scene->Group[Index]->Base_Bitmap == NULL)
+			{
+
+				LoadDummyTexture(Index);
+
+				return 1;
+			}
+			else
+			{
+				BITMAPINFO    bmiData;
+				ilutGetBmpInfo(&bmiData);
+
+				App->CL_Scene->Group[Index]->Depth = bmiData.bmiHeader.biBitCount;
+				App->CL_Scene->Group[Index]->Width = bmiData.bmiHeader.biWidth;
+				App->CL_Scene->Group[Index]->Height = bmiData.bmiHeader.biHeight;
+				App->CL_Scene->Group[Index]->Bitmap_Loaded = 1;
+			}
 
 			return 1;
 		}
-		else
+
+		// ------------------------------------ JPEG
+		if (_stricmp(mFileName + strlen(mFileName) - 4, ".JPG") == 0)
 		{
-			BITMAPINFO    bmiData;
-			ilutGetBmpInfo(&bmiData);
+			App->CL_Scene->Group[Index]->Base_Bitmap = ilutWinLoadImage(mFileName, hDC);
+			ReleaseDC(PreviewWnd, hDC);
 
-			App->CL_Scene->Group[Index]->Depth = bmiData.bmiHeader.biBitCount;
-			App->CL_Scene->Group[Index]->Width = bmiData.bmiHeader.biWidth;
-			App->CL_Scene->Group[Index]->Height = bmiData.bmiHeader.biHeight;
-			App->CL_Scene->Group[Index]->Bitmap_Loaded = 1;
-		}
+			if (App->CL_Scene->Group[Index]->Base_Bitmap == NULL)
+			{
 
-		return 1;
-	}
+				LoadDummyTexture(Index);
 
-	// ------------------------------------ JPEG
-	if (_stricmp(mFileName + strlen(mFileName) - 4, ".JPG") == 0)
-	{
-		App->CL_Scene->Group[Index]->Base_Bitmap = ilutWinLoadImage(mFileName, hDC);
-		ReleaseDC(PreviewWnd, hDC);
+				return 1;
+			}
+			else
+			{
+				BITMAPINFO    bmiData;
+				ilutGetBmpInfo(&bmiData);
 
-		if (App->CL_Scene->Group[Index]->Base_Bitmap == NULL)
-		{
-
-			LoadDummyTexture(Index);
+				App->CL_Scene->Group[Index]->Depth = bmiData.bmiHeader.biBitCount;
+				App->CL_Scene->Group[Index]->Width = bmiData.bmiHeader.biWidth;
+				App->CL_Scene->Group[Index]->Height = bmiData.bmiHeader.biHeight;
+				App->CL_Scene->Group[Index]->Bitmap_Loaded = 1;
+			}
 
 			return 1;
 		}
-		else
+
+		// ------------------------------------ DDS
+		if (_stricmp(mFileName + strlen(mFileName) - 4, ".DDS") == 0)
 		{
-			BITMAPINFO    bmiData;
-			ilutGetBmpInfo(&bmiData);
+			App->CL_Scene->Group[Index]->Base_Bitmap = ilutWinLoadImage(mFileName, hDC);
+			ReleaseDC(PreviewWnd, hDC);
 
-			App->CL_Scene->Group[Index]->Depth = bmiData.bmiHeader.biBitCount;
-			App->CL_Scene->Group[Index]->Width = bmiData.bmiHeader.biWidth;
-			App->CL_Scene->Group[Index]->Height = bmiData.bmiHeader.biHeight;
-			App->CL_Scene->Group[Index]->Bitmap_Loaded = 1;
-		}
+			if (App->CL_Scene->Group[Index]->Base_Bitmap == NULL)
+			{
 
-		return 1;
-	}
+				LoadDummyTexture(Index);
 
-	// ------------------------------------ DDS
-	if (_stricmp(mFileName + strlen(mFileName) - 4, ".DDS") == 0)
-	{
-		App->CL_Scene->Group[Index]->Base_Bitmap = ilutWinLoadImage(mFileName, hDC);
-		ReleaseDC(PreviewWnd, hDC);
+				return 1;
+			}
+			else
+			{
+				BITMAPINFO    bmiData;
+				ilutGetBmpInfo(&bmiData);
 
-		if (App->CL_Scene->Group[Index]->Base_Bitmap == NULL)
-		{
-
-			LoadDummyTexture(Index);
+				App->CL_Scene->Group[Index]->Depth = bmiData.bmiHeader.biBitCount;
+				App->CL_Scene->Group[Index]->Width = bmiData.bmiHeader.biWidth;
+				App->CL_Scene->Group[Index]->Height = bmiData.bmiHeader.biHeight;
+				App->CL_Scene->Group[Index]->Bitmap_Loaded = 1;
+			}
 
 			return 1;
 		}
-		else
+
+		// ------------------------------------ TGA
+		if (_stricmp(mFileName + strlen(mFileName) - 4, ".TGA") == 0)
 		{
-			BITMAPINFO    bmiData;
-			ilutGetBmpInfo(&bmiData);
+			App->CL_Scene->Group[Index]->Base_Bitmap = ilutWinLoadImage(mFileName, hDC);
+			ReleaseDC(PreviewWnd, hDC);
 
-			App->CL_Scene->Group[Index]->Depth = bmiData.bmiHeader.biBitCount;
-			App->CL_Scene->Group[Index]->Width = bmiData.bmiHeader.biWidth;
-			App->CL_Scene->Group[Index]->Height = bmiData.bmiHeader.biHeight;
-			App->CL_Scene->Group[Index]->Bitmap_Loaded = 1;
-		}
+			if (App->CL_Scene->Group[Index]->Base_Bitmap == NULL)
+			{
 
-		return 1;
-	}
+				LoadDummyTexture(Index);
 
-	// ------------------------------------ TGA
-	if (_stricmp(mFileName + strlen(mFileName) - 4, ".TGA") == 0)
-	{
-		App->CL_Scene->Group[Index]->Base_Bitmap = ilutWinLoadImage(mFileName, hDC);
-		ReleaseDC(PreviewWnd, hDC);
+				return 1;
+			}
+			else
+			{
+				BITMAPINFO    bmiData;
+				ilutGetBmpInfo(&bmiData);
 
-		if (App->CL_Scene->Group[Index]->Base_Bitmap == NULL)
-		{
-
-			LoadDummyTexture(Index);
+				App->CL_Scene->Group[Index]->Depth = bmiData.bmiHeader.biBitCount;
+				App->CL_Scene->Group[Index]->Width = bmiData.bmiHeader.biWidth;
+				App->CL_Scene->Group[Index]->Height = bmiData.bmiHeader.biHeight;
+				App->CL_Scene->Group[Index]->Bitmap_Loaded = 1;
+			}
 
 			return 1;
 		}
-		else
+
+		// ------------------------------------ PNG
+		if (_stricmp(mFileName + strlen(mFileName) - 4, ".PNG") == 0)
 		{
-			BITMAPINFO    bmiData;
-			ilutGetBmpInfo(&bmiData);
+			App->CL_Scene->Group[Index]->Base_Bitmap = ilutWinLoadImage(mFileName, hDC);
+			ReleaseDC(PreviewWnd, hDC);
 
-			App->CL_Scene->Group[Index]->Depth = bmiData.bmiHeader.biBitCount;
-			App->CL_Scene->Group[Index]->Width = bmiData.bmiHeader.biWidth;
-			App->CL_Scene->Group[Index]->Height = bmiData.bmiHeader.biHeight;
-			App->CL_Scene->Group[Index]->Bitmap_Loaded = 1;
-		}
+			if (App->CL_Scene->Group[Index]->Base_Bitmap == NULL)
+			{
+				LoadDummyTexture(Index);
 
-		return 1;
-	}
+				return 1;
+			}
+			else
+			{
+				BITMAPINFO    bmiData;
+				ilutGetBmpInfo(&bmiData);
 
-	// ------------------------------------ PNG
-	if (_stricmp(mFileName + strlen(mFileName) - 4, ".PNG") == 0)
-	{
-		App->CL_Scene->Group[Index]->Base_Bitmap = ilutWinLoadImage(mFileName, hDC);
-		ReleaseDC(PreviewWnd, hDC);
-
-		if (App->CL_Scene->Group[Index]->Base_Bitmap == NULL)
-		{
-			LoadDummyTexture(Index);
+				App->CL_Scene->Group[Index]->Depth = bmiData.bmiHeader.biBitCount;
+				App->CL_Scene->Group[Index]->Width = bmiData.bmiHeader.biWidth;
+				App->CL_Scene->Group[Index]->Height = bmiData.bmiHeader.biHeight;
+				App->CL_Scene->Group[Index]->Bitmap_Loaded = 1;
+			}
 
 			return 1;
 		}
-		else
-		{
-			BITMAPINFO    bmiData;
-			ilutGetBmpInfo(&bmiData);
 
-			App->CL_Scene->Group[Index]->Depth = bmiData.bmiHeader.biBitCount;
-			App->CL_Scene->Group[Index]->Width = bmiData.bmiHeader.biWidth;
-			App->CL_Scene->Group[Index]->Height = bmiData.bmiHeader.biHeight;
-			App->CL_Scene->Group[Index]->Bitmap_Loaded = 1;
-		}
+		LoadDummyTexture(Index);
 
-		return 1;
+		App->CL_Scene->Group[Index]->Bitmap_Loaded = -1;
 	}
-
-	LoadDummyTexture(Index);
-
-	App->CL_Scene->Group[Index]->Bitmap_Loaded = -1;
 
 	return 1;
 }
@@ -291,17 +294,20 @@ bool CL64_Textures::Windows_Preview_FullPath(int Index, char* FullPath)
 // *************************************************************************
 bool CL64_Textures::LoadDummyTexture(int Index)
 {
+	if (App->CL_Scene->GroupCount > 0)
+	{
+		App->CL_Scene->Group[Index]->Base_Bitmap = LoadBitmap(App->hInst, MAKEINTRESOURCE(IDB_DUMMY));
 
-	App->CL_Scene->Group[Index]->Base_Bitmap = LoadBitmap(App->hInst, MAKEINTRESOURCE(IDB_DUMMY));
+		strcpy(App->CL_Scene->Group[Index]->Texture_PathFileName, "Internal Dummy BMP");
+		strcpy(App->CL_Scene->Group[Index]->Text_FileName, "Dummy.bmp");
 
-	strcpy(App->CL_Scene->Group[Index]->Texture_PathFileName, "Internal Dummy BMP");
-	strcpy(App->CL_Scene->Group[Index]->Text_FileName, "Dummy.bmp");
+		App->CL_Scene->Group[Index]->Depth = 8;
+		App->CL_Scene->Group[Index]->Width = 256;
+		App->CL_Scene->Group[Index]->Height = 256;
 
-	App->CL_Scene->Group[Index]->Depth = 8;
-	App->CL_Scene->Group[Index]->Width = 256;
-	App->CL_Scene->Group[Index]->Height = 256;
+		App->CL_Scene->Group[Index]->Bitmap_Loaded = -1;
+	}
 
-	App->CL_Scene->Group[Index]->Bitmap_Loaded = -1;
 	return 1;
 }
 
