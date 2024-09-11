@@ -96,7 +96,7 @@ LRESULT CALLBACK CL64_Props_Textures::Proc_Textures_Dialog(HWND hDlg, UINT messa
 		SendDlgItemMessage(hDlg, IDC_BT_PT_EXPORT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_PT_VIEWMESH, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
-		//SendDlgItemMessage(hDlg, IDC_BTCHANGETEXTURE, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_ST_PT_MATERIALFILE, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
 		
 		SetWindowLongPtr(GetDlgItem(hDlg, IDC_PROP_BASETEXTURE), GWLP_WNDPROC, (LONG_PTR)ViewerBasePic);
 		
@@ -139,6 +139,13 @@ LRESULT CALLBACK CL64_Props_Textures::Proc_Textures_Dialog(HWND hDlg, UINT messa
 			return (UINT)App->AppBackground;
 		}
 
+		if (GetDlgItem(hDlg, IDC_ST_PT_MATERIALFILE) == (HWND)lParam)
+		{
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+		
 		return FALSE;
 	}
 
@@ -367,6 +374,8 @@ bool CL64_Props_Textures::Update_Texture_Ogre()
 	SetDlgItemText(Props_Dlg_Hwnd, IDC_ST_PT_MATERIAL, mMaterialName);
 	SetDlgItemText(Props_Dlg_Hwnd, IDC_PT_TEXTURENAME, mTextureName);
 
+	SetDlgItemText(Props_Dlg_Hwnd, IDC_ST_PT_MATERIALFILE, App->CL_Scene->Group[Index]->Ogre_Material_File);
+	
 	RightGroups_Visable = 1;
 	ShowWindow(Props_Dlg_Hwnd, 1);
 	CheckMenuItem(App->mMenu, ID_WINDOWS_TEXTURESDIALOG, MF_BYCOMMAND | MF_CHECKED);
@@ -449,19 +458,28 @@ void CL64_Props_Textures::Texture_To_HBITMP(char* TextureFileName)
 // *************************************************************************
 void CL64_Props_Textures::Get_First_Texture_Ogre()
 {
-	Ogre::MaterialPtr MatCurent;
-
-	MatCurent = static_cast<Ogre::MaterialPtr> (Ogre::MaterialManager::getSingleton().getByName(App->CL_Scene->Group[0]->Ogre_Material));
-	strcpy(mTextureName, MatCurent->getTechnique(0)->getPass(0)->getTextureUnitState(0)->getTextureName().c_str());
-
-	strcpy(mMaterialName, App->CL_Scene->Group[0]->Ogre_Material);
-	
-	bool test = strcmp(mMaterialName,"No_Material_Loaded");
+	bool test = strcmp(App->CL_Scene->Group[0]->Ogre_Material, "No_Material_Loaded");
 	if (test == 0)
 	{
+		App->Say("Check Here No Material");
 		App->CL_Resources->mSelected_Resource_Group = "App_Resource_Group";
+		App->CL_Props_Textures->View_Texture(mTextureName, mMaterialName);
 	}
+	else
+	{
+		Ogre::MaterialPtr MatCurent;
+		MatCurent = static_cast<Ogre::MaterialPtr> (Ogre::MaterialManager::getSingleton().getByName(App->CL_Scene->Group[0]->Ogre_Material));
+		strcpy(mTextureName, MatCurent->getTechnique(0)->getPass(0)->getTextureUnitState(0)->getTextureName().c_str());
 
-	App->CL_Props_Textures->View_Texture(mTextureName, mMaterialName);
+		strcpy(mMaterialName, App->CL_Scene->Group[0]->Ogre_Material);
+
+		bool test = strcmp(mMaterialName,"No_Material_Loaded");
+		if (test == 0)
+		{
+			App->CL_Resources->mSelected_Resource_Group = "App_Resource_Group";
+		}
+
+		App->CL_Props_Textures->View_Texture(mTextureName, mMaterialName);
+	}
 }
 

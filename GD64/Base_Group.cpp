@@ -42,7 +42,10 @@ Base_Group::Base_Group()
 
 	// Ogre Data
 	Ogre_TextureName[0] = 0;
-	Ogre_Material[0] = 0;
+
+	strcpy(Ogre_Material, "No_Material_Loaded");
+
+	Ogre_Material_File[0] = 0;
 	Ogre_ImGui_MatId[0] = 0;
 	Ogre_MipMaps = 0;
 }

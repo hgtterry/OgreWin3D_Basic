@@ -204,8 +204,10 @@ bool CL64_Importers::Load_Ogre_Model(bool Use_File_Dialog)
 	App->CL_Scene->Imported_Ogre_Node->setPosition(0, 0, 0);
 	App->CL_Scene->Imported_Ogre_Node->setScale(1, 1, 1);
 
+	
 	Scan_Material_Files();
 	
+
 	App->CL_Ogre->Show_Test_Mesh(false);
 	App->CL_Camera->Reset_View();
 
@@ -218,9 +220,9 @@ bool CL64_Importers::Load_Ogre_Model(bool Use_File_Dialog)
 		App->CL_Ogre->camNode->setOrientation(Ogre::Quaternion::IDENTITY);
 		App->CL_Ogre->camNode->setPosition(Ogre::Vector3(0,0, App->CL_Scene->Imported_Ogre_Ent->getBoundingRadius() * 2.8f));
 	}
-
+	
 	App->CL_Import_Ogre3D->Ogre_To_Mesh_Data(App->CL_Scene->Imported_Ogre_Ent);
-
+	
 	App->CL_Resources->mSelected_Resource_Group = App->CL_Resources->Ogre_Loader_Resource_Group;
 
 	App->CL_Import_Ogre3D->flag_Ogre_Model_Loaded = 1;

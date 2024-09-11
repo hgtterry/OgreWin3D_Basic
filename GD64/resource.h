@@ -170,6 +170,8 @@
 #define IDC_ST_PT_DIMENSIONS            1065
 #define IDC_ST_MATERIAL                 1066
 #define IDC_ST_TEXURENAME               1067
+#define IDC_ST_PT_MATERIAL2             1068
+#define IDC_ST_PT_MATERIALFILE          1068
 #define ID_VIEW_RESET                   32771
 #define ID_VIEW_MAX3DVIEW               32772
 #define ID_DEBUG_TESTPREFERANCE         32773

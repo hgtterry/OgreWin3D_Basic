@@ -75,12 +75,15 @@ bool CL64_Imp_Ogre3D::Ogre_To_Mesh_Data(Ogre::Entity* Ogre_Entity)
 	int FaceIndexNum = 0;
 	int mFaceIndex = 0;
 	int xx = 0;
-	size_t vertex_count, index_count;
-	Vector3* vertices;
-	Vector3* normals;
-	unsigned long* indices;
+	size_t vertex_count = 0;
+	size_t  index_count = 0;
 
-	Ogre::int16* BoneIndices;	// Bone Index
+	Vector3* vertices = { 0 };
+	
+	Vector3* normals = { 0 };
+	unsigned long* indices = 0;
+
+	Ogre::int16* BoneIndices = 0;	// Bone Index
 
 	int SubMeshCount = Ogre_Entity->getNumSubEntities();
 
@@ -88,10 +91,15 @@ bool CL64_Imp_Ogre3D::Ogre_To_Mesh_Data(Ogre::Entity* Ogre_Entity)
 	unsigned int Faceloop = 0;
 	int Count = 0;
 
+	
+	bool poo = 0;
+
 	while (Count < SubMeshCount)
 	{
 		Get_SubPose_MeshInstance(Ogre_Entity->getMesh(), vertex_count, vertices, index_count, indices, Count, BoneIndices);
+		
 		int mUVTest = NewGet_SubPoseTextureUV(Ogre_Entity->getMesh(), Count);
+		
 		NewGet_SubPoseNormals(Ogre_Entity->getMesh(), vertex_count, normals, Count);
 
 		App->CL_Scene->Group[Count]->vertex_Data.resize(index_count);
@@ -107,6 +115,7 @@ bool CL64_Imp_Ogre3D::Ogre_To_Mesh_Data(Ogre::Entity* Ogre_Entity)
 		FaceCount = 0;
 		Vertloop = 0;
 		xx = 0;
+
 		while (Vertloop < vertex_count) // Process Vertices
 		{
 			App->CL_Scene->Group[Count]->vertex_Data[Vertloop].x = vertices[Vertloop].x;
@@ -163,6 +172,9 @@ bool CL64_Imp_Ogre3D::Ogre_To_Mesh_Data(Ogre::Entity* Ogre_Entity)
 	App->CL_Scene->Set_BondingBox_Model(true);
 	App->CL_Converters->Get_SkeletonInstance(Ogre_Entity);
 	Get_Ogre_Mesh_Data(Ogre_Entity);
+	
+	App->CL_ImGui->flag_Show_Model_Data = 1;
+	App->CL_ImGui->flag_Show_Ogre_Data = 1;
 
 	return 1;
 }
@@ -438,7 +450,7 @@ bool CL64_Imp_Ogre3D::GetBoneAssignment(Ogre::MeshPtr mesh, int SubMesh, HWND hD
 void CL64_Imp_Ogre3D::Get_Ogre_Mesh_Data(Ogre::Entity* Ogre_Entity)
 {
 	int Count = 0;
-
+	
 	bool Edge = Ogre_Entity->hasEdgeList();
 	if (Edge == 1)
 	{
@@ -493,6 +505,8 @@ void CL64_Imp_Ogre3D::Get_Ogre_Mesh_Data(Ogre::Entity* Ogre_Entity)
 		strcpy(App->CL_Scene->Group[Count]->Ogre_TextureName, mTexture);
 
 		App->CL_Scene->Group[Count]->Ogre_MipMaps = MatCurent->getTechnique(0)->getPass(0)->getTextureUnitState(0)->getNumMipmaps();
+
+		strcpy(App->CL_Scene->Group[Count]->Ogre_Material_File, MatCurent->getOrigin().c_str());
 		
 		Count++;
 	}

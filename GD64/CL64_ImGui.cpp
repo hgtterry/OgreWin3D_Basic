@@ -28,10 +28,10 @@ CL64_ImGui::CL64_ImGui(void)
 	flag_Show_FPS = 1;
 	flag_Show_ImGui_Demo = 0;
 	flag_Show_Camera_Data = 0;
-	flag_Show_Model_Data = 1;
+	flag_Show_Model_Data = 0;
 	flag_Show_Demo_Options = 0;
 	flag_Show_App_Debug = 0;
-	flag_Show_Ogre_Data = 1;
+	flag_Show_Ogre_Data = 0;
 	flag_Open_Textures_List = 1;
 
 	// Demo 1
@@ -62,8 +62,8 @@ CL64_ImGui::~CL64_ImGui(void)
 void CL64_ImGui::Reset_Class(void)
 {
 	flag_Show_Demo_Options = 0;
-	flag_Show_Model_Data = 1;
-	flag_Show_Ogre_Data = 1;
+	flag_Show_Model_Data = 0;
+	flag_Show_Ogre_Data = 0;
 }
 
 // *************************************************************************

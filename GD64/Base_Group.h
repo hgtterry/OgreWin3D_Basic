@@ -71,6 +71,7 @@ public:
 	// Ogre Data
 	char Ogre_TextureName[MAX_PATH];
 	char Ogre_Material[MAX_PATH];
+	char Ogre_Material_File[MAX_PATH];
 	char Ogre_ImGui_MatId[MAX_PATH];
 	int Ogre_MipMaps;
 };
