@@ -40,6 +40,7 @@ public:
 	
 	std::vector<Ogre::Vector2> MeshTextureCoords;
 
+	bool Has_Shared_Vertices;
 	bool flag_Ogre_Model_Loaded;
 };
 

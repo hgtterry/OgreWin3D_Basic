@@ -468,7 +468,7 @@ void CL64_Props_Textures::Get_First_Texture_Ogre()
 		bool test = strcmp(App->CL_Scene->Group[0]->Ogre_Material, "No_Material_Loaded");
 		if (test == 0)
 		{
-			App->Say("Check Here No Material");
+			//App->Say("Check Here No Material");
 
 			if (App->CL_Scene->GroupCount > 0)
 			{

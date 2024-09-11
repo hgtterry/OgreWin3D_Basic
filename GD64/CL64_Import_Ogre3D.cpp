@@ -22,6 +22,7 @@ appreciated but is not required.
 CL64_Imp_Ogre3D::CL64_Imp_Ogre3D(void)
 {
 	flag_Ogre_Model_Loaded = 0;
+	Has_Shared_Vertices = 0;
 }
 
 CL64_Imp_Ogre3D::~CL64_Imp_Ogre3D(void)
@@ -58,6 +59,7 @@ void CL64_Imp_Ogre3D::Reset_Class(void)
 		App->CL_Scene->S_OgreMeshData[0]->vMin = (Ogre::Vector3::ZERO);
 		App->CL_Scene->S_OgreMeshData[0]->vMax = (Ogre::Vector3::ZERO);
 
+		Has_Shared_Vertices = 0;
 		flag_Ogre_Model_Loaded = 0;
 		
 	}
@@ -68,10 +70,12 @@ void CL64_Imp_Ogre3D::Reset_Class(void)
 // *************************************************************************
 bool CL64_Imp_Ogre3D::Ogre_To_Mesh_Data(Ogre::Entity* Ogre_Entity)
 {
-	bool Has_Shared_Vertices = 0;
+	Has_Shared_Vertices = 0;
 
 	int Count = 0;
 	int SubMeshCount = Ogre_Entity->getNumSubEntities();
+
+	//App->CL_Converters->Create_MeshGroups(Ogre_Entity);
 
 	while (Count < SubMeshCount)
 	{
@@ -88,6 +92,7 @@ bool CL64_Imp_Ogre3D::Ogre_To_Mesh_Data(Ogre::Entity* Ogre_Entity)
 
 	if (Has_Shared_Vertices == 0)
 	{
+		Has_Shared_Vertices = 0;
 		App->CL_Converters->Create_MeshGroups(Ogre_Entity);
 
 		int FaceCount = 0;
