@@ -81,7 +81,6 @@ bool CL64_Imp_Ogre3D::Ogre_To_Mesh_Data(Ogre::Entity* Ogre_Entity)
 
 		if (Sahred == 1)
 		{
-			App->Say("Shared Vertices");
 			Has_Shared_Vertices = 1;
 		}
 
@@ -193,10 +192,6 @@ bool CL64_Imp_Ogre3D::Ogre_To_Mesh_Data(Ogre::Entity* Ogre_Entity)
 			Count++;
 		}
 
-		/*App->CL_Scene->Set_BondingBox_Model(true);
-		App->CL_Converters->Get_SkeletonInstance(Ogre_Entity);
-		Get_Ogre_Mesh_Data(Ogre_Entity);*/
-		
 	}
 
 	App->CL_Scene->Set_BondingBox_Model(true);
