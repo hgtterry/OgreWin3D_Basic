@@ -30,7 +30,6 @@ CL64_Dimensions::~CL64_Dimensions(void)
 // *************************************************************************
 void CL64_Dimensions::Centre_Model_Mid_Assimp(void)
 {
-
 	//if (App->CL_Scene->flag_Model_Loaded == 1)
 	if (App->CL_Scene->GroupCount  > 0)
 	{

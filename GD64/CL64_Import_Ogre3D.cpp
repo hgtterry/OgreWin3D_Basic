@@ -74,9 +74,9 @@ bool CL64_Imp_Ogre3D::Ogre_To_Mesh_Data(Ogre::Entity* Ogre_Entity)
 
 	int Count = 0;
 	int SubMeshCount = Ogre_Entity->getNumSubEntities();
-
-	//App->CL_Converters->Create_MeshGroups(Ogre_Entity);
-
+	
+	App->CL_Converters->Create_MeshGroups(Ogre_Entity);
+	
 	while (Count < SubMeshCount)
 	{
 		bool Sahred = Ogre_Entity->getSubEntity(Count)->getSubMesh()->useSharedVertices;
@@ -93,7 +93,7 @@ bool CL64_Imp_Ogre3D::Ogre_To_Mesh_Data(Ogre::Entity* Ogre_Entity)
 	if (Has_Shared_Vertices == 0)
 	{
 		Has_Shared_Vertices = 0;
-		App->CL_Converters->Create_MeshGroups(Ogre_Entity);
+		//App->CL_Converters->Create_MeshGroups(Ogre_Entity);
 
 		int FaceCount = 0;
 		int FaceNum = 0;

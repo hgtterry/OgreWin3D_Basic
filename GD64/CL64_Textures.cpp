@@ -127,7 +127,6 @@ void CL64_Textures::Load_Textures_Assimp()
 		remove(buf);
 	}
 
-	//ilutWinLoadImage(NULL, NULL);
 }
 
 // *************************************************************************

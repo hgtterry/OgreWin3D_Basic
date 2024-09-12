@@ -463,6 +463,7 @@ void CL64_Props_Textures::Texture_To_HBITMP(char* TextureFileName)
 // *************************************************************************
 void CL64_Props_Textures::Get_First_Texture_Ogre()
 {
+
 	if (App->CL_Scene->GroupCount > 0)
 	{
 		bool test = strcmp(App->CL_Scene->Group[0]->Ogre_Material, "No_Material_Loaded");
