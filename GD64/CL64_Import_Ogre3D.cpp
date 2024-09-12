@@ -75,8 +75,6 @@ bool CL64_Imp_Ogre3D::Ogre_To_Mesh_Data(Ogre::Entity* Ogre_Entity)
 	int Count = 0;
 	int SubMeshCount = Ogre_Entity->getNumSubEntities();
 	
-	App->CL_Converters->Create_MeshGroups(Ogre_Entity);
-	
 	while (Count < SubMeshCount)
 	{
 		bool Sahred = Ogre_Entity->getSubEntity(Count)->getSubMesh()->useSharedVertices;
@@ -90,11 +88,12 @@ bool CL64_Imp_Ogre3D::Ogre_To_Mesh_Data(Ogre::Entity* Ogre_Entity)
 		Count++;
 	}
 
+	App->CL_Converters->Create_MeshGroups(Ogre_Entity);
+
 	if (Has_Shared_Vertices == 0)
 	{
 		Has_Shared_Vertices = 0;
-		//App->CL_Converters->Create_MeshGroups(Ogre_Entity);
-
+		
 		int FaceCount = 0;
 		int FaceNum = 0;
 		int FaceIndexNum = 0;
@@ -194,11 +193,15 @@ bool CL64_Imp_Ogre3D::Ogre_To_Mesh_Data(Ogre::Entity* Ogre_Entity)
 			Count++;
 		}
 
-		App->CL_Scene->Set_BondingBox_Model(true);
+		/*App->CL_Scene->Set_BondingBox_Model(true);
 		App->CL_Converters->Get_SkeletonInstance(Ogre_Entity);
-		Get_Ogre_Mesh_Data(Ogre_Entity);
+		Get_Ogre_Mesh_Data(Ogre_Entity);*/
 		
 	}
+
+	App->CL_Scene->Set_BondingBox_Model(true);
+	App->CL_Converters->Get_SkeletonInstance(Ogre_Entity);
+	Get_Ogre_Mesh_Data(Ogre_Entity);
 
 	App->CL_ImGui->flag_Show_Model_Data = 1;
 	App->CL_ImGui->flag_Show_Ogre_Data = 1;
@@ -292,7 +295,6 @@ void CL64_Imp_Ogre3D::Get_Ogre_Mesh_Data(Ogre::Entity* Ogre_Entity)
 
 		App->CL_Scene->S_OgreMeshData[0]->mSubmeshes[Count].m_SubMesh_Name_str = strSubMesh;
 
-
 		Ogre::SubMesh const* subMesh = Ogre_Entity->getSubEntity(Count)->getSubMesh();
 		if (subMesh->useSharedVertices)
 		{
@@ -305,7 +307,7 @@ void CL64_Imp_Ogre3D::Get_Ogre_Mesh_Data(Ogre::Entity* Ogre_Entity)
 
 		App->CL_Scene->S_OgreMeshData[0]->mSubmeshes[Count].m_Matrial_Name_str = subMesh->getMaterialName();
 
-		App->CL_Scene->S_OgreMeshData[0]->mSubmeshes[Count].VerticesCount = subMesh->vertexData->vertexCount;
+		//App->CL_Scene->S_OgreMeshData[0]->mSubmeshes[Count].VerticesCount = subMesh->vertexData->vertexCount;
 
 		App->CL_Scene->S_OgreMeshData[0]->mSubmeshes[Count].BonesCount = subMesh->blendIndexToBoneIndexMap.size();
 

@@ -333,18 +333,22 @@ void CL64_Converters::Create_MeshGroups(Ogre::Entity* Ogre_Entity)
 
 		strcpy(App->CL_Scene->Group[Count]->Text_FileName, "No_Texture");
 
-		//_itoa(Count, GroupNum, 10);
-		//strcpy(GroupName, "Group_");
-		//strcat(GroupName, GroupNum);
+		_itoa(Count, GroupNum, 10);
+		strcpy(GroupName, "Group_");
+		strcat(GroupName, GroupNum);
 
-		//strcpy(App->CL_Scene->Group[Count]->GroupName, GroupName);
+		strcpy(App->CL_Scene->Group[Count]->GroupName, GroupName);
 
-		////---------------
-		//Ogre::SubMesh const* subMesh = Ogre_Entity->getSubEntity(Count)->getSubMesh();
-		//strcpy(App->CL_Scene->Group[Count]->MaterialName, subMesh->getMaterialName().c_str());
+		///---------------
+		Ogre::SubMesh const* subMesh = Ogre_Entity->getSubEntity(Count)->getSubMesh();
+		strcpy(App->CL_Scene->Group[Count]->MaterialName, subMesh->getMaterialName().c_str());
 
-		//App->CL_Scene->Group[Count]->GroupVertCount = subMesh->vertexData->vertexCount;
-		//App->CL_Scene->Group[Count]->IndicesCount = subMesh->vertexData->vertexCount;
+		if (App->CL_Import_Ogre3D->Has_Shared_Vertices == 0)
+		{
+			App->CL_Scene->Group[Count]->GroupVertCount = subMesh->vertexData->vertexCount;
+			App->CL_Scene->Group[Count]->IndicesCount = subMesh->vertexData->vertexCount;
+		}
+
 		//---------------
 		
 		Count++;

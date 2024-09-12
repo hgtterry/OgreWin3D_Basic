@@ -322,7 +322,7 @@ void CL64_Scene::Set_BondingBox_Model(bool Create)
 		S_BoundingBox[0] = new AABB_Type;
 	}
 
-	if (App->CL_Scene->GroupCount > 0)
+	if (App->CL_Scene->GroupCount > 0 && App->CL_Scene->VerticeCount > 4)
 	{
 		S_BoundingBox[0]->BB_Min[0].x = Group[0]->vertex_Data[0].x;
 		S_BoundingBox[0]->BB_Min[0].y = Group[0]->vertex_Data[0].y;
