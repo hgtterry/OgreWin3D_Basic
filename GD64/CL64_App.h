@@ -45,6 +45,8 @@ appreciated but is not required.
 #include "CL64_Exp_Obj.h"
 #include "CL64_Props_Textures.h"
 
+#include "CL64_Mesh_Manager.h"
+
 class CL64_App
 {
 
@@ -81,6 +83,7 @@ public:
 	CL64_Dimensions*		CL_Dimensions;
 	CL64_Exp_Obj*			CL_Exp_Obj;
 	CL64_Props_Textures*	CL_Props_Textures;
+	CL64_Mesh_Manager*		CL_Mesh_Manager;
 
 	void InitApp(void);
 	void Init_Dialogs(void);

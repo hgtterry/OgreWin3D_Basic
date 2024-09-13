@@ -89,7 +89,6 @@ void CL64_Exp_Ogre3D::Export_To_Ogre3D(bool Create)
 
 	while (Count < GroupCountTotal)
 	{
-		//App->Say_Win(App->CL_Scene->Group[Count]->Text_FileName);
 
 		_itoa(Count, MaterialNumber, 10);
 		strcpy(MatName, mExport_Just_Name);

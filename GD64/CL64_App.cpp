@@ -47,7 +47,7 @@ CL64_App::CL64_App(void)
 	CL_Dimensions =		nullptr;
 	CL_Exp_Obj =		nullptr;
 	CL_Props_Textures = nullptr;
-
+	CL_Mesh_Manager =	nullptr;
 
 	hInst =				nullptr;
 	MainHwnd =			nullptr;
@@ -155,7 +155,8 @@ void CL64_App::InitApp(void)
 	CL_Dimensions =		new CL64_Dimensions();
 	CL_Exp_Obj =		new CL64_Exp_Obj();
 	CL_Props_Textures = new CL64_Props_Textures();
-	
+	CL_Mesh_Manager =	new CL64_Mesh_Manager();
+
 	SetBrushes_Fonts();
 
 	LoadString(App->hInst, IDS_VERSION, App_Version, MAX_PATH);

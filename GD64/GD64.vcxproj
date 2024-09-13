@@ -184,6 +184,7 @@
     <ClInclude Include="CL64_Import_Ogre3D.h" />
     <ClInclude Include="CL64_Ini_File.h" />
     <ClInclude Include="CL64_Keyboard.h" />
+    <ClInclude Include="CL64_Mesh_Manager.h" />
     <ClInclude Include="CL64_Motioins.h" />
     <ClInclude Include="CL64_OGL_Listener.h" />
     <ClInclude Include="CL64_Ogre.h" />
@@ -225,6 +226,7 @@
     <ClCompile Include="CL64_Import_Ogre3D.cpp" />
     <ClCompile Include="CL64_Ini_File.cpp" />
     <ClCompile Include="CL64_Keyboard.cpp" />
+    <ClCompile Include="CL64_Mesh_Manager.cpp" />
     <ClCompile Include="CL64_Motioins.cpp" />
     <ClCompile Include="CL64_OGL_Listener.cpp" />
     <ClCompile Include="CL64_Ogre.cpp" />
