@@ -88,7 +88,7 @@ public:
 	void InitApp(void);
 	void Init_Dialogs(void);
 
-	void Say(const char* Message);
+	void Say(const char* Message, char* Message2 = NULL);
 	void Say_Win(const char* Message);
 	void Say_Int(int Value);
 	void Say_Float(float Value);

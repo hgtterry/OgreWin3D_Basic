@@ -21,7 +21,7 @@ public:
 	CL64_Dialogs(void);
 	~CL64_Dialogs(void);
 
-	void Message(char* pString);
+	void Message(char* pString, char* pString2);
 	void Start_Import_Options_Dlg();
 	void PleaseWait();
 	void Show_YesNo_Dlg(char* Text, char* Text2);
@@ -64,7 +64,8 @@ private:
 	void Fill_Face_Combo(HWND hDlg);
 	void Read_File(char* mFile, HWND hDlg);
 
-	char Message_Text[MAX_PATH];
+	char Message_Text_Header[MAX_PATH];
+	char Message_Text_Message[MAX_PATH];
 
 	char MessageString[MAX_PATH];	// Yes No Dialog
 	char MessageString2[MAX_PATH];	// Yes No Dialog

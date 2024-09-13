@@ -242,6 +242,9 @@ bool CL64_Importers::Load_Ogre_Model(bool Use_File_Dialog)
 	App->CL_Props_Textures->Get_First_Texture_Ogre();
 	App->CL_Ogre->RenderFrame(3);
 
+	
+	App->Say("Mesh Imported", (LPSTR)App->CL_Scene->FileName);
+	
 	//Get_Textures();
 
 	return 1;

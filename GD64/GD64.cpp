@@ -293,10 +293,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		{
 			bool test = App->CL_Importers->Load_Ogre_Model(true);
 
-			if (test == 1)
+			/*if (test == 1)
 			{
 				App->Say("Mesh Imported");
-			}
+			}*/
 
 			return TRUE;
 		}

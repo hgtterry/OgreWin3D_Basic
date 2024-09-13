@@ -183,11 +183,22 @@ void CL64_App::Init_Dialogs(void)
 // *************************************************************************
 // *				Say:- Terry and Hazel Flanigan 2024					   *
 // *************************************************************************
-void CL64_App::Say(const char* Message)
+void CL64_App::Say(const char* Message, char* Message2)
 {
 	char text[MAX_PATH];
+	char text2[MAX_PATH];
+
 	strcpy(text, Message);
-	App->CL_Dialogs->Message(text);
+	if (Message2 == NULL)
+	{
+		strcpy(text2, " ");
+	}
+	else
+	{
+		strcpy(text2, Message2);
+	}
+
+	App->CL_Dialogs->Message(text, text2);
 }
 
 // *************************************************************************
@@ -218,8 +229,10 @@ void CL64_App::Set_Title()
 void CL64_App::Debug_Text()
 {
 	char text[MAX_PATH];
+	char text2[MAX_PATH];
 	strcpy(text, "Here Debug");
-	App->CL_Dialogs->Message(text);
+	strcpy(text2, " ");
+	App->CL_Dialogs->Message(text,text2);
 }
 
 // *************************************************************************

@@ -20,7 +20,9 @@ appreciated but is not required.
 
 CL64_Dialogs::CL64_Dialogs(void)
 {
-	Message_Text[0] = 0;
+	Message_Text_Header[0] = 0;
+	Message_Text_Message[0] = 0;
+
 	MessageString[0] = 0;
 	MessageString2[0] = 0;
 
@@ -54,9 +56,19 @@ CL64_Dialogs::~CL64_Dialogs(void)
 // *************************************************************************
 // *	  			Message:- Terry and Hazel Flanigan 2024				   *
 // *************************************************************************
-void CL64_Dialogs::Message(char* pString)
+void CL64_Dialogs::Message(char* pString, char* pString2)
 {
-	strcpy(Message_Text, pString);
+	Message_Text_Header[0] = 0;
+	Message_Text_Message[0] = 0;
+
+	strcpy(Message_Text_Header, " ");
+	strcat(Message_Text_Header, pString);
+	strcat(Message_Text_Header, " ");
+
+	strcpy(Message_Text_Message, " ");
+	strcat(Message_Text_Message, pString2);
+	strcat(Message_Text_Message, " ");
+
 	DialogBox(App->hInst, (LPCTSTR)IDD_MESSAGE, App->Fdlg, (DLGPROC)Message_Proc);
 }
 
@@ -70,10 +82,12 @@ LRESULT CALLBACK CL64_Dialogs::Message_Proc(HWND hDlg, UINT message, WPARAM wPar
 	case WM_INITDIALOG:
 	{
 		SendDlgItemMessage(hDlg, IDC_STTEXT, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_STMESSAGE, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BANNER, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
-		SetDlgItemText(hDlg, IDC_STTEXT, App->CL_Dialogs->Message_Text);
+		SetDlgItemText(hDlg, IDC_STTEXT, App->CL_Dialogs->Message_Text_Header);
+		SetDlgItemText(hDlg, IDC_STMESSAGE, App->CL_Dialogs->Message_Text_Message);
 
 		return TRUE;
 	}
@@ -82,18 +96,27 @@ LRESULT CALLBACK CL64_Dialogs::Message_Proc(HWND hDlg, UINT message, WPARAM wPar
 	{
 		if (GetDlgItem(hDlg, IDC_BANNER) == (HWND)lParam)
 		{
-			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 255));
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->AppBackground;
 		}
 		if (GetDlgItem(hDlg, IDC_STTEXT) == (HWND)lParam)
 		{
-			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->AppBackground;
 		}
+
+		if (GetDlgItem(hDlg, IDC_STMESSAGE) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
 		return FALSE;
 	}
 
