@@ -1205,6 +1205,6 @@ void CL64_Dialogs::Read_File(char* mFile, HWND hDlg)
 // *************************************************************************
 void CL64_Dialogs::Material_Search(char* ItemString)
 {
-	SendDlgItemMessage(FileViewer_Hwnd, IDC_LST_FILE, LB_SELECTSTRING, (WPARAM)-1, (LPARAM)ItemString);
-
+	int Index = SendDlgItemMessage(FileViewer_Hwnd, IDC_LST_FILE, LB_SELECTSTRING, (WPARAM)-1, (LPARAM)ItemString);
+	SendDlgItemMessage(FileViewer_Hwnd, IDC_LST_FILE, LB_SETTOPINDEX, (WPARAM)Index, (LPARAM)0);
 }
