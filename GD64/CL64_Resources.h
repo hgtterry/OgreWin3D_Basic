@@ -49,7 +49,7 @@ public:
 
 private:
 
-	static LRESULT CALLBACK Resources_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Proc_Resources(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	bool Scan_Resource_Group(Ogre::String ResourceGroup);
 	void Get_Resource_Groups();

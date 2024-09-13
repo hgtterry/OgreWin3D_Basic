@@ -59,6 +59,8 @@
 #define IDD_TEXTUREVIEWER               168
 #define IDD_FILEVIEWER                  169
 #define IDD_PROPS_TEXTURES              170
+#define IDD_TEXTUREVIEWER1              171
+#define IDD_PROPS_TEXTUREVIEWER         171
 #define IDC_CK_SU_FULLSCREEN            1000
 #define IDC_ST_STARTUP                  1001
 #define IDC_CK_SU_FULL3DVIEW            1002
@@ -104,6 +106,7 @@
 #define IDC_BTSHOWBONES                 1010
 #define IDC_CKVERYSLOW                  1010
 #define IDC_BT_TD_RESOURCETAB           1010
+#define IDC_BT_PT_VIEWMAT               1010
 #define IDC_TBSHOWHAIR                  1011
 #define IDC_BT_TD_DEBUG_PHYSICSDEBUG    1011
 #define IDC_TBSHOWGRID                  1012
@@ -170,7 +173,6 @@
 #define IDC_ST_PT_DIMENSIONS            1065
 #define IDC_ST_MATERIAL                 1066
 #define IDC_ST_TEXURENAME               1067
-#define IDC_ST_PT_MATERIAL2             1068
 #define IDC_ST_PT_MATERIALFILE          1068
 #define ID_VIEW_RESET                   32771
 #define ID_VIEW_MAX3DVIEW               32772

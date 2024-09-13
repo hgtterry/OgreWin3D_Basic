@@ -95,13 +95,13 @@ void CL64_Resources::UnloadUserResources()
 // *************************************************************************
 void CL64_Resources::Start_Resources()
 {
-	DialogBox(App->hInst, (LPCTSTR)IDD_RESOURCESMATERIAL, App->Fdlg, (DLGPROC)Resources_Proc);
+	DialogBox(App->hInst, (LPCTSTR)IDD_RESOURCESMATERIAL, App->Fdlg, (DLGPROC)Proc_Resources);
 }
 
 // *************************************************************************
 // *			Resources_Proc:- Terry and Hazel Flanigan 2024	  		   *
 // *************************************************************************
-LRESULT CALLBACK CL64_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK CL64_Resources::Proc_Resources(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	switch (message)
 	{
