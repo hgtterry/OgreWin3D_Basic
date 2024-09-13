@@ -201,7 +201,7 @@ Ogre::Entity* CL64_Converters::Convert_To_Ogre3D(bool Create)
 	remove(Material_PathAndFile);
 	
 	// Needs Looking At
-	App->CL_Import_Ogre3D->Get_Ogre_Mesh_Data(World_Ent);
+	App->CL_Mesh_Manager->Get_Ogre_Mesh_Data(World_Ent);
 
 	return World_Ent;
 }
@@ -343,7 +343,7 @@ void CL64_Converters::Create_MeshGroups(Ogre::Entity* Ogre_Entity)
 		Ogre::SubMesh const* subMesh = Ogre_Entity->getSubEntity(Count)->getSubMesh();
 		strcpy(App->CL_Scene->Group[Count]->MaterialName, subMesh->getMaterialName().c_str());
 
-		if (App->CL_Import_Ogre3D->Has_Shared_Vertices == 0)
+		if (App->CL_Mesh_Manager->Has_Shared_Vertices == 0)
 		{
 			App->CL_Scene->Group[Count]->GroupVertCount = subMesh->vertexData->vertexCount;
 			App->CL_Scene->Group[Count]->IndicesCount = subMesh->vertexData->vertexCount;

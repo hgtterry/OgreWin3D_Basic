@@ -460,6 +460,9 @@ bool CL64_Props_Textures::View_Texture(char* TextureName, char* MaterialName)
 			Update_Texture_Ogre();
 
 			App->CL_Props_Textures->Enable_Export_Button(true);
+
+			remove(mFileName);
+
 			return 1;
 		}
 	}
