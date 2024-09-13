@@ -225,7 +225,6 @@ LRESULT CALLBACK CL64_Props_Textures::Proc_Textures_Dialog(HWND hDlg, UINT messa
 			strcpy(App->CL_Resources->mSelected_File, App->CL_Scene->Group[App->CL_Props_Textures->Selected_Group]->Ogre_Material_File);
 			App->CL_Resources->View_File(App->CL_Scene->Group[App->CL_Props_Textures->Selected_Group]->Ogre_Material_File, App->Fdlg);
 
-
 			return TRUE;
 		}
 		

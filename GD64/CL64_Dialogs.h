@@ -30,6 +30,7 @@ public:
 	bool Dialog_Text(int What_Check);
 	void Start_TextureViewer_Dialog(char* TextureFile, HWND Owner_hDlg);
 	void Start_FileViewer_Dialog(char* FFile, HWND Owner_hDlg);
+	void Material_Search(char* ItemString);
 
 	bool Canceled;
 	bool Flag_Convert_to_Ogre;
