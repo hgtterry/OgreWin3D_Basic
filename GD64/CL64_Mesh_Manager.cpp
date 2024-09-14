@@ -453,7 +453,7 @@ bool CL64_Mesh_Manager::Get_SubPoseTextureUV(Ogre::MeshPtr mesh, int SubMesh)
 		m_iCoordSet = i - 2;
 		if (!texcoordElem)
 		{
-			App->Say("no TextCords");
+			//App->Say("no TextCords");
 			return false;
 		}
 		HardwareVertexBufferSharedPtr vbuf = vertex_data->vertexBufferBinding->getBuffer(texcoordElem->getSource());

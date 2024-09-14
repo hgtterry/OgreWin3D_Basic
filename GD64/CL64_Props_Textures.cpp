@@ -482,7 +482,7 @@ void CL64_Props_Textures::Texture_To_HBITMP(char* TextureFileName)
 }
 
 // *************************************************************************
-// *			 Get_First_Texture_Ogre:- Terry and Hazel Flanigan 2024	 	   *
+// *		Get_First_Texture_Ogre:- Terry and Hazel Flanigan 2024	 	   *
 // *************************************************************************
 void CL64_Props_Textures::Get_First_Texture_Ogre()
 {
@@ -503,6 +503,7 @@ void CL64_Props_Textures::Get_First_Texture_Ogre()
 			App->CL_Ogre->OGL_Listener->Selected_Face_Group = 0;
 
 			App->CL_Resources->mSelected_Resource_Group = "App_Resource_Group";
+
 			App->CL_Props_Textures->View_Texture(mTextureName, mMaterialName);
 		}
 		else
@@ -519,6 +520,10 @@ void CL64_Props_Textures::Get_First_Texture_Ogre()
 			if (App->CL_Scene->Group[0]->Ogre_Texture_IsValid == 1)
 			{
 				App->CL_Props_Textures->View_Texture(mTextureName, mMaterialName);
+			}
+			else
+			{
+				App->CL_Scene->Group[0]->Base_Bitmap = LoadBitmap(App->hInst, MAKEINTRESOURCE(IDB_DUMMY));
 			}
 		}
 	}
