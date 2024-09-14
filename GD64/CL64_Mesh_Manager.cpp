@@ -33,10 +33,11 @@ bool CL64_Mesh_Manager::Ogre_To_Mesh_Data(Ogre::Entity* Ogre_Entity)
 {
 	Convert_To_Mesh_Data(Ogre_Entity);
 
+	
 	App->CL_Scene->Set_BondingBox_Model(true);
 	App->CL_Converters->Get_SkeletonInstance(Ogre_Entity);
 	Get_Ogre_Mesh_Data(Ogre_Entity);
-
+	
 	App->CL_ImGui->flag_Show_Model_Data = 1;
 	App->CL_ImGui->flag_Show_Ogre_Data = 1;
 
@@ -199,7 +200,7 @@ void CL64_Mesh_Manager::Get_Ogre_Mesh_Data(Ogre::Entity* Ogre_Entity)
 	{
 		App->CL_Scene->S_OgreMeshData[0]->mStrSkeleton = "No";
 	}
-
+	
 	// ---------------------------------------------------------------
 
 	App->CL_Scene->S_OgreMeshData[0]->mSubmeshes.resize(0);
@@ -210,36 +211,53 @@ void CL64_Mesh_Manager::Get_Ogre_Mesh_Data(Ogre::Entity* Ogre_Entity)
 	// ------------------------------- Materials 
 	Count = 0;
 	int NumSubEnts = Ogre_Entity->getNumSubEntities();
-
+	
 	while (Count < NumSubEnts)
 	{
-		// Materail
+
+		// Material
 		char mMaterial[MAX_PATH];
 		Ogre::SubEntity* subEnt = Ogre_Entity->getSubEntity(Count);
 		strcpy(mMaterial, subEnt->getMaterialName().c_str());
-		strcpy(App->CL_Scene->Group[Count]->Ogre_Material, mMaterial);
 
-		char nn[25];
-		char MatId[MAX_PATH];
-		strcpy(MatId, mMaterial);
-		strcat(MatId, "##");
-		strcat(MatId, _itoa(Count, nn, 10));
-		strcpy(App->CL_Scene->Group[Count]->Ogre_ImGui_MatId, MatId);
+		if (App->CL_Scene->Group[Count])
+		{
+			strcpy(App->CL_Scene->Group[Count]->Ogre_Material, mMaterial);
+			char nn[25];
+			char MatId[MAX_PATH];
+			strcpy(MatId, mMaterial);
+			strcat(MatId, "##");
+			strcat(MatId, _itoa(Count, nn, 10));
+			strcpy(App->CL_Scene->Group[Count]->Ogre_ImGui_MatId, MatId);
 
-		// Texture
-		char mTexture[MAX_PATH];
-		Ogre::MaterialPtr MatCurent;
-		MatCurent = static_cast<Ogre::MaterialPtr> (Ogre::MaterialManager::getSingleton().getByName(mMaterial));
-		strcpy(mTexture, MatCurent->getTechnique(0)->getPass(0)->getTextureUnitState(0)->getTextureName().c_str());
-		strcpy(App->CL_Scene->Group[Count]->Ogre_TextureName, mTexture);
+			// Texture
+			char mTexture[MAX_PATH];
+			Ogre::MaterialPtr MatCurent;
+			MatCurent = static_cast<Ogre::MaterialPtr> (Ogre::MaterialManager::getSingleton().getByName(mMaterial));
 
-		App->CL_Scene->Group[Count]->Ogre_MipMaps = MatCurent->getTechnique(0)->getPass(0)->getTextureUnitState(0)->getNumMipmaps();
+			if (MatCurent->getNumTechniques() > 0)
+			{
 
-		strcpy(App->CL_Scene->Group[Count]->Ogre_Material_File, MatCurent->getOrigin().c_str());
+				int TUSCount = MatCurent->getTechnique(0)->getPass(0)->getNumTextureUnitStates();
+
+				if (TUSCount > 0)
+				{
+					strcpy(mTexture, MatCurent->getTechnique(0)->getPass(0)->getTextureUnitState(0)->getTextureName().c_str());
+
+					strcpy(App->CL_Scene->Group[Count]->Ogre_TextureName, mTexture);
+					App->CL_Scene->Group[Count]->Ogre_Texture_IsValid = 1;
+					App->CL_Scene->Group[Count]->Ogre_MipMaps = MatCurent->getTechnique(0)->getPass(0)->getTextureUnitState(0)->getNumMipmaps();
+
+				}
+
+				strcpy(App->CL_Scene->Group[Count]->Ogre_Material_File, MatCurent->getOrigin().c_str());
+
+			}
+		}
 
 		Count++;
 	}
-
+	
 	Count = 0;
 	App->CL_Scene->S_OgreMeshData[0]->mStrName = Ogre_Entity->getName();
 

@@ -195,14 +195,21 @@ bool CL64_Importers::Load_Ogre_Model(bool Use_File_Dialog)
 
 	}
 
-	App->CL_Scene->Imported_Ogre_Ent = App->CL_Ogre->mSceneMgr->createEntity("Imported_Entity", App->CL_Scene->FileName, App->CL_Resources->Ogre_Loader_Resource_Group);
-	App->CL_Scene->Imported_Ogre_Node = App->CL_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
-	App->CL_Scene->Imported_Ogre_Node->attachObject(App->CL_Scene->Imported_Ogre_Ent);
+	try
+	{
+		App->CL_Scene->Imported_Ogre_Ent = App->CL_Ogre->mSceneMgr->createEntity("Imported_Entity", App->CL_Scene->FileName, App->CL_Resources->Ogre_Loader_Resource_Group);
+		App->CL_Scene->Imported_Ogre_Node = App->CL_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+		App->CL_Scene->Imported_Ogre_Node->attachObject(App->CL_Scene->Imported_Ogre_Ent);
 
-	App->CL_Scene->Imported_Ogre_Node->setVisible(true);
-	App->CL_Scene->Imported_Ogre_Node->setOrientation(Ogre::Quaternion::IDENTITY);
-	App->CL_Scene->Imported_Ogre_Node->setPosition(0, 0, 0);
-	App->CL_Scene->Imported_Ogre_Node->setScale(1, 1, 1);
+		App->CL_Scene->Imported_Ogre_Node->setVisible(true);
+		App->CL_Scene->Imported_Ogre_Node->setOrientation(Ogre::Quaternion::IDENTITY);
+		App->CL_Scene->Imported_Ogre_Node->setPosition(0, 0, 0);
+		App->CL_Scene->Imported_Ogre_Node->setScale(1, 1, 1);
+	}
+	catch (Ogre::Exception& e)
+	{
+		App->Say(e.getFullDescription().c_str());
+	}
 
 	
 	Scan_Material_Files();
@@ -288,25 +295,34 @@ void CL64_Importers::Reload_Ogre_Model(void)
 	{
 		Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();// App->CL_Scene->Texture_FolderPath);
 	}
-	catch (...)
+	catch (Ogre::Exception& e)
 	{
-
+		App->Say(e.getFullDescription().c_str());
 	}
 
-	App->CL_Scene->Imported_Ogre_Ent = App->CL_Ogre->mSceneMgr->createEntity("UserMesh", App->CL_Scene->FileName, App->CL_Resources->Ogre_Loader_Resource_Group);
-	App->CL_Scene->Imported_Ogre_Node = App->CL_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
-	App->CL_Scene->Imported_Ogre_Node->attachObject(App->CL_Scene->Imported_Ogre_Ent);
+	try
+	{
+		App->CL_Scene->Imported_Ogre_Ent = App->CL_Ogre->mSceneMgr->createEntity("UserMesh", App->CL_Scene->FileName, App->CL_Resources->Ogre_Loader_Resource_Group);
+		App->CL_Scene->Imported_Ogre_Node = App->CL_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+		App->CL_Scene->Imported_Ogre_Node->attachObject(App->CL_Scene->Imported_Ogre_Ent);
 
-	App->CL_Scene->Imported_Ogre_Node->setVisible(true);
-	App->CL_Scene->Imported_Ogre_Node->setOrientation(Ogre::Quaternion::IDENTITY);
-	App->CL_Scene->Imported_Ogre_Node->setPosition(0, 0, 0);
-	App->CL_Scene->Imported_Ogre_Node->setScale(1, 1, 1);
+		App->CL_Scene->Imported_Ogre_Node->setVisible(true);
+		App->CL_Scene->Imported_Ogre_Node->setOrientation(Ogre::Quaternion::IDENTITY);
+		App->CL_Scene->Imported_Ogre_Node->setPosition(0, 0, 0);
+		App->CL_Scene->Imported_Ogre_Node->setScale(1, 1, 1);
+	}
+	catch (Ogre::Exception& e)
+	{
+		App->Say(e.getFullDescription().c_str());
+	}
 
+	
 	Scan_Material_Files();
-
+	
 	App->CL_Ogre->Show_Test_Mesh(false);
 	App->CL_Camera->Reset_View();
 
+	
 	if (App->CL_Scene->Imported_Ogre_Ent)
 	{
 		Ogre::Vector3 vCenter = Ogre::Vector3(0.0f, (App->CL_Scene->Imported_Ogre_Ent->getBoundingBox().getMaximum().y +
@@ -329,37 +345,44 @@ void CL64_Importers::Reload_Ogre_Model(void)
 // *************************************************************************
 bool CL64_Importers::Ogre_Resource_CFG_Loader(char* Extension, char* Extension2)
 {
-	char Start_Directory[MAX_PATH];
-	strcpy(Start_Directory, "");
-
-	if (App->CL_Preferences->Use_Default_Directories == 1)
+	try
 	{
-		strcpy(Start_Directory, App->GD_Directory_FullPath);
-		strcat(Start_Directory, "\\Models\\Ogre3D_Models");
+		char Start_Directory[MAX_PATH];
+		strcpy(Start_Directory, "");
 
-		App->CL_Preferences->Use_Default_Directories = 0;
-	}
+		if (App->CL_Preferences->Use_Default_Directories == 1)
+		{
+			strcpy(Start_Directory, App->GD_Directory_FullPath);
+			strcat(Start_Directory, "\\Models\\Ogre3D_Models");
 
-	int Result = App->CL_File_IO->Open_Resource_File((LPSTR)"Ogre Config   *.cfg\0*.cfg\0", (LPSTR)"Ogre Config", Start_Directory);
-	if (Result == 0)
-	{
-		return 0;
-	}
+			App->CL_Preferences->Use_Default_Directories = 0;
+		}
+
+		int Result = App->CL_File_IO->Open_Resource_File((LPSTR)"Ogre Config   *.cfg\0*.cfg\0", (LPSTR)"Ogre Config", Start_Directory);
+		if (Result == 0)
+		{
+			return 0;
+		}
+
+		App->CL_Dialogs->PleaseWait();
 	
-	App->CL_Dialogs->PleaseWait();
+		App->CL_Resources->Load_OgreCFG_Resources(App->CL_File_IO->OgreCFG_Path_FileName);
 
-	App->CL_Resources->Load_OgreCFG_Resources(App->CL_File_IO->OgreCFG_Path_FileName);
+		App->CL_Resources->mSelected_Resource_Group = App->CL_Resources->Ogre_Loader_Resource_Group;
 
-	App->CL_Resources->mSelected_Resource_Group = App->CL_Resources->Ogre_Loader_Resource_Group;
+		if (Flag_Reload_Ogre_Model == 1 && App->CL_Import_Ogre3D->flag_Ogre_Model_Loaded == 1)
+		{
+			Reload_Ogre_Model();
+		}
 
-	if (Flag_Reload_Ogre_Model == 1 && App->CL_Import_Ogre3D->flag_Ogre_Model_Loaded == 1)
-	{
-		Reload_Ogre_Model();
+		App->CL_Ogre->RenderFrame(8);
+
+		EndDialog(App->ViewPLeaseWait, LOWORD(0));
 	}
-
-	App->CL_Ogre->RenderFrame(8);
-
-	EndDialog(App->ViewPLeaseWait, LOWORD(0));
+	catch (Ogre::Exception& e)
+	{
+		App->Say(e.getFullDescription().c_str());
+	}
 
 	return 1;
 }

@@ -490,10 +490,8 @@ void CL64_Props_Textures::Get_First_Texture_Ogre()
 	if (App->CL_Scene->GroupCount > 0)
 	{
 		bool test = strcmp(App->CL_Scene->Group[0]->Ogre_Material, "No_Material_Loaded");
-		if (test == 0)
+		if (test == 0) // Match
 		{
-			//App->Say("Check Here No Material");
-
 			if (App->CL_Scene->GroupCount > 0)
 			{
 				strcpy(mTextureName, App->CL_Scene->Group[0]->Ogre_TextureName);
@@ -509,10 +507,7 @@ void CL64_Props_Textures::Get_First_Texture_Ogre()
 		}
 		else
 		{
-			Ogre::MaterialPtr MatCurent;
-			MatCurent = static_cast<Ogre::MaterialPtr> (Ogre::MaterialManager::getSingleton().getByName(App->CL_Scene->Group[0]->Ogre_Material));
-			strcpy(mTextureName, MatCurent->getTechnique(0)->getPass(0)->getTextureUnitState(0)->getTextureName().c_str());
-
+			strcpy(mTextureName, App->CL_Scene->Group[0]->Ogre_TextureName);
 			strcpy(mMaterialName, App->CL_Scene->Group[0]->Ogre_Material);
 
 			bool test = strcmp(mMaterialName, "No_Material_Loaded");
@@ -521,7 +516,10 @@ void CL64_Props_Textures::Get_First_Texture_Ogre()
 				App->CL_Resources->mSelected_Resource_Group = "App_Resource_Group";
 			}
 
-			App->CL_Props_Textures->View_Texture(mTextureName, mMaterialName);
+			if (App->CL_Scene->Group[0]->Ogre_Texture_IsValid == 1)
+			{
+				App->CL_Props_Textures->View_Texture(mTextureName, mMaterialName);
+			}
 		}
 	}
 }

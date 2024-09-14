@@ -18,6 +18,7 @@ appreciated but is not required.
 #include "CL64_Ogre.h"
 
 #include "SdkSample.h"
+#include "OgreShaderGenerator.h"
 
 CL64_Ogre::CL64_Ogre(void)
 {
@@ -65,6 +66,8 @@ void CL64_Ogre::InitOgre(void)
 	createViewports();
 	Initialise_Resources();
 
+	
+	//mViewport->setMaterialScheme(Ogre::RTShader::ShaderGenerator::DEFAULT_SCHEME_NAME);
 	/*Ogre::RTShader::ShaderGenerator::initialize();
 	Ogre::RTShader::ShaderGenerator* shaderGenerator = Ogre::RTShader::ShaderGenerator::getSingletonPtr();
 	shaderGenerator->addSceneManager(mSceneMgr);*/
@@ -156,7 +159,44 @@ bool CL64_Ogre::SetUpResources(void)
 	Ogre::ResourceGroupManager::getSingleton().addResourceLocation("Media/Core_Data/GDCore.zip", "Zip", App_Resource_Group);
 	Ogre::ResourceGroupManager::getSingleton().addResourceLocation("Media/Core_Data/Files", "FileSystem", App_Resource_Group);
 
+	/*if (flag_Use_RTSS == 1)
+	{
+		Ogre::ResourceGroupManager::getSingleton().addResourceLocation("Media/RTShaderLib",
+			"FileSystem", App_Resource_Group);
+		Ogre::ResourceGroupManager::getSingleton().addResourceLocation("Media/RTShaderLib/GLSL",
+			"FileSystem", App_Resource_Group);
+		Ogre::ResourceGroupManager::getSingleton().addResourceLocation("Media/RTShaderLib/GLSLES",
+			"FileSystem", App_Resource_Group);
+		Ogre::ResourceGroupManager::getSingleton().addResourceLocation("Media/RTShaderLib/HLSL",
+			"FileSystem", App_Resource_Group);
+		Ogre::ResourceGroupManager::getSingleton().addResourceLocation("Media/RTShaderLib/Cg",
+			"FileSystem", App_Resource_Group);
+	}*/
+
 	App->CL_Ogre->Log_Message_To_File((LPSTR)"SetUpResources");
+
+	return 1;
+}
+
+// *************************************************************************
+// *		Initialise_Resources:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+bool CL64_Ogre::Initialise_Resources(void)
+{
+	// Initialize, parse scripts etc
+	Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
+
+	/*if (flag_Use_RTSS == 1)
+	{
+		bool success = Ogre::RTShader::ShaderGenerator::initialize();
+		if (success)
+		{
+			Ogre::RTShader::ShaderGenerator* shaderGenerator = Ogre::RTShader::ShaderGenerator::getSingletonPtr();
+			shaderGenerator->addSceneManager(mSceneMgr);
+		}
+	}*/
+
+	App->CL_Ogre->Log_Message_To_File((LPSTR)"Initialise_Resources");
 
 	return 1;
 }
@@ -260,19 +300,6 @@ bool CL64_Ogre::createViewports(void)
 	mWindow->getViewport(0)->setBackgroundColour(fadeColour);
 	
 	App->CL_Ogre->Log_Message_To_File((LPSTR)"createViewports");
-
-	return 1;
-}
-
-// *************************************************************************
-// *		Initialise_Resources:- Terry and Hazel Flanigan 2024		   *
-// *************************************************************************
-bool CL64_Ogre::Initialise_Resources(void)
-{
-	// Initialize, parse scripts etc
-	Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
-
-	App->CL_Ogre->Log_Message_To_File((LPSTR)"Initialise_Resources");
 
 	return 1;
 }
