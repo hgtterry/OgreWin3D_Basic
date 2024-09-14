@@ -523,7 +523,9 @@ void CL64_Props_Textures::Get_First_Texture_Ogre()
 			}
 			else
 			{
-				App->CL_Scene->Group[0]->Base_Bitmap = LoadBitmap(App->hInst, MAKEINTRESOURCE(IDB_DUMMY));
+				App->CL_Scene->Group[0]->Base_Bitmap = LoadBitmap(App->hInst, MAKEINTRESOURCE(IDB_NO_TEXTURE));
+				Sel_BaseBitmap = App->CL_Scene->Group[0]->Base_Bitmap;
+				Update_Texture_Ogre();
 			}
 		}
 	}
