@@ -388,7 +388,15 @@ void CL64_ImGui::Show_Ogre_Model_Data_GUI(void)
 						
 						App->CL_Props_Textures->Selected_Group = Count;
 						App->CL_Ogre->OGL_Listener->Selected_Face_Group = Count;
-						App->CL_Props_Textures->View_Texture(Texture, mMaterial);
+						if (App->CL_Scene->Group[Count]->Ogre_Texture_IsValid == 1)
+						{
+							App->CL_Props_Textures->View_Texture(Texture, mMaterial);
+						}
+						else
+						{
+							App->CL_Props_Textures->Sel_BaseBitmap = App->CL_Scene->Group[Count]->Base_Bitmap;
+							App->CL_Props_Textures->Update_Texture_Ogre();
+						}
 
 						listMaterialItems[PreviouseMaterial] = 0;
 						listMaterialItems[Count] = 1;
