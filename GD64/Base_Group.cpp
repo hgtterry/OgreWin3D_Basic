@@ -49,6 +49,7 @@ Base_Group::Base_Group()
 	Ogre_ImGui_MatId[0] = 0;
 	Ogre_MipMaps = 0;
 	Ogre_Texture_IsValid = 0;
+	Ogre_NumTextureUnits = 0;
 }
 
 

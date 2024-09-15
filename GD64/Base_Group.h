@@ -74,6 +74,7 @@ public:
 	char Ogre_Material_File[MAX_PATH];
 	char Ogre_ImGui_MatId[MAX_PATH];
 	int Ogre_MipMaps;
+	int Ogre_NumTextureUnits;
 	bool Ogre_Texture_IsValid;
 };
 

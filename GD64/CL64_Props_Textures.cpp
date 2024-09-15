@@ -101,6 +101,7 @@ LRESULT CALLBACK CL64_Props_Textures::Proc_Textures_Dialog(HWND hDlg, UINT messa
 		SendDlgItemMessage(hDlg, IDC_BT_PT_VIEWMAT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
 		SendDlgItemMessage(hDlg, IDC_ST_PT_MATERIALFILE, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_ST_PT_NUMTEXTUNITS, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
 		
 		SetWindowLongPtr(GetDlgItem(hDlg, IDC_PROP_BASETEXTURE), GWLP_WNDPROC, (LONG_PTR)ViewerBasePic);
 		
@@ -144,6 +145,13 @@ LRESULT CALLBACK CL64_Props_Textures::Proc_Textures_Dialog(HWND hDlg, UINT messa
 		}
 
 		if (GetDlgItem(hDlg, IDC_ST_PT_MATERIALFILE) == (HWND)lParam)
+		{
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		if (GetDlgItem(hDlg, IDC_ST_PT_NUMTEXTUNITS) == (HWND)lParam)
 		{
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
 			SetBkMode((HDC)wParam, TRANSPARENT);
@@ -390,9 +398,9 @@ bool CL64_Props_Textures::Update_Texture_Assimp()
 }
 
 // *************************************************************************
-// *			Update_Texture_Ogre:- Terry and Hazel Flanigan 2024		   *
+// *		Update_Texture_Ogre_Dlg:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
-bool CL64_Props_Textures::Update_Texture_Ogre()
+bool CL64_Props_Textures::Update_Texture_Ogre_Dlg()
 {
 	int Index = Selected_Group;
 
@@ -400,6 +408,10 @@ bool CL64_Props_Textures::Update_Texture_Ogre()
 	SetDlgItemText(Props_Dlg_Hwnd, IDC_PT_TEXTURENAME, mTextureName);
 
 	SetDlgItemText(Props_Dlg_Hwnd, IDC_ST_PT_MATERIALFILE, App->CL_Scene->Group[Index]->Ogre_Material_File);
+
+	char NumTextUnits[20];
+
+	SetDlgItemText(Props_Dlg_Hwnd, IDC_ST_PT_NUMTEXTUNITS, _itoa(App->CL_Scene->Group[Index]->Ogre_NumTextureUnits, NumTextUnits,10));
 	
 	RightGroups_Visable = 1;
 	ShowWindow(Props_Dlg_Hwnd, 1);
@@ -457,7 +469,7 @@ bool CL64_Props_Textures::View_Texture(char* TextureName, char* MaterialName)
 
 			Texture_To_HBITMP(mFileName);
 
-			Update_Texture_Ogre();
+			Update_Texture_Ogre_Dlg();
 
 			App->CL_Props_Textures->Enable_Export_Button(true);
 
@@ -525,7 +537,7 @@ void CL64_Props_Textures::Get_First_Texture_Ogre()
 			{
 				App->CL_Scene->Group[0]->Base_Bitmap = LoadBitmap(App->hInst, MAKEINTRESOURCE(IDB_NO_TEXTURE));
 				Sel_BaseBitmap = App->CL_Scene->Group[0]->Base_Bitmap;
-				Update_Texture_Ogre();
+				Update_Texture_Ogre_Dlg();
 			}
 		}
 	}

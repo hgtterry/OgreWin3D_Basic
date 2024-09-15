@@ -407,7 +407,7 @@ void CL64_ImGui::Show_Ogre_Model_Data_GUI(void)
 						else
 						{
 							App->CL_Props_Textures->Sel_BaseBitmap = App->CL_Scene->Group[Count]->Base_Bitmap;
-							App->CL_Props_Textures->Update_Texture_Ogre();
+							App->CL_Props_Textures->Update_Texture_Ogre_Dlg();
 						}
 
 						listMaterialItems[PreviouseMaterial] = 0;
