@@ -26,6 +26,7 @@ public:
 	void Init_ImGui(void);
 	void ImGui_Set_Colours(void);
 	void Load_Font(void);
+	void Reset_Material_Index(void);
 
 	float PosX;
 	float PosY;

@@ -47,7 +47,7 @@ CL64_ImGui::CL64_ImGui(void)
 
 	PreviouseSubMesh = -1;
 
-	listMaterialItems[0] = { 1 };
+	listMaterialItems[0] = 1;
 	PreviouseMaterial = 0;
 }
 
@@ -64,6 +64,20 @@ void CL64_ImGui::Reset_Class(void)
 	flag_Show_Demo_Options = 0;
 	flag_Show_Model_Data = 0;
 	flag_Show_Ogre_Data = 0;
+
+	listMaterialItems[PreviouseMaterial] = 0;
+	listMaterialItems[0] = 1;
+	PreviouseMaterial = 0;
+}
+
+// *************************************************************************
+// *			Reset_Material_Index:- Terry and Hazel Flanigan 2024	   *
+// *************************************************************************
+void CL64_ImGui::Reset_Material_Index(void)
+{
+	listMaterialItems[PreviouseMaterial] = 0;
+	listMaterialItems[0] = 1;
+	PreviouseMaterial = 0;
 }
 
 // *************************************************************************
