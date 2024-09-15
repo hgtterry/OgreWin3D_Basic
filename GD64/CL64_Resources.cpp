@@ -64,10 +64,10 @@ void CL64_Resources::Reset_Class(void)
 	Destroy_Resources_Group(App->CL_Converters->Temp_Resource_Group);
 	Destroy_Resources_Group(App->CL_Ogre->World_Resource_Group);
 
-	if (Ogre_ExternalResourceLoaded == 0)
+	/*if (Ogre_ExternalResourceLoaded == 0)
 	{
 		Destroy_Resources_Group(App->CL_Resources->Ogre_Loader_Resource_Group);
-	}
+	}*/
 }
 
 // *************************************************************************
