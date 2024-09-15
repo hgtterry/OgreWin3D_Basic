@@ -66,12 +66,6 @@ void CL64_Ogre::InitOgre(void)
 	createViewports();
 	Initialise_Resources();
 
-	
-	//mViewport->setMaterialScheme(Ogre::RTShader::ShaderGenerator::DEFAULT_SCHEME_NAME);
-	/*Ogre::RTShader::ShaderGenerator::initialize();
-	Ogre::RTShader::ShaderGenerator* shaderGenerator = Ogre::RTShader::ShaderGenerator::getSingletonPtr();
-	shaderGenerator->addSceneManager(mSceneMgr);*/
-
 	createFrameListener();
 
 	manObj = mSceneMgr->createManualObject("sampleArea");
