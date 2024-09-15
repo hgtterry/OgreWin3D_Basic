@@ -65,9 +65,7 @@ void CL64_ImGui::Reset_Class(void)
 	flag_Show_Model_Data = 0;
 	flag_Show_Ogre_Data = 0;
 
-	listMaterialItems[PreviouseMaterial] = 0;
-	listMaterialItems[0] = 1;
-	PreviouseMaterial = 0;
+	Reset_Material_Index();
 }
 
 // *************************************************************************

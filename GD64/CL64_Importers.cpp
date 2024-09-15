@@ -375,6 +375,8 @@ bool CL64_Importers::Ogre_Resource_CFG_Loader(char* Extension, char* Extension2)
 			Reload_Ogre_Model();
 		}
 
+		App->CL_ImGui->Reset_Material_Index();
+
 		App->CL_Ogre->RenderFrame(8);
 
 		EndDialog(App->ViewPLeaseWait, LOWORD(0));

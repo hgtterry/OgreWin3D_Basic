@@ -69,13 +69,13 @@ void CL64_Dialogs::Message(char* pString, char* pString2)
 	strcat(Message_Text_Message, pString2);
 	strcat(Message_Text_Message, " ");
 
-	DialogBox(App->hInst, (LPCTSTR)IDD_MESSAGE, App->Fdlg, (DLGPROC)Message_Proc);
+	DialogBox(App->hInst, (LPCTSTR)IDD_MESSAGE, App->Fdlg, (DLGPROC)Proc_Message);
 }
 
 // *************************************************************************
 // *        	Message_Proc:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-LRESULT CALLBACK CL64_Dialogs::Message_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK CL64_Dialogs::Proc_Message(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	switch (message)
 	{
@@ -160,13 +160,13 @@ LRESULT CALLBACK CL64_Dialogs::Message_Proc(HWND hDlg, UINT message, WPARAM wPar
 // *************************************************************************
 void CL64_Dialogs::PleaseWait()
 {
-	App->ViewPLeaseWait = CreateDialog(App->hInst, (LPCTSTR)IDD_PLEASEWAIT, App->Fdlg, (DLGPROC)PleaseWait_Proc);
+	App->ViewPLeaseWait = CreateDialog(App->hInst, (LPCTSTR)IDD_PLEASEWAIT, App->Fdlg, (DLGPROC)Proc_PleaseWait);
 }
 
 // *************************************************************************
-// *			PleaseWait_Proc:- Terry and Hazel Flanigan 2024			   *
+// *			Proc_PleaseWait:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-LRESULT CALLBACK CL64_Dialogs::PleaseWait_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK CL64_Dialogs::Proc_PleaseWait(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	switch (message)
 	{
@@ -208,15 +208,15 @@ void CL64_Dialogs::Start_FPSLock_Dlg()
 {
 	if (App->CL_TopDlg->flag_FPS_Dlg_Running == 0)
 	{
-		FPSLock_Dlg_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_FPSLOCK, App->Fdlg, (DLGPROC)FPSLock_Proc);
+		FPSLock_Dlg_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_FPSLOCK, App->Fdlg, (DLGPROC)Proc_FPSLock);
 		App->CL_TopDlg->flag_FPS_Dlg_Running = 1;
 	}
 }
 
 // *************************************************************************
-// *			FPSLock_Proc:- Terry and Hazel Flanigan 2024			   *
+// *			Proc_FPSLock:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-LRESULT CALLBACK CL64_Dialogs::FPSLock_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK CL64_Dialogs::Proc_FPSLock(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	switch (message)
 	{
@@ -393,13 +393,13 @@ void CL64_Dialogs::Start_Import_Options_Dlg()
 {
 	Flag_Convert_to_Ogre = 0;
 
-	DialogBox(App->hInst, (LPCTSTR)IDD_IMPORT_OPTIONS, App->Fdlg, (DLGPROC)Import_Options_Dlg_Proc);
+	DialogBox(App->hInst, (LPCTSTR)IDD_IMPORT_OPTIONS, App->Fdlg, (DLGPROC)Proc_Import_Options_Dlg);
 }
 
 // *************************************************************************
-// *        Import_Options_Dlg_Proc:- Terry and Hazel Flanigan 2024		   *
+// *        Proc_Import_Options_Dlg:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
-LRESULT CALLBACK CL64_Dialogs::Import_Options_Dlg_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK CL64_Dialogs::Proc_Import_Options_Dlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
 
 	switch (message)
@@ -510,14 +510,14 @@ void CL64_Dialogs::Show_YesNo_Dlg(char* Text, char* Text2)
 	strcpy(MessageString, Text);
 	strcpy(MessageString2, Text2);
 
-	DialogBox(App->hInst, (LPCTSTR)IDD_YESNO, App->Fdlg, (DLGPROC)YesNo_Proc);
+	DialogBox(App->hInst, (LPCTSTR)IDD_YESNO, App->Fdlg, (DLGPROC)Proc_YesNo);
 
 }
 
 // *************************************************************************
-// *			YesNo_Proc_Proc:- Terry and Hazel Flanigan 2024	  		   *
+// *			Proc_YesNo:- Terry and Hazel Flanigan 2024		  		   *
 // *************************************************************************
-LRESULT CALLBACK CL64_Dialogs::YesNo_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK CL64_Dialogs::Proc_YesNo(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
 
 	switch (message)
@@ -607,13 +607,13 @@ LRESULT CALLBACK CL64_Dialogs::YesNo_Proc(HWND hDlg, UINT message, WPARAM wParam
 // *************************************************************************
 void CL64_Dialogs::Start_Speed_Camera_Dlg()
 {
-	DialogBox(App->hInst, (LPCTSTR)IDD_MOUSESENSITIVITY, App->MainHwnd, (DLGPROC)Speed_Camera_Proc);
+	DialogBox(App->hInst, (LPCTSTR)IDD_MOUSESENSITIVITY, App->MainHwnd, (DLGPROC)Proc_Speed_Camera);
 }
 
 // *************************************************************************
-// *		Speed_Camera_Proc:- Terry and Hazel Flanigan 2024	  		   *
+// *		Proc_Speed_Camera:- Terry and Hazel Flanigan 2024	  		   *
 // *************************************************************************
-LRESULT CALLBACK CL64_Dialogs::Speed_Camera_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK CL64_Dialogs::Proc_Speed_Camera(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
 
 	switch (message)
@@ -774,15 +774,15 @@ bool CL64_Dialogs::Dialog_Text(int What_Check)
 	Canceled = 0;
 	What_Check_Name = What_Check;
 
-	DialogBox(App->hInst, (LPCTSTR)IDD_TEXT_DIALOG, App->MainHwnd, (DLGPROC)Dialog_Text_Proc);
+	DialogBox(App->hInst, (LPCTSTR)IDD_TEXT_DIALOG, App->MainHwnd, (DLGPROC)Proc_Dialog_Text);
 
 	return 1;
 }
 
 // **************************************************************************
-// *				Dialog_Text_Proc:- Terry and Hazel Flanigan 2024		*
+// *				Proc_Dialog_Text:- Terry and Hazel Flanigan 2024		*
 // **************************************************************************
-LRESULT CALLBACK CL64_Dialogs::Dialog_Text_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK CL64_Dialogs::Proc_Dialog_Text(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	switch (message)
 	{
@@ -820,14 +820,14 @@ LRESULT CALLBACK CL64_Dialogs::Dialog_Text_Proc(HWND hDlg, UINT message, WPARAM 
 	{
 		LPNMHDR some_item = (LPNMHDR)lParam;
 
-		if (some_item->idFrom == IDOK && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDOK)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
 			return CDRF_DODEFAULT;
 		}
 
-		if (some_item->idFrom == IDCANCEL && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDCANCEL)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
@@ -871,13 +871,13 @@ LRESULT CALLBACK CL64_Dialogs::Dialog_Text_Proc(HWND hDlg, UINT message, WPARAM 
 void CL64_Dialogs::Start_TextureViewer_Dialog(char* TextureFile, HWND Owner_hDlg)
 {
 	strcpy(mTextureFile, TextureFile);
-	DialogBox(App->hInst, (LPCTSTR)IDD_TEXTUREVIEWER, Owner_hDlg, (DLGPROC)TextureViewer_Proc);
+	DialogBox(App->hInst, (LPCTSTR)IDD_TEXTUREVIEWER, Owner_hDlg, (DLGPROC)Proc_TextureViewer);
 }
 
 // **************************************************************************
-// *		TextureViewer_Proc:- Terry and Hazel Flanigan 2024				*
+// *		Proc_TextureViewer:- Terry and Hazel Flanigan 2024				*
 // **************************************************************************
-LRESULT CALLBACK CL64_Dialogs::TextureViewer_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK CL64_Dialogs::Proc_TextureViewer(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	switch (message)
 	{
@@ -887,7 +887,7 @@ LRESULT CALLBACK CL64_Dialogs::TextureViewer_Proc(HWND hDlg, UINT message, WPARA
 		SendDlgItemMessage(hDlg, IDC_ST_DETAILS, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_VIEWEXPORT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
-		SetWindowLongPtr(GetDlgItem(hDlg, IDC_BASETEXTURE), GWLP_WNDPROC, (LONG_PTR)ViewerBasePic);
+		SetWindowLongPtr(GetDlgItem(hDlg, IDC_BASETEXTURE), GWLP_WNDPROC, (LONG_PTR)Proc_ViewerBasePic);
 
 		App->CL_Dialogs->RightGroups_Hwnd = hDlg;
 		App->CL_Textures->Texture_To_HBITMP(App->CL_Dialogs->mTextureFile);
@@ -1007,9 +1007,9 @@ LRESULT CALLBACK CL64_Dialogs::TextureViewer_Proc(HWND hDlg, UINT message, WPARA
 }
 
 // *************************************************************************
-// *			ViewerBasePic:- Terry and Hazel Flanigan 2024	  		   *
+// *		Proc_ViewerBasePic:- Terry and Hazel Flanigan 2024		  	   *
 // *************************************************************************
-bool CALLBACK CL64_Dialogs::ViewerBasePic(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
+bool CALLBACK CL64_Dialogs::Proc_ViewerBasePic(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
 
 	if (msg == WM_PAINT)
@@ -1045,9 +1045,11 @@ bool CALLBACK CL64_Dialogs::ViewerBasePic(HWND hwnd, UINT msg, WPARAM wParam, LP
 		}
 
 		EndPaint(hwnd, &ps);
+
 		return 0;
 	}
-	return 0;// DefWindowProc(hwnd, msg, wParam, lParam);
+
+	return 0;
 }
 
 // *************************************************************************
@@ -1056,13 +1058,13 @@ bool CALLBACK CL64_Dialogs::ViewerBasePic(HWND hwnd, UINT msg, WPARAM wParam, LP
 void CL64_Dialogs::Start_FileViewer_Dialog(char* FFile, HWND Owner_hDlg)
 {
 	strcpy(mFile, FFile);
-	DialogBox(App->hInst, (LPCTSTR)IDD_FILEVIEWER, Owner_hDlg, (DLGPROC)FileViewer_Proc);
+	DialogBox(App->hInst, (LPCTSTR)IDD_FILEVIEWER, Owner_hDlg, (DLGPROC)Proc_FileViewer);
 }
 
 // **************************************************************************
-// *			FileViewer_Proc:- Terry and Hazel Flanigan 2024				*
+// *			Proc_FileViewer:- Terry and Hazel Flanigan 2024				*
 // **************************************************************************
-LRESULT CALLBACK CL64_Dialogs::FileViewer_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK CL64_Dialogs::Proc_FileViewer(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	switch (message)
 	{
@@ -1071,7 +1073,7 @@ LRESULT CALLBACK CL64_Dialogs::FileViewer_Proc(HWND hDlg, UINT message, WPARAM w
 		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ST_DETAILS, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_VIEWEXPORT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_LST_FILE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_LST_FILE, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
 
 		App->CL_Dialogs->FileViewer_Hwnd = hDlg;
 		
