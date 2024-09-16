@@ -292,15 +292,19 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		case ID_OGRE3D_MESH:
 		{
 			bool test = App->CL_Importers->Load_Ogre_Model(true);
-
-			/*if (test == 1)
-			{
-				App->Say("Mesh Imported");
-			}*/
-
+			EnableMenuItem(App->mMenu, ID_OGRE3D_RELOADMESH, MF_BYCOMMAND | MF_ENABLED);
 			return TRUE;
 		}
 
+		case ID_OGRE3D_RELOADMESH:
+		{
+			strcpy(App->CL_File_IO->Model_FileName, App->CL_Scene->FileName);
+			strcpy(App->CL_File_IO->Model_Path_FileName, App->CL_Scene->Path_FileName);
+			bool test = App->CL_Importers->Load_Ogre_Model(false);
+
+			return TRUE;
+		}
+		
 		case ID_OGRE3D_RESOURCEFILE:
 		{
 			bool test = App->CL_Importers->Ogre_Resource_CFG_Loader((LPSTR)"Ogre Config   *.cfg\0*.cfg\0", (LPSTR)"Ogre Config");

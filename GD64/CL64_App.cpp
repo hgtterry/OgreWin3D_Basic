@@ -178,6 +178,9 @@ void CL64_App::Init_Dialogs(void)
 
 	App->CL_Props_Textures->Start_Props_Textures_Dialog();
 	App->CL_Panels->Move_Panels();
+
+	EnableMenuItem(App->mMenu, ID_OGRE3D_RELOADMESH, MF_BYCOMMAND | MF_GRAYED);
+	EnableMenuItem(App->mMenu, ID_OGRE3D_RELOADRESOURCEFILE, MF_BYCOMMAND | MF_GRAYED);
 }
 
 // *************************************************************************

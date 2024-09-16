@@ -788,7 +788,7 @@ void CL64_ImGui::App_Debug(void)
 				ImGui::Separator();
 				ImGui::Text("Scene Just Name: %s", App->CL_Scene->JustName);
 				ImGui::Text("Scene File Name: %s", App->CL_Scene->FileName);
-				ImGui::Text("Texture Path Full: %s", App->CL_Scene->Path_FileName);
+				ImGui::Text("File Path Full: %s", App->CL_Scene->Path_FileName);
 				ImGui::Text("Model Folder: %s", App->CL_Scene->Model_FolderPath);
 				ImGui::Text("Texture Folder: %s", App->CL_Scene->Texture_FolderPath);
 				ImGui::Separator();
