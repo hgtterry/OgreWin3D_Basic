@@ -39,6 +39,9 @@ CL64_Resources::CL64_Resources(void)
 	Ogre_Loader_Resource_Group = "Ogre_Loader_Resource_Group";
 	mSelected_Resource_Group = "App_Resource_Group";
 
+	Resource_File_Path_And_File[0] = 0;
+	Resource_File_FileName[0] = 0;
+
 	FX_General_hLV =	nullptr;
 	Export_Button =		nullptr;
 	Resource_Dlg_hWnd = nullptr;

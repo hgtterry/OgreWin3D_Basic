@@ -39,6 +39,9 @@ public:
 
 	char mSelected_File[MAX_PATH];
 
+	char Resource_File_Path_And_File[MAX_PATH];
+	char Resource_File_FileName[MAX_PATH];
+
 	bool Ogre_ExternalResourceLoaded;
 
 	HWND Resource_Dlg_hWnd;

@@ -364,6 +364,10 @@ bool CL64_Importers::Ogre_Resource_CFG_Loader(char* Extension, char* Extension2)
 			return 0;
 		}
 
+		strcpy(App->CL_Resources->Resource_File_Path_And_File, App->CL_File_IO->OgreCFG_Path_FileName);
+		strcpy(App->CL_Resources->Resource_File_FileName, App->CL_File_IO->OgreCFG_FileName);
+
+
 		App->CL_Dialogs->PleaseWait();
 	
 		App->CL_Resources->Load_OgreCFG_Resources(App->CL_File_IO->OgreCFG_Path_FileName);
