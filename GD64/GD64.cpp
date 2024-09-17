@@ -307,12 +307,16 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		
 		case ID_OGRE3D_RESOURCEFILE:
 		{
-			bool test = App->CL_Importers->Ogre_Resource_CFG_Loader((LPSTR)"Ogre Config   *.cfg\0*.cfg\0", (LPSTR)"Ogre Config");
-			
-			if (test == 1)
-			{
-				App->Say("CFG Imported");
-			}
+			bool test = App->CL_Importers->Load_Ogre_Resource_CFG(true);
+			EnableMenuItem(App->mMenu, ID_OGRE3D_RELOADRESOURCEFILE, MF_BYCOMMAND | MF_ENABLED);
+			return TRUE;
+		}
+		
+		case ID_OGRE3D_RELOADRESOURCEFILE:
+		{
+			strcpy(App->CL_File_IO->OgreCFG_Path_FileName, App->CL_Resources->Resource_File_Path_And_File);
+			strcpy(App->CL_File_IO->OgreCFG_FileName, App->CL_Resources->Resource_File_FileName);
+			bool test = App->CL_Importers->Load_Ogre_Resource_CFG(false);
 
 			return TRUE;
 		}

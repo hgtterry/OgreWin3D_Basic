@@ -341,11 +341,11 @@ void CL64_Importers::Reload_Ogre_Model(void)
 }
 
 // *************************************************************************
-// *		Ogre_Resource_CFG_Loader:- Terry and Hazel Flanigan 2024	   *
+// *		Load_Ogre_Resource_CFG:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
-bool CL64_Importers::Ogre_Resource_CFG_Loader(char* Extension, char* Extension2)
+bool CL64_Importers::Load_Ogre_Resource_CFG(bool Use_File_Dialog)
 {
-	try
+	if (Use_File_Dialog == 1)
 	{
 		char Start_Directory[MAX_PATH];
 		strcpy(Start_Directory, "");
@@ -363,32 +363,30 @@ bool CL64_Importers::Ogre_Resource_CFG_Loader(char* Extension, char* Extension2)
 		{
 			return 0;
 		}
-
-		strcpy(App->CL_Resources->Resource_File_Path_And_File, App->CL_File_IO->OgreCFG_Path_FileName);
-		strcpy(App->CL_Resources->Resource_File_FileName, App->CL_File_IO->OgreCFG_FileName);
-
-
-		App->CL_Dialogs->PleaseWait();
-	
-		App->CL_Resources->Load_OgreCFG_Resources(App->CL_File_IO->OgreCFG_Path_FileName);
-
-		App->CL_Resources->mSelected_Resource_Group = App->CL_Resources->Ogre_Loader_Resource_Group;
-
-		if (Flag_Reload_Ogre_Model == 1 && App->CL_Import_Ogre3D->flag_Ogre_Model_Loaded == 1)
-		{
-			Reload_Ogre_Model();
-		}
-
-		App->CL_ImGui->Reset_Material_Index();
-
-		App->CL_Ogre->RenderFrame(8);
-
-		EndDialog(App->ViewPLeaseWait, LOWORD(0));
 	}
-	catch (Ogre::Exception& e)
+
+	strcpy(App->CL_Resources->Resource_File_Path_And_File, App->CL_File_IO->OgreCFG_Path_FileName);
+	strcpy(App->CL_Resources->Resource_File_FileName, App->CL_File_IO->OgreCFG_FileName);
+
+
+	App->CL_Dialogs->PleaseWait();
+
+	App->CL_Resources->Load_OgreCFG_Resources(App->CL_File_IO->OgreCFG_Path_FileName);
+
+	App->CL_Resources->mSelected_Resource_Group = App->CL_Resources->Ogre_Loader_Resource_Group;
+
+	if (Flag_Reload_Ogre_Model == 1 && App->CL_Import_Ogre3D->flag_Ogre_Model_Loaded == 1)
 	{
-		App->Say(e.getFullDescription().c_str());
+		Reload_Ogre_Model();
 	}
 
+	App->CL_ImGui->Reset_Material_Index();
+
+	App->CL_Ogre->RenderFrame(8);
+
+	EndDialog(App->ViewPLeaseWait, LOWORD(0));
+
+	App->Say("CFG Imported", App->CL_Resources->Resource_File_FileName);
+	
 	return 1;
 }
