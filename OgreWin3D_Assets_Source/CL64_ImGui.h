@@ -43,15 +43,13 @@ public:
 
 	void App_Debug(void);
 
-	void Demo_Options_Gui(void);
-
 	bool flag_Imgui_Initialized;
 	bool StartPos;
 	bool flag_Show_FPS;
 	bool flag_Show_ImGui_Demo;
 	bool flag_Show_Camera_Data;
 	bool flag_Show_Model_Data;
-	bool flag_Show_Demo_Options;
+	
 	bool flag_Show_App_Debug;
 
 	bool flag_Show_Ogre_Data;

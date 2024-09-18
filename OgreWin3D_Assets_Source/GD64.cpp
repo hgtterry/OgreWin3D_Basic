@@ -866,7 +866,7 @@ INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 
 		SetDlgItemText(hDlg, IDC_ST_ABOUT_VERSION, App->App_Version);
 
-		strcpy(buf, "OgreWin3D_Basic Version:- ");
+		strcpy(buf, "OgreWin3D_Assets Version:- ");
 		strcat(buf, App->App_Version);
 		strcat(buf, "  (64bit Build)");
 		SendDlgItemMessage(hDlg, IDC_LIST_ABOUT_VERSIONS, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);

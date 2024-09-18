@@ -24,7 +24,7 @@
     <ProjectGuid>{aa7249a4-f0e4-45d0-b364-57bf5538ae19}</ProjectGuid>
     <RootNamespace>GD64</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.22000.0</WindowsTargetPlatformVersion>
-    <ProjectName>OgreWin3D</ProjectName>
+    <ProjectName>OgreWin3D_Assets</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -172,7 +172,6 @@
     <ClInclude Include="CL64_Bullet_Debug_World.h" />
     <ClInclude Include="CL64_Camera.h" />
     <ClInclude Include="CL64_Converters.h" />
-    <ClInclude Include="CL64_Demos.h" />
     <ClInclude Include="CL64_Dialogs.h" />
     <ClInclude Include="CL64_Dimensions.h" />
     <ClInclude Include="CL64_Exporters.h" />
@@ -214,7 +213,6 @@
     <ClCompile Include="CL64_Bullet_Debug_World.cpp" />
     <ClCompile Include="CL64_Camera.cpp" />
     <ClCompile Include="CL64_Converters.cpp" />
-    <ClCompile Include="CL64_Demos.cpp" />
     <ClCompile Include="CL64_Dialogs.cpp" />
     <ClCompile Include="CL64_Dimensions.cpp" />
     <ClCompile Include="CL64_Exporters.cpp" />

@@ -36,7 +36,6 @@ CL64_App::CL64_App(void)
 	CL_Converters =		nullptr;
 	CL_Bullet =			nullptr;
 	CL_Player =			nullptr;
-	CL_Demos =			nullptr;
 	CL_Dialogs =		nullptr;
 	CL_Resources =		nullptr;
 
@@ -142,7 +141,6 @@ void CL64_App::InitApp(void)
 	CL_Converters =		new CL64_Converters();
 	CL_Bullet =			new CL64_Bullet();
 	CL_Player =			new CL64_Player();
-	CL_Demos =			new CL64_Demos();
 	CL_Dialogs =		new CL64_Dialogs();
 	CL_Resources =		new CL64_Resources();
 

@@ -29,7 +29,7 @@ CL64_ImGui::CL64_ImGui(void)
 	flag_Show_ImGui_Demo = 0;
 	flag_Show_Camera_Data = 0;
 	flag_Show_Model_Data = 0;
-	flag_Show_Demo_Options = 0;
+
 	flag_Show_App_Debug = 0;
 	flag_Show_Ogre_Data = 0;
 	flag_Open_Textures_List = 1;
@@ -61,7 +61,6 @@ CL64_ImGui::~CL64_ImGui(void)
 // *************************************************************************
 void CL64_ImGui::Reset_Class(void)
 {
-	flag_Show_Demo_Options = 0;
 	flag_Show_Model_Data = 0;
 	flag_Show_Ogre_Data = 0;
 
@@ -220,11 +219,6 @@ void CL64_ImGui::ImGui_Render_Loop(void)
 	if (flag_Show_Model_Data == 1)
 	{
 		Model_Data_GUI();
-	}
-
-	if (flag_Show_Demo_Options == 1)
-	{
-		Demo_Options_Gui();
 	}
 
 	if (flag_Show_App_Debug == 1)
@@ -702,67 +696,6 @@ void CL64_ImGui::Show_Assimp_Model_Data_GUI(void)
 		ImGui::TreePop();
 	}
 
-}
-
-// *************************************************************************
-// *			Demo_Options_Gui:- Terry and Hazel Flanigan 2024		   *
-// *************************************************************************
-void CL64_ImGui::Demo_Options_Gui(void)
-{
-	ImGui::SetNextWindowPos(ImVec2(10, 10), ImGuiCond_FirstUseEver);
-	ImGui::SetNextWindowSize(ImVec2(280, 250), ImGuiCond_FirstUseEver);
-
-	if (!ImGui::Begin("Demo_1", &flag_Show_Demo_Options, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar))
-	{
-		ImGui::End();
-	}
-	else
-	{
-		// -------------------------------------- Title Bar
-		ImGui::Text("Options");
-		ImGui::SameLine(0, 180);
-		if (ImGui::Button("X"))
-		{
-			flag_Show_Demo_Options = 0;
-			RedrawWindow(App->CL_TopDlg->Demos_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-		}
-		ImGui::Separator();
-		// ---------------------------------------------
-
-		ImGui::Text("Keys WASD");
-		ImGui::Spacing();
-
-		if (ImGui::Checkbox("Show Fog", &App->CL_Ogre->flag_Show_Fog))
-		{
-			App->CL_Ogre->Enable_Fog(App->CL_Ogre->flag_Show_Fog);
-		}
-
-		ImGui::PushItemWidth(120);
-		ImGui::InputFloat("", &App->CL_Scene->B_Player[0]->Ground_speed, Float_Step, 0, "%.1f");
-		ImGui::PopItemWidth();
-		ImGui::SameLine();
-		ImGui::Text("Ground Speed");
-		ImGui::Spacing();
-		
-		ImGui::Text("Pitch:- %f", App->CL_Scene->B_Player[0]->CameraPitch_Node->getOrientation().getPitch().valueDegrees());
-		ImGui::Text("Yaw:- %f", App->CL_Ogre->camNode->getOrientation().getYaw().valueDegrees());
-		ImGui::Separator();
-
-		ImGui::Text("");
-
-		ImVec2 Size = ImGui::GetWindowSize();
-		auto textWidth = ImGui::CalcTextSize("Reset Scene").x;
-		ImGui::SetCursorPosX((Size.x - textWidth) * 0.5f);
-		if (ImGui::Button("Reset Scene"))
-		{
-			App->CL_Demos->Reset_View();
-		}
-
-		Model_Data_PosX = 10;
-		Model_Data_PosY = 10;
-
-		ImGui::End();
-	}
 }
 
 // *************************************************************************
