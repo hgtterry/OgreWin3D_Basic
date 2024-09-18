@@ -628,12 +628,10 @@ LRESULT CALLBACK CL64_TopDlg::Debug_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 	{
 	case WM_INITDIALOG:
 	{
-		SendDlgItemMessage(hDlg, IDC_BT_TD_DEBUG_IMGUIDEMO, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_TD_DEBUG_TESTCUBE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_TD_DEBUG_IMGUIFPS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_TD_DEBUG_TRAYSFPS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_BT_TD_DEBUG_FPSLOCK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-
+		
 		return TRUE;
 	}
 
@@ -645,13 +643,6 @@ LRESULT CALLBACK CL64_TopDlg::Debug_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 	case WM_NOTIFY:
 	{
 		LPNMHDR some_item = (LPNMHDR)lParam;
-
-		if (some_item->idFrom == IDC_BT_TD_DEBUG_IMGUIDEMO)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CL_ImGui->flag_Show_ImGui_Demo);
-			return CDRF_DODEFAULT;
-		}
 
 		if (some_item->idFrom == IDC_BT_TD_DEBUG_TESTCUBE)
 		{
@@ -684,32 +675,12 @@ LRESULT CALLBACK CL64_TopDlg::Debug_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 			return CDRF_DODEFAULT;
 		}
 
-		if (some_item->idFrom == IDC_BT_TD_DEBUG_FPSLOCK)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CL_TopDlg->flag_FPS_Dlg_Running);
-			return CDRF_DODEFAULT;
-		}
-		
 		return CDRF_DODEFAULT;
 	}
 
 	case WM_COMMAND:
 	{
-		if (LOWORD(wParam) == IDC_BT_TD_DEBUG_IMGUIDEMO)
-		{
-			if (App->CL_ImGui->flag_Show_ImGui_Demo == 1)
-			{
-				App->CL_TopDlg->Enable_ImGui_Demo_Panel(false);
-			}
-			else
-			{
-				App->CL_TopDlg->Enable_ImGui_Demo_Panel(true);
-			}
-
-			return 1;
-		}
-
+		
 		if (LOWORD(wParam) == IDC_BT_TD_DEBUG_TRAYSFPS)
 		{
 			if (App->CL_Ogre->flag_Show_Trays == 1)
@@ -755,20 +726,6 @@ LRESULT CALLBACK CL64_TopDlg::Debug_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 			return 1;
 		}
 
-		if (LOWORD(wParam) == IDC_BT_TD_DEBUG_FPSLOCK)
-		{
-			if (App->CL_TopDlg->flag_FPS_Dlg_Running == 1)
-			{
-				App->CL_TopDlg->Enable_FPSLock_Dlg_Panel(false);
-			}
-			else
-			{
-				App->CL_TopDlg->Enable_FPSLock_Dlg_Panel(true);
-			}
-
-			return 1;
-		}
-		
 		return FALSE;
 	}
 
@@ -1413,15 +1370,6 @@ void CL64_TopDlg::Init_Bmps_Globals(void)
 	ti23.lpszText = (LPSTR)"Toggle Physics Debug.\rDebug Bullet Shows the Capsule outline of the player.";
 	ti23.hwnd = App->MainHwnd;
 	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti23);
-
-	Temp = GetDlgItem(Debug_TB_hWnd, IDC_BT_TD_DEBUG_IMGUIDEMO);
-	TOOLINFO ti24 = { 0 };
-	ti24.cbSize = sizeof(ti24);
-	ti24.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
-	ti24.uId = (UINT_PTR)Temp;
-	ti24.lpszText = (LPSTR)"Toggle Dear ImGui Demo.";
-	ti24.hwnd = App->MainHwnd;
-	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti24);
 
 	/*Temp = GetDlgItem(Debug_TB_hWnd, IDC_BT_TD_DEBUG_RESOURCES);
 	TOOLINFO ti25 = { 0 };

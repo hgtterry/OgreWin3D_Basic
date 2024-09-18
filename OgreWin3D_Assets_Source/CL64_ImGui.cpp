@@ -531,6 +531,7 @@ void CL64_ImGui::Show_Ogre_Model_Data_GUI(void)
 		ImGui::TreePop();
 	}
 	
+	colors[ImGuiCol_Header] = ImVec4(0.26f, 0.59f, 0.98f, 0.31f);
 }
 
 // *************************************************************************
