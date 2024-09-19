@@ -294,6 +294,19 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			return TRUE;
 		}
 		
+		case ID_WINDOWS_FPS:
+		{
+			if (App->CL_ImGui->flag_Show_FPS == 1)
+			{
+				App->CL_ImGui->flag_Show_FPS = 0;
+			}
+			else
+			{
+				App->CL_ImGui->flag_Show_FPS = 1;
+			}
+
+			return TRUE;
+		}
 		
 		// Tools -------------------------------------------------------
 		case ID_TOOLS_RESOURCEVIEWER:

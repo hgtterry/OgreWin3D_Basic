@@ -52,8 +52,6 @@ public:
 	void Log_Message_To_File(char* Message);
 	void Clear_ErrorLog();
 
-	void Show_Test_Mesh(bool Show);
-	void Delete_TestMesh(void);
 	void Enable_Fog(bool Enable);
 
 	// Renders a Single Frame
@@ -96,6 +94,6 @@ public:
 	bool flag_Show_Test_Mesh;	// is Test Mesh Visable
 	bool flag_Show_Trays;		// is Trays Visable
 	bool flag_Show_Fog;			// Is the fog Enabled
-	bool flag_Test_Mesh_Active;
+
 };
 

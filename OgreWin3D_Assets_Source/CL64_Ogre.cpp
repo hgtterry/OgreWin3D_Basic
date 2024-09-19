@@ -42,8 +42,7 @@ CL64_Ogre::CL64_Ogre(void)
 	flag_Show_Test_Mesh = 1;
 	flag_Show_Trays = 0;
 	flag_Show_Fog = 0;
-	flag_Test_Mesh_Active = 0;
-
+	
 	FPSLock = 16666; // Default 60 FPS
 
 	FPStimer.reset();
@@ -91,8 +90,6 @@ void CL64_Ogre::InitOgre(void)
 	App->CL_Ogre->Ogre3D_Listener->Ogre_Model_Loaded = 1;
 	App->CL_Scene->flag_Model_Loaded = 1;
 	
-	flag_Test_Mesh_Active = 1;
-
 	App->CL_ImGui->Init_ImGui();
 
 	App->CL_Player->Create_Player_Object();
@@ -403,40 +400,6 @@ void CL64_Ogre::Clear_ErrorLog()
 	fclose(fp);
 
 	_unlink(Path);
-}
-
-// *************************************************************************
-// *			Show_Test_Mesh:- Terry and Hazel Flanigan 2024			   *
-// *************************************************************************
-void CL64_Ogre::Show_Test_Mesh(bool Show)
-{
-	if (flag_Test_Mesh_Active == 1 && App->CL_Scene->Imported_Ogre_Ent)
-	{
-		if (Show == 1)
-		{
-			App->CL_Scene->Imported_Ogre_Ent->setVisible(true);
-			flag_Show_Test_Mesh = 1;
-		}
-		else
-		{
-			App->CL_Scene->Imported_Ogre_Ent->setVisible(false);
-			flag_Show_Test_Mesh = 0;
-		}
-	}
-}
-
-// *************************************************************************
-// *			Delete_TestMesh:- Terry and Hazel Flanigan 2024			   *
-// *************************************************************************
-void CL64_Ogre::Delete_TestMesh(void)
-{
-	
-	if (App->CL_Ogre->flag_Test_Mesh_Active == 1)
-	{
-		App->CL_TopDlg->Enable_TestMesh_Button(false);
-		App->CL_Ogre->flag_Test_Mesh_Active = 0;
-	}
-
 }
 
 // *************************************************************************

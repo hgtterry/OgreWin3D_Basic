@@ -135,9 +135,6 @@ void CL64_Scene::Clear_Scene_And_Reset(void)
 	// Clear any Mesh Data
 	Reset_Class(); // Reset this Class
 
-	// Remove the Test Mesh
-	App->CL_Ogre->Delete_TestMesh();
-
 	Reset_Main_Entity();
 
 	App->CL_Import_Ogre3D->Reset_Class();

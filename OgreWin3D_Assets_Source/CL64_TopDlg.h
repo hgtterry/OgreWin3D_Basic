@@ -26,7 +26,6 @@ public:
 	void Start_TopBar();
 	void Start_Tabs_Headers(void);
 	void Hide_Tabs(void);
-	void Enable_TestMesh_Button(bool Enable);
 	void Enable_Grid_Hair_Icons(bool Enable) const;
 	void Enable_Info_Icon(bool Enable) const;
 	void Enable_Info_Panel(bool Enable);
@@ -34,7 +33,6 @@ public:
 	void Enable_FPSLock_Dlg_Panel(bool Enable);
 
 	// Tab Options
-	void Start_Debug_TB(void);
 	void Start_Camera_TB(void);
 	void Start_Physics_TB(void);
 	void Start_Motions_TB(void);
@@ -46,9 +44,7 @@ public:
 
 	char Selected_Motion_Name[MAX_PATH];
 
-	bool flag_Toggle_Tabs_Debug;
 	bool flag_Toggle_Tabs_Camera;
-	bool flag_Toggle_Tabs_Demos;
 	bool flag_Toggle_Tabs_Physics;
 	bool flag_Toggle_Tabs_Motions;
 	bool flag_Toggle_Tabs_Resources;
@@ -64,7 +60,6 @@ public:
 	HWND Tabs_TB_hWnd;
 
 	// Tab Options
-	HWND Debug_TB_hWnd;
 	HWND Camera_TB_hWnd;
 	HWND Physics_TB_hWnd;
 	HWND Motions_TB_hWnd;
@@ -75,7 +70,6 @@ private:
 	static LRESULT CALLBACK Tabs_Headers_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	// Tab Options
-	static LRESULT CALLBACK Debug_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Camera_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Physics_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Motions_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);

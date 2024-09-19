@@ -352,7 +352,6 @@ LRESULT CALLBACK CL64_Dialogs::Proc_FPSLock(HWND hDlg, UINT message, WPARAM wPar
 		if (LOWORD(wParam) == IDOK)
 		{
 			App->CL_TopDlg->flag_FPS_Dlg_Running = 0;
-			RedrawWindow(App->CL_TopDlg->Debug_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
@@ -360,7 +359,6 @@ LRESULT CALLBACK CL64_Dialogs::Proc_FPSLock(HWND hDlg, UINT message, WPARAM wPar
 		if (LOWORD(wParam) == IDCANCEL)
 		{
 			App->CL_TopDlg->flag_FPS_Dlg_Running = 0;
-			RedrawWindow(App->CL_TopDlg->Debug_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}

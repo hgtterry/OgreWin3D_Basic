@@ -87,7 +87,6 @@ bool CL64_Importers::Assimp_Loader(bool UseDialog,const char* Extension, const c
 
 	App->CL_Scene->Loaded_File_Type = Enums::Loaded_File_Type_Assimp;
 
-	App->CL_Ogre->Show_Test_Mesh(false);
 	App->CL_Camera->Reset_View();
 
 	App->CL_Scene->Set_Scene(Enums::Scene_Mode_MeshData);
@@ -214,8 +213,6 @@ bool CL64_Importers::Load_Ogre_Model(bool Use_File_Dialog)
 	
 	Scan_Material_Files();
 	
-
-	App->CL_Ogre->Show_Test_Mesh(false);
 	App->CL_Camera->Reset_View();
 
 	if (App->CL_Scene->Imported_Ogre_Ent)
@@ -319,7 +316,6 @@ void CL64_Importers::Reload_Ogre_Model(void)
 	
 	Scan_Material_Files();
 	
-	App->CL_Ogre->Show_Test_Mesh(false);
 	App->CL_Camera->Reset_View();
 
 	
