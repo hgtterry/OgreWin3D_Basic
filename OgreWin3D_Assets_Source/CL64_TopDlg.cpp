@@ -241,7 +241,7 @@ LRESULT CALLBACK CL64_TopDlg::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam
 			HWND Temp = GetDlgItem(hDlg, IDC_BTSHOWTEXTURES);
 
 
-			if (App->CL_Scene->Scene_Mode == Enums::Scene_Mode_TestMesh)
+			/*if (App->CL_Scene->Scene_Mode == Enums::Scene_Mode_TestMesh)
 			{
 				if (App->CL_Ogre->flag_Show_Test_Mesh == 1)
 				{
@@ -255,7 +255,7 @@ LRESULT CALLBACK CL64_TopDlg::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam
 				}
 
 				return TRUE;
-			}
+			}*/
 
 			if (App->CL_Scene->Scene_Mode == Enums::Scene_Mode_Imported_Entity)
 			{

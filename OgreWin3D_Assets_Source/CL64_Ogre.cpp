@@ -75,21 +75,6 @@ void CL64_Ogre::InitOgre(void)
 	App->CL_Grid->Grid_Update(1);
 	App->CL_Grid->Hair_Update(1);
 
-	App->CL_Scene->Imported_Ogre_Ent = mSceneMgr->createEntity("Test_Mesh", "Sinbad.mesh");
-	App->CL_Scene->Imported_Ogre_Node = mSceneMgr->getRootSceneNode()->createChildSceneNode();
-	App->CL_Scene->Imported_Ogre_Node->attachObject(App->CL_Scene->Imported_Ogre_Ent);
-
-	App->CL_Scene->S_OgreMeshData[0]->mFileName_Str = "Sinbad.mesh";
-	strcpy(App->CL_Scene->JustName, "Sinbad");
-
-	App->CL_Mesh_Manager->Ogre_To_Mesh_Data(App->CL_Scene->Imported_Ogre_Ent);
-	App->CL_Motions->Get_Motions(App->CL_Scene->Imported_Ogre_Ent);
-	App->CL_Import_Ogre3D->flag_Ogre_Model_Loaded = 1;
-
-	App->CL_Scene->Scene_Mode = Enums::Scene_Mode_TestMesh;
-	App->CL_Ogre->Ogre3D_Listener->Ogre_Model_Loaded = 1;
-	App->CL_Scene->flag_Model_Loaded = 1;
-	
 	App->CL_ImGui->Init_ImGui();
 
 	App->CL_Player->Create_Player_Object();

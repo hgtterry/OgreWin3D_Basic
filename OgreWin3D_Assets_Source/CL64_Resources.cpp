@@ -1031,7 +1031,7 @@ void CL64_Resources::Load_OgreCFG_Resources(const Ogre::String& file)
 	
 	if (App->CL_Scene->Imported_Ogre_Node)
 	{
-		if (App->CL_Scene->Scene_Mode == Enums::Scene_Mode_TestMesh)
+		if (App->CL_Scene->Scene_Mode == Enums::Scene_Mode_None)
 		{
 
 		}

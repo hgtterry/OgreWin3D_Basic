@@ -243,7 +243,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		}
 
 		// Windows -------------------------------------------------------
-
 		case ID_WINDOWS_MODELDATA:
 		{
 			if (App->CL_ImGui->flag_Show_Model_Data == 1)
@@ -389,6 +388,18 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			{
 				App->Say("Imported");
 			}
+
+			return TRUE;
+		}
+
+		case ID_FILE_TESTMODEL:
+		{
+			char Path_and_File[MAX_PATH];
+			strcpy(Path_and_File, App->GD_Directory_FullPath);
+			strcat(Path_and_File, "\\Models\\Ogre3D_Models\\Sinbad_No_Config\\Sinbad.mesh");
+			strcpy(App->CL_File_IO->Model_FileName,"Sinbad.mesh");
+			strcpy(App->CL_File_IO->Model_Path_FileName, Path_and_File);
+			bool test = App->CL_Importers->Load_Ogre_Model(false);
 
 			return TRUE;
 		}
