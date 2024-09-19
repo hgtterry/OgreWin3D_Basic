@@ -82,7 +82,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>..\OgreWin3D_Basic\</OutDir>
+    <OutDir>..\Bin\</OutDir>
     <TargetName>OgreWin3D_Basic</TargetName>
   </PropertyGroup>
   <PropertyGroup>
