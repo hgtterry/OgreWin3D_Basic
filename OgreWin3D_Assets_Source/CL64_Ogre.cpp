@@ -132,20 +132,6 @@ bool CL64_Ogre::SetUpResources(void)
 	Ogre::ResourceGroupManager::getSingleton().addResourceLocation("Media/Core_Data/GDCore.zip", "Zip", App_Resource_Group);
 	Ogre::ResourceGroupManager::getSingleton().addResourceLocation("Media/Core_Data/Files", "FileSystem", App_Resource_Group);
 
-	/*if (flag_Use_RTSS == 1)
-	{
-		Ogre::ResourceGroupManager::getSingleton().addResourceLocation("Media/RTShaderLib",
-			"FileSystem", App_Resource_Group);
-		Ogre::ResourceGroupManager::getSingleton().addResourceLocation("Media/RTShaderLib/GLSL",
-			"FileSystem", App_Resource_Group);
-		Ogre::ResourceGroupManager::getSingleton().addResourceLocation("Media/RTShaderLib/GLSLES",
-			"FileSystem", App_Resource_Group);
-		Ogre::ResourceGroupManager::getSingleton().addResourceLocation("Media/RTShaderLib/HLSL",
-			"FileSystem", App_Resource_Group);
-		Ogre::ResourceGroupManager::getSingleton().addResourceLocation("Media/RTShaderLib/Cg",
-			"FileSystem", App_Resource_Group);
-	}*/
-
 	App->CL_Ogre->Log_Message_To_File((LPSTR)"SetUpResources");
 
 	return 1;
@@ -158,16 +144,6 @@ bool CL64_Ogre::Initialise_Resources(void)
 {
 	// Initialize, parse scripts etc
 	Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
-
-	/*if (flag_Use_RTSS == 1)
-	{
-		bool success = Ogre::RTShader::ShaderGenerator::initialize();
-		if (success)
-		{
-			Ogre::RTShader::ShaderGenerator* shaderGenerator = Ogre::RTShader::ShaderGenerator::getSingletonPtr();
-			shaderGenerator->addSceneManager(mSceneMgr);
-		}
-	}*/
 
 	App->CL_Ogre->Log_Message_To_File((LPSTR)"Initialise_Resources");
 
@@ -250,7 +226,7 @@ bool CL64_Ogre::CreateCamera(void)
 
 	camNode->attachObject(mCamera);
 
-	camNode->setPosition(Ogre::Vector3(0, 5, 15));
+	camNode->setPosition(Ogre::Vector3(0, 35, 60));
 	camNode->lookAt(Ogre::Vector3(0, 0, 0), Ogre::Node::TS_WORLD);
 
 	App->CL_Ogre->Log_Message_To_File((LPSTR)"createCamera");

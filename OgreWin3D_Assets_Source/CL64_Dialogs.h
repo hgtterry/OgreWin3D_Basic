@@ -31,6 +31,7 @@ public:
 	void Start_TextureViewer_Dialog(char* TextureFile, HWND Owner_hDlg);
 	void Start_FileViewer_Dialog(char* FFile, HWND Owner_hDlg);
 	void Material_Search(char* ItemString);
+	void Show_Reset_View_Dlg();
 
 	bool Canceled;
 	bool Flag_Convert_to_Ogre;
@@ -57,6 +58,7 @@ private:
 	static LRESULT CALLBACK Proc_Dialog_Text(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Proc_TextureViewer(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Proc_FileViewer(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Proc_Reset_View_Dlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	static bool CALLBACK Proc_ViewerBasePic(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 

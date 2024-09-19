@@ -708,7 +708,9 @@ LRESULT CALLBACK CL64_TopDlg::Camera_TB_Proc(HWND hDlg, UINT message, WPARAM wPa
 		
 		if (LOWORD(wParam) == IDC_BT_TD_DEBUG_RESETVIEW)
 		{
-			App->CL_Camera->Reset_View();
+			App->CL_Dialogs->Show_Reset_View_Dlg();
+
+			//App->CL_Camera->Reset_View();
 			return 1;
 		}
 		

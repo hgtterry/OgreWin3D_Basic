@@ -50,8 +50,6 @@ CL64_Ogre3D_Listener::CL64_Ogre3D_Listener(void)
 	Wheel = 0;
 	StopOgre = 0;
 
-	Ogre_Model_Loaded = 0;
-
 	Run_Physics = 0;
 	Bullet_Step = 2;
 
@@ -241,7 +239,7 @@ bool CL64_Ogre3D_Listener::Capture_LeftMouse_Model(void)
 			App->CL_Grid->HairNode->yaw(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
 			App->CL_Ogre->OGL_Listener->RZ = App->CL_Ogre->OGL_Listener->RZ - (Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2);
 
-			if (Ogre_Model_Loaded == 1)
+			if (App->CL_Scene->flag_Ogre_Model_Loaded == 1)
 			{
 				App->CL_Scene->Imported_Ogre_Node->yaw(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
 			}
@@ -260,7 +258,7 @@ bool CL64_Ogre3D_Listener::Capture_LeftMouse_Model(void)
 			App->CL_Grid->HairNode->yaw(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
 			App->CL_Ogre->OGL_Listener->RZ = App->CL_Ogre->OGL_Listener->RZ + (Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2);
 
-			if (Ogre_Model_Loaded == 1)
+			if (App->CL_Scene->flag_Ogre_Model_Loaded == 1)
 			{
 				App->CL_Scene->Imported_Ogre_Node->yaw(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
 			}
@@ -281,7 +279,7 @@ bool CL64_Ogre3D_Listener::Capture_LeftMouse_Model(void)
 			App->CL_Grid->HairNode->pitch(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
 			App->CL_Ogre->OGL_Listener->RX = App->CL_Ogre->OGL_Listener->RX - (Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2);
 
-			if (Ogre_Model_Loaded == 1)
+			if (App->CL_Scene->flag_Ogre_Model_Loaded == 1)
 			{
 				App->CL_Scene->Imported_Ogre_Node->pitch(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
 			}
@@ -300,7 +298,7 @@ bool CL64_Ogre3D_Listener::Capture_LeftMouse_Model(void)
 			App->CL_Grid->HairNode->pitch(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
 			App->CL_Ogre->OGL_Listener->RX = App->CL_Ogre->OGL_Listener->RX + (Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2);
 
-			if (Ogre_Model_Loaded == 1)
+			if (App->CL_Scene->flag_Ogre_Model_Loaded == 1)
 			{
 				App->CL_Scene->Imported_Ogre_Node->pitch(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
 			}

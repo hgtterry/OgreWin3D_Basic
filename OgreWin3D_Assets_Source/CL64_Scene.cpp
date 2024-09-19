@@ -28,6 +28,8 @@ CL64_Scene::CL64_Scene(void)
 	BoneCount = 0;
 
 	flag_Model_Loaded = 0;
+	flag_Ogre_Model_Loaded = 0;
+
 	flag_Player_Added = 0;
 	flag_Show_Main_Entity = 0;
 
@@ -130,7 +132,7 @@ void CL64_Scene::Clear_Scene_And_Reset(void)
 {
 	App->CL_Motions->Reset_Class(); // Call First in case animations in Progress
 
-	App->CL_Ogre->Ogre3D_Listener->Ogre_Model_Loaded = 0;
+	App->CL_Scene->flag_Ogre_Model_Loaded = 0;
 
 	// Clear any Mesh Data
 	Reset_Class(); // Reset this Class
@@ -155,7 +157,7 @@ void CL64_Scene::Clear_Scene_And_Reset(void)
 
 	App->CL_ImGui->Reset_Class();
 
-	App->CL_Ogre->Ogre3D_Listener->Ogre_Model_Loaded = 0;
+	App->CL_Scene->flag_Ogre_Model_Loaded = 0;
 	
 	if (App->CL_Converters->World_Ent)
 	{
@@ -167,7 +169,7 @@ void CL64_Scene::Clear_Scene_And_Reset(void)
 	App->CL_Resources->Reset_Class();
 	App->CL_Props_Textures->Reset_Class();
 
-	SetWindowText(App->MainHwnd, "OgreWin3D_Basic");
+	SetWindowText(App->MainHwnd, "OgreWin3D_Assets");
 }
 
 // *************************************************************************
@@ -182,7 +184,7 @@ void CL64_Scene::Set_Scene(int Mode)
 	{
 		App->CL_Scene->Scene_Mode = Enums::Scene_Mode_Imported_Entity;
 
-		App->CL_Ogre->Ogre3D_Listener->Ogre_Model_Loaded = 1;
+		App->CL_Scene->flag_Ogre_Model_Loaded = 1;
 
 		App->CL_Ogre->OGL_Listener->Flag_ShowTextured = 0;
 		App->CL_Scene->flag_Show_Main_Entity = 1;
@@ -230,7 +232,7 @@ void CL64_Scene::Reset_Main_Entity(void)
 		Imported_Ogre_Node = nullptr;
 	}
 
-	App->CL_Ogre->Ogre3D_Listener->Ogre_Model_Loaded = 0;
+	App->CL_Scene->flag_Ogre_Model_Loaded = 0;
 }
 
 // *************************************************************************

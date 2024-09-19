@@ -41,10 +41,13 @@ void CL64_Camera::Reset_View(void)
 	App->CL_Ogre->OGL_Listener->RZ = 0;
 
 	App->CL_Ogre->camNode->resetOrientation();
-	App->CL_Ogre->camNode->setPosition(Ogre::Vector3(0, 5, 15));
+	//App->CL_Ogre->camNode->setPosition(Ogre::Vector3(0, 5, 15));
+	//App->CL_Ogre->camNode->lookAt(Ogre::Vector3(0, 0, 0), Ogre::Node::TS_WORLD);
+
+	App->CL_Ogre->camNode->setPosition(Ogre::Vector3(0, 35, 60));
 	App->CL_Ogre->camNode->lookAt(Ogre::Vector3(0, 0, 0), Ogre::Node::TS_WORLD);
 
-	if (App->CL_Ogre->Ogre3D_Listener->Ogre_Model_Loaded == 1)
+	if (App->CL_Scene->flag_Ogre_Model_Loaded == 1)
 	{
 		App->CL_Scene->Imported_Ogre_Node->setOrientation(Ogre::Quaternion::IDENTITY);
 		App->CL_Scene->Imported_Ogre_Node->setPosition(0, 0, 0);

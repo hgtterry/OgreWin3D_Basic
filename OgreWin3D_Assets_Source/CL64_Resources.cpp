@@ -1037,7 +1037,7 @@ void CL64_Resources::Load_OgreCFG_Resources(const Ogre::String& file)
 		}
 		else
 		{
-			App->CL_Ogre->Ogre3D_Listener->Ogre_Model_Loaded = 0;
+			App->CL_Scene->flag_Ogre_Model_Loaded = 0;
 
 			App->CL_Scene->Imported_Ogre_Node->detachAllObjects();
 			App->CL_Ogre->mSceneMgr->destroySceneNode(App->CL_Scene->Imported_Ogre_Node);
