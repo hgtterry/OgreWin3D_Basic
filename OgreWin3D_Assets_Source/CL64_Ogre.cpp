@@ -93,9 +93,6 @@ void CL64_Ogre::InitOgre(void)
 	
 	flag_Test_Mesh_Active = 1;
 
-	mTrayMgr = new OgreBites::TrayManager("InterfaceName", mWindow);
-	mTrayMgr->hideCursor();
-
 	App->CL_ImGui->Init_ImGui();
 
 	App->CL_Player->Create_Player_Object();
@@ -425,25 +422,6 @@ void CL64_Ogre::Show_Test_Mesh(bool Show)
 			App->CL_Scene->Imported_Ogre_Ent->setVisible(false);
 			flag_Show_Test_Mesh = 0;
 		}
-	}
-}
-
-// *************************************************************************
-// *			Show_Trays:- Terry and Hazel Flanigan 2024				   *
-// *************************************************************************
-void CL64_Ogre::Show_Trays(bool Enable)
-{
-	if (Enable == 1)
-	{
-		mTrayMgr->showAll();
-		mTrayMgr->showFrameStats(OgreBites::TL_BOTTOMLEFT);
-		mTrayMgr->hideCursor();
-		flag_Show_Trays = 1;
-	}
-	else
-	{
-		mTrayMgr->hideAll();
-		flag_Show_Trays = 0;
 	}
 }
 

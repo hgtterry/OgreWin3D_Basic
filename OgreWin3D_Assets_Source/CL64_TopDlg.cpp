@@ -630,8 +630,7 @@ LRESULT CALLBACK CL64_TopDlg::Debug_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 	{
 		SendDlgItemMessage(hDlg, IDC_BT_TD_DEBUG_TESTCUBE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_TD_DEBUG_IMGUIFPS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_BT_TD_DEBUG_TRAYSFPS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		
+	
 		return TRUE;
 	}
 
@@ -668,33 +667,11 @@ LRESULT CALLBACK CL64_TopDlg::Debug_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 			return CDRF_DODEFAULT;
 		}
 
-		if (some_item->idFrom == IDC_BT_TD_DEBUG_TRAYSFPS)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CL_Ogre->flag_Show_Trays);
-			return CDRF_DODEFAULT;
-		}
-
 		return CDRF_DODEFAULT;
 	}
 
 	case WM_COMMAND:
 	{
-		
-		if (LOWORD(wParam) == IDC_BT_TD_DEBUG_TRAYSFPS)
-		{
-			if (App->CL_Ogre->flag_Show_Trays == 1)
-			{
-				App->CL_Ogre->Show_Trays(false);
-			}
-			else
-			{
-				App->CL_Ogre->Show_Trays(true);
-			}
-
-			return 1;
-		}
-		
 		if (LOWORD(wParam) == IDC_BT_TD_DEBUG_TESTCUBE)
 		{
 			if (App->CL_Ogre->flag_Test_Mesh_Active == 1)
@@ -1352,15 +1329,6 @@ void CL64_TopDlg::Init_Bmps_Globals(void)
 	ti21.lpszText = (LPSTR)"Toggle Imgui FPS.\rImGui Version for FPS.";
 	ti21.hwnd = App->MainHwnd;
 	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti21);
-
-	Temp = GetDlgItem(Debug_TB_hWnd, IDC_BT_TD_DEBUG_TRAYSFPS);
-	TOOLINFO ti22 = { 0 };
-	ti22.cbSize = sizeof(ti22);
-	ti22.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
-	ti22.uId = (UINT_PTR)Temp;
-	ti22.lpszText = (LPSTR)"Toggle Trays FPS.\rOgre3D Version for FPS.";
-	ti22.hwnd = App->MainHwnd;
-	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti22);
 
 	Temp = GetDlgItem(Debug_TB_hWnd, IDC_BT_TD_DEBUG_PHYSICSDEBUG);
 	TOOLINFO ti23 = { 0 };
