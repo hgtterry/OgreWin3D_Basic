@@ -31,10 +31,15 @@ public:
 	void Start_TextureViewer_Dialog(char* TextureFile, HWND Owner_hDlg);
 	void Start_FileViewer_Dialog(char* FFile, HWND Owner_hDlg);
 	void Material_Search(char* ItemString);
+
 	void Show_Reset_View_Dlg();
+	void Close_Reset_View_Dlg();
+
 
 	bool Canceled;
 	bool Flag_Convert_to_Ogre;
+
+	bool flag_Reset_View_Dlg_Active;
 
 	char btext[MAX_PATH];
 	char Chr_Text[MAX_PATH];
@@ -46,6 +51,7 @@ public:
 	HWND FileViewer_Hwnd;
 	HWND RightGroups_Hwnd;
 	HWND FPSLock_Dlg_hWnd;
+	HWND Reset_View_Dlg_Hwnd;
 
 private:
 
@@ -79,6 +85,5 @@ private:
 	bool flag_Mouse_Slow;
 	bool flag_Mouse_VerySlow;
 	bool flag_Mouse_Fast;
-
 };
 

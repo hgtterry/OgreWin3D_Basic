@@ -100,6 +100,7 @@
 #define IDC_BT_MOTIONS_PAUSE            1009
 #define IDC_BT_FOLDER_NAME              1009
 #define IDC_BT_PT_VIEWMESH              1009
+#define IDC_BT_RV_ZOOM                  1009
 #define IDC_BUTTON4                     1010
 #define IDC_BT_CAMERA_FREE              1010
 #define IDC_ALLMATERIALS                1010
@@ -176,6 +177,7 @@
 #define IDC_STMESSAGE                   1067
 #define IDC_ST_PT_MATERIALFILE          1068
 #define IDC_ST_PT_NUMTEXTUNITS          1069
+#define IDC_BT_RV_ZERO                  1070
 #define ID_VIEW_RESET                   32771
 #define ID_VIEW_MAX3DVIEW               32772
 #define ID_DEBUG_TESTPREFERANCE         32773
@@ -222,7 +224,7 @@
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        173
 #define _APS_NEXT_COMMAND_VALUE         32808
-#define _APS_NEXT_CONTROL_VALUE         1070
+#define _APS_NEXT_CONTROL_VALUE         1071
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif

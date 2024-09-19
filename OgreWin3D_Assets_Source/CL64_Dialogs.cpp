@@ -35,6 +35,8 @@ CL64_Dialogs::CL64_Dialogs(void)
 	flag_Mouse_VerySlow = 0;
 	flag_Mouse_Fast = 0;
 
+	flag_Reset_View_Dlg_Active = 0;
+
 	What_Check_Name = Enums::Check_Name_None;
 
 	btext[0] = 0;
@@ -42,11 +44,11 @@ CL64_Dialogs::CL64_Dialogs(void)
 	mTextureFile[0] = 0;
 	mFile[0] = 0;
 
-	Sel_BaseBitmap =	nullptr;
-	RightGroups_Hwnd =	nullptr;
-	FileViewer_Hwnd =	nullptr;
-	FPSLock_Dlg_hWnd =	nullptr;
-
+	Sel_BaseBitmap =		nullptr;
+	RightGroups_Hwnd =		nullptr;
+	FileViewer_Hwnd =		nullptr;
+	FPSLock_Dlg_hWnd =		nullptr;
+	Reset_View_Dlg_Hwnd =	nullptr;
 }
 
 CL64_Dialogs::~CL64_Dialogs(void)
@@ -868,7 +870,11 @@ LRESULT CALLBACK CL64_Dialogs::Proc_Dialog_Text(HWND hDlg, UINT message, WPARAM 
 // *************************************************************************
 void CL64_Dialogs::Show_Reset_View_Dlg()
 {
-	DialogBox(App->hInst, (LPCTSTR)IDD_RESETVIEW, App->MainHwnd, (DLGPROC)Proc_Reset_View_Dlg);
+	if (flag_Reset_View_Dlg_Active == 0)
+	{
+		Reset_View_Dlg_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_RESETVIEW, App->MainHwnd, (DLGPROC)Proc_Reset_View_Dlg);
+		flag_Reset_View_Dlg_Active = 1;
+	}
 
 }
 
@@ -882,7 +888,9 @@ LRESULT CALLBACK CL64_Dialogs::Proc_Reset_View_Dlg(HWND hDlg, UINT message, WPAR
 	case WM_INITDIALOG:
 	{
 		SendDlgItemMessage(hDlg, IDC_BT_RV_RESET, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-
+		SendDlgItemMessage(hDlg, IDC_BT_RV_ZERO, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_RV_ZOOM, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
 		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
@@ -903,6 +911,20 @@ LRESULT CALLBACK CL64_Dialogs::Proc_Reset_View_Dlg(HWND hDlg, UINT message, WPAR
 		LPNMHDR some_item = (LPNMHDR)lParam;
 
 		if (some_item->idFrom == IDC_BT_RV_RESET)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BT_RV_ZERO)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+		
+		if (some_item->idFrom == IDC_BT_RV_ZOOM)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
@@ -933,19 +955,32 @@ LRESULT CALLBACK CL64_Dialogs::Proc_Reset_View_Dlg(HWND hDlg, UINT message, WPAR
 		{
 			App->CL_Camera->Reset_View();
 			App->CL_Ogre->RenderFrame(8);
-			//EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
 
+		if (LOWORD(wParam) == IDC_BT_RV_ZERO)
+		{
+			App->CL_Camera->Zero_View();
+			App->CL_Ogre->RenderFrame(8);
+			return TRUE;
+		}
+		
+		if (LOWORD(wParam) == IDC_BT_RV_ZOOM)
+		{
+			App->CL_Camera->Zoom_View();
+			App->CL_Ogre->RenderFrame(8);
+			return TRUE;
+		}
+		
 		if (LOWORD(wParam) == IDOK)
 		{
-			EndDialog(hDlg, LOWORD(wParam));
+			App->CL_Dialogs->Close_Reset_View_Dlg();
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == IDCANCEL)
 		{
-			EndDialog(hDlg, LOWORD(wParam));
+			App->CL_Dialogs->Close_Reset_View_Dlg();
 			return TRUE;
 		}
 	}
@@ -954,6 +989,16 @@ LRESULT CALLBACK CL64_Dialogs::Proc_Reset_View_Dlg(HWND hDlg, UINT message, WPAR
 
 	}
 	return FALSE;
+}
+
+// *************************************************************************
+// *	  Close_TextureViewer_Dialog:- Terry and Hazel Flanigan 2024	   *
+// *************************************************************************
+void CL64_Dialogs::Close_Reset_View_Dlg()
+{
+	App->CL_Dialogs->flag_Reset_View_Dlg_Active = 0;
+	RedrawWindow(App->CL_TopDlg->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+	EndDialog(Reset_View_Dlg_Hwnd, 0);
 }
 
 // *************************************************************************

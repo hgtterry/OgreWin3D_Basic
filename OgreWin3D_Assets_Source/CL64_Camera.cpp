@@ -41,9 +41,7 @@ void CL64_Camera::Reset_View(void)
 	App->CL_Ogre->OGL_Listener->RZ = 0;
 
 	App->CL_Ogre->camNode->resetOrientation();
-	//App->CL_Ogre->camNode->setPosition(Ogre::Vector3(0, 5, 15));
-	//App->CL_Ogre->camNode->lookAt(Ogre::Vector3(0, 0, 0), Ogre::Node::TS_WORLD);
-
+	
 	App->CL_Ogre->camNode->setPosition(Ogre::Vector3(0, 35, 60));
 	App->CL_Ogre->camNode->lookAt(Ogre::Vector3(0, 0, 0), Ogre::Node::TS_WORLD);
 
@@ -51,6 +49,62 @@ void CL64_Camera::Reset_View(void)
 	{
 		App->CL_Scene->Imported_Ogre_Node->setOrientation(Ogre::Quaternion::IDENTITY);
 		App->CL_Scene->Imported_Ogre_Node->setPosition(0, 0, 0);
+	}
+}
+
+// *************************************************************************
+// *			Zero_View:- Terry and Hazel Flanigan 2024				   *
+// *************************************************************************
+void CL64_Camera::Zero_View(void)
+{
+	App->CL_Grid->GridNode->setPosition(0, 0, 0);
+	App->CL_Grid->GridNode->resetOrientation();
+
+	App->CL_Grid->HairNode->setPosition(0, 0, 0);
+	App->CL_Grid->HairNode->resetOrientation();
+
+	App->CL_Ogre->OGL_Listener->RX = 0;
+	App->CL_Ogre->OGL_Listener->RZ = 0;
+
+	if (App->CL_Scene->Imported_Ogre_Ent)
+	{
+		App->CL_Scene->Imported_Ogre_Node->resetOrientation();
+		App->CL_Scene->Imported_Ogre_Node->setPosition(0, 0, 0);
+	}
+
+	App->CL_Ogre->camNode->resetOrientation();
+	App->CL_Ogre->camNode->setPosition(Ogre::Vector3(0, 0, 0));
+	App->CL_Ogre->camNode->lookAt(Ogre::Vector3(0, 0, 0), Ogre::Node::TS_WORLD);
+
+}
+
+// *************************************************************************
+// *			Zoom_View:- Terry and Hazel Flanigan 2024				   *
+// *************************************************************************
+void CL64_Camera::Zoom_View(void)
+{
+	if (App->CL_Scene->Imported_Ogre_Ent)
+	{
+		App->CL_Grid->GridNode->setPosition(0, 0, 0);
+		App->CL_Grid->GridNode->resetOrientation();
+
+		App->CL_Grid->HairNode->setPosition(0, 0, 0);
+		App->CL_Grid->HairNode->resetOrientation();
+
+		App->CL_Ogre->OGL_Listener->RX = 0;
+		App->CL_Ogre->OGL_Listener->RZ = 0;
+
+		App->CL_Ogre->camNode->setPosition(Ogre::Vector3(0, 0, 0));
+		
+		Ogre::Vector3 vCenter = Ogre::Vector3(0.0f, (App->CL_Scene->Imported_Ogre_Ent->getBoundingBox().getMaximum().y +
+			App->CL_Scene->Imported_Ogre_Ent->getBoundingBox().getMinimum().y) * 0.5f,
+			0.0f);
+
+		App->CL_Scene->Imported_Ogre_Node->resetOrientation();
+		App->CL_Scene->Imported_Ogre_Node->setPosition(0, 0, 0);
+		App->CL_Ogre->camNode->resetOrientation();
+		App->CL_Ogre->camNode->setPosition(Ogre::Vector3(0, 0, App->CL_Scene->Imported_Ogre_Ent->getBoundingRadius() * 2.8f));
+
 	}
 }
 

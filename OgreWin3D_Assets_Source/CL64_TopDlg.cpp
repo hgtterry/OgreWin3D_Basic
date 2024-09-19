@@ -671,7 +671,7 @@ LRESULT CALLBACK CL64_TopDlg::Camera_TB_Proc(HWND hDlg, UINT message, WPARAM wPa
 		if (some_item->idFrom == IDC_BT_TD_DEBUG_RESETVIEW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Normal(item);
+			App->Custom_Button_Toggle(item,App->CL_Dialogs->flag_Reset_View_Dlg_Active);
 			return CDRF_DODEFAULT;
 		}
 		
@@ -708,9 +708,15 @@ LRESULT CALLBACK CL64_TopDlg::Camera_TB_Proc(HWND hDlg, UINT message, WPARAM wPa
 		
 		if (LOWORD(wParam) == IDC_BT_TD_DEBUG_RESETVIEW)
 		{
-			App->CL_Dialogs->Show_Reset_View_Dlg();
+			if (App->CL_Dialogs->flag_Reset_View_Dlg_Active == 0)
+			{
+				App->CL_Dialogs->Show_Reset_View_Dlg();
+			}
+			else
+			{
+				App->CL_Dialogs->Close_Reset_View_Dlg();
+			}
 
-			//App->CL_Camera->Reset_View();
 			return 1;
 		}
 		
