@@ -150,11 +150,8 @@ void CL64_Scene::Clear_Scene_And_Reset(void)
 	App->CL_Ogre->camNode->setOrientation(Ogre::Quaternion::IDENTITY);
 
 	App->CL_Grid->Reset_Class();
-	
 	App->CL_Camera->Reset_View();
-
 	App->CL_Bullet->Clear_Trimesh();
-
 	App->CL_ImGui->Reset_Class();
 
 	App->CL_Scene->flag_Ogre_Model_Loaded = 0;
@@ -168,6 +165,7 @@ void CL64_Scene::Clear_Scene_And_Reset(void)
 	
 	App->CL_Resources->Reset_Class();
 	App->CL_Props_Textures->Reset_Class();
+	App->CL_Dialogs->Reset_Class();
 
 	SetWindowText(App->MainHwnd, "OgreWin3D_Assets");
 }

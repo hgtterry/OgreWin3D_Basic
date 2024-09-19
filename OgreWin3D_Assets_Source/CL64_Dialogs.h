@@ -21,6 +21,8 @@ public:
 	CL64_Dialogs(void);
 	~CL64_Dialogs(void);
 
+	void Reset_Class(void);
+
 	void Message(char* pString, char* pString2);
 	void Start_Import_Options_Dlg();
 	void PleaseWait();

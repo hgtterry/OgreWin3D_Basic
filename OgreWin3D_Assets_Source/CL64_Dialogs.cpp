@@ -56,6 +56,17 @@ CL64_Dialogs::~CL64_Dialogs(void)
 }
 
 // *************************************************************************
+// *			Reset_Class:- Terry and Hazel Flanigan 2024				   *
+// *************************************************************************
+void CL64_Dialogs::Reset_Class(void)
+{
+	if (flag_Reset_View_Dlg_Active == 1)
+	{
+		Close_Reset_View_Dlg();
+	}
+}
+
+// *************************************************************************
 // *	  			Message:- Terry and Hazel Flanigan 2024				   *
 // *************************************************************************
 void CL64_Dialogs::Message(char* pString, char* pString2)
@@ -891,7 +902,6 @@ LRESULT CALLBACK CL64_Dialogs::Proc_Reset_View_Dlg(HWND hDlg, UINT message, WPAR
 		SendDlgItemMessage(hDlg, IDC_BT_RV_ZERO, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_RV_ZOOM, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
-		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
 		return TRUE;
@@ -931,13 +941,6 @@ LRESULT CALLBACK CL64_Dialogs::Proc_Reset_View_Dlg(HWND hDlg, UINT message, WPAR
 			return CDRF_DODEFAULT;
 		}
 		
-		if (some_item->idFrom == IDOK)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Normal(item);
-			return CDRF_DODEFAULT;
-		}
-
 		if (some_item->idFrom == IDCANCEL)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
@@ -972,12 +975,6 @@ LRESULT CALLBACK CL64_Dialogs::Proc_Reset_View_Dlg(HWND hDlg, UINT message, WPAR
 			return TRUE;
 		}
 		
-		if (LOWORD(wParam) == IDOK)
-		{
-			App->CL_Dialogs->Close_Reset_View_Dlg();
-			return TRUE;
-		}
-
 		if (LOWORD(wParam) == IDCANCEL)
 		{
 			App->CL_Dialogs->Close_Reset_View_Dlg();

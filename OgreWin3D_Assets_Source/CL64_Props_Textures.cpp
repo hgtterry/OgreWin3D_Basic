@@ -61,6 +61,10 @@ void CL64_Props_Textures::Reset_Class(void)
 	
 	SetDlgItemText(Props_Dlg_Hwnd, IDC_ST_PT_DIMENSIONS,"0 x 0");
 
+	RightGroups_Visable = 0;
+	ShowWindow(Props_Dlg_Hwnd, 0);
+	CheckMenuItem(App->mMenu, ID_WINDOWS_TEXTURESDIALOG, MF_BYCOMMAND | MF_UNCHECKED);
+
 	Enable_Export_Button(false);
 }
 
@@ -74,7 +78,7 @@ bool CL64_Props_Textures::Start_Props_Textures_Dialog()
 	App->CL_Props_Textures->Enable_Export_Button(false);
 	//ShowWindow(Props_Dlg_Hwnd, 1);
 	RightGroups_Visable = 1;
-	CheckMenuItem(App->mMenu, ID_WINDOWS_TEXTURESDIALOG, MF_BYCOMMAND | MF_CHECKED);
+	CheckMenuItem(App->mMenu, ID_WINDOWS_TEXTURESDIALOG, MF_BYCOMMAND | MF_UNCHECKED);
 	
 	return 1;
 }

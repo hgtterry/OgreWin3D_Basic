@@ -22,6 +22,8 @@ appreciated but is not required.
 CL64_Imp_Ogre3D::CL64_Imp_Ogre3D(void)
 {
 	flag_Ogre_Model_Loaded = 0;
+	App->CL_Scene->S_OgreMeshData[0]->mStrName = "No Model Loaded";
+	App->CL_Scene->S_OgreMeshData[0]->mFileName_Str = "No Model Loaded";
 }
 
 CL64_Imp_Ogre3D::~CL64_Imp_Ogre3D(void)
