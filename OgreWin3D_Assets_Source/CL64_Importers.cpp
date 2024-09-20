@@ -99,37 +99,6 @@ bool CL64_Importers::Assimp_Loader(bool UseDialog,const char* Extension, const c
 	App->CL_Props_Textures->Update_Texture_Assimp();
 
 	return 1;
-
-	if (UseDialog == 1)
-	{
-		App->CL_Ogre->RenderFrame(3);
-		
-		App->CL_Dialogs->Start_Import_Options_Dlg();
-
-		if (App->CL_Dialogs->Flag_Convert_to_Ogre == 1)
-		{
-			App->CL_Scene->Reset_Main_Entity();
-
-			App->CL_Scene->Imported_Ogre_Ent = App->CL_Converters->Convert_To_Ogre3D(1);
-			
-			App->CL_Scene->Imported_Ogre_Node = App->CL_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
-			App->CL_Scene->Imported_Ogre_Node->attachObject(App->CL_Scene->Imported_Ogre_Ent);
-
-			App->CL_Scene->Imported_Ogre_Node->setVisible(true);
-			App->CL_Scene->Imported_Ogre_Node->setOrientation(Ogre::Quaternion::IDENTITY);
-			App->CL_Scene->Imported_Ogre_Node->setPosition(0, 0, 0);
-			App->CL_Scene->Imported_Ogre_Node->setScale(1, 1, 1);
-
-			App->CL_Scene->Set_Scene(Enums::Scene_Mode_Imported_Entity);
-
-			App->CL_Import_Ogre3D->flag_Ogre_Model_Loaded = 1;
-			App->CL_Scene->flag_Ogre_Model_Loaded = 1;
-			App->CL_Scene->flag_Model_Loaded = 1;
-
-		}
-	}
-
-	return 1;
 }
 
 // *************************************************************************
@@ -232,7 +201,7 @@ bool CL64_Importers::Load_Ogre_Model(bool Use_File_Dialog)
 	App->CL_Import_Ogre3D->flag_Ogre_Model_Loaded = 1;
 	App->CL_Scene->flag_Model_Loaded = 1;
 
-	App->CL_Scene->Set_Scene(Enums::Scene_Mode_Imported_Entity);
+	App->CL_Scene->Set_Scene(Enums::Scene_Mode_Ogre_Model);
 
 	//Get_BoneNames();
 

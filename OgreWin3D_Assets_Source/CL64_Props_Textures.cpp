@@ -242,7 +242,7 @@ LRESULT CALLBACK CL64_Props_Textures::Proc_Textures_Dialog(HWND hDlg, UINT messa
 		
 		if (LOWORD(wParam) == IDC_BT_PT_EXPORT)
 		{
-			App->CL_Resources->Export_File(App->CL_Scene->Group[App->CL_Props_Textures->Selected_Group]->Ogre_TextureName);
+			App->CL_Resources->Export_File(App->CL_Scene->Group[App->CL_Props_Textures->Selected_Group]->Ogre_Texture_FileName);
 			return TRUE;
 		}
 
@@ -510,7 +510,7 @@ void CL64_Props_Textures::Get_First_Texture_Ogre()
 		{
 			if (App->CL_Scene->GroupCount > 0)
 			{
-				strcpy(mTextureName, App->CL_Scene->Group[0]->Ogre_TextureName);
+				strcpy(mTextureName, App->CL_Scene->Group[0]->Ogre_Texture_FileName);
 				strcpy(mMaterialName, App->CL_Scene->Group[0]->Ogre_Material);
 				strcpy(App->CL_Resources->mSelected_File, mTextureName);
 			}
@@ -524,7 +524,7 @@ void CL64_Props_Textures::Get_First_Texture_Ogre()
 		}
 		else
 		{
-			strcpy(mTextureName, App->CL_Scene->Group[0]->Ogre_TextureName);
+			strcpy(mTextureName, App->CL_Scene->Group[0]->Ogre_Texture_FileName);
 			strcpy(mMaterialName, App->CL_Scene->Group[0]->Ogre_Material);
 
 			bool test = strcmp(mMaterialName, "No_Material_Loaded");

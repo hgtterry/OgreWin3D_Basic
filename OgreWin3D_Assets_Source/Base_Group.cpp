@@ -41,7 +41,7 @@ Base_Group::Base_Group()
 	ListView_Item = NULL;
 
 	// Ogre Data
-	Ogre_TextureName[0] = 0;
+	Ogre_Texture_FileName[0] = 0;
 
 	strcpy(Ogre_Material, "No_Material_Loaded");
 

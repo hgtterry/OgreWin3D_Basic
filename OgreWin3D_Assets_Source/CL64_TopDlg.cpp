@@ -257,7 +257,7 @@ LRESULT CALLBACK CL64_TopDlg::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam
 				return TRUE;
 			}*/
 
-			if (App->CL_Scene->Scene_Mode == Enums::Scene_Mode_Imported_Entity)
+			if (App->CL_Scene->Scene_Mode == Enums::Scene_Mode_Ogre_Model)
 			{
 				App->CL_Ogre->OGL_Listener->Flag_ShowTextured = 0;
 

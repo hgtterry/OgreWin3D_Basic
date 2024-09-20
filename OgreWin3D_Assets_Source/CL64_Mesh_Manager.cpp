@@ -244,7 +244,7 @@ void CL64_Mesh_Manager::Get_Ogre_Mesh_Data(Ogre::Entity* Ogre_Entity)
 					App->CL_Scene->Group[Count]->Ogre_NumTextureUnits = TUSCount;
 					strcpy(mTexture, MatCurent->getTechnique(0)->getPass(0)->getTextureUnitState(0)->getTextureName().c_str());
 
-					strcpy(App->CL_Scene->Group[Count]->Ogre_TextureName, mTexture);
+					strcpy(App->CL_Scene->Group[Count]->Ogre_Texture_FileName, mTexture);
 					App->CL_Scene->Group[Count]->Ogre_Texture_IsValid = 1;
 					App->CL_Scene->Group[Count]->Ogre_MipMaps = MatCurent->getTechnique(0)->getPass(0)->getTextureUnitState(0)->getNumMipmaps();
 

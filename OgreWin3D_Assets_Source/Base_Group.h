@@ -69,7 +69,7 @@ public:
 	HTREEITEM ListView_Item;
 
 	// Ogre Data
-	char Ogre_TextureName[MAX_PATH];
+	char Ogre_Texture_FileName[MAX_PATH];
 	char Ogre_Material[MAX_PATH];
 	char Ogre_Material_File[MAX_PATH];
 	char Ogre_ImGui_MatId[MAX_PATH];

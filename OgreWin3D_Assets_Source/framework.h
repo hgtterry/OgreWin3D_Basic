@@ -84,7 +84,7 @@ namespace Enums
 	enum Scene_Mode
 	{
 		Scene_Mode_None = 0,		// No Scene Mode Set
-		Scene_Mode_Imported_Entity = 1,
+		Scene_Mode_Ogre_Model = 1,
 		Scene_Mode_MeshData = 2
 	};
 

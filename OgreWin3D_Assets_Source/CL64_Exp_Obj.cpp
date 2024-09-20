@@ -19,6 +19,14 @@ appreciated but is not required.
 
 CL64_Exp_Obj::CL64_Exp_Obj(void)
 {
+	OutputFolder[0] = 0;
+	Object_FileName[0] = 0;
+	mtl_FileName[0] = 0;
+	Just_mtl_FileName[0] = 0;
+
+	Write_OBJECTFILE = NULL;
+	Write_MTLFile = NULL;
+
 }
 
 CL64_Exp_Obj::~CL64_Exp_Obj(void)
@@ -67,7 +75,15 @@ bool CL64_Exp_Obj::Create_ObjectFile(void)
 
 	Write_ObjectFile();
 
-	WriteMTLFile();
+	if (App->CL_Scene->Scene_Mode == Enums::Scene_Mode_Ogre_Model)
+	{
+		WriteMTLFile_Ogre();
+		Export_Textures_Ogre();
+	}
+	else
+	{
+		WriteMTLFile();
+	}
 
 	return 1;
 }
@@ -277,6 +293,117 @@ bool CL64_Exp_Obj::WriteMTLFile(void)
 	}
 
 	fclose(Write_MTLFile);
+
+	return 1;
+}
+
+// *************************************************************************
+// *			WriteMTLFile_Ogre:- Terry and Hazel Flanigan 2024      	   *
+// *************************************************************************
+bool CL64_Exp_Obj::WriteMTLFile_Ogre(void)
+{
+	Write_MTLFile = 0;
+
+	char buf[1024];
+
+	Write_MTLFile = fopen(mtl_FileName, "wt");
+
+	if (!Write_MTLFile)
+	{
+		return 0;
+	}
+
+	fprintf(Write_MTLFile, "#\n");
+	fprintf(Write_MTLFile, "# Wavefront material file\n");
+	fprintf(Write_MTLFile, "# Created with OgreWin3D\n");
+	fprintf(Write_MTLFile, "#\n");
+	fprintf(Write_MTLFile, "%s \n", " ");
+
+	int GroupCount = 0;
+	int GroupCountTotal = App->CL_Scene->GroupCount;
+
+	while (GroupCount < GroupCountTotal)
+	{
+		strcpy(buf, App->CL_Scene->Group[GroupCount]->MaterialName);
+		fprintf(Write_MTLFile, "newmtl %s\n", buf);
+
+		fprintf(Write_MTLFile, "illum 2\n");
+		fprintf(Write_MTLFile, "Kd 0.800000 0.800000 0.800000\n");
+		fprintf(Write_MTLFile, "Ka 0.200000 0.200000 0.200000\n");
+		fprintf(Write_MTLFile, "Ks 0.000000 0.000000 0.000000\n");
+		fprintf(Write_MTLFile, "Ke 0.000000 0.000000 0.000000\n");
+		fprintf(Write_MTLFile, "Ns 0.000000\n");
+
+		if (App->CL_Scene->Group[GroupCount]->Ogre_Texture_IsValid == 1)
+		{
+			strcpy(buf, App->CL_Scene->Group[GroupCount]->Ogre_Texture_FileName);
+		}
+		else
+		{
+			strcpy(buf, "Dummy.bmp");
+		}
+
+		fprintf(Write_MTLFile, "map_Kd %s\n", buf);
+
+		fprintf(Write_MTLFile, "%s \n", " ");
+
+		GroupCount++;
+	}
+
+	fclose(Write_MTLFile);
+
+	return 1;
+}
+
+// *************************************************************************
+// *		Export_Textures_Ogre:- Terry and Hazel Flanigan 2024		  	   *
+// *************************************************************************
+bool CL64_Exp_Obj::Export_Textures_Ogre()
+{
+	Ogre::String mFileString;
+	mFileString.clear();
+
+	char Path_and_File[MAX_PATH];
+
+	int GroupCount = 0;
+	int GroupCountTotal = App->CL_Scene->GroupCount;
+
+	Ogre::FileInfoListPtr RFI = ResourceGroupManager::getSingleton().listResourceFileInfo(App->CL_Resources->Ogre_Loader_Resource_Group, false);
+	Ogre::FileInfoList::const_iterator i, iend;
+	iend = RFI->end();
+
+	while (GroupCount < GroupCountTotal)
+	{
+		for (i = RFI->begin(); i != iend; ++i)
+		{
+			if (i->filename == App->CL_Scene->Group[GroupCount]->Ogre_Texture_FileName) // Texture Exsists
+			{
+				Ogre::DataStreamPtr ff = i->archive->open(i->filename);
+
+				mFileString = ff->getAsString();
+
+				Path_and_File[0] = 0;
+				strcpy(Path_and_File, OutputFolder);
+				strcat(Path_and_File, App->CL_Scene->Group[GroupCount]->Ogre_Texture_FileName);
+
+				std::ofstream outFile;
+				outFile.open(Path_and_File, std::ios::binary);
+				outFile << mFileString;
+				outFile.close();
+
+				mFileString.clear();
+				App->Say_Win(Path_and_File);
+			}
+			else
+			{
+
+			}
+
+		}
+
+		GroupCount++;
+
+	}
 
 	return 1;
 }

@@ -388,8 +388,8 @@ void CL64_ImGui::Show_Ogre_Model_Data_GUI(void)
 						char mMaterial[MAX_PATH];
 						char Texture[MAX_PATH];
 						
-						strcpy(App->CL_Resources->mSelected_File, App->CL_Scene->Group[Count]->Ogre_TextureName);
-						strcpy(Texture, App->CL_Scene->Group[Count]->Ogre_TextureName);
+						strcpy(App->CL_Resources->mSelected_File, App->CL_Scene->Group[Count]->Ogre_Texture_FileName);
+						strcpy(Texture, App->CL_Scene->Group[Count]->Ogre_Texture_FileName);
 						strcpy(mMaterial, App->CL_Scene->Group[Count]->Ogre_Material);
 						
 						App->CL_Props_Textures->Selected_Group = Count;

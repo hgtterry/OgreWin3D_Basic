@@ -178,9 +178,9 @@ void CL64_Scene::Set_Scene(int Mode)
 	// Set up Application and Scene
 	
 	// Imported Ogre3D Model
-	if (Mode == Enums::Scene_Mode_Imported_Entity)
+	if (Mode == Enums::Scene_Mode_Ogre_Model)
 	{
-		App->CL_Scene->Scene_Mode = Enums::Scene_Mode_Imported_Entity;
+		App->CL_Scene->Scene_Mode = Enums::Scene_Mode_Ogre_Model;
 
 		App->CL_Scene->flag_Ogre_Model_Loaded = 1;
 

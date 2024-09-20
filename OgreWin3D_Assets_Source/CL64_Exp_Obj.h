@@ -24,13 +24,16 @@ public:
 	bool Create_ObjectFile(void);
 	void Write_ObjectFile(void);
 	void Write_ObjectFile_Commit(void);
+
 	bool WriteMTLFile(void);
+	bool WriteMTLFile_Ogre(void);
 
-	char OutputFolder[1024];
+	bool Export_Textures_Ogre();
 
-	char Object_FileName[255];
-	char mtl_FileName[255];
-	char Just_mtl_FileName[255];
+	char OutputFolder[MAX_PATH];
+	char Object_FileName[MAX_PATH];
+	char mtl_FileName[MAX_PATH];
+	char Just_mtl_FileName[MAX_PATH];
 
 	FILE* Write_OBJECTFILE;
 	FILE* Write_MTLFile;
