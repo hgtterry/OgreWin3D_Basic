@@ -78,7 +78,7 @@ namespace Enums
 	{
 		Scene_Mode_None = 0,		// No Scene Mode Set No Model
 		Scene_Mode_Ogre_Model = 1,
-		Scene_Mode_Assimp_Model = 2
+		Scene_Mode_Assimp_Model = 72
 	};
 
 	enum Check_Text

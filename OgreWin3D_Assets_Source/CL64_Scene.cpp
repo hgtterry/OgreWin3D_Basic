@@ -79,7 +79,7 @@ void CL64_Scene::Reset_Class(void)
 {
 	flag_Model_Loaded = 0;
 	
-	App->CL_Scene->Scene_Mode = Enums::Scene_Mode_None;
+	Scene_Mode = Enums::Scene_Mode_None;
 
 	int Count = 0;
 	int Index = GroupCount;
@@ -175,6 +175,7 @@ void CL64_Scene::Clear_Scene_And_Reset(void)
 // *************************************************************************
 void CL64_Scene::Set_Scene(int Mode)
 {
+	//return;
 	// Set up Application and Scene
 	
 	// Imported Ogre3D Model

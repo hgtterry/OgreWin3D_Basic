@@ -1026,7 +1026,7 @@ LRESULT CALLBACK CL64_Dialogs::Proc_TextureViewer(HWND hDlg, UINT message, WPARA
 		App->CL_Textures->Texture_To_HBITMP(App->CL_Dialogs->mTextureFile);
 
 		char buf[MAX_PATH];
-		if (App->CL_Scene->Scene_Mode = Enums::Scene_Mode_Assimp_Model)
+		if (App->CL_Scene->Scene_Mode == Enums::Scene_Mode_Assimp_Model)
 		{
 			EnableWindow(GetDlgItem(hDlg, IDC_BT_VIEWEXPORT),false);
 
@@ -1106,7 +1106,7 @@ LRESULT CALLBACK CL64_Dialogs::Proc_TextureViewer(HWND hDlg, UINT message, WPARA
 
 		if (LOWORD(wParam) == IDOK)
 		{
-			if (App->CL_Scene->Scene_Mode = Enums::Scene_Mode_Assimp_Model)
+			if (App->CL_Scene->Scene_Mode == Enums::Scene_Mode_Assimp_Model)
 			{
 			}
 			else
@@ -1120,7 +1120,7 @@ LRESULT CALLBACK CL64_Dialogs::Proc_TextureViewer(HWND hDlg, UINT message, WPARA
 
 		if (LOWORD(wParam) == IDCANCEL)
 		{
-			if (App->CL_Scene->Scene_Mode = Enums::Scene_Mode_Assimp_Model)
+			if (App->CL_Scene->Scene_Mode == Enums::Scene_Mode_Assimp_Model)
 			{
 			}
 			else

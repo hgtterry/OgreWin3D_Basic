@@ -374,7 +374,6 @@ void CL64_Ogre::RenderFrame(int How_Many)
 		Ogre::Root::getSingletonPtr()->renderOneFrame();
 		Count++;
 	}
-
 }
 
 // *************************************************************************

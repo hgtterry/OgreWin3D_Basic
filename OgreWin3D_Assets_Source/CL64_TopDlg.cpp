@@ -240,23 +240,6 @@ LRESULT CALLBACK CL64_TopDlg::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam
 		{
 			HWND Temp = GetDlgItem(hDlg, IDC_BTSHOWTEXTURES);
 
-
-			/*if (App->CL_Scene->Scene_Mode == Enums::Scene_Mode_TestMesh)
-			{
-				if (App->CL_Ogre->flag_Show_Test_Mesh == 1)
-				{
-					
-					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_TexturesOff_Bmp);
-				}
-				else
-				{
-					
-					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_TexturesOn_Bmp);
-				}
-
-				return TRUE;
-			}*/
-
 			if (App->CL_Scene->Scene_Mode == Enums::Scene_Mode_Ogre_Model)
 			{
 				App->CL_Ogre->OGL_Listener->Flag_ShowTextured = 0;

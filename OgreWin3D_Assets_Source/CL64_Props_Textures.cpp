@@ -543,6 +543,7 @@ void CL64_Props_Textures::Get_First_Texture_Ogre()
 				Sel_BaseBitmap = App->CL_Scene->Group[0]->Base_Bitmap;
 				Update_Texture_Ogre_Dlg();
 			}
+
 		}
 	}
 }
