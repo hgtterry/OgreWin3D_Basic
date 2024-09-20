@@ -392,11 +392,17 @@ bool CL64_Exp_Obj::Export_Textures_Ogre()
 				outFile.close();
 
 				mFileString.clear();
-				App->Say_Win(Path_and_File);
 			}
 			else
 			{
+				HBITMAP hbmpTemp;
+				hbmpTemp = App->CL_Textures->DummyTexture_To_HBITMAP();
 
+				char OutFile[MAX_PATH];
+				strcpy(OutFile, OutputFolder);
+				strcat(OutFile, "Dummy.bmp");
+
+				App->CL_Textures->HBITMAP_TO_BmpFile(hbmpTemp, OutFile, (LPSTR)"");
 			}
 
 		}

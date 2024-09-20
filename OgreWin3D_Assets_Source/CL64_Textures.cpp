@@ -480,6 +480,17 @@ bool CL64_Textures::Create_DummyTexture(char* Folder)
 }
 
 // *************************************************************************
+// *		DummyTexture_To_HBITMAP:- Terry and Hazel Flanigan 2024    	   *
+// *************************************************************************
+HBITMAP CL64_Textures::DummyTexture_To_HBITMAP()
+{
+	HBITMAP hbmpTemp;
+	hbmpTemp = LoadBitmap(App->hInst, MAKEINTRESOURCE(IDB_DUMMY));
+
+	return hbmpTemp;
+}
+
+// *************************************************************************
 // *		HBITMAP_TO_BmpFile:- Terry and Hazel Flanigan 2024		 	   *
 // *************************************************************************
 bool CL64_Textures::HBITMAP_TO_BmpFile(HBITMAP Bitmap, char* Filename, char* SaveFolder)

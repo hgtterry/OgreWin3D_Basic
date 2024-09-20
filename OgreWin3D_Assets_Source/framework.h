@@ -50,13 +50,6 @@ appreciated but is not required.
 
 namespace Enums
 {
-	enum Loaded_File_Type
-	{
-		Loaded_File_Type_None = 0,
-		Loaded_File_Type_Assimp = 1,
-		Loaded_File_Type_Ogre = 2
-	};
-
 	enum Model_Type
 	{
 		Model_Type_None = 0,
@@ -83,9 +76,9 @@ namespace Enums
 
 	enum Scene_Mode
 	{
-		Scene_Mode_None = 0,		// No Scene Mode Set
+		Scene_Mode_None = 0,		// No Scene Mode Set No Model
 		Scene_Mode_Ogre_Model = 1,
-		Scene_Mode_MeshData = 2
+		Scene_Mode_Assimp_Model = 2
 	};
 
 	enum Check_Text

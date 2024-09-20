@@ -110,7 +110,6 @@ public:
 	int MotionCount;
 	int VerticeCount;
 	int FaceCount;
-	int Loaded_File_Type;
 	int BoneCount;
 
 	int Scene_Mode;

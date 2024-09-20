@@ -32,6 +32,7 @@ public:
 
 	bool HBITMAP_TO_BmpFile(HBITMAP Bitmap, char* Filename, char* SaveFolder);
 	void Texture_To_HBITMP(char* TextureFileName);
+	HBITMAP DummyTexture_To_HBITMAP();
 
 	void Get_Just_FileName(char* pString, char* FileName);
 

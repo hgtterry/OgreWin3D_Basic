@@ -327,7 +327,7 @@ void CL64_ImGui::Model_Data_GUI(void)
 		
 		ImGui::Separator();
 
-		if (App->CL_Scene->Loaded_File_Type == Enums::Loaded_File_Type_Assimp)
+		if (App->CL_Scene->Scene_Mode = Enums::Scene_Mode_Assimp_Model)
 		{
 			Show_Assimp_Model_Data_GUI();
 		}
@@ -753,7 +753,7 @@ void CL64_ImGui::App_Debug(void)
 				ImGui::Text("Model Loaded: %i", App->CL_Scene->flag_Model_Loaded);
 				ImGui::Text("Player Added: %i", App->CL_Scene->flag_Player_Added);
 				ImGui::Text("Main Entity: %i", App->CL_Scene->flag_Show_Main_Entity);
-				ImGui::Text("Loaded File Type: %i", App->CL_Scene->Loaded_File_Type);
+				ImGui::Text("Loaded File Type: %i", App->CL_Scene->Scene_Mode);
 				ImGui::Text("Scene Mode: %i", App->CL_Scene->Scene_Mode);
 				ImGui::Separator();
 				ImGui::TreePop();

@@ -36,7 +36,6 @@ CL64_Scene::CL64_Scene(void)
 	// Ogre
 	Ogre_Face_Count = 0;
 
-	Loaded_File_Type = Enums::Loaded_File_Type_None;
 	Scene_Mode = Enums::Scene_Mode_None;
 
 	strcpy(Texture_FolderPath, "None");
@@ -79,7 +78,8 @@ CL64_Scene::~CL64_Scene(void)
 void CL64_Scene::Reset_Class(void)
 {
 	flag_Model_Loaded = 0;
-	Loaded_File_Type = Enums::Loaded_File_Type_None;
+	
+	App->CL_Scene->Scene_Mode = Enums::Scene_Mode_None;
 
 	int Count = 0;
 	int Index = GroupCount;
@@ -191,9 +191,9 @@ void CL64_Scene::Set_Scene(int Mode)
 	}
 
 	// Imported Assimp Imported Model
-	if (Mode == Enums::Scene_Mode_MeshData)
+	if (Mode == Enums::Scene_Mode_Assimp_Model)
 	{
-		App->CL_Scene->Scene_Mode = Enums::Scene_Mode_MeshData;
+		App->CL_Scene->Scene_Mode = Enums::Scene_Mode_Assimp_Model;
 
 		App->CL_Ogre->OGL_Listener->Flag_ShowTextured = 1;
 		App->CL_Scene->flag_Model_Loaded = 1;
