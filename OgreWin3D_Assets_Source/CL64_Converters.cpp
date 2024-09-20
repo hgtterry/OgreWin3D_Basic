@@ -66,8 +66,6 @@ void CL64_Converters::Set_Paths(void)
 // *************************************************************************
 Ogre::Entity* CL64_Converters::Convert_To_Ogre3D(bool Create)
 {
-	App->CL_Scene->flag_Ogre_Model_Loaded = 0;
-
 	if (World_Ent)
 	{
 		App->CL_Ogre->mSceneMgr->destroyEntity(World_Ent);

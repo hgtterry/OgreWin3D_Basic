@@ -45,7 +45,7 @@ void CL64_Camera::Reset_View(void)
 	App->CL_Ogre->camNode->setPosition(Ogre::Vector3(0, 35, 60));
 	App->CL_Ogre->camNode->lookAt(Ogre::Vector3(0, 0, 0), Ogre::Node::TS_WORLD);
 
-	if (App->CL_Scene->flag_Ogre_Model_Loaded == 1)
+	if (App->CL_Scene->Scene_Mode == Enums::Scene_Mode_Ogre_Model)
 	{
 		App->CL_Scene->Imported_Ogre_Node->setOrientation(Ogre::Quaternion::IDENTITY);
 		App->CL_Scene->Imported_Ogre_Node->setPosition(0, 0, 0);

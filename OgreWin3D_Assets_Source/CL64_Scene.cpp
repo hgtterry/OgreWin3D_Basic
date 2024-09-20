@@ -28,8 +28,7 @@ CL64_Scene::CL64_Scene(void)
 	BoneCount = 0;
 
 	flag_Model_Loaded = 0;
-	flag_Ogre_Model_Loaded = 0;
-
+	
 	flag_Player_Added = 0;
 	flag_Show_Main_Entity = 0;
 
@@ -78,7 +77,6 @@ CL64_Scene::~CL64_Scene(void)
 void CL64_Scene::Reset_Class(void)
 {
 	flag_Model_Loaded = 0;
-	
 	Scene_Mode = Enums::Scene_Mode_None;
 
 	int Count = 0;
@@ -132,8 +130,6 @@ void CL64_Scene::Clear_Scene_And_Reset(void)
 {
 	App->CL_Motions->Reset_Class(); // Call First in case animations in Progress
 
-	App->CL_Scene->flag_Ogre_Model_Loaded = 0;
-
 	// Clear any Mesh Data
 	Reset_Class(); // Reset this Class
 
@@ -154,8 +150,6 @@ void CL64_Scene::Clear_Scene_And_Reset(void)
 	App->CL_Bullet->Clear_Trimesh();
 	App->CL_ImGui->Reset_Class();
 
-	App->CL_Scene->flag_Ogre_Model_Loaded = 0;
-	
 	if (App->CL_Converters->World_Ent)
 	{
 		// Needs Looking At
@@ -182,8 +176,6 @@ void CL64_Scene::Set_Scene(int Mode)
 	if (Mode == Enums::Scene_Mode_Ogre_Model)
 	{
 		App->CL_Scene->Scene_Mode = Enums::Scene_Mode_Ogre_Model;
-
-		App->CL_Scene->flag_Ogre_Model_Loaded = 1;
 
 		App->CL_Ogre->OGL_Listener->Flag_ShowTextured = 0;
 		App->CL_Scene->flag_Show_Main_Entity = 1;
@@ -231,7 +223,6 @@ void CL64_Scene::Reset_Main_Entity(void)
 		Imported_Ogre_Node = nullptr;
 	}
 
-	App->CL_Scene->flag_Ogre_Model_Loaded = 0;
 }
 
 // *************************************************************************

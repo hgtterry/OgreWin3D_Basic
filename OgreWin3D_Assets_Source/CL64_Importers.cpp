@@ -85,6 +85,9 @@ bool CL64_Importers::Assimp_Loader(bool UseDialog,const char* Extension, const c
 		return 0;
 	}
 
+	App->CL_Scene->Scene_Mode = Enums::Scene_Mode_Assimp_Model;
+	App->CL_Scene->Set_Scene(App->CL_Scene->Scene_Mode);
+
 	App->CL_Camera->Reset_View();
 
 	App->Set_Title();
@@ -143,8 +146,6 @@ bool CL64_Importers::Load_Ogre_Model(bool Use_File_Dialog)
 		App->CL_Scene->Imported_Ogre_Node = nullptr;
 	}
 
-	App->CL_Scene->flag_Ogre_Model_Loaded = 0;
-	
 	//App->CL_Scene->Reset_Main_Entity();
 	
 	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(App->CL_Scene->Texture_FolderPath,
@@ -200,8 +201,7 @@ bool CL64_Importers::Load_Ogre_Model(bool Use_File_Dialog)
 	App->CL_Scene->Scene_Mode = Enums::Scene_Mode_Ogre_Model;
 	App->CL_Ogre->OGL_Listener->Flag_ShowTextured = 0;
 	App->CL_Scene->flag_Show_Main_Entity = 1;
-	App->CL_Scene->flag_Ogre_Model_Loaded = 1;
-
+	
 	//Get_BoneNames();
 
 	App->CL_Motions->Get_Motions(App->CL_Scene->Imported_Ogre_Ent);
@@ -302,7 +302,6 @@ void CL64_Importers::Reload_Ogre_Model(void)
 	App->CL_Mesh_Manager->Ogre_To_Mesh_Data(App->CL_Scene->Imported_Ogre_Ent);
 
 	App->CL_Import_Ogre3D->flag_Ogre_Model_Loaded = 1;
-	App->CL_Scene->flag_Ogre_Model_Loaded = 1;
 	App->CL_Props_Textures->Get_First_Texture_Ogre();
 }
 
