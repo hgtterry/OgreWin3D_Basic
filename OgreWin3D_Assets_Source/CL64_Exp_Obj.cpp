@@ -213,7 +213,15 @@ void CL64_Exp_Obj::Write_ObjectFile_Commit(void)
 		FaceCount = 0;
 		int LineIndex = 0;
 
-		strcpy(MaterialName, App->CL_Scene->Group[GroupCount]->MaterialName);
+		if (App->CL_Scene->Scene_Mode == Enums::Scene_Mode_Ogre_Model)
+		{
+			strcpy(MaterialName, App->CL_Scene->Group[GroupCount]->Ogre_Material);
+		}
+		else
+		{
+			strcpy(MaterialName, App->CL_Scene->Group[GroupCount]->MaterialName);
+		}
+
 		fprintf(Write_OBJECTFILE, "usemtl %s\n", MaterialName);
 
 		while (FaceCount < App->CL_Scene->Group[GroupCount]->GroupFaceCount)
@@ -261,7 +269,7 @@ bool CL64_Exp_Obj::WriteMTLFile(void)
 
 	fprintf(Write_MTLFile, "#\n");
 	fprintf(Write_MTLFile, "# Wavefront material file\n");
-	fprintf(Write_MTLFile, "# Created with Equity_XL\n");
+	fprintf(Write_MTLFile, "# Created with OgreWin3D\n");
 	fprintf(Write_MTLFile, "#\n");
 	fprintf(Write_MTLFile, "%s \n", " ");
 
@@ -324,7 +332,7 @@ bool CL64_Exp_Obj::WriteMTLFile_Ogre(void)
 
 	while (GroupCount < GroupCountTotal)
 	{
-		strcpy(buf, App->CL_Scene->Group[GroupCount]->MaterialName);
+		strcpy(buf, App->CL_Scene->Group[GroupCount]->Ogre_Material);
 		fprintf(Write_MTLFile, "newmtl %s\n", buf);
 
 		fprintf(Write_MTLFile, "illum 2\n");

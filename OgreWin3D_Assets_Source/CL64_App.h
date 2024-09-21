@@ -105,7 +105,7 @@ public:
 	void Custom_Button_Globals(LPNMCUSTOMDRAW item) const;
 	void Custom_Button_Greyed(LPNMCUSTOMDRAW item);
 
-	void Enable_Export_Options(bool state);
+	void Enable_Export_Options(bool Enable);
 
 	HINSTANCE hInst;
 	HWND MainHwnd;

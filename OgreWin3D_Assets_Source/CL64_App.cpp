@@ -559,9 +559,9 @@ void CL64_App::Custom_Button_Greyed(LPNMCUSTOMDRAW item)
 // *************************************************************************
 // *		Enable_Export_Options:- Terry and Hazel Flanigan 2024     	   *
 // *************************************************************************
-void CL64_App::Enable_Export_Options(bool state)
+void CL64_App::Enable_Export_Options(bool Enable)
 {
-	if (state == 1)
+	if (Enable == 1)
 	{
 		EnableMenuItem(App->mMenu, ID_EXPORT_OGRE3D, MF_BYCOMMAND | MF_ENABLED);
 		EnableMenuItem(App->mMenu, ID_EXPORT_WAVEFRONTOBJ, MF_BYCOMMAND | MF_ENABLED);
