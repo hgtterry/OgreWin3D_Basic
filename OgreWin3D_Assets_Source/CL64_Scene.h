@@ -120,7 +120,7 @@ public:
 	bool flag_Player_Added; // Has a Player been created
 	bool flag_Model_Loaded; // Has a Model/Ogre3D Entity been Loaded
 	
-	bool flag_Show_Main_Entity;
+	bool flag_Show_Ogre_Mesh;
 
 	std::vector<Base_Player*> B_Player;
 };

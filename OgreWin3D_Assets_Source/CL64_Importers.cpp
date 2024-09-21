@@ -200,7 +200,7 @@ bool CL64_Importers::Load_Ogre_Model(bool Use_File_Dialog)
 	App->CL_Scene->Scene_Mode = Enums::Scene_Mode_Ogre_Model;
 	App->CL_Scene->flag_Model_Loaded = 1;
 	App->CL_Ogre->OGL_Listener->Flag_ShowTextured = 0;
-	App->CL_Scene->flag_Show_Main_Entity = 1;
+	App->CL_Scene->flag_Show_Ogre_Mesh = 1;
 	
 	//Get_BoneNames();
 

@@ -30,7 +30,7 @@ CL64_Scene::CL64_Scene(void)
 	flag_Model_Loaded = 0;
 	
 	flag_Player_Added = 0;
-	flag_Show_Main_Entity = 0;
+	flag_Show_Ogre_Mesh = 0;
 
 	// Ogre
 	Ogre_Face_Count = 0;
@@ -76,6 +76,7 @@ CL64_Scene::~CL64_Scene(void)
 // *************************************************************************
 void CL64_Scene::Reset_Class(void)
 {
+	flag_Show_Ogre_Mesh = 0;
 	flag_Model_Loaded = 0;
 	Scene_Mode = Enums::Scene_Mode_None;
 
@@ -180,7 +181,7 @@ void CL64_Scene::Set_Scene(int Mode)
 		App->CL_Scene->Scene_Mode = Enums::Scene_Mode_Ogre_Model;
 
 		App->CL_Ogre->OGL_Listener->Flag_ShowTextured = 0;
-		App->CL_Scene->flag_Show_Main_Entity = 1;
+		App->CL_Scene->flag_Show_Ogre_Mesh = 1;
 
 		return;
 	}
@@ -252,12 +253,12 @@ void CL64_Scene::Show_Main_Entity(bool Show)
 		if (Show == 1)
 		{
 			Imported_Ogre_Node->setVisible(true);
-			flag_Show_Main_Entity = 1;
+			flag_Show_Ogre_Mesh = 1;
 		}
 		else
 		{
 			Imported_Ogre_Node->setVisible(false);
-			flag_Show_Main_Entity = 0;
+			flag_Show_Ogre_Mesh = 0;
 		}
 	}
 }
