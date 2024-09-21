@@ -1212,11 +1212,18 @@ LRESULT CALLBACK CL64_Dialogs::Proc_FileViewer(HWND hDlg, UINT message, WPARAM w
 		
 		SetDlgItemText(hDlg, IDC_ST_DETAILS, (LPCTSTR)App->CL_Resources->mSelected_File);
 
+		
 		App->CL_Dialogs->Read_File(App->CL_Dialogs->mFile, hDlg);
-
+		
+		
 		char Text[MAX_PATH];
 		strcpy(Text, "material ");
-		strcat(Text, App->CL_Scene->Group[App->CL_Props_Textures->Selected_Group]->Ogre_Material);
+
+		if (App->CL_Scene->Scene_Mode == Enums::Scene_Mode_Ogre_Model)
+		{
+			strcat(Text, App->CL_Scene->Group[App->CL_Props_Textures->Selected_Group]->Ogre_Material);
+		}
+		
 		
 		App->CL_Dialogs->Material_Search((LPSTR)Text);
 		
