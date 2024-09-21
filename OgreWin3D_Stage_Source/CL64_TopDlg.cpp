@@ -26,7 +26,6 @@ CL64_TopDlg::CL64_TopDlg(void)
 	// Tab Options
 	Debug_TB_hWnd =		nullptr;
 	Camera_TB_hWnd =	nullptr;
-	Demos_TB_hWnd =		nullptr;
 	Physics_TB_hWnd =	nullptr;
 	Motions_TB_hWnd =	nullptr;
 
@@ -34,7 +33,6 @@ CL64_TopDlg::CL64_TopDlg(void)
 		;
 	flag_Toggle_Tabs_Camera = 0;
 	flag_Toggle_Tabs_Debug = 1;
-	flag_Toggle_Tabs_Demos = 0;
 	flag_Toggle_Tabs_Physics = 0;
 	flag_Toggle_Tabs_Motions = 0;
 	flag_Toggle_Tabs_Resources = 0;
@@ -42,12 +40,6 @@ CL64_TopDlg::CL64_TopDlg(void)
 	flag_Toggle_Cam_ModelMode = 1;
 	flag_Toggle_Cam_FreeMode = 0;
 	flag_Toggle_Cam_FirstMode = 0;
-
-	flag_Toggle_Demos_Demo_1 = 0;
-	flag_Toggle_Demos_Demo_2 = 0;
-	
-	flag_Demo_1_Running = 0;
-	flag_Demo_2_Running = 0;
 
 	flag_Toggle_PhysicaDebug_Node = 0;
 
@@ -66,12 +58,6 @@ CL64_TopDlg::~CL64_TopDlg(void)
 // *************************************************************************
 void CL64_TopDlg::Reset_Class(void) const
 {
-	App->CL_TopDlg->flag_Toggle_Demos_Demo_1 = 0;
-	App->CL_TopDlg->flag_Toggle_Demos_Demo_2 = 0;
-
-	App->CL_TopDlg->flag_Demo_1_Running = 0;
-	App->CL_TopDlg->flag_Demo_2_Running = 0;
-
 	App->CL_Ogre->OGL_Listener->Flag_ShowFaces = 0;
 	App->CL_Ogre->OGL_Listener->Flag_ShowPoints = 0;
 	App->CL_Ogre->OGL_Listener->Flag_ShowBones = 0;
@@ -92,11 +78,8 @@ void CL64_TopDlg::Reset_Class(void) const
 
 	App->CL_TopDlg->Update_Motions_Combo();
 
-	EnableWindow(GetDlgItem(Demos_TB_hWnd, IDC_BT_TD_DEMOS_OPTIONS), false);
-
 	Enable_Grid_Hair_Icons(true);
 	
-	RedrawWindow(Demos_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 }
 
 // **************************************************************************
@@ -122,7 +105,6 @@ LRESULT CALLBACK CL64_TopDlg::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam
 		App->CL_TopDlg->Start_Tabs_Headers();
 		App->CL_TopDlg->Start_Debug_TB();
 		App->CL_TopDlg->Start_Camera_TB();
-		App->CL_TopDlg->Start_Demos_TB();
 		App->CL_TopDlg->Start_Physics_TB();
 		App->CL_TopDlg->Start_Motions_TB();
 
@@ -499,7 +481,6 @@ LRESULT CALLBACK CL64_TopDlg::Tabs_Headers_Proc(HWND hDlg, UINT message, WPARAM 
 	{
 		SendDlgItemMessage(hDlg, IDC_BT_TDH_DEBUG, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_TBH_CAMERA, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_BT_TD_DEMOSTAB, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_TD_PHYSICSTAB, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_TD_MOTIONSTAB, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_TD_RESOURCETAB, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
@@ -527,13 +508,6 @@ LRESULT CALLBACK CL64_TopDlg::Tabs_Headers_Proc(HWND hDlg, UINT message, WPARAM 
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Toggle_Tabs(item, App->CL_TopDlg->flag_Toggle_Tabs_Camera);
-			return CDRF_DODEFAULT;
-		}
-
-		if (some_item->idFrom == IDC_BT_TD_DEMOSTAB)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle_Tabs(item, App->CL_TopDlg->flag_Toggle_Tabs_Demos);
 			return CDRF_DODEFAULT;
 		}
 
@@ -585,17 +559,6 @@ LRESULT CALLBACK CL64_TopDlg::Tabs_Headers_Proc(HWND hDlg, UINT message, WPARAM 
 			return TRUE;
 		}
 
-		if (LOWORD(wParam) == IDC_BT_TD_DEMOSTAB)
-		{
-			App->CL_TopDlg->Hide_Tabs();
-			ShowWindow(App->CL_TopDlg->Demos_TB_hWnd, SW_SHOW);
-			App->CL_TopDlg->flag_Toggle_Tabs_Demos = 1;
-
-			RedrawWindow(App->CL_TopDlg->Tabs_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-
-			return TRUE;
-		}
-
 		if (LOWORD(wParam) == IDC_BT_TD_PHYSICSTAB)
 		{
 			App->CL_TopDlg->Hide_Tabs();
@@ -636,13 +599,11 @@ void CL64_TopDlg::Hide_Tabs(void)
 {
 	ShowWindow(Debug_TB_hWnd, SW_HIDE);
 	ShowWindow(Camera_TB_hWnd, SW_HIDE);
-	ShowWindow(Demos_TB_hWnd, SW_HIDE);
 	ShowWindow(Physics_TB_hWnd, SW_HIDE);
 	ShowWindow(Motions_TB_hWnd, SW_HIDE);
 
 	flag_Toggle_Tabs_Debug = 0;
 	flag_Toggle_Tabs_Camera = 0;
-	flag_Toggle_Tabs_Demos = 0;
 	flag_Toggle_Tabs_Physics = 0;
 	flag_Toggle_Tabs_Motions = 0;
 }
@@ -666,7 +627,6 @@ LRESULT CALLBACK CL64_TopDlg::Debug_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 	case WM_INITDIALOG:
 	{
 		SendDlgItemMessage(hDlg, IDC_BT_TD_DEBUG_IMGUIDEMO, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_BT_TD_DEBUG_TESTCUBE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_TD_DEBUG_IMGUIFPS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_TD_DEBUG_TRAYSFPS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_TD_DEBUG_FPSLOCK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
@@ -687,23 +647,6 @@ LRESULT CALLBACK CL64_TopDlg::Debug_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Toggle(item, App->CL_ImGui->flag_Show_ImGui_Demo);
-			return CDRF_DODEFAULT;
-		}
-
-		if (some_item->idFrom == IDC_BT_TD_DEBUG_TESTCUBE)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-
-			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_TD_DEBUG_TESTCUBE));
-			if (test == 0)
-			{
-				App->Custom_Button_Greyed(item);
-			}
-			else
-			{
-				App->Custom_Button_Toggle(item, App->CL_Ogre->flag_Show_Test_Mesh);
-			}
-
 			return CDRF_DODEFAULT;
 		}
 
@@ -761,23 +704,6 @@ LRESULT CALLBACK CL64_TopDlg::Debug_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 			return 1;
 		}
 		
-		if (LOWORD(wParam) == IDC_BT_TD_DEBUG_TESTCUBE)
-		{
-			if (App->CL_Ogre->flag_Test_Mesh_Active == 1)
-			{
-				if (App->CL_Ogre->flag_Show_Test_Mesh == 1)
-				{
-					App->CL_Ogre->Show_Test_Mesh(false);
-				}
-				else
-				{
-					App->CL_Ogre->Show_Test_Mesh(true);
-				}
-			}
-
-			return 1;
-		}
-
 		if (LOWORD(wParam) == IDC_BT_TD_DEBUG_IMGUIFPS)
 		{
 			if (App->CL_ImGui->flag_Show_FPS == 1)
@@ -811,14 +737,6 @@ LRESULT CALLBACK CL64_TopDlg::Debug_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 
 	}
 	return FALSE;
-}
-
-// *************************************************************************
-// *		Enable_TestMesh_Button:- Terry and Hazel Flanigan 2024		   *
-// *************************************************************************
-void CL64_TopDlg::Enable_TestMesh_Button(bool Enable)
-{
-	EnableWindow(GetDlgItem(App->CL_TopDlg->Debug_TB_hWnd, IDC_BT_TD_DEBUG_TESTCUBE), Enable);
 }
 
 // *************************************************************************
@@ -962,137 +880,6 @@ LRESULT CALLBACK CL64_TopDlg::Camera_TB_Proc(HWND hDlg, UINT message, WPARAM wPa
 			else
 			{
 				App->CL_ImGui->flag_Show_Camera_Data = 1;
-			}
-
-			return 1;
-		}
-
-		return FALSE;
-	}
-
-	}
-	return FALSE;
-}
-
-// *************************************************************************
-// *			Start_Demos_TB:- Terry and Hazel Flanigan 2024			   *
-// *************************************************************************
-void CL64_TopDlg::Start_Demos_TB(void)
-{
-	Demos_TB_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_TB_DEMOS, Tabs_TB_hWnd, (DLGPROC)Demos_TB_Proc);
-}
-
-// *************************************************************************
-// *			Demos_TB_Proc:- Terry and Hazel Flanigan 2024			   *
-// *************************************************************************
-LRESULT CALLBACK CL64_TopDlg::Demos_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
-{
-
-	switch (message)
-	{
-	case WM_INITDIALOG:
-	{
-		SendDlgItemMessage(hDlg, IDC_BT_TD_DEMOS_DEMO1, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_BT_TD_DEMOS_DEMO2, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_BT_TD_DEMOS_OPTIONS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		
-		return TRUE;
-	}
-
-	case WM_CTLCOLORDLG:
-	{
-		return (LONG)App->Brush_Tabs;
-	}
-
-	case WM_NOTIFY:
-	{
-		LPNMHDR some_item = (LPNMHDR)lParam;
-
-		if (some_item->idFrom == IDC_BT_TD_DEMOS_DEMO1)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CL_TopDlg->flag_Toggle_Demos_Demo_1);
-			return CDRF_DODEFAULT;
-		}
-
-		if (some_item->idFrom == IDC_BT_TD_DEMOS_DEMO2)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CL_TopDlg->flag_Toggle_Demos_Demo_2);
-			return CDRF_DODEFAULT;
-		}
-
-		if (some_item->idFrom == IDC_BT_TD_DEMOS_OPTIONS)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-
-			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_TD_DEMOS_OPTIONS));
-			if (test == 0)
-			{
-				App->Custom_Button_Greyed(item);
-			}
-			else
-			{
-				App->Custom_Button_Toggle(item, App->CL_ImGui->flag_Show_Demo_Options);
-			}
-
-			return CDRF_DODEFAULT;
-		}
-		
-		return CDRF_DODEFAULT;
-	}
-
-	case WM_COMMAND:
-	{
-
-		if (LOWORD(wParam) == IDC_BT_TD_DEMOS_DEMO1)
-		{
-			if (App->CL_TopDlg->flag_Demo_1_Running == 0)
-			{
-				App->CL_Demos->Start_Demo_1();
-
-				App->CL_TopDlg->flag_Toggle_Demos_Demo_1 = 1;
-				App->CL_TopDlg->flag_Toggle_Demos_Demo_2 = 0;
-
-				RedrawWindow(App->CL_TopDlg->Demos_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-				EnableWindow(GetDlgItem(hDlg, IDC_BT_TD_DEMOS_OPTIONS), true);
-
-				App->CL_TopDlg->flag_Demo_1_Running = 1;
-				App->CL_TopDlg->flag_Demo_2_Running = 0;
-			}
-
-			return 1;
-		}
-
-		if (LOWORD(wParam) == IDC_BT_TD_DEMOS_DEMO2)
-		{
-			if (App->CL_TopDlg->flag_Demo_2_Running == 0)
-			{
-				App->CL_Demos->Start_Demo_2();
-				
-				App->CL_TopDlg->flag_Toggle_Demos_Demo_2 = 1;
-				App->CL_TopDlg->flag_Toggle_Demos_Demo_1 = 0;
-
-				RedrawWindow(App->CL_TopDlg->Demos_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-				EnableWindow(GetDlgItem(hDlg, IDC_BT_TD_DEMOS_OPTIONS), true);
-
-				App->CL_TopDlg->flag_Demo_2_Running = 1;
-				App->CL_TopDlg->flag_Demo_1_Running = 0;
-
-			}
-
-			return 1;
-		}
-
-		if (LOWORD(wParam) == IDC_BT_TD_DEMOS_OPTIONS)
-		{
-			if (App->CL_ImGui->flag_Show_Demo_Options == 1)
-			{
-				App->CL_ImGui->flag_Show_Demo_Options = 0;
-			}
-			else
-			{
-				App->CL_ImGui->flag_Show_Demo_Options = 1;
 			}
 
 			return 1;
@@ -1545,15 +1332,6 @@ void CL64_TopDlg::Init_Bmps_Globals(void)
 	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti9);
 
 	// ------------------------- Debug Panel
-
-	Temp = GetDlgItem(Debug_TB_hWnd, IDC_BT_TD_DEBUG_TESTCUBE);
-	TOOLINFO ti20 = { 0 };
-	ti20.cbSize = sizeof(ti20);
-	ti20.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
-	ti20.uId = (UINT_PTR)Temp;
-	ti20.lpszText = (LPSTR)"Toggle Test Mesh.\rCreated as the program starts.";
-	ti20.hwnd = App->MainHwnd;
-	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti20);
 
 	Temp = GetDlgItem(Debug_TB_hWnd, IDC_BT_TD_DEBUG_IMGUIFPS);
 	TOOLINFO ti21 = { 0 };

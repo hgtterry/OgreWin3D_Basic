@@ -172,7 +172,6 @@
     <ClInclude Include="CL64_Bullet_Debug_World.h" />
     <ClInclude Include="CL64_Camera.h" />
     <ClInclude Include="CL64_Converters.h" />
-    <ClInclude Include="CL64_Demos.h" />
     <ClInclude Include="CL64_Dialogs.h" />
     <ClInclude Include="CL64_Dimensions.h" />
     <ClInclude Include="CL64_Exporters.h" />
@@ -215,7 +214,6 @@
     <ClCompile Include="CL64_Bullet_Debug_World.cpp" />
     <ClCompile Include="CL64_Camera.cpp" />
     <ClCompile Include="CL64_Converters.cpp" />
-    <ClCompile Include="CL64_Demos.cpp" />
     <ClCompile Include="CL64_Dialogs.cpp" />
     <ClCompile Include="CL64_Dimensions.cpp" />
     <ClCompile Include="CL64_Exporters.cpp" />

@@ -72,7 +72,7 @@ bool CL64_Props_Textures::Start_Props_Textures_Dialog()
 	Props_Dlg_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_PROPS_TEXTURES, App->MainHwnd, (DLGPROC)Proc_Textures_Dialog);
 
 	App->CL_Props_Textures->Enable_Export_Button(false);
-	//ShowWindow(Props_Dlg_Hwnd, 1);
+	ShowWindow(Props_Dlg_Hwnd, 0);
 	RightGroups_Visable = 1;
 	CheckMenuItem(App->mMenu, ID_WINDOWS_TEXTURESDIALOG, MF_BYCOMMAND | MF_CHECKED);
 	
@@ -375,7 +375,7 @@ bool CL64_Props_Textures::Update_Texture_Assimp()
 	SetDlgItemText(Props_Dlg_Hwnd, IDC_PT_TEXTURENAME, mTextureName);
 
 	RightGroups_Visable = 1;
-	ShowWindow(Props_Dlg_Hwnd, 1);
+	ShowWindow(Props_Dlg_Hwnd, 0);
 
 	CheckMenuItem(App->mMenu, ID_WINDOWS_TEXTURESDIALOG, MF_BYCOMMAND | MF_CHECKED);
 
@@ -414,7 +414,7 @@ bool CL64_Props_Textures::Update_Texture_Ogre_Dlg()
 	SetDlgItemText(Props_Dlg_Hwnd, IDC_ST_PT_NUMTEXTUNITS, _itoa(App->CL_Scene->Group[Index]->Ogre_NumTextureUnits, NumTextUnits,10));
 	
 	RightGroups_Visable = 1;
-	ShowWindow(Props_Dlg_Hwnd, 1);
+	ShowWindow(Props_Dlg_Hwnd, 0);
 	CheckMenuItem(App->mMenu, ID_WINDOWS_TEXTURESDIALOG, MF_BYCOMMAND | MF_CHECKED);
 
 	BITMAP bm;

@@ -24,8 +24,7 @@ public:
 
 	bool Load_Ogre_Model(bool Use_File_Dialog);
 	bool Load_Ogre_Resource_CFG(bool Use_File_Dialog);
-	bool Load_Level(bool Use_File_Dialog);
-
+	
 	void Reload_Ogre_Model(void);
 	void Scan_Material_Files(void);
 

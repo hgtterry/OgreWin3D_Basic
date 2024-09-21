@@ -304,7 +304,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			strcpy(App->CL_File_IO->Model_FileName, "World_1.mesh");
 			strcpy(App->CL_File_IO->Model_Path_FileName, Path);
 
-			bool test = App->CL_Importers->Load_Ogre_Model(false);
+			bool test = App->CL_Level->Load_Level(false);
 			return TRUE;
 		}
 		

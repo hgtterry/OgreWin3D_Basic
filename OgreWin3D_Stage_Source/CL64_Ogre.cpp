@@ -76,7 +76,7 @@ void CL64_Ogre::InitOgre(void)
 	App->CL_Grid->Grid_Update(1);
 	App->CL_Grid->Hair_Update(1);
 
-	App->CL_Scene->Imported_Ogre_Ent = mSceneMgr->createEntity("Test_Mesh", "Sinbad.mesh");
+	/*App->CL_Scene->Imported_Ogre_Ent = mSceneMgr->createEntity("Test_Mesh", "Sinbad.mesh");
 	App->CL_Scene->Imported_Ogre_Node = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	App->CL_Scene->Imported_Ogre_Node->attachObject(App->CL_Scene->Imported_Ogre_Ent);
 
@@ -91,7 +91,8 @@ void CL64_Ogre::InitOgre(void)
 	App->CL_Ogre->Ogre3D_Listener->Ogre_Model_Loaded = 1;
 	App->CL_Scene->flag_Model_Loaded = 1;
 	
-	flag_Test_Mesh_Active = 1;
+	flag_Test_Mesh_Active = 1;*/
+
 
 	mTrayMgr = new OgreBites::TrayManager("InterfaceName", mWindow);
 	mTrayMgr->hideCursor();
@@ -99,6 +100,15 @@ void CL64_Ogre::InitOgre(void)
 	App->CL_ImGui->Init_ImGui();
 
 	App->CL_Player->Create_Player_Object();
+
+	char Path[MAX_PATH];
+	strcpy(Path, App->GD_Directory_FullPath);
+	strcat(Path, "\\Levels\\Level_1\\World_1.mesh");
+
+	strcpy(App->CL_File_IO->Model_FileName, "World_1.mesh");
+	strcpy(App->CL_File_IO->Model_Path_FileName, Path);
+
+	bool test = App->CL_Level->Load_Level(false);
 
 }
 
@@ -455,7 +465,6 @@ void CL64_Ogre::Delete_TestMesh(void)
 	
 	if (App->CL_Ogre->flag_Test_Mesh_Active == 1)
 	{
-		App->CL_TopDlg->Enable_TestMesh_Button(false);
 		App->CL_Ogre->flag_Test_Mesh_Active = 0;
 	}
 

@@ -90,9 +90,6 @@
     <ClInclude Include="CL64_Scene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CL64_Demos.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Base_Object.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -204,9 +201,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CL64_Scene.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CL64_Demos.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Base_Object.cpp">

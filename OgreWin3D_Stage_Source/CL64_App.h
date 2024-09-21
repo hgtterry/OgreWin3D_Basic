@@ -32,7 +32,6 @@ appreciated but is not required.
 #include "CL64_Converters.h"
 #include "CL64_Bullet.h"
 #include "CL64_Player.h"
-#include "CL64_Demos.h"
 #include "CL64_Dialogs.h"
 #include "CL64_Resources.h"
 
@@ -72,7 +71,6 @@ public:
 	CL64_Converters*		CL_Converters;
 	CL64_Bullet*			CL_Bullet;
 	CL64_Player*			CL_Player;
-	CL64_Demos*				CL_Demos;
 	CL64_Dialogs*			CL_Dialogs;
 	CL64_Resources*			CL_Resources;
 	
