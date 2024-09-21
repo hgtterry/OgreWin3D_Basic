@@ -183,6 +183,7 @@ void CL64_App::Init_Dialogs(void)
 	App->CL_Panels->Move_Panels();
 
 	App->CL_FileView->Start_FileView();
+	App->CL_FileView->Init_FileView();
 	App->CL_Panels->Move_FileView_Window();
 	App->CL_Panels->Resize_FileView();
 

@@ -327,5 +327,29 @@
     <Image Include="res\No_Texture.bmp">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="res\FileView\FileInactive.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\menubar\bmp00001.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\FileView\Folder.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\FileView\File.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\FileView\FIleSelected.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\FileView\filechanged.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\FileView\fileChange_Selected.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\FileView\Folder_Altered.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

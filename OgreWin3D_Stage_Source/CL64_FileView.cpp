@@ -20,6 +20,35 @@ appreciated but is not required.
 
 CL64_FileView::CL64_FileView(void)
 {
+	Flag_FileView_Active = 0;
+
+	Root =				nullptr;
+	GD_ProjectFolder =	nullptr;
+	FV_Objects_Folder = nullptr;
+	FV_LevelFolder = nullptr;
+	FV_Cameras_Folder = nullptr;
+	GD_TriggerFolder = nullptr;
+	FV_EntitiesFolder = nullptr;
+	FV_Sounds_Folder = nullptr;
+	FV_Message_Trigger_Folder = nullptr;
+	FV_Move_Folder = nullptr;
+	FV_Collectables_Folder = nullptr;
+	FV_Teleporters_Folder = nullptr;
+	FV_Evirons_Folder = nullptr;
+	FV_Lights_Folder = nullptr;
+
+	GD_Environment_Folder = nullptr;
+	GD_Area_Change_Folder = nullptr;
+	GD_Level_Change_Folder = nullptr;
+	FV_Particles_Folder = nullptr;
+
+	FV_Counters_Folder = nullptr;
+
+	FV_Players_Folder = nullptr;
+	FV_Areas_Folder = nullptr;
+
+	hImageList = nullptr;
+	hBitMap = nullptr;
 }
 
 CL64_FileView::~CL64_FileView(void)
@@ -31,24 +60,25 @@ CL64_FileView::~CL64_FileView(void)
 // **************************************************************************
 void CL64_FileView::Start_FileView(void)
 {
-	App->ListPanel = CreateDialog(App->hInst, (LPCTSTR)IDD_LISTSCENE, App->MainHwnd, (DLGPROC)ListPanel_Proc);
+	App->ListPanel = CreateDialog(App->hInst, (LPCTSTR)IDD_LISTSCENE, App->MainHwnd, (DLGPROC)Proc_ListPanel);
 	//Init_Bmps_FileView();
 }
 
 // *************************************************************************
-// *		ListPanel_Proc_Proc:- Terry and Hazel Flanigan 2022			   *
+// *		Proc_ListPanel_Proc:- Terry and Hazel Flanigan 2022			   *
 // *************************************************************************
-LRESULT CALLBACK CL64_FileView::ListPanel_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK CL64_FileView::Proc_ListPanel(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	switch (message)
 	{
 
 	case WM_INITDIALOG:
 	{
-		/*App->SBC_FileView->FileView_Active = 1;
+		App->CL_FileView->Flag_FileView_Active = 1;
+
 		SendDlgItemMessage(hDlg, IDC_TREE1, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
-		CheckMenuItem(App->mMenu, ID_WINDOWS_FILEVIEW, MF_BYCOMMAND | MF_CHECKED);*/
+		CheckMenuItem(App->mMenu, ID_WINDOWS_FILEVIEW, MF_BYCOMMAND | MF_CHECKED);
 		return TRUE;
 	}
 
@@ -178,10 +208,10 @@ LRESULT CALLBACK CL64_FileView::ListPanel_Proc(HWND hDlg, UINT message, WPARAM w
 
 	case WM_CLOSE:
 	{
-		/*App->SBC_FileView->FileView_Active = 0;
+		App->CL_FileView->Flag_FileView_Active = 0;
 		ShowWindow(App->ListPanel, 0);
 
-		CheckMenuItem(App->mMenu, ID_WINDOWS_FILEVIEW, MF_BYCOMMAND | MF_UNCHECKED);*/
+		CheckMenuItem(App->mMenu, ID_WINDOWS_FILEVIEW, MF_BYCOMMAND | MF_UNCHECKED);
 
 		return TRUE;
 	}
@@ -189,4 +219,235 @@ LRESULT CALLBACK CL64_FileView::ListPanel_Proc(HWND hDlg, UINT message, WPARAM w
 	break;
 	}
 	return FALSE;
+}
+
+// *************************************************************************
+// *			Init_FileView:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void CL64_FileView::Init_FileView(void)
+{
+	InitCommonControls();	    // make our tree control to work
+
+	////====================================================//
+	hImageList = ImageList_Create(16, 16, FALSE, 8, 0); // Zero Index
+
+	//--------- Grayed Folder Closed Open 0 1
+	hBitMap = LoadBitmap(App->hInst, MAKEINTRESOURCE(IDB_FILEINACTIVE));
+	ImageList_Add(hImageList, hBitMap, NULL);
+	DeleteObject(hBitMap);
+
+	//--------- Green Folder Closed Open 2 3
+	hBitMap = LoadBitmap(App->hInst, MAKEINTRESOURCE(IDB_TREE));
+	ImageList_Add(hImageList, hBitMap, NULL);
+	DeleteObject(hBitMap);
+
+	//--------- Uselected File Open 4
+	hBitMap = LoadBitmap(App->hInst, MAKEINTRESOURCE(IDB_FILE));
+	ImageList_Add(hImageList, hBitMap, (HBITMAP)NULL);
+	DeleteObject(hBitMap);
+
+	//--------- Selected File Open 5
+	hBitMap = LoadBitmap(App->hInst, MAKEINTRESOURCE(IDB_FILESELECTED));
+	ImageList_Add(hImageList, hBitMap, (HBITMAP)NULL);
+	DeleteObject(hBitMap);
+
+	//--------- File changed Open 6
+	hBitMap = LoadBitmap(App->hInst, MAKEINTRESOURCE(IDB_FILECHANGED));
+	ImageList_Add(hImageList, hBitMap, (HBITMAP)NULL);
+	DeleteObject(hBitMap);
+
+	//--------- File changed Selected Open 7
+	hBitMap = LoadBitmap(App->hInst, MAKEINTRESOURCE(IDB_FILECHANGEDSELECTED));
+	ImageList_Add(hImageList, hBitMap, (HBITMAP)NULL);
+	DeleteObject(hBitMap);
+
+	//--------- File changed Selected Open 8 and 9
+	hBitMap = LoadBitmap(App->hInst, MAKEINTRESOURCE(IDB_FVFOLDERRED));
+	ImageList_Add(hImageList, hBitMap, (HBITMAP)NULL);
+	DeleteObject(hBitMap);
+
+	SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_SETIMAGELIST, 0, (LPARAM)hImageList);
+
+	HWND Temp = GetDlgItem(App->ListPanel, IDC_TREE1);
+	TreeView_DeleteAllItems(Temp);
+
+
+	TreeView_SetBkColor(Temp, (COLORREF)RGB(255, 255, 255));
+
+	AddRootFolder();
+	MoreFolders(); //  Folders under root 
+	ExpandRoot();
+}
+
+// *************************************************************************
+// *			AddRootFolder:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void CL64_FileView::AddRootFolder(void)
+{
+	tvinsert.hParent = Root;			// top most level no need handle
+	tvinsert.hInsertAfter = TVI_LAST; // work as root level
+	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
+	tvinsert.item.pszText = (LPSTR)"Test Project"; // App->SBC_Project->m_Project_Name;
+	tvinsert.item.iImage = 0;
+	tvinsert.item.iSelectedImage = 1;
+	GD_ProjectFolder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
+}
+
+// *************************************************************************
+// *			MoreFoldersD:- Terry and Hazel Flanigan 2024 		 	   *
+// *************************************************************************
+void CL64_FileView::MoreFolders(void) // last folder level
+{
+	//------------------------------------------------------- Level 
+	tvinsert.hParent = GD_ProjectFolder;
+	tvinsert.hInsertAfter = TVI_LAST;
+	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
+	tvinsert.item.pszText = (LPSTR)"Test Scene"; // App->SBC_Project->m_Level_Name;
+	tvinsert.item.iImage = 0;
+	tvinsert.item.iSelectedImage = 1;
+	FV_LevelFolder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
+
+	////------------------------------------------------------- Camera
+	tvinsert.hParent = FV_LevelFolder;
+	tvinsert.hInsertAfter = TVI_LAST;
+	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
+	tvinsert.item.pszText = (LPSTR)"Camera";
+	tvinsert.item.iImage = 0;
+	tvinsert.item.iSelectedImage = 1;
+	FV_Cameras_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
+
+	tvinsert.hParent = FV_LevelFolder;
+	tvinsert.hInsertAfter = TVI_LAST;
+	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
+	tvinsert.item.pszText = (LPSTR)"Player";
+	tvinsert.item.iImage = 0;
+	tvinsert.item.iSelectedImage = 1;
+	FV_Players_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
+
+	tvinsert.hParent = FV_LevelFolder;
+	tvinsert.hInsertAfter = TVI_LAST;
+	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
+	tvinsert.item.pszText = (LPSTR)"Area";
+	tvinsert.item.iImage = 0;
+	tvinsert.item.iSelectedImage = 1;
+	FV_Areas_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
+
+	tvinsert.hParent = FV_LevelFolder;
+	tvinsert.hInsertAfter = TVI_LAST;
+	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
+	tvinsert.item.pszText = (LPSTR)"Objects";
+	tvinsert.item.iImage = 0;
+	tvinsert.item.iSelectedImage = 1;
+	FV_Objects_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
+
+	tvinsert.hParent = FV_LevelFolder;
+	tvinsert.hInsertAfter = TVI_LAST;
+	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
+	tvinsert.item.pszText = (LPSTR)"Entities";
+	tvinsert.item.iImage = 0;
+	tvinsert.item.iSelectedImage = 1;
+	FV_EntitiesFolder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
+
+	//--------------------------------------- Sounds
+	tvinsert.hParent = FV_EntitiesFolder;
+	tvinsert.hInsertAfter = TVI_LAST;
+	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
+	tvinsert.item.pszText = (LPSTR)"Sounds";
+	tvinsert.item.iImage = 0;
+	tvinsert.item.iSelectedImage = 1;
+	FV_Sounds_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
+
+	//--------------------------------------- Messages
+	tvinsert.hParent = FV_EntitiesFolder;
+	tvinsert.hInsertAfter = TVI_LAST;
+	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
+	tvinsert.item.pszText = (LPSTR)"Messages";
+	tvinsert.item.iImage = 0;
+	tvinsert.item.iSelectedImage = 1;
+	FV_Message_Trigger_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
+
+	//--------------------------------------- Move_Entities
+	tvinsert.hParent = FV_EntitiesFolder;
+	tvinsert.hInsertAfter = TVI_LAST;
+	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
+	tvinsert.item.pszText = (LPSTR)"Move_Entities";
+	tvinsert.item.iImage = 0;
+	tvinsert.item.iSelectedImage = 1;
+	FV_Move_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
+
+	//--------------------------------------- Collectables
+	tvinsert.hParent = FV_EntitiesFolder;
+	tvinsert.hInsertAfter = TVI_LAST;
+	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
+	tvinsert.item.pszText = (LPSTR)"Collectables";
+	tvinsert.item.iImage = 0;
+	tvinsert.item.iSelectedImage = 1;
+	FV_Collectables_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
+
+	//--------------------------------------- Teleporters
+	tvinsert.hParent = FV_EntitiesFolder;
+	tvinsert.hInsertAfter = TVI_LAST;
+	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
+	tvinsert.item.pszText = (LPSTR)"Teleporters";
+	tvinsert.item.iImage = 0;
+	tvinsert.item.iSelectedImage = 1;
+	FV_Teleporters_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
+
+	//--------------------------------------- Evironments Eviron_Entity
+	tvinsert.hParent = FV_EntitiesFolder;
+	tvinsert.hInsertAfter = TVI_LAST;
+	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
+	tvinsert.item.pszText = (LPSTR)"Evironments";
+	tvinsert.item.iImage = 0;
+	tvinsert.item.iSelectedImage = 1;
+	FV_Evirons_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
+
+	//--------------------------------------- Particles
+	tvinsert.hParent = FV_EntitiesFolder;
+	tvinsert.hInsertAfter = TVI_LAST;
+	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
+	tvinsert.item.pszText = (LPSTR)"Particles";
+	tvinsert.item.iImage = 0;
+	tvinsert.item.iSelectedImage = 1;
+	FV_Particles_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
+
+	//--------------------------------------- User_Objects
+	tvinsert.hParent = FV_EntitiesFolder;
+	tvinsert.hInsertAfter = TVI_LAST;
+	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
+	tvinsert.item.pszText = (LPSTR)"User_Objects";
+	tvinsert.item.iImage = 0;
+	tvinsert.item.iSelectedImage = 1;
+	FV_UserObjects_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
+
+	//--------------------------------------- Lights
+	tvinsert.hParent = FV_EntitiesFolder;
+	tvinsert.hInsertAfter = TVI_LAST;
+	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
+	tvinsert.item.pszText = (LPSTR)"Lights";
+	tvinsert.item.iImage = 0;
+	tvinsert.item.iSelectedImage = 1;
+	FV_Lights_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
+
+	//--------------------------------------- Collectables
+	tvinsert.hParent = FV_LevelFolder;
+	tvinsert.hInsertAfter = TVI_LAST;
+	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
+	tvinsert.item.pszText = (LPSTR)"Counters";
+	tvinsert.item.iImage = 0;
+	tvinsert.item.iSelectedImage = 1;
+	FV_Counters_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
+}
+
+// *************************************************************************
+// *			ExpandRoot:- Terry and Hazel Flanigan 2024				   *
+// *************************************************************************
+void CL64_FileView::ExpandRoot(void)
+{
+	HWND Temp = GetDlgItem(App->ListPanel, IDC_TREE1);
+	HTREEITEM i = TreeView_GetSelection(Temp);
+
+	TreeView_Expand(Temp, GD_ProjectFolder, TVE_EXPAND);
+	TreeView_Expand(Temp, FV_LevelFolder, TVE_EXPAND);
+	TreeView_Expand(Temp, FV_EntitiesFolder, TVE_EXPAND);
 }

@@ -60,8 +60,15 @@
 #define IDD_PROPS_TEXTURES              170
 #define IDD_PROPS_TEXTUREVIEWER         171
 #define IDB_NO_TEXTURE                  171
-#define IDD_DIALOG1                     172
 #define IDD_LISTSCENE                   172
+#define IDB_FILEINACTIVE                173
+#define IDB_TREE                        176
+#define IDB_FILE                        177
+#define IDB_FILESELECTED                178
+#define IDB_FILECHANGED                 179
+#define IDB_FILECHANGEDSELECTED         180
+#define IDB_BITMAP2                     181
+#define IDB_FVFOLDERRED                 181
 #define IDC_CK_SU_FULLSCREEN            1000
 #define IDC_ST_STARTUP                  1001
 #define IDC_CK_SU_FULL3DVIEW            1002
@@ -214,6 +221,7 @@
 #define ID_OGRE3D_RELOADRESOURCEFILE    32804
 #define ID_TOOLS_OGREWIN3D              32805
 #define ID_OPEN_LEVEL                   32806
+#define ID_WINDOWS_FILEVIEW             32807
 #define IDC_STATIC                      -1
 
 // Next default values for new objects
@@ -221,8 +229,8 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
-#define _APS_NEXT_RESOURCE_VALUE        173
-#define _APS_NEXT_COMMAND_VALUE         32807
+#define _APS_NEXT_RESOURCE_VALUE        182
+#define _APS_NEXT_COMMAND_VALUE         32808
 #define _APS_NEXT_CONTROL_VALUE         1071
 #define _APS_NEXT_SYMED_VALUE           110
 #endif

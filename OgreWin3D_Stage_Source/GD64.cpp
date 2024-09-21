@@ -280,7 +280,25 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			return TRUE;
 		}
 		
+		case ID_WINDOWS_FILEVIEW:
+		{
+			ShowWindow(App->ListPanel, 1);
 
+			if (App->CL_FileView->Flag_FileView_Active == 1)
+			{
+				App->CL_FileView->Flag_FileView_Active = 0;
+				ShowWindow(App->ListPanel, 0);
+				CheckMenuItem(App->mMenu, ID_WINDOWS_FILEVIEW, MF_BYCOMMAND | MF_UNCHECKED);
+			}
+			else
+			{
+				App->CL_FileView->Flag_FileView_Active = 1;
+				ShowWindow(App->ListPanel, 1);
+				CheckMenuItem(App->mMenu, ID_WINDOWS_FILEVIEW, MF_BYCOMMAND | MF_CHECKED);
+			}
+			return TRUE;
+		}
+		
 		// Tools -------------------------------------------------------
 		case ID_TOOLS_RESOURCEVIEWER:
 		{

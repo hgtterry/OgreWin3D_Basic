@@ -22,10 +22,45 @@ public:
 	~CL64_FileView(void);
 
 	void Start_FileView(void);
+	void Init_FileView(void);
+	bool Flag_FileView_Active;
+
+	HTREEITEM FV_Players_Folder;	// Players Folder FileFView
+	HTREEITEM FV_Areas_Folder;		// Areas/Rooms Folder FileFView
+	HTREEITEM FV_LevelFolder;
+	HTREEITEM FV_Cameras_Folder;
+	HTREEITEM FV_Objects_Folder;
+	HTREEITEM FV_Message_Trigger_Folder;
+	HTREEITEM FV_Sounds_Folder;
+	HTREEITEM FV_Move_Folder;
+	HTREEITEM FV_Teleporters_Folder;
+	HTREEITEM FV_Collectables_Folder;
+	HTREEITEM FV_Counters_Folder;
+	HTREEITEM FV_Counters2_Folder;
+	HTREEITEM FV_EntitiesFolder;
+	HTREEITEM FV_Evirons_Folder;
+	HTREEITEM FV_Particles_Folder;
+	HTREEITEM FV_Lights_Folder;
+	HTREEITEM FV_UserObjects_Folder;
 
 private:
-	static LRESULT CALLBACK ListPanel_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Proc_ListPanel(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
+	void AddRootFolder(void);
+	void MoreFolders(void);
+	void ExpandRoot(void);
+
+	TV_INSERTSTRUCT tvinsert;
+
+	HTREEITEM Root;
+	HTREEITEM GD_ProjectFolder;
+	HTREEITEM GD_TriggerFolder;
+	HTREEITEM GD_Environment_Folder;
+	HTREEITEM GD_Area_Change_Folder;
+	HTREEITEM GD_Level_Change_Folder;
+
+	HIMAGELIST hImageList;
+	HBITMAP hBitMap;
 
 };
 

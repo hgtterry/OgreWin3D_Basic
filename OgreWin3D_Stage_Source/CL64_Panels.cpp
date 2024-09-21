@@ -180,7 +180,7 @@ bool CL64_Panels::Resize_FileView(void)
 	hdwp = BeginDeferWindowPos(4);
 
 	DeferWindowPos(hdwp, Temp, NULL, 2, 2,
-		NewWidth + 388, NewHeight + 71, SWP_NOZORDER);
+		NewWidth + 388, NewHeight + 100, SWP_NOZORDER);
 
 	/*DeferWindowPos(hdwp, Temp3, NULL, 10, NewHeight + 113,
 		0, 07, SWP_NOSIZE | SWP_NOZORDER);*/
