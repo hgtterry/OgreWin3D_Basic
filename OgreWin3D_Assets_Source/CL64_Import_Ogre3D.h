@@ -23,6 +23,5 @@ public:
 
 	void Reset_Class(void);
 
-	bool flag_Ogre_Model_Loaded;
 };
 

@@ -97,6 +97,8 @@ bool CL64_Importers::Assimp_Loader(bool UseDialog,const char* Extension, const c
 	App->CL_Props_Textures->Selected_Group = 0;
 	App->CL_Props_Textures->Update_Texture_Assimp();
 
+	App->Enable_Export_Options(true);
+
 	return 1;
 }
 
@@ -195,10 +197,8 @@ bool CL64_Importers::Load_Ogre_Model(bool Use_File_Dialog)
 	
 	App->CL_Resources->mSelected_Resource_Group = App->CL_Resources->Ogre_Loader_Resource_Group;
 
-	App->CL_Import_Ogre3D->flag_Ogre_Model_Loaded = 1;
-	App->CL_Scene->flag_Model_Loaded = 1;
-
 	App->CL_Scene->Scene_Mode = Enums::Scene_Mode_Ogre_Model;
+	App->CL_Scene->flag_Model_Loaded = 1;
 	App->CL_Ogre->OGL_Listener->Flag_ShowTextured = 0;
 	App->CL_Scene->flag_Show_Main_Entity = 1;
 	
@@ -216,7 +216,8 @@ bool CL64_Importers::Load_Ogre_Model(bool Use_File_Dialog)
 	App->CL_Ogre->RenderFrame(3);
 
 	App->CL_Scene->Scene_Mode = Enums::Scene_Mode_Ogre_Model;
-	
+	App->Enable_Export_Options(true);
+
 	App->Say("Mesh Imported", (LPSTR)App->CL_Scene->FileName);
 	
 	//Get_Textures();
@@ -301,7 +302,6 @@ void CL64_Importers::Reload_Ogre_Model(void)
 
 	App->CL_Mesh_Manager->Ogre_To_Mesh_Data(App->CL_Scene->Imported_Ogre_Ent);
 
-	App->CL_Import_Ogre3D->flag_Ogre_Model_Loaded = 1;
 	App->CL_Props_Textures->Get_First_Texture_Ogre();
 }
 
@@ -340,7 +340,7 @@ bool CL64_Importers::Load_Ogre_Resource_CFG(bool Use_File_Dialog)
 
 	App->CL_Resources->mSelected_Resource_Group = App->CL_Resources->Ogre_Loader_Resource_Group;
 
-	if (Flag_Reload_Ogre_Model == 1 && App->CL_Import_Ogre3D->flag_Ogre_Model_Loaded == 1)
+	if (Flag_Reload_Ogre_Model == 1 && App->CL_Scene->Scene_Mode == Enums::Scene_Mode_Ogre_Model)
 	{
 		Reload_Ogre_Model();
 	}

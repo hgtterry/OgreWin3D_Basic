@@ -179,6 +179,9 @@ void CL64_App::Init_Dialogs(void)
 
 	EnableMenuItem(App->mMenu, ID_OGRE3D_RELOADMESH, MF_BYCOMMAND | MF_GRAYED);
 	EnableMenuItem(App->mMenu, ID_OGRE3D_RELOADRESOURCEFILE, MF_BYCOMMAND | MF_GRAYED);
+
+	Enable_Export_Options(false);
+
 }
 
 // *************************************************************************
@@ -551,5 +554,22 @@ void CL64_App::Custom_Button_Greyed(LPNMCUSTOMDRAW item)
 	SelectObject(item->hdc, old_pen);
 	SelectObject(item->hdc, old_brush);
 	DeleteObject(pen);
+}
+
+// *************************************************************************
+// *		Enable_Export_Options:- Terry and Hazel Flanigan 2024     	   *
+// *************************************************************************
+void CL64_App::Enable_Export_Options(bool state)
+{
+	if (state == 1)
+	{
+		EnableMenuItem(App->mMenu, ID_EXPORT_OGRE3D, MF_BYCOMMAND | MF_ENABLED);
+		EnableMenuItem(App->mMenu, ID_EXPORT_WAVEFRONTOBJ, MF_BYCOMMAND | MF_ENABLED);
+	}
+	else
+	{
+		EnableMenuItem(App->mMenu, ID_EXPORT_OGRE3D, MF_BYCOMMAND | MF_GRAYED);
+		EnableMenuItem(App->mMenu, ID_EXPORT_WAVEFRONTOBJ, MF_BYCOMMAND | MF_GRAYED);
+	}
 }
 

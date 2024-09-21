@@ -367,7 +367,7 @@ void CL64_ImGui::Show_Ogre_Model_Data_GUI(void)
 	ImGui::SetNextItemOpen(true, ImGuiCond_Always);
 	if (ImGui::TreeNode("Ogre3D Model", "%s", App->CL_Scene->S_OgreMeshData[0]->mFileName_Str.c_str()))
 	{
-		if (App->CL_Import_Ogre3D->flag_Ogre_Model_Loaded == 1)
+		if (App->CL_Scene->Scene_Mode == Enums::Scene_Mode_Ogre_Model)
 		{
 		
 			if (flag_Open_Textures_List == 1)

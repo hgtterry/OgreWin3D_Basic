@@ -161,6 +161,8 @@ void CL64_Scene::Clear_Scene_And_Reset(void)
 	App->CL_Props_Textures->Reset_Class();
 	App->CL_Dialogs->Reset_Class();
 
+	App->Enable_Export_Options(false);
+
 	SetWindowText(App->MainHwnd, "OgreWin3D_Assets");
 }
 
