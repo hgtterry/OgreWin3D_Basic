@@ -47,8 +47,11 @@ CL64_ImGui::CL64_ImGui(void)
 
 	PreviouseSubMesh = -1;
 
-	listMaterialItems[0] = 1;
-	PreviouseMaterial = 0;
+	listMaterialItems_Ogre[0] = 1;
+	PreviouseMaterial_Ogre = 0;
+
+	listMaterialItems_Assimp[0] = 1;
+	PreviouseMaterial_Assimp = 0;
 }
 
 CL64_ImGui::~CL64_ImGui(void)
@@ -72,9 +75,9 @@ void CL64_ImGui::Reset_Class(void)
 // *************************************************************************
 void CL64_ImGui::Reset_Material_Index(void)
 {
-	listMaterialItems[PreviouseMaterial] = 0;
-	listMaterialItems[0] = 1;
-	PreviouseMaterial = 0;
+	listMaterialItems_Ogre[PreviouseMaterial_Ogre] = 0;
+	listMaterialItems_Ogre[0] = 1;
+	PreviouseMaterial_Ogre = 0;
 }
 
 // *************************************************************************
@@ -383,7 +386,7 @@ void CL64_ImGui::Show_Ogre_Model_Data_GUI(void)
 				int Size = App->CL_Scene->GroupCount;
 				while (Count < Size)
 				{
-					if (ImGui::Selectable(App->CL_Scene->Group[Count]->Ogre_ImGui_MatId, listMaterialItems[Count]))
+					if (ImGui::Selectable(App->CL_Scene->Group[Count]->Ogre_ImGui_MatId, listMaterialItems_Ogre[Count]))
 					{
 						char mMaterial[MAX_PATH];
 						char Texture[MAX_PATH];
@@ -404,15 +407,14 @@ void CL64_ImGui::Show_Ogre_Model_Data_GUI(void)
 							App->CL_Props_Textures->Update_Texture_Ogre_Dlg();
 						}
 
-						listMaterialItems[PreviouseMaterial] = 0;
-						listMaterialItems[Count] = 1;
-						PreviouseMaterial = Count;
-
+						listMaterialItems_Ogre[PreviouseMaterial_Ogre] = 0;
+						listMaterialItems_Ogre[Count] = 1;
+						PreviouseMaterial_Ogre = Count;
 					}
 
 					Count++;
 				}
-				//ImGui::PopStyleVar();
+				
 				ImGui::TreePop();
 			}
 
@@ -558,26 +560,17 @@ void CL64_ImGui::Show_Assimp_Model_Data_GUI(void)
 
 			while (Count < Size)
 			{
-				ImGui::PushID("foo");
-				if (ImGui::BeginMenu(App->CL_Scene->Group[Count]->MaterialName))
+				if (ImGui::Selectable(App->CL_Scene->Group[Count]->MaterialName, listMaterialItems_Assimp[Count]))
 				{
+					App->CL_Props_Textures->Selected_Group = Count;
+					App->CL_Ogre->OGL_Listener->Selected_Face_Group = Count;
+					App->CL_Props_Textures->Update_Texture_Assimp();
 
-					ImGui::Text("Material Name:  %s", App->CL_Scene->Group[Count]->MaterialName);
-
-					ImGui::Separator();
-					ImGui::Text("Texture:  %s", App->CL_Scene->Group[Count]->Text_FileName);
-
-					if (ImGui::Button("View Texture"))
-					{
-						App->CL_Props_Textures->Selected_Group = Count;
-						App->CL_Ogre->OGL_Listener->Selected_Face_Group = Count;
-						App->CL_Props_Textures->Update_Texture_Assimp();
-					}
-
-					ImGui::EndMenu();
+					listMaterialItems_Assimp[PreviouseMaterial_Assimp] = 0;
+					listMaterialItems_Assimp[Count] = 1;
+					PreviouseMaterial_Assimp = Count;
 				}
 
-				ImGui::PopID();
 				Count++;
 			}
 

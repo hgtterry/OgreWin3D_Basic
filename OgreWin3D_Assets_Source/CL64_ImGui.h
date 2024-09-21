@@ -68,7 +68,10 @@ public:
 	bool listSubMeshItems[50] = { 0 };
 	int PreviouseSubMesh;
 
-	bool listMaterialItems[50] = { 0 };
-	int PreviouseMaterial;
+	bool listMaterialItems_Ogre[50] = { 0 };
+	int PreviouseMaterial_Ogre;
+
+	bool listMaterialItems_Assimp[50] = { 0 };
+	int PreviouseMaterial_Assimp;
 };
 
