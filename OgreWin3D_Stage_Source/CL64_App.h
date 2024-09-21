@@ -46,6 +46,7 @@ appreciated but is not required.
 
 #include "CL64_Mesh_Manager.h"
 #include "CL64_Level.h"
+#include "CL64_FileView.h"
 
 class CL64_App
 {
@@ -84,6 +85,7 @@ public:
 	CL64_Props_Textures*	CL_Props_Textures;
 	CL64_Mesh_Manager*		CL_Mesh_Manager;
 	CL64_Level*				CL_Level;
+	CL64_FileView*			CL_FileView;
 
 	void InitApp(void);
 	void Init_Dialogs(void);
@@ -112,6 +114,7 @@ public:
 	HWND Fdlg;
 	HWND ViewGLhWnd;
 	HWND ViewPLeaseWait;
+	HWND ListPanel;
 
 	int CursorPosX;
 	int CursorPosY;

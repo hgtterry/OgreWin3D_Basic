@@ -709,7 +709,7 @@ void CL64_ImGui::Show_Assimp_Model_Data_GUI(void)
 // *************************************************************************
 void CL64_ImGui::Demo_Options_Gui(void)
 {
-	ImGui::SetNextWindowPos(ImVec2(10, 10), ImGuiCond_FirstUseEver);
+	ImGui::SetNextWindowPos(ImVec2(250, 10), ImGuiCond_FirstUseEver);
 	ImGui::SetNextWindowSize(ImVec2(300, 70), ImGuiCond_FirstUseEver);
 
 	if (!ImGui::Begin("Control", &flag_Show_Demo_Options, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoResize))

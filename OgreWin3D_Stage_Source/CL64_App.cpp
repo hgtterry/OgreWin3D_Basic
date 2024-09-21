@@ -48,12 +48,14 @@ CL64_App::CL64_App(void)
 	CL_Props_Textures = nullptr;
 	CL_Mesh_Manager =	nullptr;
 	CL_Level =			nullptr;
+	CL_FileView =		nullptr;
 
 	hInst =				nullptr;
 	MainHwnd =			nullptr;
 	Fdlg =				nullptr;
 	ViewGLhWnd =		nullptr;
 	ViewPLeaseWait =	nullptr;
+	ListPanel =			nullptr;
 
 	GD_Directory_FullPath[0] = 0;
 	App_Version[0] = 0;
@@ -156,7 +158,8 @@ void CL64_App::InitApp(void)
 	CL_Props_Textures = new CL64_Props_Textures();
 	CL_Mesh_Manager =	new CL64_Mesh_Manager();
 	CL_Level =			new CL64_Level();
-
+	CL_FileView =		new CL64_FileView();
+	
 	SetBrushes_Fonts();
 
 	LoadString(App->hInst, IDS_VERSION, App_Version, MAX_PATH);
@@ -178,6 +181,8 @@ void CL64_App::Init_Dialogs(void)
 
 	App->CL_Props_Textures->Start_Props_Textures_Dialog();
 	App->CL_Panels->Move_Panels();
+
+	App->CL_FileView->Start_FileView();
 
 	EnableMenuItem(App->mMenu, ID_OGRE3D_RELOADMESH, MF_BYCOMMAND | MF_GRAYED);
 	EnableMenuItem(App->mMenu, ID_OGRE3D_RELOADRESOURCEFILE, MF_BYCOMMAND | MF_GRAYED);
