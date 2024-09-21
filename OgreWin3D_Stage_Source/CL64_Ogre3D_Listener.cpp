@@ -89,8 +89,6 @@ bool CL64_Ogre3D_Listener::frameStarted(const FrameEvent& evt)
 bool CL64_Ogre3D_Listener::frameRenderingQueued(const FrameEvent& evt)
 {
 
-	App->CL_Ogre->mTrayMgr->frameRendered(evt);
-
 	Ogre::ImGuiOverlay::NewFrame();
 	App->CL_ImGui->ImGui_Render_Loop();
 

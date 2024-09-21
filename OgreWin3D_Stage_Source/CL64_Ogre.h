@@ -53,7 +53,6 @@ public:
 	void Clear_ErrorLog();
 
 	void Show_Test_Mesh(bool Show);
-	void Show_Trays(bool Enable);
 	void Delete_TestMesh(void);
 	void Enable_Fog(bool Enable);
 
@@ -81,8 +80,6 @@ public:
 	Ogre::String App_Resource_Group;		// App Resource Group
 	Ogre::String World_Resource_Group;
 
-	OgreBites::TrayManager* mTrayMgr;
-
 	CL64_Ogre3D_Listener*		Ogre3D_Listener;
 	CL64_OGL_Listener*			OGL_Listener;
 	CL64_Bullet_Debug_World*	Bullet_Debug_Listener;
@@ -98,7 +95,6 @@ public:
 	int FPSLock; // FPS Lock Setable (60 FPS Default)
 
 	bool flag_Show_Test_Mesh;	// is Test Mesh Visable
-	bool flag_Show_Trays;		// is Trays Visable
 	bool flag_Show_Fog;			// Is the fog Enabled
 	bool flag_Test_Mesh_Active;
 };
