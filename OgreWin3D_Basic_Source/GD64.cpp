@@ -288,6 +288,26 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			return TRUE;
 		}
 		
+		case ID_TOOLS_OGREWIN3D:
+		{
+			App->Open_Tool((LPSTR)"OgreWin3D_Assets.exe");
+
+			return TRUE;
+		}
+		
+		case ID_OPEN_LEVEL:
+		{
+			char Path[MAX_PATH];
+			strcpy(Path,App->GD_Directory_FullPath);
+			strcat(Path, "\\Levels\\Level_1\\World_1.mesh");
+			
+			strcpy(App->CL_File_IO->Model_FileName, "World_1.mesh");
+			strcpy(App->CL_File_IO->Model_Path_FileName, Path);
+
+			bool test = App->CL_Importers->Load_Ogre_Model(false);
+			return TRUE;
+		}
+		
 		// File Import ------------------------------------------------
 		case ID_OGRE3D_MESH:
 		{
@@ -866,7 +886,7 @@ INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 
 		SetDlgItemText(hDlg, IDC_ST_ABOUT_VERSION, App->App_Version);
 
-		strcpy(buf, "OgreWin3D_Basic Version:- ");
+		strcpy(buf, "OgreWin3D_Stage Version:- ");
 		strcat(buf, App->App_Version);
 		strcat(buf, "  (64bit Build)");
 		SendDlgItemMessage(hDlg, IDC_LIST_ABOUT_VERSIONS, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);

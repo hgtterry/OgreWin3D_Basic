@@ -1,0 +1,307 @@
+
+material World_1_Material_0
+{
+	technique
+	{
+		pass
+		{
+
+			texture_unit
+			{
+				texture stfloor1.bmp
+			}
+		}
+
+	}
+
+}
+
+material World_1_Material_1
+{
+	technique
+	{
+		pass
+		{
+
+			texture_unit
+			{
+				texture Wall.bmp
+			}
+		}
+
+	}
+
+}
+
+material World_1_Material_2
+{
+	technique
+	{
+		pass
+		{
+
+			texture_unit
+			{
+				texture metal02.bmp
+			}
+		}
+
+	}
+
+}
+
+material World_1_Material_3
+{
+	technique
+	{
+		pass
+		{
+
+			texture_unit
+			{
+				texture ceillight.bmp
+			}
+		}
+
+	}
+
+}
+
+material World_1_Material_4
+{
+	technique
+	{
+		pass
+		{
+
+			texture_unit
+			{
+				texture grass01.bmp
+			}
+		}
+
+	}
+
+}
+
+material World_1_Material_5
+{
+	technique
+	{
+		pass
+		{
+
+			texture_unit
+			{
+				texture metal01.bmp
+			}
+		}
+
+	}
+
+}
+
+material World_1_Material_6
+{
+	technique
+	{
+		pass
+		{
+
+			texture_unit
+			{
+				texture metal03.bmp
+			}
+		}
+
+	}
+
+}
+
+material World_1_Material_7
+{
+	technique
+	{
+		pass
+		{
+
+			texture_unit
+			{
+				texture metal04.bmp
+			}
+		}
+
+	}
+
+}
+
+material World_1_Material_8
+{
+	technique
+	{
+		pass
+		{
+
+			texture_unit
+			{
+				texture stfloor01.bmp
+			}
+		}
+
+	}
+
+}
+
+material World_1_Material_9
+{
+	technique
+	{
+		pass
+		{
+
+			texture_unit
+			{
+				texture stwall02.bmp
+			}
+		}
+
+	}
+
+}
+
+material World_1_Material_10
+{
+	technique
+	{
+		pass
+		{
+
+			texture_unit
+			{
+				texture stwall03.bmp
+			}
+		}
+
+	}
+
+}
+
+material World_1_Material_11
+{
+	technique
+	{
+		pass
+		{
+
+			texture_unit
+			{
+				texture tiles01.bmp
+			}
+		}
+
+	}
+
+}
+
+material World_1_Material_12
+{
+	technique
+	{
+		pass
+		{
+
+			texture_unit
+			{
+				texture wfloor02.bmp
+			}
+		}
+
+	}
+
+}
+
+material World_1_Material_13
+{
+	technique
+	{
+		pass
+		{
+
+			texture_unit
+			{
+				texture brick005.bmp
+			}
+		}
+
+	}
+
+}
+
+material World_1_Material_14
+{
+	technique
+	{
+		pass
+		{
+			alpha_rejection greater 128
+
+			texture_unit
+			{
+				texture water02.tga
+			}
+		}
+
+	}
+
+}
+
+material World_1_Material_15
+{
+	technique
+	{
+		pass
+		{
+
+			texture_unit
+			{
+				texture brikgra9.bmp
+			}
+		}
+
+	}
+
+}
+
+material World_1_Material_16
+{
+	technique
+	{
+		pass
+		{
+
+			texture_unit
+			{
+				texture mtlbolts.bmp
+			}
+		}
+
+	}
+
+}
+
+material World_1_Material_17
+{
+	technique
+	{
+		pass
+		{
+
+			texture_unit
+			{
+				texture concrete.bmp
+			}
+		}
+
+	}
+
+}

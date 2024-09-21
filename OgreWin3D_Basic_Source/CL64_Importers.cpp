@@ -390,3 +390,127 @@ bool CL64_Importers::Load_Ogre_Resource_CFG(bool Use_File_Dialog)
 	
 	return 1;
 }
+
+// *************************************************************************
+// *				Load_Level:- Terry and Hazel Flanigan 2024 			   *
+// *************************************************************************
+bool CL64_Importers::Load_Level(bool Use_File_Dialog)
+{
+	if (Use_File_Dialog == 1)
+	{
+		char Start_Directory[MAX_PATH];
+		strcpy(Start_Directory, "");
+
+		if (App->CL_Preferences->Use_Default_Directories == 1)
+		{
+			strcpy(Start_Directory, App->GD_Directory_FullPath);
+			strcat(Start_Directory, "\\Models\\Ogre3D_Models");
+
+			App->CL_Preferences->Use_Default_Directories = 0;
+		}
+
+		int Result = App->CL_File_IO->Open_File_Model("Ogre3D   *.mesh\0*.mesh\0", "Ogre3D", Start_Directory);
+		if (Result == 0)
+		{
+			return 0;
+		}
+	}
+
+	App->CL_Scene->Clear_Scene_And_Reset();
+
+	char Model_Path_And_File[MAX_PATH];
+	strcpy(Model_Path_And_File, App->CL_File_IO->Get_Model_Path_File_Name().c_str());
+
+	App->CL_Scene->Set_Paths();
+
+	if (Ogre::ResourceGroupManager::getSingleton().resourceGroupExists(App->CL_Resources->Ogre_Loader_Resource_Group) == NULL)
+	{
+		Ogre::ResourceGroupManager::getSingleton().createResourceGroup(App->CL_Resources->Ogre_Loader_Resource_Group);
+	}
+
+	if (App->CL_Scene->Imported_Ogre_Ent && App->CL_Scene->Imported_Ogre_Node)
+	{
+		App->CL_Scene->Imported_Ogre_Node->detachAllObjects();
+		App->CL_Ogre->mSceneMgr->destroySceneNode(App->CL_Scene->Imported_Ogre_Node);
+		App->CL_Ogre->mSceneMgr->destroyEntity(App->CL_Scene->Imported_Ogre_Ent);
+		App->CL_Scene->Imported_Ogre_Ent = nullptr;
+		App->CL_Scene->Imported_Ogre_Node = nullptr;
+	}
+
+	App->CL_Ogre->Ogre3D_Listener->Ogre_Model_Loaded = 0;
+
+	//App->CL_Scene->Reset_Main_Entity();
+
+	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(App->CL_Scene->Texture_FolderPath,
+		"FileSystem", App->CL_Resources->Ogre_Loader_Resource_Group);
+
+	try
+	{
+		Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();// App->CL_Scene->Texture_FolderPath);
+	}
+	catch (...)
+	{
+
+	}
+
+	try
+	{
+		App->CL_Scene->Imported_Ogre_Ent = App->CL_Ogre->mSceneMgr->createEntity("Imported_Entity", App->CL_Scene->FileName, App->CL_Resources->Ogre_Loader_Resource_Group);
+		App->CL_Scene->Imported_Ogre_Node = App->CL_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+		App->CL_Scene->Imported_Ogre_Node->attachObject(App->CL_Scene->Imported_Ogre_Ent);
+
+		App->CL_Scene->Imported_Ogre_Node->setVisible(true);
+		App->CL_Scene->Imported_Ogre_Node->setOrientation(Ogre::Quaternion::IDENTITY);
+		App->CL_Scene->Imported_Ogre_Node->setPosition(0, 0, 0);
+		App->CL_Scene->Imported_Ogre_Node->setScale(1, 1, 1);
+	}
+	catch (Ogre::Exception& e)
+	{
+		App->Say(e.getFullDescription().c_str());
+	}
+
+
+	Scan_Material_Files();
+
+
+	App->CL_Ogre->Show_Test_Mesh(false);
+	App->CL_Camera->Reset_View();
+
+	if (App->CL_Scene->Imported_Ogre_Ent)
+	{
+		Ogre::Vector3 vCenter = Ogre::Vector3(0.0f, (App->CL_Scene->Imported_Ogre_Ent->getBoundingBox().getMaximum().y +
+			App->CL_Scene->Imported_Ogre_Ent->getBoundingBox().getMinimum().y) * 0.5f,
+			0.0f);
+
+		App->CL_Ogre->camNode->setOrientation(Ogre::Quaternion::IDENTITY);
+		App->CL_Ogre->camNode->setPosition(Ogre::Vector3(0, 0, App->CL_Scene->Imported_Ogre_Ent->getBoundingRadius() * 2.8f));
+	}
+
+	App->CL_Mesh_Manager->Ogre_To_Mesh_Data(App->CL_Scene->Imported_Ogre_Ent);
+
+	App->CL_Resources->mSelected_Resource_Group = App->CL_Resources->Ogre_Loader_Resource_Group;
+
+	App->CL_Import_Ogre3D->flag_Ogre_Model_Loaded = 1;
+	App->CL_Scene->flag_Model_Loaded = 1;
+
+	App->CL_Scene->Set_Scene(Enums::Scene_Mode_Imported_Entity);
+
+	//Get_BoneNames();
+
+	App->CL_Motions->Get_Motions(App->CL_Scene->Imported_Ogre_Ent);
+
+	App->CL_Scene->S_OgreMeshData[0]->mFileName_Str = App->CL_Scene->FileName;
+
+	App->Set_Title();
+
+	App->CL_ImGui->flag_Open_Textures_List = 1;
+	App->CL_Props_Textures->Get_First_Texture_Ogre();
+	App->CL_Ogre->RenderFrame(3);
+
+
+	App->Say("Mesh Imported", (LPSTR)App->CL_Scene->FileName);
+
+	//Get_Textures();
+
+	return 1;
+}

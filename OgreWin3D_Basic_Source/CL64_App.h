@@ -1,5 +1,5 @@
 /*
-Copyright (c) OgreWin3D_Basic 2024 W.T.Flanigan H.C.Flanigan Inflanite_HGT
+Copyright (c) OgreWin3D_Stage 2024 W.T.Flanigan H.C.Flanigan Inflanite_HGT
 
 This software is provided 'as-is', without any express or implied
 warranty. In no event will the authors be held liable for any damages
@@ -46,6 +46,7 @@ appreciated but is not required.
 #include "CL64_Props_Textures.h"
 
 #include "CL64_Mesh_Manager.h"
+#include "CL64_Level.h"
 
 class CL64_App
 {
@@ -84,10 +85,11 @@ public:
 	CL64_Exp_Obj*			CL_Exp_Obj;
 	CL64_Props_Textures*	CL_Props_Textures;
 	CL64_Mesh_Manager*		CL_Mesh_Manager;
+	CL64_Level*				CL_Level;
 
 	void InitApp(void);
 	void Init_Dialogs(void);
-
+	void Open_Tool(char* Tool);
 	void Say(const char* Message, char* Message2 = NULL);
 	void Say_Win(const char* Message);
 	void Say_Int(int Value);

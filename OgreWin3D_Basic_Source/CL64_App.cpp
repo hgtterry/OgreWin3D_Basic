@@ -1,5 +1,5 @@
 /*
-Copyright (c) OgreWin3D_Basic 2024 W.T.Flanigan H.C.Flanigan Inflanite_HGT
+Copyright (c) OgreWin3D_Stage 2024 W.T.Flanigan H.C.Flanigan Inflanite_HGT
 
 This software is provided 'as-is', without any express or implied
 warranty. In no event will the authors be held liable for any damages
@@ -48,6 +48,7 @@ CL64_App::CL64_App(void)
 	CL_Exp_Obj =		nullptr;
 	CL_Props_Textures = nullptr;
 	CL_Mesh_Manager =	nullptr;
+	CL_Level =			nullptr;
 
 	hInst =				nullptr;
 	MainHwnd =			nullptr;
@@ -156,6 +157,7 @@ void CL64_App::InitApp(void)
 	CL_Exp_Obj =		new CL64_Exp_Obj();
 	CL_Props_Textures = new CL64_Props_Textures();
 	CL_Mesh_Manager =	new CL64_Mesh_Manager();
+	CL_Level =			new CL64_Level();
 
 	SetBrushes_Fonts();
 
@@ -553,5 +555,18 @@ void CL64_App::Custom_Button_Greyed(LPNMCUSTOMDRAW item)
 	SelectObject(item->hdc, old_pen);
 	SelectObject(item->hdc, old_brush);
 	DeleteObject(pen);
+}
+
+// *************************************************************************
+// *			Open_Tool:- Terry and Hazel Flanigan 2024			  	   *
+// *************************************************************************
+void CL64_App::Open_Tool(char* Tool)
+{
+	char Path[1024];
+	strcpy(Path, App->GD_Directory_FullPath);
+	strcat(Path, "\\");
+	strcat(Path, Tool);
+
+	ShellExecute(0, "open", Path, 0, 0, SW_SHOW);
 }
 
