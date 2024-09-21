@@ -25,6 +25,8 @@ public:
 	void Resize_OgreWin(void);
 	void Resize_TopDlg(void);
 	bool Move_Panels(void);
+	void Move_FileView_Window(void);
+	bool Resize_FileView(void);
 
 };
 

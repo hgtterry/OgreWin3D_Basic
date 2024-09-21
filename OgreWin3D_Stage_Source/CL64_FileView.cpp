@@ -59,7 +59,8 @@ LRESULT CALLBACK CL64_FileView::ListPanel_Proc(HWND hDlg, UINT message, WPARAM w
 
 	case WM_SIZE:
 	{
-		//App->SBC_Panels->Resize_FileView();
+		App->CL_Panels->Resize_FileView();
+
 	}break;
 
 	case WM_CONTEXTMENU:

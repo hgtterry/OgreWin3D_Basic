@@ -15,6 +15,7 @@ appreciated but is not required.
 
 #include "pch.h"
 #include "CL64_App.h"
+#include "resource.h"
 #include "CL64_Panels.h"
 
 CL64_Panels::CL64_Panels(void)
@@ -130,6 +131,59 @@ bool CL64_Panels::Move_Panels(void)
 
 	/*DeferWindowPos(hdwp, App->CL_Motions->RightMotions_Hwnd, NULL, p.x + widthX - 295, PosY + 5,
 		0, 0, SWP_NOSIZE | SWP_NOZORDER);*/
+
+	return EndDeferWindowPos(hdwp);
+}
+
+// *************************************************************************
+// *		Move_FileView_Window:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+void CL64_Panels::Move_FileView_Window(void)
+{
+	POINT p = { 0 };
+
+	int Diff = MapWindowPoints(App->ViewGLhWnd, NULL, &p, 1);
+
+	int PosX = p.x;
+	int PosY = p.y;
+
+	SetWindowPos(App->ListPanel, NULL, PosX + 0, PosY + 5,
+		0, 0, SWP_NOSIZE | SWP_NOZORDER);
+
+}
+
+// *************************************************************************
+// *			Resize_FileView:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+bool CL64_Panels::Resize_FileView(void)
+{
+	RECT rcl;
+
+	HDWP hdwp;
+
+	int WidthClient = 0;
+	int HeightClient;
+	int NewWidth = 0;
+	int NewHeight = 0;
+
+	GetClientRect(App->ListPanel, &rcl);
+
+	WidthClient = rcl.right - rcl.left - 1010;
+	NewWidth = 417 + WidthClient + 200;
+
+	HeightClient = rcl.bottom - rcl.top;
+	NewHeight = HeightClient - 150;
+
+	HWND Temp = GetDlgItem(App->ListPanel, IDC_TREE1);
+	//HWND Temp3 = GetDlgItem(App->ListPanel, IDC_BT_INFO_FILEVIEW);
+
+	hdwp = BeginDeferWindowPos(4);
+
+	DeferWindowPos(hdwp, Temp, NULL, 2, 2,
+		NewWidth + 388, NewHeight + 71, SWP_NOZORDER);
+
+	/*DeferWindowPos(hdwp, Temp3, NULL, 10, NewHeight + 113,
+		0, 07, SWP_NOSIZE | SWP_NOZORDER);*/
 
 	return EndDeferWindowPos(hdwp);
 }
