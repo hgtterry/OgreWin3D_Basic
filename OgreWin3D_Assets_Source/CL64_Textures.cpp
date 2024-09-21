@@ -130,6 +130,39 @@ void CL64_Textures::Load_Textures_Assimp()
 }
 
 // *************************************************************************
+// *		DecompileTextures:- Terry and Hazel Flanigan 2024 	   	   	   *
+// *************************************************************************
+bool CL64_Textures::DecompileTextures(char* Path)
+{
+	int MatCount = App->CL_Scene->GroupCount;
+	char FileName[255];
+	char FilePath[1024];
+
+	int Loop = 0;
+	while (Loop < MatCount)
+	{
+		strcpy(FileName, App->CL_Scene->Group[Loop]->Text_FileName);
+
+		int Len = strlen(FileName);
+		FileName[Len - 4] = 0;
+		strcat(FileName, ".jpg");
+
+		strcpy(FilePath, Path);
+		strcat(FilePath, FileName);
+
+		HBITMAP Data;
+
+		Data = App->CL_Scene->Group[Loop]->Base_Bitmap;
+
+		ilutWinSaveImage(FilePath, Data);
+
+		Loop++;
+	}
+
+	return 1;
+}
+
+// *************************************************************************
 // *		Windows_Preview_FullPath:- Terry and Hazel Flanigan 2024	   *
 // *************************************************************************
 bool CL64_Textures::Windows_Preview_FullPath(int Index, char* FullPath)

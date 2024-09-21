@@ -60,8 +60,6 @@ bool CL64_Exp_Obj::Create_ObjectFile(void)
 
 	CreateDirectory(OutputFolder, NULL);
 
-	//App->CL_Textures->DecompileTextures(OutputFolder);
-
 	strcpy(Object_FileName, OutputFolder);
 	strcat(Object_FileName, App->CL_Scene->JustName);
 	strcat(Object_FileName, ".obj");
@@ -83,6 +81,7 @@ bool CL64_Exp_Obj::Create_ObjectFile(void)
 	else
 	{
 		WriteMTLFile();
+		App->CL_Textures->DecompileTextures(OutputFolder);
 	}
 
 	return 1;
@@ -95,8 +94,6 @@ void CL64_Exp_Obj::Write_ObjectFile(void)
 {
 	Write_OBJECTFILE = 0;
 
-	//	char buf[1024];
-
 	Write_OBJECTFILE = fopen(Object_FileName, "wt");
 
 	if (!Write_OBJECTFILE)
@@ -104,11 +101,8 @@ void CL64_Exp_Obj::Write_ObjectFile(void)
 		return;
 	}
 
-	//if (App->CL_Scene->Loaded_File_Type == Enums::Loaded_File_Type_Assimp)
-	{
-		Write_ObjectFile_Commit();
-	}
-
+	Write_ObjectFile_Commit();
+	
 	fclose(Write_OBJECTFILE);
 }
 
