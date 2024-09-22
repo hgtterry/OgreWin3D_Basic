@@ -21,5 +21,15 @@ public:
 	CL64_Properties(void);
 	~CL64_Properties(void);
 
+	void Start_Properties(void);
+
+	HWND Properties_Dlg_hWnd;
+
+private:
+	static LRESULT CALLBACK Proc_Properties(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+
+	void Create_Properties_hLV(void);
+
+	HWND Properties_hLV;
 };
 

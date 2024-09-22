@@ -189,6 +189,9 @@ void CL64_App::Init_Dialogs(void)
 	App->CL_Panels->Move_FileView_Window();
 	App->CL_Panels->Resize_FileView();
 
+	App->CL_Properties->Start_Properties();
+	App->CL_Panels->Place_Properties_Dlg();
+
 	EnableMenuItem(App->mMenu, ID_OGRE3D_RELOADMESH, MF_BYCOMMAND | MF_GRAYED);
 	EnableMenuItem(App->mMenu, ID_OGRE3D_RELOADRESOURCEFILE, MF_BYCOMMAND | MF_GRAYED);
 }

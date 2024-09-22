@@ -27,6 +27,7 @@ public:
 	bool Move_Panels(void);
 	void Move_FileView_Window(void);
 	bool Resize_FileView(void);
+	bool Place_Properties_Dlg(void);
 
 };
 
