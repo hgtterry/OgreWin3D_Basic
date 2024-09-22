@@ -155,7 +155,7 @@ bool CL64_Level::Load_Level(bool Use_File_Dialog)
 // *************************************************************************
 void CL64_Level::Set_Scene()
 {
-	App->CL_Ogre->Enable_Fog(true);
+	//App->CL_Ogre->Enable_Fog(true);
 
 	App->CL_Camera->Reset_View();
 
@@ -167,6 +167,8 @@ void CL64_Level::Set_Scene()
 
 	App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_First;
 	App->CL_Ogre->Ogre3D_Listener->Run_Physics = 1;
+
+	App->CL_Ogre->mSceneMgr->setSkyDome(true, "OW3D/CloudySky");
 
 	App->CL_ImGui->flag_Show_Demo_Options = 1;
 }
