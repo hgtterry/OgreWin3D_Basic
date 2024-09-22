@@ -23,6 +23,8 @@ public:
 
 	void Start_Properties(void);
 
+	bool Properties_Dlg_Active;
+
 	HWND Properties_Dlg_hWnd;
 
 private:

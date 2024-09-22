@@ -327,6 +327,27 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			return TRUE;
 		}
 
+		case ID_WINDOWS_PROPERTIES:
+		{
+
+			if (App->CL_Properties->Properties_Dlg_Active == 1)
+			{
+				App->CL_Properties->Properties_Dlg_Active = 0;
+				CheckMenuItem(App->mMenu, ID_WINDOWS_PROPERTIES, MF_BYCOMMAND | MF_UNCHECKED);
+
+				ShowWindow(App->CL_Properties->Properties_Dlg_hWnd, 0);
+			}
+			else
+			{
+				App->CL_Properties->Properties_Dlg_Active = 1;
+				CheckMenuItem(App->mMenu, ID_WINDOWS_PROPERTIES, MF_BYCOMMAND | MF_CHECKED);
+
+				ShowWindow(App->CL_Properties->Properties_Dlg_hWnd, 1);
+			}
+
+			return 1;
+		}
+
 		// Tools -------------------------------------------------------
 		case ID_TOOLS_RESOURCEVIEWER:
 		{

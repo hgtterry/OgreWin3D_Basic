@@ -20,6 +20,8 @@ appreciated but is not required.
 
 CL64_Properties::CL64_Properties(void)
 {
+	Properties_Dlg_Active = 0;
+
 	Properties_Dlg_hWnd =	nullptr;
 	Properties_hLV =		nullptr;
 }
@@ -33,17 +35,18 @@ CL64_Properties::~CL64_Properties(void)
 // *************************************************************************
 void CL64_Properties::Start_Properties(void)
 {
-	/*if (Properties_Dlg_Active == 1)
+	if (Properties_Dlg_Active == 1)
 	{
 		return;
-	}*/
+	}
 
-	/*Properties_Dlg_Active = 1;
-	HMENU mMenu = GetMenu(App->MainHwnd);
-	CheckMenuItem(mMenu, ID_WINDOWS_PROPERTIES, MF_BYCOMMAND | MF_CHECKED);*/
+	Properties_Dlg_Active = 1;
 
 	Properties_Dlg_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_PROPERTIES, App->Fdlg, (DLGPROC)Proc_Properties);
 	ShowWindow(Properties_Dlg_hWnd, 1);
+
+	HMENU mMenu = GetMenu(App->MainHwnd);
+	CheckMenuItem(mMenu, ID_WINDOWS_PROPERTIES, MF_BYCOMMAND | MF_CHECKED);
 
 	//Init_Bmps_Properties();
 
@@ -87,12 +90,12 @@ LRESULT CALLBACK CL64_Properties::Proc_Properties(HWND hDlg, UINT message, WPARA
 
 	case WM_CLOSE:
 	{
-		/*App->SBC_Properties->Properties_Dlg_Active = 0;
+		App->CL_Properties->Properties_Dlg_Active = 0;
 
 		HMENU mMenu = GetMenu(App->MainHwnd);
 		CheckMenuItem(mMenu, ID_WINDOWS_PROPERTIES, MF_BYCOMMAND | MF_UNCHECKED);
 
-		ShowWindow(App->SBC_Properties->Properties_Dlg_hWnd, 0);*/
+		ShowWindow(App->CL_Properties->Properties_Dlg_hWnd, 0);
 
 		break;
 	}
