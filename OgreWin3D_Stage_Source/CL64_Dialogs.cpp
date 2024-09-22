@@ -30,8 +30,8 @@ CL64_Dialogs::CL64_Dialogs(void)
 
 	Flag_Convert_to_Ogre = 0;
 
-	flag_Mouse_Normal = 0;
-	flag_Mouse_Slow = 1;
+	flag_Mouse_Normal = 1;
+	flag_Mouse_Slow = 0;
 	flag_Mouse_VerySlow = 0;
 	flag_Mouse_Fast = 0;
 

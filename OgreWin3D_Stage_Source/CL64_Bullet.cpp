@@ -232,8 +232,8 @@ bool CL64_Bullet::Create_New_Trimesh(Ogre::Entity* Entity, Ogre::SceneNode* Node
 	Phys_Body->setAngularVelocity(btVector3(0, 0, 0));
 	Phys_Body->setWorldTransform(startTransform);
 
-	//int f = Phys_Body->getCollisionFlags();
-	//Phys_Body->setCollisionFlags(f | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
+	int f = Phys_Body->getCollisionFlags();
+	Phys_Body->setCollisionFlags(f | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
 
 	dynamicsWorld->addRigidBody(Phys_Body);
 

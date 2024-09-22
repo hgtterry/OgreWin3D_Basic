@@ -185,7 +185,6 @@ bool CL64_Bullet_Debug_World::Render_Debug(void)
 	}
 	else
 	{
-		App->Flash_Window();
 		Clear_Debug_Render();
 	}
 

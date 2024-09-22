@@ -32,8 +32,8 @@ CL64_Ogre3D_Listener::CL64_Ogre3D_Listener(void)
 	mTranslateVector = Ogre::Vector3::ZERO;
 	
 	mMoveScale = 0;
-	mMoveSensitivity = 5;
-	mMoveSensitivityMouse = 20;
+	mMoveSensitivity = 50;
+	mMoveSensitivityMouse = 50;
 
 	Pl_LeftMouseDown = 0;
 	Pl_RightMouseDown = 0;

@@ -690,10 +690,12 @@ LRESULT CALLBACK CL64_TopDlg::Camera_TB_Proc(HWND hDlg, UINT message, WPARAM wPa
 	{
 		if (LOWORD(wParam) == IDC_BT_CAMERA_FIRST)
 		{
-			//App->CL_Camera->Reset_View();
+
 			App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_First;
 			App->CL_Ogre->Ogre3D_Listener->Run_Physics = 1;
 
+			App->CL_Player->Show_Debug_Player(false);
+			
 			App->CL_TopDlg->flag_Toggle_Cam_FirstMode = 1;
 			App->CL_TopDlg->flag_Toggle_Cam_ModelMode = 0;
 			App->CL_TopDlg->flag_Toggle_Cam_FreeMode = 0;
@@ -701,6 +703,25 @@ LRESULT CALLBACK CL64_TopDlg::Camera_TB_Proc(HWND hDlg, UINT message, WPARAM wPa
 			RedrawWindow(App->CL_TopDlg->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			return 1;
 		}
+
+		if (LOWORD(wParam) == IDC_BT_CAMERA_FREE)
+		{
+
+			App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_Free;
+
+			App->CL_Player->Show_Debug_Player(true);
+			
+			App->CL_TopDlg->flag_Toggle_PhysicaDebug_Node = 1;
+			App->CL_Ogre->Bullet_Debug_Listener->btDebug_Node->setVisible(true);
+
+			App->CL_TopDlg->flag_Toggle_Cam_FreeMode = 1;
+			App->CL_TopDlg->flag_Toggle_Cam_ModelMode = 0;
+			App->CL_TopDlg->flag_Toggle_Cam_FirstMode = 0;
+
+			RedrawWindow(App->CL_TopDlg->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			return 1;
+		}
+		
 
 		/*if (LOWORD(wParam) == IDC_BT_CAMERA_MODEL)
 		{
@@ -716,19 +737,6 @@ LRESULT CALLBACK CL64_TopDlg::Camera_TB_Proc(HWND hDlg, UINT message, WPARAM wPa
 			return 1;
 		}*/
 
-		if (LOWORD(wParam) == IDC_BT_CAMERA_FREE)
-		{
-			//App->CL_Camera->Reset_View();
-			App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_Free;
-
-			App->CL_TopDlg->flag_Toggle_Cam_FreeMode = 1;
-			App->CL_TopDlg->flag_Toggle_Cam_ModelMode = 0;
-			App->CL_TopDlg->flag_Toggle_Cam_FirstMode = 0;
-
-			RedrawWindow(App->CL_TopDlg->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-			return 1;
-		}
-		
 		if (LOWORD(wParam) == IDC_BT_TD_DEBUG_RESETVIEW)
 		{
 			App->CL_Camera->Reset_View();
