@@ -263,3 +263,23 @@ void CL64_Bullet::Clear_Trimesh()
 		flag_TriMesh_Created = 0;
 	}
 }
+// *************************************************************************
+// *			Show_Debug_Area:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void CL64_Bullet::Show_Debug_Area(bool Show)
+{
+	int f = Phys_Body->getCollisionFlags();
+
+	if (Show == 1)
+	{
+		Phys_Body->setCollisionFlags(f & (~(1 << 5)));
+	}
+	else
+	{
+		Phys_Body->setCollisionFlags(f | (1 << 5));
+	}
+
+	App->CL_Ogre->Bullet_Debug_Listener->Render_Debug_Flag = 0;
+	App->CL_Ogre->RenderFrame(1);
+	App->CL_Ogre->Bullet_Debug_Listener->Render_Debug_Flag = 1;
+}

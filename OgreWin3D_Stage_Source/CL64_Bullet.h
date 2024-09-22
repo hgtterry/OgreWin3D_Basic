@@ -24,6 +24,7 @@ public:
 	void Init_Bullet();
 	void ShutDown_Bullet();
 	void Clear_Trimesh();
+	void Show_Debug_Area(bool Show);
 
 	btDefaultCollisionConfiguration* collisionConfiguration;
 	btCollisionDispatcher* dispatcher;

@@ -819,11 +819,13 @@ LRESULT CALLBACK CL64_TopDlg::Physics_TB_Proc(HWND hDlg, UINT message, WPARAM wP
 		{
 			if (App->CL_TopDlg->flag_Toggle_PhysicaDebug_Node == 1)
 			{
+				App->CL_Bullet->Show_Debug_Area(false);
 				App->CL_TopDlg->flag_Toggle_PhysicaDebug_Node = 0;
 				App->CL_Ogre->Bullet_Debug_Listener->btDebug_Node->setVisible(false);
 			}
 			else
 			{
+				App->CL_Bullet->Show_Debug_Area(true);
 				App->CL_TopDlg->flag_Toggle_PhysicaDebug_Node = 1;
 				App->CL_Ogre->Bullet_Debug_Listener->btDebug_Node->setVisible(true);
 			}
