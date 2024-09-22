@@ -24,7 +24,6 @@ CL64_TopDlg::CL64_TopDlg(void)
 	Tabs_TB_hWnd =	nullptr;
 
 	// Tab Options
-	Debug_TB_hWnd =		nullptr;
 	Camera_TB_hWnd =	nullptr;
 	Physics_TB_hWnd =	nullptr;
 	Motions_TB_hWnd =	nullptr;
@@ -32,7 +31,6 @@ CL64_TopDlg::CL64_TopDlg(void)
 	flag_FPS_Dlg_Running = 0
 		;
 	flag_Toggle_Tabs_Camera = 0;
-	flag_Toggle_Tabs_Debug = 1;
 	flag_Toggle_Tabs_Physics = 0;
 	flag_Toggle_Tabs_Motions = 0;
 	flag_Toggle_Tabs_Resources = 0;
@@ -103,7 +101,6 @@ LRESULT CALLBACK CL64_TopDlg::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam
 		App->CL_TopDlg->TabsHwnd = hDlg;
 
 		App->CL_TopDlg->Start_Tabs_Headers();
-		App->CL_TopDlg->Start_Debug_TB();
 		App->CL_TopDlg->Start_Camera_TB();
 		App->CL_TopDlg->Start_Physics_TB();
 		App->CL_TopDlg->Start_Motions_TB();
@@ -111,8 +108,8 @@ LRESULT CALLBACK CL64_TopDlg::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam
 		App->CL_TopDlg->Hide_Tabs();
 
 		// Default Tab
-		App->CL_TopDlg->flag_Toggle_Tabs_Debug = 1;
-		ShowWindow(App->CL_TopDlg->Debug_TB_hWnd, SW_SHOW);
+		App->CL_TopDlg->flag_Toggle_Tabs_Camera = 1;
+		ShowWindow(App->CL_TopDlg->Camera_TB_hWnd, SW_SHOW);
 
 		return TRUE;
 	}
@@ -479,7 +476,6 @@ LRESULT CALLBACK CL64_TopDlg::Tabs_Headers_Proc(HWND hDlg, UINT message, WPARAM 
 	{
 	case WM_INITDIALOG:
 	{
-		SendDlgItemMessage(hDlg, IDC_BT_TDH_DEBUG, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_TBH_CAMERA, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_TD_PHYSICSTAB, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_TD_MOTIONSTAB, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
@@ -496,13 +492,6 @@ LRESULT CALLBACK CL64_TopDlg::Tabs_Headers_Proc(HWND hDlg, UINT message, WPARAM 
 	case WM_NOTIFY:
 	{
 		LPNMHDR some_item = (LPNMHDR)lParam;
-
-		if (some_item->idFrom == IDC_BT_TDH_DEBUG)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle_Tabs(item, App->CL_TopDlg->flag_Toggle_Tabs_Debug);
-			return CDRF_DODEFAULT;
-		}
 
 		if (some_item->idFrom == IDC_BT_TBH_CAMERA)
 		{
@@ -537,17 +526,6 @@ LRESULT CALLBACK CL64_TopDlg::Tabs_Headers_Proc(HWND hDlg, UINT message, WPARAM 
 
 	case WM_COMMAND:
 	{
-		if (LOWORD(wParam) == IDC_BT_TDH_DEBUG)
-		{
-			App->CL_TopDlg->Hide_Tabs();
-			ShowWindow(App->CL_TopDlg->Debug_TB_hWnd, SW_SHOW);
-			App->CL_TopDlg->flag_Toggle_Tabs_Debug = 1;
-
-			RedrawWindow(App->CL_TopDlg->Tabs_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-
-			return TRUE;
-		}
-
 		if (LOWORD(wParam) == IDC_BT_TBH_CAMERA)
 		{
 			App->CL_TopDlg->Hide_Tabs();
@@ -597,124 +575,13 @@ LRESULT CALLBACK CL64_TopDlg::Tabs_Headers_Proc(HWND hDlg, UINT message, WPARAM 
 // *************************************************************************
 void CL64_TopDlg::Hide_Tabs(void)
 {
-	ShowWindow(Debug_TB_hWnd, SW_HIDE);
 	ShowWindow(Camera_TB_hWnd, SW_HIDE);
 	ShowWindow(Physics_TB_hWnd, SW_HIDE);
 	ShowWindow(Motions_TB_hWnd, SW_HIDE);
 
-	flag_Toggle_Tabs_Debug = 0;
 	flag_Toggle_Tabs_Camera = 0;
 	flag_Toggle_Tabs_Physics = 0;
 	flag_Toggle_Tabs_Motions = 0;
-}
-
-// *************************************************************************
-// *			Start_Debug_TB:- Terry and Hazel Flanigan 2024			   *
-// *************************************************************************
-void CL64_TopDlg::Start_Debug_TB(void)
-{
-	Debug_TB_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_TB_DEBUG, Tabs_TB_hWnd, (DLGPROC)Debug_TB_Proc);
-}
-
-// *************************************************************************
-// *			Debug_TB_Proc:- Terry and Hazel Flanigan 2024			   *
-// *************************************************************************
-LRESULT CALLBACK CL64_TopDlg::Debug_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
-{
-
-	switch (message)
-	{
-	case WM_INITDIALOG:
-	{
-		SendDlgItemMessage(hDlg, IDC_BT_TD_DEBUG_IMGUIDEMO, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_BT_TD_DEBUG_IMGUIFPS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_BT_TD_DEBUG_FPSLOCK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-
-		return TRUE;
-	}
-
-	case WM_CTLCOLORDLG:
-	{
-		return (LONG)App->Brush_Tabs;
-	}
-
-	case WM_NOTIFY:
-	{
-		LPNMHDR some_item = (LPNMHDR)lParam;
-
-		if (some_item->idFrom == IDC_BT_TD_DEBUG_IMGUIDEMO)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CL_ImGui->flag_Show_ImGui_Demo);
-			return CDRF_DODEFAULT;
-		}
-
-		if (some_item->idFrom == IDC_BT_TD_DEBUG_IMGUIFPS)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CL_ImGui->flag_Show_FPS);
-			return CDRF_DODEFAULT;
-		}
-
-		if (some_item->idFrom == IDC_BT_TD_DEBUG_FPSLOCK)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CL_TopDlg->flag_FPS_Dlg_Running);
-			return CDRF_DODEFAULT;
-		}
-		
-		return CDRF_DODEFAULT;
-	}
-
-	case WM_COMMAND:
-	{
-		if (LOWORD(wParam) == IDC_BT_TD_DEBUG_IMGUIDEMO)
-		{
-			if (App->CL_ImGui->flag_Show_ImGui_Demo == 1)
-			{
-				App->CL_TopDlg->Enable_ImGui_Demo_Panel(false);
-			}
-			else
-			{
-				App->CL_TopDlg->Enable_ImGui_Demo_Panel(true);
-			}
-
-			return 1;
-		}
-
-		if (LOWORD(wParam) == IDC_BT_TD_DEBUG_IMGUIFPS)
-		{
-			if (App->CL_ImGui->flag_Show_FPS == 1)
-			{
-				App->CL_ImGui->flag_Show_FPS = 0;
-			}
-			else
-			{
-				App->CL_ImGui->flag_Show_FPS = 1;
-			}
-
-			return 1;
-		}
-
-		if (LOWORD(wParam) == IDC_BT_TD_DEBUG_FPSLOCK)
-		{
-			if (App->CL_TopDlg->flag_FPS_Dlg_Running == 1)
-			{
-				App->CL_TopDlg->Enable_FPSLock_Dlg_Panel(false);
-			}
-			else
-			{
-				App->CL_TopDlg->Enable_FPSLock_Dlg_Panel(true);
-			}
-
-			return 1;
-		}
-		
-		return FALSE;
-	}
-
-	}
-	return FALSE;
 }
 
 // *************************************************************************
@@ -1309,44 +1176,6 @@ void CL64_TopDlg::Init_Bmps_Globals(void)
 	ti9.hwnd = App->MainHwnd;
 	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti9);
 
-	// ------------------------- Debug Panel
-
-	Temp = GetDlgItem(Debug_TB_hWnd, IDC_BT_TD_DEBUG_IMGUIFPS);
-	TOOLINFO ti21 = { 0 };
-	ti21.cbSize = sizeof(ti21);
-	ti21.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
-	ti21.uId = (UINT_PTR)Temp;
-	ti21.lpszText = (LPSTR)"Toggle Imgui FPS.\rImGui Version for FPS.";
-	ti21.hwnd = App->MainHwnd;
-	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti21);
-
-	Temp = GetDlgItem(Debug_TB_hWnd, IDC_BT_TD_DEBUG_PHYSICSDEBUG);
-	TOOLINFO ti23 = { 0 };
-	ti23.cbSize = sizeof(ti23);
-	ti23.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
-	ti23.uId = (UINT_PTR)Temp;
-	ti23.lpszText = (LPSTR)"Toggle Physics Debug.\rDebug Bullet Shows the Capsule outline of the player.";
-	ti23.hwnd = App->MainHwnd;
-	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti23);
-
-	Temp = GetDlgItem(Debug_TB_hWnd, IDC_BT_TD_DEBUG_IMGUIDEMO);
-	TOOLINFO ti24 = { 0 };
-	ti24.cbSize = sizeof(ti24);
-	ti24.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
-	ti24.uId = (UINT_PTR)Temp;
-	ti24.lpszText = (LPSTR)"Toggle Dear ImGui Demo.";
-	ti24.hwnd = App->MainHwnd;
-	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti24);
-
-	/*Temp = GetDlgItem(Debug_TB_hWnd, IDC_BT_TD_DEBUG_RESOURCES);
-	TOOLINFO ti25 = { 0 };
-	ti25.cbSize = sizeof(ti25);
-	ti25.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
-	ti25.uId = (UINT_PTR)Temp;
-	ti25.lpszText = (LPSTR)"Show Resources used by the App.";
-	ti25.hwnd = App->MainHwnd;
-	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti25);*/
-	
 	// ------------------------- Camera Panel
 
 	Temp = GetDlgItem(Camera_TB_hWnd, IDC_BT_TD_DEBUG_RESETVIEW);
@@ -1476,7 +1305,6 @@ void CL64_TopDlg::Enable_ImGui_Demo_Panel(bool Enable)
 		App->CL_ImGui->flag_Show_ImGui_Demo = 0;
 	}
 
-	RedrawWindow(Debug_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 }
 
 // **************************************************************************
@@ -1496,7 +1324,5 @@ void CL64_TopDlg::Enable_FPSLock_Dlg_Panel(bool Enable)
 			App->CL_TopDlg->flag_FPS_Dlg_Running = 0;
 		}
 	}
-
-	RedrawWindow(Debug_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 }
 

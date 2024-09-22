@@ -299,6 +299,34 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			return TRUE;
 		}
 		
+		case ID_WINDOWS_FPS:
+		{
+			if (App->CL_ImGui->flag_Show_FPS == 1)
+			{
+				App->CL_ImGui->flag_Show_FPS = 0;
+			}
+			else
+			{
+				App->CL_ImGui->flag_Show_FPS = 1;
+			}
+
+			return TRUE;
+		}
+
+		case ID_WINDOWS_IMGUI:
+		{
+			if (App->CL_ImGui->flag_Show_ImGui_Demo == 1)
+			{
+				App->CL_TopDlg->Enable_ImGui_Demo_Panel(false);
+			}
+			else
+			{
+				App->CL_TopDlg->Enable_ImGui_Demo_Panel(true);
+			}
+
+			return TRUE;
+		}
+
 		// Tools -------------------------------------------------------
 		case ID_TOOLS_RESOURCEVIEWER:
 		{

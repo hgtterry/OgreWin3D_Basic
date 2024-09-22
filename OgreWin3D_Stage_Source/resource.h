@@ -21,7 +21,6 @@
 #define IDD_PREFERENCES                 134
 #define IDD_TOPBAR                      135
 #define IDD_TB_TAB                      136
-#define IDD_TB_DEBUG                    137
 #define IDB_GRIDON                      138
 #define IDD_TB_CAMERA                   138
 #define IDB_GRIDOFF                     139
@@ -67,7 +66,6 @@
 #define IDB_FILESELECTED                178
 #define IDB_FILECHANGED                 179
 #define IDB_FILECHANGEDSELECTED         180
-#define IDB_BITMAP2                     181
 #define IDB_FVFOLDERRED                 181
 #define IDC_CK_SU_FULLSCREEN            1000
 #define IDC_ST_STARTUP                  1001
@@ -222,6 +220,8 @@
 #define ID_TOOLS_OGREWIN3D              32805
 #define ID_OPEN_LEVEL                   32806
 #define ID_WINDOWS_FILEVIEW             32807
+#define ID_WINDOWS_FPS                  32808
+#define ID_WINDOWS_IMGUI                32809
 #define IDC_STATIC                      -1
 
 // Next default values for new objects
@@ -230,7 +230,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        182
-#define _APS_NEXT_COMMAND_VALUE         32808
+#define _APS_NEXT_COMMAND_VALUE         32810
 #define _APS_NEXT_CONTROL_VALUE         1071
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
