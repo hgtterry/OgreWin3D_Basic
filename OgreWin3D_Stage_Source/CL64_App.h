@@ -47,6 +47,7 @@ appreciated but is not required.
 #include "CL64_Mesh_Manager.h"
 #include "CL64_Level.h"
 #include "CL64_FileView.h"
+#include "CL64_Properties.h"
 
 class CL64_App
 {
@@ -86,6 +87,8 @@ public:
 	CL64_Mesh_Manager*		CL_Mesh_Manager;
 	CL64_Level*				CL_Level;
 	CL64_FileView*			CL_FileView;
+	CL64_Properties*		CL_Properties;
+
 
 	void InitApp(void);
 	void Init_Dialogs(void);

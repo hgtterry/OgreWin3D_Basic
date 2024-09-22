@@ -49,6 +49,7 @@ CL64_App::CL64_App(void)
 	CL_Mesh_Manager =	nullptr;
 	CL_Level =			nullptr;
 	CL_FileView =		nullptr;
+	CL_Properties =		nullptr;
 
 	hInst =				nullptr;
 	MainHwnd =			nullptr;
@@ -159,7 +160,8 @@ void CL64_App::InitApp(void)
 	CL_Mesh_Manager =	new CL64_Mesh_Manager();
 	CL_Level =			new CL64_Level();
 	CL_FileView =		new CL64_FileView();
-	
+	CL_Properties =		new CL64_Properties();
+
 	SetBrushes_Fonts();
 
 	LoadString(App->hInst, IDS_VERSION, App_Version, MAX_PATH);
