@@ -25,6 +25,7 @@ public:
 	bool Open_File_Model(const char* Extension, const char* Title, const char* StartDirectory);
 	bool Open_Resource_File(char* Extension, char* Title, char* StartDirectory);
 	bool SaveSelectedFile(char* Extension, char* File);
+	bool Check_File_Exist(char* Full_Path);
 
 	std::string Get_Model_Path_File_Name();
 

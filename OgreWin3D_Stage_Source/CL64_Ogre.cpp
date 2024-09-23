@@ -96,14 +96,13 @@ void CL64_Ogre::InitOgre(void)
 
 	App->CL_Player->Create_Player_Object();
 
-	char Path[MAX_PATH];
-	strcpy(Path, App->GD_Directory_FullPath);
-	strcat(Path, "\\Levels\\Level_1\\World_1.mesh");
+	char Test_Project[MAX_PATH];
+	strcpy(Test_Project, App->GD_Directory_FullPath);
+	strcat(Test_Project, "\\Projects\\First_Project_Prj\\Project.SBProj");
 
-	strcpy(App->CL_File_IO->Model_FileName, "World_1.mesh");
-	strcpy(App->CL_File_IO->Model_Path_FileName, Path);
+	App->CL_Importers->Reload_FromResentFiles(Test_Project);
 
-	bool test = App->CL_Level->Load_Level(false);
+	//bool test = App->CL_Level->Load_Level(false);
 
 }
 

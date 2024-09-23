@@ -79,7 +79,7 @@ bool CL64_Project::Load_Project()
 
 	App->CL_Scene->Clear_Level();
 	App->CL_Resources->Create_Project_Resources_Group();
-
+	
 	Set_Paths();
 
 	// ------------------------------------------------------------------- 
@@ -124,7 +124,7 @@ bool CL64_Project::Load_Project()
 
 	////-------------------------------------- Set Resource Path
 
-	//Load_Get_Resource_Path();
+	Load_Get_Resource_Path();
 
 	// ------------------------------------- Aera
 	if (Options->Has_Area > 0)

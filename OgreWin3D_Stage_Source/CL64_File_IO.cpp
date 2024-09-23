@@ -335,6 +335,31 @@ bool CL64_File_IO::SaveSelectedFile(char* Extension, char* File)
 	}
 
 	return 0;
+}
 
+// *************************************************************************
+// *		Check_File_Exist:- Terry and Hazel Flanigan 2022		 	   *
+// *************************************************************************
+bool CL64_File_IO::Check_File_Exist(char* Full_Path)
+{
+	char pSearchPath[1024];
+
+	WIN32_FIND_DATA FindFileData;
+	HANDLE hFind;
+
+	strcpy(pSearchPath, Full_Path);
+
+	hFind = FindFirstFile(pSearchPath, &FindFileData);
+	if (hFind == INVALID_HANDLE_VALUE)
+	{
+		return 0;
+	}
+	else
+	{
+		FindClose(hFind);
+		return 1;
+	}
+
+	return 0;
 }
 

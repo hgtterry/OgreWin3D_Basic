@@ -401,7 +401,7 @@ bool CL64_Importers::Load_Ogre_Resource_CFG(bool Use_File_Dialog)
 }
 
 // *************************************************************************
-// *						Load_Project Terry Flanigan   				   *
+// *			Load_Project:- Terry and Hazel Flanigan 2024   			   *
 // *************************************************************************
 bool CL64_Importers::Load_Project(char* Extension, char* Extension2)
 {
@@ -426,4 +426,91 @@ bool CL64_Importers::Load_Project(char* Extension, char* Extension2)
 	}*/
 
 	return 1;
+}
+
+// *************************************************************************
+// *	Reload_FromResentFiles:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void CL64_Importers::Reload_FromResentFiles(char* ResentPathAndFile)
+{
+
+	// Check Recent File Exsists
+	bool Result = App->CL_File_IO->Check_File_Exist(ResentPathAndFile);
+	if (Result == 0)
+	{
+		App->Say(" Can Not Find File:- This may be due to it has been deleted or renamed");
+		return;
+	}
+
+	strcpy(App->CL_File_IO->Project_Path_File_Name, ResentPathAndFile);
+
+	std::string mJustFileName = Get_FileName_From_Path(ResentPathAndFile);
+
+	strcpy(App->CL_File_IO->Project_File_Name, mJustFileName.c_str());
+
+	bool test = App->CL_Project->Load_Project();
+
+	/*App->CL_Prefs->Update_User_File(ResentPathAndFile);
+
+	App->SBC_TopTabs->Project_Loaded_Reset();
+	App->CL_Ogre->RenderFrame();
+
+	if (Quick_Load_Flag == 0)
+	{
+		if (test == 1)
+		{
+			App->Say("Project Loaded");
+		}
+		else
+		{
+			App->Say("Project Failed to Load");
+		}
+	}*/
+
+}
+
+// *************************************************************************
+// *		Get_FileName_From_Path:- Terry and Hazel Flanigan 2023	 	   *
+// *************************************************************************
+std::string CL64_Importers::Get_FileName_From_Path(char* pString)
+{
+	char JustFileName[MAX_PATH]{ 0 };
+	char FileName[MAX_PATH]{ 0 };
+
+	strcpy(FileName, pString);
+
+	int Count = 0;
+	int Mark = 0;
+	bool Test = 0;
+
+	while (*pString != 0)
+	{
+		if (*pString == '\\' || *pString == '/')
+		{
+			Test = 1;
+			Mark = Count;
+		}
+
+		Count++;
+		pString++;
+	}
+
+	if (Mark == 0 && Test == 0)
+	{
+		strcpy(JustFileName, FileName);
+	}
+	else
+	{
+		if (Mark == 0 && Test == 1)
+		{
+			Mark = 1;
+			strcpy(JustFileName, (FileName + Mark));
+		}
+		else
+		{
+			strcpy(JustFileName, (FileName + Mark) + 1);
+		}
+	}
+
+	return JustFileName;
 }
