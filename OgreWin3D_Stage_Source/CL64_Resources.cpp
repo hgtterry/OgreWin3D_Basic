@@ -36,6 +36,7 @@ CL64_Resources::CL64_Resources(void)
 
 	Ogre_ExternalResourceLoaded = 0;
 
+	Project_Resource_Group = "Project_Resource_Group";
 	Ogre_Loader_Resource_Group = "Ogre_Loader_Resource_Group";
 	mSelected_Resource_Group = "App_Resource_Group";
 

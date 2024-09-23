@@ -46,6 +46,7 @@ public:
 
 	HWND Resource_Dlg_hWnd;
 
+	Ogre::String Project_Resource_Group;
 	Ogre::String Ogre_Loader_Resource_Group;
 	Ogre::String mSelected_Resource_Group;
 	Ogre::String mFileString;

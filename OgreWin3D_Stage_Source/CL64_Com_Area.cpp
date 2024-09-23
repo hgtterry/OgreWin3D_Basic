@@ -89,35 +89,35 @@ void CL64_Com_Area::Set_Area_Defaults(int Index)
 // *************************************************************************
 void CL64_Com_Area::Add_Aera_To_Project(int Index, char* FileName, char* Resource_Location)
 {
-	//char B_Name[MAX_PATH];
-	//char ConNum[MAX_PATH];
+	char B_Name[MAX_PATH];
+	char ConNum[MAX_PATH];
 
-	//char Mesh_File[MAX_PATH];
-	//strcpy(Mesh_File, FileName);
+	char Mesh_File[MAX_PATH];
+	strcpy(Mesh_File, FileName);
 
-	//Base_Area* Area = App->CL_Scene->B_Area[Index];
+	Base_Area* Area = App->CL_Scene->B_Area[Index];
 
-	//strcpy_s(B_Name, "Area_");
-	//_itoa(Index, ConNum, 10);
-	//strcat(B_Name, ConNum);
-	//strcpy(App->CL_Scene->B_Area[Index]->Area_Name, B_Name);
+	strcpy_s(B_Name, "Area_");
+	_itoa(Index, ConNum, 10);
+	strcat(B_Name, ConNum);
+	strcpy(App->CL_Scene->B_Area[Index]->Area_Name, B_Name);
 
-	//strcpy(Area->Area_FileName, FileName);
-	//strcpy(Area->Area_Resource_Path, Resource_Location);
+	strcpy(Area->Area_FileName, FileName);
+	strcpy(Area->Area_Resource_Path, Resource_Location);
 
-	//Area->Area_Ent = App->CL_Ogre->mSceneMgr->createEntity(App->CL_Scene->B_Area[Index]->Area_Name, Mesh_File, App->SBC_Scene->Project_Resource_Group);
-	//Area->Area_Node = App->CL_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
-	//Area->Area_Node->attachObject(Area->Area_Ent);
+	Area->Area_Ent = App->CL_Ogre->mSceneMgr->createEntity(App->CL_Scene->B_Area[Index]->Area_Name, Mesh_File, App->CL_Resources->Project_Resource_Group);
+	Area->Area_Node = App->CL_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	Area->Area_Node->attachObject(Area->Area_Ent);
 
-	//// Get Material Name
-	//Ogre::String text = Area->Area_Ent->getMesh()->getSubMesh(0)->getMaterialName().c_str();
-	//Ogre::MaterialPtr  Mat = static_cast<Ogre::MaterialPtr> (Ogre::MaterialManager::getSingleton().getByName(text));
-	//strcpy(Area->Material_File, Mat->getOrigin().c_str());
+	// Get Material Name
+	Ogre::String text = Area->Area_Ent->getMesh()->getSubMesh(0)->getMaterialName().c_str();
+	Ogre::MaterialPtr  Mat = static_cast<Ogre::MaterialPtr> (Ogre::MaterialManager::getSingleton().getByName(text));
+	strcpy(Area->Material_File, Mat->getOrigin().c_str());
 
-	//Area->Area_Node->setVisible(true);
-	//Area->Area_Node->setPosition(Area->Mesh_Pos);
-	//Area->Area_Node->setScale(Area->Mesh_Scale);
-	//Area->Area_Node->setOrientation(Area->Mesh_Quat);
+	Area->Area_Node->setVisible(true);
+	Area->Area_Node->setPosition(Area->Mesh_Pos);
+	Area->Area_Node->setScale(Area->Mesh_Scale);
+	Area->Area_Node->setOrientation(Area->Mesh_Quat);
 
 	//Create_Area_Trimesh(Index, Area);
 
