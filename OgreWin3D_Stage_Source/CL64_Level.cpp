@@ -159,7 +159,7 @@ void CL64_Level::Set_Scene()
 
 	App->CL_Camera->Reset_View();
 
-	App->CL_Bullet->Create_New_Trimesh(App->CL_Scene->Imported_Ogre_Ent, App->CL_Scene->Imported_Ogre_Node);
+	/*App->CL_Bullet->Create_New_Trimesh(App->CL_Scene->Imported_Ogre_Ent, App->CL_Scene->Imported_Ogre_Node);*/
 
 	App->CL_Player->Set_Player_Position(Ogre::Vector3(0, 20, 0));
 	App->CL_Player->Set_Player_Rotation(btQuaternion(0, 0, 1, 0));

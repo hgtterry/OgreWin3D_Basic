@@ -22,10 +22,8 @@ public:
 	~CL64_Level(void);
 
 	bool Load_Level(bool Use_File_Dialog);
-
-private:
-
 	void Set_Scene();
+private:
 
 };
 

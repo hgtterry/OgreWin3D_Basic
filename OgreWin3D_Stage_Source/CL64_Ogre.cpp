@@ -101,7 +101,7 @@ void CL64_Ogre::InitOgre(void)
 	strcat(Test_Project, "\\Projects\\First_Project_Prj\\Project.SBProj");
 
 	App->CL_Importers->Reload_FromResentFiles(Test_Project);
-
+	App->CL_Level->Set_Scene();
 	//bool test = App->CL_Level->Load_Level(false);
 
 }

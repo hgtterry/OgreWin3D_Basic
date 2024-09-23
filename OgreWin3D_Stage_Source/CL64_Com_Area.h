@@ -31,6 +31,11 @@ public:
 
 	void Set_Area_Defaults(int Index);
 	void Add_Aera_To_Project(int Index, char* FileName, char* Resource_Location);
+private:
+
+	btBvhTriangleMeshShape* Create_Area_Trimesh(int Index, Base_Area* Object);
+	void Set_Physics(int Index);
+
 
 };
 
