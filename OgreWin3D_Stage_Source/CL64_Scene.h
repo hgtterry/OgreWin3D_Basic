@@ -81,6 +81,7 @@ public:
 	// Mode Sets the Scene
 	void Set_Scene(int Mode); 
 
+	bool Clear_Level();
 
 	void Create_Mesh_Group(int Index);
 	void Clear_Scene_And_Reset(void);

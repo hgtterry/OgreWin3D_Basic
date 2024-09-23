@@ -124,6 +124,63 @@ void CL64_Scene::Reset_Class(void)
 }
 
 // *************************************************************************
+// *			Clear_Level:- Terry and Hazel Flanigan 2024				   *
+// *************************************************************************
+bool CL64_Scene::Clear_Level()
+{
+	//App->SBC_Gui_Environ->Reset_Class();
+	//App->SBC_Project->Reset_Class();
+	//App->SBC_FileView->Reset_Class();
+	//App->SBC_TopTabs->Reset_Class();
+	//App->SBC_Properties->Reset_Class();
+
+	//App->SBC_Markers->BoxNode->setVisible(false);
+	//App->SBC_Markers->Arrow_Node->setVisible(false);
+
+	//App->Set_Main_TitleBar(" ");
+
+
+	//if (App->SBC_Scene->Scene_Loaded == 1)
+	//{
+	//	App->SBC_Physics->Enable_Physics(0);
+
+	//	App->SBC_Player->Reset_Class();
+
+	//	App->SBC_Com_Area->Reset_Class();
+
+	//	// Bullet Related
+	//	int i;
+	//	for (i = App->SBC_Bullet->dynamicsWorld->getNumCollisionObjects() - 1; i >= 0; i--)
+	//	{
+	//		btCollisionObject* obj = App->SBC_Bullet->dynamicsWorld->getCollisionObjectArray()[i];
+	//		App->SBC_Bullet->dynamicsWorld->removeCollisionObject(obj);
+	//		delete obj;
+	//	}
+	//}
+
+
+	//Scene_Modified = 0;
+
+	//Reset_Class(); // This One
+
+	//App->CL_Ogre->OgreListener->GD_CameraMode = Enums::CamNone;
+
+	//App->SBC_Com_Camera->Reset_View();
+
+	//Delete_Resources_Group();
+	//Project_Resources_Created = 0;
+
+	//Reset_Counters();
+
+	//App->SBC_FileView->SelectItem(App->SBC_FileView->FV_LevelFolder);
+
+	//App->CL_Ogre->mSceneMgr->destroyCamera("PlayerRay");
+	//App->CL_Ogre->mSceneMgr->destroyAllParticleSystems();
+
+	return 1;
+}
+
+// *************************************************************************
 // *		Clear_Scene_And_Reset:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
 void CL64_Scene::Clear_Scene_And_Reset(void)
