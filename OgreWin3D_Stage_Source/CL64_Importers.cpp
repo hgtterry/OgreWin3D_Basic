@@ -390,3 +390,32 @@ bool CL64_Importers::Load_Ogre_Resource_CFG(bool Use_File_Dialog)
 	
 	return 1;
 }
+
+// *************************************************************************
+// *						Load_Project Terry Flanigan   				   *
+// *************************************************************************
+bool CL64_Importers::Load_Project(char* Extension, char* Extension2)
+{
+
+	/*int Result = App->CL_File_IO->Open_Project_File(Extension, Extension2, NULL);
+	if (Result == 0)
+	{
+		return 1;
+	}*/
+
+	//bool test = App->CL_Project->Load_Project();
+
+	/*App->SBC_TopTabs->Project_Loaded_Reset();
+	App->CL_Ogre->RenderFrame();*/
+
+	//if (test == 1)
+	{
+		App->Say("Project Loaded");
+	}
+	/*else
+	{
+		App->Say("Project Failed to Load");
+	}*/
+
+	return 1;
+}

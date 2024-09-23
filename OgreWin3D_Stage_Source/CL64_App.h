@@ -48,6 +48,7 @@ appreciated but is not required.
 #include "CL64_Level.h"
 #include "CL64_FileView.h"
 #include "CL64_Properties.h"
+#include "CL64_Project.h"
 
 class CL64_App
 {
@@ -88,7 +89,7 @@ public:
 	CL64_Level*				CL_Level;
 	CL64_FileView*			CL_FileView;
 	CL64_Properties*		CL_Properties;
-
+	CL64_Project*			CL_Project;
 
 	void InitApp(void);
 	void Init_Dialogs(void);

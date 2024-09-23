@@ -375,6 +375,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			return TRUE;
 		}
 		
+		// File Open ------------------------------------------------
+		case ID_OPEN_PROJECT:
+		{
+			Debug
+			//App->SBC_Import->Load_Project("Project   *.SBProj\0*.SBProj\0", "Project");
+			return 1;
+		}
+
 		// File Import ------------------------------------------------
 		case ID_OGRE3D_MESH:
 		{
