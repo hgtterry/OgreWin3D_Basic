@@ -378,8 +378,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		// File Open ------------------------------------------------
 		case ID_OPEN_PROJECT:
 		{
-			Debug
-			//App->SBC_Import->Load_Project("Project   *.SBProj\0*.SBProj\0", "Project");
+			App->CL_Importers->Load_Project((LPSTR)"Project   *.SBProj\0*.SBProj\0", (LPSTR) "Project");
 			return 1;
 		}
 

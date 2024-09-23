@@ -144,6 +144,12 @@
     <ClInclude Include="CL64_Project.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Base_Area.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CL64_Com_Area.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GD64.cpp">
@@ -264,6 +270,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CL64_Project.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Base_Area.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CL64_Com_Area.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

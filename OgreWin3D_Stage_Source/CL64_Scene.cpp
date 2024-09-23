@@ -27,6 +27,9 @@ CL64_Scene::CL64_Scene(void)
 	FaceCount = 0;
 	BoneCount = 0;
 
+	// Stage
+	Area_Count = 0;
+
 	flag_Model_Loaded = 0;
 	flag_Player_Added = 0;
 	flag_Show_Main_Entity = 0;
@@ -46,6 +49,8 @@ CL64_Scene::CL64_Scene(void)
 	S_OgreMeshData[0] = new OgreMeshData_Type;
 
 	S_BoundingBox[0] = nullptr;
+
+	B_Area[20] = { nullptr };
 
 	int Count = 0;
 	while (Count < 99)

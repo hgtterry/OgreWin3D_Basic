@@ -22,6 +22,12 @@ appreciated but is not required.
 
 CL64_File_IO::CL64_File_IO()
 {
+	Project_File_Name[0] = 0;
+	Project_Path_File_Name[0] = 0;
+
+	strcpy(Data_mFilename, "No Set");
+	strcpy(Data_Path_mFilename, "No Set");
+
 	Model_FileName[0] = 0;
 	Model_Path_FileName[0] = 0;
 
@@ -39,6 +45,43 @@ CL64_File_IO::CL64_File_IO()
 
 CL64_File_IO::~CL64_File_IO()
 {
+}
+
+// *************************************************************************
+// *			Open_Project_File:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+bool CL64_File_IO::Open_Project_File(char* Extension, char* Title, char* StartDirectory)
+{
+	strcpy(Project_File_Name, "");
+	strcpy(Project_Path_File_Name, "");
+
+	ZeroMemory(&ofn, sizeof(ofn));
+	ofn.lStructSize = sizeof(ofn);
+	ofn.hwndOwner = App->MainHwnd;
+	ofn.hInstance = App->hInst;
+	ofn.lpstrFile = Project_Path_File_Name;						// full path and file name
+	ofn.nMaxFile = sizeof(Project_Path_File_Name);
+	ofn.lpstrFilter = Extension;
+
+	ofn.nFilterIndex = 1;
+	ofn.lpstrFileTitle = Project_File_Name;						// Just File Name
+	ofn.nMaxFileTitle = sizeof(Project_File_Name);
+	ofn.lpstrInitialDir = StartDirectory;
+	ofn.lpstrTitle = Title;
+	ofn.Flags = OFN_PATHMUSTEXIST |
+		OFN_FILEMUSTEXIST |
+		OFN_EXPLORER |
+		OFN_HIDEREADONLY |
+		OFN_FILEMUSTEXIST;
+
+	if (GetOpenFileName(&ofn) == TRUE)
+	{
+		strcpy(Data_mFilename, Project_File_Name);
+		strcpy(Data_Path_mFilename, Project_Path_File_Name);
+		return 1;
+	}
+
+	return 0;
 }
 
 // *************************************************************************

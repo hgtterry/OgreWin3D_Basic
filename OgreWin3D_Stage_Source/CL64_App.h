@@ -58,6 +58,7 @@ THE SOFTWARE.
 #include "CL64_FileView.h"
 #include "CL64_Properties.h"
 #include "CL64_Project.h"
+#include "CL64_Com_Area.h"
 
 class CL64_App
 {
@@ -96,9 +97,12 @@ public:
 	CL64_Props_Textures*	CL_Props_Textures;
 	CL64_Mesh_Manager*		CL_Mesh_Manager;
 	CL64_Level*				CL_Level;
+
+	// Stage
 	CL64_FileView*			CL_FileView;
 	CL64_Properties*		CL_Properties;
 	CL64_Project*			CL_Project;
+	CL64_Com_Area*			CL_Com_Area;
 
 	void InitApp(void);
 	void Init_Dialogs(void);

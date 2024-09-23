@@ -23,39 +23,14 @@ THE SOFTWARE.
 */
 
 #pragma once
-
-// ------------------------ Load Options
-typedef struct Load_Options
-{
-	int Has_Area;
-	int Has_Player;
-	int Has_Camera;
-	int Has_Objects;
-	int Has_Counters;
-
-}Load_Options;
-
-class CL64_Project
+class CL64_Com_Area
 {
 public:
-	CL64_Project();
-	~CL64_Project();
+	CL64_Com_Area();
+	~CL64_Com_Area();
 
-	bool Load_Project();
-	bool Load_Project_Aera();
-
-	char m_Project_Name[MAX_PATH];
-	char m_Level_Name[MAX_PATH];
-
-	char m_Ini_Path_File_Name[MAX_PATH];
-	char m_Level_File_Name[MAX_PATH];
-	char m_Project_Sub_Folder[MAX_PATH];
-	char m_Level_Folder_Path[MAX_PATH];
-
-	char m_Main_Assets_Path[MAX_PATH];
-
-private:
-	void Set_Paths();
+	void Set_Area_Defaults(int Index);
+	void Add_Aera_To_Project(int Index, char* FileName, char* Resource_Location);
 
 };
 

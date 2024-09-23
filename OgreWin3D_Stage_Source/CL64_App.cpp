@@ -57,10 +57,11 @@ CL64_App::CL64_App(void)
 	CL_Props_Textures = nullptr;
 	CL_Mesh_Manager =	nullptr;
 	CL_Level =			nullptr;
+
 	CL_FileView =		nullptr;
 	CL_Properties =		nullptr;
 	CL_Project =		nullptr;
-
+	CL_Com_Area =		nullptr;
 	//-------------------------------------
 
 	hInst =				nullptr;
@@ -174,6 +175,7 @@ void CL64_App::InitApp(void)
 	CL_FileView =		new CL64_FileView();
 	CL_Properties =		new CL64_Properties();
 	CL_Project =		new CL64_Project();
+	CL_Com_Area =		new CL64_Com_Area();
 
 	SetBrushes_Fonts();
 

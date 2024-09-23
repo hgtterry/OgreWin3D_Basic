@@ -17,6 +17,7 @@ appreciated but is not required.
 
 #include "Base_Player.h"
 #include "Base_Group.h"
+#include "Base_Area.h"
 
 typedef struct AABB_Type {
 	vertex_type BB_Max[1];
@@ -94,6 +95,7 @@ public:
 	Ogre::Entity* Imported_Ogre_Ent;
 	Ogre::SceneNode* Imported_Ogre_Node;
 
+	Base_Area* B_Area[20];
 	Base_Group* Group[100];
 	AABB_Type* S_BoundingBox[1];
 	Bone_Type* S_Bones[200];
@@ -115,6 +117,11 @@ public:
 	int BoneCount;
 
 	int Scene_Mode;
+
+	// Stage 
+	int Area_Count;
+
+
 
 	// Ogre
 	int Ogre_Face_Count;
