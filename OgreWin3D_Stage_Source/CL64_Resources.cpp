@@ -34,6 +34,8 @@ CL64_Resources::CL64_Resources(void)
 
 	mFileString.clear();
 
+	Project_Resources_Created = 0;
+
 	Ogre_ExternalResourceLoaded = 0;
 
 	Project_Resource_Group = "Project_Resource_Group";
@@ -72,6 +74,37 @@ void CL64_Resources::Reset_Class(void)
 	{
 		//Destroy_Resources_Group(App->CL_Resources->Ogre_Loader_Resource_Group);
 	}
+}
+
+// *************************************************************************
+// *	Create_Project_Resources_Group:- Terry and Hazel Flanigan 2024	   *
+// *************************************************************************
+bool CL64_Resources::Create_Project_Resources_Group()
+{
+	if (Project_Resources_Created == 0)
+	{
+		Ogre::ResourceGroupManager::getSingleton().createResourceGroup(Project_Resource_Group);
+		Project_Resources_Created = 1;
+	}
+
+	return 1;
+}
+
+// *************************************************************************
+// *	Add_Resource_Location_Project:- Terry and Hazel Flanigan 2022	   *
+// *************************************************************************
+bool CL64_Resources::Add_Resource_Location_Project(char* Resource_Location)
+{
+	bool Test = Ogre::ResourceGroupManager::getSingleton().resourceLocationExists(Resource_Location, Project_Resource_Group);
+
+	if (Test == 0)
+	{
+		Ogre::ResourceGroupManager::getSingleton().addResourceLocation(Resource_Location, "FileSystem", Project_Resource_Group);
+		Ogre::ResourceGroupManager::getSingleton().clearResourceGroup(Project_Resource_Group);
+		Ogre::ResourceGroupManager::getSingleton().initialiseResourceGroup(Project_Resource_Group);
+	}
+
+	return 1;
 }
 
 // *************************************************************************

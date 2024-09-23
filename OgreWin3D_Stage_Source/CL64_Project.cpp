@@ -78,7 +78,7 @@ bool CL64_Project::Load_Project()
 	m_Ini_Path_File_Name[0] = 0;
 
 	App->CL_Scene->Clear_Level();
-	//App->SBC_Scene->Create_Resources_Group();
+	App->CL_Resources->Create_Project_Resources_Group();
 
 	Set_Paths();
 
@@ -198,6 +198,28 @@ bool CL64_Project::Load_Project()
 	//App->SBC_FileView->SelectItem(App->SBC_FileView->FV_LevelFolder);
 
 	//EnableMenuItem(App->mMenu, ID_FILE_SAVEPROJECTALL, MF_GRAYED);
+
+	return 1;
+}
+
+// *************************************************************************
+// *	  	Load_Get_Resource_Path:- Terry and Hazel Flanigan 2022		   *
+// *************************************************************************
+bool CL64_Project::Load_Get_Resource_Path()
+{
+	
+	m_Main_Assets_Path[0] = 0;
+
+	strcpy(m_Main_Assets_Path, m_Project_Sub_Folder);
+	strcat(m_Main_Assets_Path, "\\");
+
+	strcat(m_Main_Assets_Path, m_Level_Name);
+	strcat(m_Main_Assets_Path, "\\");
+
+	strcat(m_Main_Assets_Path, "Assets");
+	strcat(m_Main_Assets_Path, "\\");
+
+	App->CL_Resources->Add_Resource_Location_Project(m_Main_Assets_Path);
 
 	return 1;
 }

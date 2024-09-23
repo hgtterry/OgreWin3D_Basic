@@ -56,6 +56,6 @@ public:
 
 private:
 	void Set_Paths();
-
+	bool Load_Get_Resource_Path();
 };
 
