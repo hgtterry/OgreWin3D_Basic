@@ -22,6 +22,9 @@ CL64_FileView::CL64_FileView(void)
 {
 	Flag_FileView_Active = 0;
 
+	FileView_Folder[0] = 0;
+	FileView_File[0] = 0;
+
 	Root =				nullptr;
 	GD_ProjectFolder =	nullptr;
 	FV_Objects_Folder = nullptr;
@@ -109,7 +112,7 @@ LRESULT CALLBACK CL64_FileView::Proc_ListPanel(HWND hDlg, UINT message, WPARAM w
 
 			case TVN_SELCHANGED:
 			{
-				//App->SBC_FileView->Get_Selection((LPNMHDR)lParam);
+				App->CL_FileView->Get_Selection((LPNMHDR)lParam);
 			}
 
 			}
@@ -440,6 +443,91 @@ void CL64_FileView::MoreFolders(void) // last folder level
 }
 
 // *************************************************************************
+// *		Get_Selection Terry:- Terry and Hazel Flanigan 2024		 	   *
+// *************************************************************************
+void CL64_FileView::Get_Selection(LPNMHDR lParam)
+{
+
+	strcpy(FileView_Folder, "");
+	strcpy(FileView_File, "");
+
+	int Index = 0;
+	HWND Temp = GetDlgItem(App->ListPanel, IDC_TREE1);
+	HTREEITEM i = TreeView_GetSelection(Temp);
+
+	TVITEM item;
+	item.hItem = i;
+	item.pszText = FileView_Folder;
+	item.cchTextMax = sizeof(FileView_Folder);
+	item.mask = TVIF_TEXT | TVIF_PARAM;
+	TreeView_GetItem(((LPNMHDR)lParam)->hwndFrom, &item);
+	Index = item.lParam;
+
+	HTREEITEM p = TreeView_GetParent(Temp, i);
+
+	TVITEM item1;
+	item1.hItem = p;
+	item1.pszText = FileView_File;
+	item1.cchTextMax = sizeof(FileView_File);
+	item1.mask = TVIF_TEXT;
+	TreeView_GetItem(((LPNMHDR)lParam)->hwndFrom, &item1);
+
+
+	//--------------------------------------------------------------------------
+
+	//if (!strcmp(FileView_Folder, App->SBC_Project->m_Level_Name)) // Level Folder
+	//{
+	//	HideRightPanes();
+	//	ShowWindow(App->GD_Properties_Hwnd, 1);
+
+	//	App->SBC_Properties->Edit_Category = Enums::FV_Edit_Level;
+	//	App->SBC_Properties->Update_ListView_Level();
+	//}
+
+	// ------------------------------------------------------------ Areas
+	if (!strcmp(FileView_Folder, "Area")) // Folder
+	{
+		//App->SBC_FileView->Context_Selection = Enums::FileView_Areas_Folder;
+
+		return;
+	}
+
+	if (!strcmp(FileView_File, "Area"))
+	{
+		//App->Say(FileView_Folder);
+		//App->SBC_FileView->Context_Selection = Enums::FileView_Areas_File;
+		//App->CL_Properties->Edit_Category = Enums::Edit_Area;
+		App->CL_Properties->Current_Selected_Object = Index;
+
+		//HideRightPanes();
+		ShowWindow(App->CL_Properties->Properties_Dlg_hWnd, 1);
+
+		/*App->SBC_Props_Dialog->Hide_Area_Dlg(1);
+		App->SBC_Props_Dialog->Hide_Debug_Dlg(1);
+		App->SBC_Props_Dialog->Hide_Dimensions_Dlg(1, 1);
+		App->SBC_Props_Dialog->Hide_Details_Goto_Dlg(1);
+		App->SBC_Props_Dialog->Hide_Material_Dlg(1);*/
+
+		//----------------------------------------------------------------------------
+		//App->SBC_Properties->Current_Selected_Object = Index;
+		//App->SBC_Properties->Reset_Last_Selected_Object(App->SBC_Properties->Last_Selected_Object);
+		//App->SBC_Properties->Last_Selected_Object = Index;
+		//----------------------------------------------------------------------------
+
+		App->CL_Properties->Update_ListView_Area();
+
+
+		/*if (App->SBC_Dimensions->Show_Dimensions == 1)
+		{
+			App->SBC_Dimensions->Prepare_Dimensions();
+		}*/
+
+		return;
+
+	}
+}
+
+// *************************************************************************
 // *			ExpandRoot:- Terry and Hazel Flanigan 2024				   *
 // *************************************************************************
 void CL64_FileView::ExpandRoot(void)
@@ -450,4 +538,58 @@ void CL64_FileView::ExpandRoot(void)
 	TreeView_Expand(Temp, GD_ProjectFolder, TVE_EXPAND);
 	TreeView_Expand(Temp, FV_LevelFolder, TVE_EXPAND);
 	TreeView_Expand(Temp, FV_EntitiesFolder, TVE_EXPAND);
+}
+
+// *************************************************************************
+// *				Add_Item:- Terry and Hazel Flanigan 2024		 	   *
+// *************************************************************************
+HTREEITEM CL64_FileView::Add_Item(HTREEITEM Folder, char* SFileName, int Index, bool NewItem)
+{
+	HWND Temp2 = GetDlgItem(App->ListPanel, IDC_TREE1);
+
+	tvinsert.hParent = Folder;
+	tvinsert.hInsertAfter = TVI_LAST;
+	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE | TVIF_PARAM;
+	tvinsert.item.pszText = SFileName;
+
+	if (NewItem == 1)
+	{
+		tvinsert.item.iImage = 6;
+		tvinsert.item.iSelectedImage = 7;
+		tvinsert.item.lParam = Index;
+	}
+	else
+	{
+		tvinsert.item.iImage = 4;
+		tvinsert.item.iSelectedImage = 5;
+		tvinsert.item.lParam = Index;
+	}
+
+	HTREEITEM Temp = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
+
+	return Temp;
+}
+
+// *************************************************************************
+// *			Set_FolderActive:- Terry and Hazel Flanigan 2024	 	   *
+// *************************************************************************
+void CL64_FileView::Set_FolderActive(HTREEITEM Folder)
+{
+	TVITEM Sitem;
+
+	Sitem.mask = TVIF_IMAGE | TVIF_SELECTEDIMAGE;
+	Sitem.hItem = Folder;
+	Sitem.iImage = 3;
+	Sitem.iSelectedImage = 3;
+
+	SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_SETITEM, 0, (LPARAM)(const LPTVITEM)&Sitem);
+}
+
+// *************************************************************************
+// *				SelectItem:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void CL64_FileView::SelectItem(HTREEITEM TreeItem)
+{
+	HWND Temp = GetDlgItem(App->ListPanel, IDC_TREE1);
+	TreeView_Select(Temp, TreeItem, TVGN_CARET);
 }

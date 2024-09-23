@@ -104,6 +104,58 @@ namespace Enums
 		Resource_File_Type_Overlay = 5
 	};
 
+	// Stage
+	enum Shape
+	{
+		NoShape = 0,
+		Shape_Box = 1,
+		Sphere = 2,
+		Capsule = 3,
+		Cylinder = 4,
+		Cone = 5,
+		Shape_TriMesh = 6,
+		VolumeBox = 7
+	};
+
+	enum Bullet_Type 
+	{
+		Bullet_Type_None = 0,
+		Bullet_Type_Dynamic = 1, // Free Moving Physics
+		Bullet_Type_Static = 2, // Fixed Non Moving Shape
+		Bullet_Type_TriMesh = 3,
+		Type_NXS_Convex = 4,
+		Type_JustOgre = 5,
+		Bullet_Type_Volume = 6
+	};
+
+	enum Stage_Usage
+	{
+		Stage_Usage_None = -1,
+		Stage_Usage_Room = 0,
+		Stage_Usage_Static = 1,
+		Stage_Usage_Dynamic = 2,
+		Stage_Usage_Object = 3,
+		Stage_Usage_Ammo = 4,
+		Stage_Usage_Weapon = 5,
+		Stage_Usage_Teleport = 6,
+		Stage_Usage_ChangeLevel = 7,
+		Stage_Usage_MediKit = 8,
+		Stage_Usage_Recevier = 9,
+		Stage_Usage_Particle = 10,
+		Stage_Usage_Light = 11,
+		Stage_Usage_Colectable = 12,
+		Stage_Usage_Message = 13,
+		Stage_Usage_Move = 14,
+		Stage_Usage_Sound = 15,
+		Stage_Usage_PlayerDeath = 16,
+		Stage_Usage_Counter = 17,
+		Stage_Usage_Player = 18,
+		Stage_Usage_Environment = 19,
+		Stage_Usage_RoomChange = 20,
+		Stage_Usage_EnvironEntity = 21,
+		Stage_Usage_UserObject = 22
+	};
+
 }
 
 #define Debug App->Debug_Text();

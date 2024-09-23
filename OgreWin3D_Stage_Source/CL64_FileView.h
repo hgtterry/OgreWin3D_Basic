@@ -23,6 +23,14 @@ public:
 
 	void Start_FileView(void);
 	void Init_FileView(void);
+	HTREEITEM Add_Item(HTREEITEM Folder, char* SFileName, int Index, bool NewItem);
+	void Set_FolderActive(HTREEITEM Folder);
+	void SelectItem(HTREEITEM TreeItem);
+
+	void Get_Selection(LPNMHDR lParam);
+
+
+
 	bool Flag_FileView_Active;
 
 	HTREEITEM FV_Players_Folder;	// Players Folder FileFView
@@ -62,5 +70,7 @@ private:
 	HIMAGELIST hImageList;
 	HBITMAP hBitMap;
 
+	char FileView_Folder[MAX_PATH];
+	char FileView_File[MAX_PATH];
 };
 

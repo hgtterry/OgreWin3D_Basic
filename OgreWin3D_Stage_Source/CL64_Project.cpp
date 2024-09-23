@@ -130,7 +130,7 @@ bool CL64_Project::Load_Project()
 	if (Options->Has_Area > 0)
 	{
 		bool test = Load_Project_Aera();
-		//App->SBC_Scene->Area_Added = 1;
+		App->CL_Scene->Flag_Area_Added = 1;
 	}
 
 	//// ------------------------------------- Player
@@ -297,7 +297,7 @@ bool CL64_Project::Load_Project_Aera()
 		Test = App->CL_Ini_File->GetString(buff, "Mesh_Rot", chr_Tag1, MAX_PATH);
 		if (Test > 0)
 		{
-			sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
+			int result = sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
 			App->CL_Scene->B_Area[Count]->Mesh_Rot = Ogre::Vector3(x, y, z);
 		}
 		else
@@ -310,7 +310,7 @@ bool CL64_Project::Load_Project_Aera()
 		Test = App->CL_Ini_File->GetString(buff, "Mesh_Quat", chr_Tag1, MAX_PATH);
 		if (Test > 0)
 		{
-			sscanf(chr_Tag1, "%f,%f,%f,%f", &w, &x, &y, &z);
+			int result = sscanf(chr_Tag1, "%f,%f,%f,%f", &w, &x, &y, &z);
 
 			App->CL_Scene->B_Area[Count]->Mesh_Quat.w = w;
 			App->CL_Scene->B_Area[Count]->Mesh_Quat.x = x;
@@ -333,14 +333,15 @@ bool CL64_Project::Load_Project_Aera()
 
 		strcpy(App->CL_Scene->B_Area[Count]->Area_Name, Area_Name);
 
-		//App->CL_Scene->B_Area[Count]->FileViewItem = App->CL_FileView->Add_Item(App->CL_FileView->FV_Areas_Folder, Area_Name, Count, false);
+		App->CL_Scene->B_Area[Count]->FileViewItem = App->CL_FileView->Add_Item(App->CL_FileView->FV_Areas_Folder, Area_Name, Count, false);
 
 		Count++;
 
 		App->CL_Scene->Area_Count++;
 	}
 
-	//App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Areas_Folder);
+	App->CL_FileView->Set_FolderActive(App->CL_FileView->FV_Areas_Folder);
+	App->CL_FileView->SelectItem(App->CL_Scene->B_Area[0]->FileViewItem);
 
 	return 1;
 }

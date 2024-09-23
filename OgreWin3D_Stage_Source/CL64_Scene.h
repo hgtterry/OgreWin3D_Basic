@@ -120,7 +120,7 @@ public:
 
 	// Stage 
 	int Area_Count;
-
+	bool Flag_Area_Added;
 
 
 	// Ogre

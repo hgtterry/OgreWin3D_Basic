@@ -23,6 +23,10 @@ public:
 
 	void Start_Properties(void);
 
+	bool Update_ListView_Area();
+
+	int Current_Selected_Object;
+
 	bool Properties_Dlg_Active;
 
 	HWND Properties_Dlg_hWnd;

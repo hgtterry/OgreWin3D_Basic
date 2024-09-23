@@ -22,6 +22,8 @@ CL64_Properties::CL64_Properties(void)
 {
 	Properties_Dlg_Active = 0;
 
+	Current_Selected_Object = 0;
+
 	Properties_Dlg_hWnd =	nullptr;
 	Properties_hLV =		nullptr;
 }
@@ -187,4 +189,51 @@ void CL64_Properties::Create_Properties_hLV(void)
 	SendMessage(Properties_hLV, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 	return;
+}
+
+// *************************************************************************
+// *		Update_ListView_Area:- Terry and Hazel Flanigan 2024	 	   *
+// *************************************************************************
+bool CL64_Properties::Update_ListView_Area()
+{
+	int Index = Current_Selected_Object;
+
+	char Num[10];
+	char chr_ID[50];
+	_itoa(App->CL_Scene->B_Area[Index]->This_Object_UniqueID, Num, 10);
+	strcpy(chr_ID, "Properties ID=");
+	strcat(chr_ID, Num);
+
+	SetWindowText(Properties_Dlg_hWnd, chr_ID);
+	//SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)App->SBC_Scene->B_Area[Index]->Area_Name);
+
+	const int NUM_ITEMS = 3;
+	const int NUM_COLS = 2;
+	std::string grid[NUM_COLS][NUM_ITEMS]; // string table
+	LV_ITEM pitem;
+	memset(&pitem, 0, sizeof(LV_ITEM));
+	pitem.mask = LVIF_TEXT;
+
+	grid[0][0] = "Name", grid[1][0] = App->CL_Scene->B_Area[Index]->Area_Name;
+	grid[0][1] = "Mesh File", grid[1][1] = App->CL_Scene->B_Area[Index]->Area_FileName;
+	grid[0][2] = "Materials", grid[1][2] = App->CL_Scene->B_Area[Index]->Material_File;
+
+	ListView_DeleteAllItems(Properties_hLV);
+
+	for (DWORD row = 0; row < NUM_ITEMS; row++)
+	{
+		pitem.iItem = row;
+		pitem.pszText = const_cast<char*>(grid[0][row].c_str());
+		ListView_InsertItem(Properties_hLV, &pitem);
+
+		//ListView_SetItemText
+
+		for (DWORD col = 1; col < NUM_COLS; col++)
+		{
+			ListView_SetItemText(Properties_hLV, row, col,
+				const_cast<char*>(grid[col][row].c_str()));
+		}
+	}
+
+	return 1;
 }

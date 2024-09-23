@@ -121,9 +121,9 @@ void CL64_Com_Area::Add_Aera_To_Project(int Index, char* FileName, char* Resourc
 
 	Create_Area_Trimesh(Index, Area);
 
-	//Area->Usage = Enums::Usage_Room;
+	Area->Usage = Enums::Stage_Usage_Room;
 
-	//App->CL_Scene->Area_Added = 1;
+	App->CL_Scene->Flag_Area_Added = 1;
 }
 
 // *************************************************************************
@@ -263,8 +263,8 @@ btBvhTriangleMeshShape* CL64_Com_Area::Create_Area_Trimesh(int Index, Base_Area*
 	int f = Object->Phys_Body->getCollisionFlags();
 	Object->Phys_Body->setCollisionFlags(f | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
 
-	//Object->Type = Enums::Bullet_Type_Static;
-	//Object->Shape = Enums::Shape_TriMesh;
+	Object->Type = Enums::Bullet_Type_Static;
+	Object->Shape = Enums::Shape_TriMesh;
 
 
 	Object->Phys_Body->setUserIndex(123);

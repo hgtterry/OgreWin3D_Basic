@@ -29,6 +29,7 @@ CL64_Scene::CL64_Scene(void)
 
 	// Stage
 	Area_Count = 0;
+	Flag_Area_Added = 0;
 
 	flag_Model_Loaded = 0;
 	flag_Player_Added = 0;
