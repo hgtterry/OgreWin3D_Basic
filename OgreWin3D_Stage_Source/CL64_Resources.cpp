@@ -366,6 +366,7 @@ LRESULT CALLBACK CL64_Resources::Proc_Resources(HWND hDlg, UINT message, WPARAM 
 			if (App->CL_Resources->Extension_Type == Enums::Resource_File_Type_Material)
 			{
 				App->CL_Resources->View_File(App->CL_Resources->mSelected_File, hDlg);
+				
 			}
 
 			if (App->CL_Resources->Extension_Type == Enums::Resource_File_Type_Overlay)
