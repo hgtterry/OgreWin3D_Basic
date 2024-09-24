@@ -203,8 +203,6 @@ void CL64_Scene::Clear_Scene_And_Reset(void)
 
 	Reset_Main_Entity();
 
-	App->CL_Import_Ogre3D->Reset_Class();
-	
 	App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_Model;
 	App->CL_Ogre->Ogre3D_Listener->Run_Physics = 0;
 	App->CL_Ogre->Enable_Fog(false);

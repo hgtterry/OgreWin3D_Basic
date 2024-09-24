@@ -475,7 +475,7 @@ LRESULT CALLBACK CL64_Dialogs::Proc_Import_Options_Dlg(HWND hDlg, UINT message, 
 			if (test == BST_CHECKED)
 			{
 				EndDialog(hDlg, LOWORD(wParam));
-				App->CL_Exporters->Export_Ogre(1);
+				//App->CL_Exporters->Export_Ogre(1);
 			}
 
 			EndDialog(hDlg, LOWORD(wParam));

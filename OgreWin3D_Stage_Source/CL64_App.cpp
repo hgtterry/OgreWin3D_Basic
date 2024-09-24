@@ -48,12 +48,8 @@ CL64_App::CL64_App(void)
 	CL_Dialogs =		nullptr;
 	CL_Resources =		nullptr;
 
-	CL_Import_Ogre3D =	nullptr;
 	CL_Motions =		nullptr;
-	CL_Exp_Ogre =		nullptr;
-	CL_Exporters =		nullptr;
 	CL_Dimensions =		nullptr;
-	CL_Exp_Obj =		nullptr;
 	CL_Props_Textures = nullptr;
 	CL_Mesh_Manager =	nullptr;
 	CL_Level =			nullptr;
@@ -161,14 +157,10 @@ void CL64_App::InitApp(void)
 	CL_Dialogs =		new CL64_Dialogs();
 	CL_Resources =		new CL64_Resources();
 
-	CL_Import_Ogre3D =	new CL64_Imp_Ogre3D();
 	CL_Motions =		new CL64_Motioins();
 	
-
-	CL_Exp_Ogre =		new CL64_Exp_Ogre3D(); // Create Here for Now
-	CL_Exporters =		new CL64_Exporters();
 	CL_Dimensions =		new CL64_Dimensions();
-	CL_Exp_Obj =		new CL64_Exp_Obj();
+
 	CL_Props_Textures = new CL64_Props_Textures();
 	CL_Mesh_Manager =	new CL64_Mesh_Manager();
 	CL_Level =			new CL64_Level();

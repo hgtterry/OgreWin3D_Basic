@@ -108,22 +108,10 @@
     <ClInclude Include="CL64_Ogre3D_Listener.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CL64_Exporters.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CL64_Import_Ogre3D.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="CL64_Dimensions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CL64_Motioins.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CL64_Exp_Ogre3D.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CL64_Exp_Obj.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CL64_Props_Textures.h">
@@ -236,22 +224,10 @@
     <ClCompile Include="CL64_Ogre3D_Listener.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CL64_Exporters.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CL64_Import_Ogre3D.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="CL64_Dimensions.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CL64_Motioins.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CL64_Exp_Ogre3D.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CL64_Exp_Obj.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CL64_Props_Textures.cpp">

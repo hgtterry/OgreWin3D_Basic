@@ -124,7 +124,6 @@ bool CL64_Level::Load_Level(bool Use_File_Dialog)
 
 	App->CL_Resources->mSelected_Resource_Group = App->CL_Resources->Ogre_Loader_Resource_Group;
 
-	App->CL_Import_Ogre3D->flag_Ogre_Model_Loaded = 1;
 	App->CL_Scene->flag_Model_Loaded = 1;
 
 	App->CL_Scene->Set_Scene(Enums::Scene_Mode_Imported_Entity);

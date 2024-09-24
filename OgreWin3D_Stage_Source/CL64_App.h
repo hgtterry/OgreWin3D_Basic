@@ -44,13 +44,10 @@ THE SOFTWARE.
 #include "CL64_Dialogs.h"
 #include "CL64_Resources.h"
 
-#include "CL64_Import_Ogre3D.h"
 #include "CL64_Motioins.h"
 
-#include "CL64_Exp_Ogre3D.h"
-#include "CL64_Exporters.h"
 #include "CL64_Dimensions.h"
-#include "CL64_Exp_Obj.h"
+
 #include "CL64_Props_Textures.h"
 
 #include "CL64_Mesh_Manager.h"
@@ -87,13 +84,10 @@ public:
 	CL64_Dialogs*			CL_Dialogs;
 	CL64_Resources*			CL_Resources;
 	
-	CL64_Imp_Ogre3D*		CL_Import_Ogre3D;
 	CL64_Motioins*			CL_Motions;
 
-	CL64_Exp_Ogre3D*		CL_Exp_Ogre;
-	CL64_Exporters*			CL_Exporters;
 	CL64_Dimensions*		CL_Dimensions;
-	CL64_Exp_Obj*			CL_Exp_Obj;
+
 	CL64_Props_Textures*	CL_Props_Textures;
 	CL64_Mesh_Manager*		CL_Mesh_Manager;
 	CL64_Level*				CL_Level;
