@@ -512,10 +512,10 @@ bool CL64_Project::Load_Project_Player()
 
 	}
 
-	/*App->CL_Scene->Player_Location_Count = Count;
+	//App->CL_Scene->Player_Location_Count = Count;
 
-	App->SBC_Physics->Reset_Physics();
-	App->SBC_Physics->Enable_Physics(1);*/
+	App->CL_Player->Reset_Player(70);
+	//App->SBC_Physics->Enable_Physics(1);
 
 	App->CL_FileView->Set_FolderActive(App->CL_FileView->FV_Players_Folder);
 	return 1;

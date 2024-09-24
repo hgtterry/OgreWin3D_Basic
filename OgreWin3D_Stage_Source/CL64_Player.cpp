@@ -242,3 +242,35 @@ void CL64_Player::Set_Player_GroundSpeed(float GroundSpeed)
 {
 	App->CL_Scene->B_Player[0]->Ground_speed = GroundSpeed;
 }
+
+// *************************************************************************
+// *		Set_Player_GroundSpeed:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+void CL64_Player::Reset_Player(float GroundSpeed)
+{
+	if (App->CL_Scene->flag_Player_Added == 1)// && GD_Reset_Player == 1)
+	{
+		btVector3 zeroVector(0, 0, 0);
+
+		float x = App->CL_Scene->B_Player[0]->StartPos.x;
+		float y = App->CL_Scene->B_Player[0]->StartPos.y;
+		float z = App->CL_Scene->B_Player[0]->StartPos.z;
+
+		btVector3 initialPosition(x, y, z);
+
+		btTransform startTransform;
+		startTransform.setIdentity();
+		startTransform.setRotation(btQuaternion(1.0f, 0.0f, 0.0f, 0.0f));
+		startTransform.setOrigin(initialPosition);
+
+		App->CL_Scene->B_Player[0]->Phys_Body->clearForces();
+		App->CL_Scene->B_Player[0]->Phys_Body->setLinearVelocity(zeroVector);
+		App->CL_Scene->B_Player[0]->Phys_Body->setAngularVelocity(zeroVector);
+
+		App->CL_Scene->B_Player[0]->Phys_Body->setWorldTransform(startTransform);
+		App->CL_Scene->B_Player[0]->Phys_Body->getMotionState()->setWorldTransform(startTransform);
+		App->CL_Scene->B_Player[0]->Phys_Body->activate(true);
+
+		App->CL_Scene->B_Player[0]->Phys_Body->getWorldTransform().setRotation(App->CL_Scene->B_Player[0]->Physics_Rotation);
+	}
+}
