@@ -24,6 +24,7 @@ public:
 	void Start_Properties(void);
 
 	bool Update_ListView_Area();
+	bool Update_ListView_Player();
 
 	int Current_Selected_Object;
 

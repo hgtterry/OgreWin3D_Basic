@@ -94,8 +94,6 @@ void CL64_Ogre::InitOgre(void)
 
 	App->CL_ImGui->Init_ImGui();
 
-	App->CL_Player->Create_Player_Object();
-
 	char Test_Project[MAX_PATH];
 	strcpy(Test_Project, App->GD_Directory_FullPath);
 	strcat(Test_Project, "\\Projects\\First_Project_Prj\\Project.SBProj");

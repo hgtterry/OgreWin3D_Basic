@@ -523,7 +523,38 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 		}*/
 
 		return;
+	}
 
+	if (!strcmp(FileView_Folder, "Player")) // Folder
+	{
+		//App->SBC_FileView->Context_Selection = Enums::FileView_Player_Folder;
+		return;
+	}
+	if (!strcmp(FileView_File, "Player"))
+	{
+		//App->SBC_FileView->Context_Selection = Enums::FileView_Player_File;
+
+		//HideRightPanes();
+		ShowWindow(App->CL_Properties->Properties_Dlg_hWnd, 1);
+		//App->SBC_Player->Hide_Player_Dlg(1);
+
+		//App->SBC_Properties->Edit_Category = Enums::Edit_Player;
+
+		//----------------------------------------------------------------------------
+		App->CL_Properties->Current_Selected_Object = Index;
+		//App->SBC_Properties->Reset_Last_Selected_Object(App->SBC_Properties->Last_Selected_Object);
+		//App->SBC_Properties->Last_Selected_Object = Index;
+		//----------------------------------------------------------------------------
+
+		//if (App->SBC_Properties->Edit_Physics == 0)
+		//{
+			App->CL_Properties->Update_ListView_Player();
+		//}
+		//else
+		//{*/
+			//App->CL_Properties->Update_ListView_Player_Physics();
+		//}
+		return;
 	}
 }
 

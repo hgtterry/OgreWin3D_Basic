@@ -43,6 +43,7 @@ public:
 
 	bool Load_Project();
 	bool Load_Project_Aera();
+	bool Load_Project_Player();
 
 	char m_Project_Name[MAX_PATH];
 	char m_Level_Name[MAX_PATH];

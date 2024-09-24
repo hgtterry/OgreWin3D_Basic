@@ -237,3 +237,85 @@ bool CL64_Properties::Update_ListView_Area()
 
 	return 1;
 }
+
+// *************************************************************************
+// *				Update_ListView_Player	Terry Bernie 			 	   *
+// *************************************************************************
+bool CL64_Properties::Update_ListView_Player()
+{
+	int index = Current_Selected_Object;
+
+	//	char Num[10];
+	char chr_ID[50];
+	//_itoa(App->SBC_Scene->V_Object[index]->This_Object_ID, Num, 10);
+	strcpy(chr_ID, "Properties ID=0");
+	//strcat(chr_ID, Num);
+
+	SetWindowText(Properties_Dlg_hWnd, chr_ID);
+	//SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)App->SBC_Scene->B_Player[0]->Player_Name);
+
+	char chr_Speed[100];
+	char chr_TurnRate[100];
+	char chr_Height[100];
+	char chr_StartPosX[100];
+	char chr_StartPosY[100];
+	char chr_StartPosZ[100];
+
+	char chr_LookUp_Limit[100];
+	char chr_LookDown_Limit[100];
+
+	sprintf(chr_Speed, "%.3f ", App->CL_Scene->B_Player[0]->Ground_speed / 100);
+
+	sprintf(chr_TurnRate, "%.6f ", App->CL_Scene->B_Player[0]->TurnRate);
+
+	sprintf(chr_Height, "%.3f ", App->CL_Scene->B_Player[0]->PlayerHeight);
+
+	sprintf(chr_StartPosX, "%.3f ", App->CL_Scene->B_Player[0]->StartPos.x);
+	sprintf(chr_StartPosY, "%.3f ", App->CL_Scene->B_Player[0]->StartPos.y);
+	sprintf(chr_StartPosZ, "%.3f ", App->CL_Scene->B_Player[0]->StartPos.z);
+
+	sprintf(chr_LookUp_Limit, "%.3f ", App->CL_Scene->B_Player[0]->Limit_Look_Up);
+	sprintf(chr_LookDown_Limit, "%.3f ", App->CL_Scene->B_Player[0]->Limit_Look_Down);
+
+
+	const int NUM_ITEMS = 13;
+	const int NUM_COLS = 2;
+	std::string grid[NUM_COLS][NUM_ITEMS]; // string table
+	LV_ITEM pitem;
+	memset(&pitem, 0, sizeof(LV_ITEM));
+	pitem.mask = LVIF_TEXT;
+
+	grid[0][0] = "Name", grid[1][0] = App->CL_Scene->B_Player[0]->Player_Name;
+	grid[0][1] = "Mode", grid[1][1] = "1st_Person";
+	grid[0][2] = " ", grid[1][2] = " ";
+	grid[0][3] = "Ground Speed", grid[1][3] = chr_Speed;
+	grid[0][4] = "Turn Rate", grid[1][4] = chr_TurnRate;
+	grid[0][5] = "Player Height", grid[1][5] = chr_Height;
+	grid[0][6] = " ", grid[1][6] = " ";
+	grid[0][7] = "Start Pos_X", grid[1][7] = chr_StartPosX;
+	grid[0][8] = "Start Pos_Y", grid[1][8] = chr_StartPosY;
+	grid[0][9] = "Start Pos_Z", grid[1][9] = chr_StartPosZ;
+	grid[0][10] = " ", grid[1][10] = " ";
+	grid[0][11] = "Look Up", grid[1][11] = chr_LookUp_Limit;
+	grid[0][12] = "Look Down", grid[1][12] = chr_LookDown_Limit;
+
+
+	ListView_DeleteAllItems(Properties_hLV);
+
+	for (DWORD row = 0; row < NUM_ITEMS; row++)
+	{
+		pitem.iItem = row;
+		pitem.pszText = const_cast<char*>(grid[0][row].c_str());
+		ListView_InsertItem(Properties_hLV, &pitem);
+
+		//ListView_SetItemText
+
+		for (DWORD col = 1; col < NUM_COLS; col++)
+		{
+			ListView_SetItemText(Properties_hLV, row, col,
+				const_cast<char*>(grid[col][row].c_str()));
+		}
+	}
+
+	return 1;
+}
