@@ -56,6 +56,7 @@ THE SOFTWARE.
 #include "CL64_Properties.h"
 #include "CL64_Project.h"
 #include "CL64_Com_Area.h"
+#include "CL64_Objects_Create.h"
 
 class CL64_App
 {
@@ -97,6 +98,7 @@ public:
 	CL64_Properties*		CL_Properties;
 	CL64_Project*			CL_Project;
 	CL64_Com_Area*			CL_Com_Area;
+	CL64_Objects_Create*	CL_Objects_Create;
 
 	void InitApp(void);
 	void Init_Dialogs(void);

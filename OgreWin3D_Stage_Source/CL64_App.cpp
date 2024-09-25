@@ -58,6 +58,7 @@ CL64_App::CL64_App(void)
 	CL_Properties =		nullptr;
 	CL_Project =		nullptr;
 	CL_Com_Area =		nullptr;
+	CL_Objects_Create = nullptr;
 	//-------------------------------------
 
 	hInst =				nullptr;
@@ -168,7 +169,8 @@ void CL64_App::InitApp(void)
 	CL_Properties =		new CL64_Properties();
 	CL_Project =		new CL64_Project();
 	CL_Com_Area =		new CL64_Com_Area();
-
+	CL_Objects_Create = new CL64_Objects_Create();
+	
 	SetBrushes_Fonts();
 
 	LoadString(App->hInst, IDS_VERSION, App_Version, MAX_PATH);
