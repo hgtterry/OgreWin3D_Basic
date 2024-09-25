@@ -23,19 +23,15 @@ THE SOFTWARE.
 */
 
 #pragma once
-class CL64_Objects_Create
+class CL64_Object
 {
 public:
 
-	CL64_Objects_Create(void);
-	~CL64_Objects_Create(void);
+	CL64_Object(void);
+	~CL64_Object(void);
 
-	bool Add_Objects_From_File();
-	bool Add_New_Object(int Index, bool From_MeshViewer);
-
-	void Add_Physics_Box(bool Dynamic, int Index);
-	void Add_Physics_Sphere(bool Dynamic, int Index);
-
+	float GetMesh_BB_Radius(SceneNode* mNode);
+	Ogre::Vector3 GetMesh_BB_Size(SceneNode* mNode);
 
 };
 

@@ -141,6 +141,9 @@
     <ClInclude Include="CL64_Objects_Create.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="CL64_Object.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GD64.cpp">
@@ -258,6 +261,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CL64_Objects_Create.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CL64_Object.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -59,6 +59,7 @@ CL64_App::CL64_App(void)
 	CL_Project =		nullptr;
 	CL_Com_Area =		nullptr;
 	CL_Objects_Create = nullptr;
+	CL_Object =			nullptr;
 	//-------------------------------------
 
 	hInst =				nullptr;
@@ -165,12 +166,14 @@ void CL64_App::InitApp(void)
 	CL_Props_Textures = new CL64_Props_Textures();
 	CL_Mesh_Manager =	new CL64_Mesh_Manager();
 	CL_Level =			new CL64_Level();
+
 	CL_FileView =		new CL64_FileView();
 	CL_Properties =		new CL64_Properties();
 	CL_Project =		new CL64_Project();
 	CL_Com_Area =		new CL64_Com_Area();
 	CL_Objects_Create = new CL64_Objects_Create();
-	
+	CL_Object =			new CL64_Object();
+
 	SetBrushes_Fonts();
 
 	LoadString(App->hInst, IDS_VERSION, App_Version, MAX_PATH);
