@@ -60,6 +60,7 @@ CL64_App::CL64_App(void)
 	CL_Com_Area =		nullptr;
 	CL_Objects_Create = nullptr;
 	CL_Object =			nullptr;
+	CL_Physics =		nullptr;
 	//-------------------------------------
 
 	hInst =				nullptr;
@@ -173,6 +174,7 @@ void CL64_App::InitApp(void)
 	CL_Com_Area =		new CL64_Com_Area();
 	CL_Objects_Create = new CL64_Objects_Create();
 	CL_Object =			new CL64_Object();
+	CL_Physics =		new CL64_Physics();
 
 	SetBrushes_Fonts();
 

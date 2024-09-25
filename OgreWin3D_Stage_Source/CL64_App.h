@@ -52,12 +52,14 @@ THE SOFTWARE.
 
 #include "CL64_Mesh_Manager.h"
 #include "CL64_Level.h"
+
 #include "CL64_FileView.h"
 #include "CL64_Properties.h"
 #include "CL64_Project.h"
 #include "CL64_Com_Area.h"
 #include "CL64_Objects_Create.h"
 #include "CL64_Object.h"
+#include "CL64_Physics.h"
 
 class CL64_App
 {
@@ -101,6 +103,7 @@ public:
 	CL64_Com_Area*			CL_Com_Area;
 	CL64_Objects_Create*	CL_Objects_Create;
 	CL64_Object*			CL_Object;
+	CL64_Physics*			CL_Physics;
 
 	void InitApp(void);
 	void Init_Dialogs(void);

@@ -284,22 +284,22 @@ bool CL64_Project::V_Load_Project_Objects()
 
 		// ------------- Pos
 		App->CL_Ini_File->GetString(mSection, "Mesh_Pos", chr_Tag1, MAX_PATH);
-		sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
+		(void)sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
 		V_Object->Mesh_Pos = Ogre::Vector3(x, y, z);
 
 		// ------------- Scale
 		App->CL_Ini_File->GetString(mSection, "Mesh_Scale", chr_Tag1, MAX_PATH);
-		sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
+		(void)sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
 		V_Object->Mesh_Scale = Ogre::Vector3(x, y, z);
 
 		// ------------- Rotation
 		App->CL_Ini_File->GetString(mSection, "Mesh_Rot", chr_Tag1, MAX_PATH);
-		sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
+		(void)sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
 		V_Object->Mesh_Rot = Ogre::Vector3(x, y, z);
 
 		// ------------- Mesh_Quat
 		App->CL_Ini_File->GetString(mSection, "Mesh_Quat", chr_Tag1, MAX_PATH);
-		sscanf(chr_Tag1, "%f,%f,%f,%f", &w, &x, &y, &z);
+		(void)sscanf(chr_Tag1, "%f,%f,%f,%f", &w, &x, &y, &z);
 
 		V_Object->Mesh_Quat.w = w;
 		V_Object->Mesh_Quat.x = x;
@@ -308,7 +308,7 @@ bool CL64_Project::V_Load_Project_Objects()
 
 		// ------------- Physics_Quat
 		App->CL_Ini_File->GetString(mSection, "Physics_Quat", chr_Tag1, MAX_PATH);
-		sscanf(chr_Tag1, "%f,%f,%f,%f", &w, &x, &y, &z);
+		(void)sscanf(chr_Tag1, "%f,%f,%f,%f", &w, &x, &y, &z);
 
 		V_Object->Physics_Quat.w = w;
 		V_Object->Physics_Quat.x = x;
