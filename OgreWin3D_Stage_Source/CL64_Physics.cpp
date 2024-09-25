@@ -89,14 +89,8 @@ void CL64_Physics::UpDate_Physics_And_Visuals(int Index)
 // *************************************************************************
 void CL64_Physics::Set_Physics_Position(int Index)
 {
-	//AxisAlignedBox worldAAB = App->CL_Scene->V_Object[Index]->Object_Ent->getWorldBoundingBox();// getBoundingBox();
-	////worldAAB.transformAffine(App->CL_Scene->V_Object[Index]->Object_Node->_getFullTransform());
-	//Ogre::Vector3 Centre = worldAAB.getCenter();
-
-	//Ogre::Vector3 Centre = App->CL_Scene->V_Object[Index]->Object_Ent->getWorldBoundingBox().getCenter();
-	Ogre::AxisAlignedBox bb = App->CL_Scene->V_Object[Index]->Object_Node->_getWorldAABB();
-	Ogre::Vector3 Centre = bb.getCenter();
-
+	Ogre::Vector3 Centre = App->CL_Scene->V_Object[Index]->Object_Ent->getWorldBoundingBox(true).getCenter();
 	App->CL_Scene->V_Object[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
 	App->CL_Scene->V_Object[Index]->Physics_Pos = Centre;
+
 }

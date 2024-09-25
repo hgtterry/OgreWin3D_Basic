@@ -36,6 +36,8 @@ public:
 	void Add_Physics_Box(bool Dynamic, int Index);
 	void Add_Physics_Sphere(bool Dynamic, int Index);
 
+	btBvhTriangleMeshShape* create_New_Trimesh(int Index);
+
 
 };
 
