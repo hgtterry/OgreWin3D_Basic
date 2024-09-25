@@ -42,6 +42,7 @@ public:
 	~CL64_Project();
 
 	bool Load_Project();
+	bool V_Load_Project_Objects();
 	bool Load_Project_Aera();
 	bool Load_Project_Player();
 

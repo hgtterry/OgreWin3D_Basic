@@ -15,6 +15,7 @@ appreciated but is not required.
 
 #pragma once
 
+#include "Base_Object.h"
 #include "Base_Player.h"
 #include "Base_Group.h"
 #include "Base_Area.h"
@@ -119,6 +120,7 @@ public:
 	int Scene_Mode;
 
 	// Stage 
+	int Object_Count;
 	int Area_Count;
 	bool Flag_Area_Added;
 
@@ -132,5 +134,6 @@ public:
 	bool flag_Show_Main_Entity;
 
 	std::vector<Base_Player*> B_Player;
+	std::vector<Base_Object*> V_Object;
 };
 

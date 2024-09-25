@@ -610,11 +610,11 @@ bool CL64_Ogre3D_Listener::Capture_Mouse_FirstPerson(float DeltaTime)
 
 		if (test > 1)
 		{
-			if (App->CL_Scene->B_Player[0]->CameraPitch_Node->getOrientation().getPitch().valueDegrees() < App->CL_Scene->B_Player[0]->Limit_Look_Up)
+			//if (App->CL_Scene->B_Player[0]->CameraPitch_Node->getOrientation().getPitch().valueDegrees() < App->CL_Scene->B_Player[0]->Limit_Look_Up)
 			{
 
 			}
-			else
+			//else
 			{
 				Pl_DeltaMouse = float(Pl_Cent500Y - Pl_MouseY);
 				Ogre::Radian pp = Degree(-Pl_DeltaMouse * DeltaTime) * 1;
@@ -629,11 +629,11 @@ bool CL64_Ogre3D_Listener::Capture_Mouse_FirstPerson(float DeltaTime)
 
 		if (test > 1)
 		{
-			if (App->CL_Scene->B_Player[0]->CameraPitch_Node->getOrientation().getPitch().valueDegrees() > App->CL_Scene->B_Player[0]->Limit_Look_Down)
+			//if (App->CL_Scene->B_Player[0]->CameraPitch_Node->getOrientation().getPitch().valueDegrees() > App->CL_Scene->B_Player[0]->Limit_Look_Down)
 			{
 
 			}
-			else
+			//else
 			{
 				Pl_DeltaMouse = float(Pl_MouseY - Pl_Cent500Y);
 				Ogre::Radian pp = Degree(Pl_DeltaMouse * DeltaTime) * 1;

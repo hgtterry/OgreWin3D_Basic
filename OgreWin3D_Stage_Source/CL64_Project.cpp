@@ -150,11 +150,11 @@ bool CL64_Project::Load_Project()
 	//}
 
 	//// ------------------------------------- Objects
-	//if (Options->Has_Objects > 0)
-	//{
-	//	V_Load_Project_Objects();
+	if (Options->Has_Objects > 0)
+	{
+		V_Load_Project_Objects();
 	//	App->SBC_Objects_Create->Add_Objects_From_File();
-	//}
+	}
 
 	//// ------------------------------------- Counters
 	//if (Options->Has_Counters > 0)
@@ -191,7 +191,7 @@ bool CL64_Project::Load_Project()
 
 	//delete Options;
 
-	//App->Set_Main_TitleBar(App->SBC_FileIO->Project_Path_File_Name);
+	App->Set_Title();
 	//App->SBC_FileIO->RecentFileHistory_Update();
 	//App->CL_Prefs->Update_User_File(App->SBC_FileIO->Project_Path_File_Name);
 
@@ -220,6 +220,155 @@ bool CL64_Project::Load_Get_Resource_Path()
 	strcat(m_Main_Assets_Path, "\\");
 
 	App->CL_Resources->Add_Resource_Location_Project(m_Main_Assets_Path);
+
+	return 1;
+}
+
+// *************************************************************************
+// *	  	V_Load_Project_Objects:- Terry and Hazel Flanigan 2022		   *
+// *************************************************************************
+bool CL64_Project::V_Load_Project_Objects()
+{
+	int Int_Tag = 0;
+	char Object_Ini_Path[MAX_PATH];
+	char chr_Tag1[MAX_PATH];
+	int Object_Count = 0;
+
+	float w = 0;
+	float x = 0;
+	float y = 0;
+	float z = 0;
+
+	strcpy(Object_Ini_Path, m_Project_Sub_Folder);
+	strcat(Object_Ini_Path, "\\");
+
+	strcat(Object_Ini_Path, m_Level_Name);
+	strcat(Object_Ini_Path, "\\");
+
+	strcat(Object_Ini_Path, "Objects");
+	strcat(Object_Ini_Path, "\\");
+
+	//App->Say(m_Level_Name);
+	//---------------------------------------------------
+
+	strcat(Object_Ini_Path, "Objects.efd");
+
+	App->CL_Ini_File->SetPathName(Object_Ini_Path);
+
+	Object_Count = App->CL_Ini_File->GetInt("Counters", "Objects_Count", 0, 10);
+
+	int Count = 0;
+	while (Count < Object_Count)
+	{
+		char mNumChr[MAX_PATH] = { 0 };
+		char mSection[MAX_PATH] = { 0 };
+
+		strcpy(mSection, "Object_");
+		_itoa(Count, mNumChr, 10);
+		strcat(mSection, mNumChr);
+
+		App->CL_Scene->V_Object.push_back(new Base_Object());
+
+		Base_Object* V_Object = App->CL_Scene->V_Object[Count];
+
+		App->CL_Ini_File->GetString(mSection, "Mesh_Name", V_Object->Mesh_Name, MAX_PATH);
+		App->CL_Ini_File->GetString(mSection, "Mesh_File", V_Object->Mesh_FileName, MAX_PATH);
+		App->CL_Ini_File->GetString(mSection, "Mesh_Resource_Path", V_Object->Mesh_Resource_Path, MAX_PATH);
+		App->CL_Ini_File->GetString(mSection, "Material_File", V_Object->Material_File, MAX_PATH);
+
+		// ------------- Types
+		V_Object->This_Object_UniqueID = App->CL_Ini_File->GetInt(mSection, "Object_ID", 0, 10);
+		V_Object->Type = App->CL_Ini_File->GetInt(mSection, "Object_Type", 0, 10);
+		V_Object->Shape = App->CL_Ini_File->GetInt(mSection, "Object_Shape", 0, 10);
+		V_Object->Usage = App->CL_Ini_File->GetInt(mSection, "Object_Usage", 0, 10);
+
+		// ------------- Pos
+		App->CL_Ini_File->GetString(mSection, "Mesh_Pos", chr_Tag1, MAX_PATH);
+		sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
+		V_Object->Mesh_Pos = Ogre::Vector3(x, y, z);
+
+		// ------------- Scale
+		App->CL_Ini_File->GetString(mSection, "Mesh_Scale", chr_Tag1, MAX_PATH);
+		sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
+		V_Object->Mesh_Scale = Ogre::Vector3(x, y, z);
+
+		// ------------- Rotation
+		App->CL_Ini_File->GetString(mSection, "Mesh_Rot", chr_Tag1, MAX_PATH);
+		sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
+		V_Object->Mesh_Rot = Ogre::Vector3(x, y, z);
+
+		// ------------- Mesh_Quat
+		App->CL_Ini_File->GetString(mSection, "Mesh_Quat", chr_Tag1, MAX_PATH);
+		sscanf(chr_Tag1, "%f,%f,%f,%f", &w, &x, &y, &z);
+
+		V_Object->Mesh_Quat.w = w;
+		V_Object->Mesh_Quat.x = x;
+		V_Object->Mesh_Quat.y = y;
+		V_Object->Mesh_Quat.z = z;
+
+		// ------------- Physics_Quat
+		App->CL_Ini_File->GetString(mSection, "Physics_Quat", chr_Tag1, MAX_PATH);
+		sscanf(chr_Tag1, "%f,%f,%f,%f", &w, &x, &y, &z);
+
+		V_Object->Physics_Quat.w = w;
+		V_Object->Physics_Quat.x = x;
+		V_Object->Physics_Quat.y = y;
+		V_Object->Physics_Quat.z = z;
+
+		V_Object->Dimensions_Locked = App->CL_Ini_File->GetInt(mSection, "Dimensions_Lock", 0,10);
+
+
+		//// Message Entity
+		//if (V_Object->Usage == Enums::Usage_Message)
+		//{
+		//	Read_Message(Count, mSection);
+		//}
+
+		//// Sound Entity
+		//if (V_Object->Usage == Enums::Usage_Sound)
+		//{
+		//	App->CL_Ini_File->GetString(mSection, "Sound_File", V_Object->Sound_File, MAX_PATH);
+
+		//	App->CL_Ini_File->GetString(mSection, "Sound_Volume", chr_Tag1, MAX_PATH);
+		//	sscanf(chr_Tag1, "%f", &x);
+		//	V_Object->SndVolume = x;
+		//}
+
+		//// Colectable Entity
+		//if (V_Object->Usage == Enums::Usage_Colectable)
+		//{
+		//	Read_Collectable(Count, mSection);
+		//}
+
+		//// Move Enitity
+		//if (V_Object->Usage == Enums::Usage_Move)
+		//{
+		//	Read_MoveEntity(Count, mSection);
+		//}
+
+		//// Teleport Enitity
+		//if (V_Object->Usage == Enums::Usage_Teleport)
+		//{
+		//	Read_Teleport(Count, mSection);
+		//}
+
+		//// Environ Enitity
+		//if (V_Object->Usage == Enums::Usage_EnvironEntity)
+		//{
+		//	Read_EnvironEntity(Count, mSection);
+		//}
+
+		//// Particle Enitity
+		//if (V_Object->Usage == Enums::Usage_Particle)
+		//{
+		//	Read_Particle(Count, mSection);
+		//}
+
+		Count++;
+
+	}
+
+	App->CL_Scene->Object_Count = Count;
 
 	return 1;
 }

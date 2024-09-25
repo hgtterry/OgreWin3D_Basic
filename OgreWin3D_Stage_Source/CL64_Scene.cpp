@@ -28,6 +28,7 @@ CL64_Scene::CL64_Scene(void)
 	BoneCount = 0;
 
 	// Stage
+	Object_Count = 0;
 	Area_Count = 0;
 	Flag_Area_Added = 0;
 
@@ -71,6 +72,7 @@ CL64_Scene::CL64_Scene(void)
 	Imported_Ogre_Node = nullptr;
 
 	B_Player.reserve(20);
+	V_Object.reserve(200);
 }
 
 CL64_Scene::~CL64_Scene(void)

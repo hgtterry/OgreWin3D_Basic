@@ -240,9 +240,9 @@ void CL64_App::Say_Win(const char* Message)
 void CL64_App::Set_Title()
 {
 	char TitleBar[MAX_PATH];
-	strcpy(TitleBar, "OgreWin3D_Basic");
+	strcpy(TitleBar, "OgreWin3D_Stage");
 	strcat(TitleBar, "    ");
-	strcat(TitleBar, App->CL_Scene->Path_FileName);
+	strcat(TitleBar, App->CL_File_IO->Project_Path_File_Name);
 	SetWindowText(App->MainHwnd, TitleBar);
 }
 
