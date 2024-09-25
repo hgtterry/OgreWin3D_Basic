@@ -31,5 +31,7 @@ public:
 	~CL64_Objects_Create(void);
 
 	bool Add_Objects_From_File();
+	bool Add_New_Object(int Index, bool From_MeshViewer);
+
 };
 

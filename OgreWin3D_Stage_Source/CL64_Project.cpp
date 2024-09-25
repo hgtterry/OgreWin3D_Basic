@@ -149,11 +149,11 @@ bool CL64_Project::Load_Project()
 	//	App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Cameras_Folder);
 	//}
 
-	//// ------------------------------------- Objects
+	// ------------------------------------- Objects
 	if (Options->Has_Objects > 0)
 	{
 		V_Load_Project_Objects();
-	//	App->SBC_Objects_Create->Add_Objects_From_File();
+		App->CL_Objects_Create->Add_Objects_From_File();
 	}
 
 	//// ------------------------------------- Counters

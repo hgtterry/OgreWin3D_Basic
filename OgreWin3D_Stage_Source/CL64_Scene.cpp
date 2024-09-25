@@ -31,6 +31,7 @@ CL64_Scene::CL64_Scene(void)
 	Object_Count = 0;
 	Area_Count = 0;
 	Flag_Area_Added = 0;
+	Scene_Loaded = 0;
 
 	flag_Model_Loaded = 0;
 	flag_Player_Added = 0;

@@ -123,7 +123,7 @@ public:
 	int Object_Count;
 	int Area_Count;
 	bool Flag_Area_Added;
-
+	bool Scene_Loaded;
 
 	// Ogre
 	int Ogre_Face_Count;
