@@ -1,16 +1,25 @@
 /*
-Copyright (c) OgreWin3D_Stage 2024 W.T.Flanigan H.C.Flanigan Inflanite_HGT
+Copyright (c) 2024 Inflanite_HGT W.T.Flanigan H.C.Flanigan
 
-This software is provided 'as-is', without any express or implied
-warranty. In no event will the authors be held liable for any damages
-arising from the use of this software.
+OgreWin3D_Stage
 
-Permission is granted to anyone to use this software for any purpose,
-including commercial applications, and to alter it and redistribute it
-freely.
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-An acknowledgment in the product documentation would be
-appreciated but is not required.
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
 */
 
 #include "pch.h"
@@ -525,6 +534,7 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 		return;
 	}
 
+	// ------------------------------------------------------------ Player
 	if (!strcmp(FileView_Folder, "Player")) // Folder
 	{
 		//App->SBC_FileView->Context_Selection = Enums::FileView_Player_Folder;
@@ -554,6 +564,48 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 		//{*/
 			//App->CL_Properties->Update_ListView_Player_Physics();
 		//}
+		return;
+	}
+
+	// ------------------------------------------------------------ Objects
+	if (!strcmp(FileView_Folder, "Objects")) // Folder
+	{
+		//App->SBC_FileView->Context_Selection = Enums::FileView_Objects_Folder;
+		return;
+	}
+	if (!strcmp(FileView_File, "Objects"))
+	{
+		//App->SBC_FileView->Context_Selection = Enums::FileView_Objects_File;
+
+		//HideRightPanes();
+		ShowWindow(App->CL_Properties->Properties_Dlg_hWnd, 1);
+
+		/*App->SBC_Props_Dialog->Hide_Details_Goto_Dlg(1);
+		App->SBC_Props_Dialog->Hide_Dimensions_Dlg(1, App->SBC_Scene->V_Object[Index]->Dimensions_Locked);
+		App->SBC_Props_Dialog->Hide_Debug_Dlg(1);
+		App->SBC_Props_Dialog->Hide_Material_Dlg(1);
+
+
+		App->SBC_Properties->Edit_Category = Enums::FV_Edit_Object;*/
+
+		//----------------------------------------------------------------------------
+		App->CL_Properties->Current_Selected_Object = Index;
+		/*App->SBC_Properties->Reset_Last_Selected_Object(App->SBC_Properties->Last_Selected_Object);
+		App->SBC_Properties->Last_Selected_Object = Index;*/
+		//----------------------------------------------------------------------------
+
+		/*App->SBC_LookUps->Update_Types();
+
+		App->SBC_Markers->MarkerBB_Addjust(Index);*/
+
+		App->CL_Properties->Update_ListView_Objects();
+
+
+		//if (App->SBC_Dimensions->Show_Dimensions == 1)
+		//{
+		//	App->SBC_Dimensions->Prepare_Dimensions();
+		//}
+
 		return;
 	}
 }

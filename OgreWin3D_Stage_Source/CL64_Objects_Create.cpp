@@ -87,13 +87,13 @@ bool CL64_Objects_Create::Add_Objects_From_File() // From File
 		else if (App->CL_Scene->V_Object[Count]->Usage == Enums::Stage_Usage_Colectable)
 		{
 
-			/*App->CL_Com_Collectables->Create_Collectable_Entity(Count);
+			App->CL_Com_Collectables->Create_Collectable_Entity(Count);
 
-			HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Collectables_Folder, App->CL_Scene->V_Object[Count]->Mesh_Name, Count, false);
+			HTREEITEM Temp = App->CL_FileView->Add_Item(App->CL_FileView->FV_Collectables_Folder, App->CL_Scene->V_Object[Count]->Mesh_Name, Count, false);
 			App->CL_Scene->V_Object[Count]->FileViewItem = Temp;
 
-			App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Collectables_Folder);
-			App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_EntitiesFolder);*/
+			App->CL_FileView->Set_FolderActive(App->CL_FileView->FV_Collectables_Folder);
+			App->CL_FileView->Set_FolderActive(App->CL_FileView->FV_EntitiesFolder);
 
 		}
 		else if (App->CL_Scene->V_Object[Count]->Usage == Enums::Stage_Usage_EnvironEntity)

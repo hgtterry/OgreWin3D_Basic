@@ -69,7 +69,7 @@ void CL64_Physics::UpDate_Physics_And_Visuals(int Index)
 	}
 	else
 	{
-		//if (App->CL_Scene->V_Object[Index]->Physics_Valid == 1)
+		if (App->CL_Scene->V_Object[Index]->Physics_Valid == 1)
 		{
 			Set_Physics_Position(Index);
 		}

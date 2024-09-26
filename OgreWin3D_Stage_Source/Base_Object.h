@@ -72,12 +72,12 @@ typedef struct Collectable_type
 	int Counter_ID;
 	//irrklang::ISound* SndFile;
 	//Ogre::Real SndVolume;
-	//char Sound_File[MAX_PATH];
-	//char Counter_Name[MAX_PATH];
-	//bool Counter_Disabled;
-	//bool Play;
-	//int Maths; // [ 0 = None ]  [ 1 = Add ]  [ 2 = Subtract ]
-	//int Value; 
+	char Sound_File[MAX_PATH];
+	char Counter_Name[MAX_PATH];
+	bool Counter_Disabled;
+	bool Play;
+	int Maths; // [ 0 = None ]  [ 1 = Add ]  [ 2 = Subtract ]
+	int Value; 
 
 }Collectable_type;
 

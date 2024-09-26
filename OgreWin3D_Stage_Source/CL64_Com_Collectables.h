@@ -23,30 +23,15 @@ THE SOFTWARE.
 */
 
 #pragma once
-class CL64_Properties
+class CL64_Com_Collectables
 {
 public:
 
-	CL64_Properties(void);
-	~CL64_Properties(void);
+	CL64_Com_Collectables(void);
+	~CL64_Com_Collectables(void);
 
-	void Start_Properties(void);
+	bool Create_Collectable_Entity(int Index);
+	void Set_Collectables_Defaults(int Index);
 
-	bool Update_ListView_Area();
-	bool Update_ListView_Player();
-	bool Update_ListView_Objects();
-
-	int Current_Selected_Object;
-
-	bool Properties_Dlg_Active;
-
-	HWND Properties_Dlg_hWnd;
-
-private:
-	static LRESULT CALLBACK Proc_Properties(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
-
-	void Create_Properties_hLV(void);
-
-	HWND Properties_hLV;
 };
 

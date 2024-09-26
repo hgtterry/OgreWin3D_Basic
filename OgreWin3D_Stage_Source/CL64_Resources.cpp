@@ -104,6 +104,8 @@ bool CL64_Resources::Add_Resource_Location_Project(char* Resource_Location)
 		Ogre::ResourceGroupManager::getSingleton().initialiseResourceGroup(Project_Resource_Group);
 	}
 
+	mSelected_Resource_Group = "Project_Resource_Group";
+
 	return 1;
 }
 

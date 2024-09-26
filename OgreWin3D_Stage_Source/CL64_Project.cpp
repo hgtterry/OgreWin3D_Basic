@@ -334,11 +334,11 @@ bool CL64_Project::V_Load_Project_Objects()
 		//	V_Object->SndVolume = x;
 		//}
 
-		//// Colectable Entity
-		//if (V_Object->Usage == Enums::Usage_Colectable)
-		//{
-		//	Read_Collectable(Count, mSection);
-		//}
+		// Colectable Entity
+		if (V_Object->Usage == Enums::Stage_Usage_Colectable)
+		{
+			Read_Collectable(Count, mSection);
+		}
 
 		//// Move Enitity
 		//if (V_Object->Usage == Enums::Usage_Move)
@@ -373,6 +373,38 @@ bool CL64_Project::V_Load_Project_Objects()
 	return 1;
 }
 
+// *************************************************************************
+// *	  		Read_Collectable:- Terry and Hazel Flanigan 2023		   *
+// *************************************************************************
+bool CL64_Project::Read_Collectable(int Index, char* Section)
+{
+	char chr_Tag1[MAX_PATH] = { 0 };
+	Ogre::Vector4 V4 = Ogre::Vector4::ZERO;
+
+	Base_Object* V_Object = App->CL_Scene->V_Object[Index];
+
+	V_Object->S_Collectable[0] = new Collectable_type;
+	App->CL_Com_Collectables->Set_Collectables_Defaults(Index);
+
+	App->CL_Ini_File->GetString(Section, "Col_Sound_File", chr_Tag1, MAX_PATH);
+	strcpy(V_Object->S_Collectable[0]->Sound_File, chr_Tag1);
+
+	App->CL_Ini_File->GetString(Section, "Col_Sound_Volume", chr_Tag1, MAX_PATH);
+	sscanf(chr_Tag1, "%f", &V4.x);
+	//V_Object->S_Collectable[0]->SndVolume = V4.x;
+
+	V_Object->S_Collectable[0]->Play = App->CL_Ini_File->GetInt(Section, "Col_Play", 0, 10);
+
+	App->CL_Ini_File->GetString(Section, "Col_Counter_Name", chr_Tag1, MAX_PATH);
+	strcpy(V_Object->S_Collectable[0]->Counter_Name, chr_Tag1);
+
+	V_Object->S_Collectable[0]->Counter_ID = App->CL_Ini_File->GetInt(Section, "Col_Counter_ID", 0, 10);
+	V_Object->S_Collectable[0]->Maths = App->CL_Ini_File->GetInt(Section, "Col_Maths", 0, 10);
+	V_Object->S_Collectable[0]->Value = App->CL_Ini_File->GetInt(Section, "Col_Value", 0, 10);
+	V_Object->S_Collectable[0]->Counter_Disabled = App->CL_Ini_File->GetInt(Section, "Col_Disabled", 0, 10);
+
+	return 1;
+}
 // *************************************************************************
 // *	  		Load_Project_Aera:- Terry and Hazel Flanigan 2022		   *
 // *************************************************************************

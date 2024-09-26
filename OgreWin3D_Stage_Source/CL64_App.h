@@ -61,6 +61,8 @@ THE SOFTWARE.
 #include "CL64_Object.h"
 #include "CL64_Physics.h"
 
+#include "CL64_Com_Collectables.h"
+
 class CL64_App
 {
 
@@ -104,6 +106,7 @@ public:
 	CL64_Objects_Create*	CL_Objects_Create;
 	CL64_Object*			CL_Object;
 	CL64_Physics*			CL_Physics;
+	CL64_Com_Collectables*	CL_Com_Collectables;
 
 	void InitApp(void);
 	void Init_Dialogs(void);

@@ -111,7 +111,7 @@ void CL64_Player::Initialize() const
 
 	pBase->Phys_Body->setUserPointer(pBase->Player_Node);
 
-	pBase->Phys_Body->setUserIndex(Enums::Usage_Player);
+	pBase->Phys_Body->setUserIndex(Enums::Stage_Usage_Player);
 
 	int f = pBase->Phys_Body->getCollisionFlags();
 	//pBase->Phys_Body->setCollisionFlags(f | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);

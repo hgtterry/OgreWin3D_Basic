@@ -155,7 +155,7 @@ void CL64_Ogre3D_Listener::Update_Physics(float DeltaTime)
 
 	if (Run_Physics == 1 && App->flag_OgreStarted == 1)
 	{
-		App->CL_Bullet->dynamicsWorld->stepSimulation(DeltaTime * Bullet_Step); //suppose you have 60 frames per second	
+		App->CL_Bullet->dynamicsWorld->stepSimulation(DeltaTime * Bullet_Step);	
 
 		for (int j = App->CL_Bullet->dynamicsWorld->getNumCollisionObjects() - 1; j >= 0; j--)
 		{
@@ -166,10 +166,8 @@ void CL64_Ogre3D_Listener::Update_Physics(float DeltaTime)
 
 			if (body && body->getMotionState()) //&& Block == 0)
 			{
-
 				int UI = body->getUserIndex();
 				int Index = body->getUserIndex2();
-
 
 				if (UI == Enums::Stage_Usage_Dynamic)
 				{

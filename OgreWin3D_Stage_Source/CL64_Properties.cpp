@@ -1,16 +1,25 @@
 /*
-Copyright (c) OgreWin3D_Stage 2024 W.T.Flanigan H.C.Flanigan Inflanite_HGT
+Copyright (c) 2024 Inflanite_HGT W.T.Flanigan H.C.Flanigan
 
-This software is provided 'as-is', without any express or implied
-warranty. In no event will the authors be held liable for any damages
-arising from the use of this software.
+OgreWin3D_Stage
 
-Permission is granted to anyone to use this software for any purpose,
-including commercial applications, and to alter it and redistribute it
-freely.
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-An acknowledgment in the product documentation would be
-appreciated but is not required.
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
 */
 
 #include "pch.h"
@@ -239,7 +248,7 @@ bool CL64_Properties::Update_ListView_Area()
 }
 
 // *************************************************************************
-// *				Update_ListView_Player	Terry Bernie 			 	   *
+// *		Update_ListView_Player:- Terry and Hazel Flanigan 2024	 	   *
 // *************************************************************************
 bool CL64_Properties::Update_ListView_Player()
 {
@@ -299,6 +308,60 @@ bool CL64_Properties::Update_ListView_Player()
 	grid[0][11] = "Look Up", grid[1][11] = chr_LookUp_Limit;
 	grid[0][12] = "Look Down", grid[1][12] = chr_LookDown_Limit;
 
+
+	ListView_DeleteAllItems(Properties_hLV);
+
+	for (DWORD row = 0; row < NUM_ITEMS; row++)
+	{
+		pitem.iItem = row;
+		pitem.pszText = const_cast<char*>(grid[0][row].c_str());
+		ListView_InsertItem(Properties_hLV, &pitem);
+
+		//ListView_SetItemText
+
+		for (DWORD col = 1; col < NUM_COLS; col++)
+		{
+			ListView_SetItemText(Properties_hLV, row, col,
+				const_cast<char*>(grid[col][row].c_str()));
+		}
+	}
+
+	return 1;
+}
+
+// *************************************************************************
+// *		Update_ListView_Objects:- Terry and Hazel Flanigan 2024 	   *
+// *************************************************************************
+bool CL64_Properties::Update_ListView_Objects()
+{
+	int index = Current_Selected_Object;
+
+	char Num[10];
+	char chr_ID[50];
+	char IndexNum[10];
+	_itoa(App->CL_Scene->V_Object[index]->This_Object_UniqueID, Num, 10);
+	_itoa(index, IndexNum, 10);
+	strcpy(chr_ID, "Unique ID ");
+	strcat(chr_ID, Num);
+	strcat(chr_ID, "  Object Index ");
+	strcat(chr_ID, IndexNum);
+
+
+	SetWindowText(Properties_Dlg_hWnd, chr_ID);
+	//SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)App->SBC_Scene->V_Object[index]->Mesh_Name);
+
+
+	const int NUM_ITEMS = 4;
+	const int NUM_COLS = 2;
+	std::string grid[NUM_COLS][NUM_ITEMS]; // string table
+	LV_ITEM pitem;
+	memset(&pitem, 0, sizeof(LV_ITEM));
+	pitem.mask = LVIF_TEXT;
+
+	grid[0][0] = "Name", grid[1][0] = App->CL_Scene->V_Object[index]->Mesh_Name;
+	grid[0][1] = "Mesh File", grid[1][1] = App->CL_Scene->V_Object[index]->Mesh_FileName;
+	grid[0][2] = "Materials", grid[1][2] = App->CL_Scene->V_Object[index]->Material_File;
+	grid[0][3] = " ", grid[1][3] = " ";
 
 	ListView_DeleteAllItems(Properties_hLV);
 
