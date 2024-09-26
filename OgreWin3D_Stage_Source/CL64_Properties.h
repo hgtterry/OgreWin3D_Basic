@@ -35,6 +35,7 @@ public:
 	bool Update_ListView_Area();
 	bool Update_ListView_Player();
 	bool Update_ListView_Objects();
+	bool Update_ListView_Collectables();
 
 	int Current_Selected_Object;
 
