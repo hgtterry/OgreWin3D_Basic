@@ -162,8 +162,7 @@ bool CL64_Objects_Create::Add_New_Object(int Index, bool From_MeshViewer)
 	Object->Object_Node->setVisible(true);
 
 	Object->Object_Node->setOrientation(Object->Mesh_Quat);
-	Object->Object_Node->setScale(Object->Mesh_Scale);
-
+	
 	// Get Material Name
 	Ogre::String text = Object->Object_Ent->getMesh()->getSubMesh(0)->getMaterialName().c_str();
 	Ogre::MaterialPtr  Mat = static_cast<Ogre::MaterialPtr> (Ogre::MaterialManager::getSingleton().getByName(text));
@@ -424,7 +423,7 @@ void CL64_Objects_Create::Add_Physics_Sphere(bool Dynamic, int Index)
 	}
 
 	int f = Object->Phys_Body->getCollisionFlags();
-	//Object->Phys_Body->setCollisionFlags(f | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
+	Object->Phys_Body->setCollisionFlags(f | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
 
 	App->CL_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
 

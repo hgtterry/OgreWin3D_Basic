@@ -68,17 +68,7 @@ CL64_Ogre3D_Listener::~CL64_Ogre3D_Listener(void)
 bool CL64_Ogre3D_Listener::frameStarted(const FrameEvent& evt)
 {
 	Get_View_Height_Width();
-
-	if (Run_Physics == 1)
-	{
-		App->CL_Bullet->dynamicsWorld->stepSimulation(evt.timeSinceLastFrame * Bullet_Step); //suppose you have 60 frames per second
-	}
-
-	// ------------------------ Animation
-	if (flag_Animate_Ogre == 1)
-	{
-		App->CL_Motions->Update_Motion(evt.timeSinceLastFrame);
-	}
+	Update_Physics(evt.timeSinceLastFrame);
 
 	return true;
 }
@@ -97,17 +87,6 @@ bool CL64_Ogre3D_Listener::frameRenderingQueued(const FrameEvent& evt)
 		return 1;
 	}
 
-	if (Run_Physics == 1 && App->CL_Scene->flag_Player_Added == 1)
-	{
-		btTransform trans;
-		App->CL_Scene->B_Player[0]->Phys_Body->getMotionState()->getWorldTransform(trans);
-		btQuaternion orientation = trans.getRotation();
-
-		App->CL_Scene->B_Player[0]->Player_Node->setPosition(Ogre::Vector3(trans.getOrigin().getX(), trans.getOrigin().getY(), trans.getOrigin().getZ()));
-		App->CL_Scene->B_Player[0]->Player_Node->setOrientation(Ogre::Quaternion(orientation.getW(), orientation.getX(), orientation.getY(), orientation.getZ()));
-		App->CL_Scene->B_Player[0]->Player_Node->pitch(Ogre::Degree(180));
-	}
-	
 	if (CameraMode == Enums::Cam_Mode_First)
 	{
 		Ogre::Vector3 Pos;
@@ -165,6 +144,71 @@ bool CL64_Ogre3D_Listener::frameEnded(const FrameEvent& evt)
 	}
 
 	return true;
+}
+
+// *************************************************************************
+// *			Update_Physics:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void CL64_Ogre3D_Listener::Update_Physics(float DeltaTime)
+{
+	int Count = 0;
+
+	if (Run_Physics == 1 && App->flag_OgreStarted == 1)
+	{
+		App->CL_Bullet->dynamicsWorld->stepSimulation(DeltaTime * Bullet_Step); //suppose you have 60 frames per second	
+
+		for (int j = App->CL_Bullet->dynamicsWorld->getNumCollisionObjects() - 1; j >= 0; j--)
+		{
+
+			btCollisionObject* obj = App->CL_Bullet->dynamicsWorld->getCollisionObjectArray()[j];
+			btRigidBody* body = btRigidBody::upcast(obj);
+			btTransform trans;
+
+			if (body && body->getMotionState()) //&& Block == 0)
+			{
+
+				int UI = body->getUserIndex();
+				int Index = body->getUserIndex2();
+
+
+				if (UI == Enums::Stage_Usage_Dynamic)
+				{
+
+					body->getMotionState()->getWorldTransform(trans);
+					btQuaternion orientation = trans.getRotation();
+
+					float x = obj->getWorldTransform().getOrigin().getX();
+					float y = obj->getWorldTransform().getOrigin().getY();
+					float z = obj->getWorldTransform().getOrigin().getZ();
+
+					if (Index > -1)
+					{
+						if (App->CL_Scene->V_Object[Index]->Object_Node)
+						{
+							App->CL_Scene->V_Object[Index]->Object_Node->setPosition(x, y, z);
+							App->CL_Scene->V_Object[Index]->Object_Node->setOrientation(Ogre::Quaternion(orientation.getW(), orientation.getX(), orientation.getY(), orientation.getZ()));
+
+							Ogre::Vector3 WC = App->CL_Scene->V_Object[Index]->Object_Ent->getWorldBoundingBox(true).getCenter();
+							Ogre::Vector3 NewPos = Ogre::Vector3(x, y, z) - WC;
+
+							App->CL_Scene->V_Object[Index]->Object_Node->setPosition((Ogre::Vector3(x, y, z)) + NewPos);
+						}
+					}
+				}
+			}
+		}
+	}
+
+	if (Run_Physics == 1 && App->CL_Scene->flag_Player_Added == 1)
+	{
+		btTransform trans;
+		App->CL_Scene->B_Player[0]->Phys_Body->getMotionState()->getWorldTransform(trans);
+		btQuaternion orientation = trans.getRotation();
+
+		App->CL_Scene->B_Player[0]->Player_Node->setPosition(Ogre::Vector3(trans.getOrigin().getX(), trans.getOrigin().getY(), trans.getOrigin().getZ()));
+		App->CL_Scene->B_Player[0]->Player_Node->setOrientation(Ogre::Quaternion(orientation.getW(), orientation.getX(), orientation.getY(), orientation.getZ()));
+		App->CL_Scene->B_Player[0]->Player_Node->pitch(Ogre::Degree(180));
+	}
 }
 
 // *************************************************************************

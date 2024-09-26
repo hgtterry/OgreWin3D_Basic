@@ -39,6 +39,7 @@ public:
 	bool frameRenderingQueued(const FrameEvent& evt);
 	void MoveCamera(void);
 	void Get_View_Height_Width(void);
+	void Update_Physics(float DeltaTime);
 
 	// Model Mode
 	void Mode_Camera_Model(float DeltaTime);
@@ -50,7 +51,7 @@ public:
 	bool Capture_Left_Mouse_Free(void);
 	bool Capture_Right_Mouse_Free(void);
 	bool Capture_Mouse_FirstPerson(float DeltaTime);
-
+	
 	Ogre::Camera* mCam;
 	Ogre::SceneNode* mCamNode;
 
@@ -91,5 +92,6 @@ public:
 	bool Ogre_Model_Loaded;
 
 	bool flag_Animate_Ogre;
+
 };
 
