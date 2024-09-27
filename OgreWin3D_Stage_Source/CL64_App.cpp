@@ -65,7 +65,10 @@ CL64_App::CL64_App(void)
 	CL_Com_Collectables =	nullptr;
 	CL_Com_Teleporters =	nullptr;
 	CL_Com_Environments =	nullptr;
-
+	CL_Com_Messages =		nullptr;
+	CL_Com_MoveEntity =		nullptr;
+	CL_Com_Particles =		nullptr;
+	CL_Com_Sounds =			nullptr;
 	//-------------------------------------
 
 	hInst =				nullptr;
@@ -183,6 +186,10 @@ void CL64_App::InitApp(void)
 	CL_Com_Collectables =	new CL64_Com_Collectables();
 	CL_Com_Teleporters =	new CL64_Com_Teleporters();
 	CL_Com_Environments =	new CL64_Com_Environments();
+	CL_Com_Messages =		new CL64_Com_Messages();
+	CL_Com_MoveEntity =		new CL64_Com_MoveEntity();
+	CL_Com_Particles =		new CL64_Com_Particles();
+	CL_Com_Sounds =			new CL64_Com_Sounds();
 
 	SetBrushes_Fonts();
 

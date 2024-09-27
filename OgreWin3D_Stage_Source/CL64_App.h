@@ -64,6 +64,10 @@ THE SOFTWARE.
 #include "CL64_Com_Collectables.h"
 #include "CL64_Com_Teleporters.h"
 #include "CL64_Com_Environments.h"
+#include "CL64_Com_Messages.h"
+#include "CL64_Com_MoveEntity.h"
+#include "CL64_Com_Particles.h"
+#include "CL64_Com_Sounds.h"
 
 class CL64_App
 {
@@ -111,7 +115,11 @@ public:
 	CL64_Com_Collectables*	CL_Com_Collectables;
 	CL64_Com_Teleporters*	CL_Com_Teleporters;
 	CL64_Com_Environments*	CL_Com_Environments;
-
+	CL64_Com_Messages*		CL_Com_Messages;
+	CL64_Com_MoveEntity*	CL_Com_MoveEntity;
+	CL64_Com_Particles*		CL_Com_Particles;
+	CL64_Com_Sounds*		CL_Com_Sounds;
+		
 	void InitApp(void);
 	void Init_Dialogs(void);
 	void Open_Tool(char* Tool);
