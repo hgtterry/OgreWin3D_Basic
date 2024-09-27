@@ -156,7 +156,7 @@ bool CL64_Ogre::SetUpResources(void)
 	Ogre::ResourceGroupManager::getSingleton().addResourceLocation("Media/Core_Data/Entitys.zip", "Zip", App_Resource_Group);
 	
 	Ogre::ResourceGroupManager::getSingleton().addResourceLocation("Media/Core_Data/Files", "FileSystem", App_Resource_Group);
-
+	Ogre::ResourceGroupManager::getSingleton().addResourceLocation("Media/Core_Data/Files/New_Particles", "FileSystem", App_Resource_Group);
 	/*if (flag_Use_RTSS == 1)
 	{
 		Ogre::ResourceGroupManager::getSingleton().addResourceLocation("Media/RTShaderLib",

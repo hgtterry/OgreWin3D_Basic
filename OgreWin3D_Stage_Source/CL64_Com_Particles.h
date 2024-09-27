@@ -30,6 +30,7 @@ public:
 	CL64_Com_Particles(void);
 	~CL64_Com_Particles(void);
 
+	void Set_Particle_Defaults(int Index);
 	void Create_Particle_Entity(int Index);
 };
 

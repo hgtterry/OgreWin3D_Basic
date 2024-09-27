@@ -34,6 +34,31 @@ CL64_Com_MoveEntity::~CL64_Com_MoveEntity(void)
 {
 }
 
+// *************************************************************************
+// *		Set_Move_Defaults:- Terry and Hazel Flanigan 2024		  	   *
+// *************************************************************************
+void CL64_Com_MoveEntity::Set_Move_Defaults(int Index)
+{
+	Base_Object* V_Object = App->CL_Scene->V_Object[Index];
+
+	V_Object->S_MoveType[0]->IsNegative = 1;
+	V_Object->S_MoveType[0]->Move_Distance = -50;
+	V_Object->S_MoveType[0]->Newpos = 0;
+	V_Object->S_MoveType[0]->Speed = 10.0;
+	V_Object->S_MoveType[0]->WhatDirection = Enums::Axis_x;
+	V_Object->S_MoveType[0]->Object_To_Move_Index = 0;
+	V_Object->S_MoveType[0]->Triggered = 0;
+	V_Object->S_MoveType[0]->Re_Trigger = 0;
+	strcpy(V_Object->S_MoveType[0]->Object_Name, "None");
+
+	V_Object->S_MoveType[0]->Trigger_Value = 0;
+	V_Object->S_MoveType[0]->Counter_ID = 0;
+	strcpy(V_Object->S_MoveType[0]->Counter_Name, "None");
+	V_Object->S_MoveType[0]->Counter_Disabled = 1;
+
+	return;
+}
+
 // **************************************************************************
 // *			Create_Move_Entity:- Terry and Hazel Flanigan 2024			*
 // **************************************************************************

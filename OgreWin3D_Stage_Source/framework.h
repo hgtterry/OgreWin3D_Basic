@@ -171,6 +171,13 @@ namespace Enums
 		Folder_Particle = 10
 	};
 
+	enum Axis
+	{
+		Axis_None = 0,
+		Axis_x = 1,
+		Axis_y = 2,
+		Axis_z = 3
+	};
 }
 
 #define Debug App->Debug_Text();

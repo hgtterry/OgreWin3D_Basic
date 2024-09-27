@@ -46,8 +46,12 @@ public:
 	bool Load_Project_Aera();
 	bool Load_Project_Player();
 
+	bool Read_EnvironEntity(int Index, char* Section);
+	bool Read_Message(int Index, char* Section);
 	bool Read_Collectable(int Index, char* Section);
 	bool Read_Teleport(int Index, char* Section);
+	bool Read_Particle(int Index, char* Section);
+	bool Read_MoveEntity(int Index, char* Section);
 
 	char m_Project_Name[MAX_PATH];
 	char m_Level_Name[MAX_PATH];

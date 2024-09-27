@@ -34,6 +34,33 @@ CL64_Com_Messages::~CL64_Com_Messages(void)
 {
 }
 
+// *************************************************************************
+// *		Set_Message_Defaults:- Terry and Hazel Flanigan 2022	  	   *
+// *************************************************************************
+void CL64_Com_Messages::Set_Message_Defaults(int Index)
+{
+
+	Base_Object* V_Object = App->CL_Scene->V_Object[Index];
+
+	V_Object->S_Message[0]->Trigger_Value = 0;
+	V_Object->S_Message[0]->Counter_ID = 0;
+	strcpy(V_Object->S_Message[0]->Counter_Name, "None");
+	V_Object->S_Message[0]->Counter_Disabled = 1;
+
+	strcpy(V_Object->S_Message[0]->Message_Text, "Welcome");
+	V_Object->S_Message[0]->Message_PosX = 250;
+	V_Object->S_Message[0]->Message_PosY = 10;
+
+	V_Object->S_Message[0]->PosXCentre_Flag = 0;
+	V_Object->S_Message[0]->PosYCentre_Flag = 0;
+
+	V_Object->S_Message[0]->Text_Colour = Ogre::Vector4(0, 0, 0, 255);
+	V_Object->S_Message[0]->BackGround_Colour = Ogre::Vector4(239, 239, 239, 255);
+
+	V_Object->S_Message[0]->Show_BackGround = 1;
+	return;
+}
+
 // **************************************************************************
 // *		Create_Message_Entity:- Terry and Hazel Flanigan 2024			*
 // **************************************************************************
