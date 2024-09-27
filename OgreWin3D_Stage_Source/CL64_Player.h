@@ -40,6 +40,7 @@ public:
 	void Set_Player_Rotation(btQuaternion Rotation);
 	void Set_Player_GroundSpeed(float GroundSpeed);
 	void Reset_Player(float GroundSpeed);
+	void Check_Collisions(void);
 
 	Ogre::Vector3 Current_Position;
 	btVector3 Physics_Position;
@@ -47,6 +48,15 @@ public:
 
 	btVector3 mMoveDirection;
 	btVector3 mWorld_Height;
+
+	int Col_numManifolds;
+	int Col_Player_Index;
+	int Col_Usage_Index;
+	int Col_Object_Index;
+
+	int Round;
+	float Distance;
+	int Life_Time;
 
 	int Player_Count;
 

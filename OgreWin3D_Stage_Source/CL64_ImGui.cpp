@@ -33,6 +33,7 @@ CL64_ImGui::CL64_ImGui(void)
 	flag_Show_App_Debug = 0;
 	flag_Show_Ogre_Data = 0;
 	flag_Open_Textures_List = 1;
+	Show_Collision_Debug = 0;
 
 	// Demo 1
 	flag_Show_Physics_Debug = 0;
@@ -64,6 +65,7 @@ void CL64_ImGui::Reset_Class(void)
 	flag_Show_Demo_Options = 0;
 	flag_Show_Model_Data = 0;
 	flag_Show_Ogre_Data = 0;
+	Show_Collision_Debug = 0;
 
 	Reset_Material_Index();
 }
@@ -230,6 +232,11 @@ void CL64_ImGui::ImGui_Render_Loop(void)
 	if (flag_Show_App_Debug == 1)
 	{
 		App_Debug();
+	}
+
+	if (Show_Collision_Debug == 1)
+	{
+		ImGui_Collision_Debug();
 	}
 }
 
@@ -813,6 +820,42 @@ void CL64_ImGui::App_Debug(void)
 		if (ImGui::Button("Close"))
 		{
 			flag_Show_App_Debug = 0;
+		}
+
+		ImGui::End();
+	}
+}
+
+// *************************************************************************
+// *		ImGui_Collision_Debug:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+void CL64_ImGui::ImGui_Collision_Debug(void)
+{
+	ImGui::SetNextWindowPos(ImVec2(530, 50), ImGuiCond_FirstUseEver);
+
+	if (!ImGui::Begin("Collisions_Debug", &Show_Collision_Debug, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_AlwaysAutoResize))
+	{
+		ImGui::End();
+	}
+	else
+	{
+
+		ImGui::Spacing();
+
+		ImGui::Text("Manifolds %i", App->CL_Player->Col_numManifolds);
+		ImGui::Text("PlayerIndex %i", App->CL_Player->Col_Player_Index);
+		ImGui::Text("Object_ID %i", App->CL_Player->Col_Object_Index);
+		ImGui::Text("Usage %i", App->CL_Player->Col_Usage_Index);
+
+		ImGui::Text(" ");
+
+		ImGui::Text("Round %i", App->CL_Player->Round);
+		ImGui::Text("Distance %i", App->CL_Player->Distance);
+		ImGui::Text("Life_Time %i", App->CL_Player->Life_Time);
+
+		if (ImGui::Button("Close"))
+		{
+			Show_Collision_Debug = 0;
 		}
 
 		ImGui::End();

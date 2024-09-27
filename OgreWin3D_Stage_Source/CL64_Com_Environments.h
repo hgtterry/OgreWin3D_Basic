@@ -30,5 +30,6 @@ public:
 	~CL64_Com_Environments();
 
 	void V_Set_Environ_Defaults(int Index);
+	bool Create_Environ_Entity(int Index);
 };
 
