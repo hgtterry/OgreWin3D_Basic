@@ -206,6 +206,7 @@
     <ClInclude Include="CL64_Properties.h" />
     <ClInclude Include="CL64_Props_Textures.h" />
     <ClInclude Include="CL64_Resources.h" />
+    <ClInclude Include="CL64_SB_Collision.h" />
     <ClInclude Include="CL64_Scene.h" />
     <ClInclude Include="CL64_Textures.h" />
     <ClInclude Include="CL64_TopDlg.h" />
@@ -259,6 +260,7 @@
     <ClCompile Include="CL64_Properties.cpp" />
     <ClCompile Include="CL64_Props_Textures.cpp" />
     <ClCompile Include="CL64_Resources.cpp" />
+    <ClCompile Include="CL64_SB_Collision.cpp" />
     <ClCompile Include="CL64_Scene.cpp" />
     <ClCompile Include="CL64_Textures.cpp" />
     <ClCompile Include="CL64_TopDlg.cpp" />

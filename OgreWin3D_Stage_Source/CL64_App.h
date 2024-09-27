@@ -68,6 +68,7 @@ THE SOFTWARE.
 #include "CL64_Com_MoveEntity.h"
 #include "CL64_Com_Particles.h"
 #include "CL64_Com_Sounds.h"
+#include "CL64_SB_Collision.h"
 
 class CL64_App
 {
@@ -119,7 +120,8 @@ public:
 	CL64_Com_MoveEntity*	CL_Com_MoveEntity;
 	CL64_Com_Particles*		CL_Com_Particles;
 	CL64_Com_Sounds*		CL_Com_Sounds;
-		
+	CL64_Collision*			CL_Collision;
+
 	void InitApp(void);
 	void Init_Dialogs(void);
 	void Open_Tool(char* Tool);

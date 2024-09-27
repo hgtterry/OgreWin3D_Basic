@@ -168,6 +168,9 @@
     <ClInclude Include="CL64_Com_Particles.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="CL64_SB_Collision.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GD64.cpp">
@@ -312,6 +315,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CL64_Com_Particles.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CL64_SB_Collision.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

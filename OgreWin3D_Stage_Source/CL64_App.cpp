@@ -69,6 +69,8 @@ CL64_App::CL64_App(void)
 	CL_Com_MoveEntity =		nullptr;
 	CL_Com_Particles =		nullptr;
 	CL_Com_Sounds =			nullptr;
+	CL_Collision =			nullptr;
+
 	//-------------------------------------
 
 	hInst =				nullptr;
@@ -190,7 +192,8 @@ void CL64_App::InitApp(void)
 	CL_Com_MoveEntity =		new CL64_Com_MoveEntity();
 	CL_Com_Particles =		new CL64_Com_Particles();
 	CL_Com_Sounds =			new CL64_Com_Sounds();
-
+	CL_Collision =			new CL64_Collision();
+	
 	SetBrushes_Fonts();
 
 	LoadString(App->hInst, IDS_VERSION, App_Version, MAX_PATH);

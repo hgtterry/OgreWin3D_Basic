@@ -305,15 +305,14 @@ void CL64_Player::Check_Collisions(void)
 		btCollisionObject* obB = (btCollisionObject*)(contactManifold->getBody1());
 
 		Col_Player_Index = obA->getUserIndex();  // Should Be Player
-		Col_Object_Index = obB->getUserIndex2(); // Object Index
 
-		UsageIndex = obB->getUserIndex();
+		Col_Object_Index = obB->getUserIndex2(); // Object Index
+		Col_Usage_Index = obB->getUserIndex();
+	
+		App->CL_ImGui->Show_Collision_Debug = 1;
 		
-		if (Col_Player_Index == Enums::Usage_Player)
+		if (Col_Player_Index == Enums::Stage_Usage_Player)
 		{
-			Col_Object_Index = obB->getUserIndex2(); // Object Index
-			Col_Usage_Index = obB->getUserIndex();
-			
 			if (Col_Usage_Index == 123)// && App->SBC_Scene->V_Object[Last_Message_Index]->Triggered == 1)
 			{
 				/*if (App->CL_Scene->Object_Count > 0)
@@ -324,11 +323,9 @@ void CL64_Player::Check_Collisions(void)
 			}
 			else
 			{
-				//App->CL_ImGui->Show_Collision_Debug = 1;
-				
 				//Col_Usage_Index = obB->getUserIndex();
-				Col_Usage_Index = App->CL_Scene->V_Object[Col_Object_Index]->Usage;
-				
+				//Col_Usage_Index = App->CL_Scene->V_Object[Col_Object_Index]->Usage;
+				//return;
 				// -------------------- Message Collision
 				if (Col_Usage_Index == Enums::Stage_Usage_Message)
 				{
@@ -397,7 +394,7 @@ void CL64_Player::Check_Collisions(void)
 				if (Col_Usage_Index == Enums::Stage_Usage_Move)
 				{
 
-					/*int numContacts = contactManifold->getNumContacts();
+					int numContacts = contactManifold->getNumContacts();
 					for (int j = 0; j < numContacts; j++)
 					{
 						btManifoldPoint& pt = contactManifold->getContactPoint(j);
@@ -408,70 +405,68 @@ void CL64_Player::Check_Collisions(void)
 
 						if (Round < 0)
 						{
-							if (App->SBC_Scene->V_Object[Col_Object_Index]->Triggered == 0)
+							if (App->CL_Scene->V_Object[Col_Object_Index]->Triggered == 0)
 							{
-								App->SBC_Collision->Move_Entity_Collision(Col_Object_Index);
+								App->CL_Collision->Move_Entity_Collision(Col_Object_Index);
 							}
 						}
 						else if (Round == 0)
 						{
-							if (App->SBC_Scene->V_Object[Col_Object_Index]->Triggered == 1)
+							if (App->CL_Scene->V_Object[Col_Object_Index]->Triggered == 1)
 							{
 
 							}
 						}
 
-					}*/
+					}
 				}
 
 				// -------------------- Collectable Collision
-				if (UsageIndex == Enums::Stage_Usage_Colectable)
+				if (Col_Usage_Index == Enums::Stage_Usage_Colectable)
 				{
-					/*int numContacts = contactManifold->getNumContacts();
+					int numContacts = contactManifold->getNumContacts();
 					for (int j = 0; j < numContacts; j++)
 					{
 						if (App->CL_Scene->V_Object[Col_Object_Index]->Triggered == 0)
 						{
-							App->SBC_Collision->Do_Collectable(Col_Object_Index);
+							App->CL_Collision->Do_Collectable(Col_Object_Index);
 						}
-					}*/
-
+					}
 				}
 
 				// -------------------- Teleport Collision
-				if (UsageIndex == Enums::Stage_Usage_Teleport)
+				if (Col_Usage_Index == Enums::Stage_Usage_Teleport)
 				{
-					//Debug
-					//int numContacts = contactManifold->getNumContacts();
-					//for (int j = 0; j < numContacts; j++)
-					//{
-					//	//App->CL_Collision->Do_Teleport(Col_Object_Index);
-					//	btManifoldPoint& pt = contactManifold->getContactPoint(j);
+					int numContacts = contactManifold->getNumContacts();
+					for (int j = 0; j < numContacts; j++)
+					{
+						App->CL_Collision->Do_Teleport(Col_Object_Index);
+				
+						btManifoldPoint& pt = contactManifold->getContactPoint(j);
 
-					//	Life_Time = pt.getLifeTime();
-					//	Distance = pt.getDistance();
-					//	Round = (int)Distance;
+						Life_Time = pt.getLifeTime();
+						Distance = pt.getDistance();
+						Round = (int)Distance;
 
-					//	if (Round < 0)
-					//	{
-					//		if (App->CL_Scene->V_Object[Col_Object_Index]->Triggered == 0)
-					//		{
+						if (Round < 0)
+						{
+							if (App->CL_Scene->V_Object[Col_Object_Index]->Triggered == 0)
+							{
+								App->CL_Collision->Do_Teleport(Col_Object_Index);
+							}
+						}
+						else if (Round == 0)
+						{
+							if (App->CL_Scene->V_Object[Col_Object_Index]->Triggered == 1)
+							{
 
-					//			//App->SBC_Collision->Do_Teleport(Col_Object_Index);
-					//		}
-					//	}
-					//	else if (Round == 0)
-					//	{
-					//		if (App->CL_Scene->V_Object[Col_Object_Index]->Triggered == 1)
-					//		{
-
-					//		}
-					//	}
-					//}
+							}
+						}
+					}
 				}
 
 				// -------------------- EnvironEntity Collision
-				if (UsageIndex == Enums::Stage_Usage_EnvironEntity)
+				if (Col_Usage_Index == Enums::Stage_Usage_EnvironEntity)
 				{
 					/*int numContacts = contactManifold->getNumContacts();
 					for (int j = 0; j < numContacts; j++)
@@ -499,10 +494,7 @@ void CL64_Player::Check_Collisions(void)
 					}*/
 				}
 
-				// ----------------
 			}
 		}
-
 	}
-
 }

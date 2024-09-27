@@ -23,33 +23,33 @@ THE SOFTWARE.
 */
 
 #pragma once
-class CL64_Properties
+class CL64_Collision
 {
 public:
 
-	CL64_Properties(void);
-	~CL64_Properties(void);
+	CL64_Collision(void);
+	~CL64_Collision(void);
 
-	void Start_Properties(void);
+	bool Do_Teleport(int Index);
+	bool Do_Collectable(int Index);
 
-	bool Update_ListView_Area();
-	bool Update_ListView_Player();
-	bool Update_ListView_Objects();
-	bool Update_ListView_Collectables();
-	bool Update_ListView_Sounds();
-	bool Update_ListView_Move_Entities();
+	bool Move_Entity_Collision(int Index);
+	void Set_Move_Entity(int Index);
+	void MoveObject_Listener(Ogre::Real Time);
 
-	int Current_Selected_Object;
+	float FinalPosition;
+	int ObjectIndex;
+	bool DoMove;
 
-	bool Properties_Dlg_Active;
+	int Old_Sound_Index;
 
-	HWND Properties_Dlg_hWnd;
+	float x;
+	float y;
+	float z;
 
-private:
-	static LRESULT CALLBACK Proc_Properties(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	float px;
+	float py;
+	float pz;
 
-	void Create_Properties_hLV(void);
-
-	HWND Properties_hLV;
 };
 

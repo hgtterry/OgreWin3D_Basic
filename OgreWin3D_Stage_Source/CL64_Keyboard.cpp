@@ -62,6 +62,7 @@ void CL64_Keyboard::Keyboard_Mode_First(float deltaTime)
 			if (App->CL_Scene->flag_Player_Added == 1)
 			{
 				App->CL_Player->mMoveDirection = (btVector3(0, 0, 1));
+				App->CL_Player->Check_Collisions();
 				App->CL_Scene->B_Player[0]->IsMOving_Back = 1;
 			}
 

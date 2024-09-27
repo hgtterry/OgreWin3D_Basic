@@ -467,3 +467,178 @@ bool CL64_Properties::Update_ListView_Collectables()
 
 	return 1;
 }
+
+// *************************************************************************
+// *			Update_ListView_Sounds:- Terry and Hazel Flanigan 2024     *
+// *************************************************************************
+bool CL64_Properties::Update_ListView_Sounds()
+{
+	int index = Current_Selected_Object;
+
+	char Num[10];
+	char chr_ID[50];
+	char IndexNum[10];
+	_itoa(App->CL_Scene->V_Object[index]->This_Object_UniqueID, Num, 10);
+	_itoa(index, IndexNum, 10);
+	strcpy(chr_ID, "Unique ID ");
+	strcat(chr_ID, Num);
+	strcat(chr_ID, "  Object Index ");
+	strcat(chr_ID, IndexNum);
+
+	char chr_Usage_Num[50];
+	_itoa(App->CL_Scene->V_Object[index]->Usage, chr_Usage_Num, 10);
+
+	SetWindowText(Properties_Dlg_hWnd, chr_ID);
+	//SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)App->SBC_Scene->V_Object[index]->Mesh_Name);
+
+
+	char chr_Volume[100];
+	float sum2 = 1;// App->SBC_Scene->V_Object[index]->SndVolume;
+	int Percent = int(sum2 * 100);
+	_itoa(Percent, chr_Volume, 10);
+
+	const int NUM_ITEMS = 5;
+	const int NUM_COLS = 2;
+	std::string grid[NUM_COLS][NUM_ITEMS]; // string table
+	LV_ITEM pitem;
+	memset(&pitem, 0, sizeof(LV_ITEM));
+	pitem.mask = LVIF_TEXT;
+
+	grid[0][0] = "Name", grid[1][0] = App->CL_Scene->V_Object[index]->Mesh_Name;
+	grid[0][1] = " ", grid[1][1] = " ";
+	grid[0][2] = "Sound", grid[1][2] = App->CL_Scene->V_Object[index]->Sound_File;
+	grid[0][3] = "Volume", grid[1][3] = chr_Volume;
+	grid[0][4] = "Usage", grid[1][4] = chr_Usage_Num;
+
+	ListView_DeleteAllItems(Properties_hLV);
+
+	for (DWORD row = 0; row < NUM_ITEMS; row++)
+	{
+		pitem.iItem = row;
+		pitem.pszText = const_cast<char*>(grid[0][row].c_str());
+		ListView_InsertItem(Properties_hLV, &pitem);
+
+		//ListView_SetItemText
+
+		for (DWORD col = 1; col < NUM_COLS; col++)
+		{
+			ListView_SetItemText(Properties_hLV, row, col,
+				const_cast<char*>(grid[col][row].c_str()));
+		}
+	}
+
+	return 1;
+}
+
+// *************************************************************************
+// *	Update_ListView_Move_Entities:- Terry and Hazel Flanigan 2024 	    *
+// *************************************************************************
+bool CL64_Properties::Update_ListView_Move_Entities()
+{
+
+	int index = App->CL_Properties->Current_Selected_Object;
+
+	char Num[10];
+	char chr_ID[50];
+	char IndexNum[10];
+	_itoa(App->CL_Scene->V_Object[index]->This_Object_UniqueID, Num, 10);
+	_itoa(index, IndexNum, 10);
+	strcpy(chr_ID, "Unique ID ");
+	strcat(chr_ID, Num);
+	strcat(chr_ID, "  Object Index ");
+	strcat(chr_ID, IndexNum);
+
+	SetWindowText(Properties_Dlg_hWnd, chr_ID);
+	//SetDlgItemText(App->SBC_Properties->Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)App->SBC_Scene->V_Object[index]->Mesh_Name);
+
+	char chr_Distance[100];
+	sprintf(chr_Distance, "%.3f ", App->CL_Scene->V_Object[index]->S_MoveType[0]->Move_Distance);
+
+	char chr_Speed[100];
+	sprintf(chr_Speed, "%.3f ", App->CL_Scene->V_Object[index]->S_MoveType[0]->Speed);
+
+	char chr_Axis[100];
+	if (App->CL_Scene->V_Object[index]->S_MoveType[0]->WhatDirection == Enums::Axis_x)
+	{
+		strcpy(chr_Axis, "X");
+	}
+	if (App->CL_Scene->V_Object[index]->S_MoveType[0]->WhatDirection == Enums::Axis_y)
+	{
+		strcpy(chr_Axis, "Y");
+	}
+	if (App->CL_Scene->V_Object[index]->S_MoveType[0]->WhatDirection == Enums::Axis_z)
+	{
+		strcpy(chr_Axis, "Z");
+	}
+
+	// new sound
+	char chr_Play[100];
+	if (App->CL_Scene->V_Object[index]->Play_Sound == 1)
+	{
+		strcpy(chr_Play, "True");
+	}
+	else
+	{
+		strcpy(chr_Play, "False");
+	}
+
+	char chr_Object_Name[100];
+	strcpy(chr_Object_Name, App->CL_Scene->V_Object[App->CL_Scene->V_Object[index]->S_MoveType[0]->Object_To_Move_Index]->Mesh_Name);
+
+	char chr_Trigger_Value[100];
+	_itoa(App->CL_Scene->V_Object[index]->S_MoveType[0]->Trigger_Value, chr_Trigger_Value, 10);
+
+	char chr_Volume[100];
+	float sum2 = 1;// App->CL_Scene->V_Object[index]->SndVolume;
+	int Percent = int(sum2 * 100);
+	_itoa(Percent, chr_Volume, 10);
+
+	char chr_Counter_Disabled[20];
+	if (App->CL_Scene->V_Object[index]->S_MoveType[0]->Counter_Disabled == 1)
+	{
+		strcpy(chr_Counter_Disabled, "Disabled");
+	}
+	else
+	{
+		strcpy(chr_Counter_Disabled, "Enabled");
+	}
+
+	const int NUM_ITEMS = 12;
+	const int NUM_COLS = 2;
+	std::string grid[NUM_COLS][NUM_ITEMS]; // string table
+	LV_ITEM pitem;
+	memset(&pitem, 0, sizeof(LV_ITEM));
+	pitem.mask = LVIF_TEXT;
+
+	grid[0][0] = "Name", grid[1][0] = App->CL_Scene->V_Object[index]->Mesh_Name;
+	grid[0][1] = " ", grid[1][1] = " ";
+	grid[0][2] = "Move_Object", grid[1][2] = chr_Object_Name;
+	grid[0][3] = "Axis", grid[1][3] = chr_Axis;
+	grid[0][4] = "Distance", grid[1][4] = chr_Distance;
+	grid[0][5] = "Speed", grid[1][5] = chr_Speed;
+	grid[0][6] = " ", grid[1][6] = " ";
+	grid[0][7] = "Sound", grid[1][7] = App->CL_Scene->V_Object[index]->Sound_File;
+	grid[0][8] = "Volume", grid[1][8] = chr_Volume;
+	grid[0][9] = "Play", grid[1][9] = chr_Play;
+	grid[0][10] = " ", grid[1][10] = " ";
+	grid[0][11] = "Counter", grid[1][11] = chr_Counter_Disabled;
+
+	ListView_DeleteAllItems(Properties_hLV);
+
+	for (DWORD row = 0; row < NUM_ITEMS; row++)
+	{
+		pitem.iItem = row;
+		pitem.pszText = const_cast<char*>(grid[0][row].c_str());
+		ListView_InsertItem(Properties_hLV, &pitem);
+
+		//ListView_SetItemText
+
+		for (DWORD col = 1; col < NUM_COLS; col++)
+		{
+			ListView_SetItemText(Properties_hLV, row, col,
+				const_cast<char*>(grid[col][row].c_str()));
+		}
+	}
+
+	return 1;
+}
