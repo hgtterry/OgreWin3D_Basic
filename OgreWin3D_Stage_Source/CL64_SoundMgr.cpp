@@ -28,6 +28,9 @@ THE SOFTWARE.
 
 CL64_SoundMgr::CL64_SoundMgr(void)
 {
+	SoundEngine = irrklang::createIrrKlangDevice();
+	SndFile = nullptr;
+	SndVolume = 0.5;
 }
 
 CL64_SoundMgr::~CL64_SoundMgr(void)

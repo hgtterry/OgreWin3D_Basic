@@ -155,8 +155,8 @@
       </OptimizeReferences>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <OutputFile>$(OutDir)OgreWin3D_Stage.exe</OutputFile>
-      <AdditionalDependencies>comctl32.lib;OgreMain.lib;OgreOverlay.lib;OgreRTShaderSystem.lib;OgreBites.lib;opengl32.lib;glu32.lib;assimp-vc143-mt.lib;BulletDynamics.lib;BulletCollision.lib;LinearMath.lib;DevIL.lib;ILU.lib;ILUT.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\Common_64\Ogre3D\libs;..\Common_64\Assimp\Lib;..\Common_64\Bullet\lib;..\Common_64\Devil\lib\x64\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>comctl32.lib;OgreMain.lib;OgreOverlay.lib;OgreRTShaderSystem.lib;OgreBites.lib;opengl32.lib;glu32.lib;assimp-vc143-mt.lib;BulletDynamics.lib;BulletCollision.lib;LinearMath.lib;DevIL.lib;ILU.lib;ILUT.lib;irrKlang.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\Common_64\Ogre3D\libs;..\Common_64\Assimp\Lib;..\Common_64\Bullet\lib;..\Common_64\Devil\lib\x64\Release;..\Common_64\irrKlang\Libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>LIBCMT.lib;libcpmt.lib</IgnoreSpecificDefaultLibraries>
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
       <LinkTimeCodeGenerationObjectFile />

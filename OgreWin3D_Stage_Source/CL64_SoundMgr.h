@@ -29,5 +29,9 @@ public:
 
 	CL64_SoundMgr(void);
 	~CL64_SoundMgr(void);
+
+	irrklang::ISoundEngine* SoundEngine;
+	irrklang::ISound* SndFile;
+	Ogre::Real SndVolume;
 };
 
