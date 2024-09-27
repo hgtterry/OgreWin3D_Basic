@@ -39,10 +39,10 @@ typedef struct Teleport_type
 	btVector3 Physics_Position;
 	btQuaternion Physics_Rotation;
 	int Location_ID;
-	/*irrklang::ISound* SndFile;
+	irrklang::ISound* SndFile;
 	Ogre::Real SndVolume;
 	char Sound_File[MAX_PATH];
-	bool Play;*/
+	bool Play;
 	int Trigger_Value;
 	int Counter_ID;
 	char Counter_Name[MAX_PATH];
@@ -70,8 +70,8 @@ typedef struct Message_type
 typedef struct Collectable_type
 {
 	int Counter_ID;
-	//irrklang::ISound* SndFile;
-	//Ogre::Real SndVolume;
+	irrklang::ISound* SndFile;
+	Ogre::Real SndVolume;
 	char Sound_File[MAX_PATH];
 	char Counter_Name[MAX_PATH];
 	bool Counter_Disabled;
@@ -89,11 +89,11 @@ typedef struct Environ_type
 	bool Environ_Enabled;
 
 	//--------------- Sound
-	/*irrklang::ISound* SndFile;
+	irrklang::ISound* SndFile;
 	Ogre::Real SndVolume;
 	char Sound_File[MAX_PATH];
 	bool Play;
-	bool Loop;*/
+	bool Loop;
 
 	//--------------- Light
 	Ogre::Vector3 AmbientColour;
@@ -204,7 +204,9 @@ public:
 	bool Play_Sound;
 	char Sound_File[MAX_PATH];
 	char Sound_Path[MAX_PATH];
-	
+	irrklang::ISound* SndFile;
+	Ogre::Real SndVolume;
+
 	Move_Type* S_MoveType[1];
 	Teleport_type* S_Teleport[1];
 	Collectable_type* S_Collectable[1];

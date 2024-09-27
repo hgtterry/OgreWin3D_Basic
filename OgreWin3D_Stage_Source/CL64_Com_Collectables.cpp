@@ -135,7 +135,7 @@ void CL64_Com_Collectables::Set_Collectables_Defaults(int Index)
 
 	strcpy(V_Object->S_Collectable[0]->Sound_File, "footstep.ogg");
 	V_Object->S_Collectable[0]->Play = 1;
-	//V_Object->S_Collectable[0]->SndVolume = 0.5;
+	V_Object->S_Collectable[0]->SndVolume = 0.5;
 
 	V_Object->S_Collectable[0]->Maths = 1; // Add
 	V_Object->S_Collectable[0]->Value = 1;

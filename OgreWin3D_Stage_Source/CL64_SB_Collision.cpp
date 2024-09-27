@@ -145,14 +145,14 @@ bool CL64_Collision::Do_Collectable(int Index)
 
 	if (App->CL_Scene->V_Object[Index]->S_Collectable[0]->Play == 1)
 	{
-		/*char Sound[1024];
-		strcpy(Sound, App->SBC_SoundMgr->Default_Folder);
+		char Sound[1024];
+		strcpy(Sound, App->CL_SoundMgr->Default_Folder);
 		strcat(Sound, "\\Media\\Sounds\\");
 		strcat(Sound, App->CL_Scene->V_Object[Index]->S_Collectable[0]->Sound_File);
 
-		App->CL_Scene->V_Object[Index]->S_Collectable[0]->SndFile = App->SBC_SoundMgr->SoundEngine->play2D(Sound, false, true, true);
+		App->CL_Scene->V_Object[Index]->S_Collectable[0]->SndFile = App->CL_SoundMgr->SoundEngine->play2D(Sound, false, true, true);
 		App->CL_Scene->V_Object[Index]->S_Collectable[0]->SndFile->setVolume(App->CL_Scene->V_Object[Index]->S_Collectable[0]->SndVolume);
-		App->CL_Scene->V_Object[Index]->S_Collectable[0]->SndFile->setIsPaused(false);*/
+		App->CL_Scene->V_Object[Index]->S_Collectable[0]->SndFile->setIsPaused(false);
 	}
 
 	if (App->CL_Scene->V_Object[Index]->S_Collectable[0]->Counter_Disabled == 0)
@@ -433,4 +433,24 @@ void CL64_Collision::MoveObject_Listener(Ogre::Real Time)
 	}
 
 	return;
+}
+
+// **************************************************************************
+// *				Play_Sound:- Terry and Hazel Flanigan 2024				*
+// **************************************************************************
+bool CL64_Collision::Play_Sound(int Index)
+{
+	char buff[MAX_PATH];
+	strcpy(buff, App->CL_SoundMgr->Default_Folder);
+	strcat(buff, "\\Media\\Sounds\\");
+
+	strcat(buff, App->CL_Scene->V_Object[Index]->Sound_File);
+
+	App->CL_SoundMgr->SndFile = App->CL_SoundMgr->SoundEngine->play2D(buff, false, true, true);
+	App->CL_SoundMgr->SndFile->setVolume(App->CL_Scene->V_Object[Index]->SndVolume);
+	App->CL_SoundMgr->SndFile->setIsPaused(false);
+
+	App->CL_Scene->V_Object[Index]->Triggered = 1;
+
+	return 1;
 }

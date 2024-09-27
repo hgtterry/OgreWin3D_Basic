@@ -30,6 +30,10 @@ public:
 	CL64_SoundMgr(void);
 	~CL64_SoundMgr(void);
 
+	bool Play_StartUp_Sound();
+
+	char Default_Folder[MAX_PATH];
+
 	irrklang::ISoundEngine* SoundEngine;
 	irrklang::ISound* SndFile;
 	Ogre::Real SndVolume;

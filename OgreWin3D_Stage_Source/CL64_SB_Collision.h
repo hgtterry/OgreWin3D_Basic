@@ -37,6 +37,8 @@ public:
 	void Set_Move_Entity(int Index);
 	void MoveObject_Listener(Ogre::Real Time);
 
+	bool Play_Sound(int Index);
+
 	float FinalPosition;
 	int ObjectIndex;
 	bool DoMove;

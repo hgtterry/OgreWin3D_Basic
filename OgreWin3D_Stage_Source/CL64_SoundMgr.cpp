@@ -31,8 +31,27 @@ CL64_SoundMgr::CL64_SoundMgr(void)
 	SoundEngine = irrklang::createIrrKlangDevice();
 	SndFile = nullptr;
 	SndVolume = 0.5;
+
+	strcpy(Default_Folder, App->GD_Directory_FullPath);
 }
 
 CL64_SoundMgr::~CL64_SoundMgr(void)
 {
+}
+
+// *************************************************************************
+// *		Play_StartUp_Sound:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+bool CL64_SoundMgr::Play_StartUp_Sound()
+{
+	char Sound[MAX_PATH];
+	strcpy(Sound, Default_Folder);
+	strcat(Sound, "\\Media\\Sounds\\");
+	strcat(Sound, "welcome.ogg");
+
+	SndFile = SoundEngine->play2D(Sound, false, true, true);
+	SndFile->setVolume(0.5);
+	SndFile->setIsPaused(false);
+
+	return 1;
 }

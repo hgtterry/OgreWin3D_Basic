@@ -362,7 +362,7 @@ void CL64_Player::Check_Collisions(void)
 				// -------------------- Sound Collision
 				if (Col_Usage_Index == Enums::Stage_Usage_Sound)
 				{
-					/*int numContacts = contactManifold->getNumContacts();
+					int numContacts = contactManifold->getNumContacts();
 					for (int j = 0; j < numContacts; j++)
 					{
 
@@ -374,20 +374,20 @@ void CL64_Player::Check_Collisions(void)
 
 						if (Round < 0)
 						{
-							if (App->SBC_Scene->V_Object[Col_Object_Index]->Triggered == 0)
+							if (App->CL_Scene->V_Object[Col_Object_Index]->Triggered == 0)
 							{
-								App->SBC_Collision->Play_Sound(Col_Object_Index);
-								Last_ColisionIndex = Col_Object_Index;
+								App->CL_Collision->Play_Sound(Col_Object_Index);
+								//Last_ColisionIndex = Col_Object_Index;
 							}
 						}
 						else if (Life_Time < 10)
 						{
-							if (App->SBC_Scene->V_Object[Col_Object_Index]->Triggered == 1)
+							if (App->CL_Scene->V_Object[Col_Object_Index]->Triggered == 1)
 							{
-								App->SBC_Scene->V_Object[Col_Object_Index]->Triggered = 0;
+								App->CL_Scene->V_Object[Col_Object_Index]->Triggered = 0;
 							}
 						}
-					}*/
+					}
 				}
 
 				// -------------------- Move Collision

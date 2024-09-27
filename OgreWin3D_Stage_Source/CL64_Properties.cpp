@@ -531,7 +531,7 @@ bool CL64_Properties::Update_ListView_Sounds()
 }
 
 // *************************************************************************
-// *	Update_ListView_Move_Entities:- Terry and Hazel Flanigan 2024 	    *
+// *	Update_ListView_Move_Entities:- Terry and Hazel Flanigan 2024 	   *
 // *************************************************************************
 bool CL64_Properties::Update_ListView_Move_Entities()
 {

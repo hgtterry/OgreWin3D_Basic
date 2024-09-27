@@ -614,7 +614,7 @@ bool CL64_Project::Read_Collectable(int Index, char* Section)
 
 	App->CL_Ini_File->GetString(Section, "Col_Sound_Volume", chr_Tag1, MAX_PATH);
 	(void)sscanf(chr_Tag1, "%f", &V4.x);
-	//V_Object->S_Collectable[0]->SndVolume = V4.x;
+	V_Object->S_Collectable[0]->SndVolume = V4.x;
 
 	V_Object->S_Collectable[0]->Play = App->CL_Ini_File->GetInt(Section, "Col_Play", 0, 10);
 
@@ -653,13 +653,13 @@ bool CL64_Project::Read_Teleport(int Index, char* Section)
 	V_Object->S_Teleport[0]->Location_ID = App->CL_Ini_File->GetInt(Section, "Tele_ID", 0, 10);
 
 	// Sound
-	//App->CL_Ini_File->GetString(Section, "Tele_Sound", V_Object->S_Teleport[0]->Sound_File, MAX_PATH);
+	App->CL_Ini_File->GetString(Section, "Tele_Sound", V_Object->S_Teleport[0]->Sound_File, MAX_PATH);
 
 	App->CL_Ini_File->GetString(Section, "Tele_Volume", chr_Tag1, MAX_PATH);
 	(void)sscanf(chr_Tag1, "%f", &V4.x);
-	//V_Object->S_Teleport[0]->SndVolume = V4.x;
+	V_Object->S_Teleport[0]->SndVolume = V4.x;
 
-	//V_Object->S_Teleport[0]->Play = App->CL_Ini_File->GetInt(Section, "Tele_Play", 0);
+	V_Object->S_Teleport[0]->Play = App->CL_Ini_File->GetInt(Section, "Tele_Play", 0, 10);
 
 	// Mesh_Pos
 	App->CL_Ini_File->GetString(Section, "Tele_Mesh_Position", chr_Tag1, MAX_PATH);
@@ -700,17 +700,17 @@ bool CL64_Project::Read_Teleport(int Index, char* Section)
 
 	//--------------- Sound
 	App->CL_Ini_File->GetString(Section, "Sound_File", chr_Tag1, MAX_PATH);
-	//strcpy(V_Object->S_Environ[0]->Sound_File, chr_Tag1);
+	strcpy(V_Object->S_Environ[0]->Sound_File, chr_Tag1);
 
 	App->CL_Ini_File->GetString(Section, "Snd_Volume", chr_Tag1, MAX_PATH);
 	(void)sscanf(chr_Tag1, "%f", &V4.x);
-	//V_Object->S_Environ[0]->SndVolume = V4.x;
+	V_Object->S_Environ[0]->SndVolume = V4.x;
 
 	Int_Tag = App->CL_Ini_File->GetInt(Section, "Sound_Play", 0, 10);
-	//V_Object->S_Environ[0]->Play = Int_Tag;
+	V_Object->S_Environ[0]->Play = Int_Tag;
 
 	Int_Tag = App->CL_Ini_File->GetInt(Section, "Sound_Loop", 0, 10);
-	//V_Object->S_Environ[0]->Loop = Int_Tag;
+	V_Object->S_Environ[0]->Loop = Int_Tag;
 
 	//--------------- Light
 	App->CL_Ini_File->GetString(Section, "Ambient_Colour", chr_Tag1, MAX_PATH);
