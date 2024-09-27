@@ -66,7 +66,7 @@ void CL64_Com_Particles::Create_Particle_Entity(int Index)
 	strcat(Name, buf);
 
 
-	Object->S_Particle[0]->Particle = App->CL_Ogre->mSceneMgr->createParticleSystem(Name, Object->S_Particle[0]->ParticleScript);
+	/*Object->S_Particle[0]->Particle = App->CL_Ogre->mSceneMgr->createParticleSystem(Name, Object->S_Particle[0]->ParticleScript);
 	if (Object->S_Particle[0]->Particle == NULL)
 	{
 		App->Say("Poop");
@@ -89,7 +89,7 @@ void CL64_Com_Particles::Create_Particle_Entity(int Index)
 	Object->Object_Node->setOrientation(Object->Mesh_Quat);
 	Object->Object_Node->setPosition(Object->Mesh_Pos);
 
-	Object->S_Particle[0]->Particle->setSpeedFactor(Object->S_Particle[0]->SpeedFactor);
+	Object->S_Particle[0]->Particle->setSpeedFactor(Object->S_Particle[0]->SpeedFactor);*/
 
 	/*Ogre::Vector3 Size = App->CL_Object->GetMesh_BB_Size(Object->Object_Node);
 	App->SBC_Markers->MarkerBB_Update(Size.x / 2, Size.y / 2, Size.z / 2);
