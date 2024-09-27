@@ -69,6 +69,7 @@ THE SOFTWARE.
 #include "CL64_Com_Particles.h"
 #include "CL64_Com_Sounds.h"
 #include "CL64_SB_Collision.h"
+#include "CL64_SoundMgr.h"
 
 class CL64_App
 {
@@ -121,6 +122,8 @@ public:
 	CL64_Com_Particles*		CL_Com_Particles;
 	CL64_Com_Sounds*		CL_Com_Sounds;
 	CL64_Collision*			CL_Collision;
+	CL64_SoundMgr*			CL_SoundMgr;
+
 
 	void InitApp(void);
 	void Init_Dialogs(void);
