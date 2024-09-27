@@ -63,6 +63,9 @@ CL64_App::CL64_App(void)
 	CL_Physics =			nullptr;
 
 	CL_Com_Collectables =	nullptr;
+	CL_Com_Teleporters =	nullptr;
+	CL_Com_Environments =	nullptr;
+
 	//-------------------------------------
 
 	hInst =				nullptr;
@@ -178,7 +181,9 @@ void CL64_App::InitApp(void)
 	CL_Object =				new CL64_Object();
 	CL_Physics =			new CL64_Physics();
 	CL_Com_Collectables =	new CL64_Com_Collectables();
-	
+	CL_Com_Teleporters =	new CL64_Com_Teleporters();
+	CL_Com_Environments =	new CL64_Com_Environments();
+
 	SetBrushes_Fonts();
 
 	LoadString(App->hInst, IDS_VERSION, App_Version, MAX_PATH);

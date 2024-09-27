@@ -62,6 +62,8 @@ THE SOFTWARE.
 #include "CL64_Physics.h"
 
 #include "CL64_Com_Collectables.h"
+#include "CL64_Com_Teleporters.h"
+#include "CL64_Com_Environments.h"
 
 class CL64_App
 {
@@ -107,6 +109,8 @@ public:
 	CL64_Object*			CL_Object;
 	CL64_Physics*			CL_Physics;
 	CL64_Com_Collectables*	CL_Com_Collectables;
+	CL64_Com_Teleporters*	CL_Com_Teleporters;
+	CL64_Com_Environments*	CL_Com_Environments;
 
 	void InitApp(void);
 	void Init_Dialogs(void);
