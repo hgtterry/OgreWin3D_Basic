@@ -28,5 +28,8 @@ class CL64_Com_Teleporters
 public:
 	CL64_Com_Teleporters();
 	~CL64_Com_Teleporters();
+
+	void Set_Teleports_Defaults(int Index);
+
 };
 

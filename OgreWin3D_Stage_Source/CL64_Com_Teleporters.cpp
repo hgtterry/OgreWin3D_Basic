@@ -33,3 +33,33 @@ CL64_Com_Teleporters::CL64_Com_Teleporters()
 CL64_Com_Teleporters::~CL64_Com_Teleporters()
 {
 }
+
+// *************************************************************************
+// *	  Set_Teleports_Defaults:- Terry and Hazel Flanigan 2024	 	   *
+// *************************************************************************
+void CL64_Com_Teleporters::Set_Teleports_Defaults(int Index)
+{
+	Ogre::Vector4 V4 = Ogre::Vector4::ZERO;
+
+	Base_Object* V_Object = App->CL_Scene->V_Object[Index];
+
+	V_Object->S_Teleport[0]->Location_ID = 0;
+
+	strcpy(V_Object->S_Teleport[0]->Name, "Start_Location");
+
+	/*strcpy(V_Object->S_Teleport[0]->Sound_File, "magicspell.ogg");
+	V_Object->S_Teleport[0]->SndVolume = 0.5;
+	V_Object->S_Teleport[0]->Play = 1;*/
+
+	V4.x = App->CL_Scene->B_Player[0]->StartPos.x;
+	V4.y = App->CL_Scene->B_Player[0]->StartPos.y;
+	V4.z = App->CL_Scene->B_Player[0]->StartPos.z;
+
+	V_Object->S_Teleport[0]->Physics_Position = btVector3(V4.x, V4.y, V4.z);
+	V_Object->S_Teleport[0]->Physics_Rotation = App->CL_Scene->B_Player[0]->Physics_Rotation;
+
+	V_Object->S_Teleport[0]->Trigger_Value = 0;
+	V_Object->S_Teleport[0]->Counter_ID = 0;
+	strcpy(V_Object->S_Teleport[0]->Counter_Name, "None");
+	V_Object->S_Teleport[0]->Counter_Disabled = 1;
+}

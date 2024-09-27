@@ -418,10 +418,10 @@ bool CL64_Project::Read_Teleport(int Index, char* Section)
 	Base_Object* V_Object = App->CL_Scene->V_Object[Index];
 
 	V_Object->S_Teleport[0] = new Teleport_type;
-	//App->CL_Com_Teleporters->Set_Teleports_Defaults(Index);
+	App->CL_Com_Teleporters->Set_Teleports_Defaults(Index);
 
 	V_Object->S_Environ[0] = new Environ_type;
-	//App->SBC_Com_Environments->V_Set_Environ_Defaults(Index);
+	App->CL_Com_Environments->V_Set_Environ_Defaults(Index);
 
 
 	App->CL_Ini_File->GetString(Section, "Tele_Goto", chr_Tag1, MAX_PATH);
@@ -433,19 +433,19 @@ bool CL64_Project::Read_Teleport(int Index, char* Section)
 	//App->CL_Ini_File->GetString(Section, "Tele_Sound", V_Object->S_Teleport[0]->Sound_File, MAX_PATH);
 
 	App->CL_Ini_File->GetString(Section, "Tele_Volume", chr_Tag1, MAX_PATH);
-	sscanf(chr_Tag1, "%f", &V4.x);
+	(void)sscanf(chr_Tag1, "%f", &V4.x);
 	//V_Object->S_Teleport[0]->SndVolume = V4.x;
 
 	//V_Object->S_Teleport[0]->Play = App->CL_Ini_File->GetInt(Section, "Tele_Play", 0);
 
 	// Mesh_Pos
 	App->CL_Ini_File->GetString(Section, "Tele_Mesh_Position", chr_Tag1, MAX_PATH);
-	sscanf(chr_Tag1, "%f,%f,%f", &V4.x, &V4.y, &V4.z);
+	(void)sscanf(chr_Tag1, "%f,%f,%f", &V4.x, &V4.y, &V4.z);
 	V_Object->S_Teleport[0]->Player_Position = Ogre::Vector3(V4.x, V4.y, V4.z);
 
 	//Player_Pos
 	App->CL_Ini_File->GetString(Section, "Tele_Physics_Position", chr_Tag1, MAX_PATH);
-	sscanf(chr_Tag1, "%f,%f,%f", &V4.x, &V4.y, &V4.z);
+	(void)sscanf(chr_Tag1, "%f,%f,%f", &V4.x, &V4.y, &V4.z);
 
 	V_Object->S_Teleport[0]->Physics_Position.setX(V4.x);
 	V_Object->S_Teleport[0]->Physics_Position.setY(V4.y);
@@ -453,7 +453,7 @@ bool CL64_Project::Read_Teleport(int Index, char* Section)
 
 	//Player_Rotation
 	App->CL_Ini_File->GetString(Section, "Tele_Physics_Rotation", chr_Tag1, MAX_PATH);
-	sscanf(chr_Tag1, "%f,%f,%f,%f", &V4.w, &V4.x, &V4.y, &V4.z);
+	(void)sscanf(chr_Tag1, "%f,%f,%f,%f", &V4.w, &V4.x, &V4.y, &V4.z);
 
 	V_Object->S_Teleport[0]->Physics_Rotation.setW(V4.w);
 	V_Object->S_Teleport[0]->Physics_Rotation.setX(V4.x);
@@ -480,7 +480,7 @@ bool CL64_Project::Read_Teleport(int Index, char* Section)
 	//strcpy(V_Object->S_Environ[0]->Sound_File, chr_Tag1);
 
 	App->CL_Ini_File->GetString(Section, "Snd_Volume", chr_Tag1, MAX_PATH);
-	sscanf(chr_Tag1, "%f", &V4.x);
+	(void)sscanf(chr_Tag1, "%f", &V4.x);
 	//V_Object->S_Environ[0]->SndVolume = V4.x;
 
 	Int_Tag = App->CL_Ini_File->GetInt(Section, "Sound_Play", 0, 10);
@@ -491,11 +491,11 @@ bool CL64_Project::Read_Teleport(int Index, char* Section)
 
 	//--------------- Light
 	App->CL_Ini_File->GetString(Section, "Ambient_Colour", chr_Tag1, MAX_PATH);
-	sscanf(chr_Tag1, "%f,%f,%f", &V4.x, &V4.y, &V4.z);
+	(void)sscanf(chr_Tag1, "%f,%f,%f", &V4.x, &V4.y, &V4.z);
 	V_Object->S_Environ[0]->AmbientColour = Ogre::Vector3(V4.x, V4.y, V4.z);
 
 	App->CL_Ini_File->GetString(Section, "Light_Position", chr_Tag1, MAX_PATH);
-	sscanf(chr_Tag1, "%f,%f,%f", &V4.x, &V4.y, &V4.z);
+	(void)sscanf(chr_Tag1, "%f,%f,%f", &V4.x, &V4.y, &V4.z);
 	V_Object->S_Environ[0]->Light_Position = Ogre::Vector3(V4.x, V4.y, V4.z);
 
 	//--------------- Sky
@@ -509,15 +509,15 @@ bool CL64_Project::Read_Teleport(int Index, char* Section)
 	strcpy(V_Object->S_Environ[0]->Material, chr_Tag1);
 
 	App->CL_Ini_File->GetString(Section, "Sky_Curvature", chr_Tag1, MAX_PATH);
-	sscanf(chr_Tag1, "%f", &V4.x);
+	(void)sscanf(chr_Tag1, "%f", &V4.x);
 	V_Object->S_Environ[0]->Curvature = V4.x;
 
 	App->CL_Ini_File->GetString(Section, "Sky_Tiling", chr_Tag1, MAX_PATH);
-	sscanf(chr_Tag1, "%f", &V4.x);
+	(void)sscanf(chr_Tag1, "%f", &V4.x);
 	V_Object->S_Environ[0]->Tiling = V4.x;
 
 	App->CL_Ini_File->GetString(Section, "Sky_Distance", chr_Tag1, MAX_PATH);
-	sscanf(chr_Tag1, "%f", &V4.x);
+	(void)sscanf(chr_Tag1, "%f", &V4.x);
 	V_Object->S_Environ[0]->Distance = V4.x;
 
 	//--------------- Fog
@@ -528,19 +528,19 @@ bool CL64_Project::Read_Teleport(int Index, char* Section)
 	V_Object->S_Environ[0]->Fog_Mode = Int_Tag;
 
 	App->CL_Ini_File->GetString(Section, "Fog_Colour", chr_Tag1, MAX_PATH);
-	sscanf(chr_Tag1, "%f,%f,%f", &V4.x, &V4.y, &V4.z);
+	(void)sscanf(chr_Tag1, "%f,%f,%f", &V4.x, &V4.y, &V4.z);
 	V_Object->S_Environ[0]->Fog_Colour = Ogre::Vector3(V4.x, V4.y, V4.z);
 
 	App->CL_Ini_File->GetString(Section, "Fog_Start", chr_Tag1, MAX_PATH);
-	sscanf(chr_Tag1, "%f", &V4.x);
+	(void)sscanf(chr_Tag1, "%f", &V4.x);
 	V_Object->S_Environ[0]->Fog_Start = V4.x;
 
 	App->CL_Ini_File->GetString(Section, "Fog_End", chr_Tag1, MAX_PATH);
-	sscanf(chr_Tag1, "%f", &V4.x);
+	(void)sscanf(chr_Tag1, "%f", &V4.x);
 	V_Object->S_Environ[0]->Fog_End = V4.x;
 
 	App->CL_Ini_File->GetString(Section, "Fog_Density", chr_Tag1, MAX_PATH);
-	sscanf(chr_Tag1, "%f", &V4.x);
+	(void)sscanf(chr_Tag1, "%f", &V4.x);
 	V_Object->S_Environ[0]->Fog_Density = V4.x;
 
 	return 1;

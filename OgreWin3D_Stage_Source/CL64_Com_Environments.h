@@ -28,5 +28,7 @@ class CL64_Com_Environments
 public:
 	CL64_Com_Environments();
 	~CL64_Com_Environments();
+
+	void V_Set_Environ_Defaults(int Index);
 };
 
