@@ -30,6 +30,7 @@ public:
 	~CL64_Com_Teleporters();
 
 	void Set_Teleports_Defaults(int Index);
+	bool Create_Teleport_Entity(int Index);
 
 };
 
