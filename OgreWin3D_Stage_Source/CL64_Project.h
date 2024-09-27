@@ -47,6 +47,7 @@ public:
 	bool Load_Project_Player();
 
 	bool Read_Collectable(int Index, char* Section);
+	bool Read_Teleport(int Index, char* Section);
 
 	char m_Project_Name[MAX_PATH];
 	char m_Level_Name[MAX_PATH];

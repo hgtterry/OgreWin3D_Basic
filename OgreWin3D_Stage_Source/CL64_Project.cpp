@@ -346,11 +346,11 @@ bool CL64_Project::V_Load_Project_Objects()
 		//	Read_MoveEntity(Count, mSection);
 		//}
 
-		//// Teleport Enitity
-		//if (V_Object->Usage == Enums::Usage_Teleport)
-		//{
-		//	Read_Teleport(Count, mSection);
-		//}
+		// Teleport Enitity
+		if (V_Object->Usage == Enums::Stage_Usage_Teleport)
+		{
+			Read_Teleport(Count, mSection);
+		}
 
 		//// Environ Enitity
 		//if (V_Object->Usage == Enums::Usage_EnvironEntity)
@@ -405,6 +405,147 @@ bool CL64_Project::Read_Collectable(int Index, char* Section)
 
 	return 1;
 }
+
+// *************************************************************************
+// *	  		Read_Teleport:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+bool CL64_Project::Read_Teleport(int Index, char* Section)
+{
+	int Int_Tag = 0;
+	char chr_Tag1[MAX_PATH] = { 0 };
+	Ogre::Vector4 V4 = Ogre::Vector4::ZERO;
+
+	Base_Object* V_Object = App->CL_Scene->V_Object[Index];
+
+	V_Object->S_Teleport[0] = new Teleport_type;
+	//App->CL_Com_Teleporters->Set_Teleports_Defaults(Index);
+
+	V_Object->S_Environ[0] = new Environ_type;
+	//App->SBC_Com_Environments->V_Set_Environ_Defaults(Index);
+
+
+	App->CL_Ini_File->GetString(Section, "Tele_Goto", chr_Tag1, MAX_PATH);
+	strcpy(V_Object->S_Teleport[0]->Name, chr_Tag1);
+
+	V_Object->S_Teleport[0]->Location_ID = App->CL_Ini_File->GetInt(Section, "Tele_ID", 0, 10);
+
+	// Sound
+	//App->CL_Ini_File->GetString(Section, "Tele_Sound", V_Object->S_Teleport[0]->Sound_File, MAX_PATH);
+
+	App->CL_Ini_File->GetString(Section, "Tele_Volume", chr_Tag1, MAX_PATH);
+	sscanf(chr_Tag1, "%f", &V4.x);
+	//V_Object->S_Teleport[0]->SndVolume = V4.x;
+
+	//V_Object->S_Teleport[0]->Play = App->CL_Ini_File->GetInt(Section, "Tele_Play", 0);
+
+	// Mesh_Pos
+	App->CL_Ini_File->GetString(Section, "Tele_Mesh_Position", chr_Tag1, MAX_PATH);
+	sscanf(chr_Tag1, "%f,%f,%f", &V4.x, &V4.y, &V4.z);
+	V_Object->S_Teleport[0]->Player_Position = Ogre::Vector3(V4.x, V4.y, V4.z);
+
+	//Player_Pos
+	App->CL_Ini_File->GetString(Section, "Tele_Physics_Position", chr_Tag1, MAX_PATH);
+	sscanf(chr_Tag1, "%f,%f,%f", &V4.x, &V4.y, &V4.z);
+
+	V_Object->S_Teleport[0]->Physics_Position.setX(V4.x);
+	V_Object->S_Teleport[0]->Physics_Position.setY(V4.y);
+	V_Object->S_Teleport[0]->Physics_Position.setZ(V4.z);
+
+	//Player_Rotation
+	App->CL_Ini_File->GetString(Section, "Tele_Physics_Rotation", chr_Tag1, MAX_PATH);
+	sscanf(chr_Tag1, "%f,%f,%f,%f", &V4.w, &V4.x, &V4.y, &V4.z);
+
+	V_Object->S_Teleport[0]->Physics_Rotation.setW(V4.w);
+	V_Object->S_Teleport[0]->Physics_Rotation.setX(V4.x);
+	V_Object->S_Teleport[0]->Physics_Rotation.setY(V4.y);
+	V_Object->S_Teleport[0]->Physics_Rotation.setZ(V4.z);
+
+	// Teleport Counter
+	V_Object->S_Teleport[0]->Counter_ID = App->CL_Ini_File->GetInt(Section, "Tele_Counter_ID", 0, 10);
+	V_Object->S_Teleport[0]->Trigger_Value = App->CL_Ini_File->GetInt(Section, "Tele_Trigger_Value", 0, 10);
+	V_Object->S_Teleport[0]->Counter_Disabled = App->CL_Ini_File->GetInt(Section, "Tele_Counter_Disabled", 1, 10);
+
+	// Environment
+	Int_Tag = App->CL_Ini_File->GetInt(Section, "Environ_Enabled", 0, 10);
+	V_Object->S_Environ[0]->Environ_Enabled = Int_Tag;
+
+	App->CL_Ini_File->GetString(Section, "Environment_Name", chr_Tag1, MAX_PATH);
+	strcpy(V_Object->S_Environ[0]->Environment_Name, chr_Tag1);
+
+	Int_Tag = App->CL_Ini_File->GetInt(Section, "Environment_ID", 0, 10);
+	V_Object->S_Environ[0]->Environment_ID = Int_Tag;
+
+	//--------------- Sound
+	App->CL_Ini_File->GetString(Section, "Sound_File", chr_Tag1, MAX_PATH);
+	//strcpy(V_Object->S_Environ[0]->Sound_File, chr_Tag1);
+
+	App->CL_Ini_File->GetString(Section, "Snd_Volume", chr_Tag1, MAX_PATH);
+	sscanf(chr_Tag1, "%f", &V4.x);
+	//V_Object->S_Environ[0]->SndVolume = V4.x;
+
+	Int_Tag = App->CL_Ini_File->GetInt(Section, "Sound_Play", 0, 10);
+	//V_Object->S_Environ[0]->Play = Int_Tag;
+
+	Int_Tag = App->CL_Ini_File->GetInt(Section, "Sound_Loop", 0, 10);
+	//V_Object->S_Environ[0]->Loop = Int_Tag;
+
+	//--------------- Light
+	App->CL_Ini_File->GetString(Section, "Ambient_Colour", chr_Tag1, MAX_PATH);
+	sscanf(chr_Tag1, "%f,%f,%f", &V4.x, &V4.y, &V4.z);
+	V_Object->S_Environ[0]->AmbientColour = Ogre::Vector3(V4.x, V4.y, V4.z);
+
+	App->CL_Ini_File->GetString(Section, "Light_Position", chr_Tag1, MAX_PATH);
+	sscanf(chr_Tag1, "%f,%f,%f", &V4.x, &V4.y, &V4.z);
+	V_Object->S_Environ[0]->Light_Position = Ogre::Vector3(V4.x, V4.y, V4.z);
+
+	//--------------- Sky
+	Int_Tag = App->CL_Ini_File->GetInt(Section, "Sky_Enable", 0, 10);
+	V_Object->S_Environ[0]->Enabled = Int_Tag;
+
+	Int_Tag = App->CL_Ini_File->GetInt(Section, "Sky_Type", 0, 10);
+	V_Object->S_Environ[0]->type = Int_Tag;
+
+	App->CL_Ini_File->GetString(Section, "Sky_Material", chr_Tag1, MAX_PATH);
+	strcpy(V_Object->S_Environ[0]->Material, chr_Tag1);
+
+	App->CL_Ini_File->GetString(Section, "Sky_Curvature", chr_Tag1, MAX_PATH);
+	sscanf(chr_Tag1, "%f", &V4.x);
+	V_Object->S_Environ[0]->Curvature = V4.x;
+
+	App->CL_Ini_File->GetString(Section, "Sky_Tiling", chr_Tag1, MAX_PATH);
+	sscanf(chr_Tag1, "%f", &V4.x);
+	V_Object->S_Environ[0]->Tiling = V4.x;
+
+	App->CL_Ini_File->GetString(Section, "Sky_Distance", chr_Tag1, MAX_PATH);
+	sscanf(chr_Tag1, "%f", &V4.x);
+	V_Object->S_Environ[0]->Distance = V4.x;
+
+	//--------------- Fog
+	Int_Tag = App->CL_Ini_File->GetInt(Section, "Fog_On", 0, 10);
+	V_Object->S_Environ[0]->Fog_On = Int_Tag;
+
+	Int_Tag = App->CL_Ini_File->GetInt(Section, "Fog_Mode", 0, 10);
+	V_Object->S_Environ[0]->Fog_Mode = Int_Tag;
+
+	App->CL_Ini_File->GetString(Section, "Fog_Colour", chr_Tag1, MAX_PATH);
+	sscanf(chr_Tag1, "%f,%f,%f", &V4.x, &V4.y, &V4.z);
+	V_Object->S_Environ[0]->Fog_Colour = Ogre::Vector3(V4.x, V4.y, V4.z);
+
+	App->CL_Ini_File->GetString(Section, "Fog_Start", chr_Tag1, MAX_PATH);
+	sscanf(chr_Tag1, "%f", &V4.x);
+	V_Object->S_Environ[0]->Fog_Start = V4.x;
+
+	App->CL_Ini_File->GetString(Section, "Fog_End", chr_Tag1, MAX_PATH);
+	sscanf(chr_Tag1, "%f", &V4.x);
+	V_Object->S_Environ[0]->Fog_End = V4.x;
+
+	App->CL_Ini_File->GetString(Section, "Fog_Density", chr_Tag1, MAX_PATH);
+	sscanf(chr_Tag1, "%f", &V4.x);
+	V_Object->S_Environ[0]->Fog_Density = V4.x;
+
+	return 1;
+}
+
 // *************************************************************************
 // *	  		Load_Project_Aera:- Terry and Hazel Flanigan 2022		   *
 // *************************************************************************
