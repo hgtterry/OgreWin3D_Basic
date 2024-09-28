@@ -41,6 +41,7 @@ public:
 	bool Update_ListView_Messages();
 	bool Update_ListView_Teleport();
 	bool Update_ListView_Particles();
+	bool Update_ListView_Counters();
 
 	int Current_Selected_Object;
 

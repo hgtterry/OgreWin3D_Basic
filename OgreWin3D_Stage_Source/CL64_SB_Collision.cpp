@@ -69,7 +69,7 @@ bool CL64_Collision::Do_Teleport(int Index)
 			App->CL_Scene->V_Object[Index]->S_Teleport[0]->SndFile->setIsPaused(false);
 
 			// Environment
-			/*if (App->CL_Scene->GameMode_Running_Flag == 1)
+			if (App->CL_Scene->GameMode_Running_Flag == 1)
 			{
 				App->CL_Com_Environments->Set_Environment_By_Index(0, Old_Sound_Index);
 				App->CL_Com_Environments->Set_Environment_By_Index(1, Index);
@@ -82,7 +82,7 @@ bool CL64_Collision::Do_Teleport(int Index)
 
 				Old_Sound_Index = Index;
 
-			}*/
+			}
 		}
 
 		return 1;
@@ -111,15 +111,15 @@ bool CL64_Collision::Do_Teleport(int Index)
 		// Environment
 		if (App->CL_Scene->GameMode_Running_Flag == 1)
 		{
-			//App->CL_Com_Environments->Set_Environment_By_Index(0, Old_Sound_Index);
-			//App->CL_Com_Environments->Set_Environment_By_Index(1, Index);
+			App->CL_Com_Environments->Set_Environment_By_Index(0, Old_Sound_Index);
+			App->CL_Com_Environments->Set_Environment_By_Index(1, Index);
 
 			Old_Sound_Index = Index;
 
 		}
 		else
 		{
-			//App->CL_Com_Environments->Set_Environment_By_Index(0, Index);
+			App->CL_Com_Environments->Set_Environment_By_Index(0, Index);
 
 			Old_Sound_Index = Index;
 
@@ -481,6 +481,42 @@ bool CL64_Collision::Message_Entity(int Index)
 		App->CL_Scene->V_Object[Index]->Show_Message_Flag = 1;
 		App->CL_Scene->V_Object[Index]->Triggered = 1;
 		return 1;
+	}
+
+	return 1;
+}
+
+// *************************************************************************
+// *			Do_Environment:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+bool CL64_Collision::Do_Environment(int Index)
+{
+	if (App->CL_Scene->V_Object[Index]->Triggered == 1) // return
+	{
+		return 1;
+	}
+
+	if (Old_Sound_Index == Index)
+	{
+		App->CL_Scene->V_Object[Index]->Triggered = 1;
+		return 1;
+	}
+
+	if (App->CL_Scene->GameMode_Running_Flag == 1)
+	{
+		App->CL_Com_Environments->Set_Environment_By_Index(0, Old_Sound_Index);
+		App->CL_Com_Environments->Set_Environment_By_Index(1, Index);
+
+		Old_Sound_Index = Index;
+		App->CL_Scene->V_Object[Index]->Triggered = 1;
+	}
+	else
+	{
+		App->CL_Com_Environments->Set_Environment_By_Index(0, Index);
+
+		Old_Sound_Index = Index;
+
+		App->CL_Scene->V_Object[Index]->Triggered = 1;
 	}
 
 	return 1;

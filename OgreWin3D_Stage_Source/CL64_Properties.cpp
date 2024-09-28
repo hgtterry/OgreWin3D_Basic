@@ -903,3 +903,75 @@ bool CL64_Properties::Update_ListView_Particles()
 
 	return 1;
 }
+
+// *************************************************************************
+// *		Update_ListView_Counters():- Terry and Hazel Flanigan 2024	   *
+// *************************************************************************
+bool CL64_Properties::Update_ListView_Counters()
+{
+	int index = Current_Selected_Object;
+
+	char Num[10];
+	char chr_ID[50];
+	_itoa(App->CL_Scene->B_Counter[index]->Unique_ID, Num, 10);
+	strcpy(chr_ID, "Properties ID=");
+	strcat(chr_ID, Num);
+
+	SetWindowText(Properties_Dlg_hWnd, chr_ID);
+	//SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)App->SBC_Scene->B_Counter[index]->Panel_Name);
+
+	char chr_PosX[20];
+	sprintf(chr_PosX, "%.3f ", App->CL_Scene->B_Counter[index]->PosX);
+
+	char chr_PosY[20];
+	sprintf(chr_PosY, "%.3f ", App->CL_Scene->B_Counter[index]->PosY);
+
+	char chr_Counter[20];
+	_itoa(App->CL_Scene->B_Counter[index]->Counter, chr_Counter, 10);
+
+	char chr_Display[20];
+	if (App->CL_Scene->B_Counter[index]->Show_Panel_Flag == 1)
+	{
+		strcpy(chr_Display, "Always");
+	}
+	else
+	{
+		strcpy(chr_Display, "Auto");
+	}
+
+
+	const int NUM_ITEMS = 7;
+	const int NUM_COLS = 2;
+	std::string grid[NUM_COLS][NUM_ITEMS]; // string table
+	LV_ITEM pitem;
+	memset(&pitem, 0, sizeof(LV_ITEM));
+	pitem.mask = LVIF_TEXT;
+
+	grid[0][0] = "Name", grid[1][0] = App->CL_Scene->B_Counter[index]->Panel_Name;
+	grid[0][1] = " ", grid[1][1] = " ";
+	grid[0][2] = "Pos_X", grid[1][2] = chr_PosX;
+	grid[0][3] = "Pos_Y", grid[1][3] = chr_PosY;
+	grid[0][4] = "Text", grid[1][4] = App->CL_Scene->B_Counter[index]->Text;
+	grid[0][5] = "Start_Value", grid[1][5] = chr_Counter;
+	grid[0][6] = "Display", grid[1][6] = chr_Display;
+
+
+	ListView_DeleteAllItems(Properties_hLV);
+
+	for (DWORD row = 0; row < NUM_ITEMS; row++)
+	{
+		pitem.iItem = row;
+		pitem.pszText = const_cast<char*>(grid[0][row].c_str());
+		ListView_InsertItem(Properties_hLV, &pitem);
+
+		//ListView_SetItemText
+
+		for (DWORD col = 1; col < NUM_COLS; col++)
+		{
+			ListView_SetItemText(Properties_hLV, row, col,
+				const_cast<char*>(grid[col][row].c_str()));
+		}
+	}
+
+	return 1;
+}

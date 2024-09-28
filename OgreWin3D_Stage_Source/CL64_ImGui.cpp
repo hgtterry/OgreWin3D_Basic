@@ -720,7 +720,7 @@ void CL64_ImGui::Show_Assimp_Model_Data_GUI(void)
 // *************************************************************************
 void CL64_ImGui::Demo_Options_Gui(void)
 {
-	ImGui::SetNextWindowPos(ImVec2(250, 10), ImGuiCond_FirstUseEver);
+	ImGui::SetNextWindowPos(ImVec2(220, 80), ImGuiCond_FirstUseEver);
 	ImGui::SetNextWindowSize(ImVec2(300, 70), ImGuiCond_FirstUseEver);
 
 	ImGui::PushStyleColor(ImGuiCol_WindowBg, IM_COL32(239, 239, 239, 255));

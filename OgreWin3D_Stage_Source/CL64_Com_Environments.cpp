@@ -49,11 +49,11 @@ void CL64_Com_Environments::V_Set_Environ_Defaults(int Index)
 	V_Object->S_Environ[0]->Environ_Enabled = 1;
 
 	//----------------------- Sound
-	/*strcpy(V_Object->S_Environ[0]->Sound_File, "The_Sun.ogg");
+	strcpy(V_Object->S_Environ[0]->Sound_File, "The_Sun.ogg");
 	V_Object->S_Environ[0]->SndFile = NULL;
 	V_Object->S_Environ[0]->Play = 0;
 	V_Object->S_Environ[0]->Loop = 1;
-	V_Object->S_Environ[0]->SndVolume = 0.5;*/
+	V_Object->S_Environ[0]->SndVolume = 0.5;
 
 	//----------------------- Light
 	V_Object->S_Environ[0]->AmbientColour.x = 1;
@@ -163,6 +163,68 @@ bool CL64_Com_Environments::Create_Environ_Entity(int Index)
 	App->CL_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
 
 	App->CL_Physics->Set_Physics(Index);
+
+	return 1;
+}
+
+// *************************************************************************
+// *		Set_Environment_By_Index:- Terry and Hazel Flanigan 2024 	   *
+// *************************************************************************
+int CL64_Com_Environments::Set_Environment_By_Index(bool PlayMusic, int Index)
+{
+
+	float x = App->CL_Scene->V_Object[Index]->S_Environ[0]->AmbientColour.x;
+	float y = App->CL_Scene->V_Object[Index]->S_Environ[0]->AmbientColour.y;
+	float z = App->CL_Scene->V_Object[Index]->S_Environ[0]->AmbientColour.z;
+	App->CL_Ogre->mSceneMgr->setAmbientLight(ColourValue(x, y, z));
+
+
+	// Fog
+	if (App->CL_Scene->V_Object[Index]->S_Environ[0]->Fog_On == 1)
+	{
+		float Start = App->CL_Scene->V_Object[Index]->S_Environ[0]->Fog_Start;
+		float End = App->CL_Scene->V_Object[Index]->S_Environ[0]->Fog_End;
+		float Density = App->CL_Scene->V_Object[Index]->S_Environ[0]->Fog_Density;
+
+		float x = App->CL_Scene->V_Object[Index]->S_Environ[0]->Fog_Colour.x;
+		float y = App->CL_Scene->V_Object[Index]->S_Environ[0]->Fog_Colour.y;
+		float z = App->CL_Scene->V_Object[Index]->S_Environ[0]->Fog_Colour.z;
+
+		App->CL_Ogre->mSceneMgr->setFog(FOG_LINEAR, ColourValue(x, y, z), Density, (Ogre::Real)Start, (Ogre::Real)End);
+	}
+	else
+	{
+		App->CL_Ogre->mSceneMgr->setFog(FOG_NONE, ColourValue(0.7, 0.7, 0.8), 0, 100, 1000);
+	}
+
+	if (PlayMusic == 1)
+	{
+		char buff[1024];
+		strcpy(buff, App->CL_SoundMgr->Default_Folder);
+		strcat(buff, "\\Media\\Sounds\\");
+
+		if (App->CL_Scene->V_Object[Index]->S_Environ[0]->Play == 1)
+		{
+			strcat(buff, App->CL_Scene->V_Object[Index]->S_Environ[0]->Sound_File);
+
+			App->CL_Scene->V_Object[Index]->S_Environ[0]->SndFile = App->CL_SoundMgr->SoundEngine->play2D(buff, App->CL_Scene->V_Object[Index]->S_Environ[0]->Loop, true, true);
+
+			App->CL_Scene->V_Object[Index]->S_Environ[0]->SndFile->setVolume(App->CL_Scene->V_Object[Index]->S_Environ[0]->SndVolume);
+			App->CL_Scene->V_Object[Index]->S_Environ[0]->SndFile->setIsPaused(false);
+		}
+	}
+	else
+	{
+		if (App->CL_Scene->V_Object[Index]->S_Environ[0]->SndFile == NULL)
+		{
+		}
+		else
+		{
+			App->CL_Scene->V_Object[Index]->S_Environ[0]->SndFile->setIsPaused(true);
+			App->CL_Scene->V_Object[Index]->S_Environ[0]->SndFile->drop();
+			App->CL_Scene->V_Object[Index]->S_Environ[0]->SndFile = NULL;
+		}
+	}
 
 	return 1;
 }

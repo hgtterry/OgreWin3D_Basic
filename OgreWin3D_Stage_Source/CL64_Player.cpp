@@ -465,7 +465,7 @@ void CL64_Player::Check_Collisions(void)
 				// -------------------- EnvironEntity Collision
 				if (Col_Usage_Index == Enums::Stage_Usage_EnvironEntity)
 				{
-					/*int numContacts = contactManifold->getNumContacts();
+					int numContacts = contactManifold->getNumContacts();
 					for (int j = 0; j < numContacts; j++)
 					{
 						btManifoldPoint& pt = contactManifold->getContactPoint(j);
@@ -476,19 +476,19 @@ void CL64_Player::Check_Collisions(void)
 
 						if (Round < 0)
 						{
-							if (App->SBC_Scene->V_Object[Col_Object_Index]->Triggered == 0)
+							if (App->CL_Scene->V_Object[Col_Object_Index]->Triggered == 0)
 							{
-								App->SBC_Collision->Do_Environment(Col_Object_Index);
+								App->CL_Collision->Do_Environment(Col_Object_Index);
 							}
 						}
 						else if (Round == 0)
 						{
-							if (App->SBC_Scene->V_Object[Col_Object_Index]->Triggered == 1)
+							if (App->CL_Scene->V_Object[Col_Object_Index]->Triggered == 1)
 							{
-								App->SBC_Scene->V_Object[Col_Object_Index]->Triggered = 0;
+								App->CL_Scene->V_Object[Col_Object_Index]->Triggered = 0;
 							}
 						}
-					}*/
+					}
 				}
 
 			}

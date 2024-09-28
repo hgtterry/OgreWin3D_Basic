@@ -840,6 +840,28 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 
 		return;
 	}
+
+	// ------------------------------------------------------------ Counters
+	if (!strcmp(FileView_Folder, "Counters")) // Folder
+	{
+		//App->SBC_FileView->Context_Selection = Enums::FileView_Counters_Folder;
+		return;
+	}
+	if (!strcmp(FileView_File, "Counters"))
+	{
+		//App->SBC_FileView->Context_Selection = Enums::FileView_Counters_File;
+
+		//HideRightPanes();
+		ShowWindow(App->CL_Properties->Properties_Dlg_hWnd, 1);
+		//App->SBC_Props_Dialog->Hide_Panel_Test_Dlg(1);
+
+		//App->SBC_Properties->Edit_Category = Enums::Edit_Counters;
+		App->CL_Properties->Current_Selected_Object = Index;
+
+		App->CL_Properties->Update_ListView_Counters();
+
+		return;
+	}
 }
 
 // *************************************************************************

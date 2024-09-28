@@ -32,7 +32,7 @@ public:
 
 	bool Do_Teleport(int Index);
 	bool Do_Collectable(int Index);
-
+	bool Do_Environment(int Index);
 	bool Move_Entity_Collision(int Index);
 	void Set_Move_Entity(int Index);
 	void MoveObject_Listener(Ogre::Real Time);
