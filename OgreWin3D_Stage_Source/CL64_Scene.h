@@ -19,6 +19,7 @@ appreciated but is not required.
 #include "Base_Player.h"
 #include "Base_Group.h"
 #include "Base_Area.h"
+#include "Base_Locations.h"
 
 typedef struct AABB_Type {
 	vertex_type BB_Max[1];
@@ -100,6 +101,8 @@ public:
 	Base_Group* Group[100];
 	AABB_Type* S_BoundingBox[1];
 	Bone_Type* S_Bones[200];
+	Base_Locations* B_Locations[20];
+
 	OgreMeshData_Type* S_OgreMeshData[1];
 
 	char FileName[MAX_PATH];
@@ -124,6 +127,7 @@ public:
 	int Area_Count;
 	bool Flag_Area_Added;
 	bool Scene_Loaded;
+	bool Player_Location_Count;
 
 	// Ogre
 	int Ogre_Face_Count;

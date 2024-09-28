@@ -37,8 +37,9 @@ public:
 	void SelectItem(HTREEITEM TreeItem);
 
 	void Get_Selection(LPNMHDR lParam);
-
-
+	void Redraw_FileView();
+	void Change_Level_Name(void);
+	void Change_Project_Name(void);
 
 	bool Flag_FileView_Active;
 

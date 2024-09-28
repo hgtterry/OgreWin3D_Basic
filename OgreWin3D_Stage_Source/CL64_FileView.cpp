@@ -299,7 +299,7 @@ void CL64_FileView::AddRootFolder(void)
 	tvinsert.hParent = Root;			// top most level no need handle
 	tvinsert.hInsertAfter = TVI_LAST; // work as root level
 	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
-	tvinsert.item.pszText = (LPSTR)"Test Project"; // App->SBC_Project->m_Project_Name;
+	tvinsert.item.pszText = (LPSTR)App->CL_Project->m_Project_Name;
 	tvinsert.item.iImage = 0;
 	tvinsert.item.iSelectedImage = 1;
 	GD_ProjectFolder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
@@ -314,7 +314,7 @@ void CL64_FileView::MoreFolders(void) // last folder level
 	tvinsert.hParent = GD_ProjectFolder;
 	tvinsert.hInsertAfter = TVI_LAST;
 	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
-	tvinsert.item.pszText = (LPSTR)"Test Scene"; // App->SBC_Project->m_Level_Name;
+	tvinsert.item.pszText = (LPSTR)App->CL_Project->m_Level_Name;
 	tvinsert.item.iImage = 0;
 	tvinsert.item.iSelectedImage = 1;
 	FV_LevelFolder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
@@ -456,7 +456,6 @@ void CL64_FileView::MoreFolders(void) // last folder level
 // *************************************************************************
 void CL64_FileView::Get_Selection(LPNMHDR lParam)
 {
-
 	strcpy(FileView_Folder, "");
 	strcpy(FileView_File, "");
 
@@ -726,6 +725,121 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 
 		return;
 	}
+
+	// ------------------------------------------------------------ Message_Triggers
+	if (!strcmp(FileView_Folder, "Messages")) // Folder
+	{
+		//App->SBC_FileView->Context_Selection = Enums::FileView_Messages_Triggers_Folder;
+		return;
+	}
+
+	if (!strcmp(FileView_File, "Messages"))
+	{
+		//App->SBC_FileView->Context_Selection = Enums::FileView_Messages_Triggers_File;
+
+		//HideRightPanes();
+		ShowWindow(App->CL_Properties->Properties_Dlg_hWnd, 1);
+		//App->SBC_Props_Dialog->Hide_Details_Goto_Dlg(1);
+		//App->SBC_Props_Dialog->Hide_Dimensions_Dlg(1, App->SBC_Scene->V_Object[Index]->Dimensions_Locked);
+		//App->SBC_Props_Dialog->Hide_Debug_Dlg(1);
+		//App->SBC_Props_Dialog->Hide_Panel_Test_Dlg(1);
+
+		//App->SBC_Properties->Is_Player = 0; // Mark as Object selected
+		//App->SBC_Properties->Edit_Category = Enums::Edit_Message;
+
+		//----------------------------------------------------------------------------
+		App->CL_Properties->Current_Selected_Object = Index;
+		/*App->SBC_Properties->Reset_Last_Selected_Object(App->SBC_Properties->Last_Selected_Object);
+		App->SBC_Properties->Last_Selected_Object = Index;*/
+		//----------------------------------------------------------------------------
+
+		//App->SBC_Markers->MarkerBB_Addjust(Index);
+
+		App->CL_Properties->Update_ListView_Messages();
+
+		/*if (App->SBC_Dimensions->Show_Dimensions == 1)
+		{
+			App->SBC_Dimensions->Prepare_Dimensions();
+		}*/
+
+		return;
+	}
+
+	// ------------------------------------------------------------ Teleporter Entity
+	if (!strcmp(FileView_Folder, "Teleporters")) // Folder
+	{
+		//App->SBC_FileView->Context_Selection = Enums::FileView_Teleports_Folder;
+
+		return;
+	}
+	if (!strcmp(FileView_File, "Teleporters"))
+	{
+		//App->SBC_FileView->Context_Selection = Enums::FileView_Teleports_File;
+
+		//HideRightPanes();
+		ShowWindow(App->CL_Properties->Properties_Dlg_hWnd, 1);
+		//App->SBC_Props_Dialog->Hide_Details_Goto_Dlg(1);
+		//App->SBC_Props_Dialog->Hide_Dimensions_Dlg(1, App->SBC_Scene->V_Object[Index]->Dimensions_Locked);
+		//App->SBC_Props_Dialog->Hide_Debug_Dlg(1);
+
+		//App->SBC_Properties->Is_Player = 0; // Mark as Object selected
+
+		//App->SBC_Properties->Edit_Category = Enums::Edit_Teleport;
+
+		//----------------------------------------------------------------------------
+		App->CL_Properties->Current_Selected_Object = Index;
+		/*App->SBC_Properties->Reset_Last_Selected_Object(App->SBC_Properties->Last_Selected_Object);
+		App->SBC_Properties->Last_Selected_Object = Index;*/
+		//----------------------------------------------------------------------------
+
+		//App->SBC_Markers->MarkerBB_Addjust(Index);
+
+		App->CL_Properties->Update_ListView_Teleport();
+
+		/*if (App->SBC_Dimensions->Show_Dimensions == 1)
+		{
+			App->SBC_Dimensions->Prepare_Dimensions();
+		}*/
+		return;
+	}
+
+	// ------------------------------------------------------------ Particles
+	if (!strcmp(FileView_Folder, "Particles")) // Folder
+	{
+		//App->SBC_FileView->Context_Selection = Enums::FileView_Particle_Folder;
+
+		return;
+	}
+
+	if (!strcmp(FileView_File, "Particles"))
+	{
+		//App->SBC_FileView->Context_Selection = Enums::FileView_Particle_File;
+
+		//HideRightPanes();
+		ShowWindow(App->CL_Properties->Properties_Dlg_hWnd, 1);
+
+		/*App->SBC_Props_Dialog->Hide_Details_Goto_Dlg(1);
+		App->SBC_Props_Dialog->Hide_Dimensions_Dlg(1, App->SBC_Scene->V_Object[Index]->Dimensions_Locked);
+
+		App->SBC_Properties->Edit_Category = Enums::Edit_Particles;*/
+
+		//----------------------------------------------------------------------------
+		App->CL_Properties->Current_Selected_Object = Index;
+		//App->SBC_Properties->Reset_Last_Selected_Object(App->SBC_Properties->Last_Selected_Object);
+		//App->SBC_Properties->Last_Selected_Object = Index;
+		//----------------------------------------------------------------------------
+
+		//App->SBC_Markers->MarkerBB_Addjust(Index);
+
+		App->CL_Properties->Update_ListView_Particles();
+
+		/*if (App->SBC_Dimensions->Show_Dimensions == 1)
+		{
+			App->SBC_Dimensions->Prepare_Dimensions();
+		}*/
+
+		return;
+	}
 }
 
 // *************************************************************************
@@ -793,4 +907,40 @@ void CL64_FileView::SelectItem(HTREEITEM TreeItem)
 {
 	HWND Temp = GetDlgItem(App->ListPanel, IDC_TREE1);
 	TreeView_Select(Temp, TreeItem, TVGN_CARET);
+}
+
+// *************************************************************************
+// *			Redraw_FileViewTerry and Hazel Flanigan 2024		 	   *
+// *************************************************************************
+void CL64_FileView::Redraw_FileView()
+{
+	//App->RedrawWindow_Dlg(GetDlgItem(App->ListPanel, IDC_TREE1));
+}
+
+// *************************************************************************
+// *			Change_Level_NameTerry and Hazel Flanigan 2024 			   *
+// *************************************************************************
+void CL64_FileView::Change_Level_Name(void)
+{
+	TVITEM Sitem;
+	Sitem.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
+	Sitem.hItem = FV_LevelFolder;
+	Sitem.pszText = App->CL_Project->m_Level_Name;
+	Sitem.iImage = 3;
+	Sitem.iSelectedImage = 3;
+	SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_SETITEM, 0, (LPARAM)(const LPTVITEM)&Sitem);
+}
+
+// *************************************************************************
+// *		Change_Project_NameTerry and Hazel Flanigan 2024 			   *
+// *************************************************************************
+void CL64_FileView::Change_Project_Name(void)
+{
+	TVITEM Sitem;
+	Sitem.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
+	Sitem.hItem = GD_ProjectFolder;
+	Sitem.pszText = App->CL_Project->m_Project_Name;
+	Sitem.iImage = 3;
+	Sitem.iSelectedImage = 3;
+	SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_SETITEM, 0, (LPARAM)(const LPTVITEM)&Sitem);
 }

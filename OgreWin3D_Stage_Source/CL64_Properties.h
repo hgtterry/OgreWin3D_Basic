@@ -38,6 +38,9 @@ public:
 	bool Update_ListView_Collectables();
 	bool Update_ListView_Sounds();
 	bool Update_ListView_Move_Entities();
+	bool Update_ListView_Messages();
+	bool Update_ListView_Teleport();
+	bool Update_ListView_Particles();
 
 	int Current_Selected_Object;
 

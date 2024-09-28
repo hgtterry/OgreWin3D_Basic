@@ -32,6 +32,7 @@ CL64_Scene::CL64_Scene(void)
 	Area_Count = 0;
 	Flag_Area_Added = 0;
 	Scene_Loaded = 0;
+	Player_Location_Count = 0;
 
 	flag_Model_Loaded = 0;
 	flag_Player_Added = 0;
@@ -53,7 +54,8 @@ CL64_Scene::CL64_Scene(void)
 
 	S_BoundingBox[0] = nullptr;
 
-	B_Area[20] = { nullptr };
+	B_Area[19] = { nullptr };
+	B_Locations[19] = { nullptr };
 
 	int Count = 0;
 	while (Count < 99)

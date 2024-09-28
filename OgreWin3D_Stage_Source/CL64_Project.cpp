@@ -152,7 +152,7 @@ bool CL64_Project::Load_Project()
 	// ------------------------------------- Objects
 	if (Options->Has_Objects > 0)
 	{
-		V_Load_Project_Objects();
+		Load_Project_Objects();
 		App->CL_Objects_Create->Add_Objects_From_File();
 	}
 
@@ -166,8 +166,8 @@ bool CL64_Project::Load_Project()
 
 	//App->CL_Ogre->OgreListener->GD_CameraMode = Enums::CamDetached;
 
-	//App->SBC_FileView->Change_Level_Name();
-	//App->SBC_FileView->Change_Project_Name();
+	App->CL_FileView->Change_Level_Name();
+	App->CL_FileView->Change_Project_Name();
 	//App->SBC_FileView->Redraw_FileView();
 
 	//App->CL_Scene->Scene_Modified = 0;
@@ -189,7 +189,7 @@ bool CL64_Project::Load_Project()
 	//App->CL_Scene->Scene_Loaded = 1;
 	//App->SBC_Project->Project_Loaded = 1;
 
-	//delete Options;
+	delete Options;
 
 	App->Set_Title();
 	//App->SBC_FileIO->RecentFileHistory_Update();
@@ -207,7 +207,6 @@ bool CL64_Project::Load_Project()
 // *************************************************************************
 bool CL64_Project::Load_Get_Resource_Path()
 {
-	
 	m_Main_Assets_Path[0] = 0;
 
 	strcpy(m_Main_Assets_Path, m_Project_Sub_Folder);
@@ -225,9 +224,9 @@ bool CL64_Project::Load_Get_Resource_Path()
 }
 
 // *************************************************************************
-// *	  	V_Load_Project_Objects:- Terry and Hazel Flanigan 2022		   *
+// *	  	Load_Project_Objects:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
-bool CL64_Project::V_Load_Project_Objects()
+bool CL64_Project::Load_Project_Objects()
 {
 	int Int_Tag = 0;
 	char Object_Ini_Path[MAX_PATH];
@@ -395,25 +394,25 @@ bool CL64_Project::Read_EnvironEntity(int Index, char* Section)
 
 	//--------------- Sound
 	App->CL_Ini_File->GetString(Section, "Sound_File", chr_Tag1, MAX_PATH);
-	//strcpy(V_Object->S_Environ[0]->Sound_File, chr_Tag1);
+	strcpy(V_Object->S_Environ[0]->Sound_File, chr_Tag1);
 
 	App->CL_Ini_File->GetString(Section, "Snd_Volume", chr_Tag1, MAX_PATH);
-	sscanf(chr_Tag1, "%f", &V4.x);
-	//V_Object->S_Environ[0]->SndVolume = V4.x;
+	(void)sscanf(chr_Tag1, "%f", &V4.x);
+	V_Object->S_Environ[0]->SndVolume = V4.x;
 
 	Int_Tag = App->CL_Ini_File->GetInt(Section, "Sound_Play", 0, 10);
-	//V_Object->S_Environ[0]->Play = Int_Tag;
+	V_Object->S_Environ[0]->Play = Int_Tag;
 
 	Int_Tag = App->CL_Ini_File->GetInt(Section, "Sound_Loop", 0, 10);
-	//V_Object->S_Environ[0]->Loop = Int_Tag;
+	V_Object->S_Environ[0]->Loop = Int_Tag;
 
 	//--------------- Light
 	App->CL_Ini_File->GetString(Section, "Ambient_Colour", chr_Tag1, MAX_PATH);
-	sscanf(chr_Tag1, "%f,%f,%f", &V4.x, &V4.y, &V4.z);
+	(void)sscanf(chr_Tag1, "%f,%f,%f", &V4.x, &V4.y, &V4.z);
 	V_Object->S_Environ[0]->AmbientColour = Ogre::Vector3(V4.x, V4.y, V4.z);
 
 	App->CL_Ini_File->GetString(Section, "Light_Position", chr_Tag1, MAX_PATH);
-	sscanf(chr_Tag1, "%f,%f,%f", &V4.x, &V4.y, &V4.z);
+	(void)sscanf(chr_Tag1, "%f,%f,%f", &V4.x, &V4.y, &V4.z);
 	V_Object->S_Environ[0]->Light_Position = Ogre::Vector3(V4.x, V4.y, V4.z);
 
 	//--------------- Sky
@@ -427,15 +426,15 @@ bool CL64_Project::Read_EnvironEntity(int Index, char* Section)
 	strcpy(V_Object->S_Environ[0]->Material, chr_Tag1);
 
 	App->CL_Ini_File->GetString(Section, "Sky_Curvature", chr_Tag1, MAX_PATH);
-	sscanf(chr_Tag1, "%f", &V4.x);
+	(void)sscanf(chr_Tag1, "%f", &V4.x);
 	V_Object->S_Environ[0]->Curvature = V4.x;
 
 	App->CL_Ini_File->GetString(Section, "Sky_Tiling", chr_Tag1, MAX_PATH);
-	sscanf(chr_Tag1, "%f", &V4.x);
+	(void)sscanf(chr_Tag1, "%f", &V4.x);
 	V_Object->S_Environ[0]->Tiling = V4.x;
 
 	App->CL_Ini_File->GetString(Section, "Sky_Distance", chr_Tag1, MAX_PATH);
-	sscanf(chr_Tag1, "%f", &V4.x);
+	(void)sscanf(chr_Tag1, "%f", &V4.x);
 	V_Object->S_Environ[0]->Distance = V4.x;
 
 	//--------------- Fog
@@ -446,19 +445,19 @@ bool CL64_Project::Read_EnvironEntity(int Index, char* Section)
 	V_Object->S_Environ[0]->Fog_Mode = Int_Tag;
 
 	App->CL_Ini_File->GetString(Section, "Fog_Colour", chr_Tag1, MAX_PATH);
-	sscanf(chr_Tag1, "%f,%f,%f", &V4.x, &V4.y, &V4.z);
+	(void)sscanf(chr_Tag1, "%f,%f,%f", &V4.x, &V4.y, &V4.z);
 	V_Object->S_Environ[0]->Fog_Colour = Ogre::Vector3(V4.x, V4.y, V4.z);
 
 	App->CL_Ini_File->GetString(Section, "Fog_Start", chr_Tag1, MAX_PATH);
-	sscanf(chr_Tag1, "%f", &V4.x);
+	(void)sscanf(chr_Tag1, "%f", &V4.x);
 	V_Object->S_Environ[0]->Fog_Start = V4.x;
 
 	App->CL_Ini_File->GetString(Section, "Fog_End", chr_Tag1, MAX_PATH);
-	sscanf(chr_Tag1, "%f", &V4.x);
+	(void)sscanf(chr_Tag1, "%f", &V4.x);
 	V_Object->S_Environ[0]->Fog_End = V4.x;
 
 	App->CL_Ini_File->GetString(Section, "Fog_Density", chr_Tag1, MAX_PATH);
-	sscanf(chr_Tag1, "%f", &V4.x);
+	(void)sscanf(chr_Tag1, "%f", &V4.x);
 	V_Object->S_Environ[0]->Fog_Density = V4.x;
 
 	return 1;
@@ -1001,7 +1000,6 @@ bool CL64_Project::Load_Project_Player()
 
 	}
 
-	
 	// ------------------------------------------ Locations
 	int Int_Tag = 0;
 	Locations_Count = App->CL_Ini_File->GetInt("Locations", "Locations_Count", 0,10);
@@ -1009,55 +1007,55 @@ bool CL64_Project::Load_Project_Player()
 	Count = 0;
 	while (Count < Locations_Count)
 	{
-		//if (App->CL_Scene->B_Locations[Count])
-		//{
-		//	delete App->CL_Scene->B_Locations[Count];
-		//	App->CL_Scene->B_Locations[Count] = NULL;
-		//}
+		if (App->CL_Scene->B_Locations[Count])
+		{
+			delete App->CL_Scene->B_Locations[Count];
+			App->CL_Scene->B_Locations[Count] = NULL;
+		}
 
-		//char n_buff[255];
-		//char buff[255];
-		//strcpy(buff, "Location_");
-		//_itoa(Count, n_buff, 10);
-		//strcat(buff, n_buff);
+		char n_buff[255];
+		char buff[255];
+		strcpy(buff, "Location_");
+		_itoa(Count, n_buff, 10);
+		strcat(buff, n_buff);
 
-		//App->CL_Scene->B_Locations[Count] = new Base_Locations();
-		//App->CL_Scene->B_Locations[Count]->Deleted = 0;
-
-
-		//Int_Tag = App->CL_Ini_File->GetInt(buff, "Locatoin_ID", 0, 10);
-		//App->CL_Scene->B_Locations[Count]->This_Object_UniqueID = Int_Tag;
-
-		//App->CL_Ini_File->GetString(buff, "Name", chr_Tag1, MAX_PATH);
+		App->CL_Scene->B_Locations[Count] = new Base_Locations();
+		App->CL_Scene->B_Locations[Count]->Deleted = 0;
 
 
-		//strcpy(App->CL_Scene->B_Locations[Count]->Name, chr_Tag1);
+		Int_Tag = App->CL_Ini_File->GetInt(buff, "Locatoin_ID", 0, 10);
+		App->CL_Scene->B_Locations[Count]->This_Object_UniqueID = Int_Tag;
 
-		//// Mesh_Pos
-		//App->CL_Ini_File->GetString(buff, "Mesh_Position", chr_Tag1, MAX_PATH);
-		//sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
-		//App->CL_Scene->B_Locations[Count]->Current_Position.x = x;
-		//App->CL_Scene->B_Locations[Count]->Current_Position.y = y;
-		//App->CL_Scene->B_Locations[Count]->Current_Position.z = z;
+		App->CL_Ini_File->GetString(buff, "Name", chr_Tag1, MAX_PATH);
 
-		//App->CL_Ini_File->GetString(buff, "Physics_Position", chr_Tag1, MAX_PATH);
-		//sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
-		//App->CL_Scene->B_Locations[Count]->Physics_Position.setX(x);
-		//App->CL_Scene->B_Locations[Count]->Physics_Position.setY(y);
-		//App->CL_Scene->B_Locations[Count]->Physics_Position.setZ(z);
 
-		//App->CL_Ini_File->GetString(buff, "Physics_Rotation", chr_Tag1, MAX_PATH);
-		//sscanf(chr_Tag1, "%f,%f,%f,%f", &w, &x, &y, &z);
-		//App->CL_Scene->B_Locations[Count]->Physics_Rotation.setW(w);
-		//App->CL_Scene->B_Locations[Count]->Physics_Rotation.setX(x);
-		//App->CL_Scene->B_Locations[Count]->Physics_Rotation.setY(y);
-		//App->CL_Scene->B_Locations[Count]->Physics_Rotation.setZ(z);
+		strcpy(App->CL_Scene->B_Locations[Count]->Name, chr_Tag1);
+
+		// Mesh_Pos
+		App->CL_Ini_File->GetString(buff, "Mesh_Position", chr_Tag1, MAX_PATH);
+		(void)sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
+		App->CL_Scene->B_Locations[Count]->Current_Position.x = x;
+		App->CL_Scene->B_Locations[Count]->Current_Position.y = y;
+		App->CL_Scene->B_Locations[Count]->Current_Position.z = z;
+
+		App->CL_Ini_File->GetString(buff, "Physics_Position", chr_Tag1, MAX_PATH);
+		(void)sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
+		App->CL_Scene->B_Locations[Count]->Physics_Position.setX(x);
+		App->CL_Scene->B_Locations[Count]->Physics_Position.setY(y);
+		App->CL_Scene->B_Locations[Count]->Physics_Position.setZ(z);
+
+		App->CL_Ini_File->GetString(buff, "Physics_Rotation", chr_Tag1, MAX_PATH);
+		(void)sscanf(chr_Tag1, "%f,%f,%f,%f", &w, &x, &y, &z);
+		App->CL_Scene->B_Locations[Count]->Physics_Rotation.setW(w);
+		App->CL_Scene->B_Locations[Count]->Physics_Rotation.setX(x);
+		App->CL_Scene->B_Locations[Count]->Physics_Rotation.setY(y);
+		App->CL_Scene->B_Locations[Count]->Physics_Rotation.setZ(z);
 
 		Count++;
 
 	}
 
-	//App->CL_Scene->Player_Location_Count = Count;
+	App->CL_Scene->Player_Location_Count = Count;
 
 	App->CL_Player->Reset_Player(70);
 	//App->SBC_Physics->Enable_Physics(1);
