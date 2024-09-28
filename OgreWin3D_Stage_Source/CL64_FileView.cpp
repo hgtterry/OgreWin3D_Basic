@@ -862,6 +862,42 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 
 		return;
 	}
+
+	// ------------------------------------------------------------ Eviron_Entities
+	if (!strcmp(FileView_Folder, "Evironments")) // Folder
+	{
+		//App->SBC_FileView->Context_Selection = Enums::FileView_EnvironEntity_Folder;
+		return;
+	}
+	if (!strcmp(FileView_File, "Evironments"))
+	{
+		//App->SBC_FileView->Context_Selection = Enums::FileView_EnvironEntity_File;
+
+		//HideRightPanes();
+		ShowWindow(App->CL_Properties->Properties_Dlg_hWnd, 1);
+		/*App->SBC_Props_Dialog->Hide_Details_Goto_Dlg(1);
+		App->SBC_Props_Dialog->Hide_Dimensions_Dlg(1, App->SBC_Scene->V_Object[Index]->Dimensions_Locked);
+		App->SBC_Props_Dialog->Hide_Debug_Dlg(1);
+
+		App->SBC_Properties->Edit_Category = Enums::Edit_Environs;*/
+
+		//----------------------------------------------------------------------------
+		App->CL_Properties->Current_Selected_Object = Index;
+		/*App->SBC_Properties->Reset_Last_Selected_Object(App->SBC_Properties->Last_Selected_Object);
+		App->SBC_Properties->Last_Selected_Object = Index;*/
+		//----------------------------------------------------------------------------
+
+		//App->SBC_Markers->MarkerBB_Addjust(Index);
+
+		App->CL_Properties->Update_ListView_Environs();
+
+		/*if (App->SBC_Dimensions->Show_Dimensions == 1)
+		{
+			App->SBC_Dimensions->Prepare_Dimensions();
+		}*/
+
+		return;
+	}
 }
 
 // *************************************************************************

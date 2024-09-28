@@ -42,6 +42,7 @@ public:
 	bool Update_ListView_Teleport();
 	bool Update_ListView_Particles();
 	bool Update_ListView_Counters();
+	bool Update_ListView_Environs();
 
 	int Current_Selected_Object;
 
@@ -53,6 +54,7 @@ private:
 	static LRESULT CALLBACK Proc_Properties(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	void Create_Properties_hLV(void);
+	void ListView_OnClickOptions(LPARAM lParam);
 
 	HWND Properties_hLV;
 };

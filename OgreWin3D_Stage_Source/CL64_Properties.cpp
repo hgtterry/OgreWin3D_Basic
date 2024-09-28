@@ -115,18 +115,18 @@ LRESULT CALLBACK CL64_Properties::Proc_Properties(HWND hDlg, UINT message, WPARA
 	{
 		LPNMHDR some_item = (LPNMHDR)lParam;
 
-		/*if (some_item->hwndFrom == App->SBC_Properties->Properties_hLV)
+		if (some_item->hwndFrom == App->CL_Properties->Properties_hLV)
 		{
 			switch (some_item->code)
 			{
 			case NM_CLICK:
 			{
-				App->SBC_Properties->ListView_OnClickOptions(lParam);
+				App->CL_Properties->ListView_OnClickOptions(lParam);
 			}
 			}
 		}
 
-		if (some_item->idFrom == IDC_BT_OBJECTHELP2 && some_item->code == NM_CUSTOMDRAW)
+		/*if (some_item->idFrom == IDC_BT_OBJECTHELP2 && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
@@ -196,6 +196,156 @@ void CL64_Properties::Create_Properties_hLV(void)
 	}
 
 	SendMessage(Properties_hLV, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+	return;
+}
+
+// *************************************************************************
+// *		ListView_OnClickOptions:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+void CL64_Properties::ListView_OnClickOptions(LPARAM lParam)
+{
+	App->Say("Edit Test");
+	// Area
+	/*if (Edit_Category == Enums::Edit_Area)
+	{
+		App->SBC_Properties->Edit_Area_Onclick(lParam);
+
+		return;
+	}*/
+
+	// Camera
+	/*if (Edit_Category == Enums::Edit_Camera)
+	{
+		App->SBC_Properties->Edit_Camera_Onclick(lParam);
+
+		return;
+	}*/
+
+	// Player
+	/*if (Edit_Category == Enums::Edit_Player)
+	{
+		if (Edit_Physics == 0)
+		{
+			Edit_Player_Onclick(lParam);
+		}
+		else
+		{
+			Edit_Player_Physics_Onclick(lParam);
+		}
+
+		return;
+	}*/
+
+	// Objects
+	/*if (Edit_Category == Enums::FV_Edit_Object)
+	{
+		if (Edit_Physics == 0)
+		{
+			Edit_Object_Onclick(lParam);
+		}
+		return;
+	}*/
+
+	// Messages
+	/*if (Edit_Category == Enums::Edit_Message)
+	{
+		if (Edit_Physics == 0)
+		{
+			Edit_Messages_OnClick(lParam);
+		}
+		return;
+	}*/
+
+	// Move Entity
+	//if (Edit_Category == Enums::Edit_Move_Entity)
+	//{
+	//	if (Edit_Physics == 0)
+	//	{
+	//		Edit_Move_Entity_OnClick(lParam);
+	//	}
+	//	return;
+	//}
+
+	//// Sounds
+	//if (Edit_Category == Enums::Edit_Sounds)
+	//{
+	//	if (Edit_Physics == 0)
+	//	{
+	//		Edit_Sounds_OnClick(lParam);
+	//	}
+	//	return;
+	//}
+
+	//// Teleports
+	//if (Edit_Category == Enums::Edit_Teleport)
+	//{
+	//	if (Edit_Physics == 0)
+	//	{
+	//		Edit_Teleport_OnClick(lParam);
+	//	}
+	//	return;
+	//}
+
+	//// Collectables
+	//if (Edit_Category == Enums::Edit_Collectable)
+	//{
+	//	if (Edit_Physics == 0)
+	//	{
+	//		Edit_Collectables_OnClick(lParam);
+	//	}
+	//	return;
+	//}
+
+	//// Counters
+	//if (Edit_Category == Enums::Edit_Counters)
+	//{
+	//	if (Edit_Physics == 0)
+	//	{
+	//		Edit_Counters_OnClick(lParam);
+	//	}
+	//	return;
+	//}
+
+	//// Environs
+	//if (Edit_Category == Enums::Edit_Environs)
+	//{
+	//	if (Edit_Physics == 0)
+	//	{
+	//		Edit_Environs_OnClick(lParam);
+	//	}
+	//	return;
+	//}
+
+	//// Particles
+	//if (Edit_Category == Enums::Edit_Particles)
+	//{
+	//	if (Edit_Physics == 0)
+	//	{
+	//		Edit_Particle_Onclick(lParam);
+	//	}
+	//	return;
+	//}
+
+	//// Lights
+	//if (Edit_Category == Enums::Edit_Lights)
+	//{
+	//	if (Edit_Physics == 0)
+	//	{
+	//		Edit_Light_Onclick(lParam);
+	//	}
+	//	return;
+	//}
+
+	//// UserObjects
+	//if (Edit_Category == Enums::Edit_UserObjects)
+	//{
+	//	if (Edit_Physics == 0)
+	//	{
+	//		Edit_UserObjects_Onclick(lParam);
+	//	}
+	//	return;
+	//}
 
 	return;
 }
@@ -535,7 +685,6 @@ bool CL64_Properties::Update_ListView_Sounds()
 // *************************************************************************
 bool CL64_Properties::Update_ListView_Move_Entities()
 {
-
 	int index = App->CL_Properties->Current_Selected_Object;
 
 	char Num[10];
@@ -718,7 +867,6 @@ bool CL64_Properties::Update_ListView_Messages()
 // **************************************************************************
 bool CL64_Properties::Update_ListView_Teleport()
 {
-
 	int index = App->CL_Properties->Current_Selected_Object;
 
 	char Num[10];
@@ -853,7 +1001,6 @@ bool CL64_Properties::Update_ListView_Teleport()
 // *************************************************************************
 bool CL64_Properties::Update_ListView_Particles()
 {
-
 	int index = App->CL_Properties->Current_Selected_Object;
 
 	char Num[10];
@@ -965,6 +1112,55 @@ bool CL64_Properties::Update_ListView_Counters()
 		ListView_InsertItem(Properties_hLV, &pitem);
 
 		//ListView_SetItemText
+
+		for (DWORD col = 1; col < NUM_COLS; col++)
+		{
+			ListView_SetItemText(Properties_hLV, row, col,
+				const_cast<char*>(grid[col][row].c_str()));
+		}
+	}
+
+	return 1;
+}
+
+// *************************************************************************
+// *		Update_ListView_Environs:- Terry and Hazel Flanigan 2024	   *
+// *************************************************************************
+bool CL64_Properties::Update_ListView_Environs()
+{
+	int index = Current_Selected_Object;
+
+	char Num[10];
+	char IndexNum[10];
+	char chr_ID[50];
+	_itoa(App->CL_Scene->V_Object[index]->This_Object_UniqueID, Num, 10);
+	_itoa(index, IndexNum, 10);
+	strcpy(chr_ID, "Unique ID ");
+	strcat(chr_ID, Num);
+	strcat(chr_ID, "  Object Index ");
+	strcat(chr_ID, IndexNum);
+
+	SetWindowText(Properties_Dlg_hWnd, chr_ID);
+	//SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)App->SBC_Scene->V_Object[index]->Mesh_Name);
+
+	const int NUM_ITEMS = 3;
+	const int NUM_COLS = 2;
+	std::string grid[NUM_COLS][NUM_ITEMS];
+	LV_ITEM pitem;
+	memset(&pitem, 0, sizeof(LV_ITEM));
+	pitem.mask = LVIF_TEXT;
+
+	grid[0][0] = "Name", grid[1][0] = App->CL_Scene->V_Object[index]->Mesh_Name;
+	grid[0][1] = " ", grid[1][1] = " ";
+	grid[0][2] = "Evironment", grid[1][2] = "Settings";
+
+	ListView_DeleteAllItems(Properties_hLV);
+
+	for (DWORD row = 0; row < NUM_ITEMS; row++)
+	{
+		pitem.iItem = row;
+		pitem.pszText = const_cast<char*>(grid[0][row].c_str());
+		ListView_InsertItem(Properties_hLV, &pitem);
 
 		for (DWORD col = 1; col < NUM_COLS; col++)
 		{
