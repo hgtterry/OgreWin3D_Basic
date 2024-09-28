@@ -142,3 +142,64 @@ void Base_Object::Set_ImGui_Panel_Name(void)
 
 }
 
+// *************************************************************************
+// *			Render_ImGui_Panel:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+void Base_Object::Render_ImGui_Panel(void)
+{
+	ImGui::SetNextWindowPos(ImVec2(S_Message[0]->Message_PosX, S_Message[0]->Message_PosY));
+
+	ImGuiWindowFlags window_flags = 0;
+
+	if (S_Message[0]->Show_BackGround == 1)
+	{
+		window_flags |= ImGuiWindowFlags_NoSavedSettings;
+		window_flags |= ImGuiWindowFlags_NoResize;
+		window_flags |= ImGuiWindowFlags_NoTitleBar;
+		window_flags |= ImGuiWindowFlags_AlwaysAutoResize;
+	}
+	else
+	{
+		window_flags |= ImGuiWindowFlags_NoSavedSettings;
+		window_flags |= ImGuiWindowFlags_NoResize;
+		window_flags |= ImGuiWindowFlags_NoTitleBar;
+		window_flags |= ImGuiWindowFlags_AlwaysAutoResize;
+		window_flags |= ImGuiWindowFlags_NoBackground;
+	}
+
+	ImGui::PushStyleColor(ImGuiCol_WindowBg, IM_COL32(S_Message[0]->BackGround_Colour.x, S_Message[0]->BackGround_Colour.y, S_Message[0]->BackGround_Colour.z, 255));
+
+	if (!ImGui::Begin(ImGui_Panel_Name, &Show_Message_Flag, window_flags))
+	{
+		ImGui::End();
+	}
+	else
+	{
+
+		ImVec2 Size = ImGui::GetWindowSize();
+
+		ImGui::PushFont(App->CL_ImGui->font2);
+
+		ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(S_Message[0]->Text_Colour.x, S_Message[0]->Text_Colour.y, S_Message[0]->Text_Colour.z, S_Message[0]->Text_Colour.w));
+
+		ImGui::Text("%s", S_Message[0]->Message_Text);
+
+		if (S_Message[0]->PosXCentre_Flag == 1)
+		{
+			S_Message[0]->Message_PosX = ((float)App->CL_Ogre->Ogre3D_Listener->View_Width / 2) - (Size.x / 2);
+		}
+
+		if (S_Message[0]->PosYCentre_Flag == 1)
+		{
+			S_Message[0]->Message_PosY = ((float)App->CL_Ogre->Ogre3D_Listener->View_Height / 2) - (Size.y / 2);
+		}
+
+		ImGui::PopFont();
+		ImGui::PopStyleColor();
+
+		ImGui::End();
+
+
+	}
+}
+

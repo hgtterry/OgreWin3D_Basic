@@ -39,7 +39,7 @@ public:
 	bool frameRenderingQueued(const FrameEvent& evt);
 	void MoveCamera(void);
 	void Get_View_Height_Width(void);
-	void Update_Physics(float DeltaTime);
+	void Update_Game_Logic(float DeltaTime);
 
 	// Model Mode
 	void Mode_Camera_Model(float DeltaTime);

@@ -143,7 +143,8 @@ public:
 
 	bool Init_Object(void);
 	void Set_ImGui_Panel_Name(void);
-	
+	void Render_ImGui_Panel(void);
+
 	Ogre::SceneNode		*Object_Node;
 	Ogre::Entity		*Object_Ent;
 	btRigidBody			*Phys_Body;

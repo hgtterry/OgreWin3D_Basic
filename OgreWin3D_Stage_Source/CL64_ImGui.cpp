@@ -38,6 +38,12 @@ CL64_ImGui::CL64_ImGui(void)
 	// Demo 1
 	flag_Show_Physics_Debug = 0;
 
+	font0 = 0;
+	font1 = 0;
+	font2 = 0;
+	font3 = 0;
+	fontDroid = 0;
+
 	PosX = 500;
 	PosY = 500;
 
@@ -183,11 +189,6 @@ void CL64_ImGui::ImGui_Set_Colours(void)
 // *************************************************************************
 void CL64_ImGui::Load_Font(void)
 {
-	ImFont* font0;
-	ImFont* font1;
-	ImFont* font2;
-	ImFont* fontDroid;
-
 	ImGuiIO& io = ImGui::GetIO();
 	font1 = io.Fonts->AddFontFromFileTTF("Roboto-Medium.ttf", 20);
 	font2 = io.Fonts->AddFontFromFileTTF("Roboto-Medium.ttf", 48);
@@ -247,6 +248,8 @@ void CL64_ImGui::ImGui_FPS(void)
 {
 	ImGui::SetNextWindowPos(ImVec2(PosX, PosY));
 
+	ImGui::PushStyleColor(ImGuiCol_WindowBg, IM_COL32(239, 239, 239, 255));
+
 	if (!ImGui::Begin("Ogre Data", &flag_Show_FPS, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize
 		| ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoTitleBar))
 	{
@@ -268,6 +271,7 @@ void CL64_ImGui::ImGui_FPS(void)
 		PosX = ((float)App->CL_Ogre->Ogre3D_Listener->View_Width / 2) - (Size.x / 2);
 		PosY = 10;
 
+		ImGui::PopStyleColor();
 		ImGui::End();
 	}
 }
@@ -719,33 +723,23 @@ void CL64_ImGui::Demo_Options_Gui(void)
 	ImGui::SetNextWindowPos(ImVec2(250, 10), ImGuiCond_FirstUseEver);
 	ImGui::SetNextWindowSize(ImVec2(300, 70), ImGuiCond_FirstUseEver);
 
+	ImGui::PushStyleColor(ImGuiCol_WindowBg, IM_COL32(239, 239, 239, 255));
+
 	if (!ImGui::Begin("Control", &flag_Show_Demo_Options, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoResize))
 	{
 		ImGui::End();
 	}
 	else
 	{
-		// -------------------------------------- Title Bar
-		/*ImGui::SameLine(0, 180);
-		if (ImGui::Button("X"))
-		{
-			flag_Show_Demo_Options = 0;
-			RedrawWindow(App->CL_TopDlg->Demos_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-		}*/
-		
 		ImGui::Text("Keys WASD And Mouse Left Button");
 		
 		ImVec2 Size = ImGui::GetWindowSize();
 		auto textWidth = ImGui::CalcTextSize("Reset Scene").x;
-		/*ImGui::SetCursorPosX((Size.x - textWidth) * 0.5f);
-		if (ImGui::Button("Reset Scene"))
-		{
-			App->CL_Demos->Reset_View();
-		}*/
-
+		
 		Model_Data_PosX = 10;
 		Model_Data_PosY = 10;
 
+		ImGui::PopStyleColor();
 		ImGui::End();
 	}
 }

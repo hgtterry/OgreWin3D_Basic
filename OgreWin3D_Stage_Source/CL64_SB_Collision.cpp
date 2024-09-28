@@ -52,82 +52,81 @@ CL64_Collision::~CL64_Collision(void)
 // *************************************************************************
 bool CL64_Collision::Do_Teleport(int Index)
 {
-	App->Flash_Window();
-	//if (App->CL_Scene->V_Object[Index]->S_Teleport[0]->Counter_Disabled == 1)
-	//{
-	//	App->CL_Scene->B_Player[0]->Phys_Body->getWorldTransform().setOrigin(App->CL_Scene->V_Object[Index]->S_Teleport[0]->Physics_Position);
-	//	App->CL_Scene->B_Player[0]->Phys_Body->getWorldTransform().setRotation(App->SBC_Scene->V_Object[Index]->S_Teleport[0]->Physics_Rotation);
+	if (App->CL_Scene->V_Object[Index]->S_Teleport[0]->Counter_Disabled == 1)
+	{
+		App->CL_Scene->B_Player[0]->Phys_Body->getWorldTransform().setOrigin(App->CL_Scene->V_Object[Index]->S_Teleport[0]->Physics_Position);
+		App->CL_Scene->B_Player[0]->Phys_Body->getWorldTransform().setRotation(App->CL_Scene->V_Object[Index]->S_Teleport[0]->Physics_Rotation);
 
-	//	if (App->CL_Scene->V_Object[Index]->S_Teleport[0]->Play == 1)
-	//	{
-	//		char Sound[1024];
-	//		strcpy(Sound, App->SBC_SoundMgr->Default_Folder);
-	//		strcat(Sound, "\\Media\\Sounds\\");
-	//		strcat(Sound, App->CL_Scene->V_Object[Index]->S_Teleport[0]->Sound_File);
+		if (App->CL_Scene->V_Object[Index]->S_Teleport[0]->Play == 1)
+		{
+			char Sound[MAX_PATH];
+			strcpy(Sound, App->CL_SoundMgr->Default_Folder);
+			strcat(Sound, "\\Media\\Sounds\\");
+			strcat(Sound, App->CL_Scene->V_Object[Index]->S_Teleport[0]->Sound_File);
 
-	//		App->CL_Scene->V_Object[Index]->S_Teleport[0]->SndFile = App->SBC_SoundMgr->SoundEngine->play2D(Sound, false, true, true);
-	//		App->CL_Scene->V_Object[Index]->S_Teleport[0]->SndFile->setVolume(App->CL_Scene->V_Object[Index]->S_Teleport[0]->SndVolume);
-	//		App->CL_Scene->V_Object[Index]->S_Teleport[0]->SndFile->setIsPaused(false);
+			App->CL_Scene->V_Object[Index]->S_Teleport[0]->SndFile = App->CL_SoundMgr->SoundEngine->play2D(Sound, false, true, true);
+			App->CL_Scene->V_Object[Index]->S_Teleport[0]->SndFile->setVolume(App->CL_Scene->V_Object[Index]->S_Teleport[0]->SndVolume);
+			App->CL_Scene->V_Object[Index]->S_Teleport[0]->SndFile->setIsPaused(false);
 
-	//		// Environment
-	//		if (App->CL_Scene->GameMode_Running_Flag == 1)
-	//		{
-	//			App->SBC_Com_Environments->Set_Environment_By_Index(0, Old_Sound_Index);
-	//			App->SBC_Com_Environments->Set_Environment_By_Index(1, Index);
+			// Environment
+			/*if (App->CL_Scene->GameMode_Running_Flag == 1)
+			{
+				App->CL_Com_Environments->Set_Environment_By_Index(0, Old_Sound_Index);
+				App->CL_Com_Environments->Set_Environment_By_Index(1, Index);
 
-	//			Old_Sound_Index = Index;
-	//		}
-	//		else
-	//		{
-	//			App->SBC_Com_Environments->Set_Environment_By_Index(0, Index);
+				Old_Sound_Index = Index;
+			}
+			else
+			{
+				App->CL_Com_Environments->Set_Environment_By_Index(0, Index);
 
-	//			Old_Sound_Index = Index;
+				Old_Sound_Index = Index;
 
-	//		}
-	//	}
+			}*/
+		}
 
-	//	return 1;
-	//}
+		return 1;
+	}
 
-	//int Trigger_Value = App->CL_Scene->V_Object[Index]->S_Teleport[0]->Trigger_Value;
-	//int CounterIndex = App->CL_Scene->V_Object[Index]->S_Teleport[0]->Counter_ID;
+	int Trigger_Value = App->CL_Scene->V_Object[Index]->S_Teleport[0]->Trigger_Value;
+	int CounterIndex = App->CL_Scene->V_Object[Index]->S_Teleport[0]->Counter_ID;
 
-	//if (App->CL_Scene->B_Counter[CounterIndex]->Counter >= Trigger_Value)
-	//{
-	//	App->CL_Scene->B_Player[0]->Phys_Body->getWorldTransform().setOrigin(App->CL_Scene->V_Object[Index]->S_Teleport[0]->Physics_Position);
-	//	App->CL_Scene->B_Player[0]->Phys_Body->getWorldTransform().setRotation(App->CL_Scene->V_Object[Index]->S_Teleport[0]->Physics_Rotation);
+	if (App->CL_Scene->B_Counter[CounterIndex]->Counter >= Trigger_Value)
+	{
+		App->CL_Scene->B_Player[0]->Phys_Body->getWorldTransform().setOrigin(App->CL_Scene->V_Object[Index]->S_Teleport[0]->Physics_Position);
+		App->CL_Scene->B_Player[0]->Phys_Body->getWorldTransform().setRotation(App->CL_Scene->V_Object[Index]->S_Teleport[0]->Physics_Rotation);
 
-	//	if (App->CL_Scene->V_Object[Index]->S_Teleport[0]->Play == 1)
-	//	{
-	//		char Sound[1024];
-	//		strcpy(Sound, App->SBC_SoundMgr->Default_Folder);
-	//		strcat(Sound, "\\Media\\Sounds\\");
-	//		strcat(Sound, App->CL_Scene->V_Object[Index]->S_Teleport[0]->Sound_File);
+		if (App->CL_Scene->V_Object[Index]->S_Teleport[0]->Play == 1)
+		{
+			char Sound[MAX_PATH];
+			strcpy(Sound, App->CL_SoundMgr->Default_Folder);
+			strcat(Sound, "\\Media\\Sounds\\");
+			strcat(Sound, App->CL_Scene->V_Object[Index]->S_Teleport[0]->Sound_File);
 
-	//		App->CL_Scene->V_Object[Index]->S_Teleport[0]->SndFile = App->SBC_SoundMgr->SoundEngine->play2D(Sound, false, true, true);
-	//		App->CL_Scene->V_Object[Index]->S_Teleport[0]->SndFile->setVolume(App->CL_Scene->V_Object[Index]->S_Teleport[0]->SndVolume);
-	//		App->CL_Scene->V_Object[Index]->S_Teleport[0]->SndFile->setIsPaused(false);
-	//	}
+			App->CL_Scene->V_Object[Index]->S_Teleport[0]->SndFile = App->CL_SoundMgr->SoundEngine->play2D(Sound, false, true, true);
+			App->CL_Scene->V_Object[Index]->S_Teleport[0]->SndFile->setVolume(App->CL_Scene->V_Object[Index]->S_Teleport[0]->SndVolume);
+			App->CL_Scene->V_Object[Index]->S_Teleport[0]->SndFile->setIsPaused(false);
+		}
 
-	//	// Environment
-	//	if (App->CL_Scene->GameMode_Running_Flag == 1)
-	//	{
-	//		App->SBC_Com_Environments->Set_Environment_By_Index(0, Old_Sound_Index);
-	//		App->SBC_Com_Environments->Set_Environment_By_Index(1, Index);
+		// Environment
+		if (App->CL_Scene->GameMode_Running_Flag == 1)
+		{
+			//App->CL_Com_Environments->Set_Environment_By_Index(0, Old_Sound_Index);
+			//App->CL_Com_Environments->Set_Environment_By_Index(1, Index);
 
-	//		Old_Sound_Index = Index;
+			Old_Sound_Index = Index;
 
-	//	}
-	//	else
-	//	{
-	//		App->SBC_Com_Environments->Set_Environment_By_Index(0, Index);
+		}
+		else
+		{
+			//App->CL_Com_Environments->Set_Environment_By_Index(0, Index);
 
-	//		Old_Sound_Index = Index;
+			Old_Sound_Index = Index;
 
-	//	}
+		}
 
-	//	return 1;
-	//}
+		return 1;
+	}
 
 	return 1;
 }
@@ -161,13 +160,13 @@ bool CL64_Collision::Do_Collectable(int Index)
 
 		if (App->CL_Scene->V_Object[Index]->S_Collectable[0]->Maths == 1)
 		{
-			//App->CL_Scene->B_Counter[CouterID]->Counter += App->CL_Scene->V_Object[Index]->S_Collectable[0]->Value;
+			App->CL_Scene->B_Counter[CouterID]->Counter += App->CL_Scene->V_Object[Index]->S_Collectable[0]->Value;
 			return 1;
 		}
 
 		if (App->CL_Scene->V_Object[Index]->S_Collectable[0]->Maths == 2)
 		{
-			//App->CL_Scene->B_Counter[CouterID]->Counter += -App->CL_Scene->V_Object[Index]->S_Collectable[0]->Value;
+			App->CL_Scene->B_Counter[CouterID]->Counter += -App->CL_Scene->V_Object[Index]->S_Collectable[0]->Value;
 			return 1;
 		}
 	}
@@ -197,7 +196,7 @@ bool CL64_Collision::Move_Entity_Collision(int Index)
 		int Trigger_Value = App->CL_Scene->V_Object[Index]->S_MoveType[0]->Trigger_Value;
 		int CounterIndex = App->CL_Scene->V_Object[Index]->S_MoveType[0]->Counter_ID;
 
-		//if (App->CL_Scene->B_Counter[CounterIndex]->Counter >= Trigger_Value)
+		if (App->CL_Scene->B_Counter[CounterIndex]->Counter >= Trigger_Value)
 		{
 			Set_Move_Entity(Index);
 			return 1;
@@ -250,14 +249,14 @@ void CL64_Collision::Set_Move_Entity(int Index)
 	}
 
 
-	/*char Sound[1024];
-	strcpy(Sound, App->SBC_SoundMgr->Default_Folder);
+	char Sound[1024];
+	strcpy(Sound, App->CL_SoundMgr->Default_Folder);
 	strcat(Sound, "\\Media\\Sounds\\");
 	strcat(Sound, App->CL_Scene->V_Object[ObjectIndex]->Sound_File);
 
-	App->CL_Scene->V_Object[ObjectIndex]->SndFile = App->SBC_SoundMgr->SoundEngine->play2D(Sound, false, true, true);
+	App->CL_Scene->V_Object[ObjectIndex]->SndFile = App->CL_SoundMgr->SoundEngine->play2D(Sound, false, true, true);
 	App->CL_Scene->V_Object[ObjectIndex]->SndFile->setVolume(App->CL_Scene->V_Object[ObjectIndex]->SndVolume);
-	App->CL_Scene->V_Object[ObjectIndex]->SndFile->setIsPaused(false);*/
+	App->CL_Scene->V_Object[ObjectIndex]->SndFile->setIsPaused(false);
 
 	DoMove = 1; // Trigger Ogre Listener to update
 }
@@ -289,9 +288,9 @@ void CL64_Collision::MoveObject_Listener(Ogre::Real Time)
 				if (App->CL_Scene->V_Object[ObjectIndex]->S_MoveType[0]->MeshPos.x > FinalPosition)
 				{
 
-					/*App->CL_Scene->V_Object[ObjectIndex]->SndFile->stop();
+					App->CL_Scene->V_Object[ObjectIndex]->SndFile->stop();
 					App->CL_Scene->V_Object[ObjectIndex]->SndFile->drop();
-					App->CL_Scene->V_Object[ObjectIndex]->SndFile = NULL;*/
+					App->CL_Scene->V_Object[ObjectIndex]->SndFile = NULL;
 
 					DoMove = 0; // Stop Listener
 				}
@@ -314,9 +313,9 @@ void CL64_Collision::MoveObject_Listener(Ogre::Real Time)
 				if (App->CL_Scene->V_Object[ObjectIndex]->S_MoveType[0]->MeshPos.x < FinalPosition)
 				{
 
-					/*App->CL_Scene->V_Object[ObjectIndex]->SndFile->stop();
+					App->CL_Scene->V_Object[ObjectIndex]->SndFile->stop();
 					App->CL_Scene->V_Object[ObjectIndex]->SndFile->drop();
-					App->CL_Scene->V_Object[ObjectIndex]->SndFile = NULL;*/
+					App->CL_Scene->V_Object[ObjectIndex]->SndFile = NULL;
 
 					DoMove = 0; // Stop Listener
 				}
@@ -343,9 +342,9 @@ void CL64_Collision::MoveObject_Listener(Ogre::Real Time)
 
 				if (App->CL_Scene->V_Object[ObjectIndex]->S_MoveType[0]->MeshPos.y > FinalPosition)
 				{
-					/*App->CL_Scene->V_Object[ObjectIndex]->SndFile->stop();
+					App->CL_Scene->V_Object[ObjectIndex]->SndFile->stop();
 					App->CL_Scene->V_Object[ObjectIndex]->SndFile->drop();
-					App->CL_Scene->V_Object[ObjectIndex]->SndFile = NULL;*/
+					App->CL_Scene->V_Object[ObjectIndex]->SndFile = NULL;
 
 					DoMove = 0; // Stop Listener
 				}
@@ -367,9 +366,9 @@ void CL64_Collision::MoveObject_Listener(Ogre::Real Time)
 
 				if (App->CL_Scene->V_Object[ObjectIndex]->S_MoveType[0]->MeshPos.y < FinalPosition)
 				{
-					/*App->CL_Scene->V_Object[ObjectIndex]->SndFile->stop();
+					App->CL_Scene->V_Object[ObjectIndex]->SndFile->stop();
 					App->CL_Scene->V_Object[ObjectIndex]->SndFile->drop();
-					App->CL_Scene->V_Object[ObjectIndex]->SndFile = NULL;*/
+					App->CL_Scene->V_Object[ObjectIndex]->SndFile = NULL;
 
 					DoMove = 0; // Stop Listener
 				}
@@ -396,9 +395,9 @@ void CL64_Collision::MoveObject_Listener(Ogre::Real Time)
 
 				if (App->CL_Scene->V_Object[ObjectIndex]->S_MoveType[0]->MeshPos.z > FinalPosition)
 				{
-					/*App->CL_Scene->V_Object[ObjectIndex]->SndFile->stop();
+					App->CL_Scene->V_Object[ObjectIndex]->SndFile->stop();
 					App->CL_Scene->V_Object[ObjectIndex]->SndFile->drop();
-					App->CL_Scene->V_Object[ObjectIndex]->SndFile = NULL;*/
+					App->CL_Scene->V_Object[ObjectIndex]->SndFile = NULL;
 
 					DoMove = 0; // Stop Listener
 				}
@@ -420,9 +419,9 @@ void CL64_Collision::MoveObject_Listener(Ogre::Real Time)
 
 				if (App->CL_Scene->V_Object[ObjectIndex]->S_MoveType[0]->MeshPos.z < FinalPosition)
 				{
-					/*App->CL_Scene->V_Object[ObjectIndex]->SndFile->stop();
+					App->CL_Scene->V_Object[ObjectIndex]->SndFile->stop();
 					App->CL_Scene->V_Object[ObjectIndex]->SndFile->drop();
-					App->CL_Scene->V_Object[ObjectIndex]->SndFile = NULL;*/
+					App->CL_Scene->V_Object[ObjectIndex]->SndFile = NULL;
 
 					DoMove = 0; // Stop Listener
 				}
@@ -451,6 +450,38 @@ bool CL64_Collision::Play_Sound(int Index)
 	App->CL_SoundMgr->SndFile->setIsPaused(false);
 
 	App->CL_Scene->V_Object[Index]->Triggered = 1;
+
+	return 1;
+}
+
+// *************************************************************************
+// *			Message_Entity:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+bool CL64_Collision::Message_Entity(int Index)
+{
+	if (App->CL_Scene->V_Object[Index]->Triggered == 1) // Retrigger Yes No
+	{
+		return 1;
+	}
+
+	//-----------------  Do Action
+
+	if (App->CL_Scene->V_Object[Index]->S_Message[0]->Counter_Disabled == 1)
+	{
+		App->CL_Scene->V_Object[Index]->Show_Message_Flag = 1;
+		App->CL_Scene->V_Object[Index]->Triggered = 1;
+		return 1;
+	}
+
+	int Trigger_Value = App->CL_Scene->V_Object[Index]->S_Message[0]->Trigger_Value;
+	int CounterIndex = App->CL_Scene->V_Object[Index]->S_Message[0]->Counter_ID;
+
+	if (App->CL_Scene->B_Counter[CounterIndex]->Counter < Trigger_Value)
+	{
+		App->CL_Scene->V_Object[Index]->Show_Message_Flag = 1;
+		App->CL_Scene->V_Object[Index]->Triggered = 1;
+		return 1;
+	}
 
 	return 1;
 }

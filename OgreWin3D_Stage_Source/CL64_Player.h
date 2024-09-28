@@ -62,6 +62,7 @@ public:
 
 	bool AddGravity;
 	bool Is_On_Ground;
+	int Last_Message_Index;
 
 };
 

@@ -40,6 +40,7 @@ CL64_Player::CL64_Player(void)
 	Round = 0;
 	Distance = 0;
 	Life_Time = 0;
+	Last_Message_Index = 0;
 
 	AddGravity = 0;
 	Is_On_Ground = 0;
@@ -309,28 +310,24 @@ void CL64_Player::Check_Collisions(void)
 		Col_Object_Index = obB->getUserIndex2(); // Object Index
 		Col_Usage_Index = obB->getUserIndex();
 	
-		App->CL_ImGui->Show_Collision_Debug = 1;
+		//App->CL_ImGui->Show_Collision_Debug = 1;
 		
 		if (Col_Player_Index == Enums::Stage_Usage_Player)
 		{
 			if (Col_Usage_Index == 123)// && App->SBC_Scene->V_Object[Last_Message_Index]->Triggered == 1)
 			{
-				/*if (App->CL_Scene->Object_Count > 0)
+				if (App->CL_Scene->Object_Count > 0)
 				{
 					App->CL_Scene->V_Object[Last_Message_Index]->Show_Message_Flag = 0;
 					App->CL_Scene->V_Object[Last_Message_Index]->Triggered = 0;
-				}*/
+				}
 			}
 			else
 			{
-				//Col_Usage_Index = obB->getUserIndex();
-				//Col_Usage_Index = App->CL_Scene->V_Object[Col_Object_Index]->Usage;
-				//return;
 				// -------------------- Message Collision
 				if (Col_Usage_Index == Enums::Stage_Usage_Message)
 				{
-
-					/*int numContacts = contactManifold->getNumContacts();
+					int numContacts = contactManifold->getNumContacts();
 					for (int j = 0; j < numContacts; j++)
 					{
 						btManifoldPoint& pt = contactManifold->getContactPoint(j);
@@ -356,7 +353,7 @@ void CL64_Player::Check_Collisions(void)
 
 							}
 						}
-					}*/
+					}
 				}
 
 				// -------------------- Sound Collision

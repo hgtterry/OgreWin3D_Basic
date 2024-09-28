@@ -46,6 +46,12 @@ public:
 
 	void Demo_Options_Gui(void);
 
+	ImFont* font0;
+	ImFont* font1;
+	ImFont* font2;
+	ImFont* font3;
+	ImFont* fontDroid;
+
 	bool flag_Imgui_Initialized;
 	bool StartPos;
 	bool flag_Show_FPS;

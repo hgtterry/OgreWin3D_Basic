@@ -45,6 +45,7 @@ public:
 	bool Load_Project_Objects();
 	bool Load_Project_Aera();
 	bool Load_Project_Player();
+	bool Load_Project_Counters();
 
 	bool Read_EnvironEntity(int Index, char* Section);
 	bool Read_Message(int Index, char* Section);

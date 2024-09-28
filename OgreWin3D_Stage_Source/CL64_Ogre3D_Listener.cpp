@@ -67,8 +67,8 @@ CL64_Ogre3D_Listener::~CL64_Ogre3D_Listener(void)
 // *************************************************************************
 bool CL64_Ogre3D_Listener::frameStarted(const FrameEvent& evt)
 {
-	Get_View_Height_Width();
-	Update_Physics(evt.timeSinceLastFrame);
+
+	Update_Game_Logic(evt.timeSinceLastFrame);
 
 	return true;
 }
@@ -147,11 +147,41 @@ bool CL64_Ogre3D_Listener::frameEnded(const FrameEvent& evt)
 }
 
 // *************************************************************************
-// *			Update_Physics:- Terry and Hazel Flanigan 2024			   *
+// *			Update_Game_Logic:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
-void CL64_Ogre3D_Listener::Update_Physics(float DeltaTime)
+void CL64_Ogre3D_Listener::Update_Game_Logic(float DeltaTime)
 {
+	Get_View_Height_Width();
+
 	int Count = 0;
+	while (Count < App->CL_Scene->Counters_Count)
+	{
+		if (App->CL_Scene->B_Counter)
+		{
+			if (App->CL_Scene->B_Counter[Count]->Show_Panel_Flag == 1)
+			{
+				App->CL_Scene->B_Counter[Count]->Render_ImGui_Panel();
+			}
+		}
+
+		Count++;
+	}
+
+	Count = 0;
+	while (Count < App->CL_Scene->Object_Count)
+	{
+		if (App->CL_Scene->V_Object[Count]->Usage == Enums::Stage_Usage_Message)
+		{
+			if (App->CL_Scene->V_Object[Count]->Show_Message_Flag == 1)
+			{
+				App->CL_Scene->V_Object[Count]->Render_ImGui_Panel();
+			}
+		}
+
+		Count++;
+	}
+
+	Count = 0;
 
 	if (Run_Physics == 1 && App->flag_OgreStarted == 1)
 	{

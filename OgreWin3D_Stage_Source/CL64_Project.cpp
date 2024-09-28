@@ -113,9 +113,9 @@ bool CL64_Project::Load_Project()
 	Options->Has_Objects = App->CL_Ini_File->GetInt("Options", "Objects_Count", 0, 10);
 	Options->Has_Counters = App->CL_Ini_File->GetInt("Options", "Counters_Count", 0, 10);
 
-	//App->CL_Scene->UniqueID_Object_Counter = App->Cl_Ini->GetInt("Options", "Objects_ID_Count", 0, 10);
-	//App->CL_Scene->UniqueID_Counters_Count = App->Cl_Ini->GetInt("Options", "Counters_ID_Count", 0, 10);
-	//App->CL_Scene->UniqueID_Area_Count = App->Cl_Ini->GetInt("Options", "Areas_ID_Count", 0, 10);
+	App->CL_Scene->UniqueID_Object_Counter = App->CL_Ini_File->GetInt("Options", "Objects_ID_Count", 0, 10);
+	App->CL_Scene->UniqueID_Counters_Count = App->CL_Ini_File->GetInt("Options", "Counters_ID_Count", 0, 10);
+	App->CL_Scene->UniqueID_Area_Count = App->CL_Ini_File->GetInt("Options", "Areas_ID_Count", 0, 10);
 
 	//App->SBC_Build->GameOptions->Show_FPS = App->Cl_Ini->GetInt("Config", "Show_FPS", 0, 10);
 	//App->SBC_Build->GameOptions->FullScreen = App->Cl_Ini->GetInt("Config", "Game_FullScreen", 1, 10);
@@ -156,12 +156,12 @@ bool CL64_Project::Load_Project()
 		App->CL_Objects_Create->Add_Objects_From_File();
 	}
 
-	//// ------------------------------------- Counters
-	//if (Options->Has_Counters > 0)
-	//{
-	//	Load_Project_Counters();
-	//	App->SBC_Display->Add_Counters_From_File();
-	//}
+	// ------------------------------------- Counters
+	if (Options->Has_Counters > 0)
+	{
+		Load_Project_Counters();
+		App->CL_Display->Add_Counters_From_File();
+	}
 
 
 	//App->CL_Ogre->OgreListener->GD_CameraMode = Enums::CamDetached;
@@ -219,6 +219,79 @@ bool CL64_Project::Load_Get_Resource_Path()
 	strcat(m_Main_Assets_Path, "\\");
 
 	App->CL_Resources->Add_Resource_Location_Project(m_Main_Assets_Path);
+
+	return 1;
+}
+
+// *************************************************************************
+// *	  	Load_Project_Counters:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+bool CL64_Project::Load_Project_Counters()
+{
+	char Object_Ini_Path[MAX_PATH];
+	char chr_Tag1[MAX_PATH];
+	int Counters_Count = 0;
+
+	float w = 0;
+	float x = 0;
+	float y = 0;
+	float z = 0;
+
+	strcpy(Object_Ini_Path, m_Project_Sub_Folder);
+	strcat(Object_Ini_Path, "\\");
+
+	strcat(Object_Ini_Path, m_Level_Name);
+	strcat(Object_Ini_Path, "\\");
+
+	strcat(Object_Ini_Path, "Display");
+	strcat(Object_Ini_Path, "\\");
+
+	//---------------------------------------------------
+
+	strcat(Object_Ini_Path, "Counters.edf");
+
+	App->CL_Ini_File->SetPathName(Object_Ini_Path);
+
+	Counters_Count = App->CL_Ini_File->GetInt("Counters", "Counters_Count", 0, 10);
+
+	int Count = 0;
+
+	while (Count < Counters_Count)
+	{
+		App->CL_Scene->B_Counter[Count] = new Base_Counter();
+		//App->SBC_Display->Set_Counter_Defaults(Count);
+
+		char n_buff[255];
+		char buff[255];
+		strcpy(buff, "Counter_");
+		_itoa(Count, n_buff, 10);
+		strcat(buff, n_buff);
+
+		App->CL_Ini_File->GetString(buff, "Counter_Name", chr_Tag1, MAX_PATH);
+		strcpy(App->CL_Scene->B_Counter[Count]->Panel_Name, chr_Tag1);
+
+
+		App->CL_Scene->B_Counter[Count]->Unique_ID = App->CL_Ini_File->GetInt(buff, "Counter_ID", 0, 10);
+
+		App->CL_Ini_File->GetString(buff, "Counter_Pos", chr_Tag1, MAX_PATH);
+		(void)sscanf(chr_Tag1, "%f,%f", &x, &y);
+		App->CL_Scene->B_Counter[Count]->PosX = x;
+		App->CL_Scene->B_Counter[Count]->PosY = y;
+
+		App->CL_Ini_File->GetString(buff, "Counter_Text", chr_Tag1, MAX_PATH);
+		strcpy(App->CL_Scene->B_Counter[Count]->Text, chr_Tag1);
+
+		App->CL_Scene->B_Counter[Count]->Set_ImGui_Panel_Name();
+
+
+		App->CL_Scene->B_Counter[Count]->Show_Panel_Flag = App->CL_Ini_File->GetInt(buff, "Counter_Display", 0, 10);
+
+		App->CL_Scene->B_Counter[Count]->Start_Value = App->CL_Ini_File->GetInt(buff, "Counter_Start", 0, 10);
+
+		Count++;
+	}
+
+	App->CL_Scene->Counters_Count = Count;
 
 	return 1;
 }
@@ -330,7 +403,7 @@ bool CL64_Project::Load_Project_Objects()
 
 			App->CL_Ini_File->GetString(mSection, "Sound_Volume", chr_Tag1, MAX_PATH);
 			(void)sscanf(chr_Tag1, "%f", &x);
-			//V_Object->SndVolume = x;
+			V_Object->SndVolume = x;
 		}
 
 		// Colectable Entity

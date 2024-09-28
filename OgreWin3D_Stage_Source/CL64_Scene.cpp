@@ -33,6 +33,11 @@ CL64_Scene::CL64_Scene(void)
 	Flag_Area_Added = 0;
 	Scene_Loaded = 0;
 	Player_Location_Count = 0;
+	GameMode_Running_Flag = 0;
+	Counters_Count = 0;
+	UniqueID_Object_Counter = 0;
+	UniqueID_Counters_Count = 0;
+	UniqueID_Area_Count = 0;
 
 	flag_Model_Loaded = 0;
 	flag_Player_Added = 0;
@@ -56,6 +61,7 @@ CL64_Scene::CL64_Scene(void)
 
 	B_Area[19] = { nullptr };
 	B_Locations[19] = { nullptr };
+	B_Counter[19] = { nullptr };
 
 	int Count = 0;
 	while (Count < 99)
