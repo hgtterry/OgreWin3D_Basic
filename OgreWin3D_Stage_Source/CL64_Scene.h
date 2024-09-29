@@ -127,10 +127,11 @@ public:
 	// Stage 
 	int Object_Count;
 	int Area_Count;
-	bool Flag_Area_Added;
+	int Camera_Count;
+	bool flag_Area_Added;
 	bool Scene_Loaded;
-	bool Player_Location_Count;
 	bool GameMode_Running_Flag;
+	int Player_Location_Count;
 	int Counters_Count;
 	int UniqueID_Object_Counter;
 	int UniqueID_Counters_Count;

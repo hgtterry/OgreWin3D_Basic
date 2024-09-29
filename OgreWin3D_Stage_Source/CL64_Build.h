@@ -23,10 +23,27 @@ THE SOFTWARE.
 */
 
 #pragma once
+
+// ------------------------ Game Options
+typedef struct Game_Options
+{
+	bool Show_FPS;
+	bool FullScreen;
+	bool Zipped_Assets_Flag;
+	bool Front_Dialog_Flag;
+
+}Game_Options;
+
 class CL64_Build
 {
 public:
 	CL64_Build();
 	~CL64_Build();
+
+	void Init_Build_Game_Class();
+
+	char GameName[MAX_PATH];
+
+	Game_Options* GameOptions;
 };
 

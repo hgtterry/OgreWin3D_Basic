@@ -340,7 +340,7 @@ bool CL64_File_IO::SaveSelectedFile(char* Extension, char* File)
 }
 
 // *************************************************************************
-// *		Check_File_Exist:- Terry and Hazel Flanigan 2022		 	   *
+// *		Check_File_Exist:- Terry and Hazel Flanigan 2024		 	   *
 // *************************************************************************
 bool CL64_File_IO::Check_File_Exist(char* Full_Path)
 {
@@ -350,6 +350,33 @@ bool CL64_File_IO::Check_File_Exist(char* Full_Path)
 	HANDLE hFind;
 
 	strcpy(pSearchPath, Full_Path);
+
+	hFind = FindFirstFile(pSearchPath, &FindFileData);
+	if (hFind == INVALID_HANDLE_VALUE)
+	{
+		return 0;
+	}
+	else
+	{
+		FindClose(hFind);
+		return 1;
+	}
+
+	return 0;
+}
+
+// *************************************************************************
+// *			SearchFolders:- Terry and Hazel Flanigan 2024	 	 	   *
+// *************************************************************************
+bool CL64_File_IO::SearchFolders(char* Path, char* File)
+{
+	char pSearchPath[1024];
+
+	WIN32_FIND_DATA FindFileData;
+	HANDLE hFind;
+
+	strcpy(pSearchPath, Path);
+	strcat(pSearchPath, File);
 
 	hFind = FindFirstFile(pSearchPath, &FindFileData);
 	if (hFind == INVALID_HANDLE_VALUE)

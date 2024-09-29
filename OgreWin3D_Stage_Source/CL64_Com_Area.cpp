@@ -123,7 +123,7 @@ void CL64_Com_Area::Add_Aera_To_Project(int Index, char* FileName, char* Resourc
 
 	Area->Usage = Enums::Stage_Usage_Room;
 
-	App->CL_Scene->Flag_Area_Added = 1;
+	App->CL_Scene->flag_Area_Added = 1;
 }
 
 // *************************************************************************

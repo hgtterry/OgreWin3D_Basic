@@ -30,7 +30,8 @@ CL64_Scene::CL64_Scene(void)
 	// Stage
 	Object_Count = 0;
 	Area_Count = 0;
-	Flag_Area_Added = 0;
+	Camera_Count = 0;
+	flag_Area_Added = 0;
 	Scene_Loaded = 0;
 	Player_Location_Count = 0;
 	GameMode_Running_Flag = 0;

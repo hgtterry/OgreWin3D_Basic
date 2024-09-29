@@ -26,6 +26,7 @@ public:
 	bool Open_Resource_File(char* Extension, char* Title, char* StartDirectory);
 	bool SaveSelectedFile(char* Extension, char* File);
 	bool Check_File_Exist(char* Full_Path);
+	bool SearchFolders(char* Path, char* File);
 
 	std::string Get_Model_Path_File_Name();
 

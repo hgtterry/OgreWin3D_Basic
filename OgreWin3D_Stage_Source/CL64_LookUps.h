@@ -28,5 +28,9 @@ class CL64_LookUps
 public:
 	CL64_LookUps();
 	~CL64_LookUps();
+
+	int Get_Adjusted_Counters_Count(void);
+	int Player_Location_GetCount(void);
+
 };
 

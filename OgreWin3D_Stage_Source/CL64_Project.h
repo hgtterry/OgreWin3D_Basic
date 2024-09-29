@@ -42,7 +42,7 @@ public:
 	~CL64_Project();
 
 	void Start_Save_Project_Dialog();
-
+	
 	bool Load_Project();
 	bool Load_Project_Objects();
 	bool Load_Project_Aera();
@@ -56,6 +56,8 @@ public:
 	bool Read_Particle(int Index, char* Section);
 	bool Read_MoveEntity(int Index, char* Section);
 
+	bool Copy_Assets(char* SourceFolder, char* DestinationFolder);
+
 	char m_Project_Name[MAX_PATH];
 	char m_Level_Name[MAX_PATH];
 
@@ -66,6 +68,11 @@ public:
 
 	char m_Main_Assets_Path[MAX_PATH];
 
+	// Save
+	char m_Aera_Folder_Path[MAX_PATH];
+	char m_Players_Folder_Path[MAX_PATH];
+	char m_Cameras_Folder_Path[MAX_PATH];
+
 	bool Directory_Changed_Flag;
 
 private:
@@ -74,6 +81,14 @@ private:
 
 	bool Save_Project();
 	bool Save_Project_Ini();
+	bool Save_Level_Folder();
+	bool Save_Main_Asset_Folder();
+	bool Save_Aera_Folder();
+	bool Save_Aeras_Data();
+	bool Save_Players_Folder();
+	bool Save_Player_Data();
+	bool Save_Cameras_Folder();
+	bool Save_Cameras_Data();
 
 	void Set_Paths();
 	bool Load_Get_Resource_Path();

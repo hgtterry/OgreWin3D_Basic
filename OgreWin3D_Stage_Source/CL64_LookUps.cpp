@@ -33,3 +33,45 @@ CL64_LookUps::CL64_LookUps()
 CL64_LookUps::~CL64_LookUps()
 {
 }
+
+// *************************************************************************
+// *	  Get_Adjusted_Counters_Count:- Terry and Hazel Flanigan 2024	   *
+// *************************************************************************
+int CL64_LookUps::Get_Adjusted_Counters_Count(void)
+{
+	int New_Count = 0;
+	int Count = 0;
+	int Total = App->CL_Scene->Counters_Count;
+
+	while (Count < Total)
+	{
+		if (App->CL_Scene->B_Counter[Count]->Deleted == 0)
+		{
+			New_Count++;
+		}
+
+		Count++;
+	}
+
+	return New_Count;
+}
+
+// *************************************************************************
+// *	  	Player_Location_GetCount:- Terry and Hazel Flanigan 2024	   *
+// *************************************************************************
+int CL64_LookUps::Player_Location_GetCount(void)
+{
+	int RealCount = 0;
+	int Count = 0;
+	int Total = App->CL_Scene->Player_Location_Count;
+
+	while (Count < Total)
+	{
+		if (App->CL_Scene->B_Locations[Count]->Deleted == 0)
+		{
+			RealCount++;
+		}
+		Count++;
+	}
+	return RealCount;
+}

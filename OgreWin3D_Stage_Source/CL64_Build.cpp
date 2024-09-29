@@ -28,8 +28,24 @@ THE SOFTWARE.
 
 CL64_Build::CL64_Build()
 {
+	strcpy(GameName, "YourGameName");
+
+	Init_Build_Game_Class();
 }
 
 CL64_Build::~CL64_Build()
 {
+}
+
+// *************************************************************************
+// *	  	Init_Build_Game_Class:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+void CL64_Build::Init_Build_Game_Class()
+{
+	GameOptions = new Game_Options;
+	GameOptions->Show_FPS = 0;
+	GameOptions->FullScreen = 0;
+	GameOptions->Zipped_Assets_Flag = 1;
+	GameOptions->Front_Dialog_Flag = 1;
+
 }
