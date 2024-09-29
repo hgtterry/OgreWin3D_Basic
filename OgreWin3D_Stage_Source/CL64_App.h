@@ -71,6 +71,8 @@ THE SOFTWARE.
 #include "CL64_SB_Collision.h"
 #include "CL64_SoundMgr.h"
 #include "CL64_Display.h"
+#include "CL64_Build.h"
+#include "CL64_LookUps.h"
 
 class CL64_App
 {
@@ -125,6 +127,8 @@ public:
 	CL64_Collision*			CL_Collision;
 	CL64_SoundMgr*			CL_SoundMgr;
 	CL64_Display*			CL_Display;
+	CL64_Build*				CL_Build;
+	CL64_LookUps*			CL_LookUps;
 
 	void InitApp(void);
 	void Init_Dialogs(void);

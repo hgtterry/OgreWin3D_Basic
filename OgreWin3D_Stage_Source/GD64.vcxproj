@@ -171,6 +171,7 @@
     <ClInclude Include="Base_Player.h" />
     <ClInclude Include="CL64_App.h" />
     <ClInclude Include="CL64_Assimp.h" />
+    <ClInclude Include="CL64_Build.h" />
     <ClInclude Include="CL64_Bullet.h" />
     <ClInclude Include="CL64_Bullet_Debug_World.h" />
     <ClInclude Include="CL64_Camera.h" />
@@ -194,6 +195,7 @@
     <ClInclude Include="CL64_Ini_File.h" />
     <ClInclude Include="CL64_Keyboard.h" />
     <ClInclude Include="CL64_Level.h" />
+    <ClInclude Include="CL64_LookUps.h" />
     <ClInclude Include="CL64_Mesh_Manager.h" />
     <ClInclude Include="CL64_Motioins.h" />
     <ClInclude Include="CL64_Object.h" />
@@ -229,6 +231,7 @@
     <ClCompile Include="Base_Player.cpp" />
     <ClCompile Include="CL64_App.cpp" />
     <ClCompile Include="CL64_Assimp.cpp" />
+    <ClCompile Include="CL64_Build.cpp" />
     <ClCompile Include="CL64_Bullet.cpp" />
     <ClCompile Include="CL64_Bullet_Debug_World.cpp" />
     <ClCompile Include="CL64_Camera.cpp" />
@@ -252,6 +255,7 @@
     <ClCompile Include="CL64_Ini_File.cpp" />
     <ClCompile Include="CL64_Keyboard.cpp" />
     <ClCompile Include="CL64_Level.cpp" />
+    <ClCompile Include="CL64_LookUps.cpp" />
     <ClCompile Include="CL64_Mesh_Manager.cpp" />
     <ClCompile Include="CL64_Motioins.cpp" />
     <ClCompile Include="CL64_Object.cpp" />

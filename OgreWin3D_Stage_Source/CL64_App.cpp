@@ -73,6 +73,8 @@ CL64_App::CL64_App(void)
 	CL_Collision =			nullptr;
 	CL_SoundMgr =			nullptr;
 	CL_Display =			nullptr;
+	CL_Build =				nullptr;
+	CL_LookUps =			nullptr;
 
 	//-------------------------------------
 
@@ -198,7 +200,9 @@ void CL64_App::InitApp(void)
 	CL_Collision =			new CL64_Collision();
 	CL_SoundMgr =			new CL64_SoundMgr();
 	CL_Display =			new CL64_Display();
-
+	CL_Build =				new CL64_Build();
+	CL_LookUps =			new CL64_LookUps();
+	
 	SetBrushes_Fonts();
 
 	LoadString(App->hInst, IDS_VERSION, App_Version, MAX_PATH);
