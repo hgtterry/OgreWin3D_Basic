@@ -892,7 +892,7 @@ bool CL64_Properties::Update_ListView_Teleport()
 
 	char chr_Goto_Location[100];
 	int Goto_ID = App->CL_Scene->V_Object[index]->S_Teleport[0]->Location_ID;
-	//strcpy(chr_Goto_Location, App->CL_Scene->B_Locations[Goto_ID]->Name);
+	strcpy(chr_Goto_Location, App->CL_Scene->B_Locations[Goto_ID]->Name);
 
 	char chr_Volume[100];
 	float sum2 = App->CL_Scene->V_Object[index]->S_Teleport[0]->SndVolume;

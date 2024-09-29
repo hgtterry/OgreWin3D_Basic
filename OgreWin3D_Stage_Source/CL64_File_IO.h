@@ -43,6 +43,8 @@ public:
 	char Save_PathFileName[MAX_PATH];
 	char Save_FileName[MAX_PATH];
 
+	char DeskTop_Folder[MAX_PATH];
+
 	TCHAR szSelectedDir[MAX_PATH];
 	char BrowserMessage[MAX_PATH];
 

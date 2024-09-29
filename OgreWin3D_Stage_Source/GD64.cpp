@@ -375,6 +375,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			return TRUE;
 		}
 		
+		// File Save ------------------------------------------------
+		case ID_FILE_SAVEPROJECTAS:
+		{
+			App->CL_Project->Start_Save_Project_Dialog();
+			return 1;
+		}
+
 		// File Open ------------------------------------------------
 		case ID_OPEN_PROJECT:
 		{

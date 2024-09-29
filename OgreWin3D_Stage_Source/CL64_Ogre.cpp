@@ -96,7 +96,7 @@ void CL64_Ogre::InitOgre(void)
 
 	char Test_Project[MAX_PATH];
 	strcpy(Test_Project, App->GD_Directory_FullPath);
-	strcat(Test_Project, "\\Projects\\First_Project_Prj\\Project.SBProj");
+	strcat(Test_Project, "\\Projects\\First_Project_Prj\\Project.owproj");
 
 	App->CL_Importers->Reload_FromResentFiles(Test_Project);
 	App->CL_Level->Set_Scene();

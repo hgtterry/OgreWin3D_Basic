@@ -41,6 +41,8 @@ public:
 	CL64_Project();
 	~CL64_Project();
 
+	void Start_Save_Project_Dialog();
+
 	bool Load_Project();
 	bool Load_Project_Objects();
 	bool Load_Project_Aera();
@@ -64,8 +66,18 @@ public:
 
 	char m_Main_Assets_Path[MAX_PATH];
 
+	bool Directory_Changed_Flag;
+
 private:
+
+	static LRESULT CALLBACK Save_Project_Dialog_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+
+	bool Save_Project();
+	bool Save_Project_Ini();
+
 	void Set_Paths();
 	bool Load_Get_Resource_Path();
+
+	FILE* WriteFile;
 };
 

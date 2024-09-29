@@ -68,6 +68,7 @@
 #define IDB_FILECHANGEDSELECTED         180
 #define IDB_FVFOLDERRED                 181
 #define IDD_PROPERTIES                  182
+#define IDD_PROJECTSAVE                 183
 #define IDC_CK_SU_FULLSCREEN            1000
 #define IDC_ST_STARTUP                  1001
 #define IDC_CK_SU_FULL3DVIEW            1002
@@ -146,6 +147,7 @@
 #define IDC_CK_FPSNOLOCK                1031
 #define IDC_CK_EXPORT_TO_OGRE           1031
 #define IDC_CK_SUBFOLDER                1031
+#define IDC_CK_SP_DESKTOP               1031
 #define IDC_CB_FPSLIST                  1032
 #define IDC_ST_FPSSETTINGS              1033
 #define IDC_CB_MOTIONS_MOTIONS          1036
@@ -184,6 +186,7 @@
 #define IDC_ST_PT_MATERIALFILE          1068
 #define IDC_ST_PT_NUMTEXTUNITS          1069
 #define IDC_TREE1                       1070
+#define IDC_STPJFOLDERPATH              1071
 #define ID_VIEW_RESET                   32771
 #define ID_VIEW_MAX3DVIEW               32772
 #define ID_DEBUG_TESTPREFERANCE         32773
@@ -226,6 +229,9 @@
 #define ID_WINDOWS_PROPERTIES           32810
 #define ID_OPEN_PROJECT                 32811
 #define ID_FILE_EXPORT32812             32812
+#define ID_FILE_SAVEPROJECTAS           32813
+#define ID_FILE_SAVE                    32814
+#define ID_Menu                         32815
 #define IDC_STATIC                      -1
 
 // Next default values for new objects
@@ -233,9 +239,9 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
-#define _APS_NEXT_RESOURCE_VALUE        183
-#define _APS_NEXT_COMMAND_VALUE         32813
-#define _APS_NEXT_CONTROL_VALUE         1071
+#define _APS_NEXT_RESOURCE_VALUE        184
+#define _APS_NEXT_COMMAND_VALUE         32816
+#define _APS_NEXT_CONTROL_VALUE         1072
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif

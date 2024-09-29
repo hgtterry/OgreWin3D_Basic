@@ -40,6 +40,8 @@ CL64_File_IO::CL64_File_IO()
 	OgreCFG_FileName[0] = 0;
 	OgreCFG_Path_FileName[0] = 0;
 
+	DeskTop_Folder[0] = 0;
+
 	ofn = { 0 };
 }
 

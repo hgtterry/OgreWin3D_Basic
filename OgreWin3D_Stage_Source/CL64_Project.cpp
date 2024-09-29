@@ -23,6 +23,7 @@ THE SOFTWARE.
 */
 
 #include "pch.h"
+#include "resource.h"
 #include "CL64_App.h"
 #include "CL64_Project.h"
 
@@ -43,11 +44,471 @@ CL64_Project::CL64_Project()
 
 	strcpy(m_Project_Name, "First_Project");
 	strcpy(m_Level_Name, "First_Level");
+
+	Directory_Changed_Flag = 0;
+
+	WriteFile = NULL;
 	
 }
 
 CL64_Project::~CL64_Project()
 {
+}
+
+// *************************************************************************
+// *	  Start_Save_Project_Dialog:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+void CL64_Project::Start_Save_Project_Dialog()
+{
+	DialogBox(App->hInst, (LPCTSTR)IDD_PROJECTSAVE, App->Fdlg, (DLGPROC)Save_Project_Dialog_Proc);
+
+}
+
+// *************************************************************************
+// *		Save_Project_Dialog_Proc:- Terry and Hazel Flanigan 2024  	   *
+// *************************************************************************
+LRESULT CALLBACK CL64_Project::Save_Project_Dialog_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+	switch (message)
+	{
+	case WM_INITDIALOG:
+	{
+		SendDlgItemMessage(hDlg, IDC_STPJFOLDERPATH, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		/*SendDlgItemMessage(hDlg, IDC_STPROJECTNAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_STLEVELNAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		SendDlgItemMessage(hDlg, IDC_STPATH, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_STPN, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_STLN, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		SendDlgItemMessage(hDlg, IDC_BTCHANGE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BTCHANGELEVEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));*/
+
+		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		SendDlgItemMessage(hDlg, IDC_CK_SP_DESKTOP, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+
+		/*SendDlgItemMessage(hDlg, IDC_BTPJBROWSE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_STBANNER, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
+
+		SendDlgItemMessage(hDlg, IDC_CKQUICKLOAD, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));*/
+
+		//SetDlgItemText(hDlg, IDC_STPROJECTNAME, (LPCTSTR)App->SBC_Project->m_Project_Name);
+		//SetDlgItemText(hDlg, IDC_STLEVELNAME, (LPCTSTR)App->SBC_Project->m_Level_Name);
+		SetDlgItemText(hDlg, IDC_STPJFOLDERPATH, (LPCTSTR)App->CL_Project->m_Project_Sub_Folder);
+
+		SetDlgItemText(hDlg, IDC_STBANNER, (LPCTSTR)"Save Project As");
+
+		//HWND temp = GetDlgItem(hDlg, IDC_CKQUICKLOAD);
+		//SendMessage(temp, BM_SETCHECK, 1, 0);
+
+		return TRUE;
+	}
+
+	case WM_CTLCOLORSTATIC:
+	{
+
+		if (GetDlgItem(hDlg, IDC_STPJFOLDERPATH) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->Brush_White;
+		}
+
+		/*if (GetDlgItem(hDlg, IDC_STPROJECTNAME) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->Brush_White;
+		}
+
+		if (GetDlgItem(hDlg, IDC_STLEVELNAME) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->Brush_White;
+		}
+
+		if (GetDlgItem(hDlg, IDC_STPN) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 255));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		if (GetDlgItem(hDlg, IDC_STLN) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 255));
+			SetTextColor((HDC)wParam, RGB(0, 0, 255));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		if (GetDlgItem(hDlg, IDC_STPATH) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 255));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		if (GetDlgItem(hDlg, IDC_STBANNER) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 255));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		if (GetDlgItem(hDlg, IDC_CKQUICKLOAD) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 255));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}*/
+
+		if (GetDlgItem(hDlg, IDC_CK_SP_DESKTOP) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 255));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		return FALSE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->AppBackground;
+	}
+
+	case WM_NOTIFY:
+	{
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		/*if (some_item->idFrom == IDC_BTCHANGE && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BTCHANGELEVEL && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BTPJBROWSE && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}*/
+
+		if (some_item->idFrom == IDOK)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDCANCEL)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		return CDRF_DODEFAULT;
+	}
+	case WM_COMMAND:
+
+		if (LOWORD(wParam) == IDC_CK_SP_DESKTOP)
+		{
+			HWND temp = GetDlgItem(hDlg, IDC_CK_SP_DESKTOP);
+
+			int test = SendMessage(temp, BM_GETCHECK, 0, 0);
+			if (test == BST_CHECKED)
+			{
+				strcpy(App->CL_Project->m_Project_Sub_Folder, App->CL_File_IO->DeskTop_Folder);
+				strcat(App->CL_Project->m_Project_Sub_Folder, "\\");
+				strcat(App->CL_Project->m_Project_Sub_Folder, App->CL_Project->m_Project_Name);
+				strcat(App->CL_Project->m_Project_Sub_Folder, "_Prj");
+
+				SetDlgItemText(hDlg, IDC_STPJFOLDERPATH, (LPCTSTR)App->CL_Project->m_Project_Sub_Folder);
+
+				App->CL_Project->Directory_Changed_Flag = 1;
+
+				//EnableWindow(GetDlgItem(hDlg, IDC_BTPJBROWSE), 0);
+				EnableWindow(GetDlgItem(hDlg, IDC_STPJFOLDERPATH), 0);
+
+			}
+			else
+			{
+				//EnableWindow(GetDlgItem(hDlg, IDC_BTPJBROWSE), 1);
+				EnableWindow(GetDlgItem(hDlg, IDC_STPJFOLDERPATH), 1);
+			}
+
+			return TRUE;
+		}
+
+		/*if (LOWORD(wParam) == IDC_BTPJBROWSE)
+		{
+			strcpy(App->Com_CDialogs->BrowserMessage, "Select Folder To Place New Project a sub folder will be created");
+			int Test = App->Com_CDialogs->StartBrowser("", App->Fdlg);
+
+			if (Test == 0) { return true; }
+
+			strcpy(App->SBC_Project->m_Project_Sub_Folder, App->Com_CDialogs->szSelectedDir);
+			strcat(App->SBC_Project->m_Project_Sub_Folder, App->SBC_Project->m_Project_Name);
+			strcat(App->SBC_Project->m_Project_Sub_Folder, "_Prj");
+
+			SetDlgItemText(hDlg, IDC_STPJFOLDERPATH, (LPCTSTR)App->SBC_Project->m_Project_Sub_Folder);
+
+			App->SBC_Project->Directory_Changed_Flag = 1;
+
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_BTCHANGE)
+		{
+			strcpy(App->SBC_Dialogs->btext, "Change Project Name");
+			strcpy(App->SBC_Dialogs->Chr_Text, App->SBC_Project->m_Project_Name);
+
+			App->SBC_Dialogs->Dialog_Text();
+
+			if (App->SBC_Dialogs->Canceled == 1)
+			{
+				return TRUE;
+			}
+
+			int len1 = strlen(App->SBC_Project->m_Project_Sub_Folder);
+			int len2 = strlen(App->SBC_Project->m_Project_Name);
+			App->SBC_Project->m_Project_Sub_Folder[len1 - (len2 + 5)] = 0;
+
+
+			strcpy(App->SBC_Project->m_Project_Name, App->SBC_Dialogs->Chr_Text);
+
+			strcpy(App->SBC_Project->m_Project_Sub_Folder, App->SBC_Project->m_Project_Sub_Folder);
+			strcat(App->SBC_Project->m_Project_Sub_Folder, "\\");
+			strcat(App->SBC_Project->m_Project_Sub_Folder, App->SBC_Project->m_Project_Name);
+			strcat(App->SBC_Project->m_Project_Sub_Folder, "_Prj");
+
+			SetDlgItemText(hDlg, IDC_STPROJECTNAME, (LPCTSTR)App->SBC_Project->m_Project_Name);
+			SetDlgItemText(hDlg, IDC_STPJFOLDERPATH, (LPCTSTR)App->SBC_Project->m_Project_Sub_Folder);
+
+			App->SBC_Project->Directory_Changed_Flag = 1;
+
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_BTCHANGELEVEL)
+		{
+			strcpy(App->SBC_Dialogs->btext, "Change Level Name");
+			strcpy(App->SBC_Dialogs->Chr_Text, App->SBC_Project->m_Level_Name);
+
+			App->SBC_Dialogs->Dialog_Text();
+			if (App->SBC_Dialogs->Canceled == 1)
+			{
+				return TRUE;
+			}
+
+			strcpy(App->SBC_Project->m_Level_Name, App->SBC_Dialogs->Chr_Text);
+			SetDlgItemText(hDlg, IDC_STLEVELNAME, (LPCTSTR)App->SBC_Project->m_Level_Name);
+
+			App->SBC_Project->Directory_Changed_Flag = 1;
+
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_CKQUICKLOAD)
+		{
+			HWND temp = GetDlgItem(hDlg, IDC_CKQUICKLOAD);
+
+			int test = SendMessage(temp, BM_GETCHECK, 0, 0);
+			if (test == BST_CHECKED)
+			{
+				App->SBC_Project->Set_QuickLoad_Flag = 1;
+			}
+			else
+			{
+				App->SBC_Project->Set_QuickLoad_Flag = 0;
+			}
+
+			return TRUE;
+		}*/
+
+		if (LOWORD(wParam) == IDCANCEL)
+		{
+			App->CL_Project->Directory_Changed_Flag = 0;
+
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDOK)
+		{
+
+			App->CL_Project->Save_Project();
+			//App->SBC_Project->Project_Loaded = 1;
+
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+		break;
+
+	}
+	return FALSE;
+}
+// *************************************************************************
+// *	  		Save_Project:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+bool CL64_Project::Save_Project()
+{
+
+	if (_mkdir(m_Project_Sub_Folder) == 0)
+	{
+		_chdir(m_Project_Sub_Folder);
+	}
+	else
+	{
+		_chdir(m_Project_Sub_Folder);
+	}
+
+	bool test = Save_Project_Ini();
+	if (test == 0)
+	{
+		return 0;
+	}
+
+	//Save_Level_Folder();
+	//Save_Main_Asset_Folder();
+
+	//_chdir(m_Level_Folder_Path);
+
+	//if (App->SBC_Scene->Area_Added == 1)
+	//{
+	//	Save_Aera_Folder();
+	//}
+
+	//if (App->SBC_Scene->Player_Added == 1)
+	//{
+	//	Save_Players_Folder();
+	//}
+
+	//Save_Cameras_Folder();
+	//Save_Objects_Folder();
+	//Save_Display_Folder();
+
+	//App->SBC_FileView->Change_Level_Name();
+	//App->SBC_FileView->Change_Project_Name();
+
+	//App->Set_Main_TitleBar(App->SBC_FileIO->Project_Path_File_Name);
+
+	//App->CL_Object->Clear_Modified_Objects(); // Clear Altered FileView Items
+
+	//App->SBC_Project->Directory_Changed_Flag = 0;
+
+	//strcpy(App->SBC_FileIO->Project_Path_File_Name, m_Ini_Path_File_Name);
+	//App->Set_Main_TitleBar(App->SBC_FileIO->Project_Path_File_Name);
+	//App->SBC_FileIO->RecentFileHistory_Update();
+
+
+	//if (Set_QuickLoad_Flag == 1)
+	//{
+	//	strcpy(App->CL_Prefs->QL_User_File, App->SBC_FileIO->Project_Path_File_Name);
+	//	App->CL_Prefs->Prefs_QuickLoad_Default_f = 0;
+	//	App->CL_Prefs->Write_Preferences();
+	//}
+
+
+	App->Say("Scene Saved");
+
+	return 1;
+}
+
+// *************************************************************************
+// *	  		Save_Project_Ini:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+bool CL64_Project::Save_Project_Ini()
+{
+	m_Ini_Path_File_Name[0] = 0;
+
+	strcpy(m_Ini_Path_File_Name, m_Project_Sub_Folder);
+	strcat(m_Ini_Path_File_Name, "\\");
+	strcat(m_Ini_Path_File_Name, "Project.owproj");
+
+	/*int test = App->CL_File_IO->SearchFolders(m_Project_Sub_Folder, "\\Project.SBProj");
+	if (test == 1)
+	{
+		App->CL_Dialogs->YesNo("File Exsits", "Do you want to update File", 1);
+
+		bool Doit = App->SBC_Dialogs->Canceled;
+		if (Doit == 1)
+		{
+			return 0;
+		}
+	}*/
+
+	WriteFile = nullptr;
+
+	WriteFile = fopen(m_Ini_Path_File_Name, "wt");
+
+	if (!WriteFile)
+	{
+		App->Say("Cant Create File");
+		return 0;
+	}
+
+	fprintf(WriteFile, "%s\n", "[Version_Data]");
+	fprintf(WriteFile, "%s%s\n", "Version=", "V1.2");
+
+	fprintf(WriteFile, "%s\n", " ");
+
+	fprintf(WriteFile, "%s\n", "[Files]");
+	fprintf(WriteFile, "%s%s\n", "Project_Name=", m_Project_Name);
+	fprintf(WriteFile, "%s%s\n", "Level_Name=", m_Level_Name);
+	//fprintf(WriteFile, "%s%s\n", "Game_Name=", App->CL_Build->GameName);
+
+
+	fprintf(WriteFile, "%s\n", " ");
+
+	fprintf(WriteFile, "%s\n", "[Options]");
+	fprintf(WriteFile, "%s%i\n", "Areas_Count=", App->CL_Scene->Area_Count);
+	fprintf(WriteFile, "%s%i\n", "Areas_ID_Count=", App->CL_Scene->UniqueID_Area_Count);
+
+	fprintf(WriteFile, "%s%i\n", "Players_Count=", App->CL_Player->Player_Count);
+	//fprintf(WriteFile, "%s%i\n", "Cameras_Count=", App->CL_Scene->Camera_Count);
+	fprintf(WriteFile, "%s%i\n", "Objects_Count=", App->CL_Scene->Object_Count);
+	fprintf(WriteFile, "%s%i\n", "Objects_ID_Count=", App->CL_Scene->UniqueID_Object_Counter);
+
+
+	//int Adjusted = App->CL_LookUps->Get_Adjusted_Counters_Count();
+
+	//fprintf(WriteFile, "%s%i\n", "Counters_Count=", Adjusted);
+	fprintf(WriteFile, "%s%i\n", "Counters_ID_Count=", App->CL_Scene->UniqueID_Counters_Count);
+
+	fprintf(WriteFile, "%s\n", " ");
+
+	fprintf(WriteFile, "%s\n", "[Config]");
+	/*fprintf(WriteFile, "%s%i\n", "Show_FPS=", App->SBC_Build->GameOptions->Show_FPS);
+	fprintf(WriteFile, "%s%i\n", "Game_FullScreen=", App->SBC_Build->GameOptions->FullScreen);
+	fprintf(WriteFile, "%s%i\n", "Zipped_Assets=", App->SBC_Build->GameOptions->Zipped_Assets_Flag);
+	fprintf(WriteFile, "%s%i\n", "Use_Front_Dlg=", App->SBC_Build->GameOptions->Front_Dialog_Flag);*/
+
+	fclose(WriteFile);
+
+	return 1;
 }
 
 // *************************************************************************
