@@ -72,6 +72,8 @@ public:
 	char m_Aera_Folder_Path[MAX_PATH];
 	char m_Players_Folder_Path[MAX_PATH];
 	char m_Cameras_Folder_Path[MAX_PATH];
+	char m_Objects_Folder_Path[MAX_PATH];
+	char m_Display_Folder_Path[MAX_PATH];
 
 	bool Directory_Changed_Flag;
 
@@ -89,6 +91,10 @@ private:
 	bool Save_Player_Data();
 	bool Save_Cameras_Folder();
 	bool Save_Cameras_Data();
+	bool Save_Objects_Folder();
+	bool Save_Objects_Data();
+	bool Save_Display_Folder();
+	bool Save_Display_Data();
 
 	void Set_Paths();
 	bool Load_Get_Resource_Path();
