@@ -51,6 +51,39 @@ CL64_Player::~CL64_Player(void)
 }
 
 // *************************************************************************
+// *	  					Reset_Class Bernie							   *
+// *************************************************************************
+void CL64_Player::Reset_Class(void)
+{
+	int Count = 0;
+
+	while (Count < Player_Count) // Remove Ogre Objects
+	{
+		if (App->CL_Scene->B_Player[Count])
+		{
+			if (App->CL_Scene->B_Player[Count]->Player_Ent && App->CL_Scene->B_Player[Count]->Player_Node)
+			{
+				App->CL_Ogre->mSceneMgr->destroySceneNode(App->CL_Scene->B_Player[Count]->Player_Node);
+				App->CL_Ogre->mSceneMgr->destroyEntity(App->CL_Scene->B_Player[Count]->Player_Ent);
+				App->CL_Ogre->mSceneMgr->destroyCamera(App->CL_Scene->B_Player[Count]->CameraPitch);
+				App->CL_Scene->B_Player[Count]->Player_Ent = nullptr;
+				App->CL_Scene->B_Player[Count]->Player_Node = nullptr;
+				App->CL_Scene->B_Player[Count]->CameraPitch = nullptr;
+			}
+
+			delete App->CL_Scene->B_Player[Count];
+			App->CL_Scene->B_Player[Count] = nullptr;
+		}
+
+		Count++;
+	}
+
+	Player_Count = 0;
+	App->CL_Scene->flag_Player_Added = 0;
+
+}
+
+// *************************************************************************
 // *	  	Create_Player_Object:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
 void CL64_Player::Create_Player_Object(void)

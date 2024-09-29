@@ -29,6 +29,8 @@ public:
 	CL64_Com_Area();
 	~CL64_Com_Area();
 
+	void Reset_Class(void);
+
 	void Set_Area_Defaults(int Index);
 	void Add_Aera_To_Project(int Index, char* FileName, char* Resource_Location);
 private:

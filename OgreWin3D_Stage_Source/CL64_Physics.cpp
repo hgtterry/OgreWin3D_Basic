@@ -92,5 +92,21 @@ void CL64_Physics::Set_Physics_Position(int Index)
 	Ogre::Vector3 Centre = App->CL_Scene->V_Object[Index]->Object_Ent->getWorldBoundingBox(true).getCenter();
 	App->CL_Scene->V_Object[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
 	App->CL_Scene->V_Object[Index]->Physics_Pos = Centre;
+}
+
+// *************************************************************************
+// *		 Enable_Physics:- Terry and Hazel Flanigan 2024				   *
+// *************************************************************************
+void CL64_Physics::Enable_Physics(bool Enable)
+{
+	int f = App->CL_Scene->B_Player[0]->Phys_Body->getCollisionFlags();
+
+	//App->CL_Ogre->Ogre3D_Listener->Dubug_Physics_Draw = Enable;
+	App->CL_Ogre->Ogre3D_Listener->Run_Physics = Enable;
+	App->CL_Ogre->Bullet_Debug_Listener->Render_Debug_Flag = Enable;
+
+	//App->CL_Player->ShowDebug = Enable;
+
+	App->CL_Scene->B_Player[0]->Phys_Body->setCollisionFlags(f ^ btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
 
 }

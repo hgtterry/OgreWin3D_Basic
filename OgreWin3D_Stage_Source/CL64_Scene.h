@@ -80,9 +80,8 @@ public:
 	~CL64_Scene(void);
 
 	void Reset_Class(void);
+	void Reset_Counters();
 
-	// Sets up the Application and Scene Depending on whats Happening 
-	// Mode Sets the Scene
 	void Set_Scene(int Mode); 
 
 	bool Clear_Level();
@@ -127,14 +126,16 @@ public:
 	int Object_Count;
 	int Area_Count;
 	int Camera_Count;
-	bool flag_Area_Added;
-	bool Scene_Loaded;
-	bool GameMode_Running_Flag;
 	int Player_Location_Count;
 	int Counters_Count;
 	int UniqueID_Object_Counter;
 	int UniqueID_Counters_Count;
 	int UniqueID_Area_Count;
+
+	bool flag_Area_Added;
+	bool Scene_Loaded;
+	bool GameMode_Running_Flag;
+	bool Project_Resources_Created;
 
 	// Ogre
 	int Ogre_Face_Count;

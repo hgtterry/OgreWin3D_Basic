@@ -29,6 +29,8 @@ public:
 	CL64_Player(void);
 	~CL64_Player(void);
 
+	void Reset_Class(void);
+
 	void Create_Player_Object(void);
 	void Initialize() const;
 	void Show_Debug_Player(bool Show);

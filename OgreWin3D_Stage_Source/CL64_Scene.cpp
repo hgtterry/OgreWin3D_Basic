@@ -39,6 +39,7 @@ CL64_Scene::CL64_Scene(void)
 	UniqueID_Object_Counter = 0;
 	UniqueID_Counters_Count = 0;
 	UniqueID_Area_Count = 0;
+	Project_Resources_Created = 0;
 
 	flag_Model_Loaded = 0;
 	flag_Player_Added = 0;
@@ -92,53 +93,46 @@ CL64_Scene::~CL64_Scene(void)
 // *************************************************************************
 // *			Reset_Class:- Terry and Hazel Flanigan 2024				   *
 // *************************************************************************
-void CL64_Scene::Reset_Class(void)
+void CL64_Scene::Reset_Class()
 {
-	flag_Model_Loaded = 0;
-	Loaded_File_Type = Enums::Loaded_File_Type_None;
+	//int i; // Remove Physics Objects
+	//for (i = App->SBC_Bullet->dynamicsWorld->getNumCollisionObjects() - 1; i >= 0; i--)
+	//{
+	//	btCollisionObject* obj = App->SBC_Bullet->dynamicsWorld->getCollisionObjectArray()[i];
+	//	App->SBC_Bullet->dynamicsWorld->removeCollisionObject(obj);
+	//	delete obj;
+	//}
 
-	int Count = 0;
-	int Index = GroupCount;
-
-	//--------------------- Clear Groups
-	while (Count < Index)
+	int Count = 0; // Remove Ogre Objects
+	while (Count < Object_Count)
 	{
-		if (Group[Count] != nullptr)
+		if (V_Object[Count]->Object_Node && V_Object[Count]->Object_Ent)
 		{
-			Group[Count]->vertex_Data.clear();
-			Group[Count]->vertex_Data.resize(0);
-			Group[Count]->Face_Data.resize(0);
-			Group[Count]->Normal_Data.resize(0);
-			Group[Count]->MapCord_Data.resize(0);
+			V_Object[Count]->Object_Node->detachAllObjects();
 
-			if (Group[Count]->Base_Bitmap)
-			{
-				DeleteObject(Group[Count]->Base_Bitmap);
-			}
+			App->CL_Ogre->mSceneMgr->destroySceneNode(V_Object[Count]->Object_Node);
 
-			delete Group[Count];
-			Group[Count] = nullptr;
+			App->CL_Ogre->mSceneMgr->destroyEntity(V_Object[Count]->Object_Ent);
+
+			V_Object[Count]->Object_Node = NULL;
+			V_Object[Count]->Object_Ent = NULL;
 		}
 
 		Count++;
 	}
 
-	//--------------------- Reset Counters and Strings
-	Texture_FolderPath[0] = 0;
-	GroupCount = 0;
-	TextureCount = 0;
-	VerticeCount = 0;
-	FaceCount = 0;
-	MotionCount = 0;
-	BoneCount = 0;
 
-	strcpy(FileName, "None");
-	strcpy(Path_FileName, "None");
-	strcpy(Model_FolderPath, "None");
-	strcpy(Texture_FolderPath, "None");
-	strcpy(JustName, "None");
+	// Remove V_Objects
+	Count = 0;
+	int NumObjects = V_Object.size();
 
-	flag_Model_Loaded = 0;
+	while (Count < NumObjects)
+	{
+		delete V_Object[Count];
+		Count++;
+	}
+
+	V_Object.resize(0);
 }
 
 // *************************************************************************
@@ -149,7 +143,7 @@ bool CL64_Scene::Clear_Level()
 	//App->SBC_Gui_Environ->Reset_Class();
 	App->CL_Project->Reset_Class();
 	App->CL_FileView->Reset_Class();
-	App->CL_TopDlg->Reset_Class(); // Look At
+	App->CL_TopDlg->Reset_Class(); // Look At Terry
 	App->CL_Properties->Reset_Class();
 
 	//App->SBC_Markers->BoxNode->setVisible(false);
@@ -158,37 +152,37 @@ bool CL64_Scene::Clear_Level()
 	//App->Set_Main_TitleBar(" ");
 
 
-	//if (App->SBC_Scene->Scene_Loaded == 1)
-	//{
-	//	App->SBC_Physics->Enable_Physics(0);
+	if (App->CL_Scene->Scene_Loaded == 1)
+	{
+		App->CL_Physics->Enable_Physics(0); // Look At Terry
 
-	//	App->SBC_Player->Reset_Class();
+		//App->CL_Player->Reset_Class(); // Look At Terry
 
-	//	App->SBC_Com_Area->Reset_Class();
+		App->CL_Com_Area->Reset_Class();
 
-	//	// Bullet Related
-	//	int i;
-	//	for (i = App->SBC_Bullet->dynamicsWorld->getNumCollisionObjects() - 1; i >= 0; i--)
-	//	{
-	//		btCollisionObject* obj = App->SBC_Bullet->dynamicsWorld->getCollisionObjectArray()[i];
-	//		App->SBC_Bullet->dynamicsWorld->removeCollisionObject(obj);
-	//		delete obj;
-	//	}
-	//}
+		// Bullet Related
+		int i;
+		for (i = App->CL_Bullet->dynamicsWorld->getNumCollisionObjects() - 1; i >= 0; i--)
+		{
+			btCollisionObject* obj = App->CL_Bullet->dynamicsWorld->getCollisionObjectArray()[i];
+			App->CL_Bullet->dynamicsWorld->removeCollisionObject(obj);
+			delete obj;
+		}
+	}
 
 
 	//Scene_Modified = 0;
 
-	//Reset_Class(); // This One
+	Reset_Class(); // This One
 
-	//App->CL_Ogre->OgreListener->GD_CameraMode = Enums::CamNone;
+	App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_None;
 
-	//App->SBC_Com_Camera->Reset_View();
+	//App->CL_Com_Camera->Reset_View(); // Look At Terry
 
-	//Delete_Resources_Group();
-	//Project_Resources_Created = 0;
+	App->CL_Resources->Delete_Project_Resources_Group();
+	Project_Resources_Created = 0;
 
-	//Reset_Counters();
+	Reset_Counters();
 
 	//App->SBC_FileView->SelectItem(App->SBC_FileView->FV_LevelFolder);
 
@@ -196,6 +190,34 @@ bool CL64_Scene::Clear_Level()
 	//App->CL_Ogre->mSceneMgr->destroyAllParticleSystems();
 
 	return 1;
+}
+
+// *************************************************************************
+// *			Reset_Counters:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void CL64_Scene::Reset_Counters()
+{
+	Object_Count = 0;
+	UniqueID_Object_Counter = 0;
+
+	Camera_Count = 0;
+	//UniqueID_Camera_Count = 0;
+
+	Counters_Count = 0;
+	UniqueID_Counters_Count = 0;
+
+	Project_Resources_Created = 0;
+
+	//MessageNew_Count = 0;
+	//UniqueID_MessageNew_Count = 500;
+
+	//CurrentCamMode = 0;
+	//Scene_Modified = 0;
+
+	Scene_Loaded = 0;
+
+	Player_Location_Count = 0;
+	//Locations_ID_Counter = 0;
 }
 
 // *************************************************************************

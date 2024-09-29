@@ -35,6 +35,37 @@ CL64_Com_Area::~CL64_Com_Area()
 }
 
 // *************************************************************************
+// *	  		Reset_Class:- Terry and Hazel Flanigan 2024				   *
+// *************************************************************************
+void CL64_Com_Area::Reset_Class(void)
+{
+	int Count = 0;
+
+	while (Count < App->CL_Scene->Area_Count) // Remove Ogre Objects
+	{
+		if (App->CL_Scene->B_Area[Count])
+		{
+			if (App->CL_Scene->B_Area[Count]->Area_Ent && App->CL_Scene->B_Area[Count]->Area_Node)
+			{
+				App->CL_Ogre->mSceneMgr->destroySceneNode(App->CL_Scene->B_Area[Count]->Area_Node);
+				App->CL_Ogre->mSceneMgr->destroyEntity(App->CL_Scene->B_Area[Count]->Area_Ent);
+				App->CL_Scene->B_Area[Count]->Area_Ent = nullptr;
+				App->CL_Scene->B_Area[Count]->Area_Node = nullptr;
+			}
+
+			delete App->CL_Scene->B_Area[Count];
+			App->CL_Scene->B_Area[Count] = nullptr;
+		}
+
+		Count++;
+	}
+
+	App->CL_Scene->Area_Count = 0;
+	App->CL_Scene->flag_Area_Added = 0;
+
+}
+
+// *************************************************************************
 // *		Set_Area_Defaults:- Terry and Hazel Flanigan 2024		  	   *
 // *************************************************************************
 void CL64_Com_Area::Set_Area_Defaults(int Index)

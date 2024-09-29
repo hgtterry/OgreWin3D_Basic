@@ -33,14 +33,14 @@ public:
 	void Destroy_Resources_Group(Ogre::String ResourceGroup);
 
 	bool Create_Project_Resources_Group();
+	bool Delete_Project_Resources_Group();
+
 	bool Add_Resource_Location_Project(char* Resource_Location);
 
 	bool View_Texture(char* FileName, HWND Owner_hDlg);
 	bool View_File(char* FileName, HWND Owner_hDlg);
 
 	bool Export_File(char* FileName);
-
-	bool Project_Resources_Created;
 
 	char mSelected_File[MAX_PATH];
 
