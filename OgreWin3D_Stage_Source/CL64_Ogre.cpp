@@ -98,8 +98,11 @@ void CL64_Ogre::InitOgre(void)
 	strcpy(Test_Project, App->GD_Directory_FullPath);
 	strcat(Test_Project, "\\Projects\\First_Project_Prj\\Project.owproj");
 
-	App->CL_Importers->Reload_FromResentFiles(Test_Project);
-	App->CL_Level->Set_Scene();
+	bool test = App->CL_Importers->Reload_FromResentFiles(Test_Project);
+	if (test == 1)
+	{
+		App->CL_Level->Set_Scene();
+	}
 	//bool test = App->CL_Level->Load_Level(false);
 
 }

@@ -428,15 +428,15 @@ bool CL64_Importers::Load_Project(char* Extension, char* Extension2)
 // *************************************************************************
 // *	Reload_FromResentFiles:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-void CL64_Importers::Reload_FromResentFiles(char* ResentPathAndFile)
+bool CL64_Importers::Reload_FromResentFiles(char* ResentPathAndFile)
 {
 
 	// Check Recent File Exsists
 	bool Result = App->CL_File_IO->Check_File_Exist(ResentPathAndFile);
 	if (Result == 0)
 	{
-		App->Say(" Can Not Find File:- This may be due to it has been deleted or renamed");
-		return;
+		App->Say(" Can Not Find File",(LPSTR)"This may be due to it has been deleted or renamed.");
+		return 0;
 	}
 
 	strcpy(App->CL_File_IO->Project_Path_File_Name, ResentPathAndFile);
@@ -447,6 +447,7 @@ void CL64_Importers::Reload_FromResentFiles(char* ResentPathAndFile)
 
 	bool test = App->CL_Project->Load_Project();
 
+	return 1;
 	/*App->CL_Prefs->Update_User_File(ResentPathAndFile);
 
 	App->SBC_TopTabs->Project_Loaded_Reset();

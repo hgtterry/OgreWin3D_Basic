@@ -22,27 +22,39 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-#pragma once
-class CL64_Importers
+#include "pch.h"
+#include "CL64_App.h"
+#include "CL64_Display.h"
+
+CL64_Display::CL64_Display(void)
 {
-public:
-	CL64_Importers();
-	~CL64_Importers();
+}
 
-	bool Assimp_Loader(bool UseDialog,const char* Extension, const char* Extension2);
+CL64_Display::~CL64_Display(void)
+{
+}
 
-	bool Load_Ogre_Model(bool Use_File_Dialog);
-	bool Load_Ogre_Resource_CFG(bool Use_File_Dialog);
-	bool Load_Project(char* Extension, char* Extension2);
+// *************************************************************************
+//			Add_Counters_From_File:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+bool CL64_Display::Add_Counters_From_File() // From File
+{
 
-	void Reload_Ogre_Model(void);
-	bool Reload_FromResentFiles(char* ResentPathAndFile);
+	int Counters_Count = App->CL_Scene->Counters_Count;
+	int Count = 0;
 
-	void Scan_Material_Files(void);
-	std::string Get_FileName_From_Path(char* pString);
+	while (Count < Counters_Count)
+	{
 
-	Ogre::String Ogre_CFG_Resource_Group;
+		HTREEITEM Temp = App->CL_FileView->Add_Item(App->CL_FileView->FV_Counters_Folder, App->CL_Scene->B_Counter[Count]->Panel_Name, Count, false);
+		App->CL_Scene->B_Counter[Count]->FileViewItem = Temp;
 
-	bool Flag_Reload_Ogre_Model;
-}; 
+		App->CL_Scene->B_Counter[Count]->Counter = App->CL_Scene->B_Counter[Count]->Start_Value;
 
+		Count++;
+	}
+
+	App->CL_FileView->Set_FolderActive(App->CL_FileView->FV_Counters_Folder);
+
+	return 1;
+}

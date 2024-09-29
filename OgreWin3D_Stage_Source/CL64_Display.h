@@ -23,26 +23,14 @@ THE SOFTWARE.
 */
 
 #pragma once
-class CL64_Importers
+class CL64_Display
 {
 public:
-	CL64_Importers();
-	~CL64_Importers();
 
-	bool Assimp_Loader(bool UseDialog,const char* Extension, const char* Extension2);
+	CL64_Display(void);
+	~CL64_Display(void);
 
-	bool Load_Ogre_Model(bool Use_File_Dialog);
-	bool Load_Ogre_Resource_CFG(bool Use_File_Dialog);
-	bool Load_Project(char* Extension, char* Extension2);
+	bool Add_Counters_From_File();
 
-	void Reload_Ogre_Model(void);
-	bool Reload_FromResentFiles(char* ResentPathAndFile);
-
-	void Scan_Material_Files(void);
-	std::string Get_FileName_From_Path(char* pString);
-
-	Ogre::String Ogre_CFG_Resource_Group;
-
-	bool Flag_Reload_Ogre_Model;
-}; 
+};
 
