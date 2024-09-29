@@ -501,10 +501,10 @@ bool CL64_Project::Save_Project_Ini()
 	fprintf(WriteFile, "%s\n", " ");
 
 	fprintf(WriteFile, "%s\n", "[Config]");
-	/*fprintf(WriteFile, "%s%i\n", "Show_FPS=", App->SBC_Build->GameOptions->Show_FPS);
-	fprintf(WriteFile, "%s%i\n", "Game_FullScreen=", App->SBC_Build->GameOptions->FullScreen);
-	fprintf(WriteFile, "%s%i\n", "Zipped_Assets=", App->SBC_Build->GameOptions->Zipped_Assets_Flag);
-	fprintf(WriteFile, "%s%i\n", "Use_Front_Dlg=", App->SBC_Build->GameOptions->Front_Dialog_Flag);*/
+	//fprintf(WriteFile, "%s%i\n", "Show_FPS=", App->CL_Build->GameOptions->Show_FPS);
+	//fprintf(WriteFile, "%s%i\n", "Game_FullScreen=", App->CL_Build->GameOptions->FullScreen);
+	//fprintf(WriteFile, "%s%i\n", "Zipped_Assets=", App->CL_Build->GameOptions->Zipped_Assets_Flag);
+	//fprintf(WriteFile, "%s%i\n", "Use_Front_Dlg=", App->CL_Build->GameOptions->Front_Dialog_Flag);
 
 	fclose(WriteFile);
 
