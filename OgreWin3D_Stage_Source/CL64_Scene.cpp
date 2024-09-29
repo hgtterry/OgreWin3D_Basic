@@ -175,14 +175,16 @@ bool CL64_Scene::Clear_Level()
 
 	Reset_Class(); // This One
 
-	App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_None;
+	App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_Model;
 
-	//App->CL_Com_Camera->Reset_View(); // Look At Terry
+	App->CL_Camera->Reset_View(); // Look At Terry
 
 	App->CL_Resources->Delete_Project_Resources_Group();
 	Project_Resources_Created = 0;
 
 	Reset_Counters();
+
+	App->CL_Ogre->mSceneMgr->setSkyDome(false, "OW3D/CloudySky");
 
 	//App->SBC_FileView->SelectItem(App->SBC_FileView->FV_LevelFolder);
 
