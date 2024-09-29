@@ -385,7 +385,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		// File Open ------------------------------------------------
 		case ID_OPEN_PROJECT:
 		{
-			App->CL_Importers->Load_Project((LPSTR)"Project   *.SBProj\0*.SBProj\0", (LPSTR) "Project");
+			App->CL_Importers->Load_Project((LPSTR)"Project   *.owproj\0*.owproj\0", (LPSTR) "Project");
 			return 1;
 		}
 
@@ -474,7 +474,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 			if (App->CL_Dialogs->Canceled == 0)
 			{
-				App->CL_Scene->Clear_Scene_And_Reset();
+				App->CL_Scene->Clear_Level();
 			}
 
 			return TRUE;

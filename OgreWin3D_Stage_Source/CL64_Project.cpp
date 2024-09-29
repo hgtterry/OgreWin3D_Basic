@@ -63,6 +63,17 @@ CL64_Project::~CL64_Project()
 }
 
 // *************************************************************************
+// *	  			Reset_Class:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+bool CL64_Project::Reset_Class()
+{
+	strcpy(m_Project_Name, "First_Project");
+	strcpy(m_Level_Name, "First_Level");
+
+	return 1;
+}
+
+// *************************************************************************
 // *	  Start_Save_Project_Dialog:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
 void CL64_Project::Start_Save_Project_Dialog()

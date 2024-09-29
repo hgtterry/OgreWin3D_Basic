@@ -147,10 +147,10 @@ void CL64_Scene::Reset_Class(void)
 bool CL64_Scene::Clear_Level()
 {
 	//App->SBC_Gui_Environ->Reset_Class();
-	//App->SBC_Project->Reset_Class();
-	//App->SBC_FileView->Reset_Class();
-	//App->SBC_TopTabs->Reset_Class();
-	//App->SBC_Properties->Reset_Class();
+	App->CL_Project->Reset_Class();
+	App->CL_FileView->Reset_Class();
+	App->CL_TopDlg->Reset_Class(); // Look At
+	App->CL_Properties->Reset_Class();
 
 	//App->SBC_Markers->BoxNode->setVisible(false);
 	//App->SBC_Markers->Arrow_Node->setVisible(false);
@@ -196,54 +196,6 @@ bool CL64_Scene::Clear_Level()
 	//App->CL_Ogre->mSceneMgr->destroyAllParticleSystems();
 
 	return 1;
-}
-
-// *************************************************************************
-// *		Clear_Scene_And_Reset:- Terry and Hazel Flanigan 2024		   *
-// *************************************************************************
-void CL64_Scene::Clear_Scene_And_Reset(void)
-{
-	App->CL_Motions->Reset_Class(); // Call First in case animations in Progress
-
-	App->CL_Ogre->Ogre3D_Listener->Ogre_Model_Loaded = 0;
-
-	// Clear any Mesh Data
-	Reset_Class(); // Reset this Class
-
-	// Remove the Test Mesh
-	App->CL_Ogre->Delete_TestMesh();
-
-	Reset_Main_Entity();
-
-	App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_Model;
-	App->CL_Ogre->Ogre3D_Listener->Run_Physics = 0;
-	App->CL_Ogre->Enable_Fog(false);
-
-	App->CL_TopDlg->Reset_Class();
-
-	App->CL_Ogre->camNode->setOrientation(Ogre::Quaternion::IDENTITY);
-
-	App->CL_Grid->Reset_Class();
-	
-	App->CL_Camera->Reset_View();
-
-	App->CL_Bullet->Clear_Trimesh();
-
-	App->CL_ImGui->Reset_Class();
-
-	App->CL_Ogre->Ogre3D_Listener->Ogre_Model_Loaded = 0;
-	
-	if (App->CL_Converters->World_Ent)
-	{
-		// Needs Looking At
-		App->CL_Ogre->mSceneMgr->destroyAllEntities();
-		App->CL_Converters->World_Ent = nullptr;
-	}
-	
-	App->CL_Resources->Reset_Class();
-	App->CL_Props_Textures->Reset_Class();
-
-	SetWindowText(App->MainHwnd, "OgreWin3D_Basic");
 }
 
 // *************************************************************************

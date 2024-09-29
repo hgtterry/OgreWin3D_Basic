@@ -30,6 +30,8 @@ public:
 	CL64_FileView(void);
 	~CL64_FileView(void);
 
+	void Reset_Class();
+
 	void Start_FileView(void);
 	void Init_FileView(void);
 	HTREEITEM Add_Item(HTREEITEM Folder, char* SFileName, int Index, bool NewItem);

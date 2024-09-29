@@ -30,6 +30,9 @@ public:
 	CL64_Properties(void);
 	~CL64_Properties(void);
 
+	void Reset_Class();
+	void Clear_Listview();
+
 	void Start_Properties(void);
 
 	bool Update_ListView_Area();

@@ -41,6 +41,8 @@ public:
 	CL64_Project();
 	~CL64_Project();
 
+	bool Reset_Class();
+
 	void Start_Save_Project_Dialog();
 	
 	bool Load_Project();

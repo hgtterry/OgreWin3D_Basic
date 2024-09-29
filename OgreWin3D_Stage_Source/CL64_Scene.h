@@ -88,7 +88,6 @@ public:
 	bool Clear_Level();
 
 	void Create_Mesh_Group(int Index);
-	void Clear_Scene_And_Reset(void);
 	void Set_Paths(void);
 	void Reset_Main_Entity(void);
 	void Show_Main_Entity(bool Show);

@@ -42,6 +42,25 @@ CL64_Properties::~CL64_Properties(void)
 }
 
 // *************************************************************************
+// *			Reset_Class:- Terry and Hazel Flanigan 2024 		 	   *
+// *************************************************************************
+void CL64_Properties::Reset_Class()
+{
+	//App->SBC_Com_Camera->Hide_Cam_Dlg(0);
+	//App->SBC_Player->Hide_Player_Dlg(0);
+	//App->SBC_Props_Dialog->Hide_Area_Dlg(0);
+	Clear_Listview();
+}
+
+// *************************************************************************
+// *			Clear_Listview:- Terry and Hazel Flanigan 2024		 	   *
+// *************************************************************************
+void CL64_Properties::Clear_Listview()
+{
+	ListView_DeleteAllItems(Properties_hLV);
+}
+
+// *************************************************************************
 // *		Start_GD_Properties:- Terry and Hazel Flanigan 2024    	 	   *
 // *************************************************************************
 void CL64_Properties::Start_Properties(void)
