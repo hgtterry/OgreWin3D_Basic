@@ -17,22 +17,17 @@ appreciated but is not required.
 #include "CL64_App.h"
 #include "CL64_File_IO.h"
 
-#include "Shlobj.h"
-#include "io.h"
+#include <string>
+#include <shobjidl.h> 
 
 CL64_File_IO::CL64_File_IO()
 {
-	Project_File_Name[0] = 0;
-	Project_Path_File_Name[0] = 0;
-
-	strcpy(Data_mFilename, "No Set");
-	strcpy(Data_Path_mFilename, "No Set");
 
 	Model_FileName[0] = 0;
 	Model_Path_FileName[0] = 0;
 
-	Save_PathFileName[0] = 0;;
-	Save_FileName[0] = 0;;
+	Save_PathFileName[0] = 0;
+	Save_FileName[0] = 0;
 
 	szSelectedDir[0] = 0;
 	BrowserMessage[0] = 0;
@@ -50,41 +45,95 @@ CL64_File_IO::~CL64_File_IO()
 }
 
 // *************************************************************************
-// *			Open_Project_File:- Terry and Hazel Flanigan 2024		   *
+// *				Open_File:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-bool CL64_File_IO::Open_Project_File(char* Extension, char* Title, char* StartDirectory)
+bool CL64_File_IO::Open_File()
 {
-	strcpy(Project_File_Name, "");
-	strcpy(Project_Path_File_Name, "");
+	//  CREATE FILE OBJECT INSTANCE
+	HRESULT f_SysHr = CoInitializeEx(NULL, COINIT_APARTMENTTHREADED | COINIT_DISABLE_OLE1DDE);
+	if (FAILED(f_SysHr))
+		return FALSE;
 
-	ZeroMemory(&ofn, sizeof(ofn));
-	ofn.lStructSize = sizeof(ofn);
-	ofn.hwndOwner = App->MainHwnd;
-	ofn.hInstance = App->hInst;
-	ofn.lpstrFile = Project_Path_File_Name;						// full path and file name
-	ofn.nMaxFile = sizeof(Project_Path_File_Name);
-	ofn.lpstrFilter = Extension;
-
-	ofn.nFilterIndex = 1;
-	ofn.lpstrFileTitle = Project_File_Name;						// Just File Name
-	ofn.nMaxFileTitle = sizeof(Project_File_Name);
-	ofn.lpstrInitialDir = StartDirectory;
-	ofn.lpstrTitle = Title;
-	ofn.Flags = OFN_PATHMUSTEXIST |
-		OFN_FILEMUSTEXIST |
-		OFN_EXPLORER |
-		OFN_HIDEREADONLY |
-		OFN_FILEMUSTEXIST;
-
-	if (GetOpenFileName(&ofn) == TRUE)
-	{
-		strcpy(Data_mFilename, Project_File_Name);
-		strcpy(Data_Path_mFilename, Project_Path_File_Name);
-		return 1;
+	// CREATE FileOpenDialog OBJECT
+	IFileOpenDialog* f_FileSystem;
+	f_SysHr = CoCreateInstance(CLSID_FileOpenDialog, NULL, CLSCTX_ALL, IID_IFileOpenDialog, reinterpret_cast<void**>(&f_FileSystem));
+	if (FAILED(f_SysHr)) {
+		CoUninitialize();
+		return FALSE;
 	}
 
-	return 0;
+	//  SHOW OPEN FILE DIALOG WINDOW
+	COMDLG_FILTERSPEC save_filter[1];
+	save_filter[0].pszName = L"All files";
+	save_filter[0].pszSpec = L"*.*";
+
+	f_SysHr = f_FileSystem->SetFileTypes(1,save_filter);
+	if (FAILED(f_SysHr)) {
+		f_FileSystem->Release();
+		CoUninitialize();
+		return FALSE;
+	}
+
+	//  SHOW OPEN FILE DIALOG WINDOW
+	f_SysHr = f_FileSystem->Show(App->MainHwnd);
+	if (FAILED(f_SysHr)) {
+		f_FileSystem->Release();
+		CoUninitialize();
+		return FALSE;
+	}
+
+	//  RETRIEVE FILE NAME FROM THE SELECTED ITEM
+	IShellItem* f_Files;
+	f_SysHr = f_FileSystem->GetResult(&f_Files);
+	if (FAILED(f_SysHr)) {
+		f_FileSystem->Release();
+		CoUninitialize();
+		return FALSE;
+	}
+
+	//  STORE AND CONVERT THE FILE NAME
+	PWSTR f_Path;
+	f_SysHr = f_Files->GetDisplayName(SIGDN_FILESYSPATH, &f_Path);
+	if (FAILED(f_SysHr)) {
+		f_Files->Release();
+		f_FileSystem->Release();
+		CoUninitialize();
+		return FALSE;
+	}
+
+	//  FORMAT AND STORE THE FILE PATH
+	std::wstring path(f_Path);
+	std::string c(path.begin(), path.end());
+	sFilePath = c;
+
+	//  FORMAT STRING FOR EXECUTABLE NAME
+	const size_t slash = sFilePath.find_last_of("/\\");
+	sSelectedFile = sFilePath.substr(slash + 1);
+
+	//  SUCCESS, CLEAN UP
+	CoTaskMemFree(f_Path);
+	f_Files->Release();
+	f_FileSystem->Release();
+	CoUninitialize();
+	return TRUE;
 }
+
+//bool result = FALSE;
+//int main()
+//{
+//	result = openFile();
+//	switch (result) {
+//	case(TRUE): {
+//		printf("SELECTED FILE: %s\nFILE PATH: %s\n\n", sSelectedFile.c_str(), sFilePath.c_str());
+//		system("pause");
+//	}
+//	case(FALSE): {
+//		printf("ENCOUNTERED AN ERROR: (%d)\n", GetLastError());
+//		system("pause");
+//	}
+//	}
+//	return 0;
+//}
 
 // *************************************************************************
 // *			Open_File_Model:- Terry and Hazel Flanigan 2024			   *
@@ -177,131 +226,6 @@ void CL64_File_IO::Open_HTML(char* HelpTitle)
 	strcat(Path, HelpTitle);
 
 	ShellExecute(0, "open", Path, 0, 0, SW_SHOW);
-}
-
-#pragma warning( disable : 4090)
-// *************************************************************************
-// *				StartBrowser:- Terry and Hazel Flanigan 2024   		   *
-// *************************************************************************
-bool CL64_File_IO::StartBrowser(char* szInitDir)
-{
-	TCHAR dname[MAX_PATH * 2] = { 0 };
-	IMalloc* imalloc; 
-	HRESULT Test1 = SHGetMalloc(&imalloc);
-	BROWSEINFO bi; ZeroMemory(&bi, sizeof(bi));
-
-	bi.hwndOwner = App->MainHwnd;
-	bi.pszDisplayName = dname;
-	bi.lpszTitle = BrowserMessage;
-	bi.lParam = (LPARAM)szInitDir;
-	bi.ulFlags = BIF_RETURNONLYFSDIRS | BIF_NONEWFOLDERBUTTON | BIF_USENEWUI;
-	bi.lpfn = BrowseCallbackProc;
-
-	HRESULT Test2 = CoInitialize(NULL);
-	ITEMIDLIST* pidl = SHBrowseForFolder(&bi);
-
-	if (pidl)
-	{
-		imalloc->Free(pidl);
-		imalloc->Release();
-		return 1;
-	}
-
-	imalloc->Free(pidl);
-	imalloc->Release();
-
-	return 0;
-}
-HWND g_hMyEditBox;
-#define BROWSE_WIDTH      380
-#define BROWSE_HEIGHT     530
-// *************************************************************************
-// *			BrowseCallbackProc:- Terry and Hazel Flanigan 2024 		   *
-// *************************************************************************
-int __stdcall CL64_File_IO::BrowseCallbackProc(HWND  hwnd, UINT  uMsg, LPARAM  lParam, LPARAM  lpData)
-{
-	//Initialization callback message
-	if (uMsg == BFFM_INITIALIZED)
-	{
-		HWND tt = FindWindowEx(hwnd, NULL, "Static", NULL);
-		SendMessage(tt, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		//RECT rtDialog, rtButton;
-		//RECT DesktopRect;
-		//HWND hDesktop = ::GetDesktopWindow();
-		//::GetWindowRect(hDesktop, &DesktopRect);
-		//::MoveWindow(hwnd, (DesktopRect.right / 2) - (BROWSE_WIDTH / 2), (DesktopRect.bottom / 2) - (BROWSE_HEIGHT / 2), BROWSE_WIDTH, BROWSE_HEIGHT, TRUE);
-		////SendMessage(hwnd, BFFM_SETSELECTION, 1, (LPARAM)lParam);
-		//SetWindowPos(hwnd, NULL, 2, 2,200, 200, SWP_NOZORDER);
-
-		HWND hListView = FindWindowEx(hwnd, NULL, "TreeView", NULL);
-		SetWindowPos(hListView, NULL, 2, 2, 100, 100, SWP_NOZORDER);
-		//MoveWindow(hListView, 20, 20, 200, 200, TRUE);
-		////Find the handles of OK and Cancel buttons
-		//HWND hOKButton = FindWindowEx(hwnd, NULL, "Button", NULL);
-		//HWND hCancelButton = FindWindowEx(hwnd,hOKButton, "Button", NULL);
-
-		////Gets the OK button position
-		//::GetClientRect(hOKButton, &rtButton);
-
-		////Gets the dimensions BrowseForFolder dialog
-		//::GetClientRect(hwnd, &rtDialog);
-
-		////Relocate the SysTreeView32 control
-		//::SetWindowPos(hListView, 0, 10, 43, 360, 300, 0);
-
-		////Relocate the OK button
-		//::SetWindowPos(hOKButton, 0, 230, 460, 60, 30, 0);
-
-		////Relocate the Cancel buttton
-		//::SetWindowPos(hCancelButton, 0, 300, 460, 60, 30, 0);
-
-		////Create a static control
-		//HWND hMyStaticCtrl = CreateWindowEx(0, "STATIC", "My Custom Controls", SS_NOTIFY | WS_CHILD | WS_VISIBLE, 20, 370, 200, 25, hwnd, 0, NULL, NULL);
-
-		////Create a radio button
-		//HWND hMyRaioBtn = CreateWindowEx(0, "BUTTON", "RadioButton", SS_NOTIFY | WS_CHILD | WS_VISIBLE | BS_AUTORADIOBUTTON, 20, 400, 200, 20, hwnd, 0, NULL, NULL);
-
-		////Create an Edit box
-		//g_hMyEditBox = CreateWindowEx(0, "EDIT", "", SS_NOTIFY | WS_CHILD | WS_VISIBLE | WS_BORDER, 20, 430, 340, 20, hwnd, 0, NULL, NULL);
-		//
-		//LPCTSTR path = reinterpret_cast<LPCTSTR>(lpData);
-
-		//SendMessage(hwnd, BFFM_SETSELECTION, TRUE, (LPARAM)path);
-	
-	}
-
-	if (uMsg == BFFM_SELCHANGED)
-	{
-		TCHAR szDir[MAX_PATH * 2] = { 0 };
-
-		BOOL bRet = SHGetPathFromIDList((LPITEMIDLIST)lParam, szDir);
-		if (bRet)
-		{
-			if (_taccess(szDir, 00) != 0)
-			{
-				bRet = FALSE;
-			}
-			else
-			{
-				SHFILEINFO sfi;
-				::SHGetFileInfo((LPCTSTR)lParam, 0, &sfi, sizeof(sfi),
-					SHGFI_PIDL | SHGFI_ATTRIBUTES);
-
-				if (sfi.dwAttributes & SFGAO_LINK)
-					bRet = FALSE;
-			}
-		}
-
-		if (!bRet)
-		{
-			::EnableWindow(GetDlgItem(hwnd, IDOK), FALSE);
-			strcpy(App->CL_File_IO->szSelectedDir, "");
-		}
-		else
-			strcpy(App->CL_File_IO->szSelectedDir, szDir);
-	}
-
-	return 0;
 }
 
 // *************************************************************************

@@ -29,6 +29,9 @@ THE SOFTWARE.
 
 CL64_Project::CL64_Project()
 {
+	Project_File_Name[0] = 0;
+	Project_Path_File_Name[0] = 0;
+
 	m_Ini_Path_File_Name[0] = 0;
 	m_Level_File_Name[0] = 0;
 	m_Level_Folder_Path[0] = 0;
@@ -1440,11 +1443,11 @@ bool CL64_Project::Save_Display_Data()
 // *************************************************************************
 void CL64_Project::Set_Paths()
 {
-	strcpy(m_Level_File_Name, App->CL_File_IO->Project_File_Name);
-	strcpy(m_Project_Sub_Folder, App->CL_File_IO->Project_Path_File_Name);
-	strcpy(m_Ini_Path_File_Name, App->CL_File_IO->Project_Path_File_Name);
+	strcpy(m_Level_File_Name, Project_File_Name);
+	strcpy(m_Project_Sub_Folder, Project_Path_File_Name);
+	strcpy(m_Ini_Path_File_Name, Project_Path_File_Name);
 
-	strcpy(m_Level_Folder_Path, App->CL_File_IO->Project_Path_File_Name);
+	strcpy(m_Level_Folder_Path, Project_Path_File_Name);
 
 	// Get path no file 
 	int len1 = strlen(m_Level_File_Name);
@@ -1452,6 +1455,25 @@ void CL64_Project::Set_Paths()
 	strcpy(m_Project_Sub_Folder, m_Project_Sub_Folder);
 	m_Project_Sub_Folder[len2 - (len1 + 1)] = 0;
 	
+}
+
+// *************************************************************************
+// *	  		Load_Last_Project:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+bool CL64_Project::Load_Last_Project()
+{
+	char Test_Project[MAX_PATH];
+	strcpy(Test_Project, App->GD_Directory_FullPath);
+	strcat(Test_Project, "\\Projects\\First_Project_Prj\\Project.owproj");
+
+	bool test = App->CL_Importers->Reload_FromResentFiles(Test_Project);
+	if (test == 1)
+	{
+		App->CL_Level->Set_Scene();
+		return 1;
+	}
+
+	return 0;
 }
 
 // *************************************************************************
@@ -1463,6 +1485,7 @@ bool CL64_Project::Load_Project()
 	m_Ini_Path_File_Name[0] = 0;
 
 	App->CL_Scene->Clear_Level();
+	
 	App->CL_Resources->Create_Project_Resources_Group();
 	
 	Set_Paths();
@@ -1549,7 +1572,7 @@ bool CL64_Project::Load_Project()
 	}
 
 
-	//App->CL_Ogre->OgreListener->GD_CameraMode = Enums::CamDetached;
+	//App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_None;
 
 	App->CL_FileView->Change_Level_Name();
 	App->CL_FileView->Change_Project_Name();
@@ -1603,6 +1626,7 @@ bool CL64_Project::Load_Get_Resource_Path()
 	strcat(m_Main_Assets_Path, "Assets");
 	strcat(m_Main_Assets_Path, "\\");
 
+	//App->Say_Win(m_Main_Assets_Path);
 	App->CL_Resources->Add_Resource_Location_Project(m_Main_Assets_Path);
 
 	return 1;

@@ -156,7 +156,7 @@ bool CL64_Scene::Clear_Level()
 	{
 		App->CL_Physics->Enable_Physics(0); // Look At Terry
 
-		//App->CL_Player->Reset_Class(); // Look At Terry
+		App->CL_Player->Reset_Class(); // Look At Terry
 
 		App->CL_Com_Area->Reset_Class();
 
@@ -189,8 +189,9 @@ bool CL64_Scene::Clear_Level()
 	//App->SBC_FileView->SelectItem(App->SBC_FileView->FV_LevelFolder);
 
 	//App->CL_Ogre->mSceneMgr->destroyCamera("PlayerRay");
-	//App->CL_Ogre->mSceneMgr->destroyAllParticleSystems();
+	App->CL_Ogre->mSceneMgr->destroyAllParticleSystems();
 
+	App->CL_Ogre->RenderFrame(8);
 	return 1;
 }
 

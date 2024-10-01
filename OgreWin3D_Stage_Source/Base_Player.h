@@ -29,8 +29,8 @@ public:
 	Ogre::Entity*		Player_Ent;
 	Ogre::SceneNode*	Player_Node;
 
-	Ogre::Camera* mDummyCamera;
-	Vector3		mDummyTranslateVector;
+	//Ogre::Camera* mDummyCamera;
+	//Vector3		mDummyTranslateVector;
 
 	Ogre::String Pl_Entity_Name;
 	char Selected_Object_Name[MAX_PATH];

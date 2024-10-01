@@ -289,7 +289,7 @@ void CL64_App::Set_Title()
 	char TitleBar[MAX_PATH];
 	strcpy(TitleBar, "OgreWin3D_Stage");
 	strcat(TitleBar, "    ");
-	strcat(TitleBar, App->CL_File_IO->Project_Path_File_Name);
+	strcat(TitleBar, App->CL_Project->Project_Path_File_Name);
 	SetWindowText(App->MainHwnd, TitleBar);
 }
 

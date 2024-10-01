@@ -396,27 +396,40 @@ bool CL64_Importers::Load_Ogre_Resource_CFG(bool Use_File_Dialog)
 // *************************************************************************
 // *			Load_Project:- Terry and Hazel Flanigan 2024   			   *
 // *************************************************************************
-bool CL64_Importers::Load_Project(char* Extension, char* Extension2)
+bool CL64_Importers::Load_Project()
 {
-	int Result = App->CL_File_IO->Open_Project_File(Extension, Extension2, NULL);
-	if (Result == 0)
+	
+	bool test = App->CL_File_IO->Open_File();
+	if (test == 1)
+	{
+		App->CL_Project->Project_File_Name[0] = 0;
+		App->CL_Project->Project_Path_File_Name[0] = 0;
+
+		strcpy(App->CL_Project->Project_File_Name, App->CL_File_IO->sSelectedFile.c_str());
+		strcpy(App->CL_Project->Project_Path_File_Name, App->CL_File_IO->sFilePath.c_str());
+	}
+	else
 	{
 		return 1;
 	}
 
-	bool test = App->CL_Project->Load_Project();
+	bool result = App->CL_Project->Load_Project();
 
-	/*App->SBC_TopTabs->Project_Loaded_Reset();
-	App->CL_Ogre->RenderFrame();*/
+	App->CL_Level->Set_Scene();
 
-	//if (test == 1)
+	App->CL_Ogre->RenderFrame(8);
+
+	//App->SBC_TopTabs->Project_Loaded_Reset();
+	
+	if (result == 1)
 	{
-		App->Say("Project Loaded");
+		App->CL_Level->Set_Scene();
+		App->Say("Project Loaded", App->CL_Project->Project_File_Name);
 	}
-	/*else
+	else
 	{
 		App->Say("Project Failed to Load");
-	}*/
+	}
 
 	return 1;
 }
@@ -435,11 +448,11 @@ bool CL64_Importers::Reload_FromResentFiles(char* ResentPathAndFile)
 		return 0;
 	}
 
-	strcpy(App->CL_File_IO->Project_Path_File_Name, ResentPathAndFile);
+	strcpy(App->CL_Project->Project_Path_File_Name, ResentPathAndFile);
 
 	std::string mJustFileName = Get_FileName_From_Path(ResentPathAndFile);
 
-	strcpy(App->CL_File_IO->Project_File_Name, mJustFileName.c_str());
+	strcpy(App->CL_Project->Project_File_Name, mJustFileName.c_str());
 
 	bool test = App->CL_Project->Load_Project();
 

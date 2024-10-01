@@ -179,19 +179,29 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		// Debug -------------------------------------------------------
 		case ID_DEBUG_GENERAL:
 		{
+			char Test_Project[MAX_PATH];
+			strcpy(Test_Project, App->GD_Directory_FullPath);
+			strcat(Test_Project, "\\Projects\\First_Project_Prj\\Project.owproj");
+
+			bool test = App->CL_Importers->Reload_FromResentFiles(Test_Project);
+			if (test == 1)
+			{
+				App->CL_Level->Set_Scene();
+			}
+
 			//App->CL_Exporters->Start_Ogre_Export_Dlg();
 			//App->CL_Resources->Scan_Resource_Group(App->CL_Resources->Ogre_Loader_Resource_Group);
 			//App->CL_Resources->Get_Resource_Groups();
 			//App->CL_Textures->Texture_To_HBITMP();
 
-			if (App->CL_ImGui->flag_Open_Textures_List == 1)
+			/*if (App->CL_ImGui->flag_Open_Textures_List == 1)
 			{
 				App->CL_ImGui->flag_Open_Textures_List = 0;
 			}
 			else
 			{
 				App->CL_ImGui->flag_Open_Textures_List = 1;
-			}
+			}*/
 
 			return TRUE;
 		}
@@ -385,7 +395,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		// File Open ------------------------------------------------
 		case ID_OPEN_PROJECT:
 		{
-			App->CL_Importers->Load_Project((LPSTR)"Project   *.owproj\0*.owproj\0", (LPSTR) "Project");
+			App->CL_Importers->Load_Project();
 			return 1;
 		}
 
@@ -893,7 +903,9 @@ void StartOgre()
 
     KillTimer(App->MainHwnd, 1);
 
-	App->CL_Props_Textures->Get_First_Texture_Ogre();
+	//App->CL_Props_Textures->Get_First_Texture_Ogre();
+
+	App->CL_Project->Load_Last_Project(); // Look At Terry if no level loaded
 
 	App->CL_SoundMgr->Play_StartUp_Sound();
 

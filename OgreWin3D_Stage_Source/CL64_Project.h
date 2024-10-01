@@ -45,6 +45,7 @@ public:
 
 	void Start_Save_Project_Dialog();
 	
+	bool Load_Last_Project();
 	bool Load_Project();
 	bool Load_Project_Objects();
 	bool Load_Project_Aera();
@@ -59,6 +60,9 @@ public:
 	bool Read_MoveEntity(int Index, char* Section);
 
 	bool Copy_Assets(char* SourceFolder, char* DestinationFolder);
+
+	char Project_File_Name[MAX_PATH];
+	char Project_Path_File_Name[MAX_PATH];
 
 	char m_Project_Name[MAX_PATH];
 	char m_Level_Name[MAX_PATH];

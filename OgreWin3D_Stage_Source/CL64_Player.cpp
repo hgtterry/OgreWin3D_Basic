@@ -91,6 +91,7 @@ void CL64_Player::Create_Player_Object(void)
 	int Index = Player_Count;
 
 	App->CL_Scene->B_Player[Index] = new Base_Player();
+	
 
 	Initialize();
 
@@ -115,24 +116,13 @@ void CL64_Player::Initialize() const
 
 	Base_Player* pBase = App->CL_Scene->B_Player[Index];
 	
-	// ------------------- Ogre
-	if (pBase->Player_Ent && pBase->Player_Node)
-	{
-		App->CL_Ogre->mSceneMgr->destroySceneNode(pBase->Player_Node);
-		App->CL_Ogre->mSceneMgr->destroyEntity(pBase->Player_Ent);
-		App->CL_Ogre->mSceneMgr->destroyCamera(pBase->CameraPitch);
-		pBase->Player_Ent = nullptr;
-		pBase->Player_Node = nullptr;
-		pBase->CameraPitch = nullptr;
-	}
-	
 	pBase->Player_Ent = App->CL_Ogre->mSceneMgr->createEntity("Player_1", "axes.mesh", App->CL_Ogre->App_Resource_Group);
 	pBase->Player_Node = App->CL_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	pBase->Player_Node->attachObject(pBase->Player_Ent);
-
+	
 	pBase->Player_Node->setOrientation(Ogre::Quaternion::IDENTITY);
 	pBase->Player_Node->setVisible(false);
-
+	
 	Pos.x = pBase->StartPos.x;
 	Pos.y = pBase->StartPos.y;
 	Pos.z = pBase->StartPos.z;
@@ -162,6 +152,7 @@ void CL64_Player::Initialize() const
 	App->CL_Scene->B_Player[0]->Phys_Body->getWorldTransform().setRotation(App->CL_Scene->B_Player[0]->Physics_Rotation);
 	App->CL_Bullet->dynamicsWorld->addRigidBody(pBase->Phys_Body);
 
+	
 	App->CL_Scene->flag_Player_Added = 1;
 }
 

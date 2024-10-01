@@ -74,36 +74,7 @@ void CL64_Ogre::InitOgre(void)
 	// Set Up Grid Functions
 	App->CL_Grid->Grid_Update(1);
 	App->CL_Grid->Hair_Update(1);
-
-	/*App->CL_Scene->Imported_Ogre_Ent = mSceneMgr->createEntity("Test_Mesh", "Sinbad.mesh");
-	App->CL_Scene->Imported_Ogre_Node = mSceneMgr->getRootSceneNode()->createChildSceneNode();
-	App->CL_Scene->Imported_Ogre_Node->attachObject(App->CL_Scene->Imported_Ogre_Ent);
-
-	App->CL_Scene->S_OgreMeshData[0]->mFileName_Str = "Sinbad.mesh";
-	strcpy(App->CL_Scene->JustName, "Sinbad");
-
-	App->CL_Mesh_Manager->Ogre_To_Mesh_Data(App->CL_Scene->Imported_Ogre_Ent);
-	App->CL_Motions->Get_Motions(App->CL_Scene->Imported_Ogre_Ent);
-	App->CL_Import_Ogre3D->flag_Ogre_Model_Loaded = 1;
-
-	App->CL_Scene->Scene_Mode = Enums::Scene_Mode_TestMesh;
-	App->CL_Ogre->Ogre3D_Listener->Ogre_Model_Loaded = 1;
-	App->CL_Scene->flag_Model_Loaded = 1;
-	
-	flag_Test_Mesh_Active = 1;*/
-
 	App->CL_ImGui->Init_ImGui();
-
-	char Test_Project[MAX_PATH];
-	strcpy(Test_Project, App->GD_Directory_FullPath);
-	strcat(Test_Project, "\\Projects\\First_Project_Prj\\Project.owproj");
-
-	bool test = App->CL_Importers->Reload_FromResentFiles(Test_Project);
-	if (test == 1)
-	{
-		App->CL_Level->Set_Scene();
-	}
-	//bool test = App->CL_Level->Load_Level(false);
 
 }
 

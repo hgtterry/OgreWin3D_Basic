@@ -20,7 +20,7 @@ appreciated but is not required.
 
 Base_Player::Base_Player()
 {
-	mDummyCamera = App->CL_Ogre->mSceneMgr->createCamera("PlayerRay");
+	//mDummyCamera = App->CL_Ogre->mSceneMgr->createCamera("PlayerRay");
 
 	CameraPitch =		nullptr;
 	CameraPitch_Ent =	nullptr;;

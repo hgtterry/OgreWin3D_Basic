@@ -33,7 +33,7 @@ public:
 
 	bool Load_Ogre_Model(bool Use_File_Dialog);
 	bool Load_Ogre_Resource_CFG(bool Use_File_Dialog);
-	bool Load_Project(char* Extension, char* Extension2);
+	bool Load_Project();
 
 	void Reload_Ogre_Model(void);
 	bool Reload_FromResentFiles(char* ResentPathAndFile);

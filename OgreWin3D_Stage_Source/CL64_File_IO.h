@@ -19,9 +19,9 @@ class CL64_File_IO
 public:
 	CL64_File_IO();
 	~CL64_File_IO();
-	bool StartBrowser(char* szInitDir);
+	
+	bool Open_File();
 
-	bool Open_Project_File(char* Extension, char* Title, char* StartDirectory);
 	bool Open_File_Model(const char* Extension, const char* Title, const char* StartDirectory);
 	bool Open_Resource_File(char* Extension, char* Title, char* StartDirectory);
 	bool SaveSelectedFile(char* Extension, char* File);
@@ -32,14 +32,8 @@ public:
 
 	void Open_HTML(char* HelpTitle);
 
-	char Project_File_Name[MAX_PATH];
-	char Project_Path_File_Name[MAX_PATH];
-
 	char Model_FileName[MAX_PATH];
 	char Model_Path_FileName[MAX_PATH];
-
-	char Data_mFilename[MAX_PATH];
-	char Data_Path_mFilename[MAX_PATH];
 
 	char Save_PathFileName[MAX_PATH];
 	char Save_FileName[MAX_PATH];
@@ -52,10 +46,11 @@ public:
 	char OgreCFG_FileName[MAX_PATH];
 	char OgreCFG_Path_FileName[MAX_PATH];
 
-	OPENFILENAME ofn;
+	std::string sSelectedFile;
+	std::string sFilePath;
 
 private:
-	static int __stdcall BrowseCallbackProc(HWND  hwnd, UINT  uMsg, LPARAM  lParam, LPARAM  lpData);
-
+	
+	OPENFILENAMEA ofn;
 };
 
