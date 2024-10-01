@@ -53,7 +53,6 @@ CL64_App::CL64_App(void)
 	CL_Dimensions =		nullptr;
 	CL_Props_Textures = nullptr;
 	CL_Mesh_Manager =	nullptr;
-	CL_Level =			nullptr;
 
 	CL_FileView =			nullptr;
 	CL_Properties =			nullptr;
@@ -181,8 +180,7 @@ void CL64_App::InitApp(void)
 
 	CL_Props_Textures = new CL64_Props_Textures();
 	CL_Mesh_Manager =	new CL64_Mesh_Manager();
-	CL_Level =			new CL64_Level();
-
+	
 	CL_FileView =			new CL64_FileView();
 	CL_Properties =			new CL64_Properties();
 	CL_Project =			new CL64_Project();

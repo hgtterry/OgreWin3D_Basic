@@ -194,7 +194,6 @@
     <ClInclude Include="CL64_Importers.h" />
     <ClInclude Include="CL64_Ini_File.h" />
     <ClInclude Include="CL64_Keyboard.h" />
-    <ClInclude Include="CL64_Level.h" />
     <ClInclude Include="CL64_LookUps.h" />
     <ClInclude Include="CL64_Mesh_Manager.h" />
     <ClInclude Include="CL64_Motioins.h" />
@@ -254,7 +253,6 @@
     <ClCompile Include="CL64_Importers.cpp" />
     <ClCompile Include="CL64_Ini_File.cpp" />
     <ClCompile Include="CL64_Keyboard.cpp" />
-    <ClCompile Include="CL64_Level.cpp" />
     <ClCompile Include="CL64_LookUps.cpp" />
     <ClCompile Include="CL64_Mesh_Manager.cpp" />
     <ClCompile Include="CL64_Motioins.cpp" />

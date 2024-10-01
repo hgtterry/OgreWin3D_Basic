@@ -396,6 +396,8 @@ LRESULT CALLBACK CL64_Project::Save_Project_Dialog_Proc(HWND hDlg, UINT message,
 // *************************************************************************
 bool CL64_Project::Save_Project()
 {
+	char CurDir[MAX_PATH];
+	char* a_cwd = _getcwd(CurDir, MAX_PATH);
 
 	if (_mkdir(m_Project_Sub_Folder) == 0)
 	{
@@ -452,7 +454,7 @@ bool CL64_Project::Save_Project()
 	//	App->CL_Prefs->Write_Preferences();
 	//}
 
-
+	(void)_chdir(CurDir);
 	App->Say("Scene Saved");
 
 	return 1;
@@ -1469,7 +1471,7 @@ bool CL64_Project::Load_Last_Project()
 	bool test = App->CL_Importers->Reload_FromResentFiles(Test_Project);
 	if (test == 1)
 	{
-		App->CL_Level->Set_Scene();
+		App->CL_Scene->Set_Scene();
 		return 1;
 	}
 

@@ -186,22 +186,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			bool test = App->CL_Importers->Reload_FromResentFiles(Test_Project);
 			if (test == 1)
 			{
-				App->CL_Level->Set_Scene();
+				App->CL_Scene->Set_Scene();
 			}
-
-			//App->CL_Exporters->Start_Ogre_Export_Dlg();
-			//App->CL_Resources->Scan_Resource_Group(App->CL_Resources->Ogre_Loader_Resource_Group);
-			//App->CL_Resources->Get_Resource_Groups();
-			//App->CL_Textures->Texture_To_HBITMP();
-
-			/*if (App->CL_ImGui->flag_Open_Textures_List == 1)
-			{
-				App->CL_ImGui->flag_Open_Textures_List = 0;
-			}
-			else
-			{
-				App->CL_ImGui->flag_Open_Textures_List = 1;
-			}*/
 
 			return TRUE;
 		}
@@ -374,14 +360,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		
 		case ID_OPEN_LEVEL:
 		{
-			char Path[MAX_PATH];
+			/*char Path[MAX_PATH];
 			strcpy(Path,App->GD_Directory_FullPath);
 			strcat(Path, "\\Levels\\Level_1\\World_1.mesh");
 			
 			strcpy(App->CL_File_IO->Model_FileName, "World_1.mesh");
 			strcpy(App->CL_File_IO->Model_Path_FileName, Path);
 
-			bool test = App->CL_Level->Load_Level(false);
+			bool test = App->CL_Level->Load_Level(false);*/
 			return TRUE;
 		}
 		
@@ -402,78 +388,36 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		// File Import ------------------------------------------------
 		case ID_OGRE3D_MESH:
 		{
-			bool test = App->CL_Importers->Load_Ogre_Model(true);
-			EnableMenuItem(App->mMenu, ID_OGRE3D_RELOADMESH, MF_BYCOMMAND | MF_ENABLED);
 			return TRUE;
 		}
 
 		case ID_OGRE3D_RELOADMESH:
 		{
-			strcpy(App->CL_File_IO->Model_FileName, App->CL_Scene->FileName);
-			strcpy(App->CL_File_IO->Model_Path_FileName, App->CL_Scene->Path_FileName);
-			bool test = App->CL_Importers->Load_Ogre_Model(false);
-
 			return TRUE;
 		}
 		
 		case ID_OGRE3D_RESOURCEFILE:
 		{
-			bool test = App->CL_Importers->Load_Ogre_Resource_CFG(true);
-			EnableMenuItem(App->mMenu, ID_OGRE3D_RELOADRESOURCEFILE, MF_BYCOMMAND | MF_ENABLED);
 			return TRUE;
 		}
 		
 		case ID_OGRE3D_RELOADRESOURCEFILE:
 		{
-			strcpy(App->CL_File_IO->OgreCFG_Path_FileName, App->CL_Resources->Resource_File_Path_And_File);
-			strcpy(App->CL_File_IO->OgreCFG_FileName, App->CL_Resources->Resource_File_FileName);
-			bool test = App->CL_Importers->Load_Ogre_Resource_CFG(false);
-
 			return TRUE;
 		}
 		
 		case ID_IMPORT_WAVEFRONTOBJ:
 		{
-			App->CL_Assimp->Options.SelectedPreset = 8 + 8388608 + 64 + aiProcess_PreTransformVertices;
-			App->CL_Assimp->Options.Model_Type = Enums::Model_Type_Obj;
-
-			bool test = App->CL_Importers->Assimp_Loader(true,"Wavefront OBJ   *.obj\0*.obj\0", "Wavefront OBJ");
-
-			if (test == 1)
-			{
-				App->Say("Imported");
-			}
-
 			return TRUE;
 		}
 
 		case ID_IMPORT_AUTODESK3DS:
 		{
-			App->CL_Assimp->Options.SelectedPreset = 8 + 8388608 + 64 + aiProcess_PreTransformVertices;
-			App->CL_Assimp->Options.Model_Type = Enums::Model_Type_3ds;
-
-			bool test = App->CL_Importers->Assimp_Loader(true, "Autodesk 3DS   *.3ds\0*.3ds\0", "Autodesk 3DS");
-
-			if (test == 1)
-			{
-				App->Say("Imported");
-			}
-
 			return TRUE;
 		}
 
 		case ID_IMPORT_MILKSHAPEMS3D:
 		{
-			App->CL_Assimp->Options.SelectedPreset = 8 + 8388608 + 64 + aiProcess_PreTransformVertices;
-			App->CL_Assimp->Options.Model_Type = Enums::Model_Type_Milk;
-
-			bool test = App->CL_Importers->Assimp_Loader(true, "MilkShape Files   *.ms3d\0*.ms3d\0", "Load MilkShape File");
-
-			if (test == 1)
-			{
-				App->Say("Imported");
-			}
-
 			return TRUE;
 		}
 

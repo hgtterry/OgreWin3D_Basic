@@ -226,33 +226,24 @@ void CL64_Scene::Reset_Counters()
 // *************************************************************************
 // *			Set_Scene:- Terry and Hazel Flanigan 2024				   *
 // *************************************************************************
-void CL64_Scene::Set_Scene(int Mode)
+void CL64_Scene::Set_Scene()
 {
-	// Set up Application and Scene
-	
-	// Imported Ogre3D Model
-	if (Mode == Enums::Scene_Mode_Imported_Entity)
-	{
-		App->CL_Scene->Scene_Mode = Enums::Scene_Mode_Imported_Entity;
+	//App->CL_Ogre->Enable_Fog(true);
 
-		App->CL_Ogre->Ogre3D_Listener->Ogre_Model_Loaded = 1;
+	App->CL_Camera->Reset_View();
 
-		App->CL_Ogre->OGL_Listener->Flag_ShowTextured = 0;
-		App->CL_Scene->flag_Show_Main_Entity = 1;
+	/*App->CL_Bullet->Create_New_Trimesh(App->CL_Scene->Imported_Ogre_Ent, App->CL_Scene->Imported_Ogre_Node);*/
 
-		return;
-	}
+	//App->CL_Player->Set_Player_Position(Ogre::Vector3(0, 20, 0));
+	//App->CL_Player->Set_Player_Rotation(btQuaternion(0, 0, 1, 0));
+	App->CL_Player->Set_Player_GroundSpeed(70);
 
-	// Imported Assimp Imported Model
-	if (Mode == Enums::Scene_Mode_MeshData)
-	{
-		App->CL_Scene->Scene_Mode = Enums::Scene_Mode_MeshData;
+	App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_First;
+	App->CL_Ogre->Ogre3D_Listener->Run_Physics = 1;
 
-		App->CL_Ogre->OGL_Listener->Flag_ShowTextured = 1;
-		App->CL_Scene->flag_Model_Loaded = 1;
-		
-		return;
-	}
+	App->CL_Ogre->mSceneMgr->setSkyDome(true, "OW3D/CloudySky");
+
+	App->CL_ImGui->flag_Show_Demo_Options = 1;
 }
 
 // *************************************************************************
@@ -318,47 +309,6 @@ void CL64_Scene::Show_Main_Entity(bool Show)
 			Imported_Ogre_Node->setVisible(false);
 			flag_Show_Main_Entity = 0;
 		}
-	}
-}
-
-// *************************************************************************
-// *			Set_Paths:- Terry and Hazel Flanigan 2024				   *
-// *************************************************************************
-void CL64_Scene::Set_Paths(void)
-{
-	strcpy(FileName, App->CL_File_IO->Model_FileName);
-	strcpy(Path_FileName, App->CL_File_IO->Model_Path_FileName);
-
-	// Get Texture path assumed at this point to be where model is
-	int len1 = strlen(FileName);
-	int len2 = strlen(Path_FileName);
-	strcpy(Model_FolderPath, Path_FileName);
-	Model_FolderPath[len2 - len1] = 0;
-
-	strcpy(Texture_FolderPath, Model_FolderPath); // Back Slash remains
-
-
-	if (_stricmp(FileName + strlen(FileName) - 5, ".ms3d") == 0)
-	{
-		strcpy(JustName, FileName);
-		int Len = strlen(JustName);
-		JustName[Len - 5] = 0;
-	}
-	else if (_stricmp(FileName + strlen(FileName) - 5, ".G3ds") == 0)
-	{
-		strcpy(JustName, FileName);
-		int Len = strlen(JustName);
-		JustName[Len - 5] = 0;
-	}
-	else if (_stricmp(FileName + strlen(FileName) - 5, ".Wepf") == 0)
-	{
-
-	}
-	else
-	{
-		strcpy(JustName, FileName);
-		int Len = strlen(JustName);
-		JustName[Len - 4] = 0;
 	}
 }
 

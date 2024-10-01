@@ -22,18 +22,11 @@ appreciated but is not required.
 
 CL64_File_IO::CL64_File_IO()
 {
-
-	Model_FileName[0] = 0;
-	Model_Path_FileName[0] = 0;
-
 	Save_PathFileName[0] = 0;
 	Save_FileName[0] = 0;
 
 	szSelectedDir[0] = 0;
 	BrowserMessage[0] = 0;
-
-	OgreCFG_FileName[0] = 0;
-	OgreCFG_Path_FileName[0] = 0;
 
 	DeskTop_Folder[0] = 0;
 
@@ -97,6 +90,7 @@ bool CL64_File_IO::Open_File()
 	if (FAILED(f_SysHr)) {
 		f_Files->Release();
 		f_FileSystem->Release();
+
 		CoUninitialize();
 		return FALSE;
 	}
@@ -118,101 +112,91 @@ bool CL64_File_IO::Open_File()
 	return TRUE;
 }
 
-//bool result = FALSE;
-//int main()
-//{
-//	result = openFile();
-//	switch (result) {
-//	case(TRUE): {
-//		printf("SELECTED FILE: %s\nFILE PATH: %s\n\n", sSelectedFile.c_str(), sFilePath.c_str());
-//		system("pause");
-//	}
-//	case(FALSE): {
-//		printf("ENCOUNTERED AN ERROR: (%d)\n", GetLastError());
-//		system("pause");
-//	}
-//	}
-//	return 0;
-//}
-
 // *************************************************************************
-// *			Open_File_Model:- Terry and Hazel Flanigan 2024			   *
+// *				Save_File:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-bool CL64_File_IO::Open_File_Model(const char* Extension, const char* Title, const char* StartDirectory)
+void CL64_File_IO::Save_File()
 {
+	HRESULT hr = CoInitializeEx(NULL, COINIT_APARTMENTTHREADED |
+		COINIT_DISABLE_OLE1DDE);
 
-	Model_FileName[0] = 0;
-	Model_Path_FileName[0] = 0;
-
-	ZeroMemory(&ofn, sizeof(ofn));
-	ofn.lStructSize = sizeof(ofn);
-	ofn.hwndOwner = App->MainHwnd;
-	ofn.hInstance = App->hInst;
-	ofn.lpstrFile = Model_Path_FileName;						// full path and file name
-	ofn.nMaxFile = sizeof(Model_Path_FileName);
-	ofn.lpstrFilter = Extension;
-
-	ofn.nFilterIndex = 1;
-	ofn.lpstrFileTitle = Model_FileName;						// Just File Name
-	ofn.nMaxFileTitle = sizeof(Model_FileName);;
-	ofn.lpstrInitialDir = StartDirectory;
-	ofn.lpstrTitle = Title;
-	ofn.Flags = OFN_PATHMUSTEXIST |
-		OFN_FILEMUSTEXIST |
-		OFN_EXPLORER |
-		OFN_HIDEREADONLY |
-		OFN_FILEMUSTEXIST;
-
-	if (GetOpenFileName(&ofn) == TRUE)
+	if (SUCCEEDED(hr))
 	{
-		return 1;
-	}
+		IFileSaveDialog* pFileSave = NULL;
 
-	return 0;
+		HRESULT hr = CoCreateInstance(__uuidof(FileSaveDialog), NULL,
+			CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&pFileSave));
+
+		if (SUCCEEDED(hr))
+		{
+			hr = pFileSave->SetDefaultExtension(L"owproj");
+			//hr = pFileSave->SetFileTypes(ARRAYSIZE(c_rgSaveTypes), c_rgSaveTypes);
+			hr = pFileSave->Show(App->MainHwnd);
+
+			if (SUCCEEDED(hr))
+			{
+				IShellItem* pItem;
+				hr = pFileSave->GetResult(&pItem);
+
+				if (SUCCEEDED(hr))
+				{
+					PWSTR pszFilePath;
+					hr = pItem->GetDisplayName(SIGDN_FILESYSPATH, &pszFilePath);
+
+					// Display the file name to the user.
+					if (SUCCEEDED(hr))
+					{
+						std::wstring path(pszFilePath);
+						std::string c(path.begin(), path.end());
+						sFilePath = c;
+						App->Say(c.c_str());
+
+						const size_t slash = sFilePath.find_last_of("/\\");
+						sSelectedFile = sFilePath.substr(slash + 1);
+						App->Say(sSelectedFile.c_str());
+						CoTaskMemFree(pszFilePath);
+					}
+					pItem->Release();
+				}
+			}
+			pFileSave->Release();
+		}
+		CoUninitialize();
+	}
 }
 
 // *************************************************************************
-// *			Open_Resource_File:- Terry and Hazel Flanigan 2024		   *
+// *				Pick_Folder:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-bool CL64_File_IO::Open_Resource_File(char* Extension, char* Title, char* StartDirectory)
+void CL64_File_IO::Pick_Folder()
 {
-	
-	strcpy(OgreCFG_FileName, "");
-	strcpy(OgreCFG_Path_FileName, "");
-	
-	ZeroMemory(&ofn, sizeof(ofn));
-	ofn.lStructSize = sizeof(ofn);
-	ofn.hwndOwner = App->MainHwnd;
-	ofn.hInstance = App->hInst;
-	ofn.lpstrFile = OgreCFG_Path_FileName;						// full path and file name
-	ofn.nMaxFile = sizeof(OgreCFG_Path_FileName);
-	ofn.lpstrFilter = Extension;
-
-	ofn.nFilterIndex = 1;
-	ofn.lpstrFileTitle = OgreCFG_FileName;						// Just File Name
-	ofn.nMaxFileTitle = sizeof(OgreCFG_FileName);
-	ofn.lpstrInitialDir = StartDirectory;
-	ofn.lpstrTitle = Title;
-	ofn.Flags = OFN_PATHMUSTEXIST |
-		OFN_FILEMUSTEXIST |
-		OFN_EXPLORER |
-		OFN_HIDEREADONLY |
-		OFN_FILEMUSTEXIST;
-
-	if (GetOpenFileName(&ofn) == TRUE)
+	IFileDialog* pfd;
+	if (SUCCEEDED(CoCreateInstance(CLSID_FileOpenDialog, NULL, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&pfd))))
 	{
-		return 1;
+		DWORD dwOptions;
+		if (SUCCEEDED(pfd->GetOptions(&dwOptions)))
+		{
+			pfd->SetOptions(dwOptions | FOS_PICKFOLDERS);
+		}
+		if (SUCCEEDED(pfd->Show(NULL)))
+		{
+			IShellItem* psi;
+			if (SUCCEEDED(pfd->GetResult(&psi)))
+			{
+				PWSTR f_Path;
+				if (SUCCEEDED(psi->GetDisplayName(SIGDN_DESKTOPABSOLUTEPARSING, &f_Path)))
+				{
+					std::wstring path(f_Path);
+					std::string c(path.begin(), path.end());
+					//sFilePath = c;
+
+					App->Say_Win(c.c_str());
+				}
+				psi->Release();
+			}
+		}
+		pfd->Release();
 	}
-
-	return 0;
-}
-
-// *************************************************************************
-// *	Get_Model_Path_File_Name:- Terry and Hazel Flanigan 2024		   *
-// *************************************************************************
-std::string CL64_File_IO::Get_Model_Path_File_Name()
-{
-	return Model_Path_FileName;
 }
 
 // *************************************************************************

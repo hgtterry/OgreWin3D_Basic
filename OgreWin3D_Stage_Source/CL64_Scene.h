@@ -82,12 +82,11 @@ public:
 	void Reset_Class(void);
 	void Reset_Counters();
 
-	void Set_Scene(int Mode); 
+	void Set_Scene(); 
 
 	bool Clear_Level();
 
 	void Create_Mesh_Group(int Index);
-	void Set_Paths(void);
 	void Reset_Main_Entity(void);
 	void Show_Main_Entity(bool Show);
 	void Main_Entity_Set_Default(void);

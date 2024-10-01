@@ -51,7 +51,6 @@ THE SOFTWARE.
 #include "CL64_Props_Textures.h"
 
 #include "CL64_Mesh_Manager.h"
-#include "CL64_Level.h"
 
 #include "CL64_FileView.h"
 #include "CL64_Properties.h"
@@ -107,7 +106,6 @@ public:
 
 	CL64_Props_Textures*	CL_Props_Textures;
 	CL64_Mesh_Manager*		CL_Mesh_Manager;
-	CL64_Level*				CL_Level;
 
 	// Stage
 	CL64_FileView*			CL_FileView;

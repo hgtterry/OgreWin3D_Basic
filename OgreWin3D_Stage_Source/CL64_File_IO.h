@@ -21,19 +21,15 @@ public:
 	~CL64_File_IO();
 	
 	bool Open_File();
-
-	bool Open_File_Model(const char* Extension, const char* Title, const char* StartDirectory);
-	bool Open_Resource_File(char* Extension, char* Title, char* StartDirectory);
+	void Save_File();
+	void Pick_Folder();
+	
+	// -------------------
 	bool SaveSelectedFile(char* Extension, char* File);
 	bool Check_File_Exist(char* Full_Path);
 	bool SearchFolders(char* Path, char* File);
 
-	std::string Get_Model_Path_File_Name();
-
 	void Open_HTML(char* HelpTitle);
-
-	char Model_FileName[MAX_PATH];
-	char Model_Path_FileName[MAX_PATH];
 
 	char Save_PathFileName[MAX_PATH];
 	char Save_FileName[MAX_PATH];
@@ -42,9 +38,6 @@ public:
 
 	TCHAR szSelectedDir[MAX_PATH];
 	char BrowserMessage[MAX_PATH];
-
-	char OgreCFG_FileName[MAX_PATH];
-	char OgreCFG_Path_FileName[MAX_PATH];
 
 	std::string sSelectedFile;
 	std::string sFilePath;
