@@ -77,13 +77,6 @@ public:
 
 	bool Clear_Level();
 
-	void Reset_Main_Entity(void);
-	void Show_Main_Entity(bool Show);
-	void Main_Entity_Set_Default(void);
-	
-	Ogre::Entity* Imported_Ogre_Ent;
-	Ogre::SceneNode* Imported_Ogre_Node;
-
 	Base_Area* B_Area[20];
 	Bone_Type* S_Bones[200];
 	Base_Locations* B_Locations[20];

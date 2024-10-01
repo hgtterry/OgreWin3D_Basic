@@ -241,7 +241,7 @@ LRESULT CALLBACK CL64_TopDlg::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam
 			HWND Temp = GetDlgItem(hDlg, IDC_BTSHOWTEXTURES);
 
 
-			if (App->CL_Scene->Scene_Mode == Enums::Scene_Mode_TestMesh)
+			/*if (App->CL_Scene->Scene_Mode == Enums::Scene_Mode_TestMesh)
 			{
 				if (App->CL_Ogre->flag_Show_Test_Mesh == 1)
 				{
@@ -290,7 +290,7 @@ LRESULT CALLBACK CL64_TopDlg::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam
 
 					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_TexturesOn_Bmp);
 				}
-			}
+			}*/
 
 			return TRUE;
 		}
@@ -908,12 +908,12 @@ LRESULT CALLBACK CL64_TopDlg::Motions_TB_Proc(HWND hDlg, UINT message, WPARAM wP
 	{
 		LPNMHDR some_item = (LPNMHDR)lParam;
 
-		if (some_item->idFrom == IDC_BT_MOTIONS_PLAY)
+		/*if (some_item->idFrom == IDC_BT_MOTIONS_PLAY)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Toggle(item, App->CL_Motions->flag_Motion_Playing);
 			return CDRF_DODEFAULT;
-		}
+		}*/
 
 		if (some_item->idFrom == IDC_BT_MOTIONS_STOP)
 		{
@@ -922,12 +922,12 @@ LRESULT CALLBACK CL64_TopDlg::Motions_TB_Proc(HWND hDlg, UINT message, WPARAM wP
 			return CDRF_DODEFAULT;
 		}
 
-		if (some_item->idFrom == IDC_BT_MOTIONS_PAUSE)
+		/*if (some_item->idFrom == IDC_BT_MOTIONS_PAUSE)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Toggle(item, App->CL_Motions->flag_Motion_Paused);
 			return CDRF_DODEFAULT;
-		}
+		}*/
 
 		return CDRF_DODEFAULT;
 	}
@@ -936,7 +936,7 @@ LRESULT CALLBACK CL64_TopDlg::Motions_TB_Proc(HWND hDlg, UINT message, WPARAM wP
 	{
 		if (LOWORD(wParam) == IDC_BT_MOTIONS_PAUSE)
 		{
-			if (App->CL_Motions->flag_Motion_Playing == 1)
+			/*if (App->CL_Motions->flag_Motion_Playing == 1)
 			{
 				if (App->CL_Motions->flag_Motion_Paused == 0)
 				{
@@ -947,20 +947,20 @@ LRESULT CALLBACK CL64_TopDlg::Motions_TB_Proc(HWND hDlg, UINT message, WPARAM wP
 					App->CL_Motions->flag_Motion_Paused = 0;
 					App->CL_Motions->Play_SelectedMotion();
 				}
-			}
+			}*/
 
 			return 1;
 		}
 		
 		if (LOWORD(wParam) == IDC_BT_MOTIONS_PLAY)
 		{
-			App->CL_Motions->Play_SelectedMotion();
+			//App->CL_Motions->Play_SelectedMotion();
 			return 1;
 		}
 
 		if (LOWORD(wParam) == IDC_BT_MOTIONS_STOP)
 		{
-			App->CL_Motions->Stop_SelectedMotion();
+			//App->CL_Motions->Stop_SelectedMotion();
 			return 1;
 		}
 
@@ -979,8 +979,8 @@ LRESULT CALLBACK CL64_TopDlg::Motions_TB_Proc(HWND hDlg, UINT message, WPARAM wP
 				SendMessage(temp, CB_GETLBTEXT, Index, (LPARAM)buff);
 				strcpy(App->CL_TopDlg->Selected_Motion_Name,buff);
 
-				App->CL_Motions->Stop_SelectedMotion();
-				App->CL_Motions->Play_SelectedMotion();
+				//App->CL_Motions->Stop_SelectedMotion();
+				//App->CL_Motions->Play_SelectedMotion();
 
 				RedrawWindow(App->CL_TopDlg->Motions_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			}
@@ -1003,7 +1003,7 @@ LRESULT CALLBACK CL64_TopDlg::Motions_TB_Proc(HWND hDlg, UINT message, WPARAM wP
 				int Index = SendMessage(temp, CB_GETCURSEL, 0, 0);
 				SendMessage(temp, CB_GETLBTEXT, Index, (LPARAM)buff);
 				
-				App->CL_Motions->AnimationScale = atof(buff);
+				//App->CL_Motions->AnimationScale = atof(buff);
 
 			}
 			}
@@ -1027,8 +1027,8 @@ void CL64_TopDlg::Update_Motions_By_Name(const char* Name)
 
 	strcpy(App->CL_TopDlg->Selected_Motion_Name, Name);
 
-	App->CL_Motions->Stop_SelectedMotion();
-	App->CL_Motions->Play_SelectedMotion();
+	//App->CL_Motions->Stop_SelectedMotion();
+	//App->CL_Motions->Play_SelectedMotion();
 
 	RedrawWindow(App->CL_TopDlg->Tabs_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 }

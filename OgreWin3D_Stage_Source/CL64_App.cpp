@@ -45,8 +45,6 @@ CL64_App::CL64_App(void)
 	CL_Player =			nullptr;
 	CL_Dialogs =		nullptr;
 	CL_Resources =		nullptr;
-
-	CL_Motions =		nullptr;
 	CL_Dimensions =		nullptr;
 	
 	CL_FileView =			nullptr;
@@ -165,9 +163,6 @@ void CL64_App::InitApp(void)
 	CL_Player =			new CL64_Player();
 	CL_Dialogs =		new CL64_Dialogs();
 	CL_Resources =		new CL64_Resources();
-
-	CL_Motions =		new CL64_Motioins();
-	
 	CL_Dimensions =		new CL64_Dimensions();
 
 	CL_FileView =			new CL64_FileView();

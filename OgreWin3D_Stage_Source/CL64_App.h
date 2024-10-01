@@ -41,8 +41,6 @@ THE SOFTWARE.
 #include "CL64_Dialogs.h"
 #include "CL64_Resources.h"
 
-#include "CL64_Motioins.h"
-
 #include "CL64_Dimensions.h"
 
 #include "CL64_FileView.h"
@@ -89,9 +87,6 @@ public:
 	CL64_Player*			CL_Player;
 	CL64_Dialogs*			CL_Dialogs;
 	CL64_Resources*			CL_Resources;
-	
-	CL64_Motioins*			CL_Motions;
-
 	CL64_Dimensions*		CL_Dimensions;
 
 	// Stage

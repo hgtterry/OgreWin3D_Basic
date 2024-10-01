@@ -387,26 +387,6 @@ void CL64_Ogre::Clear_ErrorLog()
 }
 
 // *************************************************************************
-// *			Show_Test_Mesh:- Terry and Hazel Flanigan 2024			   *
-// *************************************************************************
-void CL64_Ogre::Show_Test_Mesh(bool Show)
-{
-	if (flag_Test_Mesh_Active == 1 && App->CL_Scene->Imported_Ogre_Ent)
-	{
-		if (Show == 1)
-		{
-			App->CL_Scene->Imported_Ogre_Ent->setVisible(true);
-			flag_Show_Test_Mesh = 1;
-		}
-		else
-		{
-			App->CL_Scene->Imported_Ogre_Ent->setVisible(false);
-			flag_Show_Test_Mesh = 0;
-		}
-	}
-}
-
-// *************************************************************************
 // *			Delete_TestMesh:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
 void CL64_Ogre::Delete_TestMesh(void)

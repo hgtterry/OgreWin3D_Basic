@@ -32,7 +32,6 @@ public:
 	bool Load_Project();
 	bool Reload_FromResentFiles(char* ResentPathAndFile);
 
-	void Scan_Material_Files(void);
 	std::string Get_FileName_From_Path(char* pString);
 
 	Ogre::String Ogre_CFG_Resource_Group;

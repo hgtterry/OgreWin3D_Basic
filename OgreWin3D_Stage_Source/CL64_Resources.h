@@ -29,7 +29,6 @@ public:
 
 	void Reset_Class(void);
 	void Start_Resources();
-	void Load_OgreCFG_Resources(const Ogre::String& file);
 	void Destroy_Resources_Group(Ogre::String ResourceGroup);
 
 	bool Create_Project_Resources_Group();

@@ -70,9 +70,6 @@ CL64_Scene::CL64_Scene(void)
 		Count++;
 	}
 	
-	Imported_Ogre_Ent = nullptr;
-	Imported_Ogre_Node = nullptr;
-
 	B_Player.reserve(20);
 	V_Object.reserve(200);
 }
@@ -237,55 +234,5 @@ void CL64_Scene::Set_Scene()
 	App->CL_ImGui->flag_Show_Demo_Options = 1;
 }
 
-// *************************************************************************
-// *			Reset_Main_Entity:- Terry and Hazel Flanigan 2024		   *
-// *************************************************************************
-void CL64_Scene::Reset_Main_Entity(void)
-{
-	if (Imported_Ogre_Ent && Imported_Ogre_Node)
-	{
-		Imported_Ogre_Node->detachAllObjects();
-		App->CL_Ogre->mSceneMgr->destroySceneNode(App->CL_Scene->Imported_Ogre_Node);
-		App->CL_Ogre->mSceneMgr->destroyEntity(App->CL_Scene->Imported_Ogre_Ent);
-		Imported_Ogre_Ent = nullptr;
-		Imported_Ogre_Node = nullptr;
-	}
 
-	App->CL_Ogre->Ogre3D_Listener->Ogre_Model_Loaded = 0;
-}
-
-// *************************************************************************
-// *		Main_Entity_Set_Default:- Terry and Hazel Flanigan 2024		   *
-// *************************************************************************
-void CL64_Scene::Main_Entity_Set_Default(void)
-{
-	Imported_Ogre_Ent = App->CL_Ogre->mSceneMgr->createEntity("Imported_Entity", App->CL_Scene->FileName, App->CL_Resources->Ogre_Loader_Resource_Group);
-	Imported_Ogre_Node = App->CL_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
-	Imported_Ogre_Node->attachObject(App->CL_Scene->Imported_Ogre_Ent);
-
-	Imported_Ogre_Node->setVisible(true);
-	Imported_Ogre_Node->setOrientation(Ogre::Quaternion::IDENTITY);
-	Imported_Ogre_Node->setPosition(0, 0, 0);
-	Imported_Ogre_Node->setScale(1, 1, 1);
-}
-
-// *************************************************************************
-// *			Show_Main_Entity:- Terry and Hazel Flanigan 2024		   *
-// *************************************************************************
-void CL64_Scene::Show_Main_Entity(bool Show)
-{
-	if (Imported_Ogre_Node)
-	{
-		if (Show == 1)
-		{
-			Imported_Ogre_Node->setVisible(true);
-			flag_Show_Main_Entity = 1;
-		}
-		else
-		{
-			Imported_Ogre_Node->setVisible(false);
-			flag_Show_Main_Entity = 0;
-		}
-	}
-}
 

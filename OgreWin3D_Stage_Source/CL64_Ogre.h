@@ -52,7 +52,6 @@ public:
 	void Log_Message_To_File(char* Message);
 	void Clear_ErrorLog();
 
-	void Show_Test_Mesh(bool Show);
 	void Delete_TestMesh(void);
 	void Enable_Fog(bool Enable);
 

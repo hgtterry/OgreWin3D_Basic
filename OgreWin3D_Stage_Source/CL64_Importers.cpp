@@ -37,34 +37,6 @@ CL64_Importers::~CL64_Importers()
 {
 }
 
-// ************************************************************************
-// *		Scan_Material_Files:- Terry and Hazel Flanigan 2024 		   *
-// *************************************************************************
-void CL64_Importers::Scan_Material_Files(void)
-{
-	Ogre::String Material;
-
-	for (unsigned int i = 0; i < App->CL_Scene->Imported_Ogre_Ent->getNumSubEntities(); ++i)
-	{
-		Ogre::SubEntity* subEnt = App->CL_Scene->Imported_Ogre_Ent->getSubEntity(i);
-		
-		Material = subEnt->getMaterialName();
-		
-		bool Test = Ogre::MaterialManager::getSingleton().resourceExists(subEnt->getMaterialName(), App->CL_Resources->Ogre_Loader_Resource_Group);
-		if (Test == 1)
-		{
-
-		}
-		else
-		{
-			subEnt->setMaterialName("No_Material_Loaded", App->CL_Ogre->App_Resource_Group);
-		}
-	}
-
-}
-
-
-
 // *************************************************************************
 // *			Load_Project:- Terry and Hazel Flanigan 2024   			   *
 // *************************************************************************
