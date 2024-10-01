@@ -33,7 +33,7 @@ void CL64_Dimensions::Centre_Model_Mid_Assimp(void)
 	//if (App->CL_Scene->flag_Model_Loaded == 1)
 	if (App->CL_Scene->GroupCount  > 0)
 	{
-		float X = -App->CL_Scene->S_BoundingBox[0]->Centre->x;
+		/*float X = -App->CL_Scene->S_BoundingBox[0]->Centre->x;
 		float Y = -App->CL_Scene->S_BoundingBox[0]->Centre->y;
 		float Z = -App->CL_Scene->S_BoundingBox[0]->Centre->z;
 
@@ -54,10 +54,7 @@ void CL64_Dimensions::Centre_Model_Mid_Assimp(void)
 			}
 
 			Count++;
-		}
-
-		App->CL_Scene->Set_BondingBox_Model(0);
-
+		}*/
 	}
 }
 
@@ -70,55 +67,54 @@ void CL64_Dimensions::Rotate_Z_Assimp(float Z)
 	if (App->CL_Scene->GroupCount > 0)
 	{
 
-		Ogre::Vector3 Centre;
+		//Ogre::Vector3 Centre;
 
-		Centre.x = App->CL_Scene->S_BoundingBox[0]->Centre->x;
-		Centre.y = App->CL_Scene->S_BoundingBox[0]->Centre->y;
-		Centre.z = App->CL_Scene->S_BoundingBox[0]->Centre->z;
+		//Centre.x = App->CL_Scene->S_BoundingBox[0]->Centre->x;
+		//Centre.y = App->CL_Scene->S_BoundingBox[0]->Centre->y;
+		//Centre.z = App->CL_Scene->S_BoundingBox[0]->Centre->z;
 
-		Ogre::Vector3 Rotate;
-		Rotate.x = 0;
-		Rotate.y = 0;
-		Rotate.z = Z;
+		//Ogre::Vector3 Rotate;
+		//Rotate.x = 0;
+		//Rotate.y = 0;
+		//Rotate.z = Z;
 
 
-		int Count = 0;
-		int VertCount = 0;
+		//int Count = 0;
+		//int VertCount = 0;
 
-		int GroupCount = App->CL_Scene->GroupCount;
+		//int GroupCount = App->CL_Scene->GroupCount;
 
-		while (Count < GroupCount)
-		{
-			VertCount = 0;
-			while (VertCount < App->CL_Scene->Group[Count]->GroupVertCount)
-			{
-				Ogre::Vector3 VertPos;
-				Ogre::Vector3 RotatedVert;
+		//while (Count < GroupCount)
+		//{
+		//	VertCount = 0;
+		//	while (VertCount < App->CL_Scene->Group[Count]->GroupVertCount)
+		//	{
+		//		Ogre::Vector3 VertPos;
+		//		Ogre::Vector3 RotatedVert;
 
-				VertPos.x = App->CL_Scene->Group[Count]->vertex_Data[VertCount].x;
-				VertPos.y = App->CL_Scene->Group[Count]->vertex_Data[VertCount].y;
-				VertPos.z = App->CL_Scene->Group[Count]->vertex_Data[VertCount].z;
+		//		VertPos.x = App->CL_Scene->Group[Count]->vertex_Data[VertCount].x;
+		//		VertPos.y = App->CL_Scene->Group[Count]->vertex_Data[VertCount].y;
+		//		VertPos.z = App->CL_Scene->Group[Count]->vertex_Data[VertCount].z;
 
-				if (Rotate.z != 0) // Dont bother if Zero
-				{
-					RotatedVert = (Ogre::Quaternion(Ogre::Degree(Rotate.z), Ogre::Vector3::UNIT_X) * (VertPos - Centre));
-				}
-				else
-				{
-					RotatedVert = VertPos - Centre;
-				}
+		//		if (Rotate.z != 0) // Dont bother if Zero
+		//		{
+		//			RotatedVert = (Ogre::Quaternion(Ogre::Degree(Rotate.z), Ogre::Vector3::UNIT_X) * (VertPos - Centre));
+		//		}
+		//		else
+		//		{
+		//			RotatedVert = VertPos - Centre;
+		//		}
 
-				RotatedVert += Centre;
+		//		RotatedVert += Centre;
 
-				App->CL_Scene->Group[Count]->vertex_Data[VertCount].x = RotatedVert.x;
-				App->CL_Scene->Group[Count]->vertex_Data[VertCount].y = RotatedVert.y;
-				App->CL_Scene->Group[Count]->vertex_Data[VertCount].z = RotatedVert.z;
+		//		App->CL_Scene->Group[Count]->vertex_Data[VertCount].x = RotatedVert.x;
+		//		App->CL_Scene->Group[Count]->vertex_Data[VertCount].y = RotatedVert.y;
+		//		App->CL_Scene->Group[Count]->vertex_Data[VertCount].z = RotatedVert.z;
 
-				VertCount++;
-			}
-			Count++;
-		}
+		//		VertCount++;
+		//	}
+		//	Count++;
+		//}
 
-		App->CL_Scene->Set_BondingBox_Model(0);
 	}
 }

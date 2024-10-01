@@ -35,15 +35,12 @@ CL64_App::CL64_App(void)
 	CL_Camera =			nullptr;
 	CL_Ini_File =		nullptr;
 	CL_Preferences =	nullptr;
-	CL_Assimp =			nullptr;
 	CL_Scene =			nullptr;
 	CL_Importers =		nullptr;
 	CL_File_IO =		nullptr;
 	CL_ImGui =			nullptr;
-	CL_Textures =		nullptr;
 	CL_TopDlg =			nullptr;
 	CL_Panels =			nullptr;
-	CL_Converters =		nullptr;
 	CL_Bullet =			nullptr;
 	CL_Player =			nullptr;
 	CL_Dialogs =		nullptr;
@@ -51,9 +48,7 @@ CL64_App::CL64_App(void)
 
 	CL_Motions =		nullptr;
 	CL_Dimensions =		nullptr;
-	CL_Props_Textures = nullptr;
-	CL_Mesh_Manager =	nullptr;
-
+	
 	CL_FileView =			nullptr;
 	CL_Properties =			nullptr;
 	CL_Project =			nullptr;
@@ -160,15 +155,12 @@ void CL64_App::InitApp(void)
 	CL_Camera =			new	CL64_Camera();
 	CL_Ini_File =		new CL64_Ini_File();
 	CL_Preferences =	new CL64_Preferences();
-	CL_Assimp =			new CL64_Assimp();
 	CL_Scene =			new CL64_Scene();
 	CL_Importers =		new CL64_Importers();
 	CL_File_IO =		new CL64_File_IO();
 	CL_ImGui =			new CL64_ImGui();
-	CL_Textures =		new CL64_Textures();
 	CL_TopDlg =			new CL64_TopDlg();
 	CL_Panels =			new CL64_Panels();
-	CL_Converters =		new CL64_Converters();
 	CL_Bullet =			new CL64_Bullet();
 	CL_Player =			new CL64_Player();
 	CL_Dialogs =		new CL64_Dialogs();
@@ -178,9 +170,6 @@ void CL64_App::InitApp(void)
 	
 	CL_Dimensions =		new CL64_Dimensions();
 
-	CL_Props_Textures = new CL64_Props_Textures();
-	CL_Mesh_Manager =	new CL64_Mesh_Manager();
-	
 	CL_FileView =			new CL64_FileView();
 	CL_Properties =			new CL64_Properties();
 	CL_Project =			new CL64_Project();
@@ -233,7 +222,6 @@ void CL64_App::Init_Dialogs(void)
 	App->CL_TopDlg->Start_TopBar();
 	App->CL_Panels->Resize_TopDlg();
 
-	App->CL_Props_Textures->Start_Props_Textures_Dialog();
 	App->CL_Panels->Move_Panels();
 
 	App->CL_FileView->Start_FileView();

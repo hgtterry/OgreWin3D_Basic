@@ -51,9 +51,6 @@
     <ClInclude Include="CL64_OGL_Listener.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CL64_Assimp.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Base_Group.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -66,16 +63,10 @@
     <ClInclude Include="CL64_ImGui.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CL64_Textures.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="CL64_TopDlg.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CL64_Panels.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CL64_Converters.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CL64_Bullet.h">
@@ -112,12 +103,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CL64_Motioins.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CL64_Props_Textures.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CL64_Mesh_Manager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CL64_FileView.h">
@@ -215,9 +200,6 @@
     <ClCompile Include="CL64_OGL_Listener.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CL64_Assimp.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Base_Group.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -230,16 +212,10 @@
     <ClCompile Include="CL64_ImGui.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CL64_Textures.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="CL64_TopDlg.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CL64_Panels.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CL64_Converters.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CL64_Bullet.cpp">
@@ -276,12 +252,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CL64_Motioins.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CL64_Props_Textures.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CL64_Mesh_Manager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CL64_FileView.cpp">

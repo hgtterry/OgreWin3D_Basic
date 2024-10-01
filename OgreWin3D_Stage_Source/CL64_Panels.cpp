@@ -126,8 +126,8 @@ bool CL64_Panels::Move_Panels(void)
 
 	hdwp = BeginDeferWindowPos(5);
 
-	DeferWindowPos(hdwp, App->CL_Props_Textures->Props_Dlg_Hwnd, NULL, p.x + widthX - 300, PosY + 5,
-		0, 0, SWP_NOSIZE | SWP_NOZORDER);
+	/*DeferWindowPos(hdwp, App->CL_Props_Textures->Props_Dlg_Hwnd, NULL, p.x + widthX - 300, PosY + 5,
+		0, 0, SWP_NOSIZE | SWP_NOZORDER);*/
 
 	/*DeferWindowPos(hdwp, App->CL_Motions->RightMotions_Hwnd, NULL, p.x + widthX - 295, PosY + 5,
 		0, 0, SWP_NOSIZE | SWP_NOZORDER);*/

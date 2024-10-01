@@ -886,20 +886,20 @@ LRESULT CALLBACK CL64_Dialogs::Proc_TextureViewer(HWND hDlg, UINT message, WPARA
 		SetWindowLongPtr(GetDlgItem(hDlg, IDC_BASETEXTURE), GWLP_WNDPROC, (LONG_PTR)Proc_ViewerBasePic);
 
 		App->CL_Dialogs->RightGroups_Hwnd = hDlg;
-		App->CL_Textures->Texture_To_HBITMP(App->CL_Dialogs->mTextureFile);
+		//App->CL_Textures->Texture_To_HBITMP(App->CL_Dialogs->mTextureFile);
 
 		char buf[MAX_PATH];
 		if (App->CL_Scene->Loaded_File_Type == Enums::Loaded_File_Type_Assimp)
 		{
 			EnableWindow(GetDlgItem(hDlg, IDC_BT_VIEWEXPORT),false);
 
-			sprintf(buf, "%i X %i", App->CL_Textures->BasePicWidth
-				, App->CL_Textures->BasePicHeight);// , App->CL_Dialogs->mTextureFile);
+			//sprintf(buf, "%i X %i", App->CL_Textures->BasePicWidth
+				//, App->CL_Textures->BasePicHeight);// , App->CL_Dialogs->mTextureFile);
 		}
 		else
 		{
-			sprintf(buf, "%i X %i   %s", App->CL_Textures->BasePicWidth
-				, App->CL_Textures->BasePicHeight, App->CL_Resources->mSelected_File);
+			//sprintf(buf, "%i X %i   %s", App->CL_Textures->BasePicWidth
+				//, App->CL_Textures->BasePicHeight, App->CL_Resources->mSelected_File);
 		}
 
 		SetDlgItemText(hDlg, IDC_ST_DETAILS, (LPCTSTR)buf);
@@ -1028,15 +1028,15 @@ bool CALLBACK CL64_Dialogs::Proc_ViewerBasePic(HWND hwnd, UINT msg, WPARAM wPara
 
 			Source.left = 0;
 			Source.top = 0;
-			Source.bottom = App->CL_Textures->BasePicHeight;
-			Source.right = App->CL_Textures->BasePicWidth;
+			//Source.bottom = App->CL_Textures->BasePicHeight;
+			//Source.right = App->CL_Textures->BasePicWidth;
 
 			Dest = Rect;
 
 			hDC = GetDC(hwnd);
 			SetStretchBltMode(hDC, HALFTONE);
 
-			App->CL_Textures->RenderTexture_Blit(hDC, App->CL_Dialogs->Sel_BaseBitmap, &Source, &Dest);
+			//App->CL_Textures->RenderTexture_Blit(hDC, App->CL_Dialogs->Sel_BaseBitmap, &Source, &Dest);
 			ReleaseDC(hwnd, hDC);
 		}
 
@@ -1081,7 +1081,7 @@ LRESULT CALLBACK CL64_Dialogs::Proc_FileViewer(HWND hDlg, UINT message, WPARAM w
 		{
 			char Text[MAX_PATH];
 			strcpy(Text, "material ");
-			strcat(Text, App->CL_Scene->Group[App->CL_Props_Textures->Selected_Group]->Ogre_Material);
+			//strcat(Text, App->CL_Scene->Group[App->CL_Props_Textures->Selected_Group]->Ogre_Material);
 			App->CL_Dialogs->Material_Search((LPSTR)Text);
 		}
 

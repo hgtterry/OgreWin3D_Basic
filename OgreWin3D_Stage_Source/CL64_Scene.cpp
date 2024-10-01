@@ -59,20 +59,11 @@ CL64_Scene::CL64_Scene(void)
 
 	S_OgreMeshData[0] = new OgreMeshData_Type;
 
-	S_BoundingBox[0] = nullptr;
-
 	B_Area[19] = { nullptr };
 	B_Locations[19] = { nullptr };
 	B_Counter[19] = { nullptr };
 
 	int Count = 0;
-	while (Count < 99)
-	{
-		Group[Count] = nullptr;
-		Count++;
-	}
-
-	Count = 0;
 	while (Count < 199)
 	{
 		S_Bones[Count] = nullptr;
@@ -247,20 +238,6 @@ void CL64_Scene::Set_Scene()
 }
 
 // *************************************************************************
-// *		Create_Mesh_Group:- Terry and Hazel Flanigan 2024		 	   *
-// *************************************************************************
-void CL64_Scene::Create_Mesh_Group(int Index)
-{
-	if (Group[Index] != nullptr)
-	{
-		delete Group[Index];
-		Group[Index] = nullptr;
-	}
-
-	App->CL_Scene->Group[Index] = new Base_Group();
-}
-
-// *************************************************************************
 // *			Reset_Main_Entity:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
 void CL64_Scene::Reset_Main_Entity(void)
@@ -312,53 +289,3 @@ void CL64_Scene::Show_Main_Entity(bool Show)
 	}
 }
 
-// *************************************************************************
-// *		Create_BondingBox_Model:- Terry and Hazel Flanigan 2024		   *
-// *************************************************************************
-void CL64_Scene::Set_BondingBox_Model(bool Create)
-{
-	if (Create == 1)
-	{
-		S_BoundingBox[0] = new AABB_Type;
-	}
-
-	if (App->CL_Scene->GroupCount > 0 && App->CL_Scene->VerticeCount > 4)
-	{
-		S_BoundingBox[0]->BB_Min[0].x = Group[0]->vertex_Data[0].x;
-		S_BoundingBox[0]->BB_Min[0].y = Group[0]->vertex_Data[0].y;
-		S_BoundingBox[0]->BB_Min[0].z = Group[0]->vertex_Data[0].z;
-
-		S_BoundingBox[0]->BB_Max[0].x = Group[0]->vertex_Data[0].x;
-		S_BoundingBox[0]->BB_Max[0].y = Group[0]->vertex_Data[0].y;
-		S_BoundingBox[0]->BB_Max[0].z = Group[0]->vertex_Data[0].z;
-
-		int Count = 0;
-		int VertCount = 0;
-
-		while (Count < GroupCount)
-		{
-			VertCount = 0;
-			while (VertCount < Group[Count]->GroupVertCount)
-			{
-				if (Group[Count]->vertex_Data[VertCount].x < S_BoundingBox[0]->BB_Min[0].x) S_BoundingBox[0]->BB_Min[0].x = Group[Count]->vertex_Data[VertCount].x;
-				if (Group[Count]->vertex_Data[VertCount].y < S_BoundingBox[0]->BB_Min[0].y) S_BoundingBox[0]->BB_Min[0].y = Group[Count]->vertex_Data[VertCount].y;
-				if (Group[Count]->vertex_Data[VertCount].z < S_BoundingBox[0]->BB_Min[0].z) S_BoundingBox[0]->BB_Min[0].z = Group[Count]->vertex_Data[VertCount].z;
-				if (Group[Count]->vertex_Data[VertCount].x > S_BoundingBox[0]->BB_Max[0].x) S_BoundingBox[0]->BB_Max[0].x = Group[Count]->vertex_Data[VertCount].x;
-				if (Group[Count]->vertex_Data[VertCount].y > S_BoundingBox[0]->BB_Max[0].y) S_BoundingBox[0]->BB_Max[0].y = Group[Count]->vertex_Data[VertCount].y;
-				if (Group[Count]->vertex_Data[VertCount].z > S_BoundingBox[0]->BB_Max[0].z) S_BoundingBox[0]->BB_Max[0].z = Group[Count]->vertex_Data[VertCount].z;
-				VertCount++;
-			}
-			Count++;
-		}
-
-		S_BoundingBox[0]->Size[0].x = (fabs(S_BoundingBox[0]->BB_Max[0].x - S_BoundingBox[0]->BB_Min[0].x));
-		S_BoundingBox[0]->Size[0].y = (fabs(S_BoundingBox[0]->BB_Max[0].y - S_BoundingBox[0]->BB_Min[0].y));
-		S_BoundingBox[0]->Size[0].z = (fabs(S_BoundingBox[0]->BB_Max[0].z - S_BoundingBox[0]->BB_Min[0].z));
-
-		S_BoundingBox[0]->radius = (S_BoundingBox[0]->Size[0].x > S_BoundingBox[0]->Size[0].z) ? S_BoundingBox[0]->Size[0].z / 2.0f : S_BoundingBox[0]->Size[0].x / 2.0f;
-
-		S_BoundingBox[0]->Centre[0].x = (S_BoundingBox[0]->BB_Min[0].x + S_BoundingBox[0]->BB_Max[0].x) / 2.0f;
-		S_BoundingBox[0]->Centre[0].y = (S_BoundingBox[0]->BB_Min[0].y + S_BoundingBox[0]->BB_Max[0].y) / 2.0f;
-		S_BoundingBox[0]->Centre[0].z = (S_BoundingBox[0]->BB_Min[0].z + S_BoundingBox[0]->BB_Max[0].z) / 2.0f;
-	}
-}

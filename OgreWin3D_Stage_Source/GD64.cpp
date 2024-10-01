@@ -258,21 +258,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 		case ID_WINDOWS_TEXTURESDIALOG:
 		{
-			ShowWindow(App->CL_Props_Textures->Props_Dlg_Hwnd, 1);
-
-			if (App->CL_Props_Textures->RightGroups_Visable == 1)
-			{
-				App->CL_Props_Textures->RightGroups_Visable = 0;
-				ShowWindow(App->CL_Props_Textures->Props_Dlg_Hwnd, 0);
-				CheckMenuItem(App->mMenu, ID_WINDOWS_TEXTURESDIALOG, MF_BYCOMMAND | MF_UNCHECKED);
-			}
-			else
-			{
-				App->CL_Props_Textures->RightGroups_Visable = 1;
-				ShowWindow(App->CL_Props_Textures->Props_Dlg_Hwnd, 1);
-				CheckMenuItem(App->mMenu, ID_WINDOWS_TEXTURESDIALOG, MF_BYCOMMAND | MF_CHECKED);
-			}
-
 			return TRUE;
 		}
 		

@@ -396,7 +396,7 @@ void CL64_ImGui::Show_Ogre_Model_Data_GUI(void)
 			// Materials / Textures
 			if (ImGui::TreeNode("Materials"))
 			{
-				int Count = 0;
+				/*int Count = 0;
 				int Size = App->CL_Scene->GroupCount;
 				while (Count < Size)
 				{
@@ -428,7 +428,7 @@ void CL64_ImGui::Show_Ogre_Model_Data_GUI(void)
 					}
 
 					Count++;
-				}
+				}*/
 				//ImGui::PopStyleVar();
 				ImGui::TreePop();
 			}
@@ -455,10 +455,10 @@ void CL64_ImGui::Show_Ogre_Model_Data_GUI(void)
 					ImGui::PushID("foo");
 					if (ImGui::BeginMenu(App->CL_Scene->S_OgreMeshData[0]->mSubmeshes[Count].m_SubMesh_Name_str.c_str()))
 					{
-						ImGui::Text("Dedicated vertices:  %s", App->CL_Scene->S_OgreMeshData[0]->mSubmeshes[Count].m_HasSharedVertices_str.c_str());
+						/*ImGui::Text("Dedicated vertices:  %s", App->CL_Scene->S_OgreMeshData[0]->mSubmeshes[Count].m_HasSharedVertices_str.c_str());
 						ImGui::Text("Material Name: %s", App->CL_Scene->Group[Count]->Ogre_Material);
 						ImGui::Text("Vertices Count: %i", App->CL_Scene->S_OgreMeshData[0]->mSubmeshes[Count].VerticesCount);
-						ImGui::Text("Bones Used: %i", App->CL_Scene->S_OgreMeshData[0]->mSubmeshes[Count].BonesCount);
+						ImGui::Text("Bones Used: %i", App->CL_Scene->S_OgreMeshData[0]->mSubmeshes[Count].BonesCount);*/
 
 						ImGui::Separator();
 
@@ -574,7 +574,7 @@ void CL64_ImGui::Show_Assimp_Model_Data_GUI(void)
 
 			while (Count < Size)
 			{
-				ImGui::PushID("foo");
+				/*ImGui::PushID("foo");
 				if (ImGui::BeginMenu(App->CL_Scene->Group[Count]->MaterialName))
 				{
 
@@ -593,7 +593,7 @@ void CL64_ImGui::Show_Assimp_Model_Data_GUI(void)
 					ImGui::EndMenu();
 				}
 
-				ImGui::PopID();
+				ImGui::PopID();*/
 				Count++;
 			}
 
@@ -620,27 +620,27 @@ void CL64_ImGui::Show_Assimp_Model_Data_GUI(void)
 			while (Count < Size)
 			{
 				ImGui::PushID("foo");
-				if (ImGui::BeginMenu(App->CL_Scene->Group[Count]->GroupName))
-				{
-					ImGui::Text("Dedicated vertices:  %s", "Yes");
-					ImGui::Text("Material Name: %s", App->CL_Scene->Group[Count]->MaterialName);
-					ImGui::Text("Vertices Count: %i", App->CL_Scene->Group[Count]->GroupVertCount);
-					ImGui::Text("Bones Used: %i", 0);// App->CL_Scene->S_OgreMeshData[0]->mSubmeshes[Count].BonesCount);
+				//if (ImGui::BeginMenu(App->CL_Scene->Group[Count]->GroupName))
+				//{
+				//	//ImGui::Text("Dedicated vertices:  %s", "Yes");
+				//	//ImGui::Text("Material Name: %s", App->CL_Scene->Group[Count]->MaterialName);
+				//	//ImGui::Text("Vertices Count: %i", App->CL_Scene->Group[Count]->GroupVertCount);
+				//	//ImGui::Text("Bones Used: %i", 0);// App->CL_Scene->S_OgreMeshData[0]->mSubmeshes[Count].BonesCount);
 
-					ImGui::Separator();
+				//	//ImGui::Separator();
 
-					if (ImGui::Checkbox("Show Mesh", &listSubMeshItems[Count]))
-					{
-						App->CL_Ogre->OGL_Listener->Flag_ShowFaces = 1;
-						App->CL_Ogre->OGL_Listener->flag_ShowOnlySubFaces = 1;
-						App->CL_Ogre->OGL_Listener->Selected_Face_Group = Count;
+				//	//if (ImGui::Checkbox("Show Mesh", &listSubMeshItems[Count]))
+				//	//{
+				//	//	App->CL_Ogre->OGL_Listener->Flag_ShowFaces = 1;
+				//	//	App->CL_Ogre->OGL_Listener->flag_ShowOnlySubFaces = 1;
+				//	//	App->CL_Ogre->OGL_Listener->Selected_Face_Group = Count;
 
-						listSubMeshItems[PreviouseSubMesh] = 0;
-						PreviouseSubMesh = Count;
-					}
+				//	//	listSubMeshItems[PreviouseSubMesh] = 0;
+				//	//	PreviouseSubMesh = Count;
+				//	//}
 
-					ImGui::EndMenu();
-				}
+				//	ImGui::EndMenu();
+				//}
 
 				ImGui::PopID();
 
@@ -660,7 +660,7 @@ void CL64_ImGui::Show_Assimp_Model_Data_GUI(void)
 		// Bounds
 		if (ImGui::TreeNode("Bounds"))
 		{
-			ImGui::Text("Width:- %f", App->CL_Scene->S_BoundingBox[0]->Size->x);
+			/*ImGui::Text("Width:- %f", App->CL_Scene->S_BoundingBox[0]->Size->x);
 			ImGui::Text("Height:- %f", App->CL_Scene->S_BoundingBox[0]->Size->y);
 			ImGui::Text("Depth:- %f", App->CL_Scene->S_BoundingBox[0]->Size->z);
 
@@ -668,7 +668,7 @@ void CL64_ImGui::Show_Assimp_Model_Data_GUI(void)
 			ImGui::Text("Max:- %.5f  %.5f  %.5f", App->CL_Scene->S_BoundingBox[0]->BB_Max->x, App->CL_Scene->S_BoundingBox[0]->BB_Max->y, App->CL_Scene->S_BoundingBox[0]->BB_Max->z);
 
 			ImGui::Text("Centre:- %.5f  %.5f  %.5f", App->CL_Scene->S_BoundingBox[0]->Centre->x, App->CL_Scene->S_BoundingBox[0]->Centre->y, App->CL_Scene->S_BoundingBox[0]->Centre->z);
-			ImGui::Text("Radius:- %f", App->CL_Scene->S_BoundingBox[0]->radius);
+			ImGui::Text("Radius:- %f", App->CL_Scene->S_BoundingBox[0]->radius);*/
 			
 			ImGui::TreePop();
 		}

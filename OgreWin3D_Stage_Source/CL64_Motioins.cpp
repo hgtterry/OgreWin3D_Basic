@@ -117,9 +117,9 @@ void CL64_Motioins::Update_Motion(float deltaTime)
 // *************************************************************************
 void CL64_Motioins::Update_MeshData(void)
 {
-	App->CL_Motions->UpdateBones_Orge(false);
+	/*App->CL_Motions->UpdateBones_Orge(false);
 	App->CL_Motions->AnimationExtract_Mesh(false);
-	App->CL_Scene->Set_BondingBox_Model(false);
+	App->CL_Scene->Set_BondingBox_Model(false);*/
 }
 
 // *************************************************************************
@@ -199,7 +199,7 @@ void CL64_Motioins::Stop_SelectedMotion(void)
 // *************************************************************************
 void CL64_Motioins::Motion_Set_Pose(void)
 {
-	if (App->CL_Scene->MotionCount > 0)
+	/*if (App->CL_Scene->MotionCount > 0)
 	{
 		if (App->CL_Scene->Imported_Ogre_Ent)
 		{
@@ -207,7 +207,7 @@ void CL64_Motioins::Motion_Set_Pose(void)
 			App->CL_Motions->AnimationExtract_Mesh(true);
 			App->CL_Scene->Set_BondingBox_Model(false);
 		}
-	}
+	}*/
 }
 
 #pragma warning(disable:4996)
@@ -379,7 +379,7 @@ void CL64_Motioins::Get_AnimationInstance(Ogre::MeshPtr mesh,
 	ibuf->unlock();
 	current_offset = next_offset;
 
-	int loop = 0;
+	/*int loop = 0;
 	while (loop < vertex_count)
 	{
 		App->CL_Scene->Group[SubMesh]->vertex_Data[loop].x = vertices[loop].x;
@@ -387,7 +387,7 @@ void CL64_Motioins::Get_AnimationInstance(Ogre::MeshPtr mesh,
 		App->CL_Scene->Group[SubMesh]->vertex_Data[loop].z = vertices[loop].z;
 
 		loop++;
-	}
+	}*/
 
 	delete vertices;
 	delete indices;

@@ -30,15 +30,12 @@ THE SOFTWARE.
 #include "CL64_Camera.h"
 #include "CL64_Ini_File.h"
 #include "CL64_Preferences.h"
-#include "CL64_Assimp.h"
 #include "CL64_Scene.h"
 #include "CL64_Importers.h"
 #include "CL64_File_IO.h"
 #include "CL64_ImGui.h"
-#include "CL64_Textures.h"
 #include "CL64_TopDlg.h"
 #include "CL64_Panels.h"
-#include "CL64_Converters.h"
 #include "CL64_Bullet.h"
 #include "CL64_Player.h"
 #include "CL64_Dialogs.h"
@@ -47,10 +44,6 @@ THE SOFTWARE.
 #include "CL64_Motioins.h"
 
 #include "CL64_Dimensions.h"
-
-#include "CL64_Props_Textures.h"
-
-#include "CL64_Mesh_Manager.h"
 
 #include "CL64_FileView.h"
 #include "CL64_Properties.h"
@@ -86,15 +79,12 @@ public:
 	CL64_Camera*			CL_Camera;
 	CL64_Ini_File*			CL_Ini_File;
 	CL64_Preferences*		CL_Preferences;
-	CL64_Assimp*			CL_Assimp;
 	CL64_Scene*				CL_Scene;
 	CL64_Importers*			CL_Importers;
 	CL64_File_IO*			CL_File_IO;
 	CL64_ImGui*				CL_ImGui;
-	CL64_Textures*			CL_Textures;
 	CL64_TopDlg*			CL_TopDlg;
 	CL64_Panels*			CL_Panels;
-	CL64_Converters*		CL_Converters;
 	CL64_Bullet*			CL_Bullet;
 	CL64_Player*			CL_Player;
 	CL64_Dialogs*			CL_Dialogs;
@@ -103,9 +93,6 @@ public:
 	CL64_Motioins*			CL_Motions;
 
 	CL64_Dimensions*		CL_Dimensions;
-
-	CL64_Props_Textures*	CL_Props_Textures;
-	CL64_Mesh_Manager*		CL_Mesh_Manager;
 
 	// Stage
 	CL64_FileView*			CL_FileView;

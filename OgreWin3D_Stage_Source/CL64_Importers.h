@@ -30,8 +30,6 @@ public:
 	~CL64_Importers();
 
 	bool Load_Project();
-
-	void Reload_Ogre_Model(void);
 	bool Reload_FromResentFiles(char* ResentPathAndFile);
 
 	void Scan_Material_Files(void);

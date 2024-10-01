@@ -63,61 +63,7 @@ void CL64_Importers::Scan_Material_Files(void)
 
 }
 
-// *************************************************************************
-// *			Reload_Ogre_Model:- Terry and Hazel Flanigan 2024 		   *
-// *************************************************************************
-void CL64_Importers::Reload_Ogre_Model(void)
-{
-	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(App->CL_Scene->Texture_FolderPath,
-		"FileSystem", App->CL_Resources->Ogre_Loader_Resource_Group);
 
-	try
-	{
-		Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();// App->CL_Scene->Texture_FolderPath);
-	}
-	catch (Ogre::Exception& e)
-	{
-		App->Say(e.getFullDescription().c_str());
-	}
-
-	try
-	{
-		App->CL_Scene->Imported_Ogre_Ent = App->CL_Ogre->mSceneMgr->createEntity("UserMesh", App->CL_Scene->FileName, App->CL_Resources->Ogre_Loader_Resource_Group);
-		App->CL_Scene->Imported_Ogre_Node = App->CL_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
-		App->CL_Scene->Imported_Ogre_Node->attachObject(App->CL_Scene->Imported_Ogre_Ent);
-
-		App->CL_Scene->Imported_Ogre_Node->setVisible(true);
-		App->CL_Scene->Imported_Ogre_Node->setOrientation(Ogre::Quaternion::IDENTITY);
-		App->CL_Scene->Imported_Ogre_Node->setPosition(0, 0, 0);
-		App->CL_Scene->Imported_Ogre_Node->setScale(1, 1, 1);
-	}
-	catch (Ogre::Exception& e)
-	{
-		App->Say(e.getFullDescription().c_str());
-	}
-
-	
-	Scan_Material_Files();
-	
-	App->CL_Ogre->Show_Test_Mesh(false);
-	App->CL_Camera->Reset_View();
-
-	
-	if (App->CL_Scene->Imported_Ogre_Ent)
-	{
-		Ogre::Vector3 vCenter = Ogre::Vector3(0.0f, (App->CL_Scene->Imported_Ogre_Ent->getBoundingBox().getMaximum().y +
-			App->CL_Scene->Imported_Ogre_Ent->getBoundingBox().getMinimum().y) * 0.5f,
-			0.0f);
-
-		App->CL_Ogre->camNode->setOrientation(Ogre::Quaternion::IDENTITY);
-		App->CL_Ogre->camNode->setPosition(Ogre::Vector3(0, 0, App->CL_Scene->Imported_Ogre_Ent->getBoundingRadius() * 2.8f));
-	}
-
-	App->CL_Mesh_Manager->Ogre_To_Mesh_Data(App->CL_Scene->Imported_Ogre_Ent);
-
-	App->CL_Ogre->Ogre3D_Listener->Ogre_Model_Loaded = 1;
-	App->CL_Props_Textures->Get_First_Texture_Ogre();
-}
 
 // *************************************************************************
 // *			Load_Project:- Terry and Hazel Flanigan 2024   			   *

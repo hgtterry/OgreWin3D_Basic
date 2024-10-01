@@ -270,52 +270,52 @@ bool CL64_OGL_Listener::MeshData_Render_Textures(void)
 // *************************************************************************
 bool CL64_OGL_Listener::MeshData_Textured_Groups(int Count)
 {
-	int VertCount = 0;
-	int A = 0;
-	int B = 0;
-	int C = 0;
+	//int VertCount = 0;
+	//int A = 0;
+	//int B = 0;
+	//int C = 0;
 
-	if (App->CL_Scene->Group[Count]->MaterialIndex > -1)
-	{
-		glEnable(GL_TEXTURE_2D);
-		glColor3f(1, 1, 1);
+	//if (App->CL_Scene->Group[Count]->MaterialIndex > -1)
+	//{
+	//	glEnable(GL_TEXTURE_2D);
+	//	glColor3f(1, 1, 1);
 
-		glBindTexture(GL_TEXTURE_2D, App->CL_Textures->g_Texture[App->CL_Scene->Group[Count]->MaterialIndex]);
+	//	glBindTexture(GL_TEXTURE_2D, App->CL_Textures->g_Texture[App->CL_Scene->Group[Count]->MaterialIndex]);
 
-	}
-	else
-	{
-		glDisable(GL_TEXTURE_2D);
-	}
+	//}
+	//else
+	//{
+	//	glDisable(GL_TEXTURE_2D);
+	//}
 
-	while (VertCount < App->CL_Scene->Group[Count]->GroupFaceCount)
-	{
-		A = App->CL_Scene->Group[Count]->Face_Data[VertCount].a;
-		B = App->CL_Scene->Group[Count]->Face_Data[VertCount].b;
-		C = App->CL_Scene->Group[Count]->Face_Data[VertCount].c;
+	//while (VertCount < App->CL_Scene->Group[Count]->GroupFaceCount)
+	//{
+	//	A = App->CL_Scene->Group[Count]->Face_Data[VertCount].a;
+	//	B = App->CL_Scene->Group[Count]->Face_Data[VertCount].b;
+	//	C = App->CL_Scene->Group[Count]->Face_Data[VertCount].c;
 
-		glBegin(GL_POLYGON);
+	//	glBegin(GL_POLYGON);
 
-		//-----------------------------------------------
-		glTexCoord2f(App->CL_Scene->Group[Count]->MapCord_Data[A].u, App->CL_Scene->Group[Count]->MapCord_Data[A].v);
-		glNormal3fv(&App->CL_Scene->Group[Count]->Normal_Data[A].x);
-		glVertex3fv(&App->CL_Scene->Group[Count]->vertex_Data[A].x);
+	//	//-----------------------------------------------
+	//	glTexCoord2f(App->CL_Scene->Group[Count]->MapCord_Data[A].u, App->CL_Scene->Group[Count]->MapCord_Data[A].v);
+	//	glNormal3fv(&App->CL_Scene->Group[Count]->Normal_Data[A].x);
+	//	glVertex3fv(&App->CL_Scene->Group[Count]->vertex_Data[A].x);
 
-		//-----------------------------------------------
-		glTexCoord2f(App->CL_Scene->Group[Count]->MapCord_Data[B].u, App->CL_Scene->Group[Count]->MapCord_Data[B].v);
-		glNormal3fv(&App->CL_Scene->Group[Count]->Normal_Data[B].x);
-		glVertex3fv(&App->CL_Scene->Group[Count]->vertex_Data[B].x);
+	//	//-----------------------------------------------
+	//	glTexCoord2f(App->CL_Scene->Group[Count]->MapCord_Data[B].u, App->CL_Scene->Group[Count]->MapCord_Data[B].v);
+	//	glNormal3fv(&App->CL_Scene->Group[Count]->Normal_Data[B].x);
+	//	glVertex3fv(&App->CL_Scene->Group[Count]->vertex_Data[B].x);
 
-		//-----------------------------------------------
-		glTexCoord2f(App->CL_Scene->Group[Count]->MapCord_Data[C].u, App->CL_Scene->Group[Count]->MapCord_Data[C].v);
-		glNormal3fv(&App->CL_Scene->Group[Count]->Normal_Data[C].x);
-		glVertex3fv(&App->CL_Scene->Group[Count]->vertex_Data[C].x);
-		VertCount++;
-		//-----------------------------------------------
+	//	//-----------------------------------------------
+	//	glTexCoord2f(App->CL_Scene->Group[Count]->MapCord_Data[C].u, App->CL_Scene->Group[Count]->MapCord_Data[C].v);
+	//	glNormal3fv(&App->CL_Scene->Group[Count]->Normal_Data[C].x);
+	//	glVertex3fv(&App->CL_Scene->Group[Count]->vertex_Data[C].x);
+	//	VertCount++;
+	//	//-----------------------------------------------
 
-		glEnd();
+	//	glEnd();
 
-	}
+	//}
 
 	return 1;
 }
@@ -351,34 +351,34 @@ void CL64_OGL_Listener::MeshData_Render_Faces(void)
 // *************************************************************************
 void CL64_OGL_Listener::MeshData_Face_Groups(int Count)
 {
-	int FaceCount = 0;
-	int A = 0;
-	int B = 0;
-	int C = 0;
+	//int FaceCount = 0;
+	//int A = 0;
+	//int B = 0;
+	//int C = 0;
 
-	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-	while (FaceCount < App->CL_Scene->Group[Count]->GroupFaceCount)
-	{
-		A = App->CL_Scene->Group[Count]->Face_Data[FaceCount].a;
-		B = App->CL_Scene->Group[Count]->Face_Data[FaceCount].b;
-		C = App->CL_Scene->Group[Count]->Face_Data[FaceCount].c;
+	//while (FaceCount < App->CL_Scene->Group[Count]->GroupFaceCount)
+	//{
+	//	A = App->CL_Scene->Group[Count]->Face_Data[FaceCount].a;
+	//	B = App->CL_Scene->Group[Count]->Face_Data[FaceCount].b;
+	//	C = App->CL_Scene->Group[Count]->Face_Data[FaceCount].c;
 
-		glBegin(GL_POLYGON);
+	//	glBegin(GL_POLYGON);
 
-		//-----------------------------------------------
-		glVertex3fv(&App->CL_Scene->Group[Count]->vertex_Data[A].x);
+	//	//-----------------------------------------------
+	//	glVertex3fv(&App->CL_Scene->Group[Count]->vertex_Data[A].x);
 
-		//-----------------------------------------------
-		glVertex3fv(&App->CL_Scene->Group[Count]->vertex_Data[B].x);
+	//	//-----------------------------------------------
+	//	glVertex3fv(&App->CL_Scene->Group[Count]->vertex_Data[B].x);
 
-		//-----------------------------------------------
-		glVertex3fv(&App->CL_Scene->Group[Count]->vertex_Data[C].x);
-		FaceCount++;
-		//-----------------------------------------------
+	//	//-----------------------------------------------
+	//	glVertex3fv(&App->CL_Scene->Group[Count]->vertex_Data[C].x);
+	//	FaceCount++;
+	//	//-----------------------------------------------
 
-		glEnd();
-	}
+	//	glEnd();
+	//}
 
 }
 
@@ -405,7 +405,7 @@ void CL64_OGL_Listener::MeshData_Render_Points(void)
 // *************************************************************************
 void CL64_OGL_Listener::MeshData_Points_Groups(int Count)
 {
-	glPointSize(5);
+	/*glPointSize(5);
 
 	int VertCount = 0;
 
@@ -422,7 +422,7 @@ void CL64_OGL_Listener::MeshData_Points_Groups(int Count)
 		glEnd();
 
 		VertCount++;
-	}
+	}*/
 }
 
 //**************************************************************************
@@ -448,24 +448,24 @@ void CL64_OGL_Listener::MeshData_Render_Normals(void)
 // *************************************************************************
 void CL64_OGL_Listener::MeshData_Normals_Groups(int Count)
 {
-	int VertCount = 0;
+	//int VertCount = 0;
 
-	glPointSize(3);
-	glBegin(GL_LINES);
+	//glPointSize(3);
+	//glBegin(GL_LINES);
 
-	while (VertCount < App->CL_Scene->Group[Count]->GroupVertCount)
-	{
-		//-----------------------------------------------
-		glVertex3fv(&App->CL_Scene->Group[Count]->vertex_Data[VertCount].x);
+	//while (VertCount < App->CL_Scene->Group[Count]->GroupVertCount)
+	//{
+	//	//-----------------------------------------------
+	//	glVertex3fv(&App->CL_Scene->Group[Count]->vertex_Data[VertCount].x);
 
-		glVertex3f(App->CL_Scene->Group[Count]->vertex_Data[VertCount].x + App->CL_Scene->Group[Count]->Normal_Data[VertCount].x * Normal_Scaler,
-			App->CL_Scene->Group[Count]->vertex_Data[VertCount].y + App->CL_Scene->Group[Count]->Normal_Data[VertCount].y * Normal_Scaler,
-			App->CL_Scene->Group[Count]->vertex_Data[VertCount].z + App->CL_Scene->Group[Count]->Normal_Data[VertCount].z * Normal_Scaler);
+	//	glVertex3f(App->CL_Scene->Group[Count]->vertex_Data[VertCount].x + App->CL_Scene->Group[Count]->Normal_Data[VertCount].x * Normal_Scaler,
+	//		App->CL_Scene->Group[Count]->vertex_Data[VertCount].y + App->CL_Scene->Group[Count]->Normal_Data[VertCount].y * Normal_Scaler,
+	//		App->CL_Scene->Group[Count]->vertex_Data[VertCount].z + App->CL_Scene->Group[Count]->Normal_Data[VertCount].z * Normal_Scaler);
 
-		VertCount++;
-	}
+	//	VertCount++;
+	//}
 
-	glEnd();
+	//glEnd();
 }
 
 // *************************************************************************
@@ -539,15 +539,15 @@ void CL64_OGL_Listener::MeshData_RenderBones()
 // *************************************************************************
 void CL64_OGL_Listener::MeshData_Render_BoundingBox(void)
 {
-	float m_xMin = App->CL_Scene->S_BoundingBox[0]->BB_Min[0].x;
+	/*float m_xMin = App->CL_Scene->S_BoundingBox[0]->BB_Min[0].x;
 	float m_yMin = App->CL_Scene->S_BoundingBox[0]->BB_Min[0].y;
 	float m_zMin = App->CL_Scene->S_BoundingBox[0]->BB_Min[0].z;
 
 	float m_xMax = App->CL_Scene->S_BoundingBox[0]->BB_Max[0].x;
 	float m_yMax = App->CL_Scene->S_BoundingBox[0]->BB_Max[0].y;
-	float m_zMax = App->CL_Scene->S_BoundingBox[0]->BB_Max[0].z;
+	float m_zMax = App->CL_Scene->S_BoundingBox[0]->BB_Max[0].z;*/
 
-	glDisable(GL_TEXTURE_2D);
+	/*glDisable(GL_TEXTURE_2D);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_STENCIL_TEST);
 
@@ -595,7 +595,7 @@ void CL64_OGL_Listener::MeshData_Render_BoundingBox(void)
 	glEnd();
 	glEnable(GL_TEXTURE_2D);
 	glDisable(GL_DEPTH_TEST);
-	glDisable(GL_STENCIL_TEST);
+	glDisable(GL_STENCIL_TEST);*/
 }
 
 // **************************************************************************

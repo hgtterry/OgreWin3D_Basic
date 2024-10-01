@@ -17,18 +17,9 @@ appreciated but is not required.
 
 #include "Base_Object.h"
 #include "Base_Player.h"
-#include "Base_Group.h"
 #include "Base_Area.h"
 #include "Base_Locations.h"
 #include "Base_Counter.h"
-
-typedef struct AABB_Type {
-	vertex_type BB_Max[1];
-	vertex_type BB_Min[1];
-	vertex_type Size[1];
-	vertex_type Centre[1];
-	float radius;
-} AABB_Type;
 
 typedef struct Bone_Vert { float x, y, z; }Bone_Vert;
 typedef struct Translation_Type { float X, Y, Z; }Translation_Type;
@@ -86,18 +77,14 @@ public:
 
 	bool Clear_Level();
 
-	void Create_Mesh_Group(int Index);
 	void Reset_Main_Entity(void);
 	void Show_Main_Entity(bool Show);
 	void Main_Entity_Set_Default(void);
-	void Set_BondingBox_Model(bool Create);
-
+	
 	Ogre::Entity* Imported_Ogre_Ent;
 	Ogre::SceneNode* Imported_Ogre_Node;
 
 	Base_Area* B_Area[20];
-	Base_Group* Group[100];
-	AABB_Type* S_BoundingBox[1];
 	Bone_Type* S_Bones[200];
 	Base_Locations* B_Locations[20];
 	Base_Counter* B_Counter[20];
