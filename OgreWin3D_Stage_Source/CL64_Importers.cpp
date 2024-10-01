@@ -58,14 +58,13 @@ bool CL64_Importers::Load_Project()
 	}
 
 	bool result = App->CL_Project->Load_Project();
-
+	App->CL_Scene->Set_Scene();
 	App->CL_Ogre->RenderFrame(8);
 
 	//App->SBC_TopTabs->Project_Loaded_Reset();
 	
 	if (result == 1)
 	{
-		App->CL_Scene->Set_Scene();
 		App->Say("Project Loaded", App->CL_Project->Project_File_Name);
 	}
 	else
