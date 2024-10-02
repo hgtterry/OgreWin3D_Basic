@@ -1038,3 +1038,25 @@ void CL64_FileView::Change_Project_Name(void)
 	Sitem.iSelectedImage = 3;
 	SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_SETITEM, 0, (LPARAM)(const LPTVITEM)&Sitem);
 }
+
+// **************************************************************************
+// *			Show_FileView:- Terry and Hazel Flanigan 2022				*
+// **************************************************************************
+void CL64_FileView::Show_FileView(bool Enable)
+{
+	//ShowWindow(App->ListPanel, 1);
+
+	if (Enable == 1)
+	{
+		App->CL_FileView->Flag_FileView_Active = 1;
+		ShowWindow(App->ListPanel, 1);
+		CheckMenuItem(App->mMenu, ID_WINDOWS_FILEVIEW, MF_BYCOMMAND | MF_CHECKED);
+	}
+	else
+	{
+		App->CL_FileView->Flag_FileView_Active = 0;
+		ShowWindow(App->ListPanel, 0);
+		CheckMenuItem(App->mMenu, ID_WINDOWS_FILEVIEW, MF_BYCOMMAND | MF_UNCHECKED);
+	}
+
+}

@@ -197,10 +197,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			if (App->CL_ImGui->flag_Show_App_Debug == 1)
 			{
 				App->CL_ImGui->flag_Show_App_Debug = 0;
+				App->CL_FileView->Show_FileView(true);
 			}
 			else
 			{
 				App->CL_ImGui->flag_Show_App_Debug = 1;
+				App->CL_FileView->Show_FileView(false);
 			}
 			return TRUE;
 		}
@@ -252,20 +254,15 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		
 		case ID_WINDOWS_FILEVIEW:
 		{
-			ShowWindow(App->ListPanel, 1);
-
 			if (App->CL_FileView->Flag_FileView_Active == 1)
 			{
-				App->CL_FileView->Flag_FileView_Active = 0;
-				ShowWindow(App->ListPanel, 0);
-				CheckMenuItem(App->mMenu, ID_WINDOWS_FILEVIEW, MF_BYCOMMAND | MF_UNCHECKED);
+				App->CL_FileView->Show_FileView(false);
 			}
 			else
 			{
-				App->CL_FileView->Flag_FileView_Active = 1;
-				ShowWindow(App->ListPanel, 1);
-				CheckMenuItem(App->mMenu, ID_WINDOWS_FILEVIEW, MF_BYCOMMAND | MF_CHECKED);
+				App->CL_FileView->Show_FileView(true);
 			}
+
 			return TRUE;
 		}
 		

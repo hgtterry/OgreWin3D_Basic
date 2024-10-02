@@ -61,10 +61,7 @@ public:
 	bool flag_Project_Resources_Created;
 
 	bool flag_Player_Added;
-	bool flag_Model_Loaded;
-
-	bool flag_Show_Main_Entity;
-
+	
 	Base_Area* B_Area[20];
 	Base_Locations* B_Locations[20];
 	Base_Counter* B_Counter[20];

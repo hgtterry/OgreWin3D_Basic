@@ -33,10 +33,8 @@ CL64_Scene::CL64_Scene(void)
 	flag_Project_Resources_Created = 0;
 	flag_Area_Added = 0;
 	flag_Scene_Loaded = 0;
-	flag_Model_Loaded = 0;
 	flag_Player_Added = 0;
-	flag_Show_Main_Entity = 0;
-
+	
 	Loaded_File_Type = Enums::Loaded_File_Type_None;
 	Scene_Mode = Enums::Scene_Mode_None;
 
@@ -176,6 +174,8 @@ void CL64_Scene::Reset_Counters()
 
 	Counters_Count = 0;
 	UniqueID_Counters_Count = 0;
+
+	UniqueID_Area_Count = 0;
 
 	flag_Project_Resources_Created = 0;
 

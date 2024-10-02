@@ -170,47 +170,47 @@ void CL64_OGL_Listener::Render_Loop()
 	Translate();
 
 	//---------------------- Textured
-	if (App->CL_Scene->flag_Model_Loaded == 1 && Flag_ShowTextured == 1)
-	{
-		glEnable(GL_DEPTH_TEST);
-		glShadeModel(GL_SMOOTH);
+	//if (App->CL_Scene->flag_Model_Loaded == 1 && Flag_ShowTextured == 1)
+	//{
+	//	glEnable(GL_DEPTH_TEST);
+	//	glShadeModel(GL_SMOOTH);
 
-		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	//	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
-		MeshData_Render_Textures();
-	}
+	//	MeshData_Render_Textures();
+	//}
 
-	// ---------------------- Mesh
-	if (App->CL_Scene->flag_Model_Loaded && Flag_ShowFaces == 1)
-	{
-		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	//// ---------------------- Mesh
+	//if (App->CL_Scene->flag_Model_Loaded && Flag_ShowFaces == 1)
+	//{
+	//	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-		MeshData_Render_Faces();
-	}
+	//	MeshData_Render_Faces();
+	//}
 
-	// ---------------------- Points
-	if (App->CL_Scene->flag_Model_Loaded == 1 && Flag_ShowPoints == 1)
-	{
-		MeshData_Render_Points();
-	}
+	//// ---------------------- Points
+	//if (App->CL_Scene->flag_Model_Loaded == 1 && Flag_ShowPoints == 1)
+	//{
+	//	MeshData_Render_Points();
+	//}
 
-	// ---------------------- Bounding Box
-	if (App->CL_Scene->flag_Model_Loaded && Flag_ShowBoundingBox == 1)
-	{
-		MeshData_Render_BoundingBox();
-	}
+	//// ---------------------- Bounding Box
+	//if (App->CL_Scene->flag_Model_Loaded && Flag_ShowBoundingBox == 1)
+	//{
+	//	MeshData_Render_BoundingBox();
+	//}
 
-	// ---------------------- Normals
-	if (App->CL_Scene->flag_Model_Loaded == 1 && Flag_ShowNormals == 1)
-	{
-		MeshData_Render_Normals();
-	}
+	//// ---------------------- Normals
+	//if (App->CL_Scene->flag_Model_Loaded == 1 && Flag_ShowNormals == 1)
+	//{
+	//	MeshData_Render_Normals();
+	//}
 
-	// ---------------------- Bones
-	if (App->CL_Scene->flag_Model_Loaded == 1 && Flag_ShowBones == 1)
-	{
-		MeshData_RenderBones();
-	}
+	//// ---------------------- Bones
+	//if (App->CL_Scene->flag_Model_Loaded == 1 && Flag_ShowBones == 1)
+	//{
+	//	MeshData_RenderBones();
+	//}
 
 	// ---------------------- Crosshair
 	//if (Show_Crosshair == 1)

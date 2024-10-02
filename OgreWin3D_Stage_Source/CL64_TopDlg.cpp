@@ -296,48 +296,48 @@ LRESULT CALLBACK CL64_TopDlg::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam
 		// Show Hide Mesh/Faces
 		if (LOWORD(wParam) == IDC_TBSHOWFACES)
 		{
-			if (App->CL_Scene->flag_Model_Loaded == 1)
-			{
-				HWND Temp = GetDlgItem(hDlg, IDC_TBSHOWFACES);
+			//if (App->CL_Scene->flag_Model_Loaded == 1)
+			//{
+			//	HWND Temp = GetDlgItem(hDlg, IDC_TBSHOWFACES);
 
-				if (App->CL_Ogre->OGL_Listener->flag_ShowOnlySubFaces == 1)
-				{
-					App->CL_TopDlg->flag_ShowOnlySubFaces_Saved = 1;
-					App->CL_Ogre->OGL_Listener->flag_ShowOnlySubFaces = 0;
-					App->CL_Ogre->OGL_Listener->Flag_ShowFaces = 1;
-					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshOn_Bmp);
-					return TRUE;
-				}
+			//	if (App->CL_Ogre->OGL_Listener->flag_ShowOnlySubFaces == 1)
+			//	{
+			//		App->CL_TopDlg->flag_ShowOnlySubFaces_Saved = 1;
+			//		App->CL_Ogre->OGL_Listener->flag_ShowOnlySubFaces = 0;
+			//		App->CL_Ogre->OGL_Listener->Flag_ShowFaces = 1;
+			//		SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshOn_Bmp);
+			//		return TRUE;
+			//	}
 
-				if (App->CL_Ogre->OGL_Listener->Flag_ShowFaces == 1)
-				{
-					if (App->CL_TopDlg->flag_ShowOnlySubFaces_Saved == 1)
-					{
-						App->CL_Ogre->OGL_Listener->flag_ShowOnlySubFaces = 1;
-						App->CL_Ogre->OGL_Listener->Flag_ShowFaces = 1;
-						SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshOff_Bmp);
-						return TRUE;
-					}
+			//	if (App->CL_Ogre->OGL_Listener->Flag_ShowFaces == 1)
+			//	{
+			//		if (App->CL_TopDlg->flag_ShowOnlySubFaces_Saved == 1)
+			//		{
+			//			App->CL_Ogre->OGL_Listener->flag_ShowOnlySubFaces = 1;
+			//			App->CL_Ogre->OGL_Listener->Flag_ShowFaces = 1;
+			//			SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshOff_Bmp);
+			//			return TRUE;
+			//		}
 
-					App->CL_Ogre->OGL_Listener->Flag_ShowFaces = 0;
+			//		App->CL_Ogre->OGL_Listener->Flag_ShowFaces = 0;
 
-					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshOff_Bmp);
+			//		SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshOff_Bmp);
 
-				}
-				else
-				{
-					/*if (App->CL_TopDlg->flag_ShowOnlySubFaces_Saved == 1)
-					{
-						App->CL_Ogre->OGL_Listener->flag_ShowOnlySubFaces = 1;
-					}*/
+			//	}
+			//	else
+			//	{
+			//		/*if (App->CL_TopDlg->flag_ShowOnlySubFaces_Saved == 1)
+			//		{
+			//			App->CL_Ogre->OGL_Listener->flag_ShowOnlySubFaces = 1;
+			//		}*/
 
-					App->CL_Ogre->OGL_Listener->Flag_ShowFaces = 1;
+			//		App->CL_Ogre->OGL_Listener->Flag_ShowFaces = 1;
 
-					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshOn_Bmp);
+			//		SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshOn_Bmp);
 
-				}
+			//	}
 
-			}
+			//}
 
 			return TRUE;
 		}
@@ -345,7 +345,7 @@ LRESULT CALLBACK CL64_TopDlg::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam
 		//-------------------------------------------------------- Show Points
 		if (LOWORD(wParam) == IDC_BTSHOWPOINTS)
 		{
-			if (App->CL_Scene->flag_Model_Loaded == 1)
+			/*if (App->CL_Scene->flag_Model_Loaded == 1)
 			{
 				HWND Temp = GetDlgItem(hDlg, IDC_BTSHOWPOINTS);
 
@@ -361,7 +361,8 @@ LRESULT CALLBACK CL64_TopDlg::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam
 
 					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshPointsOn_Bmp);
 				}
-			}
+			}*/
+
 			return TRUE;
 		}
 
@@ -408,7 +409,7 @@ LRESULT CALLBACK CL64_TopDlg::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam
 		//-------------------------------------------------------- Show Normals
 		if (LOWORD(wParam) == IDC_BTSHOWNORMALS)
 		{
-			if (App->CL_Scene->flag_Model_Loaded == 1)
+			/*if (App->CL_Scene->flag_Model_Loaded == 1)
 			{
 				HWND Temp = GetDlgItem(hDlg, IDC_BTSHOWNORMALS);
 
@@ -424,14 +425,15 @@ LRESULT CALLBACK CL64_TopDlg::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam
 
 					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_NormalsOn_Bmp);
 				}
-			}
+			}*/
+
 			return TRUE;
 		}
 
 		//-------------------------------------------------------- Show Bound Box
 		if (LOWORD(wParam) == IDC_TBBOUNDBOX)
 		{
-			if (App->CL_Scene->flag_Model_Loaded == 1)
+			/*if (App->CL_Scene->flag_Model_Loaded == 1)
 			{
 				HWND Temp = GetDlgItem(hDlg, IDC_TBBOUNDBOX);
 
@@ -447,7 +449,8 @@ LRESULT CALLBACK CL64_TopDlg::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam
 					
 					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_BBOn_Bmp);
 				}
-			}
+			}*/
+
 			return TRUE;
 		}
 

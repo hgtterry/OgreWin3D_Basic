@@ -42,6 +42,7 @@ public:
 	void Redraw_FileView();
 	void Change_Level_Name(void);
 	void Change_Project_Name(void);
+	void Show_FileView(bool Enable);
 
 	bool Flag_FileView_Active;
 

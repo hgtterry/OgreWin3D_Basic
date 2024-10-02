@@ -366,32 +366,28 @@ void CL64_ImGui::App_Debug(void)
 				ImGui::TreePop();
 			}
 
-			// Mesh Data
-			if (ImGui::TreeNode("Scene Mesh Data"))
-			{
-				/*ImGui::Separator();
-				ImGui::Text("Vertices Count: %i", App->CL_Scene->VerticeCount);
-				ImGui::Text("Face Count: %i", App->CL_Scene->FaceCount);
-				ImGui::Text("Group Count: %i", App->CL_Scene->GroupCount);
-				ImGui::Text("Texture Count: %i", App->CL_Scene->TextureCount);
-
-				ImGui::Text("Motion Count: %i", App->CL_Scene->MotionCount);
-				ImGui::Text("Bone Count: %i", App->CL_Scene->BoneCount);
-				ImGui::Separator();*/
-				ImGui::TreePop();
-			}
-
-			// Bounds
-			if (ImGui::TreeNode("State Flags"))
+			// Counters and Flags
+			if (ImGui::TreeNode("Counters and Flags"))
 			{
 				ImGui::Separator();
-				ImGui::Text("Model Loaded: %i", App->CL_Scene->flag_Model_Loaded);
+				ImGui::Text("Counters ---------------------");
+				ImGui::Text("Object Count: %i", App->CL_Scene->Object_Count);
+				ImGui::Text("Aera Count: %i", App->CL_Scene->Area_Count);
+				ImGui::Text("Camera Count: %i", App->CL_Scene->Camera_Count);
+				ImGui::Text("Player Location Count: %i", App->CL_Scene->Player_Location_Count);
+				ImGui::Text("Counters Count: %i", App->CL_Scene->Counters_Count);
+
+				ImGui::Text("UniqueID Object Counter: %i", App->CL_Scene->UniqueID_Object_Counter);
+				ImGui::Text("UniqueID Area Count: %i", App->CL_Scene->UniqueID_Area_Count);
+				ImGui::Text("UniqueID Counters Count: %i", App->CL_Scene->UniqueID_Counters_Count);
+				ImGui::Text("Flags ------------------------");
+				ImGui::Text("Scene Loaded: %i", App->CL_Scene->flag_Scene_Loaded);
 				ImGui::Text("Player Added: %i", App->CL_Scene->flag_Player_Added);
-				ImGui::Text("Main Entity: %i", App->CL_Scene->flag_Show_Main_Entity);
 				ImGui::Text("Loaded File Type: %i", App->CL_Scene->Loaded_File_Type);
 				ImGui::Text("Scene Mode: %i", App->CL_Scene->Scene_Mode);
 				ImGui::Separator();
 				ImGui::TreePop();
+
 			}
 
 			// Motions
@@ -404,6 +400,8 @@ void CL64_ImGui::App_Debug(void)
 		if (ImGui::Button("Close"))
 		{
 			flag_Show_App_Debug = 0;
+			App->CL_FileView->Show_FileView(true);
+
 		}
 
 		ImGui::End();
