@@ -45,18 +45,13 @@ CL64_Scene::CL64_Scene(void)
 	flag_Player_Added = 0;
 	flag_Scene_Modified = 0;
 
-	strcpy(Texture_FolderPath, "None");
-	strcpy(FileName, "None");
-	strcpy(Path_FileName, "None");
-	strcpy(Model_FolderPath, "None");
-	strcpy(JustName, "None");
-
 	B_Area[19] = { nullptr };
 	B_Locations[19] = { nullptr };
 	B_Counter[19] = { nullptr };
 
 	B_Player.reserve(20);
 	V_Object.reserve(200);
+
 }
 
 CL64_Scene::~CL64_Scene(void)

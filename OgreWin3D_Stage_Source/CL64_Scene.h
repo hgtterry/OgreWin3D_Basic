@@ -44,12 +44,6 @@ public:
 
 	bool Clear_Level();
 
-	char FileName[MAX_PATH];
-	char Path_FileName[MAX_PATH];
-	char Model_FolderPath[MAX_PATH];
-	char Texture_FolderPath[MAX_PATH];
-	char JustName[MAX_PATH];
-
 	// Stage 
 	int Object_Count;
 	int Area_Count;
