@@ -971,28 +971,14 @@ LRESULT CALLBACK CL64_Dialogs::Proc_TextureViewer(HWND hDlg, UINT message, WPARA
 
 		if (LOWORD(wParam) == IDOK)
 		{
-			/*if (App->CL_Scene->Loaded_File_Type == Enums::Loaded_File_Type_Assimp)
-			{
-			}
-			else
-			{
-				remove(App->CL_Dialogs->mTextureFile);
-			}*/
-
+			remove(App->CL_Dialogs->mTextureFile);
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == IDCANCEL)
 		{
-			/*if (App->CL_Scene->Loaded_File_Type == Enums::Loaded_File_Type_Assimp)
-			{
-			}
-			else
-			{
-				remove(App->CL_Dialogs->mTextureFile);
-			}*/
-
+			remove(App->CL_Dialogs->mTextureFile);
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
@@ -1030,15 +1016,15 @@ bool CALLBACK CL64_Dialogs::Proc_ViewerBasePic(HWND hwnd, UINT msg, WPARAM wPara
 
 			Source.left = 0;
 			Source.top = 0;
-			//Source.bottom = App->CL_Textures->BasePicHeight;
-			//Source.right = App->CL_Textures->BasePicWidth;
+			Source.bottom = App->CL_Textures->BasePicHeight;
+			Source.right = App->CL_Textures->BasePicWidth;
 
 			Dest = Rect;
 
 			hDC = GetDC(hwnd);
 			SetStretchBltMode(hDC, HALFTONE);
 
-			//App->CL_Textures->RenderTexture_Blit(hDC, App->CL_Dialogs->Sel_BaseBitmap, &Source, &Dest);
+			App->CL_Textures->RenderTexture_Blit(hDC, App->CL_Dialogs->Sel_BaseBitmap, &Source, &Dest);
 			ReleaseDC(hwnd, hDC);
 		}
 

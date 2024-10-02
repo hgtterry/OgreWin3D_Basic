@@ -21,7 +21,6 @@ public:
 	CL64_Textures(void);
 	~CL64_Textures(void);
 
-	bool Import_OpenGL_Texture(UINT textureArray[], LPSTR strFileName, int textureID);
 	bool Create_DummyTexture(char* Folder);
 	bool HBITMAP_TO_BmpFile(HBITMAP Bitmap, char* Filename, char* SaveFolder);
 	void Texture_To_HBITMP(char* TextureFileName);
