@@ -228,3 +228,34 @@ int CL64_Com_Environments::Set_Environment_By_Index(bool PlayMusic, int Index)
 
 	return 1;
 }
+
+// *************************************************************************
+// *	Mark_As_Altered_Environ:- Terry and Hazel Flanigan 2024		 	   *
+// *************************************************************************
+void CL64_Com_Environments::Mark_As_Altered_Environ(int Index)
+{
+	App->CL_Scene->V_Object[Index]->Altered = 1;
+
+	App->CL_Scene->flag_Scene_Modified = 1;
+
+	App->CL_FileView->Mark_Altered(App->CL_Scene->V_Object[Index]->FileViewItem);
+}
+
+// *************************************************************************
+// *		Get_First_Environ:- Terry and Hazel Flanigan 2024		 	   *
+// *************************************************************************
+int CL64_Com_Environments::Get_First_Environ()
+{
+	int Count = 0;
+	while (Count < App->CL_Scene->Object_Count)
+	{
+		if (App->CL_Scene->V_Object[Count]->Usage == Enums::Stage_Usage_EnvironEntity)
+		{
+			return Count;
+		}
+
+		Count++;
+	}
+
+	return -1;
+}

@@ -68,6 +68,7 @@ CL64_App::CL64_App(void)
 	CL_Display =			nullptr;
 	CL_Build =				nullptr;
 	CL_LookUps =			nullptr;
+	CL_Gui_Environment =	nullptr;
 
 	//-------------------------------------
 
@@ -187,6 +188,7 @@ void CL64_App::InitApp(void)
 	CL_Display =			new CL64_Display();
 	CL_Build =				new CL64_Build();
 	CL_LookUps =			new CL64_LookUps();
+	CL_Gui_Environment =	new CL64_Gui_Environment();
 	
 	SetBrushes_Fonts();
 

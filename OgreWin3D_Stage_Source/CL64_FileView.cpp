@@ -913,12 +913,12 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 		ShowWindow(App->CL_Properties->Properties_Dlg_hWnd, 1);
 		/*App->SBC_Props_Dialog->Hide_Details_Goto_Dlg(1);
 		App->SBC_Props_Dialog->Hide_Dimensions_Dlg(1, App->SBC_Scene->V_Object[Index]->Dimensions_Locked);
-		App->SBC_Props_Dialog->Hide_Debug_Dlg(1);
-
-		App->SBC_Properties->Edit_Category = Enums::Edit_Environs;*/
+		App->SBC_Props_Dialog->Hide_Debug_Dlg(1);*/
 
 		//----------------------------------------------------------------------------
 		App->CL_Properties->Current_Selected_Object = Index;
+		App->CL_Properties->Edit_Category = Enums::Edit_Environs;
+
 		/*App->SBC_Properties->Reset_Last_Selected_Object(App->SBC_Properties->Last_Selected_Object);
 		App->SBC_Properties->Last_Selected_Object = Index;*/
 		//----------------------------------------------------------------------------
@@ -1058,5 +1058,19 @@ void CL64_FileView::Show_FileView(bool Enable)
 		ShowWindow(App->ListPanel, 0);
 		CheckMenuItem(App->mMenu, ID_WINDOWS_FILEVIEW, MF_BYCOMMAND | MF_UNCHECKED);
 	}
+}
 
+// *************************************************************************
+// *			Mark_Altered:- Terry and Hazel Flanigan 2024		 	   *
+// *************************************************************************
+void CL64_FileView::Mark_Altered(HTREEITEM Item)
+{
+	TVITEM Sitem;
+	Sitem.mask = TVIF_IMAGE | TVIF_SELECTEDIMAGE;
+	Sitem.hItem = Item;
+	Sitem.iImage = 6;
+	Sitem.iSelectedImage = 7;
+	SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_SETITEM, 0, (LPARAM)(const LPTVITEM)&Sitem);
+
+	//EnableMenuItem(App->mMenu, ID_FILE_SAVEPROJECTALL, MF_ENABLED);
 }

@@ -69,6 +69,7 @@
 #define IDB_FVFOLDERRED                 181
 #define IDD_PROPERTIES                  182
 #define IDD_PROJECTSAVE                 183
+#define IDD_TRUEFALSE                   184
 #define IDC_CK_SU_FULLSCREEN            1000
 #define IDC_ST_STARTUP                  1001
 #define IDC_CK_SU_FULL3DVIEW            1002
@@ -148,7 +149,10 @@
 #define IDC_CK_EXPORT_TO_OGRE           1031
 #define IDC_CK_SUBFOLDER                1031
 #define IDC_CK_SP_DESKTOP               1031
+#define IDC_CHECKYES                    1031
 #define IDC_CB_FPSLIST                  1032
+#define IDC_CHECK2                      1032
+#define IDC_CHECKNO                     1032
 #define IDC_ST_FPSSETTINGS              1033
 #define IDC_CB_MOTIONS_MOTIONS          1036
 #define IDC_ST_MOTIONS_MOTIOINS         1037
@@ -239,7 +243,7 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
-#define _APS_NEXT_RESOURCE_VALUE        184
+#define _APS_NEXT_RESOURCE_VALUE        185
 #define _APS_NEXT_COMMAND_VALUE         32816
 #define _APS_NEXT_CONTROL_VALUE         1072
 #define _APS_NEXT_SYMED_VALUE           110

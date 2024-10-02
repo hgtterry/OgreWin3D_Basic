@@ -40,7 +40,9 @@ public:
 	void Start_TextureViewer_Dialog(char* TextureFile, HWND Owner_hDlg);
 	void Start_FileViewer_Dialog(char* FFile, HWND Owner_hDlg);
 	void Material_Search(char* ItemString);
+	bool Dialog_TrueFlase(HWND Parent);
 
+	bool TrueFlase;
 	bool Canceled;
 	bool Flag_Convert_to_Ogre;
 
@@ -48,7 +50,7 @@ public:
 	char Chr_Text[MAX_PATH];
 
 	int What_Check_Name;
-
+	
 	HBITMAP	Sel_BaseBitmap;
 
 	HWND FileViewer_Hwnd;
@@ -66,6 +68,7 @@ private:
 	static LRESULT CALLBACK Proc_Dialog_Text(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Proc_TextureViewer(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Proc_FileViewer(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Proc_Dialog_TrueFlase(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	static bool CALLBACK Proc_ViewerBasePic(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 

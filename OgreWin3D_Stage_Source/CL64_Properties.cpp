@@ -33,6 +33,9 @@ CL64_Properties::CL64_Properties(void)
 
 	Current_Selected_Object = 0;
 
+	Edit_Category = Enums::Edit_Object;
+	btext[0] = 0;
+
 	Properties_Dlg_hWnd =	nullptr;
 	Properties_hLV =		nullptr;
 }
@@ -220,11 +223,34 @@ void CL64_Properties::Create_Properties_hLV(void)
 }
 
 // *************************************************************************
+// *		Edit_Environs_OnClick:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+bool CL64_Properties::Edit_Environs_OnClick(LPARAM lParam)
+{
+	int Index = Current_Selected_Object;
+
+	int result = 1;
+	int test;
+
+	LPNMLISTVIEW poo = (LPNMLISTVIEW)lParam;
+	test = poo->iItem;
+	ListView_GetItemText(Properties_hLV, test, 0, btext, 20);
+
+	result = strcmp(btext, "Evironment");
+	if (result == 0)
+	{
+		App->CL_Gui_Environment->Start_Environment_Editor(Index, 0);
+		return 1;
+	}
+
+	return 1;
+}
+
+// *************************************************************************
 // *		ListView_OnClickOptions:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
 void CL64_Properties::ListView_OnClickOptions(LPARAM lParam)
 {
-	App->Say("Edit Test");
 	// Area
 	/*if (Edit_Category == Enums::Edit_Area)
 	{
@@ -326,15 +352,15 @@ void CL64_Properties::ListView_OnClickOptions(LPARAM lParam)
 	//	return;
 	//}
 
-	//// Environs
-	//if (Edit_Category == Enums::Edit_Environs)
-	//{
-	//	if (Edit_Physics == 0)
-	//	{
-	//		Edit_Environs_OnClick(lParam);
-	//	}
-	//	return;
-	//}
+	// Environs
+	if (Edit_Category == Enums::Edit_Environs)
+	{
+		//if (Edit_Physics == 0)
+		{
+			Edit_Environs_OnClick(lParam);
+		}
+		return;
+	}
 
 	//// Particles
 	//if (Edit_Category == Enums::Edit_Particles)

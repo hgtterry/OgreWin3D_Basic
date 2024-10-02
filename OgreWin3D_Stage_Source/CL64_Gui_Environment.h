@@ -23,47 +23,65 @@ THE SOFTWARE.
 */
 
 #pragma once
-class CL64_Properties
+class CL64_Gui_Environment
 {
 public:
-
-	CL64_Properties(void);
-	~CL64_Properties(void);
+	CL64_Gui_Environment(void);
+	~CL64_Gui_Environment(void);
 
 	void Reset_Class();
-	void Clear_Listview();
 
-	void Start_Properties(void);
+	void Environ_PropertyEditor();
+	void Start_Environment_Editor(int Index,bool IsTeleport);
+	void Close_Environment_Editor();
 
-	bool Edit_Environs_OnClick(LPARAM lParam);
+	void SetSky(bool Enable);
+	bool EnableFog(bool SetFog);
 
-	bool Update_ListView_Area();
-	bool Update_ListView_Player();
-	bool Update_ListView_Objects();
-	bool Update_ListView_Collectables();
-	bool Update_ListView_Sounds();
-	bool Update_ListView_Move_Entities();
-	bool Update_ListView_Messages();
-	bool Update_ListView_Teleport();
-	bool Update_ListView_Particles();
-	bool Update_ListView_Counters();
-	bool Update_ListView_Environs();
+	bool Show_PropertyEditor;
+	int PropertyEditor_Page;
 
-	int Edit_Category;
-	int Current_Selected_Object;
+protected:
 
-	bool Properties_Dlg_Active;
+	void Set_To_PlayerView();
 
-	HWND Properties_Dlg_hWnd;
+	// Ambient
+	int Ambient_Int_Red;
+	int Ambient_Int_Green;
+	int Ambient_Int_Blue;
+	ImVec4 Ambient_Colour_Copy;
+	ImVec4 Ambient_Colour;
 
-private:
-	static LRESULT CALLBACK Proc_Properties(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	// Fog Colour
+	int Fog_Colour_Int_Red;
+	int Fog_Colour_Int_Green;
+	int Fog_Colour_Int_Blue;
+	ImVec4 Fog_Colour_Copy;
+	ImVec4 Fog_Colour;
 
-	void Create_Properties_hLV(void);
-	void ListView_OnClickOptions(LPARAM lParam);
+	int Eviron_Index;
 
-	char btext[20]; // ListView_GetItemText Text Holder for Compare
+	bool Float_Exit;
 
-	HWND Properties_hLV;
+	bool Is_Teleport;
+
+	float Float_PosX;
+	float Float_PosY;
+	bool Float_StartPos;
+
+	bool ClickOnTrack;
+	bool ClickOnVolume;
+	bool ClickOnPlay;
+	bool ClickOnLoop;
+
+	bool ClickOnFogVisible;
+	bool ClickOnFogMode;
+	bool ClickOnFogColour;
+	bool ClickOnFogStart;
+	bool ClickOnFogEnd;
+
+	bool ClickOnSkyEnabled;
+	bool ClickOnSkyTiling;
+	bool ClickOnSkyCurve;
 };
 

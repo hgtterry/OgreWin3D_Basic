@@ -36,6 +36,7 @@ CL64_Dialogs::CL64_Dialogs(void)
 	MessageString2[0] = 0;
 
 	Canceled = 0;
+	TrueFlase = 0;
 
 	Flag_Convert_to_Ogre = 0;
 
@@ -1219,4 +1220,139 @@ void CL64_Dialogs::Material_Search(char* ItemString)
 {
 	int Index = SendDlgItemMessage(FileViewer_Hwnd, IDC_LST_FILE, LB_SELECTSTRING, (WPARAM)-1, (LPARAM)ItemString);
 	SendDlgItemMessage(FileViewer_Hwnd, IDC_LST_FILE, LB_SETTOPINDEX, (WPARAM)Index, (LPARAM)0);
+}
+
+// *************************************************************************
+// *	  	Dialog_TrueFlase:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+bool CL64_Dialogs::Dialog_TrueFlase(HWND Parent)
+{
+	DialogBox(App->hInst, (LPCTSTR)IDD_TRUEFALSE, Parent, (DLGPROC)Proc_Dialog_TrueFlase);
+	return 1;
+}
+// *************************************************************************
+// *						Dialog_TrueFlase_Proc	  					   *
+// *************************************************************************
+LRESULT CALLBACK CL64_Dialogs::Proc_Dialog_TrueFlase(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+	switch (message)
+	{
+	case WM_INITDIALOG:
+	{
+		//App->SetTitleBar(hDlg);
+		SendDlgItemMessage(hDlg, IDC_TITLENAME, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_CHECKNO, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_CHECKYES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		SetDlgItemText(hDlg, IDC_TITLENAME, (LPCTSTR)App->CL_Dialogs->btext);
+
+
+		if (App->CL_Dialogs->TrueFlase == 1)
+		{
+			HWND temp = GetDlgItem(hDlg, IDC_CHECKYES);
+			SendMessage(temp, BM_SETCHECK, 1, 0);
+			temp = GetDlgItem(hDlg, IDC_CHECKNO);
+			SendMessage(temp, BM_SETCHECK, 0, 0);
+		}
+		else
+		{
+			HWND temp = GetDlgItem(hDlg, IDC_CHECKYES);
+			SendMessage(temp, BM_SETCHECK, 0, 0);
+			temp = GetDlgItem(hDlg, IDC_CHECKNO);
+			SendMessage(temp, BM_SETCHECK, 1, 0);
+		}
+		return TRUE;
+	}
+	case WM_CTLCOLORSTATIC:
+	{
+		if (GetDlgItem(hDlg, IDC_TITLENAME) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 255));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+		if (GetDlgItem(hDlg, IDC_CHECKYES) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 255));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+		if (GetDlgItem(hDlg, IDC_CHECKNO) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 255));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+		return FALSE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->AppBackground;
+	}
+
+	case WM_NOTIFY:
+	{
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		if (some_item->idFrom == IDOK && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDCANCEL && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		return CDRF_DODEFAULT;
+	}
+
+	case WM_COMMAND:
+		if (LOWORD(wParam) == IDC_CHECKYES)
+		{
+			HWND temp = GetDlgItem(hDlg, IDC_CHECKYES);
+			SendMessage(temp, BM_SETCHECK, 1, 0);
+			temp = GetDlgItem(hDlg, IDC_CHECKNO);
+			SendMessage(temp, BM_SETCHECK, 0, 0);
+			App->CL_Dialogs->TrueFlase = 1;
+		}
+
+		if (LOWORD(wParam) == IDC_CHECKNO)
+		{
+			HWND temp = GetDlgItem(hDlg, IDC_CHECKNO);
+			SendMessage(temp, BM_SETCHECK, 1, 0);
+			temp = GetDlgItem(hDlg, IDC_CHECKYES);
+			SendMessage(temp, BM_SETCHECK, 0, 0);
+			App->CL_Dialogs->TrueFlase = 0;
+		}
+
+		if (LOWORD(wParam) == IDOK)
+		{
+			App->CL_Dialogs->Canceled = 0;
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDCANCEL)
+		{
+			App->CL_Dialogs->Canceled = 1;
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+
+		break;
+
+	}
+	return FALSE;
 }

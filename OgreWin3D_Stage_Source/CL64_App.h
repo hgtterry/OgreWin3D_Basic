@@ -64,6 +64,8 @@ THE SOFTWARE.
 #include "CL64_Build.h"
 #include "CL64_LookUps.h"
 
+#include "CL64_Gui_Environment.h"
+
 class CL64_App
 {
 
@@ -111,6 +113,7 @@ public:
 	CL64_Display*			CL_Display;
 	CL64_Build*				CL_Build;
 	CL64_LookUps*			CL_LookUps;
+	CL64_Gui_Environment*	CL_Gui_Environment;
 
 	void InitApp(void);
 	void Init_Dialogs(void);

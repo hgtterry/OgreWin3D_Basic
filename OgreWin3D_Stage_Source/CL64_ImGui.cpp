@@ -226,6 +226,11 @@ void CL64_ImGui::ImGui_Render_Loop(void)
 	{
 		ImGui_Collision_Debug();
 	}
+
+	if (App->CL_Gui_Environment->Show_PropertyEditor == 1)
+	{
+		App->CL_Gui_Environment->Environ_PropertyEditor();
+	}
 }
 
 // *************************************************************************
