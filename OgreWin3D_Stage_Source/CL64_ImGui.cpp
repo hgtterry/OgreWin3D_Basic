@@ -369,7 +369,7 @@ void CL64_ImGui::App_Debug(void)
 			// Mesh Data
 			if (ImGui::TreeNode("Scene Mesh Data"))
 			{
-				ImGui::Separator();
+				/*ImGui::Separator();
 				ImGui::Text("Vertices Count: %i", App->CL_Scene->VerticeCount);
 				ImGui::Text("Face Count: %i", App->CL_Scene->FaceCount);
 				ImGui::Text("Group Count: %i", App->CL_Scene->GroupCount);
@@ -377,7 +377,7 @@ void CL64_ImGui::App_Debug(void)
 
 				ImGui::Text("Motion Count: %i", App->CL_Scene->MotionCount);
 				ImGui::Text("Bone Count: %i", App->CL_Scene->BoneCount);
-				ImGui::Separator();
+				ImGui::Separator();*/
 				ImGui::TreePop();
 			}
 

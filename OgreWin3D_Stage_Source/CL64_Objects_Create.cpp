@@ -182,7 +182,7 @@ bool CL64_Objects_Create::Add_New_Object(int Index, bool From_MeshViewer)
 	}
 
 
-	App->CL_Scene->Scene_Loaded = 1;
+	App->CL_Scene->flag_Scene_Loaded = 1;
 
 
 	//---------------------- Static

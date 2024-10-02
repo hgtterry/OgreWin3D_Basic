@@ -69,7 +69,7 @@ bool CL64_Com_Collectables::Create_Collectable_Entity(int Index)
 
 	Object->Object_Node->setPosition(Object->Mesh_Pos);
 
-	App->CL_Scene->Scene_Loaded = 1;
+	App->CL_Scene->flag_Scene_Loaded = 1;
 
 	Ogre::Vector3 Centre = App->CL_Scene->V_Object[Index]->Object_Ent->getWorldBoundingBox(true).getCenter();
 	Object->Physics_Pos = Ogre::Vector3(Centre.x, Centre.y, Centre.z);

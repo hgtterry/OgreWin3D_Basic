@@ -245,7 +245,7 @@ void CL64_OGL_Listener::Translate(void)
 // *************************************************************************
 bool CL64_OGL_Listener::MeshData_Render_Textures(void)
 {
-	int Count = 0;
+	/*int Count = 0;
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
@@ -261,7 +261,7 @@ bool CL64_OGL_Listener::MeshData_Render_Textures(void)
 		Count++;
 	}
 
-	glDisable(GL_TEXTURE_2D);
+	glDisable(GL_TEXTURE_2D);*/
 
 	return 1;
 }
@@ -325,24 +325,24 @@ bool CL64_OGL_Listener::MeshData_Textured_Groups(int Count)
 // *************************************************************************
 void CL64_OGL_Listener::MeshData_Render_Faces(void)
 {
-	int Count = 0;
+	//int Count = 0;
 
-	glColor3f(1, 1, 1);
+	//glColor3f(1, 1, 1);
 
-	int GroupCount = App->CL_Scene->GroupCount;
+	//int GroupCount = App->CL_Scene->GroupCount;
 
-	
-	if (flag_ShowOnlySubFaces == 1) // Show Only Selected SubMesh
-	{
-		MeshData_Face_Groups(Selected_Face_Group);
-		return;
-	}
+	//
+	//if (flag_ShowOnlySubFaces == 1) // Show Only Selected SubMesh
+	//{
+	//	MeshData_Face_Groups(Selected_Face_Group);
+	//	return;
+	//}
 
-	while (Count < GroupCount)
-	{
-		MeshData_Face_Groups(Count);
-		Count++;
-	}
+	//while (Count < GroupCount)
+	//{
+	//	MeshData_Face_Groups(Count);
+	//	Count++;
+	//}
 
 }
 
@@ -387,7 +387,7 @@ void CL64_OGL_Listener::MeshData_Face_Groups(int Count)
 // *************************************************************************
 void CL64_OGL_Listener::MeshData_Render_Points(void)
 {
-	int Count = 0;
+	/*int Count = 0;
 
 	glColor3f(1.0f, 1.0f, 0.0f);
 
@@ -397,7 +397,7 @@ void CL64_OGL_Listener::MeshData_Render_Points(void)
 	{
 		MeshData_Points_Groups(Count);
 		Count++;
-	}
+	}*/
 }
 
 // *************************************************************************
@@ -430,7 +430,7 @@ void CL64_OGL_Listener::MeshData_Points_Groups(int Count)
 // *************************************************************************
 void CL64_OGL_Listener::MeshData_Render_Normals(void)
 {
-	int Count = 0;
+	/*int Count = 0;
 
 	glColor3f(1, 1, 1);
 
@@ -440,7 +440,7 @@ void CL64_OGL_Listener::MeshData_Render_Normals(void)
 	{
 		MeshData_Normals_Groups(Count);
 		Count++;
-	}
+	}*/
 }
 
 // *************************************************************************

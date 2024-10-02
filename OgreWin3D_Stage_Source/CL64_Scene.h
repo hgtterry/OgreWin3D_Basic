@@ -42,14 +42,7 @@ public:
 	char JustName[MAX_PATH];
 
 	// Internal
-	int GroupCount;
-	int TextureCount;
-	int MotionCount;
-	int VerticeCount;
-	int FaceCount;
 	int Loaded_File_Type;
-	int BoneCount;
-
 	int Scene_Mode;
 
 	// Stage 
@@ -63,15 +56,12 @@ public:
 	int UniqueID_Area_Count;
 
 	bool flag_Area_Added;
-	bool Scene_Loaded;
-	bool GameMode_Running_Flag;
-	bool Project_Resources_Created;
+	bool flag_Scene_Loaded;
+	bool flag_GameMode_Running_Flag;
+	bool flag_Project_Resources_Created;
 
-	// Ogre
-	int Ogre_Face_Count;
-
-	bool flag_Player_Added; // Has a Player been created
-	bool flag_Model_Loaded; // Has a Model/Ogre3D Entity been Loaded
+	bool flag_Player_Added;
+	bool flag_Model_Loaded;
 
 	bool flag_Show_Main_Entity;
 

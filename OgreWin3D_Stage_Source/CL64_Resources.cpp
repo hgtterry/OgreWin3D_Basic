@@ -79,10 +79,10 @@ void CL64_Resources::Reset_Class(void)
 // *************************************************************************
 bool CL64_Resources::Create_Project_Resources_Group()
 {
-	if (App->CL_Scene->Project_Resources_Created == 0)
+	if (App->CL_Scene->flag_Project_Resources_Created == 0)
 	{
 		Ogre::ResourceGroupManager::getSingleton().createResourceGroup(Project_Resource_Group);
-		App->CL_Scene->Project_Resources_Created = 1;
+		App->CL_Scene->flag_Project_Resources_Created = 1;
 	}
 
 	return 1;
@@ -93,10 +93,10 @@ bool CL64_Resources::Create_Project_Resources_Group()
 // *************************************************************************
 bool CL64_Resources::Delete_Project_Resources_Group()
 {
-	if (App->CL_Scene->Project_Resources_Created == 1)
+	if (App->CL_Scene->flag_Project_Resources_Created == 1)
 	{
 		Ogre::ResourceGroupManager::getSingleton().destroyResourceGroup(App->CL_Resources->Project_Resource_Group);
-		App->CL_Scene->Project_Resources_Created = 0;
+		App->CL_Scene->flag_Project_Resources_Created = 0;
 		App->CL_Resources->mSelected_Resource_Group = "App_Resource_Group";
 	}
 
@@ -119,7 +119,7 @@ bool CL64_Resources::Add_Resource_Location_Project(char* Resource_Location)
 
 	mSelected_Resource_Group = "Project_Resource_Group";
 
-	App->CL_Scene->Project_Resources_Created = 1;
+	App->CL_Scene->flag_Project_Resources_Created = 1;
 
 	return 1;
 }

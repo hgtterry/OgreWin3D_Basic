@@ -19,34 +19,23 @@ appreciated but is not required.
 
 CL64_Scene::CL64_Scene(void)
 {
-	// Internal
-	GroupCount = 0;
-	TextureCount = 0;
-	MotionCount = 0;
-	VerticeCount = 0;
-	FaceCount = 0;
-	BoneCount = 0;
-
 	// Stage
 	Object_Count = 0;
 	Area_Count = 0;
 	Camera_Count = 0;
-	flag_Area_Added = 0;
-	Scene_Loaded = 0;
 	Player_Location_Count = 0;
-	GameMode_Running_Flag = 0;
 	Counters_Count = 0;
 	UniqueID_Object_Counter = 0;
 	UniqueID_Counters_Count = 0;
 	UniqueID_Area_Count = 0;
-	Project_Resources_Created = 0;
 
+	flag_GameMode_Running_Flag = 0;
+	flag_Project_Resources_Created = 0;
+	flag_Area_Added = 0;
+	flag_Scene_Loaded = 0;
 	flag_Model_Loaded = 0;
 	flag_Player_Added = 0;
 	flag_Show_Main_Entity = 0;
-
-	// Ogre
-	Ogre_Face_Count = 0;
 
 	Loaded_File_Type = Enums::Loaded_File_Type_None;
 	Scene_Mode = Enums::Scene_Mode_None;
@@ -60,8 +49,6 @@ CL64_Scene::CL64_Scene(void)
 	B_Area[19] = { nullptr };
 	B_Locations[19] = { nullptr };
 	B_Counter[19] = { nullptr };
-
-	int Count = 0;
 
 	B_Player.reserve(20);
 	V_Object.reserve(200);
@@ -133,7 +120,7 @@ bool CL64_Scene::Clear_Level()
 	//App->Set_Main_TitleBar(" ");
 
 
-	if (App->CL_Scene->Scene_Loaded == 1)
+	if (App->CL_Scene->flag_Scene_Loaded == 1)
 	{
 		App->CL_Physics->Enable_Physics(0); // Look At Terry
 
@@ -161,7 +148,7 @@ bool CL64_Scene::Clear_Level()
 	App->CL_Camera->Reset_View(); // Look At Terry
 
 	App->CL_Resources->Delete_Project_Resources_Group();
-	Project_Resources_Created = 0;
+	flag_Project_Resources_Created = 0;
 
 	Reset_Counters();
 
@@ -190,7 +177,7 @@ void CL64_Scene::Reset_Counters()
 	Counters_Count = 0;
 	UniqueID_Counters_Count = 0;
 
-	Project_Resources_Created = 0;
+	flag_Project_Resources_Created = 0;
 
 	//MessageNew_Count = 0;
 	//UniqueID_MessageNew_Count = 500;
@@ -198,7 +185,7 @@ void CL64_Scene::Reset_Counters()
 	//CurrentCamMode = 0;
 	//Scene_Modified = 0;
 
-	Scene_Loaded = 0;
+	flag_Scene_Loaded = 0;
 
 	Player_Location_Count = 0;
 	//Locations_ID_Counter = 0;

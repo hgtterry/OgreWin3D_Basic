@@ -1077,13 +1077,13 @@ LRESULT CALLBACK CL64_Dialogs::Proc_FileViewer(HWND hDlg, UINT message, WPARAM w
 
 		App->CL_Dialogs->Read_File(App->CL_Dialogs->mFile, hDlg);
 
-		if (App->CL_Scene->GroupCount > 0)
-		{
-			char Text[MAX_PATH];
-			strcpy(Text, "material ");
-			//strcat(Text, App->CL_Scene->Group[App->CL_Props_Textures->Selected_Group]->Ogre_Material);
-			App->CL_Dialogs->Material_Search((LPSTR)Text);
-		}
+		//if (App->CL_Scene->GroupCount > 0)
+		//{
+		//	char Text[MAX_PATH];
+		//	strcpy(Text, "material ");
+		//	//strcat(Text, App->CL_Scene->Group[App->CL_Props_Textures->Selected_Group]->Ogre_Material);
+		//	App->CL_Dialogs->Material_Search((LPSTR)Text);
+		//}
 
 		
 		App->CL_Ogre->RenderFrame(8);

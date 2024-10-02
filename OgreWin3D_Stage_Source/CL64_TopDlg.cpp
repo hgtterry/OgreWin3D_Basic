@@ -385,7 +385,7 @@ LRESULT CALLBACK CL64_TopDlg::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam
 		//-------------------------------------------------------- Show Bones
 		if (LOWORD(wParam) == IDC_BTSHOWBONES)
 		{
-			if (App->CL_Scene->flag_Model_Loaded == 1 && App->CL_Scene->BoneCount > 0)
+			/*if (App->CL_Scene->flag_Model_Loaded == 1 && App->CL_Scene->BoneCount > 0)
 			{
 				HWND Temp = GetDlgItem(hDlg, IDC_BTSHOWBONES);
 
@@ -401,7 +401,7 @@ LRESULT CALLBACK CL64_TopDlg::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam
 
 					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_BonesOn_Bmp);
 				}
-			}
+			}*/
 			return TRUE;
 		}
 
@@ -707,7 +707,10 @@ LRESULT CALLBACK CL64_TopDlg::Camera_TB_Proc(HWND hDlg, UINT message, WPARAM wPa
 
 			App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_Free;
 
-			App->CL_Player->Show_Debug_Player(true);
+			if (App->CL_Scene->flag_Player_Added == 1)
+			{
+				App->CL_Player->Show_Debug_Player(true);
+			}
 			
 			App->CL_TopDlg->flag_Toggle_PhysicaDebug_Node = 1;
 			App->CL_Ogre->Bullet_Debug_Listener->btDebug_Node->setVisible(true);

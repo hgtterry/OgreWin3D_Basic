@@ -87,7 +87,7 @@ bool CL64_Com_MoveEntity::Create_Move_Entity(int Index)
 	Object->Object_Node->setOrientation(Object->Mesh_Quat);
 	Object->Object_Node->setPosition(Object->Mesh_Pos);
 
-	App->CL_Scene->Scene_Loaded = 1;
+	App->CL_Scene->flag_Scene_Loaded = 1;
 
 	// ----------------- Physics
 

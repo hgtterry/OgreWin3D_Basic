@@ -89,7 +89,7 @@ bool CL64_Com_Messages::Create_Message_Entity(int Index)
 	MObject->Object_Node->setOrientation(MObject->Mesh_Quat);
 	MObject->Object_Node->setPosition(MObject->Mesh_Pos);
 
-	App->CL_Scene->Scene_Loaded = 1;
+	App->CL_Scene->flag_Scene_Loaded = 1;
 
 	// ----------------- Physics
 
