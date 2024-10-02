@@ -242,17 +242,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 		case ID_WINDOWS_MODELDATA:
 		{
-			if (App->CL_ImGui->flag_Show_Model_Data == 1)
-			{
-				App->CL_ImGui->flag_Show_Model_Data = 0;
-				CheckMenuItem(App->mMenu, ID_WINDOWS_MODELDATA, MF_BYCOMMAND | MF_UNCHECKED);
-			}
-			else
-			{
-				App->CL_ImGui->flag_Show_Model_Data = 1;
-				CheckMenuItem(App->mMenu, ID_WINDOWS_MODELDATA, MF_BYCOMMAND | MF_CHECKED);
-			}
-
 			return TRUE;
 		}
 

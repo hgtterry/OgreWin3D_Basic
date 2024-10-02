@@ -39,7 +39,6 @@ public:
 
 	void Update_Motions_By_Name(const char* Name);
 	void Switch_To_Motions_Dlg(void);
-	void Update_Motions_Combo(void);
 	void Update_Speed_Combo(void);
 
 	char Selected_Motion_Name[MAX_PATH];

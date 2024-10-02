@@ -21,48 +21,6 @@ appreciated but is not required.
 #include "Base_Locations.h"
 #include "Base_Counter.h"
 
-typedef struct Bone_Vert { float x, y, z; }Bone_Vert;
-typedef struct Translation_Type { float X, Y, Z; }Translation_Type;
-typedef struct rgb_Type { int Index; }rgb_Type;
-typedef struct Char_type { char Name[256]; }Char_type;
-
-typedef struct Bone_Type {
-	int Parent;
-	Bone_Vert Boneverts;
-	char BoneName[200];
-	Translation_Type TranslationStart;
-}Bone_Type;
-
-typedef struct Ogre_SubMesh_Type {
-	std::string m_SubMesh_Name_str;
-	std::string m_Matrial_Name_str;
-	Ogre::String m_HasSharedVertices_str;
-	unsigned int VerticesCount;
-	int BonesCount;
-}Ogre_SubMesh_Type;
-
-typedef struct OgreMeshData_Type {
-	Ogre::String mStrSkeleton;
-	Ogre::String mStrEdgeList;
-	Ogre::String mStrName;
-	Ogre::String mFileName_Str;
-	std::vector<std::string> m_Motion_Names;
-	std::vector<std::float_t> m_Motion_Length;
-	std::vector<std::int16_t> m_Motion_Num_Of_Tracks;
-
-	std::vector<Ogre_SubMesh_Type> mSubmeshes;
-	int mSubMeshCount;
-	Ogre::Vector3 Center;
-	Ogre::Vector3 vMin;
-	Ogre::Vector3 vMax;
-	float Width;
-	float Height;
-	float Depth;
-	float Area;
-	float Volume;
-	float Radius;
-}OgreMeshData_Type;
-
 class CL64_Scene
 {
 public:
@@ -76,13 +34,6 @@ public:
 	void Set_Scene(); 
 
 	bool Clear_Level();
-
-	Base_Area* B_Area[20];
-	Bone_Type* S_Bones[200];
-	Base_Locations* B_Locations[20];
-	Base_Counter* B_Counter[20];
-
-	OgreMeshData_Type* S_OgreMeshData[1];
 
 	char FileName[MAX_PATH];
 	char Path_FileName[MAX_PATH];
@@ -124,6 +75,9 @@ public:
 
 	bool flag_Show_Main_Entity;
 
+	Base_Area* B_Area[20];
+	Base_Locations* B_Locations[20];
+	Base_Counter* B_Counter[20];
 	std::vector<Base_Player*> B_Player;
 	std::vector<Base_Object*> V_Object;
 };

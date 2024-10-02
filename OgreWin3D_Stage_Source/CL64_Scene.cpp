@@ -57,19 +57,12 @@ CL64_Scene::CL64_Scene(void)
 	strcpy(Model_FolderPath, "None");
 	strcpy(JustName, "None");
 
-	S_OgreMeshData[0] = new OgreMeshData_Type;
-
 	B_Area[19] = { nullptr };
 	B_Locations[19] = { nullptr };
 	B_Counter[19] = { nullptr };
 
 	int Count = 0;
-	while (Count < 199)
-	{
-		S_Bones[Count] = nullptr;
-		Count++;
-	}
-	
+
 	B_Player.reserve(20);
 	V_Object.reserve(200);
 }

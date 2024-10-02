@@ -74,8 +74,6 @@ void CL64_TopDlg::Reset_Class(void) const
 	App->CL_TopDlg->Enable_ImGui_Demo_Panel(false);
 	App->CL_TopDlg->Enable_FPSLock_Dlg_Panel(false);
 
-	App->CL_TopDlg->Update_Motions_Combo();
-
 	Enable_Grid_Hair_Icons(true);
 	
 }
@@ -845,7 +843,6 @@ LRESULT CALLBACK CL64_TopDlg::Physics_TB_Proc(HWND hDlg, UINT message, WPARAM wP
 void CL64_TopDlg::Start_Motions_TB(void)
 {
 	Motions_TB_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_TB_MOTIONS, Tabs_TB_hWnd, (DLGPROC)Motions_TB_Proc);
-	Update_Motions_Combo();
 	Update_Speed_Combo();
 }
 
@@ -1043,34 +1040,6 @@ void CL64_TopDlg::Switch_To_Motions_Dlg(void)
 	App->CL_TopDlg->flag_Toggle_Tabs_Motions = 1;
 
 	RedrawWindow(App->CL_TopDlg->Tabs_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-}
-
-// *************************************************************************
-// *		Update_Motions_Combo:- Terry and Hazel Flanigan 2024		   *
-// *************************************************************************
-void CL64_TopDlg::Update_Motions_Combo(void)
-{
-	SendDlgItemMessage(Motions_TB_hWnd, IDC_CB_MOTIONS_MOTIONS, CB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
-
-	if (App->CL_Scene->MotionCount > 0)
-	{
-		int Count = 0;
-		int Size = App->CL_Scene->MotionCount;
-
-		while (Count < Size)
-		{
-			SendDlgItemMessage(Motions_TB_hWnd, IDC_CB_MOTIONS_MOTIONS, CB_ADDSTRING, (WPARAM)0, (LPARAM)App->CL_Scene->S_OgreMeshData[0]->m_Motion_Names[Count].c_str());
-			Count++;
-		}
-
-		strcpy(Selected_Motion_Name, App->CL_Scene->S_OgreMeshData[0]->m_Motion_Names[0].c_str());
-	}
-	else
-	{
-		SendDlgItemMessage(Motions_TB_hWnd, IDC_CB_MOTIONS_MOTIONS, CB_ADDSTRING, (WPARAM)0, (LPARAM)"None");
-	}
-
-	SendDlgItemMessage(Motions_TB_hWnd, IDC_CB_MOTIONS_MOTIONS, CB_SETCURSEL, (WPARAM)0, (LPARAM)0);
 }
 
 // *************************************************************************
@@ -1312,14 +1281,14 @@ void CL64_TopDlg::Enable_Info_Panel(bool Enable)
 
 	if (Enable == 1)
 	{
-		App->CL_ImGui->flag_Show_Model_Data = 1;
+		//App->CL_ImGui->flag_Show_Model_Data = 1;
 
 		SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_ModelInfoOn_Bmp);
 		CheckMenuItem(App->mMenu, ID_WINDOWS_MODELDATA, MF_BYCOMMAND | MF_CHECKED);
 	}
 	else
 	{
-		App->CL_ImGui->flag_Show_Model_Data = 0;
+		//App->CL_ImGui->flag_Show_Model_Data = 0;
 
 		SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_ModelInfo_Bmp);
 		CheckMenuItem(App->mMenu, ID_WINDOWS_MODELDATA, MF_BYCOMMAND | MF_UNCHECKED);

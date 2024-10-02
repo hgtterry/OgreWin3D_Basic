@@ -473,64 +473,64 @@ void CL64_OGL_Listener::MeshData_Normals_Groups(int Count)
 // *************************************************************************
 void CL64_OGL_Listener::MeshData_RenderBones()
 {
-	glDisable(GL_TEXTURE_2D);
-	glDisable(GL_DEPTH_TEST);
-	int Start = 0;
+	//glDisable(GL_TEXTURE_2D);
+	//glDisable(GL_DEPTH_TEST);
+	//int Start = 0;
 
-	glColor3f(1, 1, 0);
-	glPointSize(6); //PointSize
-	int Point = 0;
+	//glColor3f(1, 1, 0);
+	//glPointSize(6); //PointSize
+	//int Point = 0;
 
-	while (Start < App->CL_Scene->BoneCount)
-	{
+	//while (Start < App->CL_Scene->BoneCount)
+	//{
 
-		if (App->CL_Scene->S_Bones[Start]->Parent == -1)
-		{
-			glColor3f(1, 0, 0);			// Root Joint Colour
-		}
-		else { glColor3f(0, 0, 1); }		// Joint Colours
+	//	if (App->CL_Scene->S_Bones[Start]->Parent == -1)
+	//	{
+	//		glColor3f(1, 0, 0);			// Root Joint Colour
+	//	}
+	//	else { glColor3f(0, 0, 1); }		// Joint Colours
 
-		glBegin(GL_POINTS);
-		glVertex3f(App->CL_Scene->S_Bones[Start]->TranslationStart.X,
-			App->CL_Scene->S_Bones[Start]->TranslationStart.Y,
-			App->CL_Scene->S_Bones[Start]->TranslationStart.Z);
+	//	glBegin(GL_POINTS);
+	//	glVertex3f(App->CL_Scene->S_Bones[Start]->TranslationStart.X,
+	//		App->CL_Scene->S_Bones[Start]->TranslationStart.Y,
+	//		App->CL_Scene->S_Bones[Start]->TranslationStart.Z);
 
-		glEnd();
-		Start++;
-	}
+	//	glEnd();
+	//	Start++;
+	//}
 
-	Start = 0;
+	//Start = 0;
 
-	while (Start < App->CL_Scene->BoneCount)
-	{
+	//while (Start < App->CL_Scene->BoneCount)
+	//{
 
-		if (App->CL_Scene->S_Bones[Start]->Parent == -1)
-		{
-			glColor3f(1, 0, 0);			// Root Joint Color Again Both the same
-			glBegin(GL_POINTS);
-			glVertex3f(App->CL_Scene->S_Bones[Start]->TranslationStart.X,
-				App->CL_Scene->S_Bones[Start]->TranslationStart.Y,
-				App->CL_Scene->S_Bones[Start]->TranslationStart.Z);
-			glEnd();
-		}
-		else
-		{
-			glLineWidth(3);
-			glBegin(GL_LINES);
-			glColor3f(1, 1, 0);			// Bone Colours Between Joints
-			glVertex3f(App->CL_Scene->S_Bones[Start]->TranslationStart.X,
-				App->CL_Scene->S_Bones[Start]->TranslationStart.Y,
-				App->CL_Scene->S_Bones[Start]->TranslationStart.Z);
+	//	if (App->CL_Scene->S_Bones[Start]->Parent == -1)
+	//	{
+	//		glColor3f(1, 0, 0);			// Root Joint Color Again Both the same
+	//		glBegin(GL_POINTS);
+	//		glVertex3f(App->CL_Scene->S_Bones[Start]->TranslationStart.X,
+	//			App->CL_Scene->S_Bones[Start]->TranslationStart.Y,
+	//			App->CL_Scene->S_Bones[Start]->TranslationStart.Z);
+	//		glEnd();
+	//	}
+	//	else
+	//	{
+	//		glLineWidth(3);
+	//		glBegin(GL_LINES);
+	//		glColor3f(1, 1, 0);			// Bone Colours Between Joints
+	//		glVertex3f(App->CL_Scene->S_Bones[Start]->TranslationStart.X,
+	//			App->CL_Scene->S_Bones[Start]->TranslationStart.Y,
+	//			App->CL_Scene->S_Bones[Start]->TranslationStart.Z);
 
-			glVertex3f(App->CL_Scene->S_Bones[App->CL_Scene->S_Bones[Start]->Parent]->TranslationStart.X,
-				App->CL_Scene->S_Bones[App->CL_Scene->S_Bones[Start]->Parent]->TranslationStart.Y,
-				App->CL_Scene->S_Bones[App->CL_Scene->S_Bones[Start]->Parent]->TranslationStart.Z);
+	//		glVertex3f(App->CL_Scene->S_Bones[App->CL_Scene->S_Bones[Start]->Parent]->TranslationStart.X,
+	//			App->CL_Scene->S_Bones[App->CL_Scene->S_Bones[Start]->Parent]->TranslationStart.Y,
+	//			App->CL_Scene->S_Bones[App->CL_Scene->S_Bones[Start]->Parent]->TranslationStart.Z);
 
-			glEnd();
-		}
+	//		glEnd();
+	//	}
 
-		Start++;
-	}
+	//	Start++;
+	//}
 
 }
 
