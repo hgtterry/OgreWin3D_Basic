@@ -1,16 +1,25 @@
 /*
-Copyright (c) OgreWin3D_Basic 2024 W.T.Flanigan H.C.Flanigan Inflanite_HGT
+Copyright (c) 2024 Inflanite_HGT W.T.Flanigan H.C.Flanigan
 
-This software is provided 'as-is', without any express or implied
-warranty. In no event will the authors be held liable for any damages
-arising from the use of this software.
+OgreWin3D_Stage
 
-Permission is granted to anyone to use this software for any purpose,
-including commercial applications, and to alter it and redistribute it
-freely.
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-An acknowledgment in the product documentation would be
-appreciated but is not required.
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
 */
 
 #pragma once
@@ -51,21 +60,6 @@ appreciated but is not required.
 
 namespace Enums
 {
-	enum Loaded_File_Type
-	{
-		Loaded_File_Type_None = 0,
-		Loaded_File_Type_Assimp = 1,
-		Loaded_File_Type_Ogre = 2
-	};
-
-	enum Model_Type
-	{
-		Model_Type_None = 0,
-		Model_Type_Obj = 1,
-		Model_Type_3ds = 2,
-		Model_Type_Milk = 3
-	};
-
 	enum Camera
 	{
 		Cam_Mode_None = 0,
@@ -80,14 +74,6 @@ namespace Enums
 		Usage_None = -1,
 		Usage_Player = 2
 		
-	};
-
-	enum Scene_Mode
-	{
-		Scene_Mode_None = 0,		// No Scene Mode Set
-		Scene_Mode_TestMesh = 2,	// Test Mesh at startup
-		Scene_Mode_Imported_Entity = 3,
-		Scene_Mode_MeshData = 4
 	};
 
 	enum Check_Text

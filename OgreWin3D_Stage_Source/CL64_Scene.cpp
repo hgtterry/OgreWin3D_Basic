@@ -1,16 +1,25 @@
 /*
-Copyright (c) OgreWin3D_Basic 2024 W.T.Flanigan H.C.Flanigan Inflanite_HGT
+Copyright (c) 2024 Inflanite_HGT W.T.Flanigan H.C.Flanigan
 
-This software is provided 'as-is', without any express or implied
-warranty. In no event will the authors be held liable for any damages
-arising from the use of this software.
+OgreWin3D_Stage
 
-Permission is granted to anyone to use this software for any purpose,
-including commercial applications, and to alter it and redistribute it
-freely.
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-An acknowledgment in the product documentation would be
-appreciated but is not required.
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
 */
 
 #include "pch.h"
@@ -34,9 +43,7 @@ CL64_Scene::CL64_Scene(void)
 	flag_Area_Added = 0;
 	flag_Scene_Loaded = 0;
 	flag_Player_Added = 0;
-	
-	Loaded_File_Type = Enums::Loaded_File_Type_None;
-	Scene_Mode = Enums::Scene_Mode_None;
+	flag_Scene_Modified = 0;
 
 	strcpy(Texture_FolderPath, "None");
 	strcpy(FileName, "None");
@@ -179,6 +186,7 @@ void CL64_Scene::Reset_Counters()
 
 	flag_Project_Resources_Created = 0;
 
+	flag_Scene_Modified = 0;
 	//MessageNew_Count = 0;
 	//UniqueID_MessageNew_Count = 500;
 

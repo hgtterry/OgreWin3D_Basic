@@ -1573,14 +1573,12 @@ bool CL64_Project::Load_Project()
 		App->CL_Display->Add_Counters_From_File();
 	}
 
-
-	//App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_None;
-
 	App->CL_FileView->Change_Level_Name();
 	App->CL_FileView->Change_Project_Name();
+
 	//App->SBC_FileView->Redraw_FileView();
 
-	//App->CL_Scene->Scene_Modified = 0;
+	App->CL_Scene->flag_Scene_Modified = 0;
 
 	//int Test = App->SBC_Com_Environments->Get_First_Environ();
 	//if (Test == -1)
@@ -1596,12 +1594,13 @@ bool CL64_Project::Load_Project()
 	//	App->SBC_Com_Environments->Set_First_Environment(Test);
 	//}
 
-	//App->CL_Scene->Scene_Loaded = 1;
-	//App->SBC_Project->Project_Loaded = 1;
-
+	App->CL_Scene->flag_Scene_Loaded = 1;
+	
 	delete Options;
 
 	App->Set_Title();
+
+
 	//App->SBC_FileIO->RecentFileHistory_Update();
 	//App->CL_Prefs->Update_User_File(App->SBC_FileIO->Project_Path_File_Name);
 
