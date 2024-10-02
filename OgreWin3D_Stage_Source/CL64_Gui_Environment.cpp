@@ -467,12 +467,12 @@ void CL64_Gui_Environment::Environ_PropertyEditor()
 				if (App->CL_Dialogs->TrueFlase == 1)
 				{
 					App->CL_Scene->V_Object[Eviron_Index]->S_Environ[0]->Enabled = 1;
-					SetSky(1);
+					SetSky(true);
 				}
 				else
 				{
 					App->CL_Scene->V_Object[Eviron_Index]->S_Environ[0]->Enabled = 0;
-					SetSky(0);
+					SetSky(false);
 				}
 
 				App->CL_Com_Environments->Mark_As_Altered_Environ(Eviron_Index);
@@ -592,11 +592,13 @@ void CL64_Gui_Environment::SetSky(bool Enable)
 {
 	int Index = App->CL_Properties->Current_Selected_Object;
 
-	App->CL_Ogre->mSceneMgr->setSkyDome(Enable,
+	App->CL_Ogre->mSceneMgr->setSkyDome(Enable, "OW3D/CloudySky", App->CL_Scene->V_Object[Index]->S_Environ[0]->Curvature, App->CL_Scene->V_Object[Index]->S_Environ[0]->Tiling, App->CL_Scene->V_Object[Index]->S_Environ[0]->Distance);
+
+	/*App->CL_Ogre->mSceneMgr->setSkyDome(Enable,
 		App->CL_Scene->V_Object[Index]->S_Environ[0]->Material,
 		App->CL_Scene->V_Object[Index]->S_Environ[0]->Curvature,
 		App->CL_Scene->V_Object[Index]->S_Environ[0]->Tiling,
-		App->CL_Scene->V_Object[Index]->S_Environ[0]->Distance);
+		App->CL_Scene->V_Object[Index]->S_Environ[0]->Distance);*/
 }
 
 // *************************************************************************

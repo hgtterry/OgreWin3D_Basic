@@ -259,3 +259,51 @@ int CL64_Com_Environments::Get_First_Environ()
 
 	return -1;
 }
+
+// *************************************************************************
+// *		Set_First_Environment:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+void CL64_Com_Environments::Set_First_Environment(int Index)
+{
+	float x = App->CL_Scene->V_Object[Index]->S_Environ[0]->AmbientColour.x;
+	float y = App->CL_Scene->V_Object[Index]->S_Environ[0]->AmbientColour.y;
+	float z = App->CL_Scene->V_Object[Index]->S_Environ[0]->AmbientColour.z;
+
+	App->CL_Ogre->mSceneMgr->setAmbientLight(ColourValue(x, y, z));
+
+	if (App->CL_Scene->V_Object[Index]->S_Environ[0]->Fog_On == 1)
+	{
+		float Start = App->CL_Scene->V_Object[Index]->S_Environ[0]->Fog_Start;
+		float End = App->CL_Scene->V_Object[Index]->S_Environ[0]->Fog_End;
+		float Density = App->CL_Scene->V_Object[Index]->S_Environ[0]->Fog_Density;
+
+		float x = App->CL_Scene->V_Object[Index]->S_Environ[0]->Fog_Colour.x;
+		float y = App->CL_Scene->V_Object[Index]->S_Environ[0]->Fog_Colour.y;
+		float z = App->CL_Scene->V_Object[Index]->S_Environ[0]->Fog_Colour.z;
+
+		App->CL_Ogre->mSceneMgr->setFog(FOG_LINEAR, ColourValue(x, y, z), Density, (Ogre::Real)Start, (Ogre::Real)End);
+	}
+	else
+	{
+		App->CL_Ogre->mSceneMgr->setFog(FOG_NONE, ColourValue(0.7, 0.7, 0.8), 0, 100, 1000);
+	}
+
+	if (App->CL_Scene->V_Object[Index]->S_Environ[0]->Enabled == 1)
+	{
+	App->CL_Ogre->mSceneMgr->setSkyDome(true, "OW3D/CloudySky", 
+		App->CL_Scene->V_Object[Index]->S_Environ[0]->Curvature, 
+		App->CL_Scene->V_Object[Index]->S_Environ[0]->Tiling, 
+		App->CL_Scene->V_Object[Index]->S_Environ[0]->Distance);
+		
+	/*App->CL_Ogre->mSceneMgr->setSkyDome(true,
+			App->CL_Scene->V_Object[Index]->S_Environ[0]->Material,
+			App->CL_Scene->V_Object[Index]->S_Environ[0]->Curvature,
+			App->CL_Scene->V_Object[Index]->S_Environ[0]->Tiling,
+			App->CL_Scene->V_Object[Index]->S_Environ[0]->Distance);*/
+	}
+	else
+	{
+
+	}
+
+}

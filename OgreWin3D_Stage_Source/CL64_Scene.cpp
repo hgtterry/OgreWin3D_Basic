@@ -199,20 +199,13 @@ void CL64_Scene::Reset_Counters()
 // *************************************************************************
 void CL64_Scene::Set_Scene()
 {
-	//App->CL_Ogre->Enable_Fog(true);
-
 	App->CL_Camera->Reset_View();
-
-	/*App->CL_Bullet->Create_New_Trimesh(App->CL_Scene->Imported_Ogre_Ent, App->CL_Scene->Imported_Ogre_Node);*/
-
-	//App->CL_Player->Set_Player_Position(Ogre::Vector3(0, 20, 0));
-	//App->CL_Player->Set_Player_Rotation(btQuaternion(0, 0, 1, 0));
 	App->CL_Player->Set_Player_GroundSpeed(70);
 
 	App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_First;
 	App->CL_Ogre->Ogre3D_Listener->Run_Physics = 1;
 
-	App->CL_Ogre->mSceneMgr->setSkyDome(true, "OW3D/CloudySky");
+	//App->CL_Ogre->mSceneMgr->setSkyDome(true, "OW3D/CloudySky");
 
 	App->CL_ImGui->flag_Show_Demo_Options = 1;
 }

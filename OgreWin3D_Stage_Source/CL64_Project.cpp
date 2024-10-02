@@ -1578,22 +1578,22 @@ bool CL64_Project::Load_Project()
 
 	//App->SBC_FileView->Redraw_FileView();
 
+	int Test = App->CL_Com_Environments->Get_First_Environ();
+	if (Test == -1)
+	{
+		/*App->CL_Com_Environments->Add_New_Environ_Entity(1);
+		int mIndex = App->CL_Com_Environments->Get_First_Environ();
+		App->CL_Com_Environments->Set_First_Environment(mIndex);
+
+		App->CL_Scene->flag_Scene_Modified = 1;*/
+		Debug
+	}
+	else
+	{
+		App->CL_Com_Environments->Set_First_Environment(Test);
+	}
+
 	App->CL_Scene->flag_Scene_Modified = 0;
-
-	//int Test = App->SBC_Com_Environments->Get_First_Environ();
-	//if (Test == -1)
-	//{
-	//	App->SBC_Com_Environments->Add_New_Environ_Entity(1);
-	//	int mIndex = App->SBC_Com_Environments->Get_First_Environ();
-	//	App->SBC_Com_Environments->Set_First_Environment(mIndex);
-
-	//	App->CL_Scene->Scene_Modified = 1;
-	//}
-	//else
-	//{
-	//	App->SBC_Com_Environments->Set_First_Environment(Test);
-	//}
-
 	App->CL_Scene->flag_Scene_Loaded = 1;
 	
 	delete Options;
