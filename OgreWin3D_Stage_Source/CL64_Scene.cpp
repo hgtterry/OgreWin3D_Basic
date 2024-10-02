@@ -108,7 +108,7 @@ void CL64_Scene::Reset_Class()
 // *************************************************************************
 bool CL64_Scene::Clear_Level()
 {
-	//App->SBC_Gui_Environ->Reset_Class();
+	App->CL_Gui_Environment->Reset_Class();
 	App->CL_Project->Reset_Class();
 	App->CL_FileView->Reset_Class();
 	App->CL_TopDlg->Reset_Class(); // Look At Terry

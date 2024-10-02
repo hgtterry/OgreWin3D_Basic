@@ -343,11 +343,24 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		}
 		
 		// File Save ------------------------------------------------
-		case ID_FILE_SAVEPROJECTAS:
+		case ID_FILE_SAVE:
 		{
-			App->CL_Project->Start_Save_Project_Dialog();
+			if (App->CL_Scene->flag_Scene_Loaded == 1)
+			{
+				App->CL_Project->Save_All();
+			}
 			return 1;
 		}
+		
+		case ID_FILE_SAVEPROJECTAS:
+		{
+			if (App->CL_Scene->flag_Scene_Loaded == 1)
+			{
+				App->CL_Project->Start_Save_Project_Dialog();
+			}
+			return 1;
+		}
+
 
 		// File Open ------------------------------------------------
 		case ID_OPEN_PROJECT:
@@ -395,7 +408,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		// File Others ------------------------------------------------
 		case ID_FILE_CLEAR:
 		{
-			App->CL_Dialogs->Show_YesNo_Dlg((LPSTR) "Clear Scene/Model", (LPSTR) "Are you sure");
+			App->CL_Dialogs->Show_YesNo_Dlg((LPSTR) "Clear Scene/Model", (LPSTR)"All Data will be lost", (LPSTR) "Are you sure");
 
 			if (App->CL_Dialogs->Canceled == 0)
 			{
@@ -456,6 +469,26 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 		case IDM_EXIT:
 
+			if (App->CL_Scene->flag_Scene_Modified == 1)
+			{
+				App->CL_Dialogs->Show_YesNo_Dlg((LPSTR)"Save Scene", (LPSTR)"Scene has been Modified", (LPSTR)"Do you wish to save changes");
+
+				bool Doit = App->CL_Dialogs->Canceled;
+				if (Doit == 0)
+				{
+					App->CL_Project->Start_Save_Project_Dialog();
+				}
+			}
+			else
+			{
+				App->CL_Dialogs->Show_YesNo_Dlg((LPSTR)"Close OgreWin3D", (LPSTR)"", (LPSTR)"Are you sure");
+
+				if (App->CL_Dialogs->Canceled == 1)
+				{
+					return 1;
+				}
+			}
+
 			if (App->CL_Ogre->Ogre3D_Listener->StopOgre == 0)
 			{
 				App->CL_Ogre->Ogre3D_Listener->StopOgre = 1;
@@ -507,6 +540,25 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	//break;
 	case WM_CLOSE:
 	{
+		if (App->CL_Scene->flag_Scene_Modified == 1)
+		{
+			App->CL_Dialogs->Show_YesNo_Dlg((LPSTR)"Save Scene", (LPSTR)"Scene has been Modified", (LPSTR)"Do you wish to save changes");
+
+			bool Doit = App->CL_Dialogs->Canceled;
+			if (Doit == 0)
+			{
+				App->CL_Project->Start_Save_Project_Dialog();
+			}
+		}
+		else
+		{
+			App->CL_Dialogs->Show_YesNo_Dlg((LPSTR)"Close OgreWin3D", (LPSTR)"", (LPSTR)"Are you sure");
+
+			if (App->CL_Dialogs->Canceled == 1)
+			{
+				return 1;
+			}
+		}
 
 		if (App->CL_Ogre->Ogre3D_Listener->StopOgre == 0)
 		{

@@ -43,6 +43,7 @@ public:
 
 	bool Reset_Class();
 
+	bool Save_All();
 	void Start_Save_Project_Dialog();
 	
 	bool Load_Last_Project();

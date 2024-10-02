@@ -91,6 +91,7 @@
 #define IDC_BT_VIEWEXPORT               1007
 #define IDC_BT_LIST_OVERLAY             1007
 #define IDC_BT_PT_EXPORT                1007
+#define IDC_BT_MAINENVIRONMENT          1007
 #define IDC_BUTTON2                     1008
 #define IDC_BT_TBH_CAMERA               1008
 #define IDC_BT_DEMORESOURCES            1008
@@ -142,6 +143,8 @@
 #define IDC_BANNER_YN                   1027
 #define IDC_STTEXT_YN                   1028
 #define IDC_BT_CAMERA_SPEED1            1029
+#define IDC_STTEXT_YN2                  1029
+#define IDC_STTEXT_YN3                  1029
 #define IDC_STBANNER                    1030
 #define IDC_CHECK1                      1031
 #define IDC_CK_SU_DIRECTORIES           1031
@@ -151,7 +154,6 @@
 #define IDC_CK_SP_DESKTOP               1031
 #define IDC_CHECKYES                    1031
 #define IDC_CB_FPSLIST                  1032
-#define IDC_CHECK2                      1032
 #define IDC_CHECKNO                     1032
 #define IDC_ST_FPSSETTINGS              1033
 #define IDC_CB_MOTIONS_MOTIONS          1036

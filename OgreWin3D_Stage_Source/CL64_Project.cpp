@@ -381,7 +381,7 @@ LRESULT CALLBACK CL64_Project::Save_Project_Dialog_Proc(HWND hDlg, UINT message,
 		{
 
 			App->CL_Project->Save_Project();
-			//App->SBC_Project->Project_Loaded = 1;
+			//App->CL_Project->flag_Project_Loaded = 1;
 
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
@@ -391,6 +391,16 @@ LRESULT CALLBACK CL64_Project::Save_Project_Dialog_Proc(HWND hDlg, UINT message,
 	}
 	return FALSE;
 }
+
+// *************************************************************************
+// *	  		Save_Project:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+bool CL64_Project::Save_All()
+{
+	Save_Project();
+	return 1;
+}
+
 // *************************************************************************
 // *	  		Save_Project:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
@@ -433,20 +443,16 @@ bool CL64_Project::Save_Project()
 	Save_Objects_Folder();
 	Save_Display_Folder();
 
-	//App->SBC_FileView->Change_Level_Name();
-	//App->SBC_FileView->Change_Project_Name();
-
-	//App->Set_Main_TitleBar(App->SBC_FileIO->Project_Path_File_Name);
+	App->CL_FileView->Change_Level_Name();
+	App->CL_FileView->Change_Project_Name();
 
 	//App->CL_Object->Clear_Modified_Objects(); // Clear Altered FileView Items
-
 	//App->SBC_Project->Directory_Changed_Flag = 0;
 
-	//strcpy(App->SBC_FileIO->Project_Path_File_Name, m_Ini_Path_File_Name);
-	//App->Set_Main_TitleBar(App->SBC_FileIO->Project_Path_File_Name);
+	strcpy(Project_Path_File_Name, m_Ini_Path_File_Name);
+	App->Set_Title();
+
 	//App->SBC_FileIO->RecentFileHistory_Update();
-
-
 	//if (Set_QuickLoad_Flag == 1)
 	//{
 	//	strcpy(App->CL_Prefs->QL_User_File, App->SBC_FileIO->Project_Path_File_Name);

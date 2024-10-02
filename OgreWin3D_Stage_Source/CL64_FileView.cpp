@@ -125,7 +125,8 @@ LRESULT CALLBACK CL64_FileView::Proc_ListPanel(HWND hDlg, UINT message, WPARAM w
 		App->CL_FileView->Flag_FileView_Active = 1;
 
 		SendDlgItemMessage(hDlg, IDC_TREE1, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-
+		SendDlgItemMessage(hDlg, IDC_BT_MAINENVIRONMENT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
 		CheckMenuItem(App->mMenu, ID_WINDOWS_FILEVIEW, MF_BYCOMMAND | MF_CHECKED);
 		return TRUE;
 	}
@@ -165,14 +166,14 @@ LRESULT CALLBACK CL64_FileView::Proc_ListPanel(HWND hDlg, UINT message, WPARAM w
 
 		LPNMHDR some_item = (LPNMHDR)lParam;
 
-		/*if (some_item->idFrom == IDC_LEVELS && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDC_BT_MAINENVIRONMENT)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->SBC_FileView->Level_But_Active);
+			App->Custom_Button_Normal(item);
 			return CDRF_DODEFAULT;
 		}
 
-		if (some_item->idFrom == IDC_STOCK && some_item->code == NM_CUSTOMDRAW)
+		/*if (some_item->idFrom == IDC_STOCK && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Toggle(item, App->SBC_FileView->Stock_But_Active);
@@ -251,6 +252,25 @@ LRESULT CALLBACK CL64_FileView::Proc_ListPanel(HWND hDlg, UINT message, WPARAM w
 		//	App->Cl_Utilities->OpenHTML("Help\\FileView.html");
 		//	return TRUE;
 		//}
+
+		if (LOWORD(wParam) == IDC_BT_MAINENVIRONMENT)
+		{
+			int Index = App->CL_Com_Environments->Get_First_Environ();
+			if (Index == -1)
+			{
+				App->Say("No Environment to Edit");
+			}
+			else
+			{
+				HTREEITEM Temp = App->CL_Scene->V_Object[Index]->FileViewItem;
+				App->CL_FileView->SelectItem(Temp);
+
+				App->CL_Gui_Environment->Start_Environment_Editor(Index, false);
+			}
+
+			return TRUE;
+		}
+		
 		break;
 	}
 

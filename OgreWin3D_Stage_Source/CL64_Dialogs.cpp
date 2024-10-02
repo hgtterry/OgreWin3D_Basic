@@ -34,6 +34,7 @@ CL64_Dialogs::CL64_Dialogs(void)
 
 	MessageString[0] = 0;
 	MessageString2[0] = 0;
+	MessageString3[0] = 0;
 
 	Canceled = 0;
 	TrueFlase = 0;
@@ -506,15 +507,17 @@ LRESULT CALLBACK CL64_Dialogs::Proc_Import_Options_Dlg(HWND hDlg, UINT message, 
 // *************************************************************************
 // *	  		Show_YesNo_Dlg:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-void CL64_Dialogs::Show_YesNo_Dlg(char* Text, char* Text2)
+void CL64_Dialogs::Show_YesNo_Dlg(char* Text, char* Text2, char* Text3)
 {
 	Canceled = 0;
 
 	MessageString[0] = 0;
 	MessageString2[0] = 0;
+	MessageString3[0] = 0;
 
 	strcpy(MessageString, Text);
 	strcpy(MessageString2, Text2);
+	strcpy(MessageString3, Text3);
 
 	DialogBox(App->hInst, (LPCTSTR)IDD_YESNO, App->Fdlg, (DLGPROC)Proc_YesNo);
 
@@ -532,12 +535,15 @@ LRESULT CALLBACK CL64_Dialogs::Proc_YesNo(HWND hDlg, UINT message, WPARAM wParam
 	{
 		SendDlgItemMessage(hDlg, IDC_BANNER_YN, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_STTEXT_YN, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_STTEXT_YN3, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
 
 		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		SetDlgItemText(hDlg, IDC_BANNER_YN, App->CL_Dialogs->MessageString);
 		SetDlgItemText(hDlg, IDC_STTEXT_YN, App->CL_Dialogs->MessageString2);
+		SetDlgItemText(hDlg, IDC_STTEXT_YN3, App->CL_Dialogs->MessageString3);
+		
 		return TRUE;
 	}
 	case WM_CTLCOLORSTATIC:
@@ -549,6 +555,7 @@ LRESULT CALLBACK CL64_Dialogs::Proc_YesNo(HWND hDlg, UINT message, WPARAM wParam
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->AppBackground;
 		}
+
 		if (GetDlgItem(hDlg, IDC_STTEXT_YN) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 255, 0));
@@ -556,6 +563,15 @@ LRESULT CALLBACK CL64_Dialogs::Proc_YesNo(HWND hDlg, UINT message, WPARAM wParam
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->AppBackground;
 		}
+
+		if (GetDlgItem(hDlg, IDC_STTEXT_YN3) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+		
 		return FALSE;
 	}
 

@@ -42,6 +42,7 @@ CL64_Gui_Environment::CL64_Gui_Environment(void)
 	Float_PosX = 0;
 	Float_PosY = 0;
 	Float_StartPos = 0;
+	Float_Exit = 0;
 
 	Eviron_Index = 0;
 
@@ -165,7 +166,7 @@ void CL64_Gui_Environment::Environ_PropertyEditor()
 {
 
 	ImGui::SetNextWindowPos(ImVec2(10, 10), ImGuiCond_FirstUseEver);
-	ImGui::SetNextWindowSize(ImVec2(350, 190), ImGuiCond_FirstUseEver);
+	ImGui::SetNextWindowSize(ImVec2(350, 220), ImGuiCond_FirstUseEver);
 
 	if (!ImGui::Begin("Environment Editor", &Show_PropertyEditor, ImGuiWindowFlags_NoResize| ImGuiWindowFlags_NoTitleBar))
 	{
@@ -177,6 +178,9 @@ void CL64_Gui_Environment::Environ_PropertyEditor()
 
 	ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(2, 2));
 	ImGui::PushStyleColor(ImGuiCol_WindowBg, IM_COL32(213, 222, 242, 255));
+	
+	ImGui::Text("Environment:  %s", App->CL_Scene->V_Object[Eviron_Index]->Mesh_Name);
+	ImGui::Separator();
 
 	ImGui::Columns(2);
 	ImGui::SetColumnWidth(-1, 120);

@@ -239,7 +239,7 @@ bool CL64_Properties::Edit_Environs_OnClick(LPARAM lParam)
 	result = strcmp(btext, "Evironment");
 	if (result == 0)
 	{
-		App->CL_Gui_Environment->Start_Environment_Editor(Index, 0);
+		App->CL_Gui_Environment->Start_Environment_Editor(Index, false);
 		return 1;
 	}
 

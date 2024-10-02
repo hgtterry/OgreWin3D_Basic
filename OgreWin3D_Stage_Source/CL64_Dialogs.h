@@ -33,7 +33,7 @@ public:
 	void Message(char* pString, char* pString2);
 	void Start_Import_Options_Dlg();
 	void PleaseWait();
-	void Show_YesNo_Dlg(char* Text, char* Text2);
+	void Show_YesNo_Dlg(char* Text, char* Text2, char* Text3);
 	void Start_Speed_Camera_Dlg();
 	void Start_FPSLock_Dlg();
 	bool Dialog_Text(int What_Check);
@@ -81,6 +81,7 @@ private:
 
 	char MessageString[MAX_PATH];	// Yes No Dialog
 	char MessageString2[MAX_PATH];	// Yes No Dialog
+	char MessageString3[MAX_PATH];	// Yes No Dialog
 
 	char mTextureFile[MAX_PATH];
 	char mFile[MAX_PATH];
