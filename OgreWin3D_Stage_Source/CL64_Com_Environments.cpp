@@ -307,3 +307,62 @@ void CL64_Com_Environments::Set_First_Environment(int Index)
 	}
 
 }
+
+// *************************************************************************
+// *				GameMode:- Terry and Hazel Flanigan 2024		 	   *
+// *************************************************************************
+void CL64_Com_Environments::GameMode(bool Is_On)
+{
+	int First_Environ = Get_First_Environ();
+
+	if (Is_On == 1)
+	{
+		char buff[1024];
+		strcpy(buff, App->CL_SoundMgr->Default_Folder);
+		strcat(buff, "\\Media\\Sounds\\");
+
+		strcat(buff, App->CL_Scene->V_Object[First_Environ]->S_Environ[0]->Sound_File);
+
+		App->CL_Scene->V_Object[First_Environ]->S_Environ[0]->SndFile = App->CL_SoundMgr->SoundEngine->play2D(buff, App->CL_Scene->V_Object[First_Environ]->S_Environ[0]->Loop, true, true);
+
+		App->CL_Scene->V_Object[First_Environ]->S_Environ[0]->SndFile->setVolume(App->CL_Scene->V_Object[First_Environ]->S_Environ[0]->SndVolume);
+		App->CL_Scene->V_Object[First_Environ]->S_Environ[0]->SndFile->setIsPaused(false);
+
+		App->CL_Collision->Old_Sound_Index = First_Environ;
+	}
+	else
+	{
+		if (App->CL_Scene->V_Object[First_Environ]->S_Environ[0]->SndFile == NULL)
+		{
+		}
+		else
+		{
+			App->CL_Scene->V_Object[First_Environ]->S_Environ[0]->SndFile->setIsPaused(true);
+			App->CL_Scene->V_Object[First_Environ]->S_Environ[0]->SndFile->drop();
+			App->CL_Scene->V_Object[First_Environ]->S_Environ[0]->SndFile = NULL;
+		}
+	}
+
+	float x = App->CL_Scene->V_Object[First_Environ]->S_Environ[0]->AmbientColour.x;
+	float y = App->CL_Scene->V_Object[First_Environ]->S_Environ[0]->AmbientColour.y;
+	float z = App->CL_Scene->V_Object[First_Environ]->S_Environ[0]->AmbientColour.z;
+
+	App->CL_Ogre->mSceneMgr->setAmbientLight(ColourValue(x, y, z));
+
+	if (App->CL_Scene->V_Object[First_Environ]->S_Environ[0]->Fog_On == 1)
+	{
+		float Start = App->CL_Scene->V_Object[First_Environ]->S_Environ[0]->Fog_Start;
+		float End = App->CL_Scene->V_Object[First_Environ]->S_Environ[0]->Fog_End;
+		float Density = App->CL_Scene->V_Object[First_Environ]->S_Environ[0]->Fog_Density;
+
+		float x = App->CL_Scene->V_Object[First_Environ]->S_Environ[0]->Fog_Colour.x;
+		float y = App->CL_Scene->V_Object[First_Environ]->S_Environ[0]->Fog_Colour.y;
+		float z = App->CL_Scene->V_Object[First_Environ]->S_Environ[0]->Fog_Colour.z;
+
+		App->CL_Ogre->mSceneMgr->setFog(FOG_LINEAR, ColourValue(x, y, z), Density, (Ogre::Real)Start, (Ogre::Real)End);
+	}
+	else
+	{
+		App->CL_Ogre->mSceneMgr->setFog(FOG_NONE, ColourValue(0.7, 0.7, 0.8), 0, 100, 1000);
+	}
+}

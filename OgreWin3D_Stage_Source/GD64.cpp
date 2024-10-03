@@ -714,12 +714,15 @@ LRESULT CALLBACK Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
 		ImGuiIO& io = ImGui::GetIO();
 		io.MouseDown[0] = false;
 
-		if (App->flag_OgreStarted == 1)
+		if (App->CL_Scene->flag_GameMode_Running_Flag == 0)
 		{
-			ReleaseCapture();
-			App->CL_Ogre->Ogre3D_Listener->Pl_LeftMouseDown = 0;
-			SetCursor(App->CUR);
-			return 1;
+			if (App->flag_OgreStarted == 1)
+			{
+				ReleaseCapture();
+				App->CL_Ogre->Ogre3D_Listener->Pl_LeftMouseDown = 0;
+				SetCursor(App->CUR);
+				return 1;
+			}
 		}
 
 		return 1;
@@ -739,7 +742,7 @@ LRESULT CALLBACK Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
 		if (!ImGui::GetIO().WantCaptureMouse)
 		{
 
-			//if (App->SBC_Scene->GameMode_Running_Flag == 0)
+			if (App->CL_Scene->flag_GameMode_Running_Flag == 0)
 			{
 				if (App->flag_OgreStarted == 1)
 				{
@@ -766,12 +769,15 @@ LRESULT CALLBACK Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
 		io.MouseDown[0] = false;
 		//App->CL_Ogre->m_imgui.mouseReleased();
 
-		if (App->flag_OgreStarted == 1)
+		if (App->CL_Scene->flag_GameMode_Running_Flag == 0)
 		{
-			ReleaseCapture();
-			App->CL_Ogre->Ogre3D_Listener->Pl_RightMouseDown = 0;
-			SetCursor(App->CUR);
-			return 1;
+			if (App->flag_OgreStarted == 1)
+			{
+				ReleaseCapture();
+				App->CL_Ogre->Ogre3D_Listener->Pl_RightMouseDown = 0;
+				SetCursor(App->CUR);
+				return 1;
+			}
 		}
 
 		return 1;

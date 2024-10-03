@@ -43,6 +43,7 @@ public:
 	bool Clear_Level();
 	bool Game_Mode(void);
 	bool Editor_Mode(void);
+	bool Show_Entities(bool TrueFalse);
 
 
 	// Stage 

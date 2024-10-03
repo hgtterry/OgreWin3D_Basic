@@ -33,6 +33,7 @@ public:
 	bool Create_Environ_Entity(int Index);
 	int Set_Environment_By_Index(bool PlayMusic, int Index);
 	void Set_First_Environment(int Index);
+	void GameMode(bool Is_On);
 
 	void Mark_As_Altered_Environ(int Index);
 	int Get_First_Environ();

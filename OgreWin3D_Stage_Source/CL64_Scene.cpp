@@ -225,7 +225,7 @@ bool CL64_Scene::Game_Mode(void)
 		App->SBC_Front_Dlg->Show_Front_Dlg_Flag = 1;
 	}*/
 
-	//flag_GameMode_Running_Flag = 1;
+	flag_GameMode_Running_Flag = 1;
 
 	//App->CL_Ogre->Bullet_Debug_Listener->Render_Debug_Flag = 0;
 
@@ -234,7 +234,7 @@ bool CL64_Scene::Game_Mode(void)
 
 	//App->SBC_Markers->Arrow_Node->setVisible(0);
 
-	//App->SBC_Com_Environments->GameMode(1);
+	App->CL_Com_Environments->GameMode(true);
 
 	//App->CL_Ogre->Ogre3D_Listener->Run_Physics = 1;
 
@@ -244,11 +244,10 @@ bool CL64_Scene::Game_Mode(void)
 
 	//App->SBC_Markers->BoxNode->setVisible(false);
 
-	//Show_Entities(false); // Hide All Visible Trigers
+	Show_Entities(false); // Hide All Visible Trigers
 
 	SetCursorPos(App->CursorPosX, App->CursorPosY);
-	//S_Flags[0]->GameMode = 1;
-
+	
 	int cx = GetSystemMetrics(SM_CXSCREEN);
 	int cy = GetSystemMetrics(SM_CYSCREEN);
 
@@ -265,12 +264,12 @@ bool CL64_Scene::Game_Mode(void)
 
 	//if (App->SBC_Front_Dlg->Use_Front_Dlg_Flag == 0)
 	//{
-	//	SetCapture(App->ViewGLhWnd);// Bernie
-	//	App->CL_Ogre->OgreListener->Pl_LeftMouseDown = 1;
-	//	App->CUR = SetCursor(NULL);
+		SetCapture(App->ViewGLhWnd);// Bernie
+		App->CL_Ogre->Ogre3D_Listener->Pl_LeftMouseDown = 1;
+		App->CUR = SetCursor(NULL);
 	//}
 
-	//App->SBC_Physics->Reset_Triggers();
+	App->CL_Physics->Reset_Triggers();
 
 	//App->SBC_Gui_Dialogs->Show_Physics_Console = 0;
 
@@ -282,7 +281,7 @@ bool CL64_Scene::Game_Mode(void)
 // *************************************************************************
 bool CL64_Scene::Editor_Mode(void)
 {
-	//GameMode_Running_Flag = 0;
+	flag_GameMode_Running_Flag = 0;
 	//FullScreenMode_Flag = 0;
 
 	//App->CL_Ogre->BulletListener->Render_Debug_Flag = 1;
@@ -294,14 +293,14 @@ bool CL64_Scene::Editor_Mode(void)
 	ReleaseCapture();
 	SetCursor(App->CUR);
 
-	//if (App->SBC_Scene->Scene_Loaded == 1)
-	//{
-	//	App->SBC_Com_Environments->GameMode(0);
+	if (App->CL_Scene->flag_Scene_Loaded == 1)
+	{
+		App->CL_Com_Environments->GameMode(false);
 
-	//	Show_Entities(true); // Show All Visible Trigers
+		Show_Entities(true); // Show All Visible Trigers
 
-	//	App->SBC_Physics->Reset_Triggers();
-	//}
+		App->CL_Physics->Reset_Triggers();
+	}
 
 
 	App->CL_Ogre->Ogre3D_Listener->CameraMode = CurrentCamMode;
@@ -310,6 +309,51 @@ bool CL64_Scene::Editor_Mode(void)
 
 	//App->SBC_Gui_Dialogs->Show_Physics_Console = 1;
 
+	return 1;
+}
+
+// *************************************************************************
+// *			Show_Entities:- Terry and Hazel Flanigan 2024	 	 	   *
+// *************************************************************************
+bool CL64_Scene::Show_Entities(bool TrueFalse)
+{
+	int Count = 0;
+	while (Count < Object_Count)
+	{
+		if (V_Object[Count]->Deleted == 0)
+		{
+			if (V_Object[Count]->Usage == Enums::Stage_Usage_Sound)
+			{
+				V_Object[Count]->Object_Node->setVisible(TrueFalse);
+			}
+
+			if (V_Object[Count]->Usage == Enums::Stage_Usage_Message)
+			{
+				V_Object[Count]->Object_Node->setVisible(TrueFalse);
+			}
+
+			if (V_Object[Count]->Usage == Enums::Stage_Usage_Move)
+			{
+				V_Object[Count]->Object_Node->setVisible(TrueFalse);
+			}
+
+			if (V_Object[Count]->Usage == Enums::Stage_Usage_Teleport)
+			{
+				V_Object[Count]->Object_Node->setVisible(TrueFalse);
+			}
+
+			if (V_Object[Count]->Usage == Enums::Stage_Usage_Environment)
+			{
+				V_Object[Count]->Object_Node->setVisible(TrueFalse);
+			}
+
+			if (V_Object[Count]->Usage == Enums::Stage_Usage_EnvironEntity)
+			{
+				V_Object[Count]->Object_Node->setVisible(TrueFalse);
+			}
+		}
+		Count++;
+	}
 	return 1;
 }
 

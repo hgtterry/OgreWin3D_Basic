@@ -34,6 +34,7 @@ public:
 	void UpDate_Physics_And_Visuals(int Index);
 	void Set_Physics_Position(int Index);
 	void Enable_Physics(bool Enable);
+	void Reset_Triggers(void);
 
 };
 
