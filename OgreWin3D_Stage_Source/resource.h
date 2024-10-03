@@ -70,6 +70,8 @@
 #define IDD_PROPERTIES                  182
 #define IDD_PROJECTSAVE                 183
 #define IDD_TRUEFALSE                   184
+#define IDD_TB_PHYSICS1                 185
+#define IDD_TB_GAME                     185
 #define IDC_CK_SU_FULLSCREEN            1000
 #define IDC_ST_STARTUP                  1001
 #define IDC_CK_SU_FULL3DVIEW            1002
@@ -143,7 +145,6 @@
 #define IDC_BANNER_YN                   1027
 #define IDC_STTEXT_YN                   1028
 #define IDC_BT_CAMERA_SPEED1            1029
-#define IDC_STTEXT_YN2                  1029
 #define IDC_STTEXT_YN3                  1029
 #define IDC_STBANNER                    1030
 #define IDC_CHECK1                      1031
@@ -193,6 +194,7 @@
 #define IDC_ST_PT_NUMTEXTUNITS          1069
 #define IDC_TREE1                       1070
 #define IDC_STPJFOLDERPATH              1071
+#define IDC_BT_TBH_GAME                 1072
 #define ID_VIEW_RESET                   32771
 #define ID_VIEW_MAX3DVIEW               32772
 #define ID_DEBUG_TESTPREFERANCE         32773
@@ -247,7 +249,7 @@
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        185
 #define _APS_NEXT_COMMAND_VALUE         32816
-#define _APS_NEXT_CONTROL_VALUE         1072
+#define _APS_NEXT_CONTROL_VALUE         1073
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif

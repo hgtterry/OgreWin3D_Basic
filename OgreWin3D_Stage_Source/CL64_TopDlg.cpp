@@ -1,16 +1,25 @@
 /*
-Copyright (c) OgreWin3D_Basic 2024 W.T.Flanigan H.C.Flanigan Inflanite_HGT
+Copyright (c) 2024 Inflanite_HGT W.T.Flanigan H.C.Flanigan
 
-This software is provided 'as-is', without any express or implied
-warranty. In no event will the authors be held liable for any damages
-arising from the use of this software.
+OgreWin3D_Stage
 
-Permission is granted to anyone to use this software for any purpose,
-including commercial applications, and to alter it and redistribute it
-freely.
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-An acknowledgment in the product documentation would be
-appreciated but is not required.
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
 */
 
 #include "pch.h"
@@ -24,12 +33,14 @@ CL64_TopDlg::CL64_TopDlg(void)
 	Tabs_TB_hWnd =	nullptr;
 
 	// Tab Options
+	Game_TB_hWnd =		nullptr;
 	Camera_TB_hWnd =	nullptr;
 	Physics_TB_hWnd =	nullptr;
 	Motions_TB_hWnd =	nullptr;
 
 	flag_FPS_Dlg_Running = 0;
 		
+	flag_Toggle_Tabs_Game = 0;
 	flag_Toggle_Tabs_Camera = 0;
 	flag_Toggle_Tabs_Physics = 0;
 	flag_Toggle_Tabs_Motions = 0;
@@ -83,14 +94,14 @@ void CL64_TopDlg::Reset_Class(void) const
 // **************************************************************************
 void CL64_TopDlg::Start_TopBar()
 {
-	TabsHwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_TOPBAR, App->MainHwnd, (DLGPROC)TopBar_Proc);
+	TabsHwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_TOPBAR, App->MainHwnd, (DLGPROC)Proc_TopBar);
 	Init_Bmps_Globals();
 }
 
 // *************************************************************************
-// *			TopBar_Proc:- Terry and Hazel Flanigan 2024				   *
+// *			Proc_TopBar:- Terry and Hazel Flanigan 2024				   *
 // *************************************************************************
-LRESULT CALLBACK CL64_TopDlg::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK CL64_TopDlg::Proc_TopBar(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	switch (message)
 	{
@@ -99,6 +110,7 @@ LRESULT CALLBACK CL64_TopDlg::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam
 		App->CL_TopDlg->TabsHwnd = hDlg;
 
 		App->CL_TopDlg->Start_Tabs_Headers();
+		App->CL_TopDlg->Start_Game_TB();
 		App->CL_TopDlg->Start_Camera_TB();
 		App->CL_TopDlg->Start_Physics_TB();
 		App->CL_TopDlg->Start_Motions_TB();
@@ -464,19 +476,21 @@ LRESULT CALLBACK CL64_TopDlg::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam
 // *************************************************************************
 void CL64_TopDlg::Start_Tabs_Headers(void)
 {
-	Tabs_TB_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_TB_TAB, TabsHwnd, (DLGPROC)Tabs_Headers_Proc);
+	Tabs_TB_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_TB_TAB, TabsHwnd, (DLGPROC)Proc_Tabs_Headers);
 }
 
 // *************************************************************************
-// *		Tabs_Headers_Proc:- Terry and Hazel Flanigan 2024			   *
+// *		Proc_Tabs_Headers:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-LRESULT CALLBACK CL64_TopDlg::Tabs_Headers_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK CL64_TopDlg::Proc_Tabs_Headers(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
 
 	switch (message)
 	{
 	case WM_INITDIALOG:
 	{
+
+		SendDlgItemMessage(hDlg, IDC_BT_TBH_GAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_TBH_CAMERA, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_TD_PHYSICSTAB, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_TD_MOTIONSTAB, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
@@ -493,6 +507,13 @@ LRESULT CALLBACK CL64_TopDlg::Tabs_Headers_Proc(HWND hDlg, UINT message, WPARAM 
 	case WM_NOTIFY:
 	{
 		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		if (some_item->idFrom == IDC_BT_TBH_GAME)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle_Tabs(item, App->CL_TopDlg->flag_Toggle_Tabs_Game);
+			return CDRF_DODEFAULT;
+		}
 
 		if (some_item->idFrom == IDC_BT_TBH_CAMERA)
 		{
@@ -527,6 +548,17 @@ LRESULT CALLBACK CL64_TopDlg::Tabs_Headers_Proc(HWND hDlg, UINT message, WPARAM 
 
 	case WM_COMMAND:
 	{
+		if (LOWORD(wParam) == IDC_BT_TBH_GAME)
+		{
+			App->CL_TopDlg->Hide_Tabs();
+			ShowWindow(App->CL_TopDlg->Game_TB_hWnd, SW_SHOW);
+			App->CL_TopDlg->flag_Toggle_Tabs_Game = 1;
+
+			RedrawWindow(App->CL_TopDlg->Tabs_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+			return TRUE;
+		}
+		
 		if (LOWORD(wParam) == IDC_BT_TBH_CAMERA)
 		{
 			App->CL_TopDlg->Hide_Tabs();
@@ -576,10 +608,12 @@ LRESULT CALLBACK CL64_TopDlg::Tabs_Headers_Proc(HWND hDlg, UINT message, WPARAM 
 // *************************************************************************
 void CL64_TopDlg::Hide_Tabs(void)
 {
+	ShowWindow(Game_TB_hWnd, SW_HIDE);
 	ShowWindow(Camera_TB_hWnd, SW_HIDE);
 	ShowWindow(Physics_TB_hWnd, SW_HIDE);
 	ShowWindow(Motions_TB_hWnd, SW_HIDE);
 
+	flag_Toggle_Tabs_Game = 0;
 	flag_Toggle_Tabs_Camera = 0;
 	flag_Toggle_Tabs_Physics = 0;
 	flag_Toggle_Tabs_Motions = 0;
@@ -590,13 +624,13 @@ void CL64_TopDlg::Hide_Tabs(void)
 // *************************************************************************
 void CL64_TopDlg::Start_Camera_TB(void)
 {
-	Camera_TB_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_TB_CAMERA, Tabs_TB_hWnd, (DLGPROC)Camera_TB_Proc);
+	Camera_TB_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_TB_CAMERA, Tabs_TB_hWnd, (DLGPROC)Proc_Camera_TB);
 }
 
 // *************************************************************************
-// *			Camera_TB_Proc:- Terry and Hazel Flanigan 2024			   *
+// *			Proc_Camera_TB:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-LRESULT CALLBACK CL64_TopDlg::Camera_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK CL64_TopDlg::Proc_Camera_TB(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
 
 	switch (message)
@@ -775,17 +809,86 @@ LRESULT CALLBACK CL64_TopDlg::Camera_TB_Proc(HWND hDlg, UINT message, WPARAM wPa
 }
 
 // *************************************************************************
+// *			Start_Game_TB:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void CL64_TopDlg::Start_Game_TB(void)
+{
+	Game_TB_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_TB_GAME, Tabs_TB_hWnd, (DLGPROC)Proc_Game_TB);
+}
+
+// *************************************************************************
+// *			Proc_Game_TB:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+LRESULT CALLBACK CL64_TopDlg::Proc_Game_TB(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+
+	switch (message)
+	{
+	case WM_INITDIALOG:
+	{
+		SendDlgItemMessage(hDlg, IDC_BT_TD_DEBUG_PHYSICSDEBUG, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		return TRUE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->Brush_Tabs;
+	}
+
+	case WM_NOTIFY:
+	{
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		if (some_item->idFrom == IDC_BT_TD_DEBUG_PHYSICSDEBUG)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->CL_TopDlg->flag_Toggle_PhysicaDebug_Node);
+			return CDRF_DODEFAULT;
+		}
+
+		return CDRF_DODEFAULT;
+	}
+
+	case WM_COMMAND:
+	{
+
+		if (LOWORD(wParam) == IDC_BT_TD_DEBUG_PHYSICSDEBUG)
+		{
+			if (App->CL_TopDlg->flag_Toggle_PhysicaDebug_Node == 1)
+			{
+				App->CL_Bullet->Show_Debug_Area(false);
+				App->CL_TopDlg->flag_Toggle_PhysicaDebug_Node = 0;
+				App->CL_Ogre->Bullet_Debug_Listener->btDebug_Node->setVisible(false);
+			}
+			else
+			{
+				App->CL_Bullet->Show_Debug_Area(true);
+				App->CL_TopDlg->flag_Toggle_PhysicaDebug_Node = 1;
+				App->CL_Ogre->Bullet_Debug_Listener->btDebug_Node->setVisible(true);
+			}
+			return 1;
+		}
+
+		return FALSE;
+	}
+
+	}
+	return FALSE;
+}
+
+// *************************************************************************
 // *			Start_Physics_TB:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
 void CL64_TopDlg::Start_Physics_TB(void)
 {
-	Physics_TB_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_TB_PHYSICS, Tabs_TB_hWnd, (DLGPROC)Physics_TB_Proc);
+	Physics_TB_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_TB_PHYSICS, Tabs_TB_hWnd, (DLGPROC)Proc_Physics_TB);
 }
 
 // *************************************************************************
-// *			Physics_TB_Proc:- Terry and Hazel Flanigan 2024			   *
+// *			Proc_Physics_TB:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-LRESULT CALLBACK CL64_TopDlg::Physics_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK CL64_TopDlg::Proc_Physics_TB(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
 
 	switch (message)
@@ -848,14 +951,14 @@ LRESULT CALLBACK CL64_TopDlg::Physics_TB_Proc(HWND hDlg, UINT message, WPARAM wP
 // *************************************************************************
 void CL64_TopDlg::Start_Motions_TB(void)
 {
-	Motions_TB_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_TB_MOTIONS, Tabs_TB_hWnd, (DLGPROC)Motions_TB_Proc);
+	Motions_TB_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_TB_MOTIONS, Tabs_TB_hWnd, (DLGPROC)Proc_Motions_TB);
 	Update_Speed_Combo();
 }
 
 // *************************************************************************
-// *			Motions_TB_Proc:- Terry and Hazel Flanigan 2024			   *
+// *			Proc_Motions_TB:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-LRESULT CALLBACK CL64_TopDlg::Motions_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK CL64_TopDlg::Proc_Motions_TB(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
 
 	switch (message)
