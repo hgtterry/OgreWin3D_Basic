@@ -35,9 +35,6 @@ CL64_Ogre3D_Listener::CL64_Ogre3D_Listener(void)
 	mMoveSensitivity = 50;
 	mMoveSensitivityMouse = 50;
 
-	Pl_LeftMouseDown = 0;
-	Pl_RightMouseDown = 0;
-
 	Pl_Cent500X = App->CursorPosX;
 	Pl_Cent500Y = App->CursorPosY;
 	Pl_DeltaMouse = 0;
@@ -48,12 +45,15 @@ CL64_Ogre3D_Listener::CL64_Ogre3D_Listener(void)
 	View_Width = 0;
 
 	Wheel = 0;
-	StopOgre = 0;
-
-	Ogre_Model_Loaded = 0;
-
-	Run_Physics = 0;
+	
 	Bullet_Step = 2;
+
+	flag_Run_Physics = 0;
+	flag_Ogre_Model_Loaded = 0;
+	flag_StopOgre = 0;
+
+	flag_LeftMouseDown = 0;
+	flag_RightMouseDown = 0;
 
 	flag_Animate_Ogre = 0;
 }
@@ -109,7 +109,7 @@ bool CL64_Ogre3D_Listener::frameRenderingQueued(const FrameEvent& evt)
 
 		App->CL_Player->Update_Player(NULL, evt.timeSinceLastFrame);
 
-		if (Pl_LeftMouseDown == 1 && Pl_RightMouseDown == 0)
+		if (flag_LeftMouseDown == 1 && flag_RightMouseDown == 0)
 		{
 			Capture_Mouse_FirstPerson(evt.timeSinceLastFrame);
 			SetCursorPos(App->CursorPosX, App->CursorPosY);
@@ -143,7 +143,7 @@ bool CL64_Ogre3D_Listener::frameRenderingQueued(const FrameEvent& evt)
 bool CL64_Ogre3D_Listener::frameEnded(const FrameEvent& evt)
 {
 
-	if (StopOgre == 1)
+	if (flag_StopOgre == 1)
 	{
 		return false;
 	}
@@ -188,7 +188,7 @@ void CL64_Ogre3D_Listener::Update_Game_Logic(float DeltaTime)
 
 	Count = 0;
 
-	if (Run_Physics == 1 && App->flag_OgreStarted == 1)
+	if (flag_Run_Physics == 1 && App->flag_OgreStarted == 1)
 	{
 		App->CL_Bullet->dynamicsWorld->stepSimulation(DeltaTime * Bullet_Step);	
 
@@ -232,7 +232,7 @@ void CL64_Ogre3D_Listener::Update_Game_Logic(float DeltaTime)
 		}
 	}
 
-	if (Run_Physics == 1 && App->CL_Scene->flag_Player_Added == 1)
+	if (flag_Run_Physics == 1 && App->CL_Scene->flag_Player_Added == 1)
 	{
 		btTransform trans;
 		App->CL_Scene->B_Player[0]->Phys_Body->getMotionState()->getWorldTransform(trans);
@@ -283,13 +283,13 @@ void CL64_Ogre3D_Listener::Mode_Camera_Model(float DeltaTime)
 	App->CL_Keyboard->Keyboard_Mode_Model(DeltaTime);
 
 	// Left Mouse
-	if (Pl_LeftMouseDown == 1 && Pl_RightMouseDown == 0)
+	if (flag_LeftMouseDown == 1 && flag_RightMouseDown == 0)
 	{
 		Capture_LeftMouse_Model();
 	}
 
 	// Right Mouse
-	if (Pl_LeftMouseDown == 0 && Pl_RightMouseDown == 1)
+	if (flag_LeftMouseDown == 0 && flag_RightMouseDown == 1)
 	{
 		Capture_RightMouse_Model();
 	}
@@ -319,7 +319,7 @@ bool CL64_Ogre3D_Listener::Capture_LeftMouse_Model(void)
 			App->CL_Grid->HairNode->yaw(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
 			App->CL_Ogre->OGL_Listener->RZ = App->CL_Ogre->OGL_Listener->RZ - (Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2);
 
-			if (Ogre_Model_Loaded == 1)
+			if (flag_Ogre_Model_Loaded == 1)
 			{
 				
 			}
@@ -338,7 +338,7 @@ bool CL64_Ogre3D_Listener::Capture_LeftMouse_Model(void)
 			App->CL_Grid->HairNode->yaw(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
 			App->CL_Ogre->OGL_Listener->RZ = App->CL_Ogre->OGL_Listener->RZ + (Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2);
 
-			if (Ogre_Model_Loaded == 1)
+			if (flag_Ogre_Model_Loaded == 1)
 			{
 				
 			}
@@ -359,7 +359,7 @@ bool CL64_Ogre3D_Listener::Capture_LeftMouse_Model(void)
 			App->CL_Grid->HairNode->pitch(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
 			App->CL_Ogre->OGL_Listener->RX = App->CL_Ogre->OGL_Listener->RX - (Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2);
 
-			if (Ogre_Model_Loaded == 1)
+			if (flag_Ogre_Model_Loaded == 1)
 			{
 				
 			}
@@ -378,7 +378,7 @@ bool CL64_Ogre3D_Listener::Capture_LeftMouse_Model(void)
 			App->CL_Grid->HairNode->pitch(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
 			App->CL_Ogre->OGL_Listener->RX = App->CL_Ogre->OGL_Listener->RX + (Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2);
 
-			if (Ogre_Model_Loaded == 1)
+			if (flag_Ogre_Model_Loaded == 1)
 			{
 				
 			}
@@ -482,14 +482,14 @@ void CL64_Ogre3D_Listener::Mode_Camera_Free(float DeltaTime)
 
 	App->CL_Keyboard->Keyboard_Mode_Free(DeltaTime);
 
-	if (Pl_LeftMouseDown == 1 && Pl_RightMouseDown == 0)
+	if (flag_LeftMouseDown == 1 && flag_RightMouseDown == 0)
 	{
 		Capture_Left_Mouse_Free();
 		SetCursorPos(App->CursorPosX, App->CursorPosY);
 	}
 
 	// Right Mouse
-	if (Pl_LeftMouseDown == 0 && Pl_RightMouseDown == 1)
+	if (flag_LeftMouseDown == 0 && flag_RightMouseDown == 1)
 	{
 		Capture_Right_Mouse_Free();
 	}

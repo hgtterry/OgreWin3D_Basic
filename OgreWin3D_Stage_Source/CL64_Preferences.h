@@ -27,9 +27,9 @@ public:
 	void Read_Preferences();
 	bool Write_Preferences();
 
-	bool Start_FullScreen;
-	bool Start_Full_3DWin;
-	bool Use_Default_Directories;
+	bool flag_Start_FullScreen;
+	bool flag_Start_Full_3DWin;
+	bool flag_Use_Default_Directories;
 
 private:
 

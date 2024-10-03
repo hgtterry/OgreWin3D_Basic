@@ -38,7 +38,7 @@ public:
 	void SetSky(bool Enable);
 	bool EnableFog(bool SetFog);
 
-	bool Show_PropertyEditor;
+	bool flag_Show_PropertyEditor;
 	int PropertyEditor_Page;
 
 protected:
@@ -61,27 +61,27 @@ protected:
 
 	int Eviron_Index;
 
-	bool Float_Exit;
+	bool flag_Float_Exit;
 
-	bool Is_Teleport;
+	bool flag_Is_Teleport;
 
 	float Float_PosX;
 	float Float_PosY;
-	bool Float_StartPos;
+	bool flag_Float_StartPos;
 
-	bool ClickOnTrack;
-	bool ClickOnVolume;
-	bool ClickOnPlay;
-	bool ClickOnLoop;
+	bool flag_ClickOnTrack;
+	bool flag_ClickOnVolume;
+	bool flag_ClickOnPlay;
+	bool flag_ClickOnLoop;
 
-	bool ClickOnFogVisible;
-	bool ClickOnFogMode;
-	bool ClickOnFogColour;
-	bool ClickOnFogStart;
-	bool ClickOnFogEnd;
+	bool flag_ClickOnFogVisible;
+	bool flag_ClickOnFogMode;
+	bool flag_ClickOnFogColour;
+	bool flag_ClickOnFogStart;
+	bool flag_ClickOnFogEnd;
 
-	bool ClickOnSkyEnabled;
-	bool ClickOnSkyTiling;
-	bool ClickOnSkyCurve;
+	bool flag_ClickOnSkyEnabled;
+	bool flag_ClickOnSkyTiling;
+	bool flag_ClickOnSkyCurve;
 };
 

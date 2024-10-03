@@ -28,7 +28,6 @@ THE SOFTWARE.
 
 CL64_Gui_Environment::CL64_Gui_Environment(void)
 {
-	Show_PropertyEditor = 0;
 	PropertyEditor_Page = 0;
 
 	Ambient_Int_Red = 0;
@@ -41,27 +40,30 @@ CL64_Gui_Environment::CL64_Gui_Environment(void)
 
 	Float_PosX = 0;
 	Float_PosY = 0;
-	Float_StartPos = 0;
-	Float_Exit = 0;
-
+	
 	Eviron_Index = 0;
 
-	Is_Teleport = 0;
+	flag_Show_PropertyEditor = 0;
 
-	ClickOnTrack = 0;
-	ClickOnVolume = 0;
-	ClickOnPlay = 0;
-	ClickOnLoop = 0;
+	flag_Float_StartPos = 0;
+	flag_Float_Exit = 0;
 
-	ClickOnFogVisible = 0;
-	ClickOnFogMode = 0;
-	ClickOnFogColour = 0;
-	ClickOnFogStart = 0;
-	ClickOnFogEnd = 0;
+	flag_Is_Teleport = 0;
 
-	ClickOnSkyEnabled = 0;
-	ClickOnSkyTiling = 0;
-	ClickOnSkyCurve = 0;
+	flag_ClickOnTrack = 0;
+	flag_ClickOnVolume = 0;
+	flag_ClickOnPlay = 0;
+	flag_ClickOnLoop = 0;
+
+	flag_ClickOnFogVisible = 0;
+	flag_ClickOnFogMode = 0;
+	flag_ClickOnFogColour = 0;
+	flag_ClickOnFogStart = 0;
+	flag_ClickOnFogEnd = 0;
+
+	flag_ClickOnSkyEnabled = 0;
+	flag_ClickOnSkyTiling = 0;
+	flag_ClickOnSkyCurve = 0;
 
 }
 
@@ -76,9 +78,8 @@ void CL64_Gui_Environment::Reset_Class()
 {
 	if (App->CL_Scene->flag_Scene_Loaded == 1)
 	{
-		App->CL_Ogre->mSceneMgr->setSkyDome(false, "Examples/CloudySky");
+		App->CL_Ogre->mSceneMgr->setSkyDome(false, "Examples/CloudySky"); // Look At Terry
 
-		Show_PropertyEditor = 0;
 		PropertyEditor_Page = 0;
 
 		Ambient_Int_Red = 0;
@@ -91,26 +92,28 @@ void CL64_Gui_Environment::Reset_Class()
 
 		Float_PosX = 0;
 		Float_PosY = 0;
-		Float_StartPos = 0;
-
+		
 		Eviron_Index = 0;
 
-		Is_Teleport = 0;
+		flag_Show_PropertyEditor = 0;
+		flag_Float_StartPos = 0;
 
-		ClickOnTrack = 0;
-		ClickOnVolume = 0;
-		ClickOnPlay = 0;
-		ClickOnLoop = 0;
+		flag_Is_Teleport = 0;
 
-		ClickOnFogVisible = 0;
-		ClickOnFogMode = 0;
-		ClickOnFogColour = 0;
-		ClickOnFogStart = 0;
-		ClickOnFogEnd = 0;
+		flag_ClickOnTrack = 0;
+		flag_ClickOnVolume = 0;
+		flag_ClickOnPlay = 0;
+		flag_ClickOnLoop = 0;
 
-		ClickOnSkyEnabled = 0;
-		ClickOnSkyTiling = 0;
-		ClickOnSkyCurve = 0;
+		flag_ClickOnFogVisible = 0;
+		flag_ClickOnFogMode = 0;
+		flag_ClickOnFogColour = 0;
+		flag_ClickOnFogStart = 0;
+		flag_ClickOnFogEnd = 0;
+
+		flag_ClickOnSkyEnabled = 0;
+		flag_ClickOnSkyTiling = 0;
+		flag_ClickOnSkyCurve = 0;
 	}
 }
 
@@ -121,9 +124,9 @@ void CL64_Gui_Environment::Reset_Class()
 void CL64_Gui_Environment::Start_Environment_Editor(int Index,bool IsTeleport)
 {
 	Eviron_Index = Index;
-	Is_Teleport = IsTeleport;
+	flag_Is_Teleport = IsTeleport;
 
-	Float_Exit = 0;
+	flag_Float_Exit = 0;
 
 	Ambient_Colour_Copy.x = App->CL_Scene->V_Object[Eviron_Index]->S_Environ[0]->AmbientColour.x;
 	Ambient_Colour_Copy.y = App->CL_Scene->V_Object[Eviron_Index]->S_Environ[0]->AmbientColour.y;
@@ -156,7 +159,7 @@ void CL64_Gui_Environment::Start_Environment_Editor(int Index,bool IsTeleport)
 	App->CL_FileView->Show_FileView(false);
 	App->CL_Com_Environments->Set_Environment_By_Index(1, Eviron_Index);
 
-	Show_PropertyEditor = 1;
+	flag_Show_PropertyEditor = 1;
 }
 
 // *************************************************************************
@@ -168,7 +171,7 @@ void CL64_Gui_Environment::Environ_PropertyEditor()
 	ImGui::SetNextWindowPos(ImVec2(10, 10), ImGuiCond_FirstUseEver);
 	ImGui::SetNextWindowSize(ImVec2(350, 220), ImGuiCond_FirstUseEver);
 
-	if (!ImGui::Begin("Environment Editor", &Show_PropertyEditor, ImGuiWindowFlags_NoResize| ImGuiWindowFlags_NoTitleBar))
+	if (!ImGui::Begin("Environment Editor", &flag_Show_PropertyEditor, ImGuiWindowFlags_NoResize| ImGuiWindowFlags_NoTitleBar))
 	{
 		ImGui::End();
 		return;
@@ -239,11 +242,11 @@ void CL64_Gui_Environment::Environ_PropertyEditor()
 		ImGui::NextColumn();
 		ImGui::AlignTextToFramePadding();
 		
-		ImGui::Selectable("Track:- ", &ClickOnTrack);
+		ImGui::Selectable("Track:- ", &flag_ClickOnTrack);
 		ImGui::SameLine();
 		ImGui::Text("%s", App->CL_Scene->V_Object[Eviron_Index]->S_Environ[0]->Sound_File);
 
-		if (ClickOnTrack)
+		if (flag_ClickOnTrack)
 		{
 			ImGui::TextColored(ImVec4(0.f, 1.f, 0.24f, 1.f), "ON");
 
@@ -268,24 +271,24 @@ void CL64_Gui_Environment::Environ_PropertyEditor()
 				App->CL_Com_Environments->Set_Environment_By_Index(1, Eviron_Index);
 			}*/
 
-			ClickOnTrack = 0;
+			flag_ClickOnTrack = 0;
 		}
 		
 		// ----------------- Volume
-		ImGui::Selectable("Volume:- ", &ClickOnVolume);
+		ImGui::Selectable("Volume:- ", &flag_ClickOnVolume);
 		ImGui::SameLine();
 		ImGui::Text("%f", App->CL_Scene->V_Object[Eviron_Index]->S_Environ[0]->SndVolume);
-		if (ClickOnVolume)
+		if (flag_ClickOnVolume)
 		{
 			App->CL_Com_Environments->Mark_As_Altered_Environ(Eviron_Index);
-			ClickOnVolume = 0;
+			flag_ClickOnVolume = 0;
 		}
 
 		// ----------------- Play
-		ImGui::Selectable("Play:- ", &ClickOnPlay);
+		ImGui::Selectable("Play:- ", &flag_ClickOnPlay);
 		ImGui::SameLine();
 		ImGui::Text("%i", App->CL_Scene->V_Object[Eviron_Index]->S_Environ[0]->Play);
-		if (ClickOnPlay)
+		if (flag_ClickOnPlay)
 		{
 			strcpy(App->CL_Dialogs->btext, "Set Play Sound Track");
 
@@ -310,14 +313,14 @@ void CL64_Gui_Environment::Environ_PropertyEditor()
 			}
 
 			App->CL_Com_Environments->Mark_As_Altered_Environ(Eviron_Index);
-			ClickOnPlay = 0;
+			flag_ClickOnPlay = 0;
 		}
 
 		// ----------------- Loop
-		ImGui::Selectable("Loop:- ", &ClickOnLoop);
+		ImGui::Selectable("Loop:- ", &flag_ClickOnLoop);
 		ImGui::SameLine();
 		ImGui::Text("%i", App->CL_Scene->V_Object[Eviron_Index]->S_Environ[0]->Loop);
-		if (ClickOnLoop)
+		if (flag_ClickOnLoop)
 		{
 			strcpy(App->CL_Dialogs->btext, "Set Play Sound Loop");
 
@@ -343,7 +346,7 @@ void CL64_Gui_Environment::Environ_PropertyEditor()
 				App->CL_Com_Environments->Mark_As_Altered_Environ(Eviron_Index);
 			}
 
-			ClickOnLoop = 0;
+			flag_ClickOnLoop = 0;
 		}
 	}
 
@@ -354,10 +357,10 @@ void CL64_Gui_Environment::Environ_PropertyEditor()
 		ImGui::AlignTextToFramePadding();
 
 		// ----------------- Visible
-		ImGui::Selectable("Visible:- ", &ClickOnFogVisible);
+		ImGui::Selectable("Visible:- ", &flag_ClickOnFogVisible);
 		ImGui::SameLine();
 		ImGui::Text("%i", App->CL_Scene->V_Object[Eviron_Index]->S_Environ[0]->Fog_On);
-		if (ClickOnFogVisible)
+		if (flag_ClickOnFogVisible)
 		{
 			strcpy(App->CL_Dialogs->btext, "Set Fog Visiblity");
 
@@ -383,16 +386,16 @@ void CL64_Gui_Environment::Environ_PropertyEditor()
 			}
 
 	
-			ClickOnFogVisible = 0;
+			flag_ClickOnFogVisible = 0;
 		}
 
 		// ----------------- Mode
-		ImGui::Selectable("Mode:- ", &ClickOnFogMode);
+		ImGui::Selectable("Mode:- ", &flag_ClickOnFogMode);
 		ImGui::SameLine();
 		ImGui::Text("%i", App->CL_Scene->V_Object[Eviron_Index]->S_Environ[0]->Fog_Mode);
-		if (ClickOnFogMode)
+		if (flag_ClickOnFogMode)
 		{
-			ClickOnFogMode = 0;
+			flag_ClickOnFogMode = 0;
 		}
 
 		// ----------------- Fog Colour
@@ -454,10 +457,10 @@ void CL64_Gui_Environment::Environ_PropertyEditor()
 		ImGui::AlignTextToFramePadding();
 
 		// ----------------- Visible
-		ImGui::Selectable("Enabled:- ", &ClickOnSkyEnabled);
+		ImGui::Selectable("Enabled:- ", &flag_ClickOnSkyEnabled);
 		ImGui::SameLine();
 		ImGui::Text("%i", App->CL_Scene->V_Object[Eviron_Index]->S_Environ[0]->Enabled);
-		if (ClickOnSkyEnabled)
+		if (flag_ClickOnSkyEnabled)
 		{
 			strcpy(App->CL_Dialogs->btext, "Set Sky Visiblity");
 
@@ -482,7 +485,7 @@ void CL64_Gui_Environment::Environ_PropertyEditor()
 				App->CL_Com_Environments->Mark_As_Altered_Environ(Eviron_Index);
 			}
 
-			ClickOnSkyEnabled = 0;
+			flag_ClickOnSkyEnabled = 0;
 		}
 
 		// ----------------- Tiling
@@ -527,10 +530,10 @@ void CL64_Gui_Environment::Environ_PropertyEditor()
 
 		ImGui::PopStyleColor();
 		PropertyEditor_Page = 0;
-		Show_PropertyEditor = 0;
+		flag_Show_PropertyEditor = 0;
 	}
 
-	if (Is_Teleport == 1)
+	if (flag_Is_Teleport == 1)
 	{
 		ImGui::SameLine();
 		if (ImGui::Button("Goto Location", ImVec2(120, 0)))

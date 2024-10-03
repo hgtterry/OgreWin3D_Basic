@@ -148,7 +148,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
       return FALSE;
    }
 
-   if (App->CL_Preferences->Start_FullScreen == 1)
+   if (App->CL_Preferences->flag_Start_FullScreen == 1)
    {
 	   ShowWindow(App->MainHwnd, SW_SHOWMAXIMIZED);
    }
@@ -297,16 +297,16 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		case ID_WINDOWS_PROPERTIES:
 		{
 
-			if (App->CL_Properties->Properties_Dlg_Active == 1)
+			if (App->CL_Properties->flag_Properties_Dlg_Active == 1)
 			{
-				App->CL_Properties->Properties_Dlg_Active = 0;
+				App->CL_Properties->flag_Properties_Dlg_Active = 0;
 				CheckMenuItem(App->mMenu, ID_WINDOWS_PROPERTIES, MF_BYCOMMAND | MF_UNCHECKED);
 
 				ShowWindow(App->CL_Properties->Properties_Dlg_hWnd, 0);
 			}
 			else
 			{
-				App->CL_Properties->Properties_Dlg_Active = 1;
+				App->CL_Properties->flag_Properties_Dlg_Active = 1;
 				CheckMenuItem(App->mMenu, ID_WINDOWS_PROPERTIES, MF_BYCOMMAND | MF_CHECKED);
 
 				ShowWindow(App->CL_Properties->Properties_Dlg_hWnd, 1);
@@ -489,9 +489,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				}
 			}
 
-			if (App->CL_Ogre->Ogre3D_Listener->StopOgre == 0)
+			if (App->CL_Ogre->Ogre3D_Listener->flag_StopOgre == 0)
 			{
-				App->CL_Ogre->Ogre3D_Listener->StopOgre = 1;
+				App->CL_Ogre->Ogre3D_Listener->flag_StopOgre = 1;
 			}
 
 			PostQuitMessage(0);
@@ -560,9 +560,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			}
 		}
 
-		if (App->CL_Ogre->Ogre3D_Listener->StopOgre == 0)
+		if (App->CL_Ogre->Ogre3D_Listener->flag_StopOgre == 0)
 		{
-			App->CL_Ogre->Ogre3D_Listener->StopOgre = 1;
+			App->CL_Ogre->Ogre3D_Listener->flag_StopOgre = 1;
 		}
 
 		PostQuitMessage(0);
@@ -619,7 +619,7 @@ LRESULT CALLBACK Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
 	}
 	case WM_MOUSEWHEEL:
 	{
-		if (App->CL_Ogre->Ogre3D_Listener->Pl_LeftMouseDown == 0)
+		if (App->CL_Ogre->Ogre3D_Listener->flag_LeftMouseDown == 0)
 		{
 			int zDelta = (short)HIWORD(wParam);    // wheel rotation
 
@@ -692,12 +692,12 @@ LRESULT CALLBACK Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
 
 							SetCapture(App->ViewGLhWnd);// Bernie
 							SetCursorPos(App->CursorPosX, App->CursorPosY);
-							App->CL_Ogre->Ogre3D_Listener->Pl_LeftMouseDown = 1;
+							App->CL_Ogre->Ogre3D_Listener->flag_LeftMouseDown = 1;
 							App->CUR = SetCursor(NULL);
 						}
 						else
 						{
-							App->CL_Ogre->Ogre3D_Listener->Pl_LeftMouseDown = 1;
+							App->CL_Ogre->Ogre3D_Listener->flag_LeftMouseDown = 1;
 						}
 					}
 
@@ -719,7 +719,7 @@ LRESULT CALLBACK Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
 			if (App->flag_OgreStarted == 1)
 			{
 				ReleaseCapture();
-				App->CL_Ogre->Ogre3D_Listener->Pl_LeftMouseDown = 0;
+				App->CL_Ogre->Ogre3D_Listener->flag_LeftMouseDown = 0;
 				SetCursor(App->CUR);
 				return 1;
 			}
@@ -754,7 +754,7 @@ LRESULT CALLBACK Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
 					App->CL_Ogre->Ogre3D_Listener->Pl_Cent500Y = p.y;
 					SetCapture(App->ViewGLhWnd);// Bernie
 					SetCursorPos(App->CursorPosX, App->CursorPosY);
-					App->CL_Ogre->Ogre3D_Listener->Pl_RightMouseDown = 1;
+					App->CL_Ogre->Ogre3D_Listener->flag_RightMouseDown = 1;
 					App->CUR = SetCursor(NULL);
 					return 1;
 				}
@@ -774,7 +774,7 @@ LRESULT CALLBACK Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
 			if (App->flag_OgreStarted == 1)
 			{
 				ReleaseCapture();
-				App->CL_Ogre->Ogre3D_Listener->Pl_RightMouseDown = 0;
+				App->CL_Ogre->Ogre3D_Listener->flag_RightMouseDown = 0;
 				SetCursor(App->CUR);
 				return 1;
 			}

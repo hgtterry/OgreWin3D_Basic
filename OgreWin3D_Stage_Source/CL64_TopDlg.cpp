@@ -727,7 +727,7 @@ LRESULT CALLBACK CL64_TopDlg::Proc_Camera_TB(HWND hDlg, UINT message, WPARAM wPa
 		{
 
 			App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_First;
-			App->CL_Ogre->Ogre3D_Listener->Run_Physics = 1;
+			App->CL_Ogre->Ogre3D_Listener->flag_Run_Physics = 1;
 
 			App->CL_Player->Show_Debug_Player(false);
 			
@@ -871,7 +871,11 @@ LRESULT CALLBACK CL64_TopDlg::Proc_Game_TB(HWND hDlg, UINT message, WPARAM wPara
 
 		if (LOWORD(wParam) == IDC_BT_GAME_PREVIEW)
 		{
-			App->CL_Scene->Game_Mode();
+			if (App->CL_Scene->flag_Scene_Loaded == 1)
+			{
+				App->CL_Scene->Game_Mode();
+			}
+
 			return 1;
 		}
 

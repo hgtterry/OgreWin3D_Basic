@@ -62,8 +62,8 @@ public:
 
 	int Player_Count;
 
-	bool AddGravity;
-	bool Is_On_Ground;
+	bool flag_AddGravity;
+	bool flag_Is_On_Ground;
 	int Last_Message_Index;
 
 };

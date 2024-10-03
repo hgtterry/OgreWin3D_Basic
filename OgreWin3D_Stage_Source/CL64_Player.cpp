@@ -42,8 +42,8 @@ CL64_Player::CL64_Player(void)
 	Life_Time = 0;
 	Last_Message_Index = 0;
 
-	AddGravity = 0;
-	Is_On_Ground = 0;
+	flag_AddGravity = 0;
+	flag_Is_On_Ground = 0;
 }
 
 CL64_Player::~CL64_Player(void)
@@ -203,14 +203,14 @@ void CL64_Player::Update_Velocity(float dt)
 	btVector3 linearVelocity = inv * App->CL_Scene->B_Player[0]->Phys_Body->getLinearVelocity();
 
 
-	if (Is_On_Ground == 1)// || mJump == 1)
+	if (flag_Is_On_Ground == 1)// || mJump == 1)
 	{
 		btVector3 dv = mMoveDirection * ((App->CL_Scene->B_Player[0]->Ground_speed * 100)*dt);
 		linearVelocity = dv;
 	}
 	else
 	{
-		if (AddGravity == 1)
+		if (flag_AddGravity == 1)
 		{
 			linearVelocity[1] = 100;
 
@@ -238,13 +238,13 @@ void CL64_Player::Get_Height(void)
 	App->CL_Bullet->dynamicsWorld->rayTest(from, to, resultCallback);
 	if (resultCallback.hasHit())
 	{
-		AddGravity = 0;
-		Is_On_Ground = 1;
+		flag_AddGravity = 0;
+		flag_Is_On_Ground = 1;
 	}
 	else
 	{
-		AddGravity = 1;
-		Is_On_Ground = 0;
+		flag_AddGravity = 1;
+		flag_Is_On_Ground = 0;
 	}
 }
 

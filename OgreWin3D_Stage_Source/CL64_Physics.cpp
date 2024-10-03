@@ -102,7 +102,7 @@ void CL64_Physics::Enable_Physics(bool Enable)
 	int f = App->CL_Scene->B_Player[0]->Phys_Body->getCollisionFlags();
 
 	//App->CL_Ogre->Ogre3D_Listener->Dubug_Physics_Draw = Enable;
-	App->CL_Ogre->Ogre3D_Listener->Run_Physics = Enable;
+	App->CL_Ogre->Ogre3D_Listener->flag_Run_Physics = Enable;
 	App->CL_Ogre->Bullet_Debug_Listener->Render_Debug_Flag = Enable;
 
 	//App->CL_Player->ShowDebug = Enable;

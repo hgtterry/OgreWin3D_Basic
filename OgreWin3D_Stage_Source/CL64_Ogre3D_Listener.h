@@ -83,13 +83,13 @@ public:
 
 	float Pl_DeltaMouse;
 
-	bool Pl_LeftMouseDown;
-	bool Pl_RightMouseDown;
+	bool flag_LeftMouseDown;
+	bool flag_RightMouseDown;
 
-	bool Run_Physics;
-	bool StopOgre;
+	bool flag_Run_Physics;
+	bool flag_StopOgre;
 
-	bool Ogre_Model_Loaded;
+	bool flag_Ogre_Model_Loaded;
 
 	bool flag_Animate_Ogre;
 

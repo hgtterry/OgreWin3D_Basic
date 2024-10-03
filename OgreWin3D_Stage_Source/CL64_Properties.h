@@ -52,7 +52,7 @@ public:
 	int Edit_Category;
 	int Current_Selected_Object;
 
-	bool Properties_Dlg_Active;
+	bool flag_Properties_Dlg_Active;
 
 	HWND Properties_Dlg_hWnd;
 

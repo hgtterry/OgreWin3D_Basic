@@ -205,7 +205,7 @@ void CL64_Scene::Set_Scene()
 	App->CL_Player->Set_Player_GroundSpeed(70);
 
 	App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_First;
-	App->CL_Ogre->Ogre3D_Listener->Run_Physics = 1;
+	App->CL_Ogre->Ogre3D_Listener->flag_Run_Physics = 1;
 
 	//App->CL_Ogre->mSceneMgr->setSkyDome(true, "OW3D/CloudySky");
 
@@ -265,7 +265,7 @@ bool CL64_Scene::Game_Mode(void)
 	//if (App->SBC_Front_Dlg->Use_Front_Dlg_Flag == 0)
 	//{
 		SetCapture(App->ViewGLhWnd);// Bernie
-		App->CL_Ogre->Ogre3D_Listener->Pl_LeftMouseDown = 1;
+		App->CL_Ogre->Ogre3D_Listener->flag_LeftMouseDown = 1;
 		App->CUR = SetCursor(NULL);
 	//}
 
@@ -289,7 +289,7 @@ bool CL64_Scene::Editor_Mode(void)
 	App->CL_Grid->Grid_SetVisible(true);
 	App->CL_Grid->Hair_SetVisible(true);
 
-	App->CL_Ogre->Ogre3D_Listener->Pl_LeftMouseDown = 0;
+	App->CL_Ogre->Ogre3D_Listener->flag_LeftMouseDown = 0;
 	ReleaseCapture();
 	SetCursor(App->CUR);
 
