@@ -70,7 +70,6 @@
 #define IDD_PROPERTIES                  182
 #define IDD_PROJECTSAVE                 183
 #define IDD_TRUEFALSE                   184
-#define IDD_TB_PHYSICS1                 185
 #define IDD_TB_GAME                     185
 #define IDC_CK_SU_FULLSCREEN            1000
 #define IDC_ST_STARTUP                  1001
@@ -94,6 +93,7 @@
 #define IDC_BT_LIST_OVERLAY             1007
 #define IDC_BT_PT_EXPORT                1007
 #define IDC_BT_MAINENVIRONMENT          1007
+#define IDC_BT_GAME_PREVIEW             1007
 #define IDC_BUTTON2                     1008
 #define IDC_BT_TBH_CAMERA               1008
 #define IDC_BT_DEMORESOURCES            1008
@@ -112,6 +112,7 @@
 #define IDC_BT_MOTIONS_PAUSE            1009
 #define IDC_BT_FOLDER_NAME              1009
 #define IDC_BT_PT_VIEWMESH              1009
+#define IDC_BT_GAME_BUILDGAME           1009
 #define IDC_BUTTON4                     1010
 #define IDC_BT_CAMERA_FREE              1010
 #define IDC_ALLMATERIALS                1010
@@ -195,6 +196,7 @@
 #define IDC_TREE1                       1070
 #define IDC_STPJFOLDERPATH              1071
 #define IDC_BT_TBH_GAME                 1072
+#define IDC_BT_GAME_CONFIG              1073
 #define ID_VIEW_RESET                   32771
 #define ID_VIEW_MAX3DVIEW               32772
 #define ID_DEBUG_TESTPREFERANCE         32773
@@ -249,7 +251,7 @@
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        185
 #define _APS_NEXT_COMMAND_VALUE         32816
-#define _APS_NEXT_CONTROL_VALUE         1073
+#define _APS_NEXT_CONTROL_VALUE         1074
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif

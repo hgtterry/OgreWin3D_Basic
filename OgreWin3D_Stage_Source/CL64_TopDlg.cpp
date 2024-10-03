@@ -826,7 +826,9 @@ LRESULT CALLBACK CL64_TopDlg::Proc_Game_TB(HWND hDlg, UINT message, WPARAM wPara
 	{
 	case WM_INITDIALOG:
 	{
-		SendDlgItemMessage(hDlg, IDC_BT_TD_DEBUG_PHYSICSDEBUG, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_GAME_PREVIEW, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_GAME_CONFIG, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_GAME_BUILDGAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		return TRUE;
 	}
@@ -840,10 +842,24 @@ LRESULT CALLBACK CL64_TopDlg::Proc_Game_TB(HWND hDlg, UINT message, WPARAM wPara
 	{
 		LPNMHDR some_item = (LPNMHDR)lParam;
 
-		if (some_item->idFrom == IDC_BT_TD_DEBUG_PHYSICSDEBUG)
+		if (some_item->idFrom == IDC_BT_GAME_PREVIEW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CL_TopDlg->flag_Toggle_PhysicaDebug_Node);
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BT_GAME_CONFIG)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BT_GAME_BUILDGAME)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
 			return CDRF_DODEFAULT;
 		}
 
@@ -853,20 +869,21 @@ LRESULT CALLBACK CL64_TopDlg::Proc_Game_TB(HWND hDlg, UINT message, WPARAM wPara
 	case WM_COMMAND:
 	{
 
-		if (LOWORD(wParam) == IDC_BT_TD_DEBUG_PHYSICSDEBUG)
+		if (LOWORD(wParam) == IDC_BT_GAME_PREVIEW)
 		{
-			if (App->CL_TopDlg->flag_Toggle_PhysicaDebug_Node == 1)
-			{
-				App->CL_Bullet->Show_Debug_Area(false);
-				App->CL_TopDlg->flag_Toggle_PhysicaDebug_Node = 0;
-				App->CL_Ogre->Bullet_Debug_Listener->btDebug_Node->setVisible(false);
-			}
-			else
-			{
-				App->CL_Bullet->Show_Debug_Area(true);
-				App->CL_TopDlg->flag_Toggle_PhysicaDebug_Node = 1;
-				App->CL_Ogre->Bullet_Debug_Listener->btDebug_Node->setVisible(true);
-			}
+			Debug
+			return 1;
+		}
+
+		if (LOWORD(wParam) == IDC_BT_GAME_CONFIG)
+		{
+			Debug
+			return 1;
+		}
+
+		if (LOWORD(wParam) == IDC_BT_GAME_BUILDGAME)
+		{
+			Debug
 			return 1;
 		}
 
