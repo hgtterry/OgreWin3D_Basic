@@ -192,3 +192,7 @@ namespace Enums
 }
 
 #define Debug App->Debug_Text();
+
+#define WRNG_PRIVATE_STR2(z) #z
+#define WRNG_PRIVATE_STR1(x) WRNG_PRIVATE_STR2(x)
+#define WRNG __FILE__ "("WRNG_PRIVATE_STR1(__LINE__)") : ------------ : "

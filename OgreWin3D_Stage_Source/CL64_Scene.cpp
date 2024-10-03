@@ -113,7 +113,10 @@ bool CL64_Scene::Clear_Level()
 	App->CL_Gui_Environment->Reset_Class();
 	App->CL_Project->Reset_Class();
 	App->CL_FileView->Reset_Class();
+
+//#pragma message(WRNG "Look At Terry")
 	App->CL_TopDlg->Reset_Class(); // Look At Terry
+
 	App->CL_Properties->Reset_Class();
 
 	//App->SBC_Markers->BoxNode->setVisible(false);
@@ -141,7 +144,7 @@ bool CL64_Scene::Clear_Level()
 	}
 
 
-	//Scene_Modified = 0;
+	flag_Scene_Modified = 0;
 
 	Reset_Class(); // This One
 
@@ -156,7 +159,7 @@ bool CL64_Scene::Clear_Level()
 
 	App->CL_Ogre->mSceneMgr->setSkyDome(false, "OW3D/CloudySky");
 
-	//App->SBC_FileView->SelectItem(App->SBC_FileView->FV_LevelFolder);
+	App->CL_FileView->SelectItem(App->CL_FileView->FV_LevelFolder);
 
 	//App->CL_Ogre->mSceneMgr->destroyCamera("PlayerRay");
 	App->CL_Ogre->mSceneMgr->destroyAllParticleSystems();
