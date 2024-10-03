@@ -871,7 +871,7 @@ LRESULT CALLBACK CL64_TopDlg::Proc_Game_TB(HWND hDlg, UINT message, WPARAM wPara
 
 		if (LOWORD(wParam) == IDC_BT_GAME_PREVIEW)
 		{
-			Debug
+			App->CL_Scene->Game_Mode();
 			return 1;
 		}
 

@@ -39,10 +39,11 @@ public:
 
 	void Reset_Class(void);
 	void Reset_Counters();
-
 	void Set_Scene(); 
-
 	bool Clear_Level();
+	bool Game_Mode(void);
+	bool Editor_Mode(void);
+
 
 	// Stage 
 	int Object_Count;
@@ -53,6 +54,8 @@ public:
 	int UniqueID_Object_Counter;
 	int UniqueID_Counters_Count;
 	int UniqueID_Area_Count;
+
+	int CurrentCamMode;
 
 	bool flag_Area_Added;
 	bool flag_Scene_Loaded;

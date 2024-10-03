@@ -49,6 +49,7 @@ public:
 	bool createFrameListener(void);
 	// --------------------------------------
 
+	bool ExitFullScreen();
 	void Log_Message_To_File(char* Message);
 	void Clear_ErrorLog();
 

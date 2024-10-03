@@ -38,6 +38,8 @@ CL64_Scene::CL64_Scene(void)
 	UniqueID_Counters_Count = 0;
 	UniqueID_Area_Count = 0;
 
+	CurrentCamMode = 0;
+
 	flag_GameMode_Running_Flag = 0;
 	flag_Project_Resources_Created = 0;
 	flag_Area_Added = 0;
@@ -208,6 +210,107 @@ void CL64_Scene::Set_Scene()
 	//App->CL_Ogre->mSceneMgr->setSkyDome(true, "OW3D/CloudySky");
 
 	App->CL_ImGui->flag_Show_Demo_Options = 1;
+}
+
+// *************************************************************************
+// *				Game_Mode:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+bool CL64_Scene::Game_Mode(void)
+{
+	/*if (App->SBC_Front_Dlg->Use_Front_Dlg_Flag == 1)
+	{
+		App->CL_Ogre->OgreListener->Block_Mouse = 1;
+		App->SBC_Keyboard->Block_Keyboard = 1;
+		App->Block_Mouse_Buttons = 1;
+		App->SBC_Front_Dlg->Show_Front_Dlg_Flag = 1;
+	}*/
+
+	//flag_GameMode_Running_Flag = 1;
+
+	//App->CL_Ogre->Bullet_Debug_Listener->Render_Debug_Flag = 0;
+
+	App->CL_Grid->Grid_SetVisible(false);
+	App->CL_Grid->Hair_SetVisible(false);
+
+	//App->SBC_Markers->Arrow_Node->setVisible(0);
+
+	//App->SBC_Com_Environments->GameMode(1);
+
+	//App->CL_Ogre->Ogre3D_Listener->Run_Physics = 1;
+
+	CurrentCamMode = App->CL_Ogre->Ogre3D_Listener->CameraMode;
+	App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_First;
+
+
+	//App->SBC_Markers->BoxNode->setVisible(false);
+
+	//Show_Entities(false); // Hide All Visible Trigers
+
+	SetCursorPos(App->CursorPosX, App->CursorPosY);
+	//S_Flags[0]->GameMode = 1;
+
+	int cx = GetSystemMetrics(SM_CXSCREEN);
+	int cy = GetSystemMetrics(SM_CYSCREEN);
+
+	SetWindowPos(App->ViewGLhWnd, HWND_TOP, 0, 0, 0, 0, SWP_NOSIZE | SWP_NOZORDER);
+	SetWindowPos(App->ViewGLhWnd, NULL, 0, 0, cx, cy, SWP_NOZORDER);
+	SetParent(App->ViewGLhWnd, NULL);
+
+	App->CL_Ogre->mWindow->resize(cx, cy);
+
+	App->CL_Ogre->mWindow->windowMovedOrResized();
+	App->CL_Ogre->mCamera->setAspectRatio((Ogre::Real)App->CL_Ogre->mWindow->getWidth() / (Ogre::Real)App->CL_Ogre->mWindow->getHeight());
+
+	Root::getSingletonPtr()->renderOneFrame();
+
+	//if (App->SBC_Front_Dlg->Use_Front_Dlg_Flag == 0)
+	//{
+	//	SetCapture(App->ViewGLhWnd);// Bernie
+	//	App->CL_Ogre->OgreListener->Pl_LeftMouseDown = 1;
+	//	App->CUR = SetCursor(NULL);
+	//}
+
+	//App->SBC_Physics->Reset_Triggers();
+
+	//App->SBC_Gui_Dialogs->Show_Physics_Console = 0;
+
+	return 1;
+}
+
+// *************************************************************************
+// *				Editor_Mode:- Terry and Hazel Flanigan 2024	 	 	   *
+// *************************************************************************
+bool CL64_Scene::Editor_Mode(void)
+{
+	//GameMode_Running_Flag = 0;
+	//FullScreenMode_Flag = 0;
+
+	//App->CL_Ogre->BulletListener->Render_Debug_Flag = 1;
+
+	App->CL_Grid->Grid_SetVisible(true);
+	App->CL_Grid->Hair_SetVisible(true);
+
+	App->CL_Ogre->Ogre3D_Listener->Pl_LeftMouseDown = 0;
+	ReleaseCapture();
+	SetCursor(App->CUR);
+
+	//if (App->SBC_Scene->Scene_Loaded == 1)
+	//{
+	//	App->SBC_Com_Environments->GameMode(0);
+
+	//	Show_Entities(true); // Show All Visible Trigers
+
+	//	App->SBC_Physics->Reset_Triggers();
+	//}
+
+
+	App->CL_Ogre->Ogre3D_Listener->CameraMode = CurrentCamMode;
+
+	//App->CL_Vm_ImGui->Show_FPS = App->SBC_Dialogs->Saved_DoFPS;
+
+	//App->SBC_Gui_Dialogs->Show_Physics_Console = 1;
+
+	return 1;
 }
 
 

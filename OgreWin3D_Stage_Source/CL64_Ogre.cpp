@@ -478,3 +478,27 @@ bool CL64_Ogre::Ogre_Render_Loop(void)
 	return 1;
 }
 
+// *************************************************************************
+// *	  						ExitFullScreen							   *
+// *************************************************************************
+bool CL64_Ogre::ExitFullScreen()
+{
+	//if(Flags[0]->OgreIsRunning==1)
+	{
+
+		//App->FullScreen = 0;
+		SetParent(App->ViewGLhWnd, App->Fdlg);
+		SetWindowPos(App->ViewGLhWnd, HWND_TOP, 235, 11, 542, 455, SWP_NOZORDER);
+		App->CL_Panels->Resize_OgreWin();
+
+		App->CL_Ogre->mWindow->windowMovedOrResized();
+		App->CL_Ogre->mCamera->setAspectRatio((Ogre::Real)App->CL_Ogre->mWindow->getWidth() / (Ogre::Real)App->CL_Ogre->mWindow->getHeight());
+		App->CL_Ogre->camNode->yaw(Radian(0));
+		//Root::getSingletonPtr()->renderOneFrame();
+
+		App->CL_Scene->Editor_Mode();
+
+	}
+	return 1;
+}
+
