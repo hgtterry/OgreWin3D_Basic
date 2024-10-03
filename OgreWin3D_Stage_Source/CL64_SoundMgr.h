@@ -30,12 +30,20 @@ public:
 	CL64_SoundMgr(void);
 	~CL64_SoundMgr(void);
 
+	void Dialog_SoundFile();
+
 	bool Play_StartUp_Sound();
 
 	char Default_Folder[MAX_PATH];
 
+	bool flag_IsCancelled;
+
 	irrklang::ISoundEngine* SoundEngine;
 	irrklang::ISound* SndFile;
 	Ogre::Real SndVolume;
+
+private:
+	static LRESULT CALLBACK Proc_Dialog_SoundFile(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+
 };
 

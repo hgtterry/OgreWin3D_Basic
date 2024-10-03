@@ -322,6 +322,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			return TRUE;
 		}
 		
+		case ID_TOOLS_SOUNDPLAYER:
+		{
+			App->CL_SoundMgr->Dialog_SoundFile();
+			return TRUE;
+		}
+		
 		case ID_TOOLS_OGREWIN3D:
 		{
 			App->Open_Tool((LPSTR)"OgreWin3D_Assets.exe");
