@@ -33,9 +33,18 @@ CL64_SoundMgr::CL64_SoundMgr(void)
 	SndFile = nullptr;
 	SndVolume = 0.5;
 
-	flag_IsCancelled = 0;
-
+	strcpy(mSoundFile, "");
 	strcpy(Default_Folder, App->GD_Directory_FullPath);
+
+	SoundFile_Count = 0;
+	//Current_Object_Sound[0] = 0;
+
+	Access_File[0] = 0;
+	m_Current_Sound_file[0] = 0;
+
+	flag_IsCancelled = 0;
+	flag_Accessed = 0;
+
 }
 
 CL64_SoundMgr::~CL64_SoundMgr(void)
@@ -80,26 +89,28 @@ LRESULT CALLBACK CL64_SoundMgr::Proc_Dialog_SoundFile(HWND hDlg, UINT message, W
 	{
 	case WM_INITDIALOG:
 	{
-		//App->SetTitleBar(hDlg);
-
-		HFONT Font;
-		Font = CreateFont(-15, 0, 0, 0, FW_BOLD, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Aerial Black");
-		/*SendDlgItemMessage(hDlg, IDC_TITLENAME, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_TITLENAME, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_SOUNDLIST, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_EDITINT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));*/
+		SendDlgItemMessage(hDlg, IDC_EDITINT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_PLAY, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_PAUSE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_STOP, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
-		/*SetDlgItemText(hDlg, IDC_TITLENAME, (LPCTSTR)"Sound Player");
+		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		SetDlgItemText(hDlg, IDC_TITLENAME, (LPCTSTR)"Sound Player");
 
 
-		App->CL_SoundMgr->GetSoundFiles(hDlg, "*.ogg");
-		App->CL_SoundMgr->GetSoundFiles(hDlg, "*.wav");
+		App->CL_SoundMgr->GetSoundFiles(hDlg, (LPSTR)"*.ogg");
+		App->CL_SoundMgr->GetSoundFiles(hDlg, (LPSTR)"*.wav");
 
-		char Sound[MAX_PATH];
+		char Sound[MAX_PATH]{ 0 };
 		HWND ListHwnd = GetDlgItem(hDlg, IDC_SOUNDLIST);
 
 		SendMessage(ListHwnd, LB_SETCURSEL, 0, (LPARAM)(LPCTSTR)0);
 		SendDlgItemMessage(hDlg, IDC_SOUNDLIST, LB_GETTEXT, (WPARAM)0, (LPARAM)Sound);
-		SetDlgItemText(hDlg, IDC_EDITINT, (LPTSTR)Sound);*/
+		SetDlgItemText(hDlg, IDC_EDITINT, (LPTSTR)Sound);
 
 		//int Sel = SendMessage(GetDlgItem(hDlg, IDC_SOUNDLIST), LB_SELECTSTRING, -1, (LPARAM)App->SBC_SoundMgr->Current_Object_Sound);
 
@@ -107,7 +118,7 @@ LRESULT CALLBACK CL64_SoundMgr::Proc_Dialog_SoundFile(HWND hDlg, UINT message, W
 		//SendDlgItemMessage(hDlg, IDC_SOUNDLIST, LB_GETTEXT, (WPARAM)Sel, (LPARAM)buff);
 		//SetDlgItemText(hDlg, IDC_EDITINT, (LPTSTR)buff);
 
-		/*int VolPer = int(App->SBC_SoundMgr->SndVolume * 10);
+		int VolPer = int(App->CL_SoundMgr->SndVolume * 10);
 
 		HWND Slider = GetDlgItem(hDlg, IDC_SLVOLUME);
 		SendMessage(Slider, TBM_SETRANGE, (WPARAM)TRUE, (LPARAM)MAKELONG(0, 10));
@@ -119,10 +130,10 @@ LRESULT CALLBACK CL64_SoundMgr::Proc_Dialog_SoundFile(HWND hDlg, UINT message, W
 		sprintf(buf, "%i", VolPer);
 		SetDlgItemText(hDlg, IDC_VOLBOX, (LPCTSTR)buf);
 
-		if (App->SBC_SoundMgr->Accessed == 1)
+		if (App->CL_SoundMgr->flag_Accessed == 1)
 		{
-			SendMessage(GetDlgItem(hDlg, IDC_SOUNDLIST), LB_SELECTSTRING, -1, (LPARAM)App->SBC_SoundMgr->Access_File);
-		}*/
+			SendMessage(GetDlgItem(hDlg, IDC_SOUNDLIST), LB_SELECTSTRING, -1, (LPARAM)App->CL_SoundMgr->Access_File);
+		}
 
 		return TRUE;
 	}
@@ -136,12 +147,12 @@ LRESULT CALLBACK CL64_SoundMgr::Proc_Dialog_SoundFile(HWND hDlg, UINT message, W
 			return (UINT) App->AppBackground;
 		}*/
 
-		/*if (GetDlgItem(hDlg, IDC_STVOLUME) == (HWND)lParam)
+		if (GetDlgItem(hDlg, IDC_STVOLUME) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 255, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
 			SetBkMode((HDC)wParam, TRANSPARENT);
-			return (UINT)App->DialogBackGround;
+			return (UINT)App->AppBackground;
 		}
 
 		if (GetDlgItem(hDlg, IDC_VOLBOX) == (HWND)lParam)
@@ -165,7 +176,7 @@ LRESULT CALLBACK CL64_SoundMgr::Proc_Dialog_SoundFile(HWND hDlg, UINT message, W
 			SetBkColor((HDC)wParam, RGB(0, 255, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 255));
 			SetBkMode((HDC)wParam, TRANSPARENT);
-			return (UINT)App->DialogBackGround;
+			return (UINT)App->AppBackground;
 		}
 
 		if (GetDlgItem(hDlg, IDC_TITLENAME) == (HWND)lParam)
@@ -173,8 +184,8 @@ LRESULT CALLBACK CL64_SoundMgr::Proc_Dialog_SoundFile(HWND hDlg, UINT message, W
 			SetBkColor((HDC)wParam, RGB(0, 255, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
 			SetBkMode((HDC)wParam, TRANSPARENT);
-			return (UINT)App->DialogBackGround;
-		}*/
+			return (UINT)App->AppBackground;
+		}
 
 		return FALSE;
 	}
@@ -185,7 +196,7 @@ LRESULT CALLBACK CL64_SoundMgr::Proc_Dialog_SoundFile(HWND hDlg, UINT message, W
 	}
 	case WM_HSCROLL:
 	{
-		/*HWND Slider = GetDlgItem(hDlg, IDC_SLVOLUME);
+		HWND Slider = GetDlgItem(hDlg, IDC_SLVOLUME);
 		int pos = 0;
 		int Percent = 0;
 		char buf[20];
@@ -195,12 +206,12 @@ LRESULT CALLBACK CL64_SoundMgr::Proc_Dialog_SoundFile(HWND hDlg, UINT message, W
 		SetDlgItemText(hDlg, IDC_VOLBOX, (LPCTSTR)buf);
 
 		float sum2 = float(Percent) / 100;
-		App->SBC_SoundMgr->SndVolume = sum2;
+		App->CL_SoundMgr->SndVolume = sum2;
 
-		if (App->SBC_SoundMgr->SndFile)
+		if (App->CL_SoundMgr->SndFile)
 		{
-			App->SBC_SoundMgr->SndFile->setVolume(sum2);
-		}*/
+			App->CL_SoundMgr->SndFile->setVolume(sum2);
+		}
 
 		return 1;
 	}
@@ -209,49 +220,63 @@ LRESULT CALLBACK CL64_SoundMgr::Proc_Dialog_SoundFile(HWND hDlg, UINT message, W
 	{
 		LPNMHDR nmhdr = (LPNMHDR)lParam;
 
-		/*if (nmhdr->idFrom == IDC_PLAY && nmhdr->code == NM_CUSTOMDRAW)
+		if (nmhdr->idFrom == IDC_PLAY)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)nmhdr;
 			App->Custom_Button_Normal(item);
 			return CDRF_DODEFAULT;
 		}
 
-		if (nmhdr->idFrom == IDOK && nmhdr->code == NM_CUSTOMDRAW)
+		if (nmhdr->idFrom == IDC_BT_PAUSE)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)nmhdr;
 			App->Custom_Button_Normal(item);
 			return CDRF_DODEFAULT;
 		}
 
-		if (nmhdr->idFrom == IDCANCEL && nmhdr->code == NM_CUSTOMDRAW)
+		if (nmhdr->idFrom == IDC_BT_STOP)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)nmhdr;
 			App->Custom_Button_Normal(item);
 			return CDRF_DODEFAULT;
-		}*/
+		}
+
+		if (nmhdr->idFrom == IDOK)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)nmhdr;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (nmhdr->idFrom == IDCANCEL)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)nmhdr;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
 
 	}break;
 
 	case WM_COMMAND:
 
 
-		/*if (LOWORD(wParam) == IDC_BT_STOP)
+		if (LOWORD(wParam) == IDC_BT_STOP)
 		{
-			App->SBC_SoundMgr->SndFile->stop();
+			App->CL_SoundMgr->SndFile->stop();
 
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == IDC_BT_PAUSE)
 		{
-			bool Paused = App->SBC_SoundMgr->SndFile->getIsPaused();
+			bool Paused = App->CL_SoundMgr->SndFile->getIsPaused();
 			if (Paused == 1)
 			{
-				App->SBC_SoundMgr->SndFile->setIsPaused(0);
+				App->CL_SoundMgr->SndFile->setIsPaused(0);
 			}
 			else
 			{
-				App->SBC_SoundMgr->SndFile->setIsPaused(1);
+				App->CL_SoundMgr->SndFile->setIsPaused(1);
 			}
 
 			return TRUE;
@@ -259,7 +284,7 @@ LRESULT CALLBACK CL64_SoundMgr::Proc_Dialog_SoundFile(HWND hDlg, UINT message, W
 
 		if (LOWORD(wParam) == IDC_SOUNDLIST)
 		{
-			char buff[256];
+			char buff[MAX_PATH] { 0 };
 			int Index = 0;
 			Index = SendDlgItemMessage(hDlg, IDC_SOUNDLIST, LB_GETCURSEL, (WPARAM)0, (LPARAM)0);
 
@@ -272,79 +297,79 @@ LRESULT CALLBACK CL64_SoundMgr::Proc_Dialog_SoundFile(HWND hDlg, UINT message, W
 
 			SetDlgItemText(hDlg, IDC_EDITINT, (LPTSTR)buff);
 
-			if (App->SBC_SoundMgr->Accessed == 1)
+			if (App->CL_SoundMgr->flag_Accessed == 1)
 			{
-				strcpy(App->SBC_SoundMgr->Access_File, buff);
+				strcpy(App->CL_SoundMgr->Access_File, buff);
 			}
 
 			return TRUE;
-		}*/
+		}
 
 		if (LOWORD(wParam) == IDOK)
 		{
-			/*if (App->SBC_SoundMgr->SndFile == NULL)
+			if (App->CL_SoundMgr->SndFile == NULL)
 			{
 			}
 			else
 			{
-				App->SBC_SoundMgr->SndFile->stop();
-				App->SBC_SoundMgr->SndFile = NULL;
+				App->CL_SoundMgr->SndFile->stop();
+				App->CL_SoundMgr->SndFile = NULL;
 			}
 
-			App->SBC_SoundMgr->IsCancelled = 0;
+			App->CL_SoundMgr->flag_IsCancelled = 0;
 
 			char file[256];
 			GetDlgItemText(hDlg, IDC_EDITINT, (LPTSTR)file, 256);
-			strcpy(App->SBC_SoundMgr->mSoundFile, file);
-			App->SBC_SoundMgr->Remeber_SoundFile(file);*/
+			strcpy(App->CL_SoundMgr->mSoundFile, file);
+			App->CL_SoundMgr->Remeber_SoundFile(file);
 
-			//App->CL_SoundMgr->Accessed = 0;
+			App->CL_SoundMgr->flag_Accessed = 0;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == IDCANCEL)
 		{
-			/*if (App->SBC_SoundMgr->SndFile == NULL)
+			if (App->CL_SoundMgr->SndFile == NULL)
 			{
 			}
 			else
 			{
-				App->SBC_SoundMgr->SndFile->stop();
-				App->SBC_SoundMgr->SndFile->drop();
-				App->SBC_SoundMgr->SndFile = NULL;
+				App->CL_SoundMgr->SndFile->stop();
+				App->CL_SoundMgr->SndFile->drop();
+				App->CL_SoundMgr->SndFile = NULL;
 
 			}
 
-			App->SBC_SoundMgr->Accessed = 0;*/
-			//App->CL_SoundMgr->IsCancelled = 1;
+			App->CL_SoundMgr->flag_Accessed = 0;
+			App->CL_SoundMgr->flag_IsCancelled = 1;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
 
-		/*if (LOWORD(wParam) == IDC_PLAY)
+		if (LOWORD(wParam) == IDC_PLAY)
 		{
 
-			GetDlgItemText(hDlg, IDC_EDITINT, (LPTSTR)App->SBC_SoundMgr->m_Current_Sound_file, MAX_PATH);
+			GetDlgItemText(hDlg, IDC_EDITINT, (LPTSTR)App->CL_SoundMgr->m_Current_Sound_file, MAX_PATH);
 
-			if (App->SBC_SoundMgr->SndFile == NULL)
+			if (App->CL_SoundMgr->SndFile == NULL)
 			{
 			}
 			else
 			{
-				App->SBC_SoundMgr->SndFile->stop();
-				App->SBC_SoundMgr->SndFile = NULL;
+				App->CL_SoundMgr->SndFile->stop();
+				App->CL_SoundMgr->SndFile = NULL;
 			}
 
 			int result = 1;
-			result = strcmp(App->SBC_SoundMgr->m_Current_Sound_file, "");
+			result = strcmp(App->CL_SoundMgr->m_Current_Sound_file, "");
 			if (result == 0)
 			{
 
 			}
 			else
 			{
-				result = strcmp(App->SBC_SoundMgr->m_Current_Sound_file, "None");
+				result = strcmp(App->CL_SoundMgr->m_Current_Sound_file, "None");
 				if (result == 0)
 				{
 
@@ -352,20 +377,57 @@ LRESULT CALLBACK CL64_SoundMgr::Proc_Dialog_SoundFile(HWND hDlg, UINT message, W
 				else
 				{
 					char Sound[1024];
-					strcpy(Sound, App->SBC_SoundMgr->Default_Folder);
+					strcpy(Sound, App->CL_SoundMgr->Default_Folder);
 					strcat(Sound, "\\Media\\Sounds\\");
-					strcat(Sound, App->SBC_SoundMgr->m_Current_Sound_file);
+					strcat(Sound, App->CL_SoundMgr->m_Current_Sound_file);
 
-					App->SBC_SoundMgr->SndFile = App->SBC_SoundMgr->SoundEngine->play2D(Sound, false, true, true);
-					App->SBC_SoundMgr->SndFile->setVolume(App->SBC_SoundMgr->SndVolume);
-					App->SBC_SoundMgr->SndFile->setIsPaused(false);
+					App->CL_SoundMgr->SndFile = App->CL_SoundMgr->SoundEngine->play2D(Sound, false, true, true);
+					App->CL_SoundMgr->SndFile->setVolume(App->CL_SoundMgr->SndVolume);
+					App->CL_SoundMgr->SndFile->setIsPaused(false);
 				}
 			}
 			return TRUE;
-		}*/
+		}
 
 		break;
 
 	}
 	return FALSE;
+
+}
+
+// *************************************************************************
+// *					GetSoundFiles Terry Bernie						   *
+// *************************************************************************
+void CL64_SoundMgr::GetSoundFiles(HWND hDlg, char* Extention)
+{
+	HWND ListHwnd = GetDlgItem(hDlg, IDC_SOUNDLIST);
+
+	WIN32_FIND_DATA ffd;
+	HANDLE hFind = INVALID_HANDLE_VALUE;
+
+	char SearchName[1024];
+	strcpy(SearchName, Default_Folder);
+	strcat(SearchName, "\\Media\\Sounds\\");
+	strcat(SearchName, Extention);
+
+	hFind = FindFirstFile(SearchName, &ffd);
+
+	SendMessage(ListHwnd, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)ffd.cFileName);
+
+	while (FindNextFile(hFind, &ffd) != 0)
+	{
+		SendMessage(ListHwnd, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)ffd.cFileName);
+	}
+
+}
+
+// *************************************************************************
+// *					Remeber_SoundFile Terry Bernie					   *
+// *************************************************************************
+void CL64_SoundMgr::Remeber_SoundFile(char* File)
+{
+	Sound_File.push_back(File);
+	SoundFile_Count = Sound_File.size();
+
 }

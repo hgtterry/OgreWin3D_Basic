@@ -31,19 +31,28 @@ public:
 	~CL64_SoundMgr(void);
 
 	void Dialog_SoundFile();
-
 	bool Play_StartUp_Sound();
-
-	char Default_Folder[MAX_PATH];
-
-	bool flag_IsCancelled;
 
 	irrklang::ISoundEngine* SoundEngine;
 	irrklang::ISound* SndFile;
 	Ogre::Real SndVolume;
 
+	char Default_Folder[MAX_PATH];
+	char mSoundFile[MAX_PATH];
+	char m_Current_Sound_file[MAX_PATH];
+	char Access_File[MAX_PATH];
+
+	bool flag_IsCancelled;
+	bool flag_Accessed;
+
+	int SoundFile_Count;
+	std::vector<std::string> Sound_File;
+
 private:
 	static LRESULT CALLBACK Proc_Dialog_SoundFile(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+
+	void GetSoundFiles(HWND hDlg, char* Extention);
+	void Remeber_SoundFile(char* File);
 
 };
 

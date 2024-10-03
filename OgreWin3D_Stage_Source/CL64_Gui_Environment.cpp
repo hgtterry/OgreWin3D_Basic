@@ -250,17 +250,17 @@ void CL64_Gui_Environment::Environ_PropertyEditor()
 		{
 			ImGui::TextColored(ImVec4(0.f, 1.f, 0.24f, 1.f), "ON");
 
-			/*App->CL_SoundMgr->Accessed = 1;
+			App->CL_SoundMgr->flag_Accessed = 1;
 			strcpy(App->CL_SoundMgr->Access_File, App->CL_Scene->V_Object[Eviron_Index]->S_Environ[0]->Sound_File);
 
 			App->CL_Com_Environments->Set_Environment_By_Index(0, Eviron_Index);
 			App->CL_SoundMgr->Dialog_SoundFile();
 
-			if (App->CL_SoundMgr->IsCancelled == 0)
+			if (App->CL_SoundMgr->flag_IsCancelled == 0)
 			{
 
-				strcpy(App->CL_Scene->V_Object[Eviron_Index]->S_Environ[0]->Sound_File, App->SBC_SoundMgr->Access_File);
-				App->CL_Scene->V_Object[Eviron_Index]->S_Environ[0]->SndVolume = App->SBC_SoundMgr->SndVolume;
+				strcpy(App->CL_Scene->V_Object[Eviron_Index]->S_Environ[0]->Sound_File, App->CL_SoundMgr->Access_File);
+				App->CL_Scene->V_Object[Eviron_Index]->S_Environ[0]->SndVolume = App->CL_SoundMgr->SndVolume;
 
 				App->CL_Com_Environments->Set_Environment_By_Index(1, Eviron_Index);
 
@@ -269,7 +269,7 @@ void CL64_Gui_Environment::Environ_PropertyEditor()
 			else
 			{
 				App->CL_Com_Environments->Set_Environment_By_Index(1, Eviron_Index);
-			}*/
+			}
 
 			flag_ClickOnTrack = 0;
 		}
