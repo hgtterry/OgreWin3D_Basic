@@ -83,8 +83,10 @@ void CL64_Com_Particles::Create_Particle_Entity(int Index)
 	Object->S_Particle[0]->Particle = App->CL_Ogre->mSceneMgr->createParticleSystem(Name, Object->S_Particle[0]->ParticleScript);
 	if (Object->S_Particle[0]->Particle == NULL)
 	{
-		App->Say("Poop");
+		App->Say("Can not create Particle");
 	}
+
+	strcpy(Object->Material_File, Object->S_Particle[0]->ParticleScript);
 
 	Object->S_Particle[0]->Particle->setKeepParticlesInLocalSpace(true);
 

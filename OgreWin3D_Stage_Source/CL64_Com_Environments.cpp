@@ -109,7 +109,7 @@ bool CL64_Com_Environments::Create_Environ_Entity(int Index)
 	Object->Object_Node->setOrientation(Object->Mesh_Quat);
 	Object->Object_Node->setPosition(Object->Mesh_Pos);
 
-	App->CL_Scene->flag_Scene_Loaded = 1;
+	strcpy(Object->Material_File, "Internal");
 
 	// ----------------- Physics
 

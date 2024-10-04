@@ -40,7 +40,7 @@ bool Base_Object::Init_Object(void)
 	strcpy(Mesh_Name, "None");
 	strcpy(Mesh_FileName, "None");
 	Mesh_Resource_Path[0] = 0;
-	strcpy(Material_File, "Not Found");
+	strcpy(Material_File, "Internal");
 
 	// Actor Scale ------------------------------------------------------
 	Mesh_Scale.x = 1;

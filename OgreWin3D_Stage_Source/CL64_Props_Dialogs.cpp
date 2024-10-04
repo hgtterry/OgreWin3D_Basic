@@ -132,7 +132,7 @@ LRESULT CALLBACK CL64_Props_Dialogs::Proc_Details_Goto(HWND hDlg, UINT message, 
 
 		if (LOWORD(wParam) == IDC_BT_GOTO)
 		{
-			App->CL_Object->Object_Camera_Goto(App->CL_Properties->Current_Selected_Object);
+			App->CL_Camera->Camera_Goto_Object(App->CL_Properties->Current_Selected_Object);
 			
 			return 1;
 		}

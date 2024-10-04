@@ -24,6 +24,7 @@ public:
 	void Reset_View(void);
 	void Set_Camera_Position(float X,float Y,float Z);
 	void Set_Camera_Rotation(float Pitch, float Yaw, float Roll);
+	void Camera_Goto_Object(int Object_Index);
 
 };
 

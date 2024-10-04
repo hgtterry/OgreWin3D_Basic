@@ -42,6 +42,7 @@ public:
 	void Update_Motions_By_Name(const char* Name);
 	void Switch_To_Motions_Dlg(void);
 	void Update_Speed_Combo(void);
+	void Camera_Set_Free();
 
 	char Selected_Motion_Name[MAX_PATH];
 

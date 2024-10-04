@@ -62,8 +62,8 @@ bool CL64_Com_Sounds::Create_Sound_Entity(int Index)
 	Object->Object_Node->setOrientation(Object->Mesh_Quat);
 	Object->Object_Node->setPosition(Object->Mesh_Pos);
 
-	App->CL_Scene->flag_Scene_Loaded = 1;
-
+	strcpy(Object->Material_File, "Internal");
+	
 	// ----------------- Physics
 
 	Ogre::Vector3 Centre = App->CL_Scene->V_Object[Index]->Object_Ent->getWorldBoundingBox(true).getCenter();

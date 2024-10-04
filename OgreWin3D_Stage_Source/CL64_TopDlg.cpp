@@ -741,22 +741,7 @@ LRESULT CALLBACK CL64_TopDlg::Proc_Camera_TB(HWND hDlg, UINT message, WPARAM wPa
 
 		if (LOWORD(wParam) == IDC_BT_CAMERA_FREE)
 		{
-
-			App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_Free;
-
-			if (App->CL_Scene->flag_Player_Added == 1)
-			{
-				App->CL_Player->Show_Debug_Player(true);
-			}
-			
-			App->CL_TopDlg->flag_Toggle_PhysicaDebug_Node = 1;
-			App->CL_Ogre->Bullet_Debug_Listener->btDebug_Node->setVisible(true);
-
-			App->CL_TopDlg->flag_Toggle_Cam_FreeMode = 1;
-			App->CL_TopDlg->flag_Toggle_Cam_ModelMode = 0;
-			App->CL_TopDlg->flag_Toggle_Cam_FirstMode = 0;
-
-			RedrawWindow(App->CL_TopDlg->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			App->CL_TopDlg->Camera_Set_Free();
 			return 1;
 		}
 		
@@ -1458,5 +1443,28 @@ void CL64_TopDlg::Enable_FPSLock_Dlg_Panel(bool Enable)
 			App->CL_TopDlg->flag_FPS_Dlg_Running = 0;
 		}
 	}
+}
+
+// **************************************************************************
+// *			Camera_Set_Free:- Terry and Hazel Flanigan 2024				*
+// **************************************************************************
+void CL64_TopDlg::Camera_Set_Free()
+{
+	App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_Free;
+
+	if (App->CL_Scene->flag_Player_Added == 1)
+	{
+		App->CL_Player->Show_Debug_Player(true);
+	}
+
+	App->CL_TopDlg->flag_Toggle_PhysicaDebug_Node = 1;
+	App->CL_Ogre->Bullet_Debug_Listener->btDebug_Node->setVisible(true);
+
+	App->CL_TopDlg->flag_Toggle_Cam_FreeMode = 1;
+	App->CL_TopDlg->flag_Toggle_Cam_ModelMode = 0;
+	App->CL_TopDlg->flag_Toggle_Cam_FirstMode = 0;
+
+	RedrawWindow(App->CL_TopDlg->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
 }
 

@@ -505,6 +505,17 @@ void CL64_ImGui::ImGui_Object_Data(void)
 			ImGui::Text("Object_ID: = %i", App->CL_Scene->B_Area[Index]->This_Object_UniqueID);
 			ImGui::Text("CollisionFlags: = %i", App->CL_Scene->B_Area[Index]->Phys_Body->getCollisionFlags());
 		}
+		else if (App->CL_Properties->Edit_Category == Enums::Edit_Player)
+		{
+			ImGui::Text("Name: = %s", App->CL_Scene->B_Player[Index]->Player_Name);
+			ImGui::Text("Physics");
+			ImGui::Separator();
+			//ImGui::Text("Type: = %s", App->CL_LookUps->Chr_Type);
+			//ImGui::Text("Physics Shape: = %s", App->CL_LookUps->Chr_Shape);
+			//ImGui::Text("Usage: = %s", App->CL_LookUps->Chr_Usage);
+			//ImGui::Text("Object_ID: = %i", App->CL_Scene->B_Player[Index]->This_Object_UniqueID);
+			ImGui::Text("CollisionFlags: = %i", App->CL_Scene->B_Player[Index]->Phys_Body->getCollisionFlags());
+		}
 		else
 		{
 			ImGui::Text("Mesh");
@@ -526,7 +537,6 @@ void CL64_ImGui::ImGui_Object_Data(void)
 		}
 
 		ImGui::Spacing();
-
 
 		// Collectables
 		if (App->CL_Properties->Edit_Category == Enums::Edit_Collectable)

@@ -70,3 +70,44 @@ void CL64_Camera::Set_Camera_Rotation(float Pitch, float Yaw, float Roll)
 	App->CL_Ogre->camNode->yaw(Ogre::Degree(Yaw));
 	App->CL_Ogre->camNode->roll(Ogre::Degree(Roll));
 }
+
+// *************************************************************************
+//			Camera_Goto_Object:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void CL64_Camera::Camera_Goto_Object(int Object_Index)
+{
+	App->CL_TopDlg->Camera_Set_Free();
+
+	Ogre::Vector3 WS;
+	Ogre::Vector3 WS2;
+	Ogre::Vector3 Centre;
+	Ogre::Vector3 CentreNode;
+	Ogre::Vector3 Size;
+
+	int Index = Object_Index;
+
+	if (App->CL_Properties->Edit_Category == Enums::Edit_Area)
+	{
+		Centre = App->CL_Scene->B_Area[Index]->Area_Ent->getWorldBoundingBox(true).getCenter();
+		App->CL_Ogre->camNode->setPosition(Centre);
+		return;
+	}
+
+	if (App->CL_Properties->Edit_Category == Enums::Edit_Particles)
+	{
+		Centre = App->CL_Scene->V_Object[Index]->S_Particle[0]->Particle->getWorldBoundingBox(true).getCenter();
+		App->CL_Ogre->camNode->setPosition(Centre);
+		return;
+	}
+
+	if (App->CL_Properties->Edit_Category == Enums::Edit_Player)
+	{
+		Centre = App->CL_Scene->B_Player[Index]->Player_Ent->getWorldBoundingBox(true).getCenter();
+		App->CL_Ogre->camNode->setPosition(Centre);
+		return;
+	}
+
+	Centre = App->CL_Scene->V_Object[Index]->Object_Ent->getWorldBoundingBox(true).getCenter();
+	App->CL_Ogre->camNode->setPosition(Centre);
+
+}
