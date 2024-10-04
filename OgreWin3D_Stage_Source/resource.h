@@ -72,6 +72,8 @@
 #define IDD_TRUEFALSE                   184
 #define IDD_TB_GAME                     185
 #define IDD_SOUNDPLAYER                 186
+#define IDD_DIALOG1                     187
+#define IDD_PROPS_OBJECT                187
 #define IDC_CK_SU_FULLSCREEN            1000
 #define IDC_ST_STARTUP                  1001
 #define IDC_CK_SU_FULL3DVIEW            1002
@@ -201,7 +203,6 @@
 #define IDC_BT_TBH_GAME                 1072
 #define IDC_BT_GAME_CONFIG              1073
 #define IDC_SOUNDLIST                   1074
-#define IDC_SLIDER1                     1075
 #define IDC_SLVOLUME                    1075
 #define IDC_EDITINT                     1076
 #define IDC_BT_PAUSE                    1077
@@ -253,6 +254,7 @@
 #define ID_FILE_SAVE                    32814
 #define ID_Menu                         32815
 #define ID_TOOLS_SOUNDPLAYER            32816
+#define ID_FILE_NEW                     32817
 #define IDC_STATIC                      -1
 
 // Next default values for new objects
@@ -260,8 +262,8 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
-#define _APS_NEXT_RESOURCE_VALUE        187
-#define _APS_NEXT_COMMAND_VALUE         32817
+#define _APS_NEXT_RESOURCE_VALUE        188
+#define _APS_NEXT_COMMAND_VALUE         32818
 #define _APS_NEXT_CONTROL_VALUE         1080
 #define _APS_NEXT_SYMED_VALUE           110
 #endif

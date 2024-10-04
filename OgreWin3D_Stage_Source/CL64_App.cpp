@@ -69,7 +69,7 @@ CL64_App::CL64_App(void)
 	CL_Build =				nullptr;
 	CL_LookUps =			nullptr;
 	CL_Gui_Environment =	nullptr;
-
+	CL_Props_Dialogs =		nullptr;
 	//-------------------------------------
 
 	hInst =				nullptr;
@@ -190,7 +190,8 @@ void CL64_App::InitApp(void)
 	CL_Build =				new CL64_Build();
 	CL_LookUps =			new CL64_LookUps();
 	CL_Gui_Environment =	new CL64_Gui_Environment();
-	
+	CL_Props_Dialogs =		new CL64_Props_Dialogs();
+
 	SetBrushes_Fonts();
 
 	LoadString(App->hInst, IDS_VERSION, App_Version, MAX_PATH);
@@ -225,12 +226,15 @@ void CL64_App::Init_Dialogs(void)
 
 	App->CL_Panels->Move_Panels();
 
+	// File View
 	App->CL_FileView->Start_FileView();
 	App->CL_FileView->Init_FileView();
 	App->CL_Panels->Move_FileView_Window();
 	App->CL_Panels->Resize_FileView();
 
+	// Properties
 	App->CL_Properties->Start_Properties();
+	App->CL_Props_Dialogs->Start_Props_Dialogs();
 	App->CL_Panels->Place_Properties_Dlg();
 
 	EnableMenuItem(App->mMenu, ID_OGRE3D_RELOADMESH, MF_BYCOMMAND | MF_GRAYED);

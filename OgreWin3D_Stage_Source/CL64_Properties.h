@@ -35,15 +35,6 @@ public:
 
 	void Start_Properties(void);
 
-	bool Edit_Environs_OnClick(LPARAM lParam);
-	bool Edit_Area_Onclick(LPARAM lParam);
-	bool Edit_Camera_Onclick(LPARAM lParam);
-	bool Edit_Collectables_OnClick(LPARAM lParam);
-	bool Edit_Counters_OnClick(LPARAM lParam);
-	void Edit_Light_Onclick(LPARAM lParam);
-
-
-
 	bool Update_ListView_Area();
 	bool Update_ListView_Player();
 	bool Update_ListView_Objects();
@@ -68,6 +59,14 @@ private:
 
 	void Create_Properties_hLV(void);
 	void ListView_OnClickOptions(LPARAM lParam);
+
+	bool Edit_Object_Onclick(LPARAM lParam);
+	bool Edit_Environs_OnClick(LPARAM lParam);
+	bool Edit_Area_Onclick(LPARAM lParam);
+	bool Edit_Camera_Onclick(LPARAM lParam);
+	bool Edit_Collectables_OnClick(LPARAM lParam);
+	bool Edit_Counters_OnClick(LPARAM lParam);
+	void Edit_Light_Onclick(LPARAM lParam);
 
 	char btext[20]; // ListView_GetItemText Text Holder for Compare
 

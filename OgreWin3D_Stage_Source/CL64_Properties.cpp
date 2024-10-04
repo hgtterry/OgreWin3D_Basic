@@ -372,6 +372,38 @@ void CL64_Properties::ListView_OnClickOptions(LPARAM lParam)
 }
 
 // *************************************************************************
+// *		Edit_Object_Onclick:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+bool CL64_Properties::Edit_Object_Onclick(LPARAM lParam)
+{
+	/*int Index = App->SBC_Properties->Current_Selected_Object;
+	int result = 1;
+	int List_Index;
+
+	Base_Object* Object = App->SBC_Scene->V_Object[Index];
+
+	LPNMLISTVIEW List = (LPNMLISTVIEW)lParam;
+	List_Index = List->iItem;
+	ListView_GetItemText(Properties_hLV, List_Index, 0, btext, 20);
+
+	result = strcmp(App->SBC_Properties->btext, "Name");
+	if (result == 0)
+	{
+		App->CL_Object->Rename_Object(Index);
+
+		Update_ListView_Objects();
+	}
+
+	result = strcmp(btext, "Materials");
+	if (result == 0)
+	{
+		App->SBC_Materials->Start_Material_Editor();
+	}*/
+
+	return 1;
+}
+
+// *************************************************************************
 // *		Edit_Environs_OnClick:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
 bool CL64_Properties::Edit_Environs_OnClick(LPARAM lParam)

@@ -65,6 +65,7 @@ THE SOFTWARE.
 #include "CL64_LookUps.h"
 
 #include "CL64_Gui_Environment.h"
+#include "CL64_Props_Dialogs.h"
 
 class CL64_App
 {
@@ -114,6 +115,8 @@ public:
 	CL64_Build*				CL_Build;
 	CL64_LookUps*			CL_LookUps;
 	CL64_Gui_Environment*	CL_Gui_Environment;
+	CL64_Props_Dialogs*		CL_Props_Dialogs;
+
 
 	void InitApp(void);
 	void Init_Dialogs(void);
