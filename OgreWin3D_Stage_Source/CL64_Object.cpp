@@ -63,3 +63,43 @@ Ogre::Vector3 CL64_Object::GetMesh_BB_Size(SceneNode* mNode)
 
 	return size;
 }
+
+// *************************************************************************
+//			Object_Camera_Goto:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void CL64_Object::Object_Camera_Goto(int Object_Index)
+{
+	App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_Free;
+
+	Ogre::Vector3 WS;
+	Ogre::Vector3 WS2;
+	Ogre::Vector3 Centre;
+	Ogre::Vector3 CentreNode;
+	Ogre::Vector3 Size;
+
+	int Index = Object_Index;
+
+	if (App->CL_Properties->Edit_Category == Enums::Edit_Area)
+	{
+		Centre = App->CL_Scene->B_Area[Index]->Area_Node->getAttachedObject(0)->getBoundingBox().getCenter();
+		WS = App->CL_Scene->B_Area[Index]->Area_Node->convertLocalToWorldPosition(Centre);
+	}
+	else
+	{
+		//CentreNode = App->CL_Scene->V_Object[Index]->Object_Node->getPosition();
+
+		//Centre = App->CL_Scene->V_Object[Index]->Object_Node->getAttachedObject(0)->getBoundingBox().getCenter();
+		//Size = App->CL_Scene->V_Object[Index]->Object_Node->getAttachedObject(0)->getBoundingBox().getMaximum();
+
+		////Centre.z = Centre.z + Size.z;
+
+		//WS = App->CL_Scene->V_Object[Index]->Object_Node->convertLocalToWorldPosition(Size);
+		//WS2 = App->CL_Scene->V_Object[Index]->Object_Node->convertLocalToWorldPosition(Centre);
+		////WS.z = WS.z - 40;// Size.z;
+
+		Centre = App->CL_Scene->V_Object[Index]->Object_Ent->getWorldBoundingBox(true).getCenter();
+	}
+
+	App->CL_Ogre->camNode->setPosition(Centre);
+	//App->CL_Ogre->camNode->lookAt(WS2, Ogre::Node::TS_WORLD);
+}

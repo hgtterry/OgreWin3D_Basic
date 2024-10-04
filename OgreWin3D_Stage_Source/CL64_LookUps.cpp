@@ -28,6 +28,9 @@ THE SOFTWARE.
 
 CL64_LookUps::CL64_LookUps()
 {
+	Chr_Type[0] = 0;
+	Chr_Shape[0] = 0;
+	Chr_Usage[0] = 0;
 }
 
 CL64_LookUps::~CL64_LookUps()
@@ -74,4 +77,191 @@ int CL64_LookUps::Player_Location_GetCount(void)
 		Count++;
 	}
 	return RealCount;
+}
+
+// *************************************************************************
+// *			Update_Types:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+bool CL64_LookUps::Update_Types()
+{
+	int Index = App->CL_Properties->Current_Selected_Object;
+
+	Get_Type(Index);
+	Get_Shape(Index);
+	Get_Usage(Index);
+
+	return 0;
+}
+
+// *************************************************************************
+// *			 Get_Type:- Terry and Hazel Flanigan 2024				   *
+// *************************************************************************
+void CL64_LookUps::Get_Type(int Index)
+{
+	int Type = 0;
+
+	if (App->CL_Properties->Edit_Category == Enums::Edit_Area)
+	{
+		Type = App->CL_Scene->B_Area[Index]->Type;
+	}
+	else
+	{
+		Type = App->CL_Scene->V_Object[Index]->Type;
+	}
+
+
+
+	switch (Type)
+	{
+
+	case Enums::Bullet_Type_Dynamic:
+	{
+		strcpy(Chr_Type, "Dynamic");
+		return;
+	}
+	case Enums::Bullet_Type_Static:
+	{
+		strcpy(Chr_Type, "Static");
+		return;
+	}
+
+	break;
+
+	}
+
+	strcpy(Chr_Type, "None");
+	
+}
+
+// *************************************************************************
+// *				Get_Shape:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void CL64_LookUps::Get_Shape(int Index)
+{
+	int Shape = 0;
+
+	if (App->CL_Properties->Edit_Category == Enums::Edit_Area)
+	{
+		Shape = App->CL_Scene->B_Area[Index]->Shape;
+	}
+	else
+	{
+		Shape = App->CL_Scene->V_Object[Index]->Shape;
+	}
+
+
+	switch (Shape)
+	{
+
+	case Enums::Shape_Box:
+	{
+		strcpy(Chr_Shape, "Box");
+		return;
+	}
+	case Enums::Sphere:
+	{
+		strcpy(Chr_Shape, "Sphere");
+		return;
+	}
+
+	case Enums::Capsule:
+	{
+		strcpy(Chr_Shape, "Capsule");
+		return;
+	}
+
+	case Enums::Shape_TriMesh:
+	{
+		strcpy(Chr_Shape, "Triangle Mesh");
+		return;
+	}
+
+	break;
+
+	}
+
+	strcpy(Chr_Shape, "None");
+
+}
+
+// *************************************************************************
+// *				Get_Usage:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void CL64_LookUps::Get_Usage(int Index)
+{
+	strcpy(Chr_Usage, "None");
+
+	int Usage = 0;
+
+	if (App->CL_Properties->Edit_Category == Enums::Edit_Area)
+	{
+		Usage = App->CL_Scene->B_Area[Index]->Usage;
+	}
+	else
+	{
+		Usage = App->CL_Scene->V_Object[Index]->Usage;
+	}
+
+	switch (Usage)
+	{
+
+	case Enums::Stage_Usage_Room:
+	{
+		strcpy(Chr_Usage, "Usage_Room");
+		return;
+	}
+	case Enums::Stage_Usage_Static:
+	{
+		strcpy(Chr_Usage, "Usage_Static");
+		return;
+	}
+
+	case Enums::Stage_Usage_Dynamic:
+	{
+		strcpy(Chr_Usage, "Usage_Dynamic");
+		return;
+	}
+
+	case Enums::Stage_Usage_Object:
+	{
+		strcpy(Chr_Usage, "Usage_Object");
+		return;
+	}
+
+	case Enums::Stage_Usage_Teleport:
+	{
+		strcpy(Chr_Usage, "Usage_Teleport");
+		return;
+	}
+
+	case Enums::Stage_Usage_Colectable:
+	{
+		strcpy(Chr_Usage, "Usage_Colectable");
+		return;
+	}
+
+	case Enums::Stage_Usage_Message:
+	{
+		strcpy(Chr_Usage, "Usage_Message");
+		return;
+	}
+
+	case Enums::Stage_Usage_Move:
+	{
+		strcpy(Chr_Usage, "Usage_Move");
+		return;
+	}
+
+	case Enums::Stage_Usage_Sound:
+	{
+		strcpy(Chr_Usage, "Usage_Sound");
+		return;
+	}
+
+	break;
+
+	}
+
+	strcpy(Chr_Usage, "None");
+	
 }

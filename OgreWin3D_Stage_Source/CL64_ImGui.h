@@ -47,6 +47,7 @@ public:
 	void ImGui_Collision_Debug(void);
 
 	void App_Debug(void);
+	void ImGui_Object_Data(void);
 
 	void Demo_Options_Gui(void);
 
@@ -63,7 +64,8 @@ public:
 	bool flag_Show_Camera_Data;
 	bool flag_Show_Demo_Options;
 	bool flag_Show_App_Debug;
-	bool Show_Collision_Debug;
+	bool flag_Show_Object_Data;
+	bool flag_Show_Collision_Debug;
 
 	bool flag_Show_Ogre_Data;
 	bool flag_Open_Textures_List;
@@ -75,6 +77,9 @@ public:
 
 	float Model_Data_PosX;
 	float Model_Data_PosY;
+
+	float Object_Data_PosX;
+	float Object_Data_PosY;
 
 	float Float_Step;
 

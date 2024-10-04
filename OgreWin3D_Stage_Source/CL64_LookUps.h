@@ -32,5 +32,14 @@ public:
 	int Get_Adjusted_Counters_Count(void);
 	int Player_Location_GetCount(void);
 
+	bool Update_Types();
+	void Get_Type(int Index);
+	void Get_Shape(int Index);
+	void Get_Usage(int Index);
+
+	char Chr_Type[32];
+	char Chr_Shape[32];
+	char Chr_Usage[32];
+
 };
 

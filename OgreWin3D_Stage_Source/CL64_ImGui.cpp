@@ -33,6 +33,9 @@ CL64_ImGui::CL64_ImGui(void)
 	Camera_Data_PosX = 10;
 	Camera_Data_Posy = 100;
 
+	Object_Data_PosX = 0;
+	Object_Data_PosY = 0;
+
 	StartPos = 0;
 	flag_Show_FPS = 1;
 	flag_Show_ImGui_Demo = 0;
@@ -41,7 +44,8 @@ CL64_ImGui::CL64_ImGui(void)
 	flag_Show_App_Debug = 0;
 	flag_Show_Ogre_Data = 0;
 	flag_Open_Textures_List = 1;
-	Show_Collision_Debug = 0;
+	flag_Show_Object_Data = 0;
+	flag_Show_Collision_Debug = 0;
 
 	// Demo 1
 	flag_Show_Physics_Debug = 0;
@@ -74,8 +78,8 @@ void CL64_ImGui::Reset_Class(void)
 {
 	flag_Show_Demo_Options = 0;
 	flag_Show_Ogre_Data = 0;
-	Show_Collision_Debug = 0;
-
+	flag_Show_Collision_Debug = 0;
+	flag_Show_Object_Data = 0;
 }
 
 // *************************************************************************
@@ -222,7 +226,7 @@ void CL64_ImGui::ImGui_Render_Loop(void)
 		App_Debug();
 	}
 
-	if (Show_Collision_Debug == 1)
+	if (flag_Show_Collision_Debug == 1)
 	{
 		ImGui_Collision_Debug();
 	}
@@ -231,6 +235,12 @@ void CL64_ImGui::ImGui_Render_Loop(void)
 	{
 		App->CL_Gui_Environment->Environ_PropertyEditor();
 	}
+
+	if (flag_Show_Object_Data == 1)
+	{
+		ImGui_Object_Data();
+	}
+	
 }
 
 // *************************************************************************
@@ -282,6 +292,7 @@ void CL64_ImGui::Camera_Data_GUI(void)
 	}
 	else
 	{
+		//ImGui::BeginDisabled(true);
 		ImVec2 Size = ImGui::GetWindowSize();
 
 		auto textWidth = ImGui::CalcTextSize("Camera Data").x;
@@ -429,7 +440,7 @@ void CL64_ImGui::ImGui_Collision_Debug(void)
 {
 	ImGui::SetNextWindowPos(ImVec2(530, 50), ImGuiCond_FirstUseEver);
 
-	if (!ImGui::Begin("Collisions_Debug", &Show_Collision_Debug, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_AlwaysAutoResize))
+	if (!ImGui::Begin("Collisions_Debug", &flag_Show_Collision_Debug, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_AlwaysAutoResize))
 	{
 		ImGui::End();
 	}
@@ -451,8 +462,129 @@ void CL64_ImGui::ImGui_Collision_Debug(void)
 
 		if (ImGui::Button("Close"))
 		{
-			Show_Collision_Debug = 0;
+			flag_Show_Collision_Debug = 0;
 		}
+
+		ImGui::End();
+	}
+}
+
+// *************************************************************************
+// *					ImGui_Object_Data  Terry Bernie					   *
+// *************************************************************************
+void CL64_ImGui::ImGui_Object_Data(void)
+{
+	ImGui::SetNextWindowSize(ImVec2(530, 150), ImGuiCond_FirstUseEver);
+	ImGui::SetNextWindowPos(ImVec2(Object_Data_PosX, Object_Data_PosY));
+	
+	float w = 0;
+	float x = 0;
+	float y = 0;
+	float z = 0;
+
+	if (!ImGui::Begin("Object Data", &flag_Show_Object_Data, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_AlwaysAutoResize))
+	{
+		ImGui::End();
+	}
+	else
+	{
+		int Index = App->CL_Properties->Current_Selected_Object;
+		
+		if (App->CL_Properties->Edit_Category == Enums::Edit_Area)
+		{
+			/*ImGui::Text("Name: = %s", App->SBC_Scene->B_Area[Index]->Area_Name);
+			ImGui::Text("Mesh File Name: = %s", App->SBC_Scene->B_Area[Index]->Area_FileName);
+			ImGui::Text("Path: = %s", App->SBC_Scene->B_Area[Index]->Area_Resource_Path);
+			ImGui::Text("Type: = %s", App->SBC_LookUps->Chr_Type);
+			ImGui::Text("Shape: = %s", App->SBC_LookUps->Chr_Shape);
+			ImGui::Text("Usage: = %s", App->SBC_LookUps->Chr_Usage);
+			ImGui::Text("Object_ID: = %i", App->SBC_Scene->B_Area[Index]->This_Object_UniqueID);
+			ImGui::Text("CollisionFlags: = %i", App->SBC_Scene->B_Area[Index]->Phys_Body->getCollisionFlags());*/
+		}
+		else
+		{
+			ImGui::Text("Name: = %s", App->CL_Scene->V_Object[Index]->Mesh_Name);
+			ImGui::Text("Mesh File Name: = %s", App->CL_Scene->V_Object[Index]->Mesh_FileName);
+			ImGui::Text("Path: = %s", App->CL_Scene->V_Object[Index]->Mesh_Resource_Path);
+			ImGui::Text("Type: = %s", App->CL_LookUps->Chr_Type);
+			ImGui::Text("Shape: = %s", App->CL_LookUps->Chr_Shape);
+			ImGui::Text("Usage: = %s", App->CL_LookUps->Chr_Usage);
+			ImGui::Text("Object_ID: = %i", App->CL_Scene->V_Object[Index]->This_Object_UniqueID);
+
+			if (App->CL_Scene->V_Object[Index]->Phys_Body)
+			{
+				ImGui::Text("CollisionFlags: = %i", App->CL_Scene->V_Object[Index]->Phys_Body->getCollisionFlags());
+			}
+		}
+
+		ImGui::Spacing();
+
+
+		// Collectables
+		if (App->CL_Properties->Edit_Category == Enums::Edit_Collectable)
+		{
+			/*ImGui::Text("------------ Collectable");
+			ImGui::Text("Sound_File: = %s", App->SBC_Scene->V_Object[Index]->S_Collectable[0]->Sound_File);
+			ImGui::Text("Sound_Volume: = %f", App->SBC_Scene->V_Object[Index]->S_Collectable[0]->SndVolume);
+			ImGui::Text("Sound_Play: = %i", App->SBC_Scene->V_Object[Index]->S_Collectable[0]->Play);
+
+			ImGui::Text("Counter_Name: = %s", App->SBC_Scene->V_Object[Index]->S_Collectable[0]->Counter_Name);
+			ImGui::Text("Counter_ID: = %i", App->SBC_Scene->V_Object[Index]->S_Collectable[0]->Counter_ID);
+			ImGui::Text("Counter_Value: = %i", App->SBC_Scene->V_Object[Index]->S_Collectable[0]->Value);
+			ImGui::Text("Counter_Maths: = %i", App->SBC_Scene->V_Object[Index]->S_Collectable[0]->Maths);
+			ImGui::Text("Counter_Disabled: = %i", App->SBC_Scene->V_Object[Index]->S_Collectable[0]->Counter_Disabled);*/
+
+			return;
+		}
+
+		// Move Entity
+		if (App->CL_Properties->Edit_Category == Enums::Edit_Move_Entity)
+		{
+			ImGui::Text("------------ Move Entity");
+			//ImGui::Text("Sound_File: = %s", App->SBC_Scene->V_Object[Index]->S_Collectable[0]->Sound_File);
+			//ImGui::Text("Sound_Volume: = %f", App->SBC_Scene->V_Object[Index]->S_Collectable[0]->SndVolume);
+			//ImGui::Text("Sound_Play: = %i", App->SBC_Scene->V_Object[Index]->S_Collectable[0]->Play);
+
+			//ImGui::Text("Counter_Name: = %s", App->SBC_Scene->V_Object[Index]->S_MoveType[0]->Object_To_Move_Index);
+
+			//ImGui::Text("Counter_Name: = %s", App->SBC_Scene->V_Object[Index]->S_MoveType[0]->Counter_Name);
+			//ImGui::Text("Counter_ID: = %i", App->SBC_Scene->V_Object[Index]->S_MoveType[0]->Counter_ID);
+			//ImGui::Text("Counter_Value: = %i", App->SBC_Scene->V_Object[Index]->S_MoveType[0]->Trigger_Value);
+			////ImGui::Text("Counter_Maths: = %i", App->SBC_Scene->V_Object[Index]->S_Collectable[0]->Maths);
+			//ImGui::Text("Counter_Disabled: = %i", App->SBC_Scene->V_Object[Index]->S_MoveType[0]->Counter_Disabled);
+
+			return;
+		}
+
+
+
+		/*ImGui::Text("Physics_Mass: = %f", App->SBC_Scene->V_Object[Index]->Physics_Mass);
+		ImGui::Text("Physics_Restitution: = %f", App->SBC_Scene->V_Object[Index]->Physics_Restitution);
+
+		x = App->SBC_Scene->V_Object[Index]->Physics_Pos.x;
+		y = App->SBC_Scene->V_Object[Index]->Physics_Pos.y;
+		z = App->SBC_Scene->V_Object[Index]->Physics_Pos.z;
+		ImGui::Text("Physics_Pos: = %f,%f,%f", x, y, z);
+
+		x = App->SBC_Scene->V_Object[Index]->Physics_Scale.x;
+		y = App->SBC_Scene->V_Object[Index]->Physics_Scale.y;
+		z = App->SBC_Scene->V_Object[Index]->Physics_Scale.z;
+		ImGui::Text("Physics_Scale: = %f,%f,%f", x, y, z);
+
+		w = App->SBC_Scene->V_Object[Index]->Physics_Quat.w;
+		x = App->SBC_Scene->V_Object[Index]->Physics_Quat.x;
+		y = App->SBC_Scene->V_Object[Index]->Physics_Quat.y;
+		z = App->SBC_Scene->V_Object[Index]->Physics_Quat.z;
+		ImGui::Text("Physics_Quat: = %f,%f,%f,%f", w, x, y, z);*/
+
+		if (ImGui::Button("Close"))
+		{
+			flag_Show_Object_Data = 0;
+		}
+
+		ImVec2 Size = ImGui::GetWindowSize();
+		Object_Data_PosX = ((float)App->CL_Ogre->Ogre3D_Listener->View_Width / 2) - (Size.x / 2);
+		Object_Data_PosY = ((float)App->CL_Ogre->Ogre3D_Listener->View_Height / 2) - (Size.y / 2);;
 
 		ImGui::End();
 	}

@@ -74,8 +74,8 @@ LRESULT CALLBACK CL64_Props_Dialogs::Proc_Details_Goto(HWND hDlg, UINT message, 
 	{
 	case WM_INITDIALOG:
 	{
-		//SendDlgItemMessage(hDlg, IDC_BT_GOTO, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		//SendDlgItemMessage(hDlg, IDC_BT_DETAIL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_GOTO, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_DETAIL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		return TRUE;
 	}
@@ -93,7 +93,7 @@ LRESULT CALLBACK CL64_Props_Dialogs::Proc_Details_Goto(HWND hDlg, UINT message, 
 	{
 		LPNMHDR some_item = (LPNMHDR)lParam;
 
-		/*if (some_item->idFrom == IDC_BT_GOTO && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDC_BT_GOTO && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
@@ -105,32 +105,34 @@ LRESULT CALLBACK CL64_Props_Dialogs::Proc_Details_Goto(HWND hDlg, UINT message, 
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
 			return CDRF_DODEFAULT;
-		}*/
+		}
 
 		return CDRF_DODEFAULT;
 	}
 
 	case WM_COMMAND:
 
-		/*if (LOWORD(wParam) == IDC_BT_DETAIL)
+		if (LOWORD(wParam) == IDC_BT_DETAIL)
 		{
-			if (App->CL_Vm_ImGui->Show_Object_Data == 1)
+			if (App->CL_ImGui->flag_Show_Object_Data == 1)
 			{
-				App->CL_Vm_ImGui->Show_Object_Data = 0;
+				App->CL_ImGui->flag_Show_Object_Data = 0;
 			}
 			else
 			{
-				App->SBC_LookUps->Update_Types();
-				App->CL_Vm_ImGui->Show_Object_Data = 1;
+				App->CL_LookUps->Update_Types();
+				App->CL_ImGui->flag_Show_Object_Data = 1;
 			}
+
 			return 1;
 		}
 
 		if (LOWORD(wParam) == IDC_BT_GOTO)
 		{
-			App->CL_Object->Object_Camera_Goto(App->SBC_Properties->Current_Selected_Object);
+			App->CL_Object->Object_Camera_Goto(App->CL_Properties->Current_Selected_Object);
+			
 			return 1;
-		}*/
+		}
 
 		break;
 	}

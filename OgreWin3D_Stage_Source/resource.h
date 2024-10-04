@@ -72,7 +72,6 @@
 #define IDD_TRUEFALSE                   184
 #define IDD_TB_GAME                     185
 #define IDD_SOUNDPLAYER                 186
-#define IDD_DIALOG1                     187
 #define IDD_PROPS_OBJECT                187
 #define IDC_CK_SU_FULLSCREEN            1000
 #define IDC_ST_STARTUP                  1001
@@ -98,6 +97,7 @@
 #define IDC_BT_MAINENVIRONMENT          1007
 #define IDC_BT_GAME_PREVIEW             1007
 #define IDC_PLAY                        1007
+#define IDC_BT_DETAIL                   1007
 #define IDC_BUTTON2                     1008
 #define IDC_BT_TBH_CAMERA               1008
 #define IDC_BT_DEMORESOURCES            1008
@@ -208,6 +208,7 @@
 #define IDC_BT_PAUSE                    1077
 #define IDC_VOLBOX                      1078
 #define IDC_STVOLUME                    1079
+#define IDC_BT_GOTO                     1080
 #define ID_VIEW_RESET                   32771
 #define ID_VIEW_MAX3DVIEW               32772
 #define ID_DEBUG_TESTPREFERANCE         32773
@@ -264,7 +265,7 @@
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        188
 #define _APS_NEXT_COMMAND_VALUE         32818
-#define _APS_NEXT_CONTROL_VALUE         1080
+#define _APS_NEXT_CONTROL_VALUE         1081
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif
