@@ -548,7 +548,7 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 	//	App->SBC_Properties->Update_ListView_Level();
 	//}
 
-	// ------------------------------------------------------------ Areas
+	// ---- Areas
 	if (!strcmp(FileView_Folder, "Area")) // Folder
 	{
 		//App->SBC_FileView->Context_Selection = Enums::FileView_Areas_Folder;
@@ -560,12 +560,9 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 	{
 		//App->Say(FileView_Folder);
 		//App->SBC_FileView->Context_Selection = Enums::FileView_Areas_File;
-		//App->CL_Properties->Edit_Category = Enums::Edit_Area;
-		App->CL_Properties->Current_Selected_Object = Index;
-
+		
 		//HideRightPanes();
-		ShowWindow(App->CL_Properties->Properties_Dlg_hWnd, 1);
-
+		
 		/*App->SBC_Props_Dialog->Hide_Area_Dlg(1);
 		App->SBC_Props_Dialog->Hide_Debug_Dlg(1);
 		App->SBC_Props_Dialog->Hide_Dimensions_Dlg(1, 1);
@@ -573,11 +570,15 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 		App->SBC_Props_Dialog->Hide_Material_Dlg(1);*/
 
 		//----------------------------------------------------------------------------
-		//App->SBC_Properties->Current_Selected_Object = Index;
 		//App->SBC_Properties->Reset_Last_Selected_Object(App->SBC_Properties->Last_Selected_Object);
 		//App->SBC_Properties->Last_Selected_Object = Index;
 		//----------------------------------------------------------------------------
+		
+		App->CL_Properties->Current_Selected_Object = Index;
+		App->CL_Properties->Edit_Category = Enums::Edit_Area;
+		App->CL_LookUps->Update_Types();
 
+		ShowWindow(App->CL_Properties->Properties_Dlg_hWnd, 1);
 		App->CL_Properties->Update_ListView_Area();
 
 
@@ -589,7 +590,7 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 		return;
 	}
 
-	// ------------------------------------------------------------ Player
+	// ---- Player
 	if (!strcmp(FileView_Folder, "Player")) // Folder
 	{
 		//App->SBC_FileView->Context_Selection = Enums::FileView_Player_Folder;
@@ -600,29 +601,26 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 		//App->SBC_FileView->Context_Selection = Enums::FileView_Player_File;
 
 		//HideRightPanes();
-		ShowWindow(App->CL_Properties->Properties_Dlg_hWnd, 1);
+		
 		//App->SBC_Player->Hide_Player_Dlg(1);
 
-		//App->SBC_Properties->Edit_Category = Enums::Edit_Player;
-
 		//----------------------------------------------------------------------------
-		App->CL_Properties->Current_Selected_Object = Index;
+		
 		//App->SBC_Properties->Reset_Last_Selected_Object(App->SBC_Properties->Last_Selected_Object);
 		//App->SBC_Properties->Last_Selected_Object = Index;
 		//----------------------------------------------------------------------------
 
-		//if (App->SBC_Properties->Edit_Physics == 0)
-		//{
-			App->CL_Properties->Update_ListView_Player();
-		//}
-		//else
-		//{*/
-			//App->CL_Properties->Update_ListView_Player_Physics();
-		//}
+		App->CL_Properties->Current_Selected_Object = Index;
+		App->CL_Properties->Edit_Category = Enums::Edit_Player;
+		App->CL_LookUps->Update_Types();
+
+		ShowWindow(App->CL_Properties->Properties_Dlg_hWnd, 1);
+		App->CL_Properties->Update_ListView_Player();
+		
 		return;
 	}
 
-	// ------------------------------------------------------------ Objects
+	// ---- Objects
 	if (!strcmp(FileView_Folder, "Objects")) // Folder
 	{
 		//App->SBC_FileView->Context_Selection = Enums::FileView_Objects_Folder;
@@ -633,26 +631,27 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 		//App->SBC_FileView->Context_Selection = Enums::FileView_Objects_File;
 
 		//HideRightPanes();
-		ShowWindow(App->CL_Properties->Properties_Dlg_hWnd, 1);
+		
 
 		/*App->SBC_Props_Dialog->Hide_Details_Goto_Dlg(1);
 		App->SBC_Props_Dialog->Hide_Dimensions_Dlg(1, App->SBC_Scene->V_Object[Index]->Dimensions_Locked);
 		App->SBC_Props_Dialog->Hide_Debug_Dlg(1);
-		App->SBC_Props_Dialog->Hide_Material_Dlg(1);
+		App->SBC_Props_Dialog->Hide_Material_Dlg(1);*/
 
 
-		App->SBC_Properties->Edit_Category = Enums::FV_Edit_Object;*/
+		
 
 		//----------------------------------------------------------------------------
-		App->CL_Properties->Current_Selected_Object = Index;
 		/*App->SBC_Properties->Reset_Last_Selected_Object(App->SBC_Properties->Last_Selected_Object);
 		App->SBC_Properties->Last_Selected_Object = Index;*/
 		//----------------------------------------------------------------------------
+		/*App->SBC_Markers->MarkerBB_Addjust(Index);*/
 
-		/*App->SBC_LookUps->Update_Types();
+		App->CL_Properties->Current_Selected_Object = Index;
+		App->CL_Properties->Edit_Category = Enums::Edit_Object;
+		App->CL_LookUps->Update_Types();
 
-		App->SBC_Markers->MarkerBB_Addjust(Index);*/
-
+		ShowWindow(App->CL_Properties->Properties_Dlg_hWnd, 1);
 		App->CL_Properties->Update_ListView_Objects();
 
 
@@ -677,24 +676,25 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 		//App->SBC_FileView->Context_Selection = Enums::FileView_Collectables_File;
 
 		//HideRightPanes();
-		ShowWindow(App->CL_Properties->Properties_Dlg_hWnd, 1);
-
+		
 		//App->SBC_Props_Dialog->Hide_Details_Goto_Dlg(1);
 
 		//App->SBC_Props_Dialog->Hide_Dimensions_Dlg(1, App->SBC_Scene->V_Object[Index]->Dimensions_Locked);
 		//App->SBC_Props_Dialog->Hide_Debug_Dlg(1);
 		//App->SBC_Props_Dialog->Hide_Material_Dlg(1);
 
-		//App->SBC_Properties->Edit_Category = Enums::Edit_Collectable;
-
 		//----------------------------------------------------------------------------
-		App->CL_Properties->Current_Selected_Object = Index;
 		//App->SBC_Properties->Reset_Last_Selected_Object(App->SBC_Properties->Last_Selected_Object);
 		//App->SBC_Properties->Last_Selected_Object = Index;
 		//----------------------------------------------------------------------------
 
 		//App->SBC_Markers->MarkerBB_Addjust(Index);
 
+		App->CL_Properties->Current_Selected_Object = Index;
+		App->CL_Properties->Edit_Category = Enums::Edit_Collectable;
+		App->CL_LookUps->Update_Types();
+
+		ShowWindow(App->CL_Properties->Properties_Dlg_hWnd, 1);
 		App->CL_Properties->Update_ListView_Collectables();
 
 		/*if (App->SBC_Dimensions->Show_Dimensions == 1)
@@ -716,22 +716,24 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 		//App->SBC_FileView->Context_Selection = Enums::FileView_Sounds_File;
 
 		//HideRightPanes();
-		ShowWindow(App->CL_Properties->Properties_Dlg_hWnd, 1);
 		/*App->SBC_Props_Dialog->Hide_Details_Goto_Dlg(1);
 		App->SBC_Props_Dialog->Hide_Dimensions_Dlg(1, App->SBC_Scene->V_Object[Index]->Dimensions_Locked);
 		App->SBC_Props_Dialog->Hide_Debug_Dlg(1);
 
-		App->SBC_Properties->Is_Player = 0;
-		App->SBC_Properties->Edit_Category = Enums::Edit_Sounds;*/
-
+		App->SBC_Properties->Is_Player = 0;*/
+		
 		//----------------------------------------------------------------------------
-		App->CL_Properties->Current_Selected_Object = Index;
 		/*App->SBC_Properties->Reset_Last_Selected_Object(App->SBC_Properties->Last_Selected_Object);
 		App->SBC_Properties->Last_Selected_Object = Index;*/
 		//----------------------------------------------------------------------------
 
 		//App->SBC_Markers->MarkerBB_Addjust(Index);
 
+		App->CL_Properties->Current_Selected_Object = Index;
+		App->CL_Properties->Edit_Category = Enums::Edit_Sounds;
+		App->CL_LookUps->Update_Types();
+
+		ShowWindow(App->CL_Properties->Properties_Dlg_hWnd, 1);
 		App->CL_Properties->Update_ListView_Sounds();
 
 		/*if (App->SBC_Dimensions->Show_Dimensions == 1)
@@ -754,7 +756,6 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 		//App->SBC_FileView->Context_Selection = Enums::FileView_Move_File;
 
 		//HideRightPanes();
-		ShowWindow(App->CL_Properties->Properties_Dlg_hWnd, 1);
 		/*App->SBC_Props_Dialog->Hide_Details_Goto_Dlg(1);
 		App->SBC_Props_Dialog->Hide_Dimensions_Dlg(1, App->SBC_Scene->V_Object[Index]->Dimensions_Locked);
 		App->SBC_Props_Dialog->Hide_Physics_Reset_Dlg(1);
@@ -762,16 +763,18 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 
 		//App->SBC_Properties->Is_Player = 0; // Mark as Object selected
 
-		//App->SBC_Properties->Edit_Category = Enums::Edit_Move_Entity;
-
 		//----------------------------------------------------------------------------
-		App->CL_Properties->Current_Selected_Object = Index;
 		/*App->SBC_Properties->Reset_Last_Selected_Object(App->SBC_Properties->Last_Selected_Object);
 		App->SBC_Properties->Last_Selected_Object = Index;*/
 		//----------------------------------------------------------------------------
 
 		//App->SBC_Markers->MarkerBB_Addjust(Index);
 
+		App->CL_Properties->Current_Selected_Object = Index;
+		App->CL_Properties->Edit_Category = Enums::Edit_Move_Entity;
+		App->CL_LookUps->Update_Types();
+
+		ShowWindow(App->CL_Properties->Properties_Dlg_hWnd, 1);
 		App->CL_Properties->Update_ListView_Move_Entities();
 
 		/*if (App->SBC_Dimensions->Show_Dimensions == 1)
@@ -794,23 +797,26 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 		//App->SBC_FileView->Context_Selection = Enums::FileView_Messages_Triggers_File;
 
 		//HideRightPanes();
-		ShowWindow(App->CL_Properties->Properties_Dlg_hWnd, 1);
 		//App->SBC_Props_Dialog->Hide_Details_Goto_Dlg(1);
 		//App->SBC_Props_Dialog->Hide_Dimensions_Dlg(1, App->SBC_Scene->V_Object[Index]->Dimensions_Locked);
 		//App->SBC_Props_Dialog->Hide_Debug_Dlg(1);
 		//App->SBC_Props_Dialog->Hide_Panel_Test_Dlg(1);
 
 		//App->SBC_Properties->Is_Player = 0; // Mark as Object selected
-		//App->SBC_Properties->Edit_Category = Enums::Edit_Message;
+		
 
 		//----------------------------------------------------------------------------
-		App->CL_Properties->Current_Selected_Object = Index;
 		/*App->SBC_Properties->Reset_Last_Selected_Object(App->SBC_Properties->Last_Selected_Object);
 		App->SBC_Properties->Last_Selected_Object = Index;*/
 		//----------------------------------------------------------------------------
 
 		//App->SBC_Markers->MarkerBB_Addjust(Index);
 
+		App->CL_Properties->Current_Selected_Object = Index;
+		App->CL_Properties->Edit_Category = Enums::Edit_Message;
+		App->CL_LookUps->Update_Types();
+
+		ShowWindow(App->CL_Properties->Properties_Dlg_hWnd, 1);
 		App->CL_Properties->Update_ListView_Messages();
 
 		/*if (App->SBC_Dimensions->Show_Dimensions == 1)
@@ -833,23 +839,24 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 		//App->SBC_FileView->Context_Selection = Enums::FileView_Teleports_File;
 
 		//HideRightPanes();
-		ShowWindow(App->CL_Properties->Properties_Dlg_hWnd, 1);
 		//App->SBC_Props_Dialog->Hide_Details_Goto_Dlg(1);
 		//App->SBC_Props_Dialog->Hide_Dimensions_Dlg(1, App->SBC_Scene->V_Object[Index]->Dimensions_Locked);
 		//App->SBC_Props_Dialog->Hide_Debug_Dlg(1);
 
 		//App->SBC_Properties->Is_Player = 0; // Mark as Object selected
 
-		//App->SBC_Properties->Edit_Category = Enums::Edit_Teleport;
-
 		//----------------------------------------------------------------------------
-		App->CL_Properties->Current_Selected_Object = Index;
 		/*App->SBC_Properties->Reset_Last_Selected_Object(App->SBC_Properties->Last_Selected_Object);
 		App->SBC_Properties->Last_Selected_Object = Index;*/
 		//----------------------------------------------------------------------------
 
 		//App->SBC_Markers->MarkerBB_Addjust(Index);
 
+		App->CL_Properties->Current_Selected_Object = Index;
+		App->CL_Properties->Edit_Category = Enums::Edit_Teleport;
+		App->CL_LookUps->Update_Types();
+
+		ShowWindow(App->CL_Properties->Properties_Dlg_hWnd, 1);
 		App->CL_Properties->Update_ListView_Teleport();
 
 		/*if (App->SBC_Dimensions->Show_Dimensions == 1)
@@ -872,21 +879,22 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 		//App->SBC_FileView->Context_Selection = Enums::FileView_Particle_File;
 
 		//HideRightPanes();
-		ShowWindow(App->CL_Properties->Properties_Dlg_hWnd, 1);
 
-		/*App->SBC_Props_Dialog->Hide_Details_Goto_Dlg(1);
-		App->SBC_Props_Dialog->Hide_Dimensions_Dlg(1, App->SBC_Scene->V_Object[Index]->Dimensions_Locked);
-
-		App->SBC_Properties->Edit_Category = Enums::Edit_Particles;*/
+		//App->SBC_Props_Dialog->Hide_Details_Goto_Dlg(1);
+		//App->SBC_Props_Dialog->Hide_Dimensions_Dlg(1, App->SBC_Scene->V_Object[Index]->Dimensions_Locked);
 
 		//----------------------------------------------------------------------------
-		App->CL_Properties->Current_Selected_Object = Index;
 		//App->SBC_Properties->Reset_Last_Selected_Object(App->SBC_Properties->Last_Selected_Object);
 		//App->SBC_Properties->Last_Selected_Object = Index;
 		//----------------------------------------------------------------------------
 
 		//App->SBC_Markers->MarkerBB_Addjust(Index);
 
+		App->CL_Properties->Current_Selected_Object = Index;
+		App->CL_Properties->Edit_Category = Enums::Edit_Particles;
+		App->CL_LookUps->Update_Types();
+
+		ShowWindow(App->CL_Properties->Properties_Dlg_hWnd, 1);
 		App->CL_Properties->Update_ListView_Particles();
 
 		/*if (App->SBC_Dimensions->Show_Dimensions == 1)
@@ -908,12 +916,14 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 		//App->SBC_FileView->Context_Selection = Enums::FileView_Counters_File;
 
 		//HideRightPanes();
-		ShowWindow(App->CL_Properties->Properties_Dlg_hWnd, 1);
+		
 		//App->SBC_Props_Dialog->Hide_Panel_Test_Dlg(1);
 
-		//App->SBC_Properties->Edit_Category = Enums::Edit_Counters;
 		App->CL_Properties->Current_Selected_Object = Index;
+		App->CL_Properties->Edit_Category = Enums::Edit_Counters;
+		App->CL_LookUps->Update_Types();
 
+		ShowWindow(App->CL_Properties->Properties_Dlg_hWnd, 1);
 		App->CL_Properties->Update_ListView_Counters();
 
 		return;
@@ -930,14 +940,11 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 		//App->SBC_FileView->Context_Selection = Enums::FileView_EnvironEntity_File;
 
 		//HideRightPanes();
-		ShowWindow(App->CL_Properties->Properties_Dlg_hWnd, 1);
 		/*App->SBC_Props_Dialog->Hide_Details_Goto_Dlg(1);
 		App->SBC_Props_Dialog->Hide_Dimensions_Dlg(1, App->SBC_Scene->V_Object[Index]->Dimensions_Locked);
 		App->SBC_Props_Dialog->Hide_Debug_Dlg(1);*/
 
-		//----------------------------------------------------------------------------
-		App->CL_Properties->Current_Selected_Object = Index;
-		App->CL_Properties->Edit_Category = Enums::Edit_Environs;
+		//---------------------------------------------------------------------------
 
 		/*App->SBC_Properties->Reset_Last_Selected_Object(App->SBC_Properties->Last_Selected_Object);
 		App->SBC_Properties->Last_Selected_Object = Index;*/
@@ -945,6 +952,11 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 
 		//App->SBC_Markers->MarkerBB_Addjust(Index);
 
+		App->CL_Properties->Current_Selected_Object = Index;
+		App->CL_Properties->Edit_Category = Enums::Edit_Environs;
+		App->CL_LookUps->Update_Types();
+
+		ShowWindow(App->CL_Properties->Properties_Dlg_hWnd, 1);
 		App->CL_Properties->Update_ListView_Environs();
 
 		/*if (App->SBC_Dimensions->Show_Dimensions == 1)

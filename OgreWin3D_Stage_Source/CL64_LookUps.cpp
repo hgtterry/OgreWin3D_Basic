@@ -110,7 +110,6 @@ void CL64_LookUps::Get_Type(int Index)
 	}
 
 
-
 	switch (Type)
 	{
 
@@ -149,9 +148,14 @@ void CL64_LookUps::Get_Shape(int Index)
 		Shape = App->CL_Scene->V_Object[Index]->Shape;
 	}
 
-
 	switch (Shape)
 	{
+
+	case Enums::NoShape:
+	{
+		strcpy(Chr_Shape, "No Shape");
+		return;
+	}
 
 	case Enums::Shape_Box:
 	{
@@ -170,9 +174,27 @@ void CL64_LookUps::Get_Shape(int Index)
 		return;
 	}
 
+	case Enums::Cylinder:
+	{
+		strcpy(Chr_Shape, "Cylinder");
+		return;
+	}
+
+	case Enums::Cone:
+	{
+		strcpy(Chr_Shape, "Cone");
+		return;
+	}
+
 	case Enums::Shape_TriMesh:
 	{
 		strcpy(Chr_Shape, "Triangle Mesh");
+		return;
+	}
+
+	case Enums::VolumeBox:
+	{
+		strcpy(Chr_Shape, "Volume Box");
 		return;
 	}
 
@@ -180,7 +202,7 @@ void CL64_LookUps::Get_Shape(int Index)
 
 	}
 
-	strcpy(Chr_Shape, "None");
+	strcpy(Chr_Shape, "Not Defined");
 
 }
 

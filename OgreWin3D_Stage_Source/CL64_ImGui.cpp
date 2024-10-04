@@ -33,6 +33,7 @@ CL64_ImGui::CL64_ImGui(void)
 	Camera_Data_PosX = 10;
 	Camera_Data_Posy = 100;
 
+	flag_Do_Object_Data_Pos = 0;
 	Object_Data_PosX = 0;
 	Object_Data_PosY = 0;
 
@@ -475,7 +476,6 @@ void CL64_ImGui::ImGui_Collision_Debug(void)
 void CL64_ImGui::ImGui_Object_Data(void)
 {
 	ImGui::SetNextWindowSize(ImVec2(530, 150), ImGuiCond_FirstUseEver);
-	ImGui::SetNextWindowPos(ImVec2(Object_Data_PosX, Object_Data_PosY));
 	
 	float w = 0;
 	float x = 0;
@@ -492,22 +492,30 @@ void CL64_ImGui::ImGui_Object_Data(void)
 		
 		if (App->CL_Properties->Edit_Category == Enums::Edit_Area)
 		{
-			/*ImGui::Text("Name: = %s", App->SBC_Scene->B_Area[Index]->Area_Name);
-			ImGui::Text("Mesh File Name: = %s", App->SBC_Scene->B_Area[Index]->Area_FileName);
-			ImGui::Text("Path: = %s", App->SBC_Scene->B_Area[Index]->Area_Resource_Path);
-			ImGui::Text("Type: = %s", App->SBC_LookUps->Chr_Type);
-			ImGui::Text("Shape: = %s", App->SBC_LookUps->Chr_Shape);
-			ImGui::Text("Usage: = %s", App->SBC_LookUps->Chr_Usage);
-			ImGui::Text("Object_ID: = %i", App->SBC_Scene->B_Area[Index]->This_Object_UniqueID);
-			ImGui::Text("CollisionFlags: = %i", App->SBC_Scene->B_Area[Index]->Phys_Body->getCollisionFlags());*/
+			ImGui::Text("Mesh");
+			ImGui::Separator();
+			ImGui::Text("Name: = %s", App->CL_Scene->B_Area[Index]->Area_Name);
+			ImGui::Text("Mesh File Name: = %s", App->CL_Scene->B_Area[Index]->Area_FileName);
+			ImGui::Text("Material File: = %s", App->CL_Scene->B_Area[Index]->Material_File);
+			ImGui::Text("Physics");
+			ImGui::Separator();
+			ImGui::Text("Type: = %s", App->CL_LookUps->Chr_Type);
+			ImGui::Text("Physics Shape: = %s", App->CL_LookUps->Chr_Shape);
+			ImGui::Text("Usage: = %s", App->CL_LookUps->Chr_Usage);
+			ImGui::Text("Object_ID: = %i", App->CL_Scene->B_Area[Index]->This_Object_UniqueID);
+			ImGui::Text("CollisionFlags: = %i", App->CL_Scene->B_Area[Index]->Phys_Body->getCollisionFlags());
 		}
 		else
 		{
+			ImGui::Text("Mesh");
+			ImGui::Separator();
 			ImGui::Text("Name: = %s", App->CL_Scene->V_Object[Index]->Mesh_Name);
 			ImGui::Text("Mesh File Name: = %s", App->CL_Scene->V_Object[Index]->Mesh_FileName);
-			ImGui::Text("Path: = %s", App->CL_Scene->V_Object[Index]->Mesh_Resource_Path);
+			ImGui::Text("Material File: = %s", App->CL_Scene->V_Object[Index]->Material_File);
+			ImGui::Text("Physics");
+			ImGui::Separator();
 			ImGui::Text("Type: = %s", App->CL_LookUps->Chr_Type);
-			ImGui::Text("Shape: = %s", App->CL_LookUps->Chr_Shape);
+			ImGui::Text("Physics Shape: = %s", App->CL_LookUps->Chr_Shape);
 			ImGui::Text("Usage: = %s", App->CL_LookUps->Chr_Usage);
 			ImGui::Text("Object_ID: = %i", App->CL_Scene->V_Object[Index]->This_Object_UniqueID);
 
@@ -523,18 +531,18 @@ void CL64_ImGui::ImGui_Object_Data(void)
 		// Collectables
 		if (App->CL_Properties->Edit_Category == Enums::Edit_Collectable)
 		{
-			/*ImGui::Text("------------ Collectable");
-			ImGui::Text("Sound_File: = %s", App->SBC_Scene->V_Object[Index]->S_Collectable[0]->Sound_File);
-			ImGui::Text("Sound_Volume: = %f", App->SBC_Scene->V_Object[Index]->S_Collectable[0]->SndVolume);
-			ImGui::Text("Sound_Play: = %i", App->SBC_Scene->V_Object[Index]->S_Collectable[0]->Play);
+			ImGui::Text("------------ Collectable");
+			ImGui::Text("Sound_File: = %s", App->CL_Scene->V_Object[Index]->S_Collectable[0]->Sound_File);
+			ImGui::Text("Sound_Volume: = %f", App->CL_Scene->V_Object[Index]->S_Collectable[0]->SndVolume);
+			ImGui::Text("Sound_Play: = %i", App->CL_Scene->V_Object[Index]->S_Collectable[0]->Play);
 
-			ImGui::Text("Counter_Name: = %s", App->SBC_Scene->V_Object[Index]->S_Collectable[0]->Counter_Name);
-			ImGui::Text("Counter_ID: = %i", App->SBC_Scene->V_Object[Index]->S_Collectable[0]->Counter_ID);
-			ImGui::Text("Counter_Value: = %i", App->SBC_Scene->V_Object[Index]->S_Collectable[0]->Value);
-			ImGui::Text("Counter_Maths: = %i", App->SBC_Scene->V_Object[Index]->S_Collectable[0]->Maths);
-			ImGui::Text("Counter_Disabled: = %i", App->SBC_Scene->V_Object[Index]->S_Collectable[0]->Counter_Disabled);*/
+			ImGui::Text("Counter_Name: = %s", App->CL_Scene->V_Object[Index]->S_Collectable[0]->Counter_Name);
+			ImGui::Text("Counter_ID: = %i", App->CL_Scene->V_Object[Index]->S_Collectable[0]->Counter_ID);
+			ImGui::Text("Counter_Value: = %i", App->CL_Scene->V_Object[Index]->S_Collectable[0]->Value);
+			ImGui::Text("Counter_Maths: = %i", App->CL_Scene->V_Object[Index]->S_Collectable[0]->Maths);
+			ImGui::Text("Counter_Disabled: = %i", App->CL_Scene->V_Object[Index]->S_Collectable[0]->Counter_Disabled);
 
-			return;
+			//return;
 		}
 
 		// Move Entity
@@ -580,11 +588,16 @@ void CL64_ImGui::ImGui_Object_Data(void)
 		if (ImGui::Button("Close"))
 		{
 			flag_Show_Object_Data = 0;
+			flag_Do_Object_Data_Pos = 0;
 		}
 
-		ImVec2 Size = ImGui::GetWindowSize();
-		Object_Data_PosX = ((float)App->CL_Ogre->Ogre3D_Listener->View_Width / 2) - (Size.x / 2);
-		Object_Data_PosY = ((float)App->CL_Ogre->Ogre3D_Listener->View_Height / 2) - (Size.y / 2);;
+		if (flag_Do_Object_Data_Pos == 0)
+		{
+			ImVec2 Size = ImGui::GetWindowSize();
+			Object_Data_PosX = ((float)App->CL_Ogre->Ogre3D_Listener->View_Width / 2) - (Size.x / 2);
+			Object_Data_PosY = ((float)App->CL_Ogre->Ogre3D_Listener->View_Height / 2) - (Size.y / 2);
+			ImGui::SetWindowPos(ImVec2(Object_Data_PosX, Object_Data_PosY));
+		}
 
 		ImGui::End();
 	}

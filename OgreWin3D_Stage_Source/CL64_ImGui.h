@@ -78,6 +78,7 @@ public:
 	float Model_Data_PosX;
 	float Model_Data_PosY;
 
+	bool flag_Do_Object_Data_Pos;
 	float Object_Data_PosX;
 	float Object_Data_PosY;
 

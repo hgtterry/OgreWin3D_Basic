@@ -117,11 +117,14 @@ LRESULT CALLBACK CL64_Props_Dialogs::Proc_Details_Goto(HWND hDlg, UINT message, 
 			if (App->CL_ImGui->flag_Show_Object_Data == 1)
 			{
 				App->CL_ImGui->flag_Show_Object_Data = 0;
+				App->CL_ImGui->flag_Do_Object_Data_Pos = 0;
 			}
 			else
 			{
 				App->CL_LookUps->Update_Types();
 				App->CL_ImGui->flag_Show_Object_Data = 1;
+				App->CL_Ogre->RenderFrame(8);
+				App->CL_ImGui->flag_Do_Object_Data_Pos = 1;
 			}
 
 			return 1;
