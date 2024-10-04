@@ -159,7 +159,7 @@ bool CL64_Scene::Clear_Level()
 
 	App->CL_Ogre->mSceneMgr->setSkyDome(false, "OW3D/CloudySky");
 
-	App->CL_FileView->SelectItem(App->CL_FileView->FV_LevelFolder);
+	//App->CL_FileView->SelectItem(App->CL_FileView->FV_LevelFolder);
 
 	//App->CL_Ogre->mSceneMgr->destroyCamera("PlayerRay");
 	App->CL_Ogre->mSceneMgr->destroyAllParticleSystems();
@@ -191,7 +191,7 @@ void CL64_Scene::Reset_Counters()
 	//UniqueID_MessageNew_Count = 500;
 
 	//CurrentCamMode = 0;
-	//Scene_Modified = 0;
+	flag_Scene_Modified = 0;
 
 	flag_Scene_Loaded = 0;
 

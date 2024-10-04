@@ -183,6 +183,7 @@ public:
 	HPEN WhitePen;
 
 	HBRUSH AppBackground;
+	HBRUSH DialogBackGround;
 	HBRUSH BlackBrush;
 	HBRUSH Brush_White;
 	HBRUSH Brush_But_Normal;

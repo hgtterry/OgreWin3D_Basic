@@ -223,30 +223,6 @@ void CL64_Properties::Create_Properties_hLV(void)
 }
 
 // *************************************************************************
-// *		Edit_Environs_OnClick:- Terry and Hazel Flanigan 2024		   *
-// *************************************************************************
-bool CL64_Properties::Edit_Environs_OnClick(LPARAM lParam)
-{
-	int Index = Current_Selected_Object;
-
-	int result = 1;
-	int test;
-
-	LPNMLISTVIEW poo = (LPNMLISTVIEW)lParam;
-	test = poo->iItem;
-	ListView_GetItemText(Properties_hLV, test, 0, btext, 20);
-
-	result = strcmp(btext, "Evironment");
-	if (result == 0)
-	{
-		App->CL_Gui_Environment->Start_Environment_Editor(Index, false);
-		return 1;
-	}
-
-	return 1;
-}
-
-// *************************************************************************
 // *		ListView_OnClickOptions:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
 void CL64_Properties::ListView_OnClickOptions(LPARAM lParam)
@@ -393,6 +369,613 @@ void CL64_Properties::ListView_OnClickOptions(LPARAM lParam)
 	//}
 
 	return;
+}
+
+// *************************************************************************
+// *		Edit_Environs_OnClick:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+bool CL64_Properties::Edit_Environs_OnClick(LPARAM lParam)
+{
+	int Index = Current_Selected_Object;
+
+	int result = 1;
+	int test;
+
+	LPNMLISTVIEW poo = (LPNMLISTVIEW)lParam;
+	test = poo->iItem;
+	ListView_GetItemText(Properties_hLV, test, 0, btext, 20);
+
+	result = strcmp(btext, "Evironment");
+	if (result == 0)
+	{
+		App->CL_Gui_Environment->Start_Environment_Editor(Index, false);
+		return 1;
+	}
+
+	return 1;
+}
+
+// *************************************************************************
+// *		Edit_Area_Onclick:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+bool CL64_Properties::Edit_Area_Onclick(LPARAM lParam)
+{
+	//int Index = 0;// App->SBC_Properties->Current_Selected_Object;
+	//int result = 1;
+	//int List_Index;
+
+	//Base_Area* Area = App->SBC_Scene->B_Area[Index];
+
+	//LPNMLISTVIEW List = (LPNMLISTVIEW)lParam;
+	//List_Index = List->iItem;
+	//ListView_GetItemText(Properties_hLV, List_Index, 0, btext, 20);
+
+	//result = strcmp(App->SBC_Properties->btext, "Name");
+	//if (result == 0)
+	//{
+	//	strcpy(App->Cl_Dialogs->btext, "Change Area Name");
+	//	strcpy(App->Cl_Dialogs->Chr_Text, Area->Area_Name);
+
+	//	App->Cl_Dialogs->Dialog_Text(1, 1);
+
+	//	if (App->Cl_Dialogs->Canceled == 1)
+	//	{
+	//		return TRUE;
+	//	}
+
+	//	// Needs Duplicate Name test 
+	//	strcpy(Area->Area_Name, App->Cl_Dialogs->Chr_Text);
+
+	//	Area->Altered = 1;
+	//	App->SBC_Scene->Scene_Modified = 1;
+	//	App->SBC_FileView->Mark_Altered(Area->FileViewItem);
+
+	//	App->SBC_FileView->Change_Item_Name(Area->FileViewItem, Area->Area_Name);
+	//	Update_ListView_Area();
+	//}
+
+	//result = strcmp(btext, "Materials");
+	//if (result == 0)
+	//{
+	//	App->SBC_Materials->Start_Material_Editor();
+	//}
+
+	return 1;
+}
+
+// *************************************************************************
+// *		Edit_Camera_Onclick:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+bool CL64_Properties::Edit_Camera_Onclick(LPARAM lParam)
+{
+	//int Index = App->SBC_Properties->Current_Selected_Object; // Get Selected Object Index 
+	//int result = 1;
+	//int test;
+
+	//LPNMLISTVIEW poo = (LPNMLISTVIEW)lParam;
+	//test = poo->iItem;
+	//ListView_GetItemText(App->SBC_Properties->Properties_hLV, test, 0, App->SBC_Properties->btext, 20);
+
+	//result = strcmp(App->SBC_Properties->btext, "Name");
+	//if (result == 0)
+	//{
+	//	App->SBC_Com_Camera->Rename_Camera(Index);
+	//	Update_ListView_Camera();
+	//}
+
+	//result = strcmp(App->SBC_Properties->btext, "Pos_X");
+	//if (result == 0)
+	//{
+	//	char chr_Value[10];
+	//	sprintf(chr_Value, "%.3f ", App->SBC_Scene->B_Camera[Index]->CamPos.x);
+
+	//	strcpy(App->Cl_Dialogs->Chr_Float, chr_Value);
+	//	strcpy(App->Cl_Dialogs->btext, "Position X");
+
+	//	App->Cl_Dialogs->Dialog_Float();
+	//	if (App->Cl_Dialogs->Canceled == 1) { return TRUE; }
+
+	//	App->SBC_Scene->B_Camera[Index]->CamPos.x = App->Cl_Dialogs->mFloat;
+
+	//	App->SBC_Scene->B_Camera[Index]->Altered = 1;
+	//	App->SBC_Scene->Scene_Modified = 1;
+	//	App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Camera[Index]->FileViewItem);
+
+	//	Update_ListView_Camera();
+
+	//	return 1;
+	//}
+
+	//result = strcmp(App->SBC_Properties->btext, "Pos_Y");
+	//if (result == 0)
+	//{
+	//	char chr_Value[10];
+	//	sprintf(chr_Value, "%.3f ", App->SBC_Scene->B_Camera[Index]->CamPos.y);
+
+	//	strcpy(App->Cl_Dialogs->Chr_Float, chr_Value);
+	//	strcpy(App->Cl_Dialogs->btext, "Position Y");
+
+	//	App->Cl_Dialogs->Dialog_Float();
+	//	if (App->Cl_Dialogs->Canceled == 1) { return TRUE; }
+
+	//	App->SBC_Scene->B_Camera[Index]->CamPos.y = App->Cl_Dialogs->mFloat;
+
+	//	App->SBC_Scene->B_Camera[Index]->Altered = 1;
+	//	App->SBC_Scene->Scene_Modified = 1;
+	//	App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Camera[Index]->FileViewItem);
+
+	//	Update_ListView_Camera();
+
+	//	return 1;
+	//}
+
+	//result = strcmp(App->SBC_Properties->btext, "Pos_Z");
+	//if (result == 0)
+	//{
+	//	char chr_Value[10];
+	//	sprintf(chr_Value, "%.3f ", App->SBC_Scene->B_Camera[Index]->CamPos.z);
+
+	//	strcpy(App->Cl_Dialogs->Chr_Float, chr_Value);
+	//	strcpy(App->Cl_Dialogs->btext, "Position Z");
+
+	//	App->Cl_Dialogs->Dialog_Float();
+	//	if (App->Cl_Dialogs->Canceled == 1) { return TRUE; }
+
+	//	App->SBC_Scene->B_Camera[Index]->CamPos.z = App->Cl_Dialogs->mFloat;
+
+	//	App->SBC_Scene->B_Camera[Index]->Altered = 1;
+	//	App->SBC_Scene->Scene_Modified = 1;
+	//	App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Camera[Index]->FileViewItem);
+
+	//	Update_ListView_Camera();
+
+	//	return 1;
+	//}
+
+	//result = strcmp(App->SBC_Properties->btext, "LookAt_X");
+	//if (result == 0)
+	//{
+	//	char chr_Value[10];
+	//	sprintf(chr_Value, "%.3f ", App->SBC_Com_Camera->LookAt_X);
+
+	//	strcpy(App->Cl_Dialogs->Chr_Float, chr_Value);
+	//	strcpy(App->Cl_Dialogs->btext, "Look At X");
+
+	//	App->Cl_Dialogs->Dialog_Float();
+	//	if (App->Cl_Dialogs->Canceled == 1) { return TRUE; }
+
+	//	App->SBC_Com_Camera->LookAt_X = App->Cl_Dialogs->mFloat;
+
+	//	App->SBC_Scene->B_Camera[Index]->Altered = 1;
+	//	App->SBC_Scene->Scene_Modified = 1;
+	//	App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Camera[Index]->FileViewItem);
+
+	//	Update_ListView_Camera();
+
+	//	return 1;
+	//}
+
+	//result = strcmp(App->SBC_Properties->btext, "LookAt_Y");
+	//if (result == 0)
+	//{
+	//	char chr_Value[10];
+	//	sprintf(chr_Value, "%.3f ", App->SBC_Com_Camera->LookAt_Y);
+
+	//	strcpy(App->Cl_Dialogs->Chr_Float, chr_Value);
+	//	strcpy(App->Cl_Dialogs->btext, "Look At Y");
+
+	//	App->Cl_Dialogs->Dialog_Float();
+	//	if (App->Cl_Dialogs->Canceled == 1) { return TRUE; }
+
+	//	App->SBC_Com_Camera->LookAt_Y = App->Cl_Dialogs->mFloat;
+
+	//	App->SBC_Scene->B_Camera[Index]->Altered = 1;
+	//	App->SBC_Scene->Scene_Modified = 1;
+	//	App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Camera[Index]->FileViewItem);
+
+	//	Update_ListView_Camera();
+
+	//	return 1;
+	//}
+
+	//result = strcmp(App->SBC_Properties->btext, "LookAt_Z");
+	//if (result == 0)
+	//{
+	//	char chr_Value[10];
+	//	sprintf(chr_Value, "%.3f ", App->SBC_Com_Camera->LookAt_Z);
+
+	//	strcpy(App->Cl_Dialogs->Chr_Float, chr_Value);
+	//	strcpy(App->Cl_Dialogs->btext, "Look At Z");
+
+	//	App->Cl_Dialogs->Dialog_Float();
+	//	if (App->Cl_Dialogs->Canceled == 1) { return TRUE; }
+
+	//	App->SBC_Com_Camera->LookAt_Z = App->Cl_Dialogs->mFloat;
+
+	//	App->SBC_Scene->B_Camera[Index]->Altered = 1;
+	//	App->SBC_Scene->Scene_Modified = 1;
+	//	App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Camera[Index]->FileViewItem);
+
+	//	Update_ListView_Camera();
+
+	//	return 1;
+	//}
+
+	return 1;
+}
+
+// *************************************************************************
+// *	Edit_Collectables_OnClick:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+bool CL64_Properties::Edit_Collectables_OnClick(LPARAM lParam)
+{
+	//int Index = App->SBC_Properties->Current_Selected_Object; // Get Selected Object Index 
+	//int result = 1;
+	//int test;
+
+	//LPNMLISTVIEW poo = (LPNMLISTVIEW)lParam;
+	//test = poo->iItem;
+	//ListView_GetItemText(Properties_hLV, test, 0, btext, 20);
+
+	//result = strcmp(btext, "Name");
+	//if (result == 0)
+	//{
+	//	strcpy(App->SBC_Dialogs->btext, "Change Object Name");
+	//	strcpy(App->SBC_Dialogs->Chr_Text, App->SBC_Scene->V_Object[Index]->Mesh_Name);
+
+	//	App->SBC_Dialogs->Dialog_Text();
+
+	//	if (App->SBC_Dialogs->Canceled == 1)
+	//	{
+	//		return TRUE;
+	//	}
+
+	//	strcpy(App->SBC_Scene->V_Object[Index]->Mesh_Name, App->SBC_Dialogs->Chr_Text);
+
+
+	//	Mark_As_Altered(Index);
+	//	App->SBC_FileView->Change_Item_Name(App->SBC_Scene->V_Object[Index]->FileViewItem, App->SBC_Dialogs->Chr_Text);
+
+	//	Update_ListView_Collectables();
+
+	//	App->SBC_Physics->Reset_Triggers();
+	//}
+
+	//result = strcmp(btext, "Materials");
+	//if (result == 0)
+	//{
+	//	App->SBC_Materials->Start_Material_Editor();
+	//}
+
+	//result = strcmp(btext, "Volume");
+	//if (result == 0)
+	//{
+
+	//	App->SBC_SoundMgr->Accessed = 1;
+	//	strcpy(App->SBC_SoundMgr->Access_File, App->SBC_Scene->V_Object[Index]->S_Collectable[0]->Sound_File);
+
+	//	App->SBC_SoundMgr->Dialog_SoundFile();
+
+	//	strcpy(App->SBC_Scene->V_Object[Index]->S_Collectable[0]->Sound_File, App->SBC_SoundMgr->Access_File);
+
+	//	App->SBC_Scene->V_Object[Index]->S_Collectable[0]->SndVolume = App->SBC_SoundMgr->SndVolume;
+
+	//	Mark_As_Altered(Index);
+
+	//	Update_ListView_Collectables();
+
+	//	App->SBC_Physics->Reset_Triggers();
+
+	//	return 1;
+	//}
+
+
+	////Sound
+	//result = strcmp(btext, "Sound");
+	//if (result == 0)
+	//{
+	//	App->SBC_SoundMgr->Accessed = 1;
+	//	strcpy(App->SBC_SoundMgr->Access_File, App->SBC_Scene->V_Object[Index]->S_Collectable[0]->Sound_File);
+
+	//	App->SBC_SoundMgr->Dialog_SoundFile();
+
+	//	strcpy(App->SBC_Scene->V_Object[Index]->S_Collectable[0]->Sound_File, App->SBC_SoundMgr->Access_File);
+
+	//	App->SBC_Scene->V_Object[Index]->S_Collectable[0]->SndVolume = App->SBC_SoundMgr->SndVolume;
+
+	//	Mark_As_Altered(Index);
+
+	//	Update_ListView_Collectables();
+
+	//	App->SBC_Physics->Reset_Triggers();
+
+	//	return 1;
+	//}
+
+	//// Play
+	//result = strcmp(btext, "Play");
+	//if (result == 0)
+	//{
+
+	//	strcpy(App->Cl_Dialogs->btext, "Play Sound In The Game");
+
+	//	App->Cl_Dialogs->TrueFlase = App->SBC_Scene->V_Object[Index]->S_Collectable[0]->Play;
+
+	//	App->Cl_Dialogs->Dialog_TrueFlase(App->MainHwnd);
+
+	//	if (App->Cl_Dialogs->Canceled == 0)
+	//	{
+	//		if (App->Cl_Dialogs->TrueFlase == 1)
+	//		{
+	//			App->SBC_Scene->V_Object[Index]->S_Collectable[0]->Play = 1;
+	//		}
+	//		else
+	//		{
+	//			App->SBC_Scene->V_Object[Index]->S_Collectable[0]->Play = 0;
+
+	//		}
+	//	}
+
+	//	Mark_As_Altered(Index);
+
+	//	Update_ListView_Collectables();
+
+	//	App->SBC_Physics->Reset_Triggers();
+	//	return 1;
+	//}
+
+	//result = strcmp(btext, "Counter");
+	//if (result == 0)
+	//{
+	//	App->SBC_Dialogs->Dialog_Counter();
+
+	//	if (App->SBC_Dialogs->Canceled == 1)
+	//	{
+	//		return 1;
+	//	}
+
+	//	Mark_As_Altered(Index);
+	//	Update_ListView_Collectables();
+	//	App->SBC_Physics->Reset_Triggers();
+
+	//	return 1;
+	//}
+
+	return 1;
+}
+
+// *************************************************************************
+// *		Edit_Counters_OnClick:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+bool CL64_Properties::Edit_Counters_OnClick(LPARAM lParam)
+{
+	//int Index = App->SBC_Properties->Current_Selected_Object; // Get Selected Object Index 
+	//int result = 1;
+	//int test;
+
+	//LPNMLISTVIEW poo = (LPNMLISTVIEW)lParam;
+	//test = poo->iItem;
+	//ListView_GetItemText(Properties_hLV, test, 0, btext, 20);
+
+	//result = strcmp(btext, "Name");
+	//if (result == 0)
+	//{
+	//	App->SBC_Display->Rename_Counter(Index);
+	//	Update_ListView_Counters();
+	//}
+
+	//result = strcmp(btext, "Pos_X");
+	//if (result == 0)
+	//{
+	//	strcpy(App->Cl_Dialogs->btext, "Set Position X");
+
+	//	char buff[256];
+	//	sprintf(buff, "%.3f", App->SBC_Scene->B_Counter[Index]->PosX);
+	//	strcpy(App->Cl_Dialogs->Chr_Float, buff);
+
+	//	App->Cl_Dialogs->Dialog_Float();
+
+	//	if (App->Cl_Dialogs->Canceled == 0)
+	//	{
+
+	//		App->SBC_Scene->B_Counter[Index]->PosX = App->Cl_Dialogs->mFloat;
+
+	//		App->SBC_Display->Mark_As_Altered_Counter(Index);
+
+	//		Update_ListView_Counters();
+
+	//	}
+
+	//	return 1;
+	//}
+
+	//result = strcmp(btext, "Pos_Y");
+	//if (result == 0)
+	//{
+	//	strcpy(App->Cl_Dialogs->btext, "Set Position Y");
+
+	//	char buff[256];
+	//	sprintf(buff, "%.3f", App->SBC_Scene->B_Counter[Index]->PosY);
+	//	strcpy(App->Cl_Dialogs->Chr_Float, buff);
+
+	//	App->Cl_Dialogs->Dialog_Float();
+
+	//	if (App->Cl_Dialogs->Canceled == 0)
+	//	{
+
+	//		App->SBC_Scene->B_Counter[Index]->PosY = App->Cl_Dialogs->mFloat;
+
+	//		App->SBC_Display->Mark_As_Altered_Counter(Index);
+
+	//		Update_ListView_Counters();
+
+	//	}
+
+	//	return 1;
+	//}
+
+	//result = strcmp(btext, "Text");
+	//if (result == 0)
+	//{
+	//	strcpy(App->SBC_Dialogs->btext, "Change Text");
+	//	strcpy(App->SBC_Dialogs->Chr_Text, App->SBC_Scene->B_Counter[Index]->Text);
+
+	//	App->SBC_Dialogs->Dialog_Text();
+
+	//	if (App->SBC_Dialogs->Canceled == 1)
+	//	{
+	//		return TRUE;
+	//	}
+
+	//	strcpy(App->SBC_Scene->B_Counter[Index]->Text, App->SBC_Dialogs->Chr_Text);
+
+
+	//	App->SBC_Display->Mark_As_Altered_Counter(Index);
+
+	//	Update_ListView_Counters();
+
+	//	return 1;
+	//}
+
+	//result = strcmp(btext, "Start_Value");
+	//if (result == 0)
+	//{
+	//	strcpy(App->Cl_Dialogs->btext, "Start Value");
+	//	char buff[256];
+	//	sprintf(buff, "%i", App->SBC_Scene->B_Counter[Index]->Start_Value);
+	//	strcpy(App->Cl_Dialogs->Chr_Int, buff);
+
+	//	App->Cl_Dialogs->Dialog_Int();
+
+	//	if (App->Cl_Dialogs->Canceled == 1)
+	//	{
+	//		return TRUE;
+	//	}
+
+	//	App->SBC_Scene->B_Counter[Index]->Start_Value = App->Cl_Dialogs->mInt;
+	//	App->SBC_Scene->B_Counter[Index]->Counter = App->Cl_Dialogs->mInt;
+
+	//	App->SBC_Display->Mark_As_Altered_Counter(Index);
+
+	//	Update_ListView_Counters();
+
+	//	return 1;
+	//}
+
+	//result = strcmp(btext, "Display");
+	//if (result == 0)
+	//{
+
+	//	strcpy(App->Cl_Dialogs->btext, "Select Display Option");
+
+	//	if (App->SBC_Scene->B_Counter[Index]->Show_Panel_Flag == 0)
+	//	{
+	//		strcpy(App->SBC_Dialogs->Chr_DropText, "Auto");
+	//	}
+
+	//	if (App->SBC_Scene->B_Counter[Index]->Show_Panel_Flag == 1)
+	//	{
+	//		strcpy(App->SBC_Dialogs->Chr_DropText, "Always");
+	//	}
+
+	//	App->SBC_Dialogs->DropList_Data = Enums::DropDialog_Display;
+	//	App->SBC_Dialogs->Dialog_DropGen();
+
+
+	//	if (App->SBC_Dialogs->Canceled == 0)
+	//	{
+	//		int TestChr = 0;
+
+	//		// Auto
+	//		TestChr = strcmp(App->SBC_Dialogs->Chr_DropText, "Auto");
+	//		if (TestChr == 0)
+	//		{
+	//			App->SBC_Scene->B_Counter[Index]->Show_Panel_Flag = 0;
+	//		}
+
+	//		// Always
+	//		TestChr = strcmp(App->SBC_Dialogs->Chr_DropText, "Always");
+	//		if (TestChr == 0)
+	//		{
+	//			App->SBC_Scene->B_Counter[Index]->Show_Panel_Flag = 1;
+	//		}
+
+	//		App->SBC_Display->Mark_As_Altered_Counter(Index);
+	//		Update_ListView_Counters();
+
+	//	}
+
+	//	return 1;
+	//}
+
+	return 1;
+}
+
+// *************************************************************************
+// *		Edit_Light_Onclick:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void CL64_Properties::Edit_Light_Onclick(LPARAM lParam)
+{
+	/*int Index = App->SBC_Properties->Current_Selected_Object;
+	int result = 1;
+	int test;
+
+	LPNMLISTVIEW poo = (LPNMLISTVIEW)lParam;
+	test = poo->iItem;
+	ListView_GetItemText(Properties_hLV, test, 0, btext, 20);
+
+	result = strcmp(btext, "Name");
+	if (result == 0)
+	{
+		App->CL_Object->Rename_Object(Index);
+		Update_ListView_Particles();
+	}
+
+	result = strcmp(btext, "PosX");
+	if (result == 0)
+	{
+
+		App->SBC_Gui_Dialogs->Start_Dialog_Float(1, App->SBC_Scene->V_Object[Index]->Mesh_Pos.x, "Pos X");
+
+		while (App->SBC_Gui_Dialogs->Show_Dialog_Float == 1)
+		{
+			App->SBC_Gui_Dialogs->BackGround_Render_Loop();
+
+			App->SBC_Scene->V_Object[Index]->Mesh_Pos.x = App->SBC_Gui_Dialogs->m_Dialog_Float;
+			App->SBC_Scene->V_Object[Index]->Object_Node->setPosition(App->SBC_Scene->V_Object[Index]->Mesh_Pos);
+
+		}
+
+		App->Disable_Panels(false);
+
+		Update_ListView_Lights();
+	}
+
+	result = strcmp(btext, "PosY");
+	if (result == 0)
+	{
+
+		App->SBC_Gui_Dialogs->Start_Dialog_Float(1, App->SBC_Scene->V_Object[Index]->Mesh_Pos.y, "Pos Y");
+
+		while (App->SBC_Gui_Dialogs->Show_Dialog_Float == 1)
+		{
+			App->SBC_Gui_Dialogs->BackGround_Render_Loop();
+
+			App->SBC_Scene->V_Object[Index]->Mesh_Pos.y = App->SBC_Gui_Dialogs->m_Dialog_Float;
+			App->SBC_Scene->V_Object[Index]->Object_Node->setPosition(App->SBC_Scene->V_Object[Index]->Mesh_Pos);
+
+		}
+
+		App->Disable_Panels(false);
+
+		Update_ListView_Lights();
+	}
+
+	result = strcmp(btext, "Editor");
+	if (result == 0)
+	{
+		App->SBC_Gui_Dialogs->Start_Light_Editor();
+	}*/
 }
 
 // *************************************************************************

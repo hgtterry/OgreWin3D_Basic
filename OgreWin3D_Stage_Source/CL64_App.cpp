@@ -89,6 +89,7 @@ CL64_App::CL64_App(void)
 	CursorPosY = 500;
 
 	AppBackground = 0;
+	DialogBackGround = 0;
 
 	Font_CB15 = 0;
 	Font_CB18 = 0;
@@ -378,6 +379,8 @@ void CL64_App::LoadProgramResource(void)
 void CL64_App::SetBrushes_Fonts(void)
 {
 	AppBackground = CreateSolidBrush(RGB(213, 222, 242));
+	DialogBackGround = CreateSolidBrush(RGB(208, 230, 252));
+
 	BlackBrush = CreateSolidBrush(RGB(0, 0, 0));
 	Brush_White = CreateSolidBrush(RGB(255, 255, 255));
 	Brush_But_Normal = CreateSolidBrush(RGB(255, 255, 180));
