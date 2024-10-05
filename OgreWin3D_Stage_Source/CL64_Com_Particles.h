@@ -32,5 +32,7 @@ public:
 
 	void Set_Particle_Defaults(int Index);
 	void Create_Particle_Entity(int Index);
+	void Rename_Particle_Entity(int Index);
+
 };
 

@@ -32,5 +32,7 @@ public:
 
 	void Set_Move_Defaults(int Index);
 	bool Create_Move_Entity(int Index);
+	void Rename_Move_Entity(int Index);
+
 };
 

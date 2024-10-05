@@ -31,6 +31,7 @@ public:
 
 	void Set_Teleports_Defaults(int Index);
 	bool Create_Teleport_Entity(int Index);
+	void Rename_Teleport_Entity(int Index);
 
 };
 

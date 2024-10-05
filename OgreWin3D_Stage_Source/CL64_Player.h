@@ -42,6 +42,8 @@ public:
 	void Set_Player_Rotation(btQuaternion Rotation);
 	void Set_Player_GroundSpeed(float GroundSpeed);
 	void Reset_Player(float GroundSpeed);
+	void Rename_Player(int Index);
+
 	void Check_Collisions(void);
 
 	Ogre::Vector3 Current_Position;

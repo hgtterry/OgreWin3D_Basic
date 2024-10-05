@@ -146,3 +146,26 @@ bool CL64_Com_MoveEntity::Create_Move_Entity(int Index)
 
 	return 1;
 }
+
+// *************************************************************************
+// *		Rename_Move_Entity:- Terry and Hazel Flanigan 2024		  	   *
+// *************************************************************************
+void CL64_Com_MoveEntity::Rename_Move_Entity(int Index)
+{
+	strcpy(App->CL_Dialogs->btext, "Change Object Name");
+	strcpy(App->CL_Dialogs->Chr_Text, App->CL_Scene->V_Object[Index]->Mesh_Name);
+
+	App->CL_Dialogs->Dialog_Text(Enums::Check_Names_Objects);
+
+	if (App->CL_Dialogs->Canceled == 1)
+	{
+		return;
+	}
+
+	strcpy(App->CL_Scene->V_Object[Index]->Mesh_Name, App->CL_Dialogs->Chr_Text);
+
+	App->CL_Properties->Mark_As_Altered(Index);
+
+	App->CL_FileView->Change_Item_Name(App->CL_Scene->V_Object[Index]->FileViewItem, App->CL_Dialogs->Chr_Text);
+
+}

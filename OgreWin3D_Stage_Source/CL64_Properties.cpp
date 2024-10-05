@@ -276,15 +276,12 @@ void CL64_Properties::ListView_OnClickOptions(LPARAM lParam)
 		return;
 	}
 
-	//// Teleports
-	//if (Edit_Category == Enums::Edit_Teleport)
-	//{
-	//	if (Edit_Physics == 0)
-	//	{
-	//		Edit_Teleport_OnClick(lParam);
-	//	}
-	//	return;
-	//}
+	// Teleports
+	if (Edit_Category == Enums::Edit_Teleport)
+	{
+		Edit_Teleport_Entity(lParam);
+		return;
+	}
 
 	// Collectables
 	if (Edit_Category == Enums::Edit_Collectable)
@@ -293,15 +290,12 @@ void CL64_Properties::ListView_OnClickOptions(LPARAM lParam)
 		return;
 	}
 
-	//// Counters
-	//if (Edit_Category == Enums::Edit_Counters)
-	//{
-	//	if (Edit_Physics == 0)
-	//	{
-	//		Edit_Counters_OnClick(lParam);
-	//	}
-	//	return;
-	//}
+	// Counters
+	if (Edit_Category == Enums::Edit_Counters)
+	{
+		Edit_Counters_OnClick(lParam);
+		return;
+	}
 
 	// Environs
 	if (Edit_Category == Enums::Edit_Environs)
@@ -388,37 +382,20 @@ bool CL64_Properties::Edit_Object(LPARAM lParam)
 // *************************************************************************
 bool CL64_Properties::Edit_Player(LPARAM lParam)
 {
-	//int Index = App->SBC_Properties->Current_Selected_Object;
-	//int result = 1;
-	//int test;
+	int Index = Current_Selected_Object;
+	int result = 1;
+	int test;
 
-	//LPNMLISTVIEW poo = (LPNMLISTVIEW)lParam;
-	//test = poo->iItem;
-	//ListView_GetItemText(App->SBC_Properties->Properties_hLV, test, 0, App->SBC_Properties->btext, 20);
+	LPNMLISTVIEW poo = (LPNMLISTVIEW)lParam;
+	test = poo->iItem;
+	ListView_GetItemText(Properties_hLV, test, 0, btext, 20);
 
-	//result = strcmp(App->SBC_Properties->btext, "Name");
-	//if (result == 0)
-	//{
-	//	strcpy(App->Cl_Dialogs->btext, "Change Player Name");
-	//	strcpy(App->Cl_Dialogs->Chr_Text, App->SBC_Scene->B_Player[0]->Player_Name);
-
-	//	App->Cl_Dialogs->Dialog_Text(1, 1);
-
-	//	if (App->Cl_Dialogs->Canceled == 1)
-	//	{
-	//		return TRUE;
-	//	}
-
-	//	// Needs Duplicate Name test 
-	//	strcpy(App->SBC_Scene->B_Player[0]->Player_Name, App->Cl_Dialogs->Chr_Text);
-
-	//	App->SBC_Scene->B_Player[0]->Altered = 1;
-	//	App->SBC_Scene->Scene_Modified = 1;
-	//	App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Player[0]->FileViewItem);
-
-	//	App->SBC_FileView->Change_Item_Name(App->SBC_Scene->B_Player[0]->FileViewItem, App->Cl_Dialogs->Chr_Text);
-	//	Update_ListView_Player();
-	//}
+	result = strcmp(btext, "Name");
+	if (result == 0)
+	{
+		App->CL_Player->Rename_Player(Index);
+		Update_ListView_Player();
+	}
 
 	//result = strcmp(App->SBC_Properties->btext, "Ground Speed");
 	//if (result == 0)
@@ -716,22 +693,7 @@ bool CL64_Properties::Edit_Messages(LPARAM lParam)
 	result = strcmp(btext, "Name");
 	if (result == 0)
 	{
-		strcpy(App->CL_Dialogs->btext, "Change Object Name");
-		strcpy(App->CL_Dialogs->Chr_Text, App->CL_Scene->V_Object[Index]->Mesh_Name);
-
-		App->CL_Dialogs->Dialog_Text(Enums::Check_Names_Objects);
-
-		if (App->CL_Dialogs->Canceled == 1)
-		{
-			return TRUE;
-		}
-
-		strcpy(App->CL_Scene->V_Object[Index]->Mesh_Name, App->CL_Dialogs->Chr_Text);
-
-		Mark_As_Altered(Index);
-
-		App->CL_FileView->Change_Item_Name(App->CL_Scene->V_Object[Index]->FileViewItem, App->CL_Dialogs->Chr_Text);
-
+		App->CL_Com_Messages->Rename_Message_Entity(Index);
 		Update_ListView_Messages();
 
 		return 1;
@@ -844,22 +806,7 @@ bool CL64_Properties::Edit_Sounds(LPARAM lParam)
 	result = strcmp(btext, "Name");
 	if (result == 0)
 	{
-		strcpy(App->CL_Dialogs->btext, "Change Object Name");
-		strcpy(App->CL_Dialogs->Chr_Text, App->CL_Scene->V_Object[Index]->Mesh_Name);
-
-		App->CL_Dialogs->Dialog_Text(Enums::Check_Names_Objects);
-
-		if (App->CL_Dialogs->Canceled == 1)
-		{
-			return TRUE;
-		}
-
-		strcpy(App->CL_Scene->V_Object[Index]->Mesh_Name, App->CL_Dialogs->Chr_Text);
-
-		Mark_As_Altered(Index);
-
-		App->CL_FileView->Change_Item_Name(App->CL_Scene->V_Object[Index]->FileViewItem, App->CL_Dialogs->Chr_Text);
-
+		App->CL_Com_Sounds->Rename_Sound(Index);
 		Update_ListView_Sounds();
 	}
 
@@ -940,28 +887,11 @@ bool CL64_Properties::Edit_Move_Entity(LPARAM lParam)
 	result = strcmp(btext, "Name");
 	if (result == 0)
 	{
-		strcpy(App->CL_Dialogs->btext, "Change Object Name");
-		strcpy(App->CL_Dialogs->Chr_Text, App->CL_Scene->V_Object[Index]->Mesh_Name);
-
-		App->CL_Dialogs->Dialog_Text(Enums::Check_Names_Objects);
-
-		if (App->CL_Dialogs->Canceled == 1)
-		{
-			return TRUE;
-		}
-
-		strcpy(App->CL_Scene->V_Object[Index]->Mesh_Name, App->CL_Dialogs->Chr_Text);
-
-		Mark_As_Altered(Index);
-
-		App->CL_FileView->Change_Item_Name(App->CL_Scene->V_Object[Index]->FileViewItem, App->CL_Dialogs->Chr_Text);
-
+		App->CL_Com_MoveEntity->Rename_Move_Entity(Index);
 		Update_ListView_Move_Entities();
 
 		//App->SBC_Physics->Reset_Triggers();
 	}
-
-
 
 	result = strcmp(btext, "Move_Object");
 	if (result == 0)
@@ -1217,6 +1147,182 @@ bool CL64_Properties::Edit_Move_Entity(LPARAM lParam)
 }
 
 // *************************************************************************
+// *		Edit_Teleport_Entity:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+bool CL64_Properties::Edit_Teleport_Entity(LPARAM lParam)
+{
+	int Index = Current_Selected_Object; // Get Selected Object Index 
+	int result = 1;
+	int test;
+
+	LPNMLISTVIEW poo = (LPNMLISTVIEW)lParam;
+	test = poo->iItem;
+	ListView_GetItemText(Properties_hLV, test, 0, btext, 20);
+
+	result = strcmp(btext, "Name");
+	if (result == 0)
+	{
+		App->CL_Com_Teleporters->Rename_Teleport_Entity(Index);
+		Update_ListView_Teleport();
+	}
+
+	result = strcmp(btext, "Goto");
+	if (result == 0)
+	{
+		/*strcpy(App->Cl_Dialogs->btext, "Select Location");
+
+		App->SBC_Dialogs->DropList_Data = Enums::DropDialog_Locations;
+		App->SBC_Dialogs->Dialog_DropGen();
+
+
+		if (App->SBC_Dialogs->Canceled == 0)
+		{
+			int LocationIndex = App->Cl_LookUps->Player_Location_GetIndex_ByName(App->SBC_Dialogs->Chr_DropText);
+			App->SBC_Scene->V_Object[Index]->S_Teleport[0]->Location_ID = LocationIndex;
+
+			strcpy(App->SBC_Scene->V_Object[Index]->S_Teleport[0]->Name, App->SBC_Scene->B_Locations[LocationIndex]->Name);
+
+			App->SBC_Scene->V_Object[Index]->S_Teleport[0]->Player_Position = App->SBC_Scene->B_Locations[LocationIndex]->Current_Position;
+			App->SBC_Scene->V_Object[Index]->S_Teleport[0]->Physics_Position = App->SBC_Scene->B_Locations[LocationIndex]->Physics_Position;
+			App->SBC_Scene->V_Object[Index]->S_Teleport[0]->Physics_Rotation = App->SBC_Scene->B_Locations[LocationIndex]->Physics_Rotation;
+
+			Update_ListView_Teleport();
+		}*/
+
+	}
+
+	// Sound
+	result = strcmp(btext, "Sound");
+	if (result == 0)
+	{
+		App->CL_SoundMgr->flag_Accessed = 1; // For Sound Manager Dlg
+		strcpy(App->CL_SoundMgr->Access_File, App->CL_Scene->V_Object[Index]->S_Teleport[0]->Sound_File);
+
+		App->CL_SoundMgr->Dialog_SoundFile();
+
+		strcpy(App->CL_Scene->V_Object[Index]->S_Teleport[0]->Sound_File, App->CL_SoundMgr->Access_File);
+
+		App->CL_Scene->V_Object[Index]->S_Teleport[0]->SndVolume = App->CL_SoundMgr->SndVolume;
+
+		Mark_As_Altered(Index);
+
+		Update_ListView_Teleport();
+		return 1;
+	}
+
+	// Volume
+	result = strcmp(btext, "Volume");
+	if (result == 0)
+	{
+		App->CL_SoundMgr->flag_Accessed = 1; // For Sound Manager Dlg
+		strcpy(App->CL_SoundMgr->Access_File, App->CL_Scene->V_Object[Index]->S_Teleport[0]->Sound_File);
+
+		App->CL_SoundMgr->Dialog_SoundFile();
+
+		strcpy(App->CL_Scene->V_Object[Index]->S_Teleport[0]->Sound_File, App->CL_SoundMgr->Access_File);
+
+		App->CL_Scene->V_Object[Index]->S_Teleport[0]->SndVolume = App->CL_SoundMgr->SndVolume;
+
+		Mark_As_Altered(Index);
+
+		Update_ListView_Teleport();
+		return 1;
+	}
+
+	result = strcmp(btext, "Play");
+	if (result == 0)
+	{
+		App->CL_Dialogs->Show_YesNo_Dlg((LPSTR)"Play Sound", App->CL_Scene->V_Object[Index]->S_Teleport[0]->Sound_File, (LPSTR)"");
+
+		if (App->CL_Dialogs->Canceled == 0)
+		{
+			App->CL_Scene->V_Object[Index]->S_Teleport[0]->Play = 1;
+		}
+		else
+		{
+			App->CL_Scene->V_Object[Index]->S_Teleport[0]->Play = 0;
+		}
+
+		Update_ListView_Teleport();
+
+		return 1;
+	}
+
+	// Counter
+	result = strcmp(btext, "Counter");
+	if (result == 0)
+	{
+		/*App->SBC_Dialogs->Dialog_Counter();
+		if (App->SBC_Dialogs->Canceled == 1)
+		{
+			return 1;
+		}
+
+		Mark_As_Altered(Index);
+		Update_ListView_Teleport();*/
+
+		//App->SBC_Physics->Reset_Triggers();
+		return 1;
+	}
+
+	// Environment
+	result = strcmp(btext, "Environment");
+	if (result == 0)
+	{
+		//App->SBC_Gui_Environ->Start_Environment_Editor(Index, 1);
+
+		/*App->SBC_Dialogs->YesNo("Enable Environment","Enable Teleport Environment", true);
+
+		if (App->SBC_Dialogs->Canceled == 0)
+		{
+			App->SBC_Scene->V_Object[Index]->S_Environ[0]->Enabled = 1;
+		}
+		else
+		{
+			App->SBC_Scene->V_Object[Index]->S_Environ[0]->Enabled = 0;
+		}*/
+
+		//Update_ListView_Teleport();
+
+		return 1;
+	}
+
+	result = strcmp(btext, "Main Light");
+	if (result == 0)
+	{
+		//App->Cl_Environment->Start_Environment("Main Light");
+		//Update_ListView_Teleport();
+
+		return 1;
+	}
+
+	result = strcmp(btext, "Sound_Env");
+	if (result == 0)
+	{
+		//App->Cl_Environment->Start_Environment("Sound");
+		//Update_ListView_Teleport();
+		return 1;
+	}
+
+	result = strcmp(btext, "Fog");
+	if (result == 0)
+	{
+		//App->Cl_Environment->Start_Environment("Fog");
+		//Update_ListView_Teleport();
+		return 1;
+	}
+
+	result = strcmp(btext, "Sky");
+	if (result == 0)
+	{
+		//App->Cl_Environment->Start_Environment("Sky");
+		//Update_ListView_Teleport();
+		return 1;
+	}
+	return 1;
+}
+
+// *************************************************************************
 // *		Edit_Environs_OnClick:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
 bool CL64_Properties::Edit_Environs_OnClick(LPARAM lParam)
@@ -1229,6 +1335,13 @@ bool CL64_Properties::Edit_Environs_OnClick(LPARAM lParam)
 	LPNMLISTVIEW poo = (LPNMLISTVIEW)lParam;
 	test = poo->iItem;
 	ListView_GetItemText(Properties_hLV, test, 0, btext, 20);
+
+	result = strcmp(btext, "Name");
+	if (result == 0)
+	{
+		App->CL_Com_Environments->Rename_Environ_Entity(Index);
+		Update_ListView_Environs();
+	}
 
 	result = strcmp(btext, "Evironment");
 	if (result == 0)
@@ -1256,7 +1369,7 @@ void CL64_Properties::Edit_Particle(LPARAM lParam)
 	result = strcmp(btext, "Name");
 	if (result == 0)
 	{
-		App->CL_Object->Rename_Object(Index);
+		App->CL_Com_Particles->Rename_Particle_Entity(Index);
 		Update_ListView_Particles();
 	}
 
@@ -1511,22 +1624,7 @@ bool CL64_Properties::Edit_Collectables(LPARAM lParam)
 	result = strcmp(btext, "Name");
 	if (result == 0)
 	{
-		strcpy(App->CL_Dialogs->btext, "Change Object Name");
-		strcpy(App->CL_Dialogs->Chr_Text, App->CL_Scene->V_Object[Index]->Mesh_Name);
-
-		App->CL_Dialogs->Dialog_Text(Enums::Check_Names_Objects);
-
-		if (App->CL_Dialogs->Canceled == 1)
-		{
-			return TRUE;
-		}
-
-		strcpy(App->CL_Scene->V_Object[Index]->Mesh_Name, App->CL_Dialogs->Chr_Text);
-
-		Mark_As_Altered(Index);
-		
-		App->CL_FileView->Change_Item_Name(App->CL_Scene->V_Object[Index]->FileViewItem, App->CL_Dialogs->Chr_Text);
-
+		App->CL_Com_Collectables->Rename_Collectable(Index);
 		Update_ListView_Collectables();
 
 		//App->SBC_Physics->Reset_Triggers();
@@ -1538,50 +1636,48 @@ bool CL64_Properties::Edit_Collectables(LPARAM lParam)
 	//	App->SBC_Materials->Start_Material_Editor();
 	//}
 
-	//result = strcmp(btext, "Volume");
-	//if (result == 0)
-	//{
+	result = strcmp(btext, "Volume");
+	if (result == 0)
+	{
+		App->CL_SoundMgr->flag_Accessed = 1;
+		strcpy(App->CL_SoundMgr->Access_File, App->CL_Scene->V_Object[Index]->S_Collectable[0]->Sound_File);
 
-	//	App->SBC_SoundMgr->Accessed = 1;
-	//	strcpy(App->SBC_SoundMgr->Access_File, App->SBC_Scene->V_Object[Index]->S_Collectable[0]->Sound_File);
+		App->CL_SoundMgr->Dialog_SoundFile();
 
-	//	App->SBC_SoundMgr->Dialog_SoundFile();
+		strcpy(App->CL_Scene->V_Object[Index]->S_Collectable[0]->Sound_File, App->CL_SoundMgr->Access_File);
 
-	//	strcpy(App->SBC_Scene->V_Object[Index]->S_Collectable[0]->Sound_File, App->SBC_SoundMgr->Access_File);
+		App->CL_Scene->V_Object[Index]->S_Collectable[0]->SndVolume = App->CL_SoundMgr->SndVolume;
 
-	//	App->SBC_Scene->V_Object[Index]->S_Collectable[0]->SndVolume = App->SBC_SoundMgr->SndVolume;
+		Mark_As_Altered(Index);
 
-	//	Mark_As_Altered(Index);
+		Update_ListView_Collectables();
 
-	//	Update_ListView_Collectables();
+		App->CL_Physics->Reset_Triggers();
 
-	//	App->SBC_Physics->Reset_Triggers();
+		return 1;
+	}
 
-	//	return 1;
-	//}
+	//Sound
+	result = strcmp(btext, "Sound");
+	if (result == 0)
+	{
+		App->CL_SoundMgr->flag_Accessed = 1;
+		strcpy(App->CL_SoundMgr->Access_File, App->CL_Scene->V_Object[Index]->S_Collectable[0]->Sound_File);
 
+		App->CL_SoundMgr->Dialog_SoundFile();
 
-	////Sound
-	//result = strcmp(btext, "Sound");
-	//if (result == 0)
-	//{
-	//	App->SBC_SoundMgr->Accessed = 1;
-	//	strcpy(App->SBC_SoundMgr->Access_File, App->SBC_Scene->V_Object[Index]->S_Collectable[0]->Sound_File);
+		strcpy(App->CL_Scene->V_Object[Index]->S_Collectable[0]->Sound_File, App->CL_SoundMgr->Access_File);
 
-	//	App->SBC_SoundMgr->Dialog_SoundFile();
+		App->CL_Scene->V_Object[Index]->S_Collectable[0]->SndVolume = App->CL_SoundMgr->SndVolume;
 
-	//	strcpy(App->SBC_Scene->V_Object[Index]->S_Collectable[0]->Sound_File, App->SBC_SoundMgr->Access_File);
+		Mark_As_Altered(Index);
 
-	//	App->SBC_Scene->V_Object[Index]->S_Collectable[0]->SndVolume = App->SBC_SoundMgr->SndVolume;
+		Update_ListView_Collectables();
 
-	//	Mark_As_Altered(Index);
+		App->CL_Physics->Reset_Triggers();
 
-	//	Update_ListView_Collectables();
-
-	//	App->SBC_Physics->Reset_Triggers();
-
-	//	return 1;
-	//}
+		return 1;
+	}
 
 	//// Play
 	//result = strcmp(btext, "Play");
@@ -1640,20 +1736,20 @@ bool CL64_Properties::Edit_Collectables(LPARAM lParam)
 // *************************************************************************
 bool CL64_Properties::Edit_Counters_OnClick(LPARAM lParam)
 {
-	//int Index = App->SBC_Properties->Current_Selected_Object; // Get Selected Object Index 
-	//int result = 1;
-	//int test;
+	int Index = Current_Selected_Object; // Get Selected Object Index 
+	int result = 1;
+	int test;
 
-	//LPNMLISTVIEW poo = (LPNMLISTVIEW)lParam;
-	//test = poo->iItem;
-	//ListView_GetItemText(Properties_hLV, test, 0, btext, 20);
+	LPNMLISTVIEW poo = (LPNMLISTVIEW)lParam;
+	test = poo->iItem;
+	ListView_GetItemText(Properties_hLV, test, 0, btext, 20);
 
-	//result = strcmp(btext, "Name");
-	//if (result == 0)
-	//{
-	//	App->SBC_Display->Rename_Counter(Index);
-	//	Update_ListView_Counters();
-	//}
+	result = strcmp(btext, "Name");
+	if (result == 0)
+	{
+		App->CL_Display->Rename_Counter(Index);
+		Update_ListView_Counters();
+	}
 
 	//result = strcmp(btext, "Pos_X");
 	//if (result == 0)

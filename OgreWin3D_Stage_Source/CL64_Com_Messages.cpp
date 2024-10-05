@@ -35,7 +35,7 @@ CL64_Com_Messages::~CL64_Com_Messages(void)
 }
 
 // *************************************************************************
-// *		Set_Message_Defaults:- Terry and Hazel Flanigan 2022	  	   *
+// *		Set_Message_Defaults:- Terry and Hazel Flanigan 2024	  	   *
 // *************************************************************************
 void CL64_Com_Messages::Set_Message_Defaults(int Index)
 {
@@ -149,4 +149,26 @@ bool CL64_Com_Messages::Create_Message_Entity(int Index)
 	App->CL_Physics->Set_Physics(Index);
 
 	return 1;
+}
+
+// *************************************************************************
+// *		Rename_Message_Entity:- Terry and Hazel Flanigan 2024	  	   *
+// *************************************************************************
+void CL64_Com_Messages::Rename_Message_Entity(int Index)
+{
+	strcpy(App->CL_Dialogs->btext, "Change Entity Name");
+	strcpy(App->CL_Dialogs->Chr_Text, App->CL_Scene->V_Object[Index]->Mesh_Name);
+
+	App->CL_Dialogs->Dialog_Text(Enums::Check_Names_Objects);
+
+	if (App->CL_Dialogs->Canceled == 1)
+	{
+		return;
+	}
+
+	strcpy(App->CL_Scene->V_Object[Index]->Mesh_Name, App->CL_Dialogs->Chr_Text);
+
+	App->CL_Properties->Mark_As_Altered(Index);
+
+	App->CL_FileView->Change_Item_Name(App->CL_Scene->V_Object[Index]->FileViewItem, App->CL_Dialogs->Chr_Text);
 }

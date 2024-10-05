@@ -145,3 +145,30 @@ void CL64_Com_Collectables::Set_Collectables_Defaults(int Index)
 
 	V_Object->S_Collectable[0]->Counter_Disabled = 0;
 }
+
+// *************************************************************************
+// *			Rename_Collectable:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+void CL64_Com_Collectables::Rename_Collectable(int Index)
+{
+	Base_Object* Object = App->CL_Scene->V_Object[Index];
+
+	strcpy(App->CL_Dialogs->btext, "Change Object Name");
+	strcpy(App->CL_Dialogs->Chr_Text, Object->Mesh_Name);
+
+	App->CL_Dialogs->Dialog_Text(Enums::Check_Names_Objects);
+
+	if (App->CL_Dialogs->Canceled == 1)
+	{
+		return;
+	}
+
+	strcpy(Object->Mesh_Name, App->CL_Dialogs->Chr_Text);
+
+	Object->Altered = 1;
+
+	App->CL_Scene->flag_Scene_Modified = 1;
+	App->CL_FileView->Mark_Altered(Object->FileViewItem);
+
+	App->CL_FileView->Change_Item_Name(Object->FileViewItem, Object->Mesh_Name);
+}

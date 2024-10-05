@@ -35,6 +35,7 @@ public:
 	void Set_First_Environment(int Index);
 	void GameMode(bool Is_On);
 
+	void Rename_Environ_Entity(int Index);
 	void Mark_As_Altered_Environ(int Index);
 	int Get_First_Environ();
 

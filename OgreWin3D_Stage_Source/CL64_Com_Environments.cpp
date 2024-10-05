@@ -366,3 +366,26 @@ void CL64_Com_Environments::GameMode(bool Is_On)
 		App->CL_Ogre->mSceneMgr->setFog(FOG_NONE, ColourValue(0.7, 0.7, 0.8), 0, 100, 1000);
 	}
 }
+
+// *************************************************************************
+// *		Rename_Environ_Entity:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+void CL64_Com_Environments::Rename_Environ_Entity(int Index)
+{
+	strcpy(App->CL_Dialogs->btext, "Change Environ Name");
+	strcpy(App->CL_Dialogs->Chr_Text, App->CL_Scene->V_Object[Index]->Mesh_Name);
+
+	App->CL_Dialogs->Dialog_Text(Enums::Check_Names_Objects);
+
+	if (App->CL_Dialogs->Canceled == 1)
+	{
+		return;
+	}
+
+	strcpy(App->CL_Scene->V_Object[Index]->Mesh_Name, App->CL_Dialogs->Chr_Text);
+
+	App->CL_FileView->Change_Item_Name(App->CL_Scene->V_Object[Index]->FileViewItem, App->CL_Dialogs->Chr_Text);
+
+	Mark_As_Altered_Environ(Index);
+
+}

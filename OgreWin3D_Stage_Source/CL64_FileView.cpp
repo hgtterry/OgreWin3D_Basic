@@ -603,12 +603,12 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 	// ---- Player
 	if (!strcmp(FileView_Folder, "Player")) // Folder
 	{
-		//App->SBC_FileView->Context_Selection = Enums::FileView_Player_Folder;
+		Context_Selection = Enums::FileView_Player_Folder;
 		return;
 	}
 	if (!strcmp(FileView_File, "Player"))
 	{
-		//App->SBC_FileView->Context_Selection = Enums::FileView_Player_File;
+		Context_Selection = Enums::FileView_Player_File;
 
 		//HideRightPanes();
 		
@@ -676,14 +676,12 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 	// ------------------------------------------------------------ Collectables
 	if (!strcmp(FileView_Folder, "Collectables")) // Folder
 	{
-
-		//App->SBC_FileView->Context_Selection = Enums::FileView_Collectables_Folder;
-
+		Context_Selection = Enums::FileView_Collectables_Folder;
 		return;
 	}
 	if (!strcmp(FileView_File, "Collectables"))
 	{
-		//App->SBC_FileView->Context_Selection = Enums::FileView_Collectables_File;
+		Context_Selection = Enums::FileView_Collectables_File;
 
 		//HideRightPanes();
 		
@@ -718,12 +716,12 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 	// ------------------------------------------------------------ Sounds
 	if (!strcmp(FileView_Folder, "Sounds")) // Folder
 	{
-		//App->SBC_FileView->Context_Selection = Enums::FileView_Sounds_Folder;
+		Context_Selection = Enums::FileView_Sounds_Folder;
 		return;
 	}
 	if (!strcmp(FileView_File, "Sounds"))
 	{
-		//App->SBC_FileView->Context_Selection = Enums::FileView_Sounds_File;
+		Context_Selection = Enums::FileView_Sounds_File;
 
 		//HideRightPanes();
 		/*App->SBC_Props_Dialog->Hide_Details_Goto_Dlg(1);
@@ -757,13 +755,12 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 	// ------------------------------------------------------------ Move Entity
 	if (!strcmp(FileView_Folder, "Move_Entities")) // Folder
 	{
-		//App->SBC_FileView->Context_Selection = Enums::FileView_Move_Folder;
-
+		Context_Selection = Enums::FileView_Move_Folder;
 		return;
 	}
 	if (!strcmp(FileView_File, "Move_Entities"))
 	{
-		//App->SBC_FileView->Context_Selection = Enums::FileView_Move_File;
+		Context_Selection = Enums::FileView_Move_File;
 
 		//HideRightPanes();
 		/*App->SBC_Props_Dialog->Hide_Details_Goto_Dlg(1);
@@ -798,13 +795,13 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 	// ------------------------------------------------------------ Message_Triggers
 	if (!strcmp(FileView_Folder, "Messages")) // Folder
 	{
-		//App->SBC_FileView->Context_Selection = Enums::FileView_Messages_Triggers_Folder;
+		Context_Selection = Enums::FileView_Messages_Folder;
 		return;
 	}
 
 	if (!strcmp(FileView_File, "Messages"))
 	{
-		//App->SBC_FileView->Context_Selection = Enums::FileView_Messages_Triggers_File;
+		Context_Selection = Enums::FileView_Messages_File;
 
 		//HideRightPanes();
 		//App->SBC_Props_Dialog->Hide_Details_Goto_Dlg(1);
@@ -840,13 +837,12 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 	// ------------------------------------------------------------ Teleporter Entity
 	if (!strcmp(FileView_Folder, "Teleporters")) // Folder
 	{
-		//App->SBC_FileView->Context_Selection = Enums::FileView_Teleports_Folder;
-
+		Context_Selection = Enums::FileView_Teleports_Folder;
 		return;
 	}
 	if (!strcmp(FileView_File, "Teleporters"))
 	{
-		//App->SBC_FileView->Context_Selection = Enums::FileView_Teleports_File;
+		Context_Selection = Enums::FileView_Teleports_File;
 
 		//HideRightPanes();
 		//App->SBC_Props_Dialog->Hide_Details_Goto_Dlg(1);
@@ -879,14 +875,13 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 	// ------------------------------------------------------------ Particles
 	if (!strcmp(FileView_Folder, "Particles")) // Folder
 	{
-		//App->SBC_FileView->Context_Selection = Enums::FileView_Particle_Folder;
-
+		Context_Selection = Enums::FileView_Particle_Folder;
 		return;
 	}
 
 	if (!strcmp(FileView_File, "Particles"))
 	{
-		//App->SBC_FileView->Context_Selection = Enums::FileView_Particle_File;
+		Context_Selection = Enums::FileView_Particle_File;
 
 		//HideRightPanes();
 
@@ -918,12 +913,12 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 	// ------------------------------------------------------------ Counters
 	if (!strcmp(FileView_Folder, "Counters")) // Folder
 	{
-		//App->SBC_FileView->Context_Selection = Enums::FileView_Counters_Folder;
+		Context_Selection = Enums::FileView_Counters_Folder;
 		return;
 	}
 	if (!strcmp(FileView_File, "Counters"))
 	{
-		//App->SBC_FileView->Context_Selection = Enums::FileView_Counters_File;
+		Context_Selection = Enums::FileView_Counters_File;
 
 		//HideRightPanes();
 		
@@ -942,12 +937,12 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 	// ------------------------------------------------------------ Eviron_Entities
 	if (!strcmp(FileView_Folder, "Evironments")) // Folder
 	{
-		//App->SBC_FileView->Context_Selection = Enums::FileView_EnvironEntity_Folder;
+		Context_Selection = Enums::FileView_EnvironEntity_Folder;
 		return;
 	}
 	if (!strcmp(FileView_File, "Evironments"))
 	{
-		//App->SBC_FileView->Context_Selection = Enums::FileView_EnvironEntity_File;
+		Context_Selection = Enums::FileView_EnvironEntity_File;
 
 		//HideRightPanes();
 		/*App->SBC_Props_Dialog->Hide_Details_Goto_Dlg(1);
@@ -1152,6 +1147,30 @@ void CL64_FileView::Context_Menu(HWND hDlg)
 	if (htvItem = TreeView_HitTest(hwndTV, &htInfo)) {    // hit test
 		TreeView_SelectItem(hwndTV, htvItem);           // success; select the item
 
+		//---- Player
+		if (!strcmp(FileView_Folder, "Player")) // Folder
+		{
+			hMenu = CreatePopupMenu();
+			AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_FILE_NEW, L"&New");
+			TrackPopupMenu(hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, App->ListPanel, NULL);
+			DestroyMenu(hMenu);
+			Context_Selection = Enums::FileView_Player_Folder;
+		}
+
+		if (!strcmp(FileView_File, "Player"))
+		{
+			hMenu = CreatePopupMenu();
+
+			AppendMenuW(hMenu, MF_STRING, IDM_FILE_RENAME, L"&Rename");
+			AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_COPY, L"&Copy");
+			AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_PASTE, L"&Paste");
+			AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
+			AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_FILE_DELETE, L"&Delete");
+			TrackPopupMenu(hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, App->ListPanel, NULL);
+			DestroyMenu(hMenu);
+			Context_Selection = Enums::FileView_Player_File;
+		}
+
 		//------------------------------------- Camera
 		if (!strcmp(FileView_Folder, "Camera")) // Folder
 		{
@@ -1208,7 +1227,7 @@ void CL64_FileView::Context_Menu(HWND hDlg)
 			AppendMenuW(hMenu, MF_STRING, IDM_FILE_NEW, L"&New");
 			TrackPopupMenu(hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, App->ListPanel, NULL);
 			DestroyMenu(hMenu);
-			Context_Selection = Enums::FileView_Messages_Triggers_Folder;
+			Context_Selection = Enums::FileView_Messages_Folder;
 		}
 
 		if (!strcmp(FileView_File, "Messages"))
@@ -1223,7 +1242,7 @@ void CL64_FileView::Context_Menu(HWND hDlg)
 			AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_FILE_DELETE, L"&Delete");
 			TrackPopupMenu(hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, App->ListPanel, NULL);
 			DestroyMenu(hMenu);
-			Context_Selection = Enums::FileView_Messages_Triggers_File;
+			Context_Selection = Enums::FileView_Messages_File;
 		}
 
 		//------------------------------------- Sounds
@@ -1437,7 +1456,7 @@ void CL64_FileView::Context_Menu(HWND hDlg)
 		{
 			hMenu = CreatePopupMenu();
 
-			AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_FILE_RENAME, L"&Rename");
+			AppendMenuW(hMenu, MF_STRING , IDM_FILE_RENAME, L"&Rename");
 			AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_GOTO, L"&Goto Camera");
 			AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_COPY, L"&Create Copy");
 			//AppendMenuW(App->SBC_FileView->hMenu, MF_STRING | MF_GRAYED, IDM_PASTE, L"&Paste");
@@ -1458,13 +1477,7 @@ void CL64_FileView::Context_Rename(HWND hDlg) const
 {
 	int Index = App->CL_Properties->Current_Selected_Object;
 
-	if (Context_Selection == Enums::FileView_Areas_File)
-	{
-		App->CL_Com_Area->Rename_Area(Index);
-		App->CL_Properties->Update_ListView_Area();
-		return;
-	}
-
+	// Camera
 	if (Context_Selection == Enums::FileView_Cameras_File)
 	{
 		//App->CL_Com_Camera->Rename_Camera(Index);
@@ -1472,24 +1485,83 @@ void CL64_FileView::Context_Rename(HWND hDlg) const
 		return;
 	}
 
-	if (Context_Selection == Enums::FileView_Counters_File)
+	// Player
+	if (Context_Selection == Enums::FileView_Player_File)
 	{
-		//App->SBC_Display->Rename_Counter(Index);
-		//App->SBC_Properties->Update_ListView_Counters();
+		App->CL_Player->Rename_Player(Index);
+		App->CL_Properties->Update_ListView_Player();
 		return;
 	}
 
+	// Aera
+	if (Context_Selection == Enums::FileView_Areas_File)
+	{
+		App->CL_Com_Area->Rename_Area(Index);
+		App->CL_Properties->Update_ListView_Area();
+		return;
+	}
+
+	// Sound Entity
+	if (Context_Selection == Enums::FileView_Sounds_File)
+	{
+		App->CL_Com_Sounds->Rename_Sound(Index);
+		App->CL_Properties->Update_ListView_Sounds();
+		return;
+	}
+
+	// Message Entity
+	if (Context_Selection == Enums::FileView_Messages_File)
+	{
+		App->CL_Com_Messages->Rename_Message_Entity(Index);
+		App->CL_Properties->Update_ListView_Messages();
+		return;
+	}
+	
+	// Move Entity
+	if (Context_Selection == Enums::FileView_Move_File)
+	{
+		App->CL_Com_MoveEntity->Rename_Move_Entity(Index);
+		App->CL_Properties->Update_ListView_Move_Entities();
+		return;
+	}
+
+	// Collectable Entity
 	if (Context_Selection == Enums::FileView_Collectables_File)
 	{
-		//App->CL_Object->Rename_Object(Index);
-		//App->SBC_Properties->Update_ListView_Collectables();
+		App->CL_Com_Collectables->Rename_Collectable(Index);
+		App->CL_Properties->Update_ListView_Collectables();
 		return;
 	}
 
+	// Teleport Entity
+	if (Context_Selection == Enums::FileView_Teleports_File)
+	{
+		App->CL_Com_Teleporters->Rename_Teleport_Entity(Index);
+		App->CL_Properties->Update_ListView_Teleport();
+		return;
+	}
+
+	// Environment Entity
 	if (Context_Selection == Enums::FileView_EnvironEntity_File)
 	{
-		//App->SBC_Com_Environments->Rename_Environ(Index);
-		//App->SBC_Properties->Update_ListView_Environs();
+		App->CL_Com_Environments->Rename_Environ_Entity(Index);
+		App->CL_Properties->Update_ListView_Environs();
+		return;
+	}
+
+	// Particle Entity
+	if (Context_Selection == Enums::FileView_Particle_File)
+	{
+		App->CL_Com_Particles->Rename_Particle_Entity(Index);
+		App->CL_Properties->Update_ListView_Particles();
+		return;
+	}
+
+	// Counter Entity
+	if (Context_Selection == Enums::FileView_Counters_File)
+	{
+		App->CL_Display->Rename_Counter(Index);
+		App->CL_Properties->Update_ListView_Counters();
 		return;
 	}
 

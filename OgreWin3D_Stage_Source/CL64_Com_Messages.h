@@ -32,6 +32,7 @@ public:
 
 	void Set_Message_Defaults(int Index);
 	bool Create_Message_Entity(int Index);
+	void Rename_Message_Entity(int Index);
 
 };
 

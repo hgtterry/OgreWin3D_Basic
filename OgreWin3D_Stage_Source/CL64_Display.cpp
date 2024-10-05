@@ -58,3 +58,37 @@ bool CL64_Display::Add_Counters_From_File() // From File
 
 	return 1;
 }
+
+// *************************************************************************
+// *			Rename_Counter:- Terry and Hazel Flanigan 2022			   *
+// *************************************************************************
+void CL64_Display::Rename_Counter(int Index)
+{
+	strcpy(App->CL_Dialogs->btext, "Change Counter Name");
+	strcpy(App->CL_Dialogs->Chr_Text, App->CL_Scene->B_Counter[Index]->Panel_Name);
+
+	App->CL_Dialogs->Dialog_Text(Enums::Check_Names_Objects);
+
+	if (App->CL_Dialogs->Canceled == 1)
+	{
+		return;
+	}
+
+	strcpy(App->CL_Scene->B_Counter[Index]->Panel_Name, App->CL_Dialogs->Chr_Text);
+
+	Mark_As_Altered_Counter(Index);
+
+	App->CL_FileView->Change_Item_Name(App->CL_Scene->B_Counter[Index]->FileViewItem, App->CL_Dialogs->Chr_Text);
+}
+
+// *************************************************************************
+// *	Mark_As_Altered_Counter:- Terry and Hazel Flanigan 2022		 	   *
+// *************************************************************************
+void CL64_Display::Mark_As_Altered_Counter(int Index)
+{
+	App->CL_Scene->B_Counter[Index]->Altered = 1;
+
+	App->CL_Scene->flag_Scene_Modified = 1;
+
+	App->CL_FileView->Mark_Altered(App->CL_Scene->B_Counter[Index]->FileViewItem);
+}

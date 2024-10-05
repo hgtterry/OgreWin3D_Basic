@@ -310,6 +310,32 @@ void CL64_Player::Reset_Player(float GroundSpeed)
 }
 
 // *************************************************************************
+// *			Rename_Player:- Terry and Hazel Flanigan 2024				   *
+// *************************************************************************
+void CL64_Player::Rename_Player(int Index)
+{
+	strcpy(App->CL_Dialogs->btext, "Change Player Name");
+	strcpy(App->CL_Dialogs->Chr_Text, App->CL_Scene->B_Player[0]->Player_Name);
+
+	App->CL_Dialogs->Dialog_Text(1);
+
+	if (App->CL_Dialogs->Canceled == 1)
+	{
+		return;
+	}
+
+	// Needs Duplicate Name test 
+	strcpy(App->CL_Scene->B_Player[0]->Player_Name, App->CL_Dialogs->Chr_Text);
+
+	App->CL_Scene->B_Player[0]->Altered = 1;
+	App->CL_Scene->flag_Scene_Modified = 1;
+	App->CL_FileView->Mark_Altered(App->CL_Scene->B_Player[0]->FileViewItem);
+
+	App->CL_FileView->Change_Item_Name(App->CL_Scene->B_Player[0]->FileViewItem, App->CL_Dialogs->Chr_Text);
+
+}
+
+// *************************************************************************
 // *			Check_Collisions:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
 void CL64_Player::Check_Collisions(void)

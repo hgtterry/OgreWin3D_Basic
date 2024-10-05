@@ -46,6 +46,8 @@ public:
 	bool Update_ListView_Particles();
 	bool Update_ListView_Counters();
 	bool Update_ListView_Environs();
+	
+	void Mark_As_Altered(int Index);
 
 	int Edit_Category;
 	int Current_Selected_Object;
@@ -72,8 +74,7 @@ private:
 	bool Edit_Messages(LPARAM lParam);
 	void Edit_Particle(LPARAM lParam);
 	bool Edit_Move_Entity(LPARAM lParam);
-
-	void Mark_As_Altered(int Index);
+	bool Edit_Teleport_Entity(LPARAM lParam);
 
 	char btext[20]; // ListView_GetItemText Text Holder for Compare
 

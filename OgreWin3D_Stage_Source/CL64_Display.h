@@ -31,6 +31,8 @@ public:
 	~CL64_Display(void);
 
 	bool Add_Counters_From_File();
+	void Rename_Counter(int Index);
+	void Mark_As_Altered_Counter(int Index);
 
 };
 
