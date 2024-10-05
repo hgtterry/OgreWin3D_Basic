@@ -1308,39 +1308,22 @@ void CL64_Properties::Edit_Particle(LPARAM lParam)
 // *************************************************************************
 bool CL64_Properties::Edit_Area_Onclick(LPARAM lParam)
 {
-	//int Index = 0;// App->SBC_Properties->Current_Selected_Object;
-	//int result = 1;
-	//int List_Index;
+	int Index = Current_Selected_Object;
+	int result = 1;
+	int List_Index;
 
-	//Base_Area* Area = App->SBC_Scene->B_Area[Index];
+	Base_Area* Area = App->CL_Scene->B_Area[Index];
 
-	//LPNMLISTVIEW List = (LPNMLISTVIEW)lParam;
-	//List_Index = List->iItem;
-	//ListView_GetItemText(Properties_hLV, List_Index, 0, btext, 20);
+	LPNMLISTVIEW List = (LPNMLISTVIEW)lParam;
+	List_Index = List->iItem;
+	ListView_GetItemText(Properties_hLV, List_Index, 0, btext, 20);
 
-	//result = strcmp(App->SBC_Properties->btext, "Name");
-	//if (result == 0)
-	//{
-	//	strcpy(App->Cl_Dialogs->btext, "Change Area Name");
-	//	strcpy(App->Cl_Dialogs->Chr_Text, Area->Area_Name);
-
-	//	App->Cl_Dialogs->Dialog_Text(1, 1);
-
-	//	if (App->Cl_Dialogs->Canceled == 1)
-	//	{
-	//		return TRUE;
-	//	}
-
-	//	// Needs Duplicate Name test 
-	//	strcpy(Area->Area_Name, App->Cl_Dialogs->Chr_Text);
-
-	//	Area->Altered = 1;
-	//	App->SBC_Scene->Scene_Modified = 1;
-	//	App->SBC_FileView->Mark_Altered(Area->FileViewItem);
-
-	//	App->SBC_FileView->Change_Item_Name(Area->FileViewItem, Area->Area_Name);
-	//	Update_ListView_Area();
-	//}
+	result = strcmp(btext, "Name");
+	if (result == 0)
+	{
+		App->CL_Com_Area->Rename_Area(Index);
+		Update_ListView_Area();
+	}
 
 	//result = strcmp(btext, "Materials");
 	//if (result == 0)

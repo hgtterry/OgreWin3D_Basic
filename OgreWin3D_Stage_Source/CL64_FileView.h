@@ -66,12 +66,17 @@ public:
 	HTREEITEM FV_Lights_Folder;
 	HTREEITEM FV_UserObjects_Folder;
 
+	HMENU hMenu;
+
 private:
 	static LRESULT CALLBACK Proc_ListPanel(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	void AddRootFolder(void);
 	void MoreFolders(void);
 	void ExpandRoot(void);
+
+	void Context_Menu(HWND hDlg);
+	void Context_Rename(HWND hDlg) const;
 
 	TV_INSERTSTRUCT tvinsert;
 
@@ -84,6 +89,8 @@ private:
 
 	HIMAGELIST hImageList;
 	HBITMAP hBitMap;
+
+	int Context_Selection;
 
 	char FileView_Folder[MAX_PATH];
 	char FileView_File[MAX_PATH];

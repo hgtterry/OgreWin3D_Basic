@@ -345,3 +345,31 @@ void CL64_Com_Area::Set_Physics(int Index)
 
 	App->CL_Scene->B_Area[Index]->Physics_Valid = 1;
 }
+
+// *************************************************************************
+// *			Rename_Area:- Terry and Hazel Flanigan 2024				   *
+// *************************************************************************
+void CL64_Com_Area::Rename_Area(int Index)
+{
+	Base_Area* Area = App->CL_Scene->B_Area[Index];
+
+	strcpy(App->CL_Dialogs->btext, "Change Area Name");
+	strcpy(App->CL_Dialogs->Chr_Text, Area->Area_Name);
+
+	App->CL_Dialogs->Dialog_Text(1);
+
+	if (App->CL_Dialogs->Canceled == 1)
+	{
+		return;
+	}
+
+	// Needs Duplicate Name test 
+	strcpy(Area->Area_Name, App->CL_Dialogs->Chr_Text);
+
+	Area->Altered = 1;
+	App->CL_Scene->flag_Scene_Modified = 1;
+	App->CL_FileView->Mark_Altered(Area->FileViewItem);
+
+	App->CL_FileView->Change_Item_Name(Area->FileViewItem, Area->Area_Name);
+
+}
