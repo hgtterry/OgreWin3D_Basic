@@ -60,13 +60,20 @@ private:
 	void Create_Properties_hLV(void);
 	void ListView_OnClickOptions(LPARAM lParam);
 
-	bool Edit_Object_Onclick(LPARAM lParam);
+	bool Edit_Object(LPARAM lParam);
+	bool Edit_Player(LPARAM lParam);
+	bool Edit_Sounds(LPARAM lParam);
 	bool Edit_Environs_OnClick(LPARAM lParam);
 	bool Edit_Area_Onclick(LPARAM lParam);
 	bool Edit_Camera_Onclick(LPARAM lParam);
-	bool Edit_Collectables_OnClick(LPARAM lParam);
+	bool Edit_Collectables(LPARAM lParam);
 	bool Edit_Counters_OnClick(LPARAM lParam);
 	void Edit_Light_Onclick(LPARAM lParam);
+	bool Edit_Messages(LPARAM lParam);
+	void Edit_Particle(LPARAM lParam);
+	bool Edit_Move_Entity(LPARAM lParam);
+
+	void Mark_As_Altered(int Index);
 
 	char btext[20]; // ListView_GetItemText Text Holder for Compare
 

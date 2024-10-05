@@ -1106,3 +1106,15 @@ void CL64_FileView::Mark_Altered(HTREEITEM Item)
 
 	//EnableMenuItem(App->mMenu, ID_FILE_SAVEPROJECTALL, MF_ENABLED);
 }
+
+// *************************************************************************
+// *		Change_Item_Name:- Terry and Hazel Flanigan 2024		 	   *
+// *************************************************************************
+void CL64_FileView::Change_Item_Name(HTREEITEM Folder, char* FolderName)
+{
+	TVITEM Sitem;
+	Sitem.mask = TVIF_TEXT;
+	Sitem.hItem = Folder;
+	Sitem.pszText = FolderName;
+	SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_SETITEM, 0, (LPARAM)(const LPTVITEM)&Sitem);
+}

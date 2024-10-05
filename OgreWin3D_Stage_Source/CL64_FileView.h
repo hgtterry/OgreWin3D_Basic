@@ -44,6 +44,7 @@ public:
 	void Change_Project_Name(void);
 	void Mark_Altered(HTREEITEM Item);
 	void Show_FileView(bool Enable);
+	void Change_Item_Name(HTREEITEM Folder, char* FolderName);
 
 	bool Flag_FileView_Active;
 

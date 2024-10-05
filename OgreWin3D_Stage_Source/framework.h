@@ -189,6 +189,13 @@ namespace Enums
 		Axis_y = 2,
 		Axis_z = 3
 	};
+
+	enum Check_Names
+	{
+		Check_Names_None = 0,
+		Check_Names_Locatoins = 1,
+		Check_Names_Objects = 2
+	};
 }
 
 #define Debug App->Debug_Text();
