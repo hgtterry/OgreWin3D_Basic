@@ -68,6 +68,8 @@ private:
 
 	void RenderCrossHair(void);
 
+	void Marker_Render_BoundingBox(void);
+
 	float Hair_1PosX;
 	float Hair_1PosY;
 	float Hair_1PosZ;

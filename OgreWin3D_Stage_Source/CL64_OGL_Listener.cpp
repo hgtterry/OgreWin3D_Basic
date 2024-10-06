@@ -652,3 +652,67 @@ void CL64_OGL_Listener::RenderCrossHair(void)
 	glVertex3f(0, Length, 0);
 	glEnd();
 }
+
+// *************************************************************************
+// *	MeshData_Render_BoundingBox:- Terry and Hazel Flanigan 2024	  	   *
+// *************************************************************************
+void CL64_OGL_Listener::Marker_Render_BoundingBox(void)
+{
+	/*float m_xMin = App->CL_Scene->S_BoundingBox[0]->BB_Min[0].x;
+	float m_yMin = App->CL_Scene->S_BoundingBox[0]->BB_Min[0].y;
+	float m_zMin = App->CL_Scene->S_BoundingBox[0]->BB_Min[0].z;
+
+	float m_xMax = App->CL_Scene->S_BoundingBox[0]->BB_Max[0].x;
+	float m_yMax = App->CL_Scene->S_BoundingBox[0]->BB_Max[0].y;
+	float m_zMax = App->CL_Scene->S_BoundingBox[0]->BB_Max[0].z;*/
+
+	/*glDisable(GL_TEXTURE_2D);
+	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_STENCIL_TEST);
+
+	glLineWidth(2);
+
+	glColor3f(0.0f, 1.0f, 0.0f);
+	glBegin(GL_LINES);
+
+	glVertex3f(m_xMin, m_yMin, m_zMin);
+	glVertex3f(m_xMin, m_yMin, m_zMax);
+
+	glVertex3f(m_xMax, m_yMin, m_zMin);
+	glVertex3f(m_xMax, m_yMin, m_zMax);
+
+	glVertex3f(m_xMin, m_yMax, m_zMin);
+	glVertex3f(m_xMin, m_yMax, m_zMax);
+
+	glVertex3f(m_xMax, m_yMax, m_zMin);
+	glVertex3f(m_xMax, m_yMax, m_zMax);
+
+	glVertex3f(m_xMin, m_yMin, m_zMin);
+	glVertex3f(m_xMax, m_yMin, m_zMin);
+
+	glVertex3f(m_xMin, m_yMin, m_zMin);
+	glVertex3f(m_xMin, m_yMax, m_zMin);
+
+	glVertex3f(m_xMax, m_yMin, m_zMin);
+	glVertex3f(m_xMax, m_yMax, m_zMin);
+
+	glVertex3f(m_xMin, m_yMax, m_zMin);
+	glVertex3f(m_xMax, m_yMax, m_zMin);
+
+	glVertex3f(m_xMin, m_yMin, m_zMax);
+	glVertex3f(m_xMax, m_yMin, m_zMax);
+
+	glVertex3f(m_xMin, m_yMin, m_zMax);
+	glVertex3f(m_xMin, m_yMax, m_zMax);
+
+	glVertex3f(m_xMax, m_yMin, m_zMax);
+	glVertex3f(m_xMax, m_yMax, m_zMax);
+
+	glVertex3f(m_xMin, m_yMax, m_zMax);
+	glVertex3f(m_xMax, m_yMax, m_zMax);
+
+	glEnd();
+	glEnable(GL_TEXTURE_2D);
+	glDisable(GL_DEPTH_TEST);
+	glDisable(GL_STENCIL_TEST);*/
+}

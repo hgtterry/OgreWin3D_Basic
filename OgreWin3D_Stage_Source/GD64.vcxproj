@@ -187,6 +187,7 @@
     <ClInclude Include="CL64_Display.h" />
     <ClInclude Include="CL64_FileView.h" />
     <ClInclude Include="CL64_File_IO.h" />
+    <ClInclude Include="CL64_Gizmos.h" />
     <ClInclude Include="CL64_Grid.h" />
     <ClInclude Include="CL64_Gui_Environment.h" />
     <ClInclude Include="CL64_ImGui.h" />
@@ -243,6 +244,7 @@
     <ClCompile Include="CL64_Display.cpp" />
     <ClCompile Include="CL64_FileView.cpp" />
     <ClCompile Include="CL64_File_IO.cpp" />
+    <ClCompile Include="CL64_Gizmos.cpp" />
     <ClCompile Include="CL64_Grid.cpp" />
     <ClCompile Include="CL64_Gui_Environment.cpp" />
     <ClCompile Include="CL64_ImGui.cpp" />
