@@ -1055,9 +1055,12 @@ bool CL64_Properties::Edit_Move_Entity(LPARAM lParam)
 	result = strcmp(btext, "Volume");
 	if (result == 0)
 	{
+		App->CL_SoundMgr->flag_Accessed = 1;
+		strcpy(App->CL_SoundMgr->Access_File, App->CL_Scene->V_Object[Index]->Sound_File);
+
 		App->CL_SoundMgr->Dialog_SoundFile();
 
-		strcpy(App->CL_Scene->V_Object[Index]->Sound_File, App->CL_SoundMgr->m_Current_Sound_file);
+		strcpy(App->CL_Scene->V_Object[Index]->Sound_File, App->CL_SoundMgr->Access_File);
 
 		App->CL_Scene->V_Object[Index]->SndVolume = App->CL_SoundMgr->SndVolume;
 
@@ -1097,21 +1100,21 @@ bool CL64_Properties::Edit_Move_Entity(LPARAM lParam)
 	if (result == 0)
 	{
 
-		/*strcpy(App->Cl_Dialogs->btext, "Play Sound In The Game");
+		strcpy(App->CL_Dialogs->btext, "Play Sound");
 
-		App->Cl_Dialogs->TrueFlase = App->SBC_Scene->V_Object[Index]->Play_Sound;
+		App->CL_Dialogs->TrueFlase = App->CL_Scene->V_Object[Index]->Play_Sound;
 
-		App->Cl_Dialogs->Dialog_TrueFlase(App->MainHwnd);
+		App->CL_Dialogs->Dialog_TrueFlase(App->MainHwnd);
 
-		if (App->Cl_Dialogs->Canceled == 0)
+		if (App->CL_Dialogs->Canceled == 0)
 		{
-			if (App->Cl_Dialogs->TrueFlase == 1)
+			if (App->CL_Dialogs->TrueFlase == 1)
 			{
-				App->SBC_Scene->V_Object[Index]->Play_Sound = 1;
+				App->CL_Scene->V_Object[Index]->Play_Sound = 1;
 			}
 			else
 			{
-				App->SBC_Scene->V_Object[Index]->Play_Sound = 0;
+				App->CL_Scene->V_Object[Index]->Play_Sound = 0;
 
 			}
 		}
@@ -1120,7 +1123,7 @@ bool CL64_Properties::Edit_Move_Entity(LPARAM lParam)
 
 		Update_ListView_Move_Entities();
 
-		App->SBC_Physics->Reset_Triggers();*/
+		App->CL_Physics->Reset_Triggers();
 
 		return 1;
 	}

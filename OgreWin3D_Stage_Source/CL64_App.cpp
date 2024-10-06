@@ -71,6 +71,7 @@ CL64_App::CL64_App(void)
 	CL_Gui_Environment =	nullptr;
 	CL_Props_Dialogs =		nullptr;
 	CL_Gizmos =				nullptr;
+	CL_MeshViewer =			nullptr;
 	//-------------------------------------
 
 	hInst =				nullptr;
@@ -193,6 +194,7 @@ void CL64_App::InitApp(void)
 	CL_Gui_Environment =	new CL64_Gui_Environment();
 	CL_Props_Dialogs =		new CL64_Props_Dialogs();
 	CL_Gizmos =				new CL64_Gizmos();
+	CL_MeshViewer =			new CL64_MeshViewer();
 
 	SetBrushes_Fonts();
 

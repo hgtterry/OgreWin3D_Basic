@@ -67,6 +67,7 @@ THE SOFTWARE.
 #include "CL64_Gui_Environment.h"
 #include "CL64_Props_Dialogs.h"
 #include "CL64_Gizmos.h"
+#include "CL64_MeshViewer.h"
 
 class CL64_App
 {
@@ -118,6 +119,7 @@ public:
 	CL64_Gui_Environment*	CL_Gui_Environment;
 	CL64_Props_Dialogs*		CL_Props_Dialogs;
 	CL64_Gizmos*			CL_Gizmos;
+	CL64_MeshViewer*		CL_MeshViewer;
 
 	void InitApp(void);
 	void Init_Dialogs(void);

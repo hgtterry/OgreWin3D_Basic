@@ -248,15 +248,17 @@ void CL64_Collision::Set_Move_Entity(int Index)
 		FinalPosition = z + App->CL_Scene->V_Object[ObjectIndex]->S_MoveType[0]->Move_Distance;
 	}
 
+	if (App->CL_Scene->V_Object[Index]->Play_Sound == 1)
+	{
+		char Sound[MAX_PATH];
+		strcpy(Sound, App->CL_SoundMgr->Default_Folder);
+		strcat(Sound, "\\Media\\Sounds\\");
+		strcat(Sound, App->CL_Scene->V_Object[ObjectIndex]->Sound_File);
 
-	char Sound[1024];
-	strcpy(Sound, App->CL_SoundMgr->Default_Folder);
-	strcat(Sound, "\\Media\\Sounds\\");
-	strcat(Sound, App->CL_Scene->V_Object[ObjectIndex]->Sound_File);
-
-	App->CL_Scene->V_Object[ObjectIndex]->SndFile = App->CL_SoundMgr->SoundEngine->play2D(Sound, false, true, true);
-	App->CL_Scene->V_Object[ObjectIndex]->SndFile->setVolume(App->CL_Scene->V_Object[ObjectIndex]->SndVolume);
-	App->CL_Scene->V_Object[ObjectIndex]->SndFile->setIsPaused(false);
+		App->CL_Scene->V_Object[ObjectIndex]->SndFile = App->CL_SoundMgr->SoundEngine->play2D(Sound, false, true, true);
+		App->CL_Scene->V_Object[ObjectIndex]->SndFile->setVolume(App->CL_Scene->V_Object[ObjectIndex]->SndVolume);
+		App->CL_Scene->V_Object[ObjectIndex]->SndFile->setIsPaused(false);
+	}
 
 	DoMove = 1; // Trigger Ogre Listener to update
 }
@@ -287,10 +289,12 @@ void CL64_Collision::MoveObject_Listener(Ogre::Real Time)
 
 				if (App->CL_Scene->V_Object[ObjectIndex]->S_MoveType[0]->MeshPos.x > FinalPosition)
 				{
-
-					App->CL_Scene->V_Object[ObjectIndex]->SndFile->stop();
-					App->CL_Scene->V_Object[ObjectIndex]->SndFile->drop();
-					App->CL_Scene->V_Object[ObjectIndex]->SndFile = NULL;
+					if (App->CL_Scene->V_Object[ObjectIndex]->Play_Sound == 1)
+					{
+						App->CL_Scene->V_Object[ObjectIndex]->SndFile->stop();
+						App->CL_Scene->V_Object[ObjectIndex]->SndFile->drop();
+						App->CL_Scene->V_Object[ObjectIndex]->SndFile = NULL;
+					}
 
 					DoMove = 0; // Stop Listener
 				}
@@ -312,10 +316,12 @@ void CL64_Collision::MoveObject_Listener(Ogre::Real Time)
 
 				if (App->CL_Scene->V_Object[ObjectIndex]->S_MoveType[0]->MeshPos.x < FinalPosition)
 				{
-
-					App->CL_Scene->V_Object[ObjectIndex]->SndFile->stop();
-					App->CL_Scene->V_Object[ObjectIndex]->SndFile->drop();
-					App->CL_Scene->V_Object[ObjectIndex]->SndFile = NULL;
+					if (App->CL_Scene->V_Object[ObjectIndex]->Play_Sound == 1)
+					{
+						App->CL_Scene->V_Object[ObjectIndex]->SndFile->stop();
+						App->CL_Scene->V_Object[ObjectIndex]->SndFile->drop();
+						App->CL_Scene->V_Object[ObjectIndex]->SndFile = NULL;
+					}
 
 					DoMove = 0; // Stop Listener
 				}
@@ -342,9 +348,12 @@ void CL64_Collision::MoveObject_Listener(Ogre::Real Time)
 
 				if (App->CL_Scene->V_Object[ObjectIndex]->S_MoveType[0]->MeshPos.y > FinalPosition)
 				{
-					App->CL_Scene->V_Object[ObjectIndex]->SndFile->stop();
-					App->CL_Scene->V_Object[ObjectIndex]->SndFile->drop();
-					App->CL_Scene->V_Object[ObjectIndex]->SndFile = NULL;
+					if (App->CL_Scene->V_Object[ObjectIndex]->Play_Sound == 1)
+					{
+						App->CL_Scene->V_Object[ObjectIndex]->SndFile->stop();
+						App->CL_Scene->V_Object[ObjectIndex]->SndFile->drop();
+						App->CL_Scene->V_Object[ObjectIndex]->SndFile = NULL;
+					}
 
 					DoMove = 0; // Stop Listener
 				}
@@ -366,9 +375,12 @@ void CL64_Collision::MoveObject_Listener(Ogre::Real Time)
 
 				if (App->CL_Scene->V_Object[ObjectIndex]->S_MoveType[0]->MeshPos.y < FinalPosition)
 				{
-					App->CL_Scene->V_Object[ObjectIndex]->SndFile->stop();
-					App->CL_Scene->V_Object[ObjectIndex]->SndFile->drop();
-					App->CL_Scene->V_Object[ObjectIndex]->SndFile = NULL;
+					if (App->CL_Scene->V_Object[ObjectIndex]->Play_Sound == 1)
+					{
+						App->CL_Scene->V_Object[ObjectIndex]->SndFile->stop();
+						App->CL_Scene->V_Object[ObjectIndex]->SndFile->drop();
+						App->CL_Scene->V_Object[ObjectIndex]->SndFile = NULL;
+					}
 
 					DoMove = 0; // Stop Listener
 				}
@@ -395,9 +407,12 @@ void CL64_Collision::MoveObject_Listener(Ogre::Real Time)
 
 				if (App->CL_Scene->V_Object[ObjectIndex]->S_MoveType[0]->MeshPos.z > FinalPosition)
 				{
-					App->CL_Scene->V_Object[ObjectIndex]->SndFile->stop();
-					App->CL_Scene->V_Object[ObjectIndex]->SndFile->drop();
-					App->CL_Scene->V_Object[ObjectIndex]->SndFile = NULL;
+					if (App->CL_Scene->V_Object[ObjectIndex]->Play_Sound == 1)
+					{
+						App->CL_Scene->V_Object[ObjectIndex]->SndFile->stop();
+						App->CL_Scene->V_Object[ObjectIndex]->SndFile->drop();
+						App->CL_Scene->V_Object[ObjectIndex]->SndFile = NULL;
+					}
 
 					DoMove = 0; // Stop Listener
 				}
@@ -419,9 +434,12 @@ void CL64_Collision::MoveObject_Listener(Ogre::Real Time)
 
 				if (App->CL_Scene->V_Object[ObjectIndex]->S_MoveType[0]->MeshPos.z < FinalPosition)
 				{
-					App->CL_Scene->V_Object[ObjectIndex]->SndFile->stop();
-					App->CL_Scene->V_Object[ObjectIndex]->SndFile->drop();
-					App->CL_Scene->V_Object[ObjectIndex]->SndFile = NULL;
+					if (App->CL_Scene->V_Object[ObjectIndex]->Play_Sound == 1)
+					{
+						App->CL_Scene->V_Object[ObjectIndex]->SndFile->stop();
+						App->CL_Scene->V_Object[ObjectIndex]->SndFile->drop();
+						App->CL_Scene->V_Object[ObjectIndex]->SndFile = NULL;
+					}
 
 					DoMove = 0; // Stop Listener
 				}
