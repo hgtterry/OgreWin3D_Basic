@@ -633,29 +633,26 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 	// ---- Objects
 	if (!strcmp(FileView_Folder, "Objects")) // Folder
 	{
-		//App->SBC_FileView->Context_Selection = Enums::FileView_Objects_Folder;
+		Context_Selection = Enums::FileView_Objects_Folder;
 		return;
 	}
 	if (!strcmp(FileView_File, "Objects"))
 	{
-		//App->SBC_FileView->Context_Selection = Enums::FileView_Objects_File;
+		Context_Selection = Enums::FileView_Objects_File;
 
 		//HideRightPanes();
 		
-
 		/*App->SBC_Props_Dialog->Hide_Details_Goto_Dlg(1);
 		App->SBC_Props_Dialog->Hide_Dimensions_Dlg(1, App->SBC_Scene->V_Object[Index]->Dimensions_Locked);
 		App->SBC_Props_Dialog->Hide_Debug_Dlg(1);
 		App->SBC_Props_Dialog->Hide_Material_Dlg(1);*/
 
-
-		
-
 		//----------------------------------------------------------------------------
 		/*App->SBC_Properties->Reset_Last_Selected_Object(App->SBC_Properties->Last_Selected_Object);
 		App->SBC_Properties->Last_Selected_Object = Index;*/
 		//----------------------------------------------------------------------------
-		/*App->SBC_Markers->MarkerBB_Addjust(Index);*/
+		
+		App->CL_Gizmos->MarkerBox_Addjust(Index);
 
 		App->CL_Properties->Current_Selected_Object = Index;
 		App->CL_Properties->Edit_Category = Enums::Edit_Object;
@@ -696,7 +693,7 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 		//App->SBC_Properties->Last_Selected_Object = Index;
 		//----------------------------------------------------------------------------
 
-		//App->SBC_Markers->MarkerBB_Addjust(Index);
+		App->CL_Gizmos->MarkerBox_Addjust(Index);
 
 		App->CL_Properties->Current_Selected_Object = Index;
 		App->CL_Properties->Edit_Category = Enums::Edit_Collectable;
@@ -735,7 +732,7 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 		App->SBC_Properties->Last_Selected_Object = Index;*/
 		//----------------------------------------------------------------------------
 
-		//App->SBC_Markers->MarkerBB_Addjust(Index);
+		App->CL_Gizmos->MarkerBox_Addjust(Index);
 
 		App->CL_Properties->Current_Selected_Object = Index;
 		App->CL_Properties->Edit_Category = Enums::Edit_Sounds;
@@ -775,7 +772,7 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 		App->SBC_Properties->Last_Selected_Object = Index;*/
 		//----------------------------------------------------------------------------
 
-		//App->SBC_Markers->MarkerBB_Addjust(Index);
+		App->CL_Gizmos->MarkerBox_Addjust(Index);
 
 		App->CL_Properties->Current_Selected_Object = Index;
 		App->CL_Properties->Edit_Category = Enums::Edit_Move_Entity;
@@ -817,7 +814,7 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 		App->SBC_Properties->Last_Selected_Object = Index;*/
 		//----------------------------------------------------------------------------
 
-		//App->SBC_Markers->MarkerBB_Addjust(Index);
+		App->CL_Gizmos->MarkerBox_Addjust(Index);
 
 		App->CL_Properties->Current_Selected_Object = Index;
 		App->CL_Properties->Edit_Category = Enums::Edit_Message;
@@ -856,7 +853,7 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 		App->SBC_Properties->Last_Selected_Object = Index;*/
 		//----------------------------------------------------------------------------
 
-		//App->SBC_Markers->MarkerBB_Addjust(Index);
+		App->CL_Gizmos->MarkerBox_Addjust(Index);
 
 		App->CL_Properties->Current_Selected_Object = Index;
 		App->CL_Properties->Edit_Category = Enums::Edit_Teleport;
@@ -893,7 +890,7 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 		//App->SBC_Properties->Last_Selected_Object = Index;
 		//----------------------------------------------------------------------------
 
-		//App->SBC_Markers->MarkerBB_Addjust(Index);
+		App->CL_Gizmos->MarkerBox_Addjust(Index);
 
 		App->CL_Properties->Current_Selected_Object = Index;
 		App->CL_Properties->Edit_Category = Enums::Edit_Particles;
@@ -955,7 +952,7 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 		App->SBC_Properties->Last_Selected_Object = Index;*/
 		//----------------------------------------------------------------------------
 
-		//App->SBC_Markers->MarkerBB_Addjust(Index);
+		App->CL_Gizmos->MarkerBox_Addjust(Index);
 
 		App->CL_Properties->Current_Selected_Object = Index;
 		App->CL_Properties->Edit_Category = Enums::Edit_Environs;

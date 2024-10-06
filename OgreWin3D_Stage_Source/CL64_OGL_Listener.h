@@ -26,6 +26,18 @@ public:
 	float RX;
 	float RZ;
 
+	float MarkerBox_PosX;
+	float MarkerBox_PosY;
+	float MarkerBox_PosZ;
+
+	float MarkerBox_Depth;
+	float MarkerBox_Height;
+	float MarkerBox_Width;
+
+	float MarkerBox_Yaw;
+	float MarkerBox_Pitch;
+	float MarkerBox_Roll;
+
 	int Selected_Face_Group;
 
 	bool Flag_ShowFaces;
@@ -34,6 +46,7 @@ public:
 	bool Flag_ShowBones;
 	bool Flag_ShowNormals;
 	bool Flag_ShowTextured;
+	bool Flag_Show_MarkerBox;
 
 	bool flag_ShowOnlySubFaces;
 

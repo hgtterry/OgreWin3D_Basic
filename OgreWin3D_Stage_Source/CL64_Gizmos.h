@@ -29,5 +29,16 @@ public:
 
 	CL64_Gizmos(void);
 	~CL64_Gizmos(void);
+
+	void Set_Gizmos();
+
+	void MarkerBox_Setup(void);
+	void MarkerBox_Update(float Depth, float Height, float Width);
+	void MarkerBox_Addjust(int Index);
+
+	ManualObject* BoxManual;
+	SceneNode* BoxNode;
 };
+
+
 

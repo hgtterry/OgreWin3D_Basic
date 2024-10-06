@@ -42,12 +42,25 @@ CL64_OGL_Listener::CL64_OGL_Listener(void)
 	Hair_1RotY = 0;
 	Hair_1RotZ = 0;
 
+	MarkerBox_PosX = 0;
+	MarkerBox_PosY = 0;
+	MarkerBox_PosZ = 0;
+
+	MarkerBox_Depth = 2.5;
+	MarkerBox_Height = 2.5;
+	MarkerBox_Width = 2.5;
+
+	MarkerBox_Yaw = 0;
+	MarkerBox_Pitch = 0;
+	MarkerBox_Roll = 0;
+
 	Flag_ShowFaces = 0;
 	Flag_ShowBoundingBox = 0;
 	Flag_ShowPoints = 0;
 	Flag_ShowBones = 0;
 	Flag_ShowNormals = 0;
 	Flag_ShowTextured = 0;
+	Flag_Show_MarkerBox = 0;
 
 	Light_Activated = 0;
 
@@ -216,6 +229,11 @@ void CL64_OGL_Listener::Render_Loop()
 	//if (Show_Crosshair == 1)
 	{
 		//RenderCrossHair();
+	}
+
+	if (Flag_Show_MarkerBox == 1)
+	{
+		Marker_Render_BoundingBox();
 	}
 
 	if (depthTestEnabled)
@@ -658,15 +676,17 @@ void CL64_OGL_Listener::RenderCrossHair(void)
 // *************************************************************************
 void CL64_OGL_Listener::Marker_Render_BoundingBox(void)
 {
-	/*float m_xMin = App->CL_Scene->S_BoundingBox[0]->BB_Min[0].x;
-	float m_yMin = App->CL_Scene->S_BoundingBox[0]->BB_Min[0].y;
-	float m_zMin = App->CL_Scene->S_BoundingBox[0]->BB_Min[0].z;
+	float BoxDepth = MarkerBox_Depth;
+	float BoxHeight = MarkerBox_Height;
+	float BoxWidth = MarkerBox_Width;
 
-	float m_xMax = App->CL_Scene->S_BoundingBox[0]->BB_Max[0].x;
-	float m_yMax = App->CL_Scene->S_BoundingBox[0]->BB_Max[0].y;
-	float m_zMax = App->CL_Scene->S_BoundingBox[0]->BB_Max[0].z;*/
+	glTranslatef(MarkerBox_PosX, MarkerBox_PosY, MarkerBox_PosZ);
 
-	/*glDisable(GL_TEXTURE_2D);
+	glRotatef(MarkerBox_Roll, 1.0, 0.0, 0.0); // Rotations of the object 
+	glRotatef(MarkerBox_Yaw, 0.0, 1.0, 0.0);
+	glRotatef(MarkerBox_Pitch, 0.0, 0.0, 1.0);
+
+	glDisable(GL_TEXTURE_2D);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_STENCIL_TEST);
 
@@ -675,44 +695,48 @@ void CL64_OGL_Listener::Marker_Render_BoundingBox(void)
 	glColor3f(0.0f, 1.0f, 0.0f);
 	glBegin(GL_LINES);
 
-	glVertex3f(m_xMin, m_yMin, m_zMin);
-	glVertex3f(m_xMin, m_yMin, m_zMax);
+	// Front
+	glVertex3f(-BoxWidth, -BoxHeight, BoxDepth);	// Bottom Left
+	glVertex3f(BoxWidth, -BoxHeight, BoxDepth);		// Bottom Right
 
-	glVertex3f(m_xMax, m_yMin, m_zMin);
-	glVertex3f(m_xMax, m_yMin, m_zMax);
+	glVertex3f(-BoxWidth, BoxHeight, BoxDepth);		// Top Left
+	glVertex3f(BoxWidth, BoxHeight, BoxDepth);		// Top Right
 
-	glVertex3f(m_xMin, m_yMax, m_zMin);
-	glVertex3f(m_xMin, m_yMax, m_zMax);
+	glVertex3f(-BoxWidth, -BoxHeight, BoxDepth);	// Bottom Left
+	glVertex3f(-BoxWidth, BoxHeight, BoxDepth);		// Top Right
 
-	glVertex3f(m_xMax, m_yMax, m_zMin);
-	glVertex3f(m_xMax, m_yMax, m_zMax);
+	glVertex3f(BoxWidth, -BoxHeight, BoxDepth);		// Bottom Right
+	glVertex3f(BoxWidth, BoxHeight, BoxDepth);		// Top Right
 
-	glVertex3f(m_xMin, m_yMin, m_zMin);
-	glVertex3f(m_xMax, m_yMin, m_zMin);
+	// Back
+	glVertex3f(-BoxWidth, -BoxHeight, -BoxDepth);	// Bottom Left
+	glVertex3f(BoxWidth, -BoxHeight, -BoxDepth);		// Bottom Right
 
-	glVertex3f(m_xMin, m_yMin, m_zMin);
-	glVertex3f(m_xMin, m_yMax, m_zMin);
+	glVertex3f(-BoxWidth, BoxHeight, -BoxDepth);		// Top Left
+	glVertex3f(BoxWidth, BoxHeight, -BoxDepth);		// Top Right
 
-	glVertex3f(m_xMax, m_yMin, m_zMin);
-	glVertex3f(m_xMax, m_yMax, m_zMin);
+	glVertex3f(-BoxWidth, -BoxHeight,- BoxDepth);	// Bottom Left
+	glVertex3f(-BoxWidth, BoxHeight, -BoxDepth);		// Top Right
 
-	glVertex3f(m_xMin, m_yMax, m_zMin);
-	glVertex3f(m_xMax, m_yMax, m_zMin);
+	glVertex3f(BoxWidth, -BoxHeight, -BoxDepth);		// Bottom Right
+	glVertex3f(BoxWidth, BoxHeight, -BoxDepth);		// Top Right
 
-	glVertex3f(m_xMin, m_yMin, m_zMax);
-	glVertex3f(m_xMax, m_yMin, m_zMax);
+	glVertex3f(-BoxWidth, -BoxHeight, BoxDepth);	
+	glVertex3f(-BoxWidth, -BoxHeight, -BoxDepth);	
 
-	glVertex3f(m_xMin, m_yMin, m_zMax);
-	glVertex3f(m_xMin, m_yMax, m_zMax);
+	glVertex3f(BoxWidth, -BoxHeight, BoxDepth);
+	glVertex3f(BoxWidth, -BoxHeight, -BoxDepth);
 
-	glVertex3f(m_xMax, m_yMin, m_zMax);
-	glVertex3f(m_xMax, m_yMax, m_zMax);
+	glVertex3f(BoxWidth, BoxHeight, BoxDepth);
+	glVertex3f(BoxWidth, BoxHeight, -BoxDepth);
 
-	glVertex3f(m_xMin, m_yMax, m_zMax);
-	glVertex3f(m_xMax, m_yMax, m_zMax);
+	glVertex3f(-BoxWidth, BoxHeight, BoxDepth);
+	glVertex3f(-BoxWidth, BoxHeight, -BoxDepth);
 
 	glEnd();
+
 	glEnable(GL_TEXTURE_2D);
 	glDisable(GL_DEPTH_TEST);
-	glDisable(GL_STENCIL_TEST);*/
+	glDisable(GL_STENCIL_TEST);
+
 }
