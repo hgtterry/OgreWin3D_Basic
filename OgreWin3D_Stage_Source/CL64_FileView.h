@@ -77,6 +77,7 @@ private:
 
 	void Context_Menu(HWND hDlg);
 	void Context_Rename(HWND hDlg) const;
+	void HideRightPanes(void);
 
 	TV_INSERTSTRUCT tvinsert;
 

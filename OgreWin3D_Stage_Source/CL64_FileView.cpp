@@ -571,13 +571,13 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 	{
 		Context_Selection = Enums::FileView_Areas_File;
 		
-		//HideRightPanes();
-		
-		/*App->SBC_Props_Dialog->Hide_Area_Dlg(1);
-		App->SBC_Props_Dialog->Hide_Debug_Dlg(1);
-		App->SBC_Props_Dialog->Hide_Dimensions_Dlg(1, 1);
-		App->SBC_Props_Dialog->Hide_Details_Goto_Dlg(1);
-		App->SBC_Props_Dialog->Hide_Material_Dlg(1);*/
+		HideRightPanes();
+		App->CL_Props_Dialogs->Show_Details_Goto_Dlg(true);
+
+		//App->SBC_Props_Dialog->Hide_Debug_Dlg(1);
+		//App->SBC_Props_Dialog->Hide_Dimensions_Dlg(1, 1);
+		//App->SBC_Props_Dialog->Hide_Details_Goto_Dlg(1);
+		//App->SBC_Props_Dialog->Hide_Material_Dlg(1);*/
 
 		//----------------------------------------------------------------------------
 		//App->SBC_Properties->Reset_Last_Selected_Object(App->SBC_Properties->Last_Selected_Object);
@@ -610,9 +610,8 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 	{
 		Context_Selection = Enums::FileView_Player_File;
 
-		//HideRightPanes();
-		
-		//App->SBC_Player->Hide_Player_Dlg(1);
+		HideRightPanes();
+		App->CL_Props_Dialogs->Show_Details_Goto_Dlg(true);
 
 		//----------------------------------------------------------------------------
 		
@@ -640,12 +639,12 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 	{
 		Context_Selection = Enums::FileView_Objects_File;
 
-		//HideRightPanes();
-		
-		/*App->SBC_Props_Dialog->Hide_Details_Goto_Dlg(1);
-		App->SBC_Props_Dialog->Hide_Dimensions_Dlg(1, App->SBC_Scene->V_Object[Index]->Dimensions_Locked);
-		App->SBC_Props_Dialog->Hide_Debug_Dlg(1);
-		App->SBC_Props_Dialog->Hide_Material_Dlg(1);*/
+		HideRightPanes();
+		App->CL_Props_Dialogs->Show_Details_Goto_Dlg(true);
+
+		//App->SBC_Props_Dialog->Hide_Dimensions_Dlg(1, App->SBC_Scene->V_Object[Index]->Dimensions_Locked);
+		//App->SBC_Props_Dialog->Hide_Debug_Dlg(1);
+		//App->SBC_Props_Dialog->Hide_Material_Dlg(1);*/
 
 		//----------------------------------------------------------------------------
 		/*App->SBC_Properties->Reset_Last_Selected_Object(App->SBC_Properties->Last_Selected_Object);
@@ -680,9 +679,8 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 	{
 		Context_Selection = Enums::FileView_Collectables_File;
 
-		//HideRightPanes();
-		
-		//App->SBC_Props_Dialog->Hide_Details_Goto_Dlg(1);
+		HideRightPanes();
+		App->CL_Props_Dialogs->Show_Details_Goto_Dlg(true);
 
 		//App->SBC_Props_Dialog->Hide_Dimensions_Dlg(1, App->SBC_Scene->V_Object[Index]->Dimensions_Locked);
 		//App->SBC_Props_Dialog->Hide_Debug_Dlg(1);
@@ -720,12 +718,12 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 	{
 		Context_Selection = Enums::FileView_Sounds_File;
 
-		//HideRightPanes();
-		/*App->SBC_Props_Dialog->Hide_Details_Goto_Dlg(1);
-		App->SBC_Props_Dialog->Hide_Dimensions_Dlg(1, App->SBC_Scene->V_Object[Index]->Dimensions_Locked);
-		App->SBC_Props_Dialog->Hide_Debug_Dlg(1);
+		HideRightPanes();
+		App->CL_Props_Dialogs->Show_Details_Goto_Dlg(true);
+		//App->SBC_Props_Dialog->Hide_Dimensions_Dlg(1, App->SBC_Scene->V_Object[Index]->Dimensions_Locked);
+		//App->SBC_Props_Dialog->Hide_Debug_Dlg(1);
 
-		App->SBC_Properties->Is_Player = 0;*/
+		//App->SBC_Properties->Is_Player = 0;*/
 		
 		//----------------------------------------------------------------------------
 		/*App->SBC_Properties->Reset_Last_Selected_Object(App->SBC_Properties->Last_Selected_Object);
@@ -759,11 +757,11 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 	{
 		Context_Selection = Enums::FileView_Move_File;
 
-		//HideRightPanes();
-		/*App->SBC_Props_Dialog->Hide_Details_Goto_Dlg(1);
-		App->SBC_Props_Dialog->Hide_Dimensions_Dlg(1, App->SBC_Scene->V_Object[Index]->Dimensions_Locked);
-		App->SBC_Props_Dialog->Hide_Physics_Reset_Dlg(1);
-		App->SBC_Props_Dialog->Hide_Debug_Dlg(1);*/
+		HideRightPanes();
+		App->CL_Props_Dialogs->Show_Details_Goto_Dlg(true);
+		//App->SBC_Props_Dialog->Hide_Dimensions_Dlg(1, App->SBC_Scene->V_Object[Index]->Dimensions_Locked);
+		App->CL_Props_Dialogs->Show_Physics_Test_Dlg(true);
+		//App->SBC_Props_Dialog->Hide_Debug_Dlg(1);
 
 		//App->SBC_Properties->Is_Player = 0; // Mark as Object selected
 
@@ -800,8 +798,8 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 	{
 		Context_Selection = Enums::FileView_Messages_File;
 
-		//HideRightPanes();
-		//App->SBC_Props_Dialog->Hide_Details_Goto_Dlg(1);
+		HideRightPanes();
+		App->CL_Props_Dialogs->Show_Details_Goto_Dlg(true);
 		//App->SBC_Props_Dialog->Hide_Dimensions_Dlg(1, App->SBC_Scene->V_Object[Index]->Dimensions_Locked);
 		//App->SBC_Props_Dialog->Hide_Debug_Dlg(1);
 		//App->SBC_Props_Dialog->Hide_Panel_Test_Dlg(1);
@@ -841,8 +839,8 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 	{
 		Context_Selection = Enums::FileView_Teleports_File;
 
-		//HideRightPanes();
-		//App->SBC_Props_Dialog->Hide_Details_Goto_Dlg(1);
+		HideRightPanes();
+		App->CL_Props_Dialogs->Show_Details_Goto_Dlg(true);
 		//App->SBC_Props_Dialog->Hide_Dimensions_Dlg(1, App->SBC_Scene->V_Object[Index]->Dimensions_Locked);
 		//App->SBC_Props_Dialog->Hide_Debug_Dlg(1);
 
@@ -880,9 +878,8 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 	{
 		Context_Selection = Enums::FileView_Particle_File;
 
-		//HideRightPanes();
-
-		//App->SBC_Props_Dialog->Hide_Details_Goto_Dlg(1);
+		HideRightPanes();
+		App->CL_Props_Dialogs->Show_Details_Goto_Dlg(true);
 		//App->SBC_Props_Dialog->Hide_Dimensions_Dlg(1, App->SBC_Scene->V_Object[Index]->Dimensions_Locked);
 
 		//----------------------------------------------------------------------------
@@ -917,9 +914,8 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 	{
 		Context_Selection = Enums::FileView_Counters_File;
 
-		//HideRightPanes();
-		
-		//App->SBC_Props_Dialog->Hide_Panel_Test_Dlg(1);
+		HideRightPanes();
+		App->CL_Props_Dialogs->Show_Details_Goto_Dlg(true);
 
 		App->CL_Properties->Current_Selected_Object = Index;
 		App->CL_Properties->Edit_Category = Enums::Edit_Counters;
@@ -941,10 +937,11 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 	{
 		Context_Selection = Enums::FileView_EnvironEntity_File;
 
-		//HideRightPanes();
-		/*App->SBC_Props_Dialog->Hide_Details_Goto_Dlg(1);
-		App->SBC_Props_Dialog->Hide_Dimensions_Dlg(1, App->SBC_Scene->V_Object[Index]->Dimensions_Locked);
-		App->SBC_Props_Dialog->Hide_Debug_Dlg(1);*/
+		HideRightPanes();
+		App->CL_Props_Dialogs->Show_Details_Goto_Dlg(true);
+
+		//App->SBC_Props_Dialog->Hide_Dimensions_Dlg(1, App->SBC_Scene->V_Object[Index]->Dimensions_Locked);
+		//App->SBC_Props_Dialog->Hide_Debug_Dlg(1);*/
 
 		//---------------------------------------------------------------------------
 
@@ -968,6 +965,28 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 
 		return;
 	}
+}
+
+// *************************************************************************
+// *			HideRightPanesTerry and Hazel Flanigan 2024				   *
+// *************************************************************************
+void CL64_FileView::HideRightPanes(void)
+{
+	if (App->CL_Scene->flag_Scene_Loaded == 1)
+	{
+		//ShowWindow(App->SBC_Properties->Properties_Dlg_hWnd, 0);	
+	}
+
+	/*App->SBC_Com_Camera->Hide_Cam_Dlg(0);
+	App->SBC_Player->Hide_Player_Dlg(0);
+	App->SBC_Props_Dialog->Hide_Area_Dlg(0);*/
+	App->CL_Props_Dialogs->Show_Details_Goto_Dlg(false);
+
+	/*App->SBC_Props_Dialog->Hide_Panel_Test_Dlg(0);
+	App->SBC_Props_Dialog->Hide_Dimensions_Dlg(0, 0);*/
+	App->CL_Props_Dialogs->Show_Physics_Test_Dlg(false);
+	/*App->SBC_Props_Dialog->Hide_Debug_Dlg(0);
+	App->SBC_Props_Dialog->Hide_Material_Dlg(0);*/
 }
 
 // *************************************************************************

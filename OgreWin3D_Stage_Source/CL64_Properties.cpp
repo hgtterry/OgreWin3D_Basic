@@ -769,22 +769,22 @@ bool CL64_Properties::Edit_Messages(LPARAM lParam)
 	//	return 1;
 	//}
 
-	//// Counter
-	//result = strcmp(btext, "Counter");
-	//if (result == 0)
-	//{
-	//	App->SBC_Dialogs->Dialog_Counter();
+	// Counter
+	result = strcmp(btext, "Counter");
+	if (result == 0)
+	{
+		App->CL_Dialogs->Dialog_Counter();
 
-	//	if (App->SBC_Dialogs->Canceled == 1)
-	//	{
-	//		return 1;
-	//	}
+		if (App->CL_Dialogs->Canceled == 1)
+		{
+			return 1;
+		}
 
-	//	App->SBC_Properties->Mark_As_Altered(Index);
-	//	Update_ListView_Messages();
+		App->CL_Properties->Mark_As_Altered(Index);
+		Update_ListView_Messages();
 
-	//	return 1;
-	//}
+		return 1;
+	}
 
 	return 1;
 }

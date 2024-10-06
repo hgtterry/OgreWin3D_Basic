@@ -74,6 +74,7 @@
 #define IDD_SOUNDPLAYER                 186
 #define IDD_PROPS_OBJECT                187
 #define IDD_PROPS_COUNTER               188
+#define IDD_PROPS_PHYSTEST              189
 #define IDC_CK_SU_FULLSCREEN            1000
 #define IDC_ST_STARTUP                  1001
 #define IDC_CK_SU_FULL3DVIEW            1002
@@ -100,6 +101,7 @@
 #define IDC_PLAY                        1007
 #define IDC_BT_DETAIL                   1007
 #define IDC_BT_COUNTER                  1007
+#define IDC_BT_TEST_ENTITY              1007
 #define IDC_BUTTON2                     1008
 #define IDC_BT_TBH_CAMERA               1008
 #define IDC_BT_DEMORESOURCES            1008
@@ -212,7 +214,6 @@
 #define IDC_VOLBOX                      1078
 #define IDC_STVOLUME                    1079
 #define IDC_BT_GOTO                     1080
-#define IDC_EDIT1                       1081
 #define IDC_EDTRIGGERVALUE              1081
 #define IDC_STCOUNTERNAME               1082
 #define IDC_STMATHS                     1083
@@ -220,6 +221,7 @@
 #define IDC_ST_CT_COUNTER               1085
 #define IDC_ST_CT_MATHS                 1086
 #define IDC_STTRIGGERVALUE              1087
+#define IDC_BT_PHYSRESET                1088
 #define ID_VIEW_RESET                   32771
 #define ID_VIEW_MAX3DVIEW               32772
 #define ID_DEBUG_TESTPREFERANCE         32773
@@ -274,9 +276,9 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
-#define _APS_NEXT_RESOURCE_VALUE        189
+#define _APS_NEXT_RESOURCE_VALUE        190
 #define _APS_NEXT_COMMAND_VALUE         32818
-#define _APS_NEXT_CONTROL_VALUE         1088
+#define _APS_NEXT_CONTROL_VALUE         1089
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif

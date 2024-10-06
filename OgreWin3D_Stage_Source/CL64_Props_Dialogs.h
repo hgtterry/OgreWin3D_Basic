@@ -32,14 +32,19 @@ public:
 
 	void Start_Props_Dialogs();
 
+	void Show_Physics_Test_Dlg(bool Show);
+	void Show_Details_Goto_Dlg(bool Show);
+
 private:
 
 	static LRESULT CALLBACK Proc_Details_Goto(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Proc_Dialog_PhysicsTest(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	void Start_Details_Goto_Dlg(void);
-
-	void Hide_Details_Goto_Dlg(bool Show);
+	void Start_Dialog_PhysicsTest();
 
 	HWND Details_Goto_Hwnd;
+	HWND PhysicsTest_Dlg_hWnd;
+
 };
 
