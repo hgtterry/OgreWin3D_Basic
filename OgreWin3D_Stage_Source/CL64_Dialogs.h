@@ -41,6 +41,9 @@ public:
 	void Start_FileViewer_Dialog(char* FFile, HWND Owner_hDlg);
 	void Material_Search(char* ItemString);
 	bool Dialog_TrueFlase(HWND Parent);
+	void Dialog_Counter();
+	bool UpDate_Counter_Dialog(HWND hDlg);
+	void Set_Counter_Dialog(HWND hDlg, bool Enable);
 
 	bool TrueFlase;
 	bool Canceled;
@@ -48,6 +51,9 @@ public:
 
 	char btext[MAX_PATH];
 	char Chr_Text[MAX_PATH];
+
+	char Chr_Int[50];
+	int mInt;
 
 	int What_Check_Name;
 	
@@ -69,6 +75,7 @@ private:
 	static LRESULT CALLBACK Proc_TextureViewer(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Proc_FileViewer(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Proc_Dialog_TrueFlase(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Proc_Dialog_Counter(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	static bool CALLBACK Proc_ViewerBasePic(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 

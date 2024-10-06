@@ -1132,8 +1132,8 @@ bool CL64_Properties::Edit_Move_Entity(LPARAM lParam)
 	result = strcmp(btext, "Counter");
 	if (result == 0)
 	{
-		/*App->SBC_Dialogs->Dialog_Counter();
-		if (App->SBC_Dialogs->Canceled == 1)
+		App->CL_Dialogs->Dialog_Counter();
+		if (App->CL_Dialogs->Canceled == 1)
 		{
 			return 1;
 		}
@@ -1141,7 +1141,7 @@ bool CL64_Properties::Edit_Move_Entity(LPARAM lParam)
 		Mark_As_Altered(Index);
 		Update_ListView_Move_Entities();
 
-		App->SBC_Physics->Reset_Triggers();*/
+		//App->SBC_Physics->Reset_Triggers();
 
 		return 1;
 	}
@@ -1255,14 +1255,14 @@ bool CL64_Properties::Edit_Teleport_Entity(LPARAM lParam)
 	result = strcmp(btext, "Counter");
 	if (result == 0)
 	{
-		/*App->SBC_Dialogs->Dialog_Counter();
-		if (App->SBC_Dialogs->Canceled == 1)
+		App->CL_Dialogs->Dialog_Counter();
+		if (App->CL_Dialogs->Canceled == 1)
 		{
 			return 1;
 		}
 
 		Mark_As_Altered(Index);
-		Update_ListView_Teleport();*/
+		Update_ListView_Teleport();
 
 		//App->SBC_Physics->Reset_Triggers();
 		return 1;
@@ -1682,54 +1682,55 @@ bool CL64_Properties::Edit_Collectables(LPARAM lParam)
 		return 1;
 	}
 
-	//// Play
-	//result = strcmp(btext, "Play");
-	//if (result == 0)
-	//{
+	// Play
+	result = strcmp(btext, "Play");
+	if (result == 0)
+	{
 
-	//	strcpy(App->Cl_Dialogs->btext, "Play Sound In The Game");
+		strcpy(App->CL_Dialogs->btext, "Play Sound In The Game");
 
-	//	App->Cl_Dialogs->TrueFlase = App->SBC_Scene->V_Object[Index]->S_Collectable[0]->Play;
+		App->CL_Dialogs->TrueFlase = App->CL_Scene->V_Object[Index]->S_Collectable[0]->Play;
 
-	//	App->Cl_Dialogs->Dialog_TrueFlase(App->MainHwnd);
+		App->CL_Dialogs->Dialog_TrueFlase(App->MainHwnd);
 
-	//	if (App->Cl_Dialogs->Canceled == 0)
-	//	{
-	//		if (App->Cl_Dialogs->TrueFlase == 1)
-	//		{
-	//			App->SBC_Scene->V_Object[Index]->S_Collectable[0]->Play = 1;
-	//		}
-	//		else
-	//		{
-	//			App->SBC_Scene->V_Object[Index]->S_Collectable[0]->Play = 0;
+		if (App->CL_Dialogs->Canceled == 0)
+		{
+			if (App->CL_Dialogs->TrueFlase == 1)
+			{
+				App->CL_Scene->V_Object[Index]->S_Collectable[0]->Play = 1;
+			}
+			else
+			{
+				App->CL_Scene->V_Object[Index]->S_Collectable[0]->Play = 0;
 
-	//		}
-	//	}
+			}
+		}
 
-	//	Mark_As_Altered(Index);
+		Mark_As_Altered(Index);
 
-	//	Update_ListView_Collectables();
+		Update_ListView_Collectables();
 
-	//	App->SBC_Physics->Reset_Triggers();
-	//	return 1;
-	//}
+		App->CL_Physics->Reset_Triggers();
 
-	//result = strcmp(btext, "Counter");
-	//if (result == 0)
-	//{
-	//	App->SBC_Dialogs->Dialog_Counter();
+		return 1;
+	}
 
-	//	if (App->SBC_Dialogs->Canceled == 1)
-	//	{
-	//		return 1;
-	//	}
+	result = strcmp(btext, "Counter");
+	if (result == 0)
+	{
+		App->CL_Dialogs->Dialog_Counter();
 
-	//	Mark_As_Altered(Index);
-	//	Update_ListView_Collectables();
-	//	App->SBC_Physics->Reset_Triggers();
+		if (App->CL_Dialogs->Canceled == 1)
+		{
+			return 1;
+		}
 
-	//	return 1;
-	//}
+		Mark_As_Altered(Index);
+		Update_ListView_Collectables();
+		App->CL_Physics->Reset_Triggers();
+
+		return 1;
+	}
 
 	return 1;
 }

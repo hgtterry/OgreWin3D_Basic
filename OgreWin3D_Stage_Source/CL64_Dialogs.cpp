@@ -53,6 +53,9 @@ CL64_Dialogs::CL64_Dialogs(void)
 	mTextureFile[0] = 0;
 	mFile[0] = 0;
 
+	Chr_Int[0] = 0;
+	mInt = 0;
+
 	Sel_BaseBitmap =	nullptr;
 	RightGroups_Hwnd =	nullptr;
 	FileViewer_Hwnd =	nullptr;
@@ -1371,4 +1374,544 @@ LRESULT CALLBACK CL64_Dialogs::Proc_Dialog_TrueFlase(HWND hDlg, UINT message, WP
 
 	}
 	return FALSE;
+}
+
+// *************************************************************************
+// *	  	Dialog_Counter():- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void CL64_Dialogs::Dialog_Counter()
+{
+	Canceled = 0;
+
+	DialogBox(App->hInst, (LPCTSTR)IDD_PROPS_COUNTER, App->Fdlg, (DLGPROC)Proc_Dialog_Counter);
+
+}
+
+// *************************************************************************
+// *        Proc_Dialog_Counter:- Terry and Hazel Flanigan 2022			   *
+// *************************************************************************
+LRESULT CALLBACK CL64_Dialogs::Proc_Dialog_Counter(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+
+	switch (message)
+	{
+	case WM_INITDIALOG:
+	{
+		//App->SetTitleBar(hDlg);
+
+		SendDlgItemMessage(hDlg, IDC_EDTRIGGERVALUE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_STCOUNTERNAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_COUNTER, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_STTRIGGERVALUE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_STMATHS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_ST_CT_COUNTER, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_CK_ENABLE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_CT_MATHS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		SendDlgItemMessage(hDlg, IDC_STBANNER, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_ST_CT_MATHS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		App->CL_Dialogs->UpDate_Counter_Dialog(hDlg);
+
+		return TRUE;
+	}
+	case WM_CTLCOLORSTATIC:
+	{
+
+		if (GetDlgItem(hDlg, IDC_STCOUNTERNAME) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->Brush_White;
+		}
+
+		if (GetDlgItem(hDlg, IDC_STMATHS) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->Brush_White;
+		}
+
+		if (GetDlgItem(hDlg, IDC_STTRIGGERVALUE) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		if (GetDlgItem(hDlg, IDC_ST_CT_MATHS) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		if (GetDlgItem(hDlg, IDC_STBANNER) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		if (GetDlgItem(hDlg, IDC_CK_ENABLE) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		if (GetDlgItem(hDlg, IDC_ST_CT_COUNTER) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		return FALSE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->AppBackground;
+	}
+
+	case WM_NOTIFY:
+	{
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		if (some_item->idFrom == IDC_BT_COUNTER)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDOK)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDCANCEL)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BT_CT_MATHS)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		return CDRF_DODEFAULT;
+	}
+
+	case WM_COMMAND:
+
+		//if (LOWORD(wParam) == IDC_BT_CT_MATHS)
+		//{
+		//	int Index = App->SBC_Properties->Current_Selected_Object;
+
+		//	// Collectables
+		//	if (App->SBC_Properties->Edit_Category == Enums::Edit_Collectable)
+		//	{
+		//		int Counter_Index = App->SBC_Scene->V_Object[Index]->S_Collectable[0]->Counter_ID;
+
+		//		strcpy(App->Cl_Dialogs->btext, "Set Maths Option");
+
+		//		if (App->SBC_Scene->V_Object[Index]->S_Collectable[0]->Maths == 1)
+		//		{
+		//			strcpy(App->SBC_Dialogs->Chr_DropText, "Add");
+		//		}
+
+		//		if (App->SBC_Scene->V_Object[Index]->S_Collectable[0]->Maths == 2)
+		//		{
+		//			strcpy(App->SBC_Dialogs->Chr_DropText, "Subtract");
+		//		}
+
+		//		App->SBC_Dialogs->DropList_Data = Enums::DropDialog_Maths;
+		//		App->SBC_Dialogs->Dialog_DropGen();
+
+		//		if (App->SBC_Dialogs->Canceled == 0)
+		//		{
+		//			int TestChr;
+
+		//			// Add
+		//			TestChr = strcmp(App->SBC_Dialogs->Chr_DropText, "Add");
+		//			if (TestChr == 0)
+		//			{
+		//				App->SBC_Scene->V_Object[Index]->S_Collectable[0]->Maths = 1;
+		//			}
+
+		//			// Subtract
+		//			TestChr = strcmp(App->SBC_Dialogs->Chr_DropText, "Subtract");
+		//			if (TestChr == 0)
+		//			{
+		//				App->SBC_Scene->V_Object[Index]->S_Collectable[0]->Maths = 2;
+		//			}
+
+		//			App->SBC_Dialogs->UpDate_Counter_Dialog(hDlg);
+		//		}
+
+		//	}
+
+		//	return TRUE;
+		//}
+
+		//if (LOWORD(wParam) == IDC_BT_COUNTER)
+		//{
+		//	int Index = App->SBC_Properties->Current_Selected_Object;
+
+		//	strcpy(App->Cl_Dialogs->btext, "Select Counter");
+
+		//	if (App->SBC_Properties->Edit_Category == Enums::Edit_Move_Entity)
+		//	{
+		//		int Counter_Index = App->SBC_Scene->V_Object[Index]->S_MoveType[0]->Counter_ID;
+
+		//		strcpy(App->SBC_Dialogs->Chr_DropText, App->SBC_Scene->B_Counter[Counter_Index]->Panel_Name);
+		//		App->SBC_Dialogs->DropList_Data = Enums::DropDialog_Counters;
+		//		App->SBC_Dialogs->Dialog_DropGen();
+
+		//		if (App->SBC_Dialogs->Canceled == 0)
+		//		{
+		//			strcpy(App->SBC_Scene->V_Object[Index]->S_MoveType[0]->Counter_Name, App->SBC_Dialogs->Chr_DropText);
+
+		//			int CounterIndex = App->SBC_Display->GetIndex_By_Name(App->SBC_Dialogs->Chr_DropText);
+
+		//			App->SBC_Scene->V_Object[Index]->S_MoveType[0]->Counter_ID = CounterIndex;
+
+		//		}
+
+		//		App->SBC_Dialogs->UpDate_Counter_Dialog(hDlg);
+		//	}
+
+		//	if (App->SBC_Properties->Edit_Category == Enums::Edit_Message)
+		//	{
+		//		int Counter_Index = App->SBC_Scene->V_Object[Index]->S_Message[0]->Counter_ID;
+
+		//		strcpy(App->SBC_Dialogs->Chr_DropText, App->SBC_Scene->B_Counter[Counter_Index]->Panel_Name);
+		//		App->SBC_Dialogs->DropList_Data = Enums::DropDialog_Counters;
+		//		App->SBC_Dialogs->Dialog_DropGen();
+
+		//		if (App->SBC_Dialogs->Canceled == 0)
+		//		{
+		//			strcpy(App->SBC_Scene->V_Object[Index]->S_Message[0]->Counter_Name, App->SBC_Dialogs->Chr_DropText);
+
+		//			int CounterIndex = App->SBC_Display->GetIndex_By_Name(App->SBC_Dialogs->Chr_DropText);
+
+		//			App->SBC_Scene->V_Object[Index]->S_Message[0]->Counter_ID = CounterIndex;
+
+		//		}
+
+		//		App->SBC_Dialogs->UpDate_Counter_Dialog(hDlg);
+		//	}
+
+		//	// Collectables
+		//	if (App->SBC_Properties->Edit_Category == Enums::Edit_Collectable)
+		//	{
+		//		int Counter_Index = App->SBC_Scene->V_Object[Index]->S_Collectable[0]->Counter_ID;
+
+		//		strcpy(App->SBC_Dialogs->Chr_DropText, App->SBC_Scene->B_Counter[Counter_Index]->Panel_Name);
+		//		App->SBC_Dialogs->DropList_Data = Enums::DropDialog_Counters;
+		//		App->SBC_Dialogs->Dialog_DropGen();
+
+		//		if (App->SBC_Dialogs->Canceled == 0)
+		//		{
+		//			strcpy(App->SBC_Scene->V_Object[Index]->S_Collectable[0]->Counter_Name, App->SBC_Dialogs->Chr_DropText);
+
+		//			int CounterIndex = App->SBC_Display->GetIndex_By_Name(App->SBC_Dialogs->Chr_DropText);
+
+		//			App->SBC_Scene->V_Object[Index]->S_Collectable[0]->Counter_ID = CounterIndex;
+
+		//		}
+
+		//		App->SBC_Dialogs->UpDate_Counter_Dialog(hDlg);
+		//		return TRUE;
+		//	}
+
+		//	return TRUE;
+		//}
+
+		if (LOWORD(wParam) == IDC_CK_ENABLE)
+		{
+			int Index = App->CL_Properties->Current_Selected_Object;
+
+			HWND temp = GetDlgItem(hDlg, IDC_CK_ENABLE);
+			int test = SendMessage(temp, BM_GETCHECK, 0, 0);
+			if (test == BST_CHECKED)
+			{
+				App->CL_Dialogs->Set_Counter_Dialog(hDlg, false);
+
+				// Move Entity
+				if (App->CL_Properties->Edit_Category == Enums::Edit_Move_Entity)
+				{
+					App->CL_Scene->V_Object[Index]->S_MoveType[0]->Counter_Disabled = 1;
+					return 1;
+				}
+
+				// Messages
+				if (App->CL_Properties->Edit_Category == Enums::Edit_Message)
+				{
+					App->CL_Scene->V_Object[Index]->S_Message[0]->Counter_Disabled = 1;
+					return 1;
+				}
+
+				// Collectables
+				if (App->CL_Properties->Edit_Category == Enums::Edit_Collectable)
+				{
+					App->CL_Scene->V_Object[Index]->S_Collectable[0]->Counter_Disabled = 1;
+					return 1;
+				}
+
+				// Teleporters
+				if (App->CL_Properties->Edit_Category == Enums::Edit_Teleport)
+				{
+					App->CL_Scene->V_Object[Index]->S_Teleport[0]->Counter_Disabled = 1;
+					return 1;
+				}
+
+				return 1;
+			}
+			else
+			{
+				// Move Entity
+				App->CL_Dialogs->Set_Counter_Dialog(hDlg, true);
+
+				if (App->CL_Properties->Edit_Category == Enums::Edit_Move_Entity)
+				{
+					App->CL_Scene->V_Object[Index]->S_MoveType[0]->Counter_Disabled = 0;
+					return 1;
+				}
+
+				// Messages
+				if (App->CL_Properties->Edit_Category == Enums::Edit_Message)
+				{
+					App->CL_Scene->V_Object[Index]->S_Message[0]->Counter_Disabled = 0;
+					return 1;
+				}
+
+				// Collectables
+				if (App->CL_Properties->Edit_Category == Enums::Edit_Collectable)
+				{
+					App->CL_Scene->V_Object[Index]->S_Collectable[0]->Counter_Disabled = 0;
+					return 1;
+				}
+
+				// Teleporters
+				if (App->CL_Properties->Edit_Category == Enums::Edit_Teleport)
+				{
+					App->CL_Scene->V_Object[Index]->S_Teleport[0]->Counter_Disabled = 0;
+					return 1;
+				}
+
+				return 1;
+			}
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDOK)
+		{
+			char buff[256];
+			int result = 0;
+			GetDlgItemText(hDlg, IDC_EDTRIGGERVALUE, (LPTSTR)buff, 256);
+			strcpy(App->CL_Dialogs->Chr_Int, buff);
+			App->CL_Dialogs->mInt = atoi(buff);
+
+			if (App->CL_Properties->Edit_Category == Enums::Edit_Move_Entity)
+			{
+				int Index = App->CL_Properties->Current_Selected_Object;
+				App->CL_Scene->V_Object[Index]->S_MoveType[0]->Trigger_Value = atoi(buff);
+			}
+
+			if (App->CL_Properties->Edit_Category == Enums::Edit_Message)
+			{
+				int Index = App->CL_Properties->Current_Selected_Object;
+				App->CL_Scene->V_Object[Index]->S_Message[0]->Trigger_Value = atoi(buff);
+			}
+
+			// Collectables
+			if (App->CL_Properties->Edit_Category == Enums::Edit_Collectable)
+			{
+				int Index = App->CL_Properties->Current_Selected_Object;
+				App->CL_Scene->V_Object[Index]->S_Collectable[0]->Value = atoi(buff);
+			}
+
+			// Teleprters
+			if (App->CL_Properties->Edit_Category == Enums::Edit_Teleport)
+			{
+				int Index = App->CL_Properties->Current_Selected_Object;
+				App->CL_Scene->V_Object[Index]->S_Teleport[0]->Trigger_Value = atoi(buff);
+			}
+
+			App->CL_Dialogs->Canceled = 0;
+			//App->Cl_Dialogs->Active_Dlg_Int = 0;
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDCANCEL)
+		{
+			App->CL_Dialogs->Canceled = 1;
+			//App->Cl_Dialogs->Active_Dlg_Int = 0;
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+
+		break;
+	}
+	return FALSE;
+}
+
+// *************************************************************************
+// *	  	UpDate_Counter_Dialog:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+bool CL64_Dialogs::UpDate_Counter_Dialog(HWND hDlg)
+{
+	int Index = App->CL_Properties->Current_Selected_Object;
+
+	// Move Entity
+	if (App->CL_Properties->Edit_Category == Enums::Edit_Move_Entity)
+	{
+		if (App->CL_Scene->V_Object[Index]->S_MoveType[0]->Counter_Disabled == 1)
+		{
+			HWND temp = GetDlgItem(hDlg, IDC_CK_ENABLE);
+			SendMessage(temp, BM_SETCHECK, 1, 0);
+			Set_Counter_Dialog(hDlg, false);
+		}
+		else
+		{
+			HWND temp = GetDlgItem(hDlg, IDC_CK_ENABLE);
+			SendMessage(temp, BM_SETCHECK, 0, 0);
+			Set_Counter_Dialog(hDlg, true);
+		}
+
+		char chr_TriggerVal[20];
+		_itoa(App->CL_Scene->V_Object[Index]->S_MoveType[0]->Trigger_Value, chr_TriggerVal, 10);
+		SetDlgItemText(hDlg, IDC_EDTRIGGERVALUE, (LPCTSTR)chr_TriggerVal);
+
+		char chr_CounterName[20];
+		strcpy(chr_CounterName, App->CL_Scene->B_Counter[App->CL_Scene->V_Object[Index]->S_MoveType[0]->Counter_ID]->Panel_Name);
+		SetDlgItemText(hDlg, IDC_STCOUNTERNAME, (LPCTSTR)chr_CounterName);
+
+		return 1;
+	}
+
+	// Messages
+	if (App->CL_Properties->Edit_Category == Enums::Edit_Message)
+	{
+		if (App->CL_Scene->V_Object[Index]->S_Message[0]->Counter_Disabled == 1)
+		{
+			HWND temp = GetDlgItem(hDlg, IDC_CK_ENABLE);
+			SendMessage(temp, BM_SETCHECK, 1, 0);
+			Set_Counter_Dialog(hDlg, false);
+		}
+		else
+		{
+			HWND temp = GetDlgItem(hDlg, IDC_CK_ENABLE);
+			SendMessage(temp, BM_SETCHECK, 0, 0);
+			Set_Counter_Dialog(hDlg, true);
+		}
+
+		char chr_TriggerVal[20];
+		_itoa(App->CL_Scene->V_Object[Index]->S_Message[0]->Trigger_Value, chr_TriggerVal, 10);
+		SetDlgItemText(hDlg, IDC_EDTRIGGERVALUE, (LPCTSTR)chr_TriggerVal);
+
+		char chr_CounterName[20];
+		strcpy(chr_CounterName, App->CL_Scene->B_Counter[App->CL_Scene->V_Object[Index]->S_Message[0]->Counter_ID]->Panel_Name);
+		SetDlgItemText(hDlg, IDC_STCOUNTERNAME, (LPCTSTR)chr_CounterName);
+
+
+		return 1;
+	}
+
+	// Collectables
+	if (App->CL_Properties->Edit_Category == Enums::Edit_Collectable)
+	{
+		if (App->CL_Scene->V_Object[Index]->S_Collectable[0]->Counter_Disabled == 1)
+		{
+			HWND temp = GetDlgItem(hDlg, IDC_CK_ENABLE);
+			SendMessage(temp, BM_SETCHECK, 1, 0);
+			Set_Counter_Dialog(hDlg, false);
+		}
+		else
+		{
+			HWND temp = GetDlgItem(hDlg, IDC_CK_ENABLE);
+			SendMessage(temp, BM_SETCHECK, 0, 0);
+			Set_Counter_Dialog(hDlg, true);
+		}
+
+		char chr_TriggerVal[20];
+		_itoa(App->CL_Scene->V_Object[Index]->S_Collectable[0]->Value, chr_TriggerVal, 10);
+		SetDlgItemText(hDlg, IDC_EDTRIGGERVALUE, (LPCTSTR)chr_TriggerVal);
+
+		char chr_CounterName[20];
+		strcpy(chr_CounterName, App->CL_Scene->B_Counter[App->CL_Scene->V_Object[Index]->S_Collectable[0]->Counter_ID]->Panel_Name);
+		SetDlgItemText(hDlg, IDC_STCOUNTERNAME, (LPCTSTR)chr_CounterName);
+
+		if (App->CL_Scene->V_Object[Index]->S_Collectable[0]->Maths == 1)
+		{
+			SetDlgItemText(hDlg, IDC_STMATHS, (LPCTSTR)"Add");
+		}
+
+		if (App->CL_Scene->V_Object[Index]->S_Collectable[0]->Maths == 2)
+		{
+			SetDlgItemText(hDlg, IDC_STMATHS, "Subtract");
+		}
+
+		return 1;
+	}
+
+	// Teleporters
+	if (App->CL_Properties->Edit_Category == Enums::Edit_Teleport)
+	{
+		if (App->CL_Scene->V_Object[Index]->S_Teleport[0]->Counter_Disabled == 1)
+		{
+			HWND temp = GetDlgItem(hDlg, IDC_CK_ENABLE);
+			SendMessage(temp, BM_SETCHECK, 1, 0);
+			Set_Counter_Dialog(hDlg, false);
+		}
+		else
+		{
+			HWND temp = GetDlgItem(hDlg, IDC_CK_ENABLE);
+			SendMessage(temp, BM_SETCHECK, 0, 0);
+			Set_Counter_Dialog(hDlg, true);
+		}
+
+		char chr_TriggerVal[20];
+		_itoa(App->CL_Scene->V_Object[Index]->S_Teleport[0]->Trigger_Value, chr_TriggerVal, 10);
+		SetDlgItemText(hDlg, IDC_EDTRIGGERVALUE, (LPCTSTR)chr_TriggerVal);
+
+		char chr_CounterName[20];
+		strcpy(chr_CounterName, App->CL_Scene->B_Counter[App->CL_Scene->V_Object[Index]->S_Teleport[0]->Counter_ID]->Panel_Name);
+		SetDlgItemText(hDlg, IDC_STCOUNTERNAME, (LPCTSTR)chr_CounterName);
+
+		return 1;
+	}
+
+	return 1;
+}
+
+// *************************************************************************
+// *	  	Set_Counter_Dialog:- Terry and Hazel Flanigan 2022		   *
+// *************************************************************************
+void CL64_Dialogs::Set_Counter_Dialog(HWND hDlg, bool Enable)
+{
+	EnableWindow(GetDlgItem(hDlg, IDC_BT_COUNTER), Enable);
+	EnableWindow(GetDlgItem(hDlg, IDC_STCOUNTERNAME), Enable);
+
+	EnableWindow(GetDlgItem(hDlg, IDC_STMATHS), Enable);
+	EnableWindow(GetDlgItem(hDlg, IDC_BT_CT_MATHS), Enable);
+
+	EnableWindow(GetDlgItem(hDlg, IDC_EDTRIGGERVALUE), Enable);
 }
