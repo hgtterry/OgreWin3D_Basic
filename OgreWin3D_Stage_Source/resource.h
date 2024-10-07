@@ -104,6 +104,7 @@
 #define IDC_BT_DETAIL                   1007
 #define IDC_BT_COUNTER                  1007
 #define IDC_BT_TEST_ENTITY              1007
+#define IDC_TEST                        1007
 #define IDC_BUTTON2                     1008
 #define IDC_BT_TBH_CAMERA               1008
 #define IDC_BT_DEMORESOURCES            1008
@@ -124,6 +125,7 @@
 #define IDC_BT_PT_VIEWMESH              1009
 #define IDC_BT_GAME_BUILDGAME           1009
 #define IDC_BT_STOP                     1009
+#define IDC_DYNAMIC                     1009
 #define IDC_BUTTON4                     1010
 #define IDC_BT_CAMERA_FREE              1010
 #define IDC_ALLMATERIALS                1010
@@ -131,18 +133,25 @@
 #define IDC_CKVERYSLOW                  1010
 #define IDC_BT_TD_RESOURCETAB           1010
 #define IDC_BT_PT_VIEWMAT               1010
+#define IDC_TRIMESH                     1010
 #define IDC_TBSHOWHAIR                  1011
 #define IDC_BT_TD_DEBUG_PHYSICSDEBUG    1011
+#define IDC_JUSTOGRE                    1011
 #define IDC_TBSHOWGRID                  1012
 #define IDC_BT_TD_DEMOSTAB              1012
+#define IDC_BUTTON6                     1012
+#define IDC_CONE                        1012
 #define IDC_BT_TD_DEMOS_DEMO1           1013
 #define IDC_BTSHOWPOINTS                1013
+#define IDC_BOX                         1013
 #define IDC_BT_TD_DEMOS_DEMO2           1014
 #define IDC_TBBOUNDBOX                  1014
+#define IDC_SPHERE                      1014
 #define IDC_BANNER                      1015
 #define IDC_BUTTON7                     1015
 #define IDC_STTEXT                      1016
 #define IDC_TBINFO                      1016
+#define IDC_CYLINDER                    1016
 #define IDC_BT_TD_DEBUG_RESOURCES       1017
 #define IDC_ST_BANNER                   1018
 #define IDC_USEDMATERIALS               1019
@@ -227,6 +236,10 @@
 #define IDC_CB_FOLDERS                  1089
 #define IDC_LISTFILES                   1090
 #define IDC_SELECTEDNAME                1091
+#define IDC_STTYPE                      1092
+#define IDC_STSHAPE                     1093
+#define IDC_MVSTATIC                    1094
+#define IDC_CAPSULE                     1095
 #define ID_VIEW_RESET                   32771
 #define ID_VIEW_MAX3DVIEW               32772
 #define ID_DEBUG_TESTPREFERANCE         32773
@@ -284,7 +297,7 @@
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        192
 #define _APS_NEXT_COMMAND_VALUE         32819
-#define _APS_NEXT_CONTROL_VALUE         1092
+#define _APS_NEXT_CONTROL_VALUE         1096
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif

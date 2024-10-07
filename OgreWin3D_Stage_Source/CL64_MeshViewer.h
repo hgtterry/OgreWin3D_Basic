@@ -69,6 +69,16 @@ private:
 	char m_Resource_Folder_Full[MAX_PATH];
 	char Selected_MeshFile[MAX_PATH];
 
+	bool SelectDynamic;
+	bool SelectStatic;
+	bool SelectTriMesh;
+
+	bool Selected_Shape_Box;
+	bool Selected_Shape_Sphere;
+	bool Selected_Shape_Capsule;
+	bool Selected_Shape_Cylinder;
+	bool Selected_Shape_Cone;
+
 	CL64_MeshView_Listener* RenderListener;
 
 };

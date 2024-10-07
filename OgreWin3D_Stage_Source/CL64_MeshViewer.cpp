@@ -46,6 +46,16 @@ CL64_MeshViewer::CL64_MeshViewer(void)
 
 	flag_MV_Resource_Path_Loaded = 0;
 
+	SelectDynamic = 0;
+	SelectStatic = 0;
+	SelectTriMesh = 0;
+
+	Selected_Shape_Box = 0;
+	Selected_Shape_Sphere = 0;
+	Selected_Shape_Capsule = 0;
+	Selected_Shape_Cylinder = 0;
+	Selected_Shape_Cone = 0;
+
 	MV_Resource_Group = "MV_Resource_Group";
 
 	m_Just_Folder[0] = 0;
@@ -83,6 +93,18 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 		SendDlgItemMessage(hDlg, IDC_LISTFILES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_SELECTEDNAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
+		SendDlgItemMessage(hDlg, IDC_BOX, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_MVSTATIC, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_DYNAMIC, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_TRIMESH, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_SPHERE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_CAPSULE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_CYLINDER, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_CONE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		SendDlgItemMessage(hDlg, IDC_STSHAPE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_STTYPE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
 		App->CL_MeshViewer->MainDlgHwnd = hDlg;
 		App->CL_MeshViewer->ListHwnd = GetDlgItem(hDlg, IDC_LISTFILES);
 		App->CL_MeshViewer->CB_hWnd = GetDlgItem(hDlg, IDC_CB_FOLDERS);
@@ -115,12 +137,86 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->Brush_White;
 		}
+
+		if (GetDlgItem(hDlg, IDC_STSHAPE) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 255));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		if (GetDlgItem(hDlg, IDC_STTYPE) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 255));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
 		return FALSE;
 	}
 
 	case WM_NOTIFY:
 	{
 		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		if (some_item->idFrom == IDC_MVSTATIC)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->CL_MeshViewer->SelectStatic);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_DYNAMIC)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->CL_MeshViewer->SelectDynamic);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_TRIMESH)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->CL_MeshViewer->SelectTriMesh);
+			return CDRF_DODEFAULT;
+		}
+
+		//// ---------------------------------------------------------------------
+		if (some_item->idFrom == IDC_BOX)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->CL_MeshViewer->Selected_Shape_Box);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_SPHERE)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->CL_MeshViewer->Selected_Shape_Sphere);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_CAPSULE)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->CL_MeshViewer->Selected_Shape_Capsule);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_CYLINDER)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->CL_MeshViewer->Selected_Shape_Cylinder);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_CONE)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->CL_MeshViewer->Selected_Shape_Cone);
+			return CDRF_DODEFAULT;
+		}
 
 		if (some_item->idFrom == IDOK)
 		{
