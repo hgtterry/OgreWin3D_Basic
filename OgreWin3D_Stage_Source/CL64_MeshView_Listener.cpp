@@ -65,8 +65,6 @@ CL64_MeshView_Listener::~CL64_MeshView_Listener()
 // *************************************************************************
 bool CL64_MeshView_Listener::frameStarted(const FrameEvent& evt)
 {
-	FlashWindow(App->CL_MeshViewer->MainDlgHwnd, true);
-	
 	return true;
 }
 

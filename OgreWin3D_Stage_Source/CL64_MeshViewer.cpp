@@ -96,6 +96,8 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 
 		App->CL_MeshViewer->Show_Mesh(App->CL_MeshViewer->Selected_MeshFile);
 		
+		SetWindowText(hDlg, App->CL_MeshViewer->m_Resource_Folder_Full);
+
 		return TRUE;
 	}
 
@@ -138,6 +140,40 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 	}
 
 	case WM_COMMAND:
+
+		if (LOWORD(wParam) == IDC_CB_FOLDERS)
+		{
+			switch (HIWORD(wParam)) // Find out what message it was
+			{
+			case CBN_DROPDOWN:
+				break;
+			case CBN_CLOSEUP:
+			{
+				HWND temp = GetDlgItem(hDlg, IDC_CB_FOLDERS);
+				int Index = SendMessage(temp, CB_GETCURSEL, 0, 0);
+				SendMessage(temp, CB_GETLBTEXT, Index, (LPARAM)App->CL_MeshViewer->m_Just_Folder);
+
+				SendMessage(App->CL_MeshViewer->ListHwnd, LB_RESETCONTENT, 0, 0);
+
+				strcpy(App->CL_MeshViewer->m_Resource_Folder_Full, App->GD_Directory_FullPath);
+				strcat(App->CL_MeshViewer->m_Resource_Folder_Full, "\\Stock\\");
+				strcat(App->CL_MeshViewer->m_Resource_Folder_Full, App->CL_MeshViewer->m_Just_Folder);
+				strcat(App->CL_MeshViewer->m_Resource_Folder_Full, "\\");
+
+				//SetDlgItemText(hDlg, IDC_ST_CURRENTFOLDER, App->SBC_MeshViewer->mResource_Folder);
+				SetWindowText(hDlg, App->CL_MeshViewer->m_Resource_Folder_Full);
+
+				App->CL_MeshViewer->Delete_Resources_Group();
+				App->CL_MeshViewer->Add_Resources();
+				App->CL_MeshViewer->Get_Mesh_Files();
+				App->CL_MeshViewer->Show_Mesh(App->CL_MeshViewer->Selected_MeshFile);
+				
+				//App->CL_MeshViewer->GridNode->resetOrientation();
+			}
+			}
+
+			return TRUE;
+		}
 
 		if (LOWORD(wParam) == IDC_LISTFILES)
 		{
