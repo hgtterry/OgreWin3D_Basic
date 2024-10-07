@@ -22,58 +22,54 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
+#include "Ogre.h"
+
 #pragma once
-
-#include "CL64_MeshView_Listener.h"
-
-class CL64_MeshViewer
+class CL64_MeshView_Listener : public FrameListener
 {
 public:
-	CL64_MeshViewer(void);
-	~CL64_MeshViewer(void);
+	CL64_MeshView_Listener();
+	~CL64_MeshView_Listener();
 
-	void Start_MeshViewer_Dlg();
+	bool frameRenderingQueued(const FrameEvent& evt);
+	bool frameStarted(const FrameEvent& evt); // Comes From Directly From Oger Render Listener [081221]
 
-	Ogre::String MV_Resource_Group;
+	int		Wheel_Move;
+	bool	Pl_LeftMouseDown;	// Triger Left Mouse Presed [081221]
+	bool	Pl_RightMouseDown;	// Triger Right Mouse Presed [081221]
 
-	bool flag_MV_Resource_Path_Loaded;
+	bool	Show_Model_Data; // Show Model Data ImGui [081221]
 
-	HWND MainDlgHwnd;
-	HWND MeshViewer_3D_hWnd;
+	int		View_Height;	// Height of Render Window [081221]
+	int		View_Width;		// Width of Render Window [081221]
 
-	Ogre::RenderWindow* Ogre_MV_Window;
-	Ogre::SceneManager* Ogre_MV_SceneMgr;
-	Ogre::Camera* Ogre_MV_Camera;
-	Ogre::SceneNode* Ogre_MV_CamNode;
-	Ogre::Entity* Ogre_MvEnt;
-	Ogre::SceneNode* Ogre_MvNode;
+	float		mMoveSensitivity;
+	float		mMoveSensitivityMouse;
 
-private:
-	static LRESULT CALLBACK Proc_MeshViewer_Dlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
-	static LRESULT CALLBACK Proc_MeshViewer_3D(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	Ogre::Camera* WE_Cam;
+	Ogre::SceneNode* WE_Cam_Node;
 
-	void Close_OgreWindow(void);
-	bool Set_OgreWindow(void);
+protected:
 
-	bool Add_Resources();
-	bool Delete_Resources_Group();
+	void ModelMode(float DeltaTime);
+	void MoveCamera(void);
 
-	void Get_Stock_Folders(HWND DropHwnd);
-	void Get_Mesh_Files();
-	void Show_Mesh(char* MeshFile);
+	bool Capture_LeftMouse_Model(void);
+	bool Capture_RightMouse_Model(void);
 
-	HWND ListHwnd;
-	HWND CB_hWnd;
+	Radian		mRotX;
+	Radian		mRotY;
+	Vector3		mTranslateVector;
 
-	char m_Just_Folder[MAX_PATH];
-	char m_Resource_Folder_Full[MAX_PATH];
-	char Selected_MeshFile[MAX_PATH];
+	float		mMoveScale;
 
-	CL64_MeshView_Listener* RenderListener;
 
+	float		Pl_DeltaMouse;
+	int			Pl_MouseX;
+	int			Pl_MouseY;
+
+	POINT		Pl_pt;
+	long		Pl_Cent500X;
+	long		Pl_Cent500Y;
 };
-
-
-
-
 

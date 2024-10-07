@@ -27,6 +27,8 @@ THE SOFTWARE.
 #include "CL64_App.h"
 #include "CL64_MeshViewer.h"
 
+#include "CL64_MeshView_Listener.h"
+
 CL64_MeshViewer::CL64_MeshViewer(void)
 {
 	MainDlgHwnd =			nullptr;
@@ -41,6 +43,8 @@ CL64_MeshViewer::CL64_MeshViewer(void)
 	Ogre_MV_CamNode =		nullptr;
 	Ogre_MvEnt =			nullptr;
 	Ogre_MvNode =			nullptr;
+
+	flag_MV_Resource_Path_Loaded = 0;
 
 	MV_Resource_Group = "MV_Resource_Group";
 
@@ -135,6 +139,30 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 
 	case WM_COMMAND:
 
+		if (LOWORD(wParam) == IDC_LISTFILES)
+		{
+			char buff[MAX_PATH] { 0 };
+			int Index = 0;
+			Index = SendDlgItemMessage(hDlg, IDC_LISTFILES, LB_GETCURSEL, (WPARAM)0, (LPARAM)0);
+
+			if (Index == -1)
+			{
+				return 1;
+			}
+
+			SendDlgItemMessage(hDlg, IDC_LISTFILES, LB_GETTEXT, (WPARAM)Index, (LPARAM)buff);
+			SetDlgItemText(hDlg, IDC_SELECTEDNAME, buff);
+
+			strcpy(App->CL_MeshViewer->Selected_MeshFile, buff);
+
+			App->CL_MeshViewer->Show_Mesh(App->CL_MeshViewer->Selected_MeshFile);
+
+			//App->SBC_MeshViewer->GridNode->resetOrientation();
+
+			return TRUE;
+
+		}
+
 		if (LOWORD(wParam) == IDOK)
 		{
 			App->CL_MeshViewer->Close_OgreWindow();
@@ -162,7 +190,7 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 // *************************************************************************
 void CL64_MeshViewer::Close_OgreWindow(void)
 {
-	//App->CL_Ogre->mRoot->removeFrameListener(RenderListener);
+	App->CL_Ogre->mRoot->removeFrameListener(RenderListener);
 
 	App->CL_Ogre->mRoot->detachRenderTarget("MeshViewWin");
 	Ogre_MV_Window->destroy();
@@ -222,9 +250,9 @@ bool CL64_MeshViewer::Set_OgreWindow(void)
 	
 	//Grid_Update(1);
 
-	/*RenderListener = new SB_MeshView_Listener();
+	RenderListener = new CL64_MeshView_Listener();
 
-	App->CL_Ogre->mRoot->addFrameListener(RenderListener);*/
+	App->CL_Ogre->mRoot->addFrameListener(RenderListener);
 
 	//Reset_Camera();
 
@@ -258,7 +286,7 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_3D(HWND hDlg, UINT message, WP
 
 	case WM_CTLCOLORDLG:
 	{
-		//if (App->flag_OgreStarted == 0)
+		if (App->flag_OgreStarted == 0)
 		{
 			return (LONG)App->BlackBrush;
 		}
@@ -287,7 +315,7 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_3D(HWND hDlg, UINT message, WP
 
 	case WM_MOUSEMOVE: // ok up and running and we have a loop for mouse
 	{
-		//SetFocus(App->SBC_MeshViewer->MeshView_3D_hWnd);
+		SetFocus(App->CL_MeshViewer->MeshViewer_3D_hWnd);
 
 		break;
 	}
@@ -295,57 +323,57 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_3D(HWND hDlg, UINT message, WP
 	// Right Mouse Button
 	case WM_RBUTTONDOWN: // BERNIE_HEAR_FIRE 
 	{
-		//if (App->OgreStarted == 1)
-		//{
-		//	SetCapture(App->SBC_MeshViewer->MeshView_3D_hWnd);// Bernie
-		//	SetCursorPos(App->CursorPosX, App->CursorPosY);
-		//	App->SBC_MeshViewer->RenderListener->Pl_RightMouseDown = 1;
-		//	App->CUR = SetCursor(NULL);
-		//	return 1;
-		//}
+		if (App->flag_OgreStarted == 1)
+		{
+			SetCapture(App->CL_MeshViewer->MeshViewer_3D_hWnd);// Bernie
+			SetCursorPos(App->CursorPosX, App->CursorPosY);
+			App->CL_MeshViewer->RenderListener->Pl_RightMouseDown = 1;
+			App->CUR = SetCursor(NULL);
+			return 1;
+		}
 
 		return 1;
 	}
 	case WM_RBUTTONUP:
 	{
-		/*if (App->OgreStarted == 1)
+		if (App->flag_OgreStarted == 1)
 		{
 			ReleaseCapture();
-			App->SBC_MeshViewer->RenderListener->Pl_RightMouseDown = 0;
+			App->CL_MeshViewer->RenderListener->Pl_RightMouseDown = 0;
 			SetCursor(App->CUR);
 			return 1;
-		}*/
+		}
 
 		return 1;
 	}
 	// Left Mouse Button
 	case WM_LBUTTONDOWN: // BERNIE_HEAR_FIRE 
 	{
-		//if (App->OgreStarted == 1)
-		//{
+		if (App->flag_OgreStarted == 1)
+		{
 
-		//	SetCapture(App->SBC_MeshViewer->MeshView_3D_hWnd);// Bernie
-		//	SetCursorPos(App->CursorPosX, App->CursorPosY);
+			SetCapture(App->CL_MeshViewer->MeshViewer_3D_hWnd);// Bernie
+			SetCursorPos(App->CursorPosX, App->CursorPosY);
 
-		//	App->SBC_MeshViewer->RenderListener->Pl_LeftMouseDown = 1;
+			App->CL_MeshViewer->RenderListener->Pl_LeftMouseDown = 1;
 
-		//	App->CUR = SetCursor(NULL);
+			App->CUR = SetCursor(NULL);
 
-		//	return 1;
-		//}
+			return 1;
+		}
 
 		return 1;
 	}
 
 	case WM_LBUTTONUP:
 	{
-		/*if (App->OgreStarted == 1)
+		if (App->flag_OgreStarted == 1)
 		{
 			ReleaseCapture();
-			App->SBC_MeshViewer->RenderListener->Pl_LeftMouseDown = 0;
+			App->CL_MeshViewer->RenderListener->Pl_LeftMouseDown = 0;
 			SetCursor(App->CUR);
 			return 1;
-		}*/
+		}
 
 		return 1;
 	}
@@ -371,6 +399,7 @@ bool CL64_MeshViewer::Add_Resources()
 	}
 
 	App->CL_Resources->mSelected_Resource_Group = "MV_Resource_Group";
+	flag_MV_Resource_Path_Loaded = 1;
 
 	return 1;
 }
@@ -383,7 +412,10 @@ bool CL64_MeshViewer::Delete_Resources_Group()
 
 	Ogre::ResourceGroupManager::getSingleton().destroyResourceGroup(MV_Resource_Group);
 
+	// if scene loaded need to goto project resources
 	App->CL_Resources->mSelected_Resource_Group = "App_Resource_Group";
+	flag_MV_Resource_Path_Loaded = 0;
+
 	return 1;
 }
 
