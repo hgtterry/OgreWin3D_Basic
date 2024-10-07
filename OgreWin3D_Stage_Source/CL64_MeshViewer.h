@@ -48,6 +48,13 @@ private:
 	void Close_OgreWindow(void);
 	bool Set_OgreWindow(void);
 
+	void Get_Media_Folders_Actors(HWND DropHwnd);
+	void Get_Files();
+
+	HWND ListHwnd;
+
+	char m_Current_Folder[MAX_PATH];
+	char mResource_Folder[MAX_PATH];
 };
 
 

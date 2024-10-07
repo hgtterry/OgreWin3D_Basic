@@ -31,16 +31,18 @@ CL64_MeshViewer::CL64_MeshViewer(void)
 {
 	MainDlgHwnd =			nullptr;
 	MeshViewer_3D_hWnd =	nullptr;
-
+	ListHwnd =				nullptr;
 
 	// Ogre
 	Ogre_MV_Window =		nullptr;
 	Ogre_MV_SceneMgr =		nullptr;
 	Ogre_MV_Camera =		nullptr;
 	Ogre_MV_CamNode =		nullptr;
-	Ogre_MvEnt =			nullptr;;
-	Ogre_MvNode =			nullptr;;
+	Ogre_MvEnt =			nullptr;
+	Ogre_MvNode =			nullptr;
 
+	m_Current_Folder[0] = 0;
+	mResource_Folder[0] = 0;
 }
 
 CL64_MeshViewer::~CL64_MeshViewer(void)
@@ -68,11 +70,30 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 	{
 		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_CB_FOLDERS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_LISTFILES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		App->CL_MeshViewer->MainDlgHwnd = hDlg;
+		App->CL_MeshViewer->ListHwnd = GetDlgItem(hDlg, IDC_LISTFILES);
 
 		App->CL_MeshViewer->MeshViewer_3D_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MESHVIEWER_3D, hDlg, (DLGPROC)Proc_MeshViewer_3D);
 		App->CL_MeshViewer->Set_OgreWindow();
+
+		HWND CB_hWnd = GetDlgItem(hDlg, IDC_CB_FOLDERS);
+		App->CL_MeshViewer->Get_Media_Folders_Actors(CB_hWnd);
+
+		// Temporary
+		int Index = SendMessage(CB_hWnd, CB_GETCURSEL, 0, 0);
+		SendMessage(CB_hWnd, CB_GETLBTEXT, Index, (LPARAM)App->CL_MeshViewer->m_Current_Folder);
+
+		strcpy(App->CL_MeshViewer->mResource_Folder, App->GD_Directory_FullPath);
+		strcat(App->CL_MeshViewer->mResource_Folder, "\\Stock\\");
+		strcat(App->CL_MeshViewer->mResource_Folder, App->CL_MeshViewer->m_Current_Folder);
+		strcat(App->CL_MeshViewer->mResource_Folder, "\\");
+		//--------------------------------------------------------
+
+
+		App->CL_MeshViewer->Get_Files();
 
 		return TRUE;
 	}
@@ -92,14 +113,14 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 	{
 		LPNMHDR some_item = (LPNMHDR)lParam;
 
-		if (some_item->idFrom == IDOK && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDOK)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
 			return CDRF_DODEFAULT;
 		}
 
-		if (some_item->idFrom == IDCANCEL && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDCANCEL)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
@@ -350,4 +371,88 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_3D(HWND hDlg, UINT message, WP
 	}
 
 	return FALSE;
+}
+
+// *************************************************************************
+// *		Get_Media_FoldersActors:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+void CL64_MeshViewer::Get_Media_Folders_Actors(HWND DropHwnd)
+{
+	char Path[1024];
+
+	WIN32_FIND_DATA FindFileData;
+	HANDLE hFind;
+
+	strcpy(Path, App->GD_Directory_FullPath);
+	strcat(Path, "\\Stock\\*.*");
+
+	hFind = FindFirstFile(Path, &FindFileData);
+
+	if (hFind != INVALID_HANDLE_VALUE) {
+		do {
+			if (FindFileData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
+			{
+				if (strcmp(FindFileData.cFileName, ".") == 0 || strcmp(FindFileData.cFileName, "..") == 0)
+				{
+
+				}
+				else
+				{
+					SendMessage(DropHwnd, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)FindFileData.cFileName);
+				}
+
+			}
+		} while (FindNextFile(hFind, &FindFileData));
+		FindClose(hFind);
+	}
+
+	SendMessage(DropHwnd, CB_SETCURSEL, 0, 0);
+}
+
+// *************************************************************************
+// *			Get_Files:- Terry and Hazel Flanigan 2024			 	   *
+// *************************************************************************
+void CL64_MeshViewer::Get_Files()
+{
+	SendMessage(ListHwnd, LB_RESETCONTENT, 0, 0);
+
+	char Path[1024];
+
+	WIN32_FIND_DATA FindFileData;
+	HANDLE hFind;
+
+	strcpy(Path, mResource_Folder);
+	strcat(Path, "*.*");
+
+	hFind = FindFirstFile(Path, &FindFileData);
+
+	if (hFind != INVALID_HANDLE_VALUE) {
+		do {
+			if (FindFileData.dwFileAttributes)
+			{
+				if (strcmp(FindFileData.cFileName, ".") == 0 || strcmp(FindFileData.cFileName, "..") == 0)
+				{
+
+				}
+				else
+				{
+					if (_stricmp(FindFileData.cFileName + strlen(FindFileData.cFileName) - 5, ".mesh") == 0)
+					{
+						SendMessage(ListHwnd, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)FindFileData.cFileName);
+					}
+				}
+
+			}
+		} while (FindNextFile(hFind, &FindFileData));
+
+		FindClose(hFind);
+	}
+
+	char buff[256];
+	SendDlgItemMessage(MainDlgHwnd, IDC_LISTFILES, LB_GETTEXT, (WPARAM)0, (LPARAM)buff);
+	//SetDlgItemText(MainDlgHwnd, IDC_SELECTEDNAME, buff);
+
+	//strcpy(App->SBC_MeshViewer->Selected_MeshFile, buff);
+	//App->SBC_MeshViewer->Update_Mesh(App->SBC_MeshViewer->Selected_MeshFile);
+
 }
