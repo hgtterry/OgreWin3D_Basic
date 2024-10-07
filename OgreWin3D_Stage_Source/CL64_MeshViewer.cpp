@@ -32,6 +32,7 @@ CL64_MeshViewer::CL64_MeshViewer(void)
 	MainDlgHwnd =			nullptr;
 	MeshViewer_3D_hWnd =	nullptr;
 	ListHwnd =				nullptr;
+	CB_hWnd =				nullptr;
 
 	// Ogre
 	Ogre_MV_Window =		nullptr;
@@ -41,8 +42,12 @@ CL64_MeshViewer::CL64_MeshViewer(void)
 	Ogre_MvEnt =			nullptr;
 	Ogre_MvNode =			nullptr;
 
-	m_Current_Folder[0] = 0;
-	mResource_Folder[0] = 0;
+	MV_Resource_Group = "MV_Resource_Group";
+
+	m_Just_Folder[0] = 0;
+	m_Resource_Folder_Full[0] = 0;
+	Selected_MeshFile[0] = 0;
+
 }
 
 CL64_MeshViewer::~CL64_MeshViewer(void)
@@ -72,29 +77,21 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_CB_FOLDERS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_LISTFILES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_SELECTEDNAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		App->CL_MeshViewer->MainDlgHwnd = hDlg;
 		App->CL_MeshViewer->ListHwnd = GetDlgItem(hDlg, IDC_LISTFILES);
+		App->CL_MeshViewer->CB_hWnd = GetDlgItem(hDlg, IDC_CB_FOLDERS);
 
 		App->CL_MeshViewer->MeshViewer_3D_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MESHVIEWER_3D, hDlg, (DLGPROC)Proc_MeshViewer_3D);
 		App->CL_MeshViewer->Set_OgreWindow();
 
-		HWND CB_hWnd = GetDlgItem(hDlg, IDC_CB_FOLDERS);
-		App->CL_MeshViewer->Get_Media_Folders_Actors(CB_hWnd);
+		App->CL_MeshViewer->Get_Stock_Folders(App->CL_MeshViewer->CB_hWnd);
+		App->CL_MeshViewer->Add_Resources();
+		App->CL_MeshViewer->Get_Mesh_Files();
 
-		// Temporary
-		int Index = SendMessage(CB_hWnd, CB_GETCURSEL, 0, 0);
-		SendMessage(CB_hWnd, CB_GETLBTEXT, Index, (LPARAM)App->CL_MeshViewer->m_Current_Folder);
-
-		strcpy(App->CL_MeshViewer->mResource_Folder, App->GD_Directory_FullPath);
-		strcat(App->CL_MeshViewer->mResource_Folder, "\\Stock\\");
-		strcat(App->CL_MeshViewer->mResource_Folder, App->CL_MeshViewer->m_Current_Folder);
-		strcat(App->CL_MeshViewer->mResource_Folder, "\\");
-		//--------------------------------------------------------
-
-
-		App->CL_MeshViewer->Get_Files();
-
+		App->CL_MeshViewer->Show_Mesh(App->CL_MeshViewer->Selected_MeshFile);
+		
 		return TRUE;
 	}
 
@@ -105,7 +102,13 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 
 	case WM_CTLCOLORSTATIC:
 	{
-
+		if (GetDlgItem(hDlg, IDC_SELECTEDNAME) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->Brush_White;
+		}
 		return FALSE;
 	}
 
@@ -135,6 +138,7 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 		if (LOWORD(wParam) == IDOK)
 		{
 			App->CL_MeshViewer->Close_OgreWindow();
+			App->CL_MeshViewer->Delete_Resources_Group();
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
@@ -142,6 +146,7 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 		if (LOWORD(wParam) == IDCANCEL)
 		{
 			App->CL_MeshViewer->Close_OgreWindow();
+			App->CL_MeshViewer->Delete_Resources_Group();
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
@@ -248,7 +253,6 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_3D(HWND hDlg, UINT message, WP
 
 	case WM_INITDIALOG: // Bernie as the dialog is created
 	{
-
 		return TRUE;
 	}
 
@@ -283,7 +287,6 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_3D(HWND hDlg, UINT message, WP
 
 	case WM_MOUSEMOVE: // ok up and running and we have a loop for mouse
 	{
-
 		//SetFocus(App->SBC_MeshViewer->MeshView_3D_hWnd);
 
 		break;
@@ -292,7 +295,6 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_3D(HWND hDlg, UINT message, WP
 	// Right Mouse Button
 	case WM_RBUTTONDOWN: // BERNIE_HEAR_FIRE 
 	{
-
 		//if (App->OgreStarted == 1)
 		//{
 		//	SetCapture(App->SBC_MeshViewer->MeshView_3D_hWnd);// Bernie
@@ -306,8 +308,6 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_3D(HWND hDlg, UINT message, WP
 	}
 	case WM_RBUTTONUP:
 	{
-
-
 		/*if (App->OgreStarted == 1)
 		{
 			ReleaseCapture();
@@ -339,7 +339,6 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_3D(HWND hDlg, UINT message, WP
 
 	case WM_LBUTTONUP:
 	{
-
 		/*if (App->OgreStarted == 1)
 		{
 			ReleaseCapture();
@@ -350,35 +349,50 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_3D(HWND hDlg, UINT message, WP
 
 		return 1;
 	}
-	case WM_KEYDOWN:
-		switch (wParam)
-		{
-		case 'C':
-			if (GetAsyncKeyState(VK_CONTROL))
-			{
-				//		//		App->CL10_Objects_Com->Copy_Object();
-				//		//		return 1;
-			}
-		case 'V':
-			if (GetAsyncKeyState(VK_CONTROL))
-			{
-				//		//		App->CL10_Objects_Com->Paste_Object();
-				//		//		return 1;
-			}
-			//	return 1;
-			//	//	// more keys here
-		}break;
+	
 	}
 
 	return FALSE;
 }
 
 // *************************************************************************
-// *		Get_Media_FoldersActors:- Terry and Hazel Flanigan 2024		   *
+// *			Add_Resources:- Terry and Hazel Flanigan 2024 		 	   *
 // *************************************************************************
-void CL64_MeshViewer::Get_Media_Folders_Actors(HWND DropHwnd)
+bool CL64_MeshViewer::Add_Resources()
 {
-	char Path[1024];
+	bool Test = Ogre::ResourceGroupManager::getSingleton().resourceLocationExists(m_Resource_Folder_Full, MV_Resource_Group);
+
+	if (Test == 0)
+	{
+		Ogre::ResourceGroupManager::getSingleton().addResourceLocation(m_Resource_Folder_Full, "FileSystem", MV_Resource_Group);
+		Ogre::ResourceGroupManager::getSingleton().clearResourceGroup(MV_Resource_Group);
+		Ogre::ResourceGroupManager::getSingleton().initialiseResourceGroup(MV_Resource_Group);
+
+	}
+
+	App->CL_Resources->mSelected_Resource_Group = "MV_Resource_Group";
+
+	return 1;
+}
+
+// *************************************************************************
+// *		Delete_Resources_Group:- Terry and Hazel Flanigan 2024 		   *
+// *************************************************************************
+bool CL64_MeshViewer::Delete_Resources_Group()
+{
+
+	Ogre::ResourceGroupManager::getSingleton().destroyResourceGroup(MV_Resource_Group);
+
+	App->CL_Resources->mSelected_Resource_Group = "App_Resource_Group";
+	return 1;
+}
+
+// *************************************************************************
+// *			Get_Stock_Folders:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+void CL64_MeshViewer::Get_Stock_Folders(HWND DropHwnd)
+{
+	char Path[MAX_PATH]{ 0 };
 
 	WIN32_FIND_DATA FindFileData;
 	HANDLE hFind;
@@ -403,25 +417,35 @@ void CL64_MeshViewer::Get_Media_Folders_Actors(HWND DropHwnd)
 
 			}
 		} while (FindNextFile(hFind, &FindFileData));
+
 		FindClose(hFind);
 	}
 
 	SendMessage(DropHwnd, CB_SETCURSEL, 0, 0);
+
+	int Index = SendMessage(DropHwnd, CB_GETCURSEL, 0, 0);
+	SendMessage(CB_hWnd, CB_GETLBTEXT, Index, (LPARAM)m_Just_Folder);
+
+	strcpy(m_Resource_Folder_Full, App->GD_Directory_FullPath);
+	strcat(m_Resource_Folder_Full, "\\Stock\\");
+	strcat(m_Resource_Folder_Full, m_Just_Folder);
+	strcat(m_Resource_Folder_Full, "\\");
+
 }
 
 // *************************************************************************
-// *			Get_Files:- Terry and Hazel Flanigan 2024			 	   *
+// *			Get_Mesh_Files:- Terry and Hazel Flanigan 2024		 	   *
 // *************************************************************************
-void CL64_MeshViewer::Get_Files()
+void CL64_MeshViewer::Get_Mesh_Files()
 {
 	SendMessage(ListHwnd, LB_RESETCONTENT, 0, 0);
 
-	char Path[1024];
+	char Path[MAX_PATH]{ 0 };
 
 	WIN32_FIND_DATA FindFileData;
 	HANDLE hFind;
 
-	strcpy(Path, mResource_Folder);
+	strcpy(Path, m_Resource_Folder_Full);
 	strcat(Path, "*.*");
 
 	hFind = FindFirstFile(Path, &FindFileData);
@@ -448,11 +472,41 @@ void CL64_MeshViewer::Get_Files()
 		FindClose(hFind);
 	}
 
-	char buff[256];
+	char buff[MAX_PATH]{ 0 };
 	SendDlgItemMessage(MainDlgHwnd, IDC_LISTFILES, LB_GETTEXT, (WPARAM)0, (LPARAM)buff);
-	//SetDlgItemText(MainDlgHwnd, IDC_SELECTEDNAME, buff);
+	SetDlgItemText(MainDlgHwnd, IDC_SELECTEDNAME, buff);
 
-	//strcpy(App->SBC_MeshViewer->Selected_MeshFile, buff);
+	strcpy(Selected_MeshFile, buff);
+
 	//App->SBC_MeshViewer->Update_Mesh(App->SBC_MeshViewer->Selected_MeshFile);
+}
+
+// *************************************************************************
+// *			Update_Mesh:- Terry and Hazel Flanigan 2022				   *
+// *************************************************************************
+void CL64_MeshViewer::Show_Mesh(char* MeshFile)
+{
+	if (Ogre_MvEnt && Ogre_MvNode)
+	{
+		Ogre_MvNode->detachAllObjects();
+		Ogre_MV_SceneMgr->destroySceneNode(Ogre_MvNode);
+		Ogre_MV_SceneMgr->destroyEntity(Ogre_MvEnt);
+		Ogre_MvEnt = NULL;
+		Ogre_MvNode = NULL;
+	}
+
+	Ogre_MvEnt = Ogre_MV_SceneMgr->createEntity("MV", MeshFile, MV_Resource_Group);
+	Ogre_MvNode = Ogre_MV_SceneMgr->getRootSceneNode()->createChildSceneNode();
+	Ogre_MvNode->attachObject(Ogre_MvEnt);
+	Ogre_MvNode->setPosition(0, 0, 0);
+
+	//if (App->SBC_MeshViewer->View_Zoomed_Flag == 1)
+	{
+		Ogre::Vector3 Centre = Ogre_MvEnt->getBoundingBox().getCenter();
+		Ogre::Real Radius = Ogre_MvEnt->getBoundingRadius();
+
+		Ogre_MV_CamNode->setPosition(0, Centre.y, Radius * 2.5);
+		Ogre_MV_CamNode->lookAt(Ogre::Vector3(0, Centre.y, 0), Ogre::Node::TS_WORLD);
+	}
 
 }

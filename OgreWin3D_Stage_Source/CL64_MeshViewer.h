@@ -31,6 +31,8 @@ public:
 
 	void Start_MeshViewer_Dlg();
 
+	Ogre::String MV_Resource_Group;
+
 	HWND MainDlgHwnd;
 	HWND MeshViewer_3D_hWnd;
 
@@ -48,13 +50,19 @@ private:
 	void Close_OgreWindow(void);
 	bool Set_OgreWindow(void);
 
-	void Get_Media_Folders_Actors(HWND DropHwnd);
-	void Get_Files();
+	bool Add_Resources();
+	bool Delete_Resources_Group();
+
+	void Get_Stock_Folders(HWND DropHwnd);
+	void Get_Mesh_Files();
+	void Show_Mesh(char* MeshFile);
 
 	HWND ListHwnd;
+	HWND CB_hWnd;
 
-	char m_Current_Folder[MAX_PATH];
-	char mResource_Folder[MAX_PATH];
+	char m_Just_Folder[MAX_PATH];
+	char m_Resource_Folder_Full[MAX_PATH];
+	char Selected_MeshFile[MAX_PATH];
 };
 
 

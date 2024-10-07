@@ -225,8 +225,8 @@
 #define IDC_STTRIGGERVALUE              1087
 #define IDC_BT_PHYSRESET                1088
 #define IDC_CB_FOLDERS                  1089
-#define IDC_LIST1                       1090
 #define IDC_LISTFILES                   1090
+#define IDC_SELECTEDNAME                1091
 #define ID_VIEW_RESET                   32771
 #define ID_VIEW_MAX3DVIEW               32772
 #define ID_DEBUG_TESTPREFERANCE         32773
@@ -284,7 +284,7 @@
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        192
 #define _APS_NEXT_COMMAND_VALUE         32819
-#define _APS_NEXT_CONTROL_VALUE         1091
+#define _APS_NEXT_CONTROL_VALUE         1092
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif
