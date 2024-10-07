@@ -29,8 +29,304 @@ THE SOFTWARE.
 
 CL64_MeshViewer::CL64_MeshViewer(void)
 {
+	MainDlgHwnd =			nullptr;
+	MeshViewer_3D_hWnd =	nullptr;
+
+
+	// Ogre
+	Ogre_MV_Window =		nullptr;
+	Ogre_MV_SceneMgr =		nullptr;
+	Ogre_MV_Camera =		nullptr;
+	Ogre_MV_CamNode =		nullptr;
+
+
 }
 
 CL64_MeshViewer::~CL64_MeshViewer(void)
 {
+}
+
+// *************************************************************************
+// *	  	Start_MeshViewer_Dlg:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+void CL64_MeshViewer::Start_MeshViewer_Dlg()
+{
+	CreateDialog(App->hInst, (LPCTSTR)IDD_MESHVIEWER, App->Fdlg, (DLGPROC)Proc_MeshViewer_Dlg);
+	
+}
+
+// *************************************************************************
+// *			Proc_MeshViewer:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+	switch (message)
+	{
+
+	case WM_INITDIALOG:
+	{
+		App->CL_MeshViewer->MainDlgHwnd = hDlg;
+
+		App->CL_MeshViewer->MeshViewer_3D_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MESHVIEWER_3D, hDlg, (DLGPROC)Proc_MeshViewer_3D);
+		App->CL_MeshViewer->Set_OgreWindow();
+
+		return TRUE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->AppBackground;
+	}
+
+	case WM_CTLCOLORSTATIC:
+	{
+
+		return FALSE;
+	}
+
+	case WM_NOTIFY:
+	{
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		return CDRF_DODEFAULT;
+	}
+
+	case WM_COMMAND:
+
+		if (LOWORD(wParam) == IDOK)
+		{
+			App->CL_MeshViewer->Close_OgreWindow();
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDCANCEL)
+		{
+			App->CL_MeshViewer->Close_OgreWindow();
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+
+		break;
+	}
+
+	return FALSE;
+}
+
+// *************************************************************************
+// *		Close_MeshWindow:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void CL64_MeshViewer::Close_OgreWindow(void)
+{
+	//App->CL_Ogre->mRoot->removeFrameListener(RenderListener);
+
+	App->CL_Ogre->mRoot->detachRenderTarget("MeshViewWin");
+	Ogre_MV_Window->destroy();
+	App->CL_Ogre->mRoot->destroySceneManager(Ogre_MV_SceneMgr);
+}
+
+// *************************************************************************
+// *			OgreWindow:- Terry and Hazel Flanigan 2022				   *
+// *************************************************************************
+bool CL64_MeshViewer::Set_OgreWindow(void)
+{
+
+	Ogre::NameValuePairList options;
+
+	options["externalWindowHandle"] =
+		Ogre::StringConverter::toString((size_t)MeshViewer_3D_hWnd);
+
+	Ogre_MV_Window = App->CL_Ogre->mRoot->createRenderWindow("MeshViewWin", 1024, 768, false, &options);
+
+	Ogre_MV_SceneMgr = App->CL_Ogre->mRoot->createSceneManager("DefaultSceneManager", "MeshViewGD");
+
+	Ogre_MV_CamNode = Ogre_MV_SceneMgr->getRootSceneNode()->createChildSceneNode("Camera_Node");
+
+	Ogre_MV_Camera = Ogre_MV_SceneMgr->createCamera("CameraMV");
+	Ogre_MV_Camera->setNearClipDistance(0.1);
+	Ogre_MV_Camera->setFarClipDistance(8000);
+
+	Ogre_MV_CamNode->attachObject(Ogre_MV_Camera);
+	Ogre_MV_CamNode->setPosition(Ogre::Vector3(0, 0, 0));
+
+	Ogre::Viewport* vp = Ogre_MV_Window->addViewport(Ogre_MV_Camera);
+	Ogre_MV_Camera->setAspectRatio(Ogre::Real(vp->getActualWidth()) / Ogre::Real(vp->getActualHeight()));
+	vp->setBackgroundColour(ColourValue(0.5, 0.5, 0.5));
+
+	Ogre_MV_SceneMgr->setAmbientLight(ColourValue(0.7, 0.7, 0.7));
+
+	//App->CL_Ogre->RenderFrame(20);
+	
+	////-------------------------------------------- 
+
+	/*MvEnt = mSceneMgrMeshView->createEntity("MVTest2", Selected_MeshFile, MV_Resource_Group);
+	MvNode = mSceneMgrMeshView->getRootSceneNode()->createChildSceneNode();
+	MvNode->attachObject(MvEnt);
+	MvNode->setVisible(true);*/
+
+	// add a bright light above the scene
+	/*Light* light = mSceneMgrMeshView->createLight();
+	light->setType(Light::LT_POINT);
+	light->setPosition(-10, 40, 20);
+	light->setSpecularColour(ColourValue::White);
+
+	Ogre::Vector3 Centre = MvEnt->getBoundingBox().getCenter();
+	Ogre::Real Radius = MvEnt->getBoundingRadius();*/
+
+	//Grid_Update(1);
+
+	/*RenderListener = new SB_MeshView_Listener();
+
+	App->CL_Ogre->mRoot->addFrameListener(RenderListener);*/
+
+	//Reset_Camera();
+
+	// Debug Physics Shape
+	/*btDebug_Manual = mSceneMgrMeshView->createManualObject("MVManual");
+	btDebug_Manual->setRenderQueueGroup(RENDER_QUEUE_MAX);
+	btDebug_Manual->setDynamic(true);
+	btDebug_Manual->estimateVertexCount(2000);
+	btDebug_Manual->begin("BaseWhiteNoLighting", Ogre::RenderOperation::OT_LINE_LIST);
+	btDebug_Manual->position(0, 0, 0);
+	btDebug_Manual->colour(1, 1, 1, 1);
+	btDebug_Manual->end();
+	btDebug_Node = mSceneMgrMeshView->getRootSceneNode()->createChildSceneNode();
+	btDebug_Node->attachObject(btDebug_Manual);*/
+	Debug
+	return 1;
+}
+
+// *************************************************************************
+// *		Proc_MeshViewer_3D:- Terry and Hazel Flanigan 2024 			   *
+// *************************************************************************
+LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_3D(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+	switch (message)
+	{
+
+	case WM_INITDIALOG: // Bernie as the dialog is created
+	{
+
+		return TRUE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		//if (App->flag_OgreStarted == 0)
+		{
+			return (LONG)App->BlackBrush;
+		}
+	}
+
+	//case WM_MOUSEWHEEL:
+	//{
+	//	if (App->SBC_MeshViewer->RenderListener->Pl_LeftMouseDown == 0)
+	//	{
+	//		{
+	//			int zDelta = (short)HIWORD(wParam);    // wheel rotation
+
+	//			if (zDelta > 0)
+	//			{
+	//				App->SBC_MeshViewer->RenderListener->Wheel_Move = -1;
+	//			}
+	//			else if (zDelta < 0)
+	//			{
+	//				App->SBC_MeshViewer->RenderListener->Wheel_Move = 1;
+	//			}
+	//			return 1;
+	//		}
+	//	}
+
+	//}
+
+	case WM_MOUSEMOVE: // ok up and running and we have a loop for mouse
+	{
+
+		//SetFocus(App->SBC_MeshViewer->MeshView_3D_hWnd);
+
+		break;
+	}
+
+	// Right Mouse Button
+	case WM_RBUTTONDOWN: // BERNIE_HEAR_FIRE 
+	{
+
+		//if (App->OgreStarted == 1)
+		//{
+		//	SetCapture(App->SBC_MeshViewer->MeshView_3D_hWnd);// Bernie
+		//	SetCursorPos(App->CursorPosX, App->CursorPosY);
+		//	App->SBC_MeshViewer->RenderListener->Pl_RightMouseDown = 1;
+		//	App->CUR = SetCursor(NULL);
+		//	return 1;
+		//}
+
+		return 1;
+	}
+	case WM_RBUTTONUP:
+	{
+
+
+		/*if (App->OgreStarted == 1)
+		{
+			ReleaseCapture();
+			App->SBC_MeshViewer->RenderListener->Pl_RightMouseDown = 0;
+			SetCursor(App->CUR);
+			return 1;
+		}*/
+
+		return 1;
+	}
+	// Left Mouse Button
+	case WM_LBUTTONDOWN: // BERNIE_HEAR_FIRE 
+	{
+		//if (App->OgreStarted == 1)
+		//{
+
+		//	SetCapture(App->SBC_MeshViewer->MeshView_3D_hWnd);// Bernie
+		//	SetCursorPos(App->CursorPosX, App->CursorPosY);
+
+		//	App->SBC_MeshViewer->RenderListener->Pl_LeftMouseDown = 1;
+
+		//	App->CUR = SetCursor(NULL);
+
+		//	return 1;
+		//}
+
+		return 1;
+	}
+
+	case WM_LBUTTONUP:
+	{
+
+		/*if (App->OgreStarted == 1)
+		{
+			ReleaseCapture();
+			App->SBC_MeshViewer->RenderListener->Pl_LeftMouseDown = 0;
+			SetCursor(App->CUR);
+			return 1;
+		}*/
+
+		return 1;
+	}
+	case WM_KEYDOWN:
+		switch (wParam)
+		{
+		case 'C':
+			if (GetAsyncKeyState(VK_CONTROL))
+			{
+				//		//		App->CL10_Objects_Com->Copy_Object();
+				//		//		return 1;
+			}
+		case 'V':
+			if (GetAsyncKeyState(VK_CONTROL))
+			{
+				//		//		App->CL10_Objects_Com->Paste_Object();
+				//		//		return 1;
+			}
+			//	return 1;
+			//	//	// more keys here
+		}break;
+	}
+
+	return FALSE;
 }

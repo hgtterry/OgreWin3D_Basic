@@ -28,5 +28,28 @@ class CL64_MeshViewer
 public:
 	CL64_MeshViewer(void);
 	~CL64_MeshViewer(void);
+
+	void Start_MeshViewer_Dlg();
+
+	HWND MainDlgHwnd;
+	HWND MeshViewer_3D_hWnd;
+
+	Ogre::RenderWindow* Ogre_MV_Window;
+	Ogre::SceneManager* Ogre_MV_SceneMgr;
+	Ogre::Camera* Ogre_MV_Camera;
+	Ogre::SceneNode* Ogre_MV_CamNode;
+
+
+private:
+	static LRESULT CALLBACK Proc_MeshViewer_Dlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Proc_MeshViewer_3D(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+
+	void Close_OgreWindow(void);
+	bool Set_OgreWindow(void);
+
 };
+
+
+
+
 

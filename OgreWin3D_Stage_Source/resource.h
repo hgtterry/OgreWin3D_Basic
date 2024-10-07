@@ -75,6 +75,9 @@
 #define IDD_PROPS_OBJECT                187
 #define IDD_PROPS_COUNTER               188
 #define IDD_PROPS_PHYSTEST              189
+#define IDD_MESHVIEWER                  190
+#define IDD_DIALOG1                     191
+#define IDD_MESHVIEWER_3D               191
 #define IDC_CK_SU_FULLSCREEN            1000
 #define IDC_ST_STARTUP                  1001
 #define IDC_CK_SU_FULL3DVIEW            1002
@@ -269,6 +272,7 @@
 #define ID_Menu                         32815
 #define ID_TOOLS_SOUNDPLAYER            32816
 #define ID_FILE_NEW                     32817
+#define ID_TOOLS_MESHVIEWER             32818
 #define IDC_STATIC                      -1
 
 // Next default values for new objects
@@ -276,8 +280,8 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
-#define _APS_NEXT_RESOURCE_VALUE        190
-#define _APS_NEXT_COMMAND_VALUE         32818
+#define _APS_NEXT_RESOURCE_VALUE        192
+#define _APS_NEXT_COMMAND_VALUE         32819
 #define _APS_NEXT_CONTROL_VALUE         1089
 #define _APS_NEXT_SYMED_VALUE           110
 #endif

@@ -331,20 +331,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		case ID_TOOLS_OGREWIN3D:
 		{
 			App->Open_Tool((LPSTR)"OgreWin3D_Assets.exe");
-
 			return TRUE;
 		}
-		
-		case ID_OPEN_LEVEL:
-		{
-			/*char Path[MAX_PATH];
-			strcpy(Path,App->GD_Directory_FullPath);
-			strcat(Path, "\\Levels\\Level_1\\World_1.mesh");
-			
-			strcpy(App->CL_File_IO->Model_FileName, "World_1.mesh");
-			strcpy(App->CL_File_IO->Model_Path_FileName, Path);
 
-			bool test = App->CL_Level->Load_Level(false);*/
+		case ID_TOOLS_MESHVIEWER:
+		{
+			App->CL_MeshViewer->Start_MeshViewer_Dlg();
 			return TRUE;
 		}
 		
@@ -373,6 +365,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		{
 			App->CL_Importers->Load_Project();
 			return 1;
+		}
+
+		case ID_OPEN_LEVEL:
+		{
+			return TRUE;
 		}
 
 		// File Import ------------------------------------------------
