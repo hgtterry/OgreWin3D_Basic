@@ -38,7 +38,8 @@ CL64_MeshViewer::CL64_MeshViewer(void)
 	Ogre_MV_SceneMgr =		nullptr;
 	Ogre_MV_Camera =		nullptr;
 	Ogre_MV_CamNode =		nullptr;
-
+	Ogre_MvEnt =			nullptr;;
+	Ogre_MvNode =			nullptr;;
 
 }
 
@@ -65,6 +66,9 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 
 	case WM_INITDIALOG:
 	{
+		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
 		App->CL_MeshViewer->MainDlgHwnd = hDlg;
 
 		App->CL_MeshViewer->MeshViewer_3D_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MESHVIEWER_3D, hDlg, (DLGPROC)Proc_MeshViewer_3D);
@@ -87,6 +91,20 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 	case WM_NOTIFY:
 	{
 		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		if (some_item->idFrom == IDOK && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDCANCEL && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
 
 		return CDRF_DODEFAULT;
 	}
@@ -159,20 +177,23 @@ bool CL64_MeshViewer::Set_OgreWindow(void)
 	
 	////-------------------------------------------- 
 
-	/*MvEnt = mSceneMgrMeshView->createEntity("MVTest2", Selected_MeshFile, MV_Resource_Group);
-	MvNode = mSceneMgrMeshView->getRootSceneNode()->createChildSceneNode();
-	MvNode->attachObject(MvEnt);
-	MvNode->setVisible(true);*/
+	Ogre_MvEnt = Ogre_MV_SceneMgr->createEntity("MVTest2", "Sinbad.mesh", App->CL_Ogre->App_Resource_Group);
+	Ogre_MvNode = Ogre_MV_SceneMgr->getRootSceneNode()->createChildSceneNode();
+	Ogre_MvNode->attachObject(Ogre_MvEnt);
+	Ogre_MvNode->setVisible(true);
 
 	// add a bright light above the scene
 	/*Light* light = mSceneMgrMeshView->createLight();
 	light->setType(Light::LT_POINT);
 	light->setPosition(-10, 40, 20);
-	light->setSpecularColour(ColourValue::White);
+	light->setSpecularColour(ColourValue::White);*/
 
-	Ogre::Vector3 Centre = MvEnt->getBoundingBox().getCenter();
-	Ogre::Real Radius = MvEnt->getBoundingRadius();*/
+	Ogre::Vector3 Centre = Ogre_MvEnt->getBoundingBox().getCenter();
+	Ogre::Real Radius = Ogre_MvEnt->getBoundingRadius();
 
+	Ogre_MV_CamNode->setPosition(0, Centre.y, Radius * 2.5);
+	Ogre_MV_CamNode->lookAt(Ogre::Vector3(0, Centre.y, 0), Ogre::Node::TS_WORLD);
+	
 	//Grid_Update(1);
 
 	/*RenderListener = new SB_MeshView_Listener();
@@ -192,7 +213,7 @@ bool CL64_MeshViewer::Set_OgreWindow(void)
 	btDebug_Manual->end();
 	btDebug_Node = mSceneMgrMeshView->getRootSceneNode()->createChildSceneNode();
 	btDebug_Node->attachObject(btDebug_Manual);*/
-	Debug
+
 	return 1;
 }
 

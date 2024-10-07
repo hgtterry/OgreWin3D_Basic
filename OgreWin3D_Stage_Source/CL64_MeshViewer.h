@@ -38,7 +38,8 @@ public:
 	Ogre::SceneManager* Ogre_MV_SceneMgr;
 	Ogre::Camera* Ogre_MV_Camera;
 	Ogre::SceneNode* Ogre_MV_CamNode;
-
+	Ogre::Entity* Ogre_MvEnt;
+	Ogre::SceneNode* Ogre_MvNode;
 
 private:
 	static LRESULT CALLBACK Proc_MeshViewer_Dlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
