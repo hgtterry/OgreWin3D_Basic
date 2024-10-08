@@ -33,6 +33,7 @@ CL64_Bullet::CL64_Bullet(void)
 	GD_Physics_On = 0;
 	Physics_Dlg_Active = 0;
 	flag_TriMesh_Created = 0;
+	flag_Debug_All = 0;
 }
 
 CL64_Bullet::~CL64_Bullet(void)
@@ -263,6 +264,7 @@ void CL64_Bullet::Clear_Trimesh()
 		flag_TriMesh_Created = 0;
 	}
 }
+
 // *************************************************************************
 // *			Show_Debug_Area:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
@@ -277,6 +279,79 @@ void CL64_Bullet::Show_Debug_Area(bool Show)
 	else
 	{
 		Phys_Body->setCollisionFlags(f | (1 << 5));
+	}
+
+	App->CL_Ogre->Bullet_Debug_Listener->Render_Debug_Flag = 0;
+	App->CL_Ogre->RenderFrame(1);
+	App->CL_Ogre->Bullet_Debug_Listener->Render_Debug_Flag = 1;
+}
+
+// *************************************************************************
+// *			Show_Debug_Objects:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+void CL64_Bullet::Show_Debug_Objects(bool Show)
+{
+	int Count = 0;
+	while (Count < App->CL_Scene->Object_Count)
+	{
+
+		if (App->CL_Scene->V_Object[Count]->Phys_Body)
+		{
+			int f = App->CL_Scene->V_Object[Count]->Phys_Body->getCollisionFlags();
+
+			if (Show == true)
+			{
+				App->CL_Scene->V_Object[Count]->Phys_Body->setCollisionFlags(f & (~(1 << 5)));
+			}
+			else
+			{
+				App->CL_Scene->V_Object[Count]->Phys_Body->setCollisionFlags(f | (1 << 5));
+			}
+		}
+
+		Count++;
+	}
+
+	Count = 0;
+	while (Count < App->CL_Player->Player_Count)
+	{
+
+		if (App->CL_Scene->B_Player[Count]->Phys_Body)
+		{
+			int f = App->CL_Scene->B_Player[Count]->Phys_Body->getCollisionFlags();
+
+			if (Show == true)
+			{
+				App->CL_Scene->B_Player[Count]->Phys_Body->setCollisionFlags(f & (~(1 << 5)));
+			}
+			else
+			{
+				App->CL_Scene->B_Player[Count]->Phys_Body->setCollisionFlags(f | (1 << 5));
+			}
+		}
+
+		Count++;
+	}
+
+	Count = 0;
+	while (Count < App->CL_Scene->Area_Count)
+	{
+
+		if (App->CL_Scene->B_Area[Count]->Phys_Body)
+		{
+			int f = App->CL_Scene->B_Area[Count]->Phys_Body->getCollisionFlags();
+
+			if (Show == true)
+			{
+				App->CL_Scene->B_Area[Count]->Phys_Body->setCollisionFlags(f & (~(1 << 5)));
+			}
+			else
+			{
+				App->CL_Scene->B_Area[Count]->Phys_Body->setCollisionFlags(f | (1 << 5));
+			}
+		}
+
+		Count++;
 	}
 
 	App->CL_Ogre->Bullet_Debug_Listener->Render_Debug_Flag = 0;

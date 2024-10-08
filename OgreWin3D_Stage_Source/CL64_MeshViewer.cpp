@@ -44,7 +44,14 @@ CL64_MeshViewer::CL64_MeshViewer(void)
 	Ogre_MvEnt =			nullptr;
 	Ogre_MvNode =			nullptr;
 
+	Ogre_MV_Phys_Body =		nullptr;
+	Ogre_MV_Phys_Shape =	nullptr;
+
+	MV_btDebug_Manual =		nullptr;
+	MV_btDebug_Node =		nullptr;
+
 	flag_MV_Resource_Path_Loaded = 0;
+	flag_MeshViewer_Running = 0;
 
 	SelectDynamic = 0;
 	SelectStatic = 0;
@@ -62,6 +69,8 @@ CL64_MeshViewer::CL64_MeshViewer(void)
 	m_Resource_Folder_Full[0] = 0;
 	Selected_MeshFile[0] = 0;
 
+	Physics_Shape = Enums::NoShape;;
+
 }
 
 CL64_MeshViewer::~CL64_MeshViewer(void)
@@ -73,6 +82,8 @@ CL64_MeshViewer::~CL64_MeshViewer(void)
 // *************************************************************************
 void CL64_MeshViewer::Start_MeshViewer_Dlg()
 {
+	App->CL_Bullet->Show_Debug_Objects(false);
+
 	CreateDialog(App->hInst, (LPCTSTR)IDD_MESHVIEWER, App->Fdlg, (DLGPROC)Proc_MeshViewer_Dlg);
 	
 }
@@ -119,6 +130,8 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 		App->CL_MeshViewer->Show_Mesh(App->CL_MeshViewer->Selected_MeshFile);
 		
 		SetWindowText(hDlg, App->CL_MeshViewer->m_Resource_Folder_Full);
+
+		App->CL_MeshViewer->flag_MeshViewer_Running = 1;
 
 		return TRUE;
 	}
@@ -295,10 +308,37 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 
 		}
 
+		if (LOWORD(wParam) == IDC_BOX)
+		{
+			//App->CL_MeshViewer->Reset_Shape_Flags();
+			App->CL_MeshViewer->Selected_Shape_Box = 1;
+			//App->RedrawWindow_Dlg(hDlg);
+
+			App->CL_MeshViewer->Physics_Shape = Enums::Shape_Box;
+
+			App->CL_MeshViewer->Show_Physics_Box();
+
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_SPHERE)
+		{
+			//App->SBC_MeshViewer->Reset_Shape_Flags();
+			App->CL_MeshViewer->Selected_Shape_Sphere = 1;
+			//App->RedrawWindow_Dlg(hDlg);
+
+			App->CL_MeshViewer->Physics_Shape = Enums::Sphere;
+
+			App->CL_MeshViewer->Show_Physics_Sphere();
+
+			return TRUE;
+		}
+
 		if (LOWORD(wParam) == IDOK)
 		{
 			App->CL_MeshViewer->Close_OgreWindow();
 			App->CL_MeshViewer->Delete_Resources_Group();
+			App->CL_MeshViewer->flag_MeshViewer_Running = 0;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
@@ -307,6 +347,7 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 		{
 			App->CL_MeshViewer->Close_OgreWindow();
 			App->CL_MeshViewer->Delete_Resources_Group();
+			App->CL_MeshViewer->flag_MeshViewer_Running = 0;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
@@ -389,16 +430,19 @@ bool CL64_MeshViewer::Set_OgreWindow(void)
 	//Reset_Camera();
 
 	// Debug Physics Shape
-	/*btDebug_Manual = mSceneMgrMeshView->createManualObject("MVManual");
-	btDebug_Manual->setRenderQueueGroup(RENDER_QUEUE_MAX);
-	btDebug_Manual->setDynamic(true);
-	btDebug_Manual->estimateVertexCount(2000);
-	btDebug_Manual->begin("BaseWhiteNoLighting", Ogre::RenderOperation::OT_LINE_LIST);
-	btDebug_Manual->position(0, 0, 0);
-	btDebug_Manual->colour(1, 1, 1, 1);
-	btDebug_Manual->end();
-	btDebug_Node = mSceneMgrMeshView->getRootSceneNode()->createChildSceneNode();
-	btDebug_Node->attachObject(btDebug_Manual);*/
+	MV_btDebug_Manual = Ogre_MV_SceneMgr->createManualObject("MVManual");
+	MV_btDebug_Manual->setRenderQueueGroup(RENDER_QUEUE_MAX);
+	MV_btDebug_Manual->setDynamic(true);
+	MV_btDebug_Manual->estimateVertexCount(2000);
+	MV_btDebug_Manual->begin("Template/White_Alpha_GD64", Ogre::RenderOperation::OT_LINE_LIST, App->CL_Ogre->App_Resource_Group);
+	MV_btDebug_Manual->position(0, 0, 0);
+	MV_btDebug_Manual->colour(1, 1, 1, 1);
+	MV_btDebug_Manual->position(0, 0, 0);
+	MV_btDebug_Manual->colour(1, 1, 1, 1);
+	MV_btDebug_Manual->end();
+	MV_btDebug_Node = Ogre_MV_SceneMgr->getRootSceneNode()->createChildSceneNode();
+	MV_btDebug_Node->attachObject(MV_btDebug_Manual);
+	MV_btDebug_Node->setVisible(true);
 
 	return 1;
 }
@@ -673,4 +717,174 @@ void CL64_MeshViewer::Show_Mesh(char* MeshFile)
 		Ogre_MV_CamNode->lookAt(Ogre::Vector3(0, Centre.y, 0), Ogre::Node::TS_WORLD);
 	}
 
+	Clear_Debug_Shape();
+	MV_btDebug_Node->resetOrientation();
+
+	if (Physics_Shape == Enums::Shape_Box)
+	{
+		Show_Physics_Box();
+	}
+
+	if (Physics_Shape == Enums::Sphere)
+	{
+		Show_Physics_Sphere();
+	}
+}
+
+// *************************************************************************
+// *			Show_Physics_Box:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+void CL64_MeshViewer::Show_Physics_Box()
+{
+	Clear_Debug_Shape();
+
+	if (Ogre_MV_Phys_Body)
+	{
+		App->CL_Bullet->dynamicsWorld->removeCollisionObject(Ogre_MV_Phys_Body);
+		Ogre_MV_Phys_Body = nullptr;
+	}
+
+	Ogre::Vector3 Centre = Ogre_MvEnt->getWorldBoundingBox(true).getCenter();
+	
+
+	btTransform startTransform;
+	startTransform.setIdentity();
+	startTransform.setRotation(btQuaternion(0, 0, 0, 1));
+
+	btScalar mass;
+	mass = 0.0f;
+
+	btVector3 localInertia(0, 0, 0);
+	btVector3 initialPosition(Centre.x, Centre.y, Centre.z);
+	startTransform.setOrigin(initialPosition);
+
+	Ogre::Vector3 Size = App->CL_Object->GetMesh_BB_Size(Ogre_MvNode);
+	float sx = Size.x / 2;
+	float sy = Size.y / 2;
+	float sz = Size.z / 2;
+
+	btCollisionShape* newRigidShape = new btBoxShape(btVector3(sx, sy, sz));
+	newRigidShape->calculateLocalInertia(mass, localInertia);
+
+	App->CL_Bullet->collisionShapes.push_back(newRigidShape);
+
+	btDefaultMotionState* myMotionState = new btDefaultMotionState(startTransform);
+
+	btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, myMotionState, newRigidShape, localInertia);
+
+	Ogre_MV_Phys_Body = new btRigidBody(rbInfo);
+	Ogre_MV_Phys_Body->setRestitution(1.0);
+	Ogre_MV_Phys_Body->setFriction(1.5);
+	Ogre_MV_Phys_Body->setUserPointer(Ogre_MvNode);
+	Ogre_MV_Phys_Body->setWorldTransform(startTransform);
+
+	App->CL_Bullet->dynamicsWorld->addRigidBody(Ogre_MV_Phys_Body);
+
+	Set_Physics(0);
+}
+
+// *************************************************************************
+// *		Show_Physics_Sphere:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void CL64_MeshViewer::Show_Physics_Sphere()
+{
+	Clear_Debug_Shape();
+
+	if (Ogre_MV_Phys_Body)
+	{
+		App->CL_Bullet->dynamicsWorld->removeCollisionObject(Ogre_MV_Phys_Body);
+		Ogre_MV_Phys_Body = nullptr;
+	}
+
+	Ogre::Vector3 Centre = Ogre_MvEnt->getWorldBoundingBox(true).getCenter();
+	
+	btTransform startTransform;
+	startTransform.setIdentity();
+	startTransform.setRotation(btQuaternion(0.0f, 0.0f, 0.0f, 1));
+
+	btScalar mass;
+	mass = 0.0f;
+
+
+	btVector3 localInertia(0, 0, 0);
+	btVector3 initialPosition(Centre.x, Centre.y, Centre.z);
+
+	startTransform.setOrigin(initialPosition);
+
+	/*Ogre::Sphere SP = Ogre_MvEnt->getWorldBoundingSphere(true);
+	float Radius = (SP.getRadius());*/
+	float Radius = App->CL_Object->GetMesh_BB_Radius(Ogre_MvNode);
+
+	btCollisionShape* newRigidShape = new btSphereShape(Radius);
+	newRigidShape->calculateLocalInertia(mass, localInertia);
+
+	App->CL_Bullet->collisionShapes.push_back(newRigidShape);
+
+	btDefaultMotionState* myMotionState = new btDefaultMotionState(startTransform);
+
+	btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, myMotionState, newRigidShape, localInertia);
+
+	Ogre_MV_Phys_Body = new btRigidBody(rbInfo);
+	Ogre_MV_Phys_Body->setRestitution(1.0);
+	Ogre_MV_Phys_Body->setFriction(1.5);
+	Ogre_MV_Phys_Body->setUserPointer(Ogre_MvNode);
+	Ogre_MV_Phys_Body->setWorldTransform(startTransform);
+
+	App->CL_Bullet->dynamicsWorld->addRigidBody(Ogre_MV_Phys_Body);
+
+	Set_Physics(0);
+}
+
+// *************************************************************************
+// *			Clear_Debug_Shape:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+void CL64_MeshViewer::Clear_Debug_Shape()
+{
+	MV_btDebug_Manual->beginUpdate(0);
+	MV_btDebug_Manual->position(0, 0, 0);
+	MV_btDebug_Manual->colour(1, 1, 1);
+	MV_btDebug_Manual->position(0, 0, 0);
+	MV_btDebug_Manual->colour(1, 1, 1);
+	MV_btDebug_Manual->end();
+
+	App->CL_Ogre->Bullet_Debug_Listener->Render_Debug_Flag = 0;
+	App->CL_Ogre->RenderFrame(1);
+	App->CL_Ogre->Bullet_Debug_Listener->Render_Debug_Flag = 1;
+}
+
+// *************************************************************************
+//				Set_Physics:- Terry and Hazel Flanigan 2024				   *
+// *************************************************************************
+void CL64_MeshViewer::Set_Physics(int Index)
+{
+	float w = 0;
+	float x = 0;
+	float y = 0;
+	float z = 0;
+
+	// ----------- Position
+
+	Ogre::Vector3 Centre = Ogre_MvEnt->getWorldBoundingBox(true).getCenter();
+
+	x = Centre.x;
+	y = Centre.y;
+	z = Centre.z;
+	
+	Ogre_MV_Phys_Body->getWorldTransform().setOrigin(btVector3(x, y, z));
+	MV_btDebug_Node->setPosition(Centre);
+	// ----------- Rotation
+	//App->CL_Scene->B_Area[Index]->Physics_Quat = App->CL_Scene->B_Area[Index]->Area_Node->getOrientation();
+
+	//w = App->CL_Scene->B_Area[Index]->Physics_Quat.w;
+	//x = App->CL_Scene->B_Area[Index]->Physics_Quat.x;
+	//y = App->CL_Scene->B_Area[Index]->Physics_Quat.y;
+	//z = App->CL_Scene->B_Area[Index]->Physics_Quat.z;
+
+	//App->CL_Scene->B_Area[Index]->Phys_Body->getWorldTransform().setRotation(btQuaternion(x, y, z, w));
+
+	//// ----------- Scale
+	//Ogre::Vector3 Scale = App->CL_Scene->B_Area[Index]->Area_Node->getScale();
+	//App->CL_Scene->B_Area[Index]->Phys_Body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
+
+	//App->CL_Scene->B_Area[Index]->Physics_Valid = 1;
 }

@@ -179,7 +179,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		// Debug -------------------------------------------------------
 		case ID_DEBUG_GENERAL:
 		{
-			char Test_Project[MAX_PATH];
+			/*char Test_Project[MAX_PATH];
 			strcpy(Test_Project, App->GD_Directory_FullPath);
 			strcat(Test_Project, "\\Projects\\First_Project_Prj\\Project.owproj");
 
@@ -187,6 +187,17 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			if (test == 1)
 			{
 				App->CL_Scene->Set_Scene();
+			}*/
+
+			if (App->CL_Bullet->flag_Debug_All == 1)
+			{
+				App->CL_Bullet->flag_Debug_All = 0;
+				App->CL_Bullet->Show_Debug_Objects(false);
+			}
+			else
+			{
+				App->CL_Bullet->flag_Debug_All = 1;
+				App->CL_Bullet->Show_Debug_Objects(true);
 			}
 
 			return TRUE;

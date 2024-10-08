@@ -36,8 +36,6 @@ public:
 
 	Ogre::String MV_Resource_Group;
 
-	bool flag_MV_Resource_Path_Loaded;
-
 	HWND MainDlgHwnd;
 	HWND MeshViewer_3D_hWnd;
 
@@ -47,6 +45,14 @@ public:
 	Ogre::SceneNode* Ogre_MV_CamNode;
 	Ogre::Entity* Ogre_MvEnt;
 	Ogre::SceneNode* Ogre_MvNode;
+
+	Ogre::ManualObject* MV_btDebug_Manual;
+	Ogre::SceneNode* MV_btDebug_Node;
+
+	bool flag_MV_Resource_Path_Loaded;
+	bool flag_MeshViewer_Running;
+
+	int Physics_Shape;
 
 private:
 	static LRESULT CALLBACK Proc_MeshViewer_Dlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
@@ -61,6 +67,12 @@ private:
 	void Get_Stock_Folders(HWND DropHwnd);
 	void Get_Mesh_Files();
 	void Show_Mesh(char* MeshFile);
+
+	void Clear_Debug_Shape();
+	void Show_Physics_Box();
+	void Show_Physics_Sphere();
+	void Set_Physics(int Index);
+
 
 	HWND ListHwnd;
 	HWND CB_hWnd;
@@ -81,6 +93,8 @@ private:
 
 	CL64_MeshView_Listener* RenderListener;
 
+	btRigidBody* Ogre_MV_Phys_Body;
+	btCollisionShape* Ogre_MV_Phys_Shape;
 };
 
 

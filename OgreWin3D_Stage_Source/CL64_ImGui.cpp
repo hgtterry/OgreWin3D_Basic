@@ -402,7 +402,10 @@ void CL64_ImGui::App_Debug(void)
 				ImGui::Text("Camera Count: %i", App->CL_Scene->Camera_Count);
 				ImGui::Text("Player Location Count: %i", App->CL_Scene->Player_Location_Count);
 				ImGui::Text("Counters Count: %i", App->CL_Scene->Counters_Count);
+				//ImGui::Text("Bullet Count: %i", App->CL_Bullet->dynamicsWorld->getNumCollisionObjects());
+				//ImGui::Text("Manifolds Count: %i", App->CL_Bullet->dynamicsWorld->getDispatcher()->getNumManifolds());
 
+				
 				ImGui::Text("UniqueID Object Counter: %i", App->CL_Scene->UniqueID_Object_Counter);
 				ImGui::Text("UniqueID Area Count: %i", App->CL_Scene->UniqueID_Area_Count);
 				ImGui::Text("UniqueID Counters Count: %i", App->CL_Scene->UniqueID_Counters_Count);
