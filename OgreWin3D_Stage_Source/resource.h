@@ -77,6 +77,7 @@
 #define IDD_PROPS_PHYSTEST              189
 #define IDD_MESHVIEWER                  190
 #define IDD_MESHVIEWER_3D               191
+#define IDD_PROPS_DIMENSIONS            192
 #define IDC_CK_SU_FULLSCREEN            1000
 #define IDC_ST_STARTUP                  1001
 #define IDC_CK_SU_FULL3DVIEW            1002
@@ -105,6 +106,7 @@
 #define IDC_BT_COUNTER                  1007
 #define IDC_BT_TEST_ENTITY              1007
 #define IDC_TEST                        1007
+#define IDC_BT_SCALE                    1007
 #define IDC_BUTTON2                     1008
 #define IDC_BT_TBH_CAMERA               1008
 #define IDC_BT_DEMORESOURCES            1008
@@ -126,6 +128,7 @@
 #define IDC_BT_GAME_BUILDGAME           1009
 #define IDC_BT_STOP                     1009
 #define IDC_DYNAMIC                     1009
+#define IDC_BT_ROTATION                 1009
 #define IDC_BUTTON4                     1010
 #define IDC_BT_CAMERA_FREE              1010
 #define IDC_ALLMATERIALS                1010
@@ -139,7 +142,6 @@
 #define IDC_JUSTOGRE                    1011
 #define IDC_TBSHOWGRID                  1012
 #define IDC_BT_TD_DEMOSTAB              1012
-#define IDC_BUTTON6                     1012
 #define IDC_CONE                        1012
 #define IDC_BT_TD_DEMOS_DEMO1           1013
 #define IDC_BTSHOWPOINTS                1013
@@ -176,6 +178,7 @@
 #define IDC_CK_SP_DESKTOP               1031
 #define IDC_CHECKYES                    1031
 #define IDC_CK_ENABLE                   1031
+#define IDC_CK_LOCK                     1031
 #define IDC_CB_FPSLIST                  1032
 #define IDC_CHECKNO                     1032
 #define IDC_ST_FPSSETTINGS              1033
@@ -240,6 +243,7 @@
 #define IDC_STSHAPE                     1093
 #define IDC_MVSTATIC                    1094
 #define IDC_CAPSULE                     1095
+#define IDC_BT_POSITION                 1096
 #define ID_VIEW_RESET                   32771
 #define ID_VIEW_MAX3DVIEW               32772
 #define ID_DEBUG_TESTPREFERANCE         32773
@@ -295,9 +299,9 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
-#define _APS_NEXT_RESOURCE_VALUE        192
+#define _APS_NEXT_RESOURCE_VALUE        193
 #define _APS_NEXT_COMMAND_VALUE         32819
-#define _APS_NEXT_CONTROL_VALUE         1096
+#define _APS_NEXT_CONTROL_VALUE         1097
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif

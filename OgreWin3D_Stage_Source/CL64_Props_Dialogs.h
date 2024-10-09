@@ -31,20 +31,25 @@ public:
 	~CL64_Props_Dialogs(void);
 
 	void Start_Props_Dialogs();
+	void Start_Dialog_Dimensions();
 
 	void Show_Physics_Test_Dlg(bool Show);
 	void Show_Details_Goto_Dlg(bool Show);
+	void Show_Dimensions_Dlg(bool Show);
+
+	HWND Dimensions_Dlg_hWnd;
 
 private:
 
 	static LRESULT CALLBACK Proc_Details_Goto(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Proc_Dialog_PhysicsTest(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Proc_Dialog_Dimensions(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	void Start_Details_Goto_Dlg(void);
 	void Start_Dialog_PhysicsTest();
-
+	
 	HWND Details_Goto_Hwnd;
 	HWND PhysicsTest_Dlg_hWnd;
-
+	
 };
 

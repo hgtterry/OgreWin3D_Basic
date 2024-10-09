@@ -575,7 +575,7 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 		App->CL_Props_Dialogs->Show_Details_Goto_Dlg(true);
 
 		//App->SBC_Props_Dialog->Hide_Debug_Dlg(1);
-		//App->SBC_Props_Dialog->Hide_Dimensions_Dlg(1, 1);
+		App->CL_Props_Dialogs->Show_Dimensions_Dlg(1);
 		//App->SBC_Props_Dialog->Hide_Details_Goto_Dlg(1);
 		//App->SBC_Props_Dialog->Hide_Material_Dlg(1);*/
 
@@ -642,7 +642,7 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 		HideRightPanes();
 		App->CL_Props_Dialogs->Show_Details_Goto_Dlg(true);
 
-		//App->SBC_Props_Dialog->Hide_Dimensions_Dlg(1, App->SBC_Scene->V_Object[Index]->Dimensions_Locked);
+		App->CL_Props_Dialogs->Show_Dimensions_Dlg(1);
 		//App->SBC_Props_Dialog->Hide_Debug_Dlg(1);
 		//App->SBC_Props_Dialog->Hide_Material_Dlg(1);*/
 
@@ -682,7 +682,7 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 		HideRightPanes();
 		App->CL_Props_Dialogs->Show_Details_Goto_Dlg(true);
 
-		//App->SBC_Props_Dialog->Hide_Dimensions_Dlg(1, App->SBC_Scene->V_Object[Index]->Dimensions_Locked);
+		App->CL_Props_Dialogs->Show_Dimensions_Dlg(1);
 		//App->SBC_Props_Dialog->Hide_Debug_Dlg(1);
 		//App->SBC_Props_Dialog->Hide_Material_Dlg(1);
 
@@ -720,7 +720,7 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 
 		HideRightPanes();
 		App->CL_Props_Dialogs->Show_Details_Goto_Dlg(true);
-		//App->SBC_Props_Dialog->Hide_Dimensions_Dlg(1, App->SBC_Scene->V_Object[Index]->Dimensions_Locked);
+		App->CL_Props_Dialogs->Show_Dimensions_Dlg(1);
 		//App->SBC_Props_Dialog->Hide_Debug_Dlg(1);
 
 		//App->SBC_Properties->Is_Player = 0;*/
@@ -759,7 +759,7 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 
 		HideRightPanes();
 		App->CL_Props_Dialogs->Show_Details_Goto_Dlg(true);
-		//App->SBC_Props_Dialog->Hide_Dimensions_Dlg(1, App->SBC_Scene->V_Object[Index]->Dimensions_Locked);
+		App->CL_Props_Dialogs->Show_Dimensions_Dlg(true);
 		App->CL_Props_Dialogs->Show_Physics_Test_Dlg(true);
 		//App->SBC_Props_Dialog->Hide_Debug_Dlg(1);
 
@@ -800,7 +800,7 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 
 		HideRightPanes();
 		App->CL_Props_Dialogs->Show_Details_Goto_Dlg(true);
-		//App->SBC_Props_Dialog->Hide_Dimensions_Dlg(1, App->SBC_Scene->V_Object[Index]->Dimensions_Locked);
+		App->CL_Props_Dialogs->Show_Dimensions_Dlg(true);
 		//App->SBC_Props_Dialog->Hide_Debug_Dlg(1);
 		//App->SBC_Props_Dialog->Hide_Panel_Test_Dlg(1);
 
@@ -841,7 +841,7 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 
 		HideRightPanes();
 		App->CL_Props_Dialogs->Show_Details_Goto_Dlg(true);
-		//App->SBC_Props_Dialog->Hide_Dimensions_Dlg(1, App->SBC_Scene->V_Object[Index]->Dimensions_Locked);
+		App->CL_Props_Dialogs->Show_Dimensions_Dlg(true);
 		//App->SBC_Props_Dialog->Hide_Debug_Dlg(1);
 
 		//App->SBC_Properties->Is_Player = 0; // Mark as Object selected
@@ -880,7 +880,7 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 
 		HideRightPanes();
 		App->CL_Props_Dialogs->Show_Details_Goto_Dlg(true);
-		//App->SBC_Props_Dialog->Hide_Dimensions_Dlg(1, App->SBC_Scene->V_Object[Index]->Dimensions_Locked);
+		App->CL_Props_Dialogs->Show_Dimensions_Dlg(true);
 
 		//----------------------------------------------------------------------------
 		//App->SBC_Properties->Reset_Last_Selected_Object(App->SBC_Properties->Last_Selected_Object);
@@ -940,7 +940,7 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 		HideRightPanes();
 		App->CL_Props_Dialogs->Show_Details_Goto_Dlg(true);
 
-		//App->SBC_Props_Dialog->Hide_Dimensions_Dlg(1, App->SBC_Scene->V_Object[Index]->Dimensions_Locked);
+		App->CL_Props_Dialogs->Show_Dimensions_Dlg(true);
 		//App->SBC_Props_Dialog->Hide_Debug_Dlg(1);*/
 
 		//---------------------------------------------------------------------------
@@ -982,11 +982,11 @@ void CL64_FileView::HideRightPanes(void)
 	App->SBC_Props_Dialog->Hide_Area_Dlg(0);*/
 	App->CL_Props_Dialogs->Show_Details_Goto_Dlg(false);
 
-	/*App->SBC_Props_Dialog->Hide_Panel_Test_Dlg(0);
-	App->SBC_Props_Dialog->Hide_Dimensions_Dlg(0, 0);*/
+	//App->SBC_Props_Dialog->Hide_Panel_Test_Dlg(0);
+	App->CL_Props_Dialogs->Show_Dimensions_Dlg(false);
 	App->CL_Props_Dialogs->Show_Physics_Test_Dlg(false);
-	/*App->SBC_Props_Dialog->Hide_Debug_Dlg(0);
-	App->SBC_Props_Dialog->Hide_Material_Dlg(0);*/
+	///*App->SBC_Props_Dialog->Hide_Debug_Dlg(0);
+	//App->SBC_Props_Dialog->Hide_Material_Dlg(0);*/
 }
 
 // *************************************************************************

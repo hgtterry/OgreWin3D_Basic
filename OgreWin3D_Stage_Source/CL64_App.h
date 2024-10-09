@@ -190,6 +190,7 @@ public:
 
 	HBRUSH AppBackground;
 	HBRUSH DialogBackGround;
+	HBRUSH Brush_Panel;
 	HBRUSH BlackBrush;
 	HBRUSH Brush_White;
 	HBRUSH Brush_But_Normal;

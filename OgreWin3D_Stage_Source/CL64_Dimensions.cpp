@@ -269,8 +269,6 @@ void CL64_Dimensions::ImGui_Position(void)
 	float vec4a[4] = { Pos.x, Pos.y, Pos.z, 0.44f };
 	ImGui::InputFloat3("", vec4a, "%.3f", ImGuiInputTextFlags_ReadOnly);
 
-
-
 	// ----------------------------------------------------------------------------- Pos CheckBox X 
 	ImGui::Indent();
 	ImGui::Indent();
@@ -424,8 +422,6 @@ void CL64_Dimensions::Set_Position(Ogre::Vector3 Pos)
 	pBase_Mesh_Pos->y = Pos.y;
 	pBase_Mesh_Pos->z = Pos.z;
 
-
-
 	if (pBase_Phys_Body)
 	{
 
@@ -439,8 +435,6 @@ void CL64_Dimensions::Set_Position(Ogre::Vector3 Pos)
 	{
 		//App->SBC_Markers->MarkerBB_Addjust(Index);
 	}
-
-
 }
 
 // *************************************************************************
@@ -891,19 +885,23 @@ void CL64_Dimensions::Set_Rotation(Ogre::Vector3 Rotation, float Delta)
 Ogre::Vector3 CL64_Dimensions::Get_BoundingBox_World_Centre()
 {
 
-	/*if (*pBase_Shape == Enums::Shape_TriMesh)
+	if (*pBase_Shape == Enums::Shape_TriMesh)
 	{
 		Ogre::Vector3 Pos = pBase_Object_Node->getPosition();
 		return Pos;
 	}
 	else
 	{
-		AxisAlignedBox worldAAB = pBase_Object_Ent->getBoundingBox();
-		worldAAB.transformAffine(pBase_Object_Node->_getFullTransform());
-		Ogre::Vector3 Centre = 0worldAAB.getCenter();
+		App->Say("Get_BoundingBox_World_Centre");
+		//AxisAlignedBox worldAAB = pBase_Object_Ent->getBoundingBox();
+		//worldAAB.transformAffine(pBase_Object_Node->_getFullTransform());
+		//Ogre::Vector3 Centre = worldAAB.getCenter();
 
+		Ogre::Vector3 Centre = pBase_Object_Ent->getWorldBoundingBox(true).getCenter();
 		return Centre;
-	}*/
+	}
+	
+	
 }
 
 // *************************************************************************
@@ -938,11 +936,15 @@ void CL64_Dimensions::Set_Physics_Position()
 {
 	/*AxisAlignedBox worldAAB = pBase_Object_Ent->getBoundingBox();
 	worldAAB.transformAffine(pBase_Object_Node->_getFullTransform());
-	Ogre::Vector3 Centre = worldAAB.getCenter();
+	Ogre::Vector3 Centre = worldAAB.getCenter();*/
+
+	Ogre::Vector3 Centre = pBase_Object_Ent->getWorldBoundingBox(true).getCenter();
 	pBase_Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
 
 	pBase_Physics_Pos->x = Centre.x;
 	pBase_Physics_Pos->y = Centre.y;
-	pBase_Physics_Pos->z = Centre.z;*/
+	pBase_Physics_Pos->z = Centre.z;
+
+	App->Say("Set_Physics_Position()");
 }
 

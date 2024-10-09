@@ -127,6 +127,7 @@ CL64_App::CL64_App(void)
 	Brush_But_Normal = 0;
 	Brush_But_Hover = 0;
 	Brush_But_Pressed = 0;
+	Brush_Panel = 0;
 	Brush_Green = 0;
 	Brush_Tabs = 0;
 	Brush_Tabs_UnSelected = 0;
@@ -388,6 +389,8 @@ void CL64_App::SetBrushes_Fonts(void)
 {
 	AppBackground = CreateSolidBrush(RGB(213, 222, 242));
 	DialogBackGround = CreateSolidBrush(RGB(208, 230, 252));
+
+	Brush_Panel = CreateSolidBrush(RGB(218, 240, 255));
 
 	BlackBrush = CreateSolidBrush(RGB(0, 0, 0));
 	Brush_White = CreateSolidBrush(RGB(255, 255, 255));

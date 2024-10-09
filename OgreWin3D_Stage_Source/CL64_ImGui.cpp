@@ -241,6 +241,17 @@ void CL64_ImGui::ImGui_Render_Loop(void)
 	{
 		ImGui_Object_Data();
 	}
+
+	// SBC_Dimensions
+	if (App->CL_Dimensions->Show_Position == 1 || App->CL_Dimensions->Show_Scale == 1 || App->CL_Dimensions->Show_Rotation == 1)
+	{
+		App->CL_Dimensions->Show_Dimensions = 1;
+		App->CL_Dimensions->ImGui_Dimensions();
+	}
+	else
+	{
+		App->CL_Dimensions->Show_Dimensions = 0;
+	}
 	
 }
 

@@ -31,6 +31,7 @@ CL64_Props_Dialogs::CL64_Props_Dialogs(void)
 {
 	Details_Goto_Hwnd =		nullptr;
 	PhysicsTest_Dlg_hWnd =	nullptr;
+	Dimensions_Dlg_hWnd =	nullptr;
 }
 
 CL64_Props_Dialogs::~CL64_Props_Dialogs(void)
@@ -43,7 +44,7 @@ CL64_Props_Dialogs::~CL64_Props_Dialogs(void)
 void CL64_Props_Dialogs::Start_Props_Dialogs()
 {
 
-	//Start_Dialog_Dimensions();
+	Start_Dialog_Dimensions();
 	Start_Dialog_PhysicsTest();
 	//Start_Dialog_Debug();
 	//Start_Panels_Test_Dlg();
@@ -234,6 +235,228 @@ LRESULT CALLBACK CL64_Props_Dialogs::Proc_Dialog_PhysicsTest(HWND hDlg, UINT mes
 }
 
 // *************************************************************************
+// *	  Start_Dialog_Dimensions:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+void CL64_Props_Dialogs::Start_Dialog_Dimensions()
+{
+
+	Dimensions_Dlg_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_PROPS_DIMENSIONS, App->CL_Properties->Properties_Dlg_hWnd, (DLGPROC)Proc_Dialog_Dimensions);
+
+	//Init_Bmps_Dimensions();
+	Show_Dimensions_Dlg(0);
+
+}
+
+// *************************************************************************
+// *		Proc_Dialog_Dimensions:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+LRESULT CALLBACK CL64_Props_Dialogs::Proc_Dialog_Dimensions(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+	switch (message)
+	{
+	case WM_INITDIALOG:
+	{
+		SendDlgItemMessage(hDlg, IDC_BT_POSITION, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_ROTATION, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_SCALE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_CK_LOCK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		return TRUE;
+	}
+
+	case WM_CTLCOLORSTATIC:
+	{
+
+		if (GetDlgItem(hDlg, IDC_CK_LOCK) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->Brush_Panel;
+		}
+
+		return FALSE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->Brush_Panel;
+	}
+
+	case WM_NOTIFY:
+	{
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		if (some_item->idFrom == IDC_BT_POSITION && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->CL_Dimensions->Show_Position);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BT_SCALE && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->CL_Dimensions->Show_Scale);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BT_ROTATION && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->CL_Dimensions->Show_Rotation);
+			return CDRF_DODEFAULT;
+		}
+
+		return CDRF_DODEFAULT;
+	}
+
+	case WM_COMMAND:
+	{
+		if (LOWORD(wParam) == IDC_CK_LOCK)
+		{
+			HWND temp = GetDlgItem(hDlg, IDC_CK_LOCK);
+			int test = SendMessage(temp, BM_GETCHECK, 0, 0);
+			if (test == BST_CHECKED)
+			{
+				int EditCat = App->CL_Properties->Edit_Category;
+				//if (EditCat == Enums::FV_Edit_Object || EditCat == Enums::Edit_Teleport)
+				{
+					int Index = App->CL_Properties->Current_Selected_Object;
+					App->CL_Scene->V_Object[Index]->Dimensions_Locked = 1;
+
+					App->CL_Scene->V_Object[Index]->Altered = 1;
+					App->CL_FileView->Mark_Altered(App->CL_Scene->V_Object[Index]->FileViewItem);
+					App->CL_Scene->flag_Scene_Modified = 1;
+				}
+
+				EnableWindow(GetDlgItem(hDlg, IDC_BT_POSITION), 0);
+				EnableWindow(GetDlgItem(hDlg, IDC_BT_SCALE), 0);
+				EnableWindow(GetDlgItem(hDlg, IDC_BT_ROTATION), 0);
+				return 1;
+			}
+			else
+			{
+				int EditCat = App->CL_Properties->Edit_Category;
+				//if (EditCat == Enums::FV_Edit_Object || EditCat == Enums::Edit_Teleport)
+				{
+					int Index = App->CL_Properties->Current_Selected_Object;
+					App->CL_Scene->V_Object[Index]->Dimensions_Locked = 0;
+
+					App->CL_Scene->V_Object[Index]->Altered = 1;
+					App->CL_FileView->Mark_Altered(App->CL_Scene->V_Object[Index]->FileViewItem);
+					App->CL_Scene->flag_Scene_Modified = 1;
+				}
+
+				if (App->CL_Properties->Edit_Category == Enums::Edit_Area)
+				{
+					if (App->CL_Properties->Edit_Category == Enums::Edit_Area)
+					{
+						//App->CL_Dialogs->YesNo("Edit Area", "Are You Sure", 1);
+						bool Doit = App->CL_Dialogs->Canceled;
+						if (Doit == 1)
+						{
+							SendMessage(temp, BM_SETCHECK, 1, 0);
+							return TRUE;
+						}
+					}
+				}
+
+				EnableWindow(GetDlgItem(hDlg, IDC_BT_POSITION), 1);
+				EnableWindow(GetDlgItem(hDlg, IDC_BT_SCALE), 1);
+				EnableWindow(GetDlgItem(hDlg, IDC_BT_ROTATION), 1);
+				return 1;
+			}
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_BT_POSITION)
+		{
+
+			if (App->CL_Dimensions->Show_Position == 1)
+			{
+				App->CL_Dimensions->Show_Position = 0;
+				//App->SBC_Markers->Hide_Axis_Marker();
+			}
+			else
+			{
+				//App->SBC_Markers->Hide_Axis_Marker();
+
+				App->CL_Dimensions->Prepare_Dimensions();
+				App->CL_Dimensions->Show_Position = 1;
+				App->CL_Dimensions->Show_Scale = 0;
+				App->CL_Dimensions->Show_Rotation = 0;
+			}
+
+			RedrawWindow(App->CL_Props_Dialogs->Dimensions_Dlg_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+			return 1;
+		}
+
+		if (LOWORD(wParam) == IDC_BT_SCALE)
+		{
+
+			if (App->CL_Dimensions->Show_Scale == 1)
+			{
+				App->CL_Dimensions->Show_Scale = 0;
+				//App->SBC_Markers->Hide_Axis_Marker();
+			}
+			else
+			{
+				//App->SBC_Markers->Hide_Axis_Marker();
+
+				App->CL_Dimensions->Prepare_Dimensions();
+				App->CL_Dimensions->Show_Scale = 1;
+				App->CL_Dimensions->Show_Position = 0;
+				App->CL_Dimensions->Show_Rotation = 0;
+			}
+
+			RedrawWindow(App->CL_Props_Dialogs->Dimensions_Dlg_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+			return 1;
+		}
+
+		if (LOWORD(wParam) == IDC_BT_ROTATION)
+		{
+
+			if (App->CL_Dimensions->Show_Rotation == 1)
+			{
+				App->CL_Dimensions->Show_Rotation = 0;
+				//App->SBC_Markers->Hide_Axis_Marker();
+			}
+			else
+			{
+				//App->SBC_Markers->Hide_Axis_Marker();
+
+				App->CL_Dimensions->Prepare_Dimensions();
+				App->CL_Dimensions->Show_Rotation = 1;
+				App->CL_Dimensions->Show_Position = 0;
+				App->CL_Dimensions->Show_Scale = 0;
+			}
+
+			RedrawWindow(App->CL_Props_Dialogs->Dimensions_Dlg_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+			return 1;
+		}
+
+		if (LOWORD(wParam) == IDOK)
+		{
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDCANCEL)
+		{
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+	}
+
+	}
+	return FALSE;
+}
+
+// *************************************************************************
 // *		Show_Details_Goto_Dlg:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
 void CL64_Props_Dialogs::Show_Details_Goto_Dlg(bool Show)
@@ -247,4 +470,12 @@ void CL64_Props_Dialogs::Show_Details_Goto_Dlg(bool Show)
 void CL64_Props_Dialogs::Show_Physics_Test_Dlg(bool Show)
 {
 	ShowWindow(PhysicsTest_Dlg_hWnd, Show);
+}
+
+// *************************************************************************
+// *		Show_Dimensions_Dlg:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void CL64_Props_Dialogs::Show_Dimensions_Dlg(bool Show)
+{
+	ShowWindow(Dimensions_Dlg_hWnd, Show);
 }
