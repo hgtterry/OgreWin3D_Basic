@@ -780,7 +780,7 @@ void CL64_MeshViewer::Show_Physics_Box()
 
 	App->CL_Bullet->dynamicsWorld->addRigidBody(Ogre_MV_Phys_Body);
 
-	Set_Physics(0);
+	//Set_Physics(0);
 }
 
 // *************************************************************************
@@ -832,7 +832,7 @@ void CL64_MeshViewer::Show_Physics_Sphere()
 
 	App->CL_Bullet->dynamicsWorld->addRigidBody(Ogre_MV_Phys_Body);
 
-	Set_Physics(0);
+	//Set_Physics(0);
 }
 
 // *************************************************************************

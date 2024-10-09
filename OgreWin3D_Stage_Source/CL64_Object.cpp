@@ -44,8 +44,17 @@ float CL64_Object::GetMesh_BB_Radius(SceneNode* mNode)
 	Ogre::Vector3 max = aab.getMaximum() * mNode->getScale();
 	Ogre::Vector3 center = aab.getCenter() * mNode->getScale();
 	Ogre::Vector3 size(fabs(max.x - min.x), fabs(max.y - min.y), fabs(max.z - min.z));
-	float radius = (size.x > size.z) ? size.z / 2.0f : size.x / 2.0f;
+	float radius = (size.x < size.z) ? size.z / 2.0f : size.x / 2.0f;
 
+	/*if (size.x > size.y && size.x > size.z) {
+		radius = size.x / 2.0f;
+	}
+	else if (size.y > size.x && size.y > size.z) {
+		radius = size.y / 2.0f;
+	}
+	if (size.z > size.x && size.z > size.y) {
+		radius = size.z / 2.0f;
+	}*/
 	return radius;
 }
 
