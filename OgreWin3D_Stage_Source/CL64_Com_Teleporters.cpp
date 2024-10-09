@@ -147,7 +147,7 @@ bool CL64_Com_Teleporters::Create_Teleport_Entity(int Index)
 
 	App->CL_Scene->V_Object[Index]->Physics_Valid = 1;
 
-	App->CL_Physics->Set_Physics(Index);
+	App->CL_Physics->Set_Physics_New(Index);
 
 	return 1;
 }

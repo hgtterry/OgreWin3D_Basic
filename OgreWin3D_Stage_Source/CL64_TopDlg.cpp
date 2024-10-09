@@ -930,18 +930,26 @@ LRESULT CALLBACK CL64_TopDlg::Proc_Physics_TB(HWND hDlg, UINT message, WPARAM wP
 
 		if (LOWORD(wParam) == IDC_BT_TD_DEBUG_PHYSICSDEBUG)
 		{
-			if (App->CL_TopDlg->flag_Toggle_PhysicaDebug_Node == 1)
+			if (App->CL_Bullet->flag_Debug_All == 1)
 			{
-				App->CL_Bullet->Show_Debug_Area(false);
+				App->CL_Bullet->flag_Debug_All = 0;
+				App->CL_Bullet->Show_Debug_Objects(false);
 				App->CL_TopDlg->flag_Toggle_PhysicaDebug_Node = 0;
-				App->CL_Ogre->Bullet_Debug_Listener->btDebug_Node->setVisible(false);
+				if (App->CL_Scene->flag_Player_Added == 1 && App->CL_Ogre->Ogre3D_Listener->CameraMode == Enums::Cam_Mode_Free)
+				{
+					App->CL_Player->Show_Debug_Player(true);
+				}
 			}
 			else
 			{
-				App->CL_Bullet->Show_Debug_Area(true);
+				App->CL_Bullet->flag_Debug_All = 1;
+				App->CL_Bullet->Show_Debug_Objects(true);
+				App->CL_TopDlg->flag_Toggle_PhysicaDebug_Node = 1;
+
 				App->CL_TopDlg->flag_Toggle_PhysicaDebug_Node = 1;
 				App->CL_Ogre->Bullet_Debug_Listener->btDebug_Node->setVisible(true);
 			}
+
 			return 1;
 		}
 

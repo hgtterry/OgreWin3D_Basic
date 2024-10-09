@@ -162,7 +162,7 @@ bool CL64_Com_Environments::Create_Environ_Entity(int Index)
 
 	App->CL_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
 
-	App->CL_Physics->Set_Physics(Index);
+	App->CL_Physics->Set_Physics_New(Index);
 
 	return 1;
 }

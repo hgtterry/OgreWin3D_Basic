@@ -193,11 +193,19 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			{
 				App->CL_Bullet->flag_Debug_All = 0;
 				App->CL_Bullet->Show_Debug_Objects(false);
+
+				if (App->CL_Scene->flag_Player_Added == 1 && App->CL_Ogre->Ogre3D_Listener->CameraMode == Enums::Cam_Mode_Free)
+				{
+					App->CL_Player->Show_Debug_Player(true);
+				}
 			}
 			else
 			{
 				App->CL_Bullet->flag_Debug_All = 1;
 				App->CL_Bullet->Show_Debug_Objects(true);
+
+				App->CL_TopDlg->flag_Toggle_PhysicaDebug_Node = 1;
+				App->CL_Ogre->Bullet_Debug_Listener->btDebug_Node->setVisible(true);
 			}
 
 			return TRUE;

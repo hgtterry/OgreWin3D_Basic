@@ -35,27 +35,33 @@ CL64_Physics::~CL64_Physics(void)
 }
 
 // *************************************************************************
-//					Set_Physics:- Terry and Hazel Flanigan 2024			   *
+//				Set_Physics_New:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-void CL64_Physics::Set_Physics(int Index)
+void CL64_Physics::Set_Physics_New(int Index)
 {
+	// Rotation
 	App->CL_Scene->V_Object[Index]->Physics_Quat = App->CL_Scene->V_Object[Index]->Object_Node->getOrientation();
 
 	float w = App->CL_Scene->V_Object[Index]->Physics_Quat.w;
 	float x = App->CL_Scene->V_Object[Index]->Physics_Quat.x;
 	float y = App->CL_Scene->V_Object[Index]->Physics_Quat.y;
 	float z = App->CL_Scene->V_Object[Index]->Physics_Quat.z;
+
 	App->CL_Scene->V_Object[Index]->Phys_Body->getWorldTransform().setRotation(btQuaternion(x, y, z, w));
 
+	// Scale
 	App->CL_Scene->V_Object[Index]->Object_Node->setScale(App->CL_Scene->V_Object[Index]->Mesh_Scale);
 
 	Ogre::Vector3 Scale = App->CL_Scene->V_Object[Index]->Object_Node->getScale();
 	App->CL_Scene->V_Object[Index]->Phys_Body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
 
-	UpDate_Physics_And_Visuals(Index);
+	// Position
+	Ogre::Vector3 Centre = App->CL_Scene->V_Object[Index]->Object_Ent->getWorldBoundingBox(true).getCenter();
+	App->CL_Scene->V_Object[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
+	App->CL_Scene->V_Object[Index]->Physics_Pos = Centre;
 
+	// All Good
 	App->CL_Scene->V_Object[Index]->Physics_Valid = 1;
-
 }
 
 // *************************************************************************

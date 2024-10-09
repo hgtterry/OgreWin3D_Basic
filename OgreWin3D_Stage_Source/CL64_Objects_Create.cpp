@@ -338,13 +338,13 @@ void CL64_Objects_Create::Add_Physics_Box(bool Dynamic, int Index)
 	}
 
 	int f = Object->Phys_Body->getCollisionFlags();
-	//Object->Phys_Body->setCollisionFlags(f | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
+	Object->Phys_Body->setCollisionFlags(f | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
 
 	App->CL_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
 
 	App->CL_Scene->V_Object[Index]->Physics_Valid = 1;
 
-	App->CL_Physics->Set_Physics(Index);
+	App->CL_Physics->Set_Physics_New(Index);
 
 }
 
@@ -429,7 +429,7 @@ void CL64_Objects_Create::Add_Physics_Sphere(bool Dynamic, int Index)
 
 	App->CL_Scene->V_Object[Index]->Physics_Valid = 1;
 
-	App->CL_Physics->Set_Physics(Index);
+	App->CL_Physics->Set_Physics_New(Index);
 }
 
 // *************************************************************************
@@ -510,13 +510,13 @@ void CL64_Objects_Create::Add_Physics_Capsule(bool Dynamic, int Index)
 	}
 
 	int f = Object->Phys_Body->getCollisionFlags();
-	//Object->Phys_Body->setCollisionFlags(f | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
+	Object->Phys_Body->setCollisionFlags(f | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
 
 	App->CL_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
 
 	App->CL_Scene->V_Object[Index]->Physics_Valid = 1;
 
-	App->CL_Physics->Set_Physics(Index);
+	App->CL_Physics->Set_Physics_New(Index);
 }
 
 // *************************************************************************
@@ -596,13 +596,13 @@ void CL64_Objects_Create::Add_Physics_Cylinder(bool Dynamic, int Index)
 	}
 
 	int f = Object->Phys_Body->getCollisionFlags();
-	//Object->Phys_Body->setCollisionFlags(f | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
+	Object->Phys_Body->setCollisionFlags(f | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
 
 	App->CL_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
 
 	App->CL_Scene->V_Object[Index]->Physics_Valid = 1;
 
-	App->CL_Physics->Set_Physics(Index);
+	App->CL_Physics->Set_Physics_New(Index);
 }
 
 // *************************************************************************
@@ -688,7 +688,7 @@ void CL64_Objects_Create::Add_Physics_Cone(bool Dynamic, int Index)
 
 	App->CL_Scene->V_Object[Index]->Physics_Valid = 1;
 
-	App->CL_Physics->Set_Physics(Index);
+	App->CL_Physics->Set_Physics_New(Index);
 }
 
 // *************************************************************************
@@ -828,7 +828,7 @@ btBvhTriangleMeshShape* CL64_Objects_Create::create_New_Trimesh(int Index)
 	Object->Phys_Body->setWorldTransform(startTransform);
 
 	int f = Object->Phys_Body->getCollisionFlags();
-	//Object->Phys_Body->setCollisionFlags(f | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
+	Object->Phys_Body->setCollisionFlags(f | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
 
 	Object->Type = Enums::Bullet_Type_TriMesh;
 	Object->Shape = Enums::Shape_TriMesh;
@@ -841,7 +841,7 @@ btBvhTriangleMeshShape* CL64_Objects_Create::create_New_Trimesh(int Index)
 
 	Object->Physics_Valid = 1;
 
-	App->CL_Physics->Set_Physics(Index);
+	App->CL_Physics->Set_Physics_New(Index);
 
 	return mShape;
 }

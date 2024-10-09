@@ -892,7 +892,6 @@ Ogre::Vector3 CL64_Dimensions::Get_BoundingBox_World_Centre()
 	}
 	else
 	{
-		App->Say("Get_BoundingBox_World_Centre");
 		//AxisAlignedBox worldAAB = pBase_Object_Ent->getBoundingBox();
 		//worldAAB.transformAffine(pBase_Object_Node->_getFullTransform());
 		//Ogre::Vector3 Centre = worldAAB.getCenter();
@@ -945,6 +944,5 @@ void CL64_Dimensions::Set_Physics_Position()
 	pBase_Physics_Pos->y = Centre.y;
 	pBase_Physics_Pos->z = Centre.z;
 
-	App->Say("Set_Physics_Position()");
 }
 

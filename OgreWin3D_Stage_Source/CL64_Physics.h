@@ -30,7 +30,7 @@ public:
 	CL64_Physics(void);
 	~CL64_Physics(void);
 
-	void Set_Physics(int Index);
+	void Set_Physics_New(int Index);
 	void UpDate_Physics_And_Visuals(int Index);
 	void Set_Physics_Position(int Index);
 	void Enable_Physics(bool Enable);
