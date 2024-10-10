@@ -68,10 +68,12 @@ private:
 	void Get_Mesh_Files();
 	void Show_Mesh(char* MeshFile);
 
+	void Clear_Shape_Buttons();
+
 	void Clear_Debug_Shape();
 	void Show_Physics_Box();
 	void Show_Physics_Sphere();
-	void Set_Physics(int Index);
+	void Set_Physics();
 
 
 	HWND ListHwnd;
@@ -81,15 +83,15 @@ private:
 	char m_Resource_Folder_Full[MAX_PATH];
 	char Selected_MeshFile[MAX_PATH];
 
-	bool SelectDynamic;
-	bool SelectStatic;
-	bool SelectTriMesh;
+	bool flag_SelectDynamic;
+	bool flag_SelectStatic;
+	bool flag_SelectTriMesh;
 
-	bool Selected_Shape_Box;
-	bool Selected_Shape_Sphere;
-	bool Selected_Shape_Capsule;
-	bool Selected_Shape_Cylinder;
-	bool Selected_Shape_Cone;
+	bool flag_Selected_Shape_Box;
+	bool flag_Selected_Shape_Sphere;
+	bool flag_Selected_Shape_Capsule;
+	bool flag_Selected_Shape_Cylinder;
+	bool flag_Selected_Shape_Cone;
 
 	CL64_MeshView_Listener* RenderListener;
 

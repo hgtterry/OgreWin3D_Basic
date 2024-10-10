@@ -53,15 +53,15 @@ CL64_MeshViewer::CL64_MeshViewer(void)
 	flag_MV_Resource_Path_Loaded = 0;
 	flag_MeshViewer_Running = 0;
 
-	SelectDynamic = 0;
-	SelectStatic = 0;
-	SelectTriMesh = 0;
+	flag_SelectDynamic = 0;
+	flag_SelectStatic = 0;
+	flag_SelectTriMesh = 0;
 
-	Selected_Shape_Box = 0;
-	Selected_Shape_Sphere = 0;
-	Selected_Shape_Capsule = 0;
-	Selected_Shape_Cylinder = 0;
-	Selected_Shape_Cone = 0;
+	flag_Selected_Shape_Box = 0;
+	flag_Selected_Shape_Sphere = 0;
+	flag_Selected_Shape_Capsule = 0;
+	flag_Selected_Shape_Cylinder = 0;
+	flag_Selected_Shape_Cone = 0;
 
 	MV_Resource_Group = "MV_Resource_Group";
 
@@ -177,21 +177,21 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 		if (some_item->idFrom == IDC_MVSTATIC)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CL_MeshViewer->SelectStatic);
+			App->Custom_Button_Toggle(item, App->CL_MeshViewer->flag_SelectStatic);
 			return CDRF_DODEFAULT;
 		}
 
 		if (some_item->idFrom == IDC_DYNAMIC)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CL_MeshViewer->SelectDynamic);
+			App->Custom_Button_Toggle(item, App->CL_MeshViewer->flag_SelectDynamic);
 			return CDRF_DODEFAULT;
 		}
 
 		if (some_item->idFrom == IDC_TRIMESH)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CL_MeshViewer->SelectTriMesh);
+			App->Custom_Button_Toggle(item, App->CL_MeshViewer->flag_SelectTriMesh);
 			return CDRF_DODEFAULT;
 		}
 
@@ -199,35 +199,35 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 		if (some_item->idFrom == IDC_BOX)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CL_MeshViewer->Selected_Shape_Box);
+			App->Custom_Button_Toggle(item, App->CL_MeshViewer->flag_Selected_Shape_Box);
 			return CDRF_DODEFAULT;
 		}
 
 		if (some_item->idFrom == IDC_SPHERE)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CL_MeshViewer->Selected_Shape_Sphere);
+			App->Custom_Button_Toggle(item, App->CL_MeshViewer->flag_Selected_Shape_Sphere);
 			return CDRF_DODEFAULT;
 		}
 
 		if (some_item->idFrom == IDC_CAPSULE)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CL_MeshViewer->Selected_Shape_Capsule);
+			App->Custom_Button_Toggle(item, App->CL_MeshViewer->flag_Selected_Shape_Capsule);
 			return CDRF_DODEFAULT;
 		}
 
 		if (some_item->idFrom == IDC_CYLINDER)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CL_MeshViewer->Selected_Shape_Cylinder);
+			App->Custom_Button_Toggle(item, App->CL_MeshViewer->flag_Selected_Shape_Cylinder);
 			return CDRF_DODEFAULT;
 		}
 
 		if (some_item->idFrom == IDC_CONE)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CL_MeshViewer->Selected_Shape_Cone);
+			App->Custom_Button_Toggle(item, App->CL_MeshViewer->flag_Selected_Shape_Cone);
 			return CDRF_DODEFAULT;
 		}
 
@@ -310,9 +310,9 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 
 		if (LOWORD(wParam) == IDC_BOX)
 		{
-			//App->CL_MeshViewer->Reset_Shape_Flags();
-			App->CL_MeshViewer->Selected_Shape_Box = 1;
-			//App->RedrawWindow_Dlg(hDlg);
+			App->CL_MeshViewer->Clear_Shape_Buttons();
+			App->CL_MeshViewer->flag_Selected_Shape_Box = 1;
+			RedrawWindow(App->CL_MeshViewer->MainDlgHwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
 			App->CL_MeshViewer->Physics_Shape = Enums::Shape_Box;
 
@@ -323,9 +323,9 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 
 		if (LOWORD(wParam) == IDC_SPHERE)
 		{
-			//App->SBC_MeshViewer->Reset_Shape_Flags();
-			App->CL_MeshViewer->Selected_Shape_Sphere = 1;
-			//App->RedrawWindow_Dlg(hDlg);
+			App->CL_MeshViewer->Clear_Shape_Buttons();
+			App->CL_MeshViewer->flag_Selected_Shape_Sphere = 1;
+			RedrawWindow(App->CL_MeshViewer->MainDlgHwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
 			App->CL_MeshViewer->Physics_Shape = Enums::Sphere;
 
@@ -356,6 +356,18 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 	}
 
 	return FALSE;
+}
+
+// *************************************************************************
+// *	  	Clear_Shape_Buttons:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void CL64_MeshViewer::Clear_Shape_Buttons()
+{
+	flag_Selected_Shape_Box = 0;
+	flag_Selected_Shape_Sphere = 0;
+	flag_Selected_Shape_Capsule = 0;
+	flag_Selected_Shape_Cylinder = 0;
+	flag_Selected_Shape_Cone = 0;
 }
 
 // *************************************************************************
@@ -718,7 +730,7 @@ void CL64_MeshViewer::Show_Mesh(char* MeshFile)
 	}
 
 	Clear_Debug_Shape();
-	MV_btDebug_Node->resetOrientation();
+	MV_btDebug_Node->setOrientation(Ogre::Quaternion::IDENTITY);
 
 	if (Physics_Shape == Enums::Shape_Box)
 	{
@@ -766,7 +778,7 @@ void CL64_MeshViewer::Show_Physics_Box()
 	btCollisionShape* newRigidShape = new btBoxShape(btVector3(sx, sy, sz));
 	newRigidShape->calculateLocalInertia(mass, localInertia);
 
-	App->CL_Bullet->collisionShapes.push_back(newRigidShape);
+	//App->CL_Bullet->collisionShapes.push_back(newRigidShape);
 
 	btDefaultMotionState* myMotionState = new btDefaultMotionState(startTransform);
 
@@ -780,7 +792,7 @@ void CL64_MeshViewer::Show_Physics_Box()
 
 	App->CL_Bullet->dynamicsWorld->addRigidBody(Ogre_MV_Phys_Body);
 
-	//Set_Physics(0);
+	Set_Physics();
 }
 
 // *************************************************************************
@@ -811,14 +823,12 @@ void CL64_MeshViewer::Show_Physics_Sphere()
 
 	startTransform.setOrigin(initialPosition);
 
-	/*Ogre::Sphere SP = Ogre_MvEnt->getWorldBoundingSphere(true);
-	float Radius = (SP.getRadius());*/
 	float Radius = App->CL_Object->GetMesh_BB_Radius(Ogre_MvNode);
 
 	btCollisionShape* newRigidShape = new btSphereShape(Radius);
 	newRigidShape->calculateLocalInertia(mass, localInertia);
 
-	App->CL_Bullet->collisionShapes.push_back(newRigidShape);
+	//App->CL_Bullet->collisionShapes.push_back(newRigidShape);
 
 	btDefaultMotionState* myMotionState = new btDefaultMotionState(startTransform);
 
@@ -832,7 +842,7 @@ void CL64_MeshViewer::Show_Physics_Sphere()
 
 	App->CL_Bullet->dynamicsWorld->addRigidBody(Ogre_MV_Phys_Body);
 
-	//Set_Physics(0);
+	Set_Physics();
 }
 
 // *************************************************************************
@@ -855,36 +865,28 @@ void CL64_MeshViewer::Clear_Debug_Shape()
 // *************************************************************************
 //				Set_Physics:- Terry and Hazel Flanigan 2024				   *
 // *************************************************************************
-void CL64_MeshViewer::Set_Physics(int Index)
+void CL64_MeshViewer::Set_Physics()
 {
-	float w = 0;
-	float x = 0;
-	float y = 0;
-	float z = 0;
+	MV_btDebug_Node->resetOrientation();
+	Ogre_MvNode->resetOrientation();
+	// Rotation
+	Ogre::Quaternion Rot = Ogre_MvNode->getOrientation();
 
-	// ----------- Position
+	float w = Rot.w;
+	float x = Rot.x;
+	float y = Rot.y;
+	float z = Rot.z;
 
+	Ogre_MV_Phys_Body->getWorldTransform().setRotation(btQuaternion(x, y, z, w));
+
+	// Scale
+	Ogre_MvNode->setScale(1,1,1);
+
+	Ogre::Vector3 Scale = Ogre_MvNode->getScale();
+	Ogre_MV_Phys_Body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
+
+	// Position
 	Ogre::Vector3 Centre = Ogre_MvEnt->getWorldBoundingBox(true).getCenter();
+	Ogre_MV_Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
 
-	x = Centre.x;
-	y = Centre.y;
-	z = Centre.z;
-	
-	Ogre_MV_Phys_Body->getWorldTransform().setOrigin(btVector3(x, y, z));
-	MV_btDebug_Node->setPosition(Centre);
-	// ----------- Rotation
-	//App->CL_Scene->B_Area[Index]->Physics_Quat = App->CL_Scene->B_Area[Index]->Area_Node->getOrientation();
-
-	//w = App->CL_Scene->B_Area[Index]->Physics_Quat.w;
-	//x = App->CL_Scene->B_Area[Index]->Physics_Quat.x;
-	//y = App->CL_Scene->B_Area[Index]->Physics_Quat.y;
-	//z = App->CL_Scene->B_Area[Index]->Physics_Quat.z;
-
-	//App->CL_Scene->B_Area[Index]->Phys_Body->getWorldTransform().setRotation(btQuaternion(x, y, z, w));
-
-	//// ----------- Scale
-	//Ogre::Vector3 Scale = App->CL_Scene->B_Area[Index]->Area_Node->getScale();
-	//App->CL_Scene->B_Area[Index]->Phys_Body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
-
-	//App->CL_Scene->B_Area[Index]->Physics_Valid = 1;
 }
