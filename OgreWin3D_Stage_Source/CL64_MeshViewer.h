@@ -53,6 +53,7 @@ public:
 	bool flag_MeshViewer_Running;
 
 	int Physics_Shape;
+	int Physics_Type;
 
 private:
 	static LRESULT CALLBACK Proc_MeshViewer_Dlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
@@ -71,10 +72,19 @@ private:
 	void Clear_Shape_Buttons();
 
 	void Clear_Debug_Shape();
+
+	void Show_Physics_Trimesh();
+
+	void Show_Physics_None();
 	void Show_Physics_Box();
 	void Show_Physics_Sphere();
+	void Show_Physics_Capsule();
+	void Show_Physics_Cylinder();
+	void Show_Physics_Cone();
+
 	void Set_Physics();
 
+	void Enable_ShapeButtons(bool state);
 
 	HWND ListHwnd;
 	HWND CB_hWnd;
