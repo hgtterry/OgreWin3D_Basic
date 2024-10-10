@@ -244,6 +244,9 @@
 #define IDC_MVSTATIC                    1094
 #define IDC_CAPSULE                     1095
 #define IDC_BT_POSITION                 1096
+#define IDC_OBJECTNAME                  1097
+#define IDC_STFOLDER                    1098
+#define IDC_STNAME                      1099
 #define ID_VIEW_RESET                   32771
 #define ID_VIEW_MAX3DVIEW               32772
 #define ID_DEBUG_TESTPREFERANCE         32773
@@ -301,7 +304,7 @@
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        193
 #define _APS_NEXT_COMMAND_VALUE         32819
-#define _APS_NEXT_CONTROL_VALUE         1097
+#define _APS_NEXT_CONTROL_VALUE         1100
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif

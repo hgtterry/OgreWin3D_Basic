@@ -193,22 +193,22 @@ bool CL64_Objects_Create::Add_New_Object(int Index, bool From_MeshViewer)
 			Add_Physics_Box(false, Index);
 		}
 
-		if (Object->Shape == Enums::Sphere)
+		if (Object->Shape == Enums::Shape_Sphere)
 		{
 			Add_Physics_Sphere(false, Index);
 		}
 
-		if (Object->Shape == Enums::Capsule)
+		if (Object->Shape == Enums::Shape_Capsule)
 		{
 			Add_Physics_Capsule(false, Index);
 		}
 
-		if (Object->Shape == Enums::Cylinder)
+		if (Object->Shape == Enums::Shape_Cylinder)
 		{
 			Add_Physics_Cylinder(false, Index);
 		}
 
-		if (Object->Shape == Enums::Cone)
+		if (Object->Shape == Enums::Shape_Cone)
 		{
 			Add_Physics_Cone(false, Index);
 		}
@@ -222,22 +222,22 @@ bool CL64_Objects_Create::Add_New_Object(int Index, bool From_MeshViewer)
 			Add_Physics_Box(true, Index);
 		}
 
-		if (Object->Shape == Enums::Sphere)
+		if (Object->Shape == Enums::Shape_Sphere)
 		{
 			Add_Physics_Sphere(true, Index);
 		}
 
-		if (Object->Shape == Enums::Capsule)
+		if (Object->Shape == Enums::Shape_Capsule)
 		{
 			Add_Physics_Capsule(true, Index);
 		}
 
-		if (Object->Shape == Enums::Cylinder)
+		if (Object->Shape == Enums::Shape_Cylinder)
 		{
 			Add_Physics_Cylinder(true, Index);
 		}
 
-		if (Object->Shape == Enums::Cone)
+		if (Object->Shape == Enums::Shape_Cone)
 		{
 			Add_Physics_Cone(true, Index);
 		}
@@ -358,13 +358,13 @@ void CL64_Objects_Create::Add_Physics_Sphere(bool Dynamic, int Index)
 	if (Dynamic == 1)
 	{
 		Object->Type = Enums::Bullet_Type_Dynamic;
-		Object->Shape = Enums::Sphere;
+		Object->Shape = Enums::Shape_Sphere;
 
 	}
 	else
 	{
 		Object->Type = Enums::Bullet_Type_Static;
-		Object->Shape = Enums::Sphere;
+		Object->Shape = Enums::Shape_Sphere;
 	}
 
 	Ogre::Vector3 Centre = App->CL_Scene->V_Object[Index]->Object_Ent->getWorldBoundingBox(true).getCenter();
@@ -442,13 +442,13 @@ void CL64_Objects_Create::Add_Physics_Capsule(bool Dynamic, int Index)
 	if (Dynamic == 1)
 	{
 		Object->Type = Enums::Bullet_Type_Dynamic;
-		Object->Shape = Enums::Capsule;
+		Object->Shape = Enums::Shape_Capsule;
 
 	}
 	else
 	{
 		Object->Type = Enums::Bullet_Type_Static;
-		Object->Shape = Enums::Capsule;
+		Object->Shape = Enums::Shape_Capsule;
 	}
 
 	Ogre::Vector3 Centre = App->CL_Scene->V_Object[Index]->Object_Ent->getWorldBoundingBox(true).getCenter();
@@ -529,12 +529,12 @@ void CL64_Objects_Create::Add_Physics_Cylinder(bool Dynamic, int Index)
 	if (Dynamic == 1)
 	{
 		Object->Type = Enums::Bullet_Type_Dynamic;
-		Object->Shape = Enums::Cylinder;
+		Object->Shape = Enums::Shape_Cylinder;
 	}
 	else
 	{
 		Object->Type = Enums::Bullet_Type_Static;
-		Object->Shape = Enums::Cylinder;
+		Object->Shape = Enums::Shape_Cylinder;
 	}
 
 	Ogre::Vector3 Centre = App->CL_Scene->V_Object[Index]->Object_Ent->getWorldBoundingBox(true).getCenter();
@@ -615,12 +615,12 @@ void CL64_Objects_Create::Add_Physics_Cone(bool Dynamic, int Index)
 	if (Dynamic == 1)
 	{
 		Object->Type = Enums::Bullet_Type_Dynamic;
-		Object->Shape = Enums::Cone;
+		Object->Shape = Enums::Shape_Cone;
 	}
 	else
 	{
 		Object->Type = Enums::Bullet_Type_Static;
-		Object->Shape = Enums::Cone;
+		Object->Shape = Enums::Shape_Cone;
 	}
 
 	Ogre::Vector3 Centre = App->CL_Scene->V_Object[Index]->Object_Ent->getWorldBoundingBox(true).getCenter();

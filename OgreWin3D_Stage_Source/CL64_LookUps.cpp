@@ -151,7 +151,7 @@ void CL64_LookUps::Get_Shape(int Index)
 	switch (Shape)
 	{
 
-	case Enums::NoShape:
+	case Enums::Shape_None:
 	{
 		strcpy(Chr_Shape, "No Shape");
 		return;
@@ -162,25 +162,25 @@ void CL64_LookUps::Get_Shape(int Index)
 		strcpy(Chr_Shape, "Box");
 		return;
 	}
-	case Enums::Sphere:
+	case Enums::Shape_Sphere:
 	{
 		strcpy(Chr_Shape, "Sphere");
 		return;
 	}
 
-	case Enums::Capsule:
+	case Enums::Shape_Capsule:
 	{
 		strcpy(Chr_Shape, "Capsule");
 		return;
 	}
 
-	case Enums::Cylinder:
+	case Enums::Shape_Cylinder:
 	{
 		strcpy(Chr_Shape, "Cylinder");
 		return;
 	}
 
-	case Enums::Cone:
+	case Enums::Shape_Cone:
 	{
 		strcpy(Chr_Shape, "Cone");
 		return;
@@ -192,7 +192,7 @@ void CL64_LookUps::Get_Shape(int Index)
 		return;
 	}
 
-	case Enums::VolumeBox:
+	case Enums::Shape_VolumeBox:
 	{
 		strcpy(Chr_Shape, "Volume Box");
 		return;

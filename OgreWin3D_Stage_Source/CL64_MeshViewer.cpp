@@ -69,11 +69,12 @@ CL64_MeshViewer::CL64_MeshViewer(void)
 
 	MV_Resource_Group = "MV_Resource_Group";
 
+	Object_Name[0] = 0;
 	m_Just_Folder[0] = 0;
 	m_Resource_Folder_Full[0] = 0;
 	Selected_MeshFile[0] = 0;
 
-	Physics_Shape = Enums::NoShape;;
+	Physics_Shape = Enums::Shape_None;
 	Physics_Type = Enums::Bullet_Type_None;
 }
 
@@ -119,6 +120,10 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 
 		SendDlgItemMessage(hDlg, IDC_STSHAPE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_STTYPE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_STFOLDER, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_STNAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		SendDlgItemMessage(hDlg, IDC_OBJECTNAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		App->CL_MeshViewer->MainDlgHwnd = hDlg;
 		App->CL_MeshViewer->ListHwnd = GetDlgItem(hDlg, IDC_LISTFILES);
@@ -134,6 +139,18 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 		App->CL_MeshViewer->Show_Mesh(App->CL_MeshViewer->Selected_MeshFile);
 		
 		SetWindowText(hDlg, App->CL_MeshViewer->m_Resource_Folder_Full);
+
+		App->CL_MeshViewer->Enable_ShapeButtons(false);
+
+		char ATest[MAX_PATH];
+		char ConNum[MAX_PATH];
+
+		strcpy(ATest, "Object_");
+		_itoa(App->CL_Scene->Object_Count, ConNum, 10);
+		strcat(ATest, ConNum);
+
+		SetDlgItemText(hDlg, IDC_OBJECTNAME, ATest);
+		strcpy(App->CL_MeshViewer->Object_Name, ATest);
 
 		App->CL_MeshViewer->flag_MeshViewer_Running = 1;
 
@@ -158,7 +175,7 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 		if (GetDlgItem(hDlg, IDC_STSHAPE) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 255, 0));
-			SetTextColor((HDC)wParam, RGB(0, 0, 255));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->AppBackground;
 		}
@@ -166,10 +183,35 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 		if (GetDlgItem(hDlg, IDC_STTYPE) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 255, 0));
-			SetTextColor((HDC)wParam, RGB(0, 0, 255));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->AppBackground;
 		}
+
+		if (GetDlgItem(hDlg, IDC_STFOLDER) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		if (GetDlgItem(hDlg, IDC_STNAME) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		if (GetDlgItem(hDlg, IDC_OBJECTNAME) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->Brush_White;
+		}
+
 
 		return FALSE;
 	}
@@ -199,7 +241,36 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 			return CDRF_DODEFAULT;
 		}
 
-		//// ---------------------------------------------------------------------
+
+		if (some_item->idFrom == IDC_JUSTOGRE)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_JUSTOGRE));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
+
+			//App->Custom_Button_Toggle(item, App->CL_MeshViewer->flag_SelectTriMesh);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_TEST)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_TEST));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
+
+			//App->Custom_Button_Toggle(item, App->CL_MeshViewer->flag_SelectTriMesh);
+			return CDRF_DODEFAULT;
+		}
+
+		// ---------------------------------------------------------------------
 		if (some_item->idFrom == IDC_BOX)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
@@ -356,8 +427,6 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 
 			App->CL_MeshViewer->Show_Mesh(App->CL_MeshViewer->Selected_MeshFile);
 
-			//App->SBC_MeshViewer->GridNode->resetOrientation();
-
 			return TRUE;
 
 		}
@@ -370,7 +439,7 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 			}*/
 
 			App->CL_MeshViewer->Physics_Type = Enums::Bullet_Type_Static;
-			App->CL_MeshViewer->Physics_Shape = Enums::NoShape;
+			App->CL_MeshViewer->Physics_Shape = Enums::Shape_None;
 			App->CL_MeshViewer->flag_SelectStatic = 1;
 			App->CL_MeshViewer->flag_SelectDynamic = 0;
 			App->CL_MeshViewer->flag_SelectTriMesh = 0;
@@ -387,7 +456,7 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 		if (LOWORD(wParam) == IDC_DYNAMIC)
 		{
 			App->CL_MeshViewer->Physics_Type = Enums::Bullet_Type_Dynamic;
-			App->CL_MeshViewer->Physics_Shape = Enums::NoShape;
+			App->CL_MeshViewer->Physics_Shape = Enums::Shape_None;
 			App->CL_MeshViewer->flag_SelectDynamic = 1;
 			App->CL_MeshViewer->flag_SelectStatic = 0;
 			App->CL_MeshViewer->flag_SelectTriMesh = 0;
@@ -412,7 +481,7 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 
 			RedrawWindow(App->CL_MeshViewer->MainDlgHwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
-			App->CL_MeshViewer->Physics_Shape = Enums::NoShape;
+			App->CL_MeshViewer->Physics_Shape = Enums::Shape_None;
 
 			App->CL_MeshViewer->Show_Physics_Trimesh();
 
@@ -438,7 +507,7 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 			App->CL_MeshViewer->flag_Selected_Shape_Sphere = 1;
 			RedrawWindow(App->CL_MeshViewer->MainDlgHwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
-			App->CL_MeshViewer->Physics_Shape = Enums::Sphere;
+			App->CL_MeshViewer->Physics_Shape = Enums::Shape_Sphere;
 
 			App->CL_MeshViewer->Show_Physics_Sphere();
 
@@ -451,7 +520,7 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 			App->CL_MeshViewer->flag_Selected_Shape_Capsule = 1;
 			RedrawWindow(App->CL_MeshViewer->MainDlgHwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
-			App->CL_MeshViewer->Physics_Shape = Enums::Capsule;
+			App->CL_MeshViewer->Physics_Shape = Enums::Shape_Capsule;
 
 			App->CL_MeshViewer->Show_Physics_Capsule();
 
@@ -464,7 +533,7 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 			App->CL_MeshViewer->flag_Selected_Shape_Cylinder = 1;
 			RedrawWindow(App->CL_MeshViewer->MainDlgHwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
-			App->CL_MeshViewer->Physics_Shape = Enums::Cylinder;
+			App->CL_MeshViewer->Physics_Shape = Enums::Shape_Cylinder;
 
 			App->CL_MeshViewer->Show_Physics_Cylinder();
 
@@ -477,7 +546,7 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 			App->CL_MeshViewer->flag_Selected_Shape_Cone = 1;
 			RedrawWindow(App->CL_MeshViewer->MainDlgHwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
-			App->CL_MeshViewer->Physics_Shape = Enums::Cone;
+			App->CL_MeshViewer->Physics_Shape = Enums::Shape_Cone;
 
 			App->CL_MeshViewer->Show_Physics_Cone();
 
@@ -486,6 +555,18 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 
 		if (LOWORD(wParam) == IDOK)
 		{
+			if (App->CL_MeshViewer->Physics_Type == Enums::Bullet_Type_TriMesh)
+			{
+
+			}
+			else if (App->CL_MeshViewer->Physics_Type == Enums::Bullet_Type_None || App->CL_MeshViewer->Physics_Shape == Enums::Shape_None)
+			{
+				App->Say("No Type or Shape Selected");
+				return TRUE;
+			}
+
+			App->Say(App->CL_MeshViewer->Object_Name);
+
 			App->CL_MeshViewer->Close_OgreWindow();
 			App->CL_MeshViewer->Delete_Resources_Group();
 			App->CL_MeshViewer->flag_MeshViewer_Running = 0;
@@ -887,9 +968,24 @@ void CL64_MeshViewer::Show_Mesh(char* MeshFile)
 		Show_Physics_Box();
 	}
 
-	if (Physics_Shape == Enums::Sphere)
+	if (Physics_Shape == Enums::Shape_Sphere)
 	{
 		Show_Physics_Sphere();
+	}
+
+	if (Physics_Shape == Enums::Shape_Capsule)
+	{
+		Show_Physics_Capsule();
+	}
+
+	if (Physics_Shape == Enums::Shape_Cylinder)
+	{
+		Show_Physics_Cylinder();
+	}
+
+	if (Physics_Shape == Enums::Shape_Cone)
+	{
+		Show_Physics_Cone();
 	}
 }
 

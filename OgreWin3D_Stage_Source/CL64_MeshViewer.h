@@ -89,6 +89,7 @@ private:
 	HWND ListHwnd;
 	HWND CB_hWnd;
 
+	char Object_Name[MAX_PATH];
 	char m_Just_Folder[MAX_PATH];
 	char m_Resource_Folder_Full[MAX_PATH];
 	char Selected_MeshFile[MAX_PATH];
