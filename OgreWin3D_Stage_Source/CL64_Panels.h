@@ -28,6 +28,9 @@ public:
 	void Move_FileView_Window(void);
 	bool Resize_FileView(void);
 	bool Place_Properties_Dlg(void);
+	void Disable_Panels(bool Disable);
+
+	bool flag_Panels_Disabled;
 
 };
 

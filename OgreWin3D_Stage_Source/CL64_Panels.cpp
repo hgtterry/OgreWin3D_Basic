@@ -20,6 +20,7 @@ appreciated but is not required.
 
 CL64_Panels::CL64_Panels(void)
 {
+	flag_Panels_Disabled = 0;
 }
 
 CL64_Panels::~CL64_Panels(void)
@@ -214,5 +215,31 @@ bool CL64_Panels::Place_Properties_Dlg(void)
 		0, 0, SWP_NOSIZE | SWP_NOZORDER);
 
 	return EndDeferWindowPos(hdwp);
+}
+
+// *************************************************************************
+// *			Disable_Panels:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void CL64_Panels::Disable_Panels(bool Disable)
+{
+	if (Disable == 1)
+	{
+		flag_Panels_Disabled = 1;
+		//EnableWindow(App->MainHwnd, 0);
+		EnableWindow(App->CL_Properties->Properties_Dlg_hWnd, 0);
+		EnableWindow(App->ListPanel, 0);
+		//EnableWindow(App->Physics_Console_Hwnd, 0);
+		EnableWindow(App->CL_TopDlg->TabsHwnd, 0);
+	}
+	else
+	{
+		flag_Panels_Disabled = 0;
+		//EnableWindow(App->MainHwnd, 1);
+		EnableWindow(App->CL_Properties->Properties_Dlg_hWnd, 1);
+		EnableWindow(App->ListPanel, 1);
+		//EnableWindow(App->Physics_Console_Hwnd, 1);
+		EnableWindow(App->CL_TopDlg->TabsHwnd, 1);
+	}
+
 }
 

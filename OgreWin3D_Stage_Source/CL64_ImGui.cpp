@@ -252,6 +252,12 @@ void CL64_ImGui::ImGui_Render_Loop(void)
 	{
 		App->CL_Dimensions->Show_Dimensions = 0;
 	}
+
+	// SBC_Gui_Dialogs
+	if (App->CL_ImGui_Dialogs->Show_Dialog_Float == 1)
+	{
+		App->CL_ImGui_Dialogs->Dialog_Float();
+	}
 	
 }
 

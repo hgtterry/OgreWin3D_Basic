@@ -30,5 +30,21 @@ public:
 	CL64_ImGui_Dialogs(void);
 	~CL64_ImGui_Dialogs(void);
 
+	void BackGround_Render_Loop(void);
+	void Start_Dialog_Float(float Step, float StartValue, char* Banner);
+	void Dialog_Float(void);
+
+	// -------------- Float Dialog
+	bool Show_Dialog_Float;
+	float Float_Step;
+	bool Float_Canceld;
+	bool Float_StartPos;
+	float Float_PosX;
+	float Float_PosY;
+	float m_Dialog_Float;
+	float m_Dialog_Float_Copy;
+	char Float_Banner[MAX_PATH];
+	bool Float_Exit;
+
 };
 
