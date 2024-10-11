@@ -35,6 +35,73 @@ CL64_Objects_Create::~CL64_Objects_Create(void)
 }
 
 // *************************************************************************
+//		Add_Objects_From_MeshViewer:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+void CL64_Objects_Create::Add_Objects_From_MeshViewer()
+{
+
+	//if (App->CL_MeshViewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Collectables) // Collectables
+	//{
+	//	//App->CL_Com_Collectables->Add_New_Collectable();
+	//	return;
+	//}
+
+
+	int Index = App->CL_Scene->Object_Count;
+
+	App->CL_Scene->V_Object[Index] = new Base_Object();
+
+	Base_Object* Object = App->CL_Scene->V_Object[Index];
+	Object->This_Object_UniqueID = App->CL_Scene->UniqueID_Object_Counter; // Unique ID
+
+
+	strcpy(Object->Mesh_Name, App->CL_MeshViewer->Object_Name);
+	strcpy(Object->Mesh_FileName, App->CL_MeshViewer->Selected_MeshFile);
+	//strcpy(Object->Mesh_Resource_Path, m_ResourcePath);
+	//strcpy(Object->Material_File, App->CL_MeshViewer->m_Material_File);
+
+	Object->Type = App->CL_MeshViewer->Physics_Type;
+	Object->Shape = App->CL_MeshViewer->Physics_Shape;
+
+
+	App->CL_Objects_Create->Dispatch_MeshViewer();
+
+	App->CL_FileView->SelectItem(App->CL_Scene->V_Object[Index]->FileViewItem);
+
+
+	App->CL_Scene->UniqueID_Object_Counter++; // Unique ID
+	App->CL_Scene->Object_Count++;  // Must be last line
+
+	App->CL_Scene->flag_Scene_Modified = 1;
+
+}
+
+// *************************************************************************
+//			Dispatch_MeshViewer:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+bool CL64_Objects_Create::Dispatch_MeshViewer()
+{
+	int Index = App->CL_Scene->Object_Count;
+
+	//if (App->CL_MeshViewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Area) // Area
+	//{
+	//	App->CL_Com_Area->Add_Aera_To_Project(0, App->CL_MeshViewer->Selected_MeshFile, m_ResourcePath);
+	//	App->Say("Dispatch_MeshViewer");
+	//}
+	//else
+	{
+		Add_New_Object(Index, true);
+		App->CL_Scene->V_Object[Index]->Altered = 1;
+		App->CL_Scene->V_Object[Index]->Folder = Enums::Folder_Objects;
+		App->CL_Scene->V_Object[Index]->FileViewItem = App->CL_FileView->Add_Item(App->CL_FileView->FV_Objects_Folder,
+		App->CL_Scene->V_Object[Index]->Mesh_Name, Index, true);
+
+	}
+
+	return 1;
+}
+
+// *************************************************************************
 //			Add_Objects_From_File:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
 bool CL64_Objects_Create::Add_Objects_From_File() // From File
@@ -169,14 +236,14 @@ bool CL64_Objects_Create::Add_New_Object(int Index, bool From_MeshViewer)
 	strcpy(Object->Material_File, Mat->getOrigin().c_str());
 	Object->UsageEX = 777;
 
-	//// If from MeshViewer Get Placement Method
-	//if (From_MeshViewer == 1 && App->SBC_MeshViewer->Placement_Camera == 1)
-	//{
-	//	Ogre::Vector3 Pos = App->CL_Object->GetPlacement();
-	//	Object->Mesh_Pos = Pos;
-	//	Object->Object_Node->setPosition(Pos);
-	//}
-	//else
+	// If from MeshViewer Get Placement Method
+	if (From_MeshViewer == 1) //&& App->CL_MeshViewer->Placement_Camera == 1)
+	{
+		Ogre::Vector3 Pos = App->CL_Object->GetPlacement();
+		Object->Mesh_Pos = Pos;
+		Object->Object_Node->setPosition(Pos);
+	}
+	else
 	{
 		Object->Object_Node->setPosition(Object->Mesh_Pos);
 	}

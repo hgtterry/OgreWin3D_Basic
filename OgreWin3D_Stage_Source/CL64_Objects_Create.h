@@ -30,6 +30,9 @@ public:
 	CL64_Objects_Create(void);
 	~CL64_Objects_Create(void);
 
+	void Add_Objects_From_MeshViewer();
+	bool Dispatch_MeshViewer();
+
 	bool Add_Objects_From_File();
 	bool Add_New_Object(int Index, bool From_MeshViewer);
 

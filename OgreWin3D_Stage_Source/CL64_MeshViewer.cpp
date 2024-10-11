@@ -76,6 +76,12 @@ CL64_MeshViewer::CL64_MeshViewer(void)
 
 	Physics_Shape = Enums::Shape_None;
 	Physics_Type = Enums::Bullet_Type_None;
+
+	// Old Copy System
+	m_Material_File[0] = 0;
+	Texure_Count = 0;
+	DestinationFile[0] = 0;
+	SourceFile[0] = 0;
 }
 
 CL64_MeshViewer::~CL64_MeshViewer(void)
@@ -389,11 +395,19 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 
 				SendMessage(App->CL_MeshViewer->ListHwnd, LB_RESETCONTENT, 0, 0);
 
-				strcpy(App->CL_MeshViewer->m_Resource_Folder_Full, App->GD_Directory_FullPath);
-				strcat(App->CL_MeshViewer->m_Resource_Folder_Full, "\\Stock\\");
-				strcat(App->CL_MeshViewer->m_Resource_Folder_Full, App->CL_MeshViewer->m_Just_Folder);
-				strcat(App->CL_MeshViewer->m_Resource_Folder_Full, "\\");
-
+				int cmp = strcmp(App->CL_MeshViewer->m_Just_Folder, "Project_Assets");
+				if (cmp == 0)
+				{
+					strcpy(App->CL_MeshViewer->m_Resource_Folder_Full, App->CL_Project->m_Main_Assets_Path);
+				}
+				else
+				{
+					strcpy(App->CL_MeshViewer->m_Resource_Folder_Full, App->GD_Directory_FullPath);
+					strcat(App->CL_MeshViewer->m_Resource_Folder_Full, "\\Stock\\");
+					strcat(App->CL_MeshViewer->m_Resource_Folder_Full, App->CL_MeshViewer->m_Just_Folder);
+					strcat(App->CL_MeshViewer->m_Resource_Folder_Full, "\\");
+				}
+				
 				//SetDlgItemText(hDlg, IDC_ST_CURRENTFOLDER, App->SBC_MeshViewer->mResource_Folder);
 				SetWindowText(hDlg, App->CL_MeshViewer->m_Resource_Folder_Full);
 
@@ -565,10 +579,35 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 				return TRUE;
 			}
 
-			App->Say(App->CL_MeshViewer->Object_Name);
+			if (App->CL_MeshViewer->Ogre_MV_Phys_Body)
+			{
+				App->CL_Bullet->dynamicsWorld->removeCollisionObject(App->CL_MeshViewer->Ogre_MV_Phys_Body);
+				App->CL_MeshViewer->Ogre_MV_Phys_Body = nullptr;
+			}
 
 			App->CL_MeshViewer->Close_OgreWindow();
 			App->CL_MeshViewer->Delete_Resources_Group();
+
+			int cmp = strcmp(App->CL_MeshViewer->m_Just_Folder, "Project_Assets");
+			if (cmp == 0)
+			{
+				strcpy(App->CL_MeshViewer->m_Resource_Folder_Full, App->CL_Project->m_Main_Assets_Path);
+				App->CL_Objects_Create->Add_Objects_From_MeshViewer();
+			}
+			else
+			{
+				//if (App->CL_MeshViewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Area) // Area
+				//{
+				//	App->CL_MeshViewer->Copy_Assets();
+				//	App->CL_Com_Area->Add_New_Area();
+				//}
+				//else // Normal Object
+				//{
+					//App->CL_MeshViewer->Copy_Assets();
+					//App->CL_Objects_Create->Add_Objects_From_MeshViewer();
+				//}
+			}
+
 			App->CL_MeshViewer->flag_MeshViewer_Running = 0;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
@@ -843,6 +882,8 @@ bool CL64_MeshViewer::Delete_Resources_Group()
 // *************************************************************************
 void CL64_MeshViewer::Get_Stock_Folders(HWND DropHwnd)
 {
+	SendMessage(DropHwnd, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"Project_Assets");
+
 	char Path[MAX_PATH]{ 0 };
 
 	WIN32_FIND_DATA FindFileData;
@@ -874,14 +915,21 @@ void CL64_MeshViewer::Get_Stock_Folders(HWND DropHwnd)
 
 	SendMessage(DropHwnd, CB_SETCURSEL, 0, 0);
 
-	int Index = SendMessage(DropHwnd, CB_GETCURSEL, 0, 0);
+	int Index = SendMessage(DropHwnd, CB_GETCURSEL, 0, 0); // Default Project Assets
 	SendMessage(CB_hWnd, CB_GETLBTEXT, Index, (LPARAM)m_Just_Folder);
 
-	strcpy(m_Resource_Folder_Full, App->GD_Directory_FullPath);
-	strcat(m_Resource_Folder_Full, "\\Stock\\");
-	strcat(m_Resource_Folder_Full, m_Just_Folder);
-	strcat(m_Resource_Folder_Full, "\\");
-
+	int cmp = strcmp(m_Just_Folder, "Project_Assets");
+	if (cmp == 0)
+	{
+		strcpy(m_Resource_Folder_Full, App->CL_Project->m_Main_Assets_Path); // Projects Full Resource Path
+	}
+	else
+	{
+		strcpy(m_Resource_Folder_Full, App->GD_Directory_FullPath); // Full Path Stock Folders 
+		strcat(m_Resource_Folder_Full, "\\Stock\\");
+		strcat(m_Resource_Folder_Full, m_Just_Folder);
+		strcat(m_Resource_Folder_Full, "\\");
+	}
 }
 
 // *************************************************************************
@@ -1478,4 +1526,137 @@ void CL64_MeshViewer::Enable_ShapeButtons(bool state)
 	flag_Selected_Shape_Capsule = 0;
 	flag_Selected_Shape_Cylinder = 0;
 	flag_Selected_Shape_Cone = 0;
+}
+
+// *************************************************************************
+// *	  			Copy_Assets:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void CL64_MeshViewer::Copy_Assets()
+{
+	//return;
+	Add_Resource_Location_Project(App->CL_MeshViewer->m_Resource_Folder_Full);
+
+	return;
+	//Get_Mesh_Assets();
+
+	// ------------------ Copy Mesh
+	strcpy(SourceFile, App->CL_MeshViewer->m_Resource_Folder_Full);
+	strcat(SourceFile, App->CL_MeshViewer->Selected_MeshFile);
+
+	strcpy(DestinationFile, App->CL_Project->m_Main_Assets_Path);
+	strcat(DestinationFile, App->CL_MeshViewer->Selected_MeshFile);
+
+	CopyFile(SourceFile, DestinationFile, false);
+
+	// ------------------ Copy Material File
+	strcpy(SourceFile, App->CL_MeshViewer->m_Resource_Folder_Full);
+	strcat(SourceFile, App->CL_MeshViewer->m_Material_File);
+
+	strcpy(DestinationFile, App->CL_Project->m_Main_Assets_Path);
+	strcat(DestinationFile, App->CL_MeshViewer->m_Material_File);
+
+	CopyFile(SourceFile, DestinationFile, false);
+
+	// ------------------ Copy Textures
+	int Count = 0;
+	while (Count < Texure_Count)
+	{
+		strcpy(SourceFile, App->CL_MeshViewer->m_Resource_Folder_Full);
+		strcat(SourceFile, v_Texture_Names[Count].c_str());
+
+		strcpy(DestinationFile, App->CL_Project->m_Main_Assets_Path);
+		strcat(DestinationFile, v_Texture_Names[Count].c_str());
+
+		CopyFile(SourceFile, DestinationFile, false);
+
+		Count++;
+	}
+}
+
+// *************************************************************************
+// *	  		Get_Mesh_Assets:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void CL64_MeshViewer::Get_Mesh_Assets()
+{
+	App->CL_MeshViewer->m_Material_File[0] = 0;
+	v_Texture_Names.resize(0);
+	Texure_Count = 0;
+
+	int SubMeshCount = App->CL_MeshViewer->Ogre_MvEnt->getNumSubEntities();
+	char pScriptName[255];
+	char pMaterialFile[255];
+	Ogre::String st;
+	Ogre::MaterialPtr MP;
+
+	MP.setNull();
+	bool loaded = 0;
+
+	// ---------------------------------------------------------- Material File
+	Ogre::SubMesh const* subMesh = App->CL_MeshViewer->Ogre_MvEnt->getSubEntity(0)->getSubMesh();
+	Ogre::String MatName = subMesh->getMaterialName();
+	strcpy(pScriptName, MatName.c_str());
+
+	loaded = Ogre::MaterialManager::getSingleton().resourceExists(MatName);
+
+	if (loaded == 1)
+	{
+		MP = Ogre::MaterialManager::getSingleton().getByName(MatName, App->CL_MeshViewer->MV_Resource_Group);
+		st = MP->getOrigin();
+		strcpy(pMaterialFile, st.c_str());
+
+		strcpy(App->CL_MeshViewer->m_Material_File, pMaterialFile);
+	}
+	else
+	{
+		//strcpy(test, "Not Loaded:- ");
+	}
+
+	// ---------------------------------------------------------- Textures
+	Ogre::ResourcePtr TP;
+	Ogre::ResourceManager::ResourceMapIterator TextureIterator = Ogre::TextureManager::getSingleton().getResourceIterator();
+
+	while (TextureIterator.hasMoreElements())
+	{
+		//strcpy(pScriptName,(static_cast<Ogre::MaterialPtr>(TextureIterator.peekNextValue()))->getName().c_str());
+
+		if (TextureIterator.peekNextValue()->getGroup() == App->CL_MeshViewer->MV_Resource_Group)
+		{
+
+			strcpy(pScriptName, TextureIterator.peekNextValue()->getName().c_str());
+			TP = Ogre::TextureManager::getSingleton().getByName(pScriptName);
+
+			if (TP->isLoaded() == 1)
+			{
+				v_Texture_Names.push_back(pScriptName);
+				Texure_Count = v_Texture_Names.size();
+			}
+			else
+			{
+				v_Texture_Names.push_back(pScriptName);
+				Texure_Count = v_Texture_Names.size();
+				//App->Say(pScriptName);
+				//strcpy(test, "Not Loaded:- ");	
+			}
+
+		}
+
+		TextureIterator.moveNext();
+	}
+}
+
+// *************************************************************************
+// *	Add_Resource_Location_Project:- Terry and Hazel Flanigan 2024	   *
+// *************************************************************************
+bool CL64_MeshViewer::Add_Resource_Location_Project(char* Resource_Location)
+{
+	//bool Test = Ogre::ResourceGroupManager::getSingleton().resourceLocationExists(Resource_Location, App->CL_Resources->Project_Resource_Group);
+
+	//if (Test == 0)
+	{
+		Ogre::ResourceGroupManager::getSingleton().addResourceLocation(Resource_Location, "FileSystem", App->CL_Resources->Project_Resource_Group);
+		//Ogre::ResourceGroupManager::getSingleton().clearResourceGroup(App->CL_Resources->Project_Resource_Group);
+		Ogre::ResourceGroupManager::getSingleton().initialiseResourceGroup(App->CL_Resources->Project_Resource_Group);
+	}
+
+	return 1;
 }

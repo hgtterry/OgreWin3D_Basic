@@ -52,6 +52,13 @@ public:
 	bool flag_MV_Resource_Path_Loaded;
 	bool flag_MeshViewer_Running;
 
+	// Used for Creating Objects ----------------
+	char Object_Name[MAX_PATH];
+	char Selected_MeshFile[MAX_PATH];
+	char m_Resource_Folder_Full[MAX_PATH];
+	// ------------------------------------------
+
+
 	int Physics_Shape;
 	int Physics_Type;
 
@@ -86,13 +93,25 @@ private:
 
 	void Enable_ShapeButtons(bool state);
 
+	void Copy_Assets();
+	void Get_Mesh_Assets();
+	bool Add_Resource_Location_Project(char* Resource_Location);
+
 	HWND ListHwnd;
 	HWND CB_hWnd;
 
-	char Object_Name[MAX_PATH];
 	char m_Just_Folder[MAX_PATH];
-	char m_Resource_Folder_Full[MAX_PATH];
-	char Selected_MeshFile[MAX_PATH];
+	
+	
+	// Old Copy System
+	char m_Material_File[MAX_PATH];
+	std::vector<std::string> v_Texture_Names;
+	int Texure_Count;
+	char DestinationFile[MAX_PATH];
+	char SourceFile[MAX_PATH];
+
+
+
 
 	bool flag_SelectDynamic;
 	bool flag_SelectStatic;

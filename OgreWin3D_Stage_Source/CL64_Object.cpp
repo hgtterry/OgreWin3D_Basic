@@ -98,4 +98,49 @@ void CL64_Object::Rename_Object(int Index)
 	App->CL_FileView->Mark_Altered(Object->FileViewItem);
 
 	App->CL_FileView->Change_Item_Name(Object->FileViewItem, Object->Mesh_Name);
+
+}
+
+// *************************************************************************
+// *	  		GetPlacement:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+Ogre::Vector3 CL64_Object::GetPlacement(int Distance)
+{
+	Ogre::Vector3 Placement;
+	Ogre::Vector3 CamPos;
+	Ogre::Quaternion CamRot;
+	Ogre::Radian mYaw;
+	Ogre::Vector3 mDirection;
+
+
+	CamPos = App->CL_Ogre->camNode->getPosition();
+	mYaw = App->CL_Ogre->camNode->getOrientation().getYaw();
+
+	//App->CL_Ogre->PlacementCam->setPosition(CamPos);
+
+	//CamRot = Ogre::Quaternion::IDENTITY;
+	//App->CL_Ogre->PlacementCam->setOrientation(CamRot);
+	//App->CL_Ogre->PlacementCam->yaw(mYaw);
+
+	//Ogre::Vector3 TranslateVector = Ogre::Vector3::ZERO;
+
+	////float Radius = OgreNode->getAttachedObject(0)->getBoundingRadius();
+	////Radius = (Radius * 7) + 2;
+
+
+	//TranslateVector.z = Distance; // Distance from Camera/Player
+
+	//CamPos = App->CL_Ogre->mCamera->getPosition();
+
+	//App->CL_Ogre->PlacementCam->moveRelative(TranslateVector);
+
+	//Placement = App->CL_Ogre->PlacementCam->getPosition();
+	//Placement.y = CamPos.y - 3; // = Placement.y - (float)13.5 / 2;
+
+	// Temp
+	Placement.x = CamPos.x;
+	Placement.y = CamPos.y;
+	Placement.z = CamPos.z;
+
+	return Placement;
 }
