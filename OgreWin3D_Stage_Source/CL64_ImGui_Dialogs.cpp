@@ -22,39 +22,14 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-#pragma once
-class CL64_Props_Dialogs
+#include "pch.h"
+#include "CL64_App.h"
+#include "CL64_ImGui_Dialogs.h"
+
+CL64_ImGui_Dialogs::CL64_ImGui_Dialogs(void)
 {
-public:
+}
 
-	CL64_Props_Dialogs(void);
-	~CL64_Props_Dialogs(void);
-
-	void Start_Props_Dialogs();
-	void Start_Dialog_Dimensions();
-	void Start_Dialog_Debug();
-
-	void Hide_Debug_Dlg(bool Show);
-	void Show_Physics_Test_Dlg(bool Show);
-	void Show_Details_Goto_Dlg(bool Show);
-	void Show_Dimensions_Dlg(bool Show);
-	
-	HWND Dimensions_Dlg_hWnd;
-
-private:
-
-	static LRESULT CALLBACK Proc_Details_Goto(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
-	static LRESULT CALLBACK Proc_Dialog_PhysicsTest(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
-	static LRESULT CALLBACK Proc_Dialog_Dimensions(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
-	static LRESULT CALLBACK Proc_Dialog_Debug(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
-
-	void Start_Details_Goto_Dlg(void);
-	void Start_Dialog_PhysicsTest();
-	
-	bool Show_Area_Physics_Debug;
-
-	HWND Details_Goto_Hwnd;
-	HWND PhysicsTest_Dlg_hWnd;
-	HWND Debug_Dlg_hWnd;
-};
-
+CL64_ImGui_Dialogs::~CL64_ImGui_Dialogs(void)
+{
+}

@@ -1379,40 +1379,39 @@ void CL64_Properties::Edit_Particle(LPARAM lParam)
 	result = strcmp(btext, "Speed");
 	if (result == 0)
 	{
+		App->CL_ImGui->Start_Dialog_Float(0.01, App->CL_Scene->V_Object[Index]->S_Particle[0]->SpeedFactor, "Particle Speed");
 
-		/*App->SBC_Gui_Dialogs->Start_Dialog_Float(0.01, App->SBC_Scene->V_Object[Index]->S_Particle[0]->SpeedFactor, "Particle Speed");
-
-		while (App->SBC_Gui_Dialogs->Show_Dialog_Float == 1)
+		while (App->CL_ImGui->Show_Dialog_Float == 1)
 		{
-			App->SBC_Gui_Dialogs->BackGround_Render_Loop();
+			App->CL_ImGui->BackGround_Render_Loop();
 
-			App->SBC_Scene->V_Object[Index]->S_Particle[0]->SpeedFactor = App->SBC_Gui_Dialogs->m_Dialog_Float;
-			App->SBC_Scene->V_Object[Index]->S_Particle[0]->Particle->setSpeedFactor(App->SBC_Gui_Dialogs->m_Dialog_Float);
+			App->CL_Scene->V_Object[Index]->S_Particle[0]->SpeedFactor = App->CL_ImGui->m_Dialog_Float;
+			App->CL_Scene->V_Object[Index]->S_Particle[0]->Particle->setSpeedFactor(App->CL_ImGui->m_Dialog_Float);
 
 		}
 
-		App->SBC_Gui_Dialogs->Show_Dialog_Float = 0;
+		App->CL_ImGui->Show_Dialog_Float = 0;
 
-		if (App->SBC_Gui_Dialogs->Float_Canceld == 0)
+		if (App->CL_ImGui->Float_Canceld == 0)
 		{
-			App->SBC_Gui_Dialogs->Show_Dialog_Float = 0;
+			App->CL_ImGui->Show_Dialog_Float = 0;
 
-			App->SBC_Scene->V_Object[Index]->S_Particle[0]->SpeedFactor = App->SBC_Gui_Dialogs->m_Dialog_Float;
+			App->CL_Scene->V_Object[Index]->S_Particle[0]->SpeedFactor = App->CL_ImGui->m_Dialog_Float;
 
-			App->SBC_Scene->Scene_Modified = 1;
+			App->CL_Scene->flag_Scene_Modified = 1;
 
-			App->SBC_Scene->V_Object[Index]->Altered = 1;
-			App->SBC_Scene->Scene_Modified = 1;
-			App->SBC_FileView->Mark_Altered(App->SBC_Scene->V_Object[Index]->FileViewItem);
+			App->CL_Scene->V_Object[Index]->Altered = 1;
+			App->CL_Scene->flag_Scene_Modified = 1;
+			App->CL_FileView->Mark_Altered(App->CL_Scene->V_Object[Index]->FileViewItem);
 		}
 		else
 		{
-			App->SBC_Gui_Dialogs->m_Dialog_Float = App->SBC_Gui_Dialogs->m_Dialog_Float_Copy;
-			App->SBC_Scene->V_Object[Index]->S_Particle[0]->SpeedFactor = App->SBC_Gui_Dialogs->m_Dialog_Float_Copy;
-			App->SBC_Scene->V_Object[Index]->S_Particle[0]->Particle->setSpeedFactor(App->SBC_Gui_Dialogs->m_Dialog_Float);
+			App->CL_ImGui->m_Dialog_Float = App->CL_ImGui->m_Dialog_Float_Copy;
+			App->CL_Scene->V_Object[Index]->S_Particle[0]->SpeedFactor = App->SBC_Gui_Dialogs->m_Dialog_Float_Copy;
+			App->CL_Scene->V_Object[Index]->S_Particle[0]->Particle->setSpeedFactor(App->SBC_Gui_Dialogs->m_Dialog_Float);
 		}
 
-		App->Disable_Panels(false);*/
+		App->Disable_Panels(false);
 
 		Update_ListView_Particles();
 	}

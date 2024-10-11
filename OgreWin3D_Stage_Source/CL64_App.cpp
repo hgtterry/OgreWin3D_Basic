@@ -39,6 +39,7 @@ CL64_App::CL64_App(void)
 	CL_Importers =		nullptr;
 	CL_File_IO =		nullptr;
 	CL_ImGui =			nullptr;
+	CL_ImGui_Dialogs =	nullptr;
 	CL_TopDlg =			nullptr;
 	CL_Panels =			nullptr;
 	CL_Bullet =			nullptr;
@@ -163,6 +164,7 @@ void CL64_App::InitApp(void)
 	CL_Importers =		new CL64_Importers();
 	CL_File_IO =		new CL64_File_IO();
 	CL_ImGui =			new CL64_ImGui();
+	CL_ImGui_Dialogs =	new CL64_ImGui_Dialogs();
 	CL_TopDlg =			new CL64_TopDlg();
 	CL_Panels =			new CL64_Panels();
 	CL_Bullet =			new CL64_Bullet();

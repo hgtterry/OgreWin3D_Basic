@@ -34,6 +34,7 @@ THE SOFTWARE.
 #include "CL64_Importers.h"
 #include "CL64_File_IO.h"
 #include "CL64_ImGui.h"
+#include "CL64_ImGui_Dialogs.h"
 #include "CL64_TopDlg.h"
 #include "CL64_Panels.h"
 #include "CL64_Bullet.h"
@@ -86,6 +87,7 @@ public:
 	CL64_Importers*			CL_Importers;
 	CL64_File_IO*			CL_File_IO;
 	CL64_ImGui*				CL_ImGui;
+	CL64_ImGui_Dialogs*		CL_ImGui_Dialogs;
 	CL64_TopDlg*			CL_TopDlg;
 	CL64_Panels*			CL_Panels;
 	CL64_Bullet*			CL_Bullet;

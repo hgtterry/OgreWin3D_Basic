@@ -29,6 +29,8 @@ THE SOFTWARE.
 CL64_Object::CL64_Object(void)
 {
 	flag_Show_Physics_Debug = 0;
+	flag_Hide_All_Except = 0;
+	flag_Show_Mesh_Debug = 1;
 }
 
 CL64_Object::~CL64_Object(void)
@@ -144,4 +146,33 @@ Ogre::Vector3 CL64_Object::GetPlacement(int Distance)
 	Placement.z = CamPos.z;
 
 	return Placement;
+}
+
+// *************************************************************************
+// *		Hide_AllObjects_Except:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+void CL64_Object::Hide_AllObjects_Except(int Index, bool Show)
+{
+	int Count = 0;
+	while (Count < App->CL_Scene->Object_Count)
+	{
+		App->CL_Scene->V_Object[Count]->Object_Node->setVisible(Show);
+		Count++;
+	}
+
+	Count = 0;
+	while (Count < App->CL_Scene->Area_Count)
+	{
+		App->CL_Scene->B_Area[Count]->Area_Node->setVisible(Show);
+		Count++;
+	}
+
+	if (App->CL_Properties->Edit_Category == Enums::Edit_Area)
+	{
+		App->CL_Scene->B_Area[Index]->Area_Node->setVisible(true);
+	}
+	else
+	{
+		App->CL_Scene->V_Object[Index]->Object_Node->setVisible(true);
+	}
 }

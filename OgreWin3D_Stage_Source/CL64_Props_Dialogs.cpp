@@ -33,6 +33,8 @@ CL64_Props_Dialogs::CL64_Props_Dialogs(void)
 	PhysicsTest_Dlg_hWnd =	nullptr;
 	Dimensions_Dlg_hWnd =	nullptr;
 	Debug_Dlg_hWnd =		nullptr;
+
+	Show_Area_Physics_Debug = 0;
 }
 
 CL64_Props_Dialogs::~CL64_Props_Dialogs(void)
@@ -520,14 +522,14 @@ LRESULT CALLBACK CL64_Props_Dialogs::Proc_Dialog_Debug(HWND hDlg, UINT message, 
 		if (some_item->idFrom == IDC_BT_SHOWMESH)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, 0);//App->CL_Object->Show_Mesh_Debug);
+			App->Custom_Button_Toggle(item, App->CL_Object->flag_Show_Mesh_Debug);
 			return CDRF_DODEFAULT;
 		}
 
 		if (some_item->idFrom == IDC_BT_ONLYMESH)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, 0);// App->CL_Object->Hide_All_Except_Flag);
+			App->Custom_Button_Toggle(item, App->CL_Object->flag_Hide_All_Except);
 			return CDRF_DODEFAULT;
 		}
 
@@ -542,31 +544,31 @@ LRESULT CALLBACK CL64_Props_Dialogs::Proc_Dialog_Debug(HWND hDlg, UINT message, 
 			int Index = App->CL_Properties->Current_Selected_Object;
 
 			// -----------------------  Area
-			/*if (App->CL_Properties->Edit_Category == Enums::Edit_Area)
+			if (App->CL_Properties->Edit_Category == Enums::Edit_Area)
 			{
-				if (App->CL_Object->Hide_All_Except_Flag == 1)
+				if (App->CL_Object->flag_Hide_All_Except == 1)
 				{
-					App->CL_Object->Hide_All_Except_Flag = 0;
+					App->CL_Object->flag_Hide_All_Except = 0;
 					App->CL_Object->Hide_AllObjects_Except(Index, true);
 				}
 				else
 				{
-					App->CL_Object->Hide_All_Except_Flag = 1;
+					App->CL_Object->flag_Hide_All_Except = 1;
 					App->CL_Object->Hide_AllObjects_Except(Index, false);
 				}
 				return 1;
-			}*/
+			}
 
-			/*if (App->CL_Object->Hide_All_Except_Flag == 1)
+			if (App->CL_Object->flag_Hide_All_Except == 1)
 			{
-				App->CL_Object->Hide_All_Except_Flag = 0;
+				App->CL_Object->flag_Hide_All_Except = 0;
 				App->CL_Object->Hide_AllObjects_Except(Index, true);
 			}
 			else
 			{
-				App->CL_Object->Hide_All_Except_Flag = 1;
+				App->CL_Object->flag_Hide_All_Except = 1;
 				App->CL_Object->Hide_AllObjects_Except(Index, false);
-			}*/
+			}
 
 			return 1;
 		}
@@ -576,31 +578,31 @@ LRESULT CALLBACK CL64_Props_Dialogs::Proc_Dialog_Debug(HWND hDlg, UINT message, 
 			int Index = App->CL_Properties->Current_Selected_Object;
 
 			// -----------------------  Area
-			/*if (App->CL_Properties->Edit_Category == Enums::Edit_Area)
+			if (App->CL_Properties->Edit_Category == Enums::Edit_Area)
 			{
-				if (App->CL_Object->Show_Mesh_Debug == 1)
+				if (App->CL_Object->flag_Show_Mesh_Debug == 1)
 				{
 					App->CL_Scene->B_Area[Index]->Area_Node->setVisible(false);
-					App->CL_Object->Show_Mesh_Debug = 0;
+					App->CL_Object->flag_Show_Mesh_Debug = 0;
 				}
 				else
 				{
 					App->CL_Scene->B_Area[Index]->Area_Node->setVisible(true);
-					App->CL_Object->Show_Mesh_Debug = 1;
+					App->CL_Object->flag_Show_Mesh_Debug = 1;
 				}
 				return 1;
-			}*/
+			}
 
-			/*if (App->CL_Object->Show_Mesh_Debug == 1)
+			if (App->CL_Object->flag_Show_Mesh_Debug == 1)
 			{
 				App->CL_Scene->V_Object[Index]->Object_Node->setVisible(false);
-				App->CL_Object->Show_Mesh_Debug = 0;
+				App->CL_Object->flag_Show_Mesh_Debug = 0;
 			}
 			else
 			{
 				App->CL_Scene->V_Object[Index]->Object_Node->setVisible(true);
-				App->CL_Object->Show_Mesh_Debug = 1;
-			}*/
+				App->CL_Object->flag_Show_Mesh_Debug = 1;
+			}
 
 			return 1;
 		}
@@ -616,26 +618,27 @@ LRESULT CALLBACK CL64_Props_Dialogs::Proc_Dialog_Debug(HWND hDlg, UINT message, 
 			if (App->CL_Properties->Edit_Category == Enums::Edit_Area)
 			{
 
-				//int f = App->CL_Scene->B_Area[Index]->Phys_Body->getCollisionFlags();
+				int f = App->CL_Scene->B_Area[Index]->Phys_Body->getCollisionFlags();
 
-				//if (App->CL_Props_Dialogs->Show_Area_Physics_Debug == 1)
-				//{
-				//	App->CL_Props_Dialogs->Show_Area_Physics_Debug = 0;
-				//	App->CL_Scene->B_Area[Index]->Phys_Body->setCollisionFlags(f | (1 << 5)); // Off
+				if (App->CL_Props_Dialogs->Show_Area_Physics_Debug == 1)
+				{
+					App->CL_Props_Dialogs->Show_Area_Physics_Debug = 0;
+					App->CL_Scene->B_Area[Index]->Phys_Body->setCollisionFlags(f | (1 << 5)); // Off
 
-				//	App->CL_Ogre->Bullet_Debug_Listener->Render_Debug_Flag = 0;
-				//	App->CL_Ogre->RenderFrame(4);
-				//	App->CL_Ogre->Bullet_Debug_Listener->Render_Debug_Flag = 1;
+					App->CL_Ogre->Bullet_Debug_Listener->Render_Debug_Flag = 0;
+					App->CL_Ogre->RenderFrame(4);
+					App->CL_Ogre->Bullet_Debug_Listener->Render_Debug_Flag = 1;
 
-				//	//SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_PhysicsOff_Bmp);
-				//}
-				//else
-				//{
-				//	App->CL_Props_Dialogs->Show_Area_Physics_Debug = 1;
-				//	App->CL_Scene->B_Area[Index]->Phys_Body->setCollisionFlags(f & (~(1 << 5))); // on
+					//SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_PhysicsOff_Bmp);
+				}
+				else
+				{
+					App->CL_Props_Dialogs->Show_Area_Physics_Debug = 1;
+					App->CL_Scene->B_Area[Index]->Phys_Body->setCollisionFlags(f & (~(1 << 5))); // on
 
-				//	//SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_PhysicsOn_Bmp);
-				//}
+					//SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_PhysicsOn_Bmp);
+				}
+
 				return 1;
 			}
 
