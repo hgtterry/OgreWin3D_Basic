@@ -78,6 +78,7 @@
 #define IDD_MESHVIEWER                  190
 #define IDD_MESHVIEWER_3D               191
 #define IDD_PROPS_DIMENSIONS            192
+#define IDD_PROPS_DEBUG                 193
 #define IDC_CK_SU_FULLSCREEN            1000
 #define IDC_ST_STARTUP                  1001
 #define IDC_CK_SU_FULL3DVIEW            1002
@@ -107,6 +108,7 @@
 #define IDC_BT_TEST_ENTITY              1007
 #define IDC_TEST                        1007
 #define IDC_BT_SCALE                    1007
+#define IDC_BT_PHYSDEBUG                1007
 #define IDC_BUTTON2                     1008
 #define IDC_BT_TBH_CAMERA               1008
 #define IDC_BT_DEMORESOURCES            1008
@@ -129,6 +131,7 @@
 #define IDC_BT_STOP                     1009
 #define IDC_DYNAMIC                     1009
 #define IDC_BT_ROTATION                 1009
+#define IDC_BT_ONLYMESH                 1009
 #define IDC_BUTTON4                     1010
 #define IDC_BT_CAMERA_FREE              1010
 #define IDC_ALLMATERIALS                1010
@@ -247,6 +250,7 @@
 #define IDC_OBJECTNAME                  1097
 #define IDC_STFOLDER                    1098
 #define IDC_STNAME                      1099
+#define IDC_BT_SHOWMESH                 1100
 #define ID_VIEW_RESET                   32771
 #define ID_VIEW_MAX3DVIEW               32772
 #define ID_DEBUG_TESTPREFERANCE         32773
@@ -302,9 +306,9 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
-#define _APS_NEXT_RESOURCE_VALUE        193
+#define _APS_NEXT_RESOURCE_VALUE        194
 #define _APS_NEXT_COMMAND_VALUE         32819
-#define _APS_NEXT_CONTROL_VALUE         1100
+#define _APS_NEXT_CONTROL_VALUE         1101
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif

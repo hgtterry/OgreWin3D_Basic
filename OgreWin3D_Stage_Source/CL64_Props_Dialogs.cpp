@@ -32,6 +32,7 @@ CL64_Props_Dialogs::CL64_Props_Dialogs(void)
 	Details_Goto_Hwnd =		nullptr;
 	PhysicsTest_Dlg_hWnd =	nullptr;
 	Dimensions_Dlg_hWnd =	nullptr;
+	Debug_Dlg_hWnd =		nullptr;
 }
 
 CL64_Props_Dialogs::~CL64_Props_Dialogs(void)
@@ -46,7 +47,7 @@ void CL64_Props_Dialogs::Start_Props_Dialogs()
 
 	Start_Dialog_Dimensions();
 	Start_Dialog_PhysicsTest();
-	//Start_Dialog_Debug();
+	Start_Dialog_Debug();
 	//Start_Panels_Test_Dlg();
 	//Start_Area_PropsPanel();
 	Start_Details_Goto_Dlg();
@@ -454,6 +455,238 @@ LRESULT CALLBACK CL64_Props_Dialogs::Proc_Dialog_Dimensions(HWND hDlg, UINT mess
 
 	}
 	return FALSE;
+}
+
+// *************************************************************************
+// *	  		Start_Dialog_Debug:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+void CL64_Props_Dialogs::Start_Dialog_Debug()
+{
+	Debug_Dlg_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_PROPS_DEBUG, App->CL_Properties->Properties_Dlg_hWnd, (DLGPROC)Proc_Dialog_Debug);
+
+	//Init_Bmps_Debug();
+
+	Hide_Debug_Dlg(true);
+
+}
+
+// *************************************************************************
+// *			Proc_Dialog_Debug:- Terry and Hazel Flanigan 2024  		   *
+// *************************************************************************
+LRESULT CALLBACK CL64_Props_Dialogs::Proc_Dialog_Debug(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+	switch (message)
+	{
+	case WM_INITDIALOG:
+	{
+		SendDlgItemMessage(hDlg, IDC_BT_PHYSDEBUG, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_SHOWMESH, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_ONLYMESH, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		return TRUE;
+	}
+	case WM_CTLCOLORSTATIC:
+	{
+		return FALSE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->Brush_Panel;
+	}
+
+	case WM_NOTIFY:
+	{
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		if (some_item->idFrom == IDC_BT_PHYSDEBUG)
+		{
+			if (App->CL_Scene->Object_Count > 0)
+			{
+				int Index = App->CL_Properties->Current_Selected_Object;
+
+				LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+				App->Custom_Button_Toggle(item, App->CL_Scene->V_Object[Index]->Physics_Debug_On);
+				return CDRF_DODEFAULT;
+			}
+			else
+			{
+				LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+				App->Custom_Button_Toggle(item, 0);
+				return CDRF_DODEFAULT;
+			}
+		}
+
+		if (some_item->idFrom == IDC_BT_SHOWMESH)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, 0);//App->CL_Object->Show_Mesh_Debug);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BT_ONLYMESH)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, 0);// App->CL_Object->Hide_All_Except_Flag);
+			return CDRF_DODEFAULT;
+		}
+
+		return CDRF_DODEFAULT;
+	}
+
+	case WM_COMMAND:
+	{
+
+		if (LOWORD(wParam) == IDC_BT_ONLYMESH)
+		{
+			int Index = App->CL_Properties->Current_Selected_Object;
+
+			// -----------------------  Area
+			/*if (App->CL_Properties->Edit_Category == Enums::Edit_Area)
+			{
+				if (App->CL_Object->Hide_All_Except_Flag == 1)
+				{
+					App->CL_Object->Hide_All_Except_Flag = 0;
+					App->CL_Object->Hide_AllObjects_Except(Index, true);
+				}
+				else
+				{
+					App->CL_Object->Hide_All_Except_Flag = 1;
+					App->CL_Object->Hide_AllObjects_Except(Index, false);
+				}
+				return 1;
+			}*/
+
+			/*if (App->CL_Object->Hide_All_Except_Flag == 1)
+			{
+				App->CL_Object->Hide_All_Except_Flag = 0;
+				App->CL_Object->Hide_AllObjects_Except(Index, true);
+			}
+			else
+			{
+				App->CL_Object->Hide_All_Except_Flag = 1;
+				App->CL_Object->Hide_AllObjects_Except(Index, false);
+			}*/
+
+			return 1;
+		}
+
+		if (LOWORD(wParam) == IDC_BT_SHOWMESH)
+		{
+			int Index = App->CL_Properties->Current_Selected_Object;
+
+			// -----------------------  Area
+			/*if (App->CL_Properties->Edit_Category == Enums::Edit_Area)
+			{
+				if (App->CL_Object->Show_Mesh_Debug == 1)
+				{
+					App->CL_Scene->B_Area[Index]->Area_Node->setVisible(false);
+					App->CL_Object->Show_Mesh_Debug = 0;
+				}
+				else
+				{
+					App->CL_Scene->B_Area[Index]->Area_Node->setVisible(true);
+					App->CL_Object->Show_Mesh_Debug = 1;
+				}
+				return 1;
+			}*/
+
+			/*if (App->CL_Object->Show_Mesh_Debug == 1)
+			{
+				App->CL_Scene->V_Object[Index]->Object_Node->setVisible(false);
+				App->CL_Object->Show_Mesh_Debug = 0;
+			}
+			else
+			{
+				App->CL_Scene->V_Object[Index]->Object_Node->setVisible(true);
+				App->CL_Object->Show_Mesh_Debug = 1;
+			}*/
+
+			return 1;
+		}
+
+		if (LOWORD(wParam) == IDC_BT_PHYSDEBUG)
+		{
+			HWND Temp = GetDlgItem(hDlg, IDC_BT_PHYSDEBUG);
+
+			int Index = App->CL_Properties->Current_Selected_Object;
+
+
+			// -----------------------  Area
+			if (App->CL_Properties->Edit_Category == Enums::Edit_Area)
+			{
+
+				//int f = App->CL_Scene->B_Area[Index]->Phys_Body->getCollisionFlags();
+
+				//if (App->CL_Props_Dialogs->Show_Area_Physics_Debug == 1)
+				//{
+				//	App->CL_Props_Dialogs->Show_Area_Physics_Debug = 0;
+				//	App->CL_Scene->B_Area[Index]->Phys_Body->setCollisionFlags(f | (1 << 5)); // Off
+
+				//	App->CL_Ogre->Bullet_Debug_Listener->Render_Debug_Flag = 0;
+				//	App->CL_Ogre->RenderFrame(4);
+				//	App->CL_Ogre->Bullet_Debug_Listener->Render_Debug_Flag = 1;
+
+				//	//SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_PhysicsOff_Bmp);
+				//}
+				//else
+				//{
+				//	App->CL_Props_Dialogs->Show_Area_Physics_Debug = 1;
+				//	App->CL_Scene->B_Area[Index]->Phys_Body->setCollisionFlags(f & (~(1 << 5))); // on
+
+				//	//SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_PhysicsOn_Bmp);
+				//}
+				return 1;
+			}
+
+			// -----------------------  Objects
+			if (App->CL_Scene->Object_Count > 0)
+			{
+				int f = App->CL_Scene->V_Object[Index]->Phys_Body->getCollisionFlags();
+
+				if (App->CL_Scene->V_Object[Index]->Physics_Debug_On == 1)
+				{
+					App->CL_Object->flag_Show_Physics_Debug = 0;
+					App->CL_Scene->V_Object[Index]->Phys_Body->setCollisionFlags(f | (1 << 5)); // Off
+
+					App->CL_Scene->V_Object[Index]->Physics_Debug_On = 0;
+
+					App->CL_Ogre->Bullet_Debug_Listener->Render_Debug_Flag = 0;
+					App->CL_Ogre->RenderFrame(4);
+					App->CL_Ogre->Bullet_Debug_Listener->Render_Debug_Flag = 1;
+
+					//SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_PhysicsOff_Bmp);
+				}
+				else
+				{
+					App->CL_Scene->V_Object[Index]->Physics_Debug_On = 1;
+					App->CL_Object->flag_Show_Physics_Debug = 1;
+					App->CL_Scene->V_Object[Index]->Phys_Body->setCollisionFlags(f & (~(1 << 5))); // on
+
+					//SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_PhysicsOn_Bmp);
+				}
+			}
+
+			return 1;
+		}
+
+		if (LOWORD(wParam) == IDCANCEL)
+		{
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+	}
+
+	}
+	return FALSE;
+}
+
+// *************************************************************************
+// *			Hide_Debug_Dlg:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void CL64_Props_Dialogs::Hide_Debug_Dlg(bool Show)
+{
+	ShowWindow(Debug_Dlg_hWnd, Show);
 }
 
 // *************************************************************************

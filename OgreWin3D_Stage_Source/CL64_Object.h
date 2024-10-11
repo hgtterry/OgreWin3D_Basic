@@ -34,5 +34,7 @@ public:
 	Ogre::Vector3 GetMesh_BB_Size(SceneNode* mNode);
 	void Rename_Object(int Index);
 	Ogre::Vector3 GetPlacement(int Distance = -6);
+
+	bool flag_Show_Physics_Debug;
 };
 

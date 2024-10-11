@@ -28,6 +28,7 @@ THE SOFTWARE.
 
 CL64_Object::CL64_Object(void)
 {
+	flag_Show_Physics_Debug = 0;
 }
 
 CL64_Object::~CL64_Object(void)
