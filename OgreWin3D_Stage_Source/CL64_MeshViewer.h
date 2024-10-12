@@ -95,7 +95,7 @@ private:
 
 	void Enable_ShapeButtons(bool state);
 
-	bool Check_for_Files(char* Resource_Location);
+	bool Check_if_Files_Exsit(char* File);
 	void Copy_Assets();
 
 	void Get_Ogre_Mesh_Data(Ogre::Entity* Ogre_Entity);
@@ -114,12 +114,11 @@ private:
 	char m_Material_File[MAX_PATH];
 	std::vector<std::string> v_Texture_Names;
 	int Texure_Count;
+	int NumSub_Meshes;
+
 	char DestinationFile[MAX_PATH];
 	char SourceFile[MAX_PATH];
-
-
-
-
+	
 	bool flag_SelectDynamic;
 	bool flag_SelectStatic;
 	bool flag_SelectTriMesh;

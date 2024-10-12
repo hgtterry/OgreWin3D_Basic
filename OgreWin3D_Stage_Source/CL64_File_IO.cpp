@@ -252,7 +252,7 @@ bool CL64_File_IO::SaveSelectedFile(char* Extension, char* File)
 // *************************************************************************
 bool CL64_File_IO::Check_File_Exist(char* Full_Path)
 {
-	char pSearchPath[1024];
+	char pSearchPath[MAX_PATH];
 
 	WIN32_FIND_DATA FindFileData;
 	HANDLE hFind;

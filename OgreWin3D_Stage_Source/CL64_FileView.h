@@ -76,6 +76,7 @@ private:
 	void ExpandRoot(void);
 
 	void Context_Menu(HWND hDlg);
+	void Context_New(HWND hDlg);
 	void Context_Rename(HWND hDlg) const;
 	void HideRightPanes(void);
 

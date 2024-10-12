@@ -221,11 +221,11 @@ LRESULT CALLBACK CL64_FileView::Proc_ListPanel(HWND hDlg, UINT message, WPARAM w
 		//	return TRUE;
 		//}
 
-		//if (LOWORD(wParam) == IDM_FILE_NEW)
-		//{
-		//	App->SBC_FileView->Context_New(hDlg);
-		//	return TRUE;
-		//}
+		if (LOWORD(wParam) == IDM_FILE_NEW)
+		{
+			App->CL_FileView->Context_New(hDlg);
+			return TRUE;
+		}
 
 		if (LOWORD(wParam) == IDM_FILE_RENAME)
 		{
@@ -1215,7 +1215,7 @@ void CL64_FileView::Context_Menu(HWND hDlg)
 		if (!strcmp(FileView_Folder, "Objects")) // Folder
 		{
 			hMenu = CreatePopupMenu();
-			AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_FILE_NEW, L"&New");
+			AppendMenuW(hMenu, MF_STRING , IDM_FILE_NEW, L"&New");
 			TrackPopupMenu(hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, App->ListPanel, NULL);
 			DestroyMenu(hMenu);
 			Context_Selection = Enums::FileView_Objects_Folder;
@@ -1484,6 +1484,200 @@ void CL64_FileView::Context_Menu(HWND hDlg)
 		}
 
 	}
+}
+
+// *************************************************************************
+// *				Context_New:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void CL64_FileView::Context_New(HWND hDlg)
+{
+	if (App->CL_Scene->flag_Scene_Loaded == 0)
+	{
+		App->Say("A Project must be created First");
+
+		return;
+	}
+
+	if (App->CL_FileView->Context_Selection == Enums::FileView_Areas_Folder)
+	{
+		/*App->SBC_Dialogs->YesNo("Add Area", "Do you want to add a new Area", 1);
+
+		bool Doit = App->SBC_Dialogs->Canceled;
+		if (Doit == 0)
+		{
+			App->SBC_MeshViewer->Mesh_Viewer_Mode = Enums::Mesh_Viewer_Area;
+			App->SBC_MeshViewer->StartMeshViewer();
+		}*/
+
+		return;
+	}
+
+	/*if (App->SBC_Scene->Area_Added == 0)
+	{
+		App->Say("An Area must be Added Firest before adding items");
+
+		return;
+	}*/
+
+	if (App->CL_FileView->Context_Selection == Enums::FileView_Cameras_Folder)
+	{
+		/*App->SBC_Dialogs->YesNo("Add Object", "Do you want to add a new Camera", 1);
+
+		bool Doit = App->SBC_Dialogs->Canceled;
+		if (Doit == 0)
+		{
+			App->SBC_Com_Camera->Add_New_Camera();
+		}*/
+
+		return;
+	}
+
+	if (App->CL_FileView->Context_Selection == Enums::FileView_Objects_Folder)
+	{
+		App->CL_Dialogs->Show_YesNo_Dlg((LPSTR)"Add Object", (LPSTR)"Do you want to add a new Object Entity", (LPSTR)"");
+
+		bool Doit = App->CL_Dialogs->Canceled;
+		if (Doit == 0)
+		{
+			//App->CL_MeshViewer->Mesh_Viewer_Mode = Enums::Mesh_Viewer_Objects;
+			App->CL_MeshViewer->Start_MeshViewer_Dlg();
+		}
+
+		return;
+	}
+
+	//if (App->CL_FileView->Context_Selection == Enums::FileView_Messages_Triggers_Folder)
+	//{
+	//	/*App->SBC_Dialogs->YesNo("Add Message", "Do you want to add a new Message Entity", 1);
+
+	//	bool Doit = App->SBC_Dialogs->Canceled;
+	//	if (Doit == 0)
+	//	{
+	//		App->CL_Com_Messages->Add_New_Message();
+	//	}*/
+
+	//	return;
+	//}
+
+	if (App->CL_FileView->Context_Selection == Enums::FileView_Sounds_Folder)
+	{
+		/*App->SBC_Dialogs->YesNo("Add Message", "Do you want to add a new Sound Entity", 1);
+
+		bool Doit = App->SBC_Dialogs->Canceled;
+		if (Doit == 0)
+		{
+			App->CL_Com_Sounds->Add_New_Sound();
+		}*/
+
+		return;
+	}
+
+	if (App->CL_FileView->Context_Selection == Enums::FileView_EnvironEntity_Folder)
+	{
+		/*App->SBC_Dialogs->YesNo("Add Environ Entity", "Do you want to add a new Environ Entity", 1);
+
+		bool Doit = App->SBC_Dialogs->Canceled;
+		if (Doit == 0)
+		{
+			App->SBC_Com_Environments->Add_New_Environ_Entity(0);
+		}*/
+
+		return;
+	}
+
+
+	if (App->CL_FileView->Context_Selection == Enums::FileView_Move_Folder)
+	{
+		/*App->SBC_Dialogs->YesNo("Add Message", "Do you want to add a new Move Entity", 1);
+
+		bool Doit = App->SBC_Dialogs->Canceled;
+		if (Doit == 0)
+		{
+			App->SBC_Com_MoveEntity->Add_New_Move_Entity();
+		}*/
+
+		return;
+	}
+
+	if (App->CL_FileView->Context_Selection == Enums::FileView_Teleports_Folder)
+	{
+		/*App->SBC_Dialogs->YesNo("Add Message", "Do you want to add a new Teleport Entity", 1);
+
+		bool Doit = App->SBC_Dialogs->Canceled;
+		if (Doit == 0)
+		{
+			App->CL_Com_Teleporters->Add_New_Teleporter();
+		}*/
+
+		return;
+	}
+
+	if (App->CL_FileView->Context_Selection == Enums::FileView_Collectables_Folder)
+	{
+
+		/*App->SBC_Dialogs->YesNo("Add Object", "Do you want to add a new Collectable", 1);
+
+		bool Doit = App->SBC_Dialogs->Canceled;
+		if (Doit == 0)
+		{
+			App->SBC_MeshViewer->Mesh_Viewer_Mode = Enums::Mesh_Viewer_Collectables;
+			App->SBC_MeshViewer->StartMeshViewer();
+		}*/
+
+		return;
+	}
+
+	if (App->CL_FileView->Context_Selection == Enums::FileView_Counters_Folder)
+	{
+
+		/*App->SBC_Dialogs->YesNo("Add Counter", "Do you want to add a new Counter", 1);
+
+		bool Doit = App->SBC_Dialogs->Canceled;
+		if (Doit == 0)
+		{
+			App->SBC_Display->Add_New_Counter();
+		}*/
+
+		return;
+	}
+
+	if (App->CL_FileView->Context_Selection == Enums::FileView_Environments_Folder)
+	{
+
+		//App->SBC_Dialogs->YesNo("Add Environment", "Do you want to add a new Environment", 1);
+
+		//bool Doit = App->SBC_Dialogs->Canceled;
+		//if (Doit == 0)
+		//{
+		//	//App->SBC_Com_Environments->Add_New_Environment();
+		//}
+
+		return;
+	}
+
+	if (App->CL_FileView->Context_Selection == Enums::FileView_Particle_Folder)
+	{
+
+		/*App->SBC_Dialogs->YesNo("Add Particle", "Do you want to add a new Particle", 1);
+
+		bool Doit = App->SBC_Dialogs->Canceled;
+		if (Doit == 0)
+		{
+			strcpy(App->SBC_Dialogs->Chr_DropText, "GD_Smoke1");
+			App->SBC_Dialogs->DropList_Data = Enums::DropDialog_Particles;
+			App->SBC_Dialogs->Dialog_DropGen();
+
+			if (App->SBC_Dialogs->Canceled == 0)
+			{
+				App->CL_Com_Particles->Add_New_Particle(App->SBC_Dialogs->Chr_DropText);
+			}
+
+		}*/
+
+		return;
+	}
+
+	return;
 }
 
 // *************************************************************************

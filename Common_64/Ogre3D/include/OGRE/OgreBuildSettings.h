@@ -5,8 +5,8 @@
 
 // Define ogre version
 #define OGRE_VERSION_MAJOR 14
-#define OGRE_VERSION_MINOR 2
-#define OGRE_VERSION_PATCH 5
+#define OGRE_VERSION_MINOR 3
+#define OGRE_VERSION_PATCH 0
 #define OGRE_VERSION_SUFFIX ""
 #define OGRE_VERSION_NAME "Tsathoggua"
 

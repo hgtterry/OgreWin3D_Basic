@@ -39,7 +39,7 @@ Torus Knot Software Ltd.
 #include "OgreCommon.h"
 #include "OgreSceneQuery.h"
 #include "OgreAutoParamDataSource.h"
-#include "OgreAnimationState.h"
+#include "OgreAnimation.h"
 #include "OgreRenderQueue.h"
 #include "OgreRenderQueueSortingGrouping.h"
 #include "OgreResourceGroupManager.h"
@@ -234,7 +234,7 @@ namespace Ogre {
         dependent on the Camera, which will always call back the SceneManager
         which created it to render the scene. 
      */
-    class _OgreExport SceneManager : public SceneMgtAlloc
+    class _OgreExport SceneManager : public AnimationContainer, public SceneMgtAlloc
     {
     public:
         enum QueryTypeMask : uint32
@@ -403,7 +403,6 @@ namespace Ogre {
         friend class SceneMgrQueuedRenderableVisitor;
 
         typedef std::map<String, Camera* > CameraList;
-        typedef std::map<String, Animation*> AnimationList;
         typedef std::map<String, MovableObject*> MovableObjectMap;
         typedef std::map<String, StaticGeometry* > StaticGeometryMap;
     private:
@@ -462,12 +461,11 @@ namespace Ogre {
         AutoTrackingSceneNodes mAutoTrackingSceneNodes;
 
         // Sky params
-        class _OgreExport SkyRenderer : public Listener, public Node::Listener
+        class _OgreExport SkyRenderer : public Listener
         {
         protected:
             SceneManager* mSceneManager;
             virtual void _updateRenderQueue(RenderQueue* queue) = 0;
-            void nodeDestroyed(const Node*) override;
         public:
             enum BoxPlane
             {
@@ -480,6 +478,7 @@ namespace Ogre {
             };
 
             SkyRenderer(SceneManager* owner);
+            virtual ~SkyRenderer();
 
             SceneNode* mSceneNode;
             bool mEnabled;
@@ -487,6 +486,8 @@ namespace Ogre {
             void setEnabled(bool enable);
             void postFindVisibleObjects(SceneManager* source, IlluminationRenderStage irs, Viewport* vp) override;
         };
+
+        std::unique_ptr<SkyRenderer> mSkyRenderer;
 
         class SkyPlaneRenderer : public SkyRenderer
         {
@@ -496,10 +497,9 @@ namespace Ogre {
         public:
             SkyPlaneRenderer(SceneManager* owner) : SkyRenderer(owner), mSkyPlaneEntity(0) {}
             SkyPlaneGenParameters mSkyPlaneGenParameters;
-            void setSkyPlane(bool enable, const Plane& plane, const String& materialName,
-                             Real scale, Real tiling, uint8 renderQueue, Real bow, int xsegments,
-                             int ysegments, const String& groupName);
-        } mSkyPlane;
+            void create(const Plane& plane, const String& materialName, Real scale, Real tiling, uint8 renderQueue,
+                        Real bow, int xsegments, int ysegments, const String& groupName);
+        };
 
         class SkyBoxRenderer : public SkyRenderer
         {
@@ -510,10 +510,9 @@ namespace Ogre {
         public:
             SkyBoxRenderer(SceneManager* owner) : SkyRenderer(owner) {}
             SkyBoxGenParameters mSkyBoxGenParameters;
-            void setSkyBox(bool enable, const String& materialName, Real distance,
-                           uint8 renderQueue, const Quaternion& orientation,
-                           const String& groupName);
-        } mSkyBox;
+            void create(const String& materialName, Real distance, uint8 renderQueue, const Quaternion& orientation,
+                        const String& groupName);
+        };
 
         class SkyDomeRenderer : public SkyRenderer
         {
@@ -530,11 +529,10 @@ namespace Ogre {
         public:
             SkyDomeRenderer(SceneManager* owner)  : SkyRenderer(owner) {}
             SkyDomeGenParameters mSkyDomeGenParameters;
-            void setSkyDome(bool enable, const String& materialName, Real curvature, Real tiling,
-                            Real distance, uint8 renderQueue, const Quaternion& orientation,
-                            int xsegments, int ysegments, int ysegments_keep,
-                            const String& groupName);
-        } mSkyDome;
+            void create(const String& materialName, Real curvature, Real tiling, Real distance, uint8 renderQueue,
+                        const Quaternion& orientation, int xsegments, int ysegments, int ysegments_keep,
+                        const String& groupName);
+        };
 
         // Fog
         FogMode mFogMode;
@@ -554,6 +552,7 @@ namespace Ogre {
 
         bool mFlipCullingOnNegativeScale;
         CullingMode mPassCullingMode;
+        static bool msPerRenderableLights;
 
     protected:
 
@@ -683,8 +682,6 @@ namespace Ogre {
         /// Internal method for destroying shadow textures (texture-based shadows)
         void destroyShadowTextures(void);
 
-        /** Internal method for rendering all objects using the default queue sequence. */
-        void renderVisibleObjectsDefaultSequence(void);
         /** Internal method for preparing the render queue for use with each render. */
         void prepareRenderQueue(void);
 
@@ -1048,6 +1045,18 @@ namespace Ogre {
         */
         virtual ~SceneManager();
 
+        /** Toggle sorting of lights for each renderable
+
+            By default, lights are sorted for each renderable based on their distance.
+            This allows having more than 8 lights affecting the scene.
+            However, the sorting is expensive and prevents the use of more efficient algorithms.
+
+            Disabling this option will make the lights be sorted only once per frame.
+            Also disables per-renderable light masks.
+         */
+        static void usePerRenderableLights(bool enabled) { msPerRenderableLights = enabled; }
+
+        static bool hasPerRenderableLights() { return msPerRenderableLights; }
 
         /** Mutex to protect the scene graph from simultaneous access from
             multiple threads.
@@ -1771,7 +1780,7 @@ namespace Ogre {
 
         /** Sends visible objects found in _findVisibleObjects to the rendering engine.
         */
-        void _renderVisibleObjects(void) { renderVisibleObjectsDefaultSequence(); }
+        void _renderVisibleObjects(void);
 
         /** Prompts the class to send its contents to the renderer.
 
@@ -1818,6 +1827,19 @@ namespace Ogre {
 
         /// @name Sky Rendering
         /// @{
+        /** Enables / disables a 'sky' */
+        void setSkyRenderingEnabled(bool enable)
+        {
+            if (mSkyRenderer)
+                mSkyRenderer->setEnabled(enable);
+        }
+
+        /** Return whether a sky is enabled */
+        bool isSkyRenderingEnabled(void) const { return mSkyRenderer && mSkyRenderer->mEnabled; }
+
+        /** Get the sky node, if enabled. */
+        SceneNode* getSkyNode(void) const { return mSkyRenderer ? mSkyRenderer->mSceneNode : NULL; }
+
         /** Enables / disables a 'sky plane' i.e. a plane at constant
             distance from the camera representing the sky.
 
@@ -1885,17 +1907,23 @@ namespace Ogre {
             int xsegments = 1, int ysegments = 1, 
             const String& groupName = ResourceGroupManager::AUTODETECT_RESOURCE_GROUP_NAME);
 
-        /** Enables / disables a 'sky plane' */
-        void setSkyPlaneEnabled(bool enable) { mSkyPlane.setEnabled(enable); }
+        /// @deprecated use setSkyRenderingEnabled
+        OGRE_DEPRECATED void setSkyPlaneEnabled(bool enable) { setSkyRenderingEnabled(enable); }
 
-        /** Return whether a key plane is enabled */
-        bool isSkyPlaneEnabled(void) const { return mSkyPlane.mEnabled; }
+        /// @deprecated use isSkyRenderingEnabled
+        OGRE_DEPRECATED bool isSkyPlaneEnabled(void) const { return isSkyRenderingEnabled(); }
 
-        /** Get the sky plane node, if enabled. */
-        SceneNode* getSkyPlaneNode(void) const { return mSkyPlane.mSceneNode; }
+        /// @deprecated use getSkyNode
+        OGRE_DEPRECATED SceneNode* getSkyPlaneNode(void) const { return getSkyNode(); }
 
-        /** Get the parameters used to construct the SkyPlane, if any **/
-        const SkyPlaneGenParameters& getSkyPlaneGenParameters(void) const { return mSkyPlane.mSkyPlaneGenParameters; }
+        /// @deprecated use do not use
+        OGRE_DEPRECATED SkyPlaneGenParameters getSkyPlaneGenParameters(void) const
+        {
+            if (auto skyPlane = dynamic_cast<SkyPlaneRenderer*>(mSkyRenderer.get()))
+                return skyPlane->mSkyPlaneGenParameters;
+
+            return SkyPlaneGenParameters{};
+        }
 
         /** Enables / disables a 'sky box' i.e. a 6-sided box at constant
             distance from the camera representing the sky.
@@ -1949,17 +1977,23 @@ namespace Ogre {
             uint8 renderQueue = RENDER_QUEUE_SKIES_EARLY, const Quaternion& orientation = Quaternion::IDENTITY,
             const String& groupName = ResourceGroupManager::AUTODETECT_RESOURCE_GROUP_NAME);
 
-        /** Enables / disables a 'sky box' */
-        void setSkyBoxEnabled(bool enable) { mSkyBox.setEnabled(enable); }
+        /// @deprecated use setSkyRenderingEnabled
+        OGRE_DEPRECATED void setSkyBoxEnabled(bool enable) { setSkyRenderingEnabled(enable); }
 
-        /** Return whether a skybox is enabled */
-        bool isSkyBoxEnabled(void) const { return mSkyBox.mEnabled; }
+        /// @deprecated use isSkyRenderingEnabled
+        OGRE_DEPRECATED bool isSkyBoxEnabled(void) const { return isSkyRenderingEnabled(); }
 
-        /** Get the skybox node, if enabled. */
-        SceneNode* getSkyBoxNode(void) const { return mSkyBox.mSceneNode; }
+        /// @deprecated use getSkyNode
+        OGRE_DEPRECATED SceneNode* getSkyBoxNode(void) const { return getSkyNode(); }
 
-        /** Get the parameters used to generate the current SkyBox, if any */
-        const SkyBoxGenParameters& getSkyBoxGenParameters(void) const { return mSkyBox.mSkyBoxGenParameters; }
+        /// @deprecated use do not use
+        OGRE_DEPRECATED SkyBoxGenParameters getSkyBoxGenParameters(void) const
+        {
+            if (auto skyBox = dynamic_cast<SkyBoxRenderer*>(mSkyRenderer.get()))
+                return skyBox->mSkyBoxGenParameters;
+
+            return SkyBoxGenParameters{};
+        }
 
         /** Enables / disables a 'sky dome' i.e. an illusion of a curved sky.
 
@@ -2032,17 +2066,23 @@ namespace Ogre {
             int xsegments = 16, int ysegments = 16, int ysegments_keep = -1,
             const String& groupName = ResourceGroupManager::AUTODETECT_RESOURCE_GROUP_NAME);
 
-        /** Enables / disables a 'sky dome' */
-        void setSkyDomeEnabled(bool enable) { mSkyDome.setEnabled(enable); }
+        /// @deprecated use setSkyRenderingEnabled
+        OGRE_DEPRECATED void setSkyDomeEnabled(bool enable) { setSkyRenderingEnabled(enable); }
 
-        /** Return whether a skydome is enabled */
-        bool isSkyDomeEnabled(void) const { return mSkyDome.mEnabled; }
+        /// @deprecated use isSkyRenderingEnabled
+        OGRE_DEPRECATED bool isSkyDomeEnabled(void) const { return isSkyRenderingEnabled(); }
 
-        /** Get the sky dome node, if enabled. */
-        SceneNode* getSkyDomeNode(void) const { return mSkyDome.mSceneNode; }
+        /// @deprecated use getSkyNode
+        OGRE_DEPRECATED SceneNode* getSkyDomeNode(void) const { return getSkyNode(); }
 
-        /** Get the parameters used to generate the current SkyDome, if any */
-        const SkyDomeGenParameters& getSkyDomeGenParameters(void) const { return mSkyDome.mSkyDomeGenParameters; }
+        /// @deprecated do not use
+        OGRE_DEPRECATED SkyDomeGenParameters getSkyDomeGenParameters(void) const
+        {
+            if (auto skyDome = dynamic_cast<SkyDomeRenderer*>(mSkyRenderer.get()))
+                return skyDome->mSkyDomeGenParameters;
+
+            return SkyDomeGenParameters{};
+        }
         /// @}
 
         /// @name Fogging
@@ -2163,25 +2203,19 @@ namespace Ogre {
             although this is more useful when performing skeletal animation (see Skeleton::createAnimation).
         @note whilst it uses the same classes, the animations created here are kept separate from the
             skeletal animations of meshes (each Skeleton owns those animations).
-        @param name The name of the animation, must be unique within this SceneManager.
-        @param length The total length of the animation.
-        */
-        Animation* createAnimation(const String& name, Real length);
 
-        /** Looks up an Animation object previously created with createAnimation. 
-        @note Throws an exception if the named instance does not exist
+        @copydetails AnimationContainer::createAnimation
         */
-        Animation* getAnimation(const String& name) const;
-        /** Returns whether an animation with the given name exists.
-        */
-        bool hasAnimation(const String& name) const;
+        Animation* createAnimation(const String& name, Real length) override;
 
-        /** Destroys an Animation. 
 
-            You should ensure that none of your code is referencing this animation objects since the 
-            memory will be freed.
-        */
-        void destroyAnimation(const String& name);
+        Animation* getAnimation(const String& name) const override;
+        bool hasAnimation(const String& name) const override;
+        uint16 getNumAnimations(void) const override { return static_cast<uint16>(mAnimationsList.size()); }
+        Animation* getAnimation(unsigned short index) const override;
+        void removeAnimation(const String& name) override;
+
+        void destroyAnimation(const String& name) { removeAnimation(name); }
 
         /** Removes all animations created using this SceneManager. */
         void destroyAllAnimations(void);
