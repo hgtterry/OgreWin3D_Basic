@@ -97,7 +97,9 @@ private:
 
 	bool Check_for_Files(char* Resource_Location);
 	void Copy_Assets();
-	void Get_Mesh_Assets();
+
+	void Get_Ogre_Mesh_Data(Ogre::Entity* Ogre_Entity);
+
 	bool Add_Resource_Location_Project(char* Resource_Location);
 
 	void Show_Mesh_Properties();

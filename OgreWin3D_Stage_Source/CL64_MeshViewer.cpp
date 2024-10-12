@@ -434,7 +434,7 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 
 		if (LOWORD(wParam) == IDC_BT_PROPERTIES)
 		{
-
+			App->CL_MeshViewer->Get_Ogre_Mesh_Data(App->CL_MeshViewer->Ogre_MvEnt);
 			App->CL_MeshViewer->Show_Mesh_Properties();
 
 			return TRUE;
@@ -1599,74 +1599,57 @@ bool CL64_MeshViewer::Check_for_Files(char* Resource_Location)
 }
 
 // *************************************************************************
-// *	  		Get_Mesh_Assets:- Terry and Hazel Flanigan 2024			   *
+// *	    	Get_Ogre_Mesh_Data:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
-void CL64_MeshViewer::Get_Mesh_Assets()
+void CL64_MeshViewer::Get_Ogre_Mesh_Data(Ogre::Entity* Ogre_Entity)
 {
 	App->CL_MeshViewer->m_Material_File[0] = 0;
 	v_Texture_Names.resize(0);
 	Texure_Count = 0;
 
-	int SubMeshCount = App->CL_MeshViewer->Ogre_MvEnt->getNumSubEntities();
-	char pScriptName[255];
-	char pMaterialFile[255];
-	Ogre::String st;
-	Ogre::MaterialPtr MP;
+	int Count = 0;
 
-	MP.setNull();
-	bool loaded = 0;
-
-	// ---------------------------------------------------------- Material File
-	Ogre::SubMesh const* subMesh = App->CL_MeshViewer->Ogre_MvEnt->getSubEntity(0)->getSubMesh();
-	Ogre::String MatName = subMesh->getMaterialName();
-	strcpy(pScriptName, MatName.c_str());
-
-	loaded = Ogre::MaterialManager::getSingleton().resourceExists(MatName);
-
-	if (loaded == 1)
+	Count = 0;
+	int NumSubEnts = Ogre_Entity->getNumSubEntities();
+	
+	if (NumSubEnts > 0)
 	{
-		MP = Ogre::MaterialManager::getSingleton().getByName(MatName, App->CL_MeshViewer->MV_Resource_Group);
-		st = MP->getOrigin();
-		strcpy(pMaterialFile, st.c_str());
-
-		strcpy(App->CL_MeshViewer->m_Material_File, pMaterialFile);
-	}
-	else
-	{
-		//strcpy(test, "Not Loaded:- ");
+		strcpy(m_Material_File, Ogre_Entity->getSubEntity(0)->getMaterial()->getOrigin().c_str());
 	}
 
-	// ---------------------------------------------------------- Textures
-	Ogre::ResourcePtr TP;
-	Ogre::ResourceManager::ResourceMapIterator TextureIterator = Ogre::TextureManager::getSingleton().getResourceIterator();
-
-	while (TextureIterator.hasMoreElements())
+	while (Count < NumSubEnts)
 	{
-		//strcpy(pScriptName,(static_cast<Ogre::MaterialPtr>(TextureIterator.peekNextValue()))->getName().c_str());
+		// Material
+		char mMaterial[MAX_PATH];
+		Ogre::SubEntity* subEnt = Ogre_Entity->getSubEntity(Count);
+		strcpy(mMaterial, subEnt->getMaterialName().c_str());
 
-		if (TextureIterator.peekNextValue()->getGroup() == App->CL_MeshViewer->MV_Resource_Group)
+
+		// Texture
+		char mTexture[MAX_PATH];
+		Ogre::MaterialPtr MatCurent;
+		MatCurent = static_cast<Ogre::MaterialPtr> (Ogre::MaterialManager::getSingleton().getByName(mMaterial));
+
+		if (MatCurent->getNumTechniques() > 0)
 		{
+			int TUSCount = MatCurent->getTechnique(0)->getPass(0)->getNumTextureUnitStates();
 
-			strcpy(pScriptName, TextureIterator.peekNextValue()->getName().c_str());
-			TP = Ogre::TextureManager::getSingleton().getByName(pScriptName);
-
-			if (TP->isLoaded() == 1)
+			if (TUSCount > 0)
 			{
-				v_Texture_Names.push_back(pScriptName);
+				strcpy(mTexture, MatCurent->getTechnique(0)->getPass(0)->getTextureUnitState(0)->getTextureName().c_str());
+				v_Texture_Names.push_back(mTexture);
 				Texure_Count = v_Texture_Names.size();
-			}
-			else
-			{
-				v_Texture_Names.push_back(pScriptName);
-				Texure_Count = v_Texture_Names.size();
-				//App->Say(pScriptName);
-				//strcpy(test, "Not Loaded:- ");	
-			}
 
+			}
+		}
+		else
+		{
+			
 		}
 
-		TextureIterator.moveNext();
+		Count++;
 	}
+
 }
 
 // *************************************************************************
