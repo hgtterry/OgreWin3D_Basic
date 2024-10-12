@@ -65,6 +65,8 @@ public:
 private:
 	static LRESULT CALLBACK Proc_MeshViewer_Dlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Proc_MeshViewer_3D(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Proc_Mesh_Properties(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+
 
 	void Close_OgreWindow(void);
 	bool Set_OgreWindow(void);
@@ -93,9 +95,12 @@ private:
 
 	void Enable_ShapeButtons(bool state);
 
+	bool Check_for_Files(char* Resource_Location);
 	void Copy_Assets();
 	void Get_Mesh_Assets();
 	bool Add_Resource_Location_Project(char* Resource_Location);
+
+	void Show_Mesh_Properties();
 
 	HWND ListHwnd;
 	HWND CB_hWnd;

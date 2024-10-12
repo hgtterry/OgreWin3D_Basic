@@ -129,6 +129,8 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 		SendDlgItemMessage(hDlg, IDC_STFOLDER, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_STNAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
+		SendDlgItemMessage(hDlg, IDC_BT_PROPERTIES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
 		SendDlgItemMessage(hDlg, IDC_OBJECTNAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		App->CL_MeshViewer->MainDlgHwnd = hDlg;
@@ -225,6 +227,13 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 	case WM_NOTIFY:
 	{
 		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		if (some_item->idFrom == IDC_BT_PROPERTIES)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
 
 		if (some_item->idFrom == IDC_MVSTATIC)
 		{
@@ -423,6 +432,14 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 			return TRUE;
 		}
 
+		if (LOWORD(wParam) == IDC_BT_PROPERTIES)
+		{
+
+			App->CL_MeshViewer->Show_Mesh_Properties();
+
+			return TRUE;
+		}
+
 		if (LOWORD(wParam) == IDC_LISTFILES)
 		{
 			char buff[MAX_PATH] { 0 };
@@ -603,8 +620,8 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 				//}
 				//else // Normal Object
 				//{
-					//App->CL_MeshViewer->Copy_Assets();
-					//App->CL_Objects_Create->Add_Objects_From_MeshViewer();
+					App->CL_MeshViewer->Copy_Assets();
+					App->CL_Objects_Create->Add_Objects_From_MeshViewer();
 				//}
 			}
 
@@ -1574,6 +1591,14 @@ void CL64_MeshViewer::Copy_Assets()
 }
 
 // *************************************************************************
+// *		Check_for_Files:- Terry and Hazel Flanigan 2024				   *
+// *************************************************************************
+bool CL64_MeshViewer::Check_for_Files(char* Resource_Location)
+{
+	return 1;
+}
+
+// *************************************************************************
 // *	  		Get_Mesh_Assets:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
 void CL64_MeshViewer::Get_Mesh_Assets()
@@ -1659,4 +1684,91 @@ bool CL64_MeshViewer::Add_Resource_Location_Project(char* Resource_Location)
 	}
 
 	return 1;
+}
+
+// *************************************************************************
+// *	  	Show_Mesh_Properties:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+void CL64_MeshViewer::Show_Mesh_Properties()
+{
+	DialogBox(App->hInst, (LPCTSTR)IDD_LISTDATA, MainDlgHwnd, (DLGPROC)Proc_Mesh_Properties);
+}
+
+// *************************************************************************
+// *		Proc_Mesh_Properties:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+LRESULT CALLBACK CL64_MeshViewer::Proc_Mesh_Properties(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+	switch (message)
+	{
+
+	case WM_INITDIALOG:
+	{
+		SendDlgItemMessage(hDlg, IDC_LISTGROUP, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		HWND List = GetDlgItem(hDlg, IDC_LISTGROUP);
+		ListView_DeleteAllItems(List);
+
+		SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->CL_MeshViewer->m_Resource_Folder_Full);
+		SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"");
+		SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->CL_MeshViewer->Selected_MeshFile);
+		SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->CL_MeshViewer->m_Material_File);
+		SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"");
+
+		int Count = 0;
+		while (Count < App->CL_MeshViewer->Texure_Count)
+		{
+			SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->CL_MeshViewer->v_Texture_Names[Count].c_str());
+
+			Count++;
+		}
+
+		return TRUE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->AppBackground;
+	}
+
+	case WM_CTLCOLORSTATIC:
+	{
+		return FALSE;
+	}
+
+	case WM_NOTIFY:
+	{
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+
+		if (some_item->idFrom == IDOK)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		return CDRF_DODEFAULT;
+	}
+
+	case WM_COMMAND:
+	{
+		if (LOWORD(wParam) == IDOK)
+		{
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDCANCEL)
+		{
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+
+		break;
+	}
+	}
+
+	return FALSE;
 }
