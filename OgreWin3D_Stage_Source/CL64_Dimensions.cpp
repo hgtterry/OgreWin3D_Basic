@@ -339,7 +339,7 @@ void CL64_Dimensions::ImGui_Position(void)
 
 	// ----------------------------------------------------------------------------- Position Do Move 
 	float spacingX = ImGui::GetStyle().ItemInnerSpacing.x;
-	//ImGui::PushButtonRepeat(true);
+	ImGui::PushItemFlag(ImGuiItemFlags_ButtonRepeat, true);
 	if (ImGui::ArrowButton("##leftXX", ImGuiDir_Left))
 	{
 		if (App->CL_Scene->flag_Scene_Loaded == 1)
@@ -388,7 +388,8 @@ void CL64_Dimensions::ImGui_Position(void)
 			}
 		}
 	}
-	//ImGui::PopButtonRepeat();
+
+	ImGui::PopItemFlag();
 
 	// ----------------------------------------------------------------------------- Position Combo Step
 	ImGui::SameLine();
@@ -556,7 +557,7 @@ void CL64_Dimensions::ImGui_Scale(void)
 
 	// ----------------------------------------------------------------------------- Scale Do Scale
 	float spacingX = ImGui::GetStyle().ItemInnerSpacing.x;
-	//ImGui::PushButtonRepeat(true);
+	ImGui::PushItemFlag(ImGuiItemFlags_ButtonRepeat, true);
 	if (ImGui::ArrowButton("##leftSX", ImGuiDir_Left))
 	{
 		if (App->CL_Scene->flag_Scene_Loaded == 1)
@@ -638,7 +639,8 @@ void CL64_Dimensions::ImGui_Scale(void)
 			}
 		}
 	}
-	//ImGui::PopButtonRepeat();
+	
+	ImGui::PopItemFlag();
 
 	// ----------------------------------------------------------------------------- Scale Combo Step
 	ImGui::SameLine();
@@ -769,7 +771,7 @@ void CL64_Dimensions::ImGui_Rotation(void)
 	ImGui::Spacing();
 
 	float spacingX = ImGui::GetStyle().ItemInnerSpacing.x;
-	//ImGui::PushButtonRepeat(true);
+	ImGui::PushItemFlag(ImGuiItemFlags_ButtonRepeat,true);
 	if (ImGui::ArrowButton("##leftRX", ImGuiDir_Left))
 	{
 		if (App->CL_Scene->flag_Scene_Loaded == 1)
@@ -826,8 +828,8 @@ void CL64_Dimensions::ImGui_Rotation(void)
 		}
 	}
 
-	//ImGui::PopButtonRepeat();
-
+	ImGui::PopItemFlag();
+	
 	// ----------------------------------------------------------------------------- Rotation Combo Step
 	ImGui::SameLine();
 	ImGui::SetNextItemWidth(100);

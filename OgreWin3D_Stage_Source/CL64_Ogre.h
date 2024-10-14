@@ -26,6 +26,7 @@ appreciated but is not required.
 #include <OgreImGuiInputListener.h>
 
 #include "CL64_Bullet_Debug_World.h"
+#include "CL64_ResourceListener.h"
 
 using namespace Ogre;
 using namespace OgreBites;
@@ -83,7 +84,7 @@ public:
 	CL64_Ogre3D_Listener*		Ogre3D_Listener;
 	CL64_OGL_Listener*			OGL_Listener;
 	CL64_Bullet_Debug_World*	Bullet_Debug_Listener;
-
+	CL64_ResourceListener*		Resource__Listener;
 
 	Ogre::OverlaySystem* mOverlaySystem;
 	
@@ -97,5 +98,6 @@ public:
 	bool flag_Show_Test_Mesh;	// is Test Mesh Visable
 	bool flag_Show_Fog;			// Is the fog Enabled
 	bool flag_Test_Mesh_Active;
+	bool flag_Block_Rendering;
 };
 

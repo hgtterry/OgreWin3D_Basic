@@ -26,6 +26,7 @@ THE SOFTWARE.
 
 #include "CL64_MeshView_Listener.h"
 
+
 class CL64_MeshViewer
 {
 public:
@@ -104,6 +105,10 @@ private:
 
 	void Show_Mesh_Properties();
 
+	bool Create_Mesh(char* File);
+	bool Create_Material(char* File);
+	bool Create_Texture(char* Texture_Path, char* Texture_Name);
+
 	HWND ListHwnd;
 	HWND CB_hWnd;
 
@@ -112,7 +117,9 @@ private:
 	
 	// Old Copy System
 	char m_Material_File[MAX_PATH];
+
 	std::vector<std::string> v_Texture_Names;
+	
 	int Texure_Count;
 	int NumSub_Meshes;
 

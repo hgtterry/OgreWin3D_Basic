@@ -42,6 +42,7 @@ CL64_Ogre::CL64_Ogre(void)
 	flag_Show_Test_Mesh = 1;
 	flag_Show_Fog = 0;
 	flag_Test_Mesh_Active = 0;
+	flag_Block_Rendering = 0;
 
 	FPSLock = 16666; // Default 60 FPS
 
@@ -342,7 +343,8 @@ bool CL64_Ogre::createFrameListener(void)
 		return FALSE;
 	}
 
-	App->CL_Ogre->Log_Message_To_File((LPSTR)"createFrameListener");
+	Resource__Listener = new CL64_ResourceListener();
+	Ogre::ResourceGroupManager::getSingleton().addResourceGroupListener(Resource__Listener);
 
 	return TRUE;
 }
@@ -454,8 +456,8 @@ bool CL64_Ogre::Ogre_Render_Loop(void)
 		{
 			FPStimer.reset();
 
-			//if (Block_RenderingQueued == 0)
-			//{
+			if (flag_Block_Rendering == 0)
+			{
 
 				if (!mRoot->_fireFrameStarted())
 				{
@@ -472,7 +474,7 @@ bool CL64_Ogre::Ogre_Render_Loop(void)
 					return false;
 				}
 
-			//}
+			}
 		}
 	}
 

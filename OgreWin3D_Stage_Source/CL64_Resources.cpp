@@ -871,6 +871,7 @@ bool CL64_Resources::Export_File(char* FileName)
 		}
 	}
 
+	//MeshManager::getSingleton().load("mymesh.mesh", "General");
 	return 1;
 }
 

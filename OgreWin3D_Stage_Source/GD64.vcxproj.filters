@@ -189,6 +189,9 @@
     <ClInclude Include="CL64_ImGui_Dialogs.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="CL64_ResourceListener.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GD64.cpp">
@@ -354,6 +357,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CL64_ImGui_Dialogs.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CL64_ResourceListener.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

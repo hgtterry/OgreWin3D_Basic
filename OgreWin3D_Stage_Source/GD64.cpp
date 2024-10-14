@@ -189,23 +189,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				App->CL_Scene->Set_Scene();
 			}*/
 
-			if (App->CL_Bullet->flag_Debug_All == 1)
+			if (App->CL_Ogre->flag_Block_Rendering == 1)
 			{
-				App->CL_Bullet->flag_Debug_All = 0;
-				App->CL_Bullet->Show_Debug_Objects(false);
-
-				if (App->CL_Scene->flag_Player_Added == 1 && App->CL_Ogre->Ogre3D_Listener->CameraMode == Enums::Cam_Mode_Free)
-				{
-					App->CL_Player->Show_Debug_Player(true);
-				}
+				App->CL_Ogre->flag_Block_Rendering = 0;
 			}
 			else
 			{
-				App->CL_Bullet->flag_Debug_All = 1;
-				App->CL_Bullet->Show_Debug_Objects(true);
-
-				App->CL_TopDlg->flag_Toggle_PhysicaDebug_Node = 1;
-				App->CL_Ogre->Bullet_Debug_Listener->btDebug_Node->setVisible(true);
+				App->CL_Ogre->flag_Block_Rendering = 1;
 			}
 
 			return TRUE;
@@ -970,10 +960,10 @@ INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 
 		SendDlgItemMessage(hDlg, IDC_LIST_ABOUT_VERSIONS, LB_ADDSTRING, (WPARAM)0, (LPARAM)" ");
 
-		sprintf(buf, "%s", "Ogre Version:- 14.2.5 (Tsathoggua)");
+		sprintf(buf, "%s", "Ogre Version:- Version 14.3.0 (Tsathoggua)");
 		SendDlgItemMessage(hDlg, IDC_LIST_ABOUT_VERSIONS, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
-		sprintf(buf, "%s", "Imgui Version:- 1.90.4");
+		sprintf(buf, "%s", "Imgui Version:- 1.91.2");
 		SendDlgItemMessage(hDlg, IDC_LIST_ABOUT_VERSIONS, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
 		sprintf(buf, "%s", "Bullet Version:- 2.86.1");
