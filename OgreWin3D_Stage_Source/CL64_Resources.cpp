@@ -540,6 +540,7 @@ LRESULT CALLBACK CL64_Resources::Proc_Resources(HWND hDlg, UINT message, WPARAM 
 
 		if (LOWORD(wParam) == IDCANCEL)
 		{
+			//Ogre::ResourceGroupManager::getSingleton().unloadUnreferencedResourcesInGroup(App->CL_Resources->Project_Resource_Group);
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
