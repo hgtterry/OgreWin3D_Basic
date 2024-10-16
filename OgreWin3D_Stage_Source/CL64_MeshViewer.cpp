@@ -623,7 +623,7 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 				//if (test == 1)
 				{
 					App->CL_MeshViewer->Copy_Assets();
-					//App->CL_Objects_Create->Add_Objects_From_MeshViewer();
+					App->CL_Objects_Create->Add_Objects_From_MeshViewer();
 				}
 				//else
 				{
@@ -1565,95 +1565,78 @@ void CL64_MeshViewer::Enable_ShapeButtons(bool state)
 // *************************************************************************
 void CL64_MeshViewer::Copy_Assets()
 {
-
+	int Count = 0;
 	std::vector<std::string> Test_Texture_Names;
 	Test_Texture_Names.reserve(20);
 
-	int Count = 0;
+	// ------------------ Textures
 	while (Count < Texure_Count)
 	{
-		if (std::find(Test_Texture_Names.begin(), Test_Texture_Names.end(), v_Texture_Names[Count]) != Test_Texture_Names.end()) {
+		strcpy(DestinationFile, App->CL_Project->m_Main_Assets_Path);
+		strcat(DestinationFile, v_Texture_Names[Count].c_str());
+		
+		if (std::find(Test_Texture_Names.begin(), Test_Texture_Names.end(), v_Texture_Names[Count]) != Test_Texture_Names.end()) 
+		{
 			// Found Skip Anding Texture again or we will crash
 		}
 		else
 		{
-			strcpy(SourceFile, App->CL_MeshViewer->m_Resource_Folder_Full);
-			strcat(SourceFile, v_Texture_Names[Count].c_str());
-			Create_Texture(SourceFile, (LPSTR)v_Texture_Names[Count].c_str());
+			bool test = Check_if_Files_Exsit((LPSTR)v_Texture_Names[Count].c_str());
+			if (test == 1)
+			{
+				App->Say("File Exsists", (LPSTR)v_Texture_Names[Count].c_str());
+				Test_Texture_Names.push_back(v_Texture_Names[Count]);
+			}
+			else
+			{
+				App->Say("Creating", (LPSTR)v_Texture_Names[Count].c_str());
+				strcpy(SourceFile, App->CL_MeshViewer->m_Resource_Folder_Full);
+				strcat(SourceFile, v_Texture_Names[Count].c_str());
+				Create_Texture(SourceFile, (LPSTR)v_Texture_Names[Count].c_str());
 
-			Test_Texture_Names.push_back(v_Texture_Names[Count]);
+				Test_Texture_Names.push_back(v_Texture_Names[Count]);
+
+				CopyFile(SourceFile, DestinationFile, false);
+				Debug
+			}
 		}
 
 		Count++;
 	}
 
 	// ------------------ Material
-	strcpy(SourceFile, m_Resource_Folder_Full);
-	strcat(SourceFile, m_Material_File);
-	Create_Material(SourceFile);
+	bool test = Check_if_Files_Exsit((LPSTR)m_Material_File);
+	if (test == 1)
+	{
+		App->Say("File Exsists", (LPSTR)m_Material_File);
+	}
+	else
+	{
+		strcpy(SourceFile, m_Resource_Folder_Full);
+		strcat(SourceFile, m_Material_File);
+		Create_Material(SourceFile);
+
+		strcpy(DestinationFile, App->CL_Project->m_Main_Assets_Path);
+		strcat(DestinationFile, App->CL_MeshViewer->m_Material_File);
+		CopyFile(SourceFile, DestinationFile, false);
+	}
 
 	// ------------------ Mesh
-	strcpy(SourceFile, m_Resource_Folder_Full);
-	strcat(SourceFile, Selected_MeshFile);
-	Create_Mesh(SourceFile);
+	test = Check_if_Files_Exsit(Selected_MeshFile);
+	if (test == 1)
+	{
+			App->Say("File Exsists", Selected_MeshFile);
+	}
+	else
+	{
+		strcpy(SourceFile, m_Resource_Folder_Full);
+		strcat(SourceFile, Selected_MeshFile);
+		Create_Mesh(SourceFile);
 
-		/*test = Check_if_Files_Exsit(Selected_MeshFile);
-		if (test == 1)
-		{
-			App->Say("File Exsists");
-		}
-		else*/
-
-		/*strcpy(DestinationFile, App->CL_Project->m_Main_Assets_Path);
+		strcpy(DestinationFile, App->CL_Project->m_Main_Assets_Path);
 		strcat(DestinationFile, App->CL_MeshViewer->Selected_MeshFile);
-		CopyFile(SourceFile, DestinationFile, false);*/
-
-
-		//Ogre::ResourceGroupManager::getSingleton().declareResource(DestinationFile, "Mesh", App->CL_Resources->Project_Resource_Group);
-
-
-	// ------------------ Copy Material File
-	/*strcpy(SourceFile, m_Resource_Folder_Full);
-	strcat(SourceFile, m_Material_File);
-	Create_Material(SourceFile);*/
-	//test = Check_if_Files_Exsit(m_Material_File);
-	//if (test == 1)
-	//{
-	//	App->Say("File Exsists");
-	//}
-	//else
-		{
-			/*strcpy(DestinationFile, App->CL_Project->m_Main_Assets_Path);
-			strcat(DestinationFile, App->CL_MeshViewer->m_Material_File);
-			CopyFile(SourceFile, DestinationFile, false);*/
-
-			//Ogre::ResourceGroupManager::getSingleton().declareResource(DestinationFile, "Material", App->CL_Resources->Project_Resource_Group);
-		}
-
-		// ------------------ Copy Textures
-		//int Count = 0;
-		//while (Count < Texure_Count)
-		//{
-		//	/*strcpy(SourceFile, App->CL_MeshViewer->m_Resource_Folder_Full);
-		//	strcat(SourceFile, v_Texture_Names[Count].c_str());*/
-
-		//	/*bool test = Check_if_Files_Exsit((LPSTR)v_Texture_Names[Count].c_str());
-		//	if (test == 1)
-		//	{
-		//		App->Say("File Exsists");
-		//	}
-		//	else*/
-		//	{
-		//		/*strcpy(DestinationFile, App->CL_Project->m_Main_Assets_Path);
-		//		strcat(DestinationFile, v_Texture_Names[Count].c_str());
-		//		CopyFile(SourceFile, DestinationFile, false);*/
-
-		//		//Ogre::ResourceGroupManager::getSingleton().(DestinationFile, "Texture", App->CL_Resources->Project_Resource_Group);
-		//	}
-
-
-		//	Count++;
-		//}
+		CopyFile(SourceFile, DestinationFile, false);
+	}
 
 }
 
@@ -1662,6 +1645,8 @@ void CL64_MeshViewer::Copy_Assets()
 // *************************************************************************
 bool CL64_MeshViewer::Create_Mesh(char* File)
 {
+	App->Say(Selected_MeshFile);
+
 	Ogre::String source = File;
 
 	FILE* pFile = fopen(source.c_str(), "rb");
@@ -1678,18 +1663,18 @@ bool CL64_MeshViewer::Create_Mesh(char* File)
 		fread((void*)memstream->getPtr(), tagStat.st_size, 1, pFile);
 		fclose(pFile);
 
-		MeshPtr pMesh = MeshManager::getSingleton().createManual("LocalMesh", App->CL_Resources->Project_Resource_Group);
+		MeshPtr pMesh = MeshManager::getSingleton().createManual(Selected_MeshFile, App->CL_Resources->Project_Resource_Group);
 
 		MeshSerializer meshSerializer;
 		DataStreamPtr stream(memstream);
 		meshSerializer.importMesh(stream, pMesh.getPointer());
 		
 		
-		Ogre::Entity* Testxx_1 = App->CL_Ogre->mSceneMgr->createEntity("LocalMesh_Ent", "LocalMesh",App->CL_Resources->Project_Resource_Group);
+		/*Ogre::Entity* Testxx_1 = App->CL_Ogre->mSceneMgr->createEntity("LocalMesh_Ent", Selected_MeshFile,App->CL_Resources->Project_Resource_Group);
 		Ogre::SceneNode* vNode = App->CL_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 		vNode->attachObject(Testxx_1);
 		vNode->setVisible(true);
-		vNode->scale(1, 1, 1);
+		vNode->scale(1, 1, 1);*/
 
 	}
 
