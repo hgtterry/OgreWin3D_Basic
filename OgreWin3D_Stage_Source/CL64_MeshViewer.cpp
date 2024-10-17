@@ -623,18 +623,159 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 				//if (test == 1)
 				{
 					App->CL_MeshViewer->Copy_Assets();
+
+					/*Ogre::MaterialPtr  Mat = Ogre::MaterialManager::getSingleton().getByName(App->CL_MeshViewer->v_Scrip_Names[2], App->CL_Resources->Project_Resource_Group);
+					
+					MaterialManager* mm = MaterialManager::getSingletonPtr();
+					ResourceGroupManager* rgm = ResourceGroupManager::getSingletonPtr();
+					
+					Ogre::String text2 = App->CL_MeshViewer->v_Scrip_Names[2];
+					ResourcePtr r = mm->getResourceByName(text2);
+					String origin = r->getOrigin();
+					String group = r->getGroup();
+
+					char SourceFile[MAX_PATH];
+					strcpy(SourceFile, App->CL_MeshViewer->m_Resource_Folder_Full);
+					strcat(SourceFile, App->CL_MeshViewer->m_Material_File);*/
+					//App->CL_MeshViewer->Create_Material(SourceFile);
+					/*try
+					{
+						mm->remove(r);
+					}
+					catch (Ogre::Exception& Ex)
+					{
+						App->Say_Win(Ex.what());
+					}*/
+						
+					//App->CL_MeshViewer->Create_Material(SourceFile);
+					//mm->load(r->getName(), group);
+
+					
+					/*if (!origin.empty())
+					{
+						mm->remove(r);
+						mm->parseScript(rgm->openResource(origin, group), group);
+						mm->load(r->getName(), group);
+					}*/
+
+					//if (Mat)
+					//{
+					//	try
+					//	{
+					//		Mat->load();
+					//		bool test = Mat->isLoaded();
+					//		if (test == 1)
+					//		{
+					//			App->Say("Mat Loaded");
+					//		}
+
+					//		//Mat->removeAllTechniques();
+
+					//		try
+					//		{
+					//			//Mat->getTechnique(0)->getPass(0)->getTextureUnitState(0)->setTextureName("Barrel_B2.dds");
+					//			Mat->getTechnique(0)->getPass(0)->setAmbient(1, 0, 0);
+					//		}
+					//		catch (Ogre::Exception& Ex)
+					//		{
+					//			App->Say_Win(Ex.what());
+					//		}
+
+					//		Mat->compile();
+					//		Mat->_notifyNeedsRecompile();
+					//		Mat->reload();
+					//		
+					//	}
+					//	catch (Ogre::Exception& Ex)
+					//	{
+					//		App->Say_Win(Ex.what());
+					//	}
+
+					//	App->Say("MaterialManager");
+					//}
+
 					App->CL_Objects_Create->Add_Objects_From_MeshViewer();
+
+					char SourceFile[MAX_PATH];
+					strcpy(SourceFile, App->CL_Project->m_Main_Assets_Path);
+					strcat(SourceFile, App->CL_MeshViewer->m_Material_File);
+
+					int Index = App->CL_Properties->Current_Selected_Object;
+
+					Ogre::MaterialManager* mm = Ogre::MaterialManager::getSingletonPtr();
+					Ogre::ResourceGroupManager* rgm = Ogre::ResourceGroupManager::getSingletonPtr();
+					
+					int NumSubMesh2 = App->CL_Scene->V_Object[Index]->Object_Ent->getMesh()->getNumSubMeshes();
+
+					Ogre::String text2 = App->CL_Scene->V_Object[Index]->Object_Ent->getMesh()->getSubMesh(0)->getMaterialName().c_str();
+					Ogre::ResourcePtr r = mm->getResourceByName(App->CL_MeshViewer->v_Scrip_Names[0], App->CL_Resources->Project_Resource_Group);
+
+					Ogre::String origin = r->getOrigin();
+					Ogre::String group = r->getGroup();
+					
+					Ogre::MaterialPtr  Mat = Ogre::MaterialManager::getSingleton().getByName(App->CL_MeshViewer->v_Scrip_Names[0], App->CL_Resources->Project_Resource_Group);
+					
+					App->Say(App->CL_MeshViewer->v_Scrip_Names[0].c_str());
+					//if (!origin.empty())
+					{
+						Ogre::DataStreamPtr ds = NULL;
+
+						try
+						{
+							mm->remove(Mat);
+						}
+						catch (Ogre::Exception& Ex)
+						{
+							App->Say_Win(Ex.what());
+						}
+
+						
+						App->Say("MaterialManager0");
+						try
+						{
+							ds = rgm->openResource(origin, App->CL_Resources->Project_Resource_Group);
+						}
+						catch (Ogre::Exception& Ex)
+						{
+							App->Say_Win(Ex.what());
+						}
+
+						App->Say("MaterialManager1");
+						try
+						{
+						mm->parseScript(ds, App->CL_Resources->Project_Resource_Group);
+						}
+						catch (Ogre::Exception& Ex)
+						{
+							App->Say_Win(Ex.what());
+						}
+						
+						App->Say("MaterialManager2");
+						mm->load(App->CL_MeshViewer->v_Scrip_Names[0], App->CL_Resources->Project_Resource_Group);
+						App->Say("MaterialManager3");
+					}
+
+					/*for (int k = 0; k < App->CL_Scene->V_Object[Index]->Object_Ent->getNumSubEntities(); k++)
+					{
+						SubEntity* se = App->CL_Scene->V_Object[Index]->Object_Ent->getSubEntity(k);
+						se->setMaterial(se->getMaterial());
+					}*/
 				}
 				//else
 				{
 
 				}
 
+				//std::vector<Ogre::MaterialPtr> MatClone;
+				
+
+					Debug
 				//App->CL_MeshViewer->Copy_Assets();
 				//App->CL_Objects_Create->Add_Objects_From_MeshViewer();
 				//}
 			}
 
+			App->CL_Ogre->RenderFrame(10);
 			App->CL_MeshViewer->Close_OgreWindow();
 			App->CL_MeshViewer->Delete_Resources_Group();
 
@@ -1592,11 +1733,14 @@ void CL64_MeshViewer::Copy_Assets()
 				App->Say("Creating", (LPSTR)v_Texture_Names[Count].c_str());
 				strcpy(SourceFile, App->CL_MeshViewer->m_Resource_Folder_Full);
 				strcat(SourceFile, v_Texture_Names[Count].c_str());
+				CopyFile(SourceFile, DestinationFile, false);
+				//Ogre::ResourceGroupManager::getSingleton().declareResource(,App->CL_Resources->Project_Resource_Group);
+
 				Create_Texture(SourceFile, (LPSTR)v_Texture_Names[Count].c_str());
 
 				Test_Texture_Names.push_back(v_Texture_Names[Count]);
 
-				CopyFile(SourceFile, DestinationFile, false);
+				
 				Debug
 			}
 		}
@@ -1609,6 +1753,7 @@ void CL64_MeshViewer::Copy_Assets()
 	if (test == 1)
 	{
 		App->Say("File Exsists", (LPSTR)m_Material_File);
+		
 	}
 	else
 	{
@@ -1620,6 +1765,9 @@ void CL64_MeshViewer::Copy_Assets()
 		strcat(DestinationFile, App->CL_MeshViewer->m_Material_File);
 		CopyFile(SourceFile, DestinationFile, false);
 	}
+
+	//Ogre::MaterialManager::getSingleton().remove(m_Material_File, App->CL_Resources->Project_Resource_Group);
+	//Create_Material(DestinationFile);
 
 	// ------------------ Mesh
 	test = Check_if_Files_Exsit(Selected_MeshFile);
@@ -1638,6 +1786,138 @@ void CL64_MeshViewer::Copy_Assets()
 		CopyFile(SourceFile, DestinationFile, false);
 	}
 
+	
+	App->CL_Ogre->RenderFrame(8);
+	App->Say("initialiseResourceGroup");
+}
+
+// *************************************************************************
+// *			Create_Texture:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+bool CL64_MeshViewer::Create_Texture(char* Texture_Path, char* Texture_Name)
+{
+	Ogre::TextureManager::getSingleton().setVerbose(true);
+
+	if (Ogre::ResourceGroupManager::getSingleton().resourceExists(App->CL_Resources->Project_Resource_Group,m_Material_File))
+	{
+		App->Say("Resource Exsist", m_Material_File);
+
+		Ogre::ResourcePtr RP = NULL;
+		RP = Ogre::TextureManager::getSingleton().getResourceByName(Texture_Name, App->CL_Resources->Project_Resource_Group);
+
+		if (RP)
+		{
+			bool test = RP->isLoaded();
+			if (test == 1)
+			{
+				App->Say(Texture_Name, (LPSTR)"Loaded");
+				return 0;
+			}
+			else
+			{
+				RP->isPrepared();
+				App->Say(Texture_Name, (LPSTR)"Not Loaded");
+
+				Ogre::TextureManager::getSingleton().remove(Texture_Name, App->CL_Resources->Project_Resource_Group);
+				
+				bool tt = RP->isPrepared();
+				if (tt == 1)
+				{
+					App->Say("Prepeared");
+				}
+
+				/*try
+				{
+					Ogre::TextureManager::getSingleton().load(Texture_Name, App->CL_Resources->Project_Resource_Group);
+				}
+				catch (Ogre::Exception& Ex)
+				{
+					App->Say_Win(Ex.what());
+				}
+
+				return 0;*/
+			}
+
+		}
+	}
+
+	Ogre::String source = Texture_Path;
+	FILE* pFile = fopen(source.c_str(), "rb");
+	
+	if (!pFile)
+	{
+		OGRE_EXCEPT(Exception::ERR_FILE_NOT_FOUND, "File " + source + " not found.", "OgreMeshLoaded");
+	}
+	else
+	{
+		struct stat tagStat;
+		stat(source.c_str(), &tagStat);
+		Ogre::MemoryDataStream* memstream = new MemoryDataStream(source, tagStat.st_size, true);
+		fread((void*)memstream->getPtr(), tagStat.st_size, 1, pFile);
+		fclose(pFile);
+
+		Ogre::DataStreamPtr stream(memstream);
+
+		Ogre::Image mm;
+		mm.load(stream);
+
+		//Ogre::TextureManager::getSingleton().createManual(Texture_Name, "TEX_TYPE_2D", App->CL_Resources->Project_Resource_Group)
+		Ogre::ResourceGroupManager::getSingleton().declareResource(Texture_Name, "Texture", App->CL_Resources->Project_Resource_Group);
+
+		try
+		{
+			Ogre::TextureManager::getSingleton().loadImage(Texture_Name, App->CL_Resources->Project_Resource_Group, mm);
+		}
+		catch (Ogre::Exception& Ex)
+		{
+			App->Say_Win(Ex.what());
+		}
+
+		//Ogre::ResourceGroupManager::getSingleton().clearResourceGroup(App->CL_Resources->Project_Resource_Group);
+		//Ogre::ResourceGroupManager::getSingleton().initialiseResourceGroup(App->CL_Resources->Project_Resource_Group);
+		//Ogre::ResourceGroupManager::getSingleton().prepareResourceGroup(App->CL_Resources->Project_Resource_Group);
+
+		//App->Say("initialiseResourceGroup");
+	}
+
+	return 1;
+}
+
+// *************************************************************************
+// *			Create_Material:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+bool CL64_MeshViewer::Create_Material(char* File)
+{
+	Ogre::String source = File;
+
+	FILE* pFile = fopen(source.c_str(), "rt");
+
+	if (!pFile)
+	{
+		OGRE_EXCEPT(Exception::ERR_FILE_NOT_FOUND, "File " + source + " not found.", "OgreMeshLoaded");
+	}
+	else
+	{
+		struct stat tagStat;
+		stat(source.c_str(), &tagStat);
+		Ogre::MemoryDataStream* memstream = new MemoryDataStream(source, tagStat.st_size, true);
+		fread((void*)memstream->getPtr(), tagStat.st_size, 1, pFile);
+		fclose(pFile);
+
+		Ogre::DataStreamPtr stream(memstream);
+
+		try
+		{
+			Ogre::ScriptCompilerManager::getSingleton().parseScript(stream, App->CL_Resources->Project_Resource_Group);
+		}
+		catch (Ogre::Exception& Ex)
+		{
+			App->Say_Win(Ex.what());
+		}
+
+	}
+
+	return 1;
 }
 
 // *************************************************************************
@@ -1681,65 +1961,6 @@ bool CL64_MeshViewer::Create_Mesh(char* File)
 	return 1;
 }
 
-// *************************************************************************
-// *			Create_Material:- Terry and Hazel Flanigan 2024			   *
-// *************************************************************************
-bool CL64_MeshViewer::Create_Material(char* File)
-{
-	Ogre::String source = File;
-
-	FILE* pFile = fopen(source.c_str(), "rt");
-
-	if (!pFile)
-	{
-		OGRE_EXCEPT(Exception::ERR_FILE_NOT_FOUND, "File " + source + " not found.", "OgreMeshLoaded");
-	}
-	else
-	{
-		struct stat tagStat;
-		stat(source.c_str(), &tagStat);
-		Ogre::MemoryDataStream* memstream = new MemoryDataStream(source, tagStat.st_size, true);
-		fread((void*)memstream->getPtr(), tagStat.st_size, 1, pFile);
-		fclose(pFile);
-
-		Ogre::DataStreamPtr stream(memstream);
-		Ogre::ScriptCompilerManager::getSingleton().parseScript(stream, App->CL_Resources->Project_Resource_Group);
-
-	}
-
-	return 1;
-}
-
-// *************************************************************************
-// *			Create_Texture:- Terry and Hazel Flanigan 2024			   *
-// *************************************************************************
-bool CL64_MeshViewer::Create_Texture(char* Texture_Path, char* Texture_Name)
-{
-	Ogre::String source = Texture_Path;
-
-	FILE* pFile = fopen(source.c_str(), "rb");
-
-	if (!pFile)
-	{
-		OGRE_EXCEPT(Exception::ERR_FILE_NOT_FOUND, "File " + source + " not found.", "OgreMeshLoaded");
-	}
-	else
-	{
-		struct stat tagStat;
-		stat(source.c_str(), &tagStat);
-		Ogre::MemoryDataStream* memstream = new MemoryDataStream(source, tagStat.st_size, true);
-		fread((void*)memstream->getPtr(), tagStat.st_size, 1, pFile);
-		fclose(pFile);
-
-		Ogre::DataStreamPtr stream(memstream);
-
-		Ogre::Image mm;
-		mm.load(stream);
-		Ogre::TextureManager::getSingleton().loadImage(Texture_Name, App->CL_Resources->Project_Resource_Group, mm);
-	}
-
-	return 1;
-}
 
 // *************************************************************************
 // *		Check_if_Files_Exsit:- Terry and Hazel Flanigan 2024		   *
@@ -1766,7 +1987,10 @@ bool CL64_MeshViewer::Check_if_Files_Exsit(char* File)
 void CL64_MeshViewer::Get_Ogre_Mesh_Data(Ogre::Entity* Ogre_Entity)
 {
 	App->CL_MeshViewer->m_Material_File[0] = 0;
+
 	v_Texture_Names.resize(0);
+	v_Scrip_Names.resize(0);
+
 	Texure_Count = 0;
 	NumSub_Meshes = 0;
 
@@ -1814,6 +2038,7 @@ void CL64_MeshViewer::Get_Ogre_Mesh_Data(Ogre::Entity* Ogre_Entity)
 
 		// Texture
 		char mTexture[MAX_PATH];
+		char mMaterial_Script[MAX_PATH];
 		Ogre::MaterialPtr MatCurent;
 		MatCurent = static_cast<Ogre::MaterialPtr> (Ogre::MaterialManager::getSingleton().getByName(mMaterial));
 
@@ -1821,13 +2046,16 @@ void CL64_MeshViewer::Get_Ogre_Mesh_Data(Ogre::Entity* Ogre_Entity)
 		{
 			int TUSCount = MatCurent->getTechnique(0)->getPass(0)->getNumTextureUnitStates();
 
+			
 			if (TUSCount > 0)
 			{
 				strcpy(mTexture, MatCurent->getTechnique(0)->getPass(0)->getTextureUnitState(0)->getTextureName().c_str());
+				strcpy(mMaterial_Script, MatCurent->getName().c_str());
 				v_Texture_Names.push_back(mTexture);
+				v_Scrip_Names.push_back(mMaterial_Script);
 
 				Texure_Count = v_Texture_Names.size();
-
+				Material_Scripts_Count = v_Scrip_Names.size();
 			}
 		}
 		
@@ -1894,9 +2122,11 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_Mesh_Properties(HWND hDlg, UINT message, 
 		SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->CL_MeshViewer->m_Material_File);
 		
 		int Count = 0;
+		char buf4[100];
 		while (Count < App->CL_MeshViewer->Texure_Count)
 		{
-			SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->CL_MeshViewer->v_Texture_Names[Count].c_str());
+			sprintf(buf4, "%s %s", App->CL_MeshViewer->v_Scrip_Names[Count].c_str(), App->CL_MeshViewer->v_Texture_Names[Count].c_str());
+			SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)buf4);
 
 			Count++;
 		}

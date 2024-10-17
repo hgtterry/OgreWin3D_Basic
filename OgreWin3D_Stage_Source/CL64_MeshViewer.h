@@ -119,8 +119,10 @@ private:
 	char m_Material_File[MAX_PATH];
 
 	std::vector<std::string> v_Texture_Names;
-	
+	std::vector<std::string> v_Scrip_Names;
+
 	int Texure_Count;
+	int Material_Scripts_Count;
 	int NumSub_Meshes;
 
 	char DestinationFile[MAX_PATH];
