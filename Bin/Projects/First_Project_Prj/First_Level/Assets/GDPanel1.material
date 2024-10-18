@@ -6,9 +6,10 @@ material GDPanel1_Material_0
 		pass
 		{
 			alpha_rejection greater 128
+
 			texture_unit
 			{
-				texture GDP1_grid01.tga
+				texture Material0.bmp
 			}
 		}
 

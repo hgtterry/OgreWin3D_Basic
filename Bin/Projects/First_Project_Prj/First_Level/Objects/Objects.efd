@@ -99,7 +99,7 @@ Move_Play_Sound=1
 Move_Volume=0.500000
 Move_Counter_ID=0
 Move_Trigger_Value=6
-Move_Counter_Disabled=0
+Move_Counter_Disabled=1
  
 *************************************************************************************
 [Object_4]
@@ -119,7 +119,7 @@ Physics_Quat=1.000000,0.000000,0.000000,0.000000
 Dimensions_Lock=0
 -- Message
 Message_Text=You Need 6 Orbs to Open This Gate
-Message_Pos=346.000000,104.500000
+Message_Pos=627.500000,104.500000
 Message_Counter_ID=0
 Message_Trigger_Value=6
 Message_Counter_Disabled=0
@@ -303,7 +303,7 @@ Physics_Quat=1.000000,0.000000,0.000000,0.000000
 Dimensions_Lock=0
 -- Message
 Message_Text=You Need 4 Orbs to Open This Gate
-Message_Pos=346.000000,288.500000
+Message_Pos=627.500000,507.000000
 Message_Counter_ID=0
 Message_Trigger_Value=4
 Message_Counter_Disabled=0
@@ -503,7 +503,7 @@ Tele_Physics_Position=28.438210,-101.100006,932.750366
 Tele_Physics_Rotation=0.000000,0.026901,0.000000,0.999638
 Tele_Counter_ID=0
 Tele_Trigger_Value=0
-Tele_Counter_Disabled=0
+Tele_Counter_Disabled=1
 ------------------------------------------------------------------------------ Teleporter Environ
 Environ_Enabled=1
 Environment_Name=Not_Set
@@ -571,7 +571,7 @@ Tele_Physics_Position=-98.485710,-39.600002,1.243914
 Tele_Physics_Rotation=0.000000,0.710346,0.000000,-0.703853
 Tele_Counter_ID=0
 Tele_Trigger_Value=2
-Tele_Counter_Disabled=0
+Tele_Counter_Disabled=1
 ------------------------------------------------------------------------------ Teleporter Environ
 Environ_Enabled=1
 Environment_Name=Not_Set
@@ -1024,7 +1024,7 @@ Physics_Quat=1.000000,0.000000,0.000000,0.000000
 Dimensions_Lock=0
 -- Message
 Message_Text=You Need 2 Orbs to Enter this Portal
-Message_Pos=339.500000,288.500000
+Message_Pos=621.000000,507.000000
 Message_Counter_ID=0
 Message_Trigger_Value=2
 Message_Counter_Disabled=0
