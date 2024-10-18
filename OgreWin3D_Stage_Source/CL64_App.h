@@ -69,6 +69,7 @@ THE SOFTWARE.
 #include "CL64_Props_Dialogs.h"
 #include "CL64_Gizmos.h"
 #include "CL64_MeshViewer.h"
+#include "CL64_Materials.h"
 
 class CL64_App
 {
@@ -122,6 +123,7 @@ public:
 	CL64_Props_Dialogs*		CL_Props_Dialogs;
 	CL64_Gizmos*			CL_Gizmos;
 	CL64_MeshViewer*		CL_MeshViewer;
+	CL64_Materials*			CL_Materials;
 
 	void InitApp(void);
 	void Init_Dialogs(void);

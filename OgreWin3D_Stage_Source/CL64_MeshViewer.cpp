@@ -696,64 +696,64 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 
 					App->CL_Objects_Create->Add_Objects_From_MeshViewer();
 
-					char SourceFile[MAX_PATH];
-					strcpy(SourceFile, App->CL_Project->m_Main_Assets_Path);
-					strcat(SourceFile, App->CL_MeshViewer->m_Material_File);
+					//char SourceFile[MAX_PATH];
+					//strcpy(SourceFile, App->CL_Project->m_Main_Assets_Path);
+					//strcat(SourceFile, App->CL_MeshViewer->m_Material_File);
 
-					int Index = App->CL_Properties->Current_Selected_Object;
+					//int Index = App->CL_Properties->Current_Selected_Object;
 
-					Ogre::MaterialManager* mm = Ogre::MaterialManager::getSingletonPtr();
-					Ogre::ResourceGroupManager* rgm = Ogre::ResourceGroupManager::getSingletonPtr();
-					
-					int NumSubMesh2 = App->CL_Scene->V_Object[Index]->Object_Ent->getMesh()->getNumSubMeshes();
+					//Ogre::MaterialManager* mm = Ogre::MaterialManager::getSingletonPtr();
+					//Ogre::ResourceGroupManager* rgm = Ogre::ResourceGroupManager::getSingletonPtr();
+					//
+					//int NumSubMesh2 = App->CL_Scene->V_Object[Index]->Object_Ent->getMesh()->getNumSubMeshes();
 
-					Ogre::String text2 = App->CL_Scene->V_Object[Index]->Object_Ent->getMesh()->getSubMesh(0)->getMaterialName().c_str();
-					Ogre::ResourcePtr r = mm->getResourceByName(App->CL_MeshViewer->v_Scrip_Names[0], App->CL_Resources->Project_Resource_Group);
+					//Ogre::String text2 = App->CL_Scene->V_Object[Index]->Object_Ent->getMesh()->getSubMesh(0)->getMaterialName().c_str();
+					//Ogre::ResourcePtr r = mm->getResourceByName(App->CL_MeshViewer->v_Scrip_Names[0], App->CL_Resources->Project_Resource_Group);
 
-					Ogre::String origin = r->getOrigin();
-					Ogre::String group = r->getGroup();
-					
-					Ogre::MaterialPtr  Mat = Ogre::MaterialManager::getSingleton().getByName(App->CL_MeshViewer->v_Scrip_Names[0], App->CL_Resources->Project_Resource_Group);
-					
-					App->Say(App->CL_MeshViewer->v_Scrip_Names[0].c_str());
-					//if (!origin.empty())
-					{
-						Ogre::DataStreamPtr ds = NULL;
+					//Ogre::String origin = r->getOrigin();
+					//Ogre::String group = r->getGroup();
+					//
+					//Ogre::MaterialPtr  Mat = Ogre::MaterialManager::getSingleton().getByName(App->CL_MeshViewer->v_Scrip_Names[0], App->CL_Resources->Project_Resource_Group);
+					//
+					//App->Say(App->CL_MeshViewer->v_Scrip_Names[0].c_str());
+					////if (!origin.empty())
+					//{
+					//	Ogre::DataStreamPtr ds = NULL;
 
-						try
-						{
-							mm->remove(Mat);
-						}
-						catch (Ogre::Exception& Ex)
-						{
-							App->Say_Win(Ex.what());
-						}
+					//	try
+					//	{
+					//		mm->remove(Mat);
+					//	}
+					//	catch (Ogre::Exception& Ex)
+					//	{
+					//		App->Say_Win(Ex.what());
+					//	}
 
-						
-						App->Say("MaterialManager0");
-						try
-						{
-							ds = rgm->openResource(origin, App->CL_Resources->Project_Resource_Group);
-						}
-						catch (Ogre::Exception& Ex)
-						{
-							App->Say_Win(Ex.what());
-						}
+					//	
+					//	App->Say("MaterialManager0");
+					//	try
+					//	{
+					//		ds = rgm->openResource(origin, App->CL_Resources->Project_Resource_Group);
+					//	}
+					//	catch (Ogre::Exception& Ex)
+					//	{
+					//		App->Say_Win(Ex.what());
+					//	}
 
-						App->Say("MaterialManager1");
-						try
-						{
-						mm->parseScript(ds, App->CL_Resources->Project_Resource_Group);
-						}
-						catch (Ogre::Exception& Ex)
-						{
-							App->Say_Win(Ex.what());
-						}
-						
-						App->Say("MaterialManager2");
-						mm->load(App->CL_MeshViewer->v_Scrip_Names[0], App->CL_Resources->Project_Resource_Group);
-						App->Say("MaterialManager3");
-					}
+					//	App->Say("MaterialManager1");
+					//	try
+					//	{
+					//	mm->parseScript(ds, App->CL_Resources->Project_Resource_Group);
+					//	}
+					//	catch (Ogre::Exception& Ex)
+					//	{
+					//		App->Say_Win(Ex.what());
+					//	}
+					//	
+					//	App->Say("MaterialManager2");
+					//	mm->load(App->CL_MeshViewer->v_Scrip_Names[0], App->CL_Resources->Project_Resource_Group);
+					//	App->Say("MaterialManager3");
+					//}
 
 					/*for (int k = 0; k < App->CL_Scene->V_Object[Index]->Object_Ent->getNumSubEntities(); k++)
 					{
