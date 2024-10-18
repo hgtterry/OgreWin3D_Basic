@@ -28,6 +28,13 @@ THE SOFTWARE.
 
 CL64_Materials::CL64_Materials(void)
 {
+	Show_Material_Editor = 0;
+	Show_Scroll_Editor = 0;
+	item_current_idx = 0;
+	BaseEntity = nullptr;
+	BaseNode = nullptr;
+	NumSubMesh = 0;
+	MatClone.resize(0);
 }
 
 CL64_Materials::~CL64_Materials(void)
@@ -35,7 +42,7 @@ CL64_Materials::~CL64_Materials(void)
 }
 
 // *************************************************************************
-// *		 Start_Material_Editor:- Terry and Hazel Flanigan 2023  	   *
+// *		 Start_Material_Editor:- Terry and Hazel Flanigan 2024  	   *
 // *************************************************************************
 void CL64_Materials::Start_Material_Editor()
 {
@@ -226,7 +233,7 @@ void CL64_Materials::Material_Editor_Gui()
 }
 
 // *************************************************************************
-// *				Scroll_Gui:- Terry and Hazel Flanigan 2023			   *
+// *				Scroll_Gui:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
 void CL64_Materials::Scroll_Gui()
 {
@@ -254,7 +261,7 @@ void CL64_Materials::Scroll_Gui()
 }
 
 // *************************************************************************
-// *		 Close_Material_Editor:- Terry and Hazel Flanigan 2023  	   *
+// *		 Close_Material_Editor:- Terry and Hazel Flanigan 2024  	   *
 // *************************************************************************
 void CL64_Materials::Close_Material_Editor()
 {
@@ -267,7 +274,7 @@ void CL64_Materials::Close_Material_Editor()
 }
 
 // *************************************************************************
-// *			 Copy_Texture:- Terry and Hazel Flanigan 2023			   *
+// *			 Copy_Texture:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
 void CL64_Materials::Copy_Texture()
 {
@@ -288,12 +295,12 @@ void CL64_Materials::Copy_Texture()
 
 
 // *************************************************************************
-// *			Update_MaterialFile:- Terry and Hazel Flanigan 2023		   *
+// *		Update_MaterialFile:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
 void CL64_Materials::Update_MaterialFile()
 {
 
-	_chdir(App->CL_Project->m_Main_Assets_Path);
+	(void)_chdir(App->CL_Project->m_Main_Assets_Path);
 
 	int NumSubMesh = BaseEntity->getMesh()->getNumSubMeshes();
 
@@ -343,7 +350,7 @@ void CL64_Materials::Update_MaterialFile()
 }
 
 // *************************************************************************
-// *			Get_Material_Name:- Terry and Hazel Flanigan 2023		   *
+// *			Get_Material_Name:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
 void CL64_Materials::Get_Material_Name(Ogre::Entity* mEntity)
 {

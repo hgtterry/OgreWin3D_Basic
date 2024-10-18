@@ -33,6 +33,7 @@ CL64_Props_Dialogs::CL64_Props_Dialogs(void)
 	PhysicsTest_Dlg_hWnd =	nullptr;
 	Dimensions_Dlg_hWnd =	nullptr;
 	Debug_Dlg_hWnd =		nullptr;
+	Material_Props_Hwnd =	nullptr;
 
 	Show_Area_Physics_Debug = 0;
 }
@@ -53,7 +54,7 @@ void CL64_Props_Dialogs::Start_Props_Dialogs()
 	//Start_Panels_Test_Dlg();
 	//Start_Area_PropsPanel();
 	Start_Details_Goto_Dlg();
-	//Start_Materials_PropsPanel();
+	Start_Materials_PropsPanel();
 
 }
 
@@ -685,6 +686,68 @@ LRESULT CALLBACK CL64_Props_Dialogs::Proc_Dialog_Debug(HWND hDlg, UINT message, 
 }
 
 // *************************************************************************
+// *	  Start_Materials_PropsPanel:- Terry and Hazel Flanigan 2024	   *
+// *************************************************************************
+void CL64_Props_Dialogs::Start_Materials_PropsPanel()
+{
+	Material_Props_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_PROPS_MATERIALS, App->CL_Properties->Properties_Dlg_hWnd, (DLGPROC)Prop_Materials_PropsPanel);
+	Show_Materials_Dlg(false);
+}
+
+// *************************************************************************
+// *	Prop_Materials_PropsPanel:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+LRESULT CALLBACK CL64_Props_Dialogs::Prop_Materials_PropsPanel(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+
+	switch (message)
+	{
+	case WM_INITDIALOG:
+	{
+
+		SendDlgItemMessage(hDlg, IDC_PROPMATERIALS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		return TRUE;
+	}
+	case WM_CTLCOLORSTATIC:
+	{
+		return FALSE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->DialogBackGround;
+	}
+
+	case WM_NOTIFY:
+	{
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		if (some_item->idFrom == IDC_PROPMATERIALS)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		return CDRF_DODEFAULT;
+	}
+
+	case WM_COMMAND:
+
+		if (LOWORD(wParam) == IDC_PROPMATERIALS)
+		{
+			App->CL_Materials->Start_Material_Editor();
+
+			return 1;
+		}
+
+		break;
+	}
+	return FALSE;
+}
+
+// *************************************************************************
 // *			Hide_Debug_Dlg:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
 void CL64_Props_Dialogs::Hide_Debug_Dlg(bool Show)
@@ -714,4 +777,12 @@ void CL64_Props_Dialogs::Show_Physics_Test_Dlg(bool Show)
 void CL64_Props_Dialogs::Show_Dimensions_Dlg(bool Show)
 {
 	ShowWindow(Dimensions_Dlg_hWnd, Show);
+}
+
+// *************************************************************************
+// *		Show_Materials_Dlg:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void CL64_Props_Dialogs::Show_Materials_Dlg(bool Show)
+{
+	ShowWindow(Material_Props_Hwnd, Show);
 }

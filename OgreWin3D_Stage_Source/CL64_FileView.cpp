@@ -577,7 +577,7 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 		App->CL_Props_Dialogs->Hide_Debug_Dlg(1);
 		App->CL_Props_Dialogs->Show_Dimensions_Dlg(1);
 		//App->SBC_Props_Dialog->Hide_Details_Goto_Dlg(1);
-		//App->SBC_Props_Dialog->Hide_Material_Dlg(1);*/
+		//App->CL_Props_Dialogs->Show_Materials_Dlg(true);
 
 		//----------------------------------------------------------------------------
 		//App->SBC_Properties->Reset_Last_Selected_Object(App->SBC_Properties->Last_Selected_Object);
@@ -644,7 +644,7 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 
 		App->CL_Props_Dialogs->Show_Dimensions_Dlg(1);
 		App->CL_Props_Dialogs->Hide_Debug_Dlg(1);
-		//App->SBC_Props_Dialog->Hide_Material_Dlg(1);*/
+		App->CL_Props_Dialogs->Show_Materials_Dlg(true);
 
 		//----------------------------------------------------------------------------
 		/*App->SBC_Properties->Reset_Last_Selected_Object(App->SBC_Properties->Last_Selected_Object);
@@ -986,7 +986,8 @@ void CL64_FileView::HideRightPanes(void)
 	App->CL_Props_Dialogs->Show_Dimensions_Dlg(false);
 	App->CL_Props_Dialogs->Show_Physics_Test_Dlg(false);
 	App->CL_Props_Dialogs->Hide_Debug_Dlg(false);
-	//App->SBC_Props_Dialog->Hide_Material_Dlg(0);*/
+	App->CL_Props_Dialogs->Show_Materials_Dlg(false);
+
 }
 
 // *************************************************************************

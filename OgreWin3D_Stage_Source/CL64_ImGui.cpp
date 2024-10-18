@@ -258,6 +258,12 @@ void CL64_ImGui::ImGui_Render_Loop(void)
 	{
 		App->CL_ImGui_Dialogs->Dialog_Float();
 	}
+
+	// SBC_Gui_Dialogs - Material Editor
+	if (App->CL_Materials->Show_Material_Editor == 1)
+	{
+		App->CL_Materials->Material_Editor_Gui();
+	}
 	
 }
 

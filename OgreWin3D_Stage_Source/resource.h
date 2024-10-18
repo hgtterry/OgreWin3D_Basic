@@ -80,6 +80,8 @@
 #define IDD_PROPS_DIMENSIONS            192
 #define IDD_PROPS_DEBUG                 193
 #define IDD_LISTDATA                    194
+#define IDD_DIALOG1                     195
+#define IDD_PROPS_MATERIALS             195
 #define IDC_CK_SU_FULLSCREEN            1000
 #define IDC_ST_STARTUP                  1001
 #define IDC_CK_SU_FULL3DVIEW            1002
@@ -110,6 +112,7 @@
 #define IDC_TEST                        1007
 #define IDC_BT_SCALE                    1007
 #define IDC_BT_PHYSDEBUG                1007
+#define IDC_PROPMATERIALS               1007
 #define IDC_BUTTON2                     1008
 #define IDC_BT_TBH_CAMERA               1008
 #define IDC_BT_DEMORESOURCES            1008
@@ -309,7 +312,7 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
-#define _APS_NEXT_RESOURCE_VALUE        195
+#define _APS_NEXT_RESOURCE_VALUE        196
 #define _APS_NEXT_COMMAND_VALUE         32819
 #define _APS_NEXT_CONTROL_VALUE         1103
 #define _APS_NEXT_SYMED_VALUE           110
