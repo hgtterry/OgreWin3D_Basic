@@ -167,7 +167,7 @@ void CL64_Materials::Material_Editor_Gui()
 					MatCurent->getTechnique(0)->getPass(0)->setAmbient(1, 1, 1);
 					//MatCurent->getTechnique(0)->getPass(0)->setPolygonMode(Ogre::PolygonMode::PM_POINTS);
 					Update_MaterialFile();
-					Update_MaterialFile();
+					//Update_MaterialFile();
 					//Debug
 				}
 			}
@@ -203,7 +203,7 @@ void CL64_Materials::Material_Editor_Gui()
 
 		if (ImGui::Button("Close", ImVec2(100, 0)))
 		{
-			Update_MaterialFile();
+			//Update_MaterialFile();
 			Show_Material_Editor = 0;
 			Close_Material_Editor();
 			Show_Material_Editor = 0;
@@ -327,19 +327,62 @@ void CL64_Materials::Update_MaterialFile()
 	int NumSubMesh2 = BaseEntity->getMesh()->getNumSubMeshes();
 
 	Ogre::String text2 = BaseEntity->getMesh()->getSubMesh(0)->getMaterialName().c_str();
-	ResourcePtr r = mm->getResourceByName(text2);
-	String origin = r->getOrigin();
+	ResourcePtr r = mm->getResourceByName(text2,App->CL_Resources->Project_Resource_Group);
+
+	Debug
+
+	String origin;
+	try
+	{
+	origin = r->getOrigin();
+	}
+	catch (Ogre::Exception& Ex)
+	{
+		App->Say_Win(Ex.what());
+	}
+
+	Debug
 	String group = r->getGroup();
 	Ogre::DataStreamPtr ds = NULL;
 	
 
+	//return;
+
 	if (!origin.empty())
 	{
 		ds = rgm->openResource(origin, group);
+		try
+		{
+			mm->remove(r);
+		}
+		catch (Ogre::Exception& Ex)
+		{
+			App->Say_Win(Ex.what());
+		}
 
-		mm->remove(r);
-		mm->parseScript(ds, group);
-		mm->load(r->getName(), group);
+		App->Say("remove");
+
+		try
+		{
+			mm->parseScript(ds, group);
+		}
+		catch (Ogre::Exception& Ex)
+		{
+			//App->Say_Win(Ex.what());
+		}
+
+		App->Say("parse");
+
+		try
+		{
+			mm->load(r->getName(), group);
+		}
+		catch (Ogre::Exception& Ex)
+		{
+			App->Say_Win(Ex.what());
+		}
+
+		App->Say("Load");
 	}
 
 	for (int k = 0; k < App->CL_Scene->V_Object[Index]->Object_Ent->getNumSubEntities(); k++)
