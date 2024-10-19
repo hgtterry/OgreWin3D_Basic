@@ -456,7 +456,7 @@ bool CL64_Ogre::Ogre_Render_Loop(void)
 		{
 			FPStimer.reset();
 
-			if (flag_Block_Rendering == 0)
+			//if (flag_Block_Rendering == 0)
 			{
 
 				if (!mRoot->_fireFrameStarted())

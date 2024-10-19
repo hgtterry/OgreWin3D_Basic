@@ -35,13 +35,13 @@ public:
 	void Material_Editor_Gui();
 
 	void Get_Material_Name(Ogre::Entity* mEntity);
+	void Update_MaterialFile(Ogre::Entity* mBaseEntity);
 
 	bool Show_Material_Editor;
 
 
 protected:
 
-	void Update_MaterialFile();
 	void Copy_Texture();
 
 	void Scroll_Gui();

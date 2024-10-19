@@ -140,11 +140,6 @@ bool CL64_Objects_Create::Add_New_Object(int Index, bool From_MeshViewer)
 	strcpy(Object->Material_File, Mat->getOrigin().c_str());
 	Object->UsageEX = 777;
 
-	if (From_MeshViewer == 1) //&& App->CL_MeshViewer->Placement_Camera == 1)
-	{
-		//Ogre::MaterialPtr  Mat2 = static_cast<Ogre::MaterialPtr> (Ogre::MaterialManager::getSingleton().getByName(text, App->CL_MeshViewer->MV_Resource_Group));
-		//Object->Object_Ent->getMesh()->getSubMesh(0)->setMaterial(Mat2);
-	}
 	// If from MeshViewer Get Placement Method
 	if (From_MeshViewer == 1) //&& App->CL_MeshViewer->Placement_Camera == 1)
 	{
@@ -232,6 +227,33 @@ bool CL64_Objects_Create::Add_New_Object(int Index, bool From_MeshViewer)
 	}
 
 	ShowWindow(App->CL_Properties->Properties_Dlg_hWnd, 1);
+
+	if (From_MeshViewer == 1) //&& App->CL_MeshViewer->Placement_Camera == 1)
+	{
+		int Count = 0;
+		int TexureCount = 0;
+		//char TexureName(MAX_PATH);
+		Ogre::String TexureName;
+
+		Ogre::MaterialPtr MatCurent;
+
+		TexureCount = Object->Object_Ent->getMesh()->getNumSubMeshes();
+
+		while (Count < TexureCount)
+		{
+			Ogre::String text = Object->Object_Ent->getMesh()->getSubMesh(Count)->getMaterialName().c_str();
+			MatCurent = static_cast<Ogre::MaterialPtr> (Ogre::MaterialManager::getSingleton().getByName(text));
+			
+			TexureName = MatCurent->getTechnique(0)->getPass(0)->getTextureUnitState(0)->getTextureName().c_str();
+			//App->Say(TexureName.c_str());
+			
+			MatCurent->getTechnique(0)->getPass(0)->getTextureUnitState(0)->setTextureName(TexureName);
+			MatCurent->getTechnique(0)->getPass(0)->setAmbient(1, 1, 1);
+
+			Count++;
+		}
+
+	}
 
 	return 1;
 }

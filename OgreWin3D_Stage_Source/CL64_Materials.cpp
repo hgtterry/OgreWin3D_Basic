@@ -49,7 +49,10 @@ void CL64_Materials::Start_Material_Editor()
 	NumSubMesh = 0;
 	MatClone.resize(0);
 
+	
+
 	int Index = App->CL_Properties->Current_Selected_Object;
+
 	item_current_idx = 0;
 
 	if (App->CL_Properties->Edit_Category == Enums::Edit_Area)
@@ -66,9 +69,10 @@ void CL64_Materials::Start_Material_Editor()
 	Get_Material_Name(BaseEntity);
 
 	// ---------------- Copy Scripts
+	
 	NumSubMesh = BaseEntity->getMesh()->getNumSubMeshes();
 
-	int Count = 0;
+	/*int Count = 0;
 	while (Count < NumSubMesh)
 	{
 		Ogre::String text = BaseEntity->getMesh()->getSubMesh(Count)->getMaterialName().c_str();
@@ -84,7 +88,7 @@ void CL64_Materials::Start_Material_Editor()
 		MatClone.push_back(Mat->clone(Name));
 
 		Count++;
-	}
+	}*/
 
 
 	App->CL_FileView->Show_FileView(false);
@@ -100,6 +104,7 @@ void CL64_Materials::Start_Material_Editor()
 // *************************************************************************
 void CL64_Materials::Material_Editor_Gui()
 {
+	
 	int Index = App->CL_Properties->Current_Selected_Object;
 
 	ImGui::SetNextWindowPos(ImVec2(10, 10), ImGuiCond_FirstUseEver);
@@ -166,7 +171,7 @@ void CL64_Materials::Material_Editor_Gui()
 					MatCurent->getTechnique(0)->getPass(0)->getTextureUnitState(0)->setTextureName(App->CL_File_IO->Texture_FileName);
 					MatCurent->getTechnique(0)->getPass(0)->setAmbient(1, 1, 1);
 					//MatCurent->getTechnique(0)->getPass(0)->setPolygonMode(Ogre::PolygonMode::PM_POINTS);
-					Update_MaterialFile();
+					Update_MaterialFile(BaseEntity);
 					//Update_MaterialFile();
 					//Debug
 				}
@@ -224,7 +229,7 @@ void CL64_Materials::Material_Editor_Gui()
 				Count++;
 			}
 
-			Update_MaterialFile();
+			Update_MaterialFile(BaseEntity);
 		}
 
 		ImGui::PopStyleColor();
@@ -270,7 +275,7 @@ void CL64_Materials::Close_Material_Editor()
 	item_current_idx = 0;
 
 	//App->CL_Panels->Enable_All_Panels(true);
-	//App->CL_FileView->Show_FileView(true);
+	App->CL_FileView->Show_FileView(true);
 }
 
 // *************************************************************************
@@ -297,12 +302,26 @@ void CL64_Materials::Copy_Texture()
 // *************************************************************************
 // *		Update_MaterialFile:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-void CL64_Materials::Update_MaterialFile()
+void CL64_Materials::Update_MaterialFile(Ogre::Entity* mBaseEntity)
 {
+	int Index = App->CL_Properties->Current_Selected_Object;
+
+	//Ogre::Entity* mBaseEntity =		nullptr;
+	//Ogre::SceneNode* mBaseNode =	nullptr;
+	char mMaterial_FileName[MAX_PATH];
+
+	//mBaseEntity = App->CL_Scene->V_Object[Index]->Object_Ent;
+	//mBaseNode = App->CL_Scene->V_Object[Index]->Object_Node;
+
+	Ogre::String text = mBaseEntity->getMesh()->getSubMesh(0)->getMaterialName().c_str();
+	Ogre::MaterialPtr  Mat = static_cast<Ogre::MaterialPtr> (Ogre::MaterialManager::getSingleton().getByName(text));
+	strcpy(mMaterial_FileName, Mat->getOrigin().c_str());
+
+	App->Say(mMaterial_FileName);
 
 	(void)_chdir(App->CL_Project->m_Main_Assets_Path);
 
-	int NumSubMesh = BaseEntity->getMesh()->getNumSubMeshes();
+	int NumSubMesh = mBaseEntity->getMesh()->getNumSubMeshes();
 
 	Ogre::MaterialSerializer matSer;
 
@@ -310,23 +329,20 @@ void CL64_Materials::Update_MaterialFile()
 	{
 		Ogre::MaterialPtr  Mat;
 
-		Ogre::String text = BaseEntity->getMesh()->getSubMesh(n)->getMaterialName().c_str();
+		Ogre::String text = mBaseEntity->getMesh()->getSubMesh(n)->getMaterialName().c_str();
 		Mat = static_cast<Ogre::MaterialPtr> (Ogre::MaterialManager::getSingleton().getByName(text));
 
-		//BaseEntity->getMesh()->getSubMesh(n)->setMaterialName(text);
 		matSer.queueForExport(Mat);
 	}
 
-	matSer.exportQueued(Material_FileName);
-
-	int Index = App->CL_Properties->Current_Selected_Object;
+	matSer.exportQueued(mMaterial_FileName);
 
 	MaterialManager* mm = MaterialManager::getSingletonPtr();
 	ResourceGroupManager* rgm = ResourceGroupManager::getSingletonPtr();
 
-	int NumSubMesh2 = BaseEntity->getMesh()->getNumSubMeshes();
+	int NumSubMesh2 = mBaseEntity->getMesh()->getNumSubMeshes();
 
-	Ogre::String text2 = BaseEntity->getMesh()->getSubMesh(0)->getMaterialName().c_str();
+	Ogre::String text2 = mBaseEntity->getMesh()->getSubMesh(0)->getMaterialName().c_str();
 	ResourcePtr r = mm->getResourceByName(text2,App->CL_Resources->Project_Resource_Group);
 
 	Debug
@@ -368,6 +384,7 @@ void CL64_Materials::Update_MaterialFile()
 		}
 		catch (Ogre::Exception& Ex)
 		{
+			Ogre::String err = Ex.what();
 			//App->Say_Win(Ex.what());
 		}
 
