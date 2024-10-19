@@ -9,7 +9,7 @@ material GDPanel1_Material_0
 
 			texture_unit
 			{
-				texture bkt_ball.png
+				texture GDP1_grid01.tga
 			}
 		}
 
@@ -26,7 +26,7 @@ material GDPanel1_Material_1
 
 			texture_unit
 			{
-				texture Barrel_B2.dds
+				texture block02.bmp
 			}
 		}
 

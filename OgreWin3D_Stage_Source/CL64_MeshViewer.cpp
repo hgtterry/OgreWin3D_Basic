@@ -1638,35 +1638,38 @@ bool CL64_MeshViewer::Create_Texture(char* Texture_Path, char* Texture_Name)
 
 	if (Ogre::ResourceGroupManager::getSingleton().resourceExists(App->CL_Resources->Project_Resource_Group,m_Material_File))
 	{
+		Ogre::TextureManager::getSingleton().remove(Texture_Name, App->CL_Resources->Project_Resource_Group);
+
+		App->Say("Remove");
 		//App->Say("Resource Exsist", m_Material_File);
 
-		Ogre::ResourcePtr RP = NULL;
-		RP = Ogre::TextureManager::getSingleton().getResourceByName(Texture_Name, App->CL_Resources->Project_Resource_Group);
+		//Ogre::ResourcePtr RP = NULL;
+		//RP = Ogre::TextureManager::getSingleton().getResourceByName(Texture_Name, App->CL_Resources->Project_Resource_Group);
 
-		if (RP)
-		{
-			bool test = RP->isLoaded();
-			if (test == 1)
-			{
-				//App->Say(Texture_Name, (LPSTR)"Loaded");
-				Ogre::TextureManager::getSingleton().remove(Texture_Name, App->CL_Resources->Project_Resource_Group);
-				return 0;
-			}
-			else
-			{
-				RP->isPrepared();
-				
-				Ogre::TextureManager::getSingleton().remove(Texture_Name, App->CL_Resources->Project_Resource_Group);
-				
-				bool tt = RP->isPrepared();
-				if (tt == 1)
-				{
-					//App->Say(Texture_Name, (LPSTR)"Is Prepared");
-				}
+		//if (RP)
+		//{
+		//	bool test = RP->isLoaded();
+		//	if (test == 1)
+		//	{
+		//		//App->Say(Texture_Name, (LPSTR)"Loaded");
+		//		//Ogre::TextureManager::getSingleton().remove(Texture_Name, App->CL_Resources->Project_Resource_Group);
+		//		return 0;
+		//	}
+		//	else
+		//	{
+		//		RP->isPrepared();
+		//		
+		//		//Ogre::TextureManager::getSingleton().remove(Texture_Name, App->CL_Resources->Project_Resource_Group);
+		//		
+		//		bool tt = RP->isPrepared();
+		//		if (tt == 1)
+		//		{
+		//			//App->Say(Texture_Name, (LPSTR)"Is Prepared");
+		//		}
 
-			}
+		//	}
 
-		}
+		//}
 	}
 
 	Ogre::String source = Texture_Path;
