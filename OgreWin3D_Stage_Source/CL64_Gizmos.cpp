@@ -158,27 +158,29 @@ void CL64_Gizmos::MarkerBox_Addjust(int Index)
 	float Rot_Pitch = Object->Object_Node->getOrientation().getPitch().valueDegrees();
 	float Rot_Roll = Object->Object_Node->getOrientation().getRoll().valueDegrees();
 
-	App->CL_Ogre->OGL_Listener->MarkerBox_Yaw = Rot_Yaw;
-	//App->CL_Ogre->OGL_Listener->MarkerBox_Roll = Rot_Pitch;
+	/*App->CL_Ogre->OGL_Listener->MarkerBox_Yaw = Rot_Yaw;
+	App->CL_Ogre->OGL_Listener->MarkerBox_Roll = Rot_Pitch;
+	App->CL_Ogre->OGL_Listener->MarkerBox_Pitch = Rot_Roll;
 
 	App->CL_Ogre->OGL_Listener->MarkerBox_Depth = Size.z / 2;
 	App->CL_Ogre->OGL_Listener->MarkerBox_Height = Size.y / 2;
-	App->CL_Ogre->OGL_Listener->MarkerBox_Width = Size.x / 2;
+	App->CL_Ogre->OGL_Listener->MarkerBox_Width = Size.x / 2;*/
 	
-	//MarkerBox_Update(Size.x / 2, Size.y / 2, Size.z / 2);
+	MarkerBox_Update(Size.x / 2, Size.y / 2, Size.z / 2);
 
 	Ogre::Vector3 Centre = Object->Object_Node->getAttachedObject(0)->getBoundingBox().getCenter();
 	Ogre::Vector3 WS = Object->Object_Node->convertLocalToWorldPosition(Centre);
 
-	//BoxNode->setPosition(WS);
-	//BoxNode->setOrientation(Rot);
-	//BoxNode->setVisible(true);
-
-	App->CL_Ogre->OGL_Listener->MarkerBox_PosX = WS.x;
+	/*App->CL_Ogre->OGL_Listener->MarkerBox_PosX = WS.x;
 	App->CL_Ogre->OGL_Listener->MarkerBox_PosY = WS.y;
 	App->CL_Ogre->OGL_Listener->MarkerBox_PosZ = WS.z;
 
-	App->CL_Ogre->OGL_Listener->Flag_Show_MarkerBox = 1;
+	App->CL_Ogre->OGL_Listener->Flag_Show_MarkerBox = 1;*/
+
+
+	BoxNode->setPosition(WS);
+	BoxNode->setOrientation(Rot);
+	BoxNode->setVisible(true);
 
 	//App->SBC_Markers->Move_Arrow(WS);
 }

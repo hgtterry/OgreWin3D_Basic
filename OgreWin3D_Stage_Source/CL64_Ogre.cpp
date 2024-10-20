@@ -54,19 +54,20 @@ CL64_Ogre::~CL64_Ogre(void)
 }
 
 // *************************************************************************
-// *				InitOgre:- Terry and Hazel Flanigan 2024			   *
+// *				Init_Ogre:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-void CL64_Ogre::InitOgre(void)
+void CL64_Ogre::Init_Ogre(void)
 {
-	OgreCreateRoot();
-	SetUpResources();
-	Configure();
-	chooseSceneManager();
-	CreateCamera();
-	createViewports();
-	Initialise_Resources();
+	
+	Init_OgreCreateRoot();
+	Init_Load_Resources();
+	Init_Configure();
+	Init_ChooseSceneManager();
+	Init_CreateCamera();
+	Init_CreateViewports();
+	Init_Resources();
 
-	createFrameListener();
+	Init_CreateFrameListener();
 
 	manObj = mSceneMgr->createManualObject("sampleArea");
 	ModelNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
@@ -81,9 +82,9 @@ void CL64_Ogre::InitOgre(void)
 }
 
 // *************************************************************************
-// *		OgreCreateRoot:- Terry and Hazel Flanigan 2024				   *
+// *		Init_OgreCreateRoot:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-bool CL64_Ogre::OgreCreateRoot(void)
+bool CL64_Ogre::Init_OgreCreateRoot(void)
 {
 	Ogre::String pluginsPath;
 	pluginsPath = mResourcePath + "plugins.cfg";
@@ -110,9 +111,9 @@ bool CL64_Ogre::OgreCreateRoot(void)
 }
 
 // **************************************************************************
-// *			SetUpResources:- Terry and Hazel Flanigan 2024				*
+// *			Load_Resources:- Terry and Hazel Flanigan 2024				*
 // **************************************************************************
-bool CL64_Ogre::SetUpResources(void)
+bool CL64_Ogre::Init_Load_Resources(void)
 {
 
 	Ogre::String File;
@@ -153,32 +154,21 @@ bool CL64_Ogre::SetUpResources(void)
 }
 
 // *************************************************************************
-// *		Initialise_Resources:- Terry and Hazel Flanigan 2024		   *
+// *			Init_Resources:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-bool CL64_Ogre::Initialise_Resources(void)
+bool CL64_Ogre::Init_Resources(void)
 {
 	// Initialize, parse scripts etc
 	Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
-
-	/*if (flag_Use_RTSS == 1)
-	{
-		bool success = Ogre::RTShader::ShaderGenerator::initialize();
-		if (success)
-		{
-			Ogre::RTShader::ShaderGenerator* shaderGenerator = Ogre::RTShader::ShaderGenerator::getSingletonPtr();
-			shaderGenerator->addSceneManager(mSceneMgr);
-		}
-	}*/
-
 	App->CL_Ogre->Log_Message_To_File((LPSTR)"Initialise_Resources");
 
 	return 1;
 }
 
 // *************************************************************************
-// *				Configure:- Terry and Hazel Flanigan 2024			   *
+// *			Init_Configure:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-bool CL64_Ogre::Configure(void)
+bool CL64_Ogre::Init_Configure(void)
 {
 	try
 	{
@@ -222,9 +212,9 @@ bool CL64_Ogre::Configure(void)
 }
 
 // *************************************************************************
-// *		chooseSceneManager:- Terry and Hazel Flanigan 2024			   *
+// *		Init_ChooseSceneManager:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
-bool CL64_Ogre::chooseSceneManager(void)
+bool CL64_Ogre::Init_ChooseSceneManager(void)
 {
 	mSceneMgr = mRoot->createSceneManager("DefaultSceneManager"); // Temp
 	
@@ -241,7 +231,7 @@ bool CL64_Ogre::chooseSceneManager(void)
 // *************************************************************************
 // *			CreateCamera:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-bool CL64_Ogre::CreateCamera(void)
+bool CL64_Ogre::Init_CreateCamera(void)
 {
 	camNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 
@@ -260,9 +250,9 @@ bool CL64_Ogre::CreateCamera(void)
 }
 
 // *************************************************************************
-// *		createViewports:- Terry and Hazel Flanigan 2024				   *
+// *		Init_CreateViewports:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
-bool CL64_Ogre::createViewports(void)
+bool CL64_Ogre::Init_CreateViewports(void)
 {
 	mWindow->removeAllViewports();
 	Ogre::Viewport* vp = mWindow->addViewport(mCamera);
@@ -314,9 +304,9 @@ bool CL64_Ogre::ReverseBackSlash(char* buf)
 }
 
 // *************************************************************************
-// *		createFrameListener:- Terry and Hazel Flanigan 2024			   *
+// *	Init_CreateFrameListener:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
-bool CL64_Ogre::createFrameListener(void)
+bool CL64_Ogre::Init_CreateFrameListener(void)
 {
 
 	Ogre::String RenderSystemName = mSceneMgr->getDestinationRenderSystem()->getName();
@@ -443,6 +433,7 @@ bool CL64_Ogre::Ogre_Render_Loop(void)
 	
 	while (true)
 	{
+
 		MSG  msg;
 		while (PeekMessage(&msg, NULL, 0U, 0U, PM_REMOVE))
 		{

@@ -80,6 +80,7 @@ private:
 	void Show_Mesh(char* MeshFile);
 
 	void Clear_Shape_Buttons();
+	void Clear_Type_Buttons();
 
 	void Clear_Debug_Shape();
 

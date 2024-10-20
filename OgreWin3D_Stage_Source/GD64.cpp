@@ -878,7 +878,7 @@ LRESULT CALLBACK ViewerMain_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM 
 void StartOgre()
 {
 	App->CL_Bullet->Init_Bullet();
-    App->CL_Ogre->InitOgre();
+    App->CL_Ogre->Init_Ogre();
 
 	Sleep(500);
 

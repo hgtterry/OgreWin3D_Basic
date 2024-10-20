@@ -29,6 +29,8 @@ THE SOFTWARE.
 
 #include "CL64_MeshView_Listener.h"
 
+#pragma warning(disable : 4101)
+
 CL64_MeshViewer::CL64_MeshViewer(void)
 {
 	MainDlgHwnd =			nullptr;
@@ -612,6 +614,9 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 			else
 			{
 				App->CL_MeshViewer->Copy_Assets();
+
+				//App->Say("Copied");
+
 				App->CL_Objects_Create->Add_Objects_From_MeshViewer();
 			}
 
@@ -620,6 +625,9 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 			App->CL_MeshViewer->Close_OgreWindow();
 			App->CL_MeshViewer->Delete_Resources_Group();
 
+			App->CL_MeshViewer->Clear_Shape_Buttons();
+			App->CL_MeshViewer->Clear_Type_Buttons();
+			
 			App->CL_MeshViewer->flag_MeshViewer_Running = 0;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
@@ -629,6 +637,9 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 		{
 			App->CL_MeshViewer->Close_OgreWindow();
 			App->CL_MeshViewer->Delete_Resources_Group();
+
+			App->CL_MeshViewer->Clear_Type_Buttons();
+
 			App->CL_MeshViewer->flag_MeshViewer_Running = 0;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
@@ -650,6 +661,16 @@ void CL64_MeshViewer::Clear_Shape_Buttons()
 	flag_Selected_Shape_Capsule = 0;
 	flag_Selected_Shape_Cylinder = 0;
 	flag_Selected_Shape_Cone = 0;
+}
+
+// *************************************************************************
+// *	  	Clear_Type_Buttons:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void CL64_MeshViewer::Clear_Type_Buttons()
+{
+	App->CL_MeshViewer->flag_SelectStatic = 0;
+	App->CL_MeshViewer->flag_SelectDynamic = 0;
+	App->CL_MeshViewer->flag_SelectTriMesh = 0;
 }
 
 // *************************************************************************
@@ -1638,38 +1659,38 @@ bool CL64_MeshViewer::Create_Texture(char* Texture_Path, char* Texture_Name)
 
 	if (Ogre::ResourceGroupManager::getSingleton().resourceExists(App->CL_Resources->Project_Resource_Group,m_Material_File))
 	{
-		Ogre::TextureManager::getSingleton().remove(Texture_Name, App->CL_Resources->Project_Resource_Group);
+		//Ogre::TextureManager::getSingleton().remove(Texture_Name, App->CL_Resources->Project_Resource_Group);
 
-		App->Say("Remove");
+		
 		//App->Say("Resource Exsist", m_Material_File);
 
-		//Ogre::ResourcePtr RP = NULL;
-		//RP = Ogre::TextureManager::getSingleton().getResourceByName(Texture_Name, App->CL_Resources->Project_Resource_Group);
+		Ogre::ResourcePtr RP = NULL;
+		RP = Ogre::TextureManager::getSingleton().getResourceByName(Texture_Name, App->CL_Resources->Project_Resource_Group);
 
-		//if (RP)
-		//{
-		//	bool test = RP->isLoaded();
-		//	if (test == 1)
-		//	{
-		//		//App->Say(Texture_Name, (LPSTR)"Loaded");
-		//		//Ogre::TextureManager::getSingleton().remove(Texture_Name, App->CL_Resources->Project_Resource_Group);
-		//		return 0;
-		//	}
-		//	else
-		//	{
-		//		RP->isPrepared();
-		//		
-		//		//Ogre::TextureManager::getSingleton().remove(Texture_Name, App->CL_Resources->Project_Resource_Group);
-		//		
-		//		bool tt = RP->isPrepared();
-		//		if (tt == 1)
-		//		{
-		//			//App->Say(Texture_Name, (LPSTR)"Is Prepared");
-		//		}
+		if (RP)
+		{
+			bool test = RP->isLoaded();
+			if (test == 1)
+			{
+				//App->Say(Texture_Name, (LPSTR)"Loaded");
+				Ogre::TextureManager::getSingleton().remove(Texture_Name, App->CL_Resources->Project_Resource_Group);
+				App->Say("Remove");
+				//return 0;
+			}
+			else
+			{
+				RP->isPrepared();
+				
+				//Ogre::TextureManager::getSingleton().remove(Texture_Name, App->CL_Resources->Project_Resource_Group);
+				
+				bool tt = RP->isPrepared();
+				if (tt == 1)
+				{
+					//App->Say(Texture_Name, (LPSTR)"Is Prepared");
+				}
 
-		//	}
-
-		//}
+			}
+		}
 	}
 
 	Ogre::String source = Texture_Path;
@@ -1692,15 +1713,18 @@ bool CL64_MeshViewer::Create_Texture(char* Texture_Path, char* Texture_Name)
 		Ogre::Image mm;
 		mm.load(stream);
 
-		Ogre::ResourceGroupManager::getSingleton().declareResource(Texture_Name, "Texture", App->CL_Resources->Project_Resource_Group);
-
 		try
 		{
 			Ogre::TextureManager::getSingleton().loadImage(Texture_Name, App->CL_Resources->Project_Resource_Group, mm);
 		}
 		catch (Ogre::Exception& Ex)
 		{
-			App->Say_Win(Ex.what());
+	
+			Ogre::TextureManager::getSingleton().remove(Texture_Name, App->CL_Resources->Project_Resource_Group);
+			Ogre::TextureManager::getSingleton().loadImage(Texture_Name, App->CL_Resources->Project_Resource_Group, mm);
+
+			//App->Say_Win(Ex.what());
+			//App->Say("loadImage");
 		}
 
 	}

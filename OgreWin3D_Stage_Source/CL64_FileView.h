@@ -45,6 +45,8 @@ public:
 	void Mark_Altered(HTREEITEM Item);
 	void Show_FileView(bool Enable);
 	void Change_Item_Name(HTREEITEM Folder, char* FolderName);
+	void DeleteItem();
+	void Mark_Altered_Folder(HTREEITEM Item);
 
 	bool Flag_FileView_Active;
 
@@ -78,6 +80,8 @@ private:
 	void Context_Menu(HWND hDlg);
 	void Context_New(HWND hDlg);
 	void Context_Rename(HWND hDlg) const;
+	void Context_Delete(HWND hDlg);
+
 	void HideRightPanes(void);
 
 	TV_INSERTSTRUCT tvinsert;

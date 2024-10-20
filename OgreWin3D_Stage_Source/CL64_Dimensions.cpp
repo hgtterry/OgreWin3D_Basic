@@ -430,11 +430,12 @@ void CL64_Dimensions::Set_Position(Ogre::Vector3 Pos)
 
 		pBase_Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
 
-		UpDate_Physics_And_Visuals(Index);
+		UpDate_Physics(Index);
+		App->CL_Gizmos->MarkerBox_Addjust(Index);
 	}
 	else
 	{
-		//App->SBC_Markers->MarkerBB_Addjust(Index);
+		//App->CL_Gizmos->MarkerBox_Addjust(Index);
 	}
 }
 
@@ -688,7 +689,8 @@ void CL64_Dimensions::Set_Scale(Ogre::Vector3 Scale)
 		pBase_Physics_Scale->y = Scale.y;
 		pBase_Physics_Scale->z = Scale.z;
 
-		UpDate_Physics_And_Visuals(Index);
+		UpDate_Physics(Index);
+		App->CL_Gizmos->MarkerBox_Addjust(Index);
 	}
 
 //	App->SBC_Markers->MarkerBB_Addjust(Index);
@@ -875,7 +877,8 @@ void CL64_Dimensions::Set_Rotation(Ogre::Vector3 Rotation, float Delta)
 		pBase_Phys_Body->getWorldTransform().setRotation(btQuaternion(pBase_Physics_Quat->x,
 			pBase_Physics_Quat->y, pBase_Physics_Quat->z, pBase_Physics_Quat->w));
 
-		UpDate_Physics_And_Visuals(Index);
+		UpDate_Physics(Index);
+		App->CL_Gizmos->MarkerBox_Addjust(Index);
 	}
 
 //	App->SBC_Markers->MarkerBB_Addjust(Index);
@@ -906,9 +909,9 @@ Ogre::Vector3 CL64_Dimensions::Get_BoundingBox_World_Centre()
 }
 
 // *************************************************************************
-// *				UpDate_Physics_And_Visuals Terry Flanigan		 	   *
+// *			UpDate_Physics:- Terry and Hazel Flanigan 2024		 	   *
 // *************************************************************************
-void CL64_Dimensions::UpDate_Physics_And_Visuals(int Index)
+void CL64_Dimensions::UpDate_Physics(int Index)
 {
 	if (*pBase_Shape == Enums::Shape_TriMesh)
 	{
@@ -921,9 +924,6 @@ void CL64_Dimensions::UpDate_Physics_And_Visuals(int Index)
 		}
 	}
 
-
-	//App->SBC_Markers->MarkerBB_Addjust(Index);
-
 	// Needs Looking at
 	App->CL_Scene->V_Object[Index]->Altered = 1;
 	App->CL_FileView->Mark_Altered(App->CL_Scene->V_Object[Index]->FileViewItem);
@@ -931,13 +931,10 @@ void CL64_Dimensions::UpDate_Physics_And_Visuals(int Index)
 }
 
 // *************************************************************************
-// *	  			Set_Physics_Position Terry Flanigan					   *
+// *	  	Set_Physics_Position:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
 void CL64_Dimensions::Set_Physics_Position()
 {
-	/*AxisAlignedBox worldAAB = pBase_Object_Ent->getBoundingBox();
-	worldAAB.transformAffine(pBase_Object_Node->_getFullTransform());
-	Ogre::Vector3 Centre = worldAAB.getCenter();*/
 
 	Ogre::Vector3 Centre = pBase_Object_Ent->getWorldBoundingBox(true).getCenter();
 	pBase_Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));

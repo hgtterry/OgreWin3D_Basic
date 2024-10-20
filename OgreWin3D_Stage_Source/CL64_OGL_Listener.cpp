@@ -233,7 +233,7 @@ void CL64_OGL_Listener::Render_Loop()
 
 	if (Flag_Show_MarkerBox == 1)
 	{
-		Marker_Render_BoundingBox();
+		//Marker_Render_BoundingBox();
 	}
 
 	if (depthTestEnabled)
@@ -676,6 +676,10 @@ void CL64_OGL_Listener::RenderCrossHair(void)
 // *************************************************************************
 void CL64_OGL_Listener::Marker_Render_BoundingBox(void)
 {
+	
+	void glLoadIdentity(void);
+
+
 	float BoxDepth = MarkerBox_Depth;
 	float BoxHeight = MarkerBox_Height;
 	float BoxWidth = MarkerBox_Width;

@@ -39,15 +39,15 @@ public:
 	~CL64_Ogre(void);
 
 	// Setup --------------------------------
-	void InitOgre(void);
-	bool OgreCreateRoot(void);
-	bool SetUpResources(void);
-	bool Configure(void);
-	bool chooseSceneManager(void);
-	bool CreateCamera(void);
-	bool createViewports(void);
-	bool Initialise_Resources(void);
-	bool createFrameListener(void);
+	void Init_Ogre(void);
+	bool Init_OgreCreateRoot(void);
+	bool Init_Load_Resources(void);
+	bool Init_Configure(void);
+	bool Init_ChooseSceneManager(void);
+	bool Init_CreateCamera(void);
+	bool Init_CreateViewports(void);
+	bool Init_Resources(void);
+	bool Init_CreateFrameListener(void);
 	// --------------------------------------
 
 	bool ExitFullScreen();

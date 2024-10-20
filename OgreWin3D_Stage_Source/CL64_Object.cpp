@@ -176,3 +176,26 @@ void CL64_Object::Hide_AllObjects_Except(int Index, bool Show)
 		App->CL_Scene->V_Object[Index]->Object_Node->setVisible(true);
 	}
 }
+
+// **************************************************************************
+// *	  		Delete_Object:- Terry and Hazel Flanigan 2024				*
+// **************************************************************************
+void CL64_Object::Delete_Object()
+{
+	int MeshIndex = App->CL_Properties->Current_Selected_Object;
+	btRigidBody* body = App->CL_Scene->V_Object[MeshIndex]->Phys_Body;
+
+	if (body)
+	{
+		App->CL_Bullet->dynamicsWorld->removeCollisionObject(body);
+	}
+
+	App->CL_FileView->DeleteItem();
+
+	App->CL_Scene->V_Object[MeshIndex]->Deleted = 1;
+	App->CL_Scene->V_Object[MeshIndex]->Object_Node->setVisible(false);
+
+
+	App->CL_Scene->flag_Scene_Modified = 1;
+
+}

@@ -42,7 +42,7 @@ protected:
 	void Set_Rotation(Ogre::Vector3 Rotation, float Delta);
 
 	Ogre::Vector3 Get_BoundingBox_World_Centre();
-	void UpDate_Physics_And_Visuals(int Index);
+	void UpDate_Physics(int Index);
 	void Set_Physics_Position();
 
 	bool PosX_Selected;

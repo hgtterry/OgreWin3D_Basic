@@ -35,6 +35,7 @@ public:
 	void Rename_Object(int Index);
 	Ogre::Vector3 GetPlacement(int Distance = -6);
 	void Hide_AllObjects_Except(int Index, bool Show);
+	void Delete_Object();
 
 	bool flag_Show_Physics_Debug;
 	bool flag_Hide_All_Except;
