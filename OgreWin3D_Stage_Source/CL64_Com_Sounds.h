@@ -30,6 +30,7 @@ public:
 	CL64_Com_Sounds(void);
 	~CL64_Com_Sounds(void);
 
+	bool Add_New_Sound();
 	bool Create_Sound_Entity(int Index);
 	void Rename_Sound(int Index);
 };

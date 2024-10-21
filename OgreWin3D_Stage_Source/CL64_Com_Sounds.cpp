@@ -35,6 +35,54 @@ CL64_Com_Sounds::~CL64_Com_Sounds(void)
 }
 
 // *************************************************************************
+// *				Add_New_Sound:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+bool CL64_Com_Sounds::Add_New_Sound()
+{
+	char B_Name[MAX_PATH];
+	char ConNum[MAX_PATH];
+
+	int Index = App->CL_Scene->Object_Count;
+
+	App->CL_Scene->V_Object[Index] = new Base_Object();
+
+	strcpy(App->CL_Scene->V_Object[Index]->Sound_File, "Welcome.ogg");
+	strcpy(App->CL_Scene->V_Object[Index]->Sound_Path, App->CL_SoundMgr->Default_Folder);
+	strcat(App->CL_Scene->V_Object[Index]->Sound_Path, "\\Media\\Sounds\\");
+	strcat(App->CL_Scene->V_Object[Index]->Sound_Path, "Welcome.ogg");
+
+	App->CL_Scene->V_Object[Index]->HasSound = 1;
+
+	App->CL_Scene->V_Object[Index]->Type = Enums::Bullet_Type_Static;
+	App->CL_Scene->V_Object[Index]->Shape = Enums::Shape_Box;
+	App->CL_Scene->V_Object[Index]->This_Object_UniqueID = App->CL_Scene->UniqueID_Object_Counter; // Unique ID
+
+	strcpy(App->CL_Scene->V_Object[Index]->Mesh_FileName, "SoundEntity_GD.mesh");
+
+	strcpy_s(B_Name, "Sound_");
+	_itoa(Index, ConNum, 10);
+	strcat(B_Name, ConNum);
+	strcpy(App->CL_Scene->V_Object[Index]->Mesh_Name, B_Name);
+
+	Ogre::Vector3 Pos = App->CL_Object->GetPlacement(-50);
+	App->CL_Scene->V_Object[Index]->Mesh_Pos = Pos;
+
+	Create_Sound_Entity(Index);
+
+	HTREEITEM Temp = App->CL_FileView->Add_Item(App->CL_FileView->FV_Sounds_Folder, App->CL_Scene->V_Object[Index]->Mesh_Name, Index, true);
+	App->CL_Scene->V_Object[Index]->FileViewItem = Temp;
+
+	App->CL_FileView->SelectItem(App->CL_Scene->V_Object[Index]->FileViewItem);
+
+	App->CL_Scene->UniqueID_Object_Counter++;
+	App->CL_Scene->Object_Count++;
+
+	App->CL_FileView->Set_FolderActive(App->CL_FileView->FV_Sounds_Folder);
+
+	return 1;
+}
+
+// *************************************************************************
 // *			Create_Sound_Entity:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
 bool CL64_Com_Sounds::Create_Sound_Entity(int Index)
