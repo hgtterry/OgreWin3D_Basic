@@ -35,6 +35,52 @@ CL64_Com_Messages::~CL64_Com_Messages(void)
 }
 
 // *************************************************************************
+//				Add_New_Message:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+bool CL64_Com_Messages::Add_New_Message()
+{
+	char B_Name[MAX_PATH];
+	char ConNum[MAX_PATH];
+
+	int Index = App->CL_Scene->Object_Count;
+
+	App->CL_Scene->V_Object[Index] = new Base_Object();
+	App->CL_Scene->V_Object[Index]->S_Message[0] = new Message_type;
+	Set_Message_Defaults(Index);
+
+	App->CL_Scene->V_Object[Index]->Type = Enums::Bullet_Type_Static;
+	App->CL_Scene->V_Object[Index]->Shape = Enums::Shape_Box;
+	App->CL_Scene->V_Object[Index]->This_Object_UniqueID = App->CL_Scene->UniqueID_Object_Counter; // Unique ID
+
+	strcpy(App->CL_Scene->V_Object[Index]->Mesh_FileName, "Test_cube.mesh");
+
+	strcpy_s(B_Name, "Message_");
+	_itoa(Index, ConNum, 10);
+	strcat(B_Name, ConNum);
+	strcpy(App->CL_Scene->V_Object[Index]->Mesh_Name, B_Name);
+
+	Ogre::Vector3 Pos = App->CL_Object->GetPlacement(-50);
+	App->CL_Scene->V_Object[Index]->Mesh_Pos = Pos;
+
+	Create_Message_Entity(Index);
+
+	App->CL_Scene->V_Object[Index]->Set_ImGui_Panel_Name();
+
+
+	HTREEITEM Temp = App->CL_FileView->Add_Item(App->CL_FileView->FV_Message_Trigger_Folder, App->CL_Scene->V_Object[Index]->Mesh_Name, Index, true);
+	App->CL_Scene->V_Object[Index]->FileViewItem = Temp;
+
+	App->CL_FileView->SelectItem(App->CL_Scene->V_Object[Index]->FileViewItem);
+
+	App->CL_Scene->UniqueID_Object_Counter++;
+	App->CL_Scene->Object_Count++;
+
+	App->CL_FileView->Set_FolderActive(App->CL_FileView->FV_Message_Trigger_Folder);
+
+	return 1;
+}
+
+// *************************************************************************
 // *		Set_Message_Defaults:- Terry and Hazel Flanigan 2024	  	   *
 // *************************************************************************
 void CL64_Com_Messages::Set_Message_Defaults(int Index)

@@ -1267,7 +1267,7 @@ void CL64_FileView::Context_Menu(HWND hDlg)
 		if (!strcmp(FileView_Folder, "Messages")) // Folder
 		{
 			hMenu = CreatePopupMenu();
-			AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_FILE_NEW, L"&New");
+			AppendMenuW(hMenu, MF_STRING , IDM_FILE_NEW, L"&New");
 			TrackPopupMenu(hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, App->ListPanel, NULL);
 			DestroyMenu(hMenu);
 			Context_Selection = Enums::FileView_Messages_Folder;
@@ -1573,18 +1573,18 @@ void CL64_FileView::Context_New(HWND hDlg)
 		return;
 	}
 
-	//if (App->CL_FileView->Context_Selection == Enums::FileView_Messages_Triggers_Folder)
-	//{
-	//	/*App->SBC_Dialogs->YesNo("Add Message", "Do you want to add a new Message Entity", 1);
+	if (App->CL_FileView->Context_Selection == Enums::FileView_Messages_Folder)
+	{
+		App->CL_Dialogs->Show_YesNo_Dlg((LPSTR)"Add Message", (LPSTR)"Do you want to add a new Message Entity", (LPSTR)"");
 
-	//	bool Doit = App->SBC_Dialogs->Canceled;
-	//	if (Doit == 0)
-	//	{
-	//		App->CL_Com_Messages->Add_New_Message();
-	//	}*/
-
-	//	return;
-	//}
+		bool Doit = App->CL_Dialogs->Canceled;
+		if (Doit == 0)
+		{
+			App->CL_Com_Messages->Add_New_Message();
+		}
+		
+		return;
+	}
 
 	if (App->CL_FileView->Context_Selection == Enums::FileView_Sounds_Folder)
 	{
