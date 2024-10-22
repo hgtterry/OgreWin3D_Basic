@@ -240,6 +240,44 @@ void CL64_Panels::Disable_Panels(bool Disable)
 		//EnableWindow(App->Physics_Console_Hwnd, 1);
 		EnableWindow(App->CL_TopDlg->TabsHwnd, 1);
 	}
+}
 
+
+// **************************************************************************
+// *			Show_FileView:- Terry and Hazel Flanigan 2024				*
+// **************************************************************************
+void CL64_Panels::Show_FileView(bool Enable)
+{
+	if (Enable == 1)
+	{
+		App->CL_FileView->Flag_FileView_Active = 1;
+		ShowWindow(App->ListPanel, 1);
+		CheckMenuItem(App->mMenu, ID_WINDOWS_FILEVIEW, MF_BYCOMMAND | MF_CHECKED);
+	}
+	else
+	{
+		App->CL_FileView->Flag_FileView_Active = 0;
+		ShowWindow(App->ListPanel, 0);
+		CheckMenuItem(App->mMenu, ID_WINDOWS_FILEVIEW, MF_BYCOMMAND | MF_UNCHECKED);
+	}
+}
+
+// **************************************************************************
+// *			Show_Properties:- Terry and Hazel Flanigan 2024				*
+// **************************************************************************
+void CL64_Panels::Show_Properties(bool Enable)
+{
+	if (Enable == 1)
+	{
+		App->CL_FileView->Flag_FileView_Active = 1;
+		ShowWindow(App->CL_Properties->Properties_Dlg_hWnd, 1);
+		CheckMenuItem(App->mMenu, ID_WINDOWS_PROPERTIES, MF_BYCOMMAND | MF_CHECKED);
+	}
+	else
+	{
+		App->CL_FileView->Flag_FileView_Active = 0;
+		ShowWindow(App->CL_Properties->Properties_Dlg_hWnd, 0);
+		CheckMenuItem(App->mMenu, ID_WINDOWS_PROPERTIES, MF_BYCOMMAND | MF_UNCHECKED);
+	}
 }
 

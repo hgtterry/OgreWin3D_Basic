@@ -44,6 +44,7 @@ public:
 	void Dialog_Counter();
 	bool UpDate_Counter_Dialog(HWND hDlg);
 	void Set_Counter_Dialog(HWND hDlg, bool Enable);
+	void Dialog_Text_Props();
 
 	bool TrueFlase;
 	bool Canceled;
@@ -76,6 +77,7 @@ private:
 	static LRESULT CALLBACK Proc_FileViewer(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Proc_Dialog_TrueFlase(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Proc_Dialog_Counter(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Proc_Dialog_Text_Props(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	static bool CALLBACK Proc_ViewerBasePic(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 

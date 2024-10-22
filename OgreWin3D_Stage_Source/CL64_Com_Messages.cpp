@@ -77,6 +77,8 @@ bool CL64_Com_Messages::Add_New_Message()
 
 	App->CL_FileView->Set_FolderActive(App->CL_FileView->FV_Message_Trigger_Folder);
 
+	App->CL_Scene->flag_Scene_Modified = 1;
+
 	return 1;
 }
 

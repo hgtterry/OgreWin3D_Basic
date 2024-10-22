@@ -79,6 +79,8 @@ bool CL64_Com_Sounds::Add_New_Sound()
 
 	App->CL_FileView->Set_FolderActive(App->CL_FileView->FV_Sounds_Folder);
 
+	App->CL_Scene->flag_Scene_Modified = 1;
+
 	return 1;
 }
 

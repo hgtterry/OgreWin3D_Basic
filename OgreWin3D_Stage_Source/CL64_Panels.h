@@ -29,6 +29,8 @@ public:
 	bool Resize_FileView(void);
 	bool Place_Properties_Dlg(void);
 	void Disable_Panels(bool Disable);
+	void Show_FileView(bool Enable);
+	void Show_Properties(bool Enable);
 
 	bool flag_Panels_Disabled;
 

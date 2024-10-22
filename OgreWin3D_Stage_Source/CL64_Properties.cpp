@@ -699,75 +699,77 @@ bool CL64_Properties::Edit_Messages(LPARAM lParam)
 		return 1;
 	}
 
-	//result = strcmp(btext, "Text");
-	//if (result == 0)
-	//{
-	//	strcpy(App->SBC_Dialogs->btext, "Change Text");
-	//	strcpy(App->SBC_Dialogs->Chr_Text, App->SBC_Scene->V_Object[Index]->S_Message[0]->Message_Text);
+	result = strcmp(btext, "Text");
+	if (result == 0)
+	{
+		strcpy(App->CL_Dialogs->btext, "Change Text");
+		strcpy(App->CL_Dialogs->Chr_Text, App->CL_Scene->V_Object[Index]->S_Message[0]->Message_Text);
 
-	//	App->SBC_Dialogs->Dialog_Text();
+		App->CL_Dialogs->Dialog_Text_Props();
 
-	//	if (App->SBC_Dialogs->Canceled == 1)
-	//	{
-	//		return TRUE;
-	//	}
+		if (App->CL_Dialogs->Canceled == 1)
+		{
+			return TRUE;
+		}
 
-	//	strcpy(App->SBC_Scene->V_Object[Index]->S_Message[0]->Message_Text, App->SBC_Dialogs->Chr_Text);
+		strcpy(App->CL_Scene->V_Object[Index]->S_Message[0]->Message_Text, App->CL_Dialogs->Chr_Text);
 
-	//	App->SBC_Properties->Mark_As_Altered(Index);
+		App->CL_Properties->Mark_As_Altered(Index);
 
-	//	Update_ListView_Messages();
+		Update_ListView_Messages();
 
-	//	return 1;
-	//}
+		return 1;
+	}
 
-	//result = strcmp(btext, "Pos_X");
-	//if (result == 0)
-	//{
-	//	App->SBC_Gui_Dialogs->Start_Dialog_MessageEditor(Index);
+	result = strcmp(btext, "Pos_X");
+	if (result == 0)
+	{
+		App->CL_ImGui->Start_Dialog_MessageEditor(Index);
 
-	//	while (App->SBC_Gui_Dialogs->Show_Dialog_MessageEditor == 1)
-	//	{
-	//		App->SBC_Gui_Dialogs->BackGround_Render_Loop();
-	//	}
+		while (App->CL_ImGui->Show_Dialog_MessageEditor == 1)
+		{
+			App->CL_ImGui_Dialogs->BackGround_Render_Loop();
+		}
 
-	//	App->SBC_Gui_Dialogs->Show_Dialog_MessageEditor = 0;
+		App->CL_ImGui->Show_Dialog_MessageEditor = 0;
 
-	//	App->SBC_Scene->V_Object[Index]->Show_Message_Flag = 0;
+		App->CL_Scene->V_Object[Index]->Show_Message_Flag = 0;
 
-	//	App->SBC_Properties->Mark_As_Altered(Index);
+		App->CL_Properties->Mark_As_Altered(Index);
 
-	//	App->Show_Panels(true);
-	//	App->Disable_Panels(false);
+		App->CL_Panels->Disable_Panels(false);
+		App->CL_Panels->Show_FileView(true);
+		App->CL_Panels->Show_Properties(true);
 
-	//	Update_ListView_Messages();
+		Update_ListView_Messages();
 
-	//	return 1;
-	//}
+		return 1;
+	}
 
-	//result = strcmp(btext, "Pos_Y");
-	//if (result == 0)
-	//{
-	//	App->SBC_Gui_Dialogs->Start_Dialog_MessageEditor(Index);
+	result = strcmp(btext, "Pos_Y");
+	if (result == 0)
+	{
+		App->CL_ImGui->Start_Dialog_MessageEditor(Index);
 
-	//	while (App->SBC_Gui_Dialogs->Show_Dialog_MessageEditor == 1)
-	//	{
-	//		App->SBC_Gui_Dialogs->BackGround_Render_Loop();
-	//	}
+		while (App->CL_ImGui->Show_Dialog_MessageEditor == 1)
+		{
+			App->CL_ImGui_Dialogs->BackGround_Render_Loop();
+		}
 
-	//	App->SBC_Gui_Dialogs->Show_Dialog_MessageEditor = 0;
+		App->CL_ImGui->Show_Dialog_MessageEditor = 0;
 
-	//	App->SBC_Scene->V_Object[Index]->Show_Message_Flag = 0;
+		App->CL_Scene->V_Object[Index]->Show_Message_Flag = 0;
 
-	//	App->SBC_Properties->Mark_As_Altered(Index);
+		App->CL_Properties->Mark_As_Altered(Index);
 
-	//	App->Show_Panels(true);
-	//	App->Disable_Panels(false);
+		App->CL_Panels->Disable_Panels(false);
+		App->CL_Panels->Show_FileView(true);
+		App->CL_Panels->Show_Properties(true);
 
-	//	Update_ListView_Messages();
+		Update_ListView_Messages();
 
-	//	return 1;
-	//}
+		return 1;
+	}
 
 	// Counter
 	result = strcmp(btext, "Counter");
