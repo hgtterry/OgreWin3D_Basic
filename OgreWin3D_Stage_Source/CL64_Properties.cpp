@@ -724,14 +724,14 @@ bool CL64_Properties::Edit_Messages(LPARAM lParam)
 	result = strcmp(btext, "Pos_X");
 	if (result == 0)
 	{
-		App->CL_ImGui->Start_Dialog_MessageEditor(Index);
+		App->CL_ImGui_Dialogs->Start_Dialog_MessageEditor(Index);
 
-		while (App->CL_ImGui->Show_Dialog_MessageEditor == 1)
+		while (App->CL_ImGui_Dialogs->Show_Dialog_MessageEditor == 1)
 		{
 			App->CL_ImGui_Dialogs->BackGround_Render_Loop();
 		}
 
-		App->CL_ImGui->Show_Dialog_MessageEditor = 0;
+		App->CL_ImGui_Dialogs->Show_Dialog_MessageEditor = 0;
 
 		App->CL_Scene->V_Object[Index]->Show_Message_Flag = 0;
 
@@ -749,14 +749,14 @@ bool CL64_Properties::Edit_Messages(LPARAM lParam)
 	result = strcmp(btext, "Pos_Y");
 	if (result == 0)
 	{
-		App->CL_ImGui->Start_Dialog_MessageEditor(Index);
+		App->CL_ImGui_Dialogs->Start_Dialog_MessageEditor(Index);
 
-		while (App->CL_ImGui->Show_Dialog_MessageEditor == 1)
+		while (App->CL_ImGui_Dialogs->Show_Dialog_MessageEditor == 1)
 		{
 			App->CL_ImGui_Dialogs->BackGround_Render_Loop();
 		}
 
-		App->CL_ImGui->Show_Dialog_MessageEditor = 0;
+		App->CL_ImGui_Dialogs->Show_Dialog_MessageEditor = 0;
 
 		App->CL_Scene->V_Object[Index]->Show_Message_Flag = 0;
 

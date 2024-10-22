@@ -50,9 +50,7 @@ public:
 	void ImGui_Object_Data(void);
 
 	void Demo_Options_Gui(void);
-	void Start_Dialog_MessageEditor(int Index);
-	void Dialog_MessageEditor(void);
-
+	
 	ImFont* font0;
 	ImFont* font1;
 	ImFont* font2;
@@ -85,21 +83,6 @@ public:
 	float Object_Data_PosY;
 
 	float Float_Step;
-
-	// -------------- General
-	ImVec4 Float_Colour;
-	bool Float_Exit;
-
-	// -------------- Message Editor Dialog
-	bool Centre_X_Selected;
-	bool Centre_Y_Selected;
-	bool Show_Dialog_MessageEditor;
-	bool MessageEditor_Canceld;
-	float Message_Editor_PosX;
-	float Message_Editor_PosY;
-	bool Message_Editor_StartPos;
-	int Message_Index;
-	ImVec4 BackGround_color;
 
 };
 

@@ -40,6 +40,16 @@ CL64_ImGui_Dialogs::CL64_ImGui_Dialogs(void)
 	m_Dialog_Float_Copy = 0;
 	m_Dialog_Float = 10.222;
 
+	// Mesage Editor
+	Centre_X_Selected = 0;
+	Centre_Y_Selected = 0;
+	MessageEditor_Canceld = 0;
+	Show_Dialog_MessageEditor = 0;
+	Message_Editor_StartPos = 0;
+	Message_Editor_PosX = 10;
+	Message_Editor_PosY = 10;
+	Message_Index = 0;
+
 }
 
 CL64_ImGui_Dialogs::~CL64_ImGui_Dialogs(void)
@@ -60,12 +70,14 @@ void CL64_ImGui_Dialogs::BackGround_Render_Loop(void)
 
 	if (App->CL_Ogre->mWindow->isClosed()) return;
 
-	if (App->CL_Ogre->FPStimer.getMilliseconds() > 3)
+	if (App->CL_Ogre->FPStimer.getMilliseconds() > 6)
 	{
+		App->CL_Ogre->FPStimer.reset();
+
 		App->CL_Ogre->mRoot->_fireFrameStarted();
 		App->CL_Ogre->mRoot->_updateAllRenderTargets();
 		App->CL_Ogre->mRoot->_fireFrameEnded();
-		App->CL_Ogre->FPStimer.reset();
+
 	}
 }
 
@@ -157,6 +169,173 @@ void CL64_ImGui_Dialogs::Dialog_Float(void)
 		if (Float_Exit == 0)
 		{
 			Float_Canceld = 1;
+			ImGui::PopStyleColor();
+			ImGui::End();
+		}
+	}
+}
+
+// *************************************************************************
+// *	 Start_Dialog_MessageEditor:- Terry and Hazel Flanigan 2024  	   *
+// *************************************************************************
+void CL64_ImGui_Dialogs::Start_Dialog_MessageEditor(int Index)
+{
+
+	Float_Exit = 0;
+	MessageEditor_Canceld = 0;
+
+	Float_Step = 1;
+
+	App->CL_Panels->Disable_Panels(true);
+	App->CL_Panels->Show_FileView(false);
+	App->CL_Panels->Show_Properties(false);
+
+	Message_Editor_PosX = 10;
+	Message_Editor_PosY = 10;
+	Message_Editor_StartPos = 0;
+	Message_Index = Index;
+
+	Centre_X_Selected = App->CL_Scene->V_Object[Message_Index]->S_Message[0]->PosXCentre_Flag;
+	Centre_Y_Selected = App->CL_Scene->V_Object[Message_Index]->S_Message[0]->PosYCentre_Flag;
+
+	Float_Colour = ImVec4(App->CL_Scene->V_Object[Message_Index]->S_Message[0]->Text_Colour.x / 255.0f,
+		App->CL_Scene->V_Object[Message_Index]->S_Message[0]->Text_Colour.y / 255.0f,
+		App->CL_Scene->V_Object[Message_Index]->S_Message[0]->Text_Colour.z / 255.0f,
+		255);
+
+	BackGround_color = ImVec4(App->CL_Scene->V_Object[Message_Index]->S_Message[0]->BackGround_Colour.x / 255.0f,
+		App->CL_Scene->V_Object[Message_Index]->S_Message[0]->BackGround_Colour.y / 255.0f,
+		App->CL_Scene->V_Object[Message_Index]->S_Message[0]->BackGround_Colour.z / 255.0f,
+		255);
+
+	App->CL_Scene->V_Object[Index]->Show_Message_Flag = 1;
+
+	Show_Dialog_MessageEditor = 1;
+}
+
+// *************************************************************************
+// *		Dialog_MessageEditor:- Terry and Hazel Flanigan 2024  		   *
+// *************************************************************************
+void CL64_ImGui_Dialogs::Dialog_MessageEditor(void)
+{
+
+	ImGui::SetNextWindowPos(ImVec2(Message_Editor_PosX, Message_Editor_PosY), ImGuiCond_FirstUseEver);
+	ImGui::SetNextWindowSize(ImVec2(200, 340), ImGuiCond_FirstUseEver);
+
+	ImGui::PushStyleColor(ImGuiCol_WindowBg, IM_COL32(239, 239, 239, 255));
+
+	if (!ImGui::Begin("Message Editor", &Show_Dialog_MessageEditor, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoResize))
+	{
+		ImGui::End();
+	}
+	else
+	{
+		if (Message_Editor_StartPos == 0)
+		{
+			ImVec2 Size = ImGui::GetWindowSize();
+			Message_Editor_PosX = (((float)App->CL_Ogre->Ogre3D_Listener->View_Width - Size.x) - 10);
+			Message_Editor_PosY = 10;
+
+			ImGui::SetWindowPos("Message Editor", ImVec2(Message_Editor_PosX, Message_Editor_PosY));
+
+			Message_Editor_StartPos = 1;
+		}
+
+		float spacingX = ImGui::GetStyle().ItemInnerSpacing.x;
+
+		ImGui::Indent();
+		ImGui::Spacing();
+
+		// ------------------------------------------------------------- Pos X
+		ImGui::InputFloat("X", &App->CL_Scene->V_Object[Message_Index]->S_Message[0]->Message_PosX, Float_Step, 0, "%.3f");
+
+		ImGui::Checkbox("Centre X", &Centre_X_Selected);
+
+		if (Centre_X_Selected)
+		{
+			App->CL_Scene->V_Object[Message_Index]->S_Message[0]->PosXCentre_Flag = 1;
+		}
+		else
+		{
+			App->CL_Scene->V_Object[Message_Index]->S_Message[0]->PosXCentre_Flag = 0;
+		}
+
+		ImGui::Separator();
+		// ------------------------------------------------------------ - Pos Y
+		ImGui::InputFloat("Y", &App->CL_Scene->V_Object[Message_Index]->S_Message[0]->Message_PosY, Float_Step, 0, "%.3f");
+
+		ImGui::Checkbox("Centre Y", &Centre_Y_Selected);
+
+		if (Centre_Y_Selected)
+		{
+			App->CL_Scene->V_Object[Message_Index]->S_Message[0]->PosYCentre_Flag = 1;
+		}
+		else
+		{
+			App->CL_Scene->V_Object[Message_Index]->S_Message[0]->PosYCentre_Flag = 0;
+		}
+
+
+
+		ImGui::Spacing();
+		ImGui::Spacing();
+		ImGui::Spacing();
+		ImGui::Separator();
+		ImGui::Spacing();
+
+		ImGui::Unindent();
+
+		ImGuiColorEditFlags misc_flags = (ImGuiColorEditFlags_DisplayRGB | ImGuiColorEditFlags_InputRGB | ImGuiColorEditFlags_Uint8);
+
+
+		ImGui::ColorEdit3("Text##1", (float*)&Float_Colour, misc_flags);
+
+		App->CL_Scene->V_Object[Message_Index]->S_Message[0]->Text_Colour.x = Float_Colour.x * 255.0f;
+		App->CL_Scene->V_Object[Message_Index]->S_Message[0]->Text_Colour.y = Float_Colour.y * 255.0f;
+		App->CL_Scene->V_Object[Message_Index]->S_Message[0]->Text_Colour.z = Float_Colour.z * 255.0f;
+
+		ImGui::ColorEdit3("BG##1", (float*)&BackGround_color, misc_flags);
+
+		App->CL_Scene->V_Object[Message_Index]->S_Message[0]->BackGround_Colour.x = BackGround_color.x * 255.0f;
+		App->CL_Scene->V_Object[Message_Index]->S_Message[0]->BackGround_Colour.y = BackGround_color.y * 255.0f;
+		App->CL_Scene->V_Object[Message_Index]->S_Message[0]->BackGround_Colour.z = BackGround_color.z * 255.0f;
+
+		ImGui::Checkbox("Show Back Ground", &App->CL_Scene->V_Object[Message_Index]->S_Message[0]->Show_BackGround);
+
+		ImGui::Spacing();
+		ImGui::Spacing();
+		ImGui::Spacing();
+		ImGui::Spacing();
+		ImGui::Indent();
+		ImGui::Indent();
+		ImGui::Indent();
+
+		ImGui::Separator();
+		ImGui::Spacing();
+		ImGui::Spacing();
+
+		if (ImGui::Button("Close"))
+		{
+			Float_Exit = 1;
+			Show_Dialog_MessageEditor = 0;
+			MessageEditor_Canceld = 0;
+			ImGui::PopStyleColor();
+			ImGui::End();
+		}
+
+		//ImGui::SameLine(0.0f, spacingX);
+
+		/*if (ImGui::Button("Close"))
+		{
+			Float_Exit = 1;
+			Show_Dialog_MessageEditor = 0;
+			MessageEditor_Canceld = 1;
+			ImGui::End();
+		}*/
+
+		if (Float_Exit == 0)
+		{
+			MessageEditor_Canceld = 1;
 			ImGui::PopStyleColor();
 			ImGui::End();
 		}

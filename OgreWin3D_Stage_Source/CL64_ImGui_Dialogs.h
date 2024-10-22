@@ -31,8 +31,12 @@ public:
 	~CL64_ImGui_Dialogs(void);
 
 	void BackGround_Render_Loop(void);
+
 	void Start_Dialog_Float(float Step, float StartValue, char* Banner);
 	void Dialog_Float(void);
+
+	void Start_Dialog_MessageEditor(int Index);
+	void Dialog_MessageEditor(void);
 
 	// -------------- Float Dialog
 	bool Show_Dialog_Float;
@@ -45,6 +49,23 @@ public:
 	float m_Dialog_Float_Copy;
 	char Float_Banner[MAX_PATH];
 	bool Float_Exit;
+
+	// -------------- General
+	ImVec4 Float_Colour;
+	
+	// -------------- Message Editor Dialog
+	bool Centre_X_Selected;
+	bool Centre_Y_Selected;
+	bool Show_Dialog_MessageEditor;
+	bool MessageEditor_Canceld;
+	float Message_Editor_PosX;
+	float Message_Editor_PosY;
+	bool Message_Editor_StartPos;
+	int Message_Index;
+	ImVec4 BackGround_color;
+
+private:
+
 
 };
 
