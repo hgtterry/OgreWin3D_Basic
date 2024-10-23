@@ -726,12 +726,12 @@ bool CL64_Properties::Edit_Messages(LPARAM lParam)
 	{
 		App->CL_ImGui_Dialogs->Start_Dialog_MessageEditor(Index);
 
-		while (App->CL_ImGui_Dialogs->Show_Dialog_MessageEditor == 1)
+		while (App->CL_ImGui_Dialogs->flag_Show_Dialog_MessageEditor == 1)
 		{
 			App->CL_ImGui_Dialogs->BackGround_Render_Loop();
 		}
 
-		App->CL_ImGui_Dialogs->Show_Dialog_MessageEditor = 0;
+		App->CL_ImGui_Dialogs->flag_Show_Dialog_MessageEditor = 0;
 
 		App->CL_Scene->V_Object[Index]->Show_Message_Flag = 0;
 
@@ -751,12 +751,12 @@ bool CL64_Properties::Edit_Messages(LPARAM lParam)
 	{
 		App->CL_ImGui_Dialogs->Start_Dialog_MessageEditor(Index);
 
-		while (App->CL_ImGui_Dialogs->Show_Dialog_MessageEditor == 1)
+		while (App->CL_ImGui_Dialogs->flag_Show_Dialog_MessageEditor == 1)
 		{
 			App->CL_ImGui_Dialogs->BackGround_Render_Loop();
 		}
 
-		App->CL_ImGui_Dialogs->Show_Dialog_MessageEditor = 0;
+		App->CL_ImGui_Dialogs->flag_Show_Dialog_MessageEditor = 0;
 
 		App->CL_Scene->V_Object[Index]->Show_Message_Flag = 0;
 
@@ -898,6 +898,26 @@ bool CL64_Properties::Edit_Move_Entity(LPARAM lParam)
 	result = strcmp(btext, "Move_Object");
 	if (result == 0)
 	{
+
+		App->CL_ImGui_Dialogs->Start_Move_Entity_Editor(Index);
+
+		while (App->CL_ImGui_Dialogs->flag_Show_Move_Ent_Editor == 1)
+		{
+			App->CL_ImGui_Dialogs->BackGround_Render_Loop();
+		}
+
+		App->CL_ImGui_Dialogs->flag_Show_Move_Ent_Editor = 0;
+
+		//App->CL_Scene->V_Object[Index]->Show_Message_Flag = 0;
+
+		App->CL_Properties->Mark_As_Altered(Index);
+
+		App->CL_Panels->Disable_Panels(false);
+		App->CL_Panels->Show_FileView(true);
+		App->CL_Panels->Show_Properties(true);
+
+		Update_ListView_Move_Entities();
+
 		/*strcpy(App->Cl_Dialogs->btext, "Select Object to Move");
 		strcpy(App->SBC_Dialogs->Chr_DropText, App->SBC_Scene->V_Object[Index]->S_MoveType[0]->Object_Name);
 

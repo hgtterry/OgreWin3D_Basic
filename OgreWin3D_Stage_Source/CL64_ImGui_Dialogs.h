@@ -38,6 +38,9 @@ public:
 	void Start_Dialog_MessageEditor(int Index);
 	void Dialog_MessageEditor(void);
 
+	void Start_Move_Entity_Editor(int Index);
+	void Move_Entity_Editor(void);
+
 	// -------------- Float Dialog
 	bool Show_Dialog_Float;
 	float Float_Step;
@@ -54,16 +57,27 @@ public:
 	ImVec4 Float_Colour;
 	
 	// -------------- Message Editor Dialog
-	bool Centre_X_Selected;
-	bool Centre_Y_Selected;
-	bool Show_Dialog_MessageEditor;
-	bool MessageEditor_Canceld;
 	float Message_Editor_PosX;
 	float Message_Editor_PosY;
-	bool Message_Editor_StartPos;
 	int Message_Index;
 	ImVec4 BackGround_color;
 
+	bool flag_Centre_X_Selected;
+	bool flag_Centre_Y_Selected;
+	bool flag_Show_Dialog_MessageEditor;
+	bool flag_MessageEditor_Canceld;
+	bool flag_Message_Editor_StartPos;
+	
+
+	// -------------- Move Entity Editor
+	float Move_Ent_Editor_PosX;
+	float Move_Ent_Editor_PosY;
+	int Move_Ent_Index;
+
+	bool flag_Show_Move_Ent_Editor;
+	bool flag_Move_Ent_Canceld;
+	bool flag_Move_Ent_Editor_StartPos;
+	
 private:
 
 

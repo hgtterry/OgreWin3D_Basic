@@ -263,9 +263,14 @@ void CL64_ImGui::ImGui_Render_Loop(void)
 		App->CL_Materials->Material_Editor_Gui();
 	}
 
-	if (App->CL_ImGui_Dialogs->Show_Dialog_MessageEditor == 1)
+	if (App->CL_ImGui_Dialogs->flag_Show_Dialog_MessageEditor == 1)
 	{
 		App->CL_ImGui_Dialogs->Dialog_MessageEditor();
+	}
+
+	if (App->CL_ImGui_Dialogs->flag_Show_Move_Ent_Editor == 1)
+	{
+		App->CL_ImGui_Dialogs->Move_Entity_Editor();
 	}
 	
 }
