@@ -908,8 +908,6 @@ bool CL64_Properties::Edit_Move_Entity(LPARAM lParam)
 
 		App->CL_ImGui_Dialogs->flag_Show_Move_Ent_Editor = 0;
 
-		//App->CL_Scene->V_Object[Index]->Show_Message_Flag = 0;
-
 		App->CL_Properties->Mark_As_Altered(Index);
 
 		App->CL_Panels->Disable_Panels(false);
@@ -955,59 +953,22 @@ bool CL64_Properties::Edit_Move_Entity(LPARAM lParam)
 	result = strcmp(btext, "Axis");
 	if (result == 0)
 	{
-		//int TestChr = 1;
-		//strcpy(App->Cl_Dialogs->btext, "Select Axis ( World )");
+		App->CL_ImGui_Dialogs->Start_Move_Entity_Editor(Index);
 
-		//if (App->SBC_Scene->V_Object[Index]->S_MoveType[0]->WhatDirection == Enums::Axis_x)
-		//{
-		//	strcpy(App->SBC_Dialogs->Chr_DropText, "X");
-		//}
+		while (App->CL_ImGui_Dialogs->flag_Show_Move_Ent_Editor == 1)
+		{
+			App->CL_ImGui_Dialogs->BackGround_Render_Loop();
+		}
 
-		//if (App->SBC_Scene->V_Object[Index]->S_MoveType[0]->WhatDirection == Enums::Axis_y)
-		//{
-		//	strcpy(App->SBC_Dialogs->Chr_DropText, "Y");
-		//}
+		App->CL_ImGui_Dialogs->flag_Show_Move_Ent_Editor = 0;
 
-		//if (App->SBC_Scene->V_Object[Index]->S_MoveType[0]->WhatDirection == Enums::Axis_z)
-		//{
-		//	strcpy(App->SBC_Dialogs->Chr_DropText, "Z");
-		//}
+		App->CL_Properties->Mark_As_Altered(Index);
 
-		//App->SBC_Dialogs->DropList_Data = Enums::DropDialog_TrigMoveAxis;
-		//App->SBC_Dialogs->Dialog_DropGen();
+		App->CL_Panels->Disable_Panels(false);
+		App->CL_Panels->Show_FileView(true);
+		App->CL_Panels->Show_Properties(true);
 
-		//if (App->SBC_Dialogs->Canceled == 0)
-		//{
-
-		//	// X Axis
-		//	TestChr = strcmp(App->SBC_Dialogs->Chr_DropText, "X");
-		//	if (TestChr == 0)
-		//	{
-		//		App->SBC_Scene->V_Object[Index]->S_MoveType[0]->WhatDirection = Enums::Axis_x;
-
-		//	}
-
-		//	// y Axis
-		//	TestChr = strcmp(App->SBC_Dialogs->Chr_DropText, "Y");
-		//	if (TestChr == 0)
-		//	{
-		//		App->SBC_Scene->V_Object[Index]->S_MoveType[0]->WhatDirection = Enums::Axis_y;
-
-		//	}
-
-		//	// Z Axis
-		//	TestChr = strcmp(App->SBC_Dialogs->Chr_DropText, "Z");
-		//	if (TestChr == 0)
-		//	{
-		//		App->SBC_Scene->V_Object[Index]->S_MoveType[0]->WhatDirection = Enums::Axis_z;
-		//	}
-
-		//	Mark_As_Altered(Index);
-
-		//	Update_ListView_Move_Entities();
-
-		//	App->SBC_Physics->Reset_Triggers();
-		//}
+		Update_ListView_Move_Entities();
 
 		return 1;
 	}
@@ -1015,35 +976,24 @@ bool CL64_Properties::Edit_Move_Entity(LPARAM lParam)
 	result = strcmp(btext, "Distance");
 	if (result == 0)
 	{
-		/*strcpy(App->Cl_Dialogs->btext, "Set Offset Distance");
+		App->CL_ImGui_Dialogs->Start_Move_Entity_Editor(Index);
 
-		char buff[256];
-
-		sprintf(buff, "%f", App->SBC_Scene->V_Object[Index]->S_MoveType[0]->Move_Distance);
-		strcpy(App->Cl_Dialogs->Chr_Float, buff);
-
-		App->Cl_Dialogs->Dialog_Float();
-
-		if (App->Cl_Dialogs->Canceled == 0)
+		while (App->CL_ImGui_Dialogs->flag_Show_Move_Ent_Editor == 1)
 		{
+			App->CL_ImGui_Dialogs->BackGround_Render_Loop();
+		}
 
-			if (App->Cl_Dialogs->mFloat < 0)
-			{
-				App->SBC_Scene->V_Object[Index]->S_MoveType[0]->IsNegative = true;
-			}
-			else
-			{
-				App->SBC_Scene->V_Object[Index]->S_MoveType[0]->IsNegative = false;
-			}
+		App->CL_ImGui_Dialogs->flag_Show_Move_Ent_Editor = 0;
 
-			App->SBC_Scene->V_Object[Index]->S_MoveType[0]->Move_Distance = App->Cl_Dialogs->mFloat;
+		//App->CL_Scene->V_Object[Index]->Show_Message_Flag = 0;
 
-			Mark_As_Altered(Index);
+		App->CL_Properties->Mark_As_Altered(Index);
 
-			Update_ListView_Move_Entities();
+		App->CL_Panels->Disable_Panels(false);
+		App->CL_Panels->Show_FileView(true);
+		App->CL_Panels->Show_Properties(true);
 
-			App->SBC_Physics->Reset_Triggers();
-		}*/
+		Update_ListView_Move_Entities();
 
 		return 1;
 	}
@@ -1051,24 +1001,24 @@ bool CL64_Properties::Edit_Move_Entity(LPARAM lParam)
 	result = strcmp(btext, "Speed");
 	if (result == 0)
 	{
-		/*strcpy(App->Cl_Dialogs->btext, "Set Movment Speed");
+		App->CL_ImGui_Dialogs->Start_Move_Entity_Editor(Index);
 
-		char buff[256];
-		sprintf(buff, "%f", App->SBC_Scene->V_Object[Index]->S_MoveType[0]->Speed);
-		strcpy(App->Cl_Dialogs->Chr_Float, buff);
-
-		App->Cl_Dialogs->Dialog_Float();
-
-		if (App->Cl_Dialogs->Canceled == 0)
+		while (App->CL_ImGui_Dialogs->flag_Show_Move_Ent_Editor == 1)
 		{
+			App->CL_ImGui_Dialogs->BackGround_Render_Loop();
+		}
 
-			App->SBC_Scene->V_Object[Index]->S_MoveType[0]->Speed = App->Cl_Dialogs->mFloat;
+		App->CL_ImGui_Dialogs->flag_Show_Move_Ent_Editor = 0;
 
-			Mark_As_Altered(Index);
+		//App->CL_Scene->V_Object[Index]->Show_Message_Flag = 0;
 
-			Update_ListView_Move_Entities();
-			App->SBC_Physics->Reset_Triggers();
-		}*/
+		App->CL_Properties->Mark_As_Altered(Index);
+
+		App->CL_Panels->Disable_Panels(false);
+		App->CL_Panels->Show_FileView(true);
+		App->CL_Panels->Show_Properties(true);
+
+		Update_ListView_Move_Entities();
 
 		return 1;
 	}

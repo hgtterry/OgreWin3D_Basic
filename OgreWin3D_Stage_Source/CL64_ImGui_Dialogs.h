@@ -75,6 +75,10 @@ public:
 	float Move_Ent_Editor_PosY;
 	int Move_Ent_Index;
 
+	std::vector<std::string> V_Move_Ent_Object_List;
+	int Move_Ent_ObjectCount;
+	int Move_Ent_item_current_idx;
+
 	bool flag_Show_Move_Ent_Editor;
 	bool flag_Move_Ent_Canceld;
 	bool flag_Move_Ent_Editor_StartPos;
