@@ -501,6 +501,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				}
 			}
 
+			App->CL_ImGui_Dialogs->Close_All_Dialogs();
+
 			if (App->CL_Ogre->Ogre3D_Listener->flag_StopOgre == 0)
 			{
 				App->CL_Ogre->Ogre3D_Listener->flag_StopOgre = 1;
@@ -571,6 +573,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				return 1;
 			}
 		}
+
+		App->CL_ImGui_Dialogs->Close_All_Dialogs();
 
 		if (App->CL_Ogre->Ogre3D_Listener->flag_StopOgre == 0)
 		{

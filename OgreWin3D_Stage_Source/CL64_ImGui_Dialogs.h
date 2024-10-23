@@ -30,6 +30,7 @@ public:
 	CL64_ImGui_Dialogs(void);
 	~CL64_ImGui_Dialogs(void);
 
+	void Close_All_Dialogs(void);
 	void BackGround_Render_Loop(void);
 
 	void Start_Dialog_Float(float Step, float StartValue, char* Banner);
@@ -77,7 +78,10 @@ public:
 	bool flag_Show_Move_Ent_Editor;
 	bool flag_Move_Ent_Canceld;
 	bool flag_Move_Ent_Editor_StartPos;
-	
+	bool flag_Move_Ent_PosX_Selected;
+	bool flag_Move_Ent_PosY_Selected;
+	bool flag_Move_Ent_PosZ_Selected;
+
 private:
 
 

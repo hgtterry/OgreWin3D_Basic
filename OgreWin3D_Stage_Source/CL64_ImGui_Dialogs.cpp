@@ -54,14 +54,31 @@ CL64_ImGui_Dialogs::CL64_ImGui_Dialogs(void)
 	flag_Show_Move_Ent_Editor = 0;
 	flag_Move_Ent_Canceld = 0;
 	flag_Move_Ent_Editor_StartPos = 0;
+	flag_Move_Ent_PosX_Selected = 0;
+	flag_Move_Ent_PosY_Selected = 0;
+	flag_Move_Ent_PosZ_Selected = 0;
+
 	Move_Ent_Editor_PosX = 10;
 	Move_Ent_Editor_PosY = 10;
 	Move_Ent_Index = 0;
-	
+
 }
 
 CL64_ImGui_Dialogs::~CL64_ImGui_Dialogs(void)
 {
+}
+
+// *************************************************************************
+// *			Close_All_Dialogs:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+void CL64_ImGui_Dialogs::Close_All_Dialogs(void)
+{
+	Show_Dialog_Float = 0;
+	flag_Show_Dialog_MessageEditor = 0;
+	flag_Show_Move_Ent_Editor = 0;
+
+	//Show_ColourPicker = 0;
+	
 }
 
 // *************************************************************************
@@ -355,7 +372,7 @@ void CL64_ImGui_Dialogs::Dialog_MessageEditor(void)
 // *************************************************************************
 void CL64_ImGui_Dialogs::Start_Move_Entity_Editor(int Index)
 {
-
+	Move_Ent_Index = Index;
 	Float_Exit = 0;
 	flag_Move_Ent_Canceld = 0;
 
@@ -365,24 +382,31 @@ void CL64_ImGui_Dialogs::Start_Move_Entity_Editor(int Index)
 	App->CL_Panels->Show_FileView(false);
 	App->CL_Panels->Show_Properties(false);
 
+	if (App->CL_Scene->V_Object[Move_Ent_Index]->S_MoveType[0]->WhatDirection == Enums::Axis_x)
+	{
+		flag_Move_Ent_PosX_Selected = 1;
+		flag_Move_Ent_PosY_Selected = 0;
+		flag_Move_Ent_PosZ_Selected = 0;
+	}
+
+	if (App->CL_Scene->V_Object[Move_Ent_Index]->S_MoveType[0]->WhatDirection == Enums::Axis_y)
+	{
+		flag_Move_Ent_PosX_Selected = 0;
+		flag_Move_Ent_PosY_Selected = 1;
+		flag_Move_Ent_PosZ_Selected = 0;
+	}
+
+	if (App->CL_Scene->V_Object[Move_Ent_Index]->S_MoveType[0]->WhatDirection == Enums::Axis_z)
+	{
+		flag_Move_Ent_PosX_Selected = 0;
+		flag_Move_Ent_PosY_Selected = 0;
+		flag_Move_Ent_PosZ_Selected = 1;
+	}
+
 	Message_Editor_PosX = 10;
 	Message_Editor_PosY = 10;
 	flag_Move_Ent_Editor_StartPos = 0;
-	Move_Ent_Index = Index;
-
-	/*Centre_X_Selected = App->CL_Scene->V_Object[Message_Index]->S_Message[0]->PosXCentre_Flag;
-	Centre_Y_Selected = App->CL_Scene->V_Object[Message_Index]->S_Message[0]->PosYCentre_Flag;
-
-	Float_Colour = ImVec4(App->CL_Scene->V_Object[Message_Index]->S_Message[0]->Text_Colour.x / 255.0f,
-		App->CL_Scene->V_Object[Message_Index]->S_Message[0]->Text_Colour.y / 255.0f,
-		App->CL_Scene->V_Object[Message_Index]->S_Message[0]->Text_Colour.z / 255.0f,
-		255);
-
-	BackGround_color = ImVec4(App->CL_Scene->V_Object[Message_Index]->S_Message[0]->BackGround_Colour.x / 255.0f,
-		App->CL_Scene->V_Object[Message_Index]->S_Message[0]->BackGround_Colour.y / 255.0f,
-		App->CL_Scene->V_Object[Message_Index]->S_Message[0]->BackGround_Colour.z / 255.0f,
-		255);*/
-
+	
 	flag_Show_Move_Ent_Editor = 1;
 }
 
@@ -422,33 +446,10 @@ void CL64_ImGui_Dialogs::Move_Entity_Editor(void)
 		// ------------------------------------------------------------- Pos X
 		ImGui::InputFloat("Distance", &App->CL_Scene->V_Object[Move_Ent_Index]->S_MoveType[0]->Move_Distance, Float_Step, 0,"%.3f");
 
-		/*ImGui::Checkbox("Centre X", &Centre_X_Selected);
-
-		if (Centre_X_Selected)
-		{
-			App->CL_Scene->V_Object[Message_Index]->S_Message[0]->PosXCentre_Flag = 1;
-		}
-		else
-		{
-			App->CL_Scene->V_Object[Message_Index]->S_Message[0]->PosXCentre_Flag = 0;
-		}*/
-
 		ImGui::Separator();
 		// ------------------------------------------------------------ - Pos Y
 		ImGui::InputFloat("Speed", &App->CL_Scene->V_Object[Move_Ent_Index]->S_MoveType[0]->Speed, Float_Step, 0, "%.3f");
 
-		/*ImGui::Checkbox("Centre Y", &Centre_Y_Selected);
-
-		if (Centre_Y_Selected)
-		{
-			App->CL_Scene->V_Object[Message_Index]->S_Message[0]->PosYCentre_Flag = 1;
-		}
-		else
-		{
-			App->CL_Scene->V_Object[Message_Index]->S_Message[0]->PosYCentre_Flag = 0;
-		}*/
-
-
 
 		ImGui::Spacing();
 		ImGui::Spacing();
@@ -456,24 +457,47 @@ void CL64_ImGui_Dialogs::Move_Entity_Editor(void)
 		ImGui::Separator();
 		ImGui::Spacing();
 
-		//ImGui::Unindent();
+		ImGui::Indent();
+		ImGui::Indent();
 
-		//ImGuiColorEditFlags misc_flags = (ImGuiColorEditFlags_DisplayRGB | ImGuiColorEditFlags_InputRGB | ImGuiColorEditFlags_Uint8);
+		ImGui::Text("         Axis");
 
+		ImGui::Checkbox("X", &flag_Move_Ent_PosX_Selected);
+		
+		if (flag_Move_Ent_PosX_Selected == 1)
+		{
+			flag_Move_Ent_PosY_Selected = 0;
+			flag_Move_Ent_PosZ_Selected = 0;
 
-		//ImGui::ColorEdit3("Text##1", (float*)&Float_Colour, misc_flags);
+			App->CL_Scene->V_Object[Move_Ent_Index]->S_MoveType[0]->WhatDirection = Enums::Axis_x;
+		}
 
-		/*App->CL_Scene->V_Object[Message_Index]->S_Message[0]->Text_Colour.x = Float_Colour.x * 255.0f;
-		App->CL_Scene->V_Object[Message_Index]->S_Message[0]->Text_Colour.y = Float_Colour.y * 255.0f;
-		App->CL_Scene->V_Object[Message_Index]->S_Message[0]->Text_Colour.z = Float_Colour.z * 255.0f;*/
+		ImGui::SameLine(0.0f, spacingX);
 
-		//ImGui::ColorEdit3("BG##1", (float*)&BackGround_color, misc_flags);
+		ImGui::Checkbox("Y", &flag_Move_Ent_PosY_Selected);
+		
+		if (flag_Move_Ent_PosY_Selected == 1)
+		{
+			flag_Move_Ent_PosX_Selected = 0;
+			flag_Move_Ent_PosZ_Selected = 0;
 
-		/*App->CL_Scene->V_Object[Message_Index]->S_Message[0]->BackGround_Colour.x = BackGround_color.x * 255.0f;
-		App->CL_Scene->V_Object[Message_Index]->S_Message[0]->BackGround_Colour.y = BackGround_color.y * 255.0f;
-		App->CL_Scene->V_Object[Message_Index]->S_Message[0]->BackGround_Colour.z = BackGround_color.z * 255.0f;*/
+			App->CL_Scene->V_Object[Move_Ent_Index]->S_MoveType[0]->WhatDirection = Enums::Axis_y;
+		}
 
-		//ImGui::Checkbox("Show Back Ground", &App->CL_Scene->V_Object[Message_Index]->S_Message[0]->Show_BackGround);
+		ImGui::SameLine(0.0f, spacingX);
+
+		ImGui::Checkbox("Z", &flag_Move_Ent_PosZ_Selected);
+
+		if (flag_Move_Ent_PosZ_Selected == 1)
+		{
+			flag_Move_Ent_PosX_Selected = 0;
+			flag_Move_Ent_PosY_Selected = 0;
+
+			App->CL_Scene->V_Object[Move_Ent_Index]->S_MoveType[0]->WhatDirection = Enums::Axis_z;
+		}
+
+		ImGui::Unindent();
+		ImGui::Unindent();
 
 		ImGui::Spacing();
 		ImGui::Spacing();
@@ -507,6 +531,12 @@ void CL64_ImGui_Dialogs::Move_Entity_Editor(void)
 		{
 			App->CL_Camera->Camera_Goto_Object(App->CL_Properties->Current_Selected_Object);
 		}
+
+		ImGui::Spacing();
+		ImGui::Spacing();
+		ImGui::Spacing();
+		ImGui::Separator();
+		ImGui::Spacing();
 
 		if (ImGui::Button("Close"))
 		{
