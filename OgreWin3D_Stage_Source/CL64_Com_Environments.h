@@ -29,6 +29,7 @@ public:
 	CL64_Com_Environments();
 	~CL64_Com_Environments();
 
+	bool Add_New_Environ_Entity(bool FirstOne);
 	void V_Set_Environ_Defaults(int Index);
 	bool Create_Environ_Entity(int Index);
 	int Set_Environment_By_Index(bool PlayMusic, int Index);
