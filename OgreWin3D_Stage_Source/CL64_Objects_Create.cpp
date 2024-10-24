@@ -40,11 +40,11 @@ CL64_Objects_Create::~CL64_Objects_Create(void)
 void CL64_Objects_Create::Add_Objects_From_MeshViewer()
 {
 
-	//if (App->CL_MeshViewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Collectables) // Collectables
-	//{
-	//	//App->CL_Com_Collectables->Add_New_Collectable();
-	//	return;
-	//}
+	if (App->CL_MeshViewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Collectables) // Collectables
+	{
+		App->CL_Com_Collectables->Add_New_Collectable();
+		return;
+	}
 
 
 	int Index = App->CL_Scene->Object_Count;

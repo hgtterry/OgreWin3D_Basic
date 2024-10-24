@@ -30,6 +30,7 @@ public:
 	CL64_Com_Collectables(void);
 	~CL64_Com_Collectables(void);
 
+	bool Add_New_Collectable();
 	bool Create_Collectable_Entity(int Index);
 	void Set_Collectables_Defaults(int Index);
 	void Rename_Collectable(int Index);

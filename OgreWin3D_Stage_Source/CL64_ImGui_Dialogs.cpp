@@ -468,6 +468,36 @@ void CL64_ImGui_Dialogs::Move_Entity_Editor(void)
 
 		float spacingX = ImGui::GetStyle().ItemInnerSpacing.x;
 
+		ImGui::Indent();
+
+		static ImGuiComboFlags flags = 0;
+		//const char* combo_preview_value = items[item_current_idx];  // Pass in the preview value visible before opening the combo (it could be anything)
+		if (ImGui::BeginCombo("Object", V_Move_Ent_Object_List[Move_Ent_item_current_idx].c_str(), flags))
+		{
+			for (int n = 0; n < Move_Ent_ObjectCount; n++)
+			{
+				const bool is_selected = (Move_Ent_item_current_idx == n);
+				if (ImGui::Selectable(V_Move_Ent_Object_List[n].c_str(), is_selected))
+				{
+					Move_Ent_item_current_idx = n;
+					strcpy(App->CL_Scene->V_Object[Move_Ent_Index]->S_MoveType[0]->Object_Name, V_Move_Ent_Object_List[n].c_str());
+					int MoveObjectIndex = App->CL_Object->GetIndex_By_Name(App->CL_Scene->V_Object[Move_Ent_Index]->S_MoveType[0]->Object_Name);
+					App->CL_Scene->V_Object[Move_Ent_Index]->S_MoveType[0]->Object_To_Move_Index = MoveObjectIndex;
+					App->Flash_Window();
+				}
+
+				// Set the initial focus when opening the combo (scrolling + keyboard navigation focus)
+				if (is_selected)
+				{
+					ImGui::SetItemDefaultFocus();
+				}
+			}
+
+			ImGui::EndCombo();
+		}
+
+		ImGui::Unindent();
+		ImGui::Separator();
 		//ImGui::Indent();
 		ImGui::Spacing();
 
@@ -558,32 +588,6 @@ void CL64_ImGui_Dialogs::Move_Entity_Editor(void)
 		if (ImGui::Button("Goto"))
 		{
 			App->CL_Camera->Camera_Goto_Object(App->CL_Properties->Current_Selected_Object);
-		}
-
-		static ImGuiComboFlags flags = 0;
-		//const char* combo_preview_value = items[item_current_idx];  // Pass in the preview value visible before opening the combo (it could be anything)
-		if (ImGui::BeginCombo("Object", V_Move_Ent_Object_List[Move_Ent_item_current_idx].c_str(), flags))
-		{
-			for (int n = 0; n < Move_Ent_ObjectCount; n++)
-			{
-				const bool is_selected = (Move_Ent_item_current_idx == n);
-				if (ImGui::Selectable(V_Move_Ent_Object_List[n].c_str(), is_selected))
-				{
-					Move_Ent_item_current_idx = n;
-					strcpy(App->CL_Scene->V_Object[Move_Ent_Index]->S_MoveType[0]->Object_Name, V_Move_Ent_Object_List[n].c_str());
-					int MoveObjectIndex = App->CL_Object->GetIndex_By_Name(App->CL_Scene->V_Object[Move_Ent_Index]->S_MoveType[0]->Object_Name);
-					App->CL_Scene->V_Object[Move_Ent_Index]->S_MoveType[0]->Object_To_Move_Index = MoveObjectIndex;
-					App->Flash_Window();
-				}
-
-				// Set the initial focus when opening the combo (scrolling + keyboard navigation focus)
-				if (is_selected)
-				{
-					ImGui::SetItemDefaultFocus();
-				}
-			}
-
-			ImGui::EndCombo();
 		}
 
 		ImGui::Spacing();

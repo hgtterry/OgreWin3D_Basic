@@ -35,6 +35,57 @@ CL64_Com_Collectables::~CL64_Com_Collectables(void)
 }
 
 // *************************************************************************
+// *		Add_New_Collectable:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+bool CL64_Com_Collectables::Add_New_Collectable()
+{
+	char B_Name[MAX_PATH];
+	char ConNum[MAX_PATH];
+
+	int Index = App->CL_Scene->Object_Count;
+
+	App->CL_Scene->V_Object[Index] = new Base_Object();
+	App->CL_Scene->V_Object[Index]->S_Collectable[0] = new Collectable_type;
+	App->CL_Com_Collectables->Set_Collectables_Defaults(Index);
+
+	Base_Object* Object = App->CL_Scene->V_Object[Index];
+	Object->This_Object_UniqueID = App->CL_Scene->UniqueID_Object_Counter; // Unique ID
+
+	strcpy(Object->Mesh_Name, App->CL_MeshViewer->Object_Name);
+	strcpy(Object->Mesh_FileName, App->CL_MeshViewer->Selected_MeshFile);
+	strcpy(Object->Mesh_Resource_Path, App->CL_MeshViewer->m_Resource_Folder_Full);
+	//strcpy(Object->Material_File, App->CL_MeshViewer->);
+
+	strcpy_s(B_Name, "Collectable_");
+	_itoa(Index, ConNum, 10);
+	strcat(B_Name, ConNum);
+	strcpy(App->CL_Scene->V_Object[Index]->Mesh_Name, B_Name);
+
+	Ogre::Vector3 Pos = App->CL_Object->GetPlacement(-50);
+	App->CL_Scene->V_Object[Index]->Mesh_Pos = Pos;
+
+	Object->Type = Enums::Bullet_Type_Static;
+	Object->Shape = Enums::Shape_Box;
+
+
+	Create_Collectable_Entity(Index);
+
+	HTREEITEM Temp = App->CL_FileView->Add_Item(App->CL_FileView->FV_Collectables_Folder, App->CL_Scene->V_Object[Index]->Mesh_Name, Index, true);
+	App->CL_Scene->V_Object[Index]->FileViewItem = Temp;
+
+	App->CL_FileView->SelectItem(App->CL_Scene->V_Object[Index]->FileViewItem);
+	App->CL_FileView->Set_FolderActive(App->CL_FileView->FV_EntitiesFolder);
+
+	App->CL_Scene->UniqueID_Object_Counter++; // Unique ID
+	App->CL_Scene->Object_Count++;  // Must be last line
+
+	App->CL_Scene->V_Object[Index]->Altered = 1;
+	App->CL_Scene->flag_Scene_Modified = 1;
+
+	return 1;
+}
+
+// *************************************************************************
 // *	Create_Collectable_Entity:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
 bool CL64_Com_Collectables::Create_Collectable_Entity(int Index)

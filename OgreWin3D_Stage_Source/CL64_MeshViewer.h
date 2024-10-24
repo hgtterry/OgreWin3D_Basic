@@ -63,6 +63,8 @@ public:
 	int Physics_Shape;
 	int Physics_Type;
 
+	int Mesh_Viewer_Mode;
+
 private:
 	static LRESULT CALLBACK Proc_MeshViewer_Dlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Proc_MeshViewer_3D(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);

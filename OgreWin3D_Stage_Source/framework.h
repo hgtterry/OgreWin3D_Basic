@@ -233,6 +233,14 @@ namespace Enums
 		FileView_UserObjects_Folder = 31,
 		FileView_UserObjects_File = 32
 	};
+
+	enum Mesh_Viewer
+	{
+		Mesh_Viewer_None = -1,
+		Mesh_Viewer_Objects = 0,
+		Mesh_Viewer_Collectables = 1,
+		Mesh_Viewer_Area = 2
+	};
 }
 
 #define Debug App->Debug_Text();

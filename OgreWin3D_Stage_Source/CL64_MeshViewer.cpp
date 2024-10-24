@@ -76,6 +76,8 @@ CL64_MeshViewer::CL64_MeshViewer(void)
 	m_Resource_Folder_Full[0] = 0;
 	Selected_MeshFile[0] = 0;
 
+	Mesh_Viewer_Mode = 0; // 0 = Defaulet Objects 1 = Collectables
+
 	Physics_Shape = Enums::Shape_None;
 	Physics_Type = Enums::Bullet_Type_None;
 
@@ -946,23 +948,42 @@ void CL64_MeshViewer::Get_Stock_Folders(HWND DropHwnd)
 		FindClose(hFind);
 	}
 
-	SendMessage(DropHwnd, CB_SETCURSEL, 0, 0);
-
-	int Index = SendMessage(DropHwnd, CB_GETCURSEL, 0, 0); // Default Project Assets
-	SendMessage(CB_hWnd, CB_GETLBTEXT, Index, (LPARAM)m_Just_Folder);
-
-	int cmp = strcmp(m_Just_Folder, "Project_Assets");
-	if (cmp == 0)
+	// Colectables
+	if (Mesh_Viewer_Mode == Enums::Mesh_Viewer_Collectables)
 	{
-		strcpy(m_Resource_Folder_Full, App->CL_Project->m_Main_Assets_Path); // Projects Full Resource Path
+		strcpy(m_Just_Folder, "Collectables");
+
+		strcpy(m_Resource_Folder_Full, App->GD_Directory_FullPath); // Full Path Stock Folders 
+		strcat(m_Resource_Folder_Full, "\\Stock\\");
+		strcat(m_Resource_Folder_Full, m_Just_Folder);
+		strcat(m_Resource_Folder_Full, "\\");
+
+		SendMessage(DropHwnd, CB_SELECTSTRING, -1, (LPARAM)"Collectables");
+
+		return;
 	}
-	else
+
+	// Objects
+	if (Mesh_Viewer_Mode == Enums::Mesh_Viewer_Objects)
 	{
+		SendMessage(DropHwnd, CB_SETCURSEL, 0, 0);
+
+		int Index = SendMessage(DropHwnd, CB_GETCURSEL, 0, 0); // Default Project Assets
+		SendMessage(CB_hWnd, CB_GETLBTEXT, Index, (LPARAM)m_Just_Folder);
+
+		int cmp = strcmp(m_Just_Folder, "Project_Assets");
+		if (cmp == 0)
+		{
+			strcpy(m_Resource_Folder_Full, App->CL_Project->m_Main_Assets_Path); // Projects Full Resource Path
+			return;
+		}
+
 		strcpy(m_Resource_Folder_Full, App->GD_Directory_FullPath); // Full Path Stock Folders 
 		strcat(m_Resource_Folder_Full, "\\Stock\\");
 		strcat(m_Resource_Folder_Full, m_Just_Folder);
 		strcat(m_Resource_Folder_Full, "\\");
 	}
+	
 }
 
 // *************************************************************************

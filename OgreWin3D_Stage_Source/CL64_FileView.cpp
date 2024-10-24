@@ -1416,7 +1416,7 @@ void CL64_FileView::Context_Menu(HWND hDlg)
 		if (!strcmp(FileView_Folder, "Collectables")) // Folder
 		{
 			hMenu = CreatePopupMenu();
-			AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_FILE_NEW, L"&New");
+			AppendMenuW(hMenu, MF_STRING , IDM_FILE_NEW, L"&New");
 			TrackPopupMenu(hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, App->ListPanel, NULL);
 			DestroyMenu(hMenu);
 			Context_Selection = Enums::FileView_Collectables_Folder;
@@ -1566,7 +1566,7 @@ void CL64_FileView::Context_New(HWND hDlg)
 		bool Doit = App->CL_Dialogs->Canceled;
 		if (Doit == 0)
 		{
-			//App->CL_MeshViewer->Mesh_Viewer_Mode = Enums::Mesh_Viewer_Objects;
+			App->CL_MeshViewer->Mesh_Viewer_Mode = Enums::Mesh_Viewer_Objects;
 			App->CL_MeshViewer->Start_MeshViewer_Dlg();
 		}
 
@@ -1642,14 +1642,14 @@ void CL64_FileView::Context_New(HWND hDlg)
 	if (App->CL_FileView->Context_Selection == Enums::FileView_Collectables_Folder)
 	{
 
-		/*App->SBC_Dialogs->YesNo("Add Object", "Do you want to add a new Collectable", 1);
+		App->CL_Dialogs->Show_YesNo_Dlg((LPSTR)"Add Object", (LPSTR)"Do you want to add a new Collectable", (LPSTR)"");
 
-		bool Doit = App->SBC_Dialogs->Canceled;
+		bool Doit = App->CL_Dialogs->Canceled;
 		if (Doit == 0)
 		{
-			App->SBC_MeshViewer->Mesh_Viewer_Mode = Enums::Mesh_Viewer_Collectables;
-			App->SBC_MeshViewer->StartMeshViewer();
-		}*/
+			App->CL_MeshViewer->Mesh_Viewer_Mode = Enums::Mesh_Viewer_Collectables;
+			App->CL_MeshViewer->Start_MeshViewer_Dlg();
+		}
 
 		return;
 	}
