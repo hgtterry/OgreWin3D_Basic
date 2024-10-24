@@ -1366,7 +1366,7 @@ void CL64_FileView::Context_Menu(HWND hDlg)
 		if (!strcmp(FileView_Folder, "Move_Entities")) // Folder
 		{
 			hMenu = CreatePopupMenu();
-			AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_FILE_NEW, L"&New");
+			AppendMenuW(hMenu, MF_STRING , IDM_FILE_NEW, L"&New");
 			TrackPopupMenu(hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, App->ListPanel, NULL);
 			DestroyMenu(hMenu);
 			Context_Selection = Enums::FileView_Move_Folder;
@@ -1615,13 +1615,13 @@ void CL64_FileView::Context_New(HWND hDlg)
 
 	if (App->CL_FileView->Context_Selection == Enums::FileView_Move_Folder)
 	{
-		/*App->SBC_Dialogs->YesNo("Add Message", "Do you want to add a new Move Entity", 1);
+		App->CL_Dialogs->Show_YesNo_Dlg((LPSTR)"Add Message", (LPSTR)"Do you want to add a new Move Entity", (LPSTR)"");
 
-		bool Doit = App->SBC_Dialogs->Canceled;
+		bool Doit = App->CL_Dialogs->Canceled;
 		if (Doit == 0)
 		{
-			App->SBC_Com_MoveEntity->Add_New_Move_Entity();
-		}*/
+			App->CL_Com_MoveEntity->Add_New_Move_Entity();
+		}
 
 		return;
 	}

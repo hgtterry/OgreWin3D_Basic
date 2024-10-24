@@ -30,6 +30,7 @@ public:
 	CL64_Com_MoveEntity(void);
 	~CL64_Com_MoveEntity(void);
 
+	bool Add_New_Move_Entity();
 	void Set_Move_Defaults(int Index);
 	bool Create_Move_Entity(int Index);
 	void Rename_Move_Entity(int Index);
