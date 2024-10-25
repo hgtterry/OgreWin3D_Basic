@@ -51,6 +51,7 @@ public:
 	bool flag_Toggle_Tabs_Physics;
 	bool flag_Toggle_Tabs_Motions;
 	bool flag_Toggle_Tabs_Resources;
+	bool flag_Toggle_Tabs_Locations;
 
 	bool flag_Toggle_PhysicaDebug_Node;
 	bool flag_FPS_Dlg_Running;
@@ -67,6 +68,7 @@ public:
 	HWND Camera_TB_hWnd;
 	HWND Physics_TB_hWnd;
 	HWND Motions_TB_hWnd;
+	HWND Locations_TB_hWnd;
 
 private:
 
@@ -78,6 +80,7 @@ private:
 	static LRESULT CALLBACK Proc_Camera_TB(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Proc_Physics_TB(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Proc_Motions_TB(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Proc_Locations_TB(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	void Hide_Tabs(void);
 
@@ -87,6 +90,7 @@ private:
 	void Start_Camera_TB(void);
 	void Start_Physics_TB(void);
 	void Start_Motions_TB(void);
+	void Start_Locations_TB(void);
 
 	bool flag_Toggle_Cam_ModelMode;
 	bool flag_Toggle_Cam_FreeMode;

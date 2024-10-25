@@ -37,6 +37,7 @@ CL64_TopDlg::CL64_TopDlg(void)
 	Camera_TB_hWnd =	nullptr;
 	Physics_TB_hWnd =	nullptr;
 	Motions_TB_hWnd =	nullptr;
+	Locations_TB_hWnd = nullptr;
 
 	flag_FPS_Dlg_Running = 0;
 		
@@ -45,6 +46,7 @@ CL64_TopDlg::CL64_TopDlg(void)
 	flag_Toggle_Tabs_Physics = 0;
 	flag_Toggle_Tabs_Motions = 0;
 	flag_Toggle_Tabs_Resources = 0;
+	flag_Toggle_Tabs_Locations = 0;
 
 	flag_Toggle_Cam_ModelMode = 0;
 	flag_Toggle_Cam_FreeMode = 0;
@@ -114,6 +116,7 @@ LRESULT CALLBACK CL64_TopDlg::Proc_TopBar(HWND hDlg, UINT message, WPARAM wParam
 		App->CL_TopDlg->Start_Camera_TB();
 		App->CL_TopDlg->Start_Physics_TB();
 		App->CL_TopDlg->Start_Motions_TB();
+		App->CL_TopDlg->Start_Locations_TB();
 
 		App->CL_TopDlg->Hide_Tabs();
 
@@ -495,6 +498,7 @@ LRESULT CALLBACK CL64_TopDlg::Proc_Tabs_Headers(HWND hDlg, UINT message, WPARAM 
 		SendDlgItemMessage(hDlg, IDC_BT_TD_PHYSICSTAB, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_TD_MOTIONSTAB, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_TD_RESOURCETAB, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_TBH_LOCATIONS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
 		return TRUE;
 	}
@@ -540,6 +544,13 @@ LRESULT CALLBACK CL64_TopDlg::Proc_Tabs_Headers(HWND hDlg, UINT message, WPARAM 
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Toggle_Tabs(item, App->CL_TopDlg->flag_Toggle_Tabs_Resources);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BT_TBH_LOCATIONS)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle_Tabs(item, App->CL_TopDlg->flag_Toggle_Tabs_Locations);
 			return CDRF_DODEFAULT;
 		}
 		
@@ -597,6 +608,16 @@ LRESULT CALLBACK CL64_TopDlg::Proc_Tabs_Headers(HWND hDlg, UINT message, WPARAM 
 			App->CL_Resources->Start_Resources();
 			return TRUE;
 		}
+
+		if (LOWORD(wParam) == IDC_BT_TBH_LOCATIONS)
+		{
+			App->CL_TopDlg->Hide_Tabs();
+			ShowWindow(App->CL_TopDlg->Locations_TB_hWnd, SW_SHOW);
+			App->CL_TopDlg->flag_Toggle_Tabs_Locations = 1;
+
+			RedrawWindow(App->CL_TopDlg->Tabs_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			return TRUE;
+		}
 		
 	}
 	}
@@ -612,11 +633,14 @@ void CL64_TopDlg::Hide_Tabs(void)
 	ShowWindow(Camera_TB_hWnd, SW_HIDE);
 	ShowWindow(Physics_TB_hWnd, SW_HIDE);
 	ShowWindow(Motions_TB_hWnd, SW_HIDE);
-
+	ShowWindow(Locations_TB_hWnd, SW_HIDE);
+	
 	flag_Toggle_Tabs_Game = 0;
 	flag_Toggle_Tabs_Camera = 0;
 	flag_Toggle_Tabs_Physics = 0;
 	flag_Toggle_Tabs_Motions = 0;
+	flag_Toggle_Tabs_Locations = 0;
+
 }
 
 // *************************************************************************
@@ -951,6 +975,68 @@ LRESULT CALLBACK CL64_TopDlg::Proc_Physics_TB(HWND hDlg, UINT message, WPARAM wP
 			}
 
 			return 1;
+		}
+
+		return FALSE;
+	}
+
+	}
+	return FALSE;
+}
+
+// *************************************************************************
+// *			Start_Locations_TB:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+void CL64_TopDlg::Start_Locations_TB(void)
+{
+	Locations_TB_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_TB_LOCATIONS, Tabs_TB_hWnd, (DLGPROC)Proc_Locations_TB);
+}
+
+// *************************************************************************
+// *			Proc_Locations_TB:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+LRESULT CALLBACK CL64_TopDlg::Proc_Locations_TB(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+
+	switch (message)
+	{
+	case WM_INITDIALOG:
+	{
+		SendDlgItemMessage(hDlg, IDC_PLAYER_LOCATION, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		return TRUE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->Brush_Tabs;
+	}
+
+	case WM_NOTIFY:
+	{
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		if (some_item->idFrom == IDC_PLAYER_LOCATION && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		return CDRF_DODEFAULT;
+	}
+
+	case WM_COMMAND:
+	{
+		if (LOWORD(wParam) == IDC_PLAYER_LOCATION)
+		{
+			Debug
+			/*if (App->SBC_Scene->Player_Added == 1)
+			{
+				App->SBC_Locations->Start_Locations_Dlg();
+			}*/
+
+			return TRUE;
 		}
 
 		return FALSE;
