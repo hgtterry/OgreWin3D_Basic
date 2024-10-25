@@ -74,6 +74,7 @@ CL64_App::CL64_App(void)
 	CL_Gizmos =				nullptr;
 	CL_MeshViewer =			nullptr;
 	CL_Materials =			nullptr;
+	CL_Locations =			nullptr;
 	//-------------------------------------
 
 	hInst =				nullptr;
@@ -200,7 +201,8 @@ void CL64_App::InitApp(void)
 	CL_Gizmos =				new CL64_Gizmos();
 	CL_MeshViewer =			new CL64_MeshViewer();
 	CL_Materials =			new CL64_Materials();
-	
+	CL_Locations =			new CL64_Locations();
+
 	SetBrushes_Fonts();
 
 	LoadString(App->hInst, IDS_VERSION, App_Version, MAX_PATH);
