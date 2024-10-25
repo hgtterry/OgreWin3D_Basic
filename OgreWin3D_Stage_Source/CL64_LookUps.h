@@ -30,7 +30,9 @@ public:
 	~CL64_LookUps();
 
 	int Get_Adjusted_Counters_Count(void);
+
 	int Player_Location_GetCount(void);
+	int Player_Location_GetIndex_ByName(char* Name);
 
 	bool Update_Types();
 	void Get_Type(int Index);

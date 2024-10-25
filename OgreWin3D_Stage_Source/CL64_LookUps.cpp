@@ -80,6 +80,31 @@ int CL64_LookUps::Player_Location_GetCount(void)
 }
 
 // *************************************************************************
+// *   Player_Location_GetIndex_ByName:- Terry and Hazel Flanigan 2024	   *
+// *************************************************************************
+int CL64_LookUps::Player_Location_GetIndex_ByName(char* Name)
+{
+	int Count = 0;
+	int Total = App->CL_Scene->Player_Location_Count;
+	while (Count < Total)
+	{
+		if (App->CL_Scene->B_Locations[Count]->Deleted == 0)
+		{
+			int Result = 1;
+			Result = strcmp(App->CL_Scene->B_Locations[Count]->Name, Name);
+
+			if (Result == 0)
+			{
+				return Count;
+				break;
+			}
+		}
+		Count++;
+	}
+	return -1;
+}
+
+// *************************************************************************
 // *			Update_Types:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
 bool CL64_LookUps::Update_Types()

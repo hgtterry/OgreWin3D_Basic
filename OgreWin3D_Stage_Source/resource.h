@@ -83,6 +83,7 @@
 #define IDD_PROPS_MATERIALS             195
 #define IDD_PROP_TEXT                   196
 #define IDD_TB_LOCATIONS                197
+#define IDD_PROJECTION                  198
 #define IDC_CK_SU_FULLSCREEN            1000
 #define IDC_ST_STARTUP                  1001
 #define IDC_CK_SU_FULL3DVIEW            1002
@@ -114,6 +115,7 @@
 #define IDC_BT_SCALE                    1007
 #define IDC_BT_PHYSDEBUG                1007
 #define IDC_PROPMATERIALS               1007
+#define IDC_BTMOVE_PLAYER               1007
 #define IDC_BUTTON2                     1008
 #define IDC_BT_TBH_CAMERA               1008
 #define IDC_BT_DEMORESOURCES            1008
@@ -137,6 +139,7 @@
 #define IDC_DYNAMIC                     1009
 #define IDC_BT_ROTATION                 1009
 #define IDC_BT_ONLYMESH                 1009
+#define IDC_BTEDITT                     1009
 #define IDC_BUTTON4                     1010
 #define IDC_BT_CAMERA_FREE              1010
 #define IDC_ALLMATERIALS                1010
@@ -145,15 +148,20 @@
 #define IDC_BT_TD_RESOURCETAB           1010
 #define IDC_BT_PT_VIEWMAT               1010
 #define IDC_TRIMESH                     1010
+#define IDC_BT_LOC_FREECAM              1010
 #define IDC_TBSHOWHAIR                  1011
 #define IDC_BT_TD_DEBUG_PHYSICSDEBUG    1011
 #define IDC_JUSTOGRE                    1011
+#define IDC_BT_LOC_PLAYER               1011
 #define IDC_TBSHOWGRID                  1012
 #define IDC_BT_TD_DEMOSTAB              1012
 #define IDC_CONE                        1012
+#define IDC_BT_LOC_PLAYERTOCAMERA       1012
 #define IDC_BT_TD_DEMOS_DEMO1           1013
 #define IDC_BTSHOWPOINTS                1013
 #define IDC_BOX                         1013
+#define IDC_BUTTON8                     1013
+#define IDC_BTSAVE_LOCATION_PLAYER      1013
 #define IDC_BT_TD_DEMOS_DEMO2           1014
 #define IDC_TBBOUNDBOX                  1014
 #define IDC_SPHERE                      1014
@@ -260,6 +268,8 @@
 #define IDC_BT_PROPERTIES               1102
 #define IDC_BT_TBH_LOCATIONS            1104
 #define IDC_PLAYER_LOCATION             1105
+#define IDC_LSTLOCATIONS                1106
+#define IDC_BTDELETE                    1107
 #define ID_VIEW_RESET                   32771
 #define ID_VIEW_MAX3DVIEW               32772
 #define ID_DEBUG_TESTPREFERANCE         32773
@@ -315,9 +325,9 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
-#define _APS_NEXT_RESOURCE_VALUE        197
+#define _APS_NEXT_RESOURCE_VALUE        199
 #define _APS_NEXT_COMMAND_VALUE         32819
-#define _APS_NEXT_CONTROL_VALUE         1106
+#define _APS_NEXT_CONTROL_VALUE         1108
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif

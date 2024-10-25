@@ -29,5 +29,28 @@ public:
 
 	CL64_Locations(void);
 	~CL64_Locations(void);
+
+	void Start_Locations_Dlg();
+	void Create_Location_Entity(char* name);
+	void Goto_Location(int Index);
+	void Set_To_PlayerView();
+
+	int ListBox_Index;
+
+protected:
+
+	static LRESULT CALLBACK Proc_Locations(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+
+	void Set_To_FreeCam();
+	void Delete_Location();
+	void Save_Location();
+	void Move_Player_To_Camera();
+
+	void Init_Bmps_PlayerLocations();
+
+	HWND Locations_Dlg_hWnd;
+
+	bool Toggle_Player_Flag;
+	bool Toggle_FreeCam_Flag;
 };
 

@@ -1030,11 +1030,10 @@ LRESULT CALLBACK CL64_TopDlg::Proc_Locations_TB(HWND hDlg, UINT message, WPARAM 
 	{
 		if (LOWORD(wParam) == IDC_PLAYER_LOCATION)
 		{
-			Debug
-			/*if (App->SBC_Scene->Player_Added == 1)
+			if (App->CL_Scene->flag_Player_Added == 1)
 			{
-				App->SBC_Locations->Start_Locations_Dlg();
-			}*/
+				App->CL_Locations->Start_Locations_Dlg();
+			}
 
 			return TRUE;
 		}
