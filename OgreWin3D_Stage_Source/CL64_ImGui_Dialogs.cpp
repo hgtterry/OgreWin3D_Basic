@@ -29,11 +29,14 @@ THE SOFTWARE.
 CL64_ImGui_Dialogs::CL64_ImGui_Dialogs(void)
 {
 	// List Dialog
+	List_PosX = 0;
+	List_PosY = 0;
 	flag_Show_Dialog_list = 0;
 	strcpy(List_Banner, "Banner");
 	List_Count = 0;
 	List_Index = 0;
-
+	flag_List_StartPos = 0;
+	flag_List_Canceled = 1;
 	// -------------- Float Dialog
 	Show_Dialog_Float = 0;
 	Float_StartPos = 0;
@@ -625,20 +628,14 @@ void CL64_ImGui_Dialogs::Move_Entity_Editor(void)
 // *************************************************************************
 void CL64_ImGui_Dialogs::Start_Dialog_List()
 {
-	Float_Exit = 0;
-	App->CL_ImGui_Dialogs->Float_Canceld = 0;
-	//App->CL_ImGui_Dialogs->Float_Step = Step;
-	//App->CL_ImGui_Dialogs->m_Dialog_Float = StartValue;
-	//strcpy(App->CL_ImGui_Dialogs->Float_Banner, Banner);
-
-	//m_Dialog_Float_Copy = StartValue;
-
+	flag_List_Canceled = 1; // set to canceled 
+	
 	App->CL_Panels->Disable_Panels(true);
 
-	Float_PosX = ((float)App->CL_Ogre->Ogre3D_Listener->View_Width / 2) - (400 / 2);
-	Float_PosY = ((float)App->CL_Ogre->Ogre3D_Listener->View_Height / 2) - (330 / 2);
+	List_PosX = ((float)App->CL_Ogre->Ogre3D_Listener->View_Width / 2) - (400 / 2);
+	List_PosY = ((float)App->CL_Ogre->Ogre3D_Listener->View_Height / 2) - (330 / 2);
 
-	Float_StartPos = 0;
+	flag_List_StartPos = 0;
 
 	App->CL_ImGui_Dialogs->flag_Show_Dialog_list = 1;
 }
@@ -648,7 +645,7 @@ void CL64_ImGui_Dialogs::Start_Dialog_List()
 // *************************************************************************
 void CL64_ImGui_Dialogs::Dialog_List_Gui(void)
 {
-	ImGui::SetNextWindowPos(ImVec2(Float_PosX, Float_PosY), ImGuiCond_FirstUseEver);
+	ImGui::SetNextWindowPos(ImVec2(List_PosX, List_PosY), ImGuiCond_FirstUseEver);
 	ImGui::SetNextWindowSize(ImVec2(400, 330), ImGuiCond_FirstUseEver);
 
 	ImGui::PushStyleColor(ImGuiCol_WindowBg, IM_COL32(239, 239, 239, 255));
@@ -659,18 +656,17 @@ void CL64_ImGui_Dialogs::Dialog_List_Gui(void)
 	}
 	else
 	{
-		if (Float_StartPos == 0)
+		if (flag_List_StartPos == 0)
 		{
-			Float_PosX = ((float)App->CL_Ogre->Ogre3D_Listener->View_Width / 2) - (400 / 2);
-			Float_PosY = ((float)App->CL_Ogre->Ogre3D_Listener->View_Height / 2) - (330 / 2);
-			ImGui::SetWindowPos(List_Banner, ImVec2(Float_PosX, Float_PosY));
+			List_PosX = ((float)App->CL_Ogre->Ogre3D_Listener->View_Width / 2) - (400 / 2);
+			List_PosY = ((float)App->CL_Ogre->Ogre3D_Listener->View_Height / 2) - (330 / 2);
+			ImGui::SetWindowPos(List_Banner, ImVec2(List_PosX, List_PosY));
 
-			Float_StartPos = 1;
+			flag_List_StartPos = 1;
 		}
 
 		float spacingX = ImGui::GetStyle().ItemInnerSpacing.x;
 
-		//ImGui::Indent();
 		ImGui::Spacing();
 
 		static int item_current_idx = 0; 
@@ -706,12 +702,12 @@ void CL64_ImGui_Dialogs::Dialog_List_Gui(void)
 
 		ImGui::SameLine(0.0f, spacingX);
 
-		if (ImGui::Button("Close"))
+		if (ImGui::Button("Ok"))
 		{
-			Float_StartPos = 0;
-			Float_Exit = 1;
+			flag_List_StartPos = 0;
+			flag_List_Canceled = 0;
 			flag_Show_Dialog_list = 0;
-			Float_Canceld = 1;
+
 			ImGui::PopStyleColor();
 			ImGui::End();
 		}

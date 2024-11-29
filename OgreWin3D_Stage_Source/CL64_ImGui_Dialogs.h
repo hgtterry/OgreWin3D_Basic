@@ -46,11 +46,17 @@ public:
 	void Dialog_List_Gui(void);
 
 	// List Dialog
+	float List_PosX;
+	float List_PosY;
 	bool flag_Show_Dialog_list;
+	bool flag_List_StartPos;
+	bool flag_List_Canceled;
 	char List_Banner[MAX_PATH];
 	std::vector<std::string> List_Strings;
 	int List_Count;
 	int List_Index;
+
+
 	// -------------- Float Dialog
 	bool Show_Dialog_Float;
 	float Float_Step;

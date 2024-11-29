@@ -1172,7 +1172,7 @@ bool CL64_Properties::Edit_Teleport_Entity(LPARAM lParam)
 		App->CL_Panels->Disable_Panels(false);
 
 
-		//if (App->SBC_Dialogs->Canceled == 0)
+		if (App->CL_ImGui_Dialogs->flag_List_Canceled == 0)
 		{
 			//int LocationIndex = App->Cl_LookUps->Player_Location_GetIndex_ByName(App->SBC_Dialogs->Chr_DropText);
 			App->CL_Scene->V_Object[Index]->S_Teleport[0]->Location_ID = App->CL_ImGui_Dialogs->List_Index;
