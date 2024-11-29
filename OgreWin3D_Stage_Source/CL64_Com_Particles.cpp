@@ -135,3 +135,46 @@ void CL64_Com_Particles::Rename_Particle_Entity(int Index)
 
 	App->CL_FileView->Change_Item_Name(Object->FileViewItem, Object->Mesh_Name);
 }
+
+// *************************************************************************
+// *			Add_New_Particle:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+void CL64_Com_Particles::Add_New_Particle(char* Script)
+{
+	char B_Name[MAX_PATH];
+	char ConNum[MAX_PATH];
+
+	int Index = App->CL_Scene->Object_Count;
+
+	App->CL_Scene->V_Object[Index] = new Base_Object();
+	App->CL_Scene->V_Object[Index]->S_Particle[0] = new Particle_type;
+	App->CL_Com_Particles->Set_Particle_Defaults(Index);
+
+	strcpy(App->CL_Scene->V_Object[Index]->S_Particle[0]->ParticleScript, Script);
+
+	App->CL_Scene->V_Object[Index]->Type = Enums::Bullet_Type_None;
+	App->CL_Scene->V_Object[Index]->Shape = Enums::Shape_None;
+	App->CL_Scene->V_Object[Index]->This_Object_UniqueID = App->CL_Scene->UniqueID_Object_Counter; // Unique ID
+
+	strcpy(App->CL_Scene->V_Object[Index]->Mesh_FileName, "DoorEntity_GD.mesh");
+
+	strcpy_s(B_Name, "Particle_");
+	_itoa(Index, ConNum, 10);
+	strcat(B_Name, ConNum);
+	strcpy(App->CL_Scene->V_Object[Index]->Mesh_Name, B_Name);
+
+	Ogre::Vector3 Pos = App->CL_Object->GetPlacement(-50);
+	App->CL_Scene->V_Object[Index]->Mesh_Pos = Pos;
+	App->CL_Scene->V_Object[Index]->Mesh_Scale = Ogre::Vector3(1, 1, 1);
+
+	Create_Particle_Entity(Index);
+
+	HTREEITEM Temp = App->CL_FileView->Add_Item(App->CL_FileView->FV_Particles_Folder, App->CL_Scene->V_Object[Index]->Mesh_Name, Index, true);
+	App->CL_Scene->V_Object[Index]->FileViewItem = Temp;
+
+	App->CL_FileView->SelectItem(App->CL_Scene->V_Object[Index]->FileViewItem);
+
+	App->CL_Scene->UniqueID_Object_Counter++;
+	App->CL_Scene->Object_Count++;
+
+}

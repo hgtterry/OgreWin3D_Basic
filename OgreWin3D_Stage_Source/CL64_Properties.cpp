@@ -1174,14 +1174,15 @@ bool CL64_Properties::Edit_Teleport_Entity(LPARAM lParam)
 
 		if (App->CL_ImGui_Dialogs->flag_List_Canceled == 0)
 		{
-			//int LocationIndex = App->Cl_LookUps->Player_Location_GetIndex_ByName(App->SBC_Dialogs->Chr_DropText);
-			App->CL_Scene->V_Object[Index]->S_Teleport[0]->Location_ID = App->CL_ImGui_Dialogs->List_Index;
+			int LocationIndex = App->CL_ImGui_Dialogs->List_Index;
 
-			strcpy(App->CL_Scene->V_Object[Index]->S_Teleport[0]->Name, App->CL_Scene->B_Locations[App->CL_ImGui_Dialogs->List_Index]->Name);
+			App->CL_Scene->V_Object[Index]->S_Teleport[0]->Location_ID = LocationIndex;
 
-			App->CL_Scene->V_Object[Index]->S_Teleport[0]->Player_Position = App->CL_Scene->B_Locations[App->CL_ImGui_Dialogs->List_Index]->Current_Position;
-			App->CL_Scene->V_Object[Index]->S_Teleport[0]->Physics_Position = App->CL_Scene->B_Locations[App->CL_ImGui_Dialogs->List_Index]->Physics_Position;
-			App->CL_Scene->V_Object[Index]->S_Teleport[0]->Physics_Rotation = App->CL_Scene->B_Locations[App->CL_ImGui_Dialogs->List_Index]->Physics_Rotation;
+			strcpy(App->CL_Scene->V_Object[Index]->S_Teleport[0]->Name, App->CL_Scene->B_Locations[LocationIndex]->Name);
+
+			App->CL_Scene->V_Object[Index]->S_Teleport[0]->Player_Position = App->CL_Scene->B_Locations[LocationIndex]->Current_Position;
+			App->CL_Scene->V_Object[Index]->S_Teleport[0]->Physics_Position = App->CL_Scene->B_Locations[LocationIndex]->Physics_Position;
+			App->CL_Scene->V_Object[Index]->S_Teleport[0]->Physics_Rotation = App->CL_Scene->B_Locations[LocationIndex]->Physics_Rotation;
 
 			Update_ListView_Teleport();
 		}

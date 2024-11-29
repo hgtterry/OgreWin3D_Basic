@@ -1489,7 +1489,7 @@ void CL64_FileView::Context_Menu(HWND hDlg)
 		if (!strcmp(FileView_Folder, "Particles")) // Folder
 		{
 			hMenu = CreatePopupMenu();
-			AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_FILE_NEW, L"&New");
+			AppendMenuW(hMenu, MF_STRING , IDM_FILE_NEW, L"&New");
 			TrackPopupMenu(hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, App->ListPanel, NULL);
 			DestroyMenu(hMenu);
 			Context_Selection = Enums::FileView_Particle_Folder;
@@ -1692,21 +1692,48 @@ void CL64_FileView::Context_New(HWND hDlg)
 	if (App->CL_FileView->Context_Selection == Enums::FileView_Particle_Folder)
 	{
 
-		/*App->SBC_Dialogs->YesNo("Add Particle", "Do you want to add a new Particle", 1);
+		App->CL_Dialogs->Show_YesNo_Dlg((LPSTR)"Add Particle", (LPSTR)"Do you want to add a new Particle", (LPSTR)"");
 
-		bool Doit = App->SBC_Dialogs->Canceled;
+		bool Doit = App->CL_Dialogs->Canceled;
 		if (Doit == 0)
 		{
-			strcpy(App->SBC_Dialogs->Chr_DropText, "GD_Smoke1");
-			App->SBC_Dialogs->DropList_Data = Enums::DropDialog_Particles;
-			App->SBC_Dialogs->Dialog_DropGen();
+			strcpy(App->CL_ImGui_Dialogs->List_Banner, "Select Particle");
 
-			if (App->SBC_Dialogs->Canceled == 0)
+			App->CL_ImGui_Dialogs->List_Strings.resize(6);
+			App->CL_ImGui_Dialogs->List_Count = 6;
+
+			App->CL_ImGui_Dialogs->List_Strings[0] = "GD_Smoke1";
+			App->CL_ImGui_Dialogs->List_Strings[1] = "GD_JetEngine1";
+			App->CL_ImGui_Dialogs->List_Strings[2] = "GD_Aureola";
+			App->CL_ImGui_Dialogs->List_Strings[3] = "GD_PurpleFountain";
+			App->CL_ImGui_Dialogs->List_Strings[4] = "GD_Swarm";
+			App->CL_ImGui_Dialogs->List_Strings[5] = "GD_GreenyNimbus";
+
+			App->CL_ImGui_Dialogs->Start_Dialog_List();
+
+			while (App->CL_ImGui_Dialogs->flag_Show_Dialog_list == 1)
 			{
-				App->CL_Com_Particles->Add_New_Particle(App->SBC_Dialogs->Chr_DropText);
+				App->CL_ImGui_Dialogs->BackGround_Render_Loop();
+
 			}
 
-		}*/
+			App->CL_ImGui_Dialogs->flag_Show_Dialog_list = 0;
+			App->CL_Panels->Disable_Panels(false);
+
+			int ParticleIndex = App->CL_ImGui_Dialogs->List_Index;
+
+
+			char ParticleName[MAX_PATH];
+			strcpy(ParticleName, App->CL_ImGui_Dialogs->List_Strings[ParticleIndex].c_str());
+			
+			//App->Say(ParticleName);
+				
+			if (App->CL_ImGui_Dialogs->flag_List_Canceled == 0)
+			{
+				App->CL_Com_Particles->Add_New_Particle(ParticleName);
+			}
+
+		}
 
 		return;
 	}
