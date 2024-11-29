@@ -1144,6 +1144,8 @@ bool CL64_Properties::Edit_Teleport_Entity(LPARAM lParam)
 	result = strcmp(btext, "Goto");
 	if (result == 0)
 	{
+		strcpy(App->CL_ImGui_Dialogs->List_Banner, "Select Location");
+
 		App->CL_ImGui_Dialogs->List_Strings.resize(App->CL_Scene->Player_Location_Count);
 		App->CL_ImGui_Dialogs->List_Count = App->CL_Scene->Player_Location_Count;
 
@@ -1158,41 +1160,31 @@ bool CL64_Properties::Edit_Teleport_Entity(LPARAM lParam)
 			Count++;
 		}
 
-		//App->Say(App->CL_ImGui_Dialogs->List_Strings[2].c_str());
-
-
 		App->CL_ImGui_Dialogs->Start_Dialog_List();
 
 		while (App->CL_ImGui_Dialogs->flag_Show_Dialog_list == 1)
 		{
 			App->CL_ImGui_Dialogs->BackGround_Render_Loop();
 
-			//App->CL_Scene->V_Object[Index]->S_Particle[0]->SpeedFactor = App->CL_ImGui_Dialogs->m_Dialog_Float;
-			//App->CL_Scene->V_Object[Index]->S_Particle[0]->Particle->setSpeedFactor(App->CL_ImGui_Dialogs->m_Dialog_Float);
-
 		}
 
 		App->CL_ImGui_Dialogs->flag_Show_Dialog_list = 0;
 		App->CL_Panels->Disable_Panels(false);
-		/*strcpy(App->Cl_Dialogs->btext, "Select Location");
-
-		App->SBC_Dialogs->DropList_Data = Enums::DropDialog_Locations;
-		App->SBC_Dialogs->Dialog_DropGen();
 
 
-		if (App->SBC_Dialogs->Canceled == 0)
+		//if (App->SBC_Dialogs->Canceled == 0)
 		{
-			int LocationIndex = App->Cl_LookUps->Player_Location_GetIndex_ByName(App->SBC_Dialogs->Chr_DropText);
-			App->SBC_Scene->V_Object[Index]->S_Teleport[0]->Location_ID = LocationIndex;
+			//int LocationIndex = App->Cl_LookUps->Player_Location_GetIndex_ByName(App->SBC_Dialogs->Chr_DropText);
+			App->CL_Scene->V_Object[Index]->S_Teleport[0]->Location_ID = App->CL_ImGui_Dialogs->List_Index;
 
-			strcpy(App->SBC_Scene->V_Object[Index]->S_Teleport[0]->Name, App->SBC_Scene->B_Locations[LocationIndex]->Name);
+			strcpy(App->CL_Scene->V_Object[Index]->S_Teleport[0]->Name, App->CL_Scene->B_Locations[App->CL_ImGui_Dialogs->List_Index]->Name);
 
-			App->SBC_Scene->V_Object[Index]->S_Teleport[0]->Player_Position = App->SBC_Scene->B_Locations[LocationIndex]->Current_Position;
-			App->SBC_Scene->V_Object[Index]->S_Teleport[0]->Physics_Position = App->SBC_Scene->B_Locations[LocationIndex]->Physics_Position;
-			App->SBC_Scene->V_Object[Index]->S_Teleport[0]->Physics_Rotation = App->SBC_Scene->B_Locations[LocationIndex]->Physics_Rotation;
+			App->CL_Scene->V_Object[Index]->S_Teleport[0]->Player_Position = App->CL_Scene->B_Locations[App->CL_ImGui_Dialogs->List_Index]->Current_Position;
+			App->CL_Scene->V_Object[Index]->S_Teleport[0]->Physics_Position = App->CL_Scene->B_Locations[App->CL_ImGui_Dialogs->List_Index]->Physics_Position;
+			App->CL_Scene->V_Object[Index]->S_Teleport[0]->Physics_Rotation = App->CL_Scene->B_Locations[App->CL_ImGui_Dialogs->List_Index]->Physics_Rotation;
 
 			Update_ListView_Teleport();
-		}*/
+		}
 
 	}
 

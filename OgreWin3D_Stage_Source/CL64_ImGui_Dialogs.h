@@ -50,6 +50,7 @@ public:
 	char List_Banner[MAX_PATH];
 	std::vector<std::string> List_Strings;
 	int List_Count;
+	int List_Index;
 	// -------------- Float Dialog
 	bool Show_Dialog_Float;
 	float Float_Step;

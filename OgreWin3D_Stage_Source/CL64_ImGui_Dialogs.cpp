@@ -32,6 +32,8 @@ CL64_ImGui_Dialogs::CL64_ImGui_Dialogs(void)
 	flag_Show_Dialog_list = 0;
 	strcpy(List_Banner, "Banner");
 	List_Count = 0;
+	List_Index = 0;
+
 	// -------------- Float Dialog
 	Show_Dialog_Float = 0;
 	Float_StartPos = 0;
@@ -671,20 +673,25 @@ void CL64_ImGui_Dialogs::Dialog_List_Gui(void)
 		//ImGui::Indent();
 		ImGui::Spacing();
 
-		const char* items[] = { "AAAA", "BBBB", "CCCC", "DDDD", "EEEE", "FFFF", "GGGG", "HHHH", "IIII", "JJJJ", "KKKK", "LLLLLLL", "MMMM", "OOOOOOO" };
-		static int item_current_idx = 0; // Here we store our selection data as an index.
+		static int item_current_idx = 0; 
 		if (ImGui::BeginListBox("##listbox 2", ImVec2(-FLT_MIN, 8 * ImGui::GetTextLineHeightWithSpacing())))
 		{
 			for (int n = 0; n < List_Count; n++)
 			{
 				const bool is_selected = (item_current_idx == n);
 				if (ImGui::Selectable(List_Strings[n].c_str(), is_selected))
+				{
 					item_current_idx = n;
-
-				// Set the initial focus when opening the combo (scrolling + keyboard navigation focus)
+					List_Index = n;
+				}
+			
 				if (is_selected)
+				{
 					ImGui::SetItemDefaultFocus();
+				}
+
 			}
+
 			ImGui::EndListBox();
 		}
 
