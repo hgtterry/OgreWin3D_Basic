@@ -28,6 +28,10 @@ THE SOFTWARE.
 
 CL64_ImGui_Dialogs::CL64_ImGui_Dialogs(void)
 {
+	// List Dialog
+	flag_Show_Dialog_list = 0;
+	strcpy(List_Banner, "Banner");
+	List_Count = 0;
 	// -------------- Float Dialog
 	Show_Dialog_Float = 0;
 	Float_StartPos = 0;
@@ -77,7 +81,7 @@ void CL64_ImGui_Dialogs::Close_All_Dialogs(void)
 	Show_Dialog_Float = 0;
 	flag_Show_Dialog_MessageEditor = 0;
 	flag_Show_Move_Ent_Editor = 0;
-
+	flag_Show_Dialog_list = 0;
 	//Show_ColourPicker = 0;
 	
 }
@@ -613,3 +617,104 @@ void CL64_ImGui_Dialogs::Move_Entity_Editor(void)
 		}
 	}
 }
+
+// *************************************************************************
+// *		Start_Dialog_List:- Terry and Hazel Flanigan 2024  			   *
+// *************************************************************************
+void CL64_ImGui_Dialogs::Start_Dialog_List()
+{
+	Float_Exit = 0;
+	App->CL_ImGui_Dialogs->Float_Canceld = 0;
+	//App->CL_ImGui_Dialogs->Float_Step = Step;
+	//App->CL_ImGui_Dialogs->m_Dialog_Float = StartValue;
+	//strcpy(App->CL_ImGui_Dialogs->Float_Banner, Banner);
+
+	//m_Dialog_Float_Copy = StartValue;
+
+	App->CL_Panels->Disable_Panels(true);
+
+	Float_PosX = ((float)App->CL_Ogre->Ogre3D_Listener->View_Width / 2) - (400 / 2);
+	Float_PosY = ((float)App->CL_Ogre->Ogre3D_Listener->View_Height / 2) - (330 / 2);
+
+	Float_StartPos = 0;
+
+	App->CL_ImGui_Dialogs->flag_Show_Dialog_list = 1;
+}
+
+// *************************************************************************
+// *			Dialog_List_Gui:- Terry and Hazel Flanigan 2024  		   *
+// *************************************************************************
+void CL64_ImGui_Dialogs::Dialog_List_Gui(void)
+{
+	ImGui::SetNextWindowPos(ImVec2(Float_PosX, Float_PosY), ImGuiCond_FirstUseEver);
+	ImGui::SetNextWindowSize(ImVec2(400, 330), ImGuiCond_FirstUseEver);
+
+	ImGui::PushStyleColor(ImGuiCol_WindowBg, IM_COL32(239, 239, 239, 255));
+
+	if (!ImGui::Begin(List_Banner, &flag_Show_Dialog_list, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoResize))
+	{
+		ImGui::End();
+	}
+	else
+	{
+		if (Float_StartPos == 0)
+		{
+			Float_PosX = ((float)App->CL_Ogre->Ogre3D_Listener->View_Width / 2) - (400 / 2);
+			Float_PosY = ((float)App->CL_Ogre->Ogre3D_Listener->View_Height / 2) - (330 / 2);
+			ImGui::SetWindowPos(List_Banner, ImVec2(Float_PosX, Float_PosY));
+
+			Float_StartPos = 1;
+		}
+
+		float spacingX = ImGui::GetStyle().ItemInnerSpacing.x;
+
+		//ImGui::Indent();
+		ImGui::Spacing();
+
+		const char* items[] = { "AAAA", "BBBB", "CCCC", "DDDD", "EEEE", "FFFF", "GGGG", "HHHH", "IIII", "JJJJ", "KKKK", "LLLLLLL", "MMMM", "OOOOOOO" };
+		static int item_current_idx = 0; // Here we store our selection data as an index.
+		if (ImGui::BeginListBox("##listbox 2", ImVec2(-FLT_MIN, 8 * ImGui::GetTextLineHeightWithSpacing())))
+		{
+			for (int n = 0; n < List_Count; n++)
+			{
+				const bool is_selected = (item_current_idx == n);
+				if (ImGui::Selectable(List_Strings[n].c_str(), is_selected))
+					item_current_idx = n;
+
+				// Set the initial focus when opening the combo (scrolling + keyboard navigation focus)
+				if (is_selected)
+					ImGui::SetItemDefaultFocus();
+			}
+			ImGui::EndListBox();
+		}
+
+
+		ImGui::Spacing();
+		ImGui::Spacing();
+		ImGui::Spacing();
+		ImGui::Separator();
+		ImGui::Spacing();
+		ImGui::Spacing();
+		ImGui::Indent();
+
+		ImGui::SameLine(0.0f, spacingX);
+
+		if (ImGui::Button("Close"))
+		{
+			Float_StartPos = 0;
+			Float_Exit = 1;
+			flag_Show_Dialog_list = 0;
+			Float_Canceld = 1;
+			ImGui::PopStyleColor();
+			ImGui::End();
+		}
+
+		if (Float_Exit == 0)
+		{
+			Float_Canceld = 1;
+			ImGui::PopStyleColor();
+			ImGui::End();
+		}
+	}
+}
+

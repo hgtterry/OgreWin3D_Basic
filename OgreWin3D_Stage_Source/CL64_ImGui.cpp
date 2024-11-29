@@ -273,6 +273,10 @@ void CL64_ImGui::ImGui_Render_Loop(void)
 		App->CL_ImGui_Dialogs->Move_Entity_Editor();
 	}
 	
+	if (App->CL_ImGui_Dialogs->flag_Show_Dialog_list == 1)
+	{
+		App->CL_ImGui_Dialogs->Dialog_List_Gui();
+	}
 }
 
 // *************************************************************************

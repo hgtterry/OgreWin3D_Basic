@@ -42,6 +42,14 @@ public:
 	void Start_Move_Entity_Editor(int Index);
 	void Move_Entity_Editor(void);
 
+	void Start_Dialog_List();
+	void Dialog_List_Gui(void);
+
+	// List Dialog
+	bool flag_Show_Dialog_list;
+	char List_Banner[MAX_PATH];
+	std::vector<std::string> List_Strings;
+	int List_Count;
 	// -------------- Float Dialog
 	bool Show_Dialog_Float;
 	float Float_Step;

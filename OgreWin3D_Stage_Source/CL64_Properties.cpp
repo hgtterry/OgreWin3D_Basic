@@ -1144,6 +1144,36 @@ bool CL64_Properties::Edit_Teleport_Entity(LPARAM lParam)
 	result = strcmp(btext, "Goto");
 	if (result == 0)
 	{
+		App->CL_ImGui_Dialogs->List_Strings.resize(App->CL_Scene->Player_Location_Count);
+		App->CL_ImGui_Dialogs->List_Count = App->CL_Scene->Player_Location_Count;
+
+		int Count = 0;
+		while (Count < App->CL_Scene->Player_Location_Count)
+		{
+			if (App->CL_Scene->B_Locations[Count]->Deleted == 0)
+			{
+				App->CL_ImGui_Dialogs->List_Strings[Count] = App->CL_Scene->B_Locations[Count]->Name;
+			}
+
+			Count++;
+		}
+
+		//App->Say(App->CL_ImGui_Dialogs->List_Strings[2].c_str());
+
+
+		App->CL_ImGui_Dialogs->Start_Dialog_List();
+
+		while (App->CL_ImGui_Dialogs->flag_Show_Dialog_list == 1)
+		{
+			App->CL_ImGui_Dialogs->BackGround_Render_Loop();
+
+			//App->CL_Scene->V_Object[Index]->S_Particle[0]->SpeedFactor = App->CL_ImGui_Dialogs->m_Dialog_Float;
+			//App->CL_Scene->V_Object[Index]->S_Particle[0]->Particle->setSpeedFactor(App->CL_ImGui_Dialogs->m_Dialog_Float);
+
+		}
+
+		App->CL_ImGui_Dialogs->flag_Show_Dialog_list = 0;
+		App->CL_Panels->Disable_Panels(false);
 		/*strcpy(App->Cl_Dialogs->btext, "Select Location");
 
 		App->SBC_Dialogs->DropList_Data = Enums::DropDialog_Locations;
