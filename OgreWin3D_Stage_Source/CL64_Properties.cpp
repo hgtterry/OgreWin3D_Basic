@@ -1858,28 +1858,28 @@ bool CL64_Properties::Edit_Counters_OnClick(LPARAM lParam)
 		return 1;
 	}
 
-	//result = strcmp(btext, "Text");
-	//if (result == 0)
-	//{
-	//	strcpy(App->SBC_Dialogs->btext, "Change Text");
-	//	strcpy(App->SBC_Dialogs->Chr_Text, App->SBC_Scene->B_Counter[Index]->Text);
+	result = strcmp(btext, "Text");
+	if (result == 0)
+	{
+		strcpy(App->CL_Dialogs->btext, "Change Text");
+		strcpy(App->CL_Dialogs->Chr_Text, App->CL_Scene->B_Counter[Index]->Text);
 
-	//	App->SBC_Dialogs->Dialog_Text();
+		App->CL_Dialogs->Dialog_Text(0);
 
-	//	if (App->SBC_Dialogs->Canceled == 1)
-	//	{
-	//		return TRUE;
-	//	}
+		if (App->CL_Dialogs->Canceled == 1)
+		{
+			return TRUE;
+		}
 
-	//	strcpy(App->SBC_Scene->B_Counter[Index]->Text, App->SBC_Dialogs->Chr_Text);
+		strcpy(App->CL_Scene->B_Counter[Index]->Text, App->CL_Dialogs->Chr_Text);
 
 
-	//	App->SBC_Display->Mark_As_Altered_Counter(Index);
+		App->CL_Display->Mark_As_Altered_Counter(Index);
 
-	//	Update_ListView_Counters();
+		Update_ListView_Counters();
 
-	//	return 1;
-	//}
+		return 1;
+	}
 
 	//result = strcmp(btext, "Start_Value");
 	//if (result == 0)
@@ -1906,51 +1906,50 @@ bool CL64_Properties::Edit_Counters_OnClick(LPARAM lParam)
 	//	return 1;
 	//}
 
-	//result = strcmp(btext, "Display");
-	//if (result == 0)
-	//{
+	result = strcmp(btext, "Display");
+	if (result == 0)
+	{
+		strcpy(App->CL_ImGui_Dialogs->List_Banner, "Display Mode");
 
-	//	strcpy(App->Cl_Dialogs->btext, "Select Display Option");
+		App->CL_ImGui_Dialogs->List_Strings.resize(2);
+		App->CL_ImGui_Dialogs->List_Count = 2;
+		App->CL_ImGui_Dialogs->List_Index = App->CL_Scene->B_Counter[Index]->Show_Panel_Flag;
 
-	//	if (App->SBC_Scene->B_Counter[Index]->Show_Panel_Flag == 0)
-	//	{
-	//		strcpy(App->SBC_Dialogs->Chr_DropText, "Auto");
-	//	}
+		App->CL_ImGui_Dialogs->List_Strings[0] = "Auto";
+		App->CL_ImGui_Dialogs->List_Strings[1] = "Always";
+		
+		App->CL_ImGui_Dialogs->Start_Dialog_List();
 
-	//	if (App->SBC_Scene->B_Counter[Index]->Show_Panel_Flag == 1)
-	//	{
-	//		strcpy(App->SBC_Dialogs->Chr_DropText, "Always");
-	//	}
+		while (App->CL_ImGui_Dialogs->flag_Show_Dialog_list == 1)
+		{
+			App->CL_ImGui_Dialogs->BackGround_Render_Loop();
 
-	//	App->SBC_Dialogs->DropList_Data = Enums::DropDialog_Display;
-	//	App->SBC_Dialogs->Dialog_DropGen();
+		}
 
+		App->CL_ImGui_Dialogs->flag_Show_Dialog_list = 0;
+		App->CL_Panels->Disable_Panels(false);
 
-	//	if (App->SBC_Dialogs->Canceled == 0)
-	//	{
-	//		int TestChr = 0;
+		int SelectionIndex = App->CL_ImGui_Dialogs->List_Index;
 
-	//		// Auto
-	//		TestChr = strcmp(App->SBC_Dialogs->Chr_DropText, "Auto");
-	//		if (TestChr == 0)
-	//		{
-	//			App->SBC_Scene->B_Counter[Index]->Show_Panel_Flag = 0;
-	//		}
+		if (App->CL_ImGui_Dialogs->flag_List_Canceled == 0)
+		{
+			if (SelectionIndex == 0)
+			{
+				App->CL_Scene->B_Counter[Index]->Show_Panel_Flag = 0;
+			}
 
-	//		// Always
-	//		TestChr = strcmp(App->SBC_Dialogs->Chr_DropText, "Always");
-	//		if (TestChr == 0)
-	//		{
-	//			App->SBC_Scene->B_Counter[Index]->Show_Panel_Flag = 1;
-	//		}
+			if (SelectionIndex == 1)
+			{
+				App->CL_Scene->B_Counter[Index]->Show_Panel_Flag = 1;
+			}
 
-	//		App->SBC_Display->Mark_As_Altered_Counter(Index);
-	//		Update_ListView_Counters();
+			App->CL_Display->Mark_As_Altered_Counter(Index);
+		}
 
-	//	}
-
-	//	return 1;
-	//}
+		Update_ListView_Counters();
+		
+		return 1;
+	}
 
 	return 1;
 }

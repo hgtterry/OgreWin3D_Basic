@@ -205,7 +205,7 @@ void CL64_Physics::Reset_Physics(void)
 	int Count = 0;
 	while (Count < App->CL_Scene->Object_Count)
 	{
-		if (App->CL_Scene->V_Object[Count]->Usage == Enums::Bullet_Type_Dynamic)
+		if (App->CL_Scene->V_Object[Count]->Usage == Enums::Stage_Usage_Dynamic)
 		{
 			btVector3 zeroVector(0, 0, 0);
 

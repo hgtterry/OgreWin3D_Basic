@@ -274,7 +274,7 @@ bool CL64_Scene::Game_Mode(void)
 
 	App->CL_Physics->Reset_Triggers();
 
-	//App->SBC_Gui_Dialogs->Show_Physics_Console = 0;
+	App->CL_ImGui_Dialogs->Show_Physics_Console = 0;
 
 	return 1;
 }
@@ -310,7 +310,7 @@ bool CL64_Scene::Editor_Mode(void)
 
 	//App->CL_Vm_ImGui->Show_FPS = App->SBC_Dialogs->Saved_DoFPS;
 
-	//App->SBC_Gui_Dialogs->Show_Physics_Console = 1;
+	App->CL_ImGui_Dialogs->Show_Physics_Console = 1;
 
 	return 1;
 }
