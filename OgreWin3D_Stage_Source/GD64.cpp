@@ -898,6 +898,8 @@ void StartOgre()
 
 	App->CL_SoundMgr->Play_StartUp_Sound();
 
+	App->CL_Panels->MovePhysicsView();
+
     App->CL_Ogre->Ogre_Render_Loop();
 
     Close_App();

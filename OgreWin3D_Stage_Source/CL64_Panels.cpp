@@ -103,6 +103,7 @@ void CL64_Panels::Resize_OgreWin(void)
 	}
 
 	Move_Panels();
+	App->CL_Panels->MovePhysicsView();
 }
 
 // *************************************************************************
@@ -151,6 +152,7 @@ void CL64_Panels::Move_FileView_Window(void)
 	SetWindowPos(App->ListPanel, NULL, PosX + 0, PosY + 5,
 		0, 0, SWP_NOSIZE | SWP_NOZORDER);
 
+	App->CL_Panels->MovePhysicsView();
 }
 
 // *************************************************************************
@@ -278,6 +280,17 @@ void CL64_Panels::Show_Properties(bool Enable)
 		App->CL_FileView->Flag_FileView_Active = 0;
 		ShowWindow(App->CL_Properties->Properties_Dlg_hWnd, 0);
 		CheckMenuItem(App->mMenu, ID_WINDOWS_PROPERTIES, MF_BYCOMMAND | MF_UNCHECKED);
+	}
+}
+
+// *************************************************************************
+// *			MovePhysicsView:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void CL64_Panels::MovePhysicsView(void)
+{
+	if (App->CL_ImGui_Dialogs->Show_Physics_Console == 1)
+	{
+		App->CL_ImGui_Dialogs->Physics_Console_StartPos = 0;
 	}
 }
 

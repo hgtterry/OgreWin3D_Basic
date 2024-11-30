@@ -822,7 +822,7 @@ void CL64_ImGui_Dialogs::Physics_Console_Gui(void)
 		{
 			if (App->CL_Scene->flag_Scene_Loaded == 1)
 			{
-				//App->CL_Physics->Reset_Physics();
+				App->CL_Physics->Reset_Physics();
 
 				//App->RedrawWindow_Dlg(App->Physics_Console_Hwnd);
 			}
@@ -846,7 +846,7 @@ void CL64_ImGui_Dialogs::Physics_Console_Gui(void)
 				int Saved = App->CL_Ogre->Ogre3D_Listener->CameraMode;
 				App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_First;
 
-				//App->CL_Physics->Reset_Physics();
+				App->CL_Physics->Reset_Physics();
 				App->CL_Ogre->Ogre3D_Listener->flag_Run_Physics = 1;
 				App->CL_Physics->Reset_Triggers();
 				App->CL_Ogre->Ogre3D_Listener->flag_Run_Physics = 1;

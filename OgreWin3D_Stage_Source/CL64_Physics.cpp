@@ -189,3 +189,82 @@ void CL64_Physics::Reset_Triggers(void)
 		Count++;
 	}
 }
+
+// *************************************************************************
+// *	  		Reset_Physics:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void CL64_Physics::Reset_Physics(void)
+{
+	App->CL_Ogre->Ogre3D_Listener->flag_Run_Physics = 0;
+
+	float w = 1;
+	float x = 0;
+	float y = 0;
+	float z = 0;
+
+	int Count = 0;
+	while (Count < App->CL_Scene->Object_Count)
+	{
+		if (App->CL_Scene->V_Object[Count]->Usage == Enums::Bullet_Type_Dynamic)
+		{
+			btVector3 zeroVector(0, 0, 0);
+
+			x = App->CL_Scene->V_Object[Count]->Physics_Pos.x;
+			y = App->CL_Scene->V_Object[Count]->Physics_Pos.y;
+			z = App->CL_Scene->V_Object[Count]->Physics_Pos.z;
+			btVector3 initialPosition(x, y, z);
+
+			btTransform startTransform;
+			startTransform.setIdentity();
+
+			startTransform.setRotation(btQuaternion(App->CL_Scene->V_Object[Count]->Physics_Quat.x,
+				App->CL_Scene->V_Object[Count]->Physics_Quat.y,
+				App->CL_Scene->V_Object[Count]->Physics_Quat.z,
+				App->CL_Scene->V_Object[Count]->Physics_Quat.w));
+
+			startTransform.setOrigin(initialPosition);
+
+			App->CL_Scene->V_Object[Count]->Phys_Body->clearForces();
+			App->CL_Scene->V_Object[Count]->Phys_Body->setLinearVelocity(zeroVector);
+			App->CL_Scene->V_Object[Count]->Phys_Body->setAngularVelocity(zeroVector);
+
+			App->CL_Scene->V_Object[Count]->Phys_Body->setWorldTransform(startTransform);
+			App->CL_Scene->V_Object[Count]->Phys_Body->getMotionState()->setWorldTransform(startTransform);
+			App->CL_Scene->V_Object[Count]->Phys_Body->activate(true);
+
+			App->CL_Scene->V_Object[Count]->Object_Node->setPosition(App->CL_Scene->V_Object[Count]->Mesh_Pos);
+			App->CL_Scene->V_Object[Count]->Object_Node->setOrientation(App->CL_Scene->V_Object[Count]->Mesh_Quat);
+
+		}
+
+		Count++;
+	}
+
+	if (App->CL_Scene->flag_Player_Added == 1)// && GD_Reset_Player == 1)
+	{
+		btVector3 zeroVector(0, 0, 0);
+
+		x = App->CL_Scene->B_Player[0]->StartPos.x;
+		y = App->CL_Scene->B_Player[0]->StartPos.y;
+		z = App->CL_Scene->B_Player[0]->StartPos.z;
+
+		btVector3 initialPosition(x, y, z);
+
+		btTransform startTransform;
+		startTransform.setIdentity();
+		startTransform.setRotation(btQuaternion(1.0f, 0.0f, 0.0f, 0.0f));
+		startTransform.setOrigin(initialPosition);
+
+		App->CL_Scene->B_Player[0]->Phys_Body->clearForces();
+		App->CL_Scene->B_Player[0]->Phys_Body->setLinearVelocity(zeroVector);
+		App->CL_Scene->B_Player[0]->Phys_Body->setAngularVelocity(zeroVector);
+
+		App->CL_Scene->B_Player[0]->Phys_Body->setWorldTransform(startTransform);
+		App->CL_Scene->B_Player[0]->Phys_Body->getMotionState()->setWorldTransform(startTransform);
+		App->CL_Scene->B_Player[0]->Phys_Body->activate(true);
+
+		App->CL_Scene->B_Player[0]->Phys_Body->getWorldTransform().setRotation(App->CL_Scene->B_Player[0]->Physics_Rotation);
+	}
+
+	//App->CL_Ogre->OgreListener->GD_Run_Physics = 1;
+}
