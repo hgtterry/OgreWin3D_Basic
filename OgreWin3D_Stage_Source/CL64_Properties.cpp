@@ -2640,7 +2640,7 @@ bool CL64_Properties::Update_ListView_Particles()
 	pitem.mask = LVIF_TEXT;
 
 	grid[0][0] = "Name", grid[1][0] = App->CL_Scene->V_Object[index]->Mesh_Name;
-	grid[0][1] = "Particle", grid[1][1] = App->CL_Scene->V_Object[index]->Mesh_Name;
+	grid[0][1] = "Particle", grid[1][1] = App->CL_Scene->V_Object[index]->S_Particle[0]->ParticleScript;
 	grid[0][2] = " ", grid[1][2] = " ";
 	grid[0][3] = "Speed", grid[1][3] = chr_Speed;
 
