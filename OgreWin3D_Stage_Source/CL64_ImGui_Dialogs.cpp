@@ -176,6 +176,11 @@ void CL64_ImGui_Dialogs::Dialog_Float(void)
 
 		ImGui::InputFloat("", &m_Dialog_Float, Float_Step, 0, "%.3f");
 
+		if (m_Dialog_Float < 0)
+		{
+			m_Dialog_Float = 0;
+		}
+
 		ImGui::Spacing();
 		ImGui::Spacing();
 
