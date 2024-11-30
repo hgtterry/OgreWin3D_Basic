@@ -378,7 +378,7 @@ bool CL64_Properties::Edit_Object(LPARAM lParam)
 }
 
 // *************************************************************************
-// *				Edit_Player_Onclick  Terry Bernie					   *
+// *			Edit_Player:- Terry and Hazel Flanigan 2024				   *
 // *************************************************************************
 bool CL64_Properties::Edit_Player(LPARAM lParam)
 {
@@ -400,7 +400,7 @@ bool CL64_Properties::Edit_Player(LPARAM lParam)
 	result = strcmp(App->CL_Properties->btext, "Ground Speed");
 	if (result == 0)
 	{
-		App->CL_ImGui_Dialogs->Start_Dialog_Float(0.01, App->CL_Scene->B_Player[0]->Ground_speed / 100, (LPSTR)"Ground Speed");
+		App->CL_ImGui_Dialogs->Start_Dialog_Float(0.01,1, App->CL_Scene->B_Player[0]->Ground_speed / 100, (LPSTR)"Ground Speed");
 
 		while (App->CL_ImGui_Dialogs->Show_Dialog_Float == 1)
 		{
@@ -442,70 +442,125 @@ bool CL64_Properties::Edit_Player(LPARAM lParam)
 		return 1;
 	}
 
-	//result = strcmp(App->SBC_Properties->btext, "Turn Rate");
-	//if (result == 0)
-	//{
+	result = strcmp(App->CL_Properties->btext, "Turn Rate");
+	if (result == 0)
+	{
+		App->CL_ImGui_Dialogs->Start_Dialog_Float(0.01, 1, App->CL_Scene->B_Player[0]->TurnRate, (LPSTR)"Turn Rate");
 
-	//	char chr_Value[10];
-	//	sprintf(chr_Value, "%.6f ", App->SBC_Scene->B_Player[0]->TurnRate);
+		while (App->CL_ImGui_Dialogs->Show_Dialog_Float == 1)
+		{
+			App->CL_ImGui_Dialogs->BackGround_Render_Loop();
 
-	//	strcpy(App->Cl_Dialogs->Chr_Float, chr_Value);
-	//	strcpy(App->Cl_Dialogs->btext, "Turn Rate");
+			if (App->CL_ImGui_Dialogs->m_Dialog_Float < 0)
+			{
+				App->CL_ImGui_Dialogs->m_Dialog_Float = 0;
+			}
 
-	//	App->Cl_Dialogs->Dialog_Float();
-	//	if (App->Cl_Dialogs->Canceled == 1)
-	//	{
-	//		return TRUE;
-	//	}
+			App->CL_Scene->B_Player[0]->TurnRate = App->CL_ImGui_Dialogs->m_Dialog_Float;
+		}
 
-	//	App->SBC_Scene->B_Player[0]->TurnRate = App->Cl_Dialogs->mFloat;
+		App->CL_ImGui_Dialogs->Show_Dialog_Float = 0;
 
-	//	App->SBC_Scene->B_Player[0]->Altered = 1;
-	//	App->SBC_Scene->Scene_Modified = 1;
-	//	App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Player[0]->FileViewItem);
+		if (App->CL_ImGui_Dialogs->Float_Canceld == 0)
+		{
+			App->CL_ImGui_Dialogs->Show_Dialog_Float = 0;
 
-	//	Update_ListView_Player();
+			App->CL_Scene->B_Player[0]->TurnRate = App->CL_ImGui_Dialogs->m_Dialog_Float;
 
-	//	return 1;
-	//}
+			App->CL_Scene->flag_Scene_Modified = 1;
 
-	//result = strcmp(App->SBC_Properties->btext, "Player Height");
-	//if (result == 0)
-	//{
-	//	App->SBC_Gui_Dialogs->Start_Dialog_Float(0.10, App->SBC_Scene->B_Player[0]->PlayerHeight, "Player Height");
+			App->CL_Scene->V_Object[Index]->Altered = 1;
+			App->CL_Scene->flag_Scene_Modified = 1;
+			App->CL_FileView->Mark_Altered(App->CL_Scene->V_Object[Index]->FileViewItem);
+		}
+		else
+		{
+			App->CL_ImGui_Dialogs->m_Dialog_Float = App->CL_ImGui_Dialogs->m_Dialog_Float_Copy;
+			App->CL_Scene->B_Player[0]->TurnRate = App->CL_ImGui_Dialogs->m_Dialog_Float_Copy;
 
-	//	while (App->SBC_Gui_Dialogs->Show_Dialog_Float == 1)
-	//	{
-	//		App->SBC_Gui_Dialogs->BackGround_Render_Loop();
+		}
 
-	//		App->SBC_Scene->B_Player[0]->PlayerHeight = App->SBC_Gui_Dialogs->m_Dialog_Float;
-	//	}
+		App->CL_Panels->Disable_Panels(false);
 
-	//	App->SBC_Gui_Dialogs->Show_Dialog_Float = 0;
+		Update_ListView_Player();
 
-	//	if (App->SBC_Gui_Dialogs->Float_Canceld == 0)
-	//	{
-	//		App->SBC_Gui_Dialogs->Show_Dialog_Float = 0;
+		return 1;
+	}
 
-	//		App->SBC_Scene->B_Player[0]->PlayerHeight = App->SBC_Gui_Dialogs->m_Dialog_Float;
+	result = strcmp(App->CL_Properties->btext, "Player Height");
+	if (result == 0)
+	{
+		App->CL_ImGui_Dialogs->Start_Dialog_Float(0.1, 2, App->CL_Scene->B_Player[0]->PlayerHeight, (LPSTR)"Player Height");
 
-	//		App->SBC_Scene->Scene_Modified = 1;
+		while (App->CL_ImGui_Dialogs->Show_Dialog_Float == 1)
+		{
+			App->CL_ImGui_Dialogs->BackGround_Render_Loop();
 
-	//		App->SBC_Scene->B_Player[0]->Altered = 1;
-	//		App->SBC_Scene->Scene_Modified = 1;
-	//		App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Player[0]->FileViewItem);
-	//	}
-	//	else
-	//	{
-	//		App->SBC_Gui_Dialogs->m_Dialog_Float = App->SBC_Gui_Dialogs->m_Dialog_Float_Copy;
-	//		App->SBC_Scene->B_Player[0]->PlayerHeight = App->SBC_Gui_Dialogs->m_Dialog_Float_Copy;
-	//	}
+			if (App->CL_ImGui_Dialogs->m_Dialog_Float < 0)
+			{
+				App->CL_ImGui_Dialogs->m_Dialog_Float = 0;
+			}
 
-	//	App->Disable_Panels(false);
+			App->CL_Scene->B_Player[0]->PlayerHeight = App->CL_ImGui_Dialogs->m_Dialog_Float;
+		}
 
-	//	Update_ListView_Player();
-	//	return 1;
-	//}
+		App->CL_ImGui_Dialogs->Show_Dialog_Float = 0;
+
+		if (App->CL_ImGui_Dialogs->Float_Canceld == 0)
+		{
+			App->CL_ImGui_Dialogs->Show_Dialog_Float = 0;
+
+			App->CL_Scene->B_Player[0]->PlayerHeight = App->CL_ImGui_Dialogs->m_Dialog_Float;
+
+			App->CL_Scene->flag_Scene_Modified = 1;
+
+			App->CL_Scene->V_Object[Index]->Altered = 1;
+			App->CL_Scene->flag_Scene_Modified = 1;
+			App->CL_FileView->Mark_Altered(App->CL_Scene->V_Object[Index]->FileViewItem);
+		}
+		else
+		{
+			App->CL_ImGui_Dialogs->m_Dialog_Float = App->CL_ImGui_Dialogs->m_Dialog_Float_Copy;
+			App->CL_Scene->B_Player[0]->PlayerHeight = App->CL_ImGui_Dialogs->m_Dialog_Float_Copy;
+
+		}
+
+		App->CL_Panels->Disable_Panels(false);
+
+		/*App->SBC_Gui_Dialogs->Start_Dialog_Float(0.10, App->SBC_Scene->B_Player[0]->PlayerHeight, "Player Height");
+
+		while (App->SBC_Gui_Dialogs->Show_Dialog_Float == 1)
+		{
+			App->SBC_Gui_Dialogs->BackGround_Render_Loop();
+
+			App->SBC_Scene->B_Player[0]->PlayerHeight = App->SBC_Gui_Dialogs->m_Dialog_Float;
+		}
+
+		App->SBC_Gui_Dialogs->Show_Dialog_Float = 0;
+
+		if (App->SBC_Gui_Dialogs->Float_Canceld == 0)
+		{
+			App->SBC_Gui_Dialogs->Show_Dialog_Float = 0;
+
+			App->SBC_Scene->B_Player[0]->PlayerHeight = App->SBC_Gui_Dialogs->m_Dialog_Float;
+
+			App->SBC_Scene->Scene_Modified = 1;
+
+			App->SBC_Scene->B_Player[0]->Altered = 1;
+			App->SBC_Scene->Scene_Modified = 1;
+			App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Player[0]->FileViewItem);
+		}
+		else
+		{
+			App->SBC_Gui_Dialogs->m_Dialog_Float = App->SBC_Gui_Dialogs->m_Dialog_Float_Copy;
+			App->SBC_Scene->B_Player[0]->PlayerHeight = App->SBC_Gui_Dialogs->m_Dialog_Float_Copy;
+		}
+
+		App->Disable_Panels(false);*/
+
+		Update_ListView_Player();
+		return 1;
+	}
 
 	//result = strcmp(App->SBC_Properties->btext, "Start Pos_X");
 	//if (result == 0)
@@ -1389,7 +1444,8 @@ void CL64_Properties::Edit_Particle(LPARAM lParam)
 	result = strcmp(btext, "Speed");
 	if (result == 0)
 	{
-		App->CL_ImGui_Dialogs->Start_Dialog_Float(0.01, App->CL_Scene->V_Object[Index]->S_Particle[0]->SpeedFactor,(LPSTR) "Particle Speed");
+		App->CL_ImGui_Dialogs->Float_Combo_Step = 4;
+		App->CL_ImGui_Dialogs->Start_Dialog_Float(0.01,4, App->CL_Scene->V_Object[Index]->S_Particle[0]->SpeedFactor,(LPSTR) "Particle Speed");
 
 		while (App->CL_ImGui_Dialogs->Show_Dialog_Float == 1)
 		{
@@ -1772,7 +1828,7 @@ bool CL64_Properties::Edit_Counters_OnClick(LPARAM lParam)
 	result = strcmp(btext, "Pos_X");
 	if (result == 0)
 	{
-		App->CL_ImGui_Dialogs->Start_Dialog_Float(0.5, App->CL_Scene->B_Counter[Index]->PosX, (LPSTR)"X Position");
+		App->CL_ImGui_Dialogs->Start_Dialog_Float(0.5,3, App->CL_Scene->B_Counter[Index]->PosX, (LPSTR)"X Position");
 
 		while (App->CL_ImGui_Dialogs->Show_Dialog_Float == 1)
 		{
@@ -1804,7 +1860,7 @@ bool CL64_Properties::Edit_Counters_OnClick(LPARAM lParam)
 	result = strcmp(btext, "Pos_Y");
 	if (result == 0)
 	{
-		App->CL_ImGui_Dialogs->Start_Dialog_Float(0.5, App->CL_Scene->B_Counter[Index]->PosY, (LPSTR)"Y Position");
+		App->CL_ImGui_Dialogs->Start_Dialog_Float(0.5,3, App->CL_Scene->B_Counter[Index]->PosY, (LPSTR)"Y Position");
 
 		while (App->CL_ImGui_Dialogs->Show_Dialog_Float == 1)
 		{

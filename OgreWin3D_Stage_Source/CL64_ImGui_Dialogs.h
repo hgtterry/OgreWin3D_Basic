@@ -33,7 +33,7 @@ public:
 	void Close_All_Dialogs(void);
 	void BackGround_Render_Loop(void);
 
-	void Start_Dialog_Float(float Step, float StartValue, char* Banner);
+	void Start_Dialog_Float(float Step, int Combo_Step, float StartValue, char* Banner);
 	void Dialog_Float(void);
 
 	void Start_Dialog_MessageEditor(int Index);

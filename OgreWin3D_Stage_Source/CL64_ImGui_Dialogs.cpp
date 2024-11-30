@@ -123,12 +123,12 @@ void CL64_ImGui_Dialogs::BackGround_Render_Loop(void)
 // *************************************************************************
 // *		Start_Dialog_Float:- Terry and Hazel Flanigan 2024  		   *
 // *************************************************************************
-void CL64_ImGui_Dialogs::Start_Dialog_Float(float Step, float StartValue, char* Banner)
+void CL64_ImGui_Dialogs::Start_Dialog_Float(float Step,int Combo_Step, float StartValue, char* Banner)
 {
 	Float_Exit = 0;
 	Float_Canceld = 0;
 	Float_Step = Step;
-	Float_Combo_Step = 3;
+	Float_Combo_Step = Combo_Step;
 	m_Dialog_Float = StartValue;
 	strcpy(Float_Banner, Banner);
 
