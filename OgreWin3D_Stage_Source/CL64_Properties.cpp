@@ -1750,55 +1750,69 @@ bool CL64_Properties::Edit_Counters_OnClick(LPARAM lParam)
 		Update_ListView_Counters();
 	}
 
-	//result = strcmp(btext, "Pos_X");
-	//if (result == 0)
-	//{
-	//	strcpy(App->Cl_Dialogs->btext, "Set Position X");
+	result = strcmp(btext, "Pos_X");
+	if (result == 0)
+	{
+		App->CL_ImGui_Dialogs->Start_Dialog_Float(0.5, App->CL_Scene->B_Counter[Index]->PosX, (LPSTR)"X Position");
 
-	//	char buff[256];
-	//	sprintf(buff, "%.3f", App->SBC_Scene->B_Counter[Index]->PosX);
-	//	strcpy(App->Cl_Dialogs->Chr_Float, buff);
+		while (App->CL_ImGui_Dialogs->Show_Dialog_Float == 1)
+		{
+			App->CL_ImGui_Dialogs->BackGround_Render_Loop();
 
-	//	App->Cl_Dialogs->Dialog_Float();
+			App->CL_Scene->B_Counter[Index]->PosX = App->CL_ImGui_Dialogs->m_Dialog_Float;
+		}
 
-	//	if (App->Cl_Dialogs->Canceled == 0)
-	//	{
+		App->CL_ImGui_Dialogs->Show_Dialog_Float = 0;
 
-	//		App->SBC_Scene->B_Counter[Index]->PosX = App->Cl_Dialogs->mFloat;
+		if (App->CL_ImGui_Dialogs->Float_Canceld == 0)
+		{
+			App->CL_ImGui_Dialogs->Show_Dialog_Float = 0;
+			App->CL_Scene->B_Counter[Index]->PosX = App->CL_ImGui_Dialogs->m_Dialog_Float;
+			App->CL_Display->Mark_As_Altered_Counter(Index);
+		}
+		else
+		{
+			App->CL_Scene->B_Counter[Index]->PosX = App->CL_ImGui_Dialogs->m_Dialog_Float_Copy;
+		}
 
-	//		App->SBC_Display->Mark_As_Altered_Counter(Index);
+		App->CL_Panels->Disable_Panels(false);
 
-	//		Update_ListView_Counters();
+		Update_ListView_Counters();
 
-	//	}
+		return 1;
+	}
 
-	//	return 1;
-	//}
+	result = strcmp(btext, "Pos_Y");
+	if (result == 0)
+	{
+		App->CL_ImGui_Dialogs->Start_Dialog_Float(0.5, App->CL_Scene->B_Counter[Index]->PosY, (LPSTR)"Y Position");
 
-	//result = strcmp(btext, "Pos_Y");
-	//if (result == 0)
-	//{
-	//	strcpy(App->Cl_Dialogs->btext, "Set Position Y");
+		while (App->CL_ImGui_Dialogs->Show_Dialog_Float == 1)
+		{
+			App->CL_ImGui_Dialogs->BackGround_Render_Loop();
 
-	//	char buff[256];
-	//	sprintf(buff, "%.3f", App->SBC_Scene->B_Counter[Index]->PosY);
-	//	strcpy(App->Cl_Dialogs->Chr_Float, buff);
+			App->CL_Scene->B_Counter[Index]->PosY = App->CL_ImGui_Dialogs->m_Dialog_Float;
+		}
 
-	//	App->Cl_Dialogs->Dialog_Float();
+		App->CL_ImGui_Dialogs->Show_Dialog_Float = 0;
 
-	//	if (App->Cl_Dialogs->Canceled == 0)
-	//	{
+		if (App->CL_ImGui_Dialogs->Float_Canceld == 0)
+		{
+			App->CL_ImGui_Dialogs->Show_Dialog_Float = 0;
+			App->CL_Scene->B_Counter[Index]->PosY = App->CL_ImGui_Dialogs->m_Dialog_Float;
+			App->CL_Display->Mark_As_Altered_Counter(Index);
+		}
+		else
+		{
+			App->CL_Scene->B_Counter[Index]->PosY = App->CL_ImGui_Dialogs->m_Dialog_Float_Copy;
+		}
 
-	//		App->SBC_Scene->B_Counter[Index]->PosY = App->Cl_Dialogs->mFloat;
+		App->CL_Panels->Disable_Panels(false);
 
-	//		App->SBC_Display->Mark_As_Altered_Counter(Index);
+		Update_ListView_Counters();
 
-	//		Update_ListView_Counters();
-
-	//	}
-
-	//	return 1;
-	//}
+		return 1;
+	}
 
 	//result = strcmp(btext, "Text");
 	//if (result == 0)
