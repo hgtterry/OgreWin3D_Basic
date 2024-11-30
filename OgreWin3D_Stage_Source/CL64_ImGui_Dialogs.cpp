@@ -51,6 +51,7 @@ CL64_ImGui_Dialogs::CL64_ImGui_Dialogs(void)
 	strcpy(Float_Banner, "Banner");
 	m_Dialog_Float_Copy = 0;
 	m_Dialog_Float = 10.222;
+	Float_Combo_Step = 0;
 
 	// Mesage Editor
 	flag_Centre_X_Selected = 0;
@@ -125,10 +126,11 @@ void CL64_ImGui_Dialogs::BackGround_Render_Loop(void)
 void CL64_ImGui_Dialogs::Start_Dialog_Float(float Step, float StartValue, char* Banner)
 {
 	Float_Exit = 0;
-	App->CL_ImGui_Dialogs->Float_Canceld = 0;
-	App->CL_ImGui_Dialogs->Float_Step = Step;
-	App->CL_ImGui_Dialogs->m_Dialog_Float = StartValue;
-	strcpy(App->CL_ImGui_Dialogs->Float_Banner, Banner);
+	Float_Canceld = 0;
+	Float_Step = Step;
+	Float_Combo_Step = 3;
+	m_Dialog_Float = StartValue;
+	strcpy(Float_Banner, Banner);
 
 	m_Dialog_Float_Copy = StartValue;
 
@@ -139,7 +141,7 @@ void CL64_ImGui_Dialogs::Start_Dialog_Float(float Step, float StartValue, char* 
 
 	Float_StartPos = 0;
 
-	App->CL_ImGui_Dialogs->Show_Dialog_Float = 1;
+	Show_Dialog_Float = 1;
 }
 
 // *************************************************************************
@@ -148,7 +150,7 @@ void CL64_ImGui_Dialogs::Start_Dialog_Float(float Step, float StartValue, char* 
 void CL64_ImGui_Dialogs::Dialog_Float(void)
 {
 	ImGui::SetNextWindowPos(ImVec2(Float_PosX, Float_PosY), ImGuiCond_FirstUseEver);
-	ImGui::SetNextWindowSize(ImVec2(200, 130), ImGuiCond_FirstUseEver);
+	ImGui::SetNextWindowSize(ImVec2(210, 160), ImGuiCond_FirstUseEver);
 
 	ImGui::PushStyleColor(ImGuiCol_WindowBg, IM_COL32(239, 239, 239, 255));
 
@@ -176,6 +178,15 @@ void CL64_ImGui_Dialogs::Dialog_Float(void)
 
 		ImGui::Spacing();
 		ImGui::Spacing();
+
+		ImGui::SetNextItemWidth(100);
+		const char* XitemsPosXX[] = { "0.001","0.01","0.1","0.5","1", "2", "5", "10", "20"};
+		bool ChangedPosX = ImGui::Combo("Step", &Float_Combo_Step, XitemsPosXX, IM_ARRAYSIZE(XitemsPosXX));
+		if (ChangedPosX == 1)
+		{
+			Float_Step = (float)atof(XitemsPosXX[Float_Combo_Step]);
+		}
+
 		ImGui::Spacing();
 		ImGui::Separator();
 		ImGui::Spacing();
@@ -194,7 +205,7 @@ void CL64_ImGui_Dialogs::Dialog_Float(void)
 
 		ImGui::SameLine(0.0f, spacingX);
 
-		if (ImGui::Button("Close"))
+		if (ImGui::Button("Cancel"))
 		{
 			Float_StartPos = 0;
 			Float_Exit = 1;
