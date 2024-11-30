@@ -324,6 +324,23 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			return 1;
 		}
 
+		case ID_WINDOWS_PHYSICSCONSOLE:
+		{
+			if (App->CL_ImGui_Dialogs->Show_Physics_Console == 1) // Atention
+			{
+				App->CL_ImGui_Dialogs->Physics_Console_StartPos = 0;
+				App->CL_ImGui_Dialogs->Show_Physics_Console = 0;
+				CheckMenuItem(App->mMenu, ID_WINDOWS_PHYSICSCONSOLE, MF_BYCOMMAND | MF_UNCHECKED);
+			}
+			else
+			{
+				App->CL_ImGui_Dialogs->Physics_Console_StartPos = 0;
+				App->CL_ImGui_Dialogs->Show_Physics_Console = 1;
+				CheckMenuItem(App->mMenu, ID_WINDOWS_PHYSICSCONSOLE, MF_BYCOMMAND | MF_CHECKED);
+			}
+			return 1;
+		}
+		
 		// Tools -------------------------------------------------------
 		case ID_TOOLS_RESOURCEVIEWER:
 		{

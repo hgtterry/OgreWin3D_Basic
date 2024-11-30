@@ -58,6 +58,10 @@ public:
 	
 	bool flag_ShowOnlySubFaces_Saved;
 
+	bool flag_Toggle_Cam_ModelMode;
+	bool flag_Toggle_Cam_FreeMode;
+	bool flag_Toggle_Cam_FirstMode;
+
 	void Init_Bmps_Globals(void);
 
 	HWND TabsHwnd;
@@ -91,10 +95,6 @@ private:
 	void Start_Physics_TB(void);
 	void Start_Motions_TB(void);
 	void Start_Locations_TB(void);
-
-	bool flag_Toggle_Cam_ModelMode;
-	bool flag_Toggle_Cam_FreeMode;
-	bool flag_Toggle_Cam_FirstMode;
 
 };
 

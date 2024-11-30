@@ -24,6 +24,7 @@ THE SOFTWARE.
 
 #include "pch.h"
 #include "CL64_App.h"
+#include "resource.h"
 #include "CL64_ImGui_Dialogs.h"
 
 CL64_ImGui_Dialogs::CL64_ImGui_Dialogs(void)
@@ -781,7 +782,7 @@ void CL64_ImGui_Dialogs::Physics_Console_Gui(void)
 		ImGui::SameLine();
 		if (ImGui::Button("X"))
 		{
-			//CheckMenuItem(App->mMenu, ID_WINDOWS_SHOWPHYSICSPANEL, MF_BYCOMMAND | MF_UNCHECKED);
+			CheckMenuItem(App->mMenu, ID_WINDOWS_PHYSICSCONSOLE, MF_BYCOMMAND | MF_UNCHECKED);
 			Physics_Console_StartPos = 0;
 			Show_Physics_Console = 0;
 		}
@@ -851,14 +852,9 @@ void CL64_ImGui_Dialogs::Physics_Console_Gui(void)
 				App->CL_Physics->Reset_Triggers();
 				App->CL_Ogre->Ogre3D_Listener->flag_Run_Physics = 1;
 
-				//App->CL_TopDlg->Toggle_FirstCam_Flag = 1;
-				//App->CL_TopDlg->Toggle_FreeCam_Flag = 0;
+				App->CL_TopDlg->flag_Toggle_Cam_FirstMode = 1;
+				App->CL_TopDlg->flag_Toggle_Cam_FreeMode = 0;
 				RedrawWindow(App->CL_TopDlg->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-
-				/*App->SBC_TopTabs->Toggle_FirstCam_Flag = 0;
-				App->SBC_TopTabs->Toggle_FreeCam_Flag = 1;
-				RedrawWindow(App->SBC_TopTabs->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-				App->CL_Ogre->OgreListener->GD_CameraMode = Enums::CamDetached;*/
 
 				App->CL_Com_Environments->GameMode(0);
 

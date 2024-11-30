@@ -160,7 +160,6 @@
 #define IDC_BT_TD_DEMOS_DEMO1           1013
 #define IDC_BTSHOWPOINTS                1013
 #define IDC_BOX                         1013
-#define IDC_BUTTON8                     1013
 #define IDC_BTSAVE_LOCATION_PLAYER      1013
 #define IDC_BT_TD_DEMOS_DEMO2           1014
 #define IDC_TBBOUNDBOX                  1014
@@ -318,6 +317,7 @@
 #define ID_TOOLS_SOUNDPLAYER            32816
 #define ID_FILE_NEW                     32817
 #define ID_TOOLS_MESHVIEWER             32818
+#define ID_WINDOWS_PHYSICSCONSOLE       32819
 #define IDC_STATIC                      -1
 
 // Next default values for new objects
@@ -326,7 +326,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        199
-#define _APS_NEXT_COMMAND_VALUE         32819
+#define _APS_NEXT_COMMAND_VALUE         32820
 #define _APS_NEXT_CONTROL_VALUE         1108
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
