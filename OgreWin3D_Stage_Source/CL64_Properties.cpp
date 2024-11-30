@@ -1148,6 +1148,7 @@ bool CL64_Properties::Edit_Teleport_Entity(LPARAM lParam)
 
 		App->CL_ImGui_Dialogs->List_Strings.resize(App->CL_Scene->Player_Location_Count);
 		App->CL_ImGui_Dialogs->List_Count = App->CL_Scene->Player_Location_Count;
+		App->CL_ImGui_Dialogs->List_Index = App->CL_Scene->V_Object[Index]->S_Teleport[0]->Location_ID;
 
 		int Count = 0;
 		while (Count < App->CL_Scene->Player_Location_Count)
@@ -2651,8 +2652,6 @@ bool CL64_Properties::Update_ListView_Particles()
 		pitem.iItem = row;
 		pitem.pszText = const_cast<char*>(grid[0][row].c_str());
 		ListView_InsertItem(Properties_hLV, &pitem);
-
-		//ListView_SetItemText
 
 		for (DWORD col = 1; col < NUM_COLS; col++)
 		{

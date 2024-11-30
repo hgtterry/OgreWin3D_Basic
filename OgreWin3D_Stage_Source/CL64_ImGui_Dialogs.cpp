@@ -37,6 +37,9 @@ CL64_ImGui_Dialogs::CL64_ImGui_Dialogs(void)
 	List_Index = 0;
 	flag_List_StartPos = 0;
 	flag_List_Canceled = 1;
+	item_current_idx = 0;
+
+
 	// -------------- Float Dialog
 	Show_Dialog_Float = 0;
 	Float_StartPos = 0;
@@ -669,7 +672,10 @@ void CL64_ImGui_Dialogs::Dialog_List_Gui(void)
 
 		ImGui::Spacing();
 
-		static int item_current_idx = 0; 
+		ImGui::Text("%s", List_Strings[List_Index].c_str());
+
+		item_current_idx = List_Index;
+
 		if (ImGui::BeginListBox("##listbox 2", ImVec2(-FLT_MIN, 8 * ImGui::GetTextLineHeightWithSpacing())))
 		{
 			for (int n = 0; n < List_Count; n++)

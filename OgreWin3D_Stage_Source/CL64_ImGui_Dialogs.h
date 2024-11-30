@@ -55,7 +55,7 @@ public:
 	std::vector<std::string> List_Strings;
 	int List_Count;
 	int List_Index;
-
+	int item_current_idx;
 
 	// -------------- Float Dialog
 	bool Show_Dialog_Float;

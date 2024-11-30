@@ -65,6 +65,53 @@ void CL64_Com_Teleporters::Set_Teleports_Defaults(int Index)
 }
 
 // *************************************************************************
+// *		Add_New_Teleporter:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+bool CL64_Com_Teleporters::Add_New_Teleporter()
+{
+	char B_Name[MAX_PATH];
+	char ConNum[MAX_PATH];
+
+	int Index = App->CL_Scene->Object_Count;
+
+	App->CL_Scene->V_Object[Index] = new Base_Object();
+
+	App->CL_Scene->V_Object[Index]->S_Teleport[0] = new Teleport_type;
+	Set_Teleports_Defaults(Index);
+
+	App->CL_Scene->V_Object[Index]->S_Environ[0] = new Environ_type;
+	App->CL_Com_Environments->V_Set_Environ_Defaults(Index);
+
+	App->CL_Scene->V_Object[Index]->Type = Enums::Bullet_Type_Static;
+	App->CL_Scene->V_Object[Index]->Shape = Enums::Shape_Box;
+	App->CL_Scene->V_Object[Index]->This_Object_UniqueID = App->CL_Scene->UniqueID_Object_Counter; // Unique ID
+
+	strcpy(App->CL_Scene->V_Object[Index]->Mesh_FileName, "TeleportSend.mesh");
+
+	strcpy_s(B_Name, "Teleport_Ent_");
+	_itoa(Index, ConNum, 10);
+	strcat(B_Name, ConNum);
+	strcpy(App->CL_Scene->V_Object[Index]->Mesh_Name, B_Name);
+
+	Ogre::Vector3 Pos = App->CL_Object->GetPlacement(-50);
+	App->CL_Scene->V_Object[Index]->Mesh_Pos = Pos;
+
+	Create_Teleport_Entity(Index);
+
+	HTREEITEM Temp = App->CL_FileView->Add_Item(App->CL_FileView->FV_Teleporters_Folder, App->CL_Scene->V_Object[Index]->Mesh_Name, Index, true);
+	App->CL_Scene->V_Object[Index]->FileViewItem = Temp;
+
+	App->CL_FileView->SelectItem(App->CL_Scene->V_Object[Index]->FileViewItem);
+
+	App->CL_Scene->UniqueID_Object_Counter++;
+	App->CL_Scene->Object_Count++;
+
+	App->CL_FileView->Set_FolderActive(App->CL_FileView->FV_Teleporters_Folder);
+
+	return 1;
+}
+
+// *************************************************************************
 // *		Create_Teleport_Entity:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
 bool CL64_Com_Teleporters::Create_Teleport_Entity(int Index)

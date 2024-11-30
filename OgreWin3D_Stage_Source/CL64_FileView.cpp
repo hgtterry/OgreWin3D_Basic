@@ -1391,7 +1391,7 @@ void CL64_FileView::Context_Menu(HWND hDlg)
 		if (!strcmp(FileView_Folder, "Teleporters")) // Folder
 		{
 			hMenu = CreatePopupMenu();
-			AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_FILE_NEW, L"&New");
+			AppendMenuW(hMenu, MF_STRING , IDM_FILE_NEW, L"&New");
 			TrackPopupMenu(hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, App->ListPanel, NULL);
 			DestroyMenu(hMenu);
 			Context_Selection = Enums::FileView_Teleports_Folder;
@@ -1633,13 +1633,13 @@ void CL64_FileView::Context_New(HWND hDlg)
 	// Teleports
 	if (App->CL_FileView->Context_Selection == Enums::FileView_Teleports_Folder)
 	{
-		/*App->SBC_Dialogs->YesNo("Add Message", "Do you want to add a new Teleport Entity", 1);
+		App->CL_Dialogs->Show_YesNo_Dlg((LPSTR)"Add Message", (LPSTR)"Do you want to add a new Teleport Entity", (LPSTR)"");
 
-		bool Doit = App->SBC_Dialogs->Canceled;
+		bool Doit = App->CL_Dialogs->Canceled;
 		if (Doit == 0)
 		{
 			App->CL_Com_Teleporters->Add_New_Teleporter();
-		}*/
+		}
 
 		return;
 	}
@@ -1701,6 +1701,7 @@ void CL64_FileView::Context_New(HWND hDlg)
 
 			App->CL_ImGui_Dialogs->List_Strings.resize(6);
 			App->CL_ImGui_Dialogs->List_Count = 6;
+			App->CL_ImGui_Dialogs->List_Index = 0;
 
 			App->CL_ImGui_Dialogs->List_Strings[0] = "GD_Smoke1";
 			App->CL_ImGui_Dialogs->List_Strings[1] = "GD_JetEngine1";
