@@ -277,6 +277,12 @@ void CL64_ImGui::ImGui_Render_Loop(void)
 	{
 		App->CL_ImGui_Dialogs->Dialog_List_Gui();
 	}
+
+	// SBC_Gui_Dialogs - Physics Console
+	if (App->CL_ImGui_Dialogs->Show_Physics_Console == 1)
+	{
+		App->CL_ImGui_Dialogs->Physics_Console_Gui();
+	}
 }
 
 // *************************************************************************

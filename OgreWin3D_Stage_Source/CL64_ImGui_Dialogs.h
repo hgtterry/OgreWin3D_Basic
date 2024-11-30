@@ -45,6 +45,8 @@ public:
 	void Start_Dialog_List();
 	void Dialog_List_Gui(void);
 
+	void Physics_Console_Gui(void);
+
 	// List Dialog
 	float List_PosX;
 	float List_PosY;
@@ -101,6 +103,13 @@ public:
 	bool flag_Move_Ent_PosX_Selected;
 	bool flag_Move_Ent_PosY_Selected;
 	bool flag_Move_Ent_PosZ_Selected;
+
+	// -------------- Physics Console
+	bool Disable_Physics_Console;
+	bool Show_Physics_Console;
+	float Physics_PosX;
+	float Physics_PosY;
+	bool Physics_Console_StartPos;
 
 private:
 

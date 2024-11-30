@@ -527,37 +527,6 @@ bool CL64_Properties::Edit_Player(LPARAM lParam)
 
 		App->CL_Panels->Disable_Panels(false);
 
-		/*App->SBC_Gui_Dialogs->Start_Dialog_Float(0.10, App->SBC_Scene->B_Player[0]->PlayerHeight, "Player Height");
-
-		while (App->SBC_Gui_Dialogs->Show_Dialog_Float == 1)
-		{
-			App->SBC_Gui_Dialogs->BackGround_Render_Loop();
-
-			App->SBC_Scene->B_Player[0]->PlayerHeight = App->SBC_Gui_Dialogs->m_Dialog_Float;
-		}
-
-		App->SBC_Gui_Dialogs->Show_Dialog_Float = 0;
-
-		if (App->SBC_Gui_Dialogs->Float_Canceld == 0)
-		{
-			App->SBC_Gui_Dialogs->Show_Dialog_Float = 0;
-
-			App->SBC_Scene->B_Player[0]->PlayerHeight = App->SBC_Gui_Dialogs->m_Dialog_Float;
-
-			App->SBC_Scene->Scene_Modified = 1;
-
-			App->SBC_Scene->B_Player[0]->Altered = 1;
-			App->SBC_Scene->Scene_Modified = 1;
-			App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Player[0]->FileViewItem);
-		}
-		else
-		{
-			App->SBC_Gui_Dialogs->m_Dialog_Float = App->SBC_Gui_Dialogs->m_Dialog_Float_Copy;
-			App->SBC_Scene->B_Player[0]->PlayerHeight = App->SBC_Gui_Dialogs->m_Dialog_Float_Copy;
-		}
-
-		App->Disable_Panels(false);*/
-
 		Update_ListView_Player();
 		return 1;
 	}

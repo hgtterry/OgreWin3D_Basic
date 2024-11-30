@@ -76,6 +76,13 @@ CL64_ImGui_Dialogs::CL64_ImGui_Dialogs(void)
 	Move_Ent_Index = 0;
 	Move_Ent_item_current_idx = 0;
 
+	// -------------- Physics Console
+	Disable_Physics_Console = 0;
+	Show_Physics_Console = 1;
+	Physics_PosX = 500;
+	Physics_PosY = 500;
+	Physics_Console_StartPos = 0;
+
 }
 
 CL64_ImGui_Dialogs::~CL64_ImGui_Dialogs(void)
@@ -740,6 +747,144 @@ void CL64_ImGui_Dialogs::Dialog_List_Gui(void)
 			ImGui::PopStyleColor();
 			ImGui::End();
 		}
+	}
+}
+
+// *************************************************************************
+// *			Physics_Console:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void CL64_ImGui_Dialogs::Physics_Console_Gui(void)
+{
+	ImGui::SetNextWindowPos(ImVec2(Physics_PosX, Physics_PosY), ImGuiCond_FirstUseEver);
+	ImGui::PushStyleColor(ImGuiCol_WindowBg, IM_COL32(239, 239, 239, 255));
+	ImGuiStyle* style = &ImGui::GetStyle();
+
+	if (!ImGui::Begin("Physics_Console", &Show_Physics_Console, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar))
+	{
+		ImGui::End();
+	}
+	else
+	{
+		if (Disable_Physics_Console == 1)
+		{
+			ImGui::BeginDisabled(true);
+		}
+
+		ImGui::Text("Physics Console");
+
+		ImGui::SameLine(0, 270);
+		if (ImGui::Button("H"))
+		{
+			//App->Cl_Utilities->OpenHTML("Help\\Physics_Console.html");
+		}
+
+		ImGui::SameLine();
+		if (ImGui::Button("X"))
+		{
+			//CheckMenuItem(App->mMenu, ID_WINDOWS_SHOWPHYSICSPANEL, MF_BYCOMMAND | MF_UNCHECKED);
+			Physics_Console_StartPos = 0;
+			Show_Physics_Console = 0;
+		}
+
+		ImGui::Separator();
+
+		if (App->CL_Ogre->Ogre3D_Listener->flag_Run_Physics == 1)
+		{
+			style->Colors[ImGuiCol_Button] = ImVec4(0.0f, 1.0f, 0.0f, 1.00f);
+		}
+		else
+		{
+			style->Colors[ImGuiCol_Button] = ImVec4(1.0f, 1.0f, 1.0f, 1.00f);
+		}
+
+		if (ImGui::Button("Physics On"))
+		{
+			if (App->CL_Scene->flag_Scene_Loaded == 1)
+			{
+				if (App->CL_Ogre->Ogre3D_Listener->flag_Run_Physics == 1)
+				{
+					App->CL_Ogre->Ogre3D_Listener->flag_Run_Physics = 0;
+				}
+				else
+				{
+					App->CL_Ogre->Ogre3D_Listener->flag_Run_Physics = 1;
+				}
+
+				//App->RedrawWindow_Dlg(App->Physics_Console_Hwnd);
+			}
+		}
+
+		style->Colors[ImGuiCol_Button] = ImVec4(1, 1, 0.58, 1); // Yellow
+
+
+		ImGui::SameLine();
+		if (ImGui::Button("Reset Physics"))
+		{
+			if (App->CL_Scene->flag_Scene_Loaded == 1)
+			{
+				//App->CL_Physics->Reset_Physics();
+
+				//App->RedrawWindow_Dlg(App->Physics_Console_Hwnd);
+			}
+		}
+
+		ImGui::SameLine();
+		if (ImGui::Button("Reset Entities"))
+		{
+			if (App->CL_Scene->flag_Scene_Loaded == 1)
+			{
+				App->CL_Physics->Reset_Triggers();
+			}
+		}
+
+		ImGui::SameLine();
+		if (ImGui::Button("Reset Scene"))
+		{
+			if (App->CL_Scene->flag_Scene_Loaded == 1)
+			{
+
+				int Saved = App->CL_Ogre->Ogre3D_Listener->CameraMode;
+				App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_First;
+
+				//App->CL_Physics->Reset_Physics();
+				App->CL_Ogre->Ogre3D_Listener->flag_Run_Physics = 1;
+				App->CL_Physics->Reset_Triggers();
+				App->CL_Ogre->Ogre3D_Listener->flag_Run_Physics = 1;
+
+				//App->CL_TopDlg->Toggle_FirstCam_Flag = 1;
+				//App->CL_TopDlg->Toggle_FreeCam_Flag = 0;
+				RedrawWindow(App->CL_TopDlg->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+				/*App->SBC_TopTabs->Toggle_FirstCam_Flag = 0;
+				App->SBC_TopTabs->Toggle_FreeCam_Flag = 1;
+				RedrawWindow(App->SBC_TopTabs->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+				App->CL_Ogre->OgreListener->GD_CameraMode = Enums::CamDetached;*/
+
+				App->CL_Com_Environments->GameMode(0);
+
+			}
+		}
+
+		if (Physics_Console_StartPos == 0)
+		{
+			ImVec2 Size = ImGui::GetWindowSize();
+			Physics_PosX = 10;
+			Physics_PosY = ((float)App->CL_Ogre->Ogre3D_Listener->View_Height) - (Size.y) - 10;
+			ImGui::SetWindowPos("Physics_Console", ImVec2(Physics_PosX, Physics_PosY));
+
+			Physics_Console_StartPos = 1;
+		}
+
+		style->Colors[ImGuiCol_Button] = ImVec4(0.26f, 0.59f, 0.98f, 0.40f);
+		ImGui::PopStyleColor();
+
+
+		if (Disable_Physics_Console == 1)
+		{
+			ImGui::EndDisabled();
+		}
+
+		ImGui::End();
 	}
 }
 
