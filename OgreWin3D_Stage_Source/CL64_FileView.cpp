@@ -847,8 +847,8 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 		//App->SBC_Properties->Is_Player = 0; // Mark as Object selected
 
 		//----------------------------------------------------------------------------
-		/*App->SBC_Properties->Reset_Last_Selected_Object(App->SBC_Properties->Last_Selected_Object);
-		App->SBC_Properties->Last_Selected_Object = Index;*/
+		//App->SBC_Properties->Reset_Last_Selected_Object(App->SBC_Properties->Last_Selected_Object);
+		//App->SBC_Properties->Last_Selected_Object = Index;
 		//----------------------------------------------------------------------------
 
 		App->CL_Gizmos->MarkerBox_Addjust(Index);

@@ -146,3 +146,29 @@ void CL64_Display::Mark_As_Altered_Counter(int Index)
 
 	App->CL_FileView->Mark_Altered(App->CL_Scene->B_Counter[Index]->FileViewItem);
 }
+
+// **************************************************************************
+// *	  		GetIndex_By_Name:- Terry and Hazel Flanigan 2024			*
+// **************************************************************************
+int CL64_Display::GetIndex_By_Name(char* Name)
+{
+	int Count = 0;
+	int Total = App->CL_Scene->Counters_Count;
+
+	while (Count < Total)
+	{
+		if (App->CL_Scene->B_Counter[Count]->Deleted == 0)
+		{
+			int Result = 1;
+			Result = strcmp(App->CL_Scene->B_Counter[Count]->Panel_Name, Name);
+			if (Result == 0)
+			{
+				return Count;
+			}
+		}
+
+		Count++;
+	}
+
+	return -1;
+}

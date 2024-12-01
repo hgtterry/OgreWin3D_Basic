@@ -1402,8 +1402,8 @@ LRESULT CALLBACK CL64_Dialogs::Proc_Dialog_Counter(HWND hDlg, UINT message, WPAR
 		//App->SetTitleBar(hDlg);
 
 		SendDlgItemMessage(hDlg, IDC_EDTRIGGERVALUE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_STCOUNTERNAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_BT_COUNTER, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
+	
 		SendDlgItemMessage(hDlg, IDC_STTRIGGERVALUE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_STMATHS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ST_CT_COUNTER, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
@@ -1415,7 +1415,9 @@ LRESULT CALLBACK CL64_Dialogs::Proc_Dialog_Counter(HWND hDlg, UINT message, WPAR
 		SendDlgItemMessage(hDlg, IDC_STBANNER, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ST_CT_MATHS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
-		
+		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
 		App->CL_Dialogs->UpDate_Counter_Dialog(hDlg);
 		App->CL_Dialogs->Set_Counter_Dialog_Details(hDlg);
 
@@ -1423,15 +1425,6 @@ LRESULT CALLBACK CL64_Dialogs::Proc_Dialog_Counter(HWND hDlg, UINT message, WPAR
 	}
 	case WM_CTLCOLORSTATIC:
 	{
-
-		if (GetDlgItem(hDlg, IDC_STCOUNTERNAME) == (HWND)lParam)
-		{
-			SetBkColor((HDC)wParam, RGB(0, 255, 0));
-			SetTextColor((HDC)wParam, RGB(0, 0, 0));
-			SetBkMode((HDC)wParam, TRANSPARENT);
-			return (UINT)App->Brush_White;
-		}
-
 		if (GetDlgItem(hDlg, IDC_STMATHS) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 255, 0));
@@ -1491,13 +1484,6 @@ LRESULT CALLBACK CL64_Dialogs::Proc_Dialog_Counter(HWND hDlg, UINT message, WPAR
 	case WM_NOTIFY:
 	{
 		LPNMHDR some_item = (LPNMHDR)lParam;
-
-		if (some_item->idFrom == IDC_BT_COUNTER)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Normal(item);
-			return CDRF_DODEFAULT;
-		}
 
 		if (some_item->idFrom == IDOK)
 		{
@@ -1575,32 +1561,31 @@ LRESULT CALLBACK CL64_Dialogs::Proc_Dialog_Counter(HWND hDlg, UINT message, WPAR
 		//	return TRUE;
 		//}
 
-		//if (LOWORD(wParam) == IDC_BT_COUNTER)
-		//{
-		//	int Index = App->SBC_Properties->Current_Selected_Object;
+		if (LOWORD(wParam) == IDC_CB_COUNTERS)
+		{
+			switch (HIWORD(wParam)) // Find out what message it was
+			{
+			case CBN_DROPDOWN:
+				break;
+			case CBN_CLOSEUP:
+			{
+				int ObjectIndex = App->CL_Properties->Current_Selected_Object;
+				
+				char buff[MAX_PATH]{ 0 };
+				HWND temp = GetDlgItem(hDlg, IDC_CB_COUNTERS);
+				int Index = SendMessage(temp, CB_GETCURSEL, 0, 0);
+				SendMessage(temp, CB_GETLBTEXT, Index, (LPARAM)buff);
 
-		//	strcpy(App->Cl_Dialogs->btext, "Select Counter");
+				strcpy(App->CL_Scene->V_Object[ObjectIndex]->S_Teleport[0]->Counter_Name, buff);
+				int CounterIndex = App->CL_Display->GetIndex_By_Name(buff);
 
-		//	if (App->SBC_Properties->Edit_Category == Enums::Edit_Move_Entity)
-		//	{
-		//		int Counter_Index = App->SBC_Scene->V_Object[Index]->S_MoveType[0]->Counter_ID;
+				App->CL_Scene->V_Object[ObjectIndex]->S_Teleport[0]->Counter_ID = CounterIndex;
+				 
+			}
+			}
 
-		//		strcpy(App->SBC_Dialogs->Chr_DropText, App->SBC_Scene->B_Counter[Counter_Index]->Panel_Name);
-		//		App->SBC_Dialogs->DropList_Data = Enums::DropDialog_Counters;
-		//		App->SBC_Dialogs->Dialog_DropGen();
-
-		//		if (App->SBC_Dialogs->Canceled == 0)
-		//		{
-		//			strcpy(App->SBC_Scene->V_Object[Index]->S_MoveType[0]->Counter_Name, App->SBC_Dialogs->Chr_DropText);
-
-		//			int CounterIndex = App->SBC_Display->GetIndex_By_Name(App->SBC_Dialogs->Chr_DropText);
-
-		//			App->SBC_Scene->V_Object[Index]->S_MoveType[0]->Counter_ID = CounterIndex;
-
-		//		}
-
-		//		App->SBC_Dialogs->UpDate_Counter_Dialog(hDlg);
-		//	}
+			return TRUE;
+		}
 
 		//	if (App->SBC_Properties->Edit_Category == Enums::Edit_Message)
 		//	{
@@ -1806,10 +1791,6 @@ bool CL64_Dialogs::UpDate_Counter_Dialog(HWND hDlg)
 		_itoa(App->CL_Scene->V_Object[Index]->S_MoveType[0]->Trigger_Value, chr_TriggerVal, 10);
 		SetDlgItemText(hDlg, IDC_EDTRIGGERVALUE, (LPCTSTR)chr_TriggerVal);
 
-		char chr_CounterName[20];
-		strcpy(chr_CounterName, App->CL_Scene->B_Counter[App->CL_Scene->V_Object[Index]->S_MoveType[0]->Counter_ID]->Panel_Name);
-		SetDlgItemText(hDlg, IDC_STCOUNTERNAME, (LPCTSTR)chr_CounterName);
-
 		return 1;
 	}
 
@@ -1832,11 +1813,6 @@ bool CL64_Dialogs::UpDate_Counter_Dialog(HWND hDlg)
 		char chr_TriggerVal[20];
 		_itoa(App->CL_Scene->V_Object[Index]->S_Message[0]->Trigger_Value, chr_TriggerVal, 10);
 		SetDlgItemText(hDlg, IDC_EDTRIGGERVALUE, (LPCTSTR)chr_TriggerVal);
-
-		char chr_CounterName[20];
-		strcpy(chr_CounterName, App->CL_Scene->B_Counter[App->CL_Scene->V_Object[Index]->S_Message[0]->Counter_ID]->Panel_Name);
-		SetDlgItemText(hDlg, IDC_STCOUNTERNAME, (LPCTSTR)chr_CounterName);
-
 
 		return 1;
 	}
@@ -1861,9 +1837,6 @@ bool CL64_Dialogs::UpDate_Counter_Dialog(HWND hDlg)
 		_itoa(App->CL_Scene->V_Object[Index]->S_Collectable[0]->Value, chr_TriggerVal, 10);
 		SetDlgItemText(hDlg, IDC_EDTRIGGERVALUE, (LPCTSTR)chr_TriggerVal);
 
-		char chr_CounterName[20];
-		strcpy(chr_CounterName, App->CL_Scene->B_Counter[App->CL_Scene->V_Object[Index]->S_Collectable[0]->Counter_ID]->Panel_Name);
-		SetDlgItemText(hDlg, IDC_STCOUNTERNAME, (LPCTSTR)chr_CounterName);
 
 		if (App->CL_Scene->V_Object[Index]->S_Collectable[0]->Maths == 1)
 		{
@@ -1897,10 +1870,6 @@ bool CL64_Dialogs::UpDate_Counter_Dialog(HWND hDlg)
 		char chr_TriggerVal[20];
 		_itoa(App->CL_Scene->V_Object[Index]->S_Teleport[0]->Trigger_Value, chr_TriggerVal, 10);
 		SetDlgItemText(hDlg, IDC_EDTRIGGERVALUE, (LPCTSTR)chr_TriggerVal);
-
-		char chr_CounterName[20];
-		strcpy(chr_CounterName, App->CL_Scene->B_Counter[App->CL_Scene->V_Object[Index]->S_Teleport[0]->Counter_ID]->Panel_Name);
-		SetDlgItemText(hDlg, IDC_STCOUNTERNAME, (LPCTSTR)chr_CounterName);
 
 		return 1;
 	}
@@ -1936,9 +1905,8 @@ void CL64_Dialogs::Set_Counter_Dialog_Details(HWND hDlg)
 // *************************************************************************
 void CL64_Dialogs::Set_Counter_Dialog(HWND hDlg, bool Enable)
 {
-	EnableWindow(GetDlgItem(hDlg, IDC_BT_COUNTER), Enable);
-	EnableWindow(GetDlgItem(hDlg, IDC_STCOUNTERNAME), Enable);
-
+	EnableWindow(GetDlgItem(hDlg, IDC_CB_COUNTERS), Enable);
+	
 	EnableWindow(GetDlgItem(hDlg, IDC_STMATHS), Enable);
 	EnableWindow(GetDlgItem(hDlg, IDC_BT_CT_MATHS), Enable);
 

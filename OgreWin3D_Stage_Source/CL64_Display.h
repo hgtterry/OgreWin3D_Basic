@@ -35,6 +35,7 @@ public:
 	bool Add_Counters_From_File();
 	void Rename_Counter(int Index);
 	void Mark_As_Altered_Counter(int Index);
+	int GetIndex_By_Name(char* Name);
 
 };
 

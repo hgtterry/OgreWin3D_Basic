@@ -2593,10 +2593,14 @@ bool CL64_Properties::Update_ListView_Teleport()
 		strcpy(chr_Environ_Disabled, "Disabled");
 	}
 
+	// Environ
+	char Chr_Counter_Index[100];
+	_itoa(App->CL_Scene->V_Object[index]->S_Teleport[0]->Counter_ID, Chr_Counter_Index,10);
+
 
 	if (App->CL_Scene->V_Object[index]->S_Environ[0]->Environ_Enabled == 1)
 	{
-		const int NUM_ITEMS = 9;
+		const int NUM_ITEMS = 12;
 		const int NUM_COLS = 2;
 		std::string grid[NUM_COLS][NUM_ITEMS]; // string table
 
@@ -2612,7 +2616,10 @@ bool CL64_Properties::Update_ListView_Teleport()
 		grid[0][5] = "Play", grid[1][5] = chr_Play;
 		grid[0][6] = " ", grid[1][6] = " ";
 		grid[0][7] = "Counter", grid[1][7] = chr_Counter_Disabled;
-		grid[0][8] = "Environment", grid[1][8] = chr_Environ_Disabled;
+		grid[0][8] = "Count_Name", grid[1][8] = App->CL_Scene->V_Object[index]->S_Teleport[0]->Counter_Name;
+		grid[0][9] = "Count_Index", grid[1][9] = Chr_Counter_Index;
+		grid[0][10] = " ", grid[1][10] = " ";
+		grid[0][11] = "Environment", grid[1][11] = chr_Environ_Disabled;
 
 		ListView_DeleteAllItems(Properties_hLV);
 
