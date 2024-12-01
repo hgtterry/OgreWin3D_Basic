@@ -43,6 +43,7 @@ public:
 	void Switch_To_Motions_Dlg(void);
 	void Update_Speed_Combo(void);
 	void Camera_Set_Free();
+	void Init_Bmps_Globals(void);
 
 	char Selected_Motion_Name[MAX_PATH];
 
@@ -61,8 +62,8 @@ public:
 	bool flag_Toggle_Cam_ModelMode;
 	bool flag_Toggle_Cam_FreeMode;
 	bool flag_Toggle_Cam_FirstMode;
-
-	void Init_Bmps_Globals(void);
+	bool flag_Toggle_Select_Flag;
+	
 
 	HWND TabsHwnd;
 	HWND Tabs_TB_hWnd;

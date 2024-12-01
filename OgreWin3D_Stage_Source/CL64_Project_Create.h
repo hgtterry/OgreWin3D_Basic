@@ -29,5 +29,10 @@ public:
 
 	CL64_Project_Create(void);
 	~CL64_Project_Create(void);
+
+	void Start_New_Project();
+	void Add_First_New_Area();
+	bool First_Area_Build_Project(bool NoArea);
+
 };
 

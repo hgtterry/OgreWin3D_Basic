@@ -22,26 +22,40 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-#pragma once
-class CL64_Gizmos
+#include "pch.h"
+#include "CL64_App.h"
+#include "CL64_Picking.h"
+
+CL64_Picking::CL64_Picking(Ogre::SceneManager* sceneMgr)
 {
-public:
+    mSceneMgr = sceneMgr;
 
-	CL64_Gizmos(void);
-	~CL64_Gizmos(void);
+    mRaySceneQuery = mSceneMgr->createRayQuery(Ogre::Ray());
+    if (NULL == mRaySceneQuery)
+    {
+        App->Say("No Ray Query");
+        return;
+    }
 
-	void Set_Gizmos();
+    mParticleSceneQuery = mSceneMgr->createRayQuery(Ogre::Ray());
+    if (NULL == mParticleSceneQuery)
+    {
+        App->Say("No Ray Query");
+        return;
+    }
 
-	void MarkerBox_Setup(void);
-	void MarkerBox_Update(float Depth, float Height, float Width);
-	void MarkerBox_Addjust(int Index);
-	void Load_PickSight(void);
+    pentity = NULL;
 
-	ManualObject* BoxManual;
-	SceneNode* BoxNode;
+    Total_vertex_count = 0;
+    Total_index_count = 0;
+    Face_Index = 0;
+    Sub_Mesh_Count = 0;
+    SubMesh_Face = 0;
+    Selected_Ok = 0;
+    ParticleFound = 0;
 
-	Ogre::Overlay* mPickSight;
-};
+}
 
-
-
+CL64_Picking::~CL64_Picking(void)
+{
+}

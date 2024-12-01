@@ -56,6 +56,10 @@ CL64_Ogre3D_Listener::CL64_Ogre3D_Listener(void)
 	flag_RightMouseDown = 0;
 
 	flag_Animate_Ogre = 0;
+
+	flag_Selection_Mode = 0;
+
+	App->CL_Picking = new CL64_Picking(App->CL_Ogre->mSceneMgr);
 }
 
 CL64_Ogre3D_Listener::~CL64_Ogre3D_Listener(void)

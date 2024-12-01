@@ -30,7 +30,7 @@ CL64_Gizmos::CL64_Gizmos(void)
 {
 	BoxManual = NULL;
 	BoxNode = NULL;
-
+	mPickSight = NULL;
 }
 
 CL64_Gizmos::~CL64_Gizmos(void)
@@ -47,6 +47,7 @@ void CL64_Gizmos::Set_Gizmos()
 	Load_Target_Hit();
 	Load_All_Axis();*/
 	MarkerBox_Setup();
+	Load_PickSight();
 }
 
 // *************************************************************************
@@ -183,4 +184,24 @@ void CL64_Gizmos::MarkerBox_Addjust(int Index)
 	BoxNode->setVisible(true);
 
 	//App->SBC_Markers->Move_Arrow(WS);
+}
+
+// *************************************************************************
+// *			Load_PickSight:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void CL64_Gizmos::Load_PickSight(void)
+{
+	mPickSight = OverlayManager::getSingleton().getByName("MyOverlays/PicksightOverlay");
+	mPickSight->hide();
+
+	//Sight_Entity = App->CL_Ogre->mSceneMgr->createEntity("Arrow23", "Gizmo.mesh", App->CL_Ogre->App_Resource_Group);
+	//Sight_Node = App->CL_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	//Sight_Node->attachObject(Sight_Entity);
+
+
+	////mPickSight->add3D(Sight_Node);
+
+	//Sight_Node->setPosition(0, 0, 0);
+	//Sight_Node->setVisible(true);
+	//Sight_Node->setScale(7, 7, 7);
 }

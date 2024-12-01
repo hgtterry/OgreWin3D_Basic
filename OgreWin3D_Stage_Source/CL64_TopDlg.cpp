@@ -51,6 +51,7 @@ CL64_TopDlg::CL64_TopDlg(void)
 	flag_Toggle_Cam_ModelMode = 0;
 	flag_Toggle_Cam_FreeMode = 0;
 	flag_Toggle_Cam_FirstMode = 1;
+	flag_Toggle_Select_Flag = 0;
 
 	flag_Toggle_PhysicaDebug_Node = 0;
 
@@ -667,6 +668,7 @@ LRESULT CALLBACK CL64_TopDlg::Proc_Camera_TB(HWND hDlg, UINT message, WPARAM wPa
 		SendDlgItemMessage(hDlg, IDC_BT_CAMERA_CAMDATA, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_CAMERA_FIRST, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_CAMERA_SPEED1, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_SELECT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
 		return TRUE;
 	}
@@ -742,6 +744,13 @@ LRESULT CALLBACK CL64_TopDlg::Proc_Camera_TB(HWND hDlg, UINT message, WPARAM wPa
 			return CDRF_DODEFAULT;
 		}
 		
+		if (some_item->idFrom == IDC_BT_SELECT)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->CL_TopDlg->flag_Toggle_Select_Flag);
+			return CDRF_DODEFAULT;
+		}
+		
 		return CDRF_DODEFAULT;
 	}
 
@@ -808,6 +817,31 @@ LRESULT CALLBACK CL64_TopDlg::Proc_Camera_TB(HWND hDlg, UINT message, WPARAM wPa
 			}
 
 			return 1;
+		}
+
+		if (LOWORD(wParam) == IDC_BT_SELECT)
+		{
+			if (App->CL_Scene->flag_Scene_Loaded == 1)
+			{
+				if (App->CL_TopDlg->flag_Toggle_Select_Flag == 1)
+				{
+					//App->CL_Vm_ImGui->Show_Object_Selection = 0;
+
+					App->CL_TopDlg->flag_Toggle_Select_Flag = 0;
+					App->CL_Gizmos->mPickSight->hide();
+					App->CL_Ogre->Ogre3D_Listener->flag_Selection_Mode = 0;
+				}
+				else
+				{
+					//App->CL_Vm_ImGui->Show_Object_Selection = 1;
+					App->CL_TopDlg->flag_Toggle_Select_Flag = 1;
+					App->CL_Gizmos->mPickSight->show();
+					App->CL_Ogre->Ogre3D_Listener->flag_Selection_Mode = 1;
+				}
+
+				RedrawWindow(App->CL_TopDlg->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			}
+			return TRUE;
 		}
 
 		return FALSE;

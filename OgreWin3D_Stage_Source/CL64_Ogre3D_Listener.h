@@ -93,5 +93,7 @@ public:
 
 	bool flag_Animate_Ogre;
 
+	bool flag_Selection_Mode;
+
 };
 

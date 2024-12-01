@@ -72,6 +72,7 @@ THE SOFTWARE.
 #include "CL64_Materials.h"
 #include "CL64_Locations.h"
 #include "CL64_Project_Create.h"
+#include "CL64_Picking.h"
 
 class CL64_App
 {
@@ -128,6 +129,7 @@ public:
 	CL64_Materials*			CL_Materials;
 	CL64_Locations*			CL_Locations;
 	CL64_Project_Create*	CL_Project_Create;
+	CL64_Picking*			CL_Picking;
 
 	void InitApp(void);
 	void Init_Dialogs(void);

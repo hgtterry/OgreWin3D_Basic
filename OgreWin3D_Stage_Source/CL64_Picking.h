@@ -23,25 +23,45 @@ THE SOFTWARE.
 */
 
 #pragma once
-class CL64_Gizmos
+class CL64_Picking
 {
 public:
 
-	CL64_Gizmos(void);
-	~CL64_Gizmos(void);
+	CL64_Picking(Ogre::SceneManager* sceneMgr);
+	~CL64_Picking(void);
 
-	void Set_Gizmos();
+	Ogre::String Pl_Entity_Name;
+	float closest_distance;
 
-	void MarkerBox_Setup(void);
-	void MarkerBox_Update(float Depth, float Height, float Width);
-	void MarkerBox_Addjust(int Index);
-	void Load_PickSight(void);
+	Ogre::Vector3* vertices;
+	Ogre::Vector2* TextCords;
+	Ogre::uint32* indices;
 
-	ManualObject* BoxManual;
-	SceneNode* BoxNode;
+	Ogre::uint32* Sub_Mesh_Indexs;
 
-	Ogre::Overlay* mPickSight;
+	int SubMesh_Face;
+
+	char FaceMaterial[MAX_PATH];
+	char TextureName[MAX_PATH];
+	char ParticleName[MAX_PATH];
+	bool ParticleFound;
+	size_t Total_vertex_count;
+	size_t Total_index_count;
+
+	int Face_Index;
+	int Sub_Mesh_Count;
+
+	bool Selected_Ok;
+
+private:
+	//bool raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::MovableObject*& target, float& closest_distance, const Ogre::uint32 queryMask);
+	//void GetMeshInformation(const Ogre::MeshPtr mesh, const Ogre::Vector3& position, const Ogre::Quaternion& orient, const Ogre::Vector3& scale);
+	//void Get_Material_Data();
+
+	Ogre::SceneManager* mSceneMgr;
+	Ogre::RaySceneQuery* mRaySceneQuery;
+	Ogre::RaySceneQuery* mParticleSceneQuery;
+
+	Ogre::MovableObject* pentity;
 };
-
-
 
