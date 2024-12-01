@@ -281,7 +281,6 @@
 #define IDC_BTPJBROWSE                  1114
 #define IDC_STLN                        1115
 #define IDC_STLEVELNAME                 1116
-#define IDC_CHECK2                      1117
 #define IDC_CK_SU_LAST_PROJECT          1117
 #define ID_VIEW_RESET                   32771
 #define ID_VIEW_MAX3DVIEW               32772
@@ -332,6 +331,8 @@
 #define ID_FILE_NEW                     32817
 #define ID_TOOLS_MESHVIEWER             32818
 #define ID_WINDOWS_PHYSICSCONSOLE       32819
+#define ID_NEW_PR                       32820
+#define ID_NEW_PROJECT                  32821
 #define IDC_STATIC                      -1
 
 // Next default values for new objects
@@ -340,7 +341,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        200
-#define _APS_NEXT_COMMAND_VALUE         32820
+#define _APS_NEXT_COMMAND_VALUE         32822
 #define _APS_NEXT_CONTROL_VALUE         1118
 #define _APS_NEXT_SYMED_VALUE           110
 #endif

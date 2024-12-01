@@ -210,6 +210,7 @@
     <ClInclude Include="CL64_Player.h" />
     <ClInclude Include="CL64_Preferences.h" />
     <ClInclude Include="CL64_Project.h" />
+    <ClInclude Include="CL64_Project_Create.h" />
     <ClInclude Include="CL64_Properties.h" />
     <ClInclude Include="CL64_Props_Dialogs.h" />
     <ClInclude Include="CL64_ResourceListener.h" />
@@ -273,6 +274,7 @@
     <ClCompile Include="CL64_Player.cpp" />
     <ClCompile Include="CL64_Preferences.cpp" />
     <ClCompile Include="CL64_Project.cpp" />
+    <ClCompile Include="CL64_Project_Create.cpp" />
     <ClCompile Include="CL64_Properties.cpp" />
     <ClCompile Include="CL64_Props_Dialogs.cpp" />
     <ClCompile Include="CL64_ResourceListener.cpp" />

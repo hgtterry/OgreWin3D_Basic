@@ -71,6 +71,7 @@ THE SOFTWARE.
 #include "CL64_MeshViewer.h"
 #include "CL64_Materials.h"
 #include "CL64_Locations.h"
+#include "CL64_Project_Create.h"
 
 class CL64_App
 {
@@ -126,6 +127,7 @@ public:
 	CL64_MeshViewer*		CL_MeshViewer;
 	CL64_Materials*			CL_Materials;
 	CL64_Locations*			CL_Locations;
+	CL64_Project_Create*	CL_Project_Create;
 
 	void InitApp(void);
 	void Init_Dialogs(void);

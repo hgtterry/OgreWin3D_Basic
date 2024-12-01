@@ -400,6 +400,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			return TRUE;
 		}
 
+		case ID_NEW_PROJECT:
+		{
+			//App->CL_Project_Create->Start_New_Project();
+			return 1;
+		}
+		
 		// File Import ------------------------------------------------
 		case ID_OGRE3D_MESH:
 		{
@@ -911,14 +917,16 @@ void StartOgre()
 
     KillTimer(App->MainHwnd, 1);
 
-	//App->CL_Props_Textures->Get_First_Texture_Ogre();
-
-	App->CL_Project->Load_Last_Project(); // Look At Terry if no level loaded
+	if (App->CL_Preferences->flag_Load_Last_Project == 1)
+	{
+		App->CL_Project->Load_Last_Project(); // Look At Terry if no level loaded
+	}
 
 	App->CL_SoundMgr->Play_StartUp_Sound();
 
-	App->CL_Panels->MovePhysicsView();
+	App->CL_Ogre->RenderFrame(8);
 
+	App->CL_Panels->MovePhysicsView();
     App->CL_Ogre->Ogre_Render_Loop();
 
     Close_App();
