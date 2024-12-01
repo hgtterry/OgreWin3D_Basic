@@ -1405,13 +1405,14 @@ LRESULT CALLBACK CL64_Dialogs::Proc_Dialog_Counter(HWND hDlg, UINT message, WPAR
 		
 	
 		SendDlgItemMessage(hDlg, IDC_STTRIGGERVALUE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_STMATHS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
 		SendDlgItemMessage(hDlg, IDC_ST_CT_COUNTER, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_CK_ENABLE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_BT_CT_MATHS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
 
 		SendDlgItemMessage(hDlg, IDC_CB_COUNTERS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-
+		SendDlgItemMessage(hDlg, IDC_CB_MATHS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
 		SendDlgItemMessage(hDlg, IDC_STBANNER, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ST_CT_MATHS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
@@ -1425,14 +1426,6 @@ LRESULT CALLBACK CL64_Dialogs::Proc_Dialog_Counter(HWND hDlg, UINT message, WPAR
 	}
 	case WM_CTLCOLORSTATIC:
 	{
-		if (GetDlgItem(hDlg, IDC_STMATHS) == (HWND)lParam)
-		{
-			SetBkColor((HDC)wParam, RGB(0, 255, 0));
-			SetTextColor((HDC)wParam, RGB(0, 0, 0));
-			SetBkMode((HDC)wParam, TRANSPARENT);
-			return (UINT)App->Brush_White;
-		}
-
 		if (GetDlgItem(hDlg, IDC_STTRIGGERVALUE) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 255, 0));
@@ -1499,67 +1492,10 @@ LRESULT CALLBACK CL64_Dialogs::Proc_Dialog_Counter(HWND hDlg, UINT message, WPAR
 			return CDRF_DODEFAULT;
 		}
 
-		if (some_item->idFrom == IDC_BT_CT_MATHS)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Normal(item);
-			return CDRF_DODEFAULT;
-		}
-
 		return CDRF_DODEFAULT;
 	}
 
 	case WM_COMMAND:
-
-		//if (LOWORD(wParam) == IDC_BT_CT_MATHS)
-		//{
-		//	int Index = App->SBC_Properties->Current_Selected_Object;
-
-		//	// Collectables
-		//	if (App->SBC_Properties->Edit_Category == Enums::Edit_Collectable)
-		//	{
-		//		int Counter_Index = App->SBC_Scene->V_Object[Index]->S_Collectable[0]->Counter_ID;
-
-		//		strcpy(App->Cl_Dialogs->btext, "Set Maths Option");
-
-		//		if (App->SBC_Scene->V_Object[Index]->S_Collectable[0]->Maths == 1)
-		//		{
-		//			strcpy(App->SBC_Dialogs->Chr_DropText, "Add");
-		//		}
-
-		//		if (App->SBC_Scene->V_Object[Index]->S_Collectable[0]->Maths == 2)
-		//		{
-		//			strcpy(App->SBC_Dialogs->Chr_DropText, "Subtract");
-		//		}
-
-		//		App->SBC_Dialogs->DropList_Data = Enums::DropDialog_Maths;
-		//		App->SBC_Dialogs->Dialog_DropGen();
-
-		//		if (App->SBC_Dialogs->Canceled == 0)
-		//		{
-		//			int TestChr;
-
-		//			// Add
-		//			TestChr = strcmp(App->SBC_Dialogs->Chr_DropText, "Add");
-		//			if (TestChr == 0)
-		//			{
-		//				App->SBC_Scene->V_Object[Index]->S_Collectable[0]->Maths = 1;
-		//			}
-
-		//			// Subtract
-		//			TestChr = strcmp(App->SBC_Dialogs->Chr_DropText, "Subtract");
-		//			if (TestChr == 0)
-		//			{
-		//				App->SBC_Scene->V_Object[Index]->S_Collectable[0]->Maths = 2;
-		//			}
-
-		//			App->SBC_Dialogs->UpDate_Counter_Dialog(hDlg);
-		//		}
-
-		//	}
-
-		//	return TRUE;
-		//}
 
 		if (LOWORD(wParam) == IDC_CB_COUNTERS)
 		{
@@ -1576,10 +1512,19 @@ LRESULT CALLBACK CL64_Dialogs::Proc_Dialog_Counter(HWND hDlg, UINT message, WPAR
 				int Index = SendMessage(temp, CB_GETCURSEL, 0, 0);
 				SendMessage(temp, CB_GETLBTEXT, Index, (LPARAM)buff);
 
-				strcpy(App->CL_Scene->V_Object[ObjectIndex]->S_Teleport[0]->Counter_Name, buff);
-				int CounterIndex = App->CL_Display->GetIndex_By_Name(buff);
+				if (App->CL_Properties->Edit_Category == Enums::Edit_Teleport)
+				{
+					strcpy(App->CL_Scene->V_Object[ObjectIndex]->S_Teleport[0]->Counter_Name, buff);
+					int CounterIndex = App->CL_Display->GetIndex_By_Name(buff);
+					App->CL_Scene->V_Object[ObjectIndex]->S_Teleport[0]->Counter_ID = CounterIndex;
+				}
 
-				App->CL_Scene->V_Object[ObjectIndex]->S_Teleport[0]->Counter_ID = CounterIndex;
+				if (App->CL_Properties->Edit_Category == Enums::Edit_Collectable)
+				{
+					strcpy(App->CL_Scene->V_Object[ObjectIndex]->S_Collectable[0]->Counter_Name, buff);
+					int CounterIndex = App->CL_Display->GetIndex_By_Name(buff);
+					App->CL_Scene->V_Object[ObjectIndex]->S_Collectable[0]->Counter_ID = CounterIndex;
+				}
 				 
 			}
 			}
@@ -1587,52 +1532,31 @@ LRESULT CALLBACK CL64_Dialogs::Proc_Dialog_Counter(HWND hDlg, UINT message, WPAR
 			return TRUE;
 		}
 
-		//	if (App->SBC_Properties->Edit_Category == Enums::Edit_Message)
-		//	{
-		//		int Counter_Index = App->SBC_Scene->V_Object[Index]->S_Message[0]->Counter_ID;
+		if (LOWORD(wParam) == IDC_CB_MATHS)
+		{
+			switch (HIWORD(wParam)) // Find out what message it was
+			{
+			case CBN_DROPDOWN:
+				break;
+			case CBN_CLOSEUP:
+			{
+				int ObjectIndex = App->CL_Properties->Current_Selected_Object;
 
-		//		strcpy(App->SBC_Dialogs->Chr_DropText, App->SBC_Scene->B_Counter[Counter_Index]->Panel_Name);
-		//		App->SBC_Dialogs->DropList_Data = Enums::DropDialog_Counters;
-		//		App->SBC_Dialogs->Dialog_DropGen();
+				char buff[MAX_PATH]{ 0 };
+				HWND temp = GetDlgItem(hDlg, IDC_CB_MATHS);
+				int Index = SendMessage(temp, CB_GETCURSEL, 0, 0);
+				SendMessage(temp, CB_GETLBTEXT, Index, (LPARAM)buff);
 
-		//		if (App->SBC_Dialogs->Canceled == 0)
-		//		{
-		//			strcpy(App->SBC_Scene->V_Object[Index]->S_Message[0]->Counter_Name, App->SBC_Dialogs->Chr_DropText);
+				if (App->CL_Properties->Edit_Category == Enums::Edit_Collectable)
+				{
+					App->CL_Scene->V_Object[ObjectIndex]->S_Collectable[0]->Maths = Index;
+				}
 
-		//			int CounterIndex = App->SBC_Display->GetIndex_By_Name(App->SBC_Dialogs->Chr_DropText);
+			}
+			}
 
-		//			App->SBC_Scene->V_Object[Index]->S_Message[0]->Counter_ID = CounterIndex;
-
-		//		}
-
-		//		App->SBC_Dialogs->UpDate_Counter_Dialog(hDlg);
-		//	}
-
-		//	// Collectables
-		//	if (App->SBC_Properties->Edit_Category == Enums::Edit_Collectable)
-		//	{
-		//		int Counter_Index = App->SBC_Scene->V_Object[Index]->S_Collectable[0]->Counter_ID;
-
-		//		strcpy(App->SBC_Dialogs->Chr_DropText, App->SBC_Scene->B_Counter[Counter_Index]->Panel_Name);
-		//		App->SBC_Dialogs->DropList_Data = Enums::DropDialog_Counters;
-		//		App->SBC_Dialogs->Dialog_DropGen();
-
-		//		if (App->SBC_Dialogs->Canceled == 0)
-		//		{
-		//			strcpy(App->SBC_Scene->V_Object[Index]->S_Collectable[0]->Counter_Name, App->SBC_Dialogs->Chr_DropText);
-
-		//			int CounterIndex = App->SBC_Display->GetIndex_By_Name(App->SBC_Dialogs->Chr_DropText);
-
-		//			App->SBC_Scene->V_Object[Index]->S_Collectable[0]->Counter_ID = CounterIndex;
-
-		//		}
-
-		//		App->SBC_Dialogs->UpDate_Counter_Dialog(hDlg);
-		//		return TRUE;
-		//	}
-
-		//	return TRUE;
-		//}
+			return TRUE;
+		}
 
 		if (LOWORD(wParam) == IDC_CK_ENABLE)
 		{
@@ -1837,17 +1761,6 @@ bool CL64_Dialogs::UpDate_Counter_Dialog(HWND hDlg)
 		_itoa(App->CL_Scene->V_Object[Index]->S_Collectable[0]->Value, chr_TriggerVal, 10);
 		SetDlgItemText(hDlg, IDC_EDTRIGGERVALUE, (LPCTSTR)chr_TriggerVal);
 
-
-		if (App->CL_Scene->V_Object[Index]->S_Collectable[0]->Maths == 1)
-		{
-			SetDlgItemText(hDlg, IDC_STMATHS, (LPCTSTR)"Add");
-		}
-
-		if (App->CL_Scene->V_Object[Index]->S_Collectable[0]->Maths == 2)
-		{
-			SetDlgItemText(hDlg, IDC_STMATHS, "Subtract");
-		}
-
 		return 1;
 	}
 
@@ -1885,22 +1798,39 @@ void CL64_Dialogs::Set_Counter_Dialog_Details(HWND hDlg)
 	int ObjectIndex = App->CL_Properties->Current_Selected_Object;
 	SendDlgItemMessage(hDlg, IDC_CB_COUNTERS, CB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
 
-	if (App->CL_Properties->Edit_Category == Enums::Edit_Teleport)
+	// -------------------------------- Counters
+	int Count = 0;
+	while (Count < App->CL_Scene->Counters_Count)
 	{
-		int Count = 0;
-		while (Count < App->CL_Scene->Counters_Count)
+		if (App->CL_Scene->B_Counter[Count]->Deleted == 0)
 		{
-			if (App->CL_Scene->B_Counter[Count]->Deleted == 0)
-			{
-				SendDlgItemMessage(hDlg, IDC_CB_COUNTERS, CB_ADDSTRING, (WPARAM)0, (LPARAM)(LPSTR)App->CL_Scene->B_Counter[Count]->Panel_Name);
-			}
-
-			Count++;
+			SendDlgItemMessage(hDlg, IDC_CB_COUNTERS, CB_ADDSTRING, (WPARAM)0, (LPARAM)(LPSTR)App->CL_Scene->B_Counter[Count]->Panel_Name);
 		}
 
+		Count++;
+	}
+
+	if (App->CL_Properties->Edit_Category == Enums::Edit_Teleport)
+	{
 		SendDlgItemMessage(hDlg, IDC_CB_COUNTERS, CB_SETCURSEL, (WPARAM)App->CL_Scene->V_Object[ObjectIndex]->S_Teleport[0]->Counter_ID, (LPARAM)0);
 	}
 
+	if (App->CL_Properties->Edit_Category == Enums::Edit_Collectable)
+	{
+		SendDlgItemMessage(hDlg, IDC_CB_COUNTERS, CB_SETCURSEL, (WPARAM)App->CL_Scene->V_Object[ObjectIndex]->S_Collectable[0]->Counter_ID, (LPARAM)0);
+	}
+
+	// -------------------------------- Maths
+	SendDlgItemMessage(hDlg, IDC_CB_MATHS, CB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
+
+	SendDlgItemMessage(hDlg, IDC_CB_MATHS, CB_ADDSTRING, (WPARAM)0, (LPARAM)(LPSTR)"None");
+	SendDlgItemMessage(hDlg, IDC_CB_MATHS, CB_ADDSTRING, (WPARAM)0, (LPARAM)(LPSTR)"Add");
+	SendDlgItemMessage(hDlg, IDC_CB_MATHS, CB_ADDSTRING, (WPARAM)0, (LPARAM)(LPSTR)"Subtract");
+	
+	if (App->CL_Properties->Edit_Category == Enums::Edit_Collectable)
+	{
+		SendDlgItemMessage(hDlg, IDC_CB_MATHS, CB_SETCURSEL, (WPARAM)App->CL_Scene->V_Object[ObjectIndex]->S_Collectable[0]->Maths, (LPARAM)0);
+	}
 }
 
 // *************************************************************************
@@ -1909,10 +1839,7 @@ void CL64_Dialogs::Set_Counter_Dialog_Details(HWND hDlg)
 void CL64_Dialogs::Set_Counter_Dialog(HWND hDlg, bool Enable)
 {
 	EnableWindow(GetDlgItem(hDlg, IDC_CB_COUNTERS), Enable);
-	
-	EnableWindow(GetDlgItem(hDlg, IDC_STMATHS), Enable);
-	EnableWindow(GetDlgItem(hDlg, IDC_BT_CT_MATHS), Enable);
-
+	EnableWindow(GetDlgItem(hDlg, IDC_CB_MATHS), Enable);
 	EnableWindow(GetDlgItem(hDlg, IDC_EDTRIGGERVALUE), Enable);
 }
 

@@ -601,16 +601,18 @@ void CL64_ImGui::ImGui_Object_Data(void)
 		// Teleport
 		if (App->CL_Properties->Edit_Category == Enums::Edit_Teleport)
 		{
-			ImGui::Text("------------ Teleport Counter");
+			ImGui::Text("------------ Teleport Counter ------------");
 			ImGui::Text("Counter Disabled: = %i", App->CL_Scene->V_Object[Index]->S_Teleport[0]->Counter_Disabled);
 			ImGui::Text("Counter ID: = %i", App->CL_Scene->V_Object[Index]->S_Teleport[0]->Counter_ID);
 			ImGui::Text("Counter Name: = %s", App->CL_Scene->V_Object[Index]->S_Teleport[0]->Counter_Name);
 			ImGui::Text("Counter_Triger_Val: = %i", App->CL_Scene->V_Object[Index]->S_Teleport[0]->Trigger_Value);
 			
-			ImGui::Text("------------ Teleport Location");
-			ImGui::Text("Counter_ID: = %i", App->CL_Scene->V_Object[Index]->S_Teleport[0]->Location_ID);
-			
-			ImGui::Text("------------ Teleport Sound");
+			ImGui::Text("------------ Teleport Location ------------");
+			ImGui::Text("Location Name: = %s", App->CL_Scene->V_Object[Index]->S_Teleport[0]->Location_Name);
+			ImGui::Text("Location_ID: = %i", App->CL_Scene->V_Object[Index]->S_Teleport[0]->Location_ID);
+			ImGui::Text("Position: = %f %f %f", App->CL_Scene->V_Object[Index]->S_Teleport[0]->Physics_Position.getX(), App->CL_Scene->V_Object[Index]->S_Teleport[0]->Physics_Position.getY(), App->CL_Scene->V_Object[Index]->S_Teleport[0]->Physics_Position.getZ());
+
+			ImGui::Text("------------ Teleport Sound ------------");
 			ImGui::Text("Play: = %i", App->CL_Scene->V_Object[Index]->S_Teleport[0]->Play);
 			ImGui::Text("Volume: = %f", App->CL_Scene->V_Object[Index]->S_Teleport[0]->SndVolume);
 			ImGui::Text("Sound File: = %s", App->CL_Scene->V_Object[Index]->S_Teleport[0]->Sound_File);

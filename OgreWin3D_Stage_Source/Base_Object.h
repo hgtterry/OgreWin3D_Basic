@@ -34,7 +34,7 @@ typedef struct Move_Type {
 
 typedef struct Teleport_type
 {
-	char Name[MAX_PATH];
+	char Location_Name[MAX_PATH];
 	Ogre::Vector3 Player_Position;
 	btVector3 Physics_Position;
 	btQuaternion Physics_Rotation;

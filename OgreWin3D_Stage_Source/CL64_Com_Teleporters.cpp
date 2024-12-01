@@ -45,7 +45,7 @@ void CL64_Com_Teleporters::Set_Teleports_Defaults(int Index)
 
 	V_Object->S_Teleport[0]->Location_ID = 0;
 
-	strcpy(V_Object->S_Teleport[0]->Name, "Start_Location");
+	strcpy(V_Object->S_Teleport[0]->Location_Name, "Start_Location");
 
 	/*strcpy(V_Object->S_Teleport[0]->Sound_File, "magicspell.ogg");
 	V_Object->S_Teleport[0]->SndVolume = 0.5;

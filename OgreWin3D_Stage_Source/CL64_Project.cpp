@@ -1195,7 +1195,7 @@ bool CL64_Project::Save_Objects_Data()
 			if (App->CL_Scene->V_Object[Count]->Usage == Enums::Stage_Usage_Teleport)
 			{
 				fprintf(WriteFile, "%s\n", "-- Teleport");
-				fprintf(WriteFile, "%s%s\n", "Tele_Goto=", App->CL_Scene->V_Object[Count]->S_Teleport[0]->Name);
+				fprintf(WriteFile, "%s%s\n", "Tele_Goto=", App->CL_Scene->V_Object[Count]->S_Teleport[0]->Location_Name);
 
 				fprintf(WriteFile, "%s%i\n", "Tele_ID=", App->CL_Scene->V_Object[Count]->S_Teleport[0]->Location_ID);
 
@@ -2136,7 +2136,7 @@ bool CL64_Project::Read_Teleport(int Index, char* Section)
 
 
 	App->CL_Ini_File->GetString(Section, "Tele_Goto", chr_Tag1, MAX_PATH);
-	strcpy(V_Object->S_Teleport[0]->Name, chr_Tag1);
+	strcpy(V_Object->S_Teleport[0]->Location_Name, chr_Tag1);
 
 	V_Object->S_Teleport[0]->Location_ID = App->CL_Ini_File->GetInt(Section, "Tele_ID", 0, 10);
 

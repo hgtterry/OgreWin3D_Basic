@@ -1217,7 +1217,7 @@ bool CL64_Properties::Edit_Teleport_Entity(LPARAM lParam)
 
 			App->CL_Scene->V_Object[Index]->S_Teleport[0]->Location_ID = LocationIndex;
 
-			strcpy(App->CL_Scene->V_Object[Index]->S_Teleport[0]->Name, App->CL_Scene->B_Locations[LocationIndex]->Name);
+			strcpy(App->CL_Scene->V_Object[Index]->S_Teleport[0]->Location_Name, App->CL_Scene->B_Locations[LocationIndex]->Name);
 
 			App->CL_Scene->V_Object[Index]->S_Teleport[0]->Player_Position = App->CL_Scene->B_Locations[LocationIndex]->Current_Position;
 			App->CL_Scene->V_Object[Index]->S_Teleport[0]->Physics_Position = App->CL_Scene->B_Locations[LocationIndex]->Physics_Position;

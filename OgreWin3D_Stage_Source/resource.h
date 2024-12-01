@@ -271,8 +271,9 @@
 #define IDC_LSTLOCATIONS                1106
 #define IDC_BTDELETE                    1107
 #define IDC_EDIT1                       1108
-#define IDC_COMBO1                      1109
 #define IDC_CB_COUNTERS                 1109
+#define IDC_COMBO2                      1110
+#define IDC_CB_MATHS                    1110
 #define ID_VIEW_RESET                   32771
 #define ID_VIEW_MAX3DVIEW               32772
 #define ID_DEBUG_TESTPREFERANCE         32773
@@ -331,7 +332,7 @@
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        200
 #define _APS_NEXT_COMMAND_VALUE         32820
-#define _APS_NEXT_CONTROL_VALUE         1110
+#define _APS_NEXT_CONTROL_VALUE         1111
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif
