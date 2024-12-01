@@ -1881,30 +1881,30 @@ bool CL64_Properties::Edit_Counters_OnClick(LPARAM lParam)
 		return 1;
 	}
 
-	//result = strcmp(btext, "Start_Value");
-	//if (result == 0)
-	//{
-	//	strcpy(App->Cl_Dialogs->btext, "Start Value");
-	//	char buff[256];
-	//	sprintf(buff, "%i", App->SBC_Scene->B_Counter[Index]->Start_Value);
-	//	strcpy(App->Cl_Dialogs->Chr_Int, buff);
+	result = strcmp(btext, "Start_Value");
+	if (result == 0)
+	{
+		strcpy(App->CL_Dialogs->btext, "Start Value");
+		char buff[256];
+		sprintf(buff, "%i", App->CL_Scene->B_Counter[Index]->Start_Value);
+		strcpy(App->CL_Dialogs->Chr_Int, buff);
 
-	//	App->Cl_Dialogs->Dialog_Int();
+		App->CL_Dialogs->Dialog_Int();
 
-	//	if (App->Cl_Dialogs->Canceled == 1)
-	//	{
-	//		return TRUE;
-	//	}
+		if (App->CL_Dialogs->Canceled == 1)
+		{
+			return TRUE;
+		}
 
-	//	App->SBC_Scene->B_Counter[Index]->Start_Value = App->Cl_Dialogs->mInt;
-	//	App->SBC_Scene->B_Counter[Index]->Counter = App->Cl_Dialogs->mInt;
+		App->CL_Scene->B_Counter[Index]->Start_Value = App->CL_Dialogs->mInt;
+		App->CL_Scene->B_Counter[Index]->Counter = App->CL_Dialogs->mInt;
 
-	//	App->SBC_Display->Mark_As_Altered_Counter(Index);
+		App->CL_Display->Mark_As_Altered_Counter(Index);
 
-	//	Update_ListView_Counters();
+		Update_ListView_Counters();
 
-	//	return 1;
-	//}
+		return 1;
+	}
 
 	result = strcmp(btext, "Display");
 	if (result == 0)

@@ -45,6 +45,7 @@ public:
 	bool UpDate_Counter_Dialog(HWND hDlg);
 	void Set_Counter_Dialog(HWND hDlg, bool Enable);
 	void Dialog_Text_Props();
+	void Dialog_Int();
 
 	bool TrueFlase;
 	bool Canceled;
@@ -78,6 +79,7 @@ private:
 	static LRESULT CALLBACK Proc_Dialog_TrueFlase(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Proc_Dialog_Counter(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Proc_Dialog_Text_Props(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Proc_Dialog_Int(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	static bool CALLBACK Proc_ViewerBasePic(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
@@ -100,5 +102,6 @@ private:
 	bool flag_Mouse_VerySlow;
 	bool flag_Mouse_Fast;
 
+	bool flag_Dlg_Int_Active;
 };
 

@@ -46,6 +46,8 @@ CL64_Dialogs::CL64_Dialogs(void)
 	flag_Mouse_VerySlow = 0;
 	flag_Mouse_Fast = 0;
 
+	flag_Dlg_Int_Active = 0;
+
 	What_Check_Name = Enums::Check_Name_None;
 
 	btext[0] = 0;
@@ -1928,7 +1930,7 @@ void CL64_Dialogs::Dialog_Text_Props()
 }
 
 // **************************************************************************
-// *		Proc_Dialog_Text_Props:- Terry and Hazel Flanigan 2022			*
+// *		Proc_Dialog_Text_Props:- Terry and Hazel Flanigan 2024			*
 // **************************************************************************
 LRESULT CALLBACK CL64_Dialogs::Proc_Dialog_Text_Props(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -2012,6 +2014,112 @@ LRESULT CALLBACK CL64_Dialogs::Proc_Dialog_Text_Props(HWND hDlg, UINT message, W
 
 	break;
 
+	}
+	return FALSE;
+}
+
+// *************************************************************************
+// *	  		Dialog_Int:- Terry and Hazel Flanigan 2024				   *
+// *************************************************************************
+void CL64_Dialogs::Dialog_Int()
+{
+	if (flag_Dlg_Int_Active == 1)
+	{
+		return;
+	}
+
+	flag_Dlg_Int_Active = 1;
+
+	DialogBox(App->hInst, (LPCTSTR)IDD_EDITFLOAT, App->Fdlg, (DLGPROC)Proc_Dialog_Int);
+
+}
+
+// *************************************************************************
+// *        Proc_Dialog_Int:- Terry and Hazel Flanigan 2024				   *
+// *************************************************************************
+LRESULT CALLBACK CL64_Dialogs::Proc_Dialog_Int(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+
+	switch (message)
+	{
+	case WM_INITDIALOG:
+	{
+		SendDlgItemMessage(hDlg, IDC_BANNER, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_EDIT1, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		SetDlgItemText(hDlg, IDC_BANNER, (LPCTSTR)App->CL_Dialogs->btext);
+
+		SetDlgItemText(hDlg, IDC_EDIT1, (LPCTSTR)App->CL_Dialogs->Chr_Int);
+
+		return TRUE;
+	}
+	case WM_CTLCOLORSTATIC:
+	{
+
+		if (GetDlgItem(hDlg, IDC_BANNER) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 255));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		return FALSE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->AppBackground;
+	}
+
+	case WM_NOTIFY:
+	{
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		if (some_item->idFrom == IDOK)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDCANCEL)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		return CDRF_DODEFAULT;
+	}
+
+	case WM_COMMAND:
+		if (LOWORD(wParam) == IDOK)
+		{
+			char buff[256];
+			int result = 0;
+			GetDlgItemText(hDlg, IDC_EDIT1, (LPTSTR)buff, 256);
+			strcpy(App->CL_Dialogs->Chr_Int, buff);
+			App->CL_Dialogs->mInt = atoi(buff);
+
+			App->CL_Dialogs->Canceled = 0;
+			App->CL_Dialogs->flag_Dlg_Int_Active = 0;
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDCANCEL)
+		{
+			App->CL_Dialogs->Canceled = 1;
+			App->CL_Dialogs->flag_Dlg_Int_Active = 0;
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+
+		break;
 	}
 	return FALSE;
 }
