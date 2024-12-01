@@ -30,6 +30,11 @@ public:
 	CL64_Picking(Ogre::SceneManager* sceneMgr);
 	~CL64_Picking(void);
 
+	void Mouse_Pick_Entity();
+	void Set_Face_UV();
+	void Clear_Picking_Data();
+	bool Ray_Test_Particles(const Ogre::Ray& ray);
+
 	Ogre::String Pl_Entity_Name;
 	float closest_distance;
 
@@ -54,9 +59,9 @@ public:
 	bool Selected_Ok;
 
 private:
-	//bool raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::MovableObject*& target, float& closest_distance, const Ogre::uint32 queryMask);
-	//void GetMeshInformation(const Ogre::MeshPtr mesh, const Ogre::Vector3& position, const Ogre::Quaternion& orient, const Ogre::Vector3& scale);
-	//void Get_Material_Data();
+	bool raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::MovableObject*& target, float& closest_distance, const Ogre::uint32 queryMask);
+	void GetMeshInformation(const Ogre::MeshPtr mesh, const Ogre::Vector3& position, const Ogre::Quaternion& orient, const Ogre::Vector3& scale);
+	void Get_Material_Data();
 
 	Ogre::SceneManager* mSceneMgr;
 	Ogre::RaySceneQuery* mRaySceneQuery;

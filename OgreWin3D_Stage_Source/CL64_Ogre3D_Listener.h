@@ -94,6 +94,8 @@ public:
 	bool flag_Animate_Ogre;
 
 	bool flag_Selection_Mode;
+	int	Selected_Entity_Index;
+	char Selected_Object_Name[MAX_PATH];
 
 };
 

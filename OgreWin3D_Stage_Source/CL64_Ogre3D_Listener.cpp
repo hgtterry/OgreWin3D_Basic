@@ -60,10 +60,14 @@ CL64_Ogre3D_Listener::CL64_Ogre3D_Listener(void)
 	flag_Selection_Mode = 0;
 
 	App->CL_Picking = new CL64_Picking(App->CL_Ogre->mSceneMgr);
+	Selected_Entity_Index = 0;
+	Selected_Object_Name[0] = 0;
+
 }
 
 CL64_Ogre3D_Listener::~CL64_Ogre3D_Listener(void)
 {
+	
 }
 
 // *************************************************************************
