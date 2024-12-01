@@ -1882,21 +1882,24 @@ bool CL64_Dialogs::UpDate_Counter_Dialog(HWND hDlg)
 // *************************************************************************
 void CL64_Dialogs::Set_Counter_Dialog_Details(HWND hDlg)
 {
+	int ObjectIndex = App->CL_Properties->Current_Selected_Object;
 	SendDlgItemMessage(hDlg, IDC_CB_COUNTERS, CB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
 
-	int Count = 0;
-
-	while (Count < App->CL_Scene->Counters_Count)
+	if (App->CL_Properties->Edit_Category == Enums::Edit_Teleport)
 	{
-		if (App->CL_Scene->B_Counter[Count]->Deleted == 0)
+		int Count = 0;
+		while (Count < App->CL_Scene->Counters_Count)
 		{
-			SendDlgItemMessage(hDlg, IDC_CB_COUNTERS, CB_ADDSTRING, (WPARAM)0, (LPARAM)(LPSTR)App->CL_Scene->B_Counter[Count]->Panel_Name);
+			if (App->CL_Scene->B_Counter[Count]->Deleted == 0)
+			{
+				SendDlgItemMessage(hDlg, IDC_CB_COUNTERS, CB_ADDSTRING, (WPARAM)0, (LPARAM)(LPSTR)App->CL_Scene->B_Counter[Count]->Panel_Name);
+			}
+
+			Count++;
 		}
 
-		Count++;
+		SendDlgItemMessage(hDlg, IDC_CB_COUNTERS, CB_SETCURSEL, (WPARAM)App->CL_Scene->V_Object[ObjectIndex]->S_Teleport[0]->Counter_ID, (LPARAM)0);
 	}
-
-	SendDlgItemMessage(hDlg, IDC_CB_COUNTERS, CB_SETCURSEL, (WPARAM)0, (LPARAM)0);
 
 }
 

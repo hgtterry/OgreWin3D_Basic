@@ -1298,7 +1298,36 @@ bool CL64_Properties::Edit_Teleport_Entity(LPARAM lParam)
 		Mark_As_Altered(Index);
 		Update_ListView_Teleport();
 
-		//App->SBC_Physics->Reset_Triggers();
+		return 1;
+	}
+
+	result = strcmp(btext, "Count_Name");
+	if (result == 0)
+	{
+		App->CL_Dialogs->Dialog_Counter();
+		if (App->CL_Dialogs->Canceled == 1)
+		{
+			return 1;
+		}
+
+		Mark_As_Altered(Index);
+		Update_ListView_Teleport();
+
+		return 1;
+	}
+	
+	result = strcmp(btext, "Count_Index");
+	if (result == 0)
+	{
+		App->CL_Dialogs->Dialog_Counter();
+		if (App->CL_Dialogs->Canceled == 1)
+		{
+			return 1;
+		}
+
+		Mark_As_Altered(Index);
+		Update_ListView_Teleport();
+
 		return 1;
 	}
 
