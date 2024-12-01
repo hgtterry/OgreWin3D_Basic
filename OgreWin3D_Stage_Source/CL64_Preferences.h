@@ -30,6 +30,7 @@ public:
 	bool flag_Start_FullScreen;
 	bool flag_Start_Full_3DWin;
 	bool flag_Use_Default_Directories;
+	bool flag_Load_Last_Project;
 
 private:
 

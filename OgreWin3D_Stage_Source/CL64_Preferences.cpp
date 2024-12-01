@@ -23,6 +23,7 @@ CL64_Preferences::CL64_Preferences(void)
 	flag_Start_FullScreen = 0;
 	flag_Start_Full_3DWin = 0;
 	flag_Use_Default_Directories = 1;
+	flag_Load_Last_Project = 1;
 
 	WriteData = nullptr;
 }
@@ -61,7 +62,8 @@ LRESULT CALLBACK CL64_Preferences::Preferences_Dlg_Proc(HWND hDlg, UINT message,
 
 		SendDlgItemMessage(hDlg, IDC_CK_SU_FULLSCREEN, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_CK_SU_DIRECTORIES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-
+		SendDlgItemMessage(hDlg, IDC_CK_SU_LAST_PROJECT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
 		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
@@ -89,6 +91,18 @@ LRESULT CALLBACK CL64_Preferences::Preferences_Dlg_Proc(HWND hDlg, UINT message,
 			SendMessage(temp, BM_SETCHECK, 0, 0);
 		}
 
+		// Load last Project
+		if (App->CL_Preferences->flag_Load_Last_Project == 1)
+		{
+			HWND temp = GetDlgItem(hDlg, IDC_CK_SU_LAST_PROJECT);
+			SendMessage(temp, BM_SETCHECK, 1, 0);
+		}
+		else
+		{
+			HWND temp = GetDlgItem(hDlg, IDC_CK_SU_LAST_PROJECT);
+			SendMessage(temp, BM_SETCHECK, 0, 0);
+		}
+		
 		return TRUE;
 
 	}
@@ -118,6 +132,14 @@ LRESULT CALLBACK CL64_Preferences::Preferences_Dlg_Proc(HWND hDlg, UINT message,
 			return (UINT)App->AppBackground;
 		}
 
+		if (GetDlgItem(hDlg, IDC_CK_SU_LAST_PROJECT) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+		
 		return FALSE;
 	}
 
@@ -187,6 +209,25 @@ LRESULT CALLBACK CL64_Preferences::Preferences_Dlg_Proc(HWND hDlg, UINT message,
 			return TRUE;
 		}
 		
+		if (LOWORD(wParam) == IDC_CK_SU_LAST_PROJECT)
+		{
+			HWND temp = GetDlgItem(hDlg, IDC_CK_SU_LAST_PROJECT);
+
+			int test = SendMessage(temp, BM_GETCHECK, 0, 0);
+			if (test == BST_CHECKED)
+			{
+				App->CL_Preferences->flag_Load_Last_Project = 1;
+				return 1;
+			}
+			else
+			{
+				App->CL_Preferences->flag_Load_Last_Project = 0;
+				return 1;
+			}
+
+			return TRUE;
+		}
+
 		if (LOWORD(wParam) == IDOK)
 		{
 			App->CL_Preferences->Write_Preferences();
@@ -222,6 +263,7 @@ void CL64_Preferences::Read_Preferences()
 	flag_Start_FullScreen = App->CL_Ini_File->GetInt("Startup", "Full_Screen", 0, 10);
 	flag_Start_Full_3DWin = App->CL_Ini_File->GetInt("Startup", "Full_3DWin", 0, 10);
 	flag_Use_Default_Directories = App->CL_Ini_File->GetInt("Startup", "Default_Directories", 0, 10);
+	flag_Load_Last_Project = App->CL_Ini_File->GetInt("Startup", "Load_Last_Project", 0, 10);
 }
 
 // *************************************************************************
@@ -247,6 +289,7 @@ bool CL64_Preferences::Write_Preferences()
 	fprintf(WriteData, "%s%i\n", "Full_Screen=", flag_Start_FullScreen);
 	fprintf(WriteData, "%s%i\n", "Full_3DWin=", flag_Start_Full_3DWin);
 	fprintf(WriteData, "%s%i\n", "Default_Directories=", flag_Use_Default_Directories);
+	fprintf(WriteData, "%s%i\n", "Load_Last_Project=", flag_Load_Last_Project);
 
 	fclose(WriteData);
 
