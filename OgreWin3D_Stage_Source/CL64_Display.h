@@ -30,6 +30,8 @@ public:
 	CL64_Display(void);
 	~CL64_Display(void);
 
+	void Set_Counter_Defaults(int Index);
+	void Add_New_Counter();
 	bool Add_Counters_From_File();
 	void Rename_Counter(int Index);
 	void Mark_As_Altered_Counter(int Index);

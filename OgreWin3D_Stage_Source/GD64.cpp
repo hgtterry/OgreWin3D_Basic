@@ -189,14 +189,16 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				App->CL_Scene->Set_Scene();
 			}*/
 
-			if (App->CL_Ogre->flag_Block_Rendering == 1)
+			/*if (App->CL_Ogre->flag_Block_Rendering == 1)
 			{
 				App->CL_Ogre->flag_Block_Rendering = 0;
 			}
 			else
 			{
 				App->CL_Ogre->flag_Block_Rendering = 1;
-			}
+			}*/
+
+			App->CL_Dialogs->Dialog_Counter();
 
 			return TRUE;
 		}

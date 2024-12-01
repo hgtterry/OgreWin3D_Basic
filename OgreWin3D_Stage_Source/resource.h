@@ -84,7 +84,6 @@
 #define IDD_PROP_TEXT                   196
 #define IDD_TB_LOCATIONS                197
 #define IDD_PROJECTION                  198
-#define IDD_DIALOG1                     199
 #define IDD_EDITFLOAT                   199
 #define IDC_CK_SU_FULLSCREEN            1000
 #define IDC_ST_STARTUP                  1001
@@ -272,6 +271,8 @@
 #define IDC_LSTLOCATIONS                1106
 #define IDC_BTDELETE                    1107
 #define IDC_EDIT1                       1108
+#define IDC_COMBO1                      1109
+#define IDC_CB_COUNTERS                 1109
 #define ID_VIEW_RESET                   32771
 #define ID_VIEW_MAX3DVIEW               32772
 #define ID_DEBUG_TESTPREFERANCE         32773
@@ -330,7 +331,7 @@
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        200
 #define _APS_NEXT_COMMAND_VALUE         32820
-#define _APS_NEXT_CONTROL_VALUE         1109
+#define _APS_NEXT_CONTROL_VALUE         1110
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif

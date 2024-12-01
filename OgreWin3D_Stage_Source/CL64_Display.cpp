@@ -35,6 +35,60 @@ CL64_Display::~CL64_Display(void)
 }
 
 // *************************************************************************
+//			Set_Counter_Defaults:- Terry and Hazel Flanigan 2024	  	   *
+// *************************************************************************
+void CL64_Display::Set_Counter_Defaults(int Index)
+{
+	strcpy(App->CL_Scene->B_Counter[Index]->Panel_Name, "Not_Set");
+	App->CL_Scene->B_Counter[Index]->PosX = 250;
+	App->CL_Scene->B_Counter[Index]->PosY = 10;
+
+	App->CL_Scene->B_Counter[Index]->Deleted = 0;
+	App->CL_Scene->B_Counter[Index]->Altered = 0;
+	App->CL_Scene->B_Counter[Index]->Show_Panel_Flag = 0;
+	App->CL_Scene->B_Counter[Index]->Unique_ID = 0;
+
+	strcpy(App->CL_Scene->B_Counter[Index]->Text, "Score:= ");
+
+	return;
+}
+
+// *************************************************************************
+// *			Add_New_Counter:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void CL64_Display::Add_New_Counter()
+{
+	char B_Name[MAX_PATH];
+	char ConNum[MAX_PATH];
+
+	int Index = App->CL_Scene->Counters_Count;
+
+	App->CL_Scene->B_Counter[Index] = new Base_Counter();
+	Set_Counter_Defaults(Index);
+
+	strcpy_s(B_Name, "Counter_");
+	_itoa(Index, ConNum, 10);
+	strcat(B_Name, ConNum);
+	strcpy(App->CL_Scene->B_Counter[Index]->Panel_Name, B_Name);
+
+	App->CL_Scene->B_Counter[Index]->Unique_ID = App->CL_Scene->UniqueID_Counters_Count;
+
+	HTREEITEM Temp = App->CL_FileView->Add_Item(App->CL_FileView->FV_Counters_Folder, App->CL_Scene->B_Counter[Index]->Panel_Name, Index, true);
+	App->CL_Scene->B_Counter[Index]->FileViewItem = Temp;
+
+	App->CL_FileView->Set_FolderActive(App->CL_FileView->FV_Counters_Folder);
+
+	App->CL_FileView->SelectItem(App->CL_Scene->B_Counter[Index]->FileViewItem);
+
+	App->CL_Scene->B_Counter[Index]->Set_ImGui_Panel_Name();
+
+	Mark_As_Altered_Counter(Index);
+
+	App->CL_Scene->UniqueID_Counters_Count++;
+	App->CL_Scene->Counters_Count++;
+}
+
+// *************************************************************************
 //			Add_Counters_From_File:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
 bool CL64_Display::Add_Counters_From_File() // From File

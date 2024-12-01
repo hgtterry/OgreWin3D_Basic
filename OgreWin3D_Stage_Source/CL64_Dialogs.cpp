@@ -1410,10 +1410,14 @@ LRESULT CALLBACK CL64_Dialogs::Proc_Dialog_Counter(HWND hDlg, UINT message, WPAR
 		SendDlgItemMessage(hDlg, IDC_CK_ENABLE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_CT_MATHS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
+		SendDlgItemMessage(hDlg, IDC_CB_COUNTERS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
 		SendDlgItemMessage(hDlg, IDC_STBANNER, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ST_CT_MATHS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
+		
 		App->CL_Dialogs->UpDate_Counter_Dialog(hDlg);
+		App->CL_Dialogs->Set_Counter_Dialog_Details(hDlg);
 
 		return TRUE;
 	}
@@ -1902,6 +1906,29 @@ bool CL64_Dialogs::UpDate_Counter_Dialog(HWND hDlg)
 	}
 
 	return 1;
+}
+
+// *************************************************************************
+// *	 Set_Counter_Dialog_Details- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+void CL64_Dialogs::Set_Counter_Dialog_Details(HWND hDlg)
+{
+	SendDlgItemMessage(hDlg, IDC_CB_COUNTERS, CB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
+
+	int Count = 0;
+
+	while (Count < App->CL_Scene->Counters_Count)
+	{
+		if (App->CL_Scene->B_Counter[Count]->Deleted == 0)
+		{
+			SendDlgItemMessage(hDlg, IDC_CB_COUNTERS, CB_ADDSTRING, (WPARAM)0, (LPARAM)(LPSTR)App->CL_Scene->B_Counter[Count]->Panel_Name);
+		}
+
+		Count++;
+	}
+
+	SendDlgItemMessage(hDlg, IDC_CB_COUNTERS, CB_SETCURSEL, (WPARAM)0, (LPARAM)0);
+
 }
 
 // *************************************************************************

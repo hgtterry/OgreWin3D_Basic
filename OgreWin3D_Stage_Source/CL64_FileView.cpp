@@ -1441,7 +1441,7 @@ void CL64_FileView::Context_Menu(HWND hDlg)
 		if (!strcmp(FileView_Folder, "Counters")) // Folder
 		{
 			hMenu = CreatePopupMenu();
-			AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_FILE_NEW, L"&New");
+			AppendMenuW(hMenu, MF_STRING , IDM_FILE_NEW, L"&New");
 			TrackPopupMenu(hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, App->ListPanel, NULL);
 			DestroyMenu(hMenu);
 			Context_Selection = Enums::FileView_Counters_Folder;
@@ -1664,13 +1664,13 @@ void CL64_FileView::Context_New(HWND hDlg)
 	if (App->CL_FileView->Context_Selection == Enums::FileView_Counters_Folder)
 	{
 
-		/*App->SBC_Dialogs->YesNo("Add Counter", "Do you want to add a new Counter", 1);
+		App->CL_Dialogs->Show_YesNo_Dlg((LPSTR)"Add Counter", (LPSTR)"Do you want to add a new Counter", (LPSTR)"");
 
-		bool Doit = App->SBC_Dialogs->Canceled;
+		bool Doit = App->CL_Dialogs->Canceled;
 		if (Doit == 0)
 		{
-			App->SBC_Display->Add_New_Counter();
-		}*/
+			App->CL_Display->Add_New_Counter();
+		}
 
 		return;
 	}

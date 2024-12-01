@@ -86,6 +86,7 @@ private:
 	void UnCheck_All_SpeedMouseOption();
 	void Fill_Face_Combo(HWND hDlg);
 	void Read_File(char* mFile, HWND hDlg);
+	void Set_Counter_Dialog_Details(HWND hDlg);
 
 	char Message_Text_Header[MAX_PATH];
 	char Message_Text_Message[MAX_PATH];
