@@ -40,6 +40,7 @@ public:
 
 	char DeskTop_Folder[MAX_PATH];
 
+	bool Canceled;
 	TCHAR szSelectedDir[MAX_PATH];
 	char BrowserMessage[MAX_PATH];
 

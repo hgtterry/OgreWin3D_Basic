@@ -95,7 +95,7 @@ LRESULT CALLBACK CL64_Project::Save_Project_Dialog_Proc(HWND hDlg, UINT message,
 	case WM_INITDIALOG:
 	{
 		SendDlgItemMessage(hDlg, IDC_STPJFOLDERPATH, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		/*SendDlgItemMessage(hDlg, IDC_STPROJECTNAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_STPROJECTNAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_STLEVELNAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		SendDlgItemMessage(hDlg, IDC_STPATH, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
@@ -103,7 +103,7 @@ LRESULT CALLBACK CL64_Project::Save_Project_Dialog_Proc(HWND hDlg, UINT message,
 		SendDlgItemMessage(hDlg, IDC_STLN, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		SendDlgItemMessage(hDlg, IDC_BTCHANGE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_BTCHANGELEVEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));*/
+		SendDlgItemMessage(hDlg, IDC_BTCHANGELEVEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
@@ -111,13 +111,13 @@ LRESULT CALLBACK CL64_Project::Save_Project_Dialog_Proc(HWND hDlg, UINT message,
 		SendDlgItemMessage(hDlg, IDC_CK_SP_DESKTOP, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 
-		/*SendDlgItemMessage(hDlg, IDC_BTPJBROWSE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BTPJBROWSE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_STBANNER, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
 
-		SendDlgItemMessage(hDlg, IDC_CKQUICKLOAD, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));*/
+		/*SendDlgItemMessage(hDlg, IDC_CKQUICKLOAD, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));*/
 
-		//SetDlgItemText(hDlg, IDC_STPROJECTNAME, (LPCTSTR)App->SBC_Project->m_Project_Name);
-		//SetDlgItemText(hDlg, IDC_STLEVELNAME, (LPCTSTR)App->SBC_Project->m_Level_Name);
+		SetDlgItemText(hDlg, IDC_STPROJECTNAME, (LPCTSTR)App->CL_Project->m_Project_Name);
+		SetDlgItemText(hDlg, IDC_STLEVELNAME, (LPCTSTR)App->CL_Project->m_Level_Name);
 		SetDlgItemText(hDlg, IDC_STPJFOLDERPATH, (LPCTSTR)App->CL_Project->m_Project_Sub_Folder);
 
 		SetDlgItemText(hDlg, IDC_STBANNER, (LPCTSTR)"Save Project As");
@@ -139,7 +139,7 @@ LRESULT CALLBACK CL64_Project::Save_Project_Dialog_Proc(HWND hDlg, UINT message,
 			return (UINT)App->Brush_White;
 		}
 
-		/*if (GetDlgItem(hDlg, IDC_STPROJECTNAME) == (HWND)lParam)
+		if (GetDlgItem(hDlg, IDC_STPROJECTNAME) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 0, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
@@ -187,7 +187,7 @@ LRESULT CALLBACK CL64_Project::Save_Project_Dialog_Proc(HWND hDlg, UINT message,
 			return (UINT)App->AppBackground;
 		}
 
-		if (GetDlgItem(hDlg, IDC_CKQUICKLOAD) == (HWND)lParam)
+		/*if (GetDlgItem(hDlg, IDC_CKQUICKLOAD) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 0, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 255));
@@ -215,26 +215,26 @@ LRESULT CALLBACK CL64_Project::Save_Project_Dialog_Proc(HWND hDlg, UINT message,
 	{
 		LPNMHDR some_item = (LPNMHDR)lParam;
 
-		/*if (some_item->idFrom == IDC_BTCHANGE && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDC_BTCHANGE)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
 			return CDRF_DODEFAULT;
 		}
 
-		if (some_item->idFrom == IDC_BTCHANGELEVEL && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDC_BTCHANGELEVEL)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
 			return CDRF_DODEFAULT;
 		}
 
-		if (some_item->idFrom == IDC_BTPJBROWSE && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDC_BTPJBROWSE)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
 			return CDRF_DODEFAULT;
-		}*/
+		}
 
 		if (some_item->idFrom == IDOK)
 		{
@@ -270,89 +270,92 @@ LRESULT CALLBACK CL64_Project::Save_Project_Dialog_Proc(HWND hDlg, UINT message,
 
 				App->CL_Project->Directory_Changed_Flag = 1;
 
-				//EnableWindow(GetDlgItem(hDlg, IDC_BTPJBROWSE), 0);
+				EnableWindow(GetDlgItem(hDlg, IDC_BTPJBROWSE), 0);
 				EnableWindow(GetDlgItem(hDlg, IDC_STPJFOLDERPATH), 0);
 
 			}
 			else
 			{
-				//EnableWindow(GetDlgItem(hDlg, IDC_BTPJBROWSE), 1);
+				EnableWindow(GetDlgItem(hDlg, IDC_BTPJBROWSE), 1);
 				EnableWindow(GetDlgItem(hDlg, IDC_STPJFOLDERPATH), 1);
 			}
 
 			return TRUE;
 		}
 
-		/*if (LOWORD(wParam) == IDC_BTPJBROWSE)
+		if (LOWORD(wParam) == IDC_BTPJBROWSE)
 		{
-			strcpy(App->Com_CDialogs->BrowserMessage, "Select Folder To Place New Project a sub folder will be created");
-			int Test = App->Com_CDialogs->StartBrowser("", App->Fdlg);
+			App->CL_File_IO->Pick_Folder();
 
-			if (Test == 0) { return true; }
+			if (App->CL_File_IO->Canceled == 1)
+			{
+				return TRUE;
+			}
 
-			strcpy(App->SBC_Project->m_Project_Sub_Folder, App->Com_CDialogs->szSelectedDir);
-			strcat(App->SBC_Project->m_Project_Sub_Folder, App->SBC_Project->m_Project_Name);
-			strcat(App->SBC_Project->m_Project_Sub_Folder, "_Prj");
+			strcpy(App->CL_Project->m_Project_Sub_Folder, App->CL_File_IO->szSelectedDir);
+			strcat(App->CL_Project->m_Project_Sub_Folder, "\\");
+			strcat(App->CL_Project->m_Project_Sub_Folder, App->CL_Project->m_Project_Name);
+			strcat(App->CL_Project->m_Project_Sub_Folder, "_Prj");
 
-			SetDlgItemText(hDlg, IDC_STPJFOLDERPATH, (LPCTSTR)App->SBC_Project->m_Project_Sub_Folder);
+			SetDlgItemText(hDlg, IDC_STPJFOLDERPATH, (LPCTSTR)App->CL_Project->m_Project_Sub_Folder);
 
-			App->SBC_Project->Directory_Changed_Flag = 1;
+			App->CL_Project->Directory_Changed_Flag = 1;
 
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == IDC_BTCHANGE)
 		{
-			strcpy(App->SBC_Dialogs->btext, "Change Project Name");
-			strcpy(App->SBC_Dialogs->Chr_Text, App->SBC_Project->m_Project_Name);
+			strcpy(App->CL_Dialogs->btext, "Change Project Name");
+			strcpy(App->CL_Dialogs->Chr_Text, App->CL_Project->m_Project_Name);
 
-			App->SBC_Dialogs->Dialog_Text();
+			App->CL_Dialogs->Dialog_Text(0);
 
-			if (App->SBC_Dialogs->Canceled == 1)
+			if (App->CL_Dialogs->Canceled == 1)
 			{
 				return TRUE;
 			}
 
-			int len1 = strlen(App->SBC_Project->m_Project_Sub_Folder);
-			int len2 = strlen(App->SBC_Project->m_Project_Name);
-			App->SBC_Project->m_Project_Sub_Folder[len1 - (len2 + 5)] = 0;
+			int len1 = strlen(App->CL_Project->m_Project_Sub_Folder);
+			int len2 = strlen(App->CL_Project->m_Project_Name);
+			App->CL_Project->m_Project_Sub_Folder[len1 - (len2 + 5)] = 0;
 
 
-			strcpy(App->SBC_Project->m_Project_Name, App->SBC_Dialogs->Chr_Text);
+			strcpy(App->CL_Project->m_Project_Name, App->CL_Dialogs->Chr_Text);
 
-			strcpy(App->SBC_Project->m_Project_Sub_Folder, App->SBC_Project->m_Project_Sub_Folder);
-			strcat(App->SBC_Project->m_Project_Sub_Folder, "\\");
-			strcat(App->SBC_Project->m_Project_Sub_Folder, App->SBC_Project->m_Project_Name);
-			strcat(App->SBC_Project->m_Project_Sub_Folder, "_Prj");
+			strcpy(App->CL_Project->m_Project_Sub_Folder, App->CL_Project->m_Project_Sub_Folder);
+			strcat(App->CL_Project->m_Project_Sub_Folder, "\\");
+			strcat(App->CL_Project->m_Project_Sub_Folder, App->CL_Project->m_Project_Name);
+			strcat(App->CL_Project->m_Project_Sub_Folder, "_Prj");
 
-			SetDlgItemText(hDlg, IDC_STPROJECTNAME, (LPCTSTR)App->SBC_Project->m_Project_Name);
-			SetDlgItemText(hDlg, IDC_STPJFOLDERPATH, (LPCTSTR)App->SBC_Project->m_Project_Sub_Folder);
+			SetDlgItemText(hDlg, IDC_STPROJECTNAME, (LPCTSTR)App->CL_Project->m_Project_Name);
+			SetDlgItemText(hDlg, IDC_STPJFOLDERPATH, (LPCTSTR)App->CL_Project->m_Project_Sub_Folder);
 
-			App->SBC_Project->Directory_Changed_Flag = 1;
+			App->CL_Project->Directory_Changed_Flag = 1;
 
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == IDC_BTCHANGELEVEL)
 		{
-			strcpy(App->SBC_Dialogs->btext, "Change Level Name");
-			strcpy(App->SBC_Dialogs->Chr_Text, App->SBC_Project->m_Level_Name);
+			strcpy(App->CL_Dialogs->btext, "Change Level Name");
+			strcpy(App->CL_Dialogs->Chr_Text, App->CL_Project->m_Level_Name);
 
-			App->SBC_Dialogs->Dialog_Text();
-			if (App->SBC_Dialogs->Canceled == 1)
+			App->CL_Dialogs->Dialog_Text(0);
+			if (App->CL_Dialogs->Canceled == 1)
 			{
 				return TRUE;
 			}
 
-			strcpy(App->SBC_Project->m_Level_Name, App->SBC_Dialogs->Chr_Text);
-			SetDlgItemText(hDlg, IDC_STLEVELNAME, (LPCTSTR)App->SBC_Project->m_Level_Name);
+			strcpy(App->CL_Project->m_Level_Name, App->CL_Dialogs->Chr_Text);
+			SetDlgItemText(hDlg, IDC_STLEVELNAME, (LPCTSTR)App->CL_Project->m_Level_Name);
 
-			App->SBC_Project->Directory_Changed_Flag = 1;
+			App->CL_Project->Directory_Changed_Flag = 1;
 
 			return TRUE;
 		}
 
-		if (LOWORD(wParam) == IDC_CKQUICKLOAD)
+		/*if (LOWORD(wParam) == IDC_CKQUICKLOAD)
 		{
 			HWND temp = GetDlgItem(hDlg, IDC_CKQUICKLOAD);
 

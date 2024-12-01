@@ -1384,7 +1384,6 @@ LRESULT CALLBACK CL64_Dialogs::Proc_Dialog_TrueFlase(HWND hDlg, UINT message, WP
 void CL64_Dialogs::Dialog_Counter()
 {
 	Canceled = 0;
-
 	DialogBox(App->hInst, (LPCTSTR)IDD_PROPS_COUNTER, App->Fdlg, (DLGPROC)Proc_Dialog_Counter);
 
 }
@@ -1683,7 +1682,6 @@ LRESULT CALLBACK CL64_Dialogs::Proc_Dialog_Counter(HWND hDlg, UINT message, WPAR
 			}
 
 			App->CL_Dialogs->Canceled = 0;
-			//App->Cl_Dialogs->Active_Dlg_Int = 0;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
@@ -1691,13 +1689,13 @@ LRESULT CALLBACK CL64_Dialogs::Proc_Dialog_Counter(HWND hDlg, UINT message, WPAR
 		if (LOWORD(wParam) == IDCANCEL)
 		{
 			App->CL_Dialogs->Canceled = 1;
-			//App->Cl_Dialogs->Active_Dlg_Int = 0;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
 
 		break;
 	}
+
 	return FALSE;
 }
 

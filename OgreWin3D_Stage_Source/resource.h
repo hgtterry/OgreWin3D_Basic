@@ -117,6 +117,7 @@
 #define IDC_BT_PHYSDEBUG                1007
 #define IDC_PROPMATERIALS               1007
 #define IDC_BTMOVE_PLAYER               1007
+#define IDC_BTCHANGE                    1007
 #define IDC_BUTTON2                     1008
 #define IDC_BT_TBH_CAMERA               1008
 #define IDC_BT_DEMORESOURCES            1008
@@ -141,6 +142,7 @@
 #define IDC_BT_ROTATION                 1009
 #define IDC_BT_ONLYMESH                 1009
 #define IDC_BTEDITT                     1009
+#define IDC_BTCHANGELEVEL               1009
 #define IDC_BUTTON4                     1010
 #define IDC_BT_CAMERA_FREE              1010
 #define IDC_ALLMATERIALS                1010
@@ -272,8 +274,13 @@
 #define IDC_BTDELETE                    1107
 #define IDC_EDIT1                       1108
 #define IDC_CB_COUNTERS                 1109
-#define IDC_COMBO2                      1110
 #define IDC_CB_MATHS                    1110
+#define IDC_STPN                        1111
+#define IDC_STPROJECTNAME               1112
+#define IDC_STPATH                      1113
+#define IDC_BTPJBROWSE                  1114
+#define IDC_STLN                        1115
+#define IDC_STLEVELNAME                 1116
 #define ID_VIEW_RESET                   32771
 #define ID_VIEW_MAX3DVIEW               32772
 #define ID_DEBUG_TESTPREFERANCE         32773
@@ -332,7 +339,7 @@
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        200
 #define _APS_NEXT_COMMAND_VALUE         32820
-#define _APS_NEXT_CONTROL_VALUE         1111
+#define _APS_NEXT_CONTROL_VALUE         1117
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif

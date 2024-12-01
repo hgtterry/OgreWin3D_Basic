@@ -30,7 +30,7 @@ CL64_File_IO::CL64_File_IO()
 
 	szSelectedDir[0] = 0;
 	BrowserMessage[0] = 0;
-
+	Canceled = 0;
 	DeskTop_Folder[0] = 0;
 
 	ofn = { 0 };
@@ -207,6 +207,9 @@ void CL64_File_IO::Save_File()
 // *************************************************************************
 void CL64_File_IO::Pick_Folder()
 {
+	strcpy(szSelectedDir,"No_Selection");
+	Canceled = 1;
+
 	IFileDialog* pfd;
 	if (SUCCEEDED(CoCreateInstance(CLSID_FileOpenDialog, NULL, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&pfd))))
 	{
@@ -225,9 +228,10 @@ void CL64_File_IO::Pick_Folder()
 				{
 					std::wstring path(f_Path);
 					std::string c(path.begin(), path.end());
-					//sFilePath = c;
-
-					App->Say_Win(c.c_str());
+					
+					strcpy(szSelectedDir, c.c_str());
+					Canceled = 0;
+	
 				}
 				psi->Release();
 			}
