@@ -65,7 +65,7 @@ CL64_Picking::~CL64_Picking(void)
 }
 
 // *************************************************************************
-// *		  Clear_Picking_Data:- Terry and Hazel Flanigan 2023	   	   *
+// *		  Clear_Picking_Data:- Terry and Hazel Flanigan 2024	   	   *
 // *************************************************************************
 void CL64_Picking::Clear_Picking_Data()
 {
@@ -87,7 +87,7 @@ void CL64_Picking::Clear_Picking_Data()
 }
 
 // *************************************************************************
-// *		Mouse_Pick_Entity:- Terry and Hazel Flanigan 2022			   *
+// *		Mouse_Pick_Entity:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
 void CL64_Picking::Mouse_Pick_Entity()
 {
@@ -198,7 +198,7 @@ void CL64_Picking::Mouse_Pick_Entity()
 }
 
 // *************************************************************************
-// *		        raycast:- Terry and Hazel Flanigan 2022		       	   *
+// *		        raycast:- Terry and Hazel Flanigan 2024		       	   *
 // *************************************************************************
 bool CL64_Picking::raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::MovableObject*& target, float& closest_distance, const Ogre::uint32 queryMask)
 {
@@ -345,7 +345,7 @@ bool CL64_Picking::raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::Mo
 }
 
 // *************************************************************************
-// *		GetMeshInformation:- Terry and Hazel Flanigan 2023		  	   *
+// *		GetMeshInformation:- Terry and Hazel Flanigan 2024		  	   *
 // *************************************************************************
 void CL64_Picking::GetMeshInformation(const Ogre::MeshPtr mesh, const Ogre::Vector3& position, const Ogre::Quaternion& orient, const Ogre::Vector3& scale)
 {
@@ -504,7 +504,7 @@ void CL64_Picking::GetMeshInformation(const Ogre::MeshPtr mesh, const Ogre::Vect
 }
 
 // *************************************************************************
-// *			Set_Face_UV:- Terry and Hazel Flanigan 2023		       	   *
+// *			Set_Face_UV:- Terry and Hazel Flanigan 2024		       	   *
 // *************************************************************************
 void CL64_Picking::Set_Face_UV()
 {
@@ -578,7 +578,7 @@ void CL64_Picking::Set_Face_UV()
 }
 
 // *************************************************************************
-// *		  Get_Material_Data:- Terry and Hazel Flanigan 2023		   	   *
+// *		  Get_Material_Data:- Terry and Hazel Flanigan 2024		   	   *
 // *************************************************************************
 void CL64_Picking::Get_Material_Data()
 {
@@ -597,7 +597,7 @@ void CL64_Picking::Get_Material_Data()
 }
 
 // *************************************************************************
-// *		  Ray_Test_Particles:- Terry and Hazel Flanigan 2023	   	   *
+// *		  Ray_Test_Particles:- Terry and Hazel Flanigan 2024	   	   *
 // *************************************************************************
 bool CL64_Picking::Ray_Test_Particles(const Ogre::Ray& ray)
 {
@@ -645,7 +645,7 @@ bool CL64_Picking::Ray_Test_Particles(const Ogre::Ray& ray)
 
             strcpy(buff, Pl_Entity_Name.c_str());
 
-            sscanf((buff + 9), "%i", &IntNum);
+            (void) sscanf((buff + 9), "%i", &IntNum);
             //App->Say_Int(IntNum);
             App->CL_Gizmos->MarkerBox_Addjust(IntNum);
 

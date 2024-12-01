@@ -132,6 +132,23 @@ void CL64_Keyboard::Keyboard_Mode_First(float deltaTime)
 
 			//Block_Keyboard = 0;
 		}
+
+		//------------------------------------------------ Space Key - Jump and Selection
+		if (GetAsyncKeyState(VK_SPACE) < 0 && App->CL_Scene->flag_Player_Added == 1)
+		{
+			if (App->CL_Ogre->Ogre3D_Listener->flag_Selection_Mode == 1)
+			{
+				App->CL_Picking->Mouse_Pick_Entity();
+				App->CL_TopDlg->flag_Toggle_Select_Flag = 0;
+				App->CL_Gizmos->mPickSight->hide();
+				App->CL_Ogre->Ogre3D_Listener->flag_Selection_Mode = 0;
+				RedrawWindow(App->CL_TopDlg->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			}
+			else
+			{
+				
+			}
+		}
 	}
 }
 
@@ -284,5 +301,22 @@ void CL64_Keyboard::Keyboard_Mode_Free(float deltaTime)
 	if (GetAsyncKeyState(VK_ESCAPE) < 0) // Back to Editor mode;
 	{
 		
+	}
+
+	//------------------------------------------------ Space Key - Jump and Selection
+	if (GetAsyncKeyState(VK_SPACE) < 0 && App->CL_Scene->flag_Player_Added == 1)
+	{
+		if (App->CL_Ogre->Ogre3D_Listener->flag_Selection_Mode == 1)
+		{
+			App->CL_Picking->Mouse_Pick_Entity();
+			App->CL_TopDlg->flag_Toggle_Select_Flag = 0;
+			App->CL_Gizmos->mPickSight->hide();
+			App->CL_Ogre->Ogre3D_Listener->flag_Selection_Mode = 0;
+			RedrawWindow(App->CL_TopDlg->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+		}
+		else
+		{
+
+		}
 	}
 }

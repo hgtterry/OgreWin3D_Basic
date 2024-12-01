@@ -733,7 +733,7 @@ LRESULT CALLBACK Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
 
 							if (App->CL_Ogre->Ogre3D_Listener->flag_Selection_Mode == 1)
 							{
-								App->CL_Picking->Mouse_Pick_Entity();
+								//App->CL_Picking->Mouse_Pick_Entity();
 							}
 
 							SetCapture(App->ViewGLhWnd);// Bernie
