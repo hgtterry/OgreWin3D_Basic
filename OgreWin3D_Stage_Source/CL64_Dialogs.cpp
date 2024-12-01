@@ -1526,6 +1526,12 @@ LRESULT CALLBACK CL64_Dialogs::Proc_Dialog_Counter(HWND hDlg, UINT message, WPAR
 					App->CL_Scene->V_Object[ObjectIndex]->S_Collectable[0]->Counter_ID = CounterIndex;
 				}
 				 
+				if (App->CL_Properties->Edit_Category == Enums::Edit_Message)
+				{
+					strcpy(App->CL_Scene->V_Object[ObjectIndex]->S_Message[0]->Counter_Name, buff);
+					int CounterIndex = App->CL_Display->GetIndex_By_Name(buff);
+					App->CL_Scene->V_Object[ObjectIndex]->S_Message[0]->Counter_ID = CounterIndex;
+				}
 			}
 			}
 
@@ -1820,6 +1826,11 @@ void CL64_Dialogs::Set_Counter_Dialog_Details(HWND hDlg)
 		SendDlgItemMessage(hDlg, IDC_CB_COUNTERS, CB_SETCURSEL, (WPARAM)App->CL_Scene->V_Object[ObjectIndex]->S_Collectable[0]->Counter_ID, (LPARAM)0);
 	}
 
+	if (App->CL_Properties->Edit_Category == Enums::Edit_Message)
+	{
+		SendDlgItemMessage(hDlg, IDC_CB_COUNTERS, CB_SETCURSEL, (WPARAM)App->CL_Scene->V_Object[ObjectIndex]->S_Message[0]->Counter_ID, (LPARAM)0);
+	}
+
 	// -------------------------------- Maths
 	SendDlgItemMessage(hDlg, IDC_CB_MATHS, CB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
 
@@ -1841,6 +1852,24 @@ void CL64_Dialogs::Set_Counter_Dialog(HWND hDlg, bool Enable)
 	EnableWindow(GetDlgItem(hDlg, IDC_CB_COUNTERS), Enable);
 	EnableWindow(GetDlgItem(hDlg, IDC_CB_MATHS), Enable);
 	EnableWindow(GetDlgItem(hDlg, IDC_EDTRIGGERVALUE), Enable);
+
+	if (App->CL_Properties->Edit_Category == Enums::Edit_Message)
+	{
+		ShowWindow(GetDlgItem(hDlg, IDC_CB_MATHS), SW_HIDE);
+		ShowWindow(GetDlgItem(hDlg, IDC_ST_CT_MATHS), SW_HIDE);
+	}
+
+	if (App->CL_Properties->Edit_Category == Enums::Edit_Teleport)
+	{
+		ShowWindow(GetDlgItem(hDlg, IDC_CB_MATHS), SW_HIDE);
+		ShowWindow(GetDlgItem(hDlg, IDC_ST_CT_MATHS), SW_HIDE);
+	}
+
+	if (App->CL_Properties->Edit_Category == Enums::Edit_Collectable)
+	{
+		ShowWindow(GetDlgItem(hDlg, IDC_CB_MATHS), SW_SHOW);
+		ShowWindow(GetDlgItem(hDlg, IDC_ST_CT_MATHS), SW_SHOW);
+	}
 }
 
 // *************************************************************************
