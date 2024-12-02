@@ -35,7 +35,7 @@ public:
 	void  Init_History();
 	void  LoadHistory();
 	void  RecentFileHistory_Update();
-	void  ResentHistory_Clear();
+	void  ResentHistory_Clear(bool FirstTime);
 	void  Save_FileHistory();
 
 	char UserData_Folder[MAX_PATH];

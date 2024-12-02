@@ -97,24 +97,21 @@ bool CL64_Importers::Reload_FromResentFiles(char* ResentPathAndFile)
 
 	bool test = App->CL_Project->Load_Project();
 
-	return 1;
-	/*App->CL_Prefs->Update_User_File(ResentPathAndFile);
+	App->CL_Scene->Set_Scene();
+	App->CL_Ogre->RenderFrame(8);
 
-	App->SBC_TopTabs->Project_Loaded_Reset();
-	App->CL_Ogre->RenderFrame();
+	//App->SBC_TopTabs->Project_Loaded_Reset();
 
-	if (Quick_Load_Flag == 0)
+	if (test == 1)
 	{
-		if (test == 1)
-		{
-			App->Say("Project Loaded");
-		}
-		else
-		{
-			App->Say("Project Failed to Load");
-		}
-	}*/
+		App->Say("Project Loaded", App->CL_Project->Project_File_Name);
+	}
+	else
+	{
+		App->Say("Project Failed to Load");
+	}
 
+	return 1;
 }
 
 // *************************************************************************

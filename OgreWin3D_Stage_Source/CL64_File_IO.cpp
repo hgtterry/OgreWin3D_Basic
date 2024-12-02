@@ -251,7 +251,7 @@ void CL64_File_IO::Pick_Folder()
 // *************************************************************************
 void CL64_File_IO::Open_HTML(char* HelpTitle)
 {
-	char Path[1024];
+	char Path[MAX_PATH];
 	strcpy(Path, App->GD_Directory_FullPath);
 	strcat(Path, "\\");
 	strcat(Path, HelpTitle);
@@ -325,7 +325,7 @@ bool CL64_File_IO::Check_File_Exist(char* Full_Path)
 // *************************************************************************
 bool CL64_File_IO::SearchFolders(char* Path, char* File)
 {
-	char pSearchPath[1024];
+	char pSearchPath[MAX_PATH];
 
 	WIN32_FIND_DATA FindFileData;
 	HANDLE hFind;
@@ -364,7 +364,14 @@ void  CL64_File_IO::Init_History()
 		mPreviousFiles.resize(EQUITY_NUM_RECENT_FILES);
 
 		CreateDirectory(DirCheck, NULL);
-		ResentHistory_Clear(); // Set all slots to Empty
+
+		char buf[1024];
+		strcpy(buf, UserData_Folder);
+		strcat(buf, "\\OgreWin3D\\OgreWin3D.ini");
+		WriteRecentFiles = fopen(buf, "wt");
+		fclose(WriteRecentFiles);
+
+		ResentHistory_Clear(1); // Set all slots to Empty
 		Save_FileHistory();
 		LoadHistory();
 	}
@@ -398,9 +405,9 @@ void  CL64_File_IO::LoadHistory()
 	for (unsigned int i = 0; i < EQUITY_NUM_RECENT_FILES; ++i)
 	{
 		memset(buffer, 0, MAX_PATH);
-		fgets(buffer, 1024, ReadRecentFiles);
+		fgets(buffer, MAX_PATH, ReadRecentFiles);
 
-		char Path[1024];
+		char Path[MAX_PATH];
 		strcpy(Path, buffer);
 		int Len = strlen(Path);
 		Path[Len - 1] = 0;
@@ -415,7 +422,7 @@ void  CL64_File_IO::LoadHistory()
 	// Check for empty slots and gray out
 	for (int i = EQUITY_NUM_RECENT_FILES - 1; i >= 0; --i)
 	{
-		char szText[1024];
+		char szText[MAX_PATH];
 		strcpy(szText, mPreviousFiles[i].c_str());
 
 		UINT iFlags = 0;
@@ -443,7 +450,7 @@ void  CL64_File_IO::RecentFileHistory_Update()
 
 	if (!mHistoryMenu)return;
 
-	std::string sz = std::string(Project_Path_File_Name);
+	std::string sz = std::string(App->CL_Project->Project_Path_File_Name);
 	if (mPreviousFiles[EQUITY_NUM_RECENT_FILES - 1] == sz)return;
 
 	// add the new file to the list of recent files
@@ -480,12 +487,16 @@ void  CL64_File_IO::RecentFileHistory_Update()
 // *************************************************************************
 // *		ResentHistory_Clear:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-void  CL64_File_IO::ResentHistory_Clear()
+void  CL64_File_IO::ResentHistory_Clear(bool FirstTime)
 {
-	App->CL_Dialogs->Show_YesNo_Dlg((LPSTR)"Delete file history.", (LPSTR)"Are you sure all File history will be Deleted Procede.", (LPSTR)"");
-	if (App->CL_Dialogs->Canceled == 1)
+
+	if (FirstTime == 0)
 	{
-		return;
+		App->CL_Dialogs->Show_YesNo_Dlg((LPSTR)"Delete file history.", (LPSTR)"Are you sure all File history will be Deleted Procede.", (LPSTR)"");
+		if (App->CL_Dialogs->Canceled == 1)
+		{
+			return;
+		}
 	}
 
 	// Set all slots to <empty>
@@ -513,7 +524,7 @@ void  CL64_File_IO::Save_FileHistory()
 
 	//	WriteRecentFiles = 0;
 
-	char buf[1024];
+	char buf[MAX_PATH];
 	strcpy(buf, UserData_Folder);
 	strcat(buf, "\\OgreWin3D\\OgreWin3D.ini");
 
@@ -529,7 +540,7 @@ void  CL64_File_IO::Save_FileHistory()
 	// Save out to RecentFile.ini
 	for (unsigned int i = 0; i < EQUITY_NUM_RECENT_FILES; ++i)
 	{
-		char szName[1024];
+		char szName[MAX_PATH];
 		strcpy(szName, mPreviousFiles[i].c_str());
 
 		fprintf(WriteRecentFiles, "%s\n", szName);
