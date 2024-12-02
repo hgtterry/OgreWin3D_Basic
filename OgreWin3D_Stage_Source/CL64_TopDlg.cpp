@@ -916,6 +916,13 @@ LRESULT CALLBACK CL64_TopDlg::Proc_Game_TB(HWND hDlg, UINT message, WPARAM wPara
 		{
 			if (App->CL_Scene->flag_Scene_Loaded == 1)
 			{
+				App->CL_Dialogs->GameMode_StartPosition_Dlg();
+
+				if (App->CL_Dialogs->Canceled == 1)
+				{
+					return 1;
+				}
+
 				App->CL_Scene->Game_Mode();
 			}
 

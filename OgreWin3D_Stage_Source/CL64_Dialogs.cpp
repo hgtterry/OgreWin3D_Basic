@@ -2090,5 +2090,172 @@ LRESULT CALLBACK CL64_Dialogs::Proc_Dialog_Int(HWND hDlg, UINT message, WPARAM w
 
 		break;
 	}
+
+	return FALSE;
+}
+
+// *************************************************************************
+// *	  GameMode_StartPosition_Dlg():- Terry and Hazel Flanigan 2024	   *
+// *************************************************************************
+void CL64_Dialogs::GameMode_StartPosition_Dlg()
+{
+	DialogBox(App->hInst, (LPCTSTR)IDD_GMSTART, App->Fdlg, (DLGPROC)Proc_GameMode_StartPosition_Dlg);
+	
+}
+
+// *************************************************************************
+// *	Proc_GameMode_StartPosition_Dlg:- Terry and Hazel Flanigan 2024	   *
+// *************************************************************************
+LRESULT CALLBACK CL64_Dialogs::Proc_GameMode_StartPosition_Dlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+	switch (message)
+	{
+	case WM_INITDIALOG:
+	{
+		SendDlgItemMessage(hDlg, IDC_STARTCUR, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_STARTLEVEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_QUITGM, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		//SendDlgItemMessage(hDlg, IDC_CKFPS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		//SendDlgItemMessage(hDlg, IDC_CK_FRONTDLG, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		App->CL_Dialogs->Canceled = 0;
+		//App->SBC_Dialogs->DoFPS = 0;
+		//App->SBC_Dialogs->Saved_DoFPS = App->CL_Vm_ImGui->Show_FPS;
+
+		/*if (App->SBC_Front_Dlg->Use_Front_Dlg_Flag == 1)
+		{
+			HWND temp = GetDlgItem(hDlg, IDC_CK_FRONTDLG);
+			SendMessage(temp, BM_SETCHECK, 1, 0);
+		}*/
+
+		return TRUE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->AppBackground;
+	}
+
+	case WM_CTLCOLORSTATIC:
+	{
+		/*if (GetDlgItem(hDlg, IDC_CKFPS) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		if (GetDlgItem(hDlg, IDC_CK_FRONTDLG) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}*/
+
+		return FALSE;
+	}
+
+	case WM_NOTIFY:
+	{
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		if (some_item->idFrom == IDC_STARTCUR && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_STARTLEVEL && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_QUITGM && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		return CDRF_DODEFAULT;
+	}
+	case WM_COMMAND:
+
+		/*if (LOWORD(wParam) == IDC_CKFPS)
+		{
+
+			HWND temp = GetDlgItem(hDlg, IDC_CKFPS);
+			int test = SendMessage(temp, BM_GETCHECK, 0, 0);
+			if (test == BST_CHECKED)
+			{
+				App->SBC_Dialogs->DoFPS = 1;
+				return 1;
+			}
+			else
+			{
+				App->SBC_Dialogs->DoFPS = 0;
+
+				return 1;
+			}
+			return 1;
+		}*/
+
+		/*if (LOWORD(wParam) == IDC_CK_FRONTDLG)
+		{
+
+			HWND temp = GetDlgItem(hDlg, IDC_CK_FRONTDLG);
+			int test = SendMessage(temp, BM_GETCHECK, 0, 0);
+			if (test == BST_CHECKED)
+			{
+				App->SBC_Front_Dlg->Use_Front_Dlg_Flag = 1;
+				return 1;
+			}
+			else
+			{
+				App->SBC_Front_Dlg->Use_Front_Dlg_Flag = 0;
+
+				return 1;
+			}
+			return 1;
+		}*/
+
+		if (LOWORD(wParam) == IDC_STARTCUR)
+		{
+			App->CL_Dialogs->Canceled = 0;
+			//App->CL_Vm_ImGui->Show_FPS = App->SBC_Dialogs->DoFPS;
+			EndDialog(hDlg, LOWORD(wParam));
+			return 1;
+		}
+
+		if (LOWORD(wParam) == IDC_STARTLEVEL)
+		{
+			App->CL_Physics->Reset_Physics();
+			App->CL_Dialogs->Canceled = 0;
+			//App->CL_Vm_ImGui->Show_FPS = App->SBC_Dialogs->DoFPS;
+			EndDialog(hDlg, LOWORD(wParam));
+		}
+
+		if (LOWORD(wParam) == IDCANCEL)
+		{
+			EndDialog(hDlg, LOWORD(wParam));
+			App->CL_Dialogs->Canceled = 1;
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_QUITGM)
+		{
+			App->CL_Dialogs->Canceled = 1;
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+
+		break;
+
+	}
 	return FALSE;
 }

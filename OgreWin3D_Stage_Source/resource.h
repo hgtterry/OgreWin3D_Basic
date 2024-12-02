@@ -85,8 +85,8 @@
 #define IDD_TB_LOCATIONS                197
 #define IDD_PROJECTION                  198
 #define IDD_EDITFLOAT                   199
-#define IDD_DIALOG1                     200
 #define IDD_CREATE_OPTIONS              200
+#define IDD_GMSTART                     201
 #define IDC_CK_SU_FULLSCREEN            1000
 #define IDC_ST_STARTUP                  1001
 #define IDC_CK_SU_FULL3DVIEW            1002
@@ -120,6 +120,7 @@
 #define IDC_PROPMATERIALS               1007
 #define IDC_BTMOVE_PLAYER               1007
 #define IDC_BTCHANGE                    1007
+#define IDC_STARTLEVEL                  1007
 #define IDC_BUTTON2                     1008
 #define IDC_BT_TBH_CAMERA               1008
 #define IDC_BT_DEMORESOURCES            1008
@@ -145,6 +146,7 @@
 #define IDC_BT_ONLYMESH                 1009
 #define IDC_BTEDITT                     1009
 #define IDC_BTCHANGELEVEL               1009
+#define IDC_QUITGM                      1009
 #define IDC_BUTTON4                     1010
 #define IDC_BT_CAMERA_FREE              1010
 #define IDC_ALLMATERIALS                1010
@@ -285,6 +287,7 @@
 #define IDC_STLEVELNAME                 1116
 #define IDC_CK_SU_LAST_PROJECT          1117
 #define IDC_BT_SELECT                   1118
+#define IDC_STARTCUR                    1119
 #define ID_VIEW_RESET                   32771
 #define ID_VIEW_MAX3DVIEW               32772
 #define ID_DEBUG_TESTPREFERANCE         32773
@@ -343,9 +346,9 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
-#define _APS_NEXT_RESOURCE_VALUE        201
+#define _APS_NEXT_RESOURCE_VALUE        202
 #define _APS_NEXT_COMMAND_VALUE         32822
-#define _APS_NEXT_CONTROL_VALUE         1119
+#define _APS_NEXT_CONTROL_VALUE         1120
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif
