@@ -125,33 +125,26 @@ void CL64_Keyboard::Keyboard_Mode_First(float deltaTime)
 		//------------------------------------------------ Escape 
 		if (GetAsyncKeyState(VK_ESCAPE) < 0) // Back to Editor mode;
 		{
-			//if (Block_Keyboard == 0)
-			//{
-			//	//Block_Keyboard = 1;
-			//	
-			//	//if (App->CLSB_Scene_Data->FullScreenMode_Flag == 1)
-			//	{
-			//		App->CL_Ogre->ExitFullScreen();
-			//	}
-			//	
-			//}
 
-			if (App->CL_Build_Game->flag_Use_Front_Dlg == 1)
+			if (App->CL_Scene->flag_GameMode_Running == 1 || App->CL_Scene->flag_FullScreen_Mode == 1)
 			{
-				App->CL_Ogre->Ogre3D_Listener->flag_LeftMouseDown = 0;
-				App->CL_Ogre->Ogre3D_Listener->flag_Block_Mouse = 1;
-				App->CL_Keyboard->flag_Block_Keyboard = 1;
-				App->flag_Block_Mouse_Buttons = 1;
+				if (App->CL_Build_Game->flag_Use_Front_Dlg == 1)
+				{
+					App->CL_Ogre->Ogre3D_Listener->flag_LeftMouseDown = 0;
+					App->CL_Ogre->Ogre3D_Listener->flag_Block_Mouse = 1;
+					App->CL_Keyboard->flag_Block_Keyboard = 1;
+					App->flag_Block_Mouse_Buttons = 1;
 
-				ReleaseCapture();
-				App->CL_Ogre->Ogre3D_Listener->flag_LeftMouseDown = 0;
-				SetCursor(App->CUR);
+					ReleaseCapture();
+					App->CL_Ogre->Ogre3D_Listener->flag_LeftMouseDown = 0;
+					SetCursor(App->CUR);
 
-				App->CL_Front_Dialog->Show_Front_Dlg_Flag = 1;
-			}
-			else
-			{
-				App->CL_Ogre->ExitFullScreen();
+					App->CL_Front_Dialog->Show_Front_Dlg_Flag = 1;
+				}
+				else
+				{
+					App->CL_Ogre->ExitFullScreen();
+				}
 			}
 
 		}

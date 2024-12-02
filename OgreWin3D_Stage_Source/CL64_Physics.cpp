@@ -125,7 +125,7 @@ void CL64_Physics::Reset_Triggers(void)
 {
 	App->CL_Collision->DoMove = 0;
 
-	if (App->CL_Scene->flag_GameMode_Running_Flag == 0)
+	if (App->CL_Scene->flag_GameMode_Running == 0)
 	{
 		App->CL_SoundMgr->SoundEngine->stopAllSounds();
 	}

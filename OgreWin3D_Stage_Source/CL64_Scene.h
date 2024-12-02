@@ -41,6 +41,7 @@ public:
 	void Reset_Counters();
 	void Set_Scene(); 
 	bool Clear_Level();
+	bool Game_Restart(void);
 	bool Game_Mode(void);
 	bool Editor_Mode(void);
 	bool Show_Entities(bool TrueFalse);
@@ -60,10 +61,11 @@ public:
 
 	bool flag_Area_Added;
 	bool flag_Scene_Loaded;
-	bool flag_GameMode_Running_Flag;
 	bool flag_Project_Resources_Created;
 	bool flag_Player_Added;
 	bool flag_Scene_Modified;
+	bool flag_GameMode_Running;
+	bool flag_FullScreen_Mode;
 
 	Base_Area* B_Area[20];
 	Base_Locations* B_Locations[20];

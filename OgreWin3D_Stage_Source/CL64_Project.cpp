@@ -510,7 +510,7 @@ bool CL64_Project::Save_Project_Ini()
 	fprintf(WriteFile, "%s\n", "[Files]");
 	fprintf(WriteFile, "%s%s\n", "Project_Name=", m_Project_Name);
 	fprintf(WriteFile, "%s%s\n", "Level_Name=", m_Level_Name);
-	fprintf(WriteFile, "%s%s\n", "Game_Name=", App->CL_Build->GameName);
+	fprintf(WriteFile, "%s%s\n", "Game_Name=", App->CL_Build_Game->GameName);
 
 
 	fprintf(WriteFile, "%s\n", " ");
@@ -533,10 +533,10 @@ bool CL64_Project::Save_Project_Ini()
 	fprintf(WriteFile, "%s\n", " ");
 
 	fprintf(WriteFile, "%s\n", "[Config]");
-	fprintf(WriteFile, "%s%i\n", "Show_FPS=", App->CL_Build->GameOptions->Show_FPS);
-	fprintf(WriteFile, "%s%i\n", "Game_FullScreen=", App->CL_Build->GameOptions->FullScreen);
-	fprintf(WriteFile, "%s%i\n", "Zipped_Assets=", App->CL_Build->GameOptions->Zipped_Assets_Flag);
-	fprintf(WriteFile, "%s%i\n", "Use_Front_Dlg=", App->CL_Build->GameOptions->Front_Dialog_Flag);
+	fprintf(WriteFile, "%s%i\n", "Show_FPS=", App->CL_Build_Game->GameOptions->Show_FPS);
+	fprintf(WriteFile, "%s%i\n", "Game_FullScreen=", App->CL_Build_Game->GameOptions->FullScreen);
+	fprintf(WriteFile, "%s%i\n", "Zipped_Assets=", App->CL_Build_Game->GameOptions->Zipped_Assets_Flag);
+	fprintf(WriteFile, "%s%i\n", "Use_Front_Dlg=", App->CL_Build_Game->GameOptions->Front_Dialog_Flag);
 
 	fclose(WriteFile);
 
@@ -1523,7 +1523,7 @@ bool CL64_Project::Load_Project()
 	
 	App->CL_Ini_File->GetString("Files", "Level_Name", m_Level_Name, MAX_PATH);
 	App->CL_Ini_File->GetString("Files", "Project_Name", m_Project_Name, MAX_PATH);
-	App->CL_Ini_File->GetString("Files", "Game_Name", App->CL_Build->GameName, MAX_PATH, "YourGameName");
+	App->CL_Ini_File->GetString("Files", "Game_Name", App->CL_Build_Game->GameName, MAX_PATH, "YourGameName");
 
 
 	Options->Has_Area = App->CL_Ini_File->GetInt("Options", "Areas_Count", 0, 10);
@@ -1536,10 +1536,10 @@ bool CL64_Project::Load_Project()
 	App->CL_Scene->UniqueID_Counters_Count = App->CL_Ini_File->GetInt("Options", "Counters_ID_Count", 0, 10);
 	App->CL_Scene->UniqueID_Area_Count = App->CL_Ini_File->GetInt("Options", "Areas_ID_Count", 0, 10);
 
-	App->CL_Build->GameOptions->Show_FPS = App->CL_Ini_File->GetInt("Config", "Show_FPS", 0, 10);
-	App->CL_Build->GameOptions->FullScreen = App->CL_Ini_File->GetInt("Config", "Game_FullScreen", 1, 10);
-	App->CL_Build->GameOptions->Zipped_Assets_Flag = App->CL_Ini_File->GetInt("Config", "Zipped_Assets", 1, 10);
-	App->CL_Build->GameOptions->Front_Dialog_Flag = App->CL_Ini_File->GetInt("Config", "Use_Front_Dlg", 1, 10);
+	App->CL_Build_Game->GameOptions->Show_FPS = App->CL_Ini_File->GetInt("Config", "Show_FPS", 0, 10);
+	App->CL_Build_Game->GameOptions->FullScreen = App->CL_Ini_File->GetInt("Config", "Game_FullScreen", 1, 10);
+	App->CL_Build_Game->GameOptions->Zipped_Assets_Flag = App->CL_Ini_File->GetInt("Config", "Zipped_Assets", 1, 10);
+	App->CL_Build_Game->GameOptions->Front_Dialog_Flag = App->CL_Ini_File->GetInt("Config", "Use_Front_Dlg", 1, 10);
 
 	//-------------------------------------- Set Resource Path
 

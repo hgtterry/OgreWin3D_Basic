@@ -40,12 +40,13 @@ CL64_Scene::CL64_Scene(void)
 
 	CurrentCamMode = 0;
 
-	flag_GameMode_Running_Flag = 0;
 	flag_Project_Resources_Created = 0;
 	flag_Area_Added = 0;
 	flag_Scene_Loaded = 0;
 	flag_Player_Added = 0;
 	flag_Scene_Modified = 0;
+	flag_GameMode_Running = 0;
+	flag_FullScreen_Mode = 0;
 
 	B_Area[19] = { nullptr };
 	B_Locations[19] = { nullptr };
@@ -216,6 +217,48 @@ void CL64_Scene::Set_Scene()
 }
 
 // *************************************************************************
+// *				Game_Restart:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+bool CL64_Scene::Game_Restart(void)
+{
+
+	App->CL_Com_Environments->GameMode(0);
+	App->CL_SoundMgr->SoundEngine->stopAllSounds();
+
+	flag_GameMode_Running = 1;
+
+	App->CL_Ogre->Bullet_Debug_Listener->Render_Debug_Flag = 0;
+
+	App->CL_Grid->Grid_SetVisible(0);
+	App->CL_Grid->Hair_SetVisible(0);
+	//App->CL_Gizmos->Arrow_Node->setVisible(0);
+
+	App->CL_Ogre->Ogre3D_Listener->flag_Run_Physics = 1;
+
+	CurrentCamMode = App->CL_Ogre->Ogre3D_Listener->CameraMode;
+	App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_First;
+
+	App->CL_Gizmos->BoxNode->setVisible(false);
+
+	Show_Entities(false); // Hide All Visible Trigers
+
+	SetCursorPos(App->CursorPosX, App->CursorPosY);
+
+	if (App->CL_Build_Game->flag_Use_Front_Dlg == 0)
+	{
+		SetCapture(App->ViewGLhWnd);// Bernie
+		App->CL_Ogre->Ogre3D_Listener->flag_LeftMouseDown = 1;
+		App->CUR = SetCursor(NULL);
+	}
+
+	App->CL_Physics->Reset_Triggers();
+
+	App->CL_Com_Environments->GameMode(1);
+
+	return 1;
+}
+
+// *************************************************************************
 // *				Game_Mode:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
 bool CL64_Scene::Game_Mode(void)
@@ -230,7 +273,7 @@ bool CL64_Scene::Game_Mode(void)
 
 	App->CL_ImGui->flag_Show_FPS = App->CL_Build_Game->flag_Show_FPS;
 
-	flag_GameMode_Running_Flag = 1;
+	flag_GameMode_Running = 1;
 
 	//App->CL_Ogre->Bullet_Debug_Listener->Render_Debug_Flag = 0;
 
@@ -288,8 +331,8 @@ bool CL64_Scene::Editor_Mode(void)
 {
 	App->CL_Front_Dialog->Show_Front_Dlg_Flag = 0; // temp
 
-	flag_GameMode_Running_Flag = 0;
-	//FullScreenMode_Flag = 0;
+	flag_GameMode_Running = 0;
+	flag_FullScreen_Mode = 0;
 
 	//App->CL_Ogre->BulletListener->Render_Debug_Flag = 1;
 

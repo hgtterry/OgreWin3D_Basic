@@ -69,7 +69,7 @@ bool CL64_Collision::Do_Teleport(int Index)
 			App->CL_Scene->V_Object[Index]->S_Teleport[0]->SndFile->setIsPaused(false);
 
 			// Environment
-			if (App->CL_Scene->flag_GameMode_Running_Flag == 1)
+			if (App->CL_Scene->flag_GameMode_Running == 1)
 			{
 				App->CL_Com_Environments->Set_Environment_By_Index(0, Old_Sound_Index);
 				App->CL_Com_Environments->Set_Environment_By_Index(1, Index);
@@ -109,7 +109,7 @@ bool CL64_Collision::Do_Teleport(int Index)
 		}
 
 		// Environment
-		if (App->CL_Scene->flag_GameMode_Running_Flag == 1)
+		if (App->CL_Scene->flag_GameMode_Running == 1)
 		{
 			App->CL_Com_Environments->Set_Environment_By_Index(0, Old_Sound_Index);
 			App->CL_Com_Environments->Set_Environment_By_Index(1, Index);
@@ -520,7 +520,7 @@ bool CL64_Collision::Do_Environment(int Index)
 		return 1;
 	}
 
-	if (App->CL_Scene->flag_GameMode_Running_Flag == 1)
+	if (App->CL_Scene->flag_GameMode_Running == 1)
 	{
 		App->CL_Com_Environments->Set_Environment_By_Index(0, Old_Sound_Index);
 		App->CL_Com_Environments->Set_Environment_By_Index(1, Index);

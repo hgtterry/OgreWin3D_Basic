@@ -62,7 +62,6 @@ THE SOFTWARE.
 #include "CL64_SB_Collision.h"
 #include "CL64_SoundMgr.h"
 #include "CL64_Display.h"
-#include "CL64_Build.h"
 #include "CL64_LookUps.h"
 
 #include "CL64_Gui_Environment.h"
@@ -123,7 +122,6 @@ public:
 	CL64_Collision*			CL_Collision;
 	CL64_SoundMgr*			CL_SoundMgr;
 	CL64_Display*			CL_Display;
-	CL64_Build*				CL_Build;
 	CL64_LookUps*			CL_LookUps;
 	CL64_Gui_Environment*	CL_Gui_Environment;
 	CL64_Props_Dialogs*		CL_Props_Dialogs;
