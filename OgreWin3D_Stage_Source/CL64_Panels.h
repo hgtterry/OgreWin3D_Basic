@@ -31,6 +31,7 @@ public:
 	void Disable_Panels(bool Disable);
 	void Show_FileView(bool Enable);
 	void Show_Properties(bool Enable);
+	void Hide_Panels(bool Hide);
 	void MovePhysicsView(void);
 
 	bool flag_Panels_Disabled;

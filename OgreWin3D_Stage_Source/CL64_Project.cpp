@@ -1622,6 +1622,7 @@ bool CL64_Project::Load_Project()
 	delete Options;
 
 	App->Set_Title();
+
 	App->CL_Com_MoveEntity->Adjust_Object_To_Move();
 
 	//App->SBC_FileIO->RecentFileHistory_Update();

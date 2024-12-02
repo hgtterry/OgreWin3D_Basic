@@ -283,6 +283,23 @@ void CL64_Panels::Show_Properties(bool Enable)
 	}
 }
 
+// **************************************************************************
+// *				Hide_Panels:- Terry and Hazel Flanigan 2024				*
+// **************************************************************************
+void CL64_Panels::Hide_Panels(bool Hide)
+{
+	if (Hide == 1)
+	{
+		Show_Properties(false);
+		Show_FileView(false);
+	}
+	else
+	{
+		Show_Properties(true);
+		Show_FileView(true);
+	}
+}
+
 // *************************************************************************
 // *			MovePhysicsView:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************

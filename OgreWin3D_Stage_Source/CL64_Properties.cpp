@@ -1826,6 +1826,9 @@ bool CL64_Properties::Edit_Counters_OnClick(LPARAM lParam)
 	result = strcmp(btext, "Pos_X");
 	if (result == 0)
 	{
+		App->CL_Panels->Disable_Panels(true);
+		App->CL_Panels->Hide_Panels(true);
+
 		App->CL_ImGui_Dialogs->Start_Dialog_Float(0.5,3, App->CL_Scene->B_Counter[Index]->PosX, (LPSTR)"X Position");
 
 		while (App->CL_ImGui_Dialogs->Show_Dialog_Float == 1)
@@ -1849,6 +1852,7 @@ bool CL64_Properties::Edit_Counters_OnClick(LPARAM lParam)
 		}
 
 		App->CL_Panels->Disable_Panels(false);
+		App->CL_Panels->Hide_Panels(false);
 
 		Update_ListView_Counters();
 
@@ -1858,6 +1862,9 @@ bool CL64_Properties::Edit_Counters_OnClick(LPARAM lParam)
 	result = strcmp(btext, "Pos_Y");
 	if (result == 0)
 	{
+		App->CL_Panels->Disable_Panels(true);
+		App->CL_Panels->Hide_Panels(true);
+
 		App->CL_ImGui_Dialogs->Start_Dialog_Float(0.5,3, App->CL_Scene->B_Counter[Index]->PosY, (LPSTR)"Y Position");
 
 		while (App->CL_ImGui_Dialogs->Show_Dialog_Float == 1)
@@ -1881,7 +1888,8 @@ bool CL64_Properties::Edit_Counters_OnClick(LPARAM lParam)
 		}
 
 		App->CL_Panels->Disable_Panels(false);
-
+		App->CL_Panels->Hide_Panels(false);
+		
 		Update_ListView_Counters();
 
 		return 1;
