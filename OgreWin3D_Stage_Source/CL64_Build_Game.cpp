@@ -48,9 +48,9 @@ CL64_Build_Game::~CL64_Build_Game(void)
 void CL64_Build_Game::Init_Build_Game_Class()
 {
 	GameOptions = new Game_Options;
-	GameOptions->Show_FPS = 0;
-	GameOptions->FullScreen = 0;
-	GameOptions->Zipped_Assets_Flag = 1;
-	GameOptions->Front_Dialog_Flag = 1;
+	GameOptions->flag_Show_FPS = 0;
+	GameOptions->flag_FullScreen = 0;
+	GameOptions->flag_Zipped_Assets_Flag = 1;
+	GameOptions->flag_Front_Dialog_Flag = 1;
 
 }

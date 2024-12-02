@@ -478,19 +478,25 @@ bool CL64_Project::Save_Project_Ini()
 
 	strcpy(m_Ini_Path_File_Name, m_Project_Sub_Folder);
 	strcat(m_Ini_Path_File_Name, "\\");
-	strcat(m_Ini_Path_File_Name, "Project.owproj");
+	strcat(m_Ini_Path_File_Name, m_Project_Name);
+	strcat(m_Ini_Path_File_Name, ".owproj");
 
-	/*int test = App->CL_File_IO->SearchFolders(m_Project_Sub_Folder, "\\Project.SBProj");
+	char Filename[MAX_PATH];
+	strcpy(Filename, "\\");
+	strcat(Filename, m_Project_Name);
+	strcat(Filename, ".owproj");
+	
+	int test = App->CL_File_IO->SearchFolders(m_Project_Sub_Folder,(LPSTR)Filename);
 	if (test == 1)
 	{
-		App->CL_Dialogs->YesNo("File Exsits", "Do you want to update File", 1);
+		App->CL_Dialogs->Show_YesNo_Dlg((LPSTR)"File Exsits", (LPSTR)"Do you want to update File", (LPSTR)"");
 
-		bool Doit = App->SBC_Dialogs->Canceled;
+		bool Doit = App->CL_Dialogs->Canceled;
 		if (Doit == 1)
 		{
 			return 0;
 		}
-	}*/
+	}
 
 	WriteFile = nullptr;
 
@@ -532,11 +538,14 @@ bool CL64_Project::Save_Project_Ini()
 
 	fprintf(WriteFile, "%s\n", " ");
 
+	App->CL_Build_Game->GameOptions->flag_Show_FPS = App->CL_Build_Game->flag_Show_FPS;
+	App->CL_Build_Game->GameOptions->flag_Front_Dialog_Flag = App->CL_Build_Game->flag_Use_Front_Dlg;
+
 	fprintf(WriteFile, "%s\n", "[Config]");
-	fprintf(WriteFile, "%s%i\n", "Show_FPS=", App->CL_Build_Game->GameOptions->Show_FPS);
-	fprintf(WriteFile, "%s%i\n", "Game_FullScreen=", App->CL_Build_Game->GameOptions->FullScreen);
-	fprintf(WriteFile, "%s%i\n", "Zipped_Assets=", App->CL_Build_Game->GameOptions->Zipped_Assets_Flag);
-	fprintf(WriteFile, "%s%i\n", "Use_Front_Dlg=", App->CL_Build_Game->GameOptions->Front_Dialog_Flag);
+	fprintf(WriteFile, "%s%i\n", "Show_FPS=", App->CL_Build_Game->GameOptions->flag_Show_FPS);
+	fprintf(WriteFile, "%s%i\n", "Game_FullScreen=", App->CL_Build_Game->GameOptions->flag_FullScreen);
+	fprintf(WriteFile, "%s%i\n", "Zipped_Assets=", App->CL_Build_Game->GameOptions->flag_Zipped_Assets_Flag);
+	fprintf(WriteFile, "%s%i\n", "Use_Front_Dlg=", App->CL_Build_Game->GameOptions->flag_Front_Dialog_Flag);
 
 	fclose(WriteFile);
 
@@ -1536,10 +1545,13 @@ bool CL64_Project::Load_Project()
 	App->CL_Scene->UniqueID_Counters_Count = App->CL_Ini_File->GetInt("Options", "Counters_ID_Count", 0, 10);
 	App->CL_Scene->UniqueID_Area_Count = App->CL_Ini_File->GetInt("Options", "Areas_ID_Count", 0, 10);
 
-	App->CL_Build_Game->GameOptions->Show_FPS = App->CL_Ini_File->GetInt("Config", "Show_FPS", 0, 10);
-	App->CL_Build_Game->GameOptions->FullScreen = App->CL_Ini_File->GetInt("Config", "Game_FullScreen", 1, 10);
-	App->CL_Build_Game->GameOptions->Zipped_Assets_Flag = App->CL_Ini_File->GetInt("Config", "Zipped_Assets", 1, 10);
-	App->CL_Build_Game->GameOptions->Front_Dialog_Flag = App->CL_Ini_File->GetInt("Config", "Use_Front_Dlg", 1, 10);
+	App->CL_Build_Game->GameOptions->flag_Show_FPS = App->CL_Ini_File->GetInt("Config", "Show_FPS", 0, 10);
+	App->CL_Build_Game->GameOptions->flag_FullScreen = App->CL_Ini_File->GetInt("Config", "Game_FullScreen", 1, 10);
+	App->CL_Build_Game->GameOptions->flag_Zipped_Assets_Flag = App->CL_Ini_File->GetInt("Config", "Zipped_Assets", 1, 10);
+	App->CL_Build_Game->GameOptions->flag_Front_Dialog_Flag = App->CL_Ini_File->GetInt("Config", "Use_Front_Dlg", 1, 10);
+
+	App->CL_Build_Game->flag_Show_FPS = App->CL_Build_Game->GameOptions->flag_Show_FPS;
+	App->CL_Build_Game->flag_Use_Front_Dlg = App->CL_Build_Game->GameOptions->flag_Front_Dialog_Flag;
 
 	//-------------------------------------- Set Resource Path
 

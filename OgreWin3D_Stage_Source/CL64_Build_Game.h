@@ -27,10 +27,10 @@ THE SOFTWARE.
 // ------------------------ Game Options
 typedef struct Game_Options
 {
-	bool Show_FPS;
-	bool FullScreen;
-	bool Zipped_Assets_Flag;
-	bool Front_Dialog_Flag;
+	bool flag_Show_FPS;
+	bool flag_FullScreen;
+	bool flag_Zipped_Assets_Flag;
+	bool flag_Front_Dialog_Flag;
 
 }Game_Options;
 
