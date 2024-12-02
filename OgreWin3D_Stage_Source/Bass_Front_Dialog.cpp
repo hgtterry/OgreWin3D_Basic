@@ -65,8 +65,6 @@ void Bass_Front_Dialog::Render_Front_Dlg(void)
 		window_flags |= ImGuiWindowFlags_NoBackground;
 	}*/
 
-	//ImGui::PushStyleColor(ImGuiCol_WindowBg, IM_COL32(BackGround_Colour.x, BackGround_Colour.y, BackGround_Colour.z, 255));
-	
 	ImGui::PushStyleColor(ImGuiCol_WindowBg, IM_COL32(239, 239, 239, 255));
 
 	if (!ImGui::Begin("Front_Dialog", &Show_Front_Dlg_Flag, window_flags))
@@ -125,7 +123,7 @@ void Bass_Front_Dialog::Render_Front_Dlg(void)
 				App->CL_Keyboard->flag_Block_Keyboard = 0;
 
 				App->CL_Physics->Reset_Physics();
-				//App->CL_Scene->Game_Restart();
+				App->CL_Scene->Game_Restart();
 
 				Show_Front_Dlg_Flag = 0;
 			}
