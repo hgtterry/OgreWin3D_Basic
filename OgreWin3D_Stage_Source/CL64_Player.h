@@ -62,8 +62,6 @@ public:
 	float Distance;
 	int Life_Time;
 
-	int Player_Count;
-
 	bool flag_AddGravity;
 	bool flag_Is_On_Ground;
 	int Last_Message_Index;

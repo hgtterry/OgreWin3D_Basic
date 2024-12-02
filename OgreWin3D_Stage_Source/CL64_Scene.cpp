@@ -32,6 +32,7 @@ CL64_Scene::CL64_Scene(void)
 	Object_Count = 0;
 	Area_Count = 0;
 	Camera_Count = 0;
+	Player_Count = 0;
 	Player_Location_Count = 0;
 	Counters_Count = 0;
 	UniqueID_Object_Counter = 0;

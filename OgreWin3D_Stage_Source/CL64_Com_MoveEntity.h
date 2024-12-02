@@ -36,6 +36,7 @@ public:
 	void Rename_Move_Entity(int Index);
 	void Reset_Move_Entity(int Index);
 	void Test_Move_Entity(int Index);
+	void Adjust_Object_To_Move();
 
 
 };

@@ -246,3 +246,27 @@ void CL64_Com_MoveEntity::Test_Move_Entity(int Index)
 {
 	App->CL_Collision->Set_Move_Entity(Index);
 }
+
+// *************************************************************************
+// *		Adjust_Object_To_Move:- Terry and Hazel Flanigan 2024	  	   *
+// *************************************************************************
+void CL64_Com_MoveEntity::Adjust_Object_To_Move()
+{
+	int Count = 0;
+	int Total = App->CL_Scene->Object_Count;
+
+	while (Count < Total)
+	{
+		if (App->CL_Scene->V_Object[Count]->Usage == Enums::Stage_Usage_Move)
+		{
+			char MoveName[MAX_PATH];
+			strcpy(MoveName, App->CL_Scene->V_Object[Count]->S_MoveType[0]->Object_Name);
+
+			int AdjustedIndex = App->CL_Object->GetIndex_By_Name(MoveName);
+
+			App->CL_Scene->V_Object[Count]->S_MoveType[0]->Object_To_Move_Index = AdjustedIndex;
+		}
+
+		Count++;
+	}
+}

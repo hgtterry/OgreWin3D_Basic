@@ -199,7 +199,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				App->CL_Ogre->flag_Block_Rendering = 1;
 			}*/
 
-			App->CL_Dialogs->Dialog_Counter();
+			App->CL_Com_MoveEntity->Adjust_Object_To_Move();
 
 			return TRUE;
 		}

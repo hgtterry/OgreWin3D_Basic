@@ -313,7 +313,7 @@ void CL64_Bullet::Show_Debug_Objects(bool Show)
 	}
 
 	Count = 0;
-	while (Count < App->CL_Player->Player_Count)
+	while (Count < App->CL_Scene->Player_Count)
 	{
 
 		if (App->CL_Scene->B_Player[Count]->Phys_Body)

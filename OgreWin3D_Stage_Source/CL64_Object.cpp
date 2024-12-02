@@ -246,7 +246,7 @@ void CL64_Object::Clear_Modified_Objects()
 
 	// ---------------- Players
 	Count = 0;
-	while (Count < App->CL_Player->Player_Count)
+	while (Count < App->CL_Scene->Player_Count)
 	{
 		if (App->CL_Scene->B_Player[Count]->Altered == 1)
 		{

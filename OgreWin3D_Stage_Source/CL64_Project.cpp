@@ -527,7 +527,7 @@ bool CL64_Project::Save_Project_Ini()
 	fprintf(WriteFile, "%s%i\n", "Areas_Count=", App->CL_Scene->Area_Count);
 	fprintf(WriteFile, "%s%i\n", "Areas_ID_Count=", App->CL_Scene->UniqueID_Area_Count);
 
-	fprintf(WriteFile, "%s%i\n", "Players_Count=", App->CL_Player->Player_Count);
+	fprintf(WriteFile, "%s%i\n", "Players_Count=", App->CL_Scene->Player_Count);
 	fprintf(WriteFile, "%s%i\n", "Cameras_Count=", App->CL_Scene->Camera_Count);
 	fprintf(WriteFile, "%s%i\n", "Objects_Count=", App->CL_Scene->Object_Count);
 	fprintf(WriteFile, "%s%i\n", "Objects_ID_Count=", App->CL_Scene->UniqueID_Object_Counter);
@@ -794,14 +794,14 @@ bool CL64_Project::Save_Player_Data()
 	fprintf(WriteFile, "%s\n", " ");
 
 	fprintf(WriteFile, "%s\n", "[Counters]");
-	fprintf(WriteFile, "%s%i\n", "Player_Count=", App->CL_Player->Player_Count);
+	fprintf(WriteFile, "%s%i\n", "Player_Count=", App->CL_Scene->Player_Count);
 
 	fprintf(WriteFile, "%s\n", " ");
 
 	char Cbuff[255];
 	char buff[255];
 	int Count = 0;
-	while (Count < App->CL_Player->Player_Count)
+	while (Count < App->CL_Scene->Player_Count)
 	{
 		strcpy(buff, "[Player_");
 		_itoa(Count, Cbuff, 10);
@@ -1019,12 +1019,12 @@ bool CL64_Project::Save_Objects_Folder()
 	strcat(m_Objects_Folder_Path, "\\");
 	strcat(m_Objects_Folder_Path, "Objects");
 
-	_mkdir(m_Objects_Folder_Path);
-	_chdir(m_Objects_Folder_Path);
+	(void) _mkdir(m_Objects_Folder_Path);
+	(void) _chdir(m_Objects_Folder_Path);
 
 	Save_Objects_Data();
 
-	_chdir(m_Level_Folder_Path); // Return to Level Folder
+	(void) _chdir(m_Level_Folder_Path); // Return to Level Folder
 	return 1;
 }
 
@@ -1622,7 +1622,7 @@ bool CL64_Project::Load_Project()
 	delete Options;
 
 	App->Set_Title();
-
+	App->CL_Com_MoveEntity->Adjust_Object_To_Move();
 
 	//App->SBC_FileIO->RecentFileHistory_Update();
 	//App->CL_Prefs->Update_User_File(App->SBC_FileIO->Project_Path_File_Name);
@@ -2058,7 +2058,7 @@ bool CL64_Project::Read_MoveEntity(int Index, char* Section)
 
 	//  Name
 	App->CL_Ini_File->GetString(Section, "Move_ObjectName", V_Object->S_MoveType[0]->Object_Name, MAX_PATH);
-
+	
 	V_Object->S_MoveType[0]->Object_To_Move_Index = App->CL_Ini_File->GetInt(Section, "Move_ObjectID", 0, 10);
 	V_Object->S_MoveType[0]->WhatDirection = App->CL_Ini_File->GetInt(Section, "Move_WhatDirection", 0, 10);
 

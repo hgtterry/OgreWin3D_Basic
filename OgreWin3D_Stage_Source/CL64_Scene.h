@@ -51,6 +51,7 @@ public:
 	int Object_Count;
 	int Area_Count;
 	int Camera_Count;
+	int Player_Count;
 	int Player_Location_Count;
 	int Counters_Count;
 	int UniqueID_Object_Counter;

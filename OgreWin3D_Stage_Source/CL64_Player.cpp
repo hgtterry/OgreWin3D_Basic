@@ -28,8 +28,7 @@ distribution.
 CL64_Player::CL64_Player(void)
 {
 	mMoveDirection.setValue(0, 0, 0);
-	Player_Count = 0;
-
+	
 	mWorld_Height.setValue(0, 0, 0);
 
 	Col_numManifolds = 0;
@@ -57,7 +56,7 @@ void CL64_Player::Reset_Class(void)
 {
 	int Count = 0;
 
-	while (Count < Player_Count) // Remove Ogre Objects
+	while (Count < App->CL_Scene->Player_Count) // Remove Ogre Objects
 	{
 		if (App->CL_Scene->B_Player[Count])
 		{
@@ -78,7 +77,7 @@ void CL64_Player::Reset_Class(void)
 		Count++;
 	}
 
-	Player_Count = 0;
+	App->CL_Scene->Player_Count = 0;
 	App->CL_Scene->flag_Player_Added = 0;
 
 }
@@ -88,7 +87,7 @@ void CL64_Player::Reset_Class(void)
 // *************************************************************************
 void CL64_Player::Create_Player_Object(void)
 {
-	int Index = Player_Count;
+	int Index = App->CL_Scene->Player_Count;
 
 	App->CL_Scene->B_Player[Index] = new Base_Player();
 	
@@ -101,7 +100,7 @@ void CL64_Player::Create_Player_Object(void)
 	App->CL_Scene->B_Player[Index]->CameraPitch_Node->attachObject(App->CL_Scene->B_Player[Index]->CameraPitch);
 	App->CL_Scene->B_Player[Index]->CameraPitch_Node->setPosition(0, 0, 0);
 
-	Player_Count++;
+	App->CL_Scene->Player_Count++;
 
 }
 
@@ -112,7 +111,7 @@ void CL64_Player::Initialize() const
 {
 	Ogre::Vector3 Pos;
 
-	int Index = Player_Count;
+	int Index = App->CL_Scene->Player_Count;
 
 	Base_Player* pBase = App->CL_Scene->B_Player[Index];
 	
@@ -454,6 +453,7 @@ void CL64_Player::Check_Collisions(void)
 						{
 							if (App->CL_Scene->V_Object[Col_Object_Index]->Triggered == 0)
 							{
+								
 								App->CL_Collision->Move_Entity_Collision(Col_Object_Index);
 							}
 						}
