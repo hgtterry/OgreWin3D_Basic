@@ -74,7 +74,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	App->mMenu = GetMenu(App->MainHwnd);
 	App->CL_Ogre->Clear_ErrorLog();
 	App->Init_Dialogs();
-	
+	App->CL_File_IO->Init_History();
+
 	MSG  msg;
 	while (PeekMessage(&msg, NULL, 0U, 0U, PM_REMOVE))
 	{

@@ -290,7 +290,6 @@
 #define IDC_CK_SU_LAST_PROJECT          1117
 #define IDC_BT_SELECT                   1118
 #define IDC_STARTCUR                    1119
-#define IDC_CHECK2                      1120
 #define IDC_CK_GC_FRONTDLG              1120
 #define ID_VIEW_RESET                   32771
 #define ID_VIEW_MAX3DVIEW               32772
@@ -343,6 +342,7 @@
 #define ID_WINDOWS_PHYSICSCONSOLE       32819
 #define ID_NEW_PR                       32820
 #define ID_NEW_PROJECT                  32821
+#define ID_FILE_RECENTFILES             32822
 #define IDC_STATIC                      -1
 
 // Next default values for new objects
@@ -351,7 +351,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        203
-#define _APS_NEXT_COMMAND_VALUE         32822
+#define _APS_NEXT_COMMAND_VALUE         32823
 #define _APS_NEXT_CONTROL_VALUE         1121
 #define _APS_NEXT_SYMED_VALUE           110
 #endif

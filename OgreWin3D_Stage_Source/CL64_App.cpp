@@ -213,6 +213,19 @@ void CL64_App::InitApp(void)
 
 	LoadString(App->hInst, IDS_VERSION, App_Version, MAX_PATH);
 
+	char Udir[MAX_PATH];
+	wchar_t* path = new wchar_t[128];
+	if (SUCCEEDED(SHGetKnownFolderPath(FOLDERID_LocalAppData, 0, NULL, &path)))//KF_FLAG_CREATE
+	{
+		wsprintf(Udir, "%ls", path);
+		CoTaskMemFree(path);
+		strcpy(App->CL_File_IO->UserData_Folder, Udir);
+	}
+	else
+	{
+		App->Say("Can not access user folder");
+	}
+
 	char Deskdir[MAX_PATH];
 	wchar_t* d_path = new wchar_t[128];
 	if (SUCCEEDED(SHGetKnownFolderPath(FOLDERID_Desktop, 0, NULL, &d_path)))//KF_FLAG_CREATE

@@ -32,6 +32,14 @@ public:
 
 	void Open_HTML(char* HelpTitle);
 
+	void  Init_History();
+	void  LoadHistory();
+	void  RecentFileHistory_Update();
+	void  ResentHistory_Clear();
+	void  Save_FileHistory();
+
+	char UserData_Folder[MAX_PATH];
+
 	char Save_PathFileName[MAX_PATH];
 	char Save_FileName[MAX_PATH];
 
@@ -40,6 +48,8 @@ public:
 
 	char DeskTop_Folder[MAX_PATH];
 
+	char Project_Path_File_Name[MAX_PATH];
+
 	bool Canceled;
 	TCHAR szSelectedDir[MAX_PATH];
 	char BrowserMessage[MAX_PATH];
@@ -47,8 +57,18 @@ public:
 	std::string sSelectedFile;
 	std::string sFilePath;
 
+	std::vector<std::string> mPreviousFiles;
+
 private:
 	
 	OPENFILENAMEA ofn;
+
+	FILE* WriteRecentFiles;
+	FILE* ReadRecentFiles;
+
+#define EQUITY_NUM_RECENT_FILES 0x8
+#define EQUITY_RECENT_FILE_ID(_n_) (5000 + _n_)
+	HMENU mHistoryMenu;
+
 };
 

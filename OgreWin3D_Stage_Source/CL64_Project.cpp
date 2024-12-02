@@ -455,7 +455,8 @@ bool CL64_Project::Save_Project()
 	strcpy(Project_Path_File_Name, m_Ini_Path_File_Name);
 	App->Set_Title();
 
-	//App->SBC_FileIO->RecentFileHistory_Update();
+	App->CL_File_IO->RecentFileHistory_Update();
+
 	//if (Set_QuickLoad_Flag == 1)
 	//{
 	//	strcpy(App->CL_Prefs->QL_User_File, App->SBC_FileIO->Project_Path_File_Name);
