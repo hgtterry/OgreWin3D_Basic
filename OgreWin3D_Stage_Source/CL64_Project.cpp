@@ -449,7 +449,8 @@ bool CL64_Project::Save_Project()
 	App->CL_FileView->Change_Level_Name();
 	App->CL_FileView->Change_Project_Name();
 
-	//App->CL_Object->Clear_Modified_Objects(); // Clear Altered FileView Items
+	App->CL_Object->Clear_Modified_Objects(); // Clear Altered FileView Items
+	
 	//App->SBC_Project->Directory_Changed_Flag = 0;
 
 	strcpy(Project_Path_File_Name, m_Ini_Path_File_Name);

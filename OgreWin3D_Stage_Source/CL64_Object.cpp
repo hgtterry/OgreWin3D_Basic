@@ -225,3 +225,87 @@ int CL64_Object::GetIndex_By_Name(char* Name)
 
 	return -1;
 }
+
+// *************************************************************************
+// *		Clear_Modified_Objects:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+void CL64_Object::Clear_Modified_Objects()
+{
+	// ---------------- Areas
+	int Count = 0;
+	while (Count < App->CL_Scene->Area_Count)
+	{
+		if (App->CL_Scene->B_Area[Count]->Altered == 1)
+		{
+			App->CL_Scene->B_Area[Count]->Altered = 0;
+			App->CL_FileView->Mark_Clear(App->CL_Scene->B_Area[Count]->FileViewItem);
+		}
+
+		Count++;
+	}
+
+	// ---------------- Players
+	Count = 0;
+	while (Count < App->CL_Player->Player_Count)
+	{
+		if (App->CL_Scene->B_Player[Count]->Altered == 1)
+		{
+			App->CL_Scene->B_Player[Count]->Altered = 0;
+			App->CL_FileView->Mark_Clear(App->CL_Scene->B_Player[Count]->FileViewItem);
+		}
+
+		Count++;
+	}
+
+	// ---------------- Cameras
+	Count = 0;
+	while (Count < App->CL_Scene->Camera_Count)
+	{
+		/*if (App->CL_Scene->B_Camera[Count]->Altered == 1)
+		{
+			App->CL_Scene->B_Camera[Count]->Altered = 0;
+			App->CL_FileView->Mark_Clear(App->CL_Scene->B_Camera[Count]->FileViewItem);
+		}*/
+
+		Count++;
+	}
+
+	// ---------------- Objects
+	Count = 0;
+	while (Count < App->CL_Scene->Object_Count)
+	{
+		if (App->CL_Scene->V_Object[Count]->Altered == 1)
+		{
+			App->CL_Scene->V_Object[Count]->Altered = 0;
+			App->CL_FileView->Mark_Clear(App->CL_Scene->V_Object[Count]->FileViewItem);
+		}
+
+		Count++;
+	}
+
+	// ---------------- Display Counters
+	Count = 0;
+	while (Count < App->CL_Scene->Counters_Count)
+	{
+		if (App->CL_Scene->B_Counter[Count]->Altered == 1)
+		{
+			App->CL_Scene->B_Counter[Count]->Altered = 0;
+			App->CL_FileView->Mark_Clear(App->CL_Scene->B_Counter[Count]->FileViewItem);
+		}
+
+		Count++;
+	}
+
+	// ---------------- Folders
+	if (App->CL_Scene->Object_Count > 0)
+	{
+		App->CL_FileView->Mark_Clear_Folder(App->CL_FileView->FV_Objects_Folder);
+		App->CL_FileView->Mark_Clear_Folder(App->CL_FileView->FV_Message_Trigger_Folder);
+		App->CL_FileView->Mark_Clear_Folder(App->CL_FileView->FV_Move_Folder);
+		App->CL_FileView->Mark_Clear_Folder(App->CL_FileView->FV_Sounds_Folder);
+	}
+
+	App->CL_Scene->flag_Scene_Modified = 0;
+
+	//EnableMenuItem(App->mMenu, ID_FILE_SAVEPROJECTALL, MF_GRAYED);
+}

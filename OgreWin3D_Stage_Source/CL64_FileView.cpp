@@ -1166,6 +1166,31 @@ void CL64_FileView::Mark_Altered_Folder(HTREEITEM Item)
 	//EnableMenuItem(App->mMenu, ID_FILE_SAVEPROJECTALL, MF_ENABLED);
 }
 
+// *************************************************************************
+// *				Mark_Clear:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void CL64_FileView::Mark_Clear(HTREEITEM Item)
+{
+	TVITEM Sitem;
+	Sitem.mask = TVIF_IMAGE | TVIF_SELECTEDIMAGE;
+	Sitem.hItem = Item;
+	Sitem.iImage = 4;
+	Sitem.iSelectedImage = 5;
+	SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_SETITEM, 0, (LPARAM)(const LPTVITEM)&Sitem);
+}
+
+// *************************************************************************
+// *		Mark_Folder_Folder:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void CL64_FileView::Mark_Clear_Folder(HTREEITEM Item)
+{
+	TVITEM Sitem;
+	Sitem.mask = TVIF_IMAGE | TVIF_SELECTEDIMAGE;
+	Sitem.hItem = Item;
+	Sitem.iImage = 2;
+	Sitem.iSelectedImage = 3;
+	SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_SETITEM, 0, (LPARAM)(const LPTVITEM)&Sitem);
+}
 
 // *************************************************************************
 // *			Context_Menu:- Terry and Hazel Flanigan 2024		 	   *

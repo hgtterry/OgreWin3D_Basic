@@ -47,6 +47,8 @@ public:
 	void Change_Item_Name(HTREEITEM Folder, char* FolderName);
 	void DeleteItem();
 	void Mark_Altered_Folder(HTREEITEM Item);
+	void Mark_Clear(HTREEITEM Item);
+	void Mark_Clear_Folder(HTREEITEM Item);
 
 	bool Flag_FileView_Active;
 
