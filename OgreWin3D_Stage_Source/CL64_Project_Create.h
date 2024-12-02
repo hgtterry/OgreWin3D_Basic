@@ -30,9 +30,15 @@ public:
 	CL64_Project_Create(void);
 	~CL64_Project_Create(void);
 
+	void Create_Options_Dialog();
+
 	void Start_New_Project();
 	void Add_First_New_Area();
 	bool First_Area_Build_Project(bool NoArea);
+
+private:
+
+	static LRESULT CALLBACK Proc_Options_Dialog(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 };
 

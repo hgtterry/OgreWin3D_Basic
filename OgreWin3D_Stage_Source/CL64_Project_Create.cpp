@@ -23,6 +23,7 @@ THE SOFTWARE.
 */
 
 #include "pch.h"
+#include "resource.h"
 #include "CL64_App.h"
 #include "CL64_Project_Create.h"
 
@@ -36,12 +37,104 @@ CL64_Project_Create::~CL64_Project_Create(void)
 }
 
 // *************************************************************************
+// *	  	Create_Options_Dialog:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+void CL64_Project_Create::Create_Options_Dialog()
+{
+	DialogBox(App->hInst, (LPCTSTR)IDD_CREATE_OPTIONS, App->Fdlg, (DLGPROC)Proc_Options_Dialog);
+}
+
+// *************************************************************************
+// *        Proc_Options_Dialog:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+LRESULT CALLBACK CL64_Project_Create::Proc_Options_Dialog(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+
+	switch (message)
+	{
+	case WM_INITDIALOG:
+	{
+		//SendDlgItemMessage(hDlg, IDC_BANNER, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
+		//SendDlgItemMessage(hDlg, IDC_EDIT1, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		//SetDlgItemText(hDlg, IDC_BANNER, (LPCTSTR)App->CL_Dialogs->btext);
+
+		//SetDlgItemText(hDlg, IDC_EDIT1, (LPCTSTR)App->CL_Dialogs->Chr_Int);
+
+		return TRUE;
+	}
+	case WM_CTLCOLORSTATIC:
+	{
+
+		/*if (GetDlgItem(hDlg, IDC_BANNER) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 255));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}*/
+
+		return FALSE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->AppBackground;
+	}
+
+	case WM_NOTIFY:
+	{
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		if (some_item->idFrom == IDOK)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDCANCEL)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		return CDRF_DODEFAULT;
+	}
+
+	case WM_COMMAND:
+		if (LOWORD(wParam) == IDOK)
+		{
+			App->CL_Dialogs->Canceled = 0;
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDCANCEL)
+		{
+			App->CL_Dialogs->Canceled = 1;
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+
+		break;
+	}
+	return FALSE;
+}
+
+// *************************************************************************
 // *	  		Start_New_Project:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
 void CL64_Project_Create::Start_New_Project()
 {
 	App->CL_Scene->Clear_Level();
 	//App->CL_Scene->Create_Resources_Group();
+
+	Create_Options_Dialog();
 
 	App->CL_Project->Start_Save_Project_Dialog();
 
