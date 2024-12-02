@@ -29,5 +29,10 @@ public:
 
 	CL64_Build_Game(void);
 	~CL64_Build_Game(void);
+
+	bool flag_Use_Front_Dlg;
+	bool flag_Show_FPS;
+	bool flag_Saved_Show_FPS;
+
 };
 

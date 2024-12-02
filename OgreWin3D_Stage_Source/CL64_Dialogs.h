@@ -47,6 +47,7 @@ public:
 	void Dialog_Text_Props();
 	void Dialog_Int();
 	void GameMode_StartPosition_Dlg();
+	void Game_Config_Dlg();
 
 	bool TrueFlase;
 	bool Canceled;
@@ -82,6 +83,7 @@ private:
 	static LRESULT CALLBACK Proc_Dialog_Text_Props(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Proc_Dialog_Int(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Proc_GameMode_StartPosition_Dlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Proc_Game_Config(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	static bool CALLBACK Proc_ViewerBasePic(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 

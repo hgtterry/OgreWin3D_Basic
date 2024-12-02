@@ -2115,18 +2115,11 @@ LRESULT CALLBACK CL64_Dialogs::Proc_GameMode_StartPosition_Dlg(HWND hDlg, UINT m
 		SendDlgItemMessage(hDlg, IDC_STARTCUR, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_STARTLEVEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_QUITGM, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		//SendDlgItemMessage(hDlg, IDC_CKFPS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		//SendDlgItemMessage(hDlg, IDC_CK_FRONTDLG, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-
+		
 		App->CL_Dialogs->Canceled = 0;
 		//App->SBC_Dialogs->DoFPS = 0;
-		//App->SBC_Dialogs->Saved_DoFPS = App->CL_Vm_ImGui->Show_FPS;
 
-		/*if (App->SBC_Front_Dlg->Use_Front_Dlg_Flag == 1)
-		{
-			HWND temp = GetDlgItem(hDlg, IDC_CK_FRONTDLG);
-			SendMessage(temp, BM_SETCHECK, 1, 0);
-		}*/
+		App->CL_Build_Game->flag_Saved_Show_FPS = App->CL_ImGui->flag_Show_FPS;
 
 		return TRUE;
 	}
@@ -2138,22 +2131,6 @@ LRESULT CALLBACK CL64_Dialogs::Proc_GameMode_StartPosition_Dlg(HWND hDlg, UINT m
 
 	case WM_CTLCOLORSTATIC:
 	{
-		/*if (GetDlgItem(hDlg, IDC_CKFPS) == (HWND)lParam)
-		{
-			SetBkColor((HDC)wParam, RGB(0, 255, 0));
-			SetTextColor((HDC)wParam, RGB(0, 0, 0));
-			SetBkMode((HDC)wParam, TRANSPARENT);
-			return (UINT)App->AppBackground;
-		}
-
-		if (GetDlgItem(hDlg, IDC_CK_FRONTDLG) == (HWND)lParam)
-		{
-			SetBkColor((HDC)wParam, RGB(0, 255, 0));
-			SetTextColor((HDC)wParam, RGB(0, 0, 0));
-			SetBkMode((HDC)wParam, TRANSPARENT);
-			return (UINT)App->AppBackground;
-		}*/
-
 		return FALSE;
 	}
 
@@ -2186,44 +2163,6 @@ LRESULT CALLBACK CL64_Dialogs::Proc_GameMode_StartPosition_Dlg(HWND hDlg, UINT m
 	}
 	case WM_COMMAND:
 
-		/*if (LOWORD(wParam) == IDC_CKFPS)
-		{
-
-			HWND temp = GetDlgItem(hDlg, IDC_CKFPS);
-			int test = SendMessage(temp, BM_GETCHECK, 0, 0);
-			if (test == BST_CHECKED)
-			{
-				App->SBC_Dialogs->DoFPS = 1;
-				return 1;
-			}
-			else
-			{
-				App->SBC_Dialogs->DoFPS = 0;
-
-				return 1;
-			}
-			return 1;
-		}*/
-
-		/*if (LOWORD(wParam) == IDC_CK_FRONTDLG)
-		{
-
-			HWND temp = GetDlgItem(hDlg, IDC_CK_FRONTDLG);
-			int test = SendMessage(temp, BM_GETCHECK, 0, 0);
-			if (test == BST_CHECKED)
-			{
-				App->SBC_Front_Dlg->Use_Front_Dlg_Flag = 1;
-				return 1;
-			}
-			else
-			{
-				App->SBC_Front_Dlg->Use_Front_Dlg_Flag = 0;
-
-				return 1;
-			}
-			return 1;
-		}*/
-
 		if (LOWORD(wParam) == IDC_STARTCUR)
 		{
 			App->CL_Dialogs->Canceled = 0;
@@ -2254,6 +2193,149 @@ LRESULT CALLBACK CL64_Dialogs::Proc_GameMode_StartPosition_Dlg(HWND hDlg, UINT m
 		if (LOWORD(wParam) == IDC_QUITGM)
 		{
 			App->CL_Dialogs->Canceled = 1;
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+
+		break;
+
+	}
+	return FALSE;
+}
+
+// *************************************************************************
+// *		 Game_Config_Dlg:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void CL64_Dialogs::Game_Config_Dlg()
+{
+	App->CL_Dialogs->Canceled = 0;
+	DialogBox(App->hInst, (LPCTSTR)IDD_GAMECONFIG, App->Fdlg, (DLGPROC)Proc_Game_Config);
+
+}
+
+// *************************************************************************
+// *			Proc_Game_Config:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+LRESULT CALLBACK CL64_Dialogs::Proc_Game_Config(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+	switch (message)
+	{
+	case WM_INITDIALOG:
+	{
+		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		SendDlgItemMessage(hDlg, IDC_CK_GC_SHOWFPS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_CK_GC_FRONTDLG, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		//App->SBC_Dialogs->DoFPS = 0;
+		//App->SBC_Dialogs->Saved_DoFPS = App->CL_Vm_ImGui->Show_FPS;
+
+		if (App->CL_Build_Game->flag_Show_FPS == 1)
+		{
+			HWND temp = GetDlgItem(hDlg, IDC_CK_GC_SHOWFPS);
+			SendMessage(temp, BM_SETCHECK, 1, 0);
+		}
+		else
+		{
+			HWND temp = GetDlgItem(hDlg, IDC_CK_GC_SHOWFPS);
+			SendMessage(temp, BM_SETCHECK, 0, 0);
+		}
+
+		if (App->CL_Build_Game->flag_Use_Front_Dlg == 1)
+		{
+			HWND temp = GetDlgItem(hDlg, IDC_CK_GC_FRONTDLG);
+			SendMessage(temp, BM_SETCHECK, 1, 0);
+		}
+		else
+		{
+			HWND temp = GetDlgItem(hDlg, IDC_CK_GC_FRONTDLG);
+			SendMessage(temp, BM_SETCHECK, 0, 0);
+		}
+
+		return TRUE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->AppBackground;
+	}
+
+	case WM_CTLCOLORSTATIC:
+	{
+		if (GetDlgItem(hDlg, IDC_CK_GC_SHOWFPS) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		if (GetDlgItem(hDlg, IDC_CK_GC_FRONTDLG) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		return FALSE;
+	}
+
+	case WM_NOTIFY:
+	{
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		if (some_item->idFrom == IDOK)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDCANCEL)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		return CDRF_DODEFAULT;
+	}
+	case WM_COMMAND:
+
+		if (LOWORD(wParam) == IDCANCEL)
+		{
+			EndDialog(hDlg, LOWORD(wParam));
+			App->CL_Dialogs->Canceled = 1;
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDOK)
+		{
+			HWND temp = GetDlgItem(hDlg, IDC_CK_GC_SHOWFPS);
+			int test = SendMessage(temp, BM_GETCHECK, 0, 0);
+			if (test == BST_CHECKED)
+			{
+				App->CL_Build_Game->flag_Show_FPS = 1;
+			}
+			else
+			{
+				App->CL_Build_Game->flag_Show_FPS = 0;	
+			}
+
+			temp = GetDlgItem(hDlg, IDC_CK_GC_FRONTDLG);
+			test = SendMessage(temp, BM_GETCHECK, 0, 0);
+			if (test == BST_CHECKED)
+			{
+				App->CL_Build_Game->flag_Use_Front_Dlg = 1;
+			}
+			else
+			{
+				App->CL_Build_Game->flag_Use_Front_Dlg = 0;
+			}
+
+			App->CL_Dialogs->Canceled = 0;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}

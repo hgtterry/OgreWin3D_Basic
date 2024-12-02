@@ -931,7 +931,7 @@ LRESULT CALLBACK CL64_TopDlg::Proc_Game_TB(HWND hDlg, UINT message, WPARAM wPara
 
 		if (LOWORD(wParam) == IDC_BT_GAME_CONFIG)
 		{
-			Debug
+			App->CL_Dialogs->Game_Config_Dlg();
 			return 1;
 		}
 

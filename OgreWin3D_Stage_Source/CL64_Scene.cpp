@@ -228,6 +228,8 @@ bool CL64_Scene::Game_Mode(void)
 		App->SBC_Front_Dlg->Show_Front_Dlg_Flag = 1;
 	}*/
 
+	App->CL_ImGui->flag_Show_FPS = App->CL_Build_Game->flag_Show_FPS;
+
 	flag_GameMode_Running_Flag = 1;
 
 	//App->CL_Ogre->Bullet_Debug_Listener->Render_Debug_Flag = 0;
@@ -308,7 +310,7 @@ bool CL64_Scene::Editor_Mode(void)
 
 	App->CL_Ogre->Ogre3D_Listener->CameraMode = CurrentCamMode;
 
-	//App->CL_Vm_ImGui->Show_FPS = App->SBC_Dialogs->Saved_DoFPS;
+	App->CL_ImGui->flag_Show_FPS = App->CL_Build_Game->flag_Saved_Show_FPS;
 
 	App->CL_ImGui_Dialogs->Show_Physics_Console = 1;
 

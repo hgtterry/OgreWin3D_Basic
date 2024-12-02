@@ -28,6 +28,9 @@ THE SOFTWARE.
 
 CL64_Build_Game::CL64_Build_Game(void)
 {
+	flag_Use_Front_Dlg = 0;
+	flag_Show_FPS = 0;
+	flag_Saved_Show_FPS = 0;
 }
 
 CL64_Build_Game::~CL64_Build_Game(void)
