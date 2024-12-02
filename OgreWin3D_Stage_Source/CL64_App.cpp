@@ -77,6 +77,7 @@ CL64_App::CL64_App(void)
 	CL_Locations =			nullptr;
 	CL_Project_Create =		nullptr;
 	CL_Picking =			nullptr;
+	CL_Build_Game =			nullptr;
 	//-------------------------------------
 
 	hInst =				nullptr;
@@ -205,7 +206,7 @@ void CL64_App::InitApp(void)
 	CL_Materials =			new CL64_Materials();
 	CL_Locations =			new CL64_Locations();
 	CL_Project_Create =		new CL64_Project_Create();
-	
+	CL_Build_Game =			new CL64_Build_Game();
 	
 	SetBrushes_Fonts();
 

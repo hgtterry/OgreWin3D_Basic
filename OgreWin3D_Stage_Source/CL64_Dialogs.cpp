@@ -2235,6 +2235,10 @@ LRESULT CALLBACK CL64_Dialogs::Proc_GameMode_StartPosition_Dlg(HWND hDlg, UINT m
 		if (LOWORD(wParam) == IDC_STARTLEVEL)
 		{
 			App->CL_Physics->Reset_Physics();
+			App->CL_Ogre->Ogre3D_Listener->flag_Run_Physics = 1;
+			App->CL_Physics->Reset_Triggers();
+			App->CL_Ogre->Ogre3D_Listener->flag_Run_Physics = 1;
+
 			App->CL_Dialogs->Canceled = 0;
 			//App->CL_Vm_ImGui->Show_FPS = App->SBC_Dialogs->DoFPS;
 			EndDialog(hDlg, LOWORD(wParam));
