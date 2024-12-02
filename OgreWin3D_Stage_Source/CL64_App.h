@@ -75,6 +75,8 @@ THE SOFTWARE.
 #include "CL64_Picking.h"
 #include "CL64_Build_Game.h"
 
+#include "Bass_Front_Dialog.h"
+
 class CL64_App
 {
 
@@ -132,6 +134,9 @@ public:
 	CL64_Project_Create*	CL_Project_Create;
 	CL64_Picking*			CL_Picking;
 	CL64_Build_Game*		CL_Build_Game;
+
+	Bass_Front_Dialog*		CL_Front_Dialog;
+	
 
 	void InitApp(void);
 	void Init_Dialogs(void);
