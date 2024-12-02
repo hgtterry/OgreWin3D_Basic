@@ -220,13 +220,13 @@ void CL64_Scene::Set_Scene()
 // *************************************************************************
 bool CL64_Scene::Game_Mode(void)
 {
-	/*if (App->SBC_Front_Dlg->Use_Front_Dlg_Flag == 1)
+	if (App->CL_Build_Game->flag_Use_Front_Dlg == 1)
 	{
-		App->CL_Ogre->OgreListener->Block_Mouse = 1;
-		App->SBC_Keyboard->Block_Keyboard = 1;
-		App->Block_Mouse_Buttons = 1;
-		App->SBC_Front_Dlg->Show_Front_Dlg_Flag = 1;
-	}*/
+		App->CL_Ogre->Ogre3D_Listener->flag_Block_Mouse = 1;
+		App->CL_Keyboard->flag_Block_Keyboard = 1;
+		App->flag_Block_Mouse_Buttons = 1;
+		App->CL_Front_Dialog->Show_Front_Dlg_Flag = 1;
+	}
 
 	App->CL_ImGui->flag_Show_FPS = App->CL_Build_Game->flag_Show_FPS;
 
@@ -267,12 +267,12 @@ bool CL64_Scene::Game_Mode(void)
 
 	Root::getSingletonPtr()->renderOneFrame();
 
-	//if (App->SBC_Front_Dlg->Use_Front_Dlg_Flag == 0)
-	//{
-		SetCapture(App->ViewGLhWnd);// Bernie
+	if (App->CL_Build_Game->flag_Use_Front_Dlg == 0)
+	{
+		SetCapture(App->ViewGLhWnd);
 		App->CL_Ogre->Ogre3D_Listener->flag_LeftMouseDown = 1;
 		App->CUR = SetCursor(NULL);
-	//}
+	}
 
 	App->CL_Physics->Reset_Triggers();
 
@@ -286,6 +286,8 @@ bool CL64_Scene::Game_Mode(void)
 // *************************************************************************
 bool CL64_Scene::Editor_Mode(void)
 {
+	App->CL_Front_Dialog->Show_Front_Dlg_Flag = 0; // temp
+
 	flag_GameMode_Running_Flag = 0;
 	//FullScreenMode_Flag = 0;
 

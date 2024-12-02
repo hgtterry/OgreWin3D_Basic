@@ -88,6 +88,7 @@ public:
 
 	bool flag_Run_Physics;
 	bool flag_StopOgre;
+	bool flag_Block_Mouse;
 
 	bool flag_Ogre_Model_Loaded;
 

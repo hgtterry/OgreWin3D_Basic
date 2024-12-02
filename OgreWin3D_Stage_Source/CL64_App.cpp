@@ -143,7 +143,7 @@ CL64_App::CL64_App(void)
 	HotBrush_2 = 0;
 
 	flag_OgreStarted = 0;
-
+	flag_Block_Mouse_Buttons = 0;
 	flag_Debug_App = 0;
 	flag_Debug_Textures = 0;
 

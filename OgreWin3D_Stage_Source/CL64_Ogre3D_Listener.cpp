@@ -51,6 +51,7 @@ CL64_Ogre3D_Listener::CL64_Ogre3D_Listener(void)
 	flag_Run_Physics = 0;
 	flag_Ogre_Model_Loaded = 0;
 	flag_StopOgre = 0;
+	flag_Block_Mouse = 0;
 
 	flag_LeftMouseDown = 0;
 	flag_RightMouseDown = 0;
@@ -89,6 +90,11 @@ bool CL64_Ogre3D_Listener::frameRenderingQueued(const FrameEvent& evt)
 
 	Ogre::ImGuiOverlay::NewFrame();
 	App->CL_ImGui->ImGui_Render_Loop();
+
+	if (App->CL_Front_Dialog->Show_Front_Dlg_Flag == 1)
+	{
+		App->CL_Front_Dialog->Render_Front_Dlg();
+	}
 
 	if (CameraMode == Enums::Cam_Mode_None)
 	{
@@ -648,10 +654,10 @@ bool CL64_Ogre3D_Listener::Capture_Right_Mouse_Free(void)
 // *************************************************************************
 bool CL64_Ogre3D_Listener::Capture_Mouse_FirstPerson(float DeltaTime)
 {
-	/*if (Block_Mouse == 1)
+	if (flag_Block_Mouse == 1)
 	{
 		return 0;
-	}*/
+	}
 
 	GetCursorPos(&Mouse_point);
 

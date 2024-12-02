@@ -27,5 +27,7 @@ public:
 
 	Ogre::Real Rate;
 	Ogre::Vector3 OldPos;
+
+	bool flag_Block_Keyboard;
 };
 

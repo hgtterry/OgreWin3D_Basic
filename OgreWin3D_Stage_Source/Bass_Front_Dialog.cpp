@@ -88,8 +88,8 @@ void Bass_Front_Dialog::Render_Front_Dlg(void)
 				SetCapture(App->ViewGLhWnd);
 				App->CL_Ogre->Ogre3D_Listener->flag_LeftMouseDown = 1;
 				App->CUR = SetCursor(NULL);
-				//App->CL_Ogre->Ogre3D_Listener->flag_Block_Mouse = 0;
-				//App->CL_Keyboard->Block_Keyboard = 0;
+				App->CL_Ogre->Ogre3D_Listener->flag_Block_Mouse = 0;
+				App->CL_Keyboard->flag_Block_Keyboard = 0;
 				Game_Running_Flag = 1;
 				Show_Front_Dlg_Flag = 0;
 			}
@@ -105,8 +105,8 @@ void Bass_Front_Dialog::Render_Front_Dlg(void)
 				SetCapture(App->ViewGLhWnd);
 				App->CL_Ogre->Ogre3D_Listener->flag_LeftMouseDown = 1;
 				App->CUR = SetCursor(NULL);
-				//App->CL_Ogre->Ogre3D_Listener->Block_Mouse = 0;
-				//App->CL_Keyboard->Block_Keyboard = 0;
+				App->CL_Ogre->Ogre3D_Listener->flag_Block_Mouse = 0;
+				App->CL_Keyboard->flag_Block_Keyboard = 0;
 				Show_Front_Dlg_Flag = 0;
 			}
 		}
@@ -121,8 +121,8 @@ void Bass_Front_Dialog::Render_Front_Dlg(void)
 				SetCapture(App->ViewGLhWnd);
 				App->CL_Ogre->Ogre3D_Listener->flag_LeftMouseDown = 1;
 				App->CUR = SetCursor(NULL);
-				//App->CL_Ogre->Ogre3D_Listener->Block_Mouse = 0;
-				//App->CL_Keyboard->Block_Keyboard = 0;
+				App->CL_Ogre->Ogre3D_Listener->flag_Block_Mouse = 0;
+				App->CL_Keyboard->flag_Block_Keyboard = 0;
 
 				App->CL_Physics->Reset_Physics();
 				//App->CL_Scene->Game_Restart();
@@ -140,9 +140,9 @@ void Bass_Front_Dialog::Render_Front_Dlg(void)
 		if (ImGui::Button("      Quit      ",ImVec2(220,0)))
 		{
 			App->CL_Ogre->Ogre3D_Listener->flag_LeftMouseDown = 0;
-			//App->CL_Ogre->Ogre3D_Listener->Block_Mouse = 0;
-			//App->CL_Keyboard->Block_Keyboard = 0;
-			//App->Block_Mouse_Buttons = 0;
+			App->CL_Ogre->Ogre3D_Listener->flag_Block_Mouse = 0;
+			App->CL_Keyboard->flag_Block_Keyboard = 0;
+			App->flag_Block_Mouse_Buttons = 0;
 			App->CL_Ogre->ExitFullScreen();
 			Game_Running_Flag = 0;
 			Show_Front_Dlg_Flag = 0;

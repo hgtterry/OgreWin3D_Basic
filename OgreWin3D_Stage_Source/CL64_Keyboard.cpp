@@ -21,6 +21,7 @@ CL64_Keyboard::CL64_Keyboard(void)
 {
 	Rate = 0;
 	OldPos = Ogre::Vector3::ZERO;
+	flag_Block_Keyboard = 0;
 }
 
 CL64_Keyboard::~CL64_Keyboard(void)
@@ -32,7 +33,12 @@ CL64_Keyboard::~CL64_Keyboard(void)
 // *************************************************************************
 void CL64_Keyboard::Keyboard_Mode_First(float deltaTime)
 {
-	//if (Block_Keyboard == 0)
+	if (GetAsyncKeyState(80) < 0) // p Key
+	{
+		App->CL_Ogre->ExitFullScreen();
+	}
+
+	if (flag_Block_Keyboard == 0)
 	{
 		//	------------------------------------------------ Move Forward
 		if (GetAsyncKeyState(87) < 0) // W Key
@@ -120,17 +126,34 @@ void CL64_Keyboard::Keyboard_Mode_First(float deltaTime)
 		if (GetAsyncKeyState(VK_ESCAPE) < 0) // Back to Editor mode;
 		{
 			//if (Block_Keyboard == 0)
+			//{
+			//	//Block_Keyboard = 1;
+			//	
+			//	//if (App->CLSB_Scene_Data->FullScreenMode_Flag == 1)
+			//	{
+			//		App->CL_Ogre->ExitFullScreen();
+			//	}
+			//	
+			//}
+
+			if (App->CL_Build_Game->flag_Use_Front_Dlg == 1)
 			{
-				//Block_Keyboard = 1;
-				
-				//if (App->CLSB_Scene_Data->FullScreenMode_Flag == 1)
-				{
-					App->CL_Ogre->ExitFullScreen();
-				}
-				
+				App->CL_Ogre->Ogre3D_Listener->flag_LeftMouseDown = 0;
+				App->CL_Ogre->Ogre3D_Listener->flag_Block_Mouse = 1;
+				App->CL_Keyboard->flag_Block_Keyboard = 1;
+				App->flag_Block_Mouse_Buttons = 1;
+
+				ReleaseCapture();
+				App->CL_Ogre->Ogre3D_Listener->flag_LeftMouseDown = 0;
+				SetCursor(App->CUR);
+
+				App->CL_Front_Dialog->Show_Front_Dlg_Flag = 1;
+			}
+			else
+			{
+				App->CL_Ogre->ExitFullScreen();
 			}
 
-			//Block_Keyboard = 0;
 		}
 
 		//------------------------------------------------ Space Key - Jump and Selection
