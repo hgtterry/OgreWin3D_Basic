@@ -87,32 +87,32 @@ void CL64_Build_Game::Init_Build_Game_Class()
 
 	GameOptions = new Game_Options;
 	GameOptions->flag_Show_FPS = 0;
-	GameOptions->flag_FullScreen = 0;
-	GameOptions->flag_Zipped_Assets_Flag = 1;
-	GameOptions->flag_Front_Dialog_Flag = 1;
+	GameOptions->flag_FullScreen = 1;
+	GameOptions->flag_Zipped_Assets = 1;
+	GameOptions->flag_Front_Dialog = 1;
 }
 
 // *************************************************************************
-// *	  	Start_Project_Build:- Terry and Hazel Flanigan 2022			   *
+// *	  	Start_Project_Build:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
 void CL64_Build_Game::Start_Project_Build()
 {
 	DlgHwnd = nullptr;
 
-	//DialogBox(App->hInst, (LPCTSTR)IDD_BUILD_DIALOG, App->Fdlg, (DLGPROC)Project_Build_Proc);
+	DialogBox(App->hInst, (LPCTSTR)IDD_BUILD_DIALOG, App->Fdlg, (DLGPROC)Proc_Project_Build);
 }
 
 // *************************************************************************
-// *		Project_Build_Proc:- Terry and Hazel Flanigan 2022	  		   *
+// *		Project_Build_Proc:- Terry and Hazel Flanigan 2024	  		   *
 // *************************************************************************
-LRESULT CALLBACK CL64_Build_Game::Project_Build_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK CL64_Build_Game::Proc_Project_Build(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
 
 	switch (message)
 	{
 	case WM_INITDIALOG:
 	{
-		/*App->SBC_Build->DlgHwnd = hDlg;
+		App->CL_Build_Game->DlgHwnd = hDlg;
 
 		SendDlgItemMessage(hDlg, IDC_EDGAMENAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_STGAMENAME, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
@@ -125,7 +125,7 @@ LRESULT CALLBACK CL64_Build_Game::Project_Build_Proc(HWND hDlg, UINT message, WP
 		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_CK_BL_DESKTOP, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
-		SendDlgItemMessage(hDlg, IDC_BT_BUILDOPTIONS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		//SendDlgItemMessage(hDlg, IDC_BT_BUILDOPTIONS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		SendDlgItemMessage(hDlg, IDC_CK_BO_SHOWFPS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_CK_FULLSCREEN, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
@@ -133,56 +133,57 @@ LRESULT CALLBACK CL64_Build_Game::Project_Build_Proc(HWND hDlg, UINT message, WP
 		SendDlgItemMessage(hDlg, IDC_CK_BO_FRONTDLG, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 
-		SetDlgItemText(hDlg, IDC_EDGAMENAME, (LPCTSTR)App->SBC_Build->GameName);
+		SetDlgItemText(hDlg, IDC_EDGAMENAME, (LPCTSTR)App->CL_Build_Game->GameName);
 
-		App->SBC_Build->Banner = hDlg;*/
+		App->CL_Build_Game->Banner = hDlg;
 
-		/*if (App->SBC_Build->Directory_Altered == 0)
+		if (App->CL_Build_Game->Directory_Altered == 0)
 		{
-			strcpy(App->SBC_Build->Desktop, App->SBC_FileIO->DeskTop_Folder);
-			strcat(App->SBC_Build->Desktop, "\\");
-			strcpy(App->SBC_Build->StartFolder, App->SBC_Build->Desktop);
+			strcpy(App->CL_Build_Game->Desktop, App->CL_File_IO->DeskTop_Folder);
+			strcat(App->CL_Build_Game->Desktop, "\\");
+			strcpy(App->CL_Build_Game->StartFolder, App->CL_Build_Game->Desktop);
 		}
 
-		if (App->SBC_Build->GameOptions->Show_FPS == 1)
+		if (App->CL_Build_Game->GameOptions->flag_Show_FPS == 1)
 		{
 			HWND temp = GetDlgItem(hDlg, IDC_CK_BO_SHOWFPS);
 			SendMessage(temp, BM_SETCHECK, 1, 0);
 		}
 
-		if (App->SBC_Build->GameOptions->FullScreen == 1)
+		if (App->CL_Build_Game->GameOptions->flag_FullScreen == 1)
 		{
 			HWND temp = GetDlgItem(hDlg, IDC_CK_FULLSCREEN);
 			SendMessage(temp, BM_SETCHECK, 1, 0);
 		}
 
-		if (App->SBC_Build->GameOptions->Front_Dialog_Flag == 1)
+		if (App->CL_Build_Game->GameOptions->flag_Front_Dialog == 1)
 		{
 			HWND temp = GetDlgItem(hDlg, IDC_CK_BO_FRONTDLG);
 			SendMessage(temp, BM_SETCHECK, 1, 0);
 		}
 
-		if (App->SBC_Build->GameOptions->Zipped_Assets_Flag == 1)
+		if (App->CL_Build_Game->GameOptions->flag_Zipped_Assets == 1)
 		{
 			HWND temp = GetDlgItem(hDlg, IDC_CK_BO_ZIPFILES);
 			SendMessage(temp, BM_SETCHECK, 1, 0);
 		}
 
 
-		SetDlgItemText(hDlg, IDC_STLOCATION, (LPCTSTR)App->SBC_Build->StartFolder);*/
+		SetDlgItemText(hDlg, IDC_STLOCATION, (LPCTSTR)App->CL_Build_Game->StartFolder);
 
 
 		return TRUE;
 	}
 	case WM_CTLCOLORSTATIC:
 	{
-		/*if (GetDlgItem(hDlg, IDC_EDGAMENAME) == (HWND)lParam)
+		if (GetDlgItem(hDlg, IDC_EDGAMENAME) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 255, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->Brush_White;
 		}
+
 		if (GetDlgItem(hDlg, IDC_STLOCATION) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 255, 0));
@@ -190,13 +191,15 @@ LRESULT CALLBACK CL64_Build_Game::Project_Build_Proc(HWND hDlg, UINT message, WP
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->Brush_White;
 		}
-		if (GetDlgItem(hDlg, IDC_CKFULLSCREEN) == (HWND)lParam)
+
+		if (GetDlgItem(hDlg, IDC_CK_FULLSCREEN) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 255, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->AppBackground;
 		}
+
 		if (GetDlgItem(hDlg, IDC_STGAMENAME) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 255, 0));
@@ -259,7 +262,7 @@ LRESULT CALLBACK CL64_Build_Game::Project_Build_Proc(HWND hDlg, UINT message, WP
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->AppBackground;
-		}*/
+		}
 
 		return FALSE;
 	}
@@ -273,47 +276,47 @@ LRESULT CALLBACK CL64_Build_Game::Project_Build_Proc(HWND hDlg, UINT message, WP
 	{
 		LPNMHDR some_item = (LPNMHDR)lParam;
 
-		/*if (some_item->idFrom == IDOK && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDOK)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
 			return CDRF_DODEFAULT;
 		}
 
-		if (some_item->idFrom == IDCANCEL && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDCANCEL)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
 			return CDRF_DODEFAULT;
 		}
 
-		if (some_item->idFrom == IDC_BTBROWSE && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDC_BTBROWSE)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
 			return CDRF_DODEFAULT;
-		}*/
+		}
 
 		return CDRF_DODEFAULT;
 	}
 
 	case WM_COMMAND:
 
-		/*if (LOWORD(wParam) == IDC_CK_BL_DESKTOP)
+		if (LOWORD(wParam) == IDC_CK_BL_DESKTOP)
 		{
 			HWND temp = GetDlgItem(hDlg, IDC_CK_BL_DESKTOP);
 			int test = SendMessage(temp, BM_GETCHECK, 0, 0);
 			if (test == BST_CHECKED)
 			{
 				char Desktop[MAX_PATH];
-				strcpy(Desktop, App->SBC_FileIO->DeskTop_Folder);
+				strcpy(Desktop, App->CL_File_IO->DeskTop_Folder);
 				strcat(Desktop, "\\");
 
-				strcpy(App->Com_CDialogs->szSelectedDir, Desktop);
-				strcpy(App->SBC_Build->StartFolder, App->Com_CDialogs->szSelectedDir);
-				SetDlgItemText(hDlg, IDC_STLOCATION, (LPCTSTR)App->SBC_Build->StartFolder);
+				strcpy(App->CL_File_IO->szSelectedDir, Desktop);
+				strcpy(App->CL_Build_Game->StartFolder, App->CL_File_IO->szSelectedDir);
+				SetDlgItemText(hDlg, IDC_STLOCATION, (LPCTSTR)App->CL_Build_Game->StartFolder);
 
-				App->SBC_Build->Directory_Altered = 1;
+				App->CL_Build_Game->Directory_Altered = 1;
 
 				EnableWindow(GetDlgItem(hDlg, IDC_BTBROWSE), 0);
 				EnableWindow(GetDlgItem(hDlg, IDC_STLOCATION), 0);
@@ -325,133 +328,137 @@ LRESULT CALLBACK CL64_Build_Game::Project_Build_Proc(HWND hDlg, UINT message, WP
 				EnableWindow(GetDlgItem(hDlg, IDC_BTBROWSE), 1);
 				EnableWindow(GetDlgItem(hDlg, IDC_STLOCATION), 1);
 
-				App->SBC_Build->Directory_Altered = 1;
+				App->CL_Build_Game->Directory_Altered = 1;
 				return 1;
 			}
 			return TRUE;
-		}*/
+		}
 
-		/*if (LOWORD(wParam) == IDC_BTBROWSE)
+		if (LOWORD(wParam) == IDC_BTBROWSE)
 		{
-			strcpy(App->Com_CDialogs->BrowserMessage, "Select a Folder for Game Files a Sub folder will be created");
-			int Test = App->Com_CDialogs->StartBrowser(App->SBC_MeshViewer->mResource_Folder, App->Fdlg);
-			if (Test == 0) { return true; }
+			App->CL_File_IO->Pick_Folder();
 
-			strcpy(App->SBC_Build->StartFolder, App->Com_CDialogs->szSelectedDir);
+			if (App->CL_File_IO->Canceled == 1)
+			{
+				return TRUE;
+			}
 
-			SetDlgItemText(hDlg, IDC_STLOCATION, (LPCTSTR)App->SBC_Build->StartFolder);
+			strcpy(App->CL_Build_Game->StartFolder, App->CL_File_IO->szSelectedDir);
 
-			App->SBC_Build->Directory_Altered = 1;
+			SetDlgItemText(hDlg, IDC_STLOCATION, (LPCTSTR)App->CL_File_IO->szSelectedDir);
+
+			App->CL_Build_Game->Directory_Altered = 1;
 
 			return TRUE;
-		}*/
+		}
 
-		/*if (LOWORD(wParam) == IDC_CK_BO_SHOWFPS)
+		if (LOWORD(wParam) == IDC_CK_BO_SHOWFPS)
 		{
 			HWND temp = GetDlgItem(hDlg, IDC_CK_BO_SHOWFPS);
 
 			int test = SendMessage(temp, BM_GETCHECK, 0, 0);
 			if (test == BST_CHECKED)
 			{
-				App->SBC_Build->GameOptions->Show_FPS = 1;
+				App->CL_Build_Game->GameOptions->flag_Show_FPS = 1;
 			}
 			else
 			{
-				App->SBC_Build->GameOptions->Show_FPS = 0;
+				App->CL_Build_Game->GameOptions->flag_Show_FPS = 0;
 			}
 
 			return TRUE;
-		}*/
+		}
 
-		/*if (LOWORD(wParam) == IDC_CK_FULLSCREEN)
+		if (LOWORD(wParam) == IDC_CK_FULLSCREEN)
 		{
 			HWND temp = GetDlgItem(hDlg, IDC_CK_FULLSCREEN);
 
 			int test = SendMessage(temp, BM_GETCHECK, 0, 0);
 			if (test == BST_CHECKED)
 			{
-				App->SBC_Build->GameOptions->FullScreen = 1;
+				App->CL_Build_Game->GameOptions->flag_FullScreen = 1;
 			}
 			else
 			{
-				App->SBC_Build->GameOptions->FullScreen = 0;
+				App->CL_Build_Game->GameOptions->flag_FullScreen = 0;
 			}
 
 			return TRUE;
-		}*/
+		}
 
-		/*if (LOWORD(wParam) == IDC_CK_BO_FRONTDLG)
+		if (LOWORD(wParam) == IDC_CK_BO_FRONTDLG)
 		{
 			HWND temp = GetDlgItem(hDlg, IDC_CK_BO_FRONTDLG);
 
 			int test = SendMessage(temp, BM_GETCHECK, 0, 0);
 			if (test == BST_CHECKED)
 			{
-				App->SBC_Build->GameOptions->Front_Dialog_Flag = 1;
+				App->CL_Build_Game->GameOptions->flag_Front_Dialog = 1;
 			}
 			else
 			{
-				App->SBC_Build->GameOptions->Front_Dialog_Flag = 0;
+				App->CL_Build_Game->GameOptions->flag_Front_Dialog = 0;
 			}
 
 			return TRUE;
-		}*/
+		}
 
-		/*if (LOWORD(wParam) == IDC_CK_BO_ZIPFILES)
+		if (LOWORD(wParam) == IDC_CK_BO_ZIPFILES)
 		{
 			HWND temp = GetDlgItem(hDlg, IDC_CK_BO_ZIPFILES);
 
 			int test = SendMessage(temp, BM_GETCHECK, 0, 0);
 			if (test == BST_CHECKED)
 			{
-				App->SBC_Build->GameOptions->Zipped_Assets_Flag = 1;
+				App->CL_Build_Game->GameOptions->flag_Zipped_Assets = 1;
 			}
 			else
 			{
-				App->SBC_Build->GameOptions->Zipped_Assets_Flag = 0;
+				App->CL_Build_Game->GameOptions->flag_Zipped_Assets = 0;
 			}
 
 			return TRUE;
-		}*/
+		}
 
 		if (LOWORD(wParam) == IDOK)
 		{
-			//char GameName[255];
-			//char PathName[255];
-			//GetDlgItemText(hDlg, IDC_EDGAMENAME, (LPTSTR)GameName, 255);
-			//GetDlgItemText(hDlg, IDC_STLOCATION, (LPTSTR)PathName, 255);
-			//int result = 1;
+			char GameName[255];
+			char PathName[255];
+			GetDlgItemText(hDlg, IDC_EDGAMENAME, (LPTSTR)GameName, 255);
+			GetDlgItemText(hDlg, IDC_STLOCATION, (LPTSTR)PathName, 255);
+			int result = 1;
 
-			//// Check Name Entered
-			//result = strcmp(GameName, "");
-			//if (result == 0)
-			//{
-			//	App->Say("No Game Name Specified");
-			//	return 1;
-			//}
+			// Check Name Entered
+			result = strcmp(GameName, "");
+			if (result == 0)
+			{
+				App->Say("No Game Name Specified");
+				return 1;
+			}
 
-			//// Check Path Selected
-			//result = strcmp(PathName, "");
-			//if (result == 0)
-			//{
-			//	App->Say("No Path Specified");
-			//	return 1;
-			//}
+			// Check Path Selected
+			result = strcmp(PathName, "");
+			if (result == 0)
+			{
+				App->Say("No Path Specified");
+				return 1;
+			}
 
-			//result = strcmp(GameName, App->SBC_Build->GameName);
-			//if (result < 0 || result > 0)
-			//{
-			//	App->SBC_Scene->Scene_Modified = 1;
-			//}
-
-
+			result = strcmp(GameName, App->CL_Build_Game->GameName);
+			if (result < 0 || result > 0)
+			{
+				App->CL_Scene->flag_Scene_Modified = 1;
+			}
 
 
-			//strcpy(App->Com_CDialogs->szSelectedDir, PathName);
-			//strcpy(App->SBC_Build->StartFolder, PathName);
 
-			//strcpy(App->SBC_Build->GameName, GameName);
-			//App->SBC_Build->Create_ProjectFolder();
+
+			strcpy(App->CL_File_IO->szSelectedDir, PathName);
+			strcpy(App->CL_Build_Game->StartFolder, PathName);
+
+			strcpy(App->CL_Build_Game->GameName, GameName);
+
+			App->CL_Build_Game->Create_ProjectFolder();
 
 			EndDialog(hDlg, LOWORD(wParam));
 
@@ -472,7 +479,7 @@ LRESULT CALLBACK CL64_Build_Game::Project_Build_Proc(HWND hDlg, UINT message, WP
 }
 
 // *************************************************************************
-// *		Create_ProjectFolder:- Terry and Hazel Flanigan 2022		   *
+// *		Create_ProjectFolder:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
 void CL64_Build_Game::Create_ProjectFolder(void)
 {
@@ -486,10 +493,9 @@ void CL64_Build_Game::Create_ProjectFolder(void)
 	CoreDataFolder[0] = 0;
 	SoundFolder[0] = 0;
 
-	//strcpy(ProjectFolder, App->Com_CDialogs->szSelectedDir);
+	strcpy(ProjectFolder, App->CL_File_IO->szSelectedDir);
 	strcat(ProjectFolder, GameName);
 	strcat(ProjectFolder, "_Project");
-
 	int test = CreateDirectory(ProjectFolder, NULL);
 
 	strcpy(MediaFolder, ProjectFolder);
@@ -522,13 +528,15 @@ void CL64_Build_Game::Create_ProjectFolder(void)
 
 	Copy_ZipFiles();
 	Copy_Sound_Files();
-	Copy_Particle_Files();
+	//Copy_Particle_Files();
 
 	//App->Cl_PB->Stop_Progress_Bar("Build Completed");
+
+	App->Say("Game Built");
 }
 
 // *************************************************************************
-// *		Copy_SystemFiles:- Terry and Hazel Flanigan 2022			   *
+// *		Copy_SystemFiles:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
 void CL64_Build_Game::Copy_SystemFiles(void)
 {
@@ -544,7 +552,7 @@ void CL64_Build_Game::Copy_SystemFiles(void)
 
 	//	App->CL10_PB->Nudge();
 
-		//----------------------------- RenderSystem_GL.dll
+	//----------------------------- RenderSystem_GL.dll
 	strcpy(SourceFile, App->GD_Directory_FullPath);
 	strcat(SourceFile, "\\RenderSystem_GL.dll");
 
@@ -554,14 +562,14 @@ void CL64_Build_Game::Copy_SystemFiles(void)
 	CopyFile(SourceFile, DestinationFile, false);
 
 	//	App->CL10_PB->Nudge();
-		//----------------------------- cg.dll
-	strcpy(SourceFile, App->GD_Directory_FullPath);
+	//----------------------------- cg.dll
+	/*strcpy(SourceFile, App->GD_Directory_FullPath);
 	strcat(SourceFile, "\\cg.dll");
 
 	strcpy(DestinationFile, ProjectFolder);
 	strcat(DestinationFile, "\\cg.dll");
 
-	CopyFile(SourceFile, DestinationFile, false);
+	CopyFile(SourceFile, DestinationFile, false);*/
 
 	//----------------------------- OgreOverlay.dll
 	strcpy(SourceFile, App->GD_Directory_FullPath);
@@ -573,27 +581,27 @@ void CL64_Build_Game::Copy_SystemFiles(void)
 	CopyFile(SourceFile, DestinationFile, false);
 
 	//	App->CL10_PB->Nudge();
-		//----------------------------- msvcp140.dll
-	strcpy(SourceFile, App->GD_Directory_FullPath);
+	//----------------------------- msvcp140.dll
+	/*strcpy(SourceFile, App->GD_Directory_FullPath);
 	strcat(SourceFile, "\\msvcp140.dll");
 
 	strcpy(DestinationFile, ProjectFolder);
 	strcat(DestinationFile, "\\msvcp140.dll");
 
-	CopyFile(SourceFile, DestinationFile, false);
+	CopyFile(SourceFile, DestinationFile, false);*/
 
 	//	App->CL10_PB->Nudge();
-		//----------------------------- vcruntime140.dll
+	//----------------------------- vcruntime140.dll
 	strcpy(SourceFile, App->GD_Directory_FullPath);
-	strcat(SourceFile, "\\vcruntime140.dll");
+	strcat(SourceFile, "\\vcruntime140_1.dll");
 
 	strcpy(DestinationFile, ProjectFolder);
-	strcat(DestinationFile, "\\vcruntime140.dll");
+	strcat(DestinationFile, "\\vcruntime140_1.dll");
 
 	CopyFile(SourceFile, DestinationFile, false);
 	//	App->CL10_PB->Nudge();
 
-		//----------------------------- irrKlang.dll
+	//----------------------------- irrKlang.dll
 	strcpy(SourceFile, App->GD_Directory_FullPath);
 	strcat(SourceFile, "\\irrKlang.dll");
 
@@ -603,28 +611,28 @@ void CL64_Build_Game::Copy_SystemFiles(void)
 	CopyFile(SourceFile, DestinationFile, false);
 	//	App->CL10_PB->Nudge();
 
-		//----------------------------- Plugin_CgProgramManager.dll
-	strcpy(SourceFile, App->GD_Directory_FullPath);
+	//----------------------------- Plugin_CgProgramManager.dll
+	/*strcpy(SourceFile, App->GD_Directory_FullPath);
 	strcat(SourceFile, "\\Plugin_CgProgramManager.dll");
 
 	strcpy(DestinationFile, ProjectFolder);
 	strcat(DestinationFile, "\\Plugin_CgProgramManager.dll");
 
-	CopyFile(SourceFile, DestinationFile, false);
+	CopyFile(SourceFile, DestinationFile, false);*/
 	//	App->CL10_PB->Nudge();
 
-		//----------------------------- Game FIle
-	strcpy(SourceFile, App->GD_Directory_FullPath);
+	//----------------------------- Game FIle
+	/*strcpy(SourceFile, App->GD_Directory_FullPath);
 	strcat(SourceFile, "\\GDShell.gex");
 
 	strcpy(DestinationFile, ProjectFolder);
 	strcat(DestinationFile, "\\");
 	strcat(DestinationFile, GameName);
 	strcat(DestinationFile, ".exe");
-	CopyFile(SourceFile, DestinationFile, false);
+	CopyFile(SourceFile, DestinationFile, false);*/
 	//	App->CL10_PB->Nudge();
 
-		//----------------------------- Game FIle
+	//----------------------------- Game FIle
 	strcpy(SourceFile, App->GD_Directory_FullPath);
 	strcat(SourceFile, "\\plugins.cfg");
 	strcpy(DestinationFile, ProjectFolder);
@@ -640,7 +648,39 @@ void CL64_Build_Game::Copy_SystemFiles(void)
 	CopyFile(SourceFile, DestinationFile, false);
 	//	App->CL10_PB->Nudge();
 
-		//----------------------------- Plugin_ParticleFX.dll
+	//----------------------------- SDL2.dll
+	strcpy(SourceFile, App->GD_Directory_FullPath);
+	strcat(SourceFile, "\\SDL2.dll");
+	strcpy(DestinationFile, ProjectFolder);
+	strcat(DestinationFile, "\\SDL2.dll");
+	CopyFile(SourceFile, DestinationFile, false);
+	//	App->CL10_PB->Nudge();
+	
+	//----------------------------- Codec_RsImage.dll
+	strcpy(SourceFile, App->GD_Directory_FullPath);
+	strcat(SourceFile, "\\Codec_RsImage.dll");
+	strcpy(DestinationFile, ProjectFolder);
+	strcat(DestinationFile, "\\Codec_RsImage.dll");
+	CopyFile(SourceFile, DestinationFile, false);
+	//	App->CL10_PB->Nudge();
+	
+	//----------------------------- OgreBites.dll
+	strcpy(SourceFile, App->GD_Directory_FullPath);
+	strcat(SourceFile, "\\OgreBites.dll");
+	strcpy(DestinationFile, ProjectFolder);
+	strcat(DestinationFile, "\\OgreBites.dll");
+	CopyFile(SourceFile, DestinationFile, false);
+	//	App->CL10_PB->Nudge();
+	
+	//----------------------------- OgreRTShaderSystem.dll
+	strcpy(SourceFile, App->GD_Directory_FullPath);
+	strcat(SourceFile, "\\OgreRTShaderSystem.dll");
+	strcpy(DestinationFile, ProjectFolder);
+	strcat(DestinationFile, "\\OgreRTShaderSystem.dll");
+	CopyFile(SourceFile, DestinationFile, false);
+	//	App->CL10_PB->Nudge();
+
+	//----------------------------- Roboto-Medium.ttf
 	strcpy(SourceFile, App->GD_Directory_FullPath);
 	strcat(SourceFile, "\\Roboto-Medium.ttf");
 	strcpy(DestinationFile, ProjectFolder);
@@ -651,7 +691,7 @@ void CL64_Build_Game::Copy_SystemFiles(void)
 }
 
 // *************************************************************************
-// *					Copy_ZipFiles Terry Berine					   *
+// *			Copy_ZipFiles:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
 void CL64_Build_Game::Copy_ZipFiles(void)
 {
@@ -700,7 +740,7 @@ void CL64_Build_Game::Copy_ZipFiles(void)
 
 
 // *************************************************************************
-// *					Copy_Sound_Files Terry Berine					   *
+// *		Copy_Sound_Files:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
 void CL64_Build_Game::Copy_Sound_Files(void)
 {
@@ -717,7 +757,7 @@ void CL64_Build_Game::Copy_Sound_Files(void)
 }
 
 // *************************************************************************
-// *				Copy_Particle_Files Terry Berine					   *
+// *		Copy_Particle_Files:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
 void CL64_Build_Game::Copy_Particle_Files(void)
 {
@@ -734,7 +774,7 @@ void CL64_Build_Game::Copy_Particle_Files(void)
 }
 
 // *************************************************************************
-// *					Read_From_Config Terry Berine					   *
+// *			Read_From_Config:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
 void CL64_Build_Game::Read_From_Config(void)
 {
@@ -756,7 +796,7 @@ void CL64_Build_Game::Read_From_Config(void)
 }
 
 // *************************************************************************
-// *	  		Build_Project:- Terry and Hazel Flanigan 2022			   *
+// *	  		Build_Project:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
 bool CL64_Build_Game::Build_Project()
 {
@@ -769,11 +809,11 @@ bool CL64_Build_Game::Build_Project()
 
 	if (_mkdir(m_Build_Sub_Folder) == 0)
 	{
-		_chdir(m_Build_Sub_Folder);
+		(void) _chdir(m_Build_Sub_Folder);
 	}
 	else
 	{
-		_chdir(m_Build_Sub_Folder);
+		(void) _chdir(m_Build_Sub_Folder);
 	}
 
 	//App->Cl_PB->Nudge("Creating Ini File");
@@ -783,13 +823,13 @@ bool CL64_Build_Game::Build_Project()
 		return 0;
 	}
 
-	//App->Cl_PB->Nudge("Creating Level Folder");
+	////App->Cl_PB->Nudge("Creating Level Folder");
 	Build_Level_Folder();
 
-	//App->Cl_PB->Nudge("Creating Assets Folder");
+	////App->Cl_PB->Nudge("Creating Assets Folder");
 	Build_Main_Asset_Folder();
 
-	_chdir(m_Level_Folder_Path);
+	/*(void) _chdir(m_Level_Folder_Path);*/
 
 	//App->Cl_PB->Nudge("Creating Area Folder");
 	if (App->CL_Scene->flag_Area_Added == 1)
@@ -819,7 +859,7 @@ bool CL64_Build_Game::Build_Project()
 
 
 // *************************************************************************
-// *	  		Build_Project_Ini:- Terry and Hazel Flanigan 2022		   *
+// *	  		Build_Project_Ini:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
 bool CL64_Build_Game::Build_Project_Ini()
 {
@@ -878,8 +918,8 @@ bool CL64_Build_Game::Build_Project_Ini()
 	fprintf(WriteFile, "%s\n", "[Config]");
 	fprintf(WriteFile, "%s%i\n", "Show_FPS=", GameOptions->flag_Show_FPS);
 	fprintf(WriteFile, "%s%i\n", "Game_FullScreen=", GameOptions->flag_FullScreen);
-	fprintf(WriteFile, "%s%i\n", "Zipped_Assets=", GameOptions->flag_Zipped_Assets_Flag);
-	fprintf(WriteFile, "%s%i\n", "Use_Front_Dlg=", GameOptions->flag_Front_Dialog_Flag);
+	fprintf(WriteFile, "%s%i\n", "Zipped_Assets=", GameOptions->flag_Zipped_Assets);
+	fprintf(WriteFile, "%s%i\n", "Use_Front_Dlg=", GameOptions->flag_Front_Dialog);
 	//fprintf(WriteFile, "%s%i\n", "Player_CanJump=", flag_Prefs_PlayerCanJump);
 
 	fclose(WriteFile);
@@ -888,7 +928,7 @@ bool CL64_Build_Game::Build_Project_Ini()
 }
 
 // *************************************************************************
-// *	  	Build_Level_Folder:- Terry and Hazel Flanigan 2022			   *
+// *	  	Build_Level_Folder:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
 bool CL64_Build_Game::Build_Level_Folder()
 {
@@ -910,7 +950,7 @@ bool CL64_Build_Game::Build_Level_Folder()
 }
 
 // *************************************************************************
-// *	  	Build_Main_Asset_Folder:- Terry and Hazel Flanigan 2022		   *
+// *	  	Build_Main_Asset_Folder:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
 bool CL64_Build_Game::Build_Main_Asset_Folder()
 {
@@ -937,7 +977,7 @@ bool CL64_Build_Game::Build_Main_Asset_Folder()
 		_chdir(m_Main_Assets_Path);
 	}
 
-	if (GameOptions->flag_Zipped_Assets_Flag == 1)
+	if (GameOptions->flag_Zipped_Assets == 1)
 	{
 		Zip_Assets(LastFolder, m_Main_Assets_Path);
 	}
@@ -980,7 +1020,7 @@ bool CL64_Build_Game::Build_Area_Folder()
 }
 
 // *************************************************************************
-// *	  		Save_Areas_Data:- Terry and Hazel Flanigan 2022			   *
+// *	  		Save_Areas_Data:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
 bool CL64_Build_Game::Build_Areas_Data()
 {
@@ -1074,7 +1114,7 @@ bool CL64_Build_Game::Build_Areas_Data()
 }
 
 // *************************************************************************
-// *	  	Build_Players_Folder:- Terry and Hazel Flanigan 2022			   *
+// *	  	Build_Players_Folder:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
 bool CL64_Build_Game::Build_Players_Folder()
 {
@@ -1096,7 +1136,7 @@ bool CL64_Build_Game::Build_Players_Folder()
 }
 
 // *************************************************************************
-// *	  	Build_Player_Data:- Terry and Hazel Flanigan 2022			   *
+// *	  	Build_Player_Data:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
 bool CL64_Build_Game::Build_Player_Data()
 {
@@ -1234,7 +1274,7 @@ bool CL64_Build_Game::Build_Player_Data()
 }
 
 // *************************************************************************
-// *	  	Build_Cameras_Folder:- Terry and Hazel Flanigan 2022			   *
+// *	  	Build_Cameras_Folder:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
 bool CL64_Build_Game::Build_Cameras_Folder()
 {
@@ -1261,7 +1301,7 @@ bool CL64_Build_Game::Build_Cameras_Folder()
 }
 
 // *************************************************************************
-// *	  		Build_Cameras_Data:- Terry and Hazel Flanigan 2022		   *
+// *	  		Build_Cameras_Data:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
 bool CL64_Build_Game::Build_Cameras_Data()
 {
@@ -1344,7 +1384,7 @@ bool CL64_Build_Game::Build_Cameras_Data()
 }
 
 // *************************************************************************
-// *	  	Build_Objects_Folder:- Terry and Hazel Flanigan 2022			   *
+// *	  	Build_Objects_Folder:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
 bool CL64_Build_Game::Build_Objects_Folder()
 {
@@ -1364,7 +1404,7 @@ bool CL64_Build_Game::Build_Objects_Folder()
 }
 
 // *************************************************************************
-// *	  		Build_Objects_Data:- Terry and Hazel Flanigan 2022		   *
+// *	  		Build_Objects_Data:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
 bool CL64_Build_Game::Build_Objects_Data()
 {
@@ -1694,7 +1734,7 @@ bool CL64_Build_Game::Build_Objects_Data()
 }
 
 // *************************************************************************
-// *	  	Build_Display_Folder:- Terry and Hazel Flanigan 2022			   *
+// *	  	Build_Display_Folder:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
 bool CL64_Build_Game::Build_Display_Folder()
 {
@@ -1714,7 +1754,7 @@ bool CL64_Build_Game::Build_Display_Folder()
 }
 
 // *************************************************************************
-// *	  		Build_Display_Data:- Terry and Hazel Flanigan 2022		   *
+// *	  		Build_Display_Data:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
 bool CL64_Build_Game::Build_Display_Data()
 {
@@ -1792,7 +1832,7 @@ bool CL64_Build_Game::Build_Display_Data()
 }
 
 // *************************************************************************
-// *	  		Copy_Assets:- Terry and Hazel Flanigan 2022				   *
+// *	  		Copy_Assets:- Terry and Hazel Flanigan 2024				   *
 // *************************************************************************
 bool CL64_Build_Game::Copy_Assets(char* SourceFolder, char* DestinationFolder)
 {
@@ -1827,43 +1867,44 @@ bool CL64_Build_Game::Copy_Assets(char* SourceFolder, char* DestinationFolder)
 }
 
 // *************************************************************************
-// *	  		Zip_Assets:- Terry and Hazel Flanigan 2022				   *
+// *	  		Zip_Assets:- Terry and Hazel Flanigan 2024				   *
 // *************************************************************************
 bool CL64_Build_Game::Zip_Assets(char* SourceFolder, char* DestinationFolder)
 {
-	//HZIP hz;
+	HZIP hz;
 
-	//hz = CreateZip(_T("Assets.zip"), 0);
+	hz = CreateZip(_T("Assets.zip"), 0);
 
-	//char SourceFile[MAX_PATH];
-	//char DestinationFile[MAX_PATH];
+	char SourceFile[MAX_PATH];
+	char DestinationFile[MAX_PATH];
 
-	//char Path[MAX_PATH];
-	//strcpy(Path, SourceFolder);
-	//strcat(Path, "*.*");
+	char Path[MAX_PATH];
+	strcpy(Path, SourceFolder);
+	strcat(Path, "*.*");
 
-	//WIN32_FIND_DATA fd;
-	//HANDLE hFind = ::FindFirstFile(Path, &fd);
-	//if (hFind != INVALID_HANDLE_VALUE) {
-	//	do {
+	WIN32_FIND_DATA fd;
+	HANDLE hFind = ::FindFirstFile(Path, &fd);
+	if (hFind != INVALID_HANDLE_VALUE) {
+		do {
 
-	//		if (!(fd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY))
-	//		{
+			if (!(fd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY))
+			{
 
-	//			strcpy(SourceFile, SourceFolder);
-	//			strcat(SourceFile, fd.cFileName);
+				strcpy(SourceFile, SourceFolder);
+				strcat(SourceFile, fd.cFileName);
 
-	//			strcpy(DestinationFile, DestinationFolder);
-	//			strcat(DestinationFile, fd.cFileName);
+				strcpy(DestinationFile, DestinationFolder);
+				strcat(DestinationFile, fd.cFileName);
 
-	//			//CopyFile(SourceFile, DestinationFile, false);
-	//			ZipAdd(hz, _T(fd.cFileName), _T(SourceFile));
-	//		}
+				//CopyFile(SourceFile, DestinationFile, false);
+				ZipAdd(hz, _T(fd.cFileName), _T(SourceFile));
+			}
 
-	//	} while (::FindNextFile(hFind, &fd));
-	//	::FindClose(hFind);
-	//}
+		} while (::FindNextFile(hFind, &fd));
+		::FindClose(hFind);
+	}
 
-	//CloseZip(hz);
+	CloseZip(hz);
+
 	return 1;
 }

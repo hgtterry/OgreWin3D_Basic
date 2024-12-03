@@ -199,7 +199,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				App->CL_Ogre->flag_Block_Rendering = 1;
 			}*/
 
-			App->CL_Com_MoveEntity->Adjust_Object_To_Move();
+			if (App->CL_Scene->flag_Scene_Loaded == 1)
+			{
+				App->CL_Build_Game->Start_Project_Build();
+			}
 
 			return TRUE;
 		}

@@ -541,13 +541,13 @@ bool CL64_Project::Save_Project_Ini()
 	fprintf(WriteFile, "%s\n", " ");
 
 	App->CL_Build_Game->GameOptions->flag_Show_FPS = App->CL_Build_Game->flag_Show_FPS;
-	App->CL_Build_Game->GameOptions->flag_Front_Dialog_Flag = App->CL_Build_Game->flag_Use_Front_Dlg;
+	App->CL_Build_Game->GameOptions->flag_Front_Dialog = App->CL_Build_Game->flag_Use_Front_Dlg;
 
 	fprintf(WriteFile, "%s\n", "[Config]");
 	fprintf(WriteFile, "%s%i\n", "Show_FPS=", App->CL_Build_Game->GameOptions->flag_Show_FPS);
 	fprintf(WriteFile, "%s%i\n", "Game_FullScreen=", App->CL_Build_Game->GameOptions->flag_FullScreen);
-	fprintf(WriteFile, "%s%i\n", "Zipped_Assets=", App->CL_Build_Game->GameOptions->flag_Zipped_Assets_Flag);
-	fprintf(WriteFile, "%s%i\n", "Use_Front_Dlg=", App->CL_Build_Game->GameOptions->flag_Front_Dialog_Flag);
+	fprintf(WriteFile, "%s%i\n", "Zipped_Assets=", App->CL_Build_Game->GameOptions->flag_Zipped_Assets);
+	fprintf(WriteFile, "%s%i\n", "Use_Front_Dlg=", App->CL_Build_Game->GameOptions->flag_Front_Dialog);
 
 	fclose(WriteFile);
 
@@ -1549,11 +1549,11 @@ bool CL64_Project::Load_Project()
 
 	App->CL_Build_Game->GameOptions->flag_Show_FPS = App->CL_Ini_File->GetInt("Config", "Show_FPS", 0, 10);
 	App->CL_Build_Game->GameOptions->flag_FullScreen = App->CL_Ini_File->GetInt("Config", "Game_FullScreen", 1, 10);
-	App->CL_Build_Game->GameOptions->flag_Zipped_Assets_Flag = App->CL_Ini_File->GetInt("Config", "Zipped_Assets", 1, 10);
-	App->CL_Build_Game->GameOptions->flag_Front_Dialog_Flag = App->CL_Ini_File->GetInt("Config", "Use_Front_Dlg", 1, 10);
+	App->CL_Build_Game->GameOptions->flag_Zipped_Assets = App->CL_Ini_File->GetInt("Config", "Zipped_Assets", 1, 10);
+	App->CL_Build_Game->GameOptions->flag_Front_Dialog = App->CL_Ini_File->GetInt("Config", "Use_Front_Dlg", 1, 10);
 
 	App->CL_Build_Game->flag_Show_FPS = App->CL_Build_Game->GameOptions->flag_Show_FPS;
-	App->CL_Build_Game->flag_Use_Front_Dlg = App->CL_Build_Game->GameOptions->flag_Front_Dialog_Flag;
+	App->CL_Build_Game->flag_Use_Front_Dlg = App->CL_Build_Game->GameOptions->flag_Front_Dialog;
 
 	//-------------------------------------- Set Resource Path
 

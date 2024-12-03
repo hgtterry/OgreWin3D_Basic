@@ -29,8 +29,8 @@ typedef struct Game_Options
 {
 	bool flag_Show_FPS;
 	bool flag_FullScreen;
-	bool flag_Zipped_Assets_Flag;
-	bool flag_Front_Dialog_Flag;
+	bool flag_Zipped_Assets;
+	bool flag_Front_Dialog;
 
 }Game_Options;
 
@@ -54,7 +54,7 @@ public:
 	bool flag_Saved_Show_FPS;
 
 protected:
-	static LRESULT CALLBACK Project_Build_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Proc_Project_Build(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	void Init_Build_Game_Class();
 

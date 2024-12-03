@@ -181,6 +181,7 @@ public:
 	HFONT Font_CB15;
 	HFONT Font_CB18;
 	HFONT Font_Arial20;
+	HFONT Font_Banner;
 
 	HANDLE Hnd_TexturesOn_Bmp;
 	HANDLE Hnd_TexturesOff_Bmp;

@@ -88,6 +88,7 @@
 #define IDD_CREATE_OPTIONS              200
 #define IDD_GMSTART                     201
 #define IDD_GAMECONFIG                  202
+#define IDD_BUILD_DIALOG                203
 #define IDC_CK_SU_FULLSCREEN            1000
 #define IDC_ST_STARTUP                  1001
 #define IDC_CK_SU_FULL3DVIEW            1002
@@ -122,6 +123,7 @@
 #define IDC_BTMOVE_PLAYER               1007
 #define IDC_BTCHANGE                    1007
 #define IDC_STARTLEVEL                  1007
+#define IDC_BTBROWSE                    1007
 #define IDC_BUTTON2                     1008
 #define IDC_BT_TBH_CAMERA               1008
 #define IDC_BT_DEMORESOURCES            1008
@@ -203,6 +205,7 @@
 #define IDC_CK_ENABLE                   1031
 #define IDC_CK_LOCK                     1031
 #define IDC_CK_GC_SHOWFPS               1031
+#define IDC_CK_BL_DESKTOP               1031
 #define IDC_CB_FPSLIST                  1032
 #define IDC_CHECKNO                     1032
 #define IDC_ST_FPSSETTINGS              1033
@@ -291,6 +294,14 @@
 #define IDC_BT_SELECT                   1118
 #define IDC_STARTCUR                    1119
 #define IDC_CK_GC_FRONTDLG              1120
+#define IDC_STGAMENAME                  1121
+#define IDC_EDGAMENAME                  1122
+#define IDC_STLOCATION                  1123
+#define IDC_CK_BO_SHOWFPS               1124
+#define IDC_CK_FULLSCREEN               1125
+#define IDC_CK_BO_FRONTDLG              1126
+#define IDC_CHECK5                      1127
+#define IDC_CK_BO_ZIPFILES              1127
 #define ID_VIEW_RESET                   32771
 #define ID_VIEW_MAX3DVIEW               32772
 #define ID_DEBUG_TESTPREFERANCE         32773
@@ -352,9 +363,9 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
-#define _APS_NEXT_RESOURCE_VALUE        203
+#define _APS_NEXT_RESOURCE_VALUE        204
 #define _APS_NEXT_COMMAND_VALUE         32825
-#define _APS_NEXT_CONTROL_VALUE         1121
+#define _APS_NEXT_CONTROL_VALUE         1125
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif
