@@ -143,7 +143,7 @@ bool CL64_Objects_Create::Add_New_Object(int Index, bool From_MeshViewer)
 	// If from MeshViewer Get Placement Method
 	if (From_MeshViewer == 1) //&& App->CL_MeshViewer->Placement_Camera == 1)
 	{
-		Ogre::Vector3 Pos = App->CL_Object->GetPlacement();
+		Ogre::Vector3 Pos = App->CL_Com_Objects->GetPlacement();
 		Object->Mesh_Pos = Pos;
 		Object->Object_Node->setPosition(Pos);
 	}
@@ -403,7 +403,7 @@ void CL64_Objects_Create::Add_Physics_Box(bool Dynamic, int Index)
 	btVector3 initialPosition(Centre.x, Centre.y, Centre.z);
 	startTransform.setOrigin(initialPosition);
 
-	Ogre::Vector3 Size = App->CL_Object->GetMesh_BB_Size(Object->Object_Node);
+	Ogre::Vector3 Size = App->CL_Com_Objects->GetMesh_BB_Size(Object->Object_Node);
 	float sx = Size.x / 2;
 	float sy = Size.y / 2;
 	float sz = Size.z / 2;
@@ -492,7 +492,7 @@ void CL64_Objects_Create::Add_Physics_Sphere(bool Dynamic, int Index)
 
 	startTransform.setOrigin(initialPosition);
 
-	float Radius = App->CL_Object->GetMesh_BB_Radius(Object->Object_Node);
+	float Radius = App->CL_Com_Objects->GetMesh_BB_Radius(Object->Object_Node);
 	Object->Physics_Size = Ogre::Vector3(Radius, 0, 0);
 
 	btCollisionShape* newRigidShape = new btSphereShape(Radius);
@@ -574,12 +574,12 @@ void CL64_Objects_Create::Add_Physics_Capsule(bool Dynamic, int Index)
 
 	startTransform.setOrigin(initialPosition);
 
-	Ogre::Vector3 Size = App->CL_Object->GetMesh_BB_Size(Object->Object_Node);
+	Ogre::Vector3 Size = App->CL_Com_Objects->GetMesh_BB_Size(Object->Object_Node);
 	float sx = Size.x / 2;
 	float sy = Size.y / 2;
 	float sz = Size.z / 2;
 
-	float Radius = App->CL_Object->GetMesh_BB_Radius(Object->Object_Node);
+	float Radius = App->CL_Com_Objects->GetMesh_BB_Radius(Object->Object_Node);
 	Object->Physics_Size = Ogre::Vector3(Radius, sy, 0);
 
 	btCollisionShape* newRigidShape = new btCapsuleShape(Radius, sy);
@@ -660,12 +660,12 @@ void CL64_Objects_Create::Add_Physics_Cylinder(bool Dynamic, int Index)
 
 	startTransform.setOrigin(initialPosition);
 
-	Ogre::Vector3 Size = App->CL_Object->GetMesh_BB_Size(Object->Object_Node);
+	Ogre::Vector3 Size = App->CL_Com_Objects->GetMesh_BB_Size(Object->Object_Node);
 	float sx = Size.x / 2;
 	float sy = Size.y / 2;
 	float sz = Size.z / 2;
 
-	float Radius = App->CL_Object->GetMesh_BB_Radius(Object->Object_Node);
+	float Radius = App->CL_Com_Objects->GetMesh_BB_Radius(Object->Object_Node);
 	Object->Physics_Size = Ogre::Vector3(sx, sy, sz);
 
 	btCollisionShape* newRigidShape = new btCylinderShape(btVector3(sx, sy, sz));
@@ -746,12 +746,12 @@ void CL64_Objects_Create::Add_Physics_Cone(bool Dynamic, int Index)
 
 	startTransform.setOrigin(initialPosition);
 
-	Ogre::Vector3 Size = App->CL_Object->GetMesh_BB_Size(Object->Object_Node);
+	Ogre::Vector3 Size = App->CL_Com_Objects->GetMesh_BB_Size(Object->Object_Node);
 	float sx = Size.x / 2;
 	float sy = Size.y;// / 2;
 	float sz = Size.z / 2;
 
-	float Radius = App->CL_Object->GetMesh_BB_Radius(Object->Object_Node);
+	float Radius = App->CL_Com_Objects->GetMesh_BB_Radius(Object->Object_Node);
 	Object->Physics_Size = Ogre::Vector3(Radius, sy, 0);
 
 	btCollisionShape* newRigidShape = new btConeShape(Radius, sy);

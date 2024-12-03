@@ -23,12 +23,12 @@ THE SOFTWARE.
 */
 
 #pragma once
-class CL64_Object
+class CL64_Com_Objects
 {
 public:
 
-	CL64_Object(void);
-	~CL64_Object(void);
+	CL64_Com_Objects(void);
+	~CL64_Com_Objects(void);
 
 	float GetMesh_BB_Radius(SceneNode* mNode);
 	Ogre::Vector3 GetMesh_BB_Size(SceneNode* mNode);

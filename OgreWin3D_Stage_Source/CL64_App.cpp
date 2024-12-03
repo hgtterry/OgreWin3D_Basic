@@ -54,7 +54,7 @@ CL64_App::CL64_App(void)
 	CL_Project =			nullptr;
 	CL_Com_Area =			nullptr;
 	CL_Objects_Create =		nullptr;
-	CL_Object =				nullptr;
+	CL_Com_Objects =		nullptr;
 	CL_Physics =			nullptr;
 
 	CL_Com_Collectables =	nullptr;
@@ -186,7 +186,7 @@ void CL64_App::InitApp(void)
 	CL_Project =			new CL64_Project();
 	CL_Com_Area =			new CL64_Com_Area();
 	CL_Objects_Create =		new CL64_Objects_Create();
-	CL_Object =				new CL64_Object();
+	CL_Com_Objects =		new CL64_Com_Objects();
 	CL_Physics =			new CL64_Physics();
 	CL_Com_Collectables =	new CL64_Com_Collectables();
 	CL_Com_Teleporters =	new CL64_Com_Teleporters();

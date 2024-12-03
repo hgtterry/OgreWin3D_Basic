@@ -876,7 +876,7 @@ LRESULT CALLBACK CL64_Dialogs::Proc_Dialog_Text(HWND hDlg, UINT message, WPARAM 
 			// Checks name duplication Objects
 			if (App->CL_Dialogs->CheckNames == Enums::Check_Names_Objects)
 			{
-				int test = App->CL_Object->CheckNames_Objects(buff);
+				int test = App->CL_Com_Objects->CheckNames_Objects(buff);
 				if (test == 1)
 				{
 					App->Say("Name Already Exsits");

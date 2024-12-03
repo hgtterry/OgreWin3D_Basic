@@ -163,7 +163,7 @@ void CL64_Com_Particles::Add_New_Particle(char* Script)
 	strcat(B_Name, ConNum);
 	strcpy(App->CL_Scene->V_Object[Index]->Mesh_Name, B_Name);
 
-	Ogre::Vector3 Pos = App->CL_Object->GetPlacement(-50);
+	Ogre::Vector3 Pos = App->CL_Com_Objects->GetPlacement(-50);
 	App->CL_Scene->V_Object[Index]->Mesh_Pos = Pos;
 	App->CL_Scene->V_Object[Index]->Mesh_Scale = Ogre::Vector3(1, 1, 1);
 

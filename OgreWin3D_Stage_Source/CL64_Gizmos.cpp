@@ -153,7 +153,7 @@ void CL64_Gizmos::MarkerBox_Addjust(int Index)
 	Ogre::Vector3 Position = Object->Object_Node->getPosition();
 	Ogre::Quaternion Rot = Object->Object_Node->getOrientation();
 
-	Ogre::Vector3 Size = App->CL_Object->GetMesh_BB_Size(Object->Object_Node);
+	Ogre::Vector3 Size = App->CL_Com_Objects->GetMesh_BB_Size(Object->Object_Node);
 
 	float Rot_Yaw = Object->Object_Node->getOrientation().getYaw().valueDegrees();
 	float Rot_Pitch = Object->Object_Node->getOrientation().getPitch().valueDegrees();

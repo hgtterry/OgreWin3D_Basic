@@ -62,7 +62,7 @@ bool CL64_Com_Environments::Add_New_Environ_Entity(bool FirstOne)
 
 	if (FirstOne == 0)
 	{
-		Ogre::Vector3 Pos = App->CL_Object->GetPlacement(-50);
+		Ogre::Vector3 Pos = App->CL_Com_Objects->GetPlacement(-50);
 		App->CL_Scene->V_Object[Index]->Mesh_Pos = Pos;
 	}
 	else
@@ -178,7 +178,7 @@ bool CL64_Com_Environments::Create_Environ_Entity(int Index)
 	btVector3 initialPosition(Centre.x, Centre.y, Centre.z);
 	startTransform.setOrigin(initialPosition);
 
-	Ogre::Vector3 Size = App->CL_Object->GetMesh_BB_Size(Object->Object_Node);
+	Ogre::Vector3 Size = App->CL_Com_Objects->GetMesh_BB_Size(Object->Object_Node);
 	float sx = Size.x / 2;
 	float sy = Size.y / 2;
 	float sz = Size.z / 2;

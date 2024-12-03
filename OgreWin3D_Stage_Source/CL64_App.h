@@ -110,7 +110,7 @@ public:
 	CL64_Project*			CL_Project;
 	CL64_Com_Area*			CL_Com_Area;
 	CL64_Objects_Create*	CL_Objects_Create;
-	CL64_Object*			CL_Object;
+	CL64_Com_Objects*		CL_Com_Objects;
 	CL64_Physics*			CL_Physics;
 	CL64_Com_Collectables*	CL_Com_Collectables;
 	CL64_Com_Teleporters*	CL_Com_Teleporters;

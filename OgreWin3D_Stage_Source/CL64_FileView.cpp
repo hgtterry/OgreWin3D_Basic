@@ -1862,7 +1862,7 @@ void CL64_FileView::Context_Rename(HWND hDlg) const
 		return;
 	}
 
-	App->CL_Object->Rename_Object(Index);
+	App->CL_Com_Objects->Rename_Object(Index);
 	App->CL_Properties->Update_ListView_Objects();
 }
 
@@ -1913,7 +1913,7 @@ void CL64_FileView::Context_Delete(HWND hDlg)
 		bool Doit = App->CL_Dialogs->Canceled;
 		if (Doit == 0)
 		{
-			App->CL_Object->Delete_Object();
+			App->CL_Com_Objects->Delete_Object();
 			App->CL_FileView->Mark_Altered_Folder(FV_Objects_Folder);
 		}
 

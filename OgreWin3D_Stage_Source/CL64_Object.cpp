@@ -26,21 +26,21 @@ THE SOFTWARE.
 #include "CL64_App.h"
 #include "CL64_Object.h"
 
-CL64_Object::CL64_Object(void)
+CL64_Com_Objects::CL64_Com_Objects(void)
 {
 	flag_Show_Physics_Debug = 0;
 	flag_Hide_All_Except = 0;
 	flag_Show_Mesh_Debug = 1;
 }
 
-CL64_Object::~CL64_Object(void)
+CL64_Com_Objects::~CL64_Com_Objects(void)
 {
 }
 
 // *************************************************************************
 // *	  		GetMesh_BB_Radius:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
-float CL64_Object::GetMesh_BB_Radius(SceneNode* mNode)
+float CL64_Com_Objects::GetMesh_BB_Radius(SceneNode* mNode)
 {
 	AxisAlignedBox aab = mNode->getAttachedObject(0)->getBoundingBox();
 	Ogre::Vector3 min = aab.getMinimum() * mNode->getScale();
@@ -64,7 +64,7 @@ float CL64_Object::GetMesh_BB_Radius(SceneNode* mNode)
 // *************************************************************************
 // *	  		GetMesh_BB_Size:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-Ogre::Vector3 CL64_Object::GetMesh_BB_Size(SceneNode* mNode)
+Ogre::Vector3 CL64_Com_Objects::GetMesh_BB_Size(SceneNode* mNode)
 {
 	AxisAlignedBox aab = mNode->getAttachedObject(0)->getBoundingBox();
 	Ogre::Vector3 min = aab.getMinimum() * mNode->getScale();
@@ -79,7 +79,7 @@ Ogre::Vector3 CL64_Object::GetMesh_BB_Size(SceneNode* mNode)
 // *************************************************************************
 // *			Rename_Object:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-void CL64_Object::Rename_Object(int Index)
+void CL64_Com_Objects::Rename_Object(int Index)
 {
 	Base_Object* Object = App->CL_Scene->V_Object[Index];
 
@@ -107,7 +107,7 @@ void CL64_Object::Rename_Object(int Index)
 // *************************************************************************
 // *	  		GetPlacement:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-Ogre::Vector3 CL64_Object::GetPlacement(int Distance)
+Ogre::Vector3 CL64_Com_Objects::GetPlacement(int Distance)
 {
 	Ogre::Vector3 Placement;
 	Ogre::Vector3 CamPos;
@@ -151,7 +151,7 @@ Ogre::Vector3 CL64_Object::GetPlacement(int Distance)
 // *************************************************************************
 // *		Hide_AllObjects_Except:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
-void CL64_Object::Hide_AllObjects_Except(int Index, bool Show)
+void CL64_Com_Objects::Hide_AllObjects_Except(int Index, bool Show)
 {
 	int Count = 0;
 	while (Count < App->CL_Scene->Object_Count)
@@ -180,7 +180,7 @@ void CL64_Object::Hide_AllObjects_Except(int Index, bool Show)
 // **************************************************************************
 // *	  		Delete_Object:- Terry and Hazel Flanigan 2024				*
 // **************************************************************************
-void CL64_Object::Delete_Object()
+void CL64_Com_Objects::Delete_Object()
 {
 	int MeshIndex = App->CL_Properties->Current_Selected_Object;
 	btRigidBody* body = App->CL_Scene->V_Object[MeshIndex]->Phys_Body;
@@ -203,7 +203,7 @@ void CL64_Object::Delete_Object()
 // **************************************************************************
 // *	  		GetIndex_By_Name:- Terry and Hazel Flanigan 2024			*
 // **************************************************************************
-int CL64_Object::GetIndex_By_Name(char* Name)
+int CL64_Com_Objects::GetIndex_By_Name(char* Name)
 {
 	int Count = 0;
 	int Total = App->CL_Scene->Object_Count;
@@ -229,7 +229,7 @@ int CL64_Object::GetIndex_By_Name(char* Name)
 // *************************************************************************
 // *		Clear_Modified_Objects:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
-void CL64_Object::Clear_Modified_Objects()
+void CL64_Com_Objects::Clear_Modified_Objects()
 {
 	// ---------------- Areas
 	int Count = 0;
@@ -313,7 +313,7 @@ void CL64_Object::Clear_Modified_Objects()
 // *************************************************************************
 // *		 CheckNames_Objects:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-int CL64_Object::CheckNames_Objects(char* Name)
+int CL64_Com_Objects::CheckNames_Objects(char* Name)
 {
 	int Count = 0;
 	int Total = App->CL_Scene->Object_Count;

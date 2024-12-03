@@ -523,14 +523,14 @@ LRESULT CALLBACK CL64_Props_Dialogs::Proc_Dialog_Debug(HWND hDlg, UINT message, 
 		if (some_item->idFrom == IDC_BT_SHOWMESH)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CL_Object->flag_Show_Mesh_Debug);
+			App->Custom_Button_Toggle(item, App->CL_Com_Objects->flag_Show_Mesh_Debug);
 			return CDRF_DODEFAULT;
 		}
 
 		if (some_item->idFrom == IDC_BT_ONLYMESH)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CL_Object->flag_Hide_All_Except);
+			App->Custom_Button_Toggle(item, App->CL_Com_Objects->flag_Hide_All_Except);
 			return CDRF_DODEFAULT;
 		}
 
@@ -547,28 +547,28 @@ LRESULT CALLBACK CL64_Props_Dialogs::Proc_Dialog_Debug(HWND hDlg, UINT message, 
 			// -----------------------  Area
 			if (App->CL_Properties->Edit_Category == Enums::Edit_Area)
 			{
-				if (App->CL_Object->flag_Hide_All_Except == 1)
+				if (App->CL_Com_Objects->flag_Hide_All_Except == 1)
 				{
-					App->CL_Object->flag_Hide_All_Except = 0;
-					App->CL_Object->Hide_AllObjects_Except(Index, true);
+					App->CL_Com_Objects->flag_Hide_All_Except = 0;
+					App->CL_Com_Objects->Hide_AllObjects_Except(Index, true);
 				}
 				else
 				{
-					App->CL_Object->flag_Hide_All_Except = 1;
-					App->CL_Object->Hide_AllObjects_Except(Index, false);
+					App->CL_Com_Objects->flag_Hide_All_Except = 1;
+					App->CL_Com_Objects->Hide_AllObjects_Except(Index, false);
 				}
 				return 1;
 			}
 
-			if (App->CL_Object->flag_Hide_All_Except == 1)
+			if (App->CL_Com_Objects->flag_Hide_All_Except == 1)
 			{
-				App->CL_Object->flag_Hide_All_Except = 0;
-				App->CL_Object->Hide_AllObjects_Except(Index, true);
+				App->CL_Com_Objects->flag_Hide_All_Except = 0;
+				App->CL_Com_Objects->Hide_AllObjects_Except(Index, true);
 			}
 			else
 			{
-				App->CL_Object->flag_Hide_All_Except = 1;
-				App->CL_Object->Hide_AllObjects_Except(Index, false);
+				App->CL_Com_Objects->flag_Hide_All_Except = 1;
+				App->CL_Com_Objects->Hide_AllObjects_Except(Index, false);
 			}
 
 			return 1;
@@ -581,28 +581,28 @@ LRESULT CALLBACK CL64_Props_Dialogs::Proc_Dialog_Debug(HWND hDlg, UINT message, 
 			// -----------------------  Area
 			if (App->CL_Properties->Edit_Category == Enums::Edit_Area)
 			{
-				if (App->CL_Object->flag_Show_Mesh_Debug == 1)
+				if (App->CL_Com_Objects->flag_Show_Mesh_Debug == 1)
 				{
 					App->CL_Scene->B_Area[Index]->Area_Node->setVisible(false);
-					App->CL_Object->flag_Show_Mesh_Debug = 0;
+					App->CL_Com_Objects->flag_Show_Mesh_Debug = 0;
 				}
 				else
 				{
 					App->CL_Scene->B_Area[Index]->Area_Node->setVisible(true);
-					App->CL_Object->flag_Show_Mesh_Debug = 1;
+					App->CL_Com_Objects->flag_Show_Mesh_Debug = 1;
 				}
 				return 1;
 			}
 
-			if (App->CL_Object->flag_Show_Mesh_Debug == 1)
+			if (App->CL_Com_Objects->flag_Show_Mesh_Debug == 1)
 			{
 				App->CL_Scene->V_Object[Index]->Object_Node->setVisible(false);
-				App->CL_Object->flag_Show_Mesh_Debug = 0;
+				App->CL_Com_Objects->flag_Show_Mesh_Debug = 0;
 			}
 			else
 			{
 				App->CL_Scene->V_Object[Index]->Object_Node->setVisible(true);
-				App->CL_Object->flag_Show_Mesh_Debug = 1;
+				App->CL_Com_Objects->flag_Show_Mesh_Debug = 1;
 			}
 
 			return 1;
@@ -650,7 +650,7 @@ LRESULT CALLBACK CL64_Props_Dialogs::Proc_Dialog_Debug(HWND hDlg, UINT message, 
 
 				if (App->CL_Scene->V_Object[Index]->Physics_Debug_On == 1)
 				{
-					App->CL_Object->flag_Show_Physics_Debug = 0;
+					App->CL_Com_Objects->flag_Show_Physics_Debug = 0;
 					App->CL_Scene->V_Object[Index]->Phys_Body->setCollisionFlags(f | (1 << 5)); // Off
 
 					App->CL_Scene->V_Object[Index]->Physics_Debug_On = 0;
@@ -664,7 +664,7 @@ LRESULT CALLBACK CL64_Props_Dialogs::Proc_Dialog_Debug(HWND hDlg, UINT message, 
 				else
 				{
 					App->CL_Scene->V_Object[Index]->Physics_Debug_On = 1;
-					App->CL_Object->flag_Show_Physics_Debug = 1;
+					App->CL_Com_Objects->flag_Show_Physics_Debug = 1;
 					App->CL_Scene->V_Object[Index]->Phys_Body->setCollisionFlags(f & (~(1 << 5))); // on
 
 					//SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_PhysicsOn_Bmp);

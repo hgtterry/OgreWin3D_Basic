@@ -517,7 +517,7 @@ void CL64_ImGui_Dialogs::Move_Entity_Editor(void)
 				{
 					Move_Ent_item_current_idx = n;
 					strcpy(App->CL_Scene->V_Object[Move_Ent_Index]->S_MoveType[0]->Object_Name, V_Move_Ent_Object_List[n].c_str());
-					int MoveObjectIndex = App->CL_Object->GetIndex_By_Name(App->CL_Scene->V_Object[Move_Ent_Index]->S_MoveType[0]->Object_Name);
+					int MoveObjectIndex = App->CL_Com_Objects->GetIndex_By_Name(App->CL_Scene->V_Object[Move_Ent_Index]->S_MoveType[0]->Object_Name);
 					App->CL_Scene->V_Object[Move_Ent_Index]->S_MoveType[0]->Object_To_Move_Index = MoveObjectIndex;
 					App->Flash_Window();
 				}
