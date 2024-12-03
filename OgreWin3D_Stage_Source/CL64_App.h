@@ -158,6 +158,8 @@ public:
 	void Custom_Button_Globals(LPNMCUSTOMDRAW item) const;
 	void Custom_Button_Greyed(LPNMCUSTOMDRAW item);
 
+	void Check_Menu_Camera_Data(bool Enable);
+
 	HINSTANCE hInst;
 	HWND MainHwnd;
 	HWND Fdlg;

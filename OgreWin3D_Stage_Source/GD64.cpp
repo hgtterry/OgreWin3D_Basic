@@ -316,11 +316,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			return TRUE;
 		}
 
-		case ID_WINDOWS_TEXTURESDIALOG:
-		{
-			return TRUE;
-		}
-		
 		case ID_WINDOWS_FILEVIEW:
 		{
 			if (App->CL_FileView->Flag_FileView_Active == 1)
@@ -540,17 +535,24 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			return TRUE;
 		}
 		
-		case ID_VIEW_RESET:
+		// View --------------------------------------------------
+		case ID_VIEW_CAMERADATA:
 		{
-			App->CL_Camera->Reset_View();
-			return TRUE;
-		}
+			if (App->CL_ImGui->flag_Show_Camera_Data == 1)
+			{
+				App->CL_ImGui->flag_Show_Camera_Data = 0;
+				App->CL_ImGui->flag_CameraData_Start_Pos = 0;
+				App->Check_Menu_Camera_Data(false);
+			}
+			else
+			{
+				App->CL_ImGui->flag_Show_Camera_Data = 1;
+				App->Check_Menu_Camera_Data(true);
+			}
 
-		case ID_VIEW_MAX3DVIEW:
-		{
-			
 			return TRUE;
 		}
+		
 
 		case ID_MOUSEANDKEYS:
 		{

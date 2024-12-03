@@ -660,3 +660,18 @@ void CL64_App::Open_Tool(char* Tool)
 	ShellExecute(0, "open", Path, 0, 0, SW_SHOW);
 }
 
+// *************************************************************************
+// *		Check_Menu_Camera_Data:- Terry and Hazel Flanigan 2024	  	   *
+// *************************************************************************
+void CL64_App::Check_Menu_Camera_Data(bool Enable)
+{
+	if (Enable == 1)
+	{
+		CheckMenuItem(App->mMenu, ID_VIEW_CAMERADATA, MF_BYCOMMAND | MF_CHECKED);
+	}
+	else
+	{
+		CheckMenuItem(App->mMenu, ID_VIEW_CAMERADATA, MF_BYCOMMAND | MF_UNCHECKED);
+	}
+}
+

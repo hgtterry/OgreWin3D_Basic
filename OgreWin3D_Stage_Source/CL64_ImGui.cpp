@@ -326,11 +326,11 @@ void CL64_ImGui::ImGui_FPS(void)
 void CL64_ImGui::Camera_Data_GUI(void)
 {
 	ImGui::SetNextWindowPos(ImVec2(Camera_Data_PosX, Camera_Data_Posy), ImGuiCond_FirstUseEver);
-	ImGui::SetNextWindowSize(ImVec2(210, 290), ImGuiCond_FirstUseEver);
+	ImGui::SetNextWindowSize(ImVec2(210, 310), ImGuiCond_FirstUseEver);
 
 	ImGui::PushStyleColor(ImGuiCol_WindowBg, IM_COL32(239, 239, 239, 255));
 
-	if (!ImGui::Begin("Camera Data", &flag_Show_Camera_Data, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoResize ))
+	if (!ImGui::Begin("Camera Data", &flag_Show_Camera_Data, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar))
 	{
 		ImGui::End();
 	}
@@ -341,7 +341,7 @@ void CL64_ImGui::Camera_Data_GUI(void)
 			ImVec2 Size = ImGui::GetWindowSize();
 
 			Camera_Data_PosX = ((float)App->CL_Ogre->Ogre3D_Listener->View_Width / 2) - (210 / 2);
-			Camera_Data_Posy = ((float)App->CL_Ogre->Ogre3D_Listener->View_Height / 2) - (290 / 2);
+			Camera_Data_Posy = ((float)App->CL_Ogre->Ogre3D_Listener->View_Height / 2) - (310 / 2);
 			ImGui::SetWindowPos("Camera Data", ImVec2(Camera_Data_PosX, Camera_Data_Posy));
 
 			flag_CameraData_Start_Pos = 1;
@@ -376,10 +376,34 @@ void CL64_ImGui::Camera_Data_GUI(void)
 		ImGui::SetCursorPosX((Size.x - textWidth) * 0.5f);
 		ImGui::Text("Rotation");
 		ImGui::Text("Pitch: %f", Yaw);
-		ImGui::Text("Pitch: %f", Pitch);
-		ImGui::Text("Pitch: %f", Roll);
+		ImGui::Text("Yaw: %f", Pitch);
+		ImGui::Text("Roll: %f", Roll);
 		ImGui::Separator();
 		
+		ImGui::Text(" ");
+
+		ImGuiStyle& style = ImGui::GetStyle();
+
+		float size = ImGui::CalcTextSize("Close").x + style.FramePadding.x * 2.0f;
+		float avail = ImGui::GetContentRegionAvail().x;
+
+		float off = (avail - size) * 0.5f;
+		if (off > 0.0f)
+		{
+			ImGui::SetCursorPosX(ImGui::GetCursorPosX() + off);
+		}
+
+		if (ImGui::Button("Close"))
+		{
+			flag_CameraData_Start_Pos = 0;
+			
+			flag_Show_Camera_Data = 0;
+			App->Check_Menu_Camera_Data(false);
+
+			ImGui::PopStyleColor();
+			ImGui::End();
+		}
+
 		ImGui::PopStyleColor();
 		ImGui::End();
 	}
