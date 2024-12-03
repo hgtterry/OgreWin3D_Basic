@@ -36,7 +36,7 @@ public:
 	void Show_YesNo_Dlg(char* Text, char* Text2, char* Text3);
 	void Start_Speed_Camera_Dlg();
 	void Start_FPSLock_Dlg();
-	bool Dialog_Text(int What_Check);
+	bool Dialog_Text(int Usage);
 	void Start_TextureViewer_Dialog(char* TextureFile, HWND Owner_hDlg);
 	void Start_FileViewer_Dialog(char* FFile, HWND Owner_hDlg);
 	void Material_Search(char* ItemString);
@@ -60,7 +60,8 @@ public:
 	int mInt;
 
 	int What_Check_Name;
-	
+	int CheckNames;
+
 	HBITMAP	Sel_BaseBitmap;
 
 	HWND FileViewer_Hwnd;

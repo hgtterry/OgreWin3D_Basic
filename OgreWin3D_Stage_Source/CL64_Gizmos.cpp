@@ -187,6 +187,22 @@ void CL64_Gizmos::MarkerBox_Addjust(int Index)
 }
 
 // *************************************************************************
+// *		  	Show_MarkerBox:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void CL64_Gizmos::Show_MarkerBox(bool Show)
+{
+	if (Show == 1)
+	{
+		BoxNode->setVisible(true);
+	}
+	else
+	{
+		BoxNode->setVisible(false);
+	}
+
+}
+
+// *************************************************************************
 // *			Load_PickSight:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
 void CL64_Gizmos::Load_PickSight(void)

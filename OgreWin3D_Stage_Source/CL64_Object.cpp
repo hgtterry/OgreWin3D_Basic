@@ -309,3 +309,29 @@ void CL64_Object::Clear_Modified_Objects()
 
 	//EnableMenuItem(App->mMenu, ID_FILE_SAVEPROJECTALL, MF_GRAYED);
 }
+
+// *************************************************************************
+// *		 CheckNames_Objects:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+int CL64_Object::CheckNames_Objects(char* Name)
+{
+	int Count = 0;
+	int Total = App->CL_Scene->Object_Count;
+
+	while (Count < Total)
+	{
+		if (App->CL_Scene->V_Object[Count]->Deleted == 0)
+		{
+			int Result = 1;
+			Result = strcmp(App->CL_Scene->V_Object[Count]->Mesh_Name, Name);
+
+			if (Result == 0)
+			{
+				return 1;
+			}
+		}
+
+		Count++;
+	}
+	return 0;
+}

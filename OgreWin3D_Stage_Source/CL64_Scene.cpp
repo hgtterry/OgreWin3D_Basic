@@ -121,7 +121,7 @@ bool CL64_Scene::Clear_Level()
 
 	App->CL_Properties->Reset_Class();
 
-	//App->SBC_Markers->BoxNode->setVisible(false);
+	App->CL_Gizmos->Show_MarkerBox(false);
 	//App->SBC_Markers->Arrow_Node->setVisible(false);
 
 	//App->Set_Main_TitleBar(" ");
@@ -280,8 +280,7 @@ bool CL64_Scene::Game_Mode(void)
 
 	App->CL_Grid->Grid_SetVisible(false);
 	App->CL_Grid->Hair_SetVisible(false);
-
-	//App->SBC_Markers->Arrow_Node->setVisible(0);
+	App->CL_Gizmos->Show_MarkerBox(false);
 
 	App->CL_Com_Environments->GameMode(true);
 
@@ -289,9 +288,6 @@ bool CL64_Scene::Game_Mode(void)
 
 	CurrentCamMode = App->CL_Ogre->Ogre3D_Listener->CameraMode;
 	App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_First;
-
-
-	//App->SBC_Markers->BoxNode->setVisible(false);
 
 	Show_Entities(false); // Hide All Visible Trigers
 

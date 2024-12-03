@@ -49,6 +49,7 @@ CL64_Dialogs::CL64_Dialogs(void)
 	flag_Dlg_Int_Active = 0;
 
 	What_Check_Name = Enums::Check_Name_None;
+	CheckNames = Enums::Check_Name_None;
 
 	btext[0] = 0;
 	Chr_Text[0] = 0;
@@ -796,10 +797,11 @@ void CL64_Dialogs::UnCheck_All_SpeedMouseOption()
 // *************************************************************************
 // *	  			Dialog_Text:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-bool CL64_Dialogs::Dialog_Text(int What_Check)
+bool CL64_Dialogs::Dialog_Text(int Usage)
 {
 	Canceled = 0;
-	What_Check_Name = What_Check;
+	//What_Check_Name = What_Check;
+	CheckNames = Usage;
 
 	DialogBox(App->hInst, (LPCTSTR)IDD_TEXT_DIALOG, App->MainHwnd, (DLGPROC)Proc_Dialog_Text);
 
@@ -870,6 +872,17 @@ LRESULT CALLBACK CL64_Dialogs::Proc_Dialog_Text(HWND hDlg, UINT message, WPARAM 
 		{
 			char buff[255];
 			GetDlgItemText(hDlg, IDC_EDITTEXT, (LPTSTR)buff, 255);
+
+			// Checks name duplication Objects
+			if (App->CL_Dialogs->CheckNames == Enums::Check_Names_Objects)
+			{
+				int test = App->CL_Object->CheckNames_Objects(buff);
+				if (test == 1)
+				{
+					App->Say("Name Already Exsits");
+					return 1;
+				}
+			}
 
 			strcpy(App->CL_Dialogs->Chr_Text, buff);
 

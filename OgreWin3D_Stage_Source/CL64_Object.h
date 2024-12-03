@@ -38,6 +38,7 @@ public:
 	void Delete_Object();
 	int GetIndex_By_Name(char* Name);
 	void Clear_Modified_Objects();
+	int CheckNames_Objects(char* Name);
 
 	bool flag_Show_Physics_Debug;
 	bool flag_Hide_All_Except;
