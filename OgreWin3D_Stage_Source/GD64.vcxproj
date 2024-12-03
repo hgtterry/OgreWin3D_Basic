@@ -180,6 +180,7 @@
     <ClInclude Include="CL64_Com_Environments.h" />
     <ClInclude Include="CL64_Com_Messages.h" />
     <ClInclude Include="CL64_Com_MoveEntity.h" />
+    <ClInclude Include="CL64_Com_Objects.h" />
     <ClInclude Include="CL64_Com_Particles.h" />
     <ClInclude Include="CL64_Com_Sounds.h" />
     <ClInclude Include="CL64_Com_Teleporters.h" />
@@ -201,7 +202,6 @@
     <ClInclude Include="CL64_Materials.h" />
     <ClInclude Include="CL64_MeshViewer.h" />
     <ClInclude Include="CL64_MeshView_Listener.h" />
-    <ClInclude Include="CL64_Object.h" />
     <ClInclude Include="CL64_Objects_Create.h" />
     <ClInclude Include="CL64_OGL_Listener.h" />
     <ClInclude Include="CL64_Ogre.h" />
@@ -246,6 +246,7 @@
     <ClCompile Include="CL64_Com_Environments.cpp" />
     <ClCompile Include="CL64_Com_Messages.cpp" />
     <ClCompile Include="CL64_Com_MoveEntity.cpp" />
+    <ClCompile Include="CL64_Com_Objects.cpp" />
     <ClCompile Include="CL64_Com_Particles.cpp" />
     <ClCompile Include="CL64_Com_Sounds.cpp" />
     <ClCompile Include="CL64_Com_Teleporters.cpp" />
@@ -267,7 +268,6 @@
     <ClCompile Include="CL64_Materials.cpp" />
     <ClCompile Include="CL64_MeshViewer.cpp" />
     <ClCompile Include="CL64_MeshView_Listener.cpp" />
-    <ClCompile Include="CL64_Object.cpp" />
     <ClCompile Include="CL64_Objects_Create.cpp" />
     <ClCompile Include="CL64_OGL_Listener.cpp" />
     <ClCompile Include="CL64_Ogre.cpp" />

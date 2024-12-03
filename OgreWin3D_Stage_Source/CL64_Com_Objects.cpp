@@ -24,7 +24,7 @@ THE SOFTWARE.
 
 #include "pch.h"
 #include "CL64_App.h"
-#include "CL64_Object.h"
+#include "CL64_Com_Objects.h"
 
 CL64_Com_Objects::CL64_Com_Objects(void)
 {

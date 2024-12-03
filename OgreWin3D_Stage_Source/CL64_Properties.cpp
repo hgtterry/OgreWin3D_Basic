@@ -349,22 +349,7 @@ bool CL64_Properties::Edit_Object(LPARAM lParam)
 	result = strcmp(btext, "Name");
 	if (result == 0)
 	{
-		strcpy(App->CL_Dialogs->btext, "Change Object Name");
-		strcpy(App->CL_Dialogs->Chr_Text, App->CL_Scene->V_Object[Index]->Mesh_Name);
-
-		App->CL_Dialogs->Dialog_Text(Enums::Check_Names_Objects);
-
-		if (App->CL_Dialogs->Canceled == 1)
-		{
-			return TRUE;
-		}
-
-		strcpy(App->CL_Scene->V_Object[Index]->Mesh_Name, App->CL_Dialogs->Chr_Text);
-
-		Mark_As_Altered(Index);
-
-		App->CL_FileView->Change_Item_Name(App->CL_Scene->V_Object[Index]->FileViewItem, App->CL_Dialogs->Chr_Text);
-
+		App->CL_Com_Objects->Rename_Object(Index);
 		Update_ListView_Objects();
 	}
 

@@ -49,7 +49,7 @@ THE SOFTWARE.
 #include "CL64_Project.h"
 #include "CL64_Com_Area.h"
 #include "CL64_Objects_Create.h"
-#include "CL64_Object.h"
+#include "CL64_Com_Objects.h"
 #include "CL64_Physics.h"
 
 #include "CL64_Com_Collectables.h"

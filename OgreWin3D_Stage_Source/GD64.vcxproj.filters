@@ -120,9 +120,6 @@
     <ClInclude Include="CL64_Objects_Create.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CL64_Object.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="CL64_Physics.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -205,6 +202,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Bass_Front_Dialog.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CL64_Com_Objects.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -305,9 +305,6 @@
     <ClCompile Include="CL64_Objects_Create.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CL64_Object.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="CL64_Physics.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -390,6 +387,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Bass_Front_Dialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CL64_Com_Objects.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
