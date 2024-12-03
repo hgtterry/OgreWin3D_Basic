@@ -24,7 +24,9 @@ THE SOFTWARE.
 
 #include "pch.h"
 #include "CL64_App.h"
+#include "resource.h"
 #include "CL64_Build_Game.h"
+#include "zip.h"
 
 CL64_Build_Game::CL64_Build_Game(void)
 {
@@ -33,6 +35,35 @@ CL64_Build_Game::CL64_Build_Game(void)
 	flag_Saved_Show_FPS = 0;
 
 	strcpy(GameName, "YourGameName");
+	StartFolder[0] = 0;
+
+	ProjectFolder[0] = 0;
+	Sub_ProjectFolder[0] = 0;
+
+	MediaFolder[0] = 0;
+
+	CoreDataFolder[0] = 0;
+	SoundFolder[0] = 0;
+	ParticleFolder[0] = 0;
+
+	m_Build_Sub_Folder[0] = 0;
+
+	Directory_Altered = 0;
+	//---------------------------------
+	Sub_Build_Folder[0] = 0;
+	m_Ini_Path_File_Name[0] = 0;
+	m_Level_Folder_Path[0] = 0;
+	m_Main_Assets_Path[0] = 0;
+	m_Aera_Folder_Path[0] = 0;
+	m_Players_Folder_Path[0] = 0;
+	m_Cameras_Folder_Path[0] = 0;
+	m_Objects_Folder_Path[0] = 0;
+	m_Display_Folder_Path[0] = 0;
+	m_Enviromnet_Folder_Path[0] = 0;
+
+	Banner = nullptr;
+	DlgHwnd = nullptr;
+	WriteFile = nullptr;
 
 	Init_Build_Game_Class();
 
