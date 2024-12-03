@@ -47,7 +47,7 @@ CL64_ImGui::CL64_ImGui(void)
 	flag_Open_Textures_List = 1;
 	flag_Show_Object_Data = 0;
 	flag_Show_Collision_Debug = 0;
-
+	flag_CameraData_Start_Pos = 0;
 	// Demo 1
 	flag_Show_Physics_Debug = 0;
 
@@ -325,15 +325,28 @@ void CL64_ImGui::ImGui_FPS(void)
 // *************************************************************************
 void CL64_ImGui::Camera_Data_GUI(void)
 {
-	ImGui::SetNextWindowPos(ImVec2(Camera_Data_PosX, Camera_Data_Posy));
+	ImGui::SetNextWindowPos(ImVec2(Camera_Data_PosX, Camera_Data_Posy), ImGuiCond_FirstUseEver);
+	ImGui::SetNextWindowSize(ImVec2(210, 290), ImGuiCond_FirstUseEver);
 
-	if (!ImGui::Begin("Camera Data", &flag_Show_Camera_Data, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoResize
-		| ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoTitleBar))
+	ImGui::PushStyleColor(ImGuiCol_WindowBg, IM_COL32(239, 239, 239, 255));
+
+	if (!ImGui::Begin("Camera Data", &flag_Show_Camera_Data, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoResize ))
 	{
 		ImGui::End();
 	}
 	else
 	{
+		if (flag_CameraData_Start_Pos == 0)
+		{
+			ImVec2 Size = ImGui::GetWindowSize();
+
+			Camera_Data_PosX = ((float)App->CL_Ogre->Ogre3D_Listener->View_Width / 2) - (210 / 2);
+			Camera_Data_Posy = ((float)App->CL_Ogre->Ogre3D_Listener->View_Height / 2) - (290 / 2);
+			ImGui::SetWindowPos("Camera Data", ImVec2(Camera_Data_PosX, Camera_Data_Posy));
+
+			flag_CameraData_Start_Pos = 1;
+		}
+
 		//ImGui::BeginDisabled(true);
 		ImVec2 Size = ImGui::GetWindowSize();
 
@@ -350,21 +363,24 @@ void CL64_ImGui::Camera_Data_GUI(void)
 		ImGui::Spacing();
 		ImGui::SetCursorPosX((Size.x - textWidth) * 0.5f);
 		ImGui::TextColored(ImVec4(0,0,1,1),"Camera Data");
-		
+		ImGui::Separator();
 		textWidth = ImGui::CalcTextSize("Position").x;
 		ImGui::SetCursorPosX((Size.x - textWidth) * 0.5f);
 		ImGui::Text("Position");
-		ImGui::Text("X: %f Y: %f Z: %f",X,Y,Z);
-
+		ImGui::Text("X: %f", X);
+		ImGui::Text("X: %f", Y);
+		ImGui::Text("X: %f", Z);
 		ImGui::Separator();
 
 		textWidth = ImGui::CalcTextSize("Rotation").x;
 		ImGui::SetCursorPosX((Size.x - textWidth) * 0.5f);
 		ImGui::Text("Rotation");
-		ImGui::Text("X: %f Y: %f Z: %f", Yaw, Pitch, Roll);
-
-		Camera_Data_Posy = ((float)App->CL_Ogre->Ogre3D_Listener->View_Height) - (Size.y)-10;
-
+		ImGui::Text("Pitch: %f", Yaw);
+		ImGui::Text("Pitch: %f", Pitch);
+		ImGui::Text("Pitch: %f", Roll);
+		ImGui::Separator();
+		
+		ImGui::PopStyleColor();
 		ImGui::End();
 	}
 }

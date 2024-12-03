@@ -701,7 +701,9 @@ bool CL64_Ogre3D_Listener::Capture_Mouse_FirstPerson(float DeltaTime)
 
 		if (test > 1)
 		{
-			//if (App->CL_Scene->B_Player[0]->CameraPitch_Node->getOrientation().getPitch().valueDegrees() < App->CL_Scene->B_Player[0]->Limit_Look_Up)
+			float Limit = App->CL_Scene->B_Player[0]->CameraPitch_Node->getOrientation().getPitch().valueDegrees();
+
+			//if (Limit > App->CL_Scene->B_Player[0]->Limit_Look_Up)
 			{
 
 			}
@@ -720,7 +722,7 @@ bool CL64_Ogre3D_Listener::Capture_Mouse_FirstPerson(float DeltaTime)
 
 		if (test > 1)
 		{
-			//if (App->CL_Scene->B_Player[0]->CameraPitch_Node->getOrientation().getPitch().valueDegrees() > App->CL_Scene->B_Player[0]->Limit_Look_Down)
+			//if (App->CL_Scene->B_Player[0]->CameraPitch_Node->getOrientation().getPitch().valueDegrees() < -App->CL_Scene->B_Player[0]->Limit_Look_Down)
 			{
 
 			}

@@ -2138,7 +2138,7 @@ bool CL64_Properties::Update_ListView_Player()
 	pitem.mask = LVIF_TEXT;
 
 	grid[0][0] = "Name", grid[1][0] = App->CL_Scene->B_Player[0]->Player_Name;
-	grid[0][1] = "Mode", grid[1][1] = "1st_Person";
+	grid[0][1] = "Game Mode", grid[1][1] = "1st_Person";
 	grid[0][2] = " ", grid[1][2] = " ";
 	grid[0][3] = "Ground Speed", grid[1][3] = chr_Speed;
 	grid[0][4] = "Turn Rate", grid[1][4] = chr_TurnRate;

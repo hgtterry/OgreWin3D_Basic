@@ -66,7 +66,7 @@ public:
 	bool flag_Show_App_Debug;
 	bool flag_Show_Object_Data;
 	bool flag_Show_Collision_Debug;
-
+	bool flag_CameraData_Start_Pos;
 	bool flag_Show_Ogre_Data;
 	bool flag_Open_Textures_List;
 	// Demo 1
