@@ -241,6 +241,12 @@ namespace Enums
 		Mesh_Viewer_Collectables = 1,
 		Mesh_Viewer_Area = 2
 	};
+
+	enum Game_Preview
+	{
+		Game_Start_Full = 0,
+		Game_Start_Current = 1
+	};
 }
 
 #define Debug App->Debug_Text();

@@ -130,6 +130,7 @@ void CL64_Keyboard::Keyboard_Mode_First(float deltaTime)
 			{
 				if (App->CL_Build_Game->flag_Use_Front_Dlg == 1)
 				{
+					GetCursorPos(&Mouse_point);
 					App->CL_Ogre->Ogre3D_Listener->flag_LeftMouseDown = 0;
 					App->CL_Ogre->Ogre3D_Listener->flag_Block_Mouse = 1;
 					App->CL_Keyboard->flag_Block_Keyboard = 1;

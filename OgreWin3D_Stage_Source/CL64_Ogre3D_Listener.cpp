@@ -660,7 +660,7 @@ bool CL64_Ogre3D_Listener::Capture_Mouse_FirstPerson(float DeltaTime)
 	}
 
 	GetCursorPos(&Mouse_point);
-
+	
 	Pl_MouseX = (int(Mouse_point.x));
 	Pl_MouseY = (int(Mouse_point.y));
 

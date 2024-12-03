@@ -282,9 +282,13 @@ void CL64_Physics::Reset_Scene(void)
 	App->CL_Physics->Reset_Triggers();
 	App->CL_Ogre->Ogre3D_Listener->flag_Run_Physics = 1;
 
+	App->CL_Ogre->camNode->setOrientation(1,0,0,0);
+	App->CL_Scene->B_Player[0]->CameraPitch_Node->setOrientation(1, 0, 0, 0);
+
 	App->CL_TopDlg->flag_Toggle_Cam_FirstMode = 1;
 	App->CL_TopDlg->flag_Toggle_Cam_FreeMode = 0;
 	RedrawWindow(App->CL_TopDlg->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
 	App->CL_Com_Environments->GameMode(0);
+
 }

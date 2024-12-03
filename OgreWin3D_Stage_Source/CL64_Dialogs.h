@@ -49,6 +49,7 @@ public:
 	void GameMode_StartPosition_Dlg();
 	void Game_Config_Dlg();
 
+	bool Flag_Game_Start_Option;
 	bool TrueFlase;
 	bool Canceled;
 	bool Flag_Convert_to_Ogre;

@@ -40,6 +40,7 @@ CL64_Dialogs::CL64_Dialogs(void)
 	TrueFlase = 0;
 
 	Flag_Convert_to_Ogre = 0;
+	Flag_Game_Start_Option = 0;
 
 	flag_Mouse_Normal = 1;
 	flag_Mouse_Slow = 0;
@@ -2112,8 +2113,8 @@ LRESULT CALLBACK CL64_Dialogs::Proc_Dialog_Int(HWND hDlg, UINT message, WPARAM w
 // *************************************************************************
 void CL64_Dialogs::GameMode_StartPosition_Dlg()
 {
+	Flag_Game_Start_Option = 0;
 	DialogBox(App->hInst, (LPCTSTR)IDD_GMSTART, App->Fdlg, (DLGPROC)Proc_GameMode_StartPosition_Dlg);
-	
 }
 
 // *************************************************************************
@@ -2178,6 +2179,7 @@ LRESULT CALLBACK CL64_Dialogs::Proc_GameMode_StartPosition_Dlg(HWND hDlg, UINT m
 
 		if (LOWORD(wParam) == IDC_STARTCUR)
 		{
+			App->CL_Dialogs->Flag_Game_Start_Option = Enums::Game_Start_Current;
 			App->CL_Dialogs->Canceled = 0;
 			//App->CL_Vm_ImGui->Show_FPS = App->SBC_Dialogs->DoFPS;
 			EndDialog(hDlg, LOWORD(wParam));
@@ -2191,6 +2193,7 @@ LRESULT CALLBACK CL64_Dialogs::Proc_GameMode_StartPosition_Dlg(HWND hDlg, UINT m
 			App->CL_Physics->Reset_Triggers();
 			App->CL_Ogre->Ogre3D_Listener->flag_Run_Physics = 1;
 
+			App->CL_Dialogs->Flag_Game_Start_Option = Enums::Game_Start_Full;
 			App->CL_Dialogs->Canceled = 0;
 			//App->CL_Vm_ImGui->Show_FPS = App->SBC_Dialogs->DoFPS;
 			EndDialog(hDlg, LOWORD(wParam));

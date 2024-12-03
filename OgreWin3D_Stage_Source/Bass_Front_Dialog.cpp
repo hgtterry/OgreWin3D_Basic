@@ -88,8 +88,13 @@ void Bass_Front_Dialog::Render_Front_Dlg(void)
 				App->CUR = SetCursor(NULL);
 				App->CL_Ogre->Ogre3D_Listener->flag_Block_Mouse = 0;
 				App->CL_Keyboard->flag_Block_Keyboard = 0;
-				Game_Running_Flag = 1;
+
+				App->CL_Physics->Reset_Physics();
+				App->CL_Scene->Game_Restart();
+
 				Show_Front_Dlg_Flag = 0;
+
+				Game_Running_Flag = 1;
 			}
 		}
 
@@ -100,12 +105,14 @@ void Bass_Front_Dialog::Render_Front_Dlg(void)
 
 			if (ImGui::Button("   Resume   ", ImVec2(220, 0)))
 			{
+				SetCursorPos(App->CL_Keyboard->Mouse_point.x, App->CL_Keyboard->Mouse_point.y);
 				SetCapture(App->ViewGLhWnd);
 				App->CL_Ogre->Ogre3D_Listener->flag_LeftMouseDown = 1;
 				App->CUR = SetCursor(NULL);
 				App->CL_Ogre->Ogre3D_Listener->flag_Block_Mouse = 0;
 				App->CL_Keyboard->flag_Block_Keyboard = 0;
 				Show_Front_Dlg_Flag = 0;
+				
 			}
 		}
 
