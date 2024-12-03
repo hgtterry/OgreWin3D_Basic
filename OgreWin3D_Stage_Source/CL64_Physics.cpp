@@ -268,3 +268,23 @@ void CL64_Physics::Reset_Physics(void)
 
 	//App->CL_Ogre->OgreListener->GD_Run_Physics = 1;
 }
+
+// *************************************************************************
+// *	  		Reset_Scene:- Terry and Hazel Flanigan 2024				   *
+// *************************************************************************
+void CL64_Physics::Reset_Scene(void)
+{
+	int Saved = App->CL_Ogre->Ogre3D_Listener->CameraMode;
+	App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_First;
+
+	App->CL_Physics->Reset_Physics();
+	App->CL_Ogre->Ogre3D_Listener->flag_Run_Physics = 1;
+	App->CL_Physics->Reset_Triggers();
+	App->CL_Ogre->Ogre3D_Listener->flag_Run_Physics = 1;
+
+	App->CL_TopDlg->flag_Toggle_Cam_FirstMode = 1;
+	App->CL_TopDlg->flag_Toggle_Cam_FreeMode = 0;
+	RedrawWindow(App->CL_TopDlg->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+	App->CL_Com_Environments->GameMode(0);
+}

@@ -36,6 +36,7 @@ public:
 	void Enable_Physics(bool Enable);
 	void Reset_Triggers(void);
 	void Reset_Physics(void);
+	void Reset_Scene(void);
 
 };
 

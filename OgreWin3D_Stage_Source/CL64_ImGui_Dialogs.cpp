@@ -811,7 +811,6 @@ void CL64_ImGui_Dialogs::Physics_Console_Gui(void)
 					App->CL_Ogre->Ogre3D_Listener->flag_Run_Physics = 1;
 				}
 
-				//App->RedrawWindow_Dlg(App->Physics_Console_Hwnd);
 			}
 		}
 
@@ -824,8 +823,6 @@ void CL64_ImGui_Dialogs::Physics_Console_Gui(void)
 			if (App->CL_Scene->flag_Scene_Loaded == 1)
 			{
 				App->CL_Physics->Reset_Physics();
-
-				//App->RedrawWindow_Dlg(App->Physics_Console_Hwnd);
 			}
 		}
 
@@ -843,21 +840,7 @@ void CL64_ImGui_Dialogs::Physics_Console_Gui(void)
 		{
 			if (App->CL_Scene->flag_Scene_Loaded == 1)
 			{
-
-				int Saved = App->CL_Ogre->Ogre3D_Listener->CameraMode;
-				App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_First;
-
-				App->CL_Physics->Reset_Physics();
-				App->CL_Ogre->Ogre3D_Listener->flag_Run_Physics = 1;
-				App->CL_Physics->Reset_Triggers();
-				App->CL_Ogre->Ogre3D_Listener->flag_Run_Physics = 1;
-
-				App->CL_TopDlg->flag_Toggle_Cam_FirstMode = 1;
-				App->CL_TopDlg->flag_Toggle_Cam_FreeMode = 0;
-				RedrawWindow(App->CL_TopDlg->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-
-				App->CL_Com_Environments->GameMode(0);
-
+				App->CL_Physics->Reset_Scene();
 			}
 		}
 
