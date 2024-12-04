@@ -528,7 +528,7 @@ void CL64_Build_Game::Create_ProjectFolder(void)
 
 	Copy_ZipFiles();
 	Copy_Sound_Files();
-	//Copy_Particle_Files();
+	Copy_Particle_Files();
 
 	//App->Cl_PB->Stop_Progress_Bar("Build Completed");
 
@@ -764,7 +764,7 @@ void CL64_Build_Game::Copy_Particle_Files(void)
 	char StartFolder[MAX_PATH];
 	strcpy(StartFolder, App->GD_Directory_FullPath);
 	strcat(StartFolder, "\\");
-	strcat(StartFolder, "Media\\New_Particles\\");
+	strcat(StartFolder, "Media\\Core_Data\\Files\\New_Particles\\");
 
 	char Destination[MAX_PATH];
 	strcpy(Destination, ParticleFolder);
