@@ -621,15 +621,15 @@ void CL64_Build_Game::Copy_SystemFiles(void)
 	CopyFile(SourceFile, DestinationFile, false);*/
 	//	App->CL10_PB->Nudge();
 
-	//----------------------------- Game FIle
-	/*strcpy(SourceFile, App->GD_Directory_FullPath);
-	strcat(SourceFile, "\\GDShell.gex");
+	//----------------------------- Game File
+	strcpy(SourceFile, App->GD_Directory_FullPath);
+	strcat(SourceFile, "\\Shell.gex");
 
 	strcpy(DestinationFile, ProjectFolder);
 	strcat(DestinationFile, "\\");
 	strcat(DestinationFile, GameName);
 	strcat(DestinationFile, ".exe");
-	CopyFile(SourceFile, DestinationFile, false);*/
+	CopyFile(SourceFile, DestinationFile, false);
 	//	App->CL10_PB->Nudge();
 
 	//----------------------------- Game FIle
@@ -721,19 +721,19 @@ void CL64_Build_Game::Copy_ZipFiles(void)
 	CopyFile(SourceFile, DestinationFile, false);
 	//App->CL10_PB->Nudge();
 
-	//----------------------------- skybox.zip
+	//----------------------------- SdkTrays.zip
 	strcpy(SourceFile, App->GD_Directory_FullPath);
-	strcat(SourceFile, "\\Media\\Core_Data\\skybox.zip");
+	strcat(SourceFile, "\\Media\\Core_Data\\SdkTrays.zip");
 	strcpy(DestinationFile, CoreDataFolder);
-	strcat(DestinationFile, "\\skybox.zip");
+	strcat(DestinationFile, "\\SdkTrays.zip");
 	CopyFile(SourceFile, DestinationFile, false);
 	//App->CL10_PB->Nudge();
 
 	//----------------------------- skybox.zip
 	strcpy(SourceFile, App->GD_Directory_FullPath);
-	strcat(SourceFile, "\\Media\\App_Resources\\App_Resources.zip");
+	strcat(SourceFile, "\\Media\\Core_Data\\skybox.zip");
 	strcpy(DestinationFile, CoreDataFolder);
-	strcat(DestinationFile, "\\App_Resources.zip");
+	strcat(DestinationFile, "\\skybox.zip");
 	CopyFile(SourceFile, DestinationFile, false);
 	//App->CL10_PB->Nudge();
 }
