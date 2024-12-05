@@ -527,9 +527,8 @@ void CL64_Build_Game::Create_ProjectFolder(void)
 	Copy_Sound_Files();
 	Copy_Particle_Files();
 
-	//App->Cl_PB->Stop_Progress_Bar("Build Completed");
+	App->CL_PB->Stop_Progress_Bar((LPSTR)"Build Completed");
 
-	App->Say("Game Built");
 }
 
 // *************************************************************************
@@ -547,8 +546,6 @@ void CL64_Build_Game::Copy_SystemFiles(void)
 
 	CopyFile(SourceFile, DestinationFile, false);
 
-	//	App->CL10_PB->Nudge();
-
 	//----------------------------- RenderSystem_GL.dll
 	strcpy(SourceFile, App->GD_Directory_FullPath);
 	strcat(SourceFile, "\\RenderSystem_GL.dll");
@@ -557,16 +554,6 @@ void CL64_Build_Game::Copy_SystemFiles(void)
 	strcat(DestinationFile, "\\RenderSystem_GL.dll");
 
 	CopyFile(SourceFile, DestinationFile, false);
-
-	//	App->CL10_PB->Nudge();
-	//----------------------------- cg.dll
-	/*strcpy(SourceFile, App->GD_Directory_FullPath);
-	strcat(SourceFile, "\\cg.dll");
-
-	strcpy(DestinationFile, ProjectFolder);
-	strcat(DestinationFile, "\\cg.dll");
-
-	CopyFile(SourceFile, DestinationFile, false);*/
 
 	//----------------------------- OgreOverlay.dll
 	strcpy(SourceFile, App->GD_Directory_FullPath);
@@ -577,17 +564,6 @@ void CL64_Build_Game::Copy_SystemFiles(void)
 
 	CopyFile(SourceFile, DestinationFile, false);
 
-	//	App->CL10_PB->Nudge();
-	//----------------------------- msvcp140.dll
-	/*strcpy(SourceFile, App->GD_Directory_FullPath);
-	strcat(SourceFile, "\\msvcp140.dll");
-
-	strcpy(DestinationFile, ProjectFolder);
-	strcat(DestinationFile, "\\msvcp140.dll");
-
-	CopyFile(SourceFile, DestinationFile, false);*/
-
-	//	App->CL10_PB->Nudge();
 	//----------------------------- vcruntime140.dll
 	strcpy(SourceFile, App->GD_Directory_FullPath);
 	strcat(SourceFile, "\\vcruntime140_1.dll");
@@ -596,8 +572,7 @@ void CL64_Build_Game::Copy_SystemFiles(void)
 	strcat(DestinationFile, "\\vcruntime140_1.dll");
 
 	CopyFile(SourceFile, DestinationFile, false);
-	//	App->CL10_PB->Nudge();
-
+	
 	//----------------------------- irrKlang.dll
 	strcpy(SourceFile, App->GD_Directory_FullPath);
 	strcat(SourceFile, "\\irrKlang.dll");
@@ -606,18 +581,7 @@ void CL64_Build_Game::Copy_SystemFiles(void)
 	strcat(DestinationFile, "\\irrKlang.dll");
 
 	CopyFile(SourceFile, DestinationFile, false);
-	//	App->CL10_PB->Nudge();
-
-	//----------------------------- Plugin_CgProgramManager.dll
-	/*strcpy(SourceFile, App->GD_Directory_FullPath);
-	strcat(SourceFile, "\\Plugin_CgProgramManager.dll");
-
-	strcpy(DestinationFile, ProjectFolder);
-	strcat(DestinationFile, "\\Plugin_CgProgramManager.dll");
-
-	CopyFile(SourceFile, DestinationFile, false);*/
-	//	App->CL10_PB->Nudge();
-
+	
 	//----------------------------- Game File
 	strcpy(SourceFile, App->GD_Directory_FullPath);
 	strcat(SourceFile, "\\Shell.gex");
@@ -627,31 +591,27 @@ void CL64_Build_Game::Copy_SystemFiles(void)
 	strcat(DestinationFile, GameName);
 	strcat(DestinationFile, ".exe");
 	CopyFile(SourceFile, DestinationFile, false);
-	//	App->CL10_PB->Nudge();
-
+	
 	//----------------------------- Game FIle
 	strcpy(SourceFile, App->GD_Directory_FullPath);
 	strcat(SourceFile, "\\plugins.cfg");
 	strcpy(DestinationFile, ProjectFolder);
 	strcat(DestinationFile, "\\plugins.cfg");
 	CopyFile(SourceFile, DestinationFile, false);
-	//	App->CL10_PB->Nudge();
-
+	
 	//----------------------------- Plugin_ParticleFX.dll
 	strcpy(SourceFile, App->GD_Directory_FullPath);
 	strcat(SourceFile, "\\Plugin_ParticleFX.dll");
 	strcpy(DestinationFile, ProjectFolder);
 	strcat(DestinationFile, "\\Plugin_ParticleFX.dll");
 	CopyFile(SourceFile, DestinationFile, false);
-	//	App->CL10_PB->Nudge();
-
+	
 	//----------------------------- SDL2.dll
 	strcpy(SourceFile, App->GD_Directory_FullPath);
 	strcat(SourceFile, "\\SDL2.dll");
 	strcpy(DestinationFile, ProjectFolder);
 	strcat(DestinationFile, "\\SDL2.dll");
 	CopyFile(SourceFile, DestinationFile, false);
-	//	App->CL10_PB->Nudge();
 	
 	//----------------------------- Codec_RsImage.dll
 	strcpy(SourceFile, App->GD_Directory_FullPath);
@@ -659,7 +619,6 @@ void CL64_Build_Game::Copy_SystemFiles(void)
 	strcpy(DestinationFile, ProjectFolder);
 	strcat(DestinationFile, "\\Codec_RsImage.dll");
 	CopyFile(SourceFile, DestinationFile, false);
-	//	App->CL10_PB->Nudge();
 	
 	//----------------------------- OgreBites.dll
 	strcpy(SourceFile, App->GD_Directory_FullPath);
@@ -667,7 +626,6 @@ void CL64_Build_Game::Copy_SystemFiles(void)
 	strcpy(DestinationFile, ProjectFolder);
 	strcat(DestinationFile, "\\OgreBites.dll");
 	CopyFile(SourceFile, DestinationFile, false);
-	//	App->CL10_PB->Nudge();
 	
 	//----------------------------- OgreRTShaderSystem.dll
 	strcpy(SourceFile, App->GD_Directory_FullPath);
@@ -675,16 +633,14 @@ void CL64_Build_Game::Copy_SystemFiles(void)
 	strcpy(DestinationFile, ProjectFolder);
 	strcat(DestinationFile, "\\OgreRTShaderSystem.dll");
 	CopyFile(SourceFile, DestinationFile, false);
-	//	App->CL10_PB->Nudge();
-
+	
 	//----------------------------- Roboto-Medium.ttf
 	strcpy(SourceFile, App->GD_Directory_FullPath);
 	strcat(SourceFile, "\\Roboto-Medium.ttf");
 	strcpy(DestinationFile, ProjectFolder);
 	strcat(DestinationFile, "\\Roboto-Medium.ttf");
 	CopyFile(SourceFile, DestinationFile, false);
-	//	App->CL10_PB->Nudge();
-
+	
 }
 
 // *************************************************************************
@@ -698,7 +654,6 @@ void CL64_Build_Game::Copy_ZipFiles(void)
 	strcpy(DestinationFile, CoreDataFolder);
 	strcat(DestinationFile, "\\GDCore.zip");
 	CopyFile(SourceFile, DestinationFile, false);
-	//App->CL10_PB->Nudge();
  
 	//----------------------------- Entitys.zip
 	strcpy(SourceFile, App->GD_Directory_FullPath);
@@ -706,7 +661,6 @@ void CL64_Build_Game::Copy_ZipFiles(void)
 	strcpy(DestinationFile, CoreDataFolder);
 	strcat(DestinationFile, "\\Entitys.zip");
 	CopyFile(SourceFile, DestinationFile, false);
-	//App->CL10_PB->Nudge();
 	 
 	//----------------------------- Sinbad.zip
 	strcpy(SourceFile, App->GD_Directory_FullPath);
@@ -714,7 +668,6 @@ void CL64_Build_Game::Copy_ZipFiles(void)
 	strcpy(DestinationFile, CoreDataFolder);
 	strcat(DestinationFile, "\\Sinbad.zip");
 	CopyFile(SourceFile, DestinationFile, false);
-	//App->CL10_PB->Nudge();
 
 	//----------------------------- SdkTrays.zip
 	strcpy(SourceFile, App->GD_Directory_FullPath);
@@ -722,8 +675,7 @@ void CL64_Build_Game::Copy_ZipFiles(void)
 	strcpy(DestinationFile, CoreDataFolder);
 	strcat(DestinationFile, "\\SdkTrays.zip");
 	CopyFile(SourceFile, DestinationFile, false);
-	//App->CL10_PB->Nudge();
-
+	
 }
 
 
@@ -772,15 +724,6 @@ void CL64_Build_Game::Read_From_Config(void)
 	strcat(StartFile, "\\");
 	strcat(StartFile, "Data\\StartUp.gcf");
 
-	/*App->CL_Ini->SetPathName(StartFile);
-
-	CF_Full_Screen = App->CL_Ini->GetBool("Config", "Full_Screen", 1);
-
-	App->CL_Ini->GetString("Config", "Project_Path", chr_Tag1, 1024);
-	strcpy(App->CL10_Project->StartFolder, chr_Tag1);
-
-	App->CL_Ini->GetString("Config", "Game_Name", chr_Tag1, 1024);
-	strcpy(App->CL10_Project->GameName, chr_Tag1);*/
 }
 
 // *************************************************************************
@@ -790,10 +733,10 @@ bool CL64_Build_Game::Build_Project()
 {
 	ShowWindow(Banner, SW_HIDE);
 
-	/*App->Cl_PB->StartNewProgressBar();
-	App->Cl_PB->Set_Progress("Building Scene/Game", 10);
+	App->CL_PB->StartNewProgressBar();
+	App->CL_PB->Set_Progress((LPSTR)"Building Scene/Game", 10);
 
-	App->Cl_PB->Nudge("Creating Sub Folder");*/
+	App->CL_PB->Nudge((LPSTR)"Creating Sub Folder");
 
 	if (_mkdir(m_Build_Sub_Folder) == 0)
 	{
@@ -804,43 +747,43 @@ bool CL64_Build_Game::Build_Project()
 		(void) _chdir(m_Build_Sub_Folder);
 	}
 
-	//App->Cl_PB->Nudge("Creating Ini File");
+	App->CL_PB->Nudge((LPSTR)"Creating Ini File");
 	bool test = Build_Project_Ini();
 	if (test == 0)
 	{
 		return 0;
 	}
 
-	////App->Cl_PB->Nudge("Creating Level Folder");
+	App->CL_PB->Nudge((LPSTR)"Creating Level Folder");
 	Build_Level_Folder();
 
-	////App->Cl_PB->Nudge("Creating Assets Folder");
+	App->CL_PB->Nudge((LPSTR)"Creating Assets Folder");
 	Build_Main_Asset_Folder();
 
-	/*(void) _chdir(m_Level_Folder_Path);*/
+	(void) _chdir(m_Level_Folder_Path);
 
-	//App->Cl_PB->Nudge("Creating Area Folder");
+	App->CL_PB->Nudge((LPSTR)"Creating Area Folder");
 	if (App->CL_Scene->flag_Area_Added == 1)
 	{
 		Build_Area_Folder();
 	}
 
-	//App->Cl_PB->Nudge("Creating Player Folder");
+	App->CL_PB->Nudge((LPSTR)"Creating Player Folder");
 	if (App->CL_Scene->flag_Player_Added == 1)
 	{
 		Build_Players_Folder();
 	}
 
-	//App->Cl_PB->Nudge("Creating Camera Folder");
+	App->CL_PB->Nudge((LPSTR)"Creating Camera Folder");
 	Build_Cameras_Folder();
 
-	//App->Cl_PB->Nudge("Creating Objects Folder");
+	App->CL_PB->Nudge((LPSTR)"Creating Objects Folder");
 	Build_Objects_Folder();
 
-	//App->Cl_PB->Nudge("Creating Display Folder");
+	App->CL_PB->Nudge((LPSTR)"Creating Display Folder");
 	Build_Display_Folder();
 
-	//App->Cl_PB->Nudge("Finished");
+	App->CL_PB->Nudge((LPSTR)"Finished");
 
 	return 1;
 }
@@ -927,11 +870,11 @@ bool CL64_Build_Game::Build_Level_Folder()
 	// First Level Folder
 	if (_mkdir(m_Level_Folder_Path) == 0)
 	{
-		_chdir(m_Level_Folder_Path);
+		(void) _chdir(m_Level_Folder_Path);
 	}
 	else
 	{
-		_chdir(m_Level_Folder_Path);
+		(void) _chdir(m_Level_Folder_Path);
 	}
 
 	return 1;
@@ -958,11 +901,11 @@ bool CL64_Build_Game::Build_Main_Asset_Folder()
 
 	if (_mkdir(m_Main_Assets_Path) == 0)
 	{
-		_chdir(m_Main_Assets_Path);
+		(void) _chdir(m_Main_Assets_Path);
 	}
 	else
 	{
-		_chdir(m_Main_Assets_Path);
+		(void) _chdir(m_Main_Assets_Path);
 	}
 
 	if (GameOptions->flag_Zipped_Assets == 1)
@@ -976,7 +919,7 @@ bool CL64_Build_Game::Build_Main_Asset_Folder()
 
 	//Directory_Changed_Flag = 0;
 
-	_chdir(m_Level_Folder_Path); // Return to Level Folder
+	(void) _chdir(m_Level_Folder_Path); // Return to Level Folder
 	return 1;
 }
 
@@ -994,16 +937,16 @@ bool CL64_Build_Game::Build_Area_Folder()
 
 	if (_mkdir(m_Aera_Folder_Path) == 0)
 	{
-		_chdir(m_Aera_Folder_Path);
+		(void) _chdir(m_Aera_Folder_Path);
 	}
 	else
 	{
-		_chdir(m_Aera_Folder_Path);
+		(void) _chdir(m_Aera_Folder_Path);
 	}
 
 	Build_Areas_Data();
 
-	_chdir(m_Level_Folder_Path); // Return to Level Folder
+	(void) _chdir(m_Level_Folder_Path); // Return to Level Folder
 	return 1;
 }
 
@@ -1113,13 +1056,13 @@ bool CL64_Build_Game::Build_Players_Folder()
 	strcat(m_Players_Folder_Path, "Players");
 
 
-	_mkdir(m_Players_Folder_Path);
+	(void) _mkdir(m_Players_Folder_Path);
 
-	_chdir(m_Players_Folder_Path);
+	(void)_chdir(m_Players_Folder_Path);
 
 	Build_Player_Data();
 
-	_chdir(m_Level_Folder_Path); // Return to Level Folder
+	(void)_chdir(m_Level_Folder_Path); // Return to Level Folder
 	return 1;
 }
 
@@ -1274,16 +1217,16 @@ bool CL64_Build_Game::Build_Cameras_Folder()
 
 	if (_mkdir(m_Cameras_Folder_Path) == 0)
 	{
-		_chdir(m_Cameras_Folder_Path);
+		(void) _chdir(m_Cameras_Folder_Path);
 	}
 	else
 	{
-		_chdir(m_Cameras_Folder_Path);
+		(void) _chdir(m_Cameras_Folder_Path);
 	}
 
 	Build_Cameras_Data();
 
-	_chdir(m_Level_Folder_Path); // Return to Level Folder
+	(void) _chdir(m_Level_Folder_Path); // Return to Level Folder
 
 	return 1;
 }
