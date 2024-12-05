@@ -17,7 +17,7 @@ Counters_Count=2
 Counters_ID_Count=3
  
 [Config]
-Show_FPS=0
-Game_FullScreen=0
+Show_FPS=1
+Game_FullScreen=1
 Zipped_Assets=1
 Use_Front_Dlg=1

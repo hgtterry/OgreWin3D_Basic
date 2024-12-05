@@ -86,7 +86,7 @@ void CL64_Build_Game::Init_Build_Game_Class()
 	//CloseZip(hz);
 
 	GameOptions = new Game_Options;
-	GameOptions->flag_Show_FPS = 0;
+	GameOptions->flag_Show_FPS = 1;
 	GameOptions->flag_FullScreen = 1;
 	GameOptions->flag_Zipped_Assets = 1;
 	GameOptions->flag_Front_Dialog = 1;
@@ -449,9 +449,6 @@ LRESULT CALLBACK CL64_Build_Game::Proc_Project_Build(HWND hDlg, UINT message, WP
 			{
 				App->CL_Scene->flag_Scene_Modified = 1;
 			}
-
-
-
 
 			strcpy(App->CL_File_IO->szSelectedDir, PathName);
 			strcpy(App->CL_Build_Game->StartFolder, PathName);
