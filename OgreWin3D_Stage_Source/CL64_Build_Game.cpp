@@ -692,29 +692,27 @@ void CL64_Build_Game::Copy_SystemFiles(void)
 // *************************************************************************
 void CL64_Build_Game::Copy_ZipFiles(void)
 {
-	////----------------------------- GDCore.zip
-	//strcpy(SourceFile, App->EquityDirecory_FullPath);
-	//strcat(SourceFile, "\\Media\\Core_Data\\GDCore.zip");
-
-	//strcpy(DestinationFile, CoreDataFolder);
-	//strcat(DestinationFile, "\\GDCore.zip");
-
-	//CopyFile(SourceFile, DestinationFile, false);
-	////App->CL10_PB->Nudge();
-	////----------------------------- Equity.zip
-	//strcpy(SourceFile, App->EquityDirecory_FullPath);
-	//strcat(SourceFile, "\\Media\\Core_Data\\Equity.zip");
-
-	//strcpy(DestinationFile, CoreDataFolder);
-	//strcat(DestinationFile, "\\Equity.zip");
-
-	//CopyFile(SourceFile, DestinationFile, false);
-	////App->CL10_PB->Nudge();
-	//----------------------------- OgreCore.zip
+	//----------------------------- GDCore.zip
 	strcpy(SourceFile, App->GD_Directory_FullPath);
-	strcat(SourceFile, "\\Media\\Core_Data\\OgreCore.zip");
+	strcat(SourceFile, "\\Media\\Core_Data\\GDCore.zip");
 	strcpy(DestinationFile, CoreDataFolder);
-	strcat(DestinationFile, "\\OgreCore.zip");
+	strcat(DestinationFile, "\\GDCore.zip");
+	CopyFile(SourceFile, DestinationFile, false);
+	//App->CL10_PB->Nudge();
+ 
+	//----------------------------- Entitys.zip
+	strcpy(SourceFile, App->GD_Directory_FullPath);
+	strcat(SourceFile, "\\Media\\Core_Data\\Entitys.zip");
+	strcpy(DestinationFile, CoreDataFolder);
+	strcat(DestinationFile, "\\Entitys.zip");
+	CopyFile(SourceFile, DestinationFile, false);
+	//App->CL10_PB->Nudge();
+	 
+	//----------------------------- Sinbad.zip
+	strcpy(SourceFile, App->GD_Directory_FullPath);
+	strcat(SourceFile, "\\Media\\Core_Data\\Sinbad.zip");
+	strcpy(DestinationFile, CoreDataFolder);
+	strcat(DestinationFile, "\\Sinbad.zip");
 	CopyFile(SourceFile, DestinationFile, false);
 	//App->CL10_PB->Nudge();
 
@@ -726,13 +724,6 @@ void CL64_Build_Game::Copy_ZipFiles(void)
 	CopyFile(SourceFile, DestinationFile, false);
 	//App->CL10_PB->Nudge();
 
-	//----------------------------- skybox.zip
-	strcpy(SourceFile, App->GD_Directory_FullPath);
-	strcat(SourceFile, "\\Media\\Core_Data\\skybox.zip");
-	strcpy(DestinationFile, CoreDataFolder);
-	strcat(DestinationFile, "\\skybox.zip");
-	CopyFile(SourceFile, DestinationFile, false);
-	//App->CL10_PB->Nudge();
 }
 
 

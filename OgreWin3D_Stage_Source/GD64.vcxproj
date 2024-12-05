@@ -207,6 +207,7 @@
     <ClInclude Include="CL64_Ogre.h" />
     <ClInclude Include="CL64_Ogre3D_Listener.h" />
     <ClInclude Include="CL64_Panels.h" />
+    <ClInclude Include="CL64_PB.h" />
     <ClInclude Include="CL64_Physics.h" />
     <ClInclude Include="CL64_Picking.h" />
     <ClInclude Include="CL64_Player.h" />
@@ -274,6 +275,7 @@
     <ClCompile Include="CL64_Ogre.cpp" />
     <ClCompile Include="CL64_Ogre3D_Listener.cpp" />
     <ClCompile Include="CL64_Panels.cpp" />
+    <ClCompile Include="CL64_PB.cpp" />
     <ClCompile Include="CL64_Physics.cpp" />
     <ClCompile Include="CL64_Picking.cpp" />
     <ClCompile Include="CL64_Player.cpp" />

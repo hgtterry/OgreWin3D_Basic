@@ -56,6 +56,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                      _In_ LPWSTR    lpCmdLine,
                      _In_ int       nCmdShow)
 {
+
+	//SetDllDirectoryA(LPCSTR lpPathName);
+
     InitCommonControls();
 
     App = new CL64_App();
@@ -210,7 +213,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 			if (App->CL_Scene->flag_Scene_Loaded == 1)
 			{
-				App->CL_Build_Game->Start_Project_Build();
+				//App->CL_Build_Game->Start_Project_Build();
 			}
 
 			return TRUE;

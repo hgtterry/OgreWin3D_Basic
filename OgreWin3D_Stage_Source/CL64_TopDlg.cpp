@@ -937,7 +937,7 @@ LRESULT CALLBACK CL64_TopDlg::Proc_Game_TB(HWND hDlg, UINT message, WPARAM wPara
 
 		if (LOWORD(wParam) == IDC_BT_GAME_BUILDGAME)
 		{
-			Debug
+			App->CL_Build_Game->Start_Project_Build();
 			return 1;
 		}
 
