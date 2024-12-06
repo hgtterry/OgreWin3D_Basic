@@ -52,6 +52,7 @@ public:
 	bool Load_Project_Aera();
 	bool Load_Project_Player();
 	bool Load_Project_Counters();
+	bool Load_Project_Camera();
 
 	bool Read_EnvironEntity(int Index, char* Section);
 	bool Read_Message(int Index, char* Section);

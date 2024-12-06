@@ -1573,14 +1573,14 @@ bool CL64_Project::Load_Project()
 		//App->SBC_DCC->Player_CanJump = App->CL_Prefs->Prefs_PlayerCanJump_Flag;
 	}
 
-	//// ------------------------------------- Camera
-	//if (Options->Has_Camera > 0)
-	//{
-	//	Load_Project_Camera();
-	//	App->CL_Scene->Camera_Added = 1;
-	//	App->SBC_Com_Camera->Set_Camera(0);
-	//	App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Cameras_Folder);
-	//}
+	// ------------------------------------- Camera
+	if (Options->Has_Camera > 0)
+	{
+		Load_Project_Camera();
+		//App->CL_Scene->Camera_Added = 1;
+		//App->SBC_Com_Camera->Set_Camera(0);
+		//App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Cameras_Folder);
+	}
 
 	// ------------------------------------- Objects
 	if (Options->Has_Objects > 0)
@@ -2568,6 +2568,90 @@ bool CL64_Project::Load_Project_Player()
 	//App->SBC_Physics->Enable_Physics(1);
 
 	App->CL_FileView->Set_FolderActive(App->CL_FileView->FV_Players_Folder);
+	return 1;
+}
+
+// *************************************************************************
+// *	  	Load_Project_Camera:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+bool CL64_Project::Load_Project_Camera()
+{
+	char Cameras_Ini_Path[MAX_PATH];
+	char chr_Tag1[MAX_PATH];
+	char Camera_Name[MAX_PATH];
+	int Camera_Count = 0;
+
+	float w = 0;
+	float x = 0;
+	float y = 0;
+	float z = 0;
+
+	strcpy(Cameras_Ini_Path, m_Project_Sub_Folder);
+	strcat(Cameras_Ini_Path, "\\");
+
+	strcat(Cameras_Ini_Path, m_Level_Name);
+	strcat(Cameras_Ini_Path, "\\");
+
+	strcat(Cameras_Ini_Path, "Cameras");
+	strcat(Cameras_Ini_Path, "\\");
+
+	strcat(Cameras_Ini_Path, "Cameras.epf");
+
+	App->CL_Ini_File->SetPathName(Cameras_Ini_Path);
+
+	Camera_Count = App->CL_Ini_File->GetInt("Counters", "Cameras_Count", 0, 10);
+
+	int Count = 0;
+
+	//while (Count < Camera_Count)
+	//{
+	//	char n_buff[255];
+	//	char buff[255];
+	//	strcpy(buff, "Camera_");
+	//	_itoa(Count, n_buff, 10);
+	//	strcat(buff, n_buff);
+
+	//	App->CL_Scene->B_Camera[Count] = new Base_Camera();
+
+	//	App->Cl_Ini->GetString(buff, "Camera_Name", Camera_Name, MAX_PATH);
+	//	strcpy(App->SBC_Scene->B_Camera[Count]->Camera_Name, Camera_Name);
+
+	//	//---------------------------------- Camera Pos
+	//	App->Cl_Ini->GetString(buff, "Camera_Pos", chr_Tag1, MAX_PATH);
+	//	sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
+
+	//	App->SBC_Scene->B_Camera[Count]->CamPos.x = x;
+	//	App->SBC_Scene->B_Camera[Count]->CamPos.y = y;
+	//	App->SBC_Scene->B_Camera[Count]->CamPos.z = z;
+
+	//	//---------------------------------- Camera Look At
+	//	App->Cl_Ini->GetString(buff, "LookAt", chr_Tag1, MAX_PATH);
+	//	sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
+
+	//	App->SBC_Scene->B_Camera[Count]->LookAt.x = x;
+	//	App->SBC_Scene->B_Camera[Count]->LookAt.y = y;
+	//	App->SBC_Scene->B_Camera[Count]->LookAt.z = z;
+
+	//	//---------------------------------- Camera Quaternion
+	//	App->Cl_Ini->GetString(buff, "Camera_Quat", chr_Tag1, MAX_PATH);
+	//	sscanf(chr_Tag1, "%f,%f,%f,%f", &w, &x, &y, &z);
+
+	//	App->SBC_Scene->B_Camera[Count]->Cam_Quat.w = w;
+	//	App->SBC_Scene->B_Camera[Count]->Cam_Quat.x = x;
+	//	App->SBC_Scene->B_Camera[Count]->Cam_Quat.y = y;
+	//	App->SBC_Scene->B_Camera[Count]->Cam_Quat.z = z;
+
+
+	//	App->SBC_Scene->B_Camera[Count]->FileViewItem = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Cameras_Folder,
+	//		App->SBC_Scene->B_Camera[Count]->Camera_Name, Count, false);
+
+	//	App->SBC_Scene->Camera_Count++;
+
+	//	Count++;
+	//}
+
+	//	App->SBC_FileView->Redraw_FileView();
+
 	return 1;
 }
 
