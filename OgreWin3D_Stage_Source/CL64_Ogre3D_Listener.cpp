@@ -85,6 +85,14 @@ CL64_Ogre3D_Listener::~CL64_Ogre3D_Listener(void)
 // *************************************************************************
 bool CL64_Ogre3D_Listener::frameStarted(const FrameEvent& evt)
 {
+	// ------------------------ Animation
+	if (flag_Animate_Ogre == 1 && App->CL_Scene->flag_Player_Added == 1)
+	{
+		if (CameraMode == Enums::Cam_Mode_Free)
+		{
+			App->CL_Motions->Update_Player_Motion(evt.timeSinceLastFrame);
+		}
+	}
 
 	Update_Game_Logic(evt.timeSinceLastFrame);
 

@@ -226,6 +226,9 @@ void CL64_Scene::Set_Scene()
 	//App->CL_Ogre->mSceneMgr->setSkyDome(true, "OW3D/CloudySky");
 
 	App->CL_ImGui->flag_Show_Demo_Options = 1;
+
+	App->CL_Motions->Set_Player_Motion();
+	
 }
 
 // *************************************************************************
@@ -338,7 +341,8 @@ bool CL64_Scene::Game_Mode(void)
 	App->CL_Physics->Reset_Triggers();
 
 	App->CL_ImGui_Dialogs->Show_Physics_Console = 0;
-	
+	App->CL_Player->Show_Debug_Player(false);
+
 	return 1;
 }
 
@@ -373,10 +377,19 @@ bool CL64_Scene::Editor_Mode(void)
 
 	App->CL_Ogre->Ogre3D_Listener->CameraMode = CurrentCamMode;
 
+	if (CurrentCamMode == Enums::Cam_Mode_Free)
+	{
+		App->CL_Player->Show_Debug_Player(true);
+	}
+	else
+	{
+		App->CL_Player->Show_Debug_Player(false);
+	}
+
 	App->CL_ImGui->flag_Show_FPS = App->CL_Build_Game->flag_Saved_Show_FPS;
 
 	App->CL_ImGui_Dialogs->Show_Physics_Console = 1;
-
+	
 	return 1;
 }
 
