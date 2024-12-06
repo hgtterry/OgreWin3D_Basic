@@ -261,7 +261,7 @@ void CL64_Ogre3D_Listener::Update_Game_Logic(float DeltaTime)
 		App->CL_Scene->B_Player[0]->Phys_Body->getMotionState()->getWorldTransform(trans);
 		btQuaternion orientation = trans.getRotation();
 
-		App->CL_Scene->B_Player[0]->Player_Node->setPosition(Ogre::Vector3(trans.getOrigin().getX(), trans.getOrigin().getY(), trans.getOrigin().getZ()));
+		App->CL_Scene->B_Player[0]->Player_Node->setPosition(Ogre::Vector3(trans.getOrigin().getX(), trans.getOrigin().getY()+2, trans.getOrigin().getZ()));
 		App->CL_Scene->B_Player[0]->Player_Node->setOrientation(Ogre::Quaternion(orientation.getW(), orientation.getX(), orientation.getY(), orientation.getZ()));
 		App->CL_Scene->B_Player[0]->Player_Node->pitch(Ogre::Degree(180));
 	}

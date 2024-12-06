@@ -115,13 +115,14 @@ void CL64_Player::Initialize() const
 
 	Base_Player* pBase = App->CL_Scene->B_Player[Index];
 	
-	pBase->Player_Ent = App->CL_Ogre->mSceneMgr->createEntity("Player_1", "axes.mesh", App->CL_Ogre->App_Resource_Group);
+	pBase->Player_Ent = App->CL_Ogre->mSceneMgr->createEntity("Player_1", "Sinbad.mesh", App->CL_Ogre->App_Resource_Group);
 	pBase->Player_Node = App->CL_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	pBase->Player_Node->attachObject(pBase->Player_Ent);
 	
 	pBase->Player_Node->setOrientation(Ogre::Quaternion::IDENTITY);
-	pBase->Player_Node->setVisible(false);
-	
+	pBase->Player_Node->setVisible(true);
+	pBase->Player_Node->scale(3, 3, 3);
+
 	Pos.x = pBase->StartPos.x;
 	Pos.y = pBase->StartPos.y;
 	Pos.z = pBase->StartPos.z;
