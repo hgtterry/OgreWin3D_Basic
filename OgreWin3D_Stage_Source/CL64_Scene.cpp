@@ -216,6 +216,11 @@ void CL64_Scene::Set_Scene()
 	App->CL_Player->Set_Player_GroundSpeed(70);
 
 	App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_Free;
+
+	App->CL_Player->Show_Debug_Player(true);
+	App->CL_TopDlg->flag_Toggle_PhysicaDebug_Node = 1;
+	App->CL_Ogre->Bullet_Debug_Listener->btDebug_Node->setVisible(true);
+
 	App->CL_Ogre->Ogre3D_Listener->flag_Run_Physics = 1;
 
 	//App->CL_Ogre->mSceneMgr->setSkyDome(true, "OW3D/CloudySky");

@@ -203,6 +203,7 @@
     <ClInclude Include="CL64_Materials.h" />
     <ClInclude Include="CL64_MeshViewer.h" />
     <ClInclude Include="CL64_MeshView_Listener.h" />
+    <ClInclude Include="CL64_Motions.h" />
     <ClInclude Include="CL64_Objects_Create.h" />
     <ClInclude Include="CL64_OGL_Listener.h" />
     <ClInclude Include="CL64_Ogre.h" />
@@ -272,6 +273,7 @@
     <ClCompile Include="CL64_Materials.cpp" />
     <ClCompile Include="CL64_MeshViewer.cpp" />
     <ClCompile Include="CL64_MeshView_Listener.cpp" />
+    <ClCompile Include="CL64_Motions.cpp" />
     <ClCompile Include="CL64_Objects_Create.cpp" />
     <ClCompile Include="CL64_OGL_Listener.cpp" />
     <ClCompile Include="CL64_Ogre.cpp" />
