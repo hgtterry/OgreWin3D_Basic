@@ -35,6 +35,7 @@ public:
 
 	void Start_Properties(void);
 
+	bool Update_ListView_Camera();
 	bool Update_ListView_Area();
 	bool Update_ListView_Player();
 	bool Update_ListView_Objects();

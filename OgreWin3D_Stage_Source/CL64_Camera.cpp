@@ -111,3 +111,12 @@ void CL64_Camera::Camera_Goto_Object(int Object_Index)
 	App->CL_Ogre->camNode->setPosition(Centre);
 
 }
+
+// *************************************************************************
+// *	  		Set_Camera:- Terry and Hazel Flanigan 2024				   *
+// *************************************************************************
+void CL64_Camera::Set_Camera(int Index)
+{
+	App->CL_Ogre->camNode->setPosition(App->CL_Scene->B_Camera[Index]->CamPos);
+	App->CL_Ogre->camNode->setOrientation(App->CL_Scene->B_Camera[Index]->Cam_Quat);
+}

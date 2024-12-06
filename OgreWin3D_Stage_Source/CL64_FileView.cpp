@@ -600,7 +600,32 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 		return;
 	}
 
-	// ---- Player
+	// ------------------------------------------------------------ Cameras
+	if (!strcmp(FileView_Folder, "Camera"))
+	{
+		Context_Selection = Enums::FileView_Cameras_Folder;
+
+		return;
+	}
+
+	if (!strcmp(FileView_File, "Camera"))
+	{
+		Context_Selection = Enums::FileView_Cameras_File;
+
+		HideRightPanes();
+		ShowWindow(App->CL_Properties->Properties_Dlg_hWnd, 1);
+		//App->SBC_Com_Camera->Hide_Cam_Dlg(1);
+
+		App->CL_Properties->Edit_Category = Enums::Edit_Camera;
+
+		App->CL_Properties->Current_Selected_Object = Index;
+
+		App->CL_Properties->Update_ListView_Camera();
+
+		return;
+	}
+
+	// ---------------------------------------------------- Player
 	if (!strcmp(FileView_Folder, "Player")) // Folder
 	{
 		Context_Selection = Enums::FileView_Player_Folder;

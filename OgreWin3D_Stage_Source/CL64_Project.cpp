@@ -976,29 +976,29 @@ bool CL64_Project::Save_Cameras_Data()
 
 		fprintf(WriteFile, "%s\n", buff); // Header also Player name until changed by user
 
-		//fprintf(WriteFile, "%s%s\n", "Camera_Name=", App->CL_Scene->B_Camera[Count]->Camera_Name); // Change
+		fprintf(WriteFile, "%s%s\n", "Camera_Name=", App->CL_Scene->B_Camera[Count]->Camera_Name); // Change
 
-		//---------------------------------- Camera Pos
-		/*x = App->CL_Scene->B_Camera[Count]->CamPos.x;
+		// ---------------------------------- Camera Pos
+		x = App->CL_Scene->B_Camera[Count]->CamPos.x;
 		y = App->CL_Scene->B_Camera[Count]->CamPos.y;
 		z = App->CL_Scene->B_Camera[Count]->CamPos.z;
 
-		fprintf(WriteFile, "%s%f,%f,%f\n", "Camera_Pos=", x, y, z);*/
+		fprintf(WriteFile, "%s%f,%f,%f\n", "Camera_Pos=", x, y, z);
 
-		//---------------------------------- Camera Look At
-		/*x = App->CL_Scene->B_Camera[Count]->LookAt.x;
+		// ---------------------------------- Camera Look At
+		x = App->CL_Scene->B_Camera[Count]->LookAt.x;
 		y = App->CL_Scene->B_Camera[Count]->LookAt.y;
 		z = App->CL_Scene->B_Camera[Count]->LookAt.z;
 
-		fprintf(WriteFile, "%s%f,%f,%f\n", "LookAt=", x, y, z);*/
+		fprintf(WriteFile, "%s%f,%f,%f\n", "LookAt=", x, y, z);
 
-		//---------------------------------- Camera Quaternion
-		/*w = App->CL_Scene->B_Camera[Count]->Cam_Quat.w;
+		// ---------------------------------- Camera Quaternion
+		w = App->CL_Scene->B_Camera[Count]->Cam_Quat.w;
 		x = App->CL_Scene->B_Camera[Count]->Cam_Quat.x;
 		y = App->CL_Scene->B_Camera[Count]->Cam_Quat.y;
 		z = App->CL_Scene->B_Camera[Count]->Cam_Quat.z;
 
-		fprintf(WriteFile, "%s%f,%f,%f,%f\n", "Camera_Quat=", w, x, y, z);*/
+		fprintf(WriteFile, "%s%f,%f,%f,%f\n", "Camera_Quat=", w, x, y, z);
 
 		Count++;
 	}
@@ -1577,9 +1577,9 @@ bool CL64_Project::Load_Project()
 	if (Options->Has_Camera > 0)
 	{
 		Load_Project_Camera();
-		//App->CL_Scene->Camera_Added = 1;
-		//App->SBC_Com_Camera->Set_Camera(0);
-		//App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Cameras_Folder);
+		App->CL_Scene->flag_Camera_Added = 1;
+		App->CL_Camera->Set_Camera(0);
+		App->CL_FileView->Set_FolderActive(App->CL_FileView->FV_Cameras_Folder);
 	}
 
 	// ------------------------------------- Objects
@@ -2603,54 +2603,52 @@ bool CL64_Project::Load_Project_Camera()
 
 	int Count = 0;
 
-	//while (Count < Camera_Count)
-	//{
-	//	char n_buff[255];
-	//	char buff[255];
-	//	strcpy(buff, "Camera_");
-	//	_itoa(Count, n_buff, 10);
-	//	strcat(buff, n_buff);
+	while (Count < Camera_Count)
+	{
+		char n_buff[255];
+		char buff[255];
+		strcpy(buff, "Camera_");
+		_itoa(Count, n_buff, 10);
+		strcat(buff, n_buff);
 
-	//	App->CL_Scene->B_Camera[Count] = new Base_Camera();
+		App->CL_Scene->B_Camera[Count] = new Base_Camera();
 
-	//	App->Cl_Ini->GetString(buff, "Camera_Name", Camera_Name, MAX_PATH);
-	//	strcpy(App->SBC_Scene->B_Camera[Count]->Camera_Name, Camera_Name);
+		App->CL_Ini_File->GetString(buff, "Camera_Name", Camera_Name, MAX_PATH);
+		strcpy(App->CL_Scene->B_Camera[Count]->Camera_Name, Camera_Name);
 
-	//	//---------------------------------- Camera Pos
-	//	App->Cl_Ini->GetString(buff, "Camera_Pos", chr_Tag1, MAX_PATH);
-	//	sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
+		//---------------------------------- Camera Pos
+		App->CL_Ini_File->GetString(buff, "Camera_Pos", chr_Tag1, MAX_PATH);
+		(void) sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
 
-	//	App->SBC_Scene->B_Camera[Count]->CamPos.x = x;
-	//	App->SBC_Scene->B_Camera[Count]->CamPos.y = y;
-	//	App->SBC_Scene->B_Camera[Count]->CamPos.z = z;
+		App->CL_Scene->B_Camera[Count]->CamPos.x = x;
+		App->CL_Scene->B_Camera[Count]->CamPos.y = y;
+		App->CL_Scene->B_Camera[Count]->CamPos.z = z;
 
-	//	//---------------------------------- Camera Look At
-	//	App->Cl_Ini->GetString(buff, "LookAt", chr_Tag1, MAX_PATH);
-	//	sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
+		//---------------------------------- Camera Look At
+		App->CL_Ini_File->GetString(buff, "LookAt", chr_Tag1, MAX_PATH);
+		(void) sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
 
-	//	App->SBC_Scene->B_Camera[Count]->LookAt.x = x;
-	//	App->SBC_Scene->B_Camera[Count]->LookAt.y = y;
-	//	App->SBC_Scene->B_Camera[Count]->LookAt.z = z;
+		App->CL_Scene->B_Camera[Count]->LookAt.x = x;
+		App->CL_Scene->B_Camera[Count]->LookAt.y = y;
+		App->CL_Scene->B_Camera[Count]->LookAt.z = z;
 
-	//	//---------------------------------- Camera Quaternion
-	//	App->Cl_Ini->GetString(buff, "Camera_Quat", chr_Tag1, MAX_PATH);
-	//	sscanf(chr_Tag1, "%f,%f,%f,%f", &w, &x, &y, &z);
+		//---------------------------------- Camera Quaternion
+		App->CL_Ini_File->GetString(buff, "Camera_Quat", chr_Tag1, MAX_PATH);
+		(void) sscanf(chr_Tag1, "%f,%f,%f,%f", &w, &x, &y, &z);
 
-	//	App->SBC_Scene->B_Camera[Count]->Cam_Quat.w = w;
-	//	App->SBC_Scene->B_Camera[Count]->Cam_Quat.x = x;
-	//	App->SBC_Scene->B_Camera[Count]->Cam_Quat.y = y;
-	//	App->SBC_Scene->B_Camera[Count]->Cam_Quat.z = z;
+		App->CL_Scene->B_Camera[Count]->Cam_Quat.w = w;
+		App->CL_Scene->B_Camera[Count]->Cam_Quat.x = x;
+		App->CL_Scene->B_Camera[Count]->Cam_Quat.y = y;
+		App->CL_Scene->B_Camera[Count]->Cam_Quat.z = z;
 
 
-	//	App->SBC_Scene->B_Camera[Count]->FileViewItem = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Cameras_Folder,
-	//		App->SBC_Scene->B_Camera[Count]->Camera_Name, Count, false);
+		App->CL_Scene->B_Camera[Count]->FileViewItem = App->CL_FileView->Add_Item(App->CL_FileView->FV_Cameras_Folder,
+			App->CL_Scene->B_Camera[Count]->Camera_Name, Count, false);
 
-	//	App->SBC_Scene->Camera_Count++;
+		App->CL_Scene->Camera_Count++;
 
-	//	Count++;
-	//}
-
-	//	App->SBC_FileView->Redraw_FileView();
+		Count++;
+	}
 
 	return 1;
 }

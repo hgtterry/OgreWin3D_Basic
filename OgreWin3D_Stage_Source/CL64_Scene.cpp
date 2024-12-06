@@ -45,6 +45,7 @@ CL64_Scene::CL64_Scene(void)
 	flag_Area_Added = 0;
 	flag_Scene_Loaded = 0;
 	flag_Player_Added = 0;
+	flag_Camera_Added = 0;
 	flag_Scene_Modified = 0;
 	flag_GameMode_Running = 0;
 	flag_FullScreen_Mode = 0;
@@ -55,6 +56,7 @@ CL64_Scene::CL64_Scene(void)
 
 	B_Player.reserve(20);
 	B_Object.reserve(200);
+	B_Camera.reserve(20);
 
 }
 
@@ -194,7 +196,7 @@ void CL64_Scene::Reset_Counters()
 
 	//CurrentCamMode = 0;
 	flag_Scene_Modified = 0;
-
+	flag_Camera_Added = 0;
 	flag_Scene_Loaded = 0;
 
 	Player_Location_Count = 0;
@@ -206,7 +208,11 @@ void CL64_Scene::Reset_Counters()
 // *************************************************************************
 void CL64_Scene::Set_Scene()
 {
-	App->CL_Camera->Reset_View();
+	if (flag_Camera_Added == 0)
+	{
+		App->CL_Camera->Reset_View();
+	}
+
 	App->CL_Player->Set_Player_GroundSpeed(70);
 
 	App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_Free;

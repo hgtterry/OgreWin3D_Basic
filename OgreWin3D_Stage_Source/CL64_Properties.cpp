@@ -519,13 +519,13 @@ bool CL64_Properties::Edit_Player(LPARAM lParam)
 	//result = strcmp(App->SBC_Properties->btext, "Start Pos_X");
 	//if (result == 0)
 	//{
-	//	App->SBC_Gui_Dialogs->Start_Dialog_Float(0.10, App->SBC_Scene->B_Player[0]->StartPos.x, "Start Pos_X");
+	//	App->SBC_Gui_Dialogs->Start_Dialog_Float(0.10, App->CL_Scene->B_Player[0]->StartPos.x, "Start Pos_X");
 
 	//	while (App->SBC_Gui_Dialogs->Show_Dialog_Float == 1)
 	//	{
 	//		App->SBC_Gui_Dialogs->BackGround_Render_Loop();
 
-	//		App->SBC_Scene->B_Player[0]->StartPos.x = App->SBC_Gui_Dialogs->m_Dialog_Float;
+	//		App->CL_Scene->B_Player[0]->StartPos.x = App->SBC_Gui_Dialogs->m_Dialog_Float;
 	//		App->SBC_Physics->Reset_Physics();
 	//	}
 
@@ -535,18 +535,18 @@ bool CL64_Properties::Edit_Player(LPARAM lParam)
 	//	{
 	//		App->SBC_Gui_Dialogs->Show_Dialog_Float = 0;
 
-	//		App->SBC_Scene->B_Player[0]->StartPos.x = App->SBC_Gui_Dialogs->m_Dialog_Float;
+	//		App->CL_Scene->B_Player[0]->StartPos.x = App->SBC_Gui_Dialogs->m_Dialog_Float;
 
-	//		App->SBC_Scene->Scene_Modified = 1;
+	//		App->CL_Scene->Scene_Modified = 1;
 
-	//		App->SBC_Scene->B_Player[0]->Altered = 1;
-	//		App->SBC_Scene->Scene_Modified = 1;
-	//		App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Player[0]->FileViewItem);
+	//		App->CL_Scene->B_Player[0]->Altered = 1;
+	//		App->CL_Scene->Scene_Modified = 1;
+	//		App->SBC_FileView->Mark_Altered(App->CL_Scene->B_Player[0]->FileViewItem);
 	//	}
 	//	else
 	//	{
 	//		App->SBC_Gui_Dialogs->m_Dialog_Float = App->SBC_Gui_Dialogs->m_Dialog_Float_Copy;
-	//		App->SBC_Scene->B_Player[0]->StartPos.x = App->SBC_Gui_Dialogs->m_Dialog_Float_Copy;
+	//		App->CL_Scene->B_Player[0]->StartPos.x = App->SBC_Gui_Dialogs->m_Dialog_Float_Copy;
 	//		App->SBC_Physics->Reset_Physics();
 	//	}
 
@@ -560,13 +560,13 @@ bool CL64_Properties::Edit_Player(LPARAM lParam)
 	//result = strcmp(App->SBC_Properties->btext, "Start Pos_Y");
 	//if (result == 0)
 	//{
-	//	App->SBC_Gui_Dialogs->Start_Dialog_Float(0.10, App->SBC_Scene->B_Player[0]->StartPos.y, "Start Pos_Y");
+	//	App->SBC_Gui_Dialogs->Start_Dialog_Float(0.10, App->CL_Scene->B_Player[0]->StartPos.y, "Start Pos_Y");
 
 	//	while (App->SBC_Gui_Dialogs->Show_Dialog_Float == 1)
 	//	{
 	//		App->SBC_Gui_Dialogs->BackGround_Render_Loop();
 
-	//		App->SBC_Scene->B_Player[0]->StartPos.y = App->SBC_Gui_Dialogs->m_Dialog_Float;
+	//		App->CL_Scene->B_Player[0]->StartPos.y = App->SBC_Gui_Dialogs->m_Dialog_Float;
 	//		App->SBC_Physics->Reset_Physics();
 	//	}
 
@@ -576,18 +576,18 @@ bool CL64_Properties::Edit_Player(LPARAM lParam)
 	//	{
 	//		App->SBC_Gui_Dialogs->Show_Dialog_Float = 0;
 
-	//		App->SBC_Scene->B_Player[0]->StartPos.y = App->SBC_Gui_Dialogs->m_Dialog_Float;
+	//		App->CL_Scene->B_Player[0]->StartPos.y = App->SBC_Gui_Dialogs->m_Dialog_Float;
 
-	//		App->SBC_Scene->Scene_Modified = 1;
+	//		App->CL_Scene->Scene_Modified = 1;
 
-	//		App->SBC_Scene->B_Player[0]->Altered = 1;
-	//		App->SBC_Scene->Scene_Modified = 1;
-	//		App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Player[0]->FileViewItem);
+	//		App->CL_Scene->B_Player[0]->Altered = 1;
+	//		App->CL_Scene->Scene_Modified = 1;
+	//		App->SBC_FileView->Mark_Altered(App->CL_Scene->B_Player[0]->FileViewItem);
 	//	}
 	//	else
 	//	{
 	//		App->SBC_Gui_Dialogs->m_Dialog_Float = App->SBC_Gui_Dialogs->m_Dialog_Float_Copy;
-	//		App->SBC_Scene->B_Player[0]->StartPos.y = App->SBC_Gui_Dialogs->m_Dialog_Float_Copy;
+	//		App->CL_Scene->B_Player[0]->StartPos.y = App->SBC_Gui_Dialogs->m_Dialog_Float_Copy;
 	//		App->SBC_Physics->Reset_Physics();
 	//	}
 
@@ -600,13 +600,13 @@ bool CL64_Properties::Edit_Player(LPARAM lParam)
 	//result = strcmp(App->SBC_Properties->btext, "Start Pos_Z");
 	//if (result == 0)
 	//{
-	//	App->SBC_Gui_Dialogs->Start_Dialog_Float(0.10, App->SBC_Scene->B_Player[0]->StartPos.z, "Start Pos_Z");
+	//	App->SBC_Gui_Dialogs->Start_Dialog_Float(0.10, App->CL_Scene->B_Player[0]->StartPos.z, "Start Pos_Z");
 
 	//	while (App->SBC_Gui_Dialogs->Show_Dialog_Float == 1)
 	//	{
 	//		App->SBC_Gui_Dialogs->BackGround_Render_Loop();
 
-	//		App->SBC_Scene->B_Player[0]->StartPos.z = App->SBC_Gui_Dialogs->m_Dialog_Float;
+	//		App->CL_Scene->B_Player[0]->StartPos.z = App->SBC_Gui_Dialogs->m_Dialog_Float;
 	//		App->SBC_Physics->Reset_Physics();
 	//	}
 
@@ -616,18 +616,18 @@ bool CL64_Properties::Edit_Player(LPARAM lParam)
 	//	{
 	//		App->SBC_Gui_Dialogs->Show_Dialog_Float = 0;
 
-	//		App->SBC_Scene->B_Player[0]->StartPos.z = App->SBC_Gui_Dialogs->m_Dialog_Float;
+	//		App->CL_Scene->B_Player[0]->StartPos.z = App->SBC_Gui_Dialogs->m_Dialog_Float;
 
-	//		App->SBC_Scene->Scene_Modified = 1;
+	//		App->CL_Scene->Scene_Modified = 1;
 
-	//		App->SBC_Scene->B_Player[0]->Altered = 1;
-	//		App->SBC_Scene->Scene_Modified = 1;
-	//		App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Player[0]->FileViewItem);
+	//		App->CL_Scene->B_Player[0]->Altered = 1;
+	//		App->CL_Scene->Scene_Modified = 1;
+	//		App->SBC_FileView->Mark_Altered(App->CL_Scene->B_Player[0]->FileViewItem);
 	//	}
 	//	else
 	//	{
 	//		App->SBC_Gui_Dialogs->m_Dialog_Float = App->SBC_Gui_Dialogs->m_Dialog_Float_Copy;
-	//		App->SBC_Scene->B_Player[0]->StartPos.z = App->SBC_Gui_Dialogs->m_Dialog_Float_Copy;
+	//		App->CL_Scene->B_Player[0]->StartPos.z = App->SBC_Gui_Dialogs->m_Dialog_Float_Copy;
 	//		App->SBC_Physics->Reset_Physics();
 	//	}
 
@@ -641,7 +641,7 @@ bool CL64_Properties::Edit_Player(LPARAM lParam)
 	//result = strcmp(App->SBC_Properties->btext, "Look Up");
 	//if (result == 0)
 	//{
-	//	App->SBC_Gui_Dialogs->Start_Dialog_Float(0.5, App->SBC_Scene->B_Player[0]->Limit_Look_Up, "Player Look Up Limit");
+	//	App->SBC_Gui_Dialogs->Start_Dialog_Float(0.5, App->CL_Scene->B_Player[0]->Limit_Look_Up, "Player Look Up Limit");
 
 	//	while (App->SBC_Gui_Dialogs->Show_Dialog_Float == 1)
 	//	{
@@ -652,11 +652,11 @@ bool CL64_Properties::Edit_Player(LPARAM lParam)
 
 	//	if (App->SBC_Gui_Dialogs->Float_Canceld == 0)
 	//	{
-	//		App->SBC_Scene->B_Player[0]->Limit_Look_Up = App->SBC_Gui_Dialogs->m_Dialog_Float;
+	//		App->CL_Scene->B_Player[0]->Limit_Look_Up = App->SBC_Gui_Dialogs->m_Dialog_Float;
 
-	//		App->SBC_Scene->B_Player[0]->Altered = 1;
-	//		App->SBC_Scene->Scene_Modified = 1;
-	//		App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Player[0]->FileViewItem);
+	//		App->CL_Scene->B_Player[0]->Altered = 1;
+	//		App->CL_Scene->Scene_Modified = 1;
+	//		App->SBC_FileView->Mark_Altered(App->CL_Scene->B_Player[0]->FileViewItem);
 	//	}
 
 	//	App->Disable_Panels(false);
@@ -670,7 +670,7 @@ bool CL64_Properties::Edit_Player(LPARAM lParam)
 	//if (result == 0)
 	//{
 
-	//	App->SBC_Gui_Dialogs->Start_Dialog_Float(0.5, App->SBC_Scene->B_Player[0]->Limit_Look_Down, "Player Look Down Limit");
+	//	App->SBC_Gui_Dialogs->Start_Dialog_Float(0.5, App->CL_Scene->B_Player[0]->Limit_Look_Down, "Player Look Down Limit");
 
 	//	while (App->SBC_Gui_Dialogs->Show_Dialog_Float == 1)
 	//	{
@@ -681,11 +681,11 @@ bool CL64_Properties::Edit_Player(LPARAM lParam)
 
 	//	if (App->SBC_Gui_Dialogs->Float_Canceld == 0)
 	//	{
-	//		App->SBC_Scene->B_Player[0]->Limit_Look_Down = App->SBC_Gui_Dialogs->m_Dialog_Float;
+	//		App->CL_Scene->B_Player[0]->Limit_Look_Down = App->SBC_Gui_Dialogs->m_Dialog_Float;
 
-	//		App->SBC_Scene->B_Player[0]->Altered = 1;
-	//		App->SBC_Scene->Scene_Modified = 1;
-	//		App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Player[0]->FileViewItem);
+	//		App->CL_Scene->B_Player[0]->Altered = 1;
+	//		App->CL_Scene->Scene_Modified = 1;
+	//		App->SBC_FileView->Mark_Altered(App->CL_Scene->B_Player[0]->FileViewItem);
 	//	}
 
 	//	App->Disable_Panels(false);
@@ -940,7 +940,7 @@ bool CL64_Properties::Edit_Move_Entity(LPARAM lParam)
 		Update_ListView_Move_Entities();
 
 		/*strcpy(App->Cl_Dialogs->btext, "Select Object to Move");
-		strcpy(App->SBC_Dialogs->Chr_DropText, App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Object_Name);
+		strcpy(App->SBC_Dialogs->Chr_DropText, App->CL_Scene->B_Object[Index]->S_MoveType[0]->Object_Name);
 
 		App->SBC_Dialogs->DropList_Data = Enums::DropDialog_TrigMoveObject;
 		App->SBC_Dialogs->Dialog_DropGen();
@@ -948,19 +948,19 @@ bool CL64_Properties::Edit_Move_Entity(LPARAM lParam)
 
 		if (App->SBC_Dialogs->Canceled == 0)
 		{
-			strcpy(App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Object_Name, App->SBC_Dialogs->Chr_DropText);
+			strcpy(App->CL_Scene->B_Object[Index]->S_MoveType[0]->Object_Name, App->SBC_Dialogs->Chr_DropText);
 
-			int MoveObjectIndex = App->CL_Object->GetIndex_By_Name(App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Object_Name);
+			int MoveObjectIndex = App->CL_Object->GetIndex_By_Name(App->CL_Scene->B_Object[Index]->S_MoveType[0]->Object_Name);
 
-			App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Object_To_Move_Index = MoveObjectIndex;
+			App->CL_Scene->B_Object[Index]->S_MoveType[0]->Object_To_Move_Index = MoveObjectIndex;
 
-			App->SBC_Scene->B_Object[Index]->S_MoveType[0]->MeshPos.x = App->SBC_Scene->B_Object[MoveObjectIndex]->Mesh_Pos.x;
-			App->SBC_Scene->B_Object[Index]->S_MoveType[0]->MeshPos.y = App->SBC_Scene->B_Object[MoveObjectIndex]->Mesh_Pos.y;
-			App->SBC_Scene->B_Object[Index]->S_MoveType[0]->MeshPos.z = App->SBC_Scene->B_Object[MoveObjectIndex]->Mesh_Pos.z;
+			App->CL_Scene->B_Object[Index]->S_MoveType[0]->MeshPos.x = App->CL_Scene->B_Object[MoveObjectIndex]->Mesh_Pos.x;
+			App->CL_Scene->B_Object[Index]->S_MoveType[0]->MeshPos.y = App->CL_Scene->B_Object[MoveObjectIndex]->Mesh_Pos.y;
+			App->CL_Scene->B_Object[Index]->S_MoveType[0]->MeshPos.z = App->CL_Scene->B_Object[MoveObjectIndex]->Mesh_Pos.z;
 
-			App->SBC_Scene->B_Object[Index]->S_MoveType[0]->PhysicsPos.x = App->SBC_Scene->B_Object[MoveObjectIndex]->Physics_Pos.x;
-			App->SBC_Scene->B_Object[Index]->S_MoveType[0]->PhysicsPos.y = App->SBC_Scene->B_Object[MoveObjectIndex]->Physics_Pos.y;
-			App->SBC_Scene->B_Object[Index]->S_MoveType[0]->PhysicsPos.z = App->SBC_Scene->B_Object[MoveObjectIndex]->Physics_Pos.z;
+			App->CL_Scene->B_Object[Index]->S_MoveType[0]->PhysicsPos.x = App->CL_Scene->B_Object[MoveObjectIndex]->Physics_Pos.x;
+			App->CL_Scene->B_Object[Index]->S_MoveType[0]->PhysicsPos.y = App->CL_Scene->B_Object[MoveObjectIndex]->Physics_Pos.y;
+			App->CL_Scene->B_Object[Index]->S_MoveType[0]->PhysicsPos.z = App->CL_Scene->B_Object[MoveObjectIndex]->Physics_Pos.z;
 
 			Mark_As_Altered(Index);
 
@@ -1326,11 +1326,11 @@ bool CL64_Properties::Edit_Teleport_Entity(LPARAM lParam)
 
 		if (App->SBC_Dialogs->Canceled == 0)
 		{
-			App->SBC_Scene->B_Object[Index]->S_Environ[0]->Enabled = 1;
+			App->CL_Scene->B_Object[Index]->S_Environ[0]->Enabled = 1;
 		}
 		else
 		{
-			App->SBC_Scene->B_Object[Index]->S_Environ[0]->Enabled = 0;
+			App->CL_Scene->B_Object[Index]->S_Environ[0]->Enabled = 0;
 		}*/
 
 		//Update_ListView_Teleport();
@@ -1527,7 +1527,7 @@ bool CL64_Properties::Edit_Camera_Onclick(LPARAM lParam)
 	//if (result == 0)
 	//{
 	//	char chr_Value[10];
-	//	sprintf(chr_Value, "%.3f ", App->SBC_Scene->B_Camera[Index]->CamPos.x);
+	//	sprintf(chr_Value, "%.3f ", App->CL_Scene->B_Camera[Index]->CamPos.x);
 
 	//	strcpy(App->Cl_Dialogs->Chr_Float, chr_Value);
 	//	strcpy(App->Cl_Dialogs->btext, "Position X");
@@ -1535,11 +1535,11 @@ bool CL64_Properties::Edit_Camera_Onclick(LPARAM lParam)
 	//	App->Cl_Dialogs->Dialog_Float();
 	//	if (App->Cl_Dialogs->Canceled == 1) { return TRUE; }
 
-	//	App->SBC_Scene->B_Camera[Index]->CamPos.x = App->Cl_Dialogs->mFloat;
+	//	App->CL_Scene->B_Camera[Index]->CamPos.x = App->Cl_Dialogs->mFloat;
 
-	//	App->SBC_Scene->B_Camera[Index]->Altered = 1;
-	//	App->SBC_Scene->Scene_Modified = 1;
-	//	App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Camera[Index]->FileViewItem);
+	//	App->CL_Scene->B_Camera[Index]->Altered = 1;
+	//	App->CL_Scene->Scene_Modified = 1;
+	//	App->SBC_FileView->Mark_Altered(App->CL_Scene->B_Camera[Index]->FileViewItem);
 
 	//	Update_ListView_Camera();
 
@@ -1550,7 +1550,7 @@ bool CL64_Properties::Edit_Camera_Onclick(LPARAM lParam)
 	//if (result == 0)
 	//{
 	//	char chr_Value[10];
-	//	sprintf(chr_Value, "%.3f ", App->SBC_Scene->B_Camera[Index]->CamPos.y);
+	//	sprintf(chr_Value, "%.3f ", App->CL_Scene->B_Camera[Index]->CamPos.y);
 
 	//	strcpy(App->Cl_Dialogs->Chr_Float, chr_Value);
 	//	strcpy(App->Cl_Dialogs->btext, "Position Y");
@@ -1558,11 +1558,11 @@ bool CL64_Properties::Edit_Camera_Onclick(LPARAM lParam)
 	//	App->Cl_Dialogs->Dialog_Float();
 	//	if (App->Cl_Dialogs->Canceled == 1) { return TRUE; }
 
-	//	App->SBC_Scene->B_Camera[Index]->CamPos.y = App->Cl_Dialogs->mFloat;
+	//	App->CL_Scene->B_Camera[Index]->CamPos.y = App->Cl_Dialogs->mFloat;
 
-	//	App->SBC_Scene->B_Camera[Index]->Altered = 1;
-	//	App->SBC_Scene->Scene_Modified = 1;
-	//	App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Camera[Index]->FileViewItem);
+	//	App->CL_Scene->B_Camera[Index]->Altered = 1;
+	//	App->CL_Scene->Scene_Modified = 1;
+	//	App->SBC_FileView->Mark_Altered(App->CL_Scene->B_Camera[Index]->FileViewItem);
 
 	//	Update_ListView_Camera();
 
@@ -1573,7 +1573,7 @@ bool CL64_Properties::Edit_Camera_Onclick(LPARAM lParam)
 	//if (result == 0)
 	//{
 	//	char chr_Value[10];
-	//	sprintf(chr_Value, "%.3f ", App->SBC_Scene->B_Camera[Index]->CamPos.z);
+	//	sprintf(chr_Value, "%.3f ", App->CL_Scene->B_Camera[Index]->CamPos.z);
 
 	//	strcpy(App->Cl_Dialogs->Chr_Float, chr_Value);
 	//	strcpy(App->Cl_Dialogs->btext, "Position Z");
@@ -1581,11 +1581,11 @@ bool CL64_Properties::Edit_Camera_Onclick(LPARAM lParam)
 	//	App->Cl_Dialogs->Dialog_Float();
 	//	if (App->Cl_Dialogs->Canceled == 1) { return TRUE; }
 
-	//	App->SBC_Scene->B_Camera[Index]->CamPos.z = App->Cl_Dialogs->mFloat;
+	//	App->CL_Scene->B_Camera[Index]->CamPos.z = App->Cl_Dialogs->mFloat;
 
-	//	App->SBC_Scene->B_Camera[Index]->Altered = 1;
-	//	App->SBC_Scene->Scene_Modified = 1;
-	//	App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Camera[Index]->FileViewItem);
+	//	App->CL_Scene->B_Camera[Index]->Altered = 1;
+	//	App->CL_Scene->Scene_Modified = 1;
+	//	App->SBC_FileView->Mark_Altered(App->CL_Scene->B_Camera[Index]->FileViewItem);
 
 	//	Update_ListView_Camera();
 
@@ -1606,9 +1606,9 @@ bool CL64_Properties::Edit_Camera_Onclick(LPARAM lParam)
 
 	//	App->SBC_Com_Camera->LookAt_X = App->Cl_Dialogs->mFloat;
 
-	//	App->SBC_Scene->B_Camera[Index]->Altered = 1;
-	//	App->SBC_Scene->Scene_Modified = 1;
-	//	App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Camera[Index]->FileViewItem);
+	//	App->CL_Scene->B_Camera[Index]->Altered = 1;
+	//	App->CL_Scene->Scene_Modified = 1;
+	//	App->SBC_FileView->Mark_Altered(App->CL_Scene->B_Camera[Index]->FileViewItem);
 
 	//	Update_ListView_Camera();
 
@@ -1629,9 +1629,9 @@ bool CL64_Properties::Edit_Camera_Onclick(LPARAM lParam)
 
 	//	App->SBC_Com_Camera->LookAt_Y = App->Cl_Dialogs->mFloat;
 
-	//	App->SBC_Scene->B_Camera[Index]->Altered = 1;
-	//	App->SBC_Scene->Scene_Modified = 1;
-	//	App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Camera[Index]->FileViewItem);
+	//	App->CL_Scene->B_Camera[Index]->Altered = 1;
+	//	App->CL_Scene->Scene_Modified = 1;
+	//	App->SBC_FileView->Mark_Altered(App->CL_Scene->B_Camera[Index]->FileViewItem);
 
 	//	Update_ListView_Camera();
 
@@ -1652,9 +1652,9 @@ bool CL64_Properties::Edit_Camera_Onclick(LPARAM lParam)
 
 	//	App->SBC_Com_Camera->LookAt_Z = App->Cl_Dialogs->mFloat;
 
-	//	App->SBC_Scene->B_Camera[Index]->Altered = 1;
-	//	App->SBC_Scene->Scene_Modified = 1;
-	//	App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Camera[Index]->FileViewItem);
+	//	App->CL_Scene->B_Camera[Index]->Altered = 1;
+	//	App->CL_Scene->Scene_Modified = 1;
+	//	App->SBC_FileView->Mark_Altered(App->CL_Scene->B_Camera[Index]->FileViewItem);
 
 	//	Update_ListView_Camera();
 
@@ -2000,14 +2000,14 @@ void CL64_Properties::Edit_Light_Onclick(LPARAM lParam)
 	if (result == 0)
 	{
 
-		App->SBC_Gui_Dialogs->Start_Dialog_Float(1, App->SBC_Scene->B_Object[Index]->Mesh_Pos.x, "Pos X");
+		App->SBC_Gui_Dialogs->Start_Dialog_Float(1, App->CL_Scene->B_Object[Index]->Mesh_Pos.x, "Pos X");
 
 		while (App->SBC_Gui_Dialogs->Show_Dialog_Float == 1)
 		{
 			App->SBC_Gui_Dialogs->BackGround_Render_Loop();
 
-			App->SBC_Scene->B_Object[Index]->Mesh_Pos.x = App->SBC_Gui_Dialogs->m_Dialog_Float;
-			App->SBC_Scene->B_Object[Index]->Object_Node->setPosition(App->SBC_Scene->B_Object[Index]->Mesh_Pos);
+			App->CL_Scene->B_Object[Index]->Mesh_Pos.x = App->SBC_Gui_Dialogs->m_Dialog_Float;
+			App->CL_Scene->B_Object[Index]->Object_Node->setPosition(App->CL_Scene->B_Object[Index]->Mesh_Pos);
 
 		}
 
@@ -2020,14 +2020,14 @@ void CL64_Properties::Edit_Light_Onclick(LPARAM lParam)
 	if (result == 0)
 	{
 
-		App->SBC_Gui_Dialogs->Start_Dialog_Float(1, App->SBC_Scene->B_Object[Index]->Mesh_Pos.y, "Pos Y");
+		App->SBC_Gui_Dialogs->Start_Dialog_Float(1, App->CL_Scene->B_Object[Index]->Mesh_Pos.y, "Pos Y");
 
 		while (App->SBC_Gui_Dialogs->Show_Dialog_Float == 1)
 		{
 			App->SBC_Gui_Dialogs->BackGround_Render_Loop();
 
-			App->SBC_Scene->B_Object[Index]->Mesh_Pos.y = App->SBC_Gui_Dialogs->m_Dialog_Float;
-			App->SBC_Scene->B_Object[Index]->Object_Node->setPosition(App->SBC_Scene->B_Object[Index]->Mesh_Pos);
+			App->CL_Scene->B_Object[Index]->Mesh_Pos.y = App->SBC_Gui_Dialogs->m_Dialog_Float;
+			App->CL_Scene->B_Object[Index]->Object_Node->setPosition(App->CL_Scene->B_Object[Index]->Mesh_Pos);
 
 		}
 
@@ -2044,6 +2044,77 @@ void CL64_Properties::Edit_Light_Onclick(LPARAM lParam)
 }
 
 // *************************************************************************
+// *		Update_ListView_Camera:- Terry and Hazel Flanigan 2024 	 	   *
+// *************************************************************************
+bool CL64_Properties::Update_ListView_Camera()
+{
+	int Index = App->CL_Properties->Current_Selected_Object;
+
+	//	char Num[10];
+	char chr_ID[50];
+	//_itoa(App->CL_Scene->B_Camera[Index]->, Num, 10);
+	strcpy(chr_ID, "Properties ID=0");
+	//strcat(chr_ID, Num);
+
+	SetWindowText(Properties_Dlg_hWnd, chr_ID);
+	//SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)App->CL_Scene->B_Camera[Index]->Camera_Name);
+
+	char chr_Pos_X[100];
+	char chr_Pos_Y[100];
+	char chr_Pos_Z[100];
+
+	char chr_LookAT_X[100];
+	char chr_LookAT_Y[100];
+	char chr_LookAT_Z[100];
+
+	sprintf(chr_Pos_X, "%.3f ", App->CL_Scene->B_Camera[Index]->CamPos.x);
+	sprintf(chr_Pos_Y, "%.3f ", App->CL_Scene->B_Camera[Index]->CamPos.y);
+	sprintf(chr_Pos_Z, "%.3f ", App->CL_Scene->B_Camera[Index]->CamPos.z);
+
+	sprintf(chr_LookAT_X, "%.3f ", App->CL_Scene->B_Camera[Index]->LookAt.x);
+	sprintf(chr_LookAT_Y, "%.3f ", App->CL_Scene->B_Camera[Index]->LookAt.y);
+	sprintf(chr_LookAT_Z, "%.3f ", App->CL_Scene->B_Camera[Index]->LookAt.z);
+
+
+	const int NUM_ITEMS = 9;
+	const int NUM_COLS = 2;
+	std::string grid[NUM_COLS][NUM_ITEMS]; // string table
+	LV_ITEM pitem;
+	memset(&pitem, 0, sizeof(LV_ITEM));
+	pitem.mask = LVIF_TEXT;
+
+	grid[0][0] = "Name", grid[1][0] = App->CL_Scene->B_Camera[Index]->Camera_Name;
+	grid[0][1] = " ", grid[1][1] = " ";
+	grid[0][2] = "Pos_X", grid[1][2] = chr_Pos_X;
+	grid[0][3] = "Pos_Y", grid[1][3] = chr_Pos_Y;
+	grid[0][4] = "Pos_Z", grid[1][4] = chr_Pos_Z;
+	grid[0][5] = " ", grid[1][5] = " ";
+	grid[0][6] = "LookAt_X", grid[1][6] = chr_LookAT_X;
+	grid[0][7] = "LookAt_Y", grid[1][7] = chr_LookAT_Y;
+	grid[0][8] = "LookAt_Z", grid[1][8] = chr_LookAT_Z;
+
+
+	ListView_DeleteAllItems(App->CL_Properties->Properties_hLV);
+
+	for (DWORD row = 0; row < NUM_ITEMS; row++)
+	{
+		pitem.iItem = row;
+		pitem.pszText = const_cast<char*>(grid[0][row].c_str());
+		ListView_InsertItem(App->CL_Properties->Properties_hLV, &pitem);
+
+		//ListView_SetItemText
+
+		for (DWORD col = 1; col < NUM_COLS; col++)
+		{
+			ListView_SetItemText(App->CL_Properties->Properties_hLV, row, col,
+				const_cast<char*>(grid[col][row].c_str()));
+		}
+	}
+
+	return 1;
+}
+
+// *************************************************************************
 // *		Update_ListView_Area:- Terry and Hazel Flanigan 2024	 	   *
 // *************************************************************************
 bool CL64_Properties::Update_ListView_Area()
@@ -2057,7 +2128,7 @@ bool CL64_Properties::Update_ListView_Area()
 	strcat(chr_ID, Num);
 
 	SetWindowText(Properties_Dlg_hWnd, chr_ID);
-	//SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)App->SBC_Scene->B_Area[Index]->Area_Name);
+	//SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)App->CL_Scene->B_Area[Index]->Area_Name);
 
 	const int NUM_ITEMS = 3;
 	const int NUM_COLS = 2;
@@ -2104,7 +2175,7 @@ bool CL64_Properties::Update_ListView_Player()
 	//strcat(chr_ID, Num);
 
 	SetWindowText(Properties_Dlg_hWnd, chr_ID);
-	//SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)App->SBC_Scene->B_Player[0]->Player_Name);
+	//SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)App->CL_Scene->B_Player[0]->Player_Name);
 
 	char chr_Speed[100];
 	char chr_TurnRate[100];
@@ -2191,7 +2262,7 @@ bool CL64_Properties::Update_ListView_Objects()
 
 
 	SetWindowText(Properties_Dlg_hWnd, chr_ID);
-	//SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)App->SBC_Scene->B_Object[index]->Mesh_Name);
+	//SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)App->CL_Scene->B_Object[index]->Mesh_Name);
 
 
 	const int NUM_ITEMS = 4;
@@ -2244,7 +2315,7 @@ bool CL64_Properties::Update_ListView_Collectables()
 	strcat(chr_ID, IndexNum);
 
 	SetWindowText(Properties_Dlg_hWnd, chr_ID);
-	//SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)App->SBC_Scene->B_Object[index]->Mesh_Name);
+	//SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)App->CL_Scene->B_Object[index]->Mesh_Name);
 
 	// new sound
 	char chr_Play[100];
@@ -2332,7 +2403,7 @@ bool CL64_Properties::Update_ListView_Sounds()
 	_itoa(App->CL_Scene->B_Object[index]->Usage, chr_Usage_Num, 10);
 
 	SetWindowText(Properties_Dlg_hWnd, chr_ID);
-	//SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)App->SBC_Scene->B_Object[index]->Mesh_Name);
+	//SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)App->CL_Scene->B_Object[index]->Mesh_Name);
 
 
 	char chr_Volume[100];
@@ -2391,7 +2462,7 @@ bool CL64_Properties::Update_ListView_Move_Entities()
 	strcat(chr_ID, IndexNum);
 
 	SetWindowText(Properties_Dlg_hWnd, chr_ID);
-	//SetDlgItemText(App->SBC_Properties->Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)App->SBC_Scene->B_Object[index]->Mesh_Name);
+	//SetDlgItemText(App->SBC_Properties->Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)App->CL_Scene->B_Object[index]->Mesh_Name);
 
 	char chr_Distance[100];
 	sprintf(chr_Distance, "%.3f ", App->CL_Scene->B_Object[index]->S_MoveType[0]->Move_Distance);
@@ -2503,7 +2574,7 @@ bool CL64_Properties::Update_ListView_Messages()
 	strcat(chr_ID, IndexNum);
 
 	SetWindowText(Properties_Dlg_hWnd, chr_ID);
-	//SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)App->SBC_Scene->B_Object[index]->Mesh_Name);
+	//SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)App->CL_Scene->B_Object[index]->Mesh_Name);
 
 	char chr_PosX[20];
 	sprintf(chr_PosX, "%.3f ", App->CL_Scene->B_Object[index]->S_Message[0]->Message_PosX);
@@ -2569,7 +2640,7 @@ bool CL64_Properties::Update_ListView_Teleport()
 	strcat(chr_ID, Num);
 
 	SetWindowText(Properties_Dlg_hWnd, chr_ID);
-	//SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)App->SBC_Scene->B_Object[index]->Mesh_Name);
+	//SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)App->CL_Scene->B_Object[index]->Mesh_Name);
 
 	// new sound
 	char chr_Play[100];
@@ -2713,7 +2784,7 @@ bool CL64_Properties::Update_ListView_Particles()
 	strcat(chr_ID, "  Object Index ");
 	strcat(chr_ID, IndexNum);
 	SetWindowText(Properties_Dlg_hWnd, chr_ID);
-	//SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)App->SBC_Scene->B_Object[index]->Mesh_Name);
+	//SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)App->CL_Scene->B_Object[index]->Mesh_Name);
 
 	char chr_Speed[100];
 
@@ -2763,7 +2834,7 @@ bool CL64_Properties::Update_ListView_Counters()
 	strcat(chr_ID, Num);
 
 	SetWindowText(Properties_Dlg_hWnd, chr_ID);
-	//SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)App->SBC_Scene->B_Counter[index]->Panel_Name);
+	//SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)App->CL_Scene->B_Counter[index]->Panel_Name);
 
 	char chr_PosX[20];
 	sprintf(chr_PosX, "%.3f ", App->CL_Scene->B_Counter[index]->PosX);
@@ -2839,7 +2910,7 @@ bool CL64_Properties::Update_ListView_Environs()
 	strcat(chr_ID, IndexNum);
 
 	SetWindowText(Properties_Dlg_hWnd, chr_ID);
-	//SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)App->SBC_Scene->B_Object[index]->Mesh_Name);
+	//SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)App->CL_Scene->B_Object[index]->Mesh_Name);
 
 	const int NUM_ITEMS = 3;
 	const int NUM_COLS = 2;
