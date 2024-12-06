@@ -101,7 +101,7 @@ void CL64_Picking::Mouse_Pick_Entity()
     Ogre::Real tx = io.MousePos.x / (Ogre::Real)rw->getWidth();
     Ogre::Real ty = io.MousePos.y / (Ogre::Real)rw->getHeight();
 
-    Ogre::Ray ray = camera->getCameraToViewportRay(tx, ty);
+   // Ogre::Ray ray = camera->getCameraToViewportRay(tx, ty);
 
     // if (Ray_Test_Particles(ray) == 1)
    //  {
@@ -131,7 +131,7 @@ void CL64_Picking::Mouse_Pick_Entity()
         char buff[255];
         strcpy(buff, Pl_Entity_Name.c_str());
 
-       // App->CL_Vm_ImGui->Show_Object_Selection = 1;
+        //App->CL_Vm_ImGui->Show_Object_Selection = 1;
 
         bool test = Ogre::StringUtil::match("Plane0", Pl_Entity_Name, true);
         if (test == 1)
@@ -210,7 +210,7 @@ bool CL64_Picking::raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::Mo
     {
         mRaySceneQuery->setRay(ray);
         mRaySceneQuery->setSortByDistance(true);
-        // mRaySceneQuery->setQueryMask(Ogre::SceneManager::ENTITY_TYPE_MASK);
+        
         mRaySceneQuery->setQueryTypeMask(Ogre::SceneManager::ENTITY_TYPE_MASK);
         // execute the query, returns a vector of hits
         if (mRaySceneQuery->execute().size() <= 0)
@@ -298,9 +298,9 @@ bool CL64_Picking::raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::Mo
                         App->CL_Grid->HitFaceUVs[1] = TextCords[Face_Index + 1];
                         App->CL_Grid->HitFaceUVs[2] = TextCords[Face_Index + 2];*/
 
-                        SubMesh_Face = Sub_Mesh_Indexs[Face_Index];
+                        //SubMesh_Face = Sub_Mesh_Indexs[Face_Index];
 
-                        Get_Material_Data();
+                        //Get_Material_Data();
 
                         //App->CL_Grid->FaceNode->setVisible(true);
                     }

@@ -2076,7 +2076,7 @@ bool CL64_Properties::Update_ListView_Camera()
 	sprintf(chr_LookAT_Z, "%.3f ", App->CL_Scene->B_Camera[Index]->LookAt.z);
 
 
-	const int NUM_ITEMS = 9;
+	const int NUM_ITEMS = 6;
 	const int NUM_COLS = 2;
 	std::string grid[NUM_COLS][NUM_ITEMS]; // string table
 	LV_ITEM pitem;
@@ -2089,9 +2089,9 @@ bool CL64_Properties::Update_ListView_Camera()
 	grid[0][3] = "Pos_Y", grid[1][3] = chr_Pos_Y;
 	grid[0][4] = "Pos_Z", grid[1][4] = chr_Pos_Z;
 	grid[0][5] = " ", grid[1][5] = " ";
-	grid[0][6] = "LookAt_X", grid[1][6] = chr_LookAT_X;
+	/*grid[0][6] = "LookAt_X", grid[1][6] = chr_LookAT_X;
 	grid[0][7] = "LookAt_Y", grid[1][7] = chr_LookAT_Y;
-	grid[0][8] = "LookAt_Z", grid[1][8] = chr_LookAT_Z;
+	grid[0][8] = "LookAt_Z", grid[1][8] = chr_LookAT_Z;*/
 
 
 	ListView_DeleteAllItems(App->CL_Properties->Properties_hLV);

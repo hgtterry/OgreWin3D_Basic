@@ -78,13 +78,6 @@ CL64_Build_Game::~CL64_Build_Game(void)
 // *************************************************************************
 void CL64_Build_Game::Init_Build_Game_Class()
 {
-	//HZIP hz;
-
-	//hz = CreateZip(_T("Test.zip"), 0);
-	//ZipAdd(hz, _T("Barrel_B2.dds"), _T("Barrel_B2.dds"));
-	//ZipAdd(hz, _T("znsimple.txt"), _T("simple.txt"));
-	//CloseZip(hz);
-
 	GameOptions = new Game_Options;
 	GameOptions->flag_Show_FPS = 1;
 	GameOptions->flag_FullScreen = 1;
@@ -1302,27 +1295,27 @@ bool CL64_Build_Game::Build_Cameras_Data()
 
 		fprintf(WriteFile, "%s\n", buff); // Header also Player name until changed by user
 
-		//fprintf(WriteFile, "%s%s\n", "Camera_Name=", App->CL_Scene->B_Camera[Count]->Camera_Name); // Change
+		fprintf(WriteFile, "%s%s\n", "Camera_Name=", App->CL_Scene->B_Camera[Count]->Camera_Name); // Change
 
 		//---------------------------------- Camera Pos
-		//x = App->CL_Scene->B_Camera[Count]->CamPos.x;
-		//y = App->CL_Scene->B_Camera[Count]->CamPos.y;
-		//z = App->CL_Scene->B_Camera[Count]->CamPos.z;
+		x = App->CL_Scene->B_Camera[Count]->CamPos.x;
+		y = App->CL_Scene->B_Camera[Count]->CamPos.y;
+		z = App->CL_Scene->B_Camera[Count]->CamPos.z;
 
 		fprintf(WriteFile, "%s%f,%f,%f\n", "Camera_Pos=", x, y, z);
 
 		//---------------------------------- Camera Look At
-		//x = App->CL_Scene->B_Camera[Count]->LookAt.x;
-		//y = App->CL_Scene->B_Camera[Count]->LookAt.y;
-		//z = App->CL_Scene->B_Camera[Count]->LookAt.z;
+		x = App->CL_Scene->B_Camera[Count]->LookAt.x;
+		y = App->CL_Scene->B_Camera[Count]->LookAt.y;
+		z = App->CL_Scene->B_Camera[Count]->LookAt.z;
 
 		fprintf(WriteFile, "%s%f,%f,%f\n", "LookAt=", x, y, z);
 
 		//---------------------------------- Camera Quaternion
-		//w = App->CL_Scene->B_Camera[Count]->Cam_Quat.w;
-		//x = App->CL_Scene->B_Camera[Count]->Cam_Quat.x;
-		//y = App->CL_Scene->B_Camera[Count]->Cam_Quat.y;
-		//z = App->CL_Scene->B_Camera[Count]->Cam_Quat.z;
+		w = App->CL_Scene->B_Camera[Count]->Cam_Quat.w;
+		x = App->CL_Scene->B_Camera[Count]->Cam_Quat.x;
+		y = App->CL_Scene->B_Camera[Count]->Cam_Quat.y;
+		z = App->CL_Scene->B_Camera[Count]->Cam_Quat.z;
 
 		fprintf(WriteFile, "%s%f,%f,%f,%f\n", "Camera_Quat=", w, x, y, z);
 
