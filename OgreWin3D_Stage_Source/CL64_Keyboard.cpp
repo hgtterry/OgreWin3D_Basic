@@ -239,6 +239,85 @@ void CL64_Keyboard::Keyboard_Mode_Model(float deltaTime)
 // *************************************************************************
 void CL64_Keyboard::Keyboard_Mode_Free(float deltaTime)
 {
+	if (GetAsyncKeyState(VK_UP) < 0 && App->CL_Scene->flag_Player_Added == 1)
+	{
+		if (App->CL_Scene->flag_Player_Added == 1)
+		{
+			App->CL_Player->mMoveDirection = (btVector3(0, 0, -1));
+			App->CL_Player->Check_Collisions();
+			App->CL_Scene->B_Player[0]->IsMOving = 1;
+			App->CL_Player->Update_Player(NULL, deltaTime);
+		}
+	}
+	else
+	{
+		if (App->CL_Scene->flag_Player_Added == 1 && App->CL_Scene->B_Player[0]->IsMOving == 1)
+		{
+			App->CL_Player->mMoveDirection = (btVector3(0, 0, 0));
+			App->CL_Scene->B_Player[0]->IsMOving = 0;
+			App->CL_Player->Update_Player(NULL, deltaTime);
+		}
+	}
+
+	//	------------------------------------------------ Move Back
+	if (GetAsyncKeyState(VK_DOWN) < 0 && App->CL_Scene->flag_Player_Added == 1) // S Key	
+	{
+
+		if (App->CL_Scene->flag_Player_Added == 1)
+		{
+			App->CL_Player->mMoveDirection = (btVector3(0, 0, 1));
+			App->CL_Player->Check_Collisions();
+			App->CL_Scene->B_Player[0]->IsMOving_Back = 1;
+			App->CL_Player->Update_Player(NULL, deltaTime);
+		}
+
+	}
+	else
+	{
+		if (App->CL_Scene->flag_Player_Added == 1 && App->CL_Scene->B_Player[0]->IsMOving_Back == 1)
+		{
+			App->CL_Player->mMoveDirection = (btVector3(0, 0, 0));
+			App->CL_Scene->B_Player[0]->IsMOving_Back = 0;
+			App->CL_Player->Update_Player(NULL, deltaTime);
+		}
+	}
+
+	//	------------------------------------------------ Move Right
+	if (GetAsyncKeyState(VK_RIGHT) < 0 && App->CL_Scene->flag_Player_Added == 1)
+	{
+
+		if (App->CL_Scene->flag_Player_Added == 1)
+		{
+			Ogre::Vector3 Rotate;
+			Rotate.x = 0;
+			Rotate.y = 1;
+			Rotate.z = 0;
+
+			float Delta = 1;// App->CL_Utilities->DegreesToRadians(1);
+
+			App->CL_Scene->B_Player[0]->Rotate_FromCam(Rotate, 0.001, false);
+		}
+	}
+	
+	if (GetAsyncKeyState(VK_LEFT) < 0 && App->CL_Scene->flag_Player_Added == 1)
+	{
+
+		Ogre::Vector3 Rotate;
+		Rotate.x = 0;
+		Rotate.y = -1;
+		Rotate.z = 0;
+
+		float Delta = 1;// App->Cl_Utilities->DegreesToRadians(1);
+
+		App->CL_Scene->B_Player[0]->Rotate_FromCam(Rotate, 0.001, false);
+
+		//App->CL_Ogre->OgreListener->toggleTimer = 0.01;
+
+	}
+
+	//-------------------------------------------------------------
+	//-------------------------------------------------------------
+	// 
 	// Forward
 	if (App->CL_Ogre->Ogre3D_Listener->Wheel < 0) // Mouse Wheel Forward
 	{
