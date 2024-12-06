@@ -273,7 +273,7 @@ LRESULT CALLBACK CL64_FileView::Proc_ListPanel(HWND hDlg, UINT message, WPARAM w
 			}
 			else
 			{
-				HTREEITEM Temp = App->CL_Scene->V_Object[Index]->FileViewItem;
+				HTREEITEM Temp = App->CL_Scene->B_Object[Index]->FileViewItem;
 				App->CL_FileView->SelectItem(Temp);
 
 				App->CL_Gui_Environment->Start_Environment_Editor(Index, false);

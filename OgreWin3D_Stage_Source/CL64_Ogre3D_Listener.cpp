@@ -198,11 +198,11 @@ void CL64_Ogre3D_Listener::Update_Game_Logic(float DeltaTime)
 	Count = 0;
 	while (Count < App->CL_Scene->Object_Count)
 	{
-		if (App->CL_Scene->V_Object[Count]->Usage == Enums::Stage_Usage_Message)
+		if (App->CL_Scene->B_Object[Count]->Usage == Enums::Stage_Usage_Message)
 		{
-			if (App->CL_Scene->V_Object[Count]->Show_Message_Flag == 1)
+			if (App->CL_Scene->B_Object[Count]->Show_Message_Flag == 1)
 			{
-				App->CL_Scene->V_Object[Count]->Render_ImGui_Panel();
+				App->CL_Scene->B_Object[Count]->Render_ImGui_Panel();
 			}
 		}
 
@@ -239,15 +239,15 @@ void CL64_Ogre3D_Listener::Update_Game_Logic(float DeltaTime)
 
 					if (Index > -1)
 					{
-						if (App->CL_Scene->V_Object[Index]->Object_Node)
+						if (App->CL_Scene->B_Object[Index]->Object_Node)
 						{
-							App->CL_Scene->V_Object[Index]->Object_Node->setPosition(x, y, z);
-							App->CL_Scene->V_Object[Index]->Object_Node->setOrientation(Ogre::Quaternion(orientation.getW(), orientation.getX(), orientation.getY(), orientation.getZ()));
+							App->CL_Scene->B_Object[Index]->Object_Node->setPosition(x, y, z);
+							App->CL_Scene->B_Object[Index]->Object_Node->setOrientation(Ogre::Quaternion(orientation.getW(), orientation.getX(), orientation.getY(), orientation.getZ()));
 
-							Ogre::Vector3 WC = App->CL_Scene->V_Object[Index]->Object_Ent->getWorldBoundingBox(true).getCenter();
+							Ogre::Vector3 WC = App->CL_Scene->B_Object[Index]->Object_Ent->getWorldBoundingBox(true).getCenter();
 							Ogre::Vector3 NewPos = Ogre::Vector3(x, y, z) - WC;
 
-							App->CL_Scene->V_Object[Index]->Object_Node->setPosition((Ogre::Vector3(x, y, z)) + NewPos);
+							App->CL_Scene->B_Object[Index]->Object_Node->setPosition((Ogre::Vector3(x, y, z)) + NewPos);
 						}
 					}
 				}

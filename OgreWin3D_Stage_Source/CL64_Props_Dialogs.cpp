@@ -327,10 +327,10 @@ LRESULT CALLBACK CL64_Props_Dialogs::Proc_Dialog_Dimensions(HWND hDlg, UINT mess
 				//if (EditCat == Enums::FV_Edit_Object || EditCat == Enums::Edit_Teleport)
 				{
 					int Index = App->CL_Properties->Current_Selected_Object;
-					App->CL_Scene->V_Object[Index]->Dimensions_Locked = 1;
+					App->CL_Scene->B_Object[Index]->Dimensions_Locked = 1;
 
-					App->CL_Scene->V_Object[Index]->Altered = 1;
-					App->CL_FileView->Mark_Altered(App->CL_Scene->V_Object[Index]->FileViewItem);
+					App->CL_Scene->B_Object[Index]->Altered = 1;
+					App->CL_FileView->Mark_Altered(App->CL_Scene->B_Object[Index]->FileViewItem);
 					App->CL_Scene->flag_Scene_Modified = 1;
 				}
 
@@ -345,10 +345,10 @@ LRESULT CALLBACK CL64_Props_Dialogs::Proc_Dialog_Dimensions(HWND hDlg, UINT mess
 				//if (EditCat == Enums::FV_Edit_Object || EditCat == Enums::Edit_Teleport)
 				{
 					int Index = App->CL_Properties->Current_Selected_Object;
-					App->CL_Scene->V_Object[Index]->Dimensions_Locked = 0;
+					App->CL_Scene->B_Object[Index]->Dimensions_Locked = 0;
 
-					App->CL_Scene->V_Object[Index]->Altered = 1;
-					App->CL_FileView->Mark_Altered(App->CL_Scene->V_Object[Index]->FileViewItem);
+					App->CL_Scene->B_Object[Index]->Altered = 1;
+					App->CL_FileView->Mark_Altered(App->CL_Scene->B_Object[Index]->FileViewItem);
 					App->CL_Scene->flag_Scene_Modified = 1;
 				}
 
@@ -509,7 +509,7 @@ LRESULT CALLBACK CL64_Props_Dialogs::Proc_Dialog_Debug(HWND hDlg, UINT message, 
 				int Index = App->CL_Properties->Current_Selected_Object;
 
 				LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-				App->Custom_Button_Toggle(item, App->CL_Scene->V_Object[Index]->Physics_Debug_On);
+				App->Custom_Button_Toggle(item, App->CL_Scene->B_Object[Index]->Physics_Debug_On);
 				return CDRF_DODEFAULT;
 			}
 			else
@@ -596,12 +596,12 @@ LRESULT CALLBACK CL64_Props_Dialogs::Proc_Dialog_Debug(HWND hDlg, UINT message, 
 
 			if (App->CL_Com_Objects->flag_Show_Mesh_Debug == 1)
 			{
-				App->CL_Scene->V_Object[Index]->Object_Node->setVisible(false);
+				App->CL_Scene->B_Object[Index]->Object_Node->setVisible(false);
 				App->CL_Com_Objects->flag_Show_Mesh_Debug = 0;
 			}
 			else
 			{
-				App->CL_Scene->V_Object[Index]->Object_Node->setVisible(true);
+				App->CL_Scene->B_Object[Index]->Object_Node->setVisible(true);
 				App->CL_Com_Objects->flag_Show_Mesh_Debug = 1;
 			}
 
@@ -646,14 +646,14 @@ LRESULT CALLBACK CL64_Props_Dialogs::Proc_Dialog_Debug(HWND hDlg, UINT message, 
 			// -----------------------  Objects
 			if (App->CL_Scene->Object_Count > 0)
 			{
-				int f = App->CL_Scene->V_Object[Index]->Phys_Body->getCollisionFlags();
+				int f = App->CL_Scene->B_Object[Index]->Phys_Body->getCollisionFlags();
 
-				if (App->CL_Scene->V_Object[Index]->Physics_Debug_On == 1)
+				if (App->CL_Scene->B_Object[Index]->Physics_Debug_On == 1)
 				{
 					App->CL_Com_Objects->flag_Show_Physics_Debug = 0;
-					App->CL_Scene->V_Object[Index]->Phys_Body->setCollisionFlags(f | (1 << 5)); // Off
+					App->CL_Scene->B_Object[Index]->Phys_Body->setCollisionFlags(f | (1 << 5)); // Off
 
-					App->CL_Scene->V_Object[Index]->Physics_Debug_On = 0;
+					App->CL_Scene->B_Object[Index]->Physics_Debug_On = 0;
 
 					App->CL_Ogre->Bullet_Debug_Listener->Render_Debug_Flag = 0;
 					App->CL_Ogre->RenderFrame(4);
@@ -663,9 +663,9 @@ LRESULT CALLBACK CL64_Props_Dialogs::Proc_Dialog_Debug(HWND hDlg, UINT message, 
 				}
 				else
 				{
-					App->CL_Scene->V_Object[Index]->Physics_Debug_On = 1;
+					App->CL_Scene->B_Object[Index]->Physics_Debug_On = 1;
 					App->CL_Com_Objects->flag_Show_Physics_Debug = 1;
-					App->CL_Scene->V_Object[Index]->Phys_Body->setCollisionFlags(f & (~(1 << 5))); // on
+					App->CL_Scene->B_Object[Index]->Phys_Body->setCollisionFlags(f & (~(1 << 5))); // on
 
 					//SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_PhysicsOn_Bmp);
 				}

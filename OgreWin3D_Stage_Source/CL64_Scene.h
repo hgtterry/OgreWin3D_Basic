@@ -72,6 +72,6 @@ public:
 	Base_Locations* B_Locations[20];
 	Base_Counter* B_Counter[20];
 	std::vector<Base_Player*> B_Player;
-	std::vector<Base_Object*> V_Object;
+	std::vector<Base_Object*> B_Object;
 };
 

@@ -44,11 +44,11 @@ bool CL64_Com_Collectables::Add_New_Collectable()
 
 	int Index = App->CL_Scene->Object_Count;
 
-	App->CL_Scene->V_Object[Index] = new Base_Object();
-	App->CL_Scene->V_Object[Index]->S_Collectable[0] = new Collectable_type;
+	App->CL_Scene->B_Object[Index] = new Base_Object();
+	App->CL_Scene->B_Object[Index]->S_Collectable[0] = new Collectable_type;
 	App->CL_Com_Collectables->Set_Collectables_Defaults(Index);
 
-	Base_Object* Object = App->CL_Scene->V_Object[Index];
+	Base_Object* Object = App->CL_Scene->B_Object[Index];
 	Object->This_Object_UniqueID = App->CL_Scene->UniqueID_Object_Counter; // Unique ID
 
 	strcpy(Object->Mesh_Name, App->CL_MeshViewer->Object_Name);
@@ -59,10 +59,10 @@ bool CL64_Com_Collectables::Add_New_Collectable()
 	strcpy_s(B_Name, "Collectable_");
 	_itoa(Index, ConNum, 10);
 	strcat(B_Name, ConNum);
-	strcpy(App->CL_Scene->V_Object[Index]->Mesh_Name, B_Name);
+	strcpy(App->CL_Scene->B_Object[Index]->Mesh_Name, B_Name);
 
 	Ogre::Vector3 Pos = App->CL_Com_Objects->GetPlacement(-50);
-	App->CL_Scene->V_Object[Index]->Mesh_Pos = Pos;
+	App->CL_Scene->B_Object[Index]->Mesh_Pos = Pos;
 
 	Object->Type = Enums::Bullet_Type_Static;
 	Object->Shape = Enums::Shape_Box;
@@ -70,16 +70,16 @@ bool CL64_Com_Collectables::Add_New_Collectable()
 
 	Create_Collectable_Entity(Index);
 
-	HTREEITEM Temp = App->CL_FileView->Add_Item(App->CL_FileView->FV_Collectables_Folder, App->CL_Scene->V_Object[Index]->Mesh_Name, Index, true);
-	App->CL_Scene->V_Object[Index]->FileViewItem = Temp;
+	HTREEITEM Temp = App->CL_FileView->Add_Item(App->CL_FileView->FV_Collectables_Folder, App->CL_Scene->B_Object[Index]->Mesh_Name, Index, true);
+	App->CL_Scene->B_Object[Index]->FileViewItem = Temp;
 
-	App->CL_FileView->SelectItem(App->CL_Scene->V_Object[Index]->FileViewItem);
+	App->CL_FileView->SelectItem(App->CL_Scene->B_Object[Index]->FileViewItem);
 	App->CL_FileView->Set_FolderActive(App->CL_FileView->FV_EntitiesFolder);
 
 	App->CL_Scene->UniqueID_Object_Counter++; // Unique ID
 	App->CL_Scene->Object_Count++;  // Must be last line
 
-	App->CL_Scene->V_Object[Index]->Altered = 1;
+	App->CL_Scene->B_Object[Index]->Altered = 1;
 	App->CL_Scene->flag_Scene_Modified = 1;
 
 	return 1;
@@ -94,7 +94,7 @@ bool CL64_Com_Collectables::Create_Collectable_Entity(int Index)
 	char ConNum[256];
 	char Ogre_Name[256];
 
-	Base_Object* Object = App->CL_Scene->V_Object[Index];
+	Base_Object* Object = App->CL_Scene->B_Object[Index];
 
 
 	strcpy_s(Ogre_Name, "GDEnt_");
@@ -122,7 +122,7 @@ bool CL64_Com_Collectables::Create_Collectable_Entity(int Index)
 
 	App->CL_Scene->flag_Scene_Loaded = 1;
 
-	Ogre::Vector3 Centre = App->CL_Scene->V_Object[Index]->Object_Ent->getWorldBoundingBox(true).getCenter();
+	Ogre::Vector3 Centre = App->CL_Scene->B_Object[Index]->Object_Ent->getWorldBoundingBox(true).getCenter();
 	Object->Physics_Pos = Ogre::Vector3(Centre.x, Centre.y, Centre.z);
 
 	btTransform startTransform;
@@ -170,7 +170,7 @@ bool CL64_Com_Collectables::Create_Collectable_Entity(int Index)
 
 	App->CL_Physics->Set_Physics_New(Index);
 
-	App->CL_Scene->V_Object[Index]->Folder = Enums::Folder_Collectables;
+	App->CL_Scene->B_Object[Index]->Folder = Enums::Folder_Collectables;
 
 	return 1;
 }
@@ -180,21 +180,21 @@ bool CL64_Com_Collectables::Create_Collectable_Entity(int Index)
 // *************************************************************************
 void CL64_Com_Collectables::Set_Collectables_Defaults(int Index)
 {
-	Base_Object* V_Object = App->CL_Scene->V_Object[Index];
+	Base_Object* B_Object = App->CL_Scene->B_Object[Index];
 
-	V_Object->Altered = 0;
+	B_Object->Altered = 0;
 
-	strcpy(V_Object->S_Collectable[0]->Sound_File, "footstep.ogg");
-	V_Object->S_Collectable[0]->Play = 1;
-	V_Object->S_Collectable[0]->SndVolume = 0.5;
+	strcpy(B_Object->S_Collectable[0]->Sound_File, "footstep.ogg");
+	B_Object->S_Collectable[0]->Play = 1;
+	B_Object->S_Collectable[0]->SndVolume = 0.5;
 
-	V_Object->S_Collectable[0]->Maths = 1; // Add
-	V_Object->S_Collectable[0]->Value = 1;
+	B_Object->S_Collectable[0]->Maths = 1; // Add
+	B_Object->S_Collectable[0]->Value = 1;
 
-	V_Object->S_Collectable[0]->Counter_ID = 0;
-	strcpy(V_Object->S_Collectable[0]->Counter_Name, "Not_Set");
+	B_Object->S_Collectable[0]->Counter_ID = 0;
+	strcpy(B_Object->S_Collectable[0]->Counter_Name, "Not_Set");
 
-	V_Object->S_Collectable[0]->Counter_Disabled = 0;
+	B_Object->S_Collectable[0]->Counter_Disabled = 0;
 }
 
 // *************************************************************************
@@ -202,7 +202,7 @@ void CL64_Com_Collectables::Set_Collectables_Defaults(int Index)
 // *************************************************************************
 void CL64_Com_Collectables::Rename_Collectable(int Index)
 {
-	Base_Object* Object = App->CL_Scene->V_Object[Index];
+	Base_Object* Object = App->CL_Scene->B_Object[Index];
 
 	strcpy(App->CL_Dialogs->btext, "Change Object Name");
 	strcpy(App->CL_Dialogs->Chr_Text, Object->Mesh_Name);

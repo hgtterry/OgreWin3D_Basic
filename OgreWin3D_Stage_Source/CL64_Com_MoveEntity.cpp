@@ -44,31 +44,31 @@ bool CL64_Com_MoveEntity::Add_New_Move_Entity()
 
 	int Index = App->CL_Scene->Object_Count;
 
-	App->CL_Scene->V_Object[Index] = new Base_Object();
+	App->CL_Scene->B_Object[Index] = new Base_Object();
 
-	App->CL_Scene->V_Object[Index]->S_MoveType[0] = new Move_Type;
+	App->CL_Scene->B_Object[Index]->S_MoveType[0] = new Move_Type;
 	Set_Move_Defaults(Index); // Check
 
-	App->CL_Scene->V_Object[Index]->Type = Enums::Bullet_Type_Static;
-	App->CL_Scene->V_Object[Index]->Shape = Enums::Shape_Box;
-	App->CL_Scene->V_Object[Index]->This_Object_UniqueID = App->CL_Scene->UniqueID_Object_Counter; // Unique ID
+	App->CL_Scene->B_Object[Index]->Type = Enums::Bullet_Type_Static;
+	App->CL_Scene->B_Object[Index]->Shape = Enums::Shape_Box;
+	App->CL_Scene->B_Object[Index]->This_Object_UniqueID = App->CL_Scene->UniqueID_Object_Counter; // Unique ID
 
-	strcpy(App->CL_Scene->V_Object[Index]->Mesh_FileName, "DoorEntity_GD.mesh");
+	strcpy(App->CL_Scene->B_Object[Index]->Mesh_FileName, "DoorEntity_GD.mesh");
 
 	strcpy_s(B_Name, "MoveEnt_");
 	_itoa(Index, ConNum, 10);
 	strcat(B_Name, ConNum);
-	strcpy(App->CL_Scene->V_Object[Index]->Mesh_Name, B_Name);
+	strcpy(App->CL_Scene->B_Object[Index]->Mesh_Name, B_Name);
 
 	Ogre::Vector3 Pos = App->CL_Com_Objects->GetPlacement(-50);
-	App->CL_Scene->V_Object[Index]->Mesh_Pos = Pos;
+	App->CL_Scene->B_Object[Index]->Mesh_Pos = Pos;
 
 	Create_Move_Entity(Index);
 
-	HTREEITEM Temp = App->CL_FileView->Add_Item(App->CL_FileView->FV_Move_Folder, App->CL_Scene->V_Object[Index]->Mesh_Name, Index, true);
-	App->CL_Scene->V_Object[Index]->FileViewItem = Temp;
+	HTREEITEM Temp = App->CL_FileView->Add_Item(App->CL_FileView->FV_Move_Folder, App->CL_Scene->B_Object[Index]->Mesh_Name, Index, true);
+	App->CL_Scene->B_Object[Index]->FileViewItem = Temp;
 
-	App->CL_FileView->SelectItem(App->CL_Scene->V_Object[Index]->FileViewItem);
+	App->CL_FileView->SelectItem(App->CL_Scene->B_Object[Index]->FileViewItem);
 
 	App->CL_Scene->UniqueID_Object_Counter++;
 	App->CL_Scene->Object_Count++;
@@ -83,22 +83,22 @@ bool CL64_Com_MoveEntity::Add_New_Move_Entity()
 // *************************************************************************
 void CL64_Com_MoveEntity::Set_Move_Defaults(int Index)
 {
-	Base_Object* V_Object = App->CL_Scene->V_Object[Index];
+	Base_Object* B_Object = App->CL_Scene->B_Object[Index];
 
-	V_Object->S_MoveType[0]->IsNegative = 1;
-	V_Object->S_MoveType[0]->Move_Distance = -50;
-	V_Object->S_MoveType[0]->Newpos = 0;
-	V_Object->S_MoveType[0]->Speed = 10.0;
-	V_Object->S_MoveType[0]->WhatDirection = Enums::Axis_x;
-	V_Object->S_MoveType[0]->Object_To_Move_Index = 0;
-	V_Object->S_MoveType[0]->Triggered = 0;
-	V_Object->S_MoveType[0]->Re_Trigger = 0;
-	strcpy(V_Object->S_MoveType[0]->Object_Name, "None");
+	B_Object->S_MoveType[0]->IsNegative = 1;
+	B_Object->S_MoveType[0]->Move_Distance = -50;
+	B_Object->S_MoveType[0]->Newpos = 0;
+	B_Object->S_MoveType[0]->Speed = 10.0;
+	B_Object->S_MoveType[0]->WhatDirection = Enums::Axis_x;
+	B_Object->S_MoveType[0]->Object_To_Move_Index = 0;
+	B_Object->S_MoveType[0]->Triggered = 0;
+	B_Object->S_MoveType[0]->Re_Trigger = 0;
+	strcpy(B_Object->S_MoveType[0]->Object_Name, "None");
 
-	V_Object->S_MoveType[0]->Trigger_Value = 0;
-	V_Object->S_MoveType[0]->Counter_ID = 0;
-	strcpy(V_Object->S_MoveType[0]->Counter_Name, "None");
-	V_Object->S_MoveType[0]->Counter_Disabled = 1;
+	B_Object->S_MoveType[0]->Trigger_Value = 0;
+	B_Object->S_MoveType[0]->Counter_ID = 0;
+	strcpy(B_Object->S_MoveType[0]->Counter_Name, "None");
+	B_Object->S_MoveType[0]->Counter_Disabled = 1;
 
 	return;
 }
@@ -112,7 +112,7 @@ bool CL64_Com_MoveEntity::Create_Move_Entity(int Index)
 	char ConNum[256];
 	char Ogre_Name[256];
 
-	Base_Object* Object = App->CL_Scene->V_Object[Index];
+	Base_Object* Object = App->CL_Scene->B_Object[Index];
 
 	// ----------------- Mesh
 
@@ -135,7 +135,7 @@ bool CL64_Com_MoveEntity::Create_Move_Entity(int Index)
 	
 	// ----------------- Physics
 
-	Ogre::Vector3 Centre = App->CL_Scene->V_Object[Index]->Object_Ent->getWorldBoundingBox(true).getCenter();
+	Ogre::Vector3 Centre = App->CL_Scene->B_Object[Index]->Object_Ent->getWorldBoundingBox(true).getCenter();
 	Object->Physics_Pos = Ogre::Vector3(Centre.x, Centre.y, Centre.z);
 
 	btTransform startTransform;
@@ -184,7 +184,7 @@ bool CL64_Com_MoveEntity::Create_Move_Entity(int Index)
 
 	App->CL_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
 
-	App->CL_Scene->V_Object[Index]->Physics_Valid = 1;
+	App->CL_Scene->B_Object[Index]->Physics_Valid = 1;
 
 	App->CL_Physics->Set_Physics_New(Index);
 
@@ -197,7 +197,7 @@ bool CL64_Com_MoveEntity::Create_Move_Entity(int Index)
 void CL64_Com_MoveEntity::Rename_Move_Entity(int Index)
 {
 	strcpy(App->CL_Dialogs->btext, "Change Object Name");
-	strcpy(App->CL_Dialogs->Chr_Text, App->CL_Scene->V_Object[Index]->Mesh_Name);
+	strcpy(App->CL_Dialogs->Chr_Text, App->CL_Scene->B_Object[Index]->Mesh_Name);
 
 	App->CL_Dialogs->Dialog_Text(Enums::Check_Names_Objects);
 
@@ -206,11 +206,11 @@ void CL64_Com_MoveEntity::Rename_Move_Entity(int Index)
 		return;
 	}
 
-	strcpy(App->CL_Scene->V_Object[Index]->Mesh_Name, App->CL_Dialogs->Chr_Text);
+	strcpy(App->CL_Scene->B_Object[Index]->Mesh_Name, App->CL_Dialogs->Chr_Text);
 
 	App->CL_Properties->Mark_As_Altered(Index);
 
-	App->CL_FileView->Change_Item_Name(App->CL_Scene->V_Object[Index]->FileViewItem, App->CL_Dialogs->Chr_Text);
+	App->CL_FileView->Change_Item_Name(App->CL_Scene->B_Object[Index]->FileViewItem, App->CL_Dialogs->Chr_Text);
 
 }
 
@@ -225,18 +225,18 @@ void CL64_Com_MoveEntity::Reset_Move_Entity(int Index)
 	Ogre::Vector3 M_Pos;
 	Ogre::Vector3 P_Pos;
 
-	int ObjectToMove = App->CL_Scene->V_Object[Index]->S_MoveType[0]->Object_To_Move_Index;
+	int ObjectToMove = App->CL_Scene->B_Object[Index]->S_MoveType[0]->Object_To_Move_Index;
 
-	M_Pos = App->CL_Scene->V_Object[ObjectToMove]->Mesh_Pos;
-	P_Pos = App->CL_Scene->V_Object[ObjectToMove]->Physics_Pos;
+	M_Pos = App->CL_Scene->B_Object[ObjectToMove]->Mesh_Pos;
+	P_Pos = App->CL_Scene->B_Object[ObjectToMove]->Physics_Pos;
 
-	App->CL_Scene->V_Object[Index]->S_MoveType[0]->MeshPos = Ogre::Vector3(M_Pos);
-	App->CL_Scene->V_Object[Index]->S_MoveType[0]->PhysicsPos = Ogre::Vector3(P_Pos);
+	App->CL_Scene->B_Object[Index]->S_MoveType[0]->MeshPos = Ogre::Vector3(M_Pos);
+	App->CL_Scene->B_Object[Index]->S_MoveType[0]->PhysicsPos = Ogre::Vector3(P_Pos);
 
-	App->CL_Scene->V_Object[ObjectToMove]->Object_Node->setPosition(M_Pos);
-	App->CL_Scene->V_Object[ObjectToMove]->Phys_Body->getWorldTransform().setOrigin(btVector3(P_Pos.x, P_Pos.y, P_Pos.z));
+	App->CL_Scene->B_Object[ObjectToMove]->Object_Node->setPosition(M_Pos);
+	App->CL_Scene->B_Object[ObjectToMove]->Phys_Body->getWorldTransform().setOrigin(btVector3(P_Pos.x, P_Pos.y, P_Pos.z));
 
-	App->CL_Scene->V_Object[Index]->Triggered = 0;
+	App->CL_Scene->B_Object[Index]->Triggered = 0;
 }
 
 // *************************************************************************
@@ -257,14 +257,14 @@ void CL64_Com_MoveEntity::Adjust_Object_To_Move()
 
 	while (Count < Total)
 	{
-		if (App->CL_Scene->V_Object[Count]->Usage == Enums::Stage_Usage_Move)
+		if (App->CL_Scene->B_Object[Count]->Usage == Enums::Stage_Usage_Move)
 		{
 			char MoveName[MAX_PATH];
-			strcpy(MoveName, App->CL_Scene->V_Object[Count]->S_MoveType[0]->Object_Name);
+			strcpy(MoveName, App->CL_Scene->B_Object[Count]->S_MoveType[0]->Object_Name);
 
 			int AdjustedIndex = App->CL_Com_Objects->GetIndex_By_Name(MoveName);
 
-			App->CL_Scene->V_Object[Count]->S_MoveType[0]->Object_To_Move_Index = AdjustedIndex;
+			App->CL_Scene->B_Object[Count]->S_MoveType[0]->Object_To_Move_Index = AdjustedIndex;
 		}
 
 		Count++;

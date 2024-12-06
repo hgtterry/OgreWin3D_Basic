@@ -96,22 +96,22 @@ void CL64_Dimensions::Prepare_Dimensions(void)
 	}
 	else
 	{
-		pBase_Mesh_Name = App->CL_Scene->V_Object[Index]->Mesh_Name;
+		pBase_Mesh_Name = App->CL_Scene->B_Object[Index]->Mesh_Name;
 
-		pBase_Shape = &App->CL_Scene->V_Object[Index]->Shape;
+		pBase_Shape = &App->CL_Scene->B_Object[Index]->Shape;
 
-		pBase_Object_Ent = App->CL_Scene->V_Object[Index]->Object_Ent;
-		pBase_Object_Node = App->CL_Scene->V_Object[Index]->Object_Node;
-		pBase_Mesh_Pos = &App->CL_Scene->V_Object[Index]->Mesh_Pos;
-		pBase_Mesh_Scale = &App->CL_Scene->V_Object[Index]->Mesh_Scale;
-		pBase_Mesh_Rot = &App->CL_Scene->V_Object[Index]->Mesh_Rot;
-		pBase_Mesh_Quat = &App->CL_Scene->V_Object[Index]->Mesh_Quat;
+		pBase_Object_Ent = App->CL_Scene->B_Object[Index]->Object_Ent;
+		pBase_Object_Node = App->CL_Scene->B_Object[Index]->Object_Node;
+		pBase_Mesh_Pos = &App->CL_Scene->B_Object[Index]->Mesh_Pos;
+		pBase_Mesh_Scale = &App->CL_Scene->B_Object[Index]->Mesh_Scale;
+		pBase_Mesh_Rot = &App->CL_Scene->B_Object[Index]->Mesh_Rot;
+		pBase_Mesh_Quat = &App->CL_Scene->B_Object[Index]->Mesh_Quat;
 
-		pBase_Phys_Body = App->CL_Scene->V_Object[Index]->Phys_Body;
-		pBase_Physics_Pos = &App->CL_Scene->V_Object[Index]->Physics_Pos;
-		pBase_Physics_Scale = &App->CL_Scene->V_Object[Index]->Physics_Scale;
-		pBase_Physics_Rot = &App->CL_Scene->V_Object[Index]->Physics_Rot;
-		pBase_Physics_Quat = &App->CL_Scene->V_Object[Index]->Physics_Quat;
+		pBase_Phys_Body = App->CL_Scene->B_Object[Index]->Phys_Body;
+		pBase_Physics_Pos = &App->CL_Scene->B_Object[Index]->Physics_Pos;
+		pBase_Physics_Scale = &App->CL_Scene->B_Object[Index]->Physics_Scale;
+		pBase_Physics_Rot = &App->CL_Scene->B_Object[Index]->Physics_Rot;
+		pBase_Physics_Quat = &App->CL_Scene->B_Object[Index]->Physics_Quat;
 
 		//App->Say("Object");
 	}
@@ -252,7 +252,7 @@ void CL64_Dimensions::ImGui_Position(void)
 {
 	int Index = App->CL_Properties->Current_Selected_Object;
 
-	Ogre::Vector3 Pos = *pBase_Mesh_Pos;// App->SBC_Scene->V_Object[Index]->Mesh_Pos;
+	Ogre::Vector3 Pos = *pBase_Mesh_Pos;// App->SBC_Scene->B_Object[Index]->Mesh_Pos;
 
 	ImGuiStyle* style = &ImGui::GetStyle();
 
@@ -925,8 +925,8 @@ void CL64_Dimensions::UpDate_Physics(int Index)
 	}
 
 	// Needs Looking at
-	App->CL_Scene->V_Object[Index]->Altered = 1;
-	App->CL_FileView->Mark_Altered(App->CL_Scene->V_Object[Index]->FileViewItem);
+	App->CL_Scene->B_Object[Index]->Altered = 1;
+	App->CL_FileView->Mark_Altered(App->CL_Scene->B_Object[Index]->FileViewItem);
 	App->CL_Scene->flag_Scene_Modified = 1;
 }
 

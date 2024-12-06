@@ -340,7 +340,7 @@ bool CL64_Properties::Edit_Object(LPARAM lParam)
 	int result = 1;
 	int List_Index;
 
-	Base_Object* Object = App->CL_Scene->V_Object[Index];
+	Base_Object* Object = App->CL_Scene->B_Object[Index];
 
 	LPNMLISTVIEW List = (LPNMLISTVIEW)lParam;
 	List_Index = List->iItem;
@@ -409,9 +409,9 @@ bool CL64_Properties::Edit_Player(LPARAM lParam)
 
 			App->CL_Scene->flag_Scene_Modified = 1;
 
-			App->CL_Scene->V_Object[Index]->Altered = 1;
+			App->CL_Scene->B_Object[Index]->Altered = 1;
 			App->CL_Scene->flag_Scene_Modified = 1;
-			App->CL_FileView->Mark_Altered(App->CL_Scene->V_Object[Index]->FileViewItem);
+			App->CL_FileView->Mark_Altered(App->CL_Scene->B_Object[Index]->FileViewItem);
 		}
 		else
 		{
@@ -454,9 +454,9 @@ bool CL64_Properties::Edit_Player(LPARAM lParam)
 
 			App->CL_Scene->flag_Scene_Modified = 1;
 
-			App->CL_Scene->V_Object[Index]->Altered = 1;
+			App->CL_Scene->B_Object[Index]->Altered = 1;
 			App->CL_Scene->flag_Scene_Modified = 1;
-			App->CL_FileView->Mark_Altered(App->CL_Scene->V_Object[Index]->FileViewItem);
+			App->CL_FileView->Mark_Altered(App->CL_Scene->B_Object[Index]->FileViewItem);
 		}
 		else
 		{
@@ -499,9 +499,9 @@ bool CL64_Properties::Edit_Player(LPARAM lParam)
 
 			App->CL_Scene->flag_Scene_Modified = 1;
 
-			App->CL_Scene->V_Object[Index]->Altered = 1;
+			App->CL_Scene->B_Object[Index]->Altered = 1;
 			App->CL_Scene->flag_Scene_Modified = 1;
-			App->CL_FileView->Mark_Altered(App->CL_Scene->V_Object[Index]->FileViewItem);
+			App->CL_FileView->Mark_Altered(App->CL_Scene->B_Object[Index]->FileViewItem);
 		}
 		else
 		{
@@ -726,7 +726,7 @@ bool CL64_Properties::Edit_Messages(LPARAM lParam)
 	if (result == 0)
 	{
 		strcpy(App->CL_Dialogs->btext, "Change Text");
-		strcpy(App->CL_Dialogs->Chr_Text, App->CL_Scene->V_Object[Index]->S_Message[0]->Message_Text);
+		strcpy(App->CL_Dialogs->Chr_Text, App->CL_Scene->B_Object[Index]->S_Message[0]->Message_Text);
 
 		App->CL_Dialogs->Dialog_Text_Props();
 
@@ -735,7 +735,7 @@ bool CL64_Properties::Edit_Messages(LPARAM lParam)
 			return TRUE;
 		}
 
-		strcpy(App->CL_Scene->V_Object[Index]->S_Message[0]->Message_Text, App->CL_Dialogs->Chr_Text);
+		strcpy(App->CL_Scene->B_Object[Index]->S_Message[0]->Message_Text, App->CL_Dialogs->Chr_Text);
 
 		App->CL_Properties->Mark_As_Altered(Index);
 
@@ -756,7 +756,7 @@ bool CL64_Properties::Edit_Messages(LPARAM lParam)
 
 		App->CL_ImGui_Dialogs->flag_Show_Dialog_MessageEditor = 0;
 
-		App->CL_Scene->V_Object[Index]->Show_Message_Flag = 0;
+		App->CL_Scene->B_Object[Index]->Show_Message_Flag = 0;
 
 		App->CL_Properties->Mark_As_Altered(Index);
 
@@ -781,7 +781,7 @@ bool CL64_Properties::Edit_Messages(LPARAM lParam)
 
 		App->CL_ImGui_Dialogs->flag_Show_Dialog_MessageEditor = 0;
 
-		App->CL_Scene->V_Object[Index]->Show_Message_Flag = 0;
+		App->CL_Scene->B_Object[Index]->Show_Message_Flag = 0;
 
 		App->CL_Properties->Mark_As_Altered(Index);
 
@@ -841,13 +841,13 @@ bool CL64_Properties::Edit_Sounds(LPARAM lParam)
 	if (result == 0)
 	{
 		App->CL_SoundMgr->flag_Accessed = 1;
-		strcpy(App->CL_SoundMgr->Access_File, App->CL_Scene->V_Object[Index]->Sound_File);
+		strcpy(App->CL_SoundMgr->Access_File, App->CL_Scene->B_Object[Index]->Sound_File);
 
 		App->CL_SoundMgr->Dialog_SoundFile();
 
-		strcpy(App->CL_Scene->V_Object[Index]->Sound_File, App->CL_SoundMgr->Access_File);
+		strcpy(App->CL_Scene->B_Object[Index]->Sound_File, App->CL_SoundMgr->Access_File);
 
-		App->CL_Scene->V_Object[Index]->SndVolume = App->CL_SoundMgr->SndVolume;
+		App->CL_Scene->B_Object[Index]->SndVolume = App->CL_SoundMgr->SndVolume;
 
 		Mark_As_Altered(Index);
 
@@ -861,13 +861,13 @@ bool CL64_Properties::Edit_Sounds(LPARAM lParam)
 	if (result == 0)
 	{
 		App->CL_SoundMgr->flag_Accessed = 1;
-		strcpy(App->CL_SoundMgr->Access_File, App->CL_Scene->V_Object[Index]->Sound_File);
+		strcpy(App->CL_SoundMgr->Access_File, App->CL_Scene->B_Object[Index]->Sound_File);
 
 		App->CL_SoundMgr->Dialog_SoundFile();
 
-		strcpy(App->CL_Scene->V_Object[Index]->Sound_File, App->CL_SoundMgr->Access_File);
+		strcpy(App->CL_Scene->B_Object[Index]->Sound_File, App->CL_SoundMgr->Access_File);
 
-		App->CL_Scene->V_Object[Index]->SndVolume = App->CL_SoundMgr->SndVolume;
+		App->CL_Scene->B_Object[Index]->SndVolume = App->CL_SoundMgr->SndVolume;
 
 		Mark_As_Altered(Index);
 
@@ -881,11 +881,11 @@ bool CL64_Properties::Edit_Sounds(LPARAM lParam)
 	if (result == 0)
 	{
 
-		/*App->CL_Dialogs->Show_YesNo_Dlg("Play Sound",App->CL_Scene->V_Object[Index]->Sound_File,true);
+		/*App->CL_Dialogs->Show_YesNo_Dlg("Play Sound",App->CL_Scene->B_Object[Index]->Sound_File,true);
 
 		if (App->CL_Dialogs->Canceled == 0)
 		{
-			App->CL_Scene->V_Object[Index]->
+			App->CL_Scene->B_Object[Index]->
 		}*/
 
 		Update_ListView_Teleport();
@@ -940,7 +940,7 @@ bool CL64_Properties::Edit_Move_Entity(LPARAM lParam)
 		Update_ListView_Move_Entities();
 
 		/*strcpy(App->Cl_Dialogs->btext, "Select Object to Move");
-		strcpy(App->SBC_Dialogs->Chr_DropText, App->SBC_Scene->V_Object[Index]->S_MoveType[0]->Object_Name);
+		strcpy(App->SBC_Dialogs->Chr_DropText, App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Object_Name);
 
 		App->SBC_Dialogs->DropList_Data = Enums::DropDialog_TrigMoveObject;
 		App->SBC_Dialogs->Dialog_DropGen();
@@ -948,19 +948,19 @@ bool CL64_Properties::Edit_Move_Entity(LPARAM lParam)
 
 		if (App->SBC_Dialogs->Canceled == 0)
 		{
-			strcpy(App->SBC_Scene->V_Object[Index]->S_MoveType[0]->Object_Name, App->SBC_Dialogs->Chr_DropText);
+			strcpy(App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Object_Name, App->SBC_Dialogs->Chr_DropText);
 
-			int MoveObjectIndex = App->CL_Object->GetIndex_By_Name(App->SBC_Scene->V_Object[Index]->S_MoveType[0]->Object_Name);
+			int MoveObjectIndex = App->CL_Object->GetIndex_By_Name(App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Object_Name);
 
-			App->SBC_Scene->V_Object[Index]->S_MoveType[0]->Object_To_Move_Index = MoveObjectIndex;
+			App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Object_To_Move_Index = MoveObjectIndex;
 
-			App->SBC_Scene->V_Object[Index]->S_MoveType[0]->MeshPos.x = App->SBC_Scene->V_Object[MoveObjectIndex]->Mesh_Pos.x;
-			App->SBC_Scene->V_Object[Index]->S_MoveType[0]->MeshPos.y = App->SBC_Scene->V_Object[MoveObjectIndex]->Mesh_Pos.y;
-			App->SBC_Scene->V_Object[Index]->S_MoveType[0]->MeshPos.z = App->SBC_Scene->V_Object[MoveObjectIndex]->Mesh_Pos.z;
+			App->SBC_Scene->B_Object[Index]->S_MoveType[0]->MeshPos.x = App->SBC_Scene->B_Object[MoveObjectIndex]->Mesh_Pos.x;
+			App->SBC_Scene->B_Object[Index]->S_MoveType[0]->MeshPos.y = App->SBC_Scene->B_Object[MoveObjectIndex]->Mesh_Pos.y;
+			App->SBC_Scene->B_Object[Index]->S_MoveType[0]->MeshPos.z = App->SBC_Scene->B_Object[MoveObjectIndex]->Mesh_Pos.z;
 
-			App->SBC_Scene->V_Object[Index]->S_MoveType[0]->PhysicsPos.x = App->SBC_Scene->V_Object[MoveObjectIndex]->Physics_Pos.x;
-			App->SBC_Scene->V_Object[Index]->S_MoveType[0]->PhysicsPos.y = App->SBC_Scene->V_Object[MoveObjectIndex]->Physics_Pos.y;
-			App->SBC_Scene->V_Object[Index]->S_MoveType[0]->PhysicsPos.z = App->SBC_Scene->V_Object[MoveObjectIndex]->Physics_Pos.z;
+			App->SBC_Scene->B_Object[Index]->S_MoveType[0]->PhysicsPos.x = App->SBC_Scene->B_Object[MoveObjectIndex]->Physics_Pos.x;
+			App->SBC_Scene->B_Object[Index]->S_MoveType[0]->PhysicsPos.y = App->SBC_Scene->B_Object[MoveObjectIndex]->Physics_Pos.y;
+			App->SBC_Scene->B_Object[Index]->S_MoveType[0]->PhysicsPos.z = App->SBC_Scene->B_Object[MoveObjectIndex]->Physics_Pos.z;
 
 			Mark_As_Altered(Index);
 
@@ -1008,7 +1008,7 @@ bool CL64_Properties::Edit_Move_Entity(LPARAM lParam)
 
 		App->CL_ImGui_Dialogs->flag_Show_Move_Ent_Editor = 0;
 
-		//App->CL_Scene->V_Object[Index]->Show_Message_Flag = 0;
+		//App->CL_Scene->B_Object[Index]->Show_Message_Flag = 0;
 
 		App->CL_Properties->Mark_As_Altered(Index);
 
@@ -1033,7 +1033,7 @@ bool CL64_Properties::Edit_Move_Entity(LPARAM lParam)
 
 		App->CL_ImGui_Dialogs->flag_Show_Move_Ent_Editor = 0;
 
-		//App->CL_Scene->V_Object[Index]->Show_Message_Flag = 0;
+		//App->CL_Scene->B_Object[Index]->Show_Message_Flag = 0;
 
 		App->CL_Properties->Mark_As_Altered(Index);
 
@@ -1051,13 +1051,13 @@ bool CL64_Properties::Edit_Move_Entity(LPARAM lParam)
 	if (result == 0)
 	{
 		App->CL_SoundMgr->flag_Accessed = 1;
-		strcpy(App->CL_SoundMgr->Access_File, App->CL_Scene->V_Object[Index]->Sound_File);
+		strcpy(App->CL_SoundMgr->Access_File, App->CL_Scene->B_Object[Index]->Sound_File);
 
 		App->CL_SoundMgr->Dialog_SoundFile();
 
-		strcpy(App->CL_Scene->V_Object[Index]->Sound_File, App->CL_SoundMgr->Access_File);
+		strcpy(App->CL_Scene->B_Object[Index]->Sound_File, App->CL_SoundMgr->Access_File);
 
-		App->CL_Scene->V_Object[Index]->SndVolume = App->CL_SoundMgr->SndVolume;
+		App->CL_Scene->B_Object[Index]->SndVolume = App->CL_SoundMgr->SndVolume;
 
 		Mark_As_Altered(Index);
 
@@ -1073,13 +1073,13 @@ bool CL64_Properties::Edit_Move_Entity(LPARAM lParam)
 	if (result == 0)
 	{
 		App->CL_SoundMgr->flag_Accessed = 1;
-		strcpy(App->CL_SoundMgr->Access_File, App->CL_Scene->V_Object[Index]->Sound_File);
+		strcpy(App->CL_SoundMgr->Access_File, App->CL_Scene->B_Object[Index]->Sound_File);
 
 		App->CL_SoundMgr->Dialog_SoundFile();
 
-		strcpy(App->CL_Scene->V_Object[Index]->Sound_File, App->CL_SoundMgr->Access_File);
+		strcpy(App->CL_Scene->B_Object[Index]->Sound_File, App->CL_SoundMgr->Access_File);
 
-		App->CL_Scene->V_Object[Index]->SndVolume = App->CL_SoundMgr->SndVolume;
+		App->CL_Scene->B_Object[Index]->SndVolume = App->CL_SoundMgr->SndVolume;
 
 		Mark_As_Altered(Index);
 
@@ -1097,7 +1097,7 @@ bool CL64_Properties::Edit_Move_Entity(LPARAM lParam)
 
 		strcpy(App->CL_Dialogs->btext, "Play Sound");
 
-		App->CL_Dialogs->TrueFlase = App->CL_Scene->V_Object[Index]->Play_Sound;
+		App->CL_Dialogs->TrueFlase = App->CL_Scene->B_Object[Index]->Play_Sound;
 
 		App->CL_Dialogs->Dialog_TrueFlase(App->MainHwnd);
 
@@ -1105,11 +1105,11 @@ bool CL64_Properties::Edit_Move_Entity(LPARAM lParam)
 		{
 			if (App->CL_Dialogs->TrueFlase == 1)
 			{
-				App->CL_Scene->V_Object[Index]->Play_Sound = 1;
+				App->CL_Scene->B_Object[Index]->Play_Sound = 1;
 			}
 			else
 			{
-				App->CL_Scene->V_Object[Index]->Play_Sound = 0;
+				App->CL_Scene->B_Object[Index]->Play_Sound = 0;
 
 			}
 		}
@@ -1171,7 +1171,7 @@ bool CL64_Properties::Edit_Teleport_Entity(LPARAM lParam)
 
 		App->CL_ImGui_Dialogs->List_Strings.resize(App->CL_Scene->Player_Location_Count);
 		App->CL_ImGui_Dialogs->List_Count = App->CL_Scene->Player_Location_Count;
-		App->CL_ImGui_Dialogs->List_Index = App->CL_Scene->V_Object[Index]->S_Teleport[0]->Location_ID;
+		App->CL_ImGui_Dialogs->List_Index = App->CL_Scene->B_Object[Index]->S_Teleport[0]->Location_ID;
 
 		int Count = 0;
 		while (Count < App->CL_Scene->Player_Location_Count)
@@ -1200,13 +1200,13 @@ bool CL64_Properties::Edit_Teleport_Entity(LPARAM lParam)
 		{
 			int LocationIndex = App->CL_ImGui_Dialogs->List_Index;
 
-			App->CL_Scene->V_Object[Index]->S_Teleport[0]->Location_ID = LocationIndex;
+			App->CL_Scene->B_Object[Index]->S_Teleport[0]->Location_ID = LocationIndex;
 
-			strcpy(App->CL_Scene->V_Object[Index]->S_Teleport[0]->Location_Name, App->CL_Scene->B_Locations[LocationIndex]->Name);
+			strcpy(App->CL_Scene->B_Object[Index]->S_Teleport[0]->Location_Name, App->CL_Scene->B_Locations[LocationIndex]->Name);
 
-			App->CL_Scene->V_Object[Index]->S_Teleport[0]->Player_Position = App->CL_Scene->B_Locations[LocationIndex]->Current_Position;
-			App->CL_Scene->V_Object[Index]->S_Teleport[0]->Physics_Position = App->CL_Scene->B_Locations[LocationIndex]->Physics_Position;
-			App->CL_Scene->V_Object[Index]->S_Teleport[0]->Physics_Rotation = App->CL_Scene->B_Locations[LocationIndex]->Physics_Rotation;
+			App->CL_Scene->B_Object[Index]->S_Teleport[0]->Player_Position = App->CL_Scene->B_Locations[LocationIndex]->Current_Position;
+			App->CL_Scene->B_Object[Index]->S_Teleport[0]->Physics_Position = App->CL_Scene->B_Locations[LocationIndex]->Physics_Position;
+			App->CL_Scene->B_Object[Index]->S_Teleport[0]->Physics_Rotation = App->CL_Scene->B_Locations[LocationIndex]->Physics_Rotation;
 
 			Update_ListView_Teleport();
 		}
@@ -1218,13 +1218,13 @@ bool CL64_Properties::Edit_Teleport_Entity(LPARAM lParam)
 	if (result == 0)
 	{
 		App->CL_SoundMgr->flag_Accessed = 1; // For Sound Manager Dlg
-		strcpy(App->CL_SoundMgr->Access_File, App->CL_Scene->V_Object[Index]->S_Teleport[0]->Sound_File);
+		strcpy(App->CL_SoundMgr->Access_File, App->CL_Scene->B_Object[Index]->S_Teleport[0]->Sound_File);
 
 		App->CL_SoundMgr->Dialog_SoundFile();
 
-		strcpy(App->CL_Scene->V_Object[Index]->S_Teleport[0]->Sound_File, App->CL_SoundMgr->Access_File);
+		strcpy(App->CL_Scene->B_Object[Index]->S_Teleport[0]->Sound_File, App->CL_SoundMgr->Access_File);
 
-		App->CL_Scene->V_Object[Index]->S_Teleport[0]->SndVolume = App->CL_SoundMgr->SndVolume;
+		App->CL_Scene->B_Object[Index]->S_Teleport[0]->SndVolume = App->CL_SoundMgr->SndVolume;
 
 		Mark_As_Altered(Index);
 
@@ -1237,13 +1237,13 @@ bool CL64_Properties::Edit_Teleport_Entity(LPARAM lParam)
 	if (result == 0)
 	{
 		App->CL_SoundMgr->flag_Accessed = 1; // For Sound Manager Dlg
-		strcpy(App->CL_SoundMgr->Access_File, App->CL_Scene->V_Object[Index]->S_Teleport[0]->Sound_File);
+		strcpy(App->CL_SoundMgr->Access_File, App->CL_Scene->B_Object[Index]->S_Teleport[0]->Sound_File);
 
 		App->CL_SoundMgr->Dialog_SoundFile();
 
-		strcpy(App->CL_Scene->V_Object[Index]->S_Teleport[0]->Sound_File, App->CL_SoundMgr->Access_File);
+		strcpy(App->CL_Scene->B_Object[Index]->S_Teleport[0]->Sound_File, App->CL_SoundMgr->Access_File);
 
-		App->CL_Scene->V_Object[Index]->S_Teleport[0]->SndVolume = App->CL_SoundMgr->SndVolume;
+		App->CL_Scene->B_Object[Index]->S_Teleport[0]->SndVolume = App->CL_SoundMgr->SndVolume;
 
 		Mark_As_Altered(Index);
 
@@ -1254,15 +1254,15 @@ bool CL64_Properties::Edit_Teleport_Entity(LPARAM lParam)
 	result = strcmp(btext, "Play");
 	if (result == 0)
 	{
-		App->CL_Dialogs->Show_YesNo_Dlg((LPSTR)"Play Sound", App->CL_Scene->V_Object[Index]->S_Teleport[0]->Sound_File, (LPSTR)"");
+		App->CL_Dialogs->Show_YesNo_Dlg((LPSTR)"Play Sound", App->CL_Scene->B_Object[Index]->S_Teleport[0]->Sound_File, (LPSTR)"");
 
 		if (App->CL_Dialogs->Canceled == 0)
 		{
-			App->CL_Scene->V_Object[Index]->S_Teleport[0]->Play = 1;
+			App->CL_Scene->B_Object[Index]->S_Teleport[0]->Play = 1;
 		}
 		else
 		{
-			App->CL_Scene->V_Object[Index]->S_Teleport[0]->Play = 0;
+			App->CL_Scene->B_Object[Index]->S_Teleport[0]->Play = 0;
 		}
 
 		Update_ListView_Teleport();
@@ -1326,11 +1326,11 @@ bool CL64_Properties::Edit_Teleport_Entity(LPARAM lParam)
 
 		if (App->SBC_Dialogs->Canceled == 0)
 		{
-			App->SBC_Scene->V_Object[Index]->S_Environ[0]->Enabled = 1;
+			App->SBC_Scene->B_Object[Index]->S_Environ[0]->Enabled = 1;
 		}
 		else
 		{
-			App->SBC_Scene->V_Object[Index]->S_Environ[0]->Enabled = 0;
+			App->SBC_Scene->B_Object[Index]->S_Environ[0]->Enabled = 0;
 		}*/
 
 		//Update_ListView_Teleport();
@@ -1428,7 +1428,7 @@ void CL64_Properties::Edit_Particle(LPARAM lParam)
 	if (result == 0)
 	{
 		App->CL_ImGui_Dialogs->Float_Combo_Step = 4;
-		App->CL_ImGui_Dialogs->Start_Dialog_Float(0.01,4, App->CL_Scene->V_Object[Index]->S_Particle[0]->SpeedFactor,(LPSTR) "Particle Speed");
+		App->CL_ImGui_Dialogs->Start_Dialog_Float(0.01,4, App->CL_Scene->B_Object[Index]->S_Particle[0]->SpeedFactor,(LPSTR) "Particle Speed");
 
 		while (App->CL_ImGui_Dialogs->Show_Dialog_Float == 1)
 		{
@@ -1439,8 +1439,8 @@ void CL64_Properties::Edit_Particle(LPARAM lParam)
 				App->CL_ImGui_Dialogs->m_Dialog_Float = 0;
 			}
 
-			App->CL_Scene->V_Object[Index]->S_Particle[0]->SpeedFactor = App->CL_ImGui_Dialogs->m_Dialog_Float;
-			App->CL_Scene->V_Object[Index]->S_Particle[0]->Particle->setSpeedFactor(App->CL_ImGui_Dialogs->m_Dialog_Float);
+			App->CL_Scene->B_Object[Index]->S_Particle[0]->SpeedFactor = App->CL_ImGui_Dialogs->m_Dialog_Float;
+			App->CL_Scene->B_Object[Index]->S_Particle[0]->Particle->setSpeedFactor(App->CL_ImGui_Dialogs->m_Dialog_Float);
 
 		}
 
@@ -1450,19 +1450,19 @@ void CL64_Properties::Edit_Particle(LPARAM lParam)
 		{
 			App->CL_ImGui_Dialogs->Show_Dialog_Float = 0;
 
-			App->CL_Scene->V_Object[Index]->S_Particle[0]->SpeedFactor = App->CL_ImGui_Dialogs->m_Dialog_Float;
+			App->CL_Scene->B_Object[Index]->S_Particle[0]->SpeedFactor = App->CL_ImGui_Dialogs->m_Dialog_Float;
 
 			App->CL_Scene->flag_Scene_Modified = 1;
 
-			App->CL_Scene->V_Object[Index]->Altered = 1;
+			App->CL_Scene->B_Object[Index]->Altered = 1;
 			App->CL_Scene->flag_Scene_Modified = 1;
-			App->CL_FileView->Mark_Altered(App->CL_Scene->V_Object[Index]->FileViewItem);
+			App->CL_FileView->Mark_Altered(App->CL_Scene->B_Object[Index]->FileViewItem);
 		}
 		else
 		{
 			App->CL_ImGui_Dialogs->m_Dialog_Float = App->CL_ImGui_Dialogs->m_Dialog_Float_Copy;
-			App->CL_Scene->V_Object[Index]->S_Particle[0]->SpeedFactor = App->CL_ImGui_Dialogs->m_Dialog_Float_Copy;
-			App->CL_Scene->V_Object[Index]->S_Particle[0]->Particle->setSpeedFactor(App->CL_ImGui_Dialogs->m_Dialog_Float);
+			App->CL_Scene->B_Object[Index]->S_Particle[0]->SpeedFactor = App->CL_ImGui_Dialogs->m_Dialog_Float_Copy;
+			App->CL_Scene->B_Object[Index]->S_Particle[0]->Particle->setSpeedFactor(App->CL_ImGui_Dialogs->m_Dialog_Float);
 		}
 
 		App->CL_Panels->Disable_Panels(false);
@@ -1696,13 +1696,13 @@ bool CL64_Properties::Edit_Collectables(LPARAM lParam)
 	if (result == 0)
 	{
 		App->CL_SoundMgr->flag_Accessed = 1;
-		strcpy(App->CL_SoundMgr->Access_File, App->CL_Scene->V_Object[Index]->S_Collectable[0]->Sound_File);
+		strcpy(App->CL_SoundMgr->Access_File, App->CL_Scene->B_Object[Index]->S_Collectable[0]->Sound_File);
 
 		App->CL_SoundMgr->Dialog_SoundFile();
 
-		strcpy(App->CL_Scene->V_Object[Index]->S_Collectable[0]->Sound_File, App->CL_SoundMgr->Access_File);
+		strcpy(App->CL_Scene->B_Object[Index]->S_Collectable[0]->Sound_File, App->CL_SoundMgr->Access_File);
 
-		App->CL_Scene->V_Object[Index]->S_Collectable[0]->SndVolume = App->CL_SoundMgr->SndVolume;
+		App->CL_Scene->B_Object[Index]->S_Collectable[0]->SndVolume = App->CL_SoundMgr->SndVolume;
 
 		Mark_As_Altered(Index);
 
@@ -1718,13 +1718,13 @@ bool CL64_Properties::Edit_Collectables(LPARAM lParam)
 	if (result == 0)
 	{
 		App->CL_SoundMgr->flag_Accessed = 1;
-		strcpy(App->CL_SoundMgr->Access_File, App->CL_Scene->V_Object[Index]->S_Collectable[0]->Sound_File);
+		strcpy(App->CL_SoundMgr->Access_File, App->CL_Scene->B_Object[Index]->S_Collectable[0]->Sound_File);
 
 		App->CL_SoundMgr->Dialog_SoundFile();
 
-		strcpy(App->CL_Scene->V_Object[Index]->S_Collectable[0]->Sound_File, App->CL_SoundMgr->Access_File);
+		strcpy(App->CL_Scene->B_Object[Index]->S_Collectable[0]->Sound_File, App->CL_SoundMgr->Access_File);
 
-		App->CL_Scene->V_Object[Index]->S_Collectable[0]->SndVolume = App->CL_SoundMgr->SndVolume;
+		App->CL_Scene->B_Object[Index]->S_Collectable[0]->SndVolume = App->CL_SoundMgr->SndVolume;
 
 		Mark_As_Altered(Index);
 
@@ -1742,7 +1742,7 @@ bool CL64_Properties::Edit_Collectables(LPARAM lParam)
 
 		strcpy(App->CL_Dialogs->btext, "Play Sound In The Game");
 
-		App->CL_Dialogs->TrueFlase = App->CL_Scene->V_Object[Index]->S_Collectable[0]->Play;
+		App->CL_Dialogs->TrueFlase = App->CL_Scene->B_Object[Index]->S_Collectable[0]->Play;
 
 		App->CL_Dialogs->Dialog_TrueFlase(App->MainHwnd);
 
@@ -1750,11 +1750,11 @@ bool CL64_Properties::Edit_Collectables(LPARAM lParam)
 		{
 			if (App->CL_Dialogs->TrueFlase == 1)
 			{
-				App->CL_Scene->V_Object[Index]->S_Collectable[0]->Play = 1;
+				App->CL_Scene->B_Object[Index]->S_Collectable[0]->Play = 1;
 			}
 			else
 			{
-				App->CL_Scene->V_Object[Index]->S_Collectable[0]->Play = 0;
+				App->CL_Scene->B_Object[Index]->S_Collectable[0]->Play = 0;
 
 			}
 		}
@@ -2000,14 +2000,14 @@ void CL64_Properties::Edit_Light_Onclick(LPARAM lParam)
 	if (result == 0)
 	{
 
-		App->SBC_Gui_Dialogs->Start_Dialog_Float(1, App->SBC_Scene->V_Object[Index]->Mesh_Pos.x, "Pos X");
+		App->SBC_Gui_Dialogs->Start_Dialog_Float(1, App->SBC_Scene->B_Object[Index]->Mesh_Pos.x, "Pos X");
 
 		while (App->SBC_Gui_Dialogs->Show_Dialog_Float == 1)
 		{
 			App->SBC_Gui_Dialogs->BackGround_Render_Loop();
 
-			App->SBC_Scene->V_Object[Index]->Mesh_Pos.x = App->SBC_Gui_Dialogs->m_Dialog_Float;
-			App->SBC_Scene->V_Object[Index]->Object_Node->setPosition(App->SBC_Scene->V_Object[Index]->Mesh_Pos);
+			App->SBC_Scene->B_Object[Index]->Mesh_Pos.x = App->SBC_Gui_Dialogs->m_Dialog_Float;
+			App->SBC_Scene->B_Object[Index]->Object_Node->setPosition(App->SBC_Scene->B_Object[Index]->Mesh_Pos);
 
 		}
 
@@ -2020,14 +2020,14 @@ void CL64_Properties::Edit_Light_Onclick(LPARAM lParam)
 	if (result == 0)
 	{
 
-		App->SBC_Gui_Dialogs->Start_Dialog_Float(1, App->SBC_Scene->V_Object[Index]->Mesh_Pos.y, "Pos Y");
+		App->SBC_Gui_Dialogs->Start_Dialog_Float(1, App->SBC_Scene->B_Object[Index]->Mesh_Pos.y, "Pos Y");
 
 		while (App->SBC_Gui_Dialogs->Show_Dialog_Float == 1)
 		{
 			App->SBC_Gui_Dialogs->BackGround_Render_Loop();
 
-			App->SBC_Scene->V_Object[Index]->Mesh_Pos.y = App->SBC_Gui_Dialogs->m_Dialog_Float;
-			App->SBC_Scene->V_Object[Index]->Object_Node->setPosition(App->SBC_Scene->V_Object[Index]->Mesh_Pos);
+			App->SBC_Scene->B_Object[Index]->Mesh_Pos.y = App->SBC_Gui_Dialogs->m_Dialog_Float;
+			App->SBC_Scene->B_Object[Index]->Object_Node->setPosition(App->SBC_Scene->B_Object[Index]->Mesh_Pos);
 
 		}
 
@@ -2099,7 +2099,7 @@ bool CL64_Properties::Update_ListView_Player()
 
 	//	char Num[10];
 	char chr_ID[50];
-	//_itoa(App->CL_Scene->V_Object[index]->This_Object_ID, Num, 10);
+	//_itoa(App->CL_Scene->B_Object[index]->This_Object_ID, Num, 10);
 	strcpy(chr_ID, "Properties ID=0");
 	//strcat(chr_ID, Num);
 
@@ -2182,7 +2182,7 @@ bool CL64_Properties::Update_ListView_Objects()
 	char Num[10];
 	char chr_ID[50];
 	char IndexNum[10];
-	_itoa(App->CL_Scene->V_Object[index]->This_Object_UniqueID, Num, 10);
+	_itoa(App->CL_Scene->B_Object[index]->This_Object_UniqueID, Num, 10);
 	_itoa(index, IndexNum, 10);
 	strcpy(chr_ID, "Unique ID ");
 	strcat(chr_ID, Num);
@@ -2191,7 +2191,7 @@ bool CL64_Properties::Update_ListView_Objects()
 
 
 	SetWindowText(Properties_Dlg_hWnd, chr_ID);
-	//SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)App->SBC_Scene->V_Object[index]->Mesh_Name);
+	//SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)App->SBC_Scene->B_Object[index]->Mesh_Name);
 
 
 	const int NUM_ITEMS = 4;
@@ -2201,9 +2201,9 @@ bool CL64_Properties::Update_ListView_Objects()
 	memset(&pitem, 0, sizeof(LV_ITEM));
 	pitem.mask = LVIF_TEXT;
 
-	grid[0][0] = "Name", grid[1][0] = App->CL_Scene->V_Object[index]->Mesh_Name;
-	grid[0][1] = "Mesh File", grid[1][1] = App->CL_Scene->V_Object[index]->Mesh_FileName;
-	grid[0][2] = "Materials", grid[1][2] = App->CL_Scene->V_Object[index]->Material_File;
+	grid[0][0] = "Name", grid[1][0] = App->CL_Scene->B_Object[index]->Mesh_Name;
+	grid[0][1] = "Mesh File", grid[1][1] = App->CL_Scene->B_Object[index]->Mesh_FileName;
+	grid[0][2] = "Materials", grid[1][2] = App->CL_Scene->B_Object[index]->Material_File;
 	grid[0][3] = " ", grid[1][3] = " ";
 
 	ListView_DeleteAllItems(Properties_hLV);
@@ -2236,7 +2236,7 @@ bool CL64_Properties::Update_ListView_Collectables()
 	char Num[10];
 	char chr_ID[50];
 	char IndexNum[10];
-	_itoa(App->CL_Scene->V_Object[index]->This_Object_UniqueID, Num, 10);
+	_itoa(App->CL_Scene->B_Object[index]->This_Object_UniqueID, Num, 10);
 	_itoa(index, IndexNum, 10);
 	strcpy(chr_ID, "Unique ID ");
 	strcat(chr_ID, Num);
@@ -2244,11 +2244,11 @@ bool CL64_Properties::Update_ListView_Collectables()
 	strcat(chr_ID, IndexNum);
 
 	SetWindowText(Properties_Dlg_hWnd, chr_ID);
-	//SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)App->SBC_Scene->V_Object[index]->Mesh_Name);
+	//SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)App->SBC_Scene->B_Object[index]->Mesh_Name);
 
 	// new sound
 	char chr_Play[100];
-	if (App->CL_Scene->V_Object[index]->S_Collectable[0]->Play == 1)
+	if (App->CL_Scene->B_Object[index]->S_Collectable[0]->Play == 1)
 	{
 		strcpy(chr_Play, "True");
 	}
@@ -2258,12 +2258,12 @@ bool CL64_Properties::Update_ListView_Collectables()
 	}
 
 	char chr_Volume[100];
-	float sum2 = App->CL_Scene->V_Object[index]->S_Collectable[0]->SndVolume;
+	float sum2 = App->CL_Scene->B_Object[index]->S_Collectable[0]->SndVolume;
 	int Percent = int(sum2 * 100);
 	_itoa(Percent, chr_Volume, 10);
 
 	char chr_Counter_Disabled[20];
-	if (App->CL_Scene->V_Object[index]->S_Collectable[0]->Counter_Disabled == 1)
+	if (App->CL_Scene->B_Object[index]->S_Collectable[0]->Counter_Disabled == 1)
 	{
 		strcpy(chr_Counter_Disabled, "Disabled");
 	}
@@ -2279,11 +2279,11 @@ bool CL64_Properties::Update_ListView_Collectables()
 	memset(&pitem, 0, sizeof(LV_ITEM));
 	pitem.mask = LVIF_TEXT;
 
-	grid[0][0] = "Name", grid[1][0] = App->CL_Scene->V_Object[index]->Mesh_Name;
-	grid[0][1] = "Mesh File", grid[1][1] = App->CL_Scene->V_Object[index]->Mesh_FileName;
-	grid[0][2] = "Materials", grid[1][2] = App->CL_Scene->V_Object[index]->Material_File;
+	grid[0][0] = "Name", grid[1][0] = App->CL_Scene->B_Object[index]->Mesh_Name;
+	grid[0][1] = "Mesh File", grid[1][1] = App->CL_Scene->B_Object[index]->Mesh_FileName;
+	grid[0][2] = "Materials", grid[1][2] = App->CL_Scene->B_Object[index]->Material_File;
 	grid[0][3] = " ", grid[1][3] = " ";
-	grid[0][4] = "Sound", grid[1][4] = App->CL_Scene->V_Object[index]->S_Collectable[0]->Sound_File;
+	grid[0][4] = "Sound", grid[1][4] = App->CL_Scene->B_Object[index]->S_Collectable[0]->Sound_File;
 	grid[0][5] = "Volume", grid[1][5] = chr_Volume;
 	grid[0][6] = "Play", grid[1][6] = chr_Play;
 	grid[0][7] = " ", grid[1][7] = " ";
@@ -2321,7 +2321,7 @@ bool CL64_Properties::Update_ListView_Sounds()
 	char Num[10];
 	char chr_ID[50];
 	char IndexNum[10];
-	_itoa(App->CL_Scene->V_Object[index]->This_Object_UniqueID, Num, 10);
+	_itoa(App->CL_Scene->B_Object[index]->This_Object_UniqueID, Num, 10);
 	_itoa(index, IndexNum, 10);
 	strcpy(chr_ID, "Unique ID ");
 	strcat(chr_ID, Num);
@@ -2329,14 +2329,14 @@ bool CL64_Properties::Update_ListView_Sounds()
 	strcat(chr_ID, IndexNum);
 
 	char chr_Usage_Num[50];
-	_itoa(App->CL_Scene->V_Object[index]->Usage, chr_Usage_Num, 10);
+	_itoa(App->CL_Scene->B_Object[index]->Usage, chr_Usage_Num, 10);
 
 	SetWindowText(Properties_Dlg_hWnd, chr_ID);
-	//SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)App->SBC_Scene->V_Object[index]->Mesh_Name);
+	//SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)App->SBC_Scene->B_Object[index]->Mesh_Name);
 
 
 	char chr_Volume[100];
-	float sum2 = App->CL_Scene->V_Object[index]->SndVolume;
+	float sum2 = App->CL_Scene->B_Object[index]->SndVolume;
 	int Percent = int(sum2 * 100);
 	_itoa(Percent, chr_Volume, 10);
 
@@ -2347,9 +2347,9 @@ bool CL64_Properties::Update_ListView_Sounds()
 	memset(&pitem, 0, sizeof(LV_ITEM));
 	pitem.mask = LVIF_TEXT;
 
-	grid[0][0] = "Name", grid[1][0] = App->CL_Scene->V_Object[index]->Mesh_Name;
+	grid[0][0] = "Name", grid[1][0] = App->CL_Scene->B_Object[index]->Mesh_Name;
 	grid[0][1] = " ", grid[1][1] = " ";
-	grid[0][2] = "Sound", grid[1][2] = App->CL_Scene->V_Object[index]->Sound_File;
+	grid[0][2] = "Sound", grid[1][2] = App->CL_Scene->B_Object[index]->Sound_File;
 	grid[0][3] = "Volume", grid[1][3] = chr_Volume;
 	grid[0][4] = "Usage", grid[1][4] = chr_Usage_Num;
 
@@ -2383,7 +2383,7 @@ bool CL64_Properties::Update_ListView_Move_Entities()
 	char Num[10];
 	char chr_ID[50];
 	char IndexNum[10];
-	_itoa(App->CL_Scene->V_Object[index]->This_Object_UniqueID, Num, 10);
+	_itoa(App->CL_Scene->B_Object[index]->This_Object_UniqueID, Num, 10);
 	_itoa(index, IndexNum, 10);
 	strcpy(chr_ID, "Unique ID ");
 	strcat(chr_ID, Num);
@@ -2391,31 +2391,31 @@ bool CL64_Properties::Update_ListView_Move_Entities()
 	strcat(chr_ID, IndexNum);
 
 	SetWindowText(Properties_Dlg_hWnd, chr_ID);
-	//SetDlgItemText(App->SBC_Properties->Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)App->SBC_Scene->V_Object[index]->Mesh_Name);
+	//SetDlgItemText(App->SBC_Properties->Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)App->SBC_Scene->B_Object[index]->Mesh_Name);
 
 	char chr_Distance[100];
-	sprintf(chr_Distance, "%.3f ", App->CL_Scene->V_Object[index]->S_MoveType[0]->Move_Distance);
+	sprintf(chr_Distance, "%.3f ", App->CL_Scene->B_Object[index]->S_MoveType[0]->Move_Distance);
 
 	char chr_Speed[100];
-	sprintf(chr_Speed, "%.3f ", App->CL_Scene->V_Object[index]->S_MoveType[0]->Speed);
+	sprintf(chr_Speed, "%.3f ", App->CL_Scene->B_Object[index]->S_MoveType[0]->Speed);
 
 	char chr_Axis[100] { 0 };
-	if (App->CL_Scene->V_Object[index]->S_MoveType[0]->WhatDirection == Enums::Axis_x)
+	if (App->CL_Scene->B_Object[index]->S_MoveType[0]->WhatDirection == Enums::Axis_x)
 	{
 		strcpy(chr_Axis, "X");
 	}
-	if (App->CL_Scene->V_Object[index]->S_MoveType[0]->WhatDirection == Enums::Axis_y)
+	if (App->CL_Scene->B_Object[index]->S_MoveType[0]->WhatDirection == Enums::Axis_y)
 	{
 		strcpy(chr_Axis, "Y");
 	}
-	if (App->CL_Scene->V_Object[index]->S_MoveType[0]->WhatDirection == Enums::Axis_z)
+	if (App->CL_Scene->B_Object[index]->S_MoveType[0]->WhatDirection == Enums::Axis_z)
 	{
 		strcpy(chr_Axis, "Z");
 	}
 
 	// new sound
 	char chr_Play[100];
-	if (App->CL_Scene->V_Object[index]->Play_Sound == 1)
+	if (App->CL_Scene->B_Object[index]->Play_Sound == 1)
 	{
 		strcpy(chr_Play, "True");
 	}
@@ -2425,18 +2425,18 @@ bool CL64_Properties::Update_ListView_Move_Entities()
 	}
 
 	char chr_Object_Name[100];
-	strcpy(chr_Object_Name, App->CL_Scene->V_Object[App->CL_Scene->V_Object[index]->S_MoveType[0]->Object_To_Move_Index]->Mesh_Name);
+	strcpy(chr_Object_Name, App->CL_Scene->B_Object[App->CL_Scene->B_Object[index]->S_MoveType[0]->Object_To_Move_Index]->Mesh_Name);
 
 	char chr_Trigger_Value[100];
-	_itoa(App->CL_Scene->V_Object[index]->S_MoveType[0]->Trigger_Value, chr_Trigger_Value, 10);
+	_itoa(App->CL_Scene->B_Object[index]->S_MoveType[0]->Trigger_Value, chr_Trigger_Value, 10);
 
 	char chr_Volume[100];
-	float sum2 = App->CL_Scene->V_Object[index]->SndVolume;
+	float sum2 = App->CL_Scene->B_Object[index]->SndVolume;
 	int Percent = int(sum2 * 100);
 	_itoa(Percent, chr_Volume, 10);
 
 	char chr_Counter_Disabled[20];
-	if (App->CL_Scene->V_Object[index]->S_MoveType[0]->Counter_Disabled == 1)
+	if (App->CL_Scene->B_Object[index]->S_MoveType[0]->Counter_Disabled == 1)
 	{
 		strcpy(chr_Counter_Disabled, "Disabled");
 	}
@@ -2452,14 +2452,14 @@ bool CL64_Properties::Update_ListView_Move_Entities()
 	memset(&pitem, 0, sizeof(LV_ITEM));
 	pitem.mask = LVIF_TEXT;
 
-	grid[0][0] = "Name", grid[1][0] = App->CL_Scene->V_Object[index]->Mesh_Name;
+	grid[0][0] = "Name", grid[1][0] = App->CL_Scene->B_Object[index]->Mesh_Name;
 	grid[0][1] = " ", grid[1][1] = " ";
 	grid[0][2] = "Move_Object", grid[1][2] = chr_Object_Name;
 	grid[0][3] = "Axis", grid[1][3] = chr_Axis;
 	grid[0][4] = "Distance", grid[1][4] = chr_Distance;
 	grid[0][5] = "Speed", grid[1][5] = chr_Speed;
 	grid[0][6] = " ", grid[1][6] = " ";
-	grid[0][7] = "Sound", grid[1][7] = App->CL_Scene->V_Object[index]->Sound_File;
+	grid[0][7] = "Sound", grid[1][7] = App->CL_Scene->B_Object[index]->Sound_File;
 	grid[0][8] = "Volume", grid[1][8] = chr_Volume;
 	grid[0][9] = "Play", grid[1][9] = chr_Play;
 	grid[0][10] = " ", grid[1][10] = " ";
@@ -2495,7 +2495,7 @@ bool CL64_Properties::Update_ListView_Messages()
 	char Num[10];
 	char chr_ID[50];
 	char IndexNum[10];
-	_itoa(App->CL_Scene->V_Object[index]->This_Object_UniqueID, Num, 10);
+	_itoa(App->CL_Scene->B_Object[index]->This_Object_UniqueID, Num, 10);
 	_itoa(index, IndexNum, 10);
 	strcpy(chr_ID, "Unique ID ");
 	strcat(chr_ID, Num);
@@ -2503,16 +2503,16 @@ bool CL64_Properties::Update_ListView_Messages()
 	strcat(chr_ID, IndexNum);
 
 	SetWindowText(Properties_Dlg_hWnd, chr_ID);
-	//SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)App->SBC_Scene->V_Object[index]->Mesh_Name);
+	//SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)App->SBC_Scene->B_Object[index]->Mesh_Name);
 
 	char chr_PosX[20];
-	sprintf(chr_PosX, "%.3f ", App->CL_Scene->V_Object[index]->S_Message[0]->Message_PosX);
+	sprintf(chr_PosX, "%.3f ", App->CL_Scene->B_Object[index]->S_Message[0]->Message_PosX);
 
 	char chr_PosY[20];
-	sprintf(chr_PosY, "%.3f ", App->CL_Scene->V_Object[index]->S_Message[0]->Message_PosY);
+	sprintf(chr_PosY, "%.3f ", App->CL_Scene->B_Object[index]->S_Message[0]->Message_PosY);
 
 	char chr_Counter_Disabled[20];
-	if (App->CL_Scene->V_Object[index]->S_Message[0]->Counter_Disabled == 1)
+	if (App->CL_Scene->B_Object[index]->S_Message[0]->Counter_Disabled == 1)
 	{
 		strcpy(chr_Counter_Disabled, "Disabled");
 	}
@@ -2528,11 +2528,11 @@ bool CL64_Properties::Update_ListView_Messages()
 	memset(&pitem, 0, sizeof(LV_ITEM));
 	pitem.mask = LVIF_TEXT;
 
-	grid[0][0] = "Name", grid[1][0] = App->CL_Scene->V_Object[index]->Mesh_Name;
+	grid[0][0] = "Name", grid[1][0] = App->CL_Scene->B_Object[index]->Mesh_Name;
 	grid[0][1] = " ", grid[1][1] = " ";
 	grid[0][2] = "Pos_X", grid[1][2] = chr_PosX;
 	grid[0][3] = "Pos_Y", grid[1][3] = chr_PosY;
-	grid[0][4] = "Text", grid[1][4] = App->CL_Scene->V_Object[index]->S_Message[0]->Message_Text;
+	grid[0][4] = "Text", grid[1][4] = App->CL_Scene->B_Object[index]->S_Message[0]->Message_Text;
 	grid[0][5] = " ", grid[1][5] = " ";
 	grid[0][6] = "Counter", grid[1][6] = chr_Counter_Disabled;
 
@@ -2564,16 +2564,16 @@ bool CL64_Properties::Update_ListView_Teleport()
 
 	char Num[10];
 	char chr_ID[50];
-	_itoa(App->CL_Scene->V_Object[index]->This_Object_UniqueID, Num, 10);
+	_itoa(App->CL_Scene->B_Object[index]->This_Object_UniqueID, Num, 10);
 	strcpy(chr_ID, "Properties ID=");
 	strcat(chr_ID, Num);
 
 	SetWindowText(Properties_Dlg_hWnd, chr_ID);
-	//SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)App->SBC_Scene->V_Object[index]->Mesh_Name);
+	//SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)App->SBC_Scene->B_Object[index]->Mesh_Name);
 
 	// new sound
 	char chr_Play[100];
-	if (App->CL_Scene->V_Object[index]->S_Teleport[0]->Play == 1)
+	if (App->CL_Scene->B_Object[index]->S_Teleport[0]->Play == 1)
 	{
 		strcpy(chr_Play, "True");
 	}
@@ -2584,17 +2584,17 @@ bool CL64_Properties::Update_ListView_Teleport()
 
 
 	char chr_Goto_Location[100];
-	int Goto_ID = App->CL_Scene->V_Object[index]->S_Teleport[0]->Location_ID;
+	int Goto_ID = App->CL_Scene->B_Object[index]->S_Teleport[0]->Location_ID;
 	strcpy(chr_Goto_Location, App->CL_Scene->B_Locations[Goto_ID]->Name);
 
 	char chr_Volume[100];
-	float sum2 = App->CL_Scene->V_Object[index]->S_Teleport[0]->SndVolume;
+	float sum2 = App->CL_Scene->B_Object[index]->S_Teleport[0]->SndVolume;
 	int Percent = int(sum2 * 100);
 	_itoa(Percent, chr_Volume, 10);
 
 
 	char chr_Counter_Disabled[20];
-	if (App->CL_Scene->V_Object[index]->S_Teleport[0]->Counter_Disabled == 1)
+	if (App->CL_Scene->B_Object[index]->S_Teleport[0]->Counter_Disabled == 1)
 	{
 		strcpy(chr_Counter_Disabled, "Disabled");
 	}
@@ -2606,7 +2606,7 @@ bool CL64_Properties::Update_ListView_Teleport()
 
 	// Environ
 	char chr_Environ_Disabled[100];
-	if (App->CL_Scene->V_Object[index]->S_Environ[0]->Environ_Enabled == 1)
+	if (App->CL_Scene->B_Object[index]->S_Environ[0]->Environ_Enabled == 1)
 	{
 		strcpy(chr_Environ_Disabled, "Enabled");
 	}
@@ -2617,10 +2617,10 @@ bool CL64_Properties::Update_ListView_Teleport()
 
 	// Environ
 	char Chr_Counter_Index[100];
-	_itoa(App->CL_Scene->V_Object[index]->S_Teleport[0]->Counter_ID, Chr_Counter_Index,10);
+	_itoa(App->CL_Scene->B_Object[index]->S_Teleport[0]->Counter_ID, Chr_Counter_Index,10);
 
 
-	if (App->CL_Scene->V_Object[index]->S_Environ[0]->Environ_Enabled == 1)
+	if (App->CL_Scene->B_Object[index]->S_Environ[0]->Environ_Enabled == 1)
 	{
 		const int NUM_ITEMS = 12;
 		const int NUM_COLS = 2;
@@ -2630,15 +2630,15 @@ bool CL64_Properties::Update_ListView_Teleport()
 		memset(&pitem, 0, sizeof(LV_ITEM));
 		pitem.mask = LVIF_TEXT;
 
-		grid[0][0] = "Name", grid[1][0] = App->CL_Scene->V_Object[index]->Mesh_Name;
+		grid[0][0] = "Name", grid[1][0] = App->CL_Scene->B_Object[index]->Mesh_Name;
 		grid[0][1] = " ", grid[1][1] = " ";
 		grid[0][2] = "Goto", grid[1][2] = chr_Goto_Location;
-		grid[0][3] = "Sound", grid[1][3] = App->CL_Scene->V_Object[index]->S_Teleport[0]->Sound_File;
+		grid[0][3] = "Sound", grid[1][3] = App->CL_Scene->B_Object[index]->S_Teleport[0]->Sound_File;
 		grid[0][4] = "Volume", grid[1][4] = chr_Volume;
 		grid[0][5] = "Play", grid[1][5] = chr_Play;
 		grid[0][6] = " ", grid[1][6] = " ";
 		grid[0][7] = "Counter", grid[1][7] = chr_Counter_Disabled;
-		grid[0][8] = "Count_Name", grid[1][8] = App->CL_Scene->V_Object[index]->S_Teleport[0]->Counter_Name;
+		grid[0][8] = "Count_Name", grid[1][8] = App->CL_Scene->B_Object[index]->S_Teleport[0]->Counter_Name;
 		grid[0][9] = "Count_Index", grid[1][9] = Chr_Counter_Index;
 		grid[0][10] = " ", grid[1][10] = " ";
 		grid[0][11] = "Environment", grid[1][11] = chr_Environ_Disabled;
@@ -2668,10 +2668,10 @@ bool CL64_Properties::Update_ListView_Teleport()
 		memset(&pitem, 0, sizeof(LV_ITEM));
 		pitem.mask = LVIF_TEXT;
 
-		grid[0][0] = "Name", grid[1][0] = App->CL_Scene->V_Object[index]->Mesh_Name;
+		grid[0][0] = "Name", grid[1][0] = App->CL_Scene->B_Object[index]->Mesh_Name;
 		grid[0][1] = " ", grid[1][1] = " ";
 		grid[0][2] = "Goto", grid[1][2] = chr_Goto_Location;
-		grid[0][3] = "Sound", grid[1][3] = App->CL_Scene->V_Object[index]->S_Teleport[0]->Sound_File;
+		grid[0][3] = "Sound", grid[1][3] = App->CL_Scene->B_Object[index]->S_Teleport[0]->Sound_File;
 		grid[0][4] = "Volume", grid[1][4] = chr_Volume;
 		grid[0][5] = "Play", grid[1][5] = chr_Play;
 		grid[0][6] = " ", grid[1][6] = " ";
@@ -2706,18 +2706,18 @@ bool CL64_Properties::Update_ListView_Particles()
 	char Num[10];
 	char chr_ID[50];
 	char IndexNum[10];
-	_itoa(App->CL_Scene->V_Object[index]->This_Object_UniqueID, Num, 10);
+	_itoa(App->CL_Scene->B_Object[index]->This_Object_UniqueID, Num, 10);
 	_itoa(index, IndexNum, 10);
 	strcpy(chr_ID, "Unique ID ");
 	strcat(chr_ID, Num);
 	strcat(chr_ID, "  Object Index ");
 	strcat(chr_ID, IndexNum);
 	SetWindowText(Properties_Dlg_hWnd, chr_ID);
-	//SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)App->SBC_Scene->V_Object[index]->Mesh_Name);
+	//SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)App->SBC_Scene->B_Object[index]->Mesh_Name);
 
 	char chr_Speed[100];
 
-	sprintf(chr_Speed, "%.3f", App->CL_Scene->V_Object[index]->S_Particle[0]->Particle->getSpeedFactor());
+	sprintf(chr_Speed, "%.3f", App->CL_Scene->B_Object[index]->S_Particle[0]->Particle->getSpeedFactor());
 
 	const int NUM_ITEMS = 4;
 	const int NUM_COLS = 2;
@@ -2726,8 +2726,8 @@ bool CL64_Properties::Update_ListView_Particles()
 	memset(&pitem, 0, sizeof(LV_ITEM));
 	pitem.mask = LVIF_TEXT;
 
-	grid[0][0] = "Name", grid[1][0] = App->CL_Scene->V_Object[index]->Mesh_Name;
-	grid[0][1] = "Particle", grid[1][1] = App->CL_Scene->V_Object[index]->S_Particle[0]->ParticleScript;
+	grid[0][0] = "Name", grid[1][0] = App->CL_Scene->B_Object[index]->Mesh_Name;
+	grid[0][1] = "Particle", grid[1][1] = App->CL_Scene->B_Object[index]->S_Particle[0]->ParticleScript;
 	grid[0][2] = " ", grid[1][2] = " ";
 	grid[0][3] = "Speed", grid[1][3] = chr_Speed;
 
@@ -2831,7 +2831,7 @@ bool CL64_Properties::Update_ListView_Environs()
 	char Num[10];
 	char IndexNum[10];
 	char chr_ID[50];
-	_itoa(App->CL_Scene->V_Object[index]->This_Object_UniqueID, Num, 10);
+	_itoa(App->CL_Scene->B_Object[index]->This_Object_UniqueID, Num, 10);
 	_itoa(index, IndexNum, 10);
 	strcpy(chr_ID, "Unique ID ");
 	strcat(chr_ID, Num);
@@ -2839,7 +2839,7 @@ bool CL64_Properties::Update_ListView_Environs()
 	strcat(chr_ID, IndexNum);
 
 	SetWindowText(Properties_Dlg_hWnd, chr_ID);
-	//SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)App->SBC_Scene->V_Object[index]->Mesh_Name);
+	//SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)App->SBC_Scene->B_Object[index]->Mesh_Name);
 
 	const int NUM_ITEMS = 3;
 	const int NUM_COLS = 2;
@@ -2848,7 +2848,7 @@ bool CL64_Properties::Update_ListView_Environs()
 	memset(&pitem, 0, sizeof(LV_ITEM));
 	pitem.mask = LVIF_TEXT;
 
-	grid[0][0] = "Name", grid[1][0] = App->CL_Scene->V_Object[index]->Mesh_Name;
+	grid[0][0] = "Name", grid[1][0] = App->CL_Scene->B_Object[index]->Mesh_Name;
 	grid[0][1] = " ", grid[1][1] = " ";
 	grid[0][2] = "Evironment", grid[1][2] = "Settings";
 
@@ -2875,7 +2875,7 @@ bool CL64_Properties::Update_ListView_Environs()
 // *************************************************************************
 void CL64_Properties::Mark_As_Altered(int Index)
 {
-	App->CL_Scene->V_Object[Index]->Altered = 1;
+	App->CL_Scene->B_Object[Index]->Altered = 1;
 	App->CL_Scene->flag_Scene_Modified = 1;
-	App->CL_FileView->Mark_Altered(App->CL_Scene->V_Object[Index]->FileViewItem);
+	App->CL_FileView->Mark_Altered(App->CL_Scene->B_Object[Index]->FileViewItem);
 }

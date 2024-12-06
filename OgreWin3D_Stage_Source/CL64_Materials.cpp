@@ -61,8 +61,8 @@ void CL64_Materials::Start_Material_Editor()
 	}
 	else
 	{
-		BaseEntity = App->CL_Scene->V_Object[Index]->Object_Ent;
-		BaseNode = App->CL_Scene->V_Object[Index]->Object_Node;
+		BaseEntity = App->CL_Scene->B_Object[Index]->Object_Ent;
+		BaseNode = App->CL_Scene->B_Object[Index]->Object_Node;
 	}
 
 	// ---------------- Get Material Name
@@ -310,8 +310,8 @@ void CL64_Materials::Update_MaterialFile(Ogre::Entity* mBaseEntity)
 	//Ogre::SceneNode* mBaseNode =	nullptr;
 	char mMaterial_FileName[MAX_PATH];
 
-	//mBaseEntity = App->CL_Scene->V_Object[Index]->Object_Ent;
-	//mBaseNode = App->CL_Scene->V_Object[Index]->Object_Node;
+	//mBaseEntity = App->CL_Scene->B_Object[Index]->Object_Ent;
+	//mBaseNode = App->CL_Scene->B_Object[Index]->Object_Node;
 
 	Ogre::String text = mBaseEntity->getMesh()->getSubMesh(0)->getMaterialName().c_str();
 	Ogre::MaterialPtr  Mat = static_cast<Ogre::MaterialPtr> (Ogre::MaterialManager::getSingleton().getByName(text));
@@ -402,9 +402,9 @@ void CL64_Materials::Update_MaterialFile(Ogre::Entity* mBaseEntity)
 		App->Say("Load");
 	}
 
-	for (int k = 0; k < App->CL_Scene->V_Object[Index]->Object_Ent->getNumSubEntities(); k++)
+	for (int k = 0; k < App->CL_Scene->B_Object[Index]->Object_Ent->getNumSubEntities(); k++)
 	{
-		SubEntity* se = App->CL_Scene->V_Object[Index]->Object_Ent->getSubEntity(k);
+		SubEntity* se = App->CL_Scene->B_Object[Index]->Object_Ent->getSubEntity(k);
 		se->setMaterial(se->getMaterial());
 	}
 }

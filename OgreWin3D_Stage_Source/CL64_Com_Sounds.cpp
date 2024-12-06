@@ -44,35 +44,35 @@ bool CL64_Com_Sounds::Add_New_Sound()
 
 	int Index = App->CL_Scene->Object_Count;
 
-	App->CL_Scene->V_Object[Index] = new Base_Object();
+	App->CL_Scene->B_Object[Index] = new Base_Object();
 
-	strcpy(App->CL_Scene->V_Object[Index]->Sound_File, "Welcome.ogg");
-	strcpy(App->CL_Scene->V_Object[Index]->Sound_Path, App->CL_SoundMgr->Default_Folder);
-	strcat(App->CL_Scene->V_Object[Index]->Sound_Path, "\\Media\\Sounds\\");
-	strcat(App->CL_Scene->V_Object[Index]->Sound_Path, "Welcome.ogg");
+	strcpy(App->CL_Scene->B_Object[Index]->Sound_File, "Welcome.ogg");
+	strcpy(App->CL_Scene->B_Object[Index]->Sound_Path, App->CL_SoundMgr->Default_Folder);
+	strcat(App->CL_Scene->B_Object[Index]->Sound_Path, "\\Media\\Sounds\\");
+	strcat(App->CL_Scene->B_Object[Index]->Sound_Path, "Welcome.ogg");
 
-	App->CL_Scene->V_Object[Index]->HasSound = 1;
+	App->CL_Scene->B_Object[Index]->HasSound = 1;
 
-	App->CL_Scene->V_Object[Index]->Type = Enums::Bullet_Type_Static;
-	App->CL_Scene->V_Object[Index]->Shape = Enums::Shape_Box;
-	App->CL_Scene->V_Object[Index]->This_Object_UniqueID = App->CL_Scene->UniqueID_Object_Counter; // Unique ID
+	App->CL_Scene->B_Object[Index]->Type = Enums::Bullet_Type_Static;
+	App->CL_Scene->B_Object[Index]->Shape = Enums::Shape_Box;
+	App->CL_Scene->B_Object[Index]->This_Object_UniqueID = App->CL_Scene->UniqueID_Object_Counter; // Unique ID
 
-	strcpy(App->CL_Scene->V_Object[Index]->Mesh_FileName, "SoundEntity_GD.mesh");
+	strcpy(App->CL_Scene->B_Object[Index]->Mesh_FileName, "SoundEntity_GD.mesh");
 
 	strcpy_s(B_Name, "Sound_");
 	_itoa(Index, ConNum, 10);
 	strcat(B_Name, ConNum);
-	strcpy(App->CL_Scene->V_Object[Index]->Mesh_Name, B_Name);
+	strcpy(App->CL_Scene->B_Object[Index]->Mesh_Name, B_Name);
 
 	Ogre::Vector3 Pos = App->CL_Com_Objects->GetPlacement(-50);
-	App->CL_Scene->V_Object[Index]->Mesh_Pos = Pos;
+	App->CL_Scene->B_Object[Index]->Mesh_Pos = Pos;
 
 	Create_Sound_Entity(Index);
 
-	HTREEITEM Temp = App->CL_FileView->Add_Item(App->CL_FileView->FV_Sounds_Folder, App->CL_Scene->V_Object[Index]->Mesh_Name, Index, true);
-	App->CL_Scene->V_Object[Index]->FileViewItem = Temp;
+	HTREEITEM Temp = App->CL_FileView->Add_Item(App->CL_FileView->FV_Sounds_Folder, App->CL_Scene->B_Object[Index]->Mesh_Name, Index, true);
+	App->CL_Scene->B_Object[Index]->FileViewItem = Temp;
 
-	App->CL_FileView->SelectItem(App->CL_Scene->V_Object[Index]->FileViewItem);
+	App->CL_FileView->SelectItem(App->CL_Scene->B_Object[Index]->FileViewItem);
 
 	App->CL_Scene->UniqueID_Object_Counter++;
 	App->CL_Scene->Object_Count++;
@@ -93,7 +93,7 @@ bool CL64_Com_Sounds::Create_Sound_Entity(int Index)
 	char ConNum[256];
 	char Ogre_Name[256];
 
-	Base_Object* Object = App->CL_Scene->V_Object[Index];
+	Base_Object* Object = App->CL_Scene->B_Object[Index];
 
 	// ----------------- Mesh
 
@@ -116,7 +116,7 @@ bool CL64_Com_Sounds::Create_Sound_Entity(int Index)
 	
 	// ----------------- Physics
 
-	Ogre::Vector3 Centre = App->CL_Scene->V_Object[Index]->Object_Ent->getWorldBoundingBox(true).getCenter();
+	Ogre::Vector3 Centre = App->CL_Scene->B_Object[Index]->Object_Ent->getWorldBoundingBox(true).getCenter();
 	Object->Physics_Pos = Ogre::Vector3(Centre.x, Centre.y, Centre.z);
 
 	btTransform startTransform;
@@ -165,7 +165,7 @@ bool CL64_Com_Sounds::Create_Sound_Entity(int Index)
 
 	App->CL_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
 
-	App->CL_Scene->V_Object[Index]->Physics_Valid = 1;
+	App->CL_Scene->B_Object[Index]->Physics_Valid = 1;
 
 	App->CL_Physics->Set_Physics_New(Index);
 
@@ -177,7 +177,7 @@ bool CL64_Com_Sounds::Create_Sound_Entity(int Index)
 // *************************************************************************
 void CL64_Com_Sounds::Rename_Sound(int Index)
 {
-	Base_Object* Object = App->CL_Scene->V_Object[Index];
+	Base_Object* Object = App->CL_Scene->B_Object[Index];
 
 	strcpy(App->CL_Dialogs->btext, "Change Object Name");
 	strcpy(App->CL_Dialogs->Chr_Text, Object->Mesh_Name);

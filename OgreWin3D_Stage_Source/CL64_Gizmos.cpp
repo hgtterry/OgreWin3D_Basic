@@ -148,7 +148,7 @@ void CL64_Gizmos::MarkerBox_Update(float Depth, float Height, float Width)
 void CL64_Gizmos::MarkerBox_Addjust(int Index)
 {
 
-	Base_Object* Object = App->CL_Scene->V_Object[Index];
+	Base_Object* Object = App->CL_Scene->B_Object[Index];
 
 	Ogre::Vector3 Position = Object->Object_Node->getPosition();
 	Ogre::Quaternion Rot = Object->Object_Node->getOrientation();

@@ -257,20 +257,20 @@ void CL64_ImGui_Dialogs::Start_Dialog_MessageEditor(int Index)
 	flag_Message_Editor_StartPos = 0;
 	Message_Index = Index;
 
-	flag_Centre_X_Selected = App->CL_Scene->V_Object[Message_Index]->S_Message[0]->PosXCentre_Flag;
-	flag_Centre_Y_Selected = App->CL_Scene->V_Object[Message_Index]->S_Message[0]->PosYCentre_Flag;
+	flag_Centre_X_Selected = App->CL_Scene->B_Object[Message_Index]->S_Message[0]->PosXCentre_Flag;
+	flag_Centre_Y_Selected = App->CL_Scene->B_Object[Message_Index]->S_Message[0]->PosYCentre_Flag;
 
-	Float_Colour = ImVec4(App->CL_Scene->V_Object[Message_Index]->S_Message[0]->Text_Colour.x / 255.0f,
-		App->CL_Scene->V_Object[Message_Index]->S_Message[0]->Text_Colour.y / 255.0f,
-		App->CL_Scene->V_Object[Message_Index]->S_Message[0]->Text_Colour.z / 255.0f,
+	Float_Colour = ImVec4(App->CL_Scene->B_Object[Message_Index]->S_Message[0]->Text_Colour.x / 255.0f,
+		App->CL_Scene->B_Object[Message_Index]->S_Message[0]->Text_Colour.y / 255.0f,
+		App->CL_Scene->B_Object[Message_Index]->S_Message[0]->Text_Colour.z / 255.0f,
 		255);
 
-	BackGround_color = ImVec4(App->CL_Scene->V_Object[Message_Index]->S_Message[0]->BackGround_Colour.x / 255.0f,
-		App->CL_Scene->V_Object[Message_Index]->S_Message[0]->BackGround_Colour.y / 255.0f,
-		App->CL_Scene->V_Object[Message_Index]->S_Message[0]->BackGround_Colour.z / 255.0f,
+	BackGround_color = ImVec4(App->CL_Scene->B_Object[Message_Index]->S_Message[0]->BackGround_Colour.x / 255.0f,
+		App->CL_Scene->B_Object[Message_Index]->S_Message[0]->BackGround_Colour.y / 255.0f,
+		App->CL_Scene->B_Object[Message_Index]->S_Message[0]->BackGround_Colour.z / 255.0f,
 		255);
 
-	App->CL_Scene->V_Object[Index]->Show_Message_Flag = 1;
+	App->CL_Scene->B_Object[Index]->Show_Message_Flag = 1;
 
 	flag_Show_Dialog_MessageEditor = 1;
 }
@@ -309,32 +309,32 @@ void CL64_ImGui_Dialogs::Dialog_MessageEditor(void)
 		ImGui::Spacing();
 
 		// ------------------------------------------------------------- Pos X
-		ImGui::InputFloat("X", &App->CL_Scene->V_Object[Message_Index]->S_Message[0]->Message_PosX, Float_Step, 0, "%.3f");
+		ImGui::InputFloat("X", &App->CL_Scene->B_Object[Message_Index]->S_Message[0]->Message_PosX, Float_Step, 0, "%.3f");
 
 		ImGui::Checkbox("Centre X", &flag_Centre_X_Selected);
 
 		if (flag_Centre_X_Selected)
 		{
-			App->CL_Scene->V_Object[Message_Index]->S_Message[0]->PosXCentre_Flag = 1;
+			App->CL_Scene->B_Object[Message_Index]->S_Message[0]->PosXCentre_Flag = 1;
 		}
 		else
 		{
-			App->CL_Scene->V_Object[Message_Index]->S_Message[0]->PosXCentre_Flag = 0;
+			App->CL_Scene->B_Object[Message_Index]->S_Message[0]->PosXCentre_Flag = 0;
 		}
 
 		ImGui::Separator();
 		// ------------------------------------------------------------ - Pos Y
-		ImGui::InputFloat("Y", &App->CL_Scene->V_Object[Message_Index]->S_Message[0]->Message_PosY, Float_Step, 0, "%.3f");
+		ImGui::InputFloat("Y", &App->CL_Scene->B_Object[Message_Index]->S_Message[0]->Message_PosY, Float_Step, 0, "%.3f");
 
 		ImGui::Checkbox("Centre Y", &flag_Centre_Y_Selected);
 
 		if (flag_Centre_Y_Selected)
 		{
-			App->CL_Scene->V_Object[Message_Index]->S_Message[0]->PosYCentre_Flag = 1;
+			App->CL_Scene->B_Object[Message_Index]->S_Message[0]->PosYCentre_Flag = 1;
 		}
 		else
 		{
-			App->CL_Scene->V_Object[Message_Index]->S_Message[0]->PosYCentre_Flag = 0;
+			App->CL_Scene->B_Object[Message_Index]->S_Message[0]->PosYCentre_Flag = 0;
 		}
 
 
@@ -352,17 +352,17 @@ void CL64_ImGui_Dialogs::Dialog_MessageEditor(void)
 
 		ImGui::ColorEdit3("Text##1", (float*)&Float_Colour, misc_flags);
 
-		App->CL_Scene->V_Object[Message_Index]->S_Message[0]->Text_Colour.x = Float_Colour.x * 255.0f;
-		App->CL_Scene->V_Object[Message_Index]->S_Message[0]->Text_Colour.y = Float_Colour.y * 255.0f;
-		App->CL_Scene->V_Object[Message_Index]->S_Message[0]->Text_Colour.z = Float_Colour.z * 255.0f;
+		App->CL_Scene->B_Object[Message_Index]->S_Message[0]->Text_Colour.x = Float_Colour.x * 255.0f;
+		App->CL_Scene->B_Object[Message_Index]->S_Message[0]->Text_Colour.y = Float_Colour.y * 255.0f;
+		App->CL_Scene->B_Object[Message_Index]->S_Message[0]->Text_Colour.z = Float_Colour.z * 255.0f;
 
 		ImGui::ColorEdit3("BG##1", (float*)&BackGround_color, misc_flags);
 
-		App->CL_Scene->V_Object[Message_Index]->S_Message[0]->BackGround_Colour.x = BackGround_color.x * 255.0f;
-		App->CL_Scene->V_Object[Message_Index]->S_Message[0]->BackGround_Colour.y = BackGround_color.y * 255.0f;
-		App->CL_Scene->V_Object[Message_Index]->S_Message[0]->BackGround_Colour.z = BackGround_color.z * 255.0f;
+		App->CL_Scene->B_Object[Message_Index]->S_Message[0]->BackGround_Colour.x = BackGround_color.x * 255.0f;
+		App->CL_Scene->B_Object[Message_Index]->S_Message[0]->BackGround_Colour.y = BackGround_color.y * 255.0f;
+		App->CL_Scene->B_Object[Message_Index]->S_Message[0]->BackGround_Colour.z = BackGround_color.z * 255.0f;
 
-		ImGui::Checkbox("Show Back Ground", &App->CL_Scene->V_Object[Message_Index]->S_Message[0]->Show_BackGround);
+		ImGui::Checkbox("Show Back Ground", &App->CL_Scene->B_Object[Message_Index]->S_Message[0]->Show_BackGround);
 
 		ImGui::Spacing();
 		ImGui::Spacing();
@@ -419,21 +419,21 @@ void CL64_ImGui_Dialogs::Start_Move_Entity_Editor(int Index)
 	App->CL_Panels->Show_FileView(false);
 	App->CL_Panels->Show_Properties(false);
 
-	if (App->CL_Scene->V_Object[Move_Ent_Index]->S_MoveType[0]->WhatDirection == Enums::Axis_x)
+	if (App->CL_Scene->B_Object[Move_Ent_Index]->S_MoveType[0]->WhatDirection == Enums::Axis_x)
 	{
 		flag_Move_Ent_PosX_Selected = 1;
 		flag_Move_Ent_PosY_Selected = 0;
 		flag_Move_Ent_PosZ_Selected = 0;
 	}
 
-	if (App->CL_Scene->V_Object[Move_Ent_Index]->S_MoveType[0]->WhatDirection == Enums::Axis_y)
+	if (App->CL_Scene->B_Object[Move_Ent_Index]->S_MoveType[0]->WhatDirection == Enums::Axis_y)
 	{
 		flag_Move_Ent_PosX_Selected = 0;
 		flag_Move_Ent_PosY_Selected = 1;
 		flag_Move_Ent_PosZ_Selected = 0;
 	}
 
-	if (App->CL_Scene->V_Object[Move_Ent_Index]->S_MoveType[0]->WhatDirection == Enums::Axis_z)
+	if (App->CL_Scene->B_Object[Move_Ent_Index]->S_MoveType[0]->WhatDirection == Enums::Axis_z)
 	{
 		flag_Move_Ent_PosX_Selected = 0;
 		flag_Move_Ent_PosY_Selected = 0;
@@ -450,22 +450,22 @@ void CL64_ImGui_Dialogs::Start_Move_Entity_Editor(int Index)
 	while (Count < Total)
 	{
 
-		if (App->CL_Scene->V_Object[Count]->Usage == Enums::Stage_Usage_Static)
+		if (App->CL_Scene->B_Object[Count]->Usage == Enums::Stage_Usage_Static)
 		{
-			bool test = strcmp(App->CL_Scene->V_Object[Index]->S_MoveType[0]->Object_Name, App->CL_Scene->V_Object[Count]->Mesh_Name);
+			bool test = strcmp(App->CL_Scene->B_Object[Index]->S_MoveType[0]->Object_Name, App->CL_Scene->B_Object[Count]->Mesh_Name);
 			if (test == 0)
 			{
 				Move_Ent_item_current_idx = Move_Ent_ObjectCount;
 			}
 
-			V_Move_Ent_Object_List.push_back(App->CL_Scene->V_Object[Count]->Mesh_Name);
+			V_Move_Ent_Object_List.push_back(App->CL_Scene->B_Object[Count]->Mesh_Name);
 			Move_Ent_ObjectCount++;
 		}
 
 		Count++;
 	}
 
-	App->CL_Scene->V_Object[Index]->S_MoveType[0]->Object_Name;
+	App->CL_Scene->B_Object[Index]->S_MoveType[0]->Object_Name;
 
 	Message_Editor_PosX = 10;
 	Message_Editor_PosY = 10;
@@ -516,9 +516,9 @@ void CL64_ImGui_Dialogs::Move_Entity_Editor(void)
 				if (ImGui::Selectable(V_Move_Ent_Object_List[n].c_str(), is_selected))
 				{
 					Move_Ent_item_current_idx = n;
-					strcpy(App->CL_Scene->V_Object[Move_Ent_Index]->S_MoveType[0]->Object_Name, V_Move_Ent_Object_List[n].c_str());
-					int MoveObjectIndex = App->CL_Com_Objects->GetIndex_By_Name(App->CL_Scene->V_Object[Move_Ent_Index]->S_MoveType[0]->Object_Name);
-					App->CL_Scene->V_Object[Move_Ent_Index]->S_MoveType[0]->Object_To_Move_Index = MoveObjectIndex;
+					strcpy(App->CL_Scene->B_Object[Move_Ent_Index]->S_MoveType[0]->Object_Name, V_Move_Ent_Object_List[n].c_str());
+					int MoveObjectIndex = App->CL_Com_Objects->GetIndex_By_Name(App->CL_Scene->B_Object[Move_Ent_Index]->S_MoveType[0]->Object_Name);
+					App->CL_Scene->B_Object[Move_Ent_Index]->S_MoveType[0]->Object_To_Move_Index = MoveObjectIndex;
 					App->Flash_Window();
 				}
 
@@ -538,11 +538,11 @@ void CL64_ImGui_Dialogs::Move_Entity_Editor(void)
 		ImGui::Spacing();
 
 		// ------------------------------------------------------------- Pos X
-		ImGui::InputFloat("Distance", &App->CL_Scene->V_Object[Move_Ent_Index]->S_MoveType[0]->Move_Distance, Float_Step, 0,"%.3f");
+		ImGui::InputFloat("Distance", &App->CL_Scene->B_Object[Move_Ent_Index]->S_MoveType[0]->Move_Distance, Float_Step, 0,"%.3f");
 
 		ImGui::Separator();
 		// ------------------------------------------------------------ - Pos Y
-		ImGui::InputFloat("Speed", &App->CL_Scene->V_Object[Move_Ent_Index]->S_MoveType[0]->Speed, Float_Step, 0, "%.3f");
+		ImGui::InputFloat("Speed", &App->CL_Scene->B_Object[Move_Ent_Index]->S_MoveType[0]->Speed, Float_Step, 0, "%.3f");
 
 
 		ImGui::Spacing();
@@ -563,7 +563,7 @@ void CL64_ImGui_Dialogs::Move_Entity_Editor(void)
 			flag_Move_Ent_PosY_Selected = 0;
 			flag_Move_Ent_PosZ_Selected = 0;
 
-			App->CL_Scene->V_Object[Move_Ent_Index]->S_MoveType[0]->WhatDirection = Enums::Axis_x;
+			App->CL_Scene->B_Object[Move_Ent_Index]->S_MoveType[0]->WhatDirection = Enums::Axis_x;
 		}
 
 		ImGui::SameLine(0.0f, spacingX);
@@ -575,7 +575,7 @@ void CL64_ImGui_Dialogs::Move_Entity_Editor(void)
 			flag_Move_Ent_PosX_Selected = 0;
 			flag_Move_Ent_PosZ_Selected = 0;
 
-			App->CL_Scene->V_Object[Move_Ent_Index]->S_MoveType[0]->WhatDirection = Enums::Axis_y;
+			App->CL_Scene->B_Object[Move_Ent_Index]->S_MoveType[0]->WhatDirection = Enums::Axis_y;
 		}
 
 		ImGui::SameLine(0.0f, spacingX);
@@ -587,7 +587,7 @@ void CL64_ImGui_Dialogs::Move_Entity_Editor(void)
 			flag_Move_Ent_PosX_Selected = 0;
 			flag_Move_Ent_PosY_Selected = 0;
 
-			App->CL_Scene->V_Object[Move_Ent_Index]->S_MoveType[0]->WhatDirection = Enums::Axis_z;
+			App->CL_Scene->B_Object[Move_Ent_Index]->S_MoveType[0]->WhatDirection = Enums::Axis_z;
 		}
 
 		ImGui::Unindent();

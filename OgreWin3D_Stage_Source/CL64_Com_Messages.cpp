@@ -44,33 +44,33 @@ bool CL64_Com_Messages::Add_New_Message()
 
 	int Index = App->CL_Scene->Object_Count;
 
-	App->CL_Scene->V_Object[Index] = new Base_Object();
-	App->CL_Scene->V_Object[Index]->S_Message[0] = new Message_type;
+	App->CL_Scene->B_Object[Index] = new Base_Object();
+	App->CL_Scene->B_Object[Index]->S_Message[0] = new Message_type;
 	Set_Message_Defaults(Index);
 
-	App->CL_Scene->V_Object[Index]->Type = Enums::Bullet_Type_Static;
-	App->CL_Scene->V_Object[Index]->Shape = Enums::Shape_Box;
-	App->CL_Scene->V_Object[Index]->This_Object_UniqueID = App->CL_Scene->UniqueID_Object_Counter; // Unique ID
+	App->CL_Scene->B_Object[Index]->Type = Enums::Bullet_Type_Static;
+	App->CL_Scene->B_Object[Index]->Shape = Enums::Shape_Box;
+	App->CL_Scene->B_Object[Index]->This_Object_UniqueID = App->CL_Scene->UniqueID_Object_Counter; // Unique ID
 
-	strcpy(App->CL_Scene->V_Object[Index]->Mesh_FileName, "Test_cube.mesh");
+	strcpy(App->CL_Scene->B_Object[Index]->Mesh_FileName, "Test_cube.mesh");
 
 	strcpy_s(B_Name, "Message_");
 	_itoa(Index, ConNum, 10);
 	strcat(B_Name, ConNum);
-	strcpy(App->CL_Scene->V_Object[Index]->Mesh_Name, B_Name);
+	strcpy(App->CL_Scene->B_Object[Index]->Mesh_Name, B_Name);
 
 	Ogre::Vector3 Pos = App->CL_Com_Objects->GetPlacement(-50);
-	App->CL_Scene->V_Object[Index]->Mesh_Pos = Pos;
+	App->CL_Scene->B_Object[Index]->Mesh_Pos = Pos;
 
 	Create_Message_Entity(Index);
 
-	App->CL_Scene->V_Object[Index]->Set_ImGui_Panel_Name();
+	App->CL_Scene->B_Object[Index]->Set_ImGui_Panel_Name();
 
 
-	HTREEITEM Temp = App->CL_FileView->Add_Item(App->CL_FileView->FV_Message_Trigger_Folder, App->CL_Scene->V_Object[Index]->Mesh_Name, Index, true);
-	App->CL_Scene->V_Object[Index]->FileViewItem = Temp;
+	HTREEITEM Temp = App->CL_FileView->Add_Item(App->CL_FileView->FV_Message_Trigger_Folder, App->CL_Scene->B_Object[Index]->Mesh_Name, Index, true);
+	App->CL_Scene->B_Object[Index]->FileViewItem = Temp;
 
-	App->CL_FileView->SelectItem(App->CL_Scene->V_Object[Index]->FileViewItem);
+	App->CL_FileView->SelectItem(App->CL_Scene->B_Object[Index]->FileViewItem);
 
 	App->CL_Scene->UniqueID_Object_Counter++;
 	App->CL_Scene->Object_Count++;
@@ -88,24 +88,24 @@ bool CL64_Com_Messages::Add_New_Message()
 void CL64_Com_Messages::Set_Message_Defaults(int Index)
 {
 
-	Base_Object* V_Object = App->CL_Scene->V_Object[Index];
+	Base_Object* B_Object = App->CL_Scene->B_Object[Index];
 
-	V_Object->S_Message[0]->Trigger_Value = 0;
-	V_Object->S_Message[0]->Counter_ID = 0;
-	strcpy(V_Object->S_Message[0]->Counter_Name, "None");
-	V_Object->S_Message[0]->Counter_Disabled = 1;
+	B_Object->S_Message[0]->Trigger_Value = 0;
+	B_Object->S_Message[0]->Counter_ID = 0;
+	strcpy(B_Object->S_Message[0]->Counter_Name, "None");
+	B_Object->S_Message[0]->Counter_Disabled = 1;
 
-	strcpy(V_Object->S_Message[0]->Message_Text, "Welcome");
-	V_Object->S_Message[0]->Message_PosX = 250;
-	V_Object->S_Message[0]->Message_PosY = 10;
+	strcpy(B_Object->S_Message[0]->Message_Text, "Welcome");
+	B_Object->S_Message[0]->Message_PosX = 250;
+	B_Object->S_Message[0]->Message_PosY = 10;
 
-	V_Object->S_Message[0]->PosXCentre_Flag = 0;
-	V_Object->S_Message[0]->PosYCentre_Flag = 0;
+	B_Object->S_Message[0]->PosXCentre_Flag = 0;
+	B_Object->S_Message[0]->PosYCentre_Flag = 0;
 
-	V_Object->S_Message[0]->Text_Colour = Ogre::Vector4(0, 0, 0, 255);
-	V_Object->S_Message[0]->BackGround_Colour = Ogre::Vector4(239, 239, 239, 255);
+	B_Object->S_Message[0]->Text_Colour = Ogre::Vector4(0, 0, 0, 255);
+	B_Object->S_Message[0]->BackGround_Colour = Ogre::Vector4(239, 239, 239, 255);
 
-	V_Object->S_Message[0]->Show_BackGround = 1;
+	B_Object->S_Message[0]->Show_BackGround = 1;
 	return;
 }
 
@@ -118,7 +118,7 @@ bool CL64_Com_Messages::Create_Message_Entity(int Index)
 	char ConNum[256];
 	char Ogre_Name[256];
 
-	Base_Object* MObject = App->CL_Scene->V_Object[Index];
+	Base_Object* MObject = App->CL_Scene->B_Object[Index];
 
 	// ----------------- Mesh
 
@@ -142,7 +142,7 @@ bool CL64_Com_Messages::Create_Message_Entity(int Index)
 
 	// ----------------- Physics
 
-	Ogre::Vector3 Centre = App->CL_Scene->V_Object[Index]->Object_Ent->getWorldBoundingBox(true).getCenter();
+	Ogre::Vector3 Centre = App->CL_Scene->B_Object[Index]->Object_Ent->getWorldBoundingBox(true).getCenter();
 	MObject->Physics_Pos = Ogre::Vector3(Centre.x, Centre.y, Centre.z);
 
 	btTransform startTransform;
@@ -192,7 +192,7 @@ bool CL64_Com_Messages::Create_Message_Entity(int Index)
 
 	App->CL_Bullet->dynamicsWorld->addRigidBody(MObject->Phys_Body);
 
-	App->CL_Scene->V_Object[Index]->Physics_Valid = 1;
+	App->CL_Scene->B_Object[Index]->Physics_Valid = 1;
 
 	App->CL_Physics->Set_Physics_New(Index);
 
@@ -205,7 +205,7 @@ bool CL64_Com_Messages::Create_Message_Entity(int Index)
 void CL64_Com_Messages::Rename_Message_Entity(int Index)
 {
 	strcpy(App->CL_Dialogs->btext, "Change Entity Name");
-	strcpy(App->CL_Dialogs->Chr_Text, App->CL_Scene->V_Object[Index]->Mesh_Name);
+	strcpy(App->CL_Dialogs->Chr_Text, App->CL_Scene->B_Object[Index]->Mesh_Name);
 
 	App->CL_Dialogs->Dialog_Text(Enums::Check_Names_Objects);
 
@@ -214,9 +214,9 @@ void CL64_Com_Messages::Rename_Message_Entity(int Index)
 		return;
 	}
 
-	strcpy(App->CL_Scene->V_Object[Index]->Mesh_Name, App->CL_Dialogs->Chr_Text);
+	strcpy(App->CL_Scene->B_Object[Index]->Mesh_Name, App->CL_Dialogs->Chr_Text);
 
 	App->CL_Properties->Mark_As_Altered(Index);
 
-	App->CL_FileView->Change_Item_Name(App->CL_Scene->V_Object[Index]->FileViewItem, App->CL_Dialogs->Chr_Text);
+	App->CL_FileView->Change_Item_Name(App->CL_Scene->B_Object[Index]->FileViewItem, App->CL_Dialogs->Chr_Text);
 }

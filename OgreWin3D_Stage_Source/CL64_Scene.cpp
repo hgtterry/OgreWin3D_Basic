@@ -54,7 +54,7 @@ CL64_Scene::CL64_Scene(void)
 	B_Counter[19] = { nullptr };
 
 	B_Player.reserve(20);
-	V_Object.reserve(200);
+	B_Object.reserve(200);
 
 }
 
@@ -78,33 +78,33 @@ void CL64_Scene::Reset_Class()
 	int Count = 0; // Remove Ogre Objects
 	while (Count < Object_Count)
 	{
-		if (V_Object[Count]->Object_Node && V_Object[Count]->Object_Ent)
+		if (B_Object[Count]->Object_Node && B_Object[Count]->Object_Ent)
 		{
-			V_Object[Count]->Object_Node->detachAllObjects();
+			B_Object[Count]->Object_Node->detachAllObjects();
 
-			App->CL_Ogre->mSceneMgr->destroySceneNode(V_Object[Count]->Object_Node);
+			App->CL_Ogre->mSceneMgr->destroySceneNode(B_Object[Count]->Object_Node);
 
-			App->CL_Ogre->mSceneMgr->destroyEntity(V_Object[Count]->Object_Ent);
+			App->CL_Ogre->mSceneMgr->destroyEntity(B_Object[Count]->Object_Ent);
 
-			V_Object[Count]->Object_Node = NULL;
-			V_Object[Count]->Object_Ent = NULL;
+			B_Object[Count]->Object_Node = NULL;
+			B_Object[Count]->Object_Ent = NULL;
 		}
 
 		Count++;
 	}
 
 
-	// Remove V_Objects
+	// Remove B_Objects
 	Count = 0;
-	int NumObjects = V_Object.size();
+	int NumObjects = B_Object.size();
 
 	while (Count < NumObjects)
 	{
-		delete V_Object[Count];
+		delete B_Object[Count];
 		Count++;
 	}
 
-	V_Object.resize(0);
+	B_Object.resize(0);
 }
 
 // *************************************************************************
@@ -377,36 +377,36 @@ bool CL64_Scene::Show_Entities(bool TrueFalse)
 	int Count = 0;
 	while (Count < Object_Count)
 	{
-		if (V_Object[Count]->Deleted == 0)
+		if (B_Object[Count]->Deleted == 0)
 		{
-			if (V_Object[Count]->Usage == Enums::Stage_Usage_Sound)
+			if (B_Object[Count]->Usage == Enums::Stage_Usage_Sound)
 			{
-				V_Object[Count]->Object_Node->setVisible(TrueFalse);
+				B_Object[Count]->Object_Node->setVisible(TrueFalse);
 			}
 
-			if (V_Object[Count]->Usage == Enums::Stage_Usage_Message)
+			if (B_Object[Count]->Usage == Enums::Stage_Usage_Message)
 			{
-				V_Object[Count]->Object_Node->setVisible(TrueFalse);
+				B_Object[Count]->Object_Node->setVisible(TrueFalse);
 			}
 
-			if (V_Object[Count]->Usage == Enums::Stage_Usage_Move)
+			if (B_Object[Count]->Usage == Enums::Stage_Usage_Move)
 			{
-				V_Object[Count]->Object_Node->setVisible(TrueFalse);
+				B_Object[Count]->Object_Node->setVisible(TrueFalse);
 			}
 
-			if (V_Object[Count]->Usage == Enums::Stage_Usage_Teleport)
+			if (B_Object[Count]->Usage == Enums::Stage_Usage_Teleport)
 			{
-				V_Object[Count]->Object_Node->setVisible(TrueFalse);
+				B_Object[Count]->Object_Node->setVisible(TrueFalse);
 			}
 
-			if (V_Object[Count]->Usage == Enums::Stage_Usage_Environment)
+			if (B_Object[Count]->Usage == Enums::Stage_Usage_Environment)
 			{
-				V_Object[Count]->Object_Node->setVisible(TrueFalse);
+				B_Object[Count]->Object_Node->setVisible(TrueFalse);
 			}
 
-			if (V_Object[Count]->Usage == Enums::Stage_Usage_EnvironEntity)
+			if (B_Object[Count]->Usage == Enums::Stage_Usage_EnvironEntity)
 			{
-				V_Object[Count]->Object_Node->setVisible(TrueFalse);
+				B_Object[Count]->Object_Node->setVisible(TrueFalse);
 			}
 		}
 		Count++;

@@ -295,17 +295,17 @@ void CL64_Bullet::Show_Debug_Objects(bool Show)
 	while (Count < App->CL_Scene->Object_Count)
 	{
 
-		if (App->CL_Scene->V_Object[Count]->Phys_Body)
+		if (App->CL_Scene->B_Object[Count]->Phys_Body)
 		{
-			int f = App->CL_Scene->V_Object[Count]->Phys_Body->getCollisionFlags();
+			int f = App->CL_Scene->B_Object[Count]->Phys_Body->getCollisionFlags();
 
 			if (Show == true)
 			{
-				App->CL_Scene->V_Object[Count]->Phys_Body->setCollisionFlags(f & (~(1 << 5)));
+				App->CL_Scene->B_Object[Count]->Phys_Body->setCollisionFlags(f & (~(1 << 5)));
 			}
 			else
 			{
-				App->CL_Scene->V_Object[Count]->Phys_Body->setCollisionFlags(f | (1 << 5));
+				App->CL_Scene->B_Object[Count]->Phys_Body->setCollisionFlags(f | (1 << 5));
 			}
 		}
 

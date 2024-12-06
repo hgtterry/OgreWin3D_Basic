@@ -1527,30 +1527,30 @@ LRESULT CALLBACK CL64_Dialogs::Proc_Dialog_Counter(HWND hDlg, UINT message, WPAR
 
 				if (App->CL_Properties->Edit_Category == Enums::Edit_Teleport)
 				{
-					strcpy(App->CL_Scene->V_Object[ObjectIndex]->S_Teleport[0]->Counter_Name, buff);
+					strcpy(App->CL_Scene->B_Object[ObjectIndex]->S_Teleport[0]->Counter_Name, buff);
 					int CounterIndex = App->CL_Display->GetIndex_By_Name(buff);
-					App->CL_Scene->V_Object[ObjectIndex]->S_Teleport[0]->Counter_ID = CounterIndex;
+					App->CL_Scene->B_Object[ObjectIndex]->S_Teleport[0]->Counter_ID = CounterIndex;
 				}
 
 				if (App->CL_Properties->Edit_Category == Enums::Edit_Collectable)
 				{
-					strcpy(App->CL_Scene->V_Object[ObjectIndex]->S_Collectable[0]->Counter_Name, buff);
+					strcpy(App->CL_Scene->B_Object[ObjectIndex]->S_Collectable[0]->Counter_Name, buff);
 					int CounterIndex = App->CL_Display->GetIndex_By_Name(buff);
-					App->CL_Scene->V_Object[ObjectIndex]->S_Collectable[0]->Counter_ID = CounterIndex;
+					App->CL_Scene->B_Object[ObjectIndex]->S_Collectable[0]->Counter_ID = CounterIndex;
 				}
 				 
 				if (App->CL_Properties->Edit_Category == Enums::Edit_Message)
 				{
-					strcpy(App->CL_Scene->V_Object[ObjectIndex]->S_Message[0]->Counter_Name, buff);
+					strcpy(App->CL_Scene->B_Object[ObjectIndex]->S_Message[0]->Counter_Name, buff);
 					int CounterIndex = App->CL_Display->GetIndex_By_Name(buff);
-					App->CL_Scene->V_Object[ObjectIndex]->S_Message[0]->Counter_ID = CounterIndex;
+					App->CL_Scene->B_Object[ObjectIndex]->S_Message[0]->Counter_ID = CounterIndex;
 				}
 
 				if (App->CL_Properties->Edit_Category == Enums::Edit_Move_Entity)
 				{
-					strcpy(App->CL_Scene->V_Object[ObjectIndex]->S_MoveType[0]->Counter_Name, buff);
+					strcpy(App->CL_Scene->B_Object[ObjectIndex]->S_MoveType[0]->Counter_Name, buff);
 					int CounterIndex = App->CL_Display->GetIndex_By_Name(buff);
-					App->CL_Scene->V_Object[ObjectIndex]->S_MoveType[0]->Counter_ID = CounterIndex;
+					App->CL_Scene->B_Object[ObjectIndex]->S_MoveType[0]->Counter_ID = CounterIndex;
 				}
 			}
 			}
@@ -1575,7 +1575,7 @@ LRESULT CALLBACK CL64_Dialogs::Proc_Dialog_Counter(HWND hDlg, UINT message, WPAR
 
 				if (App->CL_Properties->Edit_Category == Enums::Edit_Collectable)
 				{
-					App->CL_Scene->V_Object[ObjectIndex]->S_Collectable[0]->Maths = Index;
+					App->CL_Scene->B_Object[ObjectIndex]->S_Collectable[0]->Maths = Index;
 				}
 
 			}
@@ -1597,28 +1597,28 @@ LRESULT CALLBACK CL64_Dialogs::Proc_Dialog_Counter(HWND hDlg, UINT message, WPAR
 				// Move Entity
 				if (App->CL_Properties->Edit_Category == Enums::Edit_Move_Entity)
 				{
-					App->CL_Scene->V_Object[Index]->S_MoveType[0]->Counter_Disabled = 1;
+					App->CL_Scene->B_Object[Index]->S_MoveType[0]->Counter_Disabled = 1;
 					return 1;
 				}
 
 				// Messages
 				if (App->CL_Properties->Edit_Category == Enums::Edit_Message)
 				{
-					App->CL_Scene->V_Object[Index]->S_Message[0]->Counter_Disabled = 1;
+					App->CL_Scene->B_Object[Index]->S_Message[0]->Counter_Disabled = 1;
 					return 1;
 				}
 
 				// Collectables
 				if (App->CL_Properties->Edit_Category == Enums::Edit_Collectable)
 				{
-					App->CL_Scene->V_Object[Index]->S_Collectable[0]->Counter_Disabled = 1;
+					App->CL_Scene->B_Object[Index]->S_Collectable[0]->Counter_Disabled = 1;
 					return 1;
 				}
 
 				// Teleporters
 				if (App->CL_Properties->Edit_Category == Enums::Edit_Teleport)
 				{
-					App->CL_Scene->V_Object[Index]->S_Teleport[0]->Counter_Disabled = 1;
+					App->CL_Scene->B_Object[Index]->S_Teleport[0]->Counter_Disabled = 1;
 					return 1;
 				}
 
@@ -1631,28 +1631,28 @@ LRESULT CALLBACK CL64_Dialogs::Proc_Dialog_Counter(HWND hDlg, UINT message, WPAR
 
 				if (App->CL_Properties->Edit_Category == Enums::Edit_Move_Entity)
 				{
-					App->CL_Scene->V_Object[Index]->S_MoveType[0]->Counter_Disabled = 0;
+					App->CL_Scene->B_Object[Index]->S_MoveType[0]->Counter_Disabled = 0;
 					return 1;
 				}
 
 				// Messages
 				if (App->CL_Properties->Edit_Category == Enums::Edit_Message)
 				{
-					App->CL_Scene->V_Object[Index]->S_Message[0]->Counter_Disabled = 0;
+					App->CL_Scene->B_Object[Index]->S_Message[0]->Counter_Disabled = 0;
 					return 1;
 				}
 
 				// Collectables
 				if (App->CL_Properties->Edit_Category == Enums::Edit_Collectable)
 				{
-					App->CL_Scene->V_Object[Index]->S_Collectable[0]->Counter_Disabled = 0;
+					App->CL_Scene->B_Object[Index]->S_Collectable[0]->Counter_Disabled = 0;
 					return 1;
 				}
 
 				// Teleporters
 				if (App->CL_Properties->Edit_Category == Enums::Edit_Teleport)
 				{
-					App->CL_Scene->V_Object[Index]->S_Teleport[0]->Counter_Disabled = 0;
+					App->CL_Scene->B_Object[Index]->S_Teleport[0]->Counter_Disabled = 0;
 					return 1;
 				}
 
@@ -1672,27 +1672,27 @@ LRESULT CALLBACK CL64_Dialogs::Proc_Dialog_Counter(HWND hDlg, UINT message, WPAR
 			if (App->CL_Properties->Edit_Category == Enums::Edit_Move_Entity)
 			{
 				int Index = App->CL_Properties->Current_Selected_Object;
-				App->CL_Scene->V_Object[Index]->S_MoveType[0]->Trigger_Value = atoi(buff);
+				App->CL_Scene->B_Object[Index]->S_MoveType[0]->Trigger_Value = atoi(buff);
 			}
 
 			if (App->CL_Properties->Edit_Category == Enums::Edit_Message)
 			{
 				int Index = App->CL_Properties->Current_Selected_Object;
-				App->CL_Scene->V_Object[Index]->S_Message[0]->Trigger_Value = atoi(buff);
+				App->CL_Scene->B_Object[Index]->S_Message[0]->Trigger_Value = atoi(buff);
 			}
 
 			// Collectables
 			if (App->CL_Properties->Edit_Category == Enums::Edit_Collectable)
 			{
 				int Index = App->CL_Properties->Current_Selected_Object;
-				App->CL_Scene->V_Object[Index]->S_Collectable[0]->Value = atoi(buff);
+				App->CL_Scene->B_Object[Index]->S_Collectable[0]->Value = atoi(buff);
 			}
 
 			// Teleprters
 			if (App->CL_Properties->Edit_Category == Enums::Edit_Teleport)
 			{
 				int Index = App->CL_Properties->Current_Selected_Object;
-				App->CL_Scene->V_Object[Index]->S_Teleport[0]->Trigger_Value = atoi(buff);
+				App->CL_Scene->B_Object[Index]->S_Teleport[0]->Trigger_Value = atoi(buff);
 			}
 
 			App->CL_Dialogs->Canceled = 0;
@@ -1723,7 +1723,7 @@ bool CL64_Dialogs::UpDate_Counter_Dialog(HWND hDlg)
 	// Move Entity
 	if (App->CL_Properties->Edit_Category == Enums::Edit_Move_Entity)
 	{
-		if (App->CL_Scene->V_Object[Index]->S_MoveType[0]->Counter_Disabled == 1)
+		if (App->CL_Scene->B_Object[Index]->S_MoveType[0]->Counter_Disabled == 1)
 		{
 			HWND temp = GetDlgItem(hDlg, IDC_CK_ENABLE);
 			SendMessage(temp, BM_SETCHECK, 1, 0);
@@ -1737,7 +1737,7 @@ bool CL64_Dialogs::UpDate_Counter_Dialog(HWND hDlg)
 		}
 
 		char chr_TriggerVal[20];
-		_itoa(App->CL_Scene->V_Object[Index]->S_MoveType[0]->Trigger_Value, chr_TriggerVal, 10);
+		_itoa(App->CL_Scene->B_Object[Index]->S_MoveType[0]->Trigger_Value, chr_TriggerVal, 10);
 		SetDlgItemText(hDlg, IDC_EDTRIGGERVALUE, (LPCTSTR)chr_TriggerVal);
 
 		return 1;
@@ -1746,7 +1746,7 @@ bool CL64_Dialogs::UpDate_Counter_Dialog(HWND hDlg)
 	// Messages
 	if (App->CL_Properties->Edit_Category == Enums::Edit_Message)
 	{
-		if (App->CL_Scene->V_Object[Index]->S_Message[0]->Counter_Disabled == 1)
+		if (App->CL_Scene->B_Object[Index]->S_Message[0]->Counter_Disabled == 1)
 		{
 			HWND temp = GetDlgItem(hDlg, IDC_CK_ENABLE);
 			SendMessage(temp, BM_SETCHECK, 1, 0);
@@ -1760,7 +1760,7 @@ bool CL64_Dialogs::UpDate_Counter_Dialog(HWND hDlg)
 		}
 
 		char chr_TriggerVal[20];
-		_itoa(App->CL_Scene->V_Object[Index]->S_Message[0]->Trigger_Value, chr_TriggerVal, 10);
+		_itoa(App->CL_Scene->B_Object[Index]->S_Message[0]->Trigger_Value, chr_TriggerVal, 10);
 		SetDlgItemText(hDlg, IDC_EDTRIGGERVALUE, (LPCTSTR)chr_TriggerVal);
 
 		return 1;
@@ -1769,7 +1769,7 @@ bool CL64_Dialogs::UpDate_Counter_Dialog(HWND hDlg)
 	// Collectables
 	if (App->CL_Properties->Edit_Category == Enums::Edit_Collectable)
 	{
-		if (App->CL_Scene->V_Object[Index]->S_Collectable[0]->Counter_Disabled == 1)
+		if (App->CL_Scene->B_Object[Index]->S_Collectable[0]->Counter_Disabled == 1)
 		{
 			HWND temp = GetDlgItem(hDlg, IDC_CK_ENABLE);
 			SendMessage(temp, BM_SETCHECK, 1, 0);
@@ -1783,7 +1783,7 @@ bool CL64_Dialogs::UpDate_Counter_Dialog(HWND hDlg)
 		}
 
 		char chr_TriggerVal[20];
-		_itoa(App->CL_Scene->V_Object[Index]->S_Collectable[0]->Value, chr_TriggerVal, 10);
+		_itoa(App->CL_Scene->B_Object[Index]->S_Collectable[0]->Value, chr_TriggerVal, 10);
 		SetDlgItemText(hDlg, IDC_EDTRIGGERVALUE, (LPCTSTR)chr_TriggerVal);
 
 		return 1;
@@ -1792,7 +1792,7 @@ bool CL64_Dialogs::UpDate_Counter_Dialog(HWND hDlg)
 	// Teleporters
 	if (App->CL_Properties->Edit_Category == Enums::Edit_Teleport)
 	{
-		if (App->CL_Scene->V_Object[Index]->S_Teleport[0]->Counter_Disabled == 1)
+		if (App->CL_Scene->B_Object[Index]->S_Teleport[0]->Counter_Disabled == 1)
 		{
 			HWND temp = GetDlgItem(hDlg, IDC_CK_ENABLE);
 			SendMessage(temp, BM_SETCHECK, 1, 0);
@@ -1806,7 +1806,7 @@ bool CL64_Dialogs::UpDate_Counter_Dialog(HWND hDlg)
 		}
 
 		char chr_TriggerVal[20];
-		_itoa(App->CL_Scene->V_Object[Index]->S_Teleport[0]->Trigger_Value, chr_TriggerVal, 10);
+		_itoa(App->CL_Scene->B_Object[Index]->S_Teleport[0]->Trigger_Value, chr_TriggerVal, 10);
 		SetDlgItemText(hDlg, IDC_EDTRIGGERVALUE, (LPCTSTR)chr_TriggerVal);
 
 		return 1;
@@ -1837,22 +1837,22 @@ void CL64_Dialogs::Set_Counter_Dialog_Details(HWND hDlg)
 
 	if (App->CL_Properties->Edit_Category == Enums::Edit_Teleport)
 	{
-		SendDlgItemMessage(hDlg, IDC_CB_COUNTERS, CB_SETCURSEL, (WPARAM)App->CL_Scene->V_Object[ObjectIndex]->S_Teleport[0]->Counter_ID, (LPARAM)0);
+		SendDlgItemMessage(hDlg, IDC_CB_COUNTERS, CB_SETCURSEL, (WPARAM)App->CL_Scene->B_Object[ObjectIndex]->S_Teleport[0]->Counter_ID, (LPARAM)0);
 	}
 
 	if (App->CL_Properties->Edit_Category == Enums::Edit_Collectable)
 	{
-		SendDlgItemMessage(hDlg, IDC_CB_COUNTERS, CB_SETCURSEL, (WPARAM)App->CL_Scene->V_Object[ObjectIndex]->S_Collectable[0]->Counter_ID, (LPARAM)0);
+		SendDlgItemMessage(hDlg, IDC_CB_COUNTERS, CB_SETCURSEL, (WPARAM)App->CL_Scene->B_Object[ObjectIndex]->S_Collectable[0]->Counter_ID, (LPARAM)0);
 	}
 
 	if (App->CL_Properties->Edit_Category == Enums::Edit_Message)
 	{
-		SendDlgItemMessage(hDlg, IDC_CB_COUNTERS, CB_SETCURSEL, (WPARAM)App->CL_Scene->V_Object[ObjectIndex]->S_Message[0]->Counter_ID, (LPARAM)0);
+		SendDlgItemMessage(hDlg, IDC_CB_COUNTERS, CB_SETCURSEL, (WPARAM)App->CL_Scene->B_Object[ObjectIndex]->S_Message[0]->Counter_ID, (LPARAM)0);
 	}
 
 	if (App->CL_Properties->Edit_Category == Enums::Edit_Move_Entity)
 	{
-		SendDlgItemMessage(hDlg, IDC_CB_COUNTERS, CB_SETCURSEL, (WPARAM)App->CL_Scene->V_Object[ObjectIndex]->S_MoveType[0]->Counter_ID, (LPARAM)0);
+		SendDlgItemMessage(hDlg, IDC_CB_COUNTERS, CB_SETCURSEL, (WPARAM)App->CL_Scene->B_Object[ObjectIndex]->S_MoveType[0]->Counter_ID, (LPARAM)0);
 	}
 	// -------------------------------- Maths
 	SendDlgItemMessage(hDlg, IDC_CB_MATHS, CB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
@@ -1863,7 +1863,7 @@ void CL64_Dialogs::Set_Counter_Dialog_Details(HWND hDlg)
 	
 	if (App->CL_Properties->Edit_Category == Enums::Edit_Collectable)
 	{
-		SendDlgItemMessage(hDlg, IDC_CB_MATHS, CB_SETCURSEL, (WPARAM)App->CL_Scene->V_Object[ObjectIndex]->S_Collectable[0]->Maths, (LPARAM)0);
+		SendDlgItemMessage(hDlg, IDC_CB_MATHS, CB_SETCURSEL, (WPARAM)App->CL_Scene->B_Object[ObjectIndex]->S_Collectable[0]->Maths, (LPARAM)0);
 	}
 }
 

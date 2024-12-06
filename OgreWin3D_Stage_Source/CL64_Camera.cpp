@@ -95,7 +95,7 @@ void CL64_Camera::Camera_Goto_Object(int Object_Index)
 
 	if (App->CL_Properties->Edit_Category == Enums::Edit_Particles)
 	{
-		Centre = App->CL_Scene->V_Object[Index]->S_Particle[0]->Particle->getWorldBoundingBox(true).getCenter();
+		Centre = App->CL_Scene->B_Object[Index]->S_Particle[0]->Particle->getWorldBoundingBox(true).getCenter();
 		App->CL_Ogre->camNode->setPosition(Centre);
 		return;
 	}
@@ -107,7 +107,7 @@ void CL64_Camera::Camera_Goto_Object(int Object_Index)
 		return;
 	}
 
-	Centre = App->CL_Scene->V_Object[Index]->Object_Ent->getWorldBoundingBox(true).getCenter();
+	Centre = App->CL_Scene->B_Object[Index]->Object_Ent->getWorldBoundingBox(true).getCenter();
 	App->CL_Ogre->camNode->setPosition(Centre);
 
 }

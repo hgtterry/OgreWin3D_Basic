@@ -131,7 +131,7 @@ void CL64_LookUps::Get_Type(int Index)
 	}
 	else
 	{
-		Type = App->CL_Scene->V_Object[Index]->Type;
+		Type = App->CL_Scene->B_Object[Index]->Type;
 	}
 
 
@@ -170,7 +170,7 @@ void CL64_LookUps::Get_Shape(int Index)
 	}
 	else
 	{
-		Shape = App->CL_Scene->V_Object[Index]->Shape;
+		Shape = App->CL_Scene->B_Object[Index]->Shape;
 	}
 
 	switch (Shape)
@@ -246,7 +246,7 @@ void CL64_LookUps::Get_Usage(int Index)
 	}
 	else
 	{
-		Usage = App->CL_Scene->V_Object[Index]->Usage;
+		Usage = App->CL_Scene->B_Object[Index]->Usage;
 	}
 
 	switch (Usage)

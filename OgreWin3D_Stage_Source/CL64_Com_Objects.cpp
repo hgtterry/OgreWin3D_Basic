@@ -81,7 +81,7 @@ Ogre::Vector3 CL64_Com_Objects::GetMesh_BB_Size(SceneNode* mNode)
 // *************************************************************************
 void CL64_Com_Objects::Rename_Object(int Index)
 {
-	Base_Object* Object = App->CL_Scene->V_Object[Index];
+	Base_Object* Object = App->CL_Scene->B_Object[Index];
 
 	strcpy(App->CL_Dialogs->btext, "Change Object Name");
 	strcpy(App->CL_Dialogs->Chr_Text, Object->Mesh_Name);
@@ -156,7 +156,7 @@ void CL64_Com_Objects::Hide_AllObjects_Except(int Index, bool Show)
 	int Count = 0;
 	while (Count < App->CL_Scene->Object_Count)
 	{
-		App->CL_Scene->V_Object[Count]->Object_Node->setVisible(Show);
+		App->CL_Scene->B_Object[Count]->Object_Node->setVisible(Show);
 		Count++;
 	}
 
@@ -173,7 +173,7 @@ void CL64_Com_Objects::Hide_AllObjects_Except(int Index, bool Show)
 	}
 	else
 	{
-		App->CL_Scene->V_Object[Index]->Object_Node->setVisible(true);
+		App->CL_Scene->B_Object[Index]->Object_Node->setVisible(true);
 	}
 }
 
@@ -183,7 +183,7 @@ void CL64_Com_Objects::Hide_AllObjects_Except(int Index, bool Show)
 void CL64_Com_Objects::Delete_Object()
 {
 	int MeshIndex = App->CL_Properties->Current_Selected_Object;
-	btRigidBody* body = App->CL_Scene->V_Object[MeshIndex]->Phys_Body;
+	btRigidBody* body = App->CL_Scene->B_Object[MeshIndex]->Phys_Body;
 
 	if (body)
 	{
@@ -192,8 +192,8 @@ void CL64_Com_Objects::Delete_Object()
 
 	App->CL_FileView->DeleteItem();
 
-	App->CL_Scene->V_Object[MeshIndex]->Deleted = 1;
-	App->CL_Scene->V_Object[MeshIndex]->Object_Node->setVisible(false);
+	App->CL_Scene->B_Object[MeshIndex]->Deleted = 1;
+	App->CL_Scene->B_Object[MeshIndex]->Object_Node->setVisible(false);
 
 
 	App->CL_Scene->flag_Scene_Modified = 1;
@@ -210,10 +210,10 @@ int CL64_Com_Objects::GetIndex_By_Name(char* Name)
 
 	while (Count < Total)
 	{
-		if (App->CL_Scene->V_Object[Count]->Deleted == 0)
+		if (App->CL_Scene->B_Object[Count]->Deleted == 0)
 		{
 			int Result = 1;
-			Result = strcmp(App->CL_Scene->V_Object[Count]->Mesh_Name, Name);
+			Result = strcmp(App->CL_Scene->B_Object[Count]->Mesh_Name, Name);
 			if (Result == 0)
 			{
 				return Count;
@@ -274,10 +274,10 @@ void CL64_Com_Objects::Clear_Modified_Objects()
 	Count = 0;
 	while (Count < App->CL_Scene->Object_Count)
 	{
-		if (App->CL_Scene->V_Object[Count]->Altered == 1)
+		if (App->CL_Scene->B_Object[Count]->Altered == 1)
 		{
-			App->CL_Scene->V_Object[Count]->Altered = 0;
-			App->CL_FileView->Mark_Clear(App->CL_Scene->V_Object[Count]->FileViewItem);
+			App->CL_Scene->B_Object[Count]->Altered = 0;
+			App->CL_FileView->Mark_Clear(App->CL_Scene->B_Object[Count]->FileViewItem);
 		}
 
 		Count++;
@@ -320,10 +320,10 @@ int CL64_Com_Objects::CheckNames_Objects(char* Name)
 
 	while (Count < Total)
 	{
-		if (App->CL_Scene->V_Object[Count]->Deleted == 0)
+		if (App->CL_Scene->B_Object[Count]->Deleted == 0)
 		{
 			int Result = 1;
-			Result = strcmp(App->CL_Scene->V_Object[Count]->Mesh_Name, Name);
+			Result = strcmp(App->CL_Scene->B_Object[Count]->Mesh_Name, Name);
 
 			if (Result == 0)
 			{
