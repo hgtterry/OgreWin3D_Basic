@@ -49,6 +49,9 @@ CL64_PB::~CL64_PB(void)
 bool CL64_PB::Start_ProgressBar()
 {
 	App->CL_Panels->Disable_Panels(true);
+	App->CL_Ogre->Ogre3D_Listener->flag_Block_Mouse = 1;
+	App->CL_ImGui_Dialogs->flag_Disable_Physics_Console = 1;
+	App->CL_Ogre->RenderFrame(8);
 
 	ProgBarHwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_PROGRESS_BAR, App->Fdlg, (DLGPROC)Proc_ProgressBar);
 
@@ -78,6 +81,8 @@ LRESULT CALLBACK CL64_PB::Proc_ProgressBar(HWND hDlg, UINT message, WPARAM wPara
 		SendDlgItemMessage(hDlg, IDC_PBBANNER, WM_SETFONT, (WPARAM)App->Font_Banner, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_PBACTION, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ST_PB_STATUS, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
+
+		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		App->CL_PB->g_pos = 0;
 		App->CL_PB->Bar = GetDlgItem(hDlg, IDC_STBAR);
@@ -163,7 +168,17 @@ LRESULT CALLBACK CL64_PB::Proc_ProgressBar(HWND hDlg, UINT message, WPARAM wPara
 		if (some_item->idFrom == IDOK)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Normal(item);
+
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDOK));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
+			else
+			{
+				App->Custom_Button_Normal(item);
+			}
+
 			return CDRF_DODEFAULT;
 		}
 		return CDRF_DODEFAULT;
@@ -173,6 +188,9 @@ LRESULT CALLBACK CL64_PB::Proc_ProgressBar(HWND hDlg, UINT message, WPARAM wPara
 		if (LOWORD(wParam) == IDOK || LOWORD(wParam) == IDCANCEL)
 		{
 			App->CL_Panels->Disable_Panels(false);
+			App->CL_ImGui_Dialogs->flag_Disable_Physics_Console = 0;
+			App->CL_Ogre->Ogre3D_Listener->flag_Block_Mouse = 0
+				;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}

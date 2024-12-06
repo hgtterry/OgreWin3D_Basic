@@ -47,6 +47,7 @@ public:
 
 	void Physics_Console_Gui(void);
 
+	bool flag_Disable_Panels;
 	// List Dialog
 	float List_PosX;
 	float List_PosY;
@@ -105,7 +106,7 @@ public:
 	bool flag_Move_Ent_PosZ_Selected;
 
 	// -------------- Physics Console
-	bool Disable_Physics_Console;
+	bool flag_Disable_Physics_Console;
 	bool Show_Physics_Console;
 	float Physics_PosX;
 	float Physics_PosY;

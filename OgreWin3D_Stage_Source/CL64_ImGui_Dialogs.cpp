@@ -29,6 +29,8 @@ THE SOFTWARE.
 
 CL64_ImGui_Dialogs::CL64_ImGui_Dialogs(void)
 {
+	flag_Disable_Panels = 0;
+
 	// List Dialog
 	List_PosX = 0;
 	List_PosY = 0;
@@ -78,8 +80,8 @@ CL64_ImGui_Dialogs::CL64_ImGui_Dialogs(void)
 	Move_Ent_item_current_idx = 0;
 
 	// -------------- Physics Console
-	Disable_Physics_Console = 0;
-	Show_Physics_Console = 1;
+	flag_Disable_Physics_Console = 0;
+	Show_Physics_Console = 0;
 	Physics_PosX = 500;
 	Physics_PosY = 500;
 	Physics_Console_StartPos = 0;
@@ -766,7 +768,7 @@ void CL64_ImGui_Dialogs::Physics_Console_Gui(void)
 	}
 	else
 	{
-		if (Disable_Physics_Console == 1)
+		if (flag_Disable_Physics_Console == 1)
 		{
 			ImGui::BeginDisabled(true);
 		}
@@ -858,7 +860,7 @@ void CL64_ImGui_Dialogs::Physics_Console_Gui(void)
 		ImGui::PopStyleColor();
 
 
-		if (Disable_Physics_Console == 1)
+		if (flag_Disable_Physics_Console == 1)
 		{
 			ImGui::EndDisabled();
 		}

@@ -989,12 +989,16 @@ void StartOgre()
 	App->CL_Bullet->Init_Bullet();
     App->CL_Ogre->Init_Ogre();
 
-	Sleep(500);
+	//Sleep(500);
 
     EndDialog(App->ViewPLeaseWait, LOWORD(0));
 
     App->flag_OgreStarted = 1;
 
+	App->CL_ImGui_Dialogs->Show_Physics_Console = 1;
+	App->CL_Ogre->RenderFrame(5);
+	App->CL_Panels->MovePhysicsView();
+	
     KillTimer(App->MainHwnd, 1);
 
 	if (App->CL_Preferences->flag_Load_Last_Project == 1)
@@ -1003,10 +1007,7 @@ void StartOgre()
 	}
 
 	App->CL_SoundMgr->Play_StartUp_Sound();
-
-	App->CL_Ogre->RenderFrame(8);
-
-	App->CL_Panels->MovePhysicsView();
+	
     App->CL_Ogre->Ogre_Render_Loop();
 
     Close_App();
