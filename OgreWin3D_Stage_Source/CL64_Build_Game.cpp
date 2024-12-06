@@ -480,7 +480,27 @@ LRESULT CALLBACK CL64_Build_Game::Proc_Project_Build(HWND hDlg, UINT message, WP
 // *************************************************************************
 void CL64_Build_Game::Create_ProjectFolder(void)
 {
+	char TestFile[MAX_PATH];
+	strcpy(TestFile, App->CL_File_IO->szSelectedDir);
+	strcat(TestFile, GameName);
+	strcat(TestFile, "_Project");
+	strcat(TestFile, "\\");
+	strcat(TestFile, "Game");
+	strcat(TestFile, "\\");
+	
+	//App->Say_Win(TestFile);
 
+	int test = App->CL_File_IO->SearchFolders(TestFile, (LPSTR)"\\Game.gdat");
+	if (test == 1)
+	{
+		App->CL_Dialogs->Show_YesNo_Dlg((LPSTR)"File Exsits", (LPSTR)"Do you want to update File", (LPSTR)"");
+
+		bool Doit = App->CL_Dialogs->Canceled;
+		if (Doit == 1)
+		{
+			return;
+		}
+	}
 
 	ProjectFolder[0] = 0;
 	Sub_ProjectFolder[0] = 0;
@@ -493,7 +513,7 @@ void CL64_Build_Game::Create_ProjectFolder(void)
 	strcpy(ProjectFolder, App->CL_File_IO->szSelectedDir);
 	strcat(ProjectFolder, GameName);
 	strcat(ProjectFolder, "_Project");
-	int test = CreateDirectory(ProjectFolder, NULL);
+	CreateDirectory(ProjectFolder, NULL);
 
 	strcpy(MediaFolder, ProjectFolder);
 	strcat(MediaFolder, "\\");
@@ -733,7 +753,7 @@ bool CL64_Build_Game::Build_Project()
 {
 	ShowWindow(Banner, SW_HIDE);
 
-	App->CL_PB->StartNewProgressBar();
+	App->CL_PB->Start_ProgressBar();
 	App->CL_PB->Set_Progress((LPSTR)"Building Scene/Game", 10);
 
 	App->CL_PB->Nudge((LPSTR)"Creating Sub Folder");
@@ -800,7 +820,7 @@ bool CL64_Build_Game::Build_Project_Ini()
 	strcat(m_Ini_Path_File_Name, "\\");
 	strcat(m_Ini_Path_File_Name, "Game.gdat");
 
-	int test = App->CL_File_IO->SearchFolders(m_Build_Sub_Folder, (LPSTR)"\\Game.gdat");
+	/*int test = App->CL_File_IO->SearchFolders(m_Build_Sub_Folder, (LPSTR)"\\Game.gdat");
 	if (test == 1)
 	{
 		App->CL_Dialogs->Show_YesNo_Dlg((LPSTR)"File Exsits", (LPSTR)"Do you want to update File", (LPSTR)"");
@@ -810,7 +830,7 @@ bool CL64_Build_Game::Build_Project_Ini()
 		{
 			return 0;
 		}
-	}
+	}*/
 
 	WriteFile = nullptr;
 
@@ -924,7 +944,7 @@ bool CL64_Build_Game::Build_Main_Asset_Folder()
 }
 
 // *************************************************************************
-// *	  	Save_Area_Folder:- Terry and Hazel Flanigan 2022			   *
+// *	  	Save_Area_Folder:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
 bool CL64_Build_Game::Build_Area_Folder()
 {

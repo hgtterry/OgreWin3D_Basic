@@ -44,21 +44,22 @@ CL64_PB::~CL64_PB(void)
 }
 
 // *************************************************************************
-// *							StartNewProgressBar						   *
+// *		Start_ProgressBar:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-bool CL64_PB::StartNewProgressBar()
+bool CL64_PB::Start_ProgressBar()
 {
+	App->CL_Panels->Disable_Panels(true);
 
-	ProgBarHwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_PROGRESS_BAR, App->Fdlg, (DLGPROC)ProgressNewBarProc);
+	ProgBarHwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_PROGRESS_BAR, App->Fdlg, (DLGPROC)Proc_ProgressBar);
 
 	Dio = 0;
 	Pani = 0;
 	return 1;
 }
 // *************************************************************************
-// *						ProgressNewBarProc			  				   *
+// *		Proc_ProgressBar:- Terry and Hazel Flanigan 2024	 		   *
 // *************************************************************************
-LRESULT CALLBACK CL64_PB::ProgressNewBarProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK CL64_PB::Proc_ProgressBar(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	HBRUSH holdBrush;
 	HPEN hPen, holdPen;
@@ -159,7 +160,7 @@ LRESULT CALLBACK CL64_PB::ProgressNewBarProc(HWND hDlg, UINT message, WPARAM wPa
 	{
 		LPNMHDR some_item = (LPNMHDR)lParam;
 
-		if (some_item->idFrom == IDOK && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDOK)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
@@ -171,6 +172,7 @@ LRESULT CALLBACK CL64_PB::ProgressNewBarProc(HWND hDlg, UINT message, WPARAM wPa
 	case WM_COMMAND:
 		if (LOWORD(wParam) == IDOK || LOWORD(wParam) == IDCANCEL)
 		{
+			App->CL_Panels->Disable_Panels(false);
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
@@ -180,7 +182,7 @@ LRESULT CALLBACK CL64_PB::ProgressNewBarProc(HWND hDlg, UINT message, WPARAM wPa
 }
 
 // *************************************************************************
-// *							Stop_Progress_Bar 						   *
+// *		Stop_Progress_Bar:- Terry and Hazel Flanigan 2024 			   *
 // *************************************************************************
 bool CL64_PB::Stop_Progress_Bar(char* ProcessText)
 {
@@ -204,7 +206,7 @@ bool CL64_PB::Stop_Progress_Bar(char* ProcessText)
 }
 
 // *************************************************************************
-// *							Set_Progress 							   *
+// *			Set_Progress:- Terry and Hazel Flanigan 2024 			   *
 // *************************************************************************
 bool CL64_PB::Set_Progress(char* ProcessText, float TotalSteps)
 {
@@ -233,7 +235,7 @@ bool CL64_PB::Set_Progress(char* ProcessText, float TotalSteps)
 }
 
 // *************************************************************************
-// *							Set_Progress_Text 						   *
+// *		Set_Progress_Text:- Terry and Hazel Flanigan 2024 			   *
 // *************************************************************************
 bool CL64_PB::Set_Progress_Text(char* ProcessText)
 {
@@ -257,7 +259,7 @@ bool CL64_PB::Set_Progress_Text(char* ProcessText)
 }
 
 // *************************************************************************
-// *								Nudge 								   *
+// *				Nudge:- Terry and Hazel Flanigan 2024 				   *
 // *************************************************************************
 bool CL64_PB::Nudge(char* Message)
 {
@@ -279,7 +281,7 @@ bool CL64_PB::Nudge(char* Message)
 }
 
 // *************************************************************************
-// *							Close									   *
+// *				Close:- Terry and Hazel Flanigan 2024				   *
 // *************************************************************************
 bool CL64_PB::Close()
 {

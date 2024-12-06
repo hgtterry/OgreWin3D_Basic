@@ -30,7 +30,7 @@ public:
 	CL64_PB(void);
 	~CL64_PB(void);
 
-	bool StartNewProgressBar();
+	bool Start_ProgressBar();
 	bool Set_Progress(char* ProcessText, float TotalSteps);
 	bool Set_Progress_Text(char* ProcessText);
 	bool Stop_Progress_Bar(char* ProcessText);
@@ -52,7 +52,7 @@ public:
 
 protected:
 
-	static LRESULT CALLBACK ProgressNewBarProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Proc_ProgressBar(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 
 };
