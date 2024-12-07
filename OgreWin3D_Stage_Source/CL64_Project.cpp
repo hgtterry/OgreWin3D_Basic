@@ -1488,15 +1488,56 @@ bool CL64_Project::Load_Last_Project()
 	strcpy(Test_Project, App->GD_Directory_FullPath);
 	strcat(Test_Project, "\\Projects\\First_Project_Prj\\Project.owproj");
 
-	bool test = App->CL_Importers->Reload_FromResentFiles(Test_Project);
+	bool test = Reload_From_ResentFiles(Test_Project);
 	if (test == 1)
 	{
 		App->CL_Scene->Set_Scene();
+		App->CL_Ogre->RenderFrame(8);
 		return 1;
 	}
 
 	return 0;
 }
+
+// *************************************************************************
+// *	Reload_FromResentFiles:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+bool CL64_Project::Reload_From_ResentFiles(char* ResentPathAndFile)
+{
+
+	// Check Recent File Exsists
+	bool Result = App->CL_File_IO->Check_File_Exist(ResentPathAndFile);
+	if (Result == 0)
+	{
+		App->Say(" Can Not Find File", (LPSTR)"This may be due to it has been deleted or renamed.");
+		return 0;
+	}
+
+	strcpy(App->CL_Project->Project_Path_File_Name, ResentPathAndFile);
+
+	std::string mJustFileName = App->CL_Utilities->Get_FileName_From_Path(ResentPathAndFile);
+
+	strcpy(App->CL_Project->Project_File_Name, mJustFileName.c_str());
+
+	bool test = App->CL_Project->Load_Project();
+
+	//App->CL_Scene->Set_Scene();
+	App->CL_Ogre->RenderFrame(8);
+
+	//App->SBC_TopTabs->Project_Loaded_Reset();
+
+	if (test == 1)
+	{
+		App->Say("Project Loaded", App->CL_Project->Project_File_Name);
+	}
+	else
+	{
+		App->Say("Project Failed to Load");
+	}
+
+	return 1;
+}
+
 
 // *************************************************************************
 // *	  		Load_Project:- Terry and Hazel Flanigan 2024			   *

@@ -47,6 +47,8 @@ public:
 	void Start_Save_Project_Dialog();
 	
 	bool Load_Last_Project();
+	bool Reload_From_ResentFiles(char* ResentPathAndFile);
+
 	bool Load_Project();
 	bool Load_Project_Objects();
 	bool Load_Project_Aera();

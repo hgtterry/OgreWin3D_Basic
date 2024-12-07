@@ -213,8 +213,6 @@ void CL64_Scene::Set_Scene()
 		App->CL_Camera->Reset_View();
 	}
 
-	App->CL_Player->Set_Player_GroundSpeed(70);
-
 	App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_Free;
 
 	App->CL_Player->Show_Debug_Player(true);

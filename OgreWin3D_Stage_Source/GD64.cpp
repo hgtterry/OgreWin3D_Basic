@@ -272,56 +272,56 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		{
 			char mFileName[MAX_PATH];
 			strcpy(mFileName, App->CL_File_IO->mPreviousFiles[7].c_str());
-			App->CL_Importers->Reload_FromResentFiles(mFileName);
+			App->CL_Project->Reload_From_ResentFiles(mFileName);
 			return 1;
 		}
 		case 5000 + 6: // 2
 		{
 			char mFileName[MAX_PATH];
 			strcpy(mFileName, App->CL_File_IO->mPreviousFiles[6].c_str());
-			App->CL_Importers->Reload_FromResentFiles(mFileName);
+			App->CL_Project->Reload_From_ResentFiles(mFileName);
 			return 1;
 		}
 		case 5000 + 5: // 3
 		{
 			char mFileName[MAX_PATH];
 			strcpy(mFileName, App->CL_File_IO->mPreviousFiles[5].c_str());
-			App->CL_Importers->Reload_FromResentFiles(mFileName);
+			App->CL_Project->Reload_From_ResentFiles(mFileName);
 			return 1;
 		}
 		case 5000 + 4: // 4
 		{
 			char mFileName[MAX_PATH];
 			strcpy(mFileName, App->CL_File_IO->mPreviousFiles[4].c_str());
-			App->CL_Importers->Reload_FromResentFiles(mFileName);
+			App->CL_Project->Reload_From_ResentFiles(mFileName);
 			return 1;
 		}
 		case 5000 + 3: // 5
 		{
 			char mFileName[MAX_PATH];
 			strcpy(mFileName, App->CL_File_IO->mPreviousFiles[3].c_str());
-			App->CL_Importers->Reload_FromResentFiles(mFileName);
+			App->CL_Project->Reload_From_ResentFiles(mFileName);
 			return 1;
 		}
 		case 5000 + 2: // 6
 		{
 			char mFileName[MAX_PATH];
 			strcpy(mFileName, App->CL_File_IO->mPreviousFiles[2].c_str());
-			App->CL_Importers->Reload_FromResentFiles(mFileName);
+			App->CL_Project->Reload_From_ResentFiles(mFileName);
 			return 1;
 		}
 		case 5000 + 1: // 7
 		{
 			char mFileName[MAX_PATH];
 			strcpy(mFileName, App->CL_File_IO->mPreviousFiles[1].c_str());
-			App->CL_Importers->Reload_FromResentFiles(mFileName);
+			App->CL_Project->Reload_From_ResentFiles(mFileName);
 			return 1;
 		}
 		case 5000 + 0: // 8
 		{
 			char mFileName[MAX_PATH];
 			strcpy(mFileName, App->CL_File_IO->mPreviousFiles[0].c_str());
-			App->CL_Importers->Reload_FromResentFiles(mFileName);
+			App->CL_Project->Reload_From_ResentFiles(mFileName);
 			return 1;
 		}
 		// Windows -------------------------------------------------------

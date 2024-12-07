@@ -30,10 +30,7 @@ public:
 	~CL64_Importers();
 
 	bool Load_Project();
-	bool Reload_FromResentFiles(char* ResentPathAndFile);
-
-	std::string Get_FileName_From_Path(char* pString);
-
+	
 	Ogre::String Ogre_CFG_Resource_Group;
 
 	bool Flag_Reload_Ogre_Model;

@@ -80,6 +80,7 @@ CL64_App::CL64_App(void)
 	CL_Front_Dialog =		nullptr;
 	CL_PB =					nullptr;
 	CL_Motions =			nullptr;
+	CL_Utilities =			nullptr;
 	//-------------------------------------
 
 	hInst =				nullptr;
@@ -212,6 +213,7 @@ void CL64_App::InitApp(void)
 	CL_Front_Dialog =		new Bass_Front_Dialog();
 	CL_PB =					new CL64_PB();
 	CL_Motions =			new CL64_Motions();
+	CL_Utilities =			new CL64_Utilities();
 
 	SetBrushes_Fonts();
 

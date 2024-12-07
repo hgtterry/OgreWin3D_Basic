@@ -75,6 +75,7 @@ THE SOFTWARE.
 #include "CL64_Build_Game.h"
 #include "CL64_PB.h"
 #include "CL64_Motions.h"
+#include "CL64_Utilities.h"
 #include "Bass_Front_Dialog.h"
 
 class CL64_App
@@ -135,6 +136,7 @@ public:
 	CL64_Build_Game*		CL_Build_Game;
 	CL64_PB*				CL_PB;
 	CL64_Motions*			CL_Motions;
+	CL64_Utilities*			CL_Utilities;
 
 	Bass_Front_Dialog*		CL_Front_Dialog;
 	
