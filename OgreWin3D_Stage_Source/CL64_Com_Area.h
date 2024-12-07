@@ -32,6 +32,7 @@ public:
 	void Reset_Class(void);
 
 	void Set_Area_Defaults(int Index);
+	bool Add_New_Area();
 	void Add_Aera_To_Project(int Index, char* FileName, char* Resource_Location);
 	void Rename_Area(int Index);
 

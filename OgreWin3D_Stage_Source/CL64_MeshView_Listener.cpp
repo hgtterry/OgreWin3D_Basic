@@ -105,6 +105,27 @@ void CL64_MeshView_Listener::ModelMode(float DeltaTime)
 		mTranslateVector.z = mMoveScale * 30;
 	}
 	
+	if (GetAsyncKeyState(87) < 0) // W Key
+	{
+		mTranslateVector.z = -mMoveScale;
+	}
+	
+	if (GetAsyncKeyState(83) < 0) // S Key	
+	{
+		mTranslateVector.z = mMoveScale;
+	}
+	
+	// Right
+	if (GetAsyncKeyState(65) < 0)
+	{
+		mTranslateVector.x = mMoveScale;
+	}
+	// Left
+	if (GetAsyncKeyState(68) < 0)
+	{
+		mTranslateVector.x = -mMoveScale;
+	}
+	
 	// Left Mouse
 	if (Pl_LeftMouseDown == 1 && Pl_RightMouseDown == 0)
 	{

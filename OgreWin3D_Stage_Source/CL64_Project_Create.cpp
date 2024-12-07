@@ -132,11 +132,13 @@ LRESULT CALLBACK CL64_Project_Create::Proc_Options_Dialog(HWND hDlg, UINT messag
 void CL64_Project_Create::Start_New_Project()
 {
 	App->CL_Scene->Clear_Level();
-	//App->CL_Scene->Create_Resources_Group();
+	App->CL_Resources->Create_Project_Resources_Group();
 
 	Create_Options_Dialog();
 
 	App->CL_Project->Start_Save_Project_Dialog();
+
+	App->CL_Scene->flag_Scene_Loaded = 1;
 
 	App->CL_Dialogs->Show_YesNo_Dlg((LPSTR)"Add Area", (LPSTR)"Do you want to add a new Area", (LPSTR)"");
 

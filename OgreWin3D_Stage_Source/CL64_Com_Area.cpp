@@ -116,6 +116,44 @@ void CL64_Com_Area::Set_Area_Defaults(int Index)
 }
 
 // *************************************************************************
+//				Add_New_Area:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+bool CL64_Com_Area::Add_New_Area()
+{
+	if (App->CL_Scene->Area_Count == 0)
+	{
+		App->CL_Project_Create->Add_First_New_Area();
+	}
+	else
+	{
+		int Index = App->CL_Scene->Area_Count;
+
+		App->CL_Scene->B_Area[Index] = new Base_Area();
+		Set_Area_Defaults(Index);
+
+		Base_Area* Area = App->CL_Scene->B_Area[Index];
+
+		Area->This_Object_UniqueID = App->CL_Scene->UniqueID_Area_Count;
+
+		Ogre::Vector3 Pos = App->CL_Com_Objects->GetPlacement(-50);
+		Area->Mesh_Pos = Pos;
+
+		Add_Aera_To_Project(Index, App->CL_MeshViewer->Selected_MeshFile, App->CL_MeshViewer->m_Resource_Folder_Full);
+
+		HTREEITEM Temp = App->CL_FileView->Add_Item(App->CL_FileView->FV_Areas_Folder, Area->Area_Name, Index, true);
+		Area->FileViewItem = Temp;
+
+		App->CL_FileView->SelectItem(Area->FileViewItem);
+
+		App->CL_Scene->UniqueID_Area_Count++;
+		App->CL_Scene->Area_Count++;
+
+		App->CL_Scene->flag_Scene_Modified = 1;
+	}
+	return 1;
+}
+
+// *************************************************************************
 // *		Add_Aera_To_Project:- Terry and Hazel Flanigan 2024 		   *
 // *************************************************************************
 void CL64_Com_Area::Add_Aera_To_Project(int Index, char* FileName, char* Resource_Location)
@@ -141,9 +179,9 @@ void CL64_Com_Area::Add_Aera_To_Project(int Index, char* FileName, char* Resourc
 	Area->Area_Node->attachObject(Area->Area_Ent);
 
 	// Get Material Name
-	Ogre::String text = Area->Area_Ent->getMesh()->getSubMesh(0)->getMaterialName().c_str();
+	/*Ogre::String text = Area->Area_Ent->getMesh()->getSubMesh(0)->getMaterialName().c_str();
 	Ogre::MaterialPtr  Mat = static_cast<Ogre::MaterialPtr> (Ogre::MaterialManager::getSingleton().getByName(text));
-	strcpy(Area->Material_File, Mat->getOrigin().c_str());
+	strcpy(Area->Material_File, Mat->getOrigin().c_str());*/
 
 	Area->Area_Node->setVisible(true);
 	Area->Area_Node->setPosition(Area->Mesh_Pos);

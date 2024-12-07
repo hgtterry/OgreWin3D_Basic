@@ -100,6 +100,13 @@ void CL64_MeshViewer::Start_MeshViewer_Dlg()
 {
 	App->CL_Bullet->Show_Debug_Objects(false);
 
+	App->CL_Panels->Disable_Panels(true);
+	App->CL_Ogre->Ogre3D_Listener->flag_Block_Mouse = 1;
+	App->CL_ImGui_Dialogs->flag_Disable_Physics_Console = 1;
+	App->CL_Keyboard->flag_Block_Keyboard = 1;
+
+	App->CL_Ogre->RenderFrame(8);
+
 	CreateDialog(App->hInst, (LPCTSTR)IDD_MESHVIEWER, App->Fdlg, (DLGPROC)Proc_MeshViewer_Dlg);
 	
 }
@@ -135,7 +142,8 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 		SendDlgItemMessage(hDlg, IDC_STNAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		SendDlgItemMessage(hDlg, IDC_BT_PROPERTIES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-
+		SendDlgItemMessage(hDlg, IDC_BT_MV_RESOURCES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
 		SendDlgItemMessage(hDlg, IDC_OBJECTNAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		App->CL_MeshViewer->MainDlgHwnd = hDlg;
@@ -240,6 +248,13 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 			return CDRF_DODEFAULT;
 		}
 
+		if (some_item->idFrom == IDC_BT_MV_RESOURCES)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+		
 		if (some_item->idFrom == IDC_MVSTATIC)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
@@ -393,6 +408,22 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 		return CDRF_DODEFAULT;
 	}
 
+	case WM_MOUSEWHEEL:
+	{
+		int zDelta = (short)HIWORD(wParam);    // wheel rotation
+
+		if (zDelta > 0)
+		{
+			App->CL_MeshViewer->RenderListener->Wheel_Move = -1;
+		}
+		else if (zDelta < 0)
+		{
+			App->CL_MeshViewer->RenderListener->Wheel_Move = 1;
+		}
+
+		return 1;
+	}
+
 	case WM_COMMAND:
 
 		if (LOWORD(wParam) == IDC_CB_FOLDERS)
@@ -443,6 +474,12 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 			return TRUE;
 		}
 
+		if (LOWORD(wParam) == IDC_BT_MV_RESOURCES)
+		{
+			App->CL_Resources->Start_Resources();
+			return TRUE;
+		}
+		
 		if (LOWORD(wParam) == IDC_LISTFILES)
 		{
 			char buff[MAX_PATH] { 0 };
@@ -606,6 +643,7 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 				App->CL_MeshViewer->Ogre_MV_Phys_Body = nullptr;
 			}
 
+			App->Say(App->CL_MeshViewer->m_Just_Folder);
 
 			int cmp = strcmp(App->CL_MeshViewer->m_Just_Folder, "Project_Assets");
 			if (cmp == 0)
@@ -613,12 +651,16 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 				strcpy(App->CL_MeshViewer->m_Resource_Folder_Full, App->CL_Project->m_Main_Assets_Path);
 				App->CL_Objects_Create->Add_Objects_From_MeshViewer();
 			}
+			else if (App->CL_MeshViewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Area)
+			{
+
+				App->CL_MeshViewer->Copy_Assets();
+				//App->CL_Com_Area->Add_New_Area();
+				Debug
+			}
 			else
 			{
 				App->CL_MeshViewer->Copy_Assets();
-
-				//App->Say("Copied");
-
 				App->CL_Objects_Create->Add_Objects_From_MeshViewer();
 			}
 
@@ -631,6 +673,12 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 			App->CL_MeshViewer->Clear_Type_Buttons();
 			
 			App->CL_MeshViewer->flag_MeshViewer_Running = 0;
+
+			App->CL_Panels->Disable_Panels(false);
+			App->CL_ImGui_Dialogs->flag_Disable_Physics_Console = 0;
+			App->CL_Ogre->Ogre3D_Listener->flag_Block_Mouse = 0;
+			App->CL_Keyboard->flag_Block_Keyboard = 0;
+
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
@@ -643,6 +691,12 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 			App->CL_MeshViewer->Clear_Type_Buttons();
 
 			App->CL_MeshViewer->flag_MeshViewer_Running = 0;
+
+			App->CL_Panels->Disable_Panels(false);
+			App->CL_ImGui_Dialogs->flag_Disable_Physics_Console = 0;
+			App->CL_Ogre->Ogre3D_Listener->flag_Block_Mouse = 0;
+			App->CL_Keyboard->flag_Block_Keyboard = 0;
+
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
@@ -948,7 +1002,7 @@ void CL64_MeshViewer::Get_Stock_Folders(HWND DropHwnd)
 		FindClose(hFind);
 	}
 
-	// Colectables
+	// -------------------------------------------------- Colectables
 	if (Mesh_Viewer_Mode == Enums::Mesh_Viewer_Collectables)
 	{
 		strcpy(m_Just_Folder, "Collectables");
@@ -963,7 +1017,7 @@ void CL64_MeshViewer::Get_Stock_Folders(HWND DropHwnd)
 		return;
 	}
 
-	// Objects
+	// -------------------------------------------------- Objects
 	if (Mesh_Viewer_Mode == Enums::Mesh_Viewer_Objects)
 	{
 		SendMessage(DropHwnd, CB_SETCURSEL, 0, 0);
@@ -982,6 +1036,20 @@ void CL64_MeshViewer::Get_Stock_Folders(HWND DropHwnd)
 		strcat(m_Resource_Folder_Full, "\\Stock\\");
 		strcat(m_Resource_Folder_Full, m_Just_Folder);
 		strcat(m_Resource_Folder_Full, "\\");
+	}
+
+	// -------------------------------------------------- Areas
+	if (Mesh_Viewer_Mode == Enums::Mesh_Viewer_Area)
+	{
+		strcpy(m_Just_Folder, "Areas");
+
+		strcpy(m_Resource_Folder_Full, App->GD_Directory_FullPath); // Full Path Stock Folders 
+		strcat(m_Resource_Folder_Full, "\\Stock\\");
+		strcat(m_Resource_Folder_Full, m_Just_Folder);
+		strcat(m_Resource_Folder_Full, "\\");
+
+		SendMessage(DropHwnd, CB_SELECTSTRING, -1, (LPARAM)"Areas");
+
 	}
 	
 }

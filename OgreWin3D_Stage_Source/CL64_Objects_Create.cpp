@@ -83,12 +83,12 @@ bool CL64_Objects_Create::Dispatch_MeshViewer()
 {
 	int Index = App->CL_Scene->Object_Count;
 
-	//if (App->CL_MeshViewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Area) // Area
-	//{
-	//	App->CL_Com_Area->Add_Aera_To_Project(0, App->CL_MeshViewer->Selected_MeshFile, m_ResourcePath);
-	//	App->Say("Dispatch_MeshViewer");
-	//}
-	//else
+	if (App->CL_MeshViewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Area) // Area
+	{
+		App->CL_Com_Area->Add_Aera_To_Project(0, App->CL_MeshViewer->Selected_MeshFile, (LPSTR)App->CL_Resources->Project_Resource_Group.c_str());
+		App->Say("Dispatch_MeshViewer");
+	}
+	else
 	{
 		Add_New_Object(Index, true);
 		App->CL_Scene->B_Object[Index]->Altered = 1;
