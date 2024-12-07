@@ -249,7 +249,6 @@ bool CL64_Scene::Game_Restart(void)
 
 	App->CL_Ogre->Ogre3D_Listener->flag_Run_Physics = 1;
 
-	CurrentCamMode = App->CL_Ogre->Ogre3D_Listener->CameraMode;
 	App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_First;
 
 	App->CL_Gizmos->BoxNode->setVisible(false);
@@ -310,6 +309,7 @@ bool CL64_Scene::Game_Mode(void)
 	//App->CL_Ogre->Ogre3D_Listener->Run_Physics = 1;
 
 	CurrentCamMode = App->CL_Ogre->Ogre3D_Listener->CameraMode;
+
 	App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_First;
 
 	Show_Entities(false); // Hide All Visible Trigers
