@@ -788,14 +788,14 @@ LRESULT CALLBACK CL64_Props_Dialogs::Proc_Camera_PropsPanel(HWND hDlg, UINT mess
 
 		LPNMHDR some_item = (LPNMHDR)lParam;
 
-		if (some_item->idFrom == IDC_BTCAMSAVE && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDC_BTCAMSAVE)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
 			return CDRF_DODEFAULT;
 		}
 
-		if (some_item->idFrom == IDC_BTCAMGOTO && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDC_BTCAMGOTO)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
@@ -811,11 +811,12 @@ LRESULT CALLBACK CL64_Props_Dialogs::Proc_Camera_PropsPanel(HWND hDlg, UINT mess
 		{
 			int Index = App->CL_Properties->Current_Selected_Object;
 
-			//App->SBC_Com_Camera->Update_Camera(Index);
+			App->CL_Com_Cameras->Update_Camera_Entity_Data(Index);
 
 			App->CL_Scene->B_Camera[Index]->Altered = 1;
 			App->CL_FileView->Mark_Altered(App->CL_Scene->B_Camera[Index]->FileViewItem);
-			//App->CL_Scene->Scene_Modified = 1;
+			App->CL_Scene->flag_Scene_Modified = 1;
+			App->CL_Properties->Update_ListView_Camera();
 			App->Say("Camera Saved");
 
 			return TRUE;
@@ -823,10 +824,9 @@ LRESULT CALLBACK CL64_Props_Dialogs::Proc_Camera_PropsPanel(HWND hDlg, UINT mess
 
 		if (LOWORD(wParam) == IDC_BTCAMGOTO)
 		{
-			//App->CL_Com_Camera->Set_Camera(App->CL_Properties->Current_Selected_Object);
+			App->CL_Com_Cameras->Set_Camera(App->CL_Properties->Current_Selected_Object);
 			return TRUE;
 		}
-
 
 		break;
 	}

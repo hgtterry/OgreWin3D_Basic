@@ -120,3 +120,14 @@ void CL64_Com_Cameras::Set_Camera(int Index)
 	App->CL_Ogre->camNode->setPosition(App->CL_Scene->B_Camera[Index]->CamPos);
 	App->CL_Ogre->camNode->setOrientation(App->CL_Scene->B_Camera[Index]->Cam_Quat);
 }
+
+// *************************************************************************
+// *	  Update_Camera_Entity_Data:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+void CL64_Com_Cameras::Update_Camera_Entity_Data(int Index)
+{
+	App->CL_Scene->B_Camera[Index]->CamPos = App->CL_Ogre->camNode->getPosition();
+
+	App->CL_Scene->B_Camera[Index]->Cam_Quat = App->CL_Ogre->camNode->getOrientation();
+
+}

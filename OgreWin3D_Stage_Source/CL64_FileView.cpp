@@ -1012,6 +1012,7 @@ void CL64_FileView::HideRightPanes(void)
 	App->CL_Props_Dialogs->Show_Physics_Test_Dlg(false);
 	App->CL_Props_Dialogs->Hide_Debug_Dlg(false);
 	App->CL_Props_Dialogs->Show_Materials_Dlg(false);
+	App->CL_Props_Dialogs->Show_Cameras_Dlg(false);
 
 }
 
