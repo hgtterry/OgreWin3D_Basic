@@ -625,7 +625,7 @@ void CL64_ImGui_Dialogs::Move_Entity_Editor(void)
 
 		if (ImGui::Button("Goto"))
 		{
-			App->CL_Camera->Camera_Goto_Object(App->CL_Properties->Current_Selected_Object);
+			App->CL_Com_Cameras->Camera_Goto_Object(App->CL_Properties->Current_Selected_Object);
 		}
 
 		ImGui::Spacing();

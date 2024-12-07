@@ -32,7 +32,7 @@ CL64_App::CL64_App(void)
 	CL_Ogre =			nullptr;
 	CL_Grid =			nullptr;
 	CL_Keyboard =		nullptr;
-	CL_Camera =			nullptr;
+	CL_Com_Cameras =	nullptr;
 	CL_Ini_File =		nullptr;
 	CL_Preferences =	nullptr;
 	CL_Scene =			nullptr;
@@ -166,7 +166,7 @@ void CL64_App::InitApp(void)
 	CL_Ogre =			new CL64_Ogre();
 	CL_Grid =			new CL64_Grid();
 	CL_Keyboard =		new CL64_Keyboard();
-	CL_Camera =			new	CL64_Camera();
+	CL_Com_Cameras =	new	CL64_Com_Cameras();
 	CL_Ini_File =		new CL64_Ini_File();
 	CL_Preferences =	new CL64_Preferences();
 	CL_Scene =			new CL64_Scene();

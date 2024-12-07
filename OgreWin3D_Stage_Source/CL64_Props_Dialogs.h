@@ -34,12 +34,14 @@ public:
 	void Start_Dialog_Dimensions();
 	void Start_Dialog_Debug();
 	void Start_Materials_PropsPanel();
+	bool Start_Camera_PropsPanel();
 
 	void Hide_Debug_Dlg(bool Show);
 	void Show_Physics_Test_Dlg(bool Show);
 	void Show_Details_Goto_Dlg(bool Show);
 	void Show_Dimensions_Dlg(bool Show);
 	void Show_Materials_Dlg(bool Show);
+	void Show_Cameras_Dlg(bool Show);
 
 	HWND Dimensions_Dlg_hWnd;
 
@@ -50,6 +52,7 @@ private:
 	static LRESULT CALLBACK Proc_Dialog_Dimensions(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Proc_Dialog_Debug(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Prop_Materials_PropsPanel(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Proc_Camera_PropsPanel(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	void Start_Details_Goto_Dlg(void);
 	void Start_Dialog_PhysicsTest();
@@ -60,6 +63,6 @@ private:
 	HWND PhysicsTest_Dlg_hWnd;
 	HWND Debug_Dlg_hWnd;
 	HWND Material_Props_Hwnd;
-
+	HWND Cam_Props_HWND;
 };
 

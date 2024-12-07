@@ -88,7 +88,7 @@ public:
 	CL64_Ogre*				CL_Ogre;
 	CL64_Grid*				CL_Grid;
 	CL64_Keyboard*			CL_Keyboard;
-	CL64_Camera*			CL_Camera;
+	CL64_Com_Cameras*		CL_Com_Cameras;
 	CL64_Ini_File*			CL_Ini_File;
 	CL64_Preferences*		CL_Preferences;
 	CL64_Scene*				CL_Scene;

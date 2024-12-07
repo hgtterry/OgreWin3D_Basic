@@ -55,7 +55,7 @@ CL64_Project::CL64_Project()
 	m_Objects_Folder_Path[0] = 0;
 	m_Display_Folder_Path[0] = 0;
 
-	Directory_Changed_Flag = 0;
+	flag_Directory_Changed_Flag = 0;
 
 	WriteFile = NULL;
 	
@@ -124,6 +124,20 @@ LRESULT CALLBACK CL64_Project::Save_Project_Dialog_Proc(HWND hDlg, UINT message,
 
 		//HWND temp = GetDlgItem(hDlg, IDC_CKQUICKLOAD);
 		//SendMessage(temp, BM_SETCHECK, 1, 0);
+
+		HWND temp = GetDlgItem(hDlg, IDC_CK_SP_DESKTOP);
+
+		int test = SendMessage(temp, BM_SETCHECK, 1, 0);
+
+		strcpy(App->CL_Project->m_Project_Sub_Folder, App->CL_File_IO->DeskTop_Folder);
+		strcat(App->CL_Project->m_Project_Sub_Folder, "\\");
+		strcat(App->CL_Project->m_Project_Sub_Folder, App->CL_Project->m_Project_Name);
+		strcat(App->CL_Project->m_Project_Sub_Folder, "_Prj");
+
+		SetDlgItemText(hDlg, IDC_STPJFOLDERPATH, (LPCTSTR)App->CL_Project->m_Project_Sub_Folder);
+
+		EnableWindow(GetDlgItem(hDlg, IDC_BTPJBROWSE), 0);
+		EnableWindow(GetDlgItem(hDlg, IDC_STPJFOLDERPATH), 0);
 
 		return TRUE;
 	}
@@ -268,7 +282,7 @@ LRESULT CALLBACK CL64_Project::Save_Project_Dialog_Proc(HWND hDlg, UINT message,
 
 				SetDlgItemText(hDlg, IDC_STPJFOLDERPATH, (LPCTSTR)App->CL_Project->m_Project_Sub_Folder);
 
-				App->CL_Project->Directory_Changed_Flag = 1;
+				App->CL_Project->flag_Directory_Changed_Flag = 1;
 
 				EnableWindow(GetDlgItem(hDlg, IDC_BTPJBROWSE), 0);
 				EnableWindow(GetDlgItem(hDlg, IDC_STPJFOLDERPATH), 0);
@@ -299,7 +313,7 @@ LRESULT CALLBACK CL64_Project::Save_Project_Dialog_Proc(HWND hDlg, UINT message,
 
 			SetDlgItemText(hDlg, IDC_STPJFOLDERPATH, (LPCTSTR)App->CL_Project->m_Project_Sub_Folder);
 
-			App->CL_Project->Directory_Changed_Flag = 1;
+			App->CL_Project->flag_Directory_Changed_Flag = 1;
 
 			return TRUE;
 		}
@@ -331,7 +345,7 @@ LRESULT CALLBACK CL64_Project::Save_Project_Dialog_Proc(HWND hDlg, UINT message,
 			SetDlgItemText(hDlg, IDC_STPROJECTNAME, (LPCTSTR)App->CL_Project->m_Project_Name);
 			SetDlgItemText(hDlg, IDC_STPJFOLDERPATH, (LPCTSTR)App->CL_Project->m_Project_Sub_Folder);
 
-			App->CL_Project->Directory_Changed_Flag = 1;
+			App->CL_Project->flag_Directory_Changed_Flag = 1;
 
 			return TRUE;
 		}
@@ -350,7 +364,7 @@ LRESULT CALLBACK CL64_Project::Save_Project_Dialog_Proc(HWND hDlg, UINT message,
 			strcpy(App->CL_Project->m_Level_Name, App->CL_Dialogs->Chr_Text);
 			SetDlgItemText(hDlg, IDC_STLEVELNAME, (LPCTSTR)App->CL_Project->m_Level_Name);
 
-			App->CL_Project->Directory_Changed_Flag = 1;
+			App->CL_Project->flag_Directory_Changed_Flag = 1;
 
 			return TRUE;
 		}
@@ -374,7 +388,7 @@ LRESULT CALLBACK CL64_Project::Save_Project_Dialog_Proc(HWND hDlg, UINT message,
 
 		if (LOWORD(wParam) == IDCANCEL)
 		{
-			App->CL_Project->Directory_Changed_Flag = 0;
+			App->CL_Project->flag_Directory_Changed_Flag = 0;
 
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
@@ -583,7 +597,7 @@ bool CL64_Project::Save_Main_Asset_Folder()
 {
 	char LastFolder[MAX_PATH];
 
-	if (Directory_Changed_Flag == 1)
+	if (flag_Directory_Changed_Flag == 1)
 	{
 		strcpy(LastFolder, m_Main_Assets_Path);
 	}
@@ -604,12 +618,12 @@ bool CL64_Project::Save_Main_Asset_Folder()
 		(void)_chdir(m_Main_Assets_Path);
 	}
 
-	if (Directory_Changed_Flag == 1)
+	if (flag_Directory_Changed_Flag == 1)
 	{
 		Copy_Assets(LastFolder, m_Main_Assets_Path);
 	}
 
-	Directory_Changed_Flag = 0;
+	flag_Directory_Changed_Flag = 0;
 
 	(void)_chdir(m_Level_Folder_Path); // Return to Level Folder
 
@@ -1619,7 +1633,7 @@ bool CL64_Project::Load_Project()
 	{
 		Load_Project_Camera();
 		App->CL_Scene->flag_Camera_Added = 1;
-		App->CL_Camera->Set_Camera(0);
+		App->CL_Com_Cameras->Set_Camera(0);
 		App->CL_FileView->Set_FolderActive(App->CL_FileView->FV_Cameras_Folder);
 	}
 

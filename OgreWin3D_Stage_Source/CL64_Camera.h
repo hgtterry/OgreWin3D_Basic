@@ -14,12 +14,12 @@ appreciated but is not required.
 */
 
 #pragma once
-class CL64_Camera
+class CL64_Com_Cameras
 {
 public:
 
-	CL64_Camera(void);
-	~CL64_Camera(void);
+	CL64_Com_Cameras(void);
+	~CL64_Com_Cameras(void);
 
 	void Reset_View(void);
 	void Set_Camera_Position(float X,float Y,float Z);

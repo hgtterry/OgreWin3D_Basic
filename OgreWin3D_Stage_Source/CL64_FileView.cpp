@@ -614,7 +614,7 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 
 		HideRightPanes();
 		ShowWindow(App->CL_Properties->Properties_Dlg_hWnd, 1);
-		//App->SBC_Com_Camera->Hide_Cam_Dlg(1);
+		App->CL_Props_Dialogs->Show_Cameras_Dlg(true);
 
 		App->CL_Properties->Edit_Category = Enums::Edit_Camera;
 

@@ -17,11 +17,11 @@ appreciated but is not required.
 #include "CL64_App.h"
 #include "CL64_Camera.h"
 
-CL64_Camera::CL64_Camera(void)
+CL64_Com_Cameras::CL64_Com_Cameras(void)
 {
 }
 
-CL64_Camera::~CL64_Camera(void)
+CL64_Com_Cameras::~CL64_Com_Cameras(void)
 {
 
 }
@@ -29,7 +29,7 @@ CL64_Camera::~CL64_Camera(void)
 // *************************************************************************
 // *			Reset_View:- Terry and Hazel Flanigan 2024				   *
 // *************************************************************************
-void CL64_Camera::Reset_View(void)
+void CL64_Com_Cameras::Reset_View(void)
 {
 	App->CL_Grid->GridNode->setPosition(0, 0, 0);
 	App->CL_Grid->GridNode->resetOrientation();
@@ -54,7 +54,7 @@ void CL64_Camera::Reset_View(void)
 // *************************************************************************
 // *		Set_Camera_Position:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-void CL64_Camera::Set_Camera_Position(float X, float Y, float Z)
+void CL64_Com_Cameras::Set_Camera_Position(float X, float Y, float Z)
 {
 	App->CL_Ogre->camNode->setPosition(X, Y, Z);
 }
@@ -62,7 +62,7 @@ void CL64_Camera::Set_Camera_Position(float X, float Y, float Z)
 // *************************************************************************
 // *		Set_Camera_Rotation:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-void CL64_Camera::Set_Camera_Rotation(float Pitch, float Yaw, float Roll)
+void CL64_Com_Cameras::Set_Camera_Rotation(float Pitch, float Yaw, float Roll)
 {
 	App->CL_Ogre->camNode->setOrientation(Ogre::Quaternion::IDENTITY);
 
@@ -74,7 +74,7 @@ void CL64_Camera::Set_Camera_Rotation(float Pitch, float Yaw, float Roll)
 // *************************************************************************
 //			Camera_Goto_Object:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-void CL64_Camera::Camera_Goto_Object(int Object_Index)
+void CL64_Com_Cameras::Camera_Goto_Object(int Object_Index)
 {
 	App->CL_TopDlg->Camera_Set_Free();
 
@@ -115,7 +115,7 @@ void CL64_Camera::Camera_Goto_Object(int Object_Index)
 // *************************************************************************
 // *	  		Set_Camera:- Terry and Hazel Flanigan 2024				   *
 // *************************************************************************
-void CL64_Camera::Set_Camera(int Index)
+void CL64_Com_Cameras::Set_Camera(int Index)
 {
 	App->CL_Ogre->camNode->setPosition(App->CL_Scene->B_Camera[Index]->CamPos);
 	App->CL_Ogre->camNode->setOrientation(App->CL_Scene->B_Camera[Index]->Cam_Quat);

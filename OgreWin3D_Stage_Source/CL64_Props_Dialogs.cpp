@@ -34,6 +34,7 @@ CL64_Props_Dialogs::CL64_Props_Dialogs(void)
 	Dimensions_Dlg_hWnd =	nullptr;
 	Debug_Dlg_hWnd =		nullptr;
 	Material_Props_Hwnd =	nullptr;
+	Cam_Props_HWND =		nullptr;
 
 	Show_Area_Physics_Debug = 0;
 }
@@ -51,6 +52,7 @@ void CL64_Props_Dialogs::Start_Props_Dialogs()
 	Start_Dialog_Dimensions();
 	Start_Dialog_PhysicsTest();
 	Start_Dialog_Debug();
+	Start_Camera_PropsPanel();
 	//Start_Panels_Test_Dlg();
 	//Start_Area_PropsPanel();
 	Start_Details_Goto_Dlg();
@@ -138,7 +140,7 @@ LRESULT CALLBACK CL64_Props_Dialogs::Proc_Details_Goto(HWND hDlg, UINT message, 
 
 		if (LOWORD(wParam) == IDC_BT_GOTO)
 		{
-			App->CL_Camera->Camera_Goto_Object(App->CL_Properties->Current_Selected_Object);
+			App->CL_Com_Cameras->Camera_Goto_Object(App->CL_Properties->Current_Selected_Object);
 			
 			return 1;
 		}
@@ -748,6 +750,90 @@ LRESULT CALLBACK CL64_Props_Dialogs::Prop_Materials_PropsPanel(HWND hDlg, UINT m
 }
 
 // *************************************************************************
+// *	  Start_Camera_PropsPanel:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+bool CL64_Props_Dialogs::Start_Camera_PropsPanel()
+{
+	Cam_Props_HWND = CreateDialog(App->hInst, (LPCTSTR)IDD_PROPS_CAMERA, App->CL_Properties->Properties_Dlg_hWnd, (DLGPROC)Proc_Camera_PropsPanel);
+	Show_Cameras_Dlg(false);
+	return 1;
+}
+
+// *************************************************************************
+// *		Proc_Camera_PropsPanel:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+LRESULT CALLBACK CL64_Props_Dialogs::Proc_Camera_PropsPanel(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+	switch (message)
+	{
+	case WM_INITDIALOG:
+	{
+		SendDlgItemMessage(hDlg, IDC_BTCAMSAVE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BTCAMGOTO, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		return TRUE;
+	}
+	case WM_CTLCOLORSTATIC:
+	{
+		return FALSE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->DialogBackGround;
+	}
+
+	case WM_NOTIFY:
+	{
+
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		if (some_item->idFrom == IDC_BTCAMSAVE && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BTCAMGOTO && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		return CDRF_DODEFAULT;
+	}
+
+	case WM_COMMAND:
+
+		if (LOWORD(wParam) == IDC_BTCAMSAVE)
+		{
+			int Index = App->CL_Properties->Current_Selected_Object;
+
+			//App->SBC_Com_Camera->Update_Camera(Index);
+
+			App->CL_Scene->B_Camera[Index]->Altered = 1;
+			App->CL_FileView->Mark_Altered(App->CL_Scene->B_Camera[Index]->FileViewItem);
+			//App->CL_Scene->Scene_Modified = 1;
+			App->Say("Camera Saved");
+
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_BTCAMGOTO)
+		{
+			//App->CL_Com_Camera->Set_Camera(App->CL_Properties->Current_Selected_Object);
+			return TRUE;
+		}
+
+
+		break;
+	}
+	return FALSE;
+}
+
+// *************************************************************************
 // *			Hide_Debug_Dlg:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
 void CL64_Props_Dialogs::Hide_Debug_Dlg(bool Show)
@@ -785,4 +871,12 @@ void CL64_Props_Dialogs::Show_Dimensions_Dlg(bool Show)
 void CL64_Props_Dialogs::Show_Materials_Dlg(bool Show)
 {
 	ShowWindow(Material_Props_Hwnd, Show);
+}
+
+// *************************************************************************
+// *		Show_Cameras_Dlg:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void CL64_Props_Dialogs::Show_Cameras_Dlg(bool Show)
+{
+	ShowWindow(Cam_Props_HWND, Show);
 }
