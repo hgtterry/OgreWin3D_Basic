@@ -360,13 +360,13 @@ void CL64_Com_Environments::Set_First_Environment(int Index)
 }
 
 // *************************************************************************
-// *				GameMode:- Terry and Hazel Flanigan 2024		 	   *
+// *		Set_Environment_GameMode:- Terry and Hazel Flanigan 2024	   *
 // *************************************************************************
-void CL64_Com_Environments::GameMode(bool Is_On)
+void CL64_Com_Environments::Set_Environment_GameMode(bool Turn_On)
 {
 	int First_Environ = Get_First_Environ();
 
-	if (Is_On == 1)
+	if (Turn_On == 1)
 	{
 		char buff[1024];
 		strcpy(buff, App->CL_SoundMgr->Default_Folder);

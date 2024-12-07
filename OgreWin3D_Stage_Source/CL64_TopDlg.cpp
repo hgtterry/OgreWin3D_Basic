@@ -762,7 +762,7 @@ LRESULT CALLBACK CL64_TopDlg::Proc_Camera_TB(HWND hDlg, UINT message, WPARAM wPa
 			App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_First;
 			App->CL_Ogre->Ogre3D_Listener->flag_Run_Physics = 1;
 
-			App->CL_Player->Show_Debug_Player(false);
+			App->CL_Player->Show_Player_And_Physics(false);
 			
 			App->CL_TopDlg->flag_Toggle_Cam_FirstMode = 1;
 			App->CL_TopDlg->flag_Toggle_Cam_ModelMode = 0;
@@ -1002,7 +1002,7 @@ LRESULT CALLBACK CL64_TopDlg::Proc_Physics_TB(HWND hDlg, UINT message, WPARAM wP
 				App->CL_TopDlg->flag_Toggle_PhysicaDebug_Node = 0;
 				if (App->CL_Scene->flag_Player_Added == 1 && App->CL_Ogre->Ogre3D_Listener->CameraMode == Enums::Cam_Mode_Free)
 				{
-					App->CL_Player->Show_Debug_Player(true);
+					App->CL_Player->Show_Player_And_Physics(true);
 				}
 			}
 			else
@@ -1588,7 +1588,7 @@ void CL64_TopDlg::Camera_Set_Free()
 
 	if (App->CL_Scene->flag_Player_Added == 1)
 	{
-		App->CL_Player->Show_Debug_Player(true);
+		App->CL_Player->Show_Player_And_Physics(true);
 	}
 
 	App->CL_TopDlg->flag_Toggle_PhysicaDebug_Node = 1;

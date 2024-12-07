@@ -215,7 +215,8 @@ void CL64_Scene::Set_Scene()
 
 	App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_Free;
 
-	App->CL_Player->Show_Debug_Player(true);
+	App->CL_Player->Show_Player_And_Physics(true);
+
 	App->CL_TopDlg->flag_Toggle_PhysicaDebug_Node = 1;
 	App->CL_Ogre->Bullet_Debug_Listener->btDebug_Node->setVisible(true);
 
@@ -235,7 +236,7 @@ void CL64_Scene::Set_Scene()
 bool CL64_Scene::Game_Restart(void)
 {
 
-	App->CL_Com_Environments->GameMode(0);
+	App->CL_Com_Environments->Set_Environment_GameMode(0);
 	App->CL_SoundMgr->SoundEngine->stopAllSounds();
 
 	flag_GameMode_Running = 1;
@@ -266,7 +267,7 @@ bool CL64_Scene::Game_Restart(void)
 
 	App->CL_Physics->Reset_Triggers();
 
-	App->CL_Com_Environments->GameMode(1);
+	App->CL_Com_Environments->Set_Environment_GameMode(1);
 
 	return 1;
 }
@@ -304,7 +305,7 @@ bool CL64_Scene::Game_Mode(void)
 	App->CL_Grid->Hair_SetVisible(false);
 	App->CL_Gizmos->Show_MarkerBox(false);
 
-	App->CL_Com_Environments->GameMode(true);
+	App->CL_Com_Environments->Set_Environment_GameMode(true);
 
 	//App->CL_Ogre->Ogre3D_Listener->Run_Physics = 1;
 
@@ -339,7 +340,7 @@ bool CL64_Scene::Game_Mode(void)
 	App->CL_Physics->Reset_Triggers();
 
 	App->CL_ImGui_Dialogs->Show_Physics_Console = 0;
-	App->CL_Player->Show_Debug_Player(false);
+	App->CL_Player->Show_Player_And_Physics(false);
 
 	return 1;
 }
@@ -365,7 +366,7 @@ bool CL64_Scene::Editor_Mode(void)
 
 	if (App->CL_Scene->flag_Scene_Loaded == 1)
 	{
-		App->CL_Com_Environments->GameMode(false);
+		App->CL_Com_Environments->Set_Environment_GameMode(false);
 
 		Show_Entities(true); // Show All Visible Trigers
 
@@ -377,11 +378,11 @@ bool CL64_Scene::Editor_Mode(void)
 
 	if (CurrentCamMode == Enums::Cam_Mode_Free)
 	{
-		App->CL_Player->Show_Debug_Player(true);
+		App->CL_Player->Show_Player_And_Physics(true);
 	}
 	else
 	{
-		App->CL_Player->Show_Debug_Player(false);
+		App->CL_Player->Show_Player_And_Physics(false);
 	}
 
 	App->CL_ImGui->flag_Show_FPS = App->CL_Build_Game->flag_Saved_Show_FPS;

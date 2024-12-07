@@ -289,6 +289,6 @@ void CL64_Physics::Reset_Scene(void)
 	App->CL_TopDlg->flag_Toggle_Cam_FreeMode = 0;
 	RedrawWindow(App->CL_TopDlg->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
-	App->CL_Com_Environments->GameMode(0);
-	App->CL_Player->Show_Debug_Player(false);
+	App->CL_Com_Environments->Set_Environment_GameMode(0);
+	App->CL_Player->Show_Player_And_Physics(false);
 }

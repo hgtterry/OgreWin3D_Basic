@@ -293,8 +293,6 @@ void CL64_Keyboard::Keyboard_Mode_Free(float deltaTime)
 			Rotate.y = 1;
 			Rotate.z = 0;
 
-			float Delta = 1;// App->CL_Utilities->DegreesToRadians(1);
-
 			App->CL_Scene->B_Player[0]->Rotate_FromCam(Rotate, 0.001, false);
 		}
 	}
@@ -307,12 +305,7 @@ void CL64_Keyboard::Keyboard_Mode_Free(float deltaTime)
 		Rotate.y = -1;
 		Rotate.z = 0;
 
-		float Delta = 1;// App->Cl_Utilities->DegreesToRadians(1);
-
 		App->CL_Scene->B_Player[0]->Rotate_FromCam(Rotate, 0.001, false);
-
-		//App->CL_Ogre->OgreListener->toggleTimer = 0.01;
-
 	}
 
 	//-------------------------------------------------------------
