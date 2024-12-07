@@ -177,6 +177,8 @@ void CL64_ImGui::ImGui_Set_Colours(void)
 	colors[ImGuiCol_NavWindowingHighlight] = ImVec4(0.70f, 0.70f, 0.70f, 0.70f);
 	colors[ImGuiCol_NavWindowingDimBg] = ImVec4(0.20f, 0.20f, 0.20f, 0.20f);
 	colors[ImGuiCol_ModalWindowDimBg] = ImVec4(0.20f, 0.20f, 0.20f, 0.35f);
+
+	style->HoverDelayNormal = 1;
 }
 
 // *************************************************************************

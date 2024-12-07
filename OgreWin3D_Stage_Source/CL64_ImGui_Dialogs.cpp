@@ -761,7 +761,7 @@ void CL64_ImGui_Dialogs::Physics_Console_Gui(void)
 	ImGui::SetNextWindowPos(ImVec2(Physics_PosX, Physics_PosY), ImGuiCond_FirstUseEver);
 	ImGui::PushStyleColor(ImGuiCol_WindowBg, IM_COL32(239, 239, 239, 255));
 	ImGuiStyle* style = &ImGui::GetStyle();
-
+	
 	if (!ImGui::Begin("Physics_Console", &Show_Physics_Console, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar))
 	{
 		ImGui::End();
@@ -816,6 +816,11 @@ void CL64_ImGui_Dialogs::Physics_Console_Gui(void)
 			}
 		}
 
+		if (ImGui::IsItemHovered(ImGuiHoveredFlags_DelayNormal | ImGuiHoveredFlags_NoSharedDelay))
+		{
+			ImGui::SetTooltip("Turn Physics \n On and Off");
+		}
+
 		style->Colors[ImGuiCol_Button] = ImVec4(1, 1, 0.58, 1); // Yellow
 
 
@@ -826,6 +831,11 @@ void CL64_ImGui_Dialogs::Physics_Console_Gui(void)
 			{
 				App->CL_Physics->Reset_Physics();
 			}
+		}
+
+		if (ImGui::IsItemHovered(ImGuiHoveredFlags_DelayNormal | ImGuiHoveredFlags_NoSharedDelay))
+		{
+			ImGui::SetTooltip("Resets Phyics and Turns Physics Off \nTurn Physics back on with Physics On Button");
 		}
 
 		ImGui::SameLine();
