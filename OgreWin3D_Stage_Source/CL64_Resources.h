@@ -42,11 +42,13 @@ public:
 	bool Export_File(char* FileName);
 
 	int Check_Mesh_Is_used_Manual();
+	int Check_Mesh_Is_used_Auto(char* Filename);
 
 	char mSelected_File[MAX_PATH];
 
 	char Resource_File_Path_And_File[MAX_PATH];
 	char Resource_File_FileName[MAX_PATH];
+	char Resource_Used_By_Object[MAX_PATH];
 
 	bool Ogre_ExternalResourceLoaded;
 

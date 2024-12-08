@@ -42,6 +42,7 @@ CL64_Resources::CL64_Resources(void)
 
 	Resource_File_Path_And_File[0] = 0;
 	Resource_File_FileName[0] = 0;
+	Resource_Used_By_Object[0] = 0;
 
 	FX_General_hLV =	nullptr;
 	Export_Button =		nullptr;
@@ -596,11 +597,11 @@ void CL64_Resources::CreateListGeneral_FX(HWND hDlg)
 	lvC.fmt = LVCFMT_LEFT;  // left-align the column
 	std::string headers[] =
 	{
-		"File", "Archive Type","Path"," "," "
+		"File", "Archive Type","Path","Used","Used By "
 	};
 	int headerSize[] =
 	{
-		165,120,470,150
+		165,120,470,100,200
 	};
 
 	for (int header = 0; header < NUM_COLS; header++)
@@ -1050,7 +1051,11 @@ int CL64_Resources::Show_Resource_Group_All()
 // *************************************************************************
 int CL64_Resources::Show_Resource_Group_Type(int mType)
 {
-	//Debug
+	if (mType == Enums::Resource_File_Type_Mesh)
+	{
+		//App->Say("Mesh");
+	}
+
 	ListView_DeleteAllItems(FX_General_hLV);
 
 	LV_ITEM pitem;
@@ -1072,6 +1077,21 @@ int CL64_Resources::Show_Resource_Group_Type(int mType)
 			ListView_SetItemText(FX_General_hLV, pRow, 1, (LPSTR)RV_Archive_GetType[Count].c_str());
 			ListView_SetItemText(FX_General_hLV, pRow, 2, (LPSTR)RV_Archive_GetName[Count].c_str());
 
+			if (mType == Enums::Resource_File_Type_Mesh)
+			{
+				int Test = Check_Mesh_Is_used_Auto((LPSTR)RV_FileName[Count].c_str());
+				if (Test == 777)
+				{
+					ListView_SetItemText(FX_General_hLV, pRow, 3, (LPSTR)"Yes");
+					ListView_SetItemText(FX_General_hLV, pRow, 4, (LPSTR)Resource_Used_By_Object);
+				}
+				else
+				{
+					ListView_SetItemText(FX_General_hLV, pRow, 3, (LPSTR)" ");
+					ListView_SetItemText(FX_General_hLV, pRow, 4, (LPSTR)Resource_Used_By_Object);
+				}
+			}
+			
 			pRow++;
 		}
 
@@ -1091,10 +1111,10 @@ int CL64_Resources::Show_Resource_Group_Type(int mType)
 int CL64_Resources::Check_Mesh_Is_used_Manual()
 {
 	int Count = 0;
-	int Objects_Couunt = App->CL_Scene->Object_Count;
+	int Objects_Count = App->CL_Scene->Object_Count;
 
 	// -------------------------------------------- Check Objects
-	while (Count < Objects_Couunt)
+	while (Count < Objects_Count)
 	{
 		int Result = 1;
 
@@ -1127,6 +1147,52 @@ int CL64_Resources::Check_Mesh_Is_used_Manual()
 	}
 
 	App->Say("NOT USED");
+
+	return -1;
+}
+
+// *************************************************************************
+// *	Check_Mesh_Is_used_Auto:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+int CL64_Resources::Check_Mesh_Is_used_Auto(char* Filename)
+{
+	int Count = 0;
+	int Objects_Count = App->CL_Scene->Object_Count;
+
+	// -------------------------------------------- Check Objects
+	while (Count < Objects_Count)
+	{
+		int Result = 1;
+
+		Result = strcmp(App->CL_Scene->B_Object[Count]->Mesh_FileName, Filename);
+		if (Result == 0)
+		{
+			strcpy(Resource_Used_By_Object, App->CL_Scene->B_Object[Count]->Mesh_Name);
+			return 777;
+		}
+
+		Count++;
+	}
+
+	Count = 0;
+	int Area_Count = App->CL_Scene->Area_Count;
+
+	// -------------------------------------------- Check Aeras
+	while (Count < Area_Count)
+	{
+		int Result = 1;
+
+		Result = strcmp(App->CL_Scene->B_Area[Count]->Area_FileName, Filename);
+		if (Result == 0)
+		{
+			strcpy(Resource_Used_By_Object, App->CL_Scene->B_Area[Count]->Area_Name);
+			return 777;
+		}
+
+		Count++;
+	}
+
+	strcpy(Resource_Used_By_Object, " ");
 
 	return -1;
 }
