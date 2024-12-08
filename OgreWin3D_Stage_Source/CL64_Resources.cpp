@@ -149,7 +149,7 @@ void CL64_Resources::UnloadUserResources()
 // *************************************************************************
 void CL64_Resources::Start_Resources()
 {
-	DialogBox(App->hInst, (LPCTSTR)IDD_RESOURCESMATERIAL, App->Fdlg, (DLGPROC)Proc_Resources);
+	DialogBox(App->hInst, (LPCTSTR)IDD_RESOURCE_VIEWER, App->Fdlg, (DLGPROC)Proc_Resources);
 }
 
 // *************************************************************************
@@ -172,7 +172,8 @@ LRESULT CALLBACK CL64_Resources::Proc_Resources(HWND hDlg, UINT message, WPARAM 
 		SendDlgItemMessage(hDlg, IDC_ST_SELECTEDFILE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_EXPORT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_VIEWFILE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		
+		SendDlgItemMessage(hDlg, IDC_BT_RV_CHECK_USED, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
 		// -------------------------- Show Resource
 		SendDlgItemMessage(hDlg, IDC_GROUPALL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ALLMATERIALS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
@@ -368,6 +369,13 @@ LRESULT CALLBACK CL64_Resources::Proc_Resources(HWND hDlg, UINT message, WPARAM 
 			return CDRF_DODEFAULT;
 		}
 		
+		if (some_item->idFrom == IDC_BT_RV_CHECK_USED)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->CL_Resources->flag_Show_All_Overlays);
+			return CDRF_DODEFAULT;
+		}
+		
 		return CDRF_DODEFAULT;
 	}
 
@@ -538,6 +546,20 @@ LRESULT CALLBACK CL64_Resources::Proc_Resources(HWND hDlg, UINT message, WPARAM 
 			return TRUE;
 		}
 
+		if (LOWORD(wParam) == IDC_BT_RV_CHECK_USED)
+		{
+			if (App->CL_Resources->flag_Show_All_Meshes == 1)
+			{
+				App->CL_Resources->Check_Mesh_Is_used_Manual();
+			}
+			else
+			{
+				App->Say("Meshs Not Selected");
+			}
+
+			return TRUE;
+		}
+		
 		if (LOWORD(wParam) == IDCANCEL)
 		{
 			//Ogre::ResourceGroupManager::getSingleton().unloadUnreferencedResourcesInGroup(App->CL_Resources->Project_Resource_Group);
@@ -1028,6 +1050,7 @@ int CL64_Resources::Show_Resource_Group_All()
 // *************************************************************************
 int CL64_Resources::Show_Resource_Group_Type(int mType)
 {
+	//Debug
 	ListView_DeleteAllItems(FX_General_hLV);
 
 	LV_ITEM pitem;
@@ -1060,6 +1083,52 @@ int CL64_Resources::Show_Resource_Group_Type(int mType)
 
 	RedrawWindow(FX_General_hLV, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 	return pRow;
+}
+
+// *************************************************************************
+// *	Check_Mesh_Is_used_Manual:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+int CL64_Resources::Check_Mesh_Is_used_Manual()
+{
+	int Count = 0;
+	int Objects_Couunt = App->CL_Scene->Object_Count;
+
+	// -------------------------------------------- Check Objects
+	while (Count < Objects_Couunt)
+	{
+		int Result = 1;
+
+		Result = strcmp(App->CL_Scene->B_Object[Count]->Mesh_FileName, mSelected_File);
+		if (Result == 0)
+		{
+			App->Say("Used By", App->CL_Scene->B_Object[Count]->Mesh_Name);
+			return Count;
+		}
+
+		Count++;
+	}
+
+	Count = 0;
+	int Area_Count = App->CL_Scene->Area_Count;
+
+	// -------------------------------------------- Check Aeras
+	while (Count < Area_Count)
+	{
+		int Result = 1;
+
+		Result = strcmp(App->CL_Scene->B_Area[Count]->Area_FileName, mSelected_File);
+		if (Result == 0)
+		{
+			App->Say("Used By", App->CL_Scene->B_Area[Count]->Area_Name);
+			return Count;
+		}
+
+		Count++;
+	}
+
+	App->Say("NOT USED");
+
+	return -1;
 }
 
 

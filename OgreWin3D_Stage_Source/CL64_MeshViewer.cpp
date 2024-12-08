@@ -771,20 +771,11 @@ bool CL64_MeshViewer::Set_OgreWindow(void)
 
 	Ogre_MV_SceneMgr->setAmbientLight(ColourValue(0.7, 0.7, 0.7));
 
-	//App->CL_Ogre->RenderFrame(20);
-	
-	////-------------------------------------------- 
-
+	//-------------------------------------------- 
 	Ogre_MvEnt = Ogre_MV_SceneMgr->createEntity("MVTest2", "Sinbad.mesh", App->CL_Ogre->App_Resource_Group);
 	Ogre_MvNode = Ogre_MV_SceneMgr->getRootSceneNode()->createChildSceneNode();
 	Ogre_MvNode->attachObject(Ogre_MvEnt);
 	Ogre_MvNode->setVisible(true);
-
-	// add a bright light above the scene
-	/*Light* light = mSceneMgrMeshView->createLight();
-	light->setType(Light::LT_POINT);
-	light->setPosition(-10, 40, 20);
-	light->setSpecularColour(ColourValue::White);*/
 
 	Ogre::Vector3 Centre = Ogre_MvEnt->getBoundingBox().getCenter();
 	Ogre::Real Radius = Ogre_MvEnt->getBoundingRadius();
@@ -792,8 +783,6 @@ bool CL64_MeshViewer::Set_OgreWindow(void)
 	Ogre_MV_CamNode->setPosition(0, Centre.y, Radius * 2.5);
 	Ogre_MV_CamNode->lookAt(Ogre::Vector3(0, Centre.y, 0), Ogre::Node::TS_WORLD);
 	
-	//Grid_Update(1);
-
 	RenderListener = new CL64_MeshView_Listener();
 
 	App->CL_Ogre->mRoot->addFrameListener(RenderListener);
@@ -838,27 +827,6 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_3D(HWND hDlg, UINT message, WP
 			return (LONG)App->BlackBrush;
 		}
 	}
-
-	//case WM_MOUSEWHEEL:
-	//{
-	//	if (App->SBC_MeshViewer->RenderListener->Pl_LeftMouseDown == 0)
-	//	{
-	//		{
-	//			int zDelta = (short)HIWORD(wParam);    // wheel rotation
-
-	//			if (zDelta > 0)
-	//			{
-	//				App->SBC_MeshViewer->RenderListener->Wheel_Move = -1;
-	//			}
-	//			else if (zDelta < 0)
-	//			{
-	//				App->SBC_MeshViewer->RenderListener->Wheel_Move = 1;
-	//			}
-	//			return 1;
-	//		}
-	//	}
-
-	//}
 
 	case WM_MOUSEMOVE: // ok up and running and we have a loop for mouse
 	{
@@ -1748,8 +1716,6 @@ bool CL64_MeshViewer::Create_Texture(char* Texture_Path, char* Texture_Name)
 
 	if (Ogre::ResourceGroupManager::getSingleton().resourceExists(App->CL_Resources->Project_Resource_Group,m_Material_File))
 	{
-		//Ogre::TextureManager::getSingleton().remove(Texture_Name, App->CL_Resources->Project_Resource_Group);
-
 		
 		//App->Say("Resource Exsist", m_Material_File);
 
@@ -1769,8 +1735,6 @@ bool CL64_MeshViewer::Create_Texture(char* Texture_Path, char* Texture_Name)
 			else
 			{
 				RP->isPrepared();
-				
-				//Ogre::TextureManager::getSingleton().remove(Texture_Name, App->CL_Resources->Project_Resource_Group);
 				
 				bool tt = RP->isPrepared();
 				if (tt == 1)
@@ -1812,8 +1776,6 @@ bool CL64_MeshViewer::Create_Texture(char* Texture_Path, char* Texture_Name)
 			Ogre::TextureManager::getSingleton().remove(Texture_Name, App->CL_Resources->Project_Resource_Group);
 			Ogre::TextureManager::getSingleton().loadImage(Texture_Name, App->CL_Resources->Project_Resource_Group, mm);
 
-			//App->Say_Win(Ex.what());
-			//App->Say("loadImage");
 		}
 
 	}
@@ -1863,8 +1825,6 @@ bool CL64_MeshViewer::Create_Material(char* File)
 // *************************************************************************
 bool CL64_MeshViewer::Create_Mesh(char* File)
 {
-	//App->Say(Selected_MeshFile);
-
 	Ogre::String source = File;
 
 	FILE* pFile = fopen(source.c_str(), "rb");

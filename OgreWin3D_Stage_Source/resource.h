@@ -29,6 +29,7 @@
 #define IDB_HAIROFF                     141
 #define IDD_MESSAGE                     142
 #define IDD_RESOURCESMATERIAL           143
+#define IDD_RESOURCE_VIEWER             143
 #define IDD_IMPORT_OPTIONS              144
 #define IDD_PLEASEWAIT                  145
 #define IDB_MESHON                      146
@@ -90,7 +91,6 @@
 #define IDD_GAMECONFIG                  202
 #define IDD_BUILD_DIALOG                203
 #define IDD_PROGRESS_BAR                204
-#define IDD_DIALOG1                     205
 #define IDD_PROPS_CAMERA                205
 #define IDC_CK_SU_FULLSCREEN            1000
 #define IDC_ST_STARTUP                  1001
@@ -311,6 +311,8 @@
 #define IDC_ST_PB_STATUS                1128
 #define IDC_BT_MV_RESOURCES             1129
 #define IDC_BTCAMGOTO                   1130
+#define IDC_BT_RV_CHECK_USED            1131
+#define IDC_BUTTON6                     1132
 #define ID_VIEW_RESET                   32771
 #define ID_VIEW_MAX3DVIEW               32772
 #define ID_DEBUG_TESTPREFERANCE         32773
@@ -374,7 +376,7 @@
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        206
 #define _APS_NEXT_COMMAND_VALUE         32825
-#define _APS_NEXT_CONTROL_VALUE         1131
+#define _APS_NEXT_CONTROL_VALUE         1133
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif

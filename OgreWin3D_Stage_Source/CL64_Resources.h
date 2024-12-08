@@ -41,6 +41,8 @@ public:
 
 	bool Export_File(char* FileName);
 
+	int Check_Mesh_Is_used_Manual();
+
 	char mSelected_File[MAX_PATH];
 
 	char Resource_File_Path_And_File[MAX_PATH];
