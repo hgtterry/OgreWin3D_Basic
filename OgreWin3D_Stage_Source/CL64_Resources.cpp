@@ -212,6 +212,18 @@ LRESULT CALLBACK CL64_Resources::Proc_Resources(HWND hDlg, UINT message, WPARAM 
 
 		App->CL_Resources->Set_Title(hDlg, (LPSTR)"All");
 
+		int test = strcmp(App->CL_Resources->mSelected_Resource_Group.c_str(), "Project_Resource_Group");
+		if (test == 0)
+		{
+			EnableWindow(GetDlgItem(hDlg, IDC_BT_RV_CHECK_USED), 1);
+			EnableWindow(GetDlgItem(hDlg, IDC_BT_RV_DELETEFILE), 1);
+		}
+		else
+		{
+			EnableWindow(GetDlgItem(hDlg, IDC_BT_RV_CHECK_USED), 0);
+			EnableWindow(GetDlgItem(hDlg, IDC_BT_RV_DELETEFILE), 0);
+		}
+
 		return TRUE;
 	}
 	case WM_CTLCOLORSTATIC:
@@ -374,14 +386,34 @@ LRESULT CALLBACK CL64_Resources::Proc_Resources(HWND hDlg, UINT message, WPARAM 
 		if (some_item->idFrom == IDC_BT_RV_CHECK_USED)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CL_Resources->flag_Show_All_Overlays);
+
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_RV_CHECK_USED));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
+			else
+			{
+				App->Custom_Button_Toggle(item, App->CL_Resources->flag_Show_All_Overlays);
+			}
+
 			return CDRF_DODEFAULT;
 		}
 
 		if (some_item->idFrom == IDC_BT_RV_DELETEFILE)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CL_Resources->flag_Show_All_Overlays);
+
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_RV_DELETEFILE));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
+			else
+			{
+				App->Custom_Button_Toggle(item, App->CL_Resources->flag_Show_All_Overlays);
+			}
+
 			return CDRF_DODEFAULT;
 		}
 		
@@ -540,6 +572,19 @@ LRESULT CALLBACK CL64_Resources::Proc_Resources(HWND hDlg, UINT message, WPARAM 
 			SendDlgItemMessage(hDlg, IDC_LST_GROUPS, LB_GETTEXT, (WPARAM)Index, (LPARAM)buff);
 
 			App->CL_Resources->mSelected_Resource_Group = buff;
+
+			int test = strcmp(App->CL_Resources->mSelected_Resource_Group.c_str(), "Project_Resource_Group");
+			if (test == 0)
+			{
+				EnableWindow(GetDlgItem(hDlg, IDC_BT_RV_CHECK_USED), 1);
+				EnableWindow(GetDlgItem(hDlg, IDC_BT_RV_DELETEFILE), 1);
+			}
+			else
+			{
+				EnableWindow(GetDlgItem(hDlg, IDC_BT_RV_CHECK_USED), 0);
+				EnableWindow(GetDlgItem(hDlg, IDC_BT_RV_DELETEFILE), 0);
+			}
+		 
 
 			App->CL_Resources->Set_Title(hDlg, (LPSTR)"All");
 
@@ -1092,33 +1137,38 @@ int CL64_Resources::Show_Resource_Group_Type(int mType)
 			ListView_SetItemText(FX_General_hLV, pRow, 1, (LPSTR)RV_Archive_GetType[Count].c_str());
 			ListView_SetItemText(FX_General_hLV, pRow, 2, (LPSTR)RV_Archive_GetName[Count].c_str());
 
-			if (mType == Enums::Resource_File_Type_Mesh)
+			int test = strcmp(mSelected_Resource_Group.c_str(), "Project_Resource_Group");
+			if (test == 0)
 			{
-				int Test = Check_Mesh_Is_used_Auto((LPSTR)RV_FileName[Count].c_str());
-				if (Test == 777)
-				{
-					ListView_SetItemText(FX_General_hLV, pRow, 3, (LPSTR)"Yes");
-					ListView_SetItemText(FX_General_hLV, pRow, 4, (LPSTR)Resource_Used_By_Object);
-				}
-				else
-				{
-					ListView_SetItemText(FX_General_hLV, pRow, 3, (LPSTR)" ");
-					ListView_SetItemText(FX_General_hLV, pRow, 4, (LPSTR)Resource_Used_By_Object);
-				}
-			}
 
-			if (mType == Enums::Resource_File_Type_Material)
-			{
-				int Test = Check_Material_Is_used_Auto((LPSTR)RV_FileName[Count].c_str());
-				if (Test == 777)
+				if (mType == Enums::Resource_File_Type_Mesh)
 				{
-					ListView_SetItemText(FX_General_hLV, pRow, 3, (LPSTR)"Yes");
-					ListView_SetItemText(FX_General_hLV, pRow, 4, (LPSTR)Resource_Used_By_Object);
+					int Test = Check_Mesh_Is_used_Auto((LPSTR)RV_FileName[Count].c_str());
+					if (Test == 777)
+					{
+						ListView_SetItemText(FX_General_hLV, pRow, 3, (LPSTR)"Yes");
+						ListView_SetItemText(FX_General_hLV, pRow, 4, (LPSTR)Resource_Used_By_Object);
+					}
+					else
+					{
+						ListView_SetItemText(FX_General_hLV, pRow, 3, (LPSTR)" ");
+						ListView_SetItemText(FX_General_hLV, pRow, 4, (LPSTR)Resource_Used_By_Object);
+					}
 				}
-				else
+
+				if (mType == Enums::Resource_File_Type_Material)
 				{
-					ListView_SetItemText(FX_General_hLV, pRow, 3, (LPSTR)" ");
-					ListView_SetItemText(FX_General_hLV, pRow, 4, (LPSTR)Resource_Used_By_Object);
+					int Test = Check_Material_Is_used_Auto((LPSTR)RV_FileName[Count].c_str());
+					if (Test == 777)
+					{
+						ListView_SetItemText(FX_General_hLV, pRow, 3, (LPSTR)"Yes");
+						ListView_SetItemText(FX_General_hLV, pRow, 4, (LPSTR)Resource_Used_By_Object);
+					}
+					else
+					{
+						ListView_SetItemText(FX_General_hLV, pRow, 3, (LPSTR)" ");
+						ListView_SetItemText(FX_General_hLV, pRow, 4, (LPSTR)Resource_Used_By_Object);
+					}
 				}
 			}
 
