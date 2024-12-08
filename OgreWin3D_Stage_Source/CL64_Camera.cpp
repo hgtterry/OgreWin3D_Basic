@@ -27,6 +27,27 @@ CL64_Com_Cameras::~CL64_Com_Cameras(void)
 }
 
 // *************************************************************************
+// *			Add_New_Camera:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void CL64_Com_Cameras::Add_New_Camera(void)
+{
+	int Index = App->CL_Scene->Camera_Count;
+
+	App->CL_Scene->B_Camera[Index] = new Base_Camera();
+	strcpy(App->CL_Scene->B_Camera[Index]->Camera_Name, "Camera_0");
+
+	App->CL_Scene->Camera_Count++;
+	App->CL_Scene->flag_Camera_Added;
+
+	App->CL_Scene->B_Camera[Index]->FileViewItem = App->CL_FileView->Add_Item(App->CL_FileView->FV_Cameras_Folder,
+		App->CL_Scene->B_Camera[Index]->Camera_Name, Index, false);
+
+	App->CL_Com_Cameras->Set_Camera(0);
+
+	App->CL_FileView->Set_FolderActive(App->CL_FileView->FV_Cameras_Folder);
+}
+
+// *************************************************************************
 // *			Reset_View:- Terry and Hazel Flanigan 2024				   *
 // *************************************************************************
 void CL64_Com_Cameras::Reset_View(void)

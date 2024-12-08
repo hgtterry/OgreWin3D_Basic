@@ -136,8 +136,36 @@ void CL64_Project_Create::Start_New_Project()
 
 	Create_Options_Dialog();
 
+	App->CL_Project->flag_Is_New_Project = 1;
 	App->CL_Project->Start_Save_Project_Dialog();
+	App->CL_Project->flag_Is_New_Project = 0;
 
+	// ----------------------------------------------- Player
+	App->CL_Player->Create_Player_Object();
+	strcpy(App->CL_Scene->B_Player[0]->Player_Name, "Player_1");
+
+	HTREEITEM Temp1 = App->CL_FileView->Add_Item(App->CL_FileView->FV_Players_Folder, (LPSTR)"Player_1", 0, true);
+	App->CL_Scene->B_Player[0]->FileViewItem = Temp1;
+	App->CL_FileView->Set_FolderActive(App->CL_FileView->FV_Players_Folder);
+
+	// ----------------------------------------------- Counter
+	App->CL_Display->Add_New_Counter();
+
+	// ------------------------ Add Location
+	App->CL_Locations->Create_Location_Entity((LPSTR)"Start_Position");
+
+	// ----------------------------------------------- Add Environ
+	App->CL_Com_Environments->Add_New_Environ_Entity(1);
+	int mIndex = App->CL_Com_Environments->Get_First_Environ();
+	App->CL_Com_Environments->Set_First_Environment(mIndex);
+
+	// ----------------------------------------------- Camera
+	App->CL_Com_Cameras->Add_New_Camera();
+
+
+	App->CL_Project->Save_All();
+
+	App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_Free;
 	App->CL_Scene->flag_Scene_Loaded = 1;
 
 	App->CL_Dialogs->Show_YesNo_Dlg((LPSTR)"Add Area", (LPSTR)"Do you want to add a new Area", (LPSTR)"");

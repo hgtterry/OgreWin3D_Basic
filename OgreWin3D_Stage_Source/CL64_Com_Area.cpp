@@ -120,36 +120,30 @@ void CL64_Com_Area::Set_Area_Defaults(int Index)
 // *************************************************************************
 bool CL64_Com_Area::Add_New_Area()
 {
-	if (App->CL_Scene->Area_Count == 0)
-	{
-		App->CL_Project_Create->Add_First_New_Area();
-	}
-	else
-	{
-		int Index = App->CL_Scene->Area_Count;
+	int Index = App->CL_Scene->Area_Count;
 
-		App->CL_Scene->B_Area[Index] = new Base_Area();
-		Set_Area_Defaults(Index);
+	App->CL_Scene->B_Area[Index] = new Base_Area();
+	Set_Area_Defaults(Index);
 
-		Base_Area* Area = App->CL_Scene->B_Area[Index];
+	Base_Area* Area = App->CL_Scene->B_Area[Index];
 
-		Area->This_Object_UniqueID = App->CL_Scene->UniqueID_Area_Count;
+	Area->This_Object_UniqueID = App->CL_Scene->UniqueID_Area_Count;
 
-		Ogre::Vector3 Pos = App->CL_Com_Objects->GetPlacement(-50);
-		Area->Mesh_Pos = Pos;
+	Ogre::Vector3 Pos = App->CL_Com_Objects->GetPlacement(-50);
+	Area->Mesh_Pos = Pos;
 
-		Add_Aera_To_Project(Index, App->CL_MeshViewer->Selected_MeshFile, App->CL_MeshViewer->m_Resource_Folder_Full);
+	Add_Aera_To_Project(Index, App->CL_MeshViewer->Selected_MeshFile, App->CL_MeshViewer->m_Resource_Folder_Full);
 
-		HTREEITEM Temp = App->CL_FileView->Add_Item(App->CL_FileView->FV_Areas_Folder, Area->Area_Name, Index, true);
-		Area->FileViewItem = Temp;
+	HTREEITEM Temp = App->CL_FileView->Add_Item(App->CL_FileView->FV_Areas_Folder, Area->Area_Name, Index, true);
+	Area->FileViewItem = Temp;
 
-		App->CL_FileView->SelectItem(Area->FileViewItem);
+	App->CL_FileView->SelectItem(Area->FileViewItem);
 
-		App->CL_Scene->UniqueID_Area_Count++;
-		App->CL_Scene->Area_Count++;
+	App->CL_Scene->UniqueID_Area_Count++;
+	App->CL_Scene->Area_Count++;
 
-		App->CL_Scene->flag_Scene_Modified = 1;
-	}
+	App->CL_Scene->flag_Scene_Modified = 1;
+
 	return 1;
 }
 

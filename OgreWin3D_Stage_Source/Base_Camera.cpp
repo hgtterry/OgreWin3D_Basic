@@ -40,8 +40,8 @@ Base_Camera::~Base_Camera()
 void Base_Camera::Init_Camera(void)
 {
 	CamPos.x = 0;
-	CamPos.y = 90;
-	CamPos.z = 100;
+	CamPos.y = 0;
+	CamPos.z = 0;
 
 	LookAt.x = 0;
 	LookAt.y = 30;

@@ -655,8 +655,7 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 			{
 
 				App->CL_MeshViewer->Copy_Assets();
-				//App->CL_Com_Area->Add_New_Area();
-				Debug
+				App->CL_Com_Area->Add_New_Area();
 			}
 			else
 			{

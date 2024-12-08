@@ -609,6 +609,8 @@ bool CL64_Project::Save_Main_Asset_Folder()
 		Copy_Assets(LastFolder, m_Main_Assets_Path);
 	}
 
+	App->CL_Project->flag_Is_New_Project = 0;
+
 	(void)_chdir(m_Level_Folder_Path); // Return to Level Folder
 
 	return 1;
