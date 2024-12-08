@@ -85,7 +85,7 @@ public:
 	char m_Objects_Folder_Path[MAX_PATH];
 	char m_Display_Folder_Path[MAX_PATH];
 
-	bool flag_Directory_Changed_Flag;
+	bool flag_Is_New_Project;
 
 private:
 

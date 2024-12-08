@@ -1302,17 +1302,40 @@ int CL64_Resources::Delete_File(char* Filename, HWND mhDlg)
 			return -1;
 		}
 
-		App->Say("Can be Deleted");
-		
-		App->CL_Resources->Reset_Flags();
-		App->CL_Resources->flag_Show_All_Meshes = 1;
+		App->CL_Dialogs->Show_YesNo_Dlg((LPSTR)"Are you Sure Delete File", (LPSTR)Filename, (LPSTR)"");
 
-		RedrawWindow(mhDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+		bool Doit = App->CL_Dialogs->Canceled;
+		if (Doit == 0)
+		{
 
-		App->CL_Resources->Set_Title(mhDlg, (LPSTR)"Meshes");
+			char File_and_Path[MAX_PATH];
 
-		int Items = App->CL_Resources->Show_Resource_Group_Type(Enums::Resource_File_Type_Mesh);
-		App->CL_Resources->Update_Counter(Items, mhDlg);
+			strcpy(File_and_Path,App->CL_Project->m_Main_Assets_Path);
+			strcat(File_and_Path, Filename);
+
+			int Test = remove(File_and_Path);
+			if (Test == 0) 
+			{
+				App->CL_Resources->Scan_Resource_Group(App->CL_Resources->mSelected_Resource_Group);
+
+				App->CL_Resources->Reset_Flags();
+				App->CL_Resources->flag_Show_All_Meshes = 1;
+
+				RedrawWindow(mhDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+				App->CL_Resources->Set_Title(mhDlg, (LPSTR)"Meshes");
+
+				int Items = App->CL_Resources->Show_Resource_Group_Type(Enums::Resource_File_Type_Mesh);
+				App->CL_Resources->Update_Counter(Items, mhDlg);
+			}
+			else 
+			{
+				App->Say(strerror(errno));
+			}
+
+			
+		}
+
 
 		return 1;
 	}

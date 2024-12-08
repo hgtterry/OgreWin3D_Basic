@@ -55,7 +55,7 @@ CL64_Project::CL64_Project()
 	m_Objects_Folder_Path[0] = 0;
 	m_Display_Folder_Path[0] = 0;
 
-	flag_Directory_Changed_Flag = 0;
+	flag_Is_New_Project = 0;
 
 	WriteFile = NULL;
 	
@@ -282,8 +282,6 @@ LRESULT CALLBACK CL64_Project::Save_Project_Dialog_Proc(HWND hDlg, UINT message,
 
 				SetDlgItemText(hDlg, IDC_STPJFOLDERPATH, (LPCTSTR)App->CL_Project->m_Project_Sub_Folder);
 
-				App->CL_Project->flag_Directory_Changed_Flag = 1;
-
 				EnableWindow(GetDlgItem(hDlg, IDC_BTPJBROWSE), 0);
 				EnableWindow(GetDlgItem(hDlg, IDC_STPJFOLDERPATH), 0);
 
@@ -312,8 +310,6 @@ LRESULT CALLBACK CL64_Project::Save_Project_Dialog_Proc(HWND hDlg, UINT message,
 			strcat(App->CL_Project->m_Project_Sub_Folder, "_Prj");
 
 			SetDlgItemText(hDlg, IDC_STPJFOLDERPATH, (LPCTSTR)App->CL_Project->m_Project_Sub_Folder);
-
-			App->CL_Project->flag_Directory_Changed_Flag = 1;
 
 			return TRUE;
 		}
@@ -345,8 +341,6 @@ LRESULT CALLBACK CL64_Project::Save_Project_Dialog_Proc(HWND hDlg, UINT message,
 			SetDlgItemText(hDlg, IDC_STPROJECTNAME, (LPCTSTR)App->CL_Project->m_Project_Name);
 			SetDlgItemText(hDlg, IDC_STPJFOLDERPATH, (LPCTSTR)App->CL_Project->m_Project_Sub_Folder);
 
-			App->CL_Project->flag_Directory_Changed_Flag = 1;
-
 			return TRUE;
 		}
 
@@ -363,8 +357,6 @@ LRESULT CALLBACK CL64_Project::Save_Project_Dialog_Proc(HWND hDlg, UINT message,
 
 			strcpy(App->CL_Project->m_Level_Name, App->CL_Dialogs->Chr_Text);
 			SetDlgItemText(hDlg, IDC_STLEVELNAME, (LPCTSTR)App->CL_Project->m_Level_Name);
-
-			App->CL_Project->flag_Directory_Changed_Flag = 1;
 
 			return TRUE;
 		}
@@ -388,8 +380,6 @@ LRESULT CALLBACK CL64_Project::Save_Project_Dialog_Proc(HWND hDlg, UINT message,
 
 		if (LOWORD(wParam) == IDCANCEL)
 		{
-			App->CL_Project->flag_Directory_Changed_Flag = 0;
-
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
@@ -399,7 +389,6 @@ LRESULT CALLBACK CL64_Project::Save_Project_Dialog_Proc(HWND hDlg, UINT message,
 
 			App->CL_Project->Save_Project();
 			//App->CL_Project->flag_Project_Loaded = 1;
-
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
@@ -597,7 +586,7 @@ bool CL64_Project::Save_Main_Asset_Folder()
 {
 	char LastFolder[MAX_PATH];
 
-	if (flag_Directory_Changed_Flag == 1)
+	//if (flag_Directory_Changed_Flag == 1)
 	{
 		strcpy(LastFolder, m_Main_Assets_Path);
 	}
@@ -618,12 +607,10 @@ bool CL64_Project::Save_Main_Asset_Folder()
 		(void)_chdir(m_Main_Assets_Path);
 	}
 
-	if (flag_Directory_Changed_Flag == 1)
+	//if (flag_Directory_Changed_Flag == 1)
 	{
 		Copy_Assets(LastFolder, m_Main_Assets_Path);
 	}
-
-	flag_Directory_Changed_Flag = 0;
 
 	(void)_chdir(m_Level_Folder_Path); // Return to Level Folder
 
