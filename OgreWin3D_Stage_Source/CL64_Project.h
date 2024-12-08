@@ -77,6 +77,7 @@ public:
 	char m_Level_Folder_Path[MAX_PATH];
 
 	char m_Main_Assets_Path[MAX_PATH];
+	char m_Last_Main_Assets_Path[MAX_PATH];
 
 	// Save
 	char m_Aera_Folder_Path[MAX_PATH];

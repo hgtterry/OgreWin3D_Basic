@@ -37,6 +37,7 @@ CL64_Project::CL64_Project()
 	m_Level_Folder_Path[0] = 0;
 
 	strcpy(m_Main_Assets_Path, "None");
+	strcpy(m_Last_Main_Assets_Path, "None");
 
 	strcpy(m_Project_Sub_Folder, App->GD_Directory_FullPath);
 	strcat(m_Project_Sub_Folder, "\\");
@@ -585,12 +586,8 @@ bool CL64_Project::Save_Level_Folder()
 bool CL64_Project::Save_Main_Asset_Folder()
 {
 	char LastFolder[MAX_PATH];
-
-	//if (flag_Directory_Changed_Flag == 1)
-	{
-		strcpy(LastFolder, m_Main_Assets_Path);
-	}
-
+	strcpy(LastFolder, m_Main_Assets_Path);
+	
 	m_Main_Assets_Path[0] = 0;
 
 	strcpy(m_Main_Assets_Path, m_Level_Folder_Path);
@@ -607,7 +604,7 @@ bool CL64_Project::Save_Main_Asset_Folder()
 		(void)_chdir(m_Main_Assets_Path);
 	}
 
-	//if (flag_Directory_Changed_Flag == 1)
+	if (flag_Is_New_Project == 0)
 	{
 		Copy_Assets(LastFolder, m_Main_Assets_Path);
 	}

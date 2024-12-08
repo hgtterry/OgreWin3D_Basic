@@ -1293,6 +1293,7 @@ int CL64_Resources::Check_Material_Is_used_Auto(char* Filename)
 // *************************************************************************
 int CL64_Resources::Delete_File(char* Filename, HWND mhDlg)
 {
+	// ------------------------------------------------ Mesh Files
 	if (App->CL_Resources->flag_Show_All_Meshes == 1)
 	{
 		int Test = Check_Mesh_Is_used_Auto(Filename);
@@ -1334,6 +1335,53 @@ int CL64_Resources::Delete_File(char* Filename, HWND mhDlg)
 			}
 
 			
+		}
+
+		return 1;
+	}
+
+	// ------------------------------------------------ Material Files
+	if (App->CL_Resources->flag_Show_All_Materials == 1)
+	{
+		int Test = Check_Material_Is_used_Auto(Filename);
+		if (Test == 777)
+		{
+			App->Say("File is Used in the Scene and can not be Deleted");
+			return -1;
+		}
+
+		App->CL_Dialogs->Show_YesNo_Dlg((LPSTR)"Are you Sure Delete File", (LPSTR)Filename, (LPSTR)"");
+
+		bool Doit = App->CL_Dialogs->Canceled;
+		if (Doit == 0)
+		{
+
+			char File_and_Path[MAX_PATH];
+
+			strcpy(File_and_Path, App->CL_Project->m_Main_Assets_Path);
+			strcat(File_and_Path, Filename);
+
+			int Test = remove(File_and_Path);
+			if (Test == 0)
+			{
+				App->CL_Resources->Scan_Resource_Group(App->CL_Resources->mSelected_Resource_Group);
+
+				App->CL_Resources->Reset_Flags();
+				App->CL_Resources->flag_Show_All_Materials = 1;
+
+				RedrawWindow(mhDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+				App->CL_Resources->Set_Title(mhDlg, (LPSTR)"Materials");
+
+				int Items = App->CL_Resources->Show_Resource_Group_Type(Enums::Resource_File_Type_Material);
+				App->CL_Resources->Update_Counter(Items, mhDlg);
+			}
+			else
+			{
+				App->Say(strerror(errno));
+			}
+
+
 		}
 
 
