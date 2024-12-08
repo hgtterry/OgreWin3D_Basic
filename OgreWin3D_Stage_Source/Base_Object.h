@@ -150,10 +150,11 @@ public:
 	btRigidBody			*Phys_Body;
 	btCollisionShape	*Phys_Shape;
 
-	char Mesh_Name[MAX_PATH];				// Mesh Name Mesh.mesh
-	char Mesh_FileName[MAX_PATH];
+	char Object_Name[MAX_PATH];	// Name of Object/Entity Set By User
+
+	char Mesh_FileName[MAX_PATH]; // Acctual Mesh File name as in .mesh
 	char Mesh_Resource_Path[MAX_PATH];
-	char Material_File[MAX_PATH];
+	char Material_File[MAX_PATH]; // Acctual Material File name as in .material
 
 	//------------------------------ Description
 	int Type;

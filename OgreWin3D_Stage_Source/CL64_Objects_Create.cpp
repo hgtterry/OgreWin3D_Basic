@@ -55,7 +55,7 @@ void CL64_Objects_Create::Add_Objects_From_MeshViewer()
 	Object->This_Object_UniqueID = App->CL_Scene->UniqueID_Object_Counter; // Unique ID
 
 
-	strcpy(Object->Mesh_Name, App->CL_MeshViewer->Object_Name);
+	strcpy(Object->Object_Name, App->CL_MeshViewer->Object_Name);
 	strcpy(Object->Mesh_FileName, App->CL_MeshViewer->Selected_MeshFile);
 	//strcpy(Object->Mesh_Resource_Path, m_ResourcePath);
 	//strcpy(Object->Material_File, App->CL_MeshViewer->m_Material_File);
@@ -94,7 +94,7 @@ bool CL64_Objects_Create::Dispatch_MeshViewer()
 		App->CL_Scene->B_Object[Index]->Altered = 1;
 		App->CL_Scene->B_Object[Index]->Folder = Enums::Folder_Objects;
 		App->CL_Scene->B_Object[Index]->FileViewItem = App->CL_FileView->Add_Item(App->CL_FileView->FV_Objects_Folder,
-		App->CL_Scene->B_Object[Index]->Mesh_Name, Index, true);
+		App->CL_Scene->B_Object[Index]->Object_Name, Index, true);
 
 	}
 
@@ -273,7 +273,7 @@ bool CL64_Objects_Create::Add_Objects_From_File() // From File
 		{
 			App->CL_Com_Sounds->Create_Sound_Entity(Count);
 
-			HTREEITEM Temp = App->CL_FileView->Add_Item(App->CL_FileView->FV_Sounds_Folder, App->CL_Scene->B_Object[Count]->Mesh_Name, Count, false);
+			HTREEITEM Temp = App->CL_FileView->Add_Item(App->CL_FileView->FV_Sounds_Folder, App->CL_Scene->B_Object[Count]->Object_Name, Count, false);
 			App->CL_Scene->B_Object[Count]->FileViewItem = Temp;
 
 			App->CL_FileView->Set_FolderActive(App->CL_FileView->FV_Sounds_Folder);
@@ -283,7 +283,7 @@ bool CL64_Objects_Create::Add_Objects_From_File() // From File
 			App->CL_Com_Messages->Create_Message_Entity(Count);
 			App->CL_Scene->B_Object[Count]->Set_ImGui_Panel_Name();
 
-			HTREEITEM Temp = App->CL_FileView->Add_Item(App->CL_FileView->FV_Message_Trigger_Folder, App->CL_Scene->B_Object[Count]->Mesh_Name, Count, false);
+			HTREEITEM Temp = App->CL_FileView->Add_Item(App->CL_FileView->FV_Message_Trigger_Folder, App->CL_Scene->B_Object[Count]->Object_Name, Count, false);
 			App->CL_Scene->B_Object[Count]->FileViewItem = Temp;
 
 			App->CL_FileView->Set_FolderActive(App->CL_FileView->FV_Message_Trigger_Folder);
@@ -292,7 +292,7 @@ bool CL64_Objects_Create::Add_Objects_From_File() // From File
 		{
 			App->CL_Com_MoveEntity->Create_Move_Entity(Count);
 
-			HTREEITEM Temp = App->CL_FileView->Add_Item(App->CL_FileView->FV_Move_Folder, App->CL_Scene->B_Object[Count]->Mesh_Name, Count, false);
+			HTREEITEM Temp = App->CL_FileView->Add_Item(App->CL_FileView->FV_Move_Folder, App->CL_Scene->B_Object[Count]->Object_Name, Count, false);
 			App->CL_Scene->B_Object[Count]->FileViewItem = Temp;
 
 			App->CL_FileView->Set_FolderActive(App->CL_FileView->FV_Move_Folder);
@@ -302,7 +302,7 @@ bool CL64_Objects_Create::Add_Objects_From_File() // From File
 		{
 			App->CL_Com_Teleporters->Create_Teleport_Entity(Count);
 
-			HTREEITEM Temp = App->CL_FileView->Add_Item(App->CL_FileView->FV_Teleporters_Folder, App->CL_Scene->B_Object[Count]->Mesh_Name, Count, false);
+			HTREEITEM Temp = App->CL_FileView->Add_Item(App->CL_FileView->FV_Teleporters_Folder, App->CL_Scene->B_Object[Count]->Object_Name, Count, false);
 			App->CL_Scene->B_Object[Count]->FileViewItem = Temp;
 
 			App->CL_FileView->Set_FolderActive(App->CL_FileView->FV_Teleporters_Folder);
@@ -313,7 +313,7 @@ bool CL64_Objects_Create::Add_Objects_From_File() // From File
 
 			App->CL_Com_Collectables->Create_Collectable_Entity(Count);
 
-			HTREEITEM Temp = App->CL_FileView->Add_Item(App->CL_FileView->FV_Collectables_Folder, App->CL_Scene->B_Object[Count]->Mesh_Name, Count, false);
+			HTREEITEM Temp = App->CL_FileView->Add_Item(App->CL_FileView->FV_Collectables_Folder, App->CL_Scene->B_Object[Count]->Object_Name, Count, false);
 			App->CL_Scene->B_Object[Count]->FileViewItem = Temp;
 
 			App->CL_FileView->Set_FolderActive(App->CL_FileView->FV_Collectables_Folder);
@@ -324,7 +324,7 @@ bool CL64_Objects_Create::Add_Objects_From_File() // From File
 		{
 			App->CL_Com_Environments->Create_Environ_Entity(Count);
 
-			HTREEITEM Temp = App->CL_FileView->Add_Item(App->CL_FileView->FV_Evirons_Folder, App->CL_Scene->B_Object[Count]->Mesh_Name, Count, false);
+			HTREEITEM Temp = App->CL_FileView->Add_Item(App->CL_FileView->FV_Evirons_Folder, App->CL_Scene->B_Object[Count]->Object_Name, Count, false);
 			App->CL_Scene->B_Object[Count]->FileViewItem = Temp;
 
 			App->CL_FileView->Set_FolderActive(App->CL_FileView->FV_Evirons_Folder);
@@ -334,7 +334,7 @@ bool CL64_Objects_Create::Add_Objects_From_File() // From File
 		{
 			App->CL_Com_Particles->Create_Particle_Entity(Count);
 
-			HTREEITEM Temp = App->CL_FileView->Add_Item(App->CL_FileView->FV_Particles_Folder, App->CL_Scene->B_Object[Count]->Mesh_Name, Count, false);
+			HTREEITEM Temp = App->CL_FileView->Add_Item(App->CL_FileView->FV_Particles_Folder, App->CL_Scene->B_Object[Count]->Object_Name, Count, false);
 			App->CL_Scene->B_Object[Count]->FileViewItem = Temp;
 
 			App->CL_FileView->Set_FolderActive(App->CL_FileView->FV_Particles_Folder);
@@ -345,7 +345,7 @@ bool CL64_Objects_Create::Add_Objects_From_File() // From File
 			App->CL_Objects_Create->Add_New_Object(Count, 0);
 			App->CL_Scene->B_Object[Count]->Altered = 0;
 			App->CL_Scene->B_Object[Count]->Folder = Enums::Folder_Objects;
-			App->CL_Scene->B_Object[Count]->FileViewItem = App->CL_FileView->Add_Item(App->CL_FileView->FV_Objects_Folder, App->CL_Scene->B_Object[Count]->Mesh_Name, Count, false);
+			App->CL_Scene->B_Object[Count]->FileViewItem = App->CL_FileView->Add_Item(App->CL_FileView->FV_Objects_Folder, App->CL_Scene->B_Object[Count]->Object_Name, Count, false);
 		}
 
 		Count++;

@@ -606,7 +606,7 @@ void CL64_ImGui::ImGui_Object_Data(void)
 		{
 			ImGui::Text("Mesh");
 			ImGui::Separator();
-			ImGui::Text("Name: = %s", App->CL_Scene->B_Object[Index]->Mesh_Name);
+			ImGui::Text("Name: = %s", App->CL_Scene->B_Object[Index]->Object_Name);
 			ImGui::Text("Mesh File Name: = %s", App->CL_Scene->B_Object[Index]->Mesh_FileName);
 			ImGui::Text("Material File: = %s", App->CL_Scene->B_Object[Index]->Material_File);
 			ImGui::Text("Physics");

@@ -161,7 +161,7 @@ void CL64_Picking::Mouse_Pick_Entity()
                     App->CL_Gizmos->MarkerBox_Addjust(IntNum);
 
                     App->CL_Ogre->Ogre3D_Listener->Selected_Entity_Index = IntNum;
-                    strcpy(App->CL_Ogre->Ogre3D_Listener->Selected_Object_Name, App->CL_Scene->B_Object[IntNum]->Mesh_Name);
+                    strcpy(App->CL_Ogre->Ogre3D_Listener->Selected_Object_Name, App->CL_Scene->B_Object[IntNum]->Object_Name);
 
                     App->CL_FileView->SelectItem(App->CL_Scene->B_Object[App->CL_Ogre->Ogre3D_Listener->Selected_Entity_Index]->FileViewItem);
 
@@ -650,7 +650,7 @@ bool CL64_Picking::Ray_Test_Particles(const Ogre::Ray& ray)
             App->CL_Gizmos->MarkerBox_Addjust(IntNum);
 
             App->CL_Ogre->Ogre3D_Listener->Selected_Entity_Index = IntNum;
-            strcpy(App->CL_Ogre->Ogre3D_Listener->Selected_Object_Name, App->CL_Scene->B_Object[IntNum]->Mesh_Name);
+            strcpy(App->CL_Ogre->Ogre3D_Listener->Selected_Object_Name, App->CL_Scene->B_Object[IntNum]->Object_Name);
 
             App->CL_FileView->SelectItem(App->CL_Scene->B_Object[App->CL_Ogre->Ogre3D_Listener->Selected_Entity_Index]->FileViewItem);
 

@@ -1399,7 +1399,7 @@ bool CL64_Build_Game::Build_Objects_Data()
 
 			fprintf(WriteFile, "%s\n", buff); // Header also Player name until changed by user
 
-			fprintf(WriteFile, "%s%s\n", "Mesh_Name=", App->CL_Scene->B_Object[Count]->Mesh_Name); // Change
+			fprintf(WriteFile, "%s%s\n", "Mesh_Name=", App->CL_Scene->B_Object[Count]->Object_Name); // Change
 
 			fprintf(WriteFile, "%s%s\n", "Mesh_File=", App->CL_Scene->B_Object[Count]->Mesh_FileName);
 			fprintf(WriteFile, "%s%s\n", "Mesh_Resource_Path=", App->CL_Scene->B_Object[Count]->Mesh_Resource_Path);

@@ -57,7 +57,7 @@ bool CL64_Com_Messages::Add_New_Message()
 	strcpy_s(B_Name, "Message_");
 	_itoa(Index, ConNum, 10);
 	strcat(B_Name, ConNum);
-	strcpy(App->CL_Scene->B_Object[Index]->Mesh_Name, B_Name);
+	strcpy(App->CL_Scene->B_Object[Index]->Object_Name, B_Name);
 
 	Ogre::Vector3 Pos = App->CL_Com_Objects->GetPlacement(-50);
 	App->CL_Scene->B_Object[Index]->Mesh_Pos = Pos;
@@ -67,7 +67,7 @@ bool CL64_Com_Messages::Add_New_Message()
 	App->CL_Scene->B_Object[Index]->Set_ImGui_Panel_Name();
 
 
-	HTREEITEM Temp = App->CL_FileView->Add_Item(App->CL_FileView->FV_Message_Trigger_Folder, App->CL_Scene->B_Object[Index]->Mesh_Name, Index, true);
+	HTREEITEM Temp = App->CL_FileView->Add_Item(App->CL_FileView->FV_Message_Trigger_Folder, App->CL_Scene->B_Object[Index]->Object_Name, Index, true);
 	App->CL_Scene->B_Object[Index]->FileViewItem = Temp;
 
 	App->CL_FileView->SelectItem(App->CL_Scene->B_Object[Index]->FileViewItem);
@@ -205,7 +205,7 @@ bool CL64_Com_Messages::Create_Message_Entity(int Index)
 void CL64_Com_Messages::Rename_Message_Entity(int Index)
 {
 	strcpy(App->CL_Dialogs->btext, "Change Entity Name");
-	strcpy(App->CL_Dialogs->Chr_Text, App->CL_Scene->B_Object[Index]->Mesh_Name);
+	strcpy(App->CL_Dialogs->Chr_Text, App->CL_Scene->B_Object[Index]->Object_Name);
 
 	App->CL_Dialogs->Dialog_Text(Enums::Check_Names_Objects);
 
@@ -214,7 +214,7 @@ void CL64_Com_Messages::Rename_Message_Entity(int Index)
 		return;
 	}
 
-	strcpy(App->CL_Scene->B_Object[Index]->Mesh_Name, App->CL_Dialogs->Chr_Text);
+	strcpy(App->CL_Scene->B_Object[Index]->Object_Name, App->CL_Dialogs->Chr_Text);
 
 	App->CL_Properties->Mark_As_Altered(Index);
 

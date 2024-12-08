@@ -62,14 +62,14 @@ bool CL64_Com_Sounds::Add_New_Sound()
 	strcpy_s(B_Name, "Sound_");
 	_itoa(Index, ConNum, 10);
 	strcat(B_Name, ConNum);
-	strcpy(App->CL_Scene->B_Object[Index]->Mesh_Name, B_Name);
+	strcpy(App->CL_Scene->B_Object[Index]->Object_Name, B_Name);
 
 	Ogre::Vector3 Pos = App->CL_Com_Objects->GetPlacement(-50);
 	App->CL_Scene->B_Object[Index]->Mesh_Pos = Pos;
 
 	Create_Sound_Entity(Index);
 
-	HTREEITEM Temp = App->CL_FileView->Add_Item(App->CL_FileView->FV_Sounds_Folder, App->CL_Scene->B_Object[Index]->Mesh_Name, Index, true);
+	HTREEITEM Temp = App->CL_FileView->Add_Item(App->CL_FileView->FV_Sounds_Folder, App->CL_Scene->B_Object[Index]->Object_Name, Index, true);
 	App->CL_Scene->B_Object[Index]->FileViewItem = Temp;
 
 	App->CL_FileView->SelectItem(App->CL_Scene->B_Object[Index]->FileViewItem);
@@ -180,7 +180,7 @@ void CL64_Com_Sounds::Rename_Sound(int Index)
 	Base_Object* Object = App->CL_Scene->B_Object[Index];
 
 	strcpy(App->CL_Dialogs->btext, "Change Object Name");
-	strcpy(App->CL_Dialogs->Chr_Text, Object->Mesh_Name);
+	strcpy(App->CL_Dialogs->Chr_Text, Object->Object_Name);
 
 	App->CL_Dialogs->Dialog_Text(Enums::Check_Names_Objects);
 
@@ -189,12 +189,12 @@ void CL64_Com_Sounds::Rename_Sound(int Index)
 		return;
 	}
 
-	strcpy(Object->Mesh_Name, App->CL_Dialogs->Chr_Text);
+	strcpy(Object->Object_Name, App->CL_Dialogs->Chr_Text);
 
 	Object->Altered = 1;
 
 	App->CL_Scene->flag_Scene_Modified = 1;
 	App->CL_Properties->Mark_As_Altered(Index);
 
-	App->CL_FileView->Change_Item_Name(Object->FileViewItem, Object->Mesh_Name);
+	App->CL_FileView->Change_Item_Name(Object->FileViewItem, Object->Object_Name);
 }

@@ -2272,7 +2272,7 @@ bool CL64_Properties::Update_ListView_Objects()
 	memset(&pitem, 0, sizeof(LV_ITEM));
 	pitem.mask = LVIF_TEXT;
 
-	grid[0][0] = "Name", grid[1][0] = App->CL_Scene->B_Object[index]->Mesh_Name;
+	grid[0][0] = "Name", grid[1][0] = App->CL_Scene->B_Object[index]->Object_Name;
 	grid[0][1] = "Mesh File", grid[1][1] = App->CL_Scene->B_Object[index]->Mesh_FileName;
 	grid[0][2] = "Materials", grid[1][2] = App->CL_Scene->B_Object[index]->Material_File;
 	grid[0][3] = " ", grid[1][3] = " ";
@@ -2350,7 +2350,7 @@ bool CL64_Properties::Update_ListView_Collectables()
 	memset(&pitem, 0, sizeof(LV_ITEM));
 	pitem.mask = LVIF_TEXT;
 
-	grid[0][0] = "Name", grid[1][0] = App->CL_Scene->B_Object[index]->Mesh_Name;
+	grid[0][0] = "Name", grid[1][0] = App->CL_Scene->B_Object[index]->Object_Name;
 	grid[0][1] = "Mesh File", grid[1][1] = App->CL_Scene->B_Object[index]->Mesh_FileName;
 	grid[0][2] = "Materials", grid[1][2] = App->CL_Scene->B_Object[index]->Material_File;
 	grid[0][3] = " ", grid[1][3] = " ";
@@ -2418,7 +2418,7 @@ bool CL64_Properties::Update_ListView_Sounds()
 	memset(&pitem, 0, sizeof(LV_ITEM));
 	pitem.mask = LVIF_TEXT;
 
-	grid[0][0] = "Name", grid[1][0] = App->CL_Scene->B_Object[index]->Mesh_Name;
+	grid[0][0] = "Name", grid[1][0] = App->CL_Scene->B_Object[index]->Object_Name;
 	grid[0][1] = " ", grid[1][1] = " ";
 	grid[0][2] = "Sound", grid[1][2] = App->CL_Scene->B_Object[index]->Sound_File;
 	grid[0][3] = "Volume", grid[1][3] = chr_Volume;
@@ -2496,7 +2496,7 @@ bool CL64_Properties::Update_ListView_Move_Entities()
 	}
 
 	char chr_Object_Name[100];
-	strcpy(chr_Object_Name, App->CL_Scene->B_Object[App->CL_Scene->B_Object[index]->S_MoveType[0]->Object_To_Move_Index]->Mesh_Name);
+	strcpy(chr_Object_Name, App->CL_Scene->B_Object[App->CL_Scene->B_Object[index]->S_MoveType[0]->Object_To_Move_Index]->Object_Name);
 
 	char chr_Trigger_Value[100];
 	_itoa(App->CL_Scene->B_Object[index]->S_MoveType[0]->Trigger_Value, chr_Trigger_Value, 10);
@@ -2523,7 +2523,7 @@ bool CL64_Properties::Update_ListView_Move_Entities()
 	memset(&pitem, 0, sizeof(LV_ITEM));
 	pitem.mask = LVIF_TEXT;
 
-	grid[0][0] = "Name", grid[1][0] = App->CL_Scene->B_Object[index]->Mesh_Name;
+	grid[0][0] = "Name", grid[1][0] = App->CL_Scene->B_Object[index]->Object_Name;
 	grid[0][1] = " ", grid[1][1] = " ";
 	grid[0][2] = "Move_Object", grid[1][2] = chr_Object_Name;
 	grid[0][3] = "Axis", grid[1][3] = chr_Axis;
@@ -2599,7 +2599,7 @@ bool CL64_Properties::Update_ListView_Messages()
 	memset(&pitem, 0, sizeof(LV_ITEM));
 	pitem.mask = LVIF_TEXT;
 
-	grid[0][0] = "Name", grid[1][0] = App->CL_Scene->B_Object[index]->Mesh_Name;
+	grid[0][0] = "Name", grid[1][0] = App->CL_Scene->B_Object[index]->Object_Name;
 	grid[0][1] = " ", grid[1][1] = " ";
 	grid[0][2] = "Pos_X", grid[1][2] = chr_PosX;
 	grid[0][3] = "Pos_Y", grid[1][3] = chr_PosY;
@@ -2701,7 +2701,7 @@ bool CL64_Properties::Update_ListView_Teleport()
 		memset(&pitem, 0, sizeof(LV_ITEM));
 		pitem.mask = LVIF_TEXT;
 
-		grid[0][0] = "Name", grid[1][0] = App->CL_Scene->B_Object[index]->Mesh_Name;
+		grid[0][0] = "Name", grid[1][0] = App->CL_Scene->B_Object[index]->Object_Name;
 		grid[0][1] = " ", grid[1][1] = " ";
 		grid[0][2] = "Goto", grid[1][2] = chr_Goto_Location;
 		grid[0][3] = "Sound", grid[1][3] = App->CL_Scene->B_Object[index]->S_Teleport[0]->Sound_File;
@@ -2739,7 +2739,7 @@ bool CL64_Properties::Update_ListView_Teleport()
 		memset(&pitem, 0, sizeof(LV_ITEM));
 		pitem.mask = LVIF_TEXT;
 
-		grid[0][0] = "Name", grid[1][0] = App->CL_Scene->B_Object[index]->Mesh_Name;
+		grid[0][0] = "Name", grid[1][0] = App->CL_Scene->B_Object[index]->Object_Name;
 		grid[0][1] = " ", grid[1][1] = " ";
 		grid[0][2] = "Goto", grid[1][2] = chr_Goto_Location;
 		grid[0][3] = "Sound", grid[1][3] = App->CL_Scene->B_Object[index]->S_Teleport[0]->Sound_File;
@@ -2797,7 +2797,7 @@ bool CL64_Properties::Update_ListView_Particles()
 	memset(&pitem, 0, sizeof(LV_ITEM));
 	pitem.mask = LVIF_TEXT;
 
-	grid[0][0] = "Name", grid[1][0] = App->CL_Scene->B_Object[index]->Mesh_Name;
+	grid[0][0] = "Name", grid[1][0] = App->CL_Scene->B_Object[index]->Object_Name;
 	grid[0][1] = "Particle", grid[1][1] = App->CL_Scene->B_Object[index]->S_Particle[0]->ParticleScript;
 	grid[0][2] = " ", grid[1][2] = " ";
 	grid[0][3] = "Speed", grid[1][3] = chr_Speed;
@@ -2919,7 +2919,7 @@ bool CL64_Properties::Update_ListView_Environs()
 	memset(&pitem, 0, sizeof(LV_ITEM));
 	pitem.mask = LVIF_TEXT;
 
-	grid[0][0] = "Name", grid[1][0] = App->CL_Scene->B_Object[index]->Mesh_Name;
+	grid[0][0] = "Name", grid[1][0] = App->CL_Scene->B_Object[index]->Object_Name;
 	grid[0][1] = " ", grid[1][1] = " ";
 	grid[0][2] = "Evironment", grid[1][2] = "Settings";
 

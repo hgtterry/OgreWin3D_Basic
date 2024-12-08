@@ -454,13 +454,13 @@ void CL64_ImGui_Dialogs::Start_Move_Entity_Editor(int Index)
 
 		if (App->CL_Scene->B_Object[Count]->Usage == Enums::Stage_Usage_Static)
 		{
-			bool test = strcmp(App->CL_Scene->B_Object[Index]->S_MoveType[0]->Object_Name, App->CL_Scene->B_Object[Count]->Mesh_Name);
+			bool test = strcmp(App->CL_Scene->B_Object[Index]->S_MoveType[0]->Object_Name, App->CL_Scene->B_Object[Count]->Object_Name);
 			if (test == 0)
 			{
 				Move_Ent_item_current_idx = Move_Ent_ObjectCount;
 			}
 
-			V_Move_Ent_Object_List.push_back(App->CL_Scene->B_Object[Count]->Mesh_Name);
+			V_Move_Ent_Object_List.push_back(App->CL_Scene->B_Object[Count]->Object_Name);
 			Move_Ent_ObjectCount++;
 		}
 

@@ -96,7 +96,7 @@ void CL64_Dimensions::Prepare_Dimensions(void)
 	}
 	else
 	{
-		pBase_Mesh_Name = App->CL_Scene->B_Object[Index]->Mesh_Name;
+		pBase_Mesh_Name = App->CL_Scene->B_Object[Index]->Object_Name;
 
 		pBase_Shape = &App->CL_Scene->B_Object[Index]->Shape;
 

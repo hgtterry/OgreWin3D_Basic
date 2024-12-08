@@ -1094,7 +1094,7 @@ bool CL64_Project::Save_Objects_Data()
 
 			fprintf(WriteFile, "%s\n", buff); // Header also Player name until changed by user
 
-			fprintf(WriteFile, "%s%s\n", "Mesh_Name=", App->CL_Scene->B_Object[Count]->Mesh_Name); // Change
+			fprintf(WriteFile, "%s%s\n", "Mesh_Name=", App->CL_Scene->B_Object[Count]->Object_Name); // Change
 
 			fprintf(WriteFile, "%s%s\n", "Mesh_File=", App->CL_Scene->B_Object[Count]->Mesh_FileName);
 			fprintf(WriteFile, "%s%s\n", "Mesh_Resource_Path=", App->CL_Scene->B_Object[Count]->Mesh_Resource_Path);
@@ -1832,7 +1832,7 @@ bool CL64_Project::Load_Project_Objects()
 
 		Base_Object* B_Object = App->CL_Scene->B_Object[Count];
 
-		App->CL_Ini_File->GetString(mSection, "Mesh_Name", B_Object->Mesh_Name, MAX_PATH);
+		App->CL_Ini_File->GetString(mSection, "Mesh_Name", B_Object->Object_Name, MAX_PATH);
 		App->CL_Ini_File->GetString(mSection, "Mesh_File", B_Object->Mesh_FileName, MAX_PATH);
 		App->CL_Ini_File->GetString(mSection, "Mesh_Resource_Path", B_Object->Mesh_Resource_Path, MAX_PATH);
 		App->CL_Ini_File->GetString(mSection, "Material_File", B_Object->Material_File, MAX_PATH);

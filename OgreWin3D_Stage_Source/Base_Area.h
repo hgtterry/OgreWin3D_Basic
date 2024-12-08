@@ -26,12 +26,12 @@ public:
 	int Folder;
 	int This_Object_UniqueID;  // Unique Number
 
-	char Area_Name[100];
+	char Area_Name[MAX_PATH]; // Name of Area Set By User
 
-	char Area_FileName[MAX_PATH];
+	char Area_FileName[MAX_PATH]; // Acctual Mesh File name as in .mesh
 	char Area_Path_And_FileName[MAX_PATH];
 	char Area_Resource_Path[MAX_PATH];
-	char Material_File[MAX_PATH];
+	char Material_File[MAX_PATH]; // Acctual Material File name as in .material
 
 	//------------------------------ Mesh
 	Ogre::Vector3			Mesh_Scale;

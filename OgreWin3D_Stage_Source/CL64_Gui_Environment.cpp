@@ -182,7 +182,7 @@ void CL64_Gui_Environment::Environ_PropertyEditor()
 	ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(2, 2));
 	ImGui::PushStyleColor(ImGuiCol_WindowBg, IM_COL32(213, 222, 242, 255));
 	
-	ImGui::Text("Environment:  %s", App->CL_Scene->B_Object[Eviron_Index]->Mesh_Name);
+	ImGui::Text("Environment:  %s", App->CL_Scene->B_Object[Eviron_Index]->Object_Name);
 	ImGui::Separator();
 
 	ImGui::Columns(2);

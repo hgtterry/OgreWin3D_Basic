@@ -84,7 +84,7 @@ void CL64_Com_Objects::Rename_Object(int Index)
 	Base_Object* Object = App->CL_Scene->B_Object[Index];
 
 	strcpy(App->CL_Dialogs->btext, "Change Object Name");
-	strcpy(App->CL_Dialogs->Chr_Text, Object->Mesh_Name);
+	strcpy(App->CL_Dialogs->Chr_Text, Object->Object_Name);
 
 	App->CL_Dialogs->Dialog_Text(Enums::Check_Names_Objects);
 
@@ -93,14 +93,14 @@ void CL64_Com_Objects::Rename_Object(int Index)
 		return;
 	}
 
-	strcpy(Object->Mesh_Name, App->CL_Dialogs->Chr_Text);
+	strcpy(Object->Object_Name, App->CL_Dialogs->Chr_Text);
 
 	Object->Altered = 1;
 
 	App->CL_Scene->flag_Scene_Modified = 1;
 	App->CL_FileView->Mark_Altered(Object->FileViewItem);
 
-	App->CL_FileView->Change_Item_Name(Object->FileViewItem, Object->Mesh_Name);
+	App->CL_FileView->Change_Item_Name(Object->FileViewItem, Object->Object_Name);
 
 }
 
@@ -213,7 +213,7 @@ int CL64_Com_Objects::GetIndex_By_Name(char* Name)
 		if (App->CL_Scene->B_Object[Count]->Deleted == 0)
 		{
 			int Result = 1;
-			Result = strcmp(App->CL_Scene->B_Object[Count]->Mesh_Name, Name);
+			Result = strcmp(App->CL_Scene->B_Object[Count]->Object_Name, Name);
 			if (Result == 0)
 			{
 				return Count;
@@ -323,7 +323,7 @@ int CL64_Com_Objects::CheckNames_Objects(char* Name)
 		if (App->CL_Scene->B_Object[Count]->Deleted == 0)
 		{
 			int Result = 1;
-			Result = strcmp(App->CL_Scene->B_Object[Count]->Mesh_Name, Name);
+			Result = strcmp(App->CL_Scene->B_Object[Count]->Object_Name, Name);
 
 			if (Result == 0)
 			{

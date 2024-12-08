@@ -37,7 +37,7 @@ bool Base_Object::Init_Object(void)
 	Phys_Body = nullptr;
 	Phys_Shape = nullptr;
 
-	strcpy(Mesh_Name, "None");
+	strcpy(Object_Name, "None");
 	strcpy(Mesh_FileName, "None");
 	Mesh_Resource_Path[0] = 0;
 	strcpy(Material_File, "Internal");

@@ -51,7 +51,7 @@ bool CL64_Com_Collectables::Add_New_Collectable()
 	Base_Object* Object = App->CL_Scene->B_Object[Index];
 	Object->This_Object_UniqueID = App->CL_Scene->UniqueID_Object_Counter; // Unique ID
 
-	strcpy(Object->Mesh_Name, App->CL_MeshViewer->Object_Name);
+	strcpy(Object->Object_Name, App->CL_MeshViewer->Object_Name);
 	strcpy(Object->Mesh_FileName, App->CL_MeshViewer->Selected_MeshFile);
 	strcpy(Object->Mesh_Resource_Path, App->CL_MeshViewer->m_Resource_Folder_Full);
 	//strcpy(Object->Material_File, App->CL_MeshViewer->);
@@ -59,7 +59,7 @@ bool CL64_Com_Collectables::Add_New_Collectable()
 	strcpy_s(B_Name, "Collectable_");
 	_itoa(Index, ConNum, 10);
 	strcat(B_Name, ConNum);
-	strcpy(App->CL_Scene->B_Object[Index]->Mesh_Name, B_Name);
+	strcpy(App->CL_Scene->B_Object[Index]->Object_Name, B_Name);
 
 	Ogre::Vector3 Pos = App->CL_Com_Objects->GetPlacement(-50);
 	App->CL_Scene->B_Object[Index]->Mesh_Pos = Pos;
@@ -70,7 +70,7 @@ bool CL64_Com_Collectables::Add_New_Collectable()
 
 	Create_Collectable_Entity(Index);
 
-	HTREEITEM Temp = App->CL_FileView->Add_Item(App->CL_FileView->FV_Collectables_Folder, App->CL_Scene->B_Object[Index]->Mesh_Name, Index, true);
+	HTREEITEM Temp = App->CL_FileView->Add_Item(App->CL_FileView->FV_Collectables_Folder, App->CL_Scene->B_Object[Index]->Object_Name, Index, true);
 	App->CL_Scene->B_Object[Index]->FileViewItem = Temp;
 
 	App->CL_FileView->SelectItem(App->CL_Scene->B_Object[Index]->FileViewItem);
@@ -205,7 +205,7 @@ void CL64_Com_Collectables::Rename_Collectable(int Index)
 	Base_Object* Object = App->CL_Scene->B_Object[Index];
 
 	strcpy(App->CL_Dialogs->btext, "Change Object Name");
-	strcpy(App->CL_Dialogs->Chr_Text, Object->Mesh_Name);
+	strcpy(App->CL_Dialogs->Chr_Text, Object->Object_Name);
 
 	App->CL_Dialogs->Dialog_Text(Enums::Check_Names_Objects);
 
@@ -214,12 +214,12 @@ void CL64_Com_Collectables::Rename_Collectable(int Index)
 		return;
 	}
 
-	strcpy(Object->Mesh_Name, App->CL_Dialogs->Chr_Text);
+	strcpy(Object->Object_Name, App->CL_Dialogs->Chr_Text);
 
 	Object->Altered = 1;
 
 	App->CL_Scene->flag_Scene_Modified = 1;
 	App->CL_FileView->Mark_Altered(Object->FileViewItem);
 
-	App->CL_FileView->Change_Item_Name(Object->FileViewItem, Object->Mesh_Name);
+	App->CL_FileView->Change_Item_Name(Object->FileViewItem, Object->Object_Name);
 }

@@ -1121,7 +1121,7 @@ int CL64_Resources::Check_Mesh_Is_used_Manual()
 		Result = strcmp(App->CL_Scene->B_Object[Count]->Mesh_FileName, mSelected_File);
 		if (Result == 0)
 		{
-			App->Say("Used By", App->CL_Scene->B_Object[Count]->Mesh_Name);
+			App->Say("Used By", App->CL_Scene->B_Object[Count]->Object_Name);
 			return Count;
 		}
 
@@ -1167,7 +1167,7 @@ int CL64_Resources::Check_Mesh_Is_used_Auto(char* Filename)
 		Result = strcmp(App->CL_Scene->B_Object[Count]->Mesh_FileName, Filename);
 		if (Result == 0)
 		{
-			strcpy(Resource_Used_By_Object, App->CL_Scene->B_Object[Count]->Mesh_Name);
+			strcpy(Resource_Used_By_Object, App->CL_Scene->B_Object[Count]->Object_Name);
 			return 777;
 		}
 

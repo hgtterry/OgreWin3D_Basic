@@ -58,7 +58,7 @@ bool CL64_Com_Environments::Add_New_Environ_Entity(bool FirstOne)
 	strcpy_s(B_Name, "Environ_");
 	_itoa(Index, ConNum, 10);
 	strcat(B_Name, ConNum);
-	strcpy(App->CL_Scene->B_Object[Index]->Mesh_Name, B_Name);
+	strcpy(App->CL_Scene->B_Object[Index]->Object_Name, B_Name);
 
 	if (FirstOne == 0)
 	{
@@ -72,7 +72,7 @@ bool CL64_Com_Environments::Add_New_Environ_Entity(bool FirstOne)
 
 	Create_Environ_Entity(Index);
 
-	HTREEITEM Temp = App->CL_FileView->Add_Item(App->CL_FileView->FV_Evirons_Folder, App->CL_Scene->B_Object[Index]->Mesh_Name, Index, true);
+	HTREEITEM Temp = App->CL_FileView->Add_Item(App->CL_FileView->FV_Evirons_Folder, App->CL_Scene->B_Object[Index]->Object_Name, Index, true);
 	App->CL_Scene->B_Object[Index]->FileViewItem = Temp;
 
 	App->CL_FileView->Set_FolderActive(App->CL_FileView->FV_Evirons_Folder);
@@ -424,7 +424,7 @@ void CL64_Com_Environments::Set_Environment_GameMode(bool Turn_On)
 void CL64_Com_Environments::Rename_Environ_Entity(int Index)
 {
 	strcpy(App->CL_Dialogs->btext, "Change Environ Name");
-	strcpy(App->CL_Dialogs->Chr_Text, App->CL_Scene->B_Object[Index]->Mesh_Name);
+	strcpy(App->CL_Dialogs->Chr_Text, App->CL_Scene->B_Object[Index]->Object_Name);
 
 	App->CL_Dialogs->Dialog_Text(Enums::Check_Names_Objects);
 
@@ -433,7 +433,7 @@ void CL64_Com_Environments::Rename_Environ_Entity(int Index)
 		return;
 	}
 
-	strcpy(App->CL_Scene->B_Object[Index]->Mesh_Name, App->CL_Dialogs->Chr_Text);
+	strcpy(App->CL_Scene->B_Object[Index]->Object_Name, App->CL_Dialogs->Chr_Text);
 
 	App->CL_FileView->Change_Item_Name(App->CL_Scene->B_Object[Index]->FileViewItem, App->CL_Dialogs->Chr_Text);
 
