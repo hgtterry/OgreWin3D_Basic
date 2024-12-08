@@ -174,7 +174,8 @@ LRESULT CALLBACK CL64_Resources::Proc_Resources(HWND hDlg, UINT message, WPARAM 
 		SendDlgItemMessage(hDlg, IDC_BT_EXPORT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_VIEWFILE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_RV_CHECK_USED, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-
+		SendDlgItemMessage(hDlg, IDC_BT_RV_DELETEFILE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
 		// -------------------------- Show Resource
 		SendDlgItemMessage(hDlg, IDC_GROUPALL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ALLMATERIALS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
@@ -376,6 +377,13 @@ LRESULT CALLBACK CL64_Resources::Proc_Resources(HWND hDlg, UINT message, WPARAM 
 			App->Custom_Button_Toggle(item, App->CL_Resources->flag_Show_All_Overlays);
 			return CDRF_DODEFAULT;
 		}
+
+		if (some_item->idFrom == IDC_BT_RV_DELETEFILE)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->CL_Resources->flag_Show_All_Overlays);
+			return CDRF_DODEFAULT;
+		}
 		
 		return CDRF_DODEFAULT;
 	}
@@ -560,6 +568,13 @@ LRESULT CALLBACK CL64_Resources::Proc_Resources(HWND hDlg, UINT message, WPARAM 
 
 			return TRUE;
 		}
+
+		if (LOWORD(wParam) == IDC_BT_RV_DELETEFILE)
+		{
+			App->CL_Resources->Delete_File(App->CL_Resources->mSelected_File,hDlg);
+			return TRUE;
+		}
+		
 		
 		if (LOWORD(wParam) == IDCANCEL)
 		{
@@ -1091,7 +1106,22 @@ int CL64_Resources::Show_Resource_Group_Type(int mType)
 					ListView_SetItemText(FX_General_hLV, pRow, 4, (LPSTR)Resource_Used_By_Object);
 				}
 			}
-			
+
+			if (mType == Enums::Resource_File_Type_Material)
+			{
+				int Test = Check_Material_Is_used_Auto((LPSTR)RV_FileName[Count].c_str());
+				if (Test == 777)
+				{
+					ListView_SetItemText(FX_General_hLV, pRow, 3, (LPSTR)"Yes");
+					ListView_SetItemText(FX_General_hLV, pRow, 4, (LPSTR)Resource_Used_By_Object);
+				}
+				else
+				{
+					ListView_SetItemText(FX_General_hLV, pRow, 3, (LPSTR)" ");
+					ListView_SetItemText(FX_General_hLV, pRow, 4, (LPSTR)Resource_Used_By_Object);
+				}
+			}
+
 			pRow++;
 		}
 
@@ -1113,38 +1143,47 @@ int CL64_Resources::Check_Mesh_Is_used_Manual()
 	int Count = 0;
 	int Objects_Count = App->CL_Scene->Object_Count;
 
-	// -------------------------------------------- Check Objects
-	while (Count < Objects_Count)
+	if (App->CL_Resources->flag_Show_All_Meshes == 1)
 	{
-		int Result = 1;
-
-		Result = strcmp(App->CL_Scene->B_Object[Count]->Mesh_FileName, mSelected_File);
-		if (Result == 0)
+		// -------------------------------------------- Check Objects
+		while (Count < Objects_Count)
 		{
-			App->Say("Used By", App->CL_Scene->B_Object[Count]->Object_Name);
-			return Count;
+			int Result = 1;
+
+			Result = strcmp(App->CL_Scene->B_Object[Count]->Mesh_FileName, mSelected_File);
+			if (Result == 0)
+			{
+				App->Say("Used By", App->CL_Scene->B_Object[Count]->Object_Name);
+				return Count;
+			}
+
+			Count++;
 		}
 
-		Count++;
-	}
+		Count = 0;
+		int Area_Count = App->CL_Scene->Area_Count;
 
-	Count = 0;
-	int Area_Count = App->CL_Scene->Area_Count;
-
-	// -------------------------------------------- Check Aeras
-	while (Count < Area_Count)
-	{
-		int Result = 1;
-
-		Result = strcmp(App->CL_Scene->B_Area[Count]->Area_FileName, mSelected_File);
-		if (Result == 0)
+		// -------------------------------------------- Check Aeras
+		while (Count < Area_Count)
 		{
-			App->Say("Used By", App->CL_Scene->B_Area[Count]->Area_Name);
-			return Count;
-		}
+			int Result = 1;
 
-		Count++;
+			Result = strcmp(App->CL_Scene->B_Area[Count]->Area_FileName, mSelected_File);
+			if (Result == 0)
+			{
+				App->Say("Used By", App->CL_Scene->B_Area[Count]->Area_Name);
+				return Count;
+			}
+
+			Count++;
+		}
 	}
+
+	if (App->CL_Resources->flag_Show_All_Materials == 1)
+	{
+
+	}
+
 
 	App->Say("NOT USED");
 
@@ -1159,40 +1198,126 @@ int CL64_Resources::Check_Mesh_Is_used_Auto(char* Filename)
 	int Count = 0;
 	int Objects_Count = App->CL_Scene->Object_Count;
 
-	// -------------------------------------------- Check Objects
-	while (Count < Objects_Count)
+	if (App->CL_Resources->flag_Show_All_Meshes == 1)
 	{
-		int Result = 1;
-
-		Result = strcmp(App->CL_Scene->B_Object[Count]->Mesh_FileName, Filename);
-		if (Result == 0)
+		// -------------------------------------------- Check Objects
+		while (Count < Objects_Count)
 		{
-			strcpy(Resource_Used_By_Object, App->CL_Scene->B_Object[Count]->Object_Name);
-			return 777;
+			int Result = 1;
+
+			Result = strcmp(App->CL_Scene->B_Object[Count]->Mesh_FileName, Filename);
+			if (Result == 0)
+			{
+				strcpy(Resource_Used_By_Object, App->CL_Scene->B_Object[Count]->Object_Name);
+				return 777;
+			}
+
+			Count++;
 		}
 
-		Count++;
-	}
+		Count = 0;
+		int Area_Count = App->CL_Scene->Area_Count;
 
-	Count = 0;
-	int Area_Count = App->CL_Scene->Area_Count;
-
-	// -------------------------------------------- Check Aeras
-	while (Count < Area_Count)
-	{
-		int Result = 1;
-
-		Result = strcmp(App->CL_Scene->B_Area[Count]->Area_FileName, Filename);
-		if (Result == 0)
+		// -------------------------------------------- Check Aeras
+		while (Count < Area_Count)
 		{
-			strcpy(Resource_Used_By_Object, App->CL_Scene->B_Area[Count]->Area_Name);
-			return 777;
+			int Result = 1;
+
+			Result = strcmp(App->CL_Scene->B_Area[Count]->Area_FileName, Filename);
+			if (Result == 0)
+			{
+				strcpy(Resource_Used_By_Object, App->CL_Scene->B_Area[Count]->Area_Name);
+				return 777;
+			}
+
+			Count++;
 		}
 
-		Count++;
+		strcpy(Resource_Used_By_Object, " ");
 	}
 
-	strcpy(Resource_Used_By_Object, " ");
+	return -1;
+}
+
+// *************************************************************************
+// *	Check_Material_Is_used_Auto:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+int CL64_Resources::Check_Material_Is_used_Auto(char* Filename)
+{
+	int Count = 0;
+	int Objects_Count = App->CL_Scene->Object_Count;
+
+	if (App->CL_Resources->flag_Show_All_Materials == 1)
+	{
+		// -------------------------------------------- Check Objects
+		while (Count < Objects_Count)
+		{
+			int Result = 1;
+
+			Result = strcmp(App->CL_Scene->B_Object[Count]->Material_File, Filename);
+			if (Result == 0)
+			{
+				strcpy(Resource_Used_By_Object, App->CL_Scene->B_Object[Count]->Object_Name);
+				return 777;
+			}
+
+			Count++;
+		}
+
+		Count = 0;
+		int Area_Count = App->CL_Scene->Area_Count;
+
+		// -------------------------------------------- Check Aeras
+		while (Count < Area_Count)
+		{
+			int Result = 1;
+
+			Result = strcmp(App->CL_Scene->B_Area[Count]->Material_File, Filename);
+			if (Result == 0)
+			{
+				strcpy(Resource_Used_By_Object, App->CL_Scene->B_Area[Count]->Area_Name);
+				return 777;
+			}
+
+			Count++;
+		}
+
+		strcpy(Resource_Used_By_Object, " ");
+	}
+
+	return -1;
+}
+
+// *************************************************************************
+// *			Delete_File:- Terry and Hazel Flanigan 2024				   *
+// *************************************************************************
+int CL64_Resources::Delete_File(char* Filename, HWND mhDlg)
+{
+	if (App->CL_Resources->flag_Show_All_Meshes == 1)
+	{
+		int Test = Check_Mesh_Is_used_Auto(Filename);
+		if (Test == 777)
+		{
+			App->Say("File is Used in the Scene and can not be Deleted");
+			return -1;
+		}
+
+		App->Say("Can be Deleted");
+		
+		App->CL_Resources->Reset_Flags();
+		App->CL_Resources->flag_Show_All_Meshes = 1;
+
+		RedrawWindow(mhDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+		App->CL_Resources->Set_Title(mhDlg, (LPSTR)"Meshes");
+
+		int Items = App->CL_Resources->Show_Resource_Group_Type(Enums::Resource_File_Type_Mesh);
+		App->CL_Resources->Update_Counter(Items, mhDlg);
+
+		return 1;
+	}
+
+	App->Say("Meshes Not Selected");
 
 	return -1;
 }

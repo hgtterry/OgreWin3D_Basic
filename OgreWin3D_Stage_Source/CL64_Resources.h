@@ -43,6 +43,7 @@ public:
 
 	int Check_Mesh_Is_used_Manual();
 	int Check_Mesh_Is_used_Auto(char* Filename);
+	int Check_Material_Is_used_Auto(char* Filename);
 
 	char mSelected_File[MAX_PATH];
 
@@ -82,6 +83,7 @@ private:
 
 	int Show_Resource_Group_Type(int mType);
 	int Show_Resource_Group_All();
+	int Delete_File(char* Filename, HWND mhDlg);
 
 	int Extension_Type;
 	int GroupSelIndex;

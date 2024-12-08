@@ -313,6 +313,7 @@
 #define IDC_BTCAMGOTO                   1130
 #define IDC_BT_RV_CHECK_USED            1131
 #define IDC_BUTTON6                     1132
+#define IDC_BT_RV_DELETEFILE            1132
 #define ID_VIEW_RESET                   32771
 #define ID_VIEW_MAX3DVIEW               32772
 #define ID_DEBUG_TESTPREFERANCE         32773
