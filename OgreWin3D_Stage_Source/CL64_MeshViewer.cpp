@@ -69,6 +69,8 @@ CL64_MeshViewer::CL64_MeshViewer(void)
 	flag_Selected_Shape_Cylinder = 0;
 	flag_Selected_Shape_Cone = 0;
 
+	MV_Render_Debug = 0;
+
 	MV_Resource_Group = "MV_Resource_Group";
 
 	Object_Name[0] = 0;
@@ -108,6 +110,11 @@ void CL64_MeshViewer::Reset_Data()
 	Ogre_MV_Phys_Body = nullptr;
 	Ogre_MV_Phys_Shape = nullptr;
 
+	MV_btDebug_Manual = nullptr;
+	MV_btDebug_Node = nullptr;
+
+	MV_Render_Debug = 0;
+
 	v_Texture_Names.resize(0);
 	v_Scrip_Names.resize(0);
 }
@@ -117,6 +124,8 @@ void CL64_MeshViewer::Reset_Data()
 // *************************************************************************
 void CL64_MeshViewer::Start_MeshViewer_Dlg()
 {
+	App->CL_Ogre->Bullet_Debug_Listener->Render_Debug_Flag = 0;
+
 	App->CL_Bullet->Show_Debug_Objects(false);
 
 	App->CL_Panels->Disable_Panels(true);
@@ -726,6 +735,7 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 			App->CL_ImGui_Dialogs->flag_Disable_Physics_Console = 0;
 			App->CL_Ogre->Ogre3D_Listener->flag_Block_Mouse = 0;
 			App->CL_Keyboard->flag_Block_Keyboard = 0;
+			
 
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
@@ -824,6 +834,9 @@ void CL64_MeshViewer::Clear_Type_Buttons()
 // *************************************************************************
 void CL64_MeshViewer::Close_OgreWindow(void)
 {
+	App->CL_MeshViewer->MV_Render_Debug = 0;
+
+
 	App->CL_Ogre->mRoot->removeFrameListener(RenderListener);
 
 	App->CL_Ogre->mRoot->detachRenderTarget("MeshViewWin");
@@ -832,7 +845,7 @@ void CL64_MeshViewer::Close_OgreWindow(void)
 }
 
 // *************************************************************************
-// *			OgreWindow:- Terry and Hazel Flanigan 2022				   *
+// *			OgreWindow:- Terry and Hazel Flanigan 2024				   *
 // *************************************************************************
 bool CL64_MeshViewer::Set_OgreWindow(void)
 {
@@ -861,18 +874,6 @@ bool CL64_MeshViewer::Set_OgreWindow(void)
 
 	Ogre_MV_SceneMgr->setAmbientLight(ColourValue(0.7, 0.7, 0.7));
 
-	//-------------------------------------------- 
-	/*Ogre_MvEnt = Ogre_MV_SceneMgr->createEntity("MVTest2", "Sinbad.mesh", App->CL_Ogre->App_Resource_Group);
-	Ogre_MvNode = Ogre_MV_SceneMgr->getRootSceneNode()->createChildSceneNode();
-	Ogre_MvNode->attachObject(Ogre_MvEnt);
-	Ogre_MvNode->setVisible(true);*/
-
-	/*Ogre::Vector3 Centre = Ogre_MvEnt->getBoundingBox().getCenter();
-	Ogre::Real Radius = Ogre_MvEnt->getBoundingRadius();*/
-
-	//Ogre_MV_CamNode->setPosition(0, Centre.y, Radius * 2.5);
-	//Ogre_MV_CamNode->lookAt(Ogre::Vector3(0, Centre.y, 0), Ogre::Node::TS_WORLD);
-	
 	RenderListener = new CL64_MeshView_Listener();
 
 	App->CL_Ogre->mRoot->addFrameListener(RenderListener);
@@ -894,6 +895,7 @@ bool CL64_MeshViewer::Set_OgreWindow(void)
 	MV_btDebug_Node->attachObject(MV_btDebug_Manual);
 	MV_btDebug_Node->setVisible(true);
 
+	App->CL_MeshViewer->MV_Render_Debug = 1;
 	return 1;
 }
 
