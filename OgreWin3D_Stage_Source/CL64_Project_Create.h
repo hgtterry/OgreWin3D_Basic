@@ -40,6 +40,6 @@ private:
 	void Setup_Scene_Indoors();
 
 	bool Canceled;
-
+	bool flag_Indoors;
 };
 

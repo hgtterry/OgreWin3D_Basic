@@ -155,6 +155,7 @@
 #define IDC_BTEDITT                     1009
 #define IDC_BTCHANGELEVEL               1009
 #define IDC_QUITGM                      1009
+#define IDC_BT_CP_PLAIN                 1009
 #define IDC_BUTTON4                     1010
 #define IDC_BT_CAMERA_FREE              1010
 #define IDC_ALLMATERIALS                1010
@@ -314,6 +315,7 @@
 #define IDC_BTCAMGOTO                   1130
 #define IDC_BT_RV_CHECK_USED            1131
 #define IDC_BT_RV_DELETEFILE            1132
+#define IDC_BT_CP_TERRAIN               1133
 #define ID_VIEW_RESET                   32771
 #define ID_VIEW_MAX3DVIEW               32772
 #define ID_DEBUG_TESTPREFERANCE         32773
@@ -378,7 +380,7 @@
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        206
 #define _APS_NEXT_COMMAND_VALUE         32826
-#define _APS_NEXT_CONTROL_VALUE         1133
+#define _APS_NEXT_CONTROL_VALUE         1134
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif

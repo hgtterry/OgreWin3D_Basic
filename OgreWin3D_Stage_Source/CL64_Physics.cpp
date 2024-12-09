@@ -264,6 +264,8 @@ void CL64_Physics::Reset_Physics(void)
 		App->CL_Scene->B_Player[0]->Phys_Body->activate(true);
 
 		App->CL_Scene->B_Player[0]->Phys_Body->getWorldTransform().setRotation(App->CL_Scene->B_Player[0]->Physics_Rotation);
+
+		App->CL_Player->Set_Player_Physics_Position(0);
 	}
 
 	//App->CL_Ogre->OgreListener->GD_Run_Physics = 1;

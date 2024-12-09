@@ -30,6 +30,7 @@ THE SOFTWARE.
 CL64_Project_Create::CL64_Project_Create(void)
 {
 	Canceled = 0;
+	flag_Indoors = 1;
 }
 
 CL64_Project_Create::~CL64_Project_Create(void)
@@ -57,13 +58,11 @@ LRESULT CALLBACK CL64_Project_Create::Proc_Options_Dialog(HWND hDlg, UINT messag
 	{
 		//SendDlgItemMessage(hDlg, IDC_BANNER, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_CP_INDOORSCENE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_CP_TERRAIN, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_CP_PLAIN, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-
-		//SetDlgItemText(hDlg, IDC_BANNER, (LPCTSTR)App->CL_Dialogs->btext);
-
-		//SetDlgItemText(hDlg, IDC_EDIT1, (LPCTSTR)App->CL_Dialogs->Chr_Int);
 
 		return TRUE;
 	}
@@ -93,7 +92,41 @@ LRESULT CALLBACK CL64_Project_Create::Proc_Options_Dialog(HWND hDlg, UINT messag
 		if (some_item->idFrom == IDC_BT_CP_INDOORSCENE)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Normal(item);
+			App->Custom_Button_Toggle(item, App->CL_Project_Create->flag_Indoors);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BT_CP_TERRAIN)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_CP_TERRAIN));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
+			else
+			{
+				App->Custom_Button_Normal(item);
+			}
+
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BT_CP_PLAIN)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_CP_PLAIN));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
+			else
+			{
+				App->Custom_Button_Normal(item);
+			}
+
 			return CDRF_DODEFAULT;
 		}
 
@@ -154,6 +187,9 @@ void CL64_Project_Create::Start_New_Project()
 	App->CL_Resources->Create_Project_Resources_Group();
 	App->CL_Ogre->Ogre3D_Listener->flag_Run_Physics = 0;
 	App->CL_Ogre->Log_Message_To_File((LPSTR)"Created Resource Group");
+
+	strcpy(App->CL_Project->m_Project_Name, "New_Project_Name");
+	strcpy(App->CL_Project->m_Level_Name, "New_Project_Level");
 
 	App->CL_Project->flag_Is_New_Project = 1;
 	App->CL_Project->Start_Save_Project_Dialog();

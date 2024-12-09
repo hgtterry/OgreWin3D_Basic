@@ -526,7 +526,6 @@ bool CL64_Properties::Edit_Player(LPARAM lParam)
 			App->CL_ImGui_Dialogs->BackGround_Render_Loop();
 
 			App->CL_Scene->B_Player[0]->StartPos.x = App->CL_ImGui_Dialogs->m_Dialog_Float;
-			App->CL_Player->Set_Player_Physics_Position(0);
 			App->CL_Physics->Reset_Physics();
 		}
 
@@ -567,8 +566,6 @@ bool CL64_Properties::Edit_Player(LPARAM lParam)
 			App->CL_ImGui_Dialogs->BackGround_Render_Loop();
 
 			App->CL_Scene->B_Player[0]->StartPos.y = App->CL_ImGui_Dialogs->m_Dialog_Float;
-			App->CL_Player->Set_Player_Physics_Position(0);
-			
 			App->CL_Physics->Reset_Physics();
 		}
 
@@ -608,7 +605,6 @@ bool CL64_Properties::Edit_Player(LPARAM lParam)
 			App->CL_ImGui_Dialogs->BackGround_Render_Loop();
 
 			App->CL_Scene->B_Player[0]->StartPos.z = App->CL_ImGui_Dialogs->m_Dialog_Float;
-			App->CL_Player->Set_Player_Physics_Position(0);
 			App->CL_Physics->Reset_Physics();
 		}
 
