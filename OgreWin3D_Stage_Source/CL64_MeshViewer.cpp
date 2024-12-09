@@ -94,6 +94,25 @@ CL64_MeshViewer::~CL64_MeshViewer(void)
 }
 
 // *************************************************************************
+// *			Reset_Data:- Terry and Hazel Flanigan 2024				   *
+// *************************************************************************
+void CL64_MeshViewer::Reset_Data()
+{
+	Ogre_MV_Window = nullptr;
+	Ogre_MV_SceneMgr = nullptr;
+	Ogre_MV_Camera = nullptr;
+	Ogre_MV_CamNode = nullptr;
+	Ogre_MvEnt = nullptr;
+	Ogre_MvNode = nullptr;
+
+	Ogre_MV_Phys_Body = nullptr;
+	Ogre_MV_Phys_Shape = nullptr;
+
+	v_Texture_Names.resize(0);
+	v_Scrip_Names.resize(0);
+}
+
+// *************************************************************************
 // *	  	Start_MeshViewer_Dlg:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
 void CL64_MeshViewer::Start_MeshViewer_Dlg()
@@ -104,6 +123,8 @@ void CL64_MeshViewer::Start_MeshViewer_Dlg()
 	App->CL_Ogre->Ogre3D_Listener->flag_Block_Mouse = 1;
 	App->CL_ImGui_Dialogs->flag_Disable_Physics_Console = 1;
 	App->CL_Keyboard->flag_Block_Keyboard = 1;
+
+	Reset_Data();
 
 	App->CL_Ogre->RenderFrame(1);
 
@@ -156,12 +177,34 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 		App->CL_MeshViewer->Set_OgreWindow();
 		App->CL_Ogre->Log_Message_To_File((LPSTR)"MeshVierer Ogre Started");
 
-		App->CL_MeshViewer->Get_Stock_Folders(App->CL_MeshViewer->CB_hWnd);
-		App->CL_MeshViewer->Add_Resources();
-		App->CL_MeshViewer->Get_Mesh_Files();
+		if (App->CL_MeshViewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Area)
+		{
+			App->CL_MeshViewer->Set_For_Areas(hDlg);
 
-		App->CL_MeshViewer->Show_Mesh(App->CL_MeshViewer->Selected_MeshFile);
-		
+			strcpy(App->CL_MeshViewer->Selected_MeshFile, "Indoor.mesh");
+			strcpy(App->CL_MeshViewer->m_Just_Folder, "Areas");
+			strcpy(App->CL_MeshViewer->m_Resource_Folder_Full, App->GD_Directory_FullPath); // Full Path Stock Folders 
+			strcat(App->CL_MeshViewer->m_Resource_Folder_Full, "\\Stock\\");
+			strcat(App->CL_MeshViewer->m_Resource_Folder_Full, App->CL_MeshViewer->m_Just_Folder);
+			strcat(App->CL_MeshViewer->m_Resource_Folder_Full, "\\");
+			App->CL_MeshViewer->Add_Resources();
+			App->CL_MeshViewer->Get_Mesh_Files();
+			App->CL_Ogre->Log_Message_To_File((LPSTR)"Area Get_Mesh_Files");
+			App->CL_MeshViewer->Show_Mesh(App->CL_MeshViewer->Selected_MeshFile);
+			App->CL_Ogre->Log_Message_To_File((LPSTR)"Area Show Mesh");
+			App->CL_MeshViewer->Get_Stock_Folders(App->CL_MeshViewer->CB_hWnd);
+		}
+		else
+		{
+			App->CL_MeshViewer->Get_Stock_Folders(App->CL_MeshViewer->CB_hWnd);
+			App->CL_MeshViewer->Add_Resources();
+			App->CL_MeshViewer->Get_Mesh_Files();
+			App->CL_Ogre->Log_Message_To_File((LPSTR)"Get_Mesh_Files");
+
+			App->CL_MeshViewer->Show_Mesh(App->CL_MeshViewer->Selected_MeshFile);
+			App->CL_Ogre->Log_Message_To_File((LPSTR)"Show Mesh");
+		}
+
 		SetWindowText(hDlg, App->CL_MeshViewer->m_Resource_Folder_Full);
 
 		App->CL_MeshViewer->Enable_ShapeButtons(false);
@@ -179,10 +222,7 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 			strcpy(App->CL_MeshViewer->Object_Name, ATest);
 		}
 
-		if (App->CL_MeshViewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Area)
-		{
-			App->CL_MeshViewer->Set_For_Areas(hDlg);
-		}
+		
 
 		App->CL_MeshViewer->flag_MeshViewer_Running = 1;
 
@@ -1060,7 +1100,6 @@ void CL64_MeshViewer::Get_Stock_Folders(HWND DropHwnd)
 	if (Mesh_Viewer_Mode == Enums::Mesh_Viewer_Area)
 	{
 		strcpy(m_Just_Folder, "Areas");
-
 		strcpy(m_Resource_Folder_Full, App->GD_Directory_FullPath); // Full Path Stock Folders 
 		strcat(m_Resource_Folder_Full, "\\Stock\\");
 		strcat(m_Resource_Folder_Full, m_Just_Folder);
@@ -1125,7 +1164,7 @@ void CL64_MeshViewer::Get_Mesh_Files()
 // *************************************************************************
 void CL64_MeshViewer::Show_Mesh(char* MeshFile)
 {
-	if (Ogre_MvEnt && Ogre_MvNode)
+	if (Ogre_MvEnt || Ogre_MvNode)
 	{
 		Ogre_MvNode->detachAllObjects();
 		Ogre_MV_SceneMgr->destroySceneNode(Ogre_MvNode);
@@ -1134,10 +1173,15 @@ void CL64_MeshViewer::Show_Mesh(char* MeshFile)
 		Ogre_MvNode = NULL;
 	}
 
-	Ogre_MvEnt = Ogre_MV_SceneMgr->createEntity("MV", MeshFile, MV_Resource_Group);
-	Ogre_MvNode = Ogre_MV_SceneMgr->getRootSceneNode()->createChildSceneNode();
-	Ogre_MvNode->attachObject(Ogre_MvEnt);
-	Ogre_MvNode->setPosition(0, 0, 0);
+	if (Ogre_MvEnt == NULL)
+	{
+		Ogre_MvEnt = Ogre_MV_SceneMgr->createEntity("MV", MeshFile, MV_Resource_Group);
+		Ogre_MvNode = Ogre_MV_SceneMgr->getRootSceneNode()->createChildSceneNode();
+		Ogre_MvNode->attachObject(Ogre_MvEnt);
+		Ogre_MvNode->setPosition(0, 0, 0);
+	}
+
+	App->CL_Ogre->Log_Message_To_File((LPSTR)"Show Mesh Create Entity");
 
 	//if (App->SBC_MeshViewer->View_Zoomed_Flag == 1)
 	{

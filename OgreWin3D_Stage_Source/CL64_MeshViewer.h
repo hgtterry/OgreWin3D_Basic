@@ -70,6 +70,7 @@ private:
 	static LRESULT CALLBACK Proc_MeshViewer_3D(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Proc_Mesh_Properties(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
+	void Reset_Data();
 
 	void Close_OgreWindow(void);
 	bool Set_OgreWindow(void);
