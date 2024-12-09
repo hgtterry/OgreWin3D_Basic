@@ -38,8 +38,11 @@ public:
 	void Update_Player(btCollisionWorld* collisionWorld, btScalar deltaTimeStep);
 	void Update_Velocity(float dt);
 	void Get_Height(void);
+
+	void Set_Player_Physics_Position(int Index);
 	void Set_Player_Position(Ogre::Vector3 Position);
 	void Set_Player_Rotation(btQuaternion Rotation);
+
 	void Set_Player_GroundSpeed(float GroundSpeed);
 	void Reset_Player(float GroundSpeed);
 	void Rename_Player(int Index);

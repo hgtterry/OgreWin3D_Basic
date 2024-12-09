@@ -516,127 +516,127 @@ bool CL64_Properties::Edit_Player(LPARAM lParam)
 		return 1;
 	}
 
-	//result = strcmp(App->SBC_Properties->btext, "Start Pos_X");
-	//if (result == 0)
-	//{
-	//	App->SBC_Gui_Dialogs->Start_Dialog_Float(0.10, App->CL_Scene->B_Player[0]->StartPos.x, "Start Pos_X");
+	result = strcmp(btext, "Start Pos_X");
+	if (result == 0)
+	{
+		App->CL_ImGui_Dialogs->Start_Dialog_Float(0.50, 3, App->CL_Scene->B_Player[0]->StartPos.x, (LPSTR)"Start Pos_X");
+		
+		while (App->CL_ImGui_Dialogs->Show_Dialog_Float == 1)
+		{
+			App->CL_ImGui_Dialogs->BackGround_Render_Loop();
 
-	//	while (App->SBC_Gui_Dialogs->Show_Dialog_Float == 1)
-	//	{
-	//		App->SBC_Gui_Dialogs->BackGround_Render_Loop();
+			App->CL_Scene->B_Player[0]->StartPos.x = App->CL_ImGui_Dialogs->m_Dialog_Float;
+			App->CL_Player->Set_Player_Physics_Position(0);
+			App->CL_Physics->Reset_Physics();
+		}
 
-	//		App->CL_Scene->B_Player[0]->StartPos.x = App->SBC_Gui_Dialogs->m_Dialog_Float;
-	//		App->SBC_Physics->Reset_Physics();
-	//	}
+		App->CL_ImGui_Dialogs->Show_Dialog_Float = 0;
 
-	//	App->SBC_Gui_Dialogs->Show_Dialog_Float = 0;
+		if (App->CL_ImGui_Dialogs->Float_Canceld == 0)
+		{
+			App->CL_ImGui_Dialogs->Show_Dialog_Float = 0;
 
-	//	if (App->SBC_Gui_Dialogs->Float_Canceld == 0)
-	//	{
-	//		App->SBC_Gui_Dialogs->Show_Dialog_Float = 0;
+			App->CL_Scene->B_Player[0]->StartPos.x = App->CL_ImGui_Dialogs->m_Dialog_Float;
 
-	//		App->CL_Scene->B_Player[0]->StartPos.x = App->SBC_Gui_Dialogs->m_Dialog_Float;
+			App->CL_Scene->B_Player[0]->Altered = 1;
+			App->CL_Scene->flag_Scene_Modified = 1;
+			App->CL_FileView->Mark_Altered(App->CL_Scene->B_Player[0]->FileViewItem);
+		}
+		else
+		{
+			App->CL_ImGui_Dialogs->m_Dialog_Float = App->CL_ImGui_Dialogs->m_Dialog_Float_Copy;
+			App->CL_Scene->B_Player[0]->StartPos.x = App->CL_ImGui_Dialogs->m_Dialog_Float_Copy;
+			App->CL_Physics->Reset_Physics();
+		}
 
-	//		App->CL_Scene->Scene_Modified = 1;
+		App->CL_Panels->Disable_Panels(false);
 
-	//		App->CL_Scene->B_Player[0]->Altered = 1;
-	//		App->CL_Scene->Scene_Modified = 1;
-	//		App->SBC_FileView->Mark_Altered(App->CL_Scene->B_Player[0]->FileViewItem);
-	//	}
-	//	else
-	//	{
-	//		App->SBC_Gui_Dialogs->m_Dialog_Float = App->SBC_Gui_Dialogs->m_Dialog_Float_Copy;
-	//		App->CL_Scene->B_Player[0]->StartPos.x = App->SBC_Gui_Dialogs->m_Dialog_Float_Copy;
-	//		App->SBC_Physics->Reset_Physics();
-	//	}
+		Update_ListView_Player();
 
-	//	App->Disable_Panels(false);
+		return 1;
+	}
 
-	//	Update_ListView_Player();
+	result = strcmp(btext, "Start Pos_Y");
+	if (result == 0)
+	{
+		//App->CL_Player->Show_Player_And_Physics(true);
+		App->CL_ImGui_Dialogs->Start_Dialog_Float(0.50, 3, App->CL_Scene->B_Player[0]->StartPos.y, (LPSTR)"Start Pos_Y");
 
-	//	return 1;
-	//}
+		while (App->CL_ImGui_Dialogs->Show_Dialog_Float == 1)
+		{
+			App->CL_ImGui_Dialogs->BackGround_Render_Loop();
 
-	//result = strcmp(App->SBC_Properties->btext, "Start Pos_Y");
-	//if (result == 0)
-	//{
-	//	App->SBC_Gui_Dialogs->Start_Dialog_Float(0.10, App->CL_Scene->B_Player[0]->StartPos.y, "Start Pos_Y");
+			App->CL_Scene->B_Player[0]->StartPos.y = App->CL_ImGui_Dialogs->m_Dialog_Float;
+			App->CL_Player->Set_Player_Physics_Position(0);
+			
+			App->CL_Physics->Reset_Physics();
+		}
 
-	//	while (App->SBC_Gui_Dialogs->Show_Dialog_Float == 1)
-	//	{
-	//		App->SBC_Gui_Dialogs->BackGround_Render_Loop();
+		App->CL_ImGui_Dialogs->Show_Dialog_Float = 0;
 
-	//		App->CL_Scene->B_Player[0]->StartPos.y = App->SBC_Gui_Dialogs->m_Dialog_Float;
-	//		App->SBC_Physics->Reset_Physics();
-	//	}
+		if (App->CL_ImGui_Dialogs->Float_Canceld == 0)
+		{
+			App->CL_ImGui_Dialogs->Show_Dialog_Float = 0;
 
-	//	App->SBC_Gui_Dialogs->Show_Dialog_Float = 0;
+			App->CL_Scene->B_Player[0]->StartPos.y = App->CL_ImGui_Dialogs->m_Dialog_Float;
 
-	//	if (App->SBC_Gui_Dialogs->Float_Canceld == 0)
-	//	{
-	//		App->SBC_Gui_Dialogs->Show_Dialog_Float = 0;
+			App->CL_Scene->B_Player[0]->Altered = 1;
+			App->CL_Scene->flag_Scene_Modified = 1;
+			App->CL_FileView->Mark_Altered(App->CL_Scene->B_Player[0]->FileViewItem);
+		}
+		else
+		{
+			App->CL_ImGui_Dialogs->m_Dialog_Float = App->CL_ImGui_Dialogs->m_Dialog_Float_Copy;
+			App->CL_Scene->B_Player[0]->StartPos.y = App->CL_ImGui_Dialogs->m_Dialog_Float_Copy;
+			App->CL_Physics->Reset_Physics();
+		}
 
-	//		App->CL_Scene->B_Player[0]->StartPos.y = App->SBC_Gui_Dialogs->m_Dialog_Float;
+		App->CL_Panels->Disable_Panels(false);
 
-	//		App->CL_Scene->Scene_Modified = 1;
+		Update_ListView_Player();
 
-	//		App->CL_Scene->B_Player[0]->Altered = 1;
-	//		App->CL_Scene->Scene_Modified = 1;
-	//		App->SBC_FileView->Mark_Altered(App->CL_Scene->B_Player[0]->FileViewItem);
-	//	}
-	//	else
-	//	{
-	//		App->SBC_Gui_Dialogs->m_Dialog_Float = App->SBC_Gui_Dialogs->m_Dialog_Float_Copy;
-	//		App->CL_Scene->B_Player[0]->StartPos.y = App->SBC_Gui_Dialogs->m_Dialog_Float_Copy;
-	//		App->SBC_Physics->Reset_Physics();
-	//	}
+		return 1;
+	}
 
-	//	App->Disable_Panels(false);
+	result = strcmp(btext, "Start Pos_Z");
+	if (result == 0)
+	{
+		App->CL_ImGui_Dialogs->Start_Dialog_Float(0.50, 3, App->CL_Scene->B_Player[0]->StartPos.z, (LPSTR)"Start Pos_Z");
 
-	//	Update_ListView_Player();
-	//	return 1;
-	//}
+		while (App->CL_ImGui_Dialogs->Show_Dialog_Float == 1)
+		{
+			App->CL_ImGui_Dialogs->BackGround_Render_Loop();
 
-	//result = strcmp(App->SBC_Properties->btext, "Start Pos_Z");
-	//if (result == 0)
-	//{
-	//	App->SBC_Gui_Dialogs->Start_Dialog_Float(0.10, App->CL_Scene->B_Player[0]->StartPos.z, "Start Pos_Z");
+			App->CL_Scene->B_Player[0]->StartPos.z = App->CL_ImGui_Dialogs->m_Dialog_Float;
+			App->CL_Player->Set_Player_Physics_Position(0);
+			App->CL_Physics->Reset_Physics();
+		}
 
-	//	while (App->SBC_Gui_Dialogs->Show_Dialog_Float == 1)
-	//	{
-	//		App->SBC_Gui_Dialogs->BackGround_Render_Loop();
+		App->CL_ImGui_Dialogs->Show_Dialog_Float = 0;
 
-	//		App->CL_Scene->B_Player[0]->StartPos.z = App->SBC_Gui_Dialogs->m_Dialog_Float;
-	//		App->SBC_Physics->Reset_Physics();
-	//	}
+		if (App->CL_ImGui_Dialogs->Float_Canceld == 0)
+		{
+			App->CL_ImGui_Dialogs->Show_Dialog_Float = 0;
 
-	//	App->SBC_Gui_Dialogs->Show_Dialog_Float = 0;
+			App->CL_Scene->B_Player[0]->StartPos.z = App->CL_ImGui_Dialogs->m_Dialog_Float;
 
-	//	if (App->SBC_Gui_Dialogs->Float_Canceld == 0)
-	//	{
-	//		App->SBC_Gui_Dialogs->Show_Dialog_Float = 0;
+			App->CL_Scene->B_Player[0]->Altered = 1;
+			App->CL_Scene->flag_Scene_Modified = 1;
+			App->CL_FileView->Mark_Altered(App->CL_Scene->B_Player[0]->FileViewItem);
+		}
+		else
+		{
+			App->CL_ImGui_Dialogs->m_Dialog_Float = App->CL_ImGui_Dialogs->m_Dialog_Float_Copy;
+			App->CL_Scene->B_Player[0]->StartPos.z = App->CL_ImGui_Dialogs->m_Dialog_Float_Copy;
+			App->CL_Physics->Reset_Physics();
+		}
 
-	//		App->CL_Scene->B_Player[0]->StartPos.z = App->SBC_Gui_Dialogs->m_Dialog_Float;
+		App->CL_Panels->Disable_Panels(false);
 
-	//		App->CL_Scene->Scene_Modified = 1;
+		Update_ListView_Player();
 
-	//		App->CL_Scene->B_Player[0]->Altered = 1;
-	//		App->CL_Scene->Scene_Modified = 1;
-	//		App->SBC_FileView->Mark_Altered(App->CL_Scene->B_Player[0]->FileViewItem);
-	//	}
-	//	else
-	//	{
-	//		App->SBC_Gui_Dialogs->m_Dialog_Float = App->SBC_Gui_Dialogs->m_Dialog_Float_Copy;
-	//		App->CL_Scene->B_Player[0]->StartPos.z = App->SBC_Gui_Dialogs->m_Dialog_Float_Copy;
-	//		App->SBC_Physics->Reset_Physics();
-	//	}
-
-	//	App->Disable_Panels(false);
-
-	//	Update_ListView_Player();
-
-	//	return 1;
-	//}
+		return 1;
+	}
 
 	//result = strcmp(App->SBC_Properties->btext, "Look Up");
 	//if (result == 0)

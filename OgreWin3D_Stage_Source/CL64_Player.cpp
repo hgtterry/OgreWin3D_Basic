@@ -264,6 +264,22 @@ void CL64_Player::Set_Player_Position(Ogre::Vector3 Position)
 }
 
 // *************************************************************************
+// *	Set_Player_Physics_Position:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+void CL64_Player::Set_Player_Physics_Position(int Index)
+{
+	btTransform trans;
+	App->CL_Scene->B_Player[0]->Phys_Body->getMotionState()->getWorldTransform(trans);
+	btQuaternion orientation = trans.getRotation();
+
+	App->CL_Scene->B_Player[0]->Player_Node->setPosition(Ogre::Vector3(trans.getOrigin().getX(), trans.getOrigin().getY() + 2, trans.getOrigin().getZ()));
+	App->CL_Scene->B_Player[0]->Player_Node->setOrientation(Ogre::Quaternion(orientation.getW(), orientation.getX(), orientation.getY(), orientation.getZ()));
+	App->CL_Scene->B_Player[0]->Player_Node->pitch(Ogre::Degree(180));
+
+}
+
+
+// *************************************************************************
 // *		Set_Player_Rotation:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
 void CL64_Player::Set_Player_Rotation(btQuaternion Rotation)
