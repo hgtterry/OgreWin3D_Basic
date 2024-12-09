@@ -43,7 +43,7 @@ public:
 
 	bool Reset_Class();
 
-	bool Save_All();
+	bool Save_All(bool Silent);
 	void Start_Save_Project_Dialog();
 	
 	bool Load_Last_Project();
@@ -86,7 +86,9 @@ public:
 	char m_Objects_Folder_Path[MAX_PATH];
 	char m_Display_Folder_Path[MAX_PATH];
 
+	bool flag_Silence_SaveAll_Dialogs;
 	bool flag_Is_New_Project;
+	bool Canceled;
 
 private:
 

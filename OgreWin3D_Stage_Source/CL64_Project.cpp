@@ -57,7 +57,9 @@ CL64_Project::CL64_Project()
 	m_Display_Folder_Path[0] = 0;
 
 	flag_Is_New_Project = 0;
+	flag_Silence_SaveAll_Dialogs = 0;
 
+	Canceled = 0;
 	WriteFile = NULL;
 	
 }
@@ -82,8 +84,8 @@ bool CL64_Project::Reset_Class()
 // *************************************************************************
 void CL64_Project::Start_Save_Project_Dialog()
 {
+	Canceled = 0;
 	DialogBox(App->hInst, (LPCTSTR)IDD_PROJECTSAVE, App->Fdlg, (DLGPROC)Save_Project_Dialog_Proc);
-
 }
 
 // *************************************************************************
@@ -381,15 +383,15 @@ LRESULT CALLBACK CL64_Project::Save_Project_Dialog_Proc(HWND hDlg, UINT message,
 
 		if (LOWORD(wParam) == IDCANCEL)
 		{
+			App->CL_Project->Canceled = 1;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == IDOK)
 		{
-
+			App->CL_Project->Canceled = 0;
 			App->CL_Project->Save_Project();
-			//App->CL_Project->flag_Project_Loaded = 1;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
@@ -402,11 +404,16 @@ LRESULT CALLBACK CL64_Project::Save_Project_Dialog_Proc(HWND hDlg, UINT message,
 // *************************************************************************
 // *	  		Save_Project:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-bool CL64_Project::Save_All()
+bool CL64_Project::Save_All(bool Silent)
 {
+	flag_Silence_SaveAll_Dialogs = Silent;
+
 	Save_Project();
 
-	App->Say("Scene Saved");
+	if (flag_Silence_SaveAll_Dialogs == 0)
+	{
+		App->Say("Scene Saved");
+	}
 
 	return 1;
 }
@@ -494,15 +501,18 @@ bool CL64_Project::Save_Project_Ini()
 	strcat(Filename, m_Project_Name);
 	strcat(Filename, ".owproj");
 	
-	int test = App->CL_File_IO->SearchFolders(m_Project_Sub_Folder,(LPSTR)Filename);
-	if (test == 1)
+	if (flag_Silence_SaveAll_Dialogs == 0)
 	{
-		App->CL_Dialogs->Show_YesNo_Dlg((LPSTR)"File Exsits", (LPSTR)"Do you want to update File", (LPSTR)"");
-
-		bool Doit = App->CL_Dialogs->Canceled;
-		if (Doit == 1)
+		int test = App->CL_File_IO->SearchFolders(m_Project_Sub_Folder, (LPSTR)Filename);
+		if (test == 1)
 		{
-			return 0;
+			App->CL_Dialogs->Show_YesNo_Dlg((LPSTR)"File Exsits", (LPSTR)"Do you want to update File", (LPSTR)"");
+
+			bool Doit = App->CL_Dialogs->Canceled;
+			if (Doit == 1)
+			{
+				return 0;
+			}
 		}
 	}
 

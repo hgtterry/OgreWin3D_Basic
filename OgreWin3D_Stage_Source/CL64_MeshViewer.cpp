@@ -105,7 +105,9 @@ void CL64_MeshViewer::Start_MeshViewer_Dlg()
 	App->CL_ImGui_Dialogs->flag_Disable_Physics_Console = 1;
 	App->CL_Keyboard->flag_Block_Keyboard = 1;
 
-	App->CL_Ogre->RenderFrame(8);
+	App->CL_Ogre->RenderFrame(1);
+
+	App->CL_Ogre->Log_Message_To_File((LPSTR)" // -------------------------  MeshViewer Dialog");
 
 	CreateDialog(App->hInst, (LPCTSTR)IDD_MESHVIEWER, App->Fdlg, (DLGPROC)Proc_MeshViewer_Dlg);
 	
@@ -152,6 +154,7 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 
 		App->CL_MeshViewer->MeshViewer_3D_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MESHVIEWER_3D, hDlg, (DLGPROC)Proc_MeshViewer_3D);
 		App->CL_MeshViewer->Set_OgreWindow();
+		App->CL_Ogre->Log_Message_To_File((LPSTR)"MeshVierer Ogre Started");
 
 		App->CL_MeshViewer->Get_Stock_Folders(App->CL_MeshViewer->CB_hWnd);
 		App->CL_MeshViewer->Add_Resources();
@@ -163,15 +166,23 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 
 		App->CL_MeshViewer->Enable_ShapeButtons(false);
 
-		char ATest[MAX_PATH];
-		char ConNum[MAX_PATH];
+		if (App->CL_MeshViewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Objects)
+		{
+			char ATest[MAX_PATH];
+			char ConNum[MAX_PATH];
 
-		strcpy(ATest, "Object_");
-		_itoa(App->CL_Scene->Object_Count, ConNum, 10);
-		strcat(ATest, ConNum);
+			strcpy(ATest, "Object_");
+			_itoa(App->CL_Scene->Object_Count, ConNum, 10);
+			strcat(ATest, ConNum);
 
-		SetDlgItemText(hDlg, IDC_OBJECTNAME, ATest);
-		strcpy(App->CL_MeshViewer->Object_Name, ATest);
+			SetDlgItemText(hDlg, IDC_OBJECTNAME, ATest);
+			strcpy(App->CL_MeshViewer->Object_Name, ATest);
+		}
+
+		if (App->CL_MeshViewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Area)
+		{
+			App->CL_MeshViewer->Set_For_Areas(hDlg);
+		}
 
 		App->CL_MeshViewer->flag_MeshViewer_Running = 1;
 
@@ -705,6 +716,48 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 }
 
 // *************************************************************************
+// *			Set_For_Areas:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void CL64_MeshViewer::Set_For_Areas(HWND hDlg)
+{
+	EnableWindow(GetDlgItem(MainDlgHwnd, IDC_MVSTATIC), false);
+	EnableWindow(GetDlgItem(MainDlgHwnd, IDC_DYNAMIC), false);
+	EnableWindow(GetDlgItem(MainDlgHwnd, IDC_TRIMESH), true);
+	EnableWindow(GetDlgItem(MainDlgHwnd, IDC_JUSTOGRE), false);
+	EnableWindow(GetDlgItem(MainDlgHwnd, IDC_TEST), false);
+
+	//SelectTriMesh = 1;
+
+	Enable_ShapeButtons(0);
+
+	char ConNum[256];
+	char ATest[256];
+
+	strcpy_s(ATest, "Area_");
+	_itoa(App->CL_Scene->Area_Count, ConNum, 10);
+	strcat(ATest, ConNum);
+
+	SetDlgItemText(hDlg, IDC_OBJECTNAME, ATest);
+	/*strcpy(App->SBC_MeshViewer->Object_Name, ATest);
+	strcpy(App->SBC_MeshViewer->m_Current_Folder, "Areas");
+	HWND temp = GetDlgItem(hDlg, IDC_CB_FOLDERS);
+	SendMessage(temp, CB_SELECTSTRING, -1, LPARAM(App->SBC_MeshViewer->m_Current_Folder));
+
+	SendMessage(App->SBC_MeshViewer->ListHwnd, LB_RESETCONTENT, 0, 0);
+
+	strcpy(App->SBC_MeshViewer->mResource_Folder, App->EquityDirecory_FullPath);
+	strcat(App->SBC_MeshViewer->mResource_Folder, "\\Media_New\\");
+	strcat(App->SBC_MeshViewer->mResource_Folder, App->SBC_MeshViewer->m_Current_Folder);
+	strcat(App->SBC_MeshViewer->mResource_Folder, "\\");
+
+	SetDlgItemText(hDlg, IDC_ST_CURRENTFOLDER, App->SBC_MeshViewer->mResource_Folder);
+	SetWindowText(hDlg, App->SBC_MeshViewer->mResource_Folder);
+
+	App->SBC_MeshViewer->Add_Resources();
+	App->SBC_MeshViewer->Get_Files();*/
+}
+
+// *************************************************************************
 // *	  	Clear_Shape_Buttons:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
 void CL64_MeshViewer::Clear_Shape_Buttons()
@@ -769,16 +822,16 @@ bool CL64_MeshViewer::Set_OgreWindow(void)
 	Ogre_MV_SceneMgr->setAmbientLight(ColourValue(0.7, 0.7, 0.7));
 
 	//-------------------------------------------- 
-	Ogre_MvEnt = Ogre_MV_SceneMgr->createEntity("MVTest2", "Sinbad.mesh", App->CL_Ogre->App_Resource_Group);
+	/*Ogre_MvEnt = Ogre_MV_SceneMgr->createEntity("MVTest2", "Sinbad.mesh", App->CL_Ogre->App_Resource_Group);
 	Ogre_MvNode = Ogre_MV_SceneMgr->getRootSceneNode()->createChildSceneNode();
 	Ogre_MvNode->attachObject(Ogre_MvEnt);
-	Ogre_MvNode->setVisible(true);
+	Ogre_MvNode->setVisible(true);*/
 
-	Ogre::Vector3 Centre = Ogre_MvEnt->getBoundingBox().getCenter();
-	Ogre::Real Radius = Ogre_MvEnt->getBoundingRadius();
+	/*Ogre::Vector3 Centre = Ogre_MvEnt->getBoundingBox().getCenter();
+	Ogre::Real Radius = Ogre_MvEnt->getBoundingRadius();*/
 
-	Ogre_MV_CamNode->setPosition(0, Centre.y, Radius * 2.5);
-	Ogre_MV_CamNode->lookAt(Ogre::Vector3(0, Centre.y, 0), Ogre::Node::TS_WORLD);
+	//Ogre_MV_CamNode->setPosition(0, Centre.y, Radius * 2.5);
+	//Ogre_MV_CamNode->lookAt(Ogre::Vector3(0, Centre.y, 0), Ogre::Node::TS_WORLD);
 	
 	RenderListener = new CL64_MeshView_Listener();
 

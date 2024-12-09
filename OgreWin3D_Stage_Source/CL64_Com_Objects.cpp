@@ -261,11 +261,11 @@ void CL64_Com_Objects::Clear_Modified_Objects()
 	Count = 0;
 	while (Count < App->CL_Scene->Camera_Count)
 	{
-		/*if (App->CL_Scene->B_Camera[Count]->Altered == 1)
+		if (App->CL_Scene->B_Camera[Count]->Altered == 1)
 		{
 			App->CL_Scene->B_Camera[Count]->Altered = 0;
 			App->CL_FileView->Mark_Clear(App->CL_Scene->B_Camera[Count]->FileViewItem);
-		}*/
+		}
 
 		Count++;
 	}

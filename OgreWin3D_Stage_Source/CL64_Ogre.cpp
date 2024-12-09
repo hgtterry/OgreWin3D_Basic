@@ -359,8 +359,8 @@ void CL64_Ogre::Log_Message_To_File(char* Message)
 		Ogre::LogManager::getSingleton().setDefaultLog(Ogre::LogManager::getSingleton().getLog("App.log"));
 		Ogre::LogManager::getSingleton().logMessage(Message);
 		Ogre::LogManager::getSingleton().setDefaultLog(Ogre::LogManager::getSingleton().getLog("GD64_Ogre.log"));
-
 	}
+
 }
 
 // *************************************************************************

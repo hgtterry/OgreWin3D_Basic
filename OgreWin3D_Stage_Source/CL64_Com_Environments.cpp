@@ -75,13 +75,15 @@ bool CL64_Com_Environments::Add_New_Environ_Entity(bool FirstOne)
 	HTREEITEM Temp = App->CL_FileView->Add_Item(App->CL_FileView->FV_Evirons_Folder, App->CL_Scene->B_Object[Index]->Object_Name, Index, true);
 	App->CL_Scene->B_Object[Index]->FileViewItem = Temp;
 
+	App->CL_Scene->B_Object[Index]->Altered = 1;
+
 	App->CL_FileView->Set_FolderActive(App->CL_FileView->FV_Evirons_Folder);
 	App->CL_FileView->SelectItem(App->CL_Scene->B_Object[Index]->FileViewItem);
 
 	App->CL_Scene->UniqueID_Object_Counter++;
 	App->CL_Scene->Object_Count++;
 
-	App->CL_FileView->Set_FolderActive(App->CL_FileView->FV_Sounds_Folder);
+	App->CL_FileView->Set_FolderActive(App->CL_FileView->FV_Evirons_Folder);
 	return 1;
 }
 

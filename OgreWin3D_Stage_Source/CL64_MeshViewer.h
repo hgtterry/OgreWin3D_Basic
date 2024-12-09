@@ -95,6 +95,8 @@ private:
 	void Show_Physics_Cylinder();
 	void Show_Physics_Cone();
 
+	void Set_For_Areas(HWND hDlg);
+
 	void Set_Physics();
 
 	void Enable_ShapeButtons(bool state);

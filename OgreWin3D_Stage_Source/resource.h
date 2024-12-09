@@ -128,6 +128,7 @@
 #define IDC_STARTLEVEL                  1007
 #define IDC_BTBROWSE                    1007
 #define IDC_BTCAMSAVE                   1007
+#define IDC_BT_CP_INDOORSCENE           1007
 #define IDC_BUTTON2                     1008
 #define IDC_BT_TBH_CAMERA               1008
 #define IDC_BT_DEMORESOURCES            1008
