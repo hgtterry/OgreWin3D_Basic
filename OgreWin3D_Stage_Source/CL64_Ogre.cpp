@@ -67,7 +67,7 @@ CL64_Ogre::~CL64_Ogre(void)
 // *************************************************************************
 void CL64_Ogre::Init_Ogre(void)
 {
-	
+
 	Init_OgreCreateRoot();
 	Init_Load_Resources();
 	Init_Configure();
@@ -102,7 +102,7 @@ bool CL64_Ogre::Init_OgreCreateRoot(void)
 	{
 		mRoot = OGRE_NEW Ogre::Root(pluginsPath, mResourcePath + "Equity_CFG.cfg", mResourcePath + "GD64_Ogre.log");
 		Ogre::LogManager::getSingleton().createLog(mResourcePath + "App.log");
-		Ogre::LogManager::getSingleton().setMinLogLevel(Ogre::LogMessageLevel::LML_TRIVIAL);
+		Ogre::LogManager::getSingleton().setMinLogLevel(Ogre::LogMessageLevel::LML_NORMAL);
 
 #pragma warning(disable : 4996) // Nightmare why
 		Ogre::LogManager::getSingleton().setLogDetail(Ogre::LoggingLevel::LL_BOREME);
@@ -114,7 +114,8 @@ bool CL64_Ogre::Init_OgreCreateRoot(void)
 		mRoot = OGRE_NEW Ogre::Root(pluginsPath, mResourcePath + "Equity_CFG.cfg", mResourcePath + "");
 	}
 
-	App->CL_Ogre->Log_Message_To_File((LPSTR)"OgreCreateRoot");
+	App->CL_Ogre->Log_Message_To_File((LPSTR)" // -------------------------  Init Ogre");
+	App->CL_Ogre->Log_Message_To_File((LPSTR)"Ogre Root Created");
 
 	return 1;
 }

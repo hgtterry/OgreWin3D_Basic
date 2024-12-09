@@ -131,14 +131,23 @@ LRESULT CALLBACK CL64_Project_Create::Proc_Options_Dialog(HWND hDlg, UINT messag
 // *************************************************************************
 void CL64_Project_Create::Start_New_Project()
 {
+	App->CL_Ogre->Log_Message_To_File((LPSTR)" // -------------------------  Create Project");
+
 	App->CL_Scene->Clear_Level();
+
+	App->CL_Ogre->Log_Message_To_File((LPSTR)"Level Cleared");
+
 	App->CL_Resources->Create_Project_Resources_Group();
+	App->CL_Ogre->Ogre3D_Listener->flag_Run_Physics = 0;
+	App->CL_Ogre->Log_Message_To_File((LPSTR)"Created Resource Group");
 
 	Create_Options_Dialog();
 
 	App->CL_Project->flag_Is_New_Project = 1;
 	App->CL_Project->Start_Save_Project_Dialog();
 	App->CL_Project->flag_Is_New_Project = 0;
+
+	App->CL_Ogre->Log_Message_To_File((LPSTR)"Save Project Dialog Closed");
 
 	// ----------------------------------------------- Player
 	App->CL_Player->Create_Player_Object();
@@ -147,21 +156,21 @@ void CL64_Project_Create::Start_New_Project()
 	HTREEITEM Temp1 = App->CL_FileView->Add_Item(App->CL_FileView->FV_Players_Folder, (LPSTR)"Player_1", 0, true);
 	App->CL_Scene->B_Player[0]->FileViewItem = Temp1;
 	App->CL_FileView->Set_FolderActive(App->CL_FileView->FV_Players_Folder);
-
+	App->CL_Ogre->Log_Message_To_File((LPSTR)"Player Added");
 	// ----------------------------------------------- Counter
 	App->CL_Display->Add_New_Counter();
-
+	App->CL_Ogre->Log_Message_To_File((LPSTR)"Counter Added");
 	// ------------------------ Add Location
 	App->CL_Locations->Create_Location_Entity((LPSTR)"Start_Position");
-
+	App->CL_Ogre->Log_Message_To_File((LPSTR)"Location Added");
 	// ----------------------------------------------- Add Environ
 	App->CL_Com_Environments->Add_New_Environ_Entity(1);
 	int mIndex = App->CL_Com_Environments->Get_First_Environ();
 	App->CL_Com_Environments->Set_First_Environment(mIndex);
-
+	App->CL_Ogre->Log_Message_To_File((LPSTR)"Environment Added");
 	// ----------------------------------------------- Camera
 	App->CL_Com_Cameras->Add_New_Camera();
-
+	App->CL_Ogre->Log_Message_To_File((LPSTR)"Camera Added");
 
 	App->CL_Project->Save_All();
 
@@ -174,7 +183,10 @@ void CL64_Project_Create::Start_New_Project()
 	if (Doit == 0)
 	{
 		App->CL_MeshViewer->Mesh_Viewer_Mode = Enums::Mesh_Viewer_Area;
+
+		App->CL_Ogre->Log_Message_To_File((LPSTR)"MeshViewer Started");
 		App->CL_MeshViewer->Start_MeshViewer_Dlg();
+		App->CL_Ogre->Log_Message_To_File((LPSTR)"MeshViewer Ended");
 	}
 	else
 	{

@@ -818,6 +818,32 @@ void CL64_Resources::Get_Resource_Groups()
 }
 
 // *************************************************************************
+// *	Get_Project_Group_Location:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+Ogre::String CL64_Resources::Get_Project_Group_Location(Ogre::String ResourceGroup)
+{
+	Ogre::String LocationPath = "No Location";
+
+	Ogre::StringVectorPtr sv = Ogre::ResourceGroupManager::getSingleton().listResourceLocations(ResourceGroup);
+
+	int Count = 0;
+
+	if (sv->size() > 0)
+	{
+		LocationPath = (*sv)[0].c_str();
+
+		/*while (Count < sv->size())
+		{
+			App->Say_Win((*sv)[Count].c_str());
+			Count++;
+		}*/
+	}
+
+	return LocationPath;
+
+}
+
+// *************************************************************************
 // *			Scan_Resource_Group:- Terry and Hazel Flanigan 2024	 	   *
 // *************************************************************************
 bool CL64_Resources::Scan_Resource_Group(Ogre::String ResourceGroup)

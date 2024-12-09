@@ -312,7 +312,6 @@
 #define IDC_BT_MV_RESOURCES             1129
 #define IDC_BTCAMGOTO                   1130
 #define IDC_BT_RV_CHECK_USED            1131
-#define IDC_BUTTON6                     1132
 #define IDC_BT_RV_DELETEFILE            1132
 #define ID_VIEW_RESET                   32771
 #define ID_VIEW_MAX3DVIEW               32772
@@ -368,6 +367,7 @@
 #define ID_FILE_RECENTFILES             32822
 #define ID_WINDOWS_CAMERADATA           32823
 #define ID_VIEW_CAMERADATA              32824
+#define ID_FILE_CLEARRESENTPROJECTS     32825
 #define IDC_STATIC                      -1
 
 // Next default values for new objects
@@ -376,7 +376,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        206
-#define _APS_NEXT_COMMAND_VALUE         32825
+#define _APS_NEXT_COMMAND_VALUE         32826
 #define _APS_NEXT_CONTROL_VALUE         1133
 #define _APS_NEXT_SYMED_VALUE           110
 #endif

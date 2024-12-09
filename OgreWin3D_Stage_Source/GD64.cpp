@@ -192,29 +192,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		// Debug -------------------------------------------------------
 		case ID_DEBUG_GENERAL:
 		{
-			/*char Test_Project[MAX_PATH];
-			strcpy(Test_Project, App->GD_Directory_FullPath);
-			strcat(Test_Project, "\\Projects\\First_Project_Prj\\Project.owproj");
-
-			bool test = App->CL_Importers->Reload_FromResentFiles(Test_Project);
-			if (test == 1)
-			{
-				App->CL_Scene->Set_Scene();
-			}*/
-
-			/*if (App->CL_Ogre->flag_Block_Rendering == 1)
-			{
-				App->CL_Ogre->flag_Block_Rendering = 0;
-			}
-			else
-			{
-				App->CL_Ogre->flag_Block_Rendering = 1;
-			}*/
-
-			if (App->CL_Scene->flag_Scene_Loaded == 1)
-			{
-				//App->CL_Build_Game->Start_Project_Build();
-			}
+			Ogre::String LocationPath = App->CL_Resources->Get_Project_Group_Location(App->CL_Resources->Project_Resource_Group);
+			App->Say_Win(LocationPath.c_str());
 
 			return TRUE;
 		}
@@ -487,6 +466,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		case ID_NEW_PROJECT:
 		{
 			App->CL_Project_Create->Start_New_Project();
+			return 1;
+		}
+		
+		case ID_FILE_CLEARRESENTPROJECTS:
+		{
+			App->CL_File_IO->ResentHistory_Clear(0);
 			return 1;
 		}
 		
@@ -1036,7 +1021,9 @@ void StartOgre()
 // *************************************************************************
 void Close_App()
 {
-	if (App->CL_Ini_File)
+	App->CL_Scene->Clear_Level();
+
+	/*if (App->CL_Ini_File)
 	{
 		App->CL_Ini_File->Clean_Up();
 
@@ -1050,7 +1037,7 @@ void Close_App()
 
 		delete App->CL_Preferences;
 		App->CL_Preferences = nullptr;
-	}
+	}*/
 
 	// And Finaly
     if (App->CL_Ogre->mRoot)

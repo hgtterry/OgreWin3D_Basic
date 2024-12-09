@@ -643,8 +643,6 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 				App->CL_MeshViewer->Ogre_MV_Phys_Body = nullptr;
 			}
 
-			App->Say(App->CL_MeshViewer->m_Just_Folder);
-
 			int cmp = strcmp(App->CL_MeshViewer->m_Just_Folder, "Project_Assets");
 			if (cmp == 0)
 			{

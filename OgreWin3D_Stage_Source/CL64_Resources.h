@@ -45,6 +45,8 @@ public:
 	int Check_Mesh_Is_used_Auto(char* Filename);
 	int Check_Material_Is_used_Auto(char* Filename);
 
+	Ogre::String Get_Project_Group_Location(Ogre::String ResourceGroup);
+
 	char mSelected_File[MAX_PATH];
 
 	char Resource_File_Path_And_File[MAX_PATH];

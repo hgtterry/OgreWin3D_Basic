@@ -106,6 +106,20 @@ void CL64_Scene::Reset_Class()
 		Count++;
 	}
 
+	Count = 0;
+	int NumCameras = Camera_Count;
+
+	while (Count < NumCameras)
+	{
+		if (App->CL_Scene->B_Camera[Count])
+		{
+			delete App->CL_Scene->B_Camera[Count];
+		}
+		
+		Count++;
+	}
+
+	B_Camera.resize(0);
 	B_Object.resize(0);
 }
 

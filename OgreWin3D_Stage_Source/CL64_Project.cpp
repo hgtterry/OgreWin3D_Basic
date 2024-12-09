@@ -405,6 +405,9 @@ LRESULT CALLBACK CL64_Project::Save_Project_Dialog_Proc(HWND hDlg, UINT message,
 bool CL64_Project::Save_All()
 {
 	Save_Project();
+
+	App->Say("Scene Saved");
+
 	return 1;
 }
 
@@ -470,8 +473,7 @@ bool CL64_Project::Save_Project()
 	//}
 
 	(void)_chdir(CurDir);
-	App->Say("Scene Saved");
-
+	
 	return 1;
 }
 
@@ -608,6 +610,8 @@ bool CL64_Project::Save_Main_Asset_Folder()
 	{
 		Copy_Assets(LastFolder, m_Main_Assets_Path);
 	}
+
+	Load_Get_Resource_Path();
 
 	App->CL_Project->flag_Is_New_Project = 0;
 
@@ -1692,7 +1696,6 @@ bool CL64_Project::Load_Get_Resource_Path()
 	strcat(m_Main_Assets_Path, "Assets");
 	strcat(m_Main_Assets_Path, "\\");
 
-	//App->Say_Win(m_Main_Assets_Path);
 	App->CL_Resources->Add_Resource_Location_Project(m_Main_Assets_Path);
 
 	return 1;
