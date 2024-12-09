@@ -1590,12 +1590,12 @@ void CL64_FileView::Context_New(HWND hDlg)
 		return;
 	}
 
-	/*if (App->SBC_Scene->Area_Added == 0)
+	if (App->CL_Scene->flag_Area_Added == 0)
 	{
 		App->Say("An Area must be Added Firest before adding items");
 
 		return;
-	}*/
+	}
 
 	if (App->CL_FileView->Context_Selection == Enums::FileView_Cameras_Folder)
 	{

@@ -234,9 +234,14 @@ void CL64_Scene::Set_Scene()
 	App->CL_TopDlg->flag_Toggle_PhysicaDebug_Node = 1;
 	App->CL_Ogre->Bullet_Debug_Listener->btDebug_Node->setVisible(true);
 
-	App->CL_Ogre->Ogre3D_Listener->flag_Run_Physics = 1;
-
-	//App->CL_Ogre->mSceneMgr->setSkyDome(true, "OW3D/CloudySky");
+	if (App->CL_Scene->flag_Area_Added == 1)
+	{
+		App->CL_Ogre->Ogre3D_Listener->flag_Run_Physics = 1;
+	}
+	else
+	{
+		App->CL_Ogre->Ogre3D_Listener->flag_Run_Physics = 0;
+	}
 
 	App->CL_ImGui->flag_Show_Demo_Options = 1;
 

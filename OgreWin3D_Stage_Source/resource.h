@@ -371,6 +371,7 @@
 #define ID_WINDOWS_CAMERADATA           32823
 #define ID_VIEW_CAMERADATA              32824
 #define ID_FILE_CLEARRESENTPROJECTS     32825
+#define ID_ADD_AREA                     32826
 #define IDC_STATIC                      -1
 
 // Next default values for new objects
@@ -379,7 +380,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        206
-#define _APS_NEXT_COMMAND_VALUE         32826
+#define _APS_NEXT_COMMAND_VALUE         32827
 #define _APS_NEXT_CONTROL_VALUE         1134
 #define _APS_NEXT_SYMED_VALUE           110
 #endif

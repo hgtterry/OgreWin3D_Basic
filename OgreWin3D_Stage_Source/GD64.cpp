@@ -640,8 +640,22 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 			return TRUE;
 		}
-		
 
+		// Add --------------------------------------------------
+		case ID_ADD_AREA:
+		{
+			App->CL_Dialogs->Show_YesNo_Dlg((LPSTR)"Add Area", (LPSTR)"Do you want to add a new Area", (LPSTR)"");
+
+			bool Doit = App->CL_Dialogs->Canceled;
+			if (Doit == 0)
+			{
+				App->CL_MeshViewer->Mesh_Viewer_Mode = Enums::Mesh_Viewer_Area;
+				App->CL_MeshViewer->Start_MeshViewer_Dlg();
+			}
+
+			return TRUE;
+		}
+		
 		case ID_MOUSEANDKEYS:
 		{
 			App->CL_File_IO->Open_HTML((LPSTR)"Help\\MouseAndKeys.html");

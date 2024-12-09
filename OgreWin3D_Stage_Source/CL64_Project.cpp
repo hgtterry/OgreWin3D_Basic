@@ -408,7 +408,11 @@ bool CL64_Project::Save_All(bool Silent)
 {
 	flag_Silence_SaveAll_Dialogs = Silent;
 
-	Save_Project();
+	bool test = Save_Project();
+	if (test == 0)
+	{
+		return 0;
+	}
 
 	if (flag_Silence_SaveAll_Dialogs == 0)
 	{

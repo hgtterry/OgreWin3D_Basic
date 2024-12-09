@@ -203,7 +203,11 @@ void CL64_Project_Create::Start_New_Project()
 
 	Setup_Scene_Indoors();
 
-	App->CL_Project->Save_All(true);
+	bool test = App->CL_Project->Save_All(true);
+	if (test == 0)
+	{
+		return;
+	}
 
 	App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_Free;
 	App->CL_Scene->flag_Scene_Loaded = 1;
