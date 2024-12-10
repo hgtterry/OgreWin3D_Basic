@@ -636,8 +636,8 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 		Context_Selection = Enums::FileView_Player_File;
 
 		HideRightPanes();
-		App->CL_Props_Dialogs->Show_Details_Goto_Dlg(true);
-
+		//App->CL_Props_Dialogs->Show_Details_Goto_Dlg(true);
+		App->CL_Props_Dialogs->Show_Player_Dlg(true);
 		//----------------------------------------------------------------------------
 		
 		//App->SBC_Properties->Reset_Last_Selected_Object(App->SBC_Properties->Last_Selected_Object);
@@ -1013,6 +1013,7 @@ void CL64_FileView::HideRightPanes(void)
 	App->CL_Props_Dialogs->Hide_Debug_Dlg(false);
 	App->CL_Props_Dialogs->Show_Materials_Dlg(false);
 	App->CL_Props_Dialogs->Show_Cameras_Dlg(false);
+	App->CL_Props_Dialogs->Show_Player_Dlg(false);
 
 }
 

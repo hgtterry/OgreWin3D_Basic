@@ -35,6 +35,7 @@ CL64_Props_Dialogs::CL64_Props_Dialogs(void)
 	Debug_Dlg_hWnd =		nullptr;
 	Material_Props_Hwnd =	nullptr;
 	Cam_Props_HWND =		nullptr;
+	Player_Props_HWND =		nullptr;
 
 	Show_Area_Physics_Debug = 0;
 }
@@ -57,6 +58,7 @@ void CL64_Props_Dialogs::Start_Props_Dialogs()
 	//Start_Area_PropsPanel();
 	Start_Details_Goto_Dlg();
 	Start_Materials_PropsPanel();
+	Start_Player_PropsPanel();
 
 }
 
@@ -831,6 +833,237 @@ LRESULT CALLBACK CL64_Props_Dialogs::Proc_Camera_PropsPanel(HWND hDlg, UINT mess
 		break;
 	}
 	return FALSE;
+}
+
+// *************************************************************************
+// *	  Start_Player_PropsPanel:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+bool CL64_Props_Dialogs::Start_Player_PropsPanel()
+{
+	Player_Props_HWND = CreateDialog(App->hInst, (LPCTSTR)IDD_PROPS_PLAYER, App->CL_Properties->Properties_Dlg_hWnd, (DLGPROC)Proc_Player_PropsPanel);
+	Show_Player_Dlg(false);
+
+	return 1;
+}
+
+// *************************************************************************
+// *		Player_PropsPanel_Proc:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+LRESULT CALLBACK CL64_Props_Dialogs::Proc_Player_PropsPanel(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+
+	switch (message)
+	{
+	case WM_INITDIALOG:
+	{
+		SendDlgItemMessage(hDlg, IDC_BTSAVE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BTOBJECT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BTPHYSICS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_PHYSICSDEBUG, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_GOTO, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		SendDlgItemMessage(hDlg, IDC_BTPL_LOCATIONS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_COLLISIONS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		return TRUE;
+	}
+	case WM_CTLCOLORSTATIC:
+	{
+		return FALSE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->DialogBackGround;
+	}
+
+	case WM_NOTIFY:
+	{
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+
+		if (some_item->idFrom == IDC_BTSAVE && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		/*if (some_item->idFrom == IDC_BTLOOKAT && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}*/
+
+		if (some_item->idFrom == IDC_BTPL_LOCATIONS && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BT_GOTO && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		// ------------------------------------------ 
+		if (some_item->idFrom == IDC_BTOBJECT && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, 0);// App->CL_Player->Toggle_Objects_Flag);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BTPHYSICS && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, 0);//App->CL_Player->Toggle_Physics_Flag);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_PHYSICSDEBUG && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, 0);//App->CL_Player->Show_Physics_Debug);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BT_COLLISIONS && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, 0);//App->CL_Vm_ImGui->Show_Collision_Debug);
+			return CDRF_DODEFAULT;
+		}
+
+		return CDRF_DODEFAULT;
+	}
+
+	case WM_COMMAND:
+
+		if (LOWORD(wParam) == IDC_BTPL_LOCATIONS)
+		{
+			App->CL_Locations->Start_Locations_Dlg();
+			return 1;
+		}
+
+		if (LOWORD(wParam) == IDC_BT_COLLISIONS)
+		{
+			/*if (App->CL_Vm_ImGui->Show_Collision_Debug == 1)
+			{
+				App->CL_Vm_ImGui->Show_Collision_Debug = 0;
+			}
+			else
+			{
+				App->CL_Vm_ImGui->Show_Collision_Debug = 1;
+			}*/
+
+			return 1;
+		}
+
+		if (LOWORD(wParam) == IDC_BT_GOTO)
+		{
+
+			//App->CL_Ogre->mCamera->setPosition(Ogre::Vector3(App->CL_Scene->B_Player[0]->Phys_Body->getWorldTransform().getOrigin()));
+
+			float x = App->CL_Scene->B_Player[0]->StartPos.x;
+			float y = App->CL_Scene->B_Player[0]->StartPos.y;
+			float z = App->CL_Scene->B_Player[0]->StartPos.z;
+
+			App->CL_Scene->B_Player[0]->Phys_Body->getWorldTransform().setOrigin(btVector3(x, y, z));
+			App->CL_Scene->B_Player[0]->Phys_Body->getWorldTransform().setRotation(App->CL_Scene->B_Player[0]->Physics_Rotation);
+
+
+			return 1;
+		}
+
+		if (LOWORD(wParam) == IDC_BTSAVE)
+		{
+			if (App->CL_Scene->flag_Scene_Loaded == 1)
+			{
+
+				//App->CL_Scene->B_Player[0]->StartPos = Ogre::Vector3(App->CL_Scene->B_Player[0]->Phys_Body->getWorldTransform().getOrigin());
+				App->CL_Scene->B_Player[0]->Physics_Rotation = App->CL_Scene->B_Player[0]->Phys_Body->getWorldTransform().getRotation();
+
+				App->CL_Scene->B_Locations[0]->Physics_Position = App->CL_Scene->B_Player[0]->Phys_Body->getWorldTransform().getOrigin();
+				App->CL_Scene->B_Locations[0]->Physics_Rotation = App->CL_Scene->B_Player[0]->Phys_Body->getWorldTransform().getRotation();
+
+				App->CL_Scene->B_Player[0]->Altered = 1;
+				App->CL_Scene->flag_Scene_Modified = 1;
+				App->CL_FileView->Mark_Altered(App->CL_Scene->B_Player[0]->FileViewItem);
+
+				App->CL_Properties->Update_ListView_Player();
+
+				App->Say("Player Saved");
+			}
+			return 1;
+		}
+
+		if (LOWORD(wParam) == IDC_BTOBJECT)
+		{
+			if (App->CL_Scene->flag_Scene_Loaded == 1)
+			{
+				/*App->CL_Properties->Edit_Physics = 0;
+				App->CL_Properties->Update_ListView_Player();
+
+				App->CL_Player->Toggle_Objects_Flag = 1;
+				App->CL_Player->Toggle_Physics_Flag = 0;*/
+				RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			}
+			return 1;
+		}
+
+		if (LOWORD(wParam) == IDC_BTPHYSICS)
+		{
+			if (App->CL_Scene->flag_Scene_Loaded == 1)
+			{
+				/*App->CL_Properties->Edit_Physics = 1;
+				App->CL_Properties->Update_ListView_Player_Physics();
+
+				App->CL_Player->Toggle_Objects_Flag = 0;*/
+				//App->CL_Player->Toggle_Physics_Flag = 1;
+				RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			}
+			return 1;
+		}
+
+		if (LOWORD(wParam) == IDC_PHYSICSDEBUG)
+		{
+			int f = App->CL_Scene->B_Player[0]->Phys_Body->getCollisionFlags();
+
+			/*if (App->CL_Player->Show_Physics_Debug == 1)
+			{
+				App->CL_Player->Show_Physics_Debug = 0;
+				App->CL_Scene->B_Player[0]->Phys_Body->setCollisionFlags(f | (1 << 5));
+
+				App->CL_Ogre->Bullet_Debug_Listener->Render_Debug_Flag = 0;
+				App->CL_Ogre->RenderFrame(8);
+				App->CL_Ogre->Bullet_Debug_Listener->Render_Debug_Flag = 1;
+			}
+			else
+			{
+				App->CL_Player->Show_Physics_Debug = 1;
+				App->CL_Scene->B_Player[0]->Phys_Body->setCollisionFlags(f & (~(1 << 5)));
+			}*/
+
+			return 1;
+		}
+
+
+		break;
+	}
+	return FALSE;
+}
+
+// *************************************************************************
+// *		Show_Player_Dlg:- Terry and Hazel Flanigan 2024				   *
+// *************************************************************************
+void CL64_Props_Dialogs::Show_Player_Dlg(bool Show)
+{
+	ShowWindow(Player_Props_HWND, Show);
 }
 
 // *************************************************************************
