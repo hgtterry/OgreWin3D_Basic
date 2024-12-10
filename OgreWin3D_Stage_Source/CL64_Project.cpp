@@ -447,7 +447,7 @@ bool CL64_Project::Save_Project()
 
 	Save_Level_Folder();
 	Save_Main_Asset_Folder();
-
+	
 	(void)_chdir(m_Level_Folder_Path);
 
 	if (App->CL_Scene->flag_Area_Added == 1)
@@ -570,7 +570,7 @@ bool CL64_Project::Save_Project_Ini()
 	fprintf(WriteFile, "%s%i\n", "Use_Front_Dlg=", App->CL_Build_Game->GameOptions->flag_Front_Dialog);
 
 	fclose(WriteFile);
-
+	
 	return 1;
 }
 
@@ -619,13 +619,16 @@ bool CL64_Project::Save_Main_Asset_Folder()
 	{
 		(void)_chdir(m_Main_Assets_Path);
 	}
-
+	
 	if (flag_Is_New_Project == 0)
 	{
 		Copy_Assets(LastFolder, m_Main_Assets_Path);
 	}
-
-	Load_Get_Resource_Path();
+	
+	if (flag_Is_New_Project == 1)
+	{
+		Load_Get_Resource_Path();
+	}
 
 	App->CL_Project->flag_Is_New_Project = 0;
 

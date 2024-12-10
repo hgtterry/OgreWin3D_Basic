@@ -518,6 +518,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			if (App->CL_Scene->flag_Scene_Loaded == 1)
 			{
 				App->CL_Project->Start_Save_Project_Dialog();
+				App->Say("Scene Saved");
 			}
 			return 1;
 		}
