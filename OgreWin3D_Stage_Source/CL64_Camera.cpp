@@ -40,7 +40,7 @@ void CL64_Com_Cameras::Add_New_Camera(void)
 	App->CL_Scene->flag_Camera_Added;
 
 	App->CL_Scene->B_Camera[Index]->FileViewItem = App->CL_FileView->Add_Item(App->CL_FileView->FV_Cameras_Folder,
-		App->CL_Scene->B_Camera[Index]->Camera_Name, Index, false);
+		App->CL_Scene->B_Camera[Index]->Camera_Name, Index, true);
 
 	App->CL_Com_Cameras->Set_Camera(0);
 

@@ -43,6 +43,6 @@ public:
 	bool flag_Show_Physics_Debug;
 	bool flag_Hide_All_Except;
 	bool flag_Show_Mesh_Debug;
-
+	bool flag_Dont_Clear_Objects;
 };
 

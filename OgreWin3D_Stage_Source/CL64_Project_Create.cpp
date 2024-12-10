@@ -203,11 +203,13 @@ void CL64_Project_Create::Start_New_Project()
 
 	Setup_Scene_Indoors();
 
+	App->CL_Com_Objects->flag_Dont_Clear_Objects = 1;
 	bool test = App->CL_Project->Save_All(true);
 	if (test == 0)
 	{
 		return;
 	}
+	App->CL_Com_Objects->flag_Dont_Clear_Objects = 0;
 
 	App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_Free;
 	App->CL_Scene->flag_Scene_Loaded = 1;
@@ -238,7 +240,6 @@ void CL64_Project_Create::Setup_Scene_Indoors()
 	// ----------------------------------------------- Player
 	App->CL_Player->Create_Player_Object();
 	strcpy(App->CL_Scene->B_Player[0]->Player_Name, "Player_1");
-
 	HTREEITEM Temp1 = App->CL_FileView->Add_Item(App->CL_FileView->FV_Players_Folder, (LPSTR)"Player_1", 0, true);
 	App->CL_Scene->B_Player[0]->FileViewItem = Temp1;
 	App->CL_FileView->Set_FolderActive(App->CL_FileView->FV_Players_Folder);
@@ -248,11 +249,13 @@ void CL64_Project_Create::Setup_Scene_Indoors()
 	App->CL_Ogre->Log_Message_To_File((LPSTR)"Counter Added");
 	// ------------------------ Add Location
 	App->CL_Locations->Create_Location_Entity((LPSTR)"Start_Position");
+	
 	App->CL_Ogre->Log_Message_To_File((LPSTR)"Location Added");
 	// ----------------------------------------------- Add Environ
 	App->CL_Com_Environments->Add_New_Environ_Entity(1);
 	int mIndex = App->CL_Com_Environments->Get_First_Environ();
 	App->CL_Com_Environments->Set_First_Environment(mIndex);
+	//App->CL_Com_Environments->Mark_As_Altered_Environ(0);
 	App->CL_Ogre->Log_Message_To_File((LPSTR)"Environment Added");
 	// ----------------------------------------------- Camera
 	App->CL_Com_Cameras->Add_New_Camera();

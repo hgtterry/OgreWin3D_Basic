@@ -94,7 +94,7 @@ void CL64_Com_Environments::V_Set_Environ_Defaults(int Index)
 {
 	Base_Object* B_Object = App->CL_Scene->B_Object[Index];
 
-	B_Object->Altered = 0;
+	B_Object->Altered = 1;
 
 	B_Object->S_Environ[0]->Environment_ID = 0;
 	strcpy(B_Object->S_Environ[0]->Environment_Name, "Not_Set");
