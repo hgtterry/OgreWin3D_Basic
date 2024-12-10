@@ -92,6 +92,7 @@
 #define IDD_BUILD_DIALOG                203
 #define IDD_PROGRESS_BAR                204
 #define IDD_PROPS_CAMERA                205
+#define IDD_PROPS_PLAYER                206
 #define IDC_CK_SU_FULLSCREEN            1000
 #define IDC_ST_STARTUP                  1001
 #define IDC_CK_SU_FULL3DVIEW            1002
@@ -129,6 +130,7 @@
 #define IDC_BTBROWSE                    1007
 #define IDC_BTCAMSAVE                   1007
 #define IDC_BT_CP_INDOORSCENE           1007
+#define IDC_BTPHYSICS                   1007
 #define IDC_BUTTON2                     1008
 #define IDC_BT_TBH_CAMERA               1008
 #define IDC_BT_DEMORESOURCES            1008
@@ -165,18 +167,23 @@
 #define IDC_BT_PT_VIEWMAT               1010
 #define IDC_TRIMESH                     1010
 #define IDC_BT_LOC_FREECAM              1010
+#define IDC_BTSAVE                      1010
 #define IDC_TBSHOWHAIR                  1011
 #define IDC_BT_TD_DEBUG_PHYSICSDEBUG    1011
 #define IDC_JUSTOGRE                    1011
 #define IDC_BT_LOC_PLAYER               1011
+#define IDC_BTPL_LOCATIONS              1011
 #define IDC_TBSHOWGRID                  1012
 #define IDC_BT_TD_DEMOSTAB              1012
 #define IDC_CONE                        1012
 #define IDC_BT_LOC_PLAYERTOCAMERA       1012
+#define IDC_BT_COLLISIONS               1012
 #define IDC_BT_TD_DEMOS_DEMO1           1013
 #define IDC_BTSHOWPOINTS                1013
 #define IDC_BOX                         1013
 #define IDC_BTSAVE_LOCATION_PLAYER      1013
+#define IDC_BUTTON8                     1013
+#define IDC_PHYSICSDEBUG                1013
 #define IDC_BT_TD_DEMOS_DEMO2           1014
 #define IDC_TBBOUNDBOX                  1014
 #define IDC_SPHERE                      1014
@@ -316,6 +323,7 @@
 #define IDC_BT_RV_CHECK_USED            1131
 #define IDC_BT_RV_DELETEFILE            1132
 #define IDC_BT_CP_TERRAIN               1133
+#define IDC_BTOBJECT                    1134
 #define ID_VIEW_RESET                   32771
 #define ID_VIEW_MAX3DVIEW               32772
 #define ID_DEBUG_TESTPREFERANCE         32773
@@ -379,9 +387,9 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
-#define _APS_NEXT_RESOURCE_VALUE        206
+#define _APS_NEXT_RESOURCE_VALUE        207
 #define _APS_NEXT_COMMAND_VALUE         32827
-#define _APS_NEXT_CONTROL_VALUE         1134
+#define _APS_NEXT_CONTROL_VALUE         1135
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif
