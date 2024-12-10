@@ -1006,10 +1006,10 @@ LRESULT CALLBACK CL64_Props_Dialogs::Proc_Player_PropsPanel(HWND hDlg, UINT mess
 		{
 			if (App->CL_Scene->flag_Scene_Loaded == 1)
 			{
-				/*App->CL_Properties->Edit_Physics = 0;
+				App->CL_Properties->flag_Edit_Physics = 0;
 				App->CL_Properties->Update_ListView_Player();
 
-				App->CL_Player->Toggle_Objects_Flag = 1;
+				/*App->CL_Player->Toggle_Objects_Flag = 1;
 				App->CL_Player->Toggle_Physics_Flag = 0;*/
 				RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			}
@@ -1020,10 +1020,10 @@ LRESULT CALLBACK CL64_Props_Dialogs::Proc_Player_PropsPanel(HWND hDlg, UINT mess
 		{
 			if (App->CL_Scene->flag_Scene_Loaded == 1)
 			{
-				/*App->CL_Properties->Edit_Physics = 1;
+				App->CL_Properties->flag_Edit_Physics = 1;
 				App->CL_Properties->Update_ListView_Player_Physics();
 
-				App->CL_Player->Toggle_Objects_Flag = 0;*/
+				/*App->CL_Player->Toggle_Objects_Flag = 0;*/
 				//App->CL_Player->Toggle_Physics_Flag = 1;
 				RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			}

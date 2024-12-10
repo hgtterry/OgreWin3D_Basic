@@ -30,6 +30,7 @@ THE SOFTWARE.
 CL64_Properties::CL64_Properties(void)
 {
 	flag_Properties_Dlg_Active = 0;
+	flag_Edit_Physics = 0;
 
 	Current_Selected_Object = 0;
 
@@ -2218,6 +2219,73 @@ bool CL64_Properties::Update_ListView_Player()
 	grid[0][11] = "Look Up", grid[1][11] = chr_LookUp_Limit;
 	grid[0][12] = "Look Down", grid[1][12] = chr_LookDown_Limit;
 
+
+	ListView_DeleteAllItems(Properties_hLV);
+
+	for (DWORD row = 0; row < NUM_ITEMS; row++)
+	{
+		pitem.iItem = row;
+		pitem.pszText = const_cast<char*>(grid[0][row].c_str());
+		ListView_InsertItem(Properties_hLV, &pitem);
+
+		//ListView_SetItemText
+
+		for (DWORD col = 1; col < NUM_COLS; col++)
+		{
+			ListView_SetItemText(Properties_hLV, row, col,
+				const_cast<char*>(grid[col][row].c_str()));
+		}
+	}
+
+	return 1;
+}
+
+// *************************************************************************
+// *	Update_ListView_Player_Physics:- Terry and Hazel Flanigan 2024	   *
+// *************************************************************************
+bool CL64_Properties::Update_ListView_Player_Physics()
+{
+	if (App->CL_Scene->flag_Scene_Loaded == 0)
+	{
+		//return 1;
+	}
+
+	int index = Current_Selected_Object;
+
+	char buff[255];
+	strcpy(buff, App->CL_Scene->B_Player[0]->Player_Name);
+	//strcat(buff, "   (Physics)");
+	//SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)buff);
+
+	char chr_PhysicsType[100];
+	strcpy(chr_PhysicsType, "Dynamic");
+
+	char chr_PhysicsShape[100];
+	strcpy(chr_PhysicsShape, "Capsule");
+
+	char chr_Mass[100];
+	char chr_Radius[100];
+	char chr_Height[100];
+
+	sprintf(chr_Mass, "%.3f ", App->CL_Scene->B_Player[0]->Capsule_Mass);
+	//sprintf(chr_Mass,"%.3f ",App->GDSBC_Player->mObject->getGravity().getY());
+	sprintf(chr_Radius, "%.3f ", App->CL_Scene->B_Player[0]->Capsule_Radius);
+	sprintf(chr_Height, "%.3f ", App->CL_Scene->B_Player[0]->Capsule_Height);
+
+
+	const int NUM_ITEMS = 6;
+	const int NUM_COLS = 2;
+	std::string grid[NUM_COLS][NUM_ITEMS]; // string table
+	LV_ITEM pitem;
+	memset(&pitem, 0, sizeof(LV_ITEM));
+	pitem.mask = LVIF_TEXT;
+
+	grid[0][0] = "Name", grid[1][0] = App->CL_Scene->B_Player[0]->Player_Name;
+	grid[0][1] = "Type", grid[1][1] = chr_PhysicsType;
+	grid[0][2] = "Shape ", grid[1][2] = chr_PhysicsShape;
+	grid[0][3] = " ", grid[1][3] = " ";
+	grid[0][4] = "Radius", grid[1][4] = chr_Radius;
+	grid[0][5] = "Height", grid[1][5] = chr_Height;
 
 	ListView_DeleteAllItems(Properties_hLV);
 

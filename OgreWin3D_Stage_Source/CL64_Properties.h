@@ -38,6 +38,7 @@ public:
 	bool Update_ListView_Camera();
 	bool Update_ListView_Area();
 	bool Update_ListView_Player();
+	bool Update_ListView_Player_Physics();
 	bool Update_ListView_Objects();
 	bool Update_ListView_Collectables();
 	bool Update_ListView_Sounds();
@@ -54,6 +55,7 @@ public:
 	int Current_Selected_Object;
 
 	bool flag_Properties_Dlg_Active;
+	bool flag_Edit_Physics;
 
 	HWND Properties_Dlg_hWnd;
 
