@@ -38,6 +38,9 @@ CL64_Props_Dialogs::CL64_Props_Dialogs(void)
 	Player_Props_HWND =		nullptr;
 
 	Show_Area_Physics_Debug = 0;
+
+	Toggle_Objects_Flag = 1;
+	Toggle_Physics_Flag = 0;
 }
 
 CL64_Props_Dialogs::~CL64_Props_Dialogs(void)
@@ -882,7 +885,7 @@ LRESULT CALLBACK CL64_Props_Dialogs::Proc_Player_PropsPanel(HWND hDlg, UINT mess
 		LPNMHDR some_item = (LPNMHDR)lParam;
 
 
-		if (some_item->idFrom == IDC_BTSAVE && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDC_BTSAVE)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
@@ -896,14 +899,14 @@ LRESULT CALLBACK CL64_Props_Dialogs::Proc_Player_PropsPanel(HWND hDlg, UINT mess
 			return CDRF_DODEFAULT;
 		}*/
 
-		if (some_item->idFrom == IDC_BTPL_LOCATIONS && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDC_BTPL_LOCATIONS)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
 			return CDRF_DODEFAULT;
 		}
 
-		if (some_item->idFrom == IDC_BT_GOTO && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDC_BT_GOTO)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
@@ -911,28 +914,28 @@ LRESULT CALLBACK CL64_Props_Dialogs::Proc_Player_PropsPanel(HWND hDlg, UINT mess
 		}
 
 		// ------------------------------------------ 
-		if (some_item->idFrom == IDC_BTOBJECT && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDC_BTOBJECT)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, 0);// App->CL_Player->Toggle_Objects_Flag);
+			App->Custom_Button_Toggle(item, App->CL_Props_Dialogs->Toggle_Objects_Flag);
 			return CDRF_DODEFAULT;
 		}
 
-		if (some_item->idFrom == IDC_BTPHYSICS && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDC_BTPHYSICS)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, 0);//App->CL_Player->Toggle_Physics_Flag);
+			App->Custom_Button_Toggle(item, App->CL_Props_Dialogs->Toggle_Physics_Flag);
 			return CDRF_DODEFAULT;
 		}
 
-		if (some_item->idFrom == IDC_PHYSICSDEBUG && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDC_PHYSICSDEBUG)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, 0);//App->CL_Player->Show_Physics_Debug);
+			App->Custom_Button_Toggle(item, App->CL_Player->Show_Physics_Debug);
 			return CDRF_DODEFAULT;
 		}
 
-		if (some_item->idFrom == IDC_BT_COLLISIONS && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDC_BT_COLLISIONS)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Toggle(item, 0);//App->CL_Vm_ImGui->Show_Collision_Debug);
@@ -1009,8 +1012,9 @@ LRESULT CALLBACK CL64_Props_Dialogs::Proc_Player_PropsPanel(HWND hDlg, UINT mess
 				App->CL_Properties->flag_Edit_Physics = 0;
 				App->CL_Properties->Update_ListView_Player();
 
-				/*App->CL_Player->Toggle_Objects_Flag = 1;
-				App->CL_Player->Toggle_Physics_Flag = 0;*/
+				App->CL_Props_Dialogs->Toggle_Objects_Flag = 1;
+				App->CL_Props_Dialogs->Toggle_Physics_Flag = 0;
+
 				RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			}
 			return 1;
@@ -1023,8 +1027,9 @@ LRESULT CALLBACK CL64_Props_Dialogs::Proc_Player_PropsPanel(HWND hDlg, UINT mess
 				App->CL_Properties->flag_Edit_Physics = 1;
 				App->CL_Properties->Update_ListView_Player_Physics();
 
-				/*App->CL_Player->Toggle_Objects_Flag = 0;*/
-				//App->CL_Player->Toggle_Physics_Flag = 1;
+				App->CL_Props_Dialogs->Toggle_Objects_Flag = 0;
+				App->CL_Props_Dialogs->Toggle_Physics_Flag = 1;
+
 				RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			}
 			return 1;
@@ -1032,22 +1037,15 @@ LRESULT CALLBACK CL64_Props_Dialogs::Proc_Player_PropsPanel(HWND hDlg, UINT mess
 
 		if (LOWORD(wParam) == IDC_PHYSICSDEBUG)
 		{
-			int f = App->CL_Scene->B_Player[0]->Phys_Body->getCollisionFlags();
-
-			/*if (App->CL_Player->Show_Physics_Debug == 1)
+			
+			if (App->CL_Player->Show_Physics_Debug == 1)
 			{
-				App->CL_Player->Show_Physics_Debug = 0;
-				App->CL_Scene->B_Player[0]->Phys_Body->setCollisionFlags(f | (1 << 5));
-
-				App->CL_Ogre->Bullet_Debug_Listener->Render_Debug_Flag = 0;
-				App->CL_Ogre->RenderFrame(8);
-				App->CL_Ogre->Bullet_Debug_Listener->Render_Debug_Flag = 1;
+				App->CL_Player->Show_Physics(false);
 			}
 			else
 			{
-				App->CL_Player->Show_Physics_Debug = 1;
-				App->CL_Scene->B_Player[0]->Phys_Body->setCollisionFlags(f & (~(1 << 5)));
-			}*/
+				App->CL_Player->Show_Physics(true);
+			}
 
 			return 1;
 		}

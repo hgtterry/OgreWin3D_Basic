@@ -33,7 +33,9 @@ public:
 
 	void Create_Player_Object(void);
 	void Initialize() const;
+
 	void Show_Player_And_Physics(bool Show);
+	void Show_Physics(bool Show);
 	
 	void Update_Player(btCollisionWorld* collisionWorld, btScalar deltaTimeStep);
 	void Update_Velocity(float dt);
@@ -67,6 +69,9 @@ public:
 
 	bool flag_AddGravity;
 	bool flag_Is_On_Ground;
+	bool Show_Physics_Debug;
+
+
 	int Last_Message_Index;
 
 };

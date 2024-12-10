@@ -41,6 +41,7 @@ CL64_Player::CL64_Player(void)
 	Life_Time = 0;
 	Last_Message_Index = 0;
 
+	Show_Physics_Debug = 0;
 	flag_AddGravity = 0;
 	flag_Is_On_Ground = 0;
 }
@@ -167,16 +168,45 @@ void CL64_Player::Show_Player_And_Physics(bool Show)
 	{
 		App->CL_Scene->B_Player[0]->Phys_Body->setCollisionFlags(f & (~(1 << 5)));
 		App->CL_Scene->B_Player[0]->Player_Node->setVisible(true);
+		Show_Physics_Debug = 1;
 	}
 	else
 	{
 		App->CL_Scene->B_Player[0]->Phys_Body->setCollisionFlags(f | (1 << 5));
 		App->CL_Scene->B_Player[0]->Player_Node->setVisible(false);
+		Show_Physics_Debug = 0;
 	}
 
 	App->CL_Ogre->Bullet_Debug_Listener->Render_Debug_Flag = 0;
 	App->CL_Ogre->RenderFrame(1);
 	App->CL_Ogre->Bullet_Debug_Listener->Render_Debug_Flag = 1;
+
+	RedrawWindow(App->CL_Props_Dialogs->Player_Props_HWND, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+}
+
+// *************************************************************************
+// *		Show_Physics:- Terry and Hazel Flanigan 2024				   *
+// *************************************************************************
+void CL64_Player::Show_Physics(bool Show)
+{
+	int f = App->CL_Scene->B_Player[0]->Phys_Body->getCollisionFlags();
+
+	if (Show == 1)
+	{
+		App->CL_Scene->B_Player[0]->Phys_Body->setCollisionFlags(f & (~(1 << 5)));
+		Show_Physics_Debug = 1;
+	}
+	else
+	{
+		App->CL_Scene->B_Player[0]->Phys_Body->setCollisionFlags(f | (1 << 5));
+		Show_Physics_Debug = 0;
+	}
+
+	App->CL_Ogre->Bullet_Debug_Listener->Render_Debug_Flag = 0;
+	App->CL_Ogre->RenderFrame(1);
+	App->CL_Ogre->Bullet_Debug_Listener->Render_Debug_Flag = 1;
+
+	RedrawWindow(App->CL_Props_Dialogs->Player_Props_HWND, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 }
 
 // *************************************************************************

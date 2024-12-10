@@ -45,6 +45,7 @@ public:
 	void Show_Cameras_Dlg(bool Show);
 	void Show_Player_Dlg(bool Show);
 
+	HWND Player_Props_HWND;
 	HWND Dimensions_Dlg_hWnd;
 
 private:
@@ -61,12 +62,14 @@ private:
 	void Start_Dialog_PhysicsTest();
 	
 	bool Show_Area_Physics_Debug;
+	bool Toggle_Objects_Flag;
+	bool Toggle_Physics_Flag;
 
 	HWND Details_Goto_Hwnd;
 	HWND PhysicsTest_Dlg_hWnd;
 	HWND Debug_Dlg_hWnd;
 	HWND Material_Props_Hwnd;
 	HWND Cam_Props_HWND;
-	HWND Player_Props_HWND;
+
 };
 
