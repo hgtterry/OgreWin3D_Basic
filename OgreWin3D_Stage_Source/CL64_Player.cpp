@@ -155,7 +155,6 @@ void CL64_Player::Initialize() const
 	App->CL_Scene->B_Player[0]->Phys_Body->getWorldTransform().setRotation(App->CL_Scene->B_Player[0]->Physics_Rotation);
 	App->CL_Bullet->dynamicsWorld->addRigidBody(pBase->Phys_Body);
 
-	
 	App->CL_Scene->flag_Player_Added = 1;
 }
 
@@ -345,7 +344,7 @@ void CL64_Player::Set_Player_GroundSpeed(float GroundSpeed)
 // *************************************************************************
 // *		Set_Player_GroundSpeed:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
-void CL64_Player::Reset_Player(float GroundSpeed)
+void CL64_Player::Reset_Player()
 {
 	if (App->CL_Scene->flag_Player_Added == 1)// && GD_Reset_Player == 1)
 	{
@@ -371,6 +370,8 @@ void CL64_Player::Reset_Player(float GroundSpeed)
 		App->CL_Scene->B_Player[0]->Phys_Body->activate(true);
 
 		App->CL_Scene->B_Player[0]->Phys_Body->getWorldTransform().setRotation(App->CL_Scene->B_Player[0]->Physics_Rotation);
+
+		Adjust_Capsule();
 	}
 }
 

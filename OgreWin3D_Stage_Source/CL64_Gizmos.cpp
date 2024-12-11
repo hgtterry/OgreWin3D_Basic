@@ -231,7 +231,7 @@ void CL64_Gizmos::Load_Crosshair()
 	Crosshair_Node = App->CL_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	Crosshair_Node->attachObject(Crosshair_Ent);
 
-	Crosshair_Node->setVisible(true);
 	Crosshair_Node->setPosition(0, 0, 0);
 	Crosshair_Node->setScale(1, 1, 1);
+	Crosshair_Node->setVisible(false);
 }

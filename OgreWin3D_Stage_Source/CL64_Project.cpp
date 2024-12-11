@@ -1632,7 +1632,7 @@ bool CL64_Project::Load_Project()
 	if (Options->Has_Player > 0)
 	{
 		bool test = Load_Project_Player();
-		//App->SBC_DCC->Player_CanJump = App->CL_Prefs->Prefs_PlayerCanJump_Flag;
+		App->CL_Player->Reset_Player();
 	}
 
 	// ------------------------------------- Camera
@@ -2544,6 +2544,15 @@ bool CL64_Project::Load_Project_Player()
 		}
 		else { App->CL_Scene->B_Player[Count]->Limit_Look_Down = -45; }
 
+		//------------------ Capsule Radius
+		Test = App->CL_Ini_File->GetString(buff, "Radius", chr_Tag1, MAX_PATH);
+		if (Test > 0)
+		{
+			(void)sscanf(chr_Tag1, "%f", &x);
+			App->CL_Scene->B_Player[Count]->Capsule_Radius = x;
+		}
+		else { App->CL_Scene->B_Player[Count]->Capsule_Radius = 4.4; }
+
 		//------------------ Capsule Height
 		Test = App->CL_Ini_File->GetString(buff, "Height", chr_Tag1, MAX_PATH);
 		if (Test > 0)
@@ -2625,10 +2634,8 @@ bool CL64_Project::Load_Project_Player()
 
 	App->CL_Scene->Player_Location_Count = Count;
 
-	App->CL_Player->Reset_Player(70);
-	//App->SBC_Physics->Enable_Physics(1);
-
 	App->CL_FileView->Set_FolderActive(App->CL_FileView->FV_Players_Folder);
+
 	return 1;
 }
 

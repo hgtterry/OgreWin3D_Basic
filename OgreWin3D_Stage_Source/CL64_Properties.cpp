@@ -744,6 +744,8 @@ bool CL64_Properties::Edit_Player_Physics(LPARAM lParam)
 	result = strcmp(btext, "Radius");
 	if (result == 0)
 	{
+		return 1;
+
 		App->CL_ImGui_Dialogs->Start_Dialog_Float(0.50, 3, App->CL_Scene->B_Player[0]->Capsule_Radius, (LPSTR)"Player Radius");
 
 		while (App->CL_ImGui_Dialogs->Show_Dialog_Float == 1)
@@ -799,7 +801,7 @@ bool CL64_Properties::Edit_Player_Physics(LPARAM lParam)
 			{
 				App->CL_Scene->B_Player[0]->Capsule_Height = App->CL_ImGui_Dialogs->m_Dialog_Float;
 				App->CL_Player->Adjust_Capsule();
-				App->CL_Physics->Reset_Physics();
+				//App->CL_Physics->Reset_Physics();
 
 				App->CL_ImGui_Dialogs->Float_Altetered = 0;
 			}
