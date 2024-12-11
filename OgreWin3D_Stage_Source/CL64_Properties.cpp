@@ -697,6 +697,128 @@ bool CL64_Properties::Edit_Player(LPARAM lParam)
 }
 
 // *************************************************************************
+// *		Edit_Player_Physics:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+bool CL64_Properties::Edit_Player_Physics(LPARAM lParam)
+{
+	int Index = Current_Selected_Object; // Get Selected Object Index 
+	int result = 1;
+	int test;
+
+	LPNMLISTVIEW poo = (LPNMLISTVIEW)lParam;
+	test = poo->iItem;
+	ListView_GetItemText(Properties_hLV, test, 0, btext, 20);
+
+	/*result = strcmp(btext, "Mass");
+	if (result == 0)
+	{
+		char chr_Radius[10];
+		sprintf(chr_Radius, "%.3f ", App->SBC_Scene->B_Player[0]->Phys_Body->getInvMass());
+
+		strcpy(App->Cl_Dialogs->Chr_Float, chr_Radius);
+		strcpy(App->Cl_Dialogs->btext, "Player Physics Mass");
+
+		App->Cl_Dialogs->Dialog_Float();
+		if (App->Cl_Dialogs->Canceled == 1) { return TRUE; }
+
+
+		App->SBC_Scene->B_Player[0]->Phys_Body->setMassProps(App->Cl_Dialogs->mFloat, btVector3(0, 0, 0));
+
+		App->SBC_Scene->B_Player[0]->Altered = 1;
+		App->SBC_Scene->Scene_Modified = 1;
+		App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Player[0]->FileViewItem);
+
+		App->SBC_Properties->Update_ListView_Player_Physics();
+
+		return 1;
+	}*/
+
+	result = strcmp(btext, "Radius");
+	if (result == 0)
+	{
+		/*char chr_Radius[10];
+		sprintf(chr_Radius, "%.3f ", App->SBC_Scene->B_Player[0]->Capsule_Radius);
+
+		strcpy(App->Cl_Dialogs->Chr_Float, chr_Radius);
+		strcpy(App->Cl_Dialogs->btext, "Player Physics Shape Radius");
+
+		App->Cl_Dialogs->Dialog_Float();
+		if (App->Cl_Dialogs->Canceled == 1)
+		{
+			return TRUE;
+		}
+
+		App->SBC_Scene->B_Player[0]->Capsule_Radius = App->Cl_Dialogs->mFloat;
+
+		App->SBC_Player->Adjust_Capsule();
+
+		App->SBC_Scene->B_Player[0]->Altered = 1;
+		App->SBC_Scene->Scene_Modified = 1;
+		App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Player[0]->FileViewItem);
+
+		App->SBC_Properties->Update_ListView_Player_Physics();*/
+		return 1;
+	}
+
+	result = strcmp(btext, "Height");
+	if (result == 0)
+	{
+		App->CL_ImGui_Dialogs->Start_Dialog_Float(0.50, 3, App->CL_Scene->B_Player[0]->Capsule_Height, (LPSTR)"Player Height");
+
+		while (App->CL_ImGui_Dialogs->Show_Dialog_Float == 1)
+		{
+			App->CL_ImGui_Dialogs->BackGround_Render_Loop();
+
+			App->CL_Scene->B_Player[0]->Capsule_Height = App->CL_ImGui_Dialogs->m_Dialog_Float;
+			App->CL_Physics->Reset_Physics();
+		}
+
+		App->CL_ImGui_Dialogs->Show_Dialog_Float = 0;
+
+		if (App->CL_ImGui_Dialogs->Float_Canceld == 0)
+		{
+			App->CL_ImGui_Dialogs->Show_Dialog_Float = 0;
+
+			App->CL_Scene->B_Player[0]->Capsule_Height = App->CL_ImGui_Dialogs->m_Dialog_Float;
+
+			App->CL_Scene->B_Player[0]->Altered = 1;
+			App->CL_Scene->flag_Scene_Modified = 1;
+			App->CL_FileView->Mark_Altered(App->CL_Scene->B_Player[0]->FileViewItem);
+		}
+		else
+		{
+			App->CL_ImGui_Dialogs->m_Dialog_Float = App->CL_ImGui_Dialogs->m_Dialog_Float_Copy;
+			App->CL_Scene->B_Player[0]->Capsule_Height = App->CL_ImGui_Dialogs->m_Dialog_Float_Copy;
+			App->CL_Physics->Reset_Physics();
+		}
+
+		App->CL_Panels->Disable_Panels(false);
+
+		/*char chr_Height[10];
+		sprintf(chr_Height, "%.3f ", App->SBC_Scene->B_Player[0]->Capsule_Height);
+
+		strcpy(App->Cl_Dialogs->Chr_Float, chr_Height);
+		strcpy(App->Cl_Dialogs->btext, "Player Physics Shape Height");
+
+		App->Cl_Dialogs->Dialog_Float();
+		if (App->Cl_Dialogs->Canceled == 1) { return TRUE; }
+
+		App->SBC_Scene->B_Player[0]->Capsule_Height = App->Cl_Dialogs->mFloat;
+
+		App->SBC_Player->Adjust_Capsule();
+
+		App->SBC_Scene->B_Player[0]->Altered = 1;
+		App->SBC_Scene->Scene_Modified = 1;
+		App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Player[0]->FileViewItem);
+
+		App->SBC_Properties->Update_ListView_Player_Physics();*/
+
+		return 1;
+	}
+	return 1;
+}
+
+// *************************************************************************
 // *				Edit_Messages:- Terry and Hazel Flanigan 2024          *
 // *************************************************************************
 bool CL64_Properties::Edit_Messages(LPARAM lParam)

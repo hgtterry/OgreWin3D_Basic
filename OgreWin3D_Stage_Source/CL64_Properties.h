@@ -37,8 +37,10 @@ public:
 
 	bool Update_ListView_Camera();
 	bool Update_ListView_Area();
+
 	bool Update_ListView_Player();
 	bool Update_ListView_Player_Physics();
+
 	bool Update_ListView_Objects();
 	bool Update_ListView_Collectables();
 	bool Update_ListView_Sounds();
@@ -66,7 +68,10 @@ private:
 	void ListView_OnClickOptions(LPARAM lParam);
 
 	bool Edit_Object(LPARAM lParam);
+
 	bool Edit_Player(LPARAM lParam);
+	bool Edit_Player_Physics(LPARAM lParam);
+
 	bool Edit_Sounds(LPARAM lParam);
 	bool Edit_Environs_OnClick(LPARAM lParam);
 	bool Edit_Area_Onclick(LPARAM lParam);
