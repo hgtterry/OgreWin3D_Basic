@@ -30,8 +30,18 @@ CL64_ImGui::CL64_ImGui(void)
 {
 	flag_Imgui_Initialized = 0;
 
+	// --------------------------- Camera Data
+	flag_Show_Camera_Data = 0;
 	Camera_Data_PosX = 10;
 	Camera_Data_Posy = 100;
+	flag_CameraData_Start_Pos = 0;
+
+	// --------------------------- Player Data
+	flag_Show_Player_Data = 0;
+	Player_Data_PosX = 10;
+	Player_Data_Posy = 100;
+	flag_PlayerData_Start_Pos = 0;
+
 
 	flag_Do_Object_Data_Pos = 0;
 	Object_Data_PosX = 0;
@@ -40,14 +50,13 @@ CL64_ImGui::CL64_ImGui(void)
 	StartPos = 0;
 	flag_Show_FPS = 1;
 	flag_Show_ImGui_Demo = 0;
-	flag_Show_Camera_Data = 0;
 	flag_Show_Demo_Options = 0;
 	flag_Show_App_Debug = 0;
 	flag_Show_Ogre_Data = 0;
 	flag_Open_Textures_List = 1;
 	flag_Show_Object_Data = 0;
 	flag_Show_Collision_Debug = 0;
-	flag_CameraData_Start_Pos = 0;
+	
 	// Demo 1
 	flag_Show_Physics_Debug = 0;
 
@@ -215,6 +224,11 @@ void CL64_ImGui::ImGui_Render_Loop(void)
 	if (flag_Show_Camera_Data == 1)
 	{
 		Camera_Data_GUI();
+	}
+
+	if (flag_Show_Player_Data == 1)
+	{
+		Player_Data_GUI();
 	}
 
 	if (flag_Show_Demo_Options == 1)
@@ -400,6 +414,108 @@ void CL64_ImGui::Camera_Data_GUI(void)
 			flag_CameraData_Start_Pos = 0;
 			
 			flag_Show_Camera_Data = 0;
+			App->Check_Menu_Camera_Data(false);
+
+			ImGui::PopStyleColor();
+			ImGui::End();
+		}
+
+		ImGui::PopStyleColor();
+		ImGui::End();
+	}
+}
+
+// *************************************************************************
+// *			Player_Data_GUI:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void CL64_ImGui::Player_Data_GUI(void)
+{
+	ImGui::SetNextWindowPos(ImVec2(Player_Data_PosX, Player_Data_Posy), ImGuiCond_FirstUseEver);
+	ImGui::SetNextWindowSize(ImVec2(210, 310), ImGuiCond_FirstUseEver);
+
+	ImGui::PushStyleColor(ImGuiCol_WindowBg, IM_COL32(239, 239, 239, 255));
+
+	if (!ImGui::Begin("Player Data", &flag_Show_Player_Data, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar))
+	{
+		ImGui::End();
+	}
+	else
+	{
+		if (flag_PlayerData_Start_Pos == 0)
+		{
+			ImVec2 Size = ImGui::GetWindowSize();
+
+			Player_Data_PosX = ((float)App->CL_Ogre->Ogre3D_Listener->View_Width / 2) - (210 / 2);
+			Player_Data_Posy = ((float)App->CL_Ogre->Ogre3D_Listener->View_Height / 2) - (310 / 2);
+			ImGui::SetWindowPos("Player Data", ImVec2(Player_Data_PosX, Player_Data_Posy));
+
+			flag_PlayerData_Start_Pos = 1;
+		}
+
+		//ImGui::BeginDisabled(true);
+		ImVec2 Size = ImGui::GetWindowSize();
+
+		auto textWidth = ImGui::CalcTextSize("Player Data").x;
+
+		//float Yaw = App->CL_Ogre->Ogre3D_Listener->mCamNode->getOrientation().getYaw().valueDegrees();
+		
+		/*btTransform tr;
+		btVector3 Min;
+		btVector3 Max;
+
+		App->CL_Scene->B_Player[0]->Phys_Body->getCollisionShape()->getAabb(tr,Min,Max);
+		Min.getX();
+		btVector3 Scale = App->CL_Scene->B_Player[0]->Phys_Body->getCollisionShape()->getLocalScaling();*/
+		
+		/*float Pitch = App->CL_Ogre->Ogre3D_Listener->mCamNode->getOrientation().getPitch().valueDegrees();
+		float Roll = App->CL_Ogre->Ogre3D_Listener->mCamNode->getOrientation().getRoll().valueDegrees();
+
+		float X = App->CL_Ogre->Ogre3D_Listener->mCamNode->getPosition().x;
+		float Y = App->CL_Ogre->Ogre3D_Listener->mCamNode->getPosition().y;
+		float Z = App->CL_Ogre->Ogre3D_Listener->mCamNode->getPosition().z;*/
+
+		ImGui::Spacing();
+		ImGui::SetCursorPosX((Size.x - textWidth) * 0.5f);
+		ImGui::TextColored(ImVec4(0, 0, 1, 1), "Player Data");
+		ImGui::Separator();
+
+		textWidth = ImGui::CalcTextSize("Ray Cast").x;
+		ImGui::SetCursorPosX((Size.x - textWidth) * 0.5f);
+		ImGui::Text("Ray Cast");
+		ImGui::Text("Ray Cast End: %f", App->CL_Player->Ray_End_Gravity);
+		ImGui::Separator();
+
+		textWidth = ImGui::CalcTextSize("Gravity").x;
+		ImGui::SetCursorPosX((Size.x - textWidth) * 0.5f);
+		ImGui::Text("Gravity");
+		ImGui::Text("Add Gravity: %i", App->CL_Player->flag_AddGravity);
+		ImGui::Text("Is on Ground: %i", App->CL_Player->flag_Is_On_Ground);
+		ImGui::Separator();
+
+		textWidth = ImGui::CalcTextSize("Collision").x;
+		ImGui::SetCursorPosX((Size.x - textWidth) * 0.5f);
+		ImGui::Text("Collision");
+		ImGui::Text("Object_ID %i", App->CL_Player->Col_Object_Index);
+		ImGui::Separator();
+
+		ImGui::Text(" ");
+
+		ImGuiStyle& style = ImGui::GetStyle();
+
+		float size = ImGui::CalcTextSize("Close").x + style.FramePadding.x * 2.0f;
+		float avail = ImGui::GetContentRegionAvail().x;
+
+		float off = (avail - size) * 0.5f;
+		if (off > 0.0f)
+		{
+			ImGui::SetCursorPosX(ImGui::GetCursorPosX() + off);
+		}
+
+		if (ImGui::Button("Close"))
+		{
+			flag_PlayerData_Start_Pos = 0;
+
+			flag_Show_Player_Data = 0;
 			App->Check_Menu_Camera_Data(false);
 
 			ImGui::PopStyleColor();

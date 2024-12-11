@@ -213,36 +213,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			return TRUE;
 		}
 			
-		case ID_DEBUG_CAMERADATA:
-		{	
-			if (App->CL_ImGui->flag_Show_Camera_Data == 1)
-			{
-				App->CL_ImGui->flag_Show_Camera_Data = 0;
-			}
-			else
-			{
-				App->CL_ImGui->flag_Show_Camera_Data = 1;
-			}
-			return TRUE;
-		}
-
 		case ID_DEBUG_TESTPREFERANCE:
 		{
-			App->CL_Preferences->Read_Preferences();
-			return TRUE;
-		}
-
-		case ID_IMGUI_IMGUIDEMO:
-		{
-			if (App->CL_ImGui->flag_Show_ImGui_Demo == 1)
-			{
-				App->CL_ImGui->flag_Show_ImGui_Demo = 0;
-			}
-			else
-			{
-				App->CL_ImGui->flag_Show_ImGui_Demo = 1;
-			}
-
+			//App->CL_Preferences->Read_Preferences();
 			return TRUE;
 		}
 
@@ -637,6 +610,23 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			{
 				App->CL_ImGui->flag_Show_Camera_Data = 1;
 				App->Check_Menu_Camera_Data(true);
+			}
+
+			return TRUE;
+		}
+
+		case ID_VIEW_PLAYERDATA:
+		{
+			if (App->CL_ImGui->flag_Show_Player_Data == 1)
+			{
+				App->CL_ImGui->flag_Show_Player_Data = 0;
+				App->CL_ImGui->flag_PlayerData_Start_Pos = 0;
+				//App->Check_Menu_Camera_Data(false);
+			}
+			else
+			{
+				App->CL_ImGui->flag_Show_Player_Data = 1;
+				//App->Check_Menu_Camera_Data(true);
 			}
 
 			return TRUE;

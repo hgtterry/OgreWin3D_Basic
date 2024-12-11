@@ -182,7 +182,6 @@
 #define IDC_BTSHOWPOINTS                1013
 #define IDC_BOX                         1013
 #define IDC_BTSAVE_LOCATION_PLAYER      1013
-#define IDC_BUTTON8                     1013
 #define IDC_PHYSICSDEBUG                1013
 #define IDC_BT_TD_DEMOS_DEMO2           1014
 #define IDC_TBBOUNDBOX                  1014
@@ -380,6 +379,8 @@
 #define ID_VIEW_CAMERADATA              32824
 #define ID_FILE_CLEARRESENTPROJECTS     32825
 #define ID_ADD_AREA                     32826
+#define ID_DEBUG_IMGUI32827             32827
+#define ID_VIEW_PLAYERDATA              32828
 #define IDC_STATIC                      -1
 
 // Next default values for new objects
@@ -388,7 +389,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        207
-#define _APS_NEXT_COMMAND_VALUE         32827
+#define _APS_NEXT_COMMAND_VALUE         32829
 #define _APS_NEXT_CONTROL_VALUE         1135
 #define _APS_NEXT_SYMED_VALUE           110
 #endif

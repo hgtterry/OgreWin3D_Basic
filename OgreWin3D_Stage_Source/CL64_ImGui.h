@@ -43,7 +43,10 @@ public:
 
 	void ImGui_Render_Loop(void);
 	void ImGui_FPS(void);
+
 	void Camera_Data_GUI(void);
+	void Player_Data_GUI(void);
+
 	void ImGui_Collision_Debug(void);
 
 	void App_Debug(void);
@@ -61,19 +64,26 @@ public:
 	bool StartPos;
 	bool flag_Show_FPS;
 	bool flag_Show_ImGui_Demo;
-	bool flag_Show_Camera_Data;
 	bool flag_Show_Demo_Options;
 	bool flag_Show_App_Debug;
 	bool flag_Show_Object_Data;
 	bool flag_Show_Collision_Debug;
-	bool flag_CameraData_Start_Pos;
 	bool flag_Show_Ogre_Data;
 	bool flag_Open_Textures_List;
 	// Demo 1
 	bool flag_Show_Physics_Debug;
 
+	// --------------------------- Camera Data
+	bool flag_Show_Camera_Data;
 	float Camera_Data_PosX;
 	float Camera_Data_Posy;
+	bool flag_CameraData_Start_Pos;
+
+	// --------------------------- Player Data
+	bool flag_Show_Player_Data;
+	float Player_Data_PosX;
+	float Player_Data_Posy;
+	bool flag_PlayerData_Start_Pos;
 
 	float Model_Data_PosX;
 	float Model_Data_PosY;
@@ -81,8 +91,6 @@ public:
 	bool flag_Do_Object_Data_Pos;
 	float Object_Data_PosX;
 	float Object_Data_PosY;
-
-	float Float_Step;
 
 };
 
