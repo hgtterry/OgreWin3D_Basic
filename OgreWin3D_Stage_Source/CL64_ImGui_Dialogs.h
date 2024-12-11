@@ -71,6 +71,7 @@ public:
 	float m_Dialog_Float_Copy;
 	char Float_Banner[MAX_PATH];
 	bool Float_Exit;
+	bool Float_Altetered;
 	int Float_Combo_Step;
 
 	// -------------- General

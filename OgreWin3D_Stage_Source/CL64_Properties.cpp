@@ -777,8 +777,14 @@ bool CL64_Properties::Edit_Player_Physics(LPARAM lParam)
 		{
 			App->CL_ImGui_Dialogs->BackGround_Render_Loop();
 
-			App->CL_Scene->B_Player[0]->Capsule_Height = App->CL_ImGui_Dialogs->m_Dialog_Float;
-			App->CL_Physics->Reset_Physics();
+			if (App->CL_ImGui_Dialogs->Float_Altetered == 1)
+			{
+				App->CL_Scene->B_Player[0]->Capsule_Height = App->CL_ImGui_Dialogs->m_Dialog_Float;
+				App->CL_Player->Adjust_Capsule();
+				App->CL_Physics->Reset_Physics();
+
+				App->CL_ImGui_Dialogs->Float_Altetered = 0;
+			}
 		}
 
 		App->CL_ImGui_Dialogs->Show_Dialog_Float = 0;

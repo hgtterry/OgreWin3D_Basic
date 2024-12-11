@@ -243,6 +243,7 @@ void CL64_Player::Update_Velocity(float dt)
 
 	btVector3 linearVelocity = inv * App->CL_Scene->B_Player[0]->Phys_Body->getLinearVelocity();
 
+	//flag_Is_On_Ground = 1;
 
 	if (flag_Is_On_Ground == 1)// || mJump == 1)
 	{

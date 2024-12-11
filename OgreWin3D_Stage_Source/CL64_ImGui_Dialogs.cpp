@@ -55,6 +55,7 @@ CL64_ImGui_Dialogs::CL64_ImGui_Dialogs(void)
 	m_Dialog_Float_Copy = 0;
 	m_Dialog_Float = 10.222;
 	Float_Combo_Step = 0;
+	Float_Altetered = 0;
 
 	// Mesage Editor
 	flag_Centre_X_Selected = 0;
@@ -184,7 +185,11 @@ void CL64_ImGui_Dialogs::Dialog_Float(void)
 		ImGui::Indent();
 		ImGui::Spacing();
 
-		ImGui::InputFloat("", &m_Dialog_Float, Float_Step, 0, "%.3f");
+		int Test = ImGui::InputFloat("", &m_Dialog_Float, Float_Step, 0, "%.3f");
+		if (Test == 1)
+		{
+			Float_Altetered = 1;
+		}
 
 		ImGui::Spacing();
 		ImGui::Spacing();
