@@ -424,10 +424,9 @@ void CL64_Player::Check_Collisions(void)
 		Col_Player_Index = obA->getUserIndex();  // Should Be Player
 
 		Col_Object_Index = obB->getUserIndex2(); // Object Index
+
 		Col_Usage_Index = obB->getUserIndex();
 	
-		//App->CL_ImGui->Show_Collision_Debug = 1;
-		
 		if (Col_Player_Index == Enums::Stage_Usage_Player)
 		{
 			if (Col_Usage_Index == 123)// && App->SBC_Scene->B_Object[Last_Message_Index]->Triggered == 1)

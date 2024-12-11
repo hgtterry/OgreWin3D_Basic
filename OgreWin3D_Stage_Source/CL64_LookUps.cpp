@@ -240,14 +240,16 @@ void CL64_LookUps::Get_Usage(int Index)
 
 	int Usage = 0;
 
-	if (App->CL_Properties->Edit_Category == Enums::Edit_Area)
-	{
-		Usage = App->CL_Scene->B_Area[Index]->Usage;
-	}
-	else
-	{
-		Usage = App->CL_Scene->B_Object[Index]->Usage;
-	}
+	
+		if (App->CL_Properties->Edit_Category == Enums::Edit_Area)
+		{
+			Usage = App->CL_Scene->B_Area[Index]->Usage;
+		}
+		else
+		{
+			Usage = App->CL_Scene->B_Object[Index]->Usage;
+		}
+	
 
 	switch (Usage)
 	{
@@ -305,6 +307,12 @@ void CL64_LookUps::Get_Usage(int Index)
 		return;
 	}
 
+	case Enums::Stage_Usage_EnvironEntity:
+	{
+		strcpy(Chr_Usage, "Environment Entity");
+		return;
+	}
+	
 	break;
 
 	}

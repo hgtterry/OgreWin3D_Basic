@@ -825,17 +825,12 @@ LRESULT CALLBACK CL64_TopDlg::Proc_Camera_TB(HWND hDlg, UINT message, WPARAM wPa
 			{
 				if (App->CL_TopDlg->flag_Toggle_Select_Flag == 1)
 				{
-					//App->CL_Vm_ImGui->Show_Object_Selection = 0;
-
 					App->CL_TopDlg->flag_Toggle_Select_Flag = 0;
-					App->CL_Gizmos->mPickSight->hide();
 					App->CL_Ogre->Ogre3D_Listener->flag_Selection_Mode = 0;
 				}
 				else
 				{
-					//App->CL_Vm_ImGui->Show_Object_Selection = 1;
 					App->CL_TopDlg->flag_Toggle_Select_Flag = 1;
-					App->CL_Gizmos->mPickSight->show();
 					App->CL_Ogre->Ogre3D_Listener->flag_Selection_Mode = 1;
 				}
 

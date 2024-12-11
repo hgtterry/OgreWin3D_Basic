@@ -495,6 +495,10 @@ void CL64_ImGui::Player_Data_GUI(void)
 		textWidth = ImGui::CalcTextSize("Collision").x;
 		ImGui::SetCursorPosX((Size.x - textWidth) * 0.5f);
 		ImGui::Text("Collision");
+
+		//App->CL_LookUps->Get_Usage(App->CL_Player->Col_Usage_Index);
+		//ImGui::Text("Usage %s", App->CL_LookUps->Chr_Usage);
+		ImGui::Text("Usage_ID %i", App->CL_Player->Col_Usage_Index);
 		ImGui::Text("Object_ID %i", App->CL_Player->Col_Object_Index);
 		ImGui::Separator();
 
