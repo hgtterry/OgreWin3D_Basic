@@ -67,7 +67,7 @@ public:
 	int Round;
 	float Distance;
 	int Life_Time;
-
+	float Ray_End_Gravity;
 	bool flag_AddGravity;
 	bool flag_Is_On_Ground;
 	bool Show_Physics_Debug;

@@ -744,27 +744,45 @@ bool CL64_Properties::Edit_Player_Physics(LPARAM lParam)
 	result = strcmp(btext, "Radius");
 	if (result == 0)
 	{
-		/*char chr_Radius[10];
-		sprintf(chr_Radius, "%.3f ", App->SBC_Scene->B_Player[0]->Capsule_Radius);
+		App->CL_ImGui_Dialogs->Start_Dialog_Float(0.50, 3, App->CL_Scene->B_Player[0]->Capsule_Radius, (LPSTR)"Player Radius");
 
-		strcpy(App->Cl_Dialogs->Chr_Float, chr_Radius);
-		strcpy(App->Cl_Dialogs->btext, "Player Physics Shape Radius");
-
-		App->Cl_Dialogs->Dialog_Float();
-		if (App->Cl_Dialogs->Canceled == 1)
+		while (App->CL_ImGui_Dialogs->Show_Dialog_Float == 1)
 		{
-			return TRUE;
+			App->CL_ImGui_Dialogs->BackGround_Render_Loop();
+
+			if (App->CL_ImGui_Dialogs->Float_Altetered == 1)
+			{
+				App->CL_Scene->B_Player[0]->Capsule_Radius = App->CL_ImGui_Dialogs->m_Dialog_Float;
+				App->CL_Player->Adjust_Capsule();
+				App->CL_Physics->Reset_Physics();
+
+				App->CL_ImGui_Dialogs->Float_Altetered = 0;
+			}
 		}
 
-		App->SBC_Scene->B_Player[0]->Capsule_Radius = App->Cl_Dialogs->mFloat;
+		App->CL_ImGui_Dialogs->Show_Dialog_Float = 0;
 
-		App->SBC_Player->Adjust_Capsule();
+		if (App->CL_ImGui_Dialogs->Float_Canceld == 0)
+		{
+			App->CL_ImGui_Dialogs->Show_Dialog_Float = 0;
 
-		App->SBC_Scene->B_Player[0]->Altered = 1;
-		App->SBC_Scene->Scene_Modified = 1;
-		App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Player[0]->FileViewItem);
+			App->CL_Scene->B_Player[0]->Capsule_Radius = App->CL_ImGui_Dialogs->m_Dialog_Float;
 
-		App->SBC_Properties->Update_ListView_Player_Physics();*/
+			App->CL_Scene->B_Player[0]->Altered = 1;
+			App->CL_Scene->flag_Scene_Modified = 1;
+			App->CL_FileView->Mark_Altered(App->CL_Scene->B_Player[0]->FileViewItem);
+		}
+		else
+		{
+			App->CL_ImGui_Dialogs->m_Dialog_Float = App->CL_ImGui_Dialogs->m_Dialog_Float_Copy;
+			App->CL_Scene->B_Player[0]->Capsule_Radius = App->CL_ImGui_Dialogs->m_Dialog_Float_Copy;
+			App->CL_Physics->Reset_Physics();
+		}
+
+		App->CL_Panels->Disable_Panels(false);
+
+		App->CL_Properties->Update_ListView_Player_Physics();
+
 		return 1;
 	}
 
@@ -809,25 +827,6 @@ bool CL64_Properties::Edit_Player_Physics(LPARAM lParam)
 		App->CL_Panels->Disable_Panels(false);
 
 		App->CL_Properties->Update_ListView_Player_Physics();
-
-		/*char chr_Height[10];
-		sprintf(chr_Height, "%.3f ", App->SBC_Scene->B_Player[0]->Capsule_Height);
-
-		strcpy(App->Cl_Dialogs->Chr_Float, chr_Height);
-		strcpy(App->Cl_Dialogs->btext, "Player Physics Shape Height");
-
-		App->Cl_Dialogs->Dialog_Float();
-		if (App->Cl_Dialogs->Canceled == 1) { return TRUE; }
-
-		App->SBC_Scene->B_Player[0]->Capsule_Height = App->Cl_Dialogs->mFloat;
-
-		App->SBC_Player->Adjust_Capsule();
-
-		App->SBC_Scene->B_Player[0]->Altered = 1;
-		App->SBC_Scene->Scene_Modified = 1;
-		App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Player[0]->FileViewItem);
-
-		App->SBC_Properties->Update_ListView_Player_Physics();*/
 
 		return 1;
 	}

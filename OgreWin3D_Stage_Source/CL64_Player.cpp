@@ -41,6 +41,8 @@ CL64_Player::CL64_Player(void)
 	Life_Time = 0;
 	Last_Message_Index = 0;
 
+	Ray_End_Gravity = 15;
+
 	Show_Physics_Debug = 0;
 	flag_AddGravity = 0;
 	flag_Is_On_Ground = 0;
@@ -210,12 +212,15 @@ void CL64_Player::Show_Physics(bool Show)
 }
 
 // *************************************************************************
-// *	  					Adjust_CapsuleTerry Bernie					   *
+// *	  	Adjust_CapsuleTerry:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
 void CL64_Player::Adjust_Capsule(void)
 {
 	App->CL_Scene->B_Player[0]->Phys_Shape = new btCapsuleShape(btScalar(App->CL_Scene->B_Player[0]->Capsule_Radius), btScalar(App->CL_Scene->B_Player[0]->Capsule_Height));
 	App->CL_Scene->B_Player[0]->Phys_Body->setCollisionShape(App->CL_Scene->B_Player[0]->Phys_Shape);
+
+	Ray_End_Gravity = (App->CL_Scene->B_Player[0]->Capsule_Height + 12) / 2;
+	Get_Height();
 }
 
 // *************************************************************************
@@ -274,7 +279,9 @@ void CL64_Player::Get_Height(void)
 {
 	btVector3 Origin = App->CL_Scene->B_Player[0]->Phys_Body->getWorldTransform().getOrigin();
 	btVector3 from = btVector3(Origin.getX(), Origin.getY(), Origin.getZ());
-	btVector3 to = btVector3(Origin.getX(), Origin.getY() - 15, Origin.getZ());
+	btVector3 to = btVector3(Origin.getX(), Origin.getY() - Ray_End_Gravity, Origin.getZ());
+
+	App->CL_Gizmos->Crosshair_Node->setPosition(Origin.getX(), Origin.getY() - Ray_End_Gravity, Origin.getZ());
 
 	btCollisionWorld::ClosestRayResultCallback resultCallback(from, to);
 	App->CL_Bullet->dynamicsWorld->rayTest(from, to, resultCallback);

@@ -28,6 +28,9 @@ THE SOFTWARE.
 
 CL64_Gizmos::CL64_Gizmos(void)
 {
+	Crosshair_Ent = nullptr;
+	Crosshair_Node = nullptr;
+
 	BoxManual = NULL;
 	BoxNode = NULL;
 	mPickSight = NULL;
@@ -42,12 +45,9 @@ CL64_Gizmos::~CL64_Gizmos(void)
 // **************************************************************************
 void CL64_Gizmos::Set_Gizmos()
 {
-	/*Load_PickSight();
-	Load_Arrow();
-	Load_Target_Hit();
-	Load_All_Axis();*/
 	MarkerBox_Setup();
 	Load_PickSight();
+	Load_Crosshair();
 }
 
 // *************************************************************************
@@ -220,4 +220,18 @@ void CL64_Gizmos::Load_PickSight(void)
 	//Sight_Node->setPosition(0, 0, 0);
 	//Sight_Node->setVisible(true);
 	//Sight_Node->setScale(7, 7, 7);
+}
+
+// *************************************************************************
+// *	  		Load_Crosshair:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void CL64_Gizmos::Load_Crosshair()
+{
+	Crosshair_Ent = App->CL_Ogre->mSceneMgr->createEntity("Crosshair", "axes.mesh", App->CL_Ogre->App_Resource_Group);
+	Crosshair_Node = App->CL_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	Crosshair_Node->attachObject(Crosshair_Ent);
+
+	Crosshair_Node->setVisible(true);
+	Crosshair_Node->setPosition(0, 0, 0);
+	Crosshair_Node->setScale(1, 1, 1);
 }

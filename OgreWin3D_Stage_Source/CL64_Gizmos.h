@@ -38,9 +38,13 @@ public:
 	void Show_MarkerBox(bool Show);
 
 	void Load_PickSight(void);
+	void Load_Crosshair();
 
 	ManualObject* BoxManual;
 	SceneNode* BoxNode;
+
+	Ogre::Entity* Crosshair_Ent;
+	Ogre::SceneNode* Crosshair_Node;
 
 	Ogre::Overlay* mPickSight;
 };
