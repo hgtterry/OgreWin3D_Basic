@@ -210,6 +210,15 @@ void CL64_Player::Show_Physics(bool Show)
 }
 
 // *************************************************************************
+// *	  					Adjust_CapsuleTerry Bernie					   *
+// *************************************************************************
+void CL64_Player::Adjust_Capsule(void)
+{
+	App->CL_Scene->B_Player[0]->Phys_Shape = new btCapsuleShape(btScalar(App->CL_Scene->B_Player[0]->Capsule_Radius), btScalar(App->CL_Scene->B_Player[0]->Capsule_Height));
+	App->CL_Scene->B_Player[0]->Phys_Body->setCollisionShape(App->CL_Scene->B_Player[0]->Phys_Shape);
+}
+
+// *************************************************************************
 // *			Update_Player:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
 void CL64_Player::Update_Player(btCollisionWorld* collisionWorld, btScalar deltaTimeStep)

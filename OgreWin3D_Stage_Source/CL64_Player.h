@@ -36,7 +36,8 @@ public:
 
 	void Show_Player_And_Physics(bool Show);
 	void Show_Physics(bool Show);
-	
+	void Adjust_Capsule(void);
+
 	void Update_Player(btCollisionWorld* collisionWorld, btScalar deltaTimeStep);
 	void Update_Velocity(float dt);
 	void Get_Height(void);

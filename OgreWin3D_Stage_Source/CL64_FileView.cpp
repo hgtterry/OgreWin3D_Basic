@@ -636,7 +636,6 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 		Context_Selection = Enums::FileView_Player_File;
 
 		HideRightPanes();
-		//App->CL_Props_Dialogs->Show_Details_Goto_Dlg(true);
 		App->CL_Props_Dialogs->Show_Player_Dlg(true);
 		//----------------------------------------------------------------------------
 		
@@ -645,6 +644,7 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 		//----------------------------------------------------------------------------
 
 		App->CL_Properties->Current_Selected_Object = Index;
+
 		App->CL_Properties->Edit_Category = Enums::Edit_Player;
 		App->CL_LookUps->Update_Types();
 

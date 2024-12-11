@@ -245,7 +245,15 @@ void CL64_Properties::ListView_OnClickOptions(LPARAM lParam)
 	// Player
 	if (Edit_Category == Enums::Edit_Player)
 	{
-		Edit_Player(lParam);
+		if (flag_Edit_Physics == 0)
+		{
+			Edit_Player(lParam);
+		}
+		else
+		{
+			Edit_Player_Physics(lParam);
+		}
+
 		return;
 	}
 
@@ -793,6 +801,8 @@ bool CL64_Properties::Edit_Player_Physics(LPARAM lParam)
 		}
 
 		App->CL_Panels->Disable_Panels(false);
+
+		App->CL_Properties->Update_ListView_Player_Physics();
 
 		/*char chr_Height[10];
 		sprintf(chr_Height, "%.3f ", App->SBC_Scene->B_Player[0]->Capsule_Height);
