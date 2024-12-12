@@ -36,6 +36,7 @@ public:
 	void Start_Materials_PropsPanel();
 	bool Start_Camera_PropsPanel();
 	bool Start_Player_PropsPanel();
+	void Start_Overide_Counter(void);
 
 	void Hide_Debug_Dlg(bool Show);
 	void Show_Physics_Test_Dlg(bool Show);
@@ -44,6 +45,7 @@ public:
 	void Show_Materials_Dlg(bool Show);
 	void Show_Cameras_Dlg(bool Show);
 	void Show_Player_Dlg(bool Show);
+	void Show_Overide_Counter_Dlg(bool Show);
 
 	HWND Player_Props_HWND;
 	HWND Dimensions_Dlg_hWnd;
@@ -57,6 +59,7 @@ private:
 	static LRESULT CALLBACK Prop_Materials_PropsPanel(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Proc_Camera_PropsPanel(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Proc_Player_PropsPanel(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Proc_Overide_Counter(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	void Start_Details_Goto_Dlg(void);
 	void Start_Dialog_PhysicsTest();
@@ -64,7 +67,9 @@ private:
 	bool Show_Area_Physics_Debug;
 	bool Toggle_Objects_Flag;
 	bool Toggle_Physics_Flag;
+	bool Toggle_OverideCounter_Flag;
 
+	HWND Overide_Counter_Goto_Hwnd;
 	HWND Details_Goto_Hwnd;
 	HWND PhysicsTest_Dlg_hWnd;
 	HWND Debug_Dlg_hWnd;

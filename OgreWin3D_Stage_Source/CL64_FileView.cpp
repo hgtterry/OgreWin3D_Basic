@@ -738,6 +738,7 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 		Context_Selection = Enums::FileView_Sounds_Folder;
 		return;
 	}
+
 	if (!strcmp(FileView_File, "Sounds"))
 	{
 		Context_Selection = Enums::FileView_Sounds_File;
@@ -783,6 +784,7 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 
 		HideRightPanes();
 		App->CL_Props_Dialogs->Show_Details_Goto_Dlg(true);
+		App->CL_Props_Dialogs->Show_Overide_Counter_Dlg(true);
 		App->CL_Props_Dialogs->Show_Dimensions_Dlg(true);
 		App->CL_Props_Dialogs->Show_Physics_Test_Dlg(true);
 		App->CL_Props_Dialogs->Hide_Debug_Dlg(1);
@@ -865,6 +867,7 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 
 		HideRightPanes();
 		App->CL_Props_Dialogs->Show_Details_Goto_Dlg(true);
+		App->CL_Props_Dialogs->Show_Overide_Counter_Dlg(true);
 		App->CL_Props_Dialogs->Show_Dimensions_Dlg(true);
 		App->CL_Props_Dialogs->Hide_Debug_Dlg(1);
 
@@ -996,24 +999,14 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 // *************************************************************************
 void CL64_FileView::HideRightPanes(void)
 {
-	if (App->CL_Scene->flag_Scene_Loaded == 1)
-	{
-		//ShowWindow(App->SBC_Properties->Properties_Dlg_hWnd, 0);	
-	}
-
-	/*App->SBC_Com_Camera->Hide_Cam_Dlg(0);
-	App->SBC_Player->Hide_Player_Dlg(0);
-	App->SBC_Props_Dialog->Hide_Area_Dlg(0);*/
 	App->CL_Props_Dialogs->Show_Details_Goto_Dlg(false);
-
-	//App->SBC_Props_Dialog->Hide_Panel_Test_Dlg(0);
 	App->CL_Props_Dialogs->Show_Dimensions_Dlg(false);
 	App->CL_Props_Dialogs->Show_Physics_Test_Dlg(false);
 	App->CL_Props_Dialogs->Hide_Debug_Dlg(false);
 	App->CL_Props_Dialogs->Show_Materials_Dlg(false);
 	App->CL_Props_Dialogs->Show_Cameras_Dlg(false);
 	App->CL_Props_Dialogs->Show_Player_Dlg(false);
-
+	App->CL_Props_Dialogs->Show_Overide_Counter_Dlg(false);
 }
 
 // *************************************************************************

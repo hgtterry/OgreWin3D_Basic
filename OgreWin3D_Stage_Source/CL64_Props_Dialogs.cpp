@@ -29,18 +29,20 @@ THE SOFTWARE.
 
 CL64_Props_Dialogs::CL64_Props_Dialogs(void)
 {
-	Details_Goto_Hwnd =		nullptr;
-	PhysicsTest_Dlg_hWnd =	nullptr;
-	Dimensions_Dlg_hWnd =	nullptr;
-	Debug_Dlg_hWnd =		nullptr;
-	Material_Props_Hwnd =	nullptr;
-	Cam_Props_HWND =		nullptr;
-	Player_Props_HWND =		nullptr;
+	Details_Goto_Hwnd =			nullptr;
+	PhysicsTest_Dlg_hWnd =		nullptr;
+	Dimensions_Dlg_hWnd =		nullptr;
+	Debug_Dlg_hWnd =			nullptr;
+	Material_Props_Hwnd =		nullptr;
+	Cam_Props_HWND =			nullptr;
+	Player_Props_HWND =			nullptr;
+	Overide_Counter_Goto_Hwnd =	nullptr;
 
 	Show_Area_Physics_Debug = 0;
 
 	Toggle_Objects_Flag = 1;
 	Toggle_Physics_Flag = 0;
+	Toggle_OverideCounter_Flag = 0;
 }
 
 CL64_Props_Dialogs::~CL64_Props_Dialogs(void)
@@ -57,11 +59,10 @@ void CL64_Props_Dialogs::Start_Props_Dialogs()
 	Start_Dialog_PhysicsTest();
 	Start_Dialog_Debug();
 	Start_Camera_PropsPanel();
-	//Start_Panels_Test_Dlg();
-	//Start_Area_PropsPanel();
 	Start_Details_Goto_Dlg();
 	Start_Materials_PropsPanel();
 	Start_Player_PropsPanel();
+	Start_Overide_Counter();
 
 }
 
@@ -106,14 +107,14 @@ LRESULT CALLBACK CL64_Props_Dialogs::Proc_Details_Goto(HWND hDlg, UINT message, 
 	{
 		LPNMHDR some_item = (LPNMHDR)lParam;
 
-		if (some_item->idFrom == IDC_BT_GOTO && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDC_BT_GOTO)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
 			return CDRF_DODEFAULT;
 		}
 
-		if (some_item->idFrom == IDC_BT_DETAIL && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDC_BT_DETAIL)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
@@ -152,6 +153,96 @@ LRESULT CALLBACK CL64_Props_Dialogs::Proc_Details_Goto(HWND hDlg, UINT message, 
 
 		break;
 	}
+
+	return FALSE;
+}
+
+// *************************************************************************
+// *		Start_Overide_Counter:- Terry and Hazel Flanigan 2024 		   *
+// *************************************************************************
+void CL64_Props_Dialogs::Start_Overide_Counter(void)
+{
+	Overide_Counter_Goto_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_PROPS_OVERRIDECOUNTER, App->CL_Properties->Properties_Dlg_hWnd, (DLGPROC)Proc_Overide_Counter);
+
+	//Init_Bmps_DetailsGo();
+	Show_Overide_Counter_Dlg(false);
+
+}
+
+// *************************************************************************
+// *		Proc_Overide_Counter:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+LRESULT CALLBACK CL64_Props_Dialogs::Proc_Overide_Counter(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+
+	switch (message)
+	{
+	case WM_INITDIALOG:
+	{
+		SendDlgItemMessage(hDlg, IDC_BT_DP_OVERIDECOUNTER, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		return TRUE;
+	}
+	case WM_CTLCOLORSTATIC:
+	{
+		return FALSE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->DialogBackGround;
+	}
+
+	case WM_NOTIFY:
+	{
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		if (some_item->idFrom == IDC_BT_DP_OVERIDECOUNTER)
+		{
+			int Index = App->CL_Properties->Current_Selected_Object;
+
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+
+			if (App->CL_Scene->Object_Count > 0)
+			{
+				App->Custom_Button_Toggle(item, App->CL_Scene->B_Object[Index]->flag_OverRide_Counter);
+			}
+			else
+			{
+				App->Custom_Button_Normal(item);
+			}
+
+			return CDRF_DODEFAULT;
+		}
+
+		return CDRF_DODEFAULT;
+	}
+
+	case WM_COMMAND:
+	{
+		if (LOWORD(wParam) == IDC_BT_DP_OVERIDECOUNTER)
+		{
+			int Index = App->CL_Properties->Current_Selected_Object;
+
+			if (App->CL_Scene->B_Object[Index]->flag_OverRide_Counter == 1)
+			{
+				App->CL_Scene->B_Object[Index]->flag_OverRide_Counter = 0;
+				App->CL_Props_Dialogs->Toggle_OverideCounter_Flag = 0;
+			}
+			else
+			{
+				App->CL_Scene->B_Object[Index]->flag_OverRide_Counter = 1;
+				App->CL_Props_Dialogs->Toggle_OverideCounter_Flag = 1;
+			}
+
+			RedrawWindow(App->CL_Props_Dialogs->Overide_Counter_Goto_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+			return 1;
+		}
+
+		break;
+	}
+	}
+
 	return FALSE;
 }
 
@@ -196,14 +287,14 @@ LRESULT CALLBACK CL64_Props_Dialogs::Proc_Dialog_PhysicsTest(HWND hDlg, UINT mes
 	{
 		LPNMHDR some_item = (LPNMHDR)lParam;
 
-		if (some_item->idFrom == IDC_BT_PHYSRESET && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDC_BT_PHYSRESET)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
 			return CDRF_DODEFAULT;
 		}
 
-		if (some_item->idFrom == IDC_BT_TEST_ENTITY && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDC_BT_TEST_ENTITY)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
@@ -298,21 +389,21 @@ LRESULT CALLBACK CL64_Props_Dialogs::Proc_Dialog_Dimensions(HWND hDlg, UINT mess
 	{
 		LPNMHDR some_item = (LPNMHDR)lParam;
 
-		if (some_item->idFrom == IDC_BT_POSITION && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDC_BT_POSITION)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Toggle(item, App->CL_Dimensions->Show_Position);
 			return CDRF_DODEFAULT;
 		}
 
-		if (some_item->idFrom == IDC_BT_SCALE && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDC_BT_SCALE)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Toggle(item, App->CL_Dimensions->Show_Scale);
 			return CDRF_DODEFAULT;
 		}
 
-		if (some_item->idFrom == IDC_BT_ROTATION && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDC_BT_ROTATION)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Toggle(item, App->CL_Dimensions->Show_Rotation);
@@ -1054,6 +1145,14 @@ LRESULT CALLBACK CL64_Props_Dialogs::Proc_Player_PropsPanel(HWND hDlg, UINT mess
 		break;
 	}
 	return FALSE;
+}
+
+// *************************************************************************
+// *	Show_Overide_Counter_Dlg:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+void CL64_Props_Dialogs::Show_Overide_Counter_Dlg(bool Show)
+{
+	ShowWindow(Overide_Counter_Goto_Hwnd, Show);
 }
 
 // *************************************************************************

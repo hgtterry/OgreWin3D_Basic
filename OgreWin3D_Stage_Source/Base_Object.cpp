@@ -109,6 +109,7 @@ bool Base_Object::Init_Object(void)
 	Triggered = 0;
 	Physics_Debug_On = 0;
 	Dimensions_Locked = 0;
+	flag_OverRide_Counter = 0;
 
 	//------------------------------ Message Entity
 	//strcpy(Message_Text, "This is in the Object");

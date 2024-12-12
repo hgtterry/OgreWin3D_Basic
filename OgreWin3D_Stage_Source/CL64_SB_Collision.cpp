@@ -52,7 +52,7 @@ CL64_Collision::~CL64_Collision(void)
 // *************************************************************************
 bool CL64_Collision::Do_Teleport(int Index)
 {
-	if (App->CL_Scene->B_Object[Index]->S_Teleport[0]->Counter_Disabled == 1)
+	if (App->CL_Scene->B_Object[Index]->S_Teleport[0]->Counter_Disabled == 1 || App->CL_Scene->B_Object[Index]->flag_OverRide_Counter == 1)
 	{
 		App->CL_Scene->B_Player[0]->Phys_Body->getWorldTransform().setOrigin(App->CL_Scene->B_Object[Index]->S_Teleport[0]->Physics_Position);
 		App->CL_Scene->B_Player[0]->Phys_Body->getWorldTransform().setRotation(App->CL_Scene->B_Object[Index]->S_Teleport[0]->Physics_Rotation);
@@ -88,6 +88,7 @@ bool CL64_Collision::Do_Teleport(int Index)
 		return 1;
 	}
 
+	
 	int Trigger_Value = App->CL_Scene->B_Object[Index]->S_Teleport[0]->Trigger_Value;
 	int CounterIndex = App->CL_Scene->B_Object[Index]->S_Teleport[0]->Counter_ID;
 
@@ -126,6 +127,7 @@ bool CL64_Collision::Do_Teleport(int Index)
 		}
 
 		return 1;
+
 	}
 
 	return 1;
@@ -187,7 +189,7 @@ bool CL64_Collision::Move_Entity_Collision(int Index)
 
 	if (App->CL_Scene->B_Object[ObjectToMove]->Deleted == 0)
 	{
-		if (App->CL_Scene->B_Object[ObjectIndex]->S_MoveType[0]->Counter_Disabled == 1)
+		if (App->CL_Scene->B_Object[ObjectIndex]->S_MoveType[0]->Counter_Disabled == 1 || App->CL_Scene->B_Object[Index]->flag_OverRide_Counter == 1)
 		{
 			Set_Move_Entity(Index);
 			return 1;

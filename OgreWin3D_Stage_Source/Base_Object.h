@@ -217,6 +217,8 @@ public:
 	Particle_type*	S_Particle[1];
 	Light_type*		S_Light[1];
 
+	bool flag_OverRide_Counter;
+
 	bool Show_Message_Flag;
 	char ImGui_Panel_Name[MAX_PATH];
 };
