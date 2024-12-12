@@ -54,6 +54,11 @@ CL64_Picking::CL64_Picking(Ogre::SceneManager* sceneMgr)
     Selected_Ok = 0;
     ParticleFound = 0;
 
+    FaceMaterial[0] = 0;
+    TextureName[0] = 0;
+    ParticleName[0] = 0;
+    ParticleFound = 0;
+
 }
 
 CL64_Picking::~CL64_Picking(void)
@@ -76,14 +81,6 @@ void CL64_Picking::Clear_Picking_Data()
     SubMesh_Face = 0;
     Selected_Ok = 0;
     ParticleFound = 0;
-
-   /* App->CL_Grid->HitVertices[0] = Ogre::Vector3(0, 0, 0);
-    App->CL_Grid->HitVertices[1] = Ogre::Vector3(0, 0, 0);
-    App->CL_Grid->HitVertices[2] = Ogre::Vector3(0, 0, 0);
-
-    App->CL_Grid->HitFaceUVs[0] = Ogre::Vector2(0, 0);
-    App->CL_Grid->HitFaceUVs[1] = Ogre::Vector2(0, 0);
-    App->CL_Grid->HitFaceUVs[2] = Ogre::Vector2(0, 0);*/
 }
 
 // *************************************************************************
@@ -100,13 +97,6 @@ void CL64_Picking::Mouse_Pick_Entity()
 
     Ogre::Real tx = io.MousePos.x / (Ogre::Real)rw->getWidth();
     Ogre::Real ty = io.MousePos.y / (Ogre::Real)rw->getHeight();
-
-   // Ogre::Ray ray = camera->getCameraToViewportRay(tx, ty);
-
-    // if (Ray_Test_Particles(ray) == 1)
-   //  {
-      //   return;
-    // }
 
     Pl_Entity_Name = "-----";
 
@@ -130,8 +120,6 @@ void CL64_Picking::Mouse_Pick_Entity()
 
         char buff[255];
         strcpy(buff, Pl_Entity_Name.c_str());
-
-        //App->CL_Vm_ImGui->Show_Object_Selection = 1;
 
         bool test = Ogre::StringUtil::match("Plane0", Pl_Entity_Name, true);
         if (test == 1)

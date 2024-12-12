@@ -346,16 +346,16 @@ bool CL64_Objects_Create::Add_Objects_From_File() // From File
 			App->CL_Scene->B_Object[Count]->Altered = 0;
 			App->CL_Scene->B_Object[Count]->Folder = Enums::Folder_Objects;
 			App->CL_Scene->B_Object[Count]->FileViewItem = App->CL_FileView->Add_Item(App->CL_FileView->FV_Objects_Folder, App->CL_Scene->B_Object[Count]->Object_Name, Count, false);
+
+			if (Object_Count > 0)
+			{
+				App->CL_FileView->Set_FolderActive(App->CL_FileView->FV_Objects_Folder);
+				ShowWindow(App->CL_Properties->Properties_Dlg_hWnd, 1);
+				App->CL_FileView->SelectItem(App->CL_Scene->B_Object[0]->FileViewItem);
+			}
 		}
 
 		Count++;
-	}
-
-	if (Object_Count > 0)
-	{
-		App->CL_FileView->Set_FolderActive(App->CL_FileView->FV_Objects_Folder);
-		ShowWindow(App->CL_Properties->Properties_Dlg_hWnd, 1);
-		App->CL_FileView->SelectItem(App->CL_Scene->B_Object[0]->FileViewItem);
 	}
 
 	return 1;

@@ -888,7 +888,6 @@ LRESULT CALLBACK Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
 							{
 								App->CL_Picking->Mouse_Pick_Entity();
 								App->CL_TopDlg->flag_Toggle_Select_Flag = 0;
-								App->CL_Gizmos->mPickSight->hide();
 								App->CL_Ogre->Ogre3D_Listener->flag_Selection_Mode = 0;
 								RedrawWindow(App->CL_TopDlg->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 							}
