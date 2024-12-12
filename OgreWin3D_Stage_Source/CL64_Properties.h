@@ -41,6 +41,7 @@ public:
 	bool Update_ListView_Player();
 	bool Update_ListView_Player_Physics();
 
+	bool Update_ListView_Level();
 	bool Update_ListView_Objects();
 	bool Update_ListView_Collectables();
 	bool Update_ListView_Sounds();

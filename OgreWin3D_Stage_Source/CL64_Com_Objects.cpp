@@ -339,3 +339,25 @@ int CL64_Com_Objects::CheckNames_Objects(char* Name)
 	}
 	return 0;
 }
+
+// *************************************************************************
+// *	  Get_Adjusted_Object_Count:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+int CL64_Com_Objects::Get_Adjusted_Object_Count(void)
+{
+	int New_Count = 0;
+	int Count = 0;
+	int Total = App->CL_Scene->Object_Count;
+
+	while (Count < Total)
+	{
+		if (App->CL_Scene->B_Object[Count]->Deleted == 0)
+		{
+			New_Count++;
+		}
+
+		Count++;
+	}
+
+	return New_Count;
+}

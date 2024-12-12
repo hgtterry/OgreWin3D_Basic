@@ -39,6 +39,7 @@ public:
 	int GetIndex_By_Name(char* Name);
 	void Clear_Modified_Objects();
 	int CheckNames_Objects(char* Name);
+	int Get_Adjusted_Object_Count(void);
 
 	bool flag_Show_Physics_Debug;
 	bool flag_Hide_All_Except;

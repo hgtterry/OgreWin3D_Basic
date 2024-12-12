@@ -547,17 +547,16 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 	item1.mask = TVIF_TEXT;
 	TreeView_GetItem(((LPNMHDR)lParam)->hwndFrom, &item1);
 
-
 	//--------------------------------------------------------------------------
 
-	//if (!strcmp(FileView_Folder, App->SBC_Project->m_Level_Name)) // Level Folder
-	//{
-	//	HideRightPanes();
-	//	ShowWindow(App->GD_Properties_Hwnd, 1);
+	if (!strcmp(FileView_Folder, App->CL_Project->m_Level_Name)) // Level Folder
+	{
+		HideRightPanes();
+		ShowWindow(App->CL_Properties->Properties_Dlg_hWnd, 1);
 
-	//	App->SBC_Properties->Edit_Category = Enums::FV_Edit_Level;
-	//	App->SBC_Properties->Update_ListView_Level();
-	//}
+		App->CL_Properties->Edit_Category = Enums::Edit_Level;
+		App->CL_Properties->Update_ListView_Level();
+	}
 
 	// ---- Areas
 	if (!strcmp(FileView_Folder, "Area")) // Folder
