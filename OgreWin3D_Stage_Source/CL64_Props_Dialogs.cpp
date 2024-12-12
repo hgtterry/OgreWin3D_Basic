@@ -1079,6 +1079,14 @@ LRESULT CALLBACK CL64_Props_Dialogs::Proc_Player_PropsPanel(HWND hDlg, UINT mess
 			if (App->CL_Scene->flag_Scene_Loaded == 1)
 			{
 
+				App->CL_Dialogs->Show_YesNo_Dlg((LPSTR)"Are You Sure", (LPSTR)"Save new Player Start Location", (LPSTR)"");
+
+				bool Doit = App->CL_Dialogs->Canceled;
+				if (Doit == 1)
+				{
+					return 1;
+				}
+
 				// Start Position
 				App->CL_Scene->B_Player[0]->StartPos.x = App->CL_Scene->B_Player[0]->Phys_Body->getWorldTransform().getOrigin().getX();
 				App->CL_Scene->B_Player[0]->StartPos.y = App->CL_Scene->B_Player[0]->Phys_Body->getWorldTransform().getOrigin().getY();

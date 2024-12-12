@@ -252,7 +252,7 @@ void CL64_Physics::Reset_Physics(void)
 
 		btTransform startTransform;
 		startTransform.setIdentity();
-		startTransform.setRotation(btQuaternion(1.0f, 0.0f, 0.0f, 0.0f));
+		startTransform.setRotation(btQuaternion(App->CL_Scene->B_Player[0]->Physics_Rotation));
 		startTransform.setOrigin(initialPosition);
 
 		App->CL_Scene->B_Player[0]->Phys_Body->clearForces();
@@ -268,7 +268,6 @@ void CL64_Physics::Reset_Physics(void)
 		App->CL_Com_Player->Set_Player_Physics_Position(0);
 	}
 
-	//App->CL_Ogre->OgreListener->GD_Run_Physics = 1;
 }
 
 // *************************************************************************
