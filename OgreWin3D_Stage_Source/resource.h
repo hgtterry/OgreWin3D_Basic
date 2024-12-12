@@ -93,7 +93,6 @@
 #define IDD_PROGRESS_BAR                204
 #define IDD_PROPS_CAMERA                205
 #define IDD_PROPS_PLAYER                206
-#define IDD_PROPS_CAMERA1               207
 #define IDD_PROPS_OVERRIDECOUNTER       207
 #define IDC_CK_SU_FULLSCREEN            1000
 #define IDC_ST_STARTUP                  1001
@@ -326,6 +325,7 @@
 #define IDC_BT_CP_TERRAIN               1133
 #define IDC_BTOBJECT                    1134
 #define IDC_BT_DP_OVERIDECOUNTER        1135
+#define IDC_STOBJECTNAME                1136
 #define ID_VIEW_RESET                   32771
 #define ID_VIEW_MAX3DVIEW               32772
 #define ID_DEBUG_TESTPREFERANCE         32773
@@ -393,7 +393,7 @@
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        207
 #define _APS_NEXT_COMMAND_VALUE         32829
-#define _APS_NEXT_CONTROL_VALUE         1136
+#define _APS_NEXT_CONTROL_VALUE         1137
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif

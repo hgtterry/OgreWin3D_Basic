@@ -96,9 +96,9 @@ LRESULT CALLBACK CL64_Properties::Proc_Properties(HWND hDlg, UINT message, WPARA
 	{
 	case WM_INITDIALOG:
 	{
-		/*SendDlgItemMessage(hDlg, IDC_STOBJECTNAME, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_STOBJECTNAME, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
 
-		App->SBC_Properties->Edit_Category = Enums::FV_Edit_Object;*/
+		//App->SBC_Properties->Edit_Category = Enums::FV_Edit_Object;*/
 
 		return 1;
 	}
@@ -106,20 +106,20 @@ LRESULT CALLBACK CL64_Properties::Proc_Properties(HWND hDlg, UINT message, WPARA
 	case WM_CTLCOLORSTATIC:
 	{
 
-		/*if (GetDlgItem(hDlg, IDC_STOBJECTNAME) == (HWND)lParam)
+		if (GetDlgItem(hDlg, IDC_STOBJECTNAME) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 255, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->DialogBackGround;
-		}*/
+		}
 
 		return FALSE;
 	}
 
 	case WM_CTLCOLORDLG:
 	{
-		return (LONG)App->AppBackground;
+		return (LONG)App->DialogBackGround;
 	}
 
 	case WM_CLOSE:
@@ -2187,7 +2187,7 @@ bool CL64_Properties::Update_ListView_Level()
 	char buff[255];
 	strcpy(buff, App->CL_Project->m_Level_Name);
 	//strcat(buff, "   (Level)");
-	//SetDlgItemText(App->CL_Properties->Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)buff);
+	SetDlgItemText(App->CL_Properties->Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)buff);
 
 	char strCamCount[20];
 
@@ -2240,7 +2240,7 @@ bool CL64_Properties::Update_ListView_Camera()
 	//strcat(chr_ID, Num);
 
 	SetWindowText(Properties_Dlg_hWnd, chr_ID);
-	//SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)App->CL_Scene->B_Camera[Index]->Camera_Name);
+	SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)App->CL_Scene->B_Camera[Index]->Camera_Name);
 
 	char chr_Pos_X[100];
 	char chr_Pos_Y[100];
@@ -2311,7 +2311,7 @@ bool CL64_Properties::Update_ListView_Area()
 	strcat(chr_ID, Num);
 
 	SetWindowText(Properties_Dlg_hWnd, chr_ID);
-	//SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)App->CL_Scene->B_Area[Index]->Area_Name);
+	SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)App->CL_Scene->B_Area[Index]->Area_Name);
 
 	const int NUM_ITEMS = 3;
 	const int NUM_COLS = 2;
@@ -2358,7 +2358,7 @@ bool CL64_Properties::Update_ListView_Player()
 	//strcat(chr_ID, Num);
 
 	SetWindowText(Properties_Dlg_hWnd, chr_ID);
-	//SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)App->CL_Scene->B_Player[0]->Player_Name);
+	SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)App->CL_Scene->B_Player[0]->Player_Name);
 
 	char chr_Speed[100];
 	char chr_TurnRate[100];
@@ -2441,7 +2441,7 @@ bool CL64_Properties::Update_ListView_Player_Physics()
 	char buff[255];
 	strcpy(buff, App->CL_Scene->B_Player[0]->Player_Name);
 	//strcat(buff, "   (Physics)");
-	//SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)buff);
+	SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)buff);
 
 	char chr_PhysicsType[100];
 	strcpy(chr_PhysicsType, "Dynamic");
@@ -2512,7 +2512,7 @@ bool CL64_Properties::Update_ListView_Objects()
 
 
 	SetWindowText(Properties_Dlg_hWnd, chr_ID);
-	//SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)App->CL_Scene->B_Object[index]->Mesh_Name);
+	SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)App->CL_Scene->B_Object[index]->Object_Name);
 
 
 	const int NUM_ITEMS = 4;
@@ -2565,7 +2565,7 @@ bool CL64_Properties::Update_ListView_Collectables()
 	strcat(chr_ID, IndexNum);
 
 	SetWindowText(Properties_Dlg_hWnd, chr_ID);
-	//SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)App->CL_Scene->B_Object[index]->Mesh_Name);
+	SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)App->CL_Scene->B_Object[index]->Object_Name);
 
 	// new sound
 	char chr_Play[100];
@@ -2653,7 +2653,7 @@ bool CL64_Properties::Update_ListView_Sounds()
 	_itoa(App->CL_Scene->B_Object[index]->Usage, chr_Usage_Num, 10);
 
 	SetWindowText(Properties_Dlg_hWnd, chr_ID);
-	//SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)App->CL_Scene->B_Object[index]->Mesh_Name);
+	SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)App->CL_Scene->B_Object[index]->Object_Name);
 
 
 	char chr_Volume[100];
@@ -2712,7 +2712,7 @@ bool CL64_Properties::Update_ListView_Move_Entities()
 	strcat(chr_ID, IndexNum);
 
 	SetWindowText(Properties_Dlg_hWnd, chr_ID);
-	//SetDlgItemText(App->SBC_Properties->Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)App->CL_Scene->B_Object[index]->Mesh_Name);
+	SetDlgItemText(App->CL_Properties->Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)App->CL_Scene->B_Object[index]->Object_Name);
 
 	char chr_Distance[100];
 	sprintf(chr_Distance, "%.3f ", App->CL_Scene->B_Object[index]->S_MoveType[0]->Move_Distance);
@@ -2824,7 +2824,7 @@ bool CL64_Properties::Update_ListView_Messages()
 	strcat(chr_ID, IndexNum);
 
 	SetWindowText(Properties_Dlg_hWnd, chr_ID);
-	//SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)App->CL_Scene->B_Object[index]->Mesh_Name);
+	SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)App->CL_Scene->B_Object[index]->Object_Name);
 
 	char chr_PosX[20];
 	sprintf(chr_PosX, "%.3f ", App->CL_Scene->B_Object[index]->S_Message[0]->Message_PosX);
@@ -2890,7 +2890,7 @@ bool CL64_Properties::Update_ListView_Teleport()
 	strcat(chr_ID, Num);
 
 	SetWindowText(Properties_Dlg_hWnd, chr_ID);
-	//SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)App->CL_Scene->B_Object[index]->Mesh_Name);
+	SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)App->CL_Scene->B_Object[index]->Object_Name);
 
 	// new sound
 	char chr_Play[100];
@@ -3034,7 +3034,7 @@ bool CL64_Properties::Update_ListView_Particles()
 	strcat(chr_ID, "  Object Index ");
 	strcat(chr_ID, IndexNum);
 	SetWindowText(Properties_Dlg_hWnd, chr_ID);
-	//SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)App->CL_Scene->B_Object[index]->Mesh_Name);
+	SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)App->CL_Scene->B_Object[index]->Object_Name);
 
 	char chr_Speed[100];
 
@@ -3084,7 +3084,7 @@ bool CL64_Properties::Update_ListView_Counters()
 	strcat(chr_ID, Num);
 
 	SetWindowText(Properties_Dlg_hWnd, chr_ID);
-	//SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)App->CL_Scene->B_Counter[index]->Panel_Name);
+	SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)App->CL_Scene->B_Counter[index]->Panel_Name);
 
 	char chr_PosX[20];
 	sprintf(chr_PosX, "%.3f ", App->CL_Scene->B_Counter[index]->PosX);
@@ -3160,7 +3160,7 @@ bool CL64_Properties::Update_ListView_Environs()
 	strcat(chr_ID, IndexNum);
 
 	SetWindowText(Properties_Dlg_hWnd, chr_ID);
-	//SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)App->CL_Scene->B_Object[index]->Mesh_Name);
+	SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)App->CL_Scene->B_Object[index]->Object_Name);
 
 	const int NUM_ITEMS = 3;
 	const int NUM_COLS = 2;
