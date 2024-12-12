@@ -38,7 +38,7 @@ THE SOFTWARE.
 #include "CL64_TopDlg.h"
 #include "CL64_Panels.h"
 #include "CL64_Bullet.h"
-#include "CL64_Player.h"
+#include "CL64_Com_Player.h"
 #include "CL64_Dialogs.h"
 #include "CL64_Resources.h"
 #include "CL64_Textures.h"
@@ -99,7 +99,7 @@ public:
 	CL64_TopDlg*			CL_TopDlg;
 	CL64_Panels*			CL_Panels;
 	CL64_Bullet*			CL_Bullet;
-	CL64_Player*			CL_Player;
+	CL64_Com_Player*		CL_Com_Player;
 	CL64_Dialogs*			CL_Dialogs;
 	CL64_Resources*			CL_Resources;
 	CL64_Textures*			CL_Textures;

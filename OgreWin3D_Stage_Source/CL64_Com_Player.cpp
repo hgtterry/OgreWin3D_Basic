@@ -23,9 +23,9 @@ distribution.
 
 #include "pch.h"
 #include "CL64_App.h"
-#include "CL64_Player.h"
+#include "CL64_Com_Player.h"
 
-CL64_Player::CL64_Player(void)
+CL64_Com_Player::CL64_Com_Player(void)
 {
 	mMoveDirection.setValue(0, 0, 0);
 	
@@ -48,14 +48,14 @@ CL64_Player::CL64_Player(void)
 	flag_Is_On_Ground = 0;
 }
 
-CL64_Player::~CL64_Player(void)
+CL64_Com_Player::~CL64_Com_Player(void)
 {
 }
 
 // *************************************************************************
 // *	  					Reset_Class Bernie							   *
 // *************************************************************************
-void CL64_Player::Reset_Class(void)
+void CL64_Com_Player::Reset_Class(void)
 {
 	int Count = 0;
 
@@ -88,7 +88,7 @@ void CL64_Player::Reset_Class(void)
 // *************************************************************************
 // *	  	Create_Player_Object:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
-void CL64_Player::Create_Player_Object(void)
+void CL64_Com_Player::Create_Player_Object(void)
 {
 	int Index = App->CL_Scene->Player_Count;
 
@@ -110,7 +110,7 @@ void CL64_Player::Create_Player_Object(void)
 // *************************************************************************
 // *	  			Initialize:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-void CL64_Player::Initialize() const
+void CL64_Com_Player::Initialize() const
 {
 	Ogre::Vector3 Pos;
 
@@ -161,7 +161,7 @@ void CL64_Player::Initialize() const
 // *************************************************************************
 // *		Show_Player_And_Physics:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
-void CL64_Player::Show_Player_And_Physics(bool Show)
+void CL64_Com_Player::Show_Player_And_Physics(bool Show)
 {
 	int f = App->CL_Scene->B_Player[0]->Phys_Body->getCollisionFlags();
 
@@ -190,7 +190,7 @@ void CL64_Player::Show_Player_And_Physics(bool Show)
 // *************************************************************************
 // *		Show_Physics:- Terry and Hazel Flanigan 2024				   *
 // *************************************************************************
-void CL64_Player::Show_Physics(bool Show)
+void CL64_Com_Player::Show_Physics(bool Show)
 {
 	int f = App->CL_Scene->B_Player[0]->Phys_Body->getCollisionFlags();
 
@@ -215,7 +215,7 @@ void CL64_Player::Show_Physics(bool Show)
 // *************************************************************************
 // *	  	Adjust_CapsuleTerry:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-void CL64_Player::Adjust_Capsule(void)
+void CL64_Com_Player::Adjust_Capsule(void)
 {
 	App->CL_Scene->B_Player[0]->Phys_Shape = new btCapsuleShape(btScalar(App->CL_Scene->B_Player[0]->Capsule_Radius), btScalar(App->CL_Scene->B_Player[0]->Capsule_Height));
 	App->CL_Scene->B_Player[0]->Phys_Body->setCollisionShape(App->CL_Scene->B_Player[0]->Phys_Shape);
@@ -227,7 +227,7 @@ void CL64_Player::Adjust_Capsule(void)
 // *************************************************************************
 // *			Update_Player:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-void CL64_Player::Update_Player(btCollisionWorld* collisionWorld, btScalar deltaTimeStep)
+void CL64_Com_Player::Update_Player(btCollisionWorld* collisionWorld, btScalar deltaTimeStep)
 {
 	mWorld_Height = App->CL_Scene->B_Player[0]->Phys_Body->getWorldTransform().getOrigin();
 
@@ -239,7 +239,7 @@ void CL64_Player::Update_Player(btCollisionWorld* collisionWorld, btScalar delta
 // *************************************************************************
 // *			Update_Velocity:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-void CL64_Player::Update_Velocity(float dt)
+void CL64_Com_Player::Update_Velocity(float dt)
 {
 	btTransform transform;
 	App->CL_Scene->B_Player[0]->Phys_Body->getMotionState()->getWorldTransform(transform);
@@ -276,7 +276,7 @@ void CL64_Player::Update_Velocity(float dt)
 // *************************************************************************
 // *				Get_Height:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-void CL64_Player::Get_Height(void)
+void CL64_Com_Player::Get_Height(void)
 {
 	btVector3 Origin = App->CL_Scene->B_Player[0]->Phys_Body->getWorldTransform().getOrigin();
 	btVector3 from = btVector3(Origin.getX(), Origin.getY(), Origin.getZ());
@@ -301,7 +301,7 @@ void CL64_Player::Get_Height(void)
 // *************************************************************************
 // *		Set_Player_Position:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-void CL64_Player::Set_Player_Position(Ogre::Vector3 Position)
+void CL64_Com_Player::Set_Player_Position(Ogre::Vector3 Position)
 {
 	float px = Position.x;
 	float py = Position.y;
@@ -314,7 +314,7 @@ void CL64_Player::Set_Player_Position(Ogre::Vector3 Position)
 // *************************************************************************
 // *	Set_Player_Physics_Position:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
-void CL64_Player::Set_Player_Physics_Position(int Index)
+void CL64_Com_Player::Set_Player_Physics_Position(int Index)
 {
 	btTransform trans;
 	App->CL_Scene->B_Player[0]->Phys_Body->getMotionState()->getWorldTransform(trans);
@@ -330,7 +330,7 @@ void CL64_Player::Set_Player_Physics_Position(int Index)
 // *************************************************************************
 // *		Set_Player_Rotation:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-void CL64_Player::Set_Player_Rotation(btQuaternion Rotation)
+void CL64_Com_Player::Set_Player_Rotation(btQuaternion Rotation)
 {
 	App->CL_Scene->B_Player[0]->Phys_Body->getWorldTransform().setRotation(Rotation);
 }
@@ -338,7 +338,7 @@ void CL64_Player::Set_Player_Rotation(btQuaternion Rotation)
 // *************************************************************************
 // *		Set_Player_GroundSpeed:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
-void CL64_Player::Set_Player_GroundSpeed(float GroundSpeed)
+void CL64_Com_Player::Set_Player_GroundSpeed(float GroundSpeed)
 {
 	App->CL_Scene->B_Player[0]->Ground_speed = GroundSpeed;
 }
@@ -346,7 +346,7 @@ void CL64_Player::Set_Player_GroundSpeed(float GroundSpeed)
 // *************************************************************************
 // *		Set_Player_GroundSpeed:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
-void CL64_Player::Reset_Player()
+void CL64_Com_Player::Reset_Player()
 {
 	if (App->CL_Scene->flag_Player_Added == 1)// && GD_Reset_Player == 1)
 	{
@@ -380,7 +380,7 @@ void CL64_Player::Reset_Player()
 // *************************************************************************
 // *			Rename_Player:- Terry and Hazel Flanigan 2024				   *
 // *************************************************************************
-void CL64_Player::Rename_Player(int Index)
+void CL64_Com_Player::Rename_Player(int Index)
 {
 	strcpy(App->CL_Dialogs->btext, "Change Player Name");
 	strcpy(App->CL_Dialogs->Chr_Text, App->CL_Scene->B_Player[0]->Player_Name);
@@ -406,7 +406,7 @@ void CL64_Player::Rename_Player(int Index)
 // *************************************************************************
 // *			Check_Collisions:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
-void CL64_Player::Check_Collisions(void)
+void CL64_Com_Player::Check_Collisions(void)
 {
 	
 	int UsageIndex = 0;

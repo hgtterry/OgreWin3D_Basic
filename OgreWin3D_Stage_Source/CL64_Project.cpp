@@ -1632,7 +1632,7 @@ bool CL64_Project::Load_Project()
 	if (Options->Has_Player > 0)
 	{
 		bool test = Load_Project_Player();
-		App->CL_Player->Reset_Player();
+		App->CL_Com_Player->Reset_Player();
 	}
 
 	// ------------------------------------- Camera
@@ -2500,7 +2500,7 @@ bool CL64_Project::Load_Project_Player()
 		strcat(buff, Cbuff);
 
 		
-		App->CL_Player->Create_Player_Object();
+		App->CL_Com_Player->Create_Player_Object();
 		
 		App->CL_Ini_File->GetString(buff, "Player_Name", Player_Name, MAX_PATH);
 		strcpy(App->CL_Scene->B_Player[Count]->Player_Name, Player_Name);

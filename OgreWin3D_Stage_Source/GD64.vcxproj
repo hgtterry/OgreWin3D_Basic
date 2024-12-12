@@ -183,6 +183,7 @@
     <ClInclude Include="CL64_Com_MoveEntity.h" />
     <ClInclude Include="CL64_Com_Objects.h" />
     <ClInclude Include="CL64_Com_Particles.h" />
+    <ClInclude Include="CL64_Com_Player.h" />
     <ClInclude Include="CL64_Com_Sounds.h" />
     <ClInclude Include="CL64_Com_Teleporters.h" />
     <ClInclude Include="CL64_Dialogs.h" />
@@ -212,7 +213,6 @@
     <ClInclude Include="CL64_PB.h" />
     <ClInclude Include="CL64_Physics.h" />
     <ClInclude Include="CL64_Picking.h" />
-    <ClInclude Include="CL64_Player.h" />
     <ClInclude Include="CL64_Preferences.h" />
     <ClInclude Include="CL64_Project.h" />
     <ClInclude Include="CL64_Project_Create.h" />
@@ -254,6 +254,7 @@
     <ClCompile Include="CL64_Com_MoveEntity.cpp" />
     <ClCompile Include="CL64_Com_Objects.cpp" />
     <ClCompile Include="CL64_Com_Particles.cpp" />
+    <ClCompile Include="CL64_Com_Player.cpp" />
     <ClCompile Include="CL64_Com_Sounds.cpp" />
     <ClCompile Include="CL64_Com_Teleporters.cpp" />
     <ClCompile Include="CL64_Dialogs.cpp" />
@@ -283,7 +284,6 @@
     <ClCompile Include="CL64_PB.cpp" />
     <ClCompile Include="CL64_Physics.cpp" />
     <ClCompile Include="CL64_Picking.cpp" />
-    <ClCompile Include="CL64_Player.cpp" />
     <ClCompile Include="CL64_Preferences.cpp" />
     <ClCompile Include="CL64_Project.cpp" />
     <ClCompile Include="CL64_Project_Create.cpp" />

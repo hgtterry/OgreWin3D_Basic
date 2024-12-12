@@ -138,7 +138,7 @@ bool CL64_Ogre3D_Listener::frameRenderingQueued(const FrameEvent& evt)
 
 		App->CL_Keyboard->Keyboard_Mode_First(evt.timeSinceLastFrame);
 
-		App->CL_Player->Update_Player(NULL, evt.timeSinceLastFrame);
+		App->CL_Com_Player->Update_Player(NULL, evt.timeSinceLastFrame);
 
 		if (flag_LeftMouseDown == 1 && flag_RightMouseDown == 0)
 		{

@@ -147,7 +147,7 @@ bool CL64_Scene::Clear_Level()
 	{
 		App->CL_Physics->Enable_Physics(0); // Look At Terry
 
-		App->CL_Player->Reset_Class(); // Look At Terry
+		App->CL_Com_Player->Reset_Class(); // Look At Terry
 
 		App->CL_Com_Area->Reset_Class();
 
@@ -229,7 +229,7 @@ void CL64_Scene::Set_Scene()
 
 	App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_Free;
 
-	App->CL_Player->Show_Player_And_Physics(true);
+	App->CL_Com_Player->Show_Player_And_Physics(true);
 
 	App->CL_TopDlg->flag_Toggle_PhysicaDebug_Node = 1;
 	App->CL_Ogre->Bullet_Debug_Listener->btDebug_Node->setVisible(true);
@@ -359,7 +359,7 @@ bool CL64_Scene::Game_Mode(void)
 	App->CL_Physics->Reset_Triggers();
 
 	App->CL_ImGui_Dialogs->Show_Physics_Console = 0;
-	App->CL_Player->Show_Player_And_Physics(false);
+	App->CL_Com_Player->Show_Player_And_Physics(false);
 
 	return 1;
 }
@@ -397,11 +397,11 @@ bool CL64_Scene::Editor_Mode(void)
 
 	if (CurrentCamMode == Enums::Cam_Mode_Free)
 	{
-		App->CL_Player->Show_Player_And_Physics(true);
+		App->CL_Com_Player->Show_Player_And_Physics(true);
 	}
 	else
 	{
-		App->CL_Player->Show_Player_And_Physics(false);
+		App->CL_Com_Player->Show_Player_And_Physics(false);
 	}
 
 	App->CL_ImGui->flag_Show_FPS = App->CL_Build_Game->flag_Saved_Show_FPS;

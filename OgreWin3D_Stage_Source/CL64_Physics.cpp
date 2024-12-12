@@ -265,7 +265,7 @@ void CL64_Physics::Reset_Physics(void)
 
 		App->CL_Scene->B_Player[0]->Phys_Body->getWorldTransform().setRotation(App->CL_Scene->B_Player[0]->Physics_Rotation);
 
-		App->CL_Player->Set_Player_Physics_Position(0);
+		App->CL_Com_Player->Set_Player_Physics_Position(0);
 	}
 
 	//App->CL_Ogre->OgreListener->GD_Run_Physics = 1;
@@ -292,5 +292,5 @@ void CL64_Physics::Reset_Scene(void)
 	RedrawWindow(App->CL_TopDlg->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
 	App->CL_Com_Environments->Set_Environment_GameMode(0);
-	App->CL_Player->Show_Player_And_Physics(false);
+	App->CL_Com_Player->Show_Player_And_Physics(false);
 }

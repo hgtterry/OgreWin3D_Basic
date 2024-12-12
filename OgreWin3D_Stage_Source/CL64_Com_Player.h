@@ -22,12 +22,12 @@ distribution.
 */
 
 #pragma once
-class CL64_Player
+class CL64_Com_Player
 {
 public:
 
-	CL64_Player(void);
-	~CL64_Player(void);
+	CL64_Com_Player(void);
+	~CL64_Com_Player(void);
 
 	void Reset_Class(void);
 

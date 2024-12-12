@@ -43,7 +43,7 @@ CL64_App::CL64_App(void)
 	CL_TopDlg =			nullptr;
 	CL_Panels =			nullptr;
 	CL_Bullet =			nullptr;
-	CL_Player =			nullptr;
+	CL_Com_Player =		nullptr;
 	CL_Dialogs =		nullptr;
 	CL_Resources =		nullptr;
 	CL_Textures =		nullptr;
@@ -177,7 +177,7 @@ void CL64_App::InitApp(void)
 	CL_TopDlg =			new CL64_TopDlg();
 	CL_Panels =			new CL64_Panels();
 	CL_Bullet =			new CL64_Bullet();
-	CL_Player =			new CL64_Player();
+	CL_Com_Player =		new CL64_Com_Player();
 	CL_Dialogs =		new CL64_Dialogs();
 	CL_Resources =		new CL64_Resources();
 	CL_Textures =		new CL64_Textures();

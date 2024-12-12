@@ -64,10 +64,10 @@ private:
 	void Start_Details_Goto_Dlg(void);
 	void Start_Dialog_PhysicsTest();
 	
-	bool Show_Area_Physics_Debug;
-	bool Toggle_Objects_Flag;
-	bool Toggle_Physics_Flag;
-	bool Toggle_OverideCounter_Flag;
+	bool flag_Show_Area_Physics_Debug;
+	bool flag_Toggle_Objects;
+	bool flag_Toggle_Physics;
+	bool flag_Toggle_OverideCounter;
 
 	HWND Overide_Counter_Goto_Hwnd;
 	HWND Details_Goto_Hwnd;

@@ -238,7 +238,7 @@ void CL64_Project_Create::Start_New_Project()
 void CL64_Project_Create::Setup_Scene_Indoors()
 {
 	// ----------------------------------------------- Player
-	App->CL_Player->Create_Player_Object();
+	App->CL_Com_Player->Create_Player_Object();
 	strcpy(App->CL_Scene->B_Player[0]->Player_Name, "Player_1");
 	HTREEITEM Temp1 = App->CL_FileView->Add_Item(App->CL_FileView->FV_Players_Folder, (LPSTR)"Player_1", 0, true);
 	App->CL_Scene->B_Player[0]->FileViewItem = Temp1;

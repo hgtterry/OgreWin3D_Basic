@@ -482,14 +482,14 @@ void CL64_ImGui::Player_Data_GUI(void)
 		textWidth = ImGui::CalcTextSize("Ray Cast").x;
 		ImGui::SetCursorPosX((Size.x - textWidth) * 0.5f);
 		ImGui::Text("Ray Cast");
-		ImGui::Text("Ray Cast End: %f", App->CL_Player->Ray_End_Gravity);
+		ImGui::Text("Ray Cast End: %f", App->CL_Com_Player->Ray_End_Gravity);
 		ImGui::Separator();
 
 		textWidth = ImGui::CalcTextSize("Gravity").x;
 		ImGui::SetCursorPosX((Size.x - textWidth) * 0.5f);
 		ImGui::Text("Gravity");
-		ImGui::Text("Add Gravity: %i", App->CL_Player->flag_AddGravity);
-		ImGui::Text("Is on Ground: %i", App->CL_Player->flag_Is_On_Ground);
+		ImGui::Text("Add Gravity: %i", App->CL_Com_Player->flag_AddGravity);
+		ImGui::Text("Is on Ground: %i", App->CL_Com_Player->flag_Is_On_Ground);
 		ImGui::Separator();
 
 		textWidth = ImGui::CalcTextSize("Collision").x;
@@ -498,8 +498,8 @@ void CL64_ImGui::Player_Data_GUI(void)
 
 		//App->CL_LookUps->Get_Usage(App->CL_Player->Col_Usage_Index);
 		//ImGui::Text("Usage %s", App->CL_LookUps->Chr_Usage);
-		ImGui::Text("Usage_ID %i", App->CL_Player->Col_Usage_Index);
-		ImGui::Text("Object_ID %i", App->CL_Player->Col_Object_Index);
+		ImGui::Text("Usage_ID %i", App->CL_Com_Player->Col_Usage_Index);
+		ImGui::Text("Object_ID %i", App->CL_Com_Player->Col_Object_Index);
 
 		ImGui::Text("Pick Object %s", App->CL_Picking->TestName);
 		
@@ -659,16 +659,16 @@ void CL64_ImGui::ImGui_Collision_Debug(void)
 
 		ImGui::Spacing();
 
-		ImGui::Text("Manifolds %i", App->CL_Player->Col_numManifolds);
-		ImGui::Text("PlayerIndex %i", App->CL_Player->Col_Player_Index);
-		ImGui::Text("Object_ID %i", App->CL_Player->Col_Object_Index);
-		ImGui::Text("Usage %i", App->CL_Player->Col_Usage_Index);
+		ImGui::Text("Manifolds %i", App->CL_Com_Player->Col_numManifolds);
+		ImGui::Text("PlayerIndex %i", App->CL_Com_Player->Col_Player_Index);
+		ImGui::Text("Object_ID %i", App->CL_Com_Player->Col_Object_Index);
+		ImGui::Text("Usage %i", App->CL_Com_Player->Col_Usage_Index);
 
 		ImGui::Text(" ");
 
-		ImGui::Text("Round %i", App->CL_Player->Round);
-		ImGui::Text("Distance %i", App->CL_Player->Distance);
-		ImGui::Text("Life_Time %i", App->CL_Player->Life_Time);
+		ImGui::Text("Round %i", App->CL_Com_Player->Round);
+		ImGui::Text("Distance %i", App->CL_Com_Player->Distance);
+		ImGui::Text("Life_Time %i", App->CL_Com_Player->Life_Time);
 
 		if (ImGui::Button("Close"))
 		{

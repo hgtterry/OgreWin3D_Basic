@@ -1804,7 +1804,7 @@ void CL64_FileView::Context_Rename(HWND hDlg) const
 	// Player
 	if (Context_Selection == Enums::FileView_Player_File)
 	{
-		App->CL_Player->Rename_Player(Index);
+		App->CL_Com_Player->Rename_Player(Index);
 		App->CL_Properties->Update_ListView_Player();
 		return;
 	}

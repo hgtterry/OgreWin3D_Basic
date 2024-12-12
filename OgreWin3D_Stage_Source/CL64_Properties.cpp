@@ -387,7 +387,7 @@ bool CL64_Properties::Edit_Player(LPARAM lParam)
 	result = strcmp(btext, "Name");
 	if (result == 0)
 	{
-		App->CL_Player->Rename_Player(Index);
+		App->CL_Com_Player->Rename_Player(Index);
 		Update_ListView_Player();
 	}
 
@@ -755,7 +755,7 @@ bool CL64_Properties::Edit_Player_Physics(LPARAM lParam)
 			if (App->CL_ImGui_Dialogs->Float_Altetered == 1)
 			{
 				App->CL_Scene->B_Player[0]->Capsule_Radius = App->CL_ImGui_Dialogs->m_Dialog_Float;
-				App->CL_Player->Adjust_Capsule();
+				App->CL_Com_Player->Adjust_Capsule();
 				App->CL_Physics->Reset_Physics();
 
 				App->CL_ImGui_Dialogs->Float_Altetered = 0;
@@ -800,7 +800,7 @@ bool CL64_Properties::Edit_Player_Physics(LPARAM lParam)
 			if (App->CL_ImGui_Dialogs->Float_Altetered == 1)
 			{
 				App->CL_Scene->B_Player[0]->Capsule_Height = App->CL_ImGui_Dialogs->m_Dialog_Float;
-				App->CL_Player->Adjust_Capsule();
+				App->CL_Com_Player->Adjust_Capsule();
 				//App->CL_Physics->Reset_Physics();
 
 				App->CL_ImGui_Dialogs->Float_Altetered = 0;
