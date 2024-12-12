@@ -53,12 +53,13 @@ CL64_Picking::CL64_Picking(Ogre::SceneManager* sceneMgr)
     SubMesh_Face = 0;
     Selected_Ok = 0;
     ParticleFound = 0;
+    Hit_Player = 0;
 
     FaceMaterial[0] = 0;
     TextureName[0] = 0;
     ParticleName[0] = 0;
     ParticleFound = 0;
-
+    TestName[0] = 0;
 }
 
 CL64_Picking::~CL64_Picking(void)
@@ -116,7 +117,15 @@ void CL64_Picking::Mouse_Pick_Entity()
         //App->Beep_Win();
 
         mNode = pentity->getParentSceneNode();
-        Pl_Entity_Name = pentity->getName();
+
+        if (Hit_Player == 0)
+        {
+            Pl_Entity_Name = pentity->getName();
+        }
+        else
+        {
+            Pl_Entity_Name = "No Selection";
+        }
 
         char buff[255];
         strcpy(buff, Pl_Entity_Name.c_str());
@@ -132,7 +141,6 @@ void CL64_Picking::Mouse_Pick_Entity()
             if (test == 1)
             {
                 Pl_Entity_Name = "Player_1";
-
                 return;
             }
             else
@@ -193,6 +201,7 @@ bool CL64_Picking::raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::Mo
     target = NULL;
     ParticleFound = 0;
     Pl_Entity_Name = "---------";
+    Hit_Player = 0;
 
     if (mRaySceneQuery != NULL)
     {
@@ -247,69 +256,85 @@ bool CL64_Picking::raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::Mo
         {
             // get the entity to check
             strcpy(TextureName, "Entity");
-
+           
             pentity = static_cast<Ogre::MovableObject*>(query_result[qr_idx].movable);
-
-            // get the mesh information
-            GetMeshInformation(((Ogre::Entity*)pentity)->getMesh(),
-                pentity->getParentNode()->_getDerivedPosition(),
-                pentity->getParentNode()->_getDerivedOrientation(),
-                pentity->getParentNode()->_getDerivedScale());
-
-            // test for hitting individual triangles on the mesh
-            bool new_closest_found = false;
-            for (size_t i = 0; i < Total_index_count; i += 3)
+            strcpy(TestName, (LPSTR)(Ogre::Entity*)pentity->getName().c_str());
+           
+            // Test for player
+            int test = strcmp(TestName, "Player_1");
+            if (test == 0)
             {
-                // check for a hit against this triangle
-                std::pair<bool, Ogre::Real> hit = Ogre::Math::intersects(ray, vertices[indices[i]],
-                    vertices[indices[i + 1]], vertices[indices[i + 2]], true, false);
-
-                // if it was a hit check if its the closest
-                if (hit.first)
-                {
-                    if ((closest_distance < 0.0f) ||
-                        (hit.second < closest_distance))
-                    {
-                        // this is the closest so far, save it off
-                        closest_distance = hit.second;
-                        new_closest_found = true;
-
-                        Face_Index = i;
-
-                        /*App->CL_Grid->HitVertices[0] = vertices[indices[i]];
-                        App->CL_Grid->HitVertices[1] = vertices[indices[i + 1]];
-                        App->CL_Grid->HitVertices[2] = vertices[indices[i + 2]];
-
-                        App->CL_Grid->Face_Update2();
-
-                        App->CL_Grid->HitFaceUVs[0] = TextCords[Face_Index];
-                        App->CL_Grid->HitFaceUVs[1] = TextCords[Face_Index + 1];
-                        App->CL_Grid->HitFaceUVs[2] = TextCords[Face_Index + 2];*/
-
-                        //SubMesh_Face = Sub_Mesh_Indexs[Face_Index];
-
-                        //Get_Material_Data();
-
-                        //App->CL_Grid->FaceNode->setVisible(true);
-                    }
-                }
+                Hit_Player = 1;
+            }
+            else
+            {
+                Hit_Player = 0;
             }
 
-            // free the verticies and indicies memory
-            delete[] vertices;
-            delete[] indices;
-            delete[] TextCords;
-            delete[] Sub_Mesh_Indexs;
 
-            // if we found a new closest raycast for this object, update the
-            // closest_result before moving on to the next object.
-            if (new_closest_found)
+            if (Hit_Player == 0)
             {
-                target = pentity;
+                // get the mesh information
+                GetMeshInformation(((Ogre::Entity*)pentity)->getMesh(),
+                    pentity->getParentNode()->_getDerivedPosition(),
+                    pentity->getParentNode()->_getDerivedOrientation(),
+                    pentity->getParentNode()->_getDerivedScale());
 
-                Sub_Mesh_Count = ((Ogre::Entity*)pentity)->getMesh()->getNumSubMeshes();
+                // test for hitting individual triangles on the mesh
+                bool new_closest_found = false;
+                for (size_t i = 0; i < Total_index_count; i += 3)
+                {
+                    // check for a hit against this triangle
+                    std::pair<bool, Ogre::Real> hit = Ogre::Math::intersects(ray, vertices[indices[i]],
+                        vertices[indices[i + 1]], vertices[indices[i + 2]], true, false);
 
-                closest_result = ray.getPoint(closest_distance);
+                    // if it was a hit check if its the closest
+                    if (hit.first)
+                    {
+                        if ((closest_distance < 0.0f) ||
+                            (hit.second < closest_distance))
+                        {
+                            // this is the closest so far, save it off
+                            closest_distance = hit.second;
+                            new_closest_found = true;
+
+                            Face_Index = i;
+
+                            /*App->CL_Grid->HitVertices[0] = vertices[indices[i]];
+                            App->CL_Grid->HitVertices[1] = vertices[indices[i + 1]];
+                            App->CL_Grid->HitVertices[2] = vertices[indices[i + 2]];
+
+                            App->CL_Grid->Face_Update2();
+
+                            App->CL_Grid->HitFaceUVs[0] = TextCords[Face_Index];
+                            App->CL_Grid->HitFaceUVs[1] = TextCords[Face_Index + 1];
+                            App->CL_Grid->HitFaceUVs[2] = TextCords[Face_Index + 2];*/
+
+                            //SubMesh_Face = Sub_Mesh_Indexs[Face_Index];
+
+                            //Get_Material_Data();
+
+                            //App->CL_Grid->FaceNode->setVisible(true);
+                        }
+                    }
+                }
+
+                // free the verticies and indicies memory
+                delete[] vertices;
+                delete[] indices;
+                delete[] TextCords;
+                delete[] Sub_Mesh_Indexs;
+
+                // if we found a new closest raycast for this object, update the
+                // closest_result before moving on to the next object.
+                if (new_closest_found)
+                {
+                    target = pentity;
+
+                    Sub_Mesh_Count = ((Ogre::Entity*)pentity)->getMesh()->getNumSubMeshes();
+
+                    closest_result = ray.getPoint(closest_distance);
+                }
             }
         }
 

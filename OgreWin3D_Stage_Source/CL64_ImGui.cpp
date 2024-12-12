@@ -500,6 +500,9 @@ void CL64_ImGui::Player_Data_GUI(void)
 		//ImGui::Text("Usage %s", App->CL_LookUps->Chr_Usage);
 		ImGui::Text("Usage_ID %i", App->CL_Player->Col_Usage_Index);
 		ImGui::Text("Object_ID %i", App->CL_Player->Col_Object_Index);
+
+		ImGui::Text("Pick Object %s", App->CL_Picking->TestName);
+		
 		ImGui::Separator();
 
 		ImGui::Text(" ");

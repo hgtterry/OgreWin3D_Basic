@@ -169,12 +169,14 @@ void CL64_Player::Show_Player_And_Physics(bool Show)
 	{
 		App->CL_Scene->B_Player[0]->Phys_Body->setCollisionFlags(f & (~(1 << 5)));
 		App->CL_Scene->B_Player[0]->Player_Node->setVisible(true);
+		//App->CL_Scene->B_Player[0]->Player_Node->scale(3, 3, 3);
 		Show_Physics_Debug = 1;
 	}
 	else
 	{
 		App->CL_Scene->B_Player[0]->Phys_Body->setCollisionFlags(f | (1 << 5));
 		App->CL_Scene->B_Player[0]->Player_Node->setVisible(false);
+		//App->CL_Scene->B_Player[0]->Player_Node->scale(0, 0, 0);
 		Show_Physics_Debug = 0;
 	}
 

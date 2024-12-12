@@ -34,6 +34,7 @@ public:
 	void Set_Face_UV();
 	void Clear_Picking_Data();
 	bool Ray_Test_Particles(const Ogre::Ray& ray);
+	bool Hit_Player;
 
 	Ogre::String Pl_Entity_Name;
 	float closest_distance;
@@ -46,6 +47,7 @@ public:
 
 	int SubMesh_Face;
 
+	char TestName[MAX_PATH];
 	char FaceMaterial[MAX_PATH];
 	char TextureName[MAX_PATH];
 	char ParticleName[MAX_PATH];
