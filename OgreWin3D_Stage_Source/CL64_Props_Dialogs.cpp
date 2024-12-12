@@ -1079,7 +1079,11 @@ LRESULT CALLBACK CL64_Props_Dialogs::Proc_Player_PropsPanel(HWND hDlg, UINT mess
 			if (App->CL_Scene->flag_Scene_Loaded == 1)
 			{
 
-				//App->CL_Scene->B_Player[0]->StartPos = Ogre::Vector3(App->CL_Scene->B_Player[0]->Phys_Body->getWorldTransform().getOrigin());
+				// Start Position
+				App->CL_Scene->B_Player[0]->StartPos.x = App->CL_Scene->B_Player[0]->Phys_Body->getWorldTransform().getOrigin().getX();
+				App->CL_Scene->B_Player[0]->StartPos.y = App->CL_Scene->B_Player[0]->Phys_Body->getWorldTransform().getOrigin().getY();
+				App->CL_Scene->B_Player[0]->StartPos.z = App->CL_Scene->B_Player[0]->Phys_Body->getWorldTransform().getOrigin().getZ();
+				
 				App->CL_Scene->B_Player[0]->Physics_Rotation = App->CL_Scene->B_Player[0]->Phys_Body->getWorldTransform().getRotation();
 
 				App->CL_Scene->B_Locations[0]->Physics_Position = App->CL_Scene->B_Player[0]->Phys_Body->getWorldTransform().getOrigin();
