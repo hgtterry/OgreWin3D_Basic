@@ -124,7 +124,7 @@ void CL64_MeshViewer::Reset_Data()
 // *************************************************************************
 void CL64_MeshViewer::Start_MeshViewer_Dlg()
 {
-	App->CL_Ogre->Bullet_Debug_Listener->Render_Debug_Flag = 0;
+	App->CL_Ogre->Bullet_Debug_Listener->flag_Render_Debug_Flag = 0;
 
 	App->CL_Bullet->Show_Debug_Objects(false);
 
@@ -1380,9 +1380,9 @@ void CL64_MeshViewer::Show_Physics_None()
 		Ogre_MV_Phys_Body = nullptr;
 	}
 
-	App->CL_Ogre->Bullet_Debug_Listener->Render_Debug_Flag = 0;
+	App->CL_Ogre->Bullet_Debug_Listener->flag_Render_Debug_Flag = 0;
 	App->CL_Ogre->RenderFrame(1);
-	App->CL_Ogre->Bullet_Debug_Listener->Render_Debug_Flag = 1;
+	App->CL_Ogre->Bullet_Debug_Listener->flag_Render_Debug_Flag = 1;
 }
 
 // *************************************************************************
@@ -1664,9 +1664,9 @@ void CL64_MeshViewer::Clear_Debug_Shape()
 	MV_btDebug_Manual->colour(1, 1, 1);
 	MV_btDebug_Manual->end();
 
-	App->CL_Ogre->Bullet_Debug_Listener->Render_Debug_Flag = 0;
+	App->CL_Ogre->Bullet_Debug_Listener->flag_Render_Debug_Flag = 0;
 	App->CL_Ogre->RenderFrame(1);
-	App->CL_Ogre->Bullet_Debug_Listener->Render_Debug_Flag = 1;
+	App->CL_Ogre->Bullet_Debug_Listener->flag_Render_Debug_Flag = 1;
 }
 
 // *************************************************************************

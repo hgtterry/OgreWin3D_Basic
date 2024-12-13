@@ -380,9 +380,9 @@ void CL64_Locations::Set_To_PlayerView()
 		int f = App->CL_Scene->B_Player[0]->Phys_Body->getCollisionFlags();
 		App->CL_Scene->B_Player[0]->Phys_Body->setCollisionFlags(f | (1 << 5));
 
-		App->CL_Ogre->Bullet_Debug_Listener->Render_Debug_Flag = 0;
+		App->CL_Ogre->Bullet_Debug_Listener->flag_Render_Debug_Flag = 0;
 		App->CL_Ogre->RenderFrame(7);
-		App->CL_Ogre->Bullet_Debug_Listener->Render_Debug_Flag = 1;
+		App->CL_Ogre->Bullet_Debug_Listener->flag_Render_Debug_Flag = 1;
 
 		//App->CL_Physics->Physics_On(true);
 
@@ -410,9 +410,9 @@ void CL64_Locations::Set_To_FreeCam()
 		int f = App->CL_Scene->B_Player[0]->Phys_Body->getCollisionFlags();
 		App->CL_Scene->B_Player[0]->Phys_Body->setCollisionFlags(f & (~(1 << 5)));
 
-		App->CL_Ogre->Bullet_Debug_Listener->Render_Debug_Flag = 0;
+		App->CL_Ogre->Bullet_Debug_Listener->flag_Render_Debug_Flag = 0;
 		App->CL_Ogre->RenderFrame(7);
-		App->CL_Ogre->Bullet_Debug_Listener->Render_Debug_Flag = 1;
+		App->CL_Ogre->Bullet_Debug_Listener->flag_Render_Debug_Flag = 1;
 
 		RedrawWindow(App->CL_TopDlg->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 		RedrawWindow(App->CL_Locations->Locations_Dlg_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);

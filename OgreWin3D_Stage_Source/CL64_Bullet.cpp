@@ -30,8 +30,8 @@ CL64_Bullet::CL64_Bullet(void)
 	Phys_Body = NULL;
 	triMesh = NULL;
 
-	GD_Physics_On = 0;
-	Physics_Dlg_Active = 0;
+	flag_GD_Physics_On = 0;
+	flag_Physics_Dlg_Active = 0;
 	flag_TriMesh_Created = 0;
 	flag_Debug_All = 0;
 }
@@ -281,9 +281,9 @@ void CL64_Bullet::Show_Debug_Area(bool Show)
 		Phys_Body->setCollisionFlags(f | (1 << 5));
 	}
 
-	App->CL_Ogre->Bullet_Debug_Listener->Render_Debug_Flag = 0;
+	App->CL_Ogre->Bullet_Debug_Listener->flag_Render_Debug_Flag = 0;
 	App->CL_Ogre->RenderFrame(1);
-	App->CL_Ogre->Bullet_Debug_Listener->Render_Debug_Flag = 1;
+	App->CL_Ogre->Bullet_Debug_Listener->flag_Render_Debug_Flag = 1;
 }
 
 // *************************************************************************
@@ -354,7 +354,7 @@ void CL64_Bullet::Show_Debug_Objects(bool Show)
 		Count++;
 	}
 
-	App->CL_Ogre->Bullet_Debug_Listener->Render_Debug_Flag = 0;
+	App->CL_Ogre->Bullet_Debug_Listener->flag_Render_Debug_Flag = 0;
 	App->CL_Ogre->RenderFrame(1);
-	App->CL_Ogre->Bullet_Debug_Listener->Render_Debug_Flag = 1;
+	App->CL_Ogre->Bullet_Debug_Listener->flag_Render_Debug_Flag = 1;
 }

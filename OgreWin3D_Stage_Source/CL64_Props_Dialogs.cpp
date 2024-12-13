@@ -724,9 +724,9 @@ LRESULT CALLBACK CL64_Props_Dialogs::Proc_Dialog_Debug(HWND hDlg, UINT message, 
 					App->CL_Props_Dialogs->flag_Show_Area_Physics_Debug = 0;
 					App->CL_Scene->B_Area[Index]->Phys_Body->setCollisionFlags(f | (1 << 5)); // Off
 
-					App->CL_Ogre->Bullet_Debug_Listener->Render_Debug_Flag = 0;
+					App->CL_Ogre->Bullet_Debug_Listener->flag_Render_Debug_Flag = 0;
 					App->CL_Ogre->RenderFrame(4);
-					App->CL_Ogre->Bullet_Debug_Listener->Render_Debug_Flag = 1;
+					App->CL_Ogre->Bullet_Debug_Listener->flag_Render_Debug_Flag = 1;
 
 					//SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_PhysicsOff_Bmp);
 				}
@@ -753,9 +753,9 @@ LRESULT CALLBACK CL64_Props_Dialogs::Proc_Dialog_Debug(HWND hDlg, UINT message, 
 
 					App->CL_Scene->B_Object[Index]->flag_Physics_Debug_On = 0;
 
-					App->CL_Ogre->Bullet_Debug_Listener->Render_Debug_Flag = 0;
+					App->CL_Ogre->Bullet_Debug_Listener->flag_Render_Debug_Flag = 0;
 					App->CL_Ogre->RenderFrame(4);
-					App->CL_Ogre->Bullet_Debug_Listener->Render_Debug_Flag = 1;
+					App->CL_Ogre->Bullet_Debug_Listener->flag_Render_Debug_Flag = 1;
 
 					//SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_PhysicsOff_Bmp);
 				}

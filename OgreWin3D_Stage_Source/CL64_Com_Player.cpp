@@ -180,9 +180,9 @@ void CL64_Com_Player::Show_Player_And_Physics(bool Show)
 		Show_Physics_Debug = 0;
 	}
 
-	App->CL_Ogre->Bullet_Debug_Listener->Render_Debug_Flag = 0;
+	App->CL_Ogre->Bullet_Debug_Listener->flag_Render_Debug_Flag = 0;
 	App->CL_Ogre->RenderFrame(1);
-	App->CL_Ogre->Bullet_Debug_Listener->Render_Debug_Flag = 1;
+	App->CL_Ogre->Bullet_Debug_Listener->flag_Render_Debug_Flag = 1;
 
 	RedrawWindow(App->CL_Props_Dialogs->Player_Props_HWND, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 }
@@ -205,9 +205,9 @@ void CL64_Com_Player::Show_Physics(bool Show)
 		Show_Physics_Debug = 0;
 	}
 
-	App->CL_Ogre->Bullet_Debug_Listener->Render_Debug_Flag = 0;
+	App->CL_Ogre->Bullet_Debug_Listener->flag_Render_Debug_Flag = 0;
 	App->CL_Ogre->RenderFrame(1);
-	App->CL_Ogre->Bullet_Debug_Listener->Render_Debug_Flag = 1;
+	App->CL_Ogre->Bullet_Debug_Listener->flag_Render_Debug_Flag = 1;
 
 	RedrawWindow(App->CL_Props_Dialogs->Player_Props_HWND, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 }

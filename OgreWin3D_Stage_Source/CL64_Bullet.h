@@ -26,6 +26,7 @@ public:
 	void Clear_Trimesh();
 	void Show_Debug_Area(bool Show);
 	void Show_Debug_Objects(bool Show);
+	bool Create_New_Trimesh(Ogre::Entity* Entity, Ogre::SceneNode* Node);
 
 	btDefaultCollisionConfiguration* collisionConfiguration;
 	btCollisionDispatcher* dispatcher;
@@ -39,11 +40,11 @@ public:
 	btRigidBody* Phys_Body;
 	btTriangleMesh* triMesh;
 
-	bool GD_Physics_On;
-	bool Physics_Dlg_Active;
+	bool flag_GD_Physics_On;
+	bool flag_Physics_Dlg_Active;
 	bool flag_TriMesh_Created;
 	bool flag_Debug_All;
-	bool Create_New_Trimesh(Ogre::Entity* Entity, Ogre::SceneNode* Node);
+
 };
 
 

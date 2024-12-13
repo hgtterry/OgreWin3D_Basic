@@ -78,7 +78,7 @@ public:
 
 	Ogre::ColourValue ColourMain;
 
-	bool Render_Debug_Flag; // Stop/Start Render Physics debug shapes [021221]
+	bool flag_Render_Debug_Flag; // Stop/Start Render Physics debug shapes [021221]
 
 	std::vector<Mvertex_type> vertex_Colour;
 	std::vector<Mvertex_type> vertex_From;

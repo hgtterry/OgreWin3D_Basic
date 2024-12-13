@@ -260,7 +260,7 @@ bool CL64_Scene::Game_Restart(void)
 
 	flag_GameMode_Running = 1;
 
-	App->CL_Ogre->Bullet_Debug_Listener->Render_Debug_Flag = 0;
+	App->CL_Ogre->Bullet_Debug_Listener->flag_Render_Debug_Flag = 0;
 
 	App->CL_Grid->Grid_SetVisible(0);
 	App->CL_Grid->Hair_SetVisible(0);

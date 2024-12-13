@@ -21,7 +21,7 @@ appreciated but is not required.
 
 CL64_Bullet_Debug_World::CL64_Bullet_Debug_World(void)
 {
-	Render_Debug_Flag = 1;
+	flag_Render_Debug_Flag = 1;
 	m_debugMode = (DebugDrawModes)DBG_DrawWireframe;
 
 	ColourMain = Ogre::ColourValue(1, 1, 1, 1);
@@ -161,7 +161,7 @@ void CL64_Bullet_Debug_World::Render_Debug_Bullet()
 // *************************************************************************
 bool CL64_Bullet_Debug_World::Render_Debug(void)
 {
-	if (Render_Debug_Flag == 1)
+	if (flag_Render_Debug_Flag == 1)
 	{
 		if (V_Count > 0)
 		{
