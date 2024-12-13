@@ -1082,9 +1082,23 @@ void StartOgre()
 	
     KillTimer(App->MainHwnd, 1);
 
+	// ------------------------ Load Test Project
 	if (App->CL_Preferences->flag_Load_Test_Project == 1)
 	{
-		App->CL_Project->Load_Last_Project(); // Look At Terry if no level loaded
+		char Test_Project[MAX_PATH];
+		strcpy(Test_Project, App->GD_Directory_FullPath);
+		strcat(Test_Project, "\\Projects\\First_Project_Prj\\Project.owproj");
+
+		App->CL_Project->Load_Last_Project(Test_Project); // Look At Terry if no level loaded
+	}
+
+	// ------------------------ Load the last Loaded Project
+	if (App->CL_Preferences->flag_Load_Last_Project == 1)
+	{
+		char Test_Project[MAX_PATH];
+		strcpy(Test_Project,App->CL_Preferences->Last_Loaded_File);
+		
+		App->CL_Project->Load_Last_Project(Test_Project); // Look At Terry if no level loaded
 	}
 
 	App->CL_SoundMgr->Play_StartUp_Sound();

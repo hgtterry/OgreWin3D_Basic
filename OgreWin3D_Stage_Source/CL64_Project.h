@@ -46,7 +46,7 @@ public:
 	bool Save_All(bool Silent);
 	void Start_Save_Project_Dialog();
 	
-	bool Load_Last_Project();
+	bool Load_Last_Project(char* Path_And_File);
 	bool Reload_From_ResentFiles(char* ResentPathAndFile);
 
 	bool Load_Project();

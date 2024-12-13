@@ -29,20 +29,20 @@ THE SOFTWARE.
 
 CL64_Props_Dialogs::CL64_Props_Dialogs(void)
 {
-	Details_Goto_Hwnd =			nullptr;
-	PhysicsTest_Dlg_hWnd =		nullptr;
-	Dimensions_Dlg_hWnd =		nullptr;
-	Debug_Dlg_hWnd =			nullptr;
-	Material_Props_Hwnd =		nullptr;
-	Cam_Props_HWND =			nullptr;
-	Player_Props_HWND =			nullptr;
-	Overide_Counter_Goto_Hwnd =	nullptr;
+	Details_Goto_Hwnd =				nullptr;
+	PhysicsTest_Dlg_hWnd =			nullptr;
+	Dimensions_Dlg_hWnd =			nullptr;
+	Debug_Dlg_hWnd =				nullptr;
+	Material_Props_Hwnd =			nullptr;
+	Cam_Props_HWND =				nullptr;
+	Player_Props_HWND =				nullptr;
+	Override_Counter_Goto_Hwnd =	nullptr;
 
 	flag_Show_Area_Physics_Debug = 0;
 
 	flag_Toggle_Objects = 1;
 	flag_Toggle_Physics = 0;
-	flag_Toggle_OverideCounter = 0;
+	flag_Toggle_OverrideCounter = 0;
 }
 
 CL64_Props_Dialogs::~CL64_Props_Dialogs(void)
@@ -62,7 +62,7 @@ void CL64_Props_Dialogs::Start_Props_Dialogs()
 	Start_Details_Goto_Dlg();
 	Start_Materials_PropsPanel();
 	Start_Player_PropsPanel();
-	Start_Overide_Counter();
+	Start_Override_Counter();
 
 }
 
@@ -160,19 +160,19 @@ LRESULT CALLBACK CL64_Props_Dialogs::Proc_Details_Goto(HWND hDlg, UINT message, 
 // *************************************************************************
 // *		Start_Overide_Counter:- Terry and Hazel Flanigan 2024 		   *
 // *************************************************************************
-void CL64_Props_Dialogs::Start_Overide_Counter(void)
+void CL64_Props_Dialogs::Start_Override_Counter(void)
 {
-	Overide_Counter_Goto_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_PROPS_OVERRIDECOUNTER, App->CL_Properties->Properties_Dlg_hWnd, (DLGPROC)Proc_Overide_Counter);
+	Override_Counter_Goto_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_PROPS_OVERRIDECOUNTER, App->CL_Properties->Properties_Dlg_hWnd, (DLGPROC)Proc_Override_Counter);
 
 	//Init_Bmps_DetailsGo();
-	Show_Overide_Counter_Dlg(false);
+	Show_Override_Counter_Dlg(false);
 
 }
 
 // *************************************************************************
 // *		Proc_Overide_Counter:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
-LRESULT CALLBACK CL64_Props_Dialogs::Proc_Overide_Counter(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK CL64_Props_Dialogs::Proc_Override_Counter(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
 
 	switch (message)
@@ -226,15 +226,15 @@ LRESULT CALLBACK CL64_Props_Dialogs::Proc_Overide_Counter(HWND hDlg, UINT messag
 			if (App->CL_Scene->B_Object[Index]->flag_OverRide_Counter == 1)
 			{
 				App->CL_Scene->B_Object[Index]->flag_OverRide_Counter = 0;
-				App->CL_Props_Dialogs->flag_Toggle_OverideCounter = 0;
+				App->CL_Props_Dialogs->flag_Toggle_OverrideCounter = 0;
 			}
 			else
 			{
 				App->CL_Scene->B_Object[Index]->flag_OverRide_Counter = 1;
-				App->CL_Props_Dialogs->flag_Toggle_OverideCounter = 1;
+				App->CL_Props_Dialogs->flag_Toggle_OverrideCounter = 1;
 			}
 
-			RedrawWindow(App->CL_Props_Dialogs->Overide_Counter_Goto_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			RedrawWindow(App->CL_Props_Dialogs->Override_Counter_Goto_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
 			return 1;
 		}
@@ -1161,11 +1161,11 @@ LRESULT CALLBACK CL64_Props_Dialogs::Proc_Player_PropsPanel(HWND hDlg, UINT mess
 }
 
 // *************************************************************************
-// *	Show_Overide_Counter_Dlg:- Terry and Hazel Flanigan 2024		   *
+// *	Show_Override_Counter_Dlg:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
-void CL64_Props_Dialogs::Show_Overide_Counter_Dlg(bool Show)
+void CL64_Props_Dialogs::Show_Override_Counter_Dlg(bool Show)
 {
-	ShowWindow(Overide_Counter_Goto_Hwnd, Show);
+	ShowWindow(Override_Counter_Goto_Hwnd, Show);
 }
 
 // *************************************************************************

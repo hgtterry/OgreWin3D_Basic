@@ -33,6 +33,8 @@ public:
 	bool flag_Load_Last_Project;
 	bool flag_Load_Test_Project;
 
+	char Last_Loaded_File[MAX_PATH];
+
 private:
 
 	static LRESULT CALLBACK Preferences_Dlg_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);

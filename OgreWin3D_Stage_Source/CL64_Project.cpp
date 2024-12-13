@@ -476,6 +476,9 @@ bool CL64_Project::Save_Project()
 
 	App->CL_File_IO->RecentFileHistory_Update();
 
+	strcpy(App->CL_Preferences->Last_Loaded_File, App->CL_Project->Project_Path_File_Name);
+	App->CL_Preferences->Write_Preferences();
+
 	//if (Set_QuickLoad_Flag == 1)
 	//{
 	//	strcpy(App->CL_Prefs->QL_User_File, App->SBC_FileIO->Project_Path_File_Name);
@@ -1503,13 +1506,10 @@ void CL64_Project::Set_Paths()
 // *************************************************************************
 // *	  		Load_Last_Project:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
-bool CL64_Project::Load_Last_Project()
+bool CL64_Project::Load_Last_Project(char* Path_And_File)
 {
-	char Test_Project[MAX_PATH];
-	strcpy(Test_Project, App->GD_Directory_FullPath);
-	strcat(Test_Project, "\\Projects\\First_Project_Prj\\Project.owproj");
+	bool test = Reload_From_ResentFiles(Path_And_File);
 
-	bool test = Reload_From_ResentFiles(Test_Project);
 	if (test == 1)
 	{
 		App->CL_Scene->Set_Scene();
@@ -1687,6 +1687,10 @@ bool CL64_Project::Load_Project()
 
 	App->CL_Com_MoveEntity->Adjust_Object_To_Move();
 
+	strcpy(App->CL_Preferences->Last_Loaded_File, App->CL_Project->Project_Path_File_Name);
+	App->CL_Preferences->Write_Preferences();
+
+	//App->CL_Project->Project_Path_File_Name
 	//App->SBC_FileIO->RecentFileHistory_Update();
 	//App->CL_Prefs->Update_User_File(App->SBC_FileIO->Project_Path_File_Name);
 

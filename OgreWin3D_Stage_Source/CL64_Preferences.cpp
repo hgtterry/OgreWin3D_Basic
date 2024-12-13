@@ -26,6 +26,8 @@ CL64_Preferences::CL64_Preferences(void)
 	flag_Load_Last_Project = 1;
 	flag_Load_Test_Project = 0;
 
+	strcpy(Last_Loaded_File,"No File");
+
 	WriteData = nullptr;
 }
 
@@ -316,6 +318,10 @@ void CL64_Preferences::Read_Preferences()
 	flag_Use_Default_Directories = App->CL_Ini_File->GetInt("Startup", "Default_Directories", 0, 10);
 	flag_Load_Last_Project = App->CL_Ini_File->GetInt("Startup", "Load_Last_Project", 0, 10);
 	flag_Load_Test_Project = App->CL_Ini_File->GetInt("Startup", "Load_Test_Project", 0, 10);
+
+	char Path_File[MAX_PATH];
+	App->CL_Ini_File->GetString("Startup", "Last_Prj_Dir", Path_File, MAX_PATH);
+	strcpy(Last_Loaded_File, Path_File);
 }
 
 // *************************************************************************
@@ -344,6 +350,8 @@ bool CL64_Preferences::Write_Preferences()
 	fprintf(WriteData, "%s%i\n", "Load_Last_Project=", flag_Load_Last_Project);
 	fprintf(WriteData, "%s%i\n", "Load_Test_Project=", flag_Load_Test_Project);
 	
+	fprintf(WriteData, "%s%s\n", "Last_Prj_Dir=", Last_Loaded_File);
+
 	fclose(WriteData);
 
 	return 1;
