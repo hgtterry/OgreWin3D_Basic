@@ -418,7 +418,7 @@ bool CL64_Properties::Edit_Player(LPARAM lParam)
 
 			App->CL_Scene->flag_Scene_Modified = 1;
 
-			App->CL_Scene->B_Object[Index]->Altered = 1;
+			App->CL_Scene->B_Object[Index]->flag_Altered = 1;
 			App->CL_Scene->flag_Scene_Modified = 1;
 			App->CL_FileView->Mark_Altered(App->CL_Scene->B_Object[Index]->FileViewItem);
 		}
@@ -463,7 +463,7 @@ bool CL64_Properties::Edit_Player(LPARAM lParam)
 
 			App->CL_Scene->flag_Scene_Modified = 1;
 
-			App->CL_Scene->B_Object[Index]->Altered = 1;
+			App->CL_Scene->B_Object[Index]->flag_Altered = 1;
 			App->CL_Scene->flag_Scene_Modified = 1;
 			App->CL_FileView->Mark_Altered(App->CL_Scene->B_Object[Index]->FileViewItem);
 		}
@@ -508,7 +508,7 @@ bool CL64_Properties::Edit_Player(LPARAM lParam)
 
 			App->CL_Scene->flag_Scene_Modified = 1;
 
-			App->CL_Scene->B_Object[Index]->Altered = 1;
+			App->CL_Scene->B_Object[Index]->flag_Altered = 1;
 			App->CL_Scene->flag_Scene_Modified = 1;
 			App->CL_FileView->Mark_Altered(App->CL_Scene->B_Object[Index]->FileViewItem);
 		}
@@ -892,7 +892,7 @@ bool CL64_Properties::Edit_Messages(LPARAM lParam)
 
 		App->CL_ImGui_Dialogs->flag_Show_Dialog_MessageEditor = 0;
 
-		App->CL_Scene->B_Object[Index]->Show_Message_Flag = 0;
+		App->CL_Scene->B_Object[Index]->flag_Show_Message_Flag = 0;
 
 		App->CL_Properties->Mark_As_Altered(Index);
 
@@ -917,7 +917,7 @@ bool CL64_Properties::Edit_Messages(LPARAM lParam)
 
 		App->CL_ImGui_Dialogs->flag_Show_Dialog_MessageEditor = 0;
 
-		App->CL_Scene->B_Object[Index]->Show_Message_Flag = 0;
+		App->CL_Scene->B_Object[Index]->flag_Show_Message_Flag = 0;
 
 		App->CL_Properties->Mark_As_Altered(Index);
 
@@ -1233,7 +1233,7 @@ bool CL64_Properties::Edit_Move_Entity(LPARAM lParam)
 
 		strcpy(App->CL_Dialogs->btext, "Play Sound");
 
-		App->CL_Dialogs->TrueFlase = App->CL_Scene->B_Object[Index]->Play_Sound;
+		App->CL_Dialogs->TrueFlase = App->CL_Scene->B_Object[Index]->flag_Play_Sound;
 
 		App->CL_Dialogs->Dialog_TrueFlase(App->MainHwnd);
 
@@ -1241,11 +1241,11 @@ bool CL64_Properties::Edit_Move_Entity(LPARAM lParam)
 		{
 			if (App->CL_Dialogs->TrueFlase == 1)
 			{
-				App->CL_Scene->B_Object[Index]->Play_Sound = 1;
+				App->CL_Scene->B_Object[Index]->flag_Play_Sound = 1;
 			}
 			else
 			{
-				App->CL_Scene->B_Object[Index]->Play_Sound = 0;
+				App->CL_Scene->B_Object[Index]->flag_Play_Sound = 0;
 
 			}
 		}
@@ -1312,7 +1312,7 @@ bool CL64_Properties::Edit_Teleport_Entity(LPARAM lParam)
 		int Count = 0;
 		while (Count < App->CL_Scene->Player_Location_Count)
 		{
-			if (App->CL_Scene->B_Locations[Count]->Deleted == 0)
+			if (App->CL_Scene->B_Locations[Count]->flag_Deleted == 0)
 			{
 				App->CL_ImGui_Dialogs->List_Strings[Count] = App->CL_Scene->B_Locations[Count]->Name;
 			}
@@ -1394,11 +1394,11 @@ bool CL64_Properties::Edit_Teleport_Entity(LPARAM lParam)
 
 		if (App->CL_Dialogs->Canceled == 0)
 		{
-			App->CL_Scene->B_Object[Index]->S_Teleport[0]->Play = 1;
+			App->CL_Scene->B_Object[Index]->S_Teleport[0]->flag_Play = 1;
 		}
 		else
 		{
-			App->CL_Scene->B_Object[Index]->S_Teleport[0]->Play = 0;
+			App->CL_Scene->B_Object[Index]->S_Teleport[0]->flag_Play = 0;
 		}
 
 		Update_ListView_Teleport();
@@ -1590,7 +1590,7 @@ void CL64_Properties::Edit_Particle(LPARAM lParam)
 
 			App->CL_Scene->flag_Scene_Modified = 1;
 
-			App->CL_Scene->B_Object[Index]->Altered = 1;
+			App->CL_Scene->B_Object[Index]->flag_Altered = 1;
 			App->CL_Scene->flag_Scene_Modified = 1;
 			App->CL_FileView->Mark_Altered(App->CL_Scene->B_Object[Index]->FileViewItem);
 		}
@@ -1878,7 +1878,7 @@ bool CL64_Properties::Edit_Collectables(LPARAM lParam)
 
 		strcpy(App->CL_Dialogs->btext, "Play Sound In The Game");
 
-		App->CL_Dialogs->TrueFlase = App->CL_Scene->B_Object[Index]->S_Collectable[0]->Play;
+		App->CL_Dialogs->TrueFlase = App->CL_Scene->B_Object[Index]->S_Collectable[0]->flag_Play;
 
 		App->CL_Dialogs->Dialog_TrueFlase(App->MainHwnd);
 
@@ -1886,11 +1886,11 @@ bool CL64_Properties::Edit_Collectables(LPARAM lParam)
 		{
 			if (App->CL_Dialogs->TrueFlase == 1)
 			{
-				App->CL_Scene->B_Object[Index]->S_Collectable[0]->Play = 1;
+				App->CL_Scene->B_Object[Index]->S_Collectable[0]->flag_Play = 1;
 			}
 			else
 			{
-				App->CL_Scene->B_Object[Index]->S_Collectable[0]->Play = 0;
+				App->CL_Scene->B_Object[Index]->S_Collectable[0]->flag_Play = 0;
 
 			}
 		}
@@ -2071,7 +2071,7 @@ bool CL64_Properties::Edit_Counters_OnClick(LPARAM lParam)
 
 		App->CL_ImGui_Dialogs->List_Strings.resize(2);
 		App->CL_ImGui_Dialogs->List_Count = 2;
-		App->CL_ImGui_Dialogs->List_Index = App->CL_Scene->B_Counter[Index]->Show_Panel_Flag;
+		App->CL_ImGui_Dialogs->List_Index = App->CL_Scene->B_Counter[Index]->flag_Show_Panel_Flag;
 
 		App->CL_ImGui_Dialogs->List_Strings[0] = "Auto";
 		App->CL_ImGui_Dialogs->List_Strings[1] = "Always";
@@ -2093,12 +2093,12 @@ bool CL64_Properties::Edit_Counters_OnClick(LPARAM lParam)
 		{
 			if (SelectionIndex == 0)
 			{
-				App->CL_Scene->B_Counter[Index]->Show_Panel_Flag = 0;
+				App->CL_Scene->B_Counter[Index]->flag_Show_Panel_Flag = 0;
 			}
 
 			if (SelectionIndex == 1)
 			{
-				App->CL_Scene->B_Counter[Index]->Show_Panel_Flag = 1;
+				App->CL_Scene->B_Counter[Index]->flag_Show_Panel_Flag = 1;
 			}
 
 			App->CL_Display->Mark_As_Altered_Counter(Index);
@@ -2569,7 +2569,7 @@ bool CL64_Properties::Update_ListView_Collectables()
 
 	// new sound
 	char chr_Play[100];
-	if (App->CL_Scene->B_Object[index]->S_Collectable[0]->Play == 1)
+	if (App->CL_Scene->B_Object[index]->S_Collectable[0]->flag_Play == 1)
 	{
 		strcpy(chr_Play, "True");
 	}
@@ -2584,7 +2584,7 @@ bool CL64_Properties::Update_ListView_Collectables()
 	_itoa(Percent, chr_Volume, 10);
 
 	char chr_Counter_Disabled[20];
-	if (App->CL_Scene->B_Object[index]->S_Collectable[0]->Counter_Disabled == 1)
+	if (App->CL_Scene->B_Object[index]->S_Collectable[0]->flag_Counter_Disabled == 1)
 	{
 		strcpy(chr_Counter_Disabled, "Disabled");
 	}
@@ -2736,7 +2736,7 @@ bool CL64_Properties::Update_ListView_Move_Entities()
 
 	// new sound
 	char chr_Play[100];
-	if (App->CL_Scene->B_Object[index]->Play_Sound == 1)
+	if (App->CL_Scene->B_Object[index]->flag_Play_Sound == 1)
 	{
 		strcpy(chr_Play, "True");
 	}
@@ -2757,7 +2757,7 @@ bool CL64_Properties::Update_ListView_Move_Entities()
 	_itoa(Percent, chr_Volume, 10);
 
 	char chr_Counter_Disabled[20];
-	if (App->CL_Scene->B_Object[index]->S_MoveType[0]->Counter_Disabled == 1)
+	if (App->CL_Scene->B_Object[index]->S_MoveType[0]->flag_Counter_Disabled == 1)
 	{
 		strcpy(chr_Counter_Disabled, "Disabled");
 	}
@@ -2833,7 +2833,7 @@ bool CL64_Properties::Update_ListView_Messages()
 	sprintf(chr_PosY, "%.3f ", App->CL_Scene->B_Object[index]->S_Message[0]->Message_PosY);
 
 	char chr_Counter_Disabled[20];
-	if (App->CL_Scene->B_Object[index]->S_Message[0]->Counter_Disabled == 1)
+	if (App->CL_Scene->B_Object[index]->S_Message[0]->flag_Counter_Disabled == 1)
 	{
 		strcpy(chr_Counter_Disabled, "Disabled");
 	}
@@ -2894,7 +2894,7 @@ bool CL64_Properties::Update_ListView_Teleport()
 
 	// new sound
 	char chr_Play[100];
-	if (App->CL_Scene->B_Object[index]->S_Teleport[0]->Play == 1)
+	if (App->CL_Scene->B_Object[index]->S_Teleport[0]->flag_Play == 1)
 	{
 		strcpy(chr_Play, "True");
 	}
@@ -2915,7 +2915,7 @@ bool CL64_Properties::Update_ListView_Teleport()
 
 
 	char chr_Counter_Disabled[20];
-	if (App->CL_Scene->B_Object[index]->S_Teleport[0]->Counter_Disabled == 1)
+	if (App->CL_Scene->B_Object[index]->S_Teleport[0]->flag_Counter_Disabled == 1)
 	{
 		strcpy(chr_Counter_Disabled, "Disabled");
 	}
@@ -2927,7 +2927,7 @@ bool CL64_Properties::Update_ListView_Teleport()
 
 	// Environ
 	char chr_Environ_Disabled[100];
-	if (App->CL_Scene->B_Object[index]->S_Environ[0]->Environ_Enabled == 1)
+	if (App->CL_Scene->B_Object[index]->S_Environ[0]->flag_Environ_Enabled == 1)
 	{
 		strcpy(chr_Environ_Disabled, "Enabled");
 	}
@@ -2941,7 +2941,7 @@ bool CL64_Properties::Update_ListView_Teleport()
 	_itoa(App->CL_Scene->B_Object[index]->S_Teleport[0]->Counter_ID, Chr_Counter_Index,10);
 
 
-	if (App->CL_Scene->B_Object[index]->S_Environ[0]->Environ_Enabled == 1)
+	if (App->CL_Scene->B_Object[index]->S_Environ[0]->flag_Environ_Enabled == 1)
 	{
 		const int NUM_ITEMS = 12;
 		const int NUM_COLS = 2;
@@ -3096,7 +3096,7 @@ bool CL64_Properties::Update_ListView_Counters()
 	_itoa(App->CL_Scene->B_Counter[index]->Counter, chr_Counter, 10);
 
 	char chr_Display[20];
-	if (App->CL_Scene->B_Counter[index]->Show_Panel_Flag == 1)
+	if (App->CL_Scene->B_Counter[index]->flag_Show_Panel_Flag == 1)
 	{
 		strcpy(chr_Display, "Always");
 	}
@@ -3196,7 +3196,7 @@ bool CL64_Properties::Update_ListView_Environs()
 // *************************************************************************
 void CL64_Properties::Mark_As_Altered(int Index)
 {
-	App->CL_Scene->B_Object[Index]->Altered = 1;
+	App->CL_Scene->B_Object[Index]->flag_Altered = 1;
 	App->CL_Scene->flag_Scene_Modified = 1;
 	App->CL_FileView->Mark_Altered(App->CL_Scene->B_Object[Index]->FileViewItem);
 }

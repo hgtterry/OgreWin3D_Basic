@@ -52,12 +52,12 @@ CL64_Collision::~CL64_Collision(void)
 // *************************************************************************
 bool CL64_Collision::Do_Teleport(int Index)
 {
-	if (App->CL_Scene->B_Object[Index]->S_Teleport[0]->Counter_Disabled == 1 || App->CL_Scene->B_Object[Index]->flag_OverRide_Counter == 1)
+	if (App->CL_Scene->B_Object[Index]->S_Teleport[0]->flag_Counter_Disabled == 1 || App->CL_Scene->B_Object[Index]->flag_OverRide_Counter == 1)
 	{
 		App->CL_Scene->B_Player[0]->Phys_Body->getWorldTransform().setOrigin(App->CL_Scene->B_Object[Index]->S_Teleport[0]->Physics_Position);
 		App->CL_Scene->B_Player[0]->Phys_Body->getWorldTransform().setRotation(App->CL_Scene->B_Object[Index]->S_Teleport[0]->Physics_Rotation);
 
-		if (App->CL_Scene->B_Object[Index]->S_Teleport[0]->Play == 1)
+		if (App->CL_Scene->B_Object[Index]->S_Teleport[0]->flag_Play == 1)
 		{
 			char Sound[MAX_PATH];
 			strcpy(Sound, App->CL_SoundMgr->Default_Folder);
@@ -97,7 +97,7 @@ bool CL64_Collision::Do_Teleport(int Index)
 		App->CL_Scene->B_Player[0]->Phys_Body->getWorldTransform().setOrigin(App->CL_Scene->B_Object[Index]->S_Teleport[0]->Physics_Position);
 		App->CL_Scene->B_Player[0]->Phys_Body->getWorldTransform().setRotation(App->CL_Scene->B_Object[Index]->S_Teleport[0]->Physics_Rotation);
 
-		if (App->CL_Scene->B_Object[Index]->S_Teleport[0]->Play == 1)
+		if (App->CL_Scene->B_Object[Index]->S_Teleport[0]->flag_Play == 1)
 		{
 			char Sound[MAX_PATH];
 			strcpy(Sound, App->CL_SoundMgr->Default_Folder);
@@ -138,13 +138,13 @@ bool CL64_Collision::Do_Teleport(int Index)
 // *************************************************************************
 bool CL64_Collision::Do_Collectable(int Index)
 {
-	App->CL_Scene->B_Object[Index]->Triggered = 1;
+	App->CL_Scene->B_Object[Index]->flag_Triggered = 1;
 
 	App->CL_Scene->B_Object[Index]->Object_Ent->setVisible(0);
 	App->CL_Scene->B_Object[Index]->Object_Node->setPosition(100, 100, 100);
 	App->CL_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(100, 100, 100));
 
-	if (App->CL_Scene->B_Object[Index]->S_Collectable[0]->Play == 1)
+	if (App->CL_Scene->B_Object[Index]->S_Collectable[0]->flag_Play == 1)
 	{
 		char Sound[1024];
 		strcpy(Sound, App->CL_SoundMgr->Default_Folder);
@@ -156,7 +156,7 @@ bool CL64_Collision::Do_Collectable(int Index)
 		App->CL_Scene->B_Object[Index]->S_Collectable[0]->SndFile->setIsPaused(false);
 	}
 
-	if (App->CL_Scene->B_Object[Index]->S_Collectable[0]->Counter_Disabled == 0)
+	if (App->CL_Scene->B_Object[Index]->S_Collectable[0]->flag_Counter_Disabled == 0)
 	{
 		int CouterID = App->CL_Scene->B_Object[Index]->S_Collectable[0]->Counter_ID;
 
@@ -187,9 +187,9 @@ bool CL64_Collision::Move_Entity_Collision(int Index)
 
 	int ObjectToMove = App->CL_Scene->B_Object[ObjectIndex]->S_MoveType[0]->Object_To_Move_Index;
 
-	if (App->CL_Scene->B_Object[ObjectToMove]->Deleted == 0)
+	if (App->CL_Scene->B_Object[ObjectToMove]->flag_Deleted == 0)
 	{
-		if (App->CL_Scene->B_Object[ObjectIndex]->S_MoveType[0]->Counter_Disabled == 1 || App->CL_Scene->B_Object[Index]->flag_OverRide_Counter == 1)
+		if (App->CL_Scene->B_Object[ObjectIndex]->S_MoveType[0]->flag_Counter_Disabled == 1 || App->CL_Scene->B_Object[Index]->flag_OverRide_Counter == 1)
 		{
 			Set_Move_Entity(Index);
 			return 1;
@@ -219,7 +219,7 @@ void CL64_Collision::Set_Move_Entity(int Index)
 
 	int ObjectToMove = App->CL_Scene->B_Object[ObjectIndex]->S_MoveType[0]->Object_To_Move_Index;
 
-	App->CL_Scene->B_Object[Index]->Triggered = 1;
+	App->CL_Scene->B_Object[Index]->flag_Triggered = 1;
 
 	M_Pos = App->CL_Scene->B_Object[ObjectToMove]->Mesh_Pos;
 	P_Pos = App->CL_Scene->B_Object[ObjectToMove]->Physics_Pos;
@@ -250,7 +250,7 @@ void CL64_Collision::Set_Move_Entity(int Index)
 		FinalPosition = z + App->CL_Scene->B_Object[ObjectIndex]->S_MoveType[0]->Move_Distance;
 	}
 
-	if (App->CL_Scene->B_Object[Index]->Play_Sound == 1)
+	if (App->CL_Scene->B_Object[Index]->flag_Play_Sound == 1)
 	{
 		char Sound[MAX_PATH];
 		strcpy(Sound, App->CL_SoundMgr->Default_Folder);
@@ -270,13 +270,13 @@ void CL64_Collision::Set_Move_Entity(int Index)
 // *************************************************************************
 void CL64_Collision::MoveObject_Listener(Ogre::Real Time)
 {
-	if (App->CL_Scene->B_Object[ObjectIndex]->Deleted == 0)
+	if (App->CL_Scene->B_Object[ObjectIndex]->flag_Deleted == 0)
 	{
 		// X Axis
 		if (App->CL_Scene->B_Object[ObjectIndex]->S_MoveType[0]->WhatDirection == Enums::Axis_x)
 		{
 
-			if (App->CL_Scene->B_Object[ObjectIndex]->S_MoveType[0]->IsNegative == false)
+			if (App->CL_Scene->B_Object[ObjectIndex]->S_MoveType[0]->flag_IsNegative == false)
 			{
 				int ObjectToMove = App->CL_Scene->B_Object[ObjectIndex]->S_MoveType[0]->Object_To_Move_Index;
 
@@ -291,7 +291,7 @@ void CL64_Collision::MoveObject_Listener(Ogre::Real Time)
 
 				if (App->CL_Scene->B_Object[ObjectIndex]->S_MoveType[0]->MeshPos.x > FinalPosition)
 				{
-					if (App->CL_Scene->B_Object[ObjectIndex]->Play_Sound == 1)
+					if (App->CL_Scene->B_Object[ObjectIndex]->flag_Play_Sound == 1)
 					{
 						App->CL_Scene->B_Object[ObjectIndex]->SndFile->stop();
 						App->CL_Scene->B_Object[ObjectIndex]->SndFile->drop();
@@ -318,7 +318,7 @@ void CL64_Collision::MoveObject_Listener(Ogre::Real Time)
 
 				if (App->CL_Scene->B_Object[ObjectIndex]->S_MoveType[0]->MeshPos.x < FinalPosition)
 				{
-					if (App->CL_Scene->B_Object[ObjectIndex]->Play_Sound == 1)
+					if (App->CL_Scene->B_Object[ObjectIndex]->flag_Play_Sound == 1)
 					{
 						App->CL_Scene->B_Object[ObjectIndex]->SndFile->stop();
 						App->CL_Scene->B_Object[ObjectIndex]->SndFile->drop();
@@ -335,7 +335,7 @@ void CL64_Collision::MoveObject_Listener(Ogre::Real Time)
 		// Y Axis
 		if (App->CL_Scene->B_Object[ObjectIndex]->S_MoveType[0]->WhatDirection == Enums::Axis_y)
 		{
-			if (App->CL_Scene->B_Object[ObjectIndex]->S_MoveType[0]->IsNegative == false)
+			if (App->CL_Scene->B_Object[ObjectIndex]->S_MoveType[0]->flag_IsNegative == false)
 			{
 				int ObjectToMove = App->CL_Scene->B_Object[ObjectIndex]->S_MoveType[0]->Object_To_Move_Index;
 
@@ -350,7 +350,7 @@ void CL64_Collision::MoveObject_Listener(Ogre::Real Time)
 
 				if (App->CL_Scene->B_Object[ObjectIndex]->S_MoveType[0]->MeshPos.y > FinalPosition)
 				{
-					if (App->CL_Scene->B_Object[ObjectIndex]->Play_Sound == 1)
+					if (App->CL_Scene->B_Object[ObjectIndex]->flag_Play_Sound == 1)
 					{
 						App->CL_Scene->B_Object[ObjectIndex]->SndFile->stop();
 						App->CL_Scene->B_Object[ObjectIndex]->SndFile->drop();
@@ -377,7 +377,7 @@ void CL64_Collision::MoveObject_Listener(Ogre::Real Time)
 
 				if (App->CL_Scene->B_Object[ObjectIndex]->S_MoveType[0]->MeshPos.y < FinalPosition)
 				{
-					if (App->CL_Scene->B_Object[ObjectIndex]->Play_Sound == 1)
+					if (App->CL_Scene->B_Object[ObjectIndex]->flag_Play_Sound == 1)
 					{
 						App->CL_Scene->B_Object[ObjectIndex]->SndFile->stop();
 						App->CL_Scene->B_Object[ObjectIndex]->SndFile->drop();
@@ -394,7 +394,7 @@ void CL64_Collision::MoveObject_Listener(Ogre::Real Time)
 		// Z Axis
 		if (App->CL_Scene->B_Object[ObjectIndex]->S_MoveType[0]->WhatDirection == Enums::Axis_z)
 		{
-			if (App->CL_Scene->B_Object[ObjectIndex]->S_MoveType[0]->IsNegative == false)
+			if (App->CL_Scene->B_Object[ObjectIndex]->S_MoveType[0]->flag_IsNegative == false)
 			{
 				int ObjectToMove = App->CL_Scene->B_Object[ObjectIndex]->S_MoveType[0]->Object_To_Move_Index;
 
@@ -409,7 +409,7 @@ void CL64_Collision::MoveObject_Listener(Ogre::Real Time)
 
 				if (App->CL_Scene->B_Object[ObjectIndex]->S_MoveType[0]->MeshPos.z > FinalPosition)
 				{
-					if (App->CL_Scene->B_Object[ObjectIndex]->Play_Sound == 1)
+					if (App->CL_Scene->B_Object[ObjectIndex]->flag_Play_Sound == 1)
 					{
 						App->CL_Scene->B_Object[ObjectIndex]->SndFile->stop();
 						App->CL_Scene->B_Object[ObjectIndex]->SndFile->drop();
@@ -436,7 +436,7 @@ void CL64_Collision::MoveObject_Listener(Ogre::Real Time)
 
 				if (App->CL_Scene->B_Object[ObjectIndex]->S_MoveType[0]->MeshPos.z < FinalPosition)
 				{
-					if (App->CL_Scene->B_Object[ObjectIndex]->Play_Sound == 1)
+					if (App->CL_Scene->B_Object[ObjectIndex]->flag_Play_Sound == 1)
 					{
 						App->CL_Scene->B_Object[ObjectIndex]->SndFile->stop();
 						App->CL_Scene->B_Object[ObjectIndex]->SndFile->drop();
@@ -469,7 +469,7 @@ bool CL64_Collision::Play_Sound(int Index)
 	App->CL_SoundMgr->SndFile->setVolume(App->CL_Scene->B_Object[Index]->SndVolume);
 	App->CL_SoundMgr->SndFile->setIsPaused(false);
 
-	App->CL_Scene->B_Object[Index]->Triggered = 1;
+	App->CL_Scene->B_Object[Index]->flag_Triggered = 1;
 
 	return 1;
 }
@@ -479,17 +479,17 @@ bool CL64_Collision::Play_Sound(int Index)
 // *************************************************************************
 bool CL64_Collision::Message_Entity(int Index)
 {
-	if (App->CL_Scene->B_Object[Index]->Triggered == 1) // Retrigger Yes No
+	if (App->CL_Scene->B_Object[Index]->flag_Triggered == 1) // Retrigger Yes No
 	{
 		return 1;
 	}
 
 	//-----------------  Do Action
 
-	if (App->CL_Scene->B_Object[Index]->S_Message[0]->Counter_Disabled == 1)
+	if (App->CL_Scene->B_Object[Index]->S_Message[0]->flag_Counter_Disabled == 1)
 	{
-		App->CL_Scene->B_Object[Index]->Show_Message_Flag = 1;
-		App->CL_Scene->B_Object[Index]->Triggered = 1;
+		App->CL_Scene->B_Object[Index]->flag_Show_Message_Flag = 1;
+		App->CL_Scene->B_Object[Index]->flag_Triggered = 1;
 		return 1;
 	}
 
@@ -498,8 +498,8 @@ bool CL64_Collision::Message_Entity(int Index)
 
 	if (App->CL_Scene->B_Counter[CounterIndex]->Counter < Trigger_Value)
 	{
-		App->CL_Scene->B_Object[Index]->Show_Message_Flag = 1;
-		App->CL_Scene->B_Object[Index]->Triggered = 1;
+		App->CL_Scene->B_Object[Index]->flag_Show_Message_Flag = 1;
+		App->CL_Scene->B_Object[Index]->flag_Triggered = 1;
 		return 1;
 	}
 
@@ -511,14 +511,14 @@ bool CL64_Collision::Message_Entity(int Index)
 // *************************************************************************
 bool CL64_Collision::Do_Environment(int Index)
 {
-	if (App->CL_Scene->B_Object[Index]->Triggered == 1) // return
+	if (App->CL_Scene->B_Object[Index]->flag_Triggered == 1) // return
 	{
 		return 1;
 	}
 
 	if (Old_Sound_Index == Index)
 	{
-		App->CL_Scene->B_Object[Index]->Triggered = 1;
+		App->CL_Scene->B_Object[Index]->flag_Triggered = 1;
 		return 1;
 	}
 
@@ -528,7 +528,7 @@ bool CL64_Collision::Do_Environment(int Index)
 		App->CL_Com_Environments->Set_Environment_By_Index(1, Index);
 
 		Old_Sound_Index = Index;
-		App->CL_Scene->B_Object[Index]->Triggered = 1;
+		App->CL_Scene->B_Object[Index]->flag_Triggered = 1;
 	}
 	else
 	{
@@ -536,7 +536,7 @@ bool CL64_Collision::Do_Environment(int Index)
 
 		Old_Sound_Index = Index;
 
-		App->CL_Scene->B_Object[Index]->Triggered = 1;
+		App->CL_Scene->B_Object[Index]->flag_Triggered = 1;
 	}
 
 	return 1;

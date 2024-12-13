@@ -42,10 +42,9 @@ public:
 
 	HTREEITEM FileViewItem;			// Holder for Area File view item [211121]
 
-	bool Physics_Valid;
-	bool Altered;
-
-	bool Physics_Debug_On;
+	bool flag_Physics_Valid;
+	bool flag_Altered;
+	bool flag_Physics_Debug_On;
 
 };
 

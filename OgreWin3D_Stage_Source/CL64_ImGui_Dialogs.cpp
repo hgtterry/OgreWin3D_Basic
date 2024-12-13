@@ -259,8 +259,8 @@ void CL64_ImGui_Dialogs::Start_Dialog_MessageEditor(int Index)
 	flag_Message_Editor_StartPos = 0;
 	Message_Index = Index;
 
-	flag_Centre_X_Selected = App->CL_Scene->B_Object[Message_Index]->S_Message[0]->PosXCentre_Flag;
-	flag_Centre_Y_Selected = App->CL_Scene->B_Object[Message_Index]->S_Message[0]->PosYCentre_Flag;
+	flag_Centre_X_Selected = App->CL_Scene->B_Object[Message_Index]->S_Message[0]->flag_PosXCentre_Flag;
+	flag_Centre_Y_Selected = App->CL_Scene->B_Object[Message_Index]->S_Message[0]->flag_PosYCentre_Flag;
 
 	Float_Colour = ImVec4(App->CL_Scene->B_Object[Message_Index]->S_Message[0]->Text_Colour.x / 255.0f,
 		App->CL_Scene->B_Object[Message_Index]->S_Message[0]->Text_Colour.y / 255.0f,
@@ -272,7 +272,7 @@ void CL64_ImGui_Dialogs::Start_Dialog_MessageEditor(int Index)
 		App->CL_Scene->B_Object[Message_Index]->S_Message[0]->BackGround_Colour.z / 255.0f,
 		255);
 
-	App->CL_Scene->B_Object[Index]->Show_Message_Flag = 1;
+	App->CL_Scene->B_Object[Index]->flag_Show_Message_Flag = 1;
 
 	flag_Show_Dialog_MessageEditor = 1;
 }
@@ -317,11 +317,11 @@ void CL64_ImGui_Dialogs::Dialog_MessageEditor(void)
 
 		if (flag_Centre_X_Selected)
 		{
-			App->CL_Scene->B_Object[Message_Index]->S_Message[0]->PosXCentre_Flag = 1;
+			App->CL_Scene->B_Object[Message_Index]->S_Message[0]->flag_PosXCentre_Flag = 1;
 		}
 		else
 		{
-			App->CL_Scene->B_Object[Message_Index]->S_Message[0]->PosXCentre_Flag = 0;
+			App->CL_Scene->B_Object[Message_Index]->S_Message[0]->flag_PosXCentre_Flag = 0;
 		}
 
 		ImGui::Separator();
@@ -332,11 +332,11 @@ void CL64_ImGui_Dialogs::Dialog_MessageEditor(void)
 
 		if (flag_Centre_Y_Selected)
 		{
-			App->CL_Scene->B_Object[Message_Index]->S_Message[0]->PosYCentre_Flag = 1;
+			App->CL_Scene->B_Object[Message_Index]->S_Message[0]->flag_PosYCentre_Flag = 1;
 		}
 		else
 		{
-			App->CL_Scene->B_Object[Message_Index]->S_Message[0]->PosYCentre_Flag = 0;
+			App->CL_Scene->B_Object[Message_Index]->S_Message[0]->flag_PosYCentre_Flag = 0;
 		}
 
 
@@ -364,7 +364,7 @@ void CL64_ImGui_Dialogs::Dialog_MessageEditor(void)
 		App->CL_Scene->B_Object[Message_Index]->S_Message[0]->BackGround_Colour.y = BackGround_color.y * 255.0f;
 		App->CL_Scene->B_Object[Message_Index]->S_Message[0]->BackGround_Colour.z = BackGround_color.z * 255.0f;
 
-		ImGui::Checkbox("Show Back Ground", &App->CL_Scene->B_Object[Message_Index]->S_Message[0]->Show_BackGround);
+		ImGui::Checkbox("Show Back Ground", &App->CL_Scene->B_Object[Message_Index]->S_Message[0]->flag_Show_BackGround);
 
 		ImGui::Spacing();
 		ImGui::Spacing();

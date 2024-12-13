@@ -79,7 +79,7 @@ bool CL64_Com_Collectables::Add_New_Collectable()
 	App->CL_Scene->UniqueID_Object_Counter++; // Unique ID
 	App->CL_Scene->Object_Count++;  // Must be last line
 
-	App->CL_Scene->B_Object[Index]->Altered = 1;
+	App->CL_Scene->B_Object[Index]->flag_Altered = 1;
 	App->CL_Scene->flag_Scene_Modified = 1;
 
 	return 1;
@@ -182,10 +182,10 @@ void CL64_Com_Collectables::Set_Collectables_Defaults(int Index)
 {
 	Base_Object* B_Object = App->CL_Scene->B_Object[Index];
 
-	B_Object->Altered = 0;
+	B_Object->flag_Altered = 0;
 
 	strcpy(B_Object->S_Collectable[0]->Sound_File, "footstep.ogg");
-	B_Object->S_Collectable[0]->Play = 1;
+	B_Object->S_Collectable[0]->flag_Play = 1;
 	B_Object->S_Collectable[0]->SndVolume = 0.5;
 
 	B_Object->S_Collectable[0]->Maths = 1; // Add
@@ -194,7 +194,7 @@ void CL64_Com_Collectables::Set_Collectables_Defaults(int Index)
 	B_Object->S_Collectable[0]->Counter_ID = 0;
 	strcpy(B_Object->S_Collectable[0]->Counter_Name, "Not_Set");
 
-	B_Object->S_Collectable[0]->Counter_Disabled = 0;
+	B_Object->S_Collectable[0]->flag_Counter_Disabled = 0;
 }
 
 // *************************************************************************
@@ -216,7 +216,7 @@ void CL64_Com_Collectables::Rename_Collectable(int Index)
 
 	strcpy(Object->Object_Name, App->CL_Dialogs->Chr_Text);
 
-	Object->Altered = 1;
+	Object->flag_Altered = 1;
 
 	App->CL_Scene->flag_Scene_Modified = 1;
 	App->CL_FileView->Mark_Altered(Object->FileViewItem);

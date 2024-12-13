@@ -75,7 +75,7 @@ bool CL64_Com_Environments::Add_New_Environ_Entity(bool FirstOne)
 	HTREEITEM Temp = App->CL_FileView->Add_Item(App->CL_FileView->FV_Evirons_Folder, App->CL_Scene->B_Object[Index]->Object_Name, Index, true);
 	App->CL_Scene->B_Object[Index]->FileViewItem = Temp;
 
-	App->CL_Scene->B_Object[Index]->Altered = 1;
+	App->CL_Scene->B_Object[Index]->flag_Altered = 1;
 
 	App->CL_FileView->Set_FolderActive(App->CL_FileView->FV_Evirons_Folder);
 	App->CL_FileView->SelectItem(App->CL_Scene->B_Object[Index]->FileViewItem);
@@ -94,18 +94,18 @@ void CL64_Com_Environments::V_Set_Environ_Defaults(int Index)
 {
 	Base_Object* B_Object = App->CL_Scene->B_Object[Index];
 
-	B_Object->Altered = 1;
+	B_Object->flag_Altered = 1;
 
 	B_Object->S_Environ[0]->Environment_ID = 0;
 	strcpy(B_Object->S_Environ[0]->Environment_Name, "Not_Set");
 
-	B_Object->S_Environ[0]->Environ_Enabled = 1;
+	B_Object->S_Environ[0]->flag_Environ_Enabled = 1;
 
 	//----------------------- Sound
 	strcpy(B_Object->S_Environ[0]->Sound_File, "The_Sun.ogg");
 	B_Object->S_Environ[0]->SndFile = NULL;
-	B_Object->S_Environ[0]->Play = 0;
-	B_Object->S_Environ[0]->Loop = 1;
+	B_Object->S_Environ[0]->flag_Play = 0;
+	B_Object->S_Environ[0]->flag_Loop = 1;
 	B_Object->S_Environ[0]->SndVolume = 0.5;
 
 	//----------------------- Light
@@ -120,7 +120,7 @@ void CL64_Com_Environments::V_Set_Environ_Defaults(int Index)
 	// Sky
 	B_Object->S_Environ[0]->Curvature = 15;
 	B_Object->S_Environ[0]->Distance = 4000;
-	B_Object->S_Environ[0]->Enabled = 0;
+	B_Object->S_Environ[0]->flag_Enabled = 0;
 	strcpy(B_Object->S_Environ[0]->Material, "Examples/CloudySky");
 	B_Object->S_Environ[0]->Tiling = 15;
 	B_Object->S_Environ[0]->type = 1;
@@ -256,11 +256,11 @@ int CL64_Com_Environments::Set_Environment_By_Index(bool PlayMusic, int Index)
 		strcpy(buff, App->CL_SoundMgr->Default_Folder);
 		strcat(buff, "\\Media\\Sounds\\");
 
-		if (App->CL_Scene->B_Object[Index]->S_Environ[0]->Play == 1)
+		if (App->CL_Scene->B_Object[Index]->S_Environ[0]->flag_Play == 1)
 		{
 			strcat(buff, App->CL_Scene->B_Object[Index]->S_Environ[0]->Sound_File);
 
-			App->CL_Scene->B_Object[Index]->S_Environ[0]->SndFile = App->CL_SoundMgr->SoundEngine->play2D(buff, App->CL_Scene->B_Object[Index]->S_Environ[0]->Loop, true, true);
+			App->CL_Scene->B_Object[Index]->S_Environ[0]->SndFile = App->CL_SoundMgr->SoundEngine->play2D(buff, App->CL_Scene->B_Object[Index]->S_Environ[0]->flag_Loop, true, true);
 
 			App->CL_Scene->B_Object[Index]->S_Environ[0]->SndFile->setVolume(App->CL_Scene->B_Object[Index]->S_Environ[0]->SndVolume);
 			App->CL_Scene->B_Object[Index]->S_Environ[0]->SndFile->setIsPaused(false);
@@ -287,7 +287,7 @@ int CL64_Com_Environments::Set_Environment_By_Index(bool PlayMusic, int Index)
 // *************************************************************************
 void CL64_Com_Environments::Mark_As_Altered_Environ(int Index)
 {
-	App->CL_Scene->B_Object[Index]->Altered = 1;
+	App->CL_Scene->B_Object[Index]->flag_Altered = 1;
 
 	App->CL_Scene->flag_Scene_Modified = 1;
 
@@ -341,7 +341,7 @@ void CL64_Com_Environments::Set_First_Environment(int Index)
 		App->CL_Ogre->mSceneMgr->setFog(FOG_NONE, ColourValue(0.7, 0.7, 0.8), 0, 100, 1000);
 	}
 
-	if (App->CL_Scene->B_Object[Index]->S_Environ[0]->Enabled == 1)
+	if (App->CL_Scene->B_Object[Index]->S_Environ[0]->flag_Enabled == 1)
 	{
 	App->CL_Ogre->mSceneMgr->setSkyDome(true, "OW3D/CloudySky", 
 		App->CL_Scene->B_Object[Index]->S_Environ[0]->Curvature, 
@@ -376,7 +376,7 @@ void CL64_Com_Environments::Set_Environment_GameMode(bool Turn_On)
 
 		strcat(buff, App->CL_Scene->B_Object[First_Environ]->S_Environ[0]->Sound_File);
 
-		App->CL_Scene->B_Object[First_Environ]->S_Environ[0]->SndFile = App->CL_SoundMgr->SoundEngine->play2D(buff, App->CL_Scene->B_Object[First_Environ]->S_Environ[0]->Loop, true, true);
+		App->CL_Scene->B_Object[First_Environ]->S_Environ[0]->SndFile = App->CL_SoundMgr->SoundEngine->play2D(buff, App->CL_Scene->B_Object[First_Environ]->S_Environ[0]->flag_Loop, true, true);
 
 		App->CL_Scene->B_Object[First_Environ]->S_Environ[0]->SndFile->setVolume(App->CL_Scene->B_Object[First_Environ]->S_Environ[0]->SndVolume);
 		App->CL_Scene->B_Object[First_Environ]->S_Environ[0]->SndFile->setIsPaused(false);

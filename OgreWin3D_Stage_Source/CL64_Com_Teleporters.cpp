@@ -61,7 +61,7 @@ void CL64_Com_Teleporters::Set_Teleports_Defaults(int Index)
 	B_Object->S_Teleport[0]->Trigger_Value = 0;
 	B_Object->S_Teleport[0]->Counter_ID = 0;
 	strcpy(B_Object->S_Teleport[0]->Counter_Name, "None");
-	B_Object->S_Teleport[0]->Counter_Disabled = 1;
+	B_Object->S_Teleport[0]->flag_Counter_Disabled = 1;
 }
 
 // *************************************************************************
@@ -192,7 +192,7 @@ bool CL64_Com_Teleporters::Create_Teleport_Entity(int Index)
 
 	App->CL_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
 
-	App->CL_Scene->B_Object[Index]->Physics_Valid = 1;
+	App->CL_Scene->B_Object[Index]->flag_Physics_Valid = 1;
 
 	App->CL_Physics->Set_Physics_New(Index);
 

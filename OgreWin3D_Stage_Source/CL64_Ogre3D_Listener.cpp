@@ -194,7 +194,7 @@ void CL64_Ogre3D_Listener::Update_Game_Logic(float DeltaTime)
 	{
 		if (App->CL_Scene->B_Counter)
 		{
-			if (App->CL_Scene->B_Counter[Count]->Show_Panel_Flag == 1)
+			if (App->CL_Scene->B_Counter[Count]->flag_Show_Panel_Flag == 1)
 			{
 				App->CL_Scene->B_Counter[Count]->Render_ImGui_Panel();
 			}
@@ -208,7 +208,7 @@ void CL64_Ogre3D_Listener::Update_Game_Logic(float DeltaTime)
 	{
 		if (App->CL_Scene->B_Object[Count]->Usage == Enums::Stage_Usage_Message)
 		{
-			if (App->CL_Scene->B_Object[Count]->Show_Message_Flag == 1)
+			if (App->CL_Scene->B_Object[Count]->flag_Show_Message_Flag == 1)
 			{
 				App->CL_Scene->B_Object[Count]->Render_ImGui_Panel();
 			}

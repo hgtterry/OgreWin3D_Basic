@@ -30,12 +30,12 @@ distribution.
 
 Base_Counter::Base_Counter()
 {
-	Show_Panel_Flag = 0;
 
 	FileViewItem = nullptr;
 
-	Deleted = 0;
-	Altered = 0;
+	flag_Show_Panel_Flag = 0;
+	flag_Deleted = 0;
+	flag_Altered = 0;
 
 	Unique_ID = 0;
 
@@ -77,7 +77,7 @@ void Base_Counter::Render_ImGui_Panel(void)
 		
 	ImGui::PushStyleColor(ImGuiCol_WindowBg, IM_COL32(239, 239, 239, 255));
 
-	if (!ImGui::Begin(ImGui_Panel_Name, &Show_Panel_Flag, ImGuiWindowFlags_NoSavedSettings
+	if (!ImGui::Begin(ImGui_Panel_Name, &flag_Show_Panel_Flag, ImGuiWindowFlags_NoSavedSettings
 		| ImGuiWindowFlags_AlwaysAutoResize
 		| ImGuiWindowFlags_NoMove
 		| ImGuiWindowFlags_NoResize

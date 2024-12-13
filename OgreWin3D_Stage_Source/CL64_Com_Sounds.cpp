@@ -51,7 +51,7 @@ bool CL64_Com_Sounds::Add_New_Sound()
 	strcat(App->CL_Scene->B_Object[Index]->Sound_Path, "\\Media\\Sounds\\");
 	strcat(App->CL_Scene->B_Object[Index]->Sound_Path, "Welcome.ogg");
 
-	App->CL_Scene->B_Object[Index]->HasSound = 1;
+	App->CL_Scene->B_Object[Index]->flag_HasSound = 1;
 
 	App->CL_Scene->B_Object[Index]->Type = Enums::Bullet_Type_Static;
 	App->CL_Scene->B_Object[Index]->Shape = Enums::Shape_Box;
@@ -165,7 +165,7 @@ bool CL64_Com_Sounds::Create_Sound_Entity(int Index)
 
 	App->CL_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
 
-	App->CL_Scene->B_Object[Index]->Physics_Valid = 1;
+	App->CL_Scene->B_Object[Index]->flag_Physics_Valid = 1;
 
 	App->CL_Physics->Set_Physics_New(Index);
 
@@ -191,7 +191,7 @@ void CL64_Com_Sounds::Rename_Sound(int Index)
 
 	strcpy(Object->Object_Name, App->CL_Dialogs->Chr_Text);
 
-	Object->Altered = 1;
+	Object->flag_Altered = 1;
 
 	App->CL_Scene->flag_Scene_Modified = 1;
 	App->CL_Properties->Mark_As_Altered(Index);

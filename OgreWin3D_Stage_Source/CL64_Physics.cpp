@@ -61,7 +61,7 @@ void CL64_Physics::Set_Physics_New(int Index)
 	App->CL_Scene->B_Object[Index]->Physics_Pos = Centre;
 
 	// All Good
-	App->CL_Scene->B_Object[Index]->Physics_Valid = 1;
+	App->CL_Scene->B_Object[Index]->flag_Physics_Valid = 1;
 }
 
 // *************************************************************************
@@ -75,7 +75,7 @@ void CL64_Physics::UpDate_Physics_And_Visuals(int Index)
 	}
 	else
 	{
-		if (App->CL_Scene->B_Object[Index]->Physics_Valid == 1)
+		if (App->CL_Scene->B_Object[Index]->flag_Physics_Valid == 1)
 		{
 			Set_Physics_Position(Index);
 		}
@@ -138,7 +138,7 @@ void CL64_Physics::Reset_Triggers(void)
 
 	while (Count < Total)
 	{
-		if (App->CL_Scene->B_Object[Count]->Deleted == 0)
+		if (App->CL_Scene->B_Object[Count]->flag_Deleted == 0)
 		{
 			// ------------------------------------- Move Entities
 			if (App->CL_Scene->B_Object[Count]->Usage == Enums::Stage_Usage_Move)
@@ -154,7 +154,7 @@ void CL64_Physics::Reset_Triggers(void)
 				App->CL_Scene->B_Object[ObjectToMove]->Object_Node->setPosition(M_Pos);
 				App->CL_Scene->B_Object[ObjectToMove]->Phys_Body->getWorldTransform().setOrigin(btVector3(P_Pos.x, P_Pos.y, P_Pos.z));
 
-				App->CL_Scene->B_Object[Count]->Triggered = 0;
+				App->CL_Scene->B_Object[Count]->flag_Triggered = 0;
 			}
 
 			// ------------------------------------- Colectables
@@ -167,14 +167,14 @@ void CL64_Physics::Reset_Triggers(void)
 				P_Pos = App->CL_Scene->B_Object[Count]->Physics_Pos;
 				App->CL_Scene->B_Object[Count]->Phys_Body->getWorldTransform().setOrigin(btVector3(P_Pos.x, P_Pos.y, P_Pos.z));
 
-				App->CL_Scene->B_Object[Count]->Triggered = 0;
+				App->CL_Scene->B_Object[Count]->flag_Triggered = 0;
 
 			}
 
 			// ------------------------------------- Messages
 			if (App->CL_Scene->B_Object[Count]->Usage == Enums::Stage_Usage_Message)
 			{
-				App->CL_Scene->B_Object[Count]->Show_Message_Flag = 0;
+				App->CL_Scene->B_Object[Count]->flag_Show_Message_Flag = 0;
 			}
 		}
 

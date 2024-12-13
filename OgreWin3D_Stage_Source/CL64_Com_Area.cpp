@@ -111,7 +111,7 @@ void CL64_Com_Area::Set_Area_Defaults(int Index)
 	App->CL_Scene->B_Area[Index]->Physics_Quat.x = 0;
 	App->CL_Scene->B_Area[Index]->Physics_Quat.y = 0;
 	App->CL_Scene->B_Area[Index]->Physics_Quat.z = 0;
-	App->CL_Scene->B_Area[Index]->Physics_Valid = 0;
+	App->CL_Scene->B_Area[Index]->flag_Physics_Valid = 0;
 	
 }
 
@@ -339,7 +339,7 @@ btBvhTriangleMeshShape* CL64_Com_Area::Create_Area_Trimesh(int Index, Base_Area*
 
 	Set_Physics(Index);
 
-	Object->Physics_Valid = 1;
+	Object->flag_Physics_Valid = 1;
 	return mShape;
 }
 
@@ -375,7 +375,7 @@ void CL64_Com_Area::Set_Physics(int Index)
 	Ogre::Vector3 Scale = App->CL_Scene->B_Area[Index]->Area_Node->getScale();
 	App->CL_Scene->B_Area[Index]->Phys_Body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
 
-	App->CL_Scene->B_Area[Index]->Physics_Valid = 1;
+	App->CL_Scene->B_Area[Index]->flag_Physics_Valid = 1;
 }
 
 // *************************************************************************
@@ -398,7 +398,7 @@ void CL64_Com_Area::Rename_Area(int Index)
 	// Needs Duplicate Name test 
 	strcpy(Area->Area_Name, App->CL_Dialogs->Chr_Text);
 
-	Area->Altered = 1;
+	Area->flag_Altered = 1;
 	App->CL_Scene->flag_Scene_Modified = 1;
 	App->CL_FileView->Mark_Altered(Area->FileViewItem);
 

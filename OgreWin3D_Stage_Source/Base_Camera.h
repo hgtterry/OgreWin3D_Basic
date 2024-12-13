@@ -40,7 +40,8 @@ public:
 
 	int This_Object_UniqueID;
 
-	bool Altered;
+	bool flag_Altered;
+
 	HTREEITEM FileViewItem;
 
 };

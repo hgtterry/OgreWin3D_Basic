@@ -1597,28 +1597,28 @@ LRESULT CALLBACK CL64_Dialogs::Proc_Dialog_Counter(HWND hDlg, UINT message, WPAR
 				// Move Entity
 				if (App->CL_Properties->Edit_Category == Enums::Edit_Move_Entity)
 				{
-					App->CL_Scene->B_Object[Index]->S_MoveType[0]->Counter_Disabled = 1;
+					App->CL_Scene->B_Object[Index]->S_MoveType[0]->flag_Counter_Disabled = 1;
 					return 1;
 				}
 
 				// Messages
 				if (App->CL_Properties->Edit_Category == Enums::Edit_Message)
 				{
-					App->CL_Scene->B_Object[Index]->S_Message[0]->Counter_Disabled = 1;
+					App->CL_Scene->B_Object[Index]->S_Message[0]->flag_Counter_Disabled = 1;
 					return 1;
 				}
 
 				// Collectables
 				if (App->CL_Properties->Edit_Category == Enums::Edit_Collectable)
 				{
-					App->CL_Scene->B_Object[Index]->S_Collectable[0]->Counter_Disabled = 1;
+					App->CL_Scene->B_Object[Index]->S_Collectable[0]->flag_Counter_Disabled = 1;
 					return 1;
 				}
 
 				// Teleporters
 				if (App->CL_Properties->Edit_Category == Enums::Edit_Teleport)
 				{
-					App->CL_Scene->B_Object[Index]->S_Teleport[0]->Counter_Disabled = 1;
+					App->CL_Scene->B_Object[Index]->S_Teleport[0]->flag_Counter_Disabled = 1;
 					return 1;
 				}
 
@@ -1631,28 +1631,28 @@ LRESULT CALLBACK CL64_Dialogs::Proc_Dialog_Counter(HWND hDlg, UINT message, WPAR
 
 				if (App->CL_Properties->Edit_Category == Enums::Edit_Move_Entity)
 				{
-					App->CL_Scene->B_Object[Index]->S_MoveType[0]->Counter_Disabled = 0;
+					App->CL_Scene->B_Object[Index]->S_MoveType[0]->flag_Counter_Disabled = 0;
 					return 1;
 				}
 
 				// Messages
 				if (App->CL_Properties->Edit_Category == Enums::Edit_Message)
 				{
-					App->CL_Scene->B_Object[Index]->S_Message[0]->Counter_Disabled = 0;
+					App->CL_Scene->B_Object[Index]->S_Message[0]->flag_Counter_Disabled = 0;
 					return 1;
 				}
 
 				// Collectables
 				if (App->CL_Properties->Edit_Category == Enums::Edit_Collectable)
 				{
-					App->CL_Scene->B_Object[Index]->S_Collectable[0]->Counter_Disabled = 0;
+					App->CL_Scene->B_Object[Index]->S_Collectable[0]->flag_Counter_Disabled = 0;
 					return 1;
 				}
 
 				// Teleporters
 				if (App->CL_Properties->Edit_Category == Enums::Edit_Teleport)
 				{
-					App->CL_Scene->B_Object[Index]->S_Teleport[0]->Counter_Disabled = 0;
+					App->CL_Scene->B_Object[Index]->S_Teleport[0]->flag_Counter_Disabled = 0;
 					return 1;
 				}
 
@@ -1723,7 +1723,7 @@ bool CL64_Dialogs::UpDate_Counter_Dialog(HWND hDlg)
 	// Move Entity
 	if (App->CL_Properties->Edit_Category == Enums::Edit_Move_Entity)
 	{
-		if (App->CL_Scene->B_Object[Index]->S_MoveType[0]->Counter_Disabled == 1)
+		if (App->CL_Scene->B_Object[Index]->S_MoveType[0]->flag_Counter_Disabled == 1)
 		{
 			HWND temp = GetDlgItem(hDlg, IDC_CK_ENABLE);
 			SendMessage(temp, BM_SETCHECK, 1, 0);
@@ -1746,7 +1746,7 @@ bool CL64_Dialogs::UpDate_Counter_Dialog(HWND hDlg)
 	// Messages
 	if (App->CL_Properties->Edit_Category == Enums::Edit_Message)
 	{
-		if (App->CL_Scene->B_Object[Index]->S_Message[0]->Counter_Disabled == 1)
+		if (App->CL_Scene->B_Object[Index]->S_Message[0]->flag_Counter_Disabled == 1)
 		{
 			HWND temp = GetDlgItem(hDlg, IDC_CK_ENABLE);
 			SendMessage(temp, BM_SETCHECK, 1, 0);
@@ -1769,7 +1769,7 @@ bool CL64_Dialogs::UpDate_Counter_Dialog(HWND hDlg)
 	// Collectables
 	if (App->CL_Properties->Edit_Category == Enums::Edit_Collectable)
 	{
-		if (App->CL_Scene->B_Object[Index]->S_Collectable[0]->Counter_Disabled == 1)
+		if (App->CL_Scene->B_Object[Index]->S_Collectable[0]->flag_Counter_Disabled == 1)
 		{
 			HWND temp = GetDlgItem(hDlg, IDC_CK_ENABLE);
 			SendMessage(temp, BM_SETCHECK, 1, 0);
@@ -1792,7 +1792,7 @@ bool CL64_Dialogs::UpDate_Counter_Dialog(HWND hDlg)
 	// Teleporters
 	if (App->CL_Properties->Edit_Category == Enums::Edit_Teleport)
 	{
-		if (App->CL_Scene->B_Object[Index]->S_Teleport[0]->Counter_Disabled == 1)
+		if (App->CL_Scene->B_Object[Index]->S_Teleport[0]->flag_Counter_Disabled == 1)
 		{
 			HWND temp = GetDlgItem(hDlg, IDC_CK_ENABLE);
 			SendMessage(temp, BM_SETCHECK, 1, 0);
@@ -1827,7 +1827,7 @@ void CL64_Dialogs::Set_Counter_Dialog_Details(HWND hDlg)
 	int Count = 0;
 	while (Count < App->CL_Scene->Counters_Count)
 	{
-		if (App->CL_Scene->B_Counter[Count]->Deleted == 0)
+		if (App->CL_Scene->B_Counter[Count]->flag_Deleted == 0)
 		{
 			SendDlgItemMessage(hDlg, IDC_CB_COUNTERS, CB_ADDSTRING, (WPARAM)0, (LPARAM)(LPSTR)App->CL_Scene->B_Counter[Count]->Panel_Name);
 		}

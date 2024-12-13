@@ -96,7 +96,7 @@ void CL64_Com_Objects::Rename_Object(int Index)
 
 	strcpy(Object->Object_Name, App->CL_Dialogs->Chr_Text);
 
-	Object->Altered = 1;
+	Object->flag_Altered = 1;
 
 	App->CL_Scene->flag_Scene_Modified = 1;
 	App->CL_FileView->Mark_Altered(Object->FileViewItem);
@@ -193,7 +193,7 @@ void CL64_Com_Objects::Delete_Object()
 
 	App->CL_FileView->DeleteItem();
 
-	App->CL_Scene->B_Object[MeshIndex]->Deleted = 1;
+	App->CL_Scene->B_Object[MeshIndex]->flag_Deleted = 1;
 	App->CL_Scene->B_Object[MeshIndex]->Object_Node->setVisible(false);
 
 
@@ -211,7 +211,7 @@ int CL64_Com_Objects::GetIndex_By_Name(char* Name)
 
 	while (Count < Total)
 	{
-		if (App->CL_Scene->B_Object[Count]->Deleted == 0)
+		if (App->CL_Scene->B_Object[Count]->flag_Deleted == 0)
 		{
 			int Result = 1;
 			Result = strcmp(App->CL_Scene->B_Object[Count]->Object_Name, Name);
@@ -238,9 +238,9 @@ void CL64_Com_Objects::Clear_Modified_Objects()
 		int Count = 0;
 		while (Count < App->CL_Scene->Area_Count)
 		{
-			if (App->CL_Scene->B_Area[Count]->Altered == 1)
+			if (App->CL_Scene->B_Area[Count]->flag_Altered == 1)
 			{
-				App->CL_Scene->B_Area[Count]->Altered = 0;
+				App->CL_Scene->B_Area[Count]->flag_Altered = 0;
 				App->CL_FileView->Mark_Clear(App->CL_Scene->B_Area[Count]->FileViewItem);
 			}
 
@@ -264,9 +264,9 @@ void CL64_Com_Objects::Clear_Modified_Objects()
 		Count = 0;
 		while (Count < App->CL_Scene->Camera_Count)
 		{
-			if (App->CL_Scene->B_Camera[Count]->Altered == 1)
+			if (App->CL_Scene->B_Camera[Count]->flag_Altered == 1)
 			{
-				App->CL_Scene->B_Camera[Count]->Altered = 0;
+				App->CL_Scene->B_Camera[Count]->flag_Altered = 0;
 				App->CL_FileView->Mark_Clear(App->CL_Scene->B_Camera[Count]->FileViewItem);
 			}
 
@@ -277,9 +277,9 @@ void CL64_Com_Objects::Clear_Modified_Objects()
 		Count = 0;
 		while (Count < App->CL_Scene->Object_Count)
 		{
-			if (App->CL_Scene->B_Object[Count]->Altered == 1)
+			if (App->CL_Scene->B_Object[Count]->flag_Altered == 1)
 			{
-				App->CL_Scene->B_Object[Count]->Altered = 0;
+				App->CL_Scene->B_Object[Count]->flag_Altered = 0;
 				App->CL_FileView->Mark_Clear(App->CL_Scene->B_Object[Count]->FileViewItem);
 			}
 
@@ -290,9 +290,9 @@ void CL64_Com_Objects::Clear_Modified_Objects()
 		Count = 0;
 		while (Count < App->CL_Scene->Counters_Count)
 		{
-			if (App->CL_Scene->B_Counter[Count]->Altered == 1)
+			if (App->CL_Scene->B_Counter[Count]->flag_Altered == 1)
 			{
-				App->CL_Scene->B_Counter[Count]->Altered = 0;
+				App->CL_Scene->B_Counter[Count]->flag_Altered = 0;
 				App->CL_FileView->Mark_Clear(App->CL_Scene->B_Counter[Count]->FileViewItem);
 			}
 
@@ -324,7 +324,7 @@ int CL64_Com_Objects::CheckNames_Objects(char* Name)
 
 	while (Count < Total)
 	{
-		if (App->CL_Scene->B_Object[Count]->Deleted == 0)
+		if (App->CL_Scene->B_Object[Count]->flag_Deleted == 0)
 		{
 			int Result = 1;
 			Result = strcmp(App->CL_Scene->B_Object[Count]->Object_Name, Name);
@@ -351,7 +351,7 @@ int CL64_Com_Objects::Get_Adjusted_Object_Count(void)
 
 	while (Count < Total)
 	{
-		if (App->CL_Scene->B_Object[Count]->Deleted == 0)
+		if (App->CL_Scene->B_Object[Count]->flag_Deleted == 0)
 		{
 			New_Count++;
 		}

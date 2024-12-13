@@ -93,19 +93,19 @@ void CL64_Com_Messages::Set_Message_Defaults(int Index)
 	B_Object->S_Message[0]->Trigger_Value = 0;
 	B_Object->S_Message[0]->Counter_ID = 0;
 	strcpy(B_Object->S_Message[0]->Counter_Name, "None");
-	B_Object->S_Message[0]->Counter_Disabled = 1;
+	B_Object->S_Message[0]->flag_Counter_Disabled = 1;
 
 	strcpy(B_Object->S_Message[0]->Message_Text, "Welcome");
 	B_Object->S_Message[0]->Message_PosX = 250;
 	B_Object->S_Message[0]->Message_PosY = 10;
 
-	B_Object->S_Message[0]->PosXCentre_Flag = 0;
-	B_Object->S_Message[0]->PosYCentre_Flag = 0;
+	B_Object->S_Message[0]->flag_PosXCentre_Flag = 0;
+	B_Object->S_Message[0]->flag_PosYCentre_Flag = 0;
 
 	B_Object->S_Message[0]->Text_Colour = Ogre::Vector4(0, 0, 0, 255);
 	B_Object->S_Message[0]->BackGround_Colour = Ogre::Vector4(239, 239, 239, 255);
 
-	B_Object->S_Message[0]->Show_BackGround = 1;
+	B_Object->S_Message[0]->flag_Show_BackGround = 1;
 	return;
 }
 
@@ -192,7 +192,7 @@ bool CL64_Com_Messages::Create_Message_Entity(int Index)
 
 	App->CL_Bullet->dynamicsWorld->addRigidBody(MObject->Phys_Body);
 
-	App->CL_Scene->B_Object[Index]->Physics_Valid = 1;
+	App->CL_Scene->B_Object[Index]->flag_Physics_Valid = 1;
 
 	App->CL_Physics->Set_Physics_New(Index);
 

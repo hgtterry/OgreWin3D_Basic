@@ -52,8 +52,10 @@ Base_Area::Base_Area()
 	Physics_Quat.x = 0;
 	Physics_Quat.y = 0;
 	Physics_Quat.z = 0;
-	Physics_Valid = 0;
 
+	flag_Physics_Valid = 0;
+	flag_Altered = 0;
+	flag_Physics_Debug_On = 0;
 
 	Usage = Enums::Usage_None;
 
@@ -72,8 +74,6 @@ Base_Area::Base_Area()
 	Area_Path_And_FileName[0] = 0;
 	Area_Resource_Path[0] = 0;
 
-	Altered = 0;
-	Physics_Debug_On = 0;
 }
 
 

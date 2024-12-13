@@ -753,13 +753,13 @@ void CL64_ImGui::ImGui_Object_Data(void)
 			ImGui::Text("------------ Collectable");
 			ImGui::Text("Sound_File: = %s", App->CL_Scene->B_Object[Index]->S_Collectable[0]->Sound_File);
 			ImGui::Text("Sound_Volume: = %f", App->CL_Scene->B_Object[Index]->S_Collectable[0]->SndVolume);
-			ImGui::Text("Sound_Play: = %i", App->CL_Scene->B_Object[Index]->S_Collectable[0]->Play);
+			ImGui::Text("Sound_Play: = %i", App->CL_Scene->B_Object[Index]->S_Collectable[0]->flag_Play);
 
 			ImGui::Text("Counter_Name: = %s", App->CL_Scene->B_Object[Index]->S_Collectable[0]->Counter_Name);
 			ImGui::Text("Counter_ID: = %i", App->CL_Scene->B_Object[Index]->S_Collectable[0]->Counter_ID);
 			ImGui::Text("Counter_Value: = %i", App->CL_Scene->B_Object[Index]->S_Collectable[0]->Value);
 			ImGui::Text("Counter_Maths: = %i", App->CL_Scene->B_Object[Index]->S_Collectable[0]->Maths);
-			ImGui::Text("Counter_Disabled: = %i", App->CL_Scene->B_Object[Index]->S_Collectable[0]->Counter_Disabled);
+			ImGui::Text("Counter_Disabled: = %i", App->CL_Scene->B_Object[Index]->S_Collectable[0]->flag_Counter_Disabled);
 
 		}
 
@@ -767,7 +767,7 @@ void CL64_ImGui::ImGui_Object_Data(void)
 		if (App->CL_Properties->Edit_Category == Enums::Edit_Teleport)
 		{
 			ImGui::Text("------------ Teleport Counter ------------");
-			ImGui::Text("Counter Disabled: = %i", App->CL_Scene->B_Object[Index]->S_Teleport[0]->Counter_Disabled);
+			ImGui::Text("Counter Disabled: = %i", App->CL_Scene->B_Object[Index]->S_Teleport[0]->flag_Counter_Disabled);
 			ImGui::Text("Counter ID: = %i", App->CL_Scene->B_Object[Index]->S_Teleport[0]->Counter_ID);
 			ImGui::Text("Counter Name: = %s", App->CL_Scene->B_Object[Index]->S_Teleport[0]->Counter_Name);
 			ImGui::Text("Counter_Triger_Val: = %i", App->CL_Scene->B_Object[Index]->S_Teleport[0]->Trigger_Value);
@@ -778,7 +778,7 @@ void CL64_ImGui::ImGui_Object_Data(void)
 			ImGui::Text("Position: = %f %f %f", App->CL_Scene->B_Object[Index]->S_Teleport[0]->Physics_Position.getX(), App->CL_Scene->B_Object[Index]->S_Teleport[0]->Physics_Position.getY(), App->CL_Scene->B_Object[Index]->S_Teleport[0]->Physics_Position.getZ());
 
 			ImGui::Text("------------ Teleport Sound ------------");
-			ImGui::Text("Play: = %i", App->CL_Scene->B_Object[Index]->S_Teleport[0]->Play);
+			ImGui::Text("Play: = %i", App->CL_Scene->B_Object[Index]->S_Teleport[0]->flag_Play);
 			ImGui::Text("Volume: = %f", App->CL_Scene->B_Object[Index]->S_Teleport[0]->SndVolume);
 			ImGui::Text("Sound File: = %s", App->CL_Scene->B_Object[Index]->S_Teleport[0]->Sound_File);
 

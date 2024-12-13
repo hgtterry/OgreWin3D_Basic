@@ -30,7 +30,7 @@ public:
 
 	int This_Object_UniqueID;  // Unique Number
 
-	bool Deleted; // Internal
+	bool flag_Deleted; // Internal
 	char Name[255];
 	Ogre::Vector3 Current_Position;
 	btVector3 Physics_Position;

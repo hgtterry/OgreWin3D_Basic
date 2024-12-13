@@ -287,12 +287,12 @@ void CL64_Gui_Environment::Environ_PropertyEditor()
 		// ----------------- Play
 		ImGui::Selectable("Play:- ", &flag_ClickOnPlay);
 		ImGui::SameLine();
-		ImGui::Text("%i", App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->Play);
+		ImGui::Text("%i", App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->flag_Play);
 		if (flag_ClickOnPlay)
 		{
 			strcpy(App->CL_Dialogs->btext, "Set Play Sound Track");
 
-			App->CL_Dialogs->TrueFlase = App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->Play;
+			App->CL_Dialogs->TrueFlase = App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->flag_Play;
 
 			App->CL_Dialogs->Dialog_TrueFlase(App->MainHwnd);
 
@@ -300,12 +300,12 @@ void CL64_Gui_Environment::Environ_PropertyEditor()
 			{
 				if (App->CL_Dialogs->TrueFlase == 1)
 				{
-					App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->Play = 1;
+					App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->flag_Play = 1;
 					App->CL_Com_Environments->Set_Environment_By_Index(1, Eviron_Index);
 				}
 				else
 				{
-					App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->Play = 0;
+					App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->flag_Play = 0;
 					App->CL_Com_Environments->Set_Environment_By_Index(0, Eviron_Index);
 				}
 
@@ -319,12 +319,12 @@ void CL64_Gui_Environment::Environ_PropertyEditor()
 		// ----------------- Loop
 		ImGui::Selectable("Loop:- ", &flag_ClickOnLoop);
 		ImGui::SameLine();
-		ImGui::Text("%i", App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->Loop);
+		ImGui::Text("%i", App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->flag_Loop);
 		if (flag_ClickOnLoop)
 		{
 			strcpy(App->CL_Dialogs->btext, "Set Play Sound Loop");
 
-			App->CL_Dialogs->TrueFlase = App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->Loop;
+			App->CL_Dialogs->TrueFlase = App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->flag_Loop;
 
 			App->CL_Dialogs->Dialog_TrueFlase(App->MainHwnd);
 
@@ -332,13 +332,13 @@ void CL64_Gui_Environment::Environ_PropertyEditor()
 			{
 				if (App->CL_Dialogs->TrueFlase == 1)
 				{
-					App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->Loop = 1;
+					App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->flag_Loop = 1;
 					App->CL_Com_Environments->Set_Environment_By_Index(0, Eviron_Index);
 					App->CL_Com_Environments->Set_Environment_By_Index(1, Eviron_Index);
 				}
 				else
 				{
-					App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->Loop = 0;
+					App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->flag_Loop = 0;
 					App->CL_Com_Environments->Set_Environment_By_Index(0, Eviron_Index);
 					App->CL_Com_Environments->Set_Environment_By_Index(1, Eviron_Index);
 				}
@@ -459,12 +459,12 @@ void CL64_Gui_Environment::Environ_PropertyEditor()
 		// ----------------- Visible
 		ImGui::Selectable("Enabled:- ", &flag_ClickOnSkyEnabled);
 		ImGui::SameLine();
-		ImGui::Text("%i", App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->Enabled);
+		ImGui::Text("%i", App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->flag_Enabled);
 		if (flag_ClickOnSkyEnabled)
 		{
 			strcpy(App->CL_Dialogs->btext, "Set Sky Visiblity");
 
-			App->CL_Dialogs->TrueFlase = App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->Enabled;
+			App->CL_Dialogs->TrueFlase = App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->flag_Enabled;
 
 			strcpy(App->CL_Dialogs->btext, "Set Sky On/Off");
 			App->CL_Dialogs->Dialog_TrueFlase(App->MainHwnd);
@@ -473,12 +473,12 @@ void CL64_Gui_Environment::Environ_PropertyEditor()
 			{
 				if (App->CL_Dialogs->TrueFlase == 1)
 				{
-					App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->Enabled = 1;
+					App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->flag_Enabled = 1;
 					SetSky(true);
 				}
 				else
 				{
-					App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->Enabled = 0;
+					App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->flag_Enabled = 0;
 					SetSky(false);
 				}
 
@@ -494,7 +494,7 @@ void CL64_Gui_Environment::Environ_PropertyEditor()
 
 		if (ImGui::InputFloat("##5", &App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->Tiling, 0.5, 0, "%.3f"))
 		{
-			if (App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->Enabled == 1)
+			if (App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->flag_Enabled == 1)
 			{
 				SetSky(true);
 			}
@@ -508,7 +508,7 @@ void CL64_Gui_Environment::Environ_PropertyEditor()
 
 		if (ImGui::InputFloat("##6", &App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->Curvature, 0.5, 0, "%.3f"))
 		{
-			if (App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->Enabled == 1)
+			if (App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->flag_Enabled == 1)
 			{
 				SetSky(true);
 			}
@@ -544,7 +544,7 @@ void CL64_Gui_Environment::Environ_PropertyEditor()
 		}
 
 		ImGui::SameLine();
-		if (ImGui::Checkbox("Enabled", &App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->Environ_Enabled))
+		if (ImGui::Checkbox("Enabled", &App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->flag_Environ_Enabled))
 		{
 			App->CL_Properties->Update_ListView_Teleport();
 		}

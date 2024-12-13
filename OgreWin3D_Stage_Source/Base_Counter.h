@@ -36,9 +36,9 @@ public:
 
 	void Render_ImGui_Panel(void);
 
-	bool Show_Panel_Flag;
-	bool Deleted;
-	bool Altered;
+	bool flag_Show_Panel_Flag;
+	bool flag_Deleted;
+	bool flag_Altered;
 
 	int Unique_ID;
 

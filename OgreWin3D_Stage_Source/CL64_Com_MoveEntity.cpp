@@ -85,20 +85,20 @@ void CL64_Com_MoveEntity::Set_Move_Defaults(int Index)
 {
 	Base_Object* B_Object = App->CL_Scene->B_Object[Index];
 
-	B_Object->S_MoveType[0]->IsNegative = 1;
+	B_Object->S_MoveType[0]->flag_IsNegative = 1;
 	B_Object->S_MoveType[0]->Move_Distance = -50;
 	B_Object->S_MoveType[0]->Newpos = 0;
 	B_Object->S_MoveType[0]->Speed = 10.0;
 	B_Object->S_MoveType[0]->WhatDirection = Enums::Axis_x;
 	B_Object->S_MoveType[0]->Object_To_Move_Index = 0;
-	B_Object->S_MoveType[0]->Triggered = 0;
-	B_Object->S_MoveType[0]->Re_Trigger = 0;
+	B_Object->S_MoveType[0]->flag_Triggered = 0;
+	B_Object->S_MoveType[0]->flag_Re_Trigger = 0;
 	strcpy(B_Object->S_MoveType[0]->Object_Name, "None");
 
 	B_Object->S_MoveType[0]->Trigger_Value = 0;
 	B_Object->S_MoveType[0]->Counter_ID = 0;
 	strcpy(B_Object->S_MoveType[0]->Counter_Name, "None");
-	B_Object->S_MoveType[0]->Counter_Disabled = 1;
+	B_Object->S_MoveType[0]->flag_Counter_Disabled = 1;
 
 	return;
 }
@@ -184,7 +184,7 @@ bool CL64_Com_MoveEntity::Create_Move_Entity(int Index)
 
 	App->CL_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
 
-	App->CL_Scene->B_Object[Index]->Physics_Valid = 1;
+	App->CL_Scene->B_Object[Index]->flag_Physics_Valid = 1;
 
 	App->CL_Physics->Set_Physics_New(Index);
 
@@ -236,7 +236,7 @@ void CL64_Com_MoveEntity::Reset_Move_Entity(int Index)
 	App->CL_Scene->B_Object[ObjectToMove]->Object_Node->setPosition(M_Pos);
 	App->CL_Scene->B_Object[ObjectToMove]->Phys_Body->getWorldTransform().setOrigin(btVector3(P_Pos.x, P_Pos.y, P_Pos.z));
 
-	App->CL_Scene->B_Object[Index]->Triggered = 0;
+	App->CL_Scene->B_Object[Index]->flag_Triggered = 0;
 }
 
 // *************************************************************************

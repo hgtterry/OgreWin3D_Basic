@@ -91,7 +91,7 @@ bool CL64_Objects_Create::Dispatch_MeshViewer()
 	else
 	{
 		Add_New_Object(Index, true);
-		App->CL_Scene->B_Object[Index]->Altered = 1;
+		App->CL_Scene->B_Object[Index]->flag_Altered = 1;
 		App->CL_Scene->B_Object[Index]->Folder = Enums::Folder_Objects;
 		App->CL_Scene->B_Object[Index]->FileViewItem = App->CL_FileView->Add_Item(App->CL_FileView->FV_Objects_Folder,
 		App->CL_Scene->B_Object[Index]->Object_Name, Index, true);
@@ -343,7 +343,7 @@ bool CL64_Objects_Create::Add_Objects_From_File() // From File
 		else
 		{
 			App->CL_Objects_Create->Add_New_Object(Count, 0);
-			App->CL_Scene->B_Object[Count]->Altered = 0;
+			App->CL_Scene->B_Object[Count]->flag_Altered = 0;
 			App->CL_Scene->B_Object[Count]->Folder = Enums::Folder_Objects;
 			App->CL_Scene->B_Object[Count]->FileViewItem = App->CL_FileView->Add_Item(App->CL_FileView->FV_Objects_Folder, App->CL_Scene->B_Object[Count]->Object_Name, Count, false);
 
@@ -443,7 +443,7 @@ void CL64_Objects_Create::Add_Physics_Box(bool Dynamic, int Index)
 
 	App->CL_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
 
-	App->CL_Scene->B_Object[Index]->Physics_Valid = 1;
+	App->CL_Scene->B_Object[Index]->flag_Physics_Valid = 1;
 
 	App->CL_Physics->Set_Physics_New(Index);
 
@@ -528,7 +528,7 @@ void CL64_Objects_Create::Add_Physics_Sphere(bool Dynamic, int Index)
 
 	App->CL_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
 
-	App->CL_Scene->B_Object[Index]->Physics_Valid = 1;
+	App->CL_Scene->B_Object[Index]->flag_Physics_Valid = 1;
 
 	App->CL_Physics->Set_Physics_New(Index);
 }
@@ -615,7 +615,7 @@ void CL64_Objects_Create::Add_Physics_Capsule(bool Dynamic, int Index)
 
 	App->CL_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
 
-	App->CL_Scene->B_Object[Index]->Physics_Valid = 1;
+	App->CL_Scene->B_Object[Index]->flag_Physics_Valid = 1;
 
 	App->CL_Physics->Set_Physics_New(Index);
 }
@@ -701,7 +701,7 @@ void CL64_Objects_Create::Add_Physics_Cylinder(bool Dynamic, int Index)
 
 	App->CL_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
 
-	App->CL_Scene->B_Object[Index]->Physics_Valid = 1;
+	App->CL_Scene->B_Object[Index]->flag_Physics_Valid = 1;
 
 	App->CL_Physics->Set_Physics_New(Index);
 }
@@ -787,7 +787,7 @@ void CL64_Objects_Create::Add_Physics_Cone(bool Dynamic, int Index)
 
 	App->CL_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
 
-	App->CL_Scene->B_Object[Index]->Physics_Valid = 1;
+	App->CL_Scene->B_Object[Index]->flag_Physics_Valid = 1;
 
 	App->CL_Physics->Set_Physics_New(Index);
 }
@@ -940,7 +940,7 @@ btBvhTriangleMeshShape* CL64_Objects_Create::create_New_Trimesh(int Index)
 
 	App->CL_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
 
-	Object->Physics_Valid = 1;
+	Object->flag_Physics_Valid = 1;
 
 	App->CL_Physics->Set_Physics_New(Index);
 

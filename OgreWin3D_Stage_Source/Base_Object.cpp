@@ -88,7 +88,7 @@ bool Base_Object::Init_Object(void)
 	Physics_Quat.x = 0;
 	Physics_Quat.y = 0;
 	Physics_Quat.z = 0;
-	Physics_Valid = 0;
+	flag_Physics_Valid = 0;
 
 	Usage = Enums::Usage_None;
 
@@ -102,26 +102,26 @@ bool Base_Object::Init_Object(void)
 
 	This_Object_UniqueID = 0; // This Needs Checking
 
-	Deleted = 0;
-	Altered = 0;
+	flag_Deleted = 0;
+	flag_Altered = 0;
 
 	Collision = 0;
-	Triggered = 0;
-	Physics_Debug_On = 0;
-	Dimensions_Locked = 0;
+	flag_Triggered = 0;
+	flag_Physics_Debug_On = 0;
+	flag_Dimensions_Locked = 0;
 	flag_OverRide_Counter = 0;
 
 	//------------------------------ Message Entity
 	//strcpy(Message_Text, "This is in the Object");
 
 	//------------------------------ Sound Entity
-	HasSound = 0;
+	flag_HasSound = 0;
 	strcpy(Sound_File, "Door_Open.wav");
 	Sound_Path[0] = 0;
-	Play_Sound = 1;
+	flag_Play_Sound = 1;
 	SndVolume = 0.5; // Default Half Volume
 
-	Show_Message_Flag = 0;
+	flag_Show_Message_Flag = 0;
 	//strcpy(Message_Text, "Welcome");
 	strcpy(ImGui_Panel_Name, "TextMessage_");
 
@@ -152,7 +152,7 @@ void Base_Object::Render_ImGui_Panel(void)
 
 	ImGuiWindowFlags window_flags = 0;
 
-	if (S_Message[0]->Show_BackGround == 1)
+	if (S_Message[0]->flag_Show_BackGround == 1)
 	{
 		window_flags |= ImGuiWindowFlags_NoSavedSettings;
 		window_flags |= ImGuiWindowFlags_NoResize;
@@ -170,7 +170,7 @@ void Base_Object::Render_ImGui_Panel(void)
 
 	ImGui::PushStyleColor(ImGuiCol_WindowBg, IM_COL32(S_Message[0]->BackGround_Colour.x, S_Message[0]->BackGround_Colour.y, S_Message[0]->BackGround_Colour.z, 255));
 
-	if (!ImGui::Begin(ImGui_Panel_Name, &Show_Message_Flag, window_flags))
+	if (!ImGui::Begin(ImGui_Panel_Name, &flag_Show_Message_Flag, window_flags))
 	{
 		ImGui::End();
 	}
@@ -185,12 +185,12 @@ void Base_Object::Render_ImGui_Panel(void)
 
 		ImGui::Text("%s", S_Message[0]->Message_Text);
 
-		if (S_Message[0]->PosXCentre_Flag == 1)
+		if (S_Message[0]->flag_PosXCentre_Flag == 1)
 		{
 			S_Message[0]->Message_PosX = ((float)App->CL_Ogre->Ogre3D_Listener->View_Width / 2) - (Size.x / 2);
 		}
 
-		if (S_Message[0]->PosYCentre_Flag == 1)
+		if (S_Message[0]->flag_PosYCentre_Flag == 1)
 		{
 			S_Message[0]->Message_PosY = ((float)App->CL_Ogre->Ogre3D_Listener->View_Height / 2) - (Size.y / 2);
 		}

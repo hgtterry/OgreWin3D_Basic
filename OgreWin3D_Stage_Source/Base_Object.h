@@ -19,16 +19,16 @@ typedef struct Move_Type {
 	float Speed;			// 
 	int WhatDirection;		//
 	int Object_To_Move_Index;		// Can Change
-	bool IsNegative = 0;	// Positive or Negative distance to move
-	bool Triggered;			// Entity 
-	bool Re_Trigger;
+	bool flag_IsNegative = 0;	// Positive or Negative distance to move
+	bool flag_Triggered;			// Entity 
+	bool flag_Re_Trigger;
 	float Move_Distance;	// Distance to Move negative or positive
 	Ogre::Vector3 MeshPos;
 	Ogre::Vector3 PhysicsPos;
 	int Trigger_Value;
 	int Counter_ID;
 	char Counter_Name[MAX_PATH];
-	bool Counter_Disabled;
+	bool flag_Counter_Disabled;
 
 }Move_Type;
 
@@ -42,11 +42,11 @@ typedef struct Teleport_type
 	irrklang::ISound* SndFile;
 	Ogre::Real SndVolume;
 	char Sound_File[MAX_PATH];
-	bool Play;
+	bool flag_Play;
 	int Trigger_Value;
 	int Counter_ID;
 	char Counter_Name[MAX_PATH];
-	bool Counter_Disabled;
+	bool flag_Counter_Disabled;
 
 }Teleport_type;
 
@@ -55,15 +55,15 @@ typedef struct Message_type
 	int Trigger_Value;
 	int Counter_ID;
 	char Counter_Name[MAX_PATH];
-	bool Counter_Disabled;
+	bool flag_Counter_Disabled;
 	float Message_PosX;
 	float Message_PosY;
 	char Message_Text[MAX_PATH];
-	bool PosXCentre_Flag;
-	bool PosYCentre_Flag;
+	bool flag_PosXCentre_Flag;
+	bool flag_PosYCentre_Flag;
 	Ogre::Vector4 Text_Colour;
 	Ogre::Vector4 BackGround_Colour;
-	bool Show_BackGround;
+	bool flag_Show_BackGround;
 
 }Message_type;
 
@@ -74,8 +74,8 @@ typedef struct Collectable_type
 	Ogre::Real SndVolume;
 	char Sound_File[MAX_PATH];
 	char Counter_Name[MAX_PATH];
-	bool Counter_Disabled;
-	bool Play;
+	bool flag_Counter_Disabled;
+	bool flag_Play;
 	int Maths; // [ 0 = None ]  [ 1 = Add ]  [ 2 = Subtract ]
 	int Value; 
 
@@ -86,21 +86,21 @@ typedef struct Environ_type
 	int Environment_ID;
 	char Environment_Name[MAX_PATH];
 
-	bool Environ_Enabled;
+	bool flag_Environ_Enabled;
 
 	//--------------- Sound
 	irrklang::ISound* SndFile;
 	Ogre::Real SndVolume;
 	char Sound_File[MAX_PATH];
-	bool Play;
-	bool Loop;
+	bool flag_Play;
+	bool flag_Loop;
 
 	//--------------- Light
 	Ogre::Vector3 AmbientColour;
 	Ogre::Vector3 Light_Position;
 
 	//--------------- Sky
-	bool Enabled;
+	bool flag_Enabled;
 	int type;
 	char Material[MAX_PATH];
 	float Curvature;
@@ -179,7 +179,7 @@ public:
 	Ogre::Quaternion		Physics_Quat;
 	float					Physics_Mass;
 	float					Physics_Restitution;
-	bool					Physics_Valid;
+	bool					flag_Physics_Valid;
 
 	//------------------------------ ListView
 
@@ -192,18 +192,18 @@ public:
 	Ogre::Quaternion Mesh_BB_Quat;
 	Ogre::Vector3 Mesh_BB_Center;
 
-	bool Deleted;
-	bool Altered;
-	bool Physics_Debug_On;
-	bool Dimensions_Locked;
+	bool flag_Deleted;
+	bool flag_Altered;
+	bool flag_Physics_Debug_On;
+	bool flag_Dimensions_Locked;
 
 	//------------------------------ Entity
-	bool					Collision;
-	bool					Triggered;
+	bool Collision;
+	bool flag_Triggered;
 
 	//-----Sound Entity
-	bool HasSound;
-	bool Play_Sound;
+	bool flag_HasSound;
+	bool flag_Play_Sound;
 	char Sound_File[MAX_PATH];
 	char Sound_Path[MAX_PATH];
 	irrklang::ISound* SndFile;
@@ -219,7 +219,8 @@ public:
 
 	bool flag_OverRide_Counter;
 
-	bool Show_Message_Flag;
+	bool flag_Show_Message_Flag;
+
 	char ImGui_Panel_Name[MAX_PATH];
 };
 

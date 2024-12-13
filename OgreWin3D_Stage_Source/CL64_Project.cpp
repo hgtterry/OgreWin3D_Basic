@@ -878,7 +878,7 @@ bool CL64_Project::Save_Player_Data()
 	Count = 0;
 	while (Count < App->CL_Scene->Player_Location_Count)
 	{
-		if (App->CL_Scene->B_Locations[Count]->Deleted == 0)
+		if (App->CL_Scene->B_Locations[Count]->flag_Deleted == 0)
 		{
 			fprintf(WriteFile, "%s\n", " ");
 
@@ -1092,7 +1092,7 @@ bool CL64_Project::Save_Objects_Data()
 	int Count = 0;
 	while (Count < App->CL_Scene->Object_Count)
 	{
-		if (App->CL_Scene->B_Object[Count]->Deleted == 0)
+		if (App->CL_Scene->B_Object[Count]->flag_Deleted == 0)
 		{
 			strcpy(buff, "[Object_");
 			_itoa(new_Count, Cbuff, 10);
@@ -1143,7 +1143,7 @@ bool CL64_Project::Save_Objects_Data()
 			z = App->CL_Scene->B_Object[Count]->Physics_Quat.z;
 			fprintf(WriteFile, "%s%f,%f,%f,%f\n", "Physics_Quat=", w, x, y, z);
 
-			fprintf(WriteFile, "%s%i\n", "Dimensions_Lock=", App->CL_Scene->B_Object[Count]->Dimensions_Locked);
+			fprintf(WriteFile, "%s%i\n", "Dimensions_Lock=", App->CL_Scene->B_Object[Count]->flag_Dimensions_Locked);
 
 			//---------------------------------------------------------------------------------- Message Entity
 			if (App->CL_Scene->B_Object[Count]->Usage == Enums::Stage_Usage_Message)
@@ -1158,10 +1158,10 @@ bool CL64_Project::Save_Objects_Data()
 				// Message Counter
 				fprintf(WriteFile, "%s%i\n", "Message_Counter_ID=", App->CL_Scene->B_Object[Count]->S_Message[0]->Counter_ID);
 				fprintf(WriteFile, "%s%i\n", "Message_Trigger_Value=", App->CL_Scene->B_Object[Count]->S_Message[0]->Trigger_Value);
-				fprintf(WriteFile, "%s%i\n", "Message_Counter_Disabled=", App->CL_Scene->B_Object[Count]->S_Message[0]->Counter_Disabled);
+				fprintf(WriteFile, "%s%i\n", "Message_Counter_Disabled=", App->CL_Scene->B_Object[Count]->S_Message[0]->flag_Counter_Disabled);
 
-				fprintf(WriteFile, "%s%i\n", "Message_CentreX=", App->CL_Scene->B_Object[Count]->S_Message[0]->PosXCentre_Flag);
-				fprintf(WriteFile, "%s%i\n", "Message_CentreY=", App->CL_Scene->B_Object[Count]->S_Message[0]->PosYCentre_Flag);
+				fprintf(WriteFile, "%s%i\n", "Message_CentreX=", App->CL_Scene->B_Object[Count]->S_Message[0]->flag_PosXCentre_Flag);
+				fprintf(WriteFile, "%s%i\n", "Message_CentreY=", App->CL_Scene->B_Object[Count]->S_Message[0]->flag_PosYCentre_Flag);
 
 				x = App->CL_Scene->B_Object[Count]->S_Message[0]->Text_Colour.x;
 				y = App->CL_Scene->B_Object[Count]->S_Message[0]->Text_Colour.y;
@@ -1175,7 +1175,7 @@ bool CL64_Project::Save_Objects_Data()
 				w = App->CL_Scene->B_Object[Count]->S_Message[0]->BackGround_Colour.w;
 				fprintf(WriteFile, "%s%f,%f,%f,%f\n", "Message_BackGround_Colour=", x, y, z, w);
 
-				fprintf(WriteFile, "%s%i\n", "Message_Show_BackGround=", App->CL_Scene->B_Object[Count]->S_Message[0]->Show_BackGround);
+				fprintf(WriteFile, "%s%i\n", "Message_Show_BackGround=", App->CL_Scene->B_Object[Count]->S_Message[0]->flag_Show_BackGround);
 
 			}
 
@@ -1192,12 +1192,12 @@ bool CL64_Project::Save_Objects_Data()
 				fprintf(WriteFile, "%s\n", "-- Colectable");
 				fprintf(WriteFile, "%s%s\n", "Col_Sound_File=", App->CL_Scene->B_Object[Count]->S_Collectable[0]->Sound_File);
 				fprintf(WriteFile, "%s%f\n", "Col_Sound_Volume=", App->CL_Scene->B_Object[Count]->S_Collectable[0]->SndVolume);
-				fprintf(WriteFile, "%s%i\n", "Col_Play=", App->CL_Scene->B_Object[Count]->S_Collectable[0]->Play);
+				fprintf(WriteFile, "%s%i\n", "Col_Play=", App->CL_Scene->B_Object[Count]->S_Collectable[0]->flag_Play);
 				fprintf(WriteFile, "%s%s\n", "Col_Counter_Name=", App->CL_Scene->B_Object[Count]->S_Collectable[0]->Counter_Name);
 				fprintf(WriteFile, "%s%i\n", "Col_Counter_ID=", App->CL_Scene->B_Object[Count]->S_Collectable[0]->Counter_ID);
 				fprintf(WriteFile, "%s%i\n", "Col_Maths=", App->CL_Scene->B_Object[Count]->S_Collectable[0]->Maths);
 				fprintf(WriteFile, "%s%i\n", "Col_Value=", App->CL_Scene->B_Object[Count]->S_Collectable[0]->Value);
-				fprintf(WriteFile, "%s%i\n", "Col_Disabled=", App->CL_Scene->B_Object[Count]->S_Collectable[0]->Counter_Disabled);
+				fprintf(WriteFile, "%s%i\n", "Col_Disabled=", App->CL_Scene->B_Object[Count]->S_Collectable[0]->flag_Counter_Disabled);
 			}
 
 			//---------------------------------------------------------------------------------- Move Entity
@@ -1205,25 +1205,25 @@ bool CL64_Project::Save_Objects_Data()
 			{
 				fprintf(WriteFile, "%s\n", "-- Move Entity");
 				fprintf(WriteFile, "%s%f\n", "Move_Distance=", App->CL_Scene->B_Object[Count]->S_MoveType[0]->Move_Distance);
-				fprintf(WriteFile, "%s%i\n", "Move_IsNegative=", App->CL_Scene->B_Object[Count]->S_MoveType[0]->IsNegative);
+				fprintf(WriteFile, "%s%i\n", "Move_IsNegative=", App->CL_Scene->B_Object[Count]->S_MoveType[0]->flag_IsNegative);
 
 				fprintf(WriteFile, "%s%f\n", "Move_NewPos=", App->CL_Scene->B_Object[Count]->S_MoveType[0]->Newpos);
 				fprintf(WriteFile, "%s%i\n", "Move_ObjectID=", App->CL_Scene->B_Object[Count]->S_MoveType[0]->Object_To_Move_Index);
 				fprintf(WriteFile, "%s%s\n", "Move_ObjectName=", App->CL_Scene->B_Object[Count]->S_MoveType[0]->Object_Name);
-				fprintf(WriteFile, "%s%i\n", "Move_Re_Trigger=", App->CL_Scene->B_Object[Count]->S_MoveType[0]->Re_Trigger);
+				fprintf(WriteFile, "%s%i\n", "Move_Re_Trigger=", App->CL_Scene->B_Object[Count]->S_MoveType[0]->flag_Re_Trigger);
 				fprintf(WriteFile, "%s%f\n", "Move_Speed=", App->CL_Scene->B_Object[Count]->S_MoveType[0]->Speed);
-				fprintf(WriteFile, "%s%i\n", "Move_Triggered=", App->CL_Scene->B_Object[Count]->S_MoveType[0]->Triggered);
+				fprintf(WriteFile, "%s%i\n", "Move_Triggered=", App->CL_Scene->B_Object[Count]->S_MoveType[0]->flag_Triggered);
 				fprintf(WriteFile, "%s%i\n", "Move_WhatDirection=", App->CL_Scene->B_Object[Count]->S_MoveType[0]->WhatDirection);
 
 				// Move Sound
 				fprintf(WriteFile, "%s%s\n", "Move_Sound=", App->CL_Scene->B_Object[Count]->Sound_File);
-				fprintf(WriteFile, "%s%i\n", "Move_Play_Sound=", App->CL_Scene->B_Object[Count]->Play_Sound);
+				fprintf(WriteFile, "%s%i\n", "Move_Play_Sound=", App->CL_Scene->B_Object[Count]->flag_Play_Sound);
 				fprintf(WriteFile, "%s%f\n", "Move_Volume=", App->CL_Scene->B_Object[Count]->SndVolume);
 
 				// Move Counter
 				fprintf(WriteFile, "%s%i\n", "Move_Counter_ID=", App->CL_Scene->B_Object[Count]->S_MoveType[0]->Counter_ID);
 				fprintf(WriteFile, "%s%i\n", "Move_Trigger_Value=", App->CL_Scene->B_Object[Count]->S_MoveType[0]->Trigger_Value);
-				fprintf(WriteFile, "%s%i\n", "Move_Counter_Disabled=", App->CL_Scene->B_Object[Count]->S_MoveType[0]->Counter_Disabled);
+				fprintf(WriteFile, "%s%i\n", "Move_Counter_Disabled=", App->CL_Scene->B_Object[Count]->S_MoveType[0]->flag_Counter_Disabled);
 			}
 
 			//---------------------------------------------------------------------------------- Teleport Entity
@@ -1236,7 +1236,7 @@ bool CL64_Project::Save_Objects_Data()
 
 				fprintf(WriteFile, "%s%s\n", "Tele_Sound=", App->CL_Scene->B_Object[Count]->S_Teleport[0]->Sound_File);
 				fprintf(WriteFile, "%s%f\n", "Tele_Volume=", App->CL_Scene->B_Object[Count]->S_Teleport[0]->SndVolume);
-				fprintf(WriteFile, "%s%i\n", "Tele_Play=", App->CL_Scene->B_Object[Count]->S_Teleport[0]->Play);
+				fprintf(WriteFile, "%s%i\n", "Tele_Play=", App->CL_Scene->B_Object[Count]->S_Teleport[0]->flag_Play);
 
 				x = App->CL_Scene->B_Object[Count]->S_Teleport[0]->Player_Position.x;
 				y = App->CL_Scene->B_Object[Count]->S_Teleport[0]->Player_Position.y;
@@ -1257,11 +1257,11 @@ bool CL64_Project::Save_Objects_Data()
 				// Teleport Counter
 				fprintf(WriteFile, "%s%i\n", "Tele_Counter_ID=", App->CL_Scene->B_Object[Count]->S_Teleport[0]->Counter_ID);
 				fprintf(WriteFile, "%s%i\n", "Tele_Trigger_Value=", App->CL_Scene->B_Object[Count]->S_Teleport[0]->Trigger_Value);
-				fprintf(WriteFile, "%s%i\n", "Tele_Counter_Disabled=", App->CL_Scene->B_Object[Count]->S_Teleport[0]->Counter_Disabled);
+				fprintf(WriteFile, "%s%i\n", "Tele_Counter_Disabled=", App->CL_Scene->B_Object[Count]->S_Teleport[0]->flag_Counter_Disabled);
 
 				//--------------- Environment
 				fprintf(WriteFile, "%s\n", "------------------------------------------------------------------------------ Teleporter Environ");
-				fprintf(WriteFile, "%s%i\n", "Environ_Enabled=", App->CL_Scene->B_Object[Count]->S_Environ[0]->Environ_Enabled);
+				fprintf(WriteFile, "%s%i\n", "Environ_Enabled=", App->CL_Scene->B_Object[Count]->S_Environ[0]->flag_Environ_Enabled);
 				fprintf(WriteFile, "%s%s\n", "Environment_Name=", App->CL_Scene->B_Object[Count]->S_Environ[0]->Environment_Name);
 				fprintf(WriteFile, "%s%i\n", "Environment_ID=", App->CL_Scene->B_Object[Count]->S_Environ[0]->Environment_ID);
 
@@ -1269,8 +1269,8 @@ bool CL64_Project::Save_Objects_Data()
 				fprintf(WriteFile, "%s%s\n", "Sound_File=", App->CL_Scene->B_Object[Count]->S_Environ[0]->Sound_File);
 				fprintf(WriteFile, "%s%f\n", "Snd_Volume=", App->CL_Scene->B_Object[Count]->S_Environ[0]->SndVolume);
 
-				fprintf(WriteFile, "%s%i\n", "Sound_Play=", App->CL_Scene->B_Object[Count]->S_Environ[0]->Play);
-				fprintf(WriteFile, "%s%i\n", "Sound_Loop=", App->CL_Scene->B_Object[Count]->S_Environ[0]->Loop);
+				fprintf(WriteFile, "%s%i\n", "Sound_Play=", App->CL_Scene->B_Object[Count]->S_Environ[0]->flag_Play);
+				fprintf(WriteFile, "%s%i\n", "Sound_Loop=", App->CL_Scene->B_Object[Count]->S_Environ[0]->flag_Loop);
 
 				//--------------- Light
 
@@ -1285,7 +1285,7 @@ bool CL64_Project::Save_Objects_Data()
 				fprintf(WriteFile, "%s%f,%f,%f\n", "Light_Position=", x, y, z);
 
 				//--------------- Sky
-				fprintf(WriteFile, "%s%i\n", "Sky_Enable=", App->CL_Scene->B_Object[Count]->S_Environ[0]->Enabled);
+				fprintf(WriteFile, "%s%i\n", "Sky_Enable=", App->CL_Scene->B_Object[Count]->S_Environ[0]->flag_Enabled);
 				fprintf(WriteFile, "%s%i\n", "Sky_Type=", App->CL_Scene->B_Object[Count]->S_Environ[0]->type);
 				fprintf(WriteFile, "%s%s\n", "Sky_Material=", App->CL_Scene->B_Object[Count]->S_Environ[0]->Material);
 				fprintf(WriteFile, "%s%f\n", "Sky_Curvature=", App->CL_Scene->B_Object[Count]->S_Environ[0]->Curvature);
@@ -1318,8 +1318,8 @@ bool CL64_Project::Save_Objects_Data()
 				fprintf(WriteFile, "%s%s\n", "Sound_File=", App->CL_Scene->B_Object[Count]->S_Environ[0]->Sound_File);
 				fprintf(WriteFile, "%s%f\n", "Snd_Volume=", App->CL_Scene->B_Object[Count]->S_Environ[0]->SndVolume);
 
-				fprintf(WriteFile, "%s%i\n", "Sound_Play=", App->CL_Scene->B_Object[Count]->S_Environ[0]->Play);
-				fprintf(WriteFile, "%s%i\n", "Sound_Loop=", App->CL_Scene->B_Object[Count]->S_Environ[0]->Loop);
+				fprintf(WriteFile, "%s%i\n", "Sound_Play=", App->CL_Scene->B_Object[Count]->S_Environ[0]->flag_Play);
+				fprintf(WriteFile, "%s%i\n", "Sound_Loop=", App->CL_Scene->B_Object[Count]->S_Environ[0]->flag_Loop);
 
 				//--------------- Light
 
@@ -1334,7 +1334,7 @@ bool CL64_Project::Save_Objects_Data()
 				fprintf(WriteFile, "%s%f,%f,%f\n", "Light_Position=", x, y, z);
 
 				//--------------- Sky
-				fprintf(WriteFile, "%s%i\n", "Sky_Enable=", App->CL_Scene->B_Object[Count]->S_Environ[0]->Enabled);
+				fprintf(WriteFile, "%s%i\n", "Sky_Enable=", App->CL_Scene->B_Object[Count]->S_Environ[0]->flag_Enabled);
 				fprintf(WriteFile, "%s%i\n", "Sky_Type=", App->CL_Scene->B_Object[Count]->S_Environ[0]->type);
 				fprintf(WriteFile, "%s%s\n", "Sky_Material=", App->CL_Scene->B_Object[Count]->S_Environ[0]->Material);
 				fprintf(WriteFile, "%s%f\n", "Sky_Curvature=", App->CL_Scene->B_Object[Count]->S_Environ[0]->Curvature);
@@ -1446,7 +1446,7 @@ bool CL64_Project::Save_Display_Data()
 	int Count = 0;
 	while (Count < App->CL_Scene->Counters_Count)
 	{
-		if (App->CL_Scene->B_Counter[Count]->Deleted == 0)
+		if (App->CL_Scene->B_Counter[Count]->flag_Deleted == 0)
 		{
 			strcpy(buff, "[Counter_");
 			_itoa(new_Count, Cbuff, 10);
@@ -1463,7 +1463,7 @@ bool CL64_Project::Save_Display_Data()
 			fprintf(WriteFile, "%s%f,%f\n", "Counter_Pos=", x, y);
 
 			fprintf(WriteFile, "%s%s\n", "Counter_Text=", App->CL_Scene->B_Counter[Count]->Text);
-			fprintf(WriteFile, "%s%i\n", "Counter_Display=", App->CL_Scene->B_Counter[Count]->Show_Panel_Flag);
+			fprintf(WriteFile, "%s%i\n", "Counter_Display=", App->CL_Scene->B_Counter[Count]->flag_Show_Panel_Flag);
 			fprintf(WriteFile, "%s%i\n", "Counter_Start=", App->CL_Scene->B_Counter[Count]->Start_Value);
 
 			fprintf(WriteFile, "%s\n", " ");
@@ -1779,7 +1779,7 @@ bool CL64_Project::Load_Project_Counters()
 		App->CL_Scene->B_Counter[Count]->Set_ImGui_Panel_Name();
 
 
-		App->CL_Scene->B_Counter[Count]->Show_Panel_Flag = App->CL_Ini_File->GetInt(buff, "Counter_Display", 0, 10);
+		App->CL_Scene->B_Counter[Count]->flag_Show_Panel_Flag = App->CL_Ini_File->GetInt(buff, "Counter_Display", 0, 10);
 
 		App->CL_Scene->B_Counter[Count]->Start_Value = App->CL_Ini_File->GetInt(buff, "Counter_Start", 0, 10);
 
@@ -1882,7 +1882,7 @@ bool CL64_Project::Load_Project_Objects()
 		B_Object->Physics_Quat.y = y;
 		B_Object->Physics_Quat.z = z;
 
-		B_Object->Dimensions_Locked = App->CL_Ini_File->GetInt(mSection, "Dimensions_Lock", 0,10);
+		B_Object->flag_Dimensions_Locked = App->CL_Ini_File->GetInt(mSection, "Dimensions_Lock", 0,10);
 
 
 		// Message Entity
@@ -1969,10 +1969,10 @@ bool CL64_Project::Read_EnvironEntity(int Index, char* Section)
 	B_Object->S_Environ[0]->SndVolume = V4.x;
 
 	Int_Tag = App->CL_Ini_File->GetInt(Section, "Sound_Play", 0, 10);
-	B_Object->S_Environ[0]->Play = Int_Tag;
+	B_Object->S_Environ[0]->flag_Play = Int_Tag;
 
 	Int_Tag = App->CL_Ini_File->GetInt(Section, "Sound_Loop", 0, 10);
-	B_Object->S_Environ[0]->Loop = Int_Tag;
+	B_Object->S_Environ[0]->flag_Loop = Int_Tag;
 
 	//--------------- Light
 	App->CL_Ini_File->GetString(Section, "Ambient_Colour", chr_Tag1, MAX_PATH);
@@ -1985,7 +1985,7 @@ bool CL64_Project::Read_EnvironEntity(int Index, char* Section)
 
 	//--------------- Sky
 	Int_Tag = App->CL_Ini_File->GetInt(Section, "Sky_Enable", 0, 10);
-	B_Object->S_Environ[0]->Enabled = Int_Tag;
+	B_Object->S_Environ[0]->flag_Enabled = Int_Tag;
 
 	Int_Tag = App->CL_Ini_File->GetInt(Section, "Sky_Type", 0, 10);
 	B_Object->S_Environ[0]->type = Int_Tag;
@@ -2058,10 +2058,10 @@ bool CL64_Project::Read_Message(int Index, char* Section)
 	// Message Counter
 	B_Object->S_Message[0]->Counter_ID = App->CL_Ini_File->GetInt(Section, "Message_Counter_ID", 0, 10);
 	B_Object->S_Message[0]->Trigger_Value = App->CL_Ini_File->GetInt(Section, "Message_Trigger_Value", 0, 10);
-	B_Object->S_Message[0]->Counter_Disabled = App->CL_Ini_File->GetInt(Section, "Message_Counter_Disabled", 1, 10);
+	B_Object->S_Message[0]->flag_Counter_Disabled = App->CL_Ini_File->GetInt(Section, "Message_Counter_Disabled", 1, 10);
 
-	B_Object->S_Message[0]->PosXCentre_Flag = App->CL_Ini_File->GetInt(Section, "Message_CentreX", 0, 10);
-	B_Object->S_Message[0]->PosYCentre_Flag = App->CL_Ini_File->GetInt(Section, "Message_CentreY", 0, 10);
+	B_Object->S_Message[0]->flag_PosXCentre_Flag = App->CL_Ini_File->GetInt(Section, "Message_CentreX", 0, 10);
+	B_Object->S_Message[0]->flag_PosYCentre_Flag = App->CL_Ini_File->GetInt(Section, "Message_CentreY", 0, 10);
 
 	int Test = App->CL_Ini_File->GetString(Section, "Message_Text_Colour", chr_Tag1, MAX_PATH);
 	if (Test > 0)
@@ -2088,7 +2088,7 @@ bool CL64_Project::Read_Message(int Index, char* Section)
 		B_Object->S_Message[0]->BackGround_Colour = Ogre::Vector4(239, 239, 239, 255);
 	}
 
-	B_Object->S_Message[0]->Show_BackGround = App->CL_Ini_File->GetInt(Section, "Message_Show_BackGround", 1, 10);
+	B_Object->S_Message[0]->flag_Show_BackGround = App->CL_Ini_File->GetInt(Section, "Message_Show_BackGround", 1, 10);
 
 	return 1;
 }
@@ -2111,7 +2111,7 @@ bool CL64_Project::Read_MoveEntity(int Index, char* Section)
 	(void)sscanf(chr_Tag1, "%f", &V4.x);
 	B_Object->S_MoveType[0]->Move_Distance = V4.x;
 
-	B_Object->S_MoveType[0]->IsNegative = App->CL_Ini_File->GetInt(Section, "Move_IsNegative", 0, 10);
+	B_Object->S_MoveType[0]->flag_IsNegative = App->CL_Ini_File->GetInt(Section, "Move_IsNegative", 0, 10);
 
 	//  Speed
 	App->CL_Ini_File->GetString(Section, "Move_Speed", chr_Tag1, MAX_PATH);
@@ -2126,7 +2126,7 @@ bool CL64_Project::Read_MoveEntity(int Index, char* Section)
 
 	// Move Sound
 	App->CL_Ini_File->GetString(Section, "Move_Sound", B_Object->Sound_File, MAX_PATH);
-	B_Object->Play_Sound = App->CL_Ini_File->GetInt(Section, "Move_Play_Sound", 0, 10);
+	B_Object->flag_Play_Sound = App->CL_Ini_File->GetInt(Section, "Move_Play_Sound", 0, 10);
 
 	App->CL_Ini_File->GetString(Section, "Move_Volume", chr_Tag1, MAX_PATH);
 	(void)sscanf(chr_Tag1, "%f", &V4.x);
@@ -2135,7 +2135,7 @@ bool CL64_Project::Read_MoveEntity(int Index, char* Section)
 	// Move Counter
 	B_Object->S_MoveType[0]->Counter_ID = App->CL_Ini_File->GetInt(Section, "Move_Counter_ID", 0, 10);
 	B_Object->S_MoveType[0]->Trigger_Value = App->CL_Ini_File->GetInt(Section, "Move_Trigger_Value", 0, 10);
-	B_Object->S_MoveType[0]->Counter_Disabled = App->CL_Ini_File->GetInt(Section, "Move_Counter_Disabled", 1, 10);
+	B_Object->S_MoveType[0]->flag_Counter_Disabled = App->CL_Ini_File->GetInt(Section, "Move_Counter_Disabled", 1, 10);
 
 	return 1;
 }
@@ -2183,7 +2183,7 @@ bool CL64_Project::Read_Collectable(int Index, char* Section)
 	(void)sscanf(chr_Tag1, "%f", &V4.x);
 	B_Object->S_Collectable[0]->SndVolume = V4.x;
 
-	B_Object->S_Collectable[0]->Play = App->CL_Ini_File->GetInt(Section, "Col_Play", 0, 10);
+	B_Object->S_Collectable[0]->flag_Play = App->CL_Ini_File->GetInt(Section, "Col_Play", 0, 10);
 
 	App->CL_Ini_File->GetString(Section, "Col_Counter_Name", chr_Tag1, MAX_PATH);
 	strcpy(B_Object->S_Collectable[0]->Counter_Name, chr_Tag1);
@@ -2191,7 +2191,7 @@ bool CL64_Project::Read_Collectable(int Index, char* Section)
 	B_Object->S_Collectable[0]->Counter_ID = App->CL_Ini_File->GetInt(Section, "Col_Counter_ID", 0, 10);
 	B_Object->S_Collectable[0]->Maths = App->CL_Ini_File->GetInt(Section, "Col_Maths", 0, 10);
 	B_Object->S_Collectable[0]->Value = App->CL_Ini_File->GetInt(Section, "Col_Value", 0, 10);
-	B_Object->S_Collectable[0]->Counter_Disabled = App->CL_Ini_File->GetInt(Section, "Col_Disabled", 0, 10);
+	B_Object->S_Collectable[0]->flag_Counter_Disabled = App->CL_Ini_File->GetInt(Section, "Col_Disabled", 0, 10);
 
 	return 1;
 }
@@ -2226,7 +2226,7 @@ bool CL64_Project::Read_Teleport(int Index, char* Section)
 	(void)sscanf(chr_Tag1, "%f", &V4.x);
 	B_Object->S_Teleport[0]->SndVolume = V4.x;
 
-	B_Object->S_Teleport[0]->Play = App->CL_Ini_File->GetInt(Section, "Tele_Play", 0, 10);
+	B_Object->S_Teleport[0]->flag_Play = App->CL_Ini_File->GetInt(Section, "Tele_Play", 0, 10);
 
 	// Mesh_Pos
 	App->CL_Ini_File->GetString(Section, "Tele_Mesh_Position", chr_Tag1, MAX_PATH);
@@ -2253,11 +2253,11 @@ bool CL64_Project::Read_Teleport(int Index, char* Section)
 	// Teleport Counter
 	B_Object->S_Teleport[0]->Counter_ID = App->CL_Ini_File->GetInt(Section, "Tele_Counter_ID", 0, 10);
 	B_Object->S_Teleport[0]->Trigger_Value = App->CL_Ini_File->GetInt(Section, "Tele_Trigger_Value", 0, 10);
-	B_Object->S_Teleport[0]->Counter_Disabled = App->CL_Ini_File->GetInt(Section, "Tele_Counter_Disabled", 1, 10);
+	B_Object->S_Teleport[0]->flag_Counter_Disabled = App->CL_Ini_File->GetInt(Section, "Tele_Counter_Disabled", 1, 10);
 
 	// Environment
 	Int_Tag = App->CL_Ini_File->GetInt(Section, "Environ_Enabled", 0, 10);
-	B_Object->S_Environ[0]->Environ_Enabled = Int_Tag;
+	B_Object->S_Environ[0]->flag_Environ_Enabled = Int_Tag;
 
 	App->CL_Ini_File->GetString(Section, "Environment_Name", chr_Tag1, MAX_PATH);
 	strcpy(B_Object->S_Environ[0]->Environment_Name, chr_Tag1);
@@ -2274,10 +2274,10 @@ bool CL64_Project::Read_Teleport(int Index, char* Section)
 	B_Object->S_Environ[0]->SndVolume = V4.x;
 
 	Int_Tag = App->CL_Ini_File->GetInt(Section, "Sound_Play", 0, 10);
-	B_Object->S_Environ[0]->Play = Int_Tag;
+	B_Object->S_Environ[0]->flag_Play = Int_Tag;
 
 	Int_Tag = App->CL_Ini_File->GetInt(Section, "Sound_Loop", 0, 10);
-	B_Object->S_Environ[0]->Loop = Int_Tag;
+	B_Object->S_Environ[0]->flag_Loop = Int_Tag;
 
 	//--------------- Light
 	App->CL_Ini_File->GetString(Section, "Ambient_Colour", chr_Tag1, MAX_PATH);
@@ -2290,7 +2290,7 @@ bool CL64_Project::Read_Teleport(int Index, char* Section)
 
 	//--------------- Sky
 	Int_Tag = App->CL_Ini_File->GetInt(Section, "Sky_Enable", 0, 10);
-	B_Object->S_Environ[0]->Enabled = Int_Tag;
+	B_Object->S_Environ[0]->flag_Enabled = Int_Tag;
 
 	Int_Tag = App->CL_Ini_File->GetInt(Section, "Sky_Type", 0, 10);
 	B_Object->S_Environ[0]->type = Int_Tag;
@@ -2597,7 +2597,7 @@ bool CL64_Project::Load_Project_Player()
 		strcat(buff, n_buff);
 
 		App->CL_Scene->B_Locations[Count] = new Base_Locations();
-		App->CL_Scene->B_Locations[Count]->Deleted = 0;
+		App->CL_Scene->B_Locations[Count]->flag_Deleted = 0;
 
 
 		Int_Tag = App->CL_Ini_File->GetInt(buff, "Locatoin_ID", 0, 10);

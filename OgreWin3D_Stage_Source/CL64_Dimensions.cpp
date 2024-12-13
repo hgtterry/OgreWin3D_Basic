@@ -925,7 +925,7 @@ void CL64_Dimensions::UpDate_Physics(int Index)
 	}
 
 	// Needs Looking at
-	App->CL_Scene->B_Object[Index]->Altered = 1;
+	App->CL_Scene->B_Object[Index]->flag_Altered = 1;
 	App->CL_FileView->Mark_Altered(App->CL_Scene->B_Object[Index]->FileViewItem);
 	App->CL_Scene->flag_Scene_Modified = 1;
 }

@@ -419,7 +419,7 @@ bool CL64_Scene::Show_Entities(bool TrueFalse)
 	int Count = 0;
 	while (Count < Object_Count)
 	{
-		if (B_Object[Count]->Deleted == 0)
+		if (B_Object[Count]->flag_Deleted == 0)
 		{
 			if (B_Object[Count]->Usage == Enums::Stage_Usage_Sound)
 			{

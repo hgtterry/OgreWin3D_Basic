@@ -48,7 +48,7 @@ int CL64_LookUps::Get_Adjusted_Counters_Count(void)
 
 	while (Count < Total)
 	{
-		if (App->CL_Scene->B_Counter[Count]->Deleted == 0)
+		if (App->CL_Scene->B_Counter[Count]->flag_Deleted == 0)
 		{
 			New_Count++;
 		}
@@ -70,7 +70,7 @@ int CL64_LookUps::Player_Location_GetCount(void)
 
 	while (Count < Total)
 	{
-		if (App->CL_Scene->B_Locations[Count]->Deleted == 0)
+		if (App->CL_Scene->B_Locations[Count]->flag_Deleted == 0)
 		{
 			RealCount++;
 		}
@@ -88,7 +88,7 @@ int CL64_LookUps::Player_Location_GetIndex_ByName(char* Name)
 	int Total = App->CL_Scene->Player_Location_Count;
 	while (Count < Total)
 	{
-		if (App->CL_Scene->B_Locations[Count]->Deleted == 0)
+		if (App->CL_Scene->B_Locations[Count]->flag_Deleted == 0)
 		{
 			int Result = 1;
 			Result = strcmp(App->CL_Scene->B_Locations[Count]->Name, Name);

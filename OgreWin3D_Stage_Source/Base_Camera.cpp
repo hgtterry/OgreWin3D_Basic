@@ -48,7 +48,7 @@ void Base_Camera::Init_Camera(void)
 	LookAt.y = 30;
 	LookAt.z = 0;
 
-	Altered = 1;
+	flag_Altered = 1;
 
 	This_Object_UniqueID = 0;
 

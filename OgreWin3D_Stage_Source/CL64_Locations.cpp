@@ -82,7 +82,7 @@ LRESULT CALLBACK CL64_Locations::Proc_Locations(HWND hDlg, UINT message, WPARAM 
 		int Count = 0;
 		while (Count < App->CL_Scene->Player_Location_Count)
 		{
-			if (App->CL_Scene->B_Locations[Count]->Deleted == 0)
+			if (App->CL_Scene->B_Locations[Count]->flag_Deleted == 0)
 			{
 				SendDlgItemMessage(hDlg, IDC_LSTLOCATIONS, LB_ADDSTRING, (WPARAM)0, (LPARAM)(LPCTSTR)App->CL_Scene->B_Locations[Count]->Name);
 			}
@@ -244,7 +244,7 @@ LRESULT CALLBACK CL64_Locations::Proc_Locations(HWND hDlg, UINT message, WPARAM 
 				while (Count < App->CL_Scene->Player_Location_Count)
 				{
 
-					if (App->CL_Scene->B_Locations[Count]->Deleted == 0)
+					if (App->CL_Scene->B_Locations[Count]->flag_Deleted == 0)
 					{
 						SendDlgItemMessage(hDlg, IDC_LSTLOCATIONS, LB_ADDSTRING, (WPARAM)0, (LPARAM)(LPCTSTR)App->CL_Scene->B_Locations[Count]->Name);
 					}
@@ -445,13 +445,13 @@ void CL64_Locations::Delete_Location()
 	App->CL_Dialogs->Show_YesNo_Dlg(tag, (LPSTR)"Are you sure", (LPSTR)"");
 	if (App->CL_Dialogs->Canceled == 0)
 	{
-		App->CL_Scene->B_Locations[Location_Index]->Deleted = 1;
+		App->CL_Scene->B_Locations[Location_Index]->flag_Deleted = 1;
 
 		SendDlgItemMessage(Locations_Dlg_hWnd, IDC_LSTLOCATIONS, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
 		int Count = 0;
 		while (Count < App->CL_Scene->Player_Location_Count)
 		{
-			if (App->CL_Scene->B_Locations[Count]->Deleted == 0)
+			if (App->CL_Scene->B_Locations[Count]->flag_Deleted == 0)
 			{
 				SendDlgItemMessage(Locations_Dlg_hWnd, IDC_LSTLOCATIONS, LB_ADDSTRING, (WPARAM)0, (LPARAM)(LPCTSTR)App->CL_Scene->B_Locations[Count]->Name);
 			}
@@ -503,7 +503,7 @@ void CL64_Locations::Create_Location_Entity(char* name)
 
 	App->CL_Scene->B_Locations[Count] = new Base_Locations();
 
-	App->CL_Scene->B_Locations[Count]->Deleted = 0;
+	App->CL_Scene->B_Locations[Count]->flag_Deleted = 0;
 
 	//App->CL_Scene->B_Locations[Count]->This_Object_UniqueID = App->CL_Scene->Locations_ID_Counter;
 

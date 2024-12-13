@@ -43,9 +43,9 @@ void CL64_Display::Set_Counter_Defaults(int Index)
 	App->CL_Scene->B_Counter[Index]->PosX = 250;
 	App->CL_Scene->B_Counter[Index]->PosY = 10;
 
-	App->CL_Scene->B_Counter[Index]->Deleted = 0;
-	App->CL_Scene->B_Counter[Index]->Altered = 0;
-	App->CL_Scene->B_Counter[Index]->Show_Panel_Flag = 0;
+	App->CL_Scene->B_Counter[Index]->flag_Deleted = 0;
+	App->CL_Scene->B_Counter[Index]->flag_Altered = 0;
+	App->CL_Scene->B_Counter[Index]->flag_Show_Panel_Flag = 0;
 	App->CL_Scene->B_Counter[Index]->Unique_ID = 0;
 
 	strcpy(App->CL_Scene->B_Counter[Index]->Text, "Score:= ");
@@ -140,7 +140,7 @@ void CL64_Display::Rename_Counter(int Index)
 // *************************************************************************
 void CL64_Display::Mark_As_Altered_Counter(int Index)
 {
-	App->CL_Scene->B_Counter[Index]->Altered = 1;
+	App->CL_Scene->B_Counter[Index]->flag_Altered = 1;
 
 	App->CL_Scene->flag_Scene_Modified = 1;
 
@@ -157,7 +157,7 @@ int CL64_Display::GetIndex_By_Name(char* Name)
 
 	while (Count < Total)
 	{
-		if (App->CL_Scene->B_Counter[Count]->Deleted == 0)
+		if (App->CL_Scene->B_Counter[Count]->flag_Deleted == 0)
 		{
 			int Result = 1;
 			Result = strcmp(App->CL_Scene->B_Counter[Count]->Panel_Name, Name);

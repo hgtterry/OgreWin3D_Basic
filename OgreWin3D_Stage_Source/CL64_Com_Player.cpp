@@ -435,8 +435,8 @@ void CL64_Com_Player::Check_Collisions(void)
 			{
 				if (App->CL_Scene->Object_Count > 0)
 				{
-					App->CL_Scene->B_Object[Last_Message_Index]->Show_Message_Flag = 0;
-					App->CL_Scene->B_Object[Last_Message_Index]->Triggered = 0;
+					App->CL_Scene->B_Object[Last_Message_Index]->flag_Show_Message_Flag = 0;
+					App->CL_Scene->B_Object[Last_Message_Index]->flag_Triggered = 0;
 				}
 			}
 			else
@@ -455,7 +455,7 @@ void CL64_Com_Player::Check_Collisions(void)
 
 						if (Round < 0)
 						{
-							if (App->CL_Scene->B_Object[Col_Object_Index]->Triggered == 0)
+							if (App->CL_Scene->B_Object[Col_Object_Index]->flag_Triggered == 0)
 							{
 								Last_Message_Index = Col_Object_Index;
 								App->CL_Collision->Message_Entity(Col_Object_Index);
@@ -463,10 +463,10 @@ void CL64_Com_Player::Check_Collisions(void)
 						}
 						else if (Round == 0)
 						{
-							if (App->CL_Scene->B_Object[Col_Object_Index]->Triggered == 1)
+							if (App->CL_Scene->B_Object[Col_Object_Index]->flag_Triggered == 1)
 							{
-								App->CL_Scene->B_Object[Col_Object_Index]->Show_Message_Flag = 0;
-								App->CL_Scene->B_Object[Col_Object_Index]->Triggered = 0;
+								App->CL_Scene->B_Object[Col_Object_Index]->flag_Show_Message_Flag = 0;
+								App->CL_Scene->B_Object[Col_Object_Index]->flag_Triggered = 0;
 
 							}
 						}
@@ -488,7 +488,7 @@ void CL64_Com_Player::Check_Collisions(void)
 
 						if (Round < 0)
 						{
-							if (App->CL_Scene->B_Object[Col_Object_Index]->Triggered == 0)
+							if (App->CL_Scene->B_Object[Col_Object_Index]->flag_Triggered == 0)
 							{
 								App->CL_Collision->Play_Sound(Col_Object_Index);
 								//Last_ColisionIndex = Col_Object_Index;
@@ -496,9 +496,9 @@ void CL64_Com_Player::Check_Collisions(void)
 						}
 						else if (Life_Time < 10)
 						{
-							if (App->CL_Scene->B_Object[Col_Object_Index]->Triggered == 1)
+							if (App->CL_Scene->B_Object[Col_Object_Index]->flag_Triggered == 1)
 							{
-								App->CL_Scene->B_Object[Col_Object_Index]->Triggered = 0;
+								App->CL_Scene->B_Object[Col_Object_Index]->flag_Triggered = 0;
 							}
 						}
 					}
@@ -519,7 +519,7 @@ void CL64_Com_Player::Check_Collisions(void)
 
 						if (Round < 0)
 						{
-							if (App->CL_Scene->B_Object[Col_Object_Index]->Triggered == 0)
+							if (App->CL_Scene->B_Object[Col_Object_Index]->flag_Triggered == 0)
 							{
 								
 								App->CL_Collision->Move_Entity_Collision(Col_Object_Index);
@@ -527,7 +527,7 @@ void CL64_Com_Player::Check_Collisions(void)
 						}
 						else if (Round == 0)
 						{
-							if (App->CL_Scene->B_Object[Col_Object_Index]->Triggered == 1)
+							if (App->CL_Scene->B_Object[Col_Object_Index]->flag_Triggered == 1)
 							{
 
 							}
@@ -542,7 +542,7 @@ void CL64_Com_Player::Check_Collisions(void)
 					int numContacts = contactManifold->getNumContacts();
 					for (int j = 0; j < numContacts; j++)
 					{
-						if (App->CL_Scene->B_Object[Col_Object_Index]->Triggered == 0)
+						if (App->CL_Scene->B_Object[Col_Object_Index]->flag_Triggered == 0)
 						{
 							App->CL_Collision->Do_Collectable(Col_Object_Index);
 						}
@@ -565,14 +565,14 @@ void CL64_Com_Player::Check_Collisions(void)
 
 						if (Round < 0)
 						{
-							if (App->CL_Scene->B_Object[Col_Object_Index]->Triggered == 0)
+							if (App->CL_Scene->B_Object[Col_Object_Index]->flag_Triggered == 0)
 							{
 								App->CL_Collision->Do_Teleport(Col_Object_Index);
 							}
 						}
 						else if (Round == 0)
 						{
-							if (App->CL_Scene->B_Object[Col_Object_Index]->Triggered == 1)
+							if (App->CL_Scene->B_Object[Col_Object_Index]->flag_Triggered == 1)
 							{
 
 							}
@@ -594,16 +594,16 @@ void CL64_Com_Player::Check_Collisions(void)
 
 						if (Round < 0)
 						{
-							if (App->CL_Scene->B_Object[Col_Object_Index]->Triggered == 0)
+							if (App->CL_Scene->B_Object[Col_Object_Index]->flag_Triggered == 0)
 							{
 								App->CL_Collision->Do_Environment(Col_Object_Index);
 							}
 						}
 						else if (Round == 0)
 						{
-							if (App->CL_Scene->B_Object[Col_Object_Index]->Triggered == 1)
+							if (App->CL_Scene->B_Object[Col_Object_Index]->flag_Triggered == 1)
 							{
-								App->CL_Scene->B_Object[Col_Object_Index]->Triggered = 0;
+								App->CL_Scene->B_Object[Col_Object_Index]->flag_Triggered = 0;
 							}
 						}
 					}

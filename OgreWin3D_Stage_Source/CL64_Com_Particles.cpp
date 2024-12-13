@@ -42,7 +42,7 @@ void CL64_Com_Particles::Set_Particle_Defaults(int Index)
 	Base_Object* B_Object = App->CL_Scene->B_Object[Index];
 
 	B_Object->Phys_Body = NULL;
-	B_Object->Physics_Valid = 0;
+	B_Object->flag_Physics_Valid = 0;
 	B_Object->Usage = Enums::Stage_Usage_Particle;
 
 	B_Object->S_Particle[0]->Particle = NULL;
@@ -128,7 +128,7 @@ void CL64_Com_Particles::Rename_Particle_Entity(int Index)
 
 	strcpy(Object->Object_Name, App->CL_Dialogs->Chr_Text);
 
-	Object->Altered = 1;
+	Object->flag_Altered = 1;
 
 	App->CL_Scene->flag_Scene_Modified = 1;
 	App->CL_FileView->Mark_Altered(Object->FileViewItem);
