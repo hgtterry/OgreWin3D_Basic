@@ -88,7 +88,7 @@ public:
 
 	bool flag_Silence_SaveAll_Dialogs;
 	bool flag_Is_New_Project;
-	bool Canceled;
+	bool flag_Canceled;
 
 private:
 

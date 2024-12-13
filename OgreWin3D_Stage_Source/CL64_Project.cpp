@@ -59,7 +59,7 @@ CL64_Project::CL64_Project()
 	flag_Is_New_Project = 0;
 	flag_Silence_SaveAll_Dialogs = 0;
 
-	Canceled = 0;
+	flag_Canceled = 0;
 	WriteFile = NULL;
 	
 }
@@ -84,7 +84,7 @@ bool CL64_Project::Reset_Class()
 // *************************************************************************
 void CL64_Project::Start_Save_Project_Dialog()
 {
-	Canceled = 0;
+	flag_Canceled = 0;
 	DialogBox(App->hInst, (LPCTSTR)IDD_PROJECTSAVE, App->Fdlg, (DLGPROC)Save_Project_Dialog_Proc);
 }
 
@@ -383,14 +383,14 @@ LRESULT CALLBACK CL64_Project::Save_Project_Dialog_Proc(HWND hDlg, UINT message,
 
 		if (LOWORD(wParam) == IDCANCEL)
 		{
-			App->CL_Project->Canceled = 1;
+			App->CL_Project->flag_Canceled = 1;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == IDOK)
 		{
-			App->CL_Project->Canceled = 0;
+			App->CL_Project->flag_Canceled = 0;
 			App->CL_Project->Save_Project();
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;

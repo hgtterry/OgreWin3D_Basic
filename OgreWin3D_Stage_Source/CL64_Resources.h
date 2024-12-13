@@ -53,7 +53,7 @@ public:
 	char Resource_File_FileName[MAX_PATH];
 	char Resource_Used_By_Object[MAX_PATH];
 
-	bool Ogre_ExternalResourceLoaded;
+	bool flag_Ogre_ExternalResourceLoaded;
 
 	HWND Resource_Dlg_hWnd;
 

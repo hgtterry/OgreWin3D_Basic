@@ -34,7 +34,7 @@ public:
 	void Set_Face_UV();
 	void Clear_Picking_Data();
 	bool Ray_Test_Particles(const Ogre::Ray& ray);
-	bool Hit_Player;
+	bool flag_Hit_Player;
 
 	Ogre::String Pl_Entity_Name;
 	float closest_distance;
@@ -58,7 +58,7 @@ public:
 	int Face_Index;
 	int Sub_Mesh_Count;
 
-	bool Selected_Ok;
+	bool flag_Selected_Ok;
 
 private:
 	bool raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::MovableObject*& target, float& closest_distance, const Ogre::uint32 queryMask);

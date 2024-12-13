@@ -34,7 +34,7 @@ CL64_Resources::CL64_Resources(void)
 
 	mFileString.clear();
 
-	Ogre_ExternalResourceLoaded = 0;
+	flag_Ogre_ExternalResourceLoaded = 0;
 
 	Project_Resource_Group = "Project_Resource_Group";
 	Ogre_Loader_Resource_Group = "Ogre_Loader_Resource_Group";
@@ -69,7 +69,7 @@ void CL64_Resources::Reset_Class(void)
 	/*Destroy_Resources_Group(App->CL_Converters->Temp_Resource_Group);
 	Destroy_Resources_Group(App->CL_Ogre->World_Resource_Group);*/
 
-	if (Ogre_ExternalResourceLoaded == 0)
+	if (flag_Ogre_ExternalResourceLoaded == 0)
 	{
 		//Destroy_Resources_Group(App->CL_Resources->Ogre_Loader_Resource_Group);
 	}
@@ -142,7 +142,7 @@ void CL64_Resources::Destroy_Resources_Group(Ogre::String ResourceGroup)
 void CL64_Resources::UnloadUserResources()
 {
 	Ogre::ResourceGroupManager::getSingleton().destroyResourceGroup(App->CL_Resources->Ogre_Loader_Resource_Group);
-	Ogre_ExternalResourceLoaded = 0;
+	flag_Ogre_ExternalResourceLoaded = 0;
 }
 
 // *************************************************************************

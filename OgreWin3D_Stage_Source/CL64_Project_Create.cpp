@@ -29,7 +29,7 @@ THE SOFTWARE.
 
 CL64_Project_Create::CL64_Project_Create(void)
 {
-	Canceled = 0;
+	flag_Canceled = 0;
 	flag_Indoors = 1;
 }
 
@@ -42,7 +42,7 @@ CL64_Project_Create::~CL64_Project_Create(void)
 // *************************************************************************
 void CL64_Project_Create::Create_Options_Dialog()
 {
-	Canceled = 0;
+	flag_Canceled = 0;
 	DialogBox(App->hInst, (LPCTSTR)IDD_CREATE_OPTIONS, App->Fdlg, (DLGPROC)Proc_Options_Dialog);
 }
 
@@ -150,14 +150,14 @@ LRESULT CALLBACK CL64_Project_Create::Proc_Options_Dialog(HWND hDlg, UINT messag
 	case WM_COMMAND:
 		if (LOWORD(wParam) == IDOK)
 		{
-			App->CL_Project_Create->Canceled = 0;
+			App->CL_Project_Create->flag_Canceled = 0;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == IDCANCEL)
 		{
-			App->CL_Project_Create->Canceled = 1;
+			App->CL_Project_Create->flag_Canceled = 1;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
@@ -176,7 +176,7 @@ void CL64_Project_Create::Start_New_Project()
 
 	App->CL_Ogre->Log_Message_To_File((LPSTR)"Open Options Diologs");
 	Create_Options_Dialog();
-	if (Canceled == 1)
+	if (flag_Canceled == 1)
 	{
 		return;
 	}
@@ -194,7 +194,7 @@ void CL64_Project_Create::Start_New_Project()
 	App->CL_Project->flag_Is_New_Project = 1;
 	App->CL_Project->Start_Save_Project_Dialog();
 	App->CL_Project->flag_Is_New_Project = 0;
-	if (App->CL_Project->Canceled == 1)
+	if (App->CL_Project->flag_Canceled == 1)
 	{
 		return;
 	}

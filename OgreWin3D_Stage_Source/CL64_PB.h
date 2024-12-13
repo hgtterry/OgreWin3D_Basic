@@ -47,7 +47,7 @@ public:
 	HWND Bar;
 
 	float Steps;
-	bool ClearBarDlg;
+	bool flag_ClearBarDlg;
 
 
 protected:

@@ -35,7 +35,7 @@ CL64_PB::CL64_PB(void)
 	g_pos = 0;
 	Bar = 0;
 	Steps = 3000;
-	ClearBarDlg = 0;
+	flag_ClearBarDlg = 0;
 
 }
 
@@ -141,11 +141,11 @@ LRESULT CALLBACK CL64_PB::Proc_ProgressBar(HWND hDlg, UINT message, WPARAM wPara
 		holdPen = (HPEN)SelectObject(hdc, hPen);
 
 
-		if (App->CL_PB->ClearBarDlg == 1)
+		if (App->CL_PB->flag_ClearBarDlg == 1)
 		{
 			holdBrush = (HBRUSH)SelectObject(hdc, App->Brush_White);
 			::Rectangle(hdc, 0, 0, rect.right, 32);
-			App->CL_PB->ClearBarDlg = 0;
+			App->CL_PB->flag_ClearBarDlg = 0;
 		}
 		else
 		{
@@ -238,7 +238,7 @@ bool CL64_PB::Set_Progress(char* ProcessText, float TotalSteps)
 
 	SetDlgItemText(ProgBarHwnd, IDC_PBACTION, (LPCTSTR)buff);
 
-	App->CL_PB->ClearBarDlg = 1;
+	App->CL_PB->flag_ClearBarDlg = 1;
 
 	InvalidateRect(ProgBarHwnd, NULL, FALSE);
 

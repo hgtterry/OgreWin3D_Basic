@@ -51,9 +51,9 @@ CL64_Picking::CL64_Picking(Ogre::SceneManager* sceneMgr)
     Face_Index = 0;
     Sub_Mesh_Count = 0;
     SubMesh_Face = 0;
-    Selected_Ok = 0;
+    flag_Selected_Ok = 0;
     ParticleFound = 0;
-    Hit_Player = 0;
+    flag_Hit_Player = 0;
 
     FaceMaterial[0] = 0;
     TextureName[0] = 0;
@@ -80,7 +80,7 @@ void CL64_Picking::Clear_Picking_Data()
     Face_Index = 0;
     Sub_Mesh_Count = 0;
     SubMesh_Face = 0;
-    Selected_Ok = 0;
+    flag_Selected_Ok = 0;
     ParticleFound = 0;
 }
 
@@ -118,7 +118,7 @@ void CL64_Picking::Mouse_Pick_Entity()
 
         mNode = pentity->getParentSceneNode();
 
-        if (Hit_Player == 0)
+        if (flag_Hit_Player == 0)
         {
             Pl_Entity_Name = pentity->getName();
         }
@@ -188,7 +188,7 @@ void CL64_Picking::Mouse_Pick_Entity()
     {
         Pl_Entity_Name = "---------";
         strcpy(TextureName, "None 2");
-        Selected_Ok = 0;
+        flag_Selected_Ok = 0;
     }
 
 }
@@ -201,7 +201,7 @@ bool CL64_Picking::raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::Mo
     target = NULL;
     ParticleFound = 0;
     Pl_Entity_Name = "---------";
-    Hit_Player = 0;
+    flag_Hit_Player = 0;
 
     if (mRaySceneQuery != NULL)
     {
@@ -213,7 +213,7 @@ bool CL64_Picking::raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::Mo
         if (mRaySceneQuery->execute().size() <= 0)
         {
             // raycast did not hit an objects bounding box
-            Selected_Ok = 0;
+            flag_Selected_Ok = 0;
             Pl_Entity_Name = "---------";
             return (false);
         }
@@ -221,7 +221,7 @@ bool CL64_Picking::raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::Mo
     else
     {
         App->Say("No Ray Query");
-        Selected_Ok = 0;
+        flag_Selected_Ok = 0;
         return (false);
     }
 
@@ -264,15 +264,15 @@ bool CL64_Picking::raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::Mo
             int test = strcmp(TestName, "Player_1");
             if (test == 0)
             {
-                Hit_Player = 1;
+                flag_Hit_Player = 1;
             }
             else
             {
-                Hit_Player = 0;
+                flag_Hit_Player = 0;
             }
 
 
-            if (Hit_Player == 0)
+            if (flag_Hit_Player == 0)
             {
                 // get the mesh information
                 GetMeshInformation(((Ogre::Entity*)pentity)->getMesh(),
@@ -345,13 +345,13 @@ bool CL64_Picking::raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::Mo
     {
         // raycast success
         result = closest_result;
-        Selected_Ok = 1;
+        flag_Selected_Ok = 1;
         return (true);
     }
     else
     {
         // raycast failed
-        Selected_Ok = 0;
+        flag_Selected_Ok = 0;
         Pl_Entity_Name = "---------";
         return (false);
     }
@@ -627,14 +627,14 @@ bool CL64_Picking::Ray_Test_Particles(const Ogre::Ray& ray)
         if (mParticleSceneQuery->execute().size() <= 0)
         {
             // raycast did not hit an objects bounding box
-            Selected_Ok = 0;
+            flag_Selected_Ok = 0;
             return (false);
         }
     }
     else
     {
         App->Say("No Ray Query");
-        Selected_Ok = 0;
+        flag_Selected_Ok = 0;
         return (false);
     }
 
