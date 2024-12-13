@@ -27,9 +27,9 @@ distribution.
 
 Bass_Front_Dialog::Bass_Front_Dialog()
 {
-	Use_Front_Dlg_Flag = 1;
-	Show_Front_Dlg_Flag = 0;
-	Game_Running_Flag = 0;
+	flag_Use_Front_Dlg_Flag = 1;
+	flag_Show_Front_Dlg_Flag = 0;
+	flag_Game_Running_Flag = 0;
 
 	PosX = 500;
 	PosY = 500;
@@ -67,7 +67,7 @@ void Bass_Front_Dialog::Render_Front_Dlg(void)
 
 	ImGui::PushStyleColor(ImGuiCol_WindowBg, IM_COL32(239, 239, 239, 255));
 
-	if (!ImGui::Begin("Front_Dialog", &Show_Front_Dlg_Flag, window_flags))
+	if (!ImGui::Begin("Front_Dialog", &flag_Show_Front_Dlg_Flag, window_flags))
 	{
 		ImGui::End();
 	}
@@ -79,7 +79,7 @@ void Bass_Front_Dialog::Render_Front_Dlg(void)
 		ImGui::Spacing();
 		ImGui::Spacing();
 
-		if (Game_Running_Flag == 0)
+		if (flag_Game_Running_Flag == 0)
 		{
 			if (ImGui::Button("Start Game",ImVec2(220, 0)))
 			{
@@ -92,13 +92,13 @@ void Bass_Front_Dialog::Render_Front_Dlg(void)
 				App->CL_Physics->Reset_Physics();
 				App->CL_Scene->Game_Restart();
 
-				Show_Front_Dlg_Flag = 0;
+				flag_Show_Front_Dlg_Flag = 0;
 
-				Game_Running_Flag = 1;
+				flag_Game_Running_Flag = 1;
 			}
 		}
 
-		if (Game_Running_Flag == 1)
+		if (flag_Game_Running_Flag == 1)
 		{
 			ImGui::Spacing();
 			ImGui::Spacing();
@@ -111,12 +111,12 @@ void Bass_Front_Dialog::Render_Front_Dlg(void)
 				App->CUR = SetCursor(NULL);
 				App->CL_Ogre->Ogre3D_Listener->flag_Block_Mouse = 0;
 				App->CL_Keyboard->flag_Block_Keyboard = 0;
-				Show_Front_Dlg_Flag = 0;
+				flag_Show_Front_Dlg_Flag = 0;
 				
 			}
 		}
 
-		if (Game_Running_Flag == 1)
+		if (flag_Game_Running_Flag == 1)
 		{
 			ImGui::Spacing();
 			ImGui::Spacing();
@@ -132,7 +132,7 @@ void Bass_Front_Dialog::Render_Front_Dlg(void)
 				App->CL_Physics->Reset_Physics();
 				App->CL_Scene->Game_Restart();
 
-				Show_Front_Dlg_Flag = 0;
+				flag_Show_Front_Dlg_Flag = 0;
 			}
 		}
 
@@ -149,8 +149,8 @@ void Bass_Front_Dialog::Render_Front_Dlg(void)
 			App->CL_Keyboard->flag_Block_Keyboard = 0;
 			App->flag_Block_Mouse_Buttons = 0;
 			App->CL_Ogre->ExitFullScreen();
-			Game_Running_Flag = 0;
-			Show_Front_Dlg_Flag = 0;
+			flag_Game_Running_Flag = 0;
+			flag_Show_Front_Dlg_Flag = 0;
 
 		}
 

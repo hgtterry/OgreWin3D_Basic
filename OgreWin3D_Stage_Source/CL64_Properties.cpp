@@ -546,7 +546,7 @@ bool CL64_Properties::Edit_Player(LPARAM lParam)
 
 			App->CL_Scene->B_Player[0]->StartPos.x = App->CL_ImGui_Dialogs->m_Dialog_Float;
 
-			App->CL_Scene->B_Player[0]->Altered = 1;
+			App->CL_Scene->B_Player[0]->flag_Altered = 1;
 			App->CL_Scene->flag_Scene_Modified = 1;
 			App->CL_FileView->Mark_Altered(App->CL_Scene->B_Player[0]->FileViewItem);
 		}
@@ -586,7 +586,7 @@ bool CL64_Properties::Edit_Player(LPARAM lParam)
 
 			App->CL_Scene->B_Player[0]->StartPos.y = App->CL_ImGui_Dialogs->m_Dialog_Float;
 
-			App->CL_Scene->B_Player[0]->Altered = 1;
+			App->CL_Scene->B_Player[0]->flag_Altered = 1;
 			App->CL_Scene->flag_Scene_Modified = 1;
 			App->CL_FileView->Mark_Altered(App->CL_Scene->B_Player[0]->FileViewItem);
 		}
@@ -625,7 +625,7 @@ bool CL64_Properties::Edit_Player(LPARAM lParam)
 
 			App->CL_Scene->B_Player[0]->StartPos.z = App->CL_ImGui_Dialogs->m_Dialog_Float;
 
-			App->CL_Scene->B_Player[0]->Altered = 1;
+			App->CL_Scene->B_Player[0]->flag_Altered = 1;
 			App->CL_Scene->flag_Scene_Modified = 1;
 			App->CL_FileView->Mark_Altered(App->CL_Scene->B_Player[0]->FileViewItem);
 		}
@@ -770,7 +770,7 @@ bool CL64_Properties::Edit_Player_Physics(LPARAM lParam)
 
 			App->CL_Scene->B_Player[0]->Capsule_Radius = App->CL_ImGui_Dialogs->m_Dialog_Float;
 
-			App->CL_Scene->B_Player[0]->Altered = 1;
+			App->CL_Scene->B_Player[0]->flag_Altered = 1;
 			App->CL_Scene->flag_Scene_Modified = 1;
 			App->CL_FileView->Mark_Altered(App->CL_Scene->B_Player[0]->FileViewItem);
 		}
@@ -815,7 +815,7 @@ bool CL64_Properties::Edit_Player_Physics(LPARAM lParam)
 
 			App->CL_Scene->B_Player[0]->Capsule_Height = App->CL_ImGui_Dialogs->m_Dialog_Float;
 
-			App->CL_Scene->B_Player[0]->Altered = 1;
+			App->CL_Scene->B_Player[0]->flag_Altered = 1;
 			App->CL_Scene->flag_Scene_Modified = 1;
 			App->CL_FileView->Mark_Altered(App->CL_Scene->B_Player[0]->FileViewItem);
 		}

@@ -48,16 +48,16 @@ void CL64_Keyboard::Keyboard_Mode_First(float deltaTime)
 			{
 				App->CL_Com_Player->mMoveDirection = (btVector3(0, 0, -1));
 				App->CL_Com_Player->Check_Collisions();
-				App->CL_Scene->B_Player[0]->IsMOving = 1;
+				App->CL_Scene->B_Player[0]->flag_IsMOving = 1;
 			}
 
 		}
 		else
 		{
-			if (App->CL_Scene->flag_Player_Added == 1 && App->CL_Scene->B_Player[0]->IsMOving == 1)
+			if (App->CL_Scene->flag_Player_Added == 1 && App->CL_Scene->B_Player[0]->flag_IsMOving == 1)
 			{
 				App->CL_Com_Player->mMoveDirection = (btVector3(0, 0, 0));
-				App->CL_Scene->B_Player[0]->IsMOving = 0;
+				App->CL_Scene->B_Player[0]->flag_IsMOving = 0;
 			}
 		}
 
@@ -69,16 +69,16 @@ void CL64_Keyboard::Keyboard_Mode_First(float deltaTime)
 			{
 				App->CL_Com_Player->mMoveDirection = (btVector3(0, 0, 1));
 				App->CL_Com_Player->Check_Collisions();
-				App->CL_Scene->B_Player[0]->IsMOving_Back = 1;
+				App->CL_Scene->B_Player[0]->flag_IsMOving_Back = 1;
 			}
 
 		}
 		else
 		{
-			if (App->CL_Scene->flag_Player_Added == 1 && App->CL_Scene->B_Player[0]->IsMOving_Back == 1)
+			if (App->CL_Scene->flag_Player_Added == 1 && App->CL_Scene->B_Player[0]->flag_IsMOving_Back == 1)
 			{
 				App->CL_Com_Player->mMoveDirection = (btVector3(0, 0, 0));
-				App->CL_Scene->B_Player[0]->IsMOving_Back = 0;
+				App->CL_Scene->B_Player[0]->flag_IsMOving_Back = 0;
 			}
 		}
 
@@ -89,15 +89,15 @@ void CL64_Keyboard::Keyboard_Mode_First(float deltaTime)
 			if (App->CL_Scene->flag_Player_Added == 1)
 			{
 				App->CL_Com_Player->mMoveDirection = (btVector3(1, 0, 0));// walkDirection
-				App->CL_Scene->B_Player[0]->IsMOving_Right = 1;
+				App->CL_Scene->B_Player[0]->flag_IsMOving_Right = 1;
 			}
 		}
 		else
 		{
-			if (App->CL_Scene->flag_Player_Added == 1 && App->CL_Scene->B_Player[0]->IsMOving_Right == 1)
+			if (App->CL_Scene->flag_Player_Added == 1 && App->CL_Scene->B_Player[0]->flag_IsMOving_Right == 1)
 			{
 				App->CL_Com_Player->mMoveDirection = (btVector3(0, 0, 0));// walkDirection
-				App->CL_Scene->B_Player[0]->IsMOving_Right = 0;
+				App->CL_Scene->B_Player[0]->flag_IsMOving_Right = 0;
 			}
 		}
 
@@ -109,16 +109,16 @@ void CL64_Keyboard::Keyboard_Mode_First(float deltaTime)
 			{
 				App->CL_Com_Player->mMoveDirection = (btVector3(-1, 0, 0));// walkDirection
 				//App->CL_Player->Check_Collisions_New();
-				App->CL_Scene->B_Player[0]->IsMOving_Left = 1;
+				App->CL_Scene->B_Player[0]->flag_IsMOving_Left = 1;
 			}
 
 		}
 		else
 		{
-			if (App->CL_Scene->flag_Player_Added == 1 && App->CL_Scene->B_Player[0]->IsMOving_Left == 1)
+			if (App->CL_Scene->flag_Player_Added == 1 && App->CL_Scene->B_Player[0]->flag_IsMOving_Left == 1)
 			{
 				App->CL_Com_Player->mMoveDirection = (btVector3(0, 0, 0));// walkDirection
-				App->CL_Scene->B_Player[0]->IsMOving_Left = 0;
+				App->CL_Scene->B_Player[0]->flag_IsMOving_Left = 0;
 			}
 		}
 
@@ -140,7 +140,7 @@ void CL64_Keyboard::Keyboard_Mode_First(float deltaTime)
 					App->CL_Ogre->Ogre3D_Listener->flag_LeftMouseDown = 0;
 					SetCursor(App->CUR);
 
-					App->CL_Front_Dialog->Show_Front_Dlg_Flag = 1;
+					App->CL_Front_Dialog->flag_Show_Front_Dlg_Flag = 1;
 				}
 				else
 				{
@@ -236,16 +236,16 @@ void CL64_Keyboard::Keyboard_Mode_Free(float deltaTime)
 			{
 				App->CL_Com_Player->mMoveDirection = (btVector3(0, 0, -1));
 				App->CL_Com_Player->Check_Collisions();
-				App->CL_Scene->B_Player[0]->IsMOving = 1;
+				App->CL_Scene->B_Player[0]->flag_IsMOving = 1;
 				App->CL_Com_Player->Update_Player(NULL, deltaTime);
 			}
 		}
 		else
 		{
-			if (App->CL_Scene->flag_Player_Added == 1 && App->CL_Scene->B_Player[0]->IsMOving == 1)
+			if (App->CL_Scene->flag_Player_Added == 1 && App->CL_Scene->B_Player[0]->flag_IsMOving == 1)
 			{
 				App->CL_Com_Player->mMoveDirection = (btVector3(0, 0, 0));
-				App->CL_Scene->B_Player[0]->IsMOving = 0;
+				App->CL_Scene->B_Player[0]->flag_IsMOving = 0;
 				App->CL_Com_Player->Update_Player(NULL, deltaTime);
 			}
 		}
@@ -258,17 +258,17 @@ void CL64_Keyboard::Keyboard_Mode_Free(float deltaTime)
 			{
 				App->CL_Com_Player->mMoveDirection = (btVector3(0, 0, 1));
 				App->CL_Com_Player->Check_Collisions();
-				App->CL_Scene->B_Player[0]->IsMOving_Back = 1;
+				App->CL_Scene->B_Player[0]->flag_IsMOving_Back = 1;
 				App->CL_Com_Player->Update_Player(NULL, deltaTime);
 			}
 
 		}
 		else
 		{
-			if (App->CL_Scene->flag_Player_Added == 1 && App->CL_Scene->B_Player[0]->IsMOving_Back == 1)
+			if (App->CL_Scene->flag_Player_Added == 1 && App->CL_Scene->B_Player[0]->flag_IsMOving_Back == 1)
 			{
 				App->CL_Com_Player->mMoveDirection = (btVector3(0, 0, 0));
-				App->CL_Scene->B_Player[0]->IsMOving_Back = 0;
+				App->CL_Scene->B_Player[0]->flag_IsMOving_Back = 0;
 				App->CL_Com_Player->Update_Player(NULL, deltaTime);
 			}
 		}

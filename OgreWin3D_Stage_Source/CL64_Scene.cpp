@@ -302,14 +302,14 @@ bool CL64_Scene::Game_Mode(void)
 			App->CL_Ogre->Ogre3D_Listener->flag_Block_Mouse = 1;
 			App->CL_Keyboard->flag_Block_Keyboard = 1;
 			App->flag_Block_Mouse_Buttons = 1;
-			App->CL_Front_Dialog->Show_Front_Dlg_Flag = 1;
+			App->CL_Front_Dialog->flag_Show_Front_Dlg_Flag = 1;
 		}
 		else
 		{
 			SetCapture(App->ViewGLhWnd);
 			App->CL_Ogre->Ogre3D_Listener->flag_LeftMouseDown = 1;
 			App->CUR = SetCursor(NULL);
-			App->CL_Front_Dialog->Game_Running_Flag = 1;
+			App->CL_Front_Dialog->flag_Game_Running_Flag = 1;
 		}
 	}
 
@@ -369,7 +369,7 @@ bool CL64_Scene::Game_Mode(void)
 // *************************************************************************
 bool CL64_Scene::Editor_Mode(void)
 {
-	App->CL_Front_Dialog->Show_Front_Dlg_Flag = 0; // temp
+	App->CL_Front_Dialog->flag_Show_Front_Dlg_Flag = 0; // temp
 
 	flag_GameMode_Running = 0;
 	flag_FullScreen_Mode = 0;

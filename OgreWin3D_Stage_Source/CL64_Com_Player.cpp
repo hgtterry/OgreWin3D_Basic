@@ -395,7 +395,7 @@ void CL64_Com_Player::Rename_Player(int Index)
 	// Needs Duplicate Name test 
 	strcpy(App->CL_Scene->B_Player[0]->Player_Name, App->CL_Dialogs->Chr_Text);
 
-	App->CL_Scene->B_Player[0]->Altered = 1;
+	App->CL_Scene->B_Player[0]->flag_Altered = 1;
 	App->CL_Scene->flag_Scene_Modified = 1;
 	App->CL_FileView->Mark_Altered(App->CL_Scene->B_Player[0]->FileViewItem);
 

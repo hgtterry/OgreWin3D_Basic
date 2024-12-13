@@ -251,9 +251,9 @@ void CL64_Com_Objects::Clear_Modified_Objects()
 		Count = 0;
 		while (Count < App->CL_Scene->Player_Count)
 		{
-			if (App->CL_Scene->B_Player[Count]->Altered == 1)
+			if (App->CL_Scene->B_Player[Count]->flag_Altered == 1)
 			{
-				App->CL_Scene->B_Player[Count]->Altered = 0;
+				App->CL_Scene->B_Player[Count]->flag_Altered = 0;
 				App->CL_FileView->Mark_Clear(App->CL_Scene->B_Player[Count]->FileViewItem);
 			}
 

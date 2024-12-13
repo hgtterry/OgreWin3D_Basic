@@ -108,7 +108,7 @@ bool CL64_Ogre3D_Listener::frameRenderingQueued(const FrameEvent& evt)
 	Ogre::ImGuiOverlay::NewFrame();
 	App->CL_ImGui->ImGui_Render_Loop();
 
-	if (App->CL_Front_Dialog->Show_Front_Dlg_Flag == 1)
+	if (App->CL_Front_Dialog->flag_Show_Front_Dlg_Flag == 1)
 	{
 		App->CL_Front_Dialog->Render_Front_Dlg();
 	}

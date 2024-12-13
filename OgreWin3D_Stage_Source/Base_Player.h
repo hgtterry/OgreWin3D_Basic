@@ -44,7 +44,6 @@ public:
 	Ogre::Vector3 StartPos;
 	btQuaternion Physics_Rotation;
 
-	bool mJump;
 	btVector3 mJumpDir;
 	float mJumpSpeed;
 
@@ -60,13 +59,15 @@ public:
 	float Limit_Look_Up;
 	float Limit_Look_Down;
 	float PlayerHeight;
-	bool Altered;
-	bool mOnGround;
-	bool IsMOving;
-	bool IsMOving_Back;
-	bool IsMOving_Right;
-	bool IsMOving_Left;
-	bool Physics_Debug_On;
+
+	bool flag_mJump;
+	bool flag_Altered;
+	bool flag_mOnGround;
+	bool flag_IsMOving;
+	bool flag_IsMOving_Back;
+	bool flag_IsMOving_Right;
+	bool flag_IsMOving_Left;
+	bool flag_Physics_Debug_On;
 
 	HTREEITEM FileViewItem;
 

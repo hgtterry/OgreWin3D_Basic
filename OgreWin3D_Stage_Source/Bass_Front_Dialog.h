@@ -30,13 +30,12 @@ public:
 
 	void Render_Front_Dlg(void);
 
-	bool Use_Front_Dlg_Flag;
-	bool Show_Front_Dlg_Flag;
+	bool flag_Use_Front_Dlg_Flag;
+	bool flag_Show_Front_Dlg_Flag;
+	bool flag_Game_Running_Flag;
 
 	float PosX; 
 	float PosY;
-
-	bool Game_Running_Flag;
 
 	Ogre::Vector4 Text_Colour;
 	Ogre::Vector4 BackGround_Colour;

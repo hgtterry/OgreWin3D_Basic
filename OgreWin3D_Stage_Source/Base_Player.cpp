@@ -46,7 +46,7 @@ Base_Player::Base_Player()
 	Limit_Look_Up = -45;
 	Limit_Look_Down = 45;
 
-	Altered = 1;
+	flag_Altered = 1;
 
 	Capsule_Mass = 1.0;
 	Capsule_Radius = 4.4;
@@ -58,19 +58,19 @@ Base_Player::Base_Player()
 
 	Compenstate = 100;
 
-	mOnGround = 1;
-	IsMOving = 0;
-	IsMOving_Back = 0;
-	IsMOving_Right = 0;
-	IsMOving_Left = 0;
+	flag_mOnGround = 1;
+	flag_IsMOving = 0;
+	flag_IsMOving_Back = 0;
+	flag_IsMOving_Right = 0;
+	flag_IsMOving_Left = 0;
 
 	Selected_Entity_Index = 0;
 	Selected_Object_Name[0] = 0;
 
-	mJump = 0;
+	flag_mJump = 0;
 	mJumpSpeed = 4.5;
 
-	Physics_Debug_On = 1;
+	flag_Physics_Debug_On = 1;
 
 	FileViewItem = nullptr;
 
