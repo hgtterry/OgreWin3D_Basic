@@ -152,6 +152,10 @@ void CL64_Gui_Environment::Start_Environment_Editor(int Index,bool IsTeleport)
 	Fog_Colour_Int_Green = Fog_Colour.y * 255;
 	Fog_Colour_Int_Blue = Fog_Colour.z * 255;
 
+	flag_ClickOnFogVisible = App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->Fog_On;
+	flag_ClickOnSkyEnabled = App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->flag_Enabled;
+	flag_ClickOnPlay = App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->flag_Play;
+	flag_ClickOnLoop = App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->flag_Loop;
 
 	/*App->Disable_Panels(true);
 	App->Show_Panels(false);*/
@@ -285,68 +289,45 @@ void CL64_Gui_Environment::Environ_PropertyEditor()
 		}
 
 		// ----------------- Play
-		ImGui::Selectable("Play:- ", &flag_ClickOnPlay);
+		ImGui::Text("Play:");
 		ImGui::SameLine();
-		ImGui::Text("%i", App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->flag_Play);
-		if (flag_ClickOnPlay)
+		int test = ImGui::Checkbox("##Play", &flag_ClickOnPlay);
+		if (test == 1)
 		{
-			strcpy(App->CL_Dialogs->btext, "Set Play Sound Track");
-
-			App->CL_Dialogs->flag_TrueFlase = App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->flag_Play;
-
-			App->CL_Dialogs->Dialog_TrueFlase(App->MainHwnd);
-
-			if (App->CL_Dialogs->flag_Canceled == 0)
+			if (flag_ClickOnPlay == 1)
 			{
-				if (App->CL_Dialogs->flag_TrueFlase == 1)
-				{
-					App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->flag_Play = 1;
-					App->CL_Com_Environments->Set_Environment_By_Index(1, Eviron_Index);
-				}
-				else
-				{
-					App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->flag_Play = 0;
-					App->CL_Com_Environments->Set_Environment_By_Index(0, Eviron_Index);
-				}
-
-				App->CL_Com_Environments->Mark_As_Altered_Environ(Eviron_Index);
+				App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->flag_Play = 1;
+				App->CL_Com_Environments->Set_Environment_By_Index(1, Eviron_Index);
+			}
+			else
+			{
+				App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->flag_Play = 0;
+				App->CL_Com_Environments->Set_Environment_By_Index(0, Eviron_Index);
 			}
 
 			App->CL_Com_Environments->Mark_As_Altered_Environ(Eviron_Index);
-			flag_ClickOnPlay = 0;
 		}
 
 		// ----------------- Loop
-		ImGui::Selectable("Loop:- ", &flag_ClickOnLoop);
+		ImGui::Text("Loop:");
 		ImGui::SameLine();
-		ImGui::Text("%i", App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->flag_Loop);
-		if (flag_ClickOnLoop)
+		test = ImGui::Checkbox("##Loop", &flag_ClickOnLoop);
+		if (test == 1)
 		{
-			strcpy(App->CL_Dialogs->btext, "Set Play Sound Loop");
-
-			App->CL_Dialogs->flag_TrueFlase = App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->flag_Loop;
-
-			App->CL_Dialogs->Dialog_TrueFlase(App->MainHwnd);
-
-			if (App->CL_Dialogs->flag_Canceled == 0)
+			if (flag_ClickOnLoop == 1)
 			{
-				if (App->CL_Dialogs->flag_TrueFlase == 1)
-				{
-					App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->flag_Loop = 1;
-					App->CL_Com_Environments->Set_Environment_By_Index(0, Eviron_Index);
-					App->CL_Com_Environments->Set_Environment_By_Index(1, Eviron_Index);
-				}
-				else
-				{
-					App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->flag_Loop = 0;
-					App->CL_Com_Environments->Set_Environment_By_Index(0, Eviron_Index);
-					App->CL_Com_Environments->Set_Environment_By_Index(1, Eviron_Index);
-				}
-
-				App->CL_Com_Environments->Mark_As_Altered_Environ(Eviron_Index);
+				App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->flag_Loop = 1;
+				App->CL_Com_Environments->Set_Environment_By_Index(0, Eviron_Index);
+				App->CL_Com_Environments->Set_Environment_By_Index(1, Eviron_Index);
+			}
+			else
+			{
+				App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->flag_Loop = 0;
+				App->CL_Com_Environments->Set_Environment_By_Index(0, Eviron_Index);
+				App->CL_Com_Environments->Set_Environment_By_Index(1, Eviron_Index);
 			}
 
-			flag_ClickOnLoop = 0;
+			App->CL_Com_Environments->Mark_As_Altered_Environ(Eviron_Index);
 		}
 	}
 
@@ -357,38 +338,25 @@ void CL64_Gui_Environment::Environ_PropertyEditor()
 		ImGui::AlignTextToFramePadding();
 
 		// ----------------- Visible
-		ImGui::Selectable("Visible:- ", &flag_ClickOnFogVisible);
+		ImGui::Text("Visible");
 		ImGui::SameLine();
-		ImGui::Text("%i", App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->Fog_On);
-		if (flag_ClickOnFogVisible)
+		int test = ImGui::Checkbox("##Visible", &flag_ClickOnFogVisible);
+		if (test == 1)
 		{
-			strcpy(App->CL_Dialogs->btext, "Set Fog Visiblity");
-
-			App->CL_Dialogs->flag_TrueFlase = App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->Fog_On;
-
-			strcpy(App->CL_Dialogs->btext, "Set Fog On/Off");
-			App->CL_Dialogs->Dialog_TrueFlase(App->MainHwnd);
-
-			if (App->CL_Dialogs->flag_Canceled == 0)
+			if (flag_ClickOnFogVisible == 1)
 			{
-				if (App->CL_Dialogs->flag_TrueFlase == 1)
-				{
-					App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->Fog_On = 1;
-					EnableFog(true);
-				}
-				else
-				{
-					App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->Fog_On = 0;
-					EnableFog(false);
-				}
-
-				App->CL_Com_Environments->Mark_As_Altered_Environ(Eviron_Index);
+				App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->Fog_On = 1;
+				EnableFog(true);
+			}
+			else
+			{
+				App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->Fog_On = 0;
+				EnableFog(false);
 			}
 
-	
-			flag_ClickOnFogVisible = 0;
+			App->CL_Com_Environments->Mark_As_Altered_Environ(Eviron_Index);
 		}
-
+			
 		// ----------------- Mode
 		ImGui::Selectable("Mode:- ", &flag_ClickOnFogMode);
 		ImGui::SameLine();
@@ -457,35 +425,23 @@ void CL64_Gui_Environment::Environ_PropertyEditor()
 		ImGui::AlignTextToFramePadding();
 
 		// ----------------- Visible
-		ImGui::Selectable("Enabled:- ", &flag_ClickOnSkyEnabled);
+		ImGui::Text("Enable");
 		ImGui::SameLine();
-		ImGui::Text("%i", App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->flag_Enabled);
-		if (flag_ClickOnSkyEnabled)
+		int test = ImGui::Checkbox("##Enable", &flag_ClickOnSkyEnabled);
+		if (test == 1)
 		{
-			strcpy(App->CL_Dialogs->btext, "Set Sky Visiblity");
-
-			App->CL_Dialogs->flag_TrueFlase = App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->flag_Enabled;
-
-			strcpy(App->CL_Dialogs->btext, "Set Sky On/Off");
-			App->CL_Dialogs->Dialog_TrueFlase(App->MainHwnd);
-
-			if (App->CL_Dialogs->flag_Canceled == 0)
+			if (flag_ClickOnSkyEnabled == 1)
 			{
-				if (App->CL_Dialogs->flag_TrueFlase == 1)
-				{
-					App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->flag_Enabled = 1;
-					SetSky(true);
-				}
-				else
-				{
-					App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->flag_Enabled = 0;
-					SetSky(false);
-				}
-
-				App->CL_Com_Environments->Mark_As_Altered_Environ(Eviron_Index);
+				App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->flag_Enabled = 1;
+				SetSky(true);
+			}
+			else
+			{
+				App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->flag_Enabled = 0;
+				SetSky(false);
 			}
 
-			flag_ClickOnSkyEnabled = 0;
+			App->CL_Com_Environments->Mark_As_Altered_Environ(Eviron_Index);
 		}
 
 		// ----------------- Tiling

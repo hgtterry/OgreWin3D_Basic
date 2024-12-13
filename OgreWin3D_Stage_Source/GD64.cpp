@@ -189,7 +189,22 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 		switch (wmId)
 		{
+
 		// Debug -------------------------------------------------------
+		case ID_DEBUG_RESETFORRELEASE:
+		{
+			App->CL_Preferences->flag_Start_FullScreen = 1;
+			App->CL_Preferences->flag_Use_Default_Directories = 1;
+			App->CL_Preferences->flag_Load_Last_Project = 0;
+			App->CL_Preferences->flag_Load_Test_Project = 1;
+			strcpy(App->CL_Preferences->Last_Loaded_File, "No File");
+
+			App->CL_Preferences->Write_Preferences();
+			App->CL_Preferences->Read_Preferences();
+
+			return TRUE;
+		}
+
 		case ID_DEBUG_GENERAL:
 		{
 			Ogre::String LocationPath = App->CL_Resources->Get_Project_Group_Location(App->CL_Resources->Project_Resource_Group);
@@ -364,8 +379,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 			return 1;
 		}
-		// Windows -------------------------------------------------------
 
+		// Windows -------------------------------------------------------
 		case ID_WINDOWS_MODELDATA:
 		{
 			return TRUE;

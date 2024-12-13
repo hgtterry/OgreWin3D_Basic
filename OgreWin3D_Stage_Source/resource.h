@@ -326,7 +326,6 @@
 #define IDC_BTOBJECT                    1134
 #define IDC_BT_DP_OVERIDECOUNTER        1135
 #define IDC_STOBJECTNAME                1136
-#define IDC_CHECK2                      1137
 #define IDC_CK_SU_TEST_PROJECT          1137
 #define ID_VIEW_RESET                   32771
 #define ID_VIEW_MAX3DVIEW               32772
@@ -386,6 +385,7 @@
 #define ID_ADD_AREA                     32826
 #define ID_DEBUG_IMGUI32827             32827
 #define ID_VIEW_PLAYERDATA              32828
+#define ID_DEBUG_RESETFORRELEASE        32829
 #define IDC_STATIC                      -1
 
 // Next default values for new objects
@@ -394,7 +394,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        207
-#define _APS_NEXT_COMMAND_VALUE         32829
+#define _APS_NEXT_COMMAND_VALUE         32830
 #define _APS_NEXT_CONTROL_VALUE         1138
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
