@@ -1082,7 +1082,7 @@ void StartOgre()
 	
     KillTimer(App->MainHwnd, 1);
 
-	if (App->CL_Preferences->flag_Load_Last_Project == 1)
+	if (App->CL_Preferences->flag_Load_Test_Project == 1)
 	{
 		App->CL_Project->Load_Last_Project(); // Look At Terry if no level loaded
 	}

@@ -326,6 +326,8 @@
 #define IDC_BTOBJECT                    1134
 #define IDC_BT_DP_OVERIDECOUNTER        1135
 #define IDC_STOBJECTNAME                1136
+#define IDC_CHECK2                      1137
+#define IDC_CK_SU_TEST_PROJECT          1137
 #define ID_VIEW_RESET                   32771
 #define ID_VIEW_MAX3DVIEW               32772
 #define ID_DEBUG_TESTPREFERANCE         32773
@@ -393,7 +395,7 @@
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        207
 #define _APS_NEXT_COMMAND_VALUE         32829
-#define _APS_NEXT_CONTROL_VALUE         1137
+#define _APS_NEXT_CONTROL_VALUE         1138
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif
