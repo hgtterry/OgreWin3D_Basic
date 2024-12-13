@@ -36,11 +36,11 @@ CL64_Dialogs::CL64_Dialogs(void)
 	MessageString2[0] = 0;
 	MessageString3[0] = 0;
 
-	Canceled = 0;
-	TrueFlase = 0;
+	flag_Canceled = 0;
+	flag_TrueFlase = 0;
 
-	Flag_Convert_to_Ogre = 0;
-	Flag_Game_Start_Option = 0;
+	flag_Convert_to_Ogre = 0;
+	flag_Game_Start_Option = 0;
 
 	flag_Mouse_Normal = 1;
 	flag_Mouse_Slow = 0;
@@ -405,7 +405,7 @@ void CL64_Dialogs::Fill_Face_Combo(HWND hDlg)
 // *************************************************************************
 void CL64_Dialogs::Start_Import_Options_Dlg()
 {
-	Flag_Convert_to_Ogre = 0;
+	flag_Convert_to_Ogre = 0;
 
 	DialogBox(App->hInst, (LPCTSTR)IDD_IMPORT_OPTIONS, App->Fdlg, (DLGPROC)Proc_Import_Options_Dlg);
 }
@@ -485,7 +485,7 @@ LRESULT CALLBACK CL64_Dialogs::Proc_Import_Options_Dlg(HWND hDlg, UINT message, 
 			int test = SendMessage(temp, BM_GETCHECK, 0, 0);
 			if (test == BST_CHECKED)
 			{
-				App->CL_Dialogs->Flag_Convert_to_Ogre = 1;
+				App->CL_Dialogs->flag_Convert_to_Ogre = 1;
 			}
 			
 			temp = GetDlgItem(hDlg, IDC_CK_EXPORT_TO_OGRE);
@@ -516,7 +516,7 @@ LRESULT CALLBACK CL64_Dialogs::Proc_Import_Options_Dlg(HWND hDlg, UINT message, 
 // *************************************************************************
 void CL64_Dialogs::Show_YesNo_Dlg(char* Text, char* Text2, char* Text3)
 {
-	Canceled = 0;
+	flag_Canceled = 0;
 
 	MessageString[0] = 0;
 	MessageString2[0] = 0;
@@ -612,14 +612,14 @@ LRESULT CALLBACK CL64_Dialogs::Proc_YesNo(HWND hDlg, UINT message, WPARAM wParam
 
 		if (LOWORD(wParam) == IDOK)
 		{
-			App->CL_Dialogs->Canceled = 0;
+			App->CL_Dialogs->flag_Canceled = 0;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == IDCANCEL)
 		{
-			App->CL_Dialogs->Canceled = 1;
+			App->CL_Dialogs->flag_Canceled = 1;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
@@ -800,7 +800,7 @@ void CL64_Dialogs::UnCheck_All_SpeedMouseOption()
 // *************************************************************************
 bool CL64_Dialogs::Dialog_Text(int Usage)
 {
-	Canceled = 0;
+	flag_Canceled = 0;
 	//What_Check_Name = What_Check;
 	CheckNames = Usage;
 
@@ -887,14 +887,14 @@ LRESULT CALLBACK CL64_Dialogs::Proc_Dialog_Text(HWND hDlg, UINT message, WPARAM 
 
 			strcpy(App->CL_Dialogs->Chr_Text, buff);
 
-			App->CL_Dialogs->Canceled = 0;
+			App->CL_Dialogs->flag_Canceled = 0;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == IDCANCEL)
 		{
-			App->CL_Dialogs->Canceled = 1;
+			App->CL_Dialogs->flag_Canceled = 1;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
@@ -1285,7 +1285,7 @@ LRESULT CALLBACK CL64_Dialogs::Proc_Dialog_TrueFlase(HWND hDlg, UINT message, WP
 		SetDlgItemText(hDlg, IDC_TITLENAME, (LPCTSTR)App->CL_Dialogs->btext);
 
 
-		if (App->CL_Dialogs->TrueFlase == 1)
+		if (App->CL_Dialogs->flag_TrueFlase == 1)
 		{
 			HWND temp = GetDlgItem(hDlg, IDC_CHECKYES);
 			SendMessage(temp, BM_SETCHECK, 1, 0);
@@ -1360,7 +1360,7 @@ LRESULT CALLBACK CL64_Dialogs::Proc_Dialog_TrueFlase(HWND hDlg, UINT message, WP
 			SendMessage(temp, BM_SETCHECK, 1, 0);
 			temp = GetDlgItem(hDlg, IDC_CHECKNO);
 			SendMessage(temp, BM_SETCHECK, 0, 0);
-			App->CL_Dialogs->TrueFlase = 1;
+			App->CL_Dialogs->flag_TrueFlase = 1;
 		}
 
 		if (LOWORD(wParam) == IDC_CHECKNO)
@@ -1369,19 +1369,19 @@ LRESULT CALLBACK CL64_Dialogs::Proc_Dialog_TrueFlase(HWND hDlg, UINT message, WP
 			SendMessage(temp, BM_SETCHECK, 1, 0);
 			temp = GetDlgItem(hDlg, IDC_CHECKYES);
 			SendMessage(temp, BM_SETCHECK, 0, 0);
-			App->CL_Dialogs->TrueFlase = 0;
+			App->CL_Dialogs->flag_TrueFlase = 0;
 		}
 
 		if (LOWORD(wParam) == IDOK)
 		{
-			App->CL_Dialogs->Canceled = 0;
+			App->CL_Dialogs->flag_Canceled = 0;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == IDCANCEL)
 		{
-			App->CL_Dialogs->Canceled = 1;
+			App->CL_Dialogs->flag_Canceled = 1;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
@@ -1397,7 +1397,7 @@ LRESULT CALLBACK CL64_Dialogs::Proc_Dialog_TrueFlase(HWND hDlg, UINT message, WP
 // *************************************************************************
 void CL64_Dialogs::Dialog_Counter()
 {
-	Canceled = 0;
+	flag_Canceled = 0;
 	DialogBox(App->hInst, (LPCTSTR)IDD_PROPS_COUNTER, App->Fdlg, (DLGPROC)Proc_Dialog_Counter);
 
 }
@@ -1695,14 +1695,14 @@ LRESULT CALLBACK CL64_Dialogs::Proc_Dialog_Counter(HWND hDlg, UINT message, WPAR
 				App->CL_Scene->B_Object[Index]->S_Teleport[0]->Trigger_Value = atoi(buff);
 			}
 
-			App->CL_Dialogs->Canceled = 0;
+			App->CL_Dialogs->flag_Canceled = 0;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == IDCANCEL)
 		{
-			App->CL_Dialogs->Canceled = 1;
+			App->CL_Dialogs->flag_Canceled = 1;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
@@ -1906,7 +1906,7 @@ void CL64_Dialogs::Set_Counter_Dialog(HWND hDlg, bool Enable)
 // *************************************************************************
 void CL64_Dialogs::Dialog_Text_Props()
 {
-	Canceled = 0;
+	flag_Canceled = 0;
 
 	DialogBox(App->hInst, (LPCTSTR)IDD_PROP_TEXT, App->Fdlg, (DLGPROC)Proc_Dialog_Text_Props);
 
@@ -1982,14 +1982,14 @@ LRESULT CALLBACK CL64_Dialogs::Proc_Dialog_Text_Props(HWND hDlg, UINT message, W
 
 			strcpy(App->CL_Dialogs->Chr_Text, buff);
 
-			App->CL_Dialogs->Canceled = 0;
+			App->CL_Dialogs->flag_Canceled = 0;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == IDCANCEL)
 		{
-			App->CL_Dialogs->Canceled = 1;
+			App->CL_Dialogs->flag_Canceled = 1;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
@@ -2088,7 +2088,7 @@ LRESULT CALLBACK CL64_Dialogs::Proc_Dialog_Int(HWND hDlg, UINT message, WPARAM w
 			strcpy(App->CL_Dialogs->Chr_Int, buff);
 			App->CL_Dialogs->mInt = atoi(buff);
 
-			App->CL_Dialogs->Canceled = 0;
+			App->CL_Dialogs->flag_Canceled = 0;
 			App->CL_Dialogs->flag_Dlg_Int_Active = 0;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
@@ -2096,7 +2096,7 @@ LRESULT CALLBACK CL64_Dialogs::Proc_Dialog_Int(HWND hDlg, UINT message, WPARAM w
 
 		if (LOWORD(wParam) == IDCANCEL)
 		{
-			App->CL_Dialogs->Canceled = 1;
+			App->CL_Dialogs->flag_Canceled = 1;
 			App->CL_Dialogs->flag_Dlg_Int_Active = 0;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
@@ -2113,7 +2113,7 @@ LRESULT CALLBACK CL64_Dialogs::Proc_Dialog_Int(HWND hDlg, UINT message, WPARAM w
 // *************************************************************************
 void CL64_Dialogs::GameMode_StartPosition_Dlg()
 {
-	Flag_Game_Start_Option = 0;
+	flag_Game_Start_Option = 0;
 	DialogBox(App->hInst, (LPCTSTR)IDD_GMSTART, App->Fdlg, (DLGPROC)Proc_GameMode_StartPosition_Dlg);
 }
 
@@ -2130,7 +2130,7 @@ LRESULT CALLBACK CL64_Dialogs::Proc_GameMode_StartPosition_Dlg(HWND hDlg, UINT m
 		SendDlgItemMessage(hDlg, IDC_STARTLEVEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_QUITGM, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
-		App->CL_Dialogs->Canceled = 0;
+		App->CL_Dialogs->flag_Canceled = 0;
 		//App->SBC_Dialogs->DoFPS = 0;
 
 		App->CL_Build_Game->flag_Saved_Show_FPS = App->CL_ImGui->flag_Show_FPS;
@@ -2179,8 +2179,8 @@ LRESULT CALLBACK CL64_Dialogs::Proc_GameMode_StartPosition_Dlg(HWND hDlg, UINT m
 
 		if (LOWORD(wParam) == IDC_STARTCUR)
 		{
-			App->CL_Dialogs->Flag_Game_Start_Option = Enums::Game_Start_Current;
-			App->CL_Dialogs->Canceled = 0;
+			App->CL_Dialogs->flag_Game_Start_Option = Enums::Game_Start_Current;
+			App->CL_Dialogs->flag_Canceled = 0;
 			//App->CL_Vm_ImGui->Show_FPS = App->SBC_Dialogs->DoFPS;
 			EndDialog(hDlg, LOWORD(wParam));
 			return 1;
@@ -2193,8 +2193,8 @@ LRESULT CALLBACK CL64_Dialogs::Proc_GameMode_StartPosition_Dlg(HWND hDlg, UINT m
 			App->CL_Physics->Reset_Triggers();
 			App->CL_Ogre->Ogre3D_Listener->flag_Run_Physics = 1;
 
-			App->CL_Dialogs->Flag_Game_Start_Option = Enums::Game_Start_Full;
-			App->CL_Dialogs->Canceled = 0;
+			App->CL_Dialogs->flag_Game_Start_Option = Enums::Game_Start_Full;
+			App->CL_Dialogs->flag_Canceled = 0;
 			//App->CL_Vm_ImGui->Show_FPS = App->SBC_Dialogs->DoFPS;
 			EndDialog(hDlg, LOWORD(wParam));
 		}
@@ -2202,13 +2202,13 @@ LRESULT CALLBACK CL64_Dialogs::Proc_GameMode_StartPosition_Dlg(HWND hDlg, UINT m
 		if (LOWORD(wParam) == IDCANCEL)
 		{
 			EndDialog(hDlg, LOWORD(wParam));
-			App->CL_Dialogs->Canceled = 1;
+			App->CL_Dialogs->flag_Canceled = 1;
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == IDC_QUITGM)
 		{
-			App->CL_Dialogs->Canceled = 1;
+			App->CL_Dialogs->flag_Canceled = 1;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
@@ -2224,7 +2224,7 @@ LRESULT CALLBACK CL64_Dialogs::Proc_GameMode_StartPosition_Dlg(HWND hDlg, UINT m
 // *************************************************************************
 void CL64_Dialogs::Game_Config_Dlg()
 {
-	App->CL_Dialogs->Canceled = 0;
+	App->CL_Dialogs->flag_Canceled = 0;
 	DialogBox(App->hInst, (LPCTSTR)IDD_GAMECONFIG, App->Fdlg, (DLGPROC)Proc_Game_Config);
 
 }
@@ -2323,7 +2323,7 @@ LRESULT CALLBACK CL64_Dialogs::Proc_Game_Config(HWND hDlg, UINT message, WPARAM 
 		if (LOWORD(wParam) == IDCANCEL)
 		{
 			EndDialog(hDlg, LOWORD(wParam));
-			App->CL_Dialogs->Canceled = 1;
+			App->CL_Dialogs->flag_Canceled = 1;
 			return TRUE;
 		}
 
@@ -2351,7 +2351,7 @@ LRESULT CALLBACK CL64_Dialogs::Proc_Game_Config(HWND hDlg, UINT message, WPARAM 
 				App->CL_Build_Game->flag_Use_Front_Dlg = 0;
 			}
 
-			App->CL_Dialogs->Canceled = 0;
+			App->CL_Dialogs->flag_Canceled = 0;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}

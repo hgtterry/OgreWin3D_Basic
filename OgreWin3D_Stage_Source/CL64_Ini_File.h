@@ -43,11 +43,8 @@ public:
 	int GetInt(LPCTSTR lpSection, LPCTSTR lpKey, int nDefault, int nBase) const;
 	DWORD GetString(LPCTSTR lpSection, LPCTSTR lpKey, LPTSTR lpBuffer, DWORD dwBufSize, LPCTSTR lpDefault = NULL) const;
 
-
 	static int __ValidateBase(int nBase);
 	LPTSTR __GetStringDynamic(LPCTSTR lpSection, LPCTSTR lpKey, LPCTSTR lpDefault = NULL) const;
-
-
 
 	LPTSTR m_pszPathName;
 };

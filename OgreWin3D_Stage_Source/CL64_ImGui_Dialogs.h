@@ -61,17 +61,17 @@ public:
 	int item_current_idx;
 
 	// -------------- Float Dialog
-	bool Show_Dialog_Float;
+	bool flag_Show_Dialog_Float;
 	float Float_Step;
-	bool Float_Canceld;
-	bool Float_StartPos;
+	bool flag_Float_Canceld;
+	bool flag_Float_StartPos;
 	float Float_PosX;
 	float Float_PosY;
 	float m_Dialog_Float;
 	float m_Dialog_Float_Copy;
 	char Float_Banner[MAX_PATH];
-	bool Float_Exit;
-	bool Float_Altetered;
+	bool flag_Float_Exit;
+	bool flag_Float_Altetered;
 	int Float_Combo_Step;
 
 	// -------------- General
@@ -108,10 +108,10 @@ public:
 
 	// -------------- Physics Console
 	bool flag_Disable_Physics_Console;
-	bool Show_Physics_Console;
+	bool flag_Show_Physics_Console;
 	float Physics_PosX;
 	float Physics_PosY;
-	bool Physics_Console_StartPos;
+	bool flag_Physics_Console_StartPos;
 
 private:
 

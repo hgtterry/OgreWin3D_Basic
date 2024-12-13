@@ -331,7 +331,7 @@ LRESULT CALLBACK CL64_Build_Game::Proc_Project_Build(HWND hDlg, UINT message, WP
 		{
 			App->CL_File_IO->Pick_Folder();
 
-			if (App->CL_File_IO->Canceled == 1)
+			if (App->CL_File_IO->flag_Canceled == 1)
 			{
 				return TRUE;
 			}
@@ -488,7 +488,7 @@ void CL64_Build_Game::Create_ProjectFolder(void)
 	{
 		App->CL_Dialogs->Show_YesNo_Dlg((LPSTR)"File Exsits", (LPSTR)"Do you want to update File", (LPSTR)"");
 
-		bool Doit = App->CL_Dialogs->Canceled;
+		bool Doit = App->CL_Dialogs->flag_Canceled;
 		if (Doit == 1)
 		{
 			return;

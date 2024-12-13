@@ -160,7 +160,7 @@ bool CL64_Ogre3D_Listener::frameRenderingQueued(const FrameEvent& evt)
 	
 	App->CL_Bullet->dynamicsWorld->debugDrawWorld();
 
-	if (App->CL_Collision->DoMove == 1)
+	if (App->CL_Collision->flag_DoMove == 1)
 	{
 		App->CL_Collision->MoveObject_Listener(evt.timeSinceLastFrame);
 	}

@@ -373,7 +373,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 		case ID_WINDOWS_FILEVIEW:
 		{
-			if (App->CL_FileView->Flag_FileView_Active == 1)
+			if (App->CL_FileView->flag_FileView_Active == 1)
 			{
 				App->CL_FileView->Show_FileView(false);
 			}
@@ -436,16 +436,16 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 		case ID_WINDOWS_PHYSICSCONSOLE:
 		{
-			if (App->CL_ImGui_Dialogs->Show_Physics_Console == 1) // Atention
+			if (App->CL_ImGui_Dialogs->flag_Show_Physics_Console == 1) // Atention
 			{
-				App->CL_ImGui_Dialogs->Physics_Console_StartPos = 0;
-				App->CL_ImGui_Dialogs->Show_Physics_Console = 0;
+				App->CL_ImGui_Dialogs->flag_Physics_Console_StartPos = 0;
+				App->CL_ImGui_Dialogs->flag_Show_Physics_Console = 0;
 				CheckMenuItem(App->mMenu, ID_WINDOWS_PHYSICSCONSOLE, MF_BYCOMMAND | MF_UNCHECKED);
 			}
 			else
 			{
-				App->CL_ImGui_Dialogs->Physics_Console_StartPos = 0;
-				App->CL_ImGui_Dialogs->Show_Physics_Console = 1;
+				App->CL_ImGui_Dialogs->flag_Physics_Console_StartPos = 0;
+				App->CL_ImGui_Dialogs->flag_Show_Physics_Console = 1;
 				CheckMenuItem(App->mMenu, ID_WINDOWS_PHYSICSCONSOLE, MF_BYCOMMAND | MF_CHECKED);
 			}
 			return 1;
@@ -562,7 +562,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		{
 			App->CL_Dialogs->Show_YesNo_Dlg((LPSTR) "Clear Scene/Model", (LPSTR)"All Data will be lost", (LPSTR) "Are you sure");
 
-			if (App->CL_Dialogs->Canceled == 0)
+			if (App->CL_Dialogs->flag_Canceled == 0)
 			{
 				App->CL_Scene->Clear_Level();
 			}
@@ -637,7 +637,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		{
 			App->CL_Dialogs->Show_YesNo_Dlg((LPSTR)"Add Area", (LPSTR)"Do you want to add a new Area", (LPSTR)"");
 
-			bool Doit = App->CL_Dialogs->Canceled;
+			bool Doit = App->CL_Dialogs->flag_Canceled;
 			if (Doit == 0)
 			{
 				App->CL_MeshViewer->Mesh_Viewer_Mode = Enums::Mesh_Viewer_Area;
@@ -663,7 +663,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			{
 				App->CL_Dialogs->Show_YesNo_Dlg((LPSTR)"Save Scene", (LPSTR)"Scene has been Modified", (LPSTR)"Do you wish to save changes");
 
-				bool Doit = App->CL_Dialogs->Canceled;
+				bool Doit = App->CL_Dialogs->flag_Canceled;
 				if (Doit == 0)
 				{
 					App->CL_Project->Start_Save_Project_Dialog();
@@ -673,7 +673,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			{
 				App->CL_Dialogs->Show_YesNo_Dlg((LPSTR)"Close OgreWin3D", (LPSTR)"Are you sure", (LPSTR)"");
 
-				if (App->CL_Dialogs->Canceled == 1)
+				if (App->CL_Dialogs->flag_Canceled == 1)
 				{
 					return 1;
 				}
@@ -736,7 +736,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		{
 			App->CL_Dialogs->Show_YesNo_Dlg((LPSTR)"Save Scene", (LPSTR)"Scene has been Modified", (LPSTR)"Do you wish to save changes");
 
-			bool Doit = App->CL_Dialogs->Canceled;
+			bool Doit = App->CL_Dialogs->flag_Canceled;
 			if (Doit == 0)
 			{
 				App->CL_Project->Start_Save_Project_Dialog();
@@ -746,7 +746,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		{
 			App->CL_Dialogs->Show_YesNo_Dlg((LPSTR)"Close OgreWin3D", (LPSTR)"Are you sure", (LPSTR)"");
 
-			if (App->CL_Dialogs->Canceled == 1)
+			if (App->CL_Dialogs->flag_Canceled == 1)
 			{
 				return 1;
 			}
@@ -1076,7 +1076,7 @@ void StartOgre()
 
     App->flag_OgreStarted = 1;
 
-	App->CL_ImGui_Dialogs->Show_Physics_Console = 1;
+	App->CL_ImGui_Dialogs->flag_Show_Physics_Console = 1;
 	App->CL_Ogre->RenderFrame(5);
 	App->CL_Panels->MovePhysicsView();
 	

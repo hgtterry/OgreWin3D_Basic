@@ -44,18 +44,18 @@ CL64_ImGui_Dialogs::CL64_ImGui_Dialogs(void)
 
 
 	// -------------- Float Dialog
-	Show_Dialog_Float = 0;
-	Float_StartPos = 0;
+	flag_Show_Dialog_Float = 0;
+	flag_Float_StartPos = 0;
 	Float_PosX = 0;
 	Float_PosY = 0;
 	Float_Step = 0.05f;
-	Float_Canceld = 0;
-	Float_Exit = 0;
+	flag_Float_Canceld = 0;
+	flag_Float_Exit = 0;
 	strcpy(Float_Banner, "Banner");
 	m_Dialog_Float_Copy = 0;
 	m_Dialog_Float = 10.222;
 	Float_Combo_Step = 0;
-	Float_Altetered = 0;
+	flag_Float_Altetered = 0;
 
 	// Mesage Editor
 	flag_Centre_X_Selected = 0;
@@ -82,10 +82,10 @@ CL64_ImGui_Dialogs::CL64_ImGui_Dialogs(void)
 
 	// -------------- Physics Console
 	flag_Disable_Physics_Console = 0;
-	Show_Physics_Console = 0;
+	flag_Show_Physics_Console = 0;
 	Physics_PosX = 500;
 	Physics_PosY = 500;
-	Physics_Console_StartPos = 0;
+	flag_Physics_Console_StartPos = 0;
 
 }
 
@@ -98,7 +98,7 @@ CL64_ImGui_Dialogs::~CL64_ImGui_Dialogs(void)
 // *************************************************************************
 void CL64_ImGui_Dialogs::Close_All_Dialogs(void)
 {
-	Show_Dialog_Float = 0;
+	flag_Show_Dialog_Float = 0;
 	flag_Show_Dialog_MessageEditor = 0;
 	flag_Show_Move_Ent_Editor = 0;
 	flag_Show_Dialog_list = 0;
@@ -136,8 +136,8 @@ void CL64_ImGui_Dialogs::BackGround_Render_Loop(void)
 // *************************************************************************
 void CL64_ImGui_Dialogs::Start_Dialog_Float(float Step,int Combo_Step, float StartValue, char* Banner)
 {
-	Float_Exit = 0;
-	Float_Canceld = 0;
+	flag_Float_Exit = 0;
+	flag_Float_Canceld = 0;
 	Float_Step = Step;
 	Float_Combo_Step = Combo_Step;
 	m_Dialog_Float = StartValue;
@@ -150,9 +150,9 @@ void CL64_ImGui_Dialogs::Start_Dialog_Float(float Step,int Combo_Step, float Sta
 	Float_PosX = ((float)App->CL_Ogre->Ogre3D_Listener->View_Width / 2) - (200 / 2);
 	Float_PosY = ((float)App->CL_Ogre->Ogre3D_Listener->View_Height / 2) - (130 / 2);
 
-	Float_StartPos = 0;
+	flag_Float_StartPos = 0;
 
-	Show_Dialog_Float = 1;
+	flag_Show_Dialog_Float = 1;
 }
 
 // *************************************************************************
@@ -165,19 +165,19 @@ void CL64_ImGui_Dialogs::Dialog_Float(void)
 
 	ImGui::PushStyleColor(ImGuiCol_WindowBg, IM_COL32(239, 239, 239, 255));
 
-	if (!ImGui::Begin(Float_Banner, &Show_Dialog_Float, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoResize))
+	if (!ImGui::Begin(Float_Banner, &flag_Show_Dialog_Float, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoResize))
 	{
 		ImGui::End();
 	}
 	else
 	{
-		if (Float_StartPos == 0)
+		if (flag_Float_StartPos == 0)
 		{
 			Float_PosX = ((float)App->CL_Ogre->Ogre3D_Listener->View_Width / 2) - (200 / 2);
 			Float_PosY = ((float)App->CL_Ogre->Ogre3D_Listener->View_Height / 2) - (130 / 2);
 			ImGui::SetWindowPos(Float_Banner, ImVec2(Float_PosX, Float_PosY));
 
-			Float_StartPos = 1;
+			flag_Float_StartPos = 1;
 		}
 
 		float spacingX = ImGui::GetStyle().ItemInnerSpacing.x;
@@ -188,7 +188,7 @@ void CL64_ImGui_Dialogs::Dialog_Float(void)
 		int Test = ImGui::InputFloat("", &m_Dialog_Float, Float_Step, 0, "%.3f");
 		if (Test == 1)
 		{
-			Float_Altetered = 1;
+			flag_Float_Altetered = 1;
 		}
 
 		ImGui::Spacing();
@@ -210,10 +210,10 @@ void CL64_ImGui_Dialogs::Dialog_Float(void)
 
 		if (ImGui::Button("Apply"))
 		{
-			Float_Exit = 1;
-			Show_Dialog_Float = 0;
-			Float_StartPos = 0;
-			Float_Canceld = 0;
+			flag_Float_Exit = 1;
+			flag_Show_Dialog_Float = 0;
+			flag_Float_StartPos = 0;
+			flag_Float_Canceld = 0;
 			ImGui::PopStyleColor();
 			ImGui::End();
 		}
@@ -222,17 +222,17 @@ void CL64_ImGui_Dialogs::Dialog_Float(void)
 
 		if (ImGui::Button("Cancel"))
 		{
-			Float_StartPos = 0;
-			Float_Exit = 1;
-			Show_Dialog_Float = 0;
-			Float_Canceld = 1;
+			flag_Float_StartPos = 0;
+			flag_Float_Exit = 1;
+			flag_Show_Dialog_Float = 0;
+			flag_Float_Canceld = 1;
 			ImGui::PopStyleColor();
 			ImGui::End();
 		}
 
-		if (Float_Exit == 0)
+		if (flag_Float_Exit == 0)
 		{
-			Float_Canceld = 1;
+			flag_Float_Canceld = 1;
 			ImGui::PopStyleColor();
 			ImGui::End();
 		}
@@ -245,7 +245,7 @@ void CL64_ImGui_Dialogs::Dialog_Float(void)
 void CL64_ImGui_Dialogs::Start_Dialog_MessageEditor(int Index)
 {
 
-	Float_Exit = 0;
+	flag_Float_Exit = 0;
 	flag_MessageEditor_Canceld = 0;
 
 	Float_Step = 1;
@@ -380,7 +380,7 @@ void CL64_ImGui_Dialogs::Dialog_MessageEditor(void)
 
 		if (ImGui::Button("Close"))
 		{
-			Float_Exit = 1;
+			flag_Float_Exit = 1;
 			flag_Show_Dialog_MessageEditor = 0;
 			flag_MessageEditor_Canceld = 0;
 			ImGui::PopStyleColor();
@@ -397,7 +397,7 @@ void CL64_ImGui_Dialogs::Dialog_MessageEditor(void)
 			ImGui::End();
 		}*/
 
-		if (Float_Exit == 0)
+		if (flag_Float_Exit == 0)
 		{
 			flag_MessageEditor_Canceld = 1;
 			ImGui::PopStyleColor();
@@ -412,7 +412,7 @@ void CL64_ImGui_Dialogs::Dialog_MessageEditor(void)
 void CL64_ImGui_Dialogs::Start_Move_Entity_Editor(int Index)
 {
 	Move_Ent_Index = Index;
-	Float_Exit = 0;
+	flag_Float_Exit = 0;
 	flag_Move_Ent_Canceld = 0;
 
 	Float_Step = 1;
@@ -636,14 +636,14 @@ void CL64_ImGui_Dialogs::Move_Entity_Editor(void)
 
 		if (ImGui::Button("Close"))
 		{
-			Float_Exit = 1;
+			flag_Float_Exit = 1;
 			flag_Show_Move_Ent_Editor = 0;
 			flag_Move_Ent_Canceld = 0;
 			ImGui::PopStyleColor();
 			ImGui::End();
 		}
 
-		if (Float_Exit == 0)
+		if (flag_Float_Exit == 0)
 		{
 			flag_Move_Ent_Canceld = 1;
 			ImGui::PopStyleColor();
@@ -744,9 +744,9 @@ void CL64_ImGui_Dialogs::Dialog_List_Gui(void)
 			ImGui::End();
 		}
 
-		if (Float_Exit == 0)
+		if (flag_Float_Exit == 0)
 		{
-			Float_Canceld = 1;
+			flag_Float_Canceld = 1;
 			ImGui::PopStyleColor();
 			ImGui::End();
 		}
@@ -762,7 +762,7 @@ void CL64_ImGui_Dialogs::Physics_Console_Gui(void)
 	ImGui::PushStyleColor(ImGuiCol_WindowBg, IM_COL32(239, 239, 239, 255));
 	ImGuiStyle* style = &ImGui::GetStyle();
 	
-	if (!ImGui::Begin("Physics_Console", &Show_Physics_Console, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar))
+	if (!ImGui::Begin("Physics_Console", &flag_Show_Physics_Console, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar))
 	{
 		ImGui::End();
 	}
@@ -785,8 +785,8 @@ void CL64_ImGui_Dialogs::Physics_Console_Gui(void)
 		if (ImGui::Button("X"))
 		{
 			CheckMenuItem(App->mMenu, ID_WINDOWS_PHYSICSCONSOLE, MF_BYCOMMAND | MF_UNCHECKED);
-			Physics_Console_StartPos = 0;
-			Show_Physics_Console = 0;
+			flag_Physics_Console_StartPos = 0;
+			flag_Show_Physics_Console = 0;
 		}
 
 		ImGui::Separator();
@@ -856,14 +856,14 @@ void CL64_ImGui_Dialogs::Physics_Console_Gui(void)
 			}
 		}
 
-		if (Physics_Console_StartPos == 0)
+		if (flag_Physics_Console_StartPos == 0)
 		{
 			ImVec2 Size = ImGui::GetWindowSize();
 			Physics_PosX = 10;
 			Physics_PosY = ((float)App->CL_Ogre->Ogre3D_Listener->View_Height) - (Size.y) - 10;
 			ImGui::SetWindowPos("Physics_Console", ImVec2(Physics_PosX, Physics_PosY));
 
-			Physics_Console_StartPos = 1;
+			flag_Physics_Console_StartPos = 1;
 		}
 
 		style->Colors[ImGuiCol_Button] = ImVec4(0.26f, 0.59f, 0.98f, 0.40f);

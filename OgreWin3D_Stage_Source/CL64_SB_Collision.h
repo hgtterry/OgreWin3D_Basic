@@ -42,7 +42,7 @@ public:
 
 	float FinalPosition;
 	int ObjectIndex;
-	bool DoMove;
+	bool flag_DoMove;
 
 	int Old_Sound_Index;
 

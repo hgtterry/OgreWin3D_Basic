@@ -33,6 +33,6 @@ public:
 	
 	Ogre::String Ogre_CFG_Resource_Group;
 
-	bool Flag_Reload_Ogre_Model;
+	bool flag_Reload_Ogre_Model;
 }; 
 

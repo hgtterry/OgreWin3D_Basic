@@ -29,7 +29,7 @@ THE SOFTWARE.
 CL64_Collision::CL64_Collision(void)
 {
 	ObjectIndex = 0;
-	DoMove = 0;
+	flag_DoMove = 0;
 
 	FinalPosition = 0;
 	Old_Sound_Index = 0;
@@ -262,7 +262,7 @@ void CL64_Collision::Set_Move_Entity(int Index)
 		App->CL_Scene->B_Object[ObjectIndex]->SndFile->setIsPaused(false);
 	}
 
-	DoMove = 1; // Trigger Ogre Listener to update
+	flag_DoMove = 1; // Trigger Ogre Listener to update
 }
 
 // *************************************************************************
@@ -298,7 +298,7 @@ void CL64_Collision::MoveObject_Listener(Ogre::Real Time)
 						App->CL_Scene->B_Object[ObjectIndex]->SndFile = NULL;
 					}
 
-					DoMove = 0; // Stop Listener
+					flag_DoMove = 0; // Stop Listener
 				}
 
 				return;
@@ -325,7 +325,7 @@ void CL64_Collision::MoveObject_Listener(Ogre::Real Time)
 						App->CL_Scene->B_Object[ObjectIndex]->SndFile = NULL;
 					}
 
-					DoMove = 0; // Stop Listener
+					flag_DoMove = 0; // Stop Listener
 				}
 
 				return;
@@ -357,7 +357,7 @@ void CL64_Collision::MoveObject_Listener(Ogre::Real Time)
 						App->CL_Scene->B_Object[ObjectIndex]->SndFile = NULL;
 					}
 
-					DoMove = 0; // Stop Listener
+					flag_DoMove = 0; // Stop Listener
 				}
 
 				return;
@@ -384,7 +384,7 @@ void CL64_Collision::MoveObject_Listener(Ogre::Real Time)
 						App->CL_Scene->B_Object[ObjectIndex]->SndFile = NULL;
 					}
 
-					DoMove = 0; // Stop Listener
+					flag_DoMove = 0; // Stop Listener
 				}
 
 				return;
@@ -416,7 +416,7 @@ void CL64_Collision::MoveObject_Listener(Ogre::Real Time)
 						App->CL_Scene->B_Object[ObjectIndex]->SndFile = NULL;
 					}
 
-					DoMove = 0; // Stop Listener
+					flag_DoMove = 0; // Stop Listener
 				}
 
 				return;
@@ -443,7 +443,7 @@ void CL64_Collision::MoveObject_Listener(Ogre::Real Time)
 						App->CL_Scene->B_Object[ObjectIndex]->SndFile = NULL;
 					}
 
-					DoMove = 0; // Stop Listener
+					flag_DoMove = 0; // Stop Listener
 				}
 
 				return;

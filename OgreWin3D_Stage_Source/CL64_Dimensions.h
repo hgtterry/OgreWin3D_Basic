@@ -24,11 +24,10 @@ public:
 	void Prepare_Dimensions(void);
 	void ImGui_Dimensions(void);
 
-	bool Show_Dimensions;
-
-	bool Show_Position;
-	bool Show_Scale;
-	bool Show_Rotation;
+	bool flag_Show_Dimensions;
+	bool flag_Show_Position;
+	bool flag_Show_Scale;
+	bool flag_Show_Rotation;
 
 protected:
 
@@ -45,19 +44,19 @@ protected:
 	void UpDate_Physics(int Index);
 	void Set_Physics_Position();
 
-	bool PosX_Selected;
-	bool PosY_Selected;
-	bool PosZ_Selected;
+	bool flag_PosX_Selected;
+	bool flag_PosY_Selected;
+	bool flag_PosZ_Selected;
 
-	bool ScaleX_Selected;
-	bool ScaleY_Selected;
-	bool ScaleZ_Selected;
+	bool flag_ScaleX_Selected;
+	bool flag_ScaleY_Selected;
+	bool flag_ScaleZ_Selected;
 
-	bool RotationX_Selected;
-	bool RotationY_Selected;
-	bool RotationZ_Selected;
+	bool flag_RotationX_Selected;
+	bool flag_RotationY_Selected;
+	bool flag_RotationZ_Selected;
 
-	bool Scale_Lock;
+	bool flag_Scale_Lock;
 
 	float Model_Pos_Delta;
 	float Model_Scale_Delta;

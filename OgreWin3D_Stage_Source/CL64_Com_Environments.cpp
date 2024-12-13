@@ -430,7 +430,7 @@ void CL64_Com_Environments::Rename_Environ_Entity(int Index)
 
 	App->CL_Dialogs->Dialog_Text(Enums::Check_Names_Objects);
 
-	if (App->CL_Dialogs->Canceled == 1)
+	if (App->CL_Dialogs->flag_Canceled == 1)
 	{
 		return;
 	}

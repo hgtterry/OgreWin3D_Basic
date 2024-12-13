@@ -302,7 +302,7 @@ LRESULT CALLBACK CL64_Project::Save_Project_Dialog_Proc(HWND hDlg, UINT message,
 		{
 			App->CL_File_IO->Pick_Folder();
 
-			if (App->CL_File_IO->Canceled == 1)
+			if (App->CL_File_IO->flag_Canceled == 1)
 			{
 				return TRUE;
 			}
@@ -324,7 +324,7 @@ LRESULT CALLBACK CL64_Project::Save_Project_Dialog_Proc(HWND hDlg, UINT message,
 
 			App->CL_Dialogs->Dialog_Text(0);
 
-			if (App->CL_Dialogs->Canceled == 1)
+			if (App->CL_Dialogs->flag_Canceled == 1)
 			{
 				return TRUE;
 			}
@@ -353,7 +353,7 @@ LRESULT CALLBACK CL64_Project::Save_Project_Dialog_Proc(HWND hDlg, UINT message,
 			strcpy(App->CL_Dialogs->Chr_Text, App->CL_Project->m_Level_Name);
 
 			App->CL_Dialogs->Dialog_Text(0);
-			if (App->CL_Dialogs->Canceled == 1)
+			if (App->CL_Dialogs->flag_Canceled == 1)
 			{
 				return TRUE;
 			}
@@ -512,7 +512,7 @@ bool CL64_Project::Save_Project_Ini()
 		{
 			App->CL_Dialogs->Show_YesNo_Dlg((LPSTR)"File Exsits", (LPSTR)"Do you want to update File", (LPSTR)"");
 
-			bool Doit = App->CL_Dialogs->Canceled;
+			bool Doit = App->CL_Dialogs->flag_Canceled;
 			if (Doit == 1)
 			{
 				return 0;

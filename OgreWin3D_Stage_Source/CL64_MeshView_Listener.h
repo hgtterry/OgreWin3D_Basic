@@ -35,10 +35,10 @@ public:
 	bool frameStarted(const FrameEvent& evt); // Comes From Directly From Oger Render Listener [081221]
 
 	int		Wheel_Move;
-	bool	Pl_LeftMouseDown;	// Triger Left Mouse Presed [081221]
-	bool	Pl_RightMouseDown;	// Triger Right Mouse Presed [081221]
+	bool	flag_Pl_LeftMouseDown;	// Triger Left Mouse Presed [081221]
+	bool	flag_Pl_RightMouseDown;	// Triger Right Mouse Presed [081221]
 
-	bool	Show_Model_Data; // Show Model Data ImGui [081221]
+	bool	flag_Show_Model_Data; // Show Model Data ImGui [081221]
 
 	int		View_Height;	// Height of Render Window [081221]
 	int		View_Width;		// Width of Render Window [081221]

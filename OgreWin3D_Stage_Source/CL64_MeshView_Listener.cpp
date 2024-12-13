@@ -35,7 +35,7 @@ CL64_MeshView_Listener::CL64_MeshView_Listener()
 	mMoveSensitivity = 50;
 	Wheel_Move = 0;
 
-	Show_Model_Data = 0;
+	flag_Show_Model_Data = 0;
 
 	Pl_DeltaMouse = 0;
 	Pl_MouseX = 0;
@@ -46,8 +46,8 @@ CL64_MeshView_Listener::CL64_MeshView_Listener()
 
 	mMoveSensitivityMouse = 50;
 
-	Pl_LeftMouseDown = 0;
-	Pl_RightMouseDown = 0;
+	flag_Pl_LeftMouseDown = 0;
+	flag_Pl_RightMouseDown = 0;
 
 	WE_Cam = nullptr;
 
@@ -127,13 +127,13 @@ void CL64_MeshView_Listener::ModelMode(float DeltaTime)
 	}
 	
 	// Left Mouse
-	if (Pl_LeftMouseDown == 1 && Pl_RightMouseDown == 0)
+	if (flag_Pl_LeftMouseDown == 1 && flag_Pl_RightMouseDown == 0)
 	{
 		Capture_LeftMouse_Model();
 	}
 
 	// Right Mouse
-	if (Pl_LeftMouseDown == 0 && Pl_RightMouseDown == 1)
+	if (flag_Pl_LeftMouseDown == 0 && flag_Pl_RightMouseDown == 1)
 	{
 		Capture_RightMouse_Model();
 	}

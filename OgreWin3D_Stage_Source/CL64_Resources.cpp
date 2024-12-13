@@ -1381,7 +1381,7 @@ int CL64_Resources::Delete_File(char* Filename, HWND mhDlg)
 
 		App->CL_Dialogs->Show_YesNo_Dlg((LPSTR)"Are you Sure Delete File", (LPSTR)Filename, (LPSTR)"");
 
-		bool Doit = App->CL_Dialogs->Canceled;
+		bool Doit = App->CL_Dialogs->flag_Canceled;
 		if (Doit == 0)
 		{
 
@@ -1428,7 +1428,7 @@ int CL64_Resources::Delete_File(char* Filename, HWND mhDlg)
 
 		App->CL_Dialogs->Show_YesNo_Dlg((LPSTR)"Are you Sure Delete File", (LPSTR)Filename, (LPSTR)"");
 
-		bool Doit = App->CL_Dialogs->Canceled;
+		bool Doit = App->CL_Dialogs->flag_Canceled;
 		if (Doit == 0)
 		{
 

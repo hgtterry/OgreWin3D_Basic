@@ -390,7 +390,7 @@ void CL64_Com_Area::Rename_Area(int Index)
 
 	App->CL_Dialogs->Dialog_Text(1);
 
-	if (App->CL_Dialogs->Canceled == 1)
+	if (App->CL_Dialogs->flag_Canceled == 1)
 	{
 		return;
 	}

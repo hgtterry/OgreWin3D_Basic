@@ -43,7 +43,7 @@ CL64_Com_Player::CL64_Com_Player(void)
 
 	Ray_End_Gravity = 15;
 
-	Show_Physics_Debug = 0;
+	flag_Show_Physics_Debug = 0;
 	flag_AddGravity = 0;
 	flag_Is_On_Ground = 0;
 }
@@ -170,14 +170,14 @@ void CL64_Com_Player::Show_Player_And_Physics(bool Show)
 		App->CL_Scene->B_Player[0]->Phys_Body->setCollisionFlags(f & (~(1 << 5)));
 		App->CL_Scene->B_Player[0]->Player_Node->setVisible(true);
 		//App->CL_Scene->B_Player[0]->Player_Node->scale(3, 3, 3);
-		Show_Physics_Debug = 1;
+		flag_Show_Physics_Debug = 1;
 	}
 	else
 	{
 		App->CL_Scene->B_Player[0]->Phys_Body->setCollisionFlags(f | (1 << 5));
 		App->CL_Scene->B_Player[0]->Player_Node->setVisible(false);
 		//App->CL_Scene->B_Player[0]->Player_Node->scale(0, 0, 0);
-		Show_Physics_Debug = 0;
+		flag_Show_Physics_Debug = 0;
 	}
 
 	App->CL_Ogre->Bullet_Debug_Listener->flag_Render_Debug_Flag = 0;
@@ -197,12 +197,12 @@ void CL64_Com_Player::Show_Physics(bool Show)
 	if (Show == 1)
 	{
 		App->CL_Scene->B_Player[0]->Phys_Body->setCollisionFlags(f & (~(1 << 5)));
-		Show_Physics_Debug = 1;
+		flag_Show_Physics_Debug = 1;
 	}
 	else
 	{
 		App->CL_Scene->B_Player[0]->Phys_Body->setCollisionFlags(f | (1 << 5));
-		Show_Physics_Debug = 0;
+		flag_Show_Physics_Debug = 0;
 	}
 
 	App->CL_Ogre->Bullet_Debug_Listener->flag_Render_Debug_Flag = 0;
@@ -387,7 +387,7 @@ void CL64_Com_Player::Rename_Player(int Index)
 
 	App->CL_Dialogs->Dialog_Text(1);
 
-	if (App->CL_Dialogs->Canceled == 1)
+	if (App->CL_Dialogs->flag_Canceled == 1)
 	{
 		return;
 	}

@@ -19,29 +19,29 @@ appreciated but is not required.
 
 CL64_Dimensions::CL64_Dimensions(void)
 {
-	Show_Dimensions = 0;
+	flag_Show_Dimensions = 0;
 
-	Show_Position = 0;
-	Show_Scale = 0;
-	Show_Rotation = 0;
+	flag_Show_Position = 0;
+	flag_Show_Scale = 0;
+	flag_Show_Rotation = 0;
 
-	PosX_Selected = 1;
-	PosY_Selected = 0;
-	PosZ_Selected = 0;
+	flag_PosX_Selected = 1;
+	flag_PosY_Selected = 0;
+	flag_PosZ_Selected = 0;
 
-	ScaleX_Selected = 1;
-	ScaleY_Selected = 0;
-	ScaleZ_Selected = 0;
+	flag_ScaleX_Selected = 1;
+	flag_ScaleY_Selected = 0;
+	flag_ScaleZ_Selected = 0;
 
-	RotationX_Selected = 1;
-	RotationY_Selected = 0;
-	RotationZ_Selected = 0;
+	flag_RotationX_Selected = 1;
+	flag_RotationY_Selected = 0;
+	flag_RotationZ_Selected = 0;
 
 	Model_Pos_Delta = 1;
 	Model_Scale_Delta = 0.01;
 	Model_Rotation_Delta = 1;
 
-	Scale_Lock = 1;
+	flag_Scale_Lock = 1;
 
 	// -------------------------- Pointers
 	pBase_Mesh_Name = NULL;
@@ -129,7 +129,7 @@ void CL64_Dimensions::ImGui_Dimensions(void)
 	ImGui::PushStyleColor(ImGuiCol_WindowBg, IM_COL32(255, 255, 255, 240));
 
 
-	if (!ImGui::Begin("Rotation2", &Show_Dimensions, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoTitleBar))
+	if (!ImGui::Begin("Rotation2", &flag_Show_Dimensions, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoTitleBar))
 	{
 		ImGui::End();
 	}
@@ -145,17 +145,17 @@ void CL64_Dimensions::ImGui_Dimensions(void)
 		//--------------------------------------- Position
 		style->Colors[ImGuiCol_Button] = ImVec4(0.8f, 0.8f, 0.8f, 1);
 
-		if (Show_Position == 1)
+		if (flag_Show_Position == 1)
 		{
 			style->Colors[ImGuiCol_Button] = ImVec4(0.0f, 1.0f, 0.0f, 1.00f);
 		}
 
 		if (ImGui::Button("Position"))
 		{
-			Show_Dimensions = 0;
-			Show_Position = 1;
-			Show_Scale = 0;
-			Show_Rotation = 0;
+			flag_Show_Dimensions = 0;
+			flag_Show_Position = 1;
+			flag_Show_Scale = 0;
+			flag_Show_Rotation = 0;
 
 			//App->SBC_Markers->Hide_Axis_Marker();
 			//RedrawWindow(App->SBC_Props_Dialog->Dimensions_Dlg_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
@@ -167,17 +167,17 @@ void CL64_Dimensions::ImGui_Dimensions(void)
 		//--------------------------------------- Rotation
 		ImGui::SameLine();
 
-		if (Show_Rotation == 1)
+		if (flag_Show_Rotation == 1)
 		{
 			style->Colors[ImGuiCol_Button] = ImVec4(0.0f, 1.0f, 0.0f, 1.00f);
 		}
 
 		if (ImGui::Button("Rotation"))
 		{
-			Show_Dimensions = 0;
-			Show_Position = 0;
-			Show_Scale = 0;
-			Show_Rotation = 1;
+			flag_Show_Dimensions = 0;
+			flag_Show_Position = 0;
+			flag_Show_Scale = 0;
+			flag_Show_Rotation = 1;
 
 			//App->SBC_Markers->Hide_Axis_Marker();
 			//RedrawWindow(App->SBC_Props_Dialog->Dimensions_Dlg_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
@@ -188,17 +188,17 @@ void CL64_Dimensions::ImGui_Dimensions(void)
 		//--------------------------------------- Scale
 		ImGui::SameLine();
 
-		if (Show_Scale == 1)
+		if (flag_Show_Scale == 1)
 		{
 			style->Colors[ImGuiCol_Button] = ImVec4(0.0f, 1.0f, 0.0f, 1.00f);
 		}
 
 		if (ImGui::Button("Scale"))
 		{
-			Show_Dimensions = 0;
-			Show_Position = 0;
-			Show_Scale = 1;
-			Show_Rotation = 0;
+			flag_Show_Dimensions = 0;
+			flag_Show_Position = 0;
+			flag_Show_Scale = 1;
+			flag_Show_Rotation = 0;
 
 			//App->SBC_Markers->Hide_Axis_Marker();
 			//RedrawWindow(App->SBC_Props_Dialog->Dimensions_Dlg_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
@@ -210,17 +210,17 @@ void CL64_Dimensions::ImGui_Dimensions(void)
 		ImGui::Unindent();
 		ImGui::Unindent();
 
-		if (Show_Position == 1)
+		if (flag_Show_Position == 1)
 		{
 			ImGui_Position();
 		}
 
-		if (Show_Scale == 1)
+		if (flag_Show_Scale == 1)
 		{
 			ImGui_Scale();
 		}
 
-		if (Show_Rotation == 1)
+		if (flag_Show_Rotation == 1)
 		{
 			ImGui_Rotation();
 		}
@@ -230,10 +230,10 @@ void CL64_Dimensions::ImGui_Dimensions(void)
 
 		if (ImGui::Button("Close"))
 		{
-			Show_Dimensions = 0;
-			Show_Position = 0;
-			Show_Scale = 0;
-			Show_Rotation = 0;
+			flag_Show_Dimensions = 0;
+			flag_Show_Position = 0;
+			flag_Show_Scale = 0;
+			flag_Show_Rotation = 0;
 
 			//App->SBC_Markers->Hide_Axis_Marker();
 			//RedrawWindow(App->SBC_Props_Dialog->Dimensions_Dlg_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
@@ -278,19 +278,19 @@ void CL64_Dimensions::ImGui_Position(void)
 	style->Colors[ImGuiCol_FrameBg] = ImVec4(0.26f, 0.59f, 0.98f, 0.40f);
 	style->Colors[ImGuiCol_FrameBgHovered] = ImVec4(0.26f, 0.59f, 0.98f, 1.00f);
 
-	ImGui::Checkbox("PX", &PosX_Selected);
+	ImGui::Checkbox("PX", &flag_PosX_Selected);
 
 	style->Colors[ImGuiCol_FrameBgHovered] = ImVec4(0.26f, 0.59f, 0.98f, 0.40f);
 	style->Colors[ImGuiCol_FrameBg] = ImVec4(1.0f, 1.0f, 1.0f, 1.00f);
 
 
-	if (PosX_Selected == 1)
+	if (flag_PosX_Selected == 1)
 	{
 		//App->SBC_Markers->Hide_Axis_Marker();
 		//App->SBC_Markers->Update_Blue_Axis_Marker(Index);
 
-		PosY_Selected = 0;
-		PosZ_Selected = 0;
+		flag_PosY_Selected = 0;
+		flag_PosZ_Selected = 0;
 	}
 
 	//------------------------------------------------------------------------------- Pos CheckBox Y
@@ -300,17 +300,17 @@ void CL64_Dimensions::ImGui_Position(void)
 
 	style->Colors[ImGuiCol_FrameBg] = ImVec4(0.0f, 0.9f, 0.0f, 1.00f);
 	style->Colors[ImGuiCol_FrameBgHovered] = ImVec4(0.f, 1.f, 0.f, 1.00f);
-	ImGui::Checkbox("PY", &PosY_Selected);
+	ImGui::Checkbox("PY", &flag_PosY_Selected);
 	style->Colors[ImGuiCol_FrameBgHovered] = ImVec4(0.26f, 0.59f, 0.98f, 0.40f);
 	style->Colors[ImGuiCol_FrameBg] = ImVec4(1.0f, 1.0f, 1.0f, 1.00f);
 
-	if (PosY_Selected)
+	if (flag_PosY_Selected)
 	{
 		//App->SBC_Markers->Hide_Axis_Marker();
 		//App->SBC_Markers->Update_Green_Axis_Marker(Index);
 
-		PosX_Selected = 0;
-		PosZ_Selected = 0;
+		flag_PosX_Selected = 0;
+		flag_PosZ_Selected = 0;
 	}
 
 	//------------------------------------------------------------------------------- Pos CheckBox Z
@@ -320,16 +320,16 @@ void CL64_Dimensions::ImGui_Position(void)
 
 	style->Colors[ImGuiCol_FrameBg] = ImVec4(0.9f, 0.0f, 0.0f, 1.00f);
 	style->Colors[ImGuiCol_FrameBgHovered] = ImVec4(1.f, 0.f, 0.f, 1.00f);
-	ImGui::Checkbox("PZ", &PosZ_Selected);
+	ImGui::Checkbox("PZ", &flag_PosZ_Selected);
 	style->Colors[ImGuiCol_FrameBgHovered] = ImVec4(0.26f, 0.59f, 0.98f, 0.40f);
 	style->Colors[ImGuiCol_FrameBg] = ImVec4(1.0f, 1.0f, 1.0f, 1.00f);
-	if (PosZ_Selected)
+	if (flag_PosZ_Selected)
 	{
 		//App->SBC_Markers->Hide_Axis_Marker();
 		//App->SBC_Markers->Update_Red_Axis_Marker(Index);
 
-		PosX_Selected = 0;
-		PosY_Selected = 0;
+		flag_PosX_Selected = 0;
+		flag_PosY_Selected = 0;
 	}
 
 	ImGui::Indent();
@@ -344,19 +344,19 @@ void CL64_Dimensions::ImGui_Position(void)
 	{
 		if (App->CL_Scene->flag_Scene_Loaded == 1)
 		{
-			if (PosX_Selected == 1)
+			if (flag_PosX_Selected == 1)
 			{
 				Pos.x = Pos.x + Model_Pos_Delta;
 				Set_Position(Pos);
 			}
 
-			if (PosY_Selected == 1)
+			if (flag_PosY_Selected == 1)
 			{
 				Pos.y = Pos.y + Model_Pos_Delta;
 				Set_Position(Pos);
 			}
 
-			if (PosZ_Selected == 1)
+			if (flag_PosZ_Selected == 1)
 			{
 				Pos.z = Pos.z + Model_Pos_Delta;
 				Set_Position(Pos);
@@ -369,19 +369,19 @@ void CL64_Dimensions::ImGui_Position(void)
 	{
 		if (App->CL_Scene->flag_Scene_Loaded == 1)
 		{
-			if (PosX_Selected == 1)
+			if (flag_PosX_Selected == 1)
 			{
 				Pos.x = Pos.x - Model_Pos_Delta;
 				Set_Position(Pos);
 			}
 
-			if (PosY_Selected == 1)
+			if (flag_PosY_Selected == 1)
 			{
 				Pos.y = Pos.y - Model_Pos_Delta;
 				Set_Position(Pos);
 			}
 
-			if (PosZ_Selected == 1)
+			if (flag_PosZ_Selected == 1)
 			{
 				Pos.z = Pos.z - Model_Pos_Delta;
 				Set_Position(Pos);
@@ -470,14 +470,14 @@ void CL64_Dimensions::ImGui_Scale(void)
 	style->Colors[ImGuiCol_FrameBg] = ImVec4(0.26f, 0.59f, 0.98f, 0.40f);
 	style->Colors[ImGuiCol_FrameBgHovered] = ImVec4(0.26f, 0.59f, 0.98f, 1.00f);
 
-	ImGui::Checkbox("SX", &ScaleX_Selected);
+	ImGui::Checkbox("SX", &flag_ScaleX_Selected);
 
 	style->Colors[ImGuiCol_FrameBg] = ImVec4(1.0f, 1.0f, 1.0f, 1.00f);
 	style->Colors[ImGuiCol_FrameBgHovered] = ImVec4(0.26f, 0.59f, 0.98f, 0.40f);
 
-	if (ScaleX_Selected == 1)
+	if (flag_ScaleX_Selected == 1)
 	{
-		if (Scale_Lock == 1)
+		if (flag_Scale_Lock == 1)
 		{
 			/*App->SBC_Markers->Hide_Axis_Marker();
 			App->SBC_Markers->Update_Red_Axis_Marker(Index);
@@ -490,8 +490,8 @@ void CL64_Dimensions::ImGui_Scale(void)
 			App->SBC_Markers->Update_Blue_Axis_Marker(Index);*/
 		}
 
-		ScaleY_Selected = 0;
-		ScaleZ_Selected = 0;
+		flag_ScaleY_Selected = 0;
+		flag_ScaleZ_Selected = 0;
 	}
 
 	//------------------------------------------------------------------------------- Scale Checkbox Y
@@ -501,13 +501,13 @@ void CL64_Dimensions::ImGui_Scale(void)
 
 	style->Colors[ImGuiCol_FrameBg] = ImVec4(0.0f, 0.9f, 0.0f, 1.00f);
 	style->Colors[ImGuiCol_FrameBgHovered] = ImVec4(0.f, 1.f, 0.f, 1.00f);
-	ImGui::Checkbox("SY", &ScaleY_Selected);
+	ImGui::Checkbox("SY", &flag_ScaleY_Selected);
 	style->Colors[ImGuiCol_FrameBgHovered] = ImVec4(0.26f, 0.59f, 0.98f, 0.40f);
 	style->Colors[ImGuiCol_FrameBg] = ImVec4(1.0f, 1.0f, 1.0f, 1.00f);
 
-	if (ScaleY_Selected)
+	if (flag_ScaleY_Selected)
 	{
-		if (Scale_Lock == 1)
+		if (flag_Scale_Lock == 1)
 		{
 			/*App->SBC_Markers->Hide_Axis_Marker();
 			App->SBC_Markers->Update_Red_Axis_Marker(Index);
@@ -520,8 +520,8 @@ void CL64_Dimensions::ImGui_Scale(void)
 			App->SBC_Markers->Update_Green_Axis_Marker(Index);*/
 		}
 
-		ScaleX_Selected = 0;
-		ScaleZ_Selected = 0;
+		flag_ScaleX_Selected = 0;
+		flag_ScaleZ_Selected = 0;
 	}
 
 	//------------------------------------------------------------------------------- Scale Checkbox Z
@@ -530,12 +530,12 @@ void CL64_Dimensions::ImGui_Scale(void)
 	ImGui::SameLine();
 
 	style->Colors[ImGuiCol_FrameBg] = ImVec4(1.0f, 0.0f, 0.0f, 1.00f);
-	ImGui::Checkbox("SZ", &ScaleZ_Selected);
+	ImGui::Checkbox("SZ", &flag_ScaleZ_Selected);
 	style->Colors[ImGuiCol_FrameBg] = ImVec4(1.0f, 1.0f, 1.0f, 1.00f);
 
-	if (ScaleZ_Selected)
+	if (flag_ScaleZ_Selected)
 	{
-		if (Scale_Lock == 1)
+		if (flag_Scale_Lock == 1)
 		{
 			/*App->SBC_Markers->Hide_Axis_Marker();
 			App->SBC_Markers->Update_Red_Axis_Marker(Index);
@@ -548,8 +548,8 @@ void CL64_Dimensions::ImGui_Scale(void)
 			App->SBC_Markers->Update_Red_Axis_Marker(Index);*/
 		}
 
-		ScaleX_Selected = 0;
-		ScaleY_Selected = 0;
+		flag_ScaleX_Selected = 0;
+		flag_ScaleY_Selected = 0;
 	}
 
 	ImGui::Indent();
@@ -563,7 +563,7 @@ void CL64_Dimensions::ImGui_Scale(void)
 	{
 		if (App->CL_Scene->flag_Scene_Loaded == 1)
 		{
-			if (Scale_Lock == 1)
+			if (flag_Scale_Lock == 1)
 			{
 				Scale.x = Scale.x + Model_Scale_Delta;
 				Scale.y = Scale.y + Model_Scale_Delta;
@@ -573,7 +573,7 @@ void CL64_Dimensions::ImGui_Scale(void)
 			}
 			else
 			{
-				if (ScaleX_Selected == 1)
+				if (flag_ScaleX_Selected == 1)
 				{
 					Scale.x = Scale.x + Model_Scale_Delta;
 
@@ -581,7 +581,7 @@ void CL64_Dimensions::ImGui_Scale(void)
 
 				}
 
-				if (ScaleY_Selected == 1)
+				if (flag_ScaleY_Selected == 1)
 				{
 					Scale.y = Scale.y + Model_Scale_Delta;
 
@@ -589,7 +589,7 @@ void CL64_Dimensions::ImGui_Scale(void)
 
 				}
 
-				if (ScaleZ_Selected == 1)
+				if (flag_ScaleZ_Selected == 1)
 				{
 					Scale.z = Scale.z + Model_Scale_Delta;
 
@@ -604,7 +604,7 @@ void CL64_Dimensions::ImGui_Scale(void)
 	{
 		if (App->CL_Scene->flag_Scene_Loaded == 1)
 		{
-			if (Scale_Lock == 1)
+			if (flag_Scale_Lock == 1)
 			{
 				Scale.x = Scale.x - Model_Scale_Delta;
 				Scale.y = Scale.y - Model_Scale_Delta;
@@ -614,7 +614,7 @@ void CL64_Dimensions::ImGui_Scale(void)
 			}
 			else
 			{
-				if (ScaleX_Selected == 1)
+				if (flag_ScaleX_Selected == 1)
 				{
 					Scale.x = Scale.x - Model_Scale_Delta;
 
@@ -622,7 +622,7 @@ void CL64_Dimensions::ImGui_Scale(void)
 
 				}
 
-				if (ScaleY_Selected == 1)
+				if (flag_ScaleY_Selected == 1)
 				{
 					Scale.y = Scale.y - Model_Scale_Delta;
 
@@ -630,7 +630,7 @@ void CL64_Dimensions::ImGui_Scale(void)
 
 				}
 
-				if (ScaleZ_Selected == 1)
+				if (flag_ScaleZ_Selected == 1)
 				{
 					Scale.z = Scale.z - Model_Scale_Delta;
 
@@ -656,7 +656,7 @@ void CL64_Dimensions::ImGui_Scale(void)
 
 
 
-	ImGui::Checkbox("Lock Axis", &Scale_Lock);
+	ImGui::Checkbox("Lock Axis", &flag_Scale_Lock);
 	{
 
 	}
@@ -725,14 +725,14 @@ void CL64_Dimensions::ImGui_Rotation(void)
 	ImGui::Indent();
 	style->Colors[ImGuiCol_FrameBg] = ImVec4(0.26f, 0.59f, 0.98f, 0.40f);
 	style->Colors[ImGuiCol_FrameBgHovered] = ImVec4(0.26f, 0.59f, 0.98f, 1.00f);
-	ImGui::Checkbox("RX", &RotationX_Selected);
+	ImGui::Checkbox("RX", &flag_RotationX_Selected);
 	style->Colors[ImGuiCol_FrameBg] = ImVec4(1.0f, 1.0f, 1.0f, 1.00f);
 	style->Colors[ImGuiCol_FrameBgHovered] = ImVec4(0.26f, 0.59f, 0.98f, 0.40f);
 
-	if (RotationX_Selected == 1)
+	if (flag_RotationX_Selected == 1)
 	{
-		RotationY_Selected = 0;
-		RotationZ_Selected = 0;
+		flag_RotationY_Selected = 0;
+		flag_RotationZ_Selected = 0;
 	}
 
 	//------------------------------------------------------------------------------- Rotation Y
@@ -742,14 +742,14 @@ void CL64_Dimensions::ImGui_Rotation(void)
 
 	style->Colors[ImGuiCol_FrameBg] = ImVec4(0.0f, 0.9f, 0.0f, 1.00f);
 	style->Colors[ImGuiCol_FrameBgHovered] = ImVec4(0.f, 1.f, 0.f, 1.00f);
-	ImGui::Checkbox("RY", &RotationY_Selected);
+	ImGui::Checkbox("RY", &flag_RotationY_Selected);
 	style->Colors[ImGuiCol_FrameBgHovered] = ImVec4(0.26f, 0.59f, 0.98f, 0.40f);
 	style->Colors[ImGuiCol_FrameBg] = ImVec4(1.0f, 1.0f, 1.0f, 1.00f);
 
-	if (RotationY_Selected)
+	if (flag_RotationY_Selected)
 	{
-		RotationX_Selected = 0;
-		RotationZ_Selected = 0;
+		flag_RotationX_Selected = 0;
+		flag_RotationZ_Selected = 0;
 	}
 
 	//------------------------------------------------------------------------------- Rotation Z
@@ -758,12 +758,12 @@ void CL64_Dimensions::ImGui_Rotation(void)
 	ImGui::SameLine();
 
 	style->Colors[ImGuiCol_FrameBg] = ImVec4(1.0f, 0.0f, 0.0f, 1.00f);
-	ImGui::Checkbox("RZ", &RotationZ_Selected);
+	ImGui::Checkbox("RZ", &flag_RotationZ_Selected);
 	style->Colors[ImGuiCol_FrameBg] = ImVec4(1.0f, 1.0f, 1.0f, 1.00f);
-	if (RotationZ_Selected)
+	if (flag_RotationZ_Selected)
 	{
-		RotationX_Selected = 0;
-		RotationY_Selected = 0;
+		flag_RotationX_Selected = 0;
+		flag_RotationY_Selected = 0;
 	}
 	// ----------------------------------------------------------------------------- Rotation
 
@@ -778,20 +778,20 @@ void CL64_Dimensions::ImGui_Rotation(void)
 	{
 		if (App->CL_Scene->flag_Scene_Loaded == 1)
 		{
-			if (RotationX_Selected == 1)
+			if (flag_RotationX_Selected == 1)
 			{
 				pBase_Mesh_Rot->x += Model_Rotation_Delta;
 				Set_Rotation(Ogre::Vector3(1, 0, 0), Model_Rotation_Delta);
 
 			}
 
-			if (RotationY_Selected == 1)
+			if (flag_RotationY_Selected == 1)
 			{
 				pBase_Mesh_Rot->y += Model_Rotation_Delta;
 				Set_Rotation(Ogre::Vector3(0, 1, 0), Model_Rotation_Delta);
 			}
 
-			if (RotationZ_Selected == 1)
+			if (flag_RotationZ_Selected == 1)
 			{
 				pBase_Mesh_Rot->z += Model_Rotation_Delta;
 				Set_Rotation(Ogre::Vector3(0, 0, 1), Model_Rotation_Delta);
@@ -806,21 +806,21 @@ void CL64_Dimensions::ImGui_Rotation(void)
 		if (App->CL_Scene->flag_Scene_Loaded == 1)
 		{
 
-			if (RotationX_Selected == 1)
+			if (flag_RotationX_Selected == 1)
 			{
 				pBase_Mesh_Rot->x -= Model_Rotation_Delta;
 				Set_Rotation(Ogre::Vector3(1, 0, 0), -Model_Rotation_Delta);
 
 			}
 
-			if (RotationY_Selected == 1)
+			if (flag_RotationY_Selected == 1)
 			{
 				pBase_Mesh_Rot->y -= Model_Rotation_Delta;
 				Set_Rotation(Ogre::Vector3(0, 1, 0), -Model_Rotation_Delta);
 
 			}
 
-			if (RotationZ_Selected == 1)
+			if (flag_RotationZ_Selected == 1)
 			{
 				pBase_Mesh_Rot->z -= Model_Rotation_Delta;
 				Set_Rotation(Ogre::Vector3(0, 0, 1), -Model_Rotation_Delta);

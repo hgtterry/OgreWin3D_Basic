@@ -31,8 +31,8 @@ CL64_Locations::CL64_Locations(void)
 {
 	Locations_Dlg_hWnd = nullptr;
 
-	Toggle_Player_Flag = 0;
-	Toggle_FreeCam_Flag = 0;
+	flag_Toggle_Player_Flag = 0;
+	flag_Toggle_FreeCam_Flag = 0;
 
 	ListBox_Index = 0;
 }
@@ -160,14 +160,14 @@ LRESULT CALLBACK CL64_Locations::Proc_Locations(HWND hDlg, UINT message, WPARAM 
 		if (some_item->idFrom == IDC_BT_LOC_PLAYER)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CL_Locations->Toggle_Player_Flag);
+			App->Custom_Button_Toggle(item, App->CL_Locations->flag_Toggle_Player_Flag);
 			return CDRF_DODEFAULT;
 		}
 
 		if (some_item->idFrom == IDC_BT_LOC_FREECAM)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CL_Locations->Toggle_FreeCam_Flag);
+			App->Custom_Button_Toggle(item, App->CL_Locations->flag_Toggle_FreeCam_Flag);
 			return CDRF_DODEFAULT;
 		}
 
@@ -235,7 +235,7 @@ LRESULT CALLBACK CL64_Locations::Proc_Locations(HWND hDlg, UINT message, WPARAM 
 
 			App->CL_Dialogs->Dialog_Text(Enums::Check_Names_Locatoins);
 
-			if (App->CL_Dialogs->Canceled == 0)
+			if (App->CL_Dialogs->flag_Canceled == 0)
 			{
 				strcpy(App->CL_Scene->B_Locations[Location_Index]->Name, App->CL_Dialogs->Chr_Text);
 
@@ -372,8 +372,8 @@ void CL64_Locations::Set_To_PlayerView()
 		//App->SBC_TopTabs->Toggle_FirstCam_Flag = 1;
 		//App->SBC_TopTabs->Toggle_FreeCam_Flag = 0;
 
-		App->CL_Locations->Toggle_Player_Flag = 1;
-		App->CL_Locations->Toggle_FreeCam_Flag = 0;
+		App->CL_Locations->flag_Toggle_Player_Flag = 1;
+		App->CL_Locations->flag_Toggle_FreeCam_Flag = 0;
 
 		App->CL_Scene->B_Player[0]->Player_Node->setVisible(false);
 
@@ -404,8 +404,8 @@ void CL64_Locations::Set_To_FreeCam()
 		//App->CL_TopDlg->flag_Toggle_FirstCam = 0;
 		//App->CL_TopDlg->flag_Toggle_FreeCam = 1;
 
-		App->CL_Locations->Toggle_FreeCam_Flag = 1;
-		App->CL_Locations->Toggle_Player_Flag = 0;
+		App->CL_Locations->flag_Toggle_FreeCam_Flag = 1;
+		App->CL_Locations->flag_Toggle_Player_Flag = 0;
 
 		int f = App->CL_Scene->B_Player[0]->Phys_Body->getCollisionFlags();
 		App->CL_Scene->B_Player[0]->Phys_Body->setCollisionFlags(f & (~(1 << 5)));
@@ -443,7 +443,7 @@ void CL64_Locations::Delete_Location()
 	strcat(tag, App->CL_Scene->B_Locations[Location_Index]->Name);
 
 	App->CL_Dialogs->Show_YesNo_Dlg(tag, (LPSTR)"Are you sure", (LPSTR)"");
-	if (App->CL_Dialogs->Canceled == 0)
+	if (App->CL_Dialogs->flag_Canceled == 0)
 	{
 		App->CL_Scene->B_Locations[Location_Index]->flag_Deleted = 1;
 
@@ -481,7 +481,7 @@ void CL64_Locations::Save_Location()
 
 	App->CL_Dialogs->Dialog_Text(1);
 
-	if (App->CL_Dialogs->Canceled == 0)
+	if (App->CL_Dialogs->flag_Canceled == 0)
 	{
 		strcpy(buf, App->CL_Dialogs->Chr_Text);
 

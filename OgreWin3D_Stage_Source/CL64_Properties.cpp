@@ -396,7 +396,7 @@ bool CL64_Properties::Edit_Player(LPARAM lParam)
 	{
 		App->CL_ImGui_Dialogs->Start_Dialog_Float(0.01,1, App->CL_Scene->B_Player[0]->Ground_speed / 100, (LPSTR)"Ground Speed");
 
-		while (App->CL_ImGui_Dialogs->Show_Dialog_Float == 1)
+		while (App->CL_ImGui_Dialogs->flag_Show_Dialog_Float == 1)
 		{
 			App->CL_ImGui_Dialogs->BackGround_Render_Loop();
 
@@ -408,11 +408,11 @@ bool CL64_Properties::Edit_Player(LPARAM lParam)
 			App->CL_Scene->B_Player[0]->Ground_speed = App->CL_ImGui_Dialogs->m_Dialog_Float * 100;
 		}
 
-		App->CL_ImGui_Dialogs->Show_Dialog_Float = 0;
+		App->CL_ImGui_Dialogs->flag_Show_Dialog_Float = 0;
 
-		if (App->CL_ImGui_Dialogs->Float_Canceld == 0)
+		if (App->CL_ImGui_Dialogs->flag_Float_Canceld == 0)
 		{
-			App->CL_ImGui_Dialogs->Show_Dialog_Float = 0;
+			App->CL_ImGui_Dialogs->flag_Show_Dialog_Float = 0;
 
 			App->CL_Scene->B_Player[0]->Ground_speed = App->CL_ImGui_Dialogs->m_Dialog_Float * 100;
 
@@ -441,7 +441,7 @@ bool CL64_Properties::Edit_Player(LPARAM lParam)
 	{
 		App->CL_ImGui_Dialogs->Start_Dialog_Float(0.01, 1, App->CL_Scene->B_Player[0]->TurnRate, (LPSTR)"Turn Rate");
 
-		while (App->CL_ImGui_Dialogs->Show_Dialog_Float == 1)
+		while (App->CL_ImGui_Dialogs->flag_Show_Dialog_Float == 1)
 		{
 			App->CL_ImGui_Dialogs->BackGround_Render_Loop();
 
@@ -453,11 +453,11 @@ bool CL64_Properties::Edit_Player(LPARAM lParam)
 			App->CL_Scene->B_Player[0]->TurnRate = App->CL_ImGui_Dialogs->m_Dialog_Float;
 		}
 
-		App->CL_ImGui_Dialogs->Show_Dialog_Float = 0;
+		App->CL_ImGui_Dialogs->flag_Show_Dialog_Float = 0;
 
-		if (App->CL_ImGui_Dialogs->Float_Canceld == 0)
+		if (App->CL_ImGui_Dialogs->flag_Float_Canceld == 0)
 		{
-			App->CL_ImGui_Dialogs->Show_Dialog_Float = 0;
+			App->CL_ImGui_Dialogs->flag_Show_Dialog_Float = 0;
 
 			App->CL_Scene->B_Player[0]->TurnRate = App->CL_ImGui_Dialogs->m_Dialog_Float;
 
@@ -486,7 +486,7 @@ bool CL64_Properties::Edit_Player(LPARAM lParam)
 	{
 		App->CL_ImGui_Dialogs->Start_Dialog_Float(0.1, 2, App->CL_Scene->B_Player[0]->PlayerHeight, (LPSTR)"Player Height");
 
-		while (App->CL_ImGui_Dialogs->Show_Dialog_Float == 1)
+		while (App->CL_ImGui_Dialogs->flag_Show_Dialog_Float == 1)
 		{
 			App->CL_ImGui_Dialogs->BackGround_Render_Loop();
 
@@ -498,11 +498,11 @@ bool CL64_Properties::Edit_Player(LPARAM lParam)
 			App->CL_Scene->B_Player[0]->PlayerHeight = App->CL_ImGui_Dialogs->m_Dialog_Float;
 		}
 
-		App->CL_ImGui_Dialogs->Show_Dialog_Float = 0;
+		App->CL_ImGui_Dialogs->flag_Show_Dialog_Float = 0;
 
-		if (App->CL_ImGui_Dialogs->Float_Canceld == 0)
+		if (App->CL_ImGui_Dialogs->flag_Float_Canceld == 0)
 		{
-			App->CL_ImGui_Dialogs->Show_Dialog_Float = 0;
+			App->CL_ImGui_Dialogs->flag_Show_Dialog_Float = 0;
 
 			App->CL_Scene->B_Player[0]->PlayerHeight = App->CL_ImGui_Dialogs->m_Dialog_Float;
 
@@ -530,7 +530,7 @@ bool CL64_Properties::Edit_Player(LPARAM lParam)
 	{
 		App->CL_ImGui_Dialogs->Start_Dialog_Float(0.50, 3, App->CL_Scene->B_Player[0]->StartPos.x, (LPSTR)"Start Pos_X");
 		
-		while (App->CL_ImGui_Dialogs->Show_Dialog_Float == 1)
+		while (App->CL_ImGui_Dialogs->flag_Show_Dialog_Float == 1)
 		{
 			App->CL_ImGui_Dialogs->BackGround_Render_Loop();
 
@@ -538,11 +538,11 @@ bool CL64_Properties::Edit_Player(LPARAM lParam)
 			App->CL_Physics->Reset_Physics();
 		}
 
-		App->CL_ImGui_Dialogs->Show_Dialog_Float = 0;
+		App->CL_ImGui_Dialogs->flag_Show_Dialog_Float = 0;
 
-		if (App->CL_ImGui_Dialogs->Float_Canceld == 0)
+		if (App->CL_ImGui_Dialogs->flag_Float_Canceld == 0)
 		{
-			App->CL_ImGui_Dialogs->Show_Dialog_Float = 0;
+			App->CL_ImGui_Dialogs->flag_Show_Dialog_Float = 0;
 
 			App->CL_Scene->B_Player[0]->StartPos.x = App->CL_ImGui_Dialogs->m_Dialog_Float;
 
@@ -570,7 +570,7 @@ bool CL64_Properties::Edit_Player(LPARAM lParam)
 		//App->CL_Player->Show_Player_And_Physics(true);
 		App->CL_ImGui_Dialogs->Start_Dialog_Float(0.50, 3, App->CL_Scene->B_Player[0]->StartPos.y, (LPSTR)"Start Pos_Y");
 
-		while (App->CL_ImGui_Dialogs->Show_Dialog_Float == 1)
+		while (App->CL_ImGui_Dialogs->flag_Show_Dialog_Float == 1)
 		{
 			App->CL_ImGui_Dialogs->BackGround_Render_Loop();
 
@@ -578,11 +578,11 @@ bool CL64_Properties::Edit_Player(LPARAM lParam)
 			App->CL_Physics->Reset_Physics();
 		}
 
-		App->CL_ImGui_Dialogs->Show_Dialog_Float = 0;
+		App->CL_ImGui_Dialogs->flag_Show_Dialog_Float = 0;
 
-		if (App->CL_ImGui_Dialogs->Float_Canceld == 0)
+		if (App->CL_ImGui_Dialogs->flag_Float_Canceld == 0)
 		{
-			App->CL_ImGui_Dialogs->Show_Dialog_Float = 0;
+			App->CL_ImGui_Dialogs->flag_Show_Dialog_Float = 0;
 
 			App->CL_Scene->B_Player[0]->StartPos.y = App->CL_ImGui_Dialogs->m_Dialog_Float;
 
@@ -609,7 +609,7 @@ bool CL64_Properties::Edit_Player(LPARAM lParam)
 	{
 		App->CL_ImGui_Dialogs->Start_Dialog_Float(0.50, 3, App->CL_Scene->B_Player[0]->StartPos.z, (LPSTR)"Start Pos_Z");
 
-		while (App->CL_ImGui_Dialogs->Show_Dialog_Float == 1)
+		while (App->CL_ImGui_Dialogs->flag_Show_Dialog_Float == 1)
 		{
 			App->CL_ImGui_Dialogs->BackGround_Render_Loop();
 
@@ -617,11 +617,11 @@ bool CL64_Properties::Edit_Player(LPARAM lParam)
 			App->CL_Physics->Reset_Physics();
 		}
 
-		App->CL_ImGui_Dialogs->Show_Dialog_Float = 0;
+		App->CL_ImGui_Dialogs->flag_Show_Dialog_Float = 0;
 
-		if (App->CL_ImGui_Dialogs->Float_Canceld == 0)
+		if (App->CL_ImGui_Dialogs->flag_Float_Canceld == 0)
 		{
-			App->CL_ImGui_Dialogs->Show_Dialog_Float = 0;
+			App->CL_ImGui_Dialogs->flag_Show_Dialog_Float = 0;
 
 			App->CL_Scene->B_Player[0]->StartPos.z = App->CL_ImGui_Dialogs->m_Dialog_Float;
 
@@ -748,25 +748,25 @@ bool CL64_Properties::Edit_Player_Physics(LPARAM lParam)
 
 		App->CL_ImGui_Dialogs->Start_Dialog_Float(0.50, 3, App->CL_Scene->B_Player[0]->Capsule_Radius, (LPSTR)"Player Radius");
 
-		while (App->CL_ImGui_Dialogs->Show_Dialog_Float == 1)
+		while (App->CL_ImGui_Dialogs->flag_Show_Dialog_Float == 1)
 		{
 			App->CL_ImGui_Dialogs->BackGround_Render_Loop();
 
-			if (App->CL_ImGui_Dialogs->Float_Altetered == 1)
+			if (App->CL_ImGui_Dialogs->flag_Float_Altetered == 1)
 			{
 				App->CL_Scene->B_Player[0]->Capsule_Radius = App->CL_ImGui_Dialogs->m_Dialog_Float;
 				App->CL_Com_Player->Adjust_Capsule();
 				App->CL_Physics->Reset_Physics();
 
-				App->CL_ImGui_Dialogs->Float_Altetered = 0;
+				App->CL_ImGui_Dialogs->flag_Float_Altetered = 0;
 			}
 		}
 
-		App->CL_ImGui_Dialogs->Show_Dialog_Float = 0;
+		App->CL_ImGui_Dialogs->flag_Show_Dialog_Float = 0;
 
-		if (App->CL_ImGui_Dialogs->Float_Canceld == 0)
+		if (App->CL_ImGui_Dialogs->flag_Float_Canceld == 0)
 		{
-			App->CL_ImGui_Dialogs->Show_Dialog_Float = 0;
+			App->CL_ImGui_Dialogs->flag_Show_Dialog_Float = 0;
 
 			App->CL_Scene->B_Player[0]->Capsule_Radius = App->CL_ImGui_Dialogs->m_Dialog_Float;
 
@@ -793,25 +793,25 @@ bool CL64_Properties::Edit_Player_Physics(LPARAM lParam)
 	{
 		App->CL_ImGui_Dialogs->Start_Dialog_Float(0.50, 3, App->CL_Scene->B_Player[0]->Capsule_Height, (LPSTR)"Player Height");
 
-		while (App->CL_ImGui_Dialogs->Show_Dialog_Float == 1)
+		while (App->CL_ImGui_Dialogs->flag_Show_Dialog_Float == 1)
 		{
 			App->CL_ImGui_Dialogs->BackGround_Render_Loop();
 
-			if (App->CL_ImGui_Dialogs->Float_Altetered == 1)
+			if (App->CL_ImGui_Dialogs->flag_Float_Altetered == 1)
 			{
 				App->CL_Scene->B_Player[0]->Capsule_Height = App->CL_ImGui_Dialogs->m_Dialog_Float;
 				App->CL_Com_Player->Adjust_Capsule();
 				//App->CL_Physics->Reset_Physics();
 
-				App->CL_ImGui_Dialogs->Float_Altetered = 0;
+				App->CL_ImGui_Dialogs->flag_Float_Altetered = 0;
 			}
 		}
 
-		App->CL_ImGui_Dialogs->Show_Dialog_Float = 0;
+		App->CL_ImGui_Dialogs->flag_Show_Dialog_Float = 0;
 
-		if (App->CL_ImGui_Dialogs->Float_Canceld == 0)
+		if (App->CL_ImGui_Dialogs->flag_Float_Canceld == 0)
 		{
-			App->CL_ImGui_Dialogs->Show_Dialog_Float = 0;
+			App->CL_ImGui_Dialogs->flag_Show_Dialog_Float = 0;
 
 			App->CL_Scene->B_Player[0]->Capsule_Height = App->CL_ImGui_Dialogs->m_Dialog_Float;
 
@@ -866,7 +866,7 @@ bool CL64_Properties::Edit_Messages(LPARAM lParam)
 
 		App->CL_Dialogs->Dialog_Text_Props();
 
-		if (App->CL_Dialogs->Canceled == 1)
+		if (App->CL_Dialogs->flag_Canceled == 1)
 		{
 			return TRUE;
 		}
@@ -936,7 +936,7 @@ bool CL64_Properties::Edit_Messages(LPARAM lParam)
 	{
 		App->CL_Dialogs->Dialog_Counter();
 
-		if (App->CL_Dialogs->Canceled == 1)
+		if (App->CL_Dialogs->flag_Canceled == 1)
 		{
 			return 1;
 		}
@@ -1233,13 +1233,13 @@ bool CL64_Properties::Edit_Move_Entity(LPARAM lParam)
 
 		strcpy(App->CL_Dialogs->btext, "Play Sound");
 
-		App->CL_Dialogs->TrueFlase = App->CL_Scene->B_Object[Index]->flag_Play_Sound;
+		App->CL_Dialogs->flag_TrueFlase = App->CL_Scene->B_Object[Index]->flag_Play_Sound;
 
 		App->CL_Dialogs->Dialog_TrueFlase(App->MainHwnd);
 
-		if (App->CL_Dialogs->Canceled == 0)
+		if (App->CL_Dialogs->flag_Canceled == 0)
 		{
-			if (App->CL_Dialogs->TrueFlase == 1)
+			if (App->CL_Dialogs->flag_TrueFlase == 1)
 			{
 				App->CL_Scene->B_Object[Index]->flag_Play_Sound = 1;
 			}
@@ -1264,7 +1264,7 @@ bool CL64_Properties::Edit_Move_Entity(LPARAM lParam)
 	if (result == 0)
 	{
 		App->CL_Dialogs->Dialog_Counter();
-		if (App->CL_Dialogs->Canceled == 1)
+		if (App->CL_Dialogs->flag_Canceled == 1)
 		{
 			return 1;
 		}
@@ -1392,7 +1392,7 @@ bool CL64_Properties::Edit_Teleport_Entity(LPARAM lParam)
 	{
 		App->CL_Dialogs->Show_YesNo_Dlg((LPSTR)"Play Sound", App->CL_Scene->B_Object[Index]->S_Teleport[0]->Sound_File, (LPSTR)"");
 
-		if (App->CL_Dialogs->Canceled == 0)
+		if (App->CL_Dialogs->flag_Canceled == 0)
 		{
 			App->CL_Scene->B_Object[Index]->S_Teleport[0]->flag_Play = 1;
 		}
@@ -1411,7 +1411,7 @@ bool CL64_Properties::Edit_Teleport_Entity(LPARAM lParam)
 	if (result == 0)
 	{
 		App->CL_Dialogs->Dialog_Counter();
-		if (App->CL_Dialogs->Canceled == 1)
+		if (App->CL_Dialogs->flag_Canceled == 1)
 		{
 			return 1;
 		}
@@ -1426,7 +1426,7 @@ bool CL64_Properties::Edit_Teleport_Entity(LPARAM lParam)
 	if (result == 0)
 	{
 		App->CL_Dialogs->Dialog_Counter();
-		if (App->CL_Dialogs->Canceled == 1)
+		if (App->CL_Dialogs->flag_Canceled == 1)
 		{
 			return 1;
 		}
@@ -1441,7 +1441,7 @@ bool CL64_Properties::Edit_Teleport_Entity(LPARAM lParam)
 	if (result == 0)
 	{
 		App->CL_Dialogs->Dialog_Counter();
-		if (App->CL_Dialogs->Canceled == 1)
+		if (App->CL_Dialogs->flag_Canceled == 1)
 		{
 			return 1;
 		}
@@ -1566,7 +1566,7 @@ void CL64_Properties::Edit_Particle(LPARAM lParam)
 		App->CL_ImGui_Dialogs->Float_Combo_Step = 4;
 		App->CL_ImGui_Dialogs->Start_Dialog_Float(0.01,4, App->CL_Scene->B_Object[Index]->S_Particle[0]->SpeedFactor,(LPSTR) "Particle Speed");
 
-		while (App->CL_ImGui_Dialogs->Show_Dialog_Float == 1)
+		while (App->CL_ImGui_Dialogs->flag_Show_Dialog_Float == 1)
 		{
 			App->CL_ImGui_Dialogs->BackGround_Render_Loop();
 
@@ -1580,11 +1580,11 @@ void CL64_Properties::Edit_Particle(LPARAM lParam)
 
 		}
 
-		App->CL_ImGui_Dialogs->Show_Dialog_Float = 0;
+		App->CL_ImGui_Dialogs->flag_Show_Dialog_Float = 0;
 
-		if (App->CL_ImGui_Dialogs->Float_Canceld == 0)
+		if (App->CL_ImGui_Dialogs->flag_Float_Canceld == 0)
 		{
-			App->CL_ImGui_Dialogs->Show_Dialog_Float = 0;
+			App->CL_ImGui_Dialogs->flag_Show_Dialog_Float = 0;
 
 			App->CL_Scene->B_Object[Index]->S_Particle[0]->SpeedFactor = App->CL_ImGui_Dialogs->m_Dialog_Float;
 
@@ -1878,13 +1878,13 @@ bool CL64_Properties::Edit_Collectables(LPARAM lParam)
 
 		strcpy(App->CL_Dialogs->btext, "Play Sound In The Game");
 
-		App->CL_Dialogs->TrueFlase = App->CL_Scene->B_Object[Index]->S_Collectable[0]->flag_Play;
+		App->CL_Dialogs->flag_TrueFlase = App->CL_Scene->B_Object[Index]->S_Collectable[0]->flag_Play;
 
 		App->CL_Dialogs->Dialog_TrueFlase(App->MainHwnd);
 
-		if (App->CL_Dialogs->Canceled == 0)
+		if (App->CL_Dialogs->flag_Canceled == 0)
 		{
-			if (App->CL_Dialogs->TrueFlase == 1)
+			if (App->CL_Dialogs->flag_TrueFlase == 1)
 			{
 				App->CL_Scene->B_Object[Index]->S_Collectable[0]->flag_Play = 1;
 			}
@@ -1909,7 +1909,7 @@ bool CL64_Properties::Edit_Collectables(LPARAM lParam)
 	{
 		App->CL_Dialogs->Dialog_Counter();
 
-		if (App->CL_Dialogs->Canceled == 1)
+		if (App->CL_Dialogs->flag_Canceled == 1)
 		{
 			return 1;
 		}
@@ -1952,18 +1952,18 @@ bool CL64_Properties::Edit_Counters_OnClick(LPARAM lParam)
 
 		App->CL_ImGui_Dialogs->Start_Dialog_Float(0.5,3, App->CL_Scene->B_Counter[Index]->PosX, (LPSTR)"X Position");
 
-		while (App->CL_ImGui_Dialogs->Show_Dialog_Float == 1)
+		while (App->CL_ImGui_Dialogs->flag_Show_Dialog_Float == 1)
 		{
 			App->CL_ImGui_Dialogs->BackGround_Render_Loop();
 
 			App->CL_Scene->B_Counter[Index]->PosX = App->CL_ImGui_Dialogs->m_Dialog_Float;
 		}
 
-		App->CL_ImGui_Dialogs->Show_Dialog_Float = 0;
+		App->CL_ImGui_Dialogs->flag_Show_Dialog_Float = 0;
 
-		if (App->CL_ImGui_Dialogs->Float_Canceld == 0)
+		if (App->CL_ImGui_Dialogs->flag_Float_Canceld == 0)
 		{
-			App->CL_ImGui_Dialogs->Show_Dialog_Float = 0;
+			App->CL_ImGui_Dialogs->flag_Show_Dialog_Float = 0;
 			App->CL_Scene->B_Counter[Index]->PosX = App->CL_ImGui_Dialogs->m_Dialog_Float;
 			App->CL_Display->Mark_As_Altered_Counter(Index);
 		}
@@ -1988,18 +1988,18 @@ bool CL64_Properties::Edit_Counters_OnClick(LPARAM lParam)
 
 		App->CL_ImGui_Dialogs->Start_Dialog_Float(0.5,3, App->CL_Scene->B_Counter[Index]->PosY, (LPSTR)"Y Position");
 
-		while (App->CL_ImGui_Dialogs->Show_Dialog_Float == 1)
+		while (App->CL_ImGui_Dialogs->flag_Show_Dialog_Float == 1)
 		{
 			App->CL_ImGui_Dialogs->BackGround_Render_Loop();
 
 			App->CL_Scene->B_Counter[Index]->PosY = App->CL_ImGui_Dialogs->m_Dialog_Float;
 		}
 
-		App->CL_ImGui_Dialogs->Show_Dialog_Float = 0;
+		App->CL_ImGui_Dialogs->flag_Show_Dialog_Float = 0;
 
-		if (App->CL_ImGui_Dialogs->Float_Canceld == 0)
+		if (App->CL_ImGui_Dialogs->flag_Float_Canceld == 0)
 		{
-			App->CL_ImGui_Dialogs->Show_Dialog_Float = 0;
+			App->CL_ImGui_Dialogs->flag_Show_Dialog_Float = 0;
 			App->CL_Scene->B_Counter[Index]->PosY = App->CL_ImGui_Dialogs->m_Dialog_Float;
 			App->CL_Display->Mark_As_Altered_Counter(Index);
 		}
@@ -2024,7 +2024,7 @@ bool CL64_Properties::Edit_Counters_OnClick(LPARAM lParam)
 
 		App->CL_Dialogs->Dialog_Text(0);
 
-		if (App->CL_Dialogs->Canceled == 1)
+		if (App->CL_Dialogs->flag_Canceled == 1)
 		{
 			return TRUE;
 		}
@@ -2049,7 +2049,7 @@ bool CL64_Properties::Edit_Counters_OnClick(LPARAM lParam)
 
 		App->CL_Dialogs->Dialog_Int();
 
-		if (App->CL_Dialogs->Canceled == 1)
+		if (App->CL_Dialogs->flag_Canceled == 1)
 		{
 			return TRUE;
 		}

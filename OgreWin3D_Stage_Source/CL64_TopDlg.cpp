@@ -70,12 +70,12 @@ CL64_TopDlg::~CL64_TopDlg(void)
 // *************************************************************************
 void CL64_TopDlg::Reset_Class(void) const
 {
-	App->CL_Ogre->OGL_Listener->Flag_ShowFaces = 0;
-	App->CL_Ogre->OGL_Listener->Flag_ShowPoints = 0;
-	App->CL_Ogre->OGL_Listener->Flag_ShowBones = 0;
-	App->CL_Ogre->OGL_Listener->Flag_ShowNormals = 0;
-	App->CL_Ogre->OGL_Listener->Flag_ShowBoundingBox = 0;
-	App->CL_Ogre->OGL_Listener->Flag_ShowTextured = 1;
+	App->CL_Ogre->OGL_Listener->flag_ShowFaces = 0;
+	App->CL_Ogre->OGL_Listener->flag_ShowPoints = 0;
+	App->CL_Ogre->OGL_Listener->flag_ShowBones = 0;
+	App->CL_Ogre->OGL_Listener->flag_ShowNormals = 0;
+	App->CL_Ogre->OGL_Listener->flag_ShowBoundingBox = 0;
+	App->CL_Ogre->OGL_Listener->flag_ShowTextured = 1;
 
 	SendMessage(GetDlgItem(TabsHwnd, IDC_BTSHOWTEXTURES), BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_TexturesOn_Bmp);
 	SendMessage(GetDlgItem(TabsHwnd, IDC_TBSHOWFACES), BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshOff_Bmp);
@@ -913,7 +913,7 @@ LRESULT CALLBACK CL64_TopDlg::Proc_Game_TB(HWND hDlg, UINT message, WPARAM wPara
 			{
 				App->CL_Dialogs->GameMode_StartPosition_Dlg();
 
-				if (App->CL_Dialogs->Canceled == 1)
+				if (App->CL_Dialogs->flag_Canceled == 1)
 				{
 					return 1;
 				}

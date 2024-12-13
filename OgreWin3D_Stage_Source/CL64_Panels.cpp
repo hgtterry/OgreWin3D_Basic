@@ -252,13 +252,13 @@ void CL64_Panels::Show_FileView(bool Enable)
 {
 	if (Enable == 1)
 	{
-		App->CL_FileView->Flag_FileView_Active = 1;
+		App->CL_FileView->flag_FileView_Active = 1;
 		ShowWindow(App->ListPanel, 1);
 		CheckMenuItem(App->mMenu, ID_WINDOWS_FILEVIEW, MF_BYCOMMAND | MF_CHECKED);
 	}
 	else
 	{
-		App->CL_FileView->Flag_FileView_Active = 0;
+		App->CL_FileView->flag_FileView_Active = 0;
 		ShowWindow(App->ListPanel, 0);
 		CheckMenuItem(App->mMenu, ID_WINDOWS_FILEVIEW, MF_BYCOMMAND | MF_UNCHECKED);
 	}
@@ -271,13 +271,13 @@ void CL64_Panels::Show_Properties(bool Enable)
 {
 	if (Enable == 1)
 	{
-		App->CL_FileView->Flag_FileView_Active = 1;
+		App->CL_FileView->flag_FileView_Active = 1;
 		ShowWindow(App->CL_Properties->Properties_Dlg_hWnd, 1);
 		CheckMenuItem(App->mMenu, ID_WINDOWS_PROPERTIES, MF_BYCOMMAND | MF_CHECKED);
 	}
 	else
 	{
-		App->CL_FileView->Flag_FileView_Active = 0;
+		App->CL_FileView->flag_FileView_Active = 0;
 		ShowWindow(App->CL_Properties->Properties_Dlg_hWnd, 0);
 		CheckMenuItem(App->mMenu, ID_WINDOWS_PROPERTIES, MF_BYCOMMAND | MF_UNCHECKED);
 	}
@@ -305,9 +305,9 @@ void CL64_Panels::Hide_Panels(bool Hide)
 // *************************************************************************
 void CL64_Panels::MovePhysicsView(void)
 {
-	if (App->CL_ImGui_Dialogs->Show_Physics_Console == 1)
+	if (App->CL_ImGui_Dialogs->flag_Show_Physics_Console == 1)
 	{
-		App->CL_ImGui_Dialogs->Physics_Console_StartPos = 0;
+		App->CL_ImGui_Dialogs->flag_Physics_Console_StartPos = 0;
 	}
 }
 

@@ -217,7 +217,7 @@ void CL64_Project_Create::Start_New_Project()
 	// ---------------------------------------------------
 	App->CL_Dialogs->Show_YesNo_Dlg((LPSTR)"Add Area", (LPSTR)"Do you want to add a new Area", (LPSTR)"");
 
-	bool Doit = App->CL_Dialogs->Canceled;
+	bool Doit = App->CL_Dialogs->flag_Canceled;
 	if (Doit == 0)
 	{
 		App->CL_MeshViewer->Mesh_Viewer_Mode = Enums::Mesh_Viewer_Area;

@@ -167,7 +167,7 @@ bool CL64_Bullet_Debug_World::Render_Debug(void)
 		{
 			if (App->CL_MeshViewer->flag_MeshViewer_Running == 1 && App->CL_MeshViewer->MV_btDebug_Manual)
 			{
-				if (App->CL_MeshViewer->MV_Render_Debug == 1)
+				if (App->CL_MeshViewer->flag_MV_Render_Debug == 1)
 				{
 					App->CL_MeshViewer->MV_btDebug_Manual->beginUpdate(0);
 

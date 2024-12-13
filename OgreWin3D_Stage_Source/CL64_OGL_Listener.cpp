@@ -54,13 +54,13 @@ CL64_OGL_Listener::CL64_OGL_Listener(void)
 	MarkerBox_Pitch = 0;
 	MarkerBox_Roll = 0;
 
-	Flag_ShowFaces = 0;
-	Flag_ShowBoundingBox = 0;
-	Flag_ShowPoints = 0;
-	Flag_ShowBones = 0;
-	Flag_ShowNormals = 0;
-	Flag_ShowTextured = 0;
-	Flag_Show_MarkerBox = 0;
+	flag_ShowFaces = 0;
+	flag_ShowBoundingBox = 0;
+	flag_ShowPoints = 0;
+	flag_ShowBones = 0;
+	flag_ShowNormals = 0;
+	flag_ShowTextured = 0;
+	flag_Show_MarkerBox = 0;
 
 	Light_Activated = 0;
 
@@ -231,7 +231,7 @@ void CL64_OGL_Listener::Render_Loop()
 		//RenderCrossHair();
 	}
 
-	if (Flag_Show_MarkerBox == 1)
+	if (flag_Show_MarkerBox == 1)
 	{
 		//Marker_Render_BoundingBox();
 	}

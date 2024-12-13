@@ -69,7 +69,7 @@ CL64_MeshViewer::CL64_MeshViewer(void)
 	flag_Selected_Shape_Cylinder = 0;
 	flag_Selected_Shape_Cone = 0;
 
-	MV_Render_Debug = 0;
+	flag_MV_Render_Debug = 0;
 
 	MV_Resource_Group = "MV_Resource_Group";
 
@@ -113,7 +113,7 @@ void CL64_MeshViewer::Reset_Data()
 	MV_btDebug_Manual = nullptr;
 	MV_btDebug_Node = nullptr;
 
-	MV_Render_Debug = 0;
+	flag_MV_Render_Debug = 0;
 
 	v_Texture_Names.resize(0);
 	v_Scrip_Names.resize(0);
@@ -834,7 +834,7 @@ void CL64_MeshViewer::Clear_Type_Buttons()
 // *************************************************************************
 void CL64_MeshViewer::Close_OgreWindow(void)
 {
-	App->CL_MeshViewer->MV_Render_Debug = 0;
+	App->CL_MeshViewer->flag_MV_Render_Debug = 0;
 
 
 	App->CL_Ogre->mRoot->removeFrameListener(RenderListener);
@@ -895,7 +895,7 @@ bool CL64_MeshViewer::Set_OgreWindow(void)
 	MV_btDebug_Node->attachObject(MV_btDebug_Manual);
 	MV_btDebug_Node->setVisible(true);
 
-	App->CL_MeshViewer->MV_Render_Debug = 1;
+	App->CL_MeshViewer->flag_MV_Render_Debug = 1;
 	return 1;
 }
 
@@ -934,7 +934,7 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_3D(HWND hDlg, UINT message, WP
 		{
 			SetCapture(App->CL_MeshViewer->MeshViewer_3D_hWnd);// Bernie
 			SetCursorPos(App->CursorPosX, App->CursorPosY);
-			App->CL_MeshViewer->RenderListener->Pl_RightMouseDown = 1;
+			App->CL_MeshViewer->RenderListener->flag_Pl_RightMouseDown = 1;
 			App->CUR = SetCursor(NULL);
 			return 1;
 		}
@@ -946,7 +946,7 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_3D(HWND hDlg, UINT message, WP
 		if (App->flag_OgreStarted == 1)
 		{
 			ReleaseCapture();
-			App->CL_MeshViewer->RenderListener->Pl_RightMouseDown = 0;
+			App->CL_MeshViewer->RenderListener->flag_Pl_RightMouseDown = 0;
 			SetCursor(App->CUR);
 			return 1;
 		}
@@ -962,7 +962,7 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_3D(HWND hDlg, UINT message, WP
 			SetCapture(App->CL_MeshViewer->MeshViewer_3D_hWnd);// Bernie
 			SetCursorPos(App->CursorPosX, App->CursorPosY);
 
-			App->CL_MeshViewer->RenderListener->Pl_LeftMouseDown = 1;
+			App->CL_MeshViewer->RenderListener->flag_Pl_LeftMouseDown = 1;
 
 			App->CUR = SetCursor(NULL);
 
@@ -977,7 +977,7 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_3D(HWND hDlg, UINT message, WP
 		if (App->flag_OgreStarted == 1)
 		{
 			ReleaseCapture();
-			App->CL_MeshViewer->RenderListener->Pl_LeftMouseDown = 0;
+			App->CL_MeshViewer->RenderListener->flag_Pl_LeftMouseDown = 0;
 			SetCursor(App->CUR);
 			return 1;
 		}

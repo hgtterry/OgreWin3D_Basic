@@ -38,6 +38,5 @@ public:
 	void Test_Move_Entity(int Index);
 	void Adjust_Object_To_Move();
 
-
 };
 

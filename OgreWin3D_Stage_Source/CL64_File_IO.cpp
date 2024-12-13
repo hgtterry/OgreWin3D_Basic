@@ -32,7 +32,7 @@ CL64_File_IO::CL64_File_IO()
 
 	szSelectedDir[0] = 0;
 	BrowserMessage[0] = 0;
-	Canceled = 0;
+	flag_Canceled = 0;
 	DeskTop_Folder[0] = 0;
 	Project_Path_File_Name[0] = 0;
 	mHistoryMenu = NULL;
@@ -214,7 +214,7 @@ void CL64_File_IO::Save_File()
 void CL64_File_IO::Pick_Folder()
 {
 	strcpy(szSelectedDir,"No_Selection");
-	Canceled = 1;
+	flag_Canceled = 1;
 
 	IFileDialog* pfd;
 	if (SUCCEEDED(CoCreateInstance(CLSID_FileOpenDialog, NULL, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&pfd))))
@@ -236,7 +236,7 @@ void CL64_File_IO::Pick_Folder()
 					std::string c(path.begin(), path.end());
 					
 					strcpy(szSelectedDir, c.c_str());
-					Canceled = 0;
+					flag_Canceled = 0;
 	
 				}
 				psi->Release();
@@ -493,7 +493,7 @@ void  CL64_File_IO::ResentHistory_Clear(bool FirstTime)
 	if (FirstTime == 0)
 	{
 		App->CL_Dialogs->Show_YesNo_Dlg((LPSTR)"Delete file history.", (LPSTR)"Are you sure all File history will be Deleted Procede.", (LPSTR)"");
-		if (App->CL_Dialogs->Canceled == 1)
+		if (App->CL_Dialogs->flag_Canceled == 1)
 		{
 			return;
 		}

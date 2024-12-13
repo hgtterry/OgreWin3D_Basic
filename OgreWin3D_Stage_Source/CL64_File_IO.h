@@ -50,7 +50,7 @@ public:
 
 	char Project_Path_File_Name[MAX_PATH];
 
-	bool Canceled;
+	bool flag_Canceled;
 	TCHAR szSelectedDir[MAX_PATH];
 	char BrowserMessage[MAX_PATH];
 

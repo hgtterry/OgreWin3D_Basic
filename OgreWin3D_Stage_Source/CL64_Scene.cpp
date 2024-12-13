@@ -297,7 +297,7 @@ bool CL64_Scene::Game_Mode(void)
 {
 	if (App->CL_Build_Game->flag_Use_Front_Dlg == 1)
 	{
-		if (App->CL_Dialogs->Flag_Game_Start_Option == Enums::Game_Start_Full)
+		if (App->CL_Dialogs->flag_Game_Start_Option == Enums::Game_Start_Full)
 		{
 			App->CL_Ogre->Ogre3D_Listener->flag_Block_Mouse = 1;
 			App->CL_Keyboard->flag_Block_Keyboard = 1;
@@ -358,7 +358,7 @@ bool CL64_Scene::Game_Mode(void)
 
 	App->CL_Physics->Reset_Triggers();
 
-	App->CL_ImGui_Dialogs->Show_Physics_Console = 0;
+	App->CL_ImGui_Dialogs->flag_Show_Physics_Console = 0;
 	App->CL_Com_Player->Show_Player_And_Physics(false);
 
 	return 1;
@@ -406,7 +406,7 @@ bool CL64_Scene::Editor_Mode(void)
 
 	App->CL_ImGui->flag_Show_FPS = App->CL_Build_Game->flag_Saved_Show_FPS;
 
-	App->CL_ImGui_Dialogs->Show_Physics_Console = 1;
+	App->CL_ImGui_Dialogs->flag_Show_Physics_Console = 1;
 	
 	return 1;
 }

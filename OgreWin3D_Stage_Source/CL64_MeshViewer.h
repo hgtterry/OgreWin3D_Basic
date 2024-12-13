@@ -53,7 +53,7 @@ public:
 	bool flag_MV_Resource_Path_Loaded;
 	bool flag_MeshViewer_Running;
 
-	bool MV_Render_Debug;
+	bool flag_MV_Render_Debug;
 	// Used for Creating Objects ----------------
 	char Object_Name[MAX_PATH];
 	char Selected_MeshFile[MAX_PATH];

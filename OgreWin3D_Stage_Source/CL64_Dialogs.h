@@ -49,10 +49,10 @@ public:
 	void GameMode_StartPosition_Dlg();
 	void Game_Config_Dlg();
 
-	bool Flag_Game_Start_Option;
-	bool TrueFlase;
-	bool Canceled;
-	bool Flag_Convert_to_Ogre;
+	bool flag_Game_Start_Option;
+	bool flag_TrueFlase;
+	bool flag_Canceled;
+	bool flag_Convert_to_Ogre;
 
 	char btext[MAX_PATH];
 	char Chr_Text[MAX_PATH];
@@ -108,7 +108,6 @@ private:
 	bool flag_Mouse_Slow;
 	bool flag_Mouse_VerySlow;
 	bool flag_Mouse_Fast;
-
 	bool flag_Dlg_Int_Active;
 };
 

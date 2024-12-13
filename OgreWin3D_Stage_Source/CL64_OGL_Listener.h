@@ -40,13 +40,13 @@ public:
 
 	int Selected_Face_Group;
 
-	bool Flag_ShowFaces;
-	bool Flag_ShowBoundingBox;
-	bool Flag_ShowPoints;
-	bool Flag_ShowBones;
-	bool Flag_ShowNormals;
-	bool Flag_ShowTextured;
-	bool Flag_Show_MarkerBox;
+	bool flag_ShowFaces;
+	bool flag_ShowBoundingBox;
+	bool flag_ShowPoints;
+	bool flag_ShowBones;
+	bool flag_ShowNormals;
+	bool flag_ShowTextured;
+	bool flag_Show_MarkerBox;
 
 	bool flag_ShowOnlySubFaces;
 

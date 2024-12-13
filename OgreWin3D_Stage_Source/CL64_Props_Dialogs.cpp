@@ -392,21 +392,21 @@ LRESULT CALLBACK CL64_Props_Dialogs::Proc_Dialog_Dimensions(HWND hDlg, UINT mess
 		if (some_item->idFrom == IDC_BT_POSITION)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CL_Dimensions->Show_Position);
+			App->Custom_Button_Toggle(item, App->CL_Dimensions->flag_Show_Position);
 			return CDRF_DODEFAULT;
 		}
 
 		if (some_item->idFrom == IDC_BT_SCALE)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CL_Dimensions->Show_Scale);
+			App->Custom_Button_Toggle(item, App->CL_Dimensions->flag_Show_Scale);
 			return CDRF_DODEFAULT;
 		}
 
 		if (some_item->idFrom == IDC_BT_ROTATION)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CL_Dimensions->Show_Rotation);
+			App->Custom_Button_Toggle(item, App->CL_Dimensions->flag_Show_Rotation);
 			return CDRF_DODEFAULT;
 		}
 
@@ -455,7 +455,7 @@ LRESULT CALLBACK CL64_Props_Dialogs::Proc_Dialog_Dimensions(HWND hDlg, UINT mess
 					if (App->CL_Properties->Edit_Category == Enums::Edit_Area)
 					{
 						//App->CL_Dialogs->YesNo("Edit Area", "Are You Sure", 1);
-						bool Doit = App->CL_Dialogs->Canceled;
+						bool Doit = App->CL_Dialogs->flag_Canceled;
 						if (Doit == 1)
 						{
 							SendMessage(temp, BM_SETCHECK, 1, 0);
@@ -475,9 +475,9 @@ LRESULT CALLBACK CL64_Props_Dialogs::Proc_Dialog_Dimensions(HWND hDlg, UINT mess
 		if (LOWORD(wParam) == IDC_BT_POSITION)
 		{
 
-			if (App->CL_Dimensions->Show_Position == 1)
+			if (App->CL_Dimensions->flag_Show_Position == 1)
 			{
-				App->CL_Dimensions->Show_Position = 0;
+				App->CL_Dimensions->flag_Show_Position = 0;
 				//App->SBC_Markers->Hide_Axis_Marker();
 			}
 			else
@@ -485,9 +485,9 @@ LRESULT CALLBACK CL64_Props_Dialogs::Proc_Dialog_Dimensions(HWND hDlg, UINT mess
 				//App->SBC_Markers->Hide_Axis_Marker();
 
 				App->CL_Dimensions->Prepare_Dimensions();
-				App->CL_Dimensions->Show_Position = 1;
-				App->CL_Dimensions->Show_Scale = 0;
-				App->CL_Dimensions->Show_Rotation = 0;
+				App->CL_Dimensions->flag_Show_Position = 1;
+				App->CL_Dimensions->flag_Show_Scale = 0;
+				App->CL_Dimensions->flag_Show_Rotation = 0;
 			}
 
 			RedrawWindow(App->CL_Props_Dialogs->Dimensions_Dlg_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
@@ -498,9 +498,9 @@ LRESULT CALLBACK CL64_Props_Dialogs::Proc_Dialog_Dimensions(HWND hDlg, UINT mess
 		if (LOWORD(wParam) == IDC_BT_SCALE)
 		{
 
-			if (App->CL_Dimensions->Show_Scale == 1)
+			if (App->CL_Dimensions->flag_Show_Scale == 1)
 			{
-				App->CL_Dimensions->Show_Scale = 0;
+				App->CL_Dimensions->flag_Show_Scale = 0;
 				//App->SBC_Markers->Hide_Axis_Marker();
 			}
 			else
@@ -508,9 +508,9 @@ LRESULT CALLBACK CL64_Props_Dialogs::Proc_Dialog_Dimensions(HWND hDlg, UINT mess
 				//App->SBC_Markers->Hide_Axis_Marker();
 
 				App->CL_Dimensions->Prepare_Dimensions();
-				App->CL_Dimensions->Show_Scale = 1;
-				App->CL_Dimensions->Show_Position = 0;
-				App->CL_Dimensions->Show_Rotation = 0;
+				App->CL_Dimensions->flag_Show_Scale = 1;
+				App->CL_Dimensions->flag_Show_Position = 0;
+				App->CL_Dimensions->flag_Show_Rotation = 0;
 			}
 
 			RedrawWindow(App->CL_Props_Dialogs->Dimensions_Dlg_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
@@ -521,9 +521,9 @@ LRESULT CALLBACK CL64_Props_Dialogs::Proc_Dialog_Dimensions(HWND hDlg, UINT mess
 		if (LOWORD(wParam) == IDC_BT_ROTATION)
 		{
 
-			if (App->CL_Dimensions->Show_Rotation == 1)
+			if (App->CL_Dimensions->flag_Show_Rotation == 1)
 			{
-				App->CL_Dimensions->Show_Rotation = 0;
+				App->CL_Dimensions->flag_Show_Rotation = 0;
 				//App->SBC_Markers->Hide_Axis_Marker();
 			}
 			else
@@ -531,9 +531,9 @@ LRESULT CALLBACK CL64_Props_Dialogs::Proc_Dialog_Dimensions(HWND hDlg, UINT mess
 				//App->SBC_Markers->Hide_Axis_Marker();
 
 				App->CL_Dimensions->Prepare_Dimensions();
-				App->CL_Dimensions->Show_Rotation = 1;
-				App->CL_Dimensions->Show_Position = 0;
-				App->CL_Dimensions->Show_Scale = 0;
+				App->CL_Dimensions->flag_Show_Rotation = 1;
+				App->CL_Dimensions->flag_Show_Position = 0;
+				App->CL_Dimensions->flag_Show_Scale = 0;
 			}
 
 			RedrawWindow(App->CL_Props_Dialogs->Dimensions_Dlg_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
@@ -555,6 +555,7 @@ LRESULT CALLBACK CL64_Props_Dialogs::Proc_Dialog_Dimensions(HWND hDlg, UINT mess
 	}
 
 	}
+
 	return FALSE;
 }
 
@@ -1022,7 +1023,7 @@ LRESULT CALLBACK CL64_Props_Dialogs::Proc_Player_PropsPanel(HWND hDlg, UINT mess
 		if (some_item->idFrom == IDC_PHYSICSDEBUG)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CL_Com_Player->Show_Physics_Debug);
+			App->Custom_Button_Toggle(item, App->CL_Com_Player->flag_Show_Physics_Debug);
 			return CDRF_DODEFAULT;
 		}
 
@@ -1081,7 +1082,7 @@ LRESULT CALLBACK CL64_Props_Dialogs::Proc_Player_PropsPanel(HWND hDlg, UINT mess
 
 				App->CL_Dialogs->Show_YesNo_Dlg((LPSTR)"Are You Sure", (LPSTR)"Save new Player Start Location", (LPSTR)"");
 
-				bool Doit = App->CL_Dialogs->Canceled;
+				bool Doit = App->CL_Dialogs->flag_Canceled;
 				if (Doit == 1)
 				{
 					return 1;
@@ -1141,7 +1142,7 @@ LRESULT CALLBACK CL64_Props_Dialogs::Proc_Player_PropsPanel(HWND hDlg, UINT mess
 		if (LOWORD(wParam) == IDC_PHYSICSDEBUG)
 		{
 			
-			if (App->CL_Com_Player->Show_Physics_Debug == 1)
+			if (App->CL_Com_Player->flag_Show_Physics_Debug == 1)
 			{
 				App->CL_Com_Player->Show_Physics(false);
 			}

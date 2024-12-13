@@ -201,7 +201,7 @@ void CL64_Com_MoveEntity::Rename_Move_Entity(int Index)
 
 	App->CL_Dialogs->Dialog_Text(Enums::Check_Names_Objects);
 
-	if (App->CL_Dialogs->Canceled == 1)
+	if (App->CL_Dialogs->flag_Canceled == 1)
 	{
 		return;
 	}
@@ -219,7 +219,7 @@ void CL64_Com_MoveEntity::Rename_Move_Entity(int Index)
 // *************************************************************************
 void CL64_Com_MoveEntity::Reset_Move_Entity(int Index)
 {
-	App->CL_Collision->DoMove = 0;
+	App->CL_Collision->flag_DoMove = 0;
 	App->CL_SoundMgr->SoundEngine->stopAllSounds();
 
 	Ogre::Vector3 M_Pos;

@@ -50,7 +50,7 @@ public:
 	void Mark_Clear(HTREEITEM Item);
 	void Mark_Clear_Folder(HTREEITEM Item);
 
-	bool Flag_FileView_Active;
+	bool flag_FileView_Active;
 
 	HTREEITEM FV_Players_Folder;	// Players Folder FileFView
 	HTREEITEM FV_Areas_Folder;		// Areas/Rooms Folder FileFView

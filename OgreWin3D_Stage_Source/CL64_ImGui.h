@@ -61,7 +61,7 @@ public:
 	ImFont* fontDroid;
 
 	bool flag_Imgui_Initialized;
-	bool StartPos;
+	bool flag_StartPos;
 	bool flag_Show_FPS;
 	bool flag_Show_ImGui_Demo;
 	bool flag_Show_Demo_Options;

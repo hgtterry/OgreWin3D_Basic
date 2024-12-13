@@ -36,7 +36,7 @@ THE SOFTWARE.
 
 CL64_FileView::CL64_FileView(void)
 {
-	Flag_FileView_Active = 0;
+	flag_FileView_Active = 0;
 
 	FileView_Folder[0] = 0;
 	FileView_File[0] = 0;
@@ -133,7 +133,7 @@ LRESULT CALLBACK CL64_FileView::Proc_ListPanel(HWND hDlg, UINT message, WPARAM w
 
 	case WM_INITDIALOG:
 	{
-		App->CL_FileView->Flag_FileView_Active = 1;
+		App->CL_FileView->flag_FileView_Active = 1;
 
 		SendDlgItemMessage(hDlg, IDC_TREE1, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_MAINENVIRONMENT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
@@ -287,7 +287,7 @@ LRESULT CALLBACK CL64_FileView::Proc_ListPanel(HWND hDlg, UINT message, WPARAM w
 
 	case WM_CLOSE:
 	{
-		App->CL_FileView->Flag_FileView_Active = 0;
+		App->CL_FileView->flag_FileView_Active = 0;
 		ShowWindow(App->ListPanel, 0);
 
 		CheckMenuItem(App->mMenu, ID_WINDOWS_FILEVIEW, MF_BYCOMMAND | MF_UNCHECKED);
@@ -1121,13 +1121,13 @@ void CL64_FileView::Show_FileView(bool Enable)
 
 	if (Enable == 1)
 	{
-		App->CL_FileView->Flag_FileView_Active = 1;
+		App->CL_FileView->flag_FileView_Active = 1;
 		ShowWindow(App->ListPanel, 1);
 		CheckMenuItem(App->mMenu, ID_WINDOWS_FILEVIEW, MF_BYCOMMAND | MF_CHECKED);
 	}
 	else
 	{
-		App->CL_FileView->Flag_FileView_Active = 0;
+		App->CL_FileView->flag_FileView_Active = 0;
 		ShowWindow(App->ListPanel, 0);
 		CheckMenuItem(App->mMenu, ID_WINDOWS_FILEVIEW, MF_BYCOMMAND | MF_UNCHECKED);
 	}
@@ -1573,7 +1573,7 @@ void CL64_FileView::Context_New(HWND hDlg)
 	{
 		App->CL_Dialogs->Show_YesNo_Dlg((LPSTR)"Add Area", (LPSTR)"Do you want to add a new Area", (LPSTR)"");
 
-		bool Doit = App->CL_Dialogs->Canceled;
+		bool Doit = App->CL_Dialogs->flag_Canceled;
 		if (Doit == 0)
 		{
 			App->CL_MeshViewer->Mesh_Viewer_Mode = Enums::Mesh_Viewer_Area;
@@ -1608,7 +1608,7 @@ void CL64_FileView::Context_New(HWND hDlg)
 	{
 		App->CL_Dialogs->Show_YesNo_Dlg((LPSTR)"Add Object", (LPSTR)"Do you want to add a new Object Entity", (LPSTR)"");
 
-		bool Doit = App->CL_Dialogs->Canceled;
+		bool Doit = App->CL_Dialogs->flag_Canceled;
 		if (Doit == 0)
 		{
 			App->CL_MeshViewer->Mesh_Viewer_Mode = Enums::Mesh_Viewer_Objects;
@@ -1623,7 +1623,7 @@ void CL64_FileView::Context_New(HWND hDlg)
 	{
 		App->CL_Dialogs->Show_YesNo_Dlg((LPSTR)"Add Message", (LPSTR)"Do you want to add a new Message Entity", (LPSTR)"");
 
-		bool Doit = App->CL_Dialogs->Canceled;
+		bool Doit = App->CL_Dialogs->flag_Canceled;
 		if (Doit == 0)
 		{
 			App->CL_Com_Messages->Add_New_Message();
@@ -1637,7 +1637,7 @@ void CL64_FileView::Context_New(HWND hDlg)
 	{
 		App->CL_Dialogs->Show_YesNo_Dlg((LPSTR)"Add Message", (LPSTR)"Do you want to add a new Sound Entity", (LPSTR)"");
 
-		bool Doit = App->CL_Dialogs->Canceled;
+		bool Doit = App->CL_Dialogs->flag_Canceled;
 		if (Doit == 0)
 		{
 			App->CL_Com_Sounds->Add_New_Sound();
@@ -1651,7 +1651,7 @@ void CL64_FileView::Context_New(HWND hDlg)
 	{
 		App->CL_Dialogs->Show_YesNo_Dlg((LPSTR)"Add Environ Entity", (LPSTR)"Do you want to add a new Environ Entity", (LPSTR)"");
 
-		bool Doit = App->CL_Dialogs->Canceled;
+		bool Doit = App->CL_Dialogs->flag_Canceled;
 		if (Doit == 0)
 		{
 			App->CL_Com_Environments->Add_New_Environ_Entity(0);
@@ -1665,7 +1665,7 @@ void CL64_FileView::Context_New(HWND hDlg)
 	{
 		App->CL_Dialogs->Show_YesNo_Dlg((LPSTR)"Add Message", (LPSTR)"Do you want to add a new Move Entity", (LPSTR)"");
 
-		bool Doit = App->CL_Dialogs->Canceled;
+		bool Doit = App->CL_Dialogs->flag_Canceled;
 		if (Doit == 0)
 		{
 			App->CL_Com_MoveEntity->Add_New_Move_Entity();
@@ -1679,7 +1679,7 @@ void CL64_FileView::Context_New(HWND hDlg)
 	{
 		App->CL_Dialogs->Show_YesNo_Dlg((LPSTR)"Add Message", (LPSTR)"Do you want to add a new Teleport Entity", (LPSTR)"");
 
-		bool Doit = App->CL_Dialogs->Canceled;
+		bool Doit = App->CL_Dialogs->flag_Canceled;
 		if (Doit == 0)
 		{
 			App->CL_Com_Teleporters->Add_New_Teleporter();
@@ -1694,7 +1694,7 @@ void CL64_FileView::Context_New(HWND hDlg)
 
 		App->CL_Dialogs->Show_YesNo_Dlg((LPSTR)"Add Object", (LPSTR)"Do you want to add a new Collectable", (LPSTR)"");
 
-		bool Doit = App->CL_Dialogs->Canceled;
+		bool Doit = App->CL_Dialogs->flag_Canceled;
 		if (Doit == 0)
 		{
 			App->CL_MeshViewer->Mesh_Viewer_Mode = Enums::Mesh_Viewer_Collectables;
@@ -1710,7 +1710,7 @@ void CL64_FileView::Context_New(HWND hDlg)
 
 		App->CL_Dialogs->Show_YesNo_Dlg((LPSTR)"Add Counter", (LPSTR)"Do you want to add a new Counter", (LPSTR)"");
 
-		bool Doit = App->CL_Dialogs->Canceled;
+		bool Doit = App->CL_Dialogs->flag_Canceled;
 		if (Doit == 0)
 		{
 			App->CL_Display->Add_New_Counter();
@@ -1738,7 +1738,7 @@ void CL64_FileView::Context_New(HWND hDlg)
 
 		App->CL_Dialogs->Show_YesNo_Dlg((LPSTR)"Add Particle", (LPSTR)"Do you want to add a new Particle", (LPSTR)"");
 
-		bool Doit = App->CL_Dialogs->Canceled;
+		bool Doit = App->CL_Dialogs->flag_Canceled;
 		if (Doit == 0)
 		{
 			strcpy(App->CL_ImGui_Dialogs->List_Banner, "Select Particle");
@@ -1929,7 +1929,7 @@ void CL64_FileView::Context_Delete(HWND hDlg)
 	{
 		App->CL_Dialogs->Show_YesNo_Dlg((LPSTR)"Remove Object", (LPSTR)"Are you sure", (LPSTR)"");
 
-		bool Doit = App->CL_Dialogs->Canceled;
+		bool Doit = App->CL_Dialogs->flag_Canceled;
 		if (Doit == 0)
 		{
 			App->CL_Com_Objects->Delete_Object();

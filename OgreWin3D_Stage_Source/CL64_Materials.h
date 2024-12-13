@@ -37,7 +37,7 @@ public:
 	void Get_Material_Name(Ogre::Entity* mEntity);
 	void Update_MaterialFile(Ogre::Entity* mBaseEntity);
 
-	bool Show_Material_Editor;
+	bool flag_Show_Material_Editor;
 
 
 protected:
@@ -46,7 +46,7 @@ protected:
 
 	void Scroll_Gui();
 
-	bool Show_Scroll_Editor;
+	bool flag_Show_Scroll_Editor;
 	int item_current_idx;
 	int NumSubMesh;
 

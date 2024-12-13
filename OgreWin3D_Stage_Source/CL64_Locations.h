@@ -50,7 +50,7 @@ protected:
 
 	HWND Locations_Dlg_hWnd;
 
-	bool Toggle_Player_Flag;
-	bool Toggle_FreeCam_Flag;
+	bool flag_Toggle_Player_Flag;
+	bool flag_Toggle_FreeCam_Flag;
 };
 

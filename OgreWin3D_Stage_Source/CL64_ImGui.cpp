@@ -47,7 +47,7 @@ CL64_ImGui::CL64_ImGui(void)
 	Object_Data_PosX = 0;
 	Object_Data_PosY = 0;
 
-	StartPos = 0;
+	flag_StartPos = 0;
 	flag_Show_FPS = 1;
 	flag_Show_ImGui_Demo = 0;
 	flag_Show_Demo_Options = 0;
@@ -257,24 +257,24 @@ void CL64_ImGui::ImGui_Render_Loop(void)
 	}
 
 	// SBC_Dimensions
-	if (App->CL_Dimensions->Show_Position == 1 || App->CL_Dimensions->Show_Scale == 1 || App->CL_Dimensions->Show_Rotation == 1)
+	if (App->CL_Dimensions->flag_Show_Position == 1 || App->CL_Dimensions->flag_Show_Scale == 1 || App->CL_Dimensions->flag_Show_Rotation == 1)
 	{
-		App->CL_Dimensions->Show_Dimensions = 1;
+		App->CL_Dimensions->flag_Show_Dimensions = 1;
 		App->CL_Dimensions->ImGui_Dimensions();
 	}
 	else
 	{
-		App->CL_Dimensions->Show_Dimensions = 0;
+		App->CL_Dimensions->flag_Show_Dimensions = 0;
 	}
 
 	// SBC_Gui_Dialogs
-	if (App->CL_ImGui_Dialogs->Show_Dialog_Float == 1)
+	if (App->CL_ImGui_Dialogs->flag_Show_Dialog_Float == 1)
 	{
 		App->CL_ImGui_Dialogs->Dialog_Float();
 	}
 
 	// SBC_Gui_Dialogs - Material Editor
-	if (App->CL_Materials->Show_Material_Editor == 1)
+	if (App->CL_Materials->flag_Show_Material_Editor == 1)
 	{
 		App->CL_Materials->Material_Editor_Gui();
 	}
@@ -295,7 +295,7 @@ void CL64_ImGui::ImGui_Render_Loop(void)
 	}
 
 	// SBC_Gui_Dialogs - Physics Console
-	if (App->CL_ImGui_Dialogs->Show_Physics_Console == 1)
+	if (App->CL_ImGui_Dialogs->flag_Show_Physics_Console == 1)
 	{
 		App->CL_ImGui_Dialogs->Physics_Console_Gui();
 	}
@@ -317,11 +317,11 @@ void CL64_ImGui::ImGui_FPS(void)
 	}
 	else
 	{
-		if (StartPos == 0)
+		if (flag_StartPos == 0)
 		{
 			ImGui::SetWindowPos("Ogre Data", ImVec2(500, 5));
 			ImGui::SetWindowSize(ImVec2(350, 90));
-			StartPos = 1;
+			flag_StartPos = 1;
 		}
 
 		ImGui::Spacing();

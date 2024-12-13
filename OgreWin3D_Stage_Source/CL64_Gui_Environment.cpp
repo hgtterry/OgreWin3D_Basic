@@ -292,13 +292,13 @@ void CL64_Gui_Environment::Environ_PropertyEditor()
 		{
 			strcpy(App->CL_Dialogs->btext, "Set Play Sound Track");
 
-			App->CL_Dialogs->TrueFlase = App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->flag_Play;
+			App->CL_Dialogs->flag_TrueFlase = App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->flag_Play;
 
 			App->CL_Dialogs->Dialog_TrueFlase(App->MainHwnd);
 
-			if (App->CL_Dialogs->Canceled == 0)
+			if (App->CL_Dialogs->flag_Canceled == 0)
 			{
-				if (App->CL_Dialogs->TrueFlase == 1)
+				if (App->CL_Dialogs->flag_TrueFlase == 1)
 				{
 					App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->flag_Play = 1;
 					App->CL_Com_Environments->Set_Environment_By_Index(1, Eviron_Index);
@@ -324,13 +324,13 @@ void CL64_Gui_Environment::Environ_PropertyEditor()
 		{
 			strcpy(App->CL_Dialogs->btext, "Set Play Sound Loop");
 
-			App->CL_Dialogs->TrueFlase = App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->flag_Loop;
+			App->CL_Dialogs->flag_TrueFlase = App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->flag_Loop;
 
 			App->CL_Dialogs->Dialog_TrueFlase(App->MainHwnd);
 
-			if (App->CL_Dialogs->Canceled == 0)
+			if (App->CL_Dialogs->flag_Canceled == 0)
 			{
-				if (App->CL_Dialogs->TrueFlase == 1)
+				if (App->CL_Dialogs->flag_TrueFlase == 1)
 				{
 					App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->flag_Loop = 1;
 					App->CL_Com_Environments->Set_Environment_By_Index(0, Eviron_Index);
@@ -364,14 +364,14 @@ void CL64_Gui_Environment::Environ_PropertyEditor()
 		{
 			strcpy(App->CL_Dialogs->btext, "Set Fog Visiblity");
 
-			App->CL_Dialogs->TrueFlase = App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->Fog_On;
+			App->CL_Dialogs->flag_TrueFlase = App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->Fog_On;
 
 			strcpy(App->CL_Dialogs->btext, "Set Fog On/Off");
 			App->CL_Dialogs->Dialog_TrueFlase(App->MainHwnd);
 
-			if (App->CL_Dialogs->Canceled == 0)
+			if (App->CL_Dialogs->flag_Canceled == 0)
 			{
-				if (App->CL_Dialogs->TrueFlase == 1)
+				if (App->CL_Dialogs->flag_TrueFlase == 1)
 				{
 					App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->Fog_On = 1;
 					EnableFog(true);
@@ -464,14 +464,14 @@ void CL64_Gui_Environment::Environ_PropertyEditor()
 		{
 			strcpy(App->CL_Dialogs->btext, "Set Sky Visiblity");
 
-			App->CL_Dialogs->TrueFlase = App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->flag_Enabled;
+			App->CL_Dialogs->flag_TrueFlase = App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->flag_Enabled;
 
 			strcpy(App->CL_Dialogs->btext, "Set Sky On/Off");
 			App->CL_Dialogs->Dialog_TrueFlase(App->MainHwnd);
 
-			if (App->CL_Dialogs->Canceled == 0)
+			if (App->CL_Dialogs->flag_Canceled == 0)
 			{
-				if (App->CL_Dialogs->TrueFlase == 1)
+				if (App->CL_Dialogs->flag_TrueFlase == 1)
 				{
 					App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->flag_Enabled = 1;
 					SetSky(true);

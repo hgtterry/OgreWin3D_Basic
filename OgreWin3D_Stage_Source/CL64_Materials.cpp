@@ -28,8 +28,8 @@ THE SOFTWARE.
 
 CL64_Materials::CL64_Materials(void)
 {
-	Show_Material_Editor = 0;
-	Show_Scroll_Editor = 0;
+	flag_Show_Material_Editor = 0;
+	flag_Show_Scroll_Editor = 0;
 	item_current_idx = 0;
 	BaseEntity = nullptr;
 	BaseNode = nullptr;
@@ -96,7 +96,7 @@ void CL64_Materials::Start_Material_Editor()
 	//App->CL_Panels->Close_Gui_Panels();
 	//App->CL_Panels->Enable_All_Panels(false);
 
-	Show_Material_Editor = 1;
+	flag_Show_Material_Editor = 1;
 }
 
 // *************************************************************************
@@ -112,7 +112,7 @@ void CL64_Materials::Material_Editor_Gui()
 
 	ImGui::PushStyleColor(ImGuiCol_WindowBg, IM_COL32(239, 239, 239, 255));
 
-	if (!ImGui::Begin("Material_Editor", &Show_Material_Editor, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar))
+	if (!ImGui::Begin("Material_Editor", &flag_Show_Material_Editor, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar))
 	{
 		ImGui::End();
 	}
@@ -188,7 +188,7 @@ void CL64_Materials::Material_Editor_Gui()
 
 		if (listbox_item_current == 1)
 		{
-			Show_Scroll_Editor = 1;
+			flag_Show_Scroll_Editor = 1;
 			Scroll_Gui();
 		}
 
@@ -209,9 +209,9 @@ void CL64_Materials::Material_Editor_Gui()
 		if (ImGui::Button("Close", ImVec2(100, 0)))
 		{
 			//Update_MaterialFile();
-			Show_Material_Editor = 0;
+			flag_Show_Material_Editor = 0;
 			Close_Material_Editor();
-			Show_Material_Editor = 0;
+			flag_Show_Material_Editor = 0;
 		}
 
 		ImGui::SameLine();
@@ -249,7 +249,7 @@ void CL64_Materials::Scroll_Gui()
 
 	ImGui::PushStyleColor(ImGuiCol_WindowBg, IM_COL32(239, 239, 239, 255));
 
-	if (!ImGui::Begin("Scroll_Editor", &Show_Scroll_Editor, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar))
+	if (!ImGui::Begin("Scroll_Editor", &flag_Show_Scroll_Editor, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar))
 	{
 		ImGui::End();
 	}
@@ -270,7 +270,7 @@ void CL64_Materials::Scroll_Gui()
 // *************************************************************************
 void CL64_Materials::Close_Material_Editor()
 {
-	Show_Material_Editor = 0;
+	flag_Show_Material_Editor = 0;
 	BaseEntity = nullptr;
 	item_current_idx = 0;
 

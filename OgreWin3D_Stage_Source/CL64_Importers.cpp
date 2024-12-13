@@ -28,7 +28,7 @@ THE SOFTWARE.
 
 CL64_Importers::CL64_Importers()
 {
-	Flag_Reload_Ogre_Model = 0;
+	flag_Reload_Ogre_Model = 0;
 	Ogre_CFG_Resource_Group = "Ogre_CFG_Resource_Group";
 
 }
