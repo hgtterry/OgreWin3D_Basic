@@ -871,8 +871,8 @@ LRESULT CALLBACK CL64_Dialogs::Proc_Dialog_Text(HWND hDlg, UINT message, WPARAM 
 	{
 		if (LOWORD(wParam) == IDOK)
 		{
-			char buff[255];
-			GetDlgItemText(hDlg, IDC_EDITTEXT, (LPTSTR)buff, 255);
+			char buff[MAX_PATH] { 0 };
+			GetDlgItemText(hDlg, IDC_EDITTEXT, (LPTSTR)buff, MAX_PATH);
 
 			// Checks name duplication Objects
 			if (App->CL_Dialogs->CheckNames == Enums::Check_Names_Objects)
@@ -1046,7 +1046,7 @@ bool CALLBACK CL64_Dialogs::Proc_ViewerBasePic(HWND hwnd, UINT msg, WPARAM wPara
 
 		if (App->CL_Dialogs->Sel_BaseBitmap != NULL)
 		{
-			RECT	Source;
+			RECT	Source { 0 };
 			RECT	Dest;
 			HDC		hDC;
 
@@ -1336,14 +1336,14 @@ LRESULT CALLBACK CL64_Dialogs::Proc_Dialog_TrueFlase(HWND hDlg, UINT message, WP
 	{
 		LPNMHDR some_item = (LPNMHDR)lParam;
 
-		if (some_item->idFrom == IDOK && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDOK)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
 			return CDRF_DODEFAULT;
 		}
 
-		if (some_item->idFrom == IDCANCEL && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDCANCEL)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
@@ -1663,9 +1663,9 @@ LRESULT CALLBACK CL64_Dialogs::Proc_Dialog_Counter(HWND hDlg, UINT message, WPAR
 
 		if (LOWORD(wParam) == IDOK)
 		{
-			char buff[256];
+			char buff[MAX_PATH] { 0 };
 			int result = 0;
-			GetDlgItemText(hDlg, IDC_EDTRIGGERVALUE, (LPTSTR)buff, 256);
+			GetDlgItemText(hDlg, IDC_EDTRIGGERVALUE, (LPTSTR)buff, MAX_PATH);
 			strcpy(App->CL_Dialogs->Chr_Int, buff);
 			App->CL_Dialogs->mInt = atoi(buff);
 
@@ -1977,8 +1977,8 @@ LRESULT CALLBACK CL64_Dialogs::Proc_Dialog_Text_Props(HWND hDlg, UINT message, W
 	{
 		if (LOWORD(wParam) == IDOK)
 		{
-			char buff[255];
-			GetDlgItemText(hDlg, IDC_EDITTEXT, (LPTSTR)buff, 255);
+			char buff[MAX_PATH]{ 0 };
+			GetDlgItemText(hDlg, IDC_EDITTEXT, (LPTSTR)buff, MAX_PATH);
 
 			strcpy(App->CL_Dialogs->Chr_Text, buff);
 
@@ -2082,9 +2082,9 @@ LRESULT CALLBACK CL64_Dialogs::Proc_Dialog_Int(HWND hDlg, UINT message, WPARAM w
 	case WM_COMMAND:
 		if (LOWORD(wParam) == IDOK)
 		{
-			char buff[256];
+			char buff[MAX_PATH] { 0 };
 			int result = 0;
-			GetDlgItemText(hDlg, IDC_EDIT1, (LPTSTR)buff, 256);
+			GetDlgItemText(hDlg, IDC_EDIT1, (LPTSTR)buff, MAX_PATH);
 			strcpy(App->CL_Dialogs->Chr_Int, buff);
 			App->CL_Dialogs->mInt = atoi(buff);
 
@@ -2152,21 +2152,21 @@ LRESULT CALLBACK CL64_Dialogs::Proc_GameMode_StartPosition_Dlg(HWND hDlg, UINT m
 	{
 		LPNMHDR some_item = (LPNMHDR)lParam;
 
-		if (some_item->idFrom == IDC_STARTCUR && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDC_STARTCUR)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
 			return CDRF_DODEFAULT;
 		}
 
-		if (some_item->idFrom == IDC_STARTLEVEL && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDC_STARTLEVEL)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
 			return CDRF_DODEFAULT;
 		}
 
-		if (some_item->idFrom == IDC_QUITGM && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDC_QUITGM)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
