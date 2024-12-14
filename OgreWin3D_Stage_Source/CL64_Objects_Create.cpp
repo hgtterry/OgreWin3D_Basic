@@ -119,7 +119,6 @@ bool CL64_Objects_Create::Add_New_Object(int Index, bool From_MeshViewer)
 
 	strcpy(Mesh_File, Object->Mesh_FileName);
 
-
 	Object->Object_Ent = App->CL_Ogre->mSceneMgr->createEntity(Ogre_Name, Mesh_File, App->CL_Resources->Project_Resource_Group);
 	
 
@@ -258,12 +257,15 @@ bool CL64_Objects_Create::Add_New_Object(int Index, bool From_MeshViewer)
 // *************************************************************************
 bool CL64_Objects_Create::Add_Objects_From_File() // From File
 {
-
 	int Object_Count = App->CL_Scene->Object_Count;
 	int Count = 0;
 
 	while (Count < Object_Count)
 	{
+		char Test_For_Mesh[MAX_PATH];
+		strcpy(Test_For_Mesh, App->CL_Project->m_Main_Assets_Path);
+		strcat(Test_For_Mesh, App->CL_Scene->B_Object[Count]->Mesh_FileName);
+		
 		if (App->CL_Scene->B_Object[Count]->Usage == Enums::Stage_Usage_Sound)
 		{
 			App->CL_Com_Sounds->Create_Sound_Entity(Count);
@@ -305,14 +307,21 @@ bool CL64_Objects_Create::Add_Objects_From_File() // From File
 		}
 		else if (App->CL_Scene->B_Object[Count]->Usage == Enums::Stage_Usage_Colectable)
 		{
+			bool Test = App->CL_File_IO->Check_File_Exist(Test_For_Mesh);
+			if (Test == 0)
+			{
+				App->Say("Can not find", App->CL_Scene->B_Object[Count]->Mesh_FileName);
+			}
+			else
+			{
+				App->CL_Com_Collectables->Create_Collectable_Entity(Count);
 
-			App->CL_Com_Collectables->Create_Collectable_Entity(Count);
+				HTREEITEM Temp = App->CL_FileView->Add_Item(App->CL_FileView->FV_Collectables_Folder, App->CL_Scene->B_Object[Count]->Object_Name, Count, false);
+				App->CL_Scene->B_Object[Count]->FileViewItem = Temp;
 
-			HTREEITEM Temp = App->CL_FileView->Add_Item(App->CL_FileView->FV_Collectables_Folder, App->CL_Scene->B_Object[Count]->Object_Name, Count, false);
-			App->CL_Scene->B_Object[Count]->FileViewItem = Temp;
-
-			App->CL_FileView->Set_FolderActive(App->CL_FileView->FV_Collectables_Folder);
-			App->CL_FileView->Set_FolderActive(App->CL_FileView->FV_EntitiesFolder);
+				App->CL_FileView->Set_FolderActive(App->CL_FileView->FV_Collectables_Folder);
+				App->CL_FileView->Set_FolderActive(App->CL_FileView->FV_EntitiesFolder);
+			}
 
 		}
 		else if (App->CL_Scene->B_Object[Count]->Usage == Enums::Stage_Usage_EnvironEntity)
@@ -337,16 +346,24 @@ bool CL64_Objects_Create::Add_Objects_From_File() // From File
 		}
 		else
 		{
-			App->CL_Objects_Create->Add_New_Object(Count, 0);
-			App->CL_Scene->B_Object[Count]->flag_Altered = 0;
-			App->CL_Scene->B_Object[Count]->Folder = Enums::Folder_Objects;
-			App->CL_Scene->B_Object[Count]->FileViewItem = App->CL_FileView->Add_Item(App->CL_FileView->FV_Objects_Folder, App->CL_Scene->B_Object[Count]->Object_Name, Count, false);
-
-			if (Object_Count > 0)
+			bool Test = App->CL_File_IO->Check_File_Exist(Test_For_Mesh);
+			if (Test == 0)
 			{
-				App->CL_FileView->Set_FolderActive(App->CL_FileView->FV_Objects_Folder);
-				ShowWindow(App->CL_Properties->Properties_Dlg_hWnd, 1);
-				App->CL_FileView->SelectItem(App->CL_Scene->B_Object[0]->FileViewItem);
+				App->Say("Can not find", App->CL_Scene->B_Object[Count]->Mesh_FileName);	
+			}
+			else
+			{
+				App->CL_Objects_Create->Add_New_Object(Count, 0);
+				App->CL_Scene->B_Object[Count]->flag_Altered = 0;
+				App->CL_Scene->B_Object[Count]->Folder = Enums::Folder_Objects;
+				App->CL_Scene->B_Object[Count]->FileViewItem = App->CL_FileView->Add_Item(App->CL_FileView->FV_Objects_Folder, App->CL_Scene->B_Object[Count]->Object_Name, Count, false);
+
+				if (Object_Count > 0)
+				{
+					App->CL_FileView->Set_FolderActive(App->CL_FileView->FV_Objects_Folder);
+					ShowWindow(App->CL_Properties->Properties_Dlg_hWnd, 1);
+					App->CL_FileView->SelectItem(App->CL_Scene->B_Object[0]->FileViewItem);
+				}
 			}
 		}
 
