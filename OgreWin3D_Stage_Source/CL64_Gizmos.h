@@ -40,6 +40,17 @@ public:
 	void Load_PickSight(void);
 	void Load_Crosshair();
 
+	void Load_All_Axis();
+	void Load_Red_Axis();
+	void Load_Green_Axis();
+	void Load_Blue_Axis();
+
+	void Update_Red_Axis_Marker(int Index);
+	void Update_Green_Axis_Marker(int Index);
+	void Update_Blue_Axis_Marker(int Index);
+
+	void Hide_Axis_Marker();
+
 	ManualObject* BoxManual;
 	SceneNode* BoxNode;
 
@@ -47,6 +58,15 @@ public:
 	Ogre::SceneNode* Crosshair_Node;
 
 	Ogre::Overlay* mPickSight;
+
+	Ogre::Entity* RedAxis_Ent;
+	Ogre::SceneNode* RedAxis_Node;
+
+	Ogre::Entity* GreenAxis_Ent;
+	Ogre::SceneNode* GreenAxis_Node;
+
+	Ogre::Entity* BlueAxis_Ent;
+	Ogre::SceneNode* BlueAxis_Node;
 };
 
 

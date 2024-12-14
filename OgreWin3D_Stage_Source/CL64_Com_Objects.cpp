@@ -361,3 +361,20 @@ int CL64_Com_Objects::Get_Adjusted_Object_Count(void)
 
 	return New_Count;
 }
+
+// *************************************************************************
+//		Get_BoundingBox_World_Centre:- Terry and Hazel Flanigan 2024	   *
+// *************************************************************************
+Ogre::Vector3 CL64_Com_Objects::Get_BoundingBox_World_Centre(int Object_Index)
+{
+	if (App->CL_Scene->B_Object[Object_Index]->Shape == Enums::Shape_TriMesh)
+	{
+		Ogre::Vector3 Pos = App->CL_Scene->B_Object[Object_Index]->Object_Node->getPosition();
+		return Pos;
+	}
+	else
+	{
+		Ogre::Vector3 Centre = App->CL_Scene->B_Object[Object_Index]->Object_Ent->getWorldBoundingBox(true).getCenter();
+		return Centre;
+	}
+}

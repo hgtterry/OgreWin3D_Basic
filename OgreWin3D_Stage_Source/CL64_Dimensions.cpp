@@ -286,8 +286,8 @@ void CL64_Dimensions::ImGui_Position(void)
 
 	if (flag_PosX_Selected == 1)
 	{
-		//App->SBC_Markers->Hide_Axis_Marker();
-		//App->SBC_Markers->Update_Blue_Axis_Marker(Index);
+		App->CL_Gizmos->Hide_Axis_Marker();
+		App->CL_Gizmos->Update_Blue_Axis_Marker(Index);
 
 		flag_PosY_Selected = 0;
 		flag_PosZ_Selected = 0;
@@ -306,8 +306,8 @@ void CL64_Dimensions::ImGui_Position(void)
 
 	if (flag_PosY_Selected)
 	{
-		//App->SBC_Markers->Hide_Axis_Marker();
-		//App->SBC_Markers->Update_Green_Axis_Marker(Index);
+		App->CL_Gizmos->Hide_Axis_Marker();
+		App->CL_Gizmos->Update_Green_Axis_Marker(Index);
 
 		flag_PosX_Selected = 0;
 		flag_PosZ_Selected = 0;
@@ -325,14 +325,14 @@ void CL64_Dimensions::ImGui_Position(void)
 	style->Colors[ImGuiCol_FrameBg] = ImVec4(1.0f, 1.0f, 1.0f, 1.00f);
 	if (flag_PosZ_Selected)
 	{
-		//App->SBC_Markers->Hide_Axis_Marker();
-		//App->SBC_Markers->Update_Red_Axis_Marker(Index);
+		App->CL_Gizmos->Hide_Axis_Marker();
+		App->CL_Gizmos->Update_Red_Axis_Marker(Index);
 
 		flag_PosX_Selected = 0;
 		flag_PosY_Selected = 0;
 	}
 
-	ImGui::Indent();
+	ImGui::Indent(10);
 
 	ImGui::Spacing();
 	ImGui::Spacing();
@@ -404,7 +404,7 @@ void CL64_Dimensions::ImGui_Position(void)
 	style->Colors[ImGuiCol_Text] = ImVec4(0.0f, 0.0f, 0.0f, 1.00f);
 
 	ImGui::Spacing();
-	ImGui::Unindent();
+	ImGui::Unindent(10);
 	ImGui::Unindent();
 	ImGui::Unindent();
 }
@@ -478,15 +478,15 @@ void CL64_Dimensions::ImGui_Scale(void)
 	{
 		if (flag_Scale_Lock == 1)
 		{
-			/*App->SBC_Markers->Hide_Axis_Marker();
-			App->SBC_Markers->Update_Red_Axis_Marker(Index);
-			App->SBC_Markers->Update_Green_Axis_Marker(Index);
-			App->SBC_Markers->Update_Blue_Axis_Marker(Index);*/
+			App->CL_Gizmos->Hide_Axis_Marker();
+			App->CL_Gizmos->Update_Red_Axis_Marker(Index);
+			App->CL_Gizmos->Update_Green_Axis_Marker(Index);
+			App->CL_Gizmos->Update_Blue_Axis_Marker(Index);
 		}
 		else
 		{
-			/*App->SBC_Markers->Hide_Axis_Marker();
-			App->SBC_Markers->Update_Blue_Axis_Marker(Index);*/
+			App->CL_Gizmos->Hide_Axis_Marker();
+			App->CL_Gizmos->Update_Blue_Axis_Marker(Index);
 		}
 
 		flag_ScaleY_Selected = 0;
@@ -508,15 +508,15 @@ void CL64_Dimensions::ImGui_Scale(void)
 	{
 		if (flag_Scale_Lock == 1)
 		{
-			/*App->SBC_Markers->Hide_Axis_Marker();
-			App->SBC_Markers->Update_Red_Axis_Marker(Index);
-			App->SBC_Markers->Update_Green_Axis_Marker(Index);
-			App->SBC_Markers->Update_Blue_Axis_Marker(Index);*/
+			App->CL_Gizmos->Hide_Axis_Marker();
+			App->CL_Gizmos->Update_Red_Axis_Marker(Index);
+			App->CL_Gizmos->Update_Green_Axis_Marker(Index);
+			App->CL_Gizmos->Update_Blue_Axis_Marker(Index);
 		}
 		else
 		{
-			/*App->SBC_Markers->Hide_Axis_Marker();
-			App->SBC_Markers->Update_Green_Axis_Marker(Index);*/
+			App->CL_Gizmos->Hide_Axis_Marker();
+			App->CL_Gizmos->Update_Green_Axis_Marker(Index);
 		}
 
 		flag_ScaleX_Selected = 0;
@@ -536,22 +536,22 @@ void CL64_Dimensions::ImGui_Scale(void)
 	{
 		if (flag_Scale_Lock == 1)
 		{
-			/*App->SBC_Markers->Hide_Axis_Marker();
-			App->SBC_Markers->Update_Red_Axis_Marker(Index);
-			App->SBC_Markers->Update_Green_Axis_Marker(Index);
-			App->SBC_Markers->Update_Blue_Axis_Marker(Index);*/
+			App->CL_Gizmos->Hide_Axis_Marker();
+			App->CL_Gizmos->Update_Red_Axis_Marker(Index);
+			App->CL_Gizmos->Update_Green_Axis_Marker(Index);
+			App->CL_Gizmos->Update_Blue_Axis_Marker(Index);
 		}
 		else
 		{
-			/*App->SBC_Markers->Hide_Axis_Marker();
-			App->SBC_Markers->Update_Red_Axis_Marker(Index);*/
+			App->CL_Gizmos->Hide_Axis_Marker();
+			App->CL_Gizmos->Update_Red_Axis_Marker(Index);
 		}
 
 		flag_ScaleX_Selected = 0;
 		flag_ScaleY_Selected = 0;
 	}
 
-	ImGui::Indent();
+	ImGui::Indent(10);
 	ImGui::Spacing();
 	ImGui::Spacing();
 
@@ -663,7 +663,7 @@ void CL64_Dimensions::ImGui_Scale(void)
 	style->Colors[ImGuiCol_Text] = ImVec4(0.0f, 0.0f, 0.0f, 1.00f);
 
 	ImGui::Spacing();
-	ImGui::Unindent();
+	ImGui::Unindent(10);
 	ImGui::Unindent();
 	ImGui::Unindent();
 }
@@ -766,7 +766,7 @@ void CL64_Dimensions::ImGui_Rotation(void)
 	}
 	// ----------------------------------------------------------------------------- Rotation
 
-	ImGui::Indent();
+	ImGui::Indent(10);
 
 	ImGui::Spacing();
 	ImGui::Spacing();
@@ -844,7 +844,7 @@ void CL64_Dimensions::ImGui_Rotation(void)
 	style->Colors[ImGuiCol_Text] = ImVec4(0.0f, 0.0f, 0.0f, 1.00f);
 
 	ImGui::Spacing();
-	ImGui::Unindent();
+	ImGui::Unindent(10);
 	ImGui::Unindent();
 	ImGui::Unindent();
 }
@@ -887,7 +887,6 @@ void CL64_Dimensions::Set_Rotation(Ogre::Vector3 Rotation, float Delta)
 // *************************************************************************
 Ogre::Vector3 CL64_Dimensions::Get_BoundingBox_World_Centre()
 {
-
 	if (*pBase_Shape == Enums::Shape_TriMesh)
 	{
 		Ogre::Vector3 Pos = pBase_Object_Node->getPosition();
@@ -895,15 +894,10 @@ Ogre::Vector3 CL64_Dimensions::Get_BoundingBox_World_Centre()
 	}
 	else
 	{
-		//AxisAlignedBox worldAAB = pBase_Object_Ent->getBoundingBox();
-		//worldAAB.transformAffine(pBase_Object_Node->_getFullTransform());
-		//Ogre::Vector3 Centre = worldAAB.getCenter();
-
+	
 		Ogre::Vector3 Centre = pBase_Object_Ent->getWorldBoundingBox(true).getCenter();
 		return Centre;
 	}
-	
-	
 }
 
 // *************************************************************************

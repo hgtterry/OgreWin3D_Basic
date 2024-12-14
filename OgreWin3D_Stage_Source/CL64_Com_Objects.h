@@ -40,6 +40,7 @@ public:
 	void Clear_Modified_Objects();
 	int CheckNames_Objects(char* Name);
 	int Get_Adjusted_Object_Count(void);
+	Ogre::Vector3 Get_BoundingBox_World_Centre(int Object_Index);
 
 	bool flag_Show_Physics_Debug;
 	bool flag_Hide_All_Except;

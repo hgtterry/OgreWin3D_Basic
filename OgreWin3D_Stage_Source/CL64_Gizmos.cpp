@@ -31,6 +31,15 @@ CL64_Gizmos::CL64_Gizmos(void)
 	Crosshair_Ent = nullptr;
 	Crosshair_Node = nullptr;
 
+	RedAxis_Ent = nullptr;
+	RedAxis_Node = nullptr;
+
+	BlueAxis_Ent = nullptr;
+	BlueAxis_Node = nullptr;
+
+	GreenAxis_Ent = nullptr;
+	GreenAxis_Node = nullptr;
+
 	BoxManual = NULL;
 	BoxNode = NULL;
 	mPickSight = NULL;
@@ -48,6 +57,7 @@ void CL64_Gizmos::Set_Gizmos()
 	MarkerBox_Setup();
 	Load_PickSight();
 	Load_Crosshair();
+	Load_All_Axis();
 }
 
 // *************************************************************************
@@ -234,4 +244,100 @@ void CL64_Gizmos::Load_Crosshair()
 	Crosshair_Node->setPosition(0, 0, 0);
 	Crosshair_Node->setScale(1, 1, 1);
 	Crosshair_Node->setVisible(false);
+}
+
+// **************************************************************************
+// *	  			Load_All_Axis:- Terry and Hazel Flanigan 2024			*
+// **************************************************************************
+void CL64_Gizmos::Load_All_Axis()
+{
+	//Load_Blue_Rot_Axis();
+	Load_Red_Axis();
+	Load_Green_Axis();
+	Load_Blue_Axis();
+}
+
+// **************************************************************************
+// *	  			Load_Red_Axis:- Terry and Hazel Flanigan 2024			*
+// **************************************************************************
+void CL64_Gizmos::Load_Red_Axis()
+{
+	RedAxis_Ent = App->CL_Ogre->mSceneMgr->createEntity("Red_Axis", "RedAxes.mesh", App->CL_Ogre->App_Resource_Group);
+	RedAxis_Node = App->CL_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	RedAxis_Node->attachObject(RedAxis_Ent);
+
+	RedAxis_Node->setVisible(false);
+	RedAxis_Node->setPosition(0, 0, 0);
+	RedAxis_Node->setScale(1, 1, 2);
+}
+
+// **************************************************************************
+// *	  			Load_Green_Axis:- Terry and Hazel Flanigan 2024			*
+// **************************************************************************
+void CL64_Gizmos::Load_Green_Axis()
+{
+	GreenAxis_Ent = App->CL_Ogre->mSceneMgr->createEntity("Green_Axis", "GreenAxes.mesh", App->CL_Ogre->App_Resource_Group);
+	GreenAxis_Node = App->CL_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	GreenAxis_Node->attachObject(GreenAxis_Ent);
+
+	GreenAxis_Node->setVisible(false);
+	GreenAxis_Node->setPosition(0, 0, 0);
+	GreenAxis_Node->setScale(1, 2, 1);
+}
+
+// **************************************************************************
+// *	  			Load_Blue_Axis:- Terry and Hazel Flanigan 2024			*
+// **************************************************************************
+void CL64_Gizmos::Load_Blue_Axis()
+{
+	BlueAxis_Ent = App->CL_Ogre->mSceneMgr->createEntity("Blue_Axis", "BlueAxes.mesh", App->CL_Ogre->App_Resource_Group);
+	BlueAxis_Node = App->CL_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	BlueAxis_Node->attachObject(BlueAxis_Ent);
+
+	BlueAxis_Node->setVisible(false);
+	BlueAxis_Node->setPosition(0, 0, 0);
+	BlueAxis_Node->setScale(2, 1, 1);
+}
+
+// **************************************************************************
+// *	  	Update_Red_Axis_Marker:- Terry and Hazel Flanigan 2024			*
+// **************************************************************************
+void CL64_Gizmos::Update_Red_Axis_Marker(int Index)
+{
+	Ogre::Vector3 Centre = App->CL_Com_Objects->Get_BoundingBox_World_Centre(Index);
+
+	RedAxis_Node->setPosition(Centre);
+	RedAxis_Node->setVisible(true);
+}
+
+// **************************************************************************
+// *	  	Update_Blue_Axis_Marker:- Terry and Hazel Flanigan 2024			*
+// **************************************************************************
+void CL64_Gizmos::Update_Green_Axis_Marker(int Index)
+{
+	Ogre::Vector3 Centre = App->CL_Com_Objects->Get_BoundingBox_World_Centre(Index);
+
+	GreenAxis_Node->setPosition(Centre);
+	GreenAxis_Node->setVisible(true);
+}
+
+// **************************************************************************
+// *	  	Update_Blue_Axis_Marker:- Terry and Hazel Flanigan 2024			*
+// **************************************************************************
+void CL64_Gizmos::Update_Blue_Axis_Marker(int Index)
+{
+	Ogre::Vector3 Centre = App->CL_Com_Objects->Get_BoundingBox_World_Centre(Index);
+
+	BlueAxis_Node->setPosition(Centre);
+	BlueAxis_Node->setVisible(true);
+}
+
+// **************************************************************************
+// *			Hide_Axis_Marker:- Terry and Hazel Flanigan 2024			*
+// **************************************************************************
+void CL64_Gizmos::Hide_Axis_Marker()
+{
+	BlueAxis_Node->setVisible(false);
+	RedAxis_Node->setVisible(false);
+	GreenAxis_Node->setVisible(false);
 }
