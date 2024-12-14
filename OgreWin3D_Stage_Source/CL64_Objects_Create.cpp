@@ -119,15 +119,10 @@ bool CL64_Objects_Create::Add_New_Object(int Index, bool From_MeshViewer)
 
 	strcpy(Mesh_File, Object->Mesh_FileName);
 
-	//if (From_MeshViewer == 1) //&& App->CL_MeshViewer->Placement_Camera == 1)
-	//{
-	//	//Object->Object_Ent = App->CL_Ogre->mSceneMgr->createEntity(Ogre_Name, Mesh_File, App->CL_MeshViewer->MV_Resource_Group);
-	//}
-	//else
-	{
-		Object->Object_Ent = App->CL_Ogre->mSceneMgr->createEntity(Ogre_Name, Mesh_File, App->CL_Resources->Project_Resource_Group);
-	}
+
+	Object->Object_Ent = App->CL_Ogre->mSceneMgr->createEntity(Ogre_Name, Mesh_File, App->CL_Resources->Project_Resource_Group);
 	
+
 	Object->Object_Node = App->CL_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	Object->Object_Node->attachObject(Object->Object_Ent);
 	Object->Object_Node->setVisible(true);

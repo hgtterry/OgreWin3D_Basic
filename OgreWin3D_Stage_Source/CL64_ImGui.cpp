@@ -299,6 +299,12 @@ void CL64_ImGui::ImGui_Render_Loop(void)
 	{
 		App->CL_ImGui_Dialogs->Physics_Console_Gui();
 	}
+
+	if (App->CL_Preferences->flag_Show_Preferences_Editor == 1)
+	{
+		App->CL_Preferences->Preferences_Editor_ImGui();
+	}
+	
 }
 
 // *************************************************************************

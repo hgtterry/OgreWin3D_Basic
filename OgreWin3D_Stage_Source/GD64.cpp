@@ -207,9 +207,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 		case ID_DEBUG_GENERAL:
 		{
-			Ogre::String LocationPath = App->CL_Resources->Get_Project_Group_Location(App->CL_Resources->Project_Resource_Group);
-			App->Say_Win(LocationPath.c_str());
+			/*Ogre::String LocationPath = App->CL_Resources->Get_Project_Group_Location(App->CL_Resources->Project_Resource_Group);
+			App->Say_Win(LocationPath.c_str());*/
 
+			App->CL_Preferences->flag_Show_Preferences_Editor = 1;
 			return TRUE;
 		}
 		

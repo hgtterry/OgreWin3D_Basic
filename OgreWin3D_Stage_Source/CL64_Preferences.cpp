@@ -20,6 +20,12 @@ appreciated but is not required.
 
 CL64_Preferences::CL64_Preferences(void)
 {
+	flag_Show_Preferences_Editor = 0;
+	PropertyEditor_Page = 0;
+	flag_Preferences_Start_Pos = 0;
+	Preferences_Pos_X = 500;
+	Preferences_Pos_Y = 500;
+
 	flag_Start_FullScreen = 0;
 	flag_Start_Full_3DWin = 0;
 	flag_Use_Default_Directories = 1;
@@ -44,10 +50,372 @@ void CL64_Preferences::Clean_Up(void)
 }
 
 // *************************************************************************
+// *	Preferences_Editor_ImGui:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+void CL64_Preferences::Preferences_Editor_ImGui()
+{
+
+	ImGui::SetNextWindowPos(ImVec2(Preferences_Pos_X, Preferences_Pos_Y), ImGuiCond_FirstUseEver);
+	ImGui::SetNextWindowSize(ImVec2(350, 220), ImGuiCond_FirstUseEver);
+
+	if (!ImGui::Begin("Environment Editor", &flag_Show_Preferences_Editor, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar))
+	{
+		ImGui::End();
+	}
+	else
+	{
+		if (flag_Preferences_Start_Pos == 0)
+		{
+			ImVec2 Size = ImGui::GetWindowSize();
+
+			Preferences_Pos_X = ((float)App->CL_Ogre->Ogre3D_Listener->View_Width / 2) - (350 / 2);
+			Preferences_Pos_Y = ((float)App->CL_Ogre->Ogre3D_Listener->View_Height / 2) - (220 / 2);
+			ImGui::SetWindowPos("Environment Editor", ImVec2(Preferences_Pos_X, Preferences_Pos_Y));
+
+			flag_Preferences_Start_Pos = 1;
+		}
+
+		ImGuiColorEditFlags misc_flags2 = (ImGuiColorEditFlags_DisplayRGB | ImGuiColorEditFlags_InputRGB | ImGuiColorEditFlags_Uint8);
+
+		ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(2, 2));
+		ImGui::PushStyleColor(ImGuiCol_WindowBg, IM_COL32(213, 222, 242, 255));
+
+		//ImGui::Text("Environment:  %s", App->CL_Scene->B_Object[Eviron_Index]->Object_Name);
+		ImGui::Separator();
+
+		ImGui::Columns(2);
+		ImGui::SetColumnWidth(-1, 120);
+
+		if (ImGui::Button("Startup ", ImVec2(100, 0)))
+		{
+			PropertyEditor_Page = 0;
+		}
+
+		if (ImGui::Button("Sound   ", ImVec2(100, 0)))
+		{
+			//PropertyEditor_Page = 1;
+		}
+
+		if (ImGui::Button("Fog   ", ImVec2(100, 0)))
+		{
+			//PropertyEditor_Page = 2;
+		}
+
+		if (ImGui::Button("Sky   ", ImVec2(100, 0)))
+		{
+			//PropertyEditor_Page = 3;
+		}
+
+		ImGui::Spacing();
+		ImGui::Spacing();
+		ImGui::Spacing();
+		ImGui::Spacing();
+
+		// ---------------------------------------------------------------- Main Light
+		if (PropertyEditor_Page == 0)
+		{
+			ImGui::NextColumn();
+			ImGui::AlignTextToFramePadding();
+
+			// ----------------- Visible
+			ImGui::Text("Enable");
+			ImGui::SameLine();
+			/*int test = ImGui::Checkbox("##Enable", &flag_ClickOnSkyEnabled);
+			if (test == 1)
+			{
+				if (flag_ClickOnSkyEnabled == 1)
+				{
+					
+				}
+				else
+				{
+					
+				}
+
+			}*/
+
+		}
+
+		// ---------------------------------------------------------------- Sound
+		//if (PropertyEditor_Page == 1)
+		//{
+		//	ImGui::NextColumn();
+		//	ImGui::AlignTextToFramePadding();
+
+		//	ImGui::Selectable("Track:- ", &flag_ClickOnTrack);
+		//	ImGui::SameLine();
+		//	//ImGui::Text("%s", App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->Sound_File);
+
+		//	if (flag_ClickOnTrack)
+		//	{
+		//		ImGui::TextColored(ImVec4(0.f, 1.f, 0.24f, 1.f), "ON");
+
+		//		App->CL_SoundMgr->flag_Accessed = 1;
+		//		strcpy(App->CL_SoundMgr->Access_File, App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->Sound_File);
+
+		//		App->CL_Com_Environments->Set_Environment_By_Index(0, Eviron_Index);
+		//		App->CL_SoundMgr->Dialog_SoundFile();
+
+		//		if (App->CL_SoundMgr->flag_IsCancelled == 0)
+		//		{
+
+		//			strcpy(App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->Sound_File, App->CL_SoundMgr->Access_File);
+		//			App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->SndVolume = App->CL_SoundMgr->SndVolume;
+
+		//			App->CL_Com_Environments->Set_Environment_By_Index(1, Eviron_Index);
+
+		//			App->CL_Com_Environments->Mark_As_Altered_Environ(Eviron_Index);
+		//		}
+		//		else
+		//		{
+		//			App->CL_Com_Environments->Set_Environment_By_Index(1, Eviron_Index);
+		//		}
+
+		//		flag_ClickOnTrack = 0;
+		//	}
+
+		//	// ----------------- Volume
+		//	ImGui::Selectable("Volume:- ", &flag_ClickOnVolume);
+		//	ImGui::SameLine();
+		//	//ImGui::Text("%f", App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->SndVolume);
+		//	if (flag_ClickOnVolume)
+		//	{
+		//		App->CL_Com_Environments->Mark_As_Altered_Environ(Eviron_Index);
+		//		flag_ClickOnVolume = 0;
+		//	}
+
+		//	// ----------------- Play
+		//	ImGui::Text("Play:");
+		//	ImGui::SameLine();
+		//	int test = ImGui::Checkbox("##Play", &flag_ClickOnPlay);
+		//	if (test == 1)
+		//	{
+		//		/*if (flag_ClickOnPlay == 1)
+		//		{
+		//			App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->flag_Play = 1;
+		//			App->CL_Com_Environments->Set_Environment_By_Index(1, Eviron_Index);
+		//		}
+		//		else
+		//		{
+		//			App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->flag_Play = 0;
+		//			App->CL_Com_Environments->Set_Environment_By_Index(0, Eviron_Index);
+		//		}
+
+		//		App->CL_Com_Environments->Mark_As_Altered_Environ(Eviron_Index);*/
+		//	}
+
+		//	// ----------------- Loop
+		//	ImGui::Text("Loop:");
+		//	ImGui::SameLine();
+		//	test = ImGui::Checkbox("##Loop", &flag_ClickOnLoop);
+		//	if (test == 1)
+		//	{
+		//		/*if (flag_ClickOnLoop == 1)
+		//		{
+		//			App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->flag_Loop = 1;
+		//			App->CL_Com_Environments->Set_Environment_By_Index(0, Eviron_Index);
+		//			App->CL_Com_Environments->Set_Environment_By_Index(1, Eviron_Index);
+		//		}
+		//		else
+		//		{
+		//			App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->flag_Loop = 0;
+		//			App->CL_Com_Environments->Set_Environment_By_Index(0, Eviron_Index);
+		//			App->CL_Com_Environments->Set_Environment_By_Index(1, Eviron_Index);
+		//		}
+
+		//		App->CL_Com_Environments->Mark_As_Altered_Environ(Eviron_Index);*/
+		//	}
+		//}
+
+		// ---------------------------------------------------------------- Fog
+		//if (PropertyEditor_Page == 2)
+		//{
+		//	ImGui::NextColumn();
+		//	ImGui::AlignTextToFramePadding();
+
+		//	// ----------------- Visible
+		//	ImGui::Text("Visible");
+		//	ImGui::SameLine();
+		//	int test = ImGui::Checkbox("##Visible", &flag_ClickOnFogVisible);
+		//	if (test == 1)
+		//	{
+		//		if (flag_ClickOnFogVisible == 1)
+		//		{
+		//			/*App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->Fog_On = 1;
+		//			EnableFog(true);*/
+		//		}
+		//		else
+		//		{
+		//			/*App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->Fog_On = 0;
+		//			EnableFog(false);*/
+		//		}
+
+		//		App->CL_Com_Environments->Mark_As_Altered_Environ(Eviron_Index);
+		//	}
+
+		//	// ----------------- Mode
+		//	ImGui::Selectable("Mode:- ", &flag_ClickOnFogMode);
+		//	ImGui::SameLine();
+		//	//ImGui::Text("%i", App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->Fog_Mode);
+		//	if (flag_ClickOnFogMode)
+		//	{
+		//		flag_ClickOnFogMode = 0;
+		//	}
+
+		//	// ----------------- Fog Colour
+		//	ImGui::Text("Fog Colour:");
+		//	ImGui::SameLine();
+
+		//	if (ImGui::ColorEdit3("", (float*)&Fog_Colour, ImGuiColorEditFlags_NoInputs | misc_flags2))
+		//	{
+		//		/*Ambient_Int_Red = Fog_Colour.x * 255;
+		//		Ambient_Int_Green = Fog_Colour.y * 255;
+		//		Ambient_Int_Blue = Fog_Colour.z * 255;*/
+
+		//		/*App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->Fog_Colour = Ogre::Vector3(Fog_Colour.x, Fog_Colour.y, Fog_Colour.z);
+
+		//		if (App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->Fog_On == 1)
+		//		{
+		//			
+		//		}
+
+		//		App->CL_Com_Environments->Mark_As_Altered_Environ(Eviron_Index);*/
+		//	}
+
+
+
+			//// ----------------- Start
+			//ImGui::Text("Start:- ", App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->Fog_Start);
+			//ImGui::SameLine();
+
+			//if (ImGui::InputFloat("##1", &App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->Fog_Start, 1, 0, "%.3f"))
+			//{
+			//	if (App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->Fog_On == 1)
+			//	{
+			//		
+			//	}
+
+			//	App->CL_Com_Environments->Mark_As_Altered_Environ(Eviron_Index);
+			//}
+
+			// ----------------- End
+			/*ImGui::Text("End:-   ", App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->Fog_End);
+			ImGui::SameLine();
+
+			if (ImGui::InputFloat("##2", &App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->Fog_End, 1, 0, "%.3f"))
+			{
+				if (App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->Fog_On == 1)
+				{
+
+				}
+
+				App->CL_Com_Environments->Mark_As_Altered_Environ(Eviron_Index);
+			}*/
+
+			//}
+
+			// ---------------------------------------------------------------- Sky
+			//if (PropertyEditor_Page == 3)
+			//{
+			//	ImGui::NextColumn();
+			//	ImGui::AlignTextToFramePadding();
+
+			//	// ----------------- Visible
+			//	ImGui::Text("Enable");
+			//	ImGui::SameLine();
+			//	int test = ImGui::Checkbox("##Enable", &flag_ClickOnSkyEnabled);
+			//	if (test == 1)
+			//	{
+			//		/*if (flag_ClickOnSkyEnabled == 1)
+			//		{
+			//			App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->flag_Enabled = 1;
+			//			
+			//		}
+			//		else
+			//		{
+			//			App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->flag_Enabled = 0;
+			//			
+			//		}
+
+			//		App->CL_Com_Environments->Mark_As_Altered_Environ(Eviron_Index);*/
+			//	}
+
+			//	// ----------------- Tiling
+			//	//ImGui::Text("Tiling:- ", App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->Tiling);
+			//	ImGui::SameLine();
+
+			//	/*if (ImGui::InputFloat("##5", &App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->Tiling, 0.5, 0, "%.3f"))
+			//	{
+			//		if (App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->flag_Enabled == 1)
+			//		{
+			//			
+			//		}
+
+			//		App->CL_Com_Environments->Mark_As_Altered_Environ(Eviron_Index);
+			//	}*/
+
+			//	// ----------------- Curvature
+			//	//ImGui::Text("Curve:- ", App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->Curvature);
+			//	ImGui::SameLine();
+
+			//	/*if (ImGui::InputFloat("##6", &App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->Curvature, 0.5, 0, "%.3f"))
+			//	{
+			//		if (App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->flag_Enabled == 1)
+			//		{
+			//			
+			//		}
+
+			//		App->CL_Com_Environments->Mark_As_Altered_Environ(Eviron_Index);
+			//	}*/
+
+			//}
+
+		ImGui::PopStyleVar();
+		ImGui::Columns(0);
+
+		ImGui::Spacing();
+		ImGui::Spacing();
+
+		if (ImGui::Button("Close", ImVec2(100, 0)))
+		{
+			Close_Preferences_Editor();
+
+			ImGui::PopStyleColor();
+			PropertyEditor_Page = 0;
+			flag_Show_Preferences_Editor = 0;
+		}
+
+		ImGui::End();
+	}
+}
+
+// *************************************************************************
+// *	 Close_Environment_Editor:- Terry and Hazel Flanigan 2024  		   *
+// *************************************************************************
+void CL64_Preferences::Close_Preferences_Editor()
+{
+	flag_Show_Preferences_Editor = 0;
+	flag_Preferences_Start_Pos = 0;
+
+	/*App->Disable_Panels(false);
+	App->Show_Panels(true);*/
+
+	/*App->CL_FileView->Show_FileView(true);
+	int Index = App->CL_Properties->Current_Selected_Object;
+	App->CL_Com_Environments->Set_Environment_By_Index(0, Index);
+
+	Index = App->CL_Com_Environments->Get_First_Environ();
+	App->CL_Com_Environments->Set_Environment_By_Index(0, Index);*/
+}
+
+// *************************************************************************
 // *	  	Start_Preferences_Dlg:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
 void CL64_Preferences::Start_Preferences_Dlg()
 {
+	flag_Preferences_Start_Pos = 0;
+	flag_Show_Preferences_Editor = 1;
+
 	DialogBox(App->hInst, (LPCTSTR)IDD_PREFERENCES, App->MainHwnd, (DLGPROC)Preferences_Dlg_Proc);
 }
 

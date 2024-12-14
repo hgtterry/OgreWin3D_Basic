@@ -23,9 +23,18 @@ public:
 
 	void Clean_Up(void);
 
+	void Preferences_Editor_ImGui();
+	void Close_Preferences_Editor();
+
 	void Start_Preferences_Dlg();
 	void Read_Preferences();
 	bool Write_Preferences();
+
+	bool flag_Show_Preferences_Editor;
+	int PropertyEditor_Page;
+	bool flag_Preferences_Start_Pos;
+	float Preferences_Pos_X;
+	float Preferences_Pos_Y;
 
 	bool flag_Start_FullScreen;
 	bool flag_Start_Full_3DWin;
