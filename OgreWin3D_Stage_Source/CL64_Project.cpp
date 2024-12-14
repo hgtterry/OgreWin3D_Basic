@@ -2347,7 +2347,7 @@ bool CL64_Project::Load_Project_Aera()
 {
 	char Area_Ini_Path[MAX_PATH];
 	char chr_Tag1[MAX_PATH];
-	char Area_Name[1024];
+	char Area_Name[MAX_PATH];
 	char Mesh_FileName[MAX_PATH];
 	char Resource_Location[MAX_PATH];
 	int Area_Count = 0;
@@ -2442,22 +2442,36 @@ bool CL64_Project::Load_Project_Aera()
 		}
 
 		//App->Cl_Ini->GetString("Area_0", "Material_File", App->CL_Scene->B_Area[Count]->Material_File, MAX_PATH);
+		
+		char Test_For_Mesh[MAX_PATH];
+		strcpy(Test_For_Mesh, App->CL_Project->m_Main_Assets_Path);
+		strcat(Test_For_Mesh, Mesh_FileName);
+		Test = App->CL_File_IO->Check_File_Exist(Test_For_Mesh);
+		if (Test == 0)
+		{
+			App->Say("Can not find", Mesh_FileName);
+		}
+		else
+		{
+			App->CL_Com_Area->Add_Aera_To_Project(Count, Mesh_FileName, m_Main_Assets_Path);
 
-		App->CL_Com_Area->Add_Aera_To_Project(Count, Mesh_FileName, m_Main_Assets_Path);
+			App->CL_Scene->B_Area[Count]->This_Object_UniqueID = App->CL_Ini_File->GetInt(buff, "Area_Object_ID", 0, 10);
 
-		App->CL_Scene->B_Area[Count]->This_Object_UniqueID = App->CL_Ini_File->GetInt(buff, "Area_Object_ID", 0,10);
+			strcpy(App->CL_Scene->B_Area[Count]->Area_Name, Area_Name);
 
-		strcpy(App->CL_Scene->B_Area[Count]->Area_Name, Area_Name);
+			App->CL_Scene->B_Area[Count]->FileViewItem = App->CL_FileView->Add_Item(App->CL_FileView->FV_Areas_Folder, Area_Name, Count, false);
 
-		App->CL_Scene->B_Area[Count]->FileViewItem = App->CL_FileView->Add_Item(App->CL_FileView->FV_Areas_Folder, Area_Name, Count, false);
+			App->CL_Scene->Area_Count++;
+		}
 
 		Count++;
-
-		App->CL_Scene->Area_Count++;
 	}
 
-	App->CL_FileView->Set_FolderActive(App->CL_FileView->FV_Areas_Folder);
-	App->CL_FileView->SelectItem(App->CL_Scene->B_Area[0]->FileViewItem);
+	if (App->CL_Scene->Area_Count > 0)
+	{
+		App->CL_FileView->Set_FolderActive(App->CL_FileView->FV_Areas_Folder);
+		App->CL_FileView->SelectItem(App->CL_Scene->B_Area[0]->FileViewItem);
+	}
 
 	return 1;
 }
