@@ -1353,7 +1353,7 @@ INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 
 		SendDlgItemMessage(hDlg, IDC_LIST_ABOUT_VERSIONS, LB_ADDSTRING, (WPARAM)0, (LPARAM)" ");
 
-		sprintf(buf, "%s", "Ogre Version:- Version 14.3.0 (Tsathoggua)");
+		sprintf(buf, "%s", "Ogre Version:- Version 14.3.2 (Tsathoggua)");
 		SendDlgItemMessage(hDlg, IDC_LIST_ABOUT_VERSIONS, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
 		sprintf(buf, "%s", "Imgui Version:- 1.91.2");
