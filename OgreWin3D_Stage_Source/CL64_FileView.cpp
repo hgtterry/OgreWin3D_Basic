@@ -1621,7 +1621,7 @@ void CL64_FileView::Context_New(HWND hDlg)
 	// Messages
 	if (App->CL_FileView->Context_Selection == Enums::FileView_Messages_Folder)
 	{
-		App->CL_Dialogs->Show_YesNo_Dlg((LPSTR)"Add Message", (LPSTR)"Do you want to add a new Message Entity", (LPSTR)"");
+		App->CL_Dialogs->Show_YesNo_Dlg((LPSTR)"Add Message Entity", (LPSTR)"Do you want to add a new Message Entity", (LPSTR)"");
 
 		bool Doit = App->CL_Dialogs->flag_Canceled;
 		if (Doit == 0)
@@ -1635,7 +1635,7 @@ void CL64_FileView::Context_New(HWND hDlg)
 	// Sounds
 	if (App->CL_FileView->Context_Selection == Enums::FileView_Sounds_Folder)
 	{
-		App->CL_Dialogs->Show_YesNo_Dlg((LPSTR)"Add Message", (LPSTR)"Do you want to add a new Sound Entity", (LPSTR)"");
+		App->CL_Dialogs->Show_YesNo_Dlg((LPSTR)"Add Sound Entity", (LPSTR)"Do you want to add a new Sound Entity", (LPSTR)"");
 
 		bool Doit = App->CL_Dialogs->flag_Canceled;
 		if (Doit == 0)
@@ -1649,7 +1649,7 @@ void CL64_FileView::Context_New(HWND hDlg)
 	// Environment
 	if (App->CL_FileView->Context_Selection == Enums::FileView_EnvironEntity_Folder)
 	{
-		App->CL_Dialogs->Show_YesNo_Dlg((LPSTR)"Add Environ Entity", (LPSTR)"Do you want to add a new Environ Entity", (LPSTR)"");
+		App->CL_Dialogs->Show_YesNo_Dlg((LPSTR)"Add Environment Entity", (LPSTR)"Do you want to add a new Environ Entity", (LPSTR)"");
 
 		bool Doit = App->CL_Dialogs->flag_Canceled;
 		if (Doit == 0)
@@ -1663,7 +1663,7 @@ void CL64_FileView::Context_New(HWND hDlg)
 	// Move Entity
 	if (App->CL_FileView->Context_Selection == Enums::FileView_Move_Folder)
 	{
-		App->CL_Dialogs->Show_YesNo_Dlg((LPSTR)"Add Message", (LPSTR)"Do you want to add a new Move Entity", (LPSTR)"");
+		App->CL_Dialogs->Show_YesNo_Dlg((LPSTR)"Add Move Entity", (LPSTR)"Do you want to add a new Move Entity", (LPSTR)"");
 
 		bool Doit = App->CL_Dialogs->flag_Canceled;
 		if (Doit == 0)
@@ -1677,7 +1677,7 @@ void CL64_FileView::Context_New(HWND hDlg)
 	// Teleports
 	if (App->CL_FileView->Context_Selection == Enums::FileView_Teleports_Folder)
 	{
-		App->CL_Dialogs->Show_YesNo_Dlg((LPSTR)"Add Message", (LPSTR)"Do you want to add a new Teleport Entity", (LPSTR)"");
+		App->CL_Dialogs->Show_YesNo_Dlg((LPSTR)"Add Teleport Entity", (LPSTR)"Do you want to add a new Teleport Entity", (LPSTR)"");
 
 		bool Doit = App->CL_Dialogs->flag_Canceled;
 		if (Doit == 0)
@@ -1691,8 +1691,7 @@ void CL64_FileView::Context_New(HWND hDlg)
 	// Collectables
 	if (App->CL_FileView->Context_Selection == Enums::FileView_Collectables_Folder)
 	{
-
-		App->CL_Dialogs->Show_YesNo_Dlg((LPSTR)"Add Object", (LPSTR)"Do you want to add a new Collectable", (LPSTR)"");
+		App->CL_Dialogs->Show_YesNo_Dlg((LPSTR)"Add Collectable Entity", (LPSTR)"Do you want to add a new Collectable", (LPSTR)"");
 
 		bool Doit = App->CL_Dialogs->flag_Canceled;
 		if (Doit == 0)
@@ -1707,8 +1706,7 @@ void CL64_FileView::Context_New(HWND hDlg)
 	// Counters
 	if (App->CL_FileView->Context_Selection == Enums::FileView_Counters_Folder)
 	{
-
-		App->CL_Dialogs->Show_YesNo_Dlg((LPSTR)"Add Counter", (LPSTR)"Do you want to add a new Counter", (LPSTR)"");
+		App->CL_Dialogs->Show_YesNo_Dlg((LPSTR)"Add Counter Entity", (LPSTR)"Do you want to add a new Counter", (LPSTR)"");
 
 		bool Doit = App->CL_Dialogs->flag_Canceled;
 		if (Doit == 0)
@@ -1735,8 +1733,7 @@ void CL64_FileView::Context_New(HWND hDlg)
 
 	if (App->CL_FileView->Context_Selection == Enums::FileView_Particle_Folder)
 	{
-
-		App->CL_Dialogs->Show_YesNo_Dlg((LPSTR)"Add Particle", (LPSTR)"Do you want to add a new Particle", (LPSTR)"");
+		App->CL_Dialogs->Show_YesNo_Dlg((LPSTR)"Add Particle Entity", (LPSTR)"Do you want to add a new Particle", (LPSTR)"");
 
 		bool Doit = App->CL_Dialogs->flag_Canceled;
 		if (Doit == 0)

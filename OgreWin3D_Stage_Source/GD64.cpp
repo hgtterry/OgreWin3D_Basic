@@ -672,7 +672,163 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 			return TRUE;
 		}
+
+		case ID_ADDITEM_OBJECT:
+		{
+			App->CL_Dialogs->Show_YesNo_Dlg((LPSTR)"Add Object", (LPSTR)"Do you want to add a new Object Entity", (LPSTR)"");
+
+			bool Doit = App->CL_Dialogs->flag_Canceled;
+			if (Doit == 0)
+			{
+				App->CL_MeshViewer->Mesh_Viewer_Mode = Enums::Mesh_Viewer_Objects;
+				App->CL_MeshViewer->Start_MeshViewer_Dlg();
+			}
+
+			return TRUE;
+		}
+
+		case ID_ADDITEM_SOUNDENTITY:
+		{
+			App->CL_Dialogs->Show_YesNo_Dlg((LPSTR)"Add Sound Entity", (LPSTR)"Do you want to add a new Sound Entity", (LPSTR)"");
+
+			bool Doit = App->CL_Dialogs->flag_Canceled;
+			if (Doit == 0)
+			{
+				App->CL_Com_Sounds->Add_New_Sound();
+			}
+
+			return TRUE;
+		}
 		
+		case ID_ADDITEM_MESSAGEENTITY:
+		{
+			App->CL_Dialogs->Show_YesNo_Dlg((LPSTR)"Add Message Entity", (LPSTR)"Do you want to add a new Message Entity", (LPSTR)"");
+
+			bool Doit = App->CL_Dialogs->flag_Canceled;
+			if (Doit == 0)
+			{
+				App->CL_Com_Messages->Add_New_Message();
+			}
+
+			return TRUE;
+		}
+
+		case ID_ADDITEM_MOVEENTITY:
+		{
+			App->CL_Dialogs->Show_YesNo_Dlg((LPSTR)"Add Move Entity", (LPSTR)"Do you want to add a new Move Entity", (LPSTR)"");
+
+			bool Doit = App->CL_Dialogs->flag_Canceled;
+			if (Doit == 0)
+			{
+				App->CL_Com_MoveEntity->Add_New_Move_Entity();
+			}
+
+			return TRUE;
+		}
+		
+		case ID_ADDITEM_COLLECTABLEENTITY:
+		{
+			App->CL_Dialogs->Show_YesNo_Dlg((LPSTR)"Add Collectable Entity", (LPSTR)"Do you want to add a new Collectable", (LPSTR)"");
+
+			bool Doit = App->CL_Dialogs->flag_Canceled;
+			if (Doit == 0)
+			{
+				App->CL_MeshViewer->Mesh_Viewer_Mode = Enums::Mesh_Viewer_Collectables;
+				App->CL_MeshViewer->Start_MeshViewer_Dlg();
+			}
+
+			return TRUE;
+		}
+
+		case ID_ADDITEM_TELEPORTERENTITY:
+		{
+			App->CL_Dialogs->Show_YesNo_Dlg((LPSTR)"Add Teleport Entity", (LPSTR)"Do you want to add a new Teleport Entity", (LPSTR)"");
+
+			bool Doit = App->CL_Dialogs->flag_Canceled;
+			if (Doit == 0)
+			{
+				App->CL_Com_Teleporters->Add_New_Teleporter();
+			}
+
+			return TRUE;
+		}
+		
+		case ID_ADDITEM_ENVIRONMENTENTITY:
+		{
+			App->CL_Dialogs->Show_YesNo_Dlg((LPSTR)"Add Environment Entity", (LPSTR)"Do you want to add a new Environ Entity", (LPSTR)"");
+
+			bool Doit = App->CL_Dialogs->flag_Canceled;
+			if (Doit == 0)
+			{
+				App->CL_Com_Environments->Add_New_Environ_Entity(0);
+			}
+
+			return TRUE;
+		}
+
+		case ID_ADDITEM_PARTICLEENTITY:
+		{
+			App->CL_Dialogs->Show_YesNo_Dlg((LPSTR)"Add Particle Entity", (LPSTR)"Do you want to add a new Particle", (LPSTR)"");
+
+			bool Doit = App->CL_Dialogs->flag_Canceled;
+			if (Doit == 0)
+			{
+				strcpy(App->CL_ImGui_Dialogs->List_Banner, "Select Particle");
+
+				App->CL_ImGui_Dialogs->List_Strings.resize(6);
+				App->CL_ImGui_Dialogs->List_Count = 6;
+				App->CL_ImGui_Dialogs->List_Index = 0;
+
+				App->CL_ImGui_Dialogs->List_Strings[0] = "GD_Smoke1";
+				App->CL_ImGui_Dialogs->List_Strings[1] = "GD_JetEngine1";
+				App->CL_ImGui_Dialogs->List_Strings[2] = "GD_Aureola";
+				App->CL_ImGui_Dialogs->List_Strings[3] = "GD_PurpleFountain";
+				App->CL_ImGui_Dialogs->List_Strings[4] = "GD_Swarm";
+				App->CL_ImGui_Dialogs->List_Strings[5] = "GD_GreenyNimbus";
+
+				App->CL_ImGui_Dialogs->Start_Dialog_List();
+
+				while (App->CL_ImGui_Dialogs->flag_Show_Dialog_list == 1)
+				{
+					App->CL_ImGui_Dialogs->BackGround_Render_Loop();
+
+				}
+
+				App->CL_ImGui_Dialogs->flag_Show_Dialog_list = 0;
+				App->CL_Panels->Disable_Panels(false);
+
+				int ParticleIndex = App->CL_ImGui_Dialogs->List_Index;
+
+
+				char ParticleName[MAX_PATH];
+				strcpy(ParticleName, App->CL_ImGui_Dialogs->List_Strings[ParticleIndex].c_str());
+
+				//App->Say(ParticleName);
+
+				if (App->CL_ImGui_Dialogs->flag_List_Canceled == 0)
+				{
+					App->CL_Com_Particles->Add_New_Particle(ParticleName);
+				}
+
+			}
+
+			return TRUE;
+		}
+		
+		case ID_ADDITEM_COUNTER:
+		{
+			App->CL_Dialogs->Show_YesNo_Dlg((LPSTR)"Add Counter Entity", (LPSTR)"Do you want to add a new Counter", (LPSTR)"");
+
+			bool Doit = App->CL_Dialogs->flag_Canceled;
+			if (Doit == 0)
+			{
+				App->CL_Display->Add_New_Counter();
+			}
+
+			return TRUE;
+		}
+
+		// ------------------------------------------------------------
 		case ID_MOUSEANDKEYS:
 		{
 			App->CL_File_IO->Open_HTML((LPSTR)"Help\\MouseAndKeys.html");

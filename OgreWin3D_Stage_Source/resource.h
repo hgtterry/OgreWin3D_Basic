@@ -380,6 +380,15 @@
 #define ID_DEBUG_IMGUI32827             32827
 #define ID_VIEW_PLAYERDATA              32828
 #define ID_DEBUG_RESETFORRELEASE        32829
+#define ID_ADDITEM_OBJECT               32830
+#define ID_ADDITEM_SOUNDENTITY          32831
+#define ID_ADDITEM_MESSAGEENTITY        32832
+#define ID_ADDITEM_MOVEENTITY           32833
+#define ID_ADDITEM_COLLECTABLEENTITY    32834
+#define ID_ADDITEM_TELEPORTERENTITY     32835
+#define ID_ADDITEM_ENVIRONMENTENTITY    32836
+#define ID_ADDITEM_PARTICLEENTITY       32837
+#define ID_ADDITEM_COUNTER              32838
 #define IDC_STATIC                      -1
 
 // Next default values for new objects
@@ -388,7 +397,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        207
-#define _APS_NEXT_COMMAND_VALUE         32830
+#define _APS_NEXT_COMMAND_VALUE         32839
 #define _APS_NEXT_CONTROL_VALUE         1138
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
