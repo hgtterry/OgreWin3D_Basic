@@ -18,7 +18,6 @@
 #define ID_VIEW_TOPVIEW                 131
 #define ID_VIEW_SIDEVIEW                132
 #define ID_VIEW_FRONTVIEW               133
-#define IDD_PREFERENCES                 134
 #define IDD_TOPBAR                      135
 #define IDD_TB_TAB                      136
 #define IDB_GRIDON                      138
@@ -94,8 +93,6 @@
 #define IDD_PROPS_CAMERA                205
 #define IDD_PROPS_PLAYER                206
 #define IDD_PROPS_OVERRIDECOUNTER       207
-#define IDC_CK_SU_FULLSCREEN            1000
-#define IDC_ST_STARTUP                  1001
 #define IDC_CK_SU_FULL3DVIEW            1002
 #define IDC_BT_TDH_DEBUG                1002
 #define IDC_BT_TD_DEBUG_RESETVIEW       1003
@@ -209,7 +206,6 @@
 #define IDC_STTEXT_YN3                  1029
 #define IDC_STBANNER                    1030
 #define IDC_CHECK1                      1031
-#define IDC_CK_SU_DIRECTORIES           1031
 #define IDC_CK_FPSNOLOCK                1031
 #define IDC_CK_EXPORT_TO_OGRE           1031
 #define IDC_CK_SUBFOLDER                1031
@@ -303,7 +299,6 @@
 #define IDC_BTPJBROWSE                  1114
 #define IDC_STLN                        1115
 #define IDC_STLEVELNAME                 1116
-#define IDC_CK_SU_LAST_PROJECT          1117
 #define IDC_BT_SELECT                   1118
 #define IDC_STARTCUR                    1119
 #define IDC_CK_GC_FRONTDLG              1120
@@ -326,7 +321,6 @@
 #define IDC_BTOBJECT                    1134
 #define IDC_BT_DP_OVERIDECOUNTER        1135
 #define IDC_STOBJECTNAME                1136
-#define IDC_CK_SU_TEST_PROJECT          1137
 #define ID_VIEW_RESET                   32771
 #define ID_VIEW_MAX3DVIEW               32772
 #define ID_DEBUG_TESTPREFERANCE         32773

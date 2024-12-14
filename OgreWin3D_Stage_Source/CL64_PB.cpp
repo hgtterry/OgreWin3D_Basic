@@ -189,8 +189,9 @@ LRESULT CALLBACK CL64_PB::Proc_ProgressBar(HWND hDlg, UINT message, WPARAM wPara
 		{
 			App->CL_Panels->Disable_Panels(false);
 			App->CL_ImGui_Dialogs->flag_Disable_Physics_Console = 0;
-			App->CL_Ogre->Ogre3D_Listener->flag_Block_Mouse = 0
-				;
+			App->CL_Ogre->Ogre3D_Listener->flag_Block_Mouse = 0;
+
+
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}

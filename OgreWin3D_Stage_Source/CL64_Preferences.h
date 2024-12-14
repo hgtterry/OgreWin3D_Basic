@@ -46,8 +46,6 @@ public:
 
 private:
 
-	static LRESULT CALLBACK Preferences_Dlg_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
-
 	FILE* WriteData;
 };
 
