@@ -603,7 +603,17 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		// PREFERENCES --------------------------------------------------
 		case ID_OPTIONS_PREFERENCES:
 		{
-			App->CL_Preferences->Start_Preferences_Dlg();
+			if (App->CL_Preferences->flag_Show_Preferences_Editor == 1)
+			{
+				App->CL_Preferences->Close_Preferences_Editor();
+				CheckMenuItem(App->mMenu, ID_OPTIONS_PREFERENCES, MF_BYCOMMAND | MF_UNCHECKED);
+			}
+			else
+			{
+				App->CL_Preferences->Start_Preferences_Dlg();
+				CheckMenuItem(App->mMenu, ID_OPTIONS_PREFERENCES, MF_BYCOMMAND | MF_CHECKED);
+			}
+
 			return TRUE;
 		}
 

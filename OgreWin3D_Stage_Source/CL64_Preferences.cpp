@@ -69,7 +69,7 @@ void CL64_Preferences::Preferences_Editor_ImGui()
 {
 
 	ImGui::SetNextWindowPos(ImVec2(Preferences_Pos_X, Preferences_Pos_Y), ImGuiCond_FirstUseEver);
-	ImGui::SetNextWindowSize(ImVec2(350, 220), ImGuiCond_FirstUseEver);
+	ImGui::SetNextWindowSize(ImVec2(350, 250), ImGuiCond_FirstUseEver);
 
 	ImGui::PushStyleColor(ImGuiCol_WindowBg, IM_COL32(239, 239, 239, 255));
 
@@ -84,11 +84,13 @@ void CL64_Preferences::Preferences_Editor_ImGui()
 			ImVec2 Size = ImGui::GetWindowSize();
 
 			Preferences_Pos_X = ((float)App->CL_Ogre->Ogre3D_Listener->View_Width / 2) - (350 / 2);
-			Preferences_Pos_Y = ((float)App->CL_Ogre->Ogre3D_Listener->View_Height / 2) - (220 / 2);
+			Preferences_Pos_Y = ((float)App->CL_Ogre->Ogre3D_Listener->View_Height / 2) - (250 / 2);
 			ImGui::SetWindowPos("Preferences Editor", ImVec2(Preferences_Pos_X, Preferences_Pos_Y));
 
 			flag_Preferences_Start_Pos = 1;
 		}
+
+		ImGuiStyle* style = &ImGui::GetStyle();
 
 		ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(2, 2));
 		
@@ -99,16 +101,39 @@ void CL64_Preferences::Preferences_Editor_ImGui()
 		ImGui::Columns(2);
 		ImGui::SetColumnWidth(-1, 120);
 
+		// ----------------------------------- Startup
+		if (PropertyEditor_Page == 0)
+		{
+			style->Colors[ImGuiCol_Button] = ImVec4(0.0f, 1.0f, 0.0f, 1.00f);
+		}
+
 		if (ImGui::Button("Startup ", ImVec2(100, 0)))
 		{
 			PropertyEditor_Page = 0;
 		}
 
-		if (ImGui::Button("##b1   ", ImVec2(100, 0)))
+		if (PropertyEditor_Page == 0)
 		{
-			//PropertyEditor_Page = 1;
+			style->Colors[ImGuiCol_Button] = ImVec4(0.26f, 0.59f, 0.98f, 0.40f);
 		}
 
+		// ----------------------------------- Test
+		if (PropertyEditor_Page == 1)
+		{
+			style->Colors[ImGuiCol_Button] = ImVec4(0.0f, 1.0f, 0.0f, 1.00f);
+		}
+
+		if (ImGui::Button("##b1   ", ImVec2(100, 0)))
+		{
+			PropertyEditor_Page = 1;
+		}
+
+		if (PropertyEditor_Page == 1)
+		{
+			style->Colors[ImGuiCol_Button] = ImVec4(0.26f, 0.59f, 0.98f, 0.40f);
+		}
+
+		// ----------------------------------- Test
 		if (ImGui::Button("##b2   ", ImVec2(100, 0)))
 		{
 			//PropertyEditor_Page = 2;
@@ -130,6 +155,8 @@ void CL64_Preferences::Preferences_Editor_ImGui()
 			ImGui::NextColumn();
 			ImGui::AlignTextToFramePadding();
 
+			ImGui::Text("Startup");
+	
 			// ----------------- Full Screen
 			int test = ImGui::Checkbox("Full Screen", &flag_Start_FullScreen);
 			if (test == 1)
@@ -214,15 +241,13 @@ void CL64_Preferences::Preferences_Editor_ImGui()
 
 		}
 
-		ImGui::PopStyleVar();
+		
 		ImGui::Columns(0);
 
 		ImGui::Spacing();
 		ImGui::Spacing();
 
-		ImGuiStyle& style = ImGui::GetStyle();
-
-		float size = ImGui::CalcTextSize("Close").x + style.FramePadding.x * 2.0f;
+		float size = ImGui::CalcTextSize("Close").x + style->FramePadding.x * 2.0f;
 		float avail = ImGui::GetContentRegionAvail().x;
 
 		float off = (avail - size) * 0.5f;
@@ -235,11 +260,14 @@ void CL64_Preferences::Preferences_Editor_ImGui()
 		{
 			Close_Preferences_Editor();
 
+			ImGui::PopStyleVar();
 			ImGui::PopStyleColor();
+
 			PropertyEditor_Page = 0;
 			flag_Show_Preferences_Editor = 0;
 		}
 
+		ImGui::PopStyleVar();
 		ImGui::PopStyleColor();
 		ImGui::End();
 	}
@@ -257,7 +285,7 @@ void CL64_Preferences::Close_Preferences_Editor()
 
 	App->CL_Panels->Disable_Panels(false);
 	App->CL_ImGui_Dialogs->flag_Disable_Physics_Console = 0;
-
+	CheckMenuItem(App->mMenu, ID_OPTIONS_PREFERENCES, MF_BYCOMMAND | MF_UNCHECKED);
 }
 
 // *************************************************************************
