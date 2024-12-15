@@ -856,7 +856,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 			if (App->CL_Scene->flag_Scene_Modified == 1)
 			{
-				App->CL_Dialogs->Show_YesNo_Dlg((LPSTR)"Save Scene", (LPSTR)"Scene has been Modified", (LPSTR)"Do you wish to save changes");
+				App->CL_Dialogs->Show_YesNo_Dlg((LPSTR)"Save Scene", (LPSTR)"Scene has been Modified", (LPSTR)"Do you wont to save changes");
 
 				bool Doit = App->CL_Dialogs->flag_Canceled;
 				if (Doit == 0)
@@ -929,7 +929,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	{
 		if (App->CL_Scene->flag_Scene_Modified == 1)
 		{
-			App->CL_Dialogs->Show_YesNo_Dlg((LPSTR)"Save Scene", (LPSTR)"Scene has been Modified", (LPSTR)"Do you wish to save changes");
+			App->CL_Dialogs->Show_YesNo_Dlg((LPSTR)"Save Scene", (LPSTR)"Scene has been Modified", (LPSTR)"Do you wont to save changes");
 
 			bool Doit = App->CL_Dialogs->flag_Canceled;
 			if (Doit == 0)

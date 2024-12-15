@@ -1252,7 +1252,7 @@ void CL64_FileView::Context_Menu(HWND hDlg)
 			AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_COPY, L"&Copy");
 			AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_PASTE, L"&Paste");
 			AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
-			AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_FILE_DELETE, L"&Delete");
+			AppendMenuW(hMenu, MF_STRING , IDM_FILE_DELETE, L"&Delete");
 			TrackPopupMenu(hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, App->ListPanel, NULL);
 			DestroyMenu(hMenu);
 			Context_Selection = Enums::FileView_Player_File;
@@ -1276,7 +1276,7 @@ void CL64_FileView::Context_Menu(HWND hDlg)
 			AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_COPY, L"&Copy");
 			AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_PASTE, L"&Paste");
 			AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
-			AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_FILE_DELETE, L"&Delete");
+			AppendMenuW(hMenu, MF_STRING , IDM_FILE_DELETE, L"&Delete");
 			TrackPopupMenu(hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, App->ListPanel, NULL);
 			DestroyMenu(hMenu);
 			Context_Selection = Enums::FileView_Cameras_File;
@@ -1548,7 +1548,7 @@ void CL64_FileView::Context_Menu(HWND hDlg)
 			AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_COPY, L"&Create Copy");
 			//AppendMenuW(App->SBC_FileView->hMenu, MF_STRING | MF_GRAYED, IDM_PASTE, L"&Paste");
 			AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
-			AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_FILE_DELETE, L"&Delete");
+			AppendMenuW(hMenu, MF_STRING , IDM_FILE_DELETE, L"&Delete");
 			TrackPopupMenu(hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, App->ListPanel, NULL);
 			DestroyMenu(hMenu);
 			Context_Selection = Enums::FileView_Particle_File;
@@ -2062,6 +2062,21 @@ void CL64_FileView::Context_Delete()
 		{
 			App->CL_Com_Objects->Delete_Object();
 			App->CL_FileView->Mark_Altered_Folder(App->CL_FileView->FV_Teleporters_Folder);
+		}
+
+		return;
+	}
+
+	// ---------------- Particles
+	if (App->CL_FileView->Context_Selection == Enums::FileView_Particle_File)
+	{
+		App->CL_Dialogs->Show_YesNo_Dlg((LPSTR)"Remove Particle Entity", (LPSTR)App->CL_Scene->B_Object[Index]->Object_Name, (LPSTR)"Are you sure");
+
+		bool Doit = App->CL_Dialogs->flag_Canceled;
+		if (Doit == 0)
+		{
+			App->CL_Com_Objects->Delete_Object();
+			App->CL_FileView->Mark_Altered_Folder(App->CL_FileView->FV_Particles_Folder);
 		}
 
 		return;
