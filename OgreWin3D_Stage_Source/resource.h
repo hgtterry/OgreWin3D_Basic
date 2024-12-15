@@ -389,6 +389,11 @@
 #define ID_ADDITEM_ENVIRONMENTENTITY    32836
 #define ID_ADDITEM_PARTICLEENTITY       32837
 #define ID_ADDITEM_COUNTER              32838
+#define ID_EDIT_RENAME                  32839
+#define ID_EDIT_GOTO                    32840
+#define ID_EDIT_COPY                    32841
+#define ID_EDIT_PASTE                   32842
+#define ID_EDIT_DELETE                  32843
 #define IDC_STATIC                      -1
 
 // Next default values for new objects
@@ -397,7 +402,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        207
-#define _APS_NEXT_COMMAND_VALUE         32839
+#define _APS_NEXT_COMMAND_VALUE         32844
 #define _APS_NEXT_CONTROL_VALUE         1138
 #define _APS_NEXT_SYMED_VALUE           110
 #endif

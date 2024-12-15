@@ -1644,20 +1644,20 @@ bool CL64_Properties::Edit_Area_Onclick(LPARAM lParam)
 // *************************************************************************
 bool CL64_Properties::Edit_Camera_Onclick(LPARAM lParam)
 {
-	//int Index = App->SBC_Properties->Current_Selected_Object; // Get Selected Object Index 
-	//int result = 1;
-	//int test;
+	int Index = Current_Selected_Object; // Get Selected Object Index 
+	int result = 1;
+	int test;
 
-	//LPNMLISTVIEW poo = (LPNMLISTVIEW)lParam;
-	//test = poo->iItem;
-	//ListView_GetItemText(App->SBC_Properties->Properties_hLV, test, 0, App->SBC_Properties->btext, 20);
+	LPNMLISTVIEW poo = (LPNMLISTVIEW)lParam;
+	test = poo->iItem;
+	ListView_GetItemText(Properties_hLV, test, 0, btext, 20);
 
-	//result = strcmp(App->SBC_Properties->btext, "Name");
-	//if (result == 0)
-	//{
-	//	App->SBC_Com_Camera->Rename_Camera(Index);
-	//	Update_ListView_Camera();
-	//}
+	result = strcmp(btext, "Name");
+	if (result == 0)
+	{
+		App->CL_Com_Cameras->Rename_Camera(Index);
+		Update_ListView_Camera();
+	}
 
 	//result = strcmp(App->SBC_Properties->btext, "Pos_X");
 	//if (result == 0)

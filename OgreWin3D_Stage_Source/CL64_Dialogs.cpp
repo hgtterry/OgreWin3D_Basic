@@ -885,6 +885,17 @@ LRESULT CALLBACK CL64_Dialogs::Proc_Dialog_Text(HWND hDlg, UINT message, WPARAM 
 				}
 			}
 
+			if (App->CL_Dialogs->CheckNames == Enums::Check_Names_Cameras)
+			{
+				int test = App->CL_Com_Cameras->CheckNames_Cameras(buff);
+				if (test == 1)
+				{
+					App->Say("Name Already Exsits");
+					return 1;
+				}
+			}
+			
+
 			strcpy(App->CL_Dialogs->Chr_Text, buff);
 
 			App->CL_Dialogs->flag_Canceled = 0;

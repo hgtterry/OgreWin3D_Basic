@@ -828,6 +828,19 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			return TRUE;
 		}
 
+		// ----------------------------------------------------- Edit
+		case ID_EDIT_RENAME:
+		{
+			App->CL_FileView->Context_Rename();
+			return TRUE;
+		}
+		
+		case ID_EDIT_DELETE:
+		{
+			App->CL_FileView->Context_Delete();
+			return TRUE;
+		}
+		
 		// ------------------------------------------------------------
 		case ID_MOUSEANDKEYS:
 		{

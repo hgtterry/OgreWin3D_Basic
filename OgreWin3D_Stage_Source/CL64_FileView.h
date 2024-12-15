@@ -50,6 +50,9 @@ public:
 	void Mark_Clear(HTREEITEM Item);
 	void Mark_Clear_Folder(HTREEITEM Item);
 
+	void Context_Rename() const;
+	void Context_Delete();
+
 	bool flag_FileView_Active;
 
 	HTREEITEM FV_Players_Folder;	// Players Folder FileFView
@@ -81,9 +84,7 @@ private:
 
 	void Context_Menu(HWND hDlg);
 	void Context_New(HWND hDlg);
-	void Context_Rename(HWND hDlg) const;
-	void Context_Delete(HWND hDlg);
-
+	
 	void HideRightPanes(void);
 
 	TV_INSERTSTRUCT tvinsert;

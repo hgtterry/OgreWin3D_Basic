@@ -29,6 +29,8 @@ public:
 	void Camera_Goto_Object(int Object_Index);
 	void Set_Camera(int Index);
 	void Update_Camera_Entity_Data(int Index);
+	void Rename_Camera(int Index);
+	int CheckNames_Cameras(char* Name);
 
 };
 

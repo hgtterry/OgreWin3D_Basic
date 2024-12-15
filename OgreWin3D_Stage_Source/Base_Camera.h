@@ -41,6 +41,7 @@ public:
 	int This_Object_UniqueID;
 
 	bool flag_Altered;
+	bool flag_Deleted;
 
 	HTREEITEM FileViewItem;
 

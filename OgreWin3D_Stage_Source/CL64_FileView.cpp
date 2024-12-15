@@ -216,7 +216,7 @@ LRESULT CALLBACK CL64_FileView::Proc_ListPanel(HWND hDlg, UINT message, WPARAM w
 
 		if (LOWORD(wParam) == IDM_FILE_DELETE)
 		{
-			App->CL_FileView->Context_Delete(hDlg);
+			App->CL_FileView->Context_Delete();
 
 			return TRUE;
 		}
@@ -229,7 +229,7 @@ LRESULT CALLBACK CL64_FileView::Proc_ListPanel(HWND hDlg, UINT message, WPARAM w
 
 		if (LOWORD(wParam) == IDM_FILE_RENAME)
 		{
-			App->CL_FileView->Context_Rename(hDlg);
+			App->CL_FileView->Context_Rename();
 			return TRUE;
 		}
 
@@ -1351,7 +1351,7 @@ void CL64_FileView::Context_Menu(HWND hDlg)
 			AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_COPY, L"&Create Copy");
 			//AppendMenuW(App->SBC_FileView->hMenu, MF_STRING | MF_GRAYED, IDM_PASTE, L"&Paste");
 			AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
-			AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_FILE_DELETE, L"&Delete");
+			AppendMenuW(hMenu, MF_STRING , IDM_FILE_DELETE, L"&Delete");
 			TrackPopupMenu(hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, App->ListPanel, NULL);
 			DestroyMenu(hMenu);
 			Context_Selection = Enums::FileView_Sounds_File;
@@ -1786,15 +1786,15 @@ void CL64_FileView::Context_New(HWND hDlg)
 // *************************************************************************
 // *				Context_Rename:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
-void CL64_FileView::Context_Rename(HWND hDlg) const
+void CL64_FileView::Context_Rename() const
 {
 	int Index = App->CL_Properties->Current_Selected_Object;
 
 	// Camera
 	if (Context_Selection == Enums::FileView_Cameras_File)
 	{
-		//App->CL_Com_Camera->Rename_Camera(Index);
-		//App->CL_Properties->Update_ListView_Camera();
+		App->CL_Com_Cameras->Rename_Camera(Index);
+		App->CL_Properties->Update_ListView_Camera();
 		return;
 	}
 
@@ -1885,8 +1885,10 @@ void CL64_FileView::Context_Rename(HWND hDlg) const
 // *************************************************************************
 // *			Context_Delete:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-void CL64_FileView::Context_Delete(HWND hDlg)
+void CL64_FileView::Context_Delete()
 {
+	int Index = App->CL_Properties->Current_Selected_Object;
+
 	// ---------------- Areas
 	if (Context_Selection == Enums::FileView_Areas_File)
 	{
@@ -1924,7 +1926,7 @@ void CL64_FileView::Context_Delete(HWND hDlg)
 	// ---------------- Objects
 	if (Context_Selection == Enums::FileView_Objects_File)
 	{
-		App->CL_Dialogs->Show_YesNo_Dlg((LPSTR)"Remove Object", (LPSTR)"Are you sure", (LPSTR)"");
+		App->CL_Dialogs->Show_YesNo_Dlg((LPSTR)"Remove Object", (LPSTR)App->CL_Scene->B_Object[Index]->Object_Name, (LPSTR)"Are you sure");
 
 		bool Doit = App->CL_Dialogs->flag_Canceled;
 		if (Doit == 0)
@@ -1954,14 +1956,14 @@ void CL64_FileView::Context_Delete(HWND hDlg)
 	// ---------------- Sound Entities
 	if (Context_Selection == Enums::FileView_Sounds_File)
 	{
-		/*App->SBC_Dialogs->YesNo("Remove Sound", "Are you sure", 1);
+		App->CL_Dialogs->Show_YesNo_Dlg((LPSTR)"Remove Sound Entity", (LPSTR)App->CL_Scene->B_Object[Index]->Object_Name, (LPSTR)"Are you sure");
 
-		bool Doit = App->SBC_Dialogs->Canceled;
+		bool Doit = App->CL_Dialogs->flag_Canceled;
 		if (Doit == 0)
 		{
-			App->CL_Object->Delete_Object();
-			App->SBC_FileView->Mark_Altered_Folder(FV_Sounds_Folder);
-		}*/
+			App->CL_Com_Objects->Delete_Object();
+			App->CL_FileView->Mark_Altered_Folder(FV_Sounds_Folder);
+		}
 
 		return;
 	}

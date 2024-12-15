@@ -152,3 +152,53 @@ void CL64_Com_Cameras::Update_Camera_Entity_Data(int Index)
 	App->CL_Scene->B_Camera[Index]->Cam_Quat = App->CL_Ogre->camNode->getOrientation();
 
 }
+
+// *************************************************************************
+// *	  		Rename_Camera:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void CL64_Com_Cameras::Rename_Camera(int Index)
+{
+	strcpy(App->CL_Dialogs->btext, "Change Camera Name");
+	strcpy(App->CL_Dialogs->Chr_Text, App->CL_Scene->B_Camera[Index]->Camera_Name);
+
+	App->CL_Dialogs->Dialog_Text(Enums::Check_Names_Cameras);
+
+	if (App->CL_Dialogs->flag_Canceled == 1)
+	{
+		return;
+	}
+
+	strcpy(App->CL_Scene->B_Camera[Index]->Camera_Name, App->CL_Dialogs->Chr_Text);
+
+	App->CL_Scene->B_Camera[Index]->flag_Altered = 1;
+	App->CL_Scene->flag_Scene_Modified = 1;
+	App->CL_FileView->Mark_Altered(App->CL_Scene->B_Camera[Index]->FileViewItem);
+
+	App->CL_FileView->Change_Item_Name(App->CL_Scene->B_Camera[Index]->FileViewItem, App->CL_Dialogs->Chr_Text);
+}
+
+// *************************************************************************
+// *		 CheckNames_Cameras:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+int CL64_Com_Cameras::CheckNames_Cameras(char* Name)
+{
+	int Count = 0;
+	int Total = App->CL_Scene->Camera_Count;
+
+	while (Count < Total)
+	{
+		if (App->CL_Scene->B_Camera[Count]->flag_Deleted == 0)
+		{
+			int Result = 1;
+			Result = strcmp(App->CL_Scene->B_Camera[Count]->Camera_Name, Name);
+
+			if (Result == 0)
+			{
+				return 1;
+			}
+		}
+
+		Count++;
+	}
+	return 0;
+}

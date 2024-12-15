@@ -49,6 +49,7 @@ void Base_Camera::Init_Camera(void)
 	LookAt.z = 0;
 
 	flag_Altered = 1;
+	flag_Deleted = 0;
 
 	This_Object_UniqueID = 0;
 
