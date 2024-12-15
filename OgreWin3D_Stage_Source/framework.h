@@ -195,7 +195,9 @@ namespace Enums
 		Check_Names_None = 0,
 		Check_Names_Locatoins = 1,
 		Check_Names_Objects = 2,
-		Check_Names_Cameras = 3
+		Check_Names_Cameras = 3,
+		Check_Names_Player = 4,
+		Check_Names_Counters = 5
 	};
 
 	enum FileView_Context

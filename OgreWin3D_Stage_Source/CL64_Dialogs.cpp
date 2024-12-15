@@ -895,7 +895,26 @@ LRESULT CALLBACK CL64_Dialogs::Proc_Dialog_Text(HWND hDlg, UINT message, WPARAM 
 				}
 			}
 			
+			if (App->CL_Dialogs->CheckNames == Enums::Check_Names_Player)
+			{
+				int test = App->CL_Com_Player->CheckNames_Player(buff);
+				if (test == 1)
+				{
+					App->Say("Name Already Exsits");
+					return 1;
+				}
+			}
 
+			if (App->CL_Dialogs->CheckNames == Enums::Check_Names_Counters)
+			{
+				int test = App->CL_Display->CheckNames_Counters(buff);
+				if (test == 1)
+				{
+					App->Say("Name Already Exsits");
+					return 1;
+				}
+			}
+			
 			strcpy(App->CL_Dialogs->Chr_Text, buff);
 
 			App->CL_Dialogs->flag_Canceled = 0;

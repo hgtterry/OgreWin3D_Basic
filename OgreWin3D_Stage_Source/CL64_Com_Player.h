@@ -49,6 +49,7 @@ public:
 	void Set_Player_GroundSpeed(float GroundSpeed);
 	void Reset_Player();
 	void Rename_Player(int Index);
+	int CheckNames_Player(char* Name);
 
 	void Check_Collisions(void);
 

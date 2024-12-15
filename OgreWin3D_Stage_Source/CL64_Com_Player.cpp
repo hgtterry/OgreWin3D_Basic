@@ -385,7 +385,7 @@ void CL64_Com_Player::Rename_Player(int Index)
 	strcpy(App->CL_Dialogs->btext, "Change Player Name");
 	strcpy(App->CL_Dialogs->Chr_Text, App->CL_Scene->B_Player[0]->Player_Name);
 
-	App->CL_Dialogs->Dialog_Text(1);
+	App->CL_Dialogs->Dialog_Text(Enums::Check_Names_Player);
 
 	if (App->CL_Dialogs->flag_Canceled == 1)
 	{
@@ -401,6 +401,32 @@ void CL64_Com_Player::Rename_Player(int Index)
 
 	App->CL_FileView->Change_Item_Name(App->CL_Scene->B_Player[0]->FileViewItem, App->CL_Dialogs->Chr_Text);
 
+}
+
+// *************************************************************************
+// *		 CheckNames_Player:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+int CL64_Com_Player::CheckNames_Player(char* Name)
+{
+	int Count = 0;
+	int Total = App->CL_Scene->Player_Count;
+
+	while (Count < Total)
+	{
+		if (App->CL_Scene->B_Player[0]->flag_Deleted == 0)
+		{
+			int Result = 1;
+			Result = strcmp(App->CL_Scene->B_Player[0]->Player_Name, Name);
+
+			if (Result == 0)
+			{
+				return 1;
+			}
+		}
+
+		Count++;
+	}
+	return 0;
 }
 
 // *************************************************************************

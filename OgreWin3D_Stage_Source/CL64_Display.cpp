@@ -121,7 +121,7 @@ void CL64_Display::Rename_Counter(int Index)
 	strcpy(App->CL_Dialogs->btext, "Change Counter Name");
 	strcpy(App->CL_Dialogs->Chr_Text, App->CL_Scene->B_Counter[Index]->Panel_Name);
 
-	App->CL_Dialogs->Dialog_Text(Enums::Check_Names_Objects);
+	App->CL_Dialogs->Dialog_Text(Enums::Check_Names_Counters);
 
 	if (App->CL_Dialogs->flag_Canceled == 1)
 	{
@@ -133,6 +133,33 @@ void CL64_Display::Rename_Counter(int Index)
 	Mark_As_Altered_Counter(Index);
 
 	App->CL_FileView->Change_Item_Name(App->CL_Scene->B_Counter[Index]->FileViewItem, App->CL_Dialogs->Chr_Text);
+}
+
+// *************************************************************************
+// *		 CheckNames_Counters:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+int CL64_Display::CheckNames_Counters(char* Name)
+{
+	int Count = 0;
+	int Total = App->CL_Scene->Counters_Count;
+
+	while (Count < Total)
+	{
+		if (App->CL_Scene->B_Counter[Count]->flag_Deleted == 0)
+		{
+			int Result = 1;
+			Result = strcmp(App->CL_Scene->B_Counter[Count]->Panel_Name, Name);
+
+			if (Result == 0)
+			{
+				return 1;
+			}
+		}
+
+		Count++;
+	}
+
+	return 0;
 }
 
 // *************************************************************************

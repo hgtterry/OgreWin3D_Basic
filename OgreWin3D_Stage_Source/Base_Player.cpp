@@ -47,6 +47,7 @@ Base_Player::Base_Player()
 	Limit_Look_Down = 45;
 
 	flag_Altered = 1;
+	flag_Deleted = 0;
 
 	Capsule_Mass = 1.0;
 	Capsule_Radius = 4.4;

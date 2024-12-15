@@ -62,6 +62,7 @@ public:
 
 	bool flag_mJump;
 	bool flag_Altered;
+	bool flag_Deleted;
 	bool flag_mOnGround;
 	bool flag_IsMOving;
 	bool flag_IsMOving_Back;
