@@ -23,12 +23,12 @@ THE SOFTWARE.
 */
 
 #pragma once
-class CL64_Display
+class CL64_Com_Counters
 {
 public:
 
-	CL64_Display(void);
-	~CL64_Display(void);
+	CL64_Com_Counters(void);
+	~CL64_Com_Counters(void);
 
 	void Set_Counter_Defaults(int Index);
 	void Add_New_Counter();

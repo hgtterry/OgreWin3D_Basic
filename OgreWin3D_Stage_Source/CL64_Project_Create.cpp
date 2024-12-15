@@ -245,7 +245,7 @@ void CL64_Project_Create::Setup_Scene_Indoors()
 	App->CL_FileView->Set_FolderActive(App->CL_FileView->FV_Players_Folder);
 	App->CL_Ogre->Log_Message_To_File((LPSTR)"Player Added");
 	// ----------------------------------------------- Counter
-	App->CL_Display->Add_New_Counter();
+	App->CL_Com_Counters->Add_New_Counter();
 	App->CL_Ogre->Log_Message_To_File((LPSTR)"Counter Added");
 	// ------------------------ Add Location
 	App->CL_Locations->Create_Location_Entity((LPSTR)"Start_Position");

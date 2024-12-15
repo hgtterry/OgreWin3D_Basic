@@ -822,7 +822,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			bool Doit = App->CL_Dialogs->flag_Canceled;
 			if (Doit == 0)
 			{
-				App->CL_Display->Add_New_Counter();
+				App->CL_Com_Counters->Add_New_Counter();
 			}
 
 			return TRUE;

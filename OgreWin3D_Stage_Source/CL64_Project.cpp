@@ -1655,7 +1655,7 @@ bool CL64_Project::Load_Project()
 	if (Options->Has_Counters > 0)
 	{
 		Load_Project_Counters();
-		App->CL_Display->Add_Counters_From_File();
+		App->CL_Com_Counters->Add_Counters_From_File();
 	}
 
 	App->CL_FileView->Change_Level_Name();

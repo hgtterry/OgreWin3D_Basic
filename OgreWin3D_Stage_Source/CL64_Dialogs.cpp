@@ -907,7 +907,7 @@ LRESULT CALLBACK CL64_Dialogs::Proc_Dialog_Text(HWND hDlg, UINT message, WPARAM 
 
 			if (App->CL_Dialogs->CheckNames == Enums::Check_Names_Counters)
 			{
-				int test = App->CL_Display->CheckNames_Counters(buff);
+				int test = App->CL_Com_Counters->CheckNames_Counters(buff);
 				if (test == 1)
 				{
 					App->Say("Name Already Exsits");
@@ -1558,28 +1558,28 @@ LRESULT CALLBACK CL64_Dialogs::Proc_Dialog_Counter(HWND hDlg, UINT message, WPAR
 				if (App->CL_Properties->Edit_Category == Enums::Edit_Teleport)
 				{
 					strcpy(App->CL_Scene->B_Object[ObjectIndex]->S_Teleport[0]->Counter_Name, buff);
-					int CounterIndex = App->CL_Display->GetIndex_By_Name(buff);
+					int CounterIndex = App->CL_Com_Counters->GetIndex_By_Name(buff);
 					App->CL_Scene->B_Object[ObjectIndex]->S_Teleport[0]->Counter_ID = CounterIndex;
 				}
 
 				if (App->CL_Properties->Edit_Category == Enums::Edit_Collectable)
 				{
 					strcpy(App->CL_Scene->B_Object[ObjectIndex]->S_Collectable[0]->Counter_Name, buff);
-					int CounterIndex = App->CL_Display->GetIndex_By_Name(buff);
+					int CounterIndex = App->CL_Com_Counters->GetIndex_By_Name(buff);
 					App->CL_Scene->B_Object[ObjectIndex]->S_Collectable[0]->Counter_ID = CounterIndex;
 				}
 				 
 				if (App->CL_Properties->Edit_Category == Enums::Edit_Message)
 				{
 					strcpy(App->CL_Scene->B_Object[ObjectIndex]->S_Message[0]->Counter_Name, buff);
-					int CounterIndex = App->CL_Display->GetIndex_By_Name(buff);
+					int CounterIndex = App->CL_Com_Counters->GetIndex_By_Name(buff);
 					App->CL_Scene->B_Object[ObjectIndex]->S_Message[0]->Counter_ID = CounterIndex;
 				}
 
 				if (App->CL_Properties->Edit_Category == Enums::Edit_Move_Entity)
 				{
 					strcpy(App->CL_Scene->B_Object[ObjectIndex]->S_MoveType[0]->Counter_Name, buff);
-					int CounterIndex = App->CL_Display->GetIndex_By_Name(buff);
+					int CounterIndex = App->CL_Com_Counters->GetIndex_By_Name(buff);
 					App->CL_Scene->B_Object[ObjectIndex]->S_MoveType[0]->Counter_ID = CounterIndex;
 				}
 			}

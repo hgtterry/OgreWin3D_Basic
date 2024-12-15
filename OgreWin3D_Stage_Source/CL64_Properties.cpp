@@ -1940,7 +1940,7 @@ bool CL64_Properties::Edit_Counters_OnClick(LPARAM lParam)
 	result = strcmp(btext, "Name");
 	if (result == 0)
 	{
-		App->CL_Display->Rename_Counter(Index);
+		App->CL_Com_Counters->Rename_Counter(Index);
 		Update_ListView_Counters();
 	}
 
@@ -1965,7 +1965,7 @@ bool CL64_Properties::Edit_Counters_OnClick(LPARAM lParam)
 		{
 			App->CL_ImGui_Dialogs->flag_Show_Dialog_Float = 0;
 			App->CL_Scene->B_Counter[Index]->PosX = App->CL_ImGui_Dialogs->m_Dialog_Float;
-			App->CL_Display->Mark_As_Altered_Counter(Index);
+			App->CL_Com_Counters->Mark_As_Altered_Counter(Index);
 		}
 		else
 		{
@@ -2001,7 +2001,7 @@ bool CL64_Properties::Edit_Counters_OnClick(LPARAM lParam)
 		{
 			App->CL_ImGui_Dialogs->flag_Show_Dialog_Float = 0;
 			App->CL_Scene->B_Counter[Index]->PosY = App->CL_ImGui_Dialogs->m_Dialog_Float;
-			App->CL_Display->Mark_As_Altered_Counter(Index);
+			App->CL_Com_Counters->Mark_As_Altered_Counter(Index);
 		}
 		else
 		{
@@ -2032,7 +2032,7 @@ bool CL64_Properties::Edit_Counters_OnClick(LPARAM lParam)
 		strcpy(App->CL_Scene->B_Counter[Index]->Text, App->CL_Dialogs->Chr_Text);
 
 
-		App->CL_Display->Mark_As_Altered_Counter(Index);
+		App->CL_Com_Counters->Mark_As_Altered_Counter(Index);
 
 		Update_ListView_Counters();
 
@@ -2057,7 +2057,7 @@ bool CL64_Properties::Edit_Counters_OnClick(LPARAM lParam)
 		App->CL_Scene->B_Counter[Index]->Start_Value = App->CL_Dialogs->mInt;
 		App->CL_Scene->B_Counter[Index]->Counter = App->CL_Dialogs->mInt;
 
-		App->CL_Display->Mark_As_Altered_Counter(Index);
+		App->CL_Com_Counters->Mark_As_Altered_Counter(Index);
 
 		Update_ListView_Counters();
 
@@ -2101,7 +2101,7 @@ bool CL64_Properties::Edit_Counters_OnClick(LPARAM lParam)
 				App->CL_Scene->B_Counter[Index]->flag_Show_Panel_Flag = 1;
 			}
 
-			App->CL_Display->Mark_As_Altered_Counter(Index);
+			App->CL_Com_Counters->Mark_As_Altered_Counter(Index);
 		}
 
 		Update_ListView_Counters();

@@ -26,18 +26,18 @@ THE SOFTWARE.
 #include "CL64_App.h"
 #include "CL64_Display.h"
 
-CL64_Display::CL64_Display(void)
+CL64_Com_Counters::CL64_Com_Counters(void)
 {
 }
 
-CL64_Display::~CL64_Display(void)
+CL64_Com_Counters::~CL64_Com_Counters(void)
 {
 }
 
 // *************************************************************************
 //			Set_Counter_Defaults:- Terry and Hazel Flanigan 2024	  	   *
 // *************************************************************************
-void CL64_Display::Set_Counter_Defaults(int Index)
+void CL64_Com_Counters::Set_Counter_Defaults(int Index)
 {
 	strcpy(App->CL_Scene->B_Counter[Index]->Panel_Name, "Not_Set");
 	App->CL_Scene->B_Counter[Index]->PosX = 250;
@@ -56,7 +56,7 @@ void CL64_Display::Set_Counter_Defaults(int Index)
 // *************************************************************************
 // *			Add_New_Counter:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-void CL64_Display::Add_New_Counter()
+void CL64_Com_Counters::Add_New_Counter()
 {
 	char B_Name[MAX_PATH];
 	char ConNum[MAX_PATH];
@@ -91,7 +91,7 @@ void CL64_Display::Add_New_Counter()
 // *************************************************************************
 //			Add_Counters_From_File:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
-bool CL64_Display::Add_Counters_From_File() // From File
+bool CL64_Com_Counters::Add_Counters_From_File() // From File
 {
 
 	int Counters_Count = App->CL_Scene->Counters_Count;
@@ -116,7 +116,7 @@ bool CL64_Display::Add_Counters_From_File() // From File
 // *************************************************************************
 // *			Rename_Counter:- Terry and Hazel Flanigan 2022			   *
 // *************************************************************************
-void CL64_Display::Rename_Counter(int Index)
+void CL64_Com_Counters::Rename_Counter(int Index)
 {
 	strcpy(App->CL_Dialogs->btext, "Change Counter Name");
 	strcpy(App->CL_Dialogs->Chr_Text, App->CL_Scene->B_Counter[Index]->Panel_Name);
@@ -138,7 +138,7 @@ void CL64_Display::Rename_Counter(int Index)
 // *************************************************************************
 // *		 CheckNames_Counters:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
-int CL64_Display::CheckNames_Counters(char* Name)
+int CL64_Com_Counters::CheckNames_Counters(char* Name)
 {
 	int Count = 0;
 	int Total = App->CL_Scene->Counters_Count;
@@ -165,7 +165,7 @@ int CL64_Display::CheckNames_Counters(char* Name)
 // *************************************************************************
 // *	Mark_As_Altered_Counter:- Terry and Hazel Flanigan 2022		 	   *
 // *************************************************************************
-void CL64_Display::Mark_As_Altered_Counter(int Index)
+void CL64_Com_Counters::Mark_As_Altered_Counter(int Index)
 {
 	App->CL_Scene->B_Counter[Index]->flag_Altered = 1;
 
@@ -177,7 +177,7 @@ void CL64_Display::Mark_As_Altered_Counter(int Index)
 // **************************************************************************
 // *	  		GetIndex_By_Name:- Terry and Hazel Flanigan 2024			*
 // **************************************************************************
-int CL64_Display::GetIndex_By_Name(char* Name)
+int CL64_Com_Counters::GetIndex_By_Name(char* Name)
 {
 	int Count = 0;
 	int Total = App->CL_Scene->Counters_Count;

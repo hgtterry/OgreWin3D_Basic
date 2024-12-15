@@ -66,7 +66,7 @@ CL64_App::CL64_App(void)
 	CL_Com_Sounds =			nullptr;
 	CL_Collision =			nullptr;
 	CL_SoundMgr =			nullptr;
-	CL_Display =			nullptr;
+	CL_Com_Counters =		nullptr;
 	CL_LookUps =			nullptr;
 	CL_Gui_Environment =	nullptr;
 	CL_Props_Dialogs =		nullptr;
@@ -200,7 +200,7 @@ void CL64_App::InitApp(void)
 	CL_Com_Sounds =			new CL64_Com_Sounds();
 	CL_Collision =			new CL64_Collision();
 	CL_SoundMgr =			new CL64_SoundMgr();
-	CL_Display =			new CL64_Display();
+	CL_Com_Counters =		new CL64_Com_Counters();
 	CL_LookUps =			new CL64_LookUps();
 	CL_Gui_Environment =	new CL64_Gui_Environment();
 	CL_Props_Dialogs =		new CL64_Props_Dialogs();

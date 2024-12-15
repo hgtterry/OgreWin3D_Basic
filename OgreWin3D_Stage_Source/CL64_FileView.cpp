@@ -1711,7 +1711,7 @@ void CL64_FileView::Context_New(HWND hDlg)
 		bool Doit = App->CL_Dialogs->flag_Canceled;
 		if (Doit == 0)
 		{
-			App->CL_Display->Add_New_Counter();
+			App->CL_Com_Counters->Add_New_Counter();
 		}
 
 		return;
@@ -1873,7 +1873,7 @@ void CL64_FileView::Context_Rename() const
 	// Counter Entity
 	if (Context_Selection == Enums::FileView_Counters_File)
 	{
-		App->CL_Display->Rename_Counter(Index);
+		App->CL_Com_Counters->Rename_Counter(Index);
 		App->CL_Properties->Update_ListView_Counters();
 		return;
 	}

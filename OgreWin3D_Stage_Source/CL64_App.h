@@ -123,7 +123,7 @@ public:
 	CL64_Com_Sounds*		CL_Com_Sounds;
 	CL64_Collision*			CL_Collision;
 	CL64_SoundMgr*			CL_SoundMgr;
-	CL64_Display*			CL_Display;
+	CL64_Com_Counters*		CL_Com_Counters;
 	CL64_LookUps*			CL_LookUps;
 	CL64_Gui_Environment*	CL_Gui_Environment;
 	CL64_Props_Dialogs*		CL_Props_Dialogs;
