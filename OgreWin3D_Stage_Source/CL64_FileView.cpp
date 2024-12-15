@@ -1326,7 +1326,7 @@ void CL64_FileView::Context_Menu(HWND hDlg)
 			AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_COPY, L"&Create Copy");
 			//AppendMenuW(App->SBC_FileView->hMenu, MF_STRING | MF_GRAYED, IDM_PASTE, L"&Paste");
 			AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
-			AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_FILE_DELETE, L"&Delete");
+			AppendMenuW(hMenu, MF_STRING , IDM_FILE_DELETE, L"&Delete");
 			TrackPopupMenu(hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, App->ListPanel, NULL);
 			DestroyMenu(hMenu);
 			Context_Selection = Enums::FileView_Messages_File;
@@ -1425,7 +1425,7 @@ void CL64_FileView::Context_Menu(HWND hDlg)
 			AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_COPY, L"&Create Copy");
 			//AppendMenuW(App->SBC_FileView->hMenu, MF_STRING | MF_GRAYED, IDM_PASTE, L"&Paste");
 			AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
-			AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_FILE_DELETE, L"&Delete");
+			AppendMenuW(hMenu, MF_STRING , IDM_FILE_DELETE, L"&Delete");
 			TrackPopupMenu(hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, App->ListPanel, NULL);
 			DestroyMenu(hMenu);
 			Context_Selection = Enums::FileView_Move_File;
@@ -1475,7 +1475,7 @@ void CL64_FileView::Context_Menu(HWND hDlg)
 			AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_COPY, L"&Create Copy");
 			//AppendMenuW(App->SBC_FileView->hMenu, MF_STRING | MF_GRAYED, IDM_PASTE, L"&Paste");
 			AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
-			AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_FILE_DELETE, L"&Delete");
+			AppendMenuW(hMenu, MF_STRING , IDM_FILE_DELETE, L"&Delete");
 			TrackPopupMenu(hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, App->ListPanel, NULL);
 			DestroyMenu(hMenu);
 			Context_Selection = Enums::FileView_Collectables_File;
@@ -1914,10 +1914,10 @@ void CL64_FileView::Context_Delete()
 	// ---------------- Cameras
 	if (Context_Selection == Enums::FileView_Cameras_File)
 	{
-	/*	if (App->SBC_Scene->Camera_Count == 1)
+		if (App->CL_Scene->Camera_Count == 1)
 		{
 			App->Say("This Camera can not be Deleted");
-		}*/
+		}
 
 		return;
 	}
@@ -1925,10 +1925,10 @@ void CL64_FileView::Context_Delete()
 	// ---------------- Players
 	if (Context_Selection == Enums::FileView_Player_File)
 	{
-		/*if (App->SBC_Scene->Player_Count == 1)
+		if (App->CL_Scene->Player_Count == 1)
 		{
 			App->Say("This Player can not be Deleted");
-		}*/
+		}
 
 		return;
 	}
@@ -1949,19 +1949,19 @@ void CL64_FileView::Context_Delete()
 	}
 
 	// ---------------- Message Triggers
-	//if (Context_Selection == Enums::FileView_Messages_Triggers_File)
-	//{
-	//	/*App->SBC_Dialogs->YesNo("Remove Message", "Are you sure", 1);
+	if (Context_Selection == Enums::FileView_Messages_File)
+	{
+		App->CL_Dialogs->Show_YesNo_Dlg((LPSTR)"Remove Message Entity", (LPSTR)App->CL_Scene->B_Object[Index]->Object_Name, (LPSTR)"Are you sure");
+		
+		bool Doit = App->CL_Dialogs->flag_Canceled;
+		if (Doit == 0)
+		{
+			App->CL_Com_Objects->Delete_Object();
+			App->CL_FileView->Mark_Altered_Folder(FV_Message_Trigger_Folder);
+		}
 
-	//	bool Doit = App->SBC_Dialogs->Canceled;
-	//	if (Doit == 0)
-	//	{
-	//		App->CL_Object->Delete_Object();
-	//		App->SBC_FileView->Mark_Altered_Folder(FV_Message_Trigger_Folder);
-	//	}*/
-
-	//	return;
-	//}
+		return;
+	}
 
 	// ---------------- Sound Entities
 	if (Context_Selection == Enums::FileView_Sounds_File)
@@ -1981,14 +1981,14 @@ void CL64_FileView::Context_Delete()
 	// ---------------- Move Entities
 	if (Context_Selection == Enums::FileView_Move_File)
 	{
-		/*App->SBC_Dialogs->YesNo("Remove Move Entity", "Are you sure", 1);
-
-		bool Doit = App->SBC_Dialogs->Canceled;
+		App->CL_Dialogs->Show_YesNo_Dlg((LPSTR)"Remove Move Entity", (LPSTR)App->CL_Scene->B_Object[Index]->Object_Name, (LPSTR)"Are you sure");
+		
+		bool Doit = App->CL_Dialogs->flag_Canceled;
 		if (Doit == 0)
 		{
-			App->CL_Object->Delete_Object();
-			App->SBC_FileView->Mark_Altered_Folder(FV_Move_Folder);
-		}*/
+			App->CL_Com_Objects->Delete_Object();
+			App->CL_FileView->Mark_Altered_Folder(FV_Move_Folder);
+		}
 
 		return;
 	}
@@ -2032,6 +2032,36 @@ void CL64_FileView::Context_Delete()
 		{
 			App->CL_Com_Objects->Delete_Object();
 			App->CL_FileView->Mark_Altered_Folder(App->CL_FileView->FV_Evirons_Folder);
+		}
+
+		return;
+	}
+
+	// ---------------- Collectables
+	if (App->CL_FileView->Context_Selection == Enums::FileView_Collectables_File)
+	{
+		App->CL_Dialogs->Show_YesNo_Dlg((LPSTR)"Remove Collectable Entity", (LPSTR)App->CL_Scene->B_Object[Index]->Object_Name, (LPSTR)"Are you sure");
+		
+		bool Doit = App->CL_Dialogs->flag_Canceled;
+		if (Doit == 0)
+		{
+			App->CL_Com_Objects->Delete_Object();
+			App->CL_FileView->Mark_Altered_Folder(App->CL_FileView->FV_Collectables_Folder);
+		}
+
+		return;
+	}
+
+	// ---------------- Teleporters
+	if (App->CL_FileView->Context_Selection == Enums::FileView_Teleports_File)
+	{
+		App->CL_Dialogs->Show_YesNo_Dlg((LPSTR)"Remove Teleport Entity", (LPSTR)App->CL_Scene->B_Object[Index]->Object_Name, (LPSTR)"Are you sure");
+
+		bool Doit = App->CL_Dialogs->flag_Canceled;
+		if (Doit == 0)
+		{
+			App->CL_Com_Objects->Delete_Object();
+			App->CL_FileView->Mark_Altered_Folder(App->CL_FileView->FV_Teleporters_Folder);
 		}
 
 		return;
