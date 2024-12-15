@@ -199,3 +199,18 @@ int CL64_Com_Counters::GetIndex_By_Name(char* Name)
 
 	return -1;
 }
+
+// **************************************************************************
+// *	  		Delete_Counter:- Terry and Hazel Flanigan 2024				*
+// **************************************************************************
+void CL64_Com_Counters::Delete_Counter()
+{
+	int CounterIndex = App->CL_Properties->Current_Selected_Object;
+
+	App->CL_FileView->DeleteItem();
+
+	App->CL_Scene->B_Counter[CounterIndex]->flag_Deleted = 1;
+	
+	App->CL_Scene->flag_Scene_Modified = 1;
+
+}

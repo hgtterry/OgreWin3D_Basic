@@ -1499,7 +1499,7 @@ void CL64_FileView::Context_Menu(HWND hDlg)
 			AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_COPY, L"&Copy");
 			AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_PASTE, L"&Paste");
 			AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
-			AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_FILE_DELETE, L"&Delete");
+			AppendMenuW(hMenu, MF_STRING , IDM_FILE_DELETE, L"&Delete");
 			TrackPopupMenu(hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, App->ListPanel, NULL);
 			DestroyMenu(hMenu);
 			Context_Selection = Enums::FileView_Counters_File;
@@ -1996,43 +1996,43 @@ void CL64_FileView::Context_Delete()
 	// ---------------- Counters
 	if (Context_Selection == Enums::FileView_Counters_File)
 	{
-		/*if (App->SBC_Scene->B_Counter[App->SBC_Properties->Current_Selected_Object]->Unique_ID == 0)
+		if (App->CL_Scene->B_Counter[App->CL_Properties->Current_Selected_Object]->Unique_ID == 0)
 		{
 			App->Say("This Counter can not be Deleted");
 			return;
 		}
 
-		App->SBC_Dialogs->YesNo("Remove Counter", "Are you sure", 1);
-
-		bool Doit = App->SBC_Dialogs->Canceled;
+		App->CL_Dialogs->Show_YesNo_Dlg((LPSTR)"Remove Counter Entity", (LPSTR)App->CL_Scene->B_Counter[Index]->Panel_Name, (LPSTR)"Are you sure");
+		
+		bool Doit = App->CL_Dialogs->flag_Canceled;
 		if (Doit == 0)
 		{
-			App->SBC_Display->Delete_Counter();
-			App->SBC_FileView->Mark_Altered_Folder(App->SBC_FileView->FV_Counters_Folder);
-		}*/
+			App->CL_Com_Counters->Delete_Counter();
+			App->CL_FileView->Mark_Altered_Folder(App->CL_FileView->FV_Counters_Folder);
+		}
 
 		return;
 	}
 
-	// ---------------- Environs
+	// ---------------- Environments
 	if (Context_Selection == Enums::FileView_EnvironEntity_File)
 	{
-		/*int Test = App->SBC_Com_Environments->Get_First_Environ();
+		int Test = App->CL_Com_Environments->Get_First_Environ();
 
-		if (App->SBC_Properties->Current_Selected_Object == Test)
+		if (App->CL_Properties->Current_Selected_Object == Test)
 		{
 			App->Say("This Environment Entity can not be Deleted");
 			return;
 		}
 
-		App->SBC_Dialogs->YesNo("Remove Environment Entity", "Are you sure", 1);
-
-		bool Doit = App->SBC_Dialogs->Canceled;
+		App->CL_Dialogs->Show_YesNo_Dlg((LPSTR)"Remove Environment Entity", (LPSTR)App->CL_Scene->B_Object[Index]->Object_Name, (LPSTR)"Are you sure");
+		
+		bool Doit = App->CL_Dialogs->flag_Canceled;
 		if (Doit == 0)
 		{
-			App->CL_Object->Delete_Object();
-			App->SBC_FileView->Mark_Altered_Folder(App->SBC_FileView->FV_Evirons_Folder);
-		}*/
+			App->CL_Com_Objects->Delete_Object();
+			App->CL_FileView->Mark_Altered_Folder(App->CL_FileView->FV_Evirons_Folder);
+		}
 
 		return;
 	}
