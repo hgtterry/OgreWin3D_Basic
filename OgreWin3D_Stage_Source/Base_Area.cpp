@@ -55,6 +55,7 @@ Base_Area::Base_Area()
 
 	flag_Physics_Valid = 0;
 	flag_Altered = 0;
+	flag_Deleted = 0;
 	flag_Physics_Debug_On = 0;
 
 	Usage = Enums::Usage_None;

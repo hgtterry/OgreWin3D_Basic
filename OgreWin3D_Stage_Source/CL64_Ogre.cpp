@@ -483,7 +483,7 @@ bool CL64_Ogre::Ogre_Render_Loop(void)
 }
 
 // *************************************************************************
-// *	  						ExitFullScreen							   *
+// *	  		ExitFullScreen:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
 bool CL64_Ogre::ExitFullScreen()
 {
@@ -504,5 +504,30 @@ bool CL64_Ogre::ExitFullScreen()
 
 	}
 	return 1;
+}
+
+// *************************************************************************
+// *		Get_OpenGL_Version:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void CL64_Ogre::Get_OpenGL_Version(char* buff)
+{
+	int  major = mRoot->getRenderSystem()->getDriverVersion().major;
+	int  minor = mRoot->getRenderSystem()->getDriverVersion().minor;
+
+	Ogre::String name = mRoot->getRenderSystem()->getName();
+
+	char c_GLVer[256];
+	strcpy(c_GLVer, name.c_str());
+
+	char cMajor[20];
+	char cMinor[20];
+	_itoa(major, cMajor, 10);
+	_itoa(minor, cMinor, 10);
+	strcpy(buff, "");
+	strcat(buff, c_GLVer);
+	strcat(buff, " ");
+	strcat(buff, cMajor);
+	strcat(buff, ".");
+	strcat(buff, cMinor);
 }
 

@@ -452,7 +452,7 @@ bool CL64_Project::Save_Project()
 
 	if (App->CL_Scene->flag_Area_Added == 1)
 	{
-		Save_Aera_Folder();
+		Save_Area_Folder();
 	}
 
 	if (App->CL_Scene->flag_Player_Added == 1)
@@ -546,8 +546,10 @@ bool CL64_Project::Save_Project_Ini()
 
 	fprintf(WriteFile, "%s\n", " ");
 
+	int Adjusted_Areas_Count = App->CL_Com_Area->Get_Adjusted_Areas_Count();
+
 	fprintf(WriteFile, "%s\n", "[Options]");
-	fprintf(WriteFile, "%s%i\n", "Areas_Count=", App->CL_Scene->Area_Count);
+	fprintf(WriteFile, "%s%i\n", "Areas_Count=", Adjusted_Areas_Count);
 	fprintf(WriteFile, "%s%i\n", "Areas_ID_Count=", App->CL_Scene->UniqueID_Area_Count);
 
 	fprintf(WriteFile, "%s%i\n", "Players_Count=", App->CL_Scene->Player_Count);
@@ -556,9 +558,9 @@ bool CL64_Project::Save_Project_Ini()
 	fprintf(WriteFile, "%s%i\n", "Objects_ID_Count=", App->CL_Scene->UniqueID_Object_Counter);
 
 
-	int Adjusted = App->CL_LookUps->Get_Adjusted_Counters_Count();
+	int Adjusted_Counters_Count = App->CL_LookUps->Get_Adjusted_Counters_Count();
 
-	fprintf(WriteFile, "%s%i\n", "Counters_Count=", Adjusted);
+	fprintf(WriteFile, "%s%i\n", "Counters_Count=", Adjusted_Counters_Count);
 	fprintf(WriteFile, "%s%i\n", "Counters_ID_Count=", App->CL_Scene->UniqueID_Counters_Count);
 
 	fprintf(WriteFile, "%s\n", " ");
@@ -641,9 +643,9 @@ bool CL64_Project::Save_Main_Asset_Folder()
 }
 
 // *************************************************************************
-// *	  	Save_Aera_Folder:- Terry and Hazel Flanigan 2022			   *
+// *	  	Save_Area_Folder:- Terry and Hazel Flanigan 2022			   *
 // *************************************************************************
-bool CL64_Project::Save_Aera_Folder()
+bool CL64_Project::Save_Area_Folder()
 {
 	m_Aera_Folder_Path[0] = 0;
 
@@ -661,19 +663,19 @@ bool CL64_Project::Save_Aera_Folder()
 		(void)_chdir(m_Aera_Folder_Path);
 	}
 
-	Save_Aeras_Data();
+	Save_Areas_Data();
 
 	(void)_chdir(m_Level_Folder_Path); // Return to Level Folder
 	return 1;
 }
 
 // *************************************************************************
-// *	  		Save_Aeras_Data:- Terry and Hazel Flanigan 2024			   *
+// *	  		Save_Areas_Data:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-bool CL64_Project::Save_Aeras_Data()
+bool CL64_Project::Save_Areas_Data()
 {
 	Ogre::Vector3 Pos;
-	char File[1024];
+	char File[MAX_PATH];
 
 	strcpy(File, m_Aera_Folder_Path);
 	strcat(File, "\\");
@@ -695,8 +697,10 @@ bool CL64_Project::Save_Aeras_Data()
 
 	fprintf(WriteFile, "%s\n", " ");
 
+	int Adjusted_Areas_Count = App->CL_Com_Area->Get_Adjusted_Areas_Count();
+
 	fprintf(WriteFile, "%s\n", "[Counters]");
-	fprintf(WriteFile, "%s%i\n", "Areas_Count=", App->CL_Scene->Area_Count);
+	fprintf(WriteFile, "%s%i\n", "Areas_Count=", Adjusted_Areas_Count);
 
 	fprintf(WriteFile, "%s\n", " ");
 
@@ -711,48 +715,52 @@ bool CL64_Project::Save_Aeras_Data()
 	int Count = 0;
 	while (Count < App->CL_Scene->Area_Count)
 	{
-		strcpy(buff, "[Area_");
-		_itoa(Count, Cbuff, 10);
-		strcat(buff, Cbuff);
-		strcat(buff, "]");
+		if (App->CL_Scene->B_Area[Count]->flag_Deleted == 0)
+		{
+			strcpy(buff, "[Area_");
+			_itoa(Count, Cbuff, 10);
+			strcat(buff, Cbuff);
+			strcat(buff, "]");
 
-		fprintf(WriteFile, "%s\n", buff); // Header also Player name until changed by user
+			fprintf(WriteFile, "%s\n", buff); // Header also Player name until changed by user
 
-		fprintf(WriteFile, "%s%s\n", "Area_Name=", App->CL_Scene->B_Area[Count]->Area_Name); // Change
+			fprintf(WriteFile, "%s%s\n", "Area_Name=", App->CL_Scene->B_Area[Count]->Area_Name); // Change
 
-		fprintf(WriteFile, "%s%s\n", "Area_File=", App->CL_Scene->B_Area[Count]->Area_FileName);
-		fprintf(WriteFile, "%s%s\n", "Area_Path_File=", App->CL_Scene->B_Area[Count]->Area_Path_And_FileName);
-		fprintf(WriteFile, "%s%s\n", "Area_Resource_Path=", App->CL_Scene->B_Area[Count]->Area_Resource_Path);
-		fprintf(WriteFile, "%s%s\n", "Material_File=", App->CL_Scene->B_Area[Count]->Material_File);
-		fprintf(WriteFile, "%s%i\n", "Area_Object_ID=", App->CL_Scene->B_Area[Count]->This_Object_UniqueID);
+			fprintf(WriteFile, "%s%s\n", "Area_File=", App->CL_Scene->B_Area[Count]->Area_FileName);
+			fprintf(WriteFile, "%s%s\n", "Area_Path_File=", App->CL_Scene->B_Area[Count]->Area_Path_And_FileName);
+			fprintf(WriteFile, "%s%s\n", "Area_Resource_Path=", App->CL_Scene->B_Area[Count]->Area_Resource_Path);
+			fprintf(WriteFile, "%s%s\n", "Material_File=", App->CL_Scene->B_Area[Count]->Material_File);
+			fprintf(WriteFile, "%s%i\n", "Area_Object_ID=", App->CL_Scene->B_Area[Count]->This_Object_UniqueID);
 
-		// ------------ Position
-		x = App->CL_Scene->B_Area[Count]->Area_Node->getPosition().x;
-		y = App->CL_Scene->B_Area[Count]->Area_Node->getPosition().y;
-		z = App->CL_Scene->B_Area[Count]->Area_Node->getPosition().z;
-		fprintf(WriteFile, "%s%f,%f,%f\n", "Mesh_Pos=", x, y, z);
+			// ------------ Position
+			x = App->CL_Scene->B_Area[Count]->Area_Node->getPosition().x;
+			y = App->CL_Scene->B_Area[Count]->Area_Node->getPosition().y;
+			z = App->CL_Scene->B_Area[Count]->Area_Node->getPosition().z;
+			fprintf(WriteFile, "%s%f,%f,%f\n", "Mesh_Pos=", x, y, z);
 
-		// ------------ Scale
-		x = App->CL_Scene->B_Area[Count]->Mesh_Scale.x;
-		y = App->CL_Scene->B_Area[Count]->Mesh_Scale.y;
-		z = App->CL_Scene->B_Area[Count]->Mesh_Scale.z;
-		fprintf(WriteFile, "%s%f,%f,%f\n", "Mesh_Scale=", x, y, z);
+			// ------------ Scale
+			x = App->CL_Scene->B_Area[Count]->Mesh_Scale.x;
+			y = App->CL_Scene->B_Area[Count]->Mesh_Scale.y;
+			z = App->CL_Scene->B_Area[Count]->Mesh_Scale.z;
+			fprintf(WriteFile, "%s%f,%f,%f\n", "Mesh_Scale=", x, y, z);
 
-		// ------------ Mesh_Rot
-		x = App->CL_Scene->B_Area[Count]->Mesh_Rot.x;
-		y = App->CL_Scene->B_Area[Count]->Mesh_Rot.y;
-		z = App->CL_Scene->B_Area[Count]->Mesh_Rot.z;
-		fprintf(WriteFile, "%s%f,%f,%f\n", "Mesh_Rot=", x, y, z);
+			// ------------ Mesh_Rot
+			x = App->CL_Scene->B_Area[Count]->Mesh_Rot.x;
+			y = App->CL_Scene->B_Area[Count]->Mesh_Rot.y;
+			z = App->CL_Scene->B_Area[Count]->Mesh_Rot.z;
+			fprintf(WriteFile, "%s%f,%f,%f\n", "Mesh_Rot=", x, y, z);
 
-		// ------------ Mesh_Quat
-		w = App->CL_Scene->B_Area[Count]->Mesh_Quat.w;
-		x = App->CL_Scene->B_Area[Count]->Mesh_Quat.x;
-		y = App->CL_Scene->B_Area[Count]->Mesh_Quat.y;
-		z = App->CL_Scene->B_Area[Count]->Mesh_Quat.z;
-		fprintf(WriteFile, "%s%f,%f,%f,%f\n", "Mesh_Quat=", w, x, y, z);
+			// ------------ Mesh_Quat
+			w = App->CL_Scene->B_Area[Count]->Mesh_Quat.w;
+			x = App->CL_Scene->B_Area[Count]->Mesh_Quat.x;
+			y = App->CL_Scene->B_Area[Count]->Mesh_Quat.y;
+			z = App->CL_Scene->B_Area[Count]->Mesh_Quat.z;
+			fprintf(WriteFile, "%s%f,%f,%f,%f\n", "Mesh_Quat=", w, x, y, z);
 
 
-		fprintf(WriteFile, "%s\n", " ");
+			fprintf(WriteFile, "%s\n", " ");
+
+		}
 
 		Count++;
 	}

@@ -35,6 +35,8 @@ public:
 	bool Add_New_Area();
 	void Add_Aera_To_Project(int Index, char* FileName, char* Resource_Location);
 	void Rename_Area(int Index);
+	void Delete_Area();
+	int Get_Adjusted_Areas_Count(void);
 
 private:
 

@@ -405,3 +405,48 @@ void CL64_Com_Area::Rename_Area(int Index)
 	App->CL_FileView->Change_Item_Name(Area->FileViewItem, Area->Area_Name);
 
 }
+
+// **************************************************************************
+// *	  		Delete_Area:- Terry and Hazel Flanigan 2024					*
+// **************************************************************************
+void CL64_Com_Area::Delete_Area()
+{
+	int AreaIndex = App->CL_Properties->Current_Selected_Object;
+	btRigidBody* body = App->CL_Scene->B_Area[AreaIndex]->Phys_Body;
+
+	if (body)
+	{
+		App->CL_Bullet->dynamicsWorld->removeCollisionObject(body);
+	}
+
+	App->CL_FileView->DeleteItem();
+
+	App->CL_Scene->B_Area[AreaIndex]->flag_Deleted = 1;
+	App->CL_Scene->B_Area[AreaIndex]->Area_Node->setVisible(false);
+
+
+	App->CL_Scene->flag_Scene_Modified = 1;
+
+}
+
+// *************************************************************************
+// *		 Get_Adjusted_Areas_Count:- Terry and Hazel Flanigan 2024	   *
+// *************************************************************************
+int CL64_Com_Area::Get_Adjusted_Areas_Count(void)
+{
+	int New_Count = 0;
+	int Count = 0;
+	int Total = App->CL_Scene->Area_Count;
+
+	while (Count < Total)
+	{
+		if (App->CL_Scene->B_Area[Count]->flag_Deleted == 0)
+		{
+			New_Count++;
+		}
+
+		Count++;
+	}
+
+	return New_Count;
+}

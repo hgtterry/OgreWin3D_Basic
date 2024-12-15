@@ -74,7 +74,8 @@ public:
 	bool Ogre_Render_Loop(void);
 
 	bool ReverseBackSlash(char* buf);
-	
+	void Get_OpenGL_Version(char* buff);
+
 	HWND RenderHwnd;
 
 	Ogre::Timer FPStimer;

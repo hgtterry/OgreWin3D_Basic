@@ -1400,7 +1400,7 @@ void CL64_FileView::Context_Menu(HWND hDlg)
 			AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_COPY, L"&Copy");
 			AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_PASTE, L"&Paste");
 			AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
-			AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_FILE_DELETE, L"&Delete");
+			AppendMenuW(hMenu, MF_STRING , IDM_FILE_DELETE, L"&Delete");
 			TrackPopupMenu(hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, App->ListPanel, NULL);
 			DestroyMenu(hMenu);
 			Context_Selection = Enums::FileView_Areas_File;
@@ -1893,10 +1893,20 @@ void CL64_FileView::Context_Delete()
 	if (Context_Selection == Enums::FileView_Areas_File)
 	{
 
-		/*if (App->SBC_Scene->B_Area[App->SBC_Properties->Current_Selected_Object]->This_Object_UniqueID == 0)
+		if (App->CL_Scene->B_Area[Index]->This_Object_UniqueID == 0)
 		{
 			App->Say("This Area can not be Deleted");
-		}*/
+			return;
+		}
+
+		App->CL_Dialogs->Show_YesNo_Dlg((LPSTR)"Remove Area", (LPSTR)App->CL_Scene->B_Area[Index]->Area_Name, (LPSTR)"Are you sure");
+
+		bool Doit = App->CL_Dialogs->flag_Canceled;
+		if (Doit == 0)
+		{
+			App->CL_Com_Area->Delete_Area();
+			App->CL_FileView->Mark_Altered_Folder(FV_Areas_Folder);
+		}
 
 		return;
 	}

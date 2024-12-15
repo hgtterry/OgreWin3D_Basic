@@ -1382,7 +1382,10 @@ INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 		strcat(buf, App->GD_Directory_FullPath);
 		SendDlgItemMessage(hDlg, IDC_LIST_ABOUT_VERSIONS, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
-
+		char buff[MAX_PATH];
+		App->CL_Ogre->Get_OpenGL_Version(buff);
+		SendDlgItemMessage(hDlg, IDC_LIST_ABOUT_VERSIONS, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);
+		
 		SendDlgItemMessage(hDlg, IDC_LIST_ABOUT_VERSIONS, LB_ADDSTRING, (WPARAM)0, (LPARAM)" ");
 
 		sprintf(buf, "%s", "Terry and Hazel Flanigan (Inflanite_HGT)");

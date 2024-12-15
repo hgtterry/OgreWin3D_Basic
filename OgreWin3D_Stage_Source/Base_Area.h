@@ -44,6 +44,7 @@ public:
 
 	bool flag_Physics_Valid;
 	bool flag_Altered;
+	bool flag_Deleted;
 	bool flag_Physics_Debug_On;
 
 };
