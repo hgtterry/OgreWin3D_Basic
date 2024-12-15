@@ -61,7 +61,7 @@ THE SOFTWARE.
 #include "CL64_Com_Sounds.h"
 #include "CL64_SB_Collision.h"
 #include "CL64_SoundMgr.h"
-#include "CL64_Display.h"
+#include "CL64_Com_Counters.h"
 #include "CL64_LookUps.h"
 
 #include "CL64_Gui_Environment.h"

@@ -150,9 +150,6 @@
     <ClInclude Include="Base_Locations.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CL64_Display.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Base_Counter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -220,6 +217,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CL64_Com_Player.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CL64_Com_Counters.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -350,9 +350,6 @@
     <ClCompile Include="Base_Locations.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CL64_Display.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Base_Counter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -420,6 +417,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CL64_Com_Player.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CL64_Com_Counters.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

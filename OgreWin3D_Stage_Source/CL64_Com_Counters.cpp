@@ -24,7 +24,7 @@ THE SOFTWARE.
 
 #include "pch.h"
 #include "CL64_App.h"
-#include "CL64_Display.h"
+#include "CL64_Com_Counters.h"
 
 CL64_Com_Counters::CL64_Com_Counters(void)
 {

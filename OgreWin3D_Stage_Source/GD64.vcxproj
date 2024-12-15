@@ -178,6 +178,7 @@
     <ClInclude Include="CL64_Camera.h" />
     <ClInclude Include="CL64_Com_Area.h" />
     <ClInclude Include="CL64_Com_Collectables.h" />
+    <ClInclude Include="CL64_Com_Counters.h" />
     <ClInclude Include="CL64_Com_Environments.h" />
     <ClInclude Include="CL64_Com_Messages.h" />
     <ClInclude Include="CL64_Com_MoveEntity.h" />
@@ -188,7 +189,6 @@
     <ClInclude Include="CL64_Com_Teleporters.h" />
     <ClInclude Include="CL64_Dialogs.h" />
     <ClInclude Include="CL64_Dimensions.h" />
-    <ClInclude Include="CL64_Display.h" />
     <ClInclude Include="CL64_FileView.h" />
     <ClInclude Include="CL64_File_IO.h" />
     <ClInclude Include="CL64_Gizmos.h" />
@@ -249,6 +249,7 @@
     <ClCompile Include="CL64_Camera.cpp" />
     <ClCompile Include="CL64_Com_Area.cpp" />
     <ClCompile Include="CL64_Com_Collectables.cpp" />
+    <ClCompile Include="CL64_Com_Counters.cpp" />
     <ClCompile Include="CL64_Com_Environments.cpp" />
     <ClCompile Include="CL64_Com_Messages.cpp" />
     <ClCompile Include="CL64_Com_MoveEntity.cpp" />
@@ -259,7 +260,6 @@
     <ClCompile Include="CL64_Com_Teleporters.cpp" />
     <ClCompile Include="CL64_Dialogs.cpp" />
     <ClCompile Include="CL64_Dimensions.cpp" />
-    <ClCompile Include="CL64_Display.cpp" />
     <ClCompile Include="CL64_FileView.cpp" />
     <ClCompile Include="CL64_File_IO.cpp" />
     <ClCompile Include="CL64_Gizmos.cpp" />
