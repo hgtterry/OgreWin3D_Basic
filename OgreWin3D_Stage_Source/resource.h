@@ -96,7 +96,6 @@
 #define IDD_MAPEDITOR                   208
 #define IDD_MAP_TOP_LEFT                209
 #define IDD_MAP_TOP_RIGHT               210
-#define IDD_MAP_TOP_BOTTOM_LEFT         211
 #define IDD_MAP_BOTTOM_LEFT             211
 #define IDD_MAP_BOTTOM_RIGHT            212
 #define IDC_CK_SU_FULL3DVIEW            1002
@@ -327,6 +326,8 @@
 #define IDC_BTOBJECT                    1134
 #define IDC_BT_DP_OVERIDECOUNTER        1135
 #define IDC_STOBJECTNAME                1136
+#define IDC_BUTTON5                     1138
+#define IDC_BT_TABS_MAP                 1138
 #define ID_VIEW_RESET                   32771
 #define ID_VIEW_MAX3DVIEW               32772
 #define ID_DEBUG_TESTPREFERANCE         32773
@@ -409,7 +410,7 @@
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        210
 #define _APS_NEXT_COMMAND_VALUE         32844
-#define _APS_NEXT_CONTROL_VALUE         1138
+#define _APS_NEXT_CONTROL_VALUE         1139
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif

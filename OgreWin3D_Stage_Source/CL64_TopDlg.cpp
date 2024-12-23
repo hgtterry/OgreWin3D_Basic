@@ -500,7 +500,8 @@ LRESULT CALLBACK CL64_TopDlg::Proc_Tabs_Headers(HWND hDlg, UINT message, WPARAM 
 		SendDlgItemMessage(hDlg, IDC_BT_TD_MOTIONSTAB, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_TD_RESOURCETAB, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_TBH_LOCATIONS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		
+		SendDlgItemMessage(hDlg, IDC_BT_TABS_MAP, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
 		return TRUE;
 	}
 
@@ -549,6 +550,13 @@ LRESULT CALLBACK CL64_TopDlg::Proc_Tabs_Headers(HWND hDlg, UINT message, WPARAM 
 		}
 
 		if (some_item->idFrom == IDC_BT_TBH_LOCATIONS)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle_Tabs(item, App->CL_TopDlg->flag_Toggle_Tabs_Locations);
+			return CDRF_DODEFAULT;
+		}
+		
+		if (some_item->idFrom == IDC_BT_TABS_MAP)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Toggle_Tabs(item, App->CL_TopDlg->flag_Toggle_Tabs_Locations);
@@ -617,6 +625,12 @@ LRESULT CALLBACK CL64_TopDlg::Proc_Tabs_Headers(HWND hDlg, UINT message, WPARAM 
 			App->CL_TopDlg->flag_Toggle_Tabs_Locations = 1;
 
 			RedrawWindow(App->CL_TopDlg->Tabs_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			return TRUE;
+		}
+		
+		if (LOWORD(wParam) == IDC_BT_TABS_MAP)
+		{
+			App->CL_MapEditor->Start_Main_View_Dlg();
 			return TRUE;
 		}
 		

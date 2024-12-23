@@ -148,7 +148,7 @@ LRESULT CALLBACK CL64_MapEditor::Splitter_Proc(HWND hDlg, UINT message, WPARAM w
 
 	case WM_CTLCOLORDLG:
 	{
-		return (LONG)App->AppBackground;
+		return (LONG)App->CL_MapEditor->BackGround_Brush;;
 	}
 
 	case WM_PAINT:
