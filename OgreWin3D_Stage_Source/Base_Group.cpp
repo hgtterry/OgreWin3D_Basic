@@ -19,37 +19,17 @@ appreciated but is not required.
 
 Base_Group::Base_Group()
 {
+	Sub_Group_Count = 0;
 	GroupName[0] = 0;
-	MaterialName[0] = 0;
-	Text_FileName[0] = 0;
-
-	Texture_FolderPath[0] = 0;
-	Texture_PathFileName[0] = 0;
-
-	Bitmap_Loaded = 0;
-
 	GroupVertCount = 0;
-
 	IndicesCount = 0; // Ogre
-	BoneAssignMentCount = 0; // Ogre
 
-	MaterialIndex = 0;
-	Soil_TextureIndex = 0;
-
-	Base_Bitmap = NULL;
-	//RF_Bitmap = NULL;
-	ListView_Item = NULL;
-
-	// Ogre Data
-	Ogre_TextureName[0] = 0;
-
-	strcpy(Ogre_Material, "No_Material_Loaded");
-
-	Ogre_Material_File[0] = 0;
-	Ogre_ImGui_MatId[0] = 0;
-	Ogre_MipMaps = 0;
-	Ogre_Texture_IsValid = 0;
-	Ogre_NumTextureUnits = 0;
+	int Count = 0;
+	while (Count < 99)
+	{
+		B_Sub_Mesh[Count] = nullptr;
+		Count++;
+	}
 }
 
 
