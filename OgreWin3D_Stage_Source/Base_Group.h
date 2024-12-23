@@ -38,6 +38,8 @@ typedef struct Sub_Mesh_type
 	int Face_Count;
 	int IndicesCount;
 
+	char chr_SubMesh_Name[MAX_PATH];
+
 }Sub_Mesh_type;
 
 class Base_Group

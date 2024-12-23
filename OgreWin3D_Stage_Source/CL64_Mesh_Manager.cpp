@@ -36,10 +36,65 @@ CL64_Mesh_Manager::~CL64_Mesh_Manager(void)
 }
 
 // *************************************************************************
+// *			Create_MeshGroups:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+void CL64_Mesh_Manager::Create_MeshGroups(Ogre::Entity* Ogre_Entity)
+{
+	// -------------------------------------------- Create Group
+	int Index = App->CL_Scene->Map_Group_Count;
+
+	if (App->CL_Scene->Map_Group[Index] != nullptr)
+	{
+		delete App->CL_Scene->Map_Group[Index];
+		App->CL_Scene->Map_Group[Index] = nullptr;
+	}
+
+	App->CL_Scene->Map_Group[Index] = new Base_Group();
+	App->CL_Scene->Map_Group[Index]->GroupVertCount = 0;
+	App->CL_Scene->Map_Group[Index]->IndicesCount = 0;
+	App->CL_Scene->Map_Group[Index]->GroupFaceCount = 0;
+
+	char Sub_Mesh_Name[MAX_PATH];
+	char Sub_Mesh_Num[MAX_PATH];
+
+	int SubMeshCount = Ogre_Entity->getNumSubEntities();
+
+	int Count = 0;
+	while (Count < SubMeshCount)
+	{
+		App->CL_Scene->Map_Group[Index]->B_Sub_Mesh[Count] = new Sub_Mesh_type;
+		App->CL_Scene->Map_Group[Index]->B_Sub_Mesh[Count]->Face_Count = 0;
+		App->CL_Scene->Map_Group[Index]->B_Sub_Mesh[Count]->IndicesCount = 0;
+		App->CL_Scene->Map_Group[Index]->B_Sub_Mesh[Count]->Vertice_Count = 0;
+
+		_itoa(Count, Sub_Mesh_Num, 10);
+		strcpy(Sub_Mesh_Name, "Sub_Mesh_");
+		strcat(Sub_Mesh_Name, Sub_Mesh_Num);
+
+		strcpy(App->CL_Scene->Map_Group[Index]->B_Sub_Mesh[Count]->chr_SubMesh_Name, Sub_Mesh_Name);
+
+		/*Ogre::SubMesh const* subMesh = Ogre_Entity->getSubEntity(Count)->getSubMesh();
+		strcpy(App->CL_Scene->Group[Count]->MaterialName, subMesh->getMaterialName().c_str());
+
+		if (App->CL_Mesh_Manager->Has_Shared_Vertices == 0)
+		{
+			App->CL_Scene->Group[Count]->GroupVertCount = subMesh->vertexData->vertexCount;
+			App->CL_Scene->Group[Count]->IndicesCount = subMesh->vertexData->vertexCount;
+		}*/
+
+		Count++;
+	}
+
+	App->CL_Scene->Map_Group_Count++;
+}
+
+// *************************************************************************
 // *			Ogre_To_Mesh_Data:- Terry and Hazel Flanigan 2024	   	   *
 // *************************************************************************
 bool CL64_Mesh_Manager::Ogre_To_Mesh_Data(Ogre::Entity* Ogre_Entity)
 {
+
+
 	Convert_To_Mesh_Data(Ogre_Entity);
 
 
@@ -75,7 +130,7 @@ bool CL64_Mesh_Manager::Convert_To_Mesh_Data(Ogre::Entity* Ogre_Entity)
 		Count++;
 	}
 
-//	App->CL_Converters->Create_MeshGroups(Ogre_Entity);
+	Create_MeshGroups(Ogre_Entity);
 
 	if (Has_Shared_Vertices == 0)
 	{

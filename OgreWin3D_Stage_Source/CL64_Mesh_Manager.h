@@ -36,6 +36,8 @@ public:
 
 private:
 
+	void Create_MeshGroups(Ogre::Entity* Ogre_Entity);
+
 	bool Convert_To_Mesh_Data(Ogre::Entity* Ogre_Entity);
 
 	void Get_SubPose_MeshInstance(Ogre::MeshPtr mesh,
