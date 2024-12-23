@@ -77,6 +77,7 @@ THE SOFTWARE.
 #include "CL64_Motions.h"
 #include "CL64_Utilities.h"
 #include "Bass_Front_Dialog.h"
+#include "CL64_MapEditor.h"
 
 class CL64_App
 {
@@ -137,6 +138,7 @@ public:
 	CL64_PB*				CL_PB;
 	CL64_Motions*			CL_Motions;
 	CL64_Utilities*			CL_Utilities;
+	CL64_MapEditor*			CL_MapEditor;
 
 	Bass_Front_Dialog*		CL_Front_Dialog;
 	

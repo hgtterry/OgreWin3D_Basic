@@ -93,6 +93,7 @@
 #define IDD_PROPS_CAMERA                205
 #define IDD_PROPS_PLAYER                206
 #define IDD_PROPS_OVERRIDECOUNTER       207
+#define IDD_MAPEDITOR                   208
 #define IDC_CK_SU_FULL3DVIEW            1002
 #define IDC_BT_TDH_DEBUG                1002
 #define IDC_BT_TD_DEBUG_RESETVIEW       1003
@@ -401,7 +402,7 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
-#define _APS_NEXT_RESOURCE_VALUE        207
+#define _APS_NEXT_RESOURCE_VALUE        209
 #define _APS_NEXT_COMMAND_VALUE         32844
 #define _APS_NEXT_CONTROL_VALUE         1138
 #define _APS_NEXT_SYMED_VALUE           110

@@ -81,6 +81,7 @@ CL64_App::CL64_App(void)
 	CL_PB =					nullptr;
 	CL_Motions =			nullptr;
 	CL_Utilities =			nullptr;
+	CL_MapEditor =			nullptr;
 	//-------------------------------------
 
 	hInst =				nullptr;
@@ -214,6 +215,7 @@ void CL64_App::InitApp(void)
 	CL_PB =					new CL64_PB();
 	CL_Motions =			new CL64_Motions();
 	CL_Utilities =			new CL64_Utilities();
+	CL_MapEditor =			new CL64_MapEditor();
 
 	SetBrushes_Fonts();
 

@@ -201,6 +201,7 @@
     <ClInclude Include="CL64_Keyboard.h" />
     <ClInclude Include="CL64_Locations.h" />
     <ClInclude Include="CL64_LookUps.h" />
+    <ClInclude Include="CL64_MapEditor.h" />
     <ClInclude Include="CL64_Materials.h" />
     <ClInclude Include="CL64_MeshViewer.h" />
     <ClInclude Include="CL64_MeshView_Listener.h" />
@@ -272,6 +273,7 @@
     <ClCompile Include="CL64_Keyboard.cpp" />
     <ClCompile Include="CL64_Locations.cpp" />
     <ClCompile Include="CL64_LookUps.cpp" />
+    <ClCompile Include="CL64_MapEditor.cpp" />
     <ClCompile Include="CL64_Materials.cpp" />
     <ClCompile Include="CL64_MeshViewer.cpp" />
     <ClCompile Include="CL64_MeshView_Listener.cpp" />
