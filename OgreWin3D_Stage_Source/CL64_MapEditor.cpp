@@ -168,11 +168,11 @@ LRESULT CALLBACK CL64_MapEditor::Splitter_Proc(HWND hDlg, UINT message, WPARAM w
 
 	case WM_SIZE:
 	{
-		//App->CL_Test_View->Init_Views();
-		//App->CL_Test_View->Resize_Windows(hDlg, App->CL_Test_View->nleftWnd_width, App->CL_Test_View->nleftWnd_Depth);
+		App->CL_MapEditor->Init_Views();
+		App->CL_MapEditor->Resize_Windows(hDlg, App->CL_MapEditor->nleftWnd_width, App->CL_MapEditor->nleftWnd_Depth);
 
 		GetClientRect(hDlg, &rect);
-		//RedrawWindow(App->CL_Test_View->Spliter_Main_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+		RedrawWindow(App->CL_MapEditor->Spliter_Main_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 		return 0;
 	}
 
@@ -480,15 +480,15 @@ LRESULT CALLBACK CL64_MapEditor::Left_Window_Proc(HWND hDlg, UINT message, WPARA
 		return (LONG)App->CL_MapEditor->BackGround_Brush;
 	}
 
-	/*case WM_ERASEBKGND:
+	case WM_ERASEBKGND:
 	{
 		return (LRESULT)1;
-	}*/
+	}
 
 	case WM_PAINT:
 	{
-		//App->CL_Test_View->m_View = 1;
-		//App->CL_Test_View->Draw_Screen(hDlg);
+		App->CL_MapEditor->m_View = 1;
+		App->CL_MapEditor->Draw_Screen(hDlg);
 		return 0;
 	}
 
@@ -522,15 +522,15 @@ LRESULT CALLBACK CL64_MapEditor::Right_Window_Proc(HWND hDlg, UINT message, WPAR
 		return (LONG)App->CL_MapEditor->BackGround_Brush;
 	}
 
-	/*case WM_ERASEBKGND:
+	case WM_ERASEBKGND:
 	{
 		return (LRESULT)1;
-	}*/
+	}
 
 	case WM_PAINT:
 	{
-		//App->CL_Test_View->m_View = 2;
-		//App->CL_Test_View->Draw_Screen(hDlg);
+		App->CL_MapEditor->m_View = 2;
+		App->CL_MapEditor->Draw_Screen(hDlg);
 		return 0;
 	}
 
@@ -564,15 +564,15 @@ LRESULT CALLBACK CL64_MapEditor::Bottom_Left_Proc(HWND hDlg, UINT message, WPARA
 		return (LONG)App->CL_MapEditor->BackGround_Brush;
 	}
 
-	/*case WM_ERASEBKGND:
+	case WM_ERASEBKGND:
 	{
 		return (LRESULT)1;
-	}*/
+	}
 
 	case WM_PAINT:
 	{
-		//App->CL_Test_View->m_View = 3;
-		//App->CL_Test_View->Draw_Screen(hDlg);
+		App->CL_MapEditor->m_View = 3;
+		App->CL_MapEditor->Draw_Screen(hDlg);
 		return 0;
 	}
 
@@ -608,4 +608,220 @@ LRESULT CALLBACK CL64_MapEditor::Bottom_Right_Proc(HWND hDlg, UINT message, WPAR
 	}
 
 	return FALSE;
+}
+
+// *************************************************************************
+// *						Draw_Screen Terry Flanigan		  			   *
+// *************************************************************************
+void CL64_MapEditor::Draw_Screen(HWND hwnd)
+{
+	//App->Get_Current_Document();
+
+	//CMainFrame* m_pMainFrame;
+	//m_pMainFrame = (CMainFrame*)AfxGetMainWnd(); // MFC POO
+
+	//CFusionDoc* m_pDoc = (CFusionDoc*)m_pMainFrame->GetCurrentDoc();
+
+	HDC			RealhDC;
+	HDC			MemoryhDC;
+	RECT		Rect;
+
+	/*POSITION pos = m_pDoc->GetFirstViewPosition();
+	m_pDoc->GetNextView(pos);
+	CView* pView = m_pDoc->GetNextView(pos);
+	CFusionView* pFusionView = (CFusionView*)pView;*/
+
+	float GridSize = 2;
+	float GridSnapSize = 2;
+
+	GetClientRect(hwnd, &Rect);
+	Rect.left--;
+	Rect.bottom--;
+
+	RealhDC = GetDC(hwnd);
+
+	MemoryhDC = CreateCompatibleDC(RealhDC);
+
+	GetClipBox(RealhDC, &Rect);
+
+	HBITMAP OffScreenBitmap;
+
+	OffScreenBitmap = CreateCompatibleBitmap(RealhDC, Rect.right - Rect.left, Rect.bottom - Rect.top);
+
+	SelectObject(MemoryhDC, OffScreenBitmap);
+
+	/*geVec3d		XTemp;
+	Box3d ViewBox;
+	Box3d_SetBogusBounds(&ViewBox);
+	Render_ViewToWorld(pFusionView->VCam, 0, 0, &XTemp);
+	Box3d_AddPoint(&ViewBox, XTemp.X, XTemp.Y, XTemp.Z);
+	Render_ViewToWorld(pFusionView->VCam, Render_GetWidth(pFusionView->VCam), Render_GetHeight(pFusionView->VCam), &XTemp);
+	Box3d_AddPoint(&ViewBox, XTemp.X, XTemp.Y, XTemp.Z);*/
+
+	//VectorToSUB(ViewBox.Min, inidx) = -FLT_MAX;
+	//VectorToSUB(ViewBox.Max, inidx) = FLT_MAX;
+
+	//BrushDrawData	brushDrawData;
+
+	//brushDrawData.pViewBox = &ViewBox;
+	//brushDrawData.pDC = MemoryhDC;
+	//brushDrawData.v = pFusionView->VCam;
+	//brushDrawData.pDoc = m_pDoc;//this;
+	//brushDrawData.GroupId = 0;
+	//brushDrawData.FlagTest = NULL;
+
+	HBRUSH hBrush = CreateSolidBrush(RGB(64, 64, 64));
+	FillRect(MemoryhDC, &Rect, (HBRUSH)hBrush); // BackGround
+	DeleteObject(hBrush);
+
+	int Center_X, Center_Y;
+	int Width, Depth;
+
+	Width = Rect.right;
+	Depth = Rect.bottom;
+
+	Center_Y = (Depth / 2);
+	Center_X = (Width / 2);
+
+	/*GridSize = Render_GetFineGrid(pFusionView->VCam, (Level_GetGridType(App->CLSB_Doc->pLevel) == GridTexel) ? GRID_TYPE_TEXEL : GRID_TYPE_METRIC);
+
+
+	if (Level_GetGridType(App->CLSB_Doc->pLevel) == GridMetric)
+	{
+		GridSize /= 2.54f;
+	}
+
+	GridSnapSize = Level_GetGridSnapSize(App->CLSB_Doc->pLevel);*/
+
+	HPEN pen = CreatePen(PS_SOLID, 0, RGB(0, 0, 0));
+	SelectObject(MemoryhDC, pen);
+
+	Draw_Grid(MemoryhDC, 8, Rect); // Snap grid
+
+
+	HPEN pen2 = CreatePen(PS_SOLID, 0, RGB(112, 112, 112));
+	SelectObject(MemoryhDC, pen2);
+
+	Draw_Grid(MemoryhDC, 128, Rect); // Big grid
+
+	/*int BrushCount = App->CL_Brush->Get_Brush_Count();*/
+
+	HPEN pen3 = CreatePen(PS_SOLID, 0, RGB(255, 255, 255));
+	SelectObject(MemoryhDC, pen3);
+
+	//int GroupVis = Level_GetGroupVisibility(App->CLSB_Doc->pLevel);
+
+	//GroupListType* Groups = Level_GetGroups(App->CLSB_Doc->pLevel);
+
+	//GroupIterator	gi;
+	//int				GroupId;
+	//GroupId = Group_GetFirstId(Groups, &gi);
+
+	//Brush* b;
+	//BrushList* pList = Level_GetBrushes(App->CLSB_Doc->pLevel);
+	//b = pList->First;
+
+	//while (b != NULL)
+	//{
+	//	brushDrawData.FlagTest = ::fdocBrushNotDetail;
+	//	brushDrawData.GroupId = GroupId;
+	//	if ((GroupVis == Group_ShowAll) ||
+	//		((GroupVis == Group_ShowCurrent) && (GroupId == App->CLSB_Doc->mCurrentGroup)) ||
+	//		((GroupVis == Group_ShowVisible) && (Group_IsVisible(Groups, GroupId)))
+	//		)
+	//	{
+	//		HPEN pen3 = CreatePen(PS_SOLID, 0, RGB(255, 255, 255));
+	//		SelectObject(MemoryhDC, pen3);
+	//		Level_EnumLeafBrushes(App->CLSB_Doc->pLevel, &brushDrawData, m_BrushDraw); // Draw Brushes
+
+	//		// render cut brushes
+	//		SelectObject(MemoryhDC, Pen_CutBrush);
+	//		brushDrawData.FlagTest = fdocBrushIsSubtract;
+	//		Level_EnumLeafBrushes(App->CLSB_Doc->pLevel, &brushDrawData, m_BrushDraw);
+
+	//	}
+
+	//	b = b->Next;
+	//	//GroupId = Group_GetNextId(Groups, &gi);
+	//}
+
+
+	//CEntity* pCameraEntity = App->CLSB_Camera_WE->FindCameraEntity();
+
+	//if ((pCameraEntity != NULL))
+	//{
+	//	if (pCameraEntity->IsSelected())
+	//	{
+	//		//pDC->SelectObject(&PenSelected);
+	//	}
+	//	else
+	//	{
+	//		SelectObject(MemoryhDC, Pen_Camera);
+	//	}
+
+	//	fdocDrawEntity(pCameraEntity, pFusionView->VCam, MemoryhDC, Level_GetEntityDefs(App->CLSB_Doc->pLevel), GE_TRUE);
+	//}
+
+	int TopLeft, BottomRight;
+	int CrossSize = 16;
+
+	int CamX = 0;
+	int CamBottomRight = 0;
+
+	Width = Rect.right;
+	Depth = Rect.bottom;
+
+	Center_Y = (Depth / 2);
+	Center_X = (Width / 2);
+
+	TopLeft = Center_Y - 4;
+	BottomRight = Center_X - 4;
+
+	BitBlt(RealhDC, Rect.left, Rect.top, Rect.right - Rect.left, Rect.bottom - Rect.top, MemoryhDC, 0, 0, SRCCOPY);
+
+	SelectObject(MemoryhDC, &OffScreenBitmap);
+
+	DeleteObject(pen);
+	DeleteObject(pen2);
+	DeleteObject(pen3);
+	DeleteObject(hBrush);
+
+	DeleteObject(OffScreenBitmap);
+	DeleteDC(MemoryhDC);
+}
+
+// *************************************************************************
+// *	  			Draw_Grid:- Terry and Hazel Flanigan 2023			   *
+// *************************************************************************
+bool CL64_MapEditor::Draw_Grid(HDC hDC, int Interval, RECT Rect)
+{
+	int cnt = Rect.bottom / Interval;
+
+	int SP = 0;
+	int Count = 0;
+
+	// horizontal lines
+	while (Count < cnt + 1)
+	{
+		MoveToEx(hDC, 0, SP, NULL);
+		LineTo(hDC, Rect.right, SP);
+
+		SP = SP + Interval;
+		Count++;
+	}
+
+	cnt = Rect.right / Interval;
+	SP = 0;
+	Count = 0;
+	// vertical lines
+	while (Count < cnt + 1)
+	{
+		MoveToEx(hDC, SP, 0, NULL);
+		LineTo(hDC, SP, Rect.bottom);
+
+		SP = SP + Interval;
+		Count++;
+	}
+
+	return 1;
 }

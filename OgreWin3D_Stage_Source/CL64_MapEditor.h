@@ -49,6 +49,9 @@ private:
 	void Create_Bottom_Right_Window();
 	bool Resize_Windows(HWND hDlg, int NewWidth, int NewDepth);
 
+	void Draw_Screen(HWND hwnd);
+	bool Draw_Grid(HDC hDC, int Interval, RECT Rect);
+
 	HPEN Pen_CutBrush;
 	HPEN Pen_Camera;
 
