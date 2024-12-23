@@ -47,6 +47,36 @@ private:
 	void Create_Right_Window();
 	void Create_Bottom_Left_Window();
 	void Create_Bottom_Right_Window();
+	bool Resize_Windows(HWND hDlg, int NewWidth, int NewDepth);
+
+	HPEN Pen_CutBrush;
+	HPEN Pen_Camera;
+
+	HWND Spliter_Main_Hwnd;
+	HWND Left_Window_Hwnd;
+	HWND Right_Window_Hwnd;
+
+	HWND Bottom_Left_Hwnd;
+	HWND Bottom_Right_Hwnd;
+
+	HBRUSH BackGround_Brush;
+
+	int m_View;
+
+	int LEFT_WINDOW_WIDTH;
+
+	int LEFT_WINDOW_DEPTH;
+	int TOP_POS_BOTLEFT;
+
+	int RIGHT_MINIMUM_SPACE;
+	int LEFT_MINIMUM_SPACE;
+
+	int nleftWnd_width;
+	int nleftWnd_Depth;
+
+	bool Do_Width;
+	bool Do_Depth;
+	bool Do_All;
 
 };
 
