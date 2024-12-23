@@ -212,6 +212,15 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 			//App->CL_MapEditor->Start_Main_View_Dlg();
 
+			if (App->CL_Ogre->OGL_Listener->flag_ShowFaces == 1)
+			{
+				App->CL_Ogre->OGL_Listener->flag_ShowFaces = 0;
+			}
+			else
+			{
+				App->CL_Ogre->OGL_Listener->flag_ShowFaces = 1;
+			}
+			
 			return TRUE;
 		}
 		

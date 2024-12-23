@@ -614,7 +614,7 @@ void CL64_ImGui::App_Debug(void)
 				ImGui::Text("Camera Count: %i", App->CL_Scene->Camera_Count);
 				ImGui::Text("Player Location Count: %i", App->CL_Scene->Player_Location_Count);
 				ImGui::Text("Counters Count: %i", App->CL_Scene->Counters_Count);
-				//ImGui::Text("Bullet Count: %i", App->CL_Bullet->dynamicsWorld->getNumCollisionObjects());
+				ImGui::Text("Map_Group_Count: %i", App->CL_Scene->Map_Group_Count);
 				//ImGui::Text("Manifolds Count: %i", App->CL_Bullet->dynamicsWorld->getDispatcher()->getNumManifolds());
 
 				

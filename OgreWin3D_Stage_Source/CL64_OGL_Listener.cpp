@@ -193,13 +193,12 @@ void CL64_OGL_Listener::Render_Loop()
 	//	MeshData_Render_Textures();
 	//}
 
-	//// ---------------------- Mesh
-	//if (App->CL_Scene->flag_Model_Loaded && Flag_ShowFaces == 1)
-	//{
-	//	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-
-	//	MeshData_Render_Faces();
-	//}
+	// ---------------------- Mesh
+	if (flag_ShowFaces == 1)
+	{
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		MeshData_Render_Faces();
+	}
 
 	//// ---------------------- Points
 	//if (App->CL_Scene->flag_Model_Loaded == 1 && Flag_ShowPoints == 1)
@@ -343,24 +342,17 @@ bool CL64_OGL_Listener::MeshData_Textured_Groups(int Count)
 // *************************************************************************
 void CL64_OGL_Listener::MeshData_Render_Faces(void)
 {
-	//int Count = 0;
+	int Count = 0;
 
-	//glColor3f(1, 1, 1);
+	glColor3f(1, 1, 1);
 
-	//int GroupCount = App->CL_Scene->GroupCount;
+	int Map_Count = 1;// App->CL_Scene->Map_Group_Count;
 
-	//
-	//if (flag_ShowOnlySubFaces == 1) // Show Only Selected SubMesh
-	//{
-	//	MeshData_Face_Groups(Selected_Face_Group);
-	//	return;
-	//}
-
-	//while (Count < GroupCount)
-	//{
-	//	MeshData_Face_Groups(Count);
-	//	Count++;
-	//}
+	while (Count < Map_Count)
+	{
+		MeshData_Face_Groups(Count);
+		Count++;
+	}
 
 }
 
@@ -369,34 +361,43 @@ void CL64_OGL_Listener::MeshData_Render_Faces(void)
 // *************************************************************************
 void CL64_OGL_Listener::MeshData_Face_Groups(int Count)
 {
-	//int FaceCount = 0;
-	//int A = 0;
-	//int B = 0;
-	//int C = 0;
 
-	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	int Sub_Group_Count = App->CL_Scene->Map_Group[Count]->Sub_Group_Count;
+	
+	int Index = 0;
+	int FaceCount = 0;
+	int A = 0;
+	int B = 0;
+	int C = 0;
 
-	//while (FaceCount < App->CL_Scene->Group[Count]->GroupFaceCount)
-	//{
-	//	A = App->CL_Scene->Group[Count]->Face_Data[FaceCount].a;
-	//	B = App->CL_Scene->Group[Count]->Face_Data[FaceCount].b;
-	//	C = App->CL_Scene->Group[Count]->Face_Data[FaceCount].c;
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-	//	glBegin(GL_POLYGON);
+	while (Index < Sub_Group_Count)
+	{
+		while (FaceCount < App->CL_Scene->Map_Group[Count]->B_Sub_Mesh[Index]->Face_Count)
+		{
+			A = App->CL_Scene->Map_Group[Count]->B_Sub_Mesh[Index]->Face_Data[FaceCount].a;
+			B = App->CL_Scene->Map_Group[Count]->B_Sub_Mesh[Index]->Face_Data[FaceCount].b;
+			C = App->CL_Scene->Map_Group[Count]->B_Sub_Mesh[Index]->Face_Data[FaceCount].c;
 
-	//	//-----------------------------------------------
-	//	glVertex3fv(&App->CL_Scene->Group[Count]->vertex_Data[A].x);
+			glBegin(GL_POLYGON);
 
-	//	//-----------------------------------------------
-	//	glVertex3fv(&App->CL_Scene->Group[Count]->vertex_Data[B].x);
+			//-----------------------------------------------
+			glVertex3fv(&App->CL_Scene->Map_Group[Count]->B_Sub_Mesh[Index]->vertex_Data[A].x);
 
-	//	//-----------------------------------------------
-	//	glVertex3fv(&App->CL_Scene->Group[Count]->vertex_Data[C].x);
-	//	FaceCount++;
-	//	//-----------------------------------------------
+			//-----------------------------------------------
+			glVertex3fv(&App->CL_Scene->Map_Group[Count]->B_Sub_Mesh[Index]->vertex_Data[B].x);
 
-	//	glEnd();
-	//}
+			//-----------------------------------------------
+			glVertex3fv(&App->CL_Scene->Map_Group[Count]->B_Sub_Mesh[Index]->vertex_Data[C].x);
+			FaceCount++;
+			//-----------------------------------------------
+
+			glEnd();
+		}
+
+		Index++;
+	}
 
 }
 

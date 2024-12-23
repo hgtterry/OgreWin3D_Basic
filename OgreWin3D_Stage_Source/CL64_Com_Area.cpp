@@ -182,6 +182,8 @@ void CL64_Com_Area::Add_Aera_To_Project(int Index, char* FileName, char* Resourc
 	Area->Area_Node->setScale(Area->Mesh_Scale);
 	Area->Area_Node->setOrientation(Area->Mesh_Quat);
 
+	App->CL_Mesh_Manager->Ogre_To_Mesh_Data(Area->Area_Ent);
+
 	Create_Area_Trimesh(Index, Area);
 
 	Area->Usage = Enums::Stage_Usage_Room;

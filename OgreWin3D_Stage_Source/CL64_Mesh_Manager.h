@@ -52,6 +52,8 @@ private:
 
 	bool GetBoneAssignment(Ogre::MeshPtr mesh, int SubMesh, HWND hDlg);
 
+	int Current_Index;
+
 	std::vector<Ogre::Vector2> MeshTextureCoords;
 
 };

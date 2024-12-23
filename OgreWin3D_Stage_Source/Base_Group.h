@@ -33,7 +33,7 @@ typedef struct Sub_Mesh_type
 	std::vector<normal_type> Normal_Data;			// XYZ
 	std::vector<mapcoord_type> MapCord_Data;		// UV
 	std::vector<int_type> FaceIndex_Data;
-
+	
 	int Vertice_Count;
 	int Face_Count;
 	int IndicesCount;
