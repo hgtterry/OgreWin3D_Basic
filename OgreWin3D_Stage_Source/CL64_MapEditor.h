@@ -28,5 +28,25 @@ class CL64_MapEditor
 public:
 	CL64_MapEditor();
 	~CL64_MapEditor();
+
+	void Start_Main_View_Dlg();
+
+private:
+
+	static LRESULT CALLBACK Splitter_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Left_Window_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Right_Window_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Bottom_Left_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Bottom_Right_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+
+
+	void Init_Views();
+	void Start_Splitter();
+
+	void Create_Left_Window();
+	void Create_Right_Window();
+	void Create_Bottom_Left_Window();
+	void Create_Bottom_Right_Window();
+
 };
 
