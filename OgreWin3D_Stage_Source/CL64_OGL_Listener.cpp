@@ -346,7 +346,7 @@ void CL64_OGL_Listener::MeshData_Render_Faces(void)
 
 	glColor3f(1, 1, 1);
 
-	int Map_Count = 1;// App->CL_Scene->Map_Group_Count;
+	int Map_Count = App->CL_Scene->Map_Group_Count;
 
 	while (Count < Map_Count)
 	{
@@ -362,7 +362,7 @@ void CL64_OGL_Listener::MeshData_Render_Faces(void)
 void CL64_OGL_Listener::MeshData_Face_Groups(int Count)
 {
 
-	int Sub_Group_Count = App->CL_Scene->Map_Group[Count]->Sub_Group_Count;
+	int Sub_Group_Count = App->CL_Scene->Map_Group[Count]->Sub_Mesh_Count;
 	
 	int Index = 0;
 	int FaceCount = 0;
@@ -374,6 +374,7 @@ void CL64_OGL_Listener::MeshData_Face_Groups(int Count)
 
 	while (Index < Sub_Group_Count)
 	{
+		int FaceCount = 0;
 		while (FaceCount < App->CL_Scene->Map_Group[Count]->B_Sub_Mesh[Index]->Face_Count)
 		{
 			A = App->CL_Scene->Map_Group[Count]->B_Sub_Mesh[Index]->Face_Data[FaceCount].a;

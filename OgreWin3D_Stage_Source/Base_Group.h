@@ -21,17 +21,12 @@ typedef struct vertex_type
 }vertex_type;
 
 typedef struct polygon_type { int a, b, c, Group; }polygon_type;
-typedef struct normal_type { float x, y, z; }normal_type;
-typedef struct mapcoord_type { float u, v; }mapcoord_type;
 typedef struct int_type { int Index; }int_type;
-typedef struct float_type { float Float1; }float_type;
 
 typedef struct Sub_Mesh_type
 {
 	std::vector<vertex_type> vertex_Data;			// XYZ
 	std::vector<polygon_type> Face_Data;			// ABC
-	std::vector<normal_type> Normal_Data;			// XYZ
-	std::vector<mapcoord_type> MapCord_Data;		// UV
 	std::vector<int_type> FaceIndex_Data;
 	
 	int Vertice_Count;
@@ -50,10 +45,10 @@ public:
 
 	char GroupName[MAX_PATH];
 
-	int Sub_Group_Count;
-	int GroupVertCount;	// Group Vertice Count
-	int GroupFaceCount;
-	int IndicesCount; // Ogre
+	int Sub_Mesh_Count;
+	int Total_VertCount;	// Group Vertice Count
+	int Total_FaceCount;
+	int Total_IndicesCount; // Ogre
 	
 	Sub_Mesh_type* B_Sub_Mesh[100];
 };

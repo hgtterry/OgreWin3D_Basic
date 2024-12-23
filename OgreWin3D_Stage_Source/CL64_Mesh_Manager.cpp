@@ -52,9 +52,9 @@ void CL64_Mesh_Manager::Create_MeshGroups(Ogre::Entity* Ogre_Entity)
 	}
 
 	App->CL_Scene->Map_Group[Index] = new Base_Group();
-	App->CL_Scene->Map_Group[Index]->GroupVertCount = 0;
-	App->CL_Scene->Map_Group[Index]->IndicesCount = 0;
-	App->CL_Scene->Map_Group[Index]->GroupFaceCount = 0;
+	App->CL_Scene->Map_Group[Index]->Total_VertCount = 0;
+	App->CL_Scene->Map_Group[Index]->Total_IndicesCount = 0;
+	App->CL_Scene->Map_Group[Index]->Total_FaceCount = 0;
 
 	char Sub_Mesh_Name[MAX_PATH];
 	char Sub_Mesh_Num[MAX_PATH];
@@ -87,7 +87,7 @@ void CL64_Mesh_Manager::Create_MeshGroups(Ogre::Entity* Ogre_Entity)
 		Count++;
 	}
 
-	App->CL_Scene->Map_Group[Index]->Sub_Group_Count = Count;
+	App->CL_Scene->Map_Group[Index]->Sub_Mesh_Count = Count;
 
 	App->CL_Scene->Map_Group_Count++;
 }

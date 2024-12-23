@@ -19,10 +19,12 @@ appreciated but is not required.
 
 Base_Group::Base_Group()
 {
-	Sub_Group_Count = 0;
+	Sub_Mesh_Count = 0;
 	GroupName[0] = 0;
-	GroupVertCount = 0;
-	IndicesCount = 0; // Ogre
+
+	Total_VertCount = 0;
+	Total_FaceCount = 0;
+	Total_IndicesCount = 0; // Ogre
 
 	int Count = 0;
 	while (Count < 99)
