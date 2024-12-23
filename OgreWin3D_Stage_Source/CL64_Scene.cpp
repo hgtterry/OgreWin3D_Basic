@@ -29,6 +29,7 @@ THE SOFTWARE.
 CL64_Scene::CL64_Scene(void)
 {
 	// Stage
+	Map_Group_Count = 0;
 	Object_Count = 0;
 	Area_Count = 0;
 	Camera_Count = 0;
@@ -57,6 +58,13 @@ CL64_Scene::CL64_Scene(void)
 	B_Player.reserve(20);
 	B_Object.reserve(200);
 	B_Camera.reserve(20);
+
+	int Count = 0;
+	while (Count < 4999)
+	{
+		Map_Group[Count] = nullptr;
+		Count++;
+	}
 
 }
 

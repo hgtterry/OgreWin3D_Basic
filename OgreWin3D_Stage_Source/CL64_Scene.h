@@ -30,6 +30,7 @@ THE SOFTWARE.
 #include "Base_Locations.h"
 #include "Base_Counter.h"
 #include "Base_Camera.h"
+#include "Base_Group.h"
 
 class CL64_Scene
 {
@@ -49,6 +50,7 @@ public:
 
 
 	// Stage 
+	int Map_Group_Count;
 	int Object_Count;
 	int Area_Count;
 	int Camera_Count;
@@ -70,6 +72,7 @@ public:
 	bool flag_FullScreen_Mode;
 	bool flag_Camera_Added;
 
+	Base_Group* Map_Group[5000];
 	Base_Area* B_Area[20];
 	Base_Locations* B_Locations[20];
 	Base_Counter* B_Counter[20];
