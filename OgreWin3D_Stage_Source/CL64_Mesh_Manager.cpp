@@ -30,6 +30,11 @@ CL64_Mesh_Manager::CL64_Mesh_Manager(void)
 {
 	Has_Shared_Vertices = 0;
 	Current_Index = 0;
+
+	m_position = Ogre::Vector3(0,0,0);
+	m_orient = Quaternion::IDENTITY;
+	m_scale = Vector3::UNIT_SCALE;
+
 }
 
 CL64_Mesh_Manager::~CL64_Mesh_Manager(void)
@@ -95,9 +100,12 @@ void CL64_Mesh_Manager::Create_MeshGroups(Ogre::Entity* Ogre_Entity)
 // *************************************************************************
 // *			Ogre_To_Mesh_Data:- Terry and Hazel Flanigan 2024	   	   *
 // *************************************************************************
-bool CL64_Mesh_Manager::Ogre_To_Mesh_Data(Ogre::Entity* Ogre_Entity)
+bool CL64_Mesh_Manager::Ogre_To_Mesh_Data(Ogre::Entity* Ogre_Entity, Ogre::SceneNode* Ogre_Node)
 {
 
+	m_position = Ogre_Node->getPosition();
+	m_orient = Ogre_Node->getOrientation();
+	m_scale = Ogre_Node->getScale();
 
 	Convert_To_Mesh_Data(Ogre_Entity);
 
@@ -166,10 +174,6 @@ bool CL64_Mesh_Manager::Convert_To_Mesh_Data(Ogre::Entity* Ogre_Entity)
 		{
 			Get_SubPose_MeshInstance(Ogre_Entity->getMesh(), vertex_count, vertices, index_count, indices, Count, BoneIndices);
 
-			//int mUVTest = Get_SubPoseTextureUV(Ogre_Entity->getMesh(), Count);
-			//Get_SubPoseNormals(Ogre_Entity->getMesh(), vertex_count, normals, Count);
-
-
 			App->CL_Scene->Map_Group[Current_Index]->B_Sub_Mesh[Count]->vertex_Data.resize(index_count);
 			App->CL_Scene->Map_Group[Current_Index]->B_Sub_Mesh[Count]->Face_Data.resize(index_count);
 			App->CL_Scene->Map_Group[Current_Index]->B_Sub_Mesh[Count]->FaceIndex_Data.resize(index_count);
@@ -224,151 +228,6 @@ bool CL64_Mesh_Manager::Convert_To_Mesh_Data(Ogre::Entity* Ogre_Entity)
 }
 
 // *************************************************************************
-// *	    	Get_Ogre_Mesh_Data:- Terry and Hazel Flanigan 2024		   *
-// *************************************************************************
-void CL64_Mesh_Manager::Get_Ogre_Mesh_Data(Ogre::Entity* Ogre_Entity)
-{
-	int Count = 0;
-
-	bool Edge = Ogre_Entity->hasEdgeList();
-	if (Edge == 1)
-	{
-		//App->CL_Scene->S_OgreMeshData[0]->mStrEdgeList = "Yes";
-	}
-	else
-	{
-		//App->CL_Scene->S_OgreMeshData[0]->mStrEdgeList = "No";
-	}
-
-	bool Skel = Ogre_Entity->hasSkeleton();
-	if (Skel == 1)
-	{
-		//App->CL_Scene->S_OgreMeshData[0]->mStrSkeleton = "Yes";
-	}
-	else
-	{
-		//App->CL_Scene->S_OgreMeshData[0]->mStrSkeleton = "No";
-	}
-
-	// ---------------------------------------------------------------
-
-	//App->CL_Scene->S_OgreMeshData[0]->mSubmeshes.resize(0);
-
-	int SubMeshCount = Ogre_Entity->getNumSubEntities();
-	//App->CL_Scene->S_OgreMeshData[0]->mSubMeshCount = SubMeshCount;
-
-	// ------------------------------- Materials 
-	Count = 0;
-	int NumSubEnts = Ogre_Entity->getNumSubEntities();
-
-	while (Count < NumSubEnts)
-	{
-
-		// Material
-		char mMaterial[MAX_PATH];
-		Ogre::SubEntity* subEnt = Ogre_Entity->getSubEntity(Count);
-		strcpy(mMaterial, subEnt->getMaterialName().c_str());
-
-		//if (App->CL_Scene->Group[Count])
-		//{
-		//	strcpy(App->CL_Scene->Group[Count]->Ogre_Material, mMaterial);
-		//	char nn[25];
-		//	char MatId[MAX_PATH];
-		//	strcpy(MatId, mMaterial);
-		//	strcat(MatId, "##");
-		//	strcat(MatId, _itoa(Count, nn, 10));
-		//	strcpy(App->CL_Scene->Group[Count]->Ogre_ImGui_MatId, MatId);
-
-		//	// Texture
-		//	char mTexture[MAX_PATH];
-		//	Ogre::MaterialPtr MatCurent;
-		//	MatCurent = static_cast<Ogre::MaterialPtr> (Ogre::MaterialManager::getSingleton().getByName(mMaterial));
-
-		//	if (MatCurent->getNumTechniques() > 0)
-		//	{
-		//		int TUSCount = MatCurent->getTechnique(0)->getPass(0)->getNumTextureUnitStates();
-
-		//		if (TUSCount > 0)
-		//		{
-		//			App->CL_Scene->Group[Count]->Ogre_NumTextureUnits = TUSCount;
-		//			strcpy(mTexture, MatCurent->getTechnique(0)->getPass(0)->getTextureUnitState(0)->getTextureName().c_str());
-
-		//			strcpy(App->CL_Scene->Group[Count]->Ogre_Texture_FileName, mTexture);
-		//			App->CL_Scene->Group[Count]->Ogre_Texture_IsValid = 1;
-		//			App->CL_Scene->Group[Count]->Ogre_MipMaps = MatCurent->getTechnique(0)->getPass(0)->getTextureUnitState(0)->getNumMipmaps();
-
-		//		}
-
-		//		strcpy(App->CL_Scene->Group[Count]->Ogre_Material_File, MatCurent->getOrigin().c_str());
-
-		//	}
-		//	else
-		//	{
-		//		App->CL_Scene->Group[Count]->Ogre_NumTextureUnits = 0;
-		//		App->CL_Scene->Group[Count]->Ogre_Texture_IsValid = 0;
-		//	}
-
-		//}
-
-		Count++;
-	}
-
-	Count = 0;
-	//App->CL_Scene->S_OgreMeshData[0]->mStrName = Ogre_Entity->getName();
-
-	// ------------------------------------ Sub Meshes
-
-	Count = 0;
-
-	//App->CL_Scene->S_OgreMeshData[0]->mSubmeshes.resize(SubMeshCount);
-
-	//while (Count < SubMeshCount)
-	//{
-	//	char Num[MAX_PATH];
-	//	char strSubMesh[MAX_PATH];
-	//	strcpy(strSubMesh, "SubMesh_");
-	//	_itoa(Count, Num, 10);
-	//	strcat(strSubMesh, Num);
-
-	//	App->CL_Scene->S_OgreMeshData[0]->mSubmeshes[Count].m_SubMesh_Name_str = strSubMesh;
-
-	//	Ogre::SubMesh const* subMesh = Ogre_Entity->getSubEntity(Count)->getSubMesh();
-	//	if (subMesh->useSharedVertices)
-	//	{
-	//		App->CL_Scene->S_OgreMeshData[0]->mSubmeshes[Count].m_HasSharedVertices_str = "No";
-	//	}
-	//	else
-	//	{
-	//		App->CL_Scene->S_OgreMeshData[0]->mSubmeshes[Count].m_HasSharedVertices_str = "Yes";
-	//	}
-
-	//	App->CL_Scene->S_OgreMeshData[0]->mSubmeshes[Count].m_Matrial_Name_str = subMesh->getMaterialName();
-
-	//	//App->CL_Scene->S_OgreMeshData[0]->mSubmeshes[Count].VerticesCount = subMesh->vertexData->vertexCount;
-
-	//	App->CL_Scene->S_OgreMeshData[0]->mSubmeshes[Count].BonesCount = subMesh->blendIndexToBoneIndexMap.size();
-
-	//	Count++;
-	//}
-
-	// ------------------------------------ Bounds
-	Ogre::Vector3 vMin(Ogre_Entity->getBoundingBox().getMinimum());
-	Ogre::Vector3 vMax(Ogre_Entity->getBoundingBox().getMaximum());
-	Ogre::Vector3 Center((vMin + vMax) * 0.5f);
-
-	/*App->CL_Scene->S_OgreMeshData[0]->vMin = vMin;
-	App->CL_Scene->S_OgreMeshData[0]->vMax = vMax;
-	App->CL_Scene->S_OgreMeshData[0]->Center = Center;
-
-	App->CL_Scene->S_OgreMeshData[0]->Width = (vMax - vMin).x;
-	App->CL_Scene->S_OgreMeshData[0]->Height = (vMax - vMin).y;
-	App->CL_Scene->S_OgreMeshData[0]->Depth = (vMax - vMin).z;
-	App->CL_Scene->S_OgreMeshData[0]->Area = (vMax - vMin).x * (vMax - vMin).y;
-	App->CL_Scene->S_OgreMeshData[0]->Volume = (vMax - vMin).x * (vMax - vMin).y * (vMax - vMin).z;
-	App->CL_Scene->S_OgreMeshData[0]->Radius = Ogre_Entity->getBoundingRadius();*/
-}
-
-// *************************************************************************
 // *	   Get_SubPose_MeshInstance:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
 void CL64_Mesh_Manager::Get_SubPose_MeshInstance(Ogre::MeshPtr mesh,
@@ -385,9 +244,9 @@ void CL64_Mesh_Manager::Get_SubPose_MeshInstance(Ogre::MeshPtr mesh,
 	size_t index_offset = 0;
 
 
-	const Vector3& position = Vector3::ZERO;
-	const Quaternion& orient = Quaternion::IDENTITY;
-	const Vector3& scale = Vector3::UNIT_SCALE;
+	const Vector3& position = m_position;
+	const Quaternion& orient = m_orient;
+	const Vector3& scale = m_scale;
 
 	vertex_count = index_count = 0;
 	Ogre::SubMesh* submesh = mesh->getSubMesh(SubMesh);
@@ -530,110 +389,3 @@ bool CL64_Mesh_Manager::Get_SubPoseTextureUV(Ogre::MeshPtr mesh, int SubMesh)
 	return true;
 }
 
-// *************************************************************************
-// *		Get_SubPoseNormals:- Terry and Hazel Flanigan 2024			   *
-// *************************************************************************
-bool CL64_Mesh_Manager::Get_SubPoseNormals(Ogre::MeshPtr mesh, size_t& vertex_count, Ogre::Vector3*& Normals,
-	int SubMesh)
-{
-
-	bool added_shared = false;
-	size_t current_offset = 0;
-	size_t shared_offset = 0;
-	size_t next_offset = 0;
-	size_t index_offset = 0;
-
-	const Vector3& position = Vector3::ZERO;
-	const Quaternion& orient = Quaternion::IDENTITY;
-	const Vector3& scale = Vector3::UNIT_SCALE;
-
-	vertex_count = 0;
-
-	Ogre::SubMesh* submesh = mesh->getSubMesh(SubMesh);
-
-	vertex_count = submesh->vertexData->vertexCount;
-
-	Normals = new Ogre::Vector3[vertex_count];
-
-	//-------------------- Get Data
-	Ogre::VertexData* vertex_data = submesh->useSharedVertices ? mesh->sharedVertexData : submesh->vertexData;
-
-	if ((!submesh->useSharedVertices) || (submesh->useSharedVertices && !added_shared))
-	{
-		if (submesh->useSharedVertices)
-		{
-			added_shared = true;
-			shared_offset = current_offset;
-		}
-
-		const Ogre::VertexElement* posElem =
-			vertex_data->vertexDeclaration->findElementBySemantic(Ogre::VES_NORMAL);
-
-		Ogre::HardwareVertexBufferSharedPtr vbuf =
-			vertex_data->vertexBufferBinding->getBuffer(posElem->getSource());
-
-		unsigned char* vertex =
-			static_cast<unsigned char*>(vbuf->lock(Ogre::HardwareBuffer::HBL_READ_ONLY));
-
-		float* pReal;
-
-		for (size_t j = 0; j < vertex_data->vertexCount; ++j, vertex += vbuf->getVertexSize())
-		{
-			posElem->baseVertexPointerToElement(vertex, &pReal);
-			Ogre::Vector3 pt(pReal[0], pReal[1], pReal[2]);
-			Normals[current_offset + j] = (orient * (pt * scale)) + position;
-		}
-
-		vbuf->unlock();
-	}
-	return 1;
-}
-
-// *************************************************************************
-// *			GetBoneAssignment:- Terry and Hazel Flanigan 2024		   *
-// *************************************************************************
-bool CL64_Mesh_Manager::GetBoneAssignment(Ogre::MeshPtr mesh, int SubMesh, HWND hDlg)
-{
-
-	int Count = 0;
-	Ogre::SubMesh* mSubmesh = mesh->getSubMesh(SubMesh);
-
-	//// Bone assignments
-	if (mesh->hasSkeleton())
-	{
-		//#pragma warning(disable : 4996) // Nightmare why
-		Ogre::SubMesh::BoneAssignmentIterator BI = mSubmesh->getBoneAssignmentIterator();
-
-		while (BI.hasMoreElements())
-		{
-			BI.getNext();
-			Count++;
-		}
-	}
-
-	//App->CL_Scene->Group[SubMesh]->BA_BoneIndex_Data.resize(Count);
-	//App->CL_Scene->Group[SubMesh]->BA_BoneVertexIndex_Data.resize(Count);
-	//App->CL_Scene->Group[SubMesh]->BA_Weight_Data.resize(Count);
-
-	//App->CL_Scene->Group[SubMesh]->BoneAssignMentCount = Count;
-
-	Count = 0;
-	if (mesh->hasSkeleton())
-	{
-		//#pragma warning(disable : 4996) // Nightmare why
-		Ogre::SubMesh::BoneAssignmentIterator BI = mSubmesh->getBoneAssignmentIterator();
-
-		while (BI.hasMoreElements())
-		{
-			Ogre::VertexBoneAssignment bb = BI.getNext();
-
-			//App->CL_Scene->Group[SubMesh]->BA_BoneIndex_Data[Count].Index = bb.boneIndex; // Bone Index 
-			//App->CL_Scene->Group[SubMesh]->BA_BoneVertexIndex_Data[Count].Index = bb.vertexIndex;
-			//App->CL_Scene->Group[SubMesh]->BA_Weight_Data[Count].Float1 = bb.weight;
-
-			Count++;
-		}
-	}
-
-	return 1;
-}

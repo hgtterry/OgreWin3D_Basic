@@ -29,9 +29,7 @@ public:
 	CL64_Mesh_Manager(void);
 	~CL64_Mesh_Manager(void);
 
-	bool Ogre_To_Mesh_Data(Ogre::Entity* Ogre_Entity);
-	void Get_Ogre_Mesh_Data(Ogre::Entity* Ogre_Entity);
-
+	bool Ogre_To_Mesh_Data(Ogre::Entity* Ogre_Entity, Ogre::SceneNode* Ogre_Node);
 	bool Has_Shared_Vertices;
 
 private:
@@ -47,12 +45,11 @@ private:
 
 	bool Get_SubPoseTextureUV(Ogre::MeshPtr mesh, int SubMesh);
 
-	bool Get_SubPoseNormals(Ogre::MeshPtr mesh, size_t& vertex_count, Ogre::Vector3*& Normals,
-		int SubMesh);
-
-	bool GetBoneAssignment(Ogre::MeshPtr mesh, int SubMesh, HWND hDlg);
-
 	int Current_Index;
+
+	Ogre::Vector3 m_position;
+	Ogre::Quaternion m_orient;
+	Ogre::Vector3 m_scale;
 
 	std::vector<Ogre::Vector2> MeshTextureCoords;
 
