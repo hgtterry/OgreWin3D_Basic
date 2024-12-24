@@ -343,49 +343,4 @@ void CL64_Mesh_Manager::Get_SubPose_MeshInstance(Ogre::MeshPtr mesh,
 	current_offset = next_offset;
 }
 
-// *************************************************************************
-// *		Get_SubPoseTextureUV:- Terry and Hazel Flanigan 2024		   *
-// *************************************************************************
-bool CL64_Mesh_Manager::Get_SubPoseTextureUV(Ogre::MeshPtr mesh, int SubMesh)
-{
-	Ogre::SubMesh* submesh = mesh->getSubMesh(SubMesh);
-	int m_iCoordSet = 0;
-
-	//// Get vertex UV coordinates
-	//std::vector<Vector2> MeshTextureCoords;
-	{
-		Ogre::VertexData* vertex_data = submesh->useSharedVertices ? mesh->sharedVertexData : submesh->vertexData;
-		// Get last set of texture coordinates
-		int i = 0;
-		const VertexElement* texcoordElem;
-		const VertexElement* pCurrentElement = NULL;
-		do
-		{
-			texcoordElem = pCurrentElement;
-			pCurrentElement = vertex_data->vertexDeclaration->findElementBySemantic(Ogre::VES_TEXTURE_COORDINATES, i++);
-		} while (pCurrentElement);
-		m_iCoordSet = i - 2;
-		if (!texcoordElem)
-		{
-			//App->Say("no TextCords");
-			return false;
-		}
-		HardwareVertexBufferSharedPtr vbuf = vertex_data->vertexBufferBinding->getBuffer(texcoordElem->getSource());
-		unsigned char* vertex = static_cast<unsigned char*>(vbuf->lock(Ogre::HardwareBuffer::HBL_READ_ONLY));
-
-		float* pReal;
-
-		MeshTextureCoords.resize(vertex_data->vertexCount);
-
-		for (size_t j = 0; j < vertex_data->vertexCount; ++j, vertex += vbuf->getVertexSize())
-		{
-			texcoordElem->baseVertexPointerToElement(vertex, &pReal);
-			MeshTextureCoords[j] = Vector2(pReal[0], pReal[1]);
-		}
-
-		vbuf->unlock();
-	}
-
-	return true;
-}
 

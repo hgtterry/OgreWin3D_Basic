@@ -63,6 +63,7 @@ CL64_MapEditor::CL64_MapEditor()
 	Pen_CutBrush = CreatePen(PS_SOLID, 0, RGB(255, 155, 0));
 	Pen_Camera = CreatePen(PS_SOLID, 0, RGB(0, 255, 0));
 
+	ViewType = 8;
 }
 
 CL64_MapEditor::~CL64_MapEditor()
@@ -70,11 +71,11 @@ CL64_MapEditor::~CL64_MapEditor()
 }
 
 // *************************************************************************
-// *	  	Start_Main_View_Dlg:- Terry and Hazel Flanigan 2023			   *
+// *	  	Start_Map_View_Dlg:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-void CL64_MapEditor::Start_Main_View_Dlg()
+void CL64_MapEditor::Start_Map_View_Dlg()
 {
-	Start_Splitter();
+	Map_View_Main_Dlg();
 }
 
 // *************************************************************************
@@ -98,15 +99,15 @@ void CL64_MapEditor::Init_Views()
 }
 
 // *************************************************************************
-// *	  			Start_Splitter:- Terry and Hazel Flanigan 2023		   *
+// *	  	Map_View_Main_Dlg:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
-void CL64_MapEditor::Start_Splitter()
+void CL64_MapEditor::Map_View_Main_Dlg()
 {
 	DialogBox(App->hInst, (LPCTSTR)IDD_MAPEDITOR, App->MainHwnd, (DLGPROC)Splitter_Proc);
 }
 
 // *************************************************************************
-// *			Splitter_Proc:- Terry and Hazel Flanigan 2023 			   *
+// *			Splitter_Proc:- Terry and Hazel Flanigan 2024 			   *
 // *************************************************************************
 LRESULT CALLBACK CL64_MapEditor::Splitter_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -615,21 +616,24 @@ LRESULT CALLBACK CL64_MapEditor::Bottom_Right_Proc(HWND hDlg, UINT message, WPAR
 // *************************************************************************
 void CL64_MapEditor::Draw_Screen(HWND hwnd)
 {
-	//App->Get_Current_Document();
+	if (m_View == 1)
+	{
+		ViewType = 8;
+	}
 
-	//CMainFrame* m_pMainFrame;
-	//m_pMainFrame = (CMainFrame*)AfxGetMainWnd(); // MFC POO
+	if (m_View == 2)
+	{
+		ViewType = 32;
+	}
 
-	//CFusionDoc* m_pDoc = (CFusionDoc*)m_pMainFrame->GetCurrentDoc();
+	if (m_View == 3)
+	{
+		ViewType = 16;
+	}
 
 	HDC			RealhDC;
 	HDC			MemoryhDC;
 	RECT		Rect;
-
-	/*POSITION pos = m_pDoc->GetFirstViewPosition();
-	m_pDoc->GetNextView(pos);
-	CView* pView = m_pDoc->GetNextView(pos);
-	CFusionView* pFusionView = (CFusionView*)pView;*/
 
 	float GridSize = 2;
 	float GridSnapSize = 2;
@@ -650,26 +654,6 @@ void CL64_MapEditor::Draw_Screen(HWND hwnd)
 
 	SelectObject(MemoryhDC, OffScreenBitmap);
 
-	/*geVec3d		XTemp;
-	Box3d ViewBox;
-	Box3d_SetBogusBounds(&ViewBox);
-	Render_ViewToWorld(pFusionView->VCam, 0, 0, &XTemp);
-	Box3d_AddPoint(&ViewBox, XTemp.X, XTemp.Y, XTemp.Z);
-	Render_ViewToWorld(pFusionView->VCam, Render_GetWidth(pFusionView->VCam), Render_GetHeight(pFusionView->VCam), &XTemp);
-	Box3d_AddPoint(&ViewBox, XTemp.X, XTemp.Y, XTemp.Z);*/
-
-	//VectorToSUB(ViewBox.Min, inidx) = -FLT_MAX;
-	//VectorToSUB(ViewBox.Max, inidx) = FLT_MAX;
-
-	//BrushDrawData	brushDrawData;
-
-	//brushDrawData.pViewBox = &ViewBox;
-	//brushDrawData.pDC = MemoryhDC;
-	//brushDrawData.v = pFusionView->VCam;
-	//brushDrawData.pDoc = m_pDoc;//this;
-	//brushDrawData.GroupId = 0;
-	//brushDrawData.FlagTest = NULL;
-
 	HBRUSH hBrush = CreateSolidBrush(RGB(64, 64, 64));
 	FillRect(MemoryhDC, &Rect, (HBRUSH)hBrush); // BackGround
 	DeleteObject(hBrush);
@@ -682,16 +666,6 @@ void CL64_MapEditor::Draw_Screen(HWND hwnd)
 
 	Center_Y = (Depth / 2);
 	Center_X = (Width / 2);
-
-	/*GridSize = Render_GetFineGrid(pFusionView->VCam, (Level_GetGridType(App->CLSB_Doc->pLevel) == GridTexel) ? GRID_TYPE_TEXEL : GRID_TYPE_METRIC);
-
-
-	if (Level_GetGridType(App->CLSB_Doc->pLevel) == GridMetric)
-	{
-		GridSize /= 2.54f;
-	}
-
-	GridSnapSize = Level_GetGridSnapSize(App->CLSB_Doc->pLevel);*/
 
 	HPEN pen = CreatePen(PS_SOLID, 0, RGB(0, 0, 0));
 	SelectObject(MemoryhDC, pen);
@@ -709,59 +683,8 @@ void CL64_MapEditor::Draw_Screen(HWND hwnd)
 	HPEN pen3 = CreatePen(PS_SOLID, 0, RGB(255, 255, 255));
 	SelectObject(MemoryhDC, pen3);
 
-	//int GroupVis = Level_GetGroupVisibility(App->CLSB_Doc->pLevel);
-
-	//GroupListType* Groups = Level_GetGroups(App->CLSB_Doc->pLevel);
-
-	//GroupIterator	gi;
-	//int				GroupId;
-	//GroupId = Group_GetFirstId(Groups, &gi);
-
-	//Brush* b;
-	//BrushList* pList = Level_GetBrushes(App->CLSB_Doc->pLevel);
-	//b = pList->First;
-
-	//while (b != NULL)
-	//{
-	//	brushDrawData.FlagTest = ::fdocBrushNotDetail;
-	//	brushDrawData.GroupId = GroupId;
-	//	if ((GroupVis == Group_ShowAll) ||
-	//		((GroupVis == Group_ShowCurrent) && (GroupId == App->CLSB_Doc->mCurrentGroup)) ||
-	//		((GroupVis == Group_ShowVisible) && (Group_IsVisible(Groups, GroupId)))
-	//		)
-	//	{
-	//		HPEN pen3 = CreatePen(PS_SOLID, 0, RGB(255, 255, 255));
-	//		SelectObject(MemoryhDC, pen3);
-	//		Level_EnumLeafBrushes(App->CLSB_Doc->pLevel, &brushDrawData, m_BrushDraw); // Draw Brushes
-
-	//		// render cut brushes
-	//		SelectObject(MemoryhDC, Pen_CutBrush);
-	//		brushDrawData.FlagTest = fdocBrushIsSubtract;
-	//		Level_EnumLeafBrushes(App->CLSB_Doc->pLevel, &brushDrawData, m_BrushDraw);
-
-	//	}
-
-	//	b = b->Next;
-	//	//GroupId = Group_GetNextId(Groups, &gi);
-	//}
-
-
-	//CEntity* pCameraEntity = App->CLSB_Camera_WE->FindCameraEntity();
-
-	//if ((pCameraEntity != NULL))
-	//{
-	//	if (pCameraEntity->IsSelected())
-	//	{
-	//		//pDC->SelectObject(&PenSelected);
-	//	}
-	//	else
-	//	{
-	//		SelectObject(MemoryhDC, Pen_Camera);
-	//	}
-
-	//	fdocDrawEntity(pCameraEntity, pFusionView->VCam, MemoryhDC, Level_GetEntityDefs(App->CLSB_Doc->pLevel), GE_TRUE);
-	//}
-
+	MeshData_Render_Faces(MemoryhDC);
+	
 	int TopLeft, BottomRight;
 	int CrossSize = 16;
 
@@ -788,6 +711,134 @@ void CL64_MapEditor::Draw_Screen(HWND hwnd)
 
 	DeleteObject(OffScreenBitmap);
 	DeleteDC(MemoryhDC);
+}
+
+
+// *************************************************************************
+// *	  			m_Render_OrthoWorldToView							   *
+// *************************************************************************
+POINT CL64_MapEditor::m_Render_OrthoWorldToView(Ogre::Vector3 const* wp)
+{
+	int vx = App->CL_MapEditor->nleftWnd_width;
+	int vy = App->CL_MapEditor->nleftWnd_Depth;
+
+	POINT	sc = { 0, 0 };
+	Ogre::Vector3 ptView;
+	Ogre::Vector3 Campos;
+
+	Campos = Ogre::Vector3(-40, -40, 0);
+	float ZoomFactor = 1;
+	float XCenter = ((float)vx) / 2.0f - 0.5f;;
+	float YCenter = ((float)vy) / 2.0f - 0.5f;
+
+	switch (ViewType)
+	{
+	case VIEWTOP:
+	{
+		App->CL_Utilities->Vector3_Subtract(wp, &Campos, &ptView);
+		App->CL_Utilities->Vector3_Scale(&ptView, ZoomFactor, &ptView);
+
+		sc.x = (int)(XCenter + ptView.x);
+		sc.y = (int)(YCenter + ptView.z);
+		break;
+	}
+	case VIEWFRONT:
+	{
+		App->CL_Utilities->Vector3_Subtract(wp, &Campos, &ptView);
+		App->CL_Utilities->Vector3_Scale(&ptView, ZoomFactor, &ptView);
+
+		sc.x = (int)(XCenter + ptView.x);
+		sc.y = (int)(YCenter - ptView.y);
+		break;
+	}
+	case VIEWSIDE:
+	{
+		App->CL_Utilities->Vector3_Subtract(wp, &Campos, &ptView);
+		App->CL_Utilities->Vector3_Scale(&ptView, ZoomFactor, &ptView);
+
+		sc.x = (int)(XCenter + ptView.z);
+		sc.y = (int)(YCenter - ptView.y);
+		break;
+	}
+	default:
+		
+		break;
+	}
+
+	return sc;
+}
+
+static POINT plist[64];
+
+// *************************************************************************
+// *		MeshData_Render_Faces:- Terry and Hazel Flanigan 2024	 	   *
+// *************************************************************************
+void CL64_MapEditor::MeshData_Render_Faces(HDC ViewDC)
+{
+	int Count = 0;
+
+	int Map_Count = App->CL_Scene->Map_Group_Count;
+
+	//while (Count < Map_Count)
+	{
+		MeshData_Face_Groups(0, ViewDC);
+		//Count++;
+	}
+}
+
+// *************************************************************************
+// *		MeshData_Face_Groups:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+void CL64_MapEditor::MeshData_Face_Groups(int Count, HDC ViewDC)
+{
+
+	int Sub_Group_Count = App->CL_Scene->Map_Group[Count]->Sub_Mesh_Count;
+
+	int Index = 0;
+	int FaceCount = 0;
+	int A = 0;
+	int B = 0;
+	int C = 0;
+
+	Ogre::Vector3 Points;
+
+	while (Index < Sub_Group_Count)
+	{
+		int FaceCount = 0;
+		while (FaceCount < App->CL_Scene->Map_Group[Count]->B_Sub_Mesh[Index]->Face_Count)
+		{
+			A = App->CL_Scene->Map_Group[Count]->B_Sub_Mesh[Index]->Face_Data[FaceCount].a;
+			B = App->CL_Scene->Map_Group[Count]->B_Sub_Mesh[Index]->Face_Data[FaceCount].b;
+			C = App->CL_Scene->Map_Group[Count]->B_Sub_Mesh[Index]->Face_Data[FaceCount].c;
+
+			Points.x = App->CL_Scene->Map_Group[Count]->B_Sub_Mesh[Index]->vertex_Data[A].x;
+			Points.y = App->CL_Scene->Map_Group[Count]->B_Sub_Mesh[Index]->vertex_Data[A].y;
+			Points.z = App->CL_Scene->Map_Group[Count]->B_Sub_Mesh[Index]->vertex_Data[A].z;
+
+			plist[0] = m_Render_OrthoWorldToView(&Points);
+			
+			Points.x = App->CL_Scene->Map_Group[Count]->B_Sub_Mesh[Index]->vertex_Data[B].x;
+			Points.y = App->CL_Scene->Map_Group[Count]->B_Sub_Mesh[Index]->vertex_Data[B].y;
+			Points.z = App->CL_Scene->Map_Group[Count]->B_Sub_Mesh[Index]->vertex_Data[B].z;
+
+			plist[1] = m_Render_OrthoWorldToView(&Points);
+
+			Points.x = App->CL_Scene->Map_Group[Count]->B_Sub_Mesh[Index]->vertex_Data[C].x;
+			Points.y = App->CL_Scene->Map_Group[Count]->B_Sub_Mesh[Index]->vertex_Data[C].y;
+			Points.z = App->CL_Scene->Map_Group[Count]->B_Sub_Mesh[Index]->vertex_Data[C].z;
+
+			plist[2] = m_Render_OrthoWorldToView(&Points);
+
+			plist[3] = plist[0];
+			Polyline(ViewDC, plist, 3 + 1);
+
+			FaceCount++;
+	
+		}
+
+		Index++;
+	}
+
 }
 
 // *************************************************************************

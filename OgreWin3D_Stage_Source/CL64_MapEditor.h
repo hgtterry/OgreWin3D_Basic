@@ -23,13 +23,24 @@ THE SOFTWARE.
 */
 
 #pragma once
+
+enum ViewTypes
+{
+	VIEWSOLID = 1,
+	VIEWTEXTURE = 2,
+	VIEWWIRE = 4,
+	VIEWTOP = 8,
+	VIEWFRONT = 16,
+	VIEWSIDE = 32
+};
+
 class CL64_MapEditor
 {
 public:
 	CL64_MapEditor();
 	~CL64_MapEditor();
 
-	void Start_Main_View_Dlg();
+	void Start_Map_View_Dlg();
 
 private:
 
@@ -41,7 +52,7 @@ private:
 
 
 	void Init_Views();
-	void Start_Splitter();
+	void Map_View_Main_Dlg();
 
 	void Create_Left_Window();
 	void Create_Right_Window();
@@ -51,6 +62,11 @@ private:
 
 	void Draw_Screen(HWND hwnd);
 	bool Draw_Grid(HDC hDC, int Interval, RECT Rect);
+
+	POINT m_Render_OrthoWorldToView(Ogre::Vector3 const* wp);
+
+	void MeshData_Render_Faces(HDC ViewDC);
+	void MeshData_Face_Groups(int Count, HDC ViewDC);
 
 	HPEN Pen_CutBrush;
 	HPEN Pen_Camera;
@@ -65,6 +81,7 @@ private:
 	HBRUSH BackGround_Brush;
 
 	int m_View;
+	int ViewType;
 
 	int LEFT_WINDOW_WIDTH;
 

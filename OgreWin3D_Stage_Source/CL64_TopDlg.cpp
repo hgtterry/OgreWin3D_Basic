@@ -630,7 +630,7 @@ LRESULT CALLBACK CL64_TopDlg::Proc_Tabs_Headers(HWND hDlg, UINT message, WPARAM 
 		
 		if (LOWORD(wParam) == IDC_BT_TABS_MAP)
 		{
-			App->CL_MapEditor->Start_Main_View_Dlg();
+			App->CL_MapEditor->Start_Map_View_Dlg();
 			return TRUE;
 		}
 		

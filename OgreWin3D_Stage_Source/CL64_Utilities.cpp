@@ -35,6 +35,32 @@ CL64_Utilities::~CL64_Utilities(void)
 }
 
 // *************************************************************************
+// *		Vector3_Subtract:- Terry and Hazel Flanigan 2024		 	   *
+// *************************************************************************
+void CL64_Utilities::Vector3_Subtract(const Ogre::Vector3* V1, const Ogre::Vector3* V2, Ogre::Vector3* V1MinusV2)
+{
+	
+	if (V1MinusV2 == NULL)
+	{
+		return;
+	}
+
+	V1MinusV2->x = V1->x - V2->x;
+	V1MinusV2->y = V1->y - V2->y;
+	V1MinusV2->z = V1->z - V2->z;
+}
+
+// *************************************************************************
+// *			Vector3_Scale:- Terry and Hazel Flanigan 2024		 	   *
+// *************************************************************************
+void CL64_Utilities::Vector3_Scale(const Ogre::Vector3* VSrc, float Scale, Ogre::Vector3* VDst)
+{
+	VDst->x = VSrc->x * Scale;
+	VDst->y = VSrc->y * Scale;
+	VDst->z = VSrc->z * Scale;
+}
+
+// *************************************************************************
 // *		Get_FileName_From_Path:- Terry and Hazel Flanigan 2024	 	   *
 // *************************************************************************
 std::string CL64_Utilities::Get_FileName_From_Path(char* pString)

@@ -43,15 +43,11 @@ private:
 		size_t& index_count, unsigned long*& indices,
 		int SubMesh, Ogre::int16*& BoneIndices);
 
-	bool Get_SubPoseTextureUV(Ogre::MeshPtr mesh, int SubMesh);
-
 	int Current_Index;
 
 	Ogre::Vector3 m_position;
 	Ogre::Quaternion m_orient;
 	Ogre::Vector3 m_scale;
-
-	std::vector<Ogre::Vector2> MeshTextureCoords;
 
 };
 

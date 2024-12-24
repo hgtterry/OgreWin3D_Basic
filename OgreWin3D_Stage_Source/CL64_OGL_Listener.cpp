@@ -353,7 +353,6 @@ void CL64_OGL_Listener::MeshData_Render_Faces(void)
 		MeshData_Face_Groups(Count);
 		Count++;
 	}
-
 }
 
 // *************************************************************************
@@ -399,7 +398,6 @@ void CL64_OGL_Listener::MeshData_Face_Groups(int Count)
 
 		Index++;
 	}
-
 }
 
 // *************************************************************************
