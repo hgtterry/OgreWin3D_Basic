@@ -34,6 +34,33 @@ enum ViewTypes
 	VIEWSIDE = 32
 };
 
+typedef struct PlaneTag
+{
+	Ogre::Vector3	Normal;
+	float			Dist;
+} GPlane;
+
+typedef struct ViewVarsTag
+{
+	HBITMAP				hDibSec;
+	Ogre::uint32		Flags;
+	Ogre::uint8*		pBits;
+	Ogre::uint32*		pZBuffer;
+	Ogre::uint32		ViewType;
+	float	ZoomFactor;//, GridInterval;
+
+	Ogre::Vector3 Vpn, Vright, Vup, CamPos;
+	float	roll, pitch, yaw;
+	GPlane		FrustPlanes[4];
+	float	MaxScreenScaleInv, FieldOfView;
+	float	XCenter, YCenter, MaxScale;
+	float	SpeedScale, YScreenScale, XScreenScale;
+	long		Width, Height;
+	long		FacesDone;
+	char Name[10];
+
+} ViewVars;
+
 class CL64_MapEditor
 {
 public:
@@ -42,20 +69,23 @@ public:
 
 	void Start_Map_View_Dlg();
 
+	ViewVars* VCam[4];
+	ViewVars* Current_ViewVars;
+
 private:
 
 	static LRESULT CALLBACK Splitter_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
-	static LRESULT CALLBACK Left_Window_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
-	static LRESULT CALLBACK Right_Window_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
-	static LRESULT CALLBACK Bottom_Left_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Proc_Top_Left_Window(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Proc_Top_Right_Window(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Proc_Bottom_Left_Window(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Bottom_Right_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 
 	void Init_Views();
 	void Map_View_Main_Dlg();
 
-	void Create_Left_Window();
-	void Create_Right_Window();
+	void Create_Top_Left_Window();
+	void Create_Top_Right_Window();
 	void Create_Bottom_Left_Window();
 	void Create_Bottom_Right_Window();
 	bool Resize_Windows(HWND hDlg, int NewWidth, int NewDepth);

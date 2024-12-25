@@ -64,6 +64,13 @@ CL64_MapEditor::CL64_MapEditor()
 	Pen_Camera = CreatePen(PS_SOLID, 0, RGB(0, 255, 0));
 
 	ViewType = 8;
+
+	int Count = 0;
+	while (Count < 3)
+	{
+		VCam[Count] = nullptr;
+		Count++;
+	}
 }
 
 CL64_MapEditor::~CL64_MapEditor()
@@ -133,8 +140,8 @@ LRESULT CALLBACK CL64_MapEditor::Splitter_Proc(HWND hDlg, UINT message, WPARAM w
 		App->CL_MapEditor->Spliter_Main_Hwnd = hDlg;
 
 		App->CL_MapEditor->Init_Views();
-		App->CL_MapEditor->Create_Left_Window();
-		App->CL_MapEditor->Create_Right_Window();
+		App->CL_MapEditor->Create_Top_Left_Window();
+		App->CL_MapEditor->Create_Top_Right_Window();
 		App->CL_MapEditor->Create_Bottom_Left_Window();
 		App->CL_MapEditor->Create_Bottom_Right_Window();
 		App->CL_MapEditor->Resize_Windows(App->CL_MapEditor->Spliter_Main_Hwnd, App->CL_MapEditor->nleftWnd_width, App->CL_MapEditor->nleftWnd_Depth);
@@ -180,6 +187,7 @@ LRESULT CALLBACK CL64_MapEditor::Splitter_Proc(HWND hDlg, UINT message, WPARAM w
 
 	case WM_LBUTTONDOWN:
 	{
+	
 		int                 xPos;
 		int                 yPos;
 
@@ -397,6 +405,14 @@ LRESULT CALLBACK CL64_MapEditor::Splitter_Proc(HWND hDlg, UINT message, WPARAM w
 
 		if (LOWORD(wParam) == IDCANCEL)
 		{
+			int Count = 0;
+
+			while (Count < 3)
+			{
+				delete App->CL_MapEditor->VCam[Count];
+				Count++;
+			}
+			
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
@@ -456,23 +472,25 @@ bool CL64_MapEditor::Resize_Windows(HWND hDlg, int NewWidth, int NewDepth)
 }
 
 // *************************************************************************
-// *	  	Create_Left_Window:- Terry and Hazel Flanigan 2023			   *
+// *	  	Create_Top_Left_Window:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
-void CL64_MapEditor::Create_Left_Window()
+void CL64_MapEditor::Create_Top_Left_Window()
 {
-	Left_Window_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MAP_TOP_LEFT, Spliter_Main_Hwnd, (DLGPROC)Left_Window_Proc);
+	Left_Window_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MAP_TOP_LEFT, Spliter_Main_Hwnd, (DLGPROC)Proc_Top_Left_Window);
 }
 
 // *************************************************************************
-// *			Left_Window_Proc:- Terry and Hazel Flanigan 2023 		   *
+// *		Proc_Top_Left_Window:- Terry and Hazel Flanigan 2024 		   *
 // *************************************************************************
-LRESULT CALLBACK CL64_MapEditor::Left_Window_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK CL64_MapEditor::Proc_Top_Left_Window(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
 
 	switch (message)
 	{
 	case WM_INITDIALOG:
 	{
+		App->CL_MapEditor->VCam[0] = new ViewVars;
+		strcpy(App->CL_MapEditor->VCam[0]->Name, "TLW");
 		return TRUE;
 	}
 
@@ -486,8 +504,16 @@ LRESULT CALLBACK CL64_MapEditor::Left_Window_Proc(HWND hDlg, UINT message, WPARA
 		return (LRESULT)1;
 	}
 
+	case WM_LBUTTONDOWN:
+	{
+		/*HDC test = GetDC(App->CL_MapEditor->Left_Window_Hwnd);
+		TextOut(test, 0, 0, TEXT("Top Left Window"), 16);*/
+		return 1;
+	}
+
 	case WM_PAINT:
 	{
+		App->CL_MapEditor->Current_ViewVars = App->CL_MapEditor->VCam[0];
 		App->CL_MapEditor->m_View = 1;
 		App->CL_MapEditor->Draw_Screen(hDlg);
 		return 0;
@@ -499,22 +525,25 @@ LRESULT CALLBACK CL64_MapEditor::Left_Window_Proc(HWND hDlg, UINT message, WPARA
 }
 
 // *************************************************************************
-// *	  	Create_Right_Window:- Terry and Hazel Flanigan 2023			   *
+// *	  	Create_Top_Right_Window:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-void CL64_MapEditor::Create_Right_Window()
+void CL64_MapEditor::Create_Top_Right_Window()
 {
-	Right_Window_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MAP_TOP_RIGHT, Spliter_Main_Hwnd, (DLGPROC)Right_Window_Proc);
+	Right_Window_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MAP_TOP_RIGHT, Spliter_Main_Hwnd, (DLGPROC)Proc_Top_Right_Window);
 }
 
 // *************************************************************************
-// *			Right_Window_Proc:- Terry and Hazel Flanigan 2023 		   *
+// *		Proc_Top_Right_Window:- Terry and Hazel Flanigan 2024 		   *
 // *************************************************************************
-LRESULT CALLBACK CL64_MapEditor::Right_Window_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK CL64_MapEditor::Proc_Top_Right_Window(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	switch (message)
 	{
 	case WM_INITDIALOG:
 	{
+		App->CL_MapEditor->VCam[1] = new ViewVars;
+		strcpy(App->CL_MapEditor->VCam[1]->Name, "TRW");
+
 		return TRUE;
 	}
 
@@ -528,8 +557,15 @@ LRESULT CALLBACK CL64_MapEditor::Right_Window_Proc(HWND hDlg, UINT message, WPAR
 		return (LRESULT)1;
 	}
 
+	case WM_LBUTTONDOWN:
+	{
+		//App->Say("Top Right");
+		return 1;
+	}
+
 	case WM_PAINT:
 	{
+		App->CL_MapEditor->Current_ViewVars = App->CL_MapEditor->VCam[1];
 		App->CL_MapEditor->m_View = 2;
 		App->CL_MapEditor->Draw_Screen(hDlg);
 		return 0;
@@ -541,22 +577,24 @@ LRESULT CALLBACK CL64_MapEditor::Right_Window_Proc(HWND hDlg, UINT message, WPAR
 }
 
 // *************************************************************************
-// *	  Create_Bottom_Left_Window:- Terry and Hazel Flanigan 2023		   *
+// *	  Create_Bottom_Left_Window:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
 void CL64_MapEditor::Create_Bottom_Left_Window()
 {
-	Bottom_Left_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MAP_BOTTOM_LEFT, Spliter_Main_Hwnd, (DLGPROC)Bottom_Left_Proc);
+	Bottom_Left_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MAP_BOTTOM_LEFT, Spliter_Main_Hwnd, (DLGPROC)Proc_Bottom_Left_Window);
 }
 
 // *************************************************************************
-// *			Bottom_Left_Proc:- Terry and Hazel Flanigan 2023 		   *
+// *		Proc_Bottom_Left_Window:- Terry and Hazel Flanigan 2024 	   *
 // *************************************************************************
-LRESULT CALLBACK CL64_MapEditor::Bottom_Left_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK CL64_MapEditor::Proc_Bottom_Left_Window(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	switch (message)
 	{
 	case WM_INITDIALOG:
 	{
+		App->CL_MapEditor->VCam[2] = new ViewVars;
+		strcpy(App->CL_MapEditor->VCam[2]->Name, "BLW");
 		return TRUE;
 	}
 
@@ -570,8 +608,15 @@ LRESULT CALLBACK CL64_MapEditor::Bottom_Left_Proc(HWND hDlg, UINT message, WPARA
 		return (LRESULT)1;
 	}
 
+	case WM_LBUTTONDOWN:
+	{
+		//App->Say("Bottom Left");
+		return 1;
+	}
+
 	case WM_PAINT:
 	{
+		App->CL_MapEditor->Current_ViewVars = App->CL_MapEditor->VCam[2];
 		App->CL_MapEditor->m_View = 3;
 		App->CL_MapEditor->Draw_Screen(hDlg);
 		return 0;
@@ -600,6 +645,12 @@ LRESULT CALLBACK CL64_MapEditor::Bottom_Right_Proc(HWND hDlg, UINT message, WPAR
 	case WM_INITDIALOG:
 	{
 		return TRUE;
+	}
+
+	case WM_LBUTTONDOWN:
+	{
+		//App->Say("Bottom Right");
+		return 1;
 	}
 
 	case WM_CTLCOLORDLG:
@@ -685,6 +736,13 @@ void CL64_MapEditor::Draw_Screen(HWND hwnd)
 
 	MeshData_Render_Faces(MemoryhDC);
 	
+	HPEN pen4 = CreatePen(PS_SOLID, 0, RGB(0, 0, 255));
+	SelectObject(MemoryhDC, pen4);
+
+	/*RECT rect = { 0,0, 400, 20 };
+	FillRect(MemoryhDC, &rect, App->AppBackground);
+	TextOut(MemoryhDC, 2, 2, TEXT("Test"), 5);*/
+
 	int TopLeft, BottomRight;
 	int CrossSize = 16;
 
@@ -711,61 +769,6 @@ void CL64_MapEditor::Draw_Screen(HWND hwnd)
 
 	DeleteObject(OffScreenBitmap);
 	DeleteDC(MemoryhDC);
-}
-
-
-// *************************************************************************
-// *	  			m_Render_OrthoWorldToView							   *
-// *************************************************************************
-POINT CL64_MapEditor::m_Render_OrthoWorldToView(Ogre::Vector3 const* wp)
-{
-	int vx = App->CL_MapEditor->nleftWnd_width;
-	int vy = App->CL_MapEditor->nleftWnd_Depth;
-
-	POINT	sc = { 0, 0 };
-	Ogre::Vector3 ptView;
-	Ogre::Vector3 Campos;
-
-	Campos = Ogre::Vector3(-40, -40, 0);
-	float ZoomFactor = 1;
-	float XCenter = ((float)vx) / 2.0f - 0.5f;;
-	float YCenter = ((float)vy) / 2.0f - 0.5f;
-
-	switch (ViewType)
-	{
-	case VIEWTOP:
-	{
-		App->CL_Utilities->Vector3_Subtract(wp, &Campos, &ptView);
-		App->CL_Utilities->Vector3_Scale(&ptView, ZoomFactor, &ptView);
-
-		sc.x = (int)(XCenter + ptView.x);
-		sc.y = (int)(YCenter + ptView.z);
-		break;
-	}
-	case VIEWFRONT:
-	{
-		App->CL_Utilities->Vector3_Subtract(wp, &Campos, &ptView);
-		App->CL_Utilities->Vector3_Scale(&ptView, ZoomFactor, &ptView);
-
-		sc.x = (int)(XCenter + ptView.x);
-		sc.y = (int)(YCenter - ptView.y);
-		break;
-	}
-	case VIEWSIDE:
-	{
-		App->CL_Utilities->Vector3_Subtract(wp, &Campos, &ptView);
-		App->CL_Utilities->Vector3_Scale(&ptView, ZoomFactor, &ptView);
-
-		sc.x = (int)(XCenter + ptView.z);
-		sc.y = (int)(YCenter - ptView.y);
-		break;
-	}
-	default:
-		
-		break;
-	}
-
-	return sc;
 }
 
 static POINT plist[64];
@@ -839,6 +842,60 @@ void CL64_MapEditor::MeshData_Face_Groups(int Count, HDC ViewDC)
 		Index++;
 	}
 
+}
+
+// *************************************************************************
+// *	  			m_Render_OrthoWorldToView							   *
+// *************************************************************************
+POINT CL64_MapEditor::m_Render_OrthoWorldToView(Ogre::Vector3 const* wp)
+{
+	int vx = App->CL_MapEditor->nleftWnd_width;
+	int vy = App->CL_MapEditor->nleftWnd_Depth;
+
+	POINT	sc = { 0, 0 };
+	Ogre::Vector3 ptView;
+	Ogre::Vector3 Campos;
+
+	Campos = Ogre::Vector3(0, 0, 0);
+	float ZoomFactor = 1;
+	float XCenter = ((float)vx) / 2.0f - 0.5f;;
+	float YCenter = ((float)vy) / 2.0f - 0.5f;
+
+	switch (ViewType)
+	{
+	case VIEWTOP:
+	{
+		App->CL_Utilities->Vector3_Subtract(wp, &Campos, &ptView);
+		App->CL_Utilities->Vector3_Scale(&ptView, ZoomFactor, &ptView);
+
+		sc.x = (int)(XCenter + ptView.x);
+		sc.y = (int)(YCenter + ptView.z);
+		break;
+	}
+	case VIEWFRONT:
+	{
+		App->CL_Utilities->Vector3_Subtract(wp, &Campos, &ptView);
+		App->CL_Utilities->Vector3_Scale(&ptView, ZoomFactor, &ptView);
+
+		sc.x = (int)(XCenter + ptView.x);
+		sc.y = (int)(YCenter - ptView.y);
+		break;
+	}
+	case VIEWSIDE:
+	{
+		App->CL_Utilities->Vector3_Subtract(wp, &Campos, &ptView);
+		App->CL_Utilities->Vector3_Scale(&ptView, ZoomFactor, &ptView);
+
+		sc.x = (int)(XCenter + ptView.z);
+		sc.y = (int)(YCenter - ptView.y);
+		break;
+	}
+	default:
+
+		break;
+	}
+
+	return sc;
 }
 
 // *************************************************************************
