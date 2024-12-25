@@ -22,7 +22,7 @@ public:
 	void Box3d_AddPoint(Box3d* b, float px, float py, float pz);
 	bool Box3d_Intersection(const Box3d* b1, const Box3d* b2, Box3d* bResult);
 	void Box3d_Union(const Box3d* b1, const Box3d* b2, Box3d* bResult);
-
+	signed int Box3d_ContainsPoint(const Box3d* b, float px, float py, float pz);
 	const Ogre::Vector3* Box3d_GetMin(const Box3d* b);
 	const Ogre::Vector3* Box3d_GetMax(const Box3d* b);
 	void Box3d_GetCenter(const Box3d* b, Ogre::Vector3* pCenter);

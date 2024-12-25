@@ -32,11 +32,6 @@ void CL64_Box::Box3d_Set(Box3d* b,float x1, float y1, float z1, float x2, float 
 
 void CL64_Box::Box3d_SetSize(Box3d* b, float sx, float sy, float sz)
 {
-	// don't allow boxes with negative bounds...
-	assert(sx >= 0.0f);
-	assert(sy >= 0.0f);
-	assert(sz >= 0.0f);
-
 	Box3d_Set(b, -sx / 2, -sy / 2, -sz / 2, sx / 2, sy / 2, sz / 2);
 }
 
@@ -52,8 +47,6 @@ void CL64_Box::Box3d_AddPoint(Box3d* b, float px, float py, float pz)
 
 static bool Box3d_Intersects(const Box3d* b1,const Box3d* b2)
 {
-	assert(Box3d_IsValid(b1));
-	assert(Box3d_IsValid(b2));
 
 	if ((b1->Min.x > b2->Max.x) || (b1->Max.x < b2->Min.x)) return false;
 	if ((b1->Min.y > b2->Max.y) || (b1->Max.y < b2->Min.y)) return false;
@@ -65,9 +58,6 @@ static bool Box3d_Intersects(const Box3d* b1,const Box3d* b2)
 bool CL64_Box::Box3d_Intersection(const Box3d* b1,const Box3d* b2,Box3d* bResult)
 {
 	bool rslt;
-
-	assert(Box3d_IsValid(b1));
-	assert(Box3d_IsValid(b2));
 
 	rslt = Box3d_Intersects(b1, b2);
 	if (rslt && (bResult != NULL))
@@ -100,33 +90,26 @@ void CL64_Box::Box3d_Union(const Box3d* b1,const Box3d* b2,Box3d* bResult)
 	);
 }
 
-//geBoolean CL64_Box::Box3d_ContainsPoint(const Box3d* b, float px, float py, float pz)
-//{
-//
-//	return ((px >= b->Min.x) && (px <= b->Max.x) &&
-//		(py >= b->Min.y) && (py <= b->Max.y) &&
-//		(pz >= b->Min.z) && (pz <= b->Max.z));
-//}
+signed int CL64_Box::Box3d_ContainsPoint(const Box3d* b, float px, float py, float pz)
+{
+
+	return ((px >= b->Min.x) && (px <= b->Max.x) &&
+		(py >= b->Min.y) && (py <= b->Max.y) &&
+		(pz >= b->Min.z) && (pz <= b->Max.z));
+}
 
 const Ogre::Vector3* CL64_Box::Box3d_GetMin(const Box3d* b)
 {
-	assert(Box3d_IsValid(b));
-
 	return &b->Min;
 }
 
 const Ogre::Vector3* CL64_Box::Box3d_GetMax(const Box3d* b)
 {
-	assert(Box3d_IsValid(b));
-
 	return &b->Max;
 }
 
 void CL64_Box::Box3d_GetCenter(const Box3d* b, Ogre::Vector3* pCenter)
 {
-	assert(Box3d_IsValid(b));
-	assert(pCenter != NULL);
-
 	App->CL_Utilities->Vector3_Set
 	(
 		pCenter,
@@ -138,22 +121,16 @@ void CL64_Box::Box3d_GetCenter(const Box3d* b, Ogre::Vector3* pCenter)
 
 float CL64_Box::Box3d_GetWidth(const Box3d* b)
 {
-	assert(Box3d_IsValid(b));
-
 	return (b->Max.x - b->Min.x + 1);
 }
 
 float CL64_Box::Box3d_GetHeight(const Box3d* b)
 {
-	assert(Box3d_IsValid(b));
-
 	return (b->Max.y - b->Min.y + 1);
 }
 
 float CL64_Box::Box3d_GetDepth(const Box3d* b)
 {
-	assert(Box3d_IsValid(b));
-
 	return (b->Max.z - b->Min.z + 1);
 }
 
@@ -171,11 +148,8 @@ void CL64_Box::Box3d_GetSize(const Box3d* b, Ogre::Vector3* pSize)
 
 void CL64_Box::Box3d_Scale(Box3d* b, float Scale)
 {
-	
 	App->CL_Utilities->Vector3_Scale(&b->Min, Scale, &b->Min);
 	App->CL_Utilities->Vector3_Scale(&b->Max, Scale, &b->Max);
-
-	assert(Box3d_IsValid(b));
 }
 
 void CL64_Box::Box3d_Move(Box3d* b, float dx, float dy, float dz)
@@ -194,6 +168,4 @@ void CL64_Box::Box3d_Inflate(Box3d* b, float dx, float dy, float dz)
 	App->CL_Utilities->Vector3_Set(&VecDelta, dx, dy, dz);
 	App->CL_Utilities->Vector3_Subtract(&b->Min, &VecDelta, &b->Min);
 	App->CL_Utilities->Vector3_Add(&b->Max, &VecDelta, &b->Max);
-
-	assert(Box3d_IsValid(b));
 }
