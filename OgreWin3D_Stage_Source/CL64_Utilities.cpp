@@ -35,6 +35,26 @@ CL64_Utilities::~CL64_Utilities(void)
 }
 
 // *************************************************************************
+// *			Vector3_Set:- Terry and Hazel Flanigan 2024			 	   *
+// *************************************************************************
+void CL64_Utilities::Vector3_Set(Ogre::Vector3* V, float X, float Y, float Z)
+{
+	V->x = X;
+	V->y = Y;
+	V->z = Z;
+}
+
+// *************************************************************************
+// *			Vector3_Add:- Terry and Hazel Flanigan 2024			 	   *
+// *************************************************************************
+void CL64_Utilities::Vector3_Add(const Ogre::Vector3* V1, const Ogre::Vector3* V2, Ogre::Vector3* V1PlusV2)
+{
+	V1PlusV2->x = V1->x + V2->x;
+	V1PlusV2->y = V1->y + V2->y;
+	V1PlusV2->z = V1->z + V2->z;
+}
+
+// *************************************************************************
 // *		Vector3_Subtract:- Terry and Hazel Flanigan 2024		 	   *
 // *************************************************************************
 void CL64_Utilities::Vector3_Subtract(const Ogre::Vector3* V1, const Ogre::Vector3* V2, Ogre::Vector3* V1MinusV2)
