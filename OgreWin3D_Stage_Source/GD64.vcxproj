@@ -172,6 +172,7 @@
     <ClInclude Include="Base_Player.h" />
     <ClInclude Include="Bass_Front_Dialog.h" />
     <ClInclude Include="CL64_App.h" />
+    <ClInclude Include="CL64_Box.h" />
     <ClInclude Include="CL64_Build_Game.h" />
     <ClInclude Include="CL64_Bullet.h" />
     <ClInclude Include="CL64_Bullet_Debug_World.h" />
@@ -245,6 +246,7 @@
     <ClCompile Include="Base_Player.cpp" />
     <ClCompile Include="Bass_Front_Dialog.cpp" />
     <ClCompile Include="CL64_App.cpp" />
+    <ClCompile Include="CL64_Box.cpp" />
     <ClCompile Include="CL64_Build_Game.cpp" />
     <ClCompile Include="CL64_Bullet.cpp" />
     <ClCompile Include="CL64_Bullet_Debug_World.cpp" />

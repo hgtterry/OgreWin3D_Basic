@@ -838,18 +838,13 @@ void CL64_MapEditor::MeshData_Face_Groups(int Count, HDC ViewDC)
 // *************************************************************************
 POINT CL64_MapEditor::m_Render_OrthoWorldToView(Ogre::Vector3 const* wp)
 {
-	int vx = App->CL_MapEditor->nleftWnd_width;
-	int vy = App->CL_MapEditor->nleftWnd_Depth;
 
 	POINT	sc = { 0, 0 };
 	Ogre::Vector3 ptView;
 	Ogre::Vector3 Campos;
 
 	Campos = Ogre::Vector3(0, 0, 0);
-	float ZoomFactor = 1;
-	float XCenter = ((float)vx) / 2.0f - 0.5f;;
-	float YCenter = ((float)vy) / 2.0f - 0.5f;
-
+	
 	switch (Current_View->ViewType)
 	{
 	case VIEWTOP:
@@ -857,8 +852,8 @@ POINT CL64_MapEditor::m_Render_OrthoWorldToView(Ogre::Vector3 const* wp)
 		App->CL_Utilities->Vector3_Subtract(wp, &Campos, &ptView);
 		App->CL_Utilities->Vector3_Scale(&ptView, Current_View->ZoomFactor, &ptView);
 
-		sc.x = (int)(XCenter + ptView.x);
-		sc.y = (int)(YCenter + ptView.z);
+		sc.x = (int)(Current_View->XCenter + ptView.x);
+		sc.y = (int)(Current_View->YCenter + ptView.z);
 		break;
 	}
 	case VIEWFRONT:
@@ -866,8 +861,8 @@ POINT CL64_MapEditor::m_Render_OrthoWorldToView(Ogre::Vector3 const* wp)
 		App->CL_Utilities->Vector3_Subtract(wp, &Campos, &ptView);
 		App->CL_Utilities->Vector3_Scale(&ptView, Current_View->ZoomFactor, &ptView);
 
-		sc.x = (int)(XCenter + ptView.x);
-		sc.y = (int)(YCenter - ptView.y);
+		sc.x = (int)(Current_View->XCenter + ptView.x);
+		sc.y = (int)(Current_View->YCenter - ptView.y);
 		break;
 	}
 	case VIEWSIDE:
@@ -875,8 +870,8 @@ POINT CL64_MapEditor::m_Render_OrthoWorldToView(Ogre::Vector3 const* wp)
 		App->CL_Utilities->Vector3_Subtract(wp, &Campos, &ptView);
 		App->CL_Utilities->Vector3_Scale(&ptView, Current_View->ZoomFactor, &ptView);
 
-		sc.x = (int)(XCenter + ptView.z);
-		sc.y = (int)(YCenter - ptView.y);
+		sc.x = (int)(Current_View->XCenter + ptView.z);
+		sc.y = (int)(Current_View->YCenter - ptView.y);
 		break;
 	}
 	default:

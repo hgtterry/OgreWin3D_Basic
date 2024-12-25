@@ -53,7 +53,10 @@ typedef struct ViewVarsTag
 	float	roll, pitch, yaw;
 	GPlane		FrustPlanes[4];
 	float	MaxScreenScaleInv, FieldOfView;
-	float	XCenter, YCenter, MaxScale;
+	float	XCenter = 310;
+	float	YCenter = 174; 
+	float	MaxScale;
+
 	float	SpeedScale, YScreenScale, XScreenScale;
 	long		Width, Height;
 	long		FacesDone;

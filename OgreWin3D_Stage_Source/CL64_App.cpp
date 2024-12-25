@@ -83,6 +83,8 @@ CL64_App::CL64_App(void)
 	CL_Utilities =			nullptr;
 	CL_MapEditor =			nullptr;
 	CL_Mesh_Manager =		nullptr;
+	CL_Box =				nullptr;
+
 	//-------------------------------------
 
 	hInst =				nullptr;
@@ -218,6 +220,7 @@ void CL64_App::InitApp(void)
 	CL_Utilities =			new CL64_Utilities();
 	CL_MapEditor =			new CL64_MapEditor();
 	CL_Mesh_Manager =		new CL64_Mesh_Manager();
+	CL_Box =				new CL64_Box();
 
 	SetBrushes_Fonts();
 

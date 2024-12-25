@@ -79,6 +79,7 @@ THE SOFTWARE.
 #include "Bass_Front_Dialog.h"
 #include "CL64_MapEditor.h"
 #include "CL64_Mesh_Manager.h"
+#include "CL64_Box.h"
 
 class CL64_App
 {
@@ -141,6 +142,7 @@ public:
 	CL64_Utilities*			CL_Utilities;
 	CL64_MapEditor*			CL_MapEditor;
 	CL64_Mesh_Manager*		CL_Mesh_Manager;
+	CL64_Box*				CL_Box;
 
 	Bass_Front_Dialog*		CL_Front_Dialog;
 	
