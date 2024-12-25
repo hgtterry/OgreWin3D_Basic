@@ -47,7 +47,7 @@ typedef struct ViewVarsTag
 	Ogre::uint8*		pBits;
 	Ogre::uint32*		pZBuffer;
 	Ogre::uint32		ViewType;
-	float	ZoomFactor;//, GridInterval;
+	float	ZoomFactor = 1;//, GridInterval;
 
 	Ogre::Vector3 Vpn, Vright, Vup, CamPos;
 	float	roll, pitch, yaw;
@@ -70,7 +70,7 @@ public:
 	void Start_Map_View_Dlg();
 
 	ViewVars* VCam[4];
-	ViewVars* Current_ViewVars;
+	ViewVars* Current_View;
 
 private:
 
@@ -109,9 +109,6 @@ private:
 	HWND Bottom_Right_Hwnd;
 
 	HBRUSH BackGround_Brush;
-
-	int m_View;
-	int ViewType;
 
 	int LEFT_WINDOW_WIDTH;
 

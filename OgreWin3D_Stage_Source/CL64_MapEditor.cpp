@@ -57,13 +57,11 @@ CL64_MapEditor::CL64_MapEditor()
 	Do_Width = 0;
 	Do_Depth = 0;
 	Do_All = 0;
-	m_View = 0;
+	
 	BackGround_Brush = CreateSolidBrush(RGB(64, 64, 64));
 
 	Pen_CutBrush = CreatePen(PS_SOLID, 0, RGB(255, 155, 0));
 	Pen_Camera = CreatePen(PS_SOLID, 0, RGB(0, 255, 0));
-
-	ViewType = 8;
 
 	int Count = 0;
 	while (Count < 3)
@@ -489,8 +487,13 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Left_Window(HWND hDlg, UINT message, W
 	{
 	case WM_INITDIALOG:
 	{
+		RECT r;
+		GetClientRect(hDlg,&r);
+
 		App->CL_MapEditor->VCam[0] = new ViewVars;
 		strcpy(App->CL_MapEditor->VCam[0]->Name, "TLW");
+		App->CL_MapEditor->VCam[0]->ViewType = 8;
+		App->CL_MapEditor->VCam[0]->ZoomFactor = 0.3;
 		return TRUE;
 	}
 
@@ -513,8 +516,7 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Left_Window(HWND hDlg, UINT message, W
 
 	case WM_PAINT:
 	{
-		App->CL_MapEditor->Current_ViewVars = App->CL_MapEditor->VCam[0];
-		App->CL_MapEditor->m_View = 1;
+		App->CL_MapEditor->Current_View = App->CL_MapEditor->VCam[0];
 		App->CL_MapEditor->Draw_Screen(hDlg);
 		return 0;
 	}
@@ -543,7 +545,8 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Right_Window(HWND hDlg, UINT message, 
 	{
 		App->CL_MapEditor->VCam[1] = new ViewVars;
 		strcpy(App->CL_MapEditor->VCam[1]->Name, "TRW");
-
+		App->CL_MapEditor->VCam[1]->ViewType = 32;
+		App->CL_MapEditor->VCam[1]->ZoomFactor = 0.3;
 		return TRUE;
 	}
 
@@ -565,8 +568,7 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Right_Window(HWND hDlg, UINT message, 
 
 	case WM_PAINT:
 	{
-		App->CL_MapEditor->Current_ViewVars = App->CL_MapEditor->VCam[1];
-		App->CL_MapEditor->m_View = 2;
+		App->CL_MapEditor->Current_View = App->CL_MapEditor->VCam[1];
 		App->CL_MapEditor->Draw_Screen(hDlg);
 		return 0;
 	}
@@ -595,6 +597,8 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Bottom_Left_Window(HWND hDlg, UINT message
 	{
 		App->CL_MapEditor->VCam[2] = new ViewVars;
 		strcpy(App->CL_MapEditor->VCam[2]->Name, "BLW");
+		App->CL_MapEditor->VCam[2]->ViewType = 16;
+		App->CL_MapEditor->VCam[2]->ZoomFactor = 0.3;
 		return TRUE;
 	}
 
@@ -616,8 +620,7 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Bottom_Left_Window(HWND hDlg, UINT message
 
 	case WM_PAINT:
 	{
-		App->CL_MapEditor->Current_ViewVars = App->CL_MapEditor->VCam[2];
-		App->CL_MapEditor->m_View = 3;
+		App->CL_MapEditor->Current_View = App->CL_MapEditor->VCam[2];
 		App->CL_MapEditor->Draw_Screen(hDlg);
 		return 0;
 	}
@@ -667,21 +670,7 @@ LRESULT CALLBACK CL64_MapEditor::Bottom_Right_Proc(HWND hDlg, UINT message, WPAR
 // *************************************************************************
 void CL64_MapEditor::Draw_Screen(HWND hwnd)
 {
-	if (m_View == 1)
-	{
-		ViewType = 8;
-	}
-
-	if (m_View == 2)
-	{
-		ViewType = 32;
-	}
-
-	if (m_View == 3)
-	{
-		ViewType = 16;
-	}
-
+	
 	HDC			RealhDC;
 	HDC			MemoryhDC;
 	RECT		Rect;
@@ -782,10 +771,10 @@ void CL64_MapEditor::MeshData_Render_Faces(HDC ViewDC)
 
 	int Map_Count = App->CL_Scene->Map_Group_Count;
 
-	//while (Count < Map_Count)
+	while (Count < Map_Count)
 	{
-		MeshData_Face_Groups(0, ViewDC);
-		//Count++;
+		MeshData_Face_Groups(Count, ViewDC);
+		Count++;
 	}
 }
 
@@ -861,12 +850,12 @@ POINT CL64_MapEditor::m_Render_OrthoWorldToView(Ogre::Vector3 const* wp)
 	float XCenter = ((float)vx) / 2.0f - 0.5f;;
 	float YCenter = ((float)vy) / 2.0f - 0.5f;
 
-	switch (ViewType)
+	switch (Current_View->ViewType)
 	{
 	case VIEWTOP:
 	{
 		App->CL_Utilities->Vector3_Subtract(wp, &Campos, &ptView);
-		App->CL_Utilities->Vector3_Scale(&ptView, ZoomFactor, &ptView);
+		App->CL_Utilities->Vector3_Scale(&ptView, Current_View->ZoomFactor, &ptView);
 
 		sc.x = (int)(XCenter + ptView.x);
 		sc.y = (int)(YCenter + ptView.z);
@@ -875,7 +864,7 @@ POINT CL64_MapEditor::m_Render_OrthoWorldToView(Ogre::Vector3 const* wp)
 	case VIEWFRONT:
 	{
 		App->CL_Utilities->Vector3_Subtract(wp, &Campos, &ptView);
-		App->CL_Utilities->Vector3_Scale(&ptView, ZoomFactor, &ptView);
+		App->CL_Utilities->Vector3_Scale(&ptView, Current_View->ZoomFactor, &ptView);
 
 		sc.x = (int)(XCenter + ptView.x);
 		sc.y = (int)(YCenter - ptView.y);
@@ -884,7 +873,7 @@ POINT CL64_MapEditor::m_Render_OrthoWorldToView(Ogre::Vector3 const* wp)
 	case VIEWSIDE:
 	{
 		App->CL_Utilities->Vector3_Subtract(wp, &Campos, &ptView);
-		App->CL_Utilities->Vector3_Scale(&ptView, ZoomFactor, &ptView);
+		App->CL_Utilities->Vector3_Scale(&ptView, Current_View->ZoomFactor, &ptView);
 
 		sc.x = (int)(XCenter + ptView.z);
 		sc.y = (int)(YCenter - ptView.y);
