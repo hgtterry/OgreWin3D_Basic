@@ -34,6 +34,15 @@ enum ViewTypes
 	VIEWSIDE = 32
 };
 
+enum View
+{
+	V_None = -1,
+	V_TL = 0,
+	V_TR = 1,
+	V_BL = 2,
+	V_BR = 3
+};
+
 typedef struct PlaneTag
 {
 	Ogre::Vector3	Normal;

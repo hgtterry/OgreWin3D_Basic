@@ -502,10 +502,11 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Left_Window(HWND hDlg, UINT message, W
 		RECT r;
 		GetClientRect(hDlg,&r);
 
-		App->CL_MapEditor->VCam[0] = new ViewVars;
-		strcpy(App->CL_MapEditor->VCam[0]->Name, "TLW");
-		App->CL_MapEditor->VCam[0]->ViewType = 8;
-		App->CL_MapEditor->VCam[0]->ZoomFactor = 0.3;
+		App->CL_MapEditor->VCam[V_TL] = new ViewVars;
+		strcpy(App->CL_MapEditor->VCam[V_TL]->Name, "TLV");
+		App->CL_MapEditor->VCam[V_TL]->ViewType = 8;
+		App->CL_MapEditor->VCam[V_TL]->ZoomFactor = 0.3;
+
 		return TRUE;
 	}
 
@@ -521,9 +522,9 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Left_Window(HWND hDlg, UINT message, W
 
 	case WM_LBUTTONDOWN:
 	{
-		App->CL_MapEditor->VCam[0]->ZoomFactor = App->CL_MapEditor->VCam[0]->ZoomFactor + 0.1;
+		App->CL_MapEditor->VCam[V_TL]->ZoomFactor = App->CL_MapEditor->VCam[0]->ZoomFactor + 0.1;
 
-		App->CL_MapEditor->Current_View = App->CL_MapEditor->VCam[0];
+		App->CL_MapEditor->Current_View = App->CL_MapEditor->VCam[V_TL];
 		App->CL_MapEditor->Draw_Screen(hDlg);
 		return 1;
 	}
@@ -531,16 +532,16 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Left_Window(HWND hDlg, UINT message, W
 	case WM_RBUTTONDOWN:
 	{
 
-		App->CL_MapEditor->VCam[0]->ZoomFactor = App->CL_MapEditor->VCam[0]->ZoomFactor - 0.1;
+		App->CL_MapEditor->VCam[V_TL]->ZoomFactor = App->CL_MapEditor->VCam[0]->ZoomFactor - 0.1;
 
-		App->CL_MapEditor->Current_View = App->CL_MapEditor->VCam[0];
+		App->CL_MapEditor->Current_View = App->CL_MapEditor->VCam[V_TL];
 		App->CL_MapEditor->Draw_Screen(hDlg);
 		return 1;
 	}
 
 	case WM_PAINT:
 	{
-		App->CL_MapEditor->Current_View = App->CL_MapEditor->VCam[0];
+		App->CL_MapEditor->Current_View = App->CL_MapEditor->VCam[V_TL];
 		App->CL_MapEditor->Draw_Screen(hDlg);
 		return 0;
 	}
@@ -567,10 +568,10 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Right_Window(HWND hDlg, UINT message, 
 	{
 	case WM_INITDIALOG:
 	{
-		App->CL_MapEditor->VCam[1] = new ViewVars;
-		strcpy(App->CL_MapEditor->VCam[1]->Name, "TRW");
-		App->CL_MapEditor->VCam[1]->ViewType = 32;
-		App->CL_MapEditor->VCam[1]->ZoomFactor = 0.3;
+		App->CL_MapEditor->VCam[V_TR] = new ViewVars;
+		strcpy(App->CL_MapEditor->VCam[V_TR]->Name, "TRV");
+		App->CL_MapEditor->VCam[V_TR]->ViewType = 32;
+		App->CL_MapEditor->VCam[V_TR]->ZoomFactor = 0.3;
 		return TRUE;
 	}
 
@@ -586,9 +587,9 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Right_Window(HWND hDlg, UINT message, 
 
 	case WM_LBUTTONDOWN:
 	{
-		App->CL_MapEditor->VCam[1]->ZoomFactor = App->CL_MapEditor->VCam[1]->ZoomFactor + 0.1;
+		App->CL_MapEditor->VCam[V_TR]->ZoomFactor = App->CL_MapEditor->VCam[V_TR]->ZoomFactor + 0.1;
 
-		App->CL_MapEditor->Current_View = App->CL_MapEditor->VCam[1];
+		App->CL_MapEditor->Current_View = App->CL_MapEditor->VCam[V_TR];
 		App->CL_MapEditor->Draw_Screen(hDlg);
 		return 1;
 	}
@@ -596,16 +597,16 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Right_Window(HWND hDlg, UINT message, 
 	case WM_RBUTTONDOWN:
 	{
 
-		App->CL_MapEditor->VCam[1]->ZoomFactor = App->CL_MapEditor->VCam[1]->ZoomFactor - 0.1;
+		App->CL_MapEditor->VCam[V_TR]->ZoomFactor = App->CL_MapEditor->VCam[V_TR]->ZoomFactor - 0.1;
 
-		App->CL_MapEditor->Current_View = App->CL_MapEditor->VCam[1];
+		App->CL_MapEditor->Current_View = App->CL_MapEditor->VCam[V_TR];
 		App->CL_MapEditor->Draw_Screen(hDlg);
 		return 1;
 	}
 
 	case WM_PAINT:
 	{
-		App->CL_MapEditor->Current_View = App->CL_MapEditor->VCam[1];
+		App->CL_MapEditor->Current_View = App->CL_MapEditor->VCam[V_TR];
 		App->CL_MapEditor->Draw_Screen(hDlg);
 		return 0;
 	}
@@ -632,10 +633,10 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Bottom_Left_Window(HWND hDlg, UINT message
 	{
 	case WM_INITDIALOG:
 	{
-		App->CL_MapEditor->VCam[2] = new ViewVars;
-		strcpy(App->CL_MapEditor->VCam[2]->Name, "BLW");
-		App->CL_MapEditor->VCam[2]->ViewType = 16;
-		App->CL_MapEditor->VCam[2]->ZoomFactor = 0.3;
+		App->CL_MapEditor->VCam[V_BL] = new ViewVars;
+		strcpy(App->CL_MapEditor->VCam[2]->Name, "BLV");
+		App->CL_MapEditor->VCam[V_BL]->ViewType = 16;
+		App->CL_MapEditor->VCam[V_BL]->ZoomFactor = 0.3;
 		return TRUE;
 	}
 
@@ -652,13 +653,13 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Bottom_Left_Window(HWND hDlg, UINT message
 	case WM_LBUTTONDOWN:
 	{
 		//App->Say("Bottom Left");
-		App->CL_MapEditor->Current_View = App->CL_MapEditor->VCam[2];
+		App->CL_MapEditor->Current_View = App->CL_MapEditor->VCam[V_BL];
 		return 1;
 	}
 
 	case WM_PAINT:
 	{
-		App->CL_MapEditor->Current_View = App->CL_MapEditor->VCam[2];
+		App->CL_MapEditor->Current_View = App->CL_MapEditor->VCam[V_BL];
 		App->CL_MapEditor->Draw_Screen(hDlg);
 		return 0;
 	}
