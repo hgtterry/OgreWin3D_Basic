@@ -36,7 +36,7 @@ THE SOFTWARE.
 
 CL64_MapEditor::CL64_MapEditor()
 {
-	Spliter_Main_Hwnd = NULL;
+	Main_Dlg_Hwnd = NULL;
 	Left_Window_Hwnd = NULL;
 	Right_Window_Hwnd = NULL;
 
@@ -57,7 +57,8 @@ CL64_MapEditor::CL64_MapEditor()
 	Do_Width = 0;
 	Do_Depth = 0;
 	Do_All = 0;
-	
+	flag_Map_Editor_Running = 0;
+
 	BackGround_Brush = CreateSolidBrush(RGB(64, 64, 64));
 
 	Pen_CutBrush = CreatePen(PS_SOLID, 0, RGB(255, 155, 0));
@@ -90,7 +91,7 @@ void CL64_MapEditor::Start_Map_View_Dlg()
 void CL64_MapEditor::Init_Views()
 {
 	RECT rect;
-	GetClientRect(Spliter_Main_Hwnd, &rect);
+	GetClientRect(Main_Dlg_Hwnd, &rect);
 
 	LEFT_WINDOW_WIDTH = rect.right / 2;
 	nleftWnd_width = rect.right / 2;
@@ -109,13 +110,17 @@ void CL64_MapEditor::Init_Views()
 // *************************************************************************
 void CL64_MapEditor::Map_View_Main_Dlg()
 {
-	DialogBox(App->hInst, (LPCTSTR)IDD_MAPEDITOR, App->MainHwnd, (DLGPROC)Splitter_Proc);
+	if (flag_Map_Editor_Running == 0)
+	{
+		CreateDialog(App->hInst, (LPCTSTR)IDD_MAPEDITOR, App->MainHwnd, (DLGPROC)Proc_Main_Dlg);
+		flag_Map_Editor_Running = 1;
+	}
 }
 
 // *************************************************************************
 // *			Splitter_Proc:- Terry and Hazel Flanigan 2024 			   *
 // *************************************************************************
-LRESULT CALLBACK CL64_MapEditor::Splitter_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK CL64_MapEditor::Proc_Main_Dlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	static HCURSOR	hcSizeEW = NULL;
 	static HCURSOR	hcSizeNS = NULL;
@@ -136,14 +141,14 @@ LRESULT CALLBACK CL64_MapEditor::Splitter_Proc(HWND hDlg, UINT message, WPARAM w
 		hcSizeNS = LoadCursor(NULL, IDC_SIZENS);
 		hcBoth = LoadCursor(NULL, IDC_SIZEALL);
 
-		App->CL_MapEditor->Spliter_Main_Hwnd = hDlg;
+		App->CL_MapEditor->Main_Dlg_Hwnd = hDlg;
 
 		App->CL_MapEditor->Init_Views();
 		App->CL_MapEditor->Create_Top_Left_Window();
 		App->CL_MapEditor->Create_Top_Right_Window();
 		App->CL_MapEditor->Create_Bottom_Left_Window();
 		App->CL_MapEditor->Create_Bottom_Right_Window();
-		App->CL_MapEditor->Resize_Windows(App->CL_MapEditor->Spliter_Main_Hwnd, App->CL_MapEditor->nleftWnd_width, App->CL_MapEditor->nleftWnd_Depth);
+		App->CL_MapEditor->Resize_Windows(App->CL_MapEditor->Main_Dlg_Hwnd, App->CL_MapEditor->nleftWnd_width, App->CL_MapEditor->nleftWnd_Depth);
 		
 		return TRUE;
 	}
@@ -179,7 +184,7 @@ LRESULT CALLBACK CL64_MapEditor::Splitter_Proc(HWND hDlg, UINT message, WPARAM w
 		App->CL_MapEditor->Resize_Windows(hDlg, App->CL_MapEditor->nleftWnd_width, App->CL_MapEditor->nleftWnd_Depth);
 
 		GetClientRect(hDlg, &rect);
-		RedrawWindow(App->CL_MapEditor->Spliter_Main_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+		RedrawWindow(App->CL_MapEditor->Main_Dlg_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 		return 0;
 	}
 
@@ -410,6 +415,7 @@ LRESULT CALLBACK CL64_MapEditor::Splitter_Proc(HWND hDlg, UINT message, WPARAM w
 
 		if (LOWORD(wParam) == IDOK)
 		{
+			App->CL_MapEditor->flag_Map_Editor_Running = 0;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
@@ -424,6 +430,7 @@ LRESULT CALLBACK CL64_MapEditor::Splitter_Proc(HWND hDlg, UINT message, WPARAM w
 				Count++;
 			}
 			
+			App->CL_MapEditor->flag_Map_Editor_Running = 0;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
@@ -477,7 +484,7 @@ bool CL64_MapEditor::Resize_Windows(HWND hDlg, int NewWidth, int NewDepth)
 		rect.bottom - (NewDepth + BOTTOM_POS_BOTLEFT),
 		FALSE);
 
-	RedrawWindow(Spliter_Main_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+	RedrawWindow(Main_Dlg_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
 	return 1;
 }
@@ -487,7 +494,7 @@ bool CL64_MapEditor::Resize_Windows(HWND hDlg, int NewWidth, int NewDepth)
 // *************************************************************************
 void CL64_MapEditor::Create_Top_Left_Window()
 {
-	Left_Window_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MAP_TOP_LEFT, Spliter_Main_Hwnd, (DLGPROC)Proc_Top_Left_Window);
+	Left_Window_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MAP_TOP_LEFT, Main_Dlg_Hwnd, (DLGPROC)Proc_Top_Left_Window);
 }
 
 // *************************************************************************
@@ -507,6 +514,12 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Left_Window(HWND hDlg, UINT message, W
 		strcpy(App->CL_MapEditor->VCam[V_TL]->Name, "TLV");
 		App->CL_MapEditor->VCam[V_TL]->ViewType = 8;
 		App->CL_MapEditor->VCam[V_TL]->ZoomFactor = 0.3;
+
+		App->CL_MapEditor->VCam[V_TL]->XCenter = 310;
+		App->CL_MapEditor->VCam[V_TL]->YCenter = 174;
+
+		App->CL_MapEditor->VCam[V_TL]->Width = 310;
+		App->CL_MapEditor->VCam[V_TL]->Height = 174;
 
 		return TRUE;
 	}
@@ -557,7 +570,7 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Left_Window(HWND hDlg, UINT message, W
 // *************************************************************************
 void CL64_MapEditor::Create_Top_Right_Window()
 {
-	Right_Window_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MAP_TOP_RIGHT, Spliter_Main_Hwnd, (DLGPROC)Proc_Top_Right_Window);
+	Right_Window_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MAP_TOP_RIGHT, Main_Dlg_Hwnd, (DLGPROC)Proc_Top_Right_Window);
 }
 
 // *************************************************************************
@@ -622,7 +635,7 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Right_Window(HWND hDlg, UINT message, 
 // *************************************************************************
 void CL64_MapEditor::Create_Bottom_Left_Window()
 {
-	Bottom_Left_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MAP_BOTTOM_LEFT, Spliter_Main_Hwnd, (DLGPROC)Proc_Bottom_Left_Window);
+	Bottom_Left_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MAP_BOTTOM_LEFT, Main_Dlg_Hwnd, (DLGPROC)Proc_Bottom_Left_Window);
 }
 
 // *************************************************************************
@@ -653,8 +666,18 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Bottom_Left_Window(HWND hDlg, UINT message
 
 	case WM_LBUTTONDOWN:
 	{
-		//App->Say("Bottom Left");
+		App->CL_MapEditor->VCam[V_BL]->ZoomFactor = App->CL_MapEditor->VCam[V_BL]->ZoomFactor + 0.1;
 		App->CL_MapEditor->Current_View = App->CL_MapEditor->VCam[V_BL];
+		App->CL_MapEditor->Draw_Screen(hDlg);
+		return 1;
+	}
+
+	case WM_RBUTTONDOWN:
+	{
+		App->CL_MapEditor->VCam[V_BL]->ZoomFactor = App->CL_MapEditor->VCam[V_BL]->ZoomFactor - 0.1;
+
+		App->CL_MapEditor->Current_View = App->CL_MapEditor->VCam[V_BL];
+		App->CL_MapEditor->Draw_Screen(hDlg);
 		return 1;
 	}
 
@@ -675,7 +698,7 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Bottom_Left_Window(HWND hDlg, UINT message
 // *************************************************************************
 void CL64_MapEditor::Create_Bottom_Right_Window()
 {
-	Bottom_Right_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MAP_BOTTOM_RIGHT, Spliter_Main_Hwnd, (DLGPROC)Bottom_Right_Proc);
+	Bottom_Right_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MAP_BOTTOM_RIGHT, Main_Dlg_Hwnd, (DLGPROC)Bottom_Right_Proc);
 }
 
 // *************************************************************************
@@ -748,14 +771,24 @@ void CL64_MapEditor::Draw_Screen(HWND hwnd)
 	Center_X = (Width / 2);
 
 	// ---------------------- Draw Grid Fine
+
 	HPEN pen = CreatePen(PS_SOLID, 0, RGB(0, 0, 0));
-	SelectObject(MemoryhDC, pen);
-	Draw_Grid(MemoryhDC, 8, Rect); // Snap grid
+	if (Current_View->ZoomFactor > 0.1)
+	{
+		SelectObject(MemoryhDC, pen);
+		Draw_Grid(MemoryhDC, 8, Rect); // Snap grid
+	}
 
 	// ---------------------- Draw Grid
 	HPEN pen2 = CreatePen(PS_SOLID, 0, RGB(112, 112, 112));
+	if (Current_View->ZoomFactor < 0.1)
+	{
+		Current_View->ZoomFactor = 0.1;
+	}
+
 	SelectObject(MemoryhDC, pen2);
 	Draw_Grid(MemoryhDC, 128, Rect); // Big grid
+	
 
 	// ---------------------- Draw Areas
 	SelectObject(MemoryhDC, Pen_White);

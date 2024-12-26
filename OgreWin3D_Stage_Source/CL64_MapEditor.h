@@ -85,9 +85,11 @@ public:
 	ViewVars* VCam[4];
 	ViewVars* Current_View;
 
+	bool flag_Map_Editor_Running;
+
 private:
 
-	static LRESULT CALLBACK Splitter_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Proc_Main_Dlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Proc_Top_Left_Window(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Proc_Top_Right_Window(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Proc_Bottom_Left_Window(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
@@ -116,10 +118,10 @@ private:
 	HPEN Pen_Camera;
 	HPEN Pen_White;
 
-	HWND Spliter_Main_Hwnd;
+	HWND Main_Dlg_Hwnd;
+
 	HWND Left_Window_Hwnd;
 	HWND Right_Window_Hwnd;
-
 	HWND Bottom_Left_Hwnd;
 	HWND Bottom_Right_Hwnd;
 

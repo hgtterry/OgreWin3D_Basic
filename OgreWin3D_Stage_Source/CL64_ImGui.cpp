@@ -631,11 +631,22 @@ void CL64_ImGui::App_Debug(void)
 
 			}
 
-			//// Motions
-			//if (ImGui::TreeNode("Motions"))
-			//{
-			//	ImGui::TreePop();
-			//}
+			if (ImGui::TreeNode("Map View"))
+			{
+				ImGui::Separator();
+				ImGui::Text("Map_Views ---------------------");
+
+				if (App->CL_MapEditor->flag_Map_Editor_Running == 1)
+				{
+					ImGui::Text("Current View: %s", App->CL_MapEditor->Current_View->Name);
+					ImGui::Text("Current Zoom: %f", App->CL_MapEditor->Current_View->ZoomFactor);
+			
+					ImGui::Separator();
+				}
+
+				ImGui::TreePop();
+
+			}
 		}
 		
 		if (ImGui::Button("Close"))
