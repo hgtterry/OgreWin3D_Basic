@@ -566,59 +566,24 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Left_Window(HWND hDlg, UINT message, W
 		POINT		RealCursorPosition;
 
 		GetCursorPos(&RealCursorPosition);
-		ScreenToClient(hDlg,&RealCursorPosition);
+		ScreenToClient(hDlg, &RealCursorPosition);
 
-		dx = (RealCursorPosition.x);// -App->CL_MapEditor->mStartPoint.x);
-		dy = (RealCursorPosition.y);// -App->CL_MapEditor->mStartPoint.y);
+		dx = (RealCursorPosition.x);
+		dy = (RealCursorPosition.y);
 
-		//if ((dx == 0) && (dy == 0))	// don't do anything if no delta
-		//{
-		//	
-		//}
-		//else
+
+		if (App->CL_MapEditor->flag_Right_Button_Down == 1 && GetAsyncKeyState(VK_CONTROL) < 0)
 		{
-			if (App->CL_MapEditor->flag_Right_Button_Down == 1 && GetAsyncKeyState(VK_CONTROL) < 0)
-			{
-				if (dy < App->CL_MapEditor->mStartPoint.y)
-				{
-					long test = App->CL_MapEditor->mStartPoint.y - dy;
-
-					if (test > 0)
-					{
-						App->CL_MapEditor->VCam[V_TL]->ZoomFactor = App->CL_MapEditor->VCam[V_TL]->ZoomFactor + 0.01;
-					}
-
-					App->CL_MapEditor->mStartPoint.y = dy;
-				}
-				else if (dy > App->CL_MapEditor->mStartPoint.y)
-				{
-					long test = dy - App->CL_MapEditor->mStartPoint.y;
-					if (test > 0)
-					{
-						App->CL_MapEditor->VCam[V_TL]->ZoomFactor = App->CL_MapEditor->VCam[V_TL]->ZoomFactor - 0.01;
-					}
-
-					App->CL_MapEditor->mStartPoint.y = dy;
-				}
-				
-			}
-				
-				App->CL_MapEditor->Current_View = App->CL_MapEditor->VCam[V_TL];
-				App->CL_MapEditor->Draw_Screen(hDlg);
-
-				//App->CL_MapEditor->mStartPoint.y = dy;
-
+			App->CL_MapEditor->Zoom_View(hDlg, dx, dy);
 		}
-		
+
 		return 1;
 	}
 
 	case WM_LBUTTONDOWN:
 	{
-		/*App->CL_MapEditor->VCam[V_TL]->ZoomFactor = App->CL_MapEditor->VCam[0]->ZoomFactor + 0.1;
-
 		App->CL_MapEditor->Current_View = App->CL_MapEditor->VCam[V_TL];
-		App->CL_MapEditor->Draw_Screen(hDlg);*/
+		
 		return 1;
 	}
 
@@ -628,11 +593,8 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Left_Window(HWND hDlg, UINT message, W
 		ScreenToClient(hDlg, &App->CL_MapEditor->mStartPoint);
 
 		App->CL_MapEditor->flag_Right_Button_Down = 1;
-
-		/*App->CL_MapEditor->VCam[V_TL]->ZoomFactor = App->CL_MapEditor->VCam[0]->ZoomFactor - 0.1;
-
 		App->CL_MapEditor->Current_View = App->CL_MapEditor->VCam[V_TL];
-		App->CL_MapEditor->Draw_Screen(hDlg);*/
+
 		return 1;
 	}
 
@@ -653,6 +615,8 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Left_Window(HWND hDlg, UINT message, W
 
 	return FALSE;
 }
+
+
 
 // *************************************************************************
 // *	  	Create_Top_Right_Window:- Terry and Hazel Flanigan 2024			   *
@@ -690,22 +654,46 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Right_Window(HWND hDlg, UINT message, 
 		return (LRESULT)1;
 	}
 
+	case WM_MOUSEMOVE:
+	{
+		int			dx, dy;
+		POINT		RealCursorPosition;
+
+		GetCursorPos(&RealCursorPosition);
+		ScreenToClient(hDlg, &RealCursorPosition);
+
+		dx = (RealCursorPosition.x);
+		dy = (RealCursorPosition.y);
+
+
+		if (App->CL_MapEditor->flag_Right_Button_Down == 1 && GetAsyncKeyState(VK_CONTROL) < 0)
+		{
+			App->CL_MapEditor->Zoom_View(hDlg, dx, dy);
+		}
+
+		return 1;
+	}
+
 	case WM_LBUTTONDOWN:
 	{
-		App->CL_MapEditor->VCam[V_TR]->ZoomFactor = App->CL_MapEditor->VCam[V_TR]->ZoomFactor + 0.1;
-
 		App->CL_MapEditor->Current_View = App->CL_MapEditor->VCam[V_TR];
-		App->CL_MapEditor->Draw_Screen(hDlg);
 		return 1;
 	}
 
 	case WM_RBUTTONDOWN:
 	{
+		GetCursorPos(&App->CL_MapEditor->mStartPoint);
+		ScreenToClient(hDlg, &App->CL_MapEditor->mStartPoint);
 
-		App->CL_MapEditor->VCam[V_TR]->ZoomFactor = App->CL_MapEditor->VCam[V_TR]->ZoomFactor - 0.1;
-
+		App->CL_MapEditor->flag_Right_Button_Down = 1;
 		App->CL_MapEditor->Current_View = App->CL_MapEditor->VCam[V_TR];
-		App->CL_MapEditor->Draw_Screen(hDlg);
+		
+		return 1;
+	}
+
+	case WM_RBUTTONUP:
+	{
+		App->CL_MapEditor->flag_Right_Button_Down = 0;
 		return 1;
 	}
 
@@ -757,20 +745,47 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Bottom_Left_Window(HWND hDlg, UINT message
 		return (LRESULT)1;
 	}
 
+	case WM_MOUSEMOVE:
+	{
+		int			dx, dy;
+		POINT		RealCursorPosition;
+
+		GetCursorPos(&RealCursorPosition);
+		ScreenToClient(hDlg, &RealCursorPosition);
+
+		dx = (RealCursorPosition.x);
+		dy = (RealCursorPosition.y);
+
+
+		if (App->CL_MapEditor->flag_Right_Button_Down == 1 && GetAsyncKeyState(VK_CONTROL) < 0)
+		{
+			App->CL_MapEditor->Zoom_View(hDlg, dx, dy);
+		}
+
+		return 1;
+	}
+
 	case WM_LBUTTONDOWN:
 	{
-		App->CL_MapEditor->VCam[V_BL]->ZoomFactor = App->CL_MapEditor->VCam[V_BL]->ZoomFactor + 0.1;
 		App->CL_MapEditor->Current_View = App->CL_MapEditor->VCam[V_BL];
-		App->CL_MapEditor->Draw_Screen(hDlg);
 		return 1;
 	}
 
 	case WM_RBUTTONDOWN:
 	{
-		App->CL_MapEditor->VCam[V_BL]->ZoomFactor = App->CL_MapEditor->VCam[V_BL]->ZoomFactor - 0.1;
+		GetCursorPos(&App->CL_MapEditor->mStartPoint);
+		ScreenToClient(hDlg, &App->CL_MapEditor->mStartPoint);
+
+		App->CL_MapEditor->flag_Right_Button_Down = 1;
 
 		App->CL_MapEditor->Current_View = App->CL_MapEditor->VCam[V_BL];
-		App->CL_MapEditor->Draw_Screen(hDlg);
+		
+		return 1;
+	}
+
+	case WM_RBUTTONUP:
+	{
+		App->CL_MapEditor->flag_Right_Button_Down = 0;
 		return 1;
 	}
 
@@ -819,6 +834,37 @@ LRESULT CALLBACK CL64_MapEditor::Bottom_Right_Proc(HWND hDlg, UINT message, WPAR
 	}
 
 	return FALSE;
+}
+
+// *************************************************************************
+// *			Zoom_View:- Terry and Hazel Flanigan 2024				   *
+// *************************************************************************
+void CL64_MapEditor::Zoom_View(HWND hDlg, int Dx, int Dy)
+{
+	if (Dy < App->CL_MapEditor->mStartPoint.y)
+	{
+		long test = App->CL_MapEditor->mStartPoint.y - Dy;
+
+		if (test > 0)
+		{
+			App->CL_MapEditor->Current_View->ZoomFactor = App->CL_MapEditor->Current_View->ZoomFactor + 0.01;
+			App->CL_MapEditor->Draw_Screen(hDlg);
+		}
+
+		App->CL_MapEditor->mStartPoint.y = Dy;
+	}
+	else if (Dy > App->CL_MapEditor->mStartPoint.y)
+	{
+		long test = Dy - App->CL_MapEditor->mStartPoint.y;
+		if (test > 0)
+		{
+			App->CL_MapEditor->Current_View->ZoomFactor = App->CL_MapEditor->Current_View->ZoomFactor - 0.01;
+			App->CL_MapEditor->Draw_Screen(hDlg);
+
+		}
+
+		App->CL_MapEditor->mStartPoint.y = Dy;
+	}
 }
 
 // *************************************************************************
