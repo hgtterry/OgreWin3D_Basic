@@ -395,6 +395,18 @@ LRESULT CALLBACK CL64_MapEditor::Splitter_Proc(HWND hDlg, UINT message, WPARAM w
 
 	case WM_COMMAND:
 	{
+		if (LOWORD(wParam) == ID_ZOOM_IN)
+		{
+			Debug
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == ID_ZOOM_OUT)
+		{
+			Debug
+			return TRUE;
+		}
+
 		if (LOWORD(wParam) == IDOK)
 		{
 			EndDialog(hDlg, LOWORD(wParam));
@@ -509,8 +521,20 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Left_Window(HWND hDlg, UINT message, W
 
 	case WM_LBUTTONDOWN:
 	{
-		/*HDC test = GetDC(App->CL_MapEditor->Left_Window_Hwnd);
-		TextOut(test, 0, 0, TEXT("Top Left Window"), 16);*/
+		App->CL_MapEditor->VCam[0]->ZoomFactor = App->CL_MapEditor->VCam[0]->ZoomFactor + 0.1;
+
+		App->CL_MapEditor->Current_View = App->CL_MapEditor->VCam[0];
+		App->CL_MapEditor->Draw_Screen(hDlg);
+		return 1;
+	}
+
+	case WM_RBUTTONDOWN:
+	{
+
+		App->CL_MapEditor->VCam[0]->ZoomFactor = App->CL_MapEditor->VCam[0]->ZoomFactor - 0.1;
+
+		App->CL_MapEditor->Current_View = App->CL_MapEditor->VCam[0];
+		App->CL_MapEditor->Draw_Screen(hDlg);
 		return 1;
 	}
 
@@ -562,7 +586,20 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Right_Window(HWND hDlg, UINT message, 
 
 	case WM_LBUTTONDOWN:
 	{
-		//App->Say("Top Right");
+		App->CL_MapEditor->VCam[1]->ZoomFactor = App->CL_MapEditor->VCam[1]->ZoomFactor + 0.1;
+
+		App->CL_MapEditor->Current_View = App->CL_MapEditor->VCam[1];
+		App->CL_MapEditor->Draw_Screen(hDlg);
+		return 1;
+	}
+
+	case WM_RBUTTONDOWN:
+	{
+
+		App->CL_MapEditor->VCam[1]->ZoomFactor = App->CL_MapEditor->VCam[1]->ZoomFactor - 0.1;
+
+		App->CL_MapEditor->Current_View = App->CL_MapEditor->VCam[1];
+		App->CL_MapEditor->Draw_Screen(hDlg);
 		return 1;
 	}
 
@@ -615,6 +652,7 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Bottom_Left_Window(HWND hDlg, UINT message
 	case WM_LBUTTONDOWN:
 	{
 		//App->Say("Bottom Left");
+		App->CL_MapEditor->Current_View = App->CL_MapEditor->VCam[2];
 		return 1;
 	}
 

@@ -47,7 +47,7 @@ typedef struct ViewVarsTag
 	Ogre::uint8*		pBits;
 	Ogre::uint32*		pZBuffer;
 	Ogre::uint32		ViewType;
-	float	ZoomFactor = 1;//, GridInterval;
+	float				ZoomFactor = 1;
 
 	Ogre::Vector3 Vpn, Vright, Vup, CamPos;
 	float	roll, pitch, yaw;
