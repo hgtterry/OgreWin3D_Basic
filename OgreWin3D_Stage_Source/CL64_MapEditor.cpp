@@ -62,6 +62,7 @@ CL64_MapEditor::CL64_MapEditor()
 
 	Pen_CutBrush = CreatePen(PS_SOLID, 0, RGB(255, 155, 0));
 	Pen_Camera = CreatePen(PS_SOLID, 0, RGB(0, 255, 0));
+	Pen_White = CreatePen(PS_SOLID, 0, RGB(255, 255, 255));
 
 	int Count = 0;
 	while (Count < 3)
@@ -746,23 +747,20 @@ void CL64_MapEditor::Draw_Screen(HWND hwnd)
 	Center_Y = (Depth / 2);
 	Center_X = (Width / 2);
 
+	// ---------------------- Draw Grid Fine
 	HPEN pen = CreatePen(PS_SOLID, 0, RGB(0, 0, 0));
 	SelectObject(MemoryhDC, pen);
-
 	Draw_Grid(MemoryhDC, 8, Rect); // Snap grid
 
-
+	// ---------------------- Draw Grid
 	HPEN pen2 = CreatePen(PS_SOLID, 0, RGB(112, 112, 112));
 	SelectObject(MemoryhDC, pen2);
-
 	Draw_Grid(MemoryhDC, 128, Rect); // Big grid
 
-	/*int BrushCount = App->CL_Brush->Get_Brush_Count();*/
-
-	HPEN pen3 = CreatePen(PS_SOLID, 0, RGB(255, 255, 255));
-	SelectObject(MemoryhDC, pen3);
-
+	// ---------------------- Draw Areas
+	SelectObject(MemoryhDC, Pen_White);
 	MeshData_Render_Faces(MemoryhDC);
+
 	
 	HPEN pen4 = CreatePen(PS_SOLID, 0, RGB(0, 0, 255));
 	SelectObject(MemoryhDC, pen4);
@@ -792,7 +790,6 @@ void CL64_MapEditor::Draw_Screen(HWND hwnd)
 
 	DeleteObject(pen);
 	DeleteObject(pen2);
-	DeleteObject(pen3);
 	DeleteObject(hBrush);
 
 	DeleteObject(OffScreenBitmap);
@@ -921,12 +918,32 @@ POINT CL64_MapEditor::m_Render_OrthoWorldToView(Ogre::Vector3 const* wp)
 	return sc;
 }
 
+#define Units_Round(n) ((int)Units_FRound((n)))
+#define Units_Trunc(n) ((int)(n))
+#define Units_FRound(n)	((float)floor((n)+0.5f))
+
 // *************************************************************************
-// *	  			Draw_Grid:- Terry and Hazel Flanigan 2023			   *
+// *	  			Draw_Grid:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
 bool CL64_MapEditor::Draw_Grid(HDC hDC, int Interval, RECT Rect)
 {
-	int cnt = Rect.bottom / Interval;
+	Ogre::Vector3 ystep, xstep, Delt, Delt2;
+	int			i, cnt, xaxis, yaxis, inidx;
+	static int axidx[3][2] = { 2, 1, 0, 2, 0, 1 };
+	float	gsinv;
+	Box3d ViewBox;
+	POINT		sp;
+
+	inidx = (Current_View->ViewType >> 3) & 0x3;
+
+	xaxis = axidx[inidx][0];
+	yaxis = axidx[inidx][1];
+
+	Render_ViewToWorld(Current_View, Units_Round(-Interval), Units_Round(-Interval), &Delt);
+	Render_ViewToWorld(Current_View, Units_Round(Current_View->Width + Interval), Units_Round(Current_View->Height + Interval), &Delt2);
+
+	// -------------------------------------------------------
+	cnt = Rect.bottom / Interval;
 
 	int SP = 0;
 	int Count = 0;
@@ -955,4 +972,52 @@ bool CL64_MapEditor::Draw_Grid(HDC hDC, int Interval, RECT Rect)
 	}
 
 	return 1;
+}
+
+// *************************************************************************
+// *	  	Render_ViewToWorld:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void CL64_MapEditor::Render_ViewToWorld(const ViewVars* v, const int x, const int y, Ogre::Vector3* wp)
+{
+	float	ZoomInv = 1.0f / Current_View->ZoomFactor;
+
+	switch (Current_View->ViewType)
+	{
+	case VIEWTOP:
+	{
+		App->CL_Utilities->Vector3_Set(wp, (x - Current_View->XCenter), 0.0f, (y - Current_View->YCenter));
+		App->CL_Utilities->Vector3_Scale(wp, ZoomInv, wp);
+		App->CL_Utilities->Vector3_Add(wp, &Current_View->CamPos, wp);
+		break;
+	}
+	case VIEWFRONT:
+	{
+
+		App->CL_Utilities->Vector3_Set(wp, (x - Current_View->XCenter), -(y - Current_View->YCenter), 0.0f);
+		App->CL_Utilities->Vector3_Scale(wp, ZoomInv, wp);
+		App->CL_Utilities->Vector3_Add(wp, &Current_View->CamPos, wp);
+		break;
+	}
+	case VIEWSIDE:
+	{
+		App->CL_Utilities->Vector3_Set(wp, 0.0f, -(y - Current_View->YCenter), (x - Current_View->XCenter));
+		App->CL_Utilities->Vector3_Scale(wp, ZoomInv, wp);
+		App->CL_Utilities->Vector3_Add(wp, &Current_View->CamPos, wp);
+		break;
+	}
+	default:
+	{
+		App->CL_Utilities->Vector3_Set
+		(
+			wp,
+			-(x - Current_View->XCenter) * (Current_View->MaxScreenScaleInv),
+			-(y - Current_View->YCenter) * (Current_View->MaxScreenScaleInv),
+			1.0f
+		);
+
+		App->CL_Utilities->Vector3_Normalize(wp);
+
+		break;
+	}
+	}
 }

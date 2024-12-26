@@ -81,6 +81,35 @@ void CL64_Utilities::Vector3_Scale(const Ogre::Vector3* VSrc, float Scale, Ogre:
 }
 
 // *************************************************************************
+// *			Vector3_Normalize:- Terry and Hazel Flanigan 2024	 	   *
+// *************************************************************************
+float CL64_Utilities::Vector3_Normalize(Ogre::Vector3* V1)
+{
+	float OneOverDist;
+	float Dist;
+
+	Dist = (float)sqrt(Vector3_DotProduct(V1, V1));
+
+	if (Dist == 0.0)
+		return 0.0f;
+	OneOverDist = 1.0f / Dist;
+
+	V1->x *= OneOverDist;
+	V1->y *= OneOverDist;
+	V1->z *= OneOverDist;
+
+	return Dist;
+}
+
+// *************************************************************************
+// *		Vector3_DotProduct:- Terry and Hazel Flanigan 2024		 	   *
+// *************************************************************************
+float CL64_Utilities::Vector3_DotProduct(const Ogre::Vector3* V1, const Ogre::Vector3* V2)
+{
+	return(V1->x * V2->x + V1->y * V2->y + V1->z * V2->z);
+}
+
+// *************************************************************************
 // *		Get_FileName_From_Path:- Terry and Hazel Flanigan 2024	 	   *
 // *************************************************************************
 std::string CL64_Utilities::Get_FileName_From_Path(char* pString)
