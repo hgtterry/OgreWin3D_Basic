@@ -67,7 +67,8 @@ typedef struct ViewVarsTag
 	float	MaxScale;
 
 	float	SpeedScale, YScreenScale, XScreenScale;
-	long		Width, Height;
+	long	Width = 310;
+	long 	Height = 174;
 	long		FacesDone;
 	char Name[10];
 

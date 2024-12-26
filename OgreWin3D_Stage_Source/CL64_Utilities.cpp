@@ -110,6 +110,14 @@ float CL64_Utilities::Vector3_DotProduct(const Ogre::Vector3* V1, const Ogre::Ve
 }
 
 // *************************************************************************
+// *			Vector3_Copy:- Terry and Hazel Flanigan 2024		 	   *
+// *************************************************************************
+void CL64_Utilities::Vector3_Copy(const Ogre::Vector3* VSrc, Ogre::Vector3* VDst)
+{
+	*VDst = *VSrc;
+}
+
+// *************************************************************************
 // *		Get_FileName_From_Path:- Terry and Hazel Flanigan 2024	 	   *
 // *************************************************************************
 std::string CL64_Utilities::Get_FileName_From_Path(char* pString)

@@ -918,15 +918,21 @@ POINT CL64_MapEditor::m_Render_OrthoWorldToView(Ogre::Vector3 const* wp)
 	return sc;
 }
 
+static const Ogre::Vector3	VecOrigin = { 0.0f, 0.0f, 0.0f };
+
 #define Units_Round(n) ((int)Units_FRound((n)))
 #define Units_Trunc(n) ((int)(n))
 #define Units_FRound(n)	((float)floor((n)+0.5f))
+#define	VectorToSUB(a, b) (*((((float *)(&a))) + (b)))
 
 // *************************************************************************
 // *	  			Draw_Grid:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
 bool CL64_MapEditor::Draw_Grid(HDC hDC, int Interval, RECT Rect)
 {
+	Current_View->Width = Rect.right;
+	Current_View->Height = Rect.bottom;
+
 	Ogre::Vector3 ystep, xstep, Delt, Delt2;
 	int			i, cnt, xaxis, yaxis, inidx;
 	static int axidx[3][2] = { 2, 1, 0, 2, 0, 1 };
@@ -942,32 +948,58 @@ bool CL64_MapEditor::Draw_Grid(HDC hDC, int Interval, RECT Rect)
 	Render_ViewToWorld(Current_View, Units_Round(-Interval), Units_Round(-Interval), &Delt);
 	Render_ViewToWorld(Current_View, Units_Round(Current_View->Width + Interval), Units_Round(Current_View->Height + Interval), &Delt2);
 
-	// -------------------------------------------------------
-	cnt = Rect.bottom / Interval;
+	App->CL_Box->Box3d_Set(&ViewBox, Delt.x, Delt.y, Delt.z, Delt2.x, Delt2.y, Delt2.z);
 
-	int SP = 0;
-	int Count = 0;
+	VectorToSUB(ViewBox.Min, inidx) = -FLT_MAX;
+	VectorToSUB(ViewBox.Max, inidx) = FLT_MAX;
+
+	gsinv = 1.0f / (float)Interval;
+	for (i = 0; i < 3; i++)
+	{
+		VectorToSUB(ViewBox.Min, i) = (float)((int)(VectorToSUB(ViewBox.Min, i) * gsinv)) * Interval;
+		VectorToSUB(ViewBox.Max, i) = (float)((int)(VectorToSUB(ViewBox.Max, i) * gsinv)) * Interval;
+	}
+
+	App->CL_Utilities->Vector3_Copy(&VecOrigin, &xstep);
+	App->CL_Utilities->Vector3_Copy(&VecOrigin, &ystep);
+	VectorToSUB(ystep, yaxis) = (float)Interval;
+	VectorToSUB(xstep, xaxis) = (float)Interval;
+
+	cnt = Rect.bottom / Interval; // hgtterry Debug Odd
 
 	// horizontal lines
-	while (Count < cnt + 1)
-	{
-		MoveToEx(hDC, 0, SP, NULL);
-		LineTo(hDC, Rect.right, SP);
+	int Count = 0;
+	App->CL_Utilities->Vector3_Copy(&ViewBox.Min, &Delt);
+	App->CL_Utilities->Vector3_Copy(&ViewBox.Min, &Delt2);
+	VectorToSUB(Delt2, xaxis) = VectorToSUB(ViewBox.Max, xaxis);
+	cnt = Units_Round((VectorToSUB(ViewBox.Max, yaxis) - VectorToSUB(ViewBox.Min, yaxis)) * gsinv);
 
-		SP = SP + Interval;
+	while (Count < cnt)
+	{
+		sp = m_Render_OrthoWorldToView(&Delt);
+		MoveToEx(hDC, 0, sp.y, NULL);
+		sp = m_Render_OrthoWorldToView(&Delt2);
+		LineTo(hDC, Current_View->Width, sp.y);
+		App->CL_Utilities->Vector3_Add(&Delt, &ystep, &Delt);
+		App->CL_Utilities->Vector3_Add(&Delt2, &ystep, &Delt2);
 		Count++;
 	}
 
-	cnt = Rect.right / Interval;
-	SP = 0;
-	Count = 0;
 	// vertical lines
-	while (Count < cnt + 1)
-	{
-		MoveToEx(hDC, SP, 0, NULL);
-		LineTo(hDC, SP, Rect.bottom);
+	Count = 0;
+	App->CL_Utilities->Vector3_Copy(&ViewBox.Min, &Delt);
+	App->CL_Utilities->Vector3_Copy(&ViewBox.Min, &Delt2);
+	VectorToSUB(Delt2, yaxis) = VectorToSUB(ViewBox.Max, yaxis);
+	cnt = Units_Round((VectorToSUB(ViewBox.Max, xaxis) - VectorToSUB(ViewBox.Min, xaxis)) * gsinv);
 
-		SP = SP + Interval;
+	while (Count < cnt)
+	{
+		sp = m_Render_OrthoWorldToView(&Delt);
+		MoveToEx(hDC, sp.x, 0, NULL);
+		sp = m_Render_OrthoWorldToView(&Delt2);
+		LineTo(hDC, sp.x, Current_View->Height);
+		App->CL_Utilities->Vector3_Add(&Delt, &xstep, &Delt);
+		App->CL_Utilities->Vector3_Add(&Delt2, &xstep, &Delt2);
 		Count++;
 	}
 
