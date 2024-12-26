@@ -641,6 +641,11 @@ void CL64_ImGui::App_Debug(void)
 					ImGui::Text("Current View: %s", App->CL_MapEditor->Current_View->Name);
 					ImGui::Text("Current Zoom: %f", App->CL_MapEditor->Current_View->ZoomFactor);
 			
+					ImGui::Text("Center X: %f", App->CL_MapEditor->Current_View->XCenter);
+					ImGui::Text("Center Y: %f", App->CL_MapEditor->Current_View->YCenter);
+					ImGui::Text("Width: %i", App->CL_MapEditor->Current_View->Width);
+					ImGui::Text("Height: %i", App->CL_MapEditor->Current_View->Height);
+
 					ImGui::Separator();
 				}
 

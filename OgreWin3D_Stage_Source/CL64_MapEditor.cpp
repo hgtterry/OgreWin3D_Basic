@@ -27,6 +27,7 @@ THE SOFTWARE.
 #include "CL64_App.h"
 #include "CL64_MapEditor.h"
 
+#define	M_PI		((float)3.14159265358979323846f)
 #define	TOP_POS					8
 #define	BOTTOM_POS				400
 #define	SPLITTER_BAR_WIDTH		5
@@ -521,6 +522,8 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Left_Window(HWND hDlg, UINT message, W
 		App->CL_MapEditor->VCam[V_TL]->Width = 310;
 		App->CL_MapEditor->VCam[V_TL]->Height = 174;
 
+		App->CL_MapEditor->VCam[V_TL]->CamPos = App->CL_Ogre->camNode->getPosition();
+		
 		return TRUE;
 	}
 
@@ -586,6 +589,8 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Right_Window(HWND hDlg, UINT message, 
 		strcpy(App->CL_MapEditor->VCam[V_TR]->Name, "TRV");
 		App->CL_MapEditor->VCam[V_TR]->ViewType = 32;
 		App->CL_MapEditor->VCam[V_TR]->ZoomFactor = 0.3;
+
+		App->CL_MapEditor->VCam[V_TR]->CamPos = App->CL_Ogre->camNode->getPosition();
 		return TRUE;
 	}
 
@@ -651,6 +656,8 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Bottom_Left_Window(HWND hDlg, UINT message
 		strcpy(App->CL_MapEditor->VCam[2]->Name, "BLV");
 		App->CL_MapEditor->VCam[V_BL]->ViewType = 16;
 		App->CL_MapEditor->VCam[V_BL]->ZoomFactor = 0.3;
+
+		App->CL_MapEditor->VCam[V_BL]->CamPos = App->CL_Ogre->camNode->getPosition();
 		return TRUE;
 	}
 
@@ -794,9 +801,9 @@ void CL64_MapEditor::Draw_Screen(HWND hwnd)
 	SelectObject(MemoryhDC, Pen_White);
 	MeshData_Render_Faces(MemoryhDC);
 
-	
-	HPEN pen4 = CreatePen(PS_SOLID, 0, RGB(0, 0, 255));
-	SelectObject(MemoryhDC, pen4);
+	// ---------------------- Draw Camera
+	SelectObject(MemoryhDC, Pen_Camera);
+	Draw_Camera(MemoryhDC);
 
 	/*RECT rect = { 0,0, 400, 20 };
 	FillRect(MemoryhDC, &rect, App->AppBackground);
@@ -827,6 +834,67 @@ void CL64_MapEditor::Draw_Screen(HWND hwnd)
 
 	DeleteObject(OffScreenBitmap);
 	DeleteDC(MemoryhDC);
+}
+
+// *************************************************************************
+// *			Draw_Camera:- Terry and Hazel Flanigan 2024	 		   *
+// *************************************************************************
+void CL64_MapEditor::Draw_Camera(HDC ViewDC)
+{
+#define ENTITY_SIZE (32.0f)  // 16" across
+
+	Ogre::Vector3 VecOrigin;
+	Ogre::Vector3 EntSizeWorld;	// entity size in world space
+
+	POINT EntPosView;
+	POINT EntSizeView;
+	POINT EntWidthHeight;
+	POINT OriginView;
+
+	POINT TopLeft, BottomRight;
+	POINT TopRight, BottomLeft;
+
+	static const float COS45 = (float)cos(M_PI / 4.0f);
+	static const float SIN45 = (float)sin(M_PI / 4.0f);
+	static const float MCOS45 = (float)cos(-(M_PI / 4.0f));
+	static const float MSIN45 = (float)sin(-(M_PI / 4.0f));
+
+	// compute entity size in view coordinates
+	App->CL_Maths->Vector3_Set(&EntSizeWorld, ENTITY_SIZE, ENTITY_SIZE, ENTITY_SIZE);
+	EntSizeView = m_Render_OrthoWorldToView(&EntSizeWorld);
+	App->CL_Maths->Vector3_Clear(&VecOrigin);
+	OriginView = m_Render_OrthoWorldToView(&VecOrigin);
+	// This one is the width and height of the Entity
+	EntWidthHeight.x = std::max(OriginView.x, EntSizeView.x) - std::min(OriginView.x, EntSizeView.x);
+	EntWidthHeight.y = std::max(OriginView.y, EntSizeView.y) - std::min(OriginView.y, EntSizeView.y);
+
+	// This can have negative numbers
+	EntSizeView.x -= OriginView.x;
+	EntSizeView.y -= OriginView.y;
+
+	// entity's position in the view
+	EntPosView = m_Render_OrthoWorldToView(&(App->CL_Ogre->camNode->getPosition()));
+
+	{
+		// Draw an X at the entity's position...
+		TopLeft.x = EntPosView.x - EntSizeView.x;
+		TopLeft.y = EntPosView.y - EntSizeView.y;
+		BottomRight.x = EntPosView.x + EntSizeView.x;
+		BottomRight.y = EntPosView.y + EntSizeView.y;
+		TopRight.x = BottomRight.x;
+		TopRight.y = TopLeft.y;
+		BottomLeft.x = TopLeft.x;
+		BottomLeft.y = BottomRight.y;
+
+		MoveToEx(ViewDC, TopLeft.x, TopLeft.y, NULL);
+		LineTo(ViewDC, BottomRight.x, BottomRight.y);
+
+		MoveToEx(ViewDC, TopRight.x, TopRight.y, NULL);
+		LineTo(ViewDC, BottomLeft.x, BottomLeft.y);
+
+	}
+
+
 }
 
 static POINT plist[64];
@@ -912,14 +980,14 @@ POINT CL64_MapEditor::m_Render_OrthoWorldToView(Ogre::Vector3 const* wp)
 	Ogre::Vector3 ptView;
 	Ogre::Vector3 Campos;
 
-	Campos = Ogre::Vector3(0, 0, 0);
+	//Campos = Ogre::Vector3(0, 0, 0);
 	
 	switch (Current_View->ViewType)
 	{
 	case VIEWTOP:
 	{
-		App->CL_Utilities->Vector3_Subtract(wp, &Campos, &ptView);
-		App->CL_Utilities->Vector3_Scale(&ptView, Current_View->ZoomFactor, &ptView);
+		App->CL_Maths->Vector3_Subtract(wp, &Current_View->CamPos, &ptView);
+		App->CL_Maths->Vector3_Scale(&ptView, Current_View->ZoomFactor, &ptView);
 
 		sc.x = (int)(Current_View->XCenter + ptView.x);
 		sc.y = (int)(Current_View->YCenter + ptView.z);
@@ -927,8 +995,8 @@ POINT CL64_MapEditor::m_Render_OrthoWorldToView(Ogre::Vector3 const* wp)
 	}
 	case VIEWFRONT:
 	{
-		App->CL_Utilities->Vector3_Subtract(wp, &Campos, &ptView);
-		App->CL_Utilities->Vector3_Scale(&ptView, Current_View->ZoomFactor, &ptView);
+		App->CL_Maths->Vector3_Subtract(wp, &Current_View->CamPos, &ptView);
+		App->CL_Maths->Vector3_Scale(&ptView, Current_View->ZoomFactor, &ptView);
 
 		sc.x = (int)(Current_View->XCenter + ptView.x);
 		sc.y = (int)(Current_View->YCenter - ptView.y);
@@ -936,8 +1004,8 @@ POINT CL64_MapEditor::m_Render_OrthoWorldToView(Ogre::Vector3 const* wp)
 	}
 	case VIEWSIDE:
 	{
-		App->CL_Utilities->Vector3_Subtract(wp, &Campos, &ptView);
-		App->CL_Utilities->Vector3_Scale(&ptView, Current_View->ZoomFactor, &ptView);
+		App->CL_Maths->Vector3_Subtract(wp, &Current_View->CamPos, &ptView);
+		App->CL_Maths->Vector3_Scale(&ptView, Current_View->ZoomFactor, &ptView);
 
 		sc.x = (int)(Current_View->XCenter + ptView.z);
 		sc.y = (int)(Current_View->YCenter - ptView.y);
@@ -993,8 +1061,8 @@ bool CL64_MapEditor::Draw_Grid(HDC hDC, int Interval, RECT Rect)
 		VectorToSUB(ViewBox.Max, i) = (float)((int)(VectorToSUB(ViewBox.Max, i) * gsinv)) * Interval;
 	}
 
-	App->CL_Utilities->Vector3_Copy(&VecOrigin, &xstep);
-	App->CL_Utilities->Vector3_Copy(&VecOrigin, &ystep);
+	App->CL_Maths->Vector3_Copy(&VecOrigin, &xstep);
+	App->CL_Maths->Vector3_Copy(&VecOrigin, &ystep);
 	VectorToSUB(ystep, yaxis) = (float)Interval;
 	VectorToSUB(xstep, xaxis) = (float)Interval;
 
@@ -1002,8 +1070,8 @@ bool CL64_MapEditor::Draw_Grid(HDC hDC, int Interval, RECT Rect)
 
 	// horizontal lines
 	int Count = 0;
-	App->CL_Utilities->Vector3_Copy(&ViewBox.Min, &Delt);
-	App->CL_Utilities->Vector3_Copy(&ViewBox.Min, &Delt2);
+	App->CL_Maths->Vector3_Copy(&ViewBox.Min, &Delt);
+	App->CL_Maths->Vector3_Copy(&ViewBox.Min, &Delt2);
 	VectorToSUB(Delt2, xaxis) = VectorToSUB(ViewBox.Max, xaxis);
 	cnt = Units_Round((VectorToSUB(ViewBox.Max, yaxis) - VectorToSUB(ViewBox.Min, yaxis)) * gsinv);
 
@@ -1013,15 +1081,15 @@ bool CL64_MapEditor::Draw_Grid(HDC hDC, int Interval, RECT Rect)
 		MoveToEx(hDC, 0, sp.y, NULL);
 		sp = m_Render_OrthoWorldToView(&Delt2);
 		LineTo(hDC, Current_View->Width, sp.y);
-		App->CL_Utilities->Vector3_Add(&Delt, &ystep, &Delt);
-		App->CL_Utilities->Vector3_Add(&Delt2, &ystep, &Delt2);
+		App->CL_Maths->Vector3_Add(&Delt, &ystep, &Delt);
+		App->CL_Maths->Vector3_Add(&Delt2, &ystep, &Delt2);
 		Count++;
 	}
 
 	// vertical lines
 	Count = 0;
-	App->CL_Utilities->Vector3_Copy(&ViewBox.Min, &Delt);
-	App->CL_Utilities->Vector3_Copy(&ViewBox.Min, &Delt2);
+	App->CL_Maths->Vector3_Copy(&ViewBox.Min, &Delt);
+	App->CL_Maths->Vector3_Copy(&ViewBox.Min, &Delt2);
 	VectorToSUB(Delt2, yaxis) = VectorToSUB(ViewBox.Max, yaxis);
 	cnt = Units_Round((VectorToSUB(ViewBox.Max, xaxis) - VectorToSUB(ViewBox.Min, xaxis)) * gsinv);
 
@@ -1031,8 +1099,8 @@ bool CL64_MapEditor::Draw_Grid(HDC hDC, int Interval, RECT Rect)
 		MoveToEx(hDC, sp.x, 0, NULL);
 		sp = m_Render_OrthoWorldToView(&Delt2);
 		LineTo(hDC, sp.x, Current_View->Height);
-		App->CL_Utilities->Vector3_Add(&Delt, &xstep, &Delt);
-		App->CL_Utilities->Vector3_Add(&Delt2, &xstep, &Delt2);
+		App->CL_Maths->Vector3_Add(&Delt, &xstep, &Delt);
+		App->CL_Maths->Vector3_Add(&Delt2, &xstep, &Delt2);
 		Count++;
 	}
 
@@ -1050,29 +1118,29 @@ void CL64_MapEditor::Render_ViewToWorld(const ViewVars* v, const int x, const in
 	{
 	case VIEWTOP:
 	{
-		App->CL_Utilities->Vector3_Set(wp, (x - Current_View->XCenter), 0.0f, (y - Current_View->YCenter));
-		App->CL_Utilities->Vector3_Scale(wp, ZoomInv, wp);
-		App->CL_Utilities->Vector3_Add(wp, &Current_View->CamPos, wp);
+		App->CL_Maths->Vector3_Set(wp, (x - Current_View->XCenter), 0.0f, (y - Current_View->YCenter));
+		App->CL_Maths->Vector3_Scale(wp, ZoomInv, wp);
+		App->CL_Maths->Vector3_Add(wp, &Current_View->CamPos, wp);
 		break;
 	}
 	case VIEWFRONT:
 	{
 
-		App->CL_Utilities->Vector3_Set(wp, (x - Current_View->XCenter), -(y - Current_View->YCenter), 0.0f);
-		App->CL_Utilities->Vector3_Scale(wp, ZoomInv, wp);
-		App->CL_Utilities->Vector3_Add(wp, &Current_View->CamPos, wp);
+		App->CL_Maths->Vector3_Set(wp, (x - Current_View->XCenter), -(y - Current_View->YCenter), 0.0f);
+		App->CL_Maths->Vector3_Scale(wp, ZoomInv, wp);
+		App->CL_Maths->Vector3_Add(wp, &Current_View->CamPos, wp);
 		break;
 	}
 	case VIEWSIDE:
 	{
-		App->CL_Utilities->Vector3_Set(wp, 0.0f, -(y - Current_View->YCenter), (x - Current_View->XCenter));
-		App->CL_Utilities->Vector3_Scale(wp, ZoomInv, wp);
-		App->CL_Utilities->Vector3_Add(wp, &Current_View->CamPos, wp);
+		App->CL_Maths->Vector3_Set(wp, 0.0f, -(y - Current_View->YCenter), (x - Current_View->XCenter));
+		App->CL_Maths->Vector3_Scale(wp, ZoomInv, wp);
+		App->CL_Maths->Vector3_Add(wp, &Current_View->CamPos, wp);
 		break;
 	}
 	default:
 	{
-		App->CL_Utilities->Vector3_Set
+		App->CL_Maths->Vector3_Set
 		(
 			wp,
 			-(x - Current_View->XCenter) * (Current_View->MaxScreenScaleInv),
@@ -1080,7 +1148,7 @@ void CL64_MapEditor::Render_ViewToWorld(const ViewVars* v, const int x, const in
 			1.0f
 		);
 
-		App->CL_Utilities->Vector3_Normalize(wp);
+		App->CL_Maths->Vector3_Normalize(wp);
 
 		break;
 	}

@@ -20,14 +20,14 @@ void CL64_Box::Box3d_Clear(Box3d* b)
 
 void CL64_Box::Box3d_SetBogusBounds(Box3d* b)
 {
-	App->CL_Utilities->Vector3_Set(&b->Min, FLT_MAX, FLT_MAX, FLT_MAX);
-	App->CL_Utilities->Vector3_Set(&b->Max, -FLT_MAX, -FLT_MAX, -FLT_MAX);
+	App->CL_Maths->Vector3_Set(&b->Min, FLT_MAX, FLT_MAX, FLT_MAX);
+	App->CL_Maths->Vector3_Set(&b->Max, -FLT_MAX, -FLT_MAX, -FLT_MAX);
 }
 
 void CL64_Box::Box3d_Set(Box3d* b,float x1, float y1, float z1, float x2, float y2, float z2)
 {
-	App->CL_Utilities->Vector3_Set(&b->Min,min(x1, x2),min(y1, y2),min(z1, z2));
-	App->CL_Utilities->Vector3_Set(&b->Max,max(x1, x2),max(y1, y2),max(z1, z2));
+	App->CL_Maths->Vector3_Set(&b->Min,min(x1, x2),min(y1, y2),min(z1, z2));
+	App->CL_Maths->Vector3_Set(&b->Max,max(x1, x2),max(y1, y2),max(z1, z2));
 }
 
 void CL64_Box::Box3d_SetSize(Box3d* b, float sx, float sy, float sz)
@@ -110,7 +110,7 @@ const Ogre::Vector3* CL64_Box::Box3d_GetMax(const Box3d* b)
 
 void CL64_Box::Box3d_GetCenter(const Box3d* b, Ogre::Vector3* pCenter)
 {
-	App->CL_Utilities->Vector3_Set
+	App->CL_Maths->Vector3_Set
 	(
 		pCenter,
 		(b->Min.x + b->Max.x) / 2,
@@ -137,7 +137,7 @@ float CL64_Box::Box3d_GetDepth(const Box3d* b)
 
 void CL64_Box::Box3d_GetSize(const Box3d* b, Ogre::Vector3* pSize)
 {
-	App->CL_Utilities->Vector3_Set
+	App->CL_Maths->Vector3_Set
 	(
 		pSize,
 		(b->Max.x - b->Min.x + 1),
@@ -148,24 +148,24 @@ void CL64_Box::Box3d_GetSize(const Box3d* b, Ogre::Vector3* pSize)
 
 void CL64_Box::Box3d_Scale(Box3d* b, float Scale)
 {
-	App->CL_Utilities->Vector3_Scale(&b->Min, Scale, &b->Min);
-	App->CL_Utilities->Vector3_Scale(&b->Max, Scale, &b->Max);
+	App->CL_Maths->Vector3_Scale(&b->Min, Scale, &b->Min);
+	App->CL_Maths->Vector3_Scale(&b->Max, Scale, &b->Max);
 }
 
 void CL64_Box::Box3d_Move(Box3d* b, float dx, float dy, float dz)
 {
 	Ogre::Vector3 VecDelta;
 
-	App->CL_Utilities->Vector3_Set(&VecDelta, dx, dy, dz);
-	App->CL_Utilities->Vector3_Add(&b->Min, &VecDelta, &b->Min);
-	App->CL_Utilities->Vector3_Add(&b->Max, &VecDelta, &b->Max);
+	App->CL_Maths->Vector3_Set(&VecDelta, dx, dy, dz);
+	App->CL_Maths->Vector3_Add(&b->Min, &VecDelta, &b->Min);
+	App->CL_Maths->Vector3_Add(&b->Max, &VecDelta, &b->Max);
 }
 
 void CL64_Box::Box3d_Inflate(Box3d* b, float dx, float dy, float dz)
 {
 	Ogre::Vector3 VecDelta;
 
-	App->CL_Utilities->Vector3_Set(&VecDelta, dx, dy, dz);
-	App->CL_Utilities->Vector3_Subtract(&b->Min, &VecDelta, &b->Min);
-	App->CL_Utilities->Vector3_Add(&b->Max, &VecDelta, &b->Max);
+	App->CL_Maths->Vector3_Set(&VecDelta, dx, dy, dz);
+	App->CL_Maths->Vector3_Subtract(&b->Min, &VecDelta, &b->Min);
+	App->CL_Maths->Vector3_Add(&b->Max, &VecDelta, &b->Max);
 }

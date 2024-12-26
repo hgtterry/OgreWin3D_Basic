@@ -113,6 +113,7 @@ private:
 	void MeshData_Render_Faces(HDC ViewDC);
 	void MeshData_Face_Groups(int Count, HDC ViewDC);
 	void Render_ViewToWorld(const ViewVars* v, const int x, const int y, Ogre::Vector3* wp);
+	void Draw_Camera(HDC ViewDC);
 
 	HPEN Pen_CutBrush;
 	HPEN Pen_Camera;

@@ -30,14 +30,6 @@ public:
 	CL64_Utilities(void);
 	~CL64_Utilities(void);
 
-	void Vector3_Set(Ogre::Vector3* V, float X, float Y, float Z);
-	void Vector3_Add(const Ogre::Vector3* V1, const Ogre::Vector3* V2, Ogre::Vector3* V1PlusV2);
-	void Vector3_Subtract(const Ogre::Vector3* V1, const Ogre::Vector3* V2, Ogre::Vector3* V1MinusV2);
-	void Vector3_Scale(const Ogre::Vector3* VSrc, float Scale, Ogre::Vector3* VDst);
-	float Vector3_Normalize(Ogre::Vector3* V1);
-	float Vector3_DotProduct(const Ogre::Vector3* V1, const Ogre::Vector3* V2);
-	void Vector3_Copy(const Ogre::Vector3* VSrc, Ogre::Vector3* VDst);
-
 	std::string Get_FileName_From_Path(char* pString);
 };
 

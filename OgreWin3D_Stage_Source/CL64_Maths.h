@@ -22,60 +22,21 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-#include "pch.h"
-#include "CL64_App.h"
-#include "CL64_Utilities.h"
-
-CL64_Utilities::CL64_Utilities(void)
+#pragma once
+class CL64_Maths
 {
-}
+public:
+	CL64_Maths();
+	~CL64_Maths();
 
-CL64_Utilities::~CL64_Utilities(void)
-{
-}
+	void Vector3_Set(Ogre::Vector3* V, float X, float Y, float Z);
+	void Vector3_Add(const Ogre::Vector3* V1, const Ogre::Vector3* V2, Ogre::Vector3* V1PlusV2);
+	void Vector3_Subtract(const Ogre::Vector3* V1, const Ogre::Vector3* V2, Ogre::Vector3* V1MinusV2);
+	void Vector3_Scale(const Ogre::Vector3* VSrc, float Scale, Ogre::Vector3* VDst);
+	float Vector3_Normalize(Ogre::Vector3* V1);
+	float Vector3_DotProduct(const Ogre::Vector3* V1, const Ogre::Vector3* V2);
+	void Vector3_Copy(const Ogre::Vector3* VSrc, Ogre::Vector3* VDst);
+	void Vector3_Clear(Ogre::Vector3* V);
 
-// *************************************************************************
-// *		Get_FileName_From_Path:- Terry and Hazel Flanigan 2024	 	   *
-// *************************************************************************
-std::string CL64_Utilities::Get_FileName_From_Path(char* pString)
-{
-	char JustFileName[MAX_PATH]{ 0 };
-	char FileName[MAX_PATH]{ 0 };
+};
 
-	strcpy(FileName, pString);
-
-	int Count = 0;
-	int Mark = 0;
-	bool Test = 0;
-
-	while (*pString != 0)
-	{
-		if (*pString == '\\' || *pString == '/')
-		{
-			Test = 1;
-			Mark = Count;
-		}
-
-		Count++;
-		pString++;
-	}
-
-	if (Mark == 0 && Test == 0)
-	{
-		strcpy(JustFileName, FileName);
-	}
-	else
-	{
-		if (Mark == 0 && Test == 1)
-		{
-			Mark = 1;
-			strcpy(JustFileName, (FileName + Mark));
-		}
-		else
-		{
-			strcpy(JustFileName, (FileName + Mark) + 1);
-		}
-	}
-
-	return JustFileName;
-}
