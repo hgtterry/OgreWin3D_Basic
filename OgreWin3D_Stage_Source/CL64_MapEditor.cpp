@@ -62,7 +62,9 @@ CL64_MapEditor::CL64_MapEditor()
 
 	flag_Show_Areas = 1;
 	flag_Show_Camera = 1;
+
 	flag_Right_Button_Down = 0;
+	flag_Left_Button_Down = 0;
 
 	BackGround_Brush = CreateSolidBrush(RGB(64, 64, 64));
 
@@ -117,13 +119,13 @@ void CL64_MapEditor::Map_View_Main_Dlg()
 {
 	if (flag_Map_Editor_Running == 0)
 	{
-		CreateDialog(App->hInst, (LPCTSTR)IDD_MAPEDITOR, App->MainHwnd, (DLGPROC)Proc_Main_Dlg);
+		DialogBox(App->hInst, (LPCTSTR)IDD_MAPEDITOR, App->MainHwnd, (DLGPROC)Proc_Main_Dlg);
 		flag_Map_Editor_Running = 1;
 	}
 }
 
 // *************************************************************************
-// *			Splitter_Proc:- Terry and Hazel Flanigan 2024 			   *
+// *			Proc_Main_Dlg:- Terry and Hazel Flanigan 2024 			   *
 // *************************************************************************
 LRESULT CALLBACK CL64_MapEditor::Proc_Main_Dlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -195,44 +197,48 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Main_Dlg(HWND hDlg, UINT message, WPARAM w
 
 	case WM_LBUTTONDOWN:
 	{
-	
-		int                 xPos;
-		int                 yPos;
-
-		// Varible used to get the mouse cursor x and y co-ordinates
-		xPos = (int)LOWORD(lParam);
-		yPos = (int)HIWORD(lParam);
-
-		// Checks whether the mouse is over the splitter window
-		xSizing = (xPos > App->CL_MapEditor->nleftWnd_width - SPLITTER_BAR_WIDTH && xPos < App->CL_MapEditor->nleftWnd_width + SPLITTER_BAR_WIDTH);
-		ySizing = (yPos > App->CL_MapEditor->nleftWnd_Depth - SPLITTER_BAR_WIDTH && yPos < App->CL_MapEditor->nleftWnd_Depth + SPLITTER_BAR_WIDTH);
-
-		if (xSizing && ySizing == 0)
+		if (App->CL_MapEditor->flag_Right_Button_Down == 0)
 		{
-			// Api to capture mouse input
-			SetCapture(hDlg);
-			if (xSizing)
+			int                 xPos;
+			int                 yPos;
+
+			// Varible used to get the mouse cursor x and y co-ordinates
+			xPos = (int)LOWORD(lParam);
+			yPos = (int)HIWORD(lParam);
+
+			// Checks whether the mouse is over the splitter window
+			xSizing = (xPos > App->CL_MapEditor->nleftWnd_width - SPLITTER_BAR_WIDTH && xPos < App->CL_MapEditor->nleftWnd_width + SPLITTER_BAR_WIDTH);
+			ySizing = (yPos > App->CL_MapEditor->nleftWnd_Depth - SPLITTER_BAR_WIDTH && yPos < App->CL_MapEditor->nleftWnd_Depth + SPLITTER_BAR_WIDTH);
+
+			if (xSizing && ySizing == 0)
 			{
-				SetCursor(hcSizeEW);
+				// Api to capture mouse input
+				SetCapture(hDlg);
+				if (xSizing)
+				{
+					SetCursor(hcSizeEW);
+				}
+
 			}
-		}
 
-		if (ySizing && xSizing == 0)
-		{
-			// Api to capture mouse input
-			SetCapture(hDlg);
-			if (ySizing)
+			if (ySizing && xSizing == 0)
 			{
-				SetCursor(hcSizeNS);
+				// Api to capture mouse input
+				SetCapture(hDlg);
+				if (ySizing)
+				{
+					SetCursor(hcSizeNS);
+				}
+
 			}
-		}
 
-		if (xSizing && ySizing)
-		{
-			SetCapture(hDlg);
-			if (ySizing)
+			if (xSizing && ySizing)
 			{
-				SetCursor(hcBoth);;
+				SetCapture(hDlg);
+				if (ySizing)
+				{
+					SetCursor(hcBoth);;
+				}
 			}
 		}
 
@@ -241,161 +247,165 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Main_Dlg(HWND hDlg, UINT message, WPARAM w
 
 	case WM_LBUTTONUP:
 	{
-		if (xSizing)
+		if (App->CL_MapEditor->flag_Right_Button_Down == 0)
 		{
-			RECT    focusrect;
-			HDC     hdc;
-
-			ReleaseCapture();
-
-			hdc = GetDC(hDlg);
-			GetClientRect(hDlg, &rect);
-
 			if (xSizing)
 			{
-				SetRect(&focusrect, App->CL_MapEditor->nleftWnd_width - (WIDTH_ADJUST * 2), rect.top + TOP_POS,
-					App->CL_MapEditor->nleftWnd_width + WIDTH_ADJUST,
-					rect.bottom - 80);
+				RECT    focusrect;
+				HDC     hdc;
 
-				DrawFocusRect(hdc, &focusrect);
+				ReleaseCapture();
 
-				xSizing = FALSE;
+				hdc = GetDC(hDlg);
+				GetClientRect(hDlg, &rect);
+
+				if (xSizing)
+				{
+					SetRect(&focusrect, App->CL_MapEditor->nleftWnd_width - (WIDTH_ADJUST * 2), rect.top + TOP_POS,
+						App->CL_MapEditor->nleftWnd_width + WIDTH_ADJUST,
+						rect.bottom - 80);
+
+					DrawFocusRect(hdc, &focusrect);
+
+					xSizing = FALSE;
+				}
+
+				ReleaseDC(hDlg, hdc);
 			}
-
-			ReleaseDC(hDlg, hdc);
-		}
-
-		if (ySizing)
-		{
-			HDC     hdc;
-
-			ReleaseCapture();
-
-			hdc = GetDC(hDlg);
-			GetClientRect(hDlg, &rect);
 
 			if (ySizing)
 			{
-				ySizing = FALSE;
+				HDC     hdc;
+
+				ReleaseCapture();
+
+				hdc = GetDC(hDlg);
+				GetClientRect(hDlg, &rect);
+
+				if (ySizing)
+				{
+					ySizing = FALSE;
+				}
+
+				ReleaseDC(hDlg, hdc);
 			}
 
-			ReleaseDC(hDlg, hdc);
+			App->CL_MapEditor->Resize_Windows(hDlg, App->CL_MapEditor->nleftWnd_width, App->CL_MapEditor->nleftWnd_Depth);
 		}
-
-		App->CL_MapEditor->Resize_Windows(hDlg, App->CL_MapEditor->nleftWnd_width, App->CL_MapEditor->nleftWnd_Depth);
-
 		return 1;
 	}
 
 	case WM_MOUSEMOVE:
 	{
-
-		int   xPos;
-		int   yPos;
-
-		// Get the x and y co-ordinates of the mouse
-		xPos = (int)LOWORD(lParam);
-		yPos = (int)HIWORD(lParam);
-
-		if (xPos < App->CL_MapEditor->LEFT_MINIMUM_SPACE || xPos > App->CL_MapEditor->RIGHT_MINIMUM_SPACE)
+		if (App->CL_MapEditor->flag_Right_Button_Down == 0)
 		{
-			return 0;
-		}
+			int   xPos;
+			int   yPos;
 
-		// Checks if the left button is pressed during dragging the splitter
-		if (wParam == MK_LBUTTON)
-		{
+			// Get the x and y co-ordinates of the mouse
+			xPos = (int)LOWORD(lParam);
+			yPos = (int)HIWORD(lParam);
 
-			if (xSizing && App->CL_MapEditor->Do_Width == 1)
+			if (xPos < App->CL_MapEditor->LEFT_MINIMUM_SPACE || xPos > App->CL_MapEditor->RIGHT_MINIMUM_SPACE)
 			{
-				RECT    focusrect;
-				HDC     hdc;
+				return 0;
+			}
 
-				hdc = GetDC(hDlg);
-				GetClientRect(hDlg, &rect);
+			// Checks if the left button is pressed during dragging the splitter
+			if (wParam == MK_LBUTTON)
+			{
 
 				if (xSizing && App->CL_MapEditor->Do_Width == 1)
 				{
-					SetRect(&focusrect, App->CL_MapEditor->nleftWnd_width - (WIDTH_ADJUST * 2), rect.top + TOP_POS,
-						App->CL_MapEditor->nleftWnd_width + WIDTH_ADJUST,
-						rect.bottom - 6);
+					RECT    focusrect;
+					HDC     hdc;
 
-					DrawFocusRect(hdc, &focusrect);
+					hdc = GetDC(hDlg);
+					GetClientRect(hDlg, &rect);
 
-					App->CL_MapEditor->nleftWnd_width = xPos;
+					if (xSizing && App->CL_MapEditor->Do_Width == 1)
+					{
+						SetRect(&focusrect, App->CL_MapEditor->nleftWnd_width - (WIDTH_ADJUST * 2), rect.top + TOP_POS,
+							App->CL_MapEditor->nleftWnd_width + WIDTH_ADJUST,
+							rect.bottom - 6);
 
-					SetRect(&focusrect, App->CL_MapEditor->nleftWnd_width - (WIDTH_ADJUST * 2), rect.top + TOP_POS,
-						App->CL_MapEditor->nleftWnd_width + WIDTH_ADJUST,
-						rect.bottom - 6);
+						DrawFocusRect(hdc, &focusrect);
 
-					DrawFocusRect(hdc, &focusrect);
+						App->CL_MapEditor->nleftWnd_width = xPos;
+
+						SetRect(&focusrect, App->CL_MapEditor->nleftWnd_width - (WIDTH_ADJUST * 2), rect.top + TOP_POS,
+							App->CL_MapEditor->nleftWnd_width + WIDTH_ADJUST,
+							rect.bottom - 6);
+
+						DrawFocusRect(hdc, &focusrect);
+					}
+
+					ReleaseDC(hDlg, hdc);
 				}
-
-				ReleaseDC(hDlg, hdc);
-			}
-
-			if (ySizing && App->CL_MapEditor->Do_Depth == 1)
-			{
-				RECT    focusrect;
-				HDC     hdc;
-
-				hdc = GetDC(hDlg);
-				GetClientRect(hDlg, &rect);
 
 				if (ySizing && App->CL_MapEditor->Do_Depth == 1)
 				{
-					SetRect(&focusrect, 0, App->CL_MapEditor->nleftWnd_Depth, rect.right, App->CL_MapEditor->nleftWnd_Depth + (WIDTH_ADJUST * 2));
+					RECT    focusrect;
+					HDC     hdc;
 
-					DrawFocusRect(hdc, &focusrect);
+					hdc = GetDC(hDlg);
+					GetClientRect(hDlg, &rect);
 
-					App->CL_MapEditor->nleftWnd_Depth = yPos;
+					if (ySizing && App->CL_MapEditor->Do_Depth == 1)
+					{
+						SetRect(&focusrect, 0, App->CL_MapEditor->nleftWnd_Depth, rect.right, App->CL_MapEditor->nleftWnd_Depth + (WIDTH_ADJUST * 2));
 
-					SetRect(&focusrect, 0, App->CL_MapEditor->nleftWnd_Depth, rect.right, App->CL_MapEditor->nleftWnd_Depth + (WIDTH_ADJUST * 2));
+						DrawFocusRect(hdc, &focusrect);
 
-					DrawFocusRect(hdc, &focusrect);
+						App->CL_MapEditor->nleftWnd_Depth = yPos;
+
+						SetRect(&focusrect, 0, App->CL_MapEditor->nleftWnd_Depth, rect.right, App->CL_MapEditor->nleftWnd_Depth + (WIDTH_ADJUST * 2));
+
+						DrawFocusRect(hdc, &focusrect);
+					}
+
+					ReleaseDC(hDlg, hdc);
 				}
 
-				ReleaseDC(hDlg, hdc);
 			}
 
-		}
-
-		if ((xPos > App->CL_MapEditor->nleftWnd_width - SPLITTER_BAR_WIDTH && xPos < App->CL_MapEditor->nleftWnd_width + SPLITTER_BAR_WIDTH))
-		{
-			if (App->CL_MapEditor->Do_All == 0)
+			if ((xPos > App->CL_MapEditor->nleftWnd_width - SPLITTER_BAR_WIDTH && xPos < App->CL_MapEditor->nleftWnd_width + SPLITTER_BAR_WIDTH))
 			{
-				SetCursor(hcSizeEW);
+				if (App->CL_MapEditor->Do_All == 0)
+				{
+					SetCursor(hcSizeEW);
+				}
+
+				App->CL_MapEditor->Do_Width = 1;
 			}
-
-			App->CL_MapEditor->Do_Width = 1;
-		}
-		else
-		{
-			App->CL_MapEditor->Do_Width = 0;
-		}
-
-		if ((yPos > App->CL_MapEditor->nleftWnd_Depth - SPLITTER_BAR_WIDTH && yPos < App->CL_MapEditor->nleftWnd_Depth + SPLITTER_BAR_WIDTH))
-		{
-			if (App->CL_MapEditor->Do_All == 0)
+			else
 			{
-				SetCursor(hcSizeNS);
+				App->CL_MapEditor->Do_Width = 0;
 			}
 
-			App->CL_MapEditor->Do_Depth = 1;
-		}
-		else
-		{
-			App->CL_MapEditor->Do_Depth = 0;
-		}
+			if ((yPos > App->CL_MapEditor->nleftWnd_Depth - SPLITTER_BAR_WIDTH && yPos < App->CL_MapEditor->nleftWnd_Depth + SPLITTER_BAR_WIDTH))
+			{
+				if (App->CL_MapEditor->Do_All == 0)
+				{
+					SetCursor(hcSizeNS);
+				}
 
-		if (App->CL_MapEditor->Do_Width == 1 && App->CL_MapEditor->Do_Depth == 1)
-		{
-			SetCursor(hcBoth);
-			App->CL_MapEditor->Do_All = 1;
-		}
-		else
-		{
-			App->CL_MapEditor->Do_All = 0;
+				App->CL_MapEditor->Do_Depth = 1;
+			}
+			else
+			{
+				App->CL_MapEditor->Do_Depth = 0;
+			}
+
+			if (App->CL_MapEditor->Do_Width == 1 && App->CL_MapEditor->Do_Depth == 1)
+			{
+				SetCursor(hcBoth);
+				App->CL_MapEditor->Do_All = 1;
+			}
+			else
+			{
+				App->CL_MapEditor->Do_All = 0;
+			}
 		}
 
 		return 1;
@@ -560,8 +570,22 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Left_Window(HWND hDlg, UINT message, W
 		return (LRESULT)1;
 	}
 
+	case WM_SETCURSOR:
+	{
+		if (App->CL_MapEditor->flag_Right_Button_Down == 1 || App->CL_MapEditor->flag_Left_Button_Down == 1)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
 	case WM_MOUSEMOVE:
 	{
+		
+
 		int			dx, dy;
 		POINT		RealCursorPosition;
 
@@ -577,13 +601,33 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Left_Window(HWND hDlg, UINT message, W
 			App->CL_MapEditor->Zoom_View(hDlg, dx, dy);
 		}
 
+		if (App->CL_MapEditor->flag_Left_Button_Down == 1 && GetAsyncKeyState(VK_CONTROL) < 0)
+		{
+			App->CL_MapEditor->Pan_View(hDlg, dx, dy);
+		}
+
 		return 1;
 	}
 
 	case WM_LBUTTONDOWN:
 	{
+		GetCursorPos(&App->CL_MapEditor->mStartPoint);
+		ScreenToClient(hDlg, &App->CL_MapEditor->mStartPoint);
+
+		App->CL_MapEditor->flag_Right_Button_Down = 0;
+		App->CL_MapEditor->flag_Left_Button_Down = 1;
+
 		App->CL_MapEditor->Current_View = App->CL_MapEditor->VCam[V_TL];
-		
+		App->CUR = SetCursor(NULL);
+		return 1;
+	}
+
+	case WM_LBUTTONUP:
+	{
+		App->CL_MapEditor->flag_Left_Button_Down = 0;
+		App->CL_MapEditor->flag_Right_Button_Down = 0;
+
+		App->CUR = SetCursor(App->CUR);
 		return 1;
 	}
 
@@ -593,14 +637,19 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Left_Window(HWND hDlg, UINT message, W
 		ScreenToClient(hDlg, &App->CL_MapEditor->mStartPoint);
 
 		App->CL_MapEditor->flag_Right_Button_Down = 1;
-		App->CL_MapEditor->Current_View = App->CL_MapEditor->VCam[V_TL];
+		App->CL_MapEditor->flag_Left_Button_Down = 0;
 
+		App->CL_MapEditor->Current_View = App->CL_MapEditor->VCam[V_TL];
+		App->CUR = SetCursor(NULL);
 		return 1;
 	}
 
 	case WM_RBUTTONUP:
 	{
 		App->CL_MapEditor->flag_Right_Button_Down = 0;
+		App->CL_MapEditor->flag_Left_Button_Down = 0;
+
+		App->CUR = SetCursor(App->CUR);
 		return 1;
 	}
 
@@ -841,30 +890,106 @@ LRESULT CALLBACK CL64_MapEditor::Bottom_Right_Proc(HWND hDlg, UINT message, WPAR
 // *************************************************************************
 void CL64_MapEditor::Zoom_View(HWND hDlg, int Dx, int Dy)
 {
+	
+	if (flag_Right_Button_Down == 1)
+	{
+		if (Dy < App->CL_MapEditor->mStartPoint.y)
+		{
+			long test = App->CL_MapEditor->mStartPoint.y - Dy;
+
+			if (test > 0)
+			{
+				App->CL_MapEditor->Current_View->ZoomFactor = App->CL_MapEditor->Current_View->ZoomFactor + 0.01;
+				App->CL_MapEditor->Draw_Screen(hDlg);
+			}
+
+			POINT pt = mStartPoint;
+			ClientToScreen(hDlg, &pt);
+			SetCursorPos(pt.x, pt.y);
+
+		}
+		else if (Dy > App->CL_MapEditor->mStartPoint.y)
+		{
+			long test = Dy - App->CL_MapEditor->mStartPoint.y;
+			if (test > 0)
+			{
+				App->CL_MapEditor->Current_View->ZoomFactor = App->CL_MapEditor->Current_View->ZoomFactor - 0.01;
+				App->CL_MapEditor->Draw_Screen(hDlg);
+
+			}
+
+			POINT pt = mStartPoint;
+			ClientToScreen(hDlg ,&pt);
+			SetCursorPos(pt.x, pt.y);
+
+		}
+	}
+}
+
+// *************************************************************************
+// *			Pan_View:- Terry and Hazel Flanigan 2024				   *
+// *************************************************************************
+void CL64_MapEditor::Pan_View(HWND hDlg, int Dx, int Dy)
+{
+	Ogre::Vector3 dv;
+	Ogre::Vector3 dcamv;
+
+	if (Dx < App->CL_MapEditor->mStartPoint.x)
+	{
+		long test = App->CL_MapEditor->mStartPoint.x - Dx;
+		if (test > 2)
+		{
+			dv = Ogre::Vector3(-15, 0, 0);
+			
+			POINT pt = mStartPoint;
+			ClientToScreen(hDlg, &pt);
+			SetCursorPos(pt.x, pt.y);
+		}
+
+	}
+	else if (Dx > App->CL_MapEditor->mStartPoint.x)
+	{
+		long test = Dx - App->CL_MapEditor->mStartPoint.x;
+		if (test > 2)
+		{
+			dv = Ogre::Vector3(15, 0, 0);
+			
+			POINT pt = mStartPoint;
+			ClientToScreen(hDlg, &pt);
+			SetCursorPos(pt.x, pt.y);
+		}
+	}
+
 	if (Dy < App->CL_MapEditor->mStartPoint.y)
 	{
 		long test = App->CL_MapEditor->mStartPoint.y - Dy;
-
-		if (test > 0)
+		if (test > 2)
 		{
-			App->CL_MapEditor->Current_View->ZoomFactor = App->CL_MapEditor->Current_View->ZoomFactor + 0.01;
-			App->CL_MapEditor->Draw_Screen(hDlg);
+			dv = Ogre::Vector3(0, 0, -15);
+			
+			POINT pt = mStartPoint;	
+			ClientToScreen(hDlg, &pt);
+			SetCursorPos(pt.x, pt.y);
 		}
-
-		App->CL_MapEditor->mStartPoint.y = Dy;
 	}
 	else if (Dy > App->CL_MapEditor->mStartPoint.y)
 	{
 		long test = Dy - App->CL_MapEditor->mStartPoint.y;
-		if (test > 0)
+		if (test > 2)
 		{
-			App->CL_MapEditor->Current_View->ZoomFactor = App->CL_MapEditor->Current_View->ZoomFactor - 0.01;
-			App->CL_MapEditor->Draw_Screen(hDlg);
+			dv = Ogre::Vector3(0, 0, 15);
 
+			POINT pt = mStartPoint;	
+			ClientToScreen(hDlg, &pt);
+			SetCursorPos(pt.x, pt.y);
 		}
-
-		App->CL_MapEditor->mStartPoint.y = Dy;
 	}
+
+	App->CL_Maths->Vector3_Scale(&dv, -1.0f, &dcamv);
+
+	App->CL_Maths->Vector3_Add(&App->CL_MapEditor->Current_View->CamPos, &dcamv, &App->CL_MapEditor->Current_View->CamPos);
+	App->CL_MapEditor->Draw_Screen(hDlg);
+
 }
 
 // *************************************************************************

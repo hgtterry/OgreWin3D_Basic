@@ -92,6 +92,7 @@ public:
 	bool flag_Show_Camera;
 
 	bool flag_Right_Button_Down;
+	bool flag_Left_Button_Down;
 
 private:
 
@@ -120,7 +121,9 @@ private:
 	void MeshData_Face_Groups(int Count, HDC ViewDC);
 	void Render_ViewToWorld(const ViewVars* v, const int x, const int y, Ogre::Vector3* wp);
 	void Draw_Camera(HDC ViewDC);
+
 	void Zoom_View(HWND hDlg, int Dx, int Dy);
+	void Pan_View(HWND hDlg, int Dx, int Dy);
 
 	HPEN Pen_CutBrush;
 	HPEN Pen_Camera;

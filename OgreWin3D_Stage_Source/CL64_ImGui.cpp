@@ -645,7 +645,7 @@ void CL64_ImGui::App_Debug(void)
 					ImGui::Text("Center Y: %f", App->CL_MapEditor->Current_View->YCenter);
 					ImGui::Text("Width: %i", App->CL_MapEditor->Current_View->Width);
 					ImGui::Text("Height: %i", App->CL_MapEditor->Current_View->Height);
-
+					ImGui::Text("Right Mouse: %i", App->CL_MapEditor->flag_Right_Button_Down);
 					ImGui::Separator();
 				}
 
