@@ -333,6 +333,7 @@ void CL64_Ogre3D_Listener::Mode_Camera_Model(float DeltaTime)
 // *************************************************************************
 bool CL64_Ogre3D_Listener::Capture_LeftMouse_Model(void)
 {
+
 	GetCursorPos(&Mouse_point);
 
 	Pl_MouseX = (int(Mouse_point.x));

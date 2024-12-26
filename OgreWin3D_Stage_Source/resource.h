@@ -405,6 +405,9 @@
 #define ID_ZOOM32845                    32845
 #define ID_ZOOM_OUT                     32846
 #define ID_ZOOM_IN                      32847
+#define ID_FILE                         32848
+#define ID_SHOW_AREAS                   32849
+#define ID_SHOW_CAMERA                  32850
 #define IDC_STATIC                      -1
 
 // Next default values for new objects
@@ -413,7 +416,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        211
-#define _APS_NEXT_COMMAND_VALUE         32848
+#define _APS_NEXT_COMMAND_VALUE         32851
 #define _APS_NEXT_CONTROL_VALUE         1139
 #define _APS_NEXT_SYMED_VALUE           110
 #endif

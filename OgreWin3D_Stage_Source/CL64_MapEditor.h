@@ -85,7 +85,13 @@ public:
 	ViewVars* VCam[4];
 	ViewVars* Current_View;
 
+	POINT		mStartPoint;
+
 	bool flag_Map_Editor_Running;
+	bool flag_Show_Areas;
+	bool flag_Show_Camera;
+
+	bool flag_Right_Button_Down;
 
 private:
 
