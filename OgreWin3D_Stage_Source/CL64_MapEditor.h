@@ -90,6 +90,7 @@ public:
 	bool flag_Map_Editor_Running;
 	bool flag_Show_Areas;
 	bool flag_Show_Camera;
+	bool flag_Show_Colectables;
 
 	bool flag_Right_Button_Down;
 	bool flag_Left_Button_Down;
@@ -128,6 +129,7 @@ private:
 	HPEN Pen_CutBrush;
 	HPEN Pen_Camera;
 	HPEN Pen_White;
+	HPEN Pen_Colectables;
 
 	HWND Main_Dlg_Hwnd;
 
@@ -137,6 +139,8 @@ private:
 	HWND Bottom_Right_Hwnd;
 
 	HBRUSH BackGround_Brush;
+
+	HMENU mMenu;
 
 	int LEFT_WINDOW_WIDTH;
 
@@ -152,6 +156,8 @@ private:
 	bool Do_Width;
 	bool Do_Depth;
 	bool Do_All;
+
+	HDC	MemoryhDC;
 
 };
 

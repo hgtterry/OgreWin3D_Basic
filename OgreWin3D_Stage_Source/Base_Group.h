@@ -49,7 +49,8 @@ public:
 	int Total_VertCount;	// Group Vertice Count
 	int Total_FaceCount;
 	int Total_IndicesCount; // Ogre
-	
+	int Obj_Usage;
+
 	Sub_Mesh_type* B_Sub_Mesh[100];
 };
 

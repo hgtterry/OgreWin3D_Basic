@@ -62,6 +62,7 @@ CL64_MapEditor::CL64_MapEditor()
 
 	flag_Show_Areas = 1;
 	flag_Show_Camera = 1;
+	flag_Show_Colectables = 1;
 
 	flag_Right_Button_Down = 0;
 	flag_Left_Button_Down = 0;
@@ -71,6 +72,9 @@ CL64_MapEditor::CL64_MapEditor()
 	Pen_CutBrush = CreatePen(PS_SOLID, 0, RGB(255, 155, 0));
 	Pen_Camera = CreatePen(PS_SOLID, 0, RGB(0, 255, 0));
 	Pen_White = CreatePen(PS_SOLID, 0, RGB(255, 255, 255));
+	Pen_Colectables = CreatePen(PS_SOLID, 0, RGB(255, 0, 0));
+
+	MemoryhDC = nullptr;
 
 	int Count = 0;
 	while (Count < 3)
@@ -117,10 +121,10 @@ void CL64_MapEditor::Init_Views()
 // *************************************************************************
 void CL64_MapEditor::Map_View_Main_Dlg()
 {
-	if (flag_Map_Editor_Running == 0)
+	//if (flag_Map_Editor_Running == 0)
 	{
 		DialogBox(App->hInst, (LPCTSTR)IDD_MAPEDITOR, App->MainHwnd, (DLGPROC)Proc_Main_Dlg);
-		flag_Map_Editor_Running = 1;
+		//flag_Map_Editor_Running = 1;
 	}
 }
 
@@ -149,6 +153,7 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Main_Dlg(HWND hDlg, UINT message, WPARAM w
 		hcBoth = LoadCursor(NULL, IDC_SIZEALL);
 
 		App->CL_MapEditor->Main_Dlg_Hwnd = hDlg;
+		App->CL_MapEditor->mMenu = GetMenu(hDlg);
 
 		App->CL_MapEditor->Init_Views();
 		App->CL_MapEditor->Create_Top_Left_Window();
@@ -157,6 +162,10 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Main_Dlg(HWND hDlg, UINT message, WPARAM w
 		App->CL_MapEditor->Create_Bottom_Right_Window();
 		App->CL_MapEditor->Resize_Windows(App->CL_MapEditor->Main_Dlg_Hwnd, App->CL_MapEditor->nleftWnd_width, App->CL_MapEditor->nleftWnd_Depth);
 		
+		CheckMenuItem(App->CL_MapEditor->mMenu, ID_SHOW_AREAS, MF_BYCOMMAND | MF_CHECKED);
+		CheckMenuItem(App->CL_MapEditor->mMenu, ID_SHOW_CAMERA, MF_BYCOMMAND | MF_CHECKED);
+		CheckMenuItem(App->CL_MapEditor->mMenu, ID_SHOW_COLECTABLES, MF_BYCOMMAND | MF_CHECKED);
+
 		return TRUE;
 	}
 
@@ -419,14 +428,16 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Main_Dlg(HWND hDlg, UINT message, WPARAM w
 			if (App->CL_MapEditor->flag_Show_Areas == 1)
 			{
 				App->CL_MapEditor->flag_Show_Areas = 0;
+				CheckMenuItem(App->CL_MapEditor->mMenu, ID_SHOW_AREAS, MF_BYCOMMAND | MF_UNCHECKED);
 			}
 			else
 			{
 				App->CL_MapEditor->flag_Show_Areas = 1;
+				CheckMenuItem(App->CL_MapEditor->mMenu, ID_SHOW_AREAS, MF_BYCOMMAND | MF_CHECKED);
 			}
 
 			App->CL_MapEditor->Resize_Windows(hDlg, App->CL_MapEditor->nleftWnd_width, App->CL_MapEditor->nleftWnd_Depth);
-
+	
 			return TRUE;
 		}
 
@@ -435,15 +446,34 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Main_Dlg(HWND hDlg, UINT message, WPARAM w
 			if (App->CL_MapEditor->flag_Show_Camera == 1)
 			{
 				App->CL_MapEditor->flag_Show_Camera = 0;
+				CheckMenuItem(App->CL_MapEditor->mMenu, ID_SHOW_CAMERA, MF_BYCOMMAND | MF_UNCHECKED);
 			}
 			else
 			{
 				App->CL_MapEditor->flag_Show_Camera = 1;
+				CheckMenuItem(App->CL_MapEditor->mMenu, ID_SHOW_CAMERA, MF_BYCOMMAND | MF_CHECKED);
 			}
 
 			App->CL_MapEditor->Resize_Windows(hDlg, App->CL_MapEditor->nleftWnd_width, App->CL_MapEditor->nleftWnd_Depth);
 
-			
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == ID_SHOW_COLECTABLES)
+		{
+			if (App->CL_MapEditor->flag_Show_Colectables == 1)
+			{
+				App->CL_MapEditor->flag_Show_Colectables = 0;
+				CheckMenuItem(App->CL_MapEditor->mMenu, ID_SHOW_COLECTABLES, MF_BYCOMMAND | MF_UNCHECKED);
+			}
+			else
+			{
+				App->CL_MapEditor->flag_Show_Colectables = 1;
+				CheckMenuItem(App->CL_MapEditor->mMenu, ID_SHOW_COLECTABLES, MF_BYCOMMAND | MF_CHECKED);
+			}
+
+			App->CL_MapEditor->Resize_Windows(hDlg, App->CL_MapEditor->nleftWnd_width, App->CL_MapEditor->nleftWnd_Depth);
+
 			return TRUE;
 		}
 
@@ -1208,7 +1238,6 @@ void CL64_MapEditor::Draw_Screen(HWND hwnd)
 {
 	
 	HDC			RealhDC;
-	HDC			MemoryhDC;
 	RECT		Rect;
 
 	float GridSize = 2;
@@ -1264,11 +1293,8 @@ void CL64_MapEditor::Draw_Screen(HWND hwnd)
 	
 
 	// ---------------------- Draw Areas
-	if (flag_Show_Areas == 1)
-	{
-		SelectObject(MemoryhDC, Pen_White);
-		MeshData_Render_Faces(MemoryhDC);
-	}
+	MeshData_Render_Faces(MemoryhDC);
+	
 
 	// ---------------------- Draw Camera
 	if (flag_Show_Camera == 1)
@@ -1377,12 +1403,38 @@ static POINT plist[64];
 void CL64_MapEditor::MeshData_Render_Faces(HDC ViewDC)
 {
 	int Count = 0;
-
+	int Dont_Draw = 0;
 	int Map_Count = App->CL_Scene->Map_Group_Count;
 
 	while (Count < Map_Count)
 	{
-		MeshData_Face_Groups(Count, ViewDC);
+		if (App->CL_Scene->Map_Group[Count]->Obj_Usage == Enums::Obj_Usage_Room)
+		{
+			if (flag_Show_Areas == 0)
+			{
+				Dont_Draw = 1;
+			}
+
+			SelectObject(MemoryhDC, Pen_White);
+		}
+
+		if (App->CL_Scene->Map_Group[Count]->Obj_Usage == Enums::Obj_Usage_Colectable)
+		{
+			if (flag_Show_Colectables == 0)
+			{
+				Dont_Draw = 1;
+			}
+
+			SelectObject(MemoryhDC, Pen_Colectables);
+		}
+
+		if (Dont_Draw == 0)
+		{
+			MeshData_Face_Groups(Count, ViewDC);
+		}
+
+		Dont_Draw = 0;
+
 		Count++;
 	}
 }

@@ -26,6 +26,8 @@ Base_Group::Base_Group()
 	Total_FaceCount = 0;
 	Total_IndicesCount = 0; // Ogre
 
+	Obj_Usage = Enums::Obj_Usage_None;
+
 	int Count = 0;
 	while (Count < 99)
 	{

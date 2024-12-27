@@ -29,14 +29,14 @@ public:
 	CL64_Mesh_Manager(void);
 	~CL64_Mesh_Manager(void);
 
-	bool Ogre_To_Mesh_Data(Ogre::Entity* Ogre_Entity, Ogre::SceneNode* Ogre_Node);
+	bool Ogre_To_Mesh_Data(Ogre::Entity* Ogre_Entity, Ogre::SceneNode* Ogre_Node, int Usage);
 	bool Has_Shared_Vertices;
 
 private:
 
-	void Create_MeshGroups(Ogre::Entity* Ogre_Entity);
+	void Create_MeshGroups(Ogre::Entity* Ogre_Entity, int Usage);
 
-	bool Convert_To_Mesh_Data(Ogre::Entity* Ogre_Entity);
+	bool Convert_To_Mesh_Data(Ogre::Entity* Ogre_Entity, int Usage);
 
 	void Get_SubPose_MeshInstance(Ogre::MeshPtr mesh,
 		size_t& vertex_count, Ogre::Vector3*& vertices,

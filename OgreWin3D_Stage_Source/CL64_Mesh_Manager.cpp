@@ -44,7 +44,7 @@ CL64_Mesh_Manager::~CL64_Mesh_Manager(void)
 // *************************************************************************
 // *			Create_MeshGroups:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
-void CL64_Mesh_Manager::Create_MeshGroups(Ogre::Entity* Ogre_Entity)
+void CL64_Mesh_Manager::Create_MeshGroups(Ogre::Entity* Ogre_Entity, int Usage)
 {
 	// -------------------------------------------- Create Group
 	int Index = App->CL_Scene->Map_Group_Count;
@@ -60,6 +60,7 @@ void CL64_Mesh_Manager::Create_MeshGroups(Ogre::Entity* Ogre_Entity)
 	App->CL_Scene->Map_Group[Index]->Total_VertCount = 0;
 	App->CL_Scene->Map_Group[Index]->Total_IndicesCount = 0;
 	App->CL_Scene->Map_Group[Index]->Total_FaceCount = 0;
+	App->CL_Scene->Map_Group[Index]->Obj_Usage = Usage;
 
 	char Sub_Mesh_Name[MAX_PATH];
 	char Sub_Mesh_Num[MAX_PATH];
@@ -100,14 +101,14 @@ void CL64_Mesh_Manager::Create_MeshGroups(Ogre::Entity* Ogre_Entity)
 // *************************************************************************
 // *			Ogre_To_Mesh_Data:- Terry and Hazel Flanigan 2024	   	   *
 // *************************************************************************
-bool CL64_Mesh_Manager::Ogre_To_Mesh_Data(Ogre::Entity* Ogre_Entity, Ogre::SceneNode* Ogre_Node)
+bool CL64_Mesh_Manager::Ogre_To_Mesh_Data(Ogre::Entity* Ogre_Entity, Ogre::SceneNode* Ogre_Node, int Usage)
 {
 
 	m_position = Ogre_Node->getPosition();
 	m_orient = Ogre_Node->getOrientation();
 	m_scale = Ogre_Node->getScale();
 
-	Convert_To_Mesh_Data(Ogre_Entity);
+	Convert_To_Mesh_Data(Ogre_Entity,Usage);
 
 	return 1;
 }
@@ -115,7 +116,7 @@ bool CL64_Mesh_Manager::Ogre_To_Mesh_Data(Ogre::Entity* Ogre_Entity, Ogre::Scene
 // *************************************************************************
 // *		Convert_To_Mesh_Data:- Terry and Hazel Flanigan 2024	   	   *
 // *************************************************************************
-bool CL64_Mesh_Manager::Convert_To_Mesh_Data(Ogre::Entity* Ogre_Entity)
+bool CL64_Mesh_Manager::Convert_To_Mesh_Data(Ogre::Entity* Ogre_Entity, int Usage)
 {
 	Has_Shared_Vertices = 0;
 
@@ -134,7 +135,7 @@ bool CL64_Mesh_Manager::Convert_To_Mesh_Data(Ogre::Entity* Ogre_Entity)
 		Count++;
 	}
 
-	Create_MeshGroups(Ogre_Entity);
+	Create_MeshGroups(Ogre_Entity, Usage);
 
 	if (Has_Shared_Vertices == 0)
 	{

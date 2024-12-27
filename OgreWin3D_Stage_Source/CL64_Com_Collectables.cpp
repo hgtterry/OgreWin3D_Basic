@@ -115,10 +115,10 @@ bool CL64_Com_Collectables::Create_Collectable_Entity(int Index)
 	Object->UsageEX = 777;
 
 	Object->Object_Node->setVisible(true);
-
 	Object->Object_Node->setOrientation(Object->Mesh_Quat);
-
 	Object->Object_Node->setPosition(Object->Mesh_Pos);
+
+	App->CL_Mesh_Manager->Ogre_To_Mesh_Data(Object->Object_Ent, Object->Object_Node, Enums::Obj_Usage_Colectable);
 
 	App->CL_Scene->flag_Scene_Loaded = 1;
 
