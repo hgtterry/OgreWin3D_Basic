@@ -619,6 +619,7 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Left_Window(HWND hDlg, UINT message, W
 
 		App->CL_MapEditor->Current_View = App->CL_MapEditor->VCam[V_TL];
 		App->CUR = SetCursor(NULL);
+
 		return 1;
 	}
 
@@ -628,6 +629,7 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Left_Window(HWND hDlg, UINT message, W
 		App->CL_MapEditor->flag_Right_Button_Down = 0;
 
 		App->CUR = SetCursor(App->CUR);
+
 		return 1;
 	}
 
@@ -641,6 +643,7 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Left_Window(HWND hDlg, UINT message, W
 
 		App->CL_MapEditor->Current_View = App->CL_MapEditor->VCam[V_TL];
 		App->CUR = SetCursor(NULL);
+
 		return 1;
 	}
 
@@ -650,6 +653,7 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Left_Window(HWND hDlg, UINT message, W
 		App->CL_MapEditor->flag_Left_Button_Down = 0;
 
 		App->CUR = SetCursor(App->CUR);
+
 		return 1;
 	}
 
@@ -657,6 +661,7 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Left_Window(HWND hDlg, UINT message, W
 	{
 		App->CL_MapEditor->Current_View = App->CL_MapEditor->VCam[V_TL];
 		App->CL_MapEditor->Draw_Screen(hDlg);
+
 		return 0;
 	}
 
@@ -701,6 +706,18 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Right_Window(HWND hDlg, UINT message, 
 	case WM_ERASEBKGND:
 	{
 		return (LRESULT)1;
+	}
+
+	case WM_SETCURSOR:
+	{
+		if (App->CL_MapEditor->flag_Right_Button_Down == 1 || App->CL_MapEditor->flag_Left_Button_Down == 1)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
 	}
 
 	case WM_MOUSEMOVE:
@@ -748,6 +765,7 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Right_Window(HWND hDlg, UINT message, 
 		App->CL_MapEditor->flag_Right_Button_Down = 0;
 
 		App->CUR = SetCursor(App->CUR);
+
 		return 1;
 	}
 
@@ -765,6 +783,8 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Right_Window(HWND hDlg, UINT message, 
 	case WM_RBUTTONUP:
 	{
 		App->CL_MapEditor->flag_Right_Button_Down = 0;
+		App->CL_MapEditor->flag_Left_Button_Down = 0;
+
 		return 1;
 	}
 
@@ -772,6 +792,7 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Right_Window(HWND hDlg, UINT message, 
 	{
 		App->CL_MapEditor->Current_View = App->CL_MapEditor->VCam[V_TR];
 		App->CL_MapEditor->Draw_Screen(hDlg);
+
 		return 0;
 	}
 
@@ -956,59 +977,179 @@ void CL64_MapEditor::Pan_View(HWND hDlg, int Dx, int Dy)
 	Ogre::Vector3 dv;
 	Ogre::Vector3 dcamv;
 
-	if (Dx < App->CL_MapEditor->mStartPoint.x)
+	switch (Current_View->ViewType)
 	{
-		long test = App->CL_MapEditor->mStartPoint.x - Dx;
-		if (test > 2)
+	case VIEWTOP:  // Top Left
+	{
+		if (Dx < App->CL_MapEditor->mStartPoint.x)
 		{
-			dv = Ogre::Vector3(-15, 0, 0);
-			
-			POINT pt = mStartPoint;
-			ClientToScreen(hDlg, &pt);
-			SetCursorPos(pt.x, pt.y);
+			long test = App->CL_MapEditor->mStartPoint.x - Dx;
+			if (test > 2)
+			{
+				dv = Ogre::Vector3(-15, 0, 0);
+
+				POINT pt = mStartPoint;
+				ClientToScreen(hDlg, &pt);
+				SetCursorPos(pt.x, pt.y);
+			}
+
+		}
+		else if (Dx > App->CL_MapEditor->mStartPoint.x)
+		{
+			long test = Dx - App->CL_MapEditor->mStartPoint.x;
+			if (test > 2)
+			{
+				dv = Ogre::Vector3(15, 0, 0);
+
+				POINT pt = mStartPoint;
+				ClientToScreen(hDlg, &pt);
+				SetCursorPos(pt.x, pt.y);
+			}
 		}
 
-	}
-	else if (Dx > App->CL_MapEditor->mStartPoint.x)
-	{
-		long test = Dx - App->CL_MapEditor->mStartPoint.x;
-		if (test > 2)
+		if (Dy < App->CL_MapEditor->mStartPoint.y)
 		{
-			dv = Ogre::Vector3(15, 0, 0);
-			
-			POINT pt = mStartPoint;
-			ClientToScreen(hDlg, &pt);
-			SetCursorPos(pt.x, pt.y);
-		}
-	}
+			long test = App->CL_MapEditor->mStartPoint.y - Dy;
+			if (test > 2)
+			{
+				dv = Ogre::Vector3(0, 0, -15);
 
-	if (Dy < App->CL_MapEditor->mStartPoint.y)
-	{
-		long test = App->CL_MapEditor->mStartPoint.y - Dy;
-		if (test > 2)
-		{
-			dv = Ogre::Vector3(0, 0, -15);
-			
-			POINT pt = mStartPoint;	
-			ClientToScreen(hDlg, &pt);
-			SetCursorPos(pt.x, pt.y);
+				POINT pt = mStartPoint;
+				ClientToScreen(hDlg, &pt);
+				SetCursorPos(pt.x, pt.y);
+			}
 		}
-	}
-	else if (Dy > App->CL_MapEditor->mStartPoint.y)
-	{
-		long test = Dy - App->CL_MapEditor->mStartPoint.y;
-		if (test > 2)
+		else if (Dy > App->CL_MapEditor->mStartPoint.y)
 		{
-			dv = Ogre::Vector3(0, 0, 15);
+			long test = Dy - App->CL_MapEditor->mStartPoint.y;
+			if (test > 2)
+			{
+				dv = Ogre::Vector3(0, 0, 15);
 
-			POINT pt = mStartPoint;	
-			ClientToScreen(hDlg, &pt);
-			SetCursorPos(pt.x, pt.y);
+				POINT pt = mStartPoint;
+				ClientToScreen(hDlg, &pt);
+				SetCursorPos(pt.x, pt.y);
+			}
 		}
+
+		break;
+	}
+	case VIEWFRONT:  // Bottom Left
+	{
+		if (Dx < App->CL_MapEditor->mStartPoint.x)
+		{
+			long test = App->CL_MapEditor->mStartPoint.x - Dx;
+			if (test > 2)
+			{
+				dv = Ogre::Vector3(-15, -15, 0);
+
+				POINT pt = mStartPoint;
+				ClientToScreen(hDlg, &pt);
+				SetCursorPos(pt.x, pt.y);
+			}
+
+		}
+		else if (Dx > App->CL_MapEditor->mStartPoint.x)
+		{
+			long test = Dx - App->CL_MapEditor->mStartPoint.x;
+			if (test > 2)
+			{
+				dv = Ogre::Vector3(15, 0, 0);
+
+				POINT pt = mStartPoint;
+				ClientToScreen(hDlg, &pt);
+				SetCursorPos(pt.x, pt.y);
+			}
+		}
+
+		if (Dy < App->CL_MapEditor->mStartPoint.y)
+		{
+			long test = App->CL_MapEditor->mStartPoint.y - Dy;
+			if (test > 2)
+			{
+				dv = Ogre::Vector3(0, -15, 0);
+
+				POINT pt = mStartPoint;
+				ClientToScreen(hDlg, &pt);
+				SetCursorPos(pt.x, pt.y);
+			}
+		}
+		else if (Dy > App->CL_MapEditor->mStartPoint.y)
+		{
+			long test = Dy - App->CL_MapEditor->mStartPoint.y;
+			if (test > 2)
+			{
+				dv = Ogre::Vector3(0, 0, 15);
+
+				POINT pt = mStartPoint;
+				ClientToScreen(hDlg, &pt);
+				SetCursorPos(pt.x, pt.y);
+			}
+		}
+
+		break;
+	}
+	case VIEWSIDE: // Top Right
+	{
+		if (Dx < App->CL_MapEditor->mStartPoint.x)
+		{
+			long test = App->CL_MapEditor->mStartPoint.x - Dx;
+			if (test > 2)
+			{
+				dv = Ogre::Vector3(0, 0, -15);
+
+				POINT pt = mStartPoint;
+				ClientToScreen(hDlg, &pt);
+				SetCursorPos(pt.x, pt.y);
+			}
+
+		}
+		else if (Dx > App->CL_MapEditor->mStartPoint.x)
+		{
+			long test = Dx - App->CL_MapEditor->mStartPoint.x;
+			if (test > 2)
+			{
+				dv = Ogre::Vector3(0, 0, 15);
+
+				POINT pt = mStartPoint;
+				ClientToScreen(hDlg, &pt);
+				SetCursorPos(pt.x, pt.y);
+			}
+		}
+
+		if (Dy < App->CL_MapEditor->mStartPoint.y)
+		{
+			long test = App->CL_MapEditor->mStartPoint.y - Dy;
+			if (test > 2)
+			{
+				dv = Ogre::Vector3(0, 15, 0);
+
+				POINT pt = mStartPoint;
+				ClientToScreen(hDlg, &pt);
+				SetCursorPos(pt.x, pt.y);
+			}
+		}
+		else if (Dy > App->CL_MapEditor->mStartPoint.y)
+		{
+			long test = Dy - App->CL_MapEditor->mStartPoint.y;
+			if (test > 2)
+			{
+				dv = Ogre::Vector3(0, -15, 0);
+
+				POINT pt = mStartPoint;
+				ClientToScreen(hDlg, &pt);
+				SetCursorPos(pt.x, pt.y);
+			}
+		}
+
+		break;
+	}
+	default:
+
+		break;
 	}
 
 	App->CL_Maths->Vector3_Scale(&dv, -1.0f, &dcamv);
-
 	App->CL_Maths->Vector3_Add(&App->CL_MapEditor->Current_View->CamPos, &dcamv, &App->CL_MapEditor->Current_View->CamPos);
 	App->CL_MapEditor->Draw_Screen(hDlg);
 
