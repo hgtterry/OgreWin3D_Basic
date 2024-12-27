@@ -720,12 +720,34 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Right_Window(HWND hDlg, UINT message, 
 			App->CL_MapEditor->Zoom_View(hDlg, dx, dy);
 		}
 
+		if (App->CL_MapEditor->flag_Left_Button_Down == 1 && GetAsyncKeyState(VK_CONTROL) < 0)
+		{
+			App->CL_MapEditor->Pan_View(hDlg, dx, dy);
+		}
+
 		return 1;
 	}
 
 	case WM_LBUTTONDOWN:
 	{
+		GetCursorPos(&App->CL_MapEditor->mStartPoint);
+		ScreenToClient(hDlg, &App->CL_MapEditor->mStartPoint);
+
+		App->CL_MapEditor->flag_Right_Button_Down = 0;
+		App->CL_MapEditor->flag_Left_Button_Down = 1;
+
 		App->CL_MapEditor->Current_View = App->CL_MapEditor->VCam[V_TR];
+		App->CUR = SetCursor(NULL);
+
+		return 1;
+	}
+
+	case WM_LBUTTONUP:
+	{
+		App->CL_MapEditor->flag_Left_Button_Down = 0;
+		App->CL_MapEditor->flag_Right_Button_Down = 0;
+
+		App->CUR = SetCursor(App->CUR);
 		return 1;
 	}
 
