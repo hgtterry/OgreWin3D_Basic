@@ -206,7 +206,7 @@ void CL64_Ogre3D_Listener::Update_Game_Logic(float DeltaTime)
 	Count = 0;
 	while (Count < App->CL_Scene->Object_Count)
 	{
-		if (App->CL_Scene->B_Object[Count]->Usage == Enums::Stage_Usage_Message)
+		if (App->CL_Scene->B_Object[Count]->Usage == Enums::Obj_Usage_Message)
 		{
 			if (App->CL_Scene->B_Object[Count]->flag_Show_Message_Flag == 1)
 			{
@@ -235,7 +235,7 @@ void CL64_Ogre3D_Listener::Update_Game_Logic(float DeltaTime)
 				int UI = body->getUserIndex();
 				int Index = body->getUserIndex2();
 
-				if (UI == Enums::Stage_Usage_Dynamic)
+				if (UI == Enums::Obj_Usage_Dynamic)
 				{
 
 					body->getMotionState()->getWorldTransform(trans);

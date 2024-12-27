@@ -254,60 +254,60 @@ void CL64_LookUps::Get_Usage(int Index)
 	switch (Usage)
 	{
 
-	case Enums::Stage_Usage_Room:
+	case Enums::Obj_Usage_Room:
 	{
 		strcpy(Chr_Usage, "Usage_Room");
 		return;
 	}
-	case Enums::Stage_Usage_Static:
+	case Enums::Obj_Usage_Static:
 	{
 		strcpy(Chr_Usage, "Usage_Static");
 		return;
 	}
 
-	case Enums::Stage_Usage_Dynamic:
+	case Enums::Obj_Usage_Dynamic:
 	{
 		strcpy(Chr_Usage, "Usage_Dynamic");
 		return;
 	}
 
-	case Enums::Stage_Usage_Object:
+	case Enums::Obj_Usage_Object:
 	{
 		strcpy(Chr_Usage, "Usage_Object");
 		return;
 	}
 
-	case Enums::Stage_Usage_Teleport:
+	case Enums::Obj_Usage_Teleport:
 	{
 		strcpy(Chr_Usage, "Usage_Teleport");
 		return;
 	}
 
-	case Enums::Stage_Usage_Colectable:
+	case Enums::Obj_Usage_Colectable:
 	{
 		strcpy(Chr_Usage, "Usage_Colectable");
 		return;
 	}
 
-	case Enums::Stage_Usage_Message:
+	case Enums::Obj_Usage_Message:
 	{
 		strcpy(Chr_Usage, "Usage_Message");
 		return;
 	}
 
-	case Enums::Stage_Usage_Move:
+	case Enums::Obj_Usage_Move:
 	{
 		strcpy(Chr_Usage, "Usage_Move");
 		return;
 	}
 
-	case Enums::Stage_Usage_Sound:
+	case Enums::Obj_Usage_Sound:
 	{
 		strcpy(Chr_Usage, "Usage_Sound");
 		return;
 	}
 
-	case Enums::Stage_Usage_EnvironEntity:
+	case Enums::Obj_Usage_EnvironEntity:
 	{
 		strcpy(Chr_Usage, "Environment Entity");
 		return;

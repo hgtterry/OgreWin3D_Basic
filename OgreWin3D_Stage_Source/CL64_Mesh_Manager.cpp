@@ -109,14 +109,6 @@ bool CL64_Mesh_Manager::Ogre_To_Mesh_Data(Ogre::Entity* Ogre_Entity, Ogre::Scene
 
 	Convert_To_Mesh_Data(Ogre_Entity);
 
-
-	//App->CL_Scene->Set_BondingBox_Model(true);
-	//App->CL_Converters->Get_SkeletonInstance(Ogre_Entity);
-	//Get_Ogre_Mesh_Data(Ogre_Entity);
-
-	//App->CL_ImGui->flag_Show_Model_Data = 1;
-	//App->CL_ImGui->flag_Show_Ogre_Data = 1;
-
 	return 1;
 }
 

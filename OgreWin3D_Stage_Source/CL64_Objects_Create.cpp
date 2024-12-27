@@ -266,7 +266,7 @@ bool CL64_Objects_Create::Add_Objects_From_File() // From File
 		strcpy(Test_For_Mesh, App->CL_Project->m_Main_Assets_Path);
 		strcat(Test_For_Mesh, App->CL_Scene->B_Object[Count]->Mesh_FileName);
 		
-		if (App->CL_Scene->B_Object[Count]->Usage == Enums::Stage_Usage_Sound)
+		if (App->CL_Scene->B_Object[Count]->Usage == Enums::Obj_Usage_Sound)
 		{
 			App->CL_Com_Sounds->Create_Sound_Entity(Count);
 
@@ -275,7 +275,7 @@ bool CL64_Objects_Create::Add_Objects_From_File() // From File
 
 			App->CL_FileView->Set_FolderActive(App->CL_FileView->FV_Sounds_Folder);
 		}
-		else if (App->CL_Scene->B_Object[Count]->Usage == Enums::Stage_Usage_Message)
+		else if (App->CL_Scene->B_Object[Count]->Usage == Enums::Obj_Usage_Message)
 		{
 			App->CL_Com_Messages->Create_Message_Entity(Count);
 			App->CL_Scene->B_Object[Count]->Set_ImGui_Panel_Name();
@@ -285,7 +285,7 @@ bool CL64_Objects_Create::Add_Objects_From_File() // From File
 
 			App->CL_FileView->Set_FolderActive(App->CL_FileView->FV_Message_Trigger_Folder);
 		}
-		else if (App->CL_Scene->B_Object[Count]->Usage == Enums::Stage_Usage_Move)
+		else if (App->CL_Scene->B_Object[Count]->Usage == Enums::Obj_Usage_Move)
 		{
 			App->CL_Com_MoveEntity->Create_Move_Entity(Count);
 
@@ -295,7 +295,7 @@ bool CL64_Objects_Create::Add_Objects_From_File() // From File
 			App->CL_FileView->Set_FolderActive(App->CL_FileView->FV_Move_Folder);
 
 		}
-		else if (App->CL_Scene->B_Object[Count]->Usage == Enums::Stage_Usage_Teleport)
+		else if (App->CL_Scene->B_Object[Count]->Usage == Enums::Obj_Usage_Teleport)
 		{
 			App->CL_Com_Teleporters->Create_Teleport_Entity(Count);
 
@@ -305,7 +305,7 @@ bool CL64_Objects_Create::Add_Objects_From_File() // From File
 			App->CL_FileView->Set_FolderActive(App->CL_FileView->FV_Teleporters_Folder);
 
 		}
-		else if (App->CL_Scene->B_Object[Count]->Usage == Enums::Stage_Usage_Colectable)
+		else if (App->CL_Scene->B_Object[Count]->Usage == Enums::Obj_Usage_Colectable)
 		{
 			bool Test = App->CL_File_IO->Check_File_Exist(Test_For_Mesh);
 			if (Test == 0)
@@ -324,7 +324,7 @@ bool CL64_Objects_Create::Add_Objects_From_File() // From File
 			}
 
 		}
-		else if (App->CL_Scene->B_Object[Count]->Usage == Enums::Stage_Usage_EnvironEntity)
+		else if (App->CL_Scene->B_Object[Count]->Usage == Enums::Obj_Usage_EnvironEntity)
 		{
 			App->CL_Com_Environments->Create_Environ_Entity(Count);
 
@@ -334,7 +334,7 @@ bool CL64_Objects_Create::Add_Objects_From_File() // From File
 			App->CL_FileView->Set_FolderActive(App->CL_FileView->FV_Evirons_Folder);
 
 		} // -------------------------------------------------------------------------- Particles
-		else if (App->CL_Scene->B_Object[Count]->Usage == Enums::Stage_Usage_Particle)
+		else if (App->CL_Scene->B_Object[Count]->Usage == Enums::Obj_Usage_Particle)
 		{
 			App->CL_Com_Particles->Create_Particle_Entity(Count);
 
@@ -439,14 +439,14 @@ void CL64_Objects_Create::Add_Physics_Box(bool Dynamic, int Index)
 
 	if (Dynamic == 1)
 	{
-		Object->Usage = Enums::Stage_Usage_Dynamic;
-		Object->Phys_Body->setUserIndex(Enums::Stage_Usage_Dynamic);
+		Object->Usage = Enums::Obj_Usage_Dynamic;
+		Object->Phys_Body->setUserIndex(Enums::Obj_Usage_Dynamic);
 		Object->Phys_Body->setUserIndex2(Index);
 	}
 	else
 	{
-		Object->Usage = Enums::Stage_Usage_Static;
-		Object->Phys_Body->setUserIndex(Enums::Stage_Usage_Static);
+		Object->Usage = Enums::Obj_Usage_Static;
+		Object->Phys_Body->setUserIndex(Enums::Obj_Usage_Static);
 		Object->Phys_Body->setUserIndex2(Index);
 	}
 
@@ -524,14 +524,14 @@ void CL64_Objects_Create::Add_Physics_Sphere(bool Dynamic, int Index)
 
 	if (Dynamic == 1)
 	{
-		Object->Usage = Enums::Stage_Usage_Dynamic;
-		Object->Phys_Body->setUserIndex(Enums::Stage_Usage_Dynamic);
+		Object->Usage = Enums::Obj_Usage_Dynamic;
+		Object->Phys_Body->setUserIndex(Enums::Obj_Usage_Dynamic);
 		Object->Phys_Body->setUserIndex2(Index);
 	}
 	else
 	{
-		Object->Usage = Enums::Stage_Usage_Static;
-		Object->Phys_Body->setUserIndex(Enums::Stage_Usage_Static);
+		Object->Usage = Enums::Obj_Usage_Static;
+		Object->Phys_Body->setUserIndex(Enums::Obj_Usage_Static);
 		Object->Phys_Body->setUserIndex2(Index);
 	}
 
@@ -611,14 +611,14 @@ void CL64_Objects_Create::Add_Physics_Capsule(bool Dynamic, int Index)
 
 	if (Dynamic == 1)
 	{
-		Object->Usage = Enums::Stage_Usage_Dynamic;
-		Object->Phys_Body->setUserIndex(Enums::Stage_Usage_Dynamic);
+		Object->Usage = Enums::Obj_Usage_Dynamic;
+		Object->Phys_Body->setUserIndex(Enums::Obj_Usage_Dynamic);
 		Object->Phys_Body->setUserIndex2(Index);
 	}
 	else
 	{
-		Object->Usage = Enums::Stage_Usage_Static;
-		Object->Phys_Body->setUserIndex(Enums::Stage_Usage_Static);
+		Object->Usage = Enums::Obj_Usage_Static;
+		Object->Phys_Body->setUserIndex(Enums::Obj_Usage_Static);
 		Object->Phys_Body->setUserIndex2(Index);
 	}
 
@@ -697,14 +697,14 @@ void CL64_Objects_Create::Add_Physics_Cylinder(bool Dynamic, int Index)
 
 	if (Dynamic == 1)
 	{
-		Object->Usage = Enums::Stage_Usage_Dynamic;
-		Object->Phys_Body->setUserIndex(Enums::Stage_Usage_Dynamic);
+		Object->Usage = Enums::Obj_Usage_Dynamic;
+		Object->Phys_Body->setUserIndex(Enums::Obj_Usage_Dynamic);
 		Object->Phys_Body->setUserIndex2(Index);
 	}
 	else
 	{
-		Object->Usage = Enums::Stage_Usage_Static;
-		Object->Phys_Body->setUserIndex(Enums::Stage_Usage_Static);
+		Object->Usage = Enums::Obj_Usage_Static;
+		Object->Phys_Body->setUserIndex(Enums::Obj_Usage_Static);
 		Object->Phys_Body->setUserIndex2(Index);
 	}
 
@@ -783,14 +783,14 @@ void CL64_Objects_Create::Add_Physics_Cone(bool Dynamic, int Index)
 
 	if (Dynamic == 1)
 	{
-		Object->Usage = Enums::Stage_Usage_Dynamic;
-		Object->Phys_Body->setUserIndex(Enums::Stage_Usage_Dynamic);
+		Object->Usage = Enums::Obj_Usage_Dynamic;
+		Object->Phys_Body->setUserIndex(Enums::Obj_Usage_Dynamic);
 		Object->Phys_Body->setUserIndex2(Index);
 	}
 	else
 	{
-		Object->Usage = Enums::Stage_Usage_Static;
-		Object->Phys_Body->setUserIndex(Enums::Stage_Usage_Static);
+		Object->Usage = Enums::Obj_Usage_Static;
+		Object->Phys_Body->setUserIndex(Enums::Obj_Usage_Static);
 		Object->Phys_Body->setUserIndex2(Index);
 	}
 

@@ -43,7 +43,7 @@ void CL64_Com_Particles::Set_Particle_Defaults(int Index)
 
 	B_Object->Phys_Body = NULL;
 	B_Object->flag_Physics_Valid = 0;
-	B_Object->Usage = Enums::Stage_Usage_Particle;
+	B_Object->Usage = Enums::Obj_Usage_Particle;
 
 	B_Object->S_Particle[0]->Particle = NULL;
 	B_Object->S_Particle[0]->SpeedFactor = 0.5;

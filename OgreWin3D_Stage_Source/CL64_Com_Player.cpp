@@ -147,7 +147,7 @@ void CL64_Com_Player::Initialize() const
 
 	pBase->Phys_Body->setUserPointer(pBase->Player_Node);
 
-	pBase->Phys_Body->setUserIndex(Enums::Stage_Usage_Player);
+	pBase->Phys_Body->setUserIndex(Enums::Usage_Player);
 
 	int f = pBase->Phys_Body->getCollisionFlags();
 	//pBase->Phys_Body->setCollisionFlags(f | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
@@ -455,7 +455,7 @@ void CL64_Com_Player::Check_Collisions(void)
 
 		Col_Usage_Index = obB->getUserIndex();
 	
-		if (Col_Player_Index == Enums::Stage_Usage_Player)
+		if (Col_Player_Index == Enums::Obj_Usage_Player)
 		{
 			if (Col_Usage_Index == 123)// && App->SBC_Scene->B_Object[Last_Message_Index]->Triggered == 1)
 			{
@@ -468,7 +468,7 @@ void CL64_Com_Player::Check_Collisions(void)
 			else
 			{
 				// -------------------- Message Collision
-				if (Col_Usage_Index == Enums::Stage_Usage_Message)
+				if (Col_Usage_Index == Enums::Obj_Usage_Message)
 				{
 					int numContacts = contactManifold->getNumContacts();
 					for (int j = 0; j < numContacts; j++)
@@ -500,7 +500,7 @@ void CL64_Com_Player::Check_Collisions(void)
 				}
 
 				// -------------------- Sound Collision
-				if (Col_Usage_Index == Enums::Stage_Usage_Sound)
+				if (Col_Usage_Index == Enums::Obj_Usage_Sound)
 				{
 					int numContacts = contactManifold->getNumContacts();
 					for (int j = 0; j < numContacts; j++)
@@ -531,7 +531,7 @@ void CL64_Com_Player::Check_Collisions(void)
 				}
 
 				// -------------------- Move Collision
-				if (Col_Usage_Index == Enums::Stage_Usage_Move)
+				if (Col_Usage_Index == Enums::Obj_Usage_Move)
 				{
 
 					int numContacts = contactManifold->getNumContacts();
@@ -563,7 +563,7 @@ void CL64_Com_Player::Check_Collisions(void)
 				}
 
 				// -------------------- Collectable Collision
-				if (Col_Usage_Index == Enums::Stage_Usage_Colectable)
+				if (Col_Usage_Index == Enums::Obj_Usage_Colectable)
 				{
 					int numContacts = contactManifold->getNumContacts();
 					for (int j = 0; j < numContacts; j++)
@@ -576,7 +576,7 @@ void CL64_Com_Player::Check_Collisions(void)
 				}
 
 				// -------------------- Teleport Collision
-				if (Col_Usage_Index == Enums::Stage_Usage_Teleport)
+				if (Col_Usage_Index == Enums::Obj_Usage_Teleport)
 				{
 					int numContacts = contactManifold->getNumContacts();
 					for (int j = 0; j < numContacts; j++)
@@ -607,7 +607,7 @@ void CL64_Com_Player::Check_Collisions(void)
 				}
 
 				// -------------------- EnvironEntity Collision
-				if (Col_Usage_Index == Enums::Stage_Usage_EnvironEntity)
+				if (Col_Usage_Index == Enums::Obj_Usage_EnvironEntity)
 				{
 					int numContacts = contactManifold->getNumContacts();
 					for (int j = 0; j < numContacts; j++)

@@ -141,7 +141,7 @@ void CL64_Physics::Reset_Triggers(void)
 		if (App->CL_Scene->B_Object[Count]->flag_Deleted == 0)
 		{
 			// ------------------------------------- Move Entities
-			if (App->CL_Scene->B_Object[Count]->Usage == Enums::Stage_Usage_Move)
+			if (App->CL_Scene->B_Object[Count]->Usage == Enums::Obj_Usage_Move)
 			{
 				int ObjectToMove = App->CL_Scene->B_Object[Count]->S_MoveType[0]->Object_To_Move_Index;
 
@@ -158,7 +158,7 @@ void CL64_Physics::Reset_Triggers(void)
 			}
 
 			// ------------------------------------- Colectables
-			if (App->CL_Scene->B_Object[Count]->Usage == Enums::Stage_Usage_Colectable)
+			if (App->CL_Scene->B_Object[Count]->Usage == Enums::Obj_Usage_Colectable)
 			{
 				App->CL_Scene->B_Object[Count]->Object_Ent->setVisible(TRUE);
 
@@ -172,7 +172,7 @@ void CL64_Physics::Reset_Triggers(void)
 			}
 
 			// ------------------------------------- Messages
-			if (App->CL_Scene->B_Object[Count]->Usage == Enums::Stage_Usage_Message)
+			if (App->CL_Scene->B_Object[Count]->Usage == Enums::Obj_Usage_Message)
 			{
 				App->CL_Scene->B_Object[Count]->flag_Show_Message_Flag = 0;
 			}
@@ -205,7 +205,7 @@ void CL64_Physics::Reset_Physics(void)
 	int Count = 0;
 	while (Count < App->CL_Scene->Object_Count)
 	{
-		if (App->CL_Scene->B_Object[Count]->Usage == Enums::Stage_Usage_Dynamic)
+		if (App->CL_Scene->B_Object[Count]->Usage == Enums::Obj_Usage_Dynamic)
 		{
 			btVector3 zeroVector(0, 0, 0);
 

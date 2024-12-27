@@ -178,9 +178,9 @@ bool CL64_Com_Messages::Create_Message_Entity(int Index)
 	MObject->Phys_Body->setUserPointer(MObject->Object_Node);
 	MObject->Phys_Body->setWorldTransform(startTransform);
 
-	MObject->Usage = Enums::Stage_Usage_Message;
+	MObject->Usage = Enums::Obj_Usage_Message;
 
-	MObject->Phys_Body->setUserIndex(Enums::Stage_Usage_Message);
+	MObject->Phys_Body->setUserIndex(Enums::Obj_Usage_Message);
 	MObject->Phys_Body->setUserIndex2(Index);
 
 	int f = MObject->Phys_Body->getCollisionFlags();

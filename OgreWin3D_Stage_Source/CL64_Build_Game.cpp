@@ -1441,7 +1441,7 @@ bool CL64_Build_Game::Build_Objects_Data()
 			z = App->CL_Scene->B_Object[Count]->Physics_Quat.z;
 			fprintf(WriteFile, "%s%f,%f,%f,%f\n", "Physics_Quat=", w, x, y, z);
 			//---------------------------------------------------------------------------------- Message Entity
-			if (App->CL_Scene->B_Object[Count]->Usage == Enums::Stage_Usage_Message)
+			if (App->CL_Scene->B_Object[Count]->Usage == Enums::Obj_Usage_Message)
 			{
 				fprintf(WriteFile, "%s\n", "------------------- Message");
 				fprintf(WriteFile, "%s%s\n", "Message_Text=", App->CL_Scene->B_Object[Count]->S_Message[0]->Message_Text);
@@ -1474,14 +1474,14 @@ bool CL64_Build_Game::Build_Objects_Data()
 			}
 
 			//---------------------------------------------------------------------------------- Sound Entity
-			if (App->CL_Scene->B_Object[Count]->Usage == Enums::Stage_Usage_Sound)
+			if (App->CL_Scene->B_Object[Count]->Usage == Enums::Obj_Usage_Sound)
 			{
 				fprintf(WriteFile, "%s%s\n", "Sound_File=", App->CL_Scene->B_Object[Count]->Sound_File);
 				fprintf(WriteFile, "%s%f\n", "Sound_Volume=", App->CL_Scene->B_Object[Count]->SndVolume);
 			}
 
 			//---------------------------------------------------------------------------------- Colectable Entity
-			if (App->CL_Scene->B_Object[Count]->Usage == Enums::Stage_Usage_Colectable)
+			if (App->CL_Scene->B_Object[Count]->Usage == Enums::Obj_Usage_Colectable)
 			{
 				fprintf(WriteFile, "%s%s\n", "Col_Sound_File=", App->CL_Scene->B_Object[Count]->S_Collectable[0]->Sound_File);
 				fprintf(WriteFile, "%s%f\n", "Col_Sound_Volume=", App->CL_Scene->B_Object[Count]->S_Collectable[0]->SndVolume);
@@ -1495,7 +1495,7 @@ bool CL64_Build_Game::Build_Objects_Data()
 			}
 
 			//---------------------------------------------------------------------------------- Move Entity
-			if (App->CL_Scene->B_Object[Count]->Usage == Enums::Stage_Usage_Move)
+			if (App->CL_Scene->B_Object[Count]->Usage == Enums::Obj_Usage_Move)
 			{
 				fprintf(WriteFile, "%s%f\n", "Move_Distance=", App->CL_Scene->B_Object[Count]->S_MoveType[0]->Move_Distance);
 				fprintf(WriteFile, "%s%i\n", "Move_IsNegative=", App->CL_Scene->B_Object[Count]->S_MoveType[0]->flag_IsNegative);
@@ -1522,7 +1522,7 @@ bool CL64_Build_Game::Build_Objects_Data()
 			}
 
 			//---------------------------------------------------------------------------------- Teleport Entity
-			if (App->CL_Scene->B_Object[Count]->Usage == Enums::Stage_Usage_Teleport)
+			if (App->CL_Scene->B_Object[Count]->Usage == Enums::Obj_Usage_Teleport)
 			{
 				fprintf(WriteFile, "%s%s\n", "Tele_Goto=", App->CL_Scene->B_Object[Count]->S_Teleport[0]->Location_Name);
 
@@ -1603,7 +1603,7 @@ bool CL64_Build_Game::Build_Objects_Data()
 			}
 
 			//---------------------------------------------------------------------------------- Environ Entity
-			if (App->CL_Scene->B_Object[Count]->Usage == Enums::Stage_Usage_EnvironEntity)
+			if (App->CL_Scene->B_Object[Count]->Usage == Enums::Obj_Usage_EnvironEntity)
 			{
 				fprintf(WriteFile, "%s\n", "------------------- EnvironEntity");
 				fprintf(WriteFile, "%s%s\n", "Environment_Name=", App->CL_Scene->B_Object[Count]->S_Environ[0]->Environment_Name);
@@ -1652,7 +1652,7 @@ bool CL64_Build_Game::Build_Objects_Data()
 			}
 
 			//---------------------------------------------------------------------------------- Particle
-			if (App->CL_Scene->B_Object[Count]->Usage == Enums::Stage_Usage_Particle)
+			if (App->CL_Scene->B_Object[Count]->Usage == Enums::Obj_Usage_Particle)
 			{
 				fprintf(WriteFile, "%s\n", "-- Particle");
 				fprintf(WriteFile, "%s%s\n", "Particle_Script=", App->CL_Scene->B_Object[Count]->S_Particle[0]->ParticleScript);

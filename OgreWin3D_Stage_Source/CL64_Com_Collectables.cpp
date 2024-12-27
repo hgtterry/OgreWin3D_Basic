@@ -159,8 +159,8 @@ bool CL64_Com_Collectables::Create_Collectable_Entity(int Index)
 	Object->Phys_Body->setUserPointer(Object->Object_Node);
 	Object->Phys_Body->setWorldTransform(startTransform);
 
-	Object->Usage = Enums::Stage_Usage_Colectable;
-	Object->Phys_Body->setUserIndex(Enums::Stage_Usage_Colectable);
+	Object->Usage = Enums::Obj_Usage_Colectable;
+	Object->Phys_Body->setUserIndex(Enums::Obj_Usage_Colectable);
 	Object->Phys_Body->setUserIndex2(Index);
 
 	int f = Object->Phys_Body->getCollisionFlags();

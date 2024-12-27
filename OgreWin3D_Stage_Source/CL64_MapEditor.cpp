@@ -775,8 +775,11 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Right_Window(HWND hDlg, UINT message, 
 		ScreenToClient(hDlg, &App->CL_MapEditor->mStartPoint);
 
 		App->CL_MapEditor->flag_Right_Button_Down = 1;
+		App->CL_MapEditor->flag_Left_Button_Down = 0;
+
 		App->CL_MapEditor->Current_View = App->CL_MapEditor->VCam[V_TR];
-		
+		App->CUR = SetCursor(NULL);
+
 		return 1;
 	}
 
@@ -784,6 +787,8 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Right_Window(HWND hDlg, UINT message, 
 	{
 		App->CL_MapEditor->flag_Right_Button_Down = 0;
 		App->CL_MapEditor->flag_Left_Button_Down = 0;
+
+		App->CUR = SetCursor(App->CUR);
 
 		return 1;
 	}
@@ -837,6 +842,18 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Bottom_Left_Window(HWND hDlg, UINT message
 		return (LRESULT)1;
 	}
 
+	case WM_SETCURSOR:
+	{
+		if (App->CL_MapEditor->flag_Right_Button_Down == 1 || App->CL_MapEditor->flag_Left_Button_Down == 1)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
 	case WM_MOUSEMOVE:
 	{
 		int			dx, dy;
@@ -854,12 +871,35 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Bottom_Left_Window(HWND hDlg, UINT message
 			App->CL_MapEditor->Zoom_View(hDlg, dx, dy);
 		}
 
+		if (App->CL_MapEditor->flag_Left_Button_Down == 1 && GetAsyncKeyState(VK_CONTROL) < 0)
+		{
+			App->CL_MapEditor->Pan_View(hDlg, dx, dy);
+		}
+
 		return 1;
 	}
 
 	case WM_LBUTTONDOWN:
 	{
+		GetCursorPos(&App->CL_MapEditor->mStartPoint);
+		ScreenToClient(hDlg, &App->CL_MapEditor->mStartPoint);
+
+		App->CL_MapEditor->flag_Right_Button_Down = 0;
+		App->CL_MapEditor->flag_Left_Button_Down = 1;
+
 		App->CL_MapEditor->Current_View = App->CL_MapEditor->VCam[V_BL];
+		App->CUR = SetCursor(NULL);
+
+		return 1;
+	}
+
+	case WM_LBUTTONUP:
+	{
+		App->CL_MapEditor->flag_Left_Button_Down = 0;
+		App->CL_MapEditor->flag_Right_Button_Down = 0;
+
+		App->CUR = SetCursor(App->CUR);
+
 		return 1;
 	}
 
@@ -868,16 +908,22 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Bottom_Left_Window(HWND hDlg, UINT message
 		GetCursorPos(&App->CL_MapEditor->mStartPoint);
 		ScreenToClient(hDlg, &App->CL_MapEditor->mStartPoint);
 
+		App->CL_MapEditor->flag_Left_Button_Down = 0;
 		App->CL_MapEditor->flag_Right_Button_Down = 1;
 
 		App->CL_MapEditor->Current_View = App->CL_MapEditor->VCam[V_BL];
 		
+		App->CUR = SetCursor(NULL);
 		return 1;
 	}
 
 	case WM_RBUTTONUP:
 	{
+		App->CL_MapEditor->flag_Left_Button_Down = 0;
 		App->CL_MapEditor->flag_Right_Button_Down = 0;
+
+		App->CUR = SetCursor(App->CUR);
+
 		return 1;
 	}
 
@@ -1041,7 +1087,7 @@ void CL64_MapEditor::Pan_View(HWND hDlg, int Dx, int Dy)
 			long test = App->CL_MapEditor->mStartPoint.x - Dx;
 			if (test > 2)
 			{
-				dv = Ogre::Vector3(-15, -15, 0);
+				dv = Ogre::Vector3(-15, 0, 0);
 
 				POINT pt = mStartPoint;
 				ClientToScreen(hDlg, &pt);
@@ -1067,7 +1113,7 @@ void CL64_MapEditor::Pan_View(HWND hDlg, int Dx, int Dy)
 			long test = App->CL_MapEditor->mStartPoint.y - Dy;
 			if (test > 2)
 			{
-				dv = Ogre::Vector3(0, -15, 0);
+				dv = Ogre::Vector3(0, 15, 0);
 
 				POINT pt = mStartPoint;
 				ClientToScreen(hDlg, &pt);
@@ -1079,7 +1125,7 @@ void CL64_MapEditor::Pan_View(HWND hDlg, int Dx, int Dy)
 			long test = Dy - App->CL_MapEditor->mStartPoint.y;
 			if (test > 2)
 			{
-				dv = Ogre::Vector3(0, 0, 15);
+				dv = Ogre::Vector3(0, -15, 0);
 
 				POINT pt = mStartPoint;
 				ClientToScreen(hDlg, &pt);

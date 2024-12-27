@@ -171,8 +171,8 @@ bool CL64_Com_MoveEntity::Create_Move_Entity(int Index)
 	Object->Phys_Body->setUserPointer(Object->Object_Node);
 	Object->Phys_Body->setWorldTransform(startTransform);
 
-	Object->Usage = Enums::Stage_Usage_Move;
-	Object->Phys_Body->setUserIndex(Enums::Stage_Usage_Move);
+	Object->Usage = Enums::Obj_Usage_Move;
+	Object->Phys_Body->setUserIndex(Enums::Obj_Usage_Move);
 	Object->Phys_Body->setUserIndex2(Index);
 
 	int f = Object->Phys_Body->getCollisionFlags();
@@ -257,7 +257,7 @@ void CL64_Com_MoveEntity::Adjust_Object_To_Move()
 
 	while (Count < Total)
 	{
-		if (App->CL_Scene->B_Object[Count]->Usage == Enums::Stage_Usage_Move)
+		if (App->CL_Scene->B_Object[Count]->Usage == Enums::Obj_Usage_Move)
 		{
 			char MoveName[MAX_PATH];
 			strcpy(MoveName, App->CL_Scene->B_Object[Count]->S_MoveType[0]->Object_Name);

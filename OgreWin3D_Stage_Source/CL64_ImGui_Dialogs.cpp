@@ -452,7 +452,7 @@ void CL64_ImGui_Dialogs::Start_Move_Entity_Editor(int Index)
 	while (Count < Total)
 	{
 
-		if (App->CL_Scene->B_Object[Count]->Usage == Enums::Stage_Usage_Static)
+		if (App->CL_Scene->B_Object[Count]->Usage == Enums::Obj_Usage_Static)
 		{
 			bool test = strcmp(App->CL_Scene->B_Object[Index]->S_MoveType[0]->Object_Name, App->CL_Scene->B_Object[Count]->Object_Name);
 			if (test == 0)

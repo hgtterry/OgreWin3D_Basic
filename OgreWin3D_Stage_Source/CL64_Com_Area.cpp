@@ -187,7 +187,7 @@ void CL64_Com_Area::Add_Aera_To_Project(int Index, char* FileName, char* Resourc
 
 	Create_Area_Trimesh(Index, Area);
 
-	Area->Usage = Enums::Stage_Usage_Room;
+	Area->Usage = Enums::Obj_Usage_Room;
 
 	App->CL_Scene->flag_Area_Added = 1;
 }

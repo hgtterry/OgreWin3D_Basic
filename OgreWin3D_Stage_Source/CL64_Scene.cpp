@@ -429,32 +429,32 @@ bool CL64_Scene::Show_Entities(bool TrueFalse)
 	{
 		if (B_Object[Count]->flag_Deleted == 0)
 		{
-			if (B_Object[Count]->Usage == Enums::Stage_Usage_Sound)
+			if (B_Object[Count]->Usage == Enums::Obj_Usage_Sound)
 			{
 				B_Object[Count]->Object_Node->setVisible(TrueFalse);
 			}
 
-			if (B_Object[Count]->Usage == Enums::Stage_Usage_Message)
+			if (B_Object[Count]->Usage == Enums::Obj_Usage_Message)
 			{
 				B_Object[Count]->Object_Node->setVisible(TrueFalse);
 			}
 
-			if (B_Object[Count]->Usage == Enums::Stage_Usage_Move)
+			if (B_Object[Count]->Usage == Enums::Obj_Usage_Move)
 			{
 				B_Object[Count]->Object_Node->setVisible(TrueFalse);
 			}
 
-			if (B_Object[Count]->Usage == Enums::Stage_Usage_Teleport)
+			if (B_Object[Count]->Usage == Enums::Obj_Usage_Teleport)
 			{
 				B_Object[Count]->Object_Node->setVisible(TrueFalse);
 			}
 
-			if (B_Object[Count]->Usage == Enums::Stage_Usage_Environment)
+			if (B_Object[Count]->Usage == Enums::Obj_Usage_Environment)
 			{
 				B_Object[Count]->Object_Node->setVisible(TrueFalse);
 			}
 
-			if (B_Object[Count]->Usage == Enums::Stage_Usage_EnvironEntity)
+			if (B_Object[Count]->Usage == Enums::Obj_Usage_EnvironEntity)
 			{
 				B_Object[Count]->Object_Node->setVisible(TrueFalse);
 			}
