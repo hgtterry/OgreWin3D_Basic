@@ -125,7 +125,6 @@ bool CL64_Objects_Create::Add_New_Object(int Index, bool From_MeshViewer)
 	Object->Object_Node = App->CL_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	Object->Object_Node->attachObject(Object->Object_Ent);
 	Object->Object_Node->setVisible(true);
-
 	Object->Object_Node->setOrientation(Object->Mesh_Quat);
 
 	// Get Material Name
@@ -133,6 +132,7 @@ bool CL64_Objects_Create::Add_New_Object(int Index, bool From_MeshViewer)
 	Ogre::MaterialPtr  Mat = static_cast<Ogre::MaterialPtr> (Ogre::MaterialManager::getSingleton().getByName(text));
 	strcpy(Object->Material_File, Mat->getOrigin().c_str());
 	Object->UsageEX = 777;
+
 
 	// If from MeshViewer Get Placement Method
 	if (From_MeshViewer == 1) //&& App->CL_MeshViewer->Placement_Camera == 1)
@@ -213,6 +213,8 @@ bool CL64_Objects_Create::Add_New_Object(int Index, bool From_MeshViewer)
 	{
 		create_New_Trimesh(Index);
 	}
+
+	App->CL_Mesh_Manager->Ogre_To_Mesh_Data(Object->Object_Ent, Object->Object_Node, Object->Usage);
 
 
 	//if (Object->Usage == Enums::Usage_Room) // Rooms
@@ -305,7 +307,7 @@ bool CL64_Objects_Create::Add_Objects_From_File() // From File
 			App->CL_FileView->Set_FolderActive(App->CL_FileView->FV_Teleporters_Folder);
 
 		}
-		else if (App->CL_Scene->B_Object[Count]->Usage == Enums::Obj_Usage_Colectable)
+		else if (App->CL_Scene->B_Object[Count]->Usage == Enums::Obj_Usage_Collectable)
 		{
 			bool Test = App->CL_File_IO->Check_File_Exist(Test_For_Mesh);
 			if (Test == 0)

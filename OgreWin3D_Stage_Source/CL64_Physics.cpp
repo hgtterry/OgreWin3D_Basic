@@ -158,7 +158,7 @@ void CL64_Physics::Reset_Triggers(void)
 			}
 
 			// ------------------------------------- Colectables
-			if (App->CL_Scene->B_Object[Count]->Usage == Enums::Obj_Usage_Colectable)
+			if (App->CL_Scene->B_Object[Count]->Usage == Enums::Obj_Usage_Collectable)
 			{
 				App->CL_Scene->B_Object[Count]->Object_Ent->setVisible(TRUE);
 

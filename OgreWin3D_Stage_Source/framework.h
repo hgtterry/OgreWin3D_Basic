@@ -130,7 +130,7 @@ namespace Enums
 		Obj_Usage_Recevier = 9,
 		Obj_Usage_Particle = 10,
 		Obj_Usage_Light = 11,
-		Obj_Usage_Colectable = 12,
+		Obj_Usage_Collectable = 12,
 		Obj_Usage_Message = 13,
 		Obj_Usage_Move = 14,
 		Obj_Usage_Sound = 15,

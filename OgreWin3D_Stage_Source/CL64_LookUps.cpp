@@ -283,9 +283,9 @@ void CL64_LookUps::Get_Usage(int Index)
 		return;
 	}
 
-	case Enums::Obj_Usage_Colectable:
+	case Enums::Obj_Usage_Collectable:
 	{
-		strcpy(Chr_Usage, "Usage_Colectable");
+		strcpy(Chr_Usage, "Usage_Collectable");
 		return;
 	}
 

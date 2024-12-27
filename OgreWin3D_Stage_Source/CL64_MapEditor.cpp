@@ -63,6 +63,7 @@ CL64_MapEditor::CL64_MapEditor()
 	flag_Show_Areas = 1;
 	flag_Show_Camera = 1;
 	flag_Show_Colectables = 1;
+	flag_Show_Static_Objects = 1;
 
 	flag_Right_Button_Down = 0;
 	flag_Left_Button_Down = 0;
@@ -73,6 +74,7 @@ CL64_MapEditor::CL64_MapEditor()
 	Pen_Camera = CreatePen(PS_SOLID, 0, RGB(0, 255, 0));
 	Pen_White = CreatePen(PS_SOLID, 0, RGB(255, 255, 255));
 	Pen_Colectables = CreatePen(PS_SOLID, 0, RGB(255, 0, 0));
+	Pen_Static_Objects = CreatePen(PS_SOLID, 0, RGB(0, 0, 255));
 
 	MemoryhDC = nullptr;
 
@@ -1418,7 +1420,7 @@ void CL64_MapEditor::MeshData_Render_Faces(HDC ViewDC)
 			SelectObject(MemoryhDC, Pen_White);
 		}
 
-		if (App->CL_Scene->Map_Group[Count]->Obj_Usage == Enums::Obj_Usage_Colectable)
+		if (App->CL_Scene->Map_Group[Count]->Obj_Usage == Enums::Obj_Usage_Collectable)
 		{
 			if (flag_Show_Colectables == 0)
 			{
@@ -1428,6 +1430,17 @@ void CL64_MapEditor::MeshData_Render_Faces(HDC ViewDC)
 			SelectObject(MemoryhDC, Pen_Colectables);
 		}
 
+		if (App->CL_Scene->Map_Group[Count]->Obj_Usage == Enums::Obj_Usage_Static)
+		{
+			if (flag_Show_Static_Objects == 0)
+			{
+				Dont_Draw = 1;
+			}
+
+			SelectObject(MemoryhDC, Pen_Static_Objects);
+		}
+
+		
 		if (Dont_Draw == 0)
 		{
 			MeshData_Face_Groups(Count, ViewDC);

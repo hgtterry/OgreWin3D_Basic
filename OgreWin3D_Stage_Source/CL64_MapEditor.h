@@ -91,6 +91,7 @@ public:
 	bool flag_Show_Areas;
 	bool flag_Show_Camera;
 	bool flag_Show_Colectables;
+	bool flag_Show_Static_Objects;
 
 	bool flag_Right_Button_Down;
 	bool flag_Left_Button_Down;
@@ -130,6 +131,7 @@ private:
 	HPEN Pen_Camera;
 	HPEN Pen_White;
 	HPEN Pen_Colectables;
+	HPEN Pen_Static_Objects;
 
 	HWND Main_Dlg_Hwnd;
 

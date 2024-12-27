@@ -563,7 +563,7 @@ void CL64_Com_Player::Check_Collisions(void)
 				}
 
 				// -------------------- Collectable Collision
-				if (Col_Usage_Index == Enums::Obj_Usage_Colectable)
+				if (Col_Usage_Index == Enums::Obj_Usage_Collectable)
 				{
 					int numContacts = contactManifold->getNumContacts();
 					for (int j = 0; j < numContacts; j++)

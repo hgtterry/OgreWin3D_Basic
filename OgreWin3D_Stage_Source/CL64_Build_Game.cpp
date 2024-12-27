@@ -1480,8 +1480,8 @@ bool CL64_Build_Game::Build_Objects_Data()
 				fprintf(WriteFile, "%s%f\n", "Sound_Volume=", App->CL_Scene->B_Object[Count]->SndVolume);
 			}
 
-			//---------------------------------------------------------------------------------- Colectable Entity
-			if (App->CL_Scene->B_Object[Count]->Usage == Enums::Obj_Usage_Colectable)
+			//---------------------------------------------------------------------------------- Collectable Entity
+			if (App->CL_Scene->B_Object[Count]->Usage == Enums::Obj_Usage_Collectable)
 			{
 				fprintf(WriteFile, "%s%s\n", "Col_Sound_File=", App->CL_Scene->B_Object[Count]->S_Collectable[0]->Sound_File);
 				fprintf(WriteFile, "%s%f\n", "Col_Sound_Volume=", App->CL_Scene->B_Object[Count]->S_Collectable[0]->SndVolume);

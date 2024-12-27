@@ -118,7 +118,7 @@ bool CL64_Com_Collectables::Create_Collectable_Entity(int Index)
 	Object->Object_Node->setOrientation(Object->Mesh_Quat);
 	Object->Object_Node->setPosition(Object->Mesh_Pos);
 
-	App->CL_Mesh_Manager->Ogre_To_Mesh_Data(Object->Object_Ent, Object->Object_Node, Enums::Obj_Usage_Colectable);
+	App->CL_Mesh_Manager->Ogre_To_Mesh_Data(Object->Object_Ent, Object->Object_Node, Enums::Obj_Usage_Collectable);
 
 	App->CL_Scene->flag_Scene_Loaded = 1;
 
@@ -159,8 +159,8 @@ bool CL64_Com_Collectables::Create_Collectable_Entity(int Index)
 	Object->Phys_Body->setUserPointer(Object->Object_Node);
 	Object->Phys_Body->setWorldTransform(startTransform);
 
-	Object->Usage = Enums::Obj_Usage_Colectable;
-	Object->Phys_Body->setUserIndex(Enums::Obj_Usage_Colectable);
+	Object->Usage = Enums::Obj_Usage_Collectable;
+	Object->Phys_Body->setUserIndex(Enums::Obj_Usage_Collectable);
 	Object->Phys_Body->setUserIndex2(Index);
 
 	int f = Object->Phys_Body->getCollisionFlags();

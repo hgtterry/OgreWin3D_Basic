@@ -1198,7 +1198,7 @@ bool CL64_Project::Save_Objects_Data()
 			}
 
 			//---------------------------------------------------------------------------------- Colectable Entity
-			if (App->CL_Scene->B_Object[Count]->Usage == Enums::Obj_Usage_Colectable)
+			if (App->CL_Scene->B_Object[Count]->Usage == Enums::Obj_Usage_Collectable)
 			{
 				fprintf(WriteFile, "%s\n", "-- Colectable");
 				fprintf(WriteFile, "%s%s\n", "Col_Sound_File=", App->CL_Scene->B_Object[Count]->S_Collectable[0]->Sound_File);
@@ -1914,7 +1914,7 @@ bool CL64_Project::Load_Project_Objects()
 		}
 
 		// Colectable Entity
-		if (B_Object->Usage == Enums::Obj_Usage_Colectable)
+		if (B_Object->Usage == Enums::Obj_Usage_Collectable)
 		{
 			Read_Collectable(Count, mSection);
 		}
