@@ -57,8 +57,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                      _In_ int       nCmdShow)
 {
 
-	//SetDllDirectoryA(LPCSTR lpPathName);
-
     InitCommonControls();
 
     App = new CL64_App();

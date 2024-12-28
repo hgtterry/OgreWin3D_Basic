@@ -115,7 +115,6 @@ void CL64_MapEditor::Init_Views()
 
 	RIGHT_MINIMUM_SPACE = rect.right - 15;
 	LEFT_MINIMUM_SPACE = rect.left + 15;
-
 }
 
 // *************************************************************************
