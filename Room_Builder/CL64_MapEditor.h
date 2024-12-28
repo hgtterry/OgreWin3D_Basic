@@ -39,14 +39,19 @@ public:
 	~CL64_MapEditor();
 
 	void Init_Map_Views();
+	void Init_Views();
+
+	HWND Main_Dlg_Hwnd;
 
 private:
+	static LRESULT CALLBACK Proc_Main_Dlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+
 	static LRESULT CALLBACK Proc_Top_Left_Window(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Proc_Top_Right_Window(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Proc_Bottom_Left_Window(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Bottom_Right_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
-	void Init_Views();
+
 
 	void Create_Top_Left_Window();
 	void Create_Top_Right_Window();

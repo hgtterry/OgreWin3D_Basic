@@ -51,6 +51,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         return FALSE;
     }
 
+    ShowWindow(App->MainHwnd, nCmdShow);
+    UpdateWindow(App->MainHwnd);
+
     App->CL_MapEditor->Init_Map_Views();
 
     HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_ROOMBUILDER));
@@ -86,7 +89,7 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
     wcex.hInstance      = hInstance;
     wcex.hIcon          = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_ROOMBUILDER));
     wcex.hCursor        = LoadCursor(nullptr, IDC_ARROW);
-    wcex.hbrBackground  = (HBRUSH)(COLOR_WINDOW+1);
+    wcex.hbrBackground  = (HBRUSH)(App->AppBackground);
     wcex.lpszMenuName   = MAKEINTRESOURCE(IDC_ROOMBUILDER);
     wcex.lpszClassName  = szWindowClass;
     wcex.hIconSm        = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));
@@ -104,19 +107,13 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
     App->MainHwnd = CreateWindow(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
       0, 0, 1200, 770, nullptr, nullptr, hInstance, nullptr);
 
-    App->Fdlg = CreateDialog(App->hInst, (LPCTSTR)IDD_BACK_SURFACE, App->MainHwnd, (DLGPROC)ViewerMain_Proc);
-
-    int cx = GetSystemMetrics(SM_CXSCREEN);
-    int cy = GetSystemMetrics(SM_CYSCREEN);
-    MoveWindow(App->Fdlg, 0, 0, cx, cy, TRUE);
-
    if (!App->MainHwnd)
    {
       return FALSE;
    }
 
-   ShowWindow(App->MainHwnd, nCmdShow);
-   UpdateWindow(App->MainHwnd);
+   /*ShowWindow(App->MainHwnd, nCmdShow);
+   UpdateWindow(App->MainHwnd);*/
 
    return TRUE;
 }
@@ -146,14 +143,27 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             }
         }
         break;
-    case WM_PAINT:
-        {
-            PAINTSTRUCT ps;
-            HDC hdc = BeginPaint(hWnd, &ps);
-            // TODO: Add any drawing code that uses hdc here...
-            EndPaint(hWnd, &ps);
-        }
-        break;
+
+    //case WM_PAINT:
+    //    {
+    //        PAINTSTRUCT ps;
+    //        HDC hdc = BeginPaint(hWnd, &ps);
+    //        // TODO: Add any drawing code that uses hdc here...
+    //        FillRect(hdc, &ps.rcPaint, (HBRUSH)App->AppBackground);
+    //        EndPaint(hWnd, &ps);
+    //    }
+    //    break;
+
+    case WM_SIZE:
+    {
+        RECT rcl;
+        GetClientRect(App->MainHwnd, &rcl);
+        MoveWindow(App->CL_MapEditor->Main_Dlg_Hwnd, 0, 50, rcl.right, rcl.bottom - 50, TRUE);
+        App->CL_MapEditor->Init_Views();
+       
+        return 0;
+    }
+    
     case WM_DESTROY:
         PostQuitMessage(0);
         break;
@@ -181,6 +191,7 @@ LRESULT CALLBACK ViewerMain_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM 
     {
         return (LONG)App->AppBackground;
     }
+
     case WM_COMMAND:
     {
 

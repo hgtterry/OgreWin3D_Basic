@@ -33,8 +33,7 @@ CL64_App::CL64_App(void)
 
 	hInst = nullptr;
 	MainHwnd = nullptr;
-	Fdlg = nullptr;
-
+	
 	AppBackground = 0;
 }
 
@@ -48,6 +47,7 @@ CL64_App::~CL64_App(void)
 void CL64_App::InitApp(void)
 {
 	CL_MapEditor = new CL64_MapEditor();
+	SetBrushes_Fonts();
 }
 
 // *************************************************************************
@@ -56,4 +56,12 @@ void CL64_App::InitApp(void)
 void CL64_App::SetBrushes_Fonts(void)
 {
 	AppBackground = CreateSolidBrush(RGB(213, 222, 242));
+}
+
+// *************************************************************************
+// *			Flash_Window:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void CL64_App::Flash_Window()
+{
+	FlashWindow(App->MainHwnd, true);
 }

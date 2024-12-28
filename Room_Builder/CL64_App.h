@@ -36,11 +36,10 @@ public:
 
 	void InitApp(void);
 	void SetBrushes_Fonts(void);
+	void Flash_Window();
 
 	HINSTANCE hInst;
 	HWND MainHwnd;
-	HWND Fdlg;
-
 	HBRUSH AppBackground;
 };
 
