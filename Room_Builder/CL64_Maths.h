@@ -1,7 +1,7 @@
 /*
 Copyright (c) 2024 Inflanite_HGT W.T.Flanigan H.C.Flanigan
 
-Room Builder
+OgreWin3D_Stage
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -23,28 +23,20 @@ THE SOFTWARE.
 */
 
 #pragma once
-
-#include "CL64_MapEditor.h"
-#include "CL64_Maths.h"
-
-class CL64_App
+class CL64_Maths
 {
 public:
-	CL64_App(void);
-	~CL64_App(void);
+	CL64_Maths();
+	~CL64_Maths();
 
-	CL64_MapEditor* CL_MapEditor;
-	CL64_Maths*		CL_Maths;
+	void Vector3_Set(Ogre::Vector3* V, float X, float Y, float Z);
+	void Vector3_Add(const Ogre::Vector3* V1, const Ogre::Vector3* V2, Ogre::Vector3* V1PlusV2);
+	void Vector3_Subtract(const Ogre::Vector3* V1, const Ogre::Vector3* V2, Ogre::Vector3* V1MinusV2);
+	void Vector3_Scale(const Ogre::Vector3* VSrc, float Scale, Ogre::Vector3* VDst);
+	float Vector3_Normalize(Ogre::Vector3* V1);
+	float Vector3_DotProduct(const Ogre::Vector3* V1, const Ogre::Vector3* V2);
+	void Vector3_Copy(const Ogre::Vector3* VSrc, Ogre::Vector3* VDst);
+	void Vector3_Clear(Ogre::Vector3* V);
 
-	void InitApp(void);
-	void SetBrushes_Fonts(void);
-	void Flash_Window();
-	void SetMainWinCentre(void) const;
-
-	HINSTANCE hInst;
-	HWND MainHwnd;
-	HBRUSH AppBackground;
 };
-
-extern CL64_App* App;
 

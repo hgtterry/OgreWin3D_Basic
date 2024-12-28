@@ -54,10 +54,76 @@ CL64_MapEditor::CL64_MapEditor()
 
 	BackGround_Brush = CreateSolidBrush(RGB(64, 64, 64));
 
+	MemoryhDC = nullptr;
 }
 
 CL64_MapEditor::~CL64_MapEditor()
 {
+}
+
+// *************************************************************************
+// *	  			Init_Views:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void CL64_MapEditor::Init_Views()
+{
+	RECT rect;
+	GetClientRect(Main_Dlg_Hwnd, &rect);
+
+	LEFT_WINDOW_WIDTH = rect.right / 2;
+	nleftWnd_width = rect.right / 2;
+
+	LEFT_WINDOW_DEPTH = rect.bottom / 2;
+	TOP_POS_BOTLEFT = rect.bottom / 2;
+	nleftWnd_Depth = LEFT_WINDOW_DEPTH;
+
+	RIGHT_MINIMUM_SPACE = rect.right - 15;
+	LEFT_MINIMUM_SPACE = rect.left + 15;
+}
+
+// *************************************************************************
+// *			Resize_Windowns:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void CL64_MapEditor::Resize_Windows(HWND hDlg, int NewWidth, int NewDepth)
+{
+	RECT rect;
+	GetClientRect(hDlg, &rect);
+
+	int Top_Windows_Top_Y = 8;
+	int Left_Windows_Start_X = 0;
+
+	int NewDepth_Depth = NewDepth - 11;
+
+	MoveWindow(Left_Window_Hwnd,
+		Left_Windows_Start_X,
+		Top_Windows_Top_Y,
+		rect.left + (NewWidth - WIDTH_ADJUST),
+		NewDepth_Depth,
+		FALSE);
+
+	MoveWindow(Right_Window_Hwnd,
+		Left_Windows_Start_X + NewWidth + WIDTH_ADJUST,
+		Top_Windows_Top_Y,
+		rect.right - (NewWidth + WIDTH_ADJUST),
+		NewDepth_Depth,
+		FALSE);
+
+	// Bottom Windows
+	MoveWindow(Bottom_Left_Hwnd,
+		Left_Windows_Start_X,
+		rect.top + NewDepth,
+		Left_Windows_Start_X + (NewWidth - WIDTH_ADJUST),
+		rect.bottom - (NewDepth + BOTTOM_POS_BOTLEFT),
+		FALSE);
+
+	MoveWindow(Bottom_Right_Hwnd,
+		Left_Windows_Start_X + NewWidth + WIDTH_ADJUST,
+		rect.top + NewDepth,
+		rect.right - (NewWidth + WIDTH_ADJUST),
+		rect.bottom - (NewDepth + BOTTOM_POS_BOTLEFT),
+		FALSE);
+
+	RedrawWindow(Main_Dlg_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
 }
 
 // *************************************************************************
@@ -365,70 +431,6 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Main_Dlg(HWND hDlg, UINT message, WPARAM w
 	}
 	return FALSE;
 }
-// *************************************************************************
-// *	  			Init_Views:- Terry and Hazel Flanigan 2024			   *
-// *************************************************************************
-void CL64_MapEditor::Init_Views()
-{
-	RECT rect;
-	GetClientRect(Main_Dlg_Hwnd, &rect);
-
-	LEFT_WINDOW_WIDTH = rect.right / 2;
-	nleftWnd_width = rect.right / 2;
-
-	LEFT_WINDOW_DEPTH = rect.bottom / 2;
-	TOP_POS_BOTLEFT = rect.bottom / 2;
-	nleftWnd_Depth = LEFT_WINDOW_DEPTH;
-
-	RIGHT_MINIMUM_SPACE = rect.right - 15;
-	LEFT_MINIMUM_SPACE = rect.left + 15;
-}
-
-// *************************************************************************
-// *			Resize_Windowns:- Terry and Hazel Flanigan 2024			   *
-// *************************************************************************
-void CL64_MapEditor::Resize_Windows(HWND hDlg, int NewWidth, int NewDepth)
-{
-	RECT rect;
-	GetClientRect(hDlg, &rect);
-
-	int Top_Windows_Top_Y = 8;
-	int Left_Windows_Start_X = 0;
-
-	int NewDepth_Depth = NewDepth - 11;
-
-	MoveWindow(Left_Window_Hwnd,
-		Left_Windows_Start_X,
-		Top_Windows_Top_Y,
-		rect.left + (NewWidth - WIDTH_ADJUST),
-		NewDepth_Depth,
-		FALSE);
-
-	MoveWindow(Right_Window_Hwnd,
-		Left_Windows_Start_X + NewWidth + WIDTH_ADJUST,
-		Top_Windows_Top_Y,
-		rect.right - (NewWidth + WIDTH_ADJUST),
-		NewDepth_Depth,
-		FALSE);
-
-	// Bottom Windows
-	MoveWindow(Bottom_Left_Hwnd,
-		Left_Windows_Start_X,
-		rect.top + NewDepth,
-		Left_Windows_Start_X + (NewWidth - WIDTH_ADJUST),
-		rect.bottom - (NewDepth + BOTTOM_POS_BOTLEFT),
-		FALSE);
-
-	MoveWindow(Bottom_Right_Hwnd,
-		Left_Windows_Start_X + NewWidth + WIDTH_ADJUST,
-		rect.top + NewDepth,
-		rect.right - (NewWidth + WIDTH_ADJUST),
-		rect.bottom - (NewDepth + BOTTOM_POS_BOTLEFT),
-		FALSE);
-
-	RedrawWindow(Main_Dlg_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-
-}
 
 // *************************************************************************
 // *	  	Create_Top_Left_Window:- Terry and Hazel Flanigan 2024		   *
@@ -491,8 +493,6 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Left_Window(HWND hDlg, UINT message, W
 
 	case WM_MOUSEMOVE:
 	{
-
-
 		int			dx, dy;
 		POINT		RealCursorPosition;
 
@@ -566,8 +566,8 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Left_Window(HWND hDlg, UINT message, W
 
 	case WM_PAINT:
 	{
-		/*App->CL_MapEditor->Current_View = App->CL_MapEditor->VCam[V_TL];
-		App->CL_MapEditor->Draw_Screen(hDlg);*/
+		//App->CL_MapEditor->Current_View = App->CL_MapEditor->VCam[V_TL];
+		App->CL_MapEditor->Draw_Screen(hDlg);
 
 		return 0;
 	}
@@ -879,4 +879,158 @@ LRESULT CALLBACK CL64_MapEditor::Bottom_Right_Proc(HWND hDlg, UINT message, WPAR
 	}
 
 	return FALSE;
+}
+
+// *************************************************************************
+// *						Draw_Screen Terry Flanigan		  			   *
+// *************************************************************************
+void CL64_MapEditor::Draw_Screen(HWND hwnd)
+{
+	//flag_IsDrawing = 1;
+
+	HDC			RealhDC;
+	RECT		Rect;
+
+	GetClientRect(hwnd, &Rect);
+	Rect.left--;
+	Rect.bottom--;
+
+	RealhDC = GetDC(hwnd);
+
+	MemoryhDC = CreateCompatibleDC(RealhDC);
+
+	GetClipBox(RealhDC, &Rect);
+
+	HBITMAP OffScreenBitmap;
+
+	OffScreenBitmap = CreateCompatibleBitmap(RealhDC, Rect.right - Rect.left, Rect.bottom - Rect.top);
+
+	SelectObject(MemoryhDC, OffScreenBitmap);
+
+	FillRect(MemoryhDC, &Rect, (HBRUSH)BackGround_Brush); // BackGround
+
+	// ---------------------- Draw Grid Fine
+	//if (Current_View->ZoomFactor > 0.1)
+	//{
+	//	SelectObject(MemoryhDC, Pen_Fine_Grid);
+	//	Draw_Grid(MemoryhDC, 8, Rect); // Snap grid
+	//}
+
+	// ---------------------- Draw Grid
+	/*if (Current_View->ZoomFactor < 0.1)
+	{
+		Current_View->ZoomFactor = 0.1;
+	}*/
+
+	//SelectObject(MemoryhDC, Pen_Grid);
+	//Draw_Grid(MemoryhDC, 128, Rect); // Big grid
+
+	//// ---------------------- Draw Areas
+	//if (flag_Show_Areas == 1)
+	//{
+	//	MeshData_Render_Faces(MemoryhDC);
+	//}
+
+	//// ---------------------- Draw Camera
+	//if (flag_Show_Camera == 1)
+	//{
+	//	SelectObject(MemoryhDC, Pen_Camera);
+	//	Draw_Camera(MemoryhDC);
+	//}
+
+
+	BitBlt(RealhDC, Rect.left, Rect.top, Rect.right - Rect.left, Rect.bottom - Rect.top, MemoryhDC, 0, 0, SRCCOPY);
+
+	//SelectObject(MemoryhDC, &OffScreenBitmap);
+
+	DeleteObject(OffScreenBitmap);
+	DeleteDC(MemoryhDC);
+
+	//flag_IsDrawing = 0;
+}
+
+#define Units_Round(n) ((int)Units_FRound((n)))
+#define Units_Trunc(n) ((int)(n))
+#define Units_FRound(n)	((float)floor((n)+0.5f))
+#define	VectorToSUB(a, b) (*((((float *)(&a))) + (b)))
+
+// *************************************************************************
+// *	  			Draw_Grid:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+bool CL64_MapEditor::Draw_Grid(HDC hDC, int Interval, RECT Rect)
+{
+	/*Current_View->Width = Rect.right;
+	Current_View->Height = Rect.bottom;*/
+
+	Ogre::Vector3 ystep, xstep, Delt, Delt2;
+	int			i, cnt, xaxis, yaxis, inidx;
+	static int axidx[3][2] = { 2, 1, 0, 2, 0, 1 };
+	float	gsinv;
+	//Box3d ViewBox;
+	//POINT		sp;
+
+	//inidx = (Current_View->ViewType >> 3) & 0x3;
+
+	//xaxis = axidx[inidx][0];
+	//yaxis = axidx[inidx][1];
+
+	//Render_ViewToWorld(Current_View, Units_Round(-Interval), Units_Round(-Interval), &Delt);
+	//Render_ViewToWorld(Current_View, Units_Round(Current_View->Width + Interval), Units_Round(Current_View->Height + Interval), &Delt2);
+
+	//App->CL_Box->Box3d_Set(&ViewBox, Delt.x, Delt.y, Delt.z, Delt2.x, Delt2.y, Delt2.z);
+
+	//VectorToSUB(ViewBox.Min, inidx) = -FLT_MAX;
+	//VectorToSUB(ViewBox.Max, inidx) = FLT_MAX;
+
+	//gsinv = 1.0f / (float)Interval;
+	//for (i = 0; i < 3; i++)
+	//{
+	//	VectorToSUB(ViewBox.Min, i) = (float)((int)(VectorToSUB(ViewBox.Min, i) * gsinv)) * Interval;
+	//	VectorToSUB(ViewBox.Max, i) = (float)((int)(VectorToSUB(ViewBox.Max, i) * gsinv)) * Interval;
+	//}
+
+	//App->CL_Maths->Vector3_Copy(&VecOrigin, &xstep);
+	//App->CL_Maths->Vector3_Copy(&VecOrigin, &ystep);
+	//VectorToSUB(ystep, yaxis) = (float)Interval;
+	//VectorToSUB(xstep, xaxis) = (float)Interval;
+
+	//cnt = Rect.bottom / Interval; // hgtterry Debug Odd
+
+	//// horizontal lines
+	//int Count = 0;
+	//App->CL_Maths->Vector3_Copy(&ViewBox.Min, &Delt);
+	//App->CL_Maths->Vector3_Copy(&ViewBox.Min, &Delt2);
+	//VectorToSUB(Delt2, xaxis) = VectorToSUB(ViewBox.Max, xaxis);
+	//cnt = Units_Round((VectorToSUB(ViewBox.Max, yaxis) - VectorToSUB(ViewBox.Min, yaxis)) * gsinv);
+
+	//while (Count < cnt)
+	//{
+	//	sp = m_Render_OrthoWorldToView(&Delt);
+	//	MoveToEx(hDC, 0, sp.y, NULL);
+	//	sp = m_Render_OrthoWorldToView(&Delt2);
+	//	LineTo(hDC, Current_View->Width, sp.y);
+	//	App->CL_Maths->Vector3_Add(&Delt, &ystep, &Delt);
+	//	App->CL_Maths->Vector3_Add(&Delt2, &ystep, &Delt2);
+	//	Count++;
+	//}
+
+	//// vertical lines
+	//Count = 0;
+	//App->CL_Maths->Vector3_Copy(&ViewBox.Min, &Delt);
+	//App->CL_Maths->Vector3_Copy(&ViewBox.Min, &Delt2);
+	//VectorToSUB(Delt2, yaxis) = VectorToSUB(ViewBox.Max, yaxis);
+	//cnt = Units_Round((VectorToSUB(ViewBox.Max, xaxis) - VectorToSUB(ViewBox.Min, xaxis)) * gsinv);
+
+	//while (Count < cnt)
+	//{
+	//	sp = m_Render_OrthoWorldToView(&Delt);
+	//	MoveToEx(hDC, sp.x, 0, NULL);
+	//	sp = m_Render_OrthoWorldToView(&Delt2);
+	//	LineTo(hDC, sp.x, Current_View->Height);
+	//	App->CL_Maths->Vector3_Add(&Delt, &xstep, &Delt);
+	//	App->CL_Maths->Vector3_Add(&Delt2, &xstep, &Delt2);
+	//	Count++;
+	//}
+
+	return 1;
 }

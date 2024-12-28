@@ -22,3 +22,9 @@
 #include <direct.h>
 #include <Commctrl.h>   // includes the Common control header
 #include <string>
+
+#include "Ogre.h"
+#include "OgreConfigFile.h"
+#include "OgreStringConverter.h"
+#include "OgreException.h"
+#include "OgreTextAreaOverlayElement.h"

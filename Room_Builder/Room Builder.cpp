@@ -56,6 +56,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     App->CL_MapEditor->Init_Map_Views();
 
+    App->SetMainWinCentre();
+
     HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_ROOMBUILDER));
 
     MSG msg;

@@ -132,6 +132,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <LanguageStandard>stdcpp14</LanguageStandard>
+      <AdditionalIncludeDirectories>..\Common_64\Ogre3D\include\OGRE\RTShaderSystem;..\Common_64\Ogre3D\include\OGRE\Bites;..\Common_64\Ogre3D\include\OGRE;..\Common_64\Ogre3D\include\OGRE\Overlay;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -142,12 +143,14 @@
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <OutputFile>$(OutDir)Room_Builder.exe</OutputFile>
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
-      <AdditionalDependencies>comctl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>comctl32.lib;OgreMain.lib;OgreOverlay.lib;OgreRTShaderSystem.lib;OgreBites.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\Common_64\Ogre3D\libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="CL64_App.h" />
     <ClInclude Include="CL64_MapEditor.h" />
+    <ClInclude Include="CL64_Maths.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Resource.h" />
@@ -157,6 +160,7 @@
   <ItemGroup>
     <ClCompile Include="CL64_App.cpp" />
     <ClCompile Include="CL64_MapEditor.cpp" />
+    <ClCompile Include="CL64_Maths.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
