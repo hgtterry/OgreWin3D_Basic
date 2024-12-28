@@ -23,34 +23,11 @@ THE SOFTWARE.
 */
 
 #pragma once
-
-#include "CL64_MapEditor.h"
-#include "CL64_Maths.h"
-#include "CL64_Box.h"
-#include "CL64_Render.h"
-#include "CL64_Level.h"
-
-class CL64_App
+class CL64_Level
 {
 public:
-	CL64_App(void);
-	~CL64_App(void);
+	CL64_Level(void);
+	~CL64_Level(void);
 
-	CL64_MapEditor* CL_MapEditor;
-	CL64_Maths*		CL_Maths;
-	CL64_Box*		CL_Box;
-	CL64_Render*	CL_Render;
-	CL64_Level*		CL_Level;
-
-	void InitApp(void);
-	void SetBrushes_Fonts(void);
-	void Flash_Window();
-	void SetMainWinCentre(void) const;
-
-	HINSTANCE hInst;
-	HWND MainHwnd;
-	HBRUSH AppBackground;
 };
-
-extern CL64_App* App;
 
