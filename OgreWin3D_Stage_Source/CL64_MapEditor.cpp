@@ -64,17 +64,23 @@ CL64_MapEditor::CL64_MapEditor()
 	flag_Show_Camera = 1;
 	flag_Show_Colectables = 1;
 	flag_Show_Static_Objects = 1;
+	flag_Show_Dynamic_Objects = 1;
+
+	flag_IsDrawing = 0;
 
 	flag_Right_Button_Down = 0;
 	flag_Left_Button_Down = 0;
 
 	BackGround_Brush = CreateSolidBrush(RGB(64, 64, 64));
 
+	Pen_Fine_Grid = CreatePen(PS_SOLID, 0, RGB(0, 0, 0));;
+	Pen_Grid = CreatePen(PS_SOLID, 0, RGB(112, 112, 112));;
 	Pen_CutBrush = CreatePen(PS_SOLID, 0, RGB(255, 155, 0));
 	Pen_Camera = CreatePen(PS_SOLID, 0, RGB(0, 255, 0));
 	Pen_White = CreatePen(PS_SOLID, 0, RGB(255, 255, 255));
 	Pen_Colectables = CreatePen(PS_SOLID, 0, RGB(255, 0, 0));
 	Pen_Static_Objects = CreatePen(PS_SOLID, 0, RGB(0, 0, 255));
+	Pen_Dynamic_Objects = CreatePen(PS_SOLID, 0, RGB(0, 255, 255));
 
 	MemoryhDC = nullptr;
 
@@ -478,6 +484,44 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Main_Dlg(HWND hDlg, UINT message, WPARAM w
 			return TRUE;
 		}
 
+		if (LOWORD(wParam) == ID_SHOW_STATICOBJECTS)
+		{
+			if (App->CL_MapEditor->flag_Show_Static_Objects == 1)
+			{
+				App->CL_MapEditor->flag_Show_Static_Objects = 0;
+				CheckMenuItem(App->CL_MapEditor->mMenu, ID_SHOW_STATICOBJECTS, MF_BYCOMMAND | MF_UNCHECKED);
+			}
+			else
+			{
+				App->CL_MapEditor->flag_Show_Static_Objects = 1;
+				CheckMenuItem(App->CL_MapEditor->mMenu, ID_SHOW_STATICOBJECTS, MF_BYCOMMAND | MF_CHECKED);
+			}
+
+			App->CL_MapEditor->Resize_Windows(hDlg, App->CL_MapEditor->nleftWnd_width, App->CL_MapEditor->nleftWnd_Depth);
+
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == ID_SHOW_DYNAMICOBJECTS)
+		{
+			if (App->CL_MapEditor->flag_Show_Dynamic_Objects == 1)
+			{
+				App->CL_MapEditor->flag_Show_Dynamic_Objects = 0;
+				CheckMenuItem(App->CL_MapEditor->mMenu, ID_SHOW_DYNAMICOBJECTS, MF_BYCOMMAND | MF_UNCHECKED);
+			}
+			else
+			{
+				App->CL_MapEditor->flag_Show_Dynamic_Objects = 1;
+				CheckMenuItem(App->CL_MapEditor->mMenu, ID_SHOW_DYNAMICOBJECTS, MF_BYCOMMAND | MF_CHECKED);
+			}
+
+			App->CL_MapEditor->Resize_Windows(hDlg, App->CL_MapEditor->nleftWnd_width, App->CL_MapEditor->nleftWnd_Depth);
+
+			return TRUE;
+		}
+
+		
+
 		if (LOWORD(wParam) == IDOK)
 		{
 			App->CL_MapEditor->flag_Map_Editor_Running = 0;
@@ -615,8 +659,6 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Left_Window(HWND hDlg, UINT message, W
 
 	case WM_MOUSEMOVE:
 	{
-		
-
 		int			dx, dy;
 		POINT		RealCursorPosition;
 
@@ -629,12 +671,18 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Left_Window(HWND hDlg, UINT message, W
 
 		if (App->CL_MapEditor->flag_Right_Button_Down == 1 && GetAsyncKeyState(VK_CONTROL) < 0)
 		{
-			App->CL_MapEditor->Zoom_View(hDlg, dx, dy);
+			if (App->CL_MapEditor->flag_IsDrawing == 0)
+			{
+				App->CL_MapEditor->Zoom_View(hDlg, dx, dy);
+			}
 		}
 
 		if (App->CL_MapEditor->flag_Left_Button_Down == 1 && GetAsyncKeyState(VK_CONTROL) < 0)
 		{
-			App->CL_MapEditor->Pan_View(hDlg, dx, dy);
+			if (App->CL_MapEditor->flag_IsDrawing == 0)
+			{
+				App->CL_MapEditor->Pan_View(hDlg, dx, dy);
+			}
 		}
 
 		return 1;
@@ -642,6 +690,10 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Left_Window(HWND hDlg, UINT message, W
 
 	case WM_LBUTTONDOWN:
 	{
+		RECT rcClip;
+		GetWindowRect(hDlg, &rcClip);
+		ClipCursor(&rcClip);
+
 		GetCursorPos(&App->CL_MapEditor->mStartPoint);
 		ScreenToClient(hDlg, &App->CL_MapEditor->mStartPoint);
 
@@ -656,6 +708,8 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Left_Window(HWND hDlg, UINT message, W
 
 	case WM_LBUTTONUP:
 	{
+		ClipCursor(NULL);
+
 		App->CL_MapEditor->flag_Left_Button_Down = 0;
 		App->CL_MapEditor->flag_Right_Button_Down = 0;
 
@@ -666,6 +720,10 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Left_Window(HWND hDlg, UINT message, W
 
 	case WM_RBUTTONDOWN:
 	{
+		RECT rcClip;
+		GetWindowRect(hDlg, &rcClip);
+		ClipCursor(&rcClip);
+
 		GetCursorPos(&App->CL_MapEditor->mStartPoint);
 		ScreenToClient(hDlg, &App->CL_MapEditor->mStartPoint);
 
@@ -680,6 +738,8 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Left_Window(HWND hDlg, UINT message, W
 
 	case WM_RBUTTONUP:
 	{
+		ClipCursor(NULL);
+
 		App->CL_MapEditor->flag_Right_Button_Down = 0;
 		App->CL_MapEditor->flag_Left_Button_Down = 0;
 
@@ -765,12 +825,18 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Right_Window(HWND hDlg, UINT message, 
 
 		if (App->CL_MapEditor->flag_Right_Button_Down == 1 && GetAsyncKeyState(VK_CONTROL) < 0)
 		{
-			App->CL_MapEditor->Zoom_View(hDlg, dx, dy);
+			if (App->CL_MapEditor->flag_IsDrawing == 0)
+			{
+				App->CL_MapEditor->Zoom_View(hDlg, dx, dy);
+			}
 		}
 
 		if (App->CL_MapEditor->flag_Left_Button_Down == 1 && GetAsyncKeyState(VK_CONTROL) < 0)
 		{
-			App->CL_MapEditor->Pan_View(hDlg, dx, dy);
+			if (App->CL_MapEditor->flag_IsDrawing == 0)
+			{
+				App->CL_MapEditor->Pan_View(hDlg, dx, dy);
+			}
 		}
 
 		return 1;
@@ -778,6 +844,10 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Right_Window(HWND hDlg, UINT message, 
 
 	case WM_LBUTTONDOWN:
 	{
+		RECT rcClip;
+		GetWindowRect(hDlg, &rcClip);
+		ClipCursor(&rcClip);
+
 		GetCursorPos(&App->CL_MapEditor->mStartPoint);
 		ScreenToClient(hDlg, &App->CL_MapEditor->mStartPoint);
 
@@ -792,6 +862,8 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Right_Window(HWND hDlg, UINT message, 
 
 	case WM_LBUTTONUP:
 	{
+		ClipCursor(NULL);
+
 		App->CL_MapEditor->flag_Left_Button_Down = 0;
 		App->CL_MapEditor->flag_Right_Button_Down = 0;
 
@@ -802,6 +874,10 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Right_Window(HWND hDlg, UINT message, 
 
 	case WM_RBUTTONDOWN:
 	{
+		RECT rcClip;
+		GetWindowRect(hDlg, &rcClip);
+		ClipCursor(&rcClip);
+
 		GetCursorPos(&App->CL_MapEditor->mStartPoint);
 		ScreenToClient(hDlg, &App->CL_MapEditor->mStartPoint);
 
@@ -816,6 +892,8 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Right_Window(HWND hDlg, UINT message, 
 
 	case WM_RBUTTONUP:
 	{
+		ClipCursor(NULL);
+
 		App->CL_MapEditor->flag_Right_Button_Down = 0;
 		App->CL_MapEditor->flag_Left_Button_Down = 0;
 
@@ -899,12 +977,18 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Bottom_Left_Window(HWND hDlg, UINT message
 
 		if (App->CL_MapEditor->flag_Right_Button_Down == 1 && GetAsyncKeyState(VK_CONTROL) < 0)
 		{
-			App->CL_MapEditor->Zoom_View(hDlg, dx, dy);
+			if (App->CL_MapEditor->flag_IsDrawing == 0)
+			{
+				App->CL_MapEditor->Zoom_View(hDlg, dx, dy);
+			}
 		}
 
 		if (App->CL_MapEditor->flag_Left_Button_Down == 1 && GetAsyncKeyState(VK_CONTROL) < 0)
 		{
-			App->CL_MapEditor->Pan_View(hDlg, dx, dy);
+			if (App->CL_MapEditor->flag_IsDrawing == 0)
+			{
+				App->CL_MapEditor->Pan_View(hDlg, dx, dy);
+			}
 		}
 
 		return 1;
@@ -912,6 +996,10 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Bottom_Left_Window(HWND hDlg, UINT message
 
 	case WM_LBUTTONDOWN:
 	{
+		RECT rcClip;
+		GetWindowRect(hDlg, &rcClip);
+		ClipCursor(&rcClip);
+
 		GetCursorPos(&App->CL_MapEditor->mStartPoint);
 		ScreenToClient(hDlg, &App->CL_MapEditor->mStartPoint);
 
@@ -926,6 +1014,8 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Bottom_Left_Window(HWND hDlg, UINT message
 
 	case WM_LBUTTONUP:
 	{
+		ClipCursor(NULL);
+
 		App->CL_MapEditor->flag_Left_Button_Down = 0;
 		App->CL_MapEditor->flag_Right_Button_Down = 0;
 
@@ -936,6 +1026,10 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Bottom_Left_Window(HWND hDlg, UINT message
 
 	case WM_RBUTTONDOWN:
 	{
+		RECT rcClip;
+		GetWindowRect(hDlg, &rcClip);
+		ClipCursor(&rcClip);
+
 		GetCursorPos(&App->CL_MapEditor->mStartPoint);
 		ScreenToClient(hDlg, &App->CL_MapEditor->mStartPoint);
 
@@ -950,6 +1044,8 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Bottom_Left_Window(HWND hDlg, UINT message
 
 	case WM_RBUTTONUP:
 	{
+		ClipCursor(NULL);
+
 		App->CL_MapEditor->flag_Left_Button_Down = 0;
 		App->CL_MapEditor->flag_Right_Button_Down = 0;
 
@@ -1053,6 +1149,7 @@ void CL64_MapEditor::Pan_View(HWND hDlg, int Dx, int Dy)
 {
 	Ogre::Vector3 dv;
 	Ogre::Vector3 dcamv;
+	int Tolerence = 20;
 
 	switch (Current_View->ViewType)
 	{
@@ -1061,7 +1158,7 @@ void CL64_MapEditor::Pan_View(HWND hDlg, int Dx, int Dy)
 		if (Dx < App->CL_MapEditor->mStartPoint.x)
 		{
 			long test = App->CL_MapEditor->mStartPoint.x - Dx;
-			if (test > 2)
+			if (test > Tolerence)
 			{
 				dv = Ogre::Vector3(-15, 0, 0);
 
@@ -1074,7 +1171,7 @@ void CL64_MapEditor::Pan_View(HWND hDlg, int Dx, int Dy)
 		else if (Dx > App->CL_MapEditor->mStartPoint.x)
 		{
 			long test = Dx - App->CL_MapEditor->mStartPoint.x;
-			if (test > 2)
+			if (test > Tolerence)
 			{
 				dv = Ogre::Vector3(15, 0, 0);
 
@@ -1082,12 +1179,13 @@ void CL64_MapEditor::Pan_View(HWND hDlg, int Dx, int Dy)
 				ClientToScreen(hDlg, &pt);
 				SetCursorPos(pt.x, pt.y);
 			}
+
 		}
 
 		if (Dy < App->CL_MapEditor->mStartPoint.y)
 		{
 			long test = App->CL_MapEditor->mStartPoint.y - Dy;
-			if (test > 2)
+			if (test > Tolerence)
 			{
 				dv = Ogre::Vector3(0, 0, -15);
 
@@ -1095,11 +1193,12 @@ void CL64_MapEditor::Pan_View(HWND hDlg, int Dx, int Dy)
 				ClientToScreen(hDlg, &pt);
 				SetCursorPos(pt.x, pt.y);
 			}
+
 		}
 		else if (Dy > App->CL_MapEditor->mStartPoint.y)
 		{
 			long test = Dy - App->CL_MapEditor->mStartPoint.y;
-			if (test > 2)
+			if (test > Tolerence)
 			{
 				dv = Ogre::Vector3(0, 0, 15);
 
@@ -1116,7 +1215,7 @@ void CL64_MapEditor::Pan_View(HWND hDlg, int Dx, int Dy)
 		if (Dx < App->CL_MapEditor->mStartPoint.x)
 		{
 			long test = App->CL_MapEditor->mStartPoint.x - Dx;
-			if (test > 2)
+			if (test > Tolerence)
 			{
 				dv = Ogre::Vector3(-15, 0, 0);
 
@@ -1129,7 +1228,7 @@ void CL64_MapEditor::Pan_View(HWND hDlg, int Dx, int Dy)
 		else if (Dx > App->CL_MapEditor->mStartPoint.x)
 		{
 			long test = Dx - App->CL_MapEditor->mStartPoint.x;
-			if (test > 2)
+			if (test > Tolerence)
 			{
 				dv = Ogre::Vector3(15, 0, 0);
 
@@ -1142,7 +1241,7 @@ void CL64_MapEditor::Pan_View(HWND hDlg, int Dx, int Dy)
 		if (Dy < App->CL_MapEditor->mStartPoint.y)
 		{
 			long test = App->CL_MapEditor->mStartPoint.y - Dy;
-			if (test > 2)
+			if (test > Tolerence)
 			{
 				dv = Ogre::Vector3(0, 15, 0);
 
@@ -1154,7 +1253,7 @@ void CL64_MapEditor::Pan_View(HWND hDlg, int Dx, int Dy)
 		else if (Dy > App->CL_MapEditor->mStartPoint.y)
 		{
 			long test = Dy - App->CL_MapEditor->mStartPoint.y;
-			if (test > 2)
+			if (test > Tolerence)
 			{
 				dv = Ogre::Vector3(0, -15, 0);
 
@@ -1171,7 +1270,7 @@ void CL64_MapEditor::Pan_View(HWND hDlg, int Dx, int Dy)
 		if (Dx < App->CL_MapEditor->mStartPoint.x)
 		{
 			long test = App->CL_MapEditor->mStartPoint.x - Dx;
-			if (test > 2)
+			if (test > Tolerence)
 			{
 				dv = Ogre::Vector3(0, 0, -15);
 
@@ -1184,7 +1283,7 @@ void CL64_MapEditor::Pan_View(HWND hDlg, int Dx, int Dy)
 		else if (Dx > App->CL_MapEditor->mStartPoint.x)
 		{
 			long test = Dx - App->CL_MapEditor->mStartPoint.x;
-			if (test > 2)
+			if (test > Tolerence)
 			{
 				dv = Ogre::Vector3(0, 0, 15);
 
@@ -1197,7 +1296,7 @@ void CL64_MapEditor::Pan_View(HWND hDlg, int Dx, int Dy)
 		if (Dy < App->CL_MapEditor->mStartPoint.y)
 		{
 			long test = App->CL_MapEditor->mStartPoint.y - Dy;
-			if (test > 2)
+			if (test > Tolerence)
 			{
 				dv = Ogre::Vector3(0, 15, 0);
 
@@ -1209,7 +1308,7 @@ void CL64_MapEditor::Pan_View(HWND hDlg, int Dx, int Dy)
 		else if (Dy > App->CL_MapEditor->mStartPoint.y)
 		{
 			long test = Dy - App->CL_MapEditor->mStartPoint.y;
-			if (test > 2)
+			if (test > Tolerence)
 			{
 				dv = Ogre::Vector3(0, -15, 0);
 
@@ -1228,8 +1327,9 @@ void CL64_MapEditor::Pan_View(HWND hDlg, int Dx, int Dy)
 
 	App->CL_Maths->Vector3_Scale(&dv, -1.0f, &dcamv);
 	App->CL_Maths->Vector3_Add(&App->CL_MapEditor->Current_View->CamPos, &dcamv, &App->CL_MapEditor->Current_View->CamPos);
+	
 	App->CL_MapEditor->Draw_Screen(hDlg);
-
+	
 }
 
 // *************************************************************************
@@ -1237,12 +1337,10 @@ void CL64_MapEditor::Pan_View(HWND hDlg, int Dx, int Dy)
 // *************************************************************************
 void CL64_MapEditor::Draw_Screen(HWND hwnd)
 {
-	
+	flag_IsDrawing = 1;
+
 	HDC			RealhDC;
 	RECT		Rect;
-
-	float GridSize = 2;
-	float GridSnapSize = 2;
 
 	GetClientRect(hwnd, &Rect);
 	Rect.left--;
@@ -1260,43 +1358,30 @@ void CL64_MapEditor::Draw_Screen(HWND hwnd)
 
 	SelectObject(MemoryhDC, OffScreenBitmap);
 
-	HBRUSH hBrush = CreateSolidBrush(RGB(64, 64, 64));
-	FillRect(MemoryhDC, &Rect, (HBRUSH)hBrush); // BackGround
-	DeleteObject(hBrush);
-
-	int Center_X, Center_Y;
-	int Width, Depth;
-
-	Width = Rect.right;
-	Depth = Rect.bottom;
-
-	Center_Y = (Depth / 2);
-	Center_X = (Width / 2);
+	FillRect(MemoryhDC, &Rect, (HBRUSH)BackGround_Brush); // BackGround
 
 	// ---------------------- Draw Grid Fine
-
-	HPEN pen = CreatePen(PS_SOLID, 0, RGB(0, 0, 0));
 	if (Current_View->ZoomFactor > 0.1)
 	{
-		SelectObject(MemoryhDC, pen);
+		SelectObject(MemoryhDC, Pen_Fine_Grid);
 		Draw_Grid(MemoryhDC, 8, Rect); // Snap grid
 	}
 
 	// ---------------------- Draw Grid
-	HPEN pen2 = CreatePen(PS_SOLID, 0, RGB(112, 112, 112));
 	if (Current_View->ZoomFactor < 0.1)
 	{
 		Current_View->ZoomFactor = 0.1;
 	}
 
-	SelectObject(MemoryhDC, pen2);
+	SelectObject(MemoryhDC, Pen_Grid);
 	Draw_Grid(MemoryhDC, 128, Rect); // Big grid
-	
 
 	// ---------------------- Draw Areas
-	MeshData_Render_Faces(MemoryhDC);
+	if (flag_Show_Areas == 1)
+	{
+		MeshData_Render_Faces(MemoryhDC);
+	}
 	
-
 	// ---------------------- Draw Camera
 	if (flag_Show_Camera == 1)
 	{
@@ -1304,35 +1389,15 @@ void CL64_MapEditor::Draw_Screen(HWND hwnd)
 		Draw_Camera(MemoryhDC);
 	}
 
-	/*RECT rect = { 0,0, 400, 20 };
-	FillRect(MemoryhDC, &rect, App->AppBackground);
-	TextOut(MemoryhDC, 2, 2, TEXT("Test"), 5);*/
-
-	int TopLeft, BottomRight;
-	int CrossSize = 16;
-
-	int CamX = 0;
-	int CamBottomRight = 0;
-
-	Width = Rect.right;
-	Depth = Rect.bottom;
-
-	Center_Y = (Depth / 2);
-	Center_X = (Width / 2);
-
-	TopLeft = Center_Y - 4;
-	BottomRight = Center_X - 4;
 
 	BitBlt(RealhDC, Rect.left, Rect.top, Rect.right - Rect.left, Rect.bottom - Rect.top, MemoryhDC, 0, 0, SRCCOPY);
 
-	SelectObject(MemoryhDC, &OffScreenBitmap);
-
-	DeleteObject(pen);
-	DeleteObject(pen2);
-	DeleteObject(hBrush);
+	//SelectObject(MemoryhDC, &OffScreenBitmap);
 
 	DeleteObject(OffScreenBitmap);
 	DeleteDC(MemoryhDC);
+
+	flag_IsDrawing = 0;
 }
 
 // *************************************************************************
@@ -1392,8 +1457,6 @@ void CL64_MapEditor::Draw_Camera(HDC ViewDC)
 		LineTo(ViewDC, BottomLeft.x, BottomLeft.y);
 
 	}
-
-
 }
 
 static POINT plist[64];
@@ -1407,40 +1470,52 @@ void CL64_MapEditor::MeshData_Render_Faces(HDC ViewDC)
 	int Dont_Draw = 0;
 	int Map_Count = App->CL_Scene->Map_Group_Count;
 
+	SelectObject(MemoryhDC, Pen_White);
+
 	while (Count < Map_Count)
 	{
-		if (App->CL_Scene->Map_Group[Count]->Obj_Usage == Enums::Obj_Usage_Room)
-		{
-			if (flag_Show_Areas == 0)
-			{
-				Dont_Draw = 1;
-			}
+		//if (App->CL_Scene->Map_Group[Count]->Obj_Usage == Enums::Obj_Usage_Room)
+		//{
+		//	if (flag_Show_Areas == 0)
+		//	{
+		//		Dont_Draw = 1;
+		//	}
 
-			SelectObject(MemoryhDC, Pen_White);
-		}
+		//	//SelectObject(MemoryhDC, Pen_White);
+		//}
 
-		if (App->CL_Scene->Map_Group[Count]->Obj_Usage == Enums::Obj_Usage_Collectable)
-		{
-			if (flag_Show_Colectables == 0)
-			{
-				Dont_Draw = 1;
-			}
+		//if (App->CL_Scene->Map_Group[Count]->Obj_Usage == Enums::Obj_Usage_Collectable)
+		//{
+		//	if (flag_Show_Colectables == 0)
+		//	{
+		//		Dont_Draw = 1;
+		//	}
 
-			SelectObject(MemoryhDC, Pen_Colectables);
-		}
+		//	//SelectObject(MemoryhDC, Pen_Colectables);
+		//}
 
-		if (App->CL_Scene->Map_Group[Count]->Obj_Usage == Enums::Obj_Usage_Static)
-		{
-			if (flag_Show_Static_Objects == 0)
-			{
-				Dont_Draw = 1;
-			}
+		//if (App->CL_Scene->Map_Group[Count]->Obj_Usage == Enums::Obj_Usage_Static)
+		//{
+		//	if (flag_Show_Static_Objects == 0)
+		//	{
+		//		Dont_Draw = 1;
+		//	}
 
-			SelectObject(MemoryhDC, Pen_Static_Objects);
-		}
+		//	//SelectObject(MemoryhDC, Pen_Static_Objects);
+		//}
+
+		//if (App->CL_Scene->Map_Group[Count]->Obj_Usage == Enums::Obj_Usage_Dynamic)
+		//{
+		//	if (flag_Show_Dynamic_Objects == 0)
+		//	{
+		//		Dont_Draw = 1;
+		//	}
+
+		//	//SelectObject(MemoryhDC, Pen_Dynamic_Objects);
+		//}
 
 		
-		if (Dont_Draw == 0)
+		//if (Dont_Draw == 0)
 		{
 			MeshData_Face_Groups(Count, ViewDC);
 		}
