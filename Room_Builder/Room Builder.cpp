@@ -9,8 +9,8 @@
 
 // Global Variables:
 HINSTANCE hInst;                                // current instance
-WCHAR szTitle[MAX_LOADSTRING];                  // The title bar text
-WCHAR szWindowClass[MAX_LOADSTRING];            // the main window class name
+TCHAR szTitle[MAX_LOADSTRING];                  // The title bar text
+TCHAR szWindowClass[MAX_LOADSTRING];            // the main window class name
 
 // Forward declarations of functions included in this code module:
 ATOM                MyRegisterClass(HINSTANCE hInstance);
@@ -18,19 +18,31 @@ BOOL                InitInstance(HINSTANCE, int);
 LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
 
+LRESULT CALLBACK ViewerMain_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+
+CL64_App* App = NULL;
+
+// *************************************************************************
+// *				WinMain:- Terry and Hazel Flanigan 2024		  		   *
+// *************************************************************************
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                      _In_opt_ HINSTANCE hPrevInstance,
                      _In_ LPWSTR    lpCmdLine,
                      _In_ int       nCmdShow)
 {
+    InitCommonControls();
+
+    App = new CL64_App();
+    App->InitApp();
+
     UNREFERENCED_PARAMETER(hPrevInstance);
     UNREFERENCED_PARAMETER(lpCmdLine);
 
     // TODO: Place code here.
 
     // Initialize global strings
-    LoadStringW(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
-    LoadStringW(hInstance, IDC_ROOMBUILDER, szWindowClass, MAX_LOADSTRING);
+    LoadString(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
+    LoadString(hInstance, IDC_ROOMBUILDER, szWindowClass, MAX_LOADSTRING);
     MyRegisterClass(hInstance);
 
     // Perform application initialization:
@@ -38,6 +50,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     {
         return FALSE;
     }
+
+    App->CL_MapEditor->Init_Map_Views();
 
     HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_ROOMBUILDER));
 
@@ -56,20 +70,16 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     return (int) msg.wParam;
 }
 
-
-
-//
-//  FUNCTION: MyRegisterClass()
-//
-//  PURPOSE: Registers the window class.
-//
+// *************************************************************************
+// *			MyRegisterClass:- Terry and Hazel Flanigan 2024	  	 	   *
+// *************************************************************************
 ATOM MyRegisterClass(HINSTANCE hInstance)
 {
-    WNDCLASSEXW wcex;
+    WNDCLASSEX wcex;
 
     wcex.cbSize = sizeof(WNDCLASSEX);
 
-    wcex.style          = CS_HREDRAW | CS_VREDRAW;
+    wcex.style          = 0;
     wcex.lpfnWndProc    = WndProc;
     wcex.cbClsExtra     = 0;
     wcex.cbWndExtra     = 0;
@@ -77,55 +87,48 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
     wcex.hIcon          = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_ROOMBUILDER));
     wcex.hCursor        = LoadCursor(nullptr, IDC_ARROW);
     wcex.hbrBackground  = (HBRUSH)(COLOR_WINDOW+1);
-    wcex.lpszMenuName   = MAKEINTRESOURCEW(IDC_ROOMBUILDER);
+    wcex.lpszMenuName   = MAKEINTRESOURCE(IDC_ROOMBUILDER);
     wcex.lpszClassName  = szWindowClass;
     wcex.hIconSm        = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));
 
-    return RegisterClassExW(&wcex);
+    return RegisterClassEx(&wcex);
 }
 
-//
-//   FUNCTION: InitInstance(HINSTANCE, int)
-//
-//   PURPOSE: Saves instance handle and creates main window
-//
-//   COMMENTS:
-//
-//        In this function, we save the instance handle in a global variable and
-//        create and display the main program window.
-//
+// *************************************************************************
+// *			InitInstance:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
 BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
-   hInst = hInstance; // Store instance handle in our global variable
+    App->hInst = hInstance; // Store instance handle in our global variable
 
-   HWND hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
-      CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
+    App->MainHwnd = CreateWindow(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
+      0, 0, 1200, 770, nullptr, nullptr, hInstance, nullptr);
 
-   if (!hWnd)
+    App->Fdlg = CreateDialog(App->hInst, (LPCTSTR)IDD_BACK_SURFACE, App->MainHwnd, (DLGPROC)ViewerMain_Proc);
+
+    int cx = GetSystemMetrics(SM_CXSCREEN);
+    int cy = GetSystemMetrics(SM_CYSCREEN);
+    MoveWindow(App->Fdlg, 0, 0, cx, cy, TRUE);
+
+   if (!App->MainHwnd)
    {
       return FALSE;
    }
 
-   ShowWindow(hWnd, nCmdShow);
-   UpdateWindow(hWnd);
+   ShowWindow(App->MainHwnd, nCmdShow);
+   UpdateWindow(App->MainHwnd);
 
    return TRUE;
 }
 
-//
-//  FUNCTION: WndProc(HWND, UINT, WPARAM, LPARAM)
-//
-//  PURPOSE: Processes messages for the main window.
-//
-//  WM_COMMAND  - process the application menu
-//  WM_PAINT    - Paint the main window
-//  WM_DESTROY  - post a quit message and return
-//
-//
+// *************************************************************************
+// *				WndProc:- Terry and Hazel Flanigan 2024	  			   *
+// *************************************************************************
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
     switch (message)
     {
+
     case WM_COMMAND:
         {
             int wmId = LOWORD(wParam);
@@ -160,7 +163,36 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     return 0;
 }
 
-// Message handler for about box.
+// *************************************************************************
+// *			ViewerMain_Proc:- Terry and Hazel Flanigan 2023			   *
+// *************************************************************************
+LRESULT CALLBACK ViewerMain_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+
+    switch (message)
+    {
+
+    case WM_INITDIALOG:
+    {
+        return TRUE;
+    }
+
+    case WM_CTLCOLORDLG:
+    {
+        return (LONG)App->AppBackground;
+    }
+    case WM_COMMAND:
+    {
+
+    }
+    break;
+    }
+    return FALSE;
+}
+
+// *************************************************************************
+// *				About:- Terry and Hazel Flanigan 2024	  			   *
+// *************************************************************************
 INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
     UNREFERENCED_PARAMETER(lParam);
