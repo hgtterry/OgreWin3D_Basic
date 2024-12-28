@@ -24,15 +24,7 @@ THE SOFTWARE.
 
 #pragma once
 
-enum ViewTypes
-{
-	VIEWSOLID = 1,
-	VIEWTEXTURE = 2,
-	VIEWWIRE = 4,
-	VIEWTOP = 8,
-	VIEWFRONT = 16,
-	VIEWSIDE = 32
-};
+#include "CL64_Render.h"
 
 enum View
 {
@@ -43,36 +35,6 @@ enum View
 	V_BR = 3
 };
 
-typedef struct PlaneTag
-{
-	Ogre::Vector3	Normal;
-	float			Dist;
-} GPlane;
-
-typedef struct ViewVarsTag
-{
-	HBITMAP				hDibSec;
-	Ogre::uint32		Flags;
-	Ogre::uint8* pBits;
-	Ogre::uint32* pZBuffer;
-	Ogre::uint32		ViewType;
-	float				ZoomFactor = 1;
-
-	Ogre::Vector3 Vpn, Vright, Vup, CamPos;
-	float	roll, pitch, yaw;
-	GPlane		FrustPlanes[4];
-	float	MaxScreenScaleInv, FieldOfView;
-	float	XCenter = 310;
-	float	YCenter = 174;
-	float	MaxScale;
-
-	float	SpeedScale, YScreenScale, XScreenScale;
-	long	Width = 310;
-	long 	Height = 174;
-	long		FacesDone;
-	char Name[10];
-
-} ViewVars;
 
 class CL64_MapEditor
 {
@@ -107,9 +69,6 @@ private:
 
 	void Draw_Screen(HWND hwnd);
 	bool Draw_Grid(HDC hDC, int Interval, RECT Rect);
-	void Render_ViewToWorld(const ViewVars* v, const int x, const int y, Ogre::Vector3* wp);
-	POINT m_Render_OrthoWorldToView(Ogre::Vector3 const* wp);
-
 
 	int LEFT_WINDOW_WIDTH;
 

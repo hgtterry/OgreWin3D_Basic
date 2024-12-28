@@ -30,6 +30,7 @@ CL64_App::CL64_App(void)
 	CL_MapEditor =	nullptr;
 	CL_Maths =		nullptr;
 	CL_Box =		nullptr;
+	CL_Render =		nullptr;
 
 	hInst = nullptr;
 	MainHwnd = nullptr;
@@ -49,6 +50,7 @@ void CL64_App::InitApp(void)
 	CL_MapEditor =	new CL64_MapEditor();
 	CL_Maths =		new CL64_Maths();
 	CL_Box =		new CL64_Box();
+	CL_Render =		new CL64_Render();
 
 	SetBrushes_Fonts();
 }

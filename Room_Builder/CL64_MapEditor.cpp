@@ -492,10 +492,10 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Left_Window(HWND hDlg, UINT message, W
 		return (LONG)App->CL_MapEditor->BackGround_Brush;
 	}
 
-	/*case WM_ERASEBKGND:
+	case WM_ERASEBKGND:
 	{
 		return (LRESULT)1;
-	}*/
+	}
 
 	/*case WM_SETCURSOR:
 	{
@@ -628,10 +628,10 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Right_Window(HWND hDlg, UINT message, 
 		return (LONG)App->CL_MapEditor->BackGround_Brush;
 	}
 
-	/*case WM_ERASEBKGND:
+	case WM_ERASEBKGND:
 	{
 		return (LRESULT)1;
-	}*/
+	}
 
 	/*case WM_SETCURSOR:
 	{
@@ -762,10 +762,10 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Bottom_Left_Window(HWND hDlg, UINT message
 		return (LONG)App->CL_MapEditor->BackGround_Brush;
 	}
 
-	/*case WM_ERASEBKGND:
+	case WM_ERASEBKGND:
 	{
 		return (LRESULT)1;
-	}*/
+	}
 
 	/*case WM_SETCURSOR:
 	{
@@ -994,8 +994,8 @@ bool CL64_MapEditor::Draw_Grid(HDC hDC, int Interval, RECT Rect)
 	xaxis = axidx[inidx][0];
 	yaxis = axidx[inidx][1];
 
-	Render_ViewToWorld(Current_View, Units_Round(-Interval), Units_Round(-Interval), &Delt);
-	Render_ViewToWorld(Current_View, Units_Round(Current_View->Width + Interval), Units_Round(Current_View->Height + Interval), &Delt2);
+	App->CL_Render->Render_ViewToWorld(Current_View, Units_Round(-Interval), Units_Round(-Interval), &Delt);
+	App->CL_Render->Render_ViewToWorld(Current_View, Units_Round(Current_View->Width + Interval), Units_Round(Current_View->Height + Interval), &Delt2);
 
 	App->CL_Box->Box3d_Set(&ViewBox, Delt.x, Delt.y, Delt.z, Delt2.x, Delt2.y, Delt2.z);
 
@@ -1025,9 +1025,9 @@ bool CL64_MapEditor::Draw_Grid(HDC hDC, int Interval, RECT Rect)
 
 	while (Count < cnt)
 	{
-		sp = m_Render_OrthoWorldToView(&Delt);
+		sp = App->CL_Render->Render_OrthoWorldToView(Current_View ,&Delt);
 		MoveToEx(hDC, 0, sp.y, NULL);
-		sp = m_Render_OrthoWorldToView(&Delt2);
+		sp = App->CL_Render->Render_OrthoWorldToView(Current_View ,&Delt2);
 		LineTo(hDC, Current_View->Width, sp.y);
 		App->CL_Maths->Vector3_Add(&Delt, &ystep, &Delt);
 		App->CL_Maths->Vector3_Add(&Delt2, &ystep, &Delt2);
@@ -1043,9 +1043,9 @@ bool CL64_MapEditor::Draw_Grid(HDC hDC, int Interval, RECT Rect)
 
 	while (Count < cnt)
 	{
-		sp = m_Render_OrthoWorldToView(&Delt);
+		sp = App->CL_Render->Render_OrthoWorldToView(Current_View ,&Delt);
 		MoveToEx(hDC, sp.x, 0, NULL);
-		sp = m_Render_OrthoWorldToView(&Delt2);
+		sp = App->CL_Render->Render_OrthoWorldToView(Current_View ,&Delt2);
 		LineTo(hDC, sp.x, Current_View->Height);
 		App->CL_Maths->Vector3_Add(&Delt, &xstep, &Delt);
 		App->CL_Maths->Vector3_Add(&Delt2, &xstep, &Delt2);
@@ -1055,97 +1055,3 @@ bool CL64_MapEditor::Draw_Grid(HDC hDC, int Interval, RECT Rect)
 	return 1;
 }
 
-// *************************************************************************
-// *	  	Render_ViewToWorld:- Terry and Hazel Flanigan 2024			   *
-// *************************************************************************
-void CL64_MapEditor::Render_ViewToWorld(const ViewVars* v, const int x, const int y, Ogre::Vector3* wp)
-{
-	float	ZoomInv = 1.0f / Current_View->ZoomFactor;
-
-	switch (Current_View->ViewType)
-	{
-	case VIEWTOP:
-	{
-		App->CL_Maths->Vector3_Set(wp, (x - Current_View->XCenter), 0.0f, (y - Current_View->YCenter));
-		App->CL_Maths->Vector3_Scale(wp, ZoomInv, wp);
-		App->CL_Maths->Vector3_Add(wp, &Current_View->CamPos, wp);
-		break;
-	}
-	case VIEWFRONT:
-	{
-
-		App->CL_Maths->Vector3_Set(wp, (x - Current_View->XCenter), -(y - Current_View->YCenter), 0.0f);
-		App->CL_Maths->Vector3_Scale(wp, ZoomInv, wp);
-		App->CL_Maths->Vector3_Add(wp, &Current_View->CamPos, wp);
-		break;
-	}
-	case VIEWSIDE:
-	{
-		App->CL_Maths->Vector3_Set(wp, 0.0f, -(y - Current_View->YCenter), (x - Current_View->XCenter));
-		App->CL_Maths->Vector3_Scale(wp, ZoomInv, wp);
-		App->CL_Maths->Vector3_Add(wp, &Current_View->CamPos, wp);
-		break;
-	}
-	default:
-	{
-		App->CL_Maths->Vector3_Set
-		(
-			wp,
-			-(x - Current_View->XCenter) * (Current_View->MaxScreenScaleInv),
-			-(y - Current_View->YCenter) * (Current_View->MaxScreenScaleInv),
-			1.0f
-		);
-
-		App->CL_Maths->Vector3_Normalize(wp);
-
-		break;
-	}
-	}
-}
-
-// *************************************************************************
-// *	  			m_Render_OrthoWorldToView							   *
-// *************************************************************************
-POINT CL64_MapEditor::m_Render_OrthoWorldToView(Ogre::Vector3 const* wp)
-{
-
-	POINT	sc = { 0, 0 };
-	Ogre::Vector3 ptView;
-	Ogre::Vector3 Campos;
-
-	switch (Current_View->ViewType)
-	{
-	case VIEWTOP:
-	{
-		App->CL_Maths->Vector3_Subtract(wp, &Current_View->CamPos, &ptView);
-		App->CL_Maths->Vector3_Scale(&ptView, Current_View->ZoomFactor, &ptView);
-
-		sc.x = (int)(Current_View->XCenter + ptView.x);
-		sc.y = (int)(Current_View->YCenter + ptView.z);
-		break;
-	}
-	case VIEWFRONT:
-	{
-		App->CL_Maths->Vector3_Subtract(wp, &Current_View->CamPos, &ptView);
-		App->CL_Maths->Vector3_Scale(&ptView, Current_View->ZoomFactor, &ptView);
-
-		sc.x = (int)(Current_View->XCenter + ptView.x);
-		sc.y = (int)(Current_View->YCenter - ptView.y);
-		break;
-	}
-	case VIEWSIDE:
-	{
-		App->CL_Maths->Vector3_Subtract(wp, &Current_View->CamPos, &ptView);
-		App->CL_Maths->Vector3_Scale(&ptView, Current_View->ZoomFactor, &ptView);
-
-		sc.x = (int)(Current_View->XCenter + ptView.z);
-		sc.y = (int)(Current_View->YCenter - ptView.y);
-		break;
-	}
-	default:
-
-		break;
-	}
-
-	return sc;
-}
