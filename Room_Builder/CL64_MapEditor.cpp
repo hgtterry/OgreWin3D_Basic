@@ -27,6 +27,14 @@ THE SOFTWARE.
 #include "CL64_App.h"
 #include "CL64_MapEditor.h"
 
+#define	M_PI		((float)3.14159265358979323846f)
+#define	TOP_POS					8
+#define	BOTTOM_POS				400
+#define	SPLITTER_BAR_WIDTH		5
+#define WIDTH_ADJUST			2
+
+#define BOTTOM_POS_BOTLEFT		5
+
 CL64_MapEditor::CL64_MapEditor()
 {
 	Main_Dlg_Hwnd = NULL;
@@ -53,6 +61,16 @@ CL64_MapEditor::CL64_MapEditor()
 	Do_All = 0;
 
 	BackGround_Brush = CreateSolidBrush(RGB(64, 64, 64));
+
+	Pen_Fine_Grid = CreatePen(PS_SOLID, 0, RGB(0, 0, 0));;
+	Pen_Grid = CreatePen(PS_SOLID, 0, RGB(112, 112, 112));;
+
+	int Count = 0;
+	while (Count < 3)
+	{
+		VCam[Count] = nullptr;
+		Count++;
+	}
 
 	MemoryhDC = nullptr;
 }
@@ -453,7 +471,7 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Left_Window(HWND hDlg, UINT message, W
 		RECT r;
 		GetClientRect(hDlg, &r);
 
-		/*App->CL_MapEditor->VCam[V_TL] = new ViewVars;
+		App->CL_MapEditor->VCam[V_TL] = new ViewVars;
 		strcpy(App->CL_MapEditor->VCam[V_TL]->Name, "TLV");
 		App->CL_MapEditor->VCam[V_TL]->ViewType = 8;
 		App->CL_MapEditor->VCam[V_TL]->ZoomFactor = 0.3;
@@ -464,7 +482,7 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Left_Window(HWND hDlg, UINT message, W
 		App->CL_MapEditor->VCam[V_TL]->Width = 310;
 		App->CL_MapEditor->VCam[V_TL]->Height = 174;
 
-		App->CL_MapEditor->VCam[V_TL]->CamPos = App->CL_Ogre->camNode->getPosition();*/
+		App->CL_MapEditor->VCam[V_TL]->CamPos = Ogre::Vector3(0, 0, 0);// App->CL_Ogre->camNode->getPosition();
 
 		return TRUE;
 	}
@@ -566,7 +584,7 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Left_Window(HWND hDlg, UINT message, W
 
 	case WM_PAINT:
 	{
-		//App->CL_MapEditor->Current_View = App->CL_MapEditor->VCam[V_TL];
+		App->CL_MapEditor->Current_View = App->CL_MapEditor->VCam[V_TL];
 		App->CL_MapEditor->Draw_Screen(hDlg);
 
 		return 0;
@@ -596,12 +614,12 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Right_Window(HWND hDlg, UINT message, 
 	{
 	case WM_INITDIALOG:
 	{
-		/*App->CL_MapEditor->VCam[V_TR] = new ViewVars;
+		App->CL_MapEditor->VCam[V_TR] = new ViewVars;
 		strcpy(App->CL_MapEditor->VCam[V_TR]->Name, "TRV");
 		App->CL_MapEditor->VCam[V_TR]->ViewType = 32;
 		App->CL_MapEditor->VCam[V_TR]->ZoomFactor = 0.3;
 
-		App->CL_MapEditor->VCam[V_TR]->CamPos = App->CL_Ogre->camNode->getPosition();*/
+		App->CL_MapEditor->VCam[V_TR]->CamPos =  Ogre::Vector3(0, 0, 0);// App->CL_Ogre->camNode->getPosition();
 		return TRUE;
 	}
 
@@ -702,8 +720,8 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Right_Window(HWND hDlg, UINT message, 
 
 	case WM_PAINT:
 	{
-		/*App->CL_MapEditor->Current_View = App->CL_MapEditor->VCam[V_TR];
-		App->CL_MapEditor->Draw_Screen(hDlg);*/
+		App->CL_MapEditor->Current_View = App->CL_MapEditor->VCam[V_TR];
+		App->CL_MapEditor->Draw_Screen(hDlg);
 
 		return 0;
 	}
@@ -730,12 +748,12 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Bottom_Left_Window(HWND hDlg, UINT message
 	{
 	case WM_INITDIALOG:
 	{
-		/*App->CL_MapEditor->VCam[V_BL] = new ViewVars;
+		App->CL_MapEditor->VCam[V_BL] = new ViewVars;
 		strcpy(App->CL_MapEditor->VCam[2]->Name, "BLV");
 		App->CL_MapEditor->VCam[V_BL]->ViewType = 16;
 		App->CL_MapEditor->VCam[V_BL]->ZoomFactor = 0.3;
 
-		App->CL_MapEditor->VCam[V_BL]->CamPos = App->CL_Ogre->camNode->getPosition();*/
+		App->CL_MapEditor->VCam[V_BL]->CamPos =  Ogre::Vector3(0, 0, 0);//App->CL_Ogre->camNode->getPosition();
 		return TRUE;
 	}
 
@@ -836,8 +854,8 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Bottom_Left_Window(HWND hDlg, UINT message
 
 	case WM_PAINT:
 	{
-		/*App->CL_MapEditor->Current_View = App->CL_MapEditor->VCam[V_BL];
-		App->CL_MapEditor->Draw_Screen(hDlg);*/
+		App->CL_MapEditor->Current_View = App->CL_MapEditor->VCam[V_BL];
+		App->CL_MapEditor->Draw_Screen(hDlg);
 		return 0;
 	}
 
@@ -910,20 +928,20 @@ void CL64_MapEditor::Draw_Screen(HWND hwnd)
 	FillRect(MemoryhDC, &Rect, (HBRUSH)BackGround_Brush); // BackGround
 
 	// ---------------------- Draw Grid Fine
-	//if (Current_View->ZoomFactor > 0.1)
-	//{
-	//	SelectObject(MemoryhDC, Pen_Fine_Grid);
-	//	Draw_Grid(MemoryhDC, 8, Rect); // Snap grid
-	//}
+	if (Current_View->ZoomFactor > 0.1)
+	{
+		SelectObject(MemoryhDC, Pen_Fine_Grid);
+		Draw_Grid(MemoryhDC, 8, Rect); // Snap grid
+	}
 
 	// ---------------------- Draw Grid
-	/*if (Current_View->ZoomFactor < 0.1)
+	if (Current_View->ZoomFactor < 0.1)
 	{
 		Current_View->ZoomFactor = 0.1;
-	}*/
+	}
 
-	//SelectObject(MemoryhDC, Pen_Grid);
-	//Draw_Grid(MemoryhDC, 128, Rect); // Big grid
+	SelectObject(MemoryhDC, Pen_Grid);
+	Draw_Grid(MemoryhDC, 128, Rect); // Big grid
 
 	//// ---------------------- Draw Areas
 	//if (flag_Show_Areas == 1)
@@ -949,6 +967,8 @@ void CL64_MapEditor::Draw_Screen(HWND hwnd)
 	//flag_IsDrawing = 0;
 }
 
+static const Ogre::Vector3	VecOrigin = { 0.0f, 0.0f, 0.0f };
+
 #define Units_Round(n) ((int)Units_FRound((n)))
 #define Units_Trunc(n) ((int)(n))
 #define Units_FRound(n)	((float)floor((n)+0.5f))
@@ -959,78 +979,173 @@ void CL64_MapEditor::Draw_Screen(HWND hwnd)
 // *************************************************************************
 bool CL64_MapEditor::Draw_Grid(HDC hDC, int Interval, RECT Rect)
 {
-	/*Current_View->Width = Rect.right;
-	Current_View->Height = Rect.bottom;*/
+	Current_View->Width = Rect.right;
+	Current_View->Height = Rect.bottom;
 
 	Ogre::Vector3 ystep, xstep, Delt, Delt2;
 	int			i, cnt, xaxis, yaxis, inidx;
 	static int axidx[3][2] = { 2, 1, 0, 2, 0, 1 };
 	float	gsinv;
-	//Box3d ViewBox;
-	//POINT		sp;
+	Box3d ViewBox;
+	POINT		sp;
 
-	//inidx = (Current_View->ViewType >> 3) & 0x3;
+	inidx = (Current_View->ViewType >> 3) & 0x3;
 
-	//xaxis = axidx[inidx][0];
-	//yaxis = axidx[inidx][1];
+	xaxis = axidx[inidx][0];
+	yaxis = axidx[inidx][1];
 
-	//Render_ViewToWorld(Current_View, Units_Round(-Interval), Units_Round(-Interval), &Delt);
-	//Render_ViewToWorld(Current_View, Units_Round(Current_View->Width + Interval), Units_Round(Current_View->Height + Interval), &Delt2);
+	Render_ViewToWorld(Current_View, Units_Round(-Interval), Units_Round(-Interval), &Delt);
+	Render_ViewToWorld(Current_View, Units_Round(Current_View->Width + Interval), Units_Round(Current_View->Height + Interval), &Delt2);
 
-	//App->CL_Box->Box3d_Set(&ViewBox, Delt.x, Delt.y, Delt.z, Delt2.x, Delt2.y, Delt2.z);
+	App->CL_Box->Box3d_Set(&ViewBox, Delt.x, Delt.y, Delt.z, Delt2.x, Delt2.y, Delt2.z);
 
-	//VectorToSUB(ViewBox.Min, inidx) = -FLT_MAX;
-	//VectorToSUB(ViewBox.Max, inidx) = FLT_MAX;
+	VectorToSUB(ViewBox.Min, inidx) = -FLT_MAX;
+	VectorToSUB(ViewBox.Max, inidx) = FLT_MAX;
 
-	//gsinv = 1.0f / (float)Interval;
-	//for (i = 0; i < 3; i++)
-	//{
-	//	VectorToSUB(ViewBox.Min, i) = (float)((int)(VectorToSUB(ViewBox.Min, i) * gsinv)) * Interval;
-	//	VectorToSUB(ViewBox.Max, i) = (float)((int)(VectorToSUB(ViewBox.Max, i) * gsinv)) * Interval;
-	//}
+	gsinv = 1.0f / (float)Interval;
+	for (i = 0; i < 3; i++)
+	{
+		VectorToSUB(ViewBox.Min, i) = (float)((int)(VectorToSUB(ViewBox.Min, i) * gsinv)) * Interval;
+		VectorToSUB(ViewBox.Max, i) = (float)((int)(VectorToSUB(ViewBox.Max, i) * gsinv)) * Interval;
+	}
 
-	//App->CL_Maths->Vector3_Copy(&VecOrigin, &xstep);
-	//App->CL_Maths->Vector3_Copy(&VecOrigin, &ystep);
-	//VectorToSUB(ystep, yaxis) = (float)Interval;
-	//VectorToSUB(xstep, xaxis) = (float)Interval;
+	App->CL_Maths->Vector3_Copy(&VecOrigin, &xstep);
+	App->CL_Maths->Vector3_Copy(&VecOrigin, &ystep);
+	VectorToSUB(ystep, yaxis) = (float)Interval;
+	VectorToSUB(xstep, xaxis) = (float)Interval;
 
-	//cnt = Rect.bottom / Interval; // hgtterry Debug Odd
+	cnt = Rect.bottom / Interval; // hgtterry Debug Odd
 
-	//// horizontal lines
-	//int Count = 0;
-	//App->CL_Maths->Vector3_Copy(&ViewBox.Min, &Delt);
-	//App->CL_Maths->Vector3_Copy(&ViewBox.Min, &Delt2);
-	//VectorToSUB(Delt2, xaxis) = VectorToSUB(ViewBox.Max, xaxis);
-	//cnt = Units_Round((VectorToSUB(ViewBox.Max, yaxis) - VectorToSUB(ViewBox.Min, yaxis)) * gsinv);
+	// horizontal lines
+	int Count = 0;
+	App->CL_Maths->Vector3_Copy(&ViewBox.Min, &Delt);
+	App->CL_Maths->Vector3_Copy(&ViewBox.Min, &Delt2);
+	VectorToSUB(Delt2, xaxis) = VectorToSUB(ViewBox.Max, xaxis);
+	cnt = Units_Round((VectorToSUB(ViewBox.Max, yaxis) - VectorToSUB(ViewBox.Min, yaxis)) * gsinv);
 
-	//while (Count < cnt)
-	//{
-	//	sp = m_Render_OrthoWorldToView(&Delt);
-	//	MoveToEx(hDC, 0, sp.y, NULL);
-	//	sp = m_Render_OrthoWorldToView(&Delt2);
-	//	LineTo(hDC, Current_View->Width, sp.y);
-	//	App->CL_Maths->Vector3_Add(&Delt, &ystep, &Delt);
-	//	App->CL_Maths->Vector3_Add(&Delt2, &ystep, &Delt2);
-	//	Count++;
-	//}
+	while (Count < cnt)
+	{
+		sp = m_Render_OrthoWorldToView(&Delt);
+		MoveToEx(hDC, 0, sp.y, NULL);
+		sp = m_Render_OrthoWorldToView(&Delt2);
+		LineTo(hDC, Current_View->Width, sp.y);
+		App->CL_Maths->Vector3_Add(&Delt, &ystep, &Delt);
+		App->CL_Maths->Vector3_Add(&Delt2, &ystep, &Delt2);
+		Count++;
+	}
 
-	//// vertical lines
-	//Count = 0;
-	//App->CL_Maths->Vector3_Copy(&ViewBox.Min, &Delt);
-	//App->CL_Maths->Vector3_Copy(&ViewBox.Min, &Delt2);
-	//VectorToSUB(Delt2, yaxis) = VectorToSUB(ViewBox.Max, yaxis);
-	//cnt = Units_Round((VectorToSUB(ViewBox.Max, xaxis) - VectorToSUB(ViewBox.Min, xaxis)) * gsinv);
+	// vertical lines
+	Count = 0;
+	App->CL_Maths->Vector3_Copy(&ViewBox.Min, &Delt);
+	App->CL_Maths->Vector3_Copy(&ViewBox.Min, &Delt2);
+	VectorToSUB(Delt2, yaxis) = VectorToSUB(ViewBox.Max, yaxis);
+	cnt = Units_Round((VectorToSUB(ViewBox.Max, xaxis) - VectorToSUB(ViewBox.Min, xaxis)) * gsinv);
 
-	//while (Count < cnt)
-	//{
-	//	sp = m_Render_OrthoWorldToView(&Delt);
-	//	MoveToEx(hDC, sp.x, 0, NULL);
-	//	sp = m_Render_OrthoWorldToView(&Delt2);
-	//	LineTo(hDC, sp.x, Current_View->Height);
-	//	App->CL_Maths->Vector3_Add(&Delt, &xstep, &Delt);
-	//	App->CL_Maths->Vector3_Add(&Delt2, &xstep, &Delt2);
-	//	Count++;
-	//}
+	while (Count < cnt)
+	{
+		sp = m_Render_OrthoWorldToView(&Delt);
+		MoveToEx(hDC, sp.x, 0, NULL);
+		sp = m_Render_OrthoWorldToView(&Delt2);
+		LineTo(hDC, sp.x, Current_View->Height);
+		App->CL_Maths->Vector3_Add(&Delt, &xstep, &Delt);
+		App->CL_Maths->Vector3_Add(&Delt2, &xstep, &Delt2);
+		Count++;
+	}
 
 	return 1;
+}
+
+// *************************************************************************
+// *	  	Render_ViewToWorld:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void CL64_MapEditor::Render_ViewToWorld(const ViewVars* v, const int x, const int y, Ogre::Vector3* wp)
+{
+	float	ZoomInv = 1.0f / Current_View->ZoomFactor;
+
+	switch (Current_View->ViewType)
+	{
+	case VIEWTOP:
+	{
+		App->CL_Maths->Vector3_Set(wp, (x - Current_View->XCenter), 0.0f, (y - Current_View->YCenter));
+		App->CL_Maths->Vector3_Scale(wp, ZoomInv, wp);
+		App->CL_Maths->Vector3_Add(wp, &Current_View->CamPos, wp);
+		break;
+	}
+	case VIEWFRONT:
+	{
+
+		App->CL_Maths->Vector3_Set(wp, (x - Current_View->XCenter), -(y - Current_View->YCenter), 0.0f);
+		App->CL_Maths->Vector3_Scale(wp, ZoomInv, wp);
+		App->CL_Maths->Vector3_Add(wp, &Current_View->CamPos, wp);
+		break;
+	}
+	case VIEWSIDE:
+	{
+		App->CL_Maths->Vector3_Set(wp, 0.0f, -(y - Current_View->YCenter), (x - Current_View->XCenter));
+		App->CL_Maths->Vector3_Scale(wp, ZoomInv, wp);
+		App->CL_Maths->Vector3_Add(wp, &Current_View->CamPos, wp);
+		break;
+	}
+	default:
+	{
+		App->CL_Maths->Vector3_Set
+		(
+			wp,
+			-(x - Current_View->XCenter) * (Current_View->MaxScreenScaleInv),
+			-(y - Current_View->YCenter) * (Current_View->MaxScreenScaleInv),
+			1.0f
+		);
+
+		App->CL_Maths->Vector3_Normalize(wp);
+
+		break;
+	}
+	}
+}
+
+// *************************************************************************
+// *	  			m_Render_OrthoWorldToView							   *
+// *************************************************************************
+POINT CL64_MapEditor::m_Render_OrthoWorldToView(Ogre::Vector3 const* wp)
+{
+
+	POINT	sc = { 0, 0 };
+	Ogre::Vector3 ptView;
+	Ogre::Vector3 Campos;
+
+	switch (Current_View->ViewType)
+	{
+	case VIEWTOP:
+	{
+		App->CL_Maths->Vector3_Subtract(wp, &Current_View->CamPos, &ptView);
+		App->CL_Maths->Vector3_Scale(&ptView, Current_View->ZoomFactor, &ptView);
+
+		sc.x = (int)(Current_View->XCenter + ptView.x);
+		sc.y = (int)(Current_View->YCenter + ptView.z);
+		break;
+	}
+	case VIEWFRONT:
+	{
+		App->CL_Maths->Vector3_Subtract(wp, &Current_View->CamPos, &ptView);
+		App->CL_Maths->Vector3_Scale(&ptView, Current_View->ZoomFactor, &ptView);
+
+		sc.x = (int)(Current_View->XCenter + ptView.x);
+		sc.y = (int)(Current_View->YCenter - ptView.y);
+		break;
+	}
+	case VIEWSIDE:
+	{
+		App->CL_Maths->Vector3_Subtract(wp, &Current_View->CamPos, &ptView);
+		App->CL_Maths->Vector3_Scale(&ptView, Current_View->ZoomFactor, &ptView);
+
+		sc.x = (int)(Current_View->XCenter + ptView.z);
+		sc.y = (int)(Current_View->YCenter - ptView.y);
+		break;
+	}
+	default:
+
+		break;
+	}
+
+	return sc;
 }

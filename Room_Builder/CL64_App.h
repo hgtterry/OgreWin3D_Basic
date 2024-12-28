@@ -26,6 +26,7 @@ THE SOFTWARE.
 
 #include "CL64_MapEditor.h"
 #include "CL64_Maths.h"
+#include "CL64_Box.h"
 
 class CL64_App
 {
@@ -35,6 +36,7 @@ public:
 
 	CL64_MapEditor* CL_MapEditor;
 	CL64_Maths*		CL_Maths;
+	CL64_Box*		CL_Box;
 
 	void InitApp(void);
 	void SetBrushes_Fonts(void);

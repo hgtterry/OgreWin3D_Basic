@@ -24,13 +24,55 @@ THE SOFTWARE.
 
 #pragma once
 
-#define	M_PI		((float)3.14159265358979323846f)
-#define	TOP_POS					8
-#define	BOTTOM_POS				400
-#define	SPLITTER_BAR_WIDTH		5
-#define WIDTH_ADJUST			2
+enum ViewTypes
+{
+	VIEWSOLID = 1,
+	VIEWTEXTURE = 2,
+	VIEWWIRE = 4,
+	VIEWTOP = 8,
+	VIEWFRONT = 16,
+	VIEWSIDE = 32
+};
 
-#define BOTTOM_POS_BOTLEFT		5
+enum View
+{
+	V_None = -1,
+	V_TL = 0,
+	V_TR = 1,
+	V_BL = 2,
+	V_BR = 3
+};
+
+typedef struct PlaneTag
+{
+	Ogre::Vector3	Normal;
+	float			Dist;
+} GPlane;
+
+typedef struct ViewVarsTag
+{
+	HBITMAP				hDibSec;
+	Ogre::uint32		Flags;
+	Ogre::uint8* pBits;
+	Ogre::uint32* pZBuffer;
+	Ogre::uint32		ViewType;
+	float				ZoomFactor = 1;
+
+	Ogre::Vector3 Vpn, Vright, Vup, CamPos;
+	float	roll, pitch, yaw;
+	GPlane		FrustPlanes[4];
+	float	MaxScreenScaleInv, FieldOfView;
+	float	XCenter = 310;
+	float	YCenter = 174;
+	float	MaxScale;
+
+	float	SpeedScale, YScreenScale, XScreenScale;
+	long	Width = 310;
+	long 	Height = 174;
+	long		FacesDone;
+	char Name[10];
+
+} ViewVars;
 
 class CL64_MapEditor
 {
@@ -40,6 +82,9 @@ public:
 
 	void Init_Map_Views();
 	void Init_Views();
+
+	ViewVars* VCam[4];
+	ViewVars* Current_View;
 
 	HWND Main_Dlg_Hwnd;
 
@@ -62,6 +107,9 @@ private:
 
 	void Draw_Screen(HWND hwnd);
 	bool Draw_Grid(HDC hDC, int Interval, RECT Rect);
+	void Render_ViewToWorld(const ViewVars* v, const int x, const int y, Ogre::Vector3* wp);
+	POINT m_Render_OrthoWorldToView(Ogre::Vector3 const* wp);
+
 
 	int LEFT_WINDOW_WIDTH;
 
@@ -85,6 +133,9 @@ private:
 	HWND Bottom_Right_Hwnd;
 
 	HBRUSH BackGround_Brush;
+
+	HPEN Pen_Fine_Grid;
+	HPEN Pen_Grid;
 
 	HDC	MemoryhDC;
 };
