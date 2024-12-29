@@ -157,6 +157,7 @@
     <ClInclude Include="CL64_Maths.h" />
     <ClInclude Include="CL64_Prefs.h" />
     <ClInclude Include="CL64_Render.h" />
+    <ClInclude Include="CL64_Utilities.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Resource.h" />
@@ -173,6 +174,7 @@
     <ClCompile Include="CL64_Maths.cpp" />
     <ClCompile Include="CL64_Prefs.cpp" />
     <ClCompile Include="CL64_Render.cpp" />
+    <ClCompile Include="CL64_Utilities.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

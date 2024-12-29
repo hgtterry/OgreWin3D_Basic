@@ -22,17 +22,14 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-#pragma once
-class CL64_Doc
+#include "pch.h"
+#include "CL64_App.h"
+#include "CL64_Utilities.h"
+
+CL64_Utilities::CL64_Utilities(void)
 {
-public:
-	CL64_Doc(void);
-	~CL64_Doc(void);
+}
 
-	void Init_Doc();
-	const char* FindTextureLibrary(char const* WadName);
-
-	char LastTemplateTypeName[MAX_PATH];
-;
-};
-
+CL64_Utilities::~CL64_Utilities(void)
+{
+}

@@ -27,14 +27,15 @@ THE SOFTWARE.
 
 CL64_App::CL64_App(void)
 {
-	CL_MapEditor =	nullptr;
-	CL_Maths =		nullptr;
-	CL_Box =		nullptr;
-	CL_Render =		nullptr;
-	CL_Level =		nullptr;
-	CL_Prefs =		nullptr;
-	CL_Ini_File =	nullptr;
-	CL_Doc =		nullptr;
+	CL_MapEditor =		nullptr;
+	CL_Maths =			nullptr;
+	CL_Box =			nullptr;
+	CL_Render =			nullptr;
+	CL_Level =			nullptr;
+	CL_Prefs =			nullptr;
+	CL_Ini_File =		nullptr;
+	CL_Doc =			nullptr;
+	CL_Utilities =		nullptr;
 
 	hInst = nullptr;
 	MainHwnd = nullptr;
@@ -53,14 +54,15 @@ CL64_App::~CL64_App(void)
 // *************************************************************************
 void CL64_App::InitApp(void)
 {
-	CL_MapEditor =	new CL64_MapEditor();
-	CL_Maths =		new CL64_Maths();
-	CL_Box =		new CL64_Box();
-	CL_Render =		new CL64_Render();
-	CL_Level =		new CL64_Level();
-	CL_Prefs =		new CL64_Prefs();
-	CL_Ini_File =	new CL64_Ini_File();
-	CL_Doc =		new CL64_Doc();
+	CL_MapEditor =		new CL64_MapEditor();
+	CL_Maths =			new CL64_Maths();
+	CL_Box =			new CL64_Box();
+	CL_Render =			new CL64_Render();
+	CL_Level =			new CL64_Level();
+	CL_Prefs =			new CL64_Prefs();
+	CL_Ini_File =		new CL64_Ini_File();
+	CL_Doc =			new CL64_Doc();
+	CL_Utilities =		new CL64_Utilities();
 
 	SetBrushes_Fonts();
 }

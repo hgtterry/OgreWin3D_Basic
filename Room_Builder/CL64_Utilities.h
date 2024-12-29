@@ -23,16 +23,10 @@ THE SOFTWARE.
 */
 
 #pragma once
-class CL64_Doc
+class CL64_Utilities
 {
 public:
-	CL64_Doc(void);
-	~CL64_Doc(void);
-
-	void Init_Doc();
-	const char* FindTextureLibrary(char const* WadName);
-
-	char LastTemplateTypeName[MAX_PATH];
-;
+	CL64_Utilities(void);
+	~CL64_Utilities(void);
 };
 

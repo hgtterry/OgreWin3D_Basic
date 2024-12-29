@@ -32,6 +32,7 @@ THE SOFTWARE.
 #include "CL64_Prefs.h"
 #include "CL64_Ini_File.h"
 #include "CL64_Doc.h"
+#include "CL64_Utilities.h"
 
 class CL64_App
 {
@@ -39,14 +40,15 @@ public:
 	CL64_App(void);
 	~CL64_App(void);
 
-	CL64_MapEditor* CL_MapEditor;
-	CL64_Maths*		CL_Maths;
-	CL64_Box*		CL_Box;
-	CL64_Render*	CL_Render;
-	CL64_Level*		CL_Level;
-	CL64_Prefs*		CL_Prefs;
-	CL64_Ini_File*	CL_Ini_File;
-	CL64_Doc*		CL_Doc;
+	CL64_MapEditor*		CL_MapEditor;
+	CL64_Maths*			CL_Maths;
+	CL64_Box*			CL_Box;
+	CL64_Render*		CL_Render;
+	CL64_Level*			CL_Level;
+	CL64_Prefs*			CL_Prefs;
+	CL64_Ini_File*		CL_Ini_File;
+	CL64_Doc*			CL_Doc;
+	CL64_Utilities*		CL_Utilities;
 
 	void InitApp(void);
 	void SetBrushes_Fonts(void);
