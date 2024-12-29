@@ -23,14 +23,10 @@ THE SOFTWARE.
 */
 
 #pragma once
-
-typedef struct tag_Level Level;
-
-class CL64_Level
+class CL64_FaceList
 {
 public:
-	CL64_Level(void);
-	~CL64_Level(void);
-
+	CL64_FaceList(void);
+	~CL64_FaceList(void);
 };
 

@@ -33,6 +33,8 @@ public:
 	const char* FindTextureLibrary(char const* WadName);
 
 	char LastTemplateTypeName[MAX_PATH];
-;
+
+	Level* pLevel;
+
 };
 

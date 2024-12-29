@@ -24,13 +24,31 @@ THE SOFTWARE.
 
 #pragma once
 
-typedef struct tag_Level Level;
+typedef struct tag_FaceList FaceList;
+typedef struct tag_BrushList BrushList;
 
-class CL64_Level
+typedef struct BrushTag
+{
+	struct BrushTag* Prev, * Next;
+	FaceList* Faces;			//null if multibrush
+	BrushList* BList;			//null if csgbrush
+	unsigned long	Flags;
+	int				Type;
+	int				ModelId;
+	int				GroupId;
+	float			HullSize;		//for hollows
+	Ogre::int32		Color;
+	char* Name;
+	Box3d			BoundingBox;
+	bool			Centre_Marker;
+} Brush;
+
+
+
+class CL64_Brush
 {
 public:
-	CL64_Level(void);
-	~CL64_Level(void);
-
+	CL64_Brush(void);
+	~CL64_Brush(void);
 };
 

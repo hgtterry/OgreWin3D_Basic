@@ -36,6 +36,8 @@ CL64_App::CL64_App(void)
 	CL_Ini_File =		nullptr;
 	CL_Doc =			nullptr;
 	CL_Utilities =		nullptr;
+	CL_Brush =			nullptr;
+	CL_FaceList =		nullptr;
 
 	hInst = nullptr;
 	MainHwnd = nullptr;
@@ -63,6 +65,8 @@ void CL64_App::InitApp(void)
 	CL_Ini_File =		new CL64_Ini_File();
 	CL_Doc =			new CL64_Doc();
 	CL_Utilities =		new CL64_Utilities();
+	CL_Brush =			new CL64_Brush();
+	CL_FaceList =		new CL64_FaceList();
 
 	SetBrushes_Fonts();
 }

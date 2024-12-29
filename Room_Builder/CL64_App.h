@@ -33,6 +33,8 @@ THE SOFTWARE.
 #include "CL64_Ini_File.h"
 #include "CL64_Doc.h"
 #include "CL64_Utilities.h"
+#include "CL64_Brush.h"
+#include "CL64_FaceList.h"
 
 class CL64_App
 {
@@ -49,6 +51,8 @@ public:
 	CL64_Ini_File*		CL_Ini_File;
 	CL64_Doc*			CL_Doc;
 	CL64_Utilities*		CL_Utilities;
+	CL64_Brush*			CL_Brush;
+	CL64_FaceList*		CL_FaceList;
 
 	void InitApp(void);
 	void SetBrushes_Fonts(void);

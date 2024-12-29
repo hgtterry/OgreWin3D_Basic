@@ -29,7 +29,7 @@ THE SOFTWARE.
 CL64_Doc::CL64_Doc(void)
 {
     LastTemplateTypeName[0] = 0;
-
+	pLevel = NULL;
 }
 
 CL64_Doc::~CL64_Doc(void)
@@ -51,6 +51,8 @@ void CL64_Doc::Init_Doc()
 
     const char* WadPath = FindTextureLibrary(DefaultWadName);
 
+	pLevel = NULL;// Level_Create(WadPath, Prefs_GetHeadersList(pPrefs),
+		//Prefs_GetActorsList(pPrefs), Prefs_GetPawnIni(pPrefs));
    
 }
 
