@@ -45,6 +45,8 @@ public:
 	void Init_Map_Views();
 	void Init_Views();
 
+	float GridSize, GridSnapSize;
+
 	ViewVars* VCam[4];
 	ViewVars* Current_View;
 

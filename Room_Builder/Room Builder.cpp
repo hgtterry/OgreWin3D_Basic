@@ -38,6 +38,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     App->InitApp();
 
+    App->CL_Prefs->Read_Preferences();
+
     UNREFERENCED_PARAMETER(hPrevInstance);
     UNREFERENCED_PARAMETER(lpCmdLine);
 
@@ -137,6 +139,15 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             // Parse the menu selections:
             switch (wmId)
             {
+
+            // ----------------------------- Debug
+            case ID_DEBUG_GENERAL:
+            {
+                App->CL_Prefs->Write_Preferences();
+                return 1;
+            }
+
+            // ---------------------------------------------
             case IDM_ABOUT:
                 DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
                 break;

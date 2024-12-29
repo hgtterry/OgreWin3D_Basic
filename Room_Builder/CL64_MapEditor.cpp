@@ -39,6 +39,9 @@ CL64_MapEditor::CL64_MapEditor()
 {
 	Main_Dlg_Hwnd = NULL;
 
+	GridSize = 128, 
+	GridSnapSize = 8;
+
 	Left_Window_Hwnd = NULL;
 	Right_Window_Hwnd = NULL;
 
@@ -927,11 +930,12 @@ void CL64_MapEditor::Draw_Screen(HWND hwnd)
 
 	FillRect(MemoryhDC, &Rect, (HBRUSH)BackGround_Brush); // BackGround
 
+
 	// ---------------------- Draw Grid Fine
 	if (Current_View->ZoomFactor > 0.1)
 	{
 		SelectObject(MemoryhDC, Pen_Fine_Grid);
-		App->CL_Render->Render_RenderOrthoGridFromSize(Current_View, 8, MemoryhDC, Rect);
+		App->CL_Render->Render_RenderOrthoGridFromSize(Current_View, int(GridSnapSize), MemoryhDC, Rect);
 	}
 
 	// ---------------------- Draw Grid
@@ -941,7 +945,7 @@ void CL64_MapEditor::Draw_Screen(HWND hwnd)
 	}
 
 	SelectObject(MemoryhDC, Pen_Grid);
-	App->CL_Render->Render_RenderOrthoGridFromSize(Current_View, 128, MemoryhDC, Rect);
+	App->CL_Render->Render_RenderOrthoGridFromSize(Current_View, int(GridSize), MemoryhDC, Rect);
 
 	//// ---------------------- Draw Areas
 	//if (flag_Show_Areas == 1)
