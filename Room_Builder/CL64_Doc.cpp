@@ -62,17 +62,16 @@ void CL64_Doc::Init_Doc()
 	}*/
 
 	pSelBrushes = App->CL_SelBrushList->SelBrushList_Create();
-	//App->CLSB_Doc->pTempSelBrushes = SelBrushList_Create();
+	pTempSelBrushes = App->CL_SelBrushList->SelBrushList_Create();
 	//App->CLSB_Doc->pSelFaces = SelFaceList_Create();
 
 	//App->CLSB_Doc->SetLockAxis(0);	// Start with no axis locked
 
 
-		// create our default box
-	/*BrushTemplate_Box* pBoxTemplate;
-	pBoxTemplate = Level_GetBoxTemplate(App->CLSB_Doc->pLevel);
-
-	App->CLSB_Doc->BTemplate = BrushTemplate_CreateBox(pBoxTemplate);*/
+	// create our default box
+	BrushTemplate_Box* pBoxTemplate;
+	pBoxTemplate = App->CL_Level->Level_GetBoxTemplate(pLevel);
+	//BTemplate = BrushTemplate_CreateBox(pBoxTemplate);
 	
 
 	/*Brush_Bound(App->CLSB_Doc->BTemplate);

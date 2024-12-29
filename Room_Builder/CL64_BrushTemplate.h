@@ -24,6 +24,8 @@ THE SOFTWARE.
 
 #pragma once
 
+#include "CL64_Brush.h"
+
 typedef struct
 {
 	int			NumSlits;
@@ -118,10 +120,7 @@ public:
 	void BrushTemplate_SpheroidDefaults(BrushTemplate_Spheroid* pSpheroidTemplate);
 	void BrushTemplate_StaircaseDefaults(BrushTemplate_Staircase* pStaircaseTemplate);
 
-
-
-
-
+	Brush* BrushTemplate_CreateBox(const BrushTemplate_Box* pTemplate);
 
 };
 

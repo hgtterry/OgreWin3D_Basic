@@ -24,6 +24,8 @@ THE SOFTWARE.
 
 #pragma once
 
+#include "CL64_BrushTemplate.h"
+
 typedef struct tag_Level Level;
 
 class CL64_Level
@@ -33,6 +35,8 @@ public:
 	~CL64_Level(void);
 
 	Level* Level_Create(const char* pWadName, const char* HeadersDir, const char* ActorsDir, const char* PawnIni);
+
+	BrushTemplate_Box* Level_GetBoxTemplate(Level* pLevel);
 
 };
 

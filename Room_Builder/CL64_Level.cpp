@@ -225,3 +225,8 @@ Level* CL64_Level::Level_Create(const char* pWadName, const char* HeadersDir, co
 //	Level_Destroy(&pLevel);
 //	return pLevel;
 }
+
+BrushTemplate_Box* CL64_Level::Level_GetBoxTemplate(Level* pLevel)
+{
+	return &pLevel->BoxTemplate;
+}
