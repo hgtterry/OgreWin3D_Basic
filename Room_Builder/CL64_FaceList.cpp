@@ -30,7 +30,7 @@ struct tag_FaceList
 {
 	int NumFaces;
 	int Limit;
-	//Face** Faces;
+	Face** Faces;
 	bool Dirty;
 	Box3d Bounds;
 };

@@ -152,6 +152,7 @@
     <ClInclude Include="CL64_Box.h" />
     <ClInclude Include="CL64_Brush.h" />
     <ClInclude Include="CL64_Doc.h" />
+    <ClInclude Include="CL64_Face.h" />
     <ClInclude Include="CL64_FaceList.h" />
     <ClInclude Include="CL64_Ini_File.h" />
     <ClInclude Include="CL64_Level.h" />
@@ -171,6 +172,7 @@
     <ClCompile Include="CL64_Box.cpp" />
     <ClCompile Include="CL64_Brush.cpp" />
     <ClCompile Include="CL64_Doc.cpp" />
+    <ClCompile Include="CL64_Face.cpp" />
     <ClCompile Include="CL64_FaceList.cpp" />
     <ClCompile Include="CL64_Ini_File.cpp" />
     <ClCompile Include="CL64_Level.cpp" />

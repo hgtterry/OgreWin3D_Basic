@@ -1,7 +1,7 @@
 /*
 Copyright (c) 2024 Inflanite_HGT W.T.Flanigan H.C.Flanigan
 
-OgreWin3D_Stage
+Room Builder
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -24,28 +24,17 @@ THE SOFTWARE.
 
 typedef struct
 {
-	float AX, AY, AZ;			// e[0][0],e[0][1],e[0][2]
-	float BX, BY, BZ;			// e[1][0],e[1][1],e[1][2]
-	float CX, CY, CZ;			// e[2][0],e[2][1],e[2][2]
-	Ogre::Vector3 Translation;  // e[0][3],e[1][3],e[2][3]
-	//	  0,0,0,1				// e[3][0],e[3][1],e[3][2]
-} geXForm3d;
+	Ogre::Vector3 uVec, vVec;
+	float uOffset, vOffset;
+} TexInfo_Vectors;
+
+typedef struct FaceTag Face;
 
 #pragma once
-class CL64_Maths
+class CL64_Face
 {
 public:
-	CL64_Maths();
-	~CL64_Maths();
-
-	void Vector3_Set(Ogre::Vector3* V, float X, float Y, float Z);
-	void Vector3_Add(const Ogre::Vector3* V1, const Ogre::Vector3* V2, Ogre::Vector3* V1PlusV2);
-	void Vector3_Subtract(const Ogre::Vector3* V1, const Ogre::Vector3* V2, Ogre::Vector3* V1MinusV2);
-	void Vector3_Scale(const Ogre::Vector3* VSrc, float Scale, Ogre::Vector3* VDst);
-	float Vector3_Normalize(Ogre::Vector3* V1);
-	float Vector3_DotProduct(const Ogre::Vector3* V1, const Ogre::Vector3* V2);
-	void Vector3_Copy(const Ogre::Vector3* VSrc, Ogre::Vector3* VDst);
-	void Vector3_Clear(Ogre::Vector3* V);
-
+	CL64_Face(void);
+	~CL64_Face(void);
 };
 

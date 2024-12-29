@@ -1,7 +1,7 @@
 /*
 Copyright (c) 2024 Inflanite_HGT W.T.Flanigan H.C.Flanigan
 
-OgreWin3D_Stage
+Room Builder
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -22,30 +22,44 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-typedef struct
+#include "pch.h"
+#include "CL64_App.h"
+#include "CL64_Face.h"
+
+typedef struct TexInfoTag
 {
-	float AX, AY, AZ;			// e[0][0],e[0][1],e[0][2]
-	float BX, BY, BZ;			// e[1][0],e[1][1],e[1][2]
-	float CX, CY, CZ;			// e[2][0],e[2][1],e[2][2]
-	Ogre::Vector3 Translation;  // e[0][3],e[1][3],e[2][3]
-	//	  0,0,0,1				// e[3][0],e[3][1],e[3][2]
-} geXForm3d;
+	Ogre::Vector3 VecNormal;
+	float xScale, yScale;
+	int xShift, yShift;
+	float	Rotate;			// texture rotation angle in degrees
+	TexInfo_Vectors TVecs;
+	int Dib;				// index into the wad
+	char Name[16];
+	signed int DirtyFlag;
+	Ogre::Vector3 Pos;
+	int txSize, tySize;		// texture size (not currently used)
+	geXForm3d XfmFaceAngle;	// face rotation angle
+} TexInfo;
 
-#pragma once
-class CL64_Maths
+typedef struct FaceTag
 {
-public:
-	CL64_Maths();
-	~CL64_Maths();
+	int				NumPoints;
+	int				Flags;
+	GPlane			Face_Plane;
+	int				LightIntensity;
+	float			Reflectivity;
+	float			Translucency;
+	float			MipMapBias;
+	float			LightXScale, LightYScale;
+	TexInfo			Tex;
+	Ogre::Vector3*	Points;
 
-	void Vector3_Set(Ogre::Vector3* V, float X, float Y, float Z);
-	void Vector3_Add(const Ogre::Vector3* V1, const Ogre::Vector3* V2, Ogre::Vector3* V1PlusV2);
-	void Vector3_Subtract(const Ogre::Vector3* V1, const Ogre::Vector3* V2, Ogre::Vector3* V1MinusV2);
-	void Vector3_Scale(const Ogre::Vector3* VSrc, float Scale, Ogre::Vector3* VDst);
-	float Vector3_Normalize(Ogre::Vector3* V1);
-	float Vector3_DotProduct(const Ogre::Vector3* V1, const Ogre::Vector3* V2);
-	void Vector3_Copy(const Ogre::Vector3* VSrc, Ogre::Vector3* VDst);
-	void Vector3_Clear(Ogre::Vector3* V);
+} Face;
 
-};
+CL64_Face::CL64_Face(void)
+{
+}
 
+CL64_Face::~CL64_Face(void)
+{
+}
