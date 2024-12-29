@@ -32,11 +32,15 @@ CL64_App::CL64_App(void)
 	CL_Box =		nullptr;
 	CL_Render =		nullptr;
 	CL_Level =		nullptr;
+	CL_Prefs =		nullptr;
+	CL_Ini_File =	nullptr;
 
 	hInst = nullptr;
 	MainHwnd = nullptr;
 	
 	AppBackground = 0;
+
+	RB_Directory_FullPath[0] = 0;
 }
 
 CL64_App::~CL64_App(void)
@@ -53,7 +57,9 @@ void CL64_App::InitApp(void)
 	CL_Box =		new CL64_Box();
 	CL_Render =		new CL64_Render();
 	CL_Level =		new CL64_Level();
-	
+	CL_Prefs =		new CL64_Prefs();
+	CL_Ini_File =	new CL64_Ini_File();
+
 	SetBrushes_Fonts();
 }
 
@@ -88,5 +94,14 @@ void CL64_App::SetMainWinCentre(void) const
 	int AllY = (ClientHeight_Y / 2) - (Control.bottom / 2) - 30;
 
 	SetWindowPos(MainHwnd, NULL, AllX, AllY, 0, 0, SWP_NOSIZE);
+}
 
+// *************************************************************************
+// *				Say_Win:- Terry and Hazel Flanigan 2024				   *
+// *************************************************************************
+void CL64_App::Say_Win(const char* Message)
+{
+	char text[MAX_PATH];
+	strcpy(text, Message);
+	MessageBox(App->MainHwnd, Message, "Message", MB_OK);
 }

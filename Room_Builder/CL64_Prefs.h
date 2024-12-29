@@ -23,41 +23,22 @@ THE SOFTWARE.
 */
 
 #pragma once
-
-#include "CL64_MapEditor.h"
-#include "CL64_Maths.h"
-#include "CL64_Box.h"
-#include "CL64_Render.h"
-#include "CL64_Level.h"
-#include "CL64_Prefs.h"
-#include "CL64_Ini_File.h"
-
-class CL64_App
+class CL64_Prefs
 {
 public:
-	CL64_App(void);
-	~CL64_App(void);
+	CL64_Prefs(void);
+	~CL64_Prefs(void);
 
-	CL64_MapEditor* CL_MapEditor;
-	CL64_Maths*		CL_Maths;
-	CL64_Box*		CL_Box;
-	CL64_Render*	CL_Render;
-	CL64_Level*		CL_Level;
-	CL64_Prefs*		CL_Prefs;
-	CL64_Ini_File*	CL_Ini_File;
+	void Read_Preferences();
+	bool Write_Preferences();
 
-	void InitApp(void);
-	void SetBrushes_Fonts(void);
-	void Flash_Window();
-	void SetMainWinCentre(void) const;
-	void Say_Win(const char* Message);
+	int Grid_Fine_Spacing;
+	int Grid_Spacing;
 
-	HINSTANCE hInst;
-	HWND MainHwnd;
-	HBRUSH AppBackground;
+private:
 
-	char RB_Directory_FullPath[MAX_PATH];
+	FILE* WriteData;
+
+
 };
-
-extern CL64_App* App;
 

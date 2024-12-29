@@ -33,6 +33,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     InitCommonControls();
 
     App = new CL64_App();
+
+    char* a_cwd = _getcwd(App->RB_Directory_FullPath, MAX_PATH);
+
     App->InitApp();
 
     UNREFERENCED_PARAMETER(hPrevInstance);
