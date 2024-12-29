@@ -28,5 +28,8 @@ class CL64_Utilities
 public:
 	CL64_Utilities(void);
 	~CL64_Utilities(void);
+
+	bool Check_File_Exist(char* Full_Path);
+
 };
 

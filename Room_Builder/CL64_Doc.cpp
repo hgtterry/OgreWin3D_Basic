@@ -49,63 +49,36 @@ void CL64_Doc::Init_Doc()
 
     // strcpy(LastPath, Prefs_GetProjectDir(pPrefs));
 
-    const char* WadPath = ""; //"FindTextureLibrary(DefaultWadName);
+    const char* WadPath = FindTextureLibrary(DefaultWadName);
 
-   // App->Say_Win(DefaultWadName);
+	App->Say_Win(WadPath);
+   
 }
 
 // *************************************************************************
-// *		    Init_Doc:- Terry and Hazel Flanigan 2024 	    		   *
+// *		   FindTextureLibrary- Terry and Hazel Flanigan 2024 	   	   *
 // *************************************************************************
 const char* CL64_Doc::FindTextureLibrary(char const* WadName)
 {
-   static char WorkPath[MAX_PATH];
-   /* const Prefs* pPrefs;*/
+	static char Path_And_File[MAX_PATH];
+	strcpy(Path_And_File, App->RB_Directory_FullPath);
+	strcat(Path_And_File, "\\Data\\");
+	strcat(Path_And_File, WadName);
 
-    /*::FilePath_AppendName(LastPath, WadName, WorkPath);
-    if (_access(WorkPath, 0) == 0)
-    {
-        return WorkPath;
-    }*/
+	bool test = App->CL_Utilities->Check_File_Exist(Path_And_File);
+	if (test == 1)
+	{
+		return Path_And_File;
+	}
+	else
+	{
+		App->Say_Win("File Does not Exist");
 
-   /* pPrefs = GetPrefs();
-    if (FilePath_SearchForFile(WadName, Prefs_GetTxlSearchPath(pPrefs), WorkPath))*/
-    {
-        return WorkPath;
-    }
-    // changed QD 01/04
-    //	return NULL;
-    // code from RFEdit Pro
-    //else
-    {
-        std::string	txlPathError = _T("World Editor checks for the default *.txl file when opening new worlds.\n\n");
-        txlPathError += _T("World Editor now is looking for:\n\n");
-        txlPathError += _T(WorkPath);
-        txlPathError += _T("\n\nbut cannot find it.\n\n");
-        txlPathError += _T("To avoid this message in the future, place or rename a *.txl file as: ");
-        txlPathError += _T(WadName);
-        txlPathError += _T("\ninto the above path. Or edit the WrldEdit.ini file to reflect\n");
-        txlPathError += _T("the name of your default *.txl file.\n\n");
-        txlPathError += _T("For now, please select a valid *.txl file");// or the application will exit.");
-
-        MessageBox(NULL, txlPathError.c_str(), "World Editor cannot find default *.txl", MB_OK);
-
-        //CFileDialog FileDlg(TRUE, "txl", WorkPath, OFN_FILEMUSTEXIST | OFN_NOCHANGEDIR,
-        //    "Texture Library Files (*.txl)|*.txl||");
-
-        //FileDlg.m_ofn.lpstrTitle = "World Editor Texture Finder";
-
-        //if (FileDlg.DoModal() == IDOK)
-        //{
-        //    CString	wadpath = FileDlg.GetPathName();
-        //    CString wadFileName = FileDlg.GetFileName();
-        //    strcpy(WorkPath, wadpath.GetBuffer(260));
-        //    // set the Prefs wadfile to THIS one -- this session only
-        //    Prefs_SetTxlName((Prefs*)pPrefs, wadFileName.GetBuffer(64));
-        //}
-
-        return WorkPath;
-    }
-    // end change
+		strcpy(Path_And_File, "");
+		return Path_And_File;
+	}
+	
+	strcpy(Path_And_File, "");
+	return Path_And_File;
 }
 
