@@ -34,6 +34,7 @@ CL64_App::CL64_App(void)
 	CL_Level =		nullptr;
 	CL_Prefs =		nullptr;
 	CL_Ini_File =	nullptr;
+	CL_Doc =		nullptr;
 
 	hInst = nullptr;
 	MainHwnd = nullptr;
@@ -59,6 +60,7 @@ void CL64_App::InitApp(void)
 	CL_Level =		new CL64_Level();
 	CL_Prefs =		new CL64_Prefs();
 	CL_Ini_File =	new CL64_Ini_File();
+	CL_Doc =		new CL64_Doc();
 
 	SetBrushes_Fonts();
 }

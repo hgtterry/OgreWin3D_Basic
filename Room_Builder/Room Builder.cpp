@@ -59,6 +59,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     ShowWindow(App->MainHwnd, nCmdShow);
     UpdateWindow(App->MainHwnd);
 
+    App->CL_Doc->Init_Doc();
     App->CL_MapEditor->Init_Map_Views();
 
     App->SetMainWinCentre();

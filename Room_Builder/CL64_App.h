@@ -31,6 +31,7 @@ THE SOFTWARE.
 #include "CL64_Level.h"
 #include "CL64_Prefs.h"
 #include "CL64_Ini_File.h"
+#include "CL64_Doc.h"
 
 class CL64_App
 {
@@ -45,6 +46,7 @@ public:
 	CL64_Level*		CL_Level;
 	CL64_Prefs*		CL_Prefs;
 	CL64_Ini_File*	CL_Ini_File;
+	CL64_Doc*		CL_Doc;
 
 	void InitApp(void);
 	void SetBrushes_Fonts(void);

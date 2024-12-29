@@ -150,6 +150,7 @@
   <ItemGroup>
     <ClInclude Include="CL64_App.h" />
     <ClInclude Include="CL64_Box.h" />
+    <ClInclude Include="CL64_Doc.h" />
     <ClInclude Include="CL64_Ini_File.h" />
     <ClInclude Include="CL64_Level.h" />
     <ClInclude Include="CL64_MapEditor.h" />
@@ -165,6 +166,7 @@
   <ItemGroup>
     <ClCompile Include="CL64_App.cpp" />
     <ClCompile Include="CL64_Box.cpp" />
+    <ClCompile Include="CL64_Doc.cpp" />
     <ClCompile Include="CL64_Ini_File.cpp" />
     <ClCompile Include="CL64_Level.cpp" />
     <ClCompile Include="CL64_MapEditor.cpp" />

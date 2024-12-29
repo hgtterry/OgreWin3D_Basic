@@ -31,6 +31,8 @@ CL64_Prefs::CL64_Prefs(void)
 	Grid_Fine_Spacing = 8;
 	Grid_Spacing = 128;
 
+	Wad_File_Name[0] = 0;
+
 	WriteData = nullptr;
 }
 
@@ -43,6 +45,7 @@ CL64_Prefs::~CL64_Prefs(void)
 // *************************************************************************
 void CL64_Prefs::Read_Preferences()
 {
+	char chr_Tag1[MAX_PATH];
 	char Preferences_Path[MAX_PATH];
 
 	strcpy(Preferences_Path, App->RB_Directory_FullPath);
@@ -56,6 +59,9 @@ void CL64_Prefs::Read_Preferences()
 
 	App->CL_MapEditor->GridSize = Grid_Spacing;
 	App->CL_MapEditor->GridSnapSize = Grid_Fine_Spacing;
+
+	App->CL_Ini_File->GetString("Wad", "Wad_File_Name", chr_Tag1, MAX_PATH);
+	strcpy(Wad_File_Name, chr_Tag1);
 
 }
 
@@ -81,6 +87,9 @@ bool CL64_Prefs::Write_Preferences()
 	fprintf(WriteData, "%s\n", "[Grid]");
 	fprintf(WriteData, "%s%i\n", "Grid_Fine_Spacing=", Grid_Fine_Spacing);
 	fprintf(WriteData, "%s%i\n", "Grid_Spacing=", Grid_Spacing);
+
+	fprintf(WriteData, "%s\n", "[Wad]");
+	fprintf(WriteData, "%s%s\n", "Wad_File_Name=", "Default.txl");
 
 	fclose(WriteData);
 

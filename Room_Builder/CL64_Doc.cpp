@@ -22,25 +22,34 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-#pragma once
-class CL64_Prefs
+#include "pch.h"
+#include "CL64_App.h"
+#include "CL64_Doc.h"
+
+CL64_Doc::CL64_Doc(void)
 {
-public:
-	CL64_Prefs(void);
-	~CL64_Prefs(void);
+    LastTemplateTypeName[0] = 0;
 
-	void Read_Preferences();
-	bool Write_Preferences();
+}
 
-	int Grid_Fine_Spacing;
-	int Grid_Spacing;
+CL64_Doc::~CL64_Doc(void)
+{
+}
 
-	char Wad_File_Name[MAX_PATH];
+// *************************************************************************
+// *		    Init_Doc:- Terry and Hazel Flanigan 2024 	    		   *
+// *************************************************************************
+void CL64_Doc::Init_Doc()
+{
+	
+    const char* DefaultWadName;
+    strcpy(LastTemplateTypeName, "Box");
 
-private:
+    DefaultWadName = App->CL_Prefs->Wad_File_Name;
 
-	FILE* WriteData;
+    // strcpy(LastPath, Prefs_GetProjectDir(pPrefs));
 
+    const char* WadPath = ""; //"FindTextureLibrary(DefaultWadName);
 
-};
-
+   // App->Say_Win(DefaultWadName);
+}

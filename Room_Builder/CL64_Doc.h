@@ -23,24 +23,15 @@ THE SOFTWARE.
 */
 
 #pragma once
-class CL64_Prefs
+class CL64_Doc
 {
 public:
-	CL64_Prefs(void);
-	~CL64_Prefs(void);
+	CL64_Doc(void);
+	~CL64_Doc(void);
 
-	void Read_Preferences();
-	bool Write_Preferences();
+	void Init_Doc();
 
-	int Grid_Fine_Spacing;
-	int Grid_Spacing;
-
-	char Wad_File_Name[MAX_PATH];
-
-private:
-
-	FILE* WriteData;
-
-
+	char LastTemplateTypeName[MAX_PATH];
+;
 };
 
