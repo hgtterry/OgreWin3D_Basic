@@ -36,6 +36,9 @@ THE SOFTWARE.
 #include "CL64_Brush.h"
 #include "CL64_FaceList.h"
 #include "CL64_Face.h"
+#include "CL64_BrushTemplate.h"
+#include "CL64_SelBrushList.h"
+#include "CL64_Array.h"
 
 class CL64_App
 {
@@ -55,7 +58,9 @@ public:
 	CL64_Brush*			CL_Brush;
 	CL64_FaceList*		CL_FaceList;
 	CL64_Face*			CL_Face;
-
+	CL64_BrushTemplate* CL_BrushTemplate;
+	CL64_SelBrushList*	CL_SelBrushList;
+	CL64_Array*			CL_Array;
 
 	void InitApp(void);
 	void SetBrushes_Fonts(void);

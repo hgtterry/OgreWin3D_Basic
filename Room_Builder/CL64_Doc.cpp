@@ -51,9 +51,35 @@ void CL64_Doc::Init_Doc()
 
     const char* WadPath = FindTextureLibrary(DefaultWadName);
 
-	pLevel = NULL;// Level_Create(WadPath, Prefs_GetHeadersList(pPrefs),
-		//Prefs_GetActorsList(pPrefs), Prefs_GetPawnIni(pPrefs));
+	/*pLevel = Level_Create(WadPath, Prefs_GetHeadersList(pPrefs),
+		Prefs_GetActorsList(pPrefs), Prefs_GetPawnIni(pPrefs));*/
    
+	pLevel = App->CL_Level->Level_Create(WadPath, NULL,NULL, NULL);
+
+	/*if (!Level_LoadWad(pLevel))
+	{
+		App->Say_Win("Can not load Wad File");
+	}*/
+
+	pSelBrushes = App->CL_SelBrushList->SelBrushList_Create();
+	//App->CLSB_Doc->pTempSelBrushes = SelBrushList_Create();
+	//App->CLSB_Doc->pSelFaces = SelFaceList_Create();
+
+	//App->CLSB_Doc->SetLockAxis(0);	// Start with no axis locked
+
+
+		// create our default box
+	/*BrushTemplate_Box* pBoxTemplate;
+	pBoxTemplate = Level_GetBoxTemplate(App->CLSB_Doc->pLevel);
+
+	App->CLSB_Doc->BTemplate = BrushTemplate_CreateBox(pBoxTemplate);*/
+	
+
+	/*Brush_Bound(App->CLSB_Doc->BTemplate);
+	App->CLSB_Doc->CurBrush = App->CLSB_Doc->BTemplate;
+
+	geVec3d_Clear(&App->CLSB_Doc->SelectedGeoCenter);*/
+
 }
 
 // *************************************************************************

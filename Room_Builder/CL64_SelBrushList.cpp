@@ -24,31 +24,54 @@ THE SOFTWARE.
 
 #include "pch.h"
 #include "CL64_App.h"
-#include "CL64_Brush.h"
+#include "CL64_SelBrushList.h"
 
-struct tag_BrushList
+struct tag_SelBrushList
 {
-	Brush* First;
-	Brush* Last;
+	Array* pItems;
+	int FirstFree;
 };
 
-CL64_Brush::CL64_Brush(void)
+CL64_SelBrushList::CL64_SelBrushList(void)
 {
 }
 
-CL64_Brush::~CL64_Brush(void)
+CL64_SelBrushList::~CL64_SelBrushList(void)
 {
 }
 
-BrushList* CL64_Brush::BrushList_Create(void)
+SelBrushList* CL64_SelBrushList::SelBrushList_Create(void)
 {
-	BrushList* pList;
+	SelBrushList* pList;
 
-	pList = (BrushList*)App->CL_Maths->Ram_Allocate(sizeof(BrushList));
+	pList = (SelBrushList*)App->CL_Maths->Ram_Allocate(sizeof(SelBrushList));
 	if (pList != NULL)
 	{
-		pList->First = NULL;
-		pList->Last = NULL;
+		pList->pItems = App->CL_Array->Array_Create(10, sizeof(Brush*));
+		if (pList->pItems != NULL)
+		{
+			pList->FirstFree = 0;
+			//Debug
+		}
+		else
+		{
+			SelBrushList_Destroy(&pList);
+		}
 	}
 	return pList;
+}
+
+void CL64_SelBrushList::SelBrushList_Destroy(SelBrushList** ppList)
+{
+	SelBrushList* pList;
+
+	assert(ppList != NULL);
+	assert(*ppList != NULL);
+	pList = *ppList;
+
+	if (pList->pItems != NULL)
+	{
+		App->CL_Array->Array_Destroy(&pList->pItems);
+	}
+	//geRam_Free(*ppList);
 }

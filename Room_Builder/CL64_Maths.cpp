@@ -34,6 +34,18 @@ CL64_Maths::~CL64_Maths()
 {
 }
 
+void* CL64_Maths::Ram_Allocate(Ogre::int32 size)
+{
+	void* p;
+
+	//do
+	//{
+		p = malloc(size);
+	//} while ((p == NULL) && (geRam_DoCriticalCallback()));
+
+	return p;
+}
+
 // *************************************************************************
 // *			Vector3_Set:- Terry and Hazel Flanigan 2024			 	   *
 // *************************************************************************

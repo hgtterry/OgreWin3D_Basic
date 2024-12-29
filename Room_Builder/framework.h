@@ -28,3 +28,5 @@
 #include "OgreStringConverter.h"
 #include "OgreException.h"
 #include "OgreTextAreaOverlayElement.h"
+
+#define Debug App->Say_Win("Here");//, "  Internal Debug Message  ");

@@ -22,33 +22,18 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-#include "pch.h"
-#include "CL64_App.h"
-#include "CL64_Brush.h"
+#pragma once
 
-struct tag_BrushList
+typedef struct tag_SelBrushList SelBrushList;
+
+class CL64_SelBrushList
 {
-	Brush* First;
-	Brush* Last;
+public:
+	CL64_SelBrushList(void);
+	~CL64_SelBrushList(void);
+
+	SelBrushList* SelBrushList_Create(void);
+	void SelBrushList_Destroy(SelBrushList** ppList);
+
 };
 
-CL64_Brush::CL64_Brush(void)
-{
-}
-
-CL64_Brush::~CL64_Brush(void)
-{
-}
-
-BrushList* CL64_Brush::BrushList_Create(void)
-{
-	BrushList* pList;
-
-	pList = (BrushList*)App->CL_Maths->Ram_Allocate(sizeof(BrushList));
-	if (pList != NULL)
-	{
-		pList->First = NULL;
-		pList->Last = NULL;
-	}
-	return pList;
-}

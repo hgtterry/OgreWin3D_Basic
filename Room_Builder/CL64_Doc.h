@@ -23,6 +23,9 @@ THE SOFTWARE.
 */
 
 #pragma once
+
+#include "CL64_SelBrushList.h"
+
 class CL64_Doc
 {
 public:
@@ -35,6 +38,8 @@ public:
 	char LastTemplateTypeName[MAX_PATH];
 
 	Level* pLevel;
+
+	SelBrushList* pSelBrushes;
 
 };
 

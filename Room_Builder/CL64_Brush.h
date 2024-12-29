@@ -50,5 +50,8 @@ class CL64_Brush
 public:
 	CL64_Brush(void);
 	~CL64_Brush(void);
+
+	BrushList* BrushList_Create(void);
+
 };
 

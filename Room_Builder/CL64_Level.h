@@ -32,5 +32,7 @@ public:
 	CL64_Level(void);
 	~CL64_Level(void);
 
+	Level* Level_Create(const char* pWadName, const char* HeadersDir, const char* ActorsDir, const char* PawnIni);
+
 };
 

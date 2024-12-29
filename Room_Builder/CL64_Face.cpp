@@ -38,7 +38,7 @@ typedef struct TexInfoTag
 	signed int DirtyFlag;
 	Ogre::Vector3 Pos;
 	int txSize, tySize;		// texture size (not currently used)
-	geXForm3d XfmFaceAngle;	// face rotation angle
+	Matrix3d XfmFaceAngle;	// face rotation angle
 } TexInfo;
 
 typedef struct FaceTag

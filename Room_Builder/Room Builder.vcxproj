@@ -149,8 +149,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="CL64_App.h" />
+    <ClInclude Include="CL64_Array.h" />
     <ClInclude Include="CL64_Box.h" />
     <ClInclude Include="CL64_Brush.h" />
+    <ClInclude Include="CL64_BrushTemplate.h" />
     <ClInclude Include="CL64_Doc.h" />
     <ClInclude Include="CL64_Face.h" />
     <ClInclude Include="CL64_FaceList.h" />
@@ -160,6 +162,7 @@
     <ClInclude Include="CL64_Maths.h" />
     <ClInclude Include="CL64_Prefs.h" />
     <ClInclude Include="CL64_Render.h" />
+    <ClInclude Include="CL64_SelBrushList.h" />
     <ClInclude Include="CL64_Utilities.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="pch.h" />
@@ -169,8 +172,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CL64_App.cpp" />
+    <ClCompile Include="CL64_Array.cpp" />
     <ClCompile Include="CL64_Box.cpp" />
     <ClCompile Include="CL64_Brush.cpp" />
+    <ClCompile Include="CL64_BrushTemplate.cpp" />
     <ClCompile Include="CL64_Doc.cpp" />
     <ClCompile Include="CL64_Face.cpp" />
     <ClCompile Include="CL64_FaceList.cpp" />
@@ -180,6 +185,7 @@
     <ClCompile Include="CL64_Maths.cpp" />
     <ClCompile Include="CL64_Prefs.cpp" />
     <ClCompile Include="CL64_Render.cpp" />
+    <ClCompile Include="CL64_SelBrushList.cpp" />
     <ClCompile Include="CL64_Utilities.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

@@ -22,6 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
+#pragma once
+
 typedef struct
 {
 	float AX, AY, AZ;			// e[0][0],e[0][1],e[0][2]
@@ -29,9 +31,8 @@ typedef struct
 	float CX, CY, CZ;			// e[2][0],e[2][1],e[2][2]
 	Ogre::Vector3 Translation;  // e[0][3],e[1][3],e[2][3]
 	//	  0,0,0,1				// e[3][0],e[3][1],e[3][2]
-} geXForm3d;
+} Matrix3d;
 
-#pragma once
 class CL64_Maths
 {
 public:
@@ -46,6 +47,10 @@ public:
 	float Vector3_DotProduct(const Ogre::Vector3* V1, const Ogre::Vector3* V2);
 	void Vector3_Copy(const Ogre::Vector3* VSrc, Ogre::Vector3* VDst);
 	void Vector3_Clear(Ogre::Vector3* V);
+
+	void* Ram_Allocate(Ogre::int32 size);
+
+	
 
 };
 
