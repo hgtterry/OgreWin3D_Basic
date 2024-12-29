@@ -47,11 +47,10 @@ void CL64_Doc::Init_Doc()
 
     DefaultWadName = App->CL_Prefs->Wad_File_Name;
 
-    // strcpy(LastPath, Prefs_GetProjectDir(pPrefs));
+    //strcpy(LastPath, Prefs_GetProjectDir(pPrefs));
 
     const char* WadPath = FindTextureLibrary(DefaultWadName);
 
-	App->Say_Win(WadPath);
    
 }
 
@@ -62,7 +61,7 @@ const char* CL64_Doc::FindTextureLibrary(char const* WadName)
 {
 	static char Path_And_File[MAX_PATH];
 	strcpy(Path_And_File, App->RB_Directory_FullPath);
-	strcat(Path_And_File, "\\Data\\");
+	strcat(Path_And_File, "\\Data\\Room_Builder\\");
 	strcat(Path_And_File, WadName);
 
 	bool test = App->CL_Utilities->Check_File_Exist(Path_And_File);

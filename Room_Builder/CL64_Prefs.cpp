@@ -49,7 +49,7 @@ void CL64_Prefs::Read_Preferences()
 	char Preferences_Path[MAX_PATH];
 
 	strcpy(Preferences_Path, App->RB_Directory_FullPath);
-	strcat(Preferences_Path, "\\Data\\Room_Builder.ini");
+	strcat(Preferences_Path, "\\Data\\Room_Builder\\Room_Builder.ini");
 
 	App->CL_Ini_File->SetPathName(Preferences_Path);
 
@@ -75,7 +75,7 @@ bool CL64_Prefs::Write_Preferences()
 	char Preferences_Path[MAX_PATH];
 
 	strcpy(Preferences_Path, App->RB_Directory_FullPath);
-	strcat(Preferences_Path, "\\Data\\Room_Builder.ini");
+	strcat(Preferences_Path, "\\Data\\Room_Builder\\Room_Builder.ini");
 
 	WriteData = fopen(Preferences_Path, "wt");
 	if (!WriteData)
