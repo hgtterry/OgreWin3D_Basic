@@ -23,10 +23,17 @@ THE SOFTWARE.
 */
 
 #pragma once
+
+#include "CL64_Face.h"
+
 class CL64_FaceList
 {
 public:
 	CL64_FaceList(void);
 	~CL64_FaceList(void);
+
+	FaceList* FaceList_Create(int NumFaces);
+	void FaceList_AddFace(FaceList* pList, Face* pFace);
+
 };
 

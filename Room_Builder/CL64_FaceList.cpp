@@ -42,3 +42,45 @@ CL64_FaceList::CL64_FaceList(void)
 CL64_FaceList::~CL64_FaceList(void)
 {
 }
+
+// *************************************************************************
+// *							FaceList_Create						 	   *
+// *************************************************************************
+FaceList* CL64_FaceList::FaceList_Create(int NumFaces)
+{
+	FaceList* pList;
+
+	assert(NumFaces > 0);
+
+	// allocate the structure
+	pList = (FaceList*)App->CL_Maths->Ram_Allocate(sizeof(FaceList));
+	if (pList != NULL)
+	{
+		pList->NumFaces = 0;
+		pList->Limit = NumFaces;
+		// allocate space for NumFaces pointers
+		pList->Faces = (struct FaceTag**)App->CL_Maths->Ram_Allocate(NumFaces * sizeof(Face*));
+		if (pList->Faces != NULL)
+		{
+			int i;
+			// set the pointers to NULL
+			for (i = 0; i < pList->Limit; i++)
+			{
+				pList->Faces[i] = NULL;
+			}
+		}
+		pList->Dirty = true;
+	}
+
+	return pList;
+}
+
+// *************************************************************************
+// *						FaceList_AddFace						 	   *
+// *************************************************************************
+void CL64_FaceList::FaceList_AddFace(FaceList* pList, Face* pFace)
+{
+	pList->Faces[pList->NumFaces] = pFace;
+	++(pList->NumFaces);
+	pList->Dirty = true;
+}

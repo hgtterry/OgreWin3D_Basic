@@ -123,7 +123,7 @@ Brush* CL64_BrushTemplate::BrushTemplate_CreateBox(const BrushTemplate_Box* pTem
 	Face* f;
 	Brush* b;
 
-	//fl = FaceList_Create(6);
+	fl = App->CL_FaceList->FaceList_Create(6);
 
 	// Vertices 0 to 3 are the 4 corners of the top face
 	App->CL_Maths->Vector3_Set(&Verts[0], (float)-(pTemplate->XSizeTop / 2), (float)(pTemplate->YSize / 2), (float)-(pTemplate->ZSizeTop / 2));
@@ -142,66 +142,66 @@ Brush* CL64_BrushTemplate::BrushTemplate_CreateBox(const BrushTemplate_Box* pTem
 	FaceVerts[1] = Verts[2];
 	FaceVerts[0] = Verts[3];
 
-	/*f = Face_Create(4, FaceVerts, 0);
+	f = App->CL_Face->Face_Create(4, FaceVerts, 0);
 	if (f)
 	{
-		FaceList_AddFace(fl, f);
-	}*/
+		App->CL_FaceList->FaceList_AddFace(fl, f);
+	}
 
 	FaceVerts[3] = Verts[4];
 	FaceVerts[2] = Verts[5];
 	FaceVerts[1] = Verts[6];
 	FaceVerts[0] = Verts[7];
 
-	//f = Face_Create(4, FaceVerts, 0);
-	//if (f)
-	//{
-	//	FaceList_AddFace(fl, f);
-	//}
+	f = App->CL_Face->Face_Create(4, FaceVerts, 0);
+	if (f)
+	{
+		App->CL_FaceList->FaceList_AddFace(fl, f);
+	}
 
 	FaceVerts[3] = Verts[1];
 	FaceVerts[2] = Verts[7];
 	FaceVerts[1] = Verts[6];
 	FaceVerts[0] = Verts[2];
 
-	/*f = Face_Create(4, FaceVerts, 0);
+	f = App->CL_Face->Face_Create(4, FaceVerts, 0);
 	if (f)
 	{
-		FaceList_AddFace(fl, f);
-	}*/
+		App->CL_FaceList->FaceList_AddFace(fl, f);
+	}
 
 	FaceVerts[3] = Verts[0];
 	FaceVerts[2] = Verts[3];
 	FaceVerts[1] = Verts[5];
 	FaceVerts[0] = Verts[4];
 
-	/*f = Face_Create(4, FaceVerts, 0);
+	f = App->CL_Face->Face_Create(4, FaceVerts, 0);
 	if (f)
 	{
-		FaceList_AddFace(fl, f);
-	}*/
+		App->CL_FaceList->FaceList_AddFace(fl, f);
+	}
 
 	FaceVerts[3] = Verts[0];
 	FaceVerts[2] = Verts[4];
 	FaceVerts[1] = Verts[7];
 	FaceVerts[0] = Verts[1];
 
-	/*f = Face_Create(4, FaceVerts, 0);
+	f = App->CL_Face->Face_Create(4, FaceVerts, 0);
 	if (f)
 	{
-		FaceList_AddFace(fl, f);
-	}*/
+		App->CL_FaceList->FaceList_AddFace(fl, f);
+	}
 
 	FaceVerts[3] = Verts[3];
 	FaceVerts[2] = Verts[2];
 	FaceVerts[1] = Verts[6];
 	FaceVerts[0] = Verts[5];
 
-	/*f = Face_Create(4, FaceVerts, 0);
+	f = App->CL_Face->Face_Create(4, FaceVerts, 0);
 	if (f)
 	{
-		FaceList_AddFace(fl, f);
-	}*/
+		App->CL_FaceList->FaceList_AddFace(fl, f);
+	}
 
 	//if (!pTemplate->Solid)
 	//{

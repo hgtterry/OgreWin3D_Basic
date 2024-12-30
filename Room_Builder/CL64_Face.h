@@ -29,6 +29,7 @@ typedef struct
 } TexInfo_Vectors;
 
 typedef struct FaceTag Face;
+typedef struct TexInfoTag TexInfo;
 
 #pragma once
 class CL64_Face
@@ -36,5 +37,16 @@ class CL64_Face
 public:
 	CL64_Face(void);
 	~CL64_Face(void);
+
+	Face* Face_Create(int NumPnts, const Ogre::Vector3* pnts, int DibId);
+	void Face_SetVisible(Face* f, const signed int bState);
+	signed int Face_SetPlaneFromFace(Face* f);
+	void Face_SetTexInfoPlane(TexInfo* t, Ogre::Vector3 const* pNormal);
+	void Face_InitTexInfo(TexInfo* t, Ogre::Vector3 const* pNormal);
+	void Face_InitFaceAngle(TexInfo* t, Ogre::Vector3 const* pNormal);
+	void Face_SetTextureDibId(Face* f, const int Dib);
+	void Face_SetTexturePos(Face* f);
+
+
 };
 
