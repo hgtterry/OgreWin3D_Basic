@@ -26,6 +26,9 @@ THE SOFTWARE.
 
 #include "CL64_Brush.h"
 #include "CL64_SelBrushList.h"
+#include "CL64_SelFaceList.h"
+
+typedef signed int(*BrushFlagTest)(const Brush* pBrush);
 
 class CL64_Doc
 {
@@ -35,6 +38,7 @@ public:
 
 	void Init_Doc();
 	const char* FindTextureLibrary(char const* WadName);
+	void SetLockAxis(int Lock) { mLockAxis = Lock; };
 
 	char LastTemplateTypeName[MAX_PATH];
 
@@ -42,10 +46,11 @@ public:
 	Brush* BTemplate, * CurBrush, * TempShearTemplate;
 	SelBrushList* pSelBrushes;
 	SelBrushList* pTempSelBrushes;
-	//SelFaceList* pSelFaces;
+	SelFaceList* pSelFaces;
 
 	Ogre::Vector3	SelectedGeoCenter, FinalPos, FinalRot, FinalScale;
 
+	int mLockAxis;
 	//SelFaceList* pSelFaces;
 };
 

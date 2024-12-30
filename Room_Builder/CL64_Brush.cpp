@@ -661,3 +661,77 @@ void CL64_Brush::BrushList_Append(BrushList* pList,Brush* pBrush)
 	}
 }
 
+// *************************************************************************
+// *						Brush_IsMulti								   *
+// *************************************************************************
+signed int CL64_Brush::Brush_IsMulti(const Brush* b)
+{
+	assert(b != NULL);
+
+	return (b->Type == BRUSH_MULTI) ? true : false;
+}
+
+// *************************************************************************
+// *						BrushList_EnumLeafBrushes					   *
+// *************************************************************************
+int	CL64_Brush::BrushList_EnumLeafBrushes(const BrushList* pList,void* pVoid,BrushList_CB	CallBack)
+{
+	signed int	bResult = true;	// TRUE means entire list was processed
+	Brush* b;
+
+	assert(pList != NULL);
+
+	for (b = pList->First; b; b = b->Next)
+	{
+		assert(b->Type != BRUSH_CSG);
+
+		if (b->Type == BRUSH_MULTI)
+		{
+			if (!BrushList_EnumLeafBrushes(b->BList, pVoid, CallBack))
+			{
+				break;
+			}
+		}
+		else if ((bResult = CallBack(b, pVoid)) == false)
+		{
+			break;
+		}
+	}
+	return bResult;
+}
+
+// *************************************************************************
+// *						Brush_GetBrushList							   *
+// *************************************************************************
+const BrushList* CL64_Brush::Brush_GetBrushList(const Brush* b)
+{
+	if (b == 0)
+	{
+		App->Say_Win("Null Brush");
+	}
+
+	return	b->BList;
+}
+
+// *************************************************************************
+// *						Brush_GetNumFaces							   *
+// *************************************************************************
+int	CL64_Brush::Brush_GetNumFaces(const Brush* b)
+{
+	assert(b != NULL);
+	assert(b->Faces != NULL);
+
+	return	App->CL_FaceList->FaceList_GetNumFaces(b->Faces);
+}
+
+// *************************************************************************
+// *							Brush_GetFace							   *
+// *************************************************************************
+Face* CL64_Brush::Brush_GetFace(const Brush* b, int i)
+{
+	assert(b != NULL);
+	assert(b->Faces != NULL);
+
+	return	App->CL_FaceList->FaceList_GetFace(b->Faces, i);
+}
+

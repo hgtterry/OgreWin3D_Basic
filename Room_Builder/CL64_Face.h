@@ -55,6 +55,8 @@ public:
 	void Face_Destroy(Face** f);
 	void Face_GetSplitInfo(const Face* f, const GPlane* p, float* dists, Ogre::uint8* sides, Ogre::uint8* cnt);
 	void Face_Clip(Face* f, const GPlane* p, float* dists, Ogre::uint8* sides);
+	const Ogre::Vector3* Face_GetPoints(const Face* f);
+	int	Face_GetNumPoints(const Face* f);
 
 };
 

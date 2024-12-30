@@ -23,6 +23,8 @@ THE SOFTWARE.
 */
 
 #pragma once
+#include "CL64_Box.h"
+#include "CL64_Face.h"
 
 typedef struct tag_FaceList FaceList;
 typedef struct tag_BrushList BrushList;
@@ -51,6 +53,7 @@ enum BrushTypeFlags
 };
 
 typedef Brush* BrushIterator;
+typedef signed int (*BrushList_CB)(Brush* pBrush, void* pVoid);
 
 class CL64_Brush
 {
@@ -78,6 +81,12 @@ public:
 	Brush* Brush_CreateHollowFromBrush(const Brush* b);
 	void Brush_SetHollowCut(Brush* b, const signed int bState);
 	void BrushList_Append(BrushList* pList, Brush* pBrush);
+
+	signed int Brush_IsMulti(const Brush* b);
+	int	BrushList_EnumLeafBrushes(const BrushList* pList, void* pVoid, BrushList_CB	CallBack);
+	const BrushList* Brush_GetBrushList(const Brush* b);
+	int	Brush_GetNumFaces(const Brush* b);
+	Face* Brush_GetFace(const Brush* b, int i);
 
 };
 

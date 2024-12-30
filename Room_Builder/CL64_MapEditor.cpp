@@ -35,6 +35,17 @@ THE SOFTWARE.
 
 #define BOTTOM_POS_BOTLEFT		5
 
+typedef struct tagBrushDrawData
+{
+	const Box3d* pViewBox;
+	HDC 		pDC2;
+	ViewVars* v;
+	int GroupId;
+	CL64_Doc* pDoc;
+	BrushFlagTest FlagTest;
+	Ogre::uint32		Color;
+} BrushDrawData;
+
 CL64_MapEditor::CL64_MapEditor()
 {
 	Main_Dlg_Hwnd = NULL;
@@ -65,8 +76,9 @@ CL64_MapEditor::CL64_MapEditor()
 
 	BackGround_Brush = CreateSolidBrush(RGB(64, 64, 64));
 
-	Pen_Fine_Grid = CreatePen(PS_SOLID, 0, RGB(0, 0, 0));;
-	Pen_Grid = CreatePen(PS_SOLID, 0, RGB(112, 112, 112));;
+	Pen_Fine_Grid = CreatePen(PS_SOLID, 0, RGB(0, 0, 0));
+	Pen_Grid = CreatePen(PS_SOLID, 0, RGB(112, 112, 112));
+	PenTemplate = CreatePen(PS_SOLID, 1, RGB(0, 0, 255));
 
 	int Count = 0;
 	while (Count < 3)
@@ -903,6 +915,28 @@ LRESULT CALLBACK CL64_MapEditor::Bottom_Right_Proc(HWND hDlg, UINT message, WPAR
 }
 
 // *************************************************************************
+// *	  						BrushDraw								   *
+// *************************************************************************
+signed int CL64_MapEditor::BrushDraw(Brush* pBrush, void* lParam)
+{
+	BrushDrawData* pData = (BrushDrawData*)lParam;
+	CL64_Doc* pDoc = pData->pDoc;
+
+	//if ((pData->GroupId == fdoc_SHOW_ALL_GROUPS) || (Brush_GetGroupId(pBrush) == pData->GroupId))
+	{
+		//if ((pData->FlagTest == NULL) || pData->FlagTest(pBrush))
+		{
+			//if (pDoc->fdocShowBrush(pBrush, pData->pViewBox))
+			{
+				App->CL_MapEditor->Render_RenderBrushFacesOrtho(pData->v, pBrush, App->CL_MapEditor->MemoryhDC);
+			}
+		}
+	}
+
+	return true;
+}
+
+// *************************************************************************
 // *						Draw_Screen Terry Flanigan		  			   *
 // *************************************************************************
 void CL64_MapEditor::Draw_Screen(HWND hwnd)
@@ -911,6 +945,25 @@ void CL64_MapEditor::Draw_Screen(HWND hwnd)
 
 	HDC			RealhDC;
 	RECT		Rect;
+	BrushDrawData	brushDrawData;
+
+	Box3d ViewBox;
+
+	App->CL_Box->Box3d_SetBogusBounds(&ViewBox);
+
+	//Render_ViewToWorld(v, 0, 0, &XTemp);
+
+	//App->CL_Box->Box3d_AddPoint(&ViewBox, XTemp.X, XTemp.Y, XTemp.Z);
+
+	//Render_ViewToWorld(v, Render_GetWidth(v), Render_GetHeight(v), &XTemp);
+	//App->CL_Box->Box3d_AddPoint(&ViewBox, XTemp.X, XTemp.Y, XTemp.Z);
+
+	brushDrawData.pViewBox = &ViewBox;
+	brushDrawData.pDC2 = MemoryhDC;
+	brushDrawData.v = Current_View;
+	brushDrawData.pDoc = App->CL_Doc;//this;
+	brushDrawData.GroupId = 0;
+	brushDrawData.FlagTest = NULL;
 
 	GetClientRect(hwnd, &Rect);
 	Rect.left--;
@@ -960,6 +1013,21 @@ void CL64_MapEditor::Draw_Screen(HWND hwnd)
 	//	Draw_Camera(MemoryhDC);
 	//}
 
+	//if (Brush_TestBoundsIntersect(App->CLSB_Doc->CurBrush, &ViewBox))
+	{
+		SelectObject(MemoryhDC, PenTemplate);
+
+		if (App->CL_Brush->Brush_IsMulti(App->CL_Doc->CurBrush))
+		{
+	
+			App->CL_Brush->BrushList_EnumLeafBrushes(App->CL_Brush->Brush_GetBrushList(App->CL_Doc->CurBrush), &brushDrawData, BrushDraw);
+		}
+		else
+		{
+			Render_RenderBrushFacesOrtho(Current_View, App->CL_Doc->CurBrush, MemoryhDC);
+			
+		}
+	}
 
 	BitBlt(RealhDC, Rect.left, Rect.top, Rect.right - Rect.left, Rect.bottom - Rect.top, MemoryhDC, 0, 0, SRCCOPY);
 
@@ -969,6 +1037,33 @@ void CL64_MapEditor::Draw_Screen(HWND hwnd)
 	DeleteDC(MemoryhDC);
 
 	//flag_IsDrawing = 0;
+}
+
+
+static POINT plist[64];
+
+// *************************************************************************
+// *	  			Render_RenderBrushFacesOrtho		Genesis			   *
+// *************************************************************************
+void CL64_MapEditor::Render_RenderBrushFacesOrtho(const ViewVars* Cam, Brush* b, HDC ViewDC)
+{
+	int	i, j;
+
+	//assert (b != NULL);
+
+	for (i = 0; i < App->CL_Brush->Brush_GetNumFaces(b); i++)
+	{
+		Face* f = App->CL_Brush->Brush_GetFace(b, i);
+		const Ogre::Vector3* pnts = App->CL_Face->Face_GetPoints(f);
+
+		for (j = 0; j < App->CL_Face->Face_GetNumPoints(f); j++)
+		{
+			plist[j] = App->CL_Render->Render_OrthoWorldToView(Cam, &pnts[j]);
+		}
+
+		plist[j] = plist[0];
+		Polyline(ViewDC, plist, j + 1);
+	}
 }
 
 

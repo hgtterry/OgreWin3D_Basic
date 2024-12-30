@@ -519,3 +519,17 @@ void CL64_Face::Face_Clip(Face* f, const GPlane* p, float* dists, Ogre::uint8* s
 	f->Points = (Ogre::Vector3*)App->CL_Maths->Ram_Allocate(sizeof(Ogre::Vector3) * nbp);
 	memcpy(f->Points, spb, sizeof(Ogre::Vector3) * nbp);
 }
+
+const Ogre::Vector3* CL64_Face::Face_GetPoints(const Face* f)
+{
+	assert(f != NULL);
+
+	return	f->Points;
+}
+
+int	CL64_Face::Face_GetNumPoints(const Face* f)
+{
+	assert(f != NULL);
+
+	return	f->NumPoints;
+}

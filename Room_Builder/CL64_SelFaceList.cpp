@@ -26,10 +26,58 @@ THE SOFTWARE.
 #include "CL64_App.h"
 #include "CL64_SelFaceList.h"
 
+struct tag_SelFaceList
+{
+	Array* pItems;
+	int FirstFree;
+};
+
 CL64_SelFaceList::CL64_SelFaceList(void)
 {
 }
 
 CL64_SelFaceList::~CL64_SelFaceList(void)
 {
+}
+
+// *************************************************************************
+// *						SelFaceList_Create							   *
+// *************************************************************************
+SelFaceList* CL64_SelFaceList::SelFaceList_Create(void)
+{
+	SelFaceList* pList;
+
+	pList = (SelFaceList*)App->CL_Maths->Ram_Allocate(sizeof(SelFaceList));
+	if (pList != NULL)
+	{
+		pList->pItems = App->CL_Array->Array_Create(10, sizeof(Face*));
+		if (pList->pItems != NULL)
+		{
+			pList->FirstFree = 0;
+		}
+		else
+		{
+			SelFaceList_Destroy(&pList);
+		}
+	}
+	return pList;
+}
+
+// *************************************************************************
+// *						SelFaceList_Destroy							   *
+// *************************************************************************
+void CL64_SelFaceList::SelFaceList_Destroy(SelFaceList** ppList)
+{
+	SelFaceList* pList;
+
+	assert(ppList != NULL);
+	assert(*ppList != NULL);
+	pList = *ppList;
+
+	if (pList->pItems != NULL)
+	{
+		App->CL_Array->Array_Destroy(&pList->pItems);
+	}
+
+	App->CL_Maths->Ram_Free(*ppList);
 }

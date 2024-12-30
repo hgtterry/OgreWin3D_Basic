@@ -23,10 +23,17 @@ THE SOFTWARE.
 */
 
 #pragma once
+
+typedef struct tag_SelFaceList SelFaceList;
+
 class CL64_SelFaceList
 {
 public:
 	CL64_SelFaceList(void);
 	~CL64_SelFaceList(void);
+
+	SelFaceList* SelFaceList_Create(void);
+	void SelFaceList_Destroy(SelFaceList** ppList);
+
 };
 

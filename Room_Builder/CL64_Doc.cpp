@@ -63,9 +63,9 @@ void CL64_Doc::Init_Doc()
 
 	pSelBrushes = App->CL_SelBrushList->SelBrushList_Create();
 	pTempSelBrushes = App->CL_SelBrushList->SelBrushList_Create();
-	//pSelFaces = SelFaceList_Create();
+	pSelFaces = App->CL_SelFaceList->SelFaceList_Create();
 
-	//App->CLSB_Doc->SetLockAxis(0);	// Start with no axis locked
+	SetLockAxis(0);	// Start with no axis locked
 
 
 	// create our default box
@@ -73,12 +73,11 @@ void CL64_Doc::Init_Doc()
 	pBoxTemplate = App->CL_Level->Level_GetBoxTemplate(pLevel);
 	BTemplate = App->CL_BrushTemplate->BrushTemplate_CreateBox(pBoxTemplate);
 	
-
 	App->CL_Brush->Brush_Bound(BTemplate);
 	CurBrush = BTemplate;
 
 	App->CL_Maths->Vector3_Clear(&SelectedGeoCenter);
-
+	
 }
 
 // *************************************************************************

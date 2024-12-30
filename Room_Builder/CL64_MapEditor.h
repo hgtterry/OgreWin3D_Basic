@@ -25,6 +25,7 @@ THE SOFTWARE.
 #pragma once
 
 #include "CL64_Render.h"
+#include "CL64_Brush.h"
 
 enum View
 {
@@ -44,6 +45,7 @@ public:
 
 	void Init_Map_Views();
 	void Init_Views();
+	void Render_RenderBrushFacesOrtho(const ViewVars* Cam, Brush* b, HDC ViewDC);
 
 	float GridSize, GridSnapSize;
 
@@ -70,7 +72,9 @@ private:
 	void Resize_Windows(HWND hDlg, int NewWidth, int NewDepth);
 
 	void Draw_Screen(HWND hwnd);
-	
+
+	static signed int BrushDraw(Brush* pBrush, void* lParam);
+
 	int LEFT_WINDOW_WIDTH;
 
 	int LEFT_WINDOW_DEPTH;
@@ -96,6 +100,7 @@ private:
 
 	HPEN Pen_Fine_Grid;
 	HPEN Pen_Grid;
+	HPEN PenTemplate;
 
 	HDC	MemoryhDC;
 };
