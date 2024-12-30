@@ -50,11 +50,15 @@ public:
 	void Vector3_CrossProduct(const Ogre::Vector3* V1, const Ogre::Vector3* V2, Ogre::Vector3* VResult);
 	signed int Vector3_Compare(const Ogre::Vector3* V1, const Ogre::Vector3* V2, float Tolerance);
 	void Vector3_Inverse(Ogre::Vector3* V);
+	void Vector3_AddScaled(const Ogre::Vector3* V1, const Ogre::Vector3* V2, float Scale, Ogre::Vector3* V1PlusV2Scaled);
+	void Vector3_MA(Ogre::Vector3* V1, float Scale, const Ogre::Vector3* V2, Ogre::Vector3* V1PlusV2Scaled);
+
 
 	void XForm3d_SetIdentity(Matrix3d* M);
 	void XForm3d_RotateX(Matrix3d* M, float RadianAngle);
 	void XForm3d_SetXRotation(Matrix3d* M, float RadianAngle);
 	void XForm3d_Multiply(const Matrix3d* M1, const Matrix3d* M2, Matrix3d* MProduct);
+
 
 	void Quaternion_SetFromAxisAngle(Ogre::Quaternion* Q, const Ogre::Vector3* Axis, float Theta);
 	void Quaternion_ToMatrix(const Ogre::Quaternion* Q, Matrix3d* M);

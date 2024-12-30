@@ -43,7 +43,14 @@ typedef struct BrushTag
 	bool			Centre_Marker;
 } Brush;
 
+enum BrushTypeFlags
+{
+	BRUSH_MULTI = 0x0001,
+	BRUSH_LEAF = 0x0002,
+	BRUSH_CSG = 0x0004
+};
 
+typedef Brush* BrushIterator;
 
 class CL64_Brush
 {
@@ -52,6 +59,25 @@ public:
 	~CL64_Brush(void);
 
 	BrushList* BrushList_Create(void);
+	Brush* Brush_Create(int Type, const FaceList* fl, const BrushList* BList);
+	void BrushList_GetBounds(const BrushList* BList, Box3d* pBounds);
+	void Brush_Bound(Brush* b);
+	//void Brush_SetSubtract(Brush* b, const signed int bState);
+	void Brush_SetSheet(Brush* b, const signed int bState);
+	void Brush_SealFaces(Brush** b);
+	void Brush_Destroy(Brush** b);
+	void BrushList_Destroy(BrushList** ppList);
+	void BrushList_DeleteAll(BrushList* pList);
+
+	Brush* BrushList_GetFirst(BrushList* pList, BrushIterator* bi);
+	Brush* BrushList_GetNext(BrushIterator* bi);
+	Brush* BrushList_GetLast(BrushList* pList, BrushIterator* bi);
+	Brush* BrushList_GetPrev(BrushIterator* bi);
+	void BrushList_Remove(BrushList* pList, Brush* pBrush);
+
+	Brush* Brush_CreateHollowFromBrush(const Brush* b);
+	void Brush_SetHollowCut(Brush* b, const signed int bState);
+	void BrushList_Append(BrushList* pList, Brush* pBrush);
 
 };
 

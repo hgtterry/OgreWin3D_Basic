@@ -46,7 +46,15 @@ public:
 	void Face_InitFaceAngle(TexInfo* t, Ogre::Vector3 const* pNormal);
 	void Face_SetTextureDibId(Face* f, const int Dib);
 	void Face_SetTexturePos(Face* f);
-
+	void Face_GetBounds(const Face* f, Box3d* b);
+	void Face_SetSheet(Face* f, const signed int bState);
+	const GPlane* Face_GetPlane(const Face* f);
+	signed int Face_IsFixedHull(const Face* f);
+	Face* Face_CreateFromPlane(const GPlane* p, float Radius, int DibId);
+	void Face_CopyFaceInfo(const Face* src, Face* dst);
+	void Face_Destroy(Face** f);
+	void Face_GetSplitInfo(const Face* f, const GPlane* p, float* dists, Ogre::uint8* sides, Ogre::uint8* cnt);
+	void Face_Clip(Face* f, const GPlane* p, float* dists, Ogre::uint8* sides);
 
 };
 

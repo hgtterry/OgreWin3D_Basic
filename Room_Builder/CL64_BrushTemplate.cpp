@@ -114,7 +114,7 @@ void CL64_BrushTemplate::BrushTemplate_StaircaseDefaults(BrushTemplate_Staircase
 	pStaircaseTemplate->MakeRamp = false;
 	pStaircaseTemplate->TCut = false;
 }
-
+#include "Room Builder.h"
 Brush* CL64_BrushTemplate::BrushTemplate_CreateBox(const BrushTemplate_Box* pTemplate)
 {
 	Ogre::Vector3	Verts[8];
@@ -203,54 +203,55 @@ Brush* CL64_BrushTemplate::BrushTemplate_CreateBox(const BrushTemplate_Box* pTem
 		App->CL_FaceList->FaceList_AddFace(fl, f);
 	}
 
-	//if (!pTemplate->Solid)
-	//{
-	//	b = Brush_Create(BRUSH_LEAF, fl, 0);
-	//	if (b)
-	//	{
-	//		Brush_SetSubtract(b, pTemplate->TCut);
-	//		Brush_SetSheet(b, pTemplate->TSheet);
-	//	}
-	//	return	b;
-	//}
-	//else
-	//{
-	//	// hollow brush
-	//	BrushList* bl = BrushList_Create();
-	//	Brush* bh, * bm;
+	if (!pTemplate->Solid)
+	{
+		b = App->CL_Brush->Brush_Create(BRUSH_LEAF, fl, 0);
+		if (b)
+		{
+			Brush_SetSubtract(b, pTemplate->TCut); // hgtterry Problem
+			App->CL_Brush->Brush_SetSheet(b, pTemplate->TSheet);
+			
+		}
+		return	b;
+	}
+	else
+	{
+		// hollow brush
+		BrushList* bl = App->CL_Brush->BrushList_Create();
+		Brush* bh, * bm;
 
-	//	b = Brush_Create(BRUSH_LEAF, fl, 0);
-	//	if (b)
-	//	{
-	//		Brush_SetHollow(b, GE_TRUE);
-	//		Brush_SetHullSize(b, (float)pTemplate->Thickness);
-	//		bh = Brush_CreateHollowFromBrush(b);
-	//		if (bh)
-	//		{
-	//			Brush_SetHollowCut(bh, GE_TRUE);
-	//			BrushList_Append(bl, b);
-	//			BrushList_Append(bl, bh);
+		b = App->CL_Brush->Brush_Create(BRUSH_LEAF, fl, 0);
+		if (b)
+		{
+			Brush_SetHollow(b, true);
+			Brush_SetHullSize(b, (float)pTemplate->Thickness);
+			bh = App->CL_Brush->Brush_CreateHollowFromBrush(b);
+			if (bh)
+			{
+				App->CL_Brush->Brush_SetHollowCut(bh, true);
+				App->CL_Brush->BrushList_Append(bl, b);
+				App->CL_Brush->BrushList_Append(bl, bh);
 
-	//			bm = Brush_Create(BRUSH_MULTI, 0, bl);
-	//			if (bm)
-	//			{
-	//				Brush_SetHollow(bm, GE_TRUE);
-	//				Brush_SetSubtract(bm, pTemplate->TCut);
-	//				Brush_SetHullSize(bm, (float)pTemplate->Thickness);
-	//				return	bm;
-	//			}
-	//		}
-	//		else
-	//		{
-	//			Brush_Destroy(&b);
-	//			BrushList_Destroy(&bl);
-	//		}
-	//	}
-	//	else
-	//	{
-	//		BrushList_Destroy(&bl);
-	//	}
-	//}
+				bm = App->CL_Brush->Brush_Create(BRUSH_MULTI, 0, bl);
+				if (bm)
+				{
+					Brush_SetHollow(bm, true);
+					Brush_SetSubtract(bm, pTemplate->TCut);
+					Brush_SetHullSize(bm, (float)pTemplate->Thickness);
+					return	bm;
+				}
+			}
+			else
+			{
+				App->CL_Brush->Brush_Destroy(&b);
+				App->CL_Brush->BrushList_Destroy(&bl);
+			}
+		}
+		else
+		{
+			App->CL_Brush->BrushList_Destroy(&bl);
+		}
+	}
 
 	return	0;
 }

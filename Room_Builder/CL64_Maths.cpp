@@ -252,6 +252,30 @@ void CL64_Maths::Vector3_Inverse(Ogre::Vector3* V)
 }
 
 // *************************************************************************
+// *			Vector3_AddScaled:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+void CL64_Maths::Vector3_AddScaled(const Ogre::Vector3* V1, const Ogre::Vector3* V2, float Scale, Ogre::Vector3* V1PlusV2Scaled)
+{
+	V1PlusV2Scaled->x = V1->x + V2->x * Scale;
+	V1PlusV2Scaled->y = V1->y + V2->y * Scale;
+	V1PlusV2Scaled->z = V1->z + V2->z * Scale;
+}
+
+// *************************************************************************
+// *				Vector3_MA:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void CL64_Maths::Vector3_MA(Ogre::Vector3* V1, float Scale, const Ogre::Vector3* V2, Ogre::Vector3* V1PlusV2Scaled)
+{
+	assert(geVec3d_IsValid(V1) != GE_FALSE);
+	assert(geVec3d_IsValid(V2) != GE_FALSE);
+	assert(V1PlusV2Scaled != NULL);
+
+	V1PlusV2Scaled->x = V1->x + V2->x * Scale;
+	V1PlusV2Scaled->y = V1->y + V2->y * Scale;
+	V1PlusV2Scaled->z = V1->z + V2->z * Scale;
+}
+
+// *************************************************************************
 // *			XForm3d_SetIdentity:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
 void CL64_Maths::XForm3d_SetIdentity(Matrix3d* M)

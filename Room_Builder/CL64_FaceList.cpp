@@ -84,3 +84,94 @@ void CL64_FaceList::FaceList_AddFace(FaceList* pList, Face* pFace)
 	++(pList->NumFaces);
 	pList->Dirty = true;
 }
+
+// *************************************************************************
+// *						FaceList_GetBounds						 	   *
+// *************************************************************************
+void CL64_FaceList::FaceList_GetBounds(const FaceList* pList, Box3d* pBounds)
+{
+	int i;
+
+	assert(pList != NULL);
+	assert(pBounds != NULL);
+	assert(pList->NumFaces > 0);
+
+	if (pList->Dirty)
+	{
+		Box3d	Bounds;
+
+		App->CL_Face->Face_GetBounds(pList->Faces[0], &Bounds);
+		for (i = 1; i < pList->NumFaces; i++)
+		{
+			Box3d FaceBounds;
+
+			App->CL_Face->Face_GetBounds(pList->Faces[i], &FaceBounds);
+			App->CL_Box->Box3d_Union(&Bounds, &FaceBounds, &Bounds);
+		}
+		
+
+		((FaceList*)pList)->Bounds = Bounds;
+		((FaceList*)pList)->Dirty = false;
+	}
+
+	*pBounds = pList->Bounds;
+}
+
+// *************************************************************************
+// *						FaceList_GetFace						 	   *
+// *************************************************************************
+Face* CL64_FaceList::FaceList_GetFace(const FaceList* pList, int WhichFace)
+{
+	return	pList->Faces[WhichFace];
+}
+
+// *************************************************************************
+// *						FaceList_GetNumFaces					 	   *
+// *************************************************************************
+int	CL64_FaceList::FaceList_GetNumFaces(const FaceList* pList)
+{
+	return pList->NumFaces;
+}
+
+// *************************************************************************
+// *						FaceList_Destroy						 	   *
+// *************************************************************************
+void CL64_FaceList::FaceList_Destroy(FaceList** ppList)
+{
+	int i;
+	FaceList* pList;
+
+	assert(ppList != NULL);
+	assert(*ppList != NULL);
+
+	pList = *ppList;
+	for (i = 0; i < pList->NumFaces; i++)
+	{
+		App->CL_Face->Face_Destroy(&pList->Faces[i]);
+	}
+	App->CL_Maths->Ram_Free(pList->Faces);
+	App->CL_Maths->Ram_Free(*ppList);
+	*ppList = NULL;
+}
+
+// *************************************************************************
+// *						FaceList_RemoveFace						 	   *
+// *************************************************************************
+void CL64_FaceList::FaceList_RemoveFace(FaceList* pList, int WhichFace)
+{
+	int	i;
+
+	assert(pList != NULL);
+	assert(pList->NumFaces <= pList->Limit);
+	assert(pList->Faces[WhichFace] != NULL);
+
+	App->CL_Face->Face_Destroy(&pList->Faces[WhichFace]);
+
+	for (i = WhichFace; i < pList->NumFaces - 1; i++)
+	{
+		pList->Faces[i] = pList->Faces[i + 1];
+	}
+	pList->Faces[--pList->NumFaces] = NULL;
+
+	pList->Dirty = true;
+}

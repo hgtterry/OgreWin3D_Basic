@@ -43,5 +43,9 @@ public:
 	SelBrushList* pSelBrushes;
 	SelBrushList* pTempSelBrushes;
 	//SelFaceList* pSelFaces;
+
+	Ogre::Vector3	SelectedGeoCenter, FinalPos, FinalRot, FinalScale;
+
+	//SelFaceList* pSelFaces;
 };
 

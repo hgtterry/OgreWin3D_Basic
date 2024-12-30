@@ -23,23 +23,10 @@ THE SOFTWARE.
 */
 
 #pragma once
-
-#include "CL64_Face.h"
-
-class CL64_FaceList
+class CL64_SelFaceList
 {
 public:
-	CL64_FaceList(void);
-	~CL64_FaceList(void);
-
-	FaceList* FaceList_Create(int NumFaces);
-	void FaceList_AddFace(FaceList* pList, Face* pFace);
-	void FaceList_GetBounds(const FaceList* pList, Box3d* pBounds);
-	Face* FaceList_GetFace(const FaceList* pList, int WhichFace);
-	int	FaceList_GetNumFaces(const FaceList* pList);
-	void FaceList_Destroy(FaceList** ppList);
-	void FaceList_RemoveFace(FaceList* pList, int WhichFace);
-
-
+	CL64_SelFaceList(void);
+	~CL64_SelFaceList(void);
 };
 

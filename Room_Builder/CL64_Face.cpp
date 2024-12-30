@@ -26,12 +26,13 @@ THE SOFTWARE.
 #include "CL64_App.h"
 #include "CL64_Face.h"
 
+static	Ogre::Vector3 spf[256], spb[256];
 const Ogre::Vector3	VecOrigin = { 0.0f, 0.0f, 0.0f };
 
 #define	VCOMPARE_EPSILON			(0.00001f)
 #define MAX_POINTS					64
 #define	ON_EPSILON					(0.1f)
-#define	VectorToSUB(a, b)			(*((((geFloat *)(&a))) + (b)))
+#define	VectorToSUB(a, b)			(*((((float *)(&a))) + (b)))
 #define FACE_DEFAULT_LIGHT			300
 #define FACE_DEFAULT_BIAS			(1.0f)
 #define FACE_DEFAULT_TRANSLUCENCY	(255.0f)
@@ -82,6 +83,13 @@ typedef struct FaceTag
 	Ogre::Vector3*	Points;
 
 } Face;
+
+enum SideFlags
+{
+	SIDE_FRONT = 0,
+	SIDE_BACK = 1,
+	SIDE_ON = 2
+};
 
 CL64_Face::CL64_Face(void)
 {
@@ -152,6 +160,23 @@ Face* CL64_Face::Face_Create(int NumPnts, const Ogre::Vector3* pnts, int DibId)
 		}
 	}
 	return	f;
+}
+
+// *************************************************************************
+// *						Face_GetBounds								   *
+// *************************************************************************
+void CL64_Face::Face_GetBounds(const Face* f, Box3d* b)
+{
+	int i;
+
+	assert(f != NULL);
+	assert(b != NULL);
+
+	App->CL_Box->Box3d_SetBogusBounds(b);
+	for (i = 0; i < f->NumPoints; i++)
+	{
+		App->CL_Box->Box3d_AddPoint(b, f->Points[i].x, f->Points[i].y, f->Points[i].z);
+	}
 }
 
 // *************************************************************************
@@ -306,4 +331,191 @@ void CL64_Face::Face_SetTexInfoPlane(TexInfo* t,Ogre::Vector3 const* pNormal)
 	t->VecNormal = *pNormal;
 
 	t->DirtyFlag = true;
+}
+
+// *************************************************************************
+// *							Face_SetSheet							   *
+// *************************************************************************
+void CL64_Face::Face_SetSheet(Face* f, const signed int bState)
+{
+	f->Flags = (bState) ? (f->Flags | FACE_SHEET) : (f->Flags & ~FACE_SHEET);
+}
+
+// *************************************************************************
+// *							Face_GetPlane							   *
+// *************************************************************************
+const GPlane* CL64_Face::Face_GetPlane(const Face* f)
+{
+	return	&f->Face_Plane;
+}
+
+// *************************************************************************
+// *						Face_IsFixedHull							   *
+// *************************************************************************
+signed int CL64_Face::Face_IsFixedHull(const Face* f)
+{
+	assert(f != NULL);
+
+	return	(f->Flags & FACE_FIXEDHULL) ? true : false;
+}
+
+// *************************************************************************
+// *						Face_CreateFromPlane						   *
+// *************************************************************************
+Face* CL64_Face::Face_CreateFromPlane(const GPlane* p, float Radius, int DibId)
+{
+	float	v;
+	Ogre::Vector3	vup, vright, org, pnts[4];
+
+	assert(p != NULL);
+
+	//find the major axis of p->Normal
+	App->CL_Maths->Vector3_Set(&vup, 0.0f, 0.0f, 1.0f);
+	if ((fabs(p->Normal.z) > fabs(p->Normal.x))
+		&& (fabs(p->Normal.z) > fabs(p->Normal.y)))
+	{
+		App->CL_Maths->Vector3_Set(&vup, 1.0f, 0.0f, 0.0f);
+	}
+
+	v = App->CL_Maths->Vector3_DotProduct(&vup, &p->Normal);
+	App->CL_Maths->Vector3_AddScaled(&vup, &p->Normal, -v, &vup);
+	App->CL_Maths->Vector3_Normalize(&vup);
+
+	App->CL_Maths->Vector3_AddScaled(&VecOrigin, &p->Normal, p->Dist, &org);
+	App->CL_Maths->Vector3_CrossProduct(&vup, &p->Normal, &vright);
+
+	App->CL_Maths->Vector3_Scale(&vup, Radius, &vup);
+	App->CL_Maths->Vector3_Scale(&vright, Radius, &vright);
+
+	App->CL_Maths->Vector3_Subtract(&org, &vright, &pnts[0]);
+	App->CL_Maths->Vector3_Add(&pnts[0], &vup, &pnts[0]);
+
+	App->CL_Maths->Vector3_Add(&org, &vright, &pnts[1]);
+	App->CL_Maths->Vector3_Add(&pnts[1], &vup, &pnts[1]);
+
+	App->CL_Maths->Vector3_Add(&org, &vright, &pnts[2]);
+	App->CL_Maths->Vector3_Subtract(&pnts[2], &vup, &pnts[2]);
+
+	App->CL_Maths->Vector3_Subtract(&org, &vright, &pnts[3]);
+	App->CL_Maths->Vector3_Subtract(&pnts[3], &vup, &pnts[3]);
+
+	return	Face_Create(4, pnts, DibId);
+}
+
+// *************************************************************************
+// *						Face_CopyFaceInfo							   *
+// *************************************************************************
+void CL64_Face::Face_CopyFaceInfo(const Face* src, Face* dst)
+{
+	assert(src);
+	assert(dst);
+
+	dst->Flags = src->Flags;
+	dst->LightIntensity = src->LightIntensity;
+	dst->MipMapBias = src->MipMapBias;
+	dst->Translucency = src->Translucency;
+	dst->Reflectivity = src->Reflectivity;
+	dst->Tex = src->Tex;
+	dst->LightXScale = src->LightXScale;
+	dst->LightYScale = src->LightYScale;
+
+	//make sure the texinfos plane and vecs are good
+	Face_SetPlaneFromFace(dst);
+}
+
+// *************************************************************************
+// *						Face_GetSplitInfo							   *
+// *************************************************************************
+void CL64_Face::Face_GetSplitInfo(const Face* f, const GPlane* p, float* dists, Ogre::uint8* sides, Ogre::uint8* cnt)
+{
+	int	i;
+
+	cnt[0] = cnt[1] = cnt[2] = 0;
+
+	for (i = 0; i < f->NumPoints; i++)
+	{
+		dists[i] = App->CL_Maths->Vector3_DotProduct(&f->Points[i], &p->Normal) - p->Dist;
+		if (dists[i] > ON_EPSILON)
+		{
+			sides[i] = SIDE_FRONT;
+		}
+		else if (dists[i] < -ON_EPSILON)
+		{
+			sides[i] = SIDE_BACK;
+		}
+		else
+		{
+			sides[i] = SIDE_ON;
+		}
+		cnt[sides[i]]++;
+	}
+	sides[i] = sides[0];
+	dists[i] = dists[0];
+}
+
+// *************************************************************************
+// *							Face_Destroy							   *
+// *************************************************************************
+void CL64_Face::Face_Destroy(Face** f)
+{
+	if ((*f)->Points)
+	{
+		App->CL_Maths->Ram_Free((*f)->Points);
+	}
+
+	App->CL_Maths->Ram_Free(*f);
+	*f = NULL;
+}
+
+// *************************************************************************
+// *							Face_Clip								   *
+// *************************************************************************
+void CL64_Face::Face_Clip(Face* f, const GPlane* p, float* dists, Ogre::uint8* sides)
+{
+	Ogre::Vector3* p1, * p2, mid;
+	int		nfp, nbp, i, j;
+	float	dot;
+
+	p1 = f->Points;
+	for (i = nfp = nbp = 0; i < f->NumPoints; i++, p1++)
+	{
+		if (sides[i] == SIDE_ON)
+		{
+			App->CL_Maths->Vector3_Copy(p1, &spb[nbp]);
+			nbp++;
+			continue;
+		}
+		if (sides[i] == SIDE_BACK)
+		{
+			App->CL_Maths->Vector3_Copy(p1, &spb[nbp]);
+			nbp++;
+		}
+		if (sides[i + 1] == SIDE_ON || sides[i + 1] == sides[i])
+			continue;
+
+		p2 = &f->Points[(i + 1) % f->NumPoints];
+		dot = dists[i] / (dists[i] - dists[i + 1]);
+		for (j = 0; j < 3; j++)
+		{
+			if (VectorToSUB(p->Normal, j) == 1)
+			{
+				VectorToSUB(mid, j) = p->Dist;
+			}
+			else if (VectorToSUB(p->Normal, j) == -1)
+			{
+				VectorToSUB(mid, j) = -p->Dist;
+			}
+			else
+			{
+				VectorToSUB(mid, j) = VectorToSUB(*p1, j) +
+					dot * (VectorToSUB(*p2, j) - VectorToSUB(*p1, j));
+			}
+		}
+		App->CL_Maths->Vector3_Copy(&mid, &spb[nbp]);
+		nbp++;
+	}
+	App->CL_Maths->Ram_Free(f->Points);
+	f->NumPoints = nbp;
+	f->Points = (Ogre::Vector3*)App->CL_Maths->Ram_Allocate(sizeof(Ogre::Vector3) * nbp);
+	memcpy(f->Points, spb, sizeof(Ogre::Vector3) * nbp);
 }
