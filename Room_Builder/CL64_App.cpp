@@ -117,6 +117,57 @@ void CL64_App::SetMainWinCentre(void) const
 }
 
 // *************************************************************************
+// *				Say:- Terry and Hazel Flanigan 2024					   *
+// *************************************************************************
+void CL64_App::Say(const char* Message, char* Message2)
+{
+	char text[MAX_PATH];
+	char text2[MAX_PATH];
+
+	strcpy(text, Message);
+	if (Message2 == NULL)
+	{
+		strcpy(text2, " ");
+	}
+	else
+	{
+		strcpy(text2, Message2);
+	}
+
+	App->CL_Dialogs->Message(text, text2);
+}
+
+// *************************************************************************
+// *				Say_Int:- Terry and Hazel Flanigan 2024				   *
+// *************************************************************************
+void CL64_App::Say_Int(int Value)
+{
+	char buf[MAX_PATH];
+	_itoa(Value, buf, 10);
+	MessageBox(MainHwnd, buf, "Display Int", MB_OK);
+}
+
+// *************************************************************************
+// *			Say_Float:- Terry and Hazel Flanigan 2024				   *
+// *************************************************************************
+void CL64_App::Say_Float(float Value)
+{
+	char buf[MAX_PATH];
+	sprintf(buf, "%f", Value);
+	MessageBox(MainHwnd, buf, "Display float", MB_OK);
+}
+
+// *************************************************************************
+// *			Say_Vector3:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void CL64_App::Say_Vector3(Ogre::Vector3 Vector)
+{
+	char buf[255];
+	sprintf(buf, "%f %f %f", Vector.x, Vector.y, Vector.z);
+	MessageBox(MainHwnd, buf, "Display Vector", MB_OK);
+}
+
+// *************************************************************************
 // *				Say_Win:- Terry and Hazel Flanigan 2024				   *
 // *************************************************************************
 void CL64_App::Say_Win(const char* Message)

@@ -78,6 +78,7 @@ void CL64_Doc::Init_Doc()
 
 	App->CL_Maths->Vector3_Clear(&SelectedGeoCenter);
 	
+	//App->Say("Done",(LPSTR)"");
 }
 
 // *************************************************************************

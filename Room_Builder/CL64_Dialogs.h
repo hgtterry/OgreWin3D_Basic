@@ -28,5 +28,15 @@ class CL64_Dialogs
 public:
 	CL64_Dialogs(void);
 	~CL64_Dialogs(void);
+
+	void Message(char* pString, char* pString2);
+
+private:
+
+	static LRESULT CALLBACK Proc_Message(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+
+	char Message_Text_Header[MAX_PATH];
+	char Message_Text_Message[MAX_PATH];
+
 };
 
