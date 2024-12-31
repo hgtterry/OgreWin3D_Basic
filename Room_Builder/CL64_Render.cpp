@@ -18,6 +18,30 @@ static const Ogre::Vector3	VecOrigin = { 0.0f, 0.0f, 0.0f };
 #define	VectorToSUB(a, b) (*((((float *)(&a))) + (b)))
 
 // *************************************************************************
+// *	  					Render_GetWidth								   *
+// *************************************************************************
+int	CL64_Render::Render_GetWidth(const ViewVars* v)
+{
+	return	v->Width;
+}
+
+// *************************************************************************
+// *	  					Render_GetHeight							   *
+// *************************************************************************
+int	CL64_Render::Render_GetHeight(const ViewVars* v)
+{
+	return	v->Height;
+}
+
+// *************************************************************************
+// *	  					Render_GetInidx							   *
+// *************************************************************************
+int	CL64_Render::Render_GetInidx(const ViewVars* v)
+{
+	return	(v->ViewType >> 3) & 0x3;
+}
+
+// *************************************************************************
 // *	  				Render_RenderOrthoGridFromSize					   *
 // *************************************************************************
 bool CL64_Render::Render_RenderOrthoGridFromSize(ViewVars* cv, int Interval, HDC hDC, RECT Rect)

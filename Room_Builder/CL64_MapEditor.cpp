@@ -936,32 +936,37 @@ signed int CL64_MapEditor::BrushDraw(Brush* pBrush, void* lParam)
 	return true;
 }
 
+#define	VectorToSUB(a, b)			(*((((float *)(&a))) + (b)))
+
 // *************************************************************************
 // *						Draw_Screen Terry Flanigan		  			   *
 // *************************************************************************
 void CL64_MapEditor::Draw_Screen(HWND hwnd)
 {
 	//flag_IsDrawing = 1;
-
+	int			inidx = 0;
 	HDC			RealhDC;
 	RECT		Rect;
 	BrushDrawData	brushDrawData;
 
+	Ogre::Vector3 XTemp;
 	Box3d ViewBox;
+	inidx = App->CL_Render->Render_GetInidx(Current_View);
 
 	App->CL_Box->Box3d_SetBogusBounds(&ViewBox);
+	App->CL_Render->Render_ViewToWorld(Current_View, 0, 0, &XTemp);
+	App->CL_Box->Box3d_AddPoint(&ViewBox, XTemp.x, XTemp.y, XTemp.z);
 
-	//Render_ViewToWorld(v, 0, 0, &XTemp);
+	App->CL_Render->Render_ViewToWorld(Current_View, App->CL_Render->Render_GetWidth(Current_View), App->CL_Render->Render_GetHeight(Current_View), &XTemp);
+	App->CL_Box->Box3d_AddPoint(&ViewBox, XTemp.x, XTemp.y, XTemp.z);
 
-	//App->CL_Box->Box3d_AddPoint(&ViewBox, XTemp.X, XTemp.Y, XTemp.Z);
-
-	//Render_ViewToWorld(v, Render_GetWidth(v), Render_GetHeight(v), &XTemp);
-	//App->CL_Box->Box3d_AddPoint(&ViewBox, XTemp.X, XTemp.Y, XTemp.Z);
+	VectorToSUB(ViewBox.Min, inidx) = -FLT_MAX;
+	VectorToSUB(ViewBox.Max, inidx) = FLT_MAX;
 
 	brushDrawData.pViewBox = &ViewBox;
 	brushDrawData.pDC2 = MemoryhDC;
 	brushDrawData.v = Current_View;
-	brushDrawData.pDoc = App->CL_Doc;//this;
+	brushDrawData.pDoc = App->CL_Doc;
 	brushDrawData.GroupId = 0;
 	brushDrawData.FlagTest = NULL;
 
@@ -1031,8 +1036,6 @@ void CL64_MapEditor::Draw_Screen(HWND hwnd)
 
 	BitBlt(RealhDC, Rect.left, Rect.top, Rect.right - Rect.left, Rect.bottom - Rect.top, MemoryhDC, 0, 0, SRCCOPY);
 
-	//SelectObject(MemoryhDC, &OffScreenBitmap);
-
 	DeleteObject(OffScreenBitmap);
 	DeleteDC(MemoryhDC);
 
@@ -1048,8 +1051,6 @@ static POINT plist[64];
 void CL64_MapEditor::Render_RenderBrushFacesOrtho(const ViewVars* Cam, Brush* b, HDC ViewDC)
 {
 	int	i, j;
-
-	//assert (b != NULL);
 
 	for (i = 0; i < App->CL_Brush->Brush_GetNumFaces(b); i++)
 	{

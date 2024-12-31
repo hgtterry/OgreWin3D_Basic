@@ -47,6 +47,10 @@ public:
 	CL64_Render(void);
 	~CL64_Render(void);
 
+	int	Render_GetWidth(const ViewVars* v);
+	int	Render_GetHeight(const ViewVars* v);
+	int	Render_GetInidx(const ViewVars* v);
+
 	bool Render_RenderOrthoGridFromSize(ViewVars* cv, int Interval, HDC hDC, RECT Rect);
 	void Render_ViewToWorld(const ViewVars* cv, const int x, const int y, Ogre::Vector3* wp);
 	POINT Render_OrthoWorldToView(const ViewVars* cv, Ogre::Vector3 const* wp);
