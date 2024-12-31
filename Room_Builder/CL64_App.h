@@ -40,6 +40,7 @@ THE SOFTWARE.
 #include "CL64_SelBrushList.h"
 #include "CL64_Array.h"
 #include "CL64_SelFaceList.h"
+#include "CL64_Dialogs.h"
 
 class CL64_App
 {
@@ -63,7 +64,7 @@ public:
 	CL64_SelBrushList*	CL_SelBrushList;
 	CL64_Array*			CL_Array;
 	CL64_SelFaceList*	CL_SelFaceList;
-
+	CL64_Dialogs*		CL_Dialogs;
 
 	void InitApp(void);
 	void SetBrushes_Fonts(void);

@@ -43,6 +43,7 @@ CL64_App::CL64_App(void)
 	CL_SelBrushList =	nullptr;
 	CL_Array =			nullptr;
 	CL_SelFaceList =	nullptr;
+	CL_Dialogs =		nullptr;
 
 	hInst = nullptr;
 	MainHwnd = nullptr;
@@ -77,6 +78,7 @@ void CL64_App::InitApp(void)
 	CL_SelBrushList =	new CL64_SelBrushList();
 	CL_Array =			new CL64_Array();
 	CL_SelFaceList =	new CL64_SelFaceList();
+	CL_Dialogs =		new CL64_Dialogs();
 
 	SetBrushes_Fonts();
 }
