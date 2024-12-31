@@ -57,6 +57,10 @@ public:
 	void Face_Clip(Face* f, const GPlane* p, float* dists, Ogre::uint8* sides);
 	const Ogre::Vector3* Face_GetPoints(const Face* f);
 	int	Face_GetNumPoints(const Face* f);
+	Face* Face_Clone(const Face* src);
+	int	Face_GetTextureDibId(const Face* f);
+	void Face_SetLightScale(Face* f, const float xScale, const float yScale);
+	void Face_SetTextureScale(Face* f, const float xScale, const float yScale);
 
 };
 

@@ -35,8 +35,12 @@ public:
 	~CL64_Level(void);
 
 	Level* Level_Create(const char* pWadName, const char* HeadersDir, const char* ActorsDir, const char* PawnIni);
+	BrushList* Level_GetBrushes(Level* pLevel);
 
 	BrushTemplate_Box* Level_GetBoxTemplate(Level* pLevel);
+	Ogre::Vector3* Level_GetTemplatePos(Level* pLevel);
+	float Level_GetDrawScale(const Level* pLevel);
+	float Level_GetLightmapScale(const Level* pLevel);
 
 };
 

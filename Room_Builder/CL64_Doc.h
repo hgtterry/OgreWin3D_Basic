@@ -40,7 +40,13 @@ public:
 	const char* FindTextureLibrary(char const* WadName);
 	void SetLockAxis(int Lock) { mLockAxis = Lock; };
 
+	void AddBrushToWorld();
+	void Brush_Add_To_world();
+	void SetDefaultBrushTexInfo(Brush* b);
+
 	char LastTemplateTypeName[MAX_PATH];
+
+	BOOL SelectLock, TempEnt;
 
 	Level* pLevel;
 	Brush* BTemplate, * CurBrush, * TempShearTemplate;
@@ -51,6 +57,8 @@ public:
 	Ogre::Vector3	SelectedGeoCenter, FinalPos, FinalRot, FinalScale;
 
 	int mLockAxis;
+	int mModeTool;
+	int mCurrentGroup;
 	//SelFaceList* pSelFaces;
 };
 

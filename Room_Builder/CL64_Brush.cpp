@@ -77,6 +77,7 @@ CL64_Brush::~CL64_Brush(void)
 }
 
 typedef void (*BrushList_FlagCB)(Brush* pBrush, const signed int bState);
+typedef void (*BrushList_IntCB)(Brush* pBrush, const int iVal);
 
 // *************************************************************************
 // *						BrushList_SetFlag							   *
@@ -90,6 +91,18 @@ static void BrushList_SetFlag(BrushList* bl, const signed int bState, BrushList_
 	for (b = bl->First; b; b = b->Next)
 	{
 		cbSetFlag(b, bState);
+	}
+}
+
+static void	BrushList_SetInt(BrushList* bl, const int iVal, BrushList_IntCB cbSetInt)
+{
+	Brush* b;
+
+	assert(bl != NULL);
+
+	for (b = bl->First; b; b = b->Next)
+	{
+		cbSetInt(b, iVal);
 	}
 }
 
@@ -202,8 +215,6 @@ void CL64_Brush::Brush_Bound(Brush* b)
 	}
 }
 
-
-typedef void (*BrushList_IntCB)(Brush* pBrush, const int iVal);
 typedef void (*BrushList_FloatCB)(Brush* pBrush, const float fVal);
 typedef void (*BrushList_Uint32CB)(Brush* pBrush, const Ogre::uint32 uVal);
 
@@ -733,5 +744,350 @@ Face* CL64_Brush::Brush_GetFace(const Brush* b, int i)
 	assert(b->Faces != NULL);
 
 	return	App->CL_FaceList->FaceList_GetFace(b->Faces, i);
+}
+
+// *************************************************************************
+// *							Brush_GetFace							   *
+// *************************************************************************
+int CL64_Brush::Get_Brush_Count(void)
+{
+	int Count = 0;
+	Brush* b;
+
+	Level* pLevel = App->CL_Doc->pLevel;
+	BrushList* pList = App->CL_Level->Level_GetBrushes(pLevel);
+
+	b = pList->First;
+	while (b != NULL)
+	{
+		Count++;
+		b = b->Next;
+	}
+
+	return Count;
+}
+
+// *************************************************************************
+// *						Brush_IsSubtract							   *
+// *************************************************************************
+signed int CL64_Brush::Brush_IsSubtract(const Brush* b)
+{
+	return	(b->Flags & BRUSH_SUBTRACT) ? true : false;
+}
+
+// *************************************************************************
+// *							Brush_Clone								   *
+// *************************************************************************
+Brush* CL64_Brush::Brush_Clone(Brush const* from)
+{
+	Brush* to = NULL;
+	FaceList* NewFaces;
+	BrushList* MBList;
+
+	assert(from != NULL);
+
+	switch (from->Type)
+	{
+	case	BRUSH_MULTI:
+		assert(from->Faces == NULL);
+		assert(from->BList);
+
+		MBList = BrushList_Clone(from->BList);
+		if (!MBList)
+		{
+			break;
+		}
+		to = Brush_Create(from->Type, NULL, MBList);
+		break;
+
+	case	BRUSH_LEAF:
+	case	BRUSH_CSG:
+		assert(from->Faces != NULL);
+
+		NewFaces = App->CL_FaceList->FaceList_Clone(from->Faces);
+		if (NewFaces != NULL)
+		{
+			to = Brush_Create(from->Type, NewFaces, NULL);
+		}
+		if (to == NULL)
+		{
+			App->CL_Maths->Ram_Free(NewFaces);
+		}
+		break;
+
+	default:
+		assert(0);
+		break;
+	}
+
+	if (to != NULL)
+	{
+		to->Flags = from->Flags;
+		to->Type = from->Type;
+		to->ModelId = from->ModelId;
+		to->GroupId = from->GroupId;
+		to->HullSize = from->HullSize;
+		to->Color = from->Color;
+		Brush_SetName(to, from->Name);
+		to->BoundingBox = from->BoundingBox;
+	}
+
+	return	to;
+}
+
+// *************************************************************************
+// *						BrushList_Clone								   *
+// *************************************************************************
+BrushList* CL64_Brush::BrushList_Clone(BrushList* inList)
+{
+	BrushList* outList;
+	Brush* b, * b2;
+
+	assert(inList != NULL);
+
+	outList = BrushList_Create();
+
+	for (b = inList->First; b; b = b->Next)
+	{
+		b2 = Brush_Clone(b);
+		BrushList_Append(outList, b2);
+	}
+	return	outList;
+}
+
+// *************************************************************************
+// *						Brush_SetName								   *
+// *************************************************************************
+void CL64_Brush::Brush_SetName(Brush* b, const char* newname)
+{
+	if (b->Name != NULL)
+	{
+		App->CL_Maths->Ram_Free(b->Name);
+	}
+
+	b->Name = (LPSTR)newname;
+}
+
+// *************************************************************************
+// *					Brush_SetFaceListDirty							   *
+// *************************************************************************
+void CL64_Brush::Brush_SetFaceListDirty(Brush* b)
+{
+	App->CL_FaceList->FaceList_SetDirty(b->Faces);
+}
+
+// *************************************************************************
+// *							Brush_Center							   *
+// *************************************************************************
+void CL64_Brush::Brush_Center(const Brush* b, Ogre::Vector3* center)
+{
+	App->CL_Box->Box3d_GetCenter(&b->BoundingBox, center);
+}
+
+// *************************************************************************
+// *						Brush_SetGroupId							   *
+// *************************************************************************
+void Brush_SetGroupId(Brush* b, const int gid)
+{
+	if (b->Type == BRUSH_MULTI)
+	{
+		BrushList_SetInt(b->BList, gid, Brush_SetGroupId);
+	}
+
+	b->GroupId = gid;
+}
+
+// *************************************************************************
+// *							Brush_EnumFaces							   *
+// *************************************************************************
+void CL64_Brush::Brush_EnumFaces(Brush* b, void* lParam, Brush_FaceCallback Callback)
+{
+	switch (b->Type)
+	{
+	case BRUSH_MULTI:
+	{
+		Brush* pBrush;
+
+		pBrush = b->BList->First;
+		while (pBrush != NULL)
+		{
+			Brush_EnumFaces(pBrush, lParam, Callback);
+			pBrush = pBrush->Next;
+		}
+		break;
+	}
+
+	case BRUSH_LEAF:
+	{
+		int NumFaces, iFace;
+
+		NumFaces = Brush_GetNumFaces(b);
+		for (iFace = 0; iFace < NumFaces; ++iFace)
+		{
+			Face* pFace = Brush_GetFace(b, iFace);
+			Callback(pFace, lParam);
+		}
+		Brush_UpdateChildFaces(b);
+		break;
+	}
+
+	default:
+		break;
+	}
+}
+
+// *************************************************************************
+// *						Brush_TestBoundsIntersect					   *
+// *************************************************************************
+signed int	CL64_Brush::Brush_TestBoundsIntersect(const Brush* b, const Box3d* pBox)
+{
+	return App->CL_Box->Box3d_Intersection(&b->BoundingBox, pBox, NULL);
+}
+
+static	Brush* bstack[8192];	//8192 levels of recursion
+static	Brush** bsp;
+
+// *************************************************************************
+// *					Brush_UpdateChildFacesRecurse					   *
+// *************************************************************************
+static void	Brush_UpdateChildFacesRecurse(Brush* b, Brush* bp)
+{
+	Brush* cb;
+	Face* f, * f2;
+	const GPlane* p, * p2;
+	int			i, j;
+	signed int	Update;
+
+	assert(b);
+
+	if (b->Type == BRUSH_LEAF)
+	{
+		if (b->Flags & BRUSH_SUBTRACT)	//find cuts
+		{
+			if (!bp)
+			{
+				bp = b;
+			}
+			for (cb = bp->Prev;;)
+			{
+				if (!cb)
+				{
+					if (--bsp >= bstack)
+					{
+						cb = (*bsp)->Prev;
+						continue;
+					}
+					else
+					{
+						bsp++;
+						break;
+					}
+				}
+				if (!(cb->Flags & BRUSH_SUBTRACT))
+				{
+					if (App->CL_Brush->Brush_TestBoundsIntersect(b, &cb->BoundingBox))
+					{
+						if (cb->BList)
+						{
+							*bsp++ = cb;
+							cb = cb->BList->Last;
+							continue;
+						}
+
+						Update = false;
+						for (i = 0; i < App->CL_FaceList->FaceList_GetNumFaces(b->Faces); i++)
+						{
+							f = App->CL_FaceList->FaceList_GetFace(b->Faces, i);
+							p = App->CL_Face->Face_GetPlane(f);
+							for (j = 0; j < App->CL_FaceList->FaceList_GetNumFaces(cb->Faces); j++)
+							{
+								Ogre::Vector3	v;
+								f2 = App->CL_FaceList->FaceList_GetFace(cb->Faces, j);
+								p2 = App->CL_Face->Face_GetPlane(f2);
+								v = p->Normal;
+
+								App->CL_Maths->Vector3_Inverse(&v);
+
+								if (App->CL_Maths->Vector3_Compare(&v, &p2->Normal, 0.01f))
+								{
+									if (fabs(-p->Dist - p2->Dist) < 0.01f)
+									{
+										App->CL_Face->Face_CopyFaceInfo(f, f2);
+										Update = true;
+									}
+								}
+							}
+						}
+					}
+				}
+				cb = cb->Prev;
+			}
+		}
+		else if (b->BList)
+		{
+			for (cb = b->BList->First; cb; cb = cb->Next)
+			{
+				for (i = 0; i < App->CL_FaceList->FaceList_GetNumFaces(b->Faces); i++)
+				{
+					f = App->CL_FaceList->FaceList_GetFace(b->Faces, i);
+					p = App->CL_Face->Face_GetPlane(f);
+					for (j = 0; j < App->CL_FaceList->FaceList_GetNumFaces(cb->Faces); j++)
+					{
+						f2 = App->CL_FaceList->FaceList_GetFace(cb->Faces, j);
+						p2 = App->CL_Face->Face_GetPlane(f2);
+
+						if (App->CL_Maths->Vector3_Compare(&p->Normal, &p2->Normal, 0.01f))
+						{
+							if (fabs(p->Dist - p2->Dist) < 0.01f)
+							{
+								App->CL_Face->Face_CopyFaceInfo(f, f2);
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	else
+	{
+		if (bp)
+		{
+			for (cb = b->BList->First; cb; cb = cb->Next)
+			{
+				Brush_UpdateChildFacesRecurse(cb, bp);
+			}
+		}
+		else
+		{
+			if (b->Flags & BRUSH_SUBTRACT)
+			{
+				//only pass down parents that need to affect
+				//the list above... like in the case of a multicut
+				for (cb = b->BList->First; cb; cb = cb->Next)
+				{
+					Brush_UpdateChildFacesRecurse(cb, b);
+				}
+			}
+			else
+			{
+				//cuts should be localized if the entire
+				//parent brush isn't a cut
+				for (cb = b->BList->First; cb; cb = cb->Next)
+				{
+					Brush_UpdateChildFacesRecurse(cb, NULL);
+				}
+			}
+		}
+	}
+}
+
+// *************************************************************************
+// *						Brush_UpdateChildFaces						   *
+// *************************************************************************
+void CL64_Brush::Brush_UpdateChildFaces(Brush* b)
+{
+	bsp = bstack;
+
+	Brush_UpdateChildFacesRecurse(b, NULL);
 }
 

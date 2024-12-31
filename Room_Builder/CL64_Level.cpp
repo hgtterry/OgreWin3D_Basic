@@ -80,6 +80,9 @@ CL64_Level::~CL64_Level(void)
 {
 }
 
+// *************************************************************************
+// *							Level_Create							   *
+// *************************************************************************
 Level* CL64_Level::Level_Create(const char* pWadName, const char* HeadersDir, const char* ActorsDir, const char* PawnIni)
 {
 	Level* pLevel = NULL;
@@ -226,7 +229,42 @@ Level* CL64_Level::Level_Create(const char* pWadName, const char* HeadersDir, co
 //	return pLevel;
 }
 
+// *************************************************************************
+// *						Level_GetBoxTemplate						   *
+// *************************************************************************
 BrushTemplate_Box* CL64_Level::Level_GetBoxTemplate(Level* pLevel)
 {
 	return &pLevel->BoxTemplate;
+}
+
+// *************************************************************************
+// *							Level_GetBrushes						   *
+// *************************************************************************
+BrushList* CL64_Level::Level_GetBrushes(Level* pLevel)
+{
+	return pLevel->Brushes;
+}
+
+// *************************************************************************
+// *						Level_GetTemplatePos						   *
+// *************************************************************************
+Ogre::Vector3* CL64_Level::Level_GetTemplatePos(Level* pLevel)
+{
+	return &pLevel->TemplatePos;
+}
+
+// *************************************************************************
+// *						Level_GetDrawScale							   *
+// *************************************************************************
+float CL64_Level::Level_GetDrawScale(const Level* pLevel)
+{
+	return pLevel->DrawScale;
+}
+
+// *************************************************************************
+// *						Level_GetLightmapScale						   *
+// *************************************************************************
+float CL64_Level::Level_GetLightmapScale(const Level* pLevel)
+{
+	return pLevel->LightmapScale;
 }

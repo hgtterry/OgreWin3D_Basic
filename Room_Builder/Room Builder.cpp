@@ -149,6 +149,42 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 return 1;
             }
 
+            // ----------------------------- Templates
+            case ID_TEMPLATES_INSERT:
+            {
+               
+                if (App->CL_Doc->mModeTool == ID_TOOLS_TEMPLATE)
+                {
+                    if (App->CL_Brush->Get_Brush_Count() == 0)
+                    {
+                       App->CL_Doc->AddBrushToWorld();
+                        //App->m_pDoc->SetModifiedFlag();
+                       // App->CLSB_TopTabs->Update_Dlg_Controls();
+                    }
+                    else
+                    {
+                       // App->CLSB_Doc->AddBrushToWorld();
+                       // App->m_pDoc->SetModifiedFlag();
+                    }
+                }
+
+                //App->CLSB_Doc->DoGeneralSelect();
+
+                //App->CL_World->Reset_Editor();
+
+                //App->CLSB_Tabs_Templates_Dlg->Enable_Insert_Button(false);
+                //App->CLSB_Panels->Set_Aplication_Dialogs_On();
+
+               // App->File_Loaded_Flag = 1;
+
+               // if (App->BR_True3D_Mode_Active == 1)
+                {
+                   // App->CLSB_Mesh_Mgr->Update_World();
+                }
+
+                return 1;
+            }
+
             // ---------------------------------------------
             case IDM_ABOUT:
                 DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);

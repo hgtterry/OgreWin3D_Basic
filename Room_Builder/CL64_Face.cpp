@@ -520,6 +520,9 @@ void CL64_Face::Face_Clip(Face* f, const GPlane* p, float* dists, Ogre::uint8* s
 	memcpy(f->Points, spb, sizeof(Ogre::Vector3) * nbp);
 }
 
+// *************************************************************************
+// *						Face_GetPoints							 	   *
+// *************************************************************************
 const Ogre::Vector3* CL64_Face::Face_GetPoints(const Face* f)
 {
 	assert(f != NULL);
@@ -527,9 +530,57 @@ const Ogre::Vector3* CL64_Face::Face_GetPoints(const Face* f)
 	return	f->Points;
 }
 
+// *************************************************************************
+// *					Face_GetNumPoints							 	   *
+// *************************************************************************
 int	CL64_Face::Face_GetNumPoints(const Face* f)
 {
-	assert(f != NULL);
-
 	return	f->NumPoints;
+}
+
+// *************************************************************************
+// *						Face_GetTextureDibId					 	   *
+// *************************************************************************
+int	CL64_Face::Face_GetTextureDibId(const Face* f)
+{
+	return	f->Tex.Dib;
+}
+
+// *************************************************************************
+// *							Face_Clone							 	   *
+// *************************************************************************
+Face* CL64_Face::Face_Clone(const Face* src)
+{
+	Face* dst;
+
+	assert(src != NULL);
+	assert(src->NumPoints > 0);
+	assert(src->Points != NULL);
+
+	dst = Face_Create(src->NumPoints, src->Points, Face_GetTextureDibId(src));
+	if (dst)
+	{
+		Face_CopyFaceInfo(src, dst);
+	}
+	return	dst;
+}
+
+// *************************************************************************
+// *							Face_SetLightScale					 	   *
+// *************************************************************************
+void CL64_Face::Face_SetLightScale(Face* f, const float xScale, const float yScale)
+{
+	f->LightXScale = xScale;
+	f->LightYScale = yScale;
+}
+
+// *************************************************************************
+// *							Face_SetTextureScale				 	   *
+// *************************************************************************
+void CL64_Face::Face_SetTextureScale(Face* f, const float xScale, const float yScale)
+{
+	f->Tex.xScale = xScale;
+	f->Tex.yScale = yScale;
+
+	f->Tex.DirtyFlag = true;
 }

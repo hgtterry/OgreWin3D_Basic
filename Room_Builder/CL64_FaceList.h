@@ -39,6 +39,8 @@ public:
 	int	FaceList_GetNumFaces(const FaceList* pList);
 	void FaceList_Destroy(FaceList** ppList);
 	void FaceList_RemoveFace(FaceList* pList, int WhichFace);
+	FaceList* FaceList_Clone(const FaceList* pList);
+	void FaceList_SetDirty(FaceList* pList);
 
 
 };

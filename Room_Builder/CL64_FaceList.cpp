@@ -50,8 +50,6 @@ FaceList* CL64_FaceList::FaceList_Create(int NumFaces)
 {
 	FaceList* pList;
 
-	assert(NumFaces > 0);
-
 	// allocate the structure
 	pList = (FaceList*)App->CL_Maths->Ram_Allocate(sizeof(FaceList));
 	if (pList != NULL)
@@ -91,10 +89,6 @@ void CL64_FaceList::FaceList_AddFace(FaceList* pList, Face* pFace)
 void CL64_FaceList::FaceList_GetBounds(const FaceList* pList, Box3d* pBounds)
 {
 	int i;
-
-	assert(pList != NULL);
-	assert(pBounds != NULL);
-	assert(pList->NumFaces > 0);
 
 	if (pList->Dirty)
 	{
@@ -141,9 +135,6 @@ void CL64_FaceList::FaceList_Destroy(FaceList** ppList)
 	int i;
 	FaceList* pList;
 
-	assert(ppList != NULL);
-	assert(*ppList != NULL);
-
 	pList = *ppList;
 	for (i = 0; i < pList->NumFaces; i++)
 	{
@@ -161,10 +152,6 @@ void CL64_FaceList::FaceList_RemoveFace(FaceList* pList, int WhichFace)
 {
 	int	i;
 
-	assert(pList != NULL);
-	assert(pList->NumFaces <= pList->Limit);
-	assert(pList->Faces[WhichFace] != NULL);
-
 	App->CL_Face->Face_Destroy(&pList->Faces[WhichFace]);
 
 	for (i = WhichFace; i < pList->NumFaces - 1; i++)
@@ -173,5 +160,41 @@ void CL64_FaceList::FaceList_RemoveFace(FaceList* pList, int WhichFace)
 	}
 	pList->Faces[--pList->NumFaces] = NULL;
 
+	pList->Dirty = true;
+}
+
+// *************************************************************************
+// *						FaceList_Clone							 	   *
+// *************************************************************************
+FaceList* CL64_FaceList::FaceList_Clone(const FaceList* pList)
+{
+	FaceList* cpList;
+	Face* cpf;
+	int			i;
+	const Face* f;
+
+	cpList = FaceList_Create(pList->NumFaces);
+
+	if (cpList)
+	{
+		for (i = 0; i < pList->NumFaces; i++)
+		{
+			f = FaceList_GetFace(pList, i);
+			if (f)
+			{
+				cpf = App->CL_Face->Face_Clone(f);
+				if (cpf)
+				FaceList_AddFace(cpList, cpf);
+			}
+		}
+	}
+	return	cpList;
+}
+
+// *************************************************************************
+// *						FaceList_SetDirty						 	   *
+// *************************************************************************
+void CL64_FaceList::FaceList_SetDirty(FaceList* pList)
+{
 	pList->Dirty = true;
 }

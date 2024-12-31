@@ -54,6 +54,7 @@ enum BrushTypeFlags
 
 typedef Brush* BrushIterator;
 typedef signed int (*BrushList_CB)(Brush* pBrush, void* pVoid);
+typedef signed int (*Brush_FaceCallback)(Face* pFace, void* lParam);
 
 class CL64_Brush
 {
@@ -87,6 +88,15 @@ public:
 	const BrushList* Brush_GetBrushList(const Brush* b);
 	int	Brush_GetNumFaces(const Brush* b);
 	Face* Brush_GetFace(const Brush* b, int i);
-
+	int Get_Brush_Count(void);
+	signed int Brush_IsSubtract(const Brush* b);
+	Brush* Brush_Clone(Brush const* from);
+	BrushList* BrushList_Clone(BrushList* inList);
+	void Brush_SetName(Brush* b, const char* newname);
+	void Brush_SetFaceListDirty(Brush* b);
+	void Brush_Center(const Brush* b, Ogre::Vector3* center);
+	void Brush_EnumFaces(Brush* b, void* lParam, Brush_FaceCallback Callback);
+	void Brush_UpdateChildFaces(Brush* b);
+	signed int	Brush_TestBoundsIntersect(const Brush* b, const Box3d* pBox);
 };
 

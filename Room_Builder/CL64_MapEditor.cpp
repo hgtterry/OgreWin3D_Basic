@@ -37,13 +37,13 @@ THE SOFTWARE.
 
 typedef struct tagBrushDrawData
 {
-	const Box3d* pViewBox;
-	HDC 		pDC2;
-	ViewVars* v;
-	int GroupId;
-	CL64_Doc* pDoc;
-	BrushFlagTest FlagTest;
-	Ogre::uint32		Color;
+	const Box3d*	pViewBox;
+	HDC 			pDC;
+	ViewVars*		v;
+	int				GroupId;
+	CL64_Doc*		pDoc;
+	BrushFlagTest	FlagTest;
+	Ogre::uint32	Color;
 } BrushDrawData;
 
 CL64_MapEditor::CL64_MapEditor()
@@ -920,7 +920,7 @@ LRESULT CALLBACK CL64_MapEditor::Bottom_Right_Proc(HWND hDlg, UINT message, WPAR
 signed int CL64_MapEditor::BrushDraw(Brush* pBrush, void* lParam)
 {
 	BrushDrawData* pData = (BrushDrawData*)lParam;
-	CL64_Doc* pDoc = pData->pDoc;
+	
 
 	//if ((pData->GroupId == fdoc_SHOW_ALL_GROUPS) || (Brush_GetGroupId(pBrush) == pData->GroupId))
 	{
@@ -936,7 +936,7 @@ signed int CL64_MapEditor::BrushDraw(Brush* pBrush, void* lParam)
 	return true;
 }
 
-#define	VectorToSUB(a, b)			(*((((float *)(&a))) + (b)))
+#define	VectorToSUB(a, b) (*((((float *)(&a))) + (b)))
 
 // *************************************************************************
 // *						Draw_Screen Terry Flanigan		  			   *
@@ -944,6 +944,7 @@ signed int CL64_MapEditor::BrushDraw(Brush* pBrush, void* lParam)
 void CL64_MapEditor::Draw_Screen(HWND hwnd)
 {
 	//flag_IsDrawing = 1;
+
 	int			inidx = 0;
 	HDC			RealhDC;
 	RECT		Rect;
@@ -964,7 +965,7 @@ void CL64_MapEditor::Draw_Screen(HWND hwnd)
 	VectorToSUB(ViewBox.Max, inidx) = FLT_MAX;
 
 	brushDrawData.pViewBox = &ViewBox;
-	brushDrawData.pDC2 = MemoryhDC;
+	brushDrawData.pDC = MemoryhDC;
 	brushDrawData.v = Current_View;
 	brushDrawData.pDoc = App->CL_Doc;
 	brushDrawData.GroupId = 0;

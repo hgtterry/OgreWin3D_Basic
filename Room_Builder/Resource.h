@@ -23,6 +23,8 @@
 #define IDC_STTEXT                      1001
 #define IDC_STMESSAGE                   1002
 #define ID_DEBUG_GENERAL                32771
+#define ID_TEMPLATES_INSERT             32772
+#define ID_TOOLS_TEMPLATE               32910
 #define IDC_STATIC                      -1
 
 // Next default values for new objects
@@ -31,7 +33,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        136
-#define _APS_NEXT_COMMAND_VALUE         32772
+#define _APS_NEXT_COMMAND_VALUE         32773
 #define _APS_NEXT_CONTROL_VALUE         1003
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
