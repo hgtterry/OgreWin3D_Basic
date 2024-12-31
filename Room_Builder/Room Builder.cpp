@@ -152,7 +152,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             // ----------------------------- Templates
             case ID_TEMPLATES_INSERT:
             {
-               
                 if (App->CL_Doc->mModeTool == ID_TOOLS_TEMPLATE)
                 {
                     if (App->CL_Brush->Get_Brush_Count() == 0)
@@ -163,13 +162,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                     }
                     else
                     {
-                       // App->CLSB_Doc->AddBrushToWorld();
+                       App->CL_Doc->AddBrushToWorld();
                        // App->m_pDoc->SetModifiedFlag();
                     }
                 }
 
-                //App->CLSB_Doc->DoGeneralSelect();
-
+                App->CL_Doc->DoGeneralSelect();
+                App->CL_Doc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
                 //App->CL_World->Reset_Editor();
 
                 //App->CLSB_Tabs_Templates_Dlg->Enable_Insert_Button(false);

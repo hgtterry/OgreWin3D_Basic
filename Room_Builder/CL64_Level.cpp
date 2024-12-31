@@ -268,3 +268,19 @@ float CL64_Level::Level_GetLightmapScale(const Level* pLevel)
 {
 	return pLevel->LightmapScale;
 }
+
+// *************************************************************************
+// *						Level_AppendBrush							   *
+// *************************************************************************
+void CL64_Level::Level_AppendBrush(Level* pLevel, Brush* pBrush)
+{
+	App->CL_Brush->BrushList_Append(pLevel->Brushes, pBrush);
+}
+
+// *************************************************************************
+// *						Level_EnumLeafBrushes						   *
+// *************************************************************************
+int CL64_Level::Level_EnumLeafBrushes(Level* pLevel, void* lParam, BrushList_CB Callback)
+{
+	return App->CL_Brush->BrushList_EnumLeafBrushes(pLevel->Brushes, lParam, Callback);
+}

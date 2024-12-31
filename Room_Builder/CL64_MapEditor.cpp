@@ -79,6 +79,7 @@ CL64_MapEditor::CL64_MapEditor()
 	Pen_Fine_Grid = CreatePen(PS_SOLID, 0, RGB(0, 0, 0));
 	Pen_Grid = CreatePen(PS_SOLID, 0, RGB(112, 112, 112));
 	PenTemplate = CreatePen(PS_SOLID, 1, RGB(0, 0, 255));
+	PenBrushes = CreatePen(PS_SOLID, 1, RGB(255, 255, 255));
 
 	int Count = 0;
 	while (Count < 3)
@@ -1006,32 +1007,31 @@ void CL64_MapEditor::Draw_Screen(HWND hwnd)
 	SelectObject(MemoryhDC, Pen_Grid);
 	App->CL_Render->Render_RenderOrthoGridFromSize(Current_View, int(GridSize), MemoryhDC, Rect);
 
-	//// ---------------------- Draw Areas
-	//if (flag_Show_Areas == 1)
-	//{
-	//	MeshData_Render_Faces(MemoryhDC);
-	//}
-
-	//// ---------------------- Draw Camera
-	//if (flag_Show_Camera == 1)
-	//{
-	//	SelectObject(MemoryhDC, Pen_Camera);
-	//	Draw_Camera(MemoryhDC);
-	//}
+	SelectObject(MemoryhDC, PenBrushes);
+	int BrushCount = App->CL_Brush->Get_Brush_Count();
+	int Count = 0;
+	while (Count < BrushCount)
+	{
+		App->CL_Level->Level_EnumLeafBrushes(App->CL_Doc->pLevel, &brushDrawData, BrushDraw);
+		Count++;
+	}
 
 	//if (Brush_TestBoundsIntersect(App->CLSB_Doc->CurBrush, &ViewBox))
 	{
-		SelectObject(MemoryhDC, PenTemplate);
+		if (App->CL_Doc->mModeTool == ID_TOOLS_TEMPLATE)
+		{
+			SelectObject(MemoryhDC, PenTemplate);
 
-		if (App->CL_Brush->Brush_IsMulti(App->CL_Doc->CurBrush))
-		{
-	
-			App->CL_Brush->BrushList_EnumLeafBrushes(App->CL_Brush->Brush_GetBrushList(App->CL_Doc->CurBrush), &brushDrawData, BrushDraw);
-		}
-		else
-		{
-			Render_RenderBrushFacesOrtho(Current_View, App->CL_Doc->CurBrush, MemoryhDC);
-			
+			if (App->CL_Brush->Brush_IsMulti(App->CL_Doc->CurBrush))
+			{
+
+				App->CL_Brush->BrushList_EnumLeafBrushes(App->CL_Brush->Brush_GetBrushList(App->CL_Doc->CurBrush), &brushDrawData, BrushDraw);
+			}
+			else
+			{
+				Render_RenderBrushFacesOrtho(Current_View, App->CL_Doc->CurBrush, MemoryhDC);
+
+			}
 		}
 	}
 

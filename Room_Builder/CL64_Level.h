@@ -41,6 +41,8 @@ public:
 	Ogre::Vector3* Level_GetTemplatePos(Level* pLevel);
 	float Level_GetDrawScale(const Level* pLevel);
 	float Level_GetLightmapScale(const Level* pLevel);
+	void Level_AppendBrush(Level* pLevel, Brush* pBrush);
+	int Level_EnumLeafBrushes(Level* pLevel, void* lParam, BrushList_CB Callback);
 
 };
 

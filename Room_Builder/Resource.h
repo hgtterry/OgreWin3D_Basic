@@ -24,6 +24,7 @@
 #define IDC_STMESSAGE                   1002
 #define ID_DEBUG_GENERAL                32771
 #define ID_TEMPLATES_INSERT             32772
+#define ID_GENERALSELECT                32886
 #define ID_TOOLS_TEMPLATE               32910
 #define IDC_STATIC                      -1
 

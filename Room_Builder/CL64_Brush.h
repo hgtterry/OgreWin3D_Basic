@@ -98,5 +98,7 @@ public:
 	void Brush_EnumFaces(Brush* b, void* lParam, Brush_FaceCallback Callback);
 	void Brush_UpdateChildFaces(Brush* b);
 	signed int	Brush_TestBoundsIntersect(const Brush* b, const Box3d* pBox);
+	signed int Brush_IsHollow(const Brush* b);
+
 };
 

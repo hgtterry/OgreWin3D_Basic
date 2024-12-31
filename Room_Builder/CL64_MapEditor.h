@@ -101,6 +101,7 @@ private:
 	HPEN Pen_Fine_Grid;
 	HPEN Pen_Grid;
 	HPEN PenTemplate;
+	HPEN PenBrushes;
 
 	HDC	MemoryhDC;
 };

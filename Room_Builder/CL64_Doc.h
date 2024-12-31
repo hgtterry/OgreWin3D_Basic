@@ -30,6 +30,26 @@ THE SOFTWARE.
 
 typedef signed int(*BrushFlagTest)(const Brush* pBrush);
 
+enum UpdateFlags
+{
+	REBUILD_QUICK = 1,
+	UAV_RENDER_ONLY = 2,
+	UAV_ACTIVE3DVIEW_ONLY = 4,
+	UAV_NONACTIVE3DVIEWS_ONLY = 8,
+	UAV_TEXTUREVIEW_ONLY = 16,
+	UAV_GRID_ONLY = 32,
+	UAV_TEXTUREBROWSER_ONLY = 64,
+	UAV_ALLVIEWS = 128,
+	UAV_ALL3DVIEWS = 256,
+	UAV_THIS_GRID_ONLY = 512
+};
+
+#define WINDOW_TOP_VIEW 0
+#define WINDOW_FRONT_VIEW 1
+#define WINDOW_SIDE_VIEW 2
+#define MAX_SEL	1000
+#define CURTOOL_NONE	(-1)
+
 class CL64_Doc
 {
 public:
@@ -43,6 +63,8 @@ public:
 	void AddBrushToWorld();
 	void Brush_Add_To_world();
 	void SetDefaultBrushTexInfo(Brush* b);
+	void UpdateAllViews(int Mode, BOOL Override);
+	void DoGeneralSelect(void);
 
 	char LastTemplateTypeName[MAX_PATH];
 
@@ -59,6 +81,7 @@ public:
 	int mLockAxis;
 	int mModeTool;
 	int mCurrentGroup;
+	int mCurrentTool;
 	//SelFaceList* pSelFaces;
 };
 

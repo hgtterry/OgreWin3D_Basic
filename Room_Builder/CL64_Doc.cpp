@@ -35,7 +35,7 @@ CL64_Doc::CL64_Doc(void)
 
 	SelectLock = FALSE;
 	TempEnt = FALSE;
-
+    mCurrentTool = CURTOOL_NONE;
     mCurrentGroup = 0;
 }
 
@@ -238,36 +238,32 @@ void CL64_Doc::Brush_Add_To_world()
         // add to current group
         Brush_SetGroupId(nb, mCurrentGroup);
 
+		fdocFaceScales Scales;
+
+		Scales.DrawScale = App->CL_Level->Level_GetDrawScale(pLevel);
+		Scales.LightmapScale = App->CL_Level->Level_GetLightmapScale(pLevel);
+		App->CL_Brush->Brush_EnumFaces(nb, &Scales, ::fdocSetFaceScales);
+
+        App->CL_Level->Level_AppendBrush(pLevel, nb);
+
+        if (!App->CL_Brush->Brush_IsHollow(nb) && !App->CL_Brush->Brush_IsMulti(nb))
         {
-            // set draw scale and lightmap scale defaults for all faces
-            fdocFaceScales Scales;
-
-            Scales.DrawScale = App->CL_Level->Level_GetDrawScale(pLevel);
-            Scales.LightmapScale = App->CL_Level->Level_GetLightmapScale(pLevel);
-            App->CL_Brush->Brush_EnumFaces(nb, &Scales, ::fdocSetFaceScales);
-
+            //App->CLSB_Doc->mWorldBsp = Node_AddBrushToTree(App->CLSB_Doc->mWorldBsp, nb);
+            App->CL_Doc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
+        }
+        else
+        {
+            App->CL_Doc->UpdateAllViews(UAV_ALL3DVIEWS | REBUILD_QUICK, NULL);
         }
 
-        //Level_AppendBrush(App->CLSB_Doc->pLevel, nb);
-
-        //if (!Brush_IsHollow(nb) && !Brush_IsMulti(nb))
-        //{
-        //    App->CLSB_Doc->mWorldBsp = Node_AddBrushToTree(App->CLSB_Doc->mWorldBsp, nb);
-        //    App->CLSB_Doc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
-        //}
-        //else
-        //{
-        //    App->CLSB_Doc->UpdateAllViews(UAV_ALL3DVIEWS | REBUILD_QUICK, NULL, TRUE);
-        //}
-
-        //Placed = GE_TRUE;
+        Placed = true;
         ////mpMainFrame->m_wndTabControls->GrpTab->UpdateAfterAddBrush();
 
         //if (App->CL_TabsGroups_Dlg->Groups_Dlg_Created == 1)
         //{
         //    App->CL_TabsGroups_Dlg->Fill_ListBox();
         //}
-
+        Debug
     }
 
     if (Placed)
@@ -284,6 +280,131 @@ void CL64_Doc::Brush_Add_To_world()
         //// ~MS
         //SetModifiedFlag();
     }
+}
+
+// *************************************************************************
+// *           DoGeneralSelect:- Terry and Hazel Flanigan 2023             *
+// *************************************************************************
+void CL64_Doc::DoGeneralSelect(void)
+{
+    mCurrentTool = CURTOOL_NONE;
+    mModeTool = ID_GENERALSELECT;
+    //ConfigureCurrentTool();
+}
+
+// *************************************************************************
+// *         UpdateAllViews:- Terry and Hazel Flanigan 2023                *
+// *************************************************************************
+void CL64_Doc::UpdateAllViews(int Mode, BOOL Override)
+{
+    RedrawWindow(App->CL_MapEditor->Main_Dlg_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+    //App->Get_Current_Document();
+
+    //if (App->m_pDoc->IsModified() && ((Mode & REBUILD_QUICK) && (Level_RebuildBspAlways(App->CLSB_Doc->pLevel))) || (Override))
+    //{
+    //    App->m_pDoc->RebuildTrees();
+    //}
+    //else if ((Mode & REBUILD_QUICK) && (!Level_RebuildBspAlways(App->CLSB_Doc->pLevel)))
+    //{
+    //    App->m_pDoc->InvalidateDrawTreeOriginalFaces();
+    //}
+
+    //if (Mode & REBUILD_QUICK)
+    //    Mode &= ~REBUILD_QUICK;
+
+    ////	Do we want to redraw everything?
+    //if (Mode & UAV_ALLVIEWS)
+    //{
+    //    App->m_pDoc->CDocument::UpdateAllViews(pSender);
+    //    return;
+    //}
+
+    //POSITION pos = App->m_pDoc->GetFirstViewPosition();
+
+    //while (pos != NULL)
+    //{
+    //    CView* pView = App->m_pDoc->GetNextView(pos);
+
+    //    if (pView->IsKindOf(RUNTIME_CLASS(CFusionView)))
+    //    {
+    //        CFusionView* pFusionView = (CFusionView*)pView;
+    //        CDC* pDC = pFusionView->GetDC();
+
+    //        switch (Mode)
+    //        {
+    //        case UAV_ACTIVE3DVIEW_ONLY:
+
+    //            if (pFusionView->GetParentFrame() == App->m_pDoc->mpActiveViewFrame)
+    //                pFusionView->Invalidate(TRUE);
+    //            break;
+
+    //        case UAV_NONACTIVE3DVIEWS_ONLY:
+
+    //            if (pFusionView->GetParentFrame() != App->m_pDoc->mpActiveViewFrame)
+    //                pFusionView->Invalidate(TRUE);
+    //            break;
+
+    //        case UAV_TEXTUREVIEW_ONLY:
+
+    //            if (pFusionView->mViewType == ID_VIEW_TEXTUREVIEW)
+    //                pFusionView->Invalidate(TRUE);
+    //            break;
+
+    //        case UAV_RENDER_ONLY:
+
+    //            switch (pFusionView->mViewType)
+    //            {
+    //            case ID_VIEW_3DWIREFRAME:
+    //            case ID_VIEW_TEXTUREVIEW:
+
+    //                pFusionView->Invalidate(TRUE);
+    //                break;
+
+    //            default:
+    //                break;
+    //            }
+    //            break;
+
+    //        case UAV_GRID_ONLY:
+
+    //            switch (pFusionView->mViewType)
+    //            {
+    //            case ID_VIEW_TOPVIEW:
+    //            case ID_VIEW_SIDEVIEW:
+    //            case ID_VIEW_FRONTVIEW:
+
+    //                pFusionView->Invalidate(TRUE);
+    //                break;
+    //            }
+    //            break;
+
+
+    //        case UAV_THIS_GRID_ONLY:
+    //            if (pFusionView == pSender)
+    //            {
+    //                switch (pFusionView->mViewType)
+    //                {
+    //                case ID_VIEW_TOPVIEW:
+    //                case ID_VIEW_SIDEVIEW:
+    //                case ID_VIEW_FRONTVIEW:
+    //                    pFusionView->Invalidate(TRUE);
+    //                    break;
+    //                }
+    //            }
+    //            break;
+
+    //        case UAV_ALL3DVIEWS:
+
+    //            pFusionView->Invalidate(TRUE);
+    //            break;
+
+    //        default:
+    //            break;
+    //        }
+
+    //        pFusionView->ReleaseDC(pDC);
+    //    }
+    //}
 }
 
 typedef struct

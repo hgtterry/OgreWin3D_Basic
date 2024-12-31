@@ -1091,3 +1091,11 @@ void CL64_Brush::Brush_UpdateChildFaces(Brush* b)
 	Brush_UpdateChildFacesRecurse(b, NULL);
 }
 
+// *************************************************************************
+// *						Brush_IsHollow								   *
+// *************************************************************************
+signed int CL64_Brush::Brush_IsHollow(const Brush* b)
+{
+	return	(b->Flags & BRUSH_HOLLOW) ? true : false;
+}
+

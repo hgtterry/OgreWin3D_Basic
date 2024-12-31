@@ -23,6 +23,7 @@ THE SOFTWARE.
 */
 
 #pragma once
+
 class CL64_Dialogs
 {
 public:
