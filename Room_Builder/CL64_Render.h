@@ -20,8 +20,8 @@ typedef struct ViewVarsTag
 {
 	HBITMAP				hDibSec;
 	Ogre::uint32		Flags;
-	Ogre::uint8* pBits;
-	Ogre::uint32* pZBuffer;
+	Ogre::uint8*		pBits;
+	Ogre::uint32*		pZBuffer;
 	Ogre::uint32		ViewType;
 	float				ZoomFactor = 1;
 

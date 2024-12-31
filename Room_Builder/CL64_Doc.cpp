@@ -37,6 +37,7 @@ CL64_Doc::CL64_Doc(void)
 	TempEnt = FALSE;
     mCurrentTool = CURTOOL_NONE;
     mCurrentGroup = 0;
+    flag_Is_Modified = 0;
 }
 
 CL64_Doc::~CL64_Doc(void)
@@ -155,131 +156,54 @@ static signed int fdocSetFaceScales(Face* pFace, void* lParam)
 // *************************************************************************
 void CL64_Doc::Brush_Add_To_world()
 {
-    bool Placed;
+	bool Placed;
 
-    if (mModeTool != ID_TOOLS_TEMPLATE)
-    {
-        return;
-    }
+	if (mModeTool != ID_TOOLS_TEMPLATE)
+	{
+		return;
+	}
 
-    Placed = false;
+	Placed = false;
 
-    if (TempEnt)
-    {
-        // here we check to see if the user is placing library objects down
-       // if (App->CLSB_Doc->PlaceObjectFlag)
-       // {
-           // geBoolean GotName;
-            //char ObjectName[MAX_PATH];
+	Brush* nb;
+	Ogre::Vector3* pTemplatePos;
 
-            // get the current object from the library and place it down
-            //GotName = mpMainFrame->m_wndTabControls->m_pBrushEntityDialog->GetCurrentObjectName (ObjectName);
-            //if (GotName)
-            //{
-            //	Placed = PlaceObject (ObjectName, &mRegularEntity.mOrigin);
-            //	mpMainFrame->m_wndTabControls->GrpTab->UpdateAfterAddBrush();
+	nb = App->CL_Brush->Brush_Clone(App->CL_Doc->CurBrush);
 
-            //	/*if (App->CL_TabsGroups_Dlg->Groups_Dlg_Created == 1)
-            //	{
-            //		App->CL_TabsGroups_Dlg->Fill_ListBox();
-            //	}*/
+	SetDefaultBrushTexInfo(nb);
+	App->CL_Brush->Brush_Bound(nb);
+	pTemplatePos = App->CL_Level->Level_GetTemplatePos(pLevel);
 
-            //	UpdateAllViews(UAV_ALL3DVIEWS, NULL);
-            //}
-      //  }
-      //  else
-       // {
-           // geBoolean GotName;
-           // CEntity NewEnt;
-           // char EntityName[MAX_PATH];
+	App->CL_Brush->Brush_Center(nb, pTemplatePos);
 
-          //  App->CLSB_Doc->mRegularEntity.DoneMove(1, Level_GetEntityDefs(App->CLSB_Doc->pLevel));
+	// add to current group
+	Brush_SetGroupId(nb, mCurrentGroup);
 
-            // now create a new entity of the currently-selected type
-            //GotName = mpMainFrame->m_wndTabControls->m_pBrushEntityDialog->GetCurrentEntityName (EntityName);
-            //if (GotName)
-            //{	
-            //	if (CreateEntityFromName (EntityName, NewEnt))
-            //	{
-            //		geVec3d org;
-            //		org = mRegularEntity.mOrigin;
-            //		// set the new entity's origin
-            //		NewEnt.SetOrigin (org.X, org.Y, org.Z, Level_GetEntityDefs (pLevel));
-            //		// add to current group
-            //		NewEnt.SetGroupId (mCurrentGroup);
-            //		Level_AddEntity (pLevel, NewEnt);
-            //		Placed = GE_TRUE;
-            //		mpMainFrame->m_wndTabControls->GrpTab->UpdateAfterAddBrush();
+	fdocFaceScales Scales;
 
-            //		/*if (App->CL_TabsGroups_Dlg->Groups_Dlg_Created == 1)
-            //		{
-            //			App->CL_TabsGroups_Dlg->Fill_ListBox();
-            //		}*/
+	Scales.DrawScale = App->CL_Level->Level_GetDrawScale(pLevel);
+	Scales.LightmapScale = App->CL_Level->Level_GetLightmapScale(pLevel);
+	App->CL_Brush->Brush_EnumFaces(nb, &Scales, ::fdocSetFaceScales);
 
-            //		UpdateAllViews(UAV_ALL3DVIEWS, NULL);
-            //	}
-            //}
-       // }
-    }
-    else
-    {
-        Debug
-        Brush* nb;
-        Ogre::Vector3* pTemplatePos;
+	App->CL_Level->Level_AppendBrush(pLevel, nb);
 
-        nb = App->CL_Brush->Brush_Clone(App->CL_Doc->CurBrush);
+	if (!App->CL_Brush->Brush_IsHollow(nb) && !App->CL_Brush->Brush_IsMulti(nb))
+	{
+		App->CL_Doc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
+	}
+	else
+	{
+		App->CL_Doc->UpdateAllViews(UAV_ALL3DVIEWS | REBUILD_QUICK, NULL);
+	}
 
-        SetDefaultBrushTexInfo(nb);
-        App->CL_Brush->Brush_Bound(nb);
-        pTemplatePos = App->CL_Level->Level_GetTemplatePos(pLevel);
+	Placed = true;
 
-        App->CL_Brush->Brush_Center(nb, pTemplatePos);
+	if (Placed)
+	{
+		App->CL_Doc->DoGeneralSelect();
+		App->CL_Doc->flag_Is_Modified = 1;
 
-        // add to current group
-        Brush_SetGroupId(nb, mCurrentGroup);
-
-		fdocFaceScales Scales;
-
-		Scales.DrawScale = App->CL_Level->Level_GetDrawScale(pLevel);
-		Scales.LightmapScale = App->CL_Level->Level_GetLightmapScale(pLevel);
-		App->CL_Brush->Brush_EnumFaces(nb, &Scales, ::fdocSetFaceScales);
-
-        App->CL_Level->Level_AppendBrush(pLevel, nb);
-
-        if (!App->CL_Brush->Brush_IsHollow(nb) && !App->CL_Brush->Brush_IsMulti(nb))
-        {
-            //App->CLSB_Doc->mWorldBsp = Node_AddBrushToTree(App->CLSB_Doc->mWorldBsp, nb);
-            App->CL_Doc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
-        }
-        else
-        {
-            App->CL_Doc->UpdateAllViews(UAV_ALL3DVIEWS | REBUILD_QUICK, NULL);
-        }
-
-        Placed = true;
-        ////mpMainFrame->m_wndTabControls->GrpTab->UpdateAfterAddBrush();
-
-        //if (App->CL_TabsGroups_Dlg->Groups_Dlg_Created == 1)
-        //{
-        //    App->CL_TabsGroups_Dlg->Fill_ListBox();
-        //}
-        Debug
-    }
-
-    if (Placed)
-    {
-        // MS: We need to simualate a "move", to finally place 
-        // Lib objects to where they were placed in Template mode
-        // switch to move mode
-        //App->CLSB_Doc->mCurrentTool = ID_TOOLS_BRUSH_MOVEROTATEBRUSH;
-        //App->CLSB_Doc->ConfigureCurrentTool();
-        //// fake a move
-        //App->CLSB_Doc->DoneMove();
-        //// Back to select mode
-        //App->CLSB_Doc->DoGeneralSelect();
-        //// ~MS
-        //SetModifiedFlag();
-    }
+	}
 }
 
 // *************************************************************************

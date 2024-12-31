@@ -214,6 +214,11 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Main_Dlg(HWND hDlg, UINT message, WPARAM w
 		return FALSE;
 	}
 
+	/*case WM_ERASEBKGND:
+	{
+		return (LRESULT)1;
+	}*/
+
 	case WM_PAINT:
 	{
 		PAINTSTRUCT ps;
@@ -490,7 +495,7 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Left_Window(HWND hDlg, UINT message, W
 		App->CL_MapEditor->VCam[V_TL] = new ViewVars;
 		strcpy(App->CL_MapEditor->VCam[V_TL]->Name, "TLV");
 		App->CL_MapEditor->VCam[V_TL]->ViewType = 8;
-		App->CL_MapEditor->VCam[V_TL]->ZoomFactor = 0.3;
+		App->CL_MapEditor->VCam[V_TL]->ZoomFactor = 0.4;
 
 		App->CL_MapEditor->VCam[V_TL]->XCenter = 310;
 		App->CL_MapEditor->VCam[V_TL]->YCenter = 174;
@@ -633,7 +638,7 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Right_Window(HWND hDlg, UINT message, 
 		App->CL_MapEditor->VCam[V_TR] = new ViewVars;
 		strcpy(App->CL_MapEditor->VCam[V_TR]->Name, "TRV");
 		App->CL_MapEditor->VCam[V_TR]->ViewType = 32;
-		App->CL_MapEditor->VCam[V_TR]->ZoomFactor = 0.3;
+		App->CL_MapEditor->VCam[V_TR]->ZoomFactor = 0.4;
 
 		App->CL_MapEditor->VCam[V_TR]->CamPos =  Ogre::Vector3(0, 0, 0);// App->CL_Ogre->camNode->getPosition();
 		return TRUE;
@@ -767,7 +772,7 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Bottom_Left_Window(HWND hDlg, UINT message
 		App->CL_MapEditor->VCam[V_BL] = new ViewVars;
 		strcpy(App->CL_MapEditor->VCam[2]->Name, "BLV");
 		App->CL_MapEditor->VCam[V_BL]->ViewType = 16;
-		App->CL_MapEditor->VCam[V_BL]->ZoomFactor = 0.3;
+		App->CL_MapEditor->VCam[V_BL]->ZoomFactor = 0.4;
 
 		App->CL_MapEditor->VCam[V_BL]->CamPos =  Ogre::Vector3(0, 0, 0);//App->CL_Ogre->camNode->getPosition();
 		return TRUE;
@@ -951,6 +956,19 @@ void CL64_MapEditor::Draw_Screen(HWND hwnd)
 	RECT		Rect;
 	BrushDrawData	brushDrawData;
 
+	GetClientRect(hwnd, &Rect);
+	Rect.left--;
+	Rect.bottom--;
+
+	Current_View->Width = Rect.left;
+	Current_View->Height = Rect.bottom;
+
+	Current_View->XScreenScale = Rect.left;
+	Current_View->YScreenScale = Rect.bottom;
+
+	/*Current_View->XCenter = Rect.left/2;
+	Current_View->YCenter = Rect.bottom/2;*/
+
 	Ogre::Vector3 XTemp;
 	Box3d ViewBox;
 	inidx = App->CL_Render->Render_GetInidx(Current_View);
@@ -971,10 +989,6 @@ void CL64_MapEditor::Draw_Screen(HWND hwnd)
 	brushDrawData.pDoc = App->CL_Doc;
 	brushDrawData.GroupId = 0;
 	brushDrawData.FlagTest = NULL;
-
-	GetClientRect(hwnd, &Rect);
-	Rect.left--;
-	Rect.bottom--;
 
 	RealhDC = GetDC(hwnd);
 

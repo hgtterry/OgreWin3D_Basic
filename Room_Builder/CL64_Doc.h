@@ -82,6 +82,7 @@ public:
 	int mModeTool;
 	int mCurrentGroup;
 	int mCurrentTool;
+	bool flag_Is_Modified;
 	//SelFaceList* pSelFaces;
 };
 
