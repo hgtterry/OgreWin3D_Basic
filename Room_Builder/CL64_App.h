@@ -113,6 +113,8 @@ public:
 	HFONT Font_Arial20;
 	HFONT Font_Banner;
 
+	bool flag_Debug_App;
+
 	char RB_Directory_FullPath[MAX_PATH];
 };
 
