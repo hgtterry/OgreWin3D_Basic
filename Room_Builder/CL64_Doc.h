@@ -65,6 +65,7 @@ public:
 	void SetDefaultBrushTexInfo(Brush* b);
 	void UpdateAllViews(int Mode, BOOL Override);
 	void DoGeneralSelect(void);
+	WadFileEntry* GetDibBitmap(const char* Name);
 
 	char LastTemplateTypeName[MAX_PATH];
 

@@ -32,11 +32,24 @@ public:
 	void Show_Textures_Dialog(bool Show);
 	void Start_TextureDialog();
 	void Fill_ListBox();
+	void Get_BitMap();
+	HBITMAP CreateHBitmapFromgeBitmap(geBitmap* Bitmap, HDC hdc);
+
+	void List_Selection_Changed();
+
+	HBITMAP	Sel_BaseBitmap;
+	long BasePicWidth;
+	long BasePicHeight;
+
+	bool Dialog_Created;
+	char m_CurrentTexture[MAX_PATH];
 
 	HWND Textures_Dlg_Hwnd;
 
 private:
 	static LRESULT CALLBACK Proc_TextureDialog(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static bool CALLBACK ViewerBasePic(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
+	bool RenderTexture_Blit(HDC hDC, HBITMAP Bmp, const RECT* SourceRect, const RECT* DestRect);
 };
 

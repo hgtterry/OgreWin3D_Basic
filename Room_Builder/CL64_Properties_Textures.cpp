@@ -30,6 +30,13 @@ THE SOFTWARE.
 CL64_Properties_Textures::CL64_Properties_Textures()
 {
 	Textures_Dlg_Hwnd = nullptr;
+	strcpy(m_CurrentTexture, "stfloor1");
+
+	Dialog_Created = 0;
+
+	Sel_BaseBitmap = NULL;
+	BasePicWidth = NULL;
+	BasePicHeight = NULL;
 }
 
 CL64_Properties_Textures::~CL64_Properties_Textures()
@@ -54,9 +61,10 @@ void CL64_Properties_Textures::Start_TextureDialog()
 {
 	Textures_Dlg_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_PROPS_TEXTURES, App->CL_Properties_Tabs->Tabs_Control_Hwnd, (DLGPROC)Proc_TextureDialog);
 
+	Dialog_Created = 1;
 	//Set_Txl_FileName();
 	Fill_ListBox();
-	//Get_BitMap();
+	Get_BitMap();
 }
 
 // *************************************************************************
@@ -79,11 +87,11 @@ LRESULT CALLBACK CL64_Properties_Textures::Proc_TextureDialog(HWND hDlg, UINT me
 		//SendDlgItemMessage(hDlg, IDC_BTTDAPPLY, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		//SendDlgItemMessage(hDlg, IDC_BTEDITFILE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		//SendDlgItemMessage(hDlg, IDC_BTTDFACEPROPERTIES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		//SendDlgItemMessage(hDlg, IDC_STWIDTHHEIGHT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_STWIDTHHEIGHT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		//App->CLSB_TextureDialog->f_TextureDlg_Active = 1;
 
-		//SetWindowLong(GetDlgItem(hDlg, IDC_BASETEXTURE2), GWL_WNDPROC, (LONG)ViewerBasePic);
+		SetWindowLongPtr(GetDlgItem(hDlg, IDC_BASETEXTURE2), GWLP_WNDPROC, (LONG_PTR)ViewerBasePic);
 
 		return TRUE;
 	}
@@ -103,7 +111,7 @@ LRESULT CALLBACK CL64_Properties_Textures::Proc_TextureDialog(HWND hDlg, UINT me
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->AppBackground;
-		}
+		}*/
 
 		if (GetDlgItem(hDlg, IDC_STWIDTHHEIGHT) == (HWND)lParam)
 		{
@@ -111,7 +119,7 @@ LRESULT CALLBACK CL64_Properties_Textures::Proc_TextureDialog(HWND hDlg, UINT me
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->AppBackground;
-		}*/
+		}
 
 		return FALSE;
 	}
@@ -171,11 +179,15 @@ LRESULT CALLBACK CL64_Properties_Textures::Proc_TextureDialog(HWND hDlg, UINT me
 		//	return TRUE;
 		//}
 
-		//if (LOWORD(wParam) == IDC_LISTTDTEXTURES)
-		//{
-		//	App->CLSB_TextureDialog->List_Selection_Changed();
-		//	return TRUE;
-		//}
+		if (LOWORD(wParam) == IDC_LISTTDTEXTURES)
+		{
+			if (App->CL_Properties_Textures->Dialog_Created == 1)
+			{
+				App->CL_Properties_Textures->List_Selection_Changed();
+			}
+
+			return TRUE;
+		}
 
 		//if (LOWORD(wParam) == IDC_BTTDAPPLY)
 		//{
@@ -202,6 +214,258 @@ LRESULT CALLBACK CL64_Properties_Textures::Proc_TextureDialog(HWND hDlg, UINT me
 	}
 	}
 	return FALSE;
+}
+
+// *************************************************************************
+// *	  	List_Selection_Changed:- Terry and Hazel Flanigan 2023		   *
+// *************************************************************************
+void CL64_Properties_Textures::List_Selection_Changed()
+{
+	int Index = SendDlgItemMessage(Textures_Dlg_Hwnd, IDC_LISTTDTEXTURES, LB_GETCURSEL, (WPARAM)0, (LPARAM)0);
+	if (Index == LB_ERR)
+	{
+		App->Say("ListBox No Selection Available",(LPSTR)"");
+	}
+	else
+	{
+		
+		char TextureName[MAX_PATH];
+		SendDlgItemMessage(Textures_Dlg_Hwnd, IDC_LISTTDTEXTURES, LB_GETTEXT, (WPARAM)Index, (LPARAM)TextureName);
+		(void) strcpy(m_CurrentTexture, TextureName);
+		//App->Say_Win(m_CurrentTexture);
+		Get_BitMap();
+		//Debug
+	}
+
+	char buf[255];
+	sprintf(buf, "Index = %i        %i X %i", Index, BasePicWidth, BasePicHeight);
+	SetDlgItemText(Textures_Dlg_Hwnd, IDC_STWIDTHHEIGHT, (LPCTSTR)buf);
+
+	//IDC_STWIDTHHEIGHT
+	//	Also set the current selection value in the document...
+	//m_pDoc->mCurTextureSelection = SelNum;
+}
+
+// *************************************************************************
+// *						ViewerBasePic Terry Flanigan	  			   *
+// *************************************************************************
+bool CALLBACK CL64_Properties_Textures::ViewerBasePic(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
+{
+	if (msg == WM_PAINT)
+	{
+		PAINTSTRUCT	ps;
+		HDC			hDC;
+		RECT		Rect;
+
+		hDC = BeginPaint(hwnd, &ps);
+		GetClientRect(hwnd, &Rect);
+		Rect.left--;
+		Rect.bottom--;
+		FillRect(hDC, &Rect, (HBRUSH)(RGB(0, 255, 0)));
+
+		if (App->CL_Properties_Textures->Sel_BaseBitmap != NULL)
+		{
+			RECT	Source;
+			RECT	Dest;
+			HDC		hDC;
+
+			Source.left = 0;
+			Source.top = 0;
+			Source.bottom = App->CL_Properties_Textures->BasePicHeight;
+			Source.right = App->CL_Properties_Textures->BasePicWidth;
+
+			Dest = Rect;
+
+			hDC = GetDC(hwnd);
+			SetStretchBltMode(hDC, HALFTONE);
+
+			App->CL_Properties_Textures->RenderTexture_Blit(hDC, App->CL_Properties_Textures->Sel_BaseBitmap, &Source, &Dest);
+			ReleaseDC(hwnd, hDC);
+
+		}
+		
+		EndPaint(hwnd, &ps);
+		return 0;
+	}
+
+	DefWindowProc(hwnd, msg, wParam, lParam);
+}
+
+// *************************************************************************
+// *					RenderTexture_Blit Terry Bernie		  		   *
+// *************************************************************************
+bool CL64_Properties_Textures::RenderTexture_Blit(HDC hDC, HBITMAP Bmp, const RECT* SourceRect, const RECT* DestRect)
+{
+	HDC		MemDC;
+	int		SourceWidth;
+	int		SourceHeight;
+	int		DestWidth;
+	int		DestHeight;
+
+	MemDC = CreateCompatibleDC(hDC);
+	if (MemDC == NULL)
+		return FALSE;
+
+	if (Bmp)
+	{
+		SelectObject(MemDC, Bmp);
+
+		SourceWidth = SourceRect->right - SourceRect->left;
+		SourceHeight = SourceRect->bottom - SourceRect->top;
+		DestWidth = DestRect->right - DestRect->left;
+		DestHeight = DestRect->bottom - DestRect->top;
+		SetStretchBltMode(hDC, COLORONCOLOR);
+		StretchBlt(hDC,
+			DestRect->left,
+			DestRect->top,
+			DestHeight,
+			DestHeight,
+			MemDC,
+			SourceRect->left,
+			SourceRect->top,
+			SourceWidth,
+			SourceHeight,
+			SRCCOPY);
+	}
+
+	DeleteDC(MemDC);
+
+	return TRUE;
+}
+
+// *************************************************************************
+// *	  		Get_BitMap:- Terry and Hazel Flanigan 2025				   *
+// *************************************************************************
+void CL64_Properties_Textures::Get_BitMap()
+{
+	WadFileEntry* BitmapPtr = App->CL_Doc->GetDibBitmap(m_CurrentTexture);
+
+	HWND	PreviewWnd;
+	HBITMAP	hbm;
+	HDC		hDC;
+	
+	PreviewWnd = GetDlgItem(Textures_Dlg_Hwnd, IDC_BASETEXTURE2);
+	hDC = GetDC(PreviewWnd);
+	hbm = CreateHBitmapFromgeBitmap(BitmapPtr->bmp, hDC);
+
+	if (geBitmap_HasAlpha(BitmapPtr->bmp))
+	{
+		//hbm = CreateHBitmapFromgeBitmap(BitmapPtr->bmp, hDC);
+		hbm = CreateHBitmapFromgeBitmap(geBitmap_GetAlpha(BitmapPtr->bmp), hDC);
+		if (hbm == NULL)
+		{
+			App->Say("Cant Assign Bitmap", (LPSTR)"");
+			Sel_BaseBitmap = NULL;
+			return;
+		}
+
+		Sel_BaseBitmap = hbm;
+	}
+	else
+	{
+		hbm = CreateHBitmapFromgeBitmap(BitmapPtr->bmp, hDC);
+		if (hbm == NULL)
+		{
+			App->Say("Cant Assign Bitmap",(LPSTR)"");
+			Sel_BaseBitmap = NULL;
+			return;
+		}
+
+		Sel_BaseBitmap = hbm;
+	}
+
+	App->CL_Properties_Textures->BasePicHeight = BitmapPtr->Height;
+	App->CL_Properties_Textures->BasePicWidth = BitmapPtr->Width;
+
+	ReleaseDC(PreviewWnd, hDC);
+	InvalidateRect(GetDlgItem(Textures_Dlg_Hwnd, IDC_BASETEXTURE2), NULL, TRUE);
+}
+
+// *************************************************************************
+// *				CreateHBitmapFromgeBitmap  06/06/08 		  		   *
+// *************************************************************************
+HBITMAP CL64_Properties_Textures::CreateHBitmapFromgeBitmap(geBitmap* Bitmap, HDC hdc)
+{
+	geBitmap* Lock;
+	gePixelFormat Format;
+	geBitmap_Info info;
+	HBITMAP hbm = NULL;
+
+	// <> choose format to be 8,16,or 24, whichever is closest to Bitmap
+	Format = GE_PIXELFORMAT_24BIT_BGR;
+
+	if (geBitmap_GetBits(Bitmap))
+	{
+		Lock = Bitmap;
+	}
+	else
+	{
+		if (!geBitmap_LockForRead(Bitmap, &Lock, 0, 0, Format, GE_FALSE, 0))
+		{
+			return NULL;
+		}
+	}
+
+	geBitmap_GetInfo(Lock, &info, NULL);
+
+	if (info.Format != Format)
+		return NULL;
+
+	{
+		void* bits;
+		BITMAPINFOHEADER bmih;
+		int pelbytes;
+
+		pelbytes = gePixelFormat_BytesPerPel(Format);
+		bits = geBitmap_GetBits(Lock);
+
+		bmih.biSize = sizeof(bmih);
+		bmih.biHeight = -info.Height;
+		bmih.biPlanes = 1;
+		bmih.biBitCount = 24;
+		bmih.biCompression = BI_RGB;
+		bmih.biSizeImage = 0;
+		bmih.biXPelsPerMeter = bmih.biYPelsPerMeter = 10000;
+		bmih.biClrUsed = bmih.biClrImportant = 0;
+
+		if ((info.Stride * pelbytes) == (((info.Stride * pelbytes) + 3) & (~3)))
+		{
+			bmih.biWidth = info.Stride;
+			hbm = CreateDIBitmap(hdc, &bmih, CBM_INIT, bits, (BITMAPINFO*)&bmih, DIB_RGB_COLORS);
+		}
+		else
+		{
+			void* newbits;
+			int Stride;
+
+			bmih.biWidth = info.Width;
+			Stride = (((info.Width * pelbytes) + 3) & (~3));
+			newbits = App->CL_Maths->Ram_Allocate(Stride * info.Height);
+			if (newbits)
+			{
+				char* newptr, * oldptr;
+				int y;
+
+				newptr = (char*)newbits;
+				oldptr = (char*)bits;
+				for (y = 0; y < info.Height; y++)
+				{
+					memcpy(newptr, oldptr, (info.Width) * pelbytes);
+					oldptr += info.Stride * pelbytes;
+					newptr += Stride;
+				}
+				hbm = CreateDIBitmap(hdc, &bmih, CBM_INIT, newbits, (BITMAPINFO*)&bmih, DIB_RGB_COLORS);
+				App->CL_Maths->Ram_Free(newbits);
+			}
+		}
+	}
+
+	if (Lock != Bitmap)
+	{
+		geBitmap_UnLock(Lock);
+	}
+
+	return hbm;
 }
 
 // *************************************************************************

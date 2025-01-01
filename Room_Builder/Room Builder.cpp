@@ -151,7 +151,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             // ----------------------------- Debug
             case ID_DEBUG_GENERAL:
             {
-                App->CL_Properties_Textures->Fill_ListBox();
+                //App->CL_Properties_Textures->RenderTexture_Blit(;
 
                 return 1;
             }

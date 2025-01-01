@@ -82,16 +82,11 @@ static int wadCountFiles(geVFile* vfs, const char* fspec)
 // *************************************************************************
 signed int CL64_WadFile::Setup(const char* Filename)
 {
-	char Path[MAX_PATH];
-
-	strcpy(Path, App->RB_Directory_FullPath);
-	strcat(Path, "\\Data\\Room_Builder\\Default.txl");
-
 	geVFile* Library;
 
 	signed int	NoErrors = GE_FALSE;
 
-	Library = geVFile_OpenNewSystem(NULL, GE_VFILE_TYPE_VIRTUAL, Path, NULL, GE_VFILE_OPEN_READONLY | GE_VFILE_OPEN_DIRECTORY);
+	Library = geVFile_OpenNewSystem(NULL, GE_VFILE_TYPE_VIRTUAL, Filename, NULL, GE_VFILE_OPEN_READONLY | GE_VFILE_OPEN_DIRECTORY);
 	if (Library != NULL)
 	{
 		NoErrors = GE_TRUE;

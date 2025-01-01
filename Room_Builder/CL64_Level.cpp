@@ -135,9 +135,9 @@ Level* CL64_Level::Level_Create(const char* pWadName, const char* HeadersDir, co
 		pLevel->ShowActors = GE_TRUE;
 		pLevel->PawnIniPath = Util_Strdup(PawnIni);*/
 
-		/*pLevel->WadPath = Util_Strdup(pWadName);
+		pLevel->WadPath = (LPSTR)pWadName;
 		pLevel->WadFile = NULL;
-		pLevel->WadSizeInfos = NULL;*/
+		pLevel->WadSizeInfos = NULL;
 
 		// initialize sky
 		/*geVec3d_Set(&pLevel->SkyRotationAxis, 1.0f, 0.0f, 0.0f);
@@ -319,6 +319,7 @@ signed int CL64_Level::Level_LoadWad(Level* pLevel)
 		return GE_FALSE;
 	}
 
+
 	if (pLevel->WadFile->Setup(pLevel->WadPath))
 	{
 		pLevel->WadSizeInfos = (SizeInfo*)App->CL_Maths->Ram_Allocate(sizeof(SizeInfo) * pLevel->WadFile->mBitmapCount);
@@ -352,3 +353,43 @@ CL64_WadFile* CL64_Level::Level_GetWadFile(Level* pLevel)
 {
 	return pLevel->WadFile;
 }
+
+// *************************************************************************
+// *						Level_GetDibIdFromWad						   *
+// *************************************************************************
+static Ogre::uint16 Level_GetDibIdFromWad(const CL64_WadFile* WadFile, const char* Name)
+{
+	Ogre::uint16	i;
+
+	for (i = 0; i < WadFile->mBitmapCount; i++)
+	{
+		if (_strcmpi(WadFile->mBitmaps[i].Name, Name) == 0)
+		{
+			return i;
+		}
+	}
+
+	return 0xffff;
+}
+
+// *************************************************************************
+// *							Level_GetWadBitmap						   *
+// *************************************************************************
+WadFileEntry* CL64_Level::Level_GetWadBitmap(Level* pLevel, const char* Name)
+{
+	Guint16 i;
+
+	if ((!pLevel) || (!pLevel->WadFile))
+		return NULL;
+
+	i = Level_GetDibIdFromWad(pLevel->WadFile, Name);
+	if (i != 0xffff)
+	{
+		return &(pLevel->WadFile->mBitmaps[i]);
+	}
+	else
+	{
+		return NULL;
+	}
+}
+

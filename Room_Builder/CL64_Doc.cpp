@@ -400,3 +400,8 @@ void CL64_Doc::SetDefaultBrushTexInfo(Brush* b)
     }
 }
 
+WadFileEntry* CL64_Doc::GetDibBitmap(const char* Name)
+{
+    return App->CL_Level->Level_GetWadBitmap(pLevel, Name);
+}
+
