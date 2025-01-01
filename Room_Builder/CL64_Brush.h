@@ -99,6 +99,7 @@ public:
 	void Brush_UpdateChildFaces(Brush* b);
 	signed int	Brush_TestBoundsIntersect(const Brush* b, const Box3d* pBox);
 	signed int Brush_IsHollow(const Brush* b);
+	const char* Brush_GetName(const Brush* b);
 
 };
 

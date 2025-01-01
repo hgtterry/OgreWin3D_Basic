@@ -44,6 +44,7 @@ THE SOFTWARE.
 #include "CL64_Properties_Tabs.h"
 #include "CL64_Properties_Templates.h"
 #include "CL64_Properties_Brushes.h"
+#include "CL64_Properties_Textures.h"
 
 class CL64_App
 {
@@ -71,6 +72,7 @@ public:
 	CL64_Properties_Tabs*		CL_Properties_Tabs;
 	CL64_Properties_Templates*	CL_Properties_Templates;
 	CL64_Properties_Brushes*	CL_Properties_Brushes;
+	CL64_Properties_Textures*	CL_Properties_Textures;
 
 	void InitApp(void);
 	void SetBrushes_Fonts(void);

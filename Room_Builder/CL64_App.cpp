@@ -47,6 +47,7 @@ CL64_App::CL64_App(void)
 	CL_Properties_Tabs =		nullptr;
 	CL_Properties_Templates =	nullptr;
 	CL_Properties_Brushes =		nullptr;
+	CL_Properties_Textures =	nullptr;
 
 	hInst = nullptr;
 	MainHwnd = nullptr;
@@ -90,6 +91,7 @@ void CL64_App::InitApp(void)
 	CL_Properties_Tabs =		new CL64_Properties_Tabs();
 	CL_Properties_Templates =	new CL64_Properties_Templates();
 	CL_Properties_Brushes =		new CL64_Properties_Brushes();
+	CL_Properties_Textures =	new CL64_Properties_Textures();
 
 	SetBrushes_Fonts();
 }

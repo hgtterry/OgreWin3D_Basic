@@ -27,9 +27,18 @@ THE SOFTWARE.
 #include "CL64_App.h"
 #include "CL64_Properties_Brushes.h"
 
+struct tag_BrushList
+{
+	Brush* First;
+	Brush* Last;
+};
+
 CL64_Properties_Brushes::CL64_Properties_Brushes()
 {
 	BrushesDlg_Hwnd = nullptr;
+
+	flag_Brushes_Dlg_Created = 0;
+
 }
 
 CL64_Properties_Brushes::~CL64_Properties_Brushes()
@@ -51,10 +60,10 @@ void CL64_Properties_Brushes::Start_Brush_Tabs_Dialog()
 {
 	BrushesDlg_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_PROPS_BRUSHES, App->CL_Properties_Tabs->Tabs_Control_Hwnd, (DLGPROC)Proc_Brush_Tabs);
 
-	/*Groups_Dlg_Created = 1;
+	flag_Brushes_Dlg_Created = 1;
 
 	Fill_ListBox();
-	Update_Dlg_Controls();*/
+	//Update_Dlg_Controls();
 }
 
 // *************************************************************************
@@ -70,9 +79,10 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Brush_Tabs(HWND hDlg, UINT messag
 		SendDlgItemMessage(hDlg, IDC_GD_BRUSHLIST, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ST_GD_GROUPS, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
 
-		/*SendDlgItemMessage(hDlg, IDC_BRUSHCOUNT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BRUSHCOUNT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ST_GD_BRUSHCOUNT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_BT_GD_BRUSHPROPERTIES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
+		/*SendDlgItemMessage(hDlg, IDC_BT_GD_BRUSHPROPERTIES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		SendDlgItemMessage(hDlg, IDC_ST_GD_SELECTED, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ST_SELECTED, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
@@ -91,7 +101,7 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Brush_Tabs(HWND hDlg, UINT messag
 			return (UINT)App->AppBackground;
 		}
 
-		/*if (GetDlgItem(hDlg, IDC_BRUSHCOUNT) == (HWND)lParam)
+		if (GetDlgItem(hDlg, IDC_BRUSHCOUNT) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 0, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
@@ -107,7 +117,7 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Brush_Tabs(HWND hDlg, UINT messag
 			return (UINT)App->AppBackground;
 		}
 
-		if (GetDlgItem(hDlg, IDC_ST_GD_SELECTED) == (HWND)lParam)
+		/*if (GetDlgItem(hDlg, IDC_ST_GD_SELECTED) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 0, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
@@ -242,4 +252,31 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Brush_Tabs(HWND hDlg, UINT messag
 	}
 	}
 	return FALSE;
+}
+
+// *************************************************************************
+// *			 Fill_ListBox:- Terry and Hazel Flanigan 2023			   *
+// *************************************************************************
+void CL64_Properties_Brushes::Fill_ListBox()
+{
+	if (flag_Brushes_Dlg_Created == 1)
+	{
+		SendDlgItemMessage(BrushesDlg_Hwnd, IDC_GD_BRUSHLIST, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
+
+		Level* pLevel = App->CL_Doc->pLevel;
+		BrushList* pList = App->CL_Level->Level_GetBrushes(App->CL_Doc->pLevel);
+
+		int Count = 0;
+		Brush* b;
+		b = pList->First;
+		while (b != NULL)
+		{
+			SendDlgItemMessage(BrushesDlg_Hwnd, IDC_GD_BRUSHLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)App->CL_Brush->Brush_GetName(b));
+			Count++;
+			b = b->Next;
+		}
+
+		char buff[100];
+		SetDlgItemText(BrushesDlg_Hwnd, IDC_BRUSHCOUNT, _itoa(Count, buff, 10));
+	}
 }

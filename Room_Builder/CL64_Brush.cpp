@@ -1099,3 +1099,17 @@ signed int CL64_Brush::Brush_IsHollow(const Brush* b)
 	return	(b->Flags & BRUSH_HOLLOW) ? true : false;
 }
 
+// *************************************************************************
+// *							Brush_GetName							   *
+// *************************************************************************
+const char* CL64_Brush::Brush_GetName(const Brush* b)
+{
+	if (b == 0)
+	{
+		App->Say("Null Brush",(LPSTR)"Brush_GetName");
+		assert(b != NULL);
+	}
+
+	return	b->Name;
+}
+

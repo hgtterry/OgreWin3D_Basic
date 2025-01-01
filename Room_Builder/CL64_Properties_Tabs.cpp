@@ -159,6 +159,8 @@ LRESULT CALLBACK CL64_Properties_Tabs::Proc_Tabs_Control(HWND hDlg, UINT message
 			App->CL_Properties_Tabs->flag_Tab_Group = 1;
 			App->CL_Properties_Brushes->Show_Brushes_Dialog(true);
 
+			App->CL_Properties_Brushes->Fill_ListBox();
+
 			RedrawWindow(App->CL_Properties_Tabs->Tabs_Control_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			return TRUE;
 		}

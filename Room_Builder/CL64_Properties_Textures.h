@@ -23,22 +23,10 @@ THE SOFTWARE.
 */
 
 #pragma once
-class CL64_Properties_Brushes
+class CL64_Properties_Textures
 {
 public:
-	CL64_Properties_Brushes();
-	~CL64_Properties_Brushes();
-
-	void Show_Brushes_Dialog(bool Show);
-	void Start_Brush_Tabs_Dialog();
-	void Fill_ListBox();
-
-	HWND BrushesDlg_Hwnd;
-
-private:
-	static LRESULT CALLBACK Proc_Brush_Tabs(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
-
-	bool flag_Brushes_Dlg_Created;
-
+	CL64_Properties_Textures();
+	~CL64_Properties_Textures();
 };
 
