@@ -70,6 +70,7 @@ public:
 
 	void InitApp(void);
 	void SetBrushes_Fonts(void);
+	bool Custom_Button_Toggle_Tabs(LPNMCUSTOMDRAW item, bool Toggle);
 	void Flash_Window();
 	void SetMainWinCentre(void) const;
 
@@ -83,6 +84,21 @@ public:
 	HINSTANCE hInst;
 	HWND MainHwnd;
 	HBRUSH AppBackground;
+	
+	HBRUSH Brush_But_Pressed;
+	HBRUSH Brush_But_Normal;
+	HBRUSH Brush_But_Hover;
+	HBRUSH Brush_Tabs_UnSelected;
+	HBRUSH Brush_Tabs;
+
+	HBRUSH BlackBrush;
+	HBRUSH Brush_White;
+	HBRUSH Brush_Green;
+
+	HFONT Font_CB15;
+	HFONT Font_CB18;
+	HFONT Font_Arial20;
+	HFONT Font_Banner;
 
 	char RB_Directory_FullPath[MAX_PATH];
 };

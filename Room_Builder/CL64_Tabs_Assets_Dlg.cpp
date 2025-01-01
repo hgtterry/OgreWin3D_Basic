@@ -29,8 +29,181 @@ THE SOFTWARE.
 
 CL64_Tabs_Assets_Dlg::CL64_Tabs_Assets_Dlg()
 {
+	Tabs_Control_Hwnd = nullptr;
 }
 
 CL64_Tabs_Assets_Dlg::~CL64_Tabs_Assets_Dlg()
 {
+}
+
+// *************************************************************************
+// *	  	Start_Tabs_Control_Dlg:- Terry and Hazel Flanigan 2023		   *
+// *************************************************************************
+void CL64_Tabs_Assets_Dlg::Start_Tabs_Control_Dlg()
+{
+
+	Tabs_Control_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_TABSDIALOG, App->MainHwnd, (DLGPROC)Proc_Tabs_Control);
+
+}
+
+// *************************************************************************
+// *        Tabs_Control_Proc:- Terry and Hazel Flanigan 2023			   *
+// *************************************************************************
+LRESULT CALLBACK CL64_Tabs_Assets_Dlg::Proc_Tabs_Control(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+
+	switch (message)
+	{
+	case WM_INITDIALOG:
+	{
+		SendDlgItemMessage(hDlg, IDC_TBTEXTURES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_TBTEMPLATES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_TBGROUPS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		//SendDlgItemMessage(hDlg, IDC_BT_3DSETTINGS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		SetWindowLong(hDlg, GWL_EXSTYLE, GetWindowLong(hDlg, GWL_EXSTYLE) | WS_EX_LAYERED);
+		SetLayeredWindowAttributes(hDlg, RGB(213, 222, 242), 230, LWA_ALPHA);
+
+		return TRUE;
+	}
+	case WM_CTLCOLORSTATIC:
+	{
+		return FALSE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->AppBackground;
+	}
+
+	case WM_NOTIFY:
+	{
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		if (some_item->idFrom == IDC_TBTEXTURES)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle_Tabs(item, App->CL_Tabs_Assets_Dlg->Tab_Texture_Flag);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_TBTEMPLATES)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle_Tabs(item, App->CL_Tabs_Assets_Dlg->Tab_Templates_Flag);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_TBGROUPS)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle_Tabs(item, App->CL_Tabs_Assets_Dlg->Tab_Group_Flag);
+			return CDRF_DODEFAULT;
+		}
+
+		/*if (some_item->idFrom == IDC_BT_3DSETTINGS && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_3DSETTINGS));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
+			else
+			{
+				App->Custom_Button_Toggle(item, App->CLSB_TabsControl->Tab_3DSettings_Flag);
+			}
+
+			return CDRF_DODEFAULT;
+		}*/
+
+		return CDRF_DODEFAULT;
+	}
+
+	case WM_COMMAND:
+	{
+		/*if (LOWORD(wParam) == IDC_TBTEXTURES)
+		{
+			App->CLSB_TabsControl->Hide_Dialogs();
+			App->CLSB_TabsControl->Tab_Texture_Flag = 1;
+			App->CLSB_TextureDialog->Show_Dialog(true);
+
+			RedrawWindow(App->CLSB_TabsControl->Tabs_Control_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			return TRUE;
+		}*/
+
+		/*if (LOWORD(wParam) == IDC_TBTEMPLATES)
+		{
+			App->CLSB_TabsControl->Hide_Dialogs();
+			App->CLSB_TabsControl->Tab_Templates_Flag = 1;
+			App->CLSB_Tabs_Templates_Dlg->Show_TemplatesDialog(true);
+
+			RedrawWindow(App->CLSB_TabsControl->Tabs_Control_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			return TRUE;
+		}*/
+
+		/*if (LOWORD(wParam) == IDC_TBGROUPS)
+		{
+			App->CLSB_TabsControl->Hide_Dialogs();
+			App->CLSB_TabsControl->Tab_Group_Flag = 1;
+			App->CL_TabsGroups_Dlg->Show_GroupsDialog(true);
+
+			RedrawWindow(App->CLSB_TabsControl->Tabs_Control_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			return TRUE;
+		}*/
+
+		//if (LOWORD(wParam) == IDC_BT_3DSETTINGS)
+		//{
+		//	if (App->CLSB_Tabs_True3D_Dlg->GameEditor_Active_Flag == 1)
+		//	{
+
+		//		App->CLSB_Tabs_True3D_Dlg->GameEditor_Active_Flag = 0;
+		//		RedrawWindow(App->CLSB_Tabs_True3D_Dlg->Game_Tab_hDlg_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+		//		App->CLSB_Equity->Equity_Render_Mode = Enums::EQ_Mode_GameDirector;
+
+		//		App->CLSB_Game_Editor->Hide_Game_Editor_Dialog();
+		//		RedrawWindow(App->CLSB_Tabs_True3D_Dlg->Game_Tab_hDlg_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+		//	}
+		//	else
+		//	{
+		//		/*if (App->BR_True3D_Mode_Active == 1)
+		//		{
+		//			App->CLSB_BR_Render->Exit_BR_3D_Mode();
+		//			App->BR_True3D_Mode_Active = 0;
+		//			App->CLSB_ViewMgrDlg->Was_BR_True3D_Mode_Active = 1;
+		//		}*/
+
+		//		App->CLSB_Tabs_True3D_Dlg->GameEditor_Active_Flag = 1;
+		//		App->CLSB_Game_Editor->Go_Game_Editor();
+		//	}
+		//	/*App->CLSB_TabsControl->Hide_Dialogs();
+		//	App->CLSB_TabsControl->Tab_3DSettings_Flag = 1;
+		//	App->CLSB_Tabs_True3D_Dlg->Show_Game_Dlg(1);*/
+
+		//	//RedrawWindow(App->CLSB_TabsControl->Tabs_Control_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+		//	return TRUE;
+		//}
+
+		// -----------------------------------------------------------------
+		if (LOWORD(wParam) == IDOK)
+		{
+			/*App->CLSB_TabsControl->Command_Panel_Started = 0;
+			App->CLSB_TabsControl->f_TabsDlg_Active = 0;*/
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDCANCEL)
+		{
+			/*App->CLSB_TabsControl->Command_Panel_Started = 0;
+			App->CLSB_TabsControl->f_TabsDlg_Active = 0;*/
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+
+		break;
+	}
+	}
+	return FALSE;
 }

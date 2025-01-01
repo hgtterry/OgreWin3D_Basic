@@ -28,5 +28,17 @@ class CL64_Tabs_Assets_Dlg
 public:
 	CL64_Tabs_Assets_Dlg();
 	~CL64_Tabs_Assets_Dlg();
+
+	void Start_Tabs_Control_Dlg();
+
+	HWND Tabs_Control_Hwnd;
+
+	bool Tab_Templates_Flag;
+	bool Tab_Texture_Flag;
+	bool Tab_Group_Flag;
+
+private:
+	static LRESULT CALLBACK Proc_Tabs_Control(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+
 };
 
