@@ -275,7 +275,7 @@ LRESULT CALLBACK ViewerMain_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM 
 }
 
 // *************************************************************************
-// *				StartOgre:- Terry and Hazel Flanigan 2024		 	   *
+// *				StartOgre:- Terry and Hazel Flanigan 2025		 	   *
 // *************************************************************************
 void StartOgre()
 {
@@ -300,7 +300,7 @@ void StartOgre()
 }
 
 // *************************************************************************
-// *				Close_App:- Terry and Hazel Flanigan 2024	  		   *
+// *				Close_App:- Terry and Hazel Flanigan 2025	  		   *
 // *************************************************************************
 void Close_App()
 {

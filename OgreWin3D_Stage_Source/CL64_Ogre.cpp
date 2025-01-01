@@ -67,7 +67,6 @@ CL64_Ogre::~CL64_Ogre(void)
 // *************************************************************************
 void CL64_Ogre::Init_Ogre(void)
 {
-
 	Init_OgreCreateRoot();
 	Init_Load_Resources();
 	Init_Configure();
@@ -87,7 +86,6 @@ void CL64_Ogre::Init_Ogre(void)
 	App->CL_Grid->Hair_Update(1);
 	App->CL_Gizmos->Set_Gizmos();
 	App->CL_ImGui->Init_ImGui();
-
 }
 
 // *************************************************************************
@@ -239,7 +237,7 @@ bool CL64_Ogre::Init_ChooseSceneManager(void)
 }
 
 // *************************************************************************
-// *			CreateCamera:- Terry and Hazel Flanigan 2024			   *
+// *		Init_CreateCamera:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
 bool CL64_Ogre::Init_CreateCamera(void)
 {
@@ -399,7 +397,6 @@ void CL64_Ogre::Delete_TestMesh(void)
 	{
 		App->CL_Ogre->flag_Test_Mesh_Active = 0;
 	}
-
 }
 
 // *************************************************************************
@@ -413,7 +410,6 @@ void CL64_Ogre::RenderFrame(int How_Many)
 		Ogre::Root::getSingletonPtr()->renderOneFrame();
 		Count++;
 	}
-
 }
 
 // *************************************************************************
