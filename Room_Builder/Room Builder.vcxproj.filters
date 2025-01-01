@@ -84,6 +84,9 @@
     <ClInclude Include="CL64_Dialogs.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="CL64_Tabs_Assets_Dlg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Room Builder.cpp">
@@ -144,6 +147,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CL64_Dialogs.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CL64_Tabs_Assets_Dlg.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -27,23 +27,24 @@ THE SOFTWARE.
 
 CL64_App::CL64_App(void)
 {
-	CL_MapEditor =		nullptr;
-	CL_Maths =			nullptr;
-	CL_Box =			nullptr;
-	CL_Render =			nullptr;
-	CL_Level =			nullptr;
-	CL_Prefs =			nullptr;
-	CL_Ini_File =		nullptr;
-	CL_Doc =			nullptr;
-	CL_Utilities =		nullptr;
-	CL_Brush =			nullptr;
-	CL_FaceList =		nullptr;
-	CL_Face =			nullptr;
-	CL_BrushTemplate =	nullptr;
-	CL_SelBrushList =	nullptr;
-	CL_Array =			nullptr;
-	CL_SelFaceList =	nullptr;
-	CL_Dialogs =		nullptr;
+	CL_MapEditor =			nullptr;
+	CL_Maths =				nullptr;
+	CL_Box =				nullptr;
+	CL_Render =				nullptr;
+	CL_Level =				nullptr;
+	CL_Prefs =				nullptr;
+	CL_Ini_File =			nullptr;
+	CL_Doc =				nullptr;
+	CL_Utilities =			nullptr;
+	CL_Brush =				nullptr;
+	CL_FaceList =			nullptr;
+	CL_Face =				nullptr;
+	CL_BrushTemplate =		nullptr;
+	CL_SelBrushList =		nullptr;
+	CL_Array =				nullptr;
+	CL_SelFaceList =		nullptr;
+	CL_Dialogs =			nullptr;
+	CL_Tabs_Assets_Dlg =	nullptr;
 
 	hInst = nullptr;
 	MainHwnd = nullptr;
@@ -62,23 +63,24 @@ CL64_App::~CL64_App(void)
 // *************************************************************************
 void CL64_App::InitApp(void)
 {
-	CL_MapEditor =		new CL64_MapEditor();
-	CL_Maths =			new CL64_Maths();
-	CL_Box =			new CL64_Box();
-	CL_Render =			new CL64_Render();
-	CL_Level =			new CL64_Level();
-	CL_Prefs =			new CL64_Prefs();
-	CL_Ini_File =		new CL64_Ini_File();
-	CL_Doc =			new CL64_Doc();
-	CL_Utilities =		new CL64_Utilities();
-	CL_Brush =			new CL64_Brush();
-	CL_FaceList =		new CL64_FaceList();
-	CL_Face =			new CL64_Face();
-	CL_BrushTemplate =	new CL64_BrushTemplate();
-	CL_SelBrushList =	new CL64_SelBrushList();
-	CL_Array =			new CL64_Array();
-	CL_SelFaceList =	new CL64_SelFaceList();
-	CL_Dialogs =		new CL64_Dialogs();
+	CL_MapEditor =			new CL64_MapEditor();
+	CL_Maths =				new CL64_Maths();
+	CL_Box =				new CL64_Box();
+	CL_Render =				new CL64_Render();
+	CL_Level =				new CL64_Level();
+	CL_Prefs =				new CL64_Prefs();
+	CL_Ini_File =			new CL64_Ini_File();
+	CL_Doc =				new CL64_Doc();
+	CL_Utilities =			new CL64_Utilities();
+	CL_Brush =				new CL64_Brush();
+	CL_FaceList =			new CL64_FaceList();
+	CL_Face =				new CL64_Face();
+	CL_BrushTemplate =		new CL64_BrushTemplate();
+	CL_SelBrushList =		new CL64_SelBrushList();
+	CL_Array =				new CL64_Array();
+	CL_SelFaceList =		new CL64_SelFaceList();
+	CL_Dialogs =			new CL64_Dialogs();
+	CL_Tabs_Assets_Dlg =	new CL64_Tabs_Assets_Dlg();
 
 	SetBrushes_Fonts();
 }

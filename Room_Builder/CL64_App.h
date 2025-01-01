@@ -41,6 +41,7 @@ THE SOFTWARE.
 #include "CL64_Array.h"
 #include "CL64_SelFaceList.h"
 #include "CL64_Dialogs.h"
+#include "CL64_Tabs_Assets_Dlg.h"
 
 class CL64_App
 {
@@ -48,23 +49,24 @@ public:
 	CL64_App(void);
 	~CL64_App(void);
 
-	CL64_MapEditor*		CL_MapEditor;
-	CL64_Maths*			CL_Maths;
-	CL64_Box*			CL_Box;
-	CL64_Render*		CL_Render;
-	CL64_Level*			CL_Level;
-	CL64_Prefs*			CL_Prefs;
-	CL64_Ini_File*		CL_Ini_File;
-	CL64_Doc*			CL_Doc;
-	CL64_Utilities*		CL_Utilities;
-	CL64_Brush*			CL_Brush;
-	CL64_FaceList*		CL_FaceList;
-	CL64_Face*			CL_Face;
-	CL64_BrushTemplate* CL_BrushTemplate;
-	CL64_SelBrushList*	CL_SelBrushList;
-	CL64_Array*			CL_Array;
-	CL64_SelFaceList*	CL_SelFaceList;
-	CL64_Dialogs*		CL_Dialogs;
+	CL64_MapEditor*			CL_MapEditor;
+	CL64_Maths*				CL_Maths;
+	CL64_Box*				CL_Box;
+	CL64_Render*			CL_Render;
+	CL64_Level*				CL_Level;
+	CL64_Prefs*				CL_Prefs;
+	CL64_Ini_File*			CL_Ini_File;
+	CL64_Doc*				CL_Doc;
+	CL64_Utilities*			CL_Utilities;
+	CL64_Brush*				CL_Brush;
+	CL64_FaceList*			CL_FaceList;
+	CL64_Face*				CL_Face;
+	CL64_BrushTemplate*		CL_BrushTemplate;
+	CL64_SelBrushList*		CL_SelBrushList;
+	CL64_Array*				CL_Array;
+	CL64_SelFaceList*		CL_SelFaceList;
+	CL64_Dialogs*			CL_Dialogs;
+	CL64_Tabs_Assets_Dlg*	CL_Tabs_Assets_Dlg;
 
 	void InitApp(void);
 	void SetBrushes_Fonts(void);
