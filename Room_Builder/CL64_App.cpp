@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2024 Inflanite_HGT W.T.Flanigan H.C.Flanigan
+Copyright (c) 2024 - 2025 Inflanite_HGT W.T.Flanigan H.C.Flanigan
 
 Room Builder
 
@@ -48,6 +48,7 @@ CL64_App::CL64_App(void)
 	CL_Properties_Templates =	nullptr;
 	CL_Properties_Brushes =		nullptr;
 	CL_Properties_Textures =	nullptr;
+	CL_Ogre	=					nullptr;
 
 	hInst = nullptr;
 	MainHwnd = nullptr;
@@ -92,6 +93,7 @@ void CL64_App::InitApp(void)
 	CL_Properties_Templates =	new CL64_Properties_Templates();
 	CL_Properties_Brushes =		new CL64_Properties_Brushes();
 	CL_Properties_Textures =	new CL64_Properties_Textures();
+	CL_Ogre =					new CL64_Ogre();
 
 	SetBrushes_Fonts();
 }

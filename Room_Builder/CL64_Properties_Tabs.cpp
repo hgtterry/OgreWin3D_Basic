@@ -52,6 +52,9 @@ void CL64_Properties_Tabs::Start_Tabs_Control_Dlg()
 	App->CL_Properties_Brushes->Start_Brush_Tabs_Dialog();
 	App->CL_Properties_Brushes->Show_Brushes_Dialog(false);
 
+	App->CL_Properties_Textures->Start_TextureDialog();
+	App->CL_Properties_Textures->Show_Textures_Dialog(false);
+
 	App->CL_Properties_Templates->Start_TemplatesDialog();
 	App->CL_Properties_Templates->Show_TemplatesDialog(true);
 
@@ -133,15 +136,15 @@ LRESULT CALLBACK CL64_Properties_Tabs::Proc_Tabs_Control(HWND hDlg, UINT message
 
 	case WM_COMMAND:
 	{
-		/*if (LOWORD(wParam) == IDC_TBTEXTURES)
+		if (LOWORD(wParam) == IDC_TBTEXTURES)
 		{
-			App->CLSB_TabsControl->Hide_Dialogs();
-			App->CLSB_TabsControl->Tab_Texture_Flag = 1;
-			App->CLSB_TextureDialog->Show_Dialog(true);
+			App->CL_Properties_Tabs->Hide_Dialogs();
+			App->CL_Properties_Tabs->flag_Tab_Texture = 1;
+			App->CL_Properties_Textures->Show_Textures_Dialog(true);
 
-			RedrawWindow(App->CLSB_TabsControl->Tabs_Control_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			RedrawWindow(App->CL_Properties_Tabs->Tabs_Control_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			return TRUE;
-		}*/
+		}
 
 		if (LOWORD(wParam) == IDC_TBTEMPLATES)
 		{
@@ -231,7 +234,7 @@ void CL64_Properties_Tabs::Hide_Dialogs()
 	flag_Tab_Templates = 0;
 	flag_Tab_3DSettings = 0;
 
-	//App->CLSB_TextureDialog->Show_Dialog(false);
+	App->CL_Properties_Textures->Show_Textures_Dialog(false);
 	App->CL_Properties_Brushes->Show_Brushes_Dialog(false);
 	App->CL_Properties_Templates->Show_TemplatesDialog(false);
 	//App->CLSB_Tabs_True3D_Dlg->Show_Game_Dlg(0);

@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2024 Inflanite_HGT W.T.Flanigan H.C.Flanigan
+Copyright (c) 2024 - 2025 Inflanite_HGT W.T.Flanigan H.C.Flanigan
 
 Room Builder
 
@@ -45,6 +45,8 @@ THE SOFTWARE.
 #include "CL64_Properties_Templates.h"
 #include "CL64_Properties_Brushes.h"
 #include "CL64_Properties_Textures.h"
+#include "CL64_Ogre.h"
+
 
 class CL64_App
 {
@@ -73,6 +75,7 @@ public:
 	CL64_Properties_Templates*	CL_Properties_Templates;
 	CL64_Properties_Brushes*	CL_Properties_Brushes;
 	CL64_Properties_Textures*	CL_Properties_Textures;
+	CL64_Ogre*					CL_Ogre;
 
 	void InitApp(void);
 	void SetBrushes_Fonts(void);

@@ -22,20 +22,14 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-#pragma once
-class CL64_Properties_Textures
+#include "pch.h"
+#include "CL64_App.h"
+#include "CL64_Ogre.h"
+
+CL64_Ogre::CL64_Ogre()
 {
-public:
-	CL64_Properties_Textures();
-	~CL64_Properties_Textures();
+}
 
-	void Show_Textures_Dialog(bool Show);
-	void Start_TextureDialog();
-
-	HWND Textures_Dlg_Hwnd;
-
-private:
-	static LRESULT CALLBACK Proc_TextureDialog(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
-
-};
-
+CL64_Ogre::~CL64_Ogre()
+{
+}

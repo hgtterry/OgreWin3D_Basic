@@ -22,6 +22,8 @@
 #define IDD_SB_TABSDIALOG               136
 #define IDD_PROPS_TEMPLATES             137
 #define IDD_PROPS_BRUSHES               138
+#define IDD_PROPS_TEMPLATES1            139
+#define IDD_PROPS_TEXTURES              139
 #define IDC_BANNER                      1000
 #define IDC_STTEXT                      1001
 #define IDC_STMESSAGE                   1002
