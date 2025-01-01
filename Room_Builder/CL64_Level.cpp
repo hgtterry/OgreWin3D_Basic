@@ -25,6 +25,7 @@ THE SOFTWARE.
 #include "pch.h"
 #include "CL64_App.h"
 #include "CL64_Level.h"
+#include "CL64_WadFile.h"
 
 struct tag_Level
 {
@@ -39,8 +40,8 @@ struct tag_Level
 	// end change
 	//EntTypeNameList* EntTypeNames;
 	//GroupListType* Groups;
-	//SizeInfo* WadSizeInfos;
-	//CWadFile* WadFile;
+	SizeInfo* WadSizeInfos;
+	CL64_WadFile* WadFile;
 	//EntityTable* pEntityDefs;
 
 	//ModelInfo_Type	ModelInfo;
@@ -283,4 +284,71 @@ void CL64_Level::Level_AppendBrush(Level* pLevel, Brush* pBrush)
 int CL64_Level::Level_EnumLeafBrushes(Level* pLevel, void* lParam, BrushList_CB Callback)
 {
 	return App->CL_Brush->BrushList_EnumLeafBrushes(pLevel->Brushes, lParam, Callback);
+}
+
+// *************************************************************************
+// *							Level_UnloadWad							   *
+// *************************************************************************
+void Level_UnloadWad(Level* pLevel)
+{
+	if (pLevel->WadSizeInfos != NULL)
+	{
+		App->CL_Maths->Ram_Free(pLevel->WadSizeInfos);
+		pLevel->WadSizeInfos = NULL;
+	}
+	if (pLevel->WadFile != NULL)
+	{
+		delete pLevel->WadFile;
+		pLevel->WadFile = NULL;
+	}
+}
+
+// *************************************************************************
+// *							Level_LoadWad							   *
+// *************************************************************************
+signed int CL64_Level::Level_LoadWad(Level* pLevel)
+{
+	// get rid of the old wad...
+	//Level_UnloadWad(pLevel);
+
+	pLevel->WadFile = new CL64_WadFile();
+	if (pLevel->WadFile == NULL)
+	{
+		App->Say("Cant Create Wad File", (LPSTR)"");
+
+		return GE_FALSE;
+	}
+
+	if (pLevel->WadFile->Setup(pLevel->WadPath))
+	{
+		pLevel->WadSizeInfos = (SizeInfo*)App->CL_Maths->Ram_Allocate(sizeof(SizeInfo) * pLevel->WadFile->mBitmapCount);
+
+		if (pLevel->WadSizeInfos != NULL)
+		{
+			int i;
+
+			for (i = 0; i < pLevel->WadFile->mBitmapCount; i++)
+			{
+				SizeInfo* pInfo;
+				WadFileEntry* Entry;
+
+				pInfo = &(pLevel->WadSizeInfos[i]);
+				Entry = &(pLevel->WadFile->mBitmaps[i]);
+
+				pInfo->TexWidth = Entry->Width;
+				pInfo->TexHeight = Entry->Height;
+				pInfo->TexData = (Guint8*)Entry->BitsPtr;
+			}
+		}
+	}
+
+	return  (pLevel->WadSizeInfos != NULL);
+}
+
+// *************************************************************************
+// *							Level_GetWadFile						   *
+// *************************************************************************
+CL64_WadFile* CL64_Level::Level_GetWadFile(Level* pLevel)
+{
+	return pLevel->WadFile;
 }

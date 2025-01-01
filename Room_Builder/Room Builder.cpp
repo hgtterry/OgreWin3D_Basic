@@ -151,7 +151,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             // ----------------------------- Debug
             case ID_DEBUG_GENERAL:
             {
-                App->CL_Prefs->Write_Preferences();
+                App->CL_Properties_Textures->Fill_ListBox();
+
                 return 1;
             }
 

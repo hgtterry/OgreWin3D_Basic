@@ -64,10 +64,10 @@ void CL64_Doc::Init_Doc()
    
 	pLevel = App->CL_Level->Level_Create(WadPath, NULL,NULL, NULL);
 
-	/*if (!Level_LoadWad(pLevel))
+	if (!App->CL_Level->Level_LoadWad(pLevel))
 	{
 		App->Say_Win("Can not load Wad File");
-	}*/
+	}
 
 	pSelBrushes = App->CL_SelBrushList->SelBrushList_Create();
 	pTempSelBrushes = App->CL_SelBrushList->SelBrushList_Create();

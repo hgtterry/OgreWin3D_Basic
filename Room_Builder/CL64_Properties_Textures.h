@@ -31,6 +31,7 @@ public:
 
 	void Show_Textures_Dialog(bool Show);
 	void Start_TextureDialog();
+	void Fill_ListBox();
 
 	HWND Textures_Dlg_Hwnd;
 

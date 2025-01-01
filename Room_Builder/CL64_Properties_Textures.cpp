@@ -54,9 +54,9 @@ void CL64_Properties_Textures::Start_TextureDialog()
 {
 	Textures_Dlg_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_PROPS_TEXTURES, App->CL_Properties_Tabs->Tabs_Control_Hwnd, (DLGPROC)Proc_TextureDialog);
 
-	/*Set_Txl_FileName();
+	//Set_Txl_FileName();
 	Fill_ListBox();
-	Get_BitMap();*/
+	//Get_BitMap();
 }
 
 // *************************************************************************
@@ -202,4 +202,41 @@ LRESULT CALLBACK CL64_Properties_Textures::Proc_TextureDialog(HWND hDlg, UINT me
 	}
 	}
 	return FALSE;
+}
+
+// *************************************************************************
+// *			Fill_ListBox:- Terry and Hazel Flanigan 2025			   *
+// *************************************************************************
+void CL64_Properties_Textures::Fill_ListBox()
+{
+	int LBIndex;
+
+	//if (f_TextureDlg_Active == 1)
+	{
+		CL64_WadFile* pWad;
+		pWad = NULL;
+
+		SendDlgItemMessage(Textures_Dlg_Hwnd, IDC_LISTTDTEXTURES, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
+
+		pWad = App->CL_Level->Level_GetWadFile(App->CL_Doc->pLevel);
+		if (pWad == NULL)
+		{
+			App->Say("Error Getting Wad File",(LPSTR)"");
+			return;
+		}
+		
+		for (int index = 0; index < pWad->mBitmapCount; index++)
+		{
+			char mName[MAX_PATH];
+
+			strcpy(mName, pWad->mBitmaps[index].Name);
+
+			LBIndex = SendDlgItemMessage(Textures_Dlg_Hwnd, IDC_LISTTDTEXTURES, LB_ADDSTRING, (WPARAM)0, (LPARAM)mName);
+		}
+
+		SendDlgItemMessage(Textures_Dlg_Hwnd, IDC_LISTTDTEXTURES, LB_SETCURSEL, (WPARAM)0, (LPARAM)0);
+		
+		//Set_Txl_FileName();
+		//List_Selection_Changed();
+	}
 }

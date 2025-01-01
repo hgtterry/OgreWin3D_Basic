@@ -41,6 +41,14 @@ typedef struct ViewVarsTag
 
 } ViewVars;
 
+typedef struct SizeInfoTag
+{
+	long	TexWidth, TexHeight;
+	long	ScreenWidth, ScreenHeight;
+	Ogre::uint8* TexData, * ScreenData;
+	Ogre::uint32* ZData;
+} SizeInfo;
+
 class CL64_Render
 {
 public:

@@ -23,10 +23,30 @@ THE SOFTWARE.
 */
 
 #pragma once
+
+#include "bitmap.h"
+
+struct WadFileEntry
+{
+	geBitmap* bmp;
+	char Name[MAX_PATH];
+	int Width, Height;
+	geBitmap* LockedBitmap;
+	void* BitsPtr;
+};
+
 class CL64_WadFile
 {
 public:
 	CL64_WadFile();
 	~CL64_WadFile();
+
+	void DestroyBitmapArray();
+
+	int			mBitmapCount;
+	WadFileEntry* mBitmaps;
+
+	signed int Setup(const char* Filename);
+
 };
 

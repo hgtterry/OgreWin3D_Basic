@@ -73,7 +73,6 @@ public:
 	CL64_SelBrushList*			CL_SelBrushList;
 	CL64_Array*					CL_Array;
 	CL64_SelFaceList*			CL_SelFaceList;
-	CL64_WadFile*				CL_WadFile;
 	// ------------------------------
 	CL64_Dialogs*				CL_Dialogs;
 	CL64_Properties_Tabs*		CL_Properties_Tabs;

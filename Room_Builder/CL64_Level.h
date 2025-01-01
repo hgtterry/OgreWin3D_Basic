@@ -25,6 +25,7 @@ THE SOFTWARE.
 #pragma once
 
 #include "CL64_BrushTemplate.h"
+#include "CL64_WadFile.h"
 
 typedef struct tag_Level Level;
 
@@ -43,6 +44,8 @@ public:
 	float Level_GetLightmapScale(const Level* pLevel);
 	void Level_AppendBrush(Level* pLevel, Brush* pBrush);
 	int Level_EnumLeafBrushes(Level* pLevel, void* lParam, BrushList_CB Callback);
+	signed int Level_LoadWad(Level* pLevel);
+	CL64_WadFile* Level_GetWadFile(Level* pLevel);
 
 };
 
