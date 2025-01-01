@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2024 Inflanite_HGT W.T.Flanigan H.C.Flanigan
+Copyright (c) 2024 - 2025 Inflanite_HGT W.T.Flanigan H.C.Flanigan
 
 Room Builder
 
@@ -22,24 +22,14 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-#pragma once
+#include "pch.h"
+#include "CL64_App.h"
+#include "CL64_Panels.h"
 
-class CL64_Dialogs
+CL64_Panels::CL64_Panels()
 {
-public:
-	CL64_Dialogs(void);
-	~CL64_Dialogs(void);
+}
 
-	void Message(char* pString, char* pString2);
-	void PleaseWait();
-
-private:
-
-	static LRESULT CALLBACK Proc_Message(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
-	static LRESULT CALLBACK Proc_PleaseWait(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
-
-	char Message_Text_Header[MAX_PATH];
-	char Message_Text_Message[MAX_PATH];
-
-};
-
+CL64_Panels::~CL64_Panels()
+{
+}

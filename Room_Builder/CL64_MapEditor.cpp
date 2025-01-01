@@ -890,14 +890,14 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Bottom_Left_Window(HWND hDlg, UINT message
 // *************************************************************************
 void CL64_MapEditor::Create_Bottom_Right_Window()
 {
-	Bottom_Right_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MAP_BOTTOM_RIGHT, Main_Dlg_Hwnd, (DLGPROC)Bottom_Right_Proc);
+	Bottom_Right_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MAP_BOTTOM_RIGHT, Main_Dlg_Hwnd, (DLGPROC)Proc_Bottom_Right);
 	App->CL_Ogre->RenderHwnd = Bottom_Right_Hwnd;
 }
 
 // *************************************************************************
-// *			Bottom_Right_Proc:- Terry and Hazel Flanigan 2024 		   *
+// *			Proc_Bottom_Right:- Terry and Hazel Flanigan 2024 		   *
 // *************************************************************************
-LRESULT CALLBACK CL64_MapEditor::Bottom_Right_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK CL64_MapEditor::Proc_Bottom_Right(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	switch (message)
 	{
@@ -914,8 +914,12 @@ LRESULT CALLBACK CL64_MapEditor::Bottom_Right_Proc(HWND hDlg, UINT message, WPAR
 
 	case WM_CTLCOLORDLG:
 	{
-		return (LONG)App->CL_MapEditor->BackGround_Brush;
+		if (App->flag_OgreStarted == 0)
+		{
+			return (LONG)App->BlackBrush;
+		}
 	}
+
 	}
 
 	return FALSE;

@@ -138,3 +138,49 @@ LRESULT CALLBACK CL64_Dialogs::Proc_Message(HWND hDlg, UINT message, WPARAM wPar
 
 	return FALSE;
 }
+
+// *************************************************************************
+// *	  			PleaseWait:- Terry and Hazel Flanigan 2025			   *
+// *************************************************************************
+void CL64_Dialogs::PleaseWait()
+{
+	App->ViewPLeaseWait = CreateDialog(App->hInst, (LPCTSTR)IDD_PLEASEWAIT, App->MainHwnd, (DLGPROC)Proc_PleaseWait);
+}
+
+// *************************************************************************
+// *			Proc_PleaseWait:- Terry and Hazel Flanigan 2025			   *
+// *************************************************************************
+LRESULT CALLBACK CL64_Dialogs::Proc_PleaseWait(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+	switch (message)
+	{
+
+	case WM_INITDIALOG:
+	{
+		HFONT Font;
+		Font = CreateFont(-25, 0, 0, 0, FW_BOLD, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Aerial Black");
+		SendDlgItemMessage(hDlg, IDC_STWAIT, WM_SETFONT, (WPARAM)Font, MAKELPARAM(TRUE, 0));
+
+		return TRUE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->Brush_Green;
+	}
+
+	case WM_CTLCOLORSTATIC:
+	{
+		if (GetDlgItem(hDlg, IDC_STWAIT) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->Brush_Green;
+		}
+
+		return FALSE;
+	}
+	}
+	return FALSE;
+}

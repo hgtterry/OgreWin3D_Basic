@@ -186,7 +186,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             case IDM_EXIT:
             {
             
-                Close_App(); // Temp
+                if (App->CL_Ogre->Ogre3D_Listener->flag_StopOgre == 0)
+                {
+                    App->CL_Ogre->Ogre3D_Listener->flag_StopOgre = 1;
+                }
+
                 PostQuitMessage(0);
                 break;
             }
@@ -210,11 +214,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     case WM_CLOSE:
     {
  
-            /* if (App->CL_Ogre->Ogre3D_Listener->flag_StopOgre == 0)
-             {
-                 App->CL_Ogre->Ogre3D_Listener->flag_StopOgre = 1;
-             }*/
-        Close_App(); // Temp
+		if (App->CL_Ogre->Ogre3D_Listener->flag_StopOgre == 0)
+		{
+			App->CL_Ogre->Ogre3D_Listener->flag_StopOgre = 1;
+		}
 
         PostQuitMessage(0);
         break;
@@ -225,7 +228,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         {
             if (App->flag_OgreStarted == 0)
             {
-                //App->CL_Dialogs->PleaseWait();
+                App->CL_Dialogs->PleaseWait();
 
                 if (Block_Call == 0)
                 {
@@ -283,20 +286,18 @@ void StartOgre()
 
     App->CL_Ogre->Init_Ogre();
 
-   // EndDialog(App->ViewPLeaseWait, LOWORD(0));
+    EndDialog(App->ViewPLeaseWait, LOWORD(0));
 
     App->flag_OgreStarted = 1;
 
     App->CL_Ogre->RenderFrame(5);
    
-    
+    App->CL_Ogre->Ogre_Render_Loop();
 
-    //App->CL_Ogre->Ogre_Render_Loop();
+    Close_App();
 
-    //Close_App();
-
-   // SystemParametersInfo(SPI_SETSCREENSAVEACTIVE, TRUE, NULL, TRUE);
-   // PostQuitMessage(0);
+    SystemParametersInfo(SPI_SETSCREENSAVEACTIVE, TRUE, NULL, TRUE);
+    PostQuitMessage(0);
 }
 
 // *************************************************************************

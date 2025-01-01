@@ -36,5 +36,14 @@ public:
 	bool frameEnded(const FrameEvent& evt);
 	bool frameRenderingQueued(const FrameEvent& evt);
 
+	Ogre::SceneNode* mCamNode;
+	float mMoveSensitivity;
+	float mMoveScale;
+
+	int	Wheel;
+
+	Vector3	mTranslateVector;
+
+	bool flag_StopOgre;
 };
 

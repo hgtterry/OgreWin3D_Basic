@@ -41,6 +41,9 @@ CL64_Ogre::CL64_Ogre()
 	mResourcePath = "";
 	Return_Chr[0] = 0;
 
+	FPSLock = 16666; // Default 60 FPS
+	FPStimer.reset();
+
 	App_Resource_Group = "App_Resource_Group";
 
 }
@@ -340,4 +343,52 @@ void CL64_Ogre::RenderFrame(int How_Many)
 		Ogre::Root::getSingletonPtr()->renderOneFrame();
 		Count++;
 	}
+}
+
+// *************************************************************************
+// *		Ogre_Render_Loop:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+bool CL64_Ogre::Ogre_Render_Loop(void)
+{
+	mRoot->clearEventTimes();
+
+	while (true)
+	{
+
+		MSG  msg;
+		while (PeekMessage(&msg, NULL, 0U, 0U, PM_REMOVE))
+		{
+			TranslateMessage(&msg);
+			DispatchMessage(&msg);
+		}
+
+		if (mWindow->isClosed()) return false;
+
+		if (FPStimer.getMicroseconds() > FPSLock)
+		{
+			FPStimer.reset();
+
+			//if (flag_Block_Rendering == 0)
+			{
+
+				if (!mRoot->_fireFrameStarted())
+				{
+					return false;
+				}
+
+				if (!mRoot->_updateAllRenderTargets())
+				{
+					return false;
+				}
+
+				if (!mRoot->_fireFrameEnded())
+				{
+					return false;
+				}
+
+			}
+		}
+	}
+
+	return 1;
 }

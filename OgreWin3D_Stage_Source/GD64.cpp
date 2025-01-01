@@ -1270,6 +1270,8 @@ LRESULT CALLBACK ViewerMain_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM 
 // *************************************************************************
 void StartOgre()
 {
+	KillTimer(App->MainHwnd, 1);
+
 	App->CL_Bullet->Init_Bullet();
     App->CL_Ogre->Init_Ogre();
 
@@ -1283,8 +1285,6 @@ void StartOgre()
 	App->CL_Ogre->RenderFrame(5);
 	App->CL_Panels->MovePhysicsView();
 	
-    KillTimer(App->MainHwnd, 1);
-
 	// ------------------------ Load Test Project
 	if (App->CL_Preferences->flag_Load_Test_Project == 1)
 	{

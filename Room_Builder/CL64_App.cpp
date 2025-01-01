@@ -50,6 +50,7 @@ CL64_App::CL64_App(void)
 	CL_Properties_Textures =	nullptr;
 	CL_Ogre	=					nullptr;
 	CL_Grid =					nullptr;
+	CL_Panels =					nullptr;
 
 	hInst = nullptr;
 	MainHwnd = nullptr;
@@ -63,6 +64,8 @@ CL64_App::CL64_App(void)
 
 	flag_Debug_App = 0;
 	flag_OgreStarted = 0;
+
+	ViewPLeaseWait = nullptr;
 
 	RB_Directory_FullPath[0] = 0;
 }
@@ -99,6 +102,7 @@ void CL64_App::InitApp(void)
 	CL_Properties_Textures =	new CL64_Properties_Textures();
 	CL_Ogre =					new CL64_Ogre();
 	CL_Grid =					new CL64_Grid();
+	CL_Panels =					new CL64_Panels();
 	
 	SetBrushes_Fonts();
 }

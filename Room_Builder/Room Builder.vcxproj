@@ -159,11 +159,13 @@
     <ClInclude Include="CL64_FaceList.h" />
     <ClInclude Include="CL64_Grid.h" />
     <ClInclude Include="CL64_Ini_File.h" />
+    <ClInclude Include="CL64_Keyboard.h" />
     <ClInclude Include="CL64_Level.h" />
     <ClInclude Include="CL64_MapEditor.h" />
     <ClInclude Include="CL64_Maths.h" />
     <ClInclude Include="CL64_Ogre.h" />
     <ClInclude Include="CL64_Ogre3D_Listener.h" />
+    <ClInclude Include="CL64_Panels.h" />
     <ClInclude Include="CL64_Prefs.h" />
     <ClInclude Include="CL64_Properties_Brushes.h" />
     <ClInclude Include="CL64_Properties_Tabs.h" />
@@ -191,11 +193,13 @@
     <ClCompile Include="CL64_FaceList.cpp" />
     <ClCompile Include="CL64_Grid.cpp" />
     <ClCompile Include="CL64_Ini_File.cpp" />
+    <ClCompile Include="CL64_Keyboard.cpp" />
     <ClCompile Include="CL64_Level.cpp" />
     <ClCompile Include="CL64_MapEditor.cpp" />
     <ClCompile Include="CL64_Maths.cpp" />
     <ClCompile Include="CL64_Ogre.cpp" />
     <ClCompile Include="CL64_Ogre3D_Listener.cpp" />
+    <ClCompile Include="CL64_Panels.cpp" />
     <ClCompile Include="CL64_Prefs.cpp" />
     <ClCompile Include="CL64_Properties_Brushes.cpp" />
     <ClCompile Include="CL64_Properties_Tabs.cpp" />

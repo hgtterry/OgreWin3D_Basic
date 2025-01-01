@@ -47,6 +47,7 @@ THE SOFTWARE.
 #include "CL64_Properties_Textures.h"
 #include "CL64_Ogre.h"
 #include "CL64_Grid.h"
+#include "CL64_Panels.h"
 
 class CL64_App
 {
@@ -77,6 +78,8 @@ public:
 	CL64_Properties_Textures*	CL_Properties_Textures;
 	CL64_Ogre*					CL_Ogre;
 	CL64_Grid*					CL_Grid;
+	CL64_Panels*				CL_Panels;
+
 
 	void InitApp(void);
 	void SetBrushes_Fonts(void);
@@ -99,6 +102,8 @@ public:
 	HWND MainHwnd;
 	HBRUSH AppBackground;
 	
+	HWND ViewPLeaseWait;
+
 	HBRUSH Brush_But_Pressed;
 	HBRUSH Brush_But_Normal;
 	HBRUSH Brush_But_Hover;

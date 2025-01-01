@@ -39,17 +39,11 @@ public:
 
 	// Setup --------------------------------
 	void Init_Ogre(void);
-	bool Init_OgreCreateRoot(void);
-	bool Init_Load_Resources(void);
-	bool Init_Configure(void);
-	bool Init_ChooseSceneManager(void);
-	bool Init_CreateCamera(void);
-	bool Init_CreateViewports(void);
-	bool Init_Resources(void);
-	bool Init_CreateFrameListener(void);
+
+
+	bool Ogre_Render_Loop(void);
 
 	void Log_Message_To_File(char* Message);
-	bool ReverseBackSlash(char* buf);
 	void RenderFrame(int How_Many);
 
 	char Return_Chr[MAX_PATH];
@@ -67,6 +61,21 @@ public:
 
 	CL64_Ogre3D_Listener* Ogre3D_Listener;
 
+	Ogre::Timer FPStimer;
+	int FPSLock; // FPS Lock Setable (60 FPS Default)
+
 	HWND RenderHwnd;
+
+private:
+	bool Init_OgreCreateRoot(void);
+	bool Init_Load_Resources(void);
+	bool Init_Configure(void);
+	bool Init_ChooseSceneManager(void);
+	bool Init_CreateCamera(void);
+	bool Init_CreateViewports(void);
+	bool Init_Resources(void);
+	bool Init_CreateFrameListener(void);
+
+	bool ReverseBackSlash(char* buf);
 };
 

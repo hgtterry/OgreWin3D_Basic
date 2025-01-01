@@ -23,10 +23,19 @@ THE SOFTWARE.
 */
 
 #include "pch.h"
+#include "CL64_App.h"
 #include "CL64_Ogre3D_Listener.h"
 
 CL64_Ogre3D_Listener::CL64_Ogre3D_Listener()
 {
+	mCamNode = App->CL_Ogre->camNode;
+
+	Wheel = 0;
+	mMoveSensitivity = 50;
+	mTranslateVector = Ogre::Vector3::ZERO;
+	mMoveScale = 0;
+
+	flag_StopOgre = 0;
 }
 
 CL64_Ogre3D_Listener::~CL64_Ogre3D_Listener()
@@ -55,5 +64,10 @@ bool CL64_Ogre3D_Listener::frameRenderingQueued(const FrameEvent& evt)
 // *************************************************************************
 bool CL64_Ogre3D_Listener::frameEnded(const FrameEvent& evt)
 {
+	if (flag_StopOgre == 1)
+	{
+		return false;
+	}
+
 	return true;
 }
