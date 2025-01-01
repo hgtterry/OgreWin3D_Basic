@@ -20,14 +20,16 @@
 #define IDD_MAPEDITOR                   134
 #define IDD_MESSAGE                     135
 #define IDD_SB_TABSDIALOG               136
+#define IDD_PROPS_TEMPLATES             137
 #define IDC_BANNER                      1000
 #define IDC_STTEXT                      1001
 #define IDC_STMESSAGE                   1002
 #define IDC_TBTEMPLATES                 1003
 #define IDC_TBTEXTURES                  1004
 #define IDC_TBGROUPS                    1005
-#define IDC_BUTTON2                     1006
 #define IDC_BT_3DSETTINGS               1006
+#define IDC_BUTTON1                     1007
+#define IDC_BTINSERT                    1007
 #define ID_DEBUG_GENERAL                32771
 #define ID_TEMPLATES_INSERT             32772
 #define ID_GENERALSELECT                32886
@@ -39,9 +41,9 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
-#define _APS_NEXT_RESOURCE_VALUE        137
+#define _APS_NEXT_RESOURCE_VALUE        138
 #define _APS_NEXT_COMMAND_VALUE         32773
-#define _APS_NEXT_CONTROL_VALUE         1007
+#define _APS_NEXT_CONTROL_VALUE         1008
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif

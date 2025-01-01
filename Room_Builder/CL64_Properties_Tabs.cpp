@@ -49,6 +49,9 @@ void CL64_Properties_Tabs::Start_Tabs_Control_Dlg()
 
 	Tabs_Control_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_TABSDIALOG, App->MainHwnd, (DLGPROC)Proc_Tabs_Control);
 
+	App->CL_Properties_Templates->Start_TemplatesDialog();
+	App->CL_Properties_Templates->Show_TemplatesDialog(true);
+
 }
 
 // *************************************************************************
