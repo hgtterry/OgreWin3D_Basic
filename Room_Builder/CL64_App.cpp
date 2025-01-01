@@ -61,6 +61,7 @@ CL64_App::CL64_App(void)
 	Font_Banner = 0;
 
 	flag_Debug_App = 0;
+	flag_OgreStarted = 0;
 
 	RB_Directory_FullPath[0] = 0;
 }

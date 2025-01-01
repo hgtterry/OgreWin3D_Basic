@@ -19,7 +19,10 @@ LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
 
 LRESULT CALLBACK ViewerMain_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+void StartOgre();
+void Close_App();
 
+int Block_Call = 0;
 
 CL64_App* App = NULL;
 
@@ -65,6 +68,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     App->SetMainWinCentre();
     App->CL_Properties_Tabs->Start_Tabs_Control_Dlg();
+
+    SetTimer(App->MainHwnd, 1, 100, NULL);
 
     HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_ROOMBUILDER));
 
@@ -177,24 +182,20 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             case IDM_ABOUT:
                 DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
                 break;
+
             case IDM_EXIT:
-                DestroyWindow(hWnd);
+            {
+            
+                Close_App(); // Temp
+                PostQuitMessage(0);
                 break;
+            }
+                
             default:
                 return DefWindowProc(hWnd, message, wParam, lParam);
             }
         }
         break;
-
-    //case WM_PAINT:
-    //    {
-    //        PAINTSTRUCT ps;
-    //        HDC hdc = BeginPaint(hWnd, &ps);
-    //        // TODO: Add any drawing code that uses hdc here...
-    //        FillRect(hdc, &ps.rcPaint, (HBRUSH)App->AppBackground);
-    //        EndPaint(hWnd, &ps);
-    //    }
-    //    break;
 
     case WM_SIZE:
     {
@@ -206,6 +207,36 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         return 0;
     }
     
+    case WM_CLOSE:
+    {
+ 
+            /* if (App->CL_Ogre->Ogre3D_Listener->flag_StopOgre == 0)
+             {
+                 App->CL_Ogre->Ogre3D_Listener->flag_StopOgre = 1;
+             }*/
+        Close_App(); // Temp
+
+        PostQuitMessage(0);
+        break;
+    }
+
+    case WM_TIMER:
+        if (wParam == 1)
+        {
+            if (App->flag_OgreStarted == 0)
+            {
+                //App->CL_Dialogs->PleaseWait();
+
+                if (Block_Call == 0)
+                {
+                    Block_Call = 1;
+                    StartOgre();
+                }
+            }
+
+            break;
+        }
+
     case WM_DESTROY:
         PostQuitMessage(0);
         break;
@@ -241,6 +272,47 @@ LRESULT CALLBACK ViewerMain_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM 
     break;
     }
     return FALSE;
+}
+
+// *************************************************************************
+// *				StartOgre:- Terry and Hazel Flanigan 2024		 	   *
+// *************************************************************************
+void StartOgre()
+{
+    KillTimer(App->MainHwnd, 1);
+
+    App->CL_Ogre->Init_Ogre();
+
+   // EndDialog(App->ViewPLeaseWait, LOWORD(0));
+
+    App->flag_OgreStarted = 1;
+
+    App->CL_Ogre->RenderFrame(5);
+   
+    
+
+    //App->CL_Ogre->Ogre_Render_Loop();
+
+    //Close_App();
+
+   // SystemParametersInfo(SPI_SETSCREENSAVEACTIVE, TRUE, NULL, TRUE);
+   // PostQuitMessage(0);
+}
+
+// *************************************************************************
+// *				Close_App:- Terry and Hazel Flanigan 2024	  		   *
+// *************************************************************************
+void Close_App()
+{
+    App->Say("Close Room Builder", (LPSTR)"");
+    // And Finaly
+    if (App->CL_Ogre->mRoot)
+    {
+        delete App->CL_Ogre->mRoot;
+        App->CL_Ogre->mRoot = NULL;
+    }
+
+    PostQuitMessage(0);
 }
 
 // *************************************************************************

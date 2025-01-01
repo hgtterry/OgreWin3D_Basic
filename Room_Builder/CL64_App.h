@@ -114,6 +114,7 @@ public:
 	HFONT Font_Banner;
 
 	bool flag_Debug_App;
+	bool flag_OgreStarted;
 
 	char RB_Directory_FullPath[MAX_PATH];
 };

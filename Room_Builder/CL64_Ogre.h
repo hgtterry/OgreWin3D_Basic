@@ -50,6 +50,7 @@ public:
 
 	void Log_Message_To_File(char* Message);
 	bool ReverseBackSlash(char* buf);
+	void RenderFrame(int How_Many);
 
 	char Return_Chr[MAX_PATH];
 	Ogre::String mResourcePath;

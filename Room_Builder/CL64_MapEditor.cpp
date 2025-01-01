@@ -891,6 +891,7 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Bottom_Left_Window(HWND hDlg, UINT message
 void CL64_MapEditor::Create_Bottom_Right_Window()
 {
 	Bottom_Right_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MAP_BOTTOM_RIGHT, Main_Dlg_Hwnd, (DLGPROC)Bottom_Right_Proc);
+	App->CL_Ogre->RenderHwnd = Bottom_Right_Hwnd;
 }
 
 // *************************************************************************

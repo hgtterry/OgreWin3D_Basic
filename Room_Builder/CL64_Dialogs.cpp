@@ -65,10 +65,10 @@ LRESULT CALLBACK CL64_Dialogs::Proc_Message(HWND hDlg, UINT message, WPARAM wPar
 	{
 	case WM_INITDIALOG:
 	{
-		/*SendDlgItemMessage(hDlg, IDC_STTEXT, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_STTEXT, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_STMESSAGE, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BANNER, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));*/
+		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		SetDlgItemText(hDlg, IDC_STTEXT, App->CL_Dialogs->Message_Text_Header);
 		SetDlgItemText(hDlg, IDC_STMESSAGE, App->CL_Dialogs->Message_Text_Message);
@@ -111,14 +111,14 @@ LRESULT CALLBACK CL64_Dialogs::Proc_Message(HWND hDlg, UINT message, WPARAM wPar
 
 	case WM_NOTIFY:
 	{
-		/*LPNMHDR some_item = (LPNMHDR)lParam;
+		LPNMHDR some_item = (LPNMHDR)lParam;
 
 		if (some_item->idFrom == IDOK)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
 			return CDRF_DODEFAULT;
-		}*/
+		}
 		return CDRF_DODEFAULT;
 	}
 

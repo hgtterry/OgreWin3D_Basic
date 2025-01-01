@@ -329,3 +329,16 @@ void CL64_Ogre::Log_Message_To_File(char* Message)
 		Ogre::LogManager::getSingleton().setDefaultLog(Ogre::LogManager::getSingleton().getLog("GD64_Ogre.log"));
 	}
 }
+
+// *************************************************************************
+// *			RenderFrame:- Terry and Hazel Flanigan 2024				   *
+// *************************************************************************
+void CL64_Ogre::RenderFrame(int How_Many)
+{
+	int Count = 0;
+	while (Count < How_Many)
+	{
+		Ogre::Root::getSingletonPtr()->renderOneFrame();
+		Count++;
+	}
+}
