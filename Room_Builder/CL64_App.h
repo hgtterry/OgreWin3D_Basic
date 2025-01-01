@@ -46,7 +46,7 @@ THE SOFTWARE.
 #include "CL64_Properties_Brushes.h"
 #include "CL64_Properties_Textures.h"
 #include "CL64_Ogre.h"
-
+#include "CL64_Grid.h"
 
 class CL64_App
 {
@@ -76,6 +76,7 @@ public:
 	CL64_Properties_Brushes*	CL_Properties_Brushes;
 	CL64_Properties_Textures*	CL_Properties_Textures;
 	CL64_Ogre*					CL_Ogre;
+	CL64_Grid*					CL_Grid;
 
 	void InitApp(void);
 	void SetBrushes_Fonts(void);

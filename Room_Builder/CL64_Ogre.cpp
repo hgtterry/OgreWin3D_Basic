@@ -66,10 +66,9 @@ void CL64_Ogre::Init_Ogre(void)
 	ModelNode->attachObject(manObj);*/
 
 	// Set Up Grid Functions
-	/*App->CL_Grid->Grid_Update(1);
-	App->CL_Grid->Hair_Update(1);*/
-	/*App->CL_Gizmos->Set_Gizmos();
-	App->CL_ImGui->Init_ImGui();*/
+	App->CL_Grid->Grid_Update(1);
+	App->CL_Grid->Hair_Update(1);
+	
 }
 
 // *************************************************************************

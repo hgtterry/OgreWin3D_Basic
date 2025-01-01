@@ -49,6 +49,7 @@ CL64_App::CL64_App(void)
 	CL_Properties_Brushes =		nullptr;
 	CL_Properties_Textures =	nullptr;
 	CL_Ogre	=					nullptr;
+	CL_Grid =					nullptr;
 
 	hInst = nullptr;
 	MainHwnd = nullptr;
@@ -97,7 +98,8 @@ void CL64_App::InitApp(void)
 	CL_Properties_Brushes =		new CL64_Properties_Brushes();
 	CL_Properties_Textures =	new CL64_Properties_Textures();
 	CL_Ogre =					new CL64_Ogre();
-
+	CL_Grid =					new CL64_Grid();
+	
 	SetBrushes_Fonts();
 }
 
