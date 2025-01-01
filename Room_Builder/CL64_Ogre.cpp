@@ -28,12 +28,20 @@ THE SOFTWARE.
 
 CL64_Ogre::CL64_Ogre()
 {
+	RenderHwnd = nullptr;
+
+	mRoot = nullptr;
+	mWindow = nullptr;
+	mSceneMgr = nullptr;
+	mCamera = nullptr;
+	camNode = nullptr;
+
+	Ogre3D_Listener = nullptr;
+
 	mResourcePath = "";
 	Return_Chr[0] = 0;
 
 	App_Resource_Group = "App_Resource_Group";
-
-	RenderHwnd = nullptr;
 
 }
 
@@ -297,28 +305,14 @@ bool CL64_Ogre::Init_CreateFrameListener(void)
 
 	if (RenderSystemName == "OpenGL Rendering Subsystem")
 	{
-		//Ogre3D_Listener = new CL64_Ogre3D_Listener();
-		//mRoot->addFrameListener(Ogre3D_Listener);
-
-		/*OGL_Listener = new CL64_OGL_Listener();
-		mSceneMgr->addRenderQueueListener(OGL_Listener);
-
-		Bullet_Debug_Listener = new CL64_Bullet_Debug_World();
-		mSceneMgr->addRenderQueueListener(Bullet_Debug_Listener);
-
-		Bullet_Debug_Listener->setDebugMode(Bullet_Debug_Listener->getDebugMode()
-			| btIDebugDraw::DBG_MAX_DEBUG_DRAW_MODE);
-		App->CL_Bullet->dynamicsWorld->setDebugDrawer(Bullet_Debug_Listener);*/
-
+		Ogre3D_Listener = new CL64_Ogre3D_Listener();
+		mRoot->addFrameListener(Ogre3D_Listener);
 	}
 	else
 	{
 		App->Say("OpenGL Rendering Subsystem not allocated ", (LPSTR)"");
 		return FALSE;
 	}
-
-	/*Resource__Listener = new CL64_ResourceListener();
-	Ogre::ResourceGroupManager::getSingleton().addResourceGroupListener(Resource__Listener);*/
 
 	return TRUE;
 }

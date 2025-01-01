@@ -24,48 +24,17 @@ THE SOFTWARE.
 
 #pragma once
 
-#include "CL64_Ogre3D_Listener.h"
-#include "OgreTrays.h"
-#include "SdkSample.h"
-
 using namespace Ogre;
-using namespace OgreBites;
 
-class CL64_Ogre : public SdkSample, public RenderTargetListener
+class CL64_Ogre3D_Listener : public FrameListener
 {
 public:
-	CL64_Ogre();
-	~CL64_Ogre();
+	CL64_Ogre3D_Listener();
+	~CL64_Ogre3D_Listener();
 
-	// Setup --------------------------------
-	void Init_Ogre(void);
-	bool Init_OgreCreateRoot(void);
-	bool Init_Load_Resources(void);
-	bool Init_Configure(void);
-	bool Init_ChooseSceneManager(void);
-	bool Init_CreateCamera(void);
-	bool Init_CreateViewports(void);
-	bool Init_Resources(void);
-	bool Init_CreateFrameListener(void);
+	bool frameStarted(const FrameEvent& evt);
+	bool frameEnded(const FrameEvent& evt);
+	bool frameRenderingQueued(const FrameEvent& evt);
 
-	void Log_Message_To_File(char* Message);
-	bool ReverseBackSlash(char* buf);
-
-	char Return_Chr[MAX_PATH];
-	Ogre::String mResourcePath;
-
-	Ogre::String App_Resource_Group;		// App Resource Group
-
-	Ogre::Root* mRoot;
-	Ogre::RenderWindow* mWindow;
-	Ogre::SceneManager* mSceneMgr;
-	Ogre::Camera* mCamera;
-	Ogre::SceneNode* camNode;
-
-	Ogre::OverlaySystem* mOverlaySystem;
-
-	CL64_Ogre3D_Listener* Ogre3D_Listener;
-
-	HWND RenderHwnd;
 };
 

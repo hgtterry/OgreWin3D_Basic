@@ -22,50 +22,38 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-#pragma once
-
+#include "pch.h"
 #include "CL64_Ogre3D_Listener.h"
-#include "OgreTrays.h"
-#include "SdkSample.h"
 
-using namespace Ogre;
-using namespace OgreBites;
-
-class CL64_Ogre : public SdkSample, public RenderTargetListener
+CL64_Ogre3D_Listener::CL64_Ogre3D_Listener()
 {
-public:
-	CL64_Ogre();
-	~CL64_Ogre();
+}
 
-	// Setup --------------------------------
-	void Init_Ogre(void);
-	bool Init_OgreCreateRoot(void);
-	bool Init_Load_Resources(void);
-	bool Init_Configure(void);
-	bool Init_ChooseSceneManager(void);
-	bool Init_CreateCamera(void);
-	bool Init_CreateViewports(void);
-	bool Init_Resources(void);
-	bool Init_CreateFrameListener(void);
+CL64_Ogre3D_Listener::~CL64_Ogre3D_Listener()
+{
+}
 
-	void Log_Message_To_File(char* Message);
-	bool ReverseBackSlash(char* buf);
+// *************************************************************************
+// *			frameStarted:- Terry and Hazel Flanigan 2025			   *
+// *************************************************************************
+bool CL64_Ogre3D_Listener::frameStarted(const FrameEvent& evt)
+{
 
-	char Return_Chr[MAX_PATH];
-	Ogre::String mResourcePath;
+	return true;
+}
 
-	Ogre::String App_Resource_Group;		// App Resource Group
+// *************************************************************************
+// *		frameRenderingQueued:- Terry and Hazel Flanigan 2025		   *
+// *************************************************************************
+bool CL64_Ogre3D_Listener::frameRenderingQueued(const FrameEvent& evt)
+{
+	return 1;
+}
 
-	Ogre::Root* mRoot;
-	Ogre::RenderWindow* mWindow;
-	Ogre::SceneManager* mSceneMgr;
-	Ogre::Camera* mCamera;
-	Ogre::SceneNode* camNode;
-
-	Ogre::OverlaySystem* mOverlaySystem;
-
-	CL64_Ogre3D_Listener* Ogre3D_Listener;
-
-	HWND RenderHwnd;
-};
-
+// *************************************************************************
+// *			frameEnded:- Terry and Hazel Flanigan 2025				   *
+// *************************************************************************
+bool CL64_Ogre3D_Listener::frameEnded(const FrameEvent& evt)
+{
+	return true;
+}
