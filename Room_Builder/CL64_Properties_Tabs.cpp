@@ -25,21 +25,26 @@ THE SOFTWARE.
 #include "pch.h"
 #include "resource.h"
 #include "CL64_App.h"
-#include "CL64_Tabs_Assets_Dlg.h"
+#include "CL64_Properties_Tabs.h"
 
-CL64_Tabs_Assets_Dlg::CL64_Tabs_Assets_Dlg()
+CL64_Properties_Tabs::CL64_Properties_Tabs()
 {
 	Tabs_Control_Hwnd = nullptr;
+
+	flag_Tab_Templates = 1;
+	flag_Tab_Texture = 0;
+	flag_Tab_Group = 0;
+	flag_Tab_3DSettings = 0;
 }
 
-CL64_Tabs_Assets_Dlg::~CL64_Tabs_Assets_Dlg()
+CL64_Properties_Tabs::~CL64_Properties_Tabs()
 {
 }
 
 // *************************************************************************
 // *	  	Start_Tabs_Control_Dlg:- Terry and Hazel Flanigan 2023		   *
 // *************************************************************************
-void CL64_Tabs_Assets_Dlg::Start_Tabs_Control_Dlg()
+void CL64_Properties_Tabs::Start_Tabs_Control_Dlg()
 {
 
 	Tabs_Control_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_TABSDIALOG, App->MainHwnd, (DLGPROC)Proc_Tabs_Control);
@@ -49,7 +54,7 @@ void CL64_Tabs_Assets_Dlg::Start_Tabs_Control_Dlg()
 // *************************************************************************
 // *        Tabs_Control_Proc:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
-LRESULT CALLBACK CL64_Tabs_Assets_Dlg::Proc_Tabs_Control(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK CL64_Properties_Tabs::Proc_Tabs_Control(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
 
 	switch (message)
@@ -59,7 +64,7 @@ LRESULT CALLBACK CL64_Tabs_Assets_Dlg::Proc_Tabs_Control(HWND hDlg, UINT message
 		SendDlgItemMessage(hDlg, IDC_TBTEXTURES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_TBTEMPLATES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_TBGROUPS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		//SendDlgItemMessage(hDlg, IDC_BT_3DSETTINGS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_3DSETTINGS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		SetWindowLong(hDlg, GWL_EXSTYLE, GetWindowLong(hDlg, GWL_EXSTYLE) | WS_EX_LAYERED);
 		SetLayeredWindowAttributes(hDlg, RGB(213, 222, 242), 230, LWA_ALPHA);
@@ -83,25 +88,25 @@ LRESULT CALLBACK CL64_Tabs_Assets_Dlg::Proc_Tabs_Control(HWND hDlg, UINT message
 		if (some_item->idFrom == IDC_TBTEXTURES)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle_Tabs(item, App->CL_Tabs_Assets_Dlg->Tab_Texture_Flag);
+			App->Custom_Button_Toggle_Tabs(item, App->CL_Properties_Tabs->flag_Tab_Texture);
 			return CDRF_DODEFAULT;
 		}
 
 		if (some_item->idFrom == IDC_TBTEMPLATES)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle_Tabs(item, App->CL_Tabs_Assets_Dlg->Tab_Templates_Flag);
+			App->Custom_Button_Toggle_Tabs(item, App->CL_Properties_Tabs->flag_Tab_Templates);
 			return CDRF_DODEFAULT;
 		}
 
 		if (some_item->idFrom == IDC_TBGROUPS)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle_Tabs(item, App->CL_Tabs_Assets_Dlg->Tab_Group_Flag);
+			App->Custom_Button_Toggle_Tabs(item, App->CL_Properties_Tabs->flag_Tab_Group);
 			return CDRF_DODEFAULT;
 		}
 
-		/*if (some_item->idFrom == IDC_BT_3DSETTINGS && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDC_BT_3DSETTINGS)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_3DSETTINGS));
@@ -111,11 +116,11 @@ LRESULT CALLBACK CL64_Tabs_Assets_Dlg::Proc_Tabs_Control(HWND hDlg, UINT message
 			}
 			else
 			{
-				App->Custom_Button_Toggle(item, App->CLSB_TabsControl->Tab_3DSettings_Flag);
+				App->Custom_Button_Toggle_Tabs(item, App->CL_Properties_Tabs->flag_Tab_3DSettings);
 			}
 
 			return CDRF_DODEFAULT;
-		}*/
+		}
 
 		return CDRF_DODEFAULT;
 	}

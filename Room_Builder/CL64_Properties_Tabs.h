@@ -23,19 +23,20 @@ THE SOFTWARE.
 */
 
 #pragma once
-class CL64_Tabs_Assets_Dlg
+class CL64_Properties_Tabs
 {
 public:
-	CL64_Tabs_Assets_Dlg();
-	~CL64_Tabs_Assets_Dlg();
+	CL64_Properties_Tabs();
+	~CL64_Properties_Tabs();
 
 	void Start_Tabs_Control_Dlg();
 
 	HWND Tabs_Control_Hwnd;
 
-	bool Tab_Templates_Flag;
-	bool Tab_Texture_Flag;
-	bool Tab_Group_Flag;
+	bool flag_Tab_Templates;
+	bool flag_Tab_Texture;
+	bool flag_Tab_Group;
+	bool flag_Tab_3DSettings;
 
 private:
 	static LRESULT CALLBACK Proc_Tabs_Control(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);

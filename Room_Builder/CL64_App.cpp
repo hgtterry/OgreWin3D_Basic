@@ -44,7 +44,7 @@ CL64_App::CL64_App(void)
 	CL_Array =				nullptr;
 	CL_SelFaceList =		nullptr;
 	CL_Dialogs =			nullptr;
-	CL_Tabs_Assets_Dlg =	nullptr;
+	CL_Properties_Tabs =	nullptr;
 
 	hInst = nullptr;
 	MainHwnd = nullptr;
@@ -85,7 +85,7 @@ void CL64_App::InitApp(void)
 	CL_Array =				new CL64_Array();
 	CL_SelFaceList =		new CL64_SelFaceList();
 	CL_Dialogs =			new CL64_Dialogs();
-	CL_Tabs_Assets_Dlg =	new CL64_Tabs_Assets_Dlg();
+	CL_Properties_Tabs =	new CL64_Properties_Tabs();
 
 	SetBrushes_Fonts();
 }
@@ -112,6 +112,25 @@ void CL64_App::SetBrushes_Fonts(void)
 	Font_CB18 = CreateFont(-18, 0, 0, 0, 0, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Courier Black");
 	Font_Arial20 = CreateFont(-20, 0, 0, 0, 0, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Arial");
 	Font_Banner = CreateFont(-30, 0, 0, 0, FW_BOLD, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Aerial Black");
+}
+
+// *************************************************************************
+// *					Custom_Button_Greyed Terry Bernie   		  	   *
+// *************************************************************************
+bool CL64_App::Custom_Button_Greyed(LPNMCUSTOMDRAW item)
+{
+	HPEN pen = CreatePen(PS_INSIDEFRAME, 0, RGB(0, 0, 255)); // Idle 
+
+	HGDIOBJ old_pen = SelectObject(item->hdc, pen);
+	HGDIOBJ old_brush = SelectObject(item->hdc, Brush_Tabs_UnSelected);
+
+	RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 5, 5);
+
+	SelectObject(item->hdc, old_pen);
+	SelectObject(item->hdc, old_brush);
+	DeleteObject(pen);
+
+	return CDRF_DODEFAULT;
 }
 
 // *************************************************************************

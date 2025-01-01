@@ -41,7 +41,7 @@ THE SOFTWARE.
 #include "CL64_Array.h"
 #include "CL64_SelFaceList.h"
 #include "CL64_Dialogs.h"
-#include "CL64_Tabs_Assets_Dlg.h"
+#include "CL64_Properties_Tabs.h"
 
 class CL64_App
 {
@@ -66,11 +66,14 @@ public:
 	CL64_Array*				CL_Array;
 	CL64_SelFaceList*		CL_SelFaceList;
 	CL64_Dialogs*			CL_Dialogs;
-	CL64_Tabs_Assets_Dlg*	CL_Tabs_Assets_Dlg;
+	CL64_Properties_Tabs*	CL_Properties_Tabs;
 
 	void InitApp(void);
 	void SetBrushes_Fonts(void);
+
+	bool Custom_Button_Greyed(LPNMCUSTOMDRAW item);
 	bool Custom_Button_Toggle_Tabs(LPNMCUSTOMDRAW item, bool Toggle);
+
 	void Flash_Window();
 	void SetMainWinCentre(void) const;
 
