@@ -23,7 +23,6 @@
 #define IDD_PROPS_TEMPLATES             137
 #define IDD_PROPS_BRUSHES               138
 #define IDD_PROPS_TEXTURES              139
-#define IDD_DIALOG1                     140
 #define IDD_PLEASEWAIT                  140
 #define IDC_BANNER                      1000
 #define IDC_STTEXT                      1001
@@ -38,6 +37,9 @@
 #define IDC_ST_GD_BRUSHCOUNT            1010
 #define IDC_BRUSHCOUNT                  1011
 #define IDC_STWAIT                      1012
+#define IDC_LIST1                       1013
+#define IDC_LISTTDTEXTURES              1013
+#define IDC_ST_GD_TEXTURES              1014
 #define ID_DEBUG_GENERAL                32771
 #define ID_TEMPLATES_INSERT             32772
 #define ID_GENERALSELECT                32886
@@ -51,7 +53,7 @@
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        141
 #define _APS_NEXT_COMMAND_VALUE         32773
-#define _APS_NEXT_CONTROL_VALUE         1013
+#define _APS_NEXT_CONTROL_VALUE         1015
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif

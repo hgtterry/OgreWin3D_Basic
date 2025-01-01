@@ -43,6 +43,8 @@ CL64_App::CL64_App(void)
 	CL_SelBrushList =			nullptr;
 	CL_Array =					nullptr;
 	CL_SelFaceList =			nullptr;
+	CL_WadFile =				nullptr;
+	// ------------------------------
 	CL_Dialogs =				nullptr;
 	CL_Properties_Tabs =		nullptr;
 	CL_Properties_Templates =	nullptr;
@@ -95,6 +97,8 @@ void CL64_App::InitApp(void)
 	CL_SelBrushList =			new CL64_SelBrushList();
 	CL_Array =					new CL64_Array();
 	CL_SelFaceList =			new CL64_SelFaceList();
+	CL_WadFile =				new CL64_WadFile();
+	// ------------------------------
 	CL_Dialogs =				new CL64_Dialogs();
 	CL_Properties_Tabs =		new CL64_Properties_Tabs();
 	CL_Properties_Templates =	new CL64_Properties_Templates();
