@@ -162,6 +162,7 @@
     <ClInclude Include="CL64_MapEditor.h" />
     <ClInclude Include="CL64_Maths.h" />
     <ClInclude Include="CL64_Prefs.h" />
+    <ClInclude Include="CL64_Properties_Brushes.h" />
     <ClInclude Include="CL64_Properties_Tabs.h" />
     <ClInclude Include="CL64_Properties_Templates.h" />
     <ClInclude Include="CL64_Render.h" />
@@ -189,6 +190,7 @@
     <ClCompile Include="CL64_MapEditor.cpp" />
     <ClCompile Include="CL64_Maths.cpp" />
     <ClCompile Include="CL64_Prefs.cpp" />
+    <ClCompile Include="CL64_Properties_Brushes.cpp" />
     <ClCompile Include="CL64_Properties_Tabs.cpp" />
     <ClCompile Include="CL64_Properties_Templates.cpp" />
     <ClCompile Include="CL64_Render.cpp" />

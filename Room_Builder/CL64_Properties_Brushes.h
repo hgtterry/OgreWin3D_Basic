@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2024 Inflanite_HGT W.T.Flanigan H.C.Flanigan
+Copyright (c) 2024 - 2025 Inflanite_HGT W.T.Flanigan H.C.Flanigan
 
 Room Builder
 
@@ -23,25 +23,19 @@ THE SOFTWARE.
 */
 
 #pragma once
-class CL64_Properties_Tabs
+class CL64_Properties_Brushes
 {
 public:
-	CL64_Properties_Tabs();
-	~CL64_Properties_Tabs();
+	CL64_Properties_Brushes();
+	~CL64_Properties_Brushes();
 
-	void Start_Tabs_Control_Dlg();
+	void Show_Brushes_Dialog(bool Show);
+	void Start_Brush_Tabs_Dialog();
 
-	HWND Tabs_Control_Hwnd;
-
-	bool flag_Tab_Templates;
-	bool flag_Tab_Texture;
-	bool flag_Tab_Group;
-	bool flag_Tab_3DSettings;
+	HWND BrushesDlg_Hwnd;
 
 private:
-	static LRESULT CALLBACK Proc_Tabs_Control(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
-
-	void Hide_Dialogs();
+	static LRESULT CALLBACK Proc_Brush_Tabs(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 };
 

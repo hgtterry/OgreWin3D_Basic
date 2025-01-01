@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2024 Inflanite_HGT W.T.Flanigan H.C.Flanigan
+Copyright (c) 2024 - 2025 Inflanite_HGT W.T.Flanigan H.C.Flanigan
 
 Room Builder
 
@@ -49,13 +49,16 @@ void CL64_Properties_Tabs::Start_Tabs_Control_Dlg()
 
 	Tabs_Control_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_TABSDIALOG, App->MainHwnd, (DLGPROC)Proc_Tabs_Control);
 
+	App->CL_Properties_Brushes->Start_Brush_Tabs_Dialog();
+	App->CL_Properties_Brushes->Show_Brushes_Dialog(false);
+
 	App->CL_Properties_Templates->Start_TemplatesDialog();
 	App->CL_Properties_Templates->Show_TemplatesDialog(true);
 
 }
 
 // *************************************************************************
-// *        Tabs_Control_Proc:- Terry and Hazel Flanigan 2023			   *
+// *        Tabs_Control_Proc:- Terry and Hazel Flanigan 2025			   *
 // *************************************************************************
 LRESULT CALLBACK CL64_Properties_Tabs::Proc_Tabs_Control(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -140,25 +143,25 @@ LRESULT CALLBACK CL64_Properties_Tabs::Proc_Tabs_Control(HWND hDlg, UINT message
 			return TRUE;
 		}*/
 
-		/*if (LOWORD(wParam) == IDC_TBTEMPLATES)
+		if (LOWORD(wParam) == IDC_TBTEMPLATES)
 		{
-			App->CLSB_TabsControl->Hide_Dialogs();
-			App->CLSB_TabsControl->Tab_Templates_Flag = 1;
-			App->CLSB_Tabs_Templates_Dlg->Show_TemplatesDialog(true);
+			App->CL_Properties_Tabs->Hide_Dialogs();
+			App->CL_Properties_Tabs->flag_Tab_Templates = 1;
+			App->CL_Properties_Templates->Show_TemplatesDialog(true);
 
-			RedrawWindow(App->CLSB_TabsControl->Tabs_Control_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			RedrawWindow(App->CL_Properties_Tabs->Tabs_Control_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			return TRUE;
-		}*/
+		}
 
-		/*if (LOWORD(wParam) == IDC_TBGROUPS)
+		if (LOWORD(wParam) == IDC_TBGROUPS)
 		{
-			App->CLSB_TabsControl->Hide_Dialogs();
-			App->CLSB_TabsControl->Tab_Group_Flag = 1;
-			App->CL_TabsGroups_Dlg->Show_GroupsDialog(true);
+			App->CL_Properties_Tabs->Hide_Dialogs();
+			App->CL_Properties_Tabs->flag_Tab_Group = 1;
+			App->CL_Properties_Brushes->Show_Brushes_Dialog(true);
 
-			RedrawWindow(App->CLSB_TabsControl->Tabs_Control_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			RedrawWindow(App->CL_Properties_Tabs->Tabs_Control_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			return TRUE;
-		}*/
+		}
 
 		//if (LOWORD(wParam) == IDC_BT_3DSETTINGS)
 		//{
@@ -214,4 +217,22 @@ LRESULT CALLBACK CL64_Properties_Tabs::Proc_Tabs_Control(HWND hDlg, UINT message
 	}
 	}
 	return FALSE;
+}
+
+// *************************************************************************
+// *	  	Hide_Dialogs:- Terry and Hazel Flanigan 2025				   *
+// *************************************************************************
+void CL64_Properties_Tabs::Hide_Dialogs()
+{
+	flag_Tab_Texture = 0;
+	flag_Tab_Group = 0;
+	flag_Tab_Templates = 0;
+	flag_Tab_3DSettings = 0;
+
+	//App->CLSB_TextureDialog->Show_Dialog(false);
+	App->CL_Properties_Brushes->Show_Brushes_Dialog(false);
+	App->CL_Properties_Templates->Show_TemplatesDialog(false);
+	//App->CLSB_Tabs_True3D_Dlg->Show_Game_Dlg(0);
+
+	RedrawWindow(Tabs_Control_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 }

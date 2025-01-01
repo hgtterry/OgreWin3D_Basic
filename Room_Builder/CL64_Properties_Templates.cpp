@@ -102,7 +102,17 @@ LRESULT CALLBACK CL64_Properties_Templates::Proc_Templates(HWND hDlg, UINT messa
 		if (some_item->idFrom == IDC_BTINSERT)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Normal(item);
+
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BTINSERT));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
+			else
+			{
+				App->Custom_Button_Normal(item);
+			}
+
 			return CDRF_DODEFAULT;
 		}
 
@@ -129,6 +139,8 @@ LRESULT CALLBACK CL64_Properties_Templates::Proc_Templates(HWND hDlg, UINT messa
 
 			App->CL_Doc->DoGeneralSelect();
 			App->CL_Doc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
+
+			App->CL_Properties_Templates->Enable_Insert_Button(false);
 
 			return 1;
 		}
