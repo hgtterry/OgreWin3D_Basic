@@ -41,6 +41,7 @@ public:
 	void FaceList_RemoveFace(FaceList* pList, int WhichFace);
 	FaceList* FaceList_Clone(const FaceList* pList);
 	void FaceList_SetDirty(FaceList* pList);
+	signed int FaceList_GetUsedTextures(const FaceList* pList, geBoolean* WrittenTex, CL64_WadFile* WadFile);
 
 
 };

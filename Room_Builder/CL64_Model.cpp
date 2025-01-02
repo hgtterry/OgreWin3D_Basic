@@ -28,6 +28,9 @@ THE SOFTWARE.
 
 CL64_Model::CL64_Model()
 {
+	BrushCount = 0;
+	Brush_Face_Count = 0;
+
 	int Count = 0;
 	while (Count < 11999)
 	{
@@ -38,4 +41,21 @@ CL64_Model::CL64_Model()
 
 CL64_Model::~CL64_Model()
 {
+}
+
+// *************************************************************************
+// *			Create_Brush_XX:- Terry and Hazel Flanigan 2025		  	   *
+// *************************************************************************
+void CL64_Model::Create_Brush_XX(int Index)
+{
+	if (B_Brush[Index] != nullptr)
+	{
+		delete B_Brush[Index];
+		B_Brush[Index] = nullptr;
+	}
+
+	B_Brush[Index] = new Base_Brush();
+
+	B_Brush[Index]->Vertice_Count = 0;
+	B_Brush[Index]->Face_Count = 0;
 }

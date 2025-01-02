@@ -23,6 +23,9 @@ THE SOFTWARE.
 */
 
 #pragma once
+
+typedef struct tag_Level3 Level3;
+
 class CL64_Mesh_Mgr
 {
 public:
@@ -31,11 +34,25 @@ public:
 
 	bool Update_World();
 	void WE_Build_Brush_List(int ExpSelected);
-	bool WE_Level_Build_Brushes(Level* pLevel, const char* Filename, BrushList* BList, int ExpSelected, geBoolean ExpLights, int GroupID);
-	bool WE_BrushList_Decode(BrushList* BList, geBoolean SubBrush);
+	bool WE_Level_Build_Brushes(Level3* pLevel, const char* Filename, BrushList* BList, int ExpSelected, geBoolean ExpLights, int GroupID);
+	bool WE_BrushList_Decode(BrushList* BList, signed int SubBrush);
+	bool WE_Brush_Create(const Brush* b, int Actual_Brush_Index);
+	bool WE_FaceList_Create(const Brush* b, const FaceList* pList, int BrushCount, int SubBrushCount, int Actual_Brush_Index);
 
 	bool WE_Convert_All_Texture_Groups();
 	void Delete_Brush_List();
+	int Get_Adjusted_Index(int RealIndex);
 
+	int	mBrushCount;
+	int	mSubBrushCount;
+	int mTextureCount;
+	int Global_Faces_Index;
+	int Actual_Brush_Index;
+	int mAdjusedIndex_Store[500];
+	int IsTextureAlpha[20];
+	int mBrush_Index;
+
+	char mBrush_Name[MAX_PATH];
+	char TextureName2[20][MAX_PATH];
 };
 

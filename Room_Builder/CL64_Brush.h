@@ -25,6 +25,7 @@ THE SOFTWARE.
 #pragma once
 #include "CL64_Box.h"
 #include "CL64_Face.h"
+#include "CL64_WadFile.h"
 
 typedef struct tag_FaceList FaceList;
 typedef struct tag_BrushList BrushList;
@@ -100,6 +101,8 @@ public:
 	signed int	Brush_TestBoundsIntersect(const Brush* b, const Box3d* pBox);
 	signed int Brush_IsHollow(const Brush* b);
 	const char* Brush_GetName(const Brush* b);
+	signed int BrushList_GetUsedTextures(BrushList* BList, signed int* UsedTex, CL64_WadFile* WadFile);
+	signed int Brush_GetUsedTextures(const Brush* b, geBoolean* UsedTex, CL64_WadFile* WadFile);
 
 };
 

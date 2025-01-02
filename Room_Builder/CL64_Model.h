@@ -30,6 +30,11 @@ public:
 	CL64_Model();
 	~CL64_Model();
 
+	void Create_Brush_XX(int Index);
+
 	Base_Brush* B_Brush[12000];
+
+	int BrushCount;
+	int Brush_Face_Count;
 };
 

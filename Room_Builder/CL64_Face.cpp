@@ -584,3 +584,80 @@ void CL64_Face::Face_SetTextureScale(Face* f, const float xScale, const float yS
 
 	f->Tex.DirtyFlag = true;
 }
+
+// *************************************************************************
+// *						Face_SetTextureName						 	   *
+// *************************************************************************
+void CL64_Face::Face_SetTextureName(Face* f, const char* pName)
+{
+	// copy the name (safely), and then nul-terminate
+	strncpy(f->Tex.Name, pName, sizeof(f->Tex.Name));
+	f->Tex.Name[sizeof(f->Tex.Name) - 1] = '\0';
+}
+
+// *************************************************************************
+// *							Face_SetTextureSize					 	   *
+// *************************************************************************
+void CL64_Face::Face_SetTextureSize(Face* f, const int txSize, const int tySize)
+{
+	f->Tex.txSize = txSize;
+	f->Tex.tySize = tySize;
+}
+
+// *************************************************************************
+// *							Face_GetTextureName					 	   *
+// *************************************************************************
+char const* CL64_Face::Face_GetTextureName(const Face* f)
+{
+	return	f->Tex.Name;
+}
+
+// *************************************************************************
+// *							Face_GetTextureSize					 	   *
+// *************************************************************************
+void CL64_Face::Face_GetTextureSize(const Face* f, int* ptxSize, int* ptySize)
+{
+	*ptxSize = f->Tex.txSize;
+	*ptySize = f->Tex.tySize;
+}
+
+signed int	Face_IsTextureLocked(const Face* f)
+{
+	return (f->Flags & FACE_TEXTURELOCKED) ? GE_TRUE : GE_FALSE;
+}
+
+static void Face_UpdateTextureVecs(Face* f)
+{
+	if (Face_IsTextureLocked(f))
+	{
+		//Face_UpdateLockedTextureVecs(f);
+	}
+	else
+	{
+		//Face_UpdateWorldTextureVecs(f);
+	}
+}
+
+
+
+// *************************************************************************
+// *							Face_GetTextureVecs					 	   *
+// *************************************************************************
+const TexInfo_Vectors* CL64_Face::Face_GetTextureVecs(const Face* f)
+{
+
+	// if info has been changed then we have to re-calculate the vecs...
+	if (f->Tex.DirtyFlag)
+	{
+		//make sure the texinfos plane and vecs are good
+		Face_SetPlaneFromFace((Face*)f);
+
+		// The cast is kinda ugly, but we really want the parameter
+		// to this function to be const!
+		// mutable would be nice here, huh?
+		Face_UpdateTextureVecs((Face*)f);
+		((Face*)f)->Tex.DirtyFlag = GE_FALSE;
+	}
+
+	return &(f->Tex.TVecs);
+}

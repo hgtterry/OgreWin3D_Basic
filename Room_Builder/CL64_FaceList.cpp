@@ -198,3 +198,27 @@ void CL64_FaceList::FaceList_SetDirty(FaceList* pList)
 {
 	pList->Dirty = true;
 }
+
+// *************************************************************************
+// *					FaceList_GetUsedTextures					 	   *
+// *************************************************************************
+signed int CL64_FaceList::FaceList_GetUsedTextures(const FaceList* pList, geBoolean* WrittenTex, CL64_WadFile* WadFile)
+{
+	int i, index;
+	for (i = 0; i < pList->NumFaces; i++)
+	{
+		index = App->CL_Face->Face_GetTextureDibId(pList->Faces[i]);
+
+		if (index < WadFile->mBitmapCount)
+			WrittenTex[index] = GE_TRUE;
+		else
+		{
+			WrittenTex[0] = GE_TRUE;
+			App->CL_Face->Face_SetTextureDibId(pList->Faces[i], 0);
+			App->CL_Face->Face_SetTextureName(pList->Faces[i], WadFile->mBitmaps[0].Name);
+			App->CL_Face->Face_SetTextureSize(pList->Faces[i], WadFile->mBitmaps[0].Width, WadFile->mBitmaps[0].Height);
+		}
+	}
+
+	return GE_TRUE;
+}

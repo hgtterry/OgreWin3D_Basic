@@ -1113,3 +1113,55 @@ const char* CL64_Brush::Brush_GetName(const Brush* b)
 	return	b->Name;
 }
 
+// *************************************************************************
+// *					BrushList_GetUsedTextures						   *
+// *************************************************************************
+signed int CL64_Brush::BrushList_GetUsedTextures(BrushList* BList, signed int* UsedTex, CL64_WadFile* WadFile)
+{
+	Brush* pBrush;
+	BrushIterator bi;
+
+	pBrush = BrushList_GetFirst(BList, &bi);
+	while (pBrush != NULL)
+	{
+		if (!Brush_GetUsedTextures(pBrush, UsedTex, WadFile)) return GE_FALSE;
+
+		pBrush = BrushList_GetNext(&bi);
+	}
+	return GE_TRUE;
+}
+
+// *************************************************************************
+// *						Brush_GetUsedTextures						   *
+// *************************************************************************
+signed int CL64_Brush::Brush_GetUsedTextures(const Brush* b, geBoolean* UsedTex, CL64_WadFile* WadFile)
+{
+	assert(UsedTex);
+	assert(b);
+
+	switch (b->Type)
+	{
+	case	BRUSH_MULTI:
+		return BrushList_GetUsedTextures(b->BList, UsedTex, WadFile);
+
+	case	BRUSH_LEAF:
+		if (b->BList)
+			return BrushList_GetUsedTextures(b->BList, UsedTex, WadFile);
+		else
+		{
+			if (!(b->Flags & (BRUSH_HOLLOW | BRUSH_HOLLOWCUT | BRUSH_SUBTRACT)))
+				return App->CL_FaceList->FaceList_GetUsedTextures(b->Faces, UsedTex, WadFile);
+		}
+		break;
+
+	case	BRUSH_CSG:
+		if (!(b->Flags & (BRUSH_HOLLOW | BRUSH_HOLLOWCUT | BRUSH_SUBTRACT)))
+			return App->CL_FaceList->FaceList_GetUsedTextures(b->Faces, UsedTex, WadFile);
+		break;
+	default:
+		assert(0);		// invalid brush type
+		break;
+	}
+	return GE_TRUE;
+}
+
