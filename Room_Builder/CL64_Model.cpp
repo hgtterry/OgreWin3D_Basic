@@ -22,20 +22,20 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-#pragma once
-class CL64_Mesh_Mgr
+#include "pch.h"
+#include "CL64_App.h"
+#include "CL64_Model.h"
+
+CL64_Model::CL64_Model()
 {
-public:
-	CL64_Mesh_Mgr();
-	~CL64_Mesh_Mgr();
+	int Count = 0;
+	while (Count < 11999)
+	{
+		B_Brush[Count] = nullptr;
+		Count++;
+	}
+}
 
-	bool Update_World();
-	void WE_Build_Brush_List(int ExpSelected);
-	bool WE_Level_Build_Brushes(Level* pLevel, const char* Filename, BrushList* BList, int ExpSelected, geBoolean ExpLights, int GroupID);
-	bool WE_BrushList_Decode(BrushList* BList, geBoolean SubBrush);
-
-	bool WE_Convert_All_Texture_Groups();
-	void Delete_Brush_List();
-
-};
-
+CL64_Model::~CL64_Model()
+{
+}

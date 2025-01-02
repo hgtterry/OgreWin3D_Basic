@@ -149,6 +149,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Base_Brush.h" />
     <ClInclude Include="CL64_App.h" />
     <ClInclude Include="CL64_Array.h" />
     <ClInclude Include="CL64_Box.h" />
@@ -165,6 +166,7 @@
     <ClInclude Include="CL64_MapEditor.h" />
     <ClInclude Include="CL64_Maths.h" />
     <ClInclude Include="CL64_Mesh_Mgr.h" />
+    <ClInclude Include="CL64_Model.h" />
     <ClInclude Include="CL64_Ogre.h" />
     <ClInclude Include="CL64_Ogre3D_Listener.h" />
     <ClInclude Include="CL64_Panels.h" />
@@ -185,6 +187,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Base_Brush.cpp" />
     <ClCompile Include="CL64_App.cpp" />
     <ClCompile Include="CL64_Array.cpp" />
     <ClCompile Include="CL64_Box.cpp" />
@@ -201,6 +204,7 @@
     <ClCompile Include="CL64_MapEditor.cpp" />
     <ClCompile Include="CL64_Maths.cpp" />
     <ClCompile Include="CL64_Mesh_Mgr.cpp" />
+    <ClCompile Include="CL64_Model.cpp" />
     <ClCompile Include="CL64_Ogre.cpp" />
     <ClCompile Include="CL64_Ogre3D_Listener.cpp" />
     <ClCompile Include="CL64_Panels.cpp" />

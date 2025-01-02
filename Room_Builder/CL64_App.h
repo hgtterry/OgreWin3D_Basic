@@ -52,6 +52,7 @@ THE SOFTWARE.
 #include "CL64_Grid.h"
 #include "CL64_Panels.h"
 #include "CL64_Keyboard.h"
+#include "CL64_Model.h"
 
 class CL64_App
 {
@@ -86,6 +87,7 @@ public:
 	CL64_Grid*					CL_Grid;
 	CL64_Panels*				CL_Panels;
 	CL64_Keyboard*				CL_Keyboard;
+	CL64_Model*					CL_Model;
 
 	void InitApp(void);
 	void SetBrushes_Fonts(void);

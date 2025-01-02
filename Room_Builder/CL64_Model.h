@@ -21,21 +21,15 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#include "Base_Brush.h"
 
 #pragma once
-class CL64_Mesh_Mgr
+class CL64_Model
 {
 public:
-	CL64_Mesh_Mgr();
-	~CL64_Mesh_Mgr();
+	CL64_Model();
+	~CL64_Model();
 
-	bool Update_World();
-	void WE_Build_Brush_List(int ExpSelected);
-	bool WE_Level_Build_Brushes(Level* pLevel, const char* Filename, BrushList* BList, int ExpSelected, geBoolean ExpLights, int GroupID);
-	bool WE_BrushList_Decode(BrushList* BList, geBoolean SubBrush);
-
-	bool WE_Convert_All_Texture_Groups();
-	void Delete_Brush_List();
-
+	Base_Brush* B_Brush[12000];
 };
 
