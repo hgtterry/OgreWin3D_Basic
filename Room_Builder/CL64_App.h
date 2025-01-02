@@ -50,6 +50,7 @@ THE SOFTWARE.
 #include "CL64_Ogre.h"
 #include "CL64_Grid.h"
 #include "CL64_Panels.h"
+#include "CL64_Keyboard.h"
 
 class CL64_App
 {
@@ -82,7 +83,7 @@ public:
 	CL64_Ogre*					CL_Ogre;
 	CL64_Grid*					CL_Grid;
 	CL64_Panels*				CL_Panels;
-
+	CL64_Keyboard*				CL_Keyboard;
 
 	void InitApp(void);
 	void SetBrushes_Fonts(void);

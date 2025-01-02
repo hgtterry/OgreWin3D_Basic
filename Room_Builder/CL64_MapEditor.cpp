@@ -170,7 +170,7 @@ void CL64_MapEditor::Init_Map_Views()
 	App->CL_MapEditor->Create_Top_Left_Window();
 	App->CL_MapEditor->Create_Top_Right_Window();
 	App->CL_MapEditor->Create_Bottom_Left_Window();
-	App->CL_MapEditor->Create_Bottom_Right_Window();
+	App->CL_MapEditor->Create_Bottom_Right_Ogre();
 
 	RECT rcl;
 	GetClientRect(App->MainHwnd, &rcl);
@@ -888,16 +888,16 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Bottom_Left_Window(HWND hDlg, UINT message
 // *************************************************************************
 // *	  Create_Bottom_Right_Window:- Terry and Hazel Flanigan 2024	   *
 // *************************************************************************
-void CL64_MapEditor::Create_Bottom_Right_Window()
+void CL64_MapEditor::Create_Bottom_Right_Ogre()
 {
-	Bottom_Right_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MAP_BOTTOM_RIGHT, Main_Dlg_Hwnd, (DLGPROC)Proc_Bottom_Right);
+	Bottom_Right_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MAP_BOTTOM_RIGHT, Main_Dlg_Hwnd, (DLGPROC)Proc_Bottom_Right_Ogre);
 	App->CL_Ogre->RenderHwnd = Bottom_Right_Hwnd;
 }
 
 // *************************************************************************
-// *			Proc_Bottom_Right:- Terry and Hazel Flanigan 2024 		   *
+// *		Proc_Bottom_Right_Ogre:- Terry and Hazel Flanigan 2024 		   *
 // *************************************************************************
-LRESULT CALLBACK CL64_MapEditor::Proc_Bottom_Right(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK CL64_MapEditor::Proc_Bottom_Right_Ogre(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	switch (message)
 	{
@@ -918,6 +918,13 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Bottom_Right(HWND hDlg, UINT message, WPAR
 		{
 			return (LONG)App->BlackBrush;
 		}
+	}
+
+	case WM_MOUSEMOVE: // ok up and running and we have a loop for mouse
+	{
+		//App->Flash_Window();
+
+		break;
 	}
 
 	}

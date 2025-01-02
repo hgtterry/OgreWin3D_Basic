@@ -60,14 +60,14 @@ private:
 	static LRESULT CALLBACK Proc_Top_Left_Window(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Proc_Top_Right_Window(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Proc_Bottom_Left_Window(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
-	static LRESULT CALLBACK Proc_Bottom_Right(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Proc_Bottom_Right_Ogre(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 
 
 	void Create_Top_Left_Window();
 	void Create_Top_Right_Window();
 	void Create_Bottom_Left_Window();
-	void Create_Bottom_Right_Window();
+	void Create_Bottom_Right_Ogre();
 
 	void Resize_Windows(HWND hDlg, int NewWidth, int NewDepth);
 

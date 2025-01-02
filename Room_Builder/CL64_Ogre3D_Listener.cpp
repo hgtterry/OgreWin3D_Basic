@@ -35,6 +35,11 @@ CL64_Ogre3D_Listener::CL64_Ogre3D_Listener()
 	mTranslateVector = Ogre::Vector3::ZERO;
 	mMoveScale = 0;
 
+	mRotX = 0;
+	mRotY = 0;
+
+	CameraMode = Enums::Cam_Mode_Model;
+
 	flag_StopOgre = 0;
 }
 
@@ -56,6 +61,16 @@ bool CL64_Ogre3D_Listener::frameStarted(const FrameEvent& evt)
 // *************************************************************************
 bool CL64_Ogre3D_Listener::frameRenderingQueued(const FrameEvent& evt)
 {
+	if (CameraMode == Enums::Cam_Mode_None)
+	{
+		return 1;
+	}
+
+	if (CameraMode == Enums::Cam_Mode_Model)
+	{
+		Mode_Camera_Model(evt.timeSinceLastFrame);
+	}
+
 	return 1;
 }
 
@@ -70,4 +85,44 @@ bool CL64_Ogre3D_Listener::frameEnded(const FrameEvent& evt)
 	}
 
 	return true;
+}
+
+// *************************************************************************
+// *		Mode_Camera_Model:- Terry and Hazel Flanigan 2025  			   *
+// *************************************************************************
+void CL64_Ogre3D_Listener::Mode_Camera_Model(float DeltaTime)
+{
+	mRotX = 0;
+	mRotY = 0;
+
+	mTranslateVector = Ogre::Vector3::ZERO;
+
+	mMoveScale = mMoveSensitivity * DeltaTime;
+
+	App->CL_Keyboard->Keyboard_Mode_Model(DeltaTime);
+
+	// Left Mouse
+	/*if (flag_LeftMouseDown == 1 && flag_RightMouseDown == 0)
+	{
+		Capture_LeftMouse_Model();
+	}*/
+
+	// Right Mouse
+	//if (flag_LeftMouseDown == 0 && flag_RightMouseDown == 1)
+	//{
+	//	//Capture_RightMouse_Model();
+	//}
+
+	MoveCamera();
+}
+
+// *************************************************************************
+// *			MoveCamera:- Terry and Hazel Flanigan 2025 				   *
+// *************************************************************************
+void CL64_Ogre3D_Listener::MoveCamera(void)
+{
+	mCamNode->yaw(mRotX, Ogre::Node::TS_PARENT);
+	mCamNode->pitch(mRotY);
+	mCamNode->translate(mTranslateVector, Ogre::Node::TS_LOCAL); // Position Relative
+	Wheel = 0;
 }

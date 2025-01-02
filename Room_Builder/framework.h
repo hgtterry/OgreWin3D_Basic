@@ -30,3 +30,15 @@
 #include "OgreTextAreaOverlayElement.h"
 
 #define Debug App->Say_Win("Here");//, "  Internal Debug Message  ");
+
+namespace Enums
+{
+	enum Camera
+	{
+		Cam_Mode_None = 0,
+		Cam_Mode_First = 1,
+		Cam_Mode_Free = 2,
+		Cam_Mode_Third = 3,
+		Cam_Mode_Model = 4
+	};
+}

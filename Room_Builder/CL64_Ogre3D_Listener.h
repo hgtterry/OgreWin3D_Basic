@@ -36,11 +36,18 @@ public:
 	bool frameEnded(const FrameEvent& evt);
 	bool frameRenderingQueued(const FrameEvent& evt);
 
+	void Mode_Camera_Model(float DeltaTime);
+	void MoveCamera(void);
+
 	Ogre::SceneNode* mCamNode;
 	float mMoveSensitivity;
 	float mMoveScale;
 
+	int CameraMode;
 	int	Wheel;
+
+	Radian		mRotX;
+	Radian		mRotY;
 
 	Vector3	mTranslateVector;
 
