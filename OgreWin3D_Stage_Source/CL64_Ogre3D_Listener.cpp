@@ -35,7 +35,7 @@ CL64_Ogre3D_Listener::CL64_Ogre3D_Listener(void)
 
 	CameraMode = Enums::Cam_Mode_Model;
 
-	mRotX = 0;;
+	mRotX = 0;
 	mRotY = 0;
 
 	mTranslateVector = Ogre::Vector3::ZERO;

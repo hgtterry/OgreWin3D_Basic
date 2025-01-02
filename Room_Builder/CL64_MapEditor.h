@@ -47,6 +47,8 @@ public:
 	void Init_Views();
 	void Render_RenderBrushFacesOrtho(const ViewVars* Cam, Brush* b, HDC ViewDC);
 
+	HWND Bottom_Right_Hwnd;
+
 	float GridSize, GridSnapSize;
 
 	ViewVars* VCam[4];
@@ -61,8 +63,6 @@ private:
 	static LRESULT CALLBACK Proc_Top_Right_Window(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Proc_Bottom_Left_Window(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Proc_Bottom_Right_Ogre(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
-
-
 
 	void Create_Top_Left_Window();
 	void Create_Top_Right_Window();
@@ -94,7 +94,7 @@ private:
 	HWND Left_Window_Hwnd;
 	HWND Right_Window_Hwnd;
 	HWND Bottom_Left_Hwnd;
-	HWND Bottom_Right_Hwnd;
+	
 
 	HBRUSH BackGround_Brush;
 

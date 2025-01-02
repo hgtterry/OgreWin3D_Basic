@@ -22,41 +22,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-#include "pch.h"
-#include "CL64_App.h"
-#include "CL64_Panels.h"
-
-CL64_Panels::CL64_Panels()
+#pragma once
+class CL64_Mesh_Mgr
 {
-}
+public:
+	CL64_Mesh_Mgr();
+	~CL64_Mesh_Mgr();
 
-CL64_Panels::~CL64_Panels()
-{
-}
+};
 
-// *************************************************************************
-// *			Resize_OgreWin:- Terry and Hazel Flanigan 2024			   *
-// *************************************************************************
-void CL64_Panels::Resize_OgreWin(void)
-{
-	RECT rcl;
-
-	GetClientRect(App->CL_MapEditor->Bottom_Right_Hwnd, &rcl);
-
-	//-----------------Ogre Window
-	//SetWindowPos(App->CL_MapEditor->Bottom_Right_Hwnd, NULL, 4, 2, NewWidth + 380, NewHeight + 58, SWP_NOZORDER);
-
-	if (App->flag_OgreStarted == 1)
-	{
-		RECT rect;
-		GetClientRect(App->CL_MapEditor->Bottom_Right_Hwnd, &rect);
-
-		if ((rect.bottom - rect.top) != 0 && App->CL_Ogre->mCamera != 0)
-		{
-			App->CL_Ogre->mWindow->windowMovedOrResized();
-			App->CL_Ogre->mCamera->setAspectRatio((Ogre::Real)App->CL_Ogre->mWindow->getWidth() / (Ogre::Real)App->CL_Ogre->mWindow->getHeight());
-			App->CL_Ogre->camNode->yaw(Radian(0));
-		}
-
-	}
-}

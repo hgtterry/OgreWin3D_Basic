@@ -157,7 +157,7 @@ void CL64_MapEditor::Resize_Windows(HWND hDlg, int NewWidth, int NewDepth)
 		FALSE);
 
 	RedrawWindow(Main_Dlg_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-
+	App->CL_Panels->Resize_OgreWin();
 }
 
 // *************************************************************************
@@ -914,6 +914,25 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Bottom_Right_Ogre(HWND hDlg, UINT message,
 		}
 	}
 
+	//case WM_MOUSEWHEEL:
+	//{
+	//	if (App->CL_Ogre->Ogre3D_Listener->flag_LeftMouseDown == 0)
+	//	{
+	//		int zDelta = (short)HIWORD(wParam);    // wheel rotation
+
+	//		if (zDelta > 0)
+	//		{
+	//			App->CL_Ogre->Ogre3D_Listener->Wheel = -1;
+	//		}
+	//		else if (zDelta < 0)
+	//		{
+	//			App->CL_Ogre->Ogre3D_Listener->Wheel = 1;
+	//		}
+
+	//		return 1;
+	//	}
+	//}
+
 	case WM_MOUSEMOVE: // ok up and running and we have a loop for mouse
 	{
 		//App->Flash_Window();
@@ -924,7 +943,6 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Bottom_Right_Ogre(HWND hDlg, UINT message,
 	// Left Mouse Button
 	case WM_LBUTTONDOWN: // BERNIE_HEAR_FIRE 
 	{
-
 		if (App->flag_OgreStarted == 1)
 		{
 			POINT p;
@@ -941,7 +959,6 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Bottom_Right_Ogre(HWND hDlg, UINT message,
 
 			return 1;
 		}
-
 
 		return 1;
 	}

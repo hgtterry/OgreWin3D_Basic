@@ -28,5 +28,7 @@ class CL64_Panels
 public:
 	CL64_Panels();
 	~CL64_Panels();
+
+	void Resize_OgreWin(void);
 };
 
