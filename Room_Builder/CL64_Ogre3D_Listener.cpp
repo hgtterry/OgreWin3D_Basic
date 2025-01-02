@@ -34,6 +34,17 @@ CL64_Ogre3D_Listener::CL64_Ogre3D_Listener()
 	mMoveSensitivity = 50;
 	mTranslateVector = Ogre::Vector3::ZERO;
 	mMoveScale = 0;
+	mMoveSensitivityMouse = 50;
+
+	flag_LeftMouseDown = 0;
+	flag_RightMouseDown = 0;
+
+	Pl_Cent500X = App->CursorPosX;
+	Pl_Cent500Y = App->CursorPosY;
+
+	Pl_DeltaMouse = 0;
+	Pl_MouseX = 0;
+	Pl_MouseY = 0;
 
 	mRotX = 0;
 	mRotY = 0;
@@ -102,18 +113,162 @@ void CL64_Ogre3D_Listener::Mode_Camera_Model(float DeltaTime)
 	App->CL_Keyboard->Keyboard_Mode_Model(DeltaTime);
 
 	// Left Mouse
-	/*if (flag_LeftMouseDown == 1 && flag_RightMouseDown == 0)
+	if (flag_LeftMouseDown == 1 && flag_RightMouseDown == 0)
 	{
 		Capture_LeftMouse_Model();
-	}*/
+	}
 
 	// Right Mouse
-	//if (flag_LeftMouseDown == 0 && flag_RightMouseDown == 1)
-	//{
-	//	//Capture_RightMouse_Model();
-	//}
+	if (flag_LeftMouseDown == 0 && flag_RightMouseDown == 1)
+	{
+		Capture_RightMouse_Model();
+	}
 
 	MoveCamera();
+}
+
+// *************************************************************************
+// *		Capture_LeftMouse_Model:- Terry and Hazel Flanigan 2025		   *
+// *************************************************************************
+void CL64_Ogre3D_Listener::Capture_LeftMouse_Model(void)
+{
+	GetCursorPos(&Mouse_point);
+
+	Pl_MouseX = (int(Mouse_point.x));
+	Pl_MouseY = (int(Mouse_point.y));
+
+	//// Left Right
+	if (Pl_MouseX < Pl_Cent500X)
+	{
+		long test = Pl_Cent500X - Pl_MouseX; // Positive
+
+		if (test > 2)
+		{
+			Pl_DeltaMouse = float(Pl_Cent500X - Pl_MouseX);
+			App->CL_Grid->GridNode->yaw(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
+			App->CL_Grid->HairNode->yaw(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
+			
+			SetCursorPos(App->CursorPosX, App->CursorPosY);
+		}
+	}
+	else if (Pl_MouseX > Pl_Cent500X)
+	{
+		long test = Pl_MouseX - Pl_Cent500X; // Positive
+
+		if (test > 2)
+		{
+			Pl_DeltaMouse = float(Pl_MouseX - Pl_Cent500X);
+			App->CL_Grid->GridNode->yaw(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
+			App->CL_Grid->HairNode->yaw(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
+			
+			SetCursorPos(App->CursorPosX, App->CursorPosY);
+		}
+	}
+
+	// Up Down
+	if (Pl_MouseY < Pl_Cent500Y)
+	{
+		long test = Pl_Cent500Y - Pl_MouseY; // Positive
+
+		if (test > 2)
+		{
+			Pl_DeltaMouse = float(Pl_Cent500Y - Pl_MouseY);
+			App->CL_Grid->GridNode->pitch(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
+			App->CL_Grid->HairNode->pitch(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
+		
+			SetCursorPos(App->CursorPosX, App->CursorPosY);
+		}
+	}
+	else if (Pl_MouseY > Pl_Cent500Y)
+	{
+		long test = Pl_MouseY - Pl_Cent500Y; // Positive
+
+		if (test > 2)
+		{
+			Pl_DeltaMouse = float(Pl_MouseY - Pl_Cent500Y);
+			App->CL_Grid->GridNode->pitch(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
+			App->CL_Grid->HairNode->pitch(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
+			
+			SetCursorPos(App->CursorPosX, App->CursorPosY);
+		}
+	}
+}
+
+// *************************************************************************
+// *	Capture_RightMouse_Model:- Terry and Hazel Flanigan 2025 		   *
+// *************************************************************************
+void CL64_Ogre3D_Listener::Capture_RightMouse_Model(void)
+{
+	GetCursorPos(&Mouse_point);
+
+	Pl_MouseX = (int(Mouse_point.x));
+	Pl_MouseY = (int(Mouse_point.y));
+
+	// Left Right
+	if (Pl_MouseX < Pl_Cent500X)
+	{
+		long test = Pl_Cent500X - Pl_MouseX; // Positive
+
+		if (test > 2)
+		{
+			Pl_DeltaMouse = float(Pl_Cent500X - Pl_MouseX);
+			mTranslateVector.x = Pl_DeltaMouse * (mMoveSensitivityMouse / 1000);
+			SetCursorPos(App->CursorPosX, App->CursorPosY);
+		}
+	}
+	else if (Pl_MouseX > Pl_Cent500X)
+	{
+		long test = Pl_MouseX - Pl_Cent500X; // Positive
+
+		if (test > 2)
+		{
+			Pl_DeltaMouse = float(Pl_MouseX - Pl_Cent500X);
+			mTranslateVector.x = -Pl_DeltaMouse * (mMoveSensitivityMouse / 1000);
+			SetCursorPos(App->CursorPosX, App->CursorPosY);
+		}
+	}
+
+	// Up Down
+	if (Pl_MouseY < Pl_Cent500Y)
+	{
+		long test = Pl_Cent500Y - Pl_MouseY; // Positive
+
+		if (test > 2)
+		{
+			Pl_DeltaMouse = float(Pl_Cent500Y - Pl_MouseY);
+
+			Ogre::Real Rate;
+			Rate = Pl_DeltaMouse * (mMoveSensitivityMouse / 1000);
+
+			Ogre::Vector3 OldPos;
+			OldPos = mCamNode->getPosition();
+
+			OldPos.y -= Rate;
+			mCamNode->setPosition(OldPos);
+			SetCursorPos(App->CursorPosX, App->CursorPosY);
+		}
+
+	}
+	else if (Pl_MouseY > Pl_Cent500Y)
+	{
+		long test = Pl_MouseY - Pl_Cent500Y; // Positive
+
+		if (test > 2)
+		{
+			Pl_DeltaMouse = float(Pl_MouseY - Pl_Cent500Y);
+
+			Ogre::Real Rate;
+			Rate = Pl_DeltaMouse * (mMoveSensitivityMouse / 1000);
+
+			Ogre::Vector3 OldPos;
+			OldPos = mCamNode->getPosition();
+
+			OldPos.y += Rate;
+			mCamNode->setPosition(OldPos);
+			SetCursorPos(App->CursorPosX, App->CursorPosY);
+		}
+
+	}
 }
 
 // *************************************************************************

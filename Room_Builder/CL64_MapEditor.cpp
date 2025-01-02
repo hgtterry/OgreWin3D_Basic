@@ -906,12 +906,6 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Bottom_Right_Ogre(HWND hDlg, UINT message,
 		return TRUE;
 	}
 
-	case WM_LBUTTONDOWN:
-	{
-		//App->Say("Bottom Right");
-		return 1;
-	}
-
 	case WM_CTLCOLORDLG:
 	{
 		if (App->flag_OgreStarted == 0)
@@ -925,6 +919,76 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Bottom_Right_Ogre(HWND hDlg, UINT message,
 		//App->Flash_Window();
 
 		break;
+	}
+
+	// Left Mouse Button
+	case WM_LBUTTONDOWN: // BERNIE_HEAR_FIRE 
+	{
+
+		if (App->flag_OgreStarted == 1)
+		{
+			POINT p;
+			GetCursorPos(&p);
+			App->CursorPosX = p.x;
+			App->CursorPosY = p.y;
+			App->CL_Ogre->Ogre3D_Listener->Pl_Cent500X = p.x;
+			App->CL_Ogre->Ogre3D_Listener->Pl_Cent500Y = p.y;
+
+			SetCapture(App->CL_MapEditor->Bottom_Right_Hwnd);
+			SetCursorPos(App->CursorPosX, App->CursorPosY);
+			App->CL_Ogre->Ogre3D_Listener->flag_LeftMouseDown = 1;
+			App->CUR = SetCursor(NULL);
+
+			return 1;
+		}
+
+
+		return 1;
+	}
+
+	case WM_LBUTTONUP:
+	{
+		if (App->flag_OgreStarted == 1)
+		{
+			ReleaseCapture();
+			App->CL_Ogre->Ogre3D_Listener->flag_LeftMouseDown = 0;
+			SetCursor(App->CUR);
+			return 1;
+		}
+
+		return 1;
+	}
+
+	// Right Mouse Button
+	case WM_RBUTTONDOWN: // BERNIE_HEAR_FIRE 
+	{
+		if (App->flag_OgreStarted == 1)
+		{
+			POINT p;
+			GetCursorPos(&p);
+			App->CursorPosX = p.x;
+			App->CursorPosY = p.y;
+			App->CL_Ogre->Ogre3D_Listener->Pl_Cent500X = p.x;
+			App->CL_Ogre->Ogre3D_Listener->Pl_Cent500Y = p.y;
+			SetCapture(App->CL_MapEditor->Bottom_Right_Hwnd);
+			SetCursorPos(App->CursorPosX, App->CursorPosY);
+			App->CL_Ogre->Ogre3D_Listener->flag_RightMouseDown = 1;
+			App->CUR = SetCursor(NULL);
+			return 1;
+		}
+
+		return 1;
+	}
+
+	case WM_RBUTTONUP:
+	{
+		if (App->flag_OgreStarted == 1)
+		{
+			ReleaseCapture();
+			App->CL_Ogre->Ogre3D_Listener->flag_RightMouseDown = 0;
+			SetCursor(App->CUR);
+			return 1;
+		}
 	}
 
 	}

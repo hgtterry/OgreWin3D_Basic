@@ -54,10 +54,14 @@ CL64_App::CL64_App(void)
 	CL_Panels =					nullptr;
 	CL_Keyboard =				nullptr;
 
+	CUR = 0;
 
 	hInst = nullptr;
 	MainHwnd = nullptr;
 	
+	CursorPosX = 500;
+	CursorPosY = 500;
+
 	AppBackground = 0;
 
 	Font_CB15 = 0;

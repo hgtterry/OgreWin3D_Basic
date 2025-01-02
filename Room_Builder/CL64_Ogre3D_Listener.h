@@ -37,11 +37,24 @@ public:
 	bool frameRenderingQueued(const FrameEvent& evt);
 
 	void Mode_Camera_Model(float DeltaTime);
+	void Capture_LeftMouse_Model(void);
+	void Capture_RightMouse_Model(void);
+
+	POINT Mouse_point;
+	int	Pl_MouseX;
+	int	Pl_MouseY;
+	long Pl_Cent500X;
+	long Pl_Cent500Y;
+	float Pl_DeltaMouse;
 	void MoveCamera(void);
 
 	Ogre::SceneNode* mCamNode;
 	float mMoveSensitivity;
 	float mMoveScale;
+	float mMoveSensitivityMouse;
+
+	bool flag_LeftMouseDown;
+	bool flag_RightMouseDown;
 
 	int CameraMode;
 	int	Wheel;

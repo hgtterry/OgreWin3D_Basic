@@ -123,8 +123,13 @@ public:
 	HFONT Font_Arial20;
 	HFONT Font_Banner;
 
+	HCURSOR CUR;
+
 	bool flag_Debug_App;
 	bool flag_OgreStarted;
+
+	int CursorPosX;
+	int CursorPosY;
 
 	char RB_Directory_FullPath[MAX_PATH];
 };
