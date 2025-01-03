@@ -25,6 +25,7 @@ THE SOFTWARE.
 #pragma once
 
 typedef struct tag_SelBrushList SelBrushList;
+typedef signed int(*SelBrushList_Callback)(Brush* pBrush, void* lParam);
 
 class CL64_SelBrushList
 {
@@ -36,6 +37,10 @@ public:
 	void SelBrushList_Destroy(SelBrushList** ppList);
 	signed int SelBrushList_Find(SelBrushList* pList, const Brush* pBrush);
 	Brush* SelBrushList_GetBrush(SelBrushList* pList, int BrushIndex);
+	int SelBrushList_GetSize(SelBrushList* pList);
+	void SelBrushList_Center(SelBrushList* pList, Ogre::Vector3* center);
+	void SelBrushList_Enum(SelBrushList* pList, SelBrushList_Callback Callback, void* lParam);
+	
 
 };
 

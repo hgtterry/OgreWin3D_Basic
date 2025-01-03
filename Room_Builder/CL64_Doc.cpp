@@ -51,6 +51,7 @@ CL64_Doc::CL64_Doc(void)
     mCurrentTool = CURTOOL_NONE;
     mCurrentGroup = 0;
     flag_Is_Modified = 0;
+    SelState = NOSELECTIONS;
 }
 
 CL64_Doc::~CL64_Doc(void)
@@ -547,16 +548,109 @@ void CL64_Doc::SelectOrtho(POINT point, ViewVars* v)
 }
 
 // *************************************************************************
+// *             UpdateSelected:- Terry and Hazel Flanigan 2025            *
+// *************************************************************************
+void CL64_Doc::UpdateSelected(void)
+{
+    int		i;
+    int NumSelFaces = App->CL_SelFaceList->SelFaceList_GetSize(pSelFaces);
+    int NumSelBrushes = App->CL_SelBrushList->SelBrushList_GetSize(pSelBrushes);
+
+    SelState = (NumSelBrushes > 1) ? MULTIBRUSH : NumSelBrushes;
+    SelState |= (NumSelFaces > 1) ? MULTIFACE : (NumSelFaces + 1) << 3;
+   
+
+    if (mModeTool == ID_GENERALSELECT)
+    {
+        if (GetSelState() & ONEBRUSH)
+        {
+            CurBrush = App->CL_SelBrushList->SelBrushList_GetBrush(pSelBrushes, 0);
+        }
+        else
+        {
+            CurBrush = BTemplate;
+        }
+    }
+
+    App->CL_Maths->Vector3_Clear(&SelectedGeoCenter);
+
+    if (mModeTool == ID_TOOLS_TEMPLATE)
+    {
+        App->CL_Brush->Brush_Center(CurBrush, &SelectedGeoCenter);
+    }
+    else if (SelState != NOSELECTIONS)
+    {
+        //Model* pModel;
+        //ModelInfo_Type* ModelInfo = Level_GetModelInfo(pLevel);
+
+        //pModel = ModelList_GetAnimatingModel(ModelInfo->Models);
+        //if (pModel != NULL)
+        //{
+        //    // we're animating a model, so use its current position
+        //    Model_GetCurrentPos(pModel, &SelectedGeoCenter);
+        //}
+        //else
+        {
+            if (NumSelBrushes)
+            {
+                App->CL_SelBrushList->SelBrushList_Center(pSelBrushes, &SelectedGeoCenter);
+            }
+            /*else if (NumSelEntities)
+            {
+                Ogre::Vector3 EntitySelectionCenter = { 0.0f,0.0f,0.0f };
+
+                CEntityArray* Entities;
+                Entities = Level_GetEntities(pLevel);
+                if (Entities)
+                {
+                    int NumEntities = Entities->GetSize();
+
+                    for (int i = 0; i < NumEntities; i++)
+                    {
+                        if ((*Entities)[i].IsSelected())
+                        {
+                            App->CL_Maths->Vector3_Add(&EntitySelectionCenter, &(*Entities)[i].mOrigin, &EntitySelectionCenter);
+                        }
+                    }
+                }
+
+                App->CL_Maths->Vector3_Scale(&EntitySelectionCenter, 1 / (float)(NumSelEntities), &SelectedGeoCenter);
+            }*/
+        }
+    }
+
+   /* if (SelState & ONEENTITY)
+    {
+        CEntityArray* Entities = Level_GetEntities(pLevel);
+
+        for (i = 0; i < Entities->GetSize() && !((*Entities)[i].IsSelected()); i++);
+        mCurrentEntity = i;
+    }
+    else
+    {
+        mCurrentEntity = -1;
+    }*/
+
+   // App->m_pDoc->UpdateFaceAttributesDlg();
+   // App->m_pDoc->UpdateBrushAttributesDlg();
+
+    //assert( mpMainFrame->m_wndTabControls ) ;
+    //assert( mpMainFrame->m_wndTabControls->GrpTab ) ;
+    //mpMainFrame->m_wndTabControls->GrpTab->UpdateGroupSelection( ) ;
+
+}
+
+// *************************************************************************
 // *           DoBrushSelection:- Terry and Hazel Flanigan 2025            *
 // *************************************************************************
 void CL64_Doc::DoBrushSelection(Brush* pBrush, BrushSel	nSelType) //	brushSelToggle | brushSelAlways)
 {
     int ModelId = 0;
-    geBoolean ModelLocked;
+    signed int ModelLocked;
    /* ModelInfo_Type* ModelInfo;
     GroupListType* Groups;*/
     int GroupId = 0;
-    geBoolean GroupLocked;
+    signed int GroupLocked;
     BrushList* BList;
     Brush* pBParent = NULL;
 
@@ -668,7 +762,7 @@ int CL64_Doc::FindClosestThing(POINT const* ptFrom, ViewVars* v, Brush** ppMinBr
     int rslt;
 
     signed int FoundBrush;
-    geFloat MinEdgeDist;
+    float MinEdgeDist;
     Brush* pMinBrush;
 
     rslt = fctNOTHING;

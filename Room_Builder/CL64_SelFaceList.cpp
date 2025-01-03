@@ -81,3 +81,11 @@ void CL64_SelFaceList::SelFaceList_Destroy(SelFaceList** ppList)
 
 	App->CL_Maths->Ram_Free(*ppList);
 }
+
+// *************************************************************************
+// *						SelFaceList_GetSize							   *
+// *************************************************************************
+int CL64_SelFaceList::SelFaceList_GetSize(SelFaceList* pList)
+{
+	return pList->FirstFree;
+}

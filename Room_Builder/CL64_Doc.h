@@ -58,6 +58,17 @@ enum BrushSel
 	brushDeselAlways
 };
 
+enum SelectionState
+{
+	NOBRUSHES = 0, ONEBRUSH = 1, MULTIBRUSH = 2, RESERVEDBRUSH = 4,
+	NOFACES = 8, ONEFACE = 16, MULTIFACE = 32, RESERVEDFACE = 64,
+	NOENTITIES = 128, ONEENTITY = 256, MULTIENTITY = 512, RESERVEDENTITY = 1024,
+	ONEBRUSHONLY = 137, ONEBRUSH_ONEFACE = 145, ONEENTITYONLY = 264,
+	ONEBRUSH_ONEENTITY = 265, NOSELECTIONS = 136,
+	BRUSHCLEAR = 7, FACECLEAR = 120, ENTITYCLEAR = 1920,
+	ANYENTITY = 1792, ANYBRUSH = 7, ANYFACE = 112
+};
+
 #define WINDOW_TOP_VIEW 0
 #define WINDOW_FRONT_VIEW 1
 #define WINDOW_SIDE_VIEW 2
@@ -88,6 +99,8 @@ public:
 	int FindClosestThing(POINT const* ptFrom, ViewVars* v, Brush** ppMinBrush, geFloat* pDist);
 	signed int FindClosestBrush(POINT const* ptFrom, ViewVars* v, Brush** ppFoundBrush, geFloat* pMinEdgeDist);
 	signed int BrushIsSelected(Brush const* pBrush);
+	void UpdateSelected(void);
+	DWORD GetSelState(void) { return SelState; }
 
 	char LastTemplateTypeName[MAX_PATH];
 
@@ -98,6 +111,8 @@ public:
 	SelBrushList* pSelBrushes;
 	SelBrushList* pTempSelBrushes;
 	SelFaceList* pSelFaces;
+
+	DWORD SelState;
 
 	Ogre::Vector3	SelectedGeoCenter, FinalPos, FinalRot, FinalScale;
 

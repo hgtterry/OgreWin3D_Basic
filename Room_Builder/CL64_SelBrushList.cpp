@@ -115,3 +115,67 @@ Brush* CL64_SelBrushList::SelBrushList_GetBrush(SelBrushList* pList, int BrushIn
 
 	return *ppBrush;
 }
+
+// *************************************************************************
+// *						SelBrushList_GetSize					 	   *
+// *************************************************************************
+int CL64_SelBrushList::SelBrushList_GetSize(SelBrushList* pList)
+{
+	return pList->FirstFree;
+}
+
+// *************************************************************************
+// *					SelBrushList_CenterEnum						 	   *
+// *************************************************************************
+static signed int SelBrushList_CenterEnum(Brush* b, void* lParam)
+{
+	Ogre::Vector3* center;
+	Ogre::Vector3 newcenter;
+
+	center = (Ogre::Vector3*)lParam;
+	App->CL_Box->Box3d_GetCenter(&b->BoundingBox, &newcenter);
+	App->CL_Maths->Vector3_Add(center, &newcenter, center);
+
+	return GE_TRUE;
+}
+
+// *************************************************************************
+// *						SelBrushList_Center						 	   *
+// *************************************************************************
+void CL64_SelBrushList::SelBrushList_Center(SelBrushList* pList, Ogre::Vector3* center)
+{
+	int listcount;
+	Ogre::Vector3 average;
+
+	assert(pList && center);
+
+	listcount = SelBrushList_GetSize(pList);
+	if (!listcount)
+	{
+		App->CL_Maths->Vector3_Clear(center);
+		return;
+	}
+
+	App->CL_Maths->Vector3_Clear(&average);
+
+	SelBrushList_Enum(pList, SelBrushList_CenterEnum, &average);
+
+	App->CL_Maths->Vector3_Scale(&average, (1 / (float)listcount), center);
+}
+
+// *************************************************************************
+// *						SelBrushList_Enum						 	   *
+// *************************************************************************
+void CL64_SelBrushList::SelBrushList_Enum(SelBrushList* pList, SelBrushList_Callback Callback, void* lParam)
+{
+	int i;
+
+	for (i = 0; i < pList->FirstFree; ++i)
+	{
+		Brush* pBrush;
+
+		pBrush = SelBrushList_GetBrush(pList, i);
+		Callback(pBrush, lParam);
+	}
+}
+
