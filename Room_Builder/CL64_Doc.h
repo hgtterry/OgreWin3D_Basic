@@ -44,6 +44,13 @@ enum UpdateFlags
 	UAV_THIS_GRID_ONLY = 512
 };
 
+enum
+{
+	fctNOTHING,
+	fctENTITY,
+	fctBRUSH
+};
+
 #define WINDOW_TOP_VIEW 0
 #define WINDOW_FRONT_VIEW 1
 #define WINDOW_SIDE_VIEW 2
@@ -66,6 +73,11 @@ public:
 	void UpdateAllViews(int Mode, BOOL Override);
 	void DoGeneralSelect(void);
 	WadFileEntry* GetDibBitmap(const char* Name);
+
+	// Selection
+	void SelectOrtho(POINT point, ViewVars* v);
+	int FindClosestThing(POINT const* ptFrom, ViewVars* v, Brush** ppMinBrush, geFloat* pDist);
+	signed int FindClosestBrush(POINT const* ptFrom, ViewVars* v, Brush** ppFoundBrush, geFloat* pMinEdgeDist);
 
 	char LastTemplateTypeName[MAX_PATH];
 
