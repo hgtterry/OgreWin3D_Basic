@@ -510,12 +510,6 @@ void CL64_Doc::SelectOrtho(POINT point, ViewVars* v)
     geFloat Dist;
     int FoundThingType;
 
-    /*if (IsSelectionLocked())
-    {
-        return;
-    }*/
-
-    // if Control key isn't pressed, then clear all current selections
    /* if ((GetAsyncKeyState(VK_SHIFT) & 0x8000) == 0)
     {
         ResetAllSelections();
@@ -527,18 +521,15 @@ void CL64_Doc::SelectOrtho(POINT point, ViewVars* v)
     {
         if (FoundThingType == fctBRUSH)
         {
-           App->Say_Win(pMinBrush->Name);
+           //App->Say_Win(pMinBrush->Name);
 
-                 DoBrushSelection(pMinBrush, brushSelToggle);
-                // if (App->CLSB_Brushes->Dimensions_Dlg_Running == 1)
-                //  {
-                //     App->CLSB_Brushes->Update_Pos_Dlg(App->CLSB_Brushes->Dimensions_Dlg_hWnd);
-                //  }
+            DoBrushSelection(pMinBrush, brushSelToggle);    
         }
         
     }
 
     UpdateSelected();
+    App->CL_Doc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
 
     /*App->CLSB_TabsControl->Select_Brushes_Tab(0);
     App->CL_TabsGroups_Dlg->Get_Index(CurBrush);
@@ -552,7 +543,6 @@ void CL64_Doc::SelectOrtho(POINT point, ViewVars* v)
 // *************************************************************************
 void CL64_Doc::UpdateSelected(void)
 {
-    int		i;
     int NumSelFaces = App->CL_SelFaceList->SelFaceList_GetSize(pSelFaces);
     int NumSelBrushes = App->CL_SelBrushList->SelBrushList_GetSize(pSelBrushes);
 
@@ -574,69 +564,20 @@ void CL64_Doc::UpdateSelected(void)
 
     App->CL_Maths->Vector3_Clear(&SelectedGeoCenter);
 
-    if (mModeTool == ID_TOOLS_TEMPLATE)
-    {
-        App->CL_Brush->Brush_Center(CurBrush, &SelectedGeoCenter);
-    }
-    else if (SelState != NOSELECTIONS)
-    {
-        //Model* pModel;
-        //ModelInfo_Type* ModelInfo = Level_GetModelInfo(pLevel);
-
-        //pModel = ModelList_GetAnimatingModel(ModelInfo->Models);
-        //if (pModel != NULL)
-        //{
-        //    // we're animating a model, so use its current position
-        //    Model_GetCurrentPos(pModel, &SelectedGeoCenter);
-        //}
-        //else
-        {
-            if (NumSelBrushes)
-            {
-                App->CL_SelBrushList->SelBrushList_Center(pSelBrushes, &SelectedGeoCenter);
-            }
-            /*else if (NumSelEntities)
-            {
-                Ogre::Vector3 EntitySelectionCenter = { 0.0f,0.0f,0.0f };
-
-                CEntityArray* Entities;
-                Entities = Level_GetEntities(pLevel);
-                if (Entities)
-                {
-                    int NumEntities = Entities->GetSize();
-
-                    for (int i = 0; i < NumEntities; i++)
-                    {
-                        if ((*Entities)[i].IsSelected())
-                        {
-                            App->CL_Maths->Vector3_Add(&EntitySelectionCenter, &(*Entities)[i].mOrigin, &EntitySelectionCenter);
-                        }
-                    }
-                }
-
-                App->CL_Maths->Vector3_Scale(&EntitySelectionCenter, 1 / (float)(NumSelEntities), &SelectedGeoCenter);
-            }*/
-        }
-    }
-
-   /* if (SelState & ONEENTITY)
-    {
-        CEntityArray* Entities = Level_GetEntities(pLevel);
-
-        for (i = 0; i < Entities->GetSize() && !((*Entities)[i].IsSelected()); i++);
-        mCurrentEntity = i;
-    }
-    else
-    {
-        mCurrentEntity = -1;
-    }*/
+	if (mModeTool == ID_TOOLS_TEMPLATE)
+	{
+		App->CL_Brush->Brush_Center(CurBrush, &SelectedGeoCenter);
+	}
+	else if (SelState != NOSELECTIONS)
+	{
+		if (NumSelBrushes)
+		{
+			App->CL_SelBrushList->SelBrushList_Center(pSelBrushes, &SelectedGeoCenter);
+		}
+	}
 
    // App->m_pDoc->UpdateFaceAttributesDlg();
    // App->m_pDoc->UpdateBrushAttributesDlg();
-
-    //assert( mpMainFrame->m_wndTabControls ) ;
-    //assert( mpMainFrame->m_wndTabControls->GrpTab ) ;
-    //mpMainFrame->m_wndTabControls->GrpTab->UpdateGroupSelection( ) ;
 
 }
 
@@ -654,8 +595,6 @@ void CL64_Doc::DoBrushSelection(Brush* pBrush, BrushSel	nSelType) //	brushSelTog
     BrushList* BList;
     Brush* pBParent = NULL;
 
-   /* ModelInfo = App->CL_Level->Level_GetModelInfo(pLevel);
-    Groups = App->CL_Level->Level_GetGroups(pLevel);*/
     BList = App->CL_Level->Level_GetBrushes(pLevel);
 
     if (App->CL_Brush->Brush_GetParent(BList, pBrush, &pBParent))
@@ -665,83 +604,15 @@ void CL64_Doc::DoBrushSelection(Brush* pBrush, BrushSel	nSelType) //	brushSelTog
 
     ModelLocked = GE_FALSE;
     GroupLocked = FALSE;
-    //	if(mAdjustMode != ADJUST_MODE_FACE)
-    {
-        // don't do this stuff if we're in face mode...
-       /* ModelId = Brush_GetModelId(pBrush);
-        if (ModelId != 0)
-        {
-            Model* pModel;
-
-            pModel = ModelList_FindById(ModelInfo->Models, ModelId);
-            if (pModel != NULL)
-            {
-                ModelLocked = Model_IsLocked(pModel);
-            }
-        }*/
-
-       /* if (!ModelLocked)
-        {
-            GroupId = Brush_GetGroupId(pBrush);
-            if (GroupId != 0)
-            {
-                GroupLocked = Group_IsLocked(Groups, GroupId);
-            }
-        }*/
-    }
 
     if (nSelType == brushSelToggle && BrushIsSelected(pBrush))
     {
-        if (ModelLocked)
-        {
-            // model is locked, so deselect everything in the model
-            //SelectModelBrushes(FALSE, ModelId);
-        }
-        else if (GroupLocked)
-        {
-            // group is locked, so deselect entire group
-            // SelectGroupBrushes(FALSE, GroupId);
-        }
-        else
-        {
-            // SelBrushList_Remove(pSelBrushes, pBrush);
-
-        }
+       
     }
     else
     {
-        //if (ModelLocked)
-        //{
-        //    // model is locked, so select everything in the model
-        //    SelectModelBrushes(TRUE, ModelId);
-        //}
-        //else if (GroupLocked)
-        //{
-        //    // group is locked.  Select everything in the group
-        //    SelectGroupBrushes(TRUE, GroupId);
-        //}
-        //else
-        {
-            //Debug
-            App->CL_SelBrushList->SelBrushList_Add(pSelBrushes, pBrush);
-
-            /*if (strstr(App->CL_Brush->Brush_GetName(pBrush), ".act") != NULL)
-            {
-                CEntityArray* Entities = Level_GetEntities(pLevel);
-
-                for (int i = 0; i < Entities->GetSize(); i++)
-                {
-                    Brush* b = (*Entities)[i].GetActorBrush();
-                    if (b != NULL)
-                        if (SelBrushList_Find(pSelBrushes, b))
-                            if (!(*Entities)[i].IsSelected())
-                            {
-                                (*Entities)[i].Select();
-                                ++NumSelEntities;
-                            }
-                }
-            }*/
-        }
+       //Debug
+       App->CL_SelBrushList->SelBrushList_Add(pSelBrushes, pBrush);    
     }
 }
 

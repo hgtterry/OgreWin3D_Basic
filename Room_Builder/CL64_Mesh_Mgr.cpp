@@ -354,7 +354,7 @@ bool CL64_Mesh_Mgr::WE_Level_Build_Brushes(Level3* pLevel, const char* Filename,
 		if (WrittenTex[i])
 		{
 			char matname[MAX_PATH];
-			int j, k;
+			//int j, k;
 			strncpy(matname, pLevel->WadFile->mBitmaps[i].Name, MAX_PATH - 1);
 
 			strcpy(TextureName2[AdjustedIndex], matname);

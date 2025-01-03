@@ -179,6 +179,19 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 return 1;
             }
 
+            // ----------------------------- Brushes
+            case ID_BRUSH_SELECT:
+            {
+                int Bnum = App->CL_Brush->Get_Brush_Count();
+                if (Bnum > 0)
+                {
+                    App->CL_Doc->DoGeneralSelect();
+                    App->CL_Doc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
+                }
+
+                return 1;
+            }
+            
             // ---------------------------------------------
             case IDM_ABOUT:
                 DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
