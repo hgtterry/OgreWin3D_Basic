@@ -140,6 +140,8 @@ LRESULT CALLBACK CL64_Properties_Templates::Proc_Templates(HWND hDlg, UINT messa
 			App->CL_Doc->DoGeneralSelect();
 			App->CL_Doc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
 
+			App->CL_Properties_Brushes->Fill_ListBox();
+
 			App->CL_Properties_Templates->Enable_Insert_Button(false);
 
 			return 1;

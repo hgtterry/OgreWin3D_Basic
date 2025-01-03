@@ -75,6 +75,8 @@ private:
 
 	static signed int BrushDraw(Brush* pBrush, void* lParam);
 
+	void On_Left_Button_Up(POINT CursorPosition);
+
 	int LEFT_WINDOW_WIDTH;
 
 	int LEFT_WINDOW_DEPTH;

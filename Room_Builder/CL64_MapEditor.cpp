@@ -557,12 +557,12 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Left_Window(HWND hDlg, UINT message, W
 
 	case WM_LBUTTONDOWN:
 	{
-		POINT		RealCursorPosition;
+		/*POINT		RealCursorPosition;
 		GetCursorPos(&RealCursorPosition);
 		ScreenToClient(hDlg, &RealCursorPosition);
 
 		App->CL_MapEditor->Current_View = App->CL_MapEditor->VCam[V_TL];
-		App->CL_Doc->SelectOrtho(RealCursorPosition,App->CL_MapEditor->Current_View);
+		App->CL_Doc->SelectOrtho(RealCursorPosition,App->CL_MapEditor->Current_View)*/;
 		
 		/*GetCursorPos(&App->CL_MapEditor->mStartPoint);
 		ScreenToClient(hDlg, &App->CL_MapEditor->mStartPoint);
@@ -578,6 +578,14 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Left_Window(HWND hDlg, UINT message, W
 
 	case WM_LBUTTONUP:
 	{
+		POINT		RealCursorPosition;
+		GetCursorPos(&RealCursorPosition);
+		ScreenToClient(hDlg, &RealCursorPosition);
+
+		App->CL_MapEditor->Current_View = App->CL_MapEditor->VCam[V_TL];
+
+		App->CL_MapEditor->On_Left_Button_Up(RealCursorPosition);
+
 		/*App->CL_MapEditor->flag_Left_Button_Down = 0;
 		App->CL_MapEditor->flag_Right_Button_Down = 0;
 
@@ -700,13 +708,6 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Right_Window(HWND hDlg, UINT message, 
 
 	case WM_LBUTTONDOWN:
 	{
-		POINT		RealCursorPosition;
-		GetCursorPos(&RealCursorPosition);
-		ScreenToClient(hDlg, &RealCursorPosition);
-
-		App->CL_MapEditor->Current_View = App->CL_MapEditor->VCam[V_TL];
-		App->CL_Doc->SelectOrtho(RealCursorPosition, App->CL_MapEditor->Current_View);
-
 		/*GetCursorPos(&App->CL_MapEditor->mStartPoint);
 		ScreenToClient(hDlg, &App->CL_MapEditor->mStartPoint);
 
@@ -721,6 +722,14 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Right_Window(HWND hDlg, UINT message, 
 
 	case WM_LBUTTONUP:
 	{
+		POINT		RealCursorPosition;
+		GetCursorPos(&RealCursorPosition);
+		ScreenToClient(hDlg, &RealCursorPosition);
+
+		App->CL_MapEditor->Current_View = App->CL_MapEditor->VCam[V_TR];
+
+		App->CL_MapEditor->On_Left_Button_Up(RealCursorPosition);
+
 		/*App->CL_MapEditor->flag_Left_Button_Down = 0;
 		App->CL_MapEditor->flag_Right_Button_Down = 0;
 
@@ -855,6 +864,14 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Bottom_Left_Window(HWND hDlg, UINT message
 
 	case WM_LBUTTONUP:
 	{
+		POINT		RealCursorPosition;
+		GetCursorPos(&RealCursorPosition);
+		ScreenToClient(hDlg, &RealCursorPosition);
+
+		App->CL_MapEditor->Current_View = App->CL_MapEditor->VCam[V_BL];
+
+		App->CL_MapEditor->On_Left_Button_Up(RealCursorPosition);
+
 		/*App->CL_MapEditor->flag_Left_Button_Down = 0;
 		App->CL_MapEditor->flag_Right_Button_Down = 0;
 
@@ -1025,6 +1042,14 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Bottom_Right_Ogre(HWND hDlg, UINT message,
 	}
 
 	return FALSE;
+}
+
+// *************************************************************************
+// *	  						On_Left_Button_Up								   *
+// *************************************************************************
+void CL64_MapEditor::On_Left_Button_Up(POINT CursorPosition)
+{
+	App->CL_Doc->SelectOrtho(CursorPosition, App->CL_MapEditor->Current_View);
 }
 
 // *************************************************************************

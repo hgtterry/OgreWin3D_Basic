@@ -173,6 +173,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                     }
                 }
 
+                App->CL_Properties_Brushes->Fill_ListBox();
+
                 App->CL_Doc->DoGeneralSelect();
                 App->CL_Doc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
                 
@@ -189,6 +191,24 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                     App->CL_Doc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
                 }
 
+                return 1;
+            }
+
+            case ID_BRUSH_MOVE:
+            {
+                App->Say("Move Brush", (LPSTR)"");
+                return 1;
+            }
+
+            case ID_BRUSH_SCALE:
+            {
+                App->Say("Scale Brush", (LPSTR)"");
+                return 1;
+            }
+
+            case ID_BRUSH_SHEAR:
+            {
+                App->Say("Shear Brush", (LPSTR)"");
                 return 1;
             }
             

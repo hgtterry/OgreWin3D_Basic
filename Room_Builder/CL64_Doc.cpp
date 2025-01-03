@@ -59,11 +59,10 @@ CL64_Doc::~CL64_Doc(void)
 }
 
 // *************************************************************************
-// *		    Init_Doc:- Terry and Hazel Flanigan 2024 	    		   *
+// *		    Init_Doc:- Terry and Hazel Flanigan 2025 	    		   *
 // *************************************************************************
 void CL64_Doc::Init_Doc()
 {
-	
     const char* DefaultWadName;
     strcpy(LastTemplateTypeName, "Box");
 
@@ -73,9 +72,6 @@ void CL64_Doc::Init_Doc()
 
     const char* WadPath = FindTextureLibrary(DefaultWadName);
 
-	/*pLevel = Level_Create(WadPath, Prefs_GetHeadersList(pPrefs),
-		Prefs_GetActorsList(pPrefs), Prefs_GetPawnIni(pPrefs));*/
-   
 	pLevel = App->CL_Level->Level_Create(WadPath, NULL,NULL, NULL);
 
 	if (!App->CL_Level->Level_LoadWad(pLevel))
@@ -89,7 +85,6 @@ void CL64_Doc::Init_Doc()
 
 	SetLockAxis(0);	// Start with no axis locked
 
-
 	// create our default box
 	BrushTemplate_Box* pBoxTemplate;
 	pBoxTemplate = App->CL_Level->Level_GetBoxTemplate(pLevel);
@@ -101,8 +96,6 @@ void CL64_Doc::Init_Doc()
 	mModeTool = ID_TOOLS_TEMPLATE;
 
 	App->CL_Maths->Vector3_Clear(&SelectedGeoCenter);
-	
-	//App->Say("Done",(LPSTR)"");
 }
 
 // *************************************************************************
@@ -155,6 +148,9 @@ struct fdocFaceScales
     float LightmapScale;
 };
 
+// *************************************************************************
+// *			        	fdocSetFaceScales	                       	   *
+// *************************************************************************
 static signed int fdocSetFaceScales(Face* pFace, void* lParam)
 {
     fdocFaceScales* pScales = (fdocFaceScales*)lParam;
@@ -231,7 +227,7 @@ void CL64_Doc::DoGeneralSelect(void)
 }
 
 // *************************************************************************
-// *         UpdateAllViews:- Terry and Hazel Flanigan 2023                *
+// *         UpdateAllViews:- Terry and Hazel Flanigan 2025                *
 // *************************************************************************
 void CL64_Doc::UpdateAllViews(int Mode, BOOL Override)
 {
@@ -521,21 +517,24 @@ void CL64_Doc::SelectOrtho(POINT point, ViewVars* v)
     {
         if (FoundThingType == fctBRUSH)
         {
-           //App->Say_Win(pMinBrush->Name);
-
             DoBrushSelection(pMinBrush, brushSelToggle);    
+
+            int Bnum = App->CL_Brush->Get_Brush_Count();
+            if (Bnum > 0)
+            {
+                UpdateSelected();
+                App->CL_Doc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
+
+                App->CL_Properties_Tabs->Select_Brushes_Tab(0);
+                App->CL_Properties_Brushes->Get_Index(CurBrush);
+
+                //App->CL_TabsGroups_Dlg->Update_Dlg_Controls();
+                //App->CLSB_TopTabs->Update_Dlg_Controls();*/
+            }
         }
         
     }
 
-    UpdateSelected();
-    App->CL_Doc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
-
-    /*App->CLSB_TabsControl->Select_Brushes_Tab(0);
-    App->CL_TabsGroups_Dlg->Get_Index(CurBrush);
-
-    App->CL_TabsGroups_Dlg->Update_Dlg_Controls();
-    App->CLSB_TopTabs->Update_Dlg_Controls();*/
 }
 
 // *************************************************************************
@@ -653,7 +652,7 @@ int CL64_Doc::FindClosestThing(POINT const* ptFrom, ViewVars* v, Brush** ppMinBr
 }
 
 // *************************************************************************
-// *            FindClosestBrush:- Terry and Hazel Flanigan 2023           *
+// *            FindClosestBrush:- Terry and Hazel Flanigan 2025           *
 // *************************************************************************
 signed int CL64_Doc::FindClosestBrush(POINT const* ptFrom, ViewVars* v, Brush** ppFoundBrush, geFloat* pMinEdgeDist)
 {

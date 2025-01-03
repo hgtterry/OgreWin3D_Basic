@@ -32,6 +32,7 @@ public:
 	void Show_Brushes_Dialog(bool Show);
 	void Start_Brush_Tabs_Dialog();
 	void Fill_ListBox();
+	void Get_Index(const Brush* b);
 
 	HWND BrushesDlg_Hwnd;
 

@@ -35,6 +35,7 @@ CL64_Properties_Tabs::CL64_Properties_Tabs()
 	flag_Tab_Texture = 0;
 	flag_Tab_Group = 0;
 	flag_Tab_3DSettings = 0;
+	flag_Tabs_Dlg_Active = 0;
 }
 
 CL64_Properties_Tabs::~CL64_Properties_Tabs()
@@ -42,12 +43,14 @@ CL64_Properties_Tabs::~CL64_Properties_Tabs()
 }
 
 // *************************************************************************
-// *	  	Start_Tabs_Control_Dlg:- Terry and Hazel Flanigan 2023		   *
+// *	  	Start_Tabs_Control_Dlg:- Terry and Hazel Flanigan 2025		   *
 // *************************************************************************
 void CL64_Properties_Tabs::Start_Tabs_Control_Dlg()
 {
 
 	Tabs_Control_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_TABSDIALOG, App->MainHwnd, (DLGPROC)Proc_Tabs_Control);
+
+	flag_Tabs_Dlg_Active = 1;
 
 	App->CL_Properties_Brushes->Start_Brush_Tabs_Dialog();
 	App->CL_Properties_Brushes->Show_Brushes_Dialog(false);
@@ -162,7 +165,7 @@ LRESULT CALLBACK CL64_Properties_Tabs::Proc_Tabs_Control(HWND hDlg, UINT message
 			App->CL_Properties_Tabs->flag_Tab_Group = 1;
 			App->CL_Properties_Brushes->Show_Brushes_Dialog(true);
 
-			App->CL_Properties_Brushes->Fill_ListBox();
+			//App->CL_Properties_Brushes->Fill_ListBox();
 
 			RedrawWindow(App->CL_Properties_Tabs->Tabs_Control_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			return TRUE;
@@ -204,16 +207,14 @@ LRESULT CALLBACK CL64_Properties_Tabs::Proc_Tabs_Control(HWND hDlg, UINT message
 		// -----------------------------------------------------------------
 		if (LOWORD(wParam) == IDOK)
 		{
-			/*App->CLSB_TabsControl->Command_Panel_Started = 0;
-			App->CLSB_TabsControl->f_TabsDlg_Active = 0;*/
+			App->CL_Properties_Tabs->flag_Tabs_Dlg_Active = 0;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == IDCANCEL)
 		{
-			/*App->CLSB_TabsControl->Command_Panel_Started = 0;
-			App->CLSB_TabsControl->f_TabsDlg_Active = 0;*/
+			App->CL_Properties_Tabs->flag_Tabs_Dlg_Active = 0;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
@@ -240,4 +241,19 @@ void CL64_Properties_Tabs::Hide_Dialogs()
 	//App->CLSB_Tabs_True3D_Dlg->Show_Game_Dlg(0);
 
 	RedrawWindow(Tabs_Control_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+}
+
+// *************************************************************************
+// *	  	Select_Brushes_Tab:- Terry and Hazel Flanigan 2025			   *
+// *************************************************************************
+void CL64_Properties_Tabs::Select_Brushes_Tab(int SelNum)
+{
+	if (Tabs_Control_Hwnd && flag_Tabs_Dlg_Active == 1)
+	{
+		Hide_Dialogs();
+		App->CL_Properties_Brushes->Show_Brushes_Dialog(true);
+		flag_Tab_Group = 1;
+
+		RedrawWindow(Tabs_Control_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+	}
 }

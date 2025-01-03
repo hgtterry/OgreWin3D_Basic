@@ -280,3 +280,34 @@ void CL64_Properties_Brushes::Fill_ListBox()
 		SetDlgItemText(BrushesDlg_Hwnd, IDC_BRUSHCOUNT, _itoa(Count, buff, 10));
 	}
 }
+
+// *************************************************************************
+// *	  		Get_Index:- Terry and Hazel Flanigan 2025				   *
+// *************************************************************************
+void CL64_Properties_Brushes::Get_Index(const Brush* b)
+{
+	Level* pLevel = App->CL_Doc->pLevel;
+	BrushList* pList = App->CL_Level->Level_GetBrushes(App->CL_Doc->pLevel);
+
+	int Selected = 0;
+	int Count = 0;
+
+	b = pList->First;
+
+	while (b != NULL)
+	{
+		Selected = App->CL_Doc->BrushIsSelected(b);
+
+		if (Selected == 1)
+		{
+			SendDlgItemMessage(BrushesDlg_Hwnd, IDC_GD_BRUSHLIST, LB_SETCURSEL, (WPARAM)Count, (LPARAM)0);
+			//Selected_Index = Count;
+			//List_Selection_Changed(0);
+		}
+
+		Count++;
+		b = b->Next;
+	}
+
+	//Update_Dlg_SelectedBrushesCount();
+}
