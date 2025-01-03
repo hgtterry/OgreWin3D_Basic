@@ -538,9 +538,9 @@ void CL64_Doc::SelectOrtho(POINT point, ViewVars* v)
         
     }
 
-    /*UpdateSelected();
+    UpdateSelected();
 
-    App->CLSB_TabsControl->Select_Brushes_Tab(0);
+    /*App->CLSB_TabsControl->Select_Brushes_Tab(0);
     App->CL_TabsGroups_Dlg->Get_Index(CurBrush);
 
     App->CL_TabsGroups_Dlg->Update_Dlg_Controls();
@@ -722,7 +722,8 @@ void CL64_Doc::DoBrushSelection(Brush* pBrush, BrushSel	nSelType) //	brushSelTog
         //}
         //else
         {
-            // SelBrushList_Add(pSelBrushes, pBrush);
+            //Debug
+            App->CL_SelBrushList->SelBrushList_Add(pSelBrushes, pBrush);
 
             /*if (strstr(App->CL_Brush->Brush_GetName(pBrush), ".act") != NULL)
             {

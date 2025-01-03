@@ -54,7 +54,6 @@ SelBrushList* CL64_SelBrushList::SelBrushList_Create(void)
 		if (pList->pItems != NULL)
 		{
 			pList->FirstFree = 0;
-			//Debug
 		}
 		else
 		{
@@ -177,5 +176,37 @@ void CL64_SelBrushList::SelBrushList_Enum(SelBrushList* pList, SelBrushList_Call
 		pBrush = SelBrushList_GetBrush(pList, i);
 		Callback(pBrush, lParam);
 	}
+}
+
+// *************************************************************************
+// *						SelBrushList_Add						 	   *
+// *************************************************************************
+signed int CL64_SelBrushList::SelBrushList_Add(SelBrushList* pList, Brush* pBrush)
+{
+	int Size = 0;
+
+	if (SelBrushList_Find(pList, pBrush))
+	{
+		return GE_FALSE;
+	}
+
+	Size = Array_GetSize(pList->pItems);
+
+	// Brush isn't already in list.  Put it at the end...
+	if (pList->FirstFree == Size)
+	{
+		int NewSize;
+		// Need to allocate more space
+		NewSize = App->CL_Array->Array_Resize(pList->pItems, 2 * Size);
+		if (NewSize == Size)
+		{
+			App->Say_Win("Can not assign Array");
+			return GE_FALSE;
+		}
+	}
+
+	Array_PutAt(pList->pItems, pList->FirstFree, &pBrush, sizeof(pBrush));
+	++(pList->FirstFree);
+	return GE_TRUE;
 }
 

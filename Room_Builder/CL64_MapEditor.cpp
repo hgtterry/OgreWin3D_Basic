@@ -80,7 +80,7 @@ CL64_MapEditor::CL64_MapEditor()
 	Pen_Grid = CreatePen(PS_SOLID, 0, RGB(112, 112, 112));
 	PenTemplate = CreatePen(PS_SOLID, 1, RGB(0, 0, 255));
 	PenBrushes = CreatePen(PS_SOLID, 1, RGB(255, 255, 255));
-
+	PenSelected = CreatePen(PS_SOLID, 1, RGB(0, 255, 255));
 	int Count = 0;
 	while (Count < 3)
 	{
@@ -1152,6 +1152,29 @@ void CL64_MapEditor::Draw_Screen(HWND hwnd)
 			{
 				Render_RenderBrushFacesOrtho(Current_View, App->CL_Doc->CurBrush, MemoryhDC);
 
+			}
+		}
+	}
+
+	SelectObject(MemoryhDC, PenSelected);
+
+	int NumSelBrushes = App->CL_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes);
+	
+	int i = 0;
+	for (i = 0; i < NumSelBrushes; i++)
+	{
+		Brush* pBrush;
+
+		pBrush = App->CL_SelBrushList->SelBrushList_GetBrush(App->CL_Doc->pSelBrushes, i);
+		//if (m_pDoc->fdocShowBrush(pBrush, &ViewBox))
+		{
+			if (App->CL_Brush->Brush_IsMulti(pBrush))
+			{
+				App->CL_Brush->BrushList_EnumLeafBrushes(App->CL_Brush->Brush_GetBrushList(pBrush), &brushDrawData, BrushDraw);
+			}
+			else
+			{
+				Render_RenderBrushFacesOrtho(Current_View, App->CL_Doc->CurBrush, MemoryhDC);
 			}
 		}
 	}

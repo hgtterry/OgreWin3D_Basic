@@ -12,10 +12,6 @@ CL64_Array::~CL64_Array(void)
 
 signed int CL64_Array::Array_Init(Array* pArray, int InitialSize, int ItemSize)
 {
-	assert(pArray != NULL);
-	assert(InitialSize >= 0);
-	assert(ItemSize > 0);
-
 	pArray->ItemSize = ItemSize;
 	pArray->ItemsAllocated = 0;
 
@@ -103,5 +99,7 @@ int CL64_Array::Array_Resize(Array* pArray, int NewSize)
 		pArray->Items = NewItems;
 		pArray->ItemsAllocated = NewSize;
 	}
+
 	return pArray->ItemsAllocated;
 }
+
