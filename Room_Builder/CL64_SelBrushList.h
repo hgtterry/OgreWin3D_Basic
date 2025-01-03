@@ -34,6 +34,8 @@ public:
 
 	SelBrushList* SelBrushList_Create(void);
 	void SelBrushList_Destroy(SelBrushList** ppList);
+	signed int SelBrushList_Find(SelBrushList* pList, const Brush* pBrush);
+	Brush* SelBrushList_GetBrush(SelBrushList* pList, int BrushIndex);
 
 };
 

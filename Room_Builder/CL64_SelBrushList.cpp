@@ -40,6 +40,9 @@ CL64_SelBrushList::~CL64_SelBrushList(void)
 {
 }
 
+// *************************************************************************
+// *						SelBrushList_Create						 	   *
+// *************************************************************************
 SelBrushList* CL64_SelBrushList::SelBrushList_Create(void)
 {
 	SelBrushList* pList;
@@ -61,6 +64,9 @@ SelBrushList* CL64_SelBrushList::SelBrushList_Create(void)
 	return pList;
 }
 
+// *************************************************************************
+// *						SelBrushList_Destroy					 	   *
+// *************************************************************************
 void CL64_SelBrushList::SelBrushList_Destroy(SelBrushList** ppList)
 {
 	SelBrushList* pList;
@@ -74,4 +80,38 @@ void CL64_SelBrushList::SelBrushList_Destroy(SelBrushList** ppList)
 		App->CL_Array->Array_Destroy(&pList->pItems);
 	}
 	//geRam_Free(*ppList);
+}
+
+// *************************************************************************
+// *							SelBrushList_Find					 	   *
+// *************************************************************************
+signed int CL64_SelBrushList::SelBrushList_Find(SelBrushList* pList, const Brush* pBrush)
+{
+	int i;
+
+	// go through list to see if this Brush is already in the list
+	for (i = 0; i < pList->FirstFree; ++i)
+	{
+		Brush* pRet;
+
+		pRet = SelBrushList_GetBrush(pList, i);
+		if (pRet == pBrush)
+		{
+			// Brush already in list
+			return GE_TRUE;
+		}
+	}
+	return GE_FALSE;
+}
+
+// *************************************************************************
+// *						SelBrushList_GetBrush					 	   *
+// *************************************************************************
+Brush* CL64_SelBrushList::SelBrushList_GetBrush(SelBrushList* pList, int BrushIndex)
+{
+	Brush** ppBrush;
+
+	ppBrush = (Brush**)Array_ItemPtr(pList->pItems, BrushIndex);
+
+	return *ppBrush;
 }

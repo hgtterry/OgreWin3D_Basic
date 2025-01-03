@@ -51,6 +51,13 @@ enum
 	fctBRUSH
 };
 
+enum BrushSel
+{
+	brushSelToggle,
+	brushSelAlways,
+	brushDeselAlways
+};
+
 #define WINDOW_TOP_VIEW 0
 #define WINDOW_FRONT_VIEW 1
 #define WINDOW_SIDE_VIEW 2
@@ -76,8 +83,11 @@ public:
 
 	// Selection
 	void SelectOrtho(POINT point, ViewVars* v);
+	void DoBrushSelection(Brush* pBrush, BrushSel	nSelType); //	brushSelToggle | brushSelAlways);
+
 	int FindClosestThing(POINT const* ptFrom, ViewVars* v, Brush** ppMinBrush, geFloat* pDist);
 	signed int FindClosestBrush(POINT const* ptFrom, ViewVars* v, Brush** ppFoundBrush, geFloat* pMinEdgeDist);
+	signed int BrushIsSelected(Brush const* pBrush);
 
 	char LastTemplateTypeName[MAX_PATH];
 

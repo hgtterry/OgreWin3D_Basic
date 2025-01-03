@@ -1165,3 +1165,47 @@ signed int CL64_Brush::Brush_GetUsedTextures(const Brush* b, geBoolean* UsedTex,
 	return GE_TRUE;
 }
 
+// *************************************************************************
+// *							Brush_GetParent							   *
+// *************************************************************************
+signed int CL64_Brush::Brush_GetParent(const BrushList* pList,const Brush* b,Brush** bParent)
+{
+	Brush* b2;
+
+	assert(b);
+	assert(pList);
+	assert(bParent);
+
+	for (b2 = pList->First; b2; b2 = b2->Next)
+
+	{
+		if (b2 == b)
+		{
+			*bParent = (Brush*)b;	//const override!
+			return		GE_TRUE;
+		}
+
+		if (b2->Type == BRUSH_LEAF)
+		{
+			if (b2->BList)
+			{
+				if (Brush_GetParent(b2->BList, b, bParent))
+				{
+					*bParent = b2;
+					return		GE_TRUE;
+				}
+			}
+		}
+		else if (b2->Type == BRUSH_MULTI)
+		{
+			if (Brush_GetParent(b2->BList, b, bParent))
+			{
+				*bParent = b2;
+				return		GE_TRUE;
+			}
+		}
+	}
+
+	return	GE_FALSE;
+}
+

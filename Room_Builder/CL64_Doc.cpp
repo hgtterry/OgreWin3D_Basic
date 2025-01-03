@@ -28,6 +28,10 @@ THE SOFTWARE.
 #include "CL64_Doc.h"
 #include "Room Builder.h"
 
+#define MAX_PIXEL_SELECT_DIST (50)
+#define MIN_ENTITY_SELECT_DIST (8.0f)
+#define MAX_PIXEL_SELECT_THINGNAME (20)
+
 typedef struct FindClosestInfoTag
 {
     CL64_Doc* pDoc;
@@ -454,6 +458,7 @@ static geFloat PointToLineDist
         yfac = ykj + t * ylk;
         dist = xfac * xfac + yfac * yfac;
     }
+
     return (geFloat)sqrt(dist);
 }
 
@@ -469,7 +474,7 @@ static geBoolean FindClosestBrushCB(Brush* pBrush, void* pVoid)
         // for each face...
         for (int iFace = 0; iFace < App->CL_Brush->Brush_GetNumFaces(pBrush); ++iFace)
         {
-            POINT			pt1, pt2;
+            POINT pt1, pt2;
             Face* pFace = App->CL_Brush->Brush_GetFace(pBrush, iFace);
             const Ogre::Vector3* FacePoints = App->CL_Face->Face_GetPoints(pFace);
             int				NumPoints = App->CL_Face->Face_GetNumPoints(pFace);
@@ -500,10 +505,7 @@ static geBoolean FindClosestBrushCB(Brush* pBrush, void* pVoid)
 // *************************************************************************
 void CL64_Doc::SelectOrtho(POINT point, ViewVars* v)
 {
-    //App->Get_Current_Document();
-
     Brush* pMinBrush;
-   // CEntity* pMinEntity;
     geFloat Dist;
     int FoundThingType;
 
@@ -520,27 +522,20 @@ void CL64_Doc::SelectOrtho(POINT point, ViewVars* v)
 
     FoundThingType = FindClosestThing(&point, v, &pMinBrush,&Dist);
 
-    //if ((FoundThingType != fctNOTHING) && (Dist <= MAX_PIXEL_SELECT_DIST))
-    //{
-    //    switch (FoundThingType)
-    //    {
-    //    case fctBRUSH:
-    //    {
-    //        DoBrushSelection(pMinBrush, brushSelToggle);
-    //        if (App->CLSB_Brushes->Dimensions_Dlg_Running == 1)
-    //        {
-    //            App->CLSB_Brushes->Update_Pos_Dlg(App->CLSB_Brushes->Dimensions_Dlg_hWnd);
-    //        }
-    //        break;
-    //    }
-    //    case fctENTITY:
-    //        DoEntitySelection(pMinEntity);
-    //        break;
-    //    default:
-    //        // bad value returned from FindClosestThing
-    //        assert(0);
-    //    }
-    //}
+    if ((FoundThingType != fctNOTHING) && (Dist <= MAX_PIXEL_SELECT_DIST))
+    {
+        if (FoundThingType == fctBRUSH)
+        {
+           App->Say_Win(pMinBrush->Name);
+
+                 DoBrushSelection(pMinBrush, brushSelToggle);
+                // if (App->CLSB_Brushes->Dimensions_Dlg_Running == 1)
+                //  {
+                //     App->CLSB_Brushes->Update_Pos_Dlg(App->CLSB_Brushes->Dimensions_Dlg_hWnd);
+                //  }
+        }
+        
+    }
 
     /*UpdateSelected();
 
@@ -552,7 +547,121 @@ void CL64_Doc::SelectOrtho(POINT point, ViewVars* v)
 }
 
 // *************************************************************************
-// *            FindClosestThing:- Terry and Hazel Flanigan 2023           *
+// *           DoBrushSelection:- Terry and Hazel Flanigan 2025            *
+// *************************************************************************
+void CL64_Doc::DoBrushSelection(Brush* pBrush, BrushSel	nSelType) //	brushSelToggle | brushSelAlways)
+{
+    int ModelId = 0;
+    geBoolean ModelLocked;
+   /* ModelInfo_Type* ModelInfo;
+    GroupListType* Groups;*/
+    int GroupId = 0;
+    geBoolean GroupLocked;
+    BrushList* BList;
+    Brush* pBParent = NULL;
+
+   /* ModelInfo = App->CL_Level->Level_GetModelInfo(pLevel);
+    Groups = App->CL_Level->Level_GetGroups(pLevel);*/
+    BList = App->CL_Level->Level_GetBrushes(pLevel);
+
+    if (App->CL_Brush->Brush_GetParent(BList, pBrush, &pBParent))
+    {
+        pBrush = pBParent;
+    }
+
+    ModelLocked = GE_FALSE;
+    GroupLocked = FALSE;
+    //	if(mAdjustMode != ADJUST_MODE_FACE)
+    {
+        // don't do this stuff if we're in face mode...
+       /* ModelId = Brush_GetModelId(pBrush);
+        if (ModelId != 0)
+        {
+            Model* pModel;
+
+            pModel = ModelList_FindById(ModelInfo->Models, ModelId);
+            if (pModel != NULL)
+            {
+                ModelLocked = Model_IsLocked(pModel);
+            }
+        }*/
+
+       /* if (!ModelLocked)
+        {
+            GroupId = Brush_GetGroupId(pBrush);
+            if (GroupId != 0)
+            {
+                GroupLocked = Group_IsLocked(Groups, GroupId);
+            }
+        }*/
+    }
+
+    if (nSelType == brushSelToggle && BrushIsSelected(pBrush))
+    {
+        if (ModelLocked)
+        {
+            // model is locked, so deselect everything in the model
+            //SelectModelBrushes(FALSE, ModelId);
+        }
+        else if (GroupLocked)
+        {
+            // group is locked, so deselect entire group
+            // SelectGroupBrushes(FALSE, GroupId);
+        }
+        else
+        {
+            // SelBrushList_Remove(pSelBrushes, pBrush);
+
+        }
+    }
+    else
+    {
+        //if (ModelLocked)
+        //{
+        //    // model is locked, so select everything in the model
+        //    SelectModelBrushes(TRUE, ModelId);
+        //}
+        //else if (GroupLocked)
+        //{
+        //    // group is locked.  Select everything in the group
+        //    SelectGroupBrushes(TRUE, GroupId);
+        //}
+        //else
+        {
+            // SelBrushList_Add(pSelBrushes, pBrush);
+
+            /*if (strstr(App->CL_Brush->Brush_GetName(pBrush), ".act") != NULL)
+            {
+                CEntityArray* Entities = Level_GetEntities(pLevel);
+
+                for (int i = 0; i < Entities->GetSize(); i++)
+                {
+                    Brush* b = (*Entities)[i].GetActorBrush();
+                    if (b != NULL)
+                        if (SelBrushList_Find(pSelBrushes, b))
+                            if (!(*Entities)[i].IsSelected())
+                            {
+                                (*Entities)[i].Select();
+                                ++NumSelEntities;
+                            }
+                }
+            }*/
+        }
+    }
+}
+
+// *************************************************************************
+// *            FindClosestThing:- Terry and Hazel Flanigan 2025           *
+// *************************************************************************
+signed int CL64_Doc::BrushIsSelected(Brush const* pBrush)
+{
+    assert(pBrush != NULL);
+
+    return App->CL_SelBrushList->SelBrushList_Find(pSelBrushes, pBrush);
+}
+
+// *************************************************************************
+// *            FindClosestThing:- Terry and Hazel Flanigan 2025           *
 // *************************************************************************
 int CL64_Doc::FindClosestThing(POINT const* ptFrom, ViewVars* v, Brush** ppMinBrush, geFloat* pDist)
 {

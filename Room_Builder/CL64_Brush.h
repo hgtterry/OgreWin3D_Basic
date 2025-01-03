@@ -103,6 +103,7 @@ public:
 	const char* Brush_GetName(const Brush* b);
 	signed int BrushList_GetUsedTextures(BrushList* BList, signed int* UsedTex, CL64_WadFile* WadFile);
 	signed int Brush_GetUsedTextures(const Brush* b, geBoolean* UsedTex, CL64_WadFile* WadFile);
+	signed int Brush_GetParent(const BrushList* pList, const Brush* b, Brush** bParent);
 
 };
 
