@@ -393,3 +393,11 @@ WadFileEntry* CL64_Level::Level_GetWadBitmap(Level* pLevel, const char* Name)
 	}
 }
 
+// *************************************************************************
+// *							Level_GetDibId							   *
+// *************************************************************************
+Guint16 CL64_Level::Level_GetDibId(const Level* pLevel, const char* Name)
+{
+	return Level_GetDibIdFromWad(pLevel->WadFile, Name);
+}
+

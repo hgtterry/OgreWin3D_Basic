@@ -214,6 +214,8 @@ void CL64_Doc::Brush_Add_To_world()
 		App->CL_Doc->flag_Is_Modified = 1;
 
 	}
+
+   // App->CL_Doc->CurBrush->Faces[0]->
 }
 
 // *************************************************************************
@@ -366,18 +368,15 @@ static signed int BrushTexSetCB(Brush* b, void* lParam)
     for (i = 0; i < NumFaces; i++) // hgtterry Debug
     {
         Face* f = App->CL_Brush->Brush_GetFace(b, i);
-        //WadFileEntry* pbmp;
-
-        ////		Face_SetTextureName(f, BrushName);
-        ////		Face_SetTextureDibId(f, Level_GetDibId (pData->pDoc->pLevel, BrushName));
-        ////		pbmp = Level_GetWadBitmap (pData->pDoc->pLevel, BrushName);
-        //Face_SetTextureName(f, pData->TexName);
-        //Face_SetTextureDibId(f, Level_GetDibId(App->CLSB_Doc->pLevel, pData->TexName));
-        //pbmp = Level_GetWadBitmap(App->CLSB_Doc->pLevel, pData->TexName);
-        //if (pbmp != NULL)
-        //{
-        //    Face_SetTextureSize(f, pbmp->Width, pbmp->Height);
-        //}
+        WadFileEntry* pbmp;
+        // 
+        App->CL_Face->Face_SetTextureName(f, pData->TexName);
+        App->CL_Face->Face_SetTextureDibId(f, App->CL_Level->Level_GetDibId(App->CL_Doc->pLevel, pData->TexName));
+        pbmp = App->CL_Level->Level_GetWadBitmap(App->CL_Doc->pLevel, pData->TexName);
+        if (pbmp != NULL)
+        {
+            App->CL_Face->Face_SetTextureSize(f, pbmp->Width, pbmp->Height);
+        }
     }
 
     App->CL_Brush->Brush_SetFaceListDirty(b);
@@ -393,7 +392,7 @@ void CL64_Doc::SetDefaultBrushTexInfo(Brush* b)
     const char* TexName;
     BrushTexSetData CallbackData;
 
-    TexName = "";// App->CLSB_TextureDialog->m_CurrentTexture; hgtterry Debug
+    TexName = App->CL_Properties_Textures->m_CurrentTexture;
     CallbackData.pDoc = this;
     CallbackData.TexName = TexName;
 
