@@ -363,8 +363,6 @@ bool CL64_Mesh_Mgr::WE_Level_Build_Brushes(Level3* pLevel, const char* Filename,
 			//int j, k;
 			strncpy(matname, pWad->mBitmaps[i].Name, MAX_PATH - 1);
 
-			strcpy(TextureName2[AdjustedIndex], matname);
-
 			if (geBitmap_HasAlpha(pWad->mBitmaps[i].bmp))
 			{
 				IsTextureAlpha[AdjustedIndex] = 1;

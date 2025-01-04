@@ -36,7 +36,9 @@ struct tag_BrushList
 CL64_Properties_Brushes::CL64_Properties_Brushes()
 {
 	BrushesDlg_Hwnd = nullptr;
+	Selected_Brush = nullptr;
 
+	Selected_Index = 0;
 	flag_Brushes_Dlg_Created = 0;
 
 }
@@ -82,9 +84,9 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Brush_Tabs(HWND hDlg, UINT messag
 		SendDlgItemMessage(hDlg, IDC_BRUSHCOUNT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ST_GD_BRUSHCOUNT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
-		/*SendDlgItemMessage(hDlg, IDC_BT_GD_BRUSHPROPERTIES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_GD_BRUSHPROPERTIES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
-		SendDlgItemMessage(hDlg, IDC_ST_GD_SELECTED, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		/*SendDlgItemMessage(hDlg, IDC_ST_GD_SELECTED, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ST_SELECTED, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_DIMENSIONS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_DELETEBRUSH, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));*/
@@ -145,7 +147,7 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Brush_Tabs(HWND hDlg, UINT messag
 	{
 		LPNMHDR some_item = (LPNMHDR)lParam;
 
-		/*if (some_item->idFrom == IDC_BT_GD_BRUSHPROPERTIES && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDC_BT_GD_BRUSHPROPERTIES && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 
@@ -162,7 +164,7 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Brush_Tabs(HWND hDlg, UINT messag
 			return CDRF_DODEFAULT;
 		}
 
-		if (some_item->idFrom == IDC_BT_DIMENSIONS && some_item->code == NM_CUSTOMDRAW)
+		/*if (some_item->idFrom == IDC_BT_DIMENSIONS && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_DIMENSIONS));
@@ -217,21 +219,21 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Brush_Tabs(HWND hDlg, UINT messag
 		//	return TRUE;
 		//}
 
-		//if (LOWORD(wParam) == IDC_GD_BRUSHLIST)
-		//{
-		//	if (App->CL_TabsGroups_Dlg->Groups_Dlg_Created == 1)
-		//	{
-		//		App->CL_TabsGroups_Dlg->List_Selection_Changed(1);
-		//	}
-		//	return TRUE;
-		//}
+		if (LOWORD(wParam) == IDC_GD_BRUSHLIST)
+		{
+			if (App->CL_Properties_Brushes->flag_Brushes_Dlg_Created == 1)
+			{
+				App->CL_Properties_Brushes->List_Selection_Changed(1);
+			}
+			return TRUE;
+		}
 
-		//if (LOWORD(wParam) == IDC_BT_GD_BRUSHPROPERTIES)
-		//{
-		//	App->CL_TabsGroups_Dlg->Start_Brush_Properties_Dlg();
-		//	SendDlgItemMessage(hDlg, IDC_GD_BRUSHLIST, LB_SETCURSEL, (WPARAM)App->CL_TabsGroups_Dlg->Selected_Index, (LPARAM)0);
-		//	return TRUE;
-		//}
+		if (LOWORD(wParam) == IDC_BT_GD_BRUSHPROPERTIES)
+		{
+			App->CL_Dialogs->Start_Brush_Properties_Dlg();
+			SendDlgItemMessage(hDlg, IDC_GD_BRUSHLIST, LB_SETCURSEL, (WPARAM)App->CL_Properties_Brushes->Selected_Index, (LPARAM)0);
+			return TRUE;
+		}
 
 		//// -----------------------------------------------------------------
 		//if (LOWORD(wParam) == IDOK)
@@ -252,6 +254,33 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Brush_Tabs(HWND hDlg, UINT messag
 	}
 	}
 	return FALSE;
+}
+
+// *************************************************************************
+// *	  	List_Selection_Changed:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+void CL64_Properties_Brushes::List_Selection_Changed(bool Clear)
+{
+	int Brush_Count = App->CL_Brush->Get_Brush_Count();
+
+	//if (Brush_Count > 0)
+	{
+		/*int Index = SendDlgItemMessage(BrushesDlg_Hwnd, IDC_GD_BRUSHLIST, LB_GETCURSEL, (WPARAM)0, (LPARAM)0);
+		if (Index == -1)
+		{
+			App->Say("ListBox No Selection Available");
+		}
+		else*/
+		{
+			if (flag_Brushes_Dlg_Created == 1)
+			{
+				Selected_Index = 0;// Index;
+				Selected_Brush = App->CL_Brush->Get_Brush_ByIndex(0);
+
+				//OnSelchangeBrushlist(Index, Clear);
+			}
+		}
+	}
 }
 
 // *************************************************************************

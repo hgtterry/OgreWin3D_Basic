@@ -24,6 +24,7 @@
 #define IDD_PROPS_BRUSHES               138
 #define IDD_PROPS_TEXTURES              139
 #define IDD_PLEASEWAIT                  140
+#define IDD_SB_BRUSH_PROPERTIES         141
 #define IDC_BANNER                      1000
 #define IDC_STTEXT                      1001
 #define IDC_STMESSAGE                   1002
@@ -41,6 +42,11 @@
 #define IDC_ST_GD_TEXTURES              1014
 #define IDC_BASETEXTURE2                1015
 #define IDC_STWIDTHHEIGHT               1016
+#define IDC_BT_GD_BRUSHPROPERTIES       1017
+#define IDC_BRUSH_PROPERTIESLIST        1018
+#define IDC_ST_BP_SELECTEDBRUSHES       1019
+#define IDC_COMBO1                      1020
+#define IDC_CB_SELECTED_BRUSH           1020
 #define ID_DEBUG_GENERAL                32771
 #define ID_TEMPLATES_INSERT             32772
 #define ID_BRUSH_SELECT                 32773
@@ -57,9 +63,9 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
-#define _APS_NEXT_RESOURCE_VALUE        141
+#define _APS_NEXT_RESOURCE_VALUE        142
 #define _APS_NEXT_COMMAND_VALUE         32777
-#define _APS_NEXT_CONTROL_VALUE         1017
+#define _APS_NEXT_CONTROL_VALUE         1021
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif

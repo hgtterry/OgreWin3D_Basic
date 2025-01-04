@@ -99,7 +99,7 @@ public:
 	void Flash_Window();
 	void SetMainWinCentre(void) const;
 
-	void Say(const char* Message, char* Message2);
+	void Say(const char* Message, char* Message2 = NULL);
 	void Say_Int(int Value);
 	void Say_Float(float Value);
 	void Say_Vector3(Ogre::Vector3 Vector);

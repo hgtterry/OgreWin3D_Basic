@@ -34,10 +34,15 @@ public:
 	void Fill_ListBox();
 	void Get_Index(const Brush* b);
 
+	int Selected_Index;
+	Brush* Selected_Brush;
+
 	HWND BrushesDlg_Hwnd;
 
 private:
 	static LRESULT CALLBACK Proc_Brush_Tabs(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+
+	void List_Selection_Changed(bool Clear);
 
 	bool flag_Brushes_Dlg_Created;
 

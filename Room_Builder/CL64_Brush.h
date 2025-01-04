@@ -30,6 +30,12 @@ THE SOFTWARE.
 typedef struct tag_FaceList FaceList;
 typedef struct tag_BrushList BrushList;
 
+#define BRUSH_COUNT_MULTI 1
+#define BRUSH_COUNT_LEAF  2
+#define BRUSH_COUNT_CSG   4
+#define BRUSH_COUNT_ALL (BRUSH_COUNT_MULTI | BRUSH_COUNT_LEAF | BRUSH_COUNT_CSG)
+#define BRUSH_COUNT_NORECURSE 8
+
 typedef struct BrushTag
 {
 	struct BrushTag* Prev, * Next;
@@ -104,6 +110,11 @@ public:
 	signed int BrushList_GetUsedTextures(BrushList* BList, signed int* UsedTex, CL64_WadFile* WadFile);
 	signed int Brush_GetUsedTextures(const Brush* b, signed int* UsedTex, CL64_WadFile* WadFile);
 	signed int Brush_GetParent(const BrushList* pList, const Brush* b, Brush** bParent);
-
+	Brush* Get_Brush_ByIndex(int Index);
+	int BrushList_Count
+	(
+		BrushList const* pList,
+		int CountFlags
+	);
 };
 

@@ -32,11 +32,23 @@ public:
 
 	void Message(char* pString, char* pString2);
 	void PleaseWait();
+	void Start_Brush_Properties_Dlg();
 
 private:
 
 	static LRESULT CALLBACK Proc_Message(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Proc_PleaseWait(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Proc_Brush_Properties(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+
+	// Brush Information
+	void Fill_Brush_Combo(HWND hDlg);
+	void List_BrushData(HWND hDlg);
+	bool Show_Brush_Info(const Brush* b, HWND hDlg);
+	bool Show_Brush_ListInfo(BrushList* BList, HWND hDlg);
+	bool Show_Brush_Faces_Info(const FaceList* pList, HWND hDlg);
+	bool Show_Face_Data(int Index, const Face* f, HWND hDlg);
+
+	bool flag_boolBrush_Properties_Dialog_Active;
 
 	char Message_Text_Header[MAX_PATH];
 	char Message_Text_Message[MAX_PATH];

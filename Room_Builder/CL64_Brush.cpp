@@ -1128,6 +1128,7 @@ signed int CL64_Brush::BrushList_GetUsedTextures(BrushList* BList, signed int* U
 
 		pBrush = BrushList_GetNext(&bi);
 	}
+
 	return GE_TRUE;
 }
 
@@ -1207,5 +1208,81 @@ signed int CL64_Brush::Brush_GetParent(const BrushList* pList,const Brush* b,Bru
 	}
 
 	return	GE_FALSE;
+}
+
+// *************************************************************************
+// *							Get_Brush_ByIndex						   *
+// *************************************************************************
+Brush* CL64_Brush::Get_Brush_ByIndex(int Index)
+{
+	Level* pLevel = App->CL_Doc->pLevel;
+	BrushList* pList = App->CL_Level->Level_GetBrushes(App->CL_Doc->pLevel);
+
+	int Count = 0;
+	Brush* b;
+	b = pList->First;
+	while (b != NULL)
+	{
+		if (Count == Index)
+		{
+			return b;
+		}
+
+		Count++;
+		b = b->Next;
+	}
+
+	return NULL;
+}
+
+// *************************************************************************
+// *							BrushList_Count							   *
+// *************************************************************************
+int CL64_Brush::BrushList_Count(BrushList const* pList,int CountFlags)
+{
+	int Count;
+	Brush* b;
+	//	geBoolean bResult = GE_TRUE;
+
+	assert(pList != NULL);
+
+	Count = 0;
+
+	b = pList->First;
+	while (b != NULL)
+	{
+		geBoolean CountIt;
+		switch (b->Type)
+		{
+		case BRUSH_MULTI:
+			CountIt = (CountFlags & BRUSH_COUNT_MULTI);
+			break;
+
+		case BRUSH_LEAF:
+			CountIt = (CountFlags & BRUSH_COUNT_LEAF);
+			break;
+
+		case BRUSH_CSG:
+			CountIt = (CountFlags & BRUSH_COUNT_CSG);
+			break;
+
+		default:
+			assert(0);
+			CountIt = GE_FALSE;
+			break;
+		}
+		if (CountIt)
+		{
+			++Count;
+		}
+
+		if ((b->Type == BRUSH_MULTI) && (!(CountFlags & BRUSH_COUNT_NORECURSE)))
+		{
+			Count += BrushList_Count(b->BList, CountFlags);
+		}
+		b = b->Next;
+	}
+
+	return Count;
 }
 
