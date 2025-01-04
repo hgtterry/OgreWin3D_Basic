@@ -174,7 +174,6 @@ void CL64_Mesh_Mgr::Delete_Brush_List()
 // *************************************************************************
 bool CL64_Mesh_Mgr::Update_World()
 {
-
 	WE_Build_Brush_List(0);
 	WE_Convert_All_Texture_Groups();
 
@@ -247,8 +246,9 @@ bool CL64_Mesh_Mgr::WE_Convert_All_Texture_Groups()
 // *************************************************************************
 void CL64_Mesh_Mgr::WE_Build_Brush_List(int ExpSelected)
 {
+	
 	Delete_Brush_List();
-
+	
 	App->CL_Model->BrushCount = 0;
 
 	mBrushCount = 0;
@@ -269,13 +269,13 @@ void CL64_Mesh_Mgr::WE_Build_Brush_List(int ExpSelected)
 	}
 	else				// Build Selected
 	{
-	//	int i, GroupID, GroupCount;
-	//	char NewFileName[MAX_PATH];
-	//	GroupID = -1;
-	//	GroupCount = 1;
+		int i, GroupID, GroupCount;
+		char NewFileName[MAX_PATH];
+		GroupID = -1;
+		GroupCount = 1;
 
-	//	for (i = 0; i < GroupCount; i++)
-	//	{
+		for (i = 0; i < GroupCount; i++)
+		{
 	//		BrushList* SBList;
 	//		Brush* pBrush;
 	//		BrushIterator bi;
@@ -324,7 +324,7 @@ void CL64_Mesh_Mgr::WE_Build_Brush_List(int ExpSelected)
 	//		}
 
 	//		BrushList_Destroy(&SBList);
-	//	}
+		}
 	}
 
 	//App->Say("Converted NEW");
@@ -335,6 +335,11 @@ void CL64_Mesh_Mgr::WE_Build_Brush_List(int ExpSelected)
 // *************************************************************************
 bool CL64_Mesh_Mgr::WE_Level_Build_Brushes(Level3* pLevel, const char* Filename, BrushList* BList, int ExpSelected, geBoolean ExpLights, int GroupID)
 {
+	CL64_WadFile* pWad;
+	pWad = NULL;
+	pWad = App->CL_Level->Level_GetWadFile(App->CL_Doc->pLevel);
+	int ml_BitMap_Count = pWad->mBitmapCount;
+
 	mTextureCount = 0;
 	memset(mAdjusedIndex_Store, 0, 500);
 	Actual_Brush_Index = 0;
@@ -342,24 +347,25 @@ bool CL64_Mesh_Mgr::WE_Level_Build_Brushes(Level3* pLevel, const char* Filename,
 	int i;
 	signed int* WrittenTex;
 
-	WrittenTex = (geBoolean*)calloc(sizeof(geBoolean), pLevel->WadFile->mBitmapCount);
-
+	WrittenTex = (signed int*)calloc(sizeof(signed int), ml_BitMap_Count);
+	
 	// which textures are used?
-	App->CL_Brush->BrushList_GetUsedTextures(BList, WrittenTex, pLevel->WadFile);
-
+	App->CL_Brush->BrushList_GetUsedTextures(BList, WrittenTex, pWad);
+	
 	// Add Textures GL
 	int AdjustedIndex = 0;
-	for (i = 0; i < pLevel->WadFile->mBitmapCount; i++)
+
+	for (i = 0; i < ml_BitMap_Count; i++)
 	{
 		if (WrittenTex[i])
 		{
 			char matname[MAX_PATH];
 			//int j, k;
-			strncpy(matname, pLevel->WadFile->mBitmaps[i].Name, MAX_PATH - 1);
+			strncpy(matname, pWad->mBitmaps[i].Name, MAX_PATH - 1);
 
 			strcpy(TextureName2[AdjustedIndex], matname);
 
-			if (geBitmap_HasAlpha(pLevel->WadFile->mBitmaps[i].bmp))
+			if (geBitmap_HasAlpha(pWad->mBitmaps[i].bmp))
 			{
 				IsTextureAlpha[AdjustedIndex] = 1;
 			}
@@ -378,6 +384,7 @@ bool CL64_Mesh_Mgr::WE_Level_Build_Brushes(Level3* pLevel, const char* Filename,
 
 	mTextureCount = AdjustedIndex;
 
+	App->Say_Int(mTextureCount);
 
 	WE_BrushList_Decode(BList, GE_FALSE);
 
@@ -396,8 +403,6 @@ bool CL64_Mesh_Mgr::WE_BrushList_Decode(BrushList* BList, signed int SubBrush)
 
 	pBrush = App->CL_Brush->BrushList_GetFirst(BList, &bi);
 
-
-
 	while (pBrush != NULL)
 	{
 		if (mSubBrushCount == 0 && pBrush->Flags & 1 || pBrush->Flags & 1024)
@@ -414,8 +419,6 @@ bool CL64_Mesh_Mgr::WE_BrushList_Decode(BrushList* BList, signed int SubBrush)
 			return GE_FALSE;
 		}
 
-
-
 		pBrush = App->CL_Brush->BrushList_GetNext(&bi);
 
 		if (SubBrush)
@@ -427,8 +430,6 @@ bool CL64_Mesh_Mgr::WE_BrushList_Decode(BrushList* BList, signed int SubBrush)
 			mBrushCount++;
 			Actual_Brush_Index++;
 		}
-
-
 	}
 
 	mSubBrushCount = 0;

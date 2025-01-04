@@ -47,6 +47,7 @@
 #define ID_BRUSH_MOVE                   32774
 #define ID_BRUSH_SCALE                  32775
 #define ID_BRUSH_SHEAR                  32776
+#define IID_TOOLS_BRUSH_MOVEROTATEBRUSH 32784
 #define ID_GENERALSELECT                32886
 #define ID_TOOLS_TEMPLATE               32910
 #define IDC_STATIC                      -1

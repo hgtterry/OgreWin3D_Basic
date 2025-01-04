@@ -1134,7 +1134,7 @@ signed int CL64_Brush::BrushList_GetUsedTextures(BrushList* BList, signed int* U
 // *************************************************************************
 // *						Brush_GetUsedTextures						   *
 // *************************************************************************
-signed int CL64_Brush::Brush_GetUsedTextures(const Brush* b, geBoolean* UsedTex, CL64_WadFile* WadFile)
+signed int CL64_Brush::Brush_GetUsedTextures(const Brush* b, signed int* UsedTex, CL64_WadFile* WadFile)
 {
 	assert(UsedTex);
 	assert(b);
