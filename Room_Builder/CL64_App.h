@@ -53,6 +53,7 @@ THE SOFTWARE.
 #include "CL64_Panels.h"
 #include "CL64_Keyboard.h"
 #include "CL64_Model.h"
+#include "CL64_Ogre3D.h"
 
 class CL64_App
 {
@@ -88,6 +89,7 @@ public:
 	CL64_Panels*				CL_Panels;
 	CL64_Keyboard*				CL_Keyboard;
 	CL64_Model*					CL_Model;
+	CL64_Ogre3D*				CL_Ogre3D;
 
 	void InitApp(void);
 	void SetBrushes_Fonts(void);

@@ -168,6 +168,7 @@
     <ClInclude Include="CL64_Mesh_Mgr.h" />
     <ClInclude Include="CL64_Model.h" />
     <ClInclude Include="CL64_Ogre.h" />
+    <ClInclude Include="CL64_Ogre3D.h" />
     <ClInclude Include="CL64_Ogre3D_Listener.h" />
     <ClInclude Include="CL64_Panels.h" />
     <ClInclude Include="CL64_Prefs.h" />
@@ -206,6 +207,7 @@
     <ClCompile Include="CL64_Mesh_Mgr.cpp" />
     <ClCompile Include="CL64_Model.cpp" />
     <ClCompile Include="CL64_Ogre.cpp" />
+    <ClCompile Include="CL64_Ogre3D.cpp" />
     <ClCompile Include="CL64_Ogre3D_Listener.cpp" />
     <ClCompile Include="CL64_Panels.cpp" />
     <ClCompile Include="CL64_Prefs.cpp" />
