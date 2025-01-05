@@ -28,8 +28,16 @@ THE SOFTWARE.
 
 CL64_Model::CL64_Model()
 {
+	// Groups
+	GroupCount = 0;
+	VerticeCount = 0;
+	FaceCount = 0;
+
+	// Brushes
 	BrushCount = 0;
 	Brush_Face_Count = 0;
+
+	JustName[0] = 0;
 
 	int Count = 0;
 	while (Count < 11999)
@@ -37,6 +45,14 @@ CL64_Model::CL64_Model()
 		B_Brush[Count] = nullptr;
 		Count++;
 	}
+
+	Count = 0;
+	while (Count < 4999)
+	{
+		Group[Count] = nullptr;
+		Count++;
+	}
+
 }
 
 CL64_Model::~CL64_Model()
@@ -58,4 +74,18 @@ void CL64_Model::Create_Brush_XX(int Index)
 
 	B_Brush[Index]->Vertice_Count = 0;
 	B_Brush[Index]->Face_Count = 0;
+}
+
+// *************************************************************************
+// *		Create_Mesh_Group:- Terry and Hazel Flanigan 2023		  	   *
+// *************************************************************************
+void CL64_Model::Create_Mesh_Group(int Index)
+{
+	if (Group[Index] != nullptr)
+	{
+		delete Group[Index];
+		Group[Index] = nullptr;
+	}
+
+	Group[Index] = new Base_Group();
 }

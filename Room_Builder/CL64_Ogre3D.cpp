@@ -102,71 +102,71 @@ void CL64_Ogre3D::Convert_ToOgre3D(bool Create)
 	World_Manual->setDynamic(false);
 	World_Manual->setCastShadows(false);
 
-	//World_Manual->estimateVertexCount(App->CL_Model->VerticeCount);
-	//World_Manual->estimateIndexCount(App->CL_Model->FaceCount);
+	World_Manual->estimateVertexCount(App->CL_Model->VerticeCount);
+	World_Manual->estimateIndexCount(App->CL_Model->FaceCount);
 
 	char MaterialNumber[255];
 	char MatName[255];
 
-	//int GroupCountTotal = App->CL_Model->Get_Groupt_Count();
+	int GroupCountTotal = App->CL_Model->GroupCount;
 	int Count = 0;
 	int FaceCount = 0;
 	int FaceIndex = 0;
 	int TotalFaces = 0;
 
-	//while (Count < GroupCountTotal)
-	//{
-	//	_itoa(Count, MaterialNumber, 10);
-	//	strcpy(MatName, mWorld_Mesh_JustName);
-	//	strcat(MatName, "_Material_");
-	//	strcat(MatName, MaterialNumber);
+	while (Count < GroupCountTotal)
+	{
+		_itoa(Count, MaterialNumber, 10);
+		strcpy(MatName, mWorld_Mesh_JustName);
+		strcat(MatName, "_Material_");
+		strcat(MatName, MaterialNumber);
 
-	//	World_Manual->begin(MatName, Ogre::RenderOperation::OT_TRIANGLE_LIST);
+		World_Manual->begin(MatName, Ogre::RenderOperation::OT_TRIANGLE_LIST);
 
-	//	FaceCount = 0;
-	//	FaceIndex = 0;
+		FaceCount = 0;
+		FaceIndex = 0;
 
-	//	TotalFaces = TotalFaces + App->CL_Model->Group[Count]->GroupFaceCount;
+		TotalFaces = TotalFaces + App->CL_Model->Group[Count]->GroupFaceCount;
 
-	//	while (FaceCount < App->CL_Model->Group[Count]->GroupFaceCount)
-	//	{
-	//		A = App->CL_Model->Group[Count]->Face_Data[FaceCount].a;
-	//		B = App->CL_Model->Group[Count]->Face_Data[FaceCount].b;
-	//		C = App->CL_Model->Group[Count]->Face_Data[FaceCount].c;
+		while (FaceCount < App->CL_Model->Group[Count]->GroupFaceCount)
+		{
+			A = App->CL_Model->Group[Count]->Face_Data[FaceCount].a;
+			B = App->CL_Model->Group[Count]->Face_Data[FaceCount].b;
+			C = App->CL_Model->Group[Count]->Face_Data[FaceCount].c;
 
-	//		// --------------------------------------------------
+			// --------------------------------------------------
 
-	//		Get_Data(Count, A);
+			Get_Data(Count, A);
 
-	//		World_Manual->position(Ogre::Vector3(x, y, z));
-	//		World_Manual->textureCoord(Ogre::Vector2(u, 1 - v));
-	//		World_Manual->normal(Ogre::Vector3(nx, ny, nz));
-	//		World_Manual->index(FaceIndex);
-	//		FaceIndex++;
+			World_Manual->position(Ogre::Vector3(x, y, z));
+			World_Manual->textureCoord(Ogre::Vector2(u, 1 - v));
+			World_Manual->normal(Ogre::Vector3(nx, ny, nz));
+			World_Manual->index(FaceIndex);
+			FaceIndex++;
 
-	//		Get_Data(Count, B);
+			Get_Data(Count, B);
 
-	//		World_Manual->position(Ogre::Vector3(x, y, z));
-	//		World_Manual->textureCoord(Ogre::Vector2(u, 1 - v));
-	//		World_Manual->normal(Ogre::Vector3(nx, ny, nz));
-	//		World_Manual->index(FaceIndex);
-	//		FaceIndex++;
+			World_Manual->position(Ogre::Vector3(x, y, z));
+			World_Manual->textureCoord(Ogre::Vector2(u, 1 - v));
+			World_Manual->normal(Ogre::Vector3(nx, ny, nz));
+			World_Manual->index(FaceIndex);
+			FaceIndex++;
 
-	//		Get_Data(Count, C);
+			Get_Data(Count, C);
 
-	//		World_Manual->position(Ogre::Vector3(x, y, z));
-	//		World_Manual->textureCoord(Ogre::Vector2(u, 1 - v));
-	//		World_Manual->normal(Ogre::Vector3(nx, ny, nz));
-	//		World_Manual->index(FaceIndex);
+			World_Manual->position(Ogre::Vector3(x, y, z));
+			World_Manual->textureCoord(Ogre::Vector2(u, 1 - v));
+			World_Manual->normal(Ogre::Vector3(nx, ny, nz));
+			World_Manual->index(FaceIndex);
 
-	//		FaceIndex++;
-	//		FaceCount++;
-	//	}
+			FaceIndex++;
+			FaceCount++;
+		}
 
-	//	World_Manual->end();
+		World_Manual->end();
 
-	//	Count++;
-	//}
+		Count++;
+	}
 
 	//App->CL_Model->Ogre_Face_Count = TotalFaces;
 
@@ -243,4 +243,21 @@ void CL64_Ogre3D::Convert_ToOgre3D(bool Create)
 
 	remove(mWorld_File_PathAndFile);
 	remove(Material_PathAndFile);
+}
+
+// *************************************************************************
+// *			Get_Data:- Terry and Hazel Flanigan 2025  			   	   *
+// *************************************************************************
+void CL64_Ogre3D::Get_Data(int Index, int FaceIndex)
+{
+	x = App->CL_Model->Group[Index]->vertex_Data[FaceIndex].x;
+	y = App->CL_Model->Group[Index]->vertex_Data[FaceIndex].y;
+	z = App->CL_Model->Group[Index]->vertex_Data[FaceIndex].z;
+
+	u = App->CL_Model->Group[Index]->MapCord_Data[FaceIndex].u;
+	v = App->CL_Model->Group[Index]->MapCord_Data[FaceIndex].v;
+
+	nx = App->CL_Model->Group[Index]->Normal_Data[FaceIndex].x;
+	ny = App->CL_Model->Group[Index]->Normal_Data[FaceIndex].y;
+	nz = App->CL_Model->Group[Index]->Normal_Data[FaceIndex].z;
 }

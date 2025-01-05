@@ -22,6 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 #include "Base_Brush.h"
+#include "Base_Group.h"
 
 #pragma once
 class CL64_Model
@@ -31,9 +32,19 @@ public:
 	~CL64_Model();
 
 	void Create_Brush_XX(int Index);
+	void Create_Mesh_Group(int Index);
 
+	Base_Group* Group[5000];
 	Base_Brush* B_Brush[12000];
 
+	char JustName[MAX_PATH];
+
+	// Groups
+	int VerticeCount;
+	int GroupCount;
+	int FaceCount;
+
+	// Brushes
 	int BrushCount;
 	int Brush_Face_Count;
 };

@@ -40,6 +40,8 @@ public:
 	bool WE_FaceList_Create(const Brush* b, const FaceList* pList, int BrushCount, int SubBrushCount, int Actual_Brush_Index);
 
 	bool WE_Convert_All_Texture_Groups();
+	int WE_Get_Vertice_Count(int TextureID);
+	bool WE_Convert_To_Texture_Group(int TextureID);
 
 	void Delete_Brush_List();
 	void Delete_Group_Brushes();

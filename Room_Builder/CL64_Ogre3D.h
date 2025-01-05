@@ -31,6 +31,7 @@ public:
 
 	void Set_World_Paths(void);
 	void Convert_ToOgre3D(bool Create);
+	void Get_Data(int Index, int FaceIndex);
 
 	Ogre::ManualObject* Export_Manual;
 	Ogre::ManualObject* World_Manual;
