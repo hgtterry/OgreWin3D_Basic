@@ -28,8 +28,219 @@ THE SOFTWARE.
 
 CL64_Ogre3D::CL64_Ogre3D(void)
 {
+	Export_Manual = nullptr;
+	World_Manual = nullptr;
+
+	mWorld_Mesh_JustName[0] = 0;
+	mWorld_File_PathAndFile[0] = 0;
+	mWorld_File_Path[0] = 0;
+	mExport_Just_Name[0] = 0;
+
+	x, y, z = 0;
+	nx, ny, nz = 0;
+	u, v = 0;
+
+	NameIndex = 0;
 }
 
 CL64_Ogre3D::~CL64_Ogre3D(void)
 {
+}
+
+// *************************************************************************
+// *		Set_World_Paths:- Terry and Hazel Flanigan 2025			 	   *
+// *************************************************************************
+void CL64_Ogre3D::Set_World_Paths(void)
+{
+	char Num[100];
+	_itoa(NameIndex, Num, 10);
+
+	strcpy(mWorld_Mesh_JustName, "World");
+	strcat(mWorld_Mesh_JustName, Num);
+
+	strcpy(mWorld_File_PathAndFile, App->RB_Directory_FullPath);
+	strcat(mWorld_File_PathAndFile, "\\");
+	strcat(mWorld_File_PathAndFile, "Data");
+	strcat(mWorld_File_PathAndFile, "\\");
+	strcat(mWorld_File_PathAndFile, "World_Test");
+
+	strcpy(mWorld_File_Path, mWorld_File_PathAndFile);
+
+	strcat(mWorld_File_PathAndFile, "\\");
+	strcat(mWorld_File_PathAndFile, mWorld_Mesh_JustName);
+	strcat(mWorld_File_PathAndFile, ".mesh");
+
+	strcpy(mExport_Just_Name, mWorld_Mesh_JustName);
+
+	NameIndex++;
+
+	x, y, z = 0;
+	nx, ny, nz = 0;
+	u, v = 0;
+}
+
+// *************************************************************************
+// *	  		Convert_ToOgre3D:- Terry and Hazel Flanigan 2025		   *
+// *************************************************************************
+void CL64_Ogre3D::Convert_ToOgre3D(bool Create)
+{
+
+	Set_World_Paths();
+
+	//App->CL_Model->Ogre_Face_Count = 0;
+
+	if (Create == 1)
+	{
+		World_Manual = App->CL_Ogre->mSceneMgr->createManualObject("OgreManual2");
+		World_Manual->setRenderQueueGroup(2);
+	}
+
+	int A = 0;
+	int B = 0;
+	int C = 0;
+
+	World_Manual->setDynamic(false);
+	World_Manual->setCastShadows(false);
+
+	//World_Manual->estimateVertexCount(App->CL_Model->VerticeCount);
+	//World_Manual->estimateIndexCount(App->CL_Model->FaceCount);
+
+	char MaterialNumber[255];
+	char MatName[255];
+
+	//int GroupCountTotal = App->CL_Model->Get_Groupt_Count();
+	int Count = 0;
+	int FaceCount = 0;
+	int FaceIndex = 0;
+	int TotalFaces = 0;
+
+	//while (Count < GroupCountTotal)
+	//{
+	//	_itoa(Count, MaterialNumber, 10);
+	//	strcpy(MatName, mWorld_Mesh_JustName);
+	//	strcat(MatName, "_Material_");
+	//	strcat(MatName, MaterialNumber);
+
+	//	World_Manual->begin(MatName, Ogre::RenderOperation::OT_TRIANGLE_LIST);
+
+	//	FaceCount = 0;
+	//	FaceIndex = 0;
+
+	//	TotalFaces = TotalFaces + App->CL_Model->Group[Count]->GroupFaceCount;
+
+	//	while (FaceCount < App->CL_Model->Group[Count]->GroupFaceCount)
+	//	{
+	//		A = App->CL_Model->Group[Count]->Face_Data[FaceCount].a;
+	//		B = App->CL_Model->Group[Count]->Face_Data[FaceCount].b;
+	//		C = App->CL_Model->Group[Count]->Face_Data[FaceCount].c;
+
+	//		// --------------------------------------------------
+
+	//		Get_Data(Count, A);
+
+	//		World_Manual->position(Ogre::Vector3(x, y, z));
+	//		World_Manual->textureCoord(Ogre::Vector2(u, 1 - v));
+	//		World_Manual->normal(Ogre::Vector3(nx, ny, nz));
+	//		World_Manual->index(FaceIndex);
+	//		FaceIndex++;
+
+	//		Get_Data(Count, B);
+
+	//		World_Manual->position(Ogre::Vector3(x, y, z));
+	//		World_Manual->textureCoord(Ogre::Vector2(u, 1 - v));
+	//		World_Manual->normal(Ogre::Vector3(nx, ny, nz));
+	//		World_Manual->index(FaceIndex);
+	//		FaceIndex++;
+
+	//		Get_Data(Count, C);
+
+	//		World_Manual->position(Ogre::Vector3(x, y, z));
+	//		World_Manual->textureCoord(Ogre::Vector2(u, 1 - v));
+	//		World_Manual->normal(Ogre::Vector3(nx, ny, nz));
+	//		World_Manual->index(FaceIndex);
+
+	//		FaceIndex++;
+	//		FaceCount++;
+	//	}
+
+	//	World_Manual->end();
+
+	//	Count++;
+	//}
+
+	//App->CL_Model->Ogre_Face_Count = TotalFaces;
+
+	if (World_Manual->getNumSections() == 0)
+	{
+		App->Say("Can not create Ogre Sections");
+	}
+
+	Ogre::MeshPtr mesh = World_Manual->convertToMesh("TestMesh");
+
+	mesh->setAutoBuildEdgeLists(true);
+	mesh->buildEdgeList();
+
+	App->CL_Ogre->mSceneMgr->destroyManualObject(World_Manual);
+
+	Ogre::MeshSerializer* ms = new Ogre::MeshSerializer();
+	ms->exportMesh(mesh.get(), mWorld_File_PathAndFile);
+	delete(ms);
+
+	char OutputFolder[MAX_PATH];
+	strcpy(OutputFolder, mWorld_File_Path);
+	strcat(OutputFolder, "\\");
+
+	//DecompileTextures_TXL(OutputFolder);
+
+	char Material_PathAndFile[MAX_PATH];
+	strcpy(Material_PathAndFile, mWorld_File_Path);
+	strcat(Material_PathAndFile, "\\");
+	strcat(Material_PathAndFile, mWorld_Mesh_JustName);
+	strcat(Material_PathAndFile, ".material");
+
+	//CreateMaterialFile(Material_PathAndFile);
+
+	char Name[MAX_PATH];
+	strcpy(Name, mWorld_Mesh_JustName);
+	strcat(Name, ".mesh");
+
+	if (App->CL_Mesh_Mgr->World_Ent)
+	{
+		App->CL_Mesh_Mgr->World_Node->detachAllObjects();
+
+		App->CL_Ogre->mSceneMgr->destroySceneNode(App->CL_Mesh_Mgr->World_Node);
+		App->CL_Ogre->mSceneMgr->destroyEntity(App->CL_Mesh_Mgr->World_Ent);
+
+		App->CL_Mesh_Mgr->World_Node = NULL;
+		App->CL_Mesh_Mgr->World_Ent = NULL;
+
+		//Ogre::ResourcePtr ptr = Ogre::MeshManager::getSingleton().getByName(Name,App->CLSB_Ogre->World_Resource_Group);
+		//ptr->unload();
+
+		//Ogre::MeshManager::getSingleton().remove(Name);
+
+		Ogre::ResourceGroupManager::getSingleton().destroyResourceGroup(App->CL_Ogre->World_Resource_Group);
+		Ogre::ResourceGroupManager::getSingleton().createResourceGroup(App->CL_Ogre->World_Resource_Group);
+
+		Ogre::ResourceGroupManager::getSingleton().addResourceLocation(mWorld_File_Path, "FileSystem", App->CL_Ogre->World_Resource_Group);
+		Ogre::ResourceGroupManager::getSingleton().clearResourceGroup(App->CL_Ogre->World_Resource_Group);
+		Ogre::ResourceGroupManager::getSingleton().initialiseResourceGroup(App->CL_Ogre->World_Resource_Group);
+
+	}
+	else
+	{
+		Ogre::ResourceGroupManager::getSingleton().addResourceLocation(mWorld_File_Path, "FileSystem", App->CL_Ogre->World_Resource_Group);
+	}
+
+	App->CL_Mesh_Mgr->World_Ent = App->CL_Ogre->mSceneMgr->createEntity(Name);
+	App->CL_Mesh_Mgr->World_Node = App->CL_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+
+	App->CL_Mesh_Mgr->World_Node->attachObject(App->CL_Mesh_Mgr->World_Ent);
+
+	App->CL_Mesh_Mgr->World_Node->setPosition(0, 0, 0);
+	App->CL_Mesh_Mgr->World_Node->setVisible(true);
+	App->CL_Mesh_Mgr->World_Node->setScale(1, 1, 1);
+
+	remove(mWorld_File_PathAndFile);
+	remove(Material_PathAndFile);
 }

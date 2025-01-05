@@ -155,6 +155,7 @@
     <ClInclude Include="CL64_Box.h" />
     <ClInclude Include="CL64_Brush.h" />
     <ClInclude Include="CL64_BrushTemplate.h" />
+    <ClInclude Include="CL64_Brush_X.h" />
     <ClInclude Include="CL64_Dialogs.h" />
     <ClInclude Include="CL64_Doc.h" />
     <ClInclude Include="CL64_Face.h" />
@@ -194,6 +195,7 @@
     <ClCompile Include="CL64_Box.cpp" />
     <ClCompile Include="CL64_Brush.cpp" />
     <ClCompile Include="CL64_BrushTemplate.cpp" />
+    <ClCompile Include="CL64_Brush_X.cpp" />
     <ClCompile Include="CL64_Dialogs.cpp" />
     <ClCompile Include="CL64_Doc.cpp" />
     <ClCompile Include="CL64_Face.cpp" />

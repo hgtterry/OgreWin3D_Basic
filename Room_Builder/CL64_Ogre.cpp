@@ -45,7 +45,7 @@ CL64_Ogre::CL64_Ogre()
 	FPStimer.reset();
 
 	App_Resource_Group = "App_Resource_Group";
-
+	World_Resource_Group = "World_Resource_Group";
 }
 
 CL64_Ogre::~CL64_Ogre()

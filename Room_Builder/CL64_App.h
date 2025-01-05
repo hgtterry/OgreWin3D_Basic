@@ -42,6 +42,7 @@ THE SOFTWARE.
 #include "CL64_SelFaceList.h"
 #include "CL64_WadFile.h"
 #include "CL64_Mesh_Mgr.h"
+#include "CL64_Brush_X.h"
 // ------------------------------
 #include "CL64_Dialogs.h"
 #include "CL64_Properties_Tabs.h"
@@ -78,6 +79,7 @@ public:
 	CL64_Array*					CL_Array;
 	CL64_SelFaceList*			CL_SelFaceList;
 	CL64_Mesh_Mgr*				CL_Mesh_Mgr;
+	CL64_Brush_X*				CL_CL64_Brush_X;
 	// ------------------------------
 	CL64_Dialogs*				CL_Dialogs;
 	CL64_Properties_Tabs*		CL_Properties_Tabs;

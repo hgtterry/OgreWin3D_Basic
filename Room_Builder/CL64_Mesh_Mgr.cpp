@@ -128,6 +128,9 @@ struct tag_Level3
 
 CL64_Mesh_Mgr::CL64_Mesh_Mgr()
 {
+	World_Node = nullptr;
+	World_Ent = nullptr;
+
 	mBrushCount = 0;
 	mSubBrushCount = 0;
 	Global_Faces_Index = 0;
@@ -258,10 +261,14 @@ void CL64_Mesh_Mgr::WE_Build_Brush_List(int ExpSelected)
 	strcpy(Path, App->RB_Directory_FullPath);
 	strcat(Path, "Data\\3DSTemp.txt");
 
-	BrushList* BList;
+	BrushList* BList = NULL;
 	signed int fResult;
 
 	BList = App->CL_Level->Level_GetBrushes(App->CL_Doc->pLevel);
+	if (BList == NULL)
+	{
+		App->Say("Error");
+	}
 
 	if (!ExpSelected)	// Build All
 	{
@@ -342,22 +349,24 @@ bool CL64_Mesh_Mgr::WE_Level_Build_Brushes(Level3* pLevel, const char* Filename,
 
 	mTextureCount = 0;
 	memset(mAdjusedIndex_Store, 0, 500);
+	memset(UsedTextures, 0, 500);
 	Actual_Brush_Index = 0;
 
 	int i;
 	signed int* WrittenTex;
 
-	WrittenTex = (signed int*)calloc(sizeof(signed int), ml_BitMap_Count);
+	//WrittenTex = (signed int*)calloc(sizeof(signed int), ml_BitMap_Count);
 	
 	// which textures are used?
-	App->CL_Brush->BrushList_GetUsedTextures(BList, WrittenTex, pWad);
+	App->CL_Brush->BrushList_GetUsedTextures(BList, UsedTextures, pWad);
 	
 	// Add Textures GL
 	int AdjustedIndex = 0;
 
 	for (i = 0; i < ml_BitMap_Count; i++)
 	{
-		if (WrittenTex[i])
+		//App->Say_Int(UsedTextures[i]);
+		if (UsedTextures[i])
 		{
 			char matname[MAX_PATH];
 			//int j, k;
@@ -386,7 +395,7 @@ bool CL64_Mesh_Mgr::WE_Level_Build_Brushes(Level3* pLevel, const char* Filename,
 
 	WE_BrushList_Decode(BList, GE_FALSE);
 
-	free(WrittenTex);
+	//free(WrittenTex);
 
 	return 1;
 }

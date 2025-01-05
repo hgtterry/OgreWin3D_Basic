@@ -56,6 +56,7 @@ CL64_App::CL64_App(void)
 	CL_Keyboard =				nullptr;
 	CL_Model =					nullptr;
 	CL_Ogre3D =					nullptr;
+	CL_CL64_Brush_X =			nullptr;
 
 	CUR = 0;
 
@@ -106,6 +107,8 @@ void CL64_App::InitApp(void)
 	CL_Array =					new CL64_Array();
 	CL_SelFaceList =			new CL64_SelFaceList();
 	CL_Mesh_Mgr =				new CL64_Mesh_Mgr();
+	CL_CL64_Brush_X =			new CL64_Brush_X();
+	
 	// ------------------------------
 	CL_Dialogs =				new CL64_Dialogs();
 	CL_Properties_Tabs =		new CL64_Properties_Tabs();

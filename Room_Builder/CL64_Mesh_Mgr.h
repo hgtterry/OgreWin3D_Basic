@@ -43,6 +43,9 @@ public:
 	void Delete_Brush_List();
 	int Get_Adjusted_Index(int RealIndex);
 
+	Ogre::SceneNode* World_Node;
+	Ogre::Entity* World_Ent;
+
 	int	mBrushCount;
 	int	mSubBrushCount;
 	int mTextureCount;
@@ -51,6 +54,8 @@ public:
 	int mAdjusedIndex_Store[500];
 	int IsTextureAlpha[20];
 	int mBrush_Index;
+
+	signed int UsedTextures[500];
 
 	char mBrush_Name[MAX_PATH];
 	char TextureName2[20][MAX_PATH];

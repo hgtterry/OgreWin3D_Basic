@@ -23,34 +23,10 @@ THE SOFTWARE.
 */
 
 #pragma once
-class CL64_Ogre3D
+class CL64_Brush_X
 {
 public:
-	CL64_Ogre3D(void);
-	~CL64_Ogre3D(void);
-
-	void Set_World_Paths(void);
-	void Convert_ToOgre3D(bool Create);
-
-	Ogre::ManualObject* Export_Manual;
-	Ogre::ManualObject* World_Manual;
-
-	char mWorld_Mesh_JustName[MAX_PATH];
-	char mWorld_File_PathAndFile[MAX_PATH];
-	char mWorld_File_Path[MAX_PATH];
-	char mExport_Just_Name[MAX_PATH];
-
-	float nx;
-	float ny;
-	float nz;
-
-	float u;
-	float v;
-
-	float x;
-	float y;
-	float z;
-
-	int NameIndex;
+	CL64_Brush_X();
+	~CL64_Brush_X();
 };
 

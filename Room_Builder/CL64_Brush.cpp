@@ -1143,15 +1143,21 @@ signed int CL64_Brush::Brush_GetUsedTextures(const Brush* b, signed int* UsedTex
 	switch (b->Type)
 	{
 	case	BRUSH_MULTI:
+	{
 		return BrushList_GetUsedTextures(b->BList, UsedTex, WadFile);
+	}
 
 	case	BRUSH_LEAF:
 		if (b->BList)
+		{
 			return BrushList_GetUsedTextures(b->BList, UsedTex, WadFile);
+		}
 		else
 		{
 			if (!(b->Flags & (BRUSH_HOLLOW | BRUSH_HOLLOWCUT | BRUSH_SUBTRACT)))
+			{
 				return App->CL_FaceList->FaceList_GetUsedTextures(b->Faces, UsedTex, WadFile);
+			}
 		}
 		break;
 

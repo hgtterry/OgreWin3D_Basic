@@ -50,6 +50,7 @@ public:
 	Ogre::String mResourcePath;
 
 	Ogre::String App_Resource_Group;		// App Resource Group
+	Ogre::String World_Resource_Group;
 
 	Ogre::Root* mRoot;
 	Ogre::RenderWindow* mWindow;
