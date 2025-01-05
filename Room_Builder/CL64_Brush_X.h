@@ -28,5 +28,14 @@ class CL64_Brush_X
 public:
 	CL64_Brush_X();
 	~CL64_Brush_X();
+
+	void BrushList_GetUsedTextures_X(signed int* UsedTex);
+
+	void Get_BrushData(Brush* b);
+	bool Get_Brush_Info(const Brush* b);
+	bool Get_Brush_ListInfo(BrushList* BList);
+	bool Get_Brush_Faces_Info(const FaceList* pList);
+	bool Get_Face_Data(int Index, const Face* f);
+
 };
 

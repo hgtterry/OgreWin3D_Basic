@@ -353,24 +353,21 @@ bool CL64_Mesh_Mgr::WE_Level_Build_Brushes(Level3* pLevel, const char* Filename,
 	Actual_Brush_Index = 0;
 
 	int i;
-	signed int* WrittenTex;
+	
+	App->CL_Brush_X->BrushList_GetUsedTextures_X(UsedTextures);
 
-	//WrittenTex = (signed int*)calloc(sizeof(signed int), ml_BitMap_Count);
-	
-	// which textures are used?
-	App->CL_Brush->BrushList_GetUsedTextures(BList, UsedTextures, pWad);
-	
 	// Add Textures GL
 	int AdjustedIndex = 0;
 
 	for (i = 0; i < ml_BitMap_Count; i++)
 	{
-		//App->Say_Int(UsedTextures[i]);
 		if (UsedTextures[i])
 		{
 			char matname[MAX_PATH];
 			//int j, k;
 			strncpy(matname, pWad->mBitmaps[i].Name, MAX_PATH - 1);
+
+			App->Say(matname);
 
 			if (geBitmap_HasAlpha(pWad->mBitmaps[i].bmp))
 			{

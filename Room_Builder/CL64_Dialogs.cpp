@@ -65,6 +65,12 @@ struct tag_FaceList
 	Box3d Bounds;
 };
 
+struct tag_BrushList
+{
+	Brush* First;
+	Brush* Last;
+};
+
 enum BrushFlags
 {
 	BRUSH_SOLID = 0x0001,
@@ -397,12 +403,6 @@ LRESULT CALLBACK CL64_Dialogs::Proc_Brush_Properties(HWND hDlg, UINT message, WP
 	}
 	return FALSE;
 }
-
-struct tag_BrushList
-{
-	Brush* First;
-	Brush* Last;
-};
 
 // *************************************************************************
 // *	  	Fill_Brush_Combo:- Terry and Hazel Flanigan 2025	    	   *
