@@ -136,6 +136,7 @@ CL64_Mesh_Mgr::CL64_Mesh_Mgr()
 	Global_Faces_Index = 0;
 	mTextureCount = 0;
 	Actual_Brush_Index = 0;
+	ActualFaceCount = 0;
 	mBrush_Index = 0;
 	mBrush_Name[0] = 0;
 
@@ -173,6 +174,30 @@ void CL64_Mesh_Mgr::Delete_Brush_List()
 }
 
 // *************************************************************************
+// * 		Delete_Group_Brushes:- Terry and Hazel Flanigan 2025		   *
+// *************************************************************************
+void CL64_Mesh_Mgr::Delete_Group_Brushes()
+{
+	CL64_Model* pModel = App->CL_Model;
+
+	/*int Count = 0;
+	while (Count < 4999)
+	{
+		if (pModel->Group[Count] != nullptr)
+		{
+			delete pModel->Group[Count];
+		}
+
+		pModel->Group[Count] = nullptr;
+
+		Count++;
+	}
+
+	App->CL_Model->GroupCount = 0;
+	App->CL_Model->VerticeCount = 0;*/
+}
+
+// *************************************************************************
 // *		Update_World:- Terry and Hazel Flanigan 2025	 			   *
 // *************************************************************************
 bool CL64_Mesh_Mgr::Update_World()
@@ -190,12 +215,12 @@ bool CL64_Mesh_Mgr::Update_World()
 // *************************************************************************
 bool CL64_Mesh_Mgr::WE_Convert_All_Texture_Groups()
 {
-	/*int mTotalVertices = 0;
+	int mTotalVertices = 0;
 	ActualFaceCount = 0;
 
 	Delete_Group_Brushes();
 
-	strcpy(App->CLSB_Model->JustName, "Test");
+	/*strcpy(App->CLSB_Model->JustName, "Test");
 
 	App->CLSB_Model->Set_Groupt_Count(mTextureCount);*/
 
@@ -367,7 +392,7 @@ bool CL64_Mesh_Mgr::WE_Level_Build_Brushes(Level3* pLevel, const char* Filename,
 			//int j, k;
 			strncpy(matname, pWad->mBitmaps[i].Name, MAX_PATH - 1);
 
-			App->Say(matname);
+			//App->Say(matname);
 
 			if (geBitmap_HasAlpha(pWad->mBitmaps[i].bmp))
 			{
@@ -388,11 +413,12 @@ bool CL64_Mesh_Mgr::WE_Level_Build_Brushes(Level3* pLevel, const char* Filename,
 
 	mTextureCount = AdjustedIndex;
 
-	App->Say_Int(mTextureCount);
+	if (mTextureCount == 0)
+	{
+		App->Say("No Textures in Brush");
+	}
 
 	WE_BrushList_Decode(BList, GE_FALSE);
-
-	//free(WrittenTex);
 
 	return 1;
 }

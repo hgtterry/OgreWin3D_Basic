@@ -150,6 +150,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Base_Brush.h" />
+    <ClInclude Include="Base_Group.h" />
     <ClInclude Include="CL64_App.h" />
     <ClInclude Include="CL64_Array.h" />
     <ClInclude Include="CL64_Box.h" />
@@ -190,6 +191,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Base_Brush.cpp" />
+    <ClCompile Include="Base_Group.cpp" />
     <ClCompile Include="CL64_App.cpp" />
     <ClCompile Include="CL64_Array.cpp" />
     <ClCompile Include="CL64_Box.cpp" />

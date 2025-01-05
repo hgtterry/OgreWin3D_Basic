@@ -51,7 +51,7 @@ CL64_Brush_X::~CL64_Brush_X()
 }
 
 // *************************************************************************
-// *		WE_Level_Build_Brushes_X:- Terry and Hazel Flanigan 2025	   *
+// *		BrushList_GetUsedTextures_X:- Terry and Hazel Flanigan 2025	   *
 // *************************************************************************
 void CL64_Brush_X::BrushList_GetUsedTextures_X(signed int* UsedTex)
 {

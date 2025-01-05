@@ -40,8 +40,12 @@ public:
 	bool WE_FaceList_Create(const Brush* b, const FaceList* pList, int BrushCount, int SubBrushCount, int Actual_Brush_Index);
 
 	bool WE_Convert_All_Texture_Groups();
+
 	void Delete_Brush_List();
+	void Delete_Group_Brushes();
+
 	int Get_Adjusted_Index(int RealIndex);
+	int ActualFaceCount;
 
 	Ogre::SceneNode* World_Node;
 	Ogre::Entity* World_Ent;

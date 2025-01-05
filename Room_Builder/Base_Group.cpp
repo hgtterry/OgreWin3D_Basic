@@ -22,22 +22,55 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-#pragma once
-class CL64_Brush_X
+#include "pch.h"
+#include "CL64_App.h"
+#include "Base_Group.h"
+
+Base_Group::Base_Group()
 {
-public:
-	CL64_Brush_X();
-	~CL64_Brush_X();
+	GroupName[0] = 0;
+	MaterialName[0] = 0;
+	Text_FileName[0] = 0;
 
-	void BrushList_GetUsedTextures_X(signed int* UsedTex);
+	Texture_FolderPath[0] = 0;
+	Texture_PathFileName[0] = 0;
 
-private:
+	Bitmap_Loaded = 0;
+	Dont_Use = 0;
 
-	void Get_BrushData(Brush* b);
-	bool Get_Brush_Info(const Brush* b);
-	bool Get_Brush_ListInfo(BrushList* BList);
-	bool Get_Brush_Faces_Info(const FaceList* pList);
-	bool Get_Face_Data(int Index, const Face* f);
+	GroupVertCount = 0;
+	GroupFaceCount = 0;
 
-};
+	IndicesCount = 0; // Ogre
+	BoneAssignMentCount = 0; // Ogre
 
+	MaterialIndex = 0;
+	Soil_TextureIndex = 0;
+
+	Base_Bitmap = NULL;
+	//RF_Bitmap = NULL;
+	ListView_Item = NULL;
+
+	// Bounding Box
+	BB_Max.x = 0;
+	BB_Max.y = 0;
+	BB_Max.z = 0;
+
+	BB_Min.x = 0;
+	BB_Min.y = 0;
+	BB_Min.z = 0;
+
+	Size.x = 0;
+	Size.y = 0;
+	Size.z = 0;
+
+	Centre.x = 0;
+	Centre.y = 0;
+	Centre.z = 0;
+
+	radius = 0;;
+}
+
+Base_Group::~Base_Group()
+{
+}
