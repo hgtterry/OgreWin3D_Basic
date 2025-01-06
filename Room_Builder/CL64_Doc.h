@@ -103,6 +103,7 @@ public:
 	DWORD GetSelState(void) { return SelState; }
 
 	void RebuildTrees(void);
+	signed int BrushIsVisible(const Brush* pBrush) const;
 
 	char LastTemplateTypeName[MAX_PATH];
 

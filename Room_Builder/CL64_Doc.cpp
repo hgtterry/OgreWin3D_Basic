@@ -201,10 +201,12 @@ void CL64_Doc::Brush_Add_To_world()
 	if (!App->CL_Brush->Brush_IsHollow(nb) && !App->CL_Brush->Brush_IsMulti(nb))
 	{
 		App->CL_Doc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
+        App->CL_Doc->RebuildTrees();
 	}
 	else
 	{
 		App->CL_Doc->UpdateAllViews(UAV_ALL3DVIEWS | REBUILD_QUICK, NULL);
+        App->CL_Doc->RebuildTrees();
 	}
 
 	Placed = true;
@@ -215,6 +217,8 @@ void CL64_Doc::Brush_Add_To_world()
 		App->CL_Doc->flag_Is_Modified = 1;
 
 	}
+
+
 
    // App->CL_Doc->CurBrush->Faces[0]->
 }
@@ -673,14 +677,52 @@ signed int CL64_Doc::FindClosestBrush(POINT const* ptFrom, ViewVars* v, Brush** 
     return	(*ppFoundBrush) ? GE_TRUE : GE_FALSE;
 }
 
+enum
+{
+    Group_ShowAll,
+    Group_ShowVisible,
+    Group_ShowCurrent
+};
+
+// *************************************************************************
+// *            BrushIsVisible:- Terry and Hazel Flanigan 2025           *
+// *************************************************************************
+signed int CL64_Doc::BrushIsVisible(const Brush* pBrush) const
+{
+    //int			GroupId;
+
+    //if (!App->CL_Brush->Brush_IsVisible(pBrush))
+    //{
+    //    return GE_FALSE;
+    //}
+    //GroupId = 0;// App->CL_Brush->Brush_GetGroupId(pBrush);
+
+    //switch (Level_GetGroupVisibility(App->CL_Doc->pLevel))
+    //{
+    //case Group_ShowAll:
+    //    return GE_TRUE;
+
+    //case Group_ShowCurrent:
+    //    return (GroupId == App->CL_Doc->mCurrentGroup);
+
+    //case Group_ShowVisible:
+    //    return Group_IsVisible(App->CL_Level->Level_GetGroups(App->CL_Doc->pLevel), GroupId);
+
+    //default:
+    //    assert(0);
+    //    return GE_FALSE;
+    //}
+}/* CFusionDoc::BrushIsVisible */
+
 // *************************************************************************
 // *         fdocBrushCSGCallback:- Terry and Hazel Flanigan 2025          *
 // *************************************************************************
-static geBoolean fdocBrushCSGCallback(const Brush* pBrush, void* lParam)
+static signed int fdocBrushCSGCallback(const Brush* pBrush, void* lParam)
 {
     CL64_Doc* pDoc = (CL64_Doc*)lParam;
 
-    return 0;// (pDoc->BrushIsVisible(pBrush) && (!Brush_IsHint(pBrush)) && (!Brush_IsClip(pBrush)));
+    // hgtterry Finish
+    return 1;// (pDoc->BrushIsVisible(pBrush) && (!Brush_IsHint(pBrush)) && (!Brush_IsClip(pBrush)));
 }
 
 // *************************************************************************

@@ -1750,6 +1750,89 @@ static void	Brush_CopyFaceInfo(Brush const* src, Brush* dst)
 	App->CL_FaceList->FaceList_CopyFaceInfo(src->Faces, dst->Faces);
 }
 
+static void	BrushList_DoCuts(BrushList* pList, int mid, Brush_CSGCallback Callback, void* lParam)
+{
+	Brush* b, * b2, * cb;
+
+	assert(pList != NULL);
+
+	//iterate cuts in reverse list order cutting solids
+	for (b = pList->Last; b; b = b->Prev)
+	{
+		if ((b->ModelId != mid) || !Callback(b, lParam))
+		{
+			continue;
+		}
+
+		if (b->Flags & BRUSH_SUBTRACT)
+		{
+			if (b->BList)
+			{
+				for (cb = b->BList->First;;)	//leaf hollows or multis
+				{
+					if (!cb)
+					{
+						if (--bsp >= bstack)
+						{
+							cb = (*bsp)->Next;
+							continue;
+						}
+						else
+						{
+							bsp++;
+							break;
+						}
+					}
+					//true subtract flags are always passed on now
+					assert(cb->Flags & BRUSH_SUBTRACT);
+
+					if (cb->BList)
+					{
+						*bsp++ = cb;
+						cb = cb->BList->First;
+						continue;
+					}
+
+					for (b2 = b->Prev; b2; b2 = b2->Prev)
+					{
+						if ((b2->Flags & BRUSH_SUBTRACT) || (b2->ModelId != mid))
+						{
+							continue;
+						}
+
+						if (App->CL_Brush->Brush_TestBoundsIntersect(cb, &b2->BoundingBox))
+						{
+							assert(b2->Type != BRUSH_CSG);
+							if (!(cb->Flags & BRUSH_HOLLOWCUT))
+							{
+								Brush_CutBrush(cb, b2);
+							}
+						}
+					}
+					cb = cb->Next;
+				}
+			}
+			else
+			{
+				for (b2 = b->Prev; b2; b2 = b2->Prev)
+				{
+					if ((b2->Flags & BRUSH_SUBTRACT) || (b2->ModelId != mid))
+					{
+						continue;
+					}
+
+					if (App->CL_Brush->Brush_TestBoundsIntersect(b, &b2->BoundingBox))
+					{
+						assert(b2->Type != BRUSH_CSG);
+
+						Brush_CutBrush(b, b2);
+					}
+				}
+			}
+		}
+	}
+}
+
 // *************************************************************************
 // *							BrushList_DoCSG							   *
 // *************************************************************************
@@ -1765,7 +1848,9 @@ void CL64_Brush::BrushList_DoCSG(BrushList* inList, int mid, Brush_CSGCallback C
 
 	bsp = bstack;	//reset this just incase...
 
-	//BrushList_DoCuts(inList, mid, Callback, lParam);
+	BrushList_DoCuts(inList, mid, Callback, lParam);
+
+	Debug
 }
 
 // *************************************************************************
@@ -1896,5 +1981,13 @@ void CL64_Brush::BrushList_RebuildHollowFaces(BrushList* inList, int mid, Brush_
 			}
 		}
 	}
+}
+
+// *************************************************************************
+// *						Brush_IsVisible								   *
+// *************************************************************************
+signed int CL64_Brush::Brush_IsVisible(const Brush* b)
+{
+	return	(b->Flags & BRUSH_HIDDEN) ? GE_FALSE : GE_TRUE;
 }
 

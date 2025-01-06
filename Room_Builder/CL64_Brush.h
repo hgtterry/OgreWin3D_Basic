@@ -119,6 +119,7 @@ public:
 	void BrushList_RebuildHollowFaces(BrushList* inList, int mid, Brush_CSGCallback Callback, void* lParam);
 	void Brush_SplitByFace(Brush* ogb, Face* sf, Brush** fb, Brush** bb);
 	void BrushList_Prepend(BrushList* pList, Brush* pBrush);
+	signed int Brush_IsVisible(const Brush* b);
 
 };
 
