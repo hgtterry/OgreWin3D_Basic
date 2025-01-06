@@ -1850,7 +1850,6 @@ void CL64_Brush::BrushList_DoCSG(BrushList* inList, int mid, Brush_CSGCallback C
 
 	BrushList_DoCuts(inList, mid, Callback, lParam);
 
-	Debug
 }
 
 // *************************************************************************

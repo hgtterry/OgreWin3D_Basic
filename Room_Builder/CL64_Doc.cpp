@@ -730,7 +730,7 @@ static signed int fdocBrushCSGCallback(const Brush* pBrush, void* lParam)
 // *************************************************************************
 void CL64_Doc::RebuildTrees(void)
 {
-    App->Say("RebuildTrees");
+   // App->Say("RebuildTrees");
    
     int	CurId = 0;
    /* GNode* n;

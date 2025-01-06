@@ -104,9 +104,6 @@ void CL64_Ogre3D::Convert_ToOgre3D(bool Create)
 
 	CreateMaterialFile();
 
-	App->Say("Converted");
-	return;
-
 	//App->CL_Model->Ogre_Face_Count = 0;
 
 	if (Create == 1)
@@ -196,7 +193,8 @@ void CL64_Ogre3D::Convert_ToOgre3D(bool Create)
 		return;
 	}
 
-	Ogre::MeshPtr mesh = World_Manual->convertToMesh("TestMesh");
+	
+	Ogre::MeshPtr mesh = World_Manual->convertToMesh("TestMesh", App->CL_Ogre->World_Resource_Group);
 
 	mesh->setAutoBuildEdgeLists(true);
 	mesh->buildEdgeList();
@@ -207,17 +205,20 @@ void CL64_Ogre3D::Convert_ToOgre3D(bool Create)
 	ms->exportMesh(mesh.get(), mWorld_File_PathAndFile);
 	delete(ms);
 
-	char OutputFolder[MAX_PATH];
+	//App->Say("Converted");
+	//return;
+
+	/*char OutputFolder[MAX_PATH];
 	strcpy(OutputFolder, mWorld_File_Path);
-	strcat(OutputFolder, "\\");
+	strcat(OutputFolder, "\\");*/
 
 	//DecompileTextures_TXL(OutputFolder);
 
-	char Material_PathAndFile[MAX_PATH];
+	/*char Material_PathAndFile[MAX_PATH];
 	strcpy(Material_PathAndFile, mWorld_File_Path);
 	strcat(Material_PathAndFile, "\\");
 	strcat(Material_PathAndFile, mWorld_Mesh_JustName);
-	strcat(Material_PathAndFile, ".material");
+	strcat(Material_PathAndFile, ".material");*/
 
 	//CreateMaterialFile(Material_PathAndFile);
 
@@ -259,11 +260,11 @@ void CL64_Ogre3D::Convert_ToOgre3D(bool Create)
 	App->CL_Mesh_Mgr->World_Node->attachObject(App->CL_Mesh_Mgr->World_Ent);
 
 	App->CL_Mesh_Mgr->World_Node->setPosition(0, 0, 0);
-	App->CL_Mesh_Mgr->World_Node->setVisible(true);
-	App->CL_Mesh_Mgr->World_Node->setScale(1, 1, 1);
-
-	remove(mWorld_File_PathAndFile);
-	remove(Material_PathAndFile);
+	App->CL_Mesh_Mgr->World_Node->setVisible(false);
+	App->CL_Mesh_Mgr->World_Node->setScale(0.5, 0.5, 0.5);
+	App->CL_Mesh_Mgr->World_Node->showBoundingBox(true);
+//	remove(mWorld_File_PathAndFile);
+//	remove(Material_PathAndFile);
 }
 
 // *************************************************************************
@@ -300,7 +301,7 @@ void CL64_Ogre3D::CreateMaterialFile()
 		strcat(MatName, MaterialNumber);
 
 		strcpy(File, App->CL_Model->Group[i]->Text_FileName);
-		App->Say_Win(File);
+		//App->Say_Win(File);
 
 		OMatName = MatName;
 		OFile = File;

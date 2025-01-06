@@ -215,8 +215,6 @@ bool CL64_Mesh_Mgr::Update_World()
 // *************************************************************************
 void CL64_Mesh_Mgr::Brush_Build_List(int ExpSelected)
 {
-	App->Say("Brush_Build_List");
-
 	Delete_Brush_List();
 
 	App->CL_Model->BrushCount = 0;
@@ -244,8 +242,6 @@ void CL64_Mesh_Mgr::Brush_Build_List(int ExpSelected)
 // *************************************************************************
 bool CL64_Mesh_Mgr::Brush_Build_Level_Brushes(Level3* pLevel, const char* Filename, BrushList* BList, int ExpSelected, geBoolean ExpLights, int GroupID)
 {
-	App->Say("Brush_Build_Level_Brushes");
-
 	CL64_WadFile* pWad;
 	pWad = NULL;
 	pWad = App->CL_Level->Level_GetWadFile(App->CL_Doc->pLevel);
@@ -306,8 +302,6 @@ bool CL64_Mesh_Mgr::Brush_Build_Level_Brushes(Level3* pLevel, const char* Filena
 // *************************************************************************
 bool CL64_Mesh_Mgr::Brush_Decode_List(BrushList* BList, signed int SubBrush)
 {
-	App->Say("Brush_Decode_List");
-
 	Brush* pBrush;
 	BrushIterator bi;
 
@@ -357,8 +351,8 @@ bool CL64_Mesh_Mgr::Brush_Decode_List(BrushList* BList, signed int SubBrush)
 // *************************************************************************
 bool CL64_Mesh_Mgr::Brush_Create(const Brush* b, int Actual_Brush_Index)
 {
-	App->Say("Brush_Create");
-	App->Say_Int(b->Type);
+	//App->Say_Int(b->Type);
+
 	switch (b->Type)
 	{
 	case BRUSH_MULTI:
@@ -384,7 +378,6 @@ bool CL64_Mesh_Mgr::Brush_Create(const Brush* b, int Actual_Brush_Index)
 	case BRUSH_CSG:
 		if (!(b->Flags & (BRUSH_HOLLOW | BRUSH_HOLLOWCUT | BRUSH_SUBTRACT)))
 		{
-			App->Say("This One");
 			return Brush_FaceList_Create(b, b->Faces, mBrushCount, mSubBrushCount, Actual_Brush_Index);
 		}
 		break;
@@ -401,8 +394,6 @@ bool CL64_Mesh_Mgr::Brush_Create(const Brush* b, int Actual_Brush_Index)
 // *************************************************************************
 bool CL64_Mesh_Mgr::Brush_FaceList_Create(const Brush* b, const FaceList* pList, int BrushCount, int SubBrushCount, int Actual_Brush_Index)
 {
-	App->Say("Brush_FaceList_Create");
-
 	App->CL_Model->Create_Brush_XX(App->CL_Model->BrushCount);
 	App->CL_Model->B_Brush[App->CL_Model->BrushCount]->Group_Index = mBrush_Index;
 	strcpy(App->CL_Model->B_Brush[App->CL_Model->BrushCount]->Brush_Name, mBrush_Name);
@@ -641,7 +632,7 @@ bool CL64_Mesh_Mgr::WE_Convert_All_Texture_Groups()
 		}
 
 		strcpy(App->CL_Model->Group[Count]->Text_FileName, buff);
-		App->Say_Win(App->CL_Model->Group[Count]->Text_FileName);
+		//App->Say_Win(App->CL_Model->Group[Count]->Text_FileName);
 
 		App->CL_Model->Group[Count]->MaterialIndex = Count;
 		App->CL_Model->Group[Count]->vertex_Data.resize(FaceCount * 3);
@@ -691,21 +682,18 @@ bool CL64_Mesh_Mgr::WE_Convert_To_Texture_Group(int TextureID)
 
 	int BrushCount = App->CL_Model->BrushCount;
 	Count = 0;
-	App->Say("Conv");
-
+	
 	while (Count < BrushCount)
 	{
-		App->Say("Conv2");
+		//App->Say("Conv2");
 		FaceCount = 0;
 
 		while (FaceCount < App->CL_Model->B_Brush[Count]->Face_Count)
 		{
-			Debug
 			int FaceIndexNum = 0;
 
 			if (App->CL_Model->B_Brush[Count]->Picking_Data[FaceCount].TextID == TextureID)
 			{
-				Debug
 				A = App->CL_Model->B_Brush[Count]->Face_Data[FaceCount].a;
 				B = App->CL_Model->B_Brush[Count]->Face_Data[FaceCount].b;
 				C = App->CL_Model->B_Brush[Count]->Face_Data[FaceCount].c;

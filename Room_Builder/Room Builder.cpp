@@ -153,8 +153,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             {
                 App->CL_Mesh_Mgr->Update_World();
 
-                Debug
-
                 return 1;
             }
 

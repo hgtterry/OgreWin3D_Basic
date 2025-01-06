@@ -1,0 +1,17 @@
+
+material World0_Material_0
+{
+	technique
+	{
+		pass 
+		{
+
+			texture_unit
+			{
+				texture stfloor1.bmp
+			}
+		}
+
+	}
+
+}
