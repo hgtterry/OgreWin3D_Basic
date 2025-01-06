@@ -102,6 +102,8 @@ public:
 	void UpdateSelected(void);
 	DWORD GetSelState(void) { return SelState; }
 
+	void RebuildTrees(void);
+
 	char LastTemplateTypeName[MAX_PATH];
 
 	BOOL SelectLock, TempEnt;

@@ -202,265 +202,27 @@ void CL64_Mesh_Mgr::Delete_Group_Brushes()
 // *************************************************************************
 bool CL64_Mesh_Mgr::Update_World()
 {
-	WE_Build_Brush_List(0);
+	Brush_Build_List(0);
 	WE_Convert_All_Texture_Groups();
 
-	//App->CLSB_Ogre3D->Convert_ToOgre3D(1);
+	App->CL_Ogre3D->Convert_ToOgre3D(1);
 
 	return 1;
 }
 
 // *************************************************************************
-// *	WE_Convert_All_Texture_Groups:- Terry and Hazel Flanigan 2025	   *
+// * 		Brush_Build_List:- Terry and Hazel Flanigan 2025			   *
 // *************************************************************************
-bool CL64_Mesh_Mgr::WE_Convert_All_Texture_Groups()
+void CL64_Mesh_Mgr::Brush_Build_List(int ExpSelected)
 {
-	int mTotalVertices = 0;
-	ActualFaceCount = 0;
+	App->Say("Brush_Build_List");
 
-	Delete_Group_Brushes();
-
-	strcpy(App->CL_Model->JustName, "Test");
-
-	App->CL_Model->GroupCount = mTextureCount;
-
-	int Count = 0;
-	while (Count < mTextureCount)
-	{
-		App->CL_Model->Create_Mesh_Group(Count);
-		int FaceCount = WE_Get_Vertice_Count(Count);
-
-		strcpy(App->CL_Model->Group[Count]->GroupName, TextureName2[Count]);
-		strcpy(App->CL_Model->Group[Count]->MaterialName, TextureName2[Count]);
-
-		char buff[MAX_PATH];
-		strcpy(buff, TextureName2[Count]);
-		if (IsTextureAlpha[Count] == 1)
-		{
-			strcat(buff, ".tga");
-		}
-		else
-		{
-			strcat(buff, ".bmp");
-		}
-
-		strcpy(App->CL_Model->Group[Count]->Text_FileName, buff);
-
-		App->CL_Model->Group[Count]->MaterialIndex = Count;
-		App->CL_Model->Group[Count]->vertex_Data.resize(FaceCount * 3);
-		App->CL_Model->Group[Count]->Normal_Data.resize(FaceCount * 3);
-		App->CL_Model->Group[Count]->MapCord_Data.resize(FaceCount * 3);
-		App->CL_Model->Group[Count]->Face_Data.resize(FaceCount);
-		App->CL_Model->Group[Count]->FaceIndex_Data.resize(FaceCount * 3);
-
-		WE_Convert_To_Texture_Group(Count);
-
-		mTotalVertices = mTotalVertices + FaceCount;
-
-		Count++;
-	}
-
-	App->CL_Model->VerticeCount = mTotalVertices * 3;
-	App->CL_Model->FaceCount = mTotalVertices;
-
-	//App->CL_Model->Render_Type = Enums::LoadedFile_Assimp;
-
-	//Update_Brush_List(Mesh_Viewer_HWND);
-
-	return true;
-}
-
-// *************************************************************************
-// *	WE_Convert_To_Texture_Group:- Terry and Hazel Flanigan 2024	 	   *
-// *************************************************************************
-bool CL64_Mesh_Mgr::WE_Convert_To_Texture_Group(int TextureID)
-{
-	int Count = 0;
-	int FaceCount = 0;
-	int vertexIndex = 0;
-	int FaceIndex = 0;
-	int FacePos = 0;
-
-	int A = 0;
-	int B = 0;
-	int C = 0;
-
-	float X = 0;
-	float Y = 0;
-	float Z = 0;
-
-	float U = 0;
-	float V = 0;
-
-	int BrushCount = App->CL_Model->BrushCount;
-	Count = 0;
-
-
-	while (Count < BrushCount)
-	{
-		FaceCount = 0;
-
-
-		while (FaceCount < App->CL_Model->B_Brush[Count]->Face_Count)
-		{
-			int FaceIndexNum = 0;
-
-			if (App->CL_Model->B_Brush[Count]->Picking_Data[FaceCount].TextID == TextureID)
-			{
-
-				A = App->CL_Model->B_Brush[Count]->Face_Data[FaceCount].a;
-				B = App->CL_Model->B_Brush[Count]->Face_Data[FaceCount].b;
-				C = App->CL_Model->B_Brush[Count]->Face_Data[FaceCount].c;
-
-				X = App->CL_Model->B_Brush[Count]->vertex_Data[A].x;
-				Y = App->CL_Model->B_Brush[Count]->vertex_Data[A].y;
-				Z = App->CL_Model->B_Brush[Count]->vertex_Data[A].z;
-
-				App->CL_Model->Group[TextureID]->vertex_Data[vertexIndex].x = X;
-				App->CL_Model->Group[TextureID]->vertex_Data[vertexIndex].y = Y;
-				App->CL_Model->Group[TextureID]->vertex_Data[vertexIndex].z = Z;
-
-				U = App->CL_Model->B_Brush[Count]->MapCord_Data[A].u,
-					V = App->CL_Model->B_Brush[Count]->MapCord_Data[A].v;
-
-				App->CL_Model->Group[TextureID]->MapCord_Data[vertexIndex].u = U;
-				App->CL_Model->Group[TextureID]->MapCord_Data[vertexIndex].v = V;
-
-				X = App->CL_Model->B_Brush[Count]->Normal_Data[A].x;
-				Y = App->CL_Model->B_Brush[Count]->Normal_Data[A].y;
-				Z = App->CL_Model->B_Brush[Count]->Normal_Data[A].z;
-
-				App->CL_Model->Group[TextureID]->Normal_Data[vertexIndex].x = X;
-				App->CL_Model->Group[TextureID]->Normal_Data[vertexIndex].y = Y;
-				App->CL_Model->Group[TextureID]->Normal_Data[vertexIndex].z = Z;
-
-				vertexIndex++;
-
-				X = App->CL_Model->B_Brush[Count]->vertex_Data[B].x;
-				Y = App->CL_Model->B_Brush[Count]->vertex_Data[B].y;
-				Z = App->CL_Model->B_Brush[Count]->vertex_Data[B].z;
-
-				App->CL_Model->Group[TextureID]->vertex_Data[vertexIndex].x = X;
-				App->CL_Model->Group[TextureID]->vertex_Data[vertexIndex].y = Y;
-				App->CL_Model->Group[TextureID]->vertex_Data[vertexIndex].z = Z;
-
-				U = App->CL_Model->B_Brush[Count]->MapCord_Data[B].u,
-					V = App->CL_Model->B_Brush[Count]->MapCord_Data[B].v;
-
-				App->CL_Model->Group[TextureID]->MapCord_Data[vertexIndex].u = U;
-				App->CL_Model->Group[TextureID]->MapCord_Data[vertexIndex].v = V;
-
-				X = App->CL_Model->B_Brush[Count]->Normal_Data[B].x;
-				Y = App->CL_Model->B_Brush[Count]->Normal_Data[B].y;
-				Z = App->CL_Model->B_Brush[Count]->Normal_Data[B].z;
-
-				App->CL_Model->Group[TextureID]->Normal_Data[vertexIndex].x = X;
-				App->CL_Model->Group[TextureID]->Normal_Data[vertexIndex].y = Y;
-				App->CL_Model->Group[TextureID]->Normal_Data[vertexIndex].z = Z;
-
-				vertexIndex++;
-
-				X = App->CL_Model->B_Brush[Count]->vertex_Data[C].x;
-				Y = App->CL_Model->B_Brush[Count]->vertex_Data[C].y;
-				Z = App->CL_Model->B_Brush[Count]->vertex_Data[C].z;
-
-				App->CL_Model->Group[TextureID]->vertex_Data[vertexIndex].x = X;
-				App->CL_Model->Group[TextureID]->vertex_Data[vertexIndex].y = Y;
-				App->CL_Model->Group[TextureID]->vertex_Data[vertexIndex].z = Z;
-
-				U = App->CL_Model->B_Brush[Count]->MapCord_Data[C].u,
-					V = App->CL_Model->B_Brush[Count]->MapCord_Data[C].v;
-
-				App->CL_Model->Group[TextureID]->MapCord_Data[vertexIndex].u = U;
-				App->CL_Model->Group[TextureID]->MapCord_Data[vertexIndex].v = V;
-
-				X = App->CL_Model->B_Brush[Count]->Normal_Data[C].x;
-				Y = App->CL_Model->B_Brush[Count]->Normal_Data[C].y;
-				Z = App->CL_Model->B_Brush[Count]->Normal_Data[C].z;
-
-				App->CL_Model->Group[TextureID]->Normal_Data[vertexIndex].x = X;
-				App->CL_Model->Group[TextureID]->Normal_Data[vertexIndex].y = Y;
-				App->CL_Model->Group[TextureID]->Normal_Data[vertexIndex].z = Z;
-
-				vertexIndex++;
-
-				App->CL_Model->Group[TextureID]->Face_Data[FacePos].a = FaceIndex;
-				FaceIndex++;
-				App->CL_Model->Group[TextureID]->Face_Data[FacePos].b = FaceIndex;
-				FaceIndex++;
-				App->CL_Model->Group[TextureID]->Face_Data[FacePos].c = FaceIndex;
-
-				App->CL_Model->Group[TextureID]->FaceIndex_Data[FacePos].Index = ActualFaceCount;
-
-				int Brush_Index = App->CL_Model->B_Brush[Count]->Picking_Data[FaceCount].Actual_Brush_Index;
-				App->CL_Model->Group[TextureID]->Face_Data[FacePos].Brush_Index = Brush_Index;
-				App->CL_Model->Group[TextureID]->Face_Data[FacePos].Face_Index = App->CL_Model->B_Brush[Count]->Picking_Data[FaceCount].WE_Face_Index;
-				FaceIndexNum++;
-				ActualFaceCount++;
-
-				FaceIndex++;
-				FacePos++;
-			}
-
-			FaceCount++;
-		}
-
-		Count++;
-	}
-
-	App->CL_Model->Group[TextureID]->GroupVertCount = vertexIndex;
-	App->CL_Model->Group[TextureID]->GroupFaceCount = vertexIndex / 3;
-
-	return 1;
-}
-
-// *************************************************************************
-// *		WE_Get_Vertice_Count:- Terry and Hazel Flanigan 2025	 	   *
-// *************************************************************************
-int CL64_Mesh_Mgr::WE_Get_Vertice_Count(int TextureID)
-{
-	int Count = 0;
-	int FaceCount = 0;
-	int TotalFaceCount = 0;
-
-	int BrushCount = App->CL_Model->BrushCount;
-	Count = 0;
-
-	while (Count < BrushCount)
-	{
-		FaceCount = 0;
-		while (FaceCount < App->CL_Model->B_Brush[Count]->Face_Count)
-		{
-			if (App->CL_Model->B_Brush[Count]->Picking_Data[FaceCount].TextID == TextureID)
-			{
-				TotalFaceCount++;
-			}
-
-			FaceCount++;
-		}
-
-		Count++;
-	}
-
-	return TotalFaceCount;
-}
-
-// *************************************************************************
-// * 		WE_Build_Brush_List:- Terry and Hazel Flanigan 2023			   *
-// *************************************************************************
-void CL64_Mesh_Mgr::WE_Build_Brush_List(int ExpSelected)
-{
-	
 	Delete_Brush_List();
-	
+
 	App->CL_Model->BrushCount = 0;
 
 	mBrushCount = 0;
 	mSubBrushCount = 0;
-
-	char Path[MAX_PATH];
-	strcpy(Path, App->RB_Directory_FullPath);
-	strcat(Path, "Data\\3DSTemp.txt");
 
 	BrushList* BList = NULL;
 	signed int fResult;
@@ -471,78 +233,19 @@ void CL64_Mesh_Mgr::WE_Build_Brush_List(int ExpSelected)
 		App->Say("Error");
 	}
 
-	if (!ExpSelected)	// Build All
+	if (ExpSelected == 0)	// Build All
 	{
-		fResult = WE_Level_Build_Brushes(reinterpret_cast<tag_Level3*> (App->CL_Doc->pLevel), "FileName", BList, 0, 0, -1);
+		fResult = Brush_Build_Level_Brushes(reinterpret_cast<tag_Level3*> (App->CL_Doc->pLevel), "FileName", BList, 0, 0, -1);
 	}
-	else				// Build Selected
-	{
-		int i, GroupID, GroupCount;
-		char NewFileName[MAX_PATH];
-		GroupID = -1;
-		GroupCount = 1;
-
-		for (i = 0; i < GroupCount; i++)
-		{
-	//		BrushList* SBList;
-	//		Brush* pBrush;
-	//		BrushIterator bi;
-
-	//		SBList = BrushList_Create();
-	//		pBrush = BrushList_GetFirst(BList, &bi);
-
-	//		while (pBrush != NULL)
-	//		{
-
-	//			if (SelBrushList_Find(App->CLSB_Doc->pSelBrushes, pBrush))
-	//			{
-	//				Brush* pClone = Brush_Clone(pBrush);
-	//				BrushList_Append(SBList, pClone);
-	//			}
-
-	//			pBrush = BrushList_GetNext(&bi);
-	//		}
-	//		// do CSG
-	//		{
-	//			ModelIterator	mi;
-	//			int				i, CurId = 0;
-	//			ModelInfo_Type* ModelInfo;
-	//			Model* pMod;
-
-	//			BrushList_ClearAllCSG(SBList);
-
-	//			BrushList_DoCSG(SBList, CurId, Brush_CSG_Callback, this);
-
-	//			//build individual model mini trees
-	//			ModelInfo = Level_GetModelInfo(App->CLSB_Doc->pLevel);
-	//			pMod = ModelList_GetFirst(ModelInfo->Models, &mi);
-
-	//			for (i = 0; i < ModelList_GetCount(ModelInfo->Models); i++)
-	//			{
-	//				CurId = Model_GetId(pMod);
-
-	//				BrushList_DoCSG(SBList, CurId, Brush_CSG_Callback, this);
-	//			}
-	//		}
-
-	//		fResult = WE_Level_Build_Brushes(reinterpret_cast<tag_Level3*> (App->CLSB_Doc->pLevel), NewFileName, SBList, 0, 0, -1);
-	//		if (!fResult)
-	//		{
-	//			App->Say("Error exporting group");
-	//		}
-
-	//		BrushList_Destroy(&SBList);
-		}
-	}
-
-	//App->Say("Converted NEW");
 }
 
 // *************************************************************************
-// *		WE_Level_Build_Brushes:- Terry and Hazel Flanigan 2023		   *
+// *		Brush_Build_Level_Brushes:- Terry and Hazel Flanigan 2025	   *
 // *************************************************************************
-bool CL64_Mesh_Mgr::WE_Level_Build_Brushes(Level3* pLevel, const char* Filename, BrushList* BList, int ExpSelected, geBoolean ExpLights, int GroupID)
+bool CL64_Mesh_Mgr::Brush_Build_Level_Brushes(Level3* pLevel, const char* Filename, BrushList* BList, int ExpSelected, geBoolean ExpLights, int GroupID)
 {
+	App->Say("Brush_Build_Level_Brushes");
+
 	CL64_WadFile* pWad;
 	pWad = NULL;
 	pWad = App->CL_Level->Level_GetWadFile(App->CL_Doc->pLevel);
@@ -554,7 +257,7 @@ bool CL64_Mesh_Mgr::WE_Level_Build_Brushes(Level3* pLevel, const char* Filename,
 	Actual_Brush_Index = 0;
 
 	int i;
-	
+
 	App->CL_Brush_X->BrushList_GetUsedTextures_X(UsedTextures);
 
 	// Add Textures GL
@@ -567,8 +270,7 @@ bool CL64_Mesh_Mgr::WE_Level_Build_Brushes(Level3* pLevel, const char* Filename,
 			char matname[MAX_PATH];
 			//int j, k;
 			strncpy(matname, pWad->mBitmaps[i].Name, MAX_PATH - 1);
-
-			//App->Say(matname);
+			strcpy(TextureName2[AdjustedIndex], matname);
 
 			if (geBitmap_HasAlpha(pWad->mBitmaps[i].bmp))
 			{
@@ -594,16 +296,18 @@ bool CL64_Mesh_Mgr::WE_Level_Build_Brushes(Level3* pLevel, const char* Filename,
 		App->Say("No Textures in Brush");
 	}
 
-	WE_BrushList_Decode(BList, GE_FALSE);
+	Brush_Decode_List(BList, GE_FALSE);
 
 	return 1;
 }
 
 // *************************************************************************
-// *			WE_BrushList_Decode:- Terry and Hazel Flanigan 2025		   *
+// *			Brush_Decode_List:- Terry and Hazel Flanigan 2025		   *
 // *************************************************************************
-bool CL64_Mesh_Mgr::WE_BrushList_Decode(BrushList* BList, signed int SubBrush)
+bool CL64_Mesh_Mgr::Brush_Decode_List(BrushList* BList, signed int SubBrush)
 {
+	App->Say("Brush_Decode_List");
+
 	Brush* pBrush;
 	BrushIterator bi;
 
@@ -620,7 +324,7 @@ bool CL64_Mesh_Mgr::WE_BrushList_Decode(BrushList* BList, signed int SubBrush)
 			}
 		}
 
-		if (!WE_Brush_Create(pBrush, Actual_Brush_Index))
+		if (!Brush_Create(pBrush, Actual_Brush_Index))
 		{
 			return GE_FALSE;
 		}
@@ -649,28 +353,27 @@ bool CL64_Mesh_Mgr::WE_BrushList_Decode(BrushList* BList, signed int SubBrush)
 }
 
 // *************************************************************************
-// *			WE_Brush_Create:- Terry and Hazel Flanigan 2025			   *
+// *			Brush_Create:- Terry and Hazel Flanigan 2025			   *
 // *************************************************************************
-bool CL64_Mesh_Mgr::WE_Brush_Create(const Brush* b, int Actual_Brush_Index)
+bool CL64_Mesh_Mgr::Brush_Create(const Brush* b, int Actual_Brush_Index)
 {
-	assert(ofile);
-	assert(b);
-
+	App->Say("Brush_Create");
+	App->Say_Int(b->Type);
 	switch (b->Type)
 	{
-	case	BRUSH_MULTI:
-		return WE_BrushList_Decode(b->BList, GE_TRUE);
+	case BRUSH_MULTI:
+		return Brush_Decode_List(b->BList, GE_TRUE); // Recursive
 
-	case	BRUSH_LEAF:
+	case BRUSH_LEAF:
 		if (b->BList)
 		{
-			return WE_BrushList_Decode(b->BList, GE_TRUE);
+			return Brush_Decode_List(b->BList, GE_TRUE); // Recursive
 		}
 		else
 		{
 			if (!(b->Flags & (BRUSH_HOLLOW | BRUSH_HOLLOWCUT | BRUSH_SUBTRACT)))
 			{
-				return WE_FaceList_Create(b, b->Faces, mBrushCount, mSubBrushCount, Actual_Brush_Index);
+				return Brush_FaceList_Create(b, b->Faces, mBrushCount, mSubBrushCount, Actual_Brush_Index);
 			}
 			else if ((b->Flags & BRUSH_SUBTRACT) && !(b->Flags & (BRUSH_HOLLOW | BRUSH_HOLLOWCUT)))
 				mBrushCount--;
@@ -678,9 +381,12 @@ bool CL64_Mesh_Mgr::WE_Brush_Create(const Brush* b, int Actual_Brush_Index)
 		break;
 
 
-	case	BRUSH_CSG:
+	case BRUSH_CSG:
 		if (!(b->Flags & (BRUSH_HOLLOW | BRUSH_HOLLOWCUT | BRUSH_SUBTRACT)))
-			return WE_FaceList_Create(b, b->Faces, mBrushCount, mSubBrushCount, Actual_Brush_Index);
+		{
+			App->Say("This One");
+			return Brush_FaceList_Create(b, b->Faces, mBrushCount, mSubBrushCount, Actual_Brush_Index);
+		}
 		break;
 	default:
 		assert(0);		// invalid brush type
@@ -691,10 +397,12 @@ bool CL64_Mesh_Mgr::WE_Brush_Create(const Brush* b, int Actual_Brush_Index)
 }
 
 // *************************************************************************
-// *		WE_FaceList_Create:- Terry and Hazel Flanigan 2025			   *
+// *		Brush_FaceList_Create:- Terry and Hazel Flanigan 2025		   *
 // *************************************************************************
-bool CL64_Mesh_Mgr::WE_FaceList_Create(const Brush* b, const FaceList* pList, int BrushCount, int SubBrushCount, int Actual_Brush_Index)
+bool CL64_Mesh_Mgr::Brush_FaceList_Create(const Brush* b, const FaceList* pList, int BrushCount, int SubBrushCount, int Actual_Brush_Index)
 {
+	App->Say("Brush_FaceList_Create");
+
 	App->CL_Model->Create_Brush_XX(App->CL_Model->BrushCount);
 	App->CL_Model->B_Brush[App->CL_Model->BrushCount]->Group_Index = mBrush_Index;
 	strcpy(App->CL_Model->B_Brush[App->CL_Model->BrushCount]->Brush_Name, mBrush_Name);
@@ -896,6 +604,243 @@ bool CL64_Mesh_Mgr::WE_FaceList_Create(const Brush* b, const FaceList* pList, in
 	App->CL_Model->BrushCount++;
 
 	return GE_TRUE;
+}
+
+// *************************************************************************
+// *	WE_Convert_All_Texture_Groups:- Terry and Hazel Flanigan 2025	   *
+// *************************************************************************
+bool CL64_Mesh_Mgr::WE_Convert_All_Texture_Groups()
+{
+	int mTotalVertices = 0;
+	ActualFaceCount = 0;
+
+	Delete_Group_Brushes();
+
+	strcpy(App->CL_Model->JustName, "Test");
+
+	App->CL_Model->GroupCount = mTextureCount;
+
+	int Count = 0;
+	while (Count < mTextureCount)
+	{
+		App->CL_Model->Create_Mesh_Group(Count);
+		int FaceCount = WE_Get_Vertice_Count(Count);
+
+		strcpy(App->CL_Model->Group[Count]->GroupName, TextureName2[Count]);
+		strcpy(App->CL_Model->Group[Count]->MaterialName, TextureName2[Count]);
+
+		char buff[MAX_PATH];
+		strcpy(buff, TextureName2[Count]);
+		if (IsTextureAlpha[Count] == 1)
+		{
+			strcat(buff, ".tga");
+		}
+		else
+		{
+			strcat(buff, ".bmp");
+		}
+
+		strcpy(App->CL_Model->Group[Count]->Text_FileName, buff);
+		App->Say_Win(App->CL_Model->Group[Count]->Text_FileName);
+
+		App->CL_Model->Group[Count]->MaterialIndex = Count;
+		App->CL_Model->Group[Count]->vertex_Data.resize(FaceCount * 3);
+		App->CL_Model->Group[Count]->Normal_Data.resize(FaceCount * 3);
+		App->CL_Model->Group[Count]->MapCord_Data.resize(FaceCount * 3);
+		App->CL_Model->Group[Count]->Face_Data.resize(FaceCount);
+		App->CL_Model->Group[Count]->FaceIndex_Data.resize(FaceCount * 3);
+
+		WE_Convert_To_Texture_Group(Count);
+
+		mTotalVertices = mTotalVertices + FaceCount;
+
+		Count++;
+	}
+
+	App->CL_Model->VerticeCount = mTotalVertices * 3;
+	App->CL_Model->FaceCount = mTotalVertices;
+
+	//App->CL_Model->Render_Type = Enums::LoadedFile_Assimp;
+
+	//Update_Brush_List(Mesh_Viewer_HWND);
+
+	return true;
+}
+
+// *************************************************************************
+// *	WE_Convert_To_Texture_Group:- Terry and Hazel Flanigan 2024	 	   *
+// *************************************************************************
+bool CL64_Mesh_Mgr::WE_Convert_To_Texture_Group(int TextureID)
+{
+	int Count = 0;
+	int FaceCount = 0;
+	int vertexIndex = 0;
+	int FaceIndex = 0;
+	int FacePos = 0;
+
+	int A = 0;
+	int B = 0;
+	int C = 0;
+
+	float X = 0;
+	float Y = 0;
+	float Z = 0;
+
+	float U = 0;
+	float V = 0;
+
+	int BrushCount = App->CL_Model->BrushCount;
+	Count = 0;
+	App->Say("Conv");
+
+	while (Count < BrushCount)
+	{
+		App->Say("Conv2");
+		FaceCount = 0;
+
+		while (FaceCount < App->CL_Model->B_Brush[Count]->Face_Count)
+		{
+			Debug
+			int FaceIndexNum = 0;
+
+			if (App->CL_Model->B_Brush[Count]->Picking_Data[FaceCount].TextID == TextureID)
+			{
+				Debug
+				A = App->CL_Model->B_Brush[Count]->Face_Data[FaceCount].a;
+				B = App->CL_Model->B_Brush[Count]->Face_Data[FaceCount].b;
+				C = App->CL_Model->B_Brush[Count]->Face_Data[FaceCount].c;
+
+				X = App->CL_Model->B_Brush[Count]->vertex_Data[A].x;
+				Y = App->CL_Model->B_Brush[Count]->vertex_Data[A].y;
+				Z = App->CL_Model->B_Brush[Count]->vertex_Data[A].z;
+
+				App->CL_Model->Group[TextureID]->vertex_Data[vertexIndex].x = X;
+				App->CL_Model->Group[TextureID]->vertex_Data[vertexIndex].y = Y;
+				App->CL_Model->Group[TextureID]->vertex_Data[vertexIndex].z = Z;
+
+				U = App->CL_Model->B_Brush[Count]->MapCord_Data[A].u,
+					V = App->CL_Model->B_Brush[Count]->MapCord_Data[A].v;
+
+				App->CL_Model->Group[TextureID]->MapCord_Data[vertexIndex].u = U;
+				App->CL_Model->Group[TextureID]->MapCord_Data[vertexIndex].v = V;
+
+				X = App->CL_Model->B_Brush[Count]->Normal_Data[A].x;
+				Y = App->CL_Model->B_Brush[Count]->Normal_Data[A].y;
+				Z = App->CL_Model->B_Brush[Count]->Normal_Data[A].z;
+
+				App->CL_Model->Group[TextureID]->Normal_Data[vertexIndex].x = X;
+				App->CL_Model->Group[TextureID]->Normal_Data[vertexIndex].y = Y;
+				App->CL_Model->Group[TextureID]->Normal_Data[vertexIndex].z = Z;
+
+				vertexIndex++;
+
+				X = App->CL_Model->B_Brush[Count]->vertex_Data[B].x;
+				Y = App->CL_Model->B_Brush[Count]->vertex_Data[B].y;
+				Z = App->CL_Model->B_Brush[Count]->vertex_Data[B].z;
+
+				App->CL_Model->Group[TextureID]->vertex_Data[vertexIndex].x = X;
+				App->CL_Model->Group[TextureID]->vertex_Data[vertexIndex].y = Y;
+				App->CL_Model->Group[TextureID]->vertex_Data[vertexIndex].z = Z;
+
+				U = App->CL_Model->B_Brush[Count]->MapCord_Data[B].u,
+					V = App->CL_Model->B_Brush[Count]->MapCord_Data[B].v;
+
+				App->CL_Model->Group[TextureID]->MapCord_Data[vertexIndex].u = U;
+				App->CL_Model->Group[TextureID]->MapCord_Data[vertexIndex].v = V;
+
+				X = App->CL_Model->B_Brush[Count]->Normal_Data[B].x;
+				Y = App->CL_Model->B_Brush[Count]->Normal_Data[B].y;
+				Z = App->CL_Model->B_Brush[Count]->Normal_Data[B].z;
+
+				App->CL_Model->Group[TextureID]->Normal_Data[vertexIndex].x = X;
+				App->CL_Model->Group[TextureID]->Normal_Data[vertexIndex].y = Y;
+				App->CL_Model->Group[TextureID]->Normal_Data[vertexIndex].z = Z;
+
+				vertexIndex++;
+
+				X = App->CL_Model->B_Brush[Count]->vertex_Data[C].x;
+				Y = App->CL_Model->B_Brush[Count]->vertex_Data[C].y;
+				Z = App->CL_Model->B_Brush[Count]->vertex_Data[C].z;
+
+				App->CL_Model->Group[TextureID]->vertex_Data[vertexIndex].x = X;
+				App->CL_Model->Group[TextureID]->vertex_Data[vertexIndex].y = Y;
+				App->CL_Model->Group[TextureID]->vertex_Data[vertexIndex].z = Z;
+
+				U = App->CL_Model->B_Brush[Count]->MapCord_Data[C].u,
+					V = App->CL_Model->B_Brush[Count]->MapCord_Data[C].v;
+
+				App->CL_Model->Group[TextureID]->MapCord_Data[vertexIndex].u = U;
+				App->CL_Model->Group[TextureID]->MapCord_Data[vertexIndex].v = V;
+
+				X = App->CL_Model->B_Brush[Count]->Normal_Data[C].x;
+				Y = App->CL_Model->B_Brush[Count]->Normal_Data[C].y;
+				Z = App->CL_Model->B_Brush[Count]->Normal_Data[C].z;
+
+				App->CL_Model->Group[TextureID]->Normal_Data[vertexIndex].x = X;
+				App->CL_Model->Group[TextureID]->Normal_Data[vertexIndex].y = Y;
+				App->CL_Model->Group[TextureID]->Normal_Data[vertexIndex].z = Z;
+
+				vertexIndex++;
+
+				App->CL_Model->Group[TextureID]->Face_Data[FacePos].a = FaceIndex;
+				FaceIndex++;
+				App->CL_Model->Group[TextureID]->Face_Data[FacePos].b = FaceIndex;
+				FaceIndex++;
+				App->CL_Model->Group[TextureID]->Face_Data[FacePos].c = FaceIndex;
+
+				App->CL_Model->Group[TextureID]->FaceIndex_Data[FacePos].Index = ActualFaceCount;
+
+				int Brush_Index = App->CL_Model->B_Brush[Count]->Picking_Data[FaceCount].Actual_Brush_Index;
+				App->CL_Model->Group[TextureID]->Face_Data[FacePos].Brush_Index = Brush_Index;
+				App->CL_Model->Group[TextureID]->Face_Data[FacePos].Face_Index = App->CL_Model->B_Brush[Count]->Picking_Data[FaceCount].WE_Face_Index;
+				FaceIndexNum++;
+				ActualFaceCount++;
+
+				FaceIndex++;
+				FacePos++;
+			}
+
+			FaceCount++;
+		}
+
+		Count++;
+	}
+
+	App->CL_Model->Group[TextureID]->GroupVertCount = vertexIndex;
+	App->CL_Model->Group[TextureID]->GroupFaceCount = vertexIndex / 3;
+
+	return 1;
+}
+
+// *************************************************************************
+// *		WE_Get_Vertice_Count:- Terry and Hazel Flanigan 2025	 	   *
+// *************************************************************************
+int CL64_Mesh_Mgr::WE_Get_Vertice_Count(int TextureID)
+{
+	int Count = 0;
+	int FaceCount = 0;
+	int TotalFaceCount = 0;
+
+	int BrushCount = App->CL_Model->BrushCount;
+	Count = 0;
+
+	while (Count < BrushCount)
+	{
+		FaceCount = 0;
+		while (FaceCount < App->CL_Model->B_Brush[Count]->Face_Count)
+		{
+			if (App->CL_Model->B_Brush[Count]->Picking_Data[FaceCount].TextID == TextureID)
+			{
+				TotalFaceCount++;
+			}
+
+			FaceCount++;
+		}
+
+		Count++;
+	}
+
+	return TotalFaceCount;
 }
 
 // *************************************************************************

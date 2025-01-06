@@ -62,6 +62,7 @@ enum BrushTypeFlags
 typedef Brush* BrushIterator;
 typedef signed int (*BrushList_CB)(Brush* pBrush, void* pVoid);
 typedef signed int (*Brush_FaceCallback)(Face* pFace, void* lParam);
+typedef signed int(*Brush_CSGCallback)(const Brush* pBrush, void* lParam);
 
 class CL64_Brush
 {
@@ -111,10 +112,13 @@ public:
 	signed int Brush_GetUsedTextures(const Brush* b, signed int* UsedTex, CL64_WadFile* WadFile);
 	signed int Brush_GetParent(const BrushList* pList, const Brush* b, Brush** bParent);
 	Brush* Get_Brush_ByIndex(int Index);
-	int BrushList_Count
-	(
-		BrushList const* pList,
-		int CountFlags
-	);
+	int BrushList_Count(BrushList const* pList,int CountFlags);
+	void BrushList_ClearAllCSG(BrushList* pList);
+	void BrushList_DoCSG(BrushList* inList, int mid, Brush_CSGCallback Callback, void* lParam);
+	void BrushList_ClearCSGAndHollows(BrushList* inList, int mid);
+	void BrushList_RebuildHollowFaces(BrushList* inList, int mid, Brush_CSGCallback Callback, void* lParam);
+	void Brush_SplitByFace(Brush* ogb, Face* sf, Brush** fb, Brush** bb);
+	void BrushList_Prepend(BrushList* pList, Brush* pBrush);
+
 };
 

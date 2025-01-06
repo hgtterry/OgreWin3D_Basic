@@ -661,3 +661,136 @@ const TexInfo_Vectors* CL64_Face::Face_GetTextureVecs(const Face* f)
 
 	return &(f->Tex.TVecs);
 }
+
+// *************************************************************************
+// *							Face_CloneReverse					 	   *
+// *************************************************************************
+Face* CL64_Face::Face_CloneReverse(const Face* src)
+{
+	int		i;
+	Face* dst;
+	Ogre::Vector3	pt;
+
+	assert(src != NULL);
+	assert(src->NumPoints > 0);
+	assert(src->Points != NULL);
+
+	dst = Face_Clone(src);
+	if (dst)
+	{
+		dst->Face_Plane.Dist = -dst->Face_Plane.Dist;
+		App->CL_Maths->Vector3_Inverse(&dst->Face_Plane.Normal);
+
+		for (i = 0; i < dst->NumPoints / 2; i++)
+		{
+			pt = dst->Points[i];
+			dst->Points[i] = dst->Points[dst->NumPoints - i - 1];
+			dst->Points[dst->NumPoints - i - 1] = pt;
+		}
+		Face_SetPlaneFromFace(dst);
+	}
+	return dst;
+}
+
+// *************************************************************************
+// *							Face_Split							 	   *
+// *************************************************************************
+void CL64_Face::Face_Split(const Face* f,const GPlane* p,Face** ff,Face** bf,float* dists, Ogre::uint8* sides)
+{
+	Ogre::Vector3* p1, * p2, mid;
+	int		nfp, nbp, i, j;
+	geFloat	dot;
+
+	assert(f);
+	assert(p);
+	assert(ff);
+	assert(bf);
+	assert(*ff == NULL);
+	assert(*bf == NULL);
+	assert(dists);
+	assert(sides);
+
+	p1 = f->Points;
+	for (i = nfp = nbp = 0; i < f->NumPoints; i++, p1++)
+	{
+		if (sides[i] == SIDE_ON)
+		{
+			App->CL_Maths->Vector3_Copy(p1, &spf[nfp]);
+			App->CL_Maths->Vector3_Copy(p1, &spb[nbp]);
+			nfp++;	nbp++;	//Dont ++ in params!
+			continue;
+		}
+		if (sides[i] == SIDE_FRONT)
+		{
+			App->CL_Maths->Vector3_Copy(p1, &spf[nfp]);
+			nfp++;
+		}
+		if (sides[i] == SIDE_BACK)
+		{
+			App->CL_Maths->Vector3_Copy(p1, &spb[nbp]);
+			nbp++;
+		}
+		if (sides[i + 1] == SIDE_ON || sides[i + 1] == sides[i])
+			continue;
+
+		p2 = &f->Points[(i + 1) % f->NumPoints];
+		dot = dists[i] / (dists[i] - dists[i + 1]);
+		for (j = 0; j < 3; j++)
+		{
+			if (VectorToSUB(p->Normal, j) == 1)
+			{
+				VectorToSUB(mid, j) = p->Dist;
+			}
+			else if (VectorToSUB(p->Normal, j) == -1)
+			{
+				VectorToSUB(mid, j) = -p->Dist;
+			}
+			else
+			{
+				VectorToSUB(mid, j) = VectorToSUB(*p1, j) +
+					dot * (VectorToSUB(*p2, j) - VectorToSUB(*p1, j));
+			}
+		}
+
+		//split goes to both sides
+		App->CL_Maths->Vector3_Copy(&mid, &spf[nfp]);
+		nfp++;
+		App->CL_Maths->Vector3_Copy(&mid, &spb[nbp]);
+		nbp++;
+	}
+	*ff = Face_Create(nfp, spf, 0);
+	*bf = Face_Create(nbp, spb, 0);
+
+	if (*ff)
+	{
+		Face_CopyFaceInfo(f, *ff);
+	}
+	if (*bf)
+	{
+		Face_CopyFaceInfo(f, *bf);
+	}
+}
+
+// *************************************************************************
+// *							Face_Split							 	   *
+// *************************************************************************
+void CL64_Face::Face_MostlyOnSide(const Face* f, const GPlane* p, float* max, int* side)
+{
+	int		i;
+	geFloat	d;
+
+	for (i = 0; i < f->NumPoints; i++)
+	{
+		d = App->CL_Maths->Vector3_DotProduct(&f->Points[i], &p->Normal) - p->Dist;
+		if (d > *max)
+		{
+			*max = d;
+			*side = SIDE_FRONT;
+		}
+		if (-d > *max)
+		{
+			*max = -d;
+			*side = SIDE_BACK;
+		}
+	}
+}

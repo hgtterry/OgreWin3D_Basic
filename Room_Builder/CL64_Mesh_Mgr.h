@@ -33,11 +33,11 @@ public:
 	~CL64_Mesh_Mgr();
 
 	bool Update_World();
-	void WE_Build_Brush_List(int ExpSelected);
-	bool WE_Level_Build_Brushes(Level3* pLevel, const char* Filename, BrushList* BList, int ExpSelected, geBoolean ExpLights, int GroupID);
-	bool WE_BrushList_Decode(BrushList* BList, signed int SubBrush);
-	bool WE_Brush_Create(const Brush* b, int Actual_Brush_Index);
-	bool WE_FaceList_Create(const Brush* b, const FaceList* pList, int BrushCount, int SubBrushCount, int Actual_Brush_Index);
+	void Brush_Build_List(int ExpSelected);
+	bool Brush_Build_Level_Brushes(Level3* pLevel, const char* Filename, BrushList* BList, int ExpSelected, geBoolean ExpLights, int GroupID);
+	bool Brush_Decode_List(BrushList* BList, signed int SubBrush);
+	bool Brush_Create(const Brush* b, int Actual_Brush_Index);
+	bool Brush_FaceList_Create(const Brush* b, const FaceList* pList, int BrushCount, int SubBrushCount, int Actual_Brush_Index);
 
 	bool WE_Convert_All_Texture_Groups();
 	int WE_Get_Vertice_Count(int TextureID);

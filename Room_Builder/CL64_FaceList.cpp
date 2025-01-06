@@ -222,3 +222,75 @@ signed int CL64_FaceList::FaceList_GetUsedTextures(const FaceList* pList, geBool
 
 	return GE_TRUE;
 }
+
+// *************************************************************************
+// *						FaceList_CopyFaceInfo					 	   *
+// *************************************************************************
+void CL64_FaceList::FaceList_CopyFaceInfo(const FaceList* src, FaceList* dst)
+{
+	int i;
+
+	assert(src);
+	assert(dst);
+
+	if (src->NumFaces != dst->NumFaces)
+	{
+		return;
+	}
+
+	for (i = 0; i < src->NumFaces; i++)
+	{
+		App->CL_Face->Face_CopyFaceInfo(src->Faces[i], dst->Faces[i]);
+	}
+	dst->Dirty = GE_TRUE;
+}
+
+static	float		dists[256];
+static	Ogre::uint8		sides[256];
+
+enum SideFlags
+{
+	SIDE_FRONT = 0,
+	SIDE_BACK = 1,
+	SIDE_ON = 2,
+	SIDE_SPLIT = 3
+};
+
+// *************************************************************************
+// *						FaceList_ClipFaceToList					 	   *
+// *************************************************************************
+void CL64_FaceList::FaceList_ClipFaceToList(const FaceList* fl, Face** f)
+{
+	int			i;
+	const GPlane* p;
+	Guint8		cnt[3];
+
+	assert(fl != NULL);
+	assert(f != NULL);
+	assert(*f != NULL);
+
+	for (i = 0; i < fl->NumFaces; i++)
+	{
+		p = App->CL_Face->Face_GetPlane(fl->Faces[i]);
+
+		App->CL_Face->Face_GetSplitInfo(*f, p, dists, sides, cnt);
+		if (!cnt[SIDE_FRONT] && !cnt[SIDE_BACK])	//coplanar
+		{
+			App->CL_Face->Face_Destroy(f);
+			return;
+		}
+		else if (!cnt[SIDE_FRONT])	//back
+		{
+			continue;
+		}
+		else if (!cnt[SIDE_BACK])	//front
+		{
+			App->CL_Face->Face_Destroy(f);
+			return;
+		}
+		else	//split
+		{
+			App->CL_Face->Face_Clip(*f, p, dists, sides);
+		}
+	}
+}

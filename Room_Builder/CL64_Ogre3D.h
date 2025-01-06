@@ -31,6 +31,7 @@ public:
 
 	void Set_World_Paths(void);
 	void Convert_ToOgre3D(bool Create);
+	void CreateMaterialFile();
 	void Get_Data(int Index, int FaceIndex);
 
 	Ogre::ManualObject* Export_Manual;
@@ -40,6 +41,7 @@ public:
 	char mWorld_File_PathAndFile[MAX_PATH];
 	char mWorld_File_Path[MAX_PATH];
 	char mExport_Just_Name[MAX_PATH];
+	char Material_PathAndFile[MAX_PATH];
 
 	float nx;
 	float ny;

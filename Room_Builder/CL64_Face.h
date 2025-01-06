@@ -66,6 +66,10 @@ public:
 	char const* Face_GetTextureName(const Face* f);
 	void Face_GetTextureSize(const Face* f, int* ptxSize, int* ptySize);
 	const TexInfo_Vectors* Face_GetTextureVecs(const Face* f);
-	
+	Face* Face_CloneReverse(const Face* src);
+	void Face_Split(const Face* f, const GPlane* p, Face** ff, Face** bf, float* dists, Ogre::uint8* sides);
+	void Face_MostlyOnSide(const Face* f, const GPlane* p, float* max, int* side);
+
+
 };
 

@@ -137,6 +137,7 @@ void CL64_Doc::AddBrushToWorld()
 	else
 	{
 		//OnBrushSubtractfromworld();
+        App->Say("Poop");
 	}
 
 	//SetModifiedFlag();
@@ -671,4 +672,80 @@ signed int CL64_Doc::FindClosestBrush(POINT const* ptFrom, ViewVars* v, Brush** 
 
     return	(*ppFoundBrush) ? GE_TRUE : GE_FALSE;
 }
+
+// *************************************************************************
+// *         fdocBrushCSGCallback:- Terry and Hazel Flanigan 2025          *
+// *************************************************************************
+static geBoolean fdocBrushCSGCallback(const Brush* pBrush, void* lParam)
+{
+    CL64_Doc* pDoc = (CL64_Doc*)lParam;
+
+    return 0;// (pDoc->BrushIsVisible(pBrush) && (!Brush_IsHint(pBrush)) && (!Brush_IsClip(pBrush)));
+}
+
+// *************************************************************************
+// *             RebuildTrees:- Terry and Hazel Flanigan 2025              *
+// *************************************************************************
+void CL64_Doc::RebuildTrees(void)
+{
+    App->Say("RebuildTrees");
+   
+    int	CurId = 0;
+   /* GNode* n;
+    AddBrushCBData	BspCallbackData;
+    ModelInfo_Type* ModelInfo;*/
+    BrushList* BList;
+    //Model* pMod;
+
+    BList = App->CL_Level->Level_GetBrushes(App->CL_Doc->pLevel);
+    //SetModifiedFlag();
+
+
+    //do the world csg list and tree first
+   /* Node_ClearBsp(App->CLSB_Doc->mWorldBsp);
+    App->CL_Doc->mWorldBsp = NULL;*/
+
+    App->CL_Brush->BrushList_ClearAllCSG(BList);
+
+    App->CL_Brush->BrushList_DoCSG(BList, CurId, ::fdocBrushCSGCallback, this);
+
+    /*BspCallbackData.pDoc = this;
+    BspCallbackData.CurId = CurId;
+    BspCallbackData.pTree = &App->CL_Doc->mWorldBsp;
+    BspCallbackData.bAddFlocking = GE_FALSE;
+
+    App->CL_Brush->BrushList_EnumCSGBrushes(BList, &BspCallbackData, ::AddBrushToBspCB);
+    BspCallbackData.bAddFlocking = GE_TRUE;
+    App->CL_Brush->BrushList_EnumCSGBrushes(BList, &BspCallbackData, ::AddBrushToBspCB);*/
+
+    //build individual model mini trees
+    //ModelInfo = Level_GetModelInfo(App->CLSB_Doc->pLevel);
+    //pMod = ModelList_GetFirst(ModelInfo->Models, &mi);
+    //n = NULL;
+    //for (i = 0; i < ModelList_GetCount(ModelInfo->Models); i++, n = NULL)
+    //{
+    //    CurId = Model_GetId(pMod);
+
+    //    BrushList_DoCSG(BList, CurId, ::fdocBrushCSGCallback, this);
+
+    //    //change pvoid from this to null to skip the BrushIsVisible check
+    //    BspCallbackData.CurId = CurId;
+    //    BspCallbackData.pTree = &n;
+    //    BspCallbackData.bAddFlocking = GE_FALSE;
+    //    BrushList_EnumCSGBrushes(BList, &BspCallbackData, ::AddBrushToBspCB);
+
+    //    BspCallbackData.bAddFlocking = GE_TRUE;
+    //    BrushList_EnumCSGBrushes(BList, &BspCallbackData, ::AddBrushToBspCB);
+
+    //    Node_ClearBsp(Model_GetModelTree(pMod));
+    //    Model_SetModelTree(pMod, n);
+    //    pMod = ModelList_GetNext(ModelInfo->Models, &mi);
+    //}
+    //if (App->CLSB_Doc->mAdjustMode == ADJUST_MODE_FACE)
+    //{
+    //    UpdateFaceAttributesDlg();
+    //}
+
+}
+
 
