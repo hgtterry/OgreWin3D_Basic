@@ -29,6 +29,7 @@ THE SOFTWARE.
 
 CL64_Top_Tabs::CL64_Top_Tabs(void)
 {
+	Headers_hWnd = nullptr;
 	flag_Brush_Select = 1;
 }
 
@@ -41,7 +42,7 @@ CL64_Top_Tabs::~CL64_Top_Tabs(void)
 // *************************************************************************
 void CL64_Top_Tabs::Start_Headers()
 {
-	CreateDialog(App->hInst, (LPCTSTR)IDD_TOP_TABS_HEADERS, App->MainHwnd, (DLGPROC)Proc_Headers);
+	Headers_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_TOP_TABS_HEADERS, App->MainHwnd, (DLGPROC)Proc_Headers);
 }
 
 // *************************************************************************
@@ -78,7 +79,17 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Headers(HWND hDlg, UINT message, WPARAM wPa
 		if (some_item->idFrom == IDC_BT_BRUSH_SELECT)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle_Tabs(item, App->CL_Top_Tabs->flag_Brush_Select);
+
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_BRUSH_SELECT));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
+			else
+			{
+				App->Custom_Button_Toggle_Tabs(item, App->CL_Top_Tabs->flag_Brush_Select);
+			}
+
 			return CDRF_DODEFAULT;
 		}
 
@@ -137,9 +148,18 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Headers(HWND hDlg, UINT message, WPARAM wPa
 	}
 
 	case WM_COMMAND:
-		if (LOWORD(wParam) == IDOK)
+	{
+		if (LOWORD(wParam) == IDC_BT_BRUSH_SELECT)
 		{
-			EndDialog(hDlg, LOWORD(wParam));
+			App->CL_Doc->mCurrentTool = CURTOOL_NONE;
+			App->CL_Doc->mModeTool = ID_GENERALSELECT;
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_BT_BRUSH_MOVE)
+		{
+			App->CL_Doc->mCurrentTool = CURTOOL_NONE;
+			App->CL_Doc->mModeTool = ID_TOOLS_BRUSH_MOVEROTATEBRUSH;
 			return TRUE;
 		}
 
@@ -149,6 +169,16 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Headers(HWND hDlg, UINT message, WPARAM wPa
 			return TRUE;
 		}
 	}
+	}
 
 	return FALSE;
+}
+
+// *************************************************************************
+// *		Enable_Select_Button:- Terry and Hazel Flanigan 2025   	  	   *
+// *************************************************************************
+void CL64_Top_Tabs::Enable_Select_Button(bool Enable, bool Active)
+{
+	EnableWindow(GetDlgItem(Headers_hWnd, IDC_BT_BRUSH_SELECT), Enable);
+	flag_Brush_Select = Active;
 }

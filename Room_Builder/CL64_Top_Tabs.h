@@ -31,6 +31,10 @@ public:
 
 	void Start_Headers();
 
+	void Enable_Select_Button(bool Enable, bool Active);
+
+	HWND Headers_hWnd;
+
 private:
 	static LRESULT CALLBACK Proc_Headers(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 

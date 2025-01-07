@@ -50,7 +50,6 @@
 #define IDC_BT_BRUSH_SELECT             1021
 #define IDC_BT_BRUSH_MOVE               1022
 #define IDC_BT_BRUSH_SCALE              1023
-#define IDC_BUTTON4                     1024
 #define IDC_BT_BRUSH_SHEAR              1024
 #define ID_DEBUG_GENERAL                32771
 #define ID_TEMPLATES_INSERT             32772
@@ -59,6 +58,7 @@
 #define ID_BRUSH_SCALE                  32775
 #define ID_BRUSH_SHEAR                  32776
 #define IID_TOOLS_BRUSH_MOVEROTATEBRUSH 32784
+#define ID_TOOLS_BRUSH_MOVEROTATEBRUSH  32784
 #define ID_GENERALSELECT                32886
 #define ID_TOOLS_TEMPLATE               32910
 #define IDC_STATIC                      -1

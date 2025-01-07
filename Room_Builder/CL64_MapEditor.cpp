@@ -242,6 +242,25 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Main_Dlg(HWND hDlg, UINT message, WPARAM w
 		return 0;
 	}
 
+	case WM_MOUSEWHEEL:
+	{
+		if (App->CL_Ogre->Ogre3D_Listener->flag_LeftMouseDown == 0)
+		{
+			int zDelta = (short)HIWORD(wParam);    // wheel rotation
+
+			if (zDelta > 0)
+			{
+				App->CL_Ogre->Ogre3D_Listener->Wheel = -1;
+			}
+			else if (zDelta < 0)
+			{
+				App->CL_Ogre->Ogre3D_Listener->Wheel = 1;
+			}
+
+			return 1;
+		}
+	}
+
 	case WM_LBUTTONDOWN:
 	{
 		//if (App->CL_MapEditor->flag_Right_Button_Down == 0)
@@ -944,25 +963,6 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Bottom_Right_Ogre(HWND hDlg, UINT message,
 			return (LONG)App->BlackBrush;
 		}
 	}
-
-	//case WM_MOUSEWHEEL:
-	//{
-	//	if (App->CL_Ogre->Ogre3D_Listener->flag_LeftMouseDown == 0)
-	//	{
-	//		int zDelta = (short)HIWORD(wParam);    // wheel rotation
-
-	//		if (zDelta > 0)
-	//		{
-	//			App->CL_Ogre->Ogre3D_Listener->Wheel = -1;
-	//		}
-	//		else if (zDelta < 0)
-	//		{
-	//			App->CL_Ogre->Ogre3D_Listener->Wheel = 1;
-	//		}
-
-	//		return 1;
-	//	}
-	//}
 
 	case WM_MOUSEMOVE: // ok up and running and we have a loop for mouse
 	{
