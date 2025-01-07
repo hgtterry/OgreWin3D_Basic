@@ -321,9 +321,50 @@ void CL64_Maths::XForm3d_SetXRotation(Matrix3d* M, float RadianAngle)
 	M->AX = 1.0f;
 	M->AY = M->AZ = M->BX = M->CX = 0.0f;
 	M->Translation.x = M->Translation.y = M->Translation.z = 0.0f;
-
-	//XForm3d_Assert(geXForm3d_IsOrthonormal(M) == GE_TRUE);
 }
+
+// *************************************************************************
+// *		XForm3d_SetYRotation:- Terry and Hazel Flanigan 2025		   *
+// *************************************************************************
+void CL64_Maths::XForm3d_SetYRotation(Matrix3d* M, float RadianAngle)
+{
+	geFloat Cos, Sin;
+	assert(M != NULL);
+	assert(RadianAngle * RadianAngle >= 0.0f);
+
+	Cos = (geFloat)cos(RadianAngle);
+	Sin = (geFloat)sin(RadianAngle);
+
+	M->AX = Cos;
+	M->AZ = Sin;
+	M->CX = -Sin;
+	M->CZ = Cos;
+	M->BY = 1.0f;
+	M->AY = M->BX = M->BZ = M->CY = 0.0f;
+	M->Translation.x = M->Translation.y = M->Translation.z = 0.0f;
+}
+
+// *************************************************************************
+// *		XForm3d_SetZRotation:- Terry and Hazel Flanigan 2025		   *
+// *************************************************************************
+void CL64_Maths::XForm3d_SetZRotation(Matrix3d* M, float RadianAngle)
+{
+	geFloat Cos, Sin;
+	assert(M != NULL);
+	assert(RadianAngle * RadianAngle >= 0.0f);
+
+	Cos = (geFloat)cos(RadianAngle);
+	Sin = (geFloat)sin(RadianAngle);
+
+	M->AX = Cos;
+	M->AY = -Sin;
+	M->BX = Sin;
+	M->BY = Cos;
+	M->CZ = 1.0f;
+	M->AZ = M->BZ = M->CX = M->CY = 0.0f;
+	M->Translation.x = M->Translation.y = M->Translation.z = 0.0f;
+}
+
 
 // *************************************************************************
 // *			XForm3d_Multiply:- Terry and Hazel Flanigan 2024		   *

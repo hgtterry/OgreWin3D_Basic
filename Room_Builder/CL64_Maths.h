@@ -58,6 +58,8 @@ public:
 	void XForm3d_RotateX(Matrix3d* M, float RadianAngle);
 	void XForm3d_SetXRotation(Matrix3d* M, float RadianAngle);
 	void XForm3d_Multiply(const Matrix3d* M1, const Matrix3d* M2, Matrix3d* MProduct);
+	void XForm3d_SetYRotation(Matrix3d* M, float RadianAngle);
+	void XForm3d_SetZRotation(Matrix3d* M, float RadianAngle);
 
 
 	void Quaternion_SetFromAxisAngle(Ogre::Quaternion* Q, const Ogre::Vector3* Axis, float Theta);

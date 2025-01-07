@@ -156,7 +156,7 @@ void CL64_Ogre3D::Convert_ToOgre3D(bool Create)
 			Get_Data(Count, A);
 
 			World_Manual->position(Ogre::Vector3(x, y, z));
-			World_Manual->textureCoord(Ogre::Vector2(0, 1)); // (u, 1 - v));
+			World_Manual->textureCoord(Ogre::Vector2(u, 1 - v));
 			World_Manual->normal(Ogre::Vector3(nx, ny, nz));
 			World_Manual->index(FaceIndex);
 			FaceIndex++;
@@ -164,7 +164,7 @@ void CL64_Ogre3D::Convert_ToOgre3D(bool Create)
 			Get_Data(Count, B);
 
 			World_Manual->position(Ogre::Vector3(x, y, z));
-			World_Manual->textureCoord(Ogre::Vector2(1, 1)); //(u, 1 - v));
+			World_Manual->textureCoord(Ogre::Vector2(u, 1 - v));
 			World_Manual->normal(Ogre::Vector3(nx, ny, nz));
 			World_Manual->index(FaceIndex);
 			FaceIndex++;
@@ -172,7 +172,7 @@ void CL64_Ogre3D::Convert_ToOgre3D(bool Create)
 			Get_Data(Count, C);
 
 			World_Manual->position(Ogre::Vector3(x, y, z));
-			World_Manual->textureCoord(Ogre::Vector2(1, 0)); //(u, 1 - v));
+			World_Manual->textureCoord(Ogre::Vector2(u, 1 - v));
 			World_Manual->normal(Ogre::Vector3(nx, ny, nz));
 			World_Manual->index(FaceIndex);
 

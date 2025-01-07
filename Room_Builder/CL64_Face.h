@@ -31,6 +31,13 @@ typedef struct
 typedef struct FaceTag Face;
 typedef struct TexInfoTag TexInfo;
 
+#define	M_PI		((geFloat)3.14159265358979323846f)
+
+#define UNITS_DEGREES_TO_RADIANS(d) Units_DegreesToRadians(d)
+#define UNITS_RADIANS_TO_DEGREES(r) Units_RadiansToDegrees(r)
+#define Units_DegreesToRadians(d) ((((geFloat)(d)) * M_PI) / 180.0f)
+#define Units_RadiansToDegrees(r) ((((geFloat)(r)) * 180.0f) / M_PI)
+
 #pragma once
 class CL64_Face
 {

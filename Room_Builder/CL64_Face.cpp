@@ -38,6 +38,7 @@ const Ogre::Vector3	VecOrigin = { 0.0f, 0.0f, 0.0f };
 #define FACE_DEFAULT_TRANSLUCENCY	(255.0f)
 #define FACE_DEFAULT_REFLECTIVITY	(1.0f)
 
+
 enum FaceFlags
 {
 	FACE_MIRROR = (1 << 0),
@@ -626,15 +627,151 @@ signed int	Face_IsTextureLocked(const Face* f)
 	return (f->Flags & FACE_TEXTURELOCKED) ? GE_TRUE : GE_FALSE;
 }
 
+static void Face_UpdateLockedTextureVecs(Face* f)
+{
+	int WhichAxis;
+	Matrix3d XfmTexture;
+	TexInfo* t = &f->Tex;
+
+	assert(t != NULL);
+	
+	if (t->xScale == 0.0f) t->xScale = 1.0f;
+	if (t->yScale == 0.0f) t->yScale = 1.0f;
+
+	// the normal has to be normal, no?
+	assert((t->VecNormal.X != 0.0f) ||
+		(t->VecNormal.Y != 0.0f) ||
+		(t->VecNormal.Z != 0.0f));
+
+	// Compute rotation
+	App->CL_Maths->Vector3_Clear(&t->XfmFaceAngle.Translation);
+	
+	WhichAxis = 0;		//	sides
+	if (fabs(t->VecNormal.y) > fabs(t->VecNormal.x))
+	{
+		if (fabs(t->VecNormal.z) > fabs(t->VecNormal.y))
+		{
+			WhichAxis = 2;	// front / back
+		}
+		else
+		{
+			WhichAxis = 1;		//	top / bottom
+		}
+	}
+	else if (fabs(t->VecNormal.z) > fabs(t->VecNormal.x))
+	{
+		WhichAxis = 2;
+	}
+
+	switch (WhichAxis)
+	{
+	case 0:			// sides
+		App->CL_Maths->XForm3d_SetZRotation(&XfmTexture, Units_DegreesToRadians(t->Rotate));
+		App->CL_Maths->XForm3d_Multiply(&t->XfmFaceAngle, &XfmTexture, &XfmTexture);
+		App->CL_Maths->Vector3_Set(&t->TVecs.uVec, -XfmTexture.AX, -XfmTexture.BX, -XfmTexture.CX);
+		App->CL_Maths->Vector3_Set(&t->TVecs.vVec, -XfmTexture.AY, -XfmTexture.BY, -XfmTexture.CY);
+		break;
+	case 1:			// top / bottom
+		App->CL_Maths->XForm3d_SetZRotation(&XfmTexture, Units_DegreesToRadians(t->Rotate));
+		App->CL_Maths->XForm3d_Multiply(&t->XfmFaceAngle, &XfmTexture, &XfmTexture);
+		App->CL_Maths->Vector3_Set(&t->TVecs.uVec, XfmTexture.AX, XfmTexture.BX, XfmTexture.CX);
+		App->CL_Maths->Vector3_Set(&t->TVecs.vVec, -XfmTexture.AY, -XfmTexture.BY, -XfmTexture.CY);
+		break;
+	case 2:			// front / back
+		App->CL_Maths->XForm3d_SetZRotation(&XfmTexture, Units_DegreesToRadians(t->Rotate));
+		App->CL_Maths->XForm3d_Multiply(&t->XfmFaceAngle, &XfmTexture, &XfmTexture);
+		App->CL_Maths->Vector3_Set(&t->TVecs.uVec, XfmTexture.AX, XfmTexture.BX, XfmTexture.CX);
+		App->CL_Maths->Vector3_Set(&t->TVecs.vVec, XfmTexture.AY, XfmTexture.BY, XfmTexture.CY);
+		break;
+	}
+	// end change
+
+		// and scale accordingly
+	App->CL_Maths->Vector3_Scale(&t->TVecs.uVec, 1.0f / t->xScale, &t->TVecs.uVec);
+	App->CL_Maths->Vector3_Scale(&t->TVecs.vVec, 1.0f / t->yScale, &t->TVecs.vVec);
+
+
+	// compute offsets...
+	{
+		geFloat uOffset, vOffset;
+
+		uOffset = App->CL_Maths->Vector3_DotProduct(&t->TVecs.uVec, &f->Tex.Pos);
+		vOffset = App->CL_Maths->Vector3_DotProduct(&t->TVecs.vVec, &f->Tex.Pos);
+
+		t->TVecs.uOffset = (float)(t->xShift - uOffset);
+		t->TVecs.vOffset = (float)(t->yShift - vOffset);
+	}
+}
+
+
+static void Face_UpdateWorldTextureVecs(Face* f)
+{
+	float	ang, sinv, cosv;
+	Ogre::Vector3 uVec, vVec;
+	int WhichAxis;
+	TexInfo* t = &f->Tex;
+
+	if (t->xScale == 0.0f) t->xScale = 1.0f;
+	if (t->yScale == 0.0f) t->yScale = 1.0f;
+
+	ang = UNITS_DEGREES_TO_RADIANS(-t->Rotate);
+	sinv = (geFloat)sin(ang);
+	cosv = (geFloat)cos(ang);
+
+	// the normal has to be normal, no?
+	assert((t->VecNormal.X != 0.0f) ||
+		(t->VecNormal.Y != 0.0f) ||
+		(t->VecNormal.Z != 0.0f));
+
+	WhichAxis = 0;
+	if (fabs(t->VecNormal.y) > fabs(t->VecNormal.x))
+	{
+		if (fabs(t->VecNormal.z) > fabs(t->VecNormal.y))
+		{
+			WhichAxis = 2;
+		}
+		else
+		{
+			WhichAxis = 1;
+		}
+	}
+	else if (fabs(t->VecNormal.z) > fabs(t->VecNormal.x))
+	{
+		WhichAxis = 2;
+	}
+
+	switch (WhichAxis)
+	{
+	case 0:
+		App->CL_Maths->Vector3_Set(&uVec, 0.0f, sinv, cosv);
+		App->CL_Maths->Vector3_Set(&vVec, 0.0f, -cosv, sinv);
+		break;
+	case 1:
+		App->CL_Maths->Vector3_Set(&uVec, cosv, 0.0f, sinv);
+		App->CL_Maths->Vector3_Set(&vVec, -sinv, 0.0f, cosv);
+		break;
+	case 2:
+		App->CL_Maths->Vector3_Set(&uVec, cosv, sinv, 0.0f);
+		App->CL_Maths->Vector3_Set(&vVec, sinv, -cosv, 0.0f);
+		break;
+	}
+
+	t->TVecs.uOffset = (geFloat)(t->xShift);
+	t->TVecs.vOffset = (geFloat)(t->yShift);
+
+	App->CL_Maths->Vector3_Scale(&uVec, (1.0f / t->xScale), &t->TVecs.uVec);
+	App->CL_Maths->Vector3_Scale(&vVec, (1.0f / t->yScale), &t->TVecs.vVec);
+}
+
 static void Face_UpdateTextureVecs(Face* f)
 {
 	if (Face_IsTextureLocked(f))
 	{
-		//Face_UpdateLockedTextureVecs(f);
+		Face_UpdateLockedTextureVecs(f);
 	}
 	else
 	{
-		//Face_UpdateWorldTextureVecs(f);
+		Face_UpdateWorldTextureVecs(f);
 	}
 }
 
