@@ -1049,7 +1049,10 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Bottom_Right_Ogre(HWND hDlg, UINT message,
 // *************************************************************************
 void CL64_MapEditor::On_Left_Button_Up(POINT CursorPosition)
 {
-	App->CL_Doc->SelectOrtho(CursorPosition, App->CL_MapEditor->Current_View);
+	if (App->CL_Doc->mModeTool == ID_GENERALSELECT)
+	{
+		App->CL_Doc->SelectOrtho(CursorPosition, App->CL_MapEditor->Current_View);
+	}
 }
 
 // *************************************************************************

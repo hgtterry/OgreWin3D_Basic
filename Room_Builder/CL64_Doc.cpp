@@ -515,6 +515,7 @@ void CL64_Doc::SelectOrtho(POINT point, ViewVars* v)
         ResetAllSelections();
     }*/
 
+
     FoundThingType = FindClosestThing(&point, v, &pMinBrush,&Dist);
 
     if ((FoundThingType != fctNOTHING) && (Dist <= MAX_PIXEL_SELECT_DIST))
