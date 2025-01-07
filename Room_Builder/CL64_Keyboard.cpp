@@ -159,7 +159,7 @@ void CL64_Keyboard::Keyboard_Mode_First(float deltaTime)
 }
 
 // *************************************************************************
-// *		Keyboard_Mode_Model:- Terry and Hazel Flanigan 2024			   *
+// *		Keyboard_Mode_Model:- Terry and Hazel Flanigan 2025			   *
 // *************************************************************************
 void CL64_Keyboard::Keyboard_Mode_Model(float deltaTime)
 {
@@ -224,97 +224,97 @@ void CL64_Keyboard::Keyboard_Mode_Model(float deltaTime)
 }
 
 // *************************************************************************
-// *		Keyboard_Mode_Free:- Terry and Hazel Flanigan 2024			   *
+// *		Keyboard_Mode_Free:- Terry and Hazel Flanigan 2025			   *
 // *************************************************************************
 void CL64_Keyboard::Keyboard_Mode_Free(float deltaTime)
 {
-	//if (flag_Block_Keyboard == 0)
-	//{
+	if (flag_Block_Keyboard == 0)
+	{
 		// Forward
-	//	if (App->CL_Ogre->Ogre3D_Listener->Wheel < 0) // Mouse Wheel Forward
-	//	{
-	//		App->CL_Ogre->Ogre3D_Listener->mTranslateVector.z = -App->CL_Ogre->Ogre3D_Listener->mMoveScale * 30;
-	//	}
-	//	if (GetAsyncKeyState(87) < 0) // W Key
-	//	{
-	//		if (App->CL_Ogre->Ogre3D_Listener->CameraMode == Enums::Cam_Mode_Free)
-	//		{
-	//			App->CL_Ogre->Ogre3D_Listener->mTranslateVector.z = -App->CL_Ogre->Ogre3D_Listener->mMoveScale;
-	//		}
-	//	}
+		if (App->CL_Ogre->Ogre3D_Listener->Wheel < 0) // Mouse Wheel Forward
+		{
+			App->CL_Ogre->Ogre3D_Listener->mTranslateVector.z = -App->CL_Ogre->Ogre3D_Listener->mMoveScale * 30;
+		}
+		if (GetAsyncKeyState(87) < 0) // W Key
+		{
+			if (App->CL_Ogre->Ogre3D_Listener->CameraMode == Enums::Cam_Mode_Free)
+			{
+				App->CL_Ogre->Ogre3D_Listener->mTranslateVector.z = -App->CL_Ogre->Ogre3D_Listener->mMoveScale;
+			}
+		}
 
-	//	// Back
-	//	if (App->CL_Ogre->Ogre3D_Listener->Wheel > 0) // Mouse Wheel Back
-	//	{
-	//		App->CL_Ogre->Ogre3D_Listener->mTranslateVector.z = App->CL_Ogre->Ogre3D_Listener->mMoveScale * 30;
-	//	}
-	//	if (GetAsyncKeyState(83) < 0) // S Key	
-	//	{
-	//		if (App->CL_Ogre->Ogre3D_Listener->CameraMode == Enums::Cam_Mode_Free)
-	//		{
-	//			App->CL_Ogre->Ogre3D_Listener->mTranslateVector.z = App->CL_Ogre->Ogre3D_Listener->mMoveScale;
-	//		}
+		// Back
+		if (App->CL_Ogre->Ogre3D_Listener->Wheel > 0) // Mouse Wheel Back
+		{
+			App->CL_Ogre->Ogre3D_Listener->mTranslateVector.z = App->CL_Ogre->Ogre3D_Listener->mMoveScale * 30;
+		}
+		if (GetAsyncKeyState(83) < 0) // S Key	
+		{
+			if (App->CL_Ogre->Ogre3D_Listener->CameraMode == Enums::Cam_Mode_Free)
+			{
+				App->CL_Ogre->Ogre3D_Listener->mTranslateVector.z = App->CL_Ogre->Ogre3D_Listener->mMoveScale;
+			}
 
-	//	}
+		}
 
-	//	// Pan Down
-	//	if (GetAsyncKeyState(81) < 0) // Q Key	
-	//	{
-	//		if (App->CL_Ogre->Ogre3D_Listener->CameraMode == Enums::Cam_Mode_Free)
-	//		{
-	//			Rate = (App->CL_Ogre->Ogre3D_Listener->mMoveSensitivity / 1000) * 2; //FlyRate;
+		// Pan Down
+		if (GetAsyncKeyState(81) < 0) // Q Key	
+		{
+			if (App->CL_Ogre->Ogre3D_Listener->CameraMode == Enums::Cam_Mode_Free)
+			{
+				Rate = (App->CL_Ogre->Ogre3D_Listener->mMoveSensitivity / 1000) * 2; //FlyRate;
 
-	//			OldPos = App->CL_Ogre->Ogre3D_Listener->mCamNode->getPosition();
+				OldPos = App->CL_Ogre->Ogre3D_Listener->mCamNode->getPosition();
 
-	//			OldPos.y -= Rate;
+				OldPos.y -= Rate;
 
-	//			App->CL_Ogre->Ogre3D_Listener->mCamNode->setPosition(OldPos);
-	//		}
-	//	}
+				App->CL_Ogre->Ogre3D_Listener->mCamNode->setPosition(OldPos);
+			}
+		}
 
-	//	//	Pan Up
-	//	if (GetAsyncKeyState(69) < 0) // E Key
-	//	{
-	//		if (App->CL_Ogre->Ogre3D_Listener->CameraMode == Enums::Cam_Mode_Free)
-	//		{
-	//			Rate = (App->CL_Ogre->Ogre3D_Listener->mMoveSensitivity / 1000) * 2; //FlyRate;
+		//	Pan Up
+		if (GetAsyncKeyState(69) < 0) // E Key
+		{
+			if (App->CL_Ogre->Ogre3D_Listener->CameraMode == Enums::Cam_Mode_Free)
+			{
+				Rate = (App->CL_Ogre->Ogre3D_Listener->mMoveSensitivity / 1000) * 2; //FlyRate;
 
-	//			OldPos = App->CL_Ogre->Ogre3D_Listener->mCamNode->getPosition();
+				OldPos = App->CL_Ogre->Ogre3D_Listener->mCamNode->getPosition();
 
-	//			OldPos.y += Rate;
+				OldPos.y += Rate;
 
-	//			App->CL_Ogre->Ogre3D_Listener->mCamNode->setPosition(OldPos);
-	//		}
-	//	}
+				App->CL_Ogre->Ogre3D_Listener->mCamNode->setPosition(OldPos);
+			}
+		}
 
-	//	// Pan Left
-	//	if (GetAsyncKeyState(65) < 0) // A Key
-	//	{
-	//		if (App->CL_Ogre->Ogre3D_Listener->CameraMode == Enums::Cam_Mode_Free)
-	//		{
-	//			App->CL_Ogre->Ogre3D_Listener->mTranslateVector.x = -App->CL_Ogre->Ogre3D_Listener->mMoveScale;
-	//		}
-	//	}
+		// Pan Left
+		if (GetAsyncKeyState(65) < 0) // A Key
+		{
+			if (App->CL_Ogre->Ogre3D_Listener->CameraMode == Enums::Cam_Mode_Free)
+			{
+				App->CL_Ogre->Ogre3D_Listener->mTranslateVector.x = -App->CL_Ogre->Ogre3D_Listener->mMoveScale;
+			}
+		}
 
-	//	// Pan Right
-	//	if (GetAsyncKeyState(68) < 0) // D Key
-	//	{
-	//		if (App->CL_Ogre->Ogre3D_Listener->CameraMode == Enums::Cam_Mode_Free)
-	//		{
-	//			App->CL_Ogre->Ogre3D_Listener->mTranslateVector.x = App->CL_Ogre->Ogre3D_Listener->mMoveScale;
-	//		}
-	//	}
+		// Pan Right
+		if (GetAsyncKeyState(68) < 0) // D Key
+		{
+			if (App->CL_Ogre->Ogre3D_Listener->CameraMode == Enums::Cam_Mode_Free)
+			{
+				App->CL_Ogre->Ogre3D_Listener->mTranslateVector.x = App->CL_Ogre->Ogre3D_Listener->mMoveScale;
+			}
+		}
 
-	//	//------------------------------------------------ Escape 
-	//	if (GetAsyncKeyState(VK_ESCAPE) < 0) // Back to Editor mode;
-	//	{
+		//------------------------------------------------ Escape 
+		if (GetAsyncKeyState(VK_ESCAPE) < 0) 
+		{
 
-	//	}
+		}
 
-	//	//------------------------------------------------ Space Key - Jump and Selection
-	//	if (GetAsyncKeyState(VK_SPACE) < 0 && App->CL_Scene->flag_Player_Added == 1)
-	//	{
-	//		
-	//	}
-	//}
+		//------------------------------------------------ Space Key - Jump and Selection
+		//if (GetAsyncKeyState(VK_SPACE) < 0 && App->CL_Scene->flag_Player_Added == 1)
+		//{
+		//	
+		//}
+	}
 }

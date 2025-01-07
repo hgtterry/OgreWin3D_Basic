@@ -40,6 +40,10 @@ public:
 	void Capture_LeftMouse_Model(void);
 	void Capture_RightMouse_Model(void);
 
+	void Camera_Mode_Free(float DeltaTime);
+	void Capture_Left_Mouse_Free(void);
+	void Capture_Right_Mouse_Free(void);
+
 	POINT Mouse_point;
 	int	Pl_MouseX;
 	int	Pl_MouseY;
