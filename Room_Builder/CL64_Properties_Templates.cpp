@@ -137,6 +137,8 @@ LRESULT CALLBACK CL64_Properties_Templates::Proc_Templates(HWND hDlg, UINT messa
 				}
 			}
 
+			App->CL_Mesh_Mgr->Update_World();
+
 			App->CL_Doc->DoGeneralSelect();
 			App->CL_Doc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
 

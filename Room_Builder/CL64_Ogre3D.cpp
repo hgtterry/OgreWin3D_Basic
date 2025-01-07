@@ -266,7 +266,7 @@ void CL64_Ogre3D::Convert_ToOgre3D(bool Create)
 //	remove(mWorld_File_PathAndFile);
 //	remove(Material_PathAndFile);
 
-	App->Say("Converted");
+	//App->Say("Converted");
 }
 
 // *************************************************************************
@@ -607,7 +607,7 @@ int CL64_Ogre3D::WriteBMP8(const char* pszFile, geBitmap* pBitmap)
 	hFile = NULL;
 
 	// Success!
-	App->Say("Success");
+	//App->Say("Success");
 
 ExitWriteBitmap:
 
