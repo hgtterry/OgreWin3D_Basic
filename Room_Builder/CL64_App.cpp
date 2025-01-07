@@ -57,6 +57,7 @@ CL64_App::CL64_App(void)
 	CL_Model =					nullptr;
 	CL_Ogre3D =					nullptr;
 	CL_Brush_X =				nullptr;
+	CL_Top_Tabs =				nullptr;
 
 	CUR = 0;
 
@@ -120,6 +121,7 @@ void CL64_App::InitApp(void)
 	CL_Keyboard =				new CL64_Keyboard();
 	CL_Model =					new CL64_Model();
 	CL_Ogre3D =					new CL64_Ogre3D();
+	CL_Top_Tabs =				new CL64_Top_Tabs();
 	
 	CL_Brush_X =				new CL64_Brush_X();
 

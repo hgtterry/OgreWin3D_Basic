@@ -330,7 +330,8 @@ void CL64_Properties_Brushes::Get_Index(const Brush* b)
 		if (Selected == 1)
 		{
 			SendDlgItemMessage(BrushesDlg_Hwnd, IDC_GD_BRUSHLIST, LB_SETCURSEL, (WPARAM)Count, (LPARAM)0);
-			//Selected_Index = Count;
+			Selected_Index = Count;
+			Selected_Brush = App->CL_Brush->Get_Brush_ByIndex(0);
 			//List_Selection_Changed(0);
 		}
 

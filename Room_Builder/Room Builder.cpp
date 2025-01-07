@@ -67,6 +67,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     App->CL_MapEditor->Init_Map_Views();
 
     App->SetMainWinCentre();
+    App->CL_Top_Tabs->Start_Headers();
     App->CL_Properties_Tabs->Start_Tabs_Control_Dlg();
 
     SetTimer(App->MainHwnd, 1, 100, NULL);

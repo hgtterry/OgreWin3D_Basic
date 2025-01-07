@@ -55,6 +55,7 @@ THE SOFTWARE.
 #include "CL64_Keyboard.h"
 #include "CL64_Model.h"
 #include "CL64_Ogre3D.h"
+#include "CL64_Top_Tabs.h"
 
 class CL64_App
 {
@@ -92,6 +93,7 @@ public:
 	CL64_Keyboard*				CL_Keyboard;
 	CL64_Model*					CL_Model;
 	CL64_Ogre3D*				CL_Ogre3D;
+	CL64_Top_Tabs*				CL_Top_Tabs;
 
 	void InitApp(void);
 	void SetBrushes_Fonts(void);

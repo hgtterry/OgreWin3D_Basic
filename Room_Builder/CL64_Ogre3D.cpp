@@ -104,8 +104,6 @@ void CL64_Ogre3D::Convert_ToOgre3D(bool Create)
 
 	CreateMaterialFile();
 
-	//App->CL_Model->Ogre_Face_Count = 0;
-
 	if (Create == 1)
 	{
 		World_Manual = App->CL_Ogre->mSceneMgr->createManualObject("OgreManual2");
@@ -185,8 +183,6 @@ void CL64_Ogre3D::Convert_ToOgre3D(bool Create)
 		Count++;
 	}
 
-	//App->CL_Model->Ogre_Face_Count = TotalFaces;
-
 	if (World_Manual->getNumSections() == 0)
 	{
 		App->Say("Can not create Ogre Sections");
@@ -205,22 +201,11 @@ void CL64_Ogre3D::Convert_ToOgre3D(bool Create)
 	ms->exportMesh(mesh.get(), mWorld_File_PathAndFile);
 	delete(ms);
 
-	//App->Say("Converted");
-	//return;
-
 	char OutputFolder[MAX_PATH];
 	strcpy(OutputFolder, mWorld_File_Path);
 	strcat(OutputFolder, "\\");
 
 	DecompileTextures_TXL(OutputFolder);
-
-	/*char Material_PathAndFile[MAX_PATH];
-	strcpy(Material_PathAndFile, mWorld_File_Path);
-	strcat(Material_PathAndFile, "\\");
-	strcat(Material_PathAndFile, mWorld_Mesh_JustName);
-	strcat(Material_PathAndFile, ".material");*/
-
-	//CreateMaterialFile(Material_PathAndFile);
 
 	char Name[MAX_PATH];
 	strcpy(Name, mWorld_Mesh_JustName);
@@ -235,11 +220,6 @@ void CL64_Ogre3D::Convert_ToOgre3D(bool Create)
 
 		App->CL_Mesh_Mgr->World_Node = NULL;
 		App->CL_Mesh_Mgr->World_Ent = NULL;
-
-		//Ogre::ResourcePtr ptr = Ogre::MeshManager::getSingleton().getByName(Name,App->CLSB_Ogre->World_Resource_Group);
-		//ptr->unload();
-
-		//Ogre::MeshManager::getSingleton().remove(Name);
 
 		Ogre::ResourceGroupManager::getSingleton().destroyResourceGroup(App->CL_Ogre->World_Resource_Group);
 		Ogre::ResourceGroupManager::getSingleton().createResourceGroup(App->CL_Ogre->World_Resource_Group);
@@ -261,12 +241,12 @@ void CL64_Ogre3D::Convert_ToOgre3D(bool Create)
 
 	App->CL_Mesh_Mgr->World_Node->setPosition(0, 0, 0);
 	App->CL_Mesh_Mgr->World_Node->setVisible(true);
-	App->CL_Mesh_Mgr->World_Node->setScale(0.5, 0.5, 0.5);
-	App->CL_Mesh_Mgr->World_Node->showBoundingBox(true);
+	App->CL_Mesh_Mgr->World_Node->setScale(1, 1, 1);
+	//App->CL_Mesh_Mgr->World_Node->showBoundingBox(true);
+	// 
 //	remove(mWorld_File_PathAndFile);
 //	remove(Material_PathAndFile);
 
-	//App->Say("Converted");
 }
 
 // *************************************************************************
@@ -417,7 +397,7 @@ typedef struct tagMY_BITMAPINFO
 #define PAD32(i)     (((i)+31)/32*4)
 
 // *************************************************************************
-// *		Extract_TXL_Texture:- Terry and Hazel Flanigan 2023    	 	   *
+// *		Extract_TXL_Texture:- Terry and Hazel Flanigan 2025    	 	   *
 // *************************************************************************
 int CL64_Ogre3D::WriteBMP8(const char* pszFile, geBitmap* pBitmap)
 {
@@ -628,7 +608,7 @@ ExitWriteBitmap:
 }
 
 // *************************************************************************
-// *			LoadTextures_TXL:- Terry and Hazel Flanigan 2023 		   *
+// *			LoadTextures_TXL:- Terry and Hazel Flanigan 2025 		   *
 // *************************************************************************
 bool CL64_Ogre3D::LoadTextures_TXL(char* Name)
 {
