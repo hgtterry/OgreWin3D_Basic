@@ -31,6 +31,7 @@ CL64_Top_Tabs::CL64_Top_Tabs(void)
 {
 	Headers_hWnd = nullptr;
 	flag_Brush_Select = 1;
+	flag_Brush_Move = 0;
 }
 
 CL64_Top_Tabs::~CL64_Top_Tabs(void)
@@ -93,7 +94,7 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Headers(HWND hDlg, UINT message, WPARAM wPa
 			return CDRF_DODEFAULT;
 		}
 
-		if (some_item->idFrom == IDC_BT_BRUSH_MOVE && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDC_BT_BRUSH_MOVE)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 
@@ -104,13 +105,13 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Headers(HWND hDlg, UINT message, WPARAM wPa
 			}
 			else
 			{
-				App->Custom_Button_Normal(item);
+				App->Custom_Button_Toggle_Tabs(item, App->CL_Top_Tabs->flag_Brush_Move);
 			}
 
 			return CDRF_DODEFAULT;
 		}
 
-		if (some_item->idFrom == IDC_BT_BRUSH_SCALE && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDC_BT_BRUSH_SCALE)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 
@@ -127,7 +128,7 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Headers(HWND hDlg, UINT message, WPARAM wPa
 			return CDRF_DODEFAULT;
 		}
 
-		if (some_item->idFrom == IDC_BT_BRUSH_SHEAR && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDC_BT_BRUSH_SHEAR)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 
@@ -151,6 +152,9 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Headers(HWND hDlg, UINT message, WPARAM wPa
 	{
 		if (LOWORD(wParam) == IDC_BT_BRUSH_SELECT)
 		{
+			App->CL_Top_Tabs->Reset_Brush_Buttons();
+			App->CL_Top_Tabs->flag_Brush_Select = 1;
+
 			App->CL_Doc->mCurrentTool = CURTOOL_NONE;
 			App->CL_Doc->mModeTool = ID_GENERALSELECT;
 			return TRUE;
@@ -158,6 +162,9 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Headers(HWND hDlg, UINT message, WPARAM wPa
 
 		if (LOWORD(wParam) == IDC_BT_BRUSH_MOVE)
 		{
+			App->CL_Top_Tabs->Reset_Brush_Buttons();
+			App->CL_Top_Tabs->flag_Brush_Move = 1;
+
 			App->CL_Doc->mCurrentTool = CURTOOL_NONE;
 			App->CL_Doc->mModeTool = ID_TOOLS_BRUSH_MOVEROTATEBRUSH;
 			return TRUE;
@@ -181,4 +188,15 @@ void CL64_Top_Tabs::Enable_Select_Button(bool Enable, bool Active)
 {
 	EnableWindow(GetDlgItem(Headers_hWnd, IDC_BT_BRUSH_SELECT), Enable);
 	flag_Brush_Select = Active;
+}
+
+// *************************************************************************
+// *	  	Reset_Brush_Buttons:- Terry and Hazel Flanigan 2025			   *
+// *************************************************************************
+void CL64_Top_Tabs::Reset_Brush_Buttons()
+{
+	flag_Brush_Select = 0;
+	flag_Brush_Move = 0;
+
+	RedrawWindow(Headers_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 }

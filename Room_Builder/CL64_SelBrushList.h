@@ -41,6 +41,7 @@ public:
 	void SelBrushList_Center(SelBrushList* pList, Ogre::Vector3* center);
 	void SelBrushList_Enum(SelBrushList* pList, SelBrushList_Callback Callback, void* lParam);
 	signed int SelBrushList_Add(SelBrushList* pList, Brush* pBrush);
+	void SelBrushList_RemoveAll(SelBrushList* pList);
 
 
 };

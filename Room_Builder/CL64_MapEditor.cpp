@@ -74,6 +74,8 @@ CL64_MapEditor::CL64_MapEditor()
 	Do_Depth = 0;
 	Do_All = 0;
 
+	flag_Left_Button_Down = 0;
+
 	BackGround_Brush = CreateSolidBrush(RGB(64, 64, 64));
 
 	Pen_Fine_Grid = CreatePen(PS_SOLID, 0, RGB(0, 0, 0));
@@ -560,7 +562,7 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Left_Window(HWND hDlg, UINT message, W
 		dx = (RealCursorPosition.x);
 		dy = (RealCursorPosition.y);
 
-
+		App->CL_MapEditor->On_Mouse_Move(RealCursorPosition);
 		/*if (App->CL_MapEditor->flag_Right_Button_Down == 1 && GetAsyncKeyState(VK_CONTROL) < 0)
 		{
 			App->CL_MapEditor->Zoom_View(hDlg, dx, dy);
@@ -576,13 +578,16 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Left_Window(HWND hDlg, UINT message, W
 
 	case WM_LBUTTONDOWN:
 	{
-		/*POINT		RealCursorPosition;
+		POINT		RealCursorPosition;
 		GetCursorPos(&RealCursorPosition);
 		ScreenToClient(hDlg, &RealCursorPosition);
 
 		App->CL_MapEditor->Current_View = App->CL_MapEditor->VCam[V_TL];
-		App->CL_Doc->SelectOrtho(RealCursorPosition,App->CL_MapEditor->Current_View)*/;
+		App->CL_Doc->SelectOrtho(RealCursorPosition,App->CL_MapEditor->Current_View);
 		
+		App->CL_MapEditor->flag_Left_Button_Down = 1;
+		App->CL_MapEditor->On_Left_Button_Down(RealCursorPosition);
+
 		/*GetCursorPos(&App->CL_MapEditor->mStartPoint);
 		ScreenToClient(hDlg, &App->CL_MapEditor->mStartPoint);
 
@@ -603,6 +608,7 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Left_Window(HWND hDlg, UINT message, W
 
 		App->CL_MapEditor->Current_View = App->CL_MapEditor->VCam[V_TL];
 
+		App->CL_MapEditor->flag_Left_Button_Down = 0;
 		App->CL_MapEditor->On_Left_Button_Up(RealCursorPosition);
 
 		/*App->CL_MapEditor->flag_Left_Button_Down = 0;
@@ -1045,6 +1051,20 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Bottom_Right_Ogre(HWND hDlg, UINT message,
 }
 
 // *************************************************************************
+// *	  						On_Mouse_Move							   *
+// *************************************************************************
+void CL64_MapEditor::On_Mouse_Move(POINT CursorPosition)
+{
+	if (flag_Left_Button_Down == 1)
+	{
+		if (App->CL_Doc->mModeTool == ID_TOOLS_BRUSH_MOVEROTATEBRUSH) //|| (Tool == ID_TOOLS_BRUSH_MOVESELECTEDBRUSHES))
+		{
+			App->Flash_Window();
+		}
+	}
+}
+
+// *************************************************************************
 // *	  						On_Left_Button_Up								   *
 // *************************************************************************
 void CL64_MapEditor::On_Left_Button_Up(POINT CursorPosition)
@@ -1052,6 +1072,18 @@ void CL64_MapEditor::On_Left_Button_Up(POINT CursorPosition)
 	if (App->CL_Doc->mModeTool == ID_GENERALSELECT)
 	{
 		App->CL_Doc->SelectOrtho(CursorPosition, App->CL_MapEditor->Current_View);
+	}
+}
+
+// *************************************************************************
+// *	  						On_Left_Button_Down								   *
+// *************************************************************************
+void CL64_MapEditor::On_Left_Button_Down(POINT CursorPosition)
+{
+	if (App->CL_Doc->mModeTool == ID_TOOLS_BRUSH_MOVEROTATEBRUSH) //|| (Tool == ID_TOOLS_BRUSH_MOVESELECTEDBRUSHES))
+	{
+		App->CL_Maths->Vector3_Clear(&App->CL_Doc->FinalPos);
+		App->CL_Doc->TempCopySelectedBrushes();
 	}
 }
 

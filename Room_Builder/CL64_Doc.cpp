@@ -791,4 +791,25 @@ void CL64_Doc::RebuildTrees(void)
 
 }
 
+void CL64_Doc::TempCopySelectedBrushes(void)
+{
+    int		i;
+    int NumSelBrushes;
+
+    NumSelBrushes = App->CL_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes);
+
+    App->CL_SelBrushList->SelBrushList_RemoveAll(App->CL_Doc->pTempSelBrushes);
+
+    // make copies of selected brushes
+    for (i = 0; i < NumSelBrushes; i++)
+    {
+        Brush* pBrush, * pClone;
+
+        pBrush = App->CL_SelBrushList->SelBrushList_GetBrush(App->CL_Doc->pSelBrushes, i);
+        pClone = App->CL_Brush->Brush_Clone(pBrush);
+        App->CL_Level->Level_AppendBrush(App->CL_Doc->pLevel, pClone);
+        App->CL_SelBrushList->SelBrushList_Add(App->CL_Doc->pTempSelBrushes, pClone);
+    }
+}
+
 

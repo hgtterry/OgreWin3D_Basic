@@ -54,6 +54,8 @@ public:
 	ViewVars* VCam[4];
 	ViewVars* Current_View;
 
+	bool flag_Left_Button_Down;
+
 	HWND Main_Dlg_Hwnd;
 
 private:
@@ -75,7 +77,9 @@ private:
 
 	static signed int BrushDraw(Brush* pBrush, void* lParam);
 
+	void On_Mouse_Move(POINT CursorPosition);
 	void On_Left_Button_Up(POINT CursorPosition);
+	void On_Left_Button_Down(POINT CursorPosition);
 
 	int LEFT_WINDOW_WIDTH;
 

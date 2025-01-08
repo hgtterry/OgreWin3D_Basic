@@ -104,6 +104,9 @@ public:
 
 	void RebuildTrees(void);
 	signed int BrushIsVisible(const Brush* pBrush) const;
+	void TempCopySelectedBrushes(void);
+
+	// ------------------------------------------------------------------- 
 
 	char LastTemplateTypeName[MAX_PATH];
 

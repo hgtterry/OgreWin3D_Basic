@@ -38,7 +38,9 @@ public:
 private:
 	static LRESULT CALLBACK Proc_Headers(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
-	bool flag_Brush_Select;
+	void Reset_Brush_Buttons();
 
+	bool flag_Brush_Select;
+	bool flag_Brush_Move;
 };
 

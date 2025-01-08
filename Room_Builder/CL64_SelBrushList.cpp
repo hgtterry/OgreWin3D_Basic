@@ -210,3 +210,11 @@ signed int CL64_SelBrushList::SelBrushList_Add(SelBrushList* pList, Brush* pBrus
 	return GE_TRUE;
 }
 
+// *************************************************************************
+// *						SelBrushList_RemoveAll					 	   *
+// *************************************************************************
+void CL64_SelBrushList::SelBrushList_RemoveAll(SelBrushList* pList)
+{
+	pList->FirstFree = 0;
+}
+
