@@ -218,3 +218,26 @@ void CL64_SelBrushList::SelBrushList_RemoveAll(SelBrushList* pList)
 	pList->FirstFree = 0;
 }
 
+// *************************************************************************
+// *						SelBrushList_Remove						 	   *
+// *************************************************************************
+signed int CL64_SelBrushList::SelBrushList_Remove(SelBrushList* pList, Brush* pBrush)
+{
+	int i;
+
+	// find the item in the list
+	for (i = 0; i < pList->FirstFree; ++i)
+	{
+		Brush* pRet;
+
+		pRet = SelBrushList_GetBrush(pList, i);
+		if (pRet == pBrush)
+		{
+			Array_DeleteAt(pList->pItems, i);
+			--(pList->FirstFree);
+			return GE_TRUE;
+		}
+	}
+	return GE_FALSE;	// not found
+}
+

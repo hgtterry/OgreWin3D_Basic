@@ -105,6 +105,13 @@ public:
 	void RebuildTrees(void);
 	signed int BrushIsVisible(const Brush* pBrush) const;
 	void TempCopySelectedBrushes(void);
+	void LockAxis(Ogre::Vector3* pWP);
+	int	GetLockAxis(void);
+	void MoveSelectedBrushes(Ogre::Vector3 const* v);
+	void MoveSelectedBrushList(SelBrushList* pList, Ogre::Vector3 const* v);
+	void DoneMovingBrushes();
+	void DoneMove(void);
+	BOOL TempDeleteSelected(void);
 
 	// ------------------------------------------------------------------- 
 
@@ -122,6 +129,7 @@ public:
 
 	Ogre::Vector3	SelectedGeoCenter, FinalPos, FinalRot, FinalScale;
 
+	int mLastOp;
 	int mLockAxis;
 	int mModeTool;
 	int mCurrentGroup;

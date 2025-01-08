@@ -1990,3 +1990,48 @@ signed int CL64_Brush::Brush_IsVisible(const Brush* b)
 	return	(b->Flags & BRUSH_HIDDEN) ? GE_FALSE : GE_TRUE;
 }
 
+// *************************************************************************
+// *							Brush_Move								   *
+// *************************************************************************
+void CL64_Brush::Brush_Move(Brush* b, const Ogre::Vector3* trans)
+{
+	assert(b && trans);
+
+	if (b->Type == BRUSH_MULTI)
+	{
+		BrushList_Move(b->BList, trans);
+	}
+	else
+	{
+		App->CL_FaceList->FaceList_Move(b->Faces, trans);
+	}
+
+	Brush_Bound(b);
+}
+
+// *************************************************************************
+// *							BrushList_Move							   *
+// *************************************************************************
+void CL64_Brush::BrushList_Move(BrushList* pList, const Ogre::Vector3* trans)
+{
+	Brush* b;
+
+	assert(pList);
+	assert(trans);
+
+	for (b = pList->First; b; b = b->Next)
+	{
+		Brush_Move(b, trans); // Recursive
+	}
+}
+
+// *************************************************************************
+// *					Brush_GetBoundingBox							   *
+// *************************************************************************
+const Box3d* CL64_Brush::Brush_GetBoundingBox(const Brush* b)
+{
+	assert(b != NULL);
+
+	return &b->BoundingBox;
+}
+

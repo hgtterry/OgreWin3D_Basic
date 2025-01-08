@@ -265,10 +265,6 @@ void CL64_FaceList::FaceList_ClipFaceToList(const FaceList* fl, Face** f)
 	const GPlane* p;
 	Guint8		cnt[3];
 
-	assert(fl != NULL);
-	assert(f != NULL);
-	assert(*f != NULL);
-
 	for (i = 0; i < fl->NumFaces; i++)
 	{
 		p = App->CL_Face->Face_GetPlane(fl->Faces[i]);
@@ -293,4 +289,18 @@ void CL64_FaceList::FaceList_ClipFaceToList(const FaceList* fl, Face** f)
 			App->CL_Face->Face_Clip(*f, p, dists, sides);
 		}
 	}
+}
+
+// *************************************************************************
+// *							FaceList_Move						 	   *
+// *************************************************************************
+void CL64_FaceList::FaceList_Move(FaceList* pList, const Ogre::Vector3* trans)
+{
+	int i;
+
+	for (i = 0; i < pList->NumFaces; i++)
+	{
+		App->CL_Face->Face_Move(pList->Faces[i], trans);
+	}
+	pList->Dirty = GE_TRUE;
 }

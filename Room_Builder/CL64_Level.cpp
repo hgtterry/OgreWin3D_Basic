@@ -401,3 +401,14 @@ Guint16 CL64_Level::Level_GetDibId(const Level* pLevel, const char* Name)
 	return Level_GetDibIdFromWad(pLevel->WadFile, Name);
 }
 
+// *************************************************************************
+// *						Level_RemoveBrush							   *
+// *************************************************************************
+void CL64_Level::Level_RemoveBrush(Level* pLevel, Brush* pBrush)
+{
+	assert(pLevel != NULL);
+	assert(pBrush != NULL);
+
+	App->CL_Brush->BrushList_Remove(pLevel->Brushes, pBrush);
+}
+

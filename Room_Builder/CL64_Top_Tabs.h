@@ -32,6 +32,7 @@ public:
 	void Start_Headers();
 
 	void Enable_Select_Button(bool Enable, bool Active);
+	void Enable_Move_Button(bool Enable, bool Active);
 
 	HWND Headers_hWnd;
 

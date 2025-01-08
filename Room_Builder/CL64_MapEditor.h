@@ -49,12 +49,19 @@ public:
 
 	HWND Bottom_Right_Hwnd;
 
+	HWND Left_Window_Hwnd;
+	HWND Right_Window_Hwnd;
+	HWND Bottom_Left_Hwnd;
+
 	float GridSize, GridSnapSize;
 
 	ViewVars* VCam[4];
 	ViewVars* Current_View;
 
+	POINT mStartPoint;
+
 	bool flag_Left_Button_Down;
+	bool flag_Right_Button_Down;
 
 	HWND Main_Dlg_Hwnd;
 
@@ -77,9 +84,9 @@ private:
 
 	static signed int BrushDraw(Brush* pBrush, void* lParam);
 
-	void On_Mouse_Move(POINT CursorPosition);
+	void On_Mouse_Move(POINT CursorPosition, HWND hDlg);
 	void On_Left_Button_Up(POINT CursorPosition);
-	void On_Left_Button_Down(POINT CursorPosition);
+	void On_Left_Button_Down(POINT CursorPosition, HWND hDlg);
 
 	int LEFT_WINDOW_WIDTH;
 
@@ -96,11 +103,6 @@ private:
 	bool Do_Width;
 	bool Do_Depth;
 	bool Do_All;
-
-	HWND Left_Window_Hwnd;
-	HWND Right_Window_Hwnd;
-	HWND Bottom_Left_Hwnd;
-	
 
 	HBRUSH BackGround_Brush;
 

@@ -191,6 +191,15 @@ void CL64_Top_Tabs::Enable_Select_Button(bool Enable, bool Active)
 }
 
 // *************************************************************************
+// *		Enable_Move_Button:- Terry and Hazel Flanigan 2025   	  	   *
+// *************************************************************************
+void CL64_Top_Tabs::Enable_Move_Button(bool Enable, bool Active)
+{
+	EnableWindow(GetDlgItem(Headers_hWnd, IDC_BT_BRUSH_MOVE), Enable);
+	flag_Brush_Move = Active;
+}
+
+// *************************************************************************
 // *	  	Reset_Brush_Buttons:- Terry and Hazel Flanigan 2025			   *
 // *************************************************************************
 void CL64_Top_Tabs::Reset_Brush_Buttons()

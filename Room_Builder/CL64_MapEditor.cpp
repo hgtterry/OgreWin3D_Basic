@@ -75,6 +75,7 @@ CL64_MapEditor::CL64_MapEditor()
 	Do_All = 0;
 
 	flag_Left_Button_Down = 0;
+	flag_Right_Button_Down = 0;
 
 	BackGround_Brush = CreateSolidBrush(RGB(64, 64, 64));
 
@@ -498,6 +499,7 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Main_Dlg(HWND hDlg, UINT message, WPARAM w
 void CL64_MapEditor::Create_Top_Left_Window()
 {
 	Left_Window_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MAP_TOP_LEFT, Main_Dlg_Hwnd, (DLGPROC)Proc_Top_Left_Window);
+	App->CL_MapEditor->VCam[V_TL]->hDlg = Left_Window_Hwnd;
 }
 
 // *************************************************************************
@@ -505,7 +507,6 @@ void CL64_MapEditor::Create_Top_Left_Window()
 // *************************************************************************
 LRESULT CALLBACK CL64_MapEditor::Proc_Top_Left_Window(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
-
 	switch (message)
 	{
 	case WM_INITDIALOG:
@@ -539,7 +540,7 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Left_Window(HWND hDlg, UINT message, W
 		return (LRESULT)1;
 	}
 
-	/*case WM_SETCURSOR:
+	case WM_SETCURSOR:
 	{
 		if (App->CL_MapEditor->flag_Right_Button_Down == 1 || App->CL_MapEditor->flag_Left_Button_Down == 1)
 		{
@@ -549,7 +550,7 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Left_Window(HWND hDlg, UINT message, W
 		{
 			return false;
 		}
-	}*/
+	}
 
 	case WM_MOUSEMOVE:
 	{
@@ -562,7 +563,8 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Left_Window(HWND hDlg, UINT message, W
 		dx = (RealCursorPosition.x);
 		dy = (RealCursorPosition.y);
 
-		App->CL_MapEditor->On_Mouse_Move(RealCursorPosition);
+		App->CL_MapEditor->Current_View = App->CL_MapEditor->VCam[V_TL];
+		App->CL_MapEditor->On_Mouse_Move(RealCursorPosition,hDlg);
 		/*if (App->CL_MapEditor->flag_Right_Button_Down == 1 && GetAsyncKeyState(VK_CONTROL) < 0)
 		{
 			App->CL_MapEditor->Zoom_View(hDlg, dx, dy);
@@ -583,10 +585,11 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Left_Window(HWND hDlg, UINT message, W
 		ScreenToClient(hDlg, &RealCursorPosition);
 
 		App->CL_MapEditor->Current_View = App->CL_MapEditor->VCam[V_TL];
-		App->CL_Doc->SelectOrtho(RealCursorPosition,App->CL_MapEditor->Current_View);
 		
+		App->CL_MapEditor->flag_Right_Button_Down = 0;
 		App->CL_MapEditor->flag_Left_Button_Down = 1;
-		App->CL_MapEditor->On_Left_Button_Down(RealCursorPosition);
+
+		App->CL_MapEditor->On_Left_Button_Down(RealCursorPosition,hDlg);
 
 		/*GetCursorPos(&App->CL_MapEditor->mStartPoint);
 		ScreenToClient(hDlg, &App->CL_MapEditor->mStartPoint);
@@ -681,6 +684,8 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Right_Window(HWND hDlg, UINT message, 
 		App->CL_MapEditor->VCam[V_TR]->ZoomFactor = 0.4;
 
 		App->CL_MapEditor->VCam[V_TR]->CamPos =  Ogre::Vector3(0, 0, 0);// App->CL_Ogre->camNode->getPosition();
+		App->CL_MapEditor->VCam[V_TR]->hDlg = hDlg;
+
 		return TRUE;
 	}
 
@@ -694,7 +699,7 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Right_Window(HWND hDlg, UINT message, 
 		return (LRESULT)1;
 	}
 
-	/*case WM_SETCURSOR:
+	case WM_SETCURSOR:
 	{
 		if (App->CL_MapEditor->flag_Right_Button_Down == 1 || App->CL_MapEditor->flag_Left_Button_Down == 1)
 		{
@@ -704,7 +709,7 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Right_Window(HWND hDlg, UINT message, 
 		{
 			return false;
 		}
-	}*/
+	}
 
 	case WM_MOUSEMOVE:
 	{
@@ -717,6 +722,8 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Right_Window(HWND hDlg, UINT message, 
 		dx = (RealCursorPosition.x);
 		dy = (RealCursorPosition.y);
 
+		App->CL_MapEditor->Current_View = App->CL_MapEditor->VCam[V_TR];
+		App->CL_MapEditor->On_Mouse_Move(RealCursorPosition, hDlg);
 
 		/*if (App->CL_MapEditor->flag_Right_Button_Down == 1 && GetAsyncKeyState(VK_CONTROL) < 0)
 		{
@@ -733,14 +740,16 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Right_Window(HWND hDlg, UINT message, 
 
 	case WM_LBUTTONDOWN:
 	{
-		/*GetCursorPos(&App->CL_MapEditor->mStartPoint);
-		ScreenToClient(hDlg, &App->CL_MapEditor->mStartPoint);
+		POINT		RealCursorPosition;
+		GetCursorPos(&RealCursorPosition);
+		ScreenToClient(hDlg, &RealCursorPosition);
 
 		App->CL_MapEditor->flag_Right_Button_Down = 0;
 		App->CL_MapEditor->flag_Left_Button_Down = 1;
 
 		App->CL_MapEditor->Current_View = App->CL_MapEditor->VCam[V_TR];
-		App->CUR = SetCursor(NULL);*/
+		
+		App->CL_MapEditor->On_Left_Button_Down(RealCursorPosition, hDlg);
 
 		return 1;
 	}
@@ -750,6 +759,9 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Right_Window(HWND hDlg, UINT message, 
 		POINT		RealCursorPosition;
 		GetCursorPos(&RealCursorPosition);
 		ScreenToClient(hDlg, &RealCursorPosition);
+
+		App->CL_MapEditor->flag_Right_Button_Down = 0;
+		App->CL_MapEditor->flag_Left_Button_Down = 0;
 
 		App->CL_MapEditor->Current_View = App->CL_MapEditor->VCam[V_TR];
 
@@ -823,6 +835,8 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Bottom_Left_Window(HWND hDlg, UINT message
 		App->CL_MapEditor->VCam[V_BL]->ZoomFactor = 0.4;
 
 		App->CL_MapEditor->VCam[V_BL]->CamPos =  Ogre::Vector3(0, 0, 0);//App->CL_Ogre->camNode->getPosition();
+		App->CL_MapEditor->VCam[V_BL]->hDlg = hDlg;
+
 		return TRUE;
 	}
 
@@ -836,7 +850,7 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Bottom_Left_Window(HWND hDlg, UINT message
 		return (LRESULT)1;
 	}
 
-	/*case WM_SETCURSOR:
+	case WM_SETCURSOR:
 	{
 		if (App->CL_MapEditor->flag_Right_Button_Down == 1 || App->CL_MapEditor->flag_Left_Button_Down == 1)
 		{
@@ -846,7 +860,7 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Bottom_Left_Window(HWND hDlg, UINT message
 		{
 			return false;
 		}
-	}*/
+	}
 
 	case WM_MOUSEMOVE:
 	{
@@ -858,6 +872,10 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Bottom_Left_Window(HWND hDlg, UINT message
 
 		dx = (RealCursorPosition.x);
 		dy = (RealCursorPosition.y);
+
+		App->CL_MapEditor->Current_View = App->CL_MapEditor->VCam[V_BL];
+
+		App->CL_MapEditor->On_Mouse_Move(RealCursorPosition, hDlg);
 
 
 		/*if (App->CL_MapEditor->flag_Right_Button_Down == 1 && GetAsyncKeyState(VK_CONTROL) < 0)
@@ -875,14 +893,16 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Bottom_Left_Window(HWND hDlg, UINT message
 
 	case WM_LBUTTONDOWN:
 	{
-		/*GetCursorPos(&App->CL_MapEditor->mStartPoint);
-		ScreenToClient(hDlg, &App->CL_MapEditor->mStartPoint);
+		POINT		RealCursorPosition;
+		GetCursorPos(&RealCursorPosition);
+		ScreenToClient(hDlg, &RealCursorPosition);
 
 		App->CL_MapEditor->flag_Right_Button_Down = 0;
 		App->CL_MapEditor->flag_Left_Button_Down = 1;
 
 		App->CL_MapEditor->Current_View = App->CL_MapEditor->VCam[V_BL];
-		App->CUR = SetCursor(NULL);*/
+
+		App->CL_MapEditor->On_Left_Button_Down(RealCursorPosition, hDlg);
 
 		return 1;
 	}
@@ -894,6 +914,9 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Bottom_Left_Window(HWND hDlg, UINT message
 		ScreenToClient(hDlg, &RealCursorPosition);
 
 		App->CL_MapEditor->Current_View = App->CL_MapEditor->VCam[V_BL];
+
+		App->CL_MapEditor->flag_Left_Button_Down = 0;
+		App->CL_MapEditor->flag_Right_Button_Down = 0;
 
 		App->CL_MapEditor->On_Left_Button_Up(RealCursorPosition);
 
@@ -984,6 +1007,9 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Bottom_Right_Ogre(HWND hDlg, UINT message,
 		{
 			POINT p;
 			GetCursorPos(&p);
+			App->CL_MapEditor->mStartPoint = p;
+
+			GetCursorPos(&p);
 			App->CursorPosX = p.x;
 			App->CursorPosY = p.y;
 			App->CL_Ogre->Ogre3D_Listener->Pl_Cent500X = p.x;
@@ -1053,33 +1079,88 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Bottom_Right_Ogre(HWND hDlg, UINT message,
 // *************************************************************************
 // *	  						On_Mouse_Move							   *
 // *************************************************************************
-void CL64_MapEditor::On_Mouse_Move(POINT CursorPosition)
+void CL64_MapEditor::On_Mouse_Move(POINT CursorPosition, HWND hDlg)
 {
+	int			dx, dy;
+	Ogre::Vector3 sp, wp, dv;
+
+	dx = (CursorPosition.x - mStartPoint.x);
+	dy = (CursorPosition.y - mStartPoint.y);
+
+	if ((dx == 0) && (dy == 0))	// don't do anything if no delta
+	{
+		return;
+	}
+
 	if (flag_Left_Button_Down == 1)
 	{
+		App->CL_Render->Render_ViewToWorld(Current_View, mStartPoint.x, mStartPoint.y, &sp);
+		App->CL_Render->Render_ViewToWorld(Current_View, CursorPosition.x, CursorPosition.y, &wp);
+		App->CL_Maths->Vector3_Subtract(&wp, &sp, &dv);
+
 		if (App->CL_Doc->mModeTool == ID_TOOLS_BRUSH_MOVEROTATEBRUSH) //|| (Tool == ID_TOOLS_BRUSH_MOVESELECTEDBRUSHES))
 		{
-			App->Flash_Window();
+			App->CL_Doc->LockAxis(&dv);
+			App->CL_Doc->MoveSelectedBrushes(&dv);
+			Draw_Screen(hDlg);
 		}
+
+		POINT pt = mStartPoint;	// The position works on the delta mStartPoint...
+		ClientToScreen(hDlg, &pt);
+		SetCursorPos(pt.x, pt.y);
 	}
+
 }
 
 // *************************************************************************
-// *	  						On_Left_Button_Up								   *
+// *	  						On_Left_Button_Up						   *
 // *************************************************************************
 void CL64_MapEditor::On_Left_Button_Up(POINT CursorPosition)
 {
 	if (App->CL_Doc->mModeTool == ID_GENERALSELECT)
 	{
-		App->CL_Doc->SelectOrtho(CursorPosition, App->CL_MapEditor->Current_View);
+		App->CL_Doc->SelectOrtho(CursorPosition, Current_View);
 	}
+
+	if (App->CL_Doc->mModeTool == ID_TOOLS_BRUSH_MOVEROTATEBRUSH)
+	{
+		App->CL_Doc->DoneMovingBrushes();
+
+		//RedrawWindow(Main_Dlg_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+		//RedrawWindow(Current_View->hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+		App->CL_Doc->UpdateAllViews(0,0);
+
+		App->CL_Mesh_Mgr->Update_World();
+
+
+
+		/*pDoc->SetModifiedFlag();
+		if (App->CLSB_Brushes->Dimensions_Dlg_Running == 1)
+		{
+			App->CLSB_Brushes->Update_Pos_Dlg(App->CLSB_Brushes->Dimensions_Dlg_hWnd);
+		}
+
+		if (App->CLSB_Equity->EquitySB_Dialog_Visible == 1)
+		{
+			App->CLSB_Mesh_Mgr->Update_World();
+		}
+
+		break;*/
+	}
+
+	App->CUR = SetCursor(App->CUR);
 }
 
 // *************************************************************************
-// *	  						On_Left_Button_Down								   *
+// *	  						On_Left_Button_Down						   *
 // *************************************************************************
-void CL64_MapEditor::On_Left_Button_Down(POINT CursorPosition)
+void CL64_MapEditor::On_Left_Button_Down(POINT CursorPosition, HWND hDlg)
 {
+	App->CUR = SetCursor(NULL);
+
+	GetCursorPos(&App->CL_MapEditor->mStartPoint);
+	ScreenToClient(hDlg, &App->CL_MapEditor->mStartPoint);
+
 	if (App->CL_Doc->mModeTool == ID_TOOLS_BRUSH_MOVEROTATEBRUSH) //|| (Tool == ID_TOOLS_BRUSH_MOVESELECTEDBRUSHES))
 	{
 		App->CL_Maths->Vector3_Clear(&App->CL_Doc->FinalPos);

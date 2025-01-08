@@ -931,3 +931,22 @@ void CL64_Face::Face_MostlyOnSide(const Face* f, const GPlane* p, float* max, in
 		}
 	}
 }
+
+// *************************************************************************
+// *							Face_Move							 	   *
+// *************************************************************************
+void CL64_Face::Face_Move(Face* f, const Ogre::Vector3* trans)
+{
+	int i;
+
+	for (i = 0; i < f->NumPoints; i++)
+	{
+		App->CL_Maths->Vector3_Add(&f->Points[i], trans, &f->Points[i]);
+	}
+
+	Face_SetPlaneFromFace(f);
+
+	// Update position...
+	App->CL_Maths->Vector3_Add(&f->Tex.Pos, trans, &f->Tex.Pos);
+	f->Tex.DirtyFlag = GE_TRUE;
+}

@@ -32,6 +32,10 @@ THE SOFTWARE.
 #define MIN_ENTITY_SELECT_DIST (8.0f)
 #define MAX_PIXEL_SELECT_THINGNAME (20)
 
+#define AXIS_X	0x1
+#define AXIS_Y	0x2
+#define AXIS_Z	0x4
+
 typedef struct FindClosestInfoTag
 {
     CL64_Doc* pDoc;
@@ -45,6 +49,8 @@ CL64_Doc::CL64_Doc(void)
 {
     LastTemplateTypeName[0] = 0;
 	pLevel = NULL;
+
+    mLastOp = 0;
 
 	SelectLock = FALSE;
 	TempEnt = FALSE;
@@ -238,7 +244,13 @@ void CL64_Doc::DoGeneralSelect(void)
 // *************************************************************************
 void CL64_Doc::UpdateAllViews(int Mode, BOOL Override)
 {
-    RedrawWindow(App->CL_MapEditor->Main_Dlg_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+    RedrawWindow(App->CL_MapEditor->Left_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+    RedrawWindow(App->CL_MapEditor->Right_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+    RedrawWindow(App->CL_MapEditor->Bottom_Left_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+
+    //RedrawWindow(App->CL_MapEditor->Main_Dlg_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
     //App->Get_Current_Document();
 
     //if (App->m_pDoc->IsModified() && ((Mode & REBUILD_QUICK) && (Level_RebuildBspAlways(App->CLSB_Doc->pLevel))) || (Override))
@@ -791,6 +803,9 @@ void CL64_Doc::RebuildTrees(void)
 
 }
 
+// *************************************************************************
+// *         TempCopySelectedBrushes:- Terry and Hazel Flanigan 2025       *
+// *************************************************************************
 void CL64_Doc::TempCopySelectedBrushes(void)
 {
     int		i;
@@ -810,6 +825,256 @@ void CL64_Doc::TempCopySelectedBrushes(void)
         App->CL_Level->Level_AppendBrush(App->CL_Doc->pLevel, pClone);
         App->CL_SelBrushList->SelBrushList_Add(App->CL_Doc->pTempSelBrushes, pClone);
     }
+}
+
+// *************************************************************************
+// *                 LockAxis:- Terry and Hazel Flanigan 2025              *
+// *************************************************************************
+void CL64_Doc::LockAxis(Ogre::Vector3* pWP)
+{
+    int mLockAxis;
+   
+    mLockAxis = App->CL_Doc->GetLockAxis();
+
+    if (mLockAxis & AXIS_X)	pWP->x = 0.0f;
+    if (mLockAxis & AXIS_Y)	pWP->y = 0.0f;
+    if (mLockAxis & AXIS_Z)	pWP->z = 0.0f;
+}
+
+// *************************************************************************
+// *              GetLockAxis:- Terry and Hazel Flanigan 2025              *
+// *************************************************************************
+int	CL64_Doc::GetLockAxis(void) 
+{ 
+    return mLockAxis; 
+}
+
+enum LastBrushAction
+{
+    BRUSH_MOVE,
+    BRUSH_ROTATE,
+    BRUSH_SCALE,
+    BRUSH_SHEAR,
+    BRUSH_RESET,
+    BRUSH_DIALOG
+};
+
+// *************************************************************************
+// *         MoveSelectedBrushes:- Terry and Hazel Flanigan 2025           *
+// *************************************************************************
+void CL64_Doc::MoveSelectedBrushes(Ogre::Vector3 const* v)
+{
+    MoveSelectedBrushList(pTempSelBrushes, v);
+}
+
+// *************************************************************************
+// *         MoveSelectedBrushList:- Terry and Hazel Flanigan 2025         *
+// *************************************************************************
+void CL64_Doc::MoveSelectedBrushList(SelBrushList* pList, Ogre::Vector3 const* v)
+{
+    int		i;
+    int NumBrushes;
+    mLastOp = BRUSH_MOVE;
+
+    App->CL_Maths->Vector3_Add(&SelectedGeoCenter, v, &SelectedGeoCenter);
+    App->CL_Maths->Vector3_Add(v, &FinalPos, &FinalPos);
+
+    NumBrushes = App->CL_SelBrushList->SelBrushList_GetSize(pList);
+    for (i = 0; i < NumBrushes; i++)
+    {
+        Brush* pBrush;
+
+        pBrush = App->CL_SelBrushList->SelBrushList_GetBrush(pList, i);
+        App->CL_Brush->Brush_Move(pBrush, v);
+
+    }
+}
+
+static float ComputeSnap(float Cur, float Delta, float SnapSize)
+{
+    float Target;
+    float SnapDelta;
+    float Remainder;
+
+    Target = Cur + Delta;
+    Remainder = (float)fmod(Target, SnapSize);
+    if (fabs(Remainder) < (SnapSize / 2.0f))
+    {
+        SnapDelta = -Remainder;
+    }
+    else
+    {
+        if (Target < 0.0f)
+        {
+            SnapDelta = -(SnapSize + Remainder);
+        }
+        else
+        {
+            SnapDelta = SnapSize - Remainder;
+        }
+    }
+    return SnapDelta;
+}
+
+static float SnapSide(float CurMin, float CurMax, float Delta, float SnapSize)
+{
+    float MinDelta, MaxDelta;
+
+    MinDelta = ComputeSnap(CurMin, Delta, SnapSize);
+    MaxDelta = ComputeSnap(CurMax, Delta, SnapSize);
+
+    return (fabs(MinDelta) < fabs(MaxDelta)) ? MinDelta : MaxDelta;
+}
+
+// *************************************************************************
+// *            DoneMovingBrushes:- Terry and Hazel Flanigan 2025         *
+// *************************************************************************
+void CL64_Doc::DoneMovingBrushes()
+{
+   // CFusionDoc* pDoc = GetDocument();
+   // int ModeTool = GetModeTool();
+
+   // pDoc->SetModifiedFlag();
+
+    if (App->CL_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes) > 0)// || ModeTool == ID_TOOLS_TEMPLATE)
+    {
+        float fSnapSize;
+        const Ogre::Vector3* vMin, * vMax;
+        const Box3d* pBox;
+        Ogre::Vector3 SnapDelta;
+        geBoolean SnapX, SnapY, SnapZ;
+
+        fSnapSize = 1.0f;
+       /* if (Level_UseGrid(App->CLSB_Doc->pLevel))
+        {
+            fSnapSize = Level_GetGridSnapSize(App->CLSB_Doc->pLevel);
+        }*/
+        // do the snap thing...
+        pBox = App->CL_Brush->Brush_GetBoundingBox(App->CL_Doc->CurBrush);
+        vMin = App->CL_Box->Box3d_GetMin(pBox);
+        vMax = App->CL_Box->Box3d_GetMax(pBox);
+        App->CL_Maths->Vector3_Clear(&SnapDelta);
+        /*
+          In template mode, the brush is moved directly, so we have to snap to
+          the current position, not current position plus delta.  Since we
+          clear the delta before computing the snap, we have to save these
+          flags.
+        */
+        SnapX = (App->CL_Doc->FinalPos.x != 0.0f);
+        SnapY = (App->CL_Doc->FinalPos.y != 0.0f);
+        SnapZ = (App->CL_Doc->FinalPos.z != 0.0f);
+        /*if ((ModeTool == ID_TOOLS_TEMPLATE) || IsCopying)
+        {
+            geVec3d_Clear(&App->CLSB_Doc->FinalPos);
+        }*/
+        if (SnapX)
+        {
+            SnapDelta.x = ::SnapSide(vMin->x, vMax->x, App->CL_Doc->FinalPos.x, fSnapSize);
+        }
+        if (SnapY)
+        {
+            SnapDelta.y = ::SnapSide(vMin->y, vMax->y, App->CL_Doc->FinalPos.y, fSnapSize);
+        }
+        if (SnapZ)
+        {
+            SnapDelta.z = ::SnapSide(vMin->z, vMax->z, App->CL_Doc->FinalPos.z, fSnapSize);
+        }
+       /* if (ModeTool == ID_TOOLS_TEMPLATE)
+        {
+            App->CL_Doc->FinalPos = SnapDelta;
+        }
+        else*/
+        {
+            App->CL_Maths->Vector3_Add(&App->CL_Doc->FinalPos, &SnapDelta, &App->CL_Doc->FinalPos);
+        }
+    }
+
+    App->CL_Doc->DoneMove();
+
+    App->CL_Doc->UpdateSelected();
+
+    /*if ((ModeTool == ID_TOOLS_TEMPLATE) ||
+        ((App->CLSB_Doc->GetSelState() & ANYENTITY) && (!(App->CLSB_Doc->GetSelState() & ANYBRUSH))))
+    {
+        App->CLSB_Doc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
+    }
+    else
+    {
+        App->CLSB_Doc->UpdateAllViews(UAV_ALL3DVIEWS | REBUILD_QUICK, NULL);
+    }*/
+}
+
+// *************************************************************************
+// *			                 DoneMove                           	   *
+// *************************************************************************
+void CL64_Doc::DoneMove(void)
+{
+    int	i;
+    //	BrushList *BList = Level_GetBrushes (pLevel);
+
+    mLastOp = BRUSH_MOVE;
+
+    TempDeleteSelected();
+
+    if (mModeTool == ID_TOOLS_TEMPLATE)
+    {
+        /*if (TempEnt)
+        {
+            DoneMoveEntity();
+        }
+        else
+        {
+            Brush_Move(CurBrush, &FinalPos);
+        }*/
+        return;
+    }
+    else
+    {
+        int NumSelBrushes = App->CL_SelBrushList->SelBrushList_GetSize(pSelBrushes);
+        for (i = 0; i < NumSelBrushes; i++)
+        {
+            Brush* pBrush;
+
+            pBrush = App->CL_SelBrushList->SelBrushList_GetBrush(pSelBrushes, i);
+
+            App->CL_Brush->Brush_Move(pBrush, &FinalPos);
+        }
+
+        if (GetSelState() & ANYENTITY)
+        {
+            //DoneMoveEntity();
+        }
+
+        UpdateSelected();
+
+       // App->m_pDoc->UpdateSelectedModel(BRUSH_MOVE, &FinalPos);
+    }
+
+    App->CL_Maths->Vector3_Clear(&FinalPos);
+
+}
+
+// *************************************************************************
+// *          TempDeleteSelected:- Terry and Hazel Flanigan 2025           *
+// *************************************************************************
+BOOL CL64_Doc::TempDeleteSelected(void)
+{
+    BOOL	ret;
+    int		i;
+    int		NumTSelBrushes = App->CL_SelBrushList->SelBrushList_GetSize(pTempSelBrushes);
+
+    for (ret = FALSE, i = 0; i < NumTSelBrushes; i++)
+    {
+        Brush* pBrush;
+
+        pBrush = App->CL_SelBrushList->SelBrushList_GetBrush(pTempSelBrushes, 0);
+
+        App->CL_Level->Level_RemoveBrush(pLevel, pBrush);
+        App->CL_SelBrushList->SelBrushList_Remove(pTempSelBrushes, pBrush);
+        App->CL_Brush->Brush_Destroy(&pBrush);
+        ret = TRUE;
+    }
+    return	ret;
 }
 
 

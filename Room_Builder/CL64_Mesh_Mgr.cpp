@@ -206,7 +206,7 @@ bool CL64_Mesh_Mgr::Update_World()
 	WE_Convert_All_Texture_Groups();
 
 	App->CL_Ogre3D->Convert_ToOgre3D(1);
-
+	
 	return 1;
 }
 

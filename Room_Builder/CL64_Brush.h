@@ -120,6 +120,9 @@ public:
 	void Brush_SplitByFace(Brush* ogb, Face* sf, Brush** fb, Brush** bb);
 	void BrushList_Prepend(BrushList* pList, Brush* pBrush);
 	signed int Brush_IsVisible(const Brush* b);
+	void Brush_Move(Brush* b, const Ogre::Vector3* trans);
+	void BrushList_Move(BrushList* pList, const Ogre::Vector3* trans);
+	const Box3d* Brush_GetBoundingBox(const Brush* b);
 
 };
 

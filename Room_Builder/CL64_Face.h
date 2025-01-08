@@ -76,6 +76,7 @@ public:
 	Face* Face_CloneReverse(const Face* src);
 	void Face_Split(const Face* f, const GPlane* p, Face** ff, Face** bf, float* dists, Ogre::uint8* sides);
 	void Face_MostlyOnSide(const Face* f, const GPlane* p, float* max, int* side);
+	void Face_Move(Face* f, const Ogre::Vector3* trans);
 
 
 };

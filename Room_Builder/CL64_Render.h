@@ -19,6 +19,7 @@ typedef struct PlaneTag
 typedef struct ViewVarsTag
 {
 	HBITMAP				hDibSec;
+	HWND				hDlg; // The Views HWND
 	Ogre::uint32		Flags;
 	Ogre::uint8*		pBits;
 	Ogre::uint32*		pZBuffer;
