@@ -351,8 +351,6 @@ bool CL64_Mesh_Mgr::Brush_Decode_List(BrushList* BList, signed int SubBrush)
 // *************************************************************************
 bool CL64_Mesh_Mgr::Brush_Create(const Brush* b, int Actual_Brush_Index)
 {
-	App->Say_Int(b->Type);
-
 	switch (b->Type)
 	{
 	case BRUSH_MULTI:

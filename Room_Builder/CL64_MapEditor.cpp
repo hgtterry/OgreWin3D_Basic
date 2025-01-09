@@ -1193,27 +1193,12 @@ void CL64_MapEditor::On_Left_Button_Up(POINT CursorPosition)
 	if (App->CL_Doc->mModeTool == ID_TOOLS_BRUSH_SCALEBRUSH)
 	{
 		//pDoc->SetModifiedFlag();
-
 		//SetCursor(AfxGetApp()->LoadStandardCursor(IDC_ARROW));
 		//pDoc->SnapScaleNearest(sides, Render_GetInidx(VCam), VCam);
 
-		if (App->CL_Doc->mLastOp == BRUSH_SCALE)
-		{
-			App->CL_Doc->DoneResize(App->CL_Doc->sides, App->CL_Render->Render_GetInidx(Current_View));
-
-			/*if (App->CLSB_Brushes->Dimensions_Dlg_Running == 1)
-			{
-				App->CLSB_Brushes->Update_Pos_Dlg(App->CLSB_Brushes->Dimensions_Dlg_hWnd);
-			}*/
-
-			/*if (App->CLSB_Equity->EquitySB_Dialog_Visible == 1)
-			{
-				App->CLSB_Mesh_Mgr->Update_World();
-			}*/
-
-			//App->CL_Mesh_Mgr->Update_World();
-		}
-
+		App->CL_Doc->DoneResize(App->CL_Doc->sides, App->CL_Render->Render_GetInidx(Current_View));
+		App->CL_Doc->UpdateAllViews(UAV_ALL3DVIEWS | REBUILD_QUICK, NULL);
+	
 		//App->CLSB_Doc->UpdateSelected();
 		//if ((ModeTool == ID_TOOLS_TEMPLATE) ||
 		//	((App->CLSB_Doc->GetSelState() & ANYENTITY) && (!(App->CLSB_Doc->GetSelState() & ANYBRUSH))))
