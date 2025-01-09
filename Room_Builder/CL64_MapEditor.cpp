@@ -1117,6 +1117,7 @@ void CL64_MapEditor::On_Mouse_Move(POINT CursorPosition, HWND hDlg)
 // *************************************************************************
 void CL64_MapEditor::On_Left_Button_Up(POINT CursorPosition)
 {
+
 	if (App->CL_Doc->mModeTool == ID_GENERALSELECT)
 	{
 		App->CL_Doc->SelectOrtho(CursorPosition, Current_View);
@@ -1126,26 +1127,11 @@ void CL64_MapEditor::On_Left_Button_Up(POINT CursorPosition)
 	{
 		App->CL_Doc->DoneMovingBrushes();
 
-		//RedrawWindow(Main_Dlg_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-		//RedrawWindow(Current_View->hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 		App->CL_Doc->UpdateAllViews(0,0);
 
 		App->CL_Mesh_Mgr->Update_World();
-
-
-
-		/*pDoc->SetModifiedFlag();
-		if (App->CLSB_Brushes->Dimensions_Dlg_Running == 1)
-		{
-			App->CLSB_Brushes->Update_Pos_Dlg(App->CLSB_Brushes->Dimensions_Dlg_hWnd);
-		}
-
-		if (App->CLSB_Equity->EquitySB_Dialog_Visible == 1)
-		{
-			App->CLSB_Mesh_Mgr->Update_World();
-		}
-
-		break;*/
+		//pDoc->SetModifiedFlag();
+		
 	}
 
 	App->CUR = SetCursor(App->CUR);

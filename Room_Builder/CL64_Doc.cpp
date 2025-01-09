@@ -513,6 +513,22 @@ static geBoolean FindClosestBrushCB(Brush* pBrush, void* pVoid)
     return GE_TRUE;
 }
 
+#pragma warning (disable:4100)
+static geBoolean ResetSelectedFacesCB(Brush* b, void* pVoid)
+{
+    int	i;
+
+    for (i = 0; i < App->CL_Brush->Brush_GetNumFaces(b); i++)
+    {
+        Face* pFace;
+
+        pFace = App->CL_Brush->Brush_GetFace(b, i);
+        App->CL_Face->Face_SetSelected(pFace, false);
+    }
+    return GE_TRUE;
+}
+#pragma warning (default:4100)
+
 // *************************************************************************
 // *			        	   SelectOrtho                             	   *
 // *************************************************************************
@@ -522,10 +538,10 @@ void CL64_Doc::SelectOrtho(POINT point, ViewVars* v)
     geFloat Dist;
     int FoundThingType;
 
-   /* if ((GetAsyncKeyState(VK_SHIFT) & 0x8000) == 0)
+   if ((GetAsyncKeyState(VK_SHIFT) & 0x8000) == 0)
     {
         ResetAllSelections();
-    }*/
+    }
 
 
     FoundThingType = FindClosestThing(&point, v, &pMinBrush,&Dist);
@@ -545,13 +561,45 @@ void CL64_Doc::SelectOrtho(POINT point, ViewVars* v)
                 App->CL_Properties_Tabs->Select_Brushes_Tab(0);
                 App->CL_Properties_Brushes->Get_Index(CurBrush);
 
+                App->CL_Top_Tabs->Enable_Move_Button(true, false);
                 //App->CL_TabsGroups_Dlg->Update_Dlg_Controls();
                 //App->CLSB_TopTabs->Update_Dlg_Controls();*/
             }
-        }
-        
+        } 
+    }
+    else
+    {
+        App->CL_Top_Tabs->Enable_Move_Button(false, false);
+        App->CL_Doc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
     }
 
+}
+
+// *************************************************************************
+// *           ResetAllSelections:- Terry and Hazel Flanigan 2025          *
+// *************************************************************************
+void CL64_Doc::ResetAllSelections(void)
+{
+    ResetAllSelectedFaces();
+    ResetAllSelectedBrushes();
+}
+
+// *************************************************************************
+// *          ResetAllSelectedFaces:- Terry and Hazel Flanigan 2025        *
+// *************************************************************************
+void CL64_Doc::ResetAllSelectedFaces(void)
+{
+    App->CL_Brush->BrushList_EnumLeafBrushes(App->CL_Level->Level_GetBrushes(pLevel), NULL, ResetSelectedFacesCB);
+    App->CL_SelFaceList->SelFaceList_RemoveAll(pSelFaces);
+}
+
+// *************************************************************************
+// *         ResetAllSelectedBrushes:- Terry and Hazel Flanigan 2025       *
+// *************************************************************************
+void CL64_Doc::ResetAllSelectedBrushes(void)
+{
+    App->CL_SelBrushList->SelBrushList_RemoveAll(pSelBrushes);
+    CurBrush = BTemplate;
 }
 
 // *************************************************************************
@@ -618,8 +666,8 @@ void CL64_Doc::DoBrushSelection(Brush* pBrush, BrushSel	nSelType) //	brushSelTog
         pBrush = pBParent;
     }
 
-    ModelLocked = GE_FALSE;
-    GroupLocked = FALSE;
+    ModelLocked = false;
+    GroupLocked = false;
 
     if (nSelType == brushSelToggle && BrushIsSelected(pBrush))
     {

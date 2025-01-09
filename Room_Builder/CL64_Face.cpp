@@ -950,3 +950,11 @@ void CL64_Face::Face_Move(Face* f, const Ogre::Vector3* trans)
 	App->CL_Maths->Vector3_Add(&f->Tex.Pos, trans, &f->Tex.Pos);
 	f->Tex.DirtyFlag = GE_TRUE;
 }
+
+// *************************************************************************
+// *						Face_SetSelected						 	   *
+// *************************************************************************
+void CL64_Face::Face_SetSelected(Face* f, const signed int bState)
+{
+	f->Flags = (bState) ? f->Flags | FACE_SELECTED : f->Flags & ~FACE_SELECTED;
+}

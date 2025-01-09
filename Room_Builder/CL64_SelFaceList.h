@@ -35,6 +35,7 @@ public:
 	SelFaceList* SelFaceList_Create(void);
 	void SelFaceList_Destroy(SelFaceList** ppList);
 	int SelFaceList_GetSize(SelFaceList* pList);
+	void SelFaceList_RemoveAll(SelFaceList* pList);
 
 };
 

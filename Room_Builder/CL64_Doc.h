@@ -94,6 +94,9 @@ public:
 
 	// Selection
 	void SelectOrtho(POINT point, ViewVars* v);
+	void ResetAllSelections(void);
+	void ResetAllSelectedFaces(void);
+	void ResetAllSelectedBrushes(void);
 	void DoBrushSelection(Brush* pBrush, BrushSel	nSelType); //	brushSelToggle | brushSelAlways);
 
 	int FindClosestThing(POINT const* ptFrom, ViewVars* v, Brush** ppMinBrush, geFloat* pDist);

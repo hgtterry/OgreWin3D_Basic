@@ -89,3 +89,11 @@ int CL64_SelFaceList::SelFaceList_GetSize(SelFaceList* pList)
 {
 	return pList->FirstFree;
 }
+
+// *************************************************************************
+// *						SelFaceList_RemoveAll						   *
+// *************************************************************************
+void CL64_SelFaceList::SelFaceList_RemoveAll(SelFaceList* pList)
+{
+	pList->FirstFree = 0;
+}
