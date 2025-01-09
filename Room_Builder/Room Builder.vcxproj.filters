@@ -135,6 +135,9 @@
     <ClInclude Include="CL64_Top_Tabs.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="A_CreateBoxDialog.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Room Builder.cpp">
@@ -246,6 +249,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CL64_Top_Tabs.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="A_CreateBoxDialog.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

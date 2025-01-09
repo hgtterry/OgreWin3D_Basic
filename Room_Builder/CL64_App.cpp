@@ -60,6 +60,9 @@ CL64_App::CL64_App(void)
 	CL_Brush_X =				nullptr;
 	CL_Top_Tabs =				nullptr;
 
+	// Templates Dialogs
+	CL_CreateBoxDialog =		nullptr;
+
 	CUR = 0;
 
 	hInst = nullptr;
@@ -126,6 +129,10 @@ void CL64_App::InitApp(void)
 	
 	CL_Brush_X =				new CL64_Brush_X();
 
+	// Templates Dialogs
+	CL_CreateBoxDialog =		new A_CreateBoxDialog();
+
+	
 	SetBrushes_Fonts();
 }
 

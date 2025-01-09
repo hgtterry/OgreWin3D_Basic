@@ -57,6 +57,9 @@ THE SOFTWARE.
 #include "CL64_Ogre3D.h"
 #include "CL64_Top_Tabs.h"
 
+// Templates Dialogs
+#include "A_CreateBoxDialog.h"
+
 class CL64_App
 {
 public:
@@ -95,6 +98,9 @@ public:
 	CL64_Ogre3D*				CL_Ogre3D;
 	CL64_Top_Tabs*				CL_Top_Tabs;
 
+	// Templates Dialogs
+	A_CreateBoxDialog*			CL_CreateBoxDialog;
+	
 	void InitApp(void);
 	void SetBrushes_Fonts(void);
 	void LoadProgramResource(void);
