@@ -1222,4 +1222,20 @@ void CL64_Doc::DoneResize(int sides, int inidx)
     UpdateSelected();
 }
 
+void CL64_Doc::OnToolsTemplate()
+{
+    App->CL_Doc->ResetAllSelectedFaces();
+    App->CL_Doc->ResetAllSelectedBrushes();
+
+    //UpdateBrushAttributesDlg();
+   // UpdateFaceAttributesDlg();
+
+    App->CL_Doc->mModeTool = ID_TOOLS_TEMPLATE;
+
+    App->CL_Doc->mCurrentTool = ID_TOOLS_BRUSH_MOVEROTATEBRUSH;
+
+    //App->CL_Doc->SetAdjustmentMode(ADJUST_MODE_FACE);
+    //ConfigureCurrentTool();
+}
+
 

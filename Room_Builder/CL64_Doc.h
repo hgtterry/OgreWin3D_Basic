@@ -120,7 +120,7 @@ public:
 	void DoneMovingBrushes();
 	void DoneMove(void);
 	BOOL TempDeleteSelected(void);
-
+	void OnToolsTemplate();
 	// ------------------------------------------------------------------- 
 
 	char LastTemplateTypeName[MAX_PATH];

@@ -78,14 +78,14 @@ LRESULT CALLBACK A_CreateBoxDialog::Proc_CreateBox(HWND hDlg, UINT message, WPAR
 		//SendDlgItemMessage(hDlg, IDC_STBOTTOM, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		//SendDlgItemMessage(hDlg, IDC_STBOTX, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		//SendDlgItemMessage(hDlg, IDC_STBOTZ, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		//SendDlgItemMessage(hDlg, IDC_XSIZEBOT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		//SendDlgItemMessage(hDlg, IDC_ZSIZEBOT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_XSIZEBOT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_ZSIZEBOT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
 		//SendDlgItemMessage(hDlg, IDC_STTOP, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		//SendDlgItemMessage(hDlg, IDC_STTOPX, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		//SendDlgItemMessage(hDlg, IDC_STZTOP, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		//SendDlgItemMessage(hDlg, IDC_XSIZETOP, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		//SendDlgItemMessage(hDlg, IDC_ZSIZETOP, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_XSIZETOP, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_ZSIZETOP, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
 		//SendDlgItemMessage(hDlg, IDC_BT_BOXSOLID, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		//SendDlgItemMessage(hDlg, IDC_BT_BOXHOLLOW, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
@@ -94,11 +94,11 @@ LRESULT CALLBACK A_CreateBoxDialog::Proc_CreateBox(HWND hDlg, UINT message, WPAR
 		//SendDlgItemMessage(hDlg, IDC_STGENERAL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		//SendDlgItemMessage(hDlg, IDC_STYSIZE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		//SendDlgItemMessage(hDlg, IDC_STWALL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		//SendDlgItemMessage(hDlg, IDC_YSIZE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		//SendDlgItemMessage(hDlg, IDC_THICKNESS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_YSIZE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_THICKNESS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 	
 		//SendDlgItemMessage(hDlg, IDC_STNAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		//SendDlgItemMessage(hDlg, IDC_EDITNAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_EDITNAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		//SendDlgItemMessage(hDlg, IDC_BOXDEFAULTS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		//SendDlgItemMessage(hDlg, IDC_BT_BOXROOM, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
@@ -121,7 +121,7 @@ LRESULT CALLBACK A_CreateBoxDialog::Proc_CreateBox(HWND hDlg, UINT message, WPAR
 		strcpy(Name, "Box_");
 		strcat(Name, Num);
 
-		//SetDlgItemText(hDlg, IDC_EDITNAME, (LPCTSTR)Name);
+		SetDlgItemText(hDlg, IDC_EDITNAME, (LPCTSTR)Name);
 
 		
 		//HWND Temp = GetDlgItem(hDlg, IDC_PICTURE);
@@ -397,12 +397,12 @@ LRESULT CALLBACK A_CreateBoxDialog::Proc_CreateBox(HWND hDlg, UINT message, WPAR
 		if (LOWORD(wParam) == IDOK)
 		{
 
-			/*App->CL_CreateBoxDialog->Get_DLG_Members(hDlg);
+			App->CL_CreateBoxDialog->Get_DLG_Members(hDlg);
 			App->CL_CreateBoxDialog->Set_BoxTemplate();
 			App->CL_CreateBoxDialog->CreateCube();
 
-			App->CLSB_TabsControl->Enable_Tabs_Dlg(true);
-			App->CLSB_Tabs_Templates_Dlg->Enable_Insert_Button(true);*/
+			//App->CLSB_TabsControl->Enable_Tabs_Dlg(true);
+			App->CL_Properties_Templates->Enable_Insert_Button(true);
 
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
@@ -428,24 +428,23 @@ LRESULT CALLBACK A_CreateBoxDialog::Proc_CreateBox(HWND hDlg, UINT message, WPAR
 // *************************************************************************
 void A_CreateBoxDialog::CreateCube() 
 {
-	//App->Get_Current_Document();
+	
+	App->CL_Doc->OnToolsTemplate();
 
-	//App->m_pDoc->OnToolsTemplate();
+	Brush *pCube;
+	pCube = App->CL_BrushTemplate->BrushTemplate_CreateBox(pBoxTemplate);
+	//pCube = BrushTemplate_BoxReverseTexture(pBoxTemplate);
+	if (pCube != NULL)
+	{
+		strcpy(App->CL_Doc->LastTemplateTypeName,BoxName);
+		
+		CreateNewTemplateBrush(pCube);
 
-	//Brush *pCube;
-	//pCube = BrushTemplate_CreateBox(pBoxTemplate);
-	////pCube = BrushTemplate_BoxReverseTexture(pBoxTemplate);
-	//if (pCube != NULL)
-	//{
-	//	App->m_pDoc->LastTemplateTypeName = BoxName;
-	//	
-	//	CreateNewTemplateBrush(pCube);
-
-	//}
-	//else
-	//{
-	//	App->Say("No pCube");
-	//}
+	}
+	else
+	{
+		App->Say("No pCube");
+	}
 }
 
 // *************************************************************************
@@ -475,7 +474,7 @@ void A_CreateBoxDialog::CreateNewTemplateBrush(Brush *pBrush)
 
 	if (m_UseCamPos == 1)
 	{
-		Ogre::Vector3 Pos;
+		Ogre::Vector3 Pos = Ogre::Vector3(0,0,0);
 
 		//Pos = App->CL_Camera_WE->Get_Camera_Position();
 
@@ -493,9 +492,9 @@ void A_CreateBoxDialog::CreateNewTemplateBrush(Brush *pBrush)
 
 	App->CL_Maths->Vector3_Subtract(pTemplatePos, &BrushPos, &MoveVec);
 
-	App->CL_Brush->Brush_Move (App->CL_Doc->CurBrush, &MoveVec);
+	App->CL_Brush->Brush_Move(App->CL_Doc->CurBrush, &MoveVec);
 
-	App->CL_Doc->UpdateAllViews (UAV_ALL3DVIEWS, NULL);
+	App->CL_Doc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
 	//App->m_pDoc->SetModifiedFlag ();
 }
 
@@ -520,7 +519,7 @@ void A_CreateBoxDialog::Set_Members()
 // *************************************************************************
 void A_CreateBoxDialog::Set_DLG_Members(HWND hDlg) 
 {
-	/*char buf[MAX_PATH];
+	char buf[MAX_PATH];
 	sprintf(buf, "%0.0f", m_XSizeTop);
 	SetDlgItemText(hDlg, IDC_XSIZETOP, (LPCTSTR)buf);
 
@@ -537,7 +536,7 @@ void A_CreateBoxDialog::Set_DLG_Members(HWND hDlg)
 	SetDlgItemText(hDlg, IDC_YSIZE, (LPCTSTR)buf);
 
 	sprintf(buf, "%0.0f", m_Thickness);
-	SetDlgItemText(hDlg, IDC_THICKNESS, (LPCTSTR)buf);*/
+	SetDlgItemText(hDlg, IDC_THICKNESS, (LPCTSTR)buf);
 }
 
 // *************************************************************************
@@ -548,7 +547,7 @@ void A_CreateBoxDialog::Get_DLG_Members(HWND hDlg)
 
 	char buff[MAX_PATH];
 
-	/*GetDlgItemText(hDlg,IDC_YSIZE,(LPTSTR)buff,MAX_PATH);
+	GetDlgItemText(hDlg,IDC_YSIZE,(LPTSTR)buff,MAX_PATH);
 	m_YSize = (float)atof(buff);
 
 	GetDlgItemText(hDlg,IDC_XSIZEBOT,(LPTSTR)buff,MAX_PATH);
@@ -568,7 +567,7 @@ void A_CreateBoxDialog::Get_DLG_Members(HWND hDlg)
 
 
 	GetDlgItemText(hDlg,IDC_EDITNAME,(LPTSTR)buff,MAX_PATH);
-	strcpy(App->CL_CreateBoxDialog->BoxName,buff);*/
+	strcpy(App->CL_CreateBoxDialog->BoxName,buff);
 
 }
 
@@ -660,15 +659,15 @@ void A_CreateBoxDialog::CreateDefault_TemplateCube()
 
 	//Set_BoxTemplate();
 
-	Brush* pCube;
-	//pCube = App->CL_Doc->BrushTemplate_CreateBox(pBoxTemplate);
+	Brush* pCube = NULL;
+	pCube = App->CL_BrushTemplate->BrushTemplate_CreateBox(pBoxTemplate);
 	if (pCube != NULL)
 	{
-		//App->CL_Doc->LastTemplateTypeName = BoxName;
+		strcpy(App->CL_Doc->LastTemplateTypeName,BoxName);
 		CreateNewTemplateBrush(pCube);
 
 		//App->CL_TabsControl->Enable_Tabs_Dlg(true);
-		//App->CL_Tabs_Templates_Dlg->Enable_Insert_Button(true);
+		App->CL_Properties_Templates->Enable_Insert_Button(true);
 
 		Debug
 	}
