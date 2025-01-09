@@ -65,7 +65,8 @@ void CL64_Properties_Templates::Start_TemplatesDialog()
 {
 
 	TemplatesDlg_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_PROPS_TEMPLATES, App->CL_Properties_Tabs->Tabs_Control_Hwnd, (DLGPROC)Proc_Templates);
-	
+	Set_Icons();
+
 	Enable_Insert_Button(true);
 
 }
@@ -151,6 +152,13 @@ LRESULT CALLBACK CL64_Properties_Templates::Proc_Templates(HWND hDlg, UINT messa
 			return 1;
 		}
 
+		if (LOWORD(wParam) == IDC_BRUSH_CUBE_PRIMITIVE)
+		{
+			Debug
+			//App->CL_CreateBoxDialog->Start_CreateBox_Dlg();
+			return 1;
+		}
+
 		// -----------------------------------------------------------------
 		if (LOWORD(wParam) == IDOK)
 		{
@@ -170,5 +178,30 @@ LRESULT CALLBACK CL64_Properties_Templates::Proc_Templates(HWND hDlg, UINT messa
 	}
 	}
 	return FALSE;
+}
+
+// *************************************************************************
+// *	  		Set_Icons:- Terry and Hazel Flanigan 2025				   *
+// *************************************************************************
+void CL64_Properties_Templates::Set_Icons()
+{
+	HWND Temp = GetDlgItem(TemplatesDlg_Hwnd, IDC_BRUSH_CUBE_PRIMITIVE);
+	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_ICON, (LPARAM)(HANDLE)App->Hnd_Box_Icon);
+
+	/*Temp = GetDlgItem(TemplatesDlg_Hwnd, IDC_GD_CYLINDER_PRIMITIVE);
+	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_ICON, (LPARAM)(HANDLE)App->Hnd_Cyl_Icon);
+
+	Temp = GetDlgItem(TemplatesDlg_Hwnd, IDC_GD_CONE_PRIMITIVE);
+	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_ICON, (LPARAM)(HANDLE)App->Hnd_Cone_Icon);
+
+	Temp = GetDlgItem(TemplatesDlg_Hwnd, IDC_GD_SPHEROID_PRIMITIVE);
+	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_ICON, (LPARAM)(HANDLE)App->Hnd_Spheriod_Icon);
+
+	Temp = GetDlgItem(TemplatesDlg_Hwnd, IDC_GD_STAIRCASE_PRIMITIVE);
+	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_ICON, (LPARAM)(HANDLE)App->Hnd_Stairs_Icon);
+
+	Temp = GetDlgItem(TemplatesDlg_Hwnd, IDC_GD_ARCH_PRIMITIVE);
+	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_ICON, (LPARAM)(HANDLE)App->Hnd_Arch_Icon);*/
+
 }
 

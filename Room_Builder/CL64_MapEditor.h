@@ -83,9 +83,10 @@ private:
 
 	void Resize_Windows(HWND hDlg, int NewWidth, int NewDepth);
 
+	// Draw Routines
 	void Draw_Screen(HWND hwnd);
-
 	static signed int BrushDraw(Brush* pBrush, void* lParam);
+	void Draw_Camera(HDC ViewDC);
 
 	void On_Mouse_Move(POINT CursorPosition, HWND hDlg);
 	void On_Left_Button_Up(POINT CursorPosition);
@@ -117,6 +118,7 @@ private:
 	HPEN PenTemplate;
 	HPEN PenBrushes;
 	HPEN PenSelected;
+	HPEN Pen_Camera;
 
 	HDC	MemoryhDC;
 };

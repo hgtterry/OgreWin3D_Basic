@@ -60,6 +60,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         return FALSE;
     }
 
+    App->LoadProgramResource();
+
     ShowWindow(App->MainHwnd, SW_SHOWMAXIMIZED);
     UpdateWindow(App->MainHwnd);
 

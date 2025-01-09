@@ -94,6 +94,7 @@ CL64_MapEditor::CL64_MapEditor()
 	PenTemplate = CreatePen(PS_SOLID, 1, RGB(0, 0, 255));
 	PenBrushes = CreatePen(PS_SOLID, 1, RGB(255, 255, 255));
 	PenSelected = CreatePen(PS_SOLID, 1, RGB(0, 255, 255));
+	Pen_Camera = CreatePen(PS_SOLID, 0, RGB(0, 255, 0));
 
 	hcSizeEW = LoadCursor(NULL, IDC_SIZEWE);
 	hcSizeNS = LoadCursor(NULL, IDC_SIZENS);
@@ -1354,6 +1355,7 @@ void CL64_MapEditor::Draw_Screen(HWND hwnd)
 	SelectObject(MemoryhDC, Pen_Grid);
 	App->CL_Render->Render_RenderOrthoGridFromSize(Current_View, int(GridSize), MemoryhDC, Rect);
 
+	// ------------------------------------------ Draw Brushes
 	SelectObject(MemoryhDC, PenBrushes);
 	int BrushCount = App->CL_Brush->Get_Brush_Count();
 	int Count = 0;
@@ -1382,8 +1384,8 @@ void CL64_MapEditor::Draw_Screen(HWND hwnd)
 		}
 	}
 
+	// ------------------------------------------ Draw Selected Brushes
 	SelectObject(MemoryhDC, PenSelected);
-
 	int NumSelBrushes = App->CL_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes);
 	
 	int i = 0;
@@ -1404,6 +1406,9 @@ void CL64_MapEditor::Draw_Screen(HWND hwnd)
 			}
 		}
 	}
+
+	SelectObject(MemoryhDC, Pen_Camera);
+	Draw_Camera(MemoryhDC);
 
 	BitBlt(RealhDC, Rect.left, Rect.top, Rect.right - Rect.left, Rect.bottom - Rect.top, MemoryhDC, 0, 0, SRCCOPY);
 
@@ -1435,6 +1440,73 @@ void CL64_MapEditor::Render_RenderBrushFacesOrtho(const ViewVars* Cam, Brush* b,
 
 		plist[j] = plist[0];
 		Polyline(ViewDC, plist, j + 1);
+	}
+}
+
+// *************************************************************************
+// *			Draw_Camera:- Terry and Hazel Flanigan 2024	 		   *
+// *************************************************************************
+void CL64_MapEditor::Draw_Camera(HDC ViewDC)
+{
+#define ENTITY_SIZE (32.0f)  // 16" across
+	
+	Ogre::Vector3 VecOrigin;
+	Ogre::Vector3 EntSizeWorld;	// entity size in world space
+	Ogre::Vector3 DummyPos = Ogre::Vector3(0, 0, 0);
+
+	POINT EntPosView;
+	POINT EntSizeView;
+	POINT EntWidthHeight;
+	POINT OriginView;
+
+	POINT TopLeft, BottomRight;
+	POINT TopRight, BottomLeft;
+
+	static const float COS45 = (float)cos(M_PI / 4.0f);
+	static const float SIN45 = (float)sin(M_PI / 4.0f);
+	static const float MCOS45 = (float)cos(-(M_PI / 4.0f));
+	static const float MSIN45 = (float)sin(-(M_PI / 4.0f));
+
+	// compute entity size in view coordinates
+	App->CL_Maths->Vector3_Set(&EntSizeWorld, ENTITY_SIZE, ENTITY_SIZE, ENTITY_SIZE);
+	EntSizeView = App->CL_Render->Render_OrthoWorldToView(Current_View ,&EntSizeWorld);
+	App->CL_Maths->Vector3_Clear(&VecOrigin);
+	OriginView = App->CL_Render->Render_OrthoWorldToView(Current_View ,&VecOrigin);
+	// This one is the width and height of the Entity
+	EntWidthHeight.x = std::max(OriginView.x, EntSizeView.x) - std::min(OriginView.x, EntSizeView.x);
+	EntWidthHeight.y = std::max(OriginView.y, EntSizeView.y) - std::min(OriginView.y, EntSizeView.y);
+
+	// This can have negative numbers
+	EntSizeView.x -= OriginView.x;
+	EntSizeView.y -= OriginView.y;
+	
+	// entity's position in the view
+
+	if (App->flag_OgreStarted == 1)
+	{
+		EntPosView = App->CL_Render->Render_OrthoWorldToView(Current_View, &DummyPos);// (App->CL_Ogre->camNode->getPosition()));
+	}
+	else
+	{
+		EntPosView = App->CL_Render->Render_OrthoWorldToView(Current_View, &DummyPos);
+	}
+
+	// Draw an X at the entity's position...
+	{
+		TopLeft.x = EntPosView.x - EntSizeView.x;
+		TopLeft.y = EntPosView.y - EntSizeView.y;
+		BottomRight.x = EntPosView.x + EntSizeView.x;
+		BottomRight.y = EntPosView.y + EntSizeView.y;
+		TopRight.x = BottomRight.x;
+		TopRight.y = TopLeft.y;
+		BottomLeft.x = TopLeft.x;
+		BottomLeft.y = BottomRight.y;
+
+		MoveToEx(ViewDC, TopLeft.x, TopLeft.y, NULL);
+		LineTo(ViewDC, BottomRight.x, BottomRight.y);
+
+		MoveToEx(ViewDC, TopRight.x, TopRight.y, NULL);
+		LineTo(ViewDC, BottomLeft.x, BottomLeft.y);
 	}
 }
 

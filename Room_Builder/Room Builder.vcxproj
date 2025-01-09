@@ -238,6 +238,7 @@
     <ResourceCompile Include="Room Builder.rc" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="res\cube.ico" />
     <Image Include="Room Builder.ico" />
     <Image Include="small.ico" />
   </ItemGroup>

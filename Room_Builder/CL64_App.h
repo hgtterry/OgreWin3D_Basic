@@ -97,6 +97,7 @@ public:
 
 	void InitApp(void);
 	void SetBrushes_Fonts(void);
+	void LoadProgramResource(void);
 
 	bool Custom_Button_Greyed(LPNMCUSTOMDRAW item);
 	bool Custom_Button_Normal(LPNMCUSTOMDRAW item);
@@ -132,6 +133,13 @@ public:
 	HFONT Font_CB18;
 	HFONT Font_Arial20;
 	HFONT Font_Banner;
+
+	//HANDLE Hnd_Arch_Icon;
+	//HANDLE Hnd_Cone_Icon;
+	//HANDLE Hnd_Cyl_Icon;
+	//HANDLE Hnd_Spheriod_Icon;
+	HANDLE Hnd_Box_Icon;
+	//HANDLE Hnd_Stairs_Icon;
 
 	HCURSOR CUR;
 
