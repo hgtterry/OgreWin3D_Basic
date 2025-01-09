@@ -52,6 +52,9 @@ CL64_Doc::CL64_Doc(void)
 
     mLastOp = 0;
 
+    ScaleNum = 1;
+    sides = 1;
+
 	SelectLock = FALSE;
 	TempEnt = FALSE;
     mCurrentTool = CURTOOL_NONE;
@@ -561,15 +564,14 @@ void CL64_Doc::SelectOrtho(POINT point, ViewVars* v)
                 App->CL_Properties_Tabs->Select_Brushes_Tab(0);
                 App->CL_Properties_Brushes->Get_Index(CurBrush);
 
-                App->CL_Top_Tabs->Enable_Move_Button(true, false);
-                //App->CL_TabsGroups_Dlg->Update_Dlg_Controls();
-                //App->CLSB_TopTabs->Update_Dlg_Controls();*/
+                App->CL_Top_Tabs->Enable_Brush_Options_Buttons(true, false);
+     
             }
         } 
     }
     else
     {
-        App->CL_Top_Tabs->Enable_Move_Button(false, false);
+        App->CL_Top_Tabs->Enable_Brush_Options_Buttons(false, false);
         App->CL_Doc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
     }
 
@@ -1123,6 +1125,98 @@ BOOL CL64_Doc::TempDeleteSelected(void)
         ret = TRUE;
     }
     return	ret;
+}
+
+// *************************************************************************
+// *             ScaleSelected:- Terry and Hazel Flanigan 2025             *
+// *************************************************************************
+void CL64_Doc::ScaleSelected(int dx, int dy)
+{
+    //smooth out the zoom scale curve with a scalar
+    float	ZoomInv = App->CL_MapEditor->Current_View->ZoomFactor;// Render_GetZoom(VCam);
+
+    ZoomInv = (ZoomInv > .5) ? 0.5f / ZoomInv : 1.0f;
+
+    // negated here because Brush_Resize is still thinking weird
+    App->CL_Doc->ResizeSelected(-(((float)dx) * ZoomInv), -(((float)dy) * ZoomInv), sides, App->CL_Render->Render_GetInidx(App->CL_MapEditor->Current_View));
+}
+
+// *************************************************************************
+// *            ResizeSelected:- Terry and Hazel Flanigan 2023             *
+// *************************************************************************
+void CL64_Doc::ResizeSelected(float dx, float dy, int sides, int inidx)
+{
+    mLastOp = BRUSH_SCALE;
+
+    if (mModeTool == ID_TOOLS_TEMPLATE)
+    {
+        /*Brush_Resize(CurBrush, dx, dy, sides, inidx, &FinalScale, &ScaleNum);
+        if (Brush_IsMulti(CurBrush))
+        {
+            BrushList_ClearCSGAndHollows((BrushList*)App->CL_Brush->Brush_GetBrushList(CurBrush), Brush_GetModelId(CurBrush));
+            BrushList_RebuildHollowFaces((BrushList*)App->CL_Brush->Brush_GetBrushList(CurBrush), Brush_GetModelId(CurBrush), ::fdocBrushCSGCallback, this);
+        }*/
+    }
+    else
+    {
+        int i;
+        int NumBrushes;
+
+        NumBrushes = App->CL_SelBrushList->SelBrushList_GetSize(pTempSelBrushes);
+
+        for (i = 0; i < NumBrushes; ++i)
+        {
+            Brush* pBrush;
+
+            pBrush = App->CL_SelBrushList->SelBrushList_GetBrush(pTempSelBrushes, i);
+
+            App->CL_Brush->Brush_Resize(pBrush, dx, dy, sides, inidx, &FinalScale, &ScaleNum);
+            
+            if (App->CL_Brush->Brush_IsMulti(pBrush))
+            {
+                App->CL_Brush->BrushList_ClearCSGAndHollows((BrushList*)App->CL_Brush->Brush_GetBrushList(pBrush), App->CL_Brush->Brush_GetModelId(pBrush));
+                App->CL_Brush->BrushList_RebuildHollowFaces((BrushList*)App->CL_Brush->Brush_GetBrushList(pBrush), App->CL_Brush->Brush_GetModelId(pBrush), ::fdocBrushCSGCallback, this);
+            }
+        }
+    }
+}
+
+// *************************************************************************
+// *			                     DoneResize                       	   *
+// *************************************************************************
+void CL64_Doc::DoneResize(int sides, int inidx)
+{
+    mLastOp = BRUSH_SCALE;
+
+    TempDeleteSelected();
+
+    if (mModeTool == ID_TOOLS_TEMPLATE)
+    {
+        if (App->CL_Brush->Brush_IsMulti(CurBrush))
+        {
+            App->CL_Brush->BrushList_ClearCSGAndHollows((BrushList*)App->CL_Brush->Brush_GetBrushList(CurBrush), App->CL_Brush->Brush_GetModelId(CurBrush));
+            App->CL_Brush->BrushList_RebuildHollowFaces((BrushList*)App->CL_Brush->Brush_GetBrushList(CurBrush), App->CL_Brush->Brush_GetModelId(CurBrush), fdocBrushCSGCallback, NULL);
+        }
+        return;
+    }
+
+    int NumSelBrushes = App->CL_SelBrushList->SelBrushList_GetSize(pSelBrushes);
+    for (int i = 0; i < NumSelBrushes; ++i)
+    {
+        Brush* pBrush;
+
+        pBrush = App->CL_SelBrushList->SelBrushList_GetBrush(pSelBrushes, i);
+
+ 
+        App->CL_Brush->Brush_ResizeFinal(pBrush, sides, inidx, &FinalScale);
+        if (App->CL_Brush->Brush_IsMulti(pBrush))
+        {
+            App->CL_Brush->BrushList_ClearCSGAndHollows((BrushList*)App->CL_Brush->Brush_GetBrushList(pBrush), App->CL_Brush->Brush_GetModelId(pBrush));
+            App->CL_Brush->BrushList_RebuildHollowFaces((BrushList*)App->CL_Brush->Brush_GetBrushList(pBrush), App->CL_Brush->Brush_GetModelId(pBrush), fdocBrushCSGCallback, NULL);
+        }
+    }
+
+    UpdateSelected();
 }
 
 

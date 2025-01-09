@@ -45,6 +45,7 @@ public:
 	void FaceList_CopyFaceInfo(const FaceList* src, FaceList* dst);
 	void FaceList_ClipFaceToList(const FaceList* fl, Face** f);
 	void FaceList_Move(FaceList* pList, const Ogre::Vector3* trans);
+	signed int FaceList_Scale(FaceList* pList, const Ogre::Vector3* ScaleVec);
 
 
 };

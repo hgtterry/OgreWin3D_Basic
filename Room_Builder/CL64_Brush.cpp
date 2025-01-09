@@ -32,6 +32,8 @@ struct tag_BrushList
 	Brush* Last;
 };
 
+#define	VectorToSUB(a, b)			(*((((float *)(&a))) + (b)))
+static const int		axidx[3][2] = { 2, 1, 0, 2, 0, 1 };
 enum BrushFlags
 {
 	BRUSH_SOLID = 0x0001,
@@ -2034,4 +2036,233 @@ const Box3d* CL64_Brush::Brush_GetBoundingBox(const Brush* b)
 
 	return &b->BoundingBox;
 }
+
+// *************************************************************************
+// *							Brush_Resize							   *
+// *************************************************************************
+void CL64_Brush::Brush_Resize(Brush* b, float dx, float dy, int sides, int inidx, Ogre::Vector3* fnscale, int* ScaleNum)
+{
+	//MRB BEGIN
+	Brush* pClone;
+	//MRB END
+
+	int		i;
+	Ogre::Vector3 FixOrg, BrushOrg, ScaleVec;
+
+	assert(b);
+	assert(fnscale);
+	assert(ScaleNum);
+
+	App->CL_Maths->Vector3_Add(&b->BoundingBox.Min, &b->BoundingBox.Max, &BrushOrg);
+	App->CL_Maths->Vector3_Scale(&BrushOrg, 0.5f, &BrushOrg);
+
+	//find the corner of the bounds to keep fixed
+	VectorToSUB(FixOrg, inidx) = 0.0f;
+	if ((sides & 3) == 0)	//center x
+	{
+		dx = -dx;
+		VectorToSUB(FixOrg, axidx[inidx][0]) = VectorToSUB(BrushOrg, axidx[inidx][0]);
+	}
+	else if ((sides & 3) == 2)	//less x
+	{
+		VectorToSUB(FixOrg, axidx[inidx][0]) = VectorToSUB(b->BoundingBox.Min, axidx[inidx][0]);
+	}
+	else if ((sides & 3) == 1)	//greater x
+	{
+		dx = -dx;
+		VectorToSUB(FixOrg, axidx[inidx][0]) = VectorToSUB(b->BoundingBox.Max, axidx[inidx][0]);
+	}
+
+	if ((sides & 0x0c) == 0)	//center y
+	{
+		VectorToSUB(FixOrg, axidx[inidx][1]) = VectorToSUB(BrushOrg, axidx[inidx][1]);
+	}
+	else if ((sides & 0x0c) == 4)	//less y
+	{
+		dy = -dy;
+		if (inidx != 1)
+			VectorToSUB(FixOrg, axidx[inidx][1]) = VectorToSUB(b->BoundingBox.Min, axidx[inidx][1]);
+		else
+			VectorToSUB(FixOrg, axidx[inidx][1]) = VectorToSUB(b->BoundingBox.Max, axidx[inidx][1]);
+	}
+	else if ((sides & 0x0c) == 8)	//greater y
+	{
+		if (inidx != 1)
+			VectorToSUB(FixOrg, axidx[inidx][1]) = VectorToSUB(b->BoundingBox.Max, axidx[inidx][1]);
+		else
+			VectorToSUB(FixOrg, axidx[inidx][1]) = VectorToSUB(b->BoundingBox.Min, axidx[inidx][1]);
+	}
+
+	if ((sides & 3) == 0)	//center x
+		dx = 0;
+	if ((sides & 0x0c) == 0)	//center x
+		dy = 0;
+
+	//translate to fixed origin
+	App->CL_Maths->Vector3_Inverse(&FixOrg);
+	Brush_Move(b, &FixOrg);
+
+	dx *= 0.005f;
+	dy *= 0.005f;
+
+	dx = 1 - dx;
+	dy = 1 - dy;
+
+	VectorToSUB(ScaleVec, inidx) = 1.0f;
+	VectorToSUB(ScaleVec, axidx[inidx][0]) = dx;
+	VectorToSUB(ScaleVec, axidx[inidx][1]) = dy;
+
+	for (i = 0; i < 3; i++)
+		VectorToSUB(*fnscale, i) *= VectorToSUB(ScaleVec, i);
+
+	(*ScaleNum)++;
+
+	pClone = Brush_Clone(b);
+	if (Brush_Scale3d(pClone, &ScaleVec))
+		Brush_Scale3d(b, &ScaleVec);
+	Brush_Destroy(&pClone);
+
+		//translate back
+	App->CL_Maths->Vector3_Inverse(&FixOrg);
+	Brush_Move(b, &FixOrg);
+
+	Brush_Bound(b);
+}
+
+// *************************************************************************
+// *							Brush_Scale3d							   *
+// *************************************************************************
+signed int CL64_Brush::Brush_Scale3d(Brush* b, const Ogre::Vector3* mag)
+{
+	signed int Success;
+	
+	if (b->Type == BRUSH_MULTI)
+	{
+		//MRB BEGIN
+		Success =
+			//MRB END
+			BrushList_Scale3d(b->BList, mag);
+	}
+	else
+	{
+		Success =App->CL_FaceList->FaceList_Scale(b->Faces, mag);
+	}
+
+	Brush_Bound(b);
+
+	return Success;
+}
+
+// *************************************************************************
+// *							BrushList_Scale3d						   *
+// *************************************************************************
+signed int CL64_Brush::BrushList_Scale3d(BrushList* pList, const Ogre::Vector3* trans)
+{
+	signed int Success = 1;
+	Brush* b;
+
+	assert(pList);
+	assert(trans);
+
+	for (b = pList->First; b; b = b->Next)
+	{
+		Success =( Success && Brush_Scale3d(b, trans));
+	}
+	
+	return Success;
+	
+}
+
+// *************************************************************************
+// *							Brush_GetModelId						   *
+// *************************************************************************
+int	CL64_Brush::Brush_GetModelId(const Brush* b)
+{
+	return	b->ModelId;
+}
+
+// *************************************************************************
+// *							Brush_ResizeFinal						   *
+// *************************************************************************
+void CL64_Brush::Brush_ResizeFinal(Brush* b, int sides, int inidx, Ogre::Vector3* fnscale)
+{
+	
+	Brush* pClone;
+	
+	Ogre::Vector3 FixOrg, BrushOrg;
+
+	App->CL_Maths->Vector3_Add(&b->BoundingBox.Min, &b->BoundingBox.Max, &BrushOrg);
+	App->CL_Maths->Vector3_Scale(&BrushOrg, 0.5f, &BrushOrg);
+
+	//find the corner of the bounds to keep fixed
+	VectorToSUB(FixOrg, inidx) = 0.0f;
+	if ((sides & 3) == 0)	//center x
+	{
+		VectorToSUB(FixOrg, axidx[inidx][0]) = VectorToSUB(BrushOrg, axidx[inidx][0]);
+	}
+	else if ((sides & 3) == 2)	//less x
+	{
+		VectorToSUB(FixOrg, axidx[inidx][0]) = VectorToSUB(b->BoundingBox.Min, axidx[inidx][0]);
+	}
+	else if ((sides & 3) == 1)	//greater x
+	{
+		VectorToSUB(FixOrg, axidx[inidx][0]) = VectorToSUB(b->BoundingBox.Max, axidx[inidx][0]);
+	}
+
+	if ((sides & 0x0c) == 0)	//center y
+	{
+		VectorToSUB(FixOrg, axidx[inidx][1]) = VectorToSUB(BrushOrg, axidx[inidx][1]);
+	}
+	else if ((sides & 0x0c) == 4)	//less y
+	{
+		if (inidx != 1)
+		{
+			VectorToSUB(FixOrg, axidx[inidx][1]) = VectorToSUB(b->BoundingBox.Min, axidx[inidx][1]);
+		}
+		else
+		{
+			VectorToSUB(FixOrg, axidx[inidx][1]) = VectorToSUB(b->BoundingBox.Max, axidx[inidx][1]);
+		}
+	}
+	else if ((sides & 0x0c) == 8)	//greater y
+	{
+		if (inidx != 1)
+		{
+			VectorToSUB(FixOrg, axidx[inidx][1]) = VectorToSUB(b->BoundingBox.Max, axidx[inidx][1]);
+		}
+		else
+		{
+			VectorToSUB(FixOrg, axidx[inidx][1]) = VectorToSUB(b->BoundingBox.Min, axidx[inidx][1]);
+		}
+	}
+
+	if ((sides & 3) == 0)	//center x
+	{
+		VectorToSUB(*fnscale, axidx[inidx][0]) = 1.0f;
+	}
+
+	if ((sides & 0x0c) == 0)	//center y
+	{
+		VectorToSUB(*fnscale, axidx[inidx][1]) = 1.0f;
+	}
+
+	//translate to fixed origin
+	App->CL_Maths->Vector3_Inverse(&FixOrg);
+	Brush_Move(b, &FixOrg);
+
+	VectorToSUB(*fnscale, inidx) = 1.0f;
+
+	pClone = Brush_Clone(b);
+	if (Brush_Scale3d(pClone, fnscale))
+		Brush_Scale3d(b, fnscale); // hgtterry Debug
+	Brush_Destroy(&pClone);
+	
+
+	//translate back
+	App->CL_Maths->Vector3_Inverse(&FixOrg);
+	Brush_Move(b, &FixOrg);
+
+	Brush_Bound(b);
+}
+
 

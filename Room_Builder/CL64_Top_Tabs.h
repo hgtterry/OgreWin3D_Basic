@@ -31,6 +31,7 @@ public:
 
 	void Start_Headers();
 
+	void Enable_Brush_Options_Buttons(bool Enable, bool Active);
 	void Enable_Select_Button(bool Enable, bool Active);
 	void Enable_Move_Button(bool Enable, bool Active);
 
@@ -43,5 +44,6 @@ private:
 
 	bool flag_Brush_Select;
 	bool flag_Brush_Move;
+	bool flag_Brush_Scale;
 };
 

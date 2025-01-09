@@ -32,6 +32,7 @@ CL64_Top_Tabs::CL64_Top_Tabs(void)
 	Headers_hWnd = nullptr;
 	flag_Brush_Select = 1;
 	flag_Brush_Move = 0;
+	flag_Brush_Scale = 0;
 }
 
 CL64_Top_Tabs::~CL64_Top_Tabs(void)
@@ -122,7 +123,7 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Headers(HWND hDlg, UINT message, WPARAM wPa
 			}
 			else
 			{
-				App->Custom_Button_Normal(item);
+				App->Custom_Button_Toggle_Tabs(item, App->CL_Top_Tabs->flag_Brush_Scale);
 			}
 
 			return CDRF_DODEFAULT;
@@ -154,6 +155,7 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Headers(HWND hDlg, UINT message, WPARAM wPa
 		{
 			App->CL_Top_Tabs->Reset_Brush_Buttons();
 			App->CL_Top_Tabs->flag_Brush_Select = 1;
+			RedrawWindow(App->CL_Top_Tabs->Headers_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
 			App->CL_Doc->mCurrentTool = CURTOOL_NONE;
 			App->CL_Doc->mModeTool = ID_GENERALSELECT;
@@ -162,11 +164,27 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Headers(HWND hDlg, UINT message, WPARAM wPa
 
 		if (LOWORD(wParam) == IDC_BT_BRUSH_MOVE)
 		{
+			SetCursor(App->CL_MapEditor->hcBoth);
+
 			App->CL_Top_Tabs->Reset_Brush_Buttons();
 			App->CL_Top_Tabs->flag_Brush_Move = 1;
+			RedrawWindow(App->CL_Top_Tabs->Headers_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
 			App->CL_Doc->mCurrentTool = CURTOOL_NONE;
 			App->CL_Doc->mModeTool = ID_TOOLS_BRUSH_MOVEROTATEBRUSH;
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_BT_BRUSH_SCALE)
+		{
+			SetCursor(App->CL_MapEditor->hcBoth);
+
+			App->CL_Top_Tabs->Reset_Brush_Buttons();
+			App->CL_Top_Tabs->flag_Brush_Scale = 1;
+			RedrawWindow(App->CL_Top_Tabs->Headers_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			
+			App->CL_Doc->mCurrentTool = CURTOOL_NONE;
+			App->CL_Doc->mModeTool = ID_TOOLS_BRUSH_SCALEBRUSH;
 			return TRUE;
 		}
 
@@ -179,6 +197,18 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Headers(HWND hDlg, UINT message, WPARAM wPa
 	}
 
 	return FALSE;
+}
+
+// *************************************************************************
+// *	Enable_Brush_Options_Buttons:- Terry and Hazel Flanigan 2025   	   *
+// *************************************************************************
+void CL64_Top_Tabs::Enable_Brush_Options_Buttons(bool Enable, bool Active)
+{
+	EnableWindow(GetDlgItem(Headers_hWnd, IDC_BT_BRUSH_MOVE), Enable);
+	flag_Brush_Move = Active;
+
+	EnableWindow(GetDlgItem(Headers_hWnd, IDC_BT_BRUSH_SCALE), Enable);
+	flag_Brush_Scale = Active;
 }
 
 // *************************************************************************
@@ -206,6 +236,7 @@ void CL64_Top_Tabs::Reset_Brush_Buttons()
 {
 	flag_Brush_Select = 0;
 	flag_Brush_Move = 0;
+	flag_Brush_Scale = 0;
 
 	RedrawWindow(Headers_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 }

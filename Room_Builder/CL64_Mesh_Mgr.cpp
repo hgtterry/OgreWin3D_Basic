@@ -351,7 +351,7 @@ bool CL64_Mesh_Mgr::Brush_Decode_List(BrushList* BList, signed int SubBrush)
 // *************************************************************************
 bool CL64_Mesh_Mgr::Brush_Create(const Brush* b, int Actual_Brush_Index)
 {
-	//App->Say_Int(b->Type);
+	App->Say_Int(b->Type);
 
 	switch (b->Type)
 	{
@@ -394,6 +394,7 @@ bool CL64_Mesh_Mgr::Brush_Create(const Brush* b, int Actual_Brush_Index)
 // *************************************************************************
 bool CL64_Mesh_Mgr::Brush_FaceList_Create(const Brush* b, const FaceList* pList, int BrushCount, int SubBrushCount, int Actual_Brush_Index)
 {
+
 	App->CL_Model->Create_Brush_XX(App->CL_Model->BrushCount);
 	App->CL_Model->B_Brush[App->CL_Model->BrushCount]->Group_Index = mBrush_Index;
 	strcpy(App->CL_Model->B_Brush[App->CL_Model->BrushCount]->Brush_Name, mBrush_Name);

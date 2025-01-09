@@ -47,6 +47,7 @@ public:
 	void Init_Views();
 	void Render_RenderBrushFacesOrtho(const ViewVars* Cam, Brush* b, HDC ViewDC);
 
+	HWND Main_Dlg_Hwnd;
 	HWND Bottom_Right_Hwnd;
 
 	HWND Left_Window_Hwnd;
@@ -63,7 +64,9 @@ public:
 	bool flag_Left_Button_Down;
 	bool flag_Right_Button_Down;
 
-	HWND Main_Dlg_Hwnd;
+	HCURSOR	hcSizeEW;
+	HCURSOR	hcSizeNS;
+	HCURSOR	hcBoth;
 
 private:
 	static LRESULT CALLBACK Proc_Main_Dlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
@@ -87,6 +90,9 @@ private:
 	void On_Mouse_Move(POINT CursorPosition, HWND hDlg);
 	void On_Left_Button_Up(POINT CursorPosition);
 	void On_Left_Button_Down(POINT CursorPosition, HWND hDlg);
+
+	void SetEditCursor(int Tool, const POINT* pMousePos);
+	int GetCursorBoxPos(const POINT* ptMousePos);
 
 	int LEFT_WINDOW_WIDTH;
 

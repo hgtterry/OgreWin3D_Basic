@@ -129,6 +129,12 @@ void CL64_Ogre3D::Convert_ToOgre3D(bool Create)
 	int FaceIndex = 0;
 	int TotalFaces = 0;
 
+	if (App->CL_Model->GroupCount == 0)
+	{
+		App->Say("No Groups");
+		return;
+	}
+
 	while (Count < GroupCountTotal)
 	{
 		_itoa(Count, MaterialNumber, 10);
@@ -142,6 +148,10 @@ void CL64_Ogre3D::Convert_ToOgre3D(bool Create)
 		FaceIndex = 0;
 
 		TotalFaces = TotalFaces + App->CL_Model->Group[Count]->GroupFaceCount;
+		if (App->CL_Model->Group[Count]->GroupFaceCount == 0)
+		{
+			App->Say("No Faces");
+		}
 
 		while (FaceCount < App->CL_Model->Group[Count]->GroupFaceCount)
 		{
@@ -186,6 +196,7 @@ void CL64_Ogre3D::Convert_ToOgre3D(bool Create)
 	if (World_Manual->getNumSections() == 0)
 	{
 		App->Say("Can not create Ogre Sections");
+		App->CL_Ogre->mSceneMgr->destroyManualObject(World_Manual);
 		return;
 	}
 

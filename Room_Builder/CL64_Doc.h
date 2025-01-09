@@ -92,12 +92,17 @@ public:
 	void DoGeneralSelect(void);
 	WadFileEntry* GetDibBitmap(const char* Name);
 
-	// Selection
+	// Selection Move Brush
 	void SelectOrtho(POINT point, ViewVars* v);
 	void ResetAllSelections(void);
 	void ResetAllSelectedFaces(void);
 	void ResetAllSelectedBrushes(void);
 	void DoBrushSelection(Brush* pBrush, BrushSel	nSelType); //	brushSelToggle | brushSelAlways);
+
+	// Selection Scale Brush
+	void ScaleSelected(int dx, int dy);
+	void ResizeSelected(float dx, float dy, int sides, int inidx);
+	void DoneResize(int sides, int inidx);
 
 	int FindClosestThing(POINT const* ptFrom, ViewVars* v, Brush** ppMinBrush, geFloat* pDist);
 	signed int FindClosestBrush(POINT const* ptFrom, ViewVars* v, Brush** ppFoundBrush, geFloat* pMinEdgeDist);
@@ -131,6 +136,9 @@ public:
 	DWORD SelState;
 
 	Ogre::Vector3	SelectedGeoCenter, FinalPos, FinalRot, FinalScale;
+
+	int ScaleNum;
+	int	sides;
 
 	int mLastOp;
 	int mLockAxis;

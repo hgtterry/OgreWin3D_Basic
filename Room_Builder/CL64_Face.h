@@ -21,6 +21,9 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#pragma once
+
+#include "CL64_Maths.h"
 
 typedef struct
 {
@@ -38,7 +41,6 @@ typedef struct TexInfoTag TexInfo;
 #define Units_DegreesToRadians(d) ((((geFloat)(d)) * M_PI) / 180.0f)
 #define Units_RadiansToDegrees(r) ((((geFloat)(r)) * 180.0f) / M_PI)
 
-#pragma once
 class CL64_Face
 {
 public:
@@ -78,7 +80,8 @@ public:
 	void Face_MostlyOnSide(const Face* f, const GPlane* p, float* max, int* side);
 	void Face_Move(Face* f, const Ogre::Vector3* trans);
 	void Face_SetSelected(Face* f, const signed int bState);
-
+	signed int Face_Scale(Face* f, const Ogre::Vector3* ScaleVec);
+	void Face_XfmTexture(Face* f, const Matrix3d* pXfm);
 
 };
 

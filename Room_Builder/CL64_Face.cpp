@@ -958,3 +958,82 @@ void CL64_Face::Face_SetSelected(Face* f, const signed int bState)
 {
 	f->Flags = (bState) ? f->Flags | FACE_SELECTED : f->Flags & ~FACE_SELECTED;
 }
+
+// *************************************************************************
+// *			( Static ) Face_UpdateFaceAngle						 	   *
+// *************************************************************************
+static void Face_UpdateFaceAngle(Face* f, const Ogre::Vector3* OldNormal)
+{
+	Ogre::Vector3 VecDest;
+	Ogre::Vector3 VecAxis;
+	geFloat cosv, Theta;
+	Matrix3d Xfm;
+
+	// Compute rotation from 
+	VecDest = f->Tex.VecNormal;
+	App->CL_Maths->Vector3_CrossProduct(&VecDest, OldNormal, &VecAxis);
+	cosv = App->CL_Maths->Vector3_DotProduct(&VecDest, OldNormal);
+	
+	if (cosv > 1.0f)
+	{
+		cosv = 1.0f;
+	}
+	Theta = (geFloat)acos(cosv);
+	if (App->CL_Maths->Vector3_Normalize(&VecAxis) == 0.0f)
+	{
+		App->CL_Maths->XForm3d_SetIdentity(&Xfm);
+		App->CL_Maths->XForm3d_RotateX(& Xfm, -Theta);
+	}
+	else
+	{
+		Ogre::Quaternion QRot;
+
+		App->CL_Maths->Quaternion_SetFromAxisAngle(&QRot, &VecAxis, -Theta);
+		App->CL_Maths->Quaternion_ToMatrix(&QRot, &Xfm);
+	}
+	
+	App->CL_Face->Face_XfmTexture(f, &Xfm);
+}
+
+// *************************************************************************
+// *							Face_XfmTexture						 	   *
+// *************************************************************************
+void CL64_Face::Face_XfmTexture(Face* f, const Matrix3d* pXfm)
+{
+	assert(f != NULL);
+	assert(pXfm != NULL);
+
+	App->CL_Maths->XForm3d_Multiply(pXfm, &f->Tex.XfmFaceAngle, &f->Tex.XfmFaceAngle);
+}
+
+// *************************************************************************
+// *								Face_Scale						 	   *
+// *************************************************************************
+signed int	CL64_Face::Face_Scale(Face* f, const Ogre::Vector3* ScaleVec)
+{
+	signed int Success;
+	//MRB END
+	int i;
+
+	assert(f);
+	assert(ScaleVec);
+
+	for (i = 0; i < f->NumPoints; i++)
+	{
+		//no magnitude operation in vec3d
+		f->Points[i].x *= ScaleVec->x;
+		f->Points[i].y *= ScaleVec->y;
+		f->Points[i].z *= ScaleVec->z;
+	}
+	{
+		Ogre::Vector3 OldNormal = f->Tex.VecNormal;
+		//MRB BEGIN
+		Success = Face_SetPlaneFromFace(f);
+
+		Face_UpdateFaceAngle(f, &OldNormal);
+	}
+	f->Tex.DirtyFlag = GE_TRUE;
+	
+	return Success;
+
+}

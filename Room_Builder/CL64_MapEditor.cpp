@@ -35,6 +35,16 @@ THE SOFTWARE.
 
 #define BOTTOM_POS_BOTLEFT		5
 
+enum LastBrushAction
+{
+	BRUSH_MOVE,
+	BRUSH_ROTATE,
+	BRUSH_SCALE,
+	BRUSH_SHEAR,
+	BRUSH_RESET,
+	BRUSH_DIALOG
+};
+
 typedef struct tagBrushDrawData
 {
 	const Box3d*	pViewBox;
@@ -84,6 +94,11 @@ CL64_MapEditor::CL64_MapEditor()
 	PenTemplate = CreatePen(PS_SOLID, 1, RGB(0, 0, 255));
 	PenBrushes = CreatePen(PS_SOLID, 1, RGB(255, 255, 255));
 	PenSelected = CreatePen(PS_SOLID, 1, RGB(0, 255, 255));
+
+	hcSizeEW = LoadCursor(NULL, IDC_SIZEWE);
+	hcSizeNS = LoadCursor(NULL, IDC_SIZENS);
+	hcBoth = LoadCursor(NULL, IDC_SIZEALL);
+
 	int Count = 0;
 	while (Count < 3)
 	{
@@ -188,10 +203,6 @@ void CL64_MapEditor::Init_Map_Views()
 // *************************************************************************
 LRESULT CALLBACK CL64_MapEditor::Proc_Main_Dlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
-	static HCURSOR	hcSizeEW = NULL;
-	static HCURSOR	hcSizeNS = NULL;
-	static HCURSOR	hcBoth = NULL;
-
 	static  BOOL        xSizing;
 	static  BOOL        ySizing;
 
@@ -203,10 +214,6 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Main_Dlg(HWND hDlg, UINT message, WPARAM w
 	{
 	case WM_INITDIALOG:
 	{
-		hcSizeEW = LoadCursor(NULL, IDC_SIZEWE);
-		hcSizeNS = LoadCursor(NULL, IDC_SIZENS);
-		hcBoth = LoadCursor(NULL, IDC_SIZEALL);
-
 		App->CL_MapEditor->Main_Dlg_Hwnd = hDlg;
 		
 		return TRUE;
@@ -285,7 +292,7 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Main_Dlg(HWND hDlg, UINT message, WPARAM w
 				SetCapture(hDlg);
 				if (xSizing)
 				{
-					SetCursor(hcSizeEW);
+					SetCursor(App->CL_MapEditor->hcSizeEW);
 				}
 
 			}
@@ -296,7 +303,7 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Main_Dlg(HWND hDlg, UINT message, WPARAM w
 				SetCapture(hDlg);
 				if (ySizing)
 				{
-					SetCursor(hcSizeNS);
+					SetCursor(App->CL_MapEditor->hcSizeNS);
 				}
 
 			}
@@ -306,7 +313,7 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Main_Dlg(HWND hDlg, UINT message, WPARAM w
 				SetCapture(hDlg);
 				if (ySizing)
 				{
-					SetCursor(hcBoth);;
+					SetCursor(App->CL_MapEditor->hcBoth);
 				}
 			}
 		}
@@ -443,7 +450,7 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Main_Dlg(HWND hDlg, UINT message, WPARAM w
 			{
 				if (App->CL_MapEditor->Do_All == 0)
 				{
-					SetCursor(hcSizeEW);
+					SetCursor(App->CL_MapEditor->hcSizeEW);
 				}
 
 				App->CL_MapEditor->Do_Width = 1;
@@ -457,7 +464,7 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Main_Dlg(HWND hDlg, UINT message, WPARAM w
 			{
 				if (App->CL_MapEditor->Do_All == 0)
 				{
-					SetCursor(hcSizeNS);
+					SetCursor(App->CL_MapEditor->hcSizeNS);
 				}
 
 				App->CL_MapEditor->Do_Depth = 1;
@@ -469,7 +476,7 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Main_Dlg(HWND hDlg, UINT message, WPARAM w
 
 			if (App->CL_MapEditor->Do_Width == 1 && App->CL_MapEditor->Do_Depth == 1)
 			{
-				SetCursor(hcBoth);
+				SetCursor(App->CL_MapEditor->hcBoth);
 				App->CL_MapEditor->Do_All = 1;
 			}
 			else
@@ -543,6 +550,14 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Left_Window(HWND hDlg, UINT message, W
 	case WM_SETCURSOR:
 	{
 		if (App->CL_MapEditor->flag_Right_Button_Down == 1 || App->CL_MapEditor->flag_Left_Button_Down == 1)
+		{
+			return true;
+		}
+		else if (App->CL_Doc->mModeTool == ID_TOOLS_BRUSH_MOVEROTATEBRUSH)
+		{
+			SetCursor(App->CL_MapEditor->hcBoth);
+		}
+		else if (App->CL_Doc->mModeTool == ID_TOOLS_BRUSH_SCALEBRUSH)
 		{
 			return true;
 		}
@@ -705,6 +720,14 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Right_Window(HWND hDlg, UINT message, 
 		{
 			return true;
 		}
+		else if (App->CL_Doc->mModeTool == ID_TOOLS_BRUSH_MOVEROTATEBRUSH)
+		{
+			SetCursor(App->CL_MapEditor->hcBoth);
+		}
+		else if (App->CL_Doc->mModeTool == ID_TOOLS_BRUSH_SCALEBRUSH)
+		{
+			return true;
+		}
 		else
 		{
 			return false;
@@ -853,6 +876,14 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Bottom_Left_Window(HWND hDlg, UINT message
 	case WM_SETCURSOR:
 	{
 		if (App->CL_MapEditor->flag_Right_Button_Down == 1 || App->CL_MapEditor->flag_Left_Button_Down == 1)
+		{
+			return true;
+		}
+		else if (App->CL_Doc->mModeTool == ID_TOOLS_BRUSH_MOVEROTATEBRUSH)
+		{
+			SetCursor(App->CL_MapEditor->hcBoth);
+		}
+		else if (App->CL_Doc->mModeTool == ID_TOOLS_BRUSH_SCALEBRUSH)
 		{
 			return true;
 		}
@@ -1081,6 +1112,7 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Bottom_Right_Ogre(HWND hDlg, UINT message,
 // *************************************************************************
 void CL64_MapEditor::On_Mouse_Move(POINT CursorPosition, HWND hDlg)
 {
+
 	int			dx, dy;
 	Ogre::Vector3 sp, wp, dv;
 
@@ -1105,9 +1137,33 @@ void CL64_MapEditor::On_Mouse_Move(POINT CursorPosition, HWND hDlg)
 			Draw_Screen(hDlg);
 		}
 
+		if (App->CL_Doc->mModeTool == ID_TOOLS_BRUSH_SCALEBRUSH) //|| (Tool == ID_TOOLS_BRUSH_MOVESELECTEDBRUSHES))
+		{
+			//App->Flash_Window();
+			//LockAxisView (&dx, &dy);
+			App->CL_Doc->ScaleSelected(dx, dy);
+
+			Draw_Screen(hDlg);
+		}
+
+
 		POINT pt = mStartPoint;	// The position works on the delta mStartPoint...
 		ClientToScreen(hDlg, &pt);
 		SetCursorPos(pt.x, pt.y);
+	}
+	else
+	{
+		//int Tool;
+
+		if (App->CL_Doc->mModeTool == ID_TOOLS_BRUSH_SCALEBRUSH) //|| (Tool == ID_TOOLS_BRUSH_MOVESELECTEDBRUSHES))
+		{
+			SetEditCursor(ID_TOOLS_BRUSH_SCALEBRUSH, &CursorPosition);
+
+			//POINT pt = mStartPoint;	// The position works on the delta mStartPoint...
+			//ClientToScreen(hDlg, &pt);
+			//SetCursorPos(pt.x, pt.y);
+
+		}
 	}
 
 }
@@ -1134,6 +1190,42 @@ void CL64_MapEditor::On_Left_Button_Up(POINT CursorPosition)
 		
 	}
 
+	if (App->CL_Doc->mModeTool == ID_TOOLS_BRUSH_SCALEBRUSH)
+	{
+		//pDoc->SetModifiedFlag();
+
+		//SetCursor(AfxGetApp()->LoadStandardCursor(IDC_ARROW));
+		//pDoc->SnapScaleNearest(sides, Render_GetInidx(VCam), VCam);
+
+		if (App->CL_Doc->mLastOp == BRUSH_SCALE)
+		{
+			App->CL_Doc->DoneResize(App->CL_Doc->sides, App->CL_Render->Render_GetInidx(Current_View));
+
+			/*if (App->CLSB_Brushes->Dimensions_Dlg_Running == 1)
+			{
+				App->CLSB_Brushes->Update_Pos_Dlg(App->CLSB_Brushes->Dimensions_Dlg_hWnd);
+			}*/
+
+			/*if (App->CLSB_Equity->EquitySB_Dialog_Visible == 1)
+			{
+				App->CLSB_Mesh_Mgr->Update_World();
+			}*/
+
+			//App->CL_Mesh_Mgr->Update_World();
+		}
+
+		//App->CLSB_Doc->UpdateSelected();
+		//if ((ModeTool == ID_TOOLS_TEMPLATE) ||
+		//	((App->CLSB_Doc->GetSelState() & ANYENTITY) && (!(App->CLSB_Doc->GetSelState() & ANYBRUSH))))
+		//{
+		//	App->CLSB_Doc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
+		//}
+		//else
+		{
+			App->CL_Doc->UpdateAllViews(UAV_ALL3DVIEWS | REBUILD_QUICK, NULL);
+		}
+	}
+
 	App->CUR = SetCursor(App->CUR);
 }
 
@@ -1142,14 +1234,36 @@ void CL64_MapEditor::On_Left_Button_Up(POINT CursorPosition)
 // *************************************************************************
 void CL64_MapEditor::On_Left_Button_Down(POINT CursorPosition, HWND hDlg)
 {
+	static const int SideLookup[25] =
+	{
+		5,	5,	4,	6,	6,
+		5,	5,	4,	6,	6,
+		1,	1,	0,	2,	2,
+		9,	9,	8,	10,	10,
+		9,	9,	8,	10,	10
+	};
+
+	int CursorSide;
+	CursorSide = GetCursorBoxPos(&CursorPosition);
+
 	App->CUR = SetCursor(NULL);
 
 	GetCursorPos(&App->CL_MapEditor->mStartPoint);
 	ScreenToClient(hDlg, &App->CL_MapEditor->mStartPoint);
 
+	App->CL_Doc->sides = SideLookup[CursorSide];
+
 	if (App->CL_Doc->mModeTool == ID_TOOLS_BRUSH_MOVEROTATEBRUSH) //|| (Tool == ID_TOOLS_BRUSH_MOVESELECTEDBRUSHES))
 	{
 		App->CL_Maths->Vector3_Clear(&App->CL_Doc->FinalPos);
+		App->CL_Doc->TempCopySelectedBrushes();
+	}
+
+	if (App->CL_Doc->mModeTool == ID_TOOLS_BRUSH_SCALEBRUSH)
+	{
+		App->CL_Doc->ScaleNum = 0;
+
+		App->CL_Maths->Vector3_Set(&App->CL_Doc->FinalScale, 1.0f, 1.0f, 1.0f);
 		App->CL_Doc->TempCopySelectedBrushes();
 	}
 }
@@ -1337,6 +1451,132 @@ void CL64_MapEditor::Render_RenderBrushFacesOrtho(const ViewVars* Cam, Brush* b,
 		plist[j] = plist[0];
 		Polyline(ViewDC, plist, j + 1);
 	}
+}
+
+// *************************************************************************
+// *	  						SetEditCursor							   *
+// *************************************************************************
+void CL64_MapEditor::SetEditCursor(int Tool, const POINT* pMousePos)
+{
+	//for sizing stuff
+	static const char* SizeCursors[25] =
+	{
+		IDC_SIZENWSE,	IDC_SIZENWSE,	IDC_SIZENS,		IDC_SIZENESW,	IDC_SIZENESW,
+		IDC_SIZENWSE,	IDC_SIZENWSE,	IDC_SIZENS,		IDC_SIZENESW,	IDC_SIZENESW,
+		IDC_SIZEWE,		IDC_SIZEWE,		IDC_NO,			IDC_SIZEWE,		IDC_SIZEWE,
+		IDC_SIZENESW,	IDC_SIZENESW,	IDC_SIZENS,		IDC_SIZENWSE,	IDC_SIZENWSE,
+		IDC_SIZENESW,	IDC_SIZENESW,	IDC_SIZENS,		IDC_SIZENWSE,	IDC_SIZENWSE
+	};
+
+	static const char* ShearCursors[25] =
+	{
+		IDC_NO,			IDC_SIZEWE,		IDC_SIZEWE,		IDC_SIZEWE,		IDC_NO,
+		IDC_SIZENS,		IDC_NO,			IDC_SIZEWE,		IDC_NO,			IDC_SIZENS,
+		IDC_SIZENS,		IDC_SIZENS,		IDC_NO,			IDC_SIZENS,		IDC_SIZENS,
+		IDC_SIZENS,		IDC_NO,			IDC_SIZEWE,		IDC_NO,			IDC_SIZENS,
+		IDC_NO,			IDC_SIZEWE,		IDC_SIZEWE,		IDC_SIZEWE,		IDC_NO
+	};
+
+	const char* WhichCursor = NULL;
+	int CursorIndex;
+
+	assert((Tool == ID_TOOLS_BRUSH_SCALEBRUSH) || (Tool == ID_TOOLS_BRUSH_SHEARBRUSH));
+
+	// Determine where the cursor is on the box surrounding the selected brush,
+	// and set the appropriate cursor.
+	if (pMousePos->x < 0 || pMousePos->y < 0)
+	{
+		return;
+	}
+	CursorIndex = GetCursorBoxPos(pMousePos);
+
+	char buf[20];
+	SetDlgItemText(App->CL_Top_Tabs->Headers_hWnd, IDC_BT_BRUSH_DEBUG, (LPCTSTR)_itoa(CursorIndex,buf,10));
+	//App->Say_Int(CursorIndex);
+	switch (Tool)
+	{
+	case ID_TOOLS_BRUSH_SCALEBRUSH:
+	{
+		// Scaling it's just a simple lookup
+		WhichCursor = SizeCursors[CursorIndex];
+		break;
+	}
+
+	/*case ID_TOOLS_BRUSH_SHEARBRUSH:
+		WhichCursor = ShearCursors[CursorIndex];
+		break;*/
+	default:
+		assert(0);
+		break;
+	}
+
+	HCURSOR	Test;
+	Test = LoadCursor(NULL, SizeCursors[CursorIndex]);
+	SetCursor(Test);
+
+}
+
+// *************************************************************************
+// *	  						GetCursorBoxPos							   *
+// *************************************************************************
+int CL64_MapEditor::GetCursorBoxPos(const POINT* ptMousePos)
+{
+	const Box3d* pBrushBox;
+	POINT ptMin, ptMax;
+	int dx, dy;
+	int x, y;
+	int horiz, vert;
+	int lookup[4] = { 1, 2, 2, 3 };
+
+	//	Box3d BrushBox;
+	//	if (pDoc->mModeTool == ID_TOOLS_TEMPLATE)
+	pBrushBox = App->CL_Brush->Brush_GetBoundingBox(App->CL_Doc->CurBrush);
+	//	else
+	//	{
+	//		SelBrushList_GetBoundingBox(pDoc->pSelBrushes, &BrushBox);
+	//		pBrushBox = &BrushBox;
+	//	}
+
+		// obtain screen coordinates for bounding box min and max points
+	ptMin = App->CL_Render->Render_OrthoWorldToView(Current_View, &pBrushBox->Min);
+	ptMax = App->CL_Render->Render_OrthoWorldToView(Current_View, &pBrushBox->Max);
+
+	// make sure the min and max points are correct...
+	if (ptMin.x > ptMax.x)
+	{
+		int temp;
+
+		temp = ptMin.x;
+		ptMin.x = ptMax.x;
+		ptMax.x = temp;
+	}
+	if (ptMin.y > ptMax.y)
+	{
+		int temp;
+
+		temp = ptMin.y;
+		ptMin.y = ptMax.y;
+		ptMax.y = temp;
+	}
+
+	// compute horizontal first
+	x = ptMousePos->x - ptMin.x;
+	dx = (ptMax.x - ptMin.x);
+	if (dx == 0) horiz = 0; else horiz = (4 * x) / dx;
+	if (horiz < 0) horiz = 0;
+	else if (horiz > 3) horiz = 4;
+	else horiz = lookup[horiz];
+
+	// and vertical
+	y = ptMousePos->y - ptMin.y;
+	dy = (ptMax.y - ptMin.y);
+	if (dy == 0) vert = 0; else vert = (4 * y) / dy;
+	if (vert < 0) vert = 0;
+	else if (vert > 3) vert = 3;
+	else vert = lookup[vert];
+
+	// return index...
+	return (vert * 5) + horiz;
 }
 
 

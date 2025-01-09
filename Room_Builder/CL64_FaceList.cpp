@@ -304,3 +304,25 @@ void CL64_FaceList::FaceList_Move(FaceList* pList, const Ogre::Vector3* trans)
 	}
 	pList->Dirty = GE_TRUE;
 }
+
+// *************************************************************************
+// *							FaceList_Scale						 	   *
+// *************************************************************************
+signed int CL64_FaceList::FaceList_Scale(FaceList* pList, const Ogre::Vector3* ScaleVec)
+{
+	signed int Success = 1;
+	
+	int i;
+
+	assert(pList != NULL);
+	assert(ScaleVec != NULL);
+
+	for (i = 0; i < pList->NumFaces; i++)
+	{
+		Success = Success && App->CL_Face->Face_Scale(pList->Faces[i], ScaleVec);
+	}
+	pList->Dirty = GE_TRUE;
+	
+	return Success;
+	
+}
