@@ -121,6 +121,7 @@ public:
 	void DoneMove(void);
 	BOOL TempDeleteSelected(void);
 	void OnToolsTemplate();
+	void OnBrushSubtractfromworld();
 	// ------------------------------------------------------------------- 
 
 	char LastTemplateTypeName[MAX_PATH];

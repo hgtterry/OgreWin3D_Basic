@@ -145,8 +145,8 @@ void CL64_Doc::AddBrushToWorld()
 	}
 	else
 	{
-		//OnBrushSubtractfromworld();
-        App->Say("Poop");
+		OnBrushSubtractfromworld();
+        App->Say("AddBrushToWorld - Subtract");
 	}
 
 	//SetModifiedFlag();
@@ -158,8 +158,47 @@ struct fdocFaceScales
     float LightmapScale;
 };
 
+void CL64_Doc::OnBrushSubtractfromworld()
+{
+    Brush* nb;
+    BrushList* BList = App->CL_Level->Level_GetBrushes(App->CL_Doc->pLevel);
+
+    if ((App->CL_Doc->mModeTool == ID_GENERALSELECT) && (App->CL_Brush->BrushList_Count(BList, BRUSH_COUNT_MULTI | BRUSH_COUNT_LEAF) < 2))
+    {
+        // cuts shouldn't start the list
+        return;
+    }
+
+    //SetModifiedFlag();
+
+    if (App->CL_Doc->mModeTool == ID_GENERALSELECT)
+    {
+        // put the brush at the very end of the list
+        App->CL_Brush->BrushList_Remove(BList, App->CL_Doc->CurBrush);
+        Brush_SetSubtract(App->CL_Doc->CurBrush, GE_TRUE);
+
+        App->CL_SelBrushList->SelBrushList_RemoveAll(App->CL_Doc->pSelBrushes);
+        App->CL_Brush->BrushList_Append(BList, App->CL_Doc->CurBrush);
+    }
+    else
+    {
+        nb = App->CL_Brush->Brush_Clone(App->CL_Doc->CurBrush);
+
+        SetDefaultBrushTexInfo(nb);
+        App->CL_Brush->Brush_Bound(nb);
+
+        // add to current group
+        Brush_SetGroupId(nb, App->CL_Doc->mCurrentGroup);
+
+        App->CL_Brush->BrushList_Append(BList, nb);
+    }
+
+    //App->CLSB_Doc->UpdateSelected();
+    App->CL_Doc->UpdateAllViews(UAV_ALL3DVIEWS | REBUILD_QUICK, NULL);
+}
+
 // *************************************************************************
-// *			        	fdocSetFaceScales	                       	   *
+// *			       ( Static ) fdocSetFaceScales	                   	   *
 // *************************************************************************
 static signed int fdocSetFaceScales(Face* pFace, void* lParam)
 {

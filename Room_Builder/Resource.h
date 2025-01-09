@@ -56,8 +56,9 @@
 #define IDC_BT_BRUSH_DEBUG              1025
 #define IDC_BRUSH_CUBE_PRIMITIVE        1026
 #define IDC_BUTTON1                     1027
-#define IDC_BUTTON2                     1028
-#define IDC_BUTTON3                     1029
+#define IDC_BT_BOXSOLID                 1027
+#define IDC_BT_BOXHOLLOW                1028
+#define IDC_BT_BOXCUTBRUSH              1029
 #define IDC_BUTTON4                     1030
 #define IDC_BUTTON5                     1031
 #define IDC_XSIZETOP                    1032
@@ -66,7 +67,6 @@
 #define IDC_ZSIZEBOT                    1035
 #define IDC_YSIZE                       1036
 #define IDC_THICKNESS                   1037
-#define IDC_EDIT7                       1038
 #define IDC_EDITNAME                    1038
 #define IDC_CHECK1                      1039
 #define IDC_CHECK2                      1040

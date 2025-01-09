@@ -87,9 +87,9 @@ LRESULT CALLBACK A_CreateBoxDialog::Proc_CreateBox(HWND hDlg, UINT message, WPAR
 		SendDlgItemMessage(hDlg, IDC_XSIZETOP, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ZSIZETOP, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
-		//SendDlgItemMessage(hDlg, IDC_BT_BOXSOLID, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		//SendDlgItemMessage(hDlg, IDC_BT_BOXHOLLOW, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		//SendDlgItemMessage(hDlg, IDC_BT_BOXCUTBRUSH, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_BOXSOLID, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_BOXHOLLOW, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_BOXCUTBRUSH, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		//SendDlgItemMessage(hDlg, IDC_STGENERAL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		//SendDlgItemMessage(hDlg, IDC_STYSIZE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
@@ -114,7 +114,7 @@ LRESULT CALLBACK A_CreateBoxDialog::Proc_CreateBox(HWND hDlg, UINT message, WPAR
 		App->CL_CreateBoxDialog->Set_DLG_Members(hDlg);
 		App->CL_CreateBoxDialog->Set_Defaults(hDlg);
 
-		int Count = App->CL_Brush->Get_Brush_Count()+1;
+		int Count = App->CL_Brush->Get_Brush_Count();
 		char Num[32];
 		char Name[32];
 		_itoa(Count, Num, 10);
@@ -251,28 +251,28 @@ LRESULT CALLBACK A_CreateBoxDialog::Proc_CreateBox(HWND hDlg, UINT message, WPAR
 	{
 		LPNMHDR some_item = (LPNMHDR)lParam;
 
-		/*if (some_item->idFrom == IDC_BT_BOXSOLID && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDC_BT_BOXSOLID && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CL_CreateBoxDialog->Solid_Flag);
+			App->Custom_Button_Toggle_Tabs(item, App->CL_CreateBoxDialog->Solid_Flag);
 			return CDRF_DODEFAULT;
 		}
 
 		if (some_item->idFrom == IDC_BT_BOXHOLLOW && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CL_CreateBoxDialog->Hollow_Flag);
+			App->Custom_Button_Toggle_Tabs(item, App->CL_CreateBoxDialog->Hollow_Flag);
 			return CDRF_DODEFAULT;
 		}
 
 		if (some_item->idFrom == IDC_BT_BOXCUTBRUSH && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CL_CreateBoxDialog->Cut_Flag);
+			App->Custom_Button_Toggle_Tabs(item, App->CL_CreateBoxDialog->Cut_Flag);
 			return CDRF_DODEFAULT;
 		}
 
-		if (some_item->idFrom == IDC_BOXDEFAULTS && some_item->code == NM_CUSTOMDRAW)
+		/*if (some_item->idFrom == IDC_BOXDEFAULTS && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
@@ -284,7 +284,7 @@ LRESULT CALLBACK A_CreateBoxDialog::Proc_CreateBox(HWND hDlg, UINT message, WPAR
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
 			return CDRF_DODEFAULT;
-		}
+		}*/
 
 		if (some_item->idFrom == IDOK && some_item->code == NM_CUSTOMDRAW)
 		{
@@ -298,7 +298,7 @@ LRESULT CALLBACK A_CreateBoxDialog::Proc_CreateBox(HWND hDlg, UINT message, WPAR
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
 			return CDRF_DODEFAULT;
-		}*/
+		}
 		
 		return CDRF_DODEFAULT;
 	}
@@ -306,10 +306,10 @@ LRESULT CALLBACK A_CreateBoxDialog::Proc_CreateBox(HWND hDlg, UINT message, WPAR
 	case WM_COMMAND:
 	{
 
-		/*if (LOWORD(wParam) == IDC_BT_BOXSOLID)
+		if (LOWORD(wParam) == IDC_BT_BOXSOLID)
 		{
-			HWND Temp = GetDlgItem(hDlg, IDC_PICTURE);
-			SendMessage(Temp, STM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_SolidBox_Bmp);
+			//HWND Temp = GetDlgItem(hDlg, IDC_PICTURE);
+			//SendMessage(Temp, STM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_SolidBox_Bmp);
 
 			App->CL_CreateBoxDialog->Zero_Dlg_Flags(hDlg);
 			App->CL_CreateBoxDialog->m_Solid = 0;
@@ -317,12 +317,12 @@ LRESULT CALLBACK A_CreateBoxDialog::Proc_CreateBox(HWND hDlg, UINT message, WPAR
 
 			RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			return TRUE;
-		}*/
+		}
 
-		/*if (LOWORD(wParam) == IDC_BT_BOXHOLLOW)
+		if (LOWORD(wParam) == IDC_BT_BOXHOLLOW)
 		{
-			HWND Temp = GetDlgItem(hDlg, IDC_PICTURE);
-			SendMessage(Temp, STM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_HollowBox_Bmp);
+			//HWND Temp = GetDlgItem(hDlg, IDC_PICTURE);
+			//SendMessage(Temp, STM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_HollowBox_Bmp);
 			
 			App->CL_CreateBoxDialog->Zero_Dlg_Flags(hDlg);
 			App->CL_CreateBoxDialog->m_Solid = 1;
@@ -330,32 +330,30 @@ LRESULT CALLBACK A_CreateBoxDialog::Proc_CreateBox(HWND hDlg, UINT message, WPAR
 
 			RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			return TRUE;
-		}*/
+		}
 
-		//if (LOWORD(wParam) == IDC_BT_BOXCUTBRUSH)
-		//{
+		if (LOWORD(wParam) == IDC_BT_BOXCUTBRUSH)
+		{
 
-		//	if (App->CL_CreateBoxDialog->Cut_Flag == 0)
-		//	{
-		//		//App->CL_CreateBoxDialog->Zero_Dlg_Flags(hDlg);
-		//		App->CL_CreateBoxDialog->m_TCut = 1;
-		//		App->CL_CreateBoxDialog->Cut_Flag = 1;
+			if (App->CL_CreateBoxDialog->Cut_Flag == 0)
+			{
+				App->CL_CreateBoxDialog->m_TCut = 1;
+				App->CL_CreateBoxDialog->Cut_Flag = 1;
 
-		//		RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-		//		return 1;
-		//	}
-		//	else
-		//	{
-		//		//App->CL_CreateBoxDialog->Zero_Dlg_Flags(hDlg);
-		//		App->CL_CreateBoxDialog->m_TCut = 0;
-		//		App->CL_CreateBoxDialog->Cut_Flag = 0;
+				RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+				return 1;
+			}
+			else
+			{
+				App->CL_CreateBoxDialog->m_TCut = 0;
+				App->CL_CreateBoxDialog->Cut_Flag = 0;
 
-		//		RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-		//		return 1;
-		//	}
+				RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+				return 1;
+			}
 
-		//	return TRUE;
-		//}
+			return TRUE;
+		}
 
 		/*if (LOWORD(wParam) == IDC_CKWORLDCENTRE)
 		{
