@@ -154,8 +154,7 @@ LRESULT CALLBACK CL64_Properties_Templates::Proc_Templates(HWND hDlg, UINT messa
 
 		if (LOWORD(wParam) == IDC_BRUSH_CUBE_PRIMITIVE)
 		{
-			Debug
-			//App->CL_CreateBoxDialog->Start_CreateBox_Dlg();
+			App->CL_CreateBoxDialog->Start_CreateBox_Dlg();
 			return 1;
 		}
 

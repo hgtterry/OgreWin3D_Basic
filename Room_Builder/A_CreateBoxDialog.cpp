@@ -23,6 +23,7 @@ THE SOFTWARE.
 */
 
 #include "pch.h"
+#include "resource.h"
 #include "CL64_App.h"
 #include "A_CreateBoxDialog.h"
 
@@ -61,7 +62,7 @@ void A_CreateBoxDialog::Start_CreateBox_Dlg()
 
 	//App->CL_TabsControl->Enable_Tabs_Dlg(false);
 
-	//DialogBox(App->hInst, (LPCTSTR)IDD_CREATEBOX, App->MainHwnd, (DLGPROC)Proc_CreateBox);
+	DialogBox(App->hInst, (LPCTSTR)IDD_CREATE_BOX, App->MainHwnd, (DLGPROC)Proc_CreateBox);
 }
 
 // *************************************************************************
@@ -393,28 +394,28 @@ LRESULT CALLBACK A_CreateBoxDialog::Proc_CreateBox(HWND hDlg, UINT message, WPAR
 		}*/
 		
 		// -----------------------------------------------------------------
-		/*if (LOWORD(wParam) == IDOK)
+		if (LOWORD(wParam) == IDOK)
 		{
 
-			App->CL_CreateBoxDialog->Get_DLG_Members(hDlg);
+			/*App->CL_CreateBoxDialog->Get_DLG_Members(hDlg);
 			App->CL_CreateBoxDialog->Set_BoxTemplate();
 			App->CL_CreateBoxDialog->CreateCube();
 
 			App->CLSB_TabsControl->Enable_Tabs_Dlg(true);
-			App->CLSB_Tabs_Templates_Dlg->Enable_Insert_Button(true);
+			App->CLSB_Tabs_Templates_Dlg->Enable_Insert_Button(true);*/
 
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 
-		}*/
+		}
 
-		/*if (LOWORD(wParam) == IDCANCEL)
+		if (LOWORD(wParam) == IDCANCEL)
 		{
-			App->CLSB_TabsControl->Enable_Tabs_Dlg(true);
+			/*App->CLSB_TabsControl->Enable_Tabs_Dlg(true);*/
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 
-		}*/
+		}
 
 		break;
 	}
