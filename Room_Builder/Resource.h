@@ -29,6 +29,7 @@
 #define IDI_CUBE_PRIMITIVE              143
 #define IDD_CREATE_BOX                  144
 #define IDD_TEXT_DIALOG                 145
+#define IDB_SOLIDBOX                    146
 #define IDC_BANNER                      1000
 #define IDC_STTEXT                      1001
 #define IDC_STMESSAGE                   1002
@@ -59,8 +60,8 @@
 #define IDC_BT_BOXSOLID                 1027
 #define IDC_BT_BOXHOLLOW                1028
 #define IDC_BT_BOXCUTBRUSH              1029
-#define IDC_BUTTON4                     1030
-#define IDC_BUTTON5                     1031
+#define IDC_BOXDEFAULTS                 1030
+#define IDC_BT_BOXROOM                  1031
 #define IDC_XSIZETOP                    1032
 #define IDC_ZSIZETOP                    1033
 #define IDC_XSIZEBOT                    1034
@@ -68,12 +69,23 @@
 #define IDC_YSIZE                       1036
 #define IDC_THICKNESS                   1037
 #define IDC_EDITNAME                    1038
-#define IDC_CHECK1                      1039
-#define IDC_CHECK2                      1040
+#define IDC_CKWORLDCENTRE               1039
 #define IDC_BT_BRUSH_RENAME             1040
-#define IDC_EDIT1                       1041
+#define IDC_CKCAMPOSITION               1040
 #define IDC_EDITTEXT                    1041
 #define IDC_TITLENAME                   1042
+#define IDC_STTOP                       1043
+#define IDC_STBOTTOM                    1044
+#define IDC_STGENERAL                   1045
+#define IDC_STTOPX                      1046
+#define IDC_STZTOP                      1047
+#define IDC_STBOTX                      1048
+#define IDC_STBOTZ                      1049
+#define IDC_STYSIZE                     1050
+#define IDC_STWALL                      1051
+#define IDC_STNAME                      1052
+#define IDC_STCAMPOS                    1053
+#define IDC_PICTURE                     1054
 #define ID_DEBUG_GENERAL                32771
 #define ID_TEMPLATES_INSERT             32772
 #define ID_BRUSH_SELECT                 32773
@@ -91,9 +103,9 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
-#define _APS_NEXT_RESOURCE_VALUE        146
+#define _APS_NEXT_RESOURCE_VALUE        147
 #define _APS_NEXT_COMMAND_VALUE         32777
-#define _APS_NEXT_CONTROL_VALUE         1043
+#define _APS_NEXT_CONTROL_VALUE         1055
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif
