@@ -249,12 +249,10 @@ void CL64_Doc::Brush_Add_To_world()
 	if (!App->CL_Brush->Brush_IsHollow(nb) && !App->CL_Brush->Brush_IsMulti(nb))
 	{
 		App->CL_Doc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
-        App->CL_Doc->RebuildTrees();
 	}
 	else
 	{
 		App->CL_Doc->UpdateAllViews(UAV_ALL3DVIEWS | REBUILD_QUICK, NULL);
-        App->CL_Doc->RebuildTrees();
 	}
 
 	Placed = true;
@@ -291,8 +289,8 @@ void CL64_Doc::UpdateAllViews(int Mode, BOOL Override)
     RedrawWindow(App->CL_MapEditor->Right_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
     RedrawWindow(App->CL_MapEditor->Bottom_Left_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
-    App->CL_Doc->RebuildTrees();
-    App->CL_Mesh_Mgr->Update_World();
+    //App->CL_Doc->RebuildTrees();
+   // App->CL_Mesh_Mgr->Update_World();
 
 
     //RedrawWindow(App->CL_MapEditor->Main_Dlg_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
