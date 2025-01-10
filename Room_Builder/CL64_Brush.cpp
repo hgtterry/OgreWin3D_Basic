@@ -140,7 +140,7 @@ Brush* CL64_Brush::Brush_Create(int Type, const FaceList* fl, const BrushList* B
 		pBrush->GroupId = 0;
 		pBrush->HullSize = 1.0f;
 		pBrush->Color = 0;
-		pBrush->Name = (LPSTR)"NoName";
+		strcpy(pBrush->Name,"NoName");
 		pBrush->Type = Type;
 		pBrush->Centre_Marker = 0;
 		switch (Type)
@@ -867,7 +867,7 @@ void CL64_Brush::Brush_SetName(Brush* b, const char* newname)
 		App->CL_Maths->Ram_Free(b->Name);
 	}
 
-	b->Name = (LPSTR)newname;
+	strcpy(b->Name,newname);
 }
 
 // *************************************************************************
@@ -1364,7 +1364,7 @@ static Brush* Brush_CreateFromParent(const Brush* ParentBrush, const FaceList* f
 		pBrush->GroupId = ParentBrush->GroupId;
 		pBrush->HullSize = ParentBrush->HullSize;
 		pBrush->Color = ParentBrush->Color;
-		pBrush->Name = ParentBrush->Name;
+		strcpy(pBrush->Name,ParentBrush->Name);
 		pBrush->Type = BRUSH_CSG;
 		App->CL_FaceList->FaceList_GetBounds(fl, &pBrush->BoundingBox);
 	}
@@ -1927,7 +1927,7 @@ void CL64_Brush::BrushList_RebuildHollowFaces(BrushList* inList, int mid, Brush_
 					{
 						geRam_Free(bh->Name);
 					}*/
-					bh->Name = b->Name;
+					strcpy(bh->Name,b->Name);
 					Brush_CopyFaceInfo(b, bh);
 					BrushList_Remove(inList, b);
 					Brush_Destroy(&b);
@@ -1978,7 +1978,7 @@ void CL64_Brush::BrushList_RebuildHollowFaces(BrushList* inList, int mid, Brush_
 				{
 					geRam_Free(bh->Name);
 				}*/
-				bh->Name = b->Name;
+				strcpy(bh->Name,b->Name);
 			}
 		}
 	}

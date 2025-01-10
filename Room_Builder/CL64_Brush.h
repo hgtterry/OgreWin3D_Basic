@@ -47,7 +47,7 @@ typedef struct BrushTag
 	int				GroupId;
 	float			HullSize;		//for hollows
 	Ogre::int32		Color;
-	char* Name;
+	char			Name[MAX_PATH];
 	Box3d			BoundingBox;
 	bool			Centre_Marker;
 } Brush;

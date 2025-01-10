@@ -289,8 +289,8 @@ void CL64_Doc::UpdateAllViews(int Mode, BOOL Override)
     RedrawWindow(App->CL_MapEditor->Right_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
     RedrawWindow(App->CL_MapEditor->Bottom_Left_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
-    //App->CL_Doc->RebuildTrees();
-   // App->CL_Mesh_Mgr->Update_World();
+    App->CL_Doc->RebuildTrees();
+    App->CL_Mesh_Mgr->Update_World();
 
 
     //RedrawWindow(App->CL_MapEditor->Main_Dlg_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);

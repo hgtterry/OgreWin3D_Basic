@@ -394,10 +394,10 @@ LRESULT CALLBACK A_CreateBoxDialog::Proc_CreateBox(HWND hDlg, UINT message, WPAR
 		// -----------------------------------------------------------------
 		if (LOWORD(wParam) == IDOK)
 		{
-
 			App->CL_CreateBoxDialog->Get_DLG_Members(hDlg);
 			App->CL_CreateBoxDialog->Set_BoxTemplate();
 			App->CL_CreateBoxDialog->CreateCube();
+			
 
 			//App->CLSB_TabsControl->Enable_Tabs_Dlg(true);
 			App->CL_Properties_Templates->Enable_Insert_Button(true);
@@ -436,7 +436,7 @@ void A_CreateBoxDialog::CreateCube()
 	{
 		strcpy(App->CL_Doc->LastTemplateTypeName,BoxName);
 		//pBoxTemplate->
-		pCube->Name = (LPSTR)"Test";
+		strcpy(pCube->Name,"Test");
 		CreateNewTemplateBrush(pCube);
 
 	}
@@ -454,8 +454,6 @@ void A_CreateBoxDialog::CreateNewTemplateBrush(Brush *pBrush)
 	Ogre::Vector3 *pTemplatePos;
 	Ogre::Vector3 MoveVec;
 	Ogre::Vector3 BrushPos;
-
-	App->CL_Doc->CurBrush->Name = (LPSTR)"TEST";
 
 	if (App->CL_Doc->BTemplate != NULL)
 	{
@@ -662,7 +660,6 @@ void A_CreateBoxDialog::CreateDefault_TemplateCube()
 	pCube = App->CL_BrushTemplate->BrushTemplate_CreateBox(pBoxTemplate);
 	if (pCube != NULL)
 	{
-		pCube->Name = (LPSTR)"Test";
 		strcpy(App->CL_Doc->LastTemplateTypeName,BoxName);
 		CreateNewTemplateBrush(pCube);
 		

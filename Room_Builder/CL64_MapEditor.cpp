@@ -1186,7 +1186,6 @@ void CL64_MapEditor::On_Left_Button_Up(POINT CursorPosition)
 
 		App->CL_Doc->UpdateAllViews(0,0);
 
-		App->CL_Mesh_Mgr->Update_World();
 		//pDoc->SetModifiedFlag();
 		
 	}
