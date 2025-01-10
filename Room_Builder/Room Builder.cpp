@@ -154,8 +154,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             // ----------------------------- Debug
             case ID_DEBUG_GENERAL:
             {
-                App->CL_Doc->RebuildTrees();
-                App->CL_Mesh_Mgr->Update_World();
+                App->CL_Doc->RebuildTrees();        // Build Brushes
+                App->CL_Mesh_Mgr->Update_World();   // Build Ogre
 
                 return 1;
             }

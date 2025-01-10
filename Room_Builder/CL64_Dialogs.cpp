@@ -96,11 +96,131 @@ CL64_Dialogs::CL64_Dialogs(void)
 	Message_Text_Header[0] = 0;
 	Message_Text_Message[0] = 0;
 
+	btext[0] = 0;
+	Chr_Text[0] = 0;;
+
+	flag_Dlg_Canceled = 0;
 	flag_boolBrush_Properties_Dialog_Active = 0;
 }
 
 CL64_Dialogs::~CL64_Dialogs(void)
 {
+}
+
+// *************************************************************************
+// *	  		Dialog_Text:- Terry and Hazel Flanigan 2025				   *
+// *************************************************************************
+void CL64_Dialogs::Dialog_Text(int What_Check)
+{
+	flag_Dlg_Canceled = 0;
+	//What_Check_Name = What_Check;
+
+	DialogBox(App->hInst, (LPCTSTR)IDD_TEXT_DIALOG, App->MainHwnd, (DLGPROC)Proc_Dialog_Text);
+	
+}
+
+// **************************************************************************
+// *			Dialog_Text_Proc:- Terry and Hazel Flanigan 2025			*
+// **************************************************************************
+LRESULT CALLBACK CL64_Dialogs::Proc_Dialog_Text(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+	switch (message)
+	{
+	case WM_INITDIALOG:
+	{
+
+		//App->SetTitleBar(hDlg);
+
+		HFONT Font;
+		Font = CreateFont(-20, 0, 0, 0, FW_BOLD, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Courier Black");
+		SendDlgItemMessage(hDlg, IDC_TITLENAME, WM_SETFONT, (WPARAM)Font, MAKELPARAM(TRUE, 0));
+
+		SendDlgItemMessage(hDlg, IDC_EDITTEXT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		SetDlgItemText(hDlg, IDC_TITLENAME, (LPCTSTR)App->CL_Dialogs->btext);
+
+		SetDlgItemText(hDlg, IDC_EDITTEXT, (LPCTSTR)App->CL_Dialogs->Chr_Text);
+
+
+		return TRUE;
+	}
+	case WM_CTLCOLORSTATIC:
+	{
+		if (GetDlgItem(hDlg, IDC_TITLENAME) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 255));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+		return FALSE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->AppBackground;
+	}
+
+	case WM_NOTIFY:
+	{
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		if (some_item->idFrom == IDOK && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDCANCEL && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		return CDRF_DODEFAULT;
+	}
+
+	case WM_COMMAND:
+	{
+		if (LOWORD(wParam) == IDOK)
+		{
+			char buff[255];
+			GetDlgItemText(hDlg, IDC_EDITTEXT, (LPTSTR)buff, 255);
+
+			strcpy(App->CL_Dialogs->Chr_Text, buff);
+
+			/*if (App->CL_Dialogs->What_Check_Name == Enums::Check_Name_Brushes)
+			{
+				bool test = App->CL_Brush->Check_if_Name_Exist(buff);
+				if (test == 1)
+				{
+					App->Say("Brush Name Exist");
+					return TRUE;
+				}
+			}*/
+
+			
+			App->CL_Dialogs->flag_Dlg_Canceled = 0;
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDCANCEL)
+		{
+			App->CL_Dialogs->flag_Dlg_Canceled = 1;
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+	}
+
+	break;
+
+	}
+	return FALSE;
 }
 
 // *************************************************************************
@@ -277,7 +397,7 @@ LRESULT CALLBACK CL64_Dialogs::Proc_Brush_Properties(HWND hDlg, UINT message, WP
 		SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_CB_SELECTED_BRUSH, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ST_BP_SELECTEDBRUSHES, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
-		//SendDlgItemMessage(hDlg, IDC_BT_RENAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_BRUSH_RENAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
@@ -317,12 +437,12 @@ LRESULT CALLBACK CL64_Dialogs::Proc_Brush_Properties(HWND hDlg, UINT message, WP
 			return CDRF_DODEFAULT;
 		}
 
-		/*if (some_item->idFrom == IDC_BT_RENAME)
+		if (some_item->idFrom == IDC_BT_BRUSH_RENAME)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
 			return CDRF_DODEFAULT;
-		}*/
+		}
 
 		return CDRF_DODEFAULT;
 	}
@@ -330,58 +450,58 @@ LRESULT CALLBACK CL64_Dialogs::Proc_Brush_Properties(HWND hDlg, UINT message, WP
 	case WM_COMMAND:
 	{
 
-		//if (LOWORD(wParam) == IDC_CB_SELECTED_BRUSH)
-		//{
-		//	switch (HIWORD(wParam)) // Find out what message it was
-		//	{
-		//	case CBN_DROPDOWN:
-		//		break;
-		//	case CBN_CLOSEUP:
-		//	{
-		//		char buff[MAX_PATH]{ 0 };
+		if (LOWORD(wParam) == IDC_CB_SELECTED_BRUSH)
+		{
+			switch (HIWORD(wParam)) // Find out what message it was
+			{
+			case CBN_DROPDOWN:
+				break;
+			case CBN_CLOSEUP:
+			{
+				char buff[MAX_PATH]{ 0 };
 
-		//		HWND temp = GetDlgItem(hDlg, IDC_CB_SELECTED_BRUSH);
-		//		int Index = SendMessage(temp, CB_GETCURSEL, 0, 0);
+				HWND temp = GetDlgItem(hDlg, IDC_CB_SELECTED_BRUSH);
+				int Index = SendMessage(temp, CB_GETCURSEL, 0, 0);
 
-		//		App->CL_TabsGroups_Dlg->Selected_Index = Index;
-		//		App->CL_TabsGroups_Dlg->Selected_Brush = App->CL_Brush->Get_By_Index(Index);
-		//		App->CL_TabsGroups_Dlg->List_BrushData(hDlg);
+				App->CL_Properties_Brushes->Selected_Index = Index;
+				App->CL_Properties_Brushes->Selected_Brush = App->CL_Brush->Get_By_Index(Index);
+				App->CL_Dialogs->List_BrushData(hDlg);
 
-		//		App->CL_TabsGroups_Dlg->OnSelchangeBrushlist(Index, 1);
-		//	}
-		//	}
+				//App->CL_Properties_Brushes->OnSelchangeBrushlist(Index, 1);
+			}
+			}
 
-		//	return TRUE;
-		//}
+			return TRUE;
+		}
 
-		/*if (LOWORD(wParam) == IDC_BT_RENAME)
+		if (LOWORD(wParam) == IDC_BT_BRUSH_RENAME)
 		{
 			char Name[MAX_PATH];
 
-			strcpy(App->CLSB_Dialogs->btext, "Change File Name");
-			strcpy(App->CLSB_Dialogs->Chr_Text, App->CL_TabsGroups_Dlg->Selected_Brush->Name);
+			strcpy(App->CL_Dialogs->btext, "Change File Name");
+			strcpy(App->CL_Dialogs->Chr_Text, App->CL_Properties_Brushes->Selected_Brush->Name);
 
-			App->CLSB_Dialogs->Dialog_Text(Enums::Check_Name_Brushes);
+			App->CL_Dialogs->Dialog_Text(Enums::Check_Name_Brushes);
 
-			if (App->CLSB_Dialogs->Canceled == 0)
+			if (App->CL_Dialogs->flag_Dlg_Canceled == 0)
 			{
-				strcpy(Name, App->CLSB_Dialogs->Chr_Text);
+				strcpy(Name, App->CL_Dialogs->Chr_Text);
 			}
 			else
 			{
 				return TRUE;
 			}
 
-			Brush_SetName(App->CL_TabsGroups_Dlg->Selected_Brush, Name);
+			App->CL_Brush->Brush_SetName(App->CL_Properties_Brushes->Selected_Brush, Name);
 
-			App->CL_TabsGroups_Dlg->Fill_Brush_Combo(hDlg);
-			App->CL_TabsGroups_Dlg->List_BrushData(hDlg);
-			App->CL_TabsGroups_Dlg->Fill_ListBox();
+			App->CL_Dialogs->Fill_Brush_Combo(hDlg);
+			App->CL_Dialogs->List_BrushData(hDlg);
+			App->CL_Properties_Brushes->Fill_ListBox();
 
-			App->m_pDoc->SetModifiedFlag(TRUE);
+			//App->m_pDoc->SetModifiedFlag(TRUE);
 
 			return TRUE;
-		}*/
+		}
 
 		// -----------------------------------------------------------------
 		if (LOWORD(wParam) == IDOK)

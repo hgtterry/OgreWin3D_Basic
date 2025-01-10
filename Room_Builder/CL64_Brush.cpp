@@ -2265,4 +2265,31 @@ void CL64_Brush::Brush_ResizeFinal(Brush* b, int sides, int inidx, Ogre::Vector3
 	Brush_Bound(b);
 }
 
+// *************************************************************************
+// *							Get_By_Index							   *
+// *************************************************************************
+Brush* CL64_Brush::Get_By_Index(int Index)
+{
+	int Count = 0;
+	int Result = 1;
+	Brush* b;
+
+	BrushList* pList = App->CL_Level->Level_GetBrushes(App->CL_Doc->pLevel);
+
+	b = pList->First;
+	while (b != NULL)
+	{
+		if (Count == Index)
+		{
+			return b;
+		}
+
+		Count++;
+
+		b = b->Next;
+	}
+
+	return NULL;
+}
+
 

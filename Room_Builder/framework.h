@@ -41,4 +41,11 @@ namespace Enums
 		Cam_Mode_Third = 3,
 		Cam_Mode_Model = 4
 	};
+
+	enum Check_Text
+	{
+		Check_Name_None = 0,
+		Check_Name_Brushes = 1,
+		Check_Names_Objects = 2
+	};
 }

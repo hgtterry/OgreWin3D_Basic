@@ -98,7 +98,7 @@ void CL64_Doc::Init_Doc()
 	BrushTemplate_Box* pBoxTemplate;
 	pBoxTemplate = App->CL_Level->Level_GetBoxTemplate(pLevel);
 	BTemplate = App->CL_BrushTemplate->BrushTemplate_CreateBox(pBoxTemplate);
-	
+    
 	App->CL_Brush->Brush_Bound(BTemplate);
 	CurBrush = BTemplate;
 
@@ -146,7 +146,7 @@ void CL64_Doc::AddBrushToWorld()
 	else
 	{
 		OnBrushSubtractfromworld();
-        App->Say("AddBrushToWorld - Subtract");
+        //App->Say("AddBrushToWorld - Subtract");
 	}
 
 	//SetModifiedFlag();

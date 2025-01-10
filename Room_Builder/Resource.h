@@ -28,6 +28,7 @@
 #define IDD_TOP_TABS_HEADERS            142
 #define IDI_CUBE_PRIMITIVE              143
 #define IDD_CREATE_BOX                  144
+#define IDD_TEXT_DIALOG                 145
 #define IDC_BANNER                      1000
 #define IDC_STTEXT                      1001
 #define IDC_STMESSAGE                   1002
@@ -55,7 +56,6 @@
 #define IDC_BT_BRUSH_SHEAR              1024
 #define IDC_BT_BRUSH_DEBUG              1025
 #define IDC_BRUSH_CUBE_PRIMITIVE        1026
-#define IDC_BUTTON1                     1027
 #define IDC_BT_BOXSOLID                 1027
 #define IDC_BT_BOXHOLLOW                1028
 #define IDC_BT_BOXCUTBRUSH              1029
@@ -70,6 +70,10 @@
 #define IDC_EDITNAME                    1038
 #define IDC_CHECK1                      1039
 #define IDC_CHECK2                      1040
+#define IDC_BT_BRUSH_RENAME             1040
+#define IDC_EDIT1                       1041
+#define IDC_EDITTEXT                    1041
+#define IDC_TITLENAME                   1042
 #define ID_DEBUG_GENERAL                32771
 #define ID_TEMPLATES_INSERT             32772
 #define ID_BRUSH_SELECT                 32773
@@ -87,9 +91,9 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
-#define _APS_NEXT_RESOURCE_VALUE        145
+#define _APS_NEXT_RESOURCE_VALUE        146
 #define _APS_NEXT_COMMAND_VALUE         32777
-#define _APS_NEXT_CONTROL_VALUE         1040
+#define _APS_NEXT_CONTROL_VALUE         1043
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif
