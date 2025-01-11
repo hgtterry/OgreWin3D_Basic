@@ -28,5 +28,13 @@ class CL64_File
 public:
 	CL64_File(void);
 	~CL64_File(void);
+
+	void Save();
+
+private:
+
+	void Save_Document();
+	bool Save(const char* FileName);
+
 };
 

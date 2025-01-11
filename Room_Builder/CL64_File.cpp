@@ -33,3 +33,44 @@ CL64_File::CL64_File(void)
 CL64_File::~CL64_File(void)
 {
 }
+
+// *************************************************************************
+// *	            Save:- Terry and Hazel Flanigan 2025	               *
+// *************************************************************************
+void CL64_File::Save()
+{
+    int BC = App->CL_Brush->Get_Brush_Count();
+    if (BC > 0)
+    {
+        Save_Document();
+        //App->Say("Saved", App->CL_World->mCurrent_3DT_PathAndFile);
+    }
+    else
+    {
+        App->Say("No Brushes to Save");
+    }
+}
+
+// *************************************************************************
+// *	          Save_Document:- Terry and Hazel Flanigan 2025	           *
+// *************************************************************************
+void CL64_File::Save_Document()
+{
+    if (Save(App->CL_Doc->mCurrent_MTF_PathAndFile) == GE_FALSE)
+    {
+        App->Say("Error: Unable to save file");
+        return;;
+    }
+
+    App->CL_Doc->flag_IsNewDocument = 0;
+    App->CL_Doc->flag_Is_Modified = false;
+}
+
+// *************************************************************************
+// *				Save:- Terry and Hazel Flanigan 2025				   *
+// *************************************************************************
+bool CL64_File::Save(const char* FileName)
+{
+    Debug
+    return 1;
+}

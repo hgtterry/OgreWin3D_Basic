@@ -160,6 +160,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 return 1;
             }
 
+            // ----------------------------- File
+            case  ID_FILE_SAVE:
+            {
+                App->CL_File->Save();
+                return 1;
+            }
+           
             // ----------------------------- Templates
             case ID_TEMPLATES_INSERT:
             {

@@ -61,8 +61,14 @@ CL64_Doc::CL64_Doc(void)
 	TempEnt = FALSE;
     mCurrentTool = CURTOOL_NONE;
     mCurrentGroup = 0;
+
     flag_Is_Modified = 0;
+    flag_IsNewDocument = 0;
+
     SelState = NOSELECTIONS;
+
+    strcpy(mCurrent_MTF_PathAndFile, App->RB_Directory_FullPath);
+    strcat(mCurrent_MTF_PathAndFile, "\\Data\\Room_Builder\\Test.mtf");
 }
 
 CL64_Doc::~CL64_Doc(void)

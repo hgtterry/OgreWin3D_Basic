@@ -134,6 +134,7 @@ public:
 	// ------------------------------------------------------------------- 
 
 	char LastTemplateTypeName[MAX_PATH];
+	char mCurrent_MTF_PathAndFile[MAX_PATH];
 
 	BOOL SelectLock, TempEnt;
 
@@ -158,6 +159,8 @@ public:
 	int mCurrentGroup;
 	int mCurrentTool;
 	bool flag_Is_Modified;
+	bool flag_IsNewDocument;
+
 	//SelFaceList* pSelFaces;
 };
 
