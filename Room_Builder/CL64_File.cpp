@@ -107,7 +107,6 @@ void CL64_File::Save()
     if (BC > 0)
     {
         Save_Document();
-        //App->Say("Saved", App->CL_World->mCurrent_3DT_PathAndFile);
     }
     else
     {
@@ -180,12 +179,8 @@ signed int CL64_File::BrushList_Write(BrushList* BList, FILE* ofile)
 // *************************************************************************
 signed int CL64_File::Brush_Write(const Brush* b, FILE* ofile)
 {
-	assert(ofile);
-	assert(b);
-
 	if (b->Type == BRUSH_CSG)
 	{
-		// CSG brushes aren't saved
 		return GE_TRUE;
 	}
 

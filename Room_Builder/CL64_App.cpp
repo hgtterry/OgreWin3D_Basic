@@ -60,6 +60,8 @@ CL64_App::CL64_App(void)
 	CL_Brush_X =				nullptr;
 	CL_Top_Tabs =				nullptr;
 	CL_File =					nullptr;
+	CL_ParseFile =				nullptr;
+
 	// Templates Dialogs
 	CL_CreateBoxDialog =		nullptr;
 
@@ -129,6 +131,7 @@ void CL64_App::InitApp(void)
 	
 	CL_Brush_X =				new CL64_Brush_X();
 	CL_File =					new CL64_File;
+	CL_ParseFile =				new CL64_ParseFile();
 
 	// Templates Dialogs
 	CL_CreateBoxDialog =		new A_CreateBoxDialog();
