@@ -216,6 +216,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 return 1;
             }
             
+            // ----------------------------- Faces
+            case ID_FACES_SELECTALLFACESINBRUSH:
+            {
+                App->CL_Doc->SelectAllFacesInBrushes();
+                return 1;
+            }
+            
             // ---------------------------------------------
             case IDM_ABOUT:
                 DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);

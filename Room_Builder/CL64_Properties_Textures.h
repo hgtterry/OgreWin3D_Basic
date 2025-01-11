@@ -51,5 +51,9 @@ private:
 	static bool CALLBACK ViewerBasePic(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 	bool RenderTexture_Blit(HDC hDC, HBITMAP Bmp, const RECT* SourceRect, const RECT* DestRect);
+
+	void Apply_Texture();
+	int Get_Index_FromName(char* TextureName);
+
 };
 

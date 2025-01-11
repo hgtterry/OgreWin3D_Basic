@@ -69,6 +69,13 @@ enum SelectionState
 	ANYENTITY = 1792, ANYBRUSH = 7, ANYFACE = 112
 };
 
+enum fdocAdjustEnum
+{
+	ADJUST_MODE_TOGGLE,
+	ADJUST_MODE_BRUSH,
+	ADJUST_MODE_FACE
+};
+
 #define WINDOW_TOP_VIEW 0
 #define WINDOW_FRONT_VIEW 1
 #define WINDOW_SIDE_VIEW 2
@@ -122,6 +129,8 @@ public:
 	BOOL TempDeleteSelected(void);
 	void OnToolsTemplate();
 	void OnBrushSubtractfromworld();
+	void SelectAllFacesInBrushes(void);
+
 	// ------------------------------------------------------------------- 
 
 	char LastTemplateTypeName[MAX_PATH];
@@ -133,6 +142,8 @@ public:
 	SelBrushList* pSelBrushes;
 	SelBrushList* pTempSelBrushes;
 	SelFaceList* pSelFaces;
+
+	fdocAdjustEnum mAdjustMode;
 
 	DWORD SelState;
 

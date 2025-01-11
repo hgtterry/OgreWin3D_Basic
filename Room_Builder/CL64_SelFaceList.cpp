@@ -97,3 +97,57 @@ void CL64_SelFaceList::SelFaceList_RemoveAll(SelFaceList* pList)
 {
 	pList->FirstFree = 0;
 }
+
+// *************************************************************************
+// *						SelFaceList_GetFace							   *
+// *************************************************************************
+Face* CL64_SelFaceList::SelFaceList_GetFace(SelFaceList* pList, int FaceIndex)
+{
+	Face** ppFace;
+
+	ppFace = (Face**)Array_ItemPtr(pList->pItems, FaceIndex);
+
+	return *ppFace;
+}
+
+// *************************************************************************
+// *						SelFaceList_Add								   *
+// *************************************************************************
+signed int CL64_SelFaceList::SelFaceList_Add(SelFaceList* pList, Face* pFace)
+{
+	int i, Size;
+
+	// go through list to see if this face is already in the list
+	for (i = 0; i < pList->FirstFree; ++i)
+	{
+		Face* pRet;
+
+		pRet = SelFaceList_GetFace(pList, i);
+		if (pRet == pFace)
+		{
+			// face already in list
+			return GE_FALSE;
+		}
+	}
+
+	Size = Array_GetSize(pList->pItems);
+	assert(pList->FirstFree <= Size);
+
+	// Face isn't already in list.  Put it at the end...
+	if (pList->FirstFree == Size)
+	{
+		int NewSize;
+		// Need to allocate more space
+		NewSize = App->CL_Array->Array_Resize(pList->pItems, 2 * Size);
+		if (NewSize == Size)
+		{
+			// couldn't resize.  Guess I can't add the face
+			return GE_FALSE;
+		}
+	}
+	Array_PutAt(pList->pItems, pList->FirstFree, &pFace, sizeof(pFace));
+	++(pList->FirstFree);
+
+	return GE_TRUE;
+}
+

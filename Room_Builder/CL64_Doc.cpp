@@ -55,6 +55,8 @@ CL64_Doc::CL64_Doc(void)
     ScaleNum = 1;
     sides = 1;
 
+    mAdjustMode = ADJUST_MODE_FACE;
+
 	SelectLock = FALSE;
 	TempEnt = FALSE;
     mCurrentTool = CURTOOL_NONE;
@@ -1259,6 +1261,9 @@ void CL64_Doc::DoneResize(int sides, int inidx)
     UpdateSelected();
 }
 
+// *************************************************************************
+// *            OnToolsTemplate:- Terry and Hazel Flanigan 2025           *
+// *************************************************************************
 void CL64_Doc::OnToolsTemplate()
 {
     App->CL_Doc->ResetAllSelectedFaces();
@@ -1272,6 +1277,55 @@ void CL64_Doc::OnToolsTemplate()
     App->CL_Doc->mCurrentTool = ID_TOOLS_BRUSH_MOVEROTATEBRUSH;
 
     //App->CL_Doc->SetAdjustmentMode(ADJUST_MODE_FACE);
+    //ConfigureCurrentTool();
+}
+
+// *************************************************************************
+// *      ( Static ) SelAllBrushFaces:- Terry and Hazel Flanigan 2025      *
+// *************************************************************************
+static geBoolean SelAllBrushFaces(Brush* pBrush, void* lParam)
+{
+    int iFace, nFaces;
+
+    nFaces = App->CL_Brush->Brush_GetNumFaces(pBrush);
+    for (iFace = 0; iFace < nFaces; ++iFace)
+    {
+        Face* pFace;
+
+        pFace = App->CL_Brush->Brush_GetFace(pBrush, iFace);
+        App->CL_Face->Face_SetSelected(pFace, GE_TRUE);
+        App->CL_SelFaceList->SelFaceList_Add(App->CL_Doc->pSelFaces, pFace);
+    }
+    return GE_TRUE;
+}
+
+// *************************************************************************
+// *        SelectAllFacesInBrushes:- Terry and Hazel Flanigan 2025        *
+// *************************************************************************
+void CL64_Doc::SelectAllFacesInBrushes(void)
+{
+    DoGeneralSelect(); // hgtterry check function
+
+    // Select all faces on all selected brushes
+    int iBrush;
+    int NumSelBrushes = App->CL_SelBrushList->SelBrushList_GetSize(pSelBrushes);
+
+    for (iBrush = 0; iBrush < NumSelBrushes; ++iBrush)
+    {
+        Brush* pBrush;
+
+        pBrush = App->CL_SelBrushList->SelBrushList_GetBrush(pSelBrushes, iBrush);
+        if (App->CL_Brush->Brush_IsMulti(pBrush))
+        {
+            App->CL_Brush->BrushList_EnumLeafBrushes(App->CL_Brush->Brush_GetBrushList(pBrush), this, ::SelAllBrushFaces);
+        }
+        else
+        {
+            SelAllBrushFaces(pBrush, this);
+        }
+    }
+
+    UpdateSelected();
     //ConfigureCurrentTool();
 }
 

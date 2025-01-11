@@ -86,12 +86,15 @@
 #define IDC_STNAME                      1052
 #define IDC_STCAMPOS                    1053
 #define IDC_PICTURE                     1054
+#define IDC_BUTTON1                     1055
+#define IDC_BTTDAPPLY                   1055
 #define ID_DEBUG_GENERAL                32771
 #define ID_TEMPLATES_INSERT             32772
 #define ID_BRUSH_SELECT                 32773
 #define ID_BRUSH_MOVE                   32774
 #define ID_BRUSH_SCALE                  32775
 #define ID_BRUSH_SHEAR                  32776
+#define ID_FACES_SELECTALLFACESINBRUSH  32777
 #define ID_TOOLS_BRUSH_MOVEROTATEBRUSH  32784
 #define ID_TOOLS_BRUSH_SCALEBRUSH       32785
 #define ID_GENERALSELECT                32886
@@ -104,8 +107,8 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        147
-#define _APS_NEXT_COMMAND_VALUE         32777
-#define _APS_NEXT_CONTROL_VALUE         1055
+#define _APS_NEXT_COMMAND_VALUE         32778
+#define _APS_NEXT_CONTROL_VALUE         1056
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif

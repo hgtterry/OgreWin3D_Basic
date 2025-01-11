@@ -36,6 +36,8 @@ public:
 	void SelFaceList_Destroy(SelFaceList** ppList);
 	int SelFaceList_GetSize(SelFaceList* pList);
 	void SelFaceList_RemoveAll(SelFaceList* pList);
+	Face* SelFaceList_GetFace(SelFaceList* pList, int FaceIndex);
+	signed int SelFaceList_Add(SelFaceList* pList, Face* pFace);
 
 };
 
