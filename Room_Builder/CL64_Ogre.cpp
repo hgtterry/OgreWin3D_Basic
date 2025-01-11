@@ -46,6 +46,7 @@ CL64_Ogre::CL64_Ogre()
 
 	App_Resource_Group = "App_Resource_Group";
 	World_Resource_Group = "World_Resource_Group";
+	Export_Resource_Group = "Export_Resource_Group";
 }
 
 CL64_Ogre::~CL64_Ogre()

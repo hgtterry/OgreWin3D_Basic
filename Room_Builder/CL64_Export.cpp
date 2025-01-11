@@ -22,54 +22,15 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-#pragma once
-class CL64_Ogre3D
+#include "pch.h"
+#include "resource.h"
+#include "CL64_App.h"
+#include "CL64_Export.h"
+
+CL64_Export::CL64_Export()
 {
-public:
-	CL64_Ogre3D(void);
-	~CL64_Ogre3D(void);
+}
 
-	void Set_Export_Paths(void);
-	void Set_World_Paths(void);
-
-	void Export_To_Ogre3D(bool Create);
-	void Convert_ToOgre3D(bool Create);
-
-	void CreateMaterialFile();
-	void Get_Data(int Index, int FaceIndex);
-	bool DecompileTextures_TXL(char* PathAndFile);
-	bool Extract_TXL_Texture(char* Name, char* Folder);
-	bool LoadTextures_TXL(char* Name);
-	int WriteBMP8(const char* pszFile, geBitmap* pBitmap);
-
-	Ogre::ManualObject* Export_Manual;
-	Ogre::ManualObject* World_Manual;
-
-	char mJustName[MAX_PATH];
-	char mFolder_Path[MAX_PATH];
-	char mSelected_Directory[MAX_PATH];
-	char mDirectory_Name[MAX_PATH];
-	char mExport_Path[MAX_PATH];
-	char mExport_PathAndFile_Mesh[MAX_PATH];
-	char mExport_PathAndFile_Material[MAX_PATH];
-
-	char mWorld_Mesh_JustName[MAX_PATH];
-	char mWorld_File_PathAndFile[MAX_PATH];
-	char mWorld_File_Path[MAX_PATH];
-	char mExport_Just_Name[MAX_PATH];
-	char Material_PathAndFile[MAX_PATH];
-
-	float nx;
-	float ny;
-	float nz;
-
-	float u;
-	float v;
-
-	float x;
-	float y;
-	float z;
-
-	int NameIndex;
-};
-
+CL64_Export::~CL64_Export()
+{
+}

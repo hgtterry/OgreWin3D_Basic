@@ -31,6 +31,14 @@ CL64_Ogre3D::CL64_Ogre3D(void)
 	Export_Manual = nullptr;
 	World_Manual = nullptr;
 
+	mJustName[0] = 0;
+	mFolder_Path[0] = 0;
+	mSelected_Directory[0] = 0;
+	mDirectory_Name[0] = 0;
+	mExport_Path[0] = 0;
+	mExport_PathAndFile_Mesh[0] = 0;
+	mExport_PathAndFile_Material[0] = 0;
+
 	mWorld_Mesh_JustName[0] = 0;
 	mWorld_File_PathAndFile[0] = 0;
 	mWorld_File_Path[0] = 0;
@@ -78,6 +86,145 @@ void CL64_Ogre3D::Set_World_Paths(void)
 	x, y, z = 0;
 	nx, ny, nz = 0;
 	u, v = 0;
+}
+
+// *************************************************************************
+// *		Set_Export_Paths:- Terry and Hazel Flanigan 2023		 	   *
+// *************************************************************************
+void CL64_Ogre3D::Set_Export_Paths(void)
+{
+	char ExportFolder[MAX_PATH];
+
+	strcpy(mSelected_Directory, mFolder_Path);
+	strcpy(mDirectory_Name, mDirectory_Name);
+	strcpy(mExport_Just_Name, mJustName);
+
+	strcpy(mExport_Path, mSelected_Directory);
+	strcat(mExport_Path, "\\");
+	strcat(mExport_Path, mDirectory_Name);
+	strcat(mExport_Path, "\\");
+
+	strcpy(mExport_PathAndFile_Mesh, mExport_Path);
+	strcat(mExport_PathAndFile_Mesh, mExport_Just_Name);
+	strcat(mExport_PathAndFile_Mesh, ".mesh");
+
+	strcpy(mExport_PathAndFile_Material, mExport_Path);
+	strcat(mExport_PathAndFile_Material, mExport_Just_Name);
+	strcat(mExport_PathAndFile_Material, ".material");
+
+	x, y, z = 0;
+	nx, ny, nz = 0;
+	u, v = 0;
+
+}
+
+// *************************************************************************
+// *	  		Export_To_Ogre3D:- Terry and Hazel Flanigan 2025		   *
+// *************************************************************************
+void CL64_Ogre3D::Export_To_Ogre3D(bool Create)
+{
+	Set_Export_Paths();
+
+	CreateDirectory(mExport_Path, NULL);
+
+	//if (Create == 1)
+	//{
+	//	Export_Manual = App->CL_Ogre->mSceneMgr->createManualObject("OgreManual2");
+	//	Export_Manual->setRenderQueueGroup(2);
+	//}
+
+	//int A = 0;
+	//int B = 0;
+	//int C = 0;
+
+	//Export_Manual->setDynamic(false);
+	//Export_Manual->setCastShadows(false);
+
+	//Export_Manual->estimateVertexCount(App->CL_Model->VerticeCount);
+	//Export_Manual->estimateIndexCount(App->CL_Model->FaceCount);
+
+	//char MaterialNumber[255];
+	//char MatName[255];
+
+	//int GroupCountTotal = App->CL_Model->GroupCount;
+	//int Count = 0;
+	//int FaceCount = 0;
+	//int FaceIndex = 0;
+
+	//while (Count < GroupCountTotal)
+	//{
+	//	_itoa(Count, MaterialNumber, 10);
+	//	strcpy(MatName, mExport_Just_Name);
+	//	strcat(MatName, "_Material_");
+	//	strcat(MatName, MaterialNumber);
+
+	//	Export_Manual->begin(MatName, Ogre::RenderOperation::OT_TRIANGLE_LIST);
+
+	//	FaceCount = 0;
+	//	FaceIndex = 0;
+
+	//	while (FaceCount < App->CL_Model->Group[Count]->GroupFaceCount)
+	//	{
+	//		A = App->CL_Model->Group[Count]->Face_Data[FaceCount].a;
+	//		B = App->CL_Model->Group[Count]->Face_Data[FaceCount].b;
+	//		C = App->CL_Model->Group[Count]->Face_Data[FaceCount].c;
+
+	//		// --------------------------------------------------
+
+	//		Get_Data(Count, A);
+
+	//		Export_Manual->position(Ogre::Vector3(x, y, z));
+	//		Export_Manual->textureCoord(Ogre::Vector2(u, 1 - v));
+	//		Export_Manual->normal(Ogre::Vector3(nx, ny, nz));
+	//		Export_Manual->index(FaceIndex);
+	//		FaceIndex++;
+
+	//		Get_Data(Count, B);
+
+	//		Export_Manual->position(Ogre::Vector3(x, y, z));
+	//		Export_Manual->textureCoord(Ogre::Vector2(u, 1 - v));
+	//		Export_Manual->normal(Ogre::Vector3(nx, ny, nz));
+	//		Export_Manual->index(FaceIndex);
+	//		FaceIndex++;
+
+	//		Get_Data(Count, C);
+
+	//		Export_Manual->position(Ogre::Vector3(x, y, z));
+	//		Export_Manual->textureCoord(Ogre::Vector2(u, 1 - v));
+	//		Export_Manual->normal(Ogre::Vector3(nx, ny, nz));
+	//		Export_Manual->index(FaceIndex);
+
+	//		FaceIndex++;
+	//		FaceCount++;
+	//	}
+
+	//	Export_Manual->end();
+
+	//	Count++;
+	//}
+
+
+	/*if (Export_Manual->getNumSections() == 0)
+	{
+		App->Say("Can not create Ogre Sections");
+		return;
+	}*/
+
+	/*Ogre::MeshPtr mesh = Export_Manual->convertToMesh("TestMesh");
+
+	mesh->setAutoBuildEdgeLists(true);
+	mesh->buildEdgeList();
+
+	App->CL_Ogre->mSceneMgr->destroyManualObject(Export_Manual);
+
+	Ogre::MeshSerializer* ms = new Ogre::MeshSerializer();
+	ms->exportMesh(mesh.get(), mExport_PathAndFile_Mesh);
+	delete(ms);
+
+	DecompileTextures_TXL(mExport_Path);*/
+
+	//CreateMaterialFile(mExport_PathAndFile_Material);
+
 }
 
 // *************************************************************************
@@ -255,9 +402,8 @@ void CL64_Ogre3D::Convert_ToOgre3D(bool Create)
 	App->CL_Mesh_Mgr->World_Node->setScale(1, 1, 1);
 	//App->CL_Mesh_Mgr->World_Node->showBoundingBox(true);
 	// 
-//	remove(mWorld_File_PathAndFile);
-//	remove(Material_PathAndFile);
-
+	remove(mWorld_File_PathAndFile);
+	remove(Material_PathAndFile);
 }
 
 // *************************************************************************
