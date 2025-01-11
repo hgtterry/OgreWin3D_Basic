@@ -28,5 +28,20 @@ class CL64_Export
 public:
 	CL64_Export();
 	~CL64_Export();
+
+	void Ogre_Export_Dlg();
+
+	char mFolder_Path[MAX_PATH];
+	char mDirectory_Name[MAX_PATH];
+	char mJustName[MAX_PATH];
+
+private:
+	static LRESULT CALLBACK Proc_Ogre_Export_Dlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+
+	void Select_Folder();
+
+	char szSelectedDir[MAX_PATH];
+
+	bool flag_Canceled;
 };
 

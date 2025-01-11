@@ -167,6 +167,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 return 1;
             }
            
+            case  ID_EXPORT_OGRE3D:
+            {
+                App->CL_Export->Ogre_Export_Dlg();
+                return 1;
+            }
+
             // ----------------------------- Templates
             case ID_TEMPLATES_INSERT:
             {
