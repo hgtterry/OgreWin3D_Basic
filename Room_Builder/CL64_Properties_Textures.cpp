@@ -245,11 +245,8 @@ static void TextureBrush(Brush* pBrush, int SelId, char const* Name, WadFileEntr
 {
 	int j;
 
-	assert(pBrush);
-
 	if (App->CL_Brush->Brush_IsMulti(pBrush))
 	{
-		// changed QD 12/03
 		TextureBrushList((BrushList*)App->CL_Brush->Brush_GetBrushList(pBrush), SelId, Name, pbmp);
 	}
 	else
@@ -259,7 +256,7 @@ static void TextureBrush(Brush* pBrush, int SelId, char const* Name, WadFileEntr
 			Face* pFace;
 
 			pFace = App->CL_Brush->Brush_GetFace(pBrush, j);
-			TextureFace(pFace, SelId, Name, pbmp); // changed QD 12/03
+			TextureFace(pFace, SelId, Name, pbmp); 
 		}
 	}
 }
@@ -271,9 +268,6 @@ static void TextureBrushList(BrushList* pList, int SelId, char const* Name, WadF
 {
 	Brush* b;
 	BrushIterator bi;
-
-	assert(pList);
-	assert(Name);
 
 	for (b = App->CL_Brush->BrushList_GetFirst(pList, &bi); b; b = App->CL_Brush->BrushList_GetNext(&bi))
 	{
@@ -325,12 +319,11 @@ void CL64_Properties_Textures::Apply_Texture()
 			Face* pFace;
 			pFace = App->CL_SelFaceList->SelFaceList_GetFace(App->CL_Doc->pSelFaces, i);
 
-			// changed QD 12/03
 			WadFileEntry* BitmapPtr = App->CL_Doc->GetDibBitmap(m_CurrentTexture);
 			TextureFace(pFace, SelectedItem, (LPCSTR)m_CurrentTexture, BitmapPtr);
-			// end change
+			
 		}
-		// have to go through the selected brushes and update their child faces
+		
 		int NumSelBrushes = App->CL_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes);
 		for (i = 0; i < NumSelBrushes; ++i)
 		{
@@ -350,19 +343,19 @@ void CL64_Properties_Textures::Apply_Texture()
 			for (i = 0; i < NumSelBrushes; ++i)
 			{
 				Brush* pBrush = App->CL_SelBrushList->SelBrushList_GetBrush(App->CL_Doc->pSelBrushes, i);
-				// changed QD 12/03
+				
 				WadFileEntry* BitmapPtr = App->CL_Doc->GetDibBitmap(m_CurrentTexture);
 				TextureBrush(pBrush, SelectedItem, (LPCSTR)m_CurrentTexture, BitmapPtr);
-				// end change
+				
 				App->CL_Brush->Brush_UpdateChildFaces(pBrush);
 			}
 		}
 		else
 		{
-			// changed QD 12/03
+			
 			WadFileEntry* BitmapPtr = App->CL_Doc->GetDibBitmap(m_CurrentTexture);
 			TextureBrush(App->CL_Doc->CurBrush, SelectedItem, (LPCSTR)m_CurrentTexture, BitmapPtr);
-			// end change
+			
 			App->CL_Brush->Brush_UpdateChildFaces(App->CL_Doc->CurBrush);
 		}
 		break;

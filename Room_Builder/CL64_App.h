@@ -56,7 +56,7 @@ THE SOFTWARE.
 #include "CL64_Model.h"
 #include "CL64_Ogre3D.h"
 #include "CL64_Top_Tabs.h"
-
+#include "CL64_File.h"
 // Templates Dialogs
 #include "A_CreateBoxDialog.h"
 
@@ -97,7 +97,7 @@ public:
 	CL64_Model*					CL_Model;
 	CL64_Ogre3D*				CL_Ogre3D;
 	CL64_Top_Tabs*				CL_Top_Tabs;
-
+	CL64_File*					CL_File;
 	// Templates Dialogs
 	A_CreateBoxDialog*			CL_CreateBoxDialog;
 	

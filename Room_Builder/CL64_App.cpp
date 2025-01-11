@@ -59,7 +59,7 @@ CL64_App::CL64_App(void)
 	CL_Ogre3D =					nullptr;
 	CL_Brush_X =				nullptr;
 	CL_Top_Tabs =				nullptr;
-
+	CL_File =					nullptr;
 	// Templates Dialogs
 	CL_CreateBoxDialog =		nullptr;
 
@@ -128,6 +128,7 @@ void CL64_App::InitApp(void)
 	CL_Top_Tabs =				new CL64_Top_Tabs();
 	
 	CL_Brush_X =				new CL64_Brush_X();
+	CL_File =					new CL64_File;
 
 	// Templates Dialogs
 	CL_CreateBoxDialog =		new A_CreateBoxDialog();
