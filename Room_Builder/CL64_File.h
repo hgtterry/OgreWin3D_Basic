@@ -23,6 +23,7 @@ THE SOFTWARE.
 */
 
 #pragma once
+
 class CL64_File
 {
 public:
@@ -36,5 +37,11 @@ private:
 	void Save_Document();
 	bool Save(const char* FileName);
 
+	signed int BrushList_Write(BrushList* BList, FILE* ofile);
+	signed int Brush_Write(const Brush* b, FILE* ofile);
+	signed int	FaceList_Write(const FaceList* pList, FILE* f);
+	signed int Face_Write(const Face* f, FILE* wf);
+
+	float Level_Version;
 };
 

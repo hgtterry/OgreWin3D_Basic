@@ -1009,7 +1009,7 @@ void CL64_Face::Face_XfmTexture(Face* f, const Matrix3d* pXfm)
 // *************************************************************************
 // *								Face_Scale						 	   *
 // *************************************************************************
-signed int	CL64_Face::Face_Scale(Face* f, const Ogre::Vector3* ScaleVec)
+signed int CL64_Face::Face_Scale(Face* f, const Ogre::Vector3* ScaleVec)
 {
 	signed int Success;
 	//MRB END
@@ -1035,5 +1035,30 @@ signed int	CL64_Face::Face_Scale(Face* f, const Ogre::Vector3* ScaleVec)
 	f->Tex.DirtyFlag = GE_TRUE;
 	
 	return Success;
+}
 
+// *************************************************************************
+// *						Face_GetTextureScale					 	   *
+// *************************************************************************
+void CL64_Face::Face_GetTextureScale(const Face* f, float* pxScale, float* pyScale)
+{
+	*pxScale = f->Tex.xScale;
+	*pyScale = f->Tex.yScale;
+}
+
+// *************************************************************************
+// *						Face_GetTextureShift					 	   *
+// *************************************************************************
+void CL64_Face::Face_GetTextureShift(const Face* f, int* pxShift, int* pyShift)
+{
+	*pxShift = f->Tex.xShift;
+	*pyShift = f->Tex.yShift;
+}
+
+// *************************************************************************
+// *						Face_GetTextureRotate					 	   *
+// *************************************************************************
+float CL64_Face::Face_GetTextureRotate(const Face* f)
+{
+	return	f->Tex.Rotate;
 }

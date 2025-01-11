@@ -82,6 +82,9 @@ public:
 	void Face_SetSelected(Face* f, const signed int bState);
 	signed int Face_Scale(Face* f, const Ogre::Vector3* ScaleVec);
 	void Face_XfmTexture(Face* f, const Matrix3d* pXfm);
+	void Face_GetTextureScale(const Face* f, float* pxScale, float* pyScale);
+	void Face_GetTextureShift(const Face* f, int* pxShift, int* pyShift);
+	float Face_GetTextureRotate(const Face* f);
 
 };
 
