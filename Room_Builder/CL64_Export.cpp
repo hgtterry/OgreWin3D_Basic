@@ -38,6 +38,7 @@ CL64_Export::CL64_Export()
 	strcpy(mJustName,"World1");
 
 	szSelectedDir[0] = 0;
+	DeskTop_Folder[0] = 0;
 
 	flag_Canceled = 0;
 }
@@ -75,11 +76,15 @@ LRESULT CALLBACK CL64_Export::Proc_Ogre_Export_Dlg(HWND hDlg, UINT message, WPAR
 		SendDlgItemMessage(hDlg, IDC_BT_OGRE_NAMECHANGE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_OGREBROWSE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
+		SendDlgItemMessage(hDlg, IDC_CK_BL_DESKTOP, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
 		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		SetDlgItemText(hDlg, IDC_ST_OGRE_FILENAME, (LPCTSTR)App->CL_Export->mJustName);
 		SetDlgItemText(hDlg, IDC_ST_OGRE_PATH, (LPCTSTR)App->CL_Export->mFolder_Path);
+
+		
 
 		return TRUE;
 	}
@@ -124,6 +129,14 @@ LRESULT CALLBACK CL64_Export::Proc_Ogre_Export_Dlg(HWND hDlg, UINT message, WPAR
 		}
 
 		if (GetDlgItem(hDlg, IDC_ST_STPATH) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		if (GetDlgItem(hDlg, IDC_CK_BL_DESKTOP) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 0, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
@@ -189,8 +202,39 @@ LRESULT CALLBACK CL64_Export::Proc_Ogre_Export_Dlg(HWND hDlg, UINT message, WPAR
 			return TRUE;
 		}
 	
+		if (LOWORD(wParam) == IDC_CK_BL_DESKTOP)
+		{
+			HWND temp = GetDlgItem(hDlg, IDC_CK_BL_DESKTOP);
+			int test = SendMessage(temp, BM_GETCHECK, 0, 0);
+			if (test == BST_CHECKED)
+			{
+				strcpy(App->CL_Export->mFolder_Path, App->CL_Export->DeskTop_Folder);
+				SetDlgItemText(hDlg, IDC_ST_OGRE_PATH, (LPCTSTR)App->CL_Export->mFolder_Path);
+				return 1;
+			}
+			else
+			{
+				return 1;
+			}
+
+			return TRUE;
+		}
+		
 		if (LOWORD(wParam) == IDOK)
 		{
+			// Check Path
+			int result = strcmp(App->CL_Export->mFolder_Path, "");
+			if (result == 0)
+			{
+				App->Say("No Path Selected");
+				return 1;
+			}
+
+			strcpy(App->CL_Export->mDirectory_Name, App->CL_Export->mJustName);
+			strcat(App->CL_Export->mDirectory_Name, "_Ogre_All");
+
+			App->CL_Ogre3D->Export_To_Ogre3D(true);
+
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}

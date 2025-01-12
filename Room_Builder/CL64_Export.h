@@ -35,12 +35,13 @@ public:
 	char mDirectory_Name[MAX_PATH];
 	char mJustName[MAX_PATH];
 
+	char szSelectedDir[MAX_PATH];
+	char DeskTop_Folder[MAX_PATH];
+
 private:
 	static LRESULT CALLBACK Proc_Ogre_Export_Dlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	void Select_Folder();
-
-	char szSelectedDir[MAX_PATH];
 
 	bool flag_Canceled;
 };

@@ -25,6 +25,7 @@ THE SOFTWARE.
 #include "pch.h"
 #include "resource.h"
 #include "CL64_App.h"
+#include "Shlobj.h"
 
 CL64_App::CL64_App(void)
 {
@@ -140,6 +141,20 @@ void CL64_App::InitApp(void)
 
 	
 	SetBrushes_Fonts();
+
+	char Deskdir[MAX_PATH];
+	wchar_t* d_path = new wchar_t[128];
+	if (SUCCEEDED(SHGetKnownFolderPath(FOLDERID_Desktop, 0, NULL, &d_path)))//KF_FLAG_CREATE
+	{
+		wsprintf(Deskdir, "%ls", d_path);
+		CoTaskMemFree(d_path);
+		strcpy(App->CL_Export->DeskTop_Folder, Deskdir);
+	}
+	else
+	{
+		App->Say("Can not access user folder");
+	}
+
 }
 
 // *************************************************************************

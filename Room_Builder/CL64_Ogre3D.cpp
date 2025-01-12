@@ -89,12 +89,10 @@ void CL64_Ogre3D::Set_World_Paths(void)
 }
 
 // *************************************************************************
-// *		Set_Export_Paths:- Terry and Hazel Flanigan 2023		 	   *
+// *		Set_Export_Paths:- Terry and Hazel Flanigan 2025		 	   *
 // *************************************************************************
 void CL64_Ogre3D::Set_Export_Paths(void)
 {
-	char ExportFolder[MAX_PATH];
-
 	strcpy(mSelected_Directory, App->CL_Export->mFolder_Path);
 	strcpy(mDirectory_Name, App->CL_Export->mDirectory_Name);
 	strcpy(mExport_Just_Name, App->CL_Export->mJustName);
@@ -126,6 +124,16 @@ void CL64_Ogre3D::Export_To_Ogre3D(bool Create)
 	Set_Export_Paths();
 
 	CreateDirectory(mExport_Path, NULL);
+
+	if (Ogre::ResourceGroupManager::getSingleton().resourceGroupExists(App->CL_Ogre->Export_Resource_Group))
+	{
+		Ogre::ResourceGroupManager::getSingleton().destroyResourceGroup(App->CL_Ogre->Export_Resource_Group);
+	}
+
+	Ogre::ResourceGroupManager::getSingleton().createResourceGroup(App->CL_Ogre->Export_Resource_Group);
+	Ogre::ResourceGroupManager::getSingleton().initialiseResourceGroup(App->CL_Ogre->Export_Resource_Group);
+
+	Export_MaterialFile(mExport_PathAndFile_Material);
 
 	//if (Create == 1)
 	//{
@@ -225,6 +233,56 @@ void CL64_Ogre3D::Export_To_Ogre3D(bool Create)
 
 	//CreateMaterialFile(mExport_PathAndFile_Material);
 
+}
+
+// *************************************************************************
+// *		Export_MaterialFile:- Terry and Hazel Flanigan 2025		   	   *
+// *************************************************************************
+void CL64_Ogre3D::Export_MaterialFile(char* MatFileName)
+{
+	char MatName[255];
+	char File[255];
+	char MaterialNumber[255];
+
+	Ogre::String OMatFileName = MatFileName;
+	Ogre::String OFile;
+	Ogre::String OMatName;
+
+	int numMaterials = App->CL_Model->GroupCount;
+
+	Ogre::MaterialManager& matMgrSgl = Ogre::MaterialManager::getSingleton();
+
+	Ogre::MaterialSerializer matSer;
+
+	for (int i = 0; i < numMaterials; ++i)
+	{
+		_itoa(i, MaterialNumber, 10);
+		strcpy(MatName, mExport_Just_Name);
+		strcat(MatName, "_Material_");
+		strcat(MatName, MaterialNumber);
+
+		strcpy(File, App->CL_Model->Group[i]->Text_FileName);
+
+		OMatName = MatName;
+		OFile = File;
+
+		Ogre::MaterialPtr ogremat = matMgrSgl.create(OMatName,App->CL_Ogre->Export_Resource_Group);
+
+
+		if (0 < strlen(File))
+		{
+			ogremat->getTechnique(0)->getPass(0)->createTextureUnitState(File);
+
+			if (_stricmp(File + strlen(File) - 4, ".TGA") == 0)
+			{
+				ogremat->getTechnique(0)->getPass(0)->setAlphaRejectSettings(Ogre::CMPF_GREATER, 128);
+			}
+		}
+
+		matSer.queueForExport(ogremat);
+	}
+
+	matSer.exportQueued(OMatFileName);
 }
 
 // *************************************************************************

@@ -33,9 +33,12 @@ public:
 	void Set_World_Paths(void);
 
 	void Export_To_Ogre3D(bool Create);
-	void Convert_ToOgre3D(bool Create);
+	void Export_MaterialFile(char* MatFileName);
 
+	void Convert_ToOgre3D(bool Create);
 	void CreateMaterialFile();
+
+
 	void Get_Data(int Index, int FaceIndex);
 	bool DecompileTextures_TXL(char* PathAndFile);
 	bool Extract_TXL_Texture(char* Name, char* Folder);
