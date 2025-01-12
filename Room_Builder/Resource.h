@@ -95,8 +95,12 @@
 #define IDC_ST_STPATH                   1060
 #define IDC_BT_OGRE_NAMECHANGE          1061
 #define IDC_BT_OGREBROWSE               1062
-#define IDC_CHECK1                      1063
 #define IDC_CK_BL_DESKTOP               1063
+#define IDC_ST_OGRE_SUBFOLDER           1064
+#define IDC_CK_CREATE_SUBDIR            1065
+#define IDC_ST_STOGRESUB                1066
+#define IDC_CHECK3                      1067
+#define IDC_CK_BUILDEDGELIST            1067
 #define ID_DEBUG_GENERAL                32771
 #define ID_TEMPLATES_INSERT             32772
 #define ID_BRUSH_SELECT                 32773
@@ -122,7 +126,7 @@
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        148
 #define _APS_NEXT_COMMAND_VALUE         32783
-#define _APS_NEXT_CONTROL_VALUE         1064
+#define _APS_NEXT_CONTROL_VALUE         1068
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif

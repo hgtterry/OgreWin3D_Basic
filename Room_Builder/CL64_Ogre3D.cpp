@@ -119,7 +119,7 @@ void CL64_Ogre3D::Set_Export_Paths(void)
 // *************************************************************************
 // *	  		Export_To_Ogre3D:- Terry and Hazel Flanigan 2025		   *
 // *************************************************************************
-void CL64_Ogre3D::Export_To_Ogre3D(bool Create)
+void CL64_Ogre3D::Export_To_Ogre3D()
 {
 	Set_Export_Paths();
 
@@ -136,12 +136,8 @@ void CL64_Ogre3D::Export_To_Ogre3D(bool Create)
 	Export_MaterialFile(mExport_PathAndFile_Material);
 	DecompileTextures_TXL(mExport_Path);
 
-	if (Create == 1)
-	{
-		Export_Manual = App->CL_Ogre->mSceneMgr->createManualObject("OgreManual2");
-		Export_Manual->setRenderQueueGroup(2);
-	}
-
+	Export_Manual = App->CL_Ogre->mSceneMgr->createManualObject("OgreManual2");
+	
 	int A = 0;
 	int B = 0;
 	int C = 0;
@@ -152,8 +148,8 @@ void CL64_Ogre3D::Export_To_Ogre3D(bool Create)
 	Export_Manual->estimateVertexCount(App->CL_Model->VerticeCount);
 	Export_Manual->estimateIndexCount(App->CL_Model->FaceCount);
 
-	char MaterialNumber[255];
-	char MatName[255];
+	char MaterialNumber[MAX_PATH];
+	char MatName[MAX_PATH];
 
 	int GroupCountTotal = App->CL_Model->GroupCount;
 	int Count = 0;
@@ -222,15 +218,22 @@ void CL64_Ogre3D::Export_To_Ogre3D(bool Create)
 	Ogre::MeshPtr mesh = Export_Manual->convertToMesh("TestMesh",App->CL_Ogre->Export_Resource_Group);
 
 	mesh->setAutoBuildEdgeLists(true);
-	mesh->buildEdgeList();
 
+	if (App->CL_Export->flag_Build_Edge_List == 1)
+	{
+		mesh->buildEdgeList();
+	}
+	
 	App->CL_Ogre->mSceneMgr->destroyManualObject(Export_Manual);
 
 	Ogre::MeshSerializer* ms = new Ogre::MeshSerializer();
 	ms->exportMesh(mesh.get(), mExport_PathAndFile_Mesh);
 	delete(ms);
 
-	App->Say("Exported");
+	char File[MAX_PATH];
+	strcpy(File, mExport_Just_Name);
+	strcat(File, ".mesh");
+	App->Say(File,(LPSTR)"Exported");
 
 }
 

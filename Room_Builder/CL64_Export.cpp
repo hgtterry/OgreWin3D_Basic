@@ -41,6 +41,7 @@ CL64_Export::CL64_Export()
 	DeskTop_Folder[0] = 0;
 
 	flag_Canceled = 0;
+	flag_Build_Edge_List = 1;
 }
 
 CL64_Export::~CL64_Export()
@@ -69,23 +70,44 @@ LRESULT CALLBACK CL64_Export::Proc_Ogre_Export_Dlg(HWND hDlg, UINT message, WPAR
 		
 		SendDlgItemMessage(hDlg, IDC_ST_STFILENAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ST_STPATH, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-
+		SendDlgItemMessage(hDlg, IDC_ST_STOGRESUB, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
 		SendDlgItemMessage(hDlg, IDC_ST_OGRE_FILENAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ST_OGRE_PATH, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-
+		SendDlgItemMessage(hDlg, IDC_ST_OGRE_SUBFOLDER, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
 		SendDlgItemMessage(hDlg, IDC_BT_OGRE_NAMECHANGE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_OGREBROWSE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
 		SendDlgItemMessage(hDlg, IDC_CK_BL_DESKTOP, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-
+		SendDlgItemMessage(hDlg, IDC_CK_CREATE_SUBDIR, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_CK_BUILDEDGELIST, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
 		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		SetDlgItemText(hDlg, IDC_ST_OGRE_FILENAME, (LPCTSTR)App->CL_Export->mJustName);
 		SetDlgItemText(hDlg, IDC_ST_OGRE_PATH, (LPCTSTR)App->CL_Export->mFolder_Path);
-
 		
+		
+		strcpy(App->CL_Export->mDirectory_Name, App->CL_Export->mJustName);
+		strcat(App->CL_Export->mDirectory_Name, "_Ogre_All");
 
+		SetDlgItemText(hDlg, IDC_ST_OGRE_SUBFOLDER, (LPCTSTR)App->CL_Export->mDirectory_Name);
+		
+		HWND Temp = GetDlgItem(hDlg, IDC_CK_CREATE_SUBDIR);
+		SendMessage(Temp, BM_SETCHECK, 1, 0);
+
+		Temp = GetDlgItem(hDlg, IDC_CK_BUILDEDGELIST);
+		if (App->CL_Export->flag_Build_Edge_List == 1)
+		{
+			SendMessage(Temp, BM_SETCHECK, 1, 0);
+		}
+		else
+		{
+			SendMessage(Temp, BM_SETCHECK, 0, 0);
+		}
+		
 		return TRUE;
 	}
 
@@ -120,6 +142,14 @@ LRESULT CALLBACK CL64_Export::Proc_Ogre_Export_Dlg(HWND hDlg, UINT message, WPAR
 			return (UINT)App->Brush_White;
 		}
 
+		if (GetDlgItem(hDlg, IDC_ST_OGRE_SUBFOLDER) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->Brush_White;
+		}
+
 		if (GetDlgItem(hDlg, IDC_ST_STFILENAME) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 0, 0));
@@ -136,7 +166,31 @@ LRESULT CALLBACK CL64_Export::Proc_Ogre_Export_Dlg(HWND hDlg, UINT message, WPAR
 			return (UINT)App->AppBackground;
 		}
 
+		if (GetDlgItem(hDlg, IDC_ST_STOGRESUB) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+		
 		if (GetDlgItem(hDlg, IDC_CK_BL_DESKTOP) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+		
+		if (GetDlgItem(hDlg, IDC_CK_CREATE_SUBDIR) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		if (GetDlgItem(hDlg, IDC_CK_BUILDEDGELIST) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 0, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
@@ -220,6 +274,24 @@ LRESULT CALLBACK CL64_Export::Proc_Ogre_Export_Dlg(HWND hDlg, UINT message, WPAR
 			return TRUE;
 		}
 		
+		if (LOWORD(wParam) == IDC_CK_BUILDEDGELIST)
+		{
+			HWND temp = GetDlgItem(hDlg, IDC_CK_BUILDEDGELIST);
+			int test = SendMessage(temp, BM_GETCHECK, 0, 0);
+			if (test == BST_CHECKED)
+			{
+				App->CL_Export->flag_Build_Edge_List = 1;
+				return 1;
+			}
+			else
+			{
+				App->CL_Export->flag_Build_Edge_List = 0;
+				return 1;
+			}
+
+			return TRUE;
+		}
+
 		if (LOWORD(wParam) == IDOK)
 		{
 			// Check Path
@@ -233,7 +305,7 @@ LRESULT CALLBACK CL64_Export::Proc_Ogre_Export_Dlg(HWND hDlg, UINT message, WPAR
 			strcpy(App->CL_Export->mDirectory_Name, App->CL_Export->mJustName);
 			strcat(App->CL_Export->mDirectory_Name, "_Ogre_All");
 
-			App->CL_Ogre3D->Export_To_Ogre3D(true);
+			App->CL_Ogre3D->Export_To_Ogre3D();
 
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;

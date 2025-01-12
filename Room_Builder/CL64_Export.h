@@ -38,6 +38,8 @@ public:
 	char szSelectedDir[MAX_PATH];
 	char DeskTop_Folder[MAX_PATH];
 
+	bool flag_Build_Edge_List;
+
 private:
 	static LRESULT CALLBACK Proc_Ogre_Export_Dlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
