@@ -28,7 +28,8 @@ THE SOFTWARE.
 #include "CL64_Export.h"
 
 #include <string>
-#include <shobjidl.h> 
+//#include <shobjidl.h> 
+#include <shobjidl_core.h>
 
 CL64_Export::CL64_Export()
 {
@@ -71,10 +72,14 @@ LRESULT CALLBACK CL64_Export::Proc_Ogre_Export_Dlg(HWND hDlg, UINT message, WPAR
 		SendDlgItemMessage(hDlg, IDC_ST_OGRE_FILENAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ST_OGRE_PATH, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
+		SendDlgItemMessage(hDlg, IDC_BT_OGRE_NAMECHANGE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_OGREBROWSE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
 		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		SetDlgItemText(hDlg, IDC_ST_OGRE_FILENAME, (LPCTSTR)App->CL_Export->mJustName);
+		SetDlgItemText(hDlg, IDC_ST_OGRE_PATH, (LPCTSTR)App->CL_Export->mFolder_Path);
 
 		return TRUE;
 	}
@@ -133,14 +138,28 @@ LRESULT CALLBACK CL64_Export::Proc_Ogre_Export_Dlg(HWND hDlg, UINT message, WPAR
 	{
 		LPNMHDR some_item = (LPNMHDR)lParam;
 
-		if (some_item->idFrom == IDOK && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDC_BT_OGRE_NAMECHANGE)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
 			return CDRF_DODEFAULT;
 		}
 
-		if (some_item->idFrom == IDCANCEL && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDC_BT_OGREBROWSE)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+		
+		if (some_item->idFrom == IDOK)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDCANCEL)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
@@ -152,6 +171,24 @@ LRESULT CALLBACK CL64_Export::Proc_Ogre_Export_Dlg(HWND hDlg, UINT message, WPAR
 
 	case WM_COMMAND:
 	{
+		if (LOWORD(wParam) == IDC_BT_OGRE_NAMECHANGE)
+		{
+			Debug
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_BT_OGREBROWSE)
+		{
+			App->CL_Export->Select_Folder();
+			if (App->CL_Export->flag_Canceled == 0)
+			{
+				strcpy(App->CL_Export->mFolder_Path, App->CL_Export->szSelectedDir);
+				SetDlgItemText(hDlg, IDC_ST_OGRE_PATH, (LPCTSTR)App->CL_Export->mFolder_Path);
+			}
+			
+			return TRUE;
+		}
+	
 		if (LOWORD(wParam) == IDOK)
 		{
 			EndDialog(hDlg, LOWORD(wParam));
@@ -173,6 +210,14 @@ LRESULT CALLBACK CL64_Export::Proc_Ogre_Export_Dlg(HWND hDlg, UINT message, WPAR
 // *************************************************************************
 void CL64_Export::Select_Folder()
 {
+	HRESULT f_SysHr = CoInitializeEx(NULL, COINIT_APARTMENTTHREADED | COINIT_DISABLE_OLE1DDE);
+
+	if (FAILED(f_SysHr))
+	{
+		App->Say("Can Not Create Browse Dialog");
+		return;
+	}
+
 	strcpy(szSelectedDir, "No_Selection");
 	flag_Canceled = 1;
 
@@ -200,8 +245,14 @@ void CL64_Export::Select_Folder()
 
 				}
 				psi->Release();
+
+				CoUninitialize();
 			}
+
+			
 		}
+
 		pfd->Release();
+		CoUninitialize();
 	}
 }
