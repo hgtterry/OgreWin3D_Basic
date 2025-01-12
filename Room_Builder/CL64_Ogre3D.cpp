@@ -134,91 +134,92 @@ void CL64_Ogre3D::Export_To_Ogre3D(bool Create)
 	Ogre::ResourceGroupManager::getSingleton().initialiseResourceGroup(App->CL_Ogre->Export_Resource_Group);
 
 	Export_MaterialFile(mExport_PathAndFile_Material);
+	DecompileTextures_TXL(mExport_Path);
 
-	//if (Create == 1)
-	//{
-	//	Export_Manual = App->CL_Ogre->mSceneMgr->createManualObject("OgreManual2");
-	//	Export_Manual->setRenderQueueGroup(2);
-	//}
+	if (Create == 1)
+	{
+		Export_Manual = App->CL_Ogre->mSceneMgr->createManualObject("OgreManual2");
+		Export_Manual->setRenderQueueGroup(2);
+	}
 
-	//int A = 0;
-	//int B = 0;
-	//int C = 0;
+	int A = 0;
+	int B = 0;
+	int C = 0;
 
-	//Export_Manual->setDynamic(false);
-	//Export_Manual->setCastShadows(false);
+	Export_Manual->setDynamic(false);
+	Export_Manual->setCastShadows(false);
 
-	//Export_Manual->estimateVertexCount(App->CL_Model->VerticeCount);
-	//Export_Manual->estimateIndexCount(App->CL_Model->FaceCount);
+	Export_Manual->estimateVertexCount(App->CL_Model->VerticeCount);
+	Export_Manual->estimateIndexCount(App->CL_Model->FaceCount);
 
-	//char MaterialNumber[255];
-	//char MatName[255];
+	char MaterialNumber[255];
+	char MatName[255];
 
-	//int GroupCountTotal = App->CL_Model->GroupCount;
-	//int Count = 0;
-	//int FaceCount = 0;
-	//int FaceIndex = 0;
+	int GroupCountTotal = App->CL_Model->GroupCount;
+	int Count = 0;
+	int FaceCount = 0;
+	int FaceIndex = 0;
 
-	//while (Count < GroupCountTotal)
-	//{
-	//	_itoa(Count, MaterialNumber, 10);
-	//	strcpy(MatName, mExport_Just_Name);
-	//	strcat(MatName, "_Material_");
-	//	strcat(MatName, MaterialNumber);
+	while (Count < GroupCountTotal)
+	{
+		_itoa(Count, MaterialNumber, 10);
+		strcpy(MatName, mExport_Just_Name);
+		strcat(MatName, "_Material_");
+		strcat(MatName, MaterialNumber);
 
-	//	Export_Manual->begin(MatName, Ogre::RenderOperation::OT_TRIANGLE_LIST);
+		Export_Manual->begin(MatName, Ogre::RenderOperation::OT_TRIANGLE_LIST,App->CL_Ogre->Export_Resource_Group);
 
-	//	FaceCount = 0;
-	//	FaceIndex = 0;
+		FaceCount = 0;
+		FaceIndex = 0;
 
-	//	while (FaceCount < App->CL_Model->Group[Count]->GroupFaceCount)
-	//	{
-	//		A = App->CL_Model->Group[Count]->Face_Data[FaceCount].a;
-	//		B = App->CL_Model->Group[Count]->Face_Data[FaceCount].b;
-	//		C = App->CL_Model->Group[Count]->Face_Data[FaceCount].c;
+		while (FaceCount < App->CL_Model->Group[Count]->GroupFaceCount)
+		{
+			A = App->CL_Model->Group[Count]->Face_Data[FaceCount].a;
+			B = App->CL_Model->Group[Count]->Face_Data[FaceCount].b;
+			C = App->CL_Model->Group[Count]->Face_Data[FaceCount].c;
 
-	//		// --------------------------------------------------
+			// --------------------------------------------------
 
-	//		Get_Data(Count, A);
+			Get_Data(Count, A);
 
-	//		Export_Manual->position(Ogre::Vector3(x, y, z));
-	//		Export_Manual->textureCoord(Ogre::Vector2(u, 1 - v));
-	//		Export_Manual->normal(Ogre::Vector3(nx, ny, nz));
-	//		Export_Manual->index(FaceIndex);
-	//		FaceIndex++;
+			Export_Manual->position(Ogre::Vector3(x, y, z));
+			Export_Manual->textureCoord(Ogre::Vector2(u, 1 - v));
+			Export_Manual->normal(Ogre::Vector3(nx, ny, nz));
+			Export_Manual->index(FaceIndex);
+			FaceIndex++;
 
-	//		Get_Data(Count, B);
+			Get_Data(Count, B);
 
-	//		Export_Manual->position(Ogre::Vector3(x, y, z));
-	//		Export_Manual->textureCoord(Ogre::Vector2(u, 1 - v));
-	//		Export_Manual->normal(Ogre::Vector3(nx, ny, nz));
-	//		Export_Manual->index(FaceIndex);
-	//		FaceIndex++;
+			Export_Manual->position(Ogre::Vector3(x, y, z));
+			Export_Manual->textureCoord(Ogre::Vector2(u, 1 - v));
+			Export_Manual->normal(Ogre::Vector3(nx, ny, nz));
+			Export_Manual->index(FaceIndex);
+			FaceIndex++;
 
-	//		Get_Data(Count, C);
+			Get_Data(Count, C);
 
-	//		Export_Manual->position(Ogre::Vector3(x, y, z));
-	//		Export_Manual->textureCoord(Ogre::Vector2(u, 1 - v));
-	//		Export_Manual->normal(Ogre::Vector3(nx, ny, nz));
-	//		Export_Manual->index(FaceIndex);
+			Export_Manual->position(Ogre::Vector3(x, y, z));
+			Export_Manual->textureCoord(Ogre::Vector2(u, 1 - v));
+			Export_Manual->normal(Ogre::Vector3(nx, ny, nz));
+			Export_Manual->index(FaceIndex);
 
-	//		FaceIndex++;
-	//		FaceCount++;
-	//	}
+			FaceIndex++;
+			FaceCount++;
+		}
 
-	//	Export_Manual->end();
+		Export_Manual->end();
 
-	//	Count++;
-	//}
+		Count++;
+	}
 
 
-	/*if (Export_Manual->getNumSections() == 0)
+	if (Export_Manual->getNumSections() == 0)
 	{
 		App->Say("Can not create Ogre Sections");
 		return;
-	}*/
+	}
 
-	/*Ogre::MeshPtr mesh = Export_Manual->convertToMesh("TestMesh");
+	Ogre::MeshPtr mesh = Export_Manual->convertToMesh("TestMesh",App->CL_Ogre->Export_Resource_Group);
 
 	mesh->setAutoBuildEdgeLists(true);
 	mesh->buildEdgeList();
@@ -229,9 +230,7 @@ void CL64_Ogre3D::Export_To_Ogre3D(bool Create)
 	ms->exportMesh(mesh.get(), mExport_PathAndFile_Mesh);
 	delete(ms);
 
-	DecompileTextures_TXL(mExport_Path);*/
-
-	//CreateMaterialFile(mExport_PathAndFile_Material);
+	App->Say("Exported");
 
 }
 
