@@ -144,11 +144,11 @@ bool CL64_File::Save(const char* FileName)
 
     Write_File = fopen(FileName, "wt");
 
-    fprintf(Write_File, "MTF_Version=%f\n", Level_Version);
+    fprintf(Write_File, "MTF_Version %f\n", Level_Version);
 
-    fprintf(Write_File, "TextureLib=%s\n", App->CL_Doc->pLevel->WadPath);
+    fprintf(Write_File, "TextureLib %s\n", App->CL_Doc->pLevel->WadPath);
 
-	fprintf(Write_File, "Brush_Count=%i\n", App->CL_Brush->Get_Brush_Count());
+	fprintf(Write_File, "Brush_Count %i\n", App->CL_Brush->Get_Brush_Count());
 
 	BrushList_Write(App->CL_Doc->pLevel->Brushes, Write_File);
 
@@ -305,7 +305,6 @@ void CL64_File::Open()
 
 	//App->CLSB_File_WE->Open_Example_File();
 	Open_3dt_File();
-
 	//App->Say("Opened");
 }
 
@@ -360,11 +359,12 @@ bool CL64_File::Open_3dt_File()
 // *************************************************************************
 bool CL64_File::Load_File(const char* FileName)
 {
+	App->CL_ParseFile->Load_File((LPSTR)FileName);
 //	App->Get_Current_Document();
 //
 //	const char* Errmsg, * WadPath;
 //	int				i;
-	Level* NewLevel;
+//	Level* NewLevel;
 //	EntityViewList* pEntityView;
 //	const Prefs* pPrefs = App->m_pDoc->GetPrefs();
 //
@@ -372,7 +372,7 @@ bool CL64_File::Load_File(const char* FileName)
 //	FilePath_GetDriveAndDir(FileName, WorkingDir);
 //	::SetCurrentDirectory(WorkingDir);*/
 //
-	bool Test = NewLevel = Level_CreateFromFile(FileName);// , & Errmsg, Prefs_GetHeadersList(pPrefs),
+	//bool Test = NewLevel = Level_CreateFromFile(FileName);// , & Errmsg, Prefs_GetHeadersList(pPrefs),
 		//Prefs_GetActorsList(pPrefs), Prefs_GetPawnIni(pPrefs));
 //
 //	if (NewLevel == NULL)
@@ -450,23 +450,20 @@ bool CL64_File::Load_File(const char* FileName)
 // *************************************************************************
 Level* CL64_File::Level_CreateFromFile(const char* FileName)//, const char** ErrMsg, const char* DefaultHeadersDir, const char* DefaultActorsDir, const char* DefaultPawnIni)
 {
-	int NumModels;
-	int VersionMajor, VersionMinor;
-	int NumGroups = 0;
-	int NumBrushes = 0;
-	int NumEntities;
-	//Parse3dt* Parser;
-	const char* Expected = "!*ERROR*!";
-	int k;
+	//int NumModels;
+	//int VersionMajor, VersionMinor;
+	//int NumGroups = 0;
+	//int NumBrushes = 0;
+	//int NumEntities;
+	////Parse3dt* Parser;
+	//const char* Expected = "!*ERROR*!";
+	//int k;
 	Level* pLevel = NULL;
-	char WadPath[MAX_PATH];
-	char HeadersDir[MAX_PATH];
+	//char WadPath[MAX_PATH];
+	//char HeadersDir[MAX_PATH];
 
-	char ActorsDir[MAX_PATH];
-	char PawnIniPath[MAX_PATH];
-
-
-	assert(FileName != NULL);
+	//char ActorsDir[MAX_PATH];
+	//char PawnIniPath[MAX_PATH];
 
 	/*Parser = Parse3dt_Create(FileName);
 	if (Parser == NULL)

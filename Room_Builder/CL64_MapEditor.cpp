@@ -1283,7 +1283,6 @@ signed int CL64_MapEditor::BrushDraw(Brush* pBrush, void* lParam)
 void CL64_MapEditor::Draw_Screen(HWND hwnd)
 {
 	//flag_IsDrawing = 1;
-
 	int			inidx = 0;
 	HDC			RealhDC;
 	RECT		Rect;
@@ -1353,61 +1352,67 @@ void CL64_MapEditor::Draw_Screen(HWND hwnd)
 
 	SelectObject(MemoryhDC, Pen_Grid);
 	App->CL_Render->Render_RenderOrthoGridFromSize(Current_View, int(GridSize), MemoryhDC, Rect);
-
-	// ------------------------------------------ Draw Brushes
-	SelectObject(MemoryhDC, PenBrushes);
-	int BrushCount = App->CL_Brush->Get_Brush_Count();
-	int Count = 0;
-	while (Count < BrushCount)
-	{
-		App->CL_Level->Level_EnumLeafBrushes(App->CL_Doc->pLevel, &brushDrawData, BrushDraw);
-		Count++;
-	}
-
-	//if (Brush_TestBoundsIntersect(App->CLSB_Doc->CurBrush, &ViewBox))
-	{
-		if (App->CL_Doc->mModeTool == ID_TOOLS_TEMPLATE)
-		{
-			SelectObject(MemoryhDC, PenTemplate);
-
-			if (App->CL_Brush->Brush_IsMulti(App->CL_Doc->CurBrush))
-			{
-
-				App->CL_Brush->BrushList_EnumLeafBrushes(App->CL_Brush->Brush_GetBrushList(App->CL_Doc->CurBrush), &brushDrawData, BrushDraw);
-			}
-			else
-			{
-				Render_RenderBrushFacesOrtho(Current_View, App->CL_Doc->CurBrush, MemoryhDC);
-
-			}
-		}
-	}
-
-	// ------------------------------------------ Draw Selected Brushes
-	SelectObject(MemoryhDC, PenSelected);
-	int NumSelBrushes = App->CL_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes);
 	
-	int i = 0;
-	for (i = 0; i < NumSelBrushes; i++)
+	//bool test = 0;
+	//if (App->CL_Brush->Get_Brush_Count() > 0)
 	{
-		Brush* pBrush;
-
-		pBrush = App->CL_SelBrushList->SelBrushList_GetBrush(App->CL_Doc->pSelBrushes, i);
-		//if (m_pDoc->fdocShowBrush(pBrush, &ViewBox))
+		// ------------------------------------------ Draw Brushes
+		SelectObject(MemoryhDC, PenBrushes);
+		int BrushCount = App->CL_Brush->Get_Brush_Count();
+		int Count = 0;
+		while (Count < BrushCount)
 		{
-			if (App->CL_Brush->Brush_IsMulti(pBrush))
+			App->CL_Level->Level_EnumLeafBrushes(App->CL_Doc->pLevel, &brushDrawData, BrushDraw);
+			Count++;
+		}
+
+		//if (Brush_TestBoundsIntersect(App->CLSB_Doc->CurBrush, &ViewBox))
+		//if (App->CL_Brush->Get_Brush_Count() > 0)
+		{
+			if (App->CL_Doc->mModeTool == ID_TOOLS_TEMPLATE)
 			{
-				App->CL_Brush->BrushList_EnumLeafBrushes(App->CL_Brush->Brush_GetBrushList(pBrush), &brushDrawData, BrushDraw);
-			}
-			else
-			{
-				Render_RenderBrushFacesOrtho(Current_View, App->CL_Doc->CurBrush, MemoryhDC);
+				SelectObject(MemoryhDC, PenTemplate);
+
+				if (App->CL_Brush->Brush_IsMulti(App->CL_Doc->CurBrush))
+				{
+
+					App->CL_Brush->BrushList_EnumLeafBrushes(App->CL_Brush->Brush_GetBrushList(App->CL_Doc->CurBrush), &brushDrawData, BrushDraw);
+				}
+				else
+				{
+					Render_RenderBrushFacesOrtho(Current_View, App->CL_Doc->CurBrush, MemoryhDC);
+
+				}
 			}
 		}
-	}
 
-	SelectObject(MemoryhDC, Pen_Camera);
-	Draw_Camera(MemoryhDC);
+		// ------------------------------------------ Draw Selected Brushes
+		SelectObject(MemoryhDC, PenSelected);
+		int NumSelBrushes = App->CL_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes);
+
+		int i = 0;
+		for (i = 0; i < NumSelBrushes; i++)
+		{
+			Brush* pBrush;
+
+			pBrush = App->CL_SelBrushList->SelBrushList_GetBrush(App->CL_Doc->pSelBrushes, i);
+			//if (m_pDoc->fdocShowBrush(pBrush, &ViewBox))
+			{
+				if (App->CL_Brush->Brush_IsMulti(pBrush))
+				{
+					App->CL_Brush->BrushList_EnumLeafBrushes(App->CL_Brush->Brush_GetBrushList(pBrush), &brushDrawData, BrushDraw);
+				}
+				else
+				{
+					Render_RenderBrushFacesOrtho(Current_View, App->CL_Doc->CurBrush, MemoryhDC);
+				}
+			}
+		}
+
+		SelectObject(MemoryhDC, Pen_Camera);
+		Draw_Camera(MemoryhDC);
+
+	}
 
 	BitBlt(RealhDC, Rect.left, Rect.top, Rect.right - Rect.left, Rect.bottom - Rect.top, MemoryhDC, 0, 0, SRCCOPY);
 

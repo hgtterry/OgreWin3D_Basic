@@ -28,5 +28,16 @@ class CL64_ParseFile
 public:
 	CL64_ParseFile(void);
 	~CL64_ParseFile(void);
+
+	void Load_File(char* FileName);
+
+private:
+
+	bool Get_Version(char* Buffer);
+	bool Get_TextureLib(char* Buffer);
+
+	char str_buff_1[MAX_PATH];
+	char str_buff_2[MAX_PATH];
+	float Tag_Float;
 };
 
