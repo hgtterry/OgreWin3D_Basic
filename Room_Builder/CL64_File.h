@@ -31,16 +31,24 @@ public:
 	~CL64_File(void);
 
 	void Save();
+	void Open();
 
 private:
 
 	void Save_Document();
 	bool Save(const char* FileName);
 
+	bool Open_3dt_File();
+	bool Load_File(const char* FileName);
+	Level* Level_CreateFromFile(const char* FileName);// , const char** ErrMsg, const char* DefaultHeadersDir, const char* DefaultActorsDir, const char* DefaultPawnIni);
+
 	signed int BrushList_Write(BrushList* BList, FILE* ofile);
 	signed int Brush_Write(const Brush* b, FILE* ofile);
 	signed int	FaceList_Write(const FaceList* pList, FILE* f);
 	signed int Face_Write(const Face* f, FILE* wf);
+
+	char PathFileName_3dt[MAX_PATH];
+	char FileName_3dt[MAX_PATH];
 
 	float Level_Version;
 };

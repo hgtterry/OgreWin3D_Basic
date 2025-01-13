@@ -99,7 +99,6 @@
 #define IDC_ST_OGRE_SUBFOLDER           1064
 #define IDC_CK_CREATE_SUBDIR            1065
 #define IDC_ST_STOGRESUB                1066
-#define IDC_CHECK3                      1067
 #define IDC_CK_BUILDEDGELIST            1067
 #define ID_DEBUG_GENERAL                32771
 #define ID_TEMPLATES_INSERT             32772
@@ -113,6 +112,7 @@
 #define ID_FILE_EXPORT                  32780
 #define ID_FILE_SAVEAS                  32781
 #define ID_EXPORT_OGRE3D                32782
+#define ID_FILE_OPEN                    32783
 #define ID_TOOLS_BRUSH_MOVEROTATEBRUSH  32784
 #define ID_TOOLS_BRUSH_SCALEBRUSH       32785
 #define ID_GENERALSELECT                32886
@@ -125,7 +125,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        148
-#define _APS_NEXT_COMMAND_VALUE         32783
+#define _APS_NEXT_COMMAND_VALUE         32784
 #define _APS_NEXT_CONTROL_VALUE         1068
 #define _APS_NEXT_SYMED_VALUE           110
 #endif

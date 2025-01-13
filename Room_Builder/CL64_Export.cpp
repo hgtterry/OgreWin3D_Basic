@@ -334,7 +334,7 @@ void CL64_Export::Select_Folder()
 		return;
 	}
 
-	strcpy(szSelectedDir, "No_Selection");
+	strcpy(szSelectedDir, "");
 	flag_Canceled = 1;
 
 	IFileDialog* pfd;
@@ -360,12 +360,10 @@ void CL64_Export::Select_Folder()
 					flag_Canceled = 0;
 
 				}
-				psi->Release();
 
+				psi->Release();
 				CoUninitialize();
 			}
-
-			
 		}
 
 		pfd->Release();
