@@ -33,11 +33,18 @@ public:
 
 private:
 
+	BrushList* BrushList_CreateFromFile(FILE* mFile);
 	bool Get_Version(char* Buffer);
 	bool Get_TextureLib(char* Buffer);
+
+	char Read_Buffer[MAX_PATH];
+	char WadPath[MAX_PATH];
 
 	char str_buff_1[MAX_PATH];
 	char str_buff_2[MAX_PATH];
 	float Tag_Float;
+	int Tag_Int;
+
+	FILE* fp;
 };
 

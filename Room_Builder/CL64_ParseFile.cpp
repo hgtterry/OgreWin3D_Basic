@@ -36,29 +36,11 @@ struct tag_Level
 	char* ActorsDir;
 	//geBoolean ShowActors;
 	char* PawnIniPath;
-	// end change
-	//EntTypeNameList* EntTypeNames;
-	//GroupListType* Groups;
+	
 	SizeInfo* WadSizeInfos;
 	CL64_WadFile* WadFile;
-	//EntityTable* pEntityDefs;
-
-	//ModelInfo_Type	ModelInfo;
-
-	//SkyFaceTexture SkyFaces[6];
-	//geVec3d SkyRotationAxis;
-	//geFloat SkyRotationSpeed;
-	//geFloat	SkyTextureScale;
-
-	// level edit settings
-	//CompileParamsType CompileParams;
+	
 	int GroupVisSetting;
-	//EntityViewList* pEntityView;
-
-	//GridInfo GridSettings;
-	//geBoolean BspRebuildFlag;
-	//ViewStateInfo ViewInfo[NUM_VIEWS];
-
 	BrushTemplate_Arch ArchTemplate;
 	BrushTemplate_Box	BoxTemplate;
 	BrushTemplate_Cone	ConeTemplate;
@@ -75,9 +57,14 @@ struct tag_Level
 
 CL64_ParseFile::CL64_ParseFile(void)
 {
+	Read_Buffer[0] = 0;
+	WadPath[0] = 0;
+
 	str_buff_1[0] = 0;
 	str_buff_2[0] = 0;
 	Tag_Float = 0;
+
+	fp = NULL;
 }
 
 CL64_ParseFile::~CL64_ParseFile(void)
@@ -90,53 +77,112 @@ CL64_ParseFile::~CL64_ParseFile(void)
 void CL64_ParseFile::Load_File(char* FileName)
 {
 	Level* pLevel = NULL;
-	char buffer[MAX_PATH];
+	
 
 	int Count = 0;
-	FILE* fp = NULL;
+
 	fp = fopen(FileName, "r");
 	if (!fp)
 	{
 		return;
 	}
 
-	memset(buffer, 0, MAX_PATH);
+	memset(Read_Buffer, 0, MAX_PATH);
 
-	while (fgets(buffer, sizeof(buffer),fp))
+	while (fgets(Read_Buffer, sizeof(Read_Buffer),fp))
 	{
 		Tag_Float = 0;
 
-		if (Get_Version(buffer) == 0)
+		if (Get_Version(Read_Buffer) == 0)
 		{
 			break;
 		}
 
-		fgets(buffer, sizeof(buffer), fp);
-		if (Get_TextureLib(buffer) == 0)
+		fgets(Read_Buffer, sizeof(Read_Buffer), fp);
+		if (Get_TextureLib(Read_Buffer) == 0)
 		{
 			break;
 		}
 
-		if (App->CL_Doc->pLevel->Brushes != NULL)
+		/*if (App->CL_Doc->pLevel->Brushes != NULL)
 		{
 			App->CL_Brush->BrushList_Destroy(&App->CL_Doc->pLevel->Brushes);
 			App->CL_Doc->pLevel->Brushes = NULL;
+		}*/
+
+		pLevel = App->CL_Level->Level_Create(WadPath, NULL, NULL, NULL);
+		if (pLevel == NULL)
+		{
+			App->Say("Can not Create Level");
+			break;
 		}
 
-		//pLevel->Brushes = BrushList_CreateFromFile(Parser, VersionMajor, VersionMinor, &Expected);
-		/*if (pLevel->Brushes == NULL)
+		pLevel->Brushes = BrushList_CreateFromFile(fp);
+		if (pLevel->Brushes == NULL)
 		{
 			App->Say("Can not Create Brushes");
 			break;
-		}*/
+		}
+
+		break;
 
 		Count++;
-		memset(buffer, 0, MAX_PATH);
+		memset(Read_Buffer, 0, MAX_PATH);
 	}
 
 	fclose(fp);
 
 	App->Say("Closed");
+}
+
+// *************************************************************************
+// *	    BrushList_CreateFromFile:- Terry and Hazel Flanigan 2025       *
+// *************************************************************************
+BrushList* CL64_ParseFile::BrushList_CreateFromFile(FILE* mFile)
+{
+	char mBuffer[MAX_PATH];
+	memset(mBuffer, 0, MAX_PATH);
+
+	int NumBrushes;
+	BrushList* blist = { 0 };
+
+	fgets(Read_Buffer, sizeof(Read_Buffer), mFile);
+	(void)sscanf(Read_Buffer, "%s %i", &str_buff_1, &Tag_Int);
+	if (!strcmp(str_buff_1, "Brushlist"))
+	{
+		//App->Say_Int(Tag_Int);
+		NumBrushes = Tag_Int;
+	}
+	else
+	{
+		App->Say("Error in File");
+		return NULL;
+	}
+	//if (!Parse3dt_GetInt(Parser, (*Expected = "Brushlist"), &NumBrushes)) return NULL;
+	
+	/*blist = BrushList_Create();
+	if (blist != NULL)
+	{
+		int i;
+
+		for (i = 0; i < NumBrushes; ++i)
+		{
+			Brush* pBrush;
+
+			pBrush = Brush_CreateFromFile(Parser, VersionMajor, VersionMinor, Expected);
+			if (pBrush == NULL)
+			{
+				BrushList_Destroy(&blist);
+				break;
+			}
+			else
+			{
+				BrushList_Append(blist, pBrush);
+			}
+		}
+	}*/
+
+	return NULL;// blist;
 }
 
 // *************************************************************************
@@ -170,7 +216,7 @@ bool CL64_ParseFile::Get_TextureLib(char* Buffer)
 	(void)sscanf(Buffer, "%s %s", &str_buff_1, &str_buff_2);
 	if (!strcmp(str_buff_1, "TextureLib"))
 	{
-		App->Say_Win(str_buff_2);
+		strcpy(WadPath, str_buff_2);
 		return 1;
 	}
 	else
@@ -181,3 +227,4 @@ bool CL64_ParseFile::Get_TextureLib(char* Buffer)
 
 	return 1;
 }
+

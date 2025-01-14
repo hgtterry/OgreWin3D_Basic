@@ -148,7 +148,7 @@ bool CL64_File::Save(const char* FileName)
 
     fprintf(Write_File, "TextureLib %s\n", App->CL_Doc->pLevel->WadPath);
 
-	fprintf(Write_File, "Brush_Count %i\n", App->CL_Brush->Get_Brush_Count());
+	//fprintf(Write_File, "Brush_Count %i\n", App->CL_Brush->Get_Brush_Count());
 
 	BrushList_Write(App->CL_Doc->pLevel->Brushes, Write_File);
 
