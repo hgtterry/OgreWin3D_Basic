@@ -140,8 +140,7 @@ void CL64_ParseFile::Load_File(char* FileName)
 // *************************************************************************
 BrushList* CL64_ParseFile::BrushList_CreateFromFile(FILE* mFile)
 {
-	char mBuffer[MAX_PATH];
-	memset(mBuffer, 0, MAX_PATH);
+	memset(Read_Buffer, 0, MAX_PATH);
 
 	int NumBrushes;
 	BrushList* blist = { 0 };
@@ -150,7 +149,6 @@ BrushList* CL64_ParseFile::BrushList_CreateFromFile(FILE* mFile)
 	(void)sscanf(Read_Buffer, "%s %i", &str_buff_1, &Tag_Int);
 	if (!strcmp(str_buff_1, "Brushlist"))
 	{
-		//App->Say_Int(Tag_Int);
 		NumBrushes = Tag_Int;
 	}
 	else
@@ -158,9 +156,8 @@ BrushList* CL64_ParseFile::BrushList_CreateFromFile(FILE* mFile)
 		App->Say("Error in File");
 		return NULL;
 	}
-	//if (!Parse3dt_GetInt(Parser, (*Expected = "Brushlist"), &NumBrushes)) return NULL;
 	
-	/*blist = BrushList_Create();
+	blist = App->CL_Brush->BrushList_Create();
 	if (blist != NULL)
 	{
 		int i;
@@ -169,7 +166,7 @@ BrushList* CL64_ParseFile::BrushList_CreateFromFile(FILE* mFile)
 		{
 			Brush* pBrush;
 
-			pBrush = Brush_CreateFromFile(Parser, VersionMajor, VersionMinor, Expected);
+			/*pBrush = Brush_CreateFromFile(Parser, VersionMajor, VersionMinor, Expected);
 			if (pBrush == NULL)
 			{
 				BrushList_Destroy(&blist);
@@ -178,11 +175,122 @@ BrushList* CL64_ParseFile::BrushList_CreateFromFile(FILE* mFile)
 			else
 			{
 				BrushList_Append(blist, pBrush);
-			}
+			}*/
 		}
-	}*/
+	}
+	else
+	{
+		App->Say("Can not create brush list");
+		return NULL;
+	}
 
-	return NULL;// blist;
+	return blist;
+}
+
+// *************************************************************************
+// *		 Brush_CreateFromFile:- Terry and Hazel Flanigan 2025		    *
+// *************************************************************************
+Brush* CL64_ParseFile::Brush_CreateFromFile()
+{
+	memset(Read_Buffer, 0, MAX_PATH);
+
+	FaceList* fl;
+	Brush* b;
+	int			tmpFlags, tmpModelId, tmpGroupId, tmpType, tmpTranslucency;
+	float		tmpHullSize = 0;
+	BrushList* blist;
+	char szTemp[MAX_PATH]{ 0 };
+
+	assert(Parser != NULL);
+
+	b = NULL;
+
+	/*if (!Parse3dt_GetLiteral(Parser, (*Expected = "Brush"), szTemp)) return NULL;
+
+	if (!Parse3dt_GetInt(Parser, (*Expected = "Flags"), &tmpFlags)) return NULL;
+
+	if (!Parse3dt_GetInt(Parser, (*Expected = "ModelId"), &tmpModelId)) return NULL;
+
+	if (!Parse3dt_GetInt(Parser, (*Expected = "GroupId"), &tmpGroupId)) return NULL;
+
+	if (!Parse3dt_GetFloat(Parser, (*Expected = "HullSize"), &tmpHullSize)) return NULL;*/
+
+
+	if (tmpHullSize < 1.0f)
+	{
+		tmpHullSize = 1.0f;
+	}
+
+	tmpTranslucency = 0;
+
+
+	tmpType = BRUSH_LEAF;	// default is leaf brush
+
+	//if (!Parse3dt_GetInt(Parser, (*Expected = "Type"), &tmpType)) return NULL;
+
+
+	fl = NULL;
+	blist = NULL;
+	switch (tmpType)
+	{
+	case BRUSH_LEAF:
+	{
+		/*fl = FaceList_CreateFromFile(Parser, VersionMajor, VersionMinor, Expected);
+		if (fl == NULL)
+		{
+			goto DoneLoad;
+		}*/
+		break;
+	}
+	case BRUSH_MULTI:
+		/*blist = BrushList_CreateFromFile(Parser, VersionMajor, VersionMinor, Expected);
+		if (blist == NULL)
+		{
+			goto DoneLoad;
+		}*/
+		break;
+	default:
+		assert(0);		//bad stuff here
+		return NULL;
+	}
+
+	//if (tmpFlags & BRUSH_TRANSLUCENT)
+	//{
+	//	// set faces as translucent
+	//	if (fl != NULL)
+	//	{
+	//		FaceList_SetTransparent(fl, GE_TRUE);
+	//	}
+	//	tmpFlags &= ~BRUSH_TRANSLUCENT;
+	//}
+
+	//b = Brush_Create(tmpType, fl, blist);
+	//if (b == NULL)
+	//{
+	//	if (fl != NULL)
+	//	{
+	//		FaceList_Destroy(&fl);
+	//	}
+	//	if (blist != NULL)
+	//	{
+	//		BrushList_Destroy(&blist);
+	//	}
+	//}
+	//else
+	//{
+	//	b->Flags = tmpFlags;
+	//	b->HullSize = tmpHullSize;
+	//	b->ModelId = tmpModelId;
+	//	b->GroupId = tmpGroupId;
+	//	Brush_SetName(b, szTemp);
+
+	//	//FaceList_SetTextureLock(fl, true);
+	//}
+
+DoneLoad:
+
+
+	return	b;
 }
 
 // *************************************************************************
