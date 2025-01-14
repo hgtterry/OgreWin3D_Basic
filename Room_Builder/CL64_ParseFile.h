@@ -33,11 +33,16 @@ public:
 
 private:
 
-	BrushList* BrushList_CreateFromFile(FILE* mFile);
+	BrushList* BrushList_CreateFromFile();
 	Brush* Brush_CreateFromFile();
+	FaceList* FaceList_CreateFromFile();
 
 	bool Get_Version(char* Buffer);
 	bool Get_TextureLib(char* Buffer);
+
+	bool Get_String(const char* Should_Be, char* Chr_return);
+	bool Get_Int(const char* Should_Be, int* Int_return);
+	bool Get_Float(const char* Should_Be, float* Float_return);
 
 	char Read_Buffer[MAX_PATH];
 	char WadPath[MAX_PATH];

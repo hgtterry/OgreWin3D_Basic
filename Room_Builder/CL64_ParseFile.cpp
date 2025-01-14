@@ -78,7 +78,6 @@ void CL64_ParseFile::Load_File(char* FileName)
 {
 	Level* pLevel = NULL;
 	
-
 	int Count = 0;
 
 	fp = fopen(FileName, "r");
@@ -117,7 +116,7 @@ void CL64_ParseFile::Load_File(char* FileName)
 			break;
 		}
 
-		pLevel->Brushes = BrushList_CreateFromFile(fp);
+		pLevel->Brushes = BrushList_CreateFromFile();
 		if (pLevel->Brushes == NULL)
 		{
 			App->Say("Can not Create Brushes");
@@ -138,25 +137,15 @@ void CL64_ParseFile::Load_File(char* FileName)
 // *************************************************************************
 // *	    BrushList_CreateFromFile:- Terry and Hazel Flanigan 2025       *
 // *************************************************************************
-BrushList* CL64_ParseFile::BrushList_CreateFromFile(FILE* mFile)
+BrushList* CL64_ParseFile::BrushList_CreateFromFile()
 {
 	memset(Read_Buffer, 0, MAX_PATH);
 
-	int NumBrushes;
+	int NumBrushes = 0;
 	BrushList* blist = { 0 };
 
-	fgets(Read_Buffer, sizeof(Read_Buffer), mFile);
-	(void)sscanf(Read_Buffer, "%s %i", &str_buff_1, &Tag_Int);
-	if (!strcmp(str_buff_1, "Brushlist"))
-	{
-		NumBrushes = Tag_Int;
-	}
-	else
-	{
-		App->Say("Error in File");
-		return NULL;
-	}
-	
+	if (!Get_Int("Brushlist", &NumBrushes)){ return NULL;};
+
 	blist = App->CL_Brush->BrushList_Create();
 	if (blist != NULL)
 	{
@@ -166,16 +155,16 @@ BrushList* CL64_ParseFile::BrushList_CreateFromFile(FILE* mFile)
 		{
 			Brush* pBrush;
 
-			/*pBrush = Brush_CreateFromFile(Parser, VersionMajor, VersionMinor, Expected);
+			pBrush = Brush_CreateFromFile();
 			if (pBrush == NULL)
 			{
-				BrushList_Destroy(&blist);
+				//BrushList_Destroy(&blist);
 				break;
 			}
 			else
 			{
-				BrushList_Append(blist, pBrush);
-			}*/
+				//BrushList_Append(blist, pBrush);
+			}
 		}
 	}
 	else
@@ -205,17 +194,12 @@ Brush* CL64_ParseFile::Brush_CreateFromFile()
 
 	b = NULL;
 
-	/*if (!Parse3dt_GetLiteral(Parser, (*Expected = "Brush"), szTemp)) return NULL;
-
-	if (!Parse3dt_GetInt(Parser, (*Expected = "Flags"), &tmpFlags)) return NULL;
-
-	if (!Parse3dt_GetInt(Parser, (*Expected = "ModelId"), &tmpModelId)) return NULL;
-
-	if (!Parse3dt_GetInt(Parser, (*Expected = "GroupId"), &tmpGroupId)) return NULL;
-
-	if (!Parse3dt_GetFloat(Parser, (*Expected = "HullSize"), &tmpHullSize)) return NULL;*/
-
-
+	if (!Get_String("Brush", szTemp)) { return NULL; };
+	if (!Get_Int("Flags", &tmpFlags)) { return NULL; };
+	if (!Get_Int("ModelId", &tmpModelId)) { return NULL; };
+	if (!Get_Int("GroupId", &tmpGroupId)) { return NULL; };
+	if (!Get_Float("HullSize", &tmpHullSize)) { return NULL; };
+	
 	if (tmpHullSize < 1.0f)
 	{
 		tmpHullSize = 1.0f;
@@ -223,31 +207,31 @@ Brush* CL64_ParseFile::Brush_CreateFromFile()
 
 	tmpTranslucency = 0;
 
-
 	tmpType = BRUSH_LEAF;	// default is leaf brush
 
-	//if (!Parse3dt_GetInt(Parser, (*Expected = "Type"), &tmpType)) return NULL;
-
-
+	if (!Get_Int("Type", &tmpType)) { return NULL; };
+	
 	fl = NULL;
 	blist = NULL;
 	switch (tmpType)
 	{
 	case BRUSH_LEAF:
 	{
-		/*fl = FaceList_CreateFromFile(Parser, VersionMajor, VersionMinor, Expected);
+		fl = FaceList_CreateFromFile();
 		if (fl == NULL)
 		{
-			goto DoneLoad;
-		}*/
+			App->Say("Can not create face");
+			return NULL;
+		}
 		break;
 	}
 	case BRUSH_MULTI:
-		/*blist = BrushList_CreateFromFile(Parser, VersionMajor, VersionMinor, Expected);
+		blist = BrushList_CreateFromFile(); // Recursive
 		if (blist == NULL)
 		{
-			goto DoneLoad;
-		}*/
+			App->Say("Can not create BrushList");
+			return NULL;
+		}
 		break;
 	default:
 		assert(0);		//bad stuff here
@@ -287,10 +271,44 @@ Brush* CL64_ParseFile::Brush_CreateFromFile()
 	//	//FaceList_SetTextureLock(fl, true);
 	//}
 
-DoneLoad:
-
-
 	return	b;
+}
+
+// *************************************************************************
+// *	     FaceList_CreateFromFile:- Terry and Hazel Flanigan 2025       *
+// *************************************************************************
+FaceList* CL64_ParseFile::FaceList_CreateFromFile()
+{
+	int NumFaces;
+	FaceList* pList = NULL;
+
+	if (!Get_Int("BrushFaces", &NumFaces)) { return NULL; };
+	
+	App->Say_Int(NumFaces);
+
+	/*pList = FaceList_Create(NumFaces);
+	if (pList != NULL)
+	{
+		int i;
+		for (i = 0; i < NumFaces; i++)
+		{
+			Face* pFace;
+
+			pFace = Face_CreateFromFile(Parser, VersionMajor, VersionMinor, Expected);
+			if (pFace != NULL)
+			{
+				FaceList_AddFace(pList, pFace);
+			}
+		}
+		if (pList->NumFaces < 4)
+		{
+			FaceList_Destroy(&pList);
+			return NULL;
+		}
+		pList->Dirty = GE_TRUE;
+	}*/
+
+	return pList;
 }
 
 // *************************************************************************
@@ -303,7 +321,7 @@ bool CL64_ParseFile::Get_Version(char* Buffer)
 	{
 		if (Tag_Float == 1.000000)
 		{
-			App->Say_Float(Tag_Float);
+			//App->Say_Float(Tag_Float);
 			return 1;
 		}
 		else
@@ -334,5 +352,83 @@ bool CL64_ParseFile::Get_TextureLib(char* Buffer)
 	}
 
 	return 1;
+}
+
+// *************************************************************************
+// *	        Get_String:- Terry and Hazel Flanigan 2025                 *
+// *************************************************************************
+bool CL64_ParseFile::Get_String(const char* Should_Be,char* Chr_return)
+{
+	memset(Read_Buffer, 0, MAX_PATH);
+	str_buff_1[0] = 0;
+	str_buff_2[0] = 0;
+
+	fgets(Read_Buffer, sizeof(Read_Buffer), fp);
+	(void)sscanf(Read_Buffer, "%s %s", &str_buff_1, &str_buff_2);
+
+	if (!strcmp(str_buff_1, Should_Be))
+	{
+		strcpy(Chr_return, str_buff_2);
+		return 1;
+	}
+	else
+	{
+		App->Say("File Error", (LPSTR)Should_Be);
+		return 0;
+	}
+
+	return 0;
+}
+
+// *************************************************************************
+// *	        Get_int:- Terry and Hazel Flanigan 2025			           *
+// *************************************************************************
+bool CL64_ParseFile::Get_Int(const char* Should_Be, int* Int_return)
+{
+	memset(Read_Buffer, 0, MAX_PATH);
+	str_buff_1[0] = 0;
+	Tag_Int = 0;
+
+	fgets(Read_Buffer, sizeof(Read_Buffer), fp);
+	(void)sscanf(Read_Buffer, "%s %i", &str_buff_1, &Tag_Int);
+
+	if (!strcmp(str_buff_1, Should_Be))
+	{
+		*Int_return = Tag_Int;
+		return 1;
+	}
+	else
+	{
+		App->Say("File Error", (LPSTR)Should_Be);
+		return 0;
+	}
+
+	return 0;
+}
+
+// *************************************************************************
+// *	        Get_Float:- Terry and Hazel Flanigan 2025		           *
+// *************************************************************************
+bool CL64_ParseFile::Get_Float(const char* Should_Be, float* Float_return)
+{
+	memset(Read_Buffer, 0, MAX_PATH);
+	str_buff_1[0] = 0;
+	Tag_Float = 0;
+
+	fgets(Read_Buffer, sizeof(Read_Buffer), fp);
+	(void)sscanf(Read_Buffer, "%s %f", &str_buff_1, &Tag_Float);
+
+	if (!strcmp(str_buff_1, Should_Be))
+	{
+		*Float_return = Tag_Float;
+		return 1;
+	}
+	else
+	{
+		App->Say("File Error", (LPSTR)Should_Be);
+		return 0;
+	}
+
+	return 0;
 }
 
