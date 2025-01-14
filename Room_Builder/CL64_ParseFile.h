@@ -36,6 +36,7 @@ private:
 	BrushList* BrushList_CreateFromFile();
 	Brush* Brush_CreateFromFile();
 	FaceList* FaceList_CreateFromFile();
+	Face* Face_CreateFromFile();
 
 	bool Get_Version(char* Buffer);
 	bool Get_TextureLib(char* Buffer);
@@ -43,6 +44,8 @@ private:
 	bool Get_String(const char* Should_Be, char* Chr_return);
 	bool Get_Int(const char* Should_Be, int* Int_return);
 	bool Get_Float(const char* Should_Be, float* Float_return);
+	bool Get_Vector3(const char* Should_Be, Ogre::Vector3* Vec3_return);
+	bool Get_Text_Info(const char* Should_Be, float* ret_Rotate, Ogre::Vector2* ret_Shift, Ogre::Vector2* ret_Scale, char* Chr_Texture);
 
 	char Read_Buffer[MAX_PATH];
 	char WadPath[MAX_PATH];
@@ -51,6 +54,7 @@ private:
 	char str_buff_2[MAX_PATH];
 	float Tag_Float;
 	int Tag_Int;
+	Ogre::Vector3 Tag_Vector3;
 
 	FILE* fp;
 };
