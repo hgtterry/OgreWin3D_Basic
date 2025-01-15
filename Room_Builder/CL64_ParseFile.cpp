@@ -107,7 +107,7 @@ CL64_ParseFile::CL64_ParseFile(void)
 	str_buff_1[0] = 0;
 	str_buff_2[0] = 0;
 	Tag_Float = 0;
-
+	Tag_Int = 0;
 	fp = NULL;
 }
 
@@ -324,7 +324,7 @@ Brush* CL64_ParseFile::Brush_CreateFromFile()
 		b->GroupId = tmpGroupId;
 		App->CL_Brush->Brush_SetName(b, szTemp);
 
-		//FaceList_SetTextureLock(fl, true);
+		//App->CL_Face->FaceList_SetTextureLock(fl, true);
 	}
 
 	return	b;
@@ -359,6 +359,7 @@ FaceList* CL64_ParseFile::FaceList_CreateFromFile()
 			App->CL_FaceList->FaceList_Destroy(&pList);
 			return NULL;
 		}
+
 		pList->Dirty = GE_TRUE;
 	}
 
@@ -404,11 +405,10 @@ Face* CL64_ParseFile::Face_CreateFromFile()
 	{
 		float LightXScale = 1.0f;
 		float LightYScale = 1.0f;
-//		
+		
 		for (i = 0; i < NumPnts; i++)
 		{
 			if (!Get_Vector3("Vec3d", &tmpPnts[i])) { return NULL; }
-			//App->Say_Float(tmpPnts[i].x);
 		}
 
 		f = App->CL_Face->Face_Create(NumPnts, tmpPnts, 0);
@@ -417,7 +417,7 @@ Face* CL64_ParseFile::Face_CreateFromFile()
 
 		if (f)
 		{
-			//App->Say("Face Created");
+			App->Say("Face Created");
 			f->Flags = flg;
 			f->LightIntensity = Light;
 			f->MipMapBias = MipMapBias;
@@ -442,8 +442,8 @@ Face* CL64_ParseFile::Face_CreateFromFile()
 			App->CL_Face->Face_InitTexInfo(&f->Tex, &f->Face_Plane.Normal);
 
 			App->CL_Face->Face_SetTextureName(f, szTemp);
-			//App->CL_Face->Face_SetTextureRotate(f, Rotate);
-			//App->CL_Face->Face_SetTextureShift(f, xShift, yShift);
+			App->CL_Face->Face_SetTextureRotate(f, Rotate);
+			App->CL_Face->Face_SetTextureShift(f, xShift, yShift);
 			App->CL_Face->Face_SetTextureScale(f, xScale, yScale);
 			App->CL_Face->Face_SetTexturePos(f);
 
@@ -451,10 +451,9 @@ Face* CL64_ParseFile::Face_CreateFromFile()
 			f->LightYScale = LightYScale;
 
 			if (!Get_Matrix3d("Transform", &f->Tex.XfmFaceAngle)) { Debug }
+			
 			//App->Say_Float(f->Tex.XfmFaceAngle.Translation.z);
 
-			//if (!Parse3dt_GetXForm3d(Parser, (*Expected = "Transform"), &f->Tex.XfmFaceAngle)) goto DoneLoad;
-			
 			if (!Get_Vector3("Pos", &f->Tex.Pos)) { return NULL; }
 		}
 

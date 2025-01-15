@@ -85,6 +85,8 @@ public:
 	void Face_GetTextureScale(const Face* f, float* pxScale, float* pyScale);
 	void Face_GetTextureShift(const Face* f, int* pxShift, int* pyShift);
 	float Face_GetTextureRotate(const Face* f);
+	void Face_SetTextureRotate(Face* f, const float Rotate);
+	void Face_SetTextureShift(Face* f, const int xShift, const int yShift);
 
 };
 

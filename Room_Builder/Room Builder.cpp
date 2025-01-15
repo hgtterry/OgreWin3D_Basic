@@ -173,7 +173,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 return 1;
             }
            
-            case  ID_EXPORT_OGRE3D:
+            case ID_EXPORT_OGRE3D:
             {
                 int BC = App->CL_Brush->Get_Brush_Count();
                 if (BC > 0)
@@ -188,6 +188,29 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 return 1;
             }
 
+            // ----------------------------- Edit
+            case ID_EDIT_SELECTALL:
+            {
+                App->CL_Doc->SelectAll();
+                App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
+
+                /*App->CL_TabsGroups_Dlg->Update_Dlg_SelectedBrushesCount();
+                App->CL_TabsGroups_Dlg->Update_Dlg_Controls();
+                App->CLSB_TopTabs->Update_Dlg_Controls();*/
+                return 1;
+            }
+
+            case ID_EDIT_DESELECTALL:
+            {
+                App->CL_Doc->ResetAllSelections();
+               // App->CL_SelBrushList->SelBrushList_RemoveAll(App->CL_Doc->pSelBrushes);
+               // App->CL_SelFaceList->SelFaceList_RemoveAll(App->CL_Doc->pSelFaces);
+                App->CL_Doc->UpdateSelected();
+
+                App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
+                return 1;
+            }
+            
             // ----------------------------- Templates
             case ID_TEMPLATES_INSERT:
             {
@@ -208,7 +231,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 App->CL_Properties_Brushes->Fill_ListBox();
 
                 App->CL_Doc->DoGeneralSelect();
-                App->CL_Doc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
+                App->CL_Doc->UpdateAllViews(Enums::UpdateViews_All);
                 
                 return 1;
             }
@@ -220,7 +243,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 if (Bnum > 0)
                 {
                     App->CL_Doc->DoGeneralSelect();
-                    App->CL_Doc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
+                    App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
                 }
 
                 return 1;

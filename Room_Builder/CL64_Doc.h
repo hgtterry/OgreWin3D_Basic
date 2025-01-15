@@ -95,7 +95,7 @@ public:
 	void AddBrushToWorld();
 	void Brush_Add_To_world();
 	void SetDefaultBrushTexInfo(Brush* b);
-	void UpdateAllViews(int Mode, BOOL Override);
+	void UpdateAllViews(int Update_Mode);
 	void DoGeneralSelect(void);
 	WadFileEntry* GetDibBitmap(const char* Name);
 
@@ -130,6 +130,7 @@ public:
 	void OnToolsTemplate();
 	void OnBrushSubtractfromworld();
 	void SelectAllFacesInBrushes(void);
+	void SelectAll(void);
 
 	// ------------------------------------------------------------------- 
 
@@ -160,7 +161,8 @@ public:
 	int mCurrentTool;
 	bool flag_Is_Modified;
 	bool flag_IsNewDocument;
-
+	int NumSelEntities
+		;
 	//SelFaceList* pSelFaces;
 };
 

@@ -114,7 +114,9 @@
 #define ID_EXPORT_OGRE3D                32782
 #define ID_FILE_OPEN                    32783
 #define ID_TOOLS_BRUSH_MOVEROTATEBRUSH  32784
+#define ID_EDIT_SELECTALL               32784
 #define ID_TOOLS_BRUSH_SCALEBRUSH       32785
+#define ID_EDIT_DESELECTALL             32785
 #define ID_GENERALSELECT                32886
 #define ID_TOOLS_TEMPLATE               32910
 #define IDC_STATIC                      -1
@@ -125,7 +127,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        148
-#define _APS_NEXT_COMMAND_VALUE         32784
+#define _APS_NEXT_COMMAND_VALUE         32786
 #define _APS_NEXT_CONTROL_VALUE         1068
 #define _APS_NEXT_SYMED_VALUE           110
 #endif

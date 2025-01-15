@@ -1184,7 +1184,7 @@ void CL64_MapEditor::On_Left_Button_Up(POINT CursorPosition)
 	{
 		App->CL_Doc->DoneMovingBrushes();
 
-		App->CL_Doc->UpdateAllViews(0,0);
+		App->CL_Doc->UpdateAllViews(Enums::UpdateViews_All);
 
 		//pDoc->SetModifiedFlag();
 		
@@ -1197,7 +1197,7 @@ void CL64_MapEditor::On_Left_Button_Up(POINT CursorPosition)
 		//pDoc->SnapScaleNearest(sides, Render_GetInidx(VCam), VCam);
 
 		App->CL_Doc->DoneResize(App->CL_Doc->sides, App->CL_Render->Render_GetInidx(Current_View));
-		App->CL_Doc->UpdateAllViews(UAV_ALL3DVIEWS | REBUILD_QUICK, NULL);
+		App->CL_Doc->UpdateAllViews(Enums::UpdateViews_All);
 	
 		//App->CLSB_Doc->UpdateSelected();
 		//if ((ModeTool == ID_TOOLS_TEMPLATE) ||
@@ -1207,7 +1207,7 @@ void CL64_MapEditor::On_Left_Button_Up(POINT CursorPosition)
 		//}
 		//else
 		{
-			App->CL_Doc->UpdateAllViews(UAV_ALL3DVIEWS | REBUILD_QUICK, NULL);
+			App->CL_Doc->UpdateAllViews(Enums::UpdateViews_All);
 		}
 	}
 
@@ -1228,24 +1228,28 @@ void CL64_MapEditor::On_Left_Button_Down(POINT CursorPosition, HWND hDlg)
 		9,	9,	8,	10,	10
 	};
 
-	int CursorSide;
-	CursorSide = GetCursorBoxPos(&CursorPosition);
-
 	App->CUR = SetCursor(NULL);
 
 	GetCursorPos(&App->CL_MapEditor->mStartPoint);
 	ScreenToClient(hDlg, &App->CL_MapEditor->mStartPoint);
 
-	App->CL_Doc->sides = SideLookup[CursorSide];
-
+	// ---------------------- Rotate Brush
 	if (App->CL_Doc->mModeTool == ID_TOOLS_BRUSH_MOVEROTATEBRUSH) //|| (Tool == ID_TOOLS_BRUSH_MOVESELECTEDBRUSHES))
 	{
+		int CursorSide = 0;
+		App->CL_Doc->sides = SideLookup[CursorSide];
+
 		App->CL_Maths->Vector3_Clear(&App->CL_Doc->FinalPos);
 		App->CL_Doc->TempCopySelectedBrushes();
 	}
 
+	// ---------------------- Scale Brush
 	if (App->CL_Doc->mModeTool == ID_TOOLS_BRUSH_SCALEBRUSH)
 	{
+		int CursorSide = 0;
+		CursorSide = GetCursorBoxPos(&CursorPosition);
+		App->CL_Doc->sides = SideLookup[CursorSide];
+
 		App->CL_Doc->ScaleNum = 0;
 
 		App->CL_Maths->Vector3_Set(&App->CL_Doc->FinalScale, 1.0f, 1.0f, 1.0f);
@@ -1353,8 +1357,8 @@ void CL64_MapEditor::Draw_Screen(HWND hwnd)
 	SelectObject(MemoryhDC, Pen_Grid);
 	App->CL_Render->Render_RenderOrthoGridFromSize(Current_View, int(GridSize), MemoryhDC, Rect);
 	
-	//bool test = 0;
-	//if (App->CL_Brush->Get_Brush_Count() > 0)
+	bool test = 0;
+	if (test == 0)
 	{
 		// ------------------------------------------ Draw Brushes
 		SelectObject(MemoryhDC, PenBrushes);
@@ -1387,24 +1391,34 @@ void CL64_MapEditor::Draw_Screen(HWND hwnd)
 		}
 
 		// ------------------------------------------ Draw Selected Brushes
-		SelectObject(MemoryhDC, PenSelected);
-		int NumSelBrushes = App->CL_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes);
-
-		int i = 0;
-		for (i = 0; i < NumSelBrushes; i++)
+		bool Draw_Sel = 0;
+		if (Draw_Sel == 0)
 		{
-			Brush* pBrush;
-
-			pBrush = App->CL_SelBrushList->SelBrushList_GetBrush(App->CL_Doc->pSelBrushes, i);
-			//if (m_pDoc->fdocShowBrush(pBrush, &ViewBox))
+			
+			SelectObject(MemoryhDC, PenSelected);
+			int NumSelBrushes = App->CL_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes);
+			/*if (NumSelBrushes > 0)
 			{
-				if (App->CL_Brush->Brush_IsMulti(pBrush))
+				App->Say_Int(NumSelBrushes);
+			}*/
+
+			//goto done;
+			int i = 0;
+			for (i = 0; i < NumSelBrushes; i++)
+			{
+				Brush* pBrush;
+
+				pBrush = App->CL_SelBrushList->SelBrushList_GetBrush(App->CL_Doc->pSelBrushes, i);
+				//if (m_pDoc->fdocShowBrush(pBrush, &ViewBox))
 				{
-					App->CL_Brush->BrushList_EnumLeafBrushes(App->CL_Brush->Brush_GetBrushList(pBrush), &brushDrawData, BrushDraw);
-				}
-				else
-				{
-					Render_RenderBrushFacesOrtho(Current_View, App->CL_Doc->CurBrush, MemoryhDC);
+					if (App->CL_Brush->Brush_IsMulti(pBrush))
+					{
+						App->CL_Brush->BrushList_EnumLeafBrushes(App->CL_Brush->Brush_GetBrushList(pBrush), &brushDrawData, BrushDraw);
+					}
+					else
+					{
+						Render_RenderBrushFacesOrtho(Current_View, App->CL_Doc->CurBrush, MemoryhDC);
+					}
 				}
 			}
 		}
@@ -1414,6 +1428,7 @@ void CL64_MapEditor::Draw_Screen(HWND hwnd)
 
 	}
 
+done:
 	BitBlt(RealhDC, Rect.left, Rect.top, Rect.right - Rect.left, Rect.bottom - Rect.top, MemoryhDC, 0, 0, SRCCOPY);
 
 	DeleteObject(OffScreenBitmap);

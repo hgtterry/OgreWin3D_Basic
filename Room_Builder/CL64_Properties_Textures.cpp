@@ -365,7 +365,7 @@ void CL64_Properties_Textures::Apply_Texture()
 		return;
 	}
 
-	App->CL_Doc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
+	App->CL_Doc->UpdateAllViews(Enums::UpdateViews_All);
 
 	/*if (App->CLSB_Equity->EquitySB_Dialog_Visible == 1)
 	{

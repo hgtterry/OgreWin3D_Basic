@@ -129,5 +129,7 @@ public:
 	signed int Brush_Scale3d(Brush* b, const Ogre::Vector3* mag);
 	signed int BrushList_Scale3d(BrushList* pList, const Ogre::Vector3* trans);
 	Brush* Get_By_Index(int Index);
+	signed int BrushList_Enum(BrushList const* pList, void* lParam, BrushList_CB CallBack);
+
 };
 

@@ -49,6 +49,7 @@ public:
 	WadFileEntry* Level_GetWadBitmap(Level* pLevel, const char* Name);
 	Guint16 Level_GetDibId(const Level* pLevel, const char* Name);
 	void Level_RemoveBrush(Level* pLevel, Brush* pBrush);
+	int Level_EnumBrushes(Level* pLevel, void* lParam, BrushList_CB Callback);
 
 };
 

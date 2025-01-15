@@ -406,9 +406,14 @@ Guint16 CL64_Level::Level_GetDibId(const Level* pLevel, const char* Name)
 // *************************************************************************
 void CL64_Level::Level_RemoveBrush(Level* pLevel, Brush* pBrush)
 {
-	assert(pLevel != NULL);
-	assert(pBrush != NULL);
-
 	App->CL_Brush->BrushList_Remove(pLevel->Brushes, pBrush);
+}
+
+// *************************************************************************
+// *						Level_RemoveBrush							   *
+// *************************************************************************
+int CL64_Level::Level_EnumBrushes(Level* pLevel, void* lParam, BrushList_CB Callback)
+{
+	return App->CL_Brush->BrushList_Enum(pLevel->Brushes, lParam, Callback);
 }
 

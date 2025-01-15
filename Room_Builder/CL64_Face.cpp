@@ -1062,3 +1062,22 @@ float CL64_Face::Face_GetTextureRotate(const Face* f)
 {
 	return	f->Tex.Rotate;
 }
+
+// *************************************************************************
+// *						Face_SetTextureRotate					 	   *
+// *************************************************************************
+void CL64_Face::Face_SetTextureRotate(Face* f, const float Rotate)
+{
+	f->Tex.Rotate = Rotate;
+	f->Tex.DirtyFlag = GE_TRUE;
+}
+
+// *************************************************************************
+// *						Face_SetTextureShift					 	   *
+// *************************************************************************
+void CL64_Face::Face_SetTextureShift(Face* f, const int xShift, const int yShift)
+{
+	f->Tex.xShift = xShift;
+	f->Tex.yShift = yShift;
+	f->Tex.DirtyFlag = GE_TRUE;
+}

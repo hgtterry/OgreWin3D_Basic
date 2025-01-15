@@ -48,4 +48,12 @@ namespace Enums
 		Check_Name_Brushes = 1,
 		Check_Names_Objects = 2
 	};
+
+	enum UpdateViews
+	{
+		UpdateViews_None = 0,
+		UpdateViews_Grids = 1,
+		UpdateViews_3D = 2,
+		UpdateViews_All = 3
+	};
 }

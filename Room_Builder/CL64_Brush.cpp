@@ -2292,4 +2292,19 @@ Brush* CL64_Brush::Get_By_Index(int Index)
 	return NULL;
 }
 
+signed int CL64_Brush::BrushList_Enum(BrushList const* pList,void* lParam,BrushList_CB	CallBack)
+{
+	geBoolean bResult = true;	// TRUE means entire list was processed
+	Brush* b;
+
+	b = pList->First;
+	while (b != NULL)
+	{
+		if ((bResult = CallBack(b, lParam)) == false)
+			break;
+		b = b->Next;
+	}
+	return bResult;
+}
+
 

@@ -54,7 +54,7 @@ CL64_Doc::CL64_Doc(void)
 
     ScaleNum = 1;
     sides = 1;
-
+    NumSelEntities = 0;
     mAdjustMode = ADJUST_MODE_FACE;
 
 	SelectLock = FALSE;
@@ -202,7 +202,7 @@ void CL64_Doc::OnBrushSubtractfromworld()
     }
 
     //App->CLSB_Doc->UpdateSelected();
-    App->CL_Doc->UpdateAllViews(UAV_ALL3DVIEWS | REBUILD_QUICK, NULL);
+    App->CL_Doc->UpdateAllViews(Enums::UpdateViews_All);
 }
 
 // *************************************************************************
@@ -256,11 +256,11 @@ void CL64_Doc::Brush_Add_To_world()
 
 	if (!App->CL_Brush->Brush_IsHollow(nb) && !App->CL_Brush->Brush_IsMulti(nb))
 	{
-		App->CL_Doc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
+		App->CL_Doc->UpdateAllViews(Enums::UpdateViews_All);
 	}
 	else
 	{
-		App->CL_Doc->UpdateAllViews(UAV_ALL3DVIEWS | REBUILD_QUICK, NULL);
+		App->CL_Doc->UpdateAllViews(Enums::UpdateViews_All);
 	}
 
 	Placed = true;
@@ -290,125 +290,30 @@ void CL64_Doc::DoGeneralSelect(void)
 // *************************************************************************
 // *         UpdateAllViews:- Terry and Hazel Flanigan 2025                *
 // *************************************************************************
-void CL64_Doc::UpdateAllViews(int Mode, BOOL Override)
+void CL64_Doc::UpdateAllViews(int Update_Mode)
 {
+    if (Update_Mode == Enums::UpdateViews_Grids)
+    {
+        RedrawWindow(App->CL_MapEditor->Left_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+        RedrawWindow(App->CL_MapEditor->Right_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+        RedrawWindow(App->CL_MapEditor->Bottom_Left_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+    }
 
-    RedrawWindow(App->CL_MapEditor->Left_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-    RedrawWindow(App->CL_MapEditor->Right_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-    RedrawWindow(App->CL_MapEditor->Bottom_Left_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+    if (Update_Mode == Enums::UpdateViews_3D)
+    {
+        App->CL_Doc->RebuildTrees();
+        App->CL_Mesh_Mgr->Update_World();
+    }
 
-    App->CL_Doc->RebuildTrees();
-    App->CL_Mesh_Mgr->Update_World();
+    if (Update_Mode == Enums::UpdateViews_All)
+    {
+        RedrawWindow(App->CL_MapEditor->Left_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+        RedrawWindow(App->CL_MapEditor->Right_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+        RedrawWindow(App->CL_MapEditor->Bottom_Left_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
-
-    //RedrawWindow(App->CL_MapEditor->Main_Dlg_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-    //App->Get_Current_Document();
-
-    //if (App->m_pDoc->IsModified() && ((Mode & REBUILD_QUICK) && (Level_RebuildBspAlways(App->CLSB_Doc->pLevel))) || (Override))
-    //{
-    //    App->m_pDoc->RebuildTrees();
-    //}
-    //else if ((Mode & REBUILD_QUICK) && (!Level_RebuildBspAlways(App->CLSB_Doc->pLevel)))
-    //{
-    //    App->m_pDoc->InvalidateDrawTreeOriginalFaces();
-    //}
-
-    //if (Mode & REBUILD_QUICK)
-    //    Mode &= ~REBUILD_QUICK;
-
-    ////	Do we want to redraw everything?
-    //if (Mode & UAV_ALLVIEWS)
-    //{
-    //    App->m_pDoc->CDocument::UpdateAllViews(pSender);
-    //    return;
-    //}
-
-    //POSITION pos = App->m_pDoc->GetFirstViewPosition();
-
-    //while (pos != NULL)
-    //{
-    //    CView* pView = App->m_pDoc->GetNextView(pos);
-
-    //    if (pView->IsKindOf(RUNTIME_CLASS(CFusionView)))
-    //    {
-    //        CFusionView* pFusionView = (CFusionView*)pView;
-    //        CDC* pDC = pFusionView->GetDC();
-
-    //        switch (Mode)
-    //        {
-    //        case UAV_ACTIVE3DVIEW_ONLY:
-
-    //            if (pFusionView->GetParentFrame() == App->m_pDoc->mpActiveViewFrame)
-    //                pFusionView->Invalidate(TRUE);
-    //            break;
-
-    //        case UAV_NONACTIVE3DVIEWS_ONLY:
-
-    //            if (pFusionView->GetParentFrame() != App->m_pDoc->mpActiveViewFrame)
-    //                pFusionView->Invalidate(TRUE);
-    //            break;
-
-    //        case UAV_TEXTUREVIEW_ONLY:
-
-    //            if (pFusionView->mViewType == ID_VIEW_TEXTUREVIEW)
-    //                pFusionView->Invalidate(TRUE);
-    //            break;
-
-    //        case UAV_RENDER_ONLY:
-
-    //            switch (pFusionView->mViewType)
-    //            {
-    //            case ID_VIEW_3DWIREFRAME:
-    //            case ID_VIEW_TEXTUREVIEW:
-
-    //                pFusionView->Invalidate(TRUE);
-    //                break;
-
-    //            default:
-    //                break;
-    //            }
-    //            break;
-
-    //        case UAV_GRID_ONLY:
-
-    //            switch (pFusionView->mViewType)
-    //            {
-    //            case ID_VIEW_TOPVIEW:
-    //            case ID_VIEW_SIDEVIEW:
-    //            case ID_VIEW_FRONTVIEW:
-
-    //                pFusionView->Invalidate(TRUE);
-    //                break;
-    //            }
-    //            break;
-
-
-    //        case UAV_THIS_GRID_ONLY:
-    //            if (pFusionView == pSender)
-    //            {
-    //                switch (pFusionView->mViewType)
-    //                {
-    //                case ID_VIEW_TOPVIEW:
-    //                case ID_VIEW_SIDEVIEW:
-    //                case ID_VIEW_FRONTVIEW:
-    //                    pFusionView->Invalidate(TRUE);
-    //                    break;
-    //                }
-    //            }
-    //            break;
-
-    //        case UAV_ALL3DVIEWS:
-
-    //            pFusionView->Invalidate(TRUE);
-    //            break;
-
-    //        default:
-    //            break;
-    //        }
-
-    //        pFusionView->ReleaseDC(pDC);
-    //    }
-    //}
+        App->CL_Doc->RebuildTrees();
+        App->CL_Mesh_Mgr->Update_World();
+    }
 }
 
 typedef struct
@@ -607,7 +512,7 @@ void CL64_Doc::SelectOrtho(POINT point, ViewVars* v)
             if (Bnum > 0)
             {
                 UpdateSelected();
-                App->CL_Doc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
+                App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
 
                 App->CL_Properties_Tabs->Select_Brushes_Tab(0);
                 App->CL_Properties_Brushes->Get_Index(CurBrush);
@@ -620,7 +525,7 @@ void CL64_Doc::SelectOrtho(POINT point, ViewVars* v)
     else
     {
         App->CL_Top_Tabs->Enable_Brush_Options_Buttons(false, false);
-        App->CL_Doc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
+        App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
     }
 
 }
@@ -650,49 +555,6 @@ void CL64_Doc::ResetAllSelectedBrushes(void)
 {
     App->CL_SelBrushList->SelBrushList_RemoveAll(pSelBrushes);
     CurBrush = BTemplate;
-}
-
-// *************************************************************************
-// *             UpdateSelected:- Terry and Hazel Flanigan 2025            *
-// *************************************************************************
-void CL64_Doc::UpdateSelected(void)
-{
-    int NumSelFaces = App->CL_SelFaceList->SelFaceList_GetSize(pSelFaces);
-    int NumSelBrushes = App->CL_SelBrushList->SelBrushList_GetSize(pSelBrushes);
-
-    SelState = (NumSelBrushes > 1) ? MULTIBRUSH : NumSelBrushes;
-    SelState |= (NumSelFaces > 1) ? MULTIFACE : (NumSelFaces + 1) << 3;
-   
-
-    if (mModeTool == ID_GENERALSELECT)
-    {
-        if (GetSelState() & ONEBRUSH)
-        {
-            CurBrush = App->CL_SelBrushList->SelBrushList_GetBrush(pSelBrushes, 0);
-        }
-        else
-        {
-            CurBrush = BTemplate;
-        }
-    }
-
-    App->CL_Maths->Vector3_Clear(&SelectedGeoCenter);
-
-	if (mModeTool == ID_TOOLS_TEMPLATE)
-	{
-		App->CL_Brush->Brush_Center(CurBrush, &SelectedGeoCenter);
-	}
-	else if (SelState != NOSELECTIONS)
-	{
-		if (NumSelBrushes)
-		{
-			App->CL_SelBrushList->SelBrushList_Center(pSelBrushes, &SelectedGeoCenter);
-		}
-	}
-
-   // App->m_pDoc->UpdateFaceAttributesDlg();
-   // App->m_pDoc->UpdateBrushAttributesDlg();
-
 }
 
 // *************************************************************************
@@ -1289,7 +1151,7 @@ void CL64_Doc::OnToolsTemplate()
 // *************************************************************************
 // *      ( Static ) SelAllBrushFaces:- Terry and Hazel Flanigan 2025      *
 // *************************************************************************
-static geBoolean SelAllBrushFaces(Brush* pBrush, void* lParam)
+static signed int SelAllBrushFaces(Brush* pBrush, void* lParam)
 {
     int iFace, nFaces;
 
@@ -1334,5 +1196,95 @@ void CL64_Doc::SelectAllFacesInBrushes(void)
     UpdateSelected();
     //ConfigureCurrentTool();
 }
+
+static signed int fdocSelectBrush(Brush* pBrush, void* lParam)
+{
+
+    App->CL_SelBrushList->SelBrushList_Add(App->CL_Doc->pSelBrushes, pBrush);
+
+    return GE_TRUE;
+}
+
+// *************************************************************************
+// *              SelectAll:- Terry and Hazel Flanigan 2025           	   *
+// *************************************************************************
+void CL64_Doc::SelectAll(void)
+{
+    DoGeneralSelect();
+    App->CL_Level->Level_EnumBrushes(pLevel, this, fdocSelectBrush);
+
+    // Select all faces on all selected brushes
+    int iBrush;
+    int NumSelBrushes = App->CL_SelBrushList->SelBrushList_GetSize(pSelBrushes);
+
+    for (iBrush = 0; iBrush < NumSelBrushes; ++iBrush)
+    {
+        Brush* pBrush;
+
+        pBrush = App->CL_SelBrushList->SelBrushList_GetBrush(pSelBrushes, iBrush);
+
+        if (App->CL_Brush->Brush_IsMulti(pBrush))
+        {
+            App->CL_Brush->BrushList_EnumLeafBrushes(App->CL_Brush->Brush_GetBrushList(pBrush), this, SelAllBrushFaces);
+        }
+        else
+        {
+            SelAllBrushFaces(pBrush, this);
+        }
+
+    }
+
+    UpdateSelected();
+
+    //ConfigureCurrentTool();
+}
+
+// *************************************************************************
+// *             UpdateSelected:- Terry and Hazel Flanigan 2025            *
+// *************************************************************************
+void CL64_Doc::UpdateSelected(void)
+{
+    int NumSelFaces = App->CL_SelFaceList->SelFaceList_GetSize(pSelFaces);
+    int NumSelBrushes = App->CL_SelBrushList->SelBrushList_GetSize(pSelBrushes);
+
+    SelState = (NumSelBrushes > 1) ? MULTIBRUSH : NumSelBrushes;
+    SelState |= (NumSelFaces > 1) ? MULTIFACE : (NumSelFaces + 1) << 3;
+
+
+    if (mModeTool == ID_GENERALSELECT && NumSelBrushes == 1)
+    {
+        //if (GetSelState() & ONEBRUSH)
+        if(NumSelBrushes == 1)
+        {
+            CurBrush = App->CL_SelBrushList->SelBrushList_GetBrush(pSelBrushes, 0);
+        }
+        else
+        {
+           //CurBrush = BTemplate;
+        }
+    }
+
+    //if (NumSelBrushes)
+    {
+        //SelBrushList_Center(pSelBrushes, &SelectedGeoCenter);
+    }
+    App->CL_Maths->Vector3_Clear(&SelectedGeoCenter);
+
+    //if (mModeTool == ID_TOOLS_TEMPLATE)
+    //{
+    //    App->CL_Brush->Brush_Center(CurBrush, &SelectedGeoCenter);
+    //}
+    //else if (SelState != NOSELECTIONS)
+    //{
+    //    if (NumSelBrushes)
+    //    {
+    //        App->CL_SelBrushList->SelBrushList_Center(pSelBrushes, &SelectedGeoCenter);
+    //    }
+    //}
+
+    // App->m_pDoc->UpdateFaceAttributesDlg();
+    // App->m_pDoc->UpdateBrushAttributesDlg();
+}
+
 
 
