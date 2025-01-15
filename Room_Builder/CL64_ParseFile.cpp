@@ -184,7 +184,7 @@ void CL64_ParseFile::Load_File(char* FileName)
 
 	fclose(fp);
 
-	App->Say("Closed");
+	App->Say("File Closed");
 }
 
 // *************************************************************************
@@ -368,13 +368,14 @@ FaceList* CL64_ParseFile::FaceList_CreateFromFile()
 Face* CL64_ParseFile::Face_CreateFromFile()
 {
 	Face* f = NULL;
-	int		i, flg, NumPnts, xShift, yShift, Light;// changed QD
+	int		i, flg, NumPnts, xShift, yShift, Light;
 	
 	Ogre::Vector2 Shift;
 	Ogre::Vector2 Scale;
+	Ogre::Vector2 Vec_Light;
 
 	float MipMapBias, Reflectivity, Translucency;
-	float	fVal, xScale, yScale, Rotate;// changed QD
+	float xScale, yScale, Rotate;
 	Ogre::Vector3* tmpPnts = NULL;
 	signed int LoadResult;
 	char szTemp[MAX_PATH]{ 0 };
@@ -386,7 +387,6 @@ Face* CL64_ParseFile::Face_CreateFromFile()
 	if (!Get_Int("NumPoints", &NumPnts)) { return NULL; }
 	if (!Get_Int("Flags", &flg)) { return NULL; }
 	
-	// don't allow selected faces on load
 	flg &= ~FACE_SELECTED;
 
 	if (!Get_Int("Light", &Light)) { return NULL; }
@@ -399,13 +399,13 @@ Face* CL64_ParseFile::Face_CreateFromFile()
 	tmpPnts = (Ogre::Vector3*)App->CL_Maths->Ram_Allocate(sizeof(Ogre::Vector3) * NumPnts);
 	if (tmpPnts)
 	{
-		float	LightXScale = 1.0f;
+		float LightXScale = 1.0f;
 		float LightYScale = 1.0f;
 //		
 		for (i = 0; i < NumPnts; i++)
 		{
 			if (!Get_Vector3("Vec3d", &tmpPnts[i])) { return NULL; }
-			App->Say_Float(tmpPnts[i].x);
+			//App->Say_Float(tmpPnts[i].x);
 		}
 
 		f = App->CL_Face->Face_Create(NumPnts, tmpPnts, 0);
@@ -430,56 +430,33 @@ Face* CL64_ParseFile::Face_CreateFromFile()
 		xScale = Scale.x;
 		yScale = Scale.y;
 
+		if (!Get_Vector2("LightScale", &Vec_Light)) { return NULL; }
+		LightXScale = Vec_Light.x;
+		LightYScale = Vec_Light.y;
 
-		//if (!Parse3dt_ScanExpectingText(Parser, (*Expected = "TexInfo"))) goto DoneLoad;
-		//// changed QD
-		//if (!Parse3dt_GetFloat(Parser, (*Expected = "Rotate"), &Rotate)) goto DoneLoad;
-		//// end change
-		//if (!Parse3dt_GetInt(Parser, (*Expected = "Shift"), &xShift)) goto DoneLoad;
-		//if (!Parse3dt_GetInt(Parser, NULL, &yShift)) goto DoneLoad;
-		//if (!Parse3dt_GetFloat(Parser, (*Expected = "Scale"), &xScale)) goto DoneLoad;
-		//if (!Parse3dt_GetFloat(Parser, NULL, &yScale)) goto DoneLoad;
-		//if (!Parse3dt_GetLiteral(Parser, (*Expected = "Name"), szTemp)) goto DoneLoad;
+		if (f)
+		{
+			App->CL_Face->Face_InitTexInfo(&f->Tex, &f->Face_Plane.Normal);
 
-		//if (!Parse3dt_GetFloat(Parser, (*Expected = "LightScale"), &LightXScale)) goto DoneLoad;
-		//if (!Parse3dt_GetFloat(Parser, NULL, &LightYScale)) goto DoneLoad;
+			App->CL_Face->Face_SetTextureName(f, szTemp);
+			//App->CL_Face->Face_SetTextureRotate(f, Rotate);// changed QD
+			//App->CL_Face->Face_SetTextureShift(f, xShift, yShift);
+			App->CL_Face->Face_SetTextureScale(f, xScale, yScale);
+			App->CL_Face->Face_SetTexturePos(f);
 
-		
+			f->LightXScale = LightXScale;
+			f->LightYScale = LightYScale;
 
-//		if (f)
-//		{
-//			Face_InitTexInfo(&f->Tex, &f->Face_Plane.Normal);
-//
-//			Face_SetTextureName(f, szTemp);
-//			Face_SetTextureRotate(f, Rotate);// changed QD
-//			Face_SetTextureShift(f, xShift, yShift);
-//			Face_SetTextureScale(f, xScale, yScale);
-//			Face_SetTexturePos(f);
-//
-//			if ((VersionMajor == 1) && (VersionMinor <= 16))
-//			{
-//				f->LightXScale = xScale;
-//				f->LightYScale = yScale;
-//			}
-//			else
-//			{
-//				f->LightXScale = LightXScale;
-//				f->LightYScale = LightYScale;
-//			}
-//			if ((VersionMajor == 1) && (VersionMinor < 29))
-//			{
-//				Face_SetVisible(f, GE_TRUE);
-//			}
-//			if (((VersionMajor == 1) && (VersionMinor > 31)))
-//			{
-//				if (!Parse3dt_GetXForm3d(Parser, (*Expected = "Transform"), &f->Tex.XfmFaceAngle)) goto DoneLoad;
-//				if (!Parse3dt_GetVec3d(Parser, (*Expected = "Pos"), &f->Tex.Pos)) goto DoneLoad;
-//			}
-//		}
-//		LoadResult = GE_TRUE;
+			fgets(Read_Buffer, sizeof(Read_Buffer), fp);
+			//if (!Parse3dt_GetXForm3d(Parser, (*Expected = "Transform"), &f->Tex.XfmFaceAngle)) goto DoneLoad;
+			
+			if (!Get_Vector3("Pos", &f->Tex.Pos)) { return NULL; }
+		}
+
+		LoadResult = true;
 	}
-//DoneLoad:
-//	if (LoadResult == GE_FALSE)
+
+//	if (LoadResult == false)
 //	{
 //		if (f != NULL)
 //		{
@@ -490,6 +467,7 @@ Face* CL64_ParseFile::Face_CreateFromFile()
 //			geRam_Free(tmpPnts);
 //		}
 //	}
+
 	return f;
 }
 
@@ -643,6 +621,33 @@ bool CL64_ParseFile::Get_Vector3(const char* Should_Be, Ogre::Vector3* Vec3_retu
 }
 
 // *************************************************************************
+// *	        Get_Vector2:- Terry and Hazel Flanigan 2025		           *
+// *************************************************************************
+bool CL64_ParseFile::Get_Vector2(const char* Should_Be, Ogre::Vector2* Vec2_return)
+{
+	memset(Read_Buffer, 0, MAX_PATH);
+	str_buff_1[0] = 0;
+	float x = 0;
+	float y = 0;
+	
+	fgets(Read_Buffer, sizeof(Read_Buffer), fp);
+	(void)sscanf(Read_Buffer, "%s %f %f", &str_buff_1, &x, &y);
+
+	if (!strcmp(str_buff_1, Should_Be))
+	{
+		*Vec2_return = Ogre::Vector2(x, y);
+		return 1;
+	}
+	else
+	{
+		App->Say("File Error", (LPSTR)Should_Be);
+		return 0;
+	}
+
+	return 0;
+}
+
+// *************************************************************************
 // *	        Get_Vector3:- Terry and Hazel Flanigan 2025		           *
 // *************************************************************************
 bool CL64_ParseFile::Get_Text_Info(const char* Should_Be, float* ret_Rotate, Ogre::Vector2* ret_Shift, Ogre::Vector2* ret_Scale, char* Chr_Texture)
@@ -651,8 +656,11 @@ bool CL64_ParseFile::Get_Text_Info(const char* Should_Be, float* ret_Rotate, Ogr
 	str_buff_1[0] = 0;
 	char Chr_Rotate[100]{ 0 };
 	char Chr_Shift[100]{ 0 };
-	char Char_Scale[100]{ 0 };
-	char Texture_Name[100]{ 0 };
+	char Chr_Scale[100]{ 0 };
+	char Chr_Text_Name[100]{ 0 };
+	char Chr_Texture_Name[100]{ 0 };
+
+	bool Read_Error = 0;
 
 	float Rx = 0;
 	float Shx = 0;
@@ -662,11 +670,60 @@ bool CL64_ParseFile::Get_Text_Info(const char* Should_Be, float* ret_Rotate, Ogr
 	float Scy = 0;
 
 	fgets(Read_Buffer, sizeof(Read_Buffer), fp);
-	(void)sscanf(Read_Buffer, "%s %s %f %s %f %f %s %f %f %s", &str_buff_1, &Chr_Rotate, &Rx, Chr_Shift, &Shx, &Shy, &Char_Scale, &Scx, &Scy, Texture_Name);
+	(void)sscanf(Read_Buffer, "%s %s %f %s %f %f %s %f %f %s %s", &str_buff_1, &Chr_Rotate, &Rx, Chr_Shift, &Shx, &Shy, &Chr_Scale, &Scx, &Scy, Chr_Text_Name, Chr_Texture_Name);
 
 	if (!strcmp(str_buff_1, Should_Be))
 	{
-		//*Vec3_return = Ogre::Vector3(x, y, z);
+		// Rotate
+		if (!strcmp(Chr_Rotate, "Rotate"))
+		{
+			*ret_Rotate = Rx;
+			Read_Error = 0;
+		}
+		else
+		{
+			Read_Error = 1;
+		}
+
+		// Shift
+		if (!strcmp(Chr_Shift, "Shift"))
+		{
+			*ret_Shift = Ogre::Vector2(Shx,Shy);
+			Read_Error = 0;
+		}
+		else
+		{
+			Read_Error = 1;
+		}
+
+		// Scale
+		if (!strcmp(Chr_Scale, "Scale"))
+		{
+			*ret_Scale = Ogre::Vector2(Scx,Scy);
+			Read_Error = 0;
+		}
+		else
+		{
+			Read_Error = 1;
+		}
+
+		// Texture Name
+		if (!strcmp(Chr_Text_Name, "Name"))
+		{
+			strcpy(Chr_Texture, Chr_Texture_Name);
+			Read_Error = 0;
+		}
+		else
+		{
+			Read_Error = 1;
+		}
+
+		if (Read_Error == 1)
+		{
+			App->Say("Get_Text_Info Error", (LPSTR)Should_Be);
+			return 0;
+		}
+
 		return 1;
 	}
 	else
