@@ -156,11 +156,11 @@ void CL64_ParseFile::Load_File(char* FileName)
 			break;
 		}
 
-		/*if (App->CL_Doc->pLevel->Brushes != NULL)
+		if (App->CL_Doc->pLevel->Brushes != NULL)
 		{
 			App->CL_Brush->BrushList_Destroy(&App->CL_Doc->pLevel->Brushes);
 			App->CL_Doc->pLevel->Brushes = NULL;
-		}*/
+		}
 
 		pLevel = App->CL_Level->Level_Create(WadPath, NULL, NULL, NULL);
 		if (pLevel == NULL)
@@ -184,6 +184,9 @@ void CL64_ParseFile::Load_File(char* FileName)
 
 	fclose(fp);
 
+	App->CL_Doc->pLevel = pLevel;
+	App->Say_Int(App->CL_Brush->Get_Brush_Count());
+	
 	App->Say("File Closed");
 }
 
@@ -211,12 +214,12 @@ BrushList* CL64_ParseFile::BrushList_CreateFromFile()
 			pBrush = Brush_CreateFromFile();
 			if (pBrush == NULL)
 			{
-				//BrushList_Destroy(&blist);
+				//App->CL_Brush->BrushList_Destroy(&blist);
 				break;
 			}
 			else
 			{
-				//BrushList_Append(blist, pBrush);
+				App->CL_Brush->BrushList_Append(blist, pBrush);
 			}
 		}
 	}
@@ -301,28 +304,28 @@ Brush* CL64_ParseFile::Brush_CreateFromFile()
 	//	tmpFlags &= ~BRUSH_TRANSLUCENT;
 	//}
 
-	//b = Brush_Create(tmpType, fl, blist);
-	//if (b == NULL)
-	//{
-	//	if (fl != NULL)
-	//	{
-	//		FaceList_Destroy(&fl);
-	//	}
-	//	if (blist != NULL)
-	//	{
-	//		BrushList_Destroy(&blist);
-	//	}
-	//}
-	//else
-	//{
-	//	b->Flags = tmpFlags;
-	//	b->HullSize = tmpHullSize;
-	//	b->ModelId = tmpModelId;
-	//	b->GroupId = tmpGroupId;
-	//	Brush_SetName(b, szTemp);
+	b = App->CL_Brush->Brush_Create(tmpType, fl, blist);
+	if (b == NULL)
+	{
+		if (fl != NULL)
+		{
+			App->CL_FaceList->FaceList_Destroy(&fl);
+		}
+		if (blist != NULL)
+		{
+			App->CL_Brush->BrushList_Destroy(&blist);
+		}
+	}
+	else
+	{
+		b->Flags = tmpFlags;
+		b->HullSize = tmpHullSize;
+		b->ModelId = tmpModelId;
+		b->GroupId = tmpGroupId;
+		App->CL_Brush->Brush_SetName(b, szTemp);
 
-	//	//FaceList_SetTextureLock(fl, true);
-	//}
+		//FaceList_SetTextureLock(fl, true);
+	}
 
 	return	b;
 }
@@ -439,7 +442,7 @@ Face* CL64_ParseFile::Face_CreateFromFile()
 			App->CL_Face->Face_InitTexInfo(&f->Tex, &f->Face_Plane.Normal);
 
 			App->CL_Face->Face_SetTextureName(f, szTemp);
-			//App->CL_Face->Face_SetTextureRotate(f, Rotate);// changed QD
+			//App->CL_Face->Face_SetTextureRotate(f, Rotate);
 			//App->CL_Face->Face_SetTextureShift(f, xShift, yShift);
 			App->CL_Face->Face_SetTextureScale(f, xScale, yScale);
 			App->CL_Face->Face_SetTexturePos(f);
@@ -447,7 +450,9 @@ Face* CL64_ParseFile::Face_CreateFromFile()
 			f->LightXScale = LightXScale;
 			f->LightYScale = LightYScale;
 
-			fgets(Read_Buffer, sizeof(Read_Buffer), fp);
+			if (!Get_Matrix3d("Transform", &f->Tex.XfmFaceAngle)) { Debug }
+			//App->Say_Float(f->Tex.XfmFaceAngle.Translation.z);
+
 			//if (!Parse3dt_GetXForm3d(Parser, (*Expected = "Transform"), &f->Tex.XfmFaceAngle)) goto DoneLoad;
 			
 			if (!Get_Vector3("Pos", &f->Tex.Pos)) { return NULL; }
@@ -648,7 +653,64 @@ bool CL64_ParseFile::Get_Vector2(const char* Should_Be, Ogre::Vector2* Vec2_retu
 }
 
 // *************************************************************************
-// *	        Get_Vector3:- Terry and Hazel Flanigan 2025		           *
+// *			 Get_Matrix3d:- Terry and Hazel Flanigan 2025		       *
+// *************************************************************************
+bool CL64_ParseFile::Get_Matrix3d(const char* Should_Be, Matrix3d* Matrix3d_return)
+{
+	memset(Read_Buffer, 0, MAX_PATH);
+	str_buff_1[0] = 0;
+
+	float AX = 0;
+	float AY = 0;
+	float AZ = 0;
+
+	float BX = 0;
+	float BY = 0;
+	float BZ = 0;
+
+	float CX = 0;
+	float CY = 0;
+	float CZ = 0;
+
+	float TX = 0;
+	float TY = 0;
+	float TZ = 0;
+	
+
+	fgets(Read_Buffer, sizeof(Read_Buffer), fp);
+	(void)sscanf(Read_Buffer, "%s %f %f %f %f %f %f %f %f %f %f %f %f", &str_buff_1, &AX, &AY, &AZ, &BX, &BY, &BZ, &CX, &CY, &CZ, &TX, &TY, &TZ);
+
+	if (!strcmp(str_buff_1, Should_Be))
+	{
+		Matrix3d_return->AX = AX;
+		Matrix3d_return->AY = AY;
+		Matrix3d_return->AZ = AZ;
+
+		Matrix3d_return->BX = BX;
+		Matrix3d_return->BY = BY;
+		Matrix3d_return->BZ = BZ;
+
+		Matrix3d_return->CX = CX;
+		Matrix3d_return->CY = CY;
+		Matrix3d_return->CZ = CZ;
+
+		Matrix3d_return->Translation.x = TX;
+		Matrix3d_return->Translation.y = TY;
+		Matrix3d_return->Translation.z = TZ;
+
+		return 1;
+	}
+	else
+	{
+		App->Say("File Error", (LPSTR)Should_Be);
+		return 0;
+	}
+
+	return 0;
+}
+
+// *************************************************************************
+// *			Get_Text_Info:- Terry and Hazel Flanigan 2025	           *
 // *************************************************************************
 bool CL64_ParseFile::Get_Text_Info(const char* Should_Be, float* ret_Rotate, Ogre::Vector2* ret_Shift, Ogre::Vector2* ret_Scale, char* Chr_Texture)
 {

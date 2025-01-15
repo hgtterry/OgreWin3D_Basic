@@ -46,6 +46,7 @@ private:
 	bool Get_Float(const char* Should_Be, float* Float_return);
 	bool Get_Vector3(const char* Should_Be, Ogre::Vector3* Vec3_return);
 	bool Get_Vector2(const char* Should_Be, Ogre::Vector2* Vec2_return);
+	bool Get_Matrix3d(const char* Should_Be, Matrix3d* Matrix3d_return);
 	bool Get_Text_Info(const char* Should_Be, float* ret_Rotate, Ogre::Vector2* ret_Shift, Ogre::Vector2* ret_Scale, char* Chr_Texture);
 
 	char Read_Buffer[MAX_PATH];
