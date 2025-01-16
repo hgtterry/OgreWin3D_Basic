@@ -61,6 +61,7 @@ THE SOFTWARE.
 #include "CL64_Export.h"
 // Templates Dialogs
 #include "A_CreateBoxDialog.h"
+#include "A_CreateCylDialog.h"
 
 class CL64_App
 {
@@ -105,7 +106,8 @@ public:
 
 	// Templates Dialogs
 	A_CreateBoxDialog*			CL_CreateBoxDialog;
-	
+	A_CreateCylDialog*			CL_CreateCylDialog;
+
 	void InitApp(void);
 	void SetBrushes_Fonts(void);
 	void LoadProgramResource(void);
@@ -147,7 +149,7 @@ public:
 
 	//HANDLE Hnd_Arch_Icon;
 	//HANDLE Hnd_Cone_Icon;
-	//HANDLE Hnd_Cyl_Icon;
+	HANDLE Hnd_Cyl_Icon;
 	//HANDLE Hnd_Spheriod_Icon;
 	HANDLE Hnd_Box_Icon;
 	//HANDLE Hnd_Stairs_Icon;

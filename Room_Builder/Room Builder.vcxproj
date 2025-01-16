@@ -150,6 +150,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="A_CreateBoxDialog.h" />
+    <ClInclude Include="A_CreateCylDialog.h" />
     <ClInclude Include="Base_Brush.h" />
     <ClInclude Include="Base_Group.h" />
     <ClInclude Include="CL64_App.h" />
@@ -196,6 +197,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="A_CreateBoxDialog.cpp" />
+    <ClCompile Include="A_CreateCylDialog.cpp" />
     <ClCompile Include="Base_Brush.cpp" />
     <ClCompile Include="Base_Group.cpp" />
     <ClCompile Include="CL64_App.cpp" />
@@ -246,7 +248,10 @@
     <ResourceCompile Include="Room Builder.rc" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="res\bitmap1.bmp" />
     <Image Include="res\cube.ico" />
+    <Image Include="res\cylinder.bmp" />
+    <Image Include="res\cylinder.ico" />
     <Image Include="res\solidbox.bmp" />
     <Image Include="Room Builder.ico" />
     <Image Include="small.ico" />

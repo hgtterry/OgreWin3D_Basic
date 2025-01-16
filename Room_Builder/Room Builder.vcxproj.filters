@@ -147,6 +147,9 @@
     <ClInclude Include="CL64_Export.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="A_CreateCylDialog.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Room Builder.cpp">
@@ -272,6 +275,9 @@
     <ClCompile Include="CL64_Export.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="A_CreateCylDialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Room Builder.rc">
@@ -289,6 +295,15 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="res\solidbox.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\cylinder.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\bitmap1.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\cylinder.bmp">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

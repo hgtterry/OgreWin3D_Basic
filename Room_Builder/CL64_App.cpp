@@ -66,6 +66,7 @@ CL64_App::CL64_App(void)
 
 	// Templates Dialogs
 	CL_CreateBoxDialog =		nullptr;
+	CL_CreateCylDialog =		nullptr;
 
 	CUR = 0;
 
@@ -81,6 +82,9 @@ CL64_App::CL64_App(void)
 	Font_CB18 = 0;
 	Font_Arial20 = 0;
 	Font_Banner = 0;
+
+	Hnd_Box_Icon = NULL;
+	Hnd_Cyl_Icon = NULL;
 
 	flag_Debug_App = 0;
 	flag_OgreStarted = 0;
@@ -138,7 +142,7 @@ void CL64_App::InitApp(void)
 	
 	// Templates Dialogs
 	CL_CreateBoxDialog =		new A_CreateBoxDialog();
-
+	CL_CreateCylDialog =		new A_CreateCylDialog();
 	
 	SetBrushes_Fonts();
 
@@ -197,13 +201,13 @@ void CL64_App::LoadProgramResource(void)
 	Hnd_SolidSpheroid_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_SOLIDSPHERE);
 
 	Hnd_Arch_Icon = LoadIcon(hInst, (LPCTSTR)IDI_ARCH_PRIMITIVE);
-	Hnd_Cone_Icon = LoadIcon(hInst, (LPCTSTR)IDI_CONE_PRIMITIVE);
+	Hnd_Cone_Icon = LoadIcon(hInst, (LPCTSTR)IDI_CONE_PRIMITIVE);*/
 	Hnd_Cyl_Icon = LoadIcon(hInst, (LPCTSTR)IDI_CYLINDER_PRIMITIVE);
-	Hnd_Spheriod_Icon = LoadIcon(hInst, (LPCTSTR)IDI_SPHEROID_PRIMITIVE);*/
+	//Hnd_Spheriod_Icon = LoadIcon(hInst, (LPCTSTR)IDI_SPHEROID_PRIMITIVE);
 	Hnd_Box_Icon = LoadIcon(hInst, (LPCTSTR)IDI_CUBE_PRIMITIVE);
-	/*Hnd_Stairs_Icon = LoadIcon(hInst, (LPCTSTR)IDI_STAIRCASE_PRIMITIVE);
+	//Hnd_Stairs_Icon = LoadIcon(hInst, (LPCTSTR)IDI_STAIRCASE_PRIMITIVE);
 
-	Hnd_MeshOn_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_MESHON);
+	/*Hnd_MeshOn_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_MESHON);
 	Hnd_MeshOff_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_MESHOFF);
 
 	Hnd_MeshPointsOn_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_MESHPOINTSON);

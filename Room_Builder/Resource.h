@@ -31,6 +31,10 @@
 #define IDD_TEXT_DIALOG                 145
 #define IDB_SOLIDBOX                    146
 #define IDD_OGRE_EXPORT                 147
+#define IDI_CYLINDER_PRIMITIVE          148
+#define IDD_CREATE_CYLINDER             149
+#define IDB_BITMAP1                     151
+#define IDB_CYLINDERBIT                 151
 #define IDC_BANNER                      1000
 #define IDC_STTEXT                      1001
 #define IDC_STMESSAGE                   1002
@@ -100,6 +104,27 @@
 #define IDC_CK_CREATE_SUBDIR            1065
 #define IDC_ST_STOGRESUB                1066
 #define IDC_CK_BUILDEDGELIST            1067
+#define IDC_BRUSH_CYCLINDER_PRIMITIVE   1068
+#define IDC_EDIT1                       1069
+#define IDC_EDIT2                       1070
+#define IDC_EDIT3                       1071
+#define IDC_EDIT4                       1072
+#define IDC_EDIT5                       1073
+#define IDC_EDIT6                       1074
+#define IDC_EDIT7                       1075
+#define IDC_EDIT8                       1076
+#define IDC_EDIT9                       1077
+#define IDC_EDIT10                      1078
+#define IDC_EDIT11                      1079
+#define IDC_EDIT12                      1080
+#define IDC_BUTTON1                     1081
+#define IDC_EDIT13                      1082
+#define IDC_CHECK1                      1083
+#define IDC_CHECK2                      1084
+#define IDC_CHECK3                      1085
+#define IDC_CHECK4                      1086
+#define IDC_CHECK5                      1087
+#define IDC_CHECK6                      1088
 #define ID_DEBUG_GENERAL                32771
 #define ID_TEMPLATES_INSERT             32772
 #define ID_BRUSH_SELECT                 32773
@@ -126,9 +151,9 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
-#define _APS_NEXT_RESOURCE_VALUE        148
+#define _APS_NEXT_RESOURCE_VALUE        152
 #define _APS_NEXT_COMMAND_VALUE         32786
-#define _APS_NEXT_CONTROL_VALUE         1068
+#define _APS_NEXT_CONTROL_VALUE         1084
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif
