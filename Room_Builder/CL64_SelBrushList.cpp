@@ -128,10 +128,10 @@ int CL64_SelBrushList::SelBrushList_GetSize(SelBrushList* pList)
 // *************************************************************************
 static signed int SelBrushList_CenterEnum(Brush* b, void* lParam)
 {
-	Ogre::Vector3* center;
-	Ogre::Vector3 newcenter;
+	T_Vec3* center;
+	T_Vec3 newcenter;
 
-	center = (Ogre::Vector3*)lParam;
+	center = (T_Vec3*)lParam;
 	App->CL_Box->Box3d_GetCenter(&b->BoundingBox, &newcenter);
 	App->CL_Maths->Vector3_Add(center, &newcenter, center);
 
@@ -141,10 +141,10 @@ static signed int SelBrushList_CenterEnum(Brush* b, void* lParam)
 // *************************************************************************
 // *						SelBrushList_Center						 	   *
 // *************************************************************************
-void CL64_SelBrushList::SelBrushList_Center(SelBrushList* pList, Ogre::Vector3* center)
+void CL64_SelBrushList::SelBrushList_Center(SelBrushList* pList, T_Vec3* center)
 {
 	int listcount;
-	Ogre::Vector3 average;
+	T_Vec3 average;
 
 	assert(pList && center);
 

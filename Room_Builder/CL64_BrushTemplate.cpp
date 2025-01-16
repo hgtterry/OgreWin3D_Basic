@@ -121,8 +121,8 @@ void CL64_BrushTemplate::BrushTemplate_StaircaseDefaults(BrushTemplate_Staircase
 // *************************************************************************
 Brush* CL64_BrushTemplate::BrushTemplate_CreateBox(const BrushTemplate_Box* pTemplate)
 {
-	Ogre::Vector3	Verts[8];
-	Ogre::Vector3	FaceVerts[4];
+	T_Vec3	Verts[8];
+	T_Vec3	FaceVerts[4];
 	FaceList* fl;
 	Face* f;
 	Brush* b;
@@ -272,8 +272,8 @@ Brush* CL64_BrushTemplate::BrushTemplate_CreateCylinder(const BrushTemplate_Cyli
 	double		EllipseZ;
 	int			NumVerticalBands, HBand, VBand;
 	int			VertexCount = 0;
-	Ogre::Vector3* Verts, * TopPoints;
-	Ogre::Vector3		Current, Final, Delta;
+	T_Vec3* Verts, * TopPoints;
+	T_Vec3	Current, Final, Delta;
 	Matrix3d YRotation;
 	FaceList* fl;
 	Face* f;
@@ -287,8 +287,8 @@ Brush* CL64_BrushTemplate::BrushTemplate_CreateCylinder(const BrushTemplate_Cyli
 	}
 
 
-	Verts = (Ogre::Vector3*)App->CL_Maths->Ram_Allocate(sizeof(Ogre::Vector3) * NumVerticalBands * 2);
-	TopPoints = (Ogre::Vector3*)App->CL_Maths->Ram_Allocate(sizeof(Ogre::Vector3) * NumVerticalBands);
+	Verts = (T_Vec3*)App->CL_Maths->Ram_Allocate(sizeof(T_Vec3) * NumVerticalBands * 2);
+	TopPoints = (T_Vec3*)App->CL_Maths->Ram_Allocate(sizeof(T_Vec3) * NumVerticalBands);
 	fl = App->CL_FaceList->FaceList_Create(NumVerticalBands + 2);
 
 	if (!Verts || !TopPoints || !fl)
@@ -390,7 +390,7 @@ Brush* CL64_BrushTemplate::BrushTemplate_CreateCylinder(const BrushTemplate_Cyli
 	{
 		for (VBand = 0; VBand < NumVerticalBands; VBand++)
 		{
-			Ogre::Vector3 Points[4];
+			T_Vec3 Points[4];
 			Points[3] = Verts[(HBand * NumVerticalBands) + VBand];
 			Points[2] = Verts[(HBand * NumVerticalBands) + ((VBand + 1) % NumVerticalBands)];
 			Points[1] = Verts[((HBand + 1) * NumVerticalBands) + ((VBand + 1) % NumVerticalBands)];

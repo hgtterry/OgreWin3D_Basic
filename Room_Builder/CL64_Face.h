@@ -27,7 +27,7 @@ THE SOFTWARE.
 
 typedef struct
 {
-	Ogre::Vector3 uVec, vVec;
+	T_Vec3 uVec, vVec;
 	float uOffset, vOffset;
 } TexInfo_Vectors;
 
@@ -47,12 +47,12 @@ public:
 	CL64_Face(void);
 	~CL64_Face(void);
 
-	Face* Face_Create(int NumPnts, const Ogre::Vector3* pnts, int DibId);
+	Face* Face_Create(int NumPnts, const T_Vec3* pnts, int DibId);
 	void Face_SetVisible(Face* f, const signed int bState);
 	signed int Face_SetPlaneFromFace(Face* f);
-	void Face_SetTexInfoPlane(TexInfo* t, Ogre::Vector3 const* pNormal);
-	void Face_InitTexInfo(TexInfo* t, Ogre::Vector3 const* pNormal);
-	void Face_InitFaceAngle(TexInfo* t, Ogre::Vector3 const* pNormal);
+	void Face_SetTexInfoPlane(TexInfo* t, T_Vec3 const* pNormal);
+	void Face_InitTexInfo(TexInfo* t, T_Vec3 const* pNormal);
+	void Face_InitFaceAngle(TexInfo* t, T_Vec3 const* pNormal);
 	void Face_SetTextureDibId(Face* f, const int Dib);
 	void Face_SetTexturePos(Face* f);
 	void Face_GetBounds(const Face* f, Box3d* b);
@@ -64,7 +64,7 @@ public:
 	void Face_Destroy(Face** f);
 	void Face_GetSplitInfo(const Face* f, const GPlane* p, float* dists, Ogre::uint8* sides, Ogre::uint8* cnt);
 	void Face_Clip(Face* f, const GPlane* p, float* dists, Ogre::uint8* sides);
-	const Ogre::Vector3* Face_GetPoints(const Face* f);
+	const T_Vec3* Face_GetPoints(const Face* f);
 	int	Face_GetNumPoints(const Face* f);
 	Face* Face_Clone(const Face* src);
 	int	Face_GetTextureDibId(const Face* f);
@@ -78,9 +78,9 @@ public:
 	Face* Face_CloneReverse(const Face* src);
 	void Face_Split(const Face* f, const GPlane* p, Face** ff, Face** bf, float* dists, Ogre::uint8* sides);
 	void Face_MostlyOnSide(const Face* f, const GPlane* p, float* max, int* side);
-	void Face_Move(Face* f, const Ogre::Vector3* trans);
+	void Face_Move(Face* f, const T_Vec3* trans);
 	void Face_SetSelected(Face* f, const signed int bState);
-	signed int Face_Scale(Face* f, const Ogre::Vector3* ScaleVec);
+	signed int Face_Scale(Face* f, const T_Vec3* ScaleVec);
 	void Face_XfmTexture(Face* f, const Matrix3d* pXfm);
 	void Face_GetTextureScale(const Face* f, float* pxScale, float* pyScale);
 	void Face_GetTextureShift(const Face* f, int* pxShift, int* pyShift);

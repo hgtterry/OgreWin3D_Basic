@@ -121,7 +121,7 @@ void CL64_Maths::Ram_Free(void* ptr)
 // *************************************************************************
 // *			Vector3_Set:- Terry and Hazel Flanigan 2024			 	   *
 // *************************************************************************
-void CL64_Maths::Vector3_Set(Ogre::Vector3* V, float X, float Y, float Z)
+void CL64_Maths::Vector3_Set(T_Vec3* V, float X, float Y, float Z)
 {
 	V->x = X;
 	V->y = Y;
@@ -131,7 +131,7 @@ void CL64_Maths::Vector3_Set(Ogre::Vector3* V, float X, float Y, float Z)
 // *************************************************************************
 // *			Vector3_Add:- Terry and Hazel Flanigan 2024			 	   *
 // *************************************************************************
-void CL64_Maths::Vector3_Add(const Ogre::Vector3* V1, const Ogre::Vector3* V2, Ogre::Vector3* V1PlusV2)
+void CL64_Maths::Vector3_Add(const T_Vec3* V1, const T_Vec3* V2, T_Vec3* V1PlusV2)
 {
 	V1PlusV2->x = V1->x + V2->x;
 	V1PlusV2->y = V1->y + V2->y;
@@ -141,7 +141,7 @@ void CL64_Maths::Vector3_Add(const Ogre::Vector3* V1, const Ogre::Vector3* V2, O
 // *************************************************************************
 // *		Vector3_Subtract:- Terry and Hazel Flanigan 2024		 	   *
 // *************************************************************************
-void CL64_Maths::Vector3_Subtract(const Ogre::Vector3* V1, const Ogre::Vector3* V2, Ogre::Vector3* V1MinusV2)
+void CL64_Maths::Vector3_Subtract(const T_Vec3* V1, const T_Vec3* V2, T_Vec3* V1MinusV2)
 {
 
 	if (V1MinusV2 == NULL)
@@ -157,7 +157,7 @@ void CL64_Maths::Vector3_Subtract(const Ogre::Vector3* V1, const Ogre::Vector3* 
 // *************************************************************************
 // *			Vector3_Scale:- Terry and Hazel Flanigan 2024		 	   *
 // *************************************************************************
-void CL64_Maths::Vector3_Scale(const Ogre::Vector3* VSrc, float Scale, Ogre::Vector3* VDst)
+void CL64_Maths::Vector3_Scale(const T_Vec3* VSrc, float Scale, T_Vec3* VDst)
 {
 	VDst->x = VSrc->x * Scale;
 	VDst->y = VSrc->y * Scale;
@@ -167,7 +167,7 @@ void CL64_Maths::Vector3_Scale(const Ogre::Vector3* VSrc, float Scale, Ogre::Vec
 // *************************************************************************
 // *			Vector3_Normalize:- Terry and Hazel Flanigan 2024	 	   *
 // *************************************************************************
-float CL64_Maths::Vector3_Normalize(Ogre::Vector3* V1)
+float CL64_Maths::Vector3_Normalize(T_Vec3* V1)
 {
 	float OneOverDist;
 	float Dist;
@@ -188,7 +188,7 @@ float CL64_Maths::Vector3_Normalize(Ogre::Vector3* V1)
 // *************************************************************************
 // *		Vector3_DotProduct:- Terry and Hazel Flanigan 2024		 	   *
 // *************************************************************************
-float CL64_Maths::Vector3_DotProduct(const Ogre::Vector3* V1, const Ogre::Vector3* V2)
+float CL64_Maths::Vector3_DotProduct(const T_Vec3* V1, const T_Vec3* V2)
 {
 	return(V1->x * V2->x + V1->y * V2->y + V1->z * V2->z);
 }
@@ -196,7 +196,7 @@ float CL64_Maths::Vector3_DotProduct(const Ogre::Vector3* V1, const Ogre::Vector
 // *************************************************************************
 // *			Vector3_Copy:- Terry and Hazel Flanigan 2024		 	   *
 // *************************************************************************
-void CL64_Maths::Vector3_Copy(const Ogre::Vector3* VSrc, Ogre::Vector3* VDst)
+void CL64_Maths::Vector3_Copy(const T_Vec3* VSrc, T_Vec3* VDst)
 {
 	*VDst = *VSrc;
 }
@@ -204,7 +204,7 @@ void CL64_Maths::Vector3_Copy(const Ogre::Vector3* VSrc, Ogre::Vector3* VDst)
 // *************************************************************************
 // *			Vector3_Clear:- Terry and Hazel Flanigan 2024		 	   *
 // *************************************************************************
-void CL64_Maths::Vector3_Clear(Ogre::Vector3* V)
+void CL64_Maths::Vector3_Clear(T_Vec3* V)
 {
 	V->x = 0.0f;
 	V->y = 0.0f;
@@ -214,9 +214,9 @@ void CL64_Maths::Vector3_Clear(Ogre::Vector3* V)
 // *************************************************************************
 // *		Vector3_CrossProduct:- Terry and Hazel Flanigan 2024	 	   *
 // *************************************************************************
-void CL64_Maths::Vector3_CrossProduct(const Ogre::Vector3* V1, const Ogre::Vector3* V2, Ogre::Vector3* VResult)
+void CL64_Maths::Vector3_CrossProduct(const T_Vec3* V1, const T_Vec3* V2, T_Vec3* VResult)
 {
-	Ogre::Vector3 Result;
+	T_Vec3 Result;
 
 	Result.x = V1->y * V2->z - V1->z * V2->y;
 	Result.y = V1->z * V2->x - V1->x * V2->z;
@@ -228,7 +228,7 @@ void CL64_Maths::Vector3_CrossProduct(const Ogre::Vector3* V1, const Ogre::Vecto
 // *************************************************************************
 // *			Vector3_Compare:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-signed int CL64_Maths::Vector3_Compare(const Ogre::Vector3* V1, const Ogre::Vector3* V2, float Tolerance)
+signed int CL64_Maths::Vector3_Compare(const T_Vec3* V1, const T_Vec3* V2, float Tolerance)
 {
 
 	if (fabs(V2->x - V1->x) > Tolerance)
@@ -244,7 +244,7 @@ signed int CL64_Maths::Vector3_Compare(const Ogre::Vector3* V1, const Ogre::Vect
 // *************************************************************************
 // *			Vector3_Compare:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-void CL64_Maths::Vector3_Inverse(Ogre::Vector3* V)
+void CL64_Maths::Vector3_Inverse(T_Vec3* V)
 {
 	V->x = -V->x;
 	V->y = -V->y;
@@ -254,7 +254,7 @@ void CL64_Maths::Vector3_Inverse(Ogre::Vector3* V)
 // *************************************************************************
 // *			Vector3_AddScaled:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
-void CL64_Maths::Vector3_AddScaled(const Ogre::Vector3* V1, const Ogre::Vector3* V2, float Scale, Ogre::Vector3* V1PlusV2Scaled)
+void CL64_Maths::Vector3_AddScaled(const T_Vec3* V1, const T_Vec3* V2, float Scale, T_Vec3* V1PlusV2Scaled)
 {
 	V1PlusV2Scaled->x = V1->x + V2->x * Scale;
 	V1PlusV2Scaled->y = V1->y + V2->y * Scale;
@@ -264,7 +264,7 @@ void CL64_Maths::Vector3_AddScaled(const Ogre::Vector3* V1, const Ogre::Vector3*
 // *************************************************************************
 // *				Vector3_MA:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-void CL64_Maths::Vector3_MA(Ogre::Vector3* V1, float Scale, const Ogre::Vector3* V2, Ogre::Vector3* V1PlusV2Scaled)
+void CL64_Maths::Vector3_MA(T_Vec3* V1, float Scale, const T_Vec3* V2, T_Vec3* V1PlusV2Scaled)
 {
 	assert(geVec3d_IsValid(V1) != GE_FALSE);
 	assert(geVec3d_IsValid(V2) != GE_FALSE);
@@ -285,8 +285,6 @@ void CL64_Maths::XForm3d_SetIdentity(Matrix3d* M)
 	M->AX = M->BY = M->CZ = 1.0f;
 	M->AY = M->AZ = M->BX = M->BZ = M->CX = M->CY = 0.0f;
 	M->Translation.x = M->Translation.y = M->Translation.z = 0.0f;
-
-	//XForm3d_Assert(geXForm3d_IsOrthonormal(M) == GE_TRUE);
 }
 
 // *************************************************************************
@@ -437,7 +435,7 @@ void CL64_Maths::XForm3d_Multiply(const Matrix3d* M1,const Matrix3d* M2, Matrix3
 // *************************************************************************
 // *	Quaternion_SetFromAxisAngle:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
-void CL64_Maths::Quaternion_SetFromAxisAngle(Ogre::Quaternion* Q, const Ogre::Vector3* Axis, float Theta)
+void CL64_Maths::Quaternion_SetFromAxisAngle(Ogre::Quaternion* Q, const T_Vec3* Axis, float Theta)
 {
 	float sinTheta;
 	
@@ -498,9 +496,9 @@ void CL64_Maths::Quaternion_ToMatrix(const Ogre::Quaternion* Q, Matrix3d* M)
 // *************************************************************************
 // *		geXForm3d_Rotate:- Terry and Hazel Flanigan 2025			   *
 // *************************************************************************
-void CL64_Maths::geXForm3d_Rotate(const Matrix3d* M,const Ogre::Vector3* V, Ogre::Vector3* Result)
+void CL64_Maths::geXForm3d_Rotate(const Matrix3d* M,const T_Vec3* V, T_Vec3* Result)
 {
-	Ogre::Vector3 VL;
+	T_Vec3 VL;
 	
 	VL = *V;
 

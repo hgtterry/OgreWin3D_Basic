@@ -441,7 +441,7 @@ bool CL64_Mesh_Mgr::Brush_FaceList_Create(const Brush* b, const FaceList* pList,
 
 	for (i = 0; i < pList->NumFaces; i++)
 	{
-		const Ogre::Vector3* verts;
+		const T_Vec3* verts;
 		verts = App->CL_Face->Face_GetPoints(pList->Faces[i]);
 		curnum_verts = App->CL_Face->Face_GetNumPoints(pList->Faces[i]);
 		for (j = 0; j < curnum_verts; j++)
@@ -464,9 +464,9 @@ bool CL64_Mesh_Mgr::Brush_FaceList_Create(const Brush* b, const FaceList* pList,
 	for (i = 0; i < pList->NumFaces; i++)
 	{
 		const TexInfo_Vectors* TVecs = App->CL_Face->Face_GetTextureVecs(pList->Faces[i]); // hgtterry needs finishing
-		const Ogre::Vector3* verts;
-		Ogre::Vector3 uVec, vVec;
-		geFloat U, V;
+		const T_Vec3* verts;
+		T_Vec3 uVec, vVec;
+		float U, V;
 
 		int txSize, tySize;
 

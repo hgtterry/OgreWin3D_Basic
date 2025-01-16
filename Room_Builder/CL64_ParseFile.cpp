@@ -72,7 +72,7 @@ struct tag_Level
 
 typedef struct TexInfoTag
 {
-	Ogre::Vector3 VecNormal;
+	T_Vec3 VecNormal;
 	float xScale, yScale;
 	int xShift, yShift;
 	float	Rotate;			// texture rotation angle in degrees
@@ -80,7 +80,7 @@ typedef struct TexInfoTag
 	int Dib;				// index into the wad
 	char Name[16];
 	signed int DirtyFlag;
-	Ogre::Vector3 Pos;
+	T_Vec3 Pos;
 	int txSize, tySize;		// texture size (not currently used)
 	Matrix3d XfmFaceAngle;	// face rotation angle
 } TexInfo;
@@ -96,7 +96,7 @@ typedef struct FaceTag
 	float		MipMapBias;
 	float		LightXScale, LightYScale;
 	TexInfo		Tex;
-	Ogre::Vector3* Points;
+	T_Vec3* Points;
 } Face;
 
 CL64_ParseFile::CL64_ParseFile(void)
@@ -380,7 +380,7 @@ Face* CL64_ParseFile::Face_CreateFromFile()
 
 	float MipMapBias, Reflectivity, Translucency;
 	float xScale, yScale, Rotate;
-	Ogre::Vector3* tmpPnts = NULL;
+	T_Vec3* tmpPnts = NULL;
 	signed int LoadResult;
 	char szTemp[MAX_PATH]{ 0 };
 
@@ -400,7 +400,7 @@ Face* CL64_ParseFile::Face_CreateFromFile()
 	if (!Get_Float("Reflectivity", &Reflectivity)) { return NULL; }
 	
 
-	tmpPnts = (Ogre::Vector3*)App->CL_Maths->Ram_Allocate(sizeof(Ogre::Vector3) * NumPnts);
+	tmpPnts = (T_Vec3*)App->CL_Maths->Ram_Allocate(sizeof(T_Vec3) * NumPnts);
 	if (tmpPnts)
 	{
 		float LightXScale = 1.0f;
@@ -599,7 +599,7 @@ bool CL64_ParseFile::Get_Float(const char* Should_Be, float* Float_return)
 // *************************************************************************
 // *	        Get_Vector3:- Terry and Hazel Flanigan 2025		           *
 // *************************************************************************
-bool CL64_ParseFile::Get_Vector3(const char* Should_Be, Ogre::Vector3* Vec3_return)
+bool CL64_ParseFile::Get_Vector3(const char* Should_Be, T_Vec3* Vec3_return)
 {
 	memset(Read_Buffer, 0, MAX_PATH);
 	str_buff_1[0] = 0;
@@ -612,7 +612,10 @@ bool CL64_ParseFile::Get_Vector3(const char* Should_Be, Ogre::Vector3* Vec3_retu
 
 	if (!strcmp(str_buff_1, Should_Be))
 	{
-		*Vec3_return = Ogre::Vector3(x, y, z);
+		Vec3_return->x = x;
+		Vec3_return->y = y;
+		Vec3_return->z = z;
+
 		return 1;
 	}
 	else

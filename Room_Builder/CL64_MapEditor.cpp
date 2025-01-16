@@ -533,7 +533,9 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Left_Window(HWND hDlg, UINT message, W
 		App->CL_MapEditor->VCam[V_TL]->Width = 310;
 		App->CL_MapEditor->VCam[V_TL]->Height = 174;
 
-		App->CL_MapEditor->VCam[V_TL]->CamPos = Ogre::Vector3(0, 0, 0);// App->CL_Ogre->camNode->getPosition();
+		App->CL_MapEditor->VCam[V_TL]->CamPos.x = 0;// App->CL_Ogre->camNode->getPosition();
+		App->CL_MapEditor->VCam[V_TL]->CamPos.y = 0;
+		App->CL_MapEditor->VCam[V_TL]->CamPos.z = 0;
 
 		return TRUE;
 	}
@@ -699,7 +701,10 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Right_Window(HWND hDlg, UINT message, 
 		App->CL_MapEditor->VCam[V_TR]->ViewType = 32;
 		App->CL_MapEditor->VCam[V_TR]->ZoomFactor = 0.4;
 
-		App->CL_MapEditor->VCam[V_TR]->CamPos =  Ogre::Vector3(0, 0, 0);// App->CL_Ogre->camNode->getPosition();
+		App->CL_MapEditor->VCam[V_TR]->CamPos.x = 0;// App->CL_Ogre->camNode->getPosition();
+		App->CL_MapEditor->VCam[V_TR]->CamPos.y;
+		App->CL_MapEditor->VCam[V_TR]->CamPos.z;
+		
 		App->CL_MapEditor->VCam[V_TR]->hDlg = hDlg;
 
 		return TRUE;
@@ -858,7 +863,10 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Bottom_Left_Window(HWND hDlg, UINT message
 		App->CL_MapEditor->VCam[V_BL]->ViewType = 16;
 		App->CL_MapEditor->VCam[V_BL]->ZoomFactor = 0.4;
 
-		App->CL_MapEditor->VCam[V_BL]->CamPos =  Ogre::Vector3(0, 0, 0);//App->CL_Ogre->camNode->getPosition();
+		App->CL_MapEditor->VCam[V_BL]->CamPos.x = 0;//App->CL_Ogre->camNode->getPosition();
+		App->CL_MapEditor->VCam[V_BL]->CamPos.y = 0;
+		App->CL_MapEditor->VCam[V_BL]->CamPos.z = 0;
+		
 		App->CL_MapEditor->VCam[V_BL]->hDlg = hDlg;
 
 		return TRUE;
@@ -1113,9 +1121,8 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Bottom_Right_Ogre(HWND hDlg, UINT message,
 // *************************************************************************
 void CL64_MapEditor::On_Mouse_Move(POINT CursorPosition, HWND hDlg)
 {
-
-	int			dx, dy;
-	Ogre::Vector3 sp, wp, dv;
+	int	dx, dy;
+	T_Vec3 sp, wp, dv;
 
 	dx = (CursorPosition.x - mStartPoint.x);
 	dy = (CursorPosition.y - mStartPoint.y);
@@ -1305,7 +1312,7 @@ void CL64_MapEditor::Draw_Screen(HWND hwnd)
 	/*Current_View->XCenter = Rect.left/2;
 	Current_View->YCenter = Rect.bottom/2;*/
 
-	Ogre::Vector3 XTemp;
+	T_Vec3 XTemp;
 	Box3d ViewBox;
 	inidx = App->CL_Render->Render_GetInidx(Current_View);
 
@@ -1450,7 +1457,7 @@ void CL64_MapEditor::Render_RenderBrushFacesOrtho(const ViewVars* Cam, Brush* b,
 	for (i = 0; i < App->CL_Brush->Brush_GetNumFaces(b); i++)
 	{
 		Face* f = App->CL_Brush->Brush_GetFace(b, i);
-		const Ogre::Vector3* pnts = App->CL_Face->Face_GetPoints(f);
+		const T_Vec3* pnts = App->CL_Face->Face_GetPoints(f);
 
 		for (j = 0; j < App->CL_Face->Face_GetNumPoints(f); j++)
 		{
@@ -1469,9 +1476,13 @@ void CL64_MapEditor::Draw_Camera(HDC ViewDC)
 {
 #define ENTITY_SIZE (32.0f)  // 16" across
 	
-	Ogre::Vector3 VecOrigin;
-	Ogre::Vector3 EntSizeWorld;	// entity size in world space
-	Ogre::Vector3 DummyPos = Ogre::Vector3(0, 0, 0);
+	T_Vec3 VecOrigin;
+	T_Vec3 EntSizeWorld;	// entity size in world space
+	T_Vec3 DummyPos;
+
+	DummyPos.x = 0;
+	DummyPos.y = 0;
+	DummyPos.z = 0;
 
 	POINT EntPosView;
 	POINT EntSizeView;

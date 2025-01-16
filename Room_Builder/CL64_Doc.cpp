@@ -233,7 +233,7 @@ void CL64_Doc::Brush_Add_To_world()
 	Placed = false;
 
 	Brush* nb;
-	Ogre::Vector3* pTemplatePos;
+    T_Vec3* pTemplatePos;
 
 	nb = App->CL_Brush->Brush_Clone(App->CL_Doc->CurBrush);
 
@@ -445,8 +445,8 @@ static geBoolean FindClosestBrushCB(Brush* pBrush, void* pVoid)
         {
             POINT pt1, pt2;
             Face* pFace = App->CL_Brush->Brush_GetFace(pBrush, iFace);
-            const Ogre::Vector3* FacePoints = App->CL_Face->Face_GetPoints(pFace);
-            int				NumPoints = App->CL_Face->Face_GetNumPoints(pFace);
+            const T_Vec3* FacePoints = App->CL_Face->Face_GetPoints(pFace);
+            int	NumPoints = App->CL_Face->Face_GetNumPoints(pFace);
 
             // Starting with the edge formed by the last point and the first point,
             // determine distance from mouse cursor pos to the edge.
@@ -790,7 +790,7 @@ void CL64_Doc::TempCopySelectedBrushes(void)
 // *************************************************************************
 // *                 LockAxis:- Terry and Hazel Flanigan 2025              *
 // *************************************************************************
-void CL64_Doc::LockAxis(Ogre::Vector3* pWP)
+void CL64_Doc::LockAxis(T_Vec3* pWP)
 {
     int mLockAxis;
    
@@ -822,7 +822,7 @@ enum LastBrushAction
 // *************************************************************************
 // *         MoveSelectedBrushes:- Terry and Hazel Flanigan 2025           *
 // *************************************************************************
-void CL64_Doc::MoveSelectedBrushes(Ogre::Vector3 const* v)
+void CL64_Doc::MoveSelectedBrushes(T_Vec3 const* v)
 {
     MoveSelectedBrushList(pTempSelBrushes, v);
 }
@@ -830,7 +830,7 @@ void CL64_Doc::MoveSelectedBrushes(Ogre::Vector3 const* v)
 // *************************************************************************
 // *         MoveSelectedBrushList:- Terry and Hazel Flanigan 2025         *
 // *************************************************************************
-void CL64_Doc::MoveSelectedBrushList(SelBrushList* pList, Ogre::Vector3 const* v)
+void CL64_Doc::MoveSelectedBrushList(SelBrushList* pList, T_Vec3 const* v)
 {
     int		i;
     int NumBrushes;
@@ -899,9 +899,9 @@ void CL64_Doc::DoneMovingBrushes()
     if (App->CL_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes) > 0)// || ModeTool == ID_TOOLS_TEMPLATE)
     {
         float fSnapSize;
-        const Ogre::Vector3* vMin, * vMax;
+        const T_Vec3* vMin, * vMax;
         const Box3d* pBox;
-        Ogre::Vector3 SnapDelta;
+        T_Vec3 SnapDelta;
         geBoolean SnapX, SnapY, SnapZ;
 
         fSnapSize = 1.0f;

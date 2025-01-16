@@ -98,17 +98,17 @@ signed int CL64_Box::Box3d_ContainsPoint(const Box3d* b, float px, float py, flo
 		(pz >= b->Min.z) && (pz <= b->Max.z));
 }
 
-const Ogre::Vector3* CL64_Box::Box3d_GetMin(const Box3d* b)
+const T_Vec3* CL64_Box::Box3d_GetMin(const Box3d* b)
 {
 	return &b->Min;
 }
 
-const Ogre::Vector3* CL64_Box::Box3d_GetMax(const Box3d* b)
+const T_Vec3* CL64_Box::Box3d_GetMax(const Box3d* b)
 {
 	return &b->Max;
 }
 
-void CL64_Box::Box3d_GetCenter(const Box3d* b, Ogre::Vector3* pCenter)
+void CL64_Box::Box3d_GetCenter(const Box3d* b, T_Vec3* pCenter)
 {
 	App->CL_Maths->Vector3_Set
 	(
@@ -135,7 +135,7 @@ float CL64_Box::Box3d_GetDepth(const Box3d* b)
 }
 
 
-void CL64_Box::Box3d_GetSize(const Box3d* b, Ogre::Vector3* pSize)
+void CL64_Box::Box3d_GetSize(const Box3d* b, T_Vec3* pSize)
 {
 	App->CL_Maths->Vector3_Set
 	(
@@ -154,7 +154,7 @@ void CL64_Box::Box3d_Scale(Box3d* b, float Scale)
 
 void CL64_Box::Box3d_Move(Box3d* b, float dx, float dy, float dz)
 {
-	Ogre::Vector3 VecDelta;
+	T_Vec3 VecDelta;
 
 	App->CL_Maths->Vector3_Set(&VecDelta, dx, dy, dz);
 	App->CL_Maths->Vector3_Add(&b->Min, &VecDelta, &b->Min);
@@ -163,7 +163,7 @@ void CL64_Box::Box3d_Move(Box3d* b, float dx, float dy, float dz)
 
 void CL64_Box::Box3d_Inflate(Box3d* b, float dx, float dy, float dz)
 {
-	Ogre::Vector3 VecDelta;
+	T_Vec3 VecDelta;
 
 	App->CL_Maths->Vector3_Set(&VecDelta, dx, dy, dz);
 	App->CL_Maths->Vector3_Subtract(&b->Min, &VecDelta, &b->Min);

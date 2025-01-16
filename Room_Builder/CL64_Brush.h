@@ -102,7 +102,7 @@ public:
 	BrushList* BrushList_Clone(BrushList* inList);
 	void Brush_SetName(Brush* b, const char* newname);
 	void Brush_SetFaceListDirty(Brush* b);
-	void Brush_Center(const Brush* b, Ogre::Vector3* center);
+	void Brush_Center(const Brush* b, T_Vec3* center);
 	void Brush_EnumFaces(Brush* b, void* lParam, Brush_FaceCallback Callback);
 	void Brush_UpdateChildFaces(Brush* b);
 	signed int	Brush_TestBoundsIntersect(const Brush* b, const Box3d* pBox);
@@ -120,14 +120,14 @@ public:
 	void Brush_SplitByFace(Brush* ogb, Face* sf, Brush** fb, Brush** bb);
 	void BrushList_Prepend(BrushList* pList, Brush* pBrush);
 	signed int Brush_IsVisible(const Brush* b);
-	void Brush_Move(Brush* b, const Ogre::Vector3* trans);
-	void BrushList_Move(BrushList* pList, const Ogre::Vector3* trans);
+	void Brush_Move(Brush* b, const T_Vec3* trans);
+	void BrushList_Move(BrushList* pList, const T_Vec3* trans);
 	const Box3d* Brush_GetBoundingBox(const Brush* b);
-	void Brush_Resize(Brush* b, float dx, float dy, int sides, int inidx, Ogre::Vector3* fnscale, int* ScaleNum);
+	void Brush_Resize(Brush* b, float dx, float dy, int sides, int inidx, T_Vec3* fnscale, int* ScaleNum);
 	int	Brush_GetModelId(const Brush* b);
-	void Brush_ResizeFinal(Brush* b, int sides, int inidx, Ogre::Vector3* fnscale);
-	signed int Brush_Scale3d(Brush* b, const Ogre::Vector3* mag);
-	signed int BrushList_Scale3d(BrushList* pList, const Ogre::Vector3* trans);
+	void Brush_ResizeFinal(Brush* b, int sides, int inidx, T_Vec3* fnscale);
+	signed int Brush_Scale3d(Brush* b, const T_Vec3* mag);
+	signed int BrushList_Scale3d(BrushList* pList, const T_Vec3* trans);
 	Brush* Get_By_Index(int Index);
 	signed int BrushList_Enum(BrushList const* pList, void* lParam, BrushList_CB CallBack);
 

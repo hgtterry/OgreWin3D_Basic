@@ -429,9 +429,9 @@ void A_CreateCylDialog::CreateCylinder()
 // *************************************************************************
 void A_CreateCylDialog::CreateNewTemplateBrush(Brush *pBrush)
 {
-	Ogre::Vector3 *pTemplatePos;
-	Ogre::Vector3 MoveVec;
-	Ogre::Vector3 BrushPos;
+	T_Vec3*pTemplatePos;
+	T_Vec3 MoveVec;
+	T_Vec3 BrushPos;
 
 	assert (pBrush != NULL);
 

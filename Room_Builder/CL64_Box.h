@@ -2,8 +2,8 @@
 
 struct tag_Box3d
 {
-	Ogre::Vector3 Min;
-	Ogre::Vector3 Max;
+	T_Vec3 Min;
+	T_Vec3 Max;
 };
 
 typedef struct tag_Box3d Box3d;
@@ -23,13 +23,13 @@ public:
 	bool Box3d_Intersection(const Box3d* b1, const Box3d* b2, Box3d* bResult);
 	void Box3d_Union(const Box3d* b1, const Box3d* b2, Box3d* bResult);
 	signed int Box3d_ContainsPoint(const Box3d* b, float px, float py, float pz);
-	const Ogre::Vector3* Box3d_GetMin(const Box3d* b);
-	const Ogre::Vector3* Box3d_GetMax(const Box3d* b);
-	void Box3d_GetCenter(const Box3d* b, Ogre::Vector3* pCenter);
+	const T_Vec3* Box3d_GetMin(const Box3d* b);
+	const T_Vec3* Box3d_GetMax(const Box3d* b);
+	void Box3d_GetCenter(const Box3d* b, T_Vec3* pCenter);
 	float Box3d_GetWidth(const Box3d* b);
 	float Box3d_GetHeight(const Box3d* b);
 	float Box3d_GetDepth(const Box3d* b);
-	void Box3d_GetSize(const Box3d* b, Ogre::Vector3* pSize);
+	void Box3d_GetSize(const Box3d* b, T_Vec3* pSize);
 	void Box3d_Scale(Box3d* b, float Scale);
 	void Box3d_Move(Box3d* b, float dx, float dy, float dz);
 	void Box3d_Inflate(Box3d* b, float dx, float dy, float dz);

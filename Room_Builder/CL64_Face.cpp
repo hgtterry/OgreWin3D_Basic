@@ -26,8 +26,8 @@ THE SOFTWARE.
 #include "CL64_App.h"
 #include "CL64_Face.h"
 
-static	Ogre::Vector3 spf[256], spb[256];
-const Ogre::Vector3	VecOrigin = { 0.0f, 0.0f, 0.0f };
+static	T_Vec3 spf[256], spb[256];
+const T_Vec3 VecOrigin = { 0.0f, 0.0f, 0.0f };
 
 #define	VCOMPARE_EPSILON			(0.00001f)
 #define MAX_POINTS					64
@@ -57,7 +57,7 @@ enum FaceFlags
 
 typedef struct TexInfoTag
 {
-	Ogre::Vector3 VecNormal;
+	T_Vec3 VecNormal;
 	float xScale, yScale;
 	int xShift, yShift;
 	float	Rotate;			// texture rotation angle in degrees
@@ -65,7 +65,7 @@ typedef struct TexInfoTag
 	int Dib;				// index into the wad
 	char Name[16];
 	signed int DirtyFlag;
-	Ogre::Vector3 Pos;
+	T_Vec3 Pos;
 	int txSize, tySize;		// texture size (not currently used)
 	Matrix3d XfmFaceAngle;	// face rotation angle
 } TexInfo;
@@ -81,7 +81,7 @@ typedef struct FaceTag
 	float			MipMapBias;
 	float			LightXScale, LightYScale;
 	TexInfo			Tex;
-	Ogre::Vector3*	Points;
+	T_Vec3*	Points;
 
 } Face;
 
@@ -111,7 +111,7 @@ void CL64_Face::Face_SetVisible(Face* f, const signed int bState)
 // *************************************************************************
 // *							Face_Create								   *
 // *************************************************************************
-Face* CL64_Face::Face_Create(int NumPnts, const Ogre::Vector3* pnts, int DibId)
+Face* CL64_Face::Face_Create(int NumPnts, const T_Vec3* pnts, int DibId)
 {
 	Face* f;
 
@@ -136,7 +136,7 @@ Face* CL64_Face::Face_Create(int NumPnts, const Ogre::Vector3* pnts, int DibId)
 
 		Face_SetVisible(f, true);
 
-		f->Points = (Ogre::Vector3*)App->CL_Maths->Ram_Allocate(sizeof(Ogre::Vector3) * NumPnts);
+		f->Points = (T_Vec3*)App->CL_Maths->Ram_Allocate(sizeof(T_Vec3) * NumPnts);
 		if (f->Points)
 		{
 			memcpy(f->Points, pnts, sizeof(Ogre::Vector3) * NumPnts);
@@ -203,7 +203,7 @@ void CL64_Face::Face_SetTextureDibId(Face* f, const int Dib)
 // *************************************************************************
 // *						Face_InitTexInfo							   *
 // *************************************************************************
-void CL64_Face::Face_InitTexInfo(TexInfo* t,Ogre::Vector3 const* pNormal)
+void CL64_Face::Face_InitTexInfo(TexInfo* t, T_Vec3 const* pNormal)
 {
 	t->Name[0] = '\0';
 	t->xScale = 1.0f;
@@ -224,12 +224,12 @@ void CL64_Face::Face_InitTexInfo(TexInfo* t,Ogre::Vector3 const* pNormal)
 // *************************************************************************
 // *						Face_InitFaceAngle							   *
 // *************************************************************************
-void CL64_Face::Face_InitFaceAngle(TexInfo* t,Ogre::Vector3 const* pNormal)
+void CL64_Face::Face_InitFaceAngle(TexInfo* t, T_Vec3 const* pNormal)
 {
-	Ogre::Vector3 VecDest;
-	Ogre::Vector3 VecAxis;
+	T_Vec3 VecDest;
+	T_Vec3 VecAxis;
 	float cosv, Theta;
-	Ogre::Vector3		PosNormal;
+	T_Vec3		PosNormal;
 
 	PosNormal = *pNormal;
 
@@ -294,7 +294,7 @@ void CL64_Face::Face_InitFaceAngle(TexInfo* t,Ogre::Vector3 const* pNormal)
 signed int CL64_Face::Face_SetPlaneFromFace(Face* f)
 {
 	int		i;
-	Ogre::Vector3 v1, v2;
+	T_Vec3 v1, v2;
 
 	assert(f != NULL);
 
@@ -327,7 +327,7 @@ signed int CL64_Face::Face_SetPlaneFromFace(Face* f)
 // *************************************************************************
 // *						Face_SetTexInfoPlane						   *
 // *************************************************************************
-void CL64_Face::Face_SetTexInfoPlane(TexInfo* t,Ogre::Vector3 const* pNormal)
+void CL64_Face::Face_SetTexInfoPlane(TexInfo* t, T_Vec3 const* pNormal)
 {
 	t->VecNormal = *pNormal;
 
@@ -366,7 +366,7 @@ signed int CL64_Face::Face_IsFixedHull(const Face* f)
 Face* CL64_Face::Face_CreateFromPlane(const GPlane* p, float Radius, int DibId)
 {
 	float	v;
-	Ogre::Vector3	vup, vright, org, pnts[4];
+	T_Vec3	vup, vright, org, pnts[4];
 
 	assert(p != NULL);
 
@@ -473,7 +473,7 @@ void CL64_Face::Face_Destroy(Face** f)
 // *************************************************************************
 void CL64_Face::Face_Clip(Face* f, const GPlane* p, float* dists, Ogre::uint8* sides)
 {
-	Ogre::Vector3* p1, * p2, mid;
+	T_Vec3* p1, * p2, mid;
 	int		nfp, nbp, i, j;
 	float	dot;
 
@@ -517,14 +517,14 @@ void CL64_Face::Face_Clip(Face* f, const GPlane* p, float* dists, Ogre::uint8* s
 	}
 	App->CL_Maths->Ram_Free(f->Points);
 	f->NumPoints = nbp;
-	f->Points = (Ogre::Vector3*)App->CL_Maths->Ram_Allocate(sizeof(Ogre::Vector3) * nbp);
-	memcpy(f->Points, spb, sizeof(Ogre::Vector3) * nbp);
+	f->Points = (T_Vec3*)App->CL_Maths->Ram_Allocate(sizeof(T_Vec3) * nbp);
+	memcpy(f->Points, spb, sizeof(T_Vec3) * nbp);
 }
 
 // *************************************************************************
 // *						Face_GetPoints							 	   *
 // *************************************************************************
-const Ogre::Vector3* CL64_Face::Face_GetPoints(const Face* f)
+const T_Vec3* CL64_Face::Face_GetPoints(const Face* f)
 {
 	assert(f != NULL);
 
@@ -707,7 +707,7 @@ static void Face_UpdateLockedTextureVecs(Face* f)
 static void Face_UpdateWorldTextureVecs(Face* f)
 {
 	float	ang, sinv, cosv;
-	Ogre::Vector3 uVec, vVec;
+	T_Vec3 uVec, vVec;
 	int WhichAxis;
 	TexInfo* t = &f->Tex;
 
@@ -806,7 +806,7 @@ Face* CL64_Face::Face_CloneReverse(const Face* src)
 {
 	int		i;
 	Face* dst;
-	Ogre::Vector3	pt;
+	T_Vec3	pt;
 
 	assert(src != NULL);
 	assert(src->NumPoints > 0);
@@ -834,18 +834,9 @@ Face* CL64_Face::Face_CloneReverse(const Face* src)
 // *************************************************************************
 void CL64_Face::Face_Split(const Face* f,const GPlane* p,Face** ff,Face** bf,float* dists, Ogre::uint8* sides)
 {
-	Ogre::Vector3* p1, * p2, mid;
+	T_Vec3* p1, * p2, mid;
 	int		nfp, nbp, i, j;
-	geFloat	dot;
-
-	assert(f);
-	assert(p);
-	assert(ff);
-	assert(bf);
-	assert(*ff == NULL);
-	assert(*bf == NULL);
-	assert(dists);
-	assert(sides);
+	float	dot;
 
 	p1 = f->Points;
 	for (i = nfp = nbp = 0; i < f->NumPoints; i++, p1++)
@@ -935,7 +926,7 @@ void CL64_Face::Face_MostlyOnSide(const Face* f, const GPlane* p, float* max, in
 // *************************************************************************
 // *							Face_Move							 	   *
 // *************************************************************************
-void CL64_Face::Face_Move(Face* f, const Ogre::Vector3* trans)
+void CL64_Face::Face_Move(Face* f, const T_Vec3* trans)
 {
 	int i;
 
@@ -962,10 +953,10 @@ void CL64_Face::Face_SetSelected(Face* f, const signed int bState)
 // *************************************************************************
 // *			( Static ) Face_UpdateFaceAngle						 	   *
 // *************************************************************************
-static void Face_UpdateFaceAngle(Face* f, const Ogre::Vector3* OldNormal)
+static void Face_UpdateFaceAngle(Face* f, const T_Vec3* OldNormal)
 {
-	Ogre::Vector3 VecDest;
-	Ogre::Vector3 VecAxis;
+	T_Vec3 VecDest;
+	T_Vec3 VecAxis;
 	geFloat cosv, Theta;
 	Matrix3d Xfm;
 
@@ -1009,7 +1000,7 @@ void CL64_Face::Face_XfmTexture(Face* f, const Matrix3d* pXfm)
 // *************************************************************************
 // *								Face_Scale						 	   *
 // *************************************************************************
-signed int CL64_Face::Face_Scale(Face* f, const Ogre::Vector3* ScaleVec)
+signed int CL64_Face::Face_Scale(Face* f, const T_Vec3* ScaleVec)
 {
 	signed int Success;
 	//MRB END
@@ -1026,7 +1017,7 @@ signed int CL64_Face::Face_Scale(Face* f, const Ogre::Vector3* ScaleVec)
 		f->Points[i].z *= ScaleVec->z;
 	}
 	{
-		Ogre::Vector3 OldNormal = f->Tex.VecNormal;
+		T_Vec3 OldNormal = f->Tex.VecNormal;
 		//MRB BEGIN
 		Success = Face_SetPlaneFromFace(f);
 

@@ -1,5 +1,5 @@
 #pragma once
-
+#include "CL64_Maths.h"
 enum ViewTypes
 {
 	VIEWSOLID = 1,
@@ -12,8 +12,8 @@ enum ViewTypes
 
 typedef struct PlaneTag
 {
-	Ogre::Vector3	Normal;
-	float			Dist;
+	T_Vec3	Normal;
+	float	Dist;
 } GPlane;
 
 typedef struct ViewVarsTag
@@ -26,7 +26,7 @@ typedef struct ViewVarsTag
 	Ogre::uint32		ViewType;
 	float				ZoomFactor = 1;
 
-	Ogre::Vector3 Vpn, Vright, Vup, CamPos;
+	T_Vec3 Vpn, Vright, Vup, CamPos;
 	float	roll, pitch, yaw;
 	GPlane		FrustPlanes[4];
 	float	MaxScreenScaleInv, FieldOfView;
@@ -61,8 +61,8 @@ public:
 	int	Render_GetInidx(const ViewVars* v);
 
 	bool Render_RenderOrthoGridFromSize(ViewVars* cv, int Interval, HDC hDC, RECT Rect);
-	void Render_ViewToWorld(const ViewVars* cv, const int x, const int y, Ogre::Vector3* wp);
-	POINT Render_OrthoWorldToView(const ViewVars* cv, Ogre::Vector3 const* wp);
+	void Render_ViewToWorld(const ViewVars* cv, const int x, const int y, T_Vec3* wp);
+	POINT Render_OrthoWorldToView(const ViewVars* cv, T_Vec3 const* wp);
 
 };
 

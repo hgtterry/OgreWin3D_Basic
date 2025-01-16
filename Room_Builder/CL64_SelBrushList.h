@@ -38,7 +38,7 @@ public:
 	signed int SelBrushList_Find(SelBrushList* pList, const Brush* pBrush);
 	Brush* SelBrushList_GetBrush(SelBrushList* pList, int BrushIndex);
 	int SelBrushList_GetSize(SelBrushList* pList);
-	void SelBrushList_Center(SelBrushList* pList, Ogre::Vector3* center);
+	void SelBrushList_Center(SelBrushList* pList, T_Vec3* center);
 	void SelBrushList_Enum(SelBrushList* pList, SelBrushList_Callback Callback, void* lParam);
 	signed int SelBrushList_Add(SelBrushList* pList, Brush* pBrush);
 	void SelBrushList_RemoveAll(SelBrushList* pList);

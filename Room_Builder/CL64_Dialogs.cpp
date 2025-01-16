@@ -756,7 +756,7 @@ bool CL64_Dialogs::Show_Face_Data(int Index, const Face* f, HWND hDlg)
 
 
 	const TexInfo_Vectors* TVecs = App->CL_Face->Face_GetTextureVecs(f);
-	Ogre::Vector3 uVec, vVec;
+	T_Vec3 uVec, vVec;
 	geFloat U, V;
 
 	int txSize, tySize;
@@ -772,7 +772,7 @@ bool CL64_Dialogs::Show_Face_Data(int Index, const Face* f, HWND hDlg)
 	App->CL_Maths->Vector3_Scale(&TVecs->uVec, 1.f / (geFloat)txSize, &uVec);
 	App->CL_Maths->Vector3_Scale(&TVecs->vVec, -1.f / (geFloat)tySize, &vVec);
 
-	const Ogre::Vector3* verts = App->CL_Face->Face_GetPoints(f);
+	const T_Vec3* verts = App->CL_Face->Face_GetPoints(f);
 
 	int j = 0;
 	for (j = 0; j < f->NumPoints; j++)

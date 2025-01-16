@@ -120,10 +120,10 @@ public:
 	void RebuildTrees(void);
 	signed int BrushIsVisible(const Brush* pBrush) const;
 	void TempCopySelectedBrushes(void);
-	void LockAxis(Ogre::Vector3* pWP);
+	void LockAxis(T_Vec3* pWP);
 	int	GetLockAxis(void);
-	void MoveSelectedBrushes(Ogre::Vector3 const* v);
-	void MoveSelectedBrushList(SelBrushList* pList, Ogre::Vector3 const* v);
+	void MoveSelectedBrushes(T_Vec3 const* v);
+	void MoveSelectedBrushList(SelBrushList* pList, T_Vec3 const* v);
 	void DoneMovingBrushes();
 	void DoneMove(void);
 	BOOL TempDeleteSelected(void);
@@ -149,7 +149,7 @@ public:
 
 	DWORD SelState;
 
-	Ogre::Vector3	SelectedGeoCenter, FinalPos, FinalRot, FinalScale;
+	T_Vec3	SelectedGeoCenter, FinalPos, FinalRot, FinalScale;
 
 	int ScaleNum;
 	int	sides;

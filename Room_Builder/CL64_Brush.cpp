@@ -340,7 +340,7 @@ Brush* CL64_Brush::Brush_CreateHollowFromBrush(const Brush* b)
 	Face* f, * sf;
 	GPlane		ExpandPlane;
 	const GPlane* p;
-	Ogre::Vector3 pnt;
+	T_Vec3 pnt;
 	FaceList* fl;
 	int			i;
 	Brush* b2;
@@ -881,7 +881,7 @@ void CL64_Brush::Brush_SetFaceListDirty(Brush* b)
 // *************************************************************************
 // *							Brush_Center							   *
 // *************************************************************************
-void CL64_Brush::Brush_Center(const Brush* b, Ogre::Vector3* center)
+void CL64_Brush::Brush_Center(const Brush* b, T_Vec3* center)
 {
 	App->CL_Box->Box3d_GetCenter(&b->BoundingBox, center);
 }
@@ -1003,7 +1003,7 @@ static void	Brush_UpdateChildFacesRecurse(Brush* b, Brush* bp)
 							p = App->CL_Face->Face_GetPlane(f);
 							for (j = 0; j < App->CL_FaceList->FaceList_GetNumFaces(cb->Faces); j++)
 							{
-								Ogre::Vector3	v;
+								T_Vec3	v;
 								f2 = App->CL_FaceList->FaceList_GetFace(cb->Faces, j);
 								p2 = App->CL_Face->Face_GetPlane(f2);
 								v = p->Normal;
@@ -1995,7 +1995,7 @@ signed int CL64_Brush::Brush_IsVisible(const Brush* b)
 // *************************************************************************
 // *							Brush_Move								   *
 // *************************************************************************
-void CL64_Brush::Brush_Move(Brush* b, const Ogre::Vector3* trans)
+void CL64_Brush::Brush_Move(Brush* b, const T_Vec3* trans)
 {
 	assert(b && trans);
 
@@ -2014,7 +2014,7 @@ void CL64_Brush::Brush_Move(Brush* b, const Ogre::Vector3* trans)
 // *************************************************************************
 // *							BrushList_Move							   *
 // *************************************************************************
-void CL64_Brush::BrushList_Move(BrushList* pList, const Ogre::Vector3* trans)
+void CL64_Brush::BrushList_Move(BrushList* pList, const T_Vec3* trans)
 {
 	Brush* b;
 
@@ -2040,14 +2040,14 @@ const Box3d* CL64_Brush::Brush_GetBoundingBox(const Brush* b)
 // *************************************************************************
 // *							Brush_Resize							   *
 // *************************************************************************
-void CL64_Brush::Brush_Resize(Brush* b, float dx, float dy, int sides, int inidx, Ogre::Vector3* fnscale, int* ScaleNum)
+void CL64_Brush::Brush_Resize(Brush* b, float dx, float dy, int sides, int inidx, T_Vec3* fnscale, int* ScaleNum)
 {
 	//MRB BEGIN
 	Brush* pClone;
 	//MRB END
 
 	int		i;
-	Ogre::Vector3 FixOrg, BrushOrg, ScaleVec;
+	T_Vec3 FixOrg, BrushOrg, ScaleVec;
 
 	assert(b);
 	assert(fnscale);
@@ -2132,7 +2132,7 @@ void CL64_Brush::Brush_Resize(Brush* b, float dx, float dy, int sides, int inidx
 // *************************************************************************
 // *							Brush_Scale3d							   *
 // *************************************************************************
-signed int CL64_Brush::Brush_Scale3d(Brush* b, const Ogre::Vector3* mag)
+signed int CL64_Brush::Brush_Scale3d(Brush* b, const T_Vec3* mag)
 {
 	signed int Success;
 	
@@ -2156,7 +2156,7 @@ signed int CL64_Brush::Brush_Scale3d(Brush* b, const Ogre::Vector3* mag)
 // *************************************************************************
 // *							BrushList_Scale3d						   *
 // *************************************************************************
-signed int CL64_Brush::BrushList_Scale3d(BrushList* pList, const Ogre::Vector3* trans)
+signed int CL64_Brush::BrushList_Scale3d(BrushList* pList, const T_Vec3* trans)
 {
 	signed int Success = 1;
 	Brush* b;
@@ -2184,12 +2184,11 @@ int	CL64_Brush::Brush_GetModelId(const Brush* b)
 // *************************************************************************
 // *							Brush_ResizeFinal						   *
 // *************************************************************************
-void CL64_Brush::Brush_ResizeFinal(Brush* b, int sides, int inidx, Ogre::Vector3* fnscale)
+void CL64_Brush::Brush_ResizeFinal(Brush* b, int sides, int inidx, T_Vec3* fnscale)
 {
-	
 	Brush* pClone;
 	
-	Ogre::Vector3 FixOrg, BrushOrg;
+	T_Vec3 FixOrg, BrushOrg;
 
 	App->CL_Maths->Vector3_Add(&b->BoundingBox.Min, &b->BoundingBox.Max, &BrushOrg);
 	App->CL_Maths->Vector3_Scale(&BrushOrg, 0.5f, &BrushOrg);

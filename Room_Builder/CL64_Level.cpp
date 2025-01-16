@@ -67,7 +67,7 @@ struct tag_Level
 	BrushTemplate_Spheroid	SpheroidTemplate;
 	BrushTemplate_Staircase StaircaseTemplate;
 
-	Ogre::Vector3 TemplatePos;
+	T_Vec3 TemplatePos;
 
 	float DrawScale;		// default draw scale
 	float LightmapScale;	// default lightmap scale
@@ -257,7 +257,7 @@ BrushList* CL64_Level::Level_GetBrushes(Level* pLevel)
 // *************************************************************************
 // *						Level_GetTemplatePos						   *
 // *************************************************************************
-Ogre::Vector3* CL64_Level::Level_GetTemplatePos(Level* pLevel)
+T_Vec3* CL64_Level::Level_GetTemplatePos(Level* pLevel)
 {
 	return &pLevel->TemplatePos;
 }

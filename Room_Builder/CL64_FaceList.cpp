@@ -294,7 +294,7 @@ void CL64_FaceList::FaceList_ClipFaceToList(const FaceList* fl, Face** f)
 // *************************************************************************
 // *							FaceList_Move						 	   *
 // *************************************************************************
-void CL64_FaceList::FaceList_Move(FaceList* pList, const Ogre::Vector3* trans)
+void CL64_FaceList::FaceList_Move(FaceList* pList, const T_Vec3* trans)
 {
 	int i;
 
@@ -308,7 +308,7 @@ void CL64_FaceList::FaceList_Move(FaceList* pList, const Ogre::Vector3* trans)
 // *************************************************************************
 // *							FaceList_Scale						 	   *
 // *************************************************************************
-signed int CL64_FaceList::FaceList_Scale(FaceList* pList, const Ogre::Vector3* ScaleVec)
+signed int CL64_FaceList::FaceList_Scale(FaceList* pList, const T_Vec3* ScaleVec)
 {
 	signed int Success = 1;
 	
