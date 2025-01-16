@@ -39,6 +39,8 @@ public:
 	BrushList* Level_GetBrushes(Level* pLevel);
 
 	BrushTemplate_Box* Level_GetBoxTemplate(Level* pLevel);
+	BrushTemplate_Cylinder* Level_GetCylinderTemplate(Level* pLevel);
+
 	Ogre::Vector3* Level_GetTemplatePos(Level* pLevel);
 	float Level_GetDrawScale(const Level* pLevel);
 	float Level_GetLightmapScale(const Level* pLevel);

@@ -239,6 +239,14 @@ BrushTemplate_Box* CL64_Level::Level_GetBoxTemplate(Level* pLevel)
 }
 
 // *************************************************************************
+// *					Level_GetCylinderTemplate						   *
+// *************************************************************************
+BrushTemplate_Cylinder* CL64_Level::Level_GetCylinderTemplate(Level* pLevel)
+{
+	return &pLevel->CylinderTemplate;
+}
+
+// *************************************************************************
 // *							Level_GetBrushes						   *
 // *************************************************************************
 BrushList* CL64_Level::Level_GetBrushes(Level* pLevel)

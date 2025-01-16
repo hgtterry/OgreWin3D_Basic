@@ -452,7 +452,7 @@ void CL64_Maths::Quaternion_SetFromAxisAngle(Ogre::Quaternion* Q, const Ogre::Ve
 }
 
 // *************************************************************************
-// *		Quaternion_ToMatrix:- Terry and Hazel Flanigan 2024			   *
+// *		Quaternion_ToMatrix:- Terry and Hazel Flanigan 2025			   *
 // *************************************************************************
 void CL64_Maths::Quaternion_ToMatrix(const Ogre::Quaternion* Q, Matrix3d* M)
 {
@@ -493,6 +493,19 @@ void CL64_Maths::Quaternion_ToMatrix(const Ogre::Quaternion* Q, Matrix3d* M)
 
 	M->Translation.x = M->Translation.y = M->Translation.z = 0.0f;
 
-	//geQuaternion_Assert(geXForm3d_IsOrthonormal(M) == GE_TRUE);
+}
+
+// *************************************************************************
+// *		geXForm3d_Rotate:- Terry and Hazel Flanigan 2025			   *
+// *************************************************************************
+void CL64_Maths::geXForm3d_Rotate(const Matrix3d* M,const Ogre::Vector3* V, Ogre::Vector3* Result)
+{
+	Ogre::Vector3 VL;
+	
+	VL = *V;
+
+	Result->x = (VL.x * M->AX) + (VL.y * M->AY) + (VL.z * M->AZ);
+	Result->y = (VL.x * M->BX) + (VL.y * M->BY) + (VL.z * M->BZ);
+	Result->z = (VL.x * M->CX) + (VL.y * M->CY) + (VL.z * M->CZ);
 
 }

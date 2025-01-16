@@ -121,6 +121,7 @@ public:
 	void BrushTemplate_StaircaseDefaults(BrushTemplate_Staircase* pStaircaseTemplate);
 
 	Brush* BrushTemplate_CreateBox(const BrushTemplate_Box* pTemplate);
+	Brush* BrushTemplate_CreateCylinder(const BrushTemplate_Cylinder* pTemplate);
 
 };
 

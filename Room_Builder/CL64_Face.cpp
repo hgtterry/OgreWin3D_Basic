@@ -1081,3 +1081,13 @@ void CL64_Face::Face_SetTextureShift(Face* f, const int xShift, const int yShift
 	f->Tex.yShift = yShift;
 	f->Tex.DirtyFlag = GE_TRUE;
 }
+
+// *************************************************************************
+// *						Face_SetFixedHull						 	   *
+// *************************************************************************
+void CL64_Face::Face_SetFixedHull(Face* f, const signed int bState)
+{
+	assert(f != NULL);
+
+	f->Flags = (bState) ? f->Flags | FACE_FIXEDHULL : f->Flags & ~FACE_FIXEDHULL;
+}

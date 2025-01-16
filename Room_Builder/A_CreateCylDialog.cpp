@@ -29,7 +29,6 @@ THE SOFTWARE.
 
 A_CreateCylDialog::A_CreateCylDialog(void)
 {
-
 	m_BotXOffset = 0.0;
 	m_BotXSize = 128.0;
 	m_BotZOffset = 0.0;
@@ -56,18 +55,18 @@ A_CreateCylDialog::~A_CreateCylDialog(void)
 }
 
 // *************************************************************************
-// *	  	Start_CreateCyl_Dlg:- Terry and Hazel Flanigan 2023			   *
+// *	  	Start_CreateCyl_Dlg:- Terry and Hazel Flanigan 2025			   *
 // *************************************************************************
 void A_CreateCylDialog::Start_CreateCyl_Dlg()
 {
-	//pCylinderTemplate = Level_GetCylinderTemplate (App->CLSB_Doc->pLevel);
+	pCylinderTemplate = App->CL_Level->Level_GetCylinderTemplate (App->CL_Doc->pLevel);
 
 	//App->CLSB_TabsControl->Enable_Tabs_Dlg(false);
 	DialogBox(App->hInst, (LPCTSTR)IDD_CREATE_CYLINDER, App->MainHwnd, (DLGPROC)Proc_Create_Cylinder);
 }
 
 // *************************************************************************
-// *        CreateBox_Proc:- Terry and Hazel Flanigan 2023				   *
+// *        CreateBox_Proc:- Terry and Hazel Flanigan 2025				   *
 // *************************************************************************
 LRESULT CALLBACK A_CreateCylDialog::Proc_Create_Cylinder(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -78,35 +77,35 @@ LRESULT CALLBACK A_CreateCylDialog::Proc_Create_Cylinder(HWND hDlg, UINT message
 	{
 		//SendDlgItemMessage(hDlg, IDC_BTSETVIEW, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
-		//App->CL_CreateCylDialog->Set_Members();
+		App->CL_CreateCylDialog->Set_Members();
 
-		//App->CL_CreateCylDialog->Set_DLG_Members(hDlg);
+		App->CL_CreateCylDialog->Set_DLG_Members(hDlg);
 
-		//SetDlgItemText(hDlg, IDC_EDITNAME, (LPCTSTR)"Cylinder");
+		SetDlgItemText(hDlg, IDC_EDITNAME, (LPCTSTR)"Cylinder");
 
 		// ----------- Style Solid Hollow Funnel
-		/*if(App->CL_CreateCylDialog->m_Solid == 0)
+		if(App->CL_CreateCylDialog->m_Solid == 0)
 		{
 			HWND temp = GetDlgItem(hDlg, IDC_SOLID);
 			SendMessage(temp, BM_SETCHECK, 1, 0);
-		}*/
+		}
 
-		/*if(App->CL_CreateCylDialog->m_Solid == 1)
+		if(App->CL_CreateCylDialog->m_Solid == 1)
 		{
 			HWND temp = GetDlgItem(hDlg, IDC_HOLLOW);
 			SendMessage(temp, BM_SETCHECK, 1, 0);
-		}*/
+		}
 
-		/*if(App->CL_CreateCylDialog->m_Solid == 2)
+		if(App->CL_CreateCylDialog->m_Solid == 2)
 		{
 			HWND temp = GetDlgItem(hDlg, IDC_RING);
 			SendMessage(temp, BM_SETCHECK, 1, 0);
-		}*/
+		}
 		// ----------------------------------------------
 
-		/*HWND temp = GetDlgItem(hDlg, IDC_CKWORLDCENTRE);
+		HWND temp = GetDlgItem(hDlg, IDC_CKWORLDCENTRE);
 		SendMessage(temp,BM_SETCHECK,1,0);
-		App->CL_CreateCylDialog->m_UseCamPos = 0;*/
+		App->CL_CreateCylDialog->m_UseCamPos = 0;
 
 		return TRUE;
 	}
@@ -136,37 +135,37 @@ LRESULT CALLBACK A_CreateCylDialog::Proc_Create_Cylinder(HWND hDlg, UINT message
 			return (UINT)App->AppBackground;
 		}*/
 
-		/*if (GetDlgItem(hDlg, IDC_TCUT) == (HWND)lParam)
+		if (GetDlgItem(hDlg, IDC_TCUT) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 0, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->AppBackground;
-		}*/
+		}
 
-		/*if (GetDlgItem(hDlg, IDC_SOLID) == (HWND)lParam)
+		if (GetDlgItem(hDlg, IDC_SOLID) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 0, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->AppBackground;
-		}*/
+		}
 
-		/*if (GetDlgItem(hDlg, IDC_HOLLOW) == (HWND)lParam)
+		if (GetDlgItem(hDlg, IDC_HOLLOW) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 0, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->AppBackground;
-		}*/
+		}
 
-		/*if (GetDlgItem(hDlg, IDC_RING) == (HWND)lParam)
+		if (GetDlgItem(hDlg, IDC_RING) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 0, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->AppBackground;
-		}*/
+		}
 
 	
 		/*if (GetDlgItem(hDlg, IDC_STTOPXSIZE) == (HWND)lParam)
@@ -283,13 +282,13 @@ LRESULT CALLBACK A_CreateCylDialog::Proc_Create_Cylinder(HWND hDlg, UINT message
 			return (UINT)App->AppBackground;
 		}*/
 
-		/*if (GetDlgItem(hDlg, IDC_CKWORLDCENTRE) == (HWND)lParam)
+		if (GetDlgItem(hDlg, IDC_CKWORLDCENTRE) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 0, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->AppBackground;
-		}*/
+		}
 
 		/*if (GetDlgItem(hDlg, IDC_CKCAMPOSITION) == (HWND)lParam)
 		{
@@ -333,25 +332,25 @@ LRESULT CALLBACK A_CreateCylDialog::Proc_Create_Cylinder(HWND hDlg, UINT message
 				return TRUE;
 			}
 
-			/*if (LOWORD(wParam) == IDC_HOLLOW)
+			if (LOWORD(wParam) == IDC_HOLLOW)
 			{
 				App->CL_CreateCylDialog->m_Solid = 1;
 				return TRUE;
-			}*/
+			}
 
-			/*if (LOWORD(wParam) == IDC_SOLID)
+			if (LOWORD(wParam) == IDC_SOLID)
 			{
 				App->CL_CreateCylDialog->m_Solid = 0;
 				return TRUE;
-			}*/
+			}
 
-			/*if (LOWORD(wParam) == IDC_RING)
+			if (LOWORD(wParam) == IDC_RING)
 			{
 				App->CL_CreateCylDialog->m_Solid = 2;
 				return TRUE;
-			}*/
+			}
 
-			/*if (LOWORD(wParam) == IDC_TCUT)
+			if (LOWORD(wParam) == IDC_TCUT)
 			{
 				HWND temp = GetDlgItem(hDlg, IDC_TCUT);
 
@@ -368,24 +367,24 @@ LRESULT CALLBACK A_CreateCylDialog::Proc_Create_Cylinder(HWND hDlg, UINT message
 				}
 
 				return TRUE;
-			}*/
+			}
 
-			/*if (LOWORD(wParam) == IDC_Defaults)
+			if (LOWORD(wParam) == IDC_Defaults)
 			{
 				App->CL_CreateCylDialog->Set_Defaults(hDlg);
 				return TRUE;
-			}*/
+			}
 
 			// -----------------------------------------------------------------
 			if (LOWORD(wParam) == IDOK)
 			{
-				/*App->CL_CreateCylDialog->Get_DLG_Members(hDlg);
+				App->CL_CreateCylDialog->Get_DLG_Members(hDlg);
 				App->CL_CreateCylDialog->Set_CylinderTemplate(); 
 				App->CL_CreateCylDialog->CreateCylinder();
 
-				App->CLSB_TabsControl->Enable_Tabs_Dlg(true);
+				//App->CLSB_TabsControl->Enable_Tabs_Dlg(true);
 
-				App->CLSB_Tabs_Templates_Dlg->Enable_Insert_Button(true);*/
+				App->CL_Properties_Templates->Enable_Insert_Button(true);
 
 				EndDialog(hDlg, LOWORD(wParam));
 				return TRUE;
@@ -405,79 +404,80 @@ LRESULT CALLBACK A_CreateCylDialog::Proc_Create_Cylinder(HWND hDlg, UINT message
 }
 
 // *************************************************************************
-// *		   CreateCylinder:- Terry and Hazel Flanigan 2023			   *
+// *		   CreateCylinder:- Terry and Hazel Flanigan 2025			   *
 // *************************************************************************
 void A_CreateCylDialog::CreateCylinder() 
 {
-	/*m_pDoc->OnToolsTemplate();
+	App->CL_Doc->OnToolsTemplate();
 
 	Brush *pCylinder;
 
-	pCylinder = BrushTemplate_CreateCylinder (pCylinderTemplate);
+	pCylinder = App->CL_BrushTemplate->BrushTemplate_CreateCylinder (pCylinderTemplate);
 	if (pCylinder != NULL)
 	{
-		m_pDoc->LastTemplateTypeName = CylinderName;
+		strcpy(App->CL_Doc->LastTemplateTypeName,CylinderName);
 		CreateNewTemplateBrush(pCylinder);
 	}
 	else
 	{
-		App->Say("No pCube");
-	}*/
+		App->Say("No pCylinder");
+	}
 }
 
 // *************************************************************************
-// *       CreateNewTemplateBrush:- Terry and Hazel Flanigan 2023		   *
+// *       CreateNewTemplateBrush:- Terry and Hazel Flanigan 2025		   *
 // *************************************************************************
 void A_CreateCylDialog::CreateNewTemplateBrush(Brush *pBrush)
 {
-	/*geVec3d *pTemplatePos;
-	geVec3d MoveVec;
-	geVec3d BrushPos;
+	Ogre::Vector3 *pTemplatePos;
+	Ogre::Vector3 MoveVec;
+	Ogre::Vector3 BrushPos;
 
 	assert (pBrush != NULL);
 
-	if (App->CLSB_Doc->BTemplate != NULL)
+	if (App->CL_Doc->BTemplate != NULL)
 	{
-		Brush_Destroy (&App->CLSB_Doc->BTemplate);
+		App->CL_Brush->Brush_Destroy (&App->CL_Doc->BTemplate);
 	}
 
-	App->CLSB_Doc->CurBrush = pBrush;
+	App->CL_Doc->CurBrush = pBrush;
 
-	App->CLSB_Doc->TempEnt	= FALSE;
-	m_pDoc->SetDefaultBrushTexInfo (App->CLSB_Doc->CurBrush);
-	Brush_Bound (App->CLSB_Doc->CurBrush);
-	Brush_Center (App->CLSB_Doc->CurBrush, &BrushPos);
+	App->CL_Doc->TempEnt	= FALSE;
+	App->CL_Doc->SetDefaultBrushTexInfo (App->CL_Doc->CurBrush);
+	App->CL_Brush->Brush_Bound (App->CL_Doc->CurBrush);
+	App->CL_Brush->Brush_Center (App->CL_Doc->CurBrush, &BrushPos);
 
-	pTemplatePos = Level_GetTemplatePos (App->CLSB_Doc->pLevel);
+	pTemplatePos = App->CL_Level->Level_GetTemplatePos (App->CL_Doc->pLevel);
 
 	if (m_UseCamPos == 1)
 	{
-		geVec3d Pos;
+		Ogre::Vector3 Pos;
 
-		Pos = App->CLSB_Camera_WE->Get_Camera_Position();
+		Pos = Ogre::Vector3(0, 0, 0);// App->CLSB_Camera_WE->Get_Camera_Position();
 
-		pTemplatePos->X = Pos.X;
-		pTemplatePos->Y = Pos.Y;
-		pTemplatePos->Z = Pos.Z;
+		pTemplatePos->x = Pos.x;
+		pTemplatePos->y = Pos.y;
+		pTemplatePos->z = Pos.z;
 	}
 	else
 	{
-		pTemplatePos->X = 0;
-		pTemplatePos->Y = 0;
-		pTemplatePos->Z = 0;
+		pTemplatePos->x = 0;
+		pTemplatePos->y = 0;
+		pTemplatePos->z = 0;
 	}
 	
 
-	geVec3d_Subtract (pTemplatePos, &BrushPos, &MoveVec);
+	App->CL_Maths->Vector3_Subtract(pTemplatePos, &BrushPos, &MoveVec);
 
-	Brush_Move (App->CLSB_Doc->CurBrush, &MoveVec);
+	App->CL_Brush->Brush_Move (App->CL_Doc->CurBrush, &MoveVec);
 
-	App->CLSB_Doc->UpdateAllViews (UAV_ALL3DVIEWS, NULL);
-	m_pDoc->SetModifiedFlag ();*/
+	App->CL_Doc->UpdateAllViews (Enums::UpdateViews_Grids);
+
+	App->CL_Doc->flag_Is_Modified = 1;
 }
 
 // *************************************************************************
-// *		 Set_Members:- Terry and Hazel Flanigan 2023				   *
+// *		 Set_Members:- Terry and Hazel Flanigan 2025				   *
 // *************************************************************************
 void A_CreateCylDialog::Set_Members() 
 {
@@ -498,11 +498,11 @@ void A_CreateCylDialog::Set_Members()
 }
 
 // *************************************************************************
-// *		 Set_DLG_Members:- Terry and Hazel Flanigan 2023			   *
+// *		 Set_DLG_Members:- Terry and Hazel Flanigan 2025			   *
 // *************************************************************************
 void A_CreateCylDialog::Set_DLG_Members(HWND hDlg) 
 {
-	/*char buf[MAX_PATH];
+	char buf[MAX_PATH];
 	sprintf(buf, "%0.0f", m_TopXSize);
 	SetDlgItemText(hDlg, IDC_TOPXSIZE, (LPCTSTR)buf);
 
@@ -550,17 +550,17 @@ void A_CreateCylDialog::Set_DLG_Members(HWND hDlg)
 	else
 	{
 		SendMessage(temp,BM_SETCHECK,0,0);
-	}*/
+	}
 }
 
 // *************************************************************************
-// *		 Get_DLG_Members:- Terry and Hazel Flanigan 2023			   *
+// *		 Get_DLG_Members:- Terry and Hazel Flanigan 2025			   *
 // *************************************************************************
 void A_CreateCylDialog::Get_DLG_Members(HWND hDlg) 
 {
 	char buf[MAX_PATH];
 
-	/*GetDlgItemText(hDlg, IDC_TOPXSIZE, (LPTSTR)buf,MAX_PATH);
+	GetDlgItemText(hDlg, IDC_TOPXSIZE, (LPTSTR)buf,MAX_PATH);
 	m_TopXSize = (float)atof(buf);
 
 	GetDlgItemText(hDlg, IDC_TOPZSIZE, (LPTSTR)buf,MAX_PATH);
@@ -599,11 +599,11 @@ void A_CreateCylDialog::Get_DLG_Members(HWND hDlg)
 	m_RingLength = (float)atof(buf);
 
 	GetDlgItemText(hDlg,IDC_EDITNAME,(LPTSTR)buf,MAX_PATH);
-	strcpy(CylinderName,buf);*/
+	strcpy(CylinderName,buf);
 }
 
 // *************************************************************************
-// *		 Set_CylinderTemplate:- Terry and Hazel Flanigan 2023		   *
+// *		 Set_CylinderTemplate:- Terry and Hazel Flanigan 2025		   *
 // *************************************************************************
 void A_CreateCylDialog::Set_CylinderTemplate() 
 {
@@ -625,7 +625,7 @@ void A_CreateCylDialog::Set_CylinderTemplate()
 
 
 // *************************************************************************
-// *	    	Set_Defaults:- Terry and Hazel Flanigan 2023			   *
+// *	    	Set_Defaults:- Terry and Hazel Flanigan 2025			   *
 // *************************************************************************
 void A_CreateCylDialog::Set_Defaults(HWND hDlg) 
 {
@@ -646,7 +646,7 @@ void A_CreateCylDialog::Set_Defaults(HWND hDlg)
 
 	Set_DLG_Members(hDlg);
 
-	/*if(m_Solid == 0)
+	if(m_Solid == 0)
 	{
 		HWND temp = GetDlgItem(hDlg,IDC_SOLID);
 		SendMessage(temp,BM_SETCHECK,1,0);
@@ -661,5 +661,5 @@ void A_CreateCylDialog::Set_Defaults(HWND hDlg)
 
 		temp = GetDlgItem(hDlg,IDC_SOLID);
 		SendMessage(temp,BM_SETCHECK,0,0);
-	}*/
+	}
 }

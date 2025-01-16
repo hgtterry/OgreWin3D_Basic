@@ -115,6 +115,10 @@ void CL64_BrushTemplate::BrushTemplate_StaircaseDefaults(BrushTemplate_Staircase
 	pStaircaseTemplate->TCut = false;
 }
 #include "Room Builder.h"
+
+// *************************************************************************
+// *					BrushTemplate_CreateBox							   *
+// *************************************************************************
 Brush* CL64_BrushTemplate::BrushTemplate_CreateBox(const BrushTemplate_Box* pTemplate)
 {
 	Ogre::Vector3	Verts[8];
@@ -236,6 +240,202 @@ Brush* CL64_BrushTemplate::BrushTemplate_CreateBox(const BrushTemplate_Box* pTem
 				if (bm)
 				{
 					Brush_SetHollow(bm, true);
+					Brush_SetSubtract(bm, pTemplate->TCut);
+					Brush_SetHullSize(bm, (float)pTemplate->Thickness);
+					return	bm;
+				}
+			}
+			else
+			{
+				App->CL_Brush->Brush_Destroy(&b);
+				App->CL_Brush->BrushList_Destroy(&bl);
+			}
+		}
+		else
+		{
+			App->CL_Brush->BrushList_Destroy(&bl);
+		}
+	}
+
+	return	0;
+}
+
+// *************************************************************************
+// *					BrushTemplate_CreateCylinder					   *
+// *************************************************************************
+Brush* CL64_BrushTemplate::BrushTemplate_CreateCylinder(const BrushTemplate_Cylinder* pTemplate)
+{
+	double		CurrentXDiameter, CurrentZDiameter;
+	double		DeltaXDiameter, DeltaZDiameter;
+	double		CurrentXOffset, CurrentZOffset;
+	double		DeltaXOffset, DeltaZOffset, sqrcheck;
+	double		EllipseZ;
+	int			NumVerticalBands, HBand, VBand;
+	int			VertexCount = 0;
+	Ogre::Vector3* Verts, * TopPoints;
+	Ogre::Vector3		Current, Final, Delta;
+	Matrix3d YRotation;
+	FaceList* fl;
+	Face* f;
+	Brush* b;
+
+	NumVerticalBands = (int)(pTemplate->VerticalStripes);
+
+	if (NumVerticalBands < 3)
+	{
+		return	0;
+	}
+
+
+	Verts = (Ogre::Vector3*)App->CL_Maths->Ram_Allocate(sizeof(Ogre::Vector3) * NumVerticalBands * 2);
+	TopPoints = (Ogre::Vector3*)App->CL_Maths->Ram_Allocate(sizeof(Ogre::Vector3) * NumVerticalBands);
+	fl = App->CL_FaceList->FaceList_Create(NumVerticalBands + 2);
+
+	if (!Verts || !TopPoints || !fl)
+	{
+		return	0;
+	}
+
+	App->CL_Maths->XForm3d_SetIdentity(&YRotation);
+	App->CL_Maths->XForm3d_SetYRotation(&YRotation, (M_PI * 2.0f) / (geFloat)NumVerticalBands);
+
+	// Start with the top of cylinder
+	CurrentXDiameter = pTemplate->TopXSize;
+	CurrentZDiameter = pTemplate->TopZSize;
+	DeltaXDiameter = (pTemplate->BotXSize - pTemplate->TopXSize);
+	DeltaZDiameter = (pTemplate->BotZSize - pTemplate->TopZSize);
+
+	// Get the offset amounts
+	CurrentXOffset = pTemplate->TopXOffset;
+	CurrentZOffset = pTemplate->TopZOffset;
+	DeltaXOffset = (pTemplate->BotXOffset - pTemplate->TopXOffset);
+	DeltaZOffset = (pTemplate->BotZOffset - pTemplate->TopZOffset);
+
+	// Get the band positions and deltas
+	App->CL_Maths->Vector3_Set(&Current, (float)(pTemplate->TopXSize / 2), (float)(pTemplate->YSize / 2), 0.0);
+	App->CL_Maths->Vector3_Set(&Delta, (float)((pTemplate->BotXSize / 2) - Current.x), (float)(-(pTemplate->YSize / 2) - Current.y), 0.0);
+
+	for (HBand = 0; HBand <= 1; HBand++)
+	{
+		Final = Current;
+		for (VBand = 0; VBand < NumVerticalBands; VBand++)
+		{
+			// Get the elliptical Z value
+			// (x^2/a^2) + (z^2/b^2) = 1
+			// z = sqrt(b^2(1 - x^2/a^2))
+			sqrcheck = (((CurrentZDiameter / 2) * (CurrentZDiameter / 2))
+				* (1.0 - (Final.x * Final.y)
+					/ ((CurrentXDiameter / 2) * (CurrentXDiameter / 2))));
+			if (sqrcheck < 0.0)
+				sqrcheck = 0.0;
+			EllipseZ = sqrt(sqrcheck);
+
+			// Check if we need to negate this thing
+			if (VBand > (NumVerticalBands / 2))
+				EllipseZ = -EllipseZ;
+
+			App->CL_Maths->Vector3_Set
+			(
+				&Verts[VertexCount],
+				(float)(Final.x + CurrentXOffset),
+				Final.y,
+				(float)(EllipseZ + CurrentZOffset)
+			);
+			VertexCount++;
+
+			// Rotate the point around the Y to get the next vertical band
+			App->CL_Maths->geXForm3d_Rotate(&YRotation, &Final, &Final);
+		}
+
+		CurrentXDiameter += DeltaXDiameter;
+		CurrentZDiameter += DeltaZDiameter;
+		CurrentXOffset += DeltaXOffset;
+		CurrentZOffset += DeltaZOffset;
+
+		App->CL_Maths->Vector3_Add(&Current, &Delta, &Current);
+	}
+
+	for (VBand = 0; VBand < NumVerticalBands; VBand++)
+	{
+		TopPoints[VBand] = Verts[VBand];
+	}
+	f = App->CL_Face->Face_Create(NumVerticalBands, TopPoints, 0);
+
+	if (f)
+	{
+		if (pTemplate->Solid > 1)
+		{
+			App->CL_Face->Face_SetFixedHull(f, GE_TRUE);
+		}
+		App->CL_FaceList->FaceList_AddFace(fl, f);
+	}
+
+	for (VBand = NumVerticalBands - 1, HBand = 0; VBand >= 0; VBand--, HBand++)
+	{
+		TopPoints[HBand] = Verts[VBand + NumVerticalBands];
+	}
+	f = App->CL_Face->Face_Create(NumVerticalBands, TopPoints, 0);
+
+	if (f)
+	{
+		if (pTemplate->Solid > 1)
+		{
+			App->CL_Face->Face_SetFixedHull(f, GE_TRUE);
+		}
+		App->CL_FaceList->FaceList_AddFace(fl, f);
+	}
+
+	// Generate the polygons
+	for (HBand = 0; HBand < 1; HBand++)
+	{
+		for (VBand = 0; VBand < NumVerticalBands; VBand++)
+		{
+			Ogre::Vector3 Points[4];
+			Points[3] = Verts[(HBand * NumVerticalBands) + VBand];
+			Points[2] = Verts[(HBand * NumVerticalBands) + ((VBand + 1) % NumVerticalBands)];
+			Points[1] = Verts[((HBand + 1) * NumVerticalBands) + ((VBand + 1) % NumVerticalBands)];
+			Points[0] = Verts[((HBand + 1) * NumVerticalBands) + VBand];
+			f = App->CL_Face->Face_Create(4, Points, 0);
+
+			if (f)
+			{
+				App->CL_FaceList->FaceList_AddFace(fl, f);
+			}
+		}
+	}
+	//	geRam_Free(Verts);
+	//	geRam_Free(TopPoints);
+
+	if (!pTemplate->Solid)
+	{
+		b = App->CL_Brush->Brush_Create(BRUSH_LEAF, fl, 0);
+		if (b)
+		{
+			Brush_SetSubtract(b, pTemplate->TCut);
+		}
+		return	b;
+	}
+	else
+	{
+		BrushList* bl = App->CL_Brush->BrushList_Create();
+		Brush* bh, * bm;
+
+		b = App->CL_Brush->Brush_Create(BRUSH_LEAF, fl, 0);
+		if (b)
+		{
+			Brush_SetHollow(b, GE_TRUE);
+			Brush_SetHullSize(b, (float)pTemplate->Thickness);
+			bh = App->CL_Brush->Brush_CreateHollowFromBrush(b);
+			if (bh)
+			{
+				App->CL_Brush->Brush_SetHollowCut(bh, GE_TRUE);
+				App->CL_Brush->BrushList_Append(bl, b);
+				App->CL_Brush->BrushList_Append(bl, bh);
+
+				bm = App->CL_Brush->Brush_Create(BRUSH_MULTI, 0, bl);
+				if (bm)
+				{
+					Brush_SetHollow(bm, GE_TRUE);
 					Brush_SetSubtract(bm, pTemplate->TCut);
 					Brush_SetHullSize(bm, (float)pTemplate->Thickness);
 					return	bm;

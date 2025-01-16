@@ -64,6 +64,7 @@ public:
 
 	void Quaternion_SetFromAxisAngle(Ogre::Quaternion* Q, const Ogre::Vector3* Axis, float Theta);
 	void Quaternion_ToMatrix(const Ogre::Quaternion* Q, Matrix3d* M);
+	void geXForm3d_Rotate(const Matrix3d* M, const Ogre::Vector3* V, Ogre::Vector3* Result);
 
 
 	void* Ram_Allocate(Ogre::int32 size);
