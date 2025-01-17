@@ -88,8 +88,8 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Brush_Tabs(HWND hDlg, UINT messag
 
 		/*SendDlgItemMessage(hDlg, IDC_ST_GD_SELECTED, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ST_SELECTED, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_BT_DIMENSIONS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_BT_DELETEBRUSH, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));*/
+		SendDlgItemMessage(hDlg, IDC_BT_DIMENSIONS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));*/
+		SendDlgItemMessage(hDlg, IDC_BT_DELETE_SEL_BRUSH, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		return TRUE;
 	}
@@ -177,12 +177,12 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Brush_Tabs(HWND hDlg, UINT messag
 				App->Custom_Button_Normal(item);
 			}
 			return CDRF_DODEFAULT;
-		}
+		}*/
 
-		if (some_item->idFrom == IDC_BT_DELETEBRUSH && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDC_BT_DELETE_SEL_BRUSH)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_DELETEBRUSH));
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_DELETE_SEL_BRUSH));
 			if (test == 0)
 			{
 				App->Custom_Button_Greyed(item);
@@ -192,26 +192,25 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Brush_Tabs(HWND hDlg, UINT messag
 				App->Custom_Button_Normal(item);
 			}
 			return CDRF_DODEFAULT;
-		}*/
+		}
 
 		return CDRF_DODEFAULT;
 	}
 
 	case WM_COMMAND:
 	{
-		//if (LOWORD(wParam) == IDC_BT_DELETEBRUSH)
-		//{
-		//	App->CLSB_Dialogs->YesNo("Are you sure", "Do you want to Delete the selected Brushes");
+		if (LOWORD(wParam) == IDC_BT_DELETE_SEL_BRUSH)
+		{
+			App->CL_Dialogs->YesNo("Are you sure", "Do you want to Delete the selected Brushes");
 
-		//	bool Doit = App->CLSB_Dialogs->Canceled;
-		//	if (Doit == 0)
-		//	{
-		//		App->m_pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
-		//		App->CLSB_Doc->DeleteCurrentThing();
-		//	}
+			bool Doit = App->CL_Dialogs->flag_Dlg_Canceled;
+			if (Doit == 0)
+			{
+				App->CL_Doc->DeleteCurrentThing();
+			}
 
-		//	return TRUE;
-		//}
+			return TRUE;
+		}
 
 		//if (LOWORD(wParam) == IDC_BT_DIMENSIONS)
 		//{

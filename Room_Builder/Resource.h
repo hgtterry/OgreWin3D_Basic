@@ -34,6 +34,8 @@
 #define IDI_CYLINDER_PRIMITIVE          148
 #define IDD_CREATE_CYLINDER             149
 #define IDB_CYLINDERBIT                 151
+#define IDD_SB_YESNO                    152
+#define IDD_YESNO_DLG                   152
 #define IDC_BANNER                      1000
 #define IDC_STTEXT                      1001
 #define IDC_STMESSAGE                   1002
@@ -114,13 +116,14 @@
 #define IDC_BOTZOFF                     1076
 #define IDC_VERTSTRIPES                 1078
 #define IDC_RINGLENGTH                  1080
-#define IDC_Defaults                    1081
-#define IDC_CHECK1                      1083
+#define IDC_CYL_DEFAULTS                1081
 #define IDC_CHECK2                      1084
-#define IDC_SOLID                       1085
-#define IDC_HOLLOW                      1086
-#define IDC_RING                        1087
 #define IDC_TCUT                        1088
+#define IDC_CYL_SOLID                   1089
+#define IDC_CYL_HOLLOW                  1090
+#define IDC_CYL_RING                    1091
+#define IDC_STTOPXSIZE                  1092
+#define IDC_BT_DELETE_SEL_BRUSH         1093
 #define ID_DEBUG_GENERAL                32771
 #define ID_TEMPLATES_INSERT             32772
 #define ID_BRUSH_SELECT                 32773
@@ -147,9 +150,9 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
-#define _APS_NEXT_RESOURCE_VALUE        152
+#define _APS_NEXT_RESOURCE_VALUE        153
 #define _APS_NEXT_COMMAND_VALUE         32786
-#define _APS_NEXT_CONTROL_VALUE         1084
+#define _APS_NEXT_CONTROL_VALUE         1094
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif

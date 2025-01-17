@@ -75,7 +75,12 @@ LRESULT CALLBACK A_CreateCylDialog::Proc_Create_Cylinder(HWND hDlg, UINT message
 	{
 	case WM_INITDIALOG:
 	{
-		//SendDlgItemMessage(hDlg, IDC_BTSETVIEW, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_CYL_DEFAULTS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		SendDlgItemMessage(hDlg, IDC_STTOPXSIZE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
+		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		App->CL_CreateCylDialog->Set_Members();
 
@@ -86,19 +91,19 @@ LRESULT CALLBACK A_CreateCylDialog::Proc_Create_Cylinder(HWND hDlg, UINT message
 		// ----------- Style Solid Hollow Funnel
 		if(App->CL_CreateCylDialog->m_Solid == 0)
 		{
-			HWND temp = GetDlgItem(hDlg, IDC_SOLID);
+			HWND temp = GetDlgItem(hDlg, IDC_CYL_SOLID);
 			SendMessage(temp, BM_SETCHECK, 1, 0);
 		}
 
 		if(App->CL_CreateCylDialog->m_Solid == 1)
 		{
-			HWND temp = GetDlgItem(hDlg, IDC_HOLLOW);
+			HWND temp = GetDlgItem(hDlg, IDC_CYL_HOLLOW);
 			SendMessage(temp, BM_SETCHECK, 1, 0);
 		}
 
 		if(App->CL_CreateCylDialog->m_Solid == 2)
 		{
-			HWND temp = GetDlgItem(hDlg, IDC_RING);
+			HWND temp = GetDlgItem(hDlg, IDC_CYL_RING);
 			SendMessage(temp, BM_SETCHECK, 1, 0);
 		}
 		// ----------------------------------------------
@@ -111,29 +116,29 @@ LRESULT CALLBACK A_CreateCylDialog::Proc_Create_Cylinder(HWND hDlg, UINT message
 	}
 	case WM_CTLCOLORSTATIC:
 	{
-		/*if (GetDlgItem(hDlg, IDC_STTOP) == (HWND)lParam)
+		if (GetDlgItem(hDlg, IDC_STTOP) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 0, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->AppBackground;
-		}*/
+		}
 
-		/*if (GetDlgItem(hDlg, IDC_STBOTTOM) == (HWND)lParam)
+		if (GetDlgItem(hDlg, IDC_STBOTTOM) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 0, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->AppBackground;
-		}*/
+		}
 
-		/*if (GetDlgItem(hDlg, IDC_STGENERAL) == (HWND)lParam)
+		if (GetDlgItem(hDlg, IDC_STGENERAL) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 0, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->AppBackground;
-		}*/
+		}
 
 		if (GetDlgItem(hDlg, IDC_TCUT) == (HWND)lParam)
 		{
@@ -143,7 +148,7 @@ LRESULT CALLBACK A_CreateCylDialog::Proc_Create_Cylinder(HWND hDlg, UINT message
 			return (UINT)App->AppBackground;
 		}
 
-		if (GetDlgItem(hDlg, IDC_SOLID) == (HWND)lParam)
+		if (GetDlgItem(hDlg, IDC_CYL_SOLID) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 0, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
@@ -151,7 +156,7 @@ LRESULT CALLBACK A_CreateCylDialog::Proc_Create_Cylinder(HWND hDlg, UINT message
 			return (UINT)App->AppBackground;
 		}
 
-		if (GetDlgItem(hDlg, IDC_HOLLOW) == (HWND)lParam)
+		if (GetDlgItem(hDlg, IDC_CYL_HOLLOW) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 0, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
@@ -159,7 +164,7 @@ LRESULT CALLBACK A_CreateCylDialog::Proc_Create_Cylinder(HWND hDlg, UINT message
 			return (UINT)App->AppBackground;
 		}
 
-		if (GetDlgItem(hDlg, IDC_RING) == (HWND)lParam)
+		if (GetDlgItem(hDlg, IDC_CYL_RING) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 0, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
@@ -167,14 +172,13 @@ LRESULT CALLBACK A_CreateCylDialog::Proc_Create_Cylinder(HWND hDlg, UINT message
 			return (UINT)App->AppBackground;
 		}
 
-	
-		/*if (GetDlgItem(hDlg, IDC_STTOPXSIZE) == (HWND)lParam)
+		if (GetDlgItem(hDlg, IDC_STTOPXSIZE) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 0, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->AppBackground;
-		}*/
+		}
 
 		/*if (GetDlgItem(hDlg, IDC_STTOPZSIZE) == (HWND)lParam)
 		{
@@ -306,6 +310,62 @@ LRESULT CALLBACK A_CreateCylDialog::Proc_Create_Cylinder(HWND hDlg, UINT message
 		return (LONG)App->AppBackground;
 	}
 
+	case WM_NOTIFY:
+	{
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		/*if (some_item->idFrom == IDC_BT_BOXSOLID && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle_Tabs(item, App->CL_CreateBoxDialog->Solid_Flag);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BT_BOXHOLLOW && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle_Tabs(item, App->CL_CreateBoxDialog->Hollow_Flag);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BT_BOXCUTBRUSH && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle_Tabs(item, App->CL_CreateBoxDialog->Cut_Flag);
+			return CDRF_DODEFAULT;
+		}*/
+
+		if (some_item->idFrom == IDC_CYL_DEFAULTS)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		/*if (some_item->idFrom == IDC_BT_BOXROOM && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}*/
+
+		if (some_item->idFrom == IDOK)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDCANCEL)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		return CDRF_DODEFAULT;
+	}
+
 	case WM_COMMAND:
 		{
 			if (LOWORD(wParam) == IDC_CKWORLDCENTRE)
@@ -332,19 +392,19 @@ LRESULT CALLBACK A_CreateCylDialog::Proc_Create_Cylinder(HWND hDlg, UINT message
 				return TRUE;
 			}
 
-			if (LOWORD(wParam) == IDC_HOLLOW)
+			if (LOWORD(wParam) == IDC_CYL_HOLLOW)
 			{
 				App->CL_CreateCylDialog->m_Solid = 1;
 				return TRUE;
 			}
 
-			if (LOWORD(wParam) == IDC_SOLID)
+			if (LOWORD(wParam) == IDC_CYL_SOLID)
 			{
 				App->CL_CreateCylDialog->m_Solid = 0;
 				return TRUE;
 			}
 
-			if (LOWORD(wParam) == IDC_RING)
+			if (LOWORD(wParam) == IDC_CYL_RING)
 			{
 				App->CL_CreateCylDialog->m_Solid = 2;
 				return TRUE;
@@ -369,7 +429,7 @@ LRESULT CALLBACK A_CreateCylDialog::Proc_Create_Cylinder(HWND hDlg, UINT message
 				return TRUE;
 			}
 
-			if (LOWORD(wParam) == IDC_Defaults)
+			if (LOWORD(wParam) == IDC_CYL_DEFAULTS)
 			{
 				App->CL_CreateCylDialog->Set_Defaults(hDlg);
 				return TRUE;
@@ -648,18 +708,18 @@ void A_CreateCylDialog::Set_Defaults(HWND hDlg)
 
 	if(m_Solid == 0)
 	{
-		HWND temp = GetDlgItem(hDlg,IDC_SOLID);
+		HWND temp = GetDlgItem(hDlg,IDC_CYL_SOLID);
 		SendMessage(temp,BM_SETCHECK,1,0);
 
-		temp = GetDlgItem(hDlg,IDC_HOLLOW);
+		temp = GetDlgItem(hDlg,IDC_CYL_HOLLOW);
 		SendMessage(temp,BM_SETCHECK,0,0);
 	}
 	else
 	{
-		HWND temp = GetDlgItem(hDlg,IDC_HOLLOW);
+		HWND temp = GetDlgItem(hDlg,IDC_CYL_HOLLOW);
 		SendMessage(temp,BM_SETCHECK,1,0);
 
-		temp = GetDlgItem(hDlg,IDC_SOLID);
+		temp = GetDlgItem(hDlg,IDC_CYL_SOLID);
 		SendMessage(temp,BM_SETCHECK,0,0);
 	}
 }

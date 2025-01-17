@@ -131,6 +131,8 @@ public:
 	void OnBrushSubtractfromworld();
 	void SelectAllFacesInBrushes(void);
 	void SelectAll(void);
+	void DeleteCurrentThing();
+	bool DeleteSelectedBrushes();
 
 	// ------------------------------------------------------------------- 
 

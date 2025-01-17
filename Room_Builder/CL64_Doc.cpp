@@ -1286,5 +1286,83 @@ void CL64_Doc::UpdateSelected(void)
     // App->m_pDoc->UpdateBrushAttributesDlg();
 }
 
+// *************************************************************************
+// *			        	DeleteCurrentThing	                    	   *
+// *************************************************************************
+void CL64_Doc::DeleteCurrentThing()
+{
+  
+    BOOL	ReBuild;
+
+    if (mModeTool == ID_GENERALSELECT)
+    {
+        // set wait cursor
+       // SetCursor(AfxGetApp()->LoadStandardCursor(IDC_WAIT));
+
+        ResetAllSelectedFaces();
+        ReBuild = (GetSelState() & ANYBRUSH);
+
+        DeleteSelectedBrushes();
+
+       /* if (ReBuild && Level_RebuildBspAlways(pLevel))
+        {
+            UpdateAllViews(UAV_ALL3DVIEWS | REBUILD_QUICK, NULL, TRUE);
+        }
+        else
+        {*/
+            UpdateAllViews(Enums::UpdateViews_All);
+        //}
+
+        // put cursor back
+        //SetCursor(AfxGetApp()->LoadStandardCursor(IDC_ARROW));
+    }
+}
+
+// *************************************************************************
+// *			        	DeleteSelectedBrushes	                	   *
+// *************************************************************************
+bool CL64_Doc::DeleteSelectedBrushes()
+{
+    signed int	bAlteredCurrentGroup = GE_FALSE;
+   
+    if (GetSelState() & ANYBRUSH)
+    {
+        int NumSelBrushes = App->CL_SelBrushList->SelBrushList_GetSize(pSelBrushes);
+        for (int i = 0; i < NumSelBrushes; i++)
+        {
+            Brush* pBrush;
+
+            pBrush = App->CL_SelBrushList->SelBrushList_GetBrush(pSelBrushes, 0);
+
+            if (strstr(App->CL_Brush->Brush_GetName(pBrush), ".act") != NULL)
+                continue;
+
+           /* if (Brush_GetGroupId(pBrush) == mCurrentGroup)
+            {
+                bAlteredCurrentGroup = GE_TRUE;
+            }*/
+
+            App->CL_Level->Level_RemoveBrush(pLevel, pBrush);
+            App->CL_SelBrushList->SelBrushList_Remove(pSelBrushes, pBrush);
+            App->CL_Brush->Brush_Destroy(&pBrush);
+        }
+
+        //turn off any operation tools
+        mCurrentTool = CURTOOL_NONE;
+
+        App->CL_Doc->flag_Is_Modified = 1;
+    }
+
+    // Deleting items removed group members so we must update the UI
+    if (bAlteredCurrentGroup)
+    {
+        //App->CL_TabsGroups_Dlg->Fill_ListBox();
+    }
+
+    UpdateSelected();
+
+    return FALSE;
+}
+
 
 
