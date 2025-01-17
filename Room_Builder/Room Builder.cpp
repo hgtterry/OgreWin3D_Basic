@@ -163,7 +163,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             // ----------------------------- File
             case ID_FILE_OPEN:
             {
-                App->CL_File->Open();
+                App->CL_File->Open(true);
                 return 1;
             }
           

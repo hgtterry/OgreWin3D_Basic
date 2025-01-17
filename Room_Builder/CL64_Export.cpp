@@ -28,7 +28,6 @@ THE SOFTWARE.
 #include "CL64_Export.h"
 
 #include <string>
-//#include <shobjidl.h> 
 #include <shobjidl_core.h>
 
 CL64_Export::CL64_Export()
@@ -37,10 +36,8 @@ CL64_Export::CL64_Export()
 	mDirectory_Name[0] = 0;
 	strcpy(mJustName,"World1");
 
-	szSelectedDir[0] = 0;
 	DeskTop_Folder[0] = 0;
 
-	flag_Canceled = 0;
 	flag_Build_Edge_List = 1;
 }
 
@@ -246,10 +243,10 @@ LRESULT CALLBACK CL64_Export::Proc_Ogre_Export_Dlg(HWND hDlg, UINT message, WPAR
 
 		if (LOWORD(wParam) == IDC_BT_OGREBROWSE)
 		{
-			App->CL_Export->Select_Folder();
-			if (App->CL_Export->flag_Canceled == 0)
+			App->CL_File_IO->Select_Folder();
+			if (App->CL_File_IO->flag_Canceled == 0)
 			{
-				strcpy(App->CL_Export->mFolder_Path, App->CL_Export->szSelectedDir);
+				strcpy(App->CL_Export->mFolder_Path, App->CL_File_IO->szSelectedDir);
 				SetDlgItemText(hDlg, IDC_ST_OGRE_PATH, (LPCTSTR)App->CL_Export->mFolder_Path);
 			}
 			
@@ -321,52 +318,3 @@ LRESULT CALLBACK CL64_Export::Proc_Ogre_Export_Dlg(HWND hDlg, UINT message, WPAR
 	return FALSE;
 }
 
-// *************************************************************************
-// *				Select_Folder:- Terry and Hazel Flanigan 2025		   *
-// *************************************************************************
-void CL64_Export::Select_Folder()
-{
-	HRESULT f_SysHr = CoInitializeEx(NULL, COINIT_APARTMENTTHREADED | COINIT_DISABLE_OLE1DDE);
-
-	if (FAILED(f_SysHr))
-	{
-		App->Say("Can Not Create Browse Dialog");
-		return;
-	}
-
-	strcpy(szSelectedDir, "");
-	flag_Canceled = 1;
-
-	IFileDialog* pfd;
-	if (SUCCEEDED(CoCreateInstance(CLSID_FileOpenDialog, NULL, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&pfd))))
-	{
-		DWORD dwOptions;
-		if (SUCCEEDED(pfd->GetOptions(&dwOptions)))
-		{
-			pfd->SetOptions(dwOptions | FOS_PICKFOLDERS);
-		}
-		if (SUCCEEDED(pfd->Show(NULL)))
-		{
-			IShellItem* psi;
-			if (SUCCEEDED(pfd->GetResult(&psi)))
-			{
-				PWSTR f_Path;
-				if (SUCCEEDED(psi->GetDisplayName(SIGDN_DESKTOPABSOLUTEPARSING, &f_Path)))
-				{
-					std::wstring path(f_Path);
-					std::string c(path.begin(), path.end());
-
-					strcpy(szSelectedDir, c.c_str());
-					flag_Canceled = 0;
-
-				}
-
-				psi->Release();
-				CoUninitialize();
-			}
-		}
-
-		pfd->Release();
-		CoUninitialize();
-	}
-}

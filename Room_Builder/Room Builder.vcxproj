@@ -165,6 +165,7 @@
     <ClInclude Include="CL64_Face.h" />
     <ClInclude Include="CL64_FaceList.h" />
     <ClInclude Include="CL64_File.h" />
+    <ClInclude Include="CL64_File_IO.h" />
     <ClInclude Include="CL64_Grid.h" />
     <ClInclude Include="CL64_Ini_File.h" />
     <ClInclude Include="CL64_Keyboard.h" />
@@ -212,6 +213,7 @@
     <ClCompile Include="CL64_Face.cpp" />
     <ClCompile Include="CL64_FaceList.cpp" />
     <ClCompile Include="CL64_File.cpp" />
+    <ClCompile Include="CL64_File_IO.cpp" />
     <ClCompile Include="CL64_Grid.cpp" />
     <ClCompile Include="CL64_Ini_File.cpp" />
     <ClCompile Include="CL64_Keyboard.cpp" />

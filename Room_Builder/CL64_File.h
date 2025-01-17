@@ -31,7 +31,7 @@ public:
 	~CL64_File(void);
 
 	void Save();
-	void Open();
+	void Open(bool TestFile);
 
 private:
 

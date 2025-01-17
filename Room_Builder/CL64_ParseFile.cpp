@@ -141,7 +141,7 @@ void CL64_ParseFile::Load_File(char* FileName)
 	}
 
 	memset(Read_Buffer, 0, MAX_PATH);
-	Debug
+
 	while (fgets(Read_Buffer, sizeof(Read_Buffer),fp))
 	{
 		Tag_Float = 0;
@@ -187,8 +187,6 @@ void CL64_ParseFile::Load_File(char* FileName)
 
 	App->CL_Doc->pLevel = pLevel;
 	//App->Say_Int(App->CL_Brush->Get_Brush_Count());
-	
-	App->Say("File Closed");
 }
 
 // *************************************************************************

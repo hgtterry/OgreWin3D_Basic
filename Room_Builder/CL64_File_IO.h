@@ -23,24 +23,21 @@ THE SOFTWARE.
 */
 
 #pragma once
-class CL64_Export
+class CL64_File_IO
 {
 public:
-	CL64_Export();
-	~CL64_Export();
+	CL64_File_IO(void);
+	~CL64_File_IO(void);
 
-	void Ogre_Export_Dlg();
+	void Select_Folder();
+	bool Open_File();
+	void Save_File();
 
-	char mFolder_Path[MAX_PATH];
-	char mDirectory_Name[MAX_PATH];
-	char mJustName[MAX_PATH];
+	char szSelectedDir[MAX_PATH];
 
-	char DeskTop_Folder[MAX_PATH];
+	std::string sFilePath;
+	std::string sSelectedFile;
 
-	bool flag_Build_Edge_List;
-
-private:
-	static LRESULT CALLBACK Proc_Ogre_Export_Dlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
-
+	bool flag_Canceled;
 };
 

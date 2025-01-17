@@ -286,7 +286,7 @@ signed int CL64_File::Face_Write(const Face* f, FILE* wf)
 // *************************************************************************
 // *	            Open:- Terry and Hazel Flanigan 2025	               *
 // *************************************************************************
-void CL64_File::Open()
+void CL64_File::Open(bool TestFile)
 {
 	char FullPath[MAX_PATH];
 
@@ -342,6 +342,7 @@ bool CL64_File::Open_3dt_File()
 		App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_Free;
 		App->CL_Doc->UpdateAllViews(Enums::UpdateViews_All);
 
+		App->Say("File Opened");
 		/*Level_SetWadPath(App->CLSB_Doc->pLevel, Txlpath);
 		App->CL_World->Set_Current_TxlPath();
 		App->CLSB_Doc->UpdateAfterWadChange();
