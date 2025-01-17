@@ -34,7 +34,6 @@
 #define IDI_CYLINDER_PRIMITIVE          148
 #define IDD_CREATE_CYLINDER             149
 #define IDB_CYLINDERBIT                 151
-#define IDD_SB_YESNO                    152
 #define IDD_YESNO_DLG                   152
 #define IDC_BANNER                      1000
 #define IDC_STTEXT                      1001
@@ -124,6 +123,9 @@
 #define IDC_CYL_RING                    1091
 #define IDC_STTOPXSIZE                  1092
 #define IDC_BT_DELETE_SEL_BRUSH         1093
+#define IDC_STTOPZSIZE                  1094
+#define IDC_STTOPXOFFSET                1095
+#define IDC_STTOPZOFFSET                1096
 #define ID_DEBUG_GENERAL                32771
 #define ID_TEMPLATES_INSERT             32772
 #define ID_BRUSH_SELECT                 32773
@@ -152,7 +154,7 @@
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        153
 #define _APS_NEXT_COMMAND_VALUE         32786
-#define _APS_NEXT_CONTROL_VALUE         1094
+#define _APS_NEXT_CONTROL_VALUE         1097
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif

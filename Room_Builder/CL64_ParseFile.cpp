@@ -116,7 +116,7 @@ struct tag_FaceList
 	int NumFaces;
 	int Limit;
 	Face** Faces;
-	geBoolean Dirty;
+	signed int Dirty;
 	Box3d Bounds;
 };
 
@@ -136,11 +136,12 @@ void CL64_ParseFile::Load_File(char* FileName)
 	fp = fopen(FileName, "r");
 	if (!fp)
 	{
+		App->Say("Can Not Find File");
 		return;
 	}
 
 	memset(Read_Buffer, 0, MAX_PATH);
-
+	Debug
 	while (fgets(Read_Buffer, sizeof(Read_Buffer),fp))
 	{
 		Tag_Float = 0;
@@ -185,7 +186,7 @@ void CL64_ParseFile::Load_File(char* FileName)
 	fclose(fp);
 
 	App->CL_Doc->pLevel = pLevel;
-	App->Say_Int(App->CL_Brush->Get_Brush_Count());
+	//App->Say_Int(App->CL_Brush->Get_Brush_Count());
 	
 	App->Say("File Closed");
 }
@@ -417,7 +418,7 @@ Face* CL64_ParseFile::Face_CreateFromFile()
 
 		if (f)
 		{
-			App->Say("Face Created");
+			//App->Say("Face Created");
 			f->Flags = flg;
 			f->LightIntensity = Light;
 			f->MipMapBias = MipMapBias;

@@ -133,6 +133,7 @@ public:
 	void SelectAll(void);
 	void DeleteCurrentThing();
 	bool DeleteSelectedBrushes();
+	void UpdateAfterWadChange();
 
 	// ------------------------------------------------------------------- 
 
@@ -163,8 +164,8 @@ public:
 	int mCurrentTool;
 	bool flag_Is_Modified;
 	bool flag_IsNewDocument;
-	int NumSelEntities
-		;
+	int NumSelEntities;
+
 	//SelFaceList* pSelFaces;
 };
 

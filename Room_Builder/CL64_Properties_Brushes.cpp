@@ -264,21 +264,58 @@ void CL64_Properties_Brushes::List_Selection_Changed(bool Clear)
 
 	//if (Brush_Count > 0)
 	{
-		/*int Index = SendDlgItemMessage(BrushesDlg_Hwnd, IDC_GD_BRUSHLIST, LB_GETCURSEL, (WPARAM)0, (LPARAM)0);
+		int Index = SendDlgItemMessage(BrushesDlg_Hwnd, IDC_GD_BRUSHLIST, LB_GETCURSEL, (WPARAM)0, (LPARAM)0);
 		if (Index == -1)
 		{
-			App->Say("ListBox No Selection Available");
+			//App->Say("ListBox No Selection Available");
 		}
-		else*/
+		else
 		{
 			if (flag_Brushes_Dlg_Created == 1)
 			{
-				Selected_Index = 0;// Index;
-				Selected_Brush = App->CL_Brush->Get_Brush_ByIndex(0);
-
-				//OnSelchangeBrushlist(Index, Clear);
+				Selected_Index = Index;
+				OnSelchangeBrushlist(Index, Clear);
 			}
 		}
+	}
+}
+
+// *************************************************************************
+// *		OnSelchangeBrushlist:- Terry and Hazel Flanigan 2025		   *
+// *************************************************************************
+void CL64_Properties_Brushes::OnSelchangeBrushlist(int Index, bool Clear)
+{
+	int			c;
+	geBoolean	bChanged = FALSE;
+
+	c = App->CL_Brush->Get_Brush_Count();
+
+	if (c > 0)
+	{
+		if (Clear == 1)
+		{
+			App->CL_Doc->ResetAllSelections();
+			App->CL_Doc->UpdateSelected();
+		}
+
+		Selected_Brush = App->CL_Brush->Get_Brush_ByIndex(Index);
+
+		App->CL_SelBrushList->SelBrushList_Add(App->CL_Doc->pSelBrushes, Selected_Brush);
+
+		if (Clear == 1)
+		{
+			/*Update_Dlg_Controls();
+			App->CLSB_TopTabs->Update_Dlg_Controls();*/
+		}
+		//m_pDoc->DoBrushSelection( Selected_Brush, brushSelToggle) ;
+		bChanged = GE_TRUE;
+	}
+
+
+	if (bChanged)
+	{
+		App->CL_Doc->UpdateSelected();
+		App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
 	}
 }
 

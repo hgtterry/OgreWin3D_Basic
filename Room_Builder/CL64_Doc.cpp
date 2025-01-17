@@ -1265,11 +1265,12 @@ void CL64_Doc::UpdateSelected(void)
 
     SelState = (NumSelBrushes > 1) ? MULTIBRUSH : NumSelBrushes;
     SelState |= (NumSelFaces > 1) ? MULTIFACE : (NumSelFaces + 1) << 3;
+    SelState |= (NumSelEntities > 1) ? MULTIENTITY : (NumSelEntities + 1) << 7;
 
 
-    if (mModeTool == ID_GENERALSELECT && NumSelBrushes == 1)
+    if (mModeTool == ID_GENERALSELECT)
     {
-        //if (GetSelState() & ONEBRUSH)
+        if (GetSelState() & ONEBRUSH)
         if(NumSelBrushes == 1)
         {
             CurBrush = App->CL_SelBrushList->SelBrushList_GetBrush(pSelBrushes, 0);
@@ -1279,27 +1280,92 @@ void CL64_Doc::UpdateSelected(void)
            //CurBrush = BTemplate;
         }
     }
-
+ 
     //if (NumSelBrushes)
     {
         //SelBrushList_Center(pSelBrushes, &SelectedGeoCenter);
     }
+
     App->CL_Maths->Vector3_Clear(&SelectedGeoCenter);
 
-    //if (mModeTool == ID_TOOLS_TEMPLATE)
-    //{
-    //    App->CL_Brush->Brush_Center(CurBrush, &SelectedGeoCenter);
-    //}
-    //else if (SelState != NOSELECTIONS)
-    //{
-    //    if (NumSelBrushes)
-    //    {
-    //        App->CL_SelBrushList->SelBrushList_Center(pSelBrushes, &SelectedGeoCenter);
-    //    }
-    //}
+    if (mModeTool == ID_TOOLS_TEMPLATE)
+    {
+        App->CL_Brush->Brush_Center(CurBrush, &SelectedGeoCenter);
+    }
+    else if (SelState != NOSELECTIONS)
+    {
+        if (NumSelBrushes)
+        {
+            App->CL_SelBrushList->SelBrushList_Center(pSelBrushes, &SelectedGeoCenter);
+        }
+    }
 
     // App->m_pDoc->UpdateFaceAttributesDlg();
     // App->m_pDoc->UpdateBrushAttributesDlg();
+}
+
+static signed int fdocUpdateFaceTextures(Face* pFace, void* lParam)
+{
+    App->CL_Face->Face_SetTextureDibId(pFace, App->CL_Level->Level_GetDibId(App->CL_Doc->pLevel, App->CL_Face->Face_GetTextureName(pFace)));
+    // changed QD 12/03
+    const WadFileEntry* const pbmp = App->CL_Level->Level_GetWadBitmap(App->CL_Doc->pLevel, App->CL_Face->Face_GetTextureName(pFace));
+    if (pbmp)
+        App->CL_Face->Face_SetTextureSize(pFace, pbmp->Width, pbmp->Height);
+    // end change
+    return GE_TRUE;
+}
+
+static signed int fdocUpdateBrushFaceTextures(Brush* pBrush, void* pVoid)
+{
+    App->CL_Brush->Brush_EnumFaces(pBrush, pVoid, ::fdocUpdateFaceTextures);
+    return GE_TRUE;
+}
+
+// *************************************************************************
+// *        UpdateAfterWadChange:- Terry and Hazel Flanigan 2025           *
+// *************************************************************************
+void CL64_Doc::UpdateAfterWadChange()
+{
+    //App->Get_Current_Document();
+
+   // App->m_pDoc->SetModifiedFlag();
+
+    //if (!Level_LoadWad(pLevel))
+    {
+       // App->Say("Cant Load TXL File");
+        /* CString Msg;
+         AfxFormatString1(Msg, IDS_CANTLOADTXL, Level_GetWadPath(pLevel));
+         AfxMessageBox(Msg, MB_OK + MB_ICONERROR);*/
+    }
+
+    // update textures tab
+   // mCurTextureSelection = 0;
+    //App->CLSB_TextureDialog->Fill_ListBox();
+
+    // update all brush faces
+    App->CL_Brush->BrushList_EnumLeafBrushes(App->CL_Level->Level_GetBrushes(pLevel), this, ::fdocUpdateBrushFaceTextures);
+    {
+        // find the rendered view and set the wad size infos for it
+        //POSITION		pos;
+        //CFusionView* pView;
+
+        //pos = App->m_pDoc->GetFirstViewPosition();
+        //while (pos != NULL)
+        //{
+        //    pView = (CFusionView*)App->m_pDoc->GetNextView(pos);
+        //    if (Render_GetViewType(pView->VCam) & (VIEWSOLID | VIEWTEXTURE | VIEWWIRE))
+        //    {
+        //        Render_SetWadSizes(pView->VCam, Level_GetWadSizeInfos(pLevel));
+        //        break;	// Only 1 rendered view for now
+        //    }
+        //}
+    }
+
+   /* if (Level_RebuildBspAlways(pLevel))
+    {
+        App->m_pDoc->RebuildTrees();
+        UpdateAllViews(UAV_ALL3DVIEWS, NULL);
+    }*/
 }
 
 // *************************************************************************

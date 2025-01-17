@@ -267,13 +267,13 @@ signed int CL64_File::Face_Write(const Face* f, FILE* wf)
 	
 	fprintf(wf, "\t\tLightScale %f %f\n", f->LightXScale, f->LightYScale);
 
-	fprintf(wf, "%s%f %f %f %f %f %f %f %f %f %f %f %f\n", "\tTransform=",
+	fprintf(wf, "%s%f %f %f %f %f %f %f %f %f %f %f %f\n", "\tTransform ",
 		f->Tex.XfmFaceAngle.AX, f->Tex.XfmFaceAngle.AY, f->Tex.XfmFaceAngle.AZ,
 		f->Tex.XfmFaceAngle.BX, f->Tex.XfmFaceAngle.BY, f->Tex.XfmFaceAngle.BZ,
 		f->Tex.XfmFaceAngle.CX, f->Tex.XfmFaceAngle.CY, f->Tex.XfmFaceAngle.CZ,
 		f->Tex.XfmFaceAngle.Translation.x, f->Tex.XfmFaceAngle.Translation.y, f->Tex.XfmFaceAngle.Translation.z);
 
-	fprintf(wf, "%s%f %f %f\n", "\tPos=", f->Tex.Pos.x, f->Tex.Pos.y, f->Tex.Pos.z);
+	fprintf(wf, "%s%f %f %f\n", "\tPos ", f->Tex.Pos.x, f->Tex.Pos.y, f->Tex.Pos.z);
 	
 	return true;
 }
@@ -305,7 +305,7 @@ void CL64_File::Open()
 
 	//App->CLSB_File_WE->Open_Example_File();
 	Open_3dt_File();
-	//App->Say("Opened");
+
 }
 
 // *************************************************************************
@@ -313,8 +313,9 @@ void CL64_File::Open()
 // *************************************************************************
 bool CL64_File::Open_3dt_File()
 {
+	App->CL_Doc->DoGeneralSelect();
+	
 	Load_File(PathFileName_3dt);
-
 	//App->m_pDoc->SetTitle(PathFileName_3dt);
 	//App->m_pDoc->SetPathName(PathFileName_3dt, FALSE);
 
@@ -325,19 +326,30 @@ bool CL64_File::Open_3dt_File()
 	//	App->CLSB_TextureDialog->Fill_ListBox();
 	//}
 	//else
-	//{
-	//	char Txlpath[MAX_PATH];
-	//	strcpy(Txlpath, App->WorldEditor_Directory);
-	//	strcat(Txlpath, "Data\\Default.txl");
+	{
+		static char Path_And_File[MAX_PATH];
+		strcpy(Path_And_File, App->RB_Directory_FullPath);
+		strcat(Path_And_File, "\\Data\\Room_Builder\\");
+		strcat(Path_And_File, "Default.txl");
 
-	//	Level_SetWadPath(App->CLSB_Doc->pLevel, Txlpath);
-	//	App->CL_World->Set_Current_TxlPath();
-	//	App->CLSB_Doc->UpdateAfterWadChange();
-	//	App->CLSB_TextureDialog->Fill_ListBox();
+		if (!App->CL_Level->Level_LoadWad(App->CL_Doc->pLevel))
+		{
+			App->Say_Win("Can not load Wad File");
+		}
 
-	//	strcpy(App->CL_World->mCurrent_TXL_FileName, Txlpath);
+		App->CL_Doc->UpdateAfterWadChange();
 
-	//}
+		App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_Free;
+		App->CL_Doc->UpdateAllViews(Enums::UpdateViews_All);
+
+		/*Level_SetWadPath(App->CLSB_Doc->pLevel, Txlpath);
+		App->CL_World->Set_Current_TxlPath();
+		App->CLSB_Doc->UpdateAfterWadChange();
+		App->CLSB_TextureDialog->Fill_ListBox();
+
+		strcpy(App->CL_World->mCurrent_TXL_FileName, Txlpath);*/
+
+	}
 
 	////App->CLSB_Level->Check_For_Centre_Brush(); // Centre Brush XYZ
 	////App->CLSB_Level->Check_For_Centre_Texture(); // Centre Texture Dummy
@@ -360,6 +372,7 @@ bool CL64_File::Open_3dt_File()
 bool CL64_File::Load_File(const char* FileName)
 {
 	App->CL_ParseFile->Load_File((LPSTR)FileName);
+	App->CL_Properties_Brushes->Fill_ListBox();
 //	App->Get_Current_Document();
 //
 //	const char* Errmsg, * WadPath;

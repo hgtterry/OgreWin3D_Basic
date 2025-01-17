@@ -43,6 +43,7 @@ private:
 	static LRESULT CALLBACK Proc_Brush_Tabs(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	void List_Selection_Changed(bool Clear);
+	void OnSelchangeBrushlist(int Index, bool Clear);
 
 	bool flag_Brushes_Dlg_Created;
 
