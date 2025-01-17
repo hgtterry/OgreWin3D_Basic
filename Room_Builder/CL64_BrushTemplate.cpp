@@ -324,7 +324,7 @@ Brush* CL64_BrushTemplate::BrushTemplate_CreateCylinder(const BrushTemplate_Cyli
 			// (x^2/a^2) + (z^2/b^2) = 1
 			// z = sqrt(b^2(1 - x^2/a^2))
 			sqrcheck = (((CurrentZDiameter / 2) * (CurrentZDiameter / 2))
-				* (1.0 - (Final.x * Final.y)
+				* (1.0 - (Final.x * Final.x)
 					/ ((CurrentXDiameter / 2) * (CurrentXDiameter / 2))));
 			if (sqrcheck < 0.0)
 				sqrcheck = 0.0;
