@@ -202,10 +202,17 @@ void CL64_Mesh_Mgr::Delete_Group_Brushes()
 // *************************************************************************
 bool CL64_Mesh_Mgr::Update_World()
 {
-	Brush_Build_List(0);
-	WE_Convert_All_Texture_Groups();
-
-	App->CL_Ogre3D->Convert_ToOgre3D(1);
+	int BC = App->CL_Brush->Get_Brush_Count();
+	if (BC > 0)
+	{
+		Brush_Build_List(0);
+		WE_Convert_All_Texture_Groups();
+		App->CL_Ogre3D->Convert_ToOgre3D(1); // Will Set Node Visable
+	}
+	else
+	{
+		App->CL_Mesh_Mgr->World_Node->setVisible(false);
+	}
 	
 	return 1;
 }

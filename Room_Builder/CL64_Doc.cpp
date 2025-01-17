@@ -301,8 +301,16 @@ void CL64_Doc::UpdateAllViews(int Update_Mode)
 
     if (Update_Mode == Enums::UpdateViews_3D)
     {
-        App->CL_Doc->RebuildTrees();
-        App->CL_Mesh_Mgr->Update_World();
+        int BC = App->CL_Brush->Get_Brush_Count();
+        if (BC > 0)
+        {
+            App->CL_Doc->RebuildTrees();
+            App->CL_Mesh_Mgr->Update_World(); // Will Set Node Visable
+        }
+        else
+        {
+            App->CL_Mesh_Mgr->World_Node->setVisible(false);
+        }
     }
 
     if (Update_Mode == Enums::UpdateViews_All)
@@ -311,8 +319,16 @@ void CL64_Doc::UpdateAllViews(int Update_Mode)
         RedrawWindow(App->CL_MapEditor->Right_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
         RedrawWindow(App->CL_MapEditor->Bottom_Left_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
-        App->CL_Doc->RebuildTrees();
-        App->CL_Mesh_Mgr->Update_World();
+        int BC = App->CL_Brush->Get_Brush_Count();
+        if (BC > 0)
+        {
+            App->CL_Doc->RebuildTrees();
+            App->CL_Mesh_Mgr->Update_World(); // Will Set Node Visable
+        }
+        else
+        {
+            App->CL_Mesh_Mgr->World_Node->setVisible(false);
+        }
     }
 }
 
@@ -1345,6 +1361,8 @@ bool CL64_Doc::DeleteSelectedBrushes()
             App->CL_Level->Level_RemoveBrush(pLevel, pBrush);
             App->CL_SelBrushList->SelBrushList_Remove(pSelBrushes, pBrush);
             App->CL_Brush->Brush_Destroy(&pBrush);
+
+            bAlteredCurrentGroup = true;
         }
 
         //turn off any operation tools
@@ -1353,10 +1371,9 @@ bool CL64_Doc::DeleteSelectedBrushes()
         App->CL_Doc->flag_Is_Modified = 1;
     }
 
-    // Deleting items removed group members so we must update the UI
     if (bAlteredCurrentGroup)
     {
-        //App->CL_TabsGroups_Dlg->Fill_ListBox();
+        App->CL_Properties_Brushes->Fill_ListBox();
     }
 
     UpdateSelected();
