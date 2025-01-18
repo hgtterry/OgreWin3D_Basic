@@ -130,6 +130,8 @@ void CL64_File::Start_Save(bool Use_Save_Dialog)
 
         Save_Document();
 
+		App->Set_Title(App->CL_Doc->mCurrent_MTF_PathAndFile);
+
 		App->Say("Saved");
     }
     else
@@ -166,7 +168,7 @@ bool CL64_File::Save(const char* FileName)
 
     fprintf(Write_File, "MTF_Version %f\n", Level_Version);
 
-    fprintf(Write_File, "TextureLib %s\n", App->CL_Doc->pLevel->WadPath);
+	fprintf(Write_File, "TextureLib %s\n", "Default.txl");// App->CL_Doc->pLevel->WadPath);
 
 	//fprintf(Write_File, "Brush_Count %i\n", App->CL_Brush->Get_Brush_Count());
 
@@ -324,6 +326,7 @@ void CL64_File::Start_Load(bool Use_Open_Dialog)
 	if (Test == true)
 	{
 		App->Set_Title(PathFileName_3dt);
+		App->CL_Top_Tabs->Enable_Select_Button(true,1);
 		App->Say("File Loaded", App->CL_File->FileName_3dt);
 	}
 	else
