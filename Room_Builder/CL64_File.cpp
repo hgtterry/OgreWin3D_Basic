@@ -98,6 +98,7 @@ CL64_File::CL64_File(void)
 
 	Read_Buffer[0] = 0;
 	WadPath[0] = 0;
+	WadFile_Name[0] = 0;
 
 	fp = NULL;
 
@@ -108,21 +109,35 @@ CL64_File::~CL64_File(void)
 }
 
 // *************************************************************************
-// *	            Save:- Terry and Hazel Flanigan 2025	               *
+// *	          Start_Save:- Terry and Hazel Flanigan 2025		       *
 // *************************************************************************
-void CL64_File::Save(bool Use_Save_Dialog)
+void CL64_File::Start_Save(bool Use_Save_Dialog)
 {
     int BC = App->CL_Brush->Get_Brush_Count();
     if (BC > 0)
     {
+		if (Use_Save_Dialog == 1)
+		{
+			App->CL_File_IO->Save_File();
+
+			if (App->CL_File_IO->flag_Canceled == 1)
+			{
+				return;
+			}
+
+			strcpy(App->CL_Doc->mCurrent_MTF_PathAndFile, App->CL_File_IO->sFilePath.c_str());
+		}
+
         Save_Document();
+
+		App->Say("Saved");
     }
     else
     {
         App->Say("No Brushes to Save");
     }
 
-    App->Say("Saved");
+    
 }
 
 // *************************************************************************
@@ -301,13 +316,20 @@ void CL64_File::Start_Load(bool Use_Open_Dialog)
 			return;
 		}
 
-		strcpy(App->CL_File->PathFileName_3dt, App->CL_File_IO->sFilePath.c_str());
-		strcpy(App->CL_File->FileName_3dt, App->CL_File_IO->sSelectedFile.c_str());
+		strcpy(PathFileName_3dt, App->CL_File_IO->sFilePath.c_str());
+		strcpy(FileName_3dt, App->CL_File_IO->sSelectedFile.c_str());
 	}
 
-	Open_3dt_File();
-
-	App->Say("File Loaded", App->CL_File->FileName_3dt);
+	bool Test = Open_3dt_File();
+	if (Test == true)
+	{
+		App->Set_Title(PathFileName_3dt);
+		App->Say("File Loaded", App->CL_File->FileName_3dt);
+	}
+	else
+	{
+		App->Say("Failed To Open File", FileName_3dt);
+	}
 }
 
 // *************************************************************************
@@ -317,26 +339,18 @@ bool CL64_File::Open_3dt_File()
 {
 	App->CL_Doc->DoGeneralSelect();
 	
-	Load_File(PathFileName_3dt);
-	//App->m_pDoc->SetTitle(PathFileName_3dt);
-	//App->m_pDoc->SetPathName(PathFileName_3dt, FALSE);
+	bool Test = Load_File(PathFileName_3dt);
 
-	//App->CL_World->Set_Paths();
-
-	//if (Quick_load_Flag == 0)
-	//{
-	//	App->CLSB_TextureDialog->Fill_ListBox();
-	//}
-	//else
+	if (Test == true)
 	{
+		App->CL_Doc->Set_Paths();
+
 		// Temporary for now hgttery Debug
 		static char Path_And_File[MAX_PATH];
 		strcpy(Path_And_File, App->RB_Directory_FullPath);
 		strcat(Path_And_File, "\\Data\\Room_Builder\\");
 		strcat(Path_And_File, "Default.txl");
 		strcpy(WadPath, Path_And_File);
-
-		//App->Say_Win(WadPath);
 
 		if (!App->CL_Level->Level_LoadWad(App->CL_Doc->pLevel))
 		{
@@ -348,7 +362,6 @@ bool CL64_File::Open_3dt_File()
 		App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_Free;
 		App->CL_Doc->UpdateAllViews(Enums::UpdateViews_All);
 
-		//App->Say("File Opened", PathFileName_3dt);
 		/*Level_SetWadPath(App->CLSB_Doc->pLevel, Txlpath);
 		App->CL_World->Set_Current_TxlPath();
 		App->CLSB_Doc->UpdateAfterWadChange();
@@ -370,7 +383,7 @@ bool CL64_File::Open_3dt_File()
 
 	//App->CLSB_RecentFiles->RecentFile_Files_Update();
 
-	return 1;
+	return true;
 }
 
 // *************************************************************************
@@ -430,7 +443,6 @@ bool CL64_File::Load_File(const char* FileName)
 
 		Count++;
 		memset(Read_Buffer, 0, MAX_PATH);
-		//Debug
 	}
 
 	fclose(fp);
@@ -439,6 +451,6 @@ bool CL64_File::Load_File(const char* FileName)
 
 	App->CL_Properties_Brushes->Fill_ListBox();
 
-	return false;
+	return true;
 }
 

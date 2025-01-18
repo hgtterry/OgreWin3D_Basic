@@ -161,6 +161,7 @@ void CL64_App::InitApp(void)
 		App->Say("Can not access user folder");
 	}
 
+	LoadString(hInst, IDS_APP_TITLE, App_Title, MAX_PATH);
 }
 
 // *************************************************************************
@@ -472,4 +473,16 @@ void CL64_App::Say_Win(const char* Message)
 	char text[MAX_PATH];
 	strcpy(text, Message);
 	MessageBox(App->MainHwnd, Message, "Message", MB_OK);
+}
+
+// *************************************************************************
+// *				Set_Title:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void CL64_App::Set_Title(const char* Title)
+{
+	char TitleBar[MAX_PATH];
+	strcpy(TitleBar, App_Title);
+	strcat(TitleBar, "    ");
+	strcat(TitleBar, Title);
+	SetWindowText(App->MainHwnd, TitleBar);
 }

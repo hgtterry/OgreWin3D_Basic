@@ -127,7 +127,8 @@ public:
 	void Say_Vector3(Ogre::Vector3 Vector);
 
 	void Say_Win(const char* Message);
-	
+	void Set_Title(const char* Title);
+
 	HINSTANCE hInst;
 	HWND MainHwnd;
 	HBRUSH AppBackground;
@@ -165,6 +166,7 @@ public:
 	int CursorPosY;
 
 	char RB_Directory_FullPath[MAX_PATH];
+	char App_Title[MAX_PATH];
 };
 
 extern CL64_App* App;

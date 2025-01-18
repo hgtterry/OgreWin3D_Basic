@@ -30,6 +30,8 @@ public:
 	~CL64_Utilities(void);
 
 	bool Check_File_Exist(char* Full_Path);
+	void Get_FileName_FromPath(char* pString, char* FileName);
 
+	char JustFileName[MAX_PATH];
 };
 

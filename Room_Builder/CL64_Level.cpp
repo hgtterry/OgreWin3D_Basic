@@ -292,6 +292,14 @@ signed int CL64_Level::Level_LoadWad(Level* pLevel)
 // *************************************************************************
 // *							Level_GetWadFile						   *
 // *************************************************************************
+const char* CL64_Level::Level_GetWadPath(const Level* pLevel)
+{
+	return (pLevel->WadPath);
+}
+
+// *************************************************************************
+// *							Level_GetWadFile						   *
+// *************************************************************************
 CL64_WadFile* CL64_Level::Level_GetWadFile(Level* pLevel)
 {
 	return pLevel->WadFile;

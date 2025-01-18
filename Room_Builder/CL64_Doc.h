@@ -134,11 +134,18 @@ public:
 	void DeleteCurrentThing();
 	bool DeleteSelectedBrushes();
 	void UpdateAfterWadChange();
+	void Set_Paths(void);
+	void Set_Current_3DT_Paths(void);
+	void Set_Current_TxlPath(void);
 
 	// ------------------------------------------------------------------- 
 
 	char LastTemplateTypeName[MAX_PATH];
+
+	// File Paths
 	char mCurrent_MTF_PathAndFile[MAX_PATH];
+	char mCurrent_TXL_Path_And_File[MAX_PATH];
+	char mCurrent_TXL_Just_FileName[MAX_PATH];
 
 	BOOL SelectLock, TempEnt;
 

@@ -168,8 +168,10 @@ bool CL64_File_IO::Open_File()
 // *************************************************************************
 // *				Save_File:- Terry and Hazel Flanigan 2025			   *
 // *************************************************************************
-void CL64_File_IO::Save_File()
+bool CL64_File_IO::Save_File()
 {
+	flag_Canceled = 1;
+
 	HRESULT hr = CoInitializeEx(NULL, COINIT_APARTMENTTHREADED |
 		COINIT_DISABLE_OLE1DDE);
 
@@ -182,7 +184,7 @@ void CL64_File_IO::Save_File()
 
 		if (SUCCEEDED(hr))
 		{
-			hr = pFileSave->SetDefaultExtension(L"owproj");
+			hr = pFileSave->SetDefaultExtension(L"mtf");
 			//hr = pFileSave->SetFileTypes(ARRAYSIZE(c_rgSaveTypes), c_rgSaveTypes);
 			hr = pFileSave->Show(App->MainHwnd);
 
@@ -202,18 +204,19 @@ void CL64_File_IO::Save_File()
 						std::wstring path(pszFilePath);
 						std::string c(path.begin(), path.end());
 						sFilePath = c;
-						App->Say(c.c_str());
-
+						
 						const size_t slash = sFilePath.find_last_of("/\\");
 						sSelectedFile = sFilePath.substr(slash + 1);
-						App->Say(sSelectedFile.c_str());
 						CoTaskMemFree(pszFilePath);
+
+						flag_Canceled = 0;
 					}
 					pItem->Release();
 				}
 			}
 			pFileSave->Release();
 		}
+
 		CoUninitialize();
 	}
 }

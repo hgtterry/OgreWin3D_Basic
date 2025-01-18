@@ -181,10 +181,15 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
             case ID_FILE_SAVE:
             {
-                App->CL_File->Save(false);
+                App->CL_File->Start_Save(false);
                 return 1;
             }
            
+            case ID_FILE_SAVEAS:
+            {
+                App->CL_File->Start_Save(true);
+                return 1;
+            }
            
             case ID_EXPORT_OGRE3D:
             {

@@ -47,6 +47,7 @@ public:
 	void Level_AppendBrush(Level* pLevel, Brush* pBrush);
 	int Level_EnumLeafBrushes(Level* pLevel, void* lParam, BrushList_CB Callback);
 	signed int Level_LoadWad(Level* pLevel);
+	const char* Level_GetWadPath(const Level* pLevel);
 	CL64_WadFile* Level_GetWadFile(Level* pLevel);
 	WadFileEntry* Level_GetWadBitmap(Level* pLevel, const char* Name);
 	Guint16 Level_GetDibId(const Level* pLevel, const char* Name);

@@ -48,6 +48,9 @@ typedef struct FindClosestInfoTag
 CL64_Doc::CL64_Doc(void)
 {
     LastTemplateTypeName[0] = 0;
+    mCurrent_TXL_Path_And_File[0] = 0;
+    mCurrent_TXL_Just_FileName[0] = 0;
+
 	pLevel = NULL;
 
     mLastOp = 0;
@@ -1445,6 +1448,59 @@ bool CL64_Doc::DeleteSelectedBrushes()
     UpdateSelected();
 
     return FALSE;
+}
+
+// *************************************************************************
+// *				Set_Paths:- Terry and Hazel Flanigan 2025			   *
+// *************************************************************************
+void CL64_Doc::Set_Paths(void)
+{
+    Set_Current_3DT_Paths();
+    Set_Current_TxlPath();
+}
+
+// *************************************************************************
+// *		Set_Current_3DT_Paths:- Terry and Hazel Flanigan 2023		   *
+// *************************************************************************
+void CL64_Doc::Set_Current_3DT_Paths(void)
+{
+    //char mFileName[MAX_PATH];
+    //char mPath_FileName[MAX_PATH];
+
+    //strcpy(mCurrent_3DT_PathAndFile, pDoc->GetPathName()); // MFC
+
+    //Get_FileName_FromPath(mCurrent_3DT_PathAndFile, mCurrent_3DT_PathAndFile);
+
+    //strcpy(mCurrent_3DT_File, JustFileName);
+
+    //strcpy(mCurrent_Title, JustFileName);
+
+    //strcpy(mFileName, mCurrent_3DT_File);
+    //strcpy(mPath_FileName, mCurrent_3DT_Path);
+
+    //int len1 = strlen(mFileName);
+    //int len2 = strlen(mCurrent_3DT_PathAndFile);
+    //strcpy(mCurrent_3DT_Path, mCurrent_3DT_PathAndFile);
+
+
+    //mCurrent_3DT_Path[len2 - len1] = 0;
+
+}
+
+// *************************************************************************
+// *		Set_Current_TxlPath:- Terry and Hazel Flanigan 2025			   *
+// *************************************************************************
+void CL64_Doc::Set_Current_TxlPath(void)
+{
+    const char* WadFilePath;
+    WadFilePath = App->CL_Level->Level_GetWadPath(App->CL_Doc->pLevel);
+
+    strcpy(mCurrent_TXL_Path_And_File, WadFilePath);
+
+    App->CL_Utilities->Get_FileName_FromPath(mCurrent_TXL_Path_And_File, mCurrent_TXL_Path_And_File);
+
+    strcpy(mCurrent_TXL_Just_FileName, App->CL_Utilities->JustFileName);
+
 }
 
 

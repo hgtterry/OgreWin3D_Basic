@@ -28,6 +28,7 @@ THE SOFTWARE.
 
 CL64_Utilities::CL64_Utilities(void)
 {
+	JustFileName[0] = 0;
 }
 
 CL64_Utilities::~CL64_Utilities(void)
@@ -58,4 +59,45 @@ bool CL64_Utilities::Check_File_Exist(char* Full_Path)
 	}
 
 	return 0;
+}
+
+// *************************************************************************
+// *		Get_FileName_FromPath:- Terry and Hazel Flanigan 2025	  	   *
+// *************************************************************************
+void CL64_Utilities::Get_FileName_FromPath(char* pString, char* FileName)
+{
+	JustFileName[0] = 0;
+
+	int Count = 0;
+	int Mark = 0;
+	bool Test = 0;
+
+	while (*pString != 0)
+	{
+		if (*pString == '\\' || *pString == '/')
+		{
+			Test = 1;
+			Mark = Count;
+		}
+
+		Count++;
+		pString++;
+	}
+
+	if (Mark == 0 && Test == 0)
+	{
+		strcpy(JustFileName, FileName);
+	}
+	else
+	{
+		if (Mark == 0 && Test == 1)
+		{
+			Mark = 1;
+			strcpy(JustFileName, (FileName + Mark));
+		}
+		else
+		{
+			strcpy(JustFileName, (FileName + Mark) + 1);
+		}
+	}
 }

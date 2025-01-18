@@ -31,7 +31,7 @@ public:
 
 	void Select_Folder();
 	bool Open_File();
-	void Save_File();
+	bool Save_File();
 
 	char szSelectedDir[MAX_PATH];
 
