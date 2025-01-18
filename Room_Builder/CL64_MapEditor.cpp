@@ -176,6 +176,7 @@ void CL64_MapEditor::Resize_Windows(HWND hDlg, int NewWidth, int NewDepth)
 		FALSE);
 
 	RedrawWindow(Main_Dlg_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+	
 	App->CL_Panels->Resize_OgreWin();
 }
 
@@ -194,6 +195,7 @@ void CL64_MapEditor::Init_Map_Views()
 	RECT rcl;
 	GetClientRect(App->MainHwnd, &rcl);
 	MoveWindow(App->CL_MapEditor->Main_Dlg_Hwnd, 0, 50, rcl.right, rcl.bottom - 50, TRUE);
+	
 	App->CL_MapEditor->Init_Views();
 	RedrawWindow(App->CL_MapEditor->Main_Dlg_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
@@ -1435,7 +1437,7 @@ void CL64_MapEditor::Draw_Screen(HWND hwnd)
 
 	}
 
-done:
+//done:
 	BitBlt(RealhDC, Rect.left, Rect.top, Rect.right - Rect.left, Rect.bottom - Rect.top, MemoryhDC, 0, 0, SRCCOPY);
 
 	DeleteObject(OffScreenBitmap);

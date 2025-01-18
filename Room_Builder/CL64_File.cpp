@@ -286,26 +286,21 @@ signed int CL64_File::Face_Write(const Face* f, FILE* wf)
 // *************************************************************************
 // *	            Open:- Terry and Hazel Flanigan 2025	               *
 // *************************************************************************
-void CL64_File::Open(bool TestFile)
+void CL64_File::Open(bool Use_Open_Dialog)
 {
-	char FullPath[MAX_PATH];
+	if (Use_Open_Dialog == 1)
+	{
+		bool test = App->CL_File_IO->Open_File();
+		if (test == false)
+		{
+			return;
+		}
 
-	strcpy(FullPath, App->RB_Directory_FullPath);
-	strcat(FullPath, "\\");
-	strcat(FullPath, "Data");
-	strcat(FullPath, "\\");
-	strcat(FullPath, "Room_Builder");
-	strcat(FullPath, "\\");
-	strcat(FullPath, "Test.mtf");
+		strcpy(App->CL_File->PathFileName_3dt, App->CL_File_IO->sFilePath.c_str());
+		strcpy(App->CL_File->FileName_3dt, App->CL_File_IO->sSelectedFile.c_str());
+	}
 
-	strcpy(App->CL_File->PathFileName_3dt, FullPath);
-	strcpy(App->CL_File->FileName_3dt, "Test.mtf");
-
-	//App->Say_Win(App->CL_File->PathFileName_3dt);
-
-	//App->CLSB_File_WE->Open_Example_File();
 	Open_3dt_File();
-
 }
 
 // *************************************************************************

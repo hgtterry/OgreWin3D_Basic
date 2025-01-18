@@ -31,7 +31,10 @@ public:
 	~CL64_File(void);
 
 	void Save();
-	void Open(bool TestFile);
+	void Open(bool Use_Open_Dialog);
+
+	char PathFileName_3dt[MAX_PATH];
+	char FileName_3dt[MAX_PATH];
 
 private:
 
@@ -46,9 +49,6 @@ private:
 	signed int Brush_Write(const Brush* b, FILE* ofile);
 	signed int	FaceList_Write(const FaceList* pList, FILE* f);
 	signed int Face_Write(const Face* f, FILE* wf);
-
-	char PathFileName_3dt[MAX_PATH];
-	char FileName_3dt[MAX_PATH];
 
 	float Level_Version;
 };

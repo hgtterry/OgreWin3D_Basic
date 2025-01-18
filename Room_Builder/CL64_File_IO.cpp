@@ -161,6 +161,7 @@ bool CL64_File_IO::Open_File()
 	f_Files->Release();
 	f_FileSystem->Release();
 	CoUninitialize();
+
 	return TRUE;
 }
 

@@ -167,11 +167,24 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 return 1;
             }
           
+            case ID_OPENEXAMPLES_TESTSCENE:
+            {
+                strcpy(App->CL_File->PathFileName_3dt, App->RB_Directory_FullPath);
+                strcat(App->CL_File->PathFileName_3dt, "\\Data\\Room_Builder\\Test.mtf");
+
+                strcpy(App->CL_File->FileName_3dt, "Test.mtf");
+    
+                App->CL_File->Open(false);
+
+                return 1;
+            }
+
             case ID_FILE_SAVE:
             {
                 App->CL_File->Save();
                 return 1;
             }
+           
            
             case ID_EXPORT_OGRE3D:
             {
