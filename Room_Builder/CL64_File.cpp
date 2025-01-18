@@ -96,6 +96,11 @@ CL64_File::CL64_File(void)
 	PathFileName_3dt[0] = 0;
 	FileName_3dt[0] = 0;
 
+	Read_Buffer[0] = 0;
+	WadPath[0] = 0;
+
+	fp = NULL;
+
 }
 
 CL64_File::~CL64_File(void)
@@ -284,9 +289,9 @@ signed int CL64_File::Face_Write(const Face* f, FILE* wf)
 // ----------------------------------------------------------------------
 
 // *************************************************************************
-// *	            Open:- Terry and Hazel Flanigan 2025	               *
+// *	           Start_Load:- Terry and Hazel Flanigan 2025	           *
 // *************************************************************************
-void CL64_File::Open(bool Use_Open_Dialog)
+void CL64_File::Start_Load(bool Use_Open_Dialog)
 {
 	if (Use_Open_Dialog == 1)
 	{
@@ -301,6 +306,8 @@ void CL64_File::Open(bool Use_Open_Dialog)
 	}
 
 	Open_3dt_File();
+
+	App->Say("File Loaded", App->CL_File->FileName_3dt);
 }
 
 // *************************************************************************
@@ -322,10 +329,14 @@ bool CL64_File::Open_3dt_File()
 	//}
 	//else
 	{
+		// Temporary for now hgttery Debug
 		static char Path_And_File[MAX_PATH];
 		strcpy(Path_And_File, App->RB_Directory_FullPath);
 		strcat(Path_And_File, "\\Data\\Room_Builder\\");
 		strcat(Path_And_File, "Default.txl");
+		strcpy(WadPath, Path_And_File);
+
+		//App->Say_Win(WadPath);
 
 		if (!App->CL_Level->Level_LoadWad(App->CL_Doc->pLevel))
 		{
@@ -337,7 +348,7 @@ bool CL64_File::Open_3dt_File()
 		App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_Free;
 		App->CL_Doc->UpdateAllViews(Enums::UpdateViews_All);
 
-		App->Say("File Opened");
+		//App->Say("File Opened", PathFileName_3dt);
 		/*Level_SetWadPath(App->CLSB_Doc->pLevel, Txlpath);
 		App->CL_World->Set_Current_TxlPath();
 		App->CLSB_Doc->UpdateAfterWadChange();
@@ -367,266 +378,67 @@ bool CL64_File::Open_3dt_File()
 // *************************************************************************
 bool CL64_File::Load_File(const char* FileName)
 {
-	App->CL_ParseFile->Load_File((LPSTR)FileName);
-	App->CL_Properties_Brushes->Fill_ListBox();
-//	App->Get_Current_Document();
-//
-//	const char* Errmsg, * WadPath;
-//	int				i;
-//	Level* NewLevel;
-//	EntityViewList* pEntityView;
-//	const Prefs* pPrefs = App->m_pDoc->GetPrefs();
-//
-//	/*char WorkingDir[MAX_PATH];
-//	FilePath_GetDriveAndDir(FileName, WorkingDir);
-//	::SetCurrentDirectory(WorkingDir);*/
-//
-	//bool Test = NewLevel = Level_CreateFromFile(FileName);// , & Errmsg, Prefs_GetHeadersList(pPrefs),
-		//Prefs_GetActorsList(pPrefs), Prefs_GetPawnIni(pPrefs));
-//
-//	if (NewLevel == NULL)
-//	{
-//		goto LoadError;
-//	}
-//
-//	// get fully-qualified path name to texture library
-//	WadPath = Level_GetWadPath(NewLevel);
-//
-//	if (!Level_LoadWad(NewLevel))
-//	{
-//		App->Say("Can not open TXL File");
-//	}
-//
-//	Level_EnumLeafBrushes(NewLevel, NewLevel, Level_FaceFixupCallback);
-//
-//	if (App->CLSB_Doc->pLevel != NULL)
-//	{
-//		Level_Destroy(&App->CLSB_Doc->pLevel);
-//	}
-//
-//	App->CLSB_Doc->pLevel = NewLevel;
-//
-//	// Validate data, groups are read after entities and brushes, so this must be last
-//	if (App->m_pDoc->ValidateEntities() == FALSE || App->m_pDoc->ValidateBrushes() == FALSE)
-//	{
-//		//m_pDoc->SelectTab( m_pDoc->CONSOLE_TAB ) ;
-//		App->Say("Can not open Validate Brushes");
-//	}
-//
-//	GroupIterator gi;
-//	GroupListType* Groups;
-//
-//	Groups = Level_GetGroups(App->CLSB_Doc->pLevel);
-//	App->CLSB_Doc->mCurrentGroup = Group_GetFirstId(Groups, &gi);
-//	{
-//		Brush* pBox = BrushTemplate_CreateBox(Level_GetBoxTemplate(App->CLSB_Doc->pLevel));
-//		if (pBox != NULL)
-//		{
-//			CreateNewTemplateBrush(pBox);
-//		}
-//		else
-//		{
-//			App->Say("Error");
-//		}
-//	}
-//
-//	// update entity visibility info
-//	pEntityView = Level_GetEntityVisibilityInfo(App->CLSB_Doc->pLevel);
-//	for (i = 0; i < pEntityView->nEntries; ++i)
-//	{
-//		Level_EnumEntities(App->CLSB_Doc->pLevel, &pEntityView->pEntries[i], ::fdocSetEntityVisibility);
-//	}
-//
-//
-//	AddCameraEntityToLevel();
-//
-//	App->CLSB_Doc->DoGeneralSelect();
-//
-//	return GE_TRUE;
-//LoadError:
-//	if (NewLevel != NULL)
-//	{
-//		Level_Destroy(&NewLevel);
-//	}
-//
-//	App->Say("Error Loading File");
-
-	return GE_FALSE;
-}
-
-// *************************************************************************
-// * 						Level_CreateFromFile						   *
-// *************************************************************************
-Level* CL64_File::Level_CreateFromFile(const char* FileName)//, const char** ErrMsg, const char* DefaultHeadersDir, const char* DefaultActorsDir, const char* DefaultPawnIni)
-{
-	//int NumModels;
-	//int VersionMajor, VersionMinor;
-	//int NumGroups = 0;
-	//int NumBrushes = 0;
-	//int NumEntities;
-	////Parse3dt* Parser;
-	//const char* Expected = "!*ERROR*!";
-	//int k;
 	Level* pLevel = NULL;
-	//char WadPath[MAX_PATH];
-	//char HeadersDir[MAX_PATH];
 
-	//char ActorsDir[MAX_PATH];
-	//char PawnIniPath[MAX_PATH];
+	int Count = 0;
 
-	/*Parser = Parse3dt_Create(FileName);
-	if (Parser == NULL)
+	fp = fopen(FileName, "r");
+	if (!fp)
 	{
-		*ErrMsg = "Can't open file";
-		return NULL;
-	}*/
+		App->Say("Can Not Find File");
+		return false;
+	}
 
-	/*Expected = "3dtVersion";
-	if (!Parse3dt_GetVersion(Parser, &VersionMajor, &VersionMinor)) goto DoneLoad;
+	memset(Read_Buffer, 0, MAX_PATH);
 
-	if (VersionMajor > LEVEL_VERSION_MAJOR)
+	while (fgets(Read_Buffer, sizeof(Read_Buffer), fp))
 	{
-		*ErrMsg = "Version mismatch.";
-		return NULL;
-	}*/
+		App->CL_ParseFile->Tag_Float = 0;
 
-//	if (VersionMajor <= 1 && VersionMinor < 16)
-//	{
-//		char	PalPath[_MAX_PATH];
-//
-//		if (!Parse3dt_GetPath(Parser, (Expected = "PalLoc"), PalPath)) goto DoneLoad;
-//	}
-//
-//	// texture library path
-//	if ((VersionMajor <= 1) && (VersionMinor < 18))
-//	{
-//		if (!Parse3dt_GetPath(Parser, (Expected = "WadLoc"), WadPath)) goto DoneLoad;
-//	}
-//	else
-//	{
-//		if (!Parse3dt_GetLiteral(Parser, (Expected = "TextureLib"), WadPath))
-//		{
-//			goto DoneLoad;
-//		}
-//
-//		char m_FileName[MAX_PATH];
-//		strcpy(m_FileName, FileName);
-//
-//		bool test = Resolve_TXL_File(WadPath, m_FileName);
-//		if (test == 0)
-//		{
-//			goto DoneLoad;
-//		}
-//
-//	}
-//
-//	// headers directory
-//	if ((VersionMajor <= 1) && (VersionMinor < 31))
-//	{
-//		strcpy(HeadersDir, DefaultHeadersDir);
-//	}
-//	else
-//	{
-//		if (!Parse3dt_GetLiteral(Parser, (Expected = "HeadersDir"), HeadersDir)) goto DoneLoad;
-//	}
-//	// changed QD Actors
-//		// actors directory
-//	if ((VersionMajor <= 1) && (VersionMinor < 33))
-//	{
-//		strcpy(ActorsDir, DefaultActorsDir);
-//	}
-//	else
-//	{
-//		if (!Parse3dt_GetLiteral(Parser, (Expected = "ActorsDir"), ActorsDir)) goto DoneLoad;
-//	}
-//	// PawnIni
-//	if ((VersionMajor <= 1) && (VersionMinor < 33))
-//	{
-//		strcpy(PawnIniPath, DefaultPawnIni);
-//	}
-//	else
-//	{
-//		if (!Parse3dt_GetLiteral(Parser, (Expected = "PawnIni"), PawnIniPath)) goto DoneLoad;
-//	}
-//
-//	pLevel = Level_Create(WadPath, HeadersDir, ActorsDir, PawnIniPath);
-//	// end change
-//	if (pLevel == NULL)
-//	{
-//		*ErrMsg = "Error creating level.";
-//		return NULL;
-//	}
-//
-//
-//	if ((VersionMajor == 1) && (VersionMinor < 15))
-//	{
-//		if (!Parse3dt_GetInt(Parser, (Expected = "NumBrushes"), &NumBrushes)) goto DoneLoad;
-//	}
-//	if (!Parse3dt_GetInt(Parser, (Expected = "NumEntities"), &NumEntities)) goto DoneLoad;
-//	if (!Parse3dt_GetInt(Parser, (Expected = "NumModels"), &NumModels)) goto DoneLoad;
-//
-//	if ((VersionMajor > 1) || ((VersionMajor == 1) && (VersionMinor >= 3)))
-//	{
-//		if (!Parse3dt_GetInt(Parser, (Expected = "NumGroups"), &NumGroups)) goto DoneLoad;
-//	}
-//
-//
-//	if ((VersionMajor == 1) && (VersionMinor < 15))
-//	{
-//		for (k = 0; k < NumBrushes; k++)
-//		{
-//			Brush* pBrush;
-//
-//			pBrush = Brush_CreateFromFile(Parser, VersionMajor, VersionMinor, &Expected);
-//			if (pBrush == NULL) goto DoneLoad;
-//			BrushList_Append(pLevel->Brushes, pBrush);
-//
-//		}
-//	}
-//	else
-//	{
-//		if (pLevel->Brushes != NULL)
-//		{
-//			BrushList_Destroy(&pLevel->Brushes);
-//		}
-//
-//		pLevel->Brushes = BrushList_CreateFromFile(Parser, VersionMajor, VersionMinor, &Expected);
-//		if (pLevel->Brushes == NULL)
-//			goto DoneLoad;
-//	}
-//
-//	if ((VersionMajor > 1) || ((VersionMajor == 1) && (VersionMinor < 6)))
-//	{
-//		Level_BrushListToTexels(pLevel);
-//	}
-//
-//	// collapse model list so numbers are consecutive
-//	Level_CollapseModels(pLevel, 1);
-//
-//	goto AllDone;
-//
-//DoneLoad:
-//	*ErrMsg = Parse3dt_Error(Parser, "Expected %s", Expected);
-//
-//	//DoneLoad1:
-//	if (pLevel != NULL)
-//	{
-//		Level_Destroy(&pLevel);
-//	}
-//
-//AllDone:
-//	if (Parser != NULL)
-//	{
-//		Parse3dt_Destroy(&Parser);
-//	}
-//
-//	//fixup hollows
-//	if (pLevel != NULL)
-//	{
-//		BrushList_MakeHollowsMulti(pLevel->Brushes);
-//	}
+		if (App->CL_ParseFile->Get_Version(Read_Buffer) == 0)
+		{
+			break;
+		}
+		
+		fgets(Read_Buffer, sizeof(Read_Buffer), fp);
+		if (App->CL_ParseFile->Get_TextureLib(Read_Buffer) == 0)
+		{
+			break;
+		}
 
-App->Say("Here Level_CreateFromFile");
+		if (App->CL_Doc->pLevel->Brushes != NULL)
+		{
+			App->CL_Brush->BrushList_Destroy(&App->CL_Doc->pLevel->Brushes);
+			App->CL_Doc->pLevel->Brushes = NULL;
+		}
+		
+		pLevel = App->CL_Level->Level_Create(WadPath, NULL, NULL, NULL);
+		if (pLevel == NULL)
+		{
+			App->Say("Can not Create Level");
+			break;
+		}
+		
+		pLevel->Brushes = App->CL_ParseFile->BrushList_CreateFromFile();
+		if (pLevel->Brushes == NULL)
+		{
+			App->Say("Can not Create Brushes");
+			break;
+		}
+		
+		break;
 
-	return pLevel;
+		Count++;
+		memset(Read_Buffer, 0, MAX_PATH);
+		//Debug
+	}
+
+	fclose(fp);
+	
+	App->CL_Doc->pLevel = pLevel;
+
+	App->CL_Properties_Brushes->Fill_ListBox();
+
+	return false;
 }
+

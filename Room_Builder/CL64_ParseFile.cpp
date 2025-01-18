@@ -101,14 +101,10 @@ typedef struct FaceTag
 
 CL64_ParseFile::CL64_ParseFile(void)
 {
-	Read_Buffer[0] = 0;
-	WadPath[0] = 0;
-
 	str_buff_1[0] = 0;
 	str_buff_2[0] = 0;
 	Tag_Float = 0;
 	Tag_Int = 0;
-	fp = NULL;
 }
 
 struct tag_FaceList
@@ -125,76 +121,11 @@ CL64_ParseFile::~CL64_ParseFile(void)
 }
 
 // *************************************************************************
-// *	          Load_File:- Terry and Hazel Flanigan 2025	               *
-// *************************************************************************
-void CL64_ParseFile::Load_File(char* FileName)
-{
-	Level* pLevel = NULL;
-	
-	int Count = 0;
-
-	fp = fopen(FileName, "r");
-	if (!fp)
-	{
-		App->Say("Can Not Find File");
-		return;
-	}
-
-	memset(Read_Buffer, 0, MAX_PATH);
-
-	while (fgets(Read_Buffer, sizeof(Read_Buffer),fp))
-	{
-		Tag_Float = 0;
-
-		if (Get_Version(Read_Buffer) == 0)
-		{
-			break;
-		}
-
-		fgets(Read_Buffer, sizeof(Read_Buffer), fp);
-		if (Get_TextureLib(Read_Buffer) == 0)
-		{
-			break;
-		}
-
-		if (App->CL_Doc->pLevel->Brushes != NULL)
-		{
-			App->CL_Brush->BrushList_Destroy(&App->CL_Doc->pLevel->Brushes);
-			App->CL_Doc->pLevel->Brushes = NULL;
-		}
-
-		pLevel = App->CL_Level->Level_Create(WadPath, NULL, NULL, NULL);
-		if (pLevel == NULL)
-		{
-			App->Say("Can not Create Level");
-			break;
-		}
-
-		pLevel->Brushes = BrushList_CreateFromFile();
-		if (pLevel->Brushes == NULL)
-		{
-			App->Say("Can not Create Brushes");
-			break;
-		}
-
-		break;
-
-		Count++;
-		memset(Read_Buffer, 0, MAX_PATH);
-	}
-
-	fclose(fp);
-
-	App->CL_Doc->pLevel = pLevel;
-	//App->Say_Int(App->CL_Brush->Get_Brush_Count());
-}
-
-// *************************************************************************
 // *	    BrushList_CreateFromFile:- Terry and Hazel Flanigan 2025       *
 // *************************************************************************
 BrushList* CL64_ParseFile::BrushList_CreateFromFile()
 {
-	memset(Read_Buffer, 0, MAX_PATH);
+	memset(App->CL_File->Read_Buffer, 0, MAX_PATH);
 
 	int NumBrushes = 0;
 	BrushList* blist = { 0 };
@@ -236,7 +167,7 @@ BrushList* CL64_ParseFile::BrushList_CreateFromFile()
 // *************************************************************************
 Brush* CL64_ParseFile::Brush_CreateFromFile()
 {
-	memset(Read_Buffer, 0, MAX_PATH);
+	memset(App->CL_File->Read_Buffer, 0, MAX_PATH);
 
 	FaceList* fl;
 	Brush* b;
@@ -505,7 +436,7 @@ bool CL64_ParseFile::Get_TextureLib(char* Buffer)
 	(void)sscanf(Buffer, "%s %s", &str_buff_1, &str_buff_2);
 	if (!strcmp(str_buff_1, "TextureLib"))
 	{
-		strcpy(WadPath, str_buff_2);
+		strcpy(App->CL_File->WadPath, str_buff_2);
 		return 1;
 	}
 	else
@@ -522,12 +453,12 @@ bool CL64_ParseFile::Get_TextureLib(char* Buffer)
 // *************************************************************************
 bool CL64_ParseFile::Get_String(const char* Should_Be,char* Chr_return)
 {
-	memset(Read_Buffer, 0, MAX_PATH);
+	memset(App->CL_File->Read_Buffer, 0, MAX_PATH);
 	str_buff_1[0] = 0;
 	str_buff_2[0] = 0;
 
-	fgets(Read_Buffer, sizeof(Read_Buffer), fp);
-	(void)sscanf(Read_Buffer, "%s %s", &str_buff_1, &str_buff_2);
+	fgets(App->CL_File->Read_Buffer, sizeof(App->CL_File->Read_Buffer), App->CL_File->fp);
+	(void)sscanf(App->CL_File->Read_Buffer, "%s %s", &str_buff_1, &str_buff_2);
 
 	if (!strcmp(str_buff_1, Should_Be))
 	{
@@ -548,12 +479,12 @@ bool CL64_ParseFile::Get_String(const char* Should_Be,char* Chr_return)
 // *************************************************************************
 bool CL64_ParseFile::Get_Int(const char* Should_Be, int* Int_return)
 {
-	memset(Read_Buffer, 0, MAX_PATH);
+	memset(App->CL_File->Read_Buffer, 0, MAX_PATH);
 	str_buff_1[0] = 0;
 	Tag_Int = 0;
 
-	fgets(Read_Buffer, sizeof(Read_Buffer), fp);
-	(void)sscanf(Read_Buffer, "%s %i", &str_buff_1, &Tag_Int);
+	fgets(App->CL_File->Read_Buffer, sizeof(App->CL_File->Read_Buffer), App->CL_File->fp);
+	(void)sscanf(App->CL_File->Read_Buffer, "%s %i", &str_buff_1, &Tag_Int);
 
 	if (!strcmp(str_buff_1, Should_Be))
 	{
@@ -574,12 +505,12 @@ bool CL64_ParseFile::Get_Int(const char* Should_Be, int* Int_return)
 // *************************************************************************
 bool CL64_ParseFile::Get_Float(const char* Should_Be, float* Float_return)
 {
-	memset(Read_Buffer, 0, MAX_PATH);
+	memset(App->CL_File->Read_Buffer, 0, MAX_PATH);
 	str_buff_1[0] = 0;
 	Tag_Float = 0;
 
-	fgets(Read_Buffer, sizeof(Read_Buffer), fp);
-	(void)sscanf(Read_Buffer, "%s %f", &str_buff_1, &Tag_Float);
+	fgets(App->CL_File->Read_Buffer, sizeof(App->CL_File->Read_Buffer), App->CL_File->fp);
+	(void)sscanf(App->CL_File->Read_Buffer, "%s %f", &str_buff_1, &Tag_Float);
 
 	if (!strcmp(str_buff_1, Should_Be))
 	{
@@ -600,14 +531,14 @@ bool CL64_ParseFile::Get_Float(const char* Should_Be, float* Float_return)
 // *************************************************************************
 bool CL64_ParseFile::Get_Vector3(const char* Should_Be, T_Vec3* Vec3_return)
 {
-	memset(Read_Buffer, 0, MAX_PATH);
+	memset(App->CL_File->Read_Buffer, 0, MAX_PATH);
 	str_buff_1[0] = 0;
 	float x = 0;
 	float y = 0;
 	float z = 0;
 
-	fgets(Read_Buffer, sizeof(Read_Buffer), fp);
-	(void)sscanf(Read_Buffer, "%s %f %f %f", &str_buff_1, &x, &y, &z);
+	fgets(App->CL_File->Read_Buffer, sizeof(App->CL_File->Read_Buffer), App->CL_File->fp);
+	(void)sscanf(App->CL_File->Read_Buffer, "%s %f %f %f", &str_buff_1, &x, &y, &z);
 
 	if (!strcmp(str_buff_1, Should_Be))
 	{
@@ -631,13 +562,13 @@ bool CL64_ParseFile::Get_Vector3(const char* Should_Be, T_Vec3* Vec3_return)
 // *************************************************************************
 bool CL64_ParseFile::Get_Vector2(const char* Should_Be, Ogre::Vector2* Vec2_return)
 {
-	memset(Read_Buffer, 0, MAX_PATH);
+	memset(App->CL_File->Read_Buffer, 0, MAX_PATH);
 	str_buff_1[0] = 0;
 	float x = 0;
 	float y = 0;
 	
-	fgets(Read_Buffer, sizeof(Read_Buffer), fp);
-	(void)sscanf(Read_Buffer, "%s %f %f", &str_buff_1, &x, &y);
+	fgets(App->CL_File->Read_Buffer, sizeof(App->CL_File->Read_Buffer), App->CL_File->fp);
+	(void)sscanf(App->CL_File->Read_Buffer, "%s %f %f", &str_buff_1, &x, &y);
 
 	if (!strcmp(str_buff_1, Should_Be))
 	{
@@ -658,7 +589,7 @@ bool CL64_ParseFile::Get_Vector2(const char* Should_Be, Ogre::Vector2* Vec2_retu
 // *************************************************************************
 bool CL64_ParseFile::Get_Matrix3d(const char* Should_Be, Matrix3d* Matrix3d_return)
 {
-	memset(Read_Buffer, 0, MAX_PATH);
+	memset(App->CL_File->Read_Buffer, 0, MAX_PATH);
 	str_buff_1[0] = 0;
 
 	float AX = 0;
@@ -678,8 +609,8 @@ bool CL64_ParseFile::Get_Matrix3d(const char* Should_Be, Matrix3d* Matrix3d_retu
 	float TZ = 0;
 	
 
-	fgets(Read_Buffer, sizeof(Read_Buffer), fp);
-	(void)sscanf(Read_Buffer, "%s %f %f %f %f %f %f %f %f %f %f %f %f", &str_buff_1, &AX, &AY, &AZ, &BX, &BY, &BZ, &CX, &CY, &CZ, &TX, &TY, &TZ);
+	fgets(App->CL_File->Read_Buffer, sizeof(App->CL_File->Read_Buffer), App->CL_File->fp);
+	(void)sscanf(App->CL_File->Read_Buffer, "%s %f %f %f %f %f %f %f %f %f %f %f %f", &str_buff_1, &AX, &AY, &AZ, &BX, &BY, &BZ, &CX, &CY, &CZ, &TX, &TY, &TZ);
 
 	if (!strcmp(str_buff_1, Should_Be))
 	{
@@ -715,7 +646,7 @@ bool CL64_ParseFile::Get_Matrix3d(const char* Should_Be, Matrix3d* Matrix3d_retu
 // *************************************************************************
 bool CL64_ParseFile::Get_Text_Info(const char* Should_Be, float* ret_Rotate, Ogre::Vector2* ret_Shift, Ogre::Vector2* ret_Scale, char* Chr_Texture)
 {
-	memset(Read_Buffer, 0, MAX_PATH);
+	memset(App->CL_File->Read_Buffer, 0, MAX_PATH);
 	str_buff_1[0] = 0;
 	char Chr_Rotate[100]{ 0 };
 	char Chr_Shift[100]{ 0 };
@@ -732,8 +663,8 @@ bool CL64_ParseFile::Get_Text_Info(const char* Should_Be, float* ret_Rotate, Ogr
 	float Scx = 0;
 	float Scy = 0;
 
-	fgets(Read_Buffer, sizeof(Read_Buffer), fp);
-	(void)sscanf(Read_Buffer, "%s %s %f %s %f %f %s %f %f %s %s", &str_buff_1, &Chr_Rotate, &Rx, Chr_Shift, &Shx, &Shy, &Chr_Scale, &Scx, &Scy, Chr_Text_Name, Chr_Texture_Name);
+	fgets(App->CL_File->Read_Buffer, sizeof(App->CL_File->Read_Buffer), App->CL_File->fp);
+	(void)sscanf(App->CL_File->Read_Buffer, "%s %s %f %s %f %f %s %f %f %s %s", &str_buff_1, &Chr_Rotate, &Rx, Chr_Shift, &Shx, &Shy, &Chr_Scale, &Scx, &Scy, Chr_Text_Name, Chr_Texture_Name);
 
 	if (!strcmp(str_buff_1, Should_Be))
 	{

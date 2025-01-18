@@ -99,14 +99,6 @@ Level* CL64_Level::Level_Create(const char* pWadName, const char* HeadersDir, co
 			return pLevel;
 		}
 
-		/*pLevel->Entities = new (CEntityArray);
-		if (pLevel->Entities == NULL) goto CreateError;*/
-
-		/*pLevel->Entities->SetSize(0, 20);*/
-
-		/*pLevel->EntTypeNames = EntTypeNameList_Create();
-		if (pLevel->EntTypeNames == NULL) goto CreateError;*/
-
 		//pLevel->Groups = Group_CreateList();
 		//if (pLevel->Groups == NULL) goto CreateError;
 
@@ -120,66 +112,9 @@ Level* CL64_Level::Level_Create(const char* pWadName, const char* HeadersDir, co
 		//}
 
 
-		/*pLevel->ModelInfo.CurrentModel = 0;
-		pLevel->ModelInfo.Models = ModelList_Create();
-		if (pLevel->ModelInfo.Models == NULL) goto CreateError;
-
-		pLevel->HeadersDir = NULL;
-		pLevel->pEntityDefs = NULL;
-		if (Level_LoadEntityDefs(pLevel, HeadersDir) == GE_FALSE)
-		{
-			goto CreateError;
-		}*/
-
-		/*pLevel->ActorsDir = Util_Strdup(ActorsDir);
-		pLevel->ShowActors = GE_TRUE;
-		pLevel->PawnIniPath = Util_Strdup(PawnIni);*/
-
 		pLevel->WadPath = (LPSTR)pWadName;
 		pLevel->WadFile = NULL;
 		pLevel->WadSizeInfos = NULL;
-
-		// initialize sky
-		/*geVec3d_Set(&pLevel->SkyRotationAxis, 1.0f, 0.0f, 0.0f);
-		pLevel->SkyRotationSpeed = 10.0f;
-		pLevel->SkyTextureScale = 1.0f;
-		for (int i = 0; i < 6; ++i)
-		{
-			pLevel->SkyFaces[i].TextureName = NULL;
-			pLevel->SkyFaces[i].Apply = GE_FALSE;
-		}*/
-
-		// Set default compile dialog params
-		/*pLevel->CompileParams.EntitiesOnly = GE_FALSE;
-		pLevel->CompileParams.VisDetailBrushes = GE_FALSE;
-		pLevel->CompileParams.DoVis = GE_TRUE;
-		pLevel->CompileParams.DoLight = GE_TRUE;
-		pLevel->CompileParams.RunBsp = GE_TRUE;
-		pLevel->CompileParams.RunPreview = GE_TRUE;
-		pLevel->CompileParams.UseMinLight = GE_TRUE;
-		pLevel->CompileParams.SuppressHidden = GE_FALSE;
-		pLevel->CompileParams.Filename[0] = '\0';*/
-
-		/*pLevel->CompileParams.Light.Verbose = GE_FALSE;
-		pLevel->CompileParams.Light.ExtraSamples = GE_FALSE;
-		pLevel->CompileParams.Light.LightScale = 1.0f;
-		pLevel->CompileParams.Light.Radiosity = GE_FALSE;
-		pLevel->CompileParams.Light.NumBounce = 10;
-		pLevel->CompileParams.Light.PatchSize = 128.0f;
-		pLevel->CompileParams.Light.FastPatch = GE_FALSE;
-		pLevel->CompileParams.Light.ReflectiveScale = 1.0f;
-		geVec3d_Set(&pLevel->CompileParams.Light.MinLight, 128.0f, 128.0f, 128.0f);*/
-
-		/*pLevel->CompileParams.Bsp.Verbose = GE_FALSE;
-		pLevel->CompileParams.Bsp.EntityVerbose = GE_FALSE;
-
-		pLevel->CompileParams.Vis.Verbose = GE_FALSE;
-		pLevel->CompileParams.Vis.FullVis = GE_FALSE;
-		pLevel->CompileParams.Vis.SortPortals = GE_TRUE;
-
-		pLevel->GroupVisSetting = Group_ShowVisible;
-
-		pLevel->pEntityView = EntityViewList_Create(pLevel->pEntityDefs);*/
 
 		// grid settings
 		//default to texel grid and snap

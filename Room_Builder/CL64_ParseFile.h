@@ -29,9 +29,7 @@ public:
 	CL64_ParseFile(void);
 	~CL64_ParseFile(void);
 
-	void Load_File(char* FileName);
-
-private:
+//private:
 
 	BrushList* BrushList_CreateFromFile();
 	Brush* Brush_CreateFromFile();
@@ -49,15 +47,11 @@ private:
 	bool Get_Matrix3d(const char* Should_Be, Matrix3d* Matrix3d_return);
 	bool Get_Text_Info(const char* Should_Be, float* ret_Rotate, Ogre::Vector2* ret_Shift, Ogre::Vector2* ret_Scale, char* Chr_Texture);
 
-	char Read_Buffer[MAX_PATH];
-	char WadPath[MAX_PATH];
-
 	char str_buff_1[MAX_PATH];
 	char str_buff_2[MAX_PATH];
 	float Tag_Float;
 	int Tag_Int;
 	Ogre::Vector3 Tag_Vector3;
 
-	FILE* fp;
 };
 

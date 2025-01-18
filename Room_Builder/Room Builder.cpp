@@ -163,7 +163,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             // ----------------------------- File
             case ID_FILE_OPEN:
             {
-                App->CL_File->Open(true);
+                App->CL_File->Start_Load(true);
                 return 1;
             }
           
@@ -174,7 +174,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
                 strcpy(App->CL_File->FileName_3dt, "Test.mtf");
     
-                App->CL_File->Open(false);
+                App->CL_File->Start_Load(false);
 
                 return 1;
             }
