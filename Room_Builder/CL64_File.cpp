@@ -91,7 +91,7 @@ typedef struct FaceTag
 
 CL64_File::CL64_File(void)
 {
-    Level_Version = 1.0;
+	Level_Version = 1.0;
 
 	PathFileName_3dt[0] = 0;
 	FileName_3dt[0] = 0;
@@ -113,9 +113,9 @@ CL64_File::~CL64_File(void)
 // *************************************************************************
 void CL64_File::Start_Save(bool Use_Save_Dialog)
 {
-    int BC = App->CL_Brush->Get_Brush_Count();
-    if (BC > 0)
-    {
+	int BC = App->CL_Brush->Get_Brush_Count();
+	if (BC > 0)
+	{
 		if (Use_Save_Dialog == 1)
 		{
 			App->CL_File_IO->Save_File();
@@ -128,18 +128,18 @@ void CL64_File::Start_Save(bool Use_Save_Dialog)
 			strcpy(App->CL_Doc->mCurrent_MTF_PathAndFile, App->CL_File_IO->sFilePath.c_str());
 		}
 
-        Save_Document();
+		Save_Document();
 
 		App->Set_Title(App->CL_Doc->mCurrent_MTF_PathAndFile);
 
 		App->Say("Saved");
-    }
-    else
-    {
-        App->Say("No Brushes to Save");
-    }
+	}
+	else
+	{
+		App->Say("No Brushes to Save");
+	}
 
-    
+	
 }
 
 // *************************************************************************
@@ -147,14 +147,14 @@ void CL64_File::Start_Save(bool Use_Save_Dialog)
 // *************************************************************************
 void CL64_File::Save_Document()
 {
-    if (Save(App->CL_Doc->mCurrent_MTF_PathAndFile) == GE_FALSE)
-    {
-        App->Say("Error: Unable to save file");
-        return;;
-    }
+	if (Save(App->CL_Doc->mCurrent_MTF_PathAndFile) == GE_FALSE)
+	{
+		App->Say("Error: Unable to save file");
+		return;;
+	}
 
-    App->CL_Doc->flag_IsNewDocument = 0;
-    App->CL_Doc->flag_Is_Modified = false;
+	App->CL_Doc->flag_IsNewDocument = 0;
+	App->CL_Doc->flag_Is_Modified = false;
 }
 
 // *************************************************************************
@@ -162,11 +162,11 @@ void CL64_File::Save_Document()
 // *************************************************************************
 bool CL64_File::Save(const char* FileName)
 {
-    FILE* Write_File = NULL;
+	FILE* Write_File = NULL;
 
-    Write_File = fopen(FileName, "wt");
+	Write_File = fopen(FileName, "wt");
 
-    fprintf(Write_File, "MTF_Version %f\n", Level_Version);
+	fprintf(Write_File, "MTF_Version %f\n", Level_Version);
 
 	fprintf(Write_File, "TextureLib %s\n", "Default.txl");// App->CL_Doc->pLevel->WadPath);
 
@@ -174,9 +174,9 @@ bool CL64_File::Save(const char* FileName)
 
 	BrushList_Write(App->CL_Doc->pLevel->Brushes, Write_File);
 
-    fclose(Write_File);
+	fclose(Write_File);
 
-    return 1;
+	return 1;
 }
 
 // *************************************************************************
