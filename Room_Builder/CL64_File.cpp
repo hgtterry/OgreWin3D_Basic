@@ -105,7 +105,7 @@ CL64_File::~CL64_File(void)
 // *************************************************************************
 // *	            Save:- Terry and Hazel Flanigan 2025	               *
 // *************************************************************************
-void CL64_File::Save()
+void CL64_File::Save(bool Use_Save_Dialog)
 {
     int BC = App->CL_Brush->Get_Brush_Count();
     if (BC > 0)

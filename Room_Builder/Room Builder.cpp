@@ -181,7 +181,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
             case ID_FILE_SAVE:
             {
-                App->CL_File->Save();
+                App->CL_File->Save(false);
                 return 1;
             }
            

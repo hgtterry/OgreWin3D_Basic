@@ -30,7 +30,7 @@ public:
 	CL64_File(void);
 	~CL64_File(void);
 
-	void Save();
+	void Save(bool Use_Save_Dialog);
 	void Open(bool Use_Open_Dialog);
 
 	char PathFileName_3dt[MAX_PATH];
