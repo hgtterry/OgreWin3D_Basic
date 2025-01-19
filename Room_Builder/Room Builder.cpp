@@ -300,6 +300,26 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             case IDM_EXIT:
             {
             
+                /*if (App->CL_Scene->flag_Scene_Modified == 1)
+                {
+                    App->CL_Dialogs->Show_YesNo_Dlg((LPSTR)"Save Scene", (LPSTR)"Scene has been Modified", (LPSTR)"Do you wont to save changes");
+
+                    bool Doit = App->CL_Dialogs->flag_Canceled;
+                    if (Doit == 0)
+                    {
+                        App->CL_Project->Start_Save_Project_Dialog();
+                    }
+                }
+                else*/
+                {
+                    App->CL_Dialogs->YesNo("Close Room Builder","Are you sure");
+
+                    if (App->CL_Dialogs->flag_Dlg_Canceled == 1)
+                    {
+                        return 1;
+                    }
+                }
+
                 if (App->CL_Ogre->Ogre3D_Listener->flag_StopOgre == 0)
                 {
                     App->CL_Ogre->Ogre3D_Listener->flag_StopOgre = 1;
@@ -328,6 +348,26 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     case WM_CLOSE:
     {
  
+        /*if (App->CL_Scene->flag_Scene_Modified == 1)
+               {
+                   App->CL_Dialogs->Show_YesNo_Dlg((LPSTR)"Save Scene", (LPSTR)"Scene has been Modified", (LPSTR)"Do you wont to save changes");
+
+                   bool Doit = App->CL_Dialogs->flag_Canceled;
+                   if (Doit == 0)
+                   {
+                       App->CL_Project->Start_Save_Project_Dialog();
+                   }
+               }
+               else*/
+        {
+            App->CL_Dialogs->YesNo("Close Room Builder", "Are you sure");
+
+            if (App->CL_Dialogs->flag_Dlg_Canceled == 1)
+            {
+                return 1;
+            }
+        }
+
 		if (App->CL_Ogre->Ogre3D_Listener->flag_StopOgre == 0)
 		{
 			App->CL_Ogre->Ogre3D_Listener->flag_StopOgre = 1;
@@ -400,6 +440,8 @@ void StartOgre()
 
     App->CL_Ogre->Init_Ogre();
 
+    Sleep(500);
+
     EndDialog(App->ViewPLeaseWait, LOWORD(0));
 
     App->flag_OgreStarted = 1;
@@ -419,8 +461,6 @@ void StartOgre()
 // *************************************************************************
 void Close_App()
 {
-    App->Say("Close Room Builder", (LPSTR)"");
-    // And Finaly
     if (App->CL_Ogre->mRoot)
     {
         delete App->CL_Ogre->mRoot;

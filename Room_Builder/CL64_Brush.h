@@ -92,6 +92,9 @@ public:
 	void BrushList_Append(BrushList* pList, Brush* pBrush);
 
 	signed int Brush_IsMulti(const Brush* b);
+	signed int Brush_IsDetail(const Brush* b);
+	signed int Brush_IsHollowCut(const Brush* b);
+
 	int	BrushList_EnumLeafBrushes(const BrushList* pList, void* pVoid, BrushList_CB	CallBack);
 	const BrushList* Brush_GetBrushList(const Brush* b);
 	int	Brush_GetNumFaces(const Brush* b);

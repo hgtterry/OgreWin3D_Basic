@@ -778,6 +778,22 @@ signed int CL64_Brush::Brush_IsSubtract(const Brush* b)
 }
 
 // *************************************************************************
+// *							Brush_IsDetail							   *
+// *************************************************************************
+signed int CL64_Brush::Brush_IsDetail(const Brush* b)
+{
+	return	(b->Flags & BRUSH_DETAIL) ? GE_TRUE : GE_FALSE;
+}
+
+// *************************************************************************
+// *						Brush_IsHollowCut							   *
+// *************************************************************************
+signed int CL64_Brush::Brush_IsHollowCut(const Brush* b)
+{
+	return	(b->Flags & BRUSH_HOLLOWCUT) ? GE_TRUE : GE_FALSE;
+}
+
+// *************************************************************************
 // *							Brush_Clone								   *
 // *************************************************************************
 Brush* CL64_Brush::Brush_Clone(Brush const* from)
