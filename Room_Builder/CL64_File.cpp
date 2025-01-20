@@ -325,8 +325,8 @@ void CL64_File::Start_Load(bool Use_Open_Dialog)
 	bool Test = Open_3dt_File();
 	if (Test == true)
 	{
-		App->Set_Title(PathFileName_3dt);
-		App->CL_Top_Tabs->Enable_Select_Button(true,1);
+		Set_Editor();
+
 		App->Say("File Loaded", App->CL_File->FileName_3dt);
 	}
 	else
@@ -455,5 +455,15 @@ bool CL64_File::Load_File(const char* FileName)
 	App->CL_Properties_Brushes->Fill_ListBox();
 
 	return true;
+}
+
+// *************************************************************************
+// *			Set_Editor:- Terry and Hazel Flanigan 2025 				   *
+// *************************************************************************
+void CL64_File::Set_Editor()
+{
+	App->Set_Title(PathFileName_3dt);
+	App->CL_Top_Tabs->Enable_Select_Button(true, 1);
+	App->CL_Properties_Templates->Enable_Insert_Button(false);
 }
 
