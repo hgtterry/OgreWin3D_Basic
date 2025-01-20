@@ -101,7 +101,6 @@ CL64_File::CL64_File(void)
 	WadFile_Name[0] = 0;
 
 	fp = NULL;
-
 }
 
 CL64_File::~CL64_File(void)
@@ -139,7 +138,6 @@ void CL64_File::Start_Save(bool Use_Save_Dialog)
 		App->Say("No Brushes to Save");
 	}
 
-	
 }
 
 // *************************************************************************
@@ -374,9 +372,6 @@ bool CL64_File::Open_3dt_File()
 		strcpy(App->CL_World->mCurrent_TXL_FileName, Txlpath);*/
 
 	}
-
-	////App->CLSB_Level->Check_For_Centre_Brush(); // Centre Brush XYZ
-	////App->CLSB_Level->Check_For_Centre_Texture(); // Centre Texture Dummy
 
 	//App->CL_TabsGroups_Dlg->Fill_ListBox();
 

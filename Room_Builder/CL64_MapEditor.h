@@ -86,6 +86,9 @@ private:
 	// Draw Routines
 	void Draw_Screen(HWND hwnd);
 	static signed int BrushDraw(Brush* pBrush, void* lParam);
+
+	void Zoom_View(HWND hDlg, int Dx, int Dy);
+
 	void Draw_Camera(HDC ViewDC);
 
 	void On_Mouse_Move(POINT CursorPosition, HWND hDlg);
