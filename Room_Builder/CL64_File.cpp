@@ -340,6 +340,7 @@ void CL64_File::Start_Load(bool Use_Open_Dialog)
 // *************************************************************************
 bool CL64_File::Open_3dt_File()
 {
+	App->CL_Doc->ResetAllSelections();
 	App->CL_Doc->DoGeneralSelect();
 	
 	bool Test = Load_File(PathFileName_3dt);
