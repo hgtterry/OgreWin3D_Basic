@@ -287,6 +287,11 @@ void CL64_Doc::DoGeneralSelect(void)
 {
     mCurrentTool = CURTOOL_NONE;
     mModeTool = ID_GENERALSELECT;
+
+    App->CL_Top_Tabs->Enable_Brush_Options_Buttons(true, false);
+    App->CL_Top_Tabs->Enable_Select_Button(true, true);
+
+    RedrawWindow(App->CL_Top_Tabs->Headers_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
     //ConfigureCurrentTool();
 }
 

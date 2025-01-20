@@ -357,7 +357,7 @@ void CL64_Ogre3D::Convert_ToOgre3D(bool Create)
 		TotalFaces = TotalFaces + App->CL_Model->Group[Count]->GroupFaceCount;
 		if (App->CL_Model->Group[Count]->GroupFaceCount == 0)
 		{
-			App->Say("No Faces");
+			//App->Say("No Faces"); hgtterry Debug
 		}
 
 		while (FaceCount < App->CL_Model->Group[Count]->GroupFaceCount)

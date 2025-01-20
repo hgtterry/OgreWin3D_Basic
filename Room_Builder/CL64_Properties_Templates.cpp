@@ -124,6 +124,8 @@ LRESULT CALLBACK CL64_Properties_Templates::Proc_Templates(HWND hDlg, UINT messa
 	{
 		if (LOWORD(wParam) == IDC_BTINSERT)
 		{
+			App->CL_Doc->mModeTool = ID_TOOLS_TEMPLATE;
+
 			if (App->CL_Doc->mModeTool == ID_TOOLS_TEMPLATE)
 			{
 				if (App->CL_Brush->Get_Brush_Count() == 0)
