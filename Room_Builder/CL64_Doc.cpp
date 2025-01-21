@@ -67,6 +67,7 @@ CL64_Doc::CL64_Doc(void)
 
     flag_Is_Modified = 0;
     flag_IsNewDocument = 0;
+    flag_Track_Camera = 1;
 
     SelState = NOSELECTIONS;
 
@@ -116,6 +117,8 @@ void CL64_Doc::Init_Doc()
 	mModeTool = ID_TOOLS_TEMPLATE;
 
 	App->CL_Maths->Vector3_Clear(&SelectedGeoCenter);
+
+    CheckMenuItem(App->mMenu, ID_CAMERA_TRACKCAMERA, MF_BYCOMMAND | MF_CHECKED);
 }
 
 // *************************************************************************

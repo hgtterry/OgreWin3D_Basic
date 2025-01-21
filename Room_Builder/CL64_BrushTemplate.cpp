@@ -344,7 +344,7 @@ Brush* CL64_BrushTemplate::BrushTemplate_CreateCylinder(const BrushTemplate_Cyli
 			VertexCount++;
 
 			// Rotate the point around the Y to get the next vertical band
-			App->CL_Maths->geXForm3d_Rotate(&YRotation, &Final, &Final);
+			App->CL_Maths->XForm3d_Rotate(&YRotation, &Final, &Final);
 		}
 
 		CurrentXDiameter += DeltaXDiameter;

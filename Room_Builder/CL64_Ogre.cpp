@@ -224,7 +224,7 @@ bool CL64_Ogre::Init_ChooseSceneManager(void)
 }
 
 // *************************************************************************
-// *		Init_CreateCamera:- Terry and Hazel Flanigan 2024		   *
+// *		Init_CreateCamera:- Terry and Hazel Flanigan 2025			   *
 // *************************************************************************
 bool CL64_Ogre::Init_CreateCamera(void)
 {
@@ -321,7 +321,7 @@ bool CL64_Ogre::Init_CreateFrameListener(void)
 }
 
 // *************************************************************************
-// *			Log_Message_To_File:- Terry and Hazel Flanigan 2024		   *
+// *			Log_Message_To_File:- Terry and Hazel Flanigan 2025		   *
 // *************************************************************************
 void CL64_Ogre::Log_Message_To_File(char* Message)
 {
@@ -334,7 +334,16 @@ void CL64_Ogre::Log_Message_To_File(char* Message)
 }
 
 // *************************************************************************
-// *			RenderFrame:- Terry and Hazel Flanigan 2024				   *
+// *			Camera_Reset_Zero:- Terry and Hazel Flanigan 2025		   *
+// *************************************************************************
+void CL64_Ogre::Camera_Reset_Zero()
+{
+	camNode->setPosition(Ogre::Vector3(0, 0, 0));
+	camNode->setOrientation(Ogre::Quaternion::IDENTITY);
+}
+
+// *************************************************************************
+// *			RenderFrame:- Terry and Hazel Flanigan 2025				   *
 // *************************************************************************
 void CL64_Ogre::RenderFrame(int How_Many)
 {

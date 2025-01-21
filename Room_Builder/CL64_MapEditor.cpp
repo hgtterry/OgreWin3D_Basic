@@ -1659,8 +1659,11 @@ void CL64_MapEditor::Draw_Screen(HWND hwnd)
 			}
 		}
 
-		SelectObject(MemoryhDC, Pen_Camera);
-		Draw_Camera(MemoryhDC);
+		if (App->CL_Doc->flag_Track_Camera == 1)
+		{
+			SelectObject(MemoryhDC, Pen_Camera);
+			Draw_Camera(MemoryhDC);
+		}
 
 	}
 
@@ -1713,6 +1716,10 @@ void CL64_MapEditor::Draw_Camera(HDC ViewDC)
 	DummyPos.y = 0;
 	DummyPos.z = 0;
 
+	T_Vec3 OgrePos;
+	Ogre::Vector3 OgreRot;
+	T_Vec3 Cam_Angles;
+
 	POINT EntPosView;
 	POINT EntSizeView;
 	POINT EntWidthHeight;
@@ -1743,12 +1750,19 @@ void CL64_MapEditor::Draw_Camera(HDC ViewDC)
 
 	if (App->flag_OgreStarted == 1)
 	{
-		T_Vec3 Pos;
-		Pos.x = App->CL_Ogre->camNode->getPosition().x;
-		Pos.y = App->CL_Ogre->camNode->getPosition().y;
-		Pos.z = App->CL_Ogre->camNode->getPosition().z;
+		OgreRot.x = App->CL_Ogre->camNode->getOrientation().getPitch().valueRadians();
+		OgreRot.y = App->CL_Ogre->camNode->getOrientation().getYaw().valueRadians();
+		OgreRot.z = 0;
 
-		EntPosView = App->CL_Render->Render_OrthoWorldToView(Current_View, &Pos);
+		Cam_Angles.x = 3.141593 - OgreRot.x;
+		Cam_Angles.y = -OgreRot.y;
+		Cam_Angles.z = 0;
+
+		OgrePos.x = App->CL_Ogre->camNode->getPosition().x;
+		OgrePos.y = App->CL_Ogre->camNode->getPosition().y;
+		OgrePos.z = App->CL_Ogre->camNode->getPosition().z;
+
+		EntPosView = App->CL_Render->Render_OrthoWorldToView(Current_View, &OgrePos);
 	}
 	else
 	{
@@ -1772,6 +1786,89 @@ void CL64_MapEditor::Draw_Camera(HDC ViewDC)
 		MoveToEx(ViewDC, TopRight.x, TopRight.y, NULL);
 		LineTo(ViewDC, BottomLeft.x, BottomLeft.y);
 	}
+
+	// ------------------------------------------------------
+	POINT		ptDirSlope;		// Slope of the "Direction" line
+	POINT		ptRotationPoint;	// Point near end of "Direction" line we rotate to get arrowhead points
+	POINT		ptRelRotatePoint;	// Rotation points about zero
+	POINT		ptPlus45;			// Final Arrowhead point
+	POINT		ptMinus45;			// Final Arrowhead point
+
+	float		fPercentIntoLine;	// Distance into Direction line for rotation point
+	float		fDirLength;		// Direction line length
+	float		fEntityLength;		// Entity length
+	float		fRadius;
+	
+	Matrix3d	Xfm;
+	T_Vec3		VecTarg;
+	
+	POINT		LineEndView{ 0 };
+	bool	bUIAvailable;
+
+	// Get the Radius and the Angle  ONE of these must be present to show UI
+	bUIAvailable = GE_FALSE;
+	//if (pEnt->GetRadius(&fRadius, pEntityDefs) == GE_FALSE)
+		fRadius = 100.0f;
+	//else
+		bUIAvailable = GE_TRUE;
+
+	//if (pEnt->GetAngles(&Angles, pEntityDefs) == GE_FALSE)
+		//App->CL_Maths->Vector3_Clear(&Angles);
+	//else
+		//bUIAvailable = GE_TRUE;
+
+	//if (bUIAvailable == GE_FALSE)
+		//return;
+
+	// The camera angles are given in camera coordinates rather than
+	// world coordinates (don't ask).
+	// So we convert them here.
+	/*if (pEnt->IsCamera())*/
+	{
+		App->CL_Maths->Vector3_Set(&Cam_Angles, Cam_Angles.z, (-Cam_Angles.y - M_PI / 2.0f), Cam_Angles.x);
+	}
+
+	
+	App->CL_Maths->XForm3d_SetEulerAngles(&Xfm, &Cam_Angles);
+	App->CL_Maths->Vector3_Set(&VecTarg, fRadius, 0.0f, 0.0f);
+	App->CL_Maths->XForm3d_Transform(&Xfm, &VecTarg, &VecTarg);
+	App->CL_Maths->Vector3_Add(&(OgrePos), &VecTarg, &VecTarg);
+
+	LineEndView = App->CL_Render->Render_OrthoWorldToView(Current_View, &VecTarg);
+
+	// Draw to the end point
+	MoveToEx(ViewDC, EntPosView.x, EntPosView.y, NULL);
+	LineTo(ViewDC, LineEndView.x, LineEndView.y);
+
+	ptDirSlope.x = LineEndView.x - EntPosView.x;	// Slope of Direction line
+	ptDirSlope.y = LineEndView.y - EntPosView.y;
+
+	fDirLength = sqrt((float)(ptDirSlope.x * ptDirSlope.x) + (ptDirSlope.y * ptDirSlope.y));	// Length of Direction line
+	fEntityLength = sqrt((float)(EntSizeView.x * EntSizeView.x) + (EntSizeView.y * EntSizeView.y));
+	fEntityLength *= 1;	// Arrow 2x entity size
+	fPercentIntoLine = 1.0f - (fEntityLength / fDirLength);
+	ptRotationPoint.x = (long)(ptDirSlope.x * fPercentIntoLine);
+	ptRotationPoint.y = (long)(ptDirSlope.y * fPercentIntoLine);
+	ptRotationPoint.x += EntPosView.x;
+	ptRotationPoint.y += EntPosView.y;
+
+	ptRelRotatePoint.x = ptRotationPoint.x - LineEndView.x;
+	ptRelRotatePoint.y = ptRotationPoint.y - LineEndView.y;
+
+	ptPlus45.x = (long)(ptRelRotatePoint.x * COS45 - ptRelRotatePoint.y * SIN45);
+	ptPlus45.y = (long)(ptRelRotatePoint.y * COS45 + ptRelRotatePoint.x * SIN45);
+	ptMinus45.x = (long)(ptRelRotatePoint.x * MCOS45 - ptRelRotatePoint.y * MSIN45);
+	ptMinus45.y = (long)(ptRelRotatePoint.y * MCOS45 + ptRelRotatePoint.x * MSIN45);
+
+	ptPlus45.x += LineEndView.x;
+	ptPlus45.y += LineEndView.y;
+	ptMinus45.x += LineEndView.x;
+	ptMinus45.y += LineEndView.y;
+
+	LineTo(ViewDC, ptPlus45.x, ptPlus45.y);
+	LineTo(ViewDC, ptMinus45.x, ptMinus45.y);
+	LineTo(ViewDC, LineEndView.x, LineEndView.y);
+
 }
 
 // *************************************************************************

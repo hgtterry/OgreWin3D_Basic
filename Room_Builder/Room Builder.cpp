@@ -60,6 +60,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         return FALSE;
     }
 
+    App->mMenu = GetMenu(App->MainHwnd);
     App->LoadProgramResource();
 
     ShowWindow(App->MainHwnd, SW_SHOWMAXIMIZED);
@@ -229,6 +230,32 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 return 1;
             }
             
+            // ----------------------------- Camera
+			case ID_CAMERA_TRACKCAMERA:
+			{
+				if (App->CL_Doc->flag_Track_Camera == 1)
+				{
+					App->CL_Doc->flag_Track_Camera = 0;
+					CheckMenuItem(App->mMenu, ID_CAMERA_TRACKCAMERA, MF_BYCOMMAND | MF_UNCHECKED);
+				}
+				else
+				{
+					App->CL_Doc->flag_Track_Camera = 1;
+					CheckMenuItem(App->mMenu, ID_CAMERA_TRACKCAMERA, MF_BYCOMMAND | MF_CHECKED);
+				}
+
+                App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
+
+				return 1;
+			}
+
+            case ID_CAMERA_RESETCAMERAZERO:
+            {
+                App->CL_Ogre->Camera_Reset_Zero();
+                App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
+                return 1;
+            }
+           
             // ----------------------------- Templates
             case ID_TEMPLATES_INSERT:
             {

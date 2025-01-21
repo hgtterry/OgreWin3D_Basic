@@ -65,11 +65,13 @@ public:
 	void XForm3d_Multiply(const Matrix3d* M1, const Matrix3d* M2, Matrix3d* MProduct);
 	void XForm3d_SetYRotation(Matrix3d* M, float RadianAngle);
 	void XForm3d_SetZRotation(Matrix3d* M, float RadianAngle);
+	void XForm3d_Transform(const Matrix3d* M, const T_Vec3* V, T_Vec3* Result);
+	void XForm3d_SetEulerAngles(Matrix3d* M, const T_Vec3* Angles);
 
 
 	void Quaternion_SetFromAxisAngle(Ogre::Quaternion* Q, const T_Vec3* Axis, float Theta);
 	void Quaternion_ToMatrix(const Ogre::Quaternion* Q, Matrix3d* M);
-	void geXForm3d_Rotate(const Matrix3d* M, const T_Vec3* V, T_Vec3* Result);
+	void XForm3d_Rotate(const Matrix3d* M, const T_Vec3* V, T_Vec3* Result);
 
 
 	void* Ram_Allocate(Ogre::int32 size);

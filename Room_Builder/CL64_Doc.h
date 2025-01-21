@@ -169,9 +169,11 @@ public:
 	int mModeTool;
 	int mCurrentGroup;
 	int mCurrentTool;
+	int NumSelEntities;
+
 	bool flag_Is_Modified;
 	bool flag_IsNewDocument;
-	int NumSelEntities;
+	bool flag_Track_Camera;
 
 	//SelFaceList* pSelFaces;
 };

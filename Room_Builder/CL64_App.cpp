@@ -70,6 +70,7 @@ CL64_App::CL64_App(void)
 	CL_CreateCylDialog =		nullptr;
 
 	CUR = 0;
+	mMenu = 0;
 
 	hInst = nullptr;
 	MainHwnd = nullptr;

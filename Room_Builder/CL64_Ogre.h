@@ -40,11 +40,12 @@ public:
 	// Setup --------------------------------
 	void Init_Ogre(void);
 
-
 	bool Ogre_Render_Loop(void);
 
 	void Log_Message_To_File(char* Message);
 	void RenderFrame(int How_Many);
+
+	void Camera_Reset_Zero();
 
 	char Return_Chr[MAX_PATH];
 	Ogre::String mResourcePath;

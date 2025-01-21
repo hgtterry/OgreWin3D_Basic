@@ -158,6 +158,7 @@ public:
 	//HANDLE Hnd_Stairs_Icon;
 
 	HCURSOR CUR;
+	HMENU mMenu;
 
 	bool flag_Debug_App;
 	bool flag_OgreStarted;
