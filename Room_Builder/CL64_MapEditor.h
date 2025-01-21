@@ -88,6 +88,7 @@ private:
 	static signed int BrushDraw(Brush* pBrush, void* lParam);
 
 	void Zoom_View(HWND hDlg, int Dx, int Dy);
+	void Pan_View(HWND hDlg, int Dx, int Dy);
 
 	void Draw_Camera(HDC ViewDC);
 

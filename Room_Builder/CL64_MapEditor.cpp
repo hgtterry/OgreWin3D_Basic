@@ -583,24 +583,9 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Left_Window(HWND hDlg, UINT message, W
 		dx = (RealCursorPosition.x);
 		dy = (RealCursorPosition.y);
 
-		if (App->CL_MapEditor->flag_Right_Button_Down == 1 && GetAsyncKeyState(VK_CONTROL) < 0)
-		{
-			App->CL_MapEditor->Zoom_View(hDlg, dx, dy);
-			return 1;
-		}
-
 		App->CL_MapEditor->Current_View = App->CL_MapEditor->VCam[V_TL];
 		App->CL_MapEditor->On_Mouse_Move(RealCursorPosition,hDlg);
-		/*if (App->CL_MapEditor->flag_Right_Button_Down == 1 && GetAsyncKeyState(VK_CONTROL) < 0)
-		{
-			App->CL_MapEditor->Zoom_View(hDlg, dx, dy);
-		}
-
-		if (App->CL_MapEditor->flag_Left_Button_Down == 1 && GetAsyncKeyState(VK_CONTROL) < 0)
-		{
-			App->CL_MapEditor->Pan_View(hDlg, dx, dy);
-		}*/
-
+		
 		return 1;
 	}
 
@@ -759,24 +744,8 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Right_Window(HWND hDlg, UINT message, 
 		dx = (RealCursorPosition.x);
 		dy = (RealCursorPosition.y);
 
-		if (App->CL_MapEditor->flag_Right_Button_Down == 1 && GetAsyncKeyState(VK_CONTROL) < 0)
-		{
-			App->CL_MapEditor->Zoom_View(hDlg, dx, dy);
-			return 1;
-		}
-
 		App->CL_MapEditor->Current_View = App->CL_MapEditor->VCam[V_TR];
 		App->CL_MapEditor->On_Mouse_Move(RealCursorPosition, hDlg);
-
-		/*if (App->CL_MapEditor->flag_Right_Button_Down == 1 && GetAsyncKeyState(VK_CONTROL) < 0)
-		{
-			App->CL_MapEditor->Zoom_View(hDlg, dx, dy);
-		}
-
-		if (App->CL_MapEditor->flag_Left_Button_Down == 1 && GetAsyncKeyState(VK_CONTROL) < 0)
-		{
-			App->CL_MapEditor->Pan_View(hDlg, dx, dy);
-		}*/
 
 		return 1;
 	}
@@ -927,21 +896,8 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Bottom_Left_Window(HWND hDlg, UINT message
 		dx = (RealCursorPosition.x);
 		dy = (RealCursorPosition.y);
 
-		if (App->CL_MapEditor->flag_Right_Button_Down == 1 && GetAsyncKeyState(VK_CONTROL) < 0)
-		{
-			App->CL_MapEditor->Zoom_View(hDlg, dx, dy);
-			return 1;
-		}
-
 		App->CL_MapEditor->Current_View = App->CL_MapEditor->VCam[V_BL];
-
 		App->CL_MapEditor->On_Mouse_Move(RealCursorPosition, hDlg);
-
-
-		/*if (App->CL_MapEditor->flag_Left_Button_Down == 1 && GetAsyncKeyState(VK_CONTROL) < 0)
-		{
-			App->CL_MapEditor->Pan_View(hDlg, dx, dy);
-		}*/
 
 		return 1;
 	}
@@ -1147,6 +1103,24 @@ void CL64_MapEditor::On_Mouse_Move(POINT CursorPosition, HWND hDlg)
 		return;
 	}
 
+	if (App->CL_MapEditor->flag_Right_Button_Down == 1 && GetAsyncKeyState(VK_CONTROL) < 0)
+	{
+		dx = (CursorPosition.x);
+		dy = (CursorPosition.y);
+
+		App->CL_MapEditor->Zoom_View(Current_View->hDlg, dx, dy);
+		return;
+	}
+
+	if (App->CL_MapEditor->flag_Left_Button_Down == 1 && GetAsyncKeyState(VK_CONTROL) < 0)
+	{
+		dx = (CursorPosition.x);
+		dy = (CursorPosition.y);
+
+		App->CL_MapEditor->Pan_View(hDlg, dx, dy);
+		return;
+	}
+
 	if (flag_Left_Button_Down == 1)
 	{
 		App->CL_Render->Render_ViewToWorld(Current_View, mStartPoint.x, mStartPoint.y, &sp);
@@ -1344,195 +1318,204 @@ void CL64_MapEditor::Zoom_View(HWND hDlg, int Dx, int Dy)
 	}
 }
 
-//// *************************************************************************
-//// *			Pan_View:- Terry and Hazel Flanigan 2024				   *
-//// *************************************************************************
-//void CL64_MapEditor::Pan_View(HWND hDlg, int Dx, int Dy)
-//{
-//	Ogre::Vector3 dv;
-//	Ogre::Vector3 dcamv;
-//	int Tolerence = 20;
-//
-//	switch (Current_View->ViewType)
-//	{
-//	case VIEWTOP:  // Top Left
-//	{
-//		if (Dx < App->CL_MapEditor->mStartPoint.x)
-//		{
-//			long test = App->CL_MapEditor->mStartPoint.x - Dx;
-//			if (test > Tolerence)
-//			{
-//				dv = Ogre::Vector3(-15, 0, 0);
-//
-//				POINT pt = mStartPoint;
-//				ClientToScreen(hDlg, &pt);
-//				SetCursorPos(pt.x, pt.y);
-//			}
-//
-//		}
-//		else if (Dx > App->CL_MapEditor->mStartPoint.x)
-//		{
-//			long test = Dx - App->CL_MapEditor->mStartPoint.x;
-//			if (test > Tolerence)
-//			{
-//				dv = Ogre::Vector3(15, 0, 0);
-//
-//				POINT pt = mStartPoint;
-//				ClientToScreen(hDlg, &pt);
-//				SetCursorPos(pt.x, pt.y);
-//			}
-//
-//		}
-//
-//		if (Dy < App->CL_MapEditor->mStartPoint.y)
-//		{
-//			long test = App->CL_MapEditor->mStartPoint.y - Dy;
-//			if (test > Tolerence)
-//			{
-//				dv = Ogre::Vector3(0, 0, -15);
-//
-//				POINT pt = mStartPoint;
-//				ClientToScreen(hDlg, &pt);
-//				SetCursorPos(pt.x, pt.y);
-//			}
-//
-//		}
-//		else if (Dy > App->CL_MapEditor->mStartPoint.y)
-//		{
-//			long test = Dy - App->CL_MapEditor->mStartPoint.y;
-//			if (test > Tolerence)
-//			{
-//				dv = Ogre::Vector3(0, 0, 15);
-//
-//				POINT pt = mStartPoint;
-//				ClientToScreen(hDlg, &pt);
-//				SetCursorPos(pt.x, pt.y);
-//			}
-//		}
-//
-//		break;
-//	}
-//	case VIEWFRONT:  // Bottom Left
-//	{
-//		if (Dx < App->CL_MapEditor->mStartPoint.x)
-//		{
-//			long test = App->CL_MapEditor->mStartPoint.x - Dx;
-//			if (test > Tolerence)
-//			{
-//				dv = Ogre::Vector3(-15, 0, 0);
-//
-//				POINT pt = mStartPoint;
-//				ClientToScreen(hDlg, &pt);
-//				SetCursorPos(pt.x, pt.y);
-//			}
-//
-//		}
-//		else if (Dx > App->CL_MapEditor->mStartPoint.x)
-//		{
-//			long test = Dx - App->CL_MapEditor->mStartPoint.x;
-//			if (test > Tolerence)
-//			{
-//				dv = Ogre::Vector3(15, 0, 0);
-//
-//				POINT pt = mStartPoint;
-//				ClientToScreen(hDlg, &pt);
-//				SetCursorPos(pt.x, pt.y);
-//			}
-//		}
-//
-//		if (Dy < App->CL_MapEditor->mStartPoint.y)
-//		{
-//			long test = App->CL_MapEditor->mStartPoint.y - Dy;
-//			if (test > Tolerence)
-//			{
-//				dv = Ogre::Vector3(0, 15, 0);
-//
-//				POINT pt = mStartPoint;
-//				ClientToScreen(hDlg, &pt);
-//				SetCursorPos(pt.x, pt.y);
-//			}
-//		}
-//		else if (Dy > App->CL_MapEditor->mStartPoint.y)
-//		{
-//			long test = Dy - App->CL_MapEditor->mStartPoint.y;
-//			if (test > Tolerence)
-//			{
-//				dv = Ogre::Vector3(0, -15, 0);
-//
-//				POINT pt = mStartPoint;
-//				ClientToScreen(hDlg, &pt);
-//				SetCursorPos(pt.x, pt.y);
-//			}
-//		}
-//
-//		break;
-//	}
-//	case VIEWSIDE: // Top Right
-//	{
-//		if (Dx < App->CL_MapEditor->mStartPoint.x)
-//		{
-//			long test = App->CL_MapEditor->mStartPoint.x - Dx;
-//			if (test > Tolerence)
-//			{
-//				dv = Ogre::Vector3(0, 0, -15);
-//
-//				POINT pt = mStartPoint;
-//				ClientToScreen(hDlg, &pt);
-//				SetCursorPos(pt.x, pt.y);
-//			}
-//
-//		}
-//		else if (Dx > App->CL_MapEditor->mStartPoint.x)
-//		{
-//			long test = Dx - App->CL_MapEditor->mStartPoint.x;
-//			if (test > Tolerence)
-//			{
-//				dv = Ogre::Vector3(0, 0, 15);
-//
-//				POINT pt = mStartPoint;
-//				ClientToScreen(hDlg, &pt);
-//				SetCursorPos(pt.x, pt.y);
-//			}
-//		}
-//
-//		if (Dy < App->CL_MapEditor->mStartPoint.y)
-//		{
-//			long test = App->CL_MapEditor->mStartPoint.y - Dy;
-//			if (test > Tolerence)
-//			{
-//				dv = Ogre::Vector3(0, 15, 0);
-//
-//				POINT pt = mStartPoint;
-//				ClientToScreen(hDlg, &pt);
-//				SetCursorPos(pt.x, pt.y);
-//			}
-//		}
-//		else if (Dy > App->CL_MapEditor->mStartPoint.y)
-//		{
-//			long test = Dy - App->CL_MapEditor->mStartPoint.y;
-//			if (test > Tolerence)
-//			{
-//				dv = Ogre::Vector3(0, -15, 0);
-//
-//				POINT pt = mStartPoint;
-//				ClientToScreen(hDlg, &pt);
-//				SetCursorPos(pt.x, pt.y);
-//			}
-//		}
-//
-//		break;
-//	}
-//	default:
-//
-//		break;
-//	}
-//
-//	App->CL_Maths->Vector3_Scale(&dv, -1.0f, &dcamv);
-//	App->CL_Maths->Vector3_Add(&App->CL_MapEditor->Current_View->CamPos, &dcamv, &App->CL_MapEditor->Current_View->CamPos);
-//
-//	App->CL_MapEditor->Draw_Screen(hDlg);
-//
-//}
+// *************************************************************************
+// *			Pan_View:- Terry and Hazel Flanigan 2025				   *
+// *************************************************************************
+void CL64_MapEditor::Pan_View(HWND hDlg, int Dx, int Dy)
+{
+	T_Vec3 dv;
+	T_Vec3 dcamv;
+	int Tolerence = 20;
+
+	switch (Current_View->ViewType)
+	{
+	case VIEWTOP:  // Top Left
+	{
+		if (Dx < App->CL_MapEditor->mStartPoint.x)
+		{
+			long test = App->CL_MapEditor->mStartPoint.x - Dx;
+			if (test > Tolerence)
+			{
+				dv.x = -15;
+				dv.y = 0;
+				dv.z = 0;
+
+				POINT pt = mStartPoint;
+				ClientToScreen(hDlg, &pt);
+				SetCursorPos(pt.x, pt.y);
+			}
+
+		}
+		else if (Dx > App->CL_MapEditor->mStartPoint.x)
+		{
+			long test = Dx - App->CL_MapEditor->mStartPoint.x;
+			if (test > Tolerence)
+			{
+				dv.x = 15;
+				dv.y = 0;
+				dv.z = 0;
+
+				POINT pt = mStartPoint;
+				ClientToScreen(hDlg, &pt);
+				SetCursorPos(pt.x, pt.y);
+			}
+
+		}
+
+		if (Dy < App->CL_MapEditor->mStartPoint.y)
+		{
+			long test = App->CL_MapEditor->mStartPoint.y - Dy;
+			if (test > Tolerence)
+			{
+				dv.x = 0;
+				dv.y = 0;
+				dv.z = -15;
+
+				POINT pt = mStartPoint;
+				ClientToScreen(hDlg, &pt);
+				SetCursorPos(pt.x, pt.y);
+			}
+
+		}
+		else if (Dy > App->CL_MapEditor->mStartPoint.y)
+		{
+			long test = Dy - App->CL_MapEditor->mStartPoint.y;
+			if (test > Tolerence)
+			{
+				dv.x = 0;
+				dv.y = 0;
+				dv.z = 15;
+
+				POINT pt = mStartPoint;
+				ClientToScreen(hDlg, &pt);
+				SetCursorPos(pt.x, pt.y);
+			}
+		}
+
+		break;
+	}
+	case VIEWFRONT:  // Bottom Left
+	{
+		if (Dx < App->CL_MapEditor->mStartPoint.x)
+		{
+			long test = App->CL_MapEditor->mStartPoint.x - Dx;
+			if (test > Tolerence)
+			{
+				dv.x = -15;
+				dv.y = 0;
+				dv.z = 0;
+
+				POINT pt = mStartPoint;
+				ClientToScreen(hDlg, &pt);
+				SetCursorPos(pt.x, pt.y);
+			}
+
+		}
+		else if (Dx > App->CL_MapEditor->mStartPoint.x)
+		{
+			long test = Dx - App->CL_MapEditor->mStartPoint.x;
+			if (test > Tolerence)
+			{
+				dv = { 15, 0, 0 };
+
+				POINT pt = mStartPoint;
+				ClientToScreen(hDlg, &pt);
+				SetCursorPos(pt.x, pt.y);
+			}
+		}
+
+		if (Dy < App->CL_MapEditor->mStartPoint.y)
+		{
+			long test = App->CL_MapEditor->mStartPoint.y - Dy;
+			if (test > Tolerence)
+			{
+				dv = { 0, 15, 0 };
+
+				POINT pt = mStartPoint;
+				ClientToScreen(hDlg, &pt);
+				SetCursorPos(pt.x, pt.y);
+			}
+		}
+		else if (Dy > App->CL_MapEditor->mStartPoint.y)
+		{
+			long test = Dy - App->CL_MapEditor->mStartPoint.y;
+			if (test > Tolerence)
+			{
+				dv = { 0, -15, 0 };
+
+				POINT pt = mStartPoint;
+				ClientToScreen(hDlg, &pt);
+				SetCursorPos(pt.x, pt.y);
+			}
+		}
+
+		break;
+	}
+	case VIEWSIDE: // Top Right
+	{
+		if (Dx < App->CL_MapEditor->mStartPoint.x)
+		{
+			long test = App->CL_MapEditor->mStartPoint.x - Dx;
+			if (test > Tolerence)
+			{
+				dv = { 0, 0, -15 };
+
+				POINT pt = mStartPoint;
+				ClientToScreen(hDlg, &pt);
+				SetCursorPos(pt.x, pt.y);
+			}
+
+		}
+		else if (Dx > App->CL_MapEditor->mStartPoint.x)
+		{
+			long test = Dx - App->CL_MapEditor->mStartPoint.x;
+			if (test > Tolerence)
+			{
+				dv = { 0, 0, 15 };
+
+				POINT pt = mStartPoint;
+				ClientToScreen(hDlg, &pt);
+				SetCursorPos(pt.x, pt.y);
+			}
+		}
+
+		if (Dy < App->CL_MapEditor->mStartPoint.y)
+		{
+			long test = App->CL_MapEditor->mStartPoint.y - Dy;
+			if (test > Tolerence)
+			{
+				dv = { 0, 15, 0 };
+				POINT pt = mStartPoint;
+				ClientToScreen(hDlg, &pt);
+				SetCursorPos(pt.x, pt.y);
+			}
+		}
+		else if (Dy > App->CL_MapEditor->mStartPoint.y)
+		{
+			long test = Dy - App->CL_MapEditor->mStartPoint.y;
+			if (test > Tolerence)
+			{
+				dv = { 0, -15, 0 };
+
+				POINT pt = mStartPoint;
+				ClientToScreen(hDlg, &pt);
+				SetCursorPos(pt.x, pt.y);
+			}
+		}
+
+		break;
+	}
+	default:
+
+		break;
+	}
+
+	App->CL_Maths->Vector3_Scale(&dv, -1.0f, &dcamv);
+	App->CL_Maths->Vector3_Add(&App->CL_MapEditor->Current_View->CamPos, &dcamv, &App->CL_MapEditor->Current_View->CamPos);
+
+	App->CL_MapEditor->Draw_Screen(hDlg);
+
+}
 
 // *************************************************************************
 // *						Draw_Screen Terry Flanigan		  			   *
