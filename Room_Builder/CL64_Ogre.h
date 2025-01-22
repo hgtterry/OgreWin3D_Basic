@@ -25,6 +25,8 @@ THE SOFTWARE.
 #pragma once
 
 #include "CL64_Ogre3D_Listener.h"
+#include "OgreImGuiOverlay.h"
+#include <OgreImGuiInputListener.h>
 #include "OgreTrays.h"
 #include "SdkSample.h"
 

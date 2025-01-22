@@ -60,6 +60,7 @@ THE SOFTWARE.
 #include "CL64_ParseFile.h"
 #include "CL64_Export.h"
 #include "CL64_File_IO.h"
+#include "CL64_ImGui.h"
 // Templates Dialogs
 #include "A_CreateBoxDialog.h"
 #include "A_CreateCylDialog.h"
@@ -105,6 +106,7 @@ public:
 	CL64_ParseFile*				CL_ParseFile;
 	CL64_Export*				CL_Export;
 	CL64_File_IO*				CL_File_IO;
+	CL64_ImGui*					CL_ImGui;
 
 	// Templates Dialogs
 	A_CreateBoxDialog*			CL_CreateBoxDialog;

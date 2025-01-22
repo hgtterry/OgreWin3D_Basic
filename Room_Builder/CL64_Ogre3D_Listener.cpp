@@ -72,6 +72,9 @@ bool CL64_Ogre3D_Listener::frameStarted(const FrameEvent& evt)
 // *************************************************************************
 bool CL64_Ogre3D_Listener::frameRenderingQueued(const FrameEvent& evt)
 {
+	Ogre::ImGuiOverlay::NewFrame();
+	App->CL_ImGui->ImGui_Render_Loop();
+
 	if (CameraMode == Enums::Cam_Mode_None)
 	{
 		return 1;

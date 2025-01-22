@@ -64,6 +64,7 @@ CL64_App::CL64_App(void)
 	CL_ParseFile =				nullptr;
 	CL_Export =					nullptr;
 	CL_File_IO =				nullptr;
+	CL_ImGui =					nullptr;
 
 	// Templates Dialogs
 	CL_CreateBoxDialog =		nullptr;
@@ -146,6 +147,7 @@ void CL64_App::InitApp(void)
 	CL_ParseFile =				new CL64_ParseFile();
 	CL_Export =					new	CL64_Export();
 	CL_File_IO =				new CL64_File_IO();
+	CL_ImGui =					new CL64_ImGui();
 
 	// Templates Dialogs
 	CL_CreateBoxDialog =		new A_CreateBoxDialog();

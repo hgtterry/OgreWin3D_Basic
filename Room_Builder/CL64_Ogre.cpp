@@ -72,7 +72,7 @@ void CL64_Ogre::Init_Ogre(void)
 	// Set Up Grid Functions
 	App->CL_Grid->Grid_Update(1);
 	App->CL_Grid->Hair_Update(1);
-	
+	App->CL_ImGui->Init_ImGui();
 }
 
 // *************************************************************************
