@@ -323,7 +323,8 @@ void CL64_Ogre3D_Listener::Capture_Left_Mouse_Free(void)
 		if (test > 2)
 		{
 			Pl_DeltaMouse = float(Pl_Cent500X - Pl_MouseX);
-			mRotX = Degree(Pl_DeltaMouse * (float)0.03);//S_Player[0]->TurnRate);
+			mRotX = Degree(Pl_DeltaMouse * (float)0.08);//S_Player[0]->TurnRate);
+			//App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
 		}
 	}
 	else if (Pl_MouseX > Pl_Cent500X)
@@ -333,7 +334,8 @@ void CL64_Ogre3D_Listener::Capture_Left_Mouse_Free(void)
 		if (test > 2)
 		{
 			Pl_DeltaMouse = float(Pl_MouseX - Pl_Cent500X);
-			mRotX = Degree(-Pl_DeltaMouse * (float)0.03);//S_Player[0]->TurnRate);
+			mRotX = Degree(-Pl_DeltaMouse * (float)0.08);//S_Player[0]->TurnRate);
+			//App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
 		}
 	}
 
@@ -345,7 +347,8 @@ void CL64_Ogre3D_Listener::Capture_Left_Mouse_Free(void)
 		if (test > 2)
 		{
 			Pl_DeltaMouse = float(Pl_Cent500Y - Pl_MouseY);
-			mRotY = Degree(Pl_DeltaMouse * (float)0.03);//S_Player[0]->TurnRate);
+			mRotY = Degree(Pl_DeltaMouse * (float)0.08);//S_Player[0]->TurnRate);
+			//App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
 		}
 	}
 	else if (Pl_MouseY > Pl_Cent500Y)
@@ -355,10 +358,11 @@ void CL64_Ogre3D_Listener::Capture_Left_Mouse_Free(void)
 		if (test > 2)
 		{
 			Pl_DeltaMouse = float(Pl_MouseY - Pl_Cent500Y);
-			mRotY = Degree(-Pl_DeltaMouse * (float)0.03);//S_Player[0]->TurnRate);
+			mRotY = Degree(-Pl_DeltaMouse * (float)0.08);//S_Player[0]->TurnRate);
+			//App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
 		}
 	}
-	
+
 }
 
 // *************************************************************************

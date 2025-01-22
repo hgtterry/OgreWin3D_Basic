@@ -1017,8 +1017,11 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Bottom_Right_Ogre(HWND hDlg, UINT message,
 
 	case WM_MOUSEMOVE: // ok up and running and we have a loop for mouse
 	{
-		//App->Flash_Window();
-
+		/*if (App->CL_Ogre->Ogre3D_Listener->flag_LeftMouseDown == 1)
+		{
+			App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
+		}*/
+		
 		break;
 	}
 
