@@ -35,6 +35,10 @@
 #define IDD_CREATE_CYLINDER             149
 #define IDB_CYLINDERBIT                 151
 #define IDD_YESNO_DLG                   152
+#define IDI_CONE_PRIMITIVE              153
+#define IDI_STAIRCASE_PRIMITIVE         154
+#define IDI_ARCH_PRIMITIVE              155
+#define IDI_SPHEROID_PRIMITIVE          156
 #define IDC_BANNER                      1000
 #define IDC_STTEXT                      1001
 #define IDC_STMESSAGE                   1002
@@ -126,6 +130,11 @@
 #define IDC_STTOPZSIZE                  1094
 #define IDC_STTOPXOFFSET                1095
 #define IDC_STTOPZOFFSET                1096
+#define IDC_BRUSH_CONE_PRIMITIVE        1097
+#define IDC_BRUSH_SPHEROID_PRIMITIVE    1098
+#define IDC_BRUSH_STAIRCASE_PRIMITIVE   1099
+#define IDC_BUTTON4                     1100
+#define IDC_BRUSH_ARCH_PRIMITIVE        1100
 #define ID_DEBUG_GENERAL                32771
 #define ID_TEMPLATES_INSERT             32772
 #define ID_BRUSH_SELECT                 32773
@@ -156,9 +165,9 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
-#define _APS_NEXT_RESOURCE_VALUE        153
+#define _APS_NEXT_RESOURCE_VALUE        157
 #define _APS_NEXT_COMMAND_VALUE         32790
-#define _APS_NEXT_CONTROL_VALUE         1097
+#define _APS_NEXT_CONTROL_VALUE         1098
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif

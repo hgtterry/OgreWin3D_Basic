@@ -312,5 +312,17 @@
     <Image Include="res\cylinder.bmp">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="res\cone.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\stairs.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\arch.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\sphere.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

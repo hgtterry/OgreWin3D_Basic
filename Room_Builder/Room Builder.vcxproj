@@ -250,11 +250,15 @@
     <ResourceCompile Include="Room Builder.rc" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="res\arch.ico" />
     <Image Include="res\bitmap1.bmp" />
+    <Image Include="res\cone.ico" />
     <Image Include="res\cube.ico" />
     <Image Include="res\cylinder.bmp" />
     <Image Include="res\cylinder.ico" />
     <Image Include="res\solidbox.bmp" />
+    <Image Include="res\sphere.ico" />
+    <Image Include="res\stairs.ico" />
     <Image Include="Room Builder.ico" />
     <Image Include="small.ico" />
   </ItemGroup>
