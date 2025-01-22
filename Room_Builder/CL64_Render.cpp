@@ -177,8 +177,7 @@ POINT CL64_Render::Render_OrthoWorldToView(const ViewVars* cv, T_Vec3 const* wp)
 {
 	POINT	sc = { 0, 0 };
 	T_Vec3 ptView;
-	T_Vec3 Campos;
-
+	
 	switch (cv->ViewType)
 	{
 	case VIEWTOP:

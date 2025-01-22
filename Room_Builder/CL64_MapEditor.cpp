@@ -504,6 +504,29 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Main_Dlg(HWND hDlg, UINT message, WPARAM w
 }
 
 // *************************************************************************
+// *	  		Set_Views_Defaults:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+void CL64_MapEditor::Set_Views_Defaults(int Index, Ogre::int32 View, const char* Name)
+{
+	strcpy(App->CL_MapEditor->VCam[Index]->Name, Name);
+	App->CL_MapEditor->VCam[Index]->ViewType = View;
+	App->CL_MapEditor->VCam[Index]->ZoomFactor = 0.4;
+
+	App->CL_MapEditor->VCam[Index]->XCenter = 310;
+	App->CL_MapEditor->VCam[Index]->YCenter = 174;
+
+	App->CL_MapEditor->VCam[Index]->XScreenScale = 0;
+	App->CL_MapEditor->VCam[Index]->YScreenScale = 0;
+
+	App->CL_MapEditor->VCam[Index]->Width = 310;
+	App->CL_MapEditor->VCam[Index]->Height = 174;
+
+	App->CL_Maths->Vector3_Set(&App->CL_MapEditor->VCam[Index]->CamPos,0,0,0);
+
+	App->CL_MapEditor->VCam[Index]->MaxScreenScaleInv = 100;
+}
+
+// *************************************************************************
 // *	  	Create_Top_Left_Window:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
 void CL64_MapEditor::Create_Top_Left_Window()
@@ -525,19 +548,7 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Left_Window(HWND hDlg, UINT message, W
 		GetClientRect(hDlg, &r);
 
 		App->CL_MapEditor->VCam[V_TL] = new ViewVars;
-		strcpy(App->CL_MapEditor->VCam[V_TL]->Name, "TLV");
-		App->CL_MapEditor->VCam[V_TL]->ViewType = 8;
-		App->CL_MapEditor->VCam[V_TL]->ZoomFactor = 0.4;
-
-		App->CL_MapEditor->VCam[V_TL]->XCenter = 310;
-		App->CL_MapEditor->VCam[V_TL]->YCenter = 174;
-
-		App->CL_MapEditor->VCam[V_TL]->Width = 310;
-		App->CL_MapEditor->VCam[V_TL]->Height = 174;
-
-		App->CL_MapEditor->VCam[V_TL]->CamPos.x = 0;// App->CL_Ogre->camNode->getPosition();
-		App->CL_MapEditor->VCam[V_TL]->CamPos.y = 0;
-		App->CL_MapEditor->VCam[V_TL]->CamPos.z = 0;
+		App->CL_MapEditor->Set_Views_Defaults(V_TL,VIEWTOP,"TLV");
 
 		return TRUE;
 	}

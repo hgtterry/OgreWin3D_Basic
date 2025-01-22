@@ -18,27 +18,30 @@ typedef struct PlaneTag
 
 typedef struct ViewVarsTag
 {
-	HBITMAP				hDibSec;
+	//HBITMAP				hDibSec;
 	HWND				hDlg; // The Views HWND
 	Ogre::uint32		Flags;
-	Ogre::uint8*		pBits;
-	Ogre::uint32*		pZBuffer;
+	//Ogre::uint8*		pBits;
+	//Ogre::uint32*		pZBuffer;
 	Ogre::uint32		ViewType;
 	float				ZoomFactor = 1;
 
-	T_Vec3 Vpn, Vright, Vup, CamPos;
-	float	roll, pitch, yaw;
-	GPlane		FrustPlanes[4];
-	float	MaxScreenScaleInv, FieldOfView;
+	//T_Vec3 Vpn, Vright, Vup, CamPos;
+	T_Vec3 CamPos;
+	//float	roll, pitch, yaw;
+	GPlane	FrustPlanes[4];
+	float	MaxScreenScaleInv;// FieldOfView;
 	float	XCenter = 310;
 	float	YCenter = 174;
-	float	MaxScale;
+	//float	MaxScale;
+	//float	SpeedScale;
+	float XScreenScale = 0;
+	float YScreenScale = 0;
 
-	float	SpeedScale, YScreenScale, XScreenScale;
 	long	Width = 310;
 	long 	Height = 174;
-	long		FacesDone;
-	char Name[10];
+	//long	FacesDone;
+	char	Name[10];
 
 } ViewVars;
 

@@ -131,6 +131,7 @@ LRESULT CALLBACK CL64_Properties_Templates::Proc_Templates(HWND hDlg, UINT messa
 				if (App->CL_Brush->Get_Brush_Count() == 0)
 				{
 					App->CL_Doc->AddBrushToWorld();
+					App->CL_Ogre->Camera_Reset_Zero();
 					App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_Free;
 					App->CL_Top_Tabs->Enable_Select_Button(true, true);
 					App->CL_Doc->flag_Is_Modified = 1;
