@@ -63,6 +63,7 @@ private:
 	bool SelectBitmap();
 	int FindBitmap(TPack_WindowData* pData, const char* Name);
 	HBITMAP CreateHBitmapFromgeBitmap(geBitmap* Bitmap, HDC hdc);
+	void UpDateGeList(int Location);
 
 	bool Render2d_Blit(HDC hDC, HBITMAP Bmp, HBITMAP Alpha, const RECT* SourceRect, const RECT* DestRect);
 

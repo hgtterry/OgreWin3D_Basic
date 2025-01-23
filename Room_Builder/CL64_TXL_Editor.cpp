@@ -67,19 +67,18 @@ LRESULT CALLBACK CL64_TXL_Editor::Proc_Texture_Lib(HWND hDlg, UINT message, WPAR
 	{
 	case WM_INITDIALOG:
 	{
-		SendDlgItemMessage(hDlg, IDC_STTXLFILE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		//SendDlgItemMessage(hDlg, IDC_STTEXTURE, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
 		//SendDlgItemMessage(hDlg, IDC_STALPHA, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
 
 		SendDlgItemMessage(hDlg, IDC_TEXTURELIST2, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		//SendDlgItemMessage(hDlg, IDC_GEINFO, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_GEINFO, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
-		/*SendDlgItemMessage(hDlg, IDC_ADD, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_BTTXLDELETE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_EXPORTSELECTED, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));*/
+		SendDlgItemMessage(hDlg, IDC_BT_ADD_TEXTURE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_DELETE_TEXTURE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		/*SendDlgItemMessage(hDlg, IDC_EXPORTSELECTED, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));*/
 
 		App->CL_TXL_Editor->TXL_Dlg_HWND = hDlg;
 
@@ -88,19 +87,27 @@ LRESULT CALLBACK CL64_TXL_Editor::Proc_Texture_Lib(HWND hDlg, UINT message, WPAR
 		App->CL_TXL_Editor->Entry->WinABitmap = NULL;
 		App->CL_TXL_Editor->Entry->WinBitmap = NULL;
 		App->CL_TXL_Editor->Entry->Deleted = 0;
-
-		SetWindowLongPtr(GetDlgItem(hDlg, IDC_PREVIEW), GWLP_WNDPROC, (LONG_PTR)TextureLibPreviewWnd);
-
-		bool Test = App->CL_TXL_Editor->LoadFile(hDlg);
-
-		//SetWindowText(hDlg, "Texture Library Editor");
+		App->CL_TXL_Editor->Entry->Dirty = 0;
+		App->CL_TXL_Editor->Entry->Flags = 0;
 
 		App->CL_TXL_Editor->pData = new TPack_WindowData;
+		App->CL_TXL_Editor->pData->BitmapCount = 0;
+		App->CL_TXL_Editor->pData->Bitmaps = NULL;
+		App->CL_TXL_Editor->pData->Dirty = 0;
+		App->CL_TXL_Editor->pData->FileNameIsValid = 0;
+		App->CL_TXL_Editor->pData->Instance = App->hInst;
+		App->CL_TXL_Editor->pData->SelectedEntry = NULL;
+		strcpy(App->CL_TXL_Editor->pData->TXLFileName, App->CL_TXL_Editor->FileName);
 
 		char buf1[200];
 		strcpy(buf1, "Texture library: - ");
 		strcat(buf1, App->CL_TXL_Editor->FileName);
-		SetDlgItemText(hDlg, IDC_STTXLFILE, buf1);
+		
+		bool Test = App->CL_TXL_Editor->LoadFile(hDlg);
+
+		SetWindowText(hDlg, buf1);
+
+		SetWindowLongPtr(GetDlgItem(hDlg, IDC_PREVIEW), GWLP_WNDPROC, (LONG_PTR)TextureLibPreviewWnd);
 
 		return 1;
 	}
@@ -128,14 +135,6 @@ LRESULT CALLBACK CL64_TXL_Editor::Proc_Texture_Lib(HWND hDlg, UINT message, WPAR
 			return (UINT)App->AppBackground;
 		}*/
 
-		if (GetDlgItem(hDlg, IDC_STTXLFILE) == (HWND)lParam)
-		{
-			SetBkColor((HDC)wParam, RGB(0, 0, 0));
-			SetTextColor((HDC)wParam, RGB(0, 0, 0));
-			SetBkMode((HDC)wParam, TRANSPARENT);
-			return (UINT)App->AppBackground;
-		}
-
 		break;
 	}
 
@@ -143,21 +142,21 @@ LRESULT CALLBACK CL64_TXL_Editor::Proc_Texture_Lib(HWND hDlg, UINT message, WPAR
 	{
 		LPNMHDR some_item = (LPNMHDR)lParam;
 
-		/*if (some_item->idFrom == IDC_ADD && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDC_BT_ADD_TEXTURE)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
 			return CDRF_DODEFAULT;
 		}
 
-		if (some_item->idFrom == IDC_BTTXLDELETE && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDC_BT_DELETE_TEXTURE)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
 			return CDRF_DODEFAULT;
 		}
 
-		if (some_item->idFrom == IDC_EXPORTSELECTED && some_item->code == NM_CUSTOMDRAW)
+		/*if (some_item->idFrom == IDC_EXPORTSELECTED && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
@@ -192,9 +191,9 @@ LRESULT CALLBACK CL64_TXL_Editor::Proc_Texture_Lib(HWND hDlg, UINT message, WPAR
 		}
 
 		//--------------------------------- Add -----------------------
-		/*if (LOWORD(wParam) == IDC_ADD)
+		if (LOWORD(wParam) == IDC_BT_ADD_TEXTURE)
 		{
-			int test = App->CLSB_FileIO->Open_File_Model(App->MainHwnd, "Texture Files ( *.bmp *.tga )\0*.bmp;*.tga\0*.tga\0*.tga\0*.bmp\0*.bmp\0", "Add Texture", "Bitmap Files");
+			/*int test = App->CLSB_FileIO->Open_File_Model(App->MainHwnd, "Texture Files ( *.bmp *.tga )\0*.bmp;*.tga\0*.tga\0*.tga\0*.bmp\0*.bmp\0", "Add Texture", "Bitmap Files");
 			if (test == 0)
 			{
 				return TRUE;
@@ -203,32 +202,32 @@ LRESULT CALLBACK CL64_TXL_Editor::Proc_Texture_Lib(HWND hDlg, UINT message, WPAR
 			strcpy(App->CL_TxlEditor->Add_Texture_FileName, App->CLSB_FileIO->FileName);
 
 			App->CL_TxlEditor->AddTexture(NULL, App->CL_TxlEditor->Add_Texture_FileName);
-			App->CL_TxlEditor->pData->Dirty = 1;
+			App->CL_TxlEditor->pData->Dirty = 1;*/
+
 			return TRUE;
-		}*/
+		}
 
 		//--------------------------------- Delete -----------------------
-		//if (LOWORD(wParam) == IDC_BTTXLDELETE)
-		//{
+		if (LOWORD(wParam) == IDC_BT_DELETE_TEXTURE)
+		{
 
-		//	int Index = SendDlgItemMessage(App->CL_TxlEditor->pData->hwnd, IDC_TEXTURELIST2, LB_GETCURSEL, (WPARAM)0, (LPARAM)0);
-		//	if (Index == -1)
-		//	{
-		//		return TRUE;
-		//	}
+			//int Index = SendDlgItemMessage(App->CL_TxlEditor->pData->hwnd, IDC_TEXTURELIST2, LB_GETCURSEL, (WPARAM)0, (LPARAM)0);
+			//if (Index == -1)
+			//{
+			//	return TRUE;
+			//}
 
-		//	//App->CL_TxlEditor->Current_Entry->Deleted = 1;
+			////App->CL_TxlEditor->Current_Entry->Deleted = 1;
 
-		//	App->CL_TxlEditor->NewBitmapList[Index]->Deleted = 1;
+			//App->CL_TxlEditor->NewBitmapList[Index]->Deleted = 1;
 
-		//	App->CL_TxlEditor->UpDateList();
-		//	App->CL_TxlEditor->SelectBitmap();
+			//App->CL_TxlEditor->UpDateList();
+			//App->CL_TxlEditor->SelectBitmap();
 
-		//	App->CL_TxlEditor->pData->Dirty = 1;
+			//App->CL_TxlEditor->pData->Dirty = 1;
 
-		//	return TRUE;
-		//}
-
+			return TRUE;
+		}
 
 		////--------------------------------- Save ----------------------
 		//if (LOWORD(wParam) == IDC_SAVE)
@@ -350,7 +349,7 @@ LRESULT CALLBACK CL64_TXL_Editor::Proc_Texture_Lib(HWND hDlg, UINT message, WPAR
 		}
 
 	}
-
+	break;
 	}
 
 	return FALSE;
@@ -599,7 +598,7 @@ bool CL64_TXL_Editor::AddTexture(geVFile* BaseFile, const char* Path)
 }
 
 // *************************************************************************
-// *						SelectBitmap  06/06/08 				  		   *
+// *			SelectBitmap:- Terry and Hazel Flanigan 2025 	  		   *
 // *************************************************************************
 bool CL64_TXL_Editor::SelectBitmap()
 {
@@ -608,17 +607,17 @@ bool CL64_TXL_Editor::SelectBitmap()
 	int location = 0;
 
 	Index = SendDlgItemMessage(TXL_Dlg_HWND, IDC_TEXTURELIST2, LB_GETCURSEL, (WPARAM)0, (LPARAM)0);
-	if (Index == LB_ERR)
+	if (Index == -1)
 	{
-		//	Entry = NULL;
+		return 0;
 	}
 	else
 	{
-		SendDlgItemMessage(TXL_Dlg_HWND, IDC_TEXTURELIST2, LB_GETTEXT, (WPARAM)Index, (LPARAM)&TextureName);
-		//	Entry = FindBitmap(pData, TextureName);
+		char buff[256]{ 0 };
+		SendDlgItemMessage(TXL_Dlg_HWND, IDC_TEXTURELIST2, LB_GETTEXT, (WPARAM)Index, (LPARAM)TextureName);
+		
 		location = FindBitmap(pData, TextureName);
-
-		//	assert(Entry);
+		
 		if (!NewBitmapList[location]->WinBitmap)
 		{
 			HWND	PreviewWnd;
@@ -638,25 +637,19 @@ bool CL64_TXL_Editor::SelectBitmap()
 			}
 			ReleaseDC(PreviewWnd, hDC);
 		}
-
-		//if	(!NewBitmapList[location]->WinBitmap)
-		//{
-		//	NonFatalError("Memory allocation error creating bitmap Select");
-		//	return 0;
-		//}
 	}
 
 	InvalidateRect(GetDlgItem(TXL_Dlg_HWND, IDC_PREVIEW), NULL, TRUE);
 
 	Entry = NewBitmapList[location];
-	//UpDateGeList(location);
+	UpDateGeList(location);
 
 	return 0;
 
 }
 
 // *************************************************************************
-// *						FindBitmap  06/06/08 				  		   *
+// *				FindBitmap:- Terry and Hazel Flanigan 2025 		  	   *
 // *************************************************************************
 int CL64_TXL_Editor::FindBitmap(TPack_WindowData* pData, const char* Name)
 {
@@ -675,7 +668,7 @@ int CL64_TXL_Editor::FindBitmap(TPack_WindowData* pData, const char* Name)
 }
 
 // *************************************************************************
-// *				CreateHBitmapFromgeBitmap  06/06/08 		  		   *
+// *	CreateHBitmapFromgeBitmap:- Terry and Hazel Flanigan 2025    	   *
 // *************************************************************************
 HBITMAP CL64_TXL_Editor::CreateHBitmapFromgeBitmap(geBitmap* Bitmap, HDC hdc)
 {
@@ -762,40 +755,39 @@ HBITMAP CL64_TXL_Editor::CreateHBitmapFromgeBitmap(geBitmap* Bitmap, HDC hdc)
 }
 
 // *************************************************************************
-// *					UpDateGeList  06/06/08 					  		   *
+// *			UpDateGeList:- Terry and Hazel Flanigan 2025			   *
 // *************************************************************************
-//bool A_TxlEditor::UpDateGeList(int Location)
-//{
-//	int B = 0;
-//	geBitmap_Info	MPInfo;
-//	geBitmap_Info	MSInfo;
-//
-//	char buff[256];
-//	strcpy(buff, "no info");
-//	SendDlgItemMessage(pData->hwnd, IDC_GEINFO, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
-//
-//	sprintf(buff, "%s %s", "Texture Name :-", NewBitmapList[Location]->Name);
-//	SendDlgItemMessage(pData->hwnd, IDC_GEINFO, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);
-//
-//	sprintf(buff, "%s %i", "Index :-", Location);
-//	SendDlgItemMessage(pData->hwnd, IDC_GEINFO, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);
-//
-//	sprintf(buff, "%s %s", "Bitmap :-", "Valid");
-//	SendDlgItemMessage(pData->hwnd, IDC_GEINFO, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);
-//
-//	sprintf(buff, "%s %d", "Width :-", geBitmap_Width(NewBitmapList[Location]->Bitmap));
-//	SendDlgItemMessage(pData->hwnd, IDC_GEINFO, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);
-//
-//	sprintf(buff, "%s %d", "Height :-", geBitmap_Height(NewBitmapList[Location]->Bitmap));
-//	SendDlgItemMessage(pData->hwnd, IDC_GEINFO, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);
-//
-//
-//	geBitmap_GetInfo(NewBitmapList[Location]->Bitmap, &MPInfo, &MSInfo);
-//	/*geBitmap_GetAverageColor(NewBitmapList[Location]->Bitmap,&R,&G,&B);
-//	sprintf(buff, "%s %i","RGB :-",MPInfo->Format);
-//	SendDlgItemMessage(pData->hwnd, IDC_GEINFO, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);*/
-//	return 1;
-//}
+void CL64_TXL_Editor::UpDateGeList(int Location)
+{
+	int B = 0;
+	geBitmap_Info	MPInfo;
+	geBitmap_Info	MSInfo;
+
+	char buff[256];
+	strcpy(buff, "no info");
+	SendDlgItemMessage(TXL_Dlg_HWND, IDC_GEINFO, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
+
+	sprintf(buff, "%s %s", "Texture Name :-", NewBitmapList[Location]->Name);
+	SendDlgItemMessage(TXL_Dlg_HWND, IDC_GEINFO, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);
+
+	sprintf(buff, "%s %i", "Index :-", Location);
+	SendDlgItemMessage(TXL_Dlg_HWND, IDC_GEINFO, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);
+
+	sprintf(buff, "%s %s", "Bitmap :-", "Valid");
+	SendDlgItemMessage(TXL_Dlg_HWND, IDC_GEINFO, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);
+
+	sprintf(buff, "%s %d", "Width :-", geBitmap_Width(NewBitmapList[Location]->Bitmap));
+	SendDlgItemMessage(TXL_Dlg_HWND, IDC_GEINFO, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);
+
+	sprintf(buff, "%s %d", "Height :-", geBitmap_Height(NewBitmapList[Location]->Bitmap));
+	SendDlgItemMessage(TXL_Dlg_HWND, IDC_GEINFO, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);
+
+
+	geBitmap_GetInfo(NewBitmapList[Location]->Bitmap, &MPInfo, &MSInfo);
+	/*geBitmap_GetAverageColor(NewBitmapList[Location]->Bitmap,&R,&G,&B);
+	sprintf(buff, "%s %i","RGB :-",MPInfo->Format);
+	SendDlgItemMessage(pData->hwnd, IDC_GEINFO, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);*/
+}
 
 // *************************************************************************
 // *						NonFatalError   					  		   *
