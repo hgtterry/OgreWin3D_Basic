@@ -38,7 +38,6 @@ typedef	struct	BitmapEntry
 typedef struct	TPack_WindowData
 {
 	HINSTANCE		Instance;
-	HWND			hwnd;
 	int				BitmapCount;
 	BitmapEntry* Bitmaps;
 	BitmapEntry* SelectedEntry;
@@ -57,11 +56,25 @@ public:
 
 private:
 	static LRESULT CALLBACK Proc_Texture_Lib(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static bool CALLBACK TextureLibPreviewWnd(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
+
+	bool LoadFile(HWND ChDlg);
+	bool AddTexture(geVFile* BaseFile, const char* Path);
+	bool SelectBitmap();
+	int FindBitmap(TPack_WindowData* pData, const char* Name);
+	HBITMAP CreateHBitmapFromgeBitmap(geBitmap* Bitmap, HDC hdc);
+
+	bool Render2d_Blit(HDC hDC, HBITMAP Bmp, HBITMAP Alpha, const RECT* SourceRect, const RECT* DestRect);
+
+	bool NonFatalError(const char* Msg, ...);
 
 	TPack_WindowData*	pData;
 	BitmapEntry*		Entry;
+	BitmapEntry*		NewBitmapList[200];
+
+	HWND TXL_Dlg_HWND;
 
 	char FileName[MAX_PATH];
-
+	char TextureName[MAX_PATH];
 };
 

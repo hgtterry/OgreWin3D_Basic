@@ -135,7 +135,9 @@
 #define IDC_BRUSH_SPHEROID_PRIMITIVE    1098
 #define IDC_STTXLFILE                   1098
 #define IDC_BRUSH_STAIRCASE_PRIMITIVE   1099
+#define IDC_TEXTURELIST2                1099
 #define IDC_BRUSH_ARCH_PRIMITIVE        1100
+#define IDC_PREVIEW                     1100
 #define ID_DEBUG_GENERAL                32771
 #define ID_TEMPLATES_INSERT             32772
 #define ID_BRUSH_SELECT                 32773
@@ -169,7 +171,7 @@
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        158
 #define _APS_NEXT_COMMAND_VALUE         32791
-#define _APS_NEXT_CONTROL_VALUE         1099
+#define _APS_NEXT_CONTROL_VALUE         1101
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif
