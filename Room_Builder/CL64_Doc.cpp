@@ -134,16 +134,19 @@ const char* CL64_Doc::FindTextureLibrary(char const* WadName)
 	bool test = App->CL_Utilities->Check_File_Exist(Path_And_File);
 	if (test == 1)
 	{
+        strcpy(App->CL_Doc->mCurrent_TXL_Path_And_File, Path_And_File);
 		return Path_And_File;
 	}
 	else
 	{
 		App->Say_Win("File Does not Exist");
 
+        strcpy(App->CL_Doc->mCurrent_TXL_Path_And_File, "No_File");
 		strcpy(Path_And_File, "");
 		return Path_And_File;
 	}
 	
+    strcpy(App->CL_Doc->mCurrent_TXL_Path_And_File, "No_File");
 	strcpy(Path_And_File, "");
 	return Path_And_File;
 }

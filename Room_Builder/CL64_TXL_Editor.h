@@ -23,10 +23,45 @@ THE SOFTWARE.
 */
 
 #pragma once
+
+typedef	struct	BitmapEntry
+{
+	char* Name;
+	geBitmap* Bitmap;
+	HBITMAP		WinBitmap;
+	HBITMAP		WinABitmap;
+	unsigned	Flags;
+	int			Dirty;
+	bool		Deleted;
+}	BitmapEntry;
+
+typedef struct	TPack_WindowData
+{
+	HINSTANCE		Instance;
+	HWND			hwnd;
+	int				BitmapCount;
+	BitmapEntry* Bitmaps;
+	BitmapEntry* SelectedEntry;
+	BOOL			FileNameIsValid;
+	char			TXLFileName[256];
+	BOOL			Dirty;
+}	TPack_WindowData;
+
 class CL64_TXL_Editor
 {
 public:
 	CL64_TXL_Editor();
 	~CL64_TXL_Editor();
+
+	void Start_Texl_Dialog();
+
+private:
+	static LRESULT CALLBACK Proc_Texture_Lib(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+
+	TPack_WindowData*	pData;
+	BitmapEntry*		Entry;
+
+	char FileName[MAX_PATH];
+
 };
 

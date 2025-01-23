@@ -319,6 +319,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 return 1;
             }
             
+            // ----------------------------- Tools
+            case ID_TOOLS_TEXTURESEDITOR:
+            {
+                App->CL_TXL_Editor->Start_Texl_Dialog();
+                return 1;
+            }
+           
             // ---------------------------------------------
             case IDM_ABOUT:
                 DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);

@@ -39,6 +39,7 @@
 #define IDI_STAIRCASE_PRIMITIVE         154
 #define IDI_ARCH_PRIMITIVE              155
 #define IDI_SPHEROID_PRIMITIVE          156
+#define IDD_TEXTURE_EDITOR              157
 #define IDC_BANNER                      1000
 #define IDC_STTEXT                      1001
 #define IDC_STMESSAGE                   1002
@@ -132,8 +133,8 @@
 #define IDC_STTOPZOFFSET                1096
 #define IDC_BRUSH_CONE_PRIMITIVE        1097
 #define IDC_BRUSH_SPHEROID_PRIMITIVE    1098
+#define IDC_STTXLFILE                   1098
 #define IDC_BRUSH_STAIRCASE_PRIMITIVE   1099
-#define IDC_BUTTON4                     1100
 #define IDC_BRUSH_ARCH_PRIMITIVE        1100
 #define ID_DEBUG_GENERAL                32771
 #define ID_TEMPLATES_INSERT             32772
@@ -156,6 +157,7 @@
 #define ID_OPENEXAMPLES_TESTSCENE       32787
 #define ID_CAMERA_TRACKCAMERA           32788
 #define ID_CAMERA_RESETCAMERAZERO       32789
+#define ID_TOOLS_TEXTURESEDITOR         32790
 #define ID_GENERALSELECT                32886
 #define ID_TOOLS_TEMPLATE               32910
 #define IDC_STATIC                      -1
@@ -165,9 +167,9 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
-#define _APS_NEXT_RESOURCE_VALUE        157
-#define _APS_NEXT_COMMAND_VALUE         32790
-#define _APS_NEXT_CONTROL_VALUE         1098
+#define _APS_NEXT_RESOURCE_VALUE        158
+#define _APS_NEXT_COMMAND_VALUE         32791
+#define _APS_NEXT_CONTROL_VALUE         1099
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif
