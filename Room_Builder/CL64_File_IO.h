@@ -30,7 +30,7 @@ public:
 	~CL64_File_IO(void);
 
 	void Select_Folder();
-	bool Open_File();
+	bool Open_File(const LPCWSTR Type, const LPCWSTR Extensions);
 	bool Save_File();
 
 	char szSelectedDir[MAX_PATH];

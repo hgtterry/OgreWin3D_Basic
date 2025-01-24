@@ -92,8 +92,11 @@ void CL64_File_IO::Select_Folder()
 // *************************************************************************
 // *				Open_File:- Terry and Hazel Flanigan 2025			   *
 // *************************************************************************
-bool CL64_File_IO::Open_File()
+bool CL64_File_IO::Open_File(const LPCWSTR Type, const LPCWSTR Extensions)
 {
+	//LPCWSTR kk = L"Texture Files";
+	//LPCWSTR ext = L"*.bmp";
+
 	//  CREATE FILE OBJECT INSTANCE
 	HRESULT f_SysHr = CoInitializeEx(NULL, COINIT_APARTMENTTHREADED | COINIT_DISABLE_OLE1DDE);
 	if (FAILED(f_SysHr))
@@ -109,8 +112,8 @@ bool CL64_File_IO::Open_File()
 
 	//  SHOW OPEN FILE DIALOG WINDOW
 	COMDLG_FILTERSPEC save_filter[1];
-	save_filter[0].pszName = L"mtf files";
-	save_filter[0].pszSpec = L"*.mtf";
+	save_filter[0].pszName = Type;
+	save_filter[0].pszSpec = Extensions;
 
 	f_SysHr = f_FileSystem->SetFileTypes(1, save_filter);
 	if (FAILED(f_SysHr)) {

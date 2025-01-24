@@ -31,6 +31,7 @@ CL64_TXL_Editor::CL64_TXL_Editor()
 {
 	mFileName[0] = 0;
 	mTextureName[0] = 0;
+	Add_Texture_FileName[0] = 0;
 
 	pData = NULL;
 	Current_Entry = NULL;
@@ -202,16 +203,23 @@ LRESULT CALLBACK CL64_TXL_Editor::Proc_Texture_Lib(HWND hDlg, UINT message, WPAR
 		//--------------------------------- Add -----------------------
 		if (LOWORD(wParam) == IDC_BT_ADD_TEXTURE)
 		{
-			/*int test = App->CLSB_FileIO->Open_File_Model(App->MainHwnd, "Texture Files ( *.bmp *.tga )\0*.bmp;*.tga\0*.tga\0*.tga\0*.bmp\0*.bmp\0", "Add Texture", "Bitmap Files");
+			// "Texture Files ( *.bmp *.tga )\0*.bmp;*.tga\0*.tga\0*.tga\0*.bmp\0*.bmp\0", "Add Texture", "Bitmap Files"
+
+			LPCWSTR mType = L"Texture Files";
+			LPCWSTR mExtensions = L"*.bmp;*.tga";
+
+			int test = App->CL_File_IO->Open_File((LPCWSTR)mType, (LPCWSTR)mExtensions);
 			if (test == 0)
 			{
 				return TRUE;
 			}
 
-			strcpy(App->CL_TxlEditor->Add_Texture_FileName, App->CLSB_FileIO->FileName);
+			App->Say_Win(App->CL_File_IO->sFilePath.c_str());
+			strcpy(App->CL_TXL_Editor->Add_Texture_FileName, App->CL_File_IO->sFilePath.c_str());
 
-			App->CL_TxlEditor->AddTexture(NULL, App->CL_TxlEditor->Add_Texture_FileName);
-			App->CL_TxlEditor->pData->Dirty = 1;*/
+			App->CL_TXL_Editor->AddTexture(NULL, App->CL_TXL_Editor->Add_Texture_FileName);
+			App->CL_TXL_Editor->UpDateList();
+			App->CL_TXL_Editor->pData->Dirty = 1;
 
 			return TRUE;
 		}
@@ -963,6 +971,76 @@ bool CL64_TXL_Editor::Save(const char* Path, bool Use_Save_Dislog)
 		pData->Dirty = FALSE;
 	return 1;
 }
+
+//// *************************************************************************
+//// *						AddTexture  06/06/08 				  		   *
+//// *************************************************************************
+//bool CL64_TXL_Editor::AddTexture(geVFile* BaseFile, const char* Path)
+//{
+//	geBitmap_Info	PInfo;
+//	geBitmap_Info	SInfo;
+//	geBitmap* Bitmap;
+//
+//	geVFile* File;
+//	char	FileName[MAX_PATH];
+//	char*	Name;
+//
+//	Bitmap = NULL;
+//	File = NULL;
+//
+//	_splitpath(Path, NULL, NULL, FileName, NULL);
+//	Name = strdup(FileName);
+//	if (!Name)
+//	{
+//		NonFatalError("Memory allocation error processing %s", Path);
+//		return FALSE;
+//	}
+//
+//	if (BaseFile)
+//		File = geVFile_Open(BaseFile, Path, GE_VFILE_OPEN_READONLY);
+//	else
+//		File = geVFile_OpenNewSystem(NULL, GE_VFILE_TYPE_DOS, Path, NULL, GE_VFILE_OPEN_READONLY);
+//
+//	if (!File)
+//	{
+//		NonFatalError("Could not open %s", Path);
+//		return TRUE;
+//	}
+//	//geBitmap_Create()
+//	Bitmap = geBitmap_CreateFromFile(File);
+//	geVFile_Close(File);
+//	if (!Bitmap)
+//	{
+//		NonFatalError("%s is not a valid bitmap", Path);
+//		return TRUE;
+//	}
+//	geBitmap_GetInfo(Bitmap, &PInfo, &SInfo);
+//	//	if	(PInfo.Format != GE_PIXELFORMAT_8BIT)
+//	//	{
+//	//		NonFatalError("%s is not an 8bit bitmap", Path);
+//	//		goto fail;
+//	//	}
+//	//	NewBitmapList = geRam_Realloc(pData->Bitmaps, sizeof(*NewBitmapList) * (pData->BitmapCount + 1));
+//	NewBitmapList[pData->BitmapCount] = new BitmapEntry;
+//	if (!NewBitmapList)
+//	{
+//		NonFatalError("Memory allocation error processing %s", Path);
+//		return TRUE;
+//	}
+//
+//	NewBitmapList[pData->BitmapCount]->Name = Name;
+//	NewBitmapList[pData->BitmapCount]->Bitmap = Bitmap;
+//	NewBitmapList[pData->BitmapCount]->WinBitmap = NULL;
+//	NewBitmapList[pData->BitmapCount]->WinABitmap = NULL;
+//	NewBitmapList[pData->BitmapCount]->Flags = 0;
+//	NewBitmapList[pData->BitmapCount]->Deleted = 0;
+//	pData->BitmapCount++;
+//
+//	SendDlgItemMessage(TXL_Dlg_HWND, IDC_TEXTURELIST2, LB_ADDSTRING, (WPARAM)0, (LPARAM)Name);
+//
+//	return TRUE;
+//
+//}
 
 // *************************************************************************
 // *						NonFatalError   					  		   *

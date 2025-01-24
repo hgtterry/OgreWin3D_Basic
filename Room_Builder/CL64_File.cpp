@@ -310,7 +310,10 @@ void CL64_File::Start_Load(bool Use_Open_Dialog)
 {
 	if (Use_Open_Dialog == 1)
 	{
-		bool test = App->CL_File_IO->Open_File();
+		LPCWSTR mType = L"Mesh Texture File";
+		LPCWSTR mExtensions = L"*.mtf";
+
+		bool test = App->CL_File_IO->Open_File((LPCWSTR)mType, (LPCWSTR)mExtensions);
 		if (test == false)
 		{
 			return;

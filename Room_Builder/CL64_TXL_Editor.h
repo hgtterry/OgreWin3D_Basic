@@ -69,7 +69,7 @@ private:
 	void UpDateGeList(int Location);
 	void UpDateList();
 	bool Save(const char* Path, bool Use_Save_Dislog);
-
+	
 	bool Render2d_Blit(HDC hDC, HBITMAP Bmp, HBITMAP Alpha, const RECT* SourceRect, const RECT* DestRect);
 
 	bool NonFatalError(const char* Msg, ...);
@@ -82,5 +82,7 @@ private:
 
 	char mFileName[MAX_PATH];
 	char mTextureName[MAX_PATH];
+	char Add_Texture_FileName[MAX_PATH];
+
 };
 
