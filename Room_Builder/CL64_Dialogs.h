@@ -60,10 +60,12 @@ private:
 	bool Show_Brush_Faces_Info(const FaceList* pList, HWND hDlg);
 	bool Show_Face_Data(int Index, const Face* f, HWND hDlg);
 
-	bool flag_boolBrush_Properties_Dialog_Active;
+	int Check_What;
 
 	char Message_Text_Header[MAX_PATH];
 	char Message_Text_Message[MAX_PATH];
+
+	bool flag_boolBrush_Properties_Dialog_Active;
 
 };
 

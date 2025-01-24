@@ -46,7 +46,8 @@ namespace Enums
 	{
 		Check_Name_None = 0,
 		Check_Name_Brushes = 1,
-		Check_Names_Objects = 2
+		Check_Names_Objects = 2,
+		Check_Names_Textures = 3
 	};
 
 	enum UpdateViews

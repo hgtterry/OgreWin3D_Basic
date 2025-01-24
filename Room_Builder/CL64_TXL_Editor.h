@@ -53,6 +53,7 @@ public:
 	~CL64_TXL_Editor();
 
 	void Start_Texl_Dialog();
+	int Check_if_Name_Exist(const char* Name);
 
 private:
 	static LRESULT CALLBACK Proc_Texture_Lib(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
@@ -61,7 +62,9 @@ private:
 	bool LoadFile(HWND ChDlg);
 	bool AddTexture(geVFile* BaseFile, const char* Path);
 	bool SelectBitmap();
+
 	int FindBitmap(TPack_WindowData* pData, const char* Name);
+
 	HBITMAP CreateHBitmapFromgeBitmap(geBitmap* Bitmap, HDC hdc);
 	void UpDateGeList(int Location);
 	void UpDateList();

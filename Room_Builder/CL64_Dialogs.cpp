@@ -102,6 +102,8 @@ CL64_Dialogs::CL64_Dialogs(void)
 	btext[0] = 0;
 	Chr_Text[0] = 0;;
 
+	Check_What = 0;
+
 	flag_Dlg_Canceled = 0;
 	flag_boolBrush_Properties_Dialog_Active = 0;
 }
@@ -216,7 +218,7 @@ LRESULT CALLBACK CL64_Dialogs::Proc_YesNo(HWND hDlg, UINT message, WPARAM wParam
 void CL64_Dialogs::Dialog_Text(int What_Check)
 {
 	flag_Dlg_Canceled = 0;
-	//What_Check_Name = What_Check;
+	Check_What = What_Check;
 
 	DialogBox(App->hInst, (LPCTSTR)IDD_TEXT_DIALOG, App->MainHwnd, (DLGPROC)Proc_Dialog_Text);
 }
@@ -230,8 +232,6 @@ LRESULT CALLBACK CL64_Dialogs::Proc_Dialog_Text(HWND hDlg, UINT message, WPARAM 
 	{
 	case WM_INITDIALOG:
 	{
-		//App->SetTitleBar(hDlg);
-
 		HFONT Font;
 		Font = CreateFont(-20, 0, 0, 0, FW_BOLD, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Courier Black");
 		SendDlgItemMessage(hDlg, IDC_TITLENAME, WM_SETFONT, (WPARAM)Font, MAKELPARAM(TRUE, 0));
@@ -294,17 +294,16 @@ LRESULT CALLBACK CL64_Dialogs::Proc_Dialog_Text(HWND hDlg, UINT message, WPARAM 
 
 			strcpy(App->CL_Dialogs->Chr_Text, buff);
 
-			/*if (App->CL_Dialogs->What_Check_Name == Enums::Check_Name_Brushes)
+			if (App->CL_Dialogs->Check_What == Enums::Check_Names_Textures)
 			{
-				bool test = App->CL_Brush->Check_if_Name_Exist(buff);
+				bool test = App->CL_TXL_Editor->Check_if_Name_Exist(buff);
 				if (test == 1)
 				{
-					App->Say("Brush Name Exist");
+					App->Say("Texture Name Exist");
 					return TRUE;
 				}
-			}*/
+			}
 
-			
 			App->CL_Dialogs->flag_Dlg_Canceled = 0;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;

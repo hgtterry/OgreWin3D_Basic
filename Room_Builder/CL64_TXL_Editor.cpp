@@ -78,6 +78,8 @@ LRESULT CALLBACK CL64_TXL_Editor::Proc_Texture_Lib(HWND hDlg, UINT message, WPAR
 
 		SendDlgItemMessage(hDlg, IDC_BT_ADD_TEXTURE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_DELETE_TEXTURE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_TXL_RENAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
 		/*SendDlgItemMessage(hDlg, IDC_EXPORTSELECTED, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));*/
 
 		App->CL_TXL_Editor->TXL_Dlg_HWND = hDlg;
@@ -150,6 +152,13 @@ LRESULT CALLBACK CL64_TXL_Editor::Proc_Texture_Lib(HWND hDlg, UINT message, WPAR
 		}
 
 		if (some_item->idFrom == IDC_BT_DELETE_TEXTURE)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BT_TXL_RENAME)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
@@ -236,14 +245,35 @@ LRESULT CALLBACK CL64_TXL_Editor::Proc_Texture_Lib(HWND hDlg, UINT message, WPAR
 		//	App->CL_Texture_Lib->Save(App->CL_Texture_Lib->pData->TXLFileName);
 		//	return TRUE;
 		//}
-		////--------------------------------- Rename ----------------------
-		//if (LOWORD(wParam) == IDC_RENAME)
-		//{
+		//--------------------------------- Rename ----------------------
+		if (LOWORD(wParam) == IDC_BT_TXL_RENAME)
+		{
+			int Index = App->CL_TXL_Editor->FindBitmap(App->CL_TXL_Editor->pData, App->CL_TXL_Editor->mTextureName);
 
-		//	//DialogBox(hInst, (LPCTSTR)IDD_RENAME, Fdlg, (DLGPROC)RenameProc);
-		//	//App->CL_Texture_Lib->pData->Dirty = 1;  // it as changed reqest save
-		//	return TRUE;
-		//}
+			char mName[MAX_PATH];
+			strcpy(App->CL_Dialogs->btext, "Change Texture Name");
+			strcpy(App->CL_Dialogs->Chr_Text, App->CL_TXL_Editor->NewBitmapList[Index]->Name);
+
+			App->CL_Dialogs->Dialog_Text(Enums::Check_Names_Textures);
+
+			if (App->CL_Dialogs->flag_Dlg_Canceled == 0)
+			{
+				strcpy(mName, App->CL_Dialogs->Chr_Text);
+			}
+			else
+			{
+				return TRUE;
+			}
+
+			strcpy(App->CL_TXL_Editor->Current_Entry->Name, mName);
+			strcpy(App->CL_TXL_Editor->NewBitmapList[Index]->Name, mName);
+
+			App->CL_TXL_Editor->UpDateList();
+
+			App->CL_TXL_Editor->pData->Dirty = 1;
+
+			return TRUE;
+		}
 		////--------------------------------- Save AS --------------------
 		/*if (LOWORD(wParam) == IDC_TEST)
 		{
@@ -689,6 +719,25 @@ int CL64_TXL_Editor::FindBitmap(TPack_WindowData* pData, const char* Name)
 	}
 
 	return -1;
+}
+
+// *************************************************************************
+// *				Check_if_Name_Exist:- Terry and Hazel Flanigan 2025 		  	   *
+// *************************************************************************
+int CL64_TXL_Editor::Check_if_Name_Exist(const char* Name)
+{
+	int	i;
+
+	for (i = 0; i < pData->BitmapCount; i++)
+	{
+
+		if (!strcmp(Name, NewBitmapList[i]->Name))
+		{
+			return 1;
+		}
+	}
+
+	return 0;
 }
 
 // *************************************************************************
