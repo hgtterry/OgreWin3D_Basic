@@ -109,8 +109,8 @@ bool CL64_File_IO::Open_File()
 
 	//  SHOW OPEN FILE DIALOG WINDOW
 	COMDLG_FILTERSPEC save_filter[1];
-	save_filter[0].pszName = L"All files";
-	save_filter[0].pszSpec = L"*.*";
+	save_filter[0].pszName = L"mtf files";
+	save_filter[0].pszSpec = L"*.mtf";
 
 	f_SysHr = f_FileSystem->SetFileTypes(1, save_filter);
 	if (FAILED(f_SysHr)) {
@@ -165,11 +165,16 @@ bool CL64_File_IO::Open_File()
 	return TRUE;
 }
 
+// COMDLG_FILTERSPEC ComDlgFS[3] = {{L"C++ code files", L"*.cpp;*.h;*.rc"},{L"Executable Files", L"*.exe;*.dll"}, {L"All Files",L"*.*"}};
+
 // *************************************************************************
 // *				Save_File:- Terry and Hazel Flanigan 2025			   *
 // *************************************************************************
 bool CL64_File_IO::Save_File()
 {
+	LPCWSTR kk = L"Mesh Text File(*.mtf) *.mtf";
+	LPCWSTR ext = L" *.mtf";
+
 	flag_Canceled = 1;
 
 	HRESULT hr = CoInitializeEx(NULL, COINIT_APARTMENTTHREADED |
@@ -184,8 +189,13 @@ bool CL64_File_IO::Save_File()
 
 		if (SUCCEEDED(hr))
 		{
-			hr = pFileSave->SetDefaultExtension(L"mtf");
-			//hr = pFileSave->SetFileTypes(ARRAYSIZE(c_rgSaveTypes), c_rgSaveTypes);
+			const COMDLG_FILTERSPEC c_rgSaveTypes[] =
+			{
+				{kk, ext}
+				//{L"Mesh Text File (*.mtf)",       L"*.mtf"}
+			};
+
+			hr = pFileSave->SetFileTypes(ARRAYSIZE(c_rgSaveTypes), c_rgSaveTypes);
 			hr = pFileSave->Show(App->MainHwnd);
 
 			if (SUCCEEDED(hr))

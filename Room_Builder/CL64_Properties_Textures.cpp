@@ -85,7 +85,7 @@ LRESULT CALLBACK CL64_Properties_Textures::Proc_TextureDialog(HWND hDlg, UINT me
 		//SendDlgItemMessage(hDlg, IDC_STTDTXLNAME, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_LISTTDTEXTURES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BTTDAPPLY, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		//SendDlgItemMessage(hDlg, IDC_BTEDITFILE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_TXL_FILE_EDIT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		//SendDlgItemMessage(hDlg, IDC_BTTDFACEPROPERTIES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_STWIDTHHEIGHT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
@@ -133,21 +133,21 @@ LRESULT CALLBACK CL64_Properties_Textures::Proc_TextureDialog(HWND hDlg, UINT me
 	{
 		LPNMHDR some_item = (LPNMHDR)lParam;
 
-		if (some_item->idFrom == IDC_BTTDAPPLY && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDC_BTTDAPPLY)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
 			return CDRF_DODEFAULT;
 		}
 
-		/*if (some_item->idFrom == IDC_BTEDITFILE && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDC_BT_TXL_FILE_EDIT)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
 			return CDRF_DODEFAULT;
 		}
 
-		if (some_item->idFrom == IDC_BTTDFACEPROPERTIES && some_item->code == NM_CUSTOMDRAW)
+		/*if (some_item->idFrom == IDC_BTTDFACEPROPERTIES)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
@@ -165,19 +165,18 @@ LRESULT CALLBACK CL64_Properties_Textures::Proc_TextureDialog(HWND hDlg, UINT me
 		//	return TRUE;
 		//}
 
-		/*if (LOWORD(wParam) == IDC_BTEDITFILE)
+		if (LOWORD(wParam) == IDC_BT_TXL_FILE_EDIT)
 		{
-			App->CL_TxlEditor->Start_Texl_Dialog();
+			App->CL_TXL_Editor->Start_Texl_Dialog();
 
-			App->Get_Current_Document();
+			//App->CL_Level->Level_SetWadPath(App->CLSB_Doc->pLevel, Level_GetWadPath(App->CLSB_Doc->pLevel));
+			//App->CL_World->Set_Current_TxlPath();
+			App->CL_Doc->UpdateAfterWadChange();
 
-			Level_SetWadPath(App->CLSB_Doc->pLevel, Level_GetWadPath(App->CLSB_Doc->pLevel));
-			App->CL_World->Set_Current_TxlPath();
-			App->CLSB_Doc->UpdateAfterWadChange();
+			App->CL_Properties_Textures->Fill_ListBox();
 
-			App->CLSB_TextureDialog->Fill_ListBox();
 			return TRUE;
-		}*/
+		}
 
 		if (LOWORD(wParam) == IDC_LISTTDTEXTURES)
 		{

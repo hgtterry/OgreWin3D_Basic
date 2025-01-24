@@ -1340,16 +1340,11 @@ static signed int fdocUpdateBrushFaceTextures(Brush* pBrush, void* pVoid)
 // *************************************************************************
 void CL64_Doc::UpdateAfterWadChange()
 {
-    //App->Get_Current_Document();
+   App->CL_Doc->flag_Is_Modified = 1;
 
-   // App->m_pDoc->SetModifiedFlag();
-
-    //if (!Level_LoadWad(pLevel))
+   if (!App->CL_Level->Level_LoadWad(pLevel))
     {
-       // App->Say("Cant Load TXL File");
-        /* CString Msg;
-         AfxFormatString1(Msg, IDS_CANTLOADTXL, Level_GetWadPath(pLevel));
-         AfxMessageBox(Msg, MB_OK + MB_ICONERROR);*/
+       App->Say("Cant Load TXL File");
     }
 
     // update textures tab

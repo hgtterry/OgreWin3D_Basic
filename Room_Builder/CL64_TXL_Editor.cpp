@@ -29,11 +29,11 @@ THE SOFTWARE.
 
 CL64_TXL_Editor::CL64_TXL_Editor()
 {
-	FileName[0] = 0;
-	TextureName[0] = 0;
+	mFileName[0] = 0;
+	mTextureName[0] = 0;
 
 	pData = NULL;
-	Entry = NULL;
+	Current_Entry = NULL;
 	TXL_Dlg_HWND = NULL;
 
 	int Count = 0;
@@ -53,7 +53,7 @@ CL64_TXL_Editor::~CL64_TXL_Editor()
 // *************************************************************************
 void CL64_TXL_Editor::Start_Texl_Dialog()
 {
-	strcpy(FileName, App->CL_Doc->mCurrent_TXL_Path_And_File);
+	strcpy(mFileName, App->CL_Level->Level_GetWadPath(App->CL_Doc->pLevel));
 
 	DialogBox(App->hInst, (LPCTSTR)IDD_TEXTURE_EDITOR, App->MainHwnd, (DLGPROC)Proc_Texture_Lib);
 }
@@ -82,13 +82,13 @@ LRESULT CALLBACK CL64_TXL_Editor::Proc_Texture_Lib(HWND hDlg, UINT message, WPAR
 
 		App->CL_TXL_Editor->TXL_Dlg_HWND = hDlg;
 
-		App->CL_TXL_Editor->Entry = new BitmapEntry;
-		App->CL_TXL_Editor->Entry->Bitmap = NULL;
-		App->CL_TXL_Editor->Entry->WinABitmap = NULL;
-		App->CL_TXL_Editor->Entry->WinBitmap = NULL;
-		App->CL_TXL_Editor->Entry->Deleted = 0;
-		App->CL_TXL_Editor->Entry->Dirty = 0;
-		App->CL_TXL_Editor->Entry->Flags = 0;
+		App->CL_TXL_Editor->Current_Entry = new BitmapEntry;
+		App->CL_TXL_Editor->Current_Entry->Bitmap = NULL;
+		App->CL_TXL_Editor->Current_Entry->WinABitmap = NULL;
+		App->CL_TXL_Editor->Current_Entry->WinBitmap = NULL;
+		App->CL_TXL_Editor->Current_Entry->Deleted = 0;
+		App->CL_TXL_Editor->Current_Entry->Dirty = 0;
+		App->CL_TXL_Editor->Current_Entry->Flags = 0;
 
 		App->CL_TXL_Editor->pData = new TPack_WindowData;
 		App->CL_TXL_Editor->pData->BitmapCount = 0;
@@ -97,17 +97,17 @@ LRESULT CALLBACK CL64_TXL_Editor::Proc_Texture_Lib(HWND hDlg, UINT message, WPAR
 		App->CL_TXL_Editor->pData->FileNameIsValid = 0;
 		App->CL_TXL_Editor->pData->Instance = App->hInst;
 		App->CL_TXL_Editor->pData->SelectedEntry = NULL;
-		strcpy(App->CL_TXL_Editor->pData->TXLFileName, App->CL_TXL_Editor->FileName);
+		strcpy(App->CL_TXL_Editor->pData->TXLFileName, App->CL_TXL_Editor->mFileName);
 
 		char buf1[200];
 		strcpy(buf1, "Texture library: - ");
-		strcat(buf1, App->CL_TXL_Editor->FileName);
+		strcat(buf1, App->CL_TXL_Editor->mFileName);
 		
 		bool Test = App->CL_TXL_Editor->LoadFile(hDlg);
 
 		SetWindowText(hDlg, buf1);
 
-		SetWindowLongPtr(GetDlgItem(hDlg, IDC_PREVIEW), GWLP_WNDPROC, (LONG_PTR)TextureLibPreviewWnd);
+		SetWindowLongPtr(GetDlgItem(hDlg, IDC_PREVIEW), GWLP_WNDPROC, (LONG_PTR)Texture_Preview_hWnd);
 
 		return 1;
 	}
@@ -210,21 +210,21 @@ LRESULT CALLBACK CL64_TXL_Editor::Proc_Texture_Lib(HWND hDlg, UINT message, WPAR
 		//--------------------------------- Delete -----------------------
 		if (LOWORD(wParam) == IDC_BT_DELETE_TEXTURE)
 		{
+			int Index = SendDlgItemMessage(App->CL_TXL_Editor->TXL_Dlg_HWND, IDC_TEXTURELIST2, LB_GETCURSEL, (WPARAM)0, (LPARAM)0);
+			if (Index == -1)
+			{
+				return TRUE;
+			}
 
-			//int Index = SendDlgItemMessage(App->CL_TxlEditor->pData->hwnd, IDC_TEXTURELIST2, LB_GETCURSEL, (WPARAM)0, (LPARAM)0);
-			//if (Index == -1)
-			//{
-			//	return TRUE;
-			//}
+			App->Say(App->CL_TXL_Editor->Current_Entry->Name);
+			App->CL_TXL_Editor->Current_Entry->Deleted = 1;
 
-			////App->CL_TxlEditor->Current_Entry->Deleted = 1;
+			App->CL_TXL_Editor->NewBitmapList[Index]->Deleted = 1;
 
-			//App->CL_TxlEditor->NewBitmapList[Index]->Deleted = 1;
+			App->CL_TXL_Editor->UpDateList();
+			App->CL_TXL_Editor->SelectBitmap();
 
-			//App->CL_TxlEditor->UpDateList();
-			//App->CL_TxlEditor->SelectBitmap();
-
-			//App->CL_TxlEditor->pData->Dirty = 1;
+			App->CL_TXL_Editor->pData->Dirty = 1;
 
 			return TRUE;
 		}
@@ -310,7 +310,7 @@ LRESULT CALLBACK CL64_TXL_Editor::Proc_Texture_Lib(HWND hDlg, UINT message, WPAR
 		if (LOWORD(wParam) == IDOK || LOWORD(wParam) == IDCANCEL)
 		{
 
-			/*if (App->CL_TxlEditor->pData->Dirty)
+			if (App->CL_TXL_Editor->pData->Dirty)
 			{
 				int	Result;
 
@@ -326,11 +326,13 @@ LRESULT CALLBACK CL64_TXL_Editor::Proc_Texture_Lib(HWND hDlg, UINT message, WPAR
 
 				if (Result == IDYES)
 				{
-					App->CL_TxlEditor->Save(App->CL_TxlEditor->pData->TXLFileName);
+					bool test = App->CL_TXL_Editor->Save(App->CL_TXL_Editor->mFileName,false);
+					if (test == 1)
+					{
+						App->Say("Saved");
+					}
 				}
 			}
-
-			App->CL_TxlEditor->CleanUp();*/
 
 			if (App->CL_TXL_Editor->pData)
 			{
@@ -338,10 +340,10 @@ LRESULT CALLBACK CL64_TXL_Editor::Proc_Texture_Lib(HWND hDlg, UINT message, WPAR
 				App->CL_TXL_Editor->pData = NULL;
 			}
 
-			if (App->CL_TXL_Editor->Entry)
+			if (App->CL_TXL_Editor->Current_Entry)
 			{
-				delete App->CL_TXL_Editor->Entry;
-				App->CL_TXL_Editor->Entry = NULL;
+				delete App->CL_TXL_Editor->Current_Entry;
+				App->CL_TXL_Editor->Current_Entry = NULL;
 			}
 
 			EndDialog(hDlg, LOWORD(wParam));
@@ -356,13 +358,35 @@ LRESULT CALLBACK CL64_TXL_Editor::Proc_Texture_Lib(HWND hDlg, UINT message, WPAR
 }
 
 // *************************************************************************
-// *					TextureLibPreviewWnd							   *
+// *						UpDateList  13/06/08 					  	   *
 // *************************************************************************
-bool CALLBACK CL64_TXL_Editor::TextureLibPreviewWnd(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
+void CL64_TXL_Editor::UpDateList()
+{
+	int Index = SendDlgItemMessage(TXL_Dlg_HWND, IDC_TEXTURELIST2, LB_GETCURSEL, (WPARAM)0, (LPARAM)0);
+	SendDlgItemMessage(TXL_Dlg_HWND, IDC_TEXTURELIST2, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
+
+	int	i;
+
+	for (i = 0; i < pData->BitmapCount; i++)
+	{
+
+		if (NewBitmapList[i]->Deleted == 0)
+		{
+			SendDlgItemMessage(TXL_Dlg_HWND, IDC_TEXTURELIST2, LB_ADDSTRING, (WPARAM)0, (LPARAM)NewBitmapList[i]->Name);
+		}
+	}
+
+	SendDlgItemMessage(TXL_Dlg_HWND, IDC_TEXTURELIST2, LB_SETCURSEL, (WPARAM)Index, (LPARAM)0);
+
+}
+
+// *************************************************************************
+// *					Texture_Preview_hWnd							   *
+// *************************************************************************
+bool CALLBACK CL64_TXL_Editor::Texture_Preview_hWnd(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
 	if (msg == WM_PAINT)
 	{
-
 		PAINTSTRUCT	ps;
 		HDC			hDC;
 		RECT		Rect;
@@ -373,7 +397,7 @@ bool CALLBACK CL64_TXL_Editor::TextureLibPreviewWnd(HWND hwnd, UINT msg, WPARAM 
 		Rect.bottom--;
 		FillRect(hDC, &Rect, (HBRUSH)(COLOR_WINDOW + 1));
 
-		if (App->CL_TXL_Editor->Entry->Bitmap != NULL)
+		if (App->CL_TXL_Editor->Current_Entry->Bitmap != NULL)
 		{
 			RECT	Source;
 			RECT	Dest;
@@ -381,8 +405,8 @@ bool CALLBACK CL64_TXL_Editor::TextureLibPreviewWnd(HWND hwnd, UINT msg, WPARAM 
 
 			Source.left = 0;
 			Source.top = 0;
-			Source.bottom = geBitmap_Height(App->CL_TXL_Editor->Entry->Bitmap);
-			Source.right = geBitmap_Width(App->CL_TXL_Editor->Entry->Bitmap);
+			Source.bottom = geBitmap_Height(App->CL_TXL_Editor->Current_Entry->Bitmap);
+			Source.right = geBitmap_Width(App->CL_TXL_Editor->Current_Entry->Bitmap);
 
 			Dest = Rect;
 
@@ -390,8 +414,8 @@ bool CALLBACK CL64_TXL_Editor::TextureLibPreviewWnd(HWND hwnd, UINT msg, WPARAM 
 			SetStretchBltMode(hDC, HALFTONE);
 
 			App->CL_TXL_Editor->Render2d_Blit(hDC,
-				App->CL_TXL_Editor->Entry->WinBitmap,
-				App->CL_TXL_Editor->Entry->WinABitmap,
+				App->CL_TXL_Editor->Current_Entry->WinBitmap,
+				App->CL_TXL_Editor->Current_Entry->WinABitmap,
 				&Source,
 				&Dest);
 
@@ -473,7 +497,7 @@ bool CL64_TXL_Editor::LoadFile(HWND ChDlg)
 
 	int TextureCount = 0;
 
-	VFS = geVFile_OpenNewSystem(NULL, GE_VFILE_TYPE_VIRTUAL, FileName, NULL, GE_VFILE_OPEN_READONLY | GE_VFILE_OPEN_DIRECTORY);
+	VFS = geVFile_OpenNewSystem(NULL, GE_VFILE_TYPE_VIRTUAL, mFileName, NULL, GE_VFILE_OPEN_READONLY | GE_VFILE_OPEN_DIRECTORY);
 	if (!VFS)
 	{
 		App->Say("Could not open file %s");
@@ -516,7 +540,7 @@ bool CL64_TXL_Editor::LoadFile(HWND ChDlg)
 		}
 	}
 
-	strcpy(pData->TXLFileName, FileName);
+	strcpy(pData->TXLFileName, mFileName);
 	pData->FileNameIsValid = TRUE;
 	pData->Dirty = FALSE;
 	geVFile_Close(VFS);
@@ -614,9 +638,9 @@ bool CL64_TXL_Editor::SelectBitmap()
 	else
 	{
 		char buff[256]{ 0 };
-		SendDlgItemMessage(TXL_Dlg_HWND, IDC_TEXTURELIST2, LB_GETTEXT, (WPARAM)Index, (LPARAM)TextureName);
+		SendDlgItemMessage(TXL_Dlg_HWND, IDC_TEXTURELIST2, LB_GETTEXT, (WPARAM)Index, (LPARAM)mTextureName);
 		
-		location = FindBitmap(pData, TextureName);
+		location = FindBitmap(pData, mTextureName);
 		
 		if (!NewBitmapList[location]->WinBitmap)
 		{
@@ -641,7 +665,7 @@ bool CL64_TXL_Editor::SelectBitmap()
 
 	InvalidateRect(GetDlgItem(TXL_Dlg_HWND, IDC_PREVIEW), NULL, TRUE);
 
-	Entry = NewBitmapList[location];
+	Current_Entry = NewBitmapList[location]; // Make it Current
 	UpDateGeList(location);
 
 	return 0;
@@ -787,6 +811,108 @@ void CL64_TXL_Editor::UpDateGeList(int Location)
 	/*geBitmap_GetAverageColor(NewBitmapList[Location]->Bitmap,&R,&G,&B);
 	sprintf(buff, "%s %i","RGB :-",MPInfo->Format);
 	SendDlgItemMessage(pData->hwnd, IDC_GEINFO, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);*/
+}
+
+// *************************************************************************
+// *			Save/SaveAs:- Terry and Hazel Flanigan 2025 		 	   *
+// *************************************************************************
+bool CL64_TXL_Editor::Save(const char* Path, bool Use_Save_Dislog)
+{
+	char		FileName[_MAX_PATH];
+	geVFile* VFS;
+	int			i;
+
+	if (Use_Save_Dislog == true)
+	{
+		OPENFILENAME ofn;	// Windows open filename structure...
+		char Filter[_MAX_PATH];
+		char	Dir[_MAX_PATH];
+
+		FileName[0] = '\0';
+
+		GetCurrentDirectory(sizeof(Dir), Dir);
+
+		ofn.lStructSize = sizeof(OPENFILENAME);
+		ofn.hwndOwner = TXL_Dlg_HWND;
+		ofn.hInstance = pData->Instance;
+		{
+			char* c;
+
+			// build actor file filter string
+			strcpy(Filter, "Texture Libraries (*.txl)");
+			c = &Filter[strlen(Filter)] + 1;
+			// c points one beyond end of string
+			strcpy(c, "*.txl");
+			c = &c[strlen(c)] + 1;
+			*c = '\0';	// 2nd terminating nul character
+		}
+		ofn.lpstrFilter = Filter;
+		ofn.lpstrCustomFilter = NULL;
+		ofn.nMaxCustFilter = 0;
+		ofn.nFilterIndex = 1;
+		ofn.lpstrFile = FileName;
+		ofn.nMaxFile = sizeof(FileName);
+		ofn.lpstrFileTitle = FileName;
+		ofn.nMaxFileTitle = sizeof(FileName);
+		ofn.lpstrInitialDir = Dir;
+		ofn.lpstrTitle = NULL;
+		ofn.Flags = OFN_HIDEREADONLY;
+		ofn.nFileOffset = 0;
+		ofn.nFileExtension = 0;
+		ofn.lpstrDefExt = "txl";
+		ofn.lCustData = 0;
+		ofn.lpfnHook = NULL;
+		ofn.lpTemplateName = NULL;
+
+		if (!GetSaveFileName(&ofn))
+			return 0;
+
+		Path = FileName;
+	}
+
+	_unlink(Path);
+
+	VFS = geVFile_OpenNewSystem(NULL, GE_VFILE_TYPE_VIRTUAL, Path, NULL, GE_VFILE_OPEN_CREATE | GE_VFILE_OPEN_DIRECTORY);
+	if (!VFS)
+	{
+		NonFatalError("Could not open file %s", Path);
+		return 0;
+	}
+
+	for (i = 0; i < pData->BitmapCount; i++)
+	{
+		geVFile* File;
+		geBoolean	WriteResult;
+
+		if (NewBitmapList[i]->Deleted == 0)
+		{
+			File = geVFile_Open(VFS, NewBitmapList[i]->Name, GE_VFILE_OPEN_CREATE);
+			if (!File)
+			{
+				NonFatalError("Could not save bitmap %s", NewBitmapList[i]->Name);
+				geVFile_Close(VFS);
+				return 0;
+			}
+
+			WriteResult = geBitmap_WriteToFile(NewBitmapList[i]->Bitmap, File);
+			geVFile_Close(File);
+			if (WriteResult == GE_FALSE)
+			{
+				NonFatalError("Could not save bitmap %s", NewBitmapList[i]->Name);
+				geVFile_Close(VFS);
+				return 0;
+			}
+		}
+	}
+
+	strcpy(pData->TXLFileName, Path);
+	pData->FileNameIsValid = TRUE;
+
+	if (geVFile_Close(VFS) == GE_FALSE)
+		NonFatalError("I/O error writing %s", Path);
+	else
+		pData->Dirty = FALSE;
+	return 1;
 }
 
 // *************************************************************************

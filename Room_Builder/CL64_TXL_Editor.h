@@ -56,7 +56,7 @@ public:
 
 private:
 	static LRESULT CALLBACK Proc_Texture_Lib(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
-	static bool CALLBACK TextureLibPreviewWnd(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
+	static bool CALLBACK Texture_Preview_hWnd(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 	bool LoadFile(HWND ChDlg);
 	bool AddTexture(geVFile* BaseFile, const char* Path);
@@ -64,18 +64,20 @@ private:
 	int FindBitmap(TPack_WindowData* pData, const char* Name);
 	HBITMAP CreateHBitmapFromgeBitmap(geBitmap* Bitmap, HDC hdc);
 	void UpDateGeList(int Location);
+	void UpDateList();
+	bool Save(const char* Path, bool Use_Save_Dislog);
 
 	bool Render2d_Blit(HDC hDC, HBITMAP Bmp, HBITMAP Alpha, const RECT* SourceRect, const RECT* DestRect);
 
 	bool NonFatalError(const char* Msg, ...);
 
 	TPack_WindowData*	pData;
-	BitmapEntry*		Entry;
+	BitmapEntry*		Current_Entry;
 	BitmapEntry*		NewBitmapList[200];
 
 	HWND TXL_Dlg_HWND;
 
-	char FileName[MAX_PATH];
-	char TextureName[MAX_PATH];
+	char mFileName[MAX_PATH];
+	char mTextureName[MAX_PATH];
 };
 
