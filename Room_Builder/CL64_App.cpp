@@ -445,7 +445,22 @@ void CL64_App::Say(const char* Message, char* Message2)
 }
 
 // *************************************************************************
-// *				Say_Int:- Terry and Hazel Flanigan 2024				   *
+// *						Report_Error:- Terry and Hazel Flanigan 2025	   					  		   *
+// *************************************************************************
+void CL64_App::Report_Error(const char* Msg, ...)
+{
+	char Buffer[MAX_PATH];
+	va_list argptr;
+
+	va_start(argptr, Msg);
+	vsprintf(Buffer, Msg, argptr);
+	va_end(argptr);
+
+	App->Say("Error", Buffer);
+}
+
+// *************************************************************************
+// *				Say_Int:- Terry and Hazel Flanigan 2025				   *
 // *************************************************************************
 void CL64_App::Say_Int(int Value)
 {

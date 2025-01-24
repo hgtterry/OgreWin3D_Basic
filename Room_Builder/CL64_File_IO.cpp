@@ -94,9 +94,6 @@ void CL64_File_IO::Select_Folder()
 // *************************************************************************
 bool CL64_File_IO::Open_File(const LPCWSTR Type, const LPCWSTR Extensions)
 {
-	//LPCWSTR kk = L"Texture Files";
-	//LPCWSTR ext = L"*.bmp";
-
 	//  CREATE FILE OBJECT INSTANCE
 	HRESULT f_SysHr = CoInitializeEx(NULL, COINIT_APARTMENTTHREADED | COINIT_DISABLE_OLE1DDE);
 	if (FAILED(f_SysHr))
@@ -173,11 +170,8 @@ bool CL64_File_IO::Open_File(const LPCWSTR Type, const LPCWSTR Extensions)
 // *************************************************************************
 // *				Save_File:- Terry and Hazel Flanigan 2025			   *
 // *************************************************************************
-bool CL64_File_IO::Save_File()
+bool CL64_File_IO::Save_File(const LPCWSTR Type, const LPCWSTR Extensions)
 {
-	LPCWSTR kk = L"Mesh Text File(*.mtf) *.mtf";
-	LPCWSTR ext = L" *.mtf";
-
 	flag_Canceled = 1;
 
 	HRESULT hr = CoInitializeEx(NULL, COINIT_APARTMENTTHREADED |
@@ -194,8 +188,7 @@ bool CL64_File_IO::Save_File()
 		{
 			const COMDLG_FILTERSPEC c_rgSaveTypes[] =
 			{
-				{kk, ext}
-				//{L"Mesh Text File (*.mtf)",       L"*.mtf"}
+				{Type, Extensions}
 			};
 
 			hr = pFileSave->SetFileTypes(ARRAYSIZE(c_rgSaveTypes), c_rgSaveTypes);

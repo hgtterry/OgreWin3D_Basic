@@ -55,7 +55,6 @@ CL64_TXL_Editor::~CL64_TXL_Editor()
 void CL64_TXL_Editor::Start_Texl_Dialog()
 {
 	strcpy(mFileName, App->CL_Level->Level_GetWadPath(App->CL_Doc->pLevel));
-
 	DialogBox(App->hInst, (LPCTSTR)IDD_TEXTURE_EDITOR, App->MainHwnd, (DLGPROC)Proc_Texture_Lib);
 }
 
@@ -609,7 +608,7 @@ bool CL64_TXL_Editor::AddTexture(geVFile* BaseFile, const char* Path)
 	Name = _strdup(FileName);
 	if (!Name)
 	{
-		NonFatalError("Memory allocation error processing %s", Path);
+		App->Report_Error("Memory allocation error processing %s", Path);
 		return FALSE;
 	}
 
@@ -620,7 +619,7 @@ bool CL64_TXL_Editor::AddTexture(geVFile* BaseFile, const char* Path)
 
 	if (!File)
 	{
-		NonFatalError("Could not open %s", Path);
+		App->Report_Error("Could not open %s", Path);
 		return TRUE;
 	}
 	//geBitmap_Create()
@@ -628,7 +627,7 @@ bool CL64_TXL_Editor::AddTexture(geVFile* BaseFile, const char* Path)
 	geVFile_Close(File);
 	if (!Bitmap)
 	{
-		NonFatalError("%s is not a valid bitmap", Path);
+		App->Report_Error("%s is not a valid bitmap", Path);
 		return TRUE;
 	}
 	geBitmap_GetInfo(Bitmap, &PInfo, &SInfo);
@@ -642,7 +641,7 @@ bool CL64_TXL_Editor::AddTexture(geVFile* BaseFile, const char* Path)
 
 	if (!NewBitmapList)
 	{
-		NonFatalError("Memory allocation error processing %s", Path);
+		App->Report_Error("Memory allocation error processing %s", Path);
 		return TRUE;
 	}
 
@@ -841,8 +840,8 @@ HBITMAP CL64_TXL_Editor::CreateHBitmapFromgeBitmap(geBitmap* Bitmap, HDC hdc)
 void CL64_TXL_Editor::UpDateGeList(int Location)
 {
 	int B = 0;
-	geBitmap_Info	MPInfo;
-	geBitmap_Info	MSInfo;
+	//geBitmap_Info	MPInfo;
+	//geBitmap_Info	MSInfo;
 
 	char buff[256];
 	strcpy(buff, "no info");
@@ -863,11 +862,8 @@ void CL64_TXL_Editor::UpDateGeList(int Location)
 	sprintf(buff, "%s %d", "Height :-", geBitmap_Height(NewBitmapList[Location]->Bitmap));
 	SendDlgItemMessage(TXL_Dlg_HWND, IDC_GEINFO, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);
 
-
-	geBitmap_GetInfo(NewBitmapList[Location]->Bitmap, &MPInfo, &MSInfo);
-	/*geBitmap_GetAverageColor(NewBitmapList[Location]->Bitmap,&R,&G,&B);
-	sprintf(buff, "%s %i","RGB :-",MPInfo->Format);
-	SendDlgItemMessage(pData->hwnd, IDC_GEINFO, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);*/
+	//geBitmap_GetInfo(NewBitmapList[Location]->Bitmap, &MPInfo, &MSInfo);
+	
 }
 
 // *************************************************************************
@@ -932,7 +928,7 @@ bool CL64_TXL_Editor::Save(const char* Path, bool Use_Save_Dislog)
 	VFS = geVFile_OpenNewSystem(NULL, GE_VFILE_TYPE_VIRTUAL, Path, NULL, GE_VFILE_OPEN_CREATE | GE_VFILE_OPEN_DIRECTORY);
 	if (!VFS)
 	{
-		NonFatalError("Could not open file %s", Path);
+		App->Report_Error("Could not open file %s", Path);
 		return 0;
 	}
 
@@ -946,7 +942,7 @@ bool CL64_TXL_Editor::Save(const char* Path, bool Use_Save_Dislog)
 			File = geVFile_Open(VFS, NewBitmapList[i]->Name, GE_VFILE_OPEN_CREATE);
 			if (!File)
 			{
-				NonFatalError("Could not save bitmap %s", NewBitmapList[i]->Name);
+				App->Report_Error("Could not save bitmap %s", NewBitmapList[i]->Name);
 				geVFile_Close(VFS);
 				return 0;
 			}
@@ -955,7 +951,7 @@ bool CL64_TXL_Editor::Save(const char* Path, bool Use_Save_Dislog)
 			geVFile_Close(File);
 			if (WriteResult == GE_FALSE)
 			{
-				NonFatalError("Could not save bitmap %s", NewBitmapList[i]->Name);
+				App->Report_Error("Could not save bitmap %s", NewBitmapList[i]->Name);
 				geVFile_Close(VFS);
 				return 0;
 			}
@@ -966,94 +962,10 @@ bool CL64_TXL_Editor::Save(const char* Path, bool Use_Save_Dislog)
 	pData->FileNameIsValid = TRUE;
 
 	if (geVFile_Close(VFS) == GE_FALSE)
-		NonFatalError("I/O error writing %s", Path);
+		App->Report_Error("I/O error writing %s", Path,"poo");
 	else
 		pData->Dirty = FALSE;
+
 	return 1;
 }
 
-//// *************************************************************************
-//// *						AddTexture  06/06/08 				  		   *
-//// *************************************************************************
-//bool CL64_TXL_Editor::AddTexture(geVFile* BaseFile, const char* Path)
-//{
-//	geBitmap_Info	PInfo;
-//	geBitmap_Info	SInfo;
-//	geBitmap* Bitmap;
-//
-//	geVFile* File;
-//	char	FileName[MAX_PATH];
-//	char*	Name;
-//
-//	Bitmap = NULL;
-//	File = NULL;
-//
-//	_splitpath(Path, NULL, NULL, FileName, NULL);
-//	Name = strdup(FileName);
-//	if (!Name)
-//	{
-//		NonFatalError("Memory allocation error processing %s", Path);
-//		return FALSE;
-//	}
-//
-//	if (BaseFile)
-//		File = geVFile_Open(BaseFile, Path, GE_VFILE_OPEN_READONLY);
-//	else
-//		File = geVFile_OpenNewSystem(NULL, GE_VFILE_TYPE_DOS, Path, NULL, GE_VFILE_OPEN_READONLY);
-//
-//	if (!File)
-//	{
-//		NonFatalError("Could not open %s", Path);
-//		return TRUE;
-//	}
-//	//geBitmap_Create()
-//	Bitmap = geBitmap_CreateFromFile(File);
-//	geVFile_Close(File);
-//	if (!Bitmap)
-//	{
-//		NonFatalError("%s is not a valid bitmap", Path);
-//		return TRUE;
-//	}
-//	geBitmap_GetInfo(Bitmap, &PInfo, &SInfo);
-//	//	if	(PInfo.Format != GE_PIXELFORMAT_8BIT)
-//	//	{
-//	//		NonFatalError("%s is not an 8bit bitmap", Path);
-//	//		goto fail;
-//	//	}
-//	//	NewBitmapList = geRam_Realloc(pData->Bitmaps, sizeof(*NewBitmapList) * (pData->BitmapCount + 1));
-//	NewBitmapList[pData->BitmapCount] = new BitmapEntry;
-//	if (!NewBitmapList)
-//	{
-//		NonFatalError("Memory allocation error processing %s", Path);
-//		return TRUE;
-//	}
-//
-//	NewBitmapList[pData->BitmapCount]->Name = Name;
-//	NewBitmapList[pData->BitmapCount]->Bitmap = Bitmap;
-//	NewBitmapList[pData->BitmapCount]->WinBitmap = NULL;
-//	NewBitmapList[pData->BitmapCount]->WinABitmap = NULL;
-//	NewBitmapList[pData->BitmapCount]->Flags = 0;
-//	NewBitmapList[pData->BitmapCount]->Deleted = 0;
-//	pData->BitmapCount++;
-//
-//	SendDlgItemMessage(TXL_Dlg_HWND, IDC_TEXTURELIST2, LB_ADDSTRING, (WPARAM)0, (LPARAM)Name);
-//
-//	return TRUE;
-//
-//}
-
-// *************************************************************************
-// *						NonFatalError   					  		   *
-// *************************************************************************
-bool CL64_TXL_Editor::NonFatalError(const char* Msg, ...)
-{
-	char Buffer[1024];
-	va_list argptr;
-
-	va_start(argptr, Msg);
-	vsprintf(Buffer, Msg, argptr);
-	va_end(argptr);
-
-	MessageBox(NULL, Buffer, "Error", MB_ICONEXCLAMATION | MB_OK);
-	return 1;
-}

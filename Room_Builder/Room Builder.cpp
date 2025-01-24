@@ -155,8 +155,22 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             // ----------------------------- Debug
             case ID_DEBUG_GENERAL:
             {
-                App->CL_Doc->RebuildTrees();        // Build Brushes
-                App->CL_Mesh_Mgr->Update_World();   // Build Ogre
+                //App->CL_Doc->RebuildTrees();        // Build Brushes
+                //App->CL_Mesh_Mgr->Update_World();   // Build Ogre
+
+                return 1;
+            }
+
+            case  ID_DEBUG_SELECTIONSTATES:
+            {
+                if(App->CL_ImGui->flag_Show_Tool_ID_Debug == 1)
+                {
+                    App->CL_ImGui->flag_Show_Tool_ID_Debug = 0;
+                }
+                else
+                {
+                    App->CL_ImGui->flag_Show_Tool_ID_Debug = 1;
+                }
 
                 return 1;
             }

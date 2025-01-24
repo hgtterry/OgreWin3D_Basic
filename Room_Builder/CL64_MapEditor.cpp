@@ -1015,37 +1015,66 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Bottom_Right_Ogre(HWND hDlg, UINT message,
 		}
 	}
 
-	case WM_MOUSEMOVE: // ok up and running and we have a loop for mouse
+	case WM_MOUSEMOVE:
 	{
-		/*if (App->CL_Ogre->Ogre3D_Listener->flag_LeftMouseDown == 1)
+		POINT pos;
+		GetCursorPos(&pos);
+		ScreenToClient(App->CL_MapEditor->Bottom_Right_Hwnd, &pos);
+
+		if (App->CL_ImGui->flag_Imgui_Initialized == 1)
 		{
-			App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
-		}*/
+			ImGuiIO& io = ImGui::GetIO();
+			io.MousePos.x = static_cast<float>(pos.x);
+			io.MousePos.y = static_cast<float>(pos.y);
+		}
+
+		if (GetCursorPos(&pos) && App->flag_OgreStarted == 1)// && App->CL10_Dimensions->Mouse_Move_Mode == Enums::Edit_Mouse_None)
+		{
+			if (ScreenToClient(App->CL_MapEditor->Bottom_Right_Hwnd, &pos))
+			{
+				RECT rc;
+				GetClientRect(App->CL_MapEditor->Bottom_Right_Hwnd, &rc);
+				int width = rc.right - rc.left;
+				int height = rc.bottom - rc.top;
+
+				float tx = ((float)width / 2) - (float)pos.x;
+			}
+		}
+
+		SetFocus(App->CL_MapEditor->Bottom_Right_Hwnd);
 		
 		break;
 	}
 
 	// Left Mouse Button
-	case WM_LBUTTONDOWN: // BERNIE_HEAR_FIRE 
+	case WM_LBUTTONDOWN:
 	{
+		ImGuiIO& io = ImGui::GetIO();
+		io.MouseDown[0] = true;
+
 		if (App->flag_OgreStarted == 1)
 		{
-			POINT p;
-			GetCursorPos(&p);
-			App->CL_MapEditor->mStartPoint = p;
+			if (!ImGui::GetIO().WantCaptureMouse)
+			{
+				POINT p;
+				GetCursorPos(&p);
+				App->CL_MapEditor->mStartPoint = p;
 
-			GetCursorPos(&p);
-			App->CursorPosX = p.x;
-			App->CursorPosY = p.y;
-			App->CL_Ogre->Ogre3D_Listener->Pl_Cent500X = p.x;
-			App->CL_Ogre->Ogre3D_Listener->Pl_Cent500Y = p.y;
+				GetCursorPos(&p);
+				App->CursorPosX = p.x;
+				App->CursorPosY = p.y;
+				App->CL_Ogre->Ogre3D_Listener->Pl_Cent500X = p.x;
+				App->CL_Ogre->Ogre3D_Listener->Pl_Cent500Y = p.y;
 
-			SetCapture(App->CL_MapEditor->Bottom_Right_Hwnd);
-			SetCursorPos(App->CursorPosX, App->CursorPosY);
-			App->CL_Ogre->Ogre3D_Listener->flag_LeftMouseDown = 1;
-			App->CUR = SetCursor(NULL);
-
-			return 1;
+				SetCapture(App->CL_MapEditor->Bottom_Right_Hwnd);
+				SetCursorPos(App->CursorPosX, App->CursorPosY);
+				App->CL_Ogre->Ogre3D_Listener->flag_LeftMouseDown = 1;
+				App->CUR = SetCursor(NULL);
+			}
+			else
+			{
+				//App->CL_Ogre->Ogre3D_Listener->flag_LeftMouseDown = 1;
+			}
 		}
 
 		return 1;
@@ -1053,6 +1082,9 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Bottom_Right_Ogre(HWND hDlg, UINT message,
 
 	case WM_LBUTTONUP:
 	{
+		ImGuiIO& io = ImGui::GetIO();
+		io.MouseDown[0] = false;
+
 		if (App->flag_OgreStarted == 1)
 		{
 			ReleaseCapture();

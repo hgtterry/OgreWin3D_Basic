@@ -117,7 +117,10 @@ void CL64_File::Start_Save(bool Use_Save_Dialog)
 	{
 		if (Use_Save_Dialog == 1)
 		{
-			App->CL_File_IO->Save_File();
+			LPCWSTR mType = L"Mesh Text File(*.mtf) *.mtf";
+			LPCWSTR mExtension = L" *.mtf";
+
+			App->CL_File_IO->Save_File(mType, mExtension);
 
 			if (App->CL_File_IO->flag_Canceled == 1)
 			{
@@ -125,6 +128,15 @@ void CL64_File::Start_Save(bool Use_Save_Dialog)
 			}
 
 			strcpy(App->CL_Doc->mCurrent_MTF_PathAndFile, App->CL_File_IO->sFilePath.c_str());
+
+			if (_stricmp(App->CL_Doc->mCurrent_MTF_PathAndFile + strlen(App->CL_Doc->mCurrent_MTF_PathAndFile) - 4, ".mtf") == 0)
+			{
+				
+			}
+			else
+			{
+				strcat(App->CL_Doc->mCurrent_MTF_PathAndFile, ".mtf");
+			}
 		}
 
 		Save_Document();

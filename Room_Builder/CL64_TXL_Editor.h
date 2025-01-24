@@ -72,8 +72,6 @@ private:
 	
 	bool Render2d_Blit(HDC hDC, HBITMAP Bmp, HBITMAP Alpha, const RECT* SourceRect, const RECT* DestRect);
 
-	bool NonFatalError(const char* Msg, ...);
-
 	TPack_WindowData*	pData;
 	BitmapEntry*		Current_Entry;
 	BitmapEntry*		NewBitmapList[200];

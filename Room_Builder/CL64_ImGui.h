@@ -33,6 +33,7 @@ public:
 	void ImGui_Render_Loop(void);
 
 	bool flag_Imgui_Initialized;
+	bool flag_Show_Tool_ID_Debug;
 
 private:
 
@@ -40,6 +41,7 @@ private:
 	void ImGui_Set_Colours(void);
 
 	void ImGui_FPS(void);
+	void App_Tool_Selection_GUI(void);
 
 	ImFont* font0;
 	ImFont* font1;

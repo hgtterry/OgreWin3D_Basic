@@ -41,6 +41,8 @@ CL64_ImGui::CL64_ImGui()
 
 	flag_Show_FPS = 1;
 	flag_StartPos = 0;
+
+	flag_Show_Tool_ID_Debug = 0;
 }
 
 CL64_ImGui::~CL64_ImGui()
@@ -171,6 +173,11 @@ void CL64_ImGui::ImGui_Render_Loop(void)
 		ImGui_FPS();
 	}
 
+	if (flag_Show_Tool_ID_Debug == 1)
+	{
+		App_Tool_Selection_GUI();
+	}
+
 	/*if (flag_Show_ImGui_Demo == 1)
 	{
 		ImGui::ShowDemoWindow();
@@ -208,6 +215,53 @@ void CL64_ImGui::ImGui_FPS(void)
 		PosY = 10;
 
 		ImGui::PopStyleColor();
+		ImGui::End();
+	}
+}
+
+// *************************************************************************
+// *		App_Tool_Selection_GUI:- Terry and Hazel Flanigan 2025		   *
+// *************************************************************************
+void CL64_ImGui::App_Tool_Selection_GUI(void)
+{
+	ImGui::SetNextWindowPos(ImVec2(10, 10), ImGuiCond_FirstUseEver);
+
+	if (!ImGui::Begin("App_Debug", &flag_Show_Tool_ID_Debug, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_AlwaysAutoResize))
+	{
+		ImGui::End();
+	}
+	else
+	{
+		char Tool[MAX_PATH];
+		if (App->CL_Doc->mModeTool == 32886)
+		{
+			strcpy(Tool, "GENERAL_SELECT");
+		}
+
+		if (App->CL_Doc->mModeTool == 32784)
+		{
+			strcpy(Tool, "MOVE_ROTATE");
+		}
+
+		if (App->CL_Doc->mModeTool == 32785)
+		{
+			strcpy(Tool, "SCALE");
+		}
+
+		if (App->CL_Doc->mModeTool == 32910)
+		{
+			strcpy(Tool, "TEMPLATE");
+		}
+
+		ImGui::Text("mModeTool:= %s", Tool);
+		ImGui::Separator();
+		ImGui::Text("Selected:= %i", App->CL_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes));
+
+		if (ImGui::Button("Close"))
+		{
+			flag_Show_Tool_ID_Debug = 0;
+		}
+
 		ImGui::End();
 	}
 }
