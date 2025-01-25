@@ -127,7 +127,7 @@ void CL64_File::Start_Save(bool Use_Save_Dialog)
 				return;
 			}
 
-			strcpy(App->CL_Doc->mCurrent_MTF_PathAndFile, App->CL_File_IO->sFilePath.c_str());
+			strcpy(App->CL_Doc->mCurrent_MTF_PathAndFile, App->CL_File_IO->s_Just_FileName.c_str());
 
 			if (_stricmp(App->CL_Doc->mCurrent_MTF_PathAndFile + strlen(App->CL_Doc->mCurrent_MTF_PathAndFile) - 4, ".mtf") == 0)
 			{
@@ -331,8 +331,11 @@ void CL64_File::Start_Load(bool Use_Open_Dialog)
 			return;
 		}
 
-		strcpy(PathFileName_3dt, App->CL_File_IO->sFilePath.c_str());
-		strcpy(FileName_3dt, App->CL_File_IO->sSelectedFile.c_str());
+		strcpy(PathFileName_3dt, App->CL_File_IO->s_Path_And_File.c_str());
+		strcpy(FileName_3dt, App->CL_File_IO->s_Just_FileName.c_str());
+
+		strcpy(App->CL_Doc->mCurrent_MTF_PathAndFile, App->CL_File_IO->s_Path_And_File.c_str());
+		strcpy(App->CL_Doc->mCurrent_MTF_Just_FileName, App->CL_File_IO->s_Just_FileName.c_str());
 	}
 
 	bool Test = Open_3dt_File();
@@ -340,6 +343,8 @@ void CL64_File::Start_Load(bool Use_Open_Dialog)
 	{
 		Set_Editor();
 
+		App->CL_Doc->DoGeneralSelect();
+		App->CL_Doc->UpdateAllViews(Enums::UpdateViews_All);
 		App->Say("File Loaded", App->CL_File->FileName_3dt);
 	}
 	else
@@ -473,7 +478,7 @@ bool CL64_File::Load_File(const char* FileName)
 // *************************************************************************
 void CL64_File::Set_Editor()
 {
-	App->Set_Title(PathFileName_3dt);
+	App->Set_Title(App->CL_Doc->mCurrent_MTF_PathAndFile);
 	App->CL_Top_Tabs->Enable_Select_Button(true, 1);
 	App->CL_Properties_Templates->Enable_Insert_Button(false);
 }

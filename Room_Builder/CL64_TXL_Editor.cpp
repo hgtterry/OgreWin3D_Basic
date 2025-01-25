@@ -213,8 +213,8 @@ LRESULT CALLBACK CL64_TXL_Editor::Proc_Texture_Lib(HWND hDlg, UINT message, WPAR
 				return TRUE;
 			}
 
-			App->Say_Win(App->CL_File_IO->sFilePath.c_str());
-			strcpy(App->CL_TXL_Editor->Add_Texture_FileName, App->CL_File_IO->sFilePath.c_str());
+			App->Say_Win(App->CL_File_IO->s_Path_And_File.c_str());
+			strcpy(App->CL_TXL_Editor->Add_Texture_FileName, App->CL_File_IO->s_Path_And_File.c_str());
 
 			App->CL_TXL_Editor->AddTexture(NULL, App->CL_TXL_Editor->Add_Texture_FileName);
 			App->CL_TXL_Editor->UpDateList();

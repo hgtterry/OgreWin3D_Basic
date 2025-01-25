@@ -35,8 +35,8 @@ public:
 
 	char szSelectedDir[MAX_PATH];
 
-	std::string sFilePath;
-	std::string sSelectedFile;
+	std::string s_Path_And_File;
+	std::string s_Just_FileName;
 
 	bool flag_Canceled;
 };

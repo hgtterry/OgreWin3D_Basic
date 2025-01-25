@@ -150,11 +150,11 @@ bool CL64_File_IO::Open_File(const LPCWSTR Type, const LPCWSTR Extensions)
 	//  FORMAT AND STORE THE FILE PATH
 	std::wstring path(f_Path);
 	std::string c(path.begin(), path.end());
-	sFilePath = c;
+	s_Path_And_File = c;
 
 	//  FORMAT STRING FOR EXECUTABLE NAME
-	const size_t slash = sFilePath.find_last_of("/\\");
-	sSelectedFile = sFilePath.substr(slash + 1);
+	const size_t slash = s_Path_And_File.find_last_of("/\\");
+	s_Just_FileName = s_Path_And_File.substr(slash + 1);
 
 	//  SUCCESS, CLEAN UP
 	CoTaskMemFree(f_Path);
@@ -209,10 +209,10 @@ bool CL64_File_IO::Save_File(const LPCWSTR Type, const LPCWSTR Extensions)
 					{
 						std::wstring path(pszFilePath);
 						std::string c(path.begin(), path.end());
-						sFilePath = c;
+						s_Path_And_File = c;
 						
-						const size_t slash = sFilePath.find_last_of("/\\");
-						sSelectedFile = sFilePath.substr(slash + 1);
+						const size_t slash = s_Path_And_File.find_last_of("/\\");
+						s_Just_FileName = s_Path_And_File.substr(slash + 1);
 						CoTaskMemFree(pszFilePath);
 
 						flag_Canceled = 0;

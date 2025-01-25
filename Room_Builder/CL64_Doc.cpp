@@ -48,6 +48,12 @@ typedef struct FindClosestInfoTag
 CL64_Doc::CL64_Doc(void)
 {
     LastTemplateTypeName[0] = 0;
+
+    strcpy(mCurrent_MTF_PathAndFile, App->RB_Directory_FullPath);
+    strcat(mCurrent_MTF_PathAndFile, "\\Data\\Room_Builder\\Test.mtf");
+
+    mCurrent_MTF_Just_FileName[0] = 0;
+
     mCurrent_TXL_Path_And_File[0] = 0;
     mCurrent_TXL_Just_FileName[0] = 0;
 
@@ -71,8 +77,6 @@ CL64_Doc::CL64_Doc(void)
 
     SelState = NOSELECTIONS;
 
-    strcpy(mCurrent_MTF_PathAndFile, App->RB_Directory_FullPath);
-    strcat(mCurrent_MTF_PathAndFile, "\\Data\\Room_Builder\\Test.mtf");
 }
 
 CL64_Doc::~CL64_Doc(void)
@@ -291,11 +295,14 @@ void CL64_Doc::Brush_Add_To_world()
 // *************************************************************************
 void CL64_Doc::DoGeneralSelect(void)
 {
-    mCurrentTool = CURTOOL_NONE;
-    mModeTool = ID_GENERALSELECT;
+    if (App->CL_Brush->Get_Brush_Count() > 0)
+    {
+        mCurrentTool = CURTOOL_NONE;
+        mModeTool = ID_GENERALSELECT;
 
-    App->CL_Top_Tabs->Enable_Brush_Options_Buttons(true, false);
-    App->CL_Top_Tabs->Enable_Select_Button(true, true);
+        App->CL_Top_Tabs->Enable_Brush_Options_Buttons(true, false);
+        App->CL_Top_Tabs->Enable_Select_Button(true, true);
+    }
 
     RedrawWindow(App->CL_Top_Tabs->Headers_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
     //ConfigureCurrentTool();
