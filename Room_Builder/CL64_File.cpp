@@ -127,7 +127,7 @@ void CL64_File::Start_Save(bool Use_Save_Dialog)
 				return;
 			}
 
-			strcpy(App->CL_Doc->mCurrent_MTF_PathAndFile, App->CL_File_IO->s_Just_FileName.c_str());
+			strcpy(App->CL_Doc->mCurrent_MTF_PathAndFile, App->CL_File_IO->s_Path_And_File.c_str());
 
 			if (_stricmp(App->CL_Doc->mCurrent_MTF_PathAndFile + strlen(App->CL_Doc->mCurrent_MTF_PathAndFile) - 4, ".mtf") == 0)
 			{
@@ -143,7 +143,7 @@ void CL64_File::Start_Save(bool Use_Save_Dialog)
 
 		App->Set_Title(App->CL_Doc->mCurrent_MTF_PathAndFile);
 
-		App->Say("Saved");
+		App->Say("Saved", App->CL_Doc->mCurrent_MTF_Just_FileName);
 	}
 	else
 	{

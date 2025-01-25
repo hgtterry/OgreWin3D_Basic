@@ -142,6 +142,10 @@
 #define IDC_BT_DELETE_TEXTURE           1104
 #define IDC_BT_TXL_FILE_EDIT            1104
 #define IDC_BT_TXL_RENAME               1105
+#define IDC_STBOTXSIZE                  1106
+#define IDC_STBOTZSIZE                  1107
+#define IDC_STBOTXOFFSET                1108
+#define IDC_STBOTZOFFSET                1109
 #define ID_DEBUG_GENERAL                32771
 #define ID_TEMPLATES_INSERT             32772
 #define ID_BRUSH_SELECT                 32773
@@ -176,7 +180,7 @@
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        158
 #define _APS_NEXT_COMMAND_VALUE         32792
-#define _APS_NEXT_CONTROL_VALUE         1106
+#define _APS_NEXT_CONTROL_VALUE         1110
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif

@@ -50,21 +50,35 @@ CL64_Doc::CL64_Doc(void)
     LastTemplateTypeName[0] = 0;
 
     strcpy(mCurrent_MTF_PathAndFile, App->RB_Directory_FullPath);
-    strcat(mCurrent_MTF_PathAndFile, "\\Data\\Room_Builder\\Test.mtf");
+    strcat(mCurrent_MTF_PathAndFile, "\\Data\\Room_Builder\\Room_1.mtf");
 
-    mCurrent_MTF_Just_FileName[0] = 0;
+    strcpy(mCurrent_MTF_Just_FileName,"Room_1.mtf");
 
     mCurrent_TXL_Path_And_File[0] = 0;
     mCurrent_TXL_Just_FileName[0] = 0;
 
 	pLevel = NULL;
+   
+    BTemplate = NULL;
+    CurBrush = NULL;
+    TempShearTemplate = NULL;
+    pSelBrushes = NULL;
+    pTempSelBrushes = NULL;
+    pSelFaces = NULL;
 
+    App->CL_Maths->Vector3_Set(&SelectedGeoCenter,0, 0, 0);
+    App->CL_Maths->Vector3_Set(&FinalPos, 0, 0, 0);
+    App->CL_Maths->Vector3_Set(&FinalRot, 0, 0, 0);
+    App->CL_Maths->Vector3_Set(&FinalScale, 0, 0, 0);
+   
     mLastOp = 0;
 
     ScaleNum = 1;
     sides = 1;
     NumSelEntities = 0;
     mAdjustMode = ADJUST_MODE_FACE;
+    mLockAxis = 0;
+    mModeTool = ID_TOOLS_TEMPLATE;
 
 	SelectLock = FALSE;
 	TempEnt = FALSE;
