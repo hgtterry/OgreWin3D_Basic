@@ -152,8 +152,8 @@
 #define IDC_STRINGLENGTH                1113
 #define IDC_STSTRIPES                   1114
 #define IDC_BT_CYL_HOLLOW               1115
-#define IDC_BUTTON4                     1116
 #define IDC_BT_CYL_RING                 1116
+#define IDC_ST_TEMPLATES                1117
 #define ID_DEBUG_GENERAL                32771
 #define ID_TEMPLATES_INSERT             32772
 #define ID_BRUSH_SELECT                 32773
@@ -188,7 +188,7 @@
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        158
 #define _APS_NEXT_COMMAND_VALUE         32792
-#define _APS_NEXT_CONTROL_VALUE         1117
+#define _APS_NEXT_CONTROL_VALUE         1118
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif

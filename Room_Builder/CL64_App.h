@@ -66,6 +66,7 @@ THE SOFTWARE.
 // Templates Dialogs
 #include "A_CreateBoxDialog.h"
 #include "A_CreateCylDialog.h"
+#include "A_CreateConeDialog.h"
 
 class CL64_App
 {
@@ -114,6 +115,7 @@ public:
 	// Templates Dialogs
 	A_CreateBoxDialog*			CL_CreateBoxDialog;
 	A_CreateCylDialog*			CL_CreateCylDialog;
+	A_CreateConeDialog*			CL_CreateConeDialog;
 
 	void InitApp(void);
 	void SetBrushes_Fonts(void);

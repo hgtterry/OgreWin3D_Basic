@@ -1952,11 +1952,9 @@ void CL64_MapEditor::SetEditCursor(int Tool, const POINT* pMousePos)
 	{
 		return;
 	}
+
 	CursorIndex = GetCursorBoxPos(pMousePos);
 
-	char buf[20];
-	SetDlgItemText(App->CL_Top_Tabs->Headers_hWnd, IDC_BT_BRUSH_DEBUG, (LPCTSTR)_itoa(CursorIndex,buf,10));
-	//App->Say_Int(CursorIndex);
 	switch (Tool)
 	{
 	case ID_TOOLS_BRUSH_SCALEBRUSH:

@@ -150,6 +150,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="A_CreateBoxDialog.h" />
+    <ClInclude Include="A_CreateConeDialog.h" />
     <ClInclude Include="A_CreateCylDialog.h" />
     <ClInclude Include="Base_Brush.h" />
     <ClInclude Include="Base_Group.h" />
@@ -200,6 +201,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="A_CreateBoxDialog.cpp" />
+    <ClCompile Include="A_CreateConeDialog.cpp" />
     <ClCompile Include="A_CreateCylDialog.cpp" />
     <ClCompile Include="Base_Brush.cpp" />
     <ClCompile Include="Base_Group.cpp" />

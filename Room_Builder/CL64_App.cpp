@@ -70,6 +70,7 @@ CL64_App::CL64_App(void)
 	// Templates Dialogs
 	CL_CreateBoxDialog =		nullptr;
 	CL_CreateCylDialog =		nullptr;
+	CL_CreateConeDialog =		nullptr;
 
 	CUR = 0;
 	mMenu = 0;
@@ -154,7 +155,8 @@ void CL64_App::InitApp(void)
 	// Templates Dialogs
 	CL_CreateBoxDialog =		new A_CreateBoxDialog();
 	CL_CreateCylDialog =		new A_CreateCylDialog();
-	
+	CL_CreateConeDialog =		new A_CreateConeDialog();
+
 	SetBrushes_Fonts();
 
 	char Deskdir[MAX_PATH];
