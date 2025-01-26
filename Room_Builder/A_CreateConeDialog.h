@@ -45,7 +45,7 @@ public:
 
 private:
 
-	static LRESULT CALLBACK CreateCone_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Proc_CreateCone(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	void Set_Members();
 	void Set_DLG_Members(HWND hDlg);

@@ -455,3 +455,139 @@ Brush* CL64_BrushTemplate::BrushTemplate_CreateCylinder(const BrushTemplate_Cyli
 
 	return	0;
 }
+
+// *************************************************************************
+// *					BrushTemplate_CreateCone						   *
+// *************************************************************************
+Brush* CL64_BrushTemplate::BrushTemplate_CreateCone(const BrushTemplate_Cone* pTemplate)
+{
+	int			index, BottomCount;
+	T_Vec3		StartPoint, CurPoint, OldPoint, OuterFocus;
+	T_Vec3		FaceVerts[3], * BottomVerts;
+	FaceList* fl;
+	Face* f;
+	Brush* b;
+
+	double CurAngle;
+	double AngleDeltaDegrees = 360.0f / (float)pTemplate->VerticalStrips;
+	double AngleDelta = UNITS_DEGREES_TO_RADIANS(AngleDeltaDegrees);
+
+
+	fl = App->CL_FaceList->FaceList_Create(pTemplate->VerticalStrips + 1);
+
+	App->CL_Maths->Vector3_Set(&OuterFocus, 0, (float)(pTemplate->Height / 2), 0);
+	App->CL_Maths->Vector3_Set(&StartPoint, (float)(pTemplate->Width / 2), (float)-(pTemplate->Height / 2), 0);
+
+	CurPoint = OldPoint = StartPoint;
+	BottomVerts = (T_Vec3*)App->CL_Maths->Ram_Allocate(sizeof(T_Vec3) * pTemplate->VerticalStrips);
+	BottomVerts[0] = CurPoint;
+
+	CurAngle = BottomCount = 0;
+	for (index = 1; index < pTemplate->VerticalStrips; index++)
+	{
+		//	Rotate around to create our successive points...
+		CurAngle += AngleDelta;
+
+		App->CL_Maths->Vector3_Set
+		(
+			&CurPoint,
+			(float)((StartPoint.x * cos(CurAngle)) + (StartPoint.z * sin(CurAngle))),
+			StartPoint.y,
+			(float)((StartPoint.z * cos(CurAngle)) - (StartPoint.x * sin(CurAngle)))
+		);
+
+		FaceVerts[2] = OuterFocus;
+		FaceVerts[1] = OldPoint;
+		FaceVerts[0] = CurPoint;
+
+		f = App->CL_Face->Face_Create(3, FaceVerts, 0);
+		if (f)
+			App->CL_FaceList->FaceList_AddFace(fl, f);
+
+		OldPoint = CurPoint;
+
+		//	Assign the current point to bottom plane...
+		BottomVerts[++BottomCount] = CurPoint;
+	}
+
+	//	Create the final polygon...
+	CurAngle += AngleDelta;
+
+	App->CL_Maths->Vector3_Set
+	(
+		&CurPoint,
+		(float)((StartPoint.x * cos(CurAngle)) + (StartPoint.z * sin(CurAngle))),
+		StartPoint.y,
+		(float)((StartPoint.z * cos(CurAngle)) - (StartPoint.x * sin(CurAngle)))
+	);
+
+	FaceVerts[2] = OuterFocus;
+	FaceVerts[1] = OldPoint;
+	FaceVerts[0] = CurPoint;
+
+	f = App->CL_Face->Face_Create(3, FaceVerts, 0);
+	if (f)
+	{
+		App->CL_FaceList->FaceList_AddFace(fl, f);
+	}
+
+	f = App->CL_Face->Face_Create(pTemplate->VerticalStrips, BottomVerts, 0);
+
+	if (f)
+	{
+		if (pTemplate->Style > 1)	//default to hollow (if they make hollow later)
+		{
+			App->CL_Face->Face_SetFixedHull(f, GE_TRUE);
+		}
+		App->CL_FaceList->FaceList_AddFace(fl, f);
+	}
+	//	geRam_Free(BottomVerts);
+
+	if (!pTemplate->Style)
+	{
+		b = App->CL_Brush->Brush_Create(BRUSH_LEAF, fl, 0);
+		if (b)
+		{
+			Brush_SetSubtract(b, pTemplate->TCut);
+		}
+		return	b;
+	}
+	else
+	{
+		BrushList* bl = App->CL_Brush->BrushList_Create();
+		Brush* bh, * bm;
+
+		b = App->CL_Brush->Brush_Create(BRUSH_LEAF, fl, 0);
+		if (b)
+		{
+			Brush_SetHollow(b, GE_TRUE);
+			Brush_SetHullSize(b, (float)pTemplate->Thickness);
+			bh = App->CL_Brush->Brush_CreateHollowFromBrush(b);
+			if (bh)
+			{
+				App->CL_Brush->Brush_SetHollowCut(bh, GE_TRUE);
+				App->CL_Brush->BrushList_Append(bl, b);
+				App->CL_Brush->BrushList_Append(bl, bh);
+
+				bm = App->CL_Brush->Brush_Create(BRUSH_MULTI, 0, bl);
+				if (bm)
+				{
+					Brush_SetHollow(bm, GE_TRUE);
+					Brush_SetSubtract(bm, pTemplate->TCut);
+					Brush_SetHullSize(bm, (float)pTemplate->Thickness);
+					return	bm;
+				}
+			}
+			else
+			{
+				App->CL_Brush->Brush_Destroy(&b);
+				App->CL_Brush->BrushList_Destroy(&bl);
+			}
+		}
+		else
+		{
+			App->CL_Brush->BrushList_Destroy(&bl);
+		}
+	}
+	return	0;
+}

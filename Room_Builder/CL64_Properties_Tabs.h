@@ -31,6 +31,7 @@ public:
 
 	void Start_Tabs_Control_Dlg();
 	void Select_Brushes_Tab(int SelNum);
+	void Enable_Tabs_Dlg(bool Enable);
 
 	HWND Tabs_Control_Hwnd;
 

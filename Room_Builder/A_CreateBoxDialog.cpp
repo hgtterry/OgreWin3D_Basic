@@ -60,9 +60,9 @@ A_CreateBoxDialog::~A_CreateBoxDialog(void)
 void A_CreateBoxDialog::Start_CreateBox_Dlg()
 {
 
-	pBoxTemplate = App->CL_Level->Level_GetBoxTemplate (App->CL_Doc->pLevel);
+	pBoxTemplate = App->CL_Level->Level_GetBoxTemplate(App->CL_Doc->pLevel);
 
-	//App->CL_TabsControl->Enable_Tabs_Dlg(false);
+	App->CL_Properties_Tabs->Enable_Tabs_Dlg(false);
 
 	DialogBox(App->hInst, (LPCTSTR)IDD_CREATE_BOX, App->MainHwnd, (DLGPROC)Proc_CreateBox);
 }
@@ -252,49 +252,49 @@ LRESULT CALLBACK A_CreateBoxDialog::Proc_CreateBox(HWND hDlg, UINT message, WPAR
 	{
 		LPNMHDR some_item = (LPNMHDR)lParam;
 
-		if (some_item->idFrom == IDC_BT_BOXSOLID && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDC_BT_BOXSOLID)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Toggle_Tabs(item, App->CL_CreateBoxDialog->Solid_Flag);
 			return CDRF_DODEFAULT;
 		}
 
-		if (some_item->idFrom == IDC_BT_BOXHOLLOW && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDC_BT_BOXHOLLOW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Toggle_Tabs(item, App->CL_CreateBoxDialog->Hollow_Flag);
 			return CDRF_DODEFAULT;
 		}
 
-		if (some_item->idFrom == IDC_BT_BOXCUTBRUSH && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDC_BT_BOXCUTBRUSH)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Toggle_Tabs(item, App->CL_CreateBoxDialog->Cut_Flag);
 			return CDRF_DODEFAULT;
 		}
 
-		if (some_item->idFrom == IDC_BOXDEFAULTS && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDC_BOXDEFAULTS)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
 			return CDRF_DODEFAULT;
 		}
 
-		if (some_item->idFrom == IDC_BT_BOXROOM && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDC_BT_BOXROOM)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
 			return CDRF_DODEFAULT;
 		}
 
-		if (some_item->idFrom == IDOK && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDOK)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
 			return CDRF_DODEFAULT;
 		}
 
-		if (some_item->idFrom == IDCANCEL && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDCANCEL)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
@@ -306,7 +306,6 @@ LRESULT CALLBACK A_CreateBoxDialog::Proc_CreateBox(HWND hDlg, UINT message, WPAR
 
 	case WM_COMMAND:
 	{
-
 		if (LOWORD(wParam) == IDC_BT_BOXSOLID)
 		{
 			//HWND Temp = GetDlgItem(hDlg, IDC_PICTURE);
@@ -400,7 +399,7 @@ LRESULT CALLBACK A_CreateBoxDialog::Proc_CreateBox(HWND hDlg, UINT message, WPAR
 			App->CL_CreateBoxDialog->CreateCube();
 			
 
-			//App->CLSB_TabsControl->Enable_Tabs_Dlg(true);
+			App->CL_Properties_Tabs->Enable_Tabs_Dlg(true);
 			App->CL_Properties_Templates->Enable_Insert_Button(true);
 
 			EndDialog(hDlg, LOWORD(wParam));
@@ -410,7 +409,7 @@ LRESULT CALLBACK A_CreateBoxDialog::Proc_CreateBox(HWND hDlg, UINT message, WPAR
 
 		if (LOWORD(wParam) == IDCANCEL)
 		{
-			/*App->CLSB_TabsControl->Enable_Tabs_Dlg(true);*/
+			App->CL_Properties_Tabs->Enable_Tabs_Dlg(true);
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 
@@ -436,7 +435,6 @@ void A_CreateBoxDialog::CreateCube()
 	if (pCube != NULL)
 	{
 		strcpy(App->CL_Doc->LastTemplateTypeName,BoxName);
-		//pBoxTemplate->
 		strcpy(pCube->Name,"Test");
 		CreateNewTemplateBrush(pCube);
 

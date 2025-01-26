@@ -177,6 +177,12 @@ LRESULT CALLBACK CL64_Properties_Templates::Proc_Templates(HWND hDlg, UINT messa
 			return 1;
 		}
 		
+		if (LOWORD(wParam) == IDC_BRUSH_CONE_PRIMITIVE)
+		{
+			App->CL_CreateConeDialog->Start_CreateCone_Dlg();
+			return 1;
+		}
+		
 		// -----------------------------------------------------------------
 		if (LOWORD(wParam) == IDOK)
 		{

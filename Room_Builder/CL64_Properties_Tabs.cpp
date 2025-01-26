@@ -257,3 +257,11 @@ void CL64_Properties_Tabs::Select_Brushes_Tab(int SelNum)
 		RedrawWindow(Tabs_Control_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 	}
 }
+
+// *************************************************************************
+// *	  	Enable_Tabs_Dlg:- Terry and Hazel Flanigan 2025				   *
+// *************************************************************************
+void CL64_Properties_Tabs::Enable_Tabs_Dlg(bool Enable)
+{
+	EnableWindow(Tabs_Control_Hwnd, Enable);
+}

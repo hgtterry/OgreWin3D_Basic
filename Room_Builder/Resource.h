@@ -40,6 +40,8 @@
 #define IDI_ARCH_PRIMITIVE              155
 #define IDI_SPHEROID_PRIMITIVE          156
 #define IDD_TEXTURE_EDITOR              157
+#define IDD_CREATE_CONE                 158
+#define IDB_CREATECONE                  159
 #define IDC_BANNER                      1000
 #define IDC_STTEXT                      1001
 #define IDC_STMESSAGE                   1002
@@ -154,6 +156,13 @@
 #define IDC_BT_CYL_HOLLOW               1115
 #define IDC_BT_CYL_RING                 1116
 #define IDC_ST_TEMPLATES                1117
+#define IDC_BT_CONE_DEFAULTS            1118
+#define IDC_ED_CONE_1                   1119
+#define IDC_ED_CONE_2                   1120
+#define IDC_ED_CONE_3                   1121
+#define IDC_ED_CONE_4                   1122
+#define IDC_EDIT2                       1123
+#define IDC_ED_CONE_NAME                1123
 #define ID_DEBUG_GENERAL                32771
 #define ID_TEMPLATES_INSERT             32772
 #define ID_BRUSH_SELECT                 32773
@@ -186,9 +195,9 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
-#define _APS_NEXT_RESOURCE_VALUE        158
+#define _APS_NEXT_RESOURCE_VALUE        160
 #define _APS_NEXT_COMMAND_VALUE         32792
-#define _APS_NEXT_CONTROL_VALUE         1118
+#define _APS_NEXT_CONTROL_VALUE         1124
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif

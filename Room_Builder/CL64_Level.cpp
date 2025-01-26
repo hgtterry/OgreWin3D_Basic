@@ -182,6 +182,14 @@ BrushTemplate_Cylinder* CL64_Level::Level_GetCylinderTemplate(Level* pLevel)
 }
 
 // *************************************************************************
+// *						Level_GetConeTemplate						   *
+// *************************************************************************
+BrushTemplate_Cone* CL64_Level::Level_GetConeTemplate(Level* pLevel)
+{
+	return &pLevel->ConeTemplate;
+}
+
+// *************************************************************************
 // *							Level_GetBrushes						   *
 // *************************************************************************
 BrushList* CL64_Level::Level_GetBrushes(Level* pLevel)

@@ -38,6 +38,8 @@ A_CreateConeDialog::A_CreateConeDialog(void)
 
 	m_UseCamPos = 0;
 
+	pConeTemplate = NULL;
+
 	strcpy(ConeName,"Cone");
 }
 
@@ -46,33 +48,37 @@ A_CreateConeDialog::~A_CreateConeDialog(void)
 }
 
 // *************************************************************************
-// *	  	Start_CreateCone_Dlg:- Terry and Hazel Flanigan 2023		   *
+// *	  	Start_CreateCone_Dlg:- Terry and Hazel Flanigan 2025		   *
 // *************************************************************************
 void A_CreateConeDialog::Start_CreateCone_Dlg()
 {
-	/*m_pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
-	pConeTemplate = Level_GetConeTemplate (App->CLSB_Doc->pLevel);
+	pConeTemplate = App->CL_Level->Level_GetConeTemplate(App->CL_Doc->pLevel);
 
-	App->CLSB_TabsControl->Enable_Tabs_Dlg(false);
-	DialogBox(App->hInst, (LPCTSTR)IDD_CREATE_CONE, App->MainHwnd, (DLGPROC)CreateCone_Proc);*/
+	App->CL_Properties_Tabs->Enable_Tabs_Dlg(false);
+
+	DialogBox(App->hInst, (LPCTSTR)IDD_CREATE_CONE, App->MainHwnd, (DLGPROC)Proc_CreateCone);
 }
 
 // *************************************************************************
-// *        CreateBox_Proc:- Terry and Hazel Flanigan 2023				   *
+// *        CreateBox_Proc:- Terry and Hazel Flanigan 2025				   *
 // *************************************************************************
-LRESULT CALLBACK A_CreateConeDialog::CreateCone_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK A_CreateConeDialog::Proc_CreateCone(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
 
 	switch (message)
 	{
 	case WM_INITDIALOG:
 	{
+		SendDlgItemMessage(hDlg, IDC_BT_CONE_DEFAULTS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
-		//App->CL_CreateConeDialog->Set_Members();
+		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
-		//App->CL_CreateConeDialog->Set_DLG_Members(hDlg);
 
-		//SetDlgItemText(hDlg, IDC_EDITNAME, (LPCTSTR)"Cone");
+		App->CL_CreateConeDialog->Set_Members();
+		App->CL_CreateConeDialog->Set_DLG_Members(hDlg);
+
+		SetDlgItemText(hDlg, IDC_ED_CONE_NAME, (LPCTSTR)"Cone");
 
 
 		//// ----------- Style Solid Hollow Funnel
@@ -225,6 +231,34 @@ LRESULT CALLBACK A_CreateConeDialog::CreateCone_Proc(HWND hDlg, UINT message, WP
 		return (LONG)App->AppBackground;
 	}
 
+	case WM_NOTIFY:
+	{
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		if (some_item->idFrom == IDC_BT_CONE_DEFAULTS)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+		
+		if (some_item->idFrom == IDOK)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDCANCEL)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		return CDRF_DODEFAULT;
+	}
+
 	case WM_COMMAND:
 		{
 			/*if (LOWORD(wParam) == IDC_CKWORLDCENTRE)
@@ -288,30 +322,30 @@ LRESULT CALLBACK A_CreateConeDialog::CreateCone_Proc(HWND hDlg, UINT message, WP
 				return TRUE;
 			}*/
 
-			/*if (LOWORD(wParam) == ID_DEFAULT)
+			if (LOWORD(wParam) == IDC_BT_CONE_DEFAULTS)
 			{
 				App->CL_CreateConeDialog->Set_Defaults(hDlg);
 				return TRUE;
-			}*/
+			}
 
 			// -----------------------------------------------------------------
 			if (LOWORD(wParam) == IDOK)
 			{
-				/*App->CL_CreateConeDialog->Get_DLG_Members(hDlg);
+				App->CL_CreateConeDialog->Get_DLG_Members(hDlg);
 				App->CL_CreateConeDialog->Set_ConeTemplate(); 
 				App->CL_CreateConeDialog->CreateCone();
 
-				App->CLSB_TabsControl->Enable_Tabs_Dlg(true);
+				App->CL_Properties_Tabs->Enable_Tabs_Dlg(true);
 
-				App->CLSB_Tabs_Templates_Dlg->Enable_Insert_Button(true);*/
-
+				App->CL_Properties_Templates->Enable_Insert_Button(true);
+				
 				EndDialog(hDlg, LOWORD(wParam));
 				return TRUE;
 			}
 
 			if (LOWORD(wParam) == IDCANCEL)
 			{
-				//App->CLSB_TabsControl->Enable_Tabs_Dlg(true);
+				App->CL_Properties_Tabs->Enable_Tabs_Dlg(true);
 				EndDialog(hDlg, LOWORD(wParam));
 				return TRUE;
 			}
@@ -327,20 +361,18 @@ LRESULT CALLBACK A_CreateConeDialog::CreateCone_Proc(HWND hDlg, UINT message, WP
 // *************************************************************************
 void A_CreateConeDialog::CreateCone() 
 {
-	/*m_pDoc->OnToolsTemplate();
-
 	Brush *pCone;
 
-	pCone = BrushTemplate_CreateCone (pConeTemplate);
+	pCone = App->CL_BrushTemplate->BrushTemplate_CreateCone (pConeTemplate);
 	if (pCone != NULL)
 	{
-		m_pDoc->LastTemplateTypeName = ConeName;
+		strcpy(App->CL_Doc->LastTemplateTypeName, ConeName);
 		CreateNewTemplateBrush (pCone);
 	}
 	else
 	{
 		App->Say("No Cone");
-	}*/
+	}
 }
 
 // *************************************************************************
@@ -348,54 +380,55 @@ void A_CreateConeDialog::CreateCone()
 // *************************************************************************
 void A_CreateConeDialog::CreateNewTemplateBrush(Brush *pBrush)
 {
-	/*geVec3d *pTemplatePos;
-	geVec3d MoveVec;
-	geVec3d BrushPos;
+	T_Vec3 *pTemplatePos;
+	T_Vec3 MoveVec;
+	T_Vec3 BrushPos;
 
 	assert (pBrush != NULL);
 
-	if (App->CLSB_Doc->BTemplate != NULL)
+	if (App->CL_Doc->BTemplate != NULL)
 	{
-		Brush_Destroy (&App->CLSB_Doc->BTemplate);
+		App->CL_Brush->Brush_Destroy (&App->CL_Doc->BTemplate);
 	}
 
-	App->CLSB_Doc->CurBrush = pBrush;
+	App->CL_Doc->CurBrush = pBrush;
 
-	App->CLSB_Doc->TempEnt	= FALSE;
-	m_pDoc->SetDefaultBrushTexInfo (App->CLSB_Doc->CurBrush);
-	Brush_Bound (App->CLSB_Doc->CurBrush);
-	Brush_Center (App->CLSB_Doc->CurBrush, &BrushPos);
+	App->CL_Doc->TempEnt	= FALSE;
+	App->CL_Doc->SetDefaultBrushTexInfo (App->CL_Doc->CurBrush);
+	App->CL_Brush->Brush_Bound (App->CL_Doc->CurBrush);
+	App->CL_Brush->Brush_Center (App->CL_Doc->CurBrush, &BrushPos);
 
-	pTemplatePos = Level_GetTemplatePos (App->CLSB_Doc->pLevel);
+	pTemplatePos = App->CL_Level->Level_GetTemplatePos (App->CL_Doc->pLevel);
 
-	if (m_UseCamPos == 1)
+	if (m_UseCamPos == 1 && App->flag_OgreStarted == 1)
 	{
-		geVec3d Pos;
+		Ogre::Vector3 Pos;
 
-		Pos = App->CLSB_Camera_WE->Get_Camera_Position();
+		Pos = App->CL_Ogre->camNode->getPosition();
 
-		pTemplatePos->X = Pos.X;
-		pTemplatePos->Y = Pos.Y;
-		pTemplatePos->Z = Pos.Z;
+		pTemplatePos->x = Pos.x;
+		pTemplatePos->y = Pos.y;
+		pTemplatePos->z = Pos.z;
 	}
 	else
 	{
-		pTemplatePos->X = 0;
-		pTemplatePos->Y = 0;
-		pTemplatePos->Z = 0;
+		pTemplatePos->x = 0;
+		pTemplatePos->y = 0;
+		pTemplatePos->z = 0;
 	}
 	
 
-	geVec3d_Subtract (pTemplatePos, &BrushPos, &MoveVec);
+	App->CL_Maths->Vector3_Subtract(pTemplatePos, &BrushPos, &MoveVec);
 
-	Brush_Move (App->CLSB_Doc->CurBrush, &MoveVec);
+	App->CL_Brush->Brush_Move (App->CL_Doc->CurBrush, &MoveVec);
 
-	App->CLSB_Doc->UpdateAllViews (UAV_ALL3DVIEWS, NULL);
-	m_pDoc->SetModifiedFlag ();*/
+	App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
+
+	App->CL_Doc->flag_Is_Modified = 1;
 }
 
 // *************************************************************************
-// *		 Set_Members:- Terry and Hazel Flanigan 2023				   *
+// *		 Set_Members:- Terry and Hazel Flanigan 2025				   *
 // *************************************************************************
 void A_CreateConeDialog::Set_Members() 
 {
@@ -408,25 +441,25 @@ void A_CreateConeDialog::Set_Members()
 }
 
 // *************************************************************************
-// *		 Set_DLG_Members:- Terry and Hazel Flanigan 2023			   *
+// *		 Set_DLG_Members:- Terry and Hazel Flanigan 205			   *
 // *************************************************************************
 void A_CreateConeDialog::Set_DLG_Members(HWND hDlg) 
 {
-	/*char buf[MAX_PATH];
+	char buf[MAX_PATH];
 	sprintf(buf, "%0.0f", m_Width);
-	SetDlgItemText(hDlg, IDC_EDIT1, (LPCTSTR)buf);
+	SetDlgItemText(hDlg, IDC_ED_CONE_1, (LPCTSTR)buf);
 
 	sprintf(buf, "%0.0f", m_Height);
-	SetDlgItemText(hDlg, IDC_EDIT10, (LPCTSTR)buf);
+	SetDlgItemText(hDlg, IDC_ED_CONE_2, (LPCTSTR)buf);
 
 	sprintf(buf, "%0.0i", m_VerticalStrips);
-	SetDlgItemText(hDlg, IDC_EDIT11, (LPCTSTR)buf);
+	SetDlgItemText(hDlg, IDC_ED_CONE_3, (LPCTSTR)buf);
 
 	sprintf(buf, "%0.0f", m_Thickness);
-	SetDlgItemText(hDlg, IDC_EDIT12, (LPCTSTR)buf);
+	SetDlgItemText(hDlg, IDC_ED_CONE_4, (LPCTSTR)buf);
 
 
-	HWND temp = GetDlgItem(hDlg, IDC_TCUT);
+	/*HWND temp = GetDlgItem(hDlg, IDC_TCUT);
 	if (m_TCut == 1)
 	{
 		SendMessage(temp,BM_SETCHECK,1,0);
@@ -442,22 +475,22 @@ void A_CreateConeDialog::Set_DLG_Members(HWND hDlg)
 // *************************************************************************
 void A_CreateConeDialog::Get_DLG_Members(HWND hDlg) 
 {
-	/*char buf[MAX_PATH];
+	char buf[MAX_PATH];
 
-	GetDlgItemText(hDlg, IDC_EDIT1, (LPTSTR)buf,MAX_PATH);
+	GetDlgItemText(hDlg, IDC_ED_CONE_1, (LPTSTR)buf,MAX_PATH);
 	m_Width = (float)atof(buf);
 
-	GetDlgItemText(hDlg, IDC_EDIT10, (LPTSTR)buf,MAX_PATH);
+	GetDlgItemText(hDlg, IDC_ED_CONE_2, (LPTSTR)buf,MAX_PATH);
 	m_Height = (float)atof(buf);
 
-	GetDlgItemText(hDlg, IDC_EDIT11, (LPTSTR)buf,MAX_PATH);
+	GetDlgItemText(hDlg, IDC_ED_CONE_3, (LPTSTR)buf,MAX_PATH);
 	m_VerticalStrips = (float)atof(buf);
 	
-	GetDlgItemText(hDlg, IDC_EDIT12, (LPTSTR)buf,MAX_PATH);
+	GetDlgItemText(hDlg, IDC_ED_CONE_4, (LPTSTR)buf,MAX_PATH);
 	m_Thickness = (float)atof(buf);
 
-	GetDlgItemText(hDlg,IDC_EDITNAME,(LPTSTR)buf,MAX_PATH);
-	strcpy(ConeName,buf);*/
+	GetDlgItemText(hDlg, IDC_ED_CONE_NAME,(LPTSTR)buf,MAX_PATH);
+	strcpy(ConeName,buf);
 }
 
 // *************************************************************************

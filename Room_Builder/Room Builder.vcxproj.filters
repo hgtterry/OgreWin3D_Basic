@@ -342,5 +342,8 @@
     <Image Include="res\sphere.ico">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="res\createco.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

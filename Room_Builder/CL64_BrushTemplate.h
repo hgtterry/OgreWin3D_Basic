@@ -122,6 +122,7 @@ public:
 
 	Brush* BrushTemplate_CreateBox(const BrushTemplate_Box* pTemplate);
 	Brush* BrushTemplate_CreateCylinder(const BrushTemplate_Cylinder* pTemplate);
+	Brush* BrushTemplate_CreateCone(const BrushTemplate_Cone* pTemplate);
 
 };
 
