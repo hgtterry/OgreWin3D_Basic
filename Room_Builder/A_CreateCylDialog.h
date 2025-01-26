@@ -68,4 +68,6 @@ private:
 	char CylinderName[MAX_PATH];
 
 	bool flag_Solid_Flag_Dlg;
+	bool flag_Hollow_Flag_Dlg;
+	bool flag_Ring_Flag_Dlg;
 };
