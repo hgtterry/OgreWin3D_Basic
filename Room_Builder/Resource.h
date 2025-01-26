@@ -146,8 +146,10 @@
 #define IDC_STBOTZSIZE                  1107
 #define IDC_STBOTXOFFSET                1108
 #define IDC_STBOTZOFFSET                1109
-#define IDC_BUTTON1                     1110
 #define IDC_BT_CUTBRUSH                 1110
+#define IDC_BT_CYL_SOLID                1111
+#define IDC_STWALLTHICKNESS             1112
+#define IDC_STRINGLENGTH                1113
 #define ID_DEBUG_GENERAL                32771
 #define ID_TEMPLATES_INSERT             32772
 #define ID_BRUSH_SELECT                 32773
@@ -182,7 +184,7 @@
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        158
 #define _APS_NEXT_COMMAND_VALUE         32792
-#define _APS_NEXT_CONTROL_VALUE         1111
+#define _APS_NEXT_CONTROL_VALUE         1114
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif

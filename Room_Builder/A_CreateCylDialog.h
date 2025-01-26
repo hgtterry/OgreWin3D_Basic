@@ -67,4 +67,5 @@ private:
 
 	char CylinderName[MAX_PATH];
 
+	bool flag_Solid_Flag_Dlg;
 };
