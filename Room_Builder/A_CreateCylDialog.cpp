@@ -46,7 +46,9 @@ A_CreateCylDialog::A_CreateCylDialog(void)
 
 	m_UseCamPos = 0;
 
-	strcpy(CylinderName,"Cylinder Test");
+	strcpy(CylinderName,"Cylinder");
+
+	pCylinderTemplate = NULL;
 
 	flag_Solid_Flag_Dlg = 1;
 	flag_Hollow_Flag_Dlg = 0;
@@ -158,6 +160,15 @@ LRESULT CALLBACK A_CreateCylDialog::Proc_Create_Cylinder(HWND hDlg, UINT message
 		HWND temp = GetDlgItem(hDlg, IDC_CKWORLDCENTRE);
 		SendMessage(temp,BM_SETCHECK,1,0);
 		App->CL_CreateCylDialog->m_UseCamPos = 0;
+
+		int Count = App->CL_Brush->Get_Brush_Count();
+		char Num[32];
+		char Name[32];
+		_itoa(Count, Num, 10);
+		strcpy(Name, "Cylinder_");
+		strcat(Name, Num);
+
+		SetDlgItemText(hDlg, IDC_EDITNAME, (LPCTSTR)Name);
 
 		return TRUE;
 	}
@@ -536,11 +547,11 @@ void A_CreateCylDialog::CreateNewTemplateBrush(Brush *pBrush)
 
 	pTemplatePos = App->CL_Level->Level_GetTemplatePos (App->CL_Doc->pLevel);
 
-	if (m_UseCamPos == 1)
+	if (m_UseCamPos == 1 && App->flag_OgreStarted == 1)
 	{
 		Ogre::Vector3 Pos;
 
-		Pos = Ogre::Vector3(0, 0, 0);// App->CLSB_Camera_WE->Get_Camera_Position();
+		Pos = App->CL_Ogre->camNode->getPosition();
 
 		pTemplatePos->x = Pos.x;
 		pTemplatePos->y = Pos.y;
@@ -553,7 +564,6 @@ void A_CreateCylDialog::CreateNewTemplateBrush(Brush *pBrush)
 		pTemplatePos->z = 0;
 	}
 	
-
 	App->CL_Maths->Vector3_Subtract(pTemplatePos, &BrushPos, &MoveVec);
 
 	App->CL_Brush->Brush_Move (App->CL_Doc->CurBrush, &MoveVec);

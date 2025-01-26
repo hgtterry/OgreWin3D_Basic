@@ -55,7 +55,7 @@ A_CreateBoxDialog::~A_CreateBoxDialog(void)
 }
 
 // *************************************************************************
-// *	  	Start_CreateBox_Dlg:- Terry and Hazel Flanigan 2023			   *
+// *	  	Start_CreateBox_Dlg:- Terry and Hazel Flanigan 2025			   *
 // *************************************************************************
 void A_CreateBoxDialog::Start_CreateBox_Dlg()
 {
@@ -68,7 +68,7 @@ void A_CreateBoxDialog::Start_CreateBox_Dlg()
 }
 
 // *************************************************************************
-// *        CreateBox_Proc:- Terry and Hazel Flanigan 2023				   *
+// *        CreateBox_Proc:- Terry and Hazel Flanigan 2025				   *
 // *************************************************************************
 LRESULT CALLBACK A_CreateBoxDialog::Proc_CreateBox(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -423,7 +423,7 @@ LRESULT CALLBACK A_CreateBoxDialog::Proc_CreateBox(HWND hDlg, UINT message, WPAR
 }
 
 // *************************************************************************
-// *		   CreateCube:- Terry and Hazel Flanigan 2023				   *
+// *		   CreateCube:- Terry and Hazel Flanigan 2025				   *
 // *************************************************************************
 void A_CreateBoxDialog::CreateCube() 
 {
@@ -448,7 +448,7 @@ void A_CreateBoxDialog::CreateCube()
 }
 
 // *************************************************************************
-// *       CreateNewTemplateBrush:- Terry and Hazel Flanigan 2023		   *
+// *       CreateNewTemplateBrush:- Terry and Hazel Flanigan 2025		   *
 // *************************************************************************
 void A_CreateBoxDialog::CreateNewTemplateBrush(Brush *pBrush)
 {
@@ -470,11 +470,11 @@ void A_CreateBoxDialog::CreateNewTemplateBrush(Brush *pBrush)
 
 	pTemplatePos = App->CL_Level->Level_GetTemplatePos (App->CL_Doc->pLevel);
 
-	if (m_UseCamPos == 1)
+	if (m_UseCamPos == 1 && App->flag_OgreStarted == 1)
 	{
-		Ogre::Vector3 Pos = Ogre::Vector3(0,0,0);
+		Ogre::Vector3 Pos;
 
-		//Pos = App->CL_Camera_WE->Get_Camera_Position();
+		Pos = App->CL_Ogre->camNode->getPosition();
 
 		pTemplatePos->x = Pos.x;
 		pTemplatePos->y = Pos.y;
@@ -487,17 +487,17 @@ void A_CreateBoxDialog::CreateNewTemplateBrush(Brush *pBrush)
 		pTemplatePos->z = 0;
 	}
 	
-
 	App->CL_Maths->Vector3_Subtract(pTemplatePos, &BrushPos, &MoveVec);
 
 	App->CL_Brush->Brush_Move(App->CL_Doc->CurBrush, &MoveVec);
 
 	App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
-	//App->m_pDoc->SetModifiedFlag ();
+
+	App->CL_Doc->flag_Is_Modified = 1;
 }
 
 // *************************************************************************
-// *		 Set_Members:- Terry and Hazel Flanigan 2023				   *
+// *		 Set_Members:- Terry and Hazel Flanigan 2025				   *
 // *************************************************************************
 void A_CreateBoxDialog::Set_Members() 
 {
@@ -513,7 +513,7 @@ void A_CreateBoxDialog::Set_Members()
 }
 
 // *************************************************************************
-// *		 Set_DLG_Members:- Terry and Hazel Flanigan 2023			   *
+// *		 Set_DLG_Members:- Terry and Hazel Flanigan 2025			   *
 // *************************************************************************
 void A_CreateBoxDialog::Set_DLG_Members(HWND hDlg) 
 {
@@ -538,7 +538,7 @@ void A_CreateBoxDialog::Set_DLG_Members(HWND hDlg)
 }
 
 // *************************************************************************
-// *		 Get_DLG_Members:- Terry and Hazel Flanigan 2023			   *
+// *		 Get_DLG_Members:- Terry and Hazel Flanigan 2025			   *
 // *************************************************************************
 void A_CreateBoxDialog::Get_DLG_Members(HWND hDlg) 
 {
@@ -570,7 +570,7 @@ void A_CreateBoxDialog::Get_DLG_Members(HWND hDlg)
 }
 
 // *************************************************************************
-// *		 Set_BoxTemplate:- Terry and Hazel Flanigan 2023		   *
+// *		 Set_BoxTemplate:- Terry and Hazel Flanigan 2025		   *
 // *************************************************************************
 void A_CreateBoxDialog::Set_BoxTemplate() 
 {
@@ -586,7 +586,7 @@ void A_CreateBoxDialog::Set_BoxTemplate()
 }
 
 // *************************************************************************
-// *	    	Set_Defaults:- Terry and Hazel Flanigan 2023			   *
+// *	    	Set_Defaults:- Terry and Hazel Flanigan 2025			   *
 // *************************************************************************
 void A_CreateBoxDialog::Set_Defaults(HWND hDlg) 
 {
@@ -616,7 +616,7 @@ void A_CreateBoxDialog::Set_Defaults(HWND hDlg)
 }
 
 // *************************************************************************
-// *	    		Set_Room:- Terry and Hazel Flanigan 2023			   *
+// *	    		Set_Room:- Terry and Hazel Flanigan 2025			   *
 // *************************************************************************
 void A_CreateBoxDialog::Set_Room(HWND hDlg)
 {
@@ -647,7 +647,7 @@ void A_CreateBoxDialog::Set_Room(HWND hDlg)
 }
 
 // *************************************************************************
-// *	CreateDefault_TemplateCube:- Terry and Hazel Flanigan 2023		   *
+// *	CreateDefault_TemplateCube:- Terry and Hazel Flanigan 2025		   *
 // *************************************************************************
 void A_CreateBoxDialog::CreateDefault_TemplateCube()
 {
@@ -676,7 +676,7 @@ void A_CreateBoxDialog::CreateDefault_TemplateCube()
 }
 
 // *************************************************************************
-// *			Zero_Dlg_Flags:- Terry and Hazel Flanigan 2023			   *
+// *			Zero_Dlg_Flags:- Terry and Hazel Flanigan 2025			   *
 // *************************************************************************
 void A_CreateBoxDialog::Zero_Dlg_Flags(HWND hDlg)
 {
