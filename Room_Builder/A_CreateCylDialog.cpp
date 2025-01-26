@@ -96,12 +96,17 @@ LRESULT CALLBACK A_CreateCylDialog::Proc_Create_Cylinder(HWND hDlg, UINT message
 		SendDlgItemMessage(hDlg, IDC_STBOTXOFFSET, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_STBOTZOFFSET, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
+		SendDlgItemMessage(hDlg, IDC_STNAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_STCAMPOS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
 		SendDlgItemMessage(hDlg, IDC_YSIZE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_VERTSTRIPES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_THICKNESS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_RINGLENGTH, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		SendDlgItemMessage(hDlg, IDC_EDITNAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
+		SendDlgItemMessage(hDlg, IDC_BT_CUTBRUSH, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
 		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
@@ -157,14 +162,6 @@ LRESULT CALLBACK A_CreateCylDialog::Proc_Create_Cylinder(HWND hDlg, UINT message
 		}
 
 		if (GetDlgItem(hDlg, IDC_STGENERAL) == (HWND)lParam)
-		{
-			SetBkColor((HDC)wParam, RGB(0, 0, 0));
-			SetTextColor((HDC)wParam, RGB(0, 0, 0));
-			SetBkMode((HDC)wParam, TRANSPARENT);
-			return (UINT)App->AppBackground;
-		}
-
-		if (GetDlgItem(hDlg, IDC_TCUT) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 0, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
@@ -294,21 +291,21 @@ LRESULT CALLBACK A_CreateCylDialog::Proc_Create_Cylinder(HWND hDlg, UINT message
 		}
 
 		// --------------------------------------------------
-		/*if (GetDlgItem(hDlg, IDC_STNAME) == (HWND)lParam)
+		if (GetDlgItem(hDlg, IDC_STNAME) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 0, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->AppBackground;
-		}*/
+		}
 
-		/*if (GetDlgItem(hDlg, IDC_STCAMPOS) == (HWND)lParam)
+		if (GetDlgItem(hDlg, IDC_STCAMPOS) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 0, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->AppBackground;
-		}*/
+		}
 
 		if (GetDlgItem(hDlg, IDC_CKWORLDCENTRE) == (HWND)lParam)
 		{
@@ -366,6 +363,13 @@ LRESULT CALLBACK A_CreateCylDialog::Proc_Create_Cylinder(HWND hDlg, UINT message
 			return CDRF_DODEFAULT;
 		}
 
+		if (some_item->idFrom == IDC_BT_CUTBRUSH)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle_Tabs(item, App->CL_CreateCylDialog->m_TCut);
+			return CDRF_DODEFAULT;
+		}
+		
 		/*if (some_item->idFrom == IDC_BT_BOXROOM && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
@@ -434,20 +438,15 @@ LRESULT CALLBACK A_CreateCylDialog::Proc_Create_Cylinder(HWND hDlg, UINT message
 				return TRUE;
 			}
 
-			if (LOWORD(wParam) == IDC_TCUT)
+			if (LOWORD(wParam) == IDC_BT_CUTBRUSH)
 			{
-				HWND temp = GetDlgItem(hDlg, IDC_TCUT);
-
-				int test = SendMessage(temp, BM_GETCHECK, 0, 0);
-				if (test == BST_CHECKED)
+				if (App->CL_CreateCylDialog->m_TCut == 1)
 				{
-					App->CL_CreateCylDialog->m_TCut = 1;
-					return 1;
+					App->CL_CreateCylDialog->m_TCut = 0;
 				}
 				else
 				{
-					App->CL_CreateCylDialog->m_TCut = 0;
-					return 1;
+					App->CL_CreateCylDialog->m_TCut = 1;
 				}
 
 				return TRUE;
