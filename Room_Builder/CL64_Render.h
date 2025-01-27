@@ -66,6 +66,7 @@ public:
 	bool Render_RenderOrthoGridFromSize(ViewVars* cv, int Interval, HDC hDC, RECT Rect);
 	void Render_ViewToWorld(const ViewVars* cv, const int x, const int y, T_Vec3* wp);
 	POINT Render_OrthoWorldToView(const ViewVars* cv, T_Vec3 const* wp);
+	void Render_MoveCamPosOrtho(ViewVars* v, const T_Vec3* dv);
 
 };
 

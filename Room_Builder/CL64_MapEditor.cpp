@@ -1369,186 +1369,60 @@ void CL64_MapEditor::Zoom_View(HWND hDlg, int Dx, int Dy)
 // *************************************************************************
 void CL64_MapEditor::Pan_View(HWND hDlg, int Dx, int Dy)
 {
-	return;
-	T_Vec3 dv;
+	T_Vec3 sp, wp, dv;;
 	T_Vec3 dcamv;
 	int Tolerence = 20;
+	int	dx, dy;
+	POINT RealCursorPosition;
+
+	GetCursorPos(&RealCursorPosition);
+	ScreenToClient(hDlg,&RealCursorPosition);
+
+	dx = (RealCursorPosition.x - mStartPoint.x);
+	dy = (RealCursorPosition.y - mStartPoint.y);
+
+	if ((dx == 0) && (dy == 0))
+	{
+		return;
+	}
+
+	App->CL_Render->Render_ViewToWorld(Current_View, mStartPoint.x, mStartPoint.y, &sp);
+	App->CL_Render->Render_ViewToWorld(Current_View, RealCursorPosition.x, RealCursorPosition.y, &wp);
+	App->CL_Maths->Vector3_Subtract(&wp, &sp, &dv);	// delta in world space
+
+	App->CL_Maths->Vector3_Scale(&dv, -1.0f, &dcamv);
+
 
 	switch (Current_View->ViewType)
 	{
 	case VIEWTOP:  // Top Left
 	{
-		if (Dx < App->CL_MapEditor->mStartPoint.x)
-		{
-			long test = App->CL_MapEditor->mStartPoint.x - Dx;
-			if (test > Tolerence)
-			{
-				dv.x = -15;
-				dv.y = 0;
-				dv.z = 0;
+		App->CL_Render->Render_MoveCamPosOrtho(Current_View, &dcamv);
 
-				POINT pt = mStartPoint;
-				ClientToScreen(hDlg, &pt);
-				SetCursorPos(pt.x, pt.y);
-			}
-
-		}
-		else if (Dx > App->CL_MapEditor->mStartPoint.x)
-		{
-			long test = Dx - App->CL_MapEditor->mStartPoint.x;
-			if (test > Tolerence)
-			{
-				dv.x = 15;
-				dv.y = 0;
-				dv.z = 0;
-
-				POINT pt = mStartPoint;
-				ClientToScreen(hDlg, &pt);
-				SetCursorPos(pt.x, pt.y);
-			}
-
-		}
-
-		if (Dy < App->CL_MapEditor->mStartPoint.y)
-		{
-			long test = App->CL_MapEditor->mStartPoint.y - Dy;
-			if (test > Tolerence)
-			{
-				dv.x = 0;
-				dv.y = 0;
-				dv.z = -15;
-
-				POINT pt = mStartPoint;
-				ClientToScreen(hDlg, &pt);
-				SetCursorPos(pt.x, pt.y);
-			}
-
-		}
-		else if (Dy > App->CL_MapEditor->mStartPoint.y)
-		{
-			long test = Dy - App->CL_MapEditor->mStartPoint.y;
-			if (test > Tolerence)
-			{
-				dv.x = 0;
-				dv.y = 0;
-				dv.z = 15;
-
-				POINT pt = mStartPoint;
-				ClientToScreen(hDlg, &pt);
-				SetCursorPos(pt.x, pt.y);
-			}
-		}
+		POINT pt = mStartPoint;
+		ClientToScreen(hDlg, &pt);
+		SetCursorPos(pt.x, pt.y);
 
 		break;
 	}
+
 	case VIEWFRONT:  // Bottom Left
 	{
-		if (Dx < App->CL_MapEditor->mStartPoint.x)
-		{
-			long test = App->CL_MapEditor->mStartPoint.x - Dx;
-			if (test > Tolerence)
-			{
-				dv.x = -15;
-				dv.y = 0;
-				dv.z = 0;
+		App->CL_Render->Render_MoveCamPosOrtho(Current_View, &dcamv);
 
-				POINT pt = mStartPoint;
-				ClientToScreen(hDlg, &pt);
-				SetCursorPos(pt.x, pt.y);
-			}
-
-		}
-		else if (Dx > App->CL_MapEditor->mStartPoint.x)
-		{
-			long test = Dx - App->CL_MapEditor->mStartPoint.x;
-			if (test > Tolerence)
-			{
-				dv = { 15, 0, 0 };
-
-				POINT pt = mStartPoint;
-				ClientToScreen(hDlg, &pt);
-				SetCursorPos(pt.x, pt.y);
-			}
-		}
-
-		if (Dy < App->CL_MapEditor->mStartPoint.y)
-		{
-			long test = App->CL_MapEditor->mStartPoint.y - Dy;
-			if (test > Tolerence)
-			{
-				dv = { 0, 15, 0 };
-
-				POINT pt = mStartPoint;
-				ClientToScreen(hDlg, &pt);
-				SetCursorPos(pt.x, pt.y);
-			}
-		}
-		else if (Dy > App->CL_MapEditor->mStartPoint.y)
-		{
-			long test = Dy - App->CL_MapEditor->mStartPoint.y;
-			if (test > Tolerence)
-			{
-				dv = { 0, -15, 0 };
-
-				POINT pt = mStartPoint;
-				ClientToScreen(hDlg, &pt);
-				SetCursorPos(pt.x, pt.y);
-			}
-		}
+		POINT pt = mStartPoint;
+		ClientToScreen(hDlg, &pt);
+		SetCursorPos(pt.x, pt.y);
 
 		break;
 	}
 	case VIEWSIDE: // Top Right
 	{
-		if (Dx < App->CL_MapEditor->mStartPoint.x)
-		{
-			long test = App->CL_MapEditor->mStartPoint.x - Dx;
-			if (test > Tolerence)
-			{
-				dv = { 0, 0, -15 };
+		App->CL_Render->Render_MoveCamPosOrtho(Current_View, &dcamv);
 
-				POINT pt = mStartPoint;
-				ClientToScreen(hDlg, &pt);
-				SetCursorPos(pt.x, pt.y);
-			}
-
-		}
-		else if (Dx > App->CL_MapEditor->mStartPoint.x)
-		{
-			long test = Dx - App->CL_MapEditor->mStartPoint.x;
-			if (test > Tolerence)
-			{
-				dv = { 0, 0, 15 };
-
-				POINT pt = mStartPoint;
-				ClientToScreen(hDlg, &pt);
-				SetCursorPos(pt.x, pt.y);
-			}
-		}
-
-		if (Dy < App->CL_MapEditor->mStartPoint.y)
-		{
-			long test = App->CL_MapEditor->mStartPoint.y - Dy;
-			if (test > Tolerence)
-			{
-				dv = { 0, 15, 0 };
-				POINT pt = mStartPoint;
-				ClientToScreen(hDlg, &pt);
-				SetCursorPos(pt.x, pt.y);
-			}
-		}
-		else if (Dy > App->CL_MapEditor->mStartPoint.y)
-		{
-			long test = Dy - App->CL_MapEditor->mStartPoint.y;
-			if (test > Tolerence)
-			{
-				dv = { 0, -15, 0 };
-
-				POINT pt = mStartPoint;
-				ClientToScreen(hDlg, &pt);
-				SetCursorPos(pt.x, pt.y);
-			}
-		}
+		POINT pt = mStartPoint;
+		ClientToScreen(hDlg, &pt);
+		SetCursorPos(pt.x, pt.y);
 
 		break;
 	}
@@ -1557,11 +1431,7 @@ void CL64_MapEditor::Pan_View(HWND hDlg, int Dx, int Dy)
 		break;
 	}
 
-	App->CL_Maths->Vector3_Scale(&dv, -1.0f, &dcamv);
-	App->CL_Maths->Vector3_Add(&App->CL_MapEditor->Current_View->CamPos, &dcamv, &App->CL_MapEditor->Current_View->CamPos);
-
 	App->CL_MapEditor->Draw_Screen(hDlg);
-
 }
 
 // *************************************************************************

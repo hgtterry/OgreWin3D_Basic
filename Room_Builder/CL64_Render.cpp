@@ -123,7 +123,7 @@ bool CL64_Render::Render_RenderOrthoGridFromSize(ViewVars* cv, int Interval, HDC
 }
 
 // *************************************************************************
-// *	  	Render_ViewToWorld:- Terry and Hazel Flanigan 2024			   *
+// *						Render_ViewToWorld							   *
 // *************************************************************************
 void CL64_Render::Render_ViewToWorld(const ViewVars* cv, const int x, const int y, T_Vec3* wp)
 {
@@ -171,7 +171,7 @@ void CL64_Render::Render_ViewToWorld(const ViewVars* cv, const int x, const int 
 }
 
 // *************************************************************************
-// *	  			Render_OrthoWorldToView							   *
+// *	  			Render_OrthoWorldToView								   *
 // *************************************************************************
 POINT CL64_Render::Render_OrthoWorldToView(const ViewVars* cv, T_Vec3 const* wp)
 {
@@ -213,4 +213,12 @@ POINT CL64_Render::Render_OrthoWorldToView(const ViewVars* cv, T_Vec3 const* wp)
 	}
 
 	return sc;
+}
+
+// *************************************************************************
+// *	  			Render_MoveCamPosOrtho								   *
+// *************************************************************************
+void CL64_Render::Render_MoveCamPosOrtho(ViewVars* v, const T_Vec3* dv)
+{
+	App->CL_Maths->Vector3_Add(&v->CamPos, dv, &v->CamPos);
 }
