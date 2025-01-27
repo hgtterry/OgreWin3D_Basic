@@ -568,7 +568,7 @@ void A_CreateBoxDialog::Get_DLG_Members(HWND hDlg)
 }
 
 // *************************************************************************
-// *		 Set_BoxTemplate:- Terry and Hazel Flanigan 2025		   *
+// *		 Set_BoxTemplate:- Terry and Hazel Flanigan 2025			   *
 // *************************************************************************
 void A_CreateBoxDialog::Set_BoxTemplate() 
 {

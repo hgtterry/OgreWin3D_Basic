@@ -58,4 +58,8 @@ private:
 	void CreateNewTemplateBrush(Brush *pBrush);
 
 	char ConeName[MAX_PATH];
+
+	bool flag_Solid_Flag_Dlg;
+	bool flag_Hollow_Flag_Dlg;
+	bool flag_Funnel_Flag_Dlg;
 };

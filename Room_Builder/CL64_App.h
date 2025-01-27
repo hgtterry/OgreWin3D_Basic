@@ -123,6 +123,7 @@ public:
 
 	bool Custom_Button_Greyed(LPNMCUSTOMDRAW item);
 	bool Custom_Button_Normal(LPNMCUSTOMDRAW item);
+	bool Custom_Button_Toggle(LPNMCUSTOMDRAW item, bool Toggle);
 	bool Custom_Button_Toggle_Tabs(LPNMCUSTOMDRAW item, bool Toggle);
 
 	void Flash_Window();

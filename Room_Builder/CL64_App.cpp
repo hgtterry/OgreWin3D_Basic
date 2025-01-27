@@ -335,6 +335,71 @@ bool CL64_App::Custom_Button_Normal(LPNMCUSTOMDRAW item)
 }
 
 // *************************************************************************
+// *					Custom_Button Terry Bernie   			 	 	   *
+// *************************************************************************
+bool CL64_App::Custom_Button_Toggle(LPNMCUSTOMDRAW item, bool Toggle)
+{
+	static HBRUSH defaultbrush = NULL;
+	static HBRUSH hotbrush = NULL;
+	static HBRUSH selectbrush = NULL;
+
+	{
+		if (item->uItemState & CDIS_HOT) //Our mouse is over the button
+		{
+			//Select our colour when the mouse hovers our button
+
+			if (Toggle == 1)
+			{
+				hotbrush = CreateSolidBrush(RGB(0, 255, 0));
+			}
+			else
+			{
+				hotbrush = CreateSolidBrush(RGB(240, 240, 240));
+			}
+
+			HPEN pen = CreatePen(PS_INSIDEFRAME, 0, RGB(0, 0, 0));
+
+			HGDIOBJ old_pen = SelectObject(item->hdc, pen);
+			HGDIOBJ old_brush = SelectObject(item->hdc, hotbrush);
+
+			RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 0, 0);
+
+			SelectObject(item->hdc, old_pen);
+			SelectObject(item->hdc, old_brush);
+			DeleteObject(pen);
+
+			return CDRF_DODEFAULT;
+		}
+
+		//Select our colour when our button is doing nothing
+
+		if (Toggle == 1)
+		{
+			defaultbrush = App->Brush_Green;
+		}
+		else
+		{
+			defaultbrush = Brush_But_Normal;
+		}
+
+		HPEN pen = CreatePen(PS_INSIDEFRAME, 0, RGB(0, 0, 0));
+
+		HGDIOBJ old_pen = SelectObject(item->hdc, pen);
+		HGDIOBJ old_brush = SelectObject(item->hdc, defaultbrush);
+
+		RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 0, 0);
+
+		SelectObject(item->hdc, old_pen);
+		SelectObject(item->hdc, old_brush);
+		DeleteObject(pen);
+
+		return CDRF_DODEFAULT;
+	}
+
+	return CDRF_DODEFAULT;
+}
+
+// *************************************************************************
 // *		Custom_Button_Toggle_Tabs:- Terry and Hazel Flanigan 2025 	   *
 // *************************************************************************
 bool CL64_App::Custom_Button_Toggle_Tabs(LPNMCUSTOMDRAW item, bool Toggle)

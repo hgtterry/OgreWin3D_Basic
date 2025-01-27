@@ -161,8 +161,14 @@
 #define IDC_ED_CONE_2                   1120
 #define IDC_ED_CONE_3                   1121
 #define IDC_ED_CONE_4                   1122
-#define IDC_EDIT2                       1123
 #define IDC_ED_CONE_NAME                1123
+#define IDC_CK_CONE_WORLDCENTRE         1124
+#define IDC_CHECK3                      1125
+#define IDC_CK_CONE_CAMPOSITION         1125
+#define IDC_BT_CONE_SOLID               1126
+#define IDC_BT_CONE_HOLLOW              1127
+#define IDC_BT_CONE_FUNNEL              1128
+#define IDC_BT_CONE_CUTBRUSH            1129
 #define ID_DEBUG_GENERAL                32771
 #define ID_TEMPLATES_INSERT             32772
 #define ID_BRUSH_SELECT                 32773
@@ -197,7 +203,7 @@
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        160
 #define _APS_NEXT_COMMAND_VALUE         32792
-#define _APS_NEXT_CONTROL_VALUE         1124
+#define _APS_NEXT_CONTROL_VALUE         1127
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif
