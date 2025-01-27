@@ -1369,6 +1369,7 @@ void CL64_MapEditor::Zoom_View(HWND hDlg, int Dx, int Dy)
 // *************************************************************************
 void CL64_MapEditor::Pan_View(HWND hDlg, int Dx, int Dy)
 {
+	return;
 	T_Vec3 dv;
 	T_Vec3 dcamv;
 	int Tolerence = 20;

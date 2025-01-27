@@ -73,6 +73,11 @@ LRESULT CALLBACK A_CreateConeDialog::Proc_CreateCone(HWND hDlg, UINT message, WP
 	{
 	case WM_INITDIALOG:
 	{
+		SendDlgItemMessage(hDlg, IDC_STDIAMETER, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_STYSIZE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_STVERTSTRIPS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_STWALLSIZE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
 		SendDlgItemMessage(hDlg, IDC_ED_CONE_1, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ED_CONE_2, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ED_CONE_3, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
@@ -83,6 +88,9 @@ LRESULT CALLBACK A_CreateConeDialog::Proc_CreateCone(HWND hDlg, UINT message, WP
 		SendDlgItemMessage(hDlg, IDC_BT_CONE_FUNNEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_CONE_CUTBRUSH, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
+		SendDlgItemMessage(hDlg, IDC_ST_CONE_NAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_ST_CONE_POSITION, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
 		SendDlgItemMessage(hDlg, IDC_CK_CONE_WORLDCENTRE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_CK_CONE_CAMPOSITION, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
@@ -92,7 +100,6 @@ LRESULT CALLBACK A_CreateConeDialog::Proc_CreateCone(HWND hDlg, UINT message, WP
 
 		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-
 
 		App->CL_CreateConeDialog->Set_Members();
 		App->CL_CreateConeDialog->Set_DLG_Members(hDlg);
@@ -107,27 +114,29 @@ LRESULT CALLBACK A_CreateConeDialog::Proc_CreateCone(HWND hDlg, UINT message, WP
 		SetDlgItemText(hDlg, IDC_ED_CONE_NAME, (LPCTSTR)Name);
 
 
-		//// ----------- Style Solid Hollow Funnel
-		//if(App->CL_CreateConeDialog->m_Style == 0)
-		//{
-		//	HWND temp = GetDlgItem(hDlg, IDC_SOLID);
-		//	SendMessage(temp, BM_SETCHECK, 1, 0);
-		//}
+		// ----------- Style Solid Hollow Funnel
+		if(App->CL_CreateConeDialog->m_Style == 0)
+		{
+			App->CL_CreateConeDialog->flag_Solid_Flag_Dlg = 1;
+			App->CL_CreateConeDialog->flag_Hollow_Flag_Dlg = 0;
+			App->CL_CreateConeDialog->flag_Funnel_Flag_Dlg = 0;
+		}
 
-		//if(App->CL_CreateConeDialog->m_Style == 1)
-		//{
-		//	HWND temp = GetDlgItem(hDlg, IDC_HOLLOW);
-		//	SendMessage(temp, BM_SETCHECK, 1, 0);
-		//}
+		if(App->CL_CreateConeDialog->m_Style == 1)
+		{
+			App->CL_CreateConeDialog->flag_Solid_Flag_Dlg = 0;
+			App->CL_CreateConeDialog->flag_Hollow_Flag_Dlg = 1;
+			App->CL_CreateConeDialog->flag_Funnel_Flag_Dlg = 0;
+		}
 
-		//if(App->CL_CreateConeDialog->m_Style == 2)
-		//{
-		//	HWND temp = GetDlgItem(hDlg, IDC_FUNNEL);
-		//	SendMessage(temp, BM_SETCHECK, 1, 0);
-		//}
-		//// ----------------------------------------------
+		if(App->CL_CreateConeDialog->m_Style == 2)
+		{
+			App->CL_CreateConeDialog->flag_Solid_Flag_Dlg = 0;
+			App->CL_CreateConeDialog->flag_Hollow_Flag_Dlg = 0;
+			App->CL_CreateConeDialog->flag_Funnel_Flag_Dlg = 1;
+		}
 
-
+		// ----------------------------------------------
 		HWND temp = GetDlgItem(hDlg, IDC_CK_CONE_WORLDCENTRE);
 		SendMessage(temp,BM_SETCHECK,1,0);
 		App->CL_CreateConeDialog->m_UseCamPos = 0;
@@ -136,70 +145,62 @@ LRESULT CALLBACK A_CreateConeDialog::Proc_CreateCone(HWND hDlg, UINT message, WP
 	}
 	case WM_CTLCOLORSTATIC:
 	{
-		//if (GetDlgItem(hDlg, IDC_STGENERAL) == (HWND)lParam)
-		//{
-		//	SetBkColor((HDC)wParam, RGB(0, 0, 0));
-		//	SetTextColor((HDC)wParam, RGB(0, 0, 0));
-		//	SetBkMode((HDC)wParam, TRANSPARENT);
-		//	return (UINT)App->AppBackground;
-		//}
+		if (GetDlgItem(hDlg, IDC_STGENERAL) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
 
-		//if (GetDlgItem(hDlg, IDC_STDIAMETER) == (HWND)lParam)
-		//{
-		//	SetBkColor((HDC)wParam, RGB(0, 0, 0));
-		//	SetTextColor((HDC)wParam, RGB(0, 0, 0));
-		//	SetBkMode((HDC)wParam, TRANSPARENT);
-		//	return (UINT)App->AppBackground;
-		//}
+		if (GetDlgItem(hDlg, IDC_STDIAMETER) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
 
-		//if (GetDlgItem(hDlg, IDC_STYSIZE) == (HWND)lParam)
-		//{
-		//	SetBkColor((HDC)wParam, RGB(0, 0, 0));
-		//	SetTextColor((HDC)wParam, RGB(0, 0, 0));
-		//	SetBkMode((HDC)wParam, TRANSPARENT);
-		//	return (UINT)App->AppBackground;
-		//}
+		if (GetDlgItem(hDlg, IDC_STYSIZE) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
 
-		//if (GetDlgItem(hDlg, IDC_STVERTSTRIPS) == (HWND)lParam)
-		//{
-		//	SetBkColor((HDC)wParam, RGB(0, 0, 0));
-		//	SetTextColor((HDC)wParam, RGB(0, 0, 0));
-		//	SetBkMode((HDC)wParam, TRANSPARENT);
-		//	return (UINT)App->AppBackground;
-		//}
+		if (GetDlgItem(hDlg, IDC_STVERTSTRIPS) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
 
-		//if (GetDlgItem(hDlg, IDC_STWALLSIZE) == (HWND)lParam)
-		//{
-		//	SetBkColor((HDC)wParam, RGB(0, 0, 0));
-		//	SetTextColor((HDC)wParam, RGB(0, 0, 0));
-		//	SetBkMode((HDC)wParam, TRANSPARENT);
-		//	return (UINT)App->AppBackground;
-		//}
+		if (GetDlgItem(hDlg, IDC_STWALLSIZE) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
 
-		//if (GetDlgItem(hDlg, IDC_STSTYLE) == (HWND)lParam)
-		//{
-		//	SetBkColor((HDC)wParam, RGB(0, 0, 0));
-		//	SetTextColor((HDC)wParam, RGB(0, 0, 0));
-		//	SetBkMode((HDC)wParam, TRANSPARENT);
-		//	return (UINT)App->AppBackground;
-		//}
+		// --------------------------------------------------
+		if (GetDlgItem(hDlg, IDC_ST_CONE_NAME) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
 
-		//// --------------------------------------------------
-		//if (GetDlgItem(hDlg, IDC_STNAME) == (HWND)lParam)
-		//{
-		//	SetBkColor((HDC)wParam, RGB(0, 0, 0));
-		//	SetTextColor((HDC)wParam, RGB(0, 0, 0));
-		//	SetBkMode((HDC)wParam, TRANSPARENT);
-		//	return (UINT)App->AppBackground;
-		//}
-
-		//if (GetDlgItem(hDlg, IDC_STCAMPOS) == (HWND)lParam)
-		//{
-		//	SetBkColor((HDC)wParam, RGB(0, 0, 0));
-		//	SetTextColor((HDC)wParam, RGB(0, 0, 0));
-		//	SetBkMode((HDC)wParam, TRANSPARENT);
-		//	return (UINT)App->AppBackground;
-		//}
+		if (GetDlgItem(hDlg, IDC_ST_CONE_POSITION) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
 
 		if (GetDlgItem(hDlg, IDC_CK_CONE_WORLDCENTRE) == (HWND)lParam)
 		{
@@ -559,20 +560,13 @@ void A_CreateConeDialog::Set_Defaults(HWND hDlg)
 
 	Set_DLG_Members(hDlg);
 
-	/*if(m_Solid == 0)
-	{
-		HWND temp = GetDlgItem(hDlg,IDC_SOLID);
-		SendMessage(temp,BM_SETCHECK,1,0);
+	HWND temp = GetDlgItem(hDlg, IDC_CK_CONE_WORLDCENTRE);
+	SendMessage(temp, BM_SETCHECK, 1, 0);
+	App->CL_CreateConeDialog->m_UseCamPos = 0;
 
-		temp = GetDlgItem(hDlg,IDC_HOLLOW);
-		SendMessage(temp,BM_SETCHECK,0,0);
-	}
-	else
-	{
-		HWND temp = GetDlgItem(hDlg,IDC_HOLLOW);
-		SendMessage(temp,BM_SETCHECK,1,0);
+	App->CL_CreateConeDialog->flag_Solid_Flag_Dlg = 1;
+	App->CL_CreateConeDialog->flag_Hollow_Flag_Dlg = 0;
+	App->CL_CreateConeDialog->flag_Funnel_Flag_Dlg = 0;
 
-		temp = GetDlgItem(hDlg,IDC_SOLID);
-		SendMessage(temp,BM_SETCHECK,0,0);
-	}*/
+	RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 }
