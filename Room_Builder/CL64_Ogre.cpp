@@ -39,7 +39,8 @@ CL64_Ogre::CL64_Ogre()
 	manObj =	nullptr;
 	ModelNode = nullptr;
 
-	Ogre3D_Listener = nullptr;
+	Ogre3D_Listener =	nullptr;
+	OGL_Listener =		nullptr;
 
 	mResourcePath = "";
 	Return_Chr[0] = 0;
@@ -313,6 +314,9 @@ bool CL64_Ogre::Init_CreateFrameListener(void)
 	{
 		Ogre3D_Listener = new CL64_Ogre3D_Listener();
 		mRoot->addFrameListener(Ogre3D_Listener);
+
+		OGL_Listener = new CL64_OGL_Listener();
+		mSceneMgr->addRenderQueueListener(OGL_Listener);
 	}
 	else
 	{

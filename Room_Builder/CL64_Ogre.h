@@ -29,6 +29,7 @@ THE SOFTWARE.
 #include <OgreImGuiInputListener.h>
 #include "OgreTrays.h"
 #include "SdkSample.h"
+#include "CL64_OGL_Listener.h"
 
 using namespace Ogre;
 using namespace OgreBites;
@@ -68,6 +69,7 @@ public:
 	Ogre::OverlaySystem* mOverlaySystem;
 
 	CL64_Ogre3D_Listener* Ogre3D_Listener;
+	CL64_OGL_Listener* OGL_Listener;
 
 	Ogre::Timer FPStimer;
 	int FPSLock; // FPS Lock Setable (60 FPS Default)

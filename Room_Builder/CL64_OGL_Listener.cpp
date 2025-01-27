@@ -1,24 +1,25 @@
 /*
-Copyright (c) GameDirector 2019 To 2024 HGT Software W.T.Flanigan H.C.Flanigan
+Copyright (c) 2024 - 2025 Inflanite_HGT W.T.Flanigan H.C.Flanigan
 
-This software is provided 'as-is', without any express or implied
-warranty. In no event will the authors be held liable for any damages
-arising from the use of this software.
+Room Builder
 
-Permission is granted to anyone to use this software for any purpose,
-including commercial applications, and to alter it and redistribute it
-freely, subject to the following restrictions:
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-1. The origin of this software must not be misrepresented; you must not
-claim that you wrote the original software. If you use this software
-in a product, an acknowledgment in the product documentation would be
-appreciated but is not required.
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
 
-2. Altered source versions must be plainly marked as such, and must not be
-misrepresented as being the original software.
-
-3. This notice may not be removed or altered from any source
-distribution.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
 */
 
 #include "pch.h"
@@ -60,14 +61,14 @@ CL64_OGL_Listener::~CL64_OGL_Listener(void)
 
 
 // *************************************************************************
-// *			renderQueueStarted:- Terry and Hazel Flanigan 2024		   *
+// *			renderQueueStarted:- Terry and Hazel Flanigan 2025		   *
 // *************************************************************************
 void CL64_OGL_Listener::renderQueueStarted(Ogre::uint8 queueGroupId, const Ogre::String& invocation, bool& skipThisInvocation)
 {
 }
 
 // *************************************************************************
-// *			renderQueueEnded:- Terry and Hazel Flanigan 2024		   *
+// *			renderQueueEnded:- Terry and Hazel Flanigan 2025		   *
 // *************************************************************************
 void CL64_OGL_Listener::renderQueueEnded(Ogre::uint8 queueGroupId, const Ogre::String& invocation, bool& repeatThisInvocation)
 {
@@ -145,7 +146,6 @@ void CL64_OGL_Listener::PostRender()
 // *************************************************************************
 void CL64_OGL_Listener::Render_Loop()
 {
-	
 	GLboolean depthTestEnabled = glIsEnabled(GL_DEPTH_TEST);
 	glDisable(GL_DEPTH_TEST);
 	GLboolean stencilTestEnabled = glIsEnabled(GL_STENCIL_TEST);
@@ -181,12 +181,12 @@ void CL64_OGL_Listener::Render_Loop()
 	}*/
 
 	// ---------------------- Mesh
-	/*if (App->CL_Scene->flag_Model_Loaded && Flag_ShowFaces == 1)
+	if (Flag_ShowFaces == 1)
 	{
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
 		MeshData_Render_Faces();
-	}*/
+	}
 
 	// ---------------------- Points
 	/*if (App->CL_Scene->flag_Model_Loaded == 1 && Flag_ShowPoints == 1)
@@ -325,59 +325,110 @@ bool CL64_OGL_Listener::MeshData_Textured_Groups(int Count)
 // *************************************************************************
 void CL64_OGL_Listener::MeshData_Render_Faces(void)
 {
-	//int Count = 0;
+	if (App->CL_Model->BrushCount == 0)
+	{
+		return;
+	}
 
-	//glColor3f(1, 1, 1);
+	int Count = 0;
 
-	//int GroupCount = App->CL_Scene->GroupCount;
+	glColor3f(1, 1, 1);
 
-	//
+	int GroupCount = App->CL_Model->BrushCount;
+
+	
 	//if (flag_ShowOnlySubFaces == 1) // Show Only Selected SubMesh
 	//{
-	//	MeshData_Face_Groups(Selected_Face_Group);
+	//	MeshData_Face_Groups(App->CL_Properties_Brushes->Selected_Index);
 	//	return;
 	//}
 
 	//while (Count < GroupCount)
-	//{
-	//	MeshData_Face_Groups(Count);
-	//	Count++;
-	//}
+	{
+		MeshData_Face_Groups(NULL);
+		//Count++;
+	}
 
 }
+
+static POINT plist[64];
 
 // *************************************************************************
 // *		MeshData_Face_Groups:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
 void CL64_OGL_Listener::MeshData_Face_Groups(int Count)
 {
-	//int FaceCount = 0;
-	//int A = 0;
-	//int B = 0;
-	//int C = 0;
+	/*int FaceCount = 0;
+	int A = 0;
+	int B = 0;
+	int C = 0;
 
-	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);*/
 
-	//while (FaceCount < App->CL_Scene->Group[Count]->GroupFaceCount)
+	//while (FaceCount < App->CL_Model->B_Brush[Count]->Face_Count)
 	//{
-	//	A = App->CL_Scene->Group[Count]->Face_Data[FaceCount].a;
-	//	B = App->CL_Scene->Group[Count]->Face_Data[FaceCount].b;
-	//	C = App->CL_Scene->Group[Count]->Face_Data[FaceCount].c;
+	//	A = App->CL_Model->B_Brush[Count]->Face_Data[FaceCount].a;
+	//	B = App->CL_Model->B_Brush[Count]->Face_Data[FaceCount].b;
+	//	C = App->CL_Model->B_Brush[Count]->Face_Data[FaceCount].c;
 
 	//	glBegin(GL_POLYGON);
 
 	//	//-----------------------------------------------
-	//	glVertex3fv(&App->CL_Scene->Group[Count]->vertex_Data[A].x);
+	//	glVertex3fv(&App->CL_Model->B_Brush[Count]->vertex_Data[A].x);
 
 	//	//-----------------------------------------------
-	//	glVertex3fv(&App->CL_Scene->Group[Count]->vertex_Data[B].x);
+	//	glVertex3fv(&App->CL_Model->B_Brush[Count]->vertex_Data[B].x);
 
 	//	//-----------------------------------------------
-	//	glVertex3fv(&App->CL_Scene->Group[Count]->vertex_Data[C].x);
+	//	glVertex3fv(&App->CL_Model->B_Brush[Count]->vertex_Data[C].x);
 	//	FaceCount++;
 	//	//-----------------------------------------------
 
 	//	glEnd();
+	//}
+
+	//------------------------------------ Here
+	/*glPointSize(5);
+	int	i, j;
+
+	for (i = 0; i < App->CL_Brush->Brush_GetNumFaces(App->CL_Doc->CurBrush); i++)
+	{
+		Face* f = App->CL_Brush->Brush_GetFace(App->CL_Doc->CurBrush, i);
+		const T_Vec3* pnts = App->CL_Face->Face_GetPoints(f);
+
+		for (j = 0; j < App->CL_Face->Face_GetNumPoints(f); j++)
+		{
+			plist[j] = App->CL_Render->Render_OrthoWorldToView(App->CL_MapEditor->Current_View, &pnts[j]);
+
+			glBegin(GL_POINTS);
+
+			glVertex3f(pnts[j].x, pnts[j].y, pnts[j].z);
+
+			glEnd();
+		}*/
+
+		/*for (j = 0; j < App->CL_Face->Face_GetNumPoints(f); j++)
+		{
+			plist[j] = App->CL_Render->Render_OrthoWorldToView(App->CL_MapEditor->Current_View, &pnts[j]);
+		}*/
+
+		//plist[j] = plist[0];
+		//Polyline(ViewDC, plist, j + 1);
+
+		//glBegin(GL_POLYGON);
+
+		////-----------------------------------------------
+		//glVertex3fv(&App->CL_Model->B_Brush[Count]->vertex_Data[A].x);
+
+		////-----------------------------------------------
+		//glVertex3fv(&App->CL_Model->B_Brush[Count]->vertex_Data[B].x);
+
+		////-----------------------------------------------
+		//glVertex3fv(&App->CL_Model->B_Brush[Count]->vertex_Data[C].x);
+		//FaceCount++;
+		////-----------------------------------------------
+
+		//glEnd();
 	//}
 
 }

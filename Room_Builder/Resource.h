@@ -196,6 +196,7 @@
 #define ID_CAMERA_RESETCAMERAZERO       32789
 #define ID_TOOLS_TEXTURESEDITOR         32790
 #define ID_DEBUG_SELECTIONSTATES        32791
+#define ID_DEBUG_SHOWALLFACES3D         32792
 #define ID_GENERALSELECT                32886
 #define ID_TOOLS_TEMPLATE               32910
 #define IDC_STATIC                      -1
@@ -206,7 +207,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        160
-#define _APS_NEXT_COMMAND_VALUE         32792
+#define _APS_NEXT_COMMAND_VALUE         32793
 #define _APS_NEXT_CONTROL_VALUE         1135
 #define _APS_NEXT_SYMED_VALUE           110
 #endif

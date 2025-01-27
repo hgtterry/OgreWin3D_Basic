@@ -175,6 +175,22 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 return 1;
             }
 
+            case  ID_DEBUG_SHOWALLFACES3D:
+            {
+                if (App->CL_Ogre->OGL_Listener->Flag_ShowFaces == 1)
+                {
+                    App->CL_Ogre->OGL_Listener->Flag_ShowFaces = 0;
+                    App->CL_Ogre->OGL_Listener->flag_ShowOnlySubFaces = 0;
+                }
+                else
+                {
+                    App->CL_Ogre->OGL_Listener->Flag_ShowFaces = 1;
+                    App->CL_Ogre->OGL_Listener->flag_ShowOnlySubFaces = 1;
+                }
+
+                return 1;
+            }
+            
             // ----------------------------- File
             case ID_FILE_OPEN:
             {
