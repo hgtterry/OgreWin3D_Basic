@@ -1328,7 +1328,6 @@ signed int CL64_MapEditor::BrushDraw(Brush* pBrush, void* lParam)
 // *************************************************************************
 void CL64_MapEditor::Zoom_View(HWND hDlg, int Dx, int Dy)
 {
-
 	if (flag_Right_Button_Down == 1)
 	{
 		if (Dy < App->CL_MapEditor->mStartPoint.y)

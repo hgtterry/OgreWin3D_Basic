@@ -62,6 +62,9 @@ public:
 	Ogre::Camera* mCamera;
 	Ogre::SceneNode* camNode;
 
+	Ogre::ManualObject* manObj;
+	Ogre::SceneNode* ModelNode;
+
 	Ogre::OverlaySystem* mOverlaySystem;
 
 	CL64_Ogre3D_Listener* Ogre3D_Listener;

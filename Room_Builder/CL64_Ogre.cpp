@@ -30,11 +30,14 @@ CL64_Ogre::CL64_Ogre()
 {
 	RenderHwnd = nullptr;
 
-	mRoot = nullptr;
-	mWindow = nullptr;
+	mRoot =		nullptr;
+	mWindow =	nullptr;
 	mSceneMgr = nullptr;
-	mCamera = nullptr;
-	camNode = nullptr;
+	mCamera =	nullptr;
+	camNode =	nullptr;
+
+	manObj =	nullptr;
+	ModelNode = nullptr;
 
 	Ogre3D_Listener = nullptr;
 
@@ -65,9 +68,9 @@ void CL64_Ogre::Init_Ogre(void)
 
 	Init_CreateFrameListener();
 
-	/*manObj = mSceneMgr->createManualObject("sampleArea");
+	manObj = mSceneMgr->createManualObject("sampleArea");
 	ModelNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
-	ModelNode->attachObject(manObj);*/
+	ModelNode->attachObject(manObj);
 
 	// Set Up Grid Functions
 	App->CL_Grid->Grid_Update(1);

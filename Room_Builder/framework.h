@@ -29,6 +29,9 @@
 #include "OgreException.h"
 #include "OgreTextAreaOverlayElement.h"
 
+#include <gl/gl.h>
+#include <gl/glu.h>
+
 #define Debug App->Say_Win("Here");//, "  Internal Debug Message  ");
 
 namespace Enums

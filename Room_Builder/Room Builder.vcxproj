@@ -143,7 +143,7 @@
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <OutputFile>$(OutDir)Room_Builder.exe</OutputFile>
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
-      <AdditionalDependencies>comctl32.lib;OgreMain.lib;OgreOverlay.lib;OgreRTShaderSystem.lib;OgreBites.lib;.\GenesisSDK\lib\genesis.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>comctl32.lib;OgreMain.lib;OgreOverlay.lib;OgreRTShaderSystem.lib;OgreBites.lib;opengl32.lib;glu32.lib;.\GenesisSDK\lib\genesis.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\Common_64\Ogre3D\libs;.\GenesisSDK\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>LIBCMT.lib;libcpmt.lib</IgnoreSpecificDefaultLibraries>
     </Link>
@@ -176,6 +176,7 @@
     <ClInclude Include="CL64_Maths.h" />
     <ClInclude Include="CL64_Mesh_Mgr.h" />
     <ClInclude Include="CL64_Model.h" />
+    <ClInclude Include="CL64_OGL_Listener.h" />
     <ClInclude Include="CL64_Ogre.h" />
     <ClInclude Include="CL64_Ogre3D.h" />
     <ClInclude Include="CL64_Ogre3D_Listener.h" />
@@ -227,6 +228,7 @@
     <ClCompile Include="CL64_Maths.cpp" />
     <ClCompile Include="CL64_Mesh_Mgr.cpp" />
     <ClCompile Include="CL64_Model.cpp" />
+    <ClCompile Include="CL64_OGL_Listener.cpp" />
     <ClCompile Include="CL64_Ogre.cpp" />
     <ClCompile Include="CL64_Ogre3D.cpp" />
     <ClCompile Include="CL64_Ogre3D_Listener.cpp" />
