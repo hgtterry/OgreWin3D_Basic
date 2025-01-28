@@ -53,6 +53,9 @@ CL64_OGL_Listener::CL64_OGL_Listener(void)
 	Light_Activated = 0;
 
 	flag_ShowOnlySubFaces = 0;
+
+	mBrushCount = 0;
+	mSubBrushCount = 0;
 }
 
 CL64_OGL_Listener::~CL64_OGL_Listener(void)
@@ -183,9 +186,14 @@ void CL64_OGL_Listener::Render_Loop()
 	// ---------------------- Mesh
 	if (Flag_ShowFaces == 1)
 	{
-		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-		MeshData_Render_Faces();
+		//if (Block == 0)
+		{
+			Block = 1;
+			MeshData_Render_Faces();
+			Block = 0;
+		}
 	}
 
 	// ---------------------- Points
@@ -342,7 +350,7 @@ void CL64_OGL_Listener::MeshData_Render_Faces(void)
 	//	MeshData_Face_Groups(App->CL_Properties_Brushes->Selected_Index);
 	//	return;
 	//}
-
+	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	//while (Count < GroupCount)
 	{
 		MeshData_Face_Groups(NULL);
@@ -351,13 +359,263 @@ void CL64_OGL_Listener::MeshData_Render_Faces(void)
 
 }
 
-static POINT plist[64];
+enum BrushFlags
+{
+	BRUSH_SOLID = 0x0001,
+	BRUSH_WINDOW = 0x0002,
+	BRUSH_WAVY = 0x0004,
+	BRUSH_DETAIL = 0x0008,	//not included in vis calculations
+	BRUSH_HOLLOWCUT = 0x0010,
+	BRUSH_TRANSLUCENT = 0x0020,
+	BRUSH_EMPTY = 0x0040,
+	BRUSH_SUBTRACT = 0x0080,
+	BRUSH_CLIP = 0x0100,
+	BRUSH_FLOCKING = 0x0200,
+	BRUSH_HOLLOW = 0x0400,
+	BRUSH_SHEET = 0x0800,
+	BRUSH_HIDDEN = 0x1000,
+	BRUSH_LOCKED = 0x2000,
+	BRUSH_HINT = 0x4000,
+	BRUSH_AREA = 0x8000
+	// All flags larger than 0x8000 (i.e. 0x00010000 through 0x80000000)
+	// are reserved for user contents.
+};
+
+// *************************************************************************
+// *			Brush_Create:- Terry and Hazel Flanigan 2025			   *
+// *************************************************************************
+bool CL64_OGL_Listener::Brush_Create(const Brush* b, int Actual_Brush_Index)
+{
+
+	switch (b->Type)
+	{
+	case BRUSH_MULTI:
+	{
+		//App->Flash_Window();
+		return Brush_Decode_List(b->BList, GE_TRUE); // Recursive
+	}
+
+	case BRUSH_LEAF:
+		if (b->BList)
+		{
+			//App->Flash_Window();
+			return Brush_Decode_List(b->BList, GE_TRUE); // Recursive
+		}
+		else
+		{
+			if (!(b->Flags & (BRUSH_HOLLOW | BRUSH_HOLLOWCUT | BRUSH_SUBTRACT)))
+			{
+				return Brush_FaceList_Create(b, b->Faces, mBrushCount, mSubBrushCount, Actual_Brush_Index);
+
+			}
+			else if ((b->Flags & BRUSH_SUBTRACT) && !(b->Flags & (BRUSH_HOLLOW | BRUSH_HOLLOWCUT)))
+				mBrushCount--;
+		}
+		break;
+
+
+	case BRUSH_CSG:
+		if (!(b->Flags & (BRUSH_HOLLOW | BRUSH_HOLLOWCUT | BRUSH_SUBTRACT)))
+		{
+			return Brush_FaceList_Create(b, b->Faces, mBrushCount, mSubBrushCount, Actual_Brush_Index);
+		}
+		break;
+	default:
+		assert(0);		// invalid brush type
+		break;
+	}
+
+	return GE_TRUE;
+}
+
+// *************************************************************************
+// *			Brush_Decode_List:- Terry and Hazel Flanigan 2025		   *
+// *************************************************************************
+bool CL64_OGL_Listener::Brush_Decode_List(BrushList* BList, signed int SubBrush)
+{
+	Brush* pBrush;
+	BrushIterator bi;
+
+	pBrush = App->CL_Brush->BrushList_GetFirst(BList, &bi);
+
+	while (pBrush != NULL)
+	{
+		if (mSubBrushCount == 0 && pBrush->Flags & 1 || pBrush->Flags & 1024)
+		{
+			if (SubBrush == 0)
+			{
+				//strcpy(mBrush_Name, pBrush->Name);
+				//mBrush_Index = mBrushCount;
+			}
+		}
+
+		if (!Brush_Create(pBrush, 0))
+		{
+			return GE_FALSE;
+		}
+
+		pBrush = App->CL_Brush->BrushList_GetNext(&bi);
+
+		if (SubBrush)
+		{
+			mSubBrushCount++;
+		}
+		else
+		{
+			//mBrushCount++;
+			//Actual_Brush_Index++;
+		}
+	}
+
+	mSubBrushCount = 0;
+
+	if (!SubBrush)
+	{
+		mBrushCount = 0;
+	}
+
+	return GE_TRUE;
+}
+
+struct tag_FaceList
+{
+	int NumFaces;
+	int Limit;
+	Face** Faces;
+	geBoolean Dirty;
+	Box3d Bounds;
+};
+
+typedef struct tag_FaceList FaceList;
+
+// *************************************************************************
+// *		Brush_FaceList_Create:- Terry and Hazel Flanigan 2025		   *
+// *************************************************************************
+bool CL64_OGL_Listener::Brush_FaceList_Create(const Brush* b, const FaceList* pList, int BrushCount, int SubBrushCount, int Actual_Brush_Index)
+{
+	//App->CL_Model->Create_Brush_XX(App->CL_Model->BrushCount);
+	//App->CL_Model->B_Brush[App->CL_Model->BrushCount]->Group_Index = mBrush_Index;
+	//strcpy(App->CL_Model->B_Brush[App->CL_Model->BrushCount]->Brush_Name, mBrush_Name);
+
+	int i, j, k, num_faces, num_verts, num_mats, num_chars, curnum_verts;
+	char matname[MAX_PATH];
+
+	assert(pList != NULL);
+	assert(f != NULL);
+
+	num_faces = num_verts = num_mats = num_chars = 0;
+	// get the total number of verts, faces and materials of the object
+
+	/*for (i = 0; i < pList->NumFaces; i++)
+	{
+		curnum_verts = App->CL_Face->Face_GetNumPoints(pList->Faces[i]);
+		num_faces += (curnum_verts - 2);
+		num_verts += curnum_verts;
+
+		if (!matf[i])
+		{
+			matf[i] = 1;
+			num_mats++;
+
+			for (j = i + 1; j < pList->NumFaces; j++)
+			{
+				if (strcmp(App->CL_Face->Face_GetTextureName(pList->Faces[i]), App->CL_Face->Face_GetTextureName(pList->Faces[j])) == 0)
+					matf[j] = 1;
+			}
+
+			strncpy(matname, App->CL_Face->Face_GetTextureName(pList->Faces[i]), MAX_PATH);
+		}
+	}*/
+
+	/*for (i = 0; i < pList->NumFaces; i++)
+		matf[i] = 0;*/
+
+	// -----------------------------------  Vertices
+	int VertIndex = 0;
+
+	//App->CL_Model->B_Brush[App->CL_Model->BrushCount]->Vertice_Count = num_verts;
+	//App->CL_Model->B_Brush[App->CL_Model->BrushCount]->vertex_Data.resize(num_verts);
+	//App->CL_Model->B_Brush[App->CL_Model->BrushCount]->Normal_Data.resize(num_verts);
+	//glPointSize(5);
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	glColor3f(1.0f, 1.0f, 0.0f);
+	for (i = 0; i < pList->NumFaces; i++)
+	{
+		const T_Vec3* verts;
+		verts = App->CL_Face->Face_GetPoints(pList->Faces[i]);
+		curnum_verts = App->CL_Face->Face_GetNumPoints(pList->Faces[i]);
+
+		glBegin(GL_POLYGON);
+		for (j = 0; j < curnum_verts; j++)
+		{
+			//App->CL_Model->B_Brush[App->CL_Model->BrushCount]->vertex_Data[VertIndex].x = verts[j].x;
+			//App->CL_Model->B_Brush[App->CL_Model->BrushCount]->vertex_Data[VertIndex].y = verts[j].y;
+			//App->CL_Model->B_Brush[App->CL_Model->BrushCount]->vertex_Data[VertIndex].z = verts[j].z;
+
+			//glBegin(GL_POINTS);
+
+			glVertex3f(verts[j].x, verts[j].y, verts[j].z);
+
+			//glEnd();
+
+			//App->CL_Model->B_Brush[App->CL_Model->BrushCount]->Normal_Data[VertIndex].x = 0.5;
+			//App->CL_Model->B_Brush[App->CL_Model->BrushCount]->Normal_Data[VertIndex].y = 0.5;
+			//App->CL_Model->B_Brush[App->CL_Model->BrushCount]->Normal_Data[VertIndex].z = 0.5;
+			//App->Flash_Window();
+			VertIndex++;
+		}
+
+		glEnd();
+	}
+
+	//int FaceIndex = 0;
+	//// -----------------------------------  Faces
+
+	//App->CL_Model->Brush_Face_Count = App->CL_Model->Brush_Face_Count + num_faces;
+	//App->CL_Model->B_Brush[App->CL_Model->BrushCount]->Face_Count = num_faces;
+	//App->CL_Model->B_Brush[App->CL_Model->BrushCount]->Face_Data.resize(num_faces);
+	//App->CL_Model->B_Brush[App->CL_Model->BrushCount]->Picking_Data.resize(num_faces);
+	//num_verts = 0;
+	//for (i = 0; i < pList->NumFaces; i++)
+	//{
+	//	curnum_verts = App->CL_Face->Face_GetNumPoints(pList->Faces[i]); //4
+
+	//	for (j = 0; j < curnum_verts - 2; j++)
+	//	{
+	//		App->CL_Model->B_Brush[App->CL_Model->BrushCount]->Face_Data[FaceIndex].a = num_verts;
+	//		App->CL_Model->B_Brush[App->CL_Model->BrushCount]->Face_Data[FaceIndex].b = num_verts + 2 + j;
+	//		App->CL_Model->B_Brush[App->CL_Model->BrushCount]->Face_Data[FaceIndex].c = num_verts + 1 + j;
+
+	//		App->CL_Model->B_Brush[App->CL_Model->BrushCount]->Picking_Data[FaceIndex].WE_Face_Index = i;
+	//		App->CL_Model->B_Brush[App->CL_Model->BrushCount]->Picking_Data[FaceIndex].Global_Face = Global_Faces_Index;
+	//		App->CL_Model->B_Brush[App->CL_Model->BrushCount]->Picking_Data[FaceIndex].Actual_Brush_Index = Actual_Brush_Index;
+
+	//		FaceIndex++;
+	//		Global_Faces_Index++;
+	//	}
+
+	//	num_verts += curnum_verts;
+	//}
+
+	return GE_TRUE;
+}
 
 // *************************************************************************
 // *		MeshData_Face_Groups:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
 void CL64_OGL_Listener::MeshData_Face_Groups(int Count)
 {
+	Brush* pBrush;
+	BrushIterator bi;
+	int Actual_Brush_Index = 0;
+	pBrush = App->CL_Doc->CurBrush;
+
+	if (!Brush_Create(pBrush, Actual_Brush_Index))
+	{
+		//App->Flash_Window();
+		//return GE_FALSE;
+	}
+
 	/*int FaceCount = 0;
 	int A = 0;
 	int B = 0;
@@ -386,6 +644,8 @@ void CL64_OGL_Listener::MeshData_Face_Groups(int Count)
 
 	//	glEnd();
 	//}
+
+	
 
 	//------------------------------------ Here
 	/*glPointSize(5);

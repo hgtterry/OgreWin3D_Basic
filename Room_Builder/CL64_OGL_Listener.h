@@ -46,6 +46,13 @@ public:
 
 	bool flag_ShowOnlySubFaces;
 
+	bool Brush_Create(const Brush* b, int Actual_Brush_Index);
+	bool Brush_Decode_List(BrushList* BList, signed int SubBrush);
+	bool Brush_FaceList_Create(const Brush* b, const FaceList* pList, int BrushCount, int SubBrushCount, int Actual_Brush_Index);
+
+	int	mBrushCount;
+	int	mSubBrushCount;
+	bool Block;
 private:
 
 	virtual void renderQueueStarted(Ogre::uint8 queueGroupId, const Ogre::String& invocation,

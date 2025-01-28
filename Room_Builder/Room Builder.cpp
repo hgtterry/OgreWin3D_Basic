@@ -158,6 +158,21 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 //App->CL_Doc->RebuildTrees();        // Build Brushes
                 //App->CL_Mesh_Mgr->Update_World();   // Build Ogre
 
+                int Count = 0;
+
+                while (Count < 3)
+                {
+                    App->CL_MapEditor->VCam[Count]->CamPos.x = 0;
+                    App->CL_MapEditor->VCam[Count]->CamPos.y = 0;
+                    App->CL_MapEditor->VCam[Count]->CamPos.z = 0;
+
+                    App->CL_MapEditor->VCam[Count]->ZoomFactor = 0.3;
+
+                    Count++;
+                }
+
+                App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
+
                 return 1;
             }
 
