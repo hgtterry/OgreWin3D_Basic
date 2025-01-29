@@ -275,6 +275,21 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 return 1;
             }
             
+            // ----------------------------- View
+            case ID_VIEW_PATHS:
+            {
+                if (App->CL_ImGui->flag_Show_Paths == 1)
+                {
+                    App->CL_ImGui->flag_Show_Paths = 0;
+                }
+                else
+                {
+                    App->CL_ImGui->flag_Show_Paths = 1;
+                }
+
+                return 1;
+            }
+            
             // ----------------------------- Camera
 			case ID_CAMERA_TRACKCAMERA:
 			{

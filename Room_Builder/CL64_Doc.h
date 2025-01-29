@@ -143,10 +143,12 @@ public:
 	char LastTemplateTypeName[MAX_PATH];
 
 	// File Paths
-	char mCurrent_MTF_Just_FileName[MAX_PATH];
-	char mCurrent_MTF_PathAndFile[MAX_PATH];
-	char mCurrent_TXL_Path_And_File[MAX_PATH];
-	char mCurrent_TXL_Just_FileName[MAX_PATH];
+	char mDoc_MTF_Just_FileName[MAX_PATH];
+	char mDoc_MTF_PathAndFile[MAX_PATH];
+	char mDoc_MTF_JustName_NoExt[MAX_PATH];
+
+	char mDoc_TXL_Path_And_File[MAX_PATH];
+	char mDoc_TXL_Just_FileName[MAX_PATH];
 
 	BOOL SelectLock, TempEnt;
 

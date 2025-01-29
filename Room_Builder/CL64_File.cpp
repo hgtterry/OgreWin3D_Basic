@@ -127,23 +127,36 @@ void CL64_File::Start_Save(bool Use_Save_Dialog)
 				return;
 			}
 
-			strcpy(App->CL_Doc->mCurrent_MTF_PathAndFile, App->CL_File_IO->s_Path_And_File.c_str());
+			strcpy(App->CL_Doc->mDoc_MTF_PathAndFile, App->CL_File_IO->s_Path_And_File.c_str());
 
-			if (_stricmp(App->CL_Doc->mCurrent_MTF_PathAndFile + strlen(App->CL_Doc->mCurrent_MTF_PathAndFile) - 4, ".mtf") == 0)
+			if (_stricmp(App->CL_Doc->mDoc_MTF_PathAndFile + strlen(App->CL_Doc->mDoc_MTF_PathAndFile) - 4, ".mtf") == 0)
 			{
 				
 			}
 			else
 			{
-				strcat(App->CL_Doc->mCurrent_MTF_PathAndFile, ".mtf");
+				strcat(App->CL_Doc->mDoc_MTF_PathAndFile, ".mtf");
 			}
+
+			App->CL_Utilities->Get_FileName_FromPath(App->CL_Doc->mDoc_MTF_PathAndFile, App->CL_Doc->mDoc_MTF_PathAndFile);
+
+			strcpy(App->CL_Doc->mDoc_MTF_Just_FileName, App->CL_Utilities->JustFileName);
+			
+			char buf[MAX_PATH];
+			strcpy(buf, App->CL_Doc->mDoc_MTF_Just_FileName);
+			int Len = strlen(buf);
+			buf[Len - 4] = 0;
+			strcpy(App->CL_Doc->mDoc_MTF_JustName_NoExt, buf);
+
+			strcpy(App->CL_Export->mJustName, App->CL_Doc->mDoc_MTF_JustName_NoExt);
+
 		}
 
 		Save_Document();
 
-		App->Set_Title(App->CL_Doc->mCurrent_MTF_PathAndFile);
+		App->Set_Title(App->CL_Doc->mDoc_MTF_PathAndFile);
 
-		App->Say("Saved", App->CL_Doc->mCurrent_MTF_Just_FileName);
+		App->Say("Saved", App->CL_Doc->mDoc_MTF_Just_FileName);
 	}
 	else
 	{
@@ -157,7 +170,7 @@ void CL64_File::Start_Save(bool Use_Save_Dialog)
 // *************************************************************************
 void CL64_File::Save_Document()
 {
-	if (Save(App->CL_Doc->mCurrent_MTF_PathAndFile) == GE_FALSE)
+	if (Save(App->CL_Doc->mDoc_MTF_PathAndFile) == GE_FALSE)
 	{
 		App->Say("Error: Unable to save file");
 		return;;
@@ -334,8 +347,17 @@ void CL64_File::Start_Load(bool Use_Open_Dialog)
 		strcpy(PathFileName_3dt, App->CL_File_IO->s_Path_And_File.c_str());
 		strcpy(FileName_3dt, App->CL_File_IO->s_Just_FileName.c_str());
 
-		strcpy(App->CL_Doc->mCurrent_MTF_PathAndFile, App->CL_File_IO->s_Path_And_File.c_str());
-		strcpy(App->CL_Doc->mCurrent_MTF_Just_FileName, App->CL_File_IO->s_Just_FileName.c_str());
+		strcpy(App->CL_Doc->mDoc_MTF_PathAndFile, App->CL_File_IO->s_Path_And_File.c_str());
+		strcpy(App->CL_Doc->mDoc_MTF_Just_FileName, App->CL_File_IO->s_Just_FileName.c_str());
+
+		char buf[MAX_PATH];
+		strcpy(buf, App->CL_Doc->mDoc_MTF_Just_FileName);
+		int Len = strlen(buf);
+		buf[Len - 4] = 0;
+		strcpy(App->CL_Doc->mDoc_MTF_JustName_NoExt, buf);
+
+		strcpy(App->CL_Export->mJustName, App->CL_Doc->mDoc_MTF_JustName_NoExt);
+
 	}
 
 	bool Test = Open_3dt_File();
@@ -478,7 +500,7 @@ bool CL64_File::Load_File(const char* FileName)
 // *************************************************************************
 void CL64_File::Set_Editor()
 {
-	App->Set_Title(App->CL_Doc->mCurrent_MTF_PathAndFile);
+	App->Set_Title(App->CL_Doc->mDoc_MTF_PathAndFile);
 	App->CL_Top_Tabs->Enable_Select_Button(true, 1);
 	App->CL_Properties_Templates->Enable_Insert_Button(false);
 }

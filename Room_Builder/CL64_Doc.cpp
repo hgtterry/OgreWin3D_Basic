@@ -49,13 +49,14 @@ CL64_Doc::CL64_Doc(void)
 {
     LastTemplateTypeName[0] = 0;
 
-    strcpy(mCurrent_MTF_PathAndFile, App->RB_Directory_FullPath);
-    strcat(mCurrent_MTF_PathAndFile, "\\Data\\Room_Builder\\Room_1.mtf");
+    strcpy(mDoc_MTF_PathAndFile, App->RB_Directory_FullPath);
+    strcat(mDoc_MTF_PathAndFile, "\\Data\\Room_Builder\\Room_1.mtf");
 
-    strcpy(mCurrent_MTF_Just_FileName,"Room_1.mtf");
+    strcpy(mDoc_MTF_Just_FileName,"Room_1.mtf");
+    strcpy(mDoc_MTF_JustName_NoExt, "Room_1");
 
-    mCurrent_TXL_Path_And_File[0] = 0;
-    mCurrent_TXL_Just_FileName[0] = 0;
+    mDoc_TXL_Path_And_File[0] = 0;
+    mDoc_TXL_Just_FileName[0] = 0;
 
 	pLevel = NULL;
    
@@ -136,6 +137,8 @@ void CL64_Doc::Init_Doc()
 
 	App->CL_Maths->Vector3_Clear(&SelectedGeoCenter);
 
+    strcpy(App->CL_Export->mJustName, mDoc_MTF_JustName_NoExt);
+
     CheckMenuItem(App->mMenu, ID_CAMERA_TRACKCAMERA, MF_BYCOMMAND | MF_CHECKED);
 }
 
@@ -152,19 +155,19 @@ const char* CL64_Doc::FindTextureLibrary(char const* WadName)
 	bool test = App->CL_Utilities->Check_File_Exist(Path_And_File);
 	if (test == 1)
 	{
-        strcpy(App->CL_Doc->mCurrent_TXL_Path_And_File, Path_And_File);
+        strcpy(App->CL_Doc->mDoc_TXL_Path_And_File, Path_And_File);
 		return Path_And_File;
 	}
 	else
 	{
 		App->Say_Win("File Does not Exist");
 
-        strcpy(App->CL_Doc->mCurrent_TXL_Path_And_File, "No_File");
+        strcpy(App->CL_Doc->mDoc_TXL_Path_And_File, "No_File");
 		strcpy(Path_And_File, "");
 		return Path_And_File;
 	}
 	
-    strcpy(App->CL_Doc->mCurrent_TXL_Path_And_File, "No_File");
+    strcpy(App->CL_Doc->mDoc_TXL_Path_And_File, "No_File");
 	strcpy(Path_And_File, "");
 	return Path_And_File;
 }
@@ -1522,11 +1525,11 @@ void CL64_Doc::Set_Current_TxlPath(void)
     const char* WadFilePath;
     WadFilePath = App->CL_Level->Level_GetWadPath(App->CL_Doc->pLevel);
 
-    strcpy(mCurrent_TXL_Path_And_File, WadFilePath);
+    strcpy(mDoc_TXL_Path_And_File, WadFilePath);
 
-    App->CL_Utilities->Get_FileName_FromPath(mCurrent_TXL_Path_And_File, mCurrent_TXL_Path_And_File);
+    App->CL_Utilities->Get_FileName_FromPath(mDoc_TXL_Path_And_File, mDoc_TXL_Path_And_File);
 
-    strcpy(mCurrent_TXL_Just_FileName, App->CL_Utilities->JustFileName);
+    strcpy(mDoc_TXL_Just_FileName, App->CL_Utilities->JustFileName);
 
 }
 

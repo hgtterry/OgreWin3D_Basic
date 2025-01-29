@@ -34,6 +34,7 @@ public:
 
 	bool flag_Imgui_Initialized;
 	bool flag_Show_Tool_ID_Debug;
+	bool flag_Show_Paths;
 
 private:
 
@@ -42,6 +43,7 @@ private:
 
 	void ImGui_FPS(void);
 	void App_Tool_Selection_GUI(void);
+	void Paths_GUI(void);
 
 	ImFont* font0;
 	ImFont* font1;

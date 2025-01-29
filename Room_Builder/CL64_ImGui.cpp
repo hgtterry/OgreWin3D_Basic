@@ -43,6 +43,7 @@ CL64_ImGui::CL64_ImGui()
 	flag_StartPos = 0;
 
 	flag_Show_Tool_ID_Debug = 0;
+	flag_Show_Paths = 0;
 }
 
 CL64_ImGui::~CL64_ImGui()
@@ -178,6 +179,11 @@ void CL64_ImGui::ImGui_Render_Loop(void)
 		App_Tool_Selection_GUI();
 	}
 
+	if (flag_Show_Paths == 1)
+	{
+		Paths_GUI();
+	}
+	
 	/*if (flag_Show_ImGui_Demo == 1)
 	{
 		ImGui::ShowDemoWindow();
@@ -263,6 +269,37 @@ void CL64_ImGui::App_Tool_Selection_GUI(void)
 		if (ImGui::Button("Close"))
 		{
 			flag_Show_Tool_ID_Debug = 0;
+		}
+
+		ImGui::End();
+	}
+}
+
+// *************************************************************************
+// *				Paths_GUI:- Terry and Hazel Flanigan 2025			   *
+// *************************************************************************
+void CL64_ImGui::Paths_GUI(void)
+{
+	ImGui::SetNextWindowPos(ImVec2(10, 10), ImGuiCond_FirstUseEver);
+
+	if (!ImGui::Begin("App_Debug", &flag_Show_Paths, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_AlwaysAutoResize))
+	{
+		ImGui::End();
+	}
+	else
+	{
+		ImGui::Text("Path And File:= %s", App->CL_Doc->mDoc_MTF_PathAndFile);
+		ImGui::Text("Just_FileName:= %s", App->CL_Doc->mDoc_MTF_Just_FileName);
+		ImGui::Text("Just_File:= %s", App->CL_Doc->mDoc_MTF_JustName_NoExt);
+
+		ImGui::Separator();
+
+		ImGui::Text("TXL Path And File:= %s", App->CL_Doc->mDoc_TXL_Path_And_File);
+		ImGui::Text("TXL Just_File:= %s", App->CL_Doc->mDoc_TXL_Just_FileName);
+
+		if (ImGui::Button("Close"))
+		{
+			flag_Show_Paths = 0;
 		}
 
 		ImGui::End();
