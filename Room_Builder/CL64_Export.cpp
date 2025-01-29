@@ -237,7 +237,23 @@ LRESULT CALLBACK CL64_Export::Proc_Ogre_Export_Dlg(HWND hDlg, UINT message, WPAR
 	{
 		if (LOWORD(wParam) == IDC_BT_OGRE_NAMECHANGE)
 		{
-			Debug
+			strcpy(App->CL_Dialogs->btext, "Change File Name");
+			strcpy(App->CL_Dialogs->Chr_Text, App->CL_Export->mJustName);
+
+			App->CL_Dialogs->Dialog_Text(Enums::Check_Name_None);
+
+			if (App->CL_Dialogs->flag_Dlg_Canceled == 0)
+			{
+				strcpy(App->CL_Export->mJustName, App->CL_Dialogs->Chr_Text);
+			}
+
+			SetDlgItemText(hDlg, IDC_ST_OGRE_FILENAME, App->CL_Export->mJustName);
+			
+			strcpy(App->CL_Export->mDirectory_Name, App->CL_Export->mJustName);
+			strcat(App->CL_Export->mDirectory_Name, "_Ogre_All");
+
+			SetDlgItemText(hDlg, IDC_ST_OGRE_SUBFOLDER, (LPCTSTR)App->CL_Export->mDirectory_Name);
+
 			return TRUE;
 		}
 
