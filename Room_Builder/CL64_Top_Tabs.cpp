@@ -188,6 +188,19 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Headers(HWND hDlg, UINT message, WPARAM wPa
 			return TRUE;
 		}
 
+		if (LOWORD(wParam) == IDC_BT_ALLFACES)
+		{
+			App->CL_Doc->SelectAllFacesInBrushes();
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_BT_NEXTFACE)
+		{
+			App->CL_Face->Select_Next_Face();
+
+			return TRUE;
+		}
+
 		if (LOWORD(wParam) == IDCANCEL)
 		{
 			EndDialog(hDlg, LOWORD(wParam));

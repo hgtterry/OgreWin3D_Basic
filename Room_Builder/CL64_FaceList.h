@@ -46,7 +46,8 @@ public:
 	void FaceList_ClipFaceToList(const FaceList* fl, Face** f);
 	void FaceList_Move(FaceList* pList, const T_Vec3* trans);
 	signed int FaceList_Scale(FaceList* pList, const T_Vec3* ScaleVec);
-
+	signed int FaceList_SetNextSelectedFace(FaceList* fl);
+	Face* FaceList_GetSelectedFace(const FaceList* fl);
 
 };
 

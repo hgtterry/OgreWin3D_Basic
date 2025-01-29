@@ -133,6 +133,14 @@ public:
 	signed int BrushList_Scale3d(BrushList* pList, const T_Vec3* trans);
 	Brush* Get_By_Index(int Index);
 	signed int BrushList_Enum(BrushList const* pList, void* lParam, BrushList_CB CallBack);
+	
+	// Faces
+	Face* Brush_SelectFirstFace(Brush* b);
+	Brush* BrushList_FindTopLevelFaceParent(const BrushList* pList, const Face* pFace);
+	Brush* BrushList_FindFaceParent(const BrushList* pList, const Face* pFace);
+	Brush* Brush_GetTopLevelParent(const BrushList* pList, const Brush* b);
+	signed int Brush_SetNextSelectedFace(Brush* b);
+	Face* Brush_GetSelectedFace(const Brush* b);
 
 };
 

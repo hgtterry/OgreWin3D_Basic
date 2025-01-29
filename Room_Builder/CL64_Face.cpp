@@ -1082,3 +1082,67 @@ void CL64_Face::Face_SetFixedHull(Face* f, const signed int bState)
 
 	f->Flags = (bState) ? f->Flags | FACE_FIXEDHULL : f->Flags & ~FACE_FIXEDHULL;
 }
+
+// *************************************************************************
+// *						Select_Next_Face						 	   *
+// *************************************************************************
+void CL64_Face::Select_Next_Face()
+{
+	BrushList* BList = App->CL_Level->Level_GetBrushes(App->CL_Doc->pLevel);
+	Debug
+	if (App->CL_Doc->mModeTool == 32886)
+	{
+		int nSelectedFaces = App->CL_SelFaceList->SelFaceList_GetSize(App->CL_Doc->pSelFaces);
+		Face* pFace;
+
+		if (nSelectedFaces == 0)
+		{
+			BrushIterator bi;
+
+			App->CL_Doc->CurBrush = App->CL_Brush->BrushList_GetFirst(BList, &bi);
+			pFace = App->CL_Brush->Brush_SelectFirstFace(App->CL_Doc->CurBrush);
+			App->CL_SelBrushList->SelBrushList_Add(App->CL_Doc->pSelBrushes, App->CL_Doc->CurBrush);
+		}
+		else
+		{
+			Brush* pBrush;
+
+			// get first selected face
+			pFace = App->CL_SelFaceList->SelFaceList_GetFace(App->CL_Doc->pSelFaces, nSelectedFaces - 1);
+			// Remove all face selections
+			//if (!(IsKeyDown(VK_SHIFT)))
+			{
+				App->CL_Doc->ResetAllSelectedFaces();
+			}
+
+			Face_SetSelected(pFace, GE_TRUE);
+			pBrush = App->CL_Brush->BrushList_FindTopLevelFaceParent(App->CL_Level->Level_GetBrushes(App->CL_Doc->pLevel), pFace);
+
+			// select next face
+			if (!App->CL_Brush->Brush_SetNextSelectedFace(pBrush))
+			{
+				pFace = App->CL_Brush->Brush_SelectFirstFace(pBrush);
+			}
+			else
+			{
+				pFace = App->CL_Brush->Brush_GetSelectedFace(pBrush);
+			}
+		}
+
+		App->CL_SelFaceList->SelFaceList_Add(App->CL_Doc->pSelFaces, pFace);
+
+		//App->CL_Doc->UpdateSelected();
+
+		//pDoc->UpdateFaceAttributesDlg ();
+		//App->CL_Doc->UpdateAllViews(Enums::UpdateViews_All);
+	}
+}
+
+// *************************************************************************
+// *						Face_IsSelected							 	   *
+// *************************************************************************
+signed int CL64_Face::Face_IsSelected(const Face* f)
+{
+	return	(f->Flags & FACE_SELECTED) ? GE_TRUE : GE_FALSE;
+}
+

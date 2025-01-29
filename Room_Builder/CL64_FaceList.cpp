@@ -324,5 +324,68 @@ signed int CL64_FaceList::FaceList_Scale(FaceList* pList, const T_Vec3* ScaleVec
 	pList->Dirty = GE_TRUE;
 	
 	return Success;
-	
+}
+
+// *************************************************************************
+// *					FaceList_SetNextSelectedFace				 	   *
+// *************************************************************************
+signed int CL64_FaceList::FaceList_SetNextSelectedFace(FaceList* fl)
+{
+	int		i;
+
+	assert(fl);
+
+	for (i = 0; i < fl->NumFaces; i++)
+	{
+		if (App->CL_Face->Face_IsSelected(fl->Faces[i]))
+		{
+			break;
+		}
+	}
+
+	if (i < fl->NumFaces - 1)
+	{
+		App->CL_Face->Face_SetSelected(fl->Faces[i], GE_FALSE);
+		i++;
+		i %= fl->NumFaces;
+		App->CL_Face->Face_SetSelected(fl->Faces[i], GE_TRUE);
+		return	GE_TRUE;
+	}
+	else if (i < fl->NumFaces)
+	{
+		App->CL_Face->Face_SetSelected(fl->Faces[i], GE_FALSE);
+		return	GE_FALSE;	//skip to next brush or select first 
+	}
+	else	//if it didn't overflow... there simply wasn't
+	{		//anything selected, select the first face
+		App->CL_Face->Face_SetSelected(fl->Faces[0], GE_TRUE);
+		return	GE_TRUE;
+	}
+}
+
+// *************************************************************************
+// *					FaceList_GetSelectedFace					 	   *
+// *************************************************************************
+Face* CL64_FaceList::FaceList_GetSelectedFace(const FaceList* fl)
+{
+	int		i;
+
+	assert(fl);
+
+	for (i = 0; i < fl->NumFaces; i++)
+	{
+		if (App->CL_Face->Face_IsSelected(fl->Faces[i]))
+		{
+			break;
+		}
+	}
+
+	if (i < fl->NumFaces)
+	{
+		return	fl->Faces[i];
+	}
+	else
+	{
+		return	NULL;
+	}
 }

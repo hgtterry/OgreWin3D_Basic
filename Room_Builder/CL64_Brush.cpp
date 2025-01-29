@@ -2307,6 +2307,9 @@ Brush* CL64_Brush::Get_By_Index(int Index)
 	return NULL;
 }
 
+// *************************************************************************
+// *							BrushList_Enum							   *
+// *************************************************************************
 signed int CL64_Brush::BrushList_Enum(BrushList const* pList,void* lParam,BrushList_CB	CallBack)
 {
 	geBoolean bResult = true;	// TRUE means entire list was processed
@@ -2320,6 +2323,199 @@ signed int CL64_Brush::BrushList_Enum(BrushList const* pList,void* lParam,BrushL
 		b = b->Next;
 	}
 	return bResult;
+}
+
+// *************************************************************************
+// *						Brush_SelectFirstFace						   *
+// *************************************************************************
+Face* CL64_Brush::Brush_SelectFirstFace(Brush* b)
+{
+	Face* pFace;
+
+	assert(b);
+
+	if (Brush_IsMulti(b))
+	{
+		return Brush_SelectFirstFace(b->BList->First); // Recursive
+	}
+	else
+	{
+		pFace = App->CL_FaceList->FaceList_GetFace(b->Faces, 0);
+
+		App->CL_Face->Face_SetSelected(pFace, GE_TRUE);
+		return pFace;
+	}
+}
+
+// *************************************************************************
+// *				BrushList_FindTopLevelFaceParent					   *
+// *************************************************************************
+Brush* CL64_Brush::BrushList_FindTopLevelFaceParent(const BrushList* pList, const Face* pFace)
+{
+	Brush* bFound;
+
+	bFound = BrushList_FindFaceParent(pList, pFace);
+	if (bFound != NULL)
+	{
+		bFound = Brush_GetTopLevelParent(pList, bFound);
+	}
+	return bFound;
+}
+
+// *************************************************************************
+// *					BrushList_FindFaceParent						   *
+// *************************************************************************
+Brush* CL64_Brush::BrushList_FindFaceParent(const BrushList* pList, const Face* pFace)
+{
+	Brush* pBrush;
+
+	for (pBrush = pList->First; pBrush != NULL; pBrush = pBrush->Next)
+	{
+		switch (pBrush->Type)
+
+		{
+		case BRUSH_MULTI:
+		{
+			Brush* pFound;
+
+			pFound = BrushList_FindFaceParent(pBrush->BList, pFace);
+			if (pFound != NULL)
+			{
+				return pFound;
+			}
+			break;
+		}
+		case BRUSH_LEAF:
+		case BRUSH_CSG:
+		{
+			int i;
+			for (i = 0; i < Brush_GetNumFaces(pBrush); i++)
+
+
+			{
+				Face* pCheckFace;
+
+				pCheckFace = Brush_GetFace(pBrush, i);
+				if (pFace == pCheckFace)
+				{
+					return pBrush;
+				}
+			}
+			break;;
+		}
+		default:
+			assert(0);
+			break;
+		}
+	}
+
+	return NULL;
+}
+
+// *************************************************************************
+// *						Brush_GetTopLevelParent						   *
+// *************************************************************************
+Brush* CL64_Brush::Brush_GetTopLevelParent(const BrushList* pList,const Brush* b)
+{
+	Brush const* bWork;
+	Brush* pImmediateParent;
+
+	bWork = b;
+
+	while (Brush_GetParent(pList, bWork, &pImmediateParent) == GE_TRUE)
+	{
+		if (bWork == pImmediateParent)
+		{
+			break;
+		}
+
+		bWork = pImmediateParent;
+	}
+
+	return (Brush*)bWork;
+}
+
+// *************************************************************************
+// *			( Static ) BrushList_SetNextSelectedFace				   *
+// *************************************************************************
+static geBoolean BrushList_SetNextSelectedFace(BrushList* pList)
+{
+	Brush* b;
+
+	assert(pList);
+
+	for (b = pList->First; b; b = b->Next)
+	{
+		if (App->CL_Brush->Brush_GetSelectedFace(b))
+		{
+			break;
+		}
+	}
+	if (!b)	//no faces found selected
+	{
+		App->CL_Brush->Brush_SelectFirstFace(pList->First);	//in case it's also a multi
+		return	GE_TRUE;
+	}
+	for (; b; b = b->Next)
+	{
+		if (App->CL_Brush->Brush_SetNextSelectedFace(b))
+		{
+			return	GE_TRUE;
+		}
+	}
+
+	return	GE_FALSE;	//wrapped around the end... handle outside
+}
+
+// *************************************************************************
+// *				( Static ) BrushList_GetSelectedFace				   *
+// *************************************************************************
+static Face* BrushList_GetSelectedFace(const BrushList* pList)
+{
+	Face* f;
+	Brush* b;
+
+	assert(pList);
+
+	for (f = NULL, b = pList->First; (b && !f); b = b->Next)
+	{
+		f = App->CL_Brush->Brush_GetSelectedFace(b);
+	}
+	return	f;
+}
+
+// *************************************************************************
+// *					Brush_SetNextSelectedFace						   *
+// *************************************************************************
+Face* CL64_Brush::Brush_GetSelectedFace(const Brush* b)
+{
+	assert(b);
+
+	if (Brush_IsMulti(b))
+	{
+		return BrushList_GetSelectedFace(b->BList);
+	}
+	else
+	{
+		return	App->CL_FaceList->FaceList_GetSelectedFace(b->Faces);
+	}
+}
+
+// *************************************************************************
+// *					Brush_SetNextSelectedFace						   *
+// *************************************************************************
+signed int CL64_Brush::Brush_SetNextSelectedFace(Brush* b)
+{
+	assert(b);
+
+	if (Brush_IsMulti(b))
+	{
+		return	BrushList_SetNextSelectedFace(b->BList);
+	}
+	else
+	{
+		return	App->CL_FaceList->FaceList_SetNextSelectedFace(b->Faces);
+	}
 }
 
 
