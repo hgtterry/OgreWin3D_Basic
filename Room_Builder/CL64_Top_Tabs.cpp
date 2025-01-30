@@ -216,7 +216,7 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Headers(HWND hDlg, UINT message, WPARAM wPa
 			pFace = App->CL_FaceList->FaceList_GetFace(App->CL_Doc->CurBrush->Faces, 2);
 			App->CL_Face->Face_SetSelected(pFace, true);*/
 
-			App->CL_Doc->SelectAllFacesInBrushes();
+			//App->CL_Doc->SelectAllFacesInBrushes();
 			App->CL_Face->Select_Next_Face();
 
 			//App->CL_Doc->UpdateSelected(Enums::UpdateViews_Grids);
