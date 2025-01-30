@@ -749,7 +749,7 @@ Face* CL64_Brush::Brush_GetFace(const Brush* b, int i)
 }
 
 // *************************************************************************
-// *							Brush_GetFace							   *
+// *							Get_Brush_Count							   *
 // *************************************************************************
 int CL64_Brush::Get_Brush_Count(void)
 {

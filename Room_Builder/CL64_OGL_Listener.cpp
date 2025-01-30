@@ -66,27 +66,13 @@ CL64_OGL_Listener::CL64_OGL_Listener(void)
 	RX = 0;
 	RZ = 0;
 
-	Hair_1PosX = 0;
-	Hair_1PosY = 0;
-	Hair_1PosZ = 0;
-
-	Hair_1RotX = 0;
-	Hair_1RotY = 0;
-	Hair_1RotZ = 0;
-
-	Flag_ShowFaces = 0;
-	Flag_ShowBoundingBox = 0;
-	Flag_ShowPoints = 0;
-	Flag_ShowBones = 0;
-	Flag_ShowNormals = 0;
-	Flag_ShowTextured = 0;
-
 	Light_Activated = 0;
-
-	flag_ShowOnlySubFaces = 0;
 
 	mBrushCount = 0;
 	mSubBrushCount = 0;
+
+	Flag_Show_Selected_Brush = 0;
+	Flag_Show_Selected_Face = 0;
 }
 
 CL64_OGL_Listener::~CL64_OGL_Listener(void)
@@ -110,13 +96,9 @@ void CL64_OGL_Listener::renderQueueEnded(Ogre::uint8 queueGroupId, const Ogre::S
 		return;
 	}
 
-	
-
 	PreRender();
 
-
 	Render_Loop();
-
 
 	PostRender();
 }
@@ -136,7 +118,7 @@ void CL64_OGL_Listener::PreRender()
 
 	Ogre::RenderSystem* renderSystem = App->CL_Ogre->manObj->_getManager()->getDestinationRenderSystem();
 	Ogre::Node* parentNode = App->CL_Ogre->manObj->getParentNode();
-
+	
 #pragma warning(disable : 4996) // Nightmare why
 
 	renderSystem->_setWorldMatrix(parentNode->_getFullTransform());
@@ -152,7 +134,7 @@ void CL64_OGL_Listener::PreRender()
 	}
 	//Set a clear pass to give the renderer a clear renderstate
 	App->CL_Ogre->mSceneMgr->_setPass(clearPass, true);
-
+	//clearPass->
 	// save attribs
 	glPushAttrib(GL_ALL_ATTRIB_BITS);
 }
@@ -184,6 +166,8 @@ void CL64_OGL_Listener::Render_Loop()
 	GLboolean stencilTestEnabled = glIsEnabled(GL_STENCIL_TEST);
 	glDisable(GL_STENCIL_TEST);
 
+	glDisable(GL_CULL_FACE);
+
 	if (Light_Activated == 0)
 	{
 		glDisable(GL_LIGHTING);
@@ -202,60 +186,21 @@ void CL64_OGL_Listener::Render_Loop()
 	glColor3f(0.8f, 0.8f, 0.8f);
 	Translate();
 
-	//---------------------- Textured
-	/*if (App->CL_Scene->flag_Model_Loaded == 1 && Flag_ShowTextured == 1)
+	// ---------------------- Brush
+	if (Flag_Show_Selected_Brush == 1)
 	{
-		glEnable(GL_DEPTH_TEST);
-		glShadeModel(GL_SMOOTH);
-
-		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-
-		MeshData_Render_Textures();
-	}*/
-
-	// ---------------------- Mesh
-	if (Flag_ShowFaces == 1)
-	{
-		//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-
-		//if (Block == 0)
-		{
-			Block = 1;
-			MeshData_Render_Faces();
-			Block = 0;
-		}
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		Render_Selected_Brush();
 	}
 
-	// ---------------------- Points
-	/*if (App->CL_Scene->flag_Model_Loaded == 1 && Flag_ShowPoints == 1)
+	// ---------------------- Face
+	if (Flag_Show_Selected_Face == 1)
 	{
-		MeshData_Render_Points();
-	}*/
-
-	// ---------------------- Bounding Box
-	/*if (App->CL_Scene->flag_Model_Loaded && Flag_ShowBoundingBox == 1)
-	{
-		MeshData_Render_BoundingBox();
-	}*/
-
-	// ---------------------- Normals
-	/*if (App->CL_Scene->flag_Model_Loaded == 1 && Flag_ShowNormals == 1)
-	{
-		MeshData_Render_Normals();
-	}*/
-
-	// ---------------------- Bones
-	/*if (App->CL_Scene->flag_Model_Loaded == 1 && Flag_ShowBones == 1)
-	{
-		MeshData_RenderBones();
-	}*/
-
-	// ---------------------- Crosshair
-	//if (Show_Crosshair == 1)
-	{
-		//RenderCrossHair();
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		glLineWidth(2);
+		Render_Selected_Face();
 	}
-
+	
 	if (depthTestEnabled)
 	{
 		glEnable(GL_DEPTH_TEST);
@@ -271,7 +216,6 @@ void CL64_OGL_Listener::Render_Loop()
 // *************************************************************************
 void CL64_OGL_Listener::Translate(void)
 {
-
 	glRotatef(RX, 1.0, 0.0, 0.0); // Rotations of the object 
 
 	glRotatef(RZ, 0.0, 1.0, 0.0);
@@ -279,122 +223,60 @@ void CL64_OGL_Listener::Translate(void)
 }
 
 // *************************************************************************
-// *		MeshData_Render_Textures:- Terry and Hazel Flanigan 2024	   *
+// *		Render_Selected_Face:- Terry and Hazel Flanigan 2025		   *
 // *************************************************************************
-bool CL64_OGL_Listener::MeshData_Render_Textures(void)
+void CL64_OGL_Listener::Render_Selected_Face()
 {
-	/*int Count = 0;
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-	glEnable(GL_TEXTURE_2D);
-	glColor3f(1, 1, 1);
-
-	int GroupCount = App->CL_Scene->GroupCount;
-
-	Count = 0;
-	while (Count < GroupCount)
+	int FC = App->CL_SelFaceList->SelFaceList_GetSize(App->CL_Doc->pSelFaces);
+	if (FC > 0)
 	{
-		MeshData_Textured_Groups(Count);
-		Count++;
+		int j = 0;
+		int curnum_verts = 0;
+
+		Brush* pBrush;
+		Face* pFace;
+
+		int Actual_Brush_Index = 0;
+		pBrush = App->CL_Doc->CurBrush;
+
+		pFace = App->CL_SelFaceList->SelFaceList_GetFace(App->CL_Doc->pSelFaces, 0);
+
+		const T_Vec3* verts;
+		verts = App->CL_Face->Face_GetPoints(pFace);
+		curnum_verts = App->CL_Face->Face_GetNumPoints(pFace);
+
+		glColor3f(1.0f, 0.0f, 1.0f);
+		glBegin(GL_POLYGON);
+
+		for (j = 0; j < curnum_verts; j++)
+		{
+			glVertex3f(verts[j].x, verts[j].y, verts[j].z);
+		}
+
+		glEnd();
 	}
 
-	glDisable(GL_TEXTURE_2D);*/
-
-	return 1;
-}
-// *************************************************************************
-// *		MeshData_Textured_Groups:- Terry and Hazel Flanigan 2024	   *
-// *************************************************************************
-bool CL64_OGL_Listener::MeshData_Textured_Groups(int Count)
-{
-	//int VertCount = 0;
-	//int A = 0;
-	//int B = 0;
-	//int C = 0;
-
-	//if (App->CL_Scene->Group[Count]->MaterialIndex > -1)
-	//{
-	//	glEnable(GL_TEXTURE_2D);
-	//	glColor3f(1, 1, 1);
-
-	//	glBindTexture(GL_TEXTURE_2D, App->CL_Textures->g_Texture[App->CL_Scene->Group[Count]->MaterialIndex]);
-
-	//}
-	//else
-	//{
-	//	glDisable(GL_TEXTURE_2D);
-	//}
-
-	//while (VertCount < App->CL_Scene->Group[Count]->GroupFaceCount)
-	//{
-	//	A = App->CL_Scene->Group[Count]->Face_Data[VertCount].a;
-	//	B = App->CL_Scene->Group[Count]->Face_Data[VertCount].b;
-	//	C = App->CL_Scene->Group[Count]->Face_Data[VertCount].c;
-
-	//	glBegin(GL_POLYGON);
-
-	//	//-----------------------------------------------
-	//	glTexCoord2f(App->CL_Scene->Group[Count]->MapCord_Data[A].u, App->CL_Scene->Group[Count]->MapCord_Data[A].v);
-	//	glNormal3fv(&App->CL_Scene->Group[Count]->Normal_Data[A].x);
-	//	glVertex3fv(&App->CL_Scene->Group[Count]->vertex_Data[A].x);
-
-	//	//-----------------------------------------------
-	//	glTexCoord2f(App->CL_Scene->Group[Count]->MapCord_Data[B].u, App->CL_Scene->Group[Count]->MapCord_Data[B].v);
-	//	glNormal3fv(&App->CL_Scene->Group[Count]->Normal_Data[B].x);
-	//	glVertex3fv(&App->CL_Scene->Group[Count]->vertex_Data[B].x);
-
-	//	//-----------------------------------------------
-	//	glTexCoord2f(App->CL_Scene->Group[Count]->MapCord_Data[C].u, App->CL_Scene->Group[Count]->MapCord_Data[C].v);
-	//	glNormal3fv(&App->CL_Scene->Group[Count]->Normal_Data[C].x);
-	//	glVertex3fv(&App->CL_Scene->Group[Count]->vertex_Data[C].x);
-	//	VertCount++;
-	//	//-----------------------------------------------
-
-	//	glEnd();
-
-	//}
-
-	return 1;
 }
 
 // *************************************************************************
-// *		MeshData_Render_Faces:- Terry and Hazel Flanigan 2024	 	   *
+// *		Render_Selected_Brush:- Terry and Hazel Flanigan 2025		   *
 // *************************************************************************
-void CL64_OGL_Listener::MeshData_Render_Faces(void)
-{
-	if (App->CL_Model->BrushCount == 0)
-	{
-		return;
-	}
-
-	int Count = 0;
-
-	glColor3f(1, 1, 1);
-
-	int GroupCount = App->CL_Model->BrushCount;
-	MeshData_Face_Groups(NULL);
-}
-
-// *************************************************************************
-// *		MeshData_Face_Groups:- Terry and Hazel Flanigan 2024		   *
-// *************************************************************************
-void CL64_OGL_Listener::MeshData_Face_Groups(int Count)
+void CL64_OGL_Listener::Render_Selected_Brush()
 {
 	Brush* pBrush;
 	int Actual_Brush_Index = 0;
 	pBrush = App->CL_Doc->CurBrush;
 
-	if (!Brush_Create(pBrush, Actual_Brush_Index))
+	if (!Get_Brush(pBrush, Actual_Brush_Index))
 	{
 		
 	}
 }
 
 // *************************************************************************
-// *			Brush_Create:- Terry and Hazel Flanigan 2025			   *
+// *				Get_Brush:- Terry and Hazel Flanigan 2025			   *
 // *************************************************************************
-bool CL64_OGL_Listener::Brush_Create(const Brush* b, int Actual_Brush_Index)
+bool CL64_OGL_Listener::Get_Brush(const Brush* b, int Actual_Brush_Index)
 {
 	switch (b->Type)
 	{
@@ -459,7 +341,7 @@ bool CL64_OGL_Listener::Brush_Decode_List(BrushList* BList, signed int SubBrush)
 			}
 		}
 
-		if (!Brush_Create(pBrush, 0))
+		if (!Get_Brush(pBrush, 0))
 		{
 			return GE_FALSE;
 		}
@@ -494,13 +376,9 @@ bool CL64_OGL_Listener::Brush_FaceList_Create(const Brush* b, const FaceList* pL
 {
 	int i, j, num_faces, num_verts, num_mats, num_chars, curnum_verts;
 
-	assert(pList != NULL);
-	assert(f != NULL);
-
 	num_faces = num_verts = num_mats = num_chars = 0;
 	
 	// -----------------------------------  Vertices
-	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	glColor3f(0.0f, 1.0f, 0.0f);
 	for (i = 0; i < pList->NumFaces; i++)
 	{
@@ -521,23 +399,6 @@ bool CL64_OGL_Listener::Brush_FaceList_Create(const Brush* b, const FaceList* pL
 	return GE_TRUE;
 }
 
-// *************************************************************************
-// *		MeshData_Render_Points:- Terry and Hazel Flanigan 2024	  	   *
-// *************************************************************************
-void CL64_OGL_Listener::MeshData_Render_Points(void)
-{
-	/*int Count = 0;
-
-	glColor3f(1.0f, 1.0f, 0.0f);
-
-	int GroupCount = App->CL_Scene->GroupCount;
-
-	while (Count < GroupCount)
-	{
-		MeshData_Points_Groups(Count);
-		Count++;
-	}*/
-}
 
 // *************************************************************************
 // *		MeshData_Points_Groups:- Terry and Hazel Flanigan 2024	   	   *
@@ -562,232 +423,4 @@ void CL64_OGL_Listener::MeshData_Points_Groups(int Count)
 
 		VertCount++;
 	}*/
-}
-
-//**************************************************************************
-// *		MeshData_Render_Normals:- Terry and Hazel Flanigan 2024   	   *
-// *************************************************************************
-void CL64_OGL_Listener::MeshData_Render_Normals(void)
-{
-	/*int Count = 0;
-
-	glColor3f(1, 1, 1);
-
-	int GroupCount = App->CL_Scene->GroupCount;
-
-	while (Count < GroupCount)
-	{
-		MeshData_Normals_Groups(Count);
-		Count++;
-	}*/
-}
-
-// *************************************************************************
-// *		MeshData_Normals_Groups:- Terry and Hazel Flanigan 2024	 	   *
-// *************************************************************************
-void CL64_OGL_Listener::MeshData_Normals_Groups(int Count)
-{
-	//int VertCount = 0;
-
-	//glPointSize(3);
-	//glBegin(GL_LINES);
-
-	//while (VertCount < App->CL_Scene->Group[Count]->GroupVertCount)
-	//{
-	//	//-----------------------------------------------
-	//	glVertex3fv(&App->CL_Scene->Group[Count]->vertex_Data[VertCount].x);
-
-	//	glVertex3f(App->CL_Scene->Group[Count]->vertex_Data[VertCount].x + App->CL_Scene->Group[Count]->Normal_Data[VertCount].x * Normal_Scaler,
-	//		App->CL_Scene->Group[Count]->vertex_Data[VertCount].y + App->CL_Scene->Group[Count]->Normal_Data[VertCount].y * Normal_Scaler,
-	//		App->CL_Scene->Group[Count]->vertex_Data[VertCount].z + App->CL_Scene->Group[Count]->Normal_Data[VertCount].z * Normal_Scaler);
-
-	//	VertCount++;
-	//}
-
-	//glEnd();
-}
-
-// *************************************************************************
-// *		MeshData_RenderBones:- Terry and Hazel Flanigan 2024 	  	   *
-// *************************************************************************
-void CL64_OGL_Listener::MeshData_RenderBones()
-{
-	//glDisable(GL_TEXTURE_2D);
-	//glDisable(GL_DEPTH_TEST);
-	//int Start = 0;
-
-	//glColor3f(1, 1, 0);
-	//glPointSize(6); //PointSize
-	//int Point = 0;
-
-	//while (Start < App->CL_Scene->BoneCount)
-	//{
-
-	//	if (App->CL_Scene->S_Bones[Start]->Parent == -1)
-	//	{
-	//		glColor3f(1, 0, 0);			// Root Joint Colour
-	//	}
-	//	else { glColor3f(0, 0, 1); }		// Joint Colours
-
-	//	glBegin(GL_POINTS);
-	//	glVertex3f(App->CL_Scene->S_Bones[Start]->TranslationStart.X,
-	//		App->CL_Scene->S_Bones[Start]->TranslationStart.Y,
-	//		App->CL_Scene->S_Bones[Start]->TranslationStart.Z);
-
-	//	glEnd();
-	//	Start++;
-	//}
-
-	//Start = 0;
-
-	//while (Start < App->CL_Scene->BoneCount)
-	//{
-
-	//	if (App->CL_Scene->S_Bones[Start]->Parent == -1)
-	//	{
-	//		glColor3f(1, 0, 0);			// Root Joint Color Again Both the same
-	//		glBegin(GL_POINTS);
-	//		glVertex3f(App->CL_Scene->S_Bones[Start]->TranslationStart.X,
-	//			App->CL_Scene->S_Bones[Start]->TranslationStart.Y,
-	//			App->CL_Scene->S_Bones[Start]->TranslationStart.Z);
-	//		glEnd();
-	//	}
-	//	else
-	//	{
-	//		glLineWidth(3);
-	//		glBegin(GL_LINES);
-	//		glColor3f(1, 1, 0);			// Bone Colours Between Joints
-	//		glVertex3f(App->CL_Scene->S_Bones[Start]->TranslationStart.X,
-	//			App->CL_Scene->S_Bones[Start]->TranslationStart.Y,
-	//			App->CL_Scene->S_Bones[Start]->TranslationStart.Z);
-
-	//		glVertex3f(App->CL_Scene->S_Bones[App->CL_Scene->S_Bones[Start]->Parent]->TranslationStart.X,
-	//			App->CL_Scene->S_Bones[App->CL_Scene->S_Bones[Start]->Parent]->TranslationStart.Y,
-	//			App->CL_Scene->S_Bones[App->CL_Scene->S_Bones[Start]->Parent]->TranslationStart.Z);
-
-	//		glEnd();
-	//	}
-
-	//	Start++;
-	//}
-
-}
-
-// *************************************************************************
-// *	MeshData_Render_BoundingBox:- Terry and Hazel Flanigan 2024	  	   *
-// *************************************************************************
-void CL64_OGL_Listener::MeshData_Render_BoundingBox(void)
-{
-	/*float m_xMin = App->CL_Scene->S_BoundingBox[0]->BB_Min[0].x;
-	float m_yMin = App->CL_Scene->S_BoundingBox[0]->BB_Min[0].y;
-	float m_zMin = App->CL_Scene->S_BoundingBox[0]->BB_Min[0].z;
-
-	float m_xMax = App->CL_Scene->S_BoundingBox[0]->BB_Max[0].x;
-	float m_yMax = App->CL_Scene->S_BoundingBox[0]->BB_Max[0].y;
-	float m_zMax = App->CL_Scene->S_BoundingBox[0]->BB_Max[0].z;
-
-	glDisable(GL_TEXTURE_2D);
-	glEnable(GL_DEPTH_TEST);
-	glEnable(GL_STENCIL_TEST);
-
-	glLineWidth(2);
-
-	glColor3f(0.0f, 1.0f, 0.0f);
-	glBegin(GL_LINES);
-
-	glVertex3f(m_xMin, m_yMin, m_zMin);
-	glVertex3f(m_xMin, m_yMin, m_zMax);
-
-	glVertex3f(m_xMax, m_yMin, m_zMin);
-	glVertex3f(m_xMax, m_yMin, m_zMax);
-
-	glVertex3f(m_xMin, m_yMax, m_zMin);
-	glVertex3f(m_xMin, m_yMax, m_zMax);
-
-	glVertex3f(m_xMax, m_yMax, m_zMin);
-	glVertex3f(m_xMax, m_yMax, m_zMax);
-
-	glVertex3f(m_xMin, m_yMin, m_zMin);
-	glVertex3f(m_xMax, m_yMin, m_zMin);
-
-	glVertex3f(m_xMin, m_yMin, m_zMin);
-	glVertex3f(m_xMin, m_yMax, m_zMin);
-
-	glVertex3f(m_xMax, m_yMin, m_zMin);
-	glVertex3f(m_xMax, m_yMax, m_zMin);
-
-	glVertex3f(m_xMin, m_yMax, m_zMin);
-	glVertex3f(m_xMax, m_yMax, m_zMin);
-
-	glVertex3f(m_xMin, m_yMin, m_zMax);
-	glVertex3f(m_xMax, m_yMin, m_zMax);
-
-	glVertex3f(m_xMin, m_yMin, m_zMax);
-	glVertex3f(m_xMin, m_yMax, m_zMax);
-
-	glVertex3f(m_xMax, m_yMin, m_zMax);
-	glVertex3f(m_xMax, m_yMax, m_zMax);
-
-	glVertex3f(m_xMin, m_yMax, m_zMax);
-	glVertex3f(m_xMax, m_yMax, m_zMax);
-
-	glEnd();
-	glEnable(GL_TEXTURE_2D);
-	glDisable(GL_DEPTH_TEST);
-	glDisable(GL_STENCIL_TEST);*/
-}
-
-// **************************************************************************
-// *			RenderCrossHair:- Terry and Hazel Flanigan 2024				*
-// **************************************************************************
-void CL64_OGL_Listener::RenderCrossHair(void)
-{
-	glDisable(GL_TEXTURE_2D);
-	
-	float Length = 40;
-	glLineWidth(3);
-
-	glTranslatef(Hair_1PosX, Hair_1PosY, Hair_1PosZ);
-
-	glRotatef(Hair_1RotX, 1.0, 0.0, 0.0); // Rotations of the object 
-	glRotatef(Hair_1RotY, 0.0, 1.0, 0.0);
-	glRotatef(Hair_1RotZ, 0.0, 0.0, 1.0);
-
-	glScalef(1, 1, 1);
-
-	//-------------------------------------------  x hair] Blue
-	glBegin(GL_LINES);
-	glColor3f(0.0f, 0.0f, 1.0f); // Color
-	glVertex3f(-Length, 0, 0);
-	glVertex3f(0, 0, 0);
-	glEnd();
-
-	glBegin(GL_LINES);
-	glVertex3f(0, 0, 0);
-	glVertex3f(Length, 0, 0);
-	glEnd();
-
-	//-------------------------------------------  z hair Red
-	glBegin(GL_LINES);
-	glColor3f(1.0f, 0.0f, 0.0f); // Color
-	glVertex3f(0, 0, -Length);
-	glVertex3f(0, 0, 0);
-	glEnd();
-
-	glBegin(GL_LINES);
-	glVertex3f(0, 0, 0);
-	glVertex3f(0, 0, Length);
-	glEnd();
-
-	//-------------------------------------------  y hair Green
-	glBegin(GL_LINES);
-	glColor3f(0.0f, 1.0f, 0.0f); // Color
-	glVertex3f(0, -Length, 0);
-	glVertex3f(0, 0, 0);
-	glEnd();
-
-	glBegin(GL_LINES);
-	glVertex3f(0, 0, 0);
-	glVertex3f(0, Length, 0);
-	glEnd();
 }

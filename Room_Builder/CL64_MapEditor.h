@@ -46,6 +46,7 @@ public:
 	void Init_Map_Views();
 	void Init_Views();
 	void Render_RenderBrushFacesOrtho(const ViewVars* Cam, Brush* b, HDC ViewDC);
+	void Render_RenderBrushSelFacesOrtho(ViewVars* Cam, Brush* b, HDC ViewDC);
 
 	HWND Main_Dlg_Hwnd;
 	HWND Bottom_Right_Hwnd;
@@ -124,7 +125,7 @@ private:
 	HPEN PenBrushes;
 	HPEN PenSelected;
 	HPEN Pen_Camera;
-
+	HPEN PenSelectedFaces;
 	HDC	MemoryhDC;
 };
 

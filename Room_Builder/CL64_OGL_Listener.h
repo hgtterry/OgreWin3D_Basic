@@ -37,22 +37,16 @@ public:
 
 	int Selected_Face_Group;
 
-	bool Flag_ShowFaces;
-	bool Flag_ShowBoundingBox;
-	bool Flag_ShowPoints;
-	bool Flag_ShowBones;
-	bool Flag_ShowNormals;
-	bool Flag_ShowTextured;
+	bool Flag_Show_Selected_Brush;
+	bool Flag_Show_Selected_Face;
 
-	bool flag_ShowOnlySubFaces;
-
-	bool Brush_Create(const Brush* b, int Actual_Brush_Index);
+	bool Get_Brush(const Brush* b, int Actual_Brush_Index);
 	bool Brush_Decode_List(BrushList* BList, signed int SubBrush);
 	bool Brush_FaceList_Create(const Brush* b, const FaceList* pList, int BrushCount, int SubBrushCount, int Actual_Brush_Index);
 
 	int	mBrushCount;
 	int	mSubBrushCount;
-	bool Block;
+
 private:
 
 	virtual void renderQueueStarted(Ogre::uint8 queueGroupId, const Ogre::String& invocation,
@@ -66,31 +60,10 @@ private:
 	void Render_Loop();
 	void Translate(void);
 
-	bool MeshData_Render_Textures(void);
-	bool MeshData_Textured_Groups(int Count);
+	void Render_Selected_Brush();
+	void Render_Selected_Face();
 
-	void MeshData_Render_Faces(void);
-	void MeshData_Face_Groups(int Count);
-
-	void MeshData_Render_Points(void);
 	void MeshData_Points_Groups(int Count);
-
-	void MeshData_Render_Normals(void);
-	void MeshData_Normals_Groups(int Count);
-
-	void MeshData_RenderBones();
-
-	void MeshData_Render_BoundingBox(void);
-
-	void RenderCrossHair(void);
-
-	float Hair_1PosX;
-	float Hair_1PosY;
-	float Hair_1PosZ;
-
-	float Hair_1RotX;
-	float Hair_1RotY;
-	float Hair_1RotZ;
 
 	bool Light_Activated;
 };

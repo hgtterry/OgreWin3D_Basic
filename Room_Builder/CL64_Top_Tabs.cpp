@@ -191,12 +191,36 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Headers(HWND hDlg, UINT message, WPARAM wPa
 		if (LOWORD(wParam) == IDC_BT_ALLFACES)
 		{
 			App->CL_Doc->SelectAllFacesInBrushes();
+			App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == IDC_BT_NEXTFACE)
 		{
+			//int iFace = 0;
+			//int nFaces = App->CL_Brush->Brush_GetNumFaces(App->CL_Doc->CurBrush);
+			//
+			////for (iFace = 0; iFace < nFaces; ++iFace)
+			//{
+			//	Face* pFace;
+
+			//	//pFace = App->CL_Brush->Brush_GetFace(App->CL_Doc->CurBrush, 2);
+			//	pFace = App->CL_FaceList->FaceList_GetFace(App->CL_Doc->CurBrush->Faces, 2);
+
+			//	App->CL_Face->Face_SetSelected(pFace, true);
+			//	//App->CL_SelFaceList->SelFaceList_Add(App->CL_Doc->pSelFaces, pFace);
+			//}
+			/*App->CL_Doc->DoBrushSelection(App->CL_Doc->CurBrush, brushSelToggle);
+			
+			Face* pFace;
+			pFace = App->CL_FaceList->FaceList_GetFace(App->CL_Doc->CurBrush->Faces, 2);
+			App->CL_Face->Face_SetSelected(pFace, true);*/
+
+			App->CL_Doc->SelectAllFacesInBrushes();
 			App->CL_Face->Select_Next_Face();
+
+			//App->CL_Doc->UpdateSelected(Enums::UpdateViews_Grids);
+			App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
 
 			return TRUE;
 		}

@@ -95,10 +95,16 @@ CL64_MapEditor::CL64_MapEditor()
 	PenBrushes = CreatePen(PS_SOLID, 1, RGB(255, 255, 255));
 	PenSelected = CreatePen(PS_SOLID, 1, RGB(0, 255, 255));
 	Pen_Camera = CreatePen(PS_SOLID, 0, RGB(0, 255, 0));
+	PenSelectedFaces = CreatePen(PS_SOLID, 1, RGB(255, 0, 255));
 
 	hcSizeEW = LoadCursor(NULL, IDC_SIZEWE);
 	hcSizeNS = LoadCursor(NULL, IDC_SIZENS);
 	hcBoth = LoadCursor(NULL, IDC_SIZEALL);
+
+	mStartPoint.x = 0;
+	mStartPoint.y = 0;
+
+	Current_View = NULL;
 
 	int Count = 0;
 	while (Count < 3)
@@ -1433,6 +1439,46 @@ void CL64_MapEditor::Pan_View(HWND hDlg, int Dx, int Dy)
 	App->CL_MapEditor->Draw_Screen(hDlg);
 }
 
+static geBoolean BrushDrawSelFacesOrtho(Brush* pBrush, void* lParam)
+{
+	BrushDrawData* pData;
+
+	pData = (BrushDrawData*)lParam;
+
+	App->CL_MapEditor->Render_RenderBrushSelFacesOrtho(pData->v, pBrush, pData->pDC);
+
+	return	GE_TRUE;
+}
+
+static POINT plist[64];
+
+// *************************************************************************
+// *					Render_RenderBrushSelFacesOrtho		  			   *
+// *************************************************************************
+void CL64_MapEditor::Render_RenderBrushSelFacesOrtho(ViewVars* Cam, Brush* b, HDC ViewDC)
+{
+	int	i, j;
+
+	if (!b)
+		return;
+
+	for (i = 0; i < App->CL_Brush->Brush_GetNumFaces(b); i++)
+	{
+		Face* f = App->CL_Brush->Brush_GetFace(b, i);
+		const T_Vec3* pnts = App->CL_Face->Face_GetPoints(f);
+
+		if (!App->CL_Face->Face_IsSelected(f))
+			continue;
+
+		for (j = 0; j < App->CL_Face->Face_GetNumPoints(f); j++)
+		{
+			plist[j] = App->CL_Render->Render_OrthoWorldToView(Cam, &pnts[j]);
+		}
+		plist[j] = App->CL_Render->Render_OrthoWorldToView(Cam, &pnts[0]);
+		Polyline(MemoryhDC, plist, j + 1);
+	}
+}
+
 // *************************************************************************
 // *						Draw_Screen Terry Flanigan		  			   *
 // *************************************************************************
@@ -1575,6 +1621,12 @@ void CL64_MapEditor::Draw_Screen(HWND hwnd)
 			}
 		}
 
+		BrushList* BList;
+		BList = App->CL_Level->Level_GetBrushes(App->CL_Doc->pLevel);
+
+		SelectObject(MemoryhDC, PenSelectedFaces);
+		App->CL_Brush->BrushList_EnumLeafBrushes(BList, &brushDrawData, BrushDrawSelFacesOrtho);
+
 		if (App->CL_Doc->flag_Track_Camera == 1)
 		{
 			SelectObject(MemoryhDC, Pen_Camera);
@@ -1591,9 +1643,6 @@ void CL64_MapEditor::Draw_Screen(HWND hwnd)
 
 	//flag_IsDrawing = 0;
 }
-
-
-static POINT plist[64];
 
 // *************************************************************************
 // *	  			Render_RenderBrushFacesOrtho		Genesis			   *

@@ -1089,7 +1089,7 @@ void CL64_Face::Face_SetFixedHull(Face* f, const signed int bState)
 void CL64_Face::Select_Next_Face()
 {
 	BrushList* BList = App->CL_Level->Level_GetBrushes(App->CL_Doc->pLevel);
-	Debug
+	
 	if (App->CL_Doc->mModeTool == 32886)
 	{
 		int nSelectedFaces = App->CL_SelFaceList->SelFaceList_GetSize(App->CL_Doc->pSelFaces);
@@ -1105,7 +1105,7 @@ void CL64_Face::Select_Next_Face()
 		}
 		else
 		{
-			Brush* pBrush;
+			Brush* pBrush = NULL;
 
 			// get first selected face
 			pFace = App->CL_SelFaceList->SelFaceList_GetFace(App->CL_Doc->pSelFaces, nSelectedFaces - 1);
@@ -1116,6 +1116,7 @@ void CL64_Face::Select_Next_Face()
 			}
 
 			Face_SetSelected(pFace, GE_TRUE);
+
 			pBrush = App->CL_Brush->BrushList_FindTopLevelFaceParent(App->CL_Level->Level_GetBrushes(App->CL_Doc->pLevel), pFace);
 
 			// select next face
@@ -1126,9 +1127,11 @@ void CL64_Face::Select_Next_Face()
 			else
 			{
 				pFace = App->CL_Brush->Brush_GetSelectedFace(pBrush);
+				
 			}
 		}
 
+		
 		App->CL_SelFaceList->SelFaceList_Add(App->CL_Doc->pSelFaces, pFace);
 
 		//App->CL_Doc->UpdateSelected();

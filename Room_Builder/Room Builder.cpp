@@ -60,6 +60,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         return FALSE;
     }
 
+
     App->mMenu = GetMenu(App->MainHwnd);
     App->LoadProgramResource();
 
@@ -68,6 +69,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     App->CL_Doc->Init_Doc();
     App->CL_MapEditor->Init_Map_Views();
+    App->CL_Ogre->Init_Ogre();
 
     App->SetMainWinCentre();
     App->CL_Top_Tabs->Start_Headers();
@@ -192,15 +194,27 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
             case  ID_DEBUG_SHOWALLFACES3D:
             {
-                if (App->CL_Ogre->OGL_Listener->Flag_ShowFaces == 1)
+                if (App->CL_Ogre->OGL_Listener->Flag_Show_Selected_Brush == 1)
                 {
-                    App->CL_Ogre->OGL_Listener->Flag_ShowFaces = 0;
-                    App->CL_Ogre->OGL_Listener->flag_ShowOnlySubFaces = 0;
+                    App->CL_Ogre->OGL_Listener->Flag_Show_Selected_Brush = 0;
                 }
                 else
                 {
-                    App->CL_Ogre->OGL_Listener->Flag_ShowFaces = 1;
-                    App->CL_Ogre->OGL_Listener->flag_ShowOnlySubFaces = 1;
+                    App->CL_Ogre->OGL_Listener->Flag_Show_Selected_Brush = 1;
+                }
+
+                return 1;
+            }
+
+            case  ID_DEBUG_RENDERSELECTEDFACE:
+            {
+                if (App->CL_Ogre->OGL_Listener->Flag_Show_Selected_Face == 1)
+                {
+                    App->CL_Ogre->OGL_Listener->Flag_Show_Selected_Face = 0;
+                }
+                else
+                {
+                    App->CL_Ogre->OGL_Listener->Flag_Show_Selected_Face = 1;
                 }
 
                 return 1;
@@ -532,7 +546,7 @@ void StartOgre()
 {
     KillTimer(App->MainHwnd, 1);
 
-    App->CL_Ogre->Init_Ogre();
+   // App->CL_Ogre->Init_Ogre();
 
     Sleep(500);
 

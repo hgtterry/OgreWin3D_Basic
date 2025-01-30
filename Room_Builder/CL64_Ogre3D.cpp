@@ -462,6 +462,7 @@ void CL64_Ogre3D::Convert_ToOgre3D(bool Create)
 	App->CL_Mesh_Mgr->World_Node->setScale(1, 1, 1);
 	//App->CL_Mesh_Mgr->World_Node->showBoundingBox(true);
 	// 
+
 	remove(mWorld_File_PathAndFile);
 	remove(Material_PathAndFile);
 }

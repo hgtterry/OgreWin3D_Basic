@@ -1213,11 +1213,12 @@ static signed int SelAllBrushFaces(Brush* pBrush, void* lParam)
     for (iFace = 0; iFace < nFaces; ++iFace)
     {
         Face* pFace;
-
         pFace = App->CL_Brush->Brush_GetFace(pBrush, iFace);
+
         App->CL_Face->Face_SetSelected(pFace, GE_TRUE);
-        App->CL_SelFaceList->SelFaceList_Add(App->CL_Doc->pSelFaces, pFace);
+        App->CL_SelFaceList->SelFaceList_Add(App->CL_Doc->pSelFaces, pFace);  
     }
+
     return GE_TRUE;
 }
 
