@@ -64,8 +64,8 @@ CL64_OGL_Listener::CL64_OGL_Listener(void)
 	mBrushCount = 0;
 	mSubBrushCount = 0;
 
-	Flag_Show_Selected_Brush = 1;
-	Flag_Show_Selected_Face = 1;
+	Flag_Show_Selected_Brush = 0;
+	Flag_Show_Selected_Face = 0;
 }
 
 CL64_OGL_Listener::~CL64_OGL_Listener(void)
@@ -260,9 +260,12 @@ void CL64_OGL_Listener::Render_Selected_Brush()
 	int Actual_Brush_Index = 0;
 	pBrush = App->CL_Doc->CurBrush;
 
-	if (!Get_Brush(pBrush, Actual_Brush_Index))
+	if (App->CL_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes) > 0)
 	{
-		
+		if (!Get_Brush(pBrush, Actual_Brush_Index))
+		{
+
+		}
 	}
 }
 

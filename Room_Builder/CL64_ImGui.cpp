@@ -261,7 +261,7 @@ void CL64_ImGui::App_Tool_Selection_GUI(void)
 
 		ImGui::Text("mModeTool:= %s", Tool);
 		ImGui::Separator();
-		ImGui::Text("Selected Brushe:= %i", App->CL_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes));
+		ImGui::Text("Selected Brushs:= %i", App->CL_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes));
 		ImGui::Text("Current Brush:= %s", App->CL_Doc->CurBrush->Name);
 
 		ImGui::Separator();

@@ -202,6 +202,7 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Brush_Tabs(HWND hDlg, UINT messag
 			if (Doit == 0)
 			{
 				App->CL_Doc->DeleteCurrentThing();
+				App->CL_Doc->ResetAllSelectedBrushes();
 			}
 
 			return TRUE;
