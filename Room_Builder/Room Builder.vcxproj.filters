@@ -308,6 +308,9 @@
     <ClCompile Include="CL64_OGL_Listener.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Structures.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Room Builder.rc">

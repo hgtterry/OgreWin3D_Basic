@@ -49,35 +49,6 @@ enum BrushFlags
 	// are reserved for user contents.
 };
 
-typedef struct TexInfoTag
-{
-	Ogre::Vector3 VecNormal;
-	geFloat xScale, yScale;
-	int xShift, yShift;
-	geFloat	Rotate;			// texture rotation angle in degrees
-	TexInfo_Vectors TVecs;
-	int Dib;				// index into the wad
-	char Name[16];
-	geBoolean DirtyFlag;
-	Ogre::Vector3 Pos;
-	int txSize, tySize;		// texture size (not currently used)
-	//App->  geXForm3d XfmFaceAngle;	// face rotation angle
-} TexInfo;
-
-typedef struct FaceTag
-{
-	int			NumPoints;
-	int			Flags;
-	Plane		Face_Plane;
-	int			LightIntensity;
-	geFloat		Reflectivity;
-	geFloat		Translucency;
-	geFloat		MipMapBias;
-	geFloat		LightXScale, LightYScale;
-	TexInfo		Tex;
-	Ogre::Vector3* Points;
-} Face;
-
 struct tag_FaceList
 {
 	int NumFaces;

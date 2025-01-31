@@ -25,6 +25,7 @@ THE SOFTWARE.
 #include "pch.h"
 #include "CL64_App.h"
 #include "CL64_File.h"
+#include "Structures.cpp"
 
 struct tag_Level
 {
@@ -58,36 +59,6 @@ struct tag_FaceList
 	geBoolean Dirty;
 	Box3d Bounds;
 };
-
-typedef struct TexInfoTag
-{
-	Ogre::Vector3 VecNormal;
-	geFloat xScale, yScale;
-	int xShift, yShift;
-	geFloat	Rotate;			// texture rotation angle in degrees
-	TexInfo_Vectors TVecs;
-	int Dib;				// index into the wad
-	char Name[16];
-	geBoolean DirtyFlag;
-	Ogre::Vector3 Pos;
-	int txSize, tySize;		// texture size (not currently used)
-	Matrix3d XfmFaceAngle;	// face rotation angle
-} TexInfo;
-
-typedef struct FaceTag
-{
-	int				NumPoints;
-	int				Flags;
-	GPlane			Face_Plane;
-	int				LightIntensity;
-	float			Reflectivity;
-	float			Translucency;
-	float			MipMapBias;
-	float			LightXScale, LightYScale;
-	TexInfo			Tex;
-	Ogre::Vector3* Points;
-
-} Face;
 
 CL64_File::CL64_File(void)
 {

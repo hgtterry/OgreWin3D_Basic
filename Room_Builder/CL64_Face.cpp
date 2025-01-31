@@ -25,6 +25,7 @@ THE SOFTWARE.
 #include "pch.h"
 #include "CL64_App.h"
 #include "CL64_Face.h"
+#include "Structures.cpp"
 
 static	T_Vec3 spf[256], spb[256];
 const T_Vec3 VecOrigin = { 0.0f, 0.0f, 0.0f };
@@ -54,36 +55,6 @@ enum FaceFlags
 	FACE_SHEET = (1 << 10),		//visible from both sides
 	FACE_TRANSPARENT = (1 << 11)		//use transparency value for something
 };
-
-typedef struct TexInfoTag
-{
-	T_Vec3 VecNormal;
-	float xScale, yScale;
-	int xShift, yShift;
-	float	Rotate;			// texture rotation angle in degrees
-	TexInfo_Vectors TVecs;
-	int Dib;				// index into the wad
-	char Name[16];
-	signed int DirtyFlag;
-	T_Vec3 Pos;
-	int txSize, tySize;		// texture size (not currently used)
-	Matrix3d XfmFaceAngle;	// face rotation angle
-} TexInfo;
-
-typedef struct FaceTag
-{
-	int				NumPoints;
-	int				Flags;
-	GPlane			Face_Plane;
-	int				LightIntensity;
-	float			Reflectivity;
-	float			Translucency;
-	float			MipMapBias;
-	float			LightXScale, LightYScale;
-	TexInfo			Tex;
-	T_Vec3*	Points;
-
-} Face;
 
 enum SideFlags
 {
@@ -133,6 +104,7 @@ Face* CL64_Face::Face_Create(int NumPnts, const T_Vec3* pnts, int DibId)
 		f->Reflectivity = FACE_DEFAULT_REFLECTIVITY;
 		f->LightXScale = 1.0f;
 		f->LightYScale = 1.0f;
+		f->Selected = 0;
 
 		Face_SetVisible(f, true);
 
@@ -947,7 +919,8 @@ void CL64_Face::Face_Move(Face* f, const T_Vec3* trans)
 // *************************************************************************
 void CL64_Face::Face_SetSelected(Face* f, const signed int bState)
 {
-	f->Flags = (bState) ? f->Flags | FACE_SELECTED : f->Flags & ~FACE_SELECTED;
+	//f->Flags = (bState) ? f->Flags | FACE_SELECTED : f->Flags & ~FACE_SELECTED;
+	f->Selected = bState;
 }
 
 // *************************************************************************
@@ -1144,8 +1117,9 @@ void CL64_Face::Select_Next_Face()
 // *************************************************************************
 // *						Face_IsSelected							 	   *
 // *************************************************************************
-signed int CL64_Face::Face_IsSelected(const Face* f)
+bool CL64_Face::Face_IsSelected(const Face* f)
 {
+	return	f->Selected;
 	return	(f->Flags & FACE_SELECTED) ? GE_TRUE : GE_FALSE;
 }
 

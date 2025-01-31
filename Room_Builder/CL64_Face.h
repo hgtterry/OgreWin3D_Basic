@@ -89,7 +89,7 @@ public:
 	void Face_SetTextureShift(Face* f, const int xShift, const int yShift);
 	void Face_SetFixedHull(Face* f, const signed int bState);
 	void Select_Next_Face();
-	signed int Face_IsSelected(const Face* f);
+	bool Face_IsSelected(const Face* f);
 
 };
 

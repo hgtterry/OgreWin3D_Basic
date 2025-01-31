@@ -26,35 +26,7 @@ THE SOFTWARE.
 #include "resource.h"
 #include "CL64_App.h"
 #include "CL64_Dialogs.h"
-
-typedef struct TexInfoTag
-{
-	Ogre::Vector3 VecNormal;
-	float xScale, yScale;
-	int xShift, yShift;
-	float	Rotate;			// texture rotation angle in degrees
-	TexInfo_Vectors TVecs;
-	int Dib;				// index into the wad
-	char Name[16];
-	signed int DirtyFlag;
-	Ogre::Vector3 Pos;
-	int txSize, tySize;		// texture size (not currently used)
-	Matrix3d XfmFaceAngle;	// face rotation angle
-} TexInfo;
-
-typedef struct FaceTag
-{
-	int			NumPoints;
-	int			Flags;
-	Plane		Face_Plane;
-	int			LightIntensity;
-	geFloat		Reflectivity;
-	geFloat		Translucency;
-	geFloat		MipMapBias;
-	geFloat		LightXScale, LightYScale;
-	TexInfo		Tex;
-	Ogre::Vector3* Points;
-} Face;
+#include "Structures.cpp"
 
 struct tag_FaceList
 {
@@ -843,6 +815,9 @@ bool CL64_Dialogs::Show_Face_Data(int Index, const Face* f, HWND hDlg)
 	SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
 	sprintf(buf, "%s%i", "Flags ", f->Flags);
+	SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+
+	sprintf(buf, "%s%i", "Selected ", f->Selected);
 	SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
 	sprintf(buf, "%s%d", "NumPoints", f->NumPoints);
