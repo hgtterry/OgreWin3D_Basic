@@ -608,7 +608,7 @@ void CL64_Doc::ResetAllSelectedFaces(void)
 void CL64_Doc::ResetAllSelectedBrushes(void)
 {
     App->CL_SelBrushList->SelBrushList_RemoveAll(pSelBrushes);
-    CurBrush = BTemplate;
+   // CurBrush = BTemplate; // hgtterry Check
 }
 
 // *************************************************************************
