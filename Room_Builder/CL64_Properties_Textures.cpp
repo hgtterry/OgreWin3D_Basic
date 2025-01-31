@@ -198,13 +198,12 @@ LRESULT CALLBACK CL64_Properties_Textures::Proc_TextureDialog(HWND hDlg, UINT me
 			}
 			else
 			{
+				App->CL_Doc->SelectAllFacesInBrushes();
 				App->CL_Properties_Textures->Apply_Texture();
 
 				App->CL_Doc->ResetAllSelectedFaces();
 				
-				/*Face* pFace;
-				pFace = App->CL_FaceList->FaceList_GetFace(App->CL_Doc->CurBrush->Faces, App->CL_FaceList->FaceList_GetNumFaces(App->CL_Doc->CurBrush->Faces) - 1);
-				App->CL_Face->Face_SetSelected(pFace, GE_TRUE);*/
+				
 
 				App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
 
