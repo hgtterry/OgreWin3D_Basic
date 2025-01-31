@@ -26,21 +26,7 @@ THE SOFTWARE.
 #include "CL64_App.h"
 #include "CL64_Brush_X.h"
 #include "CL64_Brush.h"
-
-struct tag_BrushList
-{
-	Brush* First;
-	Brush* Last;
-};
-
-struct tag_FaceList
-{
-	int NumFaces;
-	int Limit;
-	Face** Faces;
-	geBoolean Dirty;
-	Box3d Bounds;
-};
+#include "Structures.cpp"
 
 CL64_Brush_X::CL64_Brush_X()
 {

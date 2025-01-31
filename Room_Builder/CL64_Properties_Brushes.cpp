@@ -26,12 +26,7 @@ THE SOFTWARE.
 #include "resource.h"
 #include "CL64_App.h"
 #include "CL64_Properties_Brushes.h"
-
-struct tag_BrushList
-{
-	Brush* First;
-	Brush* Last;
-};
+#include "Structures.cpp"
 
 CL64_Properties_Brushes::CL64_Properties_Brushes()
 {

@@ -28,21 +28,6 @@ THE SOFTWARE.
 #include "CL64_Dialogs.h"
 #include "Structures.cpp"
 
-struct tag_FaceList
-{
-	int NumFaces;
-	int Limit;
-	Face** Faces;
-	geBoolean Dirty;
-	Box3d Bounds;
-};
-
-struct tag_BrushList
-{
-	Brush* First;
-	Brush* Last;
-};
-
 enum BrushFlags
 {
 	BRUSH_SOLID = 0x0001,

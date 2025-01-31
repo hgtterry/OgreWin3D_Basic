@@ -25,12 +25,7 @@ THE SOFTWARE.
 #include "pch.h"
 #include "CL64_App.h"
 #include "CL64_Brush.h"
-
-struct tag_BrushList
-{
-	Brush* First;
-	Brush* Last;
-};
+#include "Structures.cpp"
 
 #define	VectorToSUB(a, b)			(*((((float *)(&a))) + (b)))
 static const int		axidx[3][2] = { 2, 1, 0, 2, 0, 1 };

@@ -27,38 +27,8 @@ THE SOFTWARE.
 #include "CL64_File.h"
 #include "Structures.cpp"
 
-struct tag_Level
-{
-	BrushList* Brushes;
-	char* WadPath;
-	char* HeadersDir;
-	char* ActorsDir;
-	char* PawnIniPath;
-	SizeInfo* WadSizeInfos;
-	CL64_WadFile* WadFile;
-	int GroupVisSetting;
 
-	BrushTemplate_Arch ArchTemplate;
-	BrushTemplate_Box	BoxTemplate;
-	BrushTemplate_Cone	ConeTemplate;
-	BrushTemplate_Cylinder CylinderTemplate;
-	BrushTemplate_Spheroid	SpheroidTemplate;
-	BrushTemplate_Staircase StaircaseTemplate;
 
-	Ogre::Vector3 TemplatePos;
-
-	float DrawScale;		// default draw scale
-	float LightmapScale;	// default lightmap scale
-};
-
-struct tag_FaceList
-{
-	int NumFaces;
-	int Limit;
-	Face** Faces;
-	geBoolean Dirty;
-	Box3d Bounds;
-};
 
 CL64_File::CL64_File(void)
 {

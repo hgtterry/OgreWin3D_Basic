@@ -25,12 +25,7 @@ THE SOFTWARE.
 #include "pch.h"
 #include "CL64_App.h"
 #include "CL64_SelBrushList.h"
-
-struct tag_SelBrushList
-{
-	Array* pItems;
-	int FirstFree;
-};
+#include "Structures.cpp"
 
 CL64_SelBrushList::CL64_SelBrushList(void)
 {

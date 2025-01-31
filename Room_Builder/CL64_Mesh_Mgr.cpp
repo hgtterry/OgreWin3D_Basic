@@ -26,6 +26,7 @@ THE SOFTWARE.
 #include "CL64_App.h"
 #include "CL64_Mesh_Mgr.h"
 #include "CL64_WadFile.h"
+#include "Structures.cpp"
 
 enum BrushFlags
 {
@@ -49,14 +50,6 @@ enum BrushFlags
 	// are reserved for user contents.
 };
 
-struct tag_FaceList
-{
-	int NumFaces;
-	int Limit;
-	Face** Faces;
-	geBoolean Dirty;
-	Box3d Bounds;
-};
 
 struct tag_Level3
 {

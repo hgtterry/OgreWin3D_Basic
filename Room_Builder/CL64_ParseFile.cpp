@@ -43,34 +43,6 @@ enum FaceFlags
 	FACE_TRANSPARENT = (1 << 11)		//use transparency value for something
 };
 
-struct tag_Level
-{
-	BrushList* Brushes;
-	//CEntityArray* Entities;
-	char* WadPath;
-	char* HeadersDir;
-	// changed QD Actors
-	char* ActorsDir;
-	//geBoolean ShowActors;
-	char* PawnIniPath;
-	
-	SizeInfo* WadSizeInfos;
-	CL64_WadFile* WadFile;
-	
-	int GroupVisSetting;
-	BrushTemplate_Arch ArchTemplate;
-	BrushTemplate_Box	BoxTemplate;
-	BrushTemplate_Cone	ConeTemplate;
-	BrushTemplate_Cylinder CylinderTemplate;
-	BrushTemplate_Spheroid	SpheroidTemplate;
-	BrushTemplate_Staircase StaircaseTemplate;
-
-	Ogre::Vector3 TemplatePos;
-
-	float DrawScale;		// default draw scale
-	float LightmapScale;	// default lightmap scale
-};
-
 CL64_ParseFile::CL64_ParseFile(void)
 {
 	str_buff_1[0] = 0;
@@ -78,15 +50,6 @@ CL64_ParseFile::CL64_ParseFile(void)
 	Tag_Float = 0;
 	Tag_Int = 0;
 }
-
-struct tag_FaceList
-{
-	int NumFaces;
-	int Limit;
-	Face** Faces;
-	signed int Dirty;
-	Box3d Bounds;
-};
 
 CL64_ParseFile::~CL64_ParseFile(void)
 {

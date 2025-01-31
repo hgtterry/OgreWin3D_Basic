@@ -25,12 +25,7 @@ THE SOFTWARE.
 #include "pch.h"
 #include "CL64_App.h"
 #include "CL64_SelFaceList.h"
-
-struct tag_SelFaceList
-{
-	Array* pItems;
-	int FirstFree;
-};
+#include "Structures.cpp"
 
 CL64_SelFaceList::CL64_SelFaceList(void)
 {

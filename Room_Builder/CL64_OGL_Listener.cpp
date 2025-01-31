@@ -25,6 +25,7 @@ THE SOFTWARE.
 #include "pch.h"
 #include "CL64_App.h"
 #include "CL64_OGL_Listener.h"
+#include "Structures.cpp"
 
 enum BrushFlags
 {
@@ -46,14 +47,6 @@ enum BrushFlags
 	BRUSH_AREA = 0x8000
 };
 
-struct tag_FaceList
-{
-	int NumFaces;
-	int Limit;
-	Face** Faces;
-	geBoolean Dirty;
-	Box3d Bounds;
-};
 
 typedef struct tag_FaceList FaceList;
 

@@ -25,15 +25,8 @@ THE SOFTWARE.
 #include "pch.h"
 #include "CL64_App.h"
 #include "CL64_FaceList.h"
+#include "Structures.cpp"
 
-struct tag_FaceList
-{
-	int NumFaces;
-	int Limit;
-	Face** Faces;
-	bool Dirty;
-	Box3d Bounds;
-};
 
 CL64_FaceList::CL64_FaceList(void)
 {

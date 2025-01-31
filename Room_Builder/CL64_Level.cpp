@@ -26,52 +26,7 @@ THE SOFTWARE.
 #include "CL64_App.h"
 #include "CL64_Level.h"
 #include "CL64_WadFile.h"
-
-struct tag_Level
-{
-	BrushList* Brushes;
-	//CEntityArray* Entities;
-	char* WadPath;
-	char* HeadersDir;
-	// changed QD Actors
-	char* ActorsDir;
-	//geBoolean ShowActors;
-	char* PawnIniPath;
-	// end change
-	//EntTypeNameList* EntTypeNames;
-	//GroupListType* Groups;
-	SizeInfo* WadSizeInfos;
-	CL64_WadFile* WadFile;
-	//EntityTable* pEntityDefs;
-
-	//ModelInfo_Type	ModelInfo;
-
-	//SkyFaceTexture SkyFaces[6];
-	//geVec3d SkyRotationAxis;
-	//geFloat SkyRotationSpeed;
-	//geFloat	SkyTextureScale;
-
-	// level edit settings
-	//CompileParamsType CompileParams;
-	int GroupVisSetting;
-	//EntityViewList* pEntityView;
-
-	//GridInfo GridSettings;
-	//geBoolean BspRebuildFlag;
-	//ViewStateInfo ViewInfo[NUM_VIEWS];
-
-	BrushTemplate_Arch ArchTemplate;
-	BrushTemplate_Box	BoxTemplate;
-	BrushTemplate_Cone	ConeTemplate;
-	BrushTemplate_Cylinder CylinderTemplate;
-	BrushTemplate_Spheroid	SpheroidTemplate;
-	BrushTemplate_Staircase StaircaseTemplate;
-
-	T_Vec3 TemplatePos;
-
-	float DrawScale;		// default draw scale
-	float LightmapScale;	// default lightmap scale
-};
+#include "Structures.cpp"
 
 CL64_Level::CL64_Level(void)
 {
