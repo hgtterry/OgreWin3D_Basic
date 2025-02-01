@@ -197,9 +197,10 @@
 #define IDC_ST_STAIRS_GENERAL           1152
 #define IDC_ST_STAIRS_NAME              1153
 #define IDC_ST_STAIRS_POSITION          1154
-#define IDC_BUTTON2                     1155
-#define IDC_BUTTON3                     1156
+#define IDC_BT_STAIRS_STAIRS            1155
+#define IDC_BT_STAIRS_RAMP              1156
 #define IDC_BUTTON4                     1157
+#define IDC_BT_STAIRS_CUT               1157
 #define ID_DEBUG_GENERAL                32771
 #define ID_TEMPLATES_INSERT             32772
 #define ID_BRUSH_SELECT                 32773

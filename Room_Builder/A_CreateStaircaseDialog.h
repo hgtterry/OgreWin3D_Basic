@@ -43,6 +43,9 @@ public:
 
 	bool	m_UseCamPos;
 
+	bool flag_Ramp_Flag_Dlg;
+	bool flag_Stairs_Flag_Dlg;
+	
 private:
 
 	static LRESULT CALLBACK Proc_CreateStaircase(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
