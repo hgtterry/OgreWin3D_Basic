@@ -36,6 +36,7 @@ public:
 	HBITMAP CreateHBitmapFromgeBitmap(geBitmap* Bitmap, HDC hdc);
 
 	void List_Selection_Changed();
+	void Get_Selected_Face();
 
 	HBITMAP	Sel_BaseBitmap;
 	long BasePicWidth;
@@ -45,6 +46,8 @@ public:
 	char m_CurrentTexture[MAX_PATH];
 
 	HWND Textures_Dlg_Hwnd;
+
+	Face* mSelected_Face;
 
 private:
 	static LRESULT CALLBACK Proc_TextureDialog(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);

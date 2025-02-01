@@ -280,3 +280,4 @@ void CL64_Properties_Tabs::Enable_Tabs_Dlg(bool Enable)
 {
 	EnableWindow(Tabs_Control_Hwnd, Enable);
 }
+

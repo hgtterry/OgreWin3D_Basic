@@ -37,6 +37,8 @@ CL64_Properties_Textures::CL64_Properties_Textures()
 	Sel_BaseBitmap = NULL;
 	BasePicWidth = NULL;
 	BasePicHeight = NULL;
+
+	mSelected_Face = NULL;
 }
 
 CL64_Properties_Textures::~CL64_Properties_Textures()
@@ -51,6 +53,7 @@ void CL64_Properties_Textures::Show_Textures_Dialog(bool Show)
 	//if (App->CL_Properties_Textures->f_TextureDlg_Active == 1)
 	{
 		ShowWindow(Textures_Dlg_Hwnd, Show);
+		Get_Selected_Face();
 	}
 }
 
@@ -696,5 +699,30 @@ void CL64_Properties_Textures::Fill_ListBox()
 		
 		//Set_Txl_FileName();
 		//List_Selection_Changed();
+	}
+}
+
+// *************************************************************************
+// *	  	Get_Selected_Face:- Terry and Hazel Flanigan 2025			   *
+// *************************************************************************
+void CL64_Properties_Textures::Get_Selected_Face()
+{
+	mSelected_Face = NULL;
+
+	int NumberOfFaces = App->CL_SelFaceList->SelFaceList_GetSize(App->CL_Doc->pSelFaces);
+
+	if (NumberOfFaces > 0)
+	{
+		mSelected_Face = App->CL_SelFaceList->SelFaceList_GetFace(App->CL_Doc->pSelFaces, (NumberOfFaces - 1));
+
+		char buff[100];
+		App->CL_Face->Face_GetTextureName(mSelected_Face);
+
+		strcpy(buff, App->CL_Face->Face_GetTextureName(mSelected_Face));
+
+		int Index = Get_Index_FromName(buff);
+
+		SendDlgItemMessage(Textures_Dlg_Hwnd, IDC_LISTTDTEXTURES, LB_SELECTSTRING, (WPARAM)-1, (LPARAM)buff);
+		List_Selection_Changed();
 	}
 }

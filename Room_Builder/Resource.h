@@ -175,7 +175,8 @@
 #define IDC_STWALLSIZE                  1134
 #define IDC_BT_NEXTFACE                 1135
 #define IDC_BT_ALLFACES                 1136
-#define IDC_BT_NEXTFACE2                1137
+#define IDC_BUTTON1                     1136
+#define IDC_BT_TEXTURE_FACE_PROPS       1136
 #define IDC_BT_PREVFACE                 1137
 #define ID_DEBUG_GENERAL                32771
 #define ID_TEMPLATES_INSERT             32772
@@ -214,7 +215,7 @@
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        160
 #define _APS_NEXT_COMMAND_VALUE         32795
-#define _APS_NEXT_CONTROL_VALUE         1136
+#define _APS_NEXT_CONTROL_VALUE         1137
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif
