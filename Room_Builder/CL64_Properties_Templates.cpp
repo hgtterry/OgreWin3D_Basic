@@ -155,7 +155,11 @@ LRESULT CALLBACK CL64_Properties_Templates::Proc_Templates(HWND hDlg, UINT messa
 
 			App->CL_Mesh_Mgr->Update_World();
 
-			App->CL_Doc->DoGeneralSelect();
+			App->CL_Doc->DoGeneralSelect(true);
+
+			App->CL_Doc->mCurrentTool = CURTOOL_NONE;
+			App->CL_Doc->mModeTool = ID_GENERALSELECT;
+
 			App->CL_Doc->UpdateAllViews(Enums::UpdateViews_All);
 
 			App->CL_Properties_Brushes->Fill_ListBox();

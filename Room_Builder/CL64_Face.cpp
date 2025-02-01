@@ -1172,6 +1172,6 @@ void CL64_Face::Select_Previous_Face()
 bool CL64_Face::Face_IsSelected(const Face* f)
 {
 	return	f->Selected;
-	return	(f->Flags & FACE_SELECTED) ? GE_TRUE : GE_FALSE;
+	//return	(f->Flags & FACE_SELECTED) ? GE_TRUE : GE_FALSE;
 }
 

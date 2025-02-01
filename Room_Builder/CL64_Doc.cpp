@@ -297,9 +297,7 @@ void CL64_Doc::Brush_Add_To_world()
 
 	if (Placed)
 	{
-		App->CL_Doc->DoGeneralSelect();
 		App->CL_Doc->flag_Is_Modified = 1;
-
 	}
 
 
@@ -310,8 +308,24 @@ void CL64_Doc::Brush_Add_To_world()
 // *************************************************************************
 // *           DoGeneralSelect:- Terry and Hazel Flanigan 2023             *
 // *************************************************************************
-void CL64_Doc::DoGeneralSelect(void)
+void CL64_Doc::DoGeneralSelect(bool from_Insert)
 {
+    if (from_Insert == true)
+    {
+        if (App->CL_Brush->Get_Brush_Count() > 0)
+        {
+            mCurrentTool = CURTOOL_NONE;
+            mModeTool = ID_GENERALSELECT;
+
+            App->CL_Top_Tabs->Enable_Brush_Options_Buttons(false, false);
+            App->CL_Top_Tabs->Enable_Select_Button(true, true);
+
+            RedrawWindow(App->CL_Top_Tabs->Headers_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+            return;
+        }
+    }
+
     if (App->CL_Brush->Get_Brush_Count() > 0)
     {
         mCurrentTool = CURTOOL_NONE;
@@ -319,10 +333,10 @@ void CL64_Doc::DoGeneralSelect(void)
 
         App->CL_Top_Tabs->Enable_Brush_Options_Buttons(true, false);
         App->CL_Top_Tabs->Enable_Select_Button(true, true);
+
+        RedrawWindow(App->CL_Top_Tabs->Headers_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
     }
 
-    RedrawWindow(App->CL_Top_Tabs->Headers_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-    //ConfigureCurrentTool();
 }
 
 // *************************************************************************
@@ -1227,7 +1241,7 @@ static signed int SelAllBrushFaces(Brush* pBrush, void* lParam)
 // *************************************************************************
 void CL64_Doc::SelectAllFacesInBrushes(void)
 {
-    DoGeneralSelect(); // hgtterry check function
+    DoGeneralSelect(false); // hgtterry check function
 
     // Select all faces on all selected brushes
     int iBrush;
@@ -1265,7 +1279,7 @@ static signed int fdocSelectBrush(Brush* pBrush, void* lParam)
 // *************************************************************************
 void CL64_Doc::SelectAll(void)
 {
-    DoGeneralSelect();
+    DoGeneralSelect(false);
     App->CL_Level->Level_EnumBrushes(pLevel, this, fdocSelectBrush);
 
     // Select all faces on all selected brushes

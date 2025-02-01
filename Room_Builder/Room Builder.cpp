@@ -349,7 +349,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
                 App->CL_Properties_Brushes->Fill_ListBox();
 
-                App->CL_Doc->DoGeneralSelect();
+                App->CL_Doc->DoGeneralSelect(true);
                 App->CL_Doc->UpdateAllViews(Enums::UpdateViews_All);
                 
                 return 1;
@@ -361,7 +361,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 int Bnum = App->CL_Brush->Get_Brush_Count();
                 if (Bnum > 0)
                 {
-                    App->CL_Doc->DoGeneralSelect();
+                    App->CL_Doc->DoGeneralSelect(false);
                     App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
                 }
 

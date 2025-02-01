@@ -306,7 +306,7 @@ void CL64_File::Start_Load(bool Use_Open_Dialog)
 	{
 		Set_Editor();
 
-		App->CL_Doc->DoGeneralSelect();
+		App->CL_Doc->DoGeneralSelect(false);
 		App->CL_Doc->UpdateAllViews(Enums::UpdateViews_All);
 		App->Say("File Loaded", App->CL_File->FileName_3dt);
 	}
@@ -322,7 +322,7 @@ void CL64_File::Start_Load(bool Use_Open_Dialog)
 bool CL64_File::Open_3dt_File()
 {
 	App->CL_Doc->ResetAllSelections();
-	App->CL_Doc->DoGeneralSelect();
+	App->CL_Doc->DoGeneralSelect(false);
 	
 	bool Test = Load_File(PathFileName_3dt);
 

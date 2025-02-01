@@ -96,7 +96,7 @@ public:
 	void Brush_Add_To_world();
 	void SetDefaultBrushTexInfo(Brush* b);
 	void UpdateAllViews(int Update_Mode);
-	void DoGeneralSelect(void);
+	void DoGeneralSelect(bool from_Insert);
 	WadFileEntry* GetDibBitmap(const char* Name);
 
 	// Selection Move Brush

@@ -212,7 +212,7 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Headers(HWND hDlg, UINT message, WPARAM wPa
 			App->CL_Top_Tabs->flag_Brush_Select = 1;
 			RedrawWindow(App->CL_Top_Tabs->Headers_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
-			App->CL_Doc->DoGeneralSelect();
+			App->CL_Doc->DoGeneralSelect(false);
 
 			return TRUE;
 		}
