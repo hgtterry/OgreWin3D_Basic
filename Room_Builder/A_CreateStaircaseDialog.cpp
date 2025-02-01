@@ -44,7 +44,7 @@ A_CreateStaircaseDialog::~A_CreateStaircaseDialog(void)
 }
 
 // *************************************************************************
-// *	  	Start_CreateArch_Dlg:- Terry and Hazel Flanigan 2023		   *
+// *	  	Start_CreateArch_Dlg:- Terry and Hazel Flanigan 2025		   *
 // *************************************************************************
 void A_CreateStaircaseDialog::Start_CreateStaircase_Dlg()
 {
@@ -55,7 +55,7 @@ void A_CreateStaircaseDialog::Start_CreateStaircase_Dlg()
 }
 
 // *************************************************************************
-// *        CreateBox_Proc:- Terry and Hazel Flanigan 2023				   *
+// *        CreateBox_Proc:- Terry and Hazel Flanigan 2025				   *
 // *************************************************************************
 LRESULT CALLBACK A_CreateStaircaseDialog::Proc_CreateStaircase(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -64,11 +64,28 @@ LRESULT CALLBACK A_CreateStaircaseDialog::Proc_CreateStaircase(HWND hDlg, UINT m
 	{
 	case WM_INITDIALOG:
 	{
+		SendDlgItemMessage(hDlg, IDC_ST_STAIRS_GENERAL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
+		SendDlgItemMessage(hDlg, IDC_ST_STAIRS_HEIGHT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_ST_STAIRS_WIDTH, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_ST_STAIRS_LENGTH, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_ST_STAIRS_STEPS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
 		SendDlgItemMessage(hDlg, IDC_ED_STAIRS_HEIGHT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ED_STAIRS_WIDTH, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ED_STAIRS_LENGTH, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ED_STAIRS_STEPS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
+		
+		SendDlgItemMessage(hDlg, IDC_ST_STAIRS_NAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_STAIRS_EDITNAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
+		SendDlgItemMessage(hDlg, IDC_ST_STAIRS_POSITION, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_CK_STAIRS_WORLDCENTRE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_CK_STAIRS_CAMPOSITION, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		SendDlgItemMessage(hDlg, IDC_BT_STAIRS_DEFAULTS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
 		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
@@ -76,7 +93,7 @@ LRESULT CALLBACK A_CreateStaircaseDialog::Proc_CreateStaircase(HWND hDlg, UINT m
 
 		App->CL_CreateStaircaseDialog->Set_DLG_Members(hDlg);
 
-		//SetDlgItemText(hDlg, IDC_EDITNAME, (LPCTSTR)"Staircase");*/
+		SetDlgItemText(hDlg, IDC_STAIRS_EDITNAME, (LPCTSTR)"Staircase");
 
 
 		
@@ -102,53 +119,53 @@ LRESULT CALLBACK A_CreateStaircaseDialog::Proc_CreateStaircase(HWND hDlg, UINT m
 	}
 	case WM_CTLCOLORSTATIC:
 	{
-		//if (GetDlgItem(hDlg, IDC_STGENERAL) == (HWND)lParam)
-		//{
-		//	SetBkColor((HDC)wParam, RGB(0, 0, 0));
-		//	SetTextColor((HDC)wParam, RGB(0, 0, 0));
-		//	SetBkMode((HDC)wParam, TRANSPARENT);
-		//	return (UINT)App->AppBackground;
-		//}
+		if (GetDlgItem(hDlg, IDC_ST_STAIRS_GENERAL) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
 
-		//if (GetDlgItem(hDlg, IDC_STHEIGHT) == (HWND)lParam)
-		//{
-		//	SetBkColor((HDC)wParam, RGB(0, 0, 0));
-		//	SetTextColor((HDC)wParam, RGB(0, 0, 0));
-		//	SetBkMode((HDC)wParam, TRANSPARENT);
-		//	return (UINT)App->AppBackground;
-		//}
+		if (GetDlgItem(hDlg, IDC_ST_STAIRS_HEIGHT) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
 
-		//if (GetDlgItem(hDlg, IDC_STWIDTH) == (HWND)lParam)
-		//{
-		//	SetBkColor((HDC)wParam, RGB(0, 0, 0));
-		//	SetTextColor((HDC)wParam, RGB(0, 0, 0));
-		//	SetBkMode((HDC)wParam, TRANSPARENT);
-		//	return (UINT)App->AppBackground;
-		//}
+		if (GetDlgItem(hDlg, IDC_ST_STAIRS_WIDTH) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
 
-		//if (GetDlgItem(hDlg, IDC_STLENGTH) == (HWND)lParam)
-		//{
-		//	SetBkColor((HDC)wParam, RGB(0, 0, 0));
-		//	SetTextColor((HDC)wParam, RGB(0, 0, 0));
-		//	SetBkMode((HDC)wParam, TRANSPARENT);
-		//	return (UINT)App->AppBackground;
-		//}
+		if (GetDlgItem(hDlg, IDC_ST_STAIRS_LENGTH) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
 
-		//if (GetDlgItem(hDlg, IDC_STSTEPS) == (HWND)lParam)
-		//{
-		//	SetBkColor((HDC)wParam, RGB(0, 0, 0));
-		//	SetTextColor((HDC)wParam, RGB(0, 0, 0));
-		//	SetBkMode((HDC)wParam, TRANSPARENT);
-		//	return (UINT)App->AppBackground;
-		//}
+		if (GetDlgItem(hDlg, IDC_ST_STAIRS_STEPS) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
 
-		//if (GetDlgItem(hDlg, IDC_TCUT) == (HWND)lParam)
-		//{
-		//	SetBkColor((HDC)wParam, RGB(0, 0, 0));
-		//	SetTextColor((HDC)wParam, RGB(0, 0, 0));
-		//	SetBkMode((HDC)wParam, TRANSPARENT);
-		//	return (UINT)App->AppBackground;
-		//}
+		/*if (GetDlgItem(hDlg, IDC_TCUT) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}*/
 
 		//if (GetDlgItem(hDlg, IDC_CHECK1) == (HWND)lParam)
 		//{
@@ -158,38 +175,38 @@ LRESULT CALLBACK A_CreateStaircaseDialog::Proc_CreateStaircase(HWND hDlg, UINT m
 		//	return (UINT)App->AppBackground;
 		//}
 
-		//// --------------------------------------------------
-		//if (GetDlgItem(hDlg, IDC_STNAME) == (HWND)lParam)
-		//{
-		//	SetBkColor((HDC)wParam, RGB(0, 0, 0));
-		//	SetTextColor((HDC)wParam, RGB(0, 0, 0));
-		//	SetBkMode((HDC)wParam, TRANSPARENT);
-		//	return (UINT)App->AppBackground;
-		//}
+		// --------------------------------------------------
+		if (GetDlgItem(hDlg, IDC_ST_STAIRS_NAME) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
 
-		//if (GetDlgItem(hDlg, IDC_STCAMPOS) == (HWND)lParam)
-		//{
-		//	SetBkColor((HDC)wParam, RGB(0, 0, 0));
-		//	SetTextColor((HDC)wParam, RGB(0, 0, 0));
-		//	SetBkMode((HDC)wParam, TRANSPARENT);
-		//	return (UINT)App->AppBackground;
-		//}
+		if (GetDlgItem(hDlg, IDC_ST_STAIRS_POSITION) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
 
-		//if (GetDlgItem(hDlg, IDC_CKWORLDCENTRE) == (HWND)lParam)
-		//{
-		//	SetBkColor((HDC)wParam, RGB(0, 0, 0));
-		//	SetTextColor((HDC)wParam, RGB(0, 0, 0));
-		//	SetBkMode((HDC)wParam, TRANSPARENT);
-		//	return (UINT)App->AppBackground;
-		//}
+		if (GetDlgItem(hDlg, IDC_CK_STAIRS_WORLDCENTRE) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
 
-		//if (GetDlgItem(hDlg, IDC_CKCAMPOSITION) == (HWND)lParam)
-		//{
-		//	SetBkColor((HDC)wParam, RGB(0, 0, 0));
-		//	SetTextColor((HDC)wParam, RGB(0, 0, 0));
-		//	SetBkMode((HDC)wParam, TRANSPARENT);
-		//	return (UINT)App->AppBackground;
-		//}
+		if (GetDlgItem(hDlg, IDC_CK_STAIRS_CAMPOSITION) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
 
 		return FALSE;
 	}
@@ -229,14 +246,14 @@ LRESULT CALLBACK A_CreateStaircaseDialog::Proc_CreateStaircase(HWND hDlg, UINT m
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Toggle(item, App->CL_CreateConeDialog->m_TCut);
 			return CDRF_DODEFAULT;
-		}
+		}*/
 
-		if (some_item->idFrom == IDC_BT_CONE_DEFAULTS)
+		if (some_item->idFrom == IDC_BT_STAIRS_DEFAULTS)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
 			return CDRF_DODEFAULT;
-		}*/
+		}
 
 		if (some_item->idFrom == IDOK)
 		{
@@ -320,11 +337,11 @@ LRESULT CALLBACK A_CreateStaircaseDialog::Proc_CreateStaircase(HWND hDlg, UINT m
 				return TRUE;
 			}*/
 
-			/*if (LOWORD(wParam) == IDC_Defaults)
+			if (LOWORD(wParam) == IDC_BT_STAIRS_DEFAULTS)
 			{
 				App->CL_CreateStaircaseDialog->Set_Defaults(hDlg);
 				return TRUE;
-			}*/
+			}
 
 			// -----------------------------------------------------------------
 			if (LOWORD(wParam) == IDOK)
@@ -355,11 +372,12 @@ LRESULT CALLBACK A_CreateStaircaseDialog::Proc_CreateStaircase(HWND hDlg, UINT m
 }
 
 // *************************************************************************
-// *		   CreateStaircase:- Terry and Hazel Flanigan 2023			   *
+// *		   CreateStaircase:- Terry and Hazel Flanigan 2025			   *
 // *************************************************************************
 void A_CreateStaircaseDialog::CreateStaircase() 
 {
-	
+	App->CL_Doc->OnToolsTemplate();
+
 	Brush *pStaircase;
 
 	pStaircase = App->CL_BrushTemplate->BrushTemplate_CreateStaircase (pStaircaseTemplate);
@@ -375,7 +393,7 @@ void A_CreateStaircaseDialog::CreateStaircase()
 }
 
 // *************************************************************************
-// *       CreateNewTemplateBrush:- Terry and Hazel Flanigan 2023		   *
+// *       CreateNewTemplateBrush:- Terry and Hazel Flanigan 2025		   *
 // *************************************************************************
 void A_CreateStaircaseDialog::CreateNewTemplateBrush(Brush *pBrush)
 {
@@ -426,7 +444,7 @@ void A_CreateStaircaseDialog::CreateNewTemplateBrush(Brush *pBrush)
 }
 
 // *************************************************************************
-// *		 Set_Members:- Terry and Hazel Flanigan 2023				   *
+// *		 Set_Members:- Terry and Hazel Flanigan 2025				   *
 // *************************************************************************
 void A_CreateStaircaseDialog::Set_Members() 
 {
@@ -439,7 +457,7 @@ void A_CreateStaircaseDialog::Set_Members()
 }
 
 // *************************************************************************
-// *		 Set_DLG_Members:- Terry and Hazel Flanigan 2023			   *
+// *		 Set_DLG_Members:- Terry and Hazel Flanigan 2025			   *
 // *************************************************************************
 void A_CreateStaircaseDialog::Set_DLG_Members(HWND hDlg) 
 {
@@ -469,7 +487,7 @@ void A_CreateStaircaseDialog::Set_DLG_Members(HWND hDlg)
 }
 
 // *************************************************************************
-// *		 Get_DLG_Members:- Terry and Hazel Flanigan 2023			   *
+// *		 Get_DLG_Members:- Terry and Hazel Flanigan 2025			   *
 // *************************************************************************
 void A_CreateStaircaseDialog::Get_DLG_Members(HWND hDlg) 
 {
@@ -487,12 +505,12 @@ void A_CreateStaircaseDialog::Get_DLG_Members(HWND hDlg)
 	GetDlgItemText(hDlg, IDC_ED_STAIRS_STEPS, (LPTSTR)buf,MAX_PATH);
 	m_NumberOfStairs = (int)atoi(buf);
 
-	//GetDlgItemText(hDlg,IDC_EDITNAME,(LPTSTR)buf,MAX_PATH);
-	//strcpy(StaircaseName,buf);
+	GetDlgItemText(hDlg, IDC_STAIRS_EDITNAME,(LPTSTR)buf,MAX_PATH);
+	strcpy(StaircaseName,buf);
 }
 
 // *************************************************************************
-// *		 Set_StaircaseTemplate:- Terry and Hazel Flanigan 2023		   *
+// *		 Set_StaircaseTemplate:- Terry and Hazel Flanigan 2025		   *
 // *************************************************************************
 void A_CreateStaircaseDialog::Set_StaircaseTemplate() 
 {
@@ -505,7 +523,7 @@ void A_CreateStaircaseDialog::Set_StaircaseTemplate()
 }
 
 // *************************************************************************
-// *	    	Set_Defaults:- Terry and Hazel Flanigan 2023			   *
+// *	    	Set_Defaults:- Terry and Hazel Flanigan 2025			   *
 // *************************************************************************
 void A_CreateStaircaseDialog::Set_Defaults(HWND hDlg) 
 {

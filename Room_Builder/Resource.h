@@ -180,17 +180,26 @@
 #define IDC_BT_TEXTURE_FACE_PROPS       1136
 #define IDC_BT_PREVFACE                 1137
 #define IDC_ST_PIC                      1137
-#define IDC_BUTTON1                     1138
+#define IDC_BT_STAIRS_DEFAULTS          1138
 #define IDC_ED_STAIRS_HEIGHT            1139
 #define IDC_ED_STAIRS_WIDTH             1140
 #define IDC_ED_STAIRS_LENGTH            1141
-#define IDC_EDIT4                       1142
 #define IDC_ED_STAIRS_STEPS             1142
 #define IDC_CHECK1                      1143
 #define IDC_CHECK3                      1144
-#define IDC_EDIT5                       1145
-#define IDC_CHECK4                      1146
-#define IDC_CHECK5                      1147
+#define IDC_STAIRS_EDITNAME             1145
+#define IDC_CK_STAIRS_WORLDCENTRE       1146
+#define IDC_CK_STAIRS_CAMPOSITION       1147
+#define IDC_ST_STAIRS_HEIGHT            1148
+#define IDC_ST_STAIRS_WIDTH             1149
+#define IDC_ST_STAIRS_LENGTH            1150
+#define IDC_ST_STAIRS_STEPS             1151
+#define IDC_ST_STAIRS_GENERAL           1152
+#define IDC_ST_STAIRS_NAME              1153
+#define IDC_ST_STAIRS_POSITION          1154
+#define IDC_BUTTON2                     1155
+#define IDC_BUTTON3                     1156
+#define IDC_BUTTON4                     1157
 #define ID_DEBUG_GENERAL                32771
 #define ID_TEMPLATES_INSERT             32772
 #define ID_BRUSH_SELECT                 32773
@@ -228,7 +237,7 @@
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        162
 #define _APS_NEXT_COMMAND_VALUE         32795
-#define _APS_NEXT_CONTROL_VALUE         1146
+#define _APS_NEXT_CONTROL_VALUE         1156
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif
