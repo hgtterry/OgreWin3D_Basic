@@ -246,13 +246,28 @@ void CL64_Properties_Tabs::Hide_Dialogs()
 // *************************************************************************
 // *	  	Select_Brushes_Tab:- Terry and Hazel Flanigan 2025			   *
 // *************************************************************************
-void CL64_Properties_Tabs::Select_Brushes_Tab(int SelNum)
+void CL64_Properties_Tabs::Select_Brushes_Tab()
 {
 	if (Tabs_Control_Hwnd && flag_Tabs_Dlg_Active == 1)
 	{
 		Hide_Dialogs();
 		App->CL_Properties_Brushes->Show_Brushes_Dialog(true);
 		flag_Tab_Group = 1;
+
+		RedrawWindow(Tabs_Control_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+	}
+}
+
+// *************************************************************************
+// *	  	Select_Textures_Tab:- Terry and Hazel Flanigan 2025			   *
+// *************************************************************************
+void CL64_Properties_Tabs::Select_Textures_Tab()
+{
+	if (Tabs_Control_Hwnd && flag_Tabs_Dlg_Active == 1)
+	{
+		Hide_Dialogs();
+		App->CL_Properties_Textures->Show_Textures_Dialog(true);
+		flag_Tab_Texture = 1;
 
 		RedrawWindow(Tabs_Control_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 	}

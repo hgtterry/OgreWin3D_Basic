@@ -582,7 +582,7 @@ void CL64_Doc::SelectOrtho(POINT point, ViewVars* v)
                 UpdateSelected();
                 App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
 
-                App->CL_Properties_Tabs->Select_Brushes_Tab(0);
+                App->CL_Properties_Tabs->Select_Brushes_Tab();
                 App->CL_Properties_Brushes->Get_Index(CurBrush);
 
                 App->CL_Top_Tabs->Enable_Brush_Options_Buttons(true, false);

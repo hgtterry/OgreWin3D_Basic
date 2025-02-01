@@ -30,7 +30,10 @@ public:
 	~CL64_Properties_Tabs();
 
 	void Start_Tabs_Control_Dlg();
-	void Select_Brushes_Tab(int SelNum);
+
+	void Select_Brushes_Tab();
+	void Select_Textures_Tab();
+
 	void Enable_Tabs_Dlg(bool Enable);
 
 	HWND Tabs_Control_Hwnd;

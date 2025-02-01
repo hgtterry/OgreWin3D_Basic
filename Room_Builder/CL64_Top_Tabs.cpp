@@ -247,6 +247,8 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Headers(HWND hDlg, UINT message, WPARAM wPa
 		{
 			App->CL_Doc->SelectAllFacesInBrushes();
 			App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
+			App->CL_Properties_Tabs->Select_Textures_Tab();
+
 			return TRUE;
 		}
 
@@ -264,6 +266,7 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Headers(HWND hDlg, UINT message, WPARAM wPa
 
 			//App->CL_Doc->UpdateSelected(Enums::UpdateViews_Grids);
 			App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
+			App->CL_Properties_Tabs->Select_Textures_Tab();
 
 			return TRUE;
 		}
@@ -282,6 +285,7 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Headers(HWND hDlg, UINT message, WPARAM wPa
 
 			//App->CL_Doc->UpdateSelected(Enums::UpdateViews_Grids);
 			App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
+			App->CL_Properties_Tabs->Select_Textures_Tab();
 
 			return TRUE;
 		}
