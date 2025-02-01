@@ -61,6 +61,10 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Headers(HWND hDlg, UINT message, WPARAM wPa
 		SendDlgItemMessage(hDlg, IDC_BT_BRUSH_SCALE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_BRUSH_SHEAR, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
+		SendDlgItemMessage(hDlg, IDC_BT_ALLFACES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_NEXTFACE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_PREVFACE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
 		return TRUE;
 	}
 
@@ -146,6 +150,57 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Headers(HWND hDlg, UINT message, WPARAM wPa
 			return CDRF_DODEFAULT;
 		}
 
+		if (some_item->idFrom == IDC_BT_ALLFACES)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_ALLFACES));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
+			else
+			{
+				App->Custom_Button_Normal(item);
+			}
+
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BT_NEXTFACE)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_NEXTFACE));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
+			else
+			{
+				App->Custom_Button_Normal(item);
+			}
+
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BT_PREVFACE)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_PREVFACE));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
+			else
+			{
+				App->Custom_Button_Normal(item);
+			}
+
+			return CDRF_DODEFAULT;
+		}
+
 		return CDRF_DODEFAULT;
 	}
 
@@ -213,6 +268,24 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Headers(HWND hDlg, UINT message, WPARAM wPa
 			return TRUE;
 		}
 
+		if (LOWORD(wParam) == IDC_BT_PREVFACE)
+		{
+			if (App->CL_SelFaceList->SelFaceList_GetSize(App->CL_Doc->pSelFaces) == 0)
+			{
+				App->CL_Doc->SelectAllFacesInBrushes();
+				App->CL_Face->Select_Previous_Face();
+			}
+			else
+			{
+				App->CL_Face->Select_Previous_Face();
+			}
+
+			//App->CL_Doc->UpdateSelected(Enums::UpdateViews_Grids);
+			App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
+
+			return TRUE;
+		}
+		
 		if (LOWORD(wParam) == IDCANCEL)
 		{
 			EndDialog(hDlg, LOWORD(wParam));
@@ -234,6 +307,15 @@ void CL64_Top_Tabs::Enable_Brush_Options_Buttons(bool Enable, bool Active)
 
 	EnableWindow(GetDlgItem(Headers_hWnd, IDC_BT_BRUSH_SCALE), Enable);
 	flag_Brush_Scale = Active;
+
+	EnableWindow(GetDlgItem(Headers_hWnd, IDC_BT_ALLFACES), Enable);
+	//flag_Brush_Scale = Active;
+
+	EnableWindow(GetDlgItem(Headers_hWnd, IDC_BT_NEXTFACE), Enable);
+	//flag_Brush_Scale = Active;
+
+	EnableWindow(GetDlgItem(Headers_hWnd, IDC_BT_PREVFACE), Enable);
+	//flag_Brush_Scale = Active;
 }
 
 // *************************************************************************

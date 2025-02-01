@@ -2343,6 +2343,27 @@ Face* CL64_Brush::Brush_SelectFirstFace(Brush* b)
 }
 
 // *************************************************************************
+// *						Brush_SelectLastFace						   *
+// *************************************************************************
+Face* CL64_Brush::Brush_SelectLastFace(Brush* b)
+{
+	assert(b);
+
+	if (Brush_IsMulti(b))
+	{
+		return Brush_SelectLastFace(b->BList->Last);
+	}
+	else
+	{
+		Face* pFace;
+
+		pFace = App->CL_FaceList->FaceList_GetFace(b->Faces, 0);
+		App->CL_Face->Face_SetSelected(pFace, GE_TRUE);
+		return pFace;
+	}
+}
+
+// *************************************************************************
 // *				BrushList_FindTopLevelFaceParent					   *
 // *************************************************************************
 Brush* CL64_Brush::BrushList_FindTopLevelFaceParent(const BrushList* pList, const Face* pFace)
@@ -2433,7 +2454,7 @@ Brush* CL64_Brush::Brush_GetTopLevelParent(const BrushList* pList,const Brush* b
 // *************************************************************************
 // *			( Static ) BrushList_SetNextSelectedFace				   *
 // *************************************************************************
-static geBoolean BrushList_SetNextSelectedFace(BrushList* pList)
+static signed int BrushList_SetNextSelectedFace(BrushList* pList)
 {
 	Brush* b;
 
@@ -2459,6 +2480,37 @@ static geBoolean BrushList_SetNextSelectedFace(BrushList* pList)
 		}
 	}
 
+	return	GE_FALSE;	//wrapped around the end... handle outside
+}
+
+// *************************************************************************
+// *			( Static ) BrushList_SetPrevSelectedFace				   *
+// *************************************************************************
+static signed int BrushList_SetPrevSelectedFace(BrushList* pList)
+{
+	Brush* b;
+
+	assert(pList);
+
+	for (b = pList->Last; b; b = b->Prev)
+	{
+		if (App->CL_Brush->Brush_GetSelectedFace(b))
+		{
+			break;
+		}
+	}
+	if (!b)	//no faces found selected
+	{
+		App->CL_Brush->Brush_SelectLastFace(pList->Last);	//in case it's also a multi
+		return	GE_TRUE;
+	}
+	for (; b; b = b->Prev)
+	{
+		if (App->CL_Brush->Brush_SetPrevSelectedFace(b))
+		{
+			return	GE_TRUE;
+		}
+	}
 	return	GE_FALSE;	//wrapped around the end... handle outside
 }
 
@@ -2510,6 +2562,23 @@ signed int CL64_Brush::Brush_SetNextSelectedFace(Brush* b)
 	else
 	{
 		return	App->CL_FaceList->FaceList_SetNextSelectedFace(b->Faces);
+	}
+}
+
+// *************************************************************************
+// *					Brush_SetPrevSelectedFace						   *
+// *************************************************************************
+signed int CL64_Brush::Brush_SetPrevSelectedFace(Brush* b)
+{
+	assert(b);
+
+	if (Brush_IsMulti(b))
+	{
+		return	BrushList_SetPrevSelectedFace(b->BList);
+	}
+	else
+	{
+		return	App->CL_FaceList->FaceList_SetPrevSelectedFace(b->Faces);
 	}
 }
 

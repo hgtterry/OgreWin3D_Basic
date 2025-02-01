@@ -137,10 +137,15 @@ public:
 	
 	// Faces
 	Face* Brush_SelectFirstFace(Brush* b);
+	Face* Brush_SelectLastFace(Brush* b);
+
 	Brush* BrushList_FindTopLevelFaceParent(const BrushList* pList, const Face* pFace);
 	Brush* BrushList_FindFaceParent(const BrushList* pList, const Face* pFace);
 	Brush* Brush_GetTopLevelParent(const BrushList* pList, const Brush* b);
+	
 	signed int Brush_SetNextSelectedFace(Brush* b);
+	signed int Brush_SetPrevSelectedFace(Brush* b);
+
 	Face* Brush_GetSelectedFace(const Brush* b);
 
 };

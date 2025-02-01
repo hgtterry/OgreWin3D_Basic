@@ -357,6 +357,42 @@ signed int CL64_FaceList::FaceList_SetNextSelectedFace(FaceList* fl)
 }
 
 // *************************************************************************
+// *					FaceList_SetPrevSelectedFace				 	   *
+// *************************************************************************
+signed int CL64_FaceList::FaceList_SetPrevSelectedFace(FaceList* fl)
+{
+	int		i;
+
+	assert(fl);
+
+	for (i = 0; i < fl->NumFaces; i++)
+	{
+		if (App->CL_Face->Face_IsSelected(fl->Faces[i]))
+		{
+			break;
+		}
+	}
+
+	if (i >= fl->NumFaces)	//if it didn't underflow... there simply wasn't
+	{						//anything selected, select the last face
+		App->CL_Face->Face_SetSelected(fl->Faces[fl->NumFaces - 1], GE_TRUE);
+		return	GE_TRUE;
+	}
+	else if (i == 0)
+	{
+		App->CL_Face->Face_SetSelected(fl->Faces[i], GE_FALSE);
+		return	GE_FALSE;	//skip to prev brush or select last
+	}
+	else
+	{
+		App->CL_Face->Face_SetSelected(fl->Faces[i], GE_FALSE);
+		i--;
+		App->CL_Face->Face_SetSelected(fl->Faces[i], GE_TRUE);
+		return	GE_TRUE;
+	}
+}
+
+// *************************************************************************
 // *					FaceList_GetSelectedFace					 	   *
 // *************************************************************************
 Face* CL64_FaceList::FaceList_GetSelectedFace(const FaceList* fl)

@@ -175,6 +175,8 @@
 #define IDC_STWALLSIZE                  1134
 #define IDC_BT_NEXTFACE                 1135
 #define IDC_BT_ALLFACES                 1136
+#define IDC_BT_NEXTFACE2                1137
+#define IDC_BT_PREVFACE                 1137
 #define ID_DEBUG_GENERAL                32771
 #define ID_TEMPLATES_INSERT             32772
 #define ID_BRUSH_SELECT                 32773
