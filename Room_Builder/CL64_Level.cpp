@@ -145,6 +145,14 @@ BrushTemplate_Cone* CL64_Level::Level_GetConeTemplate(Level* pLevel)
 }
 
 // *************************************************************************
+// *						Level_GetStaircaseTemplate					   *
+// *************************************************************************
+BrushTemplate_Staircase* CL64_Level::Level_GetStaircaseTemplate(Level* pLevel)
+{
+	return &pLevel->StaircaseTemplate;
+}
+
+// *************************************************************************
 // *							Level_GetBrushes						   *
 // *************************************************************************
 BrushList* CL64_Level::Level_GetBrushes(Level* pLevel)

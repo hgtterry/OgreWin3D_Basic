@@ -42,6 +42,8 @@
 #define IDD_TEXTURE_EDITOR              157
 #define IDD_CREATE_CONE                 158
 #define IDB_CREATECONE                  159
+#define IDD_CREATE_STAIRCASE            160
+#define IDB_CREATESTAIRS                161
 #define IDC_BANNER                      1000
 #define IDC_STTEXT                      1001
 #define IDC_STMESSAGE                   1002
@@ -175,9 +177,20 @@
 #define IDC_STWALLSIZE                  1134
 #define IDC_BT_NEXTFACE                 1135
 #define IDC_BT_ALLFACES                 1136
-#define IDC_BUTTON1                     1136
 #define IDC_BT_TEXTURE_FACE_PROPS       1136
 #define IDC_BT_PREVFACE                 1137
+#define IDC_ST_PIC                      1137
+#define IDC_BUTTON1                     1138
+#define IDC_ED_STAIRS_HEIGHT            1139
+#define IDC_ED_STAIRS_WIDTH             1140
+#define IDC_ED_STAIRS_LENGTH            1141
+#define IDC_EDIT4                       1142
+#define IDC_ED_STAIRS_STEPS             1142
+#define IDC_CHECK1                      1143
+#define IDC_CHECK3                      1144
+#define IDC_EDIT5                       1145
+#define IDC_CHECK4                      1146
+#define IDC_CHECK5                      1147
 #define ID_DEBUG_GENERAL                32771
 #define ID_TEMPLATES_INSERT             32772
 #define ID_BRUSH_SELECT                 32773
@@ -213,9 +226,9 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
-#define _APS_NEXT_RESOURCE_VALUE        160
+#define _APS_NEXT_RESOURCE_VALUE        162
 #define _APS_NEXT_COMMAND_VALUE         32795
-#define _APS_NEXT_CONTROL_VALUE         1137
+#define _APS_NEXT_CONTROL_VALUE         1146
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif

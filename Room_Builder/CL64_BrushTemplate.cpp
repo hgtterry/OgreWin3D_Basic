@@ -591,3 +591,109 @@ Brush* CL64_BrushTemplate::BrushTemplate_CreateCone(const BrushTemplate_Cone* pT
 	}
 	return	0;
 }
+
+// *************************************************************************
+// *					BrushTemplate_CreateStaircase					   *
+// *************************************************************************
+Brush* CL64_BrushTemplate::BrushTemplate_CreateStaircase(const BrushTemplate_Staircase* pTemplate)
+{
+	int			i;
+	float		HalfWidth = (geFloat)(pTemplate->Width / 2);
+	float		HalfHeight = (geFloat)(pTemplate->Height / 2);
+	float		HalfLength = (geFloat)(pTemplate->Length / 2);
+	Brush* b, * b2;
+	BrushList* MBList = App->CL_Brush->BrushList_Create();
+	FaceList* fl;
+	Face* f;
+	T_Vec3		v, FaceVerts[4];
+
+
+	if (pTemplate->MakeRamp)
+	{
+		fl = App->CL_FaceList->FaceList_Create(5);
+
+		App->CL_Maths->Vector3_Set(&(FaceVerts[3]), -HalfWidth, -HalfHeight, HalfLength);
+		App->CL_Maths->Vector3_Set(&(FaceVerts[2]), HalfWidth, -HalfHeight, HalfLength);
+		App->CL_Maths->Vector3_Set(&(FaceVerts[1]), HalfWidth, HalfHeight, HalfLength);
+		App->CL_Maths->Vector3_Set(&(FaceVerts[0]), -HalfWidth, HalfHeight, HalfLength);
+		f = App->CL_Face->Face_Create(4, FaceVerts, 0);
+		if (f)
+		{
+			App->CL_FaceList->FaceList_AddFace(fl, f);
+		}
+
+		App->CL_Maths->Vector3_Set(&(FaceVerts[3]), HalfWidth, -HalfHeight, HalfLength);
+		App->CL_Maths->Vector3_Set(&(FaceVerts[2]), -HalfWidth, -HalfHeight, HalfLength);
+		App->CL_Maths->Vector3_Set(&(FaceVerts[1]), -HalfWidth, -HalfHeight, -HalfLength);
+		App->CL_Maths->Vector3_Set(&(FaceVerts[0]), HalfWidth, -HalfHeight, -HalfLength);
+		f = App->CL_Face->Face_Create(4, FaceVerts, 0);
+		if (f)
+		{
+			App->CL_FaceList->FaceList_AddFace(fl, f);
+		}
+
+		App->CL_Maths->Vector3_Set(&(FaceVerts[3]), -HalfWidth, HalfHeight, HalfLength);
+		App->CL_Maths->Vector3_Set(&(FaceVerts[2]), HalfWidth, HalfHeight, HalfLength);
+		App->CL_Maths->Vector3_Set(&(FaceVerts[1]), HalfWidth, -HalfHeight, -HalfLength);
+		App->CL_Maths->Vector3_Set(&(FaceVerts[0]), -HalfWidth, -HalfHeight, -HalfLength);
+		f = App->CL_Face->Face_Create(4, FaceVerts, 0);
+		if (f)
+		{
+			App->CL_FaceList->FaceList_AddFace(fl, f);
+		}
+
+		App->CL_Maths->Vector3_Set(&(FaceVerts[2]), HalfWidth, HalfHeight, HalfLength);
+		App->CL_Maths->Vector3_Set(&(FaceVerts[1]), HalfWidth, -HalfHeight, HalfLength);
+		App->CL_Maths->Vector3_Set(&(FaceVerts[0]), HalfWidth, -HalfHeight, -HalfLength);
+		f = App->CL_Face->Face_Create(3, FaceVerts, 0);
+		if (f)
+		{
+			App->CL_FaceList->FaceList_AddFace(fl, f);
+		}
+
+		App->CL_Maths->Vector3_Set(&(FaceVerts[0]), -HalfWidth, HalfHeight, HalfLength);
+		App->CL_Maths->Vector3_Set(&(FaceVerts[1]), -HalfWidth, -HalfHeight, HalfLength);
+		App->CL_Maths->Vector3_Set(&(FaceVerts[2]), -HalfWidth, -HalfHeight, -HalfLength);
+		f = App->CL_Face->Face_Create(3, FaceVerts, 0);
+		if (f)
+		{
+			App->CL_FaceList->FaceList_AddFace(fl, f);
+		}
+
+		b = App->CL_Brush->Brush_Create(BRUSH_LEAF, fl, 0);
+	}
+	else
+	{
+		float	StairYSize = (geFloat)pTemplate->Height / (geFloat)pTemplate->NumberOfStairs;
+		float	DZ = (geFloat)pTemplate->Length / (geFloat)pTemplate->NumberOfStairs;
+		float	ZSize = (geFloat)pTemplate->Length;
+		BrushTemplate_Box BoxTemplate;
+
+		BoxTemplate.Solid = 0;
+		BoxTemplate.TCut = pTemplate->TCut;
+		BoxTemplate.Thickness = 0.0f;
+		BoxTemplate.XSizeTop = pTemplate->Width;
+		BoxTemplate.XSizeBot = pTemplate->Width;
+		BoxTemplate.YSize = StairYSize;
+
+		for (i = 0; i < pTemplate->NumberOfStairs; i++)
+		{
+			BoxTemplate.ZSizeTop = ZSize;
+			BoxTemplate.ZSizeBot = ZSize;
+			BoxTemplate.TSheet = GE_FALSE;	// nasty, nasty, nasty
+			b2 = BrushTemplate_CreateBox(&BoxTemplate);
+			ZSize -= DZ;
+			App->CL_Maths->Vector3_Set(&v, 0.0f, i * StairYSize, (i * DZ) / 2);
+			App->CL_Brush->Brush_Move(b2, &v);
+			App->CL_Brush->BrushList_Append(MBList, b2);
+		}
+		b = App->CL_Brush->Brush_Create(BRUSH_MULTI, 0, MBList);
+	}
+
+	if (b)
+	{
+		Brush_SetSubtract(b, pTemplate->TCut);
+	}
+
+	return	b;
+}

@@ -45,7 +45,7 @@ public:
 
 private:
 
-	static LRESULT CALLBACK CreateStaircase_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Proc_CreateStaircase(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	void Set_Members();
 	void Set_DLG_Members(HWND hDlg);

@@ -360,5 +360,8 @@
     <Image Include="res\createco.bmp">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="res\createst.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

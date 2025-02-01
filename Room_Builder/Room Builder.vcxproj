@@ -265,6 +265,7 @@
     <Image Include="res\bitmap1.bmp" />
     <Image Include="res\cone.ico" />
     <Image Include="res\createco.bmp" />
+    <Image Include="res\createst.bmp" />
     <Image Include="res\cube.ico" />
     <Image Include="res\cylinder.bmp" />
     <Image Include="res\cylinder.ico" />
