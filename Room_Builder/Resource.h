@@ -185,7 +185,6 @@
 #define IDC_ED_STAIRS_WIDTH             1140
 #define IDC_ED_STAIRS_LENGTH            1141
 #define IDC_ED_STAIRS_STEPS             1142
-#define IDC_CHECK1                      1143
 #define IDC_CHECK3                      1144
 #define IDC_STAIRS_EDITNAME             1145
 #define IDC_CK_STAIRS_WORLDCENTRE       1146
@@ -199,7 +198,6 @@
 #define IDC_ST_STAIRS_POSITION          1154
 #define IDC_BT_STAIRS_STAIRS            1155
 #define IDC_BT_STAIRS_RAMP              1156
-#define IDC_BUTTON4                     1157
 #define IDC_BT_STAIRS_CUT               1157
 #define ID_DEBUG_GENERAL                32771
 #define ID_TEMPLATES_INSERT             32772

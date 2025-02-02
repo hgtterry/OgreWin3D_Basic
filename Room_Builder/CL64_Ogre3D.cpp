@@ -226,8 +226,10 @@ void CL64_Ogre3D::Export_To_Ogre3D()
 	
 	App->CL_Ogre->mSceneMgr->destroyManualObject(Export_Manual);
 
+	//Ogre::MeshVersion::
+
 	Ogre::MeshSerializer* ms = new Ogre::MeshSerializer();
-	ms->exportMesh(mesh.get(), mExport_PathAndFile_Mesh);
+	ms->exportMesh(mesh.get(), mExport_PathAndFile_Mesh, Ogre::MeshVersion::MESH_VERSION_LATEST);
 	delete(ms);
 
 	char File[MAX_PATH];
