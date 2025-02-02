@@ -249,7 +249,7 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Headers(HWND hDlg, UINT message, WPARAM wPa
 			App->CL_Top_Tabs->Reset_Brush_Buttons();
 			App->CL_Top_Tabs->flag_Brush_Move = 1;
 
-			App->CL_Top_Tabs->Deselect_Faces();
+			App->CL_Top_Tabs->Deselect_Faces_Dlg_Buttons();
 
 			RedrawWindow(App->CL_Top_Tabs->Headers_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
@@ -268,7 +268,7 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Headers(HWND hDlg, UINT message, WPARAM wPa
 			App->CL_Top_Tabs->Reset_Brush_Buttons();
 			App->CL_Top_Tabs->flag_Brush_Scale = 1;
 
-			App->CL_Top_Tabs->Deselect_Faces();
+			App->CL_Top_Tabs->Deselect_Faces_Dlg_Buttons();
 
 			RedrawWindow(App->CL_Top_Tabs->Headers_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			
@@ -279,7 +279,7 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Headers(HWND hDlg, UINT message, WPARAM wPa
 
 		if (LOWORD(wParam) == IDC_BT_ALLFACES)
 		{
-			App->CL_Top_Tabs->Deselect_Faces();
+			App->CL_Top_Tabs->Deselect_Faces_Dlg_Buttons();
 			App->CL_Top_Tabs->flag_All_Faces = 1;
 
 			RedrawWindow(App->CL_Top_Tabs->Headers_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
@@ -295,7 +295,7 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Headers(HWND hDlg, UINT message, WPARAM wPa
 		{
 			if (App->CL_SelFaceList->SelFaceList_GetSize(App->CL_Doc->pSelFaces) == 0)
 			{
-				App->CL_Top_Tabs->Deselect_Faces();
+				App->CL_Top_Tabs->Deselect_Faces_Dlg_Buttons();
 				App->CL_Top_Tabs->flag_Next_Face = 1;
 				RedrawWindow(App->CL_Top_Tabs->Headers_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
@@ -305,7 +305,7 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Headers(HWND hDlg, UINT message, WPARAM wPa
 			}
 			else
 			{
-				App->CL_Top_Tabs->Deselect_Faces();
+				App->CL_Top_Tabs->Deselect_Faces_Dlg_Buttons();
 				App->CL_Top_Tabs->flag_Next_Face = 1;
 				RedrawWindow(App->CL_Top_Tabs->Headers_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
@@ -323,7 +323,7 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Headers(HWND hDlg, UINT message, WPARAM wPa
 		{
 			if (App->CL_SelFaceList->SelFaceList_GetSize(App->CL_Doc->pSelFaces) == 0)
 			{
-				App->CL_Top_Tabs->Deselect_Faces();
+				App->CL_Top_Tabs->Deselect_Faces_Dlg_Buttons();
 				App->CL_Top_Tabs->flag_Prev_Face = 1;
 				RedrawWindow(App->CL_Top_Tabs->Headers_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
@@ -332,7 +332,7 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Headers(HWND hDlg, UINT message, WPARAM wPa
 			}
 			else
 			{
-				App->CL_Top_Tabs->Deselect_Faces();
+				App->CL_Top_Tabs->Deselect_Faces_Dlg_Buttons();
 				App->CL_Top_Tabs->flag_Prev_Face = 1;
 				RedrawWindow(App->CL_Top_Tabs->Headers_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
@@ -409,9 +409,9 @@ void CL64_Top_Tabs::Reset_Brush_Buttons()
 }
 
 // *************************************************************************
-// *			Deselect_Faces:- Terry and Hazel Flanigan 2025			   *
+// *	Deselect_Faces_Dlg_Buttons:- Terry and Hazel Flanigan 2025		   *
 // *************************************************************************
-void CL64_Top_Tabs::Deselect_Faces()
+void CL64_Top_Tabs::Deselect_Faces_Dlg_Buttons()
 {
 	flag_All_Faces = 0;
 	flag_Next_Face = 0;

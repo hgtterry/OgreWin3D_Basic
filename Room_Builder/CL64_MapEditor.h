@@ -47,6 +47,7 @@ public:
 	void Init_Views();
 	void Render_RenderBrushFacesOrtho(const ViewVars* Cam, Brush* b, HDC ViewDC);
 	void Render_RenderBrushSelFacesOrtho(ViewVars* Cam, Brush* b, HDC ViewDC);
+	void Reset_Views();
 
 	HWND Main_Dlg_Hwnd;
 	HWND Bottom_Right_Hwnd;

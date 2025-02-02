@@ -121,6 +121,15 @@ CL64_MapEditor::~CL64_MapEditor()
 }
 
 // *************************************************************************
+// *	  			Reset_Views:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void CL64_MapEditor::Reset_Views()
+{
+	App->CL_MapEditor->Init_Views();
+	App->CL_MapEditor->Resize_Windows(Main_Dlg_Hwnd, nleftWnd_width, nleftWnd_Depth);
+}
+
+// *************************************************************************
 // *	  			Init_Views:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
 void CL64_MapEditor::Init_Views()
@@ -1096,6 +1105,7 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Bottom_Right_Ogre(HWND hDlg, UINT message,
 			ReleaseCapture();
 			App->CL_Ogre->Ogre3D_Listener->flag_LeftMouseDown = 0;
 			SetCursor(App->CUR);
+			App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
 			return 1;
 		}
 

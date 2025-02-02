@@ -274,6 +274,21 @@ void CL64_Properties_Tabs::Select_Textures_Tab()
 }
 
 // *************************************************************************
+// *	  	Select_Templates_Tab:- Terry and Hazel Flanigan 2025			   *
+// *************************************************************************
+void CL64_Properties_Tabs::Select_Templates_Tab()
+{
+	if (Tabs_Control_Hwnd && flag_Tabs_Dlg_Active == 1)
+	{
+		Hide_Dialogs();
+		App->CL_Properties_Templates->Show_TemplatesDialog(true);
+		flag_Tab_Templates = 1;
+
+		RedrawWindow(Tabs_Control_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+	}
+}
+
+// *************************************************************************
 // *	  	Enable_Tabs_Dlg:- Terry and Hazel Flanigan 2025				   *
 // *************************************************************************
 void CL64_Properties_Tabs::Enable_Tabs_Dlg(bool Enable)

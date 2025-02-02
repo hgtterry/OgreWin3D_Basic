@@ -34,7 +34,7 @@ public:
 	void Enable_Brush_Options_Buttons(bool Enable, bool Active);
 	void Enable_Select_Button(bool Enable, bool Active);
 	void Enable_Move_Button(bool Enable, bool Active);
-	void Deselect_Faces();
+	void Deselect_Faces_Dlg_Buttons();
 
 	HWND Headers_hWnd;
 
