@@ -39,6 +39,9 @@ CL64_Export::CL64_Export()
 	DeskTop_Folder[0] = 0;
 
 	flag_Build_Edge_List = 1;
+
+	mOgre_Version = Enums::Export_Ogre_Latest;
+
 }
 
 CL64_Export::~CL64_Export()
@@ -80,6 +83,10 @@ LRESULT CALLBACK CL64_Export::Proc_Ogre_Export_Dlg(HWND hDlg, UINT message, WPAR
 		SendDlgItemMessage(hDlg, IDC_CK_CREATE_SUBDIR, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_CK_BUILDEDGELIST, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
+		SendDlgItemMessage(hDlg, IDC_CK_VLATEST, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_CK_VL18, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_CK_VL17, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
 		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
@@ -105,6 +112,12 @@ LRESULT CALLBACK CL64_Export::Proc_Ogre_Export_Dlg(HWND hDlg, UINT message, WPAR
 			SendMessage(Temp, BM_SETCHECK, 0, 0);
 		}
 		
+		if (App->CL_Export->mOgre_Version == Enums::Export_Ogre_Latest)
+		{
+			Temp = GetDlgItem(hDlg, IDC_CK_VLATEST);
+			SendMessage(Temp, BM_SETCHECK, 1, 0);
+		}
+
 		return TRUE;
 	}
 
@@ -179,6 +192,29 @@ LRESULT CALLBACK CL64_Export::Proc_Ogre_Export_Dlg(HWND hDlg, UINT message, WPAR
 			return (UINT)App->AppBackground;
 		}
 		
+		if (GetDlgItem(hDlg, IDC_CK_VLATEST) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		if (GetDlgItem(hDlg, IDC_CK_VL18) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		if (GetDlgItem(hDlg, IDC_CK_VL17) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
 		if (GetDlgItem(hDlg, IDC_CK_CREATE_SUBDIR) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 0, 0));
@@ -302,6 +338,24 @@ LRESULT CALLBACK CL64_Export::Proc_Ogre_Export_Dlg(HWND hDlg, UINT message, WPAR
 				return 1;
 			}
 
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_CK_VLATEST)
+		{
+			App->CL_Export->mOgre_Version = Enums::Export_Ogre_Latest;
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_CK_VL18)
+		{
+			App->CL_Export->mOgre_Version = Enums::Export_Ogre_18;
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_CK_VL17)
+		{
+			App->CL_Export->mOgre_Version = Enums::Export_Ogre_17;
 			return TRUE;
 		}
 

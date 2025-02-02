@@ -60,4 +60,11 @@ namespace Enums
 		UpdateViews_3D = 2,
 		UpdateViews_All = 3
 	};
+
+	enum Export_Ogre
+	{
+		Export_Ogre_Latest = 0,
+		Export_Ogre_18 = 1,
+		Export_Ogre_17 = 2
+	};
 }

@@ -39,6 +39,8 @@ public:
 
 	bool flag_Build_Edge_List;
 
+	int mOgre_Version;
+
 private:
 	static LRESULT CALLBACK Proc_Ogre_Export_Dlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 

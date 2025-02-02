@@ -45,7 +45,6 @@
 #define IDD_CREATE_STAIRCASE            160
 #define IDB_CREATESTAIRS                161
 #define IDB_CREATERAMP                  162
-#define IDB_BITMAP1                     163
 #define IDB_HOLLOWBOX                   163
 #define IDC_BANNER                      1000
 #define IDC_STTEXT                      1001
@@ -200,7 +199,11 @@
 #define IDC_ST_STAIRS_POSITION          1154
 #define IDC_BT_STAIRS_STAIRS            1155
 #define IDC_BT_STAIRS_RAMP              1156
+#define IDC_CK_VLATEST                  1156
 #define IDC_BT_STAIRS_CUT               1157
+#define IDC_CK_VL18                     1157
+#define IDC_CHECK4                      1159
+#define IDC_CK_VL17                     1159
 #define ID_DEBUG_GENERAL                32771
 #define ID_TEMPLATES_INSERT             32772
 #define ID_BRUSH_SELECT                 32773
@@ -238,7 +241,7 @@
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        164
 #define _APS_NEXT_COMMAND_VALUE         32795
-#define _APS_NEXT_CONTROL_VALUE         1156
+#define _APS_NEXT_CONTROL_VALUE         1157
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif
