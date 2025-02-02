@@ -39,6 +39,9 @@ CL64_Export::CL64_Export()
 	DeskTop_Folder[0] = 0;
 
 	flag_Build_Edge_List = 1;
+	flag_Version_Latest = 1;
+	flag_Version_18 = 0;
+	flag_Version_17 = 0;
 
 	mOgre_Version = Enums::Export_Ogre_Latest;
 
@@ -83,9 +86,10 @@ LRESULT CALLBACK CL64_Export::Proc_Ogre_Export_Dlg(HWND hDlg, UINT message, WPAR
 		SendDlgItemMessage(hDlg, IDC_CK_CREATE_SUBDIR, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_CK_BUILDEDGELIST, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
-		SendDlgItemMessage(hDlg, IDC_CK_VLATEST, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_CK_VL18, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_CK_VL17, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_ST_VERSION, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_VLATEST, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_VL18, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_VL17, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
@@ -112,11 +116,11 @@ LRESULT CALLBACK CL64_Export::Proc_Ogre_Export_Dlg(HWND hDlg, UINT message, WPAR
 			SendMessage(Temp, BM_SETCHECK, 0, 0);
 		}
 		
-		if (App->CL_Export->mOgre_Version == Enums::Export_Ogre_Latest)
+		/*if (App->CL_Export->mOgre_Version == Enums::Export_Ogre_Latest)
 		{
 			Temp = GetDlgItem(hDlg, IDC_CK_VLATEST);
 			SendMessage(Temp, BM_SETCHECK, 1, 0);
-		}
+		}*/
 
 		return TRUE;
 	}
@@ -192,29 +196,6 @@ LRESULT CALLBACK CL64_Export::Proc_Ogre_Export_Dlg(HWND hDlg, UINT message, WPAR
 			return (UINT)App->AppBackground;
 		}
 		
-		if (GetDlgItem(hDlg, IDC_CK_VLATEST) == (HWND)lParam)
-		{
-			SetBkColor((HDC)wParam, RGB(0, 0, 0));
-			SetTextColor((HDC)wParam, RGB(0, 0, 0));
-			SetBkMode((HDC)wParam, TRANSPARENT);
-			return (UINT)App->AppBackground;
-		}
-
-		if (GetDlgItem(hDlg, IDC_CK_VL18) == (HWND)lParam)
-		{
-			SetBkColor((HDC)wParam, RGB(0, 0, 0));
-			SetTextColor((HDC)wParam, RGB(0, 0, 0));
-			SetBkMode((HDC)wParam, TRANSPARENT);
-			return (UINT)App->AppBackground;
-		}
-
-		if (GetDlgItem(hDlg, IDC_CK_VL17) == (HWND)lParam)
-		{
-			SetBkColor((HDC)wParam, RGB(0, 0, 0));
-			SetTextColor((HDC)wParam, RGB(0, 0, 0));
-			SetBkMode((HDC)wParam, TRANSPARENT);
-			return (UINT)App->AppBackground;
-		}
 		if (GetDlgItem(hDlg, IDC_CK_CREATE_SUBDIR) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 0, 0));
@@ -231,6 +212,14 @@ LRESULT CALLBACK CL64_Export::Proc_Ogre_Export_Dlg(HWND hDlg, UINT message, WPAR
 			return (UINT)App->AppBackground;
 		}
 		
+		if (GetDlgItem(hDlg, IDC_ST_VERSION) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
 		return FALSE;
 	}
 
@@ -249,6 +238,27 @@ LRESULT CALLBACK CL64_Export::Proc_Ogre_Export_Dlg(HWND hDlg, UINT message, WPAR
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BT_VLATEST)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->CL_Export->flag_Version_Latest);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BT_VL18)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->CL_Export->flag_Version_18);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BT_VL17)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->CL_Export->flag_Version_17);
 			return CDRF_DODEFAULT;
 		}
 		
@@ -341,21 +351,42 @@ LRESULT CALLBACK CL64_Export::Proc_Ogre_Export_Dlg(HWND hDlg, UINT message, WPAR
 			return TRUE;
 		}
 
-		if (LOWORD(wParam) == IDC_CK_VLATEST)
+		if (LOWORD(wParam) == IDC_BT_VLATEST)
 		{
 			App->CL_Export->mOgre_Version = Enums::Export_Ogre_Latest;
+
+			App->CL_Export->flag_Version_Latest = 1;
+			App->CL_Export->flag_Version_18 = 0;
+			App->CL_Export->flag_Version_17 = 0;
+
+			RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
 			return TRUE;
 		}
 
-		if (LOWORD(wParam) == IDC_CK_VL18)
+		if (LOWORD(wParam) == IDC_BT_VL18)
 		{
 			App->CL_Export->mOgre_Version = Enums::Export_Ogre_18;
+
+			App->CL_Export->flag_Version_Latest = 0;
+			App->CL_Export->flag_Version_18 = 1;
+			App->CL_Export->flag_Version_17 = 0;
+
+			RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
 			return TRUE;
 		}
 
-		if (LOWORD(wParam) == IDC_CK_VL17)
+		if (LOWORD(wParam) == IDC_BT_VL17)
 		{
 			App->CL_Export->mOgre_Version = Enums::Export_Ogre_17;
+
+			App->CL_Export->flag_Version_Latest = 0;
+			App->CL_Export->flag_Version_18 = 0;
+			App->CL_Export->flag_Version_17 = 1;
+
+			RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
 			return TRUE;
 		}
 

@@ -38,6 +38,9 @@ public:
 	char DeskTop_Folder[MAX_PATH];
 
 	bool flag_Build_Edge_List;
+	bool flag_Version_Latest;
+	bool flag_Version_18;
+	bool flag_Version_17;
 
 	int mOgre_Version;
 
