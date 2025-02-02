@@ -33,6 +33,10 @@ CL64_Top_Tabs::CL64_Top_Tabs(void)
 	flag_Brush_Select = 1;
 	flag_Brush_Move = 0;
 	flag_Brush_Scale = 0;
+
+	flag_All_Faces = 0;
+	flag_Next_Face = 0;
+	flag_Prev_Face = 0;
 }
 
 CL64_Top_Tabs::~CL64_Top_Tabs(void)
@@ -56,11 +60,13 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Headers(HWND hDlg, UINT message, WPARAM wPa
 	{
 	case WM_INITDIALOG:
 	{
+		SendDlgItemMessage(hDlg, IDC_ST_HEADER_BRUSHES, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_BRUSH_SELECT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_BRUSH_MOVE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_BRUSH_SCALE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_BRUSH_SHEAR, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
+		SendDlgItemMessage(hDlg, IDC_ST_HEADER_FACES, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_ALLFACES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_NEXTFACE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_PREVFACE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
@@ -70,6 +76,22 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Headers(HWND hDlg, UINT message, WPARAM wPa
 
 	case WM_CTLCOLORSTATIC:
 	{
+		if (GetDlgItem(hDlg, IDC_ST_HEADER_BRUSHES) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		if (GetDlgItem(hDlg, IDC_ST_HEADER_FACES) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+		
 		return FALSE;
 	}
 
@@ -161,7 +183,7 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Headers(HWND hDlg, UINT message, WPARAM wPa
 			}
 			else
 			{
-				App->Custom_Button_Normal(item);
+				App->Custom_Button_Toggle_Tabs(item, App->CL_Top_Tabs->flag_All_Faces);
 			}
 
 			return CDRF_DODEFAULT;
@@ -178,7 +200,7 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Headers(HWND hDlg, UINT message, WPARAM wPa
 			}
 			else
 			{
-				App->Custom_Button_Normal(item);
+				App->Custom_Button_Toggle_Tabs(item, App->CL_Top_Tabs->flag_Next_Face);
 			}
 
 			return CDRF_DODEFAULT;
@@ -195,7 +217,7 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Headers(HWND hDlg, UINT message, WPARAM wPa
 			}
 			else
 			{
-				App->Custom_Button_Normal(item);
+				App->Custom_Button_Toggle_Tabs(item, App->CL_Top_Tabs->flag_Prev_Face);
 			}
 
 			return CDRF_DODEFAULT;
@@ -221,8 +243,14 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Headers(HWND hDlg, UINT message, WPARAM wPa
 		{
 			SetCursor(App->CL_MapEditor->hcBoth);
 
+			App->CL_Doc->ResetAllSelectedFaces();;
+			App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
+
 			App->CL_Top_Tabs->Reset_Brush_Buttons();
 			App->CL_Top_Tabs->flag_Brush_Move = 1;
+
+			App->CL_Top_Tabs->Deselect_Faces();
+
 			RedrawWindow(App->CL_Top_Tabs->Headers_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
 			App->CL_Doc->mCurrentTool = CURTOOL_NONE;
@@ -234,8 +262,14 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Headers(HWND hDlg, UINT message, WPARAM wPa
 		{
 			SetCursor(App->CL_MapEditor->hcBoth);
 
+			App->CL_Doc->ResetAllSelectedFaces();;
+			App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
+
 			App->CL_Top_Tabs->Reset_Brush_Buttons();
 			App->CL_Top_Tabs->flag_Brush_Scale = 1;
+
+			App->CL_Top_Tabs->Deselect_Faces();
+
 			RedrawWindow(App->CL_Top_Tabs->Headers_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			
 			App->CL_Doc->mCurrentTool = CURTOOL_NONE;
@@ -245,6 +279,11 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Headers(HWND hDlg, UINT message, WPARAM wPa
 
 		if (LOWORD(wParam) == IDC_BT_ALLFACES)
 		{
+			App->CL_Top_Tabs->Deselect_Faces();
+			App->CL_Top_Tabs->flag_All_Faces = 1;
+
+			RedrawWindow(App->CL_Top_Tabs->Headers_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
 			App->CL_Doc->SelectAllFacesInBrushes();
 			App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
 			App->CL_Properties_Tabs->Select_Textures_Tab();
@@ -256,11 +295,20 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Headers(HWND hDlg, UINT message, WPARAM wPa
 		{
 			if (App->CL_SelFaceList->SelFaceList_GetSize(App->CL_Doc->pSelFaces) == 0)
 			{
+				App->CL_Top_Tabs->Deselect_Faces();
+				App->CL_Top_Tabs->flag_Next_Face = 1;
+				RedrawWindow(App->CL_Top_Tabs->Headers_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
 				App->CL_Doc->SelectAllFacesInBrushes();
 				App->CL_Face->Select_Next_Face();
+
 			}
 			else
 			{
+				App->CL_Top_Tabs->Deselect_Faces();
+				App->CL_Top_Tabs->flag_Next_Face = 1;
+				RedrawWindow(App->CL_Top_Tabs->Headers_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
 				App->CL_Face->Select_Next_Face();
 			}
 
@@ -275,11 +323,19 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Headers(HWND hDlg, UINT message, WPARAM wPa
 		{
 			if (App->CL_SelFaceList->SelFaceList_GetSize(App->CL_Doc->pSelFaces) == 0)
 			{
+				App->CL_Top_Tabs->Deselect_Faces();
+				App->CL_Top_Tabs->flag_Prev_Face = 1;
+				RedrawWindow(App->CL_Top_Tabs->Headers_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
 				App->CL_Doc->SelectAllFacesInBrushes();
 				App->CL_Face->Select_Previous_Face();
 			}
 			else
 			{
+				App->CL_Top_Tabs->Deselect_Faces();
+				App->CL_Top_Tabs->flag_Prev_Face = 1;
+				RedrawWindow(App->CL_Top_Tabs->Headers_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
 				App->CL_Face->Select_Previous_Face();
 			}
 
@@ -348,6 +404,18 @@ void CL64_Top_Tabs::Reset_Brush_Buttons()
 	flag_Brush_Select = 0;
 	flag_Brush_Move = 0;
 	flag_Brush_Scale = 0;
+
+	RedrawWindow(Headers_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+}
+
+// *************************************************************************
+// *			Deselect_Faces:- Terry and Hazel Flanigan 2025			   *
+// *************************************************************************
+void CL64_Top_Tabs::Deselect_Faces()
+{
+	flag_All_Faces = 0;
+	flag_Next_Face = 0;
+	flag_Prev_Face = 0;
 
 	RedrawWindow(Headers_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 }

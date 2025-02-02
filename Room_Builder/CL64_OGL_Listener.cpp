@@ -64,8 +64,8 @@ CL64_OGL_Listener::CL64_OGL_Listener(void)
 	mBrushCount = 0;
 	mSubBrushCount = 0;
 
-	Flag_Show_Selected_Brush = 0;
-	Flag_Show_Selected_Face = 0;
+	Flag_Show_Selected_Brush = 1;
+	Flag_Show_Selected_Face = 1;
 }
 
 CL64_OGL_Listener::~CL64_OGL_Listener(void)

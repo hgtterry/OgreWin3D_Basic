@@ -72,6 +72,8 @@
 #define IDC_BT_BRUSH_SCALE              1023
 #define IDC_BT_BRUSH_SHEAR              1024
 #define IDC_BT_BRUSH_DEBUG              1025
+#define IDC_BT_BRUSH_MOVE2              1025
+#define IDC_BT_BRUSH_ROTATE             1025
 #define IDC_BRUSH_CUBE_PRIMITIVE        1026
 #define IDC_BT_BOXSOLID                 1027
 #define IDC_BT_BOXHOLLOW                1028
@@ -203,7 +205,13 @@
 #define IDC_BT_VLATEST                  1158
 #define IDC_ST_VERSION                  1159
 #define IDC_BT_VL18                     1160
+#define IDC_ST_HEADER_FACES             1160
 #define IDC_BT_VL17                     1161
+#define IDC_ST_HEADER_BRUSHES           1161
+#define IDC_BUTTON1                     1162
+#define IDC_BUTTON2                     1163
+#define IDC_BUTTON3                     1164
+#define IDC_BUTTON4                     1165
 #define ID_DEBUG_GENERAL                32771
 #define ID_TEMPLATES_INSERT             32772
 #define ID_BRUSH_SELECT                 32773
@@ -241,7 +249,7 @@
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        164
 #define _APS_NEXT_COMMAND_VALUE         32795
-#define _APS_NEXT_CONTROL_VALUE         1160
+#define _APS_NEXT_CONTROL_VALUE         1163
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif
