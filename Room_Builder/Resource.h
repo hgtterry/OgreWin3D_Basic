@@ -44,6 +44,9 @@
 #define IDB_CREATECONE                  159
 #define IDD_CREATE_STAIRCASE            160
 #define IDB_CREATESTAIRS                161
+#define IDB_CREATERAMP                  162
+#define IDB_BITMAP1                     163
+#define IDB_HOLLOWBOX                   163
 #define IDC_BANNER                      1000
 #define IDC_STTEXT                      1001
 #define IDC_STMESSAGE                   1002
@@ -185,7 +188,6 @@
 #define IDC_ED_STAIRS_WIDTH             1140
 #define IDC_ED_STAIRS_LENGTH            1141
 #define IDC_ED_STAIRS_STEPS             1142
-#define IDC_CHECK3                      1144
 #define IDC_STAIRS_EDITNAME             1145
 #define IDC_CK_STAIRS_WORLDCENTRE       1146
 #define IDC_CK_STAIRS_CAMPOSITION       1147
@@ -234,7 +236,7 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
-#define _APS_NEXT_RESOURCE_VALUE        162
+#define _APS_NEXT_RESOURCE_VALUE        164
 #define _APS_NEXT_COMMAND_VALUE         32795
 #define _APS_NEXT_CONTROL_VALUE         1156
 #define _APS_NEXT_SYMED_VALUE           110

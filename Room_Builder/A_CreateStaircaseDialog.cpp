@@ -316,6 +316,9 @@ LRESULT CALLBACK A_CreateStaircaseDialog::Proc_CreateStaircase(HWND hDlg, UINT m
 
 			if (LOWORD(wParam) == IDC_BT_STAIRS_STAIRS)
 			{
+				HWND Temp = GetDlgItem(hDlg, IDC_ST_PIC);
+				SendMessage(Temp, STM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_Stairs_Bmp);
+
 				App->CL_CreateStaircaseDialog->m_MakeRamp = 0;
 
 				App->CL_CreateStaircaseDialog->flag_Stairs_Flag_Dlg = 1;
@@ -328,6 +331,9 @@ LRESULT CALLBACK A_CreateStaircaseDialog::Proc_CreateStaircase(HWND hDlg, UINT m
 
 			if (LOWORD(wParam) == IDC_BT_STAIRS_RAMP)
 			{
+				HWND Temp = GetDlgItem(hDlg, IDC_ST_PIC);
+				SendMessage(Temp, STM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_Ramp_Bmp);
+
 				App->CL_CreateStaircaseDialog->m_MakeRamp = 1;
 
 				App->CL_CreateStaircaseDialog->flag_Stairs_Flag_Dlg = 0;

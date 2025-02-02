@@ -363,5 +363,11 @@
     <Image Include="res\createst.bmp">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="res\Ramp.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\hollowbo.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

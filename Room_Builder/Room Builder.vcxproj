@@ -269,6 +269,8 @@
     <Image Include="res\cube.ico" />
     <Image Include="res\cylinder.bmp" />
     <Image Include="res\cylinder.ico" />
+    <Image Include="res\hollowbo.bmp" />
+    <Image Include="res\Ramp.bmp" />
     <Image Include="res\solidbox.bmp" />
     <Image Include="res\sphere.ico" />
     <Image Include="res\stairs.ico" />

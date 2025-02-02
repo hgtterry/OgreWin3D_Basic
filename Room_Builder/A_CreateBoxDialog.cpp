@@ -308,8 +308,8 @@ LRESULT CALLBACK A_CreateBoxDialog::Proc_CreateBox(HWND hDlg, UINT message, WPAR
 	{
 		if (LOWORD(wParam) == IDC_BT_BOXSOLID)
 		{
-			//HWND Temp = GetDlgItem(hDlg, IDC_PICTURE);
-			//SendMessage(Temp, STM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_SolidBox_Bmp);
+			HWND Temp = GetDlgItem(hDlg, IDC_PICTURE);
+			SendMessage(Temp, STM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_SolidBox_Bmp);
 
 			App->CL_CreateBoxDialog->Zero_Dlg_Flags(hDlg);
 			App->CL_CreateBoxDialog->m_Solid = 0;
@@ -321,8 +321,8 @@ LRESULT CALLBACK A_CreateBoxDialog::Proc_CreateBox(HWND hDlg, UINT message, WPAR
 
 		if (LOWORD(wParam) == IDC_BT_BOXHOLLOW)
 		{
-			//HWND Temp = GetDlgItem(hDlg, IDC_PICTURE);
-			//SendMessage(Temp, STM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_HollowBox_Bmp);
+			HWND Temp = GetDlgItem(hDlg, IDC_PICTURE);
+			SendMessage(Temp, STM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_HollowBox_Bmp);
 			
 			App->CL_CreateBoxDialog->Zero_Dlg_Flags(hDlg);
 			App->CL_CreateBoxDialog->m_Solid = 1;

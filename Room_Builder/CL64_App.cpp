@@ -89,13 +89,19 @@ CL64_App::CL64_App(void)
 	Font_Arial20 = 0;
 	Font_Banner = 0;
 
+	Hnd_SolidBox_Bmp = NULL;
+	Hnd_HollowBox_Bmp = NULL;
+
+	Hnd_Stairs_Bmp = NULL;
+	Hnd_Ramp_Bmp = NULL;
+
 	Hnd_Box_Icon =	NULL;
 	Hnd_Cyl_Icon =	NULL;
 	Hnd_Cone_Icon = NULL;
 	Hnd_Arch_Icon = NULL;
 	Hnd_Spheriod_Icon = NULL;
 	Hnd_Stairs_Icon = NULL;
-
+	
 	flag_Debug_App = 0;
 	flag_OgreStarted = 0;
 
@@ -200,9 +206,6 @@ void CL64_App::SetBrushes_Fonts(void)
 	Font_Arial20 = CreateFont(-20, 0, 0, 0, 0, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Arial");
 	Font_Banner = CreateFont(-30, 0, 0, 0, FW_BOLD, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Aerial Black");
 
-	//Hnd_Box_Icon = LoadIcon(hInst, MAKEINTRESOURCE(IDI_CUBE_PRIMITIVE));
-
-	//Hnd_Box_Icon = LoadImage(hInst, MAKEINTRESOURCE(IDI_CUBE_PRIMITIVE), IMAGE_ICON, 32, 32, LR_DEFAULTCOLOR | LR_SHARED | LR_DEFAULTSIZE);
 }
 
 // *************************************************************************
@@ -210,10 +213,13 @@ void CL64_App::SetBrushes_Fonts(void)
 // *************************************************************************
 void CL64_App::LoadProgramResource(void)
 {
-	/*Hnd_HollowBox_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_HOLLOWBOX);
+	Hnd_HollowBox_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_HOLLOWBOX);
 	Hnd_SolidBox_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_SOLIDBOX);
 
-	Hnd_HollowSpheroid_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_HOLLOWSPHERE);
+	Hnd_Stairs_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_CREATESTAIRS);
+	Hnd_Ramp_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_CREATERAMP);
+
+	/*Hnd_HollowSpheroid_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_HOLLOWSPHERE);
 	Hnd_SolidSpheroid_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_SOLIDSPHERE);*/
 
 	Hnd_Arch_Icon = LoadIcon(hInst, (LPCTSTR)IDI_ARCH_PRIMITIVE);
