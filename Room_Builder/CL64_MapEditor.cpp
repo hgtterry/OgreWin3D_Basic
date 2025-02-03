@@ -1213,6 +1213,11 @@ void CL64_MapEditor::On_Mouse_Move(POINT CursorPosition, HWND hDlg)
 				App->CL_Doc->MoveSelectedBrushes(&dv);
 				Draw_Screen(hDlg);
 			}
+
+			if (App->CL_Top_Tabs->flag_Brush_Rotate == 1)
+			{
+				App->Flash_Window();
+			}
 		}
 
 		if (App->CL_Doc->mModeTool == ID_TOOLS_BRUSH_SCALEBRUSH)
@@ -1250,7 +1255,6 @@ void CL64_MapEditor::On_Mouse_Move(POINT CursorPosition, HWND hDlg)
 // *************************************************************************
 void CL64_MapEditor::On_Left_Button_Up(POINT CursorPosition)
 {
-
 	if (App->CL_Doc->mModeTool == ID_GENERALSELECT)
 	{
 		App->CL_Doc->SelectOrtho(CursorPosition, Current_View);
@@ -1263,6 +1267,11 @@ void CL64_MapEditor::On_Left_Button_Up(POINT CursorPosition)
 			App->CL_Doc->DoneMovingBrushes();
 			App->CL_Doc->UpdateAllViews(Enums::UpdateViews_All);
 			App->CL_Doc->flag_Is_Modified = 1;
+		}
+
+		if (App->CL_Top_Tabs->flag_Brush_Rotate == 1)
+		{
+			App->Flash_Window();
 		}
 
 	}
@@ -1320,6 +1329,11 @@ void CL64_MapEditor::On_Left_Button_Down(POINT CursorPosition, HWND hDlg)
 
 			App->CL_Maths->Vector3_Clear(&App->CL_Doc->FinalPos);
 			App->CL_Doc->TempCopySelectedBrushes();
+		}
+
+		if (App->CL_Top_Tabs->flag_Brush_Rotate == 1)
+		{
+			App->Flash_Window();
 		}
 	}
 

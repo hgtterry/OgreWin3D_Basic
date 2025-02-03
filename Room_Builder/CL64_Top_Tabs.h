@@ -37,6 +37,7 @@ public:
 	void Deselect_Faces_Dlg_Buttons();
 
 	bool flag_Brush_Move;
+	bool flag_Brush_Rotate;
 
 	HWND Headers_hWnd;
 

@@ -31,7 +31,10 @@ CL64_Top_Tabs::CL64_Top_Tabs(void)
 {
 	Headers_hWnd = nullptr;
 	flag_Brush_Select = 1;
+
 	flag_Brush_Move = 0;
+	flag_Brush_Rotate = 0;
+
 	flag_Brush_Scale = 0;
 
 	flag_All_Faces = 0;
@@ -62,7 +65,9 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Headers(HWND hDlg, UINT message, WPARAM wPa
 	{
 		SendDlgItemMessage(hDlg, IDC_ST_HEADER_BRUSHES, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_BRUSH_SELECT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
 		SendDlgItemMessage(hDlg, IDC_BT_BRUSH_MOVE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_BRUSH_ROTATE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_BRUSH_SCALE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_BRUSH_SHEAR, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
@@ -138,6 +143,23 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Headers(HWND hDlg, UINT message, WPARAM wPa
 			return CDRF_DODEFAULT;
 		}
 
+		if (some_item->idFrom == IDC_BT_BRUSH_ROTATE)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_BRUSH_ROTATE));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
+			else
+			{
+				App->Custom_Button_Toggle_Tabs(item, App->CL_Top_Tabs->flag_Brush_Rotate);
+			}
+
+			return CDRF_DODEFAULT;
+		}
+		
 		if (some_item->idFrom == IDC_BT_BRUSH_SCALE)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
@@ -258,6 +280,25 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Headers(HWND hDlg, UINT message, WPARAM wPa
 			return TRUE;
 		}
 
+		if (LOWORD(wParam) == IDC_BT_BRUSH_ROTATE)
+		{
+			SetCursor(App->CL_MapEditor->hcBoth);
+
+			App->CL_Doc->ResetAllSelectedFaces();;
+			App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
+
+			App->CL_Top_Tabs->Reset_Brush_Buttons();
+			App->CL_Top_Tabs->flag_Brush_Rotate = 1;
+
+			App->CL_Top_Tabs->Deselect_Faces_Dlg_Buttons();
+
+			RedrawWindow(App->CL_Top_Tabs->Headers_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+			App->CL_Doc->mCurrentTool = CURTOOL_NONE;
+			App->CL_Doc->mModeTool = ID_TOOLS_BRUSH_MOVEROTATEBRUSH;
+			return TRUE;
+		}
+
 		if (LOWORD(wParam) == IDC_BT_BRUSH_SCALE)
 		{
 			SetCursor(App->CL_MapEditor->hcBoth);
@@ -368,6 +409,9 @@ void CL64_Top_Tabs::Enable_Brush_Options_Buttons(bool Enable, bool Active)
 	EnableWindow(GetDlgItem(Headers_hWnd, IDC_BT_BRUSH_SCALE), Enable);
 	flag_Brush_Scale = Active;
 
+	EnableWindow(GetDlgItem(Headers_hWnd, IDC_BT_BRUSH_ROTATE), Enable);
+	flag_Brush_Scale = Active;
+
 	EnableWindow(GetDlgItem(Headers_hWnd, IDC_BT_ALLFACES), Enable);
 	//flag_Brush_Scale = Active;
 
@@ -403,6 +447,7 @@ void CL64_Top_Tabs::Reset_Brush_Buttons()
 {
 	flag_Brush_Select = 0;
 	flag_Brush_Move = 0;
+	flag_Brush_Rotate = 0;
 	flag_Brush_Scale = 0;
 
 	RedrawWindow(Headers_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
