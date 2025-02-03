@@ -127,6 +127,22 @@ void CL64_MapEditor::Reset_Views()
 {
 	App->CL_MapEditor->Init_Views();
 	App->CL_MapEditor->Resize_Windows(Main_Dlg_Hwnd, nleftWnd_width, nleftWnd_Depth);
+
+	int Count = 0;
+
+	while (Count < 3)
+	{
+		App->CL_MapEditor->VCam[Count]->CamPos.x = 0;
+		App->CL_MapEditor->VCam[Count]->CamPos.y = 0;
+		App->CL_MapEditor->VCam[Count]->CamPos.z = 0;
+
+		App->CL_MapEditor->VCam[Count]->ZoomFactor = 0.3;
+
+		Count++;
+	}
+
+	App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
+
 }
 
 // *************************************************************************
