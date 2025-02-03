@@ -276,7 +276,7 @@ void CL64_File::Start_Load(bool Use_Open_Dialog)
 {
 	if (Use_Open_Dialog == 1)
 	{
-		LPCWSTR mType = L"Mesh Texture File";
+		LPCWSTR mType = L"Mesh Text File";
 		LPCWSTR mExtensions = L"*.mtf";
 
 		bool test = App->CL_File_IO->Open_File((LPCWSTR)mType, (LPCWSTR)mExtensions);
@@ -309,6 +309,7 @@ void CL64_File::Start_Load(bool Use_Open_Dialog)
 		Set_Editor();
 
 		App->CL_Doc->UpdateAllViews(Enums::UpdateViews_All);
+
 		App->Say("File Loaded", App->CL_File->FileName_3dt);
 	}
 	else

@@ -12,6 +12,8 @@ CL64_Render::~CL64_Render(void)
 
 static const T_Vec3	VecOrigin = { 0.0f, 0.0f, 0.0f };
 
+#define PI2				((geFloat)(2.0f * (M_PI)))
+#define ONE_OVER_2PI	((geFloat)(1.0f/(PI2)))
 #define Units_Round(n) ((int)Units_FRound((n)))
 #define Units_Trunc(n) ((int)(n))
 #define Units_FRound(n)	((float)floor((n)+0.5f))
@@ -213,6 +215,39 @@ POINT CL64_Render::Render_OrthoWorldToView(const ViewVars* cv, T_Vec3 const* wp)
 	}
 
 	return sc;
+}
+
+// *************************************************************************
+// *	  				Render_GetXScreenScale							   *
+// *************************************************************************
+float CL64_Render::Render_GetXScreenScale(const ViewVars* v)
+{
+	return	v->XScreenScale;
+}
+
+// *************************************************************************
+// *	  				Render_ViewDeltaToRotation						   *
+// *************************************************************************
+void CL64_Render::Render_ViewDeltaToRotation(const ViewVars* v,const float dx, T_Vec3* VecRotate)
+{
+	float RotationRads;
+
+	RotationRads = (dx) * (ONE_OVER_2PI / Render_GetXScreenScale(v));
+	switch (v->ViewType)
+	{
+	case VIEWTOP:	// +dx = negative rotation about Y
+		App->CL_Maths->Vector3_Set(VecRotate, 0.0f, -RotationRads, 0.0f);
+		break;
+	case VIEWFRONT:  // +dx = negative rotation about Z
+		//disable roll
+		App->CL_Maths->Vector3_Set(VecRotate, 0.0f, 0.0f, -RotationRads);
+		break;
+	case VIEWSIDE:	// +dx = positive rotation about X
+		App->CL_Maths->Vector3_Set(VecRotate, RotationRads, 0.0f, 0.0f);
+		break;
+	default:
+		assert(0);  // can't happen!
+	}
 }
 
 // *************************************************************************

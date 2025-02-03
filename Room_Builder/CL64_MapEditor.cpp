@@ -1205,16 +1205,18 @@ void CL64_MapEditor::On_Mouse_Move(POINT CursorPosition, HWND hDlg)
 		App->CL_Render->Render_ViewToWorld(Current_View, CursorPosition.x, CursorPosition.y, &wp);
 		App->CL_Maths->Vector3_Subtract(&wp, &sp, &dv);
 
-		if (App->CL_Doc->mModeTool == ID_TOOLS_BRUSH_MOVEROTATEBRUSH) //|| (Tool == ID_TOOLS_BRUSH_MOVESELECTEDBRUSHES))
+		if (App->CL_Doc->mModeTool == ID_TOOLS_BRUSH_MOVEROTATEBRUSH)
 		{
-			App->CL_Doc->LockAxis(&dv);
-			App->CL_Doc->MoveSelectedBrushes(&dv);
-			Draw_Screen(hDlg);
+			if (App->CL_Top_Tabs->flag_Brush_Move == 1)
+			{
+				App->CL_Doc->LockAxis(&dv);
+				App->CL_Doc->MoveSelectedBrushes(&dv);
+				Draw_Screen(hDlg);
+			}
 		}
 
-		if (App->CL_Doc->mModeTool == ID_TOOLS_BRUSH_SCALEBRUSH) //|| (Tool == ID_TOOLS_BRUSH_MOVESELECTEDBRUSHES))
+		if (App->CL_Doc->mModeTool == ID_TOOLS_BRUSH_SCALEBRUSH)
 		{
-			//App->Flash_Window();
 			//LockAxisView (&dx, &dy);
 			App->CL_Doc->ScaleSelected(dx, dy);
 
@@ -1256,12 +1258,13 @@ void CL64_MapEditor::On_Left_Button_Up(POINT CursorPosition)
 
 	if (App->CL_Doc->mModeTool == ID_TOOLS_BRUSH_MOVEROTATEBRUSH)
 	{
-		App->CL_Doc->DoneMovingBrushes();
+		if (App->CL_Top_Tabs->flag_Brush_Move == 1)
+		{
+			App->CL_Doc->DoneMovingBrushes();
+			App->CL_Doc->UpdateAllViews(Enums::UpdateViews_All);
+			App->CL_Doc->flag_Is_Modified = 1;
+		}
 
-		App->CL_Doc->UpdateAllViews(Enums::UpdateViews_All);
-
-		//pDoc->SetModifiedFlag();
-		
 	}
 
 	if (App->CL_Doc->mModeTool == ID_TOOLS_BRUSH_SCALEBRUSH)
@@ -1307,14 +1310,17 @@ void CL64_MapEditor::On_Left_Button_Down(POINT CursorPosition, HWND hDlg)
 	GetCursorPos(&App->CL_MapEditor->mStartPoint);
 	ScreenToClient(hDlg, &App->CL_MapEditor->mStartPoint);
 
-	// ---------------------- Rotate Brush
+	// ---------------------- Move Brush
 	if (App->CL_Doc->mModeTool == ID_TOOLS_BRUSH_MOVEROTATEBRUSH) //|| (Tool == ID_TOOLS_BRUSH_MOVESELECTEDBRUSHES))
 	{
-		int CursorSide = 0;
-		App->CL_Doc->sides = SideLookup[CursorSide];
+		if (App->CL_Top_Tabs->flag_Brush_Move == 1)
+		{
+			int CursorSide = 0;
+			App->CL_Doc->sides = SideLookup[CursorSide];
 
-		App->CL_Maths->Vector3_Clear(&App->CL_Doc->FinalPos);
-		App->CL_Doc->TempCopySelectedBrushes();
+			App->CL_Maths->Vector3_Clear(&App->CL_Doc->FinalPos);
+			App->CL_Doc->TempCopySelectedBrushes();
+		}
 	}
 
 	// ---------------------- Scale Brush
