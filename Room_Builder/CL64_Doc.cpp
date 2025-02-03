@@ -920,6 +920,73 @@ void CL64_Doc::MoveSelectedBrushList(SelBrushList* pList, T_Vec3 const* v)
     }
 }
 
+// *************************************************************************
+// *         RotateSelectedBrushes:- Terry and Hazel Flanigan 2025         *
+// *************************************************************************
+void CL64_Doc::RotateSelectedBrushes(T_Vec3 const* v)
+{
+    RotateSelectedBrushList(App->CL_Doc->pTempSelBrushes, v);
+}
+
+// *************************************************************************
+// *         RotateSelectedBrushList:- Terry and Hazel Flanigan 2025       *
+// *************************************************************************
+void CL64_Doc::RotateSelectedBrushList(SelBrushList* pList,T_Vec3 const* v)
+{
+    int i;
+    Matrix3d rm;
+    T_Vec3 RotationPoint;
+    int NumBrushes = App->CL_SelBrushList->SelBrushList_GetSize(pList);
+
+   // App->CLSB_Doc->mLastOp = BRUSH_ROTATE;
+
+    GetRotationPoint(&RotationPoint);
+
+
+    App->CL_Maths->Vector3_Add(v, &App->CL_Doc->FinalRot, &App->CL_Doc->FinalRot);
+    App->CL_Maths->XForm3d_SetEulerAngles(&rm, v);
+
+    for (i = 0; i < NumBrushes; i++)
+    {
+        Brush* pBrush = App->CL_SelBrushList->SelBrushList_GetBrush(pList, i);
+        App->CL_Brush->Brush_Rotate(pBrush, &rm, &RotationPoint);
+    }
+}
+
+// *************************************************************************
+// *         GetRotationPoint:- Terry and Hazel Flanigan 2025              *
+// *************************************************************************
+void CL64_Doc::GetRotationPoint(T_Vec3* pVec)
+{
+   // Model* pModel;
+   // ModelInfo_Type* ModelInfo = Level_GetModelInfo(App->CLSB_Doc->pLevel);
+
+    //pModel = ModelList_GetAnimatingModel(ModelInfo->Models);
+    //if (pModel != NULL)
+    //{
+    //    CModelDialog* ModelTab;
+    //    geVec3d Xlate;
+
+    //    // we're animating a model, so use its current position
+    //    Model_GetCurrentPos(pModel, pVec);
+    //    // We have to add the current move translation
+    //    ModelTab = App->CLSB_Doc->mpMainFrame->GetModelTab();
+    //    if (ModelTab != NULL)
+    //    {
+    //        //ModelTab->GetTranslation (&Xlate);
+    //    }
+    //    else
+    //    {
+    //        geVec3d_Clear(&Xlate);
+    //    }
+    //    geVec3d_Add(pVec, &Xlate, pVec);
+    //}
+    //else
+    {
+        *pVec = App->CL_Doc->SelectedGeoCenter;
+    }
+}
+
 static float ComputeSnap(float Cur, float Delta, float SnapSize)
 {
     float Target;

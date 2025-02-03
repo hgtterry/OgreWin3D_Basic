@@ -2582,4 +2582,35 @@ signed int CL64_Brush::Brush_SetPrevSelectedFace(Brush* b)
 	}
 }
 
+// *************************************************************************
+// *							Brush_Rotate							   *
+// *************************************************************************
+void CL64_Brush::Brush_Rotate(Brush* b,const Matrix3d* pXfmRotate,const T_Vec3* pCenter)
+{
+
+	if (b->Type == BRUSH_MULTI)
+	{
+		BrushList_Rotate(b->BList, pXfmRotate, pCenter);
+	}
+	else
+	{
+		App->CL_FaceList->FaceList_Rotate(b->Faces, pXfmRotate, pCenter);
+	}
+
+	Brush_Bound(b);
+}
+
+// *************************************************************************
+// *							Brush_Rotate							   *
+// *************************************************************************
+void CL64_Brush::BrushList_Rotate(BrushList* pList, const Matrix3d* pXfmRotate, const T_Vec3* pCenter)
+{
+	Brush* b;
+
+	for (b = pList->First; b; b = b->Next)
+	{
+		Brush_Rotate(b, pXfmRotate, pCenter); // Recursive
+	}
+}
+
 

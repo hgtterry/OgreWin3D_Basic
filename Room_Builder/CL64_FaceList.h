@@ -52,5 +52,10 @@ public:
 
 	Face* FaceList_GetSelectedFace(const FaceList* fl);
 
+	// Rotate
+	void FaceList_Rotate(FaceList* pList, const Matrix3d* pXfm, const T_Vec3* pCenter);
+	void Face_Rotate(Face* f, const Matrix3d* pXfmRotate, const T_Vec3* pCenter);
+
+
 };
 

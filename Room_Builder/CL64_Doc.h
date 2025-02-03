@@ -138,6 +138,11 @@ public:
 	void Set_Current_3DT_Paths(void);
 	void Set_Current_TxlPath(void);
 
+	// Rotation
+	void RotateSelectedBrushes(T_Vec3 const* v);
+	void RotateSelectedBrushList(SelBrushList* pList, T_Vec3 const* v);
+	void GetRotationPoint(T_Vec3* pVec);
+
 	// ------------------------------------------------------------------- 
 
 	char LastTemplateTypeName[MAX_PATH];

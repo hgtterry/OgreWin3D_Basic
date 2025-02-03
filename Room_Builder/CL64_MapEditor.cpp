@@ -1216,7 +1216,10 @@ void CL64_MapEditor::On_Mouse_Move(POINT CursorPosition, HWND hDlg)
 
 			if (App->CL_Top_Tabs->flag_Brush_Rotate == 1)
 			{
-				App->Flash_Window();
+				App->CL_Doc->LockAxis(&dv);
+				App->CL_Render->Render_ViewDeltaToRotation(Current_View, (float)dx, &dv);
+				App->CL_Doc->RotateSelectedBrushes(&dv);
+				Draw_Screen(hDlg);
 			}
 		}
 
@@ -1271,7 +1274,9 @@ void CL64_MapEditor::On_Left_Button_Up(POINT CursorPosition)
 
 		if (App->CL_Top_Tabs->flag_Brush_Rotate == 1)
 		{
-			App->Flash_Window();
+			//App->CL_Doc->DoneMovingBrushes();
+			App->CL_Doc->UpdateAllViews(Enums::UpdateViews_All);
+			App->CL_Doc->flag_Is_Modified = 1;
 		}
 
 	}
@@ -1333,7 +1338,11 @@ void CL64_MapEditor::On_Left_Button_Down(POINT CursorPosition, HWND hDlg)
 
 		if (App->CL_Top_Tabs->flag_Brush_Rotate == 1)
 		{
-			App->Flash_Window();
+			int CursorSide = 0;
+			App->CL_Doc->sides = SideLookup[CursorSide];
+
+			App->CL_Maths->Vector3_Clear(&App->CL_Doc->FinalPos);
+			App->CL_Doc->TempCopySelectedBrushes();
 		}
 	}
 

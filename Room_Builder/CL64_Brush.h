@@ -148,5 +148,9 @@ public:
 
 	Face* Brush_GetSelectedFace(const Brush* b);
 
+	// Rotate
+	void Brush_Rotate(Brush* b, const Matrix3d* pXfmRotate, const T_Vec3* pCenter);
+	void BrushList_Rotate(BrushList* pList, const Matrix3d* pXfmRotate, const T_Vec3* pCenter);
+
 };
 

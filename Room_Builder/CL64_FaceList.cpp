@@ -418,3 +418,52 @@ Face* CL64_FaceList::FaceList_GetSelectedFace(const FaceList* fl)
 		return	NULL;
 	}
 }
+
+// *************************************************************************
+// *							FaceList_Rotate						 	   *
+// *************************************************************************
+void CL64_FaceList::FaceList_Rotate(FaceList* pList, const Matrix3d* pXfm, const T_Vec3* pCenter)
+{
+	int i;
+
+	for (i = 0; i < pList->NumFaces; i++)
+	{
+		Face_Rotate(pList->Faces[i], pXfm, pCenter);
+	}
+
+	pList->Dirty = GE_TRUE;
+}
+
+// *************************************************************************
+// *							Face_Rotate							 	   *
+// *************************************************************************
+void CL64_FaceList::Face_Rotate(Face* f, const Matrix3d* pXfmRotate, const T_Vec3* pCenter)
+{
+	int	i;
+	T_Vec3* pPoint;
+
+	assert(f != NULL);
+	assert(pXfmRotate != NULL);
+	assert(pCenter != NULL);
+
+	for (i = 0; i < f->NumPoints; i++)
+	{
+		pPoint = &f->Points[i];
+		App->CL_Maths->Vector3_Subtract(pPoint, pCenter, pPoint);
+		App->CL_Maths->XForm3d_Rotate(pXfmRotate, pPoint, pPoint);
+		App->CL_Maths->Vector3_Add(pPoint, pCenter, pPoint);
+	}
+
+	App->CL_Face->Face_SetPlaneFromFace(f);
+	App->CL_Face->Face_XfmTexture(f, pXfmRotate);
+
+	pPoint = &f->Tex.Pos;
+
+	App->CL_Maths->Vector3_Subtract(pPoint, pCenter, pPoint);
+	App->CL_Maths->XForm3d_Rotate(pXfmRotate, pPoint, pPoint);
+	App->CL_Maths->Vector3_Add(pPoint, pCenter, pPoint);
+
+	//App->Flash_Window();
+
+	f->Tex.DirtyFlag = GE_TRUE;
+}

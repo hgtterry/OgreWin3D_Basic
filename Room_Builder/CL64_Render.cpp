@@ -232,7 +232,7 @@ void CL64_Render::Render_ViewDeltaToRotation(const ViewVars* v,const float dx, T
 {
 	float RotationRads;
 
-	RotationRads = (dx) * (ONE_OVER_2PI / Render_GetXScreenScale(v));
+	RotationRads = (dx) * 0.002;// (ONE_OVER_2PI / Render_GetXScreenScale(v));
 	switch (v->ViewType)
 	{
 	case VIEWTOP:	// +dx = negative rotation about Y
