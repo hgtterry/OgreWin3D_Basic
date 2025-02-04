@@ -339,3 +339,19 @@ int CL64_Level::Level_EnumBrushes(Level* pLevel, void* lParam, BrushList_CB Call
 	return App->CL_Brush->BrushList_Enum(pLevel->Brushes, lParam, Callback);
 }
 
+// *************************************************************************
+// *							Level_UseGrid							   *
+// *************************************************************************
+signed int CL64_Level::Level_UseGrid(const Level* pLevel)
+{
+	return 0;// pLevel->GridSettings.UseGrid;
+}
+
+// *************************************************************************
+// *					Level_GetRotationSnap							   *
+// *************************************************************************
+int CL64_Level::Level_GetRotationSnap(const Level* pLevel)
+{
+	return 1;// pLevel->GridSettings.RotationSnap;
+}
+

@@ -1274,9 +1274,20 @@ void CL64_MapEditor::On_Left_Button_Up(POINT CursorPosition)
 
 		if (App->CL_Top_Tabs->flag_Brush_Rotate == 1)
 		{
-			//App->CL_Doc->DoneMovingBrushes();
+			App->CL_Doc->UpdateSelected();
+			App->CL_Doc->DoneRotate();
+
+			App->CL_Doc->DoGeneralSelect(false);
+
+			int Selected = App->CL_Properties_Brushes->Selected_Index;
+			App->CL_Properties_Brushes->Selected_Index = Selected;
+			App->CL_Properties_Brushes->OnSelchangeBrushlist(Selected, 0);
+
 			App->CL_Doc->UpdateAllViews(Enums::UpdateViews_All);
 			App->CL_Doc->flag_Is_Modified = 1;
+
+			App->CL_Doc->mModeTool = ID_TOOLS_BRUSH_MOVEROTATEBRUSH;
+
 		}
 
 	}

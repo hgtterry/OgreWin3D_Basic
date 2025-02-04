@@ -55,6 +55,8 @@ public:
 	Guint16 Level_GetDibId(const Level* pLevel, const char* Name);
 	void Level_RemoveBrush(Level* pLevel, Brush* pBrush);
 	int Level_EnumBrushes(Level* pLevel, void* lParam, BrushList_CB Callback);
+	signed int Level_UseGrid(const Level* pLevel);
+	int Level_GetRotationSnap(const Level* pLevel);
 
 };
 

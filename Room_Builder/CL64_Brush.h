@@ -142,7 +142,8 @@ public:
 	Brush* BrushList_FindTopLevelFaceParent(const BrushList* pList, const Face* pFace);
 	Brush* BrushList_FindFaceParent(const BrushList* pList, const Face* pFace);
 	Brush* Brush_GetTopLevelParent(const BrushList* pList, const Brush* b);
-	
+	void BrushList_InsertAfter(BrushList* pList, Brush* pBMarker, Brush* pBrush);
+
 	signed int Brush_SetNextSelectedFace(Brush* b);
 	signed int Brush_SetPrevSelectedFace(Brush* b);
 

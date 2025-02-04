@@ -125,6 +125,7 @@ public:
 	void MoveSelectedBrushes(T_Vec3 const* v);
 	void MoveSelectedBrushList(SelBrushList* pList, T_Vec3 const* v);
 	void DoneMovingBrushes();
+	void DoneRotate(void);
 	void DoneMove(void);
 	BOOL TempDeleteSelected(void);
 	void OnToolsTemplate();

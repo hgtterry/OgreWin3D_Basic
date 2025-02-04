@@ -2601,6 +2601,25 @@ void CL64_Brush::Brush_Rotate(Brush* b,const Matrix3d* pXfmRotate,const T_Vec3* 
 }
 
 // *************************************************************************
+// *						BrushList_InsertAfter						   *
+// *************************************************************************
+void CL64_Brush::BrushList_InsertAfter(BrushList* pList, Brush* pBMarker, Brush* pBrush)
+{
+	pBrush->Next = pBMarker->Next;
+	pBrush->Prev = pBMarker;
+
+	if (pBrush->Next == NULL)	//last in list?
+	{
+		pList->Last = pBrush;
+	}
+	else
+	{
+		pBrush->Next->Prev = pBrush;
+	}
+	pBMarker->Next = pBrush;
+}
+
+// *************************************************************************
 // *							Brush_Rotate							   *
 // *************************************************************************
 void CL64_Brush::BrushList_Rotate(BrushList* pList, const Matrix3d* pXfmRotate, const T_Vec3* pCenter)

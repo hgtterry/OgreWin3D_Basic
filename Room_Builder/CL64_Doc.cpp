@@ -1086,9 +1086,10 @@ void CL64_Doc::DoneMovingBrushes()
         }
     }
 
-    App->CL_Doc->DoneMove();
+	App->CL_Doc->DoneMove();
+	App->CL_Doc->UpdateSelected();
 
-    App->CL_Doc->UpdateSelected();
+
 
     /*if ((ModeTool == ID_TOOLS_TEMPLATE) ||
         ((App->CLSB_Doc->GetSelState() & ANYENTITY) && (!(App->CLSB_Doc->GetSelState() & ANYBRUSH))))
@@ -1101,13 +1102,104 @@ void CL64_Doc::DoneMovingBrushes()
     }*/
 }
 
+#define	M_PI		((geFloat)3.14159265358979323846f)
+#define Units_DegreesToRadians(d) ((((float)(d)) * M_PI) / 180.0f)
+// *************************************************************************
+// *              DoneRotate:- Terry and Hazel Flanigan 2025              *
+// *************************************************************************
+void CL64_Doc::DoneRotate(void)
+{
+    int			i;
+    float	RSnap;
+    Matrix3d		rm;
+    T_Vec3 RotationPoint;
+    T_Vec3 TemplateReversalRot;
+
+    TemplateReversalRot = FinalRot;
+
+    mLastOp = BRUSH_ROTATE;
+
+    TempDeleteSelected();
+
+    App->CL_Doc->TempCopySelectedBrushes();
+
+    App->CL_Doc->GetRotationPoint(&RotationPoint);
+
+    if ((App->CL_Doc->SelState & NOENTITIES) && App->CL_Level->Level_UseGrid(pLevel))
+    {
+        RSnap = Units_DegreesToRadians((float)App->CL_Level->Level_GetRotationSnap(pLevel));
+        FinalRot.x = ((float)((int)(FinalRot.x / RSnap))) * RSnap;
+        FinalRot.y = ((float)((int)(FinalRot.y / RSnap))) * RSnap;
+        FinalRot.z = ((float)((int)(FinalRot.z / RSnap))) * RSnap;
+    }
+
+    
+    if (mModeTool == ID_TOOLS_TEMPLATE)
+    {
+        App->CL_Maths->Vector3_Subtract(&FinalRot, &TemplateReversalRot, &FinalRot);
+    }
+
+    App->CL_Maths->XForm3d_SetEulerAngles(&rm, &FinalRot);
+
+    if (mModeTool == ID_TOOLS_TEMPLATE)
+    {
+       
+        App->CL_Brush->Brush_Rotate(CurBrush, &rm, &RotationPoint);
+        return;
+    }
+   
+    int NumSelBrushes = App->CL_SelBrushList->SelBrushList_GetSize(pSelBrushes);
+
+    for (i = 0; i < NumSelBrushes; i++)
+    {
+        Brush* pBrush;
+
+        pBrush = App->CL_SelBrushList->SelBrushList_GetBrush(pTempSelBrushes, i);
+        App->CL_Brush->Brush_Rotate(pBrush, &rm, &RotationPoint);
+    }
+
+    if (i < NumSelBrushes)
+    {
+        App->CL_Doc->TempDeleteSelected();
+    }
+    else
+    {
+        BrushList* BList = App->CL_Level->Level_GetBrushes(pLevel);
+
+        for (i = 0; i < NumSelBrushes; i++)
+        {
+            // Replace the sel list brushes with the TSelList brushes
+            Brush* TempBrush, * OldBrush;
+
+            TempBrush = App->CL_SelBrushList->SelBrushList_GetBrush(pTempSelBrushes, 0);
+            OldBrush = App->CL_SelBrushList->SelBrushList_GetBrush(pSelBrushes, 0);
+           
+            App->CL_Brush->BrushList_Remove(BList, TempBrush);
+            App->CL_Brush->BrushList_InsertAfter(BList, OldBrush, TempBrush);
+            App->CL_Brush->BrushList_Remove(BList, OldBrush);
+
+            App->CL_SelBrushList->SelBrushList_Remove(pSelBrushes, OldBrush);
+            App->CL_SelBrushList->SelBrushList_Remove(pTempSelBrushes, TempBrush);
+
+            App->CL_SelBrushList->SelBrushList_Add(pSelBrushes, TempBrush);
+
+            //App->CL_Brush->BrushList_Remove(OldBrush->BList, OldBrush);
+        }
+    }
+   
+    UpdateSelected();
+   
+    App->CL_Maths->Vector3_Clear(&FinalRot);
+
+}
+
 // *************************************************************************
 // *			                 DoneMove                           	   *
 // *************************************************************************
 void CL64_Doc::DoneMove(void)
 {
     int	i;
-    //	BrushList *BList = Level_GetBrushes (pLevel);
+    //BrushList *BList = App->CL_Level->Level_GetBrushes (pLevel);
 
     mLastOp = BRUSH_MOVE;
 
@@ -1115,13 +1207,13 @@ void CL64_Doc::DoneMove(void)
 
     if (mModeTool == ID_TOOLS_TEMPLATE)
     {
-        /*if (TempEnt)
+       /* if (TempEnt)
         {
             DoneMoveEntity();
         }
-        else
-        {
-            Brush_Move(CurBrush, &FinalPos);
+        else*/
+      /*  {
+            App->CL_Brush->Brush_Move(CurBrush, &FinalPos);
         }*/
         return;
     }
