@@ -46,6 +46,7 @@
 #define IDB_CREATESTAIRS                161
 #define IDB_CREATERAMP                  162
 #define IDB_HOLLOWBOX                   163
+#define IDD_BRUSH_DIMENSIONS            164
 #define IDC_BANNER                      1000
 #define IDC_STTEXT                      1001
 #define IDC_STMESSAGE                   1002
@@ -211,7 +212,43 @@
 #define IDC_BUTTON2                     1163
 #define IDC_BT_BRUSH_DIMENSIONS         1163
 #define IDC_BUTTON3                     1164
+#define IDC_ED_BRUSH_POSX               1164
 #define IDC_BUTTON4                     1165
+#define IDC_ED_BRUSH_POSY               1165
+#define IDC_ED_BRUSH_POSZ               1166
+#define IDC_ED_BRUSH_ROTX               1167
+#define IDC_ED_BRUSH_ROTY               1168
+#define IDC_ED_BRUSH_ROTZ               1169
+#define IDC_ED_BRUSH_SCALEX             1170
+#define IDC_ED_BRUSH_SCALEY             1171
+#define IDC_ED_BRUSH_SCALEZ             1172
+#define IDC_SBPOSXH                     1173
+#define IDC_SBPOSYH                     1174
+#define IDC_SBPOSZH                     1175
+#define IDC_SCROLLBAR4                  1176
+#define IDC_SCROLLBAR5                  1177
+#define IDC_SCROLLBAR6                  1178
+#define IDC_SCROLLBAR7                  1179
+#define IDC_SCROLLBAR8                  1180
+#define IDC_SCROLLBAR9                  1181
+#define IDC_CBPOSXDELTA                 1182
+#define IDC_CBPOSYDELTA                 1183
+#define IDC_CBPOSZDELTA                 1184
+#define IDC_CBROTXDELTA                 1185
+#define IDC_CBROTYDELTA                 1186
+#define IDC_CBROTZDELTA                 1187
+#define IDC_COMBO7                      1188
+#define IDC_STPOSX                      1189
+#define IDC_COMBO8                      1190
+#define IDC_COMBO9                      1191
+#define IDC_STPOSY                      1192
+#define IDC_STPOSZ                      1193
+#define IDC_STROTX                      1194
+#define IDC_STROTY                      1195
+#define IDC_STROTZ                      1196
+#define IDC_STSIZEX                     1197
+#define IDC_STSIZEY                     1198
+#define IDC_STSIZEZ                     1199
 #define ID_DEBUG_GENERAL                32771
 #define ID_TEMPLATES_INSERT             32772
 #define ID_BRUSH_SELECT                 32773
@@ -247,9 +284,9 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
-#define _APS_NEXT_RESOURCE_VALUE        164
+#define _APS_NEXT_RESOURCE_VALUE        165
 #define _APS_NEXT_COMMAND_VALUE         32795
-#define _APS_NEXT_CONTROL_VALUE         1164
+#define _APS_NEXT_CONTROL_VALUE         1200
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif

@@ -41,9 +41,29 @@ public:
 
 private:
 	static LRESULT CALLBACK Proc_Brush_Tabs(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Proc_Dimensions_Dlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	void List_Selection_Changed(bool Clear);
-	
+	void Start_Dimensions_Dlg();
+
+	void Update_Deltas_Dlg(HWND hDlg);
+	void Fill_ComboBox_PosDelta(HWND hDlg);
+	void Fill_ComboBox_RotDelta(HWND hDlg);
+
+	void Update_From_Brush_Dlg(HWND hDlg);
+	void Get_Brush();
+
+	void Move_Brush();
+
+	float PosX_Delta;
+	float PosY_Delta;
+	float PosZ_Delta;
+
+	T_Vec3 CenterOfSelection;
+	T_Vec3 Rotation;
+	T_Vec3 Size;
+
+	HWND Dimensions_Dlg_hWnd;
 
 	bool flag_Brushes_Dlg_Created;
 
