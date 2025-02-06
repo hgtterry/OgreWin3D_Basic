@@ -110,6 +110,7 @@ public:
 	void ScaleSelected(int dx, int dy);
 	void ResizeSelected(float dx, float dy, int sides, int inidx);
 	void DoneResize(int sides, int inidx);
+	void ScaleSelectedBrushes(T_Vec3* ScaleVector);
 
 	int FindClosestThing(POINT const* ptFrom, ViewVars* v, Brush** ppMinBrush, geFloat* pDist);
 	signed int FindClosestBrush(POINT const* ptFrom, ViewVars* v, Brush** ppFoundBrush, geFloat* pMinEdgeDist);

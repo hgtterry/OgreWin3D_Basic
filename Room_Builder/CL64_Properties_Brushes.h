@@ -54,11 +54,23 @@ private:
 	void Get_Brush();
 
 	void Move_Brush();
+	void Rotate_Brush(float SX, float SY, float SZ);
+	void Scale_Brush(float SX, float SY, float SZ);
 
 	float PosX_Delta;
 	float PosY_Delta;
 	float PosZ_Delta;
 
+	float RotX_Delta;
+	float RotY_Delta;
+	float RotZ_Delta;
+
+	float ScaleX_Delta;
+	float ScaleY_Delta;
+	float ScaleZ_Delta;
+
+	T_Vec3 FinalScale;
+	T_Vec3 FinalRot;
 	T_Vec3 CenterOfSelection;
 	T_Vec3 Rotation;
 	T_Vec3 Size;

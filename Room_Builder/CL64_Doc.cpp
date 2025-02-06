@@ -954,6 +954,53 @@ void CL64_Doc::RotateSelectedBrushList(SelBrushList* pList,T_Vec3 const* v)
 }
 
 // *************************************************************************
+// *            ScaleSelectedBrushes:- Terry and Hazel Flanigan 2025       *
+// *************************************************************************
+void CL64_Doc::ScaleSelectedBrushes(T_Vec3* ScaleVector)
+{
+    App->CL_Doc->mLastOp = BRUSH_SCALE;
+
+    T_Vec3	VecOrigin = { 0.0f, 0.0f, 0.0f };
+
+    T_Vec3 MoveTo;
+    T_Vec3 MoveBack;
+    App->CL_Maths->Vector3_Subtract(&VecOrigin, &App->CL_Doc->SelectedGeoCenter, &MoveTo);
+    App->CL_Maths->Vector3_Subtract(&App->CL_Doc->SelectedGeoCenter, &VecOrigin, &MoveBack);
+
+    if (App->CL_Doc->mModeTool == ID_TOOLS_TEMPLATE)
+    {
+       /* Brush_Scale3d(App->CLSB_Doc->CurBrush, ScaleVector);
+        if (Brush_IsMulti(App->CLSB_Doc->CurBrush))
+        {
+            BrushList_ClearCSGAndHollows((BrushList*)App->CL_Brush->Brush_GetBrushList(App->CLSB_Doc->CurBrush), Brush_GetModelId(App->CLSB_Doc->CurBrush));
+            BrushList_RebuildHollowFaces((BrushList*)App->CL_Brush->Brush_GetBrushList(App->CLSB_Doc->CurBrush), Brush_GetModelId(App->CLSB_Doc->CurBrush), ::fdocBrushCSGCallback, this);
+        }*/
+    }
+    else
+    {
+        int i;
+        int NumSelBrushes = App->CL_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes);
+
+        for (i = 0; i < NumSelBrushes; ++i)
+        {
+            Brush* pBrush;
+
+            pBrush = App->CL_SelBrushList->SelBrushList_GetBrush(App->CL_Doc->pSelBrushes, i);
+
+            App->CL_Brush->Brush_Move(pBrush, &MoveTo);
+            App->CL_Brush->Brush_Scale3d(pBrush, ScaleVector);
+            App->CL_Brush->Brush_Move(pBrush, &MoveBack);
+
+            if (App->CL_Brush->Brush_IsMulti(pBrush))
+            {
+                App->CL_Brush->BrushList_ClearCSGAndHollows((BrushList*)App->CL_Brush->Brush_GetBrushList(pBrush), App->CL_Brush->Brush_GetModelId(pBrush));
+                App->CL_Brush->BrushList_RebuildHollowFaces((BrushList*)App->CL_Brush->Brush_GetBrushList(pBrush), App->CL_Brush->Brush_GetModelId(pBrush), ::fdocBrushCSGCallback, this);
+            }
+        }
+    }
+}
+
+// *************************************************************************
 // *         GetRotationPoint:- Terry and Hazel Flanigan 2025              *
 // *************************************************************************
 void CL64_Doc::GetRotationPoint(T_Vec3* pVec)

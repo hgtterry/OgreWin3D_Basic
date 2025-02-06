@@ -36,6 +36,8 @@ CL64_Properties_Brushes::CL64_Properties_Brushes()
 	Selected_Index = 0;
 	flag_Brushes_Dlg_Created = 0;
 
+	App->CL_Maths->Vector3_Clear(&FinalScale);
+	App->CL_Maths->Vector3_Clear(&FinalRot);
 	App->CL_Maths->Vector3_Clear(&CenterOfSelection);
 	App->CL_Maths->Vector3_Clear(&Rotation);
 	App->CL_Maths->Vector3_Clear(&Size);
@@ -43,6 +45,14 @@ CL64_Properties_Brushes::CL64_Properties_Brushes()
 	PosX_Delta = 1;
 	PosY_Delta = 1;
 	PosZ_Delta = 1;
+
+	ScaleX_Delta = 1;
+	ScaleY_Delta = 1;
+	ScaleZ_Delta = 1;
+
+	RotX_Delta = 1;
+	RotY_Delta = 1;
+	RotZ_Delta = 1;
 
 	Rotation;
 	Size;
@@ -390,7 +400,15 @@ void CL64_Properties_Brushes::Get_Index(const Brush* b)
 // *************************************************************************
 void CL64_Properties_Brushes::Start_Dimensions_Dlg()
 {
-	Dimensions_Dlg_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_BRUSH_DIMENSIONS, App->MainHwnd, (DLGPROC)Proc_Dimensions_Dlg);
+	int NumberOfBrushes = App->CL_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes);
+	if (NumberOfBrushes > 0)
+	{
+		Dimensions_Dlg_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_BRUSH_DIMENSIONS, App->MainHwnd, (DLGPROC)Proc_Dimensions_Dlg);
+	}
+	else
+	{
+		App->Say("No Brush Selected");
+	}
 }
 
 // *************************************************************************
@@ -675,195 +693,194 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Dimensions_Dlg(HWND hDlg, UINT me
 
 		// ------------------------------------------------------------- Rotation
 		// -------- Rot X
-		//if (HWND(lParam) == GetDlgItem(hDlg, IDC_SBROTXH))
-		//{
-		//	/*float m_Delta = App->CLSB_Brushes->RotX_Delta * GE_PI / 180;
+		if (HWND(lParam) == GetDlgItem(hDlg, IDC_SBROTX))
+		{
+			float m_Delta = App->CL_Properties_Brushes->RotX_Delta * GE_PI / 180;
 
-		//	switch ((int)LOWORD(wParam))
-		//	{
-		//	case SB_LINERIGHT:
-		//	{
+			switch ((int)LOWORD(wParam))
+			{
+			case SB_LINERIGHT:
+			{
 
-		//		App->CLSB_Brushes->Rotation.x += +App->CLSB_Brushes->RotX_Delta;
-		//		App->CLSB_Brushes->Rotate_Brush(m_Delta, 0, 0);
-		//		break;
-		//	}
+				App->CL_Properties_Brushes->Rotation.x += +App->CL_Properties_Brushes->RotX_Delta;
+				App->CL_Properties_Brushes->Rotate_Brush(m_Delta, 0, 0);
+				break;
+			}
 
-		//	case SB_LINELEFT:
-		//	{
-		//		App->CLSB_Brushes->Rotation.x += -App->CLSB_Brushes->RotX_Delta;
-		//		App->CLSB_Brushes->Rotate_Brush(-m_Delta, 0, 0);
-		//		break;
-		//	}
-		//	}
+			case SB_LINELEFT:
+			{
+				App->CL_Properties_Brushes->Rotation.x += -App->CL_Properties_Brushes->RotX_Delta;
+				App->CL_Properties_Brushes->Rotate_Brush(-m_Delta, 0, 0);
+				break;
+			}
+			}
 
-		//	App->CLSB_Brushes->Update_Pos_Dlg(hDlg);*/
+			App->CL_Properties_Brushes->Update_From_Brush_Dlg(hDlg);
 
-		//	return 0;
-		//}
-
-		// ------- Rot Y
-		//if (HWND(lParam) == GetDlgItem(hDlg, IDC_SBROTYH))
-		//{
-		//	/*float m_Delta = App->CLSB_Brushes->RotY_Delta * GE_PI / 180;
-
-		//	switch ((int)LOWORD(wParam))
-		//	{
-		//	case SB_LINERIGHT:
-		//	{
-		//		App->CLSB_Brushes->Rotation.y += +App->CLSB_Brushes->RotY_Delta;
-		//		App->CLSB_Brushes->Rotate_Brush(0, m_Delta, 0);
-		//		break;
-		//	}
-
-		//	case SB_LINELEFT:
-		//	{
-		//		App->CLSB_Brushes->Rotation.y += -App->CLSB_Brushes->RotY_Delta;
-		//		App->CLSB_Brushes->Rotate_Brush(0, -m_Delta, 0);
-		//		break;
-		//	}
-		//	}
-
-		//	App->CLSB_Brushes->Update_Pos_Dlg(hDlg);*/
-
-		//	return 0;
-		//}
+			return 0;
+		}
 
 		// ------- Rot Y
-		//if (HWND(lParam) == GetDlgItem(hDlg, IDC_SBROTZH))
-		//{
-		//	/*float m_Delta = App->CLSB_Brushes->RotZ_Delta * GE_PI / 180;
+		if (HWND(lParam) == GetDlgItem(hDlg, IDC_SBROTY))
+		{
+			float m_Delta = App->CL_Properties_Brushes->RotY_Delta * GE_PI / 180;
 
-		//	switch ((int)LOWORD(wParam))
-		//	{
-		//	case SB_LINERIGHT:
-		//	{
-		//		App->CLSB_Brushes->Rotation.z += +App->CLSB_Brushes->RotZ_Delta;
-		//		App->CLSB_Brushes->Rotate_Brush(0, 0, m_Delta);
-		//		App->CLSB_Brushes->Move_Brush();
-		//		break;
-		//	}
+			switch ((int)LOWORD(wParam))
+			{
+			case SB_LINERIGHT:
+			{
+				App->CL_Properties_Brushes->Rotation.y += +App->CL_Properties_Brushes->RotY_Delta;
+				App->CL_Properties_Brushes->Rotate_Brush(0, m_Delta, 0);
+				break;
+			}
 
-		//	case SB_LINELEFT:
-		//	{
-		//		App->CLSB_Brushes->Rotation.z += -App->CLSB_Brushes->RotZ_Delta;
-		//		App->CLSB_Brushes->Rotate_Brush(0, 0, -m_Delta);
-		//		break;
-		//	}
-		//	}
+			case SB_LINELEFT:
+			{
+				App->CL_Properties_Brushes->Rotation.y += -App->CL_Properties_Brushes->RotY_Delta;
+				App->CL_Properties_Brushes->Rotate_Brush(0, -m_Delta, 0);
+				break;
+			}
+			}
 
-		//	App->CLSB_Brushes->Update_Pos_Dlg(hDlg);*/
+			App->CL_Properties_Brushes->Update_From_Brush_Dlg(hDlg);
 
-		//	return 0;
-		//}
+			return 0;
+		}
 
+		// ------- Rot Z
+		if (HWND(lParam) == GetDlgItem(hDlg, IDC_SBROTZ))
+		{
+			float m_Delta = App->CL_Properties_Brushes->RotZ_Delta * GE_PI / 180;
+
+			switch ((int)LOWORD(wParam))
+			{
+			case SB_LINERIGHT:
+			{
+				App->CL_Properties_Brushes->Rotation.z += +App->CL_Properties_Brushes->RotZ_Delta;
+				App->CL_Properties_Brushes->Rotate_Brush(0, 0, m_Delta);
+				break;
+			}
+
+			case SB_LINELEFT:
+			{
+				App->CL_Properties_Brushes->Rotation.z += -App->CL_Properties_Brushes->RotZ_Delta;
+				App->CL_Properties_Brushes->Rotate_Brush(0, 0, -m_Delta);
+				break;
+			}
+			}
+
+			App->CL_Properties_Brushes->Update_From_Brush_Dlg(hDlg);
+
+			return 0;
+		}
+		
 		// ------------------------------------------------------------- SCALE
 		// -------- Scale X
-		//if (HWND(lParam) == GetDlgItem(hDlg, IDC_SBSCALEX))
-		//{
-		//	/*switch ((int)LOWORD(wParam))
-		//	{
-		//	case SB_LINERIGHT:
-		//	{
-		//		if (App->CLSB_Brushes->ScaleLock_Flag == 1)
-		//		{
-		//			App->CLSB_Brushes->Scale_Brush_Lock(1);
-		//		}
-		//		else
-		//		{
-		//			float Delta = App->CLSB_Brushes->ScaleX_Delta;
-		//			float scale = (App->CLSB_Brushes->Size.x + Delta) / App->CLSB_Brushes->Size.x;
+		if (HWND(lParam) == GetDlgItem(hDlg, IDC_SBSCALEX))
+		{
+			switch ((int)LOWORD(wParam))
+			{
+			case SB_LINERIGHT:
+			{
+				/*if (App->CL_Properties_Brushes->ScaleLock_Flag == 1)
+				{
+					App->CL_Properties_Brushes->Scale_Brush_Lock(1);
+				}
+				else*/
+				{
+					float Delta = App->CL_Properties_Brushes->ScaleX_Delta;
+					float scale = (App->CL_Properties_Brushes->Size.x + Delta) / App->CL_Properties_Brushes->Size.x;
 
-		//			App->CLSB_Brushes->Scale_Brush(scale, 1, 1);
-		//		}
+					App->CL_Properties_Brushes->Scale_Brush(scale, 1, 1);
+				}
 
-		//		break;
-		//	}
+				break;
+			}
 
-		//	case SB_LINELEFT:
-		//	{
-		//		if (App->CLSB_Brushes->ScaleLock_Flag == 1)
-		//		{
-		//			App->CLSB_Brushes->Scale_Brush_Lock(0);
-		//		}
-		//		else
-		//		{
-		//			if (App->CLSB_Brushes->Size.x > 1)
-		//			{
-		//				float Delta = App->CLSB_Brushes->ScaleX_Delta;
-		//				float scale = (App->CLSB_Brushes->Size.x + -Delta) / App->CLSB_Brushes->Size.x;
+			case SB_LINELEFT:
+			{
+				/*if (App->CLSB_Brushes->ScaleLock_Flag == 1)
+				{
+					App->CLSB_Brushes->Scale_Brush_Lock(0);
+				}
+				else*/
+				{
+					if (App->CL_Properties_Brushes->Size.x > 1)
+					{
+						float Delta = App->CL_Properties_Brushes->ScaleX_Delta;
+						float scale = (App->CL_Properties_Brushes->Size.x + -Delta) / App->CL_Properties_Brushes->Size.x;
 
-		//				App->CLSB_Brushes->Scale_Brush(scale, 1, 1);
-		//			}
-		//		}
-		//		break;
-		//	}
-		//	}
+						App->CL_Properties_Brushes->Scale_Brush(scale, 1, 1);
+					}
+				}
+				break;
+			}
+			}
 
-		//	App->CLSB_Brushes->Update_Pos_Dlg(hDlg);*/
+			App->CL_Properties_Brushes->Update_From_Brush_Dlg(hDlg);
 
-		//	return 0;
-		//}
+			return 0;
+		}
 
 		// -------- Scale Y
-		//if (HWND(lParam) == GetDlgItem(hDlg, IDC_SBSCALEY))
-		//{
-		//	/*switch ((int)LOWORD(wParam))
-		//	{
-		//	case SB_LINERIGHT:
-		//	{
-		//		float scale = (App->CLSB_Brushes->Size.y + 1) / App->CLSB_Brushes->Size.y;
+		if (HWND(lParam) == GetDlgItem(hDlg, IDC_SBSCALEY))
+		{
+			switch ((int)LOWORD(wParam))
+			{
+			case SB_LINERIGHT:
+			{
+				float scale = (App->CL_Properties_Brushes->Size.y + 1) / App->CL_Properties_Brushes->Size.y;
 
-		//		App->CLSB_Brushes->Scale_Brush(1, scale, 1);
-		//		break;
-		//	}
+				App->CL_Properties_Brushes->Scale_Brush(1, scale, 1);
+				break;
+			}
 
-		//	case SB_LINELEFT:
-		//	{
-		//		if (App->CLSB_Brushes->Size.y > 1)
-		//		{
-		//			float scale = (App->CLSB_Brushes->Size.y + -1) / App->CLSB_Brushes->Size.y;
+			case SB_LINELEFT:
+			{
+				if (App->CL_Properties_Brushes->Size.y > 1)
+				{
+					float scale = (App->CL_Properties_Brushes->Size.y + -1) / App->CL_Properties_Brushes->Size.y;
 
-		//			App->CLSB_Brushes->Scale_Brush(1, scale, 1);
-		//		}
-		//		break;
-		//	}
-		//	}
+					App->CL_Properties_Brushes->Scale_Brush(1, scale, 1);
+				}
+				break;
+			}
+			}
 
-		//	App->CLSB_Brushes->Update_Pos_Dlg(hDlg);*/
+			App->CL_Properties_Brushes->Update_From_Brush_Dlg(hDlg);
 
-		//	return 0;
-		//}
+			return 0;
+		}
 
 		// -------- Scale Z
-		//if (HWND(lParam) == GetDlgItem(hDlg, IDC_SBSCALEZ))
-		//{
-		//	/*switch ((int)LOWORD(wParam))
-		//	{
-		//	case SB_LINERIGHT:
-		//	{
-		//		float scale = (App->CLSB_Brushes->Size.z + 1) / App->CLSB_Brushes->Size.z;
+		if (HWND(lParam) == GetDlgItem(hDlg, IDC_SBSCALEZ))
+		{
+			switch ((int)LOWORD(wParam))
+			{
+			case SB_LINERIGHT:
+			{
+				float scale = (App->CL_Properties_Brushes->Size.z + 1) / App->CL_Properties_Brushes->Size.z;
 
-		//		App->CLSB_Brushes->Scale_Brush(1, 1, scale);
-		//		break;
-		//	}
+				App->CL_Properties_Brushes->Scale_Brush(1, 1, scale);
+				break;
+			}
 
-		//	case SB_LINELEFT:
-		//	{
-		//		if (App->CLSB_Brushes->Size.z > 1)
-		//		{
-		//			float scale = (App->CLSB_Brushes->Size.z + -1) / App->CLSB_Brushes->Size.z;
+			case SB_LINELEFT:
+			{
+				if (App->CL_Properties_Brushes->Size.z > 1)
+				{
+					float scale = (App->CL_Properties_Brushes->Size.z + -1) / App->CL_Properties_Brushes->Size.z;
 
-		//			App->CLSB_Brushes->Scale_Brush(1, 1, scale);
-		//		}
-		//		break;
-		//	}
-		//	}
+					App->CL_Properties_Brushes->Scale_Brush(1, 1, scale);
+				}
+				break;
+			}
+			}
 
-		//	App->CLSB_Brushes->Update_Pos_Dlg(hDlg);*/
+			App->CL_Properties_Brushes->Update_From_Brush_Dlg(hDlg);
 
-		//	return 0;
-		//}
+			return 0;
+		}
 
 
 		return 0;
@@ -1154,6 +1171,7 @@ void CL64_Properties_Brushes::Get_Brush()
 	else
 	{
 		App->Say("Cant Get Brush");
+		return;
 	}
 
 	Size.x = (fabs(pBrush->BoundingBox.Max.x - pBrush->BoundingBox.Min.x));
@@ -1177,6 +1195,34 @@ void CL64_Properties_Brushes::Move_Brush()
 	App->CL_Maths->Vector3_Subtract(&CenterOfSelection, &App->CL_Doc->SelectedGeoCenter, &CenterOfSelection);
 
 	App->CL_Doc->MoveSelectedBrushList(App->CL_Doc->pSelBrushes, &CenterOfSelection);
+
+	App->CL_Doc->UpdateAllViews(Enums::UpdateViews_All);
+}
+
+// *************************************************************************
+// *				Rotate_Brush:- Terry and Hazel Flanigan 2025	  	   *
+// *************************************************************************
+void CL64_Properties_Brushes::Rotate_Brush(float SX, float SY, float SZ)
+{
+	FinalRot.x = SX;
+	FinalRot.y = SY;
+	FinalRot.z = SZ;
+
+	App->CL_Doc->RotateSelectedBrushList(App->CL_Doc->pSelBrushes, &FinalRot);
+
+	App->CL_Doc->UpdateAllViews(Enums::UpdateViews_All);
+}
+
+// *************************************************************************
+// *				Scale_Brush:- Terry and Hazel Flanigan 2025		  	   *
+// *************************************************************************
+void CL64_Properties_Brushes::Scale_Brush(float SX, float SY, float SZ)
+{
+	FinalScale.x = SX;
+	FinalScale.y = SY;
+	FinalScale.z = SZ;
+
+	App->CL_Doc->ScaleSelectedBrushes(&FinalScale);
 
 	App->CL_Doc->UpdateAllViews(Enums::UpdateViews_All);
 }
