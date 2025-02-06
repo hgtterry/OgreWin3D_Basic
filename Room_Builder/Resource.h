@@ -72,7 +72,6 @@
 #define IDC_BT_BRUSH_SCALE              1023
 #define IDC_BT_BRUSH_SHEAR              1024
 #define IDC_BT_BRUSH_DEBUG              1025
-#define IDC_BT_BRUSH_MOVE2              1025
 #define IDC_BT_BRUSH_ROTATE             1025
 #define IDC_BRUSH_CUBE_PRIMITIVE        1026
 #define IDC_BT_BOXSOLID                 1027
@@ -210,6 +209,7 @@
 #define IDC_ST_HEADER_BRUSHES           1161
 #define IDC_BUTTON1                     1162
 #define IDC_BUTTON2                     1163
+#define IDC_BT_BRUSH_DIMENSIONS         1163
 #define IDC_BUTTON3                     1164
 #define IDC_BUTTON4                     1165
 #define ID_DEBUG_GENERAL                32771
@@ -249,7 +249,7 @@
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        164
 #define _APS_NEXT_COMMAND_VALUE         32795
-#define _APS_NEXT_CONTROL_VALUE         1163
+#define _APS_NEXT_CONTROL_VALUE         1164
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif

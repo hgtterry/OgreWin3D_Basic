@@ -81,9 +81,7 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Brush_Tabs(HWND hDlg, UINT messag
 		
 		SendDlgItemMessage(hDlg, IDC_BT_GD_BRUSHPROPERTIES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
-		/*SendDlgItemMessage(hDlg, IDC_ST_GD_SELECTED, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_ST_SELECTED, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_BT_DIMENSIONS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));*/
+		SendDlgItemMessage(hDlg, IDC_BT_BRUSH_DIMENSIONS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_DELETE_SEL_BRUSH, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		return TRUE;
@@ -159,10 +157,10 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Brush_Tabs(HWND hDlg, UINT messag
 			return CDRF_DODEFAULT;
 		}
 
-		/*if (some_item->idFrom == IDC_BT_DIMENSIONS && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDC_BT_BRUSH_DIMENSIONS)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_DIMENSIONS));
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_BRUSH_DIMENSIONS));
 			if (test == 0)
 			{
 				App->Custom_Button_Greyed(item);
@@ -172,7 +170,7 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Brush_Tabs(HWND hDlg, UINT messag
 				App->Custom_Button_Normal(item);
 			}
 			return CDRF_DODEFAULT;
-		}*/
+		}
 
 		if (some_item->idFrom == IDC_BT_DELETE_SEL_BRUSH)
 		{
@@ -208,11 +206,12 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Brush_Tabs(HWND hDlg, UINT messag
 			return TRUE;
 		}
 
-		//if (LOWORD(wParam) == IDC_BT_DIMENSIONS)
-		//{
-		//	App->CLSB_Brushes->Start_Dimensions_Dlg();
-		//	return TRUE;
-		//}
+		if (LOWORD(wParam) == IDC_BT_BRUSH_DIMENSIONS)
+		{
+			Debug
+			//App->CLSB_Brushes->Start_Dimensions_Dlg();
+			return TRUE;
+		}
 
 		if (LOWORD(wParam) == IDC_GD_BRUSHLIST)
 		{
