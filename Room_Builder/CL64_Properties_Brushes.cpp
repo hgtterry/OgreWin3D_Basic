@@ -42,17 +42,17 @@ CL64_Properties_Brushes::CL64_Properties_Brushes()
 	App->CL_Maths->Vector3_Clear(&Rotation);
 	App->CL_Maths->Vector3_Clear(&Size);
 
-	PosX_Delta = 1;
-	PosY_Delta = 1;
-	PosZ_Delta = 1;
+	PosX_Delta = 10;
+	PosY_Delta = 10;
+	PosZ_Delta = 10;
 
 	ScaleX_Delta = 1;
 	ScaleY_Delta = 1;
 	ScaleZ_Delta = 1;
 
-	RotX_Delta = 1;
-	RotY_Delta = 1;
-	RotZ_Delta = 1;
+	RotX_Delta = 45;
+	RotY_Delta = 45;
+	RotZ_Delta = 45;
 
 	Rotation;
 	Size;
@@ -421,9 +421,9 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Dimensions_Dlg(HWND hDlg, UINT me
 	{
 	case WM_INITDIALOG:
 	{
-		//SendDlgItemMessage(hDlg, IDC_STPOSITION, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		//SendDlgItemMessage(hDlg, IDC_STROTITION, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		//SendDlgItemMessage(hDlg, IDC_STROTATION2, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_ST_DIM_POSITION, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_ST_DIM_ROTATION, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_ST_DIM_SCALE, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
 
 		SendDlgItemMessage(hDlg, IDC_STPOSX, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_STPOSY, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
@@ -501,24 +501,30 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Dimensions_Dlg(HWND hDlg, UINT me
 			return (UINT)App->AppBackground;
 		}
 
-		//if (GetDlgItem(hDlg, IDC_STPOSITION) == (HWND)lParam)
-		//{
-		//	SetBkColor((HDC)wParam, RGB(0, 255, 0));
-		//	SetTextColor((HDC)wParam, RGB(0, 0, 0));
-		//	SetBkMode((HDC)wParam, TRANSPARENT);
-		//	return (UINT)App->AppBackground;
-		//}
+		if (GetDlgItem(hDlg, IDC_ST_DIM_POSITION) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
 
-		//// Rotation
+		if (GetDlgItem(hDlg, IDC_ST_DIM_ROTATION) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
 
-		//if (GetDlgItem(hDlg, IDC_STROTATION2) == (HWND)lParam)
-		//{
-		//	SetBkColor((HDC)wParam, RGB(0, 255, 0));
-		//	SetTextColor((HDC)wParam, RGB(0, 0, 0));
-		//	SetBkMode((HDC)wParam, TRANSPARENT);
-		//	return (UINT)App->AppBackground;
-		//}
-
+		if (GetDlgItem(hDlg, IDC_ST_DIM_SCALE) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+		
 		if (GetDlgItem(hDlg, IDC_STROTX) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 255, 0));
@@ -542,15 +548,6 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Dimensions_Dlg(HWND hDlg, UINT me
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->AppBackground;
 		}
-
-		//if (GetDlgItem(hDlg, IDC_STROTATION) == (HWND)lParam)
-		//{
-		//	SetBkColor((HDC)wParam, RGB(0, 255, 0));
-		//	SetTextColor((HDC)wParam, RGB(0, 0, 0));
-		//	SetBkMode((HDC)wParam, TRANSPARENT);
-		//	return (UINT)App->AppBackground;
-		//}
-
 
 		if (GetDlgItem(hDlg, IDC_STSIZEX) == (HWND)lParam)
 		{
@@ -909,131 +906,131 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Dimensions_Dlg(HWND hDlg, UINT me
 			return TRUE;
 		}*/
 
-		//if (LOWORD(wParam) == IDC_CBPOSXDELTA)
-		//{
-		//	switch (HIWORD(wParam)) // Find out what message it was
-		//	{
-		//	case CBN_DROPDOWN:
-		//		break;
-		//	case CBN_CLOSEUP:
-		//	{
-		//		char buff[MAX_PATH]{ 0 };
+		if (LOWORD(wParam) == IDC_CBPOSXDELTA)
+		{
+			switch (HIWORD(wParam)) // Find out what message it was
+			{
+			case CBN_DROPDOWN:
+				break;
+			case CBN_CLOSEUP:
+			{
+				char buff[MAX_PATH]{ 0 };
 
-		//		HWND temp = GetDlgItem(hDlg, IDC_CBPOSXDELTA);
-		//		int Index = SendMessage(temp, CB_GETCURSEL, 0, 0);
-		//		SendMessage(temp, CB_GETLBTEXT, Index, (LPARAM)buff);
+				HWND temp = GetDlgItem(hDlg, IDC_CBPOSXDELTA);
+				int Index = SendMessage(temp, CB_GETCURSEL, 0, 0);
+				SendMessage(temp, CB_GETLBTEXT, Index, (LPARAM)buff);
 
-		//		App->CLSB_Brushes->PosX_Delta = atof(buff);
-		//	}
-		//	}
+				App->CL_Properties_Brushes->PosX_Delta = atof(buff);
+			}
+			}
 
-		//	return TRUE;
-		//}
+			return TRUE;
+		}
 
-		//if (LOWORD(wParam) == IDC_CBPOSYDELTA)
-		//{
-		//	switch (HIWORD(wParam)) // Find out what message it was
-		//	{
-		//	case CBN_DROPDOWN:
-		//		break;
-		//	case CBN_CLOSEUP:
-		//	{
-		//		char buff[MAX_PATH]{ 0 };
+		if (LOWORD(wParam) == IDC_CBPOSYDELTA)
+		{
+			switch (HIWORD(wParam)) // Find out what message it was
+			{
+			case CBN_DROPDOWN:
+				break;
+			case CBN_CLOSEUP:
+			{
+				char buff[MAX_PATH]{ 0 };
 
-		//		HWND temp = GetDlgItem(hDlg, IDC_CBPOSYDELTA);
-		//		int Index = SendMessage(temp, CB_GETCURSEL, 0, 0);
-		//		SendMessage(temp, CB_GETLBTEXT, Index, (LPARAM)buff);
+				HWND temp = GetDlgItem(hDlg, IDC_CBPOSYDELTA);
+				int Index = SendMessage(temp, CB_GETCURSEL, 0, 0);
+				SendMessage(temp, CB_GETLBTEXT, Index, (LPARAM)buff);
 
-		//		App->CLSB_Brushes->PosY_Delta = atof(buff);
-		//	}
-		//	}
+				App->CL_Properties_Brushes->PosY_Delta = atof(buff);
+			}
+			}
 
-		//	return TRUE;
-		//}
+			return TRUE;
+		}
 
-		//if (LOWORD(wParam) == IDC_CBPOSZDELTA)
-		//{
-		//	switch (HIWORD(wParam)) // Find out what message it was
-		//	{
-		//	case CBN_DROPDOWN:
-		//		break;
-		//	case CBN_CLOSEUP:
-		//	{
-		//		char buff[MAX_PATH]{ 0 };
+		if (LOWORD(wParam) == IDC_CBPOSZDELTA)
+		{
+			switch (HIWORD(wParam)) // Find out what message it was
+			{
+			case CBN_DROPDOWN:
+				break;
+			case CBN_CLOSEUP:
+			{
+				char buff[MAX_PATH]{ 0 };
 
-		//		HWND temp = GetDlgItem(hDlg, IDC_CBPOSZDELTA);
-		//		int Index = SendMessage(temp, CB_GETCURSEL, 0, 0);
-		//		SendMessage(temp, CB_GETLBTEXT, Index, (LPARAM)buff);
+				HWND temp = GetDlgItem(hDlg, IDC_CBPOSZDELTA);
+				int Index = SendMessage(temp, CB_GETCURSEL, 0, 0);
+				SendMessage(temp, CB_GETLBTEXT, Index, (LPARAM)buff);
 
-		//		App->CLSB_Brushes->PosZ_Delta = atof(buff);
-		//	}
-		//	}
+				App->CL_Properties_Brushes->PosZ_Delta = atof(buff);
+			}
+			}
 
-		//	return TRUE;
-		//}
+			return TRUE;
+		}
 
-		//if (LOWORD(wParam) == IDC_CBROTXDELTA3)
-		//{
-		//	switch (HIWORD(wParam)) // Find out what message it was
-		//	{
-		//	case CBN_DROPDOWN:
-		//		break;
-		//	case CBN_CLOSEUP:
-		//	{
-		//		char buff[MAX_PATH]{ 0 };
+		if (LOWORD(wParam) == IDC_CBROTXDELTA)
+		{
+			switch (HIWORD(wParam)) // Find out what message it was
+			{
+			case CBN_DROPDOWN:
+				break;
+			case CBN_CLOSEUP:
+			{
+				char buff[MAX_PATH]{ 0 };
 
-		//		HWND temp = GetDlgItem(hDlg, IDC_CBROTXDELTA3);
-		//		int Index = SendMessage(temp, CB_GETCURSEL, 0, 0);
-		//		SendMessage(temp, CB_GETLBTEXT, Index, (LPARAM)buff);
+				HWND temp = GetDlgItem(hDlg, IDC_CBROTXDELTA);
+				int Index = SendMessage(temp, CB_GETCURSEL, 0, 0);
+				SendMessage(temp, CB_GETLBTEXT, Index, (LPARAM)buff);
 
-		//		App->CLSB_Brushes->RotX_Delta = atof(buff);
-		//	}
-		//	}
+				App->CL_Properties_Brushes->RotX_Delta = atof(buff);
+			}
+			}
 
-		//	return TRUE;
-		//}
+			return TRUE;
+		}
 
-		//if (LOWORD(wParam) == IDC_CBROTYDELTA3)
-		//{
-		//	switch (HIWORD(wParam)) // Find out what message it was
-		//	{
-		//	case CBN_DROPDOWN:
-		//		break;
-		//	case CBN_CLOSEUP:
-		//	{
-		//		char buff[MAX_PATH]{ 0 };
+		if (LOWORD(wParam) == IDC_CBROTYDELTA)
+		{
+			switch (HIWORD(wParam)) // Find out what message it was
+			{
+			case CBN_DROPDOWN:
+				break;
+			case CBN_CLOSEUP:
+			{
+				char buff[MAX_PATH]{ 0 };
 
-		//		HWND temp = GetDlgItem(hDlg, IDC_CBROTYDELTA3);
-		//		int Index = SendMessage(temp, CB_GETCURSEL, 0, 0);
-		//		SendMessage(temp, CB_GETLBTEXT, Index, (LPARAM)buff);
+				HWND temp = GetDlgItem(hDlg, IDC_CBROTYDELTA);
+				int Index = SendMessage(temp, CB_GETCURSEL, 0, 0);
+				SendMessage(temp, CB_GETLBTEXT, Index, (LPARAM)buff);
 
-		//		App->CLSB_Brushes->RotY_Delta = atof(buff);
-		//	}
-		//	}
+				App->CL_Properties_Brushes->RotY_Delta = atof(buff);
+			}
+			}
 
-		//	return TRUE;
-		//}
+			return TRUE;
+		}
 
-		//if (LOWORD(wParam) == IDC_CBROTZDELTA3)
-		//{
-		//	switch (HIWORD(wParam)) // Find out what message it was
-		//	{
-		//	case CBN_DROPDOWN:
-		//		break;
-		//	case CBN_CLOSEUP:
-		//	{
-		//		char buff[MAX_PATH]{ 0 };
+		if (LOWORD(wParam) == IDC_CBROTZDELTA)
+		{
+			switch (HIWORD(wParam)) // Find out what message it was
+			{
+			case CBN_DROPDOWN:
+				break;
+			case CBN_CLOSEUP:
+			{
+				char buff[MAX_PATH]{ 0 };
 
-		//		HWND temp = GetDlgItem(hDlg, IDC_CBROTZDELTA3);
-		//		int Index = SendMessage(temp, CB_GETCURSEL, 0, 0);
-		//		SendMessage(temp, CB_GETLBTEXT, Index, (LPARAM)buff);
+				HWND temp = GetDlgItem(hDlg, IDC_CBROTZDELTA);
+				int Index = SendMessage(temp, CB_GETCURSEL, 0, 0);
+				SendMessage(temp, CB_GETLBTEXT, Index, (LPARAM)buff);
 
-		//		App->CLSB_Brushes->RotZ_Delta = atof(buff);
-		//	}
-		//	}
+				App->CL_Properties_Brushes->RotZ_Delta = atof(buff);
+			}
+			}
 
-		//	return TRUE;
-		//}
+			return TRUE;
+		}
 
 		if (LOWORD(wParam) == IDOK)
 		{
@@ -1095,7 +1092,7 @@ void CL64_Properties_Brushes::Fill_ComboBox_PosDelta(HWND hDlg)
 	SendMessage(hDlg, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"100");
 	SendMessage(hDlg, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"128");
 
-	SendMessage(hDlg, CB_SETCURSEL, 3, 0);
+	SendMessage(hDlg, CB_SETCURSEL, 4, 0);
 }
 
 // *************************************************************************
@@ -1107,7 +1104,7 @@ void CL64_Properties_Brushes::Fill_ComboBox_RotDelta(HWND hDlg)
 	SendMessage(hDlg, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"45");
 	SendMessage(hDlg, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"90");
 
-	SendMessage(hDlg, CB_SETCURSEL, 0, 0);
+	SendMessage(hDlg, CB_SETCURSEL, 1, 0);
 }
 
 // *************************************************************************

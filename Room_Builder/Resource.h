@@ -230,7 +230,6 @@
 #define IDC_SBROTZ                      1178
 #define IDC_SBSCALEX                    1179
 #define IDC_SBSCALEY                    1180
-#define IDC_SCROLLBAR9                  1181
 #define IDC_SBSCALEZ                    1181
 #define IDC_CBPOSXDELTA                 1182
 #define IDC_CBPOSYDELTA                 1183
@@ -250,6 +249,10 @@
 #define IDC_STSIZEX                     1197
 #define IDC_STSIZEY                     1198
 #define IDC_STSIZEZ                     1199
+#define IDC_ST_DIM_POSITION             1200
+#define IDC_ST_DIM_ROTATION             1201
+#define IDC_ST_DIM_ROTATION2            1202
+#define IDC_ST_DIM_SCALE                1202
 #define ID_DEBUG_GENERAL                32771
 #define ID_TEMPLATES_INSERT             32772
 #define ID_BRUSH_SELECT                 32773
@@ -287,7 +290,7 @@
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        165
 #define _APS_NEXT_COMMAND_VALUE         32795
-#define _APS_NEXT_CONTROL_VALUE         1200
+#define _APS_NEXT_CONTROL_VALUE         1201
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif
