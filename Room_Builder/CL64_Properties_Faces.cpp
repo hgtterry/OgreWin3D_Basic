@@ -26,6 +26,7 @@ THE SOFTWARE.
 #include "resource.h"
 #include "CL64_App.h"
 #include "CL64_Properties_Faces.h"
+#include "Structures.cpp"
 
 CL64_Properties_Faces::CL64_Properties_Faces(void)
 {
@@ -63,6 +64,7 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 	{
 		SendDlgItemMessage(hDlg, IDC_LABEL_NUM_FACES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ST_NUM_FACES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_LST_FACELIST, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
 		App->CL_Properties_Faces->mNumberOfFaces = 0;
 		App->CL_Properties_Faces->mNumberOfFaces = App->CL_SelFaceList->SelFaceList_GetSize(App->CL_Doc->pSelFaces);
@@ -70,6 +72,8 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 		char buf[10];
 		sprintf(buf, "%i", App->CL_Properties_Faces->mNumberOfFaces);
 		SetDlgItemText(hDlg, IDC_ST_NUM_FACES, (LPCTSTR)buf);
+
+		App->CL_Properties_Faces->Update_Face_List(hDlg);
 
 		/*SendDlgItemMessage(hDlg, IDC_STTEXT2, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_STTEXT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
@@ -444,5 +448,30 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 		break;
 	}
 	}
+
 	return FALSE;
+}
+
+// *************************************************************************
+// *		Update_Face_List:- Terry and Hazel Flanigan 2025			*
+// *************************************************************************
+void CL64_Properties_Faces::Update_Face_List(HWND hDlg)
+{
+	int Count = 0;
+	Face* pFace = NULL;
+
+	SendDlgItemMessage(hDlg, IDC_LST_FACELIST, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
+
+	if (mNumberOfFaces > 0)
+	{
+		while (Count < mNumberOfFaces)
+		{
+			pFace = App->CL_SelFaceList->SelFaceList_GetFace(App->CL_Doc->pSelFaces, Count);
+			SendDlgItemMessage(hDlg, IDC_LST_FACELIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)pFace->Tex.Name);
+			Count++;
+		}
+	}
+
+	SendDlgItemMessage(hDlg, IDC_LST_FACELIST, LB_SETCURSEL, (WPARAM)0, (LPARAM)0);
+
 }
