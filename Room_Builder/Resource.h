@@ -251,8 +251,9 @@
 #define IDC_STSIZEZ                     1199
 #define IDC_ST_DIM_POSITION             1200
 #define IDC_ST_DIM_ROTATION             1201
-#define IDC_ST_DIM_ROTATION2            1202
+#define IDC_ST_SELECTED                 1201
 #define IDC_ST_DIM_SCALE                1202
+#define IDC_ST_SELECTED_NUM             1202
 #define ID_DEBUG_GENERAL                32771
 #define ID_TEMPLATES_INSERT             32772
 #define ID_BRUSH_SELECT                 32773
@@ -290,7 +291,7 @@
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        165
 #define _APS_NEXT_COMMAND_VALUE         32795
-#define _APS_NEXT_CONTROL_VALUE         1201
+#define _APS_NEXT_CONTROL_VALUE         1203
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif

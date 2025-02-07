@@ -110,7 +110,10 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Brush_Tabs(HWND hDlg, UINT messag
 		SendDlgItemMessage(hDlg, IDC_ST_GD_GROUPS, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
 
 		SendDlgItemMessage(hDlg, IDC_BRUSHCOUNT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
 		SendDlgItemMessage(hDlg, IDC_ST_GD_BRUSHCOUNT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_ST_SELECTED, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_ST_SELECTED_NUM, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
 		SendDlgItemMessage(hDlg, IDC_BT_GD_BRUSHPROPERTIES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
@@ -145,7 +148,7 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Brush_Tabs(HWND hDlg, UINT messag
 			return (UINT)App->AppBackground;
 		}
 
-		/*if (GetDlgItem(hDlg, IDC_ST_GD_SELECTED) == (HWND)lParam)
+		if (GetDlgItem(hDlg, IDC_ST_SELECTED) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 0, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
@@ -153,13 +156,13 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Brush_Tabs(HWND hDlg, UINT messag
 			return (UINT)App->AppBackground;
 		}
 
-		if (GetDlgItem(hDlg, IDC_ST_SELECTED) == (HWND)lParam)
+		if (GetDlgItem(hDlg, IDC_ST_SELECTED_NUM) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 0, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->AppBackground;
-		}*/
+		}
 
 		return FALSE;
 	}
@@ -344,6 +347,7 @@ void CL64_Properties_Brushes::OnSelchangeBrushlist(int Index, bool Clear)
 	{
 		App->CL_Doc->UpdateSelected();
 		App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
+		Update_SelectedBrushesCount_Dlg();
 	}
 }
 
@@ -403,7 +407,17 @@ void CL64_Properties_Brushes::Get_Index(const Brush* b)
 		b = b->Next;
 	}
 
-	//Update_Dlg_SelectedBrushesCount();
+	Update_SelectedBrushesCount_Dlg();
+}
+
+// *************************************************************************
+// * Update_SelectedBrushesCount_Dlg:- Terry and Hazel Flanigan 2023	*
+// *************************************************************************
+void CL64_Properties_Brushes::Update_SelectedBrushesCount_Dlg()
+{
+	char buff[100];
+	int NumSelBrushes = App->CL_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes);
+	SetDlgItemText(BrushesDlg_Hwnd, IDC_ST_SELECTED_NUM, _itoa(NumSelBrushes, buff, 10));
 }
 
 // *************************************************************************

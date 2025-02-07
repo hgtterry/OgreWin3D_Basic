@@ -281,12 +281,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             case ID_EDIT_DESELECTALL:
             {
                 App->CL_Panels->Deselect_All_Brushes_Update_Dlgs();
-                //App->CL_Doc->ResetAllSelections();
-               // App->CL_SelBrushList->SelBrushList_RemoveAll(App->CL_Doc->pSelBrushes);
-               // App->CL_SelFaceList->SelFaceList_RemoveAll(App->CL_Doc->pSelFaces);
-               // App->CL_Doc->UpdateSelected();
-
-               // App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
                 return 1;
             }
             

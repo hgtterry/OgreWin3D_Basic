@@ -36,6 +36,8 @@ public:
 	void Fill_ListBox();
 	void Get_Index(const Brush* b);
 	void OnSelchangeBrushlist(int Index, bool Clear);
+	void Update_SelectedBrushesCount_Dlg();
+
 	int Selected_Index;
 	Brush* Selected_Brush;
 
