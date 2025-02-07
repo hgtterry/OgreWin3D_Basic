@@ -352,7 +352,7 @@ void CL64_Properties_Brushes::OnSelchangeBrushlist(int Index, bool Clear)
 }
 
 // *************************************************************************
-// *			 Fill_ListBox:- Terry and Hazel Flanigan 2023			   *
+// *			 Fill_ListBox:- Terry and Hazel Flanigan 2025			   *
 // *************************************************************************
 void CL64_Properties_Brushes::Fill_ListBox()
 {
@@ -411,7 +411,7 @@ void CL64_Properties_Brushes::Get_Index(const Brush* b)
 }
 
 // *************************************************************************
-// * Update_SelectedBrushesCount_Dlg:- Terry and Hazel Flanigan 2023	*
+// * Update_SelectedBrushesCount_Dlg:- Terry and Hazel Flanigan 2025	*
 // *************************************************************************
 void CL64_Properties_Brushes::Update_SelectedBrushesCount_Dlg()
 {

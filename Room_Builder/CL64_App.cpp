@@ -1,7 +1,7 @@
 /*
 Copyright (c) 2024 - 2025 Inflanite_HGT W.T.Flanigan H.C.Flanigan
 
-Room Builder
+OW3D_Mesh_Builder
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -52,6 +52,8 @@ CL64_App::CL64_App(void)
 	CL_Properties_Templates =	nullptr;
 	CL_Properties_Brushes =		nullptr;
 	CL_Properties_Textures =	nullptr;
+	CL_Properties_Faces =		nullptr;
+
 	CL_Ogre	=					nullptr;
 	CL_Grid =					nullptr;
 	CL_Panels =					nullptr;
@@ -143,6 +145,8 @@ void CL64_App::InitApp(void)
 	CL_Properties_Templates =	new CL64_Properties_Templates();
 	CL_Properties_Brushes =		new CL64_Properties_Brushes();
 	CL_Properties_Textures =	new CL64_Properties_Textures();
+	CL_Properties_Faces =		new CL64_Properties_Faces();
+	
 	CL_Ogre =					new CL64_Ogre();
 	CL_Grid =					new CL64_Grid();
 	CL_Panels =					new CL64_Panels();
