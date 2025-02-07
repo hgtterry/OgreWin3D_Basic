@@ -65,11 +65,22 @@ CL64_Properties_Brushes::~CL64_Properties_Brushes()
 }
 
 // *************************************************************************
-// *	  	Show_GroupsDialog:- Terry and Hazel Flanigan 2025			   *
+// *	  	Show_Brushes_Dialog:- Terry and Hazel Flanigan 2025			   *
 // *************************************************************************
 void CL64_Properties_Brushes::Show_Brushes_Dialog(bool Show)
 {
 	ShowWindow(BrushesDlg_Hwnd, Show);
+}
+
+// *************************************************************************
+// *	  Enable_Options_Buttons:- Terry and Hazel Flanigan 2025		*
+// *************************************************************************
+void CL64_Properties_Brushes::Enable_Options_Buttons(bool Enable)
+{
+	EnableWindow(GetDlgItem(BrushesDlg_Hwnd, IDC_BT_GD_BRUSHPROPERTIES), Enable);
+	EnableWindow(GetDlgItem(BrushesDlg_Hwnd, IDC_BT_BRUSH_DIMENSIONS), Enable);
+	EnableWindow(GetDlgItem(BrushesDlg_Hwnd, IDC_BT_DELETE_SEL_BRUSH), Enable);
+
 }
 
 // *************************************************************************

@@ -586,7 +586,7 @@ void CL64_Doc::SelectOrtho(POINT point, ViewVars* v)
                 App->CL_Properties_Brushes->Get_Index(CurBrush);
 
                 App->CL_Top_Tabs->Enable_Brush_Options_Buttons(true, false);
-     
+                App->CL_Properties_Brushes->Enable_Options_Buttons(true);
             }
         } 
     }
@@ -595,7 +595,10 @@ void CL64_Doc::SelectOrtho(POINT point, ViewVars* v)
         App->CL_Top_Tabs->Enable_Brush_Options_Buttons(false, false);
         App->CL_Top_Tabs->Deselect_Faces_Dlg_Buttons();
 
+        App->CL_Properties_Brushes->Enable_Options_Buttons(false);
+
         App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
+        Debug
     }
 
 }

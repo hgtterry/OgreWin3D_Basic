@@ -30,6 +30,8 @@ public:
 	~CL64_Properties_Brushes();
 
 	void Show_Brushes_Dialog(bool Show);
+	void Enable_Options_Buttons(bool Enable);
+
 	void Start_Brush_Tabs_Dialog();
 	void Fill_ListBox();
 	void Get_Index(const Brush* b);
