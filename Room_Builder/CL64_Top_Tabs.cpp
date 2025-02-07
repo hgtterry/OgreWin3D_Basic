@@ -252,7 +252,9 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Headers(HWND hDlg, UINT message, WPARAM wPa
 	{
 		if (LOWORD(wParam) == IDC_BT_BRUSH_SELECT)
 		{
-			App->CL_Doc->DoGeneralSelect(false);
+			App->CL_Panels->Deselect_All_Brushes_Update_Dlgs();
+
+			/*App->CL_Doc->DoGeneralSelect(false);
 
 			App->CL_Doc->ResetAllSelections();
 			App->CL_Doc->UpdateSelected();
@@ -264,7 +266,7 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Headers(HWND hDlg, UINT message, WPARAM wPa
 			App->CL_Top_Tabs->Enable_Brush_Options_Buttons(false, false);
 			App->CL_Top_Tabs->Deselect_Faces_Dlg_Buttons();
 
-			App->CL_Properties_Brushes->Enable_Options_Buttons(false);
+			App->CL_Properties_Brushes->Enable_Options_Buttons(false);*/
 
 			RedrawWindow(App->CL_Top_Tabs->Headers_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 

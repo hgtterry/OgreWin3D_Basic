@@ -35,7 +35,9 @@ public:
 	void Enable_Select_Button(bool Enable, bool Active);
 	void Enable_Move_Button(bool Enable, bool Active);
 	void Deselect_Faces_Dlg_Buttons();
+	void Reset_Brush_Buttons();
 
+	bool flag_Brush_Select;
 	bool flag_Brush_Move;
 	bool flag_Brush_Rotate;
 
@@ -44,9 +46,6 @@ public:
 private:
 	static LRESULT CALLBACK Proc_Headers(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
-	void Reset_Brush_Buttons();
-
-	bool flag_Brush_Select;
 	bool flag_Brush_Scale;
 
 	bool flag_All_Faces;

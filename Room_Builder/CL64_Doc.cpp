@@ -592,12 +592,15 @@ void CL64_Doc::SelectOrtho(POINT point, ViewVars* v)
     }
     else
     {
-        App->CL_Top_Tabs->Enable_Brush_Options_Buttons(false, false);
+        App->CL_Panels->Deselect_All_Brushes_Update_Dlgs();
+
+       /* App->CL_Top_Tabs->Enable_Brush_Options_Buttons(false, false);
         App->CL_Top_Tabs->Deselect_Faces_Dlg_Buttons();
 
         App->CL_Properties_Brushes->Enable_Options_Buttons(false);
 
-        App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
+        App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);*/
+
         Debug
     }
 

@@ -30,5 +30,8 @@ public:
 	~CL64_Panels();
 
 	void Resize_OgreWin(void);
+
+	void Deselect_All_Brushes_Update_Dlgs(void);
+
 };
 

@@ -34,9 +34,9 @@ CL64_Panels::~CL64_Panels()
 {
 }
 
-// *************************************************************************
-// *			Resize_OgreWin:- Terry and Hazel Flanigan 2024			   *
-// *************************************************************************
+// ************************************************************************
+// *			Resize_OgreWin:- Terry and Hazel Flanigan 2025			*
+// ************************************************************************
 void CL64_Panels::Resize_OgreWin(void)
 {
 	RECT rcl;
@@ -59,4 +59,25 @@ void CL64_Panels::Resize_OgreWin(void)
 		}
 
 	}
+}
+
+// *************************************************************************
+// *  Deselect_All_Brushes_Update_Dlgs:- Terry and Hazel Flanigan 2025   *
+// *************************************************************************
+void CL64_Panels::Deselect_All_Brushes_Update_Dlgs(void)
+{
+	App->CL_Doc->DoGeneralSelect(false);
+	App->CL_Doc->ResetAllSelections();
+	App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
+
+	App->CL_Top_Tabs->Enable_Brush_Options_Buttons(false, false);
+	App->CL_Top_Tabs->Deselect_Faces_Dlg_Buttons();
+
+	App->CL_Top_Tabs->Reset_Brush_Buttons();
+	App->CL_Top_Tabs->flag_Brush_Select = 1;
+
+	App->CL_Properties_Brushes->Enable_Options_Buttons(false);
+
+	App->CL_Top_Tabs->Deselect_Faces_Dlg_Buttons();
+
 }
