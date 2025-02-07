@@ -28,5 +28,17 @@ class CL64_Properties_Faces
 public:
 	CL64_Properties_Faces(void);
 	~CL64_Properties_Faces(void);
+
+	void Start_FaceDialog();
+
+	HWND FaceDlg_Hwnd;
+
+	int mNumberOfFaces;
+
+	bool f_FaceDlg_Active;
+
+private:
+	static LRESULT CALLBACK Proc_FaceDialog(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+
 };
 

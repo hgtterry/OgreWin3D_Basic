@@ -34,7 +34,9 @@ CL64_Properties_Brushes::CL64_Properties_Brushes()
 	Selected_Brush = nullptr;
 
 	Selected_Index = 0;
+
 	flag_Brushes_Dlg_Created = 0;
+	flag_Dimension_Dlg_Active = 0;
 
 	App->CL_Maths->Vector3_Clear(&FinalScale);
 	App->CL_Maths->Vector3_Clear(&FinalRot);
@@ -425,14 +427,18 @@ void CL64_Properties_Brushes::Update_SelectedBrushesCount_Dlg()
 // *************************************************************************
 void CL64_Properties_Brushes::Start_Dimensions_Dlg()
 {
-	int NumberOfBrushes = App->CL_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes);
-	if (NumberOfBrushes > 0)
+	if (flag_Dimension_Dlg_Active == 0)
 	{
-		Dimensions_Dlg_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_BRUSH_DIMENSIONS, App->MainHwnd, (DLGPROC)Proc_Dimensions_Dlg);
-	}
-	else
-	{
-		App->Say("No Brush Selected");
+		int NumberOfBrushes = App->CL_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes);
+		if (NumberOfBrushes > 0)
+		{
+			Dimensions_Dlg_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_BRUSH_DIMENSIONS, App->MainHwnd, (DLGPROC)Proc_Dimensions_Dlg);
+			flag_Dimension_Dlg_Active = 1;
+		}
+		else
+		{
+			App->Say("No Brush Selected");
+		}
 	}
 }
 
@@ -933,7 +939,7 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Dimensions_Dlg(HWND hDlg, UINT me
 
 		if (LOWORD(wParam) == IDC_CBPOSXDELTA)
 		{
-			switch (HIWORD(wParam)) // Find out what message it was
+			switch (HIWORD(wParam))
 			{
 			case CBN_DROPDOWN:
 				break;
@@ -954,7 +960,7 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Dimensions_Dlg(HWND hDlg, UINT me
 
 		if (LOWORD(wParam) == IDC_CBPOSYDELTA)
 		{
-			switch (HIWORD(wParam)) // Find out what message it was
+			switch (HIWORD(wParam))
 			{
 			case CBN_DROPDOWN:
 				break;
@@ -975,7 +981,7 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Dimensions_Dlg(HWND hDlg, UINT me
 
 		if (LOWORD(wParam) == IDC_CBPOSZDELTA)
 		{
-			switch (HIWORD(wParam)) // Find out what message it was
+			switch (HIWORD(wParam))
 			{
 			case CBN_DROPDOWN:
 				break;
@@ -996,7 +1002,7 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Dimensions_Dlg(HWND hDlg, UINT me
 
 		if (LOWORD(wParam) == IDC_CBROTXDELTA)
 		{
-			switch (HIWORD(wParam)) // Find out what message it was
+			switch (HIWORD(wParam))
 			{
 			case CBN_DROPDOWN:
 				break;
@@ -1017,7 +1023,7 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Dimensions_Dlg(HWND hDlg, UINT me
 
 		if (LOWORD(wParam) == IDC_CBROTYDELTA)
 		{
-			switch (HIWORD(wParam)) // Find out what message it was
+			switch (HIWORD(wParam))
 			{
 			case CBN_DROPDOWN:
 				break;
@@ -1038,7 +1044,7 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Dimensions_Dlg(HWND hDlg, UINT me
 
 		if (LOWORD(wParam) == IDC_CBROTZDELTA)
 		{
-			switch (HIWORD(wParam)) // Find out what message it was
+			switch (HIWORD(wParam))
 			{
 			case CBN_DROPDOWN:
 				break;
@@ -1059,14 +1065,14 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Dimensions_Dlg(HWND hDlg, UINT me
 
 		if (LOWORD(wParam) == IDOK)
 		{
-			//App->CLSB_Brushes->Dimensions_Dlg_Running = 0;
+			App->CL_Properties_Brushes->flag_Dimension_Dlg_Active = 0;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == IDCANCEL)
 		{
-			//App->CLSB_Brushes->Dimensions_Dlg_Running = 0;
+			App->CL_Properties_Brushes->flag_Dimension_Dlg_Active = 0;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}

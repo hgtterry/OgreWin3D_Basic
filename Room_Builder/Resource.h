@@ -47,6 +47,7 @@
 #define IDB_CREATERAMP                  162
 #define IDB_HOLLOWBOX                   163
 #define IDD_BRUSH_DIMENSIONS            164
+#define IDD_PROPS_FACES                 165
 #define IDC_BANNER                      1000
 #define IDC_STTEXT                      1001
 #define IDC_STMESSAGE                   1002
@@ -254,6 +255,9 @@
 #define IDC_ST_SELECTED                 1201
 #define IDC_ST_DIM_SCALE                1202
 #define IDC_ST_SELECTED_NUM             1202
+#define IDC_LST_FACELIST                1203
+#define IDC_LABEL_NUM_FACES             1204
+#define IDC_ST_NUM_FACES                1205
 #define ID_DEBUG_GENERAL                32771
 #define ID_TEMPLATES_INSERT             32772
 #define ID_BRUSH_SELECT                 32773
@@ -289,9 +293,9 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
-#define _APS_NEXT_RESOURCE_VALUE        165
+#define _APS_NEXT_RESOURCE_VALUE        166
 #define _APS_NEXT_COMMAND_VALUE         32795
-#define _APS_NEXT_CONTROL_VALUE         1203
+#define _APS_NEXT_CONTROL_VALUE         1206
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif

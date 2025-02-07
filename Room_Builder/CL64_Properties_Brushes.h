@@ -82,6 +82,6 @@ private:
 	HWND Dimensions_Dlg_hWnd;
 
 	bool flag_Brushes_Dlg_Created;
-
+	bool flag_Dimension_Dlg_Active;
 };
 
