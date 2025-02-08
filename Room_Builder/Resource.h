@@ -265,8 +265,10 @@
 #define IDC_ST_EDITANGLE                1210
 #define IDC_SBXOFFSET                   1211
 #define IDC_SBYOFFSET                   1212
-#define IDC_SBYOFFSET2                  1213
 #define IDC_SBANGLE                     1213
+#define IDC_SBXSCALE                    1214
+#define IDC_SBXOFFSET3                  1215
+#define IDC_SBYSCALE                    1215
 #define ID_DEBUG_GENERAL                32771
 #define ID_TEMPLATES_INSERT             32772
 #define ID_BRUSH_SELECT                 32773

@@ -263,7 +263,8 @@ void CL64_ImGui::App_Tool_Selection_GUI(void)
 		ImGui::Separator();
 		ImGui::Text("Selected Brushs:= %i", App->CL_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes));
 		ImGui::Text("Current Brush:= %s", App->CL_Doc->CurBrush->Name);
-
+		//ImGui::Text("Current Brush Faces:= %i", App->CL_Brush->Brush_GetNumFaces(App->CL_Doc->CurBrush));
+		
 		ImGui::Separator();
 
 		ImGui::Text("Selected Faces:= %i", App->CL_SelFaceList->SelFaceList_GetSize(App->CL_Doc->pSelFaces));

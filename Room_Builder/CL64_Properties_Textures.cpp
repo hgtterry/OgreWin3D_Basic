@@ -151,7 +151,7 @@ LRESULT CALLBACK CL64_Properties_Textures::Proc_TextureDialog(HWND hDlg, UINT me
 	{
 		if (LOWORD(wParam) == IDC_BT_TEXTURE_FACE_PROPS)
 		{
-			App->CL_Properties_Faces->Start_FaceDialog();
+			//App->CL_Properties_Faces->Start_FaceDialog();
 			return TRUE;
 		}
 

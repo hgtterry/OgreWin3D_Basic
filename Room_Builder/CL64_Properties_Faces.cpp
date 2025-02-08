@@ -43,6 +43,9 @@ CL64_Properties_Faces::CL64_Properties_Faces(void)
 	m_TextureYOffset = 0;
 	m_TextureXOffset = 0;
 
+	ScaleX_Delta = 0.01;
+	ScaleY_Delta = 0.01;
+
 	m_Selected_Face_Index = 0;
 
 	f_FaceDlg_Active = 0;
@@ -267,6 +270,8 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 			{
 			case SB_LINERIGHT:
 			{
+				App->CL_Doc->SelectAllFacesInBrushes();
+
 				App->CL_Properties_Faces->m_TextureAngle++;
 				App->CL_Properties_Faces->UpdateDialog(hDlg);
 				
@@ -275,13 +280,14 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 				App->CL_Face->Face_SetTextureRotate(App->CL_Properties_Faces->m_Selected_Face, pAngle);
 				App->CL_Doc->UpdateAllViews(Enums::UpdateViews_All);
 
-				App->CL_Ogre->RenderFrame(7);
+				App->CL_Ogre->RenderFrame(2);
 
 				break;
 			}
 
 			case SB_LINELEFT:
 			{
+				//App->CL_Doc->SelectAllFacesInBrushes();
 				App->CL_Properties_Faces->m_TextureAngle--;
 				App->CL_Properties_Faces->UpdateDialog(hDlg);
 				
@@ -290,7 +296,7 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 				App->CL_Face->Face_SetTextureRotate(App->CL_Properties_Faces->m_Selected_Face, pAngle);
 				App->CL_Doc->UpdateAllViews(Enums::UpdateViews_All);
 
-				App->CL_Ogre->RenderFrame(7);
+				App->CL_Ogre->RenderFrame(2);
 
 				break;
 			}
@@ -317,6 +323,8 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 
 				App->CL_Doc->UpdateAllViews(Enums::UpdateViews_All);
 
+				App->CL_Ogre->RenderFrame(7);
+
 				break;
 			}
 
@@ -332,6 +340,8 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 				App->CL_Face->Face_SetTextureShift(App->CL_Properties_Faces->m_Selected_Face, pXOffset, yOff);
 
 				App->CL_Doc->UpdateAllViews(Enums::UpdateViews_All);
+
+				App->CL_Ogre->RenderFrame(7);
 
 				break;
 			}
@@ -357,7 +367,8 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 				App->CL_Face->Face_SetTextureShift(App->CL_Properties_Faces->m_Selected_Face, xOff, pYOffset);
 
 				App->CL_Doc->UpdateAllViews(Enums::UpdateViews_All);
-				//App->CL_FaceDialog->OnKillfocusYOffset();
+				
+				App->CL_Ogre->RenderFrame(7);
 
 				break;
 			}
@@ -375,6 +386,52 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 
 				App->CL_Doc->UpdateAllViews(Enums::UpdateViews_All);
 
+				App->CL_Ogre->RenderFrame(7);
+
+				break;
+			}
+			}
+
+			return 0;
+		}
+
+		// -------- Scale X
+		if (HWND(lParam) == GetDlgItem(hDlg, IDC_SBXSCALE))
+		{
+			switch ((int)LOWORD(wParam))
+			{
+			case SB_LINERIGHT:
+			{
+				App->CL_Properties_Faces->m_TextureXScale = App->CL_Properties_Faces->m_TextureXScale + App->CL_Properties_Faces->ScaleX_Delta;
+				App->CL_Properties_Faces->UpdateDialog(hDlg);
+				
+				float pXScale = (float)App->CL_Properties_Faces->m_TextureXScale;
+				float xScale, yScale;
+
+				App->CL_Face->Face_GetTextureScale(App->CL_Properties_Faces->m_Selected_Face, &xScale, &yScale);
+				App->CL_Face->Face_SetTextureScale(App->CL_Properties_Faces->m_Selected_Face, pXScale, yScale);
+
+				App->CL_Doc->UpdateAllViews(Enums::UpdateViews_All);
+
+				App->CL_Ogre->RenderFrame(7);
+
+				break;
+			}
+			case SB_LINELEFT:
+			{
+				App->CL_Properties_Faces->m_TextureXScale = App->CL_Properties_Faces->m_TextureXScale - App->CL_Properties_Faces->ScaleX_Delta;
+				App->CL_Properties_Faces->UpdateDialog(hDlg);
+				
+				float pXScale = (float)App->CL_Properties_Faces->m_TextureXScale;
+				float xScale, yScale;
+
+				App->CL_Face->Face_GetTextureScale(App->CL_Properties_Faces->m_Selected_Face, &xScale, &yScale);
+				App->CL_Face->Face_SetTextureScale(App->CL_Properties_Faces->m_Selected_Face, pXScale, yScale);
+
+				App->CL_Doc->UpdateAllViews(Enums::UpdateViews_All);
+
+				App->CL_Ogre->RenderFrame(7);
+
 				break;
 			}
 			}
@@ -383,58 +440,70 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 		}
 
 		// -------- Scale Y
-		/*if (HWND(lParam) == GetDlgItem(hDlg, IDC_SBYSCALE_UNIT))
+		if (HWND(lParam) == GetDlgItem(hDlg, IDC_SBYSCALE))
 		{
 			switch ((int)LOWORD(wParam))
 			{
-			case SB_LINEUP:
+			case SB_LINERIGHT:
+			{
+				App->CL_Properties_Faces->m_TextureYScale = App->CL_Properties_Faces->m_TextureYScale + App->CL_Properties_Faces->ScaleY_Delta;
+				App->CL_Properties_Faces->UpdateDialog(hDlg);
+				
+				float pYScale = (float)App->CL_Properties_Faces->m_TextureYScale;
+				float xScale, yScale;
 
-				App->CL_FaceDialog->m_TextureYScale = App->CL_FaceDialog->m_TextureYScale + App->CL_FaceDialog->ScaleY_Delta;
-				App->CL_FaceDialog->UpdateDialog(hDlg);
-				App->CL_FaceDialog->OnKillfocusYScale();
+				App->CL_Face->Face_GetTextureScale(App->CL_Properties_Faces->m_Selected_Face, &xScale, &yScale);
+				App->CL_Face->Face_SetTextureScale(App->CL_Properties_Faces->m_Selected_Face, xScale, pYScale);
 
-				break;
+				App->CL_Doc->UpdateAllViews(Enums::UpdateViews_All);
 
-			case SB_LINEDOWN:
-				App->CL_FaceDialog->m_TextureYScale = App->CL_FaceDialog->m_TextureYScale - App->CL_FaceDialog->ScaleY_Delta;
-				App->CL_FaceDialog->UpdateDialog(hDlg);
-				App->CL_FaceDialog->OnKillfocusYScale();
+				App->CL_Ogre->RenderFrame(7);
 
 				break;
 			}
 
-			return 0;
-		}*/
-
-		// -------- Scale X
-		/*if (HWND(lParam) == GetDlgItem(hDlg, IDC_SBXSCALE_UNIT))
-		{
-			switch ((int)LOWORD(wParam))
+			case SB_LINELEFT:
 			{
-			case SB_LINEUP:
+				App->CL_Properties_Faces->m_TextureYScale = App->CL_Properties_Faces->m_TextureYScale - App->CL_Properties_Faces->ScaleY_Delta;
+				App->CL_Properties_Faces->UpdateDialog(hDlg);
+				
+				float pYScale = (float)App->CL_Properties_Faces->m_TextureYScale;
+				float xScale, yScale;
 
-				App->CL_FaceDialog->m_TextureXScale = App->CL_FaceDialog->m_TextureXScale + App->CL_FaceDialog->ScaleX_Delta;
-				App->CL_FaceDialog->UpdateDialog(hDlg);
-				App->CL_FaceDialog->OnKillfocusXScale();
+				App->CL_Face->Face_GetTextureScale(App->CL_Properties_Faces->m_Selected_Face, &xScale, &yScale);
+				App->CL_Face->Face_SetTextureScale(App->CL_Properties_Faces->m_Selected_Face, xScale, pYScale);
 
-				break;
+				App->CL_Doc->UpdateAllViews(Enums::UpdateViews_All);
 
-			case SB_LINEDOWN:
-				App->CL_FaceDialog->m_TextureXScale = App->CL_FaceDialog->m_TextureXScale - App->CL_FaceDialog->ScaleX_Delta;
-				App->CL_FaceDialog->UpdateDialog(hDlg);
-				App->CL_FaceDialog->OnKillfocusXScale();
+				App->CL_Ogre->RenderFrame(7);
 
 				break;
 			}
+			}
 
 			return 0;
-		}*/
+		}
 
 		return 0;
 	}
 
 	case WM_COMMAND:
 	{
+		if (LOWORD(wParam) == IDC_LST_FACELIST)
+		{
+			int Index = SendDlgItemMessage(hDlg, IDC_LST_FACELIST, LB_GETCURSEL, (WPARAM)0, (LPARAM)0);
+			if (Index == -1)
+			{
+				return TRUE;
+			}
+			else
+			{
+				App->CL_Properties_Faces->m_Selected_Face_Index = Index;
+				App->CL_Properties_Faces->m_Selected_Face = App->CL_SelFaceList->SelFaceList_GetFace(App->CL_Doc->pSelFaces, Index);
+			}
+
+			return TRUE;
+		}
 
 		/*if (LOWORD(wParam) == IDC_TEXTURELOCK)
 		{
@@ -563,6 +632,8 @@ void CL64_Properties_Faces::Update_Face_List(HWND hDlg)
 	Face* pFace = NULL;
 
 	SendDlgItemMessage(hDlg, IDC_LST_FACELIST, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
+
+	//App->CL_Brush->Brush_GetNumFaces(App->CL_Doc->CurBrush);
 
 	if (m_NumberOfFaces > 0)
 	{

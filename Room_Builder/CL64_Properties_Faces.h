@@ -50,6 +50,9 @@ private:
 	float m_TextureXScale;
 	float m_TextureYScale;
 
+	float ScaleX_Delta;
+	float ScaleY_Delta;
+
 	int m_TextureYOffset;
 	int m_TextureXOffset;
 
