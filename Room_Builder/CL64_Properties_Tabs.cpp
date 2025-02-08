@@ -43,6 +43,14 @@ CL64_Properties_Tabs::~CL64_Properties_Tabs()
 }
 
 // *************************************************************************
+// *	  Show_Tabs_Control_Dlg:- Terry and Hazel Flanigan 2025		*
+// *************************************************************************
+void CL64_Properties_Tabs::Show_Tabs_Control_Dlg(bool Show)
+{
+	ShowWindow(Tabs_Control_Hwnd, Show);
+}
+
+// *************************************************************************
 // *	  	Start_Tabs_Control_Dlg:- Terry and Hazel Flanigan 2025		   *
 // *************************************************************************
 void CL64_Properties_Tabs::Start_Tabs_Control_Dlg()
@@ -51,7 +59,7 @@ void CL64_Properties_Tabs::Start_Tabs_Control_Dlg()
 	Tabs_Control_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_TABSDIALOG, App->MainHwnd, (DLGPROC)Proc_Tabs_Control);
 
 	flag_Tabs_Dlg_Active = 1;
-
+	
 	App->CL_Properties_Brushes->Start_Brush_Tabs_Dialog();
 	App->CL_Properties_Brushes->Show_Brushes_Dialog(false);
 
@@ -61,6 +69,7 @@ void CL64_Properties_Tabs::Start_Tabs_Control_Dlg()
 	App->CL_Properties_Templates->Start_TemplatesDialog();
 	App->CL_Properties_Templates->Show_TemplatesDialog(true);
 
+	CheckMenuItem(App->mMenu, ID_WINDOW_PROPERTIES, MF_BYCOMMAND | MF_CHECKED);
 }
 
 // *************************************************************************
@@ -171,51 +180,22 @@ LRESULT CALLBACK CL64_Properties_Tabs::Proc_Tabs_Control(HWND hDlg, UINT message
 			return TRUE;
 		}
 
-		//if (LOWORD(wParam) == IDC_BT_3DSETTINGS)
-		//{
-		//	if (App->CLSB_Tabs_True3D_Dlg->GameEditor_Active_Flag == 1)
-		//	{
-
-		//		App->CLSB_Tabs_True3D_Dlg->GameEditor_Active_Flag = 0;
-		//		RedrawWindow(App->CLSB_Tabs_True3D_Dlg->Game_Tab_hDlg_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-
-		//		App->CLSB_Equity->Equity_Render_Mode = Enums::EQ_Mode_GameDirector;
-
-		//		App->CLSB_Game_Editor->Hide_Game_Editor_Dialog();
-		//		RedrawWindow(App->CLSB_Tabs_True3D_Dlg->Game_Tab_hDlg_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-		//	}
-		//	else
-		//	{
-		//		/*if (App->BR_True3D_Mode_Active == 1)
-		//		{
-		//			App->CLSB_BR_Render->Exit_BR_3D_Mode();
-		//			App->BR_True3D_Mode_Active = 0;
-		//			App->CLSB_ViewMgrDlg->Was_BR_True3D_Mode_Active = 1;
-		//		}*/
-
-		//		App->CLSB_Tabs_True3D_Dlg->GameEditor_Active_Flag = 1;
-		//		App->CLSB_Game_Editor->Go_Game_Editor();
-		//	}
-		//	/*App->CLSB_TabsControl->Hide_Dialogs();
-		//	App->CLSB_TabsControl->Tab_3DSettings_Flag = 1;
-		//	App->CLSB_Tabs_True3D_Dlg->Show_Game_Dlg(1);*/
-
-		//	//RedrawWindow(App->CLSB_TabsControl->Tabs_Control_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-		//	return TRUE;
-		//}
-
 		// -----------------------------------------------------------------
 		if (LOWORD(wParam) == IDOK)
 		{
 			App->CL_Properties_Tabs->flag_Tabs_Dlg_Active = 0;
-			EndDialog(hDlg, LOWORD(wParam));
+			App->CL_Properties_Tabs->Show_Tabs_Control_Dlg(false);
+			CheckMenuItem(App->mMenu, ID_WINDOW_PROPERTIES, MF_BYCOMMAND | MF_UNCHECKED);
+			//EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == IDCANCEL)
 		{
 			App->CL_Properties_Tabs->flag_Tabs_Dlg_Active = 0;
-			EndDialog(hDlg, LOWORD(wParam));
+			App->CL_Properties_Tabs->Show_Tabs_Control_Dlg(false);
+			CheckMenuItem(App->mMenu, ID_WINDOW_PROPERTIES, MF_BYCOMMAND | MF_UNCHECKED);
+			//EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
 
@@ -238,7 +218,6 @@ void CL64_Properties_Tabs::Hide_Dialogs()
 	App->CL_Properties_Textures->Show_Textures_Dialog(false);
 	App->CL_Properties_Brushes->Show_Brushes_Dialog(false);
 	App->CL_Properties_Templates->Show_TemplatesDialog(false);
-	//App->CLSB_Tabs_True3D_Dlg->Show_Game_Dlg(0);
 
 	RedrawWindow(Tabs_Control_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 }

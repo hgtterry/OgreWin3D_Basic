@@ -394,6 +394,25 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 App->CL_TXL_Editor->Start_Texl_Dialog();
                 return 1;
             }
+
+            // ----------------------------- Windows
+            case ID_WINDOW_PROPERTIES:
+            {
+                if (App->CL_Properties_Tabs->flag_Tabs_Dlg_Active == 1)
+                {
+                    App->CL_Properties_Tabs->Show_Tabs_Control_Dlg(false);
+                    App->CL_Properties_Tabs->flag_Tabs_Dlg_Active = 0;
+                    CheckMenuItem(App->mMenu, ID_WINDOW_PROPERTIES, MF_BYCOMMAND | MF_UNCHECKED);
+                }
+                else
+                {
+                    App->CL_Properties_Tabs->Show_Tabs_Control_Dlg(true);
+                    App->CL_Properties_Tabs->flag_Tabs_Dlg_Active = 1;
+                    CheckMenuItem(App->mMenu, ID_WINDOW_PROPERTIES, MF_BYCOMMAND | MF_CHECKED);
+                }
+
+                return 1;
+            }
            
             // ---------------------------------------------
             case IDM_ABOUT:

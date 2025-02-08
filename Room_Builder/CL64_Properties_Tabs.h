@@ -29,6 +29,7 @@ public:
 	CL64_Properties_Tabs();
 	~CL64_Properties_Tabs();
 
+	void Show_Tabs_Control_Dlg(bool Show);
 	void Start_Tabs_Control_Dlg();
 
 	void Select_Brushes_Tab();
