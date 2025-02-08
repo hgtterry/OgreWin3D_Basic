@@ -713,3 +713,11 @@ void CL64_Properties_Textures::Get_Selected_Face()
 		List_Selection_Changed();
 	}
 }
+
+// *************************************************************************
+// *		Enable_FaceProps_Button:- Terry and Hazel Flanigan 2025		*
+// *************************************************************************
+void CL64_Properties_Textures::Enable_FaceProps_Button(bool Enable)
+{
+	EnableWindow(GetDlgItem(Textures_Dlg_Hwnd, IDC_BT_TEXTURE_FACE_PROPS), Enable);
+}

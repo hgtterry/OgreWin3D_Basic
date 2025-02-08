@@ -32,7 +32,18 @@ CL64_Properties_Faces::CL64_Properties_Faces(void)
 {
 	FaceDlg_Hwnd = nullptr;
 
-	mNumberOfFaces = 0;
+	m_Selected_Face = NULL;
+
+	m_NumberOfFaces = 0;
+
+	m_TextureAngle = 0;
+	m_TextureXScale = 0;
+	m_TextureYScale = 0;
+
+	m_TextureYOffset = 0;
+	m_TextureXOffset = 0;
+
+	m_Selected_Face_Index = 0;
 
 	f_FaceDlg_Active = 0;
 }
@@ -66,14 +77,25 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 		SendDlgItemMessage(hDlg, IDC_ST_NUM_FACES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_LST_FACELIST, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
-		App->CL_Properties_Faces->mNumberOfFaces = 0;
-		App->CL_Properties_Faces->mNumberOfFaces = App->CL_SelFaceList->SelFaceList_GetSize(App->CL_Doc->pSelFaces);
+		SendDlgItemMessage(hDlg, IDC_ST_EDITXOFFSET, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_ST_EDITYOFFSET, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_ST_EDITXSCALE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_ST_EDITYSCALE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_ST_EDITANGLE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
+		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		App->CL_Properties_Faces->m_NumberOfFaces = 0;
+		App->CL_Properties_Faces->m_NumberOfFaces = App->CL_SelFaceList->SelFaceList_GetSize(App->CL_Doc->pSelFaces);
 
 		char buf[10];
-		sprintf(buf, "%i", App->CL_Properties_Faces->mNumberOfFaces);
+		sprintf(buf, "%i", App->CL_Properties_Faces->m_NumberOfFaces);
 		SetDlgItemText(hDlg, IDC_ST_NUM_FACES, (LPCTSTR)buf);
 
 		App->CL_Properties_Faces->Update_Face_List(hDlg);
+		App->CL_Properties_Faces->Update_Face_Members();
+		App->CL_Properties_Faces->UpdateDialog(hDlg);
 
 		/*SendDlgItemMessage(hDlg, IDC_STTEXT2, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_STTEXT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
@@ -138,31 +160,47 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 			return (UINT)App->AppBackground;
 		}
 
-		/*if (GetDlgItem(hDlg, IDC_LABEL_TEXTURE_OFFSET_SCALEX) == (HWND)lParam)
+		if (GetDlgItem(hDlg, IDC_ST_EDITXOFFSET) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 0, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
 			SetBkMode((HDC)wParam, TRANSPARENT);
-			return (UINT)App->AppBackground;
+			return (UINT)App->Brush_White;
 		}
 
-		if (GetDlgItem(hDlg, IDC_LABEL_TEXTURE_OFFSET_SCALEY) == (HWND)lParam)
+		if (GetDlgItem(hDlg, IDC_ST_EDITYOFFSET) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 0, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
 			SetBkMode((HDC)wParam, TRANSPARENT);
-			return (UINT)App->AppBackground;
+			return (UINT)App->Brush_White;
 		}
-
-		if (GetDlgItem(hDlg, IDC_LABEL_TEXTURE_OFFSET_SCALEANGLE) == (HWND)lParam)
+		
+		if (GetDlgItem(hDlg, IDC_ST_EDITXSCALE) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 0, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
 			SetBkMode((HDC)wParam, TRANSPARENT);
-			return (UINT)App->AppBackground;
+			return (UINT)App->Brush_White;
 		}
 
-		if (GetDlgItem(hDlg, IDC_TEXTURELOCK) == (HWND)lParam)
+		if (GetDlgItem(hDlg, IDC_ST_EDITYSCALE) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->Brush_White;
+		}
+
+		if (GetDlgItem(hDlg, IDC_ST_EDITANGLE) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->Brush_White;
+		}
+
+		/*if (GetDlgItem(hDlg, IDC_TEXTURELOCK) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 0, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
@@ -203,82 +241,146 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 			return CDRF_DODEFAULT;
 		}*/
 
+		if (some_item->idFrom == IDOK)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDCANCEL)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
 		return CDRF_DODEFAULT;
 	}
 
-	case WM_VSCROLL:
+	case WM_HSCROLL:
 	{
 		// -------- Angle
-		/*if (HWND(lParam) == GetDlgItem(hDlg, IDC_SBANGLE_UNIT))
+		if (HWND(lParam) == GetDlgItem(hDlg, IDC_SBANGLE))
 		{
 			switch ((int)LOWORD(wParam))
 			{
-			case SB_LINEUP:
+			case SB_LINERIGHT:
+			{
+				App->CL_Properties_Faces->m_TextureAngle++;
+				App->CL_Properties_Faces->UpdateDialog(hDlg);
+				
+				float pAngle = (float)App->CL_Properties_Faces->m_TextureAngle;
 
-				App->CL_FaceDialog->m_TextureAngle++;
-				App->CL_FaceDialog->UpdateDialog(hDlg);
-				App->CL_FaceDialog->OnKillfocusAngle();
+				App->CL_Face->Face_SetTextureRotate(App->CL_Properties_Faces->m_Selected_Face, pAngle);
+				App->CL_Doc->UpdateAllViews(Enums::UpdateViews_All);
 
-				break;
-
-			case SB_LINEDOWN:
-				App->CL_FaceDialog->m_TextureAngle--;
-				App->CL_FaceDialog->UpdateDialog(hDlg);
-				App->CL_FaceDialog->OnKillfocusAngle();
+				App->CL_Ogre->RenderFrame(7);
 
 				break;
 			}
 
+			case SB_LINELEFT:
+			{
+				App->CL_Properties_Faces->m_TextureAngle--;
+				App->CL_Properties_Faces->UpdateDialog(hDlg);
+				
+				float pAngle = (float)App->CL_Properties_Faces->m_TextureAngle;
+
+				App->CL_Face->Face_SetTextureRotate(App->CL_Properties_Faces->m_Selected_Face, pAngle);
+				App->CL_Doc->UpdateAllViews(Enums::UpdateViews_All);
+
+				App->CL_Ogre->RenderFrame(7);
+
+				break;
+			}
+			}
+
 			return 0;
-		}*/
+		}
 
 		// -------- Offset X
-		/*if (HWND(lParam) == GetDlgItem(hDlg, IDC_SBXOFFSET_UNIT))
+		if (HWND(lParam) == GetDlgItem(hDlg, IDC_SBXOFFSET))
 		{
 			switch ((int)LOWORD(wParam))
 			{
-			case SB_LINEUP:
+			case SB_LINERIGHT:
+			{
+				App->CL_Properties_Faces->m_TextureXOffset++;
+				App->CL_Properties_Faces->UpdateDialog(hDlg);
+			
+				int pXOffset = (int)App->CL_Properties_Faces->m_TextureXOffset;
+				int xOff, yOff;
 
-				App->CL_FaceDialog->m_TextureXOffset++;
-				App->CL_FaceDialog->UpdateDialog(hDlg);
-				App->CL_FaceDialog->OnKillfocusXOffset();
+				App->CL_Face->Face_GetTextureShift(App->CL_Properties_Faces->m_Selected_Face, &xOff, &yOff);
+				App->CL_Face->Face_SetTextureShift(App->CL_Properties_Faces->m_Selected_Face, pXOffset, yOff);
 
-				break;
-
-			case SB_LINEDOWN:
-				App->CL_FaceDialog->m_TextureXOffset--;
-				App->CL_FaceDialog->UpdateDialog(hDlg);
-				App->CL_FaceDialog->OnKillfocusXOffset();
+				App->CL_Doc->UpdateAllViews(Enums::UpdateViews_All);
 
 				break;
 			}
 
+			case SB_LINELEFT:
+			{
+				App->CL_Properties_Faces->m_TextureXOffset--;
+				App->CL_Properties_Faces->UpdateDialog(hDlg);
+
+				int pXOffset = (int)App->CL_Properties_Faces->m_TextureXOffset;
+				int xOff, yOff;
+
+				App->CL_Face->Face_GetTextureShift(App->CL_Properties_Faces->m_Selected_Face, &xOff, &yOff);
+				App->CL_Face->Face_SetTextureShift(App->CL_Properties_Faces->m_Selected_Face, pXOffset, yOff);
+
+				App->CL_Doc->UpdateAllViews(Enums::UpdateViews_All);
+
+				break;
+			}
+			}
+
 			return 0;
-		}*/
+		}
 
 		// -------- Offset Y
-		/*if (HWND(lParam) == GetDlgItem(hDlg, IDC_SBYOFFSET_UNIT))
+		if (HWND(lParam) == GetDlgItem(hDlg, IDC_SBYOFFSET))
 		{
 			switch ((int)LOWORD(wParam))
 			{
-			case SB_LINEUP:
+			case SB_LINERIGHT:
+			{
+				App->CL_Properties_Faces->m_TextureYOffset++;
+				App->CL_Properties_Faces->UpdateDialog(hDlg);
 
-				App->CL_FaceDialog->m_TextureYOffset++;
-				App->CL_FaceDialog->UpdateDialog(hDlg);
-				App->CL_FaceDialog->OnKillfocusYOffset();
+				int pYOffset = (int)App->CL_Properties_Faces->m_TextureYOffset;
+				int xOff, yOff;
 
-				break;
+				App->CL_Face->Face_GetTextureShift(App->CL_Properties_Faces->m_Selected_Face, &xOff, &yOff);
+				App->CL_Face->Face_SetTextureShift(App->CL_Properties_Faces->m_Selected_Face, xOff, pYOffset);
 
-			case SB_LINEDOWN:
-				App->CL_FaceDialog->m_TextureYOffset--;
-				App->CL_FaceDialog->UpdateDialog(hDlg);
-				App->CL_FaceDialog->OnKillfocusYOffset();
+				App->CL_Doc->UpdateAllViews(Enums::UpdateViews_All);
+				//App->CL_FaceDialog->OnKillfocusYOffset();
 
 				break;
 			}
 
+			case SB_LINELEFT:
+			{
+				App->CL_Properties_Faces->m_TextureYOffset--;
+				App->CL_Properties_Faces->UpdateDialog(hDlg);
+				
+				int pYOffset = (int)App->CL_Properties_Faces->m_TextureYOffset;
+				int xOff, yOff;
+
+				App->CL_Face->Face_GetTextureShift(App->CL_Properties_Faces->m_Selected_Face, &xOff, &yOff);
+				App->CL_Face->Face_SetTextureShift(App->CL_Properties_Faces->m_Selected_Face, xOff, pYOffset);
+
+				App->CL_Doc->UpdateAllViews(Enums::UpdateViews_All);
+
+				break;
+			}
+			}
+
 			return 0;
-		}*/
+		}
 
 		// -------- Scale Y
 		/*if (HWND(lParam) == GetDlgItem(hDlg, IDC_SBYSCALE_UNIT))
@@ -462,9 +564,9 @@ void CL64_Properties_Faces::Update_Face_List(HWND hDlg)
 
 	SendDlgItemMessage(hDlg, IDC_LST_FACELIST, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
 
-	if (mNumberOfFaces > 0)
+	if (m_NumberOfFaces > 0)
 	{
-		while (Count < mNumberOfFaces)
+		while (Count < m_NumberOfFaces)
 		{
 			pFace = App->CL_SelFaceList->SelFaceList_GetFace(App->CL_Doc->pSelFaces, Count);
 			SendDlgItemMessage(hDlg, IDC_LST_FACELIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)pFace->Tex.Name);
@@ -474,4 +576,62 @@ void CL64_Properties_Faces::Update_Face_List(HWND hDlg)
 
 	SendDlgItemMessage(hDlg, IDC_LST_FACELIST, LB_SETCURSEL, (WPARAM)0, (LPARAM)0);
 
+	m_Selected_Face = pFace = App->CL_SelFaceList->SelFaceList_GetFace(App->CL_Doc->pSelFaces, 0);
+}
+
+// *************************************************************************
+// *		Update_Face_Members:- Terry and Hazel Flanigan 2025			*
+// *************************************************************************
+void CL64_Properties_Faces::Update_Face_Members()
+{
+	int NumberOfFaces = 0;
+	m_Selected_Face = NULL;
+
+	NumberOfFaces = App->CL_SelFaceList->SelFaceList_GetSize(App->CL_Doc->pSelFaces);
+	if (NumberOfFaces > 0)
+	{
+		m_Selected_Face = App->CL_SelFaceList->SelFaceList_GetFace(App->CL_Doc->pSelFaces, m_Selected_Face_Index);
+	}
+	else
+	{
+		m_Selected_Face = NULL;
+		return;
+	}
+	
+	if (NumberOfFaces && m_Selected_Face)
+	{
+		m_TextureAngle = App->CL_Face->Face_GetTextureRotate(m_Selected_Face);
+		App->CL_Face->Face_GetTextureShift(m_Selected_Face, &m_TextureXOffset, &m_TextureYOffset);
+		App->CL_Face->Face_GetTextureScale(m_Selected_Face, &m_TextureXScale, &m_TextureYScale);
+
+		//		m_TextureLock	=Face_IsTextureLocked (pFace);
+		//		GetDlgItem( IDC_FACELIGHTINTENSITY )->EnableWindow( m_Light && !m_Sky) ;
+		//		DisplayingNULL = FALSE;
+		//		EnabledChange(TRUE);
+	}
+}
+
+// *************************************************************************
+// *		  UpdateDialog:- Terry and Hazel Flanigan 2025				*
+// *************************************************************************
+void CL64_Properties_Faces::UpdateDialog(HWND hDlg)
+{
+	char buf[255];
+
+	sprintf(buf, "%i", m_TextureXOffset);
+	SetDlgItemText(hDlg, IDC_ST_EDITXOFFSET, (LPCTSTR)buf);
+
+	sprintf(buf, "%i", m_TextureYOffset);
+	SetDlgItemText(hDlg, IDC_ST_EDITYOFFSET, (LPCTSTR)buf);
+
+	sprintf(buf, "%.3f", m_TextureXScale);
+	SetDlgItemText(hDlg, IDC_ST_EDITXSCALE, (LPCTSTR)buf);
+
+	sprintf(buf, "%.3f", m_TextureYScale);
+	SetDlgItemText(hDlg, IDC_ST_EDITYSCALE, (LPCTSTR)buf);
+
+	sprintf(buf, "%.0f", m_TextureAngle);
+	SetDlgItemText(hDlg, IDC_ST_EDITANGLE, (LPCTSTR)buf);
+
+	//Update_FaceProperties_Dlg(hDlg);
 }

@@ -37,6 +37,7 @@ public:
 
 	void List_Selection_Changed();
 	void Get_Selected_Face();
+	void Enable_FaceProps_Button(bool Enable);
 
 	HBITMAP	Sel_BaseBitmap;
 	long BasePicWidth;

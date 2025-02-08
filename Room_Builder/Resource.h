@@ -258,6 +258,15 @@
 #define IDC_LST_FACELIST                1203
 #define IDC_LABEL_NUM_FACES             1204
 #define IDC_ST_NUM_FACES                1205
+#define IDC_ST_EDITXOFFSET              1206
+#define IDC_ST_EDITYOFFSET              1207
+#define IDC_ST_EDITXSCALE               1208
+#define IDC_ST_EDITYSCALE               1209
+#define IDC_ST_EDITANGLE                1210
+#define IDC_SBXOFFSET                   1211
+#define IDC_SBYOFFSET                   1212
+#define IDC_SBYOFFSET2                  1213
+#define IDC_SBANGLE                     1213
 #define ID_DEBUG_GENERAL                32771
 #define ID_TEMPLATES_INSERT             32772
 #define ID_BRUSH_SELECT                 32773
@@ -296,7 +305,7 @@
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        166
 #define _APS_NEXT_COMMAND_VALUE         32796
-#define _APS_NEXT_CONTROL_VALUE         1206
+#define _APS_NEXT_CONTROL_VALUE         1212
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif

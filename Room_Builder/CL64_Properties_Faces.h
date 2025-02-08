@@ -33,7 +33,7 @@ public:
 
 	HWND FaceDlg_Hwnd;
 
-	int mNumberOfFaces;
+	int m_NumberOfFaces;
 
 	bool f_FaceDlg_Active;
 
@@ -41,6 +41,18 @@ private:
 	static LRESULT CALLBACK Proc_FaceDialog(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	void Update_Face_List(HWND hDlg);
+	void Update_Face_Members();
+	void UpdateDialog(HWND hDlg);
 
+	Face* m_Selected_Face;
+
+	float m_TextureAngle;
+	float m_TextureXScale;
+	float m_TextureYScale;
+
+	int m_TextureYOffset;
+	int m_TextureXOffset;
+
+	int m_Selected_Face_Index;
 };
 
