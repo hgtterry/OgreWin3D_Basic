@@ -52,6 +52,8 @@ CL64_Top_Tabs::~CL64_Top_Tabs(void)
 void CL64_Top_Tabs::Start_Headers()
 {
 	Headers_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_TOP_TABS_HEADERS, App->MainHwnd, (DLGPROC)Proc_Headers);
+	Update_Faces_Combo();
+
 }
 
 // *************************************************************************
@@ -75,6 +77,7 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Headers(HWND hDlg, UINT message, WPARAM wPa
 		SendDlgItemMessage(hDlg, IDC_BT_ALLFACES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_NEXTFACE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_PREVFACE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_CB_FACELIST, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		return TRUE;
 	}
@@ -463,6 +466,28 @@ void CL64_Top_Tabs::Deselect_Faces_Dlg_Buttons()
 	flag_All_Faces = 0;
 	flag_Next_Face = 0;
 	flag_Prev_Face = 0;
+
+	RedrawWindow(Headers_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+}
+
+// *************************************************************************
+// *		Update_Faces_Combo:- Terry and Hazel Flanigan 2025			   *
+// *************************************************************************
+void CL64_Top_Tabs::Update_Faces_Combo()
+{
+	HWND Temp = GetDlgItem(Headers_hWnd, IDC_CB_FACELIST);
+	SendMessage(Temp, CB_RESETCONTENT, 0, 0);
+	
+	int Count = 0;
+	int Face_Count = App->CL_Brush_X->Get_Brush_All_Faces_Count();
+
+	while (Count < Face_Count)
+	{
+		SendMessage(Temp, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"Face");
+		Count++;
+	}
+
+	SendMessage(Temp, CB_SETCURSEL, 0, 0);
 
 	RedrawWindow(Headers_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 }

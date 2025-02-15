@@ -36,6 +36,7 @@ public:
 	void Enable_Move_Button(bool Enable, bool Active);
 	void Deselect_Faces_Dlg_Buttons();
 	void Reset_Brush_Buttons();
+	void Update_Faces_Combo();
 
 	bool flag_Brush_Select;
 	bool flag_Brush_Move;

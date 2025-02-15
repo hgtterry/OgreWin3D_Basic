@@ -176,9 +176,9 @@ static signed int Get_Brush_Face_Count(Brush* pBrush, void* lParam)
 }
 
 // *************************************************************************
-// *       Get_Brush_All_Face_Count:- Terry and Hazel Flanigan 2025		   *
+// *       Get_Brush_All_Faces_Count:- Terry and Hazel Flanigan 2025		   *
 // *************************************************************************
-void CL64_Brush_X::Get_Brush_All_Face_Count(void)
+int CL64_Brush_X::Get_Brush_All_Faces_Count(void)
 {
 	Face_Count = 0;
 
@@ -195,9 +195,7 @@ void CL64_Brush_X::Get_Brush_All_Face_Count(void)
 		Get_Brush_Face_Count(App->CL_Doc->CurBrush, this);
 	}
 
-
-	App->Say_Int(Face_Count);
-
+	return Face_Count;
 }
 
 // *************************************************************************
@@ -207,8 +205,6 @@ int	CL64_Brush_X::BrushList_EnumLeafBrushes(const BrushList* pList, void* pVoid,
 {
 	signed int	bResult = true;	// TRUE means entire list was processed
 	Brush* b;
-
-	assert(pList != NULL);
 
 	for (b = pList->First; b; b = b->Next)
 	{
@@ -227,6 +223,7 @@ int	CL64_Brush_X::BrushList_EnumLeafBrushes(const BrushList* pList, void* pVoid,
 			break;
 		}
 	}
+
 	return bResult;
 }
 

@@ -591,14 +591,14 @@ void CL64_Doc::SelectOrtho(POINT point, ViewVars* v)
 
                 App->CL_Properties_Brushes->Update_SelectedBrushesCount_Dlg();
 
-                App->CL_Brush_X->Get_Brush_All_Face_Count();
-
+                App->CL_Top_Tabs->Update_Faces_Combo();
             }
         } 
     }
     else
     {
         App->CL_Panels->Deselect_All_Brushes_Update_Dlgs();
+        App->CL_Top_Tabs->Update_Faces_Combo();
     }
 
 }

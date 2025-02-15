@@ -30,7 +30,7 @@ public:
 	~CL64_Brush_X();
 
 	void BrushList_GetUsedTextures_X(signed int* UsedTex);
-	void Get_Brush_All_Face_Count(void);
+	int Get_Brush_All_Faces_Count(void);
 	int	BrushList_EnumLeafBrushes(const BrushList* pList, void* pVoid, BrushList_CB	CallBack);
 
 	int Face_Count;
