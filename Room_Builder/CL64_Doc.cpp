@@ -66,6 +66,7 @@ CL64_Doc::CL64_Doc(void)
     pSelBrushes = NULL;
     pTempSelBrushes = NULL;
     pSelFaces = NULL;
+    Temp_SelFaces = NULL;
 
     App->CL_Maths->Vector3_Set(&SelectedGeoCenter,0, 0, 0);
     App->CL_Maths->Vector3_Set(&FinalPos, 0, 0, 0);
@@ -589,6 +590,9 @@ void CL64_Doc::SelectOrtho(POINT point, ViewVars* v)
                 App->CL_Properties_Brushes->Enable_Options_Buttons(true);
 
                 App->CL_Properties_Brushes->Update_SelectedBrushesCount_Dlg();
+
+                App->CL_Brush_X->Get_Brush_All_Face_Count();
+
             }
         } 
     }

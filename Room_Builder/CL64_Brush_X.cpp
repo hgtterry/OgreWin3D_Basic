@@ -30,6 +30,7 @@ THE SOFTWARE.
 
 CL64_Brush_X::CL64_Brush_X()
 {
+	Face_Count = 0;
 }
 
 CL64_Brush_X::~CL64_Brush_X()
@@ -159,6 +160,74 @@ bool CL64_Brush_X::Get_Face_Data(int Index, const Face* f)
 	//App->Say(buf2);
 	
 	return 1;
+}
+
+// *************************************************************************
+// *    ( Static ) Get_Brush_Face_Count:- Terry and Hazel Flanigan 2025    *
+// *************************************************************************
+static signed int Get_Brush_Face_Count(Brush* pBrush, void* lParam)
+{
+	int nFaces = 0;
+	nFaces = App->CL_Brush->Brush_GetNumFaces(pBrush);
+
+	App->CL_Brush_X->Face_Count = App->CL_Brush_X->Face_Count + nFaces;
+
+	return true;
+}
+
+// *************************************************************************
+// *       Get_Brush_All_Face_Count:- Terry and Hazel Flanigan 2025		   *
+// *************************************************************************
+void CL64_Brush_X::Get_Brush_All_Face_Count(void)
+{
+	Face_Count = 0;
+
+	Brush* pBrush;
+
+	pBrush = App->CL_Doc->CurBrush;// App->CL_SelBrushList->SelBrushList_GetBrush(App->CL_Doc->pSelBrushes, iBrush);
+
+	if (App->CL_Brush->Brush_IsMulti(App->CL_Doc->CurBrush))
+	{
+		BrushList_EnumLeafBrushes(App->CL_Brush->Brush_GetBrushList(App->CL_Doc->CurBrush), this, Get_Brush_Face_Count);
+	}
+	else
+	{
+		Get_Brush_Face_Count(App->CL_Doc->CurBrush, this);
+	}
+
+
+	App->Say_Int(Face_Count);
+
+}
+
+// *************************************************************************
+// *						BrushList_EnumLeafBrushes					   *
+// *************************************************************************
+int	CL64_Brush_X::BrushList_EnumLeafBrushes(const BrushList* pList, void* pVoid, BrushList_CB	CallBack)
+{
+	signed int	bResult = true;	// TRUE means entire list was processed
+	Brush* b;
+
+	assert(pList != NULL);
+
+	for (b = pList->First; b; b = b->Next)
+	{
+		assert(b->Type != BRUSH_CSG);
+
+		if (b->Type == BRUSH_MULTI)
+		{
+			if (!BrushList_EnumLeafBrushes(b->BList, pVoid, CallBack))
+			{
+				break;
+			}
+		}
+		else if ((bResult = CallBack(b, pVoid)) == false)
+		{
+			
+			break;
+		}
+	}
+	return bResult;
 }
 
 

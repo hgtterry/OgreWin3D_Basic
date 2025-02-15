@@ -164,6 +164,7 @@ public:
 	SelBrushList* pSelBrushes;
 	SelBrushList* pTempSelBrushes;
 	SelFaceList* pSelFaces;
+	SelFaceList* Temp_SelFaces;
 
 	fdocAdjustEnum mAdjustMode;
 

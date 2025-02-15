@@ -265,6 +265,8 @@
 #define IDC_ST_EDITANGLE                1210
 #define IDC_SBXOFFSET                   1211
 #define IDC_SBYOFFSET                   1212
+#define IDC_COMBO1                      1212
+#define IDC_CB_FACELIST                 1212
 #define IDC_SBANGLE                     1213
 #define IDC_SBXSCALE                    1214
 #define IDC_SBXOFFSET3                  1215
@@ -307,7 +309,7 @@
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        166
 #define _APS_NEXT_COMMAND_VALUE         32796
-#define _APS_NEXT_CONTROL_VALUE         1212
+#define _APS_NEXT_CONTROL_VALUE         1213
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif
