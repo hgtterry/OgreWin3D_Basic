@@ -268,7 +268,7 @@ void CL64_ImGui::App_Tool_Selection_GUI(void)
 		ImGui::Separator();
 
 		ImGui::Text("Selected Faces:= %i", App->CL_SelFaceList->SelFaceList_GetSize(App->CL_Doc->pSelFaces));
-		
+		ImGui::Text("Current Face:= %i", App->CL_Face->Selected_Face_Index);
 		
 		//ImGui::Text("Cam_Pos_X:= %f", App->CL_MapEditor->Current_View->CamPos.x);
 		

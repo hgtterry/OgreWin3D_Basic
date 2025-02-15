@@ -319,6 +319,26 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Headers(HWND hDlg, UINT message, WPARAM wPa
 			return TRUE;
 		}
 
+		if (LOWORD(wParam) == IDC_CB_FACELIST)
+		{
+			switch (HIWORD(wParam)) // Find out what message it was
+			{
+			case CBN_DROPDOWN:
+				break;
+			case CBN_CLOSEUP:
+			{
+				HWND temp = GetDlgItem(hDlg, IDC_CB_FACELIST);
+				int Index = SendMessage(temp, CB_GETCURSEL, 0, 0);
+
+				App->CL_Face->Selected_Face_Index = Index;
+				App->CL_Top_Tabs->Select_Face();
+
+			}
+			}
+
+			return true;
+		}
+
 		if (LOWORD(wParam) == IDC_BT_ALLFACES)
 		{
 			App->CL_Top_Tabs->Deselect_Faces_Dlg_Buttons();
@@ -335,59 +355,31 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Headers(HWND hDlg, UINT message, WPARAM wPa
 			return TRUE;
 		}
 
+		// ----- Next Face
 		if (LOWORD(wParam) == IDC_BT_NEXTFACE)
 		{
-			if (App->CL_SelFaceList->SelFaceList_GetSize(App->CL_Doc->pSelFaces) == 0)
+			App->CL_Face->Selected_Face_Index++;
+
+			if (App->CL_Face->Selected_Face_Index == App->CL_Brush_X->Face_Count)
 			{
-				App->CL_Top_Tabs->Deselect_Faces_Dlg_Buttons();
-				App->CL_Top_Tabs->flag_Next_Face = 1;
-				RedrawWindow(App->CL_Top_Tabs->Headers_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-
-				App->CL_Doc->SelectAllFacesInBrushes();
-				App->CL_Face->Select_Next_Face();
-
-			}
-			else
-			{
-				App->CL_Top_Tabs->Deselect_Faces_Dlg_Buttons();
-				App->CL_Top_Tabs->flag_Next_Face = 1;
-				RedrawWindow(App->CL_Top_Tabs->Headers_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-
-				App->CL_Face->Select_Next_Face();
+				App->CL_Face->Selected_Face_Index = 0;
 			}
 
-			//App->CL_Doc->UpdateSelected(Enums::UpdateViews_Grids);
-			App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
-
-			App->CL_Properties_Textures->Enable_FaceProps_Button(true);
-			App->CL_Properties_Tabs->Select_Textures_Tab();
+			App->CL_Top_Tabs->Select_Face();
 
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == IDC_BT_PREVFACE)
 		{
-			if (App->CL_SelFaceList->SelFaceList_GetSize(App->CL_Doc->pSelFaces) == 0)
-			{
-				App->CL_Top_Tabs->Deselect_Faces_Dlg_Buttons();
-				App->CL_Top_Tabs->flag_Prev_Face = 1;
-				RedrawWindow(App->CL_Top_Tabs->Headers_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			App->CL_Face->Selected_Face_Index--;
 
-				App->CL_Doc->SelectAllFacesInBrushes();
-				App->CL_Face->Select_Previous_Face();
-			}
-			else
+			if (App->CL_Face->Selected_Face_Index < 0)
 			{
-				App->CL_Top_Tabs->Deselect_Faces_Dlg_Buttons();
-				App->CL_Top_Tabs->flag_Prev_Face = 1;
-				RedrawWindow(App->CL_Top_Tabs->Headers_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-
-				App->CL_Face->Select_Previous_Face();
+				App->CL_Face->Selected_Face_Index = App->CL_Brush_X->Face_Count - 1;
 			}
 
-			App->CL_Properties_Textures->Enable_FaceProps_Button(true);
-			App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
-			App->CL_Properties_Tabs->Select_Textures_Tab();
+			App->CL_Top_Tabs->Select_Face();
 
 			return TRUE;
 		}
@@ -424,6 +416,9 @@ void CL64_Top_Tabs::Enable_Brush_Options_Buttons(bool Enable, bool Active)
 	//flag_Brush_Scale = Active;
 
 	EnableWindow(GetDlgItem(Headers_hWnd, IDC_BT_PREVFACE), Enable);
+	//flag_Brush_Scale = Active;
+
+	EnableWindow(GetDlgItem(Headers_hWnd, IDC_CB_FACELIST), Enable);
 	//flag_Brush_Scale = Active;
 }
 
@@ -470,6 +465,39 @@ void CL64_Top_Tabs::Deselect_Faces_Dlg_Buttons()
 	RedrawWindow(Headers_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 }
 
+
+// *************************************************************************
+// *			Select_Face:- Terry and Hazel Flanigan 2025				   *
+// *************************************************************************
+void CL64_Top_Tabs::Select_Face()
+{
+	if (App->CL_SelFaceList->SelFaceList_GetSize(App->CL_Doc->pSelFaces) == 0)
+	{
+		App->CL_Top_Tabs->Deselect_Faces_Dlg_Buttons();
+		App->CL_Top_Tabs->flag_Next_Face = 1;
+		RedrawWindow(App->CL_Top_Tabs->Headers_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+		App->CL_Doc->SelectAllFacesInBrushes();
+		App->CL_Face->Select_Face_From_Index(App->CL_Face->Selected_Face_Index);
+	}
+	else
+	{
+		App->CL_Top_Tabs->Deselect_Faces_Dlg_Buttons();
+		App->CL_Top_Tabs->flag_Next_Face = 1;
+		RedrawWindow(App->CL_Top_Tabs->Headers_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+		App->CL_Face->Select_Face_From_Index(App->CL_Face->Selected_Face_Index);
+	}
+
+	App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
+
+	App->CL_Properties_Textures->Enable_FaceProps_Button(true);
+	App->CL_Properties_Tabs->Select_Textures_Tab();
+
+	HWND Temp = GetDlgItem(App->CL_Top_Tabs->Headers_hWnd, IDC_CB_FACELIST);
+	SendMessage(Temp, CB_SETCURSEL, App->CL_Face->Selected_Face_Index, 0);
+}
+
 // *************************************************************************
 // *		Update_Faces_Combo:- Terry and Hazel Flanigan 2025			   *
 // *************************************************************************
@@ -477,17 +505,24 @@ void CL64_Top_Tabs::Update_Faces_Combo()
 {
 	HWND Temp = GetDlgItem(Headers_hWnd, IDC_CB_FACELIST);
 	SendMessage(Temp, CB_RESETCONTENT, 0, 0);
-	
-	int Count = 0;
-	int Face_Count = App->CL_Brush_X->Get_Brush_All_Faces_Count();
+	char buff[MAX_PATH];
 
-	while (Count < Face_Count)
+	int SB = App->CL_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes);
+	
+	if (SB > 0)
 	{
-		SendMessage(Temp, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"Face");
-		Count++;
+		int Count = 0;
+		int Face_Count = App->CL_Brush_X->Get_Brush_All_Faces_Count();
+
+		while (Count < Face_Count)
+		{
+			sprintf(buff, "%s %i", "Face:-", Count);
+			SendMessage(Temp, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)buff);
+			Count++;
+		}
+
+		SendMessage(Temp, CB_SETCURSEL, App->CL_Face->Selected_Face_Index, 0);
 	}
 
-	SendMessage(Temp, CB_SETCURSEL, 0, 0);
-
-	RedrawWindow(Headers_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+	
 }

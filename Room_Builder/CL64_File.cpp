@@ -448,6 +448,10 @@ void CL64_File::Set_Editor()
 	App->CL_Properties_Templates->Enable_Insert_Button(false);
 
 	App->CL_Top_Tabs->Deselect_Faces_Dlg_Buttons();
+
+	App->CL_Face->Selected_Face_Index = 0;
+	//App->CL_Top_Tabs->Update_Faces_Combo();
+	
 	App->CL_Doc->ResetAllSelections();
 	App->CL_Top_Tabs->Enable_Brush_Options_Buttons(false, false);
 	App->CL_Properties_Tabs->Select_Templates_Tab();

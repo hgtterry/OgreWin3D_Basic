@@ -65,6 +65,7 @@ enum SideFlags
 
 CL64_Face::CL64_Face(void)
 {
+	Selected_Face_Index = 0;
 }
 
 CL64_Face::~CL64_Face(void)
@@ -1057,109 +1058,27 @@ void CL64_Face::Face_SetFixedHull(Face* f, const signed int bState)
 }
 
 // *************************************************************************
-// *						Select_Next_Face						 	   *
+// *					Select_Face_From_Index						 	   *
 // *************************************************************************
-void CL64_Face::Select_Next_Face()
+void CL64_Face::Select_Face_From_Index(int mFace_Index)
 {
-	BrushList* BList = App->CL_Level->Level_GetBrushes(App->CL_Doc->pLevel);
-	
-	if (App->CL_Doc->mModeTool == 32886)
+
+	if (App->CL_Doc->mModeTool == 32886) // hgtterry Whats this
 	{
-		int nSelectedFaces = App->CL_SelFaceList->SelFaceList_GetSize(App->CL_Doc->pSelFaces);
 		Face* pFace;
 
-		if (nSelectedFaces == 0)
+		if (Selected_Face_Index == 0)
 		{
-			BrushIterator bi;
-
-			App->CL_Doc->CurBrush = App->CL_Brush->BrushList_GetFirst(BList, &bi);
 			pFace = App->CL_Brush->Brush_SelectFirstFace(App->CL_Doc->CurBrush);
-			App->CL_SelBrushList->SelBrushList_Add(App->CL_Doc->pSelBrushes, App->CL_Doc->CurBrush);
+			App->CL_Doc->ResetAllSelectedFaces();
+			Face_SetSelected(pFace, GE_TRUE);
+
 		}
 		else
 		{
-			Brush* pBrush = NULL;
-
-			// get first selected face
-			pFace = App->CL_SelFaceList->SelFaceList_GetFace(App->CL_Doc->pSelFaces, nSelectedFaces - 1);
-			// Remove all face selections
-			//if (!(IsKeyDown(VK_SHIFT)))
-			{
-				App->CL_Doc->ResetAllSelectedFaces();
-			}
-
+			pFace = App->CL_SelFaceList->SelFaceList_GetFace(App->CL_Doc->pSelFaces,mFace_Index);// nSelectedFaces - 1);
+			App->CL_Doc->ResetAllSelectedFaces();
 			Face_SetSelected(pFace, GE_TRUE);
-
-			pBrush = App->CL_Brush->BrushList_FindTopLevelFaceParent(App->CL_Level->Level_GetBrushes(App->CL_Doc->pLevel), pFace);
-
-			// select next face
-			if (!App->CL_Brush->Brush_SetNextSelectedFace(pBrush))
-			{
-				pFace = App->CL_Brush->Brush_SelectFirstFace(pBrush);
-			}
-			else
-			{
-				pFace = App->CL_Brush->Brush_GetSelectedFace(pBrush);
-				
-			}
-		}
-
-		App->CL_SelFaceList->SelFaceList_Add(App->CL_Doc->pSelFaces, pFace);
-
-		//App->CL_Doc->UpdateSelected();
-
-		//pDoc->UpdateFaceAttributesDlg ();
-		//App->CL_Doc->UpdateAllViews(Enums::UpdateViews_All);
-	}
-}
-
-// *************************************************************************
-// *						Select_Previous_Face					 	   *
-// *************************************************************************
-void CL64_Face::Select_Previous_Face()
-{
-	BrushList* BList = App->CL_Level->Level_GetBrushes(App->CL_Doc->pLevel);
-
-	if (App->CL_Doc->mModeTool == 32886)
-	{
-		int nSelectedFaces = App->CL_SelFaceList->SelFaceList_GetSize(App->CL_Doc->pSelFaces);
-		Face* pFace;
-
-		if (nSelectedFaces == 0)
-		{
-			BrushIterator bi;
-
-			App->CL_Doc->CurBrush = App->CL_Brush->BrushList_GetFirst(BList, &bi);
-			pFace = App->CL_Brush->Brush_SelectFirstFace(App->CL_Doc->CurBrush);
-			App->CL_SelBrushList->SelBrushList_Add(App->CL_Doc->pSelBrushes, App->CL_Doc->CurBrush);
-		}
-		else
-		{
-			Brush* pBrush;
-
-			// get the last selected face
-			pFace = App->CL_SelFaceList->SelFaceList_GetFace(App->CL_Doc->pSelFaces, 0);
-
-			// Remove all face selections
-			//if (!(IsKeyDown(VK_SHIFT)))
-			{
-				App->CL_Doc->ResetAllSelectedFaces();
-			}
-
-			// Select the next face in order, using selected brush list...
-			pBrush = App->CL_Brush->BrushList_FindTopLevelFaceParent(App->CL_Level->Level_GetBrushes(App->CL_Doc->pLevel), pFace);
-			
-			Face_SetSelected(pFace, GE_TRUE);
-
-			// select next face
-			if (!App->CL_Brush->Brush_SetPrevSelectedFace(pBrush))
-			{
-				pFace = App->CL_Brush->Brush_SelectLastFace(pBrush);
-			}
-			else
-			{
-				pFace = App->CL_Brush->Brush_GetSelectedFace(pBrush);
-			}
 		}
 
 		App->CL_SelFaceList->SelFaceList_Add(App->CL_Doc->pSelFaces, pFace);
