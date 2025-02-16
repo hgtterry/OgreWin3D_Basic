@@ -270,7 +270,7 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 			{
 			case SB_LINERIGHT:
 			{
-				App->CL_Doc->SelectAllFacesInBrushes();
+				//App->CL_Doc->SelectAllFacesInBrushes();
 
 				App->CL_Properties_Faces->m_TextureAngle++;
 				App->CL_Properties_Faces->UpdateDialog(hDlg);
@@ -280,14 +280,15 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 				App->CL_Face->Face_SetTextureRotate(App->CL_Properties_Faces->m_Selected_Face, pAngle);
 				App->CL_Doc->UpdateAllViews(Enums::UpdateViews_All);
 
-				App->CL_Ogre->RenderFrame(2);
-
+				App->CL_Ogre->RenderFrame(7);
+				//App->CL_Top_Tabs->Select_Face();
 				break;
 			}
 
 			case SB_LINELEFT:
 			{
 				//App->CL_Doc->SelectAllFacesInBrushes();
+
 				App->CL_Properties_Faces->m_TextureAngle--;
 				App->CL_Properties_Faces->UpdateDialog(hDlg);
 				
@@ -296,7 +297,7 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 				App->CL_Face->Face_SetTextureRotate(App->CL_Properties_Faces->m_Selected_Face, pAngle);
 				App->CL_Doc->UpdateAllViews(Enums::UpdateViews_All);
 
-				App->CL_Ogre->RenderFrame(2);
+				App->CL_Ogre->RenderFrame(7);
 
 				break;
 			}
