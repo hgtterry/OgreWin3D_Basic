@@ -317,45 +317,15 @@ bool CL64_Textures::Soil_Load_Texture(UINT textureArray[], LPSTR strFileName, in
 
 	stbi_image_free(image_data);
 
-
-
-	/*textureArray[textureID] = SOIL_load_OGL_texture
-	(
-		strFileName,
-		SOIL_LOAD_AUTO,
-		SOIL_CREATE_NEW_ID,
-		SOIL_FLAG_TEXTURE_REPEATS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_MIPMAPS
-	);*/
-
 	if (textureArray[textureID] == 0) // Fall back attemp to convert and load or Bail
 	{
 		Texture_To_Bmp(strFileName);
 
-		/*textureArray[textureID] = SOIL_load_OGL_texture
-		(
-			"Etemp.bmp",
-			SOIL_LOAD_AUTO,
-			SOIL_CREATE_NEW_ID,
-			SOIL_FLAG_TEXTURE_REPEATS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_MIPMAPS
-		);*/
 		remove("Etemp.bmp");
-
-		/*if (textureArray[textureID] == 0)
-		{
-			const char* test = SOIL_last_result();
-			char buff[255];
-			strcpy(buff, test);
-			App->Say(buff);
-			return 0;
-		}*/
 
 	}
 
-	/*glBindTexture(GL_TEXTURE_2D, textureArray[textureID]);
-
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR_MIPMAP_LINEAR);*/
-
+	
 	return 1;
 }
 

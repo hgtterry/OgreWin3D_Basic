@@ -174,15 +174,19 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
                 if (App->CL_Ogre->OGL_Listener->Render_Mode == Enums::Render_Groups)
                 {
+                    App->CL_Ogre->OGL_Listener->Flag_Render_Brushes = 0;
                     App->CL_Ogre->OGL_Listener->Render_Mode = Enums::Render_Nothing;
                     App->CL_Mesh_Mgr->World_Node->setVisible(true);
                 }
                 else
                 {
+                    App->CL_Ogre->OGL_Listener->Flag_Render_Brushes = 1;
                     App->CL_Ogre->OGL_Listener->Render_Mode = Enums::Render_Groups;
                     App->CL_Mesh_Mgr->World_Node->setVisible(false);
                 }
 
+                RedrawWindow(App->CL_Properties_Textures->Textures_Dlg_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+                
                 return 1;
             }
 

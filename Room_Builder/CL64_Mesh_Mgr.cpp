@@ -821,16 +821,12 @@ int CL64_Mesh_Mgr::Get_Adjusted_Index(int RealIndex)
 }
 
 // *************************************************************************
-// *			AddTexture_GL:- Terry and Hazel Flanigan 2023		  	   *
+// *			AddTexture_GL:- Terry and Hazel Flanigan 2025		  	   *
 // *************************************************************************
 bool CL64_Mesh_Mgr::AddTexture_GL(geVFile* BaseFile, const char* TextureName, int GroupIndex)
 {
-	return 1;
 	//Debug
-	HWND	PreviewWnd;
-	HBITMAP	hbm;
-	HDC		hDC;
-
+	
 	int index = 0;
 	geBitmap* Bitmap = NULL;
 	CL64_WadFile* pWad;
@@ -868,7 +864,7 @@ bool CL64_Mesh_Mgr::AddTexture_GL(geVFile* BaseFile, const char* TextureName, in
 
 				App->CL_Textures->Write_BMP(TempTextureFile,Bitmap);
 
-				//App->CL_Textures->Soil_Load_Texture(App->CL_Ogre->OGL_Listener->g_BrushTexture, TempTextureFile, GroupIndex);
+				App->CL_Textures->Soil_Load_Texture(App->CL_Ogre->OGL_Listener->g_BrushTexture, TempTextureFile, GroupIndex);
 			}
 
 			DeleteFile((LPCTSTR)TempTextureFile);

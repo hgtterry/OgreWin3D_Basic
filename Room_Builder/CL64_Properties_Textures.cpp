@@ -144,6 +144,13 @@ LRESULT CALLBACK CL64_Properties_Textures::Proc_TextureDialog(HWND hDlg, UINT me
 			return CDRF_DODEFAULT;
 		}
 
+		if (some_item->idFrom == IDC_BT_GL)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->CL_Ogre->OGL_Listener->Flag_Render_Brushes);
+			return CDRF_DODEFAULT;
+		}
+		
 		return CDRF_DODEFAULT;
 	}
 

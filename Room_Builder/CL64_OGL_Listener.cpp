@@ -66,6 +66,7 @@ CL64_OGL_Listener::CL64_OGL_Listener(void)
 
 	Flag_Show_Selected_Brush = 1;
 	Flag_Show_Selected_Face = 1;
+	Flag_Render_Brushes = 0;
 
 	Render_Mode = Enums::Render_Nothing;
 
@@ -163,7 +164,7 @@ void CL64_OGL_Listener::Render_Loop()
 	GLboolean stencilTestEnabled = glIsEnabled(GL_STENCIL_TEST);
 	glDisable(GL_STENCIL_TEST);
 
-	glDisable(GL_CULL_FACE);
+	//glDisable(GL_CULL_FACE);
 
 	if (Light_Activated == 0)
 	{
@@ -183,8 +184,13 @@ void CL64_OGL_Listener::Render_Loop()
 	glColor3f(0.8f, 0.8f, 0.8f);
 	Translate();
 
-	if (Render_Mode == Enums::Render_Groups)
+	if (Render_Mode == Enums::Render_Groups && Flag_Render_Brushes == 1)
 	{
+		glEnable(GL_DEPTH_TEST);
+		glShadeModel(GL_SMOOTH);
+
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
 		Groups_Render_Textures();
 	}
 
