@@ -595,7 +595,7 @@ bool CL64_Ogre3D::Extract_TXL_Texture(char* Name, char* Folder)
 	char Name2[MAX_PATH];
 	strcpy(Name2, Folder);
 
-	if (geBitmap_HasAlpha(BitmapPtr->bmp))
+	if (geBitmap_HasAlpha(BitmapPtr->bmp)) // hgtterry Need to do Alpha
 	{
 		//LoadTextures_TXL(Name);
 

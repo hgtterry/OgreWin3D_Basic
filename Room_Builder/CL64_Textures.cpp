@@ -26,6 +26,13 @@ THE SOFTWARE.
 #include "CL64_App.h"
 #include "CL64_Textures.h"
 
+#define STB_IMAGE_IMPLEMENTATION
+#include "stb_image.h"
+
+#include "il.h"
+#include "ilu.h"
+#include "ilut.h"
+
 typedef struct tagMY_BITMAPINFO
 {
 	BITMAPINFOHEADER bmiHeader;
@@ -252,3 +259,114 @@ ExitWriteBitmap:
 	}
 	return 1;// nErrorCode;
 }
+
+// *************************************************************************
+// *		 Soil_Load_Texture:- Terry and Hazel Flanigan 2025		  	   *
+// *************************************************************************
+bool CL64_Textures::Soil_Load_Texture(UINT textureArray[], LPSTR strFileName, int textureID)
+{
+	int image_width = 0;
+	int image_height = 0;
+	int channels = 0;
+	int force_channels = 4;
+
+	unsigned char* image_data = stbi_load(strFileName, &image_width, &image_height, &channels, force_channels);
+	if (image_data == NULL)
+	{
+		//App->Say("Cant Create Texture");
+		return 0;
+	}
+
+	if ((force_channels >= 1) && (force_channels <= 4))
+	{
+		channels = force_channels;
+	}
+
+	bool INVERT_Y = 1;
+	if (INVERT_Y == 1)
+	{
+		int i, j;
+		for (j = 0; j * 2 < image_height; ++j)
+		{
+			int index1 = j * image_width * channels;
+			int index2 = (image_height - 1 - j) * image_width * channels;
+			for (i = image_width * channels; i > 0; --i)
+			{
+				unsigned char temp = image_data[index1];
+				image_data[index1] = image_data[index2];
+				image_data[index2] = temp;
+				++index1;
+				++index2;
+			}
+		}
+	}
+
+	GLuint image_texture;
+	glGenTextures(1, &image_texture);
+	glBindTexture(GL_TEXTURE_2D, image_texture);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+#if defined(GL_UNPACK_ROW_LENGTH) && !defined(__EMSCRIPTEN__)
+	glPixelStorei(GL_UNPACK_ROW_LENGTH, 0);
+#endif
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image_width, image_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image_data);
+
+	textureArray[textureID] = image_texture;
+
+	stbi_image_free(image_data);
+
+
+
+	/*textureArray[textureID] = SOIL_load_OGL_texture
+	(
+		strFileName,
+		SOIL_LOAD_AUTO,
+		SOIL_CREATE_NEW_ID,
+		SOIL_FLAG_TEXTURE_REPEATS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_MIPMAPS
+	);*/
+
+	if (textureArray[textureID] == 0) // Fall back attemp to convert and load or Bail
+	{
+		Texture_To_Bmp(strFileName);
+
+		/*textureArray[textureID] = SOIL_load_OGL_texture
+		(
+			"Etemp.bmp",
+			SOIL_LOAD_AUTO,
+			SOIL_CREATE_NEW_ID,
+			SOIL_FLAG_TEXTURE_REPEATS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_MIPMAPS
+		);*/
+		remove("Etemp.bmp");
+
+		/*if (textureArray[textureID] == 0)
+		{
+			const char* test = SOIL_last_result();
+			char buff[255];
+			strcpy(buff, test);
+			App->Say(buff);
+			return 0;
+		}*/
+
+	}
+
+	/*glBindTexture(GL_TEXTURE_2D, textureArray[textureID]);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR_MIPMAP_LINEAR);*/
+
+	return 1;
+}
+
+// *************************************************************************
+// *			Texture_To_Bmp:- Terry and Hazel Flanigan 2023			   *
+// *************************************************************************
+bool CL64_Textures::Texture_To_Bmp(char* File)
+{
+	ilLoadImage(File);
+	ilSaveImage("Etemp.bmp");
+	return 1;
+}
+
+

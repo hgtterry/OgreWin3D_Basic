@@ -866,7 +866,7 @@ bool CL64_Mesh_Mgr::AddTexture_GL(geVFile* BaseFile, const char* TextureName, in
 				strcat(TempTextureFile, "\\");
 				strcat(TempTextureFile, "TextureLoad.bmp");
 
-				//App->CL_Textures->Genesis_WriteToBmp(Bitmap, TempTextureFile);
+				App->CL_Textures->Write_BMP(TempTextureFile,Bitmap);
 
 				//App->CL_Textures->Soil_Load_Texture(App->CL_Ogre->OGL_Listener->g_BrushTexture, TempTextureFile, GroupIndex);
 			}

@@ -31,5 +31,8 @@ public:
 	~CL64_Textures(void);
 
 	int Write_BMP(const char* pszFile, geBitmap* pBitmap);
+	bool Soil_Load_Texture(UINT textureArray[], LPSTR strFileName, int textureID);
+	bool Texture_To_Bmp(char* File);
+
 };
 
