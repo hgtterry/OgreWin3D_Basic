@@ -270,35 +270,31 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 			{
 			case SB_LINERIGHT:
 			{
-				//App->CL_Doc->SelectAllFacesInBrushes();
-
 				App->CL_Properties_Faces->m_TextureAngle++;
 				App->CL_Properties_Faces->UpdateDialog(hDlg);
 				
 				float pAngle = (float)App->CL_Properties_Faces->m_TextureAngle;
 
+				//App->CL_Properties_Faces->m_Selected_Face->Tex.Rotate = pAngle;
+				
 				App->CL_Face->Face_SetTextureRotate(App->CL_Properties_Faces->m_Selected_Face, pAngle);
-				App->CL_Doc->UpdateAllViews(Enums::UpdateViews_All);
-
-				App->CL_Ogre->RenderFrame(7);
-				//App->CL_Top_Tabs->Select_Face();
+				App->CL_Properties_Faces->Update();
+				
 				break;
 			}
 
 			case SB_LINELEFT:
 			{
-				//App->CL_Doc->SelectAllFacesInBrushes();
-
 				App->CL_Properties_Faces->m_TextureAngle--;
 				App->CL_Properties_Faces->UpdateDialog(hDlg);
 				
 				float pAngle = (float)App->CL_Properties_Faces->m_TextureAngle;
 
+				//App->CL_Properties_Faces->m_Selected_Face->Tex.Rotate = pAngle;
+
 				App->CL_Face->Face_SetTextureRotate(App->CL_Properties_Faces->m_Selected_Face, pAngle);
-				App->CL_Doc->UpdateAllViews(Enums::UpdateViews_All);
-
-				App->CL_Ogre->RenderFrame(7);
-
+				App->CL_Properties_Faces->Update();
+				
 				break;
 			}
 			}
@@ -313,8 +309,12 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 			{
 			case SB_LINERIGHT:
 			{
+				char buf[255];
+
 				App->CL_Properties_Faces->m_TextureXOffset++;
-				App->CL_Properties_Faces->UpdateDialog(hDlg);
+
+				sprintf(buf, "%i", App->CL_Properties_Faces->m_TextureXOffset);
+				SetDlgItemText(hDlg, IDC_ST_EDITXOFFSET, (LPCTSTR)buf);
 			
 				int pXOffset = (int)App->CL_Properties_Faces->m_TextureXOffset;
 				int xOff, yOff;
@@ -322,17 +322,19 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 				App->CL_Face->Face_GetTextureShift(App->CL_Properties_Faces->m_Selected_Face, &xOff, &yOff);
 				App->CL_Face->Face_SetTextureShift(App->CL_Properties_Faces->m_Selected_Face, pXOffset, yOff);
 
-				App->CL_Doc->UpdateAllViews(Enums::UpdateViews_All);
-
-				App->CL_Ogre->RenderFrame(7);
-
+				App->CL_Properties_Faces->Update();
+				
 				break;
 			}
 
 			case SB_LINELEFT:
 			{
+				char buf[255];
+
 				App->CL_Properties_Faces->m_TextureXOffset--;
-				App->CL_Properties_Faces->UpdateDialog(hDlg);
+				
+				sprintf(buf, "%i", App->CL_Properties_Faces->m_TextureXOffset);
+				SetDlgItemText(hDlg, IDC_ST_EDITXOFFSET, (LPCTSTR)buf);
 
 				int pXOffset = (int)App->CL_Properties_Faces->m_TextureXOffset;
 				int xOff, yOff;
@@ -340,10 +342,8 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 				App->CL_Face->Face_GetTextureShift(App->CL_Properties_Faces->m_Selected_Face, &xOff, &yOff);
 				App->CL_Face->Face_SetTextureShift(App->CL_Properties_Faces->m_Selected_Face, pXOffset, yOff);
 
-				App->CL_Doc->UpdateAllViews(Enums::UpdateViews_All);
-
-				App->CL_Ogre->RenderFrame(7);
-
+				App->CL_Properties_Faces->Update();
+				
 				break;
 			}
 			}
@@ -367,10 +367,8 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 				App->CL_Face->Face_GetTextureShift(App->CL_Properties_Faces->m_Selected_Face, &xOff, &yOff);
 				App->CL_Face->Face_SetTextureShift(App->CL_Properties_Faces->m_Selected_Face, xOff, pYOffset);
 
-				App->CL_Doc->UpdateAllViews(Enums::UpdateViews_All);
+				App->CL_Properties_Faces->Update();
 				
-				App->CL_Ogre->RenderFrame(7);
-
 				break;
 			}
 
@@ -385,10 +383,8 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 				App->CL_Face->Face_GetTextureShift(App->CL_Properties_Faces->m_Selected_Face, &xOff, &yOff);
 				App->CL_Face->Face_SetTextureShift(App->CL_Properties_Faces->m_Selected_Face, xOff, pYOffset);
 
-				App->CL_Doc->UpdateAllViews(Enums::UpdateViews_All);
-
-				App->CL_Ogre->RenderFrame(7);
-
+				App->CL_Properties_Faces->Update();
+				
 				break;
 			}
 			}
@@ -412,9 +408,7 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 				App->CL_Face->Face_GetTextureScale(App->CL_Properties_Faces->m_Selected_Face, &xScale, &yScale);
 				App->CL_Face->Face_SetTextureScale(App->CL_Properties_Faces->m_Selected_Face, pXScale, yScale);
 
-				App->CL_Doc->UpdateAllViews(Enums::UpdateViews_All);
-
-				App->CL_Ogre->RenderFrame(7);
+				App->CL_Properties_Faces->Update();
 
 				break;
 			}
@@ -429,10 +423,8 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 				App->CL_Face->Face_GetTextureScale(App->CL_Properties_Faces->m_Selected_Face, &xScale, &yScale);
 				App->CL_Face->Face_SetTextureScale(App->CL_Properties_Faces->m_Selected_Face, pXScale, yScale);
 
-				App->CL_Doc->UpdateAllViews(Enums::UpdateViews_All);
-
-				App->CL_Ogre->RenderFrame(7);
-
+				App->CL_Properties_Faces->Update();
+				
 				break;
 			}
 			}
@@ -456,9 +448,7 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 				App->CL_Face->Face_GetTextureScale(App->CL_Properties_Faces->m_Selected_Face, &xScale, &yScale);
 				App->CL_Face->Face_SetTextureScale(App->CL_Properties_Faces->m_Selected_Face, xScale, pYScale);
 
-				App->CL_Doc->UpdateAllViews(Enums::UpdateViews_All);
-
-				App->CL_Ogre->RenderFrame(7);
+				App->CL_Properties_Faces->Update();
 
 				break;
 			}
@@ -474,9 +464,7 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 				App->CL_Face->Face_GetTextureScale(App->CL_Properties_Faces->m_Selected_Face, &xScale, &yScale);
 				App->CL_Face->Face_SetTextureScale(App->CL_Properties_Faces->m_Selected_Face, xScale, pYScale);
 
-				App->CL_Doc->UpdateAllViews(Enums::UpdateViews_All);
-
-				App->CL_Ogre->RenderFrame(7);
+				App->CL_Properties_Faces->Update();
 
 				break;
 			}
@@ -625,30 +613,53 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 }
 
 // *************************************************************************
+// *			Update:- Terry and Hazel Flanigan 2025                     *
+// *************************************************************************
+void CL64_Properties_Faces::Update()
+{
+	App->CL_Doc->UpdateAllViews(Enums::UpdateViews_3D);
+
+	App->CL_SelFaceList->SelFaceList_RemoveAll(App->CL_Doc->pSelFaces);
+
+	App->CL_Doc->SelectAllFacesInBrushes();
+
+	App->CL_Face->Select_Face_From_Index(App->CL_Face->Selected_Face_Index);
+
+	App->CL_Ogre->RenderFrame(2);
+
+	App->CL_Properties_Faces->m_Selected_Face = App->CL_SelFaceList->SelFaceList_GetFace(App->CL_Doc->pSelFaces, App->CL_Face->Selected_Face_Index);
+}
+
+// *************************************************************************
 // *		Update_Face_List:- Terry and Hazel Flanigan 2025			*
 // *************************************************************************
 void CL64_Properties_Faces::Update_Face_List(HWND hDlg)
 {
 	int Count = 0;
 	Face* pFace = NULL;
+	char buff[MAX_PATH];
 
 	SendDlgItemMessage(hDlg, IDC_LST_FACELIST, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
 
-	//App->CL_Brush->Brush_GetNumFaces(App->CL_Doc->CurBrush);
+	int SB = App->CL_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes);
 
-	if (m_NumberOfFaces > 0)
+	if (SB > 0)
 	{
-		while (Count < m_NumberOfFaces)
+		int Count = 0;
+		int Face_Count = App->CL_Brush_X->Face_Count;
+
+		while (Count < Face_Count)
 		{
-			pFace = App->CL_SelFaceList->SelFaceList_GetFace(App->CL_Doc->pSelFaces, Count);
-			SendDlgItemMessage(hDlg, IDC_LST_FACELIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)pFace->Tex.Name);
+			sprintf(buff, "%s %i", "Face:-", Count + 1);
+			SendDlgItemMessage(hDlg, IDC_LST_FACELIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);
 			Count++;
 		}
+
+		SendDlgItemMessage(hDlg, IDC_LST_FACELIST, LB_SETCURSEL, (WPARAM)App->CL_Face->Selected_Face_Index, (LPARAM)0);
+	
 	}
 
-	SendDlgItemMessage(hDlg, IDC_LST_FACELIST, LB_SETCURSEL, (WPARAM)0, (LPARAM)0);
-
-	m_Selected_Face = pFace = App->CL_SelFaceList->SelFaceList_GetFace(App->CL_Doc->pSelFaces, 0);
+	m_Selected_Face = App->CL_SelFaceList->SelFaceList_GetFace(App->CL_Doc->pSelFaces, App->CL_Face->Selected_Face_Index);
 }
 
 // *************************************************************************

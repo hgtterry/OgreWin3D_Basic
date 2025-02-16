@@ -171,7 +171,11 @@ bool CL64_Mesh_Mgr::Update_World()
 	{
 		Brush_Build_List(0);
 		WE_Convert_All_Texture_Groups();
-		App->CL_Ogre3D->Convert_ToOgre3D(1); // Will Set Node Visable
+
+		if (App->CL_Ogre->OGL_Listener->Flag_Render_Brushes == 0)
+		{
+			App->CL_Ogre3D->Convert_ToOgre3D(1); // Will Set Node Visable
+		}
 	}
 	else
 	{
@@ -250,7 +254,10 @@ bool CL64_Mesh_Mgr::Brush_Build_Level_Brushes(Level3* pLevel, const char* Filena
 
 			mAdjusedIndex_Store[AdjustedIndex] = i;
 
-			AddTexture_GL(NULL, matname, AdjustedIndex);
+			if (App->CL_Ogre->OGL_Listener->Flag_Render_Brushes == 0)
+			{
+				AddTexture_GL(NULL, matname, AdjustedIndex);
+			}
 
 			AdjustedIndex++;
 		}
