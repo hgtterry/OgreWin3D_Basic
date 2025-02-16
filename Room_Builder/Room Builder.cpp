@@ -157,10 +157,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             // ----------------------------- Debug
             case ID_DEBUG_GENERAL:
             {
-                //App->CL_Doc->RebuildTrees();        // Build Brushes
-                //App->CL_Mesh_Mgr->Update_World();   // Build Ogre
-
-                int Count = 0;
+               /* int Count = 0;
 
                 while (Count < 3)
                 {
@@ -173,7 +170,18 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                     Count++;
                 }
 
-                App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
+                App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);*/
+
+                if (App->CL_Ogre->OGL_Listener->Render_Mode == Enums::Render_Groups)
+                {
+                    App->CL_Ogre->OGL_Listener->Render_Mode = Enums::Render_Nothing;
+                    App->CL_Mesh_Mgr->World_Node->setVisible(true);
+                }
+                else
+                {
+                    App->CL_Ogre->OGL_Listener->Render_Mode = Enums::Render_Groups;
+                    App->CL_Mesh_Mgr->World_Node->setVisible(false);
+                }
 
                 return 1;
             }

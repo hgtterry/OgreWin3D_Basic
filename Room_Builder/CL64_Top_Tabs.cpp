@@ -516,7 +516,7 @@ void CL64_Top_Tabs::Update_Faces_Combo()
 
 		while (Count < Face_Count)
 		{
-			sprintf(buff, "%s %i", "Face:-", Count);
+			sprintf(buff, "%s %i", "Face:-", Count+1);
 			SendMessage(Temp, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)buff);
 			Count++;
 		}

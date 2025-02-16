@@ -67,4 +67,13 @@ namespace Enums
 		Export_Ogre_18 = 1,
 		Export_Ogre_17 = 2
 	};
+
+	enum RenderMode
+	{
+		Render_Nothing = -1,
+		Render_Brushes = 0,
+		Render_Groups = 1,
+		Render_Ogre = 2,
+		Render_Assimp = 3
+	};
 }

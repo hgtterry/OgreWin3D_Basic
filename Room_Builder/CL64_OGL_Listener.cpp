@@ -66,6 +66,10 @@ CL64_OGL_Listener::CL64_OGL_Listener(void)
 
 	Flag_Show_Selected_Brush = 1;
 	Flag_Show_Selected_Face = 1;
+
+	Render_Mode = Enums::Render_Nothing;
+
+	memset(g_BrushTexture,0,399);
 }
 
 CL64_OGL_Listener::~CL64_OGL_Listener(void)
@@ -179,6 +183,11 @@ void CL64_OGL_Listener::Render_Loop()
 	glColor3f(0.8f, 0.8f, 0.8f);
 	Translate();
 
+	if (Render_Mode == Enums::Render_Groups)
+	{
+		Groups_Render_Textures();
+	}
+
 	// ---------------------- Brush
 	if (Flag_Show_Selected_Brush == 1)
 	{
@@ -194,6 +203,7 @@ void CL64_OGL_Listener::Render_Loop()
 		Render_Selected_Face();
 	}
 	
+
 	if (depthTestEnabled)
 	{
 		glEnable(GL_DEPTH_TEST);
@@ -213,6 +223,110 @@ void CL64_OGL_Listener::Translate(void)
 
 	glRotatef(RZ, 0.0, 1.0, 0.0);
 	glRotatef(0.0, 0.0, 0.0, 1.0);
+}
+
+// *************************************************************************
+// *		Groups_Render_Textures:- Terry and Hazel Flanigan 2025	   	   *
+// *************************************************************************
+void CL64_OGL_Listener::Groups_Render_Textures(void)
+{
+	int Count = 0;
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	glEnable(GL_TEXTURE_2D);
+	glColor3f(1, 1, 1);
+
+	int GroupCount = App->CL_Model->GroupCount;
+
+	//if (ShowOnlySubMesh == 1) // Show Only Selected SubMesh
+	//{
+	//	Groups_Textured_Parts(Selected_Group);
+	//	glDisable(GL_TEXTURE_2D);
+	//	return;
+	//}
+
+	//Count = 0;
+	//if (Show_HideGroup == 1) // Hide Selected SubMesh
+	//{
+	//	while (Count < GroupCount)
+	//	{
+	//		if (Selected_Group == Count)
+	//		{
+	//		}
+	//		else
+	//		{
+	//			Groups_Textured_Parts(Count);
+	//		}
+	//		Count++;
+	//	}
+
+	//	glDisable(GL_TEXTURE_2D);
+	//	return;
+	//}
+
+	Count = 0;
+	while (Count < GroupCount)
+	{
+		Groups_Textured_Parts(Count);
+		Count++;
+	}
+
+	glDisable(GL_TEXTURE_2D);
+
+}
+
+// *************************************************************************
+// *		Groups_Textured_Part:- Terry and Hazel Flanigan 2025	 	   *
+// *************************************************************************
+void CL64_OGL_Listener::Groups_Textured_Parts(int Count)
+{
+	int VertCount = 0;
+	int A = 0;
+	int B = 0;
+	int C = 0;
+
+	if (App->CL_Model->Group[Count]->MaterialIndex > -1)
+	{
+		glEnable(GL_TEXTURE_2D);
+		glColor3f(1, 1, 1);
+
+		glBindTexture(GL_TEXTURE_2D, g_BrushTexture[App->CL_Model->Group[Count]->MaterialIndex]);
+
+	}
+	else
+	{
+		glDisable(GL_TEXTURE_2D);
+	}
+
+	while (VertCount < App->CL_Model->Group[Count]->GroupFaceCount)
+	{
+		A = App->CL_Model->Group[Count]->Face_Data[VertCount].a;
+		B = App->CL_Model->Group[Count]->Face_Data[VertCount].b;
+		C = App->CL_Model->Group[Count]->Face_Data[VertCount].c;
+
+		glBegin(GL_POLYGON);
+
+		//-----------------------------------------------
+		glTexCoord2f(App->CL_Model->Group[Count]->MapCord_Data[A].u, App->CL_Model->Group[Count]->MapCord_Data[A].v);
+		glNormal3fv(&App->CL_Model->Group[Count]->Normal_Data[A].x);
+		glVertex3fv(&App->CL_Model->Group[Count]->vertex_Data[A].x);
+
+		//-----------------------------------------------
+		glTexCoord2f(App->CL_Model->Group[Count]->MapCord_Data[B].u, App->CL_Model->Group[Count]->MapCord_Data[B].v);
+		glNormal3fv(&App->CL_Model->Group[Count]->Normal_Data[B].x);
+		glVertex3fv(&App->CL_Model->Group[Count]->vertex_Data[B].x);
+
+		//-----------------------------------------------
+		glTexCoord2f(App->CL_Model->Group[Count]->MapCord_Data[C].u, App->CL_Model->Group[Count]->MapCord_Data[C].v);
+		glNormal3fv(&App->CL_Model->Group[Count]->Normal_Data[C].x);
+		glVertex3fv(&App->CL_Model->Group[Count]->vertex_Data[C].x);
+		VertCount++;
+		//-----------------------------------------------
+
+		glEnd();
+
+	}
 }
 
 // *************************************************************************
@@ -395,28 +509,3 @@ bool CL64_OGL_Listener::Brush_FaceList_Create(const Brush* b, const FaceList* pL
 	return GE_TRUE;
 }
 
-
-// *************************************************************************
-// *		MeshData_Points_Groups:- Terry and Hazel Flanigan 2024	   	   *
-// *************************************************************************
-void CL64_OGL_Listener::MeshData_Points_Groups(int Count)
-{
-	/*glPointSize(5);
-
-	int VertCount = 0;
-
-	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-
-	int GroupVertCount = App->CL_Scene->Group[Count]->GroupVertCount;
-
-	while (VertCount < GroupVertCount)
-	{
-		glBegin(GL_POINTS);
-
-		glVertex3fv(&App->CL_Scene->Group[Count]->vertex_Data[VertCount].x);
-
-		glEnd();
-
-		VertCount++;
-	}*/
-}

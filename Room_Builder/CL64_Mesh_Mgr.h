@@ -47,6 +47,8 @@ public:
 	void Delete_Group_Brushes();
 
 	int Get_Adjusted_Index(int RealIndex);
+	bool AddTexture_GL(geVFile* BaseFile, const char* TextureName, int GroupIndex);
+
 	int ActualFaceCount;
 
 	Ogre::SceneNode* World_Node;

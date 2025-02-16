@@ -250,7 +250,7 @@ bool CL64_Mesh_Mgr::Brush_Build_Level_Brushes(Level3* pLevel, const char* Filena
 
 			mAdjusedIndex_Store[AdjustedIndex] = i;
 
-			//AddTexture_GL(NULL, matname, AdjustedIndex);
+			AddTexture_GL(NULL, matname, AdjustedIndex);
 
 			AdjustedIndex++;
 		}
@@ -725,7 +725,7 @@ bool CL64_Mesh_Mgr::WE_Convert_To_Texture_Group(int TextureID)
 				App->CL_Model->Group[TextureID]->vertex_Data[vertexIndex].z = Z;
 
 				U = App->CL_Model->B_Brush[Count]->MapCord_Data[C].u,
-					V = App->CL_Model->B_Brush[Count]->MapCord_Data[C].v;
+				V = App->CL_Model->B_Brush[Count]->MapCord_Data[C].v;
 
 				App->CL_Model->Group[TextureID]->MapCord_Data[vertexIndex].u = U;
 				App->CL_Model->Group[TextureID]->MapCord_Data[vertexIndex].v = V;
@@ -818,4 +818,62 @@ int CL64_Mesh_Mgr::Get_Adjusted_Index(int RealIndex)
 	}
 
 	return -1;
+}
+
+// *************************************************************************
+// *			AddTexture_GL:- Terry and Hazel Flanigan 2023		  	   *
+// *************************************************************************
+bool CL64_Mesh_Mgr::AddTexture_GL(geVFile* BaseFile, const char* TextureName, int GroupIndex)
+{
+	return 1;
+	//Debug
+	HWND	PreviewWnd;
+	HBITMAP	hbm;
+	HDC		hDC;
+
+	int index = 0;
+	geBitmap* Bitmap = NULL;
+	CL64_WadFile* pWad;
+	pWad = NULL;
+	pWad = App->CL_Level->Level_GetWadFile(App->CL_Doc->pLevel);
+	for (index = 0; index < pWad->mBitmapCount; index++)
+	{
+		char mName[MAX_PATH];
+		char TempTextureFile[MAX_PATH];
+
+		strcpy(mName, pWad->mBitmaps[index].Name);
+
+		bool test = strcmp(mName, TextureName);
+		if (test == 0)
+		{
+			Bitmap = pWad->mBitmaps[index].bmp;
+
+			if (geBitmap_HasAlpha(Bitmap))
+			{
+				//App->CL_Textures->LoadTextures_TXL(pWad->mBitmaps[index].Name);
+
+				strcpy(TempTextureFile, App->RB_Directory_FullPath);
+				strcat(TempTextureFile, "\\");
+				strcat(TempTextureFile, "TextureLoad.tga");
+
+				//App->CL_Textures->WriteTGA(TempTextureFile, App->CLSB_Textures->Temp_RF_Bitmap);
+
+				//App->CL_Textures->Soil_Load_Texture(App->CL_Ogre->OGL_Listener->g_BrushTexture, TempTextureFile, GroupIndex);
+			}
+			else
+			{
+				strcpy(TempTextureFile, App->RB_Directory_FullPath);
+				strcat(TempTextureFile, "\\");
+				strcat(TempTextureFile, "TextureLoad.bmp");
+
+				//App->CL_Textures->Genesis_WriteToBmp(Bitmap, TempTextureFile);
+
+				//App->CL_Textures->Soil_Load_Texture(App->CL_Ogre->OGL_Listener->g_BrushTexture, TempTextureFile, GroupIndex);
+			}
+
+			DeleteFile((LPCTSTR)TempTextureFile);
+		}
+	}
+
+	return TRUE;
 }
