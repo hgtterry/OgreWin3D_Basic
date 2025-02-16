@@ -43,8 +43,7 @@ public:
 	bool DecompileTextures_TXL(char* PathAndFile);
 	bool Extract_TXL_Texture(char* Name, char* Folder);
 	bool LoadTextures_TXL(char* Name);
-	int WriteBMP8(const char* pszFile, geBitmap* pBitmap);
-
+	
 	Ogre::ManualObject* Export_Manual;
 	Ogre::ManualObject* World_Manual;
 

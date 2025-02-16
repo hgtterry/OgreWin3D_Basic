@@ -29,5 +29,7 @@ class CL64_Textures
 public:
 	CL64_Textures(void);
 	~CL64_Textures(void);
+
+	int Write_BMP(const char* pszFile, geBitmap* pBitmap);
 };
 
