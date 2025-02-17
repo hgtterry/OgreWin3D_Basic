@@ -278,6 +278,10 @@
 #define IDC_COMBO2                      1220
 #define IDC_COMBO3                      1221
 #define IDC_COMBO4                      1222
+#define IDC_ST_X                        1223
+#define IDC_ST_Y                        1224
+#define IDC_FLIPHORIZONTAL              1225
+#define IDC_FLIPVERTICAL                1226
 #define ID_DEBUG_GENERAL                32771
 #define ID_TEMPLATES_INSERT             32772
 #define ID_BRUSH_SELECT                 32773
@@ -316,7 +320,7 @@
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        166
 #define _APS_NEXT_COMMAND_VALUE         32796
-#define _APS_NEXT_CONTROL_VALUE         1220
+#define _APS_NEXT_CONTROL_VALUE         1227
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif

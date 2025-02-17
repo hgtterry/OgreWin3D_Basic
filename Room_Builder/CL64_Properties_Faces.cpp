@@ -83,7 +83,13 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 		SendDlgItemMessage(hDlg, IDC_STTEXTOFFSET, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_STTEXTSCALE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ST_ANGLE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		SendDlgItemMessage(hDlg, IDC_ST_X, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_ST_Y, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
+		SendDlgItemMessage(hDlg, IDC_FLIPHORIZONTAL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_FLIPVERTICAL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
 		SendDlgItemMessage(hDlg, IDC_ST_EDITXOFFSET, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ST_EDITYOFFSET, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ST_EDITXSCALE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
@@ -140,6 +146,22 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 		}
 
 		if (GetDlgItem(hDlg, IDC_STTEXTSCALE) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		if (GetDlgItem(hDlg, IDC_ST_X) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		if (GetDlgItem(hDlg, IDC_ST_Y) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 0, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
@@ -231,26 +253,19 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 	{
 		LPNMHDR some_item = (LPNMHDR)lParam;
 
-		/*if (some_item->idFrom == IDC_FLIPHORIZONTAL && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDC_FLIPHORIZONTAL)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
 			return CDRF_DODEFAULT;
 		}
 
-		if (some_item->idFrom == IDC_FLIPVERTICAL && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDC_FLIPVERTICAL)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
 			return CDRF_DODEFAULT;
 		}
-
-		if (some_item->idFrom == IDOK && some_item->code == NM_CUSTOMDRAW)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Normal(item);
-			return CDRF_DODEFAULT;
-		}*/
 
 		if (some_item->idFrom == IDOK)
 		{
@@ -584,19 +599,31 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 		//	return TRUE;
 		//}
 
-		/*if (LOWORD(wParam) == IDC_FLIPHORIZONTAL)
+		if (LOWORD(wParam) == IDC_FLIPHORIZONTAL)
 		{
-			App->CL_FaceDialog->On_FlipHorizontal();
-			App->CL_FaceDialog->Update_FaceProperties_Dlg(hDlg);
-			return TRUE;
-		}*/
+			float xScale, yScale;
 
-		/*if (LOWORD(wParam) == IDC_FLIPVERTICAL)
-		{
-			App->CL_FaceDialog->OnFlipvertical();
-			App->CL_FaceDialog->Update_FaceProperties_Dlg(hDlg);
+			App->CL_Face->Face_GetTextureScale(App->CL_Properties_Faces->m_Selected_Face, &xScale, &yScale);
+			App->CL_Face->Face_SetTextureScale(App->CL_Properties_Faces->m_Selected_Face, xScale, -yScale);
+
+			App->CL_Properties_Faces->UpdateDialog(hDlg);
+			App->CL_Properties_Faces->Update();
+
 			return TRUE;
-		}*/
+		}
+
+		if (LOWORD(wParam) == IDC_FLIPVERTICAL)
+		{
+			float xScale, yScale;
+
+			App->CL_Face->Face_GetTextureScale(App->CL_Properties_Faces->m_Selected_Face, &xScale, &yScale);
+			App->CL_Face->Face_SetTextureScale(App->CL_Properties_Faces->m_Selected_Face, -xScale, yScale);
+
+			App->CL_Properties_Faces->UpdateDialog(hDlg);
+			App->CL_Properties_Faces->Update();
+
+			return TRUE;
+		}
 
 		// -----------------------------------------------------------------
 		if (LOWORD(wParam) == IDOK)
