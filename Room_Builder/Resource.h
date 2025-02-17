@@ -271,6 +271,13 @@
 #define IDC_SBXSCALE                    1214
 #define IDC_SBXOFFSET3                  1215
 #define IDC_SBYSCALE                    1215
+#define IDC_STTEXTSCALE                 1216
+#define IDC_STTEXTOFFSET                1217
+#define IDC_ST_ANGLE                    1218
+#define IDC_COMBO1                      1219
+#define IDC_COMBO2                      1220
+#define IDC_COMBO3                      1221
+#define IDC_COMBO4                      1222
 #define ID_DEBUG_GENERAL                32771
 #define ID_TEMPLATES_INSERT             32772
 #define ID_BRUSH_SELECT                 32773
@@ -309,7 +316,7 @@
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        166
 #define _APS_NEXT_COMMAND_VALUE         32796
-#define _APS_NEXT_CONTROL_VALUE         1214
+#define _APS_NEXT_CONTROL_VALUE         1220
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif
