@@ -45,17 +45,27 @@ private:
 	void Update_Face_Members();
 	void UpdateDialog(HWND hDlg);
 
+	void Fill_ComboBox_AngleValues(HWND hDlg);
+	void Fill_ComboBox_ScaleValues(HWND hDlg);
+	void Fill_ComboBox_OffSetValues(HWND hDlg);
+
 	Face* m_Selected_Face;
 
 	float m_TextureAngle;
-	float m_TextureXScale;
-	float m_TextureYScale;
+	float m_TextureAngle_Delta;
 
+	float m_TextureXScale;
 	float ScaleX_Delta;
+
+	float m_TextureYScale;
 	float ScaleY_Delta;
+	
 
 	int m_TextureYOffset;
+	int m_TextureYOffset_Delta;
+
 	int m_TextureXOffset;
+	int m_TextureXOffset_Delta;
 
 	int m_Selected_Face_Index;
 };

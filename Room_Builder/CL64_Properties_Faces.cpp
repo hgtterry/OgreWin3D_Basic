@@ -37,14 +37,19 @@ CL64_Properties_Faces::CL64_Properties_Faces(void)
 	m_NumberOfFaces = 0;
 
 	m_TextureAngle = 0;
+	m_TextureAngle_Delta = 15;
+
 	m_TextureXScale = 0;
+	ScaleX_Delta = 0.01;
+
 	m_TextureYScale = 0;
+	ScaleY_Delta = 0.01;
+
+	m_TextureXOffset = 0;
+	m_TextureXOffset_Delta = 16;
 
 	m_TextureYOffset = 0;
-	m_TextureXOffset = 0;
-
-	ScaleX_Delta = 0.01;
-	ScaleY_Delta = 0.01;
+	m_TextureYOffset_Delta = 16;
 
 	m_Selected_Face_Index = 0;
 
@@ -96,6 +101,13 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 		SendDlgItemMessage(hDlg, IDC_ST_EDITYSCALE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ST_EDITANGLE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
+		SendDlgItemMessage(hDlg, IDC_CBXOFFSET, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_CBYOFFSET, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_CBXSCALE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_CBYSCALE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
+		SendDlgItemMessage(hDlg, IDC_CBANGLE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
 		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
@@ -116,22 +128,21 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 
 		App->CL_FaceDialog->UpdateDialog(hDlg);
 
-		App->CL_FaceDialog->Update_FaceProperties_Dlg(hDlg);
+		App->CL_FaceDialog->Update_FaceProperties_Dlg(hDlg);*/
 
 		HWND CB_hWnd = GetDlgItem(hDlg, IDC_CBXOFFSET);
-		App->CL_FaceDialog->Fill_ComboBox_OffSetValues(CB_hWnd);
+		App->CL_Properties_Faces->Fill_ComboBox_OffSetValues(CB_hWnd);
 
 		CB_hWnd = GetDlgItem(hDlg, IDC_CBYOFFSET);
-		App->CL_FaceDialog->Fill_ComboBox_OffSetValues(CB_hWnd);
+		App->CL_Properties_Faces->Fill_ComboBox_OffSetValues(CB_hWnd);
 
 		CB_hWnd = GetDlgItem(hDlg, IDC_CBXSCALE);
-		App->CL_FaceDialog->Fill_ComboBox_ScaleValues(CB_hWnd);
+		App->CL_Properties_Faces->Fill_ComboBox_ScaleValues(CB_hWnd);
 
 		CB_hWnd = GetDlgItem(hDlg, IDC_CBYSCALE);
-		App->CL_FaceDialog->Fill_ComboBox_ScaleValues(CB_hWnd);
+		App->CL_Properties_Faces->Fill_ComboBox_ScaleValues(CB_hWnd);
 
-		CB_hWnd = GetDlgItem(hDlg, IDC_CBANGLE);
-		App->CL_FaceDialog->Fill_ComboBox_AngleValues(CB_hWnd);*/
+		App->CL_Properties_Faces->Fill_ComboBox_AngleValues(hDlg);
 
 		return TRUE;
 	}
@@ -293,13 +304,11 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 			{
 			case SB_LINERIGHT:
 			{
-				App->CL_Properties_Faces->m_TextureAngle++;
+				App->CL_Properties_Faces->m_TextureAngle += App->CL_Properties_Faces->m_TextureAngle_Delta;
 				App->CL_Properties_Faces->UpdateDialog(hDlg);
 				
 				float pAngle = (float)App->CL_Properties_Faces->m_TextureAngle;
 
-				//App->CL_Properties_Faces->m_Selected_Face->Tex.Rotate = pAngle;
-				
 				App->CL_Face->Face_SetTextureRotate(App->CL_Properties_Faces->m_Selected_Face, pAngle);
 				App->CL_Properties_Faces->Update();
 				
@@ -308,12 +317,10 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 
 			case SB_LINELEFT:
 			{
-				App->CL_Properties_Faces->m_TextureAngle--;
+				App->CL_Properties_Faces->m_TextureAngle -= App->CL_Properties_Faces->m_TextureAngle_Delta;
 				App->CL_Properties_Faces->UpdateDialog(hDlg);
 				
 				float pAngle = (float)App->CL_Properties_Faces->m_TextureAngle;
-
-				//App->CL_Properties_Faces->m_Selected_Face->Tex.Rotate = pAngle;
 
 				App->CL_Face->Face_SetTextureRotate(App->CL_Properties_Faces->m_Selected_Face, pAngle);
 				App->CL_Properties_Faces->Update();
@@ -334,7 +341,7 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 			{
 				char buf[255];
 
-				App->CL_Properties_Faces->m_TextureXOffset++;
+				App->CL_Properties_Faces->m_TextureXOffset += App->CL_Properties_Faces->m_TextureXOffset_Delta;
 
 				sprintf(buf, "%i", App->CL_Properties_Faces->m_TextureXOffset);
 				SetDlgItemText(hDlg, IDC_ST_EDITXOFFSET, (LPCTSTR)buf);
@@ -354,7 +361,7 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 			{
 				char buf[255];
 
-				App->CL_Properties_Faces->m_TextureXOffset--;
+				App->CL_Properties_Faces->m_TextureXOffset -= App->CL_Properties_Faces->m_TextureXOffset_Delta;
 				
 				sprintf(buf, "%i", App->CL_Properties_Faces->m_TextureXOffset);
 				SetDlgItemText(hDlg, IDC_ST_EDITXOFFSET, (LPCTSTR)buf);
@@ -381,7 +388,7 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 			{
 			case SB_LINERIGHT:
 			{
-				App->CL_Properties_Faces->m_TextureYOffset++;
+				App->CL_Properties_Faces->m_TextureYOffset += App->CL_Properties_Faces->m_TextureYOffset_Delta;
 				App->CL_Properties_Faces->UpdateDialog(hDlg);
 
 				int pYOffset = (int)App->CL_Properties_Faces->m_TextureYOffset;
@@ -397,7 +404,7 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 
 			case SB_LINELEFT:
 			{
-				App->CL_Properties_Faces->m_TextureYOffset--;
+				App->CL_Properties_Faces->m_TextureYOffset -= App->CL_Properties_Faces->m_TextureYOffset_Delta;
 				App->CL_Properties_Faces->UpdateDialog(hDlg);
 				
 				int pYOffset = (int)App->CL_Properties_Faces->m_TextureYOffset;
@@ -422,7 +429,7 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 			{
 			case SB_LINERIGHT:
 			{
-				App->CL_Properties_Faces->m_TextureXScale = App->CL_Properties_Faces->m_TextureXScale + App->CL_Properties_Faces->ScaleX_Delta;
+				App->CL_Properties_Faces->m_TextureXScale += App->CL_Properties_Faces->ScaleX_Delta;
 				App->CL_Properties_Faces->UpdateDialog(hDlg);
 				
 				float pXScale = (float)App->CL_Properties_Faces->m_TextureXScale;
@@ -437,7 +444,7 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 			}
 			case SB_LINELEFT:
 			{
-				App->CL_Properties_Faces->m_TextureXScale = App->CL_Properties_Faces->m_TextureXScale - App->CL_Properties_Faces->ScaleX_Delta;
+				App->CL_Properties_Faces->m_TextureXScale -= App->CL_Properties_Faces->ScaleX_Delta;
 				App->CL_Properties_Faces->UpdateDialog(hDlg);
 				
 				float pXScale = (float)App->CL_Properties_Faces->m_TextureXScale;
@@ -462,7 +469,7 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 			{
 			case SB_LINERIGHT:
 			{
-				App->CL_Properties_Faces->m_TextureYScale = App->CL_Properties_Faces->m_TextureYScale + App->CL_Properties_Faces->ScaleY_Delta;
+				App->CL_Properties_Faces->m_TextureYScale += App->CL_Properties_Faces->ScaleY_Delta;
 				App->CL_Properties_Faces->UpdateDialog(hDlg);
 				
 				float pYScale = (float)App->CL_Properties_Faces->m_TextureYScale;
@@ -478,7 +485,7 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 
 			case SB_LINELEFT:
 			{
-				App->CL_Properties_Faces->m_TextureYScale = App->CL_Properties_Faces->m_TextureYScale - App->CL_Properties_Faces->ScaleY_Delta;
+				App->CL_Properties_Faces->m_TextureYScale -= App->CL_Properties_Faces->ScaleY_Delta;
 				App->CL_Properties_Faces->UpdateDialog(hDlg);
 				
 				float pYScale = (float)App->CL_Properties_Faces->m_TextureYScale;
@@ -557,47 +564,111 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 			return TRUE;
 		}*/
 
-		//if (LOWORD(wParam) == IDC_CBXSCALE)
-		//{
-		//	switch (HIWORD(wParam)) // Find out what message it was
-		//	{
-		//	case CBN_DROPDOWN:
-		//		break;
-		//	case CBN_CLOSEUP:
-		//	{
-		//		char buff[MAX_PATH]{ 0 };
+		if (LOWORD(wParam) == IDC_CBXOFFSET)
+		{
+			switch (HIWORD(wParam)) 
+			{
+			case CBN_DROPDOWN:
+				break;
+			case CBN_CLOSEUP:
+			{
+				char buff[MAX_PATH]{ 0 };
 
-		//		HWND temp = GetDlgItem(hDlg, IDC_CBXSCALE);
-		//		int Index = SendMessage(temp, CB_GETCURSEL, 0, 0);
-		//		SendMessage(temp, CB_GETLBTEXT, Index, (LPARAM)buff);
+				HWND temp = GetDlgItem(hDlg, IDC_CBXOFFSET);
+				int Index = SendMessage(temp, CB_GETCURSEL, 0, 0);
+				SendMessage(temp, CB_GETLBTEXT, Index, (LPARAM)buff);
 
-		//		App->CL_FaceDialog->ScaleX_Delta = atof(buff);
-		//	}
-		//	}
+				App->CL_Properties_Faces->m_TextureXOffset_Delta = atoi(buff);
+			}
+			}
+			
+			return TRUE;
+		}
 
-		//	return TRUE;
-		//}
+		if (LOWORD(wParam) == IDC_CBYOFFSET)
+		{
+			switch (HIWORD(wParam))
+			{
+			case CBN_DROPDOWN:
+				break;
+			case CBN_CLOSEUP:
+			{
+				char buff[MAX_PATH]{ 0 };
 
-		//if (LOWORD(wParam) == IDC_CBYSCALE)
-		//{
-		//	switch (HIWORD(wParam)) // Find out what message it was
-		//	{
-		//	case CBN_DROPDOWN:
-		//		break;
-		//	case CBN_CLOSEUP:
-		//	{
-		//		char buff[MAX_PATH]{ 0 };
+				HWND temp = GetDlgItem(hDlg, IDC_CBYOFFSET);
+				int Index = SendMessage(temp, CB_GETCURSEL, 0, 0);
+				SendMessage(temp, CB_GETLBTEXT, Index, (LPARAM)buff);
 
-		//		HWND temp = GetDlgItem(hDlg, IDC_CBYSCALE);
-		//		int Index = SendMessage(temp, CB_GETCURSEL, 0, 0);
-		//		SendMessage(temp, CB_GETLBTEXT, Index, (LPARAM)buff);
+				App->CL_Properties_Faces->m_TextureYOffset_Delta = atoi(buff);
+			}
+			}
 
-		//		App->CL_FaceDialog->ScaleY_Delta = atof(buff);
-		//	}
-		//	}
+			return TRUE;
+		}
 
-		//	return TRUE;
-		//}
+		if (LOWORD(wParam) == IDC_CBXSCALE)
+		{
+			switch (HIWORD(wParam))
+			{
+			case CBN_DROPDOWN:
+				break;
+			case CBN_CLOSEUP:
+			{
+				char buff[MAX_PATH]{ 0 };
+
+				HWND temp = GetDlgItem(hDlg, IDC_CBXSCALE);
+				int Index = SendMessage(temp, CB_GETCURSEL, 0, 0);
+				SendMessage(temp, CB_GETLBTEXT, Index, (LPARAM)buff);
+
+				App->CL_Properties_Faces->ScaleX_Delta = atof(buff);
+			}
+			}
+
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_CBYSCALE)
+		{
+			switch (HIWORD(wParam))
+			{
+			case CBN_DROPDOWN:
+				break;
+			case CBN_CLOSEUP:
+			{
+				char buff[MAX_PATH]{ 0 };
+
+				HWND temp = GetDlgItem(hDlg, IDC_CBYSCALE);
+				int Index = SendMessage(temp, CB_GETCURSEL, 0, 0);
+				SendMessage(temp, CB_GETLBTEXT, Index, (LPARAM)buff);
+
+				App->CL_Properties_Faces->ScaleY_Delta = atof(buff);
+			}
+			}
+
+			return TRUE;
+		}
+
+		// Angle Combo
+		if (LOWORD(wParam) == IDC_CBANGLE)
+		{
+			switch (HIWORD(wParam))
+			{
+			case CBN_DROPDOWN:
+				break;
+			case CBN_CLOSEUP:
+			{
+				char buff[MAX_PATH]{ 0 };
+
+				HWND temp = GetDlgItem(hDlg, IDC_CBANGLE);
+				int Index = SendMessage(temp, CB_GETCURSEL, 0, 0);
+				SendMessage(temp, CB_GETLBTEXT, Index, (LPARAM)buff);
+
+				App->CL_Properties_Faces->m_TextureAngle_Delta = atof(buff);
+			}
+			}
+
+			return TRUE;
+		}
 
 		if (LOWORD(wParam) == IDC_FLIPHORIZONTAL)
 		{
@@ -663,6 +734,55 @@ void CL64_Properties_Faces::Update()
 	App->CL_Ogre->RenderFrame(2);
 
 	App->CL_Properties_Faces->m_Selected_Face = App->CL_SelFaceList->SelFaceList_GetFace(App->CL_Doc->pSelFaces, App->CL_Face->Selected_Face_Index);
+}
+
+// *************************************************************************
+// *				Fill_ComboBox_AngleValues Terry Flanigan	  		   *
+// *************************************************************************
+void CL64_Properties_Faces::Fill_ComboBox_AngleValues(HWND hDlg)
+{
+	HWND CB_hWnd = GetDlgItem(hDlg, IDC_CBANGLE);
+
+	SendMessage(CB_hWnd, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"5");
+	SendMessage(CB_hWnd, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"10");
+	SendMessage(CB_hWnd, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"15");
+	SendMessage(CB_hWnd, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"30");
+	SendMessage(CB_hWnd, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"45");
+	SendMessage(CB_hWnd, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"90");
+
+	SendMessage(CB_hWnd, CB_SETCURSEL, 2, 0);
+}
+
+// *************************************************************************
+// *				Fill_ComboBox_ScaleValues Terry Flanigan	  		   *
+// *************************************************************************
+void CL64_Properties_Faces::Fill_ComboBox_ScaleValues(HWND hDlg)
+{
+	SendMessage(hDlg, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"0.001");
+	SendMessage(hDlg, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"0.01");
+	SendMessage(hDlg, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"0.02");
+	SendMessage(hDlg, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"0.05");
+	SendMessage(hDlg, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"0.10");
+	SendMessage(hDlg, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"0.50");
+	SendMessage(hDlg, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"1.0");
+	SendMessage(hDlg, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"2.0");
+
+	SendMessage(hDlg, CB_SETCURSEL, 1, 0);
+}
+
+// *************************************************************************
+// *				Fill_ComboBox_OffSetValues Terry Flanigan	  		   *
+// *************************************************************************
+void CL64_Properties_Faces::Fill_ComboBox_OffSetValues(HWND hDlg)
+{
+	SendMessage(hDlg, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"4");
+	SendMessage(hDlg, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"8");
+	SendMessage(hDlg, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"16");
+	SendMessage(hDlg, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"32");
+	SendMessage(hDlg, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"64");
+	SendMessage(hDlg, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"128");
+
+	SendMessage(hDlg, CB_SETCURSEL, 2, 0);
 }
 
 // *************************************************************************

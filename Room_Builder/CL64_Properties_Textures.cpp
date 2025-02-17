@@ -158,7 +158,16 @@ LRESULT CALLBACK CL64_Properties_Textures::Proc_TextureDialog(HWND hDlg, UINT me
 	{
 		if (LOWORD(wParam) == IDC_BT_TEXTURE_FACE_PROPS)
 		{
-			App->CL_Properties_Faces->Start_FaceDialog();
+			int SF = App->CL_SelFaceList->SelFaceList_GetSize(App->CL_Doc->pSelFaces);
+			if (SF > 0)
+			{
+				App->CL_Properties_Faces->Start_FaceDialog();
+			}
+			else
+			{
+				App->Say("No Face Selected");
+			}
+
 			return TRUE;
 		}
 
