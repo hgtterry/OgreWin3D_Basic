@@ -146,9 +146,13 @@ void CL64_Doc::Init_Doc()
 // *************************************************************************
 // *	    	Set_Editor:- Terry and Hazel Flanigan 2025	    		   *
 // *************************************************************************
-void CL64_Doc::Set_Editor(int Set_State)
+void CL64_Doc::Editor_Set_Dlgs(int Set_State)
 {
-
+    if (Set_State == Enums::Editor_Dlgs_First_Brush)
+    {
+        App->CL_Top_Tabs->Enable_Select_Button(true, true);
+        App->CL_Properties_Tabs->Enable_Tabs(true);
+    }
 }
 
 // *************************************************************************

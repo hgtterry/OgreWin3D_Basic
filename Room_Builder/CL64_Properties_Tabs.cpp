@@ -109,7 +109,16 @@ LRESULT CALLBACK CL64_Properties_Tabs::Proc_Tabs_Control(HWND hDlg, UINT message
 		if (some_item->idFrom == IDC_TBTEXTURES)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle_Tabs(item, App->CL_Properties_Tabs->flag_Tab_Texture);
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_TBTEXTURES));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
+			else
+			{
+				App->Custom_Button_Toggle_Tabs(item, App->CL_Properties_Tabs->flag_Tab_Texture);
+			}
+
 			return CDRF_DODEFAULT;
 		}
 
@@ -123,7 +132,16 @@ LRESULT CALLBACK CL64_Properties_Tabs::Proc_Tabs_Control(HWND hDlg, UINT message
 		if (some_item->idFrom == IDC_TBGROUPS)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle_Tabs(item, App->CL_Properties_Tabs->flag_Tab_Group);
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_TBGROUPS));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
+			else
+			{
+				App->Custom_Button_Toggle_Tabs(item, App->CL_Properties_Tabs->flag_Tab_Group);
+			}
+			
 			return CDRF_DODEFAULT;
 		}
 
@@ -273,5 +291,14 @@ void CL64_Properties_Tabs::Select_Templates_Tab()
 void CL64_Properties_Tabs::Enable_Tabs_Dlg(bool Enable)
 {
 	EnableWindow(Tabs_Control_Hwnd, Enable);
+}
+
+// *************************************************************************
+// *	  	Enable_Tabs:- Terry and Hazel Flanigan 2025					   *
+// *************************************************************************
+void CL64_Properties_Tabs::Enable_Tabs(bool Enable)
+{
+	EnableWindow(GetDlgItem(Tabs_Control_Hwnd, IDC_TBTEXTURES), Enable);
+	EnableWindow(GetDlgItem(Tabs_Control_Hwnd, IDC_TBGROUPS), Enable);
 }
 

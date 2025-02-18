@@ -37,6 +37,7 @@ public:
 	void Select_Templates_Tab();
 
 	void Enable_Tabs_Dlg(bool Enable);
+	void Enable_Tabs(bool Enable);
 
 	HWND Tabs_Control_Hwnd;
 

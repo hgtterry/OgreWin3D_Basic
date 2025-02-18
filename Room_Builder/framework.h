@@ -76,4 +76,10 @@ namespace Enums
 		Render_Ogre = 2,
 		Render_Assimp = 3
 	};
+
+	enum Editor_Mode
+	{
+		Editor_Dlgs_New = 0,
+		Editor_Dlgs_First_Brush = 1
+	};
 }
