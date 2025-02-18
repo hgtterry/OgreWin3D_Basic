@@ -144,6 +144,14 @@ void CL64_Doc::Init_Doc()
 }
 
 // *************************************************************************
+// *	    	Set_Editor:- Terry and Hazel Flanigan 2025	    		   *
+// *************************************************************************
+void CL64_Doc::Set_Editor(int Set_State)
+{
+
+}
+
+// *************************************************************************
 // *		   FindTextureLibrary- Terry and Hazel Flanigan 2024 	   	   *
 // *************************************************************************
 const char* CL64_Doc::FindTextureLibrary(char const* WadName)
@@ -1691,8 +1699,8 @@ void CL64_Doc::Set_Current_TxlPath(void)
     App->CL_Utilities->Get_FileName_FromPath(mDoc_TXL_Path_And_File, mDoc_TXL_Path_And_File);
 
     strcpy(mDoc_TXL_Just_FileName, App->CL_Utilities->JustFileName);
-
 }
+
 
 
 

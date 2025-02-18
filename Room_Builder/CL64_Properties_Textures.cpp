@@ -140,7 +140,17 @@ LRESULT CALLBACK CL64_Properties_Textures::Proc_TextureDialog(HWND hDlg, UINT me
 		if (some_item->idFrom == IDC_BT_TEXTURE_FACE_PROPS)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Normal(item);
+
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_TEXTURE_FACE_PROPS));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
+			else
+			{
+				App->Custom_Button_Normal(item);
+			}
+
 			return CDRF_DODEFAULT;
 		}
 

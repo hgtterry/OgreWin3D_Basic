@@ -89,6 +89,8 @@ public:
 	~CL64_Doc(void);
 
 	void Init_Doc();
+	void Set_Editor(int Set_State);
+
 	const char* FindTextureLibrary(char const* WadName);
 	void SetLockAxis(int Lock) { mLockAxis = Lock; };
 
