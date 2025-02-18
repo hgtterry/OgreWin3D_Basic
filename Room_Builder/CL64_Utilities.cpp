@@ -62,6 +62,41 @@ bool CL64_Utilities::Check_File_Exist(char* Full_Path)
 }
 
 // *************************************************************************
+// *		Delete_Folder_Contents:- Terry and Hazel Flanigan 2024	 	   *
+// *************************************************************************
+void CL64_Utilities::Delete_Folder_Contents(char* Folder)
+{
+	char pSearchPath[MAX_PATH];
+	char DeleteFile[MAX_PATH];
+
+	WIN32_FIND_DATA FindFileData;
+	HANDLE hFind;
+
+	strcpy(pSearchPath, Folder);
+	strcat(pSearchPath, "\\");
+	strcat(pSearchPath, "*.*");
+
+	hFind = FindFirstFile(pSearchPath, &FindFileData);
+	if (hFind != INVALID_HANDLE_VALUE)
+	{
+		strcpy(DeleteFile, Folder);
+		strcat(DeleteFile, "\\");
+		strcat(DeleteFile, FindFileData.cFileName);
+		remove(DeleteFile);
+		
+		while (FindNextFile(hFind, &FindFileData) != 0)
+		{
+			strcpy(DeleteFile, Folder);
+			strcat(DeleteFile, "\\");
+			strcat(DeleteFile, FindFileData.cFileName);
+			remove(DeleteFile);
+		}
+	}
+	
+	FindClose(hFind);
+}
+
+// *************************************************************************
 // *		Get_FileName_FromPath:- Terry and Hazel Flanigan 2025	  	   *
 // *************************************************************************
 void CL64_Utilities::Get_FileName_FromPath(char* pString, char* FileName)

@@ -82,7 +82,7 @@ void CL64_Ogre3D::Set_World_Paths(void)
 	strcpy(mExport_Just_Name, mWorld_Mesh_JustName);
 
 	NameIndex++;
-
+	
 	x, y, z = 0;
 	nx, ny, nz = 0;
 	u, v = 0;

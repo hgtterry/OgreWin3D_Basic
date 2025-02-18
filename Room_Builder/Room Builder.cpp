@@ -601,6 +601,17 @@ void Close_App()
         App->CL_Ogre->mRoot = NULL;
     }
 
+    // Delete Contents of working folder
+    char mWorld_File_PathAndFile[MAX_PATH];
+    strcpy(mWorld_File_PathAndFile, App->RB_Directory_FullPath);
+    strcat(mWorld_File_PathAndFile, "\\");
+    strcat(mWorld_File_PathAndFile, "Data");
+    strcat(mWorld_File_PathAndFile, "\\");
+    strcat(mWorld_File_PathAndFile, "World_Test");
+    App->CL_Utilities->Delete_Folder_Contents(mWorld_File_PathAndFile);
+
+
+
     PostQuitMessage(0);
 }
 

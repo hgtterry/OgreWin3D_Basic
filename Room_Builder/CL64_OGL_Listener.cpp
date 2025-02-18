@@ -197,6 +197,7 @@ void CL64_OGL_Listener::Render_Loop()
 	// ---------------------- Brush
 	if (Flag_Show_Selected_Brush == 1)
 	{
+		glDisable(GL_CULL_FACE);
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 		Render_Selected_Brush();
 	}
@@ -204,6 +205,7 @@ void CL64_OGL_Listener::Render_Loop()
 	// ---------------------- Face
 	if (Flag_Show_Selected_Face == 1)
 	{
+		glDisable(GL_CULL_FACE);
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 		glLineWidth(2);
 		Render_Selected_Face();
