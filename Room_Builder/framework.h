@@ -33,6 +33,8 @@
 #include <gl/glu.h>
 
 #define Debug App->Say_Win("Here");//, "  Internal Debug Message  ");
+#define Do_Timer App->CL_Ogre->Processes_Start_Time();
+#define Get_Timer App->CL_Ogre->Processes_Get_Time();
 
 namespace Enums
 {

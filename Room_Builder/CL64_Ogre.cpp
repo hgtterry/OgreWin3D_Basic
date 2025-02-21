@@ -47,6 +47,8 @@ CL64_Ogre::CL64_Ogre()
 
 	FPSLock = 16666; // Default 60 FPS
 	FPStimer.reset();
+	Processes_timer.reset();
+	m_Processes_Time = 0;
 
 	App_Resource_Group = "App_Resource_Group";
 	World_Resource_Group = "World_Resource_Group";
@@ -408,4 +410,21 @@ bool CL64_Ogre::Ogre_Render_Loop(void)
 	}
 
 	return 1;
+}
+
+// *************************************************************************
+// *		Processes_Start_Time:- Terry and Hazel Flanigan 2025		   *
+// *************************************************************************
+void CL64_Ogre::Processes_Start_Time(void)
+{
+	Processes_timer.reset();
+}
+
+// *************************************************************************
+// *			Processes_Get_Time:- Terry and Hazel Flanigan 2025		   *
+// *************************************************************************
+void CL64_Ogre::Processes_Get_Time(void)
+{
+	m_Processes_Time = Processes_timer.getMilliseconds();
+	Processes_timer.reset();
 }

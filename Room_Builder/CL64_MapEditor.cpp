@@ -1550,6 +1550,7 @@ void CL64_MapEditor::Render_RenderBrushSelFacesOrtho(ViewVars* Cam, Brush* b, HD
 // *************************************************************************
 void CL64_MapEditor::Draw_Screen(HWND hwnd)
 {
+	//Do_Timer
 	//flag_IsDrawing = 1;
 	int			inidx = 0;
 	HDC			RealhDC;
@@ -1701,13 +1702,14 @@ void CL64_MapEditor::Draw_Screen(HWND hwnd)
 
 	}
 
-//done:
 	BitBlt(RealhDC, Rect.left, Rect.top, Rect.right - Rect.left, Rect.bottom - Rect.top, MemoryhDC, 0, 0, SRCCOPY);
 
 	DeleteObject(OffScreenBitmap);
 	DeleteDC(MemoryhDC);
-
+	ReleaseDC(hwnd, RealhDC);
 	//flag_IsDrawing = 0;
+
+	//Get_Timer
 }
 
 // *************************************************************************

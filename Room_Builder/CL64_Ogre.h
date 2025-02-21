@@ -50,6 +50,9 @@ public:
 
 	void Camera_Reset_Zero();
 
+	void Processes_Start_Time(void);
+	void Processes_Get_Time(void);
+
 	char Return_Chr[MAX_PATH];
 	Ogre::String mResourcePath;
 
@@ -72,7 +75,10 @@ public:
 	CL64_OGL_Listener* OGL_Listener;
 
 	Ogre::Timer FPStimer;
+	Ogre::Timer Processes_timer;
+
 	int FPSLock; // FPS Lock Setable (60 FPS Default)
+	int m_Processes_Time;
 
 	HWND RenderHwnd;
 

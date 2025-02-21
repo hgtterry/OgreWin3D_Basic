@@ -587,6 +587,8 @@ void CL64_Doc::SelectOrtho(POINT point, ViewVars* v)
     {
         if (FoundThingType == fctBRUSH)
         {
+            Do_Timer
+
             DoBrushSelection(pMinBrush, brushSelToggle);    
 
             int Bnum = App->CL_Brush->Get_Brush_Count();
@@ -605,6 +607,8 @@ void CL64_Doc::SelectOrtho(POINT point, ViewVars* v)
 
                 App->CL_Top_Tabs->Update_Faces_Combo();
             }
+
+            Get_Timer
         } 
     }
     else

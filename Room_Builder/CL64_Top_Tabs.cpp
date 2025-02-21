@@ -503,6 +503,10 @@ void CL64_Top_Tabs::Select_Face()
 // *************************************************************************
 void CL64_Top_Tabs::Update_Faces_Combo()
 {
+	//App->Flash_Window();
+
+	//Do_Timer
+
 	HWND Temp = GetDlgItem(Headers_hWnd, IDC_CB_FACELIST);
 	SendMessage(Temp, CB_RESETCONTENT, 0, 0);
 	char buff[MAX_PATH];
@@ -524,5 +528,5 @@ void CL64_Top_Tabs::Update_Faces_Combo()
 		SendMessage(Temp, CB_SETCURSEL, App->CL_Face->Selected_Face_Index, 0);
 	}
 
-	
+	//Get_Timer
 }
