@@ -349,23 +349,7 @@ bool CL64_File::Open_3dt_File()
 		App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_Free;
 		App->CL_Doc->UpdateAllViews(Enums::UpdateViews_All);
 
-		/*Level_SetWadPath(App->CLSB_Doc->pLevel, Txlpath);
-		App->CL_World->Set_Current_TxlPath();
-		App->CLSB_Doc->UpdateAfterWadChange();
-		App->CLSB_TextureDialog->Fill_ListBox();
-
-		strcpy(App->CL_World->mCurrent_TXL_FileName, Txlpath);*/
-
 	}
-
-	//App->CL_TabsGroups_Dlg->Fill_ListBox();
-
-	////App->CLSB_Level->Change_Centre_Brush_Texture();
-
-	//App->CL_World->Set_Paths();
-	//App->CL_World->Reset_Editor();
-
-	//App->CLSB_RecentFiles->RecentFile_Files_Update();
 
 	return true;
 }

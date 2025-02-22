@@ -1667,30 +1667,20 @@ void CL64_Doc::Set_Paths(void)
 }
 
 // *************************************************************************
-// *		Set_Current_3DT_Paths:- Terry and Hazel Flanigan 2023		   *
+// *		Set_Current_3DT_Paths:- Terry and Hazel Flanigan 2025		   *
 // *************************************************************************
 void CL64_Doc::Set_Current_3DT_Paths(void)
 {
-    //char mFileName[MAX_PATH];
-    //char mPath_FileName[MAX_PATH];
+    strcpy(App->CL_Doc->mDoc_MTF_PathAndFile, App->CL_File->PathFileName_3dt);
+    strcpy(App->CL_Doc->mDoc_MTF_Just_FileName, App->CL_File->FileName_3dt);
 
-    //strcpy(mCurrent_3DT_PathAndFile, pDoc->GetPathName()); // MFC
+    char buf[MAX_PATH];
+    strcpy(buf, App->CL_Doc->mDoc_MTF_Just_FileName);
+    int Len = strlen(buf);
+    buf[Len - 4] = 0;
+    strcpy(App->CL_Doc->mDoc_MTF_JustName_NoExt, buf);
 
-    //Get_FileName_FromPath(mCurrent_3DT_PathAndFile, mCurrent_3DT_PathAndFile);
-
-    //strcpy(mCurrent_3DT_File, JustFileName);
-
-    //strcpy(mCurrent_Title, JustFileName);
-
-    //strcpy(mFileName, mCurrent_3DT_File);
-    //strcpy(mPath_FileName, mCurrent_3DT_Path);
-
-    //int len1 = strlen(mFileName);
-    //int len2 = strlen(mCurrent_3DT_PathAndFile);
-    //strcpy(mCurrent_3DT_Path, mCurrent_3DT_PathAndFile);
-
-
-    //mCurrent_3DT_Path[len2 - len1] = 0;
+    strcpy(App->CL_Export->mJustName, App->CL_Doc->mDoc_MTF_JustName_NoExt);
 
 }
 
