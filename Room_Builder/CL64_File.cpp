@@ -440,7 +440,9 @@ void CL64_File::Set_Editor()
 	App->CL_Top_Tabs->Enable_Brush_Options_Buttons(false, false);
 	App->CL_Properties_Tabs->Select_Templates_Tab();
 	App->CL_Ogre->Camera_Reset_Zero();
+
 	App->CL_MapEditor->Reset_Views();
+
 	App->CL_Doc->Editor_Set_Dlgs(Enums::Editor_Dlgs_First_Brush);
 
 	App->CL_Ogre->RenderFrame(7);

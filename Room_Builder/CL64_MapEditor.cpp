@@ -70,15 +70,14 @@ CL64_MapEditor::CL64_MapEditor()
 	Bottom_Right_Hwnd = NULL;
 
 	LEFT_WINDOW_WIDTH = 500;
+	nleftWnd_width = 500;
 
 	LEFT_WINDOW_DEPTH = 215;
+	nleftWnd_Depth = 215;
 	TOP_POS_BOTLEFT = 215;
 
 	RIGHT_MINIMUM_SPACE = 1000;
 	LEFT_MINIMUM_SPACE = 15;
-
-	nleftWnd_width = LEFT_WINDOW_WIDTH;
-	nleftWnd_Depth = LEFT_WINDOW_DEPTH;
 
 	Do_Width = 0;
 	Do_Depth = 0;

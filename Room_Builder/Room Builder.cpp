@@ -64,11 +64,13 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     App->mMenu = GetMenu(App->MainHwnd);
     App->LoadProgramResource();
 
+    App->CL_Doc->Init_Doc();
+    App->CL_MapEditor->Init_Map_Views();
+    App->CL_MapEditor->Reset_Views();
+
     ShowWindow(App->MainHwnd, SW_SHOWMAXIMIZED);
     UpdateWindow(App->MainHwnd);
 
-    App->CL_Doc->Init_Doc();
-    App->CL_MapEditor->Init_Map_Views();
     App->CL_Ogre->Init_Ogre();
 
     App->SetMainWinCentre();
@@ -132,9 +134,6 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    {
       return FALSE;
    }
-
-   /*ShowWindow(App->MainHwnd, nCmdShow);
-   UpdateWindow(App->MainHwnd);*/
 
    return TRUE;
 }
@@ -321,6 +320,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             }
             
             // ----------------------------- View
+            case ID_VIEW_RESETVIEWS:
+            {
+                App->CL_MapEditor->Reset_Views();
+                return 1;
+            }
+            
             case ID_VIEW_PATHS:
             {
                 if (App->CL_ImGui->flag_Show_Paths == 1)
