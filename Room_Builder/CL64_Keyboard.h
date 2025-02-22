@@ -29,5 +29,6 @@ public:
 	Ogre::Vector3 OldPos;
 	POINT		Mouse_point;
 	bool flag_Block_Keyboard;
+	bool flag_Update_Views;
 };
 

@@ -22,6 +22,7 @@ CL64_Keyboard::CL64_Keyboard(void)
 	Rate = 0;
 	OldPos = Ogre::Vector3::ZERO;
 	flag_Block_Keyboard = 0;
+	flag_Update_Views = 0;
 }
 
 CL64_Keyboard::~CL64_Keyboard(void)
@@ -234,7 +235,8 @@ void CL64_Keyboard::Keyboard_Mode_Free(float deltaTime)
 		if (App->CL_Ogre->Ogre3D_Listener->Wheel < 0) // Mouse Wheel Forward
 		{
 			App->CL_Ogre->Ogre3D_Listener->mTranslateVector.z = -App->CL_Ogre->Ogre3D_Listener->mMoveScale * 30;
-			App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
+			
+			flag_Update_Views = 1;
 		}
 		if (GetAsyncKeyState(87) < 0) // W Key
 		{
@@ -243,14 +245,15 @@ void CL64_Keyboard::Keyboard_Mode_Free(float deltaTime)
 				App->CL_Ogre->Ogre3D_Listener->mTranslateVector.z = -App->CL_Ogre->Ogre3D_Listener->mMoveScale;
 			}
 
-			App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
+			flag_Update_Views = 1;
 		}
 
 		// Back
 		if (App->CL_Ogre->Ogre3D_Listener->Wheel > 0) // Mouse Wheel Back
 		{
 			App->CL_Ogre->Ogre3D_Listener->mTranslateVector.z = App->CL_Ogre->Ogre3D_Listener->mMoveScale * 30;
-			App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
+			
+			flag_Update_Views = 1;
 		}
 		if (GetAsyncKeyState(83) < 0) // S Key	
 		{
@@ -259,7 +262,7 @@ void CL64_Keyboard::Keyboard_Mode_Free(float deltaTime)
 				App->CL_Ogre->Ogre3D_Listener->mTranslateVector.z = App->CL_Ogre->Ogre3D_Listener->mMoveScale;
 			}
 
-			App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
+			flag_Update_Views = 1;
 		}
 
 		// Pan Down
@@ -274,8 +277,8 @@ void CL64_Keyboard::Keyboard_Mode_Free(float deltaTime)
 				OldPos.y -= Rate;
 
 				App->CL_Ogre->Ogre3D_Listener->mCamNode->setPosition(OldPos);
-
-				App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
+				
+				flag_Update_Views = 1;
 			}
 		}
 
@@ -291,6 +294,8 @@ void CL64_Keyboard::Keyboard_Mode_Free(float deltaTime)
 				OldPos.y += Rate;
 
 				App->CL_Ogre->Ogre3D_Listener->mCamNode->setPosition(OldPos);
+				
+				flag_Update_Views = 1;
 			}
 		}
 
@@ -300,7 +305,8 @@ void CL64_Keyboard::Keyboard_Mode_Free(float deltaTime)
 			if (App->CL_Ogre->Ogre3D_Listener->CameraMode == Enums::Cam_Mode_Free)
 			{
 				App->CL_Ogre->Ogre3D_Listener->mTranslateVector.x = -App->CL_Ogre->Ogre3D_Listener->mMoveScale;
-				App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
+				
+				flag_Update_Views = 1;
 			}
 		}
 
@@ -310,7 +316,8 @@ void CL64_Keyboard::Keyboard_Mode_Free(float deltaTime)
 			if (App->CL_Ogre->Ogre3D_Listener->CameraMode == Enums::Cam_Mode_Free)
 			{
 				App->CL_Ogre->Ogre3D_Listener->mTranslateVector.x = App->CL_Ogre->Ogre3D_Listener->mMoveScale;
-				App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
+				
+				flag_Update_Views = 1;
 			}
 		}
 
@@ -325,5 +332,11 @@ void CL64_Keyboard::Keyboard_Mode_Free(float deltaTime)
 		//{
 		//	
 		//}
+	}
+
+	if (flag_Update_Views == 1)
+	{
+		flag_Update_Views = 0;
+		App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
 	}
 }
