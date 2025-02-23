@@ -511,6 +511,11 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 			{
 				App->CL_Properties_Faces->m_Selected_Face_Index = Index;
 				App->CL_Properties_Faces->m_Selected_Face = App->CL_SelFaceList->SelFaceList_GetFace(App->CL_Doc->pSelFaces, Index);
+				
+				App->CL_Face->Selected_Face_Index = Index;
+
+				App->CL_Top_Tabs->Select_Face();
+				App->CL_Properties_Faces->Change_Selection();
 			}
 
 			return TRUE;
@@ -875,4 +880,13 @@ void CL64_Properties_Faces::Change_Selection()
 	App->CL_Properties_Faces->UpdateDialog(FaceDlg_Hwnd);
 
 	SendDlgItemMessage(FaceDlg_Hwnd, IDC_LST_FACELIST, LB_SETCURSEL, (WPARAM)App->CL_Face->Selected_Face_Index, (LPARAM)0);
+}
+
+// *************************************************************************
+// *			Close_Faces_Dialog:- Terry and Hazel Flanigan 2025         *
+// *************************************************************************
+void CL64_Properties_Faces::Close_Faces_Dialog()
+{
+	App->CL_Properties_Faces->flag_FaceDlg_Active = 0;
+	EndDialog(FaceDlg_Hwnd, 0);
 }

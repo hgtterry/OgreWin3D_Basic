@@ -613,6 +613,11 @@ void CL64_Doc::SelectOrtho(POINT point, ViewVars* v)
     }
     else
     {
+        if (App->CL_Properties_Faces->flag_FaceDlg_Active == 1)
+        {
+            App->CL_Properties_Faces->Close_Faces_Dialog();
+        }
+
         App->CL_Panels->Deselect_All_Brushes_Update_Dlgs();
         App->CL_Top_Tabs->Update_Faces_Combo();
     }

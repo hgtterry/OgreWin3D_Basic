@@ -31,6 +31,7 @@ public:
 
 	void Start_FaceDialog();
 	void Change_Selection();
+	void Close_Faces_Dialog();
 
 	HWND FaceDlg_Hwnd;
 
