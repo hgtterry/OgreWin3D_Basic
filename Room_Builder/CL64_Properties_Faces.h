@@ -30,6 +30,7 @@ public:
 	~CL64_Properties_Faces(void);
 
 	void Start_FaceDialog();
+	void Change_Selection();
 
 	HWND FaceDlg_Hwnd;
 

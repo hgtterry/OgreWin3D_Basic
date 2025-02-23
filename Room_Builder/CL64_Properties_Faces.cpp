@@ -810,7 +810,7 @@ void CL64_Properties_Faces::Update_Face_List(HWND hDlg)
 }
 
 // *************************************************************************
-// *		Update_Face_Members:- Terry and Hazel Flanigan 2025			*
+// *		Update_Face_Members:- Terry and Hazel Flanigan 2025            *
 // *************************************************************************
 void CL64_Properties_Faces::Update_Face_Members()
 {
@@ -864,4 +864,15 @@ void CL64_Properties_Faces::UpdateDialog(HWND hDlg)
 	SetDlgItemText(hDlg, IDC_ST_EDITANGLE, (LPCTSTR)buf);
 
 	//Update_FaceProperties_Dlg(hDlg);
+}
+
+// *************************************************************************
+// *			Change_Selection:- Terry and Hazel Flanigan 2025           *
+// *************************************************************************
+void CL64_Properties_Faces::Change_Selection()
+{
+	App->CL_Properties_Faces->Update_Face_Members();
+	App->CL_Properties_Faces->UpdateDialog(FaceDlg_Hwnd);
+
+	SendDlgItemMessage(FaceDlg_Hwnd, IDC_LST_FACELIST, LB_SETCURSEL, (WPARAM)App->CL_Face->Selected_Face_Index, (LPARAM)0);
 }
