@@ -53,7 +53,7 @@ CL64_Properties_Faces::CL64_Properties_Faces(void)
 
 	m_Selected_Face_Index = 0;
 
-	f_FaceDlg_Active = 0;
+	flag_FaceDlg_Active = 0;
 }
 
 CL64_Properties_Faces::~CL64_Properties_Faces(void)
@@ -65,10 +65,10 @@ CL64_Properties_Faces::~CL64_Properties_Faces(void)
 // *************************************************************************
 void CL64_Properties_Faces::Start_FaceDialog()
 {
-	if (f_FaceDlg_Active == 0)
+	if (flag_FaceDlg_Active == 0)
 	{
 		FaceDlg_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_PROPS_FACES, App->MainHwnd, (DLGPROC)Proc_FaceDialog);
-		f_FaceDlg_Active = 1;
+		flag_FaceDlg_Active = 1;
 	}
 }
 
@@ -121,14 +121,6 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 		App->CL_Properties_Faces->Update_Face_List(hDlg);
 		App->CL_Properties_Faces->Update_Face_Members();
 		App->CL_Properties_Faces->UpdateDialog(hDlg);
-
-		/*SendDlgItemMessage(hDlg, IDC_LISTFACEPROPERTIES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-
-		App->CL_FaceDialog->UpdatePolygonFocus();
-
-		App->CL_FaceDialog->UpdateDialog(hDlg);
-
-		App->CL_FaceDialog->Update_FaceProperties_Dlg(hDlg);*/
 
 		HWND CB_hWnd = GetDlgItem(hDlg, IDC_CBXOFFSET);
 		App->CL_Properties_Faces->Fill_ComboBox_OffSetValues(CB_hWnd);
@@ -699,14 +691,14 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 		// -----------------------------------------------------------------
 		if (LOWORD(wParam) == IDOK)
 		{
-			App->CL_Properties_Faces->f_FaceDlg_Active = 0;
+			App->CL_Properties_Faces->flag_FaceDlg_Active = 0;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == IDCANCEL)
 		{
-			App->CL_Properties_Faces->f_FaceDlg_Active = 0;
+			App->CL_Properties_Faces->flag_FaceDlg_Active = 0;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
@@ -850,7 +842,7 @@ void CL64_Properties_Faces::Update_Face_Members()
 }
 
 // *************************************************************************
-// *		  UpdateDialog:- Terry and Hazel Flanigan 2025				*
+// *			UpdateDialog:- Terry and Hazel Flanigan 2025               *
 // *************************************************************************
 void CL64_Properties_Faces::UpdateDialog(HWND hDlg)
 {

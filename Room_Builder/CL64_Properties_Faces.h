@@ -35,7 +35,7 @@ public:
 
 	int m_NumberOfFaces;
 
-	bool f_FaceDlg_Active;
+	bool flag_FaceDlg_Active;
 
 private:
 	static LRESULT CALLBACK Proc_FaceDialog(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
