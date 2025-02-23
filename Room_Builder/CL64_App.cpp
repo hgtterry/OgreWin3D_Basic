@@ -187,6 +187,7 @@ void CL64_App::InitApp(void)
 	}
 
 	LoadString(hInst, IDS_APP_TITLE, App_Title, MAX_PATH);
+
 }
 
 // *************************************************************************
@@ -267,6 +268,9 @@ void CL64_App::LoadProgramResource(void)
 
 	Hnd_FullScreen_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_FULLSCREEN);*/
 
+	// Set Defaults for now
+	App->CL_Level->flag_UseGrid = 1;
+	CheckMenuItem(App->mMenu, ID_GRID_GRIDSNAP, MF_BYCOMMAND | MF_CHECKED);
 }
 
 // *************************************************************************

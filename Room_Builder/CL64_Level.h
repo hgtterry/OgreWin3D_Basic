@@ -57,6 +57,8 @@ public:
 	int Level_EnumBrushes(Level* pLevel, void* lParam, BrushList_CB Callback);
 	signed int Level_UseGrid(const Level* pLevel);
 	int Level_GetRotationSnap(const Level* pLevel);
+	float Level_GetGridSnapSize(const Level* pLevel);
 
+	bool flag_UseGrid;
 };
 

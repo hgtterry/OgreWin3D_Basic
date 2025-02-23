@@ -2632,4 +2632,114 @@ void CL64_Brush::BrushList_Rotate(BrushList* pList, const Matrix3d* pXfmRotate, 
 	}
 }
 
+// *************************************************************************
+// *						Brush_SnapScaleNearest						   *
+// *************************************************************************
+void CL64_Brush::Brush_SnapScaleNearest(Brush* b, float gsize, int sides, int inidx, T_Vec3* fnscale, int* ScaleNum)
+{
+	int		i;
+	T_Vec3	FixOrg, BrushOrg;
+	T_Vec3	dmin, vsnap, sbound;
+	float	const	gsizeinv = 1.0f / (geFloat)gsize;
+
+	App->CL_Maths->Vector3_Add(&b->BoundingBox.Min, &b->BoundingBox.Max, &BrushOrg);
+	App->CL_Maths->Vector3_Scale(&BrushOrg, 0.5f, &BrushOrg);
+
+	//find the corner of the bounds to keep fixed
+	VectorToSUB(FixOrg, inidx) = 0.0f;
+	VectorToSUB(dmin, inidx) = 0.0f;
+	if ((sides & 3) == 0)
+	{
+		VectorToSUB(FixOrg, axidx[inidx][0]) = VectorToSUB(b->BoundingBox.Min, axidx[inidx][0]);
+		VectorToSUB(dmin, axidx[inidx][0]) = VectorToSUB(b->BoundingBox.Max, axidx[inidx][0]);
+	}
+	else if ((sides & 3) == 2)
+	{
+		VectorToSUB(FixOrg, axidx[inidx][0]) = VectorToSUB(b->BoundingBox.Max, axidx[inidx][0]);
+		VectorToSUB(dmin, axidx[inidx][0]) = VectorToSUB(b->BoundingBox.Min, axidx[inidx][0]);
+	}
+	else if ((sides & 3) == 1)
+	{
+		VectorToSUB(FixOrg, axidx[inidx][0]) = VectorToSUB(b->BoundingBox.Min, axidx[inidx][0]);
+		VectorToSUB(dmin, axidx[inidx][0]) = VectorToSUB(b->BoundingBox.Max, axidx[inidx][0]);
+	}
+
+	if ((sides & 0x0c) == 0)
+	{
+		VectorToSUB(FixOrg, axidx[inidx][1]) = VectorToSUB(b->BoundingBox.Min, axidx[inidx][1]);
+		VectorToSUB(dmin, axidx[inidx][1]) = VectorToSUB(b->BoundingBox.Max, axidx[inidx][1]);
+	}
+	else if ((sides & 0x0c) == 8)
+	{
+		if (inidx != 1)	//check for top view (which has backwards y axis relation)
+		{
+			VectorToSUB(FixOrg, axidx[inidx][1]) = VectorToSUB(b->BoundingBox.Min, axidx[inidx][1]);
+			VectorToSUB(dmin, axidx[inidx][1]) = VectorToSUB(b->BoundingBox.Max, axidx[inidx][1]);
+		}
+		else
+		{
+			VectorToSUB(FixOrg, axidx[inidx][1]) = VectorToSUB(b->BoundingBox.Max, axidx[inidx][1]);
+			VectorToSUB(dmin, axidx[inidx][1]) = VectorToSUB(b->BoundingBox.Min, axidx[inidx][1]);
+		}
+	}
+	else if ((sides & 0x0c) == 4)
+	{
+		if (inidx != 1)
+		{
+			VectorToSUB(FixOrg, axidx[inidx][1]) = VectorToSUB(b->BoundingBox.Max, axidx[inidx][1]);
+			VectorToSUB(dmin, axidx[inidx][1]) = VectorToSUB(b->BoundingBox.Min, axidx[inidx][1]);
+		}
+		else
+		{
+			VectorToSUB(FixOrg, axidx[inidx][1]) = VectorToSUB(b->BoundingBox.Min, axidx[inidx][1]);
+			VectorToSUB(dmin, axidx[inidx][1]) = VectorToSUB(b->BoundingBox.Max, axidx[inidx][1]);
+		}
+	}
+
+	App->CL_Maths->Vector3_Scale(&FixOrg, gsizeinv, &sbound);
+
+	for (i = 0; i < 3; i++)
+	{
+		VectorToSUB(vsnap, i) = (geFloat)Units_Trunc(VectorToSUB(sbound, i));
+	}
+
+	App->CL_Maths->Vector3_Subtract(&sbound, &vsnap, &sbound);
+	App->CL_Maths->Vector3_Scale(&vsnap, gsize, &vsnap);
+	App->CL_Maths->Vector3_Subtract(&FixOrg, &dmin, &FixOrg);
+	App->CL_Maths->Vector3_Subtract(&vsnap, &dmin, &vsnap);
+
+	for (i = 0; i < 3; i++)
+	{
+		if (VectorToSUB(sbound, i) > 0.5f)
+		{
+			VectorToSUB(vsnap, i) += gsize;
+		}
+		else if (VectorToSUB(sbound, i) < -0.5f)
+		{
+			VectorToSUB(vsnap, i) -= gsize;
+		}
+	}
+
+	//find the magnitude to expand onto the boundary
+	for (i = 0; i < 3; i++)
+	{
+		if (VectorToSUB(FixOrg, i))
+		{
+			VectorToSUB(sbound, i) = (1.0f - (VectorToSUB(vsnap, i) / VectorToSUB(FixOrg, i))) * 200.0f;
+		}
+	}
+	if ((sides & 3) == 1)
+	{
+		VectorToSUB(sbound, axidx[inidx][0]) = -VectorToSUB(sbound, axidx[inidx][0]);
+	}
+	if ((sides & 0x0c) == 4)
+	{
+		VectorToSUB(sbound, axidx[inidx][1]) = -VectorToSUB(sbound, axidx[inidx][1]);
+	}
+
+	Brush_Resize(b, VectorToSUB(sbound, axidx[inidx][0]), VectorToSUB(sbound, axidx[inidx][1]), sides, inidx, fnscale, ScaleNum);
+
+	Brush_Bound(b);
+}
+
 

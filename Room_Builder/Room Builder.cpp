@@ -340,6 +340,23 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 return 1;
             }
             
+            // ----------------------------- Grid
+            case ID_GRID_GRIDSNAP:
+            {
+                if (App->CL_Level->flag_UseGrid == 1)
+                {
+                    App->CL_Level->flag_UseGrid = 0;
+                    CheckMenuItem(App->mMenu, ID_GRID_GRIDSNAP, MF_BYCOMMAND | MF_UNCHECKED);
+                }
+                else
+                {
+                    App->CL_Level->flag_UseGrid = 1;
+                    CheckMenuItem(App->mMenu, ID_GRID_GRIDSNAP, MF_BYCOMMAND | MF_CHECKED);
+                }
+
+                return 1;
+            }
+            
             // ----------------------------- Camera
 			case ID_CAMERA_TRACKCAMERA:
 			{

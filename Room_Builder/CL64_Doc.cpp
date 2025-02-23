@@ -982,33 +982,7 @@ void CL64_Doc::ScaleSelectedBrushes(T_Vec3* ScaleVector)
 // *************************************************************************
 void CL64_Doc::GetRotationPoint(T_Vec3* pVec)
 {
-   // Model* pModel;
-   // ModelInfo_Type* ModelInfo = Level_GetModelInfo(App->CLSB_Doc->pLevel);
-
-    //pModel = ModelList_GetAnimatingModel(ModelInfo->Models);
-    //if (pModel != NULL)
-    //{
-    //    CModelDialog* ModelTab;
-    //    geVec3d Xlate;
-
-    //    // we're animating a model, so use its current position
-    //    Model_GetCurrentPos(pModel, pVec);
-    //    // We have to add the current move translation
-    //    ModelTab = App->CLSB_Doc->mpMainFrame->GetModelTab();
-    //    if (ModelTab != NULL)
-    //    {
-    //        //ModelTab->GetTranslation (&Xlate);
-    //    }
-    //    else
-    //    {
-    //        geVec3d_Clear(&Xlate);
-    //    }
-    //    geVec3d_Add(pVec, &Xlate, pVec);
-    //}
-    //else
-    {
         *pVec = App->CL_Doc->SelectedGeoCenter;
-    }
 }
 
 static float ComputeSnap(float Cur, float Delta, float SnapSize)
@@ -1066,28 +1040,27 @@ void CL64_Doc::DoneMovingBrushes()
         geBoolean SnapX, SnapY, SnapZ;
 
         fSnapSize = 1.0f;
-       /* if (Level_UseGrid(App->CLSB_Doc->pLevel))
+
+        if (App->CL_Level->flag_UseGrid == 1)
         {
-            fSnapSize = Level_GetGridSnapSize(App->CLSB_Doc->pLevel);
-        }*/
+            fSnapSize = App->CL_Level->Level_GetGridSnapSize(App->CL_Doc->pLevel);
+        }
+
         // do the snap thing...
         pBox = App->CL_Brush->Brush_GetBoundingBox(App->CL_Doc->CurBrush);
         vMin = App->CL_Box->Box3d_GetMin(pBox);
         vMax = App->CL_Box->Box3d_GetMax(pBox);
         App->CL_Maths->Vector3_Clear(&SnapDelta);
-        /*
-          In template mode, the brush is moved directly, so we have to snap to
-          the current position, not current position plus delta.  Since we
-          clear the delta before computing the snap, we have to save these
-          flags.
-        */
+       
         SnapX = (App->CL_Doc->FinalPos.x != 0.0f);
         SnapY = (App->CL_Doc->FinalPos.y != 0.0f);
         SnapZ = (App->CL_Doc->FinalPos.z != 0.0f);
+
         /*if ((ModeTool == ID_TOOLS_TEMPLATE) || IsCopying)
         {
             geVec3d_Clear(&App->CLSB_Doc->FinalPos);
         }*/
+
         if (SnapX)
         {
             SnapDelta.x = ::SnapSide(vMin->x, vMax->x, App->CL_Doc->FinalPos.x, fSnapSize);
@@ -1112,8 +1085,6 @@ void CL64_Doc::DoneMovingBrushes()
 
 	App->CL_Doc->DoneMove();
 	App->CL_Doc->UpdateSelected();
-
-
 
     /*if ((ModeTool == ID_TOOLS_TEMPLATE) ||
         ((App->CLSB_Doc->GetSelState() & ANYENTITY) && (!(App->CLSB_Doc->GetSelState() & ANYBRUSH))))
@@ -1702,6 +1673,40 @@ void CL64_Doc::Set_Current_TxlPath(void)
     App->CL_Utilities->Get_FileName_FromPath(mDoc_TXL_Path_And_File, mDoc_TXL_Path_And_File);
 
     strcpy(mDoc_TXL_Just_FileName, App->CL_Utilities->JustFileName);
+}
+
+// *************************************************************************
+// *		SnapScaleNearest:- Terry and Hazel Flanigan 2025			   *
+// *************************************************************************
+void CL64_Doc::SnapScaleNearest(int sides, int inidx, ViewVars* v)
+{
+    geFloat	bsnap;
+
+    flag_Is_Modified = 1;
+
+    //App->CLSB_Doc->mLastOp = BRUSH_SCALE;
+
+    bsnap = 1.0f;
+    if (App->CL_Level->flag_UseGrid == 1)
+    {
+        bsnap = App->CL_Level->Level_GetGridSnapSize(App->CL_Doc->pLevel);
+    }
+
+   /* if (App->CLSB_Doc->mModeTool == ID_TOOLS_TEMPLATE)
+    {
+        Brush_SnapScaleNearest(App->CLSB_Doc->CurBrush, bsnap, sides, inidx, &App->CLSB_Doc->FinalScale, &App->CLSB_Doc->ScaleNum);
+    }
+    else*/
+    {
+        int i;
+        int NumBrushes = App->CL_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pTempSelBrushes);
+
+        for (i = 0; i < NumBrushes; ++i)
+        {
+            Brush* pBrush = App->CL_SelBrushList->SelBrushList_GetBrush(App->CL_Doc->pTempSelBrushes, i);
+            App->CL_Brush->Brush_SnapScaleNearest(pBrush, bsnap, sides, inidx, &App->CL_Doc->FinalScale, &App->CL_Doc->ScaleNum);
+        }
+    }
 }
 
 

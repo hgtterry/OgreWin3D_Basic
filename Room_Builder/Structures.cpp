@@ -1,6 +1,14 @@
 #include "pch.h"
 #include "CL64_App.h"
 
+#define Units_Trunc(n) ((int)(n))
+
+#define Units_CentimetersToEngine(c) (((float)(c)) / 2.54f)
+#define Units_EngineToCentimeters(i) (((float)(i)) * 2.54f)
+
+#define CENTIMETERS_TO_ENGINE(c) Units_CentimetersToEngine(c)
+#define ENGINE_TO_CENTIMETERS(e) Units_EngineToCentimeters(e)
+
 // *************************************************************************
 // *						Texture Information							   *
 // *************************************************************************
@@ -59,6 +67,26 @@ struct tag_BrushList
 	Brush* Last;
 };
 
+enum
+{
+	GridSize_Centimeter = 1,
+	GridSize_Decimeter = 10,
+	GridSize_Meter = 100
+};
+
+// *************************************************************************
+// *							GridInfo								   *
+// *************************************************************************
+typedef struct
+{
+	int GridType;
+	int SnapType;
+	int MetricSnapSize;
+	int TexelSnapSize;
+	int RotationSnap;
+
+} GridInfo;
+
 // *************************************************************************
 // *							Level Structure							   *
 // *************************************************************************
@@ -72,6 +100,8 @@ struct tag_Level
 	SizeInfo* WadSizeInfos;
 	CL64_WadFile* WadFile;
 	int GroupVisSetting;
+
+	GridInfo GridSettings;
 
 	BrushTemplate_Arch ArchTemplate;
 	BrushTemplate_Box	BoxTemplate;
@@ -103,3 +133,4 @@ struct tag_SelFaceList
 	Array* pItems;
 	int FirstFree;
 };
+

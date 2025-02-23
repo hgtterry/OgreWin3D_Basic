@@ -153,5 +153,8 @@ public:
 	void Brush_Rotate(Brush* b, const Matrix3d* pXfmRotate, const T_Vec3* pCenter);
 	void BrushList_Rotate(BrushList* pList, const Matrix3d* pXfmRotate, const T_Vec3* pCenter);
 
+	// Scale
+	void Brush_SnapScaleNearest(Brush* b, float gsize, int sides, int inidx, T_Vec3* fnscale, int* ScaleNum);
+
 };
 

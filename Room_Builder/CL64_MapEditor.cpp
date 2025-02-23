@@ -1293,9 +1293,9 @@ void CL64_MapEditor::On_Left_Button_Up(POINT CursorPosition)
 
 	if (App->CL_Doc->mModeTool == ID_TOOLS_BRUSH_SCALEBRUSH)
 	{
-		//pDoc->SetModifiedFlag();
+		App->CL_Doc->flag_Is_Modified = 1;
 		//SetCursor(AfxGetApp()->LoadStandardCursor(IDC_ARROW));
-		//pDoc->SnapScaleNearest(sides, Render_GetInidx(VCam), VCam);
+		App->CL_Doc->SnapScaleNearest(App->CL_Doc->sides, App->CL_Render->Render_GetInidx(Current_View), Current_View);
 
 		App->CL_Doc->DoneResize(App->CL_Doc->sides, App->CL_Render->Render_GetInidx(Current_View));
 		App->CL_Doc->UpdateAllViews(Enums::UpdateViews_All);

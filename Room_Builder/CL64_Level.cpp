@@ -28,8 +28,11 @@ THE SOFTWARE.
 #include "CL64_WadFile.h"
 #include "Structures.cpp"
 
+enum { GridMetric = 0, GridTexel = 1 };
+
 CL64_Level::CL64_Level(void)
 {
+	flag_UseGrid = 1;
 }
 
 CL64_Level::~CL64_Level(void)
@@ -71,24 +74,16 @@ Level* CL64_Level::Level_Create(const char* pWadName, const char* HeadersDir, co
 		pLevel->WadFile = NULL;
 		pLevel->WadSizeInfos = NULL;
 
-		// grid settings
-		//default to texel grid and snap
-		//with rotational snap of 15
-		{
-			/*GridInfo* pGridInfo;
+		GridInfo* pGridInfo;
+		pGridInfo = &pLevel->GridSettings;
+		pGridInfo->GridType = GridTexel;
+		pGridInfo->SnapType = GridTexel;
+		pGridInfo->MetricSnapSize = GridSize_Decimeter;
+		pGridInfo->TexelSnapSize = 8;
+		pGridInfo->RotationSnap = 15;
+		
 
-			pGridInfo = &pLevel->GridSettings;
-			pGridInfo->UseGrid = GE_TRUE;
-			pGridInfo->GridType = GridTexel;
-			pGridInfo->SnapType = GridTexel;
-			pGridInfo->MetricSnapSize = GridSize_Decimeter;
-			pGridInfo->TexelSnapSize = 8;
-			pGridInfo->RotationSnap = 15;*/
-		}
-
-		//		pLevel->BspRebuildFlag = GE_TRUE;
-		/*pLevel->BspRebuildFlag = GE_FALSE;
-		for (int iView = 0; iView < NUM_VIEWS; ++iView)
+		/*for (int iView = 0; iView < NUM_VIEWS; ++iView)
 		{
 			ViewStateInfo* pInfo;
 
@@ -353,5 +348,25 @@ signed int CL64_Level::Level_UseGrid(const Level* pLevel)
 int CL64_Level::Level_GetRotationSnap(const Level* pLevel)
 {
 	return 1;// pLevel->GridSettings.RotationSnap;
+}
+
+// *************************************************************************
+// *					Level_GetRotationSnap							   *
+// *************************************************************************
+float CL64_Level::Level_GetGridSnapSize (const Level *pLevel)
+{
+	const GridInfo *pGridInfo = &pLevel->GridSettings;
+
+	switch (pGridInfo->SnapType)
+	{
+		case GridMetric :
+			return CENTIMETERS_TO_ENGINE (pGridInfo->MetricSnapSize);
+			break;
+		default :
+			assert (0);
+		case GridTexel :
+			return (float)pGridInfo->TexelSnapSize;
+			break;
+	}
 }
 
