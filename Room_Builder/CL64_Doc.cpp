@@ -27,6 +27,7 @@ THE SOFTWARE.
 #include "CL64_App.h"
 #include "CL64_Doc.h"
 #include "Room Builder.h"
+#include "Structures.cpp"
 
 #define MAX_PIXEL_SELECT_DIST (50)
 #define MIN_ENTITY_SELECT_DIST (8.0f)
@@ -35,15 +36,6 @@ THE SOFTWARE.
 #define AXIS_X	0x1
 #define AXIS_Y	0x2
 #define AXIS_Z	0x4
-
-typedef struct FindClosestInfoTag
-{
-    CL64_Doc* pDoc;
-    ViewVars* v;
-    Brush** ppFoundBrush;
-    geFloat* pMinEdgeDist;
-    const POINT* ptFrom;
-} FindClosestInfo;
 
 CL64_Doc::CL64_Doc(void)
 {
@@ -197,10 +189,9 @@ void CL64_Doc::AddBrushToWorld()
 	else
 	{
 		OnBrushSubtractfromworld();
-        //App->Say("AddBrushToWorld - Subtract");
 	}
 
-	//SetModifiedFlag();
+    flag_Is_Modified = 1;
 }
 
 struct fdocFaceScales
@@ -1026,10 +1017,8 @@ static float SnapSide(float CurMin, float CurMax, float Delta, float SnapSize)
 // *************************************************************************
 void CL64_Doc::DoneMovingBrushes()
 {
-   // CFusionDoc* pDoc = GetDocument();
-   // int ModeTool = GetModeTool();
-
-   // pDoc->SetModifiedFlag();
+ 
+    flag_Is_Modified = 1;
 
     if (App->CL_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes) > 0)// || ModeTool == ID_TOOLS_TEMPLATE)
     {
@@ -1105,7 +1094,7 @@ void CL64_Doc::DoneMovingBrushes()
 void CL64_Doc::DoneRotate(void)
 {
     int			i;
-    float	RSnap;
+    float	RSnap = 1;
     Matrix3d		rm;
     T_Vec3 RotationPoint;
     T_Vec3 TemplateReversalRot;
@@ -1120,7 +1109,7 @@ void CL64_Doc::DoneRotate(void)
 
     App->CL_Doc->GetRotationPoint(&RotationPoint);
 
-    if ((App->CL_Doc->SelState & NOENTITIES) && App->CL_Level->Level_UseGrid(pLevel))
+    if (App->CL_Level->flag_UseGrid == 1)
     {
         RSnap = Units_DegreesToRadians((float)App->CL_Level->Level_GetRotationSnap(pLevel));
         FinalRot.x = ((float)((int)(FinalRot.x / RSnap))) * RSnap;
@@ -1535,7 +1524,7 @@ static signed int fdocUpdateBrushFaceTextures(Brush* pBrush, void* pVoid)
 // *************************************************************************
 void CL64_Doc::UpdateAfterWadChange()
 {
-   App->CL_Doc->flag_Is_Modified = 1;
+   flag_Is_Modified = 1;
 
    if (!App->CL_Level->Level_LoadWad(pLevel))
     {
@@ -1619,7 +1608,7 @@ bool CL64_Doc::DeleteSelectedBrushes()
         //turn off any operation tools
         mCurrentTool = CURTOOL_NONE;
 
-        App->CL_Doc->flag_Is_Modified = 1;
+        flag_Is_Modified = 1;
     }
 
     

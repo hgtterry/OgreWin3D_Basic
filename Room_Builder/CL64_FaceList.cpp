@@ -463,7 +463,5 @@ void CL64_FaceList::Face_Rotate(Face* f, const Matrix3d* pXfmRotate, const T_Vec
 	App->CL_Maths->XForm3d_Rotate(pXfmRotate, pPoint, pPoint);
 	App->CL_Maths->Vector3_Add(pPoint, pCenter, pPoint);
 
-	//App->Flash_Window();
-
 	f->Tex.DirtyFlag = GE_TRUE;
 }

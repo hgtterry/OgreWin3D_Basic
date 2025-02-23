@@ -347,7 +347,7 @@ signed int CL64_Level::Level_UseGrid(const Level* pLevel)
 // *************************************************************************
 int CL64_Level::Level_GetRotationSnap(const Level* pLevel)
 {
-	return 1;// pLevel->GridSettings.RotationSnap;
+	return pLevel->GridSettings.RotationSnap;
 }
 
 // *************************************************************************

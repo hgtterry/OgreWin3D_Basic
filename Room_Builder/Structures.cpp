@@ -134,3 +134,12 @@ struct tag_SelFaceList
 	int FirstFree;
 };
 
+typedef struct FindClosestInfoTag
+{
+    CL64_Doc* pDoc;
+    ViewVars* v;
+    Brush** ppFoundBrush;
+    geFloat* pMinEdgeDist;
+    const POINT* ptFrom;
+} FindClosestInfo;
+
