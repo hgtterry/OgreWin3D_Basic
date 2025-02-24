@@ -356,7 +356,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
                 return 1;
             }
-            
+
+            case ID_GRID_SNAPOPTOPNS:
+            {
+                App->CL_Dialogs->Dialog_SnapOptions();
+                return 1;
+            }
+           
             // ----------------------------- Camera
 			case ID_CAMERA_TRACKCAMERA:
 			{

@@ -48,6 +48,7 @@
 #define IDB_HOLLOWBOX                   163
 #define IDD_BRUSH_DIMENSIONS            164
 #define IDD_PROPS_FACES                 165
+#define IDD_SNAPOPTIONS                 166
 #define IDC_BANNER                      1000
 #define IDC_STTEXT                      1001
 #define IDC_STMESSAGE                   1002
@@ -283,6 +284,12 @@
 #define IDC_FLIPHORIZONTAL              1225
 #define IDC_FLIPVERTICAL                1226
 #define IDC_CBANGLE                     1227
+#define IDC_RADIO1                      1227
+#define IDC_RADIO2                      1228
+#define IDC_RADIO3                      1229
+#define IDC_RADIO4                      1230
+#define IDC_RADIO5                      1231
+#define IDC_RADIO6                      1232
 #define ID_DEBUG_GENERAL                32771
 #define ID_TEMPLATES_INSERT             32772
 #define ID_BRUSH_SELECT                 32773
@@ -315,6 +322,7 @@
 #define ID_VIEW_RESETVIEWS              32798
 #define ID_GRID                         32799
 #define ID_GRID_GRIDSNAP                32800
+#define ID_GRID_SNAPOPTOPNS             32801
 #define ID_GENERALSELECT                32886
 #define ID_TOOLS_TEMPLATE               32910
 #define IDC_STATIC                      -1
@@ -324,9 +332,9 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
-#define _APS_NEXT_RESOURCE_VALUE        166
-#define _APS_NEXT_COMMAND_VALUE         32801
-#define _APS_NEXT_CONTROL_VALUE         1227
+#define _APS_NEXT_RESOURCE_VALUE        167
+#define _APS_NEXT_COMMAND_VALUE         32802
+#define _APS_NEXT_CONTROL_VALUE         1228
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif

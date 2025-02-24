@@ -35,6 +35,7 @@ public:
 	void PleaseWait();
 	void Start_Brush_Properties_Dlg();
 	void Dialog_Text(int What_Check);
+	void Dialog_SnapOptions();
 
 	char btext[MAX_PATH];
 	char Chr_Text[MAX_PATH];
@@ -51,6 +52,7 @@ private:
 	static LRESULT CALLBACK Proc_Brush_Properties(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Proc_Dialog_Text(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Proc_YesNo(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Proc_SnapOptions(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	// Brush Information
 	void Fill_Brush_Combo(HWND hDlg);
