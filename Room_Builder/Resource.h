@@ -287,9 +287,10 @@
 #define IDC_RADIO1                      1227
 #define IDC_RADIO2                      1228
 #define IDC_RADIO3                      1229
-#define IDC_RADIO4                      1230
-#define IDC_RADIO5                      1231
-#define IDC_RADIO6                      1232
+#define IDC_RADIO4                      1229
+#define IDC_RADIO8                      1230
+#define IDC_RADIO16                     1231
+#define IDC_RADIO32                     1232
 #define ID_DEBUG_GENERAL                32771
 #define ID_TEMPLATES_INSERT             32772
 #define ID_BRUSH_SELECT                 32773

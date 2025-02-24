@@ -871,19 +871,67 @@ LRESULT CALLBACK CL64_Dialogs::Proc_SnapOptions(HWND hDlg, UINT message, WPARAM 
 	{
 	case WM_INITDIALOG:
 	{
-		//SendDlgItemMessage(hDlg, IDC_EDITTEXT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_RADIO1, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_RADIO2, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_RADIO4, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_RADIO8, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_RADIO16, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_RADIO32, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+
 
 		return TRUE;
 	}
 	case WM_CTLCOLORSTATIC:
 	{
-		/*if (GetDlgItem(hDlg, IDC_TITLENAME) == (HWND)lParam)
+		if (GetDlgItem(hDlg, IDC_RADIO1) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 255, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 255));
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->AppBackground;
-		}*/
+		}
+
+		if (GetDlgItem(hDlg, IDC_RADIO2) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 255));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		if (GetDlgItem(hDlg, IDC_RADIO4) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 255));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		if (GetDlgItem(hDlg, IDC_RADIO8) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 255));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		if (GetDlgItem(hDlg, IDC_RADIO16) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 255));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		if (GetDlgItem(hDlg, IDC_RADIO32) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 255));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
 		return FALSE;
 	}
 
@@ -915,6 +963,48 @@ LRESULT CALLBACK CL64_Dialogs::Proc_SnapOptions(HWND hDlg, UINT message, WPARAM 
 
 	case WM_COMMAND:
 	{
+		if (LOWORD(wParam) == IDC_RADIO1)
+		{
+			App->CL_MapEditor->GridSnapSize = 1;
+			App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_RADIO2)
+		{
+			App->CL_MapEditor->GridSnapSize = 2;
+			App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_RADIO4)
+		{
+			App->CL_MapEditor->GridSnapSize = 4;
+			App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_RADIO8)
+		{
+			App->CL_MapEditor->GridSnapSize = 8;
+			App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_RADIO16)
+		{
+			App->CL_MapEditor->GridSnapSize = 16;
+			App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_RADIO32)
+		{
+			App->CL_MapEditor->GridSnapSize = 32;
+			App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
+			return TRUE;
+		}
+		
 		if (LOWORD(wParam) == IDOK)
 		{
 			EndDialog(hDlg, LOWORD(wParam));
