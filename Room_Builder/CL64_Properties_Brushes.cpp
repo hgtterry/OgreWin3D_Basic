@@ -230,15 +230,18 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Brush_Tabs(HWND hDlg, UINT messag
 
 	case WM_COMMAND:
 	{
-		if (LOWORD(wParam) == IDC_BT_DELETE_SEL_BRUSH)
+		if (LOWORD(wParam) == IDC_BT_GD_BRUSHPROPERTIES)
 		{
-			App->CL_Dialogs->YesNo("Are you sure", "Do you want to Delete the selected Brushes");
+			int NumSelBrushes = App->CL_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes);
 
-			bool Doit = App->CL_Dialogs->flag_Dlg_Canceled;
-			if (Doit == 0)
+			if (NumSelBrushes > 0)
 			{
-				App->CL_Doc->DeleteCurrentThing();
-				App->CL_Doc->ResetAllSelectedBrushes();
+				App->CL_Dialogs->Start_Brush_Properties_Dlg();
+				SendDlgItemMessage(hDlg, IDC_GD_BRUSHLIST, LB_SETCURSEL, (WPARAM)App->CL_Properties_Brushes->Selected_Index, (LPARAM)0);
+			}
+			else
+			{
+				App->Say("No Brush Selected");
 			}
 
 			return TRUE;
@@ -246,7 +249,40 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Brush_Tabs(HWND hDlg, UINT messag
 
 		if (LOWORD(wParam) == IDC_BT_BRUSH_DIMENSIONS)
 		{
-			App->CL_Properties_Brushes->Start_Dimensions_Dlg();
+			int NumSelBrushes = App->CL_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes);
+
+			if (NumSelBrushes > 0)
+			{
+				App->CL_Properties_Brushes->Start_Dimensions_Dlg();
+			}
+			else
+			{
+				App->Say("No Brush Selected");
+			}
+
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_BT_DELETE_SEL_BRUSH)
+		{
+			int NumSelBrushes = App->CL_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes);
+
+			if (NumSelBrushes > 0)
+			{
+				App->CL_Dialogs->YesNo("Are you sure", "Do you want to Delete the selected Brushes");
+
+				bool Doit = App->CL_Dialogs->flag_Dlg_Canceled;
+				if (Doit == 0)
+				{
+					App->CL_Doc->DeleteCurrentThing();
+					App->CL_Doc->ResetAllSelectedBrushes();
+				}
+			}
+			else
+			{
+				App->Say("No Brush Selected");
+			}
+
 			return TRUE;
 		}
 
@@ -255,18 +291,16 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Brush_Tabs(HWND hDlg, UINT messag
 			if (App->CL_Properties_Brushes->flag_Brushes_Dlg_Created == 1)
 			{
 				App->CL_Doc->DoGeneralSelect(false);
+
+				App->CL_Properties_Brushes->Enable_Options_Buttons(true);
+
 				App->CL_Properties_Brushes->List_Selection_Changed(1);
+
 			}
 			return TRUE;
 		}
 
-		if (LOWORD(wParam) == IDC_BT_GD_BRUSHPROPERTIES)
-		{
-			App->CL_Dialogs->Start_Brush_Properties_Dlg();
-			SendDlgItemMessage(hDlg, IDC_GD_BRUSHLIST, LB_SETCURSEL, (WPARAM)App->CL_Properties_Brushes->Selected_Index, (LPARAM)0);
-			return TRUE;
-		}
-
+	
 		//// -----------------------------------------------------------------
 		//if (LOWORD(wParam) == IDOK)
 		//{

@@ -444,7 +444,6 @@ void CL64_Dialogs::Start_Brush_Properties_Dlg()
 // *************************************************************************
 LRESULT CALLBACK CL64_Dialogs::Proc_Brush_Properties(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
-
 	switch (message)
 	{
 	case WM_INITDIALOG:
@@ -894,6 +893,17 @@ LRESULT CALLBACK CL64_Dialogs::Proc_SnapOptions(HWND hDlg, UINT message, WPARAM 
 		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
+		HWND Temp = GetDlgItem(hDlg, IDC_USESNAP);
+		if (App->CL_Level->flag_UseGrid == 1)
+		{
+			SendMessage(Temp, BM_SETCHECK, 1, 0);
+		}
+		else
+		{
+			SendMessage(Temp, BM_SETCHECK, 0, 0);
+		}
+		
+
 		float fSnapSize = App->CL_Level->Level_GetGridSnapSize(App->CL_Doc->pLevel);
 
 		if (fSnapSize == 1)
@@ -1081,6 +1091,27 @@ LRESULT CALLBACK CL64_Dialogs::Proc_SnapOptions(HWND hDlg, UINT message, WPARAM 
 
 	case WM_COMMAND:
 	{
+		if (LOWORD(wParam) == IDC_USESNAP)
+		{
+			HWND Temp = GetDlgItem(hDlg, IDC_USESNAP);
+
+			if (App->CL_Level->flag_UseGrid == 1)
+			{
+				App->CL_Level->flag_UseGrid = 0;
+				SendMessage(Temp, BM_SETCHECK, 0, 0);
+				CheckMenuItem(App->mMenu, ID_GRID_GRIDSNAP, MF_BYCOMMAND | MF_UNCHECKED);
+			}
+			else
+			{
+				App->CL_Level->flag_UseGrid = 1;
+				SendMessage(Temp, BM_SETCHECK, 1, 0);
+				CheckMenuItem(App->mMenu, ID_GRID_GRIDSNAP, MF_BYCOMMAND | MF_CHECKED);
+			}
+
+			return TRUE;
+		}
+		
+
 		if (LOWORD(wParam) == IDC_RADIO1)
 		{
 			App->CL_MapEditor->GridSnapSize = 1;
