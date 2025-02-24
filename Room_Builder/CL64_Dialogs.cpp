@@ -871,6 +871,9 @@ LRESULT CALLBACK CL64_Dialogs::Proc_SnapOptions(HWND hDlg, UINT message, WPARAM 
 	{
 	case WM_INITDIALOG:
 	{
+		SendDlgItemMessage(hDlg, IDC_USESNAP, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		SendDlgItemMessage(hDlg, IDC_ST_GRIDSNAP, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_RADIO1, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_RADIO2, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_RADIO4, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
@@ -878,16 +881,90 @@ LRESULT CALLBACK CL64_Dialogs::Proc_SnapOptions(HWND hDlg, UINT message, WPARAM 
 		SendDlgItemMessage(hDlg, IDC_RADIO16, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_RADIO32, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
+		SendDlgItemMessage(hDlg, IDC_ST_ROTATIONSNAP, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_ST_DEGREES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
+		SendDlgItemMessage(hDlg, IDC_SNAP15, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_SNAP30, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_SNAP45, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_SNAP60, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_SNAP90, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
+		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
+		float fSnapSize = App->CL_Level->Level_GetGridSnapSize(App->CL_Doc->pLevel);
+
+		if (fSnapSize == 1)
+		{
+			SendDlgItemMessage(hDlg, IDC_RADIO1, BM_SETCHECK, BST_CHECKED, 0);
+		}
+
+		if (fSnapSize == 2)
+		{
+			SendDlgItemMessage(hDlg, IDC_RADIO2, BM_SETCHECK, BST_CHECKED, 0);
+		}
+
+		if (fSnapSize == 4)
+		{
+			SendDlgItemMessage(hDlg, IDC_RADIO4, BM_SETCHECK, BST_CHECKED, 0);
+		}
+
+		if (fSnapSize == 8)
+		{
+			SendDlgItemMessage(hDlg, IDC_RADIO8, BM_SETCHECK, BST_CHECKED, 0);
+		}
+
+		if (fSnapSize == 16)
+		{
+			SendDlgItemMessage(hDlg, IDC_RADIO16, BM_SETCHECK, BST_CHECKED, 0);
+		}
+
+		if (fSnapSize == 32)
+		{
+			SendDlgItemMessage(hDlg, IDC_RADIO32, BM_SETCHECK, BST_CHECKED, 0);
+		}
 
 		return TRUE;
 	}
 	case WM_CTLCOLORSTATIC:
 	{
+		if (GetDlgItem(hDlg, IDC_ST_GRIDSNAP) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		if (GetDlgItem(hDlg, IDC_ST_ROTATIONSNAP) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		if (GetDlgItem(hDlg, IDC_ST_DEGREES) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+	
+		if (GetDlgItem(hDlg, IDC_USESNAP) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
 		if (GetDlgItem(hDlg, IDC_RADIO1) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 255, 0));
-			SetTextColor((HDC)wParam, RGB(0, 0, 255));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->AppBackground;
 		}
@@ -895,7 +972,7 @@ LRESULT CALLBACK CL64_Dialogs::Proc_SnapOptions(HWND hDlg, UINT message, WPARAM 
 		if (GetDlgItem(hDlg, IDC_RADIO2) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 255, 0));
-			SetTextColor((HDC)wParam, RGB(0, 0, 255));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->AppBackground;
 		}
@@ -903,7 +980,7 @@ LRESULT CALLBACK CL64_Dialogs::Proc_SnapOptions(HWND hDlg, UINT message, WPARAM 
 		if (GetDlgItem(hDlg, IDC_RADIO4) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 255, 0));
-			SetTextColor((HDC)wParam, RGB(0, 0, 255));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->AppBackground;
 		}
@@ -911,7 +988,7 @@ LRESULT CALLBACK CL64_Dialogs::Proc_SnapOptions(HWND hDlg, UINT message, WPARAM 
 		if (GetDlgItem(hDlg, IDC_RADIO8) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 255, 0));
-			SetTextColor((HDC)wParam, RGB(0, 0, 255));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->AppBackground;
 		}
@@ -919,7 +996,7 @@ LRESULT CALLBACK CL64_Dialogs::Proc_SnapOptions(HWND hDlg, UINT message, WPARAM 
 		if (GetDlgItem(hDlg, IDC_RADIO16) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 255, 0));
-			SetTextColor((HDC)wParam, RGB(0, 0, 255));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->AppBackground;
 		}
@@ -927,7 +1004,7 @@ LRESULT CALLBACK CL64_Dialogs::Proc_SnapOptions(HWND hDlg, UINT message, WPARAM 
 		if (GetDlgItem(hDlg, IDC_RADIO32) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 255, 0));
-			SetTextColor((HDC)wParam, RGB(0, 0, 255));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->AppBackground;
 		}
@@ -944,6 +1021,41 @@ LRESULT CALLBACK CL64_Dialogs::Proc_SnapOptions(HWND hDlg, UINT message, WPARAM 
 	{
 		LPNMHDR some_item = (LPNMHDR)lParam;
 
+		if (some_item->idFrom == IDC_SNAP15)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_SNAP30)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_SNAP45)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_SNAP60)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_SNAP90)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+		
 		if (some_item->idFrom == IDOK)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
@@ -966,6 +1078,8 @@ LRESULT CALLBACK CL64_Dialogs::Proc_SnapOptions(HWND hDlg, UINT message, WPARAM 
 		if (LOWORD(wParam) == IDC_RADIO1)
 		{
 			App->CL_MapEditor->GridSnapSize = 1;
+			App->CL_Doc->pLevel->GridSettings.TexelSnapSize = 1;
+
 			App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
 			return TRUE;
 		}
@@ -973,6 +1087,8 @@ LRESULT CALLBACK CL64_Dialogs::Proc_SnapOptions(HWND hDlg, UINT message, WPARAM 
 		if (LOWORD(wParam) == IDC_RADIO2)
 		{
 			App->CL_MapEditor->GridSnapSize = 2;
+			App->CL_Doc->pLevel->GridSettings.TexelSnapSize = 2;
+
 			App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
 			return TRUE;
 		}
@@ -980,6 +1096,8 @@ LRESULT CALLBACK CL64_Dialogs::Proc_SnapOptions(HWND hDlg, UINT message, WPARAM 
 		if (LOWORD(wParam) == IDC_RADIO4)
 		{
 			App->CL_MapEditor->GridSnapSize = 4;
+			App->CL_Doc->pLevel->GridSettings.TexelSnapSize = 4;
+
 			App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
 			return TRUE;
 		}
@@ -987,6 +1105,8 @@ LRESULT CALLBACK CL64_Dialogs::Proc_SnapOptions(HWND hDlg, UINT message, WPARAM 
 		if (LOWORD(wParam) == IDC_RADIO8)
 		{
 			App->CL_MapEditor->GridSnapSize = 8;
+			App->CL_Doc->pLevel->GridSettings.TexelSnapSize = 8;
+
 			App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
 			return TRUE;
 		}
@@ -994,6 +1114,8 @@ LRESULT CALLBACK CL64_Dialogs::Proc_SnapOptions(HWND hDlg, UINT message, WPARAM 
 		if (LOWORD(wParam) == IDC_RADIO16)
 		{
 			App->CL_MapEditor->GridSnapSize = 16;
+			App->CL_Doc->pLevel->GridSettings.TexelSnapSize = 16;
+
 			App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
 			return TRUE;
 		}
@@ -1001,6 +1123,8 @@ LRESULT CALLBACK CL64_Dialogs::Proc_SnapOptions(HWND hDlg, UINT message, WPARAM 
 		if (LOWORD(wParam) == IDC_RADIO32)
 		{
 			App->CL_MapEditor->GridSnapSize = 32;
+			App->CL_Doc->pLevel->GridSettings.TexelSnapSize = 32;
+
 			App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
 			return TRUE;
 		}

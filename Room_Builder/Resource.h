@@ -286,11 +286,22 @@
 #define IDC_CBANGLE                     1227
 #define IDC_RADIO1                      1227
 #define IDC_RADIO2                      1228
-#define IDC_RADIO3                      1229
 #define IDC_RADIO4                      1229
 #define IDC_RADIO8                      1230
 #define IDC_RADIO16                     1231
 #define IDC_RADIO32                     1232
+#define IDC_USESNAP                     1233
+#define IDC_SNAP15                      1234
+#define IDC_SNAP30                      1235
+#define IDC_SNAP45                      1236
+#define IDC_SNAP60                      1237
+#define IDC_SNAP90                      1238
+#define IDC_ST_GRIDSNAP                 1239
+#define IDC_ST_ROTATIONSNAP             1240
+#define IDC_EDIT1                       1241
+#define IDC_SPIN1                       1242
+#define IDC_ST_ROTATIONSNAP2            1243
+#define IDC_ST_DEGREES                  1243
 #define ID_DEBUG_GENERAL                32771
 #define ID_TEMPLATES_INSERT             32772
 #define ID_BRUSH_SELECT                 32773
@@ -335,7 +346,7 @@
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        167
 #define _APS_NEXT_COMMAND_VALUE         32802
-#define _APS_NEXT_CONTROL_VALUE         1228
+#define _APS_NEXT_CONTROL_VALUE         1243
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif
