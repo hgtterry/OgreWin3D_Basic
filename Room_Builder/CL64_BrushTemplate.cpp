@@ -58,13 +58,12 @@ void CL64_BrushTemplate::BrushTemplate_BoxDefaults(BrushTemplate_Box* pBoxTempla
 {
 	pBoxTemplate->Solid = 1;		// hollow
 	pBoxTemplate->TCut = false;
-	// emperically derived default sizes
 	pBoxTemplate->Thickness = 16.0f;
-	pBoxTemplate->XSizeBot = 680.0f;
-	pBoxTemplate->XSizeTop = 680.0f;
-	pBoxTemplate->YSize = 360.0f;
-	pBoxTemplate->ZSizeBot = 560.0f;
-	pBoxTemplate->ZSizeTop = 560.0f;
+	pBoxTemplate->XSizeBot = 768.0f;
+	pBoxTemplate->XSizeTop = 768.0f;
+	pBoxTemplate->YSize = 512.0f;
+	pBoxTemplate->ZSizeBot = 512.0f;
+	pBoxTemplate->ZSizeTop = 512.0f;
 }
 
 void CL64_BrushTemplate::BrushTemplate_ConeDefaults(BrushTemplate_Cone* pConeTemplate)

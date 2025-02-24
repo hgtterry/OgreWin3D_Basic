@@ -618,12 +618,12 @@ void A_CreateBoxDialog::Set_Defaults(HWND hDlg)
 // *************************************************************************
 void A_CreateBoxDialog::Set_Room(HWND hDlg)
 {
-	m_YSize = 360.0f;
+	m_YSize = 512.0f;
 	m_Solid = 1;
-	m_XSizeBot = 680.0f;
-	m_XSizeTop = 680.0f;
-	m_ZSizeBot = 560.0f;
-	m_ZSizeTop = 560.0f;
+	m_XSizeBot = 768.0f;
+	m_XSizeTop = 768.0f;
+	m_ZSizeBot = 512.0f;
+	m_ZSizeTop = 512.0f;
 	m_TCut = false;
 	m_Thickness = 16.0f;
 	m_TSheet = false;
