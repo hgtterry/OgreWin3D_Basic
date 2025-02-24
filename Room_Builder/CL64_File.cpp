@@ -444,7 +444,7 @@ void CL64_File::Set_Editor()
 	App->CL_MapEditor->Reset_Views();
 
 	App->CL_Doc->Editor_Set_Dlgs(Enums::Editor_Dlgs_First_Brush);
-
+	App->CL_Properties_Brushes->Enable_Options_Buttons(false);
 	App->CL_Ogre->RenderFrame(7);
 
 }
