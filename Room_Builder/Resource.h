@@ -299,8 +299,8 @@
 #define IDC_ST_GRIDSNAP                 1239
 #define IDC_ST_ROTATIONSNAP             1240
 #define IDC_EDIT1                       1241
+#define IDC_ED_DEGREES                  1241
 #define IDC_SPIN1                       1242
-#define IDC_ST_ROTATIONSNAP2            1243
 #define IDC_ST_DEGREES                  1243
 #define ID_DEBUG_GENERAL                32771
 #define ID_TEMPLATES_INSERT             32772

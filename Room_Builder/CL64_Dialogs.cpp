@@ -883,6 +883,7 @@ LRESULT CALLBACK CL64_Dialogs::Proc_SnapOptions(HWND hDlg, UINT message, WPARAM 
 
 		SendDlgItemMessage(hDlg, IDC_ST_ROTATIONSNAP, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ST_DEGREES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_ED_DEGREES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
 		SendDlgItemMessage(hDlg, IDC_SNAP15, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_SNAP30, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
@@ -925,6 +926,11 @@ LRESULT CALLBACK CL64_Dialogs::Proc_SnapOptions(HWND hDlg, UINT message, WPARAM 
 			SendDlgItemMessage(hDlg, IDC_RADIO32, BM_SETCHECK, BST_CHECKED, 0);
 		}
 
+		char buff[10];
+
+		int fRotation = App->CL_Level->Level_GetRotationSnap(App->CL_Doc->pLevel);
+		SetDlgItemText(hDlg, IDC_ED_DEGREES, (LPCTSTR)_itoa(fRotation,buff,10));
+		
 		return TRUE;
 	}
 	case WM_CTLCOLORSTATIC:
@@ -1126,6 +1132,56 @@ LRESULT CALLBACK CL64_Dialogs::Proc_SnapOptions(HWND hDlg, UINT message, WPARAM 
 			App->CL_Doc->pLevel->GridSettings.TexelSnapSize = 32;
 
 			App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
+			return TRUE;
+		}
+		
+		if (LOWORD(wParam) == IDC_SNAP15)
+		{
+			App->CL_Doc->pLevel->GridSettings.RotationSnap = 15;
+
+			char buff[10];
+			int fRotation = App->CL_Level->Level_GetRotationSnap(App->CL_Doc->pLevel);
+			SetDlgItemText(hDlg, IDC_ED_DEGREES, (LPCTSTR)_itoa(fRotation, buff, 10));
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_SNAP30)
+		{
+			App->CL_Doc->pLevel->GridSettings.RotationSnap = 30;
+
+			char buff[10];
+			int fRotation = App->CL_Level->Level_GetRotationSnap(App->CL_Doc->pLevel);
+			SetDlgItemText(hDlg, IDC_ED_DEGREES, (LPCTSTR)_itoa(fRotation, buff, 10));
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_SNAP45)
+		{
+			App->CL_Doc->pLevel->GridSettings.RotationSnap = 45;
+
+			char buff[10];
+			int fRotation = App->CL_Level->Level_GetRotationSnap(App->CL_Doc->pLevel);
+			SetDlgItemText(hDlg, IDC_ED_DEGREES, (LPCTSTR)_itoa(fRotation, buff, 10));
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_SNAP60)
+		{
+			App->CL_Doc->pLevel->GridSettings.RotationSnap = 60;
+
+			char buff[10];
+			int fRotation = App->CL_Level->Level_GetRotationSnap(App->CL_Doc->pLevel);
+			SetDlgItemText(hDlg, IDC_ED_DEGREES, (LPCTSTR)_itoa(fRotation, buff, 10));
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_SNAP90)
+		{
+			App->CL_Doc->pLevel->GridSettings.RotationSnap = 90;
+
+			char buff[10];
+			int fRotation = App->CL_Level->Level_GetRotationSnap(App->CL_Doc->pLevel);
+			SetDlgItemText(hDlg, IDC_ED_DEGREES, (LPCTSTR)_itoa(fRotation, buff, 10));
 			return TRUE;
 		}
 		
