@@ -202,8 +202,6 @@ LRESULT CALLBACK CL64_TXL_Editor::Proc_Texture_Lib(HWND hDlg, UINT message, WPAR
 		//--------------------------------- Add -----------------------
 		if (LOWORD(wParam) == IDC_BT_ADD_TEXTURE)
 		{
-			// "Texture Files ( *.bmp *.tga )\0*.bmp;*.tga\0*.tga\0*.tga\0*.bmp\0*.bmp\0", "Add Texture", "Bitmap Files"
-
 			LPCWSTR mType = L"Texture Files";
 			LPCWSTR mExtensions = L"*.bmp;*.tga;*.jpg";
 
@@ -259,6 +257,7 @@ LRESULT CALLBACK CL64_TXL_Editor::Proc_Texture_Lib(HWND hDlg, UINT message, WPAR
 		//	App->CL_Texture_Lib->Save(App->CL_Texture_Lib->pData->TXLFileName);
 		//	return TRUE;
 		//}
+		// 
 		//--------------------------------- Rename ----------------------
 		if (LOWORD(wParam) == IDC_BT_TXL_RENAME)
 		{
