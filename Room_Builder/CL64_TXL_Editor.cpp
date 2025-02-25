@@ -219,7 +219,7 @@ LRESULT CALLBACK CL64_TXL_Editor::Proc_Texture_Lib(HWND hDlg, UINT message, WPAR
 			strcpy(App->CL_TXL_Editor->Add_Texture_FileName, App->CL_File_IO->s_Path_And_File.c_str());
 
 			App->CL_TXL_Editor->AddTexture(NULL, App->CL_TXL_Editor->Add_Texture_FileName);
-			App->CL_TXL_Editor->UpDateList();
+			//App->CL_TXL_Editor->UpDateList();
 			App->CL_TXL_Editor->pData->Dirty = 1;
 
 			if (Converted == 1)
@@ -620,15 +620,20 @@ bool CL64_TXL_Editor::AddTexture(geVFile* BaseFile, const char* Path)
 	}
 
 	if (BaseFile)
+	{
 		File = geVFile_Open(BaseFile, Path, GE_VFILE_OPEN_READONLY);
+	}
 	else
+	{
 		File = geVFile_OpenNewSystem(NULL, GE_VFILE_TYPE_DOS, Path, NULL, GE_VFILE_OPEN_READONLY);
+	}
 
 	if (!File)
 	{
 		App->Report_Error("Could not open %s", Path);
 		return TRUE;
 	}
+
 	//geBitmap_Create()
 	Bitmap = geBitmap_CreateFromFile(File);
 	geVFile_Close(File);
@@ -644,8 +649,9 @@ bool CL64_TXL_Editor::AddTexture(geVFile* BaseFile, const char* Path)
 	//		goto fail;
 	//	}
 	//	NewBitmapList = geRam_Realloc(pData->Bitmaps, sizeof(*NewBitmapList) * (pData->BitmapCount + 1));
+	
 	NewBitmapList[pData->BitmapCount] = new BitmapEntry;
-
+	
 	if (!NewBitmapList)
 	{
 		App->Report_Error("Memory allocation error processing %s", Path);
