@@ -101,6 +101,7 @@ private:
 
 	void SetEditCursor(int Tool, const POINT* pMousePos);
 	int GetCursorBoxPos(const POINT* ptMousePos);
+	signed int fdocShowBrush(Brush const* b, Box3d const* ViewBox);
 
 	int LEFT_WINDOW_WIDTH;
 
@@ -127,6 +128,8 @@ private:
 	HPEN PenSelected;
 	HPEN Pen_Camera;
 	HPEN PenSelectedFaces;
+	HPEN PenCutBrush;
+
 	HDC	MemoryhDC;
 };
 

@@ -578,7 +578,7 @@ void CL64_Doc::SelectOrtho(POINT point, ViewVars* v)
     {
         if (FoundThingType == fctBRUSH)
         {
-            Do_Timer
+            //Do_Timer
 
             DoBrushSelection(pMinBrush, brushSelToggle);    
 
@@ -599,7 +599,7 @@ void CL64_Doc::SelectOrtho(POINT point, ViewVars* v)
                 App->CL_Top_Tabs->Update_Faces_Combo();
             }
 
-            Get_Timer
+            //Get_Timer
         } 
     }
     else

@@ -95,6 +95,7 @@ CL64_MapEditor::CL64_MapEditor()
 	PenSelected = CreatePen(PS_SOLID, 1, RGB(0, 255, 255));
 	Pen_Camera = CreatePen(PS_SOLID, 0, RGB(0, 255, 0));
 	PenSelectedFaces = CreatePen(PS_SOLID, 1, RGB(255, 0, 255));
+	PenCutBrush = CreatePen(PS_SOLID, 1, RGB(255, 155, 0));
 
 	hcSizeEW = LoadCursor(NULL, IDC_SIZEWE);
 	hcSizeNS = LoadCursor(NULL, IDC_SIZENS);
@@ -1370,6 +1371,11 @@ void CL64_MapEditor::On_Left_Button_Down(POINT CursorPosition, HWND hDlg)
 	}
 }
 
+signed int CL64_MapEditor::fdocShowBrush(Brush const* b,Box3d const* ViewBox)
+{
+	return 1;// (App->CL_Brush->BrushIsVisible(b) && App->CL_Brush->Brush_TestBoundsIntersect(b, ViewBox));
+}
+
 // *************************************************************************
 // *	  						BrushDraw								   *
 // *************************************************************************
@@ -1380,9 +1386,9 @@ signed int CL64_MapEditor::BrushDraw(Brush* pBrush, void* lParam)
 
 	//if ((pData->GroupId == fdoc_SHOW_ALL_GROUPS) || (Brush_GetGroupId(pBrush) == pData->GroupId))
 	{
-		//if ((pData->FlagTest == NULL) || pData->FlagTest(pBrush))
+		if ((pData->FlagTest == NULL) || pData->FlagTest(pBrush))
 		{
-			//if (pDoc->fdocShowBrush(pBrush, pData->pViewBox))
+			if (App->CL_MapEditor->fdocShowBrush(pBrush, pData->pViewBox))
 			{
 				App->CL_MapEditor->Render_RenderBrushFacesOrtho(pData->v, pBrush, App->CL_MapEditor->MemoryhDC);
 			}
@@ -1544,12 +1550,23 @@ void CL64_MapEditor::Render_RenderBrushSelFacesOrtho(ViewVars* Cam, Brush* b, HD
 	}
 }
 
+static geBoolean fdocBrushNotDetail(const Brush* b)
+{
+	return !App->CL_Brush->Brush_IsDetail(b);
+}
+
+
+static geBoolean fdocBrushIsSubtract(const Brush* b)
+{
+	return (App->CL_Brush->Brush_IsSubtract(b) && !App->CL_Brush->Brush_IsHollowCut(b));
+}
+
 // *************************************************************************
 // *						Draw_Screen Terry Flanigan		  			   *
 // *************************************************************************
 void CL64_MapEditor::Draw_Screen(HWND hwnd)
 {
-	//Do_Timer
+	Do_Timer
 	//flag_IsDrawing = 1;
 	int			inidx = 0;
 	HDC			RealhDC;
@@ -1628,11 +1645,16 @@ void CL64_MapEditor::Draw_Screen(HWND hwnd)
 		SelectObject(MemoryhDC, PenBrushes);
 		int BrushCount = App->CL_Brush->Get_Brush_Count();
 		int Count = 0;
-		while (Count < BrushCount)
-		{
-			App->CL_Level->Level_EnumLeafBrushes(App->CL_Doc->pLevel, &brushDrawData, BrushDraw);
-			Count++;
-		}
+		
+		brushDrawData.FlagTest = fdocBrushNotDetail;
+		SelectObject(MemoryhDC, PenBrushes);
+		App->CL_Level->Level_EnumLeafBrushes(App->CL_Doc->pLevel, &brushDrawData, BrushDraw);
+
+		SelectObject(MemoryhDC, PenCutBrush);
+		brushDrawData.FlagTest = fdocBrushIsSubtract;
+		App->CL_Level->Level_EnumLeafBrushes(App->CL_Doc->pLevel, &brushDrawData, BrushDraw);
+		
+		brushDrawData.FlagTest = fdocBrushNotDetail;
 
 		//if (Brush_TestBoundsIntersect(App->CLSB_Doc->CurBrush, &ViewBox))
 		//if (App->CL_Brush->Get_Brush_Count() > 0)
@@ -1661,12 +1683,7 @@ void CL64_MapEditor::Draw_Screen(HWND hwnd)
 			
 			SelectObject(MemoryhDC, PenSelected);
 			int NumSelBrushes = App->CL_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes);
-			/*if (NumSelBrushes > 0)
-			{
-				App->Say_Int(NumSelBrushes);
-			}*/
-
-			//goto done;
+			
 			int i = 0;
 			for (i = 0; i < NumSelBrushes; i++)
 			{
@@ -1685,6 +1702,7 @@ void CL64_MapEditor::Draw_Screen(HWND hwnd)
 					}
 				}
 			}
+
 		}
 
 		BrushList* BList;
@@ -1708,7 +1726,7 @@ void CL64_MapEditor::Draw_Screen(HWND hwnd)
 	ReleaseDC(hwnd, RealhDC);
 	//flag_IsDrawing = 0;
 
-	//Get_Timer
+	Get_Timer
 }
 
 // *************************************************************************
