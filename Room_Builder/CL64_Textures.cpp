@@ -43,6 +43,12 @@ typedef struct tagMY_BITMAPINFO
 
 CL64_Textures::CL64_Textures(void)
 {
+	ilInit();
+
+	Temp_Texture_File[0] = 0;
+
+	strcpy(Temp_Texture_Location, App->RB_Directory_FullPath);
+	strcat(Temp_Texture_Location, "\\Data\\World_Test\\");
 }
 
 CL64_Textures::~CL64_Textures(void)
@@ -330,13 +336,69 @@ bool CL64_Textures::Soil_Load_Texture(UINT textureArray[], LPSTR strFileName, in
 }
 
 // *************************************************************************
-// *			Texture_To_Bmp:- Terry and Hazel Flanigan 2023			   *
+// *			Texture_To_Bmp:- Terry and Hazel Flanigan 2025			   *
 // *************************************************************************
 bool CL64_Textures::Texture_To_Bmp(char* File)
 {
+
 	ilLoadImage(File);
 	ilSaveImage("Etemp.bmp");
 	return 1;
 }
+
+// *************************************************************************
+// *			Covert_Texture:- Terry and Hazel Flanigan 2025			   *
+// *************************************************************************
+bool CL64_Textures::Covert_Texture(const char* File)
+{
+	//---------------------------------------------------------- Bmp
+	if (_stricmp(File + strlen(File) - 4, ".BMP") == 0)
+	{
+		// Do Nothing
+		return 0;
+	}
+
+	//---------------------------------------------------------- tga
+	if (_stricmp(File + strlen(File) - 4, ".TGA") == 0)
+	{
+		// Do Nothing
+		return 0;
+	}
+
+	//---------------------------------------------------------- jpg
+	if (_stricmp(File + strlen(File) - 4, ".jpg") == 0)
+	{
+		Temp_Texture_File[0] = 0;
+
+		ilLoadImage(File);
+
+		App->CL_Utilities->Get_FileName_FromPath((LPSTR)File, (LPSTR)File);
+
+		strcpy(Temp_Texture_File, Temp_Texture_Location);
+		strcat(Temp_Texture_File, App->CL_Utilities->JustFileName);
+		
+		int Len = strlen(Temp_Texture_File);
+		Temp_Texture_File[Len - 4] = 0;
+		strcat(Temp_Texture_File, ".bmp");
+
+		ilSaveImage(Temp_Texture_File);
+
+		strcpy((LPSTR)App->CL_File_IO->s_Path_And_File.c_str(), Temp_Texture_File);
+
+		return 1;
+	}
+
+	return 0;
+}
+
+// *************************************************************************
+// *			Remove_Temp_Texture:- Terry and Hazel Flanigan 2025			   *
+// *************************************************************************
+void CL64_Textures::Remove_Temp_Texture()
+{
+	remove(Temp_Texture_File);
+}
+
+
 
 

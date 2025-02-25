@@ -205,7 +205,7 @@ LRESULT CALLBACK CL64_TXL_Editor::Proc_Texture_Lib(HWND hDlg, UINT message, WPAR
 			// "Texture Files ( *.bmp *.tga )\0*.bmp;*.tga\0*.tga\0*.tga\0*.bmp\0*.bmp\0", "Add Texture", "Bitmap Files"
 
 			LPCWSTR mType = L"Texture Files";
-			LPCWSTR mExtensions = L"*.bmp;*.tga";
+			LPCWSTR mExtensions = L"*.bmp;*.tga;*.jpg";
 
 			int test = App->CL_File_IO->Open_File((LPCWSTR)mType, (LPCWSTR)mExtensions);
 			if (test == 0)
@@ -213,12 +213,19 @@ LRESULT CALLBACK CL64_TXL_Editor::Proc_Texture_Lib(HWND hDlg, UINT message, WPAR
 				return TRUE;
 			}
 
-			App->Say_Win(App->CL_File_IO->s_Path_And_File.c_str());
+			bool Converted = 0;
+			Converted = App->CL_Textures->Covert_Texture(App->CL_File_IO->s_Path_And_File.c_str());
+
 			strcpy(App->CL_TXL_Editor->Add_Texture_FileName, App->CL_File_IO->s_Path_And_File.c_str());
 
 			App->CL_TXL_Editor->AddTexture(NULL, App->CL_TXL_Editor->Add_Texture_FileName);
 			App->CL_TXL_Editor->UpDateList();
 			App->CL_TXL_Editor->pData->Dirty = 1;
+
+			if (Converted == 1)
+			{
+				App->CL_Textures->Remove_Temp_Texture();
+			}
 
 			return TRUE;
 		}

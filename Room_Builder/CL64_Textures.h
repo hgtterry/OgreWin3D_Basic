@@ -33,6 +33,10 @@ public:
 	int Write_BMP(const char* pszFile, geBitmap* pBitmap);
 	bool Soil_Load_Texture(UINT textureArray[], LPSTR strFileName, int textureID);
 	bool Texture_To_Bmp(char* File);
+	bool Covert_Texture(const char* File);
+	void Remove_Temp_Texture();
 
+	char Temp_Texture_File[MAX_PATH];
+	char Temp_Texture_Location[MAX_PATH];
 };
 
