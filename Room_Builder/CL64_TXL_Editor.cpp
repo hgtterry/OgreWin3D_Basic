@@ -92,20 +92,13 @@ LRESULT CALLBACK CL64_TXL_Editor::Proc_Texture_Lib(HWND hDlg, UINT message, WPAR
 		App->CL_TXL_Editor->Current_Entry->Dirty = 0;
 		App->CL_TXL_Editor->Current_Entry->Flags = 0;
 
-		App->CL_TXL_Editor->pData = new TPack_WindowData;
-		App->CL_TXL_Editor->pData->BitmapCount = 0;
-		App->CL_TXL_Editor->pData->Bitmaps = NULL;
-		App->CL_TXL_Editor->pData->Dirty = 0;
-		App->CL_TXL_Editor->pData->FileNameIsValid = 0;
-		App->CL_TXL_Editor->pData->Instance = App->hInst;
-		App->CL_TXL_Editor->pData->SelectedEntry = NULL;
-		strcpy(App->CL_TXL_Editor->pData->TXLFileName, App->CL_TXL_Editor->mFileName);
+		App->CL_TXL_Editor->Create_New_pData();
 
 		char buf1[200];
 		strcpy(buf1, "Texture library: - ");
 		strcat(buf1, App->CL_TXL_Editor->mFileName);
 		
-		bool Test = App->CL_TXL_Editor->LoadFile(hDlg);
+		bool Test = App->CL_TXL_Editor->LoadFile(hDlg,false);
 
 		SetWindowText(hDlg, buf1);
 
@@ -377,11 +370,7 @@ LRESULT CALLBACK CL64_TXL_Editor::Proc_Texture_Lib(HWND hDlg, UINT message, WPAR
 				}
 			}
 
-			if (App->CL_TXL_Editor->pData)
-			{
-				delete App->CL_TXL_Editor->pData;
-				App->CL_TXL_Editor->pData = NULL;
-			}
+			App->CL_TXL_Editor->Delete_pData();
 
 			if (App->CL_TXL_Editor->Current_Entry)
 			{
@@ -398,6 +387,36 @@ LRESULT CALLBACK CL64_TXL_Editor::Proc_Texture_Lib(HWND hDlg, UINT message, WPAR
 	}
 
 	return FALSE;
+}
+
+// *************************************************************************
+// *						Create_New_pData 						  	   *
+// *************************************************************************
+void CL64_TXL_Editor::Create_New_pData()
+{
+	Delete_pData();
+
+	pData = new TPack_WindowData;
+	pData->BitmapCount = 0;
+	pData->Bitmaps = NULL;
+	pData->Dirty = 0;
+	pData->FileNameIsValid = 0;
+	pData->Instance = App->hInst;
+	pData->SelectedEntry = NULL;
+
+	strcpy(pData->TXLFileName, mFileName);
+}
+
+// *************************************************************************
+// *							Delete_pData 						  	   *
+// *************************************************************************
+void CL64_TXL_Editor::Delete_pData()
+{
+	if (pData)
+	{
+		delete pData;
+		pData = NULL;
+	}
 }
 
 // *************************************************************************
@@ -530,13 +549,15 @@ bool CL64_TXL_Editor::Render2d_Blit(HDC hDC, HBITMAP Bmp, HBITMAP Alpha, const R
 // *************************************************************************
 // *			LoadFile:- Terry and Hazel Flanigan 2025		  		   *
 // *************************************************************************
-bool CL64_TXL_Editor::LoadFile(HWND ChDlg)
+bool CL64_TXL_Editor::LoadFile(HWND ChDlg, bool from_Editor)
 {
 	geVFile* VFS;
 	geVFile_Finder* Finder = NULL;
 
-	pData = new TPack_WindowData;
-	pData->BitmapCount = 0;
+	if (from_Editor == 1)
+	{
+		Create_New_pData();
+	}
 
 	int TextureCount = 0;
 
@@ -588,8 +609,11 @@ bool CL64_TXL_Editor::LoadFile(HWND ChDlg)
 	pData->Dirty = FALSE;
 	geVFile_Close(VFS);
 
-	SendDlgItemMessage(TXL_Dlg_HWND, IDC_TEXTURELIST2, LB_SETCURSEL, (WPARAM)0, (LPARAM)0);
-	SelectBitmap();
+	if (from_Editor == 0)
+	{
+		SendDlgItemMessage(TXL_Dlg_HWND, IDC_TEXTURELIST2, LB_SETCURSEL, (WPARAM)0, (LPARAM)0);
+		SelectBitmap();
+	}
 
 	return 1;
 }
@@ -604,7 +628,7 @@ bool CL64_TXL_Editor::AddTexture(geVFile* BaseFile, const char* Path)
 	geBitmap* Bitmap;
 
 	geVFile* File;
-	char			FileName[_MAX_FNAME];
+	char FileName[MAX_PATH];
 	char* Name;
 
 	Bitmap = NULL;
@@ -656,6 +680,9 @@ bool CL64_TXL_Editor::AddTexture(geVFile* BaseFile, const char* Path)
 		App->Report_Error("Memory allocation error processing %s", Path);
 		return TRUE;
 	}
+
+	Just_Name[0] = 0;
+	strcpy(Just_Name,Name);
 
 	NewBitmapList[pData->BitmapCount]->Name = Name;
 	NewBitmapList[pData->BitmapCount]->Bitmap = Bitmap;
@@ -954,7 +981,7 @@ bool CL64_TXL_Editor::Save(const char* Path, bool Use_Save_Dislog)
 			File = geVFile_Open(VFS, NewBitmapList[i]->Name, GE_VFILE_OPEN_CREATE);
 			if (!File)
 			{
-				App->Report_Error("Could not save bitmap %s", NewBitmapList[i]->Name);
+				App->Report_Error("Could not save bitmap 1 %s", NewBitmapList[i]->Name);
 				geVFile_Close(VFS);
 				return 0;
 			}
@@ -963,7 +990,7 @@ bool CL64_TXL_Editor::Save(const char* Path, bool Use_Save_Dislog)
 			geVFile_Close(File);
 			if (WriteResult == GE_FALSE)
 			{
-				App->Report_Error("Could not save bitmap %s", NewBitmapList[i]->Name);
+				App->Report_Error("Could not save bitmap 2 %s", NewBitmapList[i]->Name);
 				geVFile_Close(VFS);
 				return 0;
 			}
@@ -980,4 +1007,301 @@ bool CL64_TXL_Editor::Save(const char* Path, bool Use_Save_Dislog)
 
 	return 1;
 }
+
+// *************************************************************************
+// *		Load_Texture_Panel:- Terry and Hazel Flanigan 2025 		 	   *
+// *************************************************************************
+void CL64_TXL_Editor::Load_Texture_Panel()
+{
+	LPCWSTR mType = L"Texture Files";
+	LPCWSTR mExtensions = L"*.bmp;*.tga;*.jpg";
+
+
+	int test = App->CL_File_IO->Open_File((LPCWSTR)mType, (LPCWSTR)mExtensions);
+	if (test == 0)
+	{
+		return;
+	}
+
+	strcpy(mFileName, App->CL_Level->Level_GetWadPath(App->CL_Doc->pLevel));
+
+	bool load_test = LoadFile(NULL, true);
+	if (load_test == 1)
+	{
+		//return 1;
+	}
+
+	strcpy(Add_Texture_FileName, App->CL_File_IO->s_Path_And_File.c_str());
+
+	AddTexture(NULL, Add_Texture_FileName);
+
+	Save(mFileName, false);
+
+	App->CL_Doc->UpdateAfterWadChange();
+	App->CL_Properties_Textures->Fill_ListBox();
+
+	SendDlgItemMessage(App->CL_Properties_Textures->Textures_Dlg_Hwnd, IDC_LISTTDTEXTURES, LB_SELECTSTRING, (WPARAM)-1, (LPARAM)Just_Name);
+	App->CL_Properties_Textures->List_Selection_Changed();
+
+	Delete_pData();
+}
+
+// *************************************************************************
+// *		Delete_Texture_Panel:- Terry and Hazel Flanigan 2025 	 	   *
+// *************************************************************************
+void CL64_TXL_Editor::Delete_Texture_Panel()
+{
+	LPCWSTR mType = L"Texture Files";
+	LPCWSTR mExtensions = L"*.bmp;*.tga;*.jpg";
+
+
+	int test = App->CL_File_IO->Open_File((LPCWSTR)mType, (LPCWSTR)mExtensions);
+	if (test == 0)
+	{
+		return;
+	}
+
+	strcpy(mFileName, App->CL_Level->Level_GetWadPath(App->CL_Doc->pLevel));
+
+	bool load_test = LoadFile(NULL, true);
+	if (load_test == 1)
+	{
+		//return 1;
+	}
+
+	strcpy(Add_Texture_FileName, App->CL_File_IO->s_Path_And_File.c_str());
+
+	AddTexture(NULL, Add_Texture_FileName);
+
+	Save(mFileName, false);
+
+	App->CL_Doc->UpdateAfterWadChange();
+	App->CL_Properties_Textures->Fill_ListBox();
+
+	Delete_pData();
+}
+
+// *************************************************************************
+// *				Load_New:- Terry and Hazel Flanigan 2025 		 	   *
+// *************************************************************************
+signed int CL64_TXL_Editor::Load_New(const char* FileName)
+{
+	//DestroyBmps();
+
+	pData = new TPack_WindowData;
+	pData->BitmapCount = 0;
+
+	geVFile* VFS = geVFile_OpenNewSystem(NULL, GE_VFILE_TYPE_VIRTUAL, FileName, NULL, GE_VFILE_OPEN_READONLY | GE_VFILE_OPEN_DIRECTORY);
+	if (!VFS)
+	{
+		//DestroyBmps();
+		return false;
+	}
+
+	geVFile_Finder* Finder = geVFile_CreateFinder(VFS, "*.*");
+	if (!Finder)
+	{
+		geVFile_Close(VFS);
+		//DestroyBmps();
+		return false;
+	}
+
+	while (geVFile_FinderGetNextFile(Finder) != GE_FALSE)
+	{
+		geVFile_Properties	Properties;
+
+		geVFile_FinderGetProperties(Finder, &Properties);
+		if (!AddTexture_New(VFS, Properties.Name))
+		{
+			geVFile_Close(VFS);
+			//DestroyBmps();
+			return false;
+		}
+	}
+
+	geVFile_Close(VFS);
+
+	return true;
+}
+
+// *************************************************************************
+// *			AddTexture_New:- Terry and Hazel Flanigan 2025 		 	   *
+// *************************************************************************
+signed int CL64_TXL_Editor::AddTexture_New(geVFile* pVFS, const char* TextureName)
+{
+	geBitmap_Info	PInfo;
+	geBitmap_Info	SInfo;
+	geBitmap* pBitmap;
+	geVFile* pTextureFile;
+
+	if (pVFS)
+		pTextureFile = geVFile_Open(pVFS, TextureName, GE_VFILE_OPEN_READONLY);
+	else
+		return false;
+
+	if (!pTextureFile)
+	{
+		return false;
+	}
+
+	pBitmap = geBitmap_CreateFromFile(pTextureFile);
+	geVFile_Close(pTextureFile);
+
+	if (!pBitmap)
+	{
+		return false;
+	}
+
+	geBitmap_GetInfo(pBitmap, &PInfo, &SInfo);
+
+	//Support several pixelformats. JJT
+	if (PInfo.Format != GE_PIXELFORMAT_8BIT_GRAY
+		&& PInfo.Format != GE_PIXELFORMAT_8BIT
+		&& PInfo.Format != GE_PIXELFORMAT_16BIT_555_RGB
+		&& PInfo.Format != GE_PIXELFORMAT_16BIT_565_RGB
+		&& PInfo.Format != GE_PIXELFORMAT_16BIT_4444_ARGB
+		&& PInfo.Format != GE_PIXELFORMAT_24BIT_RGB
+		&& PInfo.Format != GE_PIXELFORMAT_24BIT_BGR
+
+		)
+	{
+		//Default
+		if (!geBitmap_SetFormat(pBitmap, GE_PIXELFORMAT_16BIT_555_RGB, GE_FALSE, 0, NULL))
+		{
+			geBitmap_Destroy(&pBitmap);
+			return false;
+		}
+	}
+
+	NewBitmapList[pData->BitmapCount] = new BitmapEntry;
+
+	if (!NewBitmapList)
+	{
+		App->Report_Error("Memory allocation error processing %s", TextureName);
+		return TRUE;
+	}
+
+	NewBitmapList[pData->BitmapCount]->Name = (LPSTR)TextureName;
+	NewBitmapList[pData->BitmapCount]->Bitmap = pBitmap;
+	NewBitmapList[pData->BitmapCount]->WinBitmap = NULL;
+	NewBitmapList[pData->BitmapCount]->WinABitmap = NULL;
+	NewBitmapList[pData->BitmapCount]->Flags = 0;
+	NewBitmapList[pData->BitmapCount]->Deleted = 0;
+	pData->BitmapCount++;
+
+	return true;
+}
+
+// *************************************************************************
+// *			AddBitmap_New:- Terry and Hazel Flanigan 2025 		 	   *
+// *************************************************************************
+signed int CL64_TXL_Editor::AddBitmap_New(const char* BitmapFileName)
+{
+	geBitmap_Info	PInfo;
+	geBitmap_Info	SInfo;
+	geBitmap* pBitmap = 0;
+	geVFile* pBMPFile = 0;
+	char FileName[MAX_PATH];
+	//CString Msg;
+
+	_splitpath(BitmapFileName, NULL, NULL, FileName, NULL);
+
+	//int DuplicateTexture = FindTexture(FileName);
+	//if (DuplicateTexture != -1)
+	{
+		/*AfxFormatString1(Msg, IDS_REPLACEBMPINWAD, FileName);
+		if (AfxMessageBox(Msg, MB_YESNO | MB_ICONQUESTION) != IDYES)
+			return GE_FALSE;
+
+		CTexturePackBmp& CurrentTexture = Textures->ElementAt(DuplicateTexture);*/
+		//geBitmap_Destroy(&CurrentTexture.pBmp);
+		//Textures->RemoveAt(DuplicateTexture);
+	}
+
+	pBMPFile = geVFile_OpenNewSystem(NULL, GE_VFILE_TYPE_DOS, BitmapFileName, NULL, GE_VFILE_OPEN_READONLY);
+
+	if (!pBMPFile)
+	{
+		/*AfxFormatString1(Msg, IDS_CANTOPENBMP, FileName);
+		AfxMessageBox(Msg, MB_OK | MB_ICONEXCLAMATION);*/
+
+		return GE_FALSE;
+	}
+
+	pBitmap = geBitmap_CreateFromFile(pBMPFile);
+	geVFile_Close(pBMPFile);
+
+	if (!pBitmap)
+	{
+		/*AfxFormatString1(Msg, IDS_INVALIDBITMAPFILE, FileName);
+		AfxMessageBox(Msg, MB_OK | MB_ICONEXCLAMATION);*/
+
+		return GE_FALSE;
+	}
+
+	geBitmap_GetInfo(pBitmap, &PInfo, &SInfo);
+
+	if ((PInfo.Width != PInfo.Height) ||
+		(
+			(PInfo.Width != 1) &&
+			(PInfo.Width != 2) &&
+			(PInfo.Width != 4) &&
+			(PInfo.Width != 8) &&
+			(PInfo.Width != 16) &&
+			(PInfo.Width != 32) &&
+			(PInfo.Width != 64) &&
+			(PInfo.Width != 128) &&
+			(PInfo.Width != 256)
+			)
+		)
+	{
+		/*CString SizeString;
+		SizeString.Format("%d (width) by %d (height)", PInfo.Width, PInfo.Height);
+		AfxFormatString2(Msg, IDS_BMPSIZEPROBLEM, FileName, SizeString);
+		if (AfxMessageBox(Msg, MB_YESNO | MB_ICONQUESTION | MB_DEFBUTTON2) != IDYES)*/
+			return GE_FALSE;
+	}
+
+	//Support several pixelformats. JJT
+	if (PInfo.Format != GE_PIXELFORMAT_8BIT_GRAY
+		&& PInfo.Format != GE_PIXELFORMAT_8BIT
+		&& PInfo.Format != GE_PIXELFORMAT_16BIT_555_RGB
+		&& PInfo.Format != GE_PIXELFORMAT_16BIT_565_RGB
+		&& PInfo.Format != GE_PIXELFORMAT_16BIT_4444_ARGB
+		&& PInfo.Format != GE_PIXELFORMAT_24BIT_RGB
+		&& PInfo.Format != GE_PIXELFORMAT_24BIT_BGR
+		)
+	{
+		//Default
+		if (!geBitmap_SetFormat(pBitmap, GE_PIXELFORMAT_16BIT_555_RGB, GE_FALSE, 0, NULL))
+		{
+			/*AfxFormatString1(Msg, IDS_FAILED16555RGB, FileName);
+			AfxMessageBox(Msg, MB_OK | MB_ICONEXCLAMATION);*/
+
+			geBitmap_Destroy(&pBitmap);
+			return GE_FALSE;
+		}
+	}
+
+	NewBitmapList[pData->BitmapCount] = new BitmapEntry;
+
+	if (!NewBitmapList)
+	{
+		App->Report_Error("Memory allocation error processing %s", BitmapFileName);
+		return TRUE;
+	}
+
+	NewBitmapList[pData->BitmapCount]->Name = (LPSTR)BitmapFileName;
+	NewBitmapList[pData->BitmapCount]->Bitmap = pBitmap;
+	NewBitmapList[pData->BitmapCount]->WinBitmap = NULL;
+	NewBitmapList[pData->BitmapCount]->WinABitmap = NULL;
+	NewBitmapList[pData->BitmapCount]->Flags = 0;
+	NewBitmapList[pData->BitmapCount]->Deleted = 0;
+	pData->BitmapCount++;
+	//CTexturePackBmp NewTexture(FileName, pBitmap);
+	//Textures->Add(NewTexture);
+
+	return GE_TRUE;
+}
+
 
