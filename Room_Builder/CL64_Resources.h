@@ -28,5 +28,32 @@ class CL64_Resources
 public:
 	CL64_Resources();
 	~CL64_Resources();
+
+	void Start_Resources();
+
+private:
+	static LRESULT CALLBACK Proc_Resources(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+
+
+	void CreateListGeneral_FX(HWND hDlg);
+	void Update_Resource_Groups_Combo(HWND hDlg);
+	bool Scan_Resource_Group(Ogre::String ResourceGroup);
+	bool Get_File_Extensions(char* FileName, int Index);
+	int Show_Resource_Group_All();
+
+
+	Ogre::String mSelected_Resource_Group;
+
+
+	HWND FX_General_hLV;
+
+	int GroupSelIndex;
+	int RV_Size;
+
+	std::vector<std::string> RV_FileName;
+	std::vector<std::string> RV_Archive_GetName;
+	std::vector<std::string> RV_Archive_GetType;
+	std::vector<int> RV_File_Extension;
+
 };
 

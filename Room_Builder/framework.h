@@ -84,4 +84,14 @@ namespace Enums
 		Editor_Dlgs_New = 0,
 		Editor_Dlgs_First_Brush = 1
 	};
+
+	enum Resource_File_Type
+	{
+		Resource_File_Type_None = 0,
+		Resource_File_Type_Material = 1,
+		Resource_File_Type_Mesh = 2,
+		Resource_File_Type_Skeleton = 3,
+		Resource_File_Type_Texture = 4,
+		Resource_File_Type_Overlay = 5
+	};
 }
