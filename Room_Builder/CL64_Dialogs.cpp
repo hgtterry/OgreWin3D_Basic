@@ -58,6 +58,7 @@ CL64_Dialogs::CL64_Dialogs(void)
 
 	btext[0] = 0;
 	Chr_Text[0] = 0;;
+	mTextureFile[0] = 0;
 
 	Check_What = 0;
 
@@ -1233,4 +1234,192 @@ LRESULT CALLBACK CL64_Dialogs::Proc_SnapOptions(HWND hDlg, UINT message, WPARAM 
 
 	}
 	return FALSE;
+}
+
+// *************************************************************************
+// *	  Start_TextureViewer_Dialog:- Terry and Hazel Flanigan 2024	   *
+// *************************************************************************
+void CL64_Dialogs::Start_TextureViewer_Dialog(char* TextureFile, HWND Owner_hDlg)
+{
+	mTextureFile[0] = 0;
+	strcpy(mTextureFile, TextureFile);
+	DialogBox(App->hInst, (LPCTSTR)IDD_TEXTUREVIEWER, Owner_hDlg, (DLGPROC)Proc_TextureViewer);
+}
+
+// **************************************************************************
+// *		Proc_TextureViewer:- Terry and Hazel Flanigan 2024				*
+// **************************************************************************
+LRESULT CALLBACK CL64_Dialogs::Proc_TextureViewer(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+	switch (message)
+	{
+	case WM_INITDIALOG:
+	{
+		//SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		//SendDlgItemMessage(hDlg, IDC_ST_DETAILS, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
+		//SendDlgItemMessage(hDlg, IDC_BT_VIEWEXPORT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		SetWindowLongPtr(GetDlgItem(hDlg, IDC_BASETEXTURE), GWLP_WNDPROC, (LONG_PTR)Proc_ViewerBasePic);
+
+		//App->CL_Dialogs->RightGroups_Hwnd = hDlg;
+		App->CL_Textures->Texture_To_HBITMP(App->CL_Dialogs->mTextureFile);
+
+		//char buf[MAX_PATH];
+		//if (App->CL_Scene->Scene_Mode == Enums::Scene_Mode_Assimp_Model)
+		//{
+		//	EnableWindow(GetDlgItem(hDlg, IDC_BT_VIEWEXPORT), false);
+
+		//	sprintf(buf, "%i X %i", App->CL_Textures->BasePicWidth
+		//		, App->CL_Textures->BasePicHeight);// , App->CL_Dialogs->mTextureFile);
+		//}
+		//else
+		//{
+		//	sprintf(buf, "%i X %i   %s", App->CL_Textures->BasePicWidth
+		//		, App->CL_Textures->BasePicHeight, App->CL_Resources->mSelected_File);
+		//}
+
+		//SetDlgItemText(hDlg, IDC_ST_DETAILS, (LPCTSTR)buf);
+
+
+		//App->CL_Ogre->RenderFrame(8);
+
+		return TRUE;
+	}
+	case WM_CTLCOLORSTATIC:
+	{
+		/*if (GetDlgItem(hDlg, IDC_ST_DETAILS) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}*/
+
+		return FALSE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->AppBackground;
+	}
+
+	case WM_NOTIFY:
+	{
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		/*if (some_item->idFrom == IDC_BT_VIEWEXPORT)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_VIEWEXPORT));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
+			else
+			{
+				App->Custom_Button_Normal(item);
+			}
+
+			return CDRF_DODEFAULT;
+		}*/
+
+		if (some_item->idFrom == IDCANCEL)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		return CDRF_DODEFAULT;
+	}
+
+	case WM_COMMAND:
+	{
+
+		/*if (LOWORD(wParam) == IDC_BT_VIEWEXPORT)
+		{
+			App->CL_Resources->Export_File(App->CL_Resources->mSelected_File);
+			return TRUE;
+		}*/
+
+		if (LOWORD(wParam) == IDOK)
+		{
+			/*if (App->CL_Scene->Scene_Mode == Enums::Scene_Mode_Assimp_Model)
+			{
+			}
+			else
+			{
+				remove(App->CL_Dialogs->mTextureFile);
+			}*/
+
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDCANCEL)
+		{
+			/*if (App->CL_Scene->Scene_Mode == Enums::Scene_Mode_Assimp_Model)
+			{
+			}
+			else
+			{
+				remove(App->CL_Dialogs->mTextureFile);
+			}*/
+
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+	}
+
+	break;
+
+	}
+
+	return FALSE;
+}
+
+// *************************************************************************
+// *		Proc_ViewerBasePic:- Terry and Hazel Flanigan 2024		  	   *
+// *************************************************************************
+bool CALLBACK CL64_Dialogs::Proc_ViewerBasePic(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
+{
+	if (msg == WM_PAINT)
+	{
+		PAINTSTRUCT	ps;
+		HDC			hDC;
+		RECT		Rect;
+
+		hDC = BeginPaint(hwnd, &ps);
+		GetClientRect(hwnd, &Rect);
+		Rect.left--;
+		Rect.bottom--;
+		FillRect(hDC, &Rect, (HBRUSH)(RGB(0, 255, 0)));
+
+		/*if (App->CL_Dialogs->Sel_BaseBitmap != NULL)
+		{
+			RECT	Source;
+			RECT	Dest;
+			HDC		hDC;
+
+			Source.left = 0;
+			Source.top = 0;
+			Source.bottom = App->CL_Textures->BasePicHeight;
+			Source.right = App->CL_Textures->BasePicWidth;
+
+			Dest = Rect;
+
+			hDC = GetDC(hwnd);
+			SetStretchBltMode(hDC, HALFTONE);
+
+			App->CL_Textures->RenderTexture_Blit(hDC, App->CL_Dialogs->Sel_BaseBitmap, &Source, &Dest);
+			ReleaseDC(hwnd, hDC);
+		}*/
+
+		EndPaint(hwnd, &ps);
+
+		return 0;
+	}
+
+	return 0;
 }

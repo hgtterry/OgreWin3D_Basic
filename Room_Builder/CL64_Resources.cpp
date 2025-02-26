@@ -30,8 +30,16 @@ THE SOFTWARE.
 CL64_Resources::CL64_Resources()
 {
 	FX_General_hLV = NULL;
+	Resource_Dlg_hWnd = NULL;
 
 	mSelected_Resource_Group = "App_Resource_Group";
+
+	Extension_Type = Enums::Resource_File_Type_None;
+
+	mFileString.clear();
+
+	mSelected_File[0] = 0;
+	mbtext[0] = 0;
 
 	GroupSelIndex = 0;
 	RV_Size = 0;
@@ -63,12 +71,12 @@ LRESULT CALLBACK CL64_Resources::Proc_Resources(HWND hDlg, UINT message, WPARAM 
 		SendDlgItemMessage(hDlg, IDC_STCOUNT, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
 		//SendDlgItemMessage(hDlg, IDC_ST_RESOURCE_GROUP, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
 		//SendDlgItemMessage(hDlg, IDC_ST_GB_LISTOPTIONS, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
-		//SendDlgItemMessage(hDlg, IDC_ST_GB_OPTIONS, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_ST_GB_OPTIONS, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
 
 
-		//SendDlgItemMessage(hDlg, IDC_ST_SELECTEDFILE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_ST_SELECTEDFILE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		//SendDlgItemMessage(hDlg, IDC_BT_EXPORT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		//SendDlgItemMessage(hDlg, IDC_BT_VIEWFILE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_VIEWFILE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		//// -------------------------- Show Resource
 		//SendDlgItemMessage(hDlg, IDC_GROUPALL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
@@ -83,13 +91,13 @@ LRESULT CALLBACK CL64_Resources::Proc_Resources(HWND hDlg, UINT message, WPARAM 
 
 		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
-		//SetDlgItemText(hDlg, IDC_ST_SELECTEDFILE, (LPCTSTR)App->CL_Resources->mSelected_File);
+		SetDlgItemText(hDlg, IDC_ST_SELECTEDFILE, (LPCTSTR)App->CL_Resources->mSelected_File);
 
-		//App->CL_Resources->Resource_Dlg_hWnd = hDlg;
+		App->CL_Resources->Resource_Dlg_hWnd = hDlg;
 
 		//App->CL_Resources->Export_Button = GetDlgItem(hDlg, IDC_BT_EXPORT);
 
-		//EnableWindow(GetDlgItem(hDlg, IDC_BT_VIEWFILE), false);
+		EnableWindow(GetDlgItem(hDlg, IDC_BT_VIEWFILE), false);
 		//EnableWindow(GetDlgItem(hDlg, IDC_BT_EXPORT), true);
 
 		App->CL_Resources->Update_Resource_Groups_Combo(hDlg);
@@ -132,15 +140,15 @@ LRESULT CALLBACK CL64_Resources::Proc_Resources(HWND hDlg, UINT message, WPARAM 
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->AppBackground;
-		}
+		}*/
 
-		if (GetDlgItem(hDlg, IDC_ST_GB_LISTOPTIONS) == (HWND)lParam)
-		{
-			SetBkColor((HDC)wParam, RGB(0, 0, 0));
-			SetTextColor((HDC)wParam, RGB(0, 0, 0));
-			SetBkMode((HDC)wParam, TRANSPARENT);
-			return (UINT)App->AppBackground;
-		}
+		//if (GetDlgItem(hDlg, IDC_ST_GB_LISTOPTIONS) == (HWND)lParam)
+		//{
+		//	SetBkColor((HDC)wParam, RGB(0, 0, 0));
+		//	SetTextColor((HDC)wParam, RGB(0, 0, 0));
+		//	SetBkMode((HDC)wParam, TRANSPARENT);
+		//	return (UINT)App->AppBackground;
+		//}
 
 		if (GetDlgItem(hDlg, IDC_ST_GB_OPTIONS) == (HWND)lParam)
 		{
@@ -156,7 +164,7 @@ LRESULT CALLBACK CL64_Resources::Proc_Resources(HWND hDlg, UINT message, WPARAM 
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->Brush_White;
-		}*/
+		}
 
 		return FALSE;
 	}
@@ -170,7 +178,7 @@ LRESULT CALLBACK CL64_Resources::Proc_Resources(HWND hDlg, UINT message, WPARAM 
 	{
 		LPNMHDR some_item = (LPNMHDR)lParam;
 
-		/*if (some_item->hwndFrom == App->CL_Resources->FX_General_hLV)
+		if (some_item->hwndFrom == App->CL_Resources->FX_General_hLV)
 		{
 			switch (some_item->code)
 			{
@@ -180,7 +188,7 @@ LRESULT CALLBACK CL64_Resources::Proc_Resources(HWND hDlg, UINT message, WPARAM 
 				SetDlgItemText(hDlg, IDC_ST_SELECTEDFILE, (LPCTSTR)App->CL_Resources->mSelected_File);
 			}
 			}
-		}*/
+		}
 
 		if (some_item->idFrom == IDCANCEL)
 		{
@@ -204,7 +212,7 @@ LRESULT CALLBACK CL64_Resources::Proc_Resources(HWND hDlg, UINT message, WPARAM 
 			}
 
 			return CDRF_DODEFAULT;
-		}
+		}*/
 
 		if (some_item->idFrom == IDC_BT_VIEWFILE)
 		{
@@ -223,7 +231,7 @@ LRESULT CALLBACK CL64_Resources::Proc_Resources(HWND hDlg, UINT message, WPARAM 
 			return CDRF_DODEFAULT;
 		}
 
-		if (some_item->idFrom == IDC_GROUPALL)
+		/*if (some_item->idFrom == IDC_GROUPALL)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Toggle(item, App->CL_Resources->flag_Show_Group_All);
@@ -270,14 +278,14 @@ LRESULT CALLBACK CL64_Resources::Proc_Resources(HWND hDlg, UINT message, WPARAM 
 
 	case WM_COMMAND:
 
-		/*if (LOWORD(wParam) == IDC_BT_VIEWFILE)
+		if (LOWORD(wParam) == IDC_BT_VIEWFILE)
 		{
 			if (App->CL_Resources->Extension_Type == Enums::Resource_File_Type_Texture)
 			{
 				App->CL_Resources->View_Texture(App->CL_Resources->mSelected_File, hDlg);
 			}
 
-			if (App->CL_Resources->Extension_Type == Enums::Resource_File_Type_Material)
+			/*if (App->CL_Resources->Extension_Type == Enums::Resource_File_Type_Material)
 			{
 				App->CL_Resources->View_File(App->CL_Resources->mSelected_File, hDlg);
 			}
@@ -285,10 +293,10 @@ LRESULT CALLBACK CL64_Resources::Proc_Resources(HWND hDlg, UINT message, WPARAM 
 			if (App->CL_Resources->Extension_Type == Enums::Resource_File_Type_Overlay)
 			{
 				App->CL_Resources->View_File(App->CL_Resources->mSelected_File, hDlg);
-			}
+			}*/
 
 			return TRUE;
-		}*/
+		}
 
 		/*if (LOWORD(wParam) == IDC_BT_EXPORT)
 		{
@@ -488,6 +496,55 @@ void CL64_Resources::CreateListGeneral_FX(HWND hDlg)
 }
 
 // *************************************************************************
+// *		ListView_OnClickOptions:- Terry and Hazel Flanigan 2024	 	   *
+// *************************************************************************
+void CL64_Resources::ListView_OnClickOptions(LPARAM lParam)
+{
+	int List_Index;
+
+	LPNMLISTVIEW List = (LPNMLISTVIEW)lParam;
+	List_Index = List->iItem;
+	ListView_GetItemText(FX_General_hLV, List_Index, 0, mbtext, MAX_PATH);
+
+	int Count = 0;
+	int End = RV_Size;
+
+	strcpy(mSelected_File, mbtext);
+
+	while (Count < End)
+	{
+		bool test = strcmp(RV_FileName[Count].c_str(), mbtext);
+		if (test == 0)
+		{
+			if (RV_File_Extension[Count] == Enums::Resource_File_Type_Texture)
+			{
+				Extension_Type = Enums::Resource_File_Type_Texture;
+				EnableWindow(GetDlgItem(Resource_Dlg_hWnd, IDC_BT_VIEWFILE), true);
+				return;
+			}
+
+			if (RV_File_Extension[Count] == Enums::Resource_File_Type_Material)
+			{
+				Extension_Type = Enums::Resource_File_Type_Material;
+				EnableWindow(GetDlgItem(Resource_Dlg_hWnd, IDC_BT_VIEWFILE), true);
+				return;
+			}
+
+			if (RV_File_Extension[Count] == Enums::Resource_File_Type_Overlay)
+			{
+				Extension_Type = Enums::Resource_File_Type_Overlay;
+				EnableWindow(GetDlgItem(Resource_Dlg_hWnd, IDC_BT_VIEWFILE), true);
+				return;
+			}
+		}
+
+		Count++;
+	}
+
+	EnableWindow(GetDlgItem(Resource_Dlg_hWnd, IDC_BT_VIEWFILE), false);
+}
+
+// *************************************************************************
 // *	Update_Resource_Groups_Combo:- Terry and Hazel Flanigan 2024	   *
 // *************************************************************************
 void CL64_Resources::Update_Resource_Groups_Combo(HWND hDlg)
@@ -667,6 +724,44 @@ void CL64_Resources::Update_Counter(int Value, HWND hDlg)
 	strcpy(buf, "Items:- ");
 	strcat(buf, num);
 	SetDlgItemText(hDlg, IDC_STCOUNT, (LPCTSTR)buf);
+}
+
+// *************************************************************************
+// *				View_Texture:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+bool CL64_Resources::View_Texture(char* FileName, HWND Owner_hDlg)
+{
+	Ogre::FileInfoListPtr RFI = ResourceGroupManager::getSingleton().listResourceFileInfo(mSelected_Resource_Group, false);
+	Ogre::FileInfoList::const_iterator i, iend;
+	iend = RFI->end();
+
+	for (i = RFI->begin(); i != iend; ++i)
+	{
+		if (i->filename == FileName)
+		{
+			Ogre::DataStreamPtr ff = i->archive->open(i->filename);
+
+			mFileString = ff->getAsString();
+
+			char mFileName[MAX_PATH];
+			strcpy(mFileName, App->RB_Directory_FullPath);
+			strcat(mFileName, "\\Data\\");
+			strcat(mFileName, FileName);
+
+			std::ofstream outFile;
+			outFile.open(mFileName, std::ios::binary);
+			outFile << mFileString;
+			outFile.close();
+
+			mFileString.clear();
+
+			App->CL_Dialogs->Start_TextureViewer_Dialog(mFileName, Owner_hDlg);
+
+			return 1;
+		}
+	}
+
+	return 1;
 }
 
 // *************************************************************************

@@ -31,23 +31,31 @@ public:
 
 	void Start_Resources();
 	void Load_Texture_Resources();
+	bool View_Texture(char* FileName, HWND Owner_hDlg);
 
 private:
 	static LRESULT CALLBACK Proc_Resources(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 
 	void CreateListGeneral_FX(HWND hDlg);
+	void ListView_OnClickOptions(LPARAM lParam);
+
 	void Update_Resource_Groups_Combo(HWND hDlg);
 	bool Scan_Resource_Group(Ogre::String ResourceGroup);
 	bool Get_File_Extensions(char* FileName, int Index);
 	int Show_Resource_Group_All();
 	void Update_Counter(int Value, HWND hDlg);
 
-	
-	Ogre::String mSelected_Resource_Group;
+	char mSelected_File[MAX_PATH];
+	char mbtext[MAX_PATH];
 
+	Ogre::String mSelected_Resource_Group;
+	Ogre::String mFileString;
 
 	HWND FX_General_hLV;
+	HWND Resource_Dlg_hWnd;
+
+	int Extension_Type;
 
 	int GroupSelIndex;
 	int RV_Size;

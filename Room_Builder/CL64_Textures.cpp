@@ -56,6 +56,51 @@ CL64_Textures::~CL64_Textures(void)
 }
 
 // *************************************************************************
+// *			RenderTexture_Blit:- Terry and Hazel Flanigan 2024	  	   *
+// *************************************************************************
+void CL64_Textures::RenderTexture_Blit(HDC hDC, HBITMAP Bmp, const RECT* SourceRect, const RECT* DestRect)
+{
+	HDC		MemDC;
+	int		SourceWidth;
+	int		SourceHeight;
+	int		DestWidth;
+	int		DestHeight;
+
+	MemDC = CreateCompatibleDC(hDC);
+	if (MemDC == NULL)
+	{
+		App->Say("Can not create MemDC");
+		return;
+	}
+
+
+	if (Bmp)
+	{
+		SelectObject(MemDC, Bmp);
+
+		SourceWidth = SourceRect->right - SourceRect->left;
+		SourceHeight = SourceRect->bottom - SourceRect->top;
+		DestWidth = DestRect->right - DestRect->left;
+		DestHeight = DestRect->bottom - DestRect->top;
+		SetStretchBltMode(hDC, COLORONCOLOR);
+		StretchBlt(hDC,
+			DestRect->left,
+			DestRect->top,
+			DestHeight,
+			DestHeight,
+			MemDC,
+			SourceRect->left,
+			SourceRect->top,
+			SourceWidth,
+			SourceHeight,
+			SRCCOPY);
+	}
+
+	DeleteDC(MemDC);
+
+}
+
+// *************************************************************************
 // *			Write_BMP:- Terry and Hazel Flanigan 2025			 	   *
 // *************************************************************************
 int CL64_Textures::Write_BMP(const char* pszFile, geBitmap* pBitmap)
@@ -333,6 +378,23 @@ bool CL64_Textures::Soil_Load_Texture(UINT textureArray[], LPSTR strFileName, in
 
 	
 	return 1;
+}
+
+// *************************************************************************
+// *			 Texture_To_HBITMP:- Terry and Hazel Flanigan 2024	 	   *
+// *************************************************************************
+void CL64_Textures::Texture_To_HBITMP(char* TextureFileName)
+{
+	//HWND PreviewWnd = GetDlgItem(App->CL_Dialogs->RightGroups_Hwnd, IDC_BASETEXTURE);
+	//HDC	hDC = GetDC(PreviewWnd);
+
+	//App->CL_Dialogs->Sel_BaseBitmap = ilutWinLoadImage(TextureFileName, hDC);
+
+	//BasePicWidth = ilGetInteger(IL_IMAGE_WIDTH);
+	//BasePicHeight = ilGetInteger(IL_IMAGE_HEIGHT);
+	////BasePicDepth = ilGetInteger(IL_IMAGE_DEPTH);
+
+	//RedrawWindow(App->CL_Dialogs->RightGroups_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 }
 
 // *************************************************************************

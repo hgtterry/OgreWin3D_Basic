@@ -36,10 +36,11 @@ public:
 	void Start_Brush_Properties_Dlg();
 	void Dialog_Text(int What_Check);
 	void Dialog_SnapOptions();
+	void Start_TextureViewer_Dialog(char* TextureFile, HWND Owner_hDlg);
 
 	char btext[MAX_PATH];
 	char Chr_Text[MAX_PATH];
-
+	char mTextureFile[MAX_PATH];
 	char MessageString[MAX_PATH];
 	char MessageString2[MAX_PATH];
 
@@ -53,6 +54,8 @@ private:
 	static LRESULT CALLBACK Proc_Dialog_Text(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Proc_YesNo(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Proc_SnapOptions(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Proc_TextureViewer(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static bool CALLBACK Proc_ViewerBasePic(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);;
 
 	// Brush Information
 	void Fill_Brush_Combo(HWND hDlg);
@@ -61,6 +64,7 @@ private:
 	bool Show_Brush_ListInfo(BrushList* BList, HWND hDlg);
 	bool Show_Brush_Faces_Info(const FaceList* pList, HWND hDlg);
 	bool Show_Face_Data(int Index, const Face* f, HWND hDlg);
+	
 
 	int Check_What;
 
