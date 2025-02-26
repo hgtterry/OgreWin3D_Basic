@@ -64,6 +64,7 @@ THE SOFTWARE.
 #include "CL64_ImGui.h"
 #include "CL64_TXL_Editor.h"
 #include "CL64_Textures.h"
+#include "CL64_Resources.h"
 
 // Templates Dialogs
 #include "A_CreateBoxDialog.h"
@@ -116,6 +117,7 @@ public:
 	CL64_ImGui*					CL_ImGui;
 	CL64_TXL_Editor*			CL_TXL_Editor;
 	CL64_Textures*				CL_Textures;
+	CL64_Resources*				CL_Resources;
 
 	// Templates Dialogs
 	A_CreateBoxDialog*			CL_CreateBoxDialog;
