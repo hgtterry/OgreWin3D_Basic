@@ -60,7 +60,7 @@ LRESULT CALLBACK CL64_Resources::Proc_Resources(HWND hDlg, UINT message, WPARAM 
 	{
 
 		//SendDlgItemMessage(hDlg, IDC_ST_BANNER, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
-		//SendDlgItemMessage(hDlg, IDC_STCOUNT, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_STCOUNT, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
 		//SendDlgItemMessage(hDlg, IDC_ST_RESOURCE_GROUP, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
 		//SendDlgItemMessage(hDlg, IDC_ST_GB_LISTOPTIONS, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
 		//SendDlgItemMessage(hDlg, IDC_ST_GB_OPTIONS, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
@@ -102,7 +102,7 @@ LRESULT CALLBACK CL64_Resources::Proc_Resources(HWND hDlg, UINT message, WPARAM 
 
 		int Items = App->CL_Resources->Show_Resource_Group_All();
 
-		//App->CL_Resources->Update_Counter(Items, hDlg);
+		App->CL_Resources->Update_Counter(Items, hDlg);
 
 		//App->CL_Resources->Set_Title(hDlg, (LPSTR)"All");
 
@@ -116,7 +116,7 @@ LRESULT CALLBACK CL64_Resources::Proc_Resources(HWND hDlg, UINT message, WPARAM 
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->AppBackground;
-		}
+		}*/
 
 		if (GetDlgItem(hDlg, IDC_STCOUNT) == (HWND)lParam)
 		{
@@ -126,7 +126,7 @@ LRESULT CALLBACK CL64_Resources::Proc_Resources(HWND hDlg, UINT message, WPARAM 
 			return (UINT)App->AppBackground;
 		}
 
-		if (GetDlgItem(hDlg, IDC_ST_RESOURCE_GROUP) == (HWND)lParam)
+		/*if (GetDlgItem(hDlg, IDC_ST_RESOURCE_GROUP) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 0, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
@@ -180,7 +180,7 @@ LRESULT CALLBACK CL64_Resources::Proc_Resources(HWND hDlg, UINT message, WPARAM 
 				SetDlgItemText(hDlg, IDC_ST_SELECTEDFILE, (LPCTSTR)App->CL_Resources->mSelected_File);
 			}
 			}
-		}
+		}*/
 
 		if (some_item->idFrom == IDCANCEL)
 		{
@@ -189,7 +189,7 @@ LRESULT CALLBACK CL64_Resources::Proc_Resources(HWND hDlg, UINT message, WPARAM 
 			return CDRF_DODEFAULT;
 		}
 
-		if (some_item->idFrom == IDC_BT_EXPORT)
+		/*if (some_item->idFrom == IDC_BT_EXPORT)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 
@@ -423,7 +423,7 @@ LRESULT CALLBACK CL64_Resources::Proc_Resources(HWND hDlg, UINT message, WPARAM 
 
 			App->CL_Resources->Scan_Resource_Group(App->CL_Resources->mSelected_Resource_Group);
 			int Items = App->CL_Resources->Show_Resource_Group_All();
-			//App->CL_Resources->Update_Counter(Items, hDlg);
+			App->CL_Resources->Update_Counter(Items, hDlg);
 
 			//App->CL_Resources->Reset_Flags();
 			//App->CL_Resources->flag_Show_Group_All = 1;
@@ -653,5 +653,44 @@ int CL64_Resources::Show_Resource_Group_All()
 	//Set_Selection(0);
 
 	return Count;
+}
+
+// *************************************************************************
+// *			Update_Counter:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void CL64_Resources::Update_Counter(int Value, HWND hDlg)
+{
+	char buf[100];
+	char num[100];
+	_itoa(Value, num, 10);
+
+	strcpy(buf, "Items:- ");
+	strcat(buf, num);
+	SetDlgItemText(hDlg, IDC_STCOUNT, (LPCTSTR)buf);
+}
+
+// *************************************************************************
+// *		Load_Texture_Resources:- Terry and Hazel Flanigan 2024         *
+// *************************************************************************
+void CL64_Resources::Load_Texture_Resources()
+{
+	char BufPath[MAX_PATH];
+	strcpy(BufPath, App->RB_Directory_FullPath);
+	strcat(BufPath, "\\Data\\Room_Builder\\Default.zip");
+
+
+	if (Ogre::ResourceGroupManager::getSingleton().resourceGroupExists(App->CL_Ogre->Texture_Resource_Group))
+	{
+		Ogre::ResourceGroupManager::getSingleton().destroyResourceGroup(App->CL_Ogre->Texture_Resource_Group);
+	}
+
+	Ogre::ResourceGroupManager::getSingleton().createResourceGroup(App->CL_Ogre->Texture_Resource_Group);
+	
+	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(BufPath, "Zip", App->CL_Ogre->Texture_Resource_Group);
+	Ogre::ResourceGroupManager::getSingleton().clearResourceGroup(App->CL_Ogre->Texture_Resource_Group);
+	Ogre::ResourceGroupManager::getSingleton().initialiseResourceGroup(App->CL_Ogre->Texture_Resource_Group);
+
+
+
 }
 

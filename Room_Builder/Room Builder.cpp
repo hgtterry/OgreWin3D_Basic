@@ -67,15 +67,17 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     App->CL_Doc->Init_Doc();
     App->CL_MapEditor->Init_Map_Views();
     App->CL_MapEditor->Reset_Views();
+    App->SetMainWinCentre();
 
     ShowWindow(App->MainHwnd, SW_SHOWMAXIMIZED);
     UpdateWindow(App->MainHwnd);
 
     App->CL_Ogre->Init_Ogre();
 
-    App->SetMainWinCentre();
     App->CL_Top_Tabs->Start_Headers();
     App->CL_Properties_Tabs->Start_Tabs_Control_Dlg();
+
+    App->CL_Resources->Load_Texture_Resources();
 
     SetTimer(App->MainHwnd, 1, 100, NULL);
 
@@ -170,7 +172,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 }
 
                 App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);*/
-
+               // App->CL_Resources->Load_Texture_Resources();
                 if (App->CL_Ogre->OGL_Listener->Render_Mode == Enums::Render_Groups)
                 {
                     App->CL_Ogre->OGL_Listener->Flag_Render_Brushes = 0;

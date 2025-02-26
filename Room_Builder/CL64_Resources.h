@@ -30,6 +30,7 @@ public:
 	~CL64_Resources();
 
 	void Start_Resources();
+	void Load_Texture_Resources();
 
 private:
 	static LRESULT CALLBACK Proc_Resources(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
@@ -40,8 +41,9 @@ private:
 	bool Scan_Resource_Group(Ogre::String ResourceGroup);
 	bool Get_File_Extensions(char* FileName, int Index);
 	int Show_Resource_Group_All();
+	void Update_Counter(int Value, HWND hDlg);
 
-
+	
 	Ogre::String mSelected_Resource_Group;
 
 

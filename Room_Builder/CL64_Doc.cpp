@@ -96,6 +96,8 @@ CL64_Doc::~CL64_Doc(void)
 // *************************************************************************
 void CL64_Doc::Init_Doc()
 {
+    //App->CL_Resources->Load_Texture_Resources();
+
     const char* DefaultWadName;
     strcpy(LastTemplateTypeName, "Box");
 

@@ -303,8 +303,8 @@
 #define IDC_ED_DEGREES                  1241
 #define IDC_SPIN1                       1242
 #define IDC_ST_DEGREES                  1243
-#define IDC_LIST1                       1243
 #define IDC_LST_GROUPS                  1243
+#define IDC_STCOUNT                     1244
 #define ID_DEBUG_GENERAL                32771
 #define ID_TEMPLATES_INSERT             32772
 #define ID_BRUSH_SELECT                 32773
@@ -350,7 +350,7 @@
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        168
 #define _APS_NEXT_COMMAND_VALUE         32803
-#define _APS_NEXT_CONTROL_VALUE         1244
+#define _APS_NEXT_CONTROL_VALUE         1245
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif
