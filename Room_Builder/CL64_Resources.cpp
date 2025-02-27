@@ -297,9 +297,9 @@ LRESULT CALLBACK CL64_Resources::Proc_Resources(HWND hDlg, UINT message, WPARAM 
 			/*if (App->CL_Resources->Extension_Type == Enums::Resource_File_Type_Material)
 			{
 				App->CL_Resources->View_File(App->CL_Resources->mSelected_File, hDlg);
-			}
+			}*/
 
-			if (App->CL_Resources->Extension_Type == Enums::Resource_File_Type_Overlay)
+			/*if (App->CL_Resources->Extension_Type == Enums::Resource_File_Type_Overlay)
 			{
 				App->CL_Resources->View_File(App->CL_Resources->mSelected_File, hDlg);
 			}*/
@@ -770,7 +770,7 @@ int CL64_Resources::Show_Resource_Group_All()
 
 	}
 
-	//Set_Selection(0);
+	Set_Selection(0);
 
 	return Count;
 }
@@ -879,8 +879,6 @@ void CL64_Resources::Load_Texture_Resources()
 	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(BufPath, "Zip", App->CL_Ogre->Texture_Resource_Group);
 	Ogre::ResourceGroupManager::getSingleton().clearResourceGroup(App->CL_Ogre->Texture_Resource_Group);
 	Ogre::ResourceGroupManager::getSingleton().initialiseResourceGroup(App->CL_Ogre->Texture_Resource_Group);
-
-
 
 }
 

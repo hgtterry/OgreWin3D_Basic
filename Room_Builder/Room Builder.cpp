@@ -461,11 +461,18 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 return 1;
             }
 
-            case  ID_TOOLS_RESOURCEVIEWER:
+            case ID_TOOLS_RESOURCEVIEWER:
             {
                 App->CL_Resources->Start_Resources();
                 return 1;
             }
+
+            case ID_TOOLS_TEXTURESEDITORNEW:
+            {
+                App->CL_TXL_Editor->A_Start_Texl_Dialog();
+                return 1;
+            }
+            
            
             // ----------------------------- Windows
             case ID_WINDOW_PROPERTIES:

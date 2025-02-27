@@ -52,6 +52,24 @@ public:
 	CL64_TXL_Editor();
 	~CL64_TXL_Editor();
 
+	void A_Start_Texl_Dialog();
+	bool A_Scan_Textures_Group();
+	void A_UpDateList();
+	bool A_SelectBitmap();
+	void Texture_To_HBITMP(char* TextureFileName);
+
+	HWND A_TXL_Dlg_HWND;
+	std::vector<std::string> Vec_Texture_Name;
+	int Texture_Count;
+	Ogre::String mFileString;
+
+	long BasePicWidth;
+	long BasePicHeight;
+	long BasePicDepth;
+
+	HBITMAP	Sel_BaseBitmap;
+	// ----------------------------------------
+
 	void Start_Texl_Dialog();
 	int Check_if_Name_Exist(const char* Name);
 
@@ -70,6 +88,9 @@ public:
 	bool AddTexture(geVFile* BaseFile, const char* Path);
 
 private:
+	static LRESULT CALLBACK A_Proc_Texture_Lib(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static bool CALLBACK Proc_ViewerBasePic(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
+
 	static LRESULT CALLBACK Proc_Texture_Lib(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static bool CALLBACK Texture_Preview_hWnd(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
@@ -94,5 +115,6 @@ private:
 
 	char mTextureName[MAX_PATH];
 	char Just_Name[MAX_PATH];
+
 };
 

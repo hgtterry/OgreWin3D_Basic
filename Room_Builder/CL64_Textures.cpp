@@ -393,13 +393,24 @@ void CL64_Textures::Texture_To_HBITMP(char* TextureFileName)
 	HWND PreviewWnd = GetDlgItem(App->CL_Dialogs->TextureView_Hwnd, IDC_BASETEXTURE);
 	HDC	hDC = GetDC(PreviewWnd);
 
-	App->CL_Dialogs->Sel_BaseBitmap = ilutWinLoadImage(TextureFileName, hDC);
+	App->CL_Dialogs->Sel_BaseBitmap = Get_HBITMP(TextureFileName, hDC);
 
+	RedrawWindow(App->CL_Dialogs->TextureView_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+}
+
+// *************************************************************************
+// *			 Get_To_HBITMP:- Terry and Hazel Flanigan 2024	 	   *
+// *************************************************************************
+HBITMAP CL64_Textures::Get_HBITMP(char* TextureFileName, HDC hDC)
+{
+	HBITMAP hBmp = NULL;
+
+	hBmp = ilutWinLoadImage(TextureFileName, hDC);
 	BasePicWidth = ilGetInteger(IL_IMAGE_WIDTH);
 	BasePicHeight = ilGetInteger(IL_IMAGE_HEIGHT);
 	//BasePicDepth = ilGetInteger(IL_IMAGE_DEPTH);
 
-	RedrawWindow(App->CL_Dialogs->TextureView_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+	return hBmp;
 }
 
 // *************************************************************************

@@ -35,6 +35,8 @@ public:
 	bool Soil_Load_Texture(UINT textureArray[], LPSTR strFileName, int textureID);
 	
 	void Texture_To_HBITMP(char* TextureFileName);
+	HBITMAP Get_HBITMP(char* TextureFileName, HDC hDC);
+
 	bool Texture_To_Bmp(char* File);
 
 	bool Covert_Texture(const char* File);
