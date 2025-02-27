@@ -310,6 +310,14 @@
 #define IDC_BT_VIEWFILE                 1246
 #define IDC_ST_SELECTEDFILE             1247
 #define IDC_BASETEXTURE                 1248
+#define IDC_ST_GB_LISTOPTIONS           1249
+#define IDC_GROUPALL                    1250
+#define IDC_ALLMATERIALS                1251
+#define IDC_ALLTEXTURES                 1252
+#define IDC_ALLMESH                     1253
+#define IDC_BT_LIST_OVERLAY             1254
+#define IDC_BT_LIST_SKELETON            1255
+#define IDC_ST_RESOURCE_GROUP           1256
 #define ID_DEBUG_GENERAL                32771
 #define ID_TEMPLATES_INSERT             32772
 #define ID_BRUSH_SELECT                 32773
@@ -355,7 +363,7 @@
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        169
 #define _APS_NEXT_COMMAND_VALUE         32803
-#define _APS_NEXT_CONTROL_VALUE         1249
+#define _APS_NEXT_CONTROL_VALUE         1257
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif

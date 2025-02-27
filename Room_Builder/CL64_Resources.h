@@ -44,7 +44,11 @@ private:
 	bool Scan_Resource_Group(Ogre::String ResourceGroup);
 	bool Get_File_Extensions(char* FileName, int Index);
 	int Show_Resource_Group_All();
+	int Show_Resource_Group_Type(int mType);
 	void Update_Counter(int Value, HWND hDlg);
+	void Set_Title(HWND hDlg, char* Title);
+	void Reset_Flags();
+	void Set_Selection(int Index);
 
 	char mSelected_File[MAX_PATH];
 	char mbtext[MAX_PATH];
@@ -59,6 +63,15 @@ private:
 
 	int GroupSelIndex;
 	int RV_Size;
+
+	bool flag_Show_Group_All;
+	bool flag_Show_App_Res;
+	bool flag_Show_Demo_Res;
+	bool flag_Show_All_Materials;
+	bool flag_Show_All_Meshes;
+	bool flag_Show_All_Textures;
+	bool flag_Show_All_Skeleton;
+	bool flag_Show_All_Overlays;
 
 	std::vector<std::string> RV_FileName;
 	std::vector<std::string> RV_Archive_GetName;

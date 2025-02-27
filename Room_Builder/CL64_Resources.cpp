@@ -41,6 +41,15 @@ CL64_Resources::CL64_Resources()
 	mSelected_File[0] = 0;
 	mbtext[0] = 0;
 
+	flag_Show_Group_All = 0;
+	flag_Show_App_Res = 0;
+	flag_Show_Demo_Res = 0;
+	flag_Show_All_Materials = 0;
+	flag_Show_All_Meshes = 0;
+	flag_Show_All_Textures = 0;
+	flag_Show_All_Skeleton = 0;
+	flag_Show_All_Overlays = 0;
+
 	GroupSelIndex = 0;
 	RV_Size = 0;
 }
@@ -67,10 +76,10 @@ LRESULT CALLBACK CL64_Resources::Proc_Resources(HWND hDlg, UINT message, WPARAM 
 	case WM_INITDIALOG:
 	{
 
-		//SendDlgItemMessage(hDlg, IDC_ST_BANNER, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_ST_BANNER, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_STCOUNT, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
-		//SendDlgItemMessage(hDlg, IDC_ST_RESOURCE_GROUP, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
-		//SendDlgItemMessage(hDlg, IDC_ST_GB_LISTOPTIONS, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_ST_RESOURCE_GROUP, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_ST_GB_LISTOPTIONS, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ST_GB_OPTIONS, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
 
 
@@ -78,13 +87,13 @@ LRESULT CALLBACK CL64_Resources::Proc_Resources(HWND hDlg, UINT message, WPARAM 
 		//SendDlgItemMessage(hDlg, IDC_BT_EXPORT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_VIEWFILE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
-		//// -------------------------- Show Resource
-		//SendDlgItemMessage(hDlg, IDC_GROUPALL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		//SendDlgItemMessage(hDlg, IDC_ALLMATERIALS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		//SendDlgItemMessage(hDlg, IDC_ALLTEXTURES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		//SendDlgItemMessage(hDlg, IDC_ALLMESH, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		//SendDlgItemMessage(hDlg, IDC_BT_LIST_SKELETON, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		//SendDlgItemMessage(hDlg, IDC_BT_LIST_OVERLAY, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		// -------------------------- Show Resource
+		SendDlgItemMessage(hDlg, IDC_GROUPALL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_ALLMATERIALS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_ALLTEXTURES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_ALLMESH, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_LIST_SKELETON, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_LIST_OVERLAY, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		//// -------------------------- 
 		SendDlgItemMessage(hDlg, IDC_LST_GROUPS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
@@ -103,8 +112,8 @@ LRESULT CALLBACK CL64_Resources::Proc_Resources(HWND hDlg, UINT message, WPARAM 
 		App->CL_Resources->Update_Resource_Groups_Combo(hDlg);
 
 		App->CL_Resources->CreateListGeneral_FX(hDlg);
-		//App->CL_Resources->Reset_Flags();
-		//App->CL_Resources->flag_Show_Group_All = 1;
+		App->CL_Resources->Reset_Flags();
+		App->CL_Resources->flag_Show_Group_All = 1;
 
 		App->CL_Resources->Scan_Resource_Group(App->CL_Resources->mSelected_Resource_Group);
 
@@ -112,19 +121,19 @@ LRESULT CALLBACK CL64_Resources::Proc_Resources(HWND hDlg, UINT message, WPARAM 
 
 		App->CL_Resources->Update_Counter(Items, hDlg);
 
-		//App->CL_Resources->Set_Title(hDlg, (LPSTR)"All");
+		App->CL_Resources->Set_Title(hDlg, (LPSTR)"All");
 
 		return TRUE;
 	}
 	case WM_CTLCOLORSTATIC:
 	{
-		/*if (GetDlgItem(hDlg, IDC_ST_BANNER) == (HWND)lParam)
+		if (GetDlgItem(hDlg, IDC_ST_BANNER) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 0, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->AppBackground;
-		}*/
+		}
 
 		if (GetDlgItem(hDlg, IDC_STCOUNT) == (HWND)lParam)
 		{
@@ -134,21 +143,21 @@ LRESULT CALLBACK CL64_Resources::Proc_Resources(HWND hDlg, UINT message, WPARAM 
 			return (UINT)App->AppBackground;
 		}
 
-		/*if (GetDlgItem(hDlg, IDC_ST_RESOURCE_GROUP) == (HWND)lParam)
+		if (GetDlgItem(hDlg, IDC_ST_RESOURCE_GROUP) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 0, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->AppBackground;
-		}*/
+		}
 
-		//if (GetDlgItem(hDlg, IDC_ST_GB_LISTOPTIONS) == (HWND)lParam)
-		//{
-		//	SetBkColor((HDC)wParam, RGB(0, 0, 0));
-		//	SetTextColor((HDC)wParam, RGB(0, 0, 0));
-		//	SetBkMode((HDC)wParam, TRANSPARENT);
-		//	return (UINT)App->AppBackground;
-		//}
+		if (GetDlgItem(hDlg, IDC_ST_GB_LISTOPTIONS) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
 
 		if (GetDlgItem(hDlg, IDC_ST_GB_OPTIONS) == (HWND)lParam)
 		{
@@ -231,7 +240,7 @@ LRESULT CALLBACK CL64_Resources::Proc_Resources(HWND hDlg, UINT message, WPARAM 
 			return CDRF_DODEFAULT;
 		}
 
-		/*if (some_item->idFrom == IDC_GROUPALL)
+		if (some_item->idFrom == IDC_GROUPALL)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Toggle(item, App->CL_Resources->flag_Show_Group_All);
@@ -271,7 +280,7 @@ LRESULT CALLBACK CL64_Resources::Proc_Resources(HWND hDlg, UINT message, WPARAM 
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Toggle(item, App->CL_Resources->flag_Show_All_Overlays);
 			return CDRF_DODEFAULT;
-		}*/
+		}
 
 		return CDRF_DODEFAULT;
 	}
@@ -305,7 +314,7 @@ LRESULT CALLBACK CL64_Resources::Proc_Resources(HWND hDlg, UINT message, WPARAM 
 			return TRUE;
 		}*/
 
-		/*if (LOWORD(wParam) == IDC_GROUPALL)
+		if (LOWORD(wParam) == IDC_GROUPALL)
 		{
 			App->CL_Resources->Set_Title(hDlg, (LPSTR)"All");
 
@@ -318,9 +327,9 @@ LRESULT CALLBACK CL64_Resources::Proc_Resources(HWND hDlg, UINT message, WPARAM 
 			App->CL_Resources->Update_Counter(Items, hDlg);
 
 			return TRUE;
-		}*/
+		}
 
-		/*if (LOWORD(wParam) == IDC_ALLMATERIALS)
+		if (LOWORD(wParam) == IDC_ALLMATERIALS)
 		{
 			App->CL_Resources->Set_Title(hDlg, (LPSTR)"Materials");
 
@@ -336,9 +345,9 @@ LRESULT CALLBACK CL64_Resources::Proc_Resources(HWND hDlg, UINT message, WPARAM 
 			EnableWindow(GetDlgItem(hDlg, IDC_BT_VIEWFILE), true);
 
 			return TRUE;
-		}*/
+		}
 
-		/*if (LOWORD(wParam) == IDC_ALLTEXTURES)
+		if (LOWORD(wParam) == IDC_ALLTEXTURES)
 		{
 			App->CL_Resources->Set_Title(hDlg, (LPSTR)"Textures");
 
@@ -355,9 +364,9 @@ LRESULT CALLBACK CL64_Resources::Proc_Resources(HWND hDlg, UINT message, WPARAM 
 			EnableWindow(GetDlgItem(hDlg, IDC_BT_VIEWFILE), true);
 
 			return TRUE;
-		}*/
+		}
 
-		/*if (LOWORD(wParam) == IDC_ALLMESH)
+		if (LOWORD(wParam) == IDC_ALLMESH)
 		{
 			App->CL_Resources->Reset_Flags();
 			App->CL_Resources->flag_Show_All_Meshes = 1;
@@ -370,9 +379,9 @@ LRESULT CALLBACK CL64_Resources::Proc_Resources(HWND hDlg, UINT message, WPARAM 
 			App->CL_Resources->Update_Counter(Items, hDlg);
 
 			return TRUE;
-		}*/
+		}
 
-		/*if (LOWORD(wParam) == IDC_BT_LIST_SKELETON)
+		if (LOWORD(wParam) == IDC_BT_LIST_SKELETON)
 		{
 			App->CL_Resources->Reset_Flags();
 			App->CL_Resources->flag_Show_All_Skeleton = 1;
@@ -385,9 +394,9 @@ LRESULT CALLBACK CL64_Resources::Proc_Resources(HWND hDlg, UINT message, WPARAM 
 			App->CL_Resources->Update_Counter(Items, hDlg);
 
 			return TRUE;
-		}*/
+		}
 
-		/*if (LOWORD(wParam) == IDC_BT_LIST_OVERLAY)
+		if (LOWORD(wParam) == IDC_BT_LIST_OVERLAY)
 		{
 			App->CL_Resources->Reset_Flags();
 			App->CL_Resources->flag_Show_All_Overlays = 1;
@@ -402,7 +411,7 @@ LRESULT CALLBACK CL64_Resources::Proc_Resources(HWND hDlg, UINT message, WPARAM 
 			App->CL_Resources->Extension_Type = Enums::Resource_File_Type_Overlay;
 			EnableWindow(GetDlgItem(hDlg, IDC_BT_VIEWFILE), true);
 			return TRUE;
-		}*/
+		}
 
 		if (LOWORD(wParam) == IDC_LST_GROUPS)
 		{
@@ -427,14 +436,14 @@ LRESULT CALLBACK CL64_Resources::Proc_Resources(HWND hDlg, UINT message, WPARAM 
 
 			App->CL_Resources->mSelected_Resource_Group = buff;
 
-			//App->CL_Resources->Set_Title(hDlg, (LPSTR)"All");
+			App->CL_Resources->Set_Title(hDlg, (LPSTR)"All");
 
 			App->CL_Resources->Scan_Resource_Group(App->CL_Resources->mSelected_Resource_Group);
 			int Items = App->CL_Resources->Show_Resource_Group_All();
 			App->CL_Resources->Update_Counter(Items, hDlg);
 
-			//App->CL_Resources->Reset_Flags();
-			//App->CL_Resources->flag_Show_Group_All = 1;
+			App->CL_Resources->Reset_Flags();
+			App->CL_Resources->flag_Show_Group_All = 1;
 
 			RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
@@ -610,6 +619,60 @@ bool CL64_Resources::Scan_Resource_Group(Ogre::String ResourceGroup)
 }
 
 // *************************************************************************
+// *	  Show_Resource_Group_Type:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+int CL64_Resources::Show_Resource_Group_Type(int mType)
+{
+	ListView_DeleteAllItems(FX_General_hLV);
+
+	LV_ITEM pitem;
+	memset(&pitem, 0, sizeof(LV_ITEM));
+	pitem.mask = LVIF_TEXT;
+
+	int	 pRow = 0;
+	int Count = 0;
+	int End = RV_Size;
+
+	while (Count < End)
+	{
+		if (RV_File_Extension[Count] == mType)
+		{
+			pitem.iItem = pRow;
+			pitem.pszText = (LPSTR)RV_FileName[Count].c_str();
+
+			ListView_InsertItem(FX_General_hLV, &pitem);
+			ListView_SetItemText(FX_General_hLV, pRow, 1, (LPSTR)RV_Archive_GetType[Count].c_str());
+			ListView_SetItemText(FX_General_hLV, pRow, 2, (LPSTR)RV_Archive_GetName[Count].c_str());
+
+			pRow++;
+		}
+
+		Count++;
+
+	}
+
+	Set_Selection(0);
+
+	RedrawWindow(FX_General_hLV, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+	return pRow;
+}
+
+// *************************************************************************
+// *			Set_Selection:- Terry and Hazel Flanigan 2024		  	   *
+// *************************************************************************
+void CL64_Resources::Set_Selection(int Index)
+{
+	ListView_SetItemState(FX_General_hLV, Index, LVNI_SELECTED, LVNI_SELECTED);
+	ListView_SetSelectionMark(FX_General_hLV, Index);
+	ListView_EnsureVisible(FX_General_hLV, Index, false);
+
+	ListView_GetItemText(FX_General_hLV, Index, 0, mbtext, MAX_PATH);
+
+	strcpy(mSelected_File, mbtext);
+	SetDlgItemText(Resource_Dlg_hWnd, IDC_ST_SELECTEDFILE, (LPCTSTR)App->CL_Resources->mSelected_File);
+}
+
+// *************************************************************************
 // *		Get_File_Extensions:- Terry and Hazel Flanigan 2024		  	   *
 // *************************************************************************
 bool CL64_Resources::Get_File_Extensions(char* FileName, int Index)
@@ -710,6 +773,38 @@ int CL64_Resources::Show_Resource_Group_All()
 	//Set_Selection(0);
 
 	return Count;
+}
+
+// *************************************************************************
+// *			Set_Title:- Terry and Hazel Flanigan 2024				   *
+// *************************************************************************
+void CL64_Resources::Set_Title(HWND hDlg, char* Title)
+{
+	char mTitle[MAX_PATH]{ 0 };
+
+	strcpy(mTitle, App->CL_Resources->mSelected_Resource_Group.c_str());
+	strcat(mTitle, ":  ( ");
+	strcat(mTitle, Title);
+	strcat(mTitle, " )");
+
+	SetDlgItemText(hDlg, IDC_ST_BANNER, (LPCTSTR)mTitle);
+}
+
+// *************************************************************************
+// *			Reset_Flags:- Terry and Hazel Flanigan 2024				   *
+// *************************************************************************
+void CL64_Resources::Reset_Flags()
+{
+	flag_Show_App_Res = 0;
+	flag_Show_Demo_Res = 0;
+	flag_Show_All_Materials = 0;
+	flag_Show_All_Textures = 0;
+	flag_Show_All_Meshes = 0;
+	flag_Show_Group_All = 0;
+	flag_Show_All_Skeleton = 0;
+	flag_Show_All_Overlays = 0;
+
+	EnableWindow(GetDlgItem(Resource_Dlg_hWnd, IDC_BT_VIEWFILE), false);
 }
 
 // *************************************************************************
