@@ -46,6 +46,10 @@ public:
 
 	bool flag_Dlg_Canceled;
 
+	HWND TextureView_Hwnd;
+
+	HBITMAP	Sel_BaseBitmap;
+
 private:
 
 	static LRESULT CALLBACK Proc_Message(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
@@ -65,7 +69,6 @@ private:
 	bool Show_Brush_Faces_Info(const FaceList* pList, HWND hDlg);
 	bool Show_Face_Data(int Index, const Face* f, HWND hDlg);
 	
-
 	int Check_What;
 
 	char Message_Text_Header[MAX_PATH];

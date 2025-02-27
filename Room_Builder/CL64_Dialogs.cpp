@@ -56,6 +56,9 @@ CL64_Dialogs::CL64_Dialogs(void)
 	MessageString[0] = 0;
 	MessageString2[0] = 0;
 
+	TextureView_Hwnd = NULL;
+	Sel_BaseBitmap = NULL;
+
 	btext[0] = 0;
 	Chr_Text[0] = 0;;
 	mTextureFile[0] = 0;
@@ -1261,7 +1264,7 @@ LRESULT CALLBACK CL64_Dialogs::Proc_TextureViewer(HWND hDlg, UINT message, WPARA
 
 		SetWindowLongPtr(GetDlgItem(hDlg, IDC_BASETEXTURE), GWLP_WNDPROC, (LONG_PTR)Proc_ViewerBasePic);
 
-		//App->CL_Dialogs->RightGroups_Hwnd = hDlg;
+		App->CL_Dialogs->TextureView_Hwnd = hDlg;
 		App->CL_Textures->Texture_To_HBITMP(App->CL_Dialogs->mTextureFile);
 
 		//char buf[MAX_PATH];
@@ -1279,7 +1282,6 @@ LRESULT CALLBACK CL64_Dialogs::Proc_TextureViewer(HWND hDlg, UINT message, WPARA
 		//}
 
 		//SetDlgItemText(hDlg, IDC_ST_DETAILS, (LPCTSTR)buf);
-
 
 		//App->CL_Ogre->RenderFrame(8);
 
@@ -1345,28 +1347,14 @@ LRESULT CALLBACK CL64_Dialogs::Proc_TextureViewer(HWND hDlg, UINT message, WPARA
 
 		if (LOWORD(wParam) == IDOK)
 		{
-			/*if (App->CL_Scene->Scene_Mode == Enums::Scene_Mode_Assimp_Model)
-			{
-			}
-			else
-			{
-				remove(App->CL_Dialogs->mTextureFile);
-			}*/
-
+			remove(App->CL_Dialogs->mTextureFile);
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == IDCANCEL)
 		{
-			/*if (App->CL_Scene->Scene_Mode == Enums::Scene_Mode_Assimp_Model)
-			{
-			}
-			else
-			{
-				remove(App->CL_Dialogs->mTextureFile);
-			}*/
-
+			remove(App->CL_Dialogs->mTextureFile);
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
@@ -1396,7 +1384,7 @@ bool CALLBACK CL64_Dialogs::Proc_ViewerBasePic(HWND hwnd, UINT msg, WPARAM wPara
 		Rect.bottom--;
 		FillRect(hDC, &Rect, (HBRUSH)(RGB(0, 255, 0)));
 
-		/*if (App->CL_Dialogs->Sel_BaseBitmap != NULL)
+		if (App->CL_Dialogs->Sel_BaseBitmap != NULL)
 		{
 			RECT	Source;
 			RECT	Dest;
@@ -1414,7 +1402,7 @@ bool CALLBACK CL64_Dialogs::Proc_ViewerBasePic(HWND hwnd, UINT msg, WPARAM wPara
 
 			App->CL_Textures->RenderTexture_Blit(hDC, App->CL_Dialogs->Sel_BaseBitmap, &Source, &Dest);
 			ReleaseDC(hwnd, hDC);
-		}*/
+		}
 
 		EndPaint(hwnd, &ps);
 

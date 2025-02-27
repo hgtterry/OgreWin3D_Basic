@@ -23,6 +23,7 @@ THE SOFTWARE.
 */
 
 #include "pch.h"
+#include "resource.h"
 #include "CL64_App.h"
 #include "CL64_Textures.h"
 
@@ -46,6 +47,10 @@ CL64_Textures::CL64_Textures(void)
 	ilInit();
 
 	Temp_Texture_File[0] = 0;
+
+	BasePicWidth = 0;
+	BasePicHeight = 0;
+	BasePicDepth = 0;
 
 	strcpy(Temp_Texture_Location, App->RB_Directory_FullPath);
 	strcat(Temp_Texture_Location, "\\Data\\World_Test\\");
@@ -385,16 +390,16 @@ bool CL64_Textures::Soil_Load_Texture(UINT textureArray[], LPSTR strFileName, in
 // *************************************************************************
 void CL64_Textures::Texture_To_HBITMP(char* TextureFileName)
 {
-	//HWND PreviewWnd = GetDlgItem(App->CL_Dialogs->RightGroups_Hwnd, IDC_BASETEXTURE);
-	//HDC	hDC = GetDC(PreviewWnd);
+	HWND PreviewWnd = GetDlgItem(App->CL_Dialogs->TextureView_Hwnd, IDC_BASETEXTURE);
+	HDC	hDC = GetDC(PreviewWnd);
 
-	//App->CL_Dialogs->Sel_BaseBitmap = ilutWinLoadImage(TextureFileName, hDC);
+	App->CL_Dialogs->Sel_BaseBitmap = ilutWinLoadImage(TextureFileName, hDC);
 
-	//BasePicWidth = ilGetInteger(IL_IMAGE_WIDTH);
-	//BasePicHeight = ilGetInteger(IL_IMAGE_HEIGHT);
-	////BasePicDepth = ilGetInteger(IL_IMAGE_DEPTH);
+	BasePicWidth = ilGetInteger(IL_IMAGE_WIDTH);
+	BasePicHeight = ilGetInteger(IL_IMAGE_HEIGHT);
+	//BasePicDepth = ilGetInteger(IL_IMAGE_DEPTH);
 
-	//RedrawWindow(App->CL_Dialogs->RightGroups_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+	RedrawWindow(App->CL_Dialogs->TextureView_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 }
 
 // *************************************************************************

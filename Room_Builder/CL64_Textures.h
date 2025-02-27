@@ -40,6 +40,10 @@ public:
 	bool Covert_Texture(const char* File);
 	void Remove_Temp_Texture();
 
+	long BasePicWidth;
+	long BasePicHeight;
+	long BasePicDepth;
+
 	char Temp_Texture_File[MAX_PATH];
 	char Temp_Texture_Location[MAX_PATH];
 };
