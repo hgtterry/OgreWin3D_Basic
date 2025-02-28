@@ -308,6 +308,7 @@ void CL64_Ogre3D::Export_MaterialFile(char* MatFileName)
 // *************************************************************************
 void CL64_Ogre3D::Convert_ToOgre3D(bool Create)
 {
+	Do_Timer
 
 	if (App->CL_Mesh_Mgr->World_Ent)
 	{
@@ -439,11 +440,15 @@ void CL64_Ogre3D::Convert_ToOgre3D(bool Create)
 	strcpy(OutputFolder, mWorld_File_Path);
 	strcat(OutputFolder, "\\");
 
-	DecompileTextures_TXL(OutputFolder);
+	//DecompileTextures_TXL(OutputFolder);
 
 	char Name[MAX_PATH];
 	strcpy(Name, mWorld_Mesh_JustName);
 	strcat(Name, ".mesh");
+
+	char BufPath[MAX_PATH];
+	strcpy(BufPath, App->RB_Directory_FullPath);
+	strcat(BufPath, "\\Data\\Room_Builder\\Default.zip");
 
 	if (App->CL_Mesh_Mgr->World_Ent)
 	{
@@ -459,15 +464,19 @@ void CL64_Ogre3D::Convert_ToOgre3D(bool Create)
 		Ogre::ResourceGroupManager::getSingleton().createResourceGroup(App->CL_Ogre->World_Resource_Group);
 
 		Ogre::ResourceGroupManager::getSingleton().addResourceLocation(mWorld_File_Path, "FileSystem", App->CL_Ogre->World_Resource_Group);
+		Ogre::ResourceGroupManager::getSingleton().addResourceLocation(BufPath, "Zip", App->CL_Ogre->World_Resource_Group);
+
 		Ogre::ResourceGroupManager::getSingleton().clearResourceGroup(App->CL_Ogre->World_Resource_Group);
 		Ogre::ResourceGroupManager::getSingleton().initialiseResourceGroup(App->CL_Ogre->World_Resource_Group);
-
+		
 	}
 	else
 	{
 		Ogre::ResourceGroupManager::getSingleton().addResourceLocation(mWorld_File_Path, "FileSystem", App->CL_Ogre->World_Resource_Group);
+		Ogre::ResourceGroupManager::getSingleton().addResourceLocation(BufPath, "Zip", App->CL_Ogre->World_Resource_Group);
 	}
 
+	
 	App->CL_Mesh_Mgr->World_Ent = App->CL_Ogre->mSceneMgr->createEntity(Name);
 	App->CL_Mesh_Mgr->World_Node = App->CL_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 
@@ -476,11 +485,11 @@ void CL64_Ogre3D::Convert_ToOgre3D(bool Create)
 	App->CL_Mesh_Mgr->World_Node->setPosition(0, 0, 0);
 	App->CL_Mesh_Mgr->World_Node->setVisible(true);
 	App->CL_Mesh_Mgr->World_Node->setScale(1, 1, 1);
-	//App->CL_Mesh_Mgr->World_Node->showBoundingBox(true);
-	// 
-
+	
 	remove(mWorld_File_PathAndFile);
 	remove(Material_PathAndFile);
+
+	Get_Timer
 }
 
 // *************************************************************************

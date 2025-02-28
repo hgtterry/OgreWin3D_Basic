@@ -177,6 +177,12 @@
     <ClInclude Include="CL64_Resources.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="zip.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="unzip.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Room Builder.cpp">
@@ -333,6 +339,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CL64_Resources.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="zip.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="unzip.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

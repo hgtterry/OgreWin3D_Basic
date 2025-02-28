@@ -1566,7 +1566,7 @@ static geBoolean fdocBrushIsSubtract(const Brush* b)
 // *************************************************************************
 void CL64_MapEditor::Draw_Screen(HWND hwnd)
 {
-	Do_Timer
+	//Do_Timer
 	//flag_IsDrawing = 1;
 	int			inidx = 0;
 	HDC			RealhDC;
@@ -1726,7 +1726,7 @@ void CL64_MapEditor::Draw_Screen(HWND hwnd)
 	ReleaseDC(hwnd, RealhDC);
 	//flag_IsDrawing = 0;
 
-	Get_Timer
+	//Get_Timer
 }
 
 // *************************************************************************
