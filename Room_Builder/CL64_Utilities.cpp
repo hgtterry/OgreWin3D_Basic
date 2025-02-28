@@ -174,7 +174,7 @@ void CL64_Utilities::UnZip_Test()
 // *************************************************************************
 // *			UnZip_Test_2:- Terry and Hazel Flanigan 2025			   *
 // *************************************************************************
-void CL64_Utilities::UnZip_Test_2()
+void CL64_Utilities::UnZip_Test_2(char* Folder)
 {
 	Ogre::String mFileString;
 
@@ -211,9 +211,9 @@ void CL64_Utilities::UnZip_Test_2()
 }
 
 // *************************************************************************
-// *			RemoveFileFromZip:- Terry and Hazel Flanigan 2025		   *
+// *							RemoveFileFromZip						   *
 // *************************************************************************
-ZRESULT CL64_Utilities::RemoveFileFromZip(const TCHAR* zipfn, const TCHAR* zename)
+ZRESULT CL64_Utilities::RemoveFileFromZip(const char* zipfn, const char* zename)
 {
 	return AddFileToZip(zipfn, zename, 0);
 }
@@ -221,7 +221,7 @@ ZRESULT CL64_Utilities::RemoveFileFromZip(const TCHAR* zipfn, const TCHAR* zenam
 // *************************************************************************
 // *								AddFileToZip						   *
 // *************************************************************************
-ZRESULT CL64_Utilities::AddFileToZip(const TCHAR* zipfn, const TCHAR* zename, const TCHAR* zefn)
+ZRESULT CL64_Utilities::AddFileToZip(const char* zipfn, const char* zename, const char* zefn)
 {
 	if (GetFileAttributes(zipfn) == 0xFFFFFFFF || (zefn != 0 && GetFileAttributes(zefn) == 0xFFFFFFFF)) return ZR_NOFILE;
 	// Expected size of the new zip will be the size of the old zip plus the size of the new file
