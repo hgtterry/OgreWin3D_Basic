@@ -173,7 +173,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
                 App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);*/
                // App->CL_Resources->Load_Texture_Resources();
-                if (App->CL_Ogre->OGL_Listener->Render_Mode == Enums::Render_Groups)
+               /* if (App->CL_Ogre->OGL_Listener->Render_Mode == Enums::Render_Groups)
                 {
                     App->CL_Ogre->OGL_Listener->Flag_Render_Brushes = 0;
                     App->CL_Ogre->OGL_Listener->Render_Mode = Enums::Render_Nothing;
@@ -186,8 +186,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                     App->CL_Mesh_Mgr->World_Node->setVisible(false);
                 }
 
-                RedrawWindow(App->CL_Properties_Textures->Textures_Dlg_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-                
+                RedrawWindow(App->CL_Properties_Textures->Textures_Dlg_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);*/
+                App->CL_Utilities->UnZip_Test();
+
                 return 1;
             }
 

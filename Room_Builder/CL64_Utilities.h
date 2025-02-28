@@ -32,6 +32,7 @@ public:
 	bool Check_File_Exist(char* Full_Path);
 	void Get_FileName_FromPath(char* pString, char* FileName);
 	void Delete_Folder_Contents(char* Folder);
+	void UnZip_Test();
 
 	char JustFileName[MAX_PATH];
 };

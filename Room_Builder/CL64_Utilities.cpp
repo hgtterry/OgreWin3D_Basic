@@ -136,3 +136,36 @@ void CL64_Utilities::Get_FileName_FromPath(char* pString, char* FileName)
 		}
 	}
 }
+
+#include "unzip.h"
+#include "zip.h"
+
+// *************************************************************************
+// *			UnZip_Test:- Terry and Hazel Flanigan 2025			   *
+// *************************************************************************
+void CL64_Utilities::UnZip_Test()
+{
+	char BufPath[MAX_PATH];
+	strcpy(BufPath, App->RB_Directory_FullPath);
+	strcat(BufPath, "\\Data\\Room_Builder\\Default.zip");
+
+	char OutDir[MAX_PATH];
+	strcpy(OutDir, App->RB_Directory_FullPath);
+	strcat(OutDir, "\\Data\\Room_Builder\\");
+
+	SetCurrentDirectory(OutDir);
+
+	HZIP hz = OpenZip(BufPath, 0);
+	ZIPENTRY ze; GetZipItem(hz, -1, &ze); int numitems = ze.index;
+	// -1 gives overall information about the zipfile
+	for (int zi = 0; zi < numitems; zi++)
+	{
+		ZIPENTRY ze; GetZipItem(hz, zi, &ze); // fetch individual details
+		UnzipItem(hz, zi, ze.name);         // e.g. the item's name.
+
+		App->Say(ze.name);
+	}
+
+	CloseZip(hz);
+	
+}
