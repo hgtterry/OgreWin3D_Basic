@@ -23,6 +23,10 @@ THE SOFTWARE.
 */
 
 #pragma once
+
+#include "unzip.h"
+#include "zip.h"
+
 class CL64_Utilities
 {
 public:
@@ -33,6 +37,10 @@ public:
 	void Get_FileName_FromPath(char* pString, char* FileName);
 	void Delete_Folder_Contents(char* Folder);
 	void UnZip_Test();
+	void UnZip_Test_2();
+
+	ZRESULT RemoveFileFromZip(const TCHAR* zipfn, const TCHAR* zename);
+	ZRESULT AddFileToZip(const TCHAR* zipfn, const TCHAR* zename, const TCHAR* zefn);
 
 	char JustFileName[MAX_PATH];
 };
