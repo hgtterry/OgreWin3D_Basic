@@ -70,36 +70,21 @@ public:
 	HBITMAP	Sel_BaseBitmap;
 	// ----------------------------------------
 
-	void Start_Texl_Dialog();
 	int Check_if_Name_Exist(const char* Name);
-
-	void Load_Texture_Panel();
-	void Delete_Texture_Panel();
-
-	bool LoadFile(HWND ChDlg,bool from_Editor);
 
 	signed int Load_New(const char* FileName);
 	signed int AddTexture_New(geVFile* pVFS, const char* TextureName);
 	signed int AddBitmap_New(const char* BitmapFileName);
-	bool Save(const char* Path, bool Use_Save_Dislog);
 
 	char mFileName[MAX_PATH];
 	char Add_Texture_FileName[MAX_PATH];
-	bool AddTexture(geVFile* BaseFile, const char* Path);
-
+	
 private:
 	static LRESULT CALLBACK A_Proc_Texture_Lib(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static bool CALLBACK Proc_ViewerBasePic(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
-	static LRESULT CALLBACK Proc_Texture_Lib(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
-	static bool CALLBACK Texture_Preview_hWnd(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
-
 	void Create_New_pData();
 	void Delete_pData();
-
-	bool SelectBitmap();
-
-	int FindBitmap(TPack_WindowData* pData, const char* Name);
 
 	HBITMAP CreateHBitmapFromgeBitmap(geBitmap* Bitmap, HDC hdc);
 	void UpDateGeList(int Location);
