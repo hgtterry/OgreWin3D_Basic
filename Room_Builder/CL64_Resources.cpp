@@ -880,5 +880,6 @@ void CL64_Resources::Load_Texture_Resources()
 	Ogre::ResourceGroupManager::getSingleton().clearResourceGroup(App->CL_Ogre->Texture_Resource_Group);
 	Ogre::ResourceGroupManager::getSingleton().initialiseResourceGroup(App->CL_Ogre->Texture_Resource_Group);
 
+	App->CL_TXL_Editor->flag_Textures_Scanned = 1;
 }
 

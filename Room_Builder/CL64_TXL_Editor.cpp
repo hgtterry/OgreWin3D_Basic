@@ -38,7 +38,11 @@ CL64_TXL_Editor::CL64_TXL_Editor()
 	mFileName[0] = 0;
 	mTextureName[0] = 0;
 	Add_Texture_FileName[0] = 0;
+	Just_Name[0] = 0;
+
 	mFileString.clear();
+	flag_Textures_Scanned = 0;
+	Sel_BaseBitmap = NULL;
 
 	pData = NULL;
 	Current_Entry = NULL;
@@ -48,7 +52,7 @@ CL64_TXL_Editor::CL64_TXL_Editor()
 	int Count = 0;
 	while (Count < 199)
 	{
-		NewBitmapList[Count] = NULL;
+		Texture_List[Count] = NULL;
 		Count++;
 	}
 }
@@ -62,26 +66,27 @@ CL64_TXL_Editor::~CL64_TXL_Editor()
 // *************************************************************************
 void CL64_TXL_Editor::Start_Texl_Dialog()
 {
-	DialogBox(App->hInst, (LPCTSTR)IDD_TXL_EDITOR, App->MainHwnd, (DLGPROC)Proc_Texture_Lib);
+	DialogBox(App->hInst, (LPCTSTR)IDD_TXL_EDITOR, App->MainHwnd, (DLGPROC)Proc_Texl_Dialog);
 }
 
 // **************************************************************************
 // *			Dialog_Text_Proc:- Terry and Hazel Flanigan 2025			*
 // **************************************************************************
-LRESULT CALLBACK CL64_TXL_Editor::Proc_Texture_Lib(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK CL64_TXL_Editor::Proc_Texl_Dialog(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	switch (message)
 	{
 	case WM_INITDIALOG:
 	{
+		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_TEXTURELIST2, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ST_TEXTURE_NAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
 		SetWindowLongPtr(GetDlgItem(hDlg, IDC_PREVIEW), GWLP_WNDPROC, (LONG_PTR)Proc_ViewerBasePic);
 
 		App->CL_TXL_Editor->TXL_Dlg_HWND = hDlg;
-		App->CL_TXL_Editor->Scan_Textures_Group();
 		App->CL_TXL_Editor->UpDateList();
+		App->CL_TXL_Editor->SelectBitmap();
 
 		return TRUE;
 	}
@@ -129,12 +134,6 @@ LRESULT CALLBACK CL64_TXL_Editor::Proc_Texture_Lib(HWND hDlg, UINT message, WPAR
 		if (LOWORD(wParam) == IDC_TEXTURELIST2)
 		{
 			App->CL_TXL_Editor->SelectBitmap();
-			return TRUE;
-		}
-
-		if (LOWORD(wParam) == IDOK)
-		{
-			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
 
@@ -197,26 +196,34 @@ bool CALLBACK CL64_TXL_Editor::Proc_ViewerBasePic(HWND hwnd, UINT msg, WPARAM wP
 }
 
 // *************************************************************************
-// *		Scan_Textures_Group:- Terry and Hazel Flanigan 2025			*
+// *	Scan_Textures_Resource_Group:- Terry and Hazel Flanigan 2025	   *
 // *************************************************************************
-bool CL64_TXL_Editor::Scan_Textures_Group()
+void CL64_TXL_Editor::Scan_Textures_Resource_Group()
 {
-	Vec_Texture_Name.resize(0);
+	Texture_Count = 0;
 
-	Ogre::FileInfoListPtr RFI = ResourceGroupManager::getSingleton().listResourceFileInfo(App->CL_Ogre->Texture_Resource_Group, false);
-	Ogre::FileInfoList::const_iterator i, iend;
-	iend = RFI->end();
-	int Count = 0;
-
-	for (i = RFI->begin(); i != iend; ++i)
+	if (flag_Textures_Scanned == 1)
 	{
-		Vec_Texture_Name.push_back(i->filename);
-		Count++;
+		Ogre::FileInfoListPtr RFI = ResourceGroupManager::getSingleton().listResourceFileInfo(App->CL_Ogre->Texture_Resource_Group, false);
+		Ogre::FileInfoList::const_iterator i, iend;
+		iend = RFI->end();
+		int Count = 0;
+
+		for (i = RFI->begin(); i != iend; ++i)
+		{
+			Texture_List[Count] = new BitmapEntry;
+			strcpy(Texture_List[Count]->FileName, i->filename.c_str());
+			strcpy(Texture_List[Count]->Name, "");
+
+			Texture_List[Count]->Deleted = 0;
+			Texture_List[Count]->Dib_Index = Count;
+			Texture_List[Count]->Dirty = 0;
+
+			Count++;
+		}
+
+		Texture_Count = Count;
 	}
-
-	Texture_Count = Count;
-
-	return 1;
 }
 
 // *************************************************************************
@@ -230,7 +237,7 @@ void CL64_TXL_Editor::UpDateList()
 	int Count = 0;
 	while (Count < Texture_Count)
 	{
-		SendDlgItemMessage(TXL_Dlg_HWND, IDC_TEXTURELIST2, LB_ADDSTRING, (WPARAM)0, (LPARAM)Vec_Texture_Name[Count].c_str());
+		SendDlgItemMessage(TXL_Dlg_HWND, IDC_TEXTURELIST2, LB_ADDSTRING, (WPARAM)0, (LPARAM)Texture_List[Count]->FileName);
 		Count++;
 	}
 
@@ -353,7 +360,7 @@ int CL64_TXL_Editor::Check_if_Name_Exist(const char* Name)
 	for (i = 0; i < pData->BitmapCount; i++)
 	{
 
-		if (!strcmp(Name, NewBitmapList[i]->Name))
+		if (!strcmp(Name, Texture_List[i]->Name))
 		{
 			return 1;
 		}

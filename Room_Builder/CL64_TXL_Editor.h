@@ -26,12 +26,10 @@ THE SOFTWARE.
 
 typedef	struct	BitmapEntry
 {
-	char* Name;
-	geBitmap* Bitmap;
-	HBITMAP		WinBitmap;
-	HBITMAP		WinABitmap;
-	unsigned	Flags;
-	int			Dirty;
+	char Name[20];
+	char FileName[20];
+	int			Dib_Index;
+	bool		Dirty;
 	bool		Deleted;
 }	BitmapEntry;
 
@@ -39,8 +37,8 @@ typedef struct	TPack_WindowData
 {
 	HINSTANCE		Instance;
 	int				BitmapCount;
-	BitmapEntry* Bitmaps;
-	BitmapEntry* SelectedEntry;
+	BitmapEntry*	Bitmaps;
+	BitmapEntry*	SelectedEntry;
 	BOOL			FileNameIsValid;
 	char			TXLFileName[256];
 	BOOL			Dirty;
@@ -53,8 +51,8 @@ public:
 	~CL64_TXL_Editor();
 
 	void Start_Texl_Dialog();
+	void Scan_Textures_Resource_Group();
 
-	std::vector<std::string> Vec_Texture_Name;
 	int Texture_Count;
 	Ogre::String mFileString;
 
@@ -70,12 +68,13 @@ public:
 
 	char mFileName[MAX_PATH];
 	char Add_Texture_FileName[MAX_PATH];
+
+	bool flag_Textures_Scanned;
 	
 private:
-	static LRESULT CALLBACK Proc_Texture_Lib(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Proc_Texl_Dialog(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static bool CALLBACK Proc_ViewerBasePic(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
-	bool Scan_Textures_Group(); // Private
 	void UpDateList();
 	bool SelectBitmap();
 	void Texture_To_HBITMP(char* TextureFileName);
@@ -85,7 +84,7 @@ private:
 
 	TPack_WindowData*	pData;
 	BitmapEntry*		Current_Entry;
-	BitmapEntry*		NewBitmapList[200];
+	BitmapEntry*		Texture_List[200];
 
 	HWND TXL_Dlg_HWND;
 
