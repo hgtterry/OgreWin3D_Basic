@@ -465,7 +465,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
             case ID_TOOLS_TEXTURESEDITORNEW:
             {
-                App->CL_TXL_Editor->A_Start_Texl_Dialog();
+                App->CL_TXL_Editor->Start_Texl_Dialog();
                 return 1;
             }
             

@@ -52,13 +52,8 @@ public:
 	CL64_TXL_Editor();
 	~CL64_TXL_Editor();
 
-	void A_Start_Texl_Dialog();
-	bool A_Scan_Textures_Group();
-	void A_UpDateList();
-	bool A_SelectBitmap();
-	void Texture_To_HBITMP(char* TextureFileName);
+	void Start_Texl_Dialog();
 
-	HWND A_TXL_Dlg_HWND;
 	std::vector<std::string> Vec_Texture_Name;
 	int Texture_Count;
 	Ogre::String mFileString;
@@ -68,29 +63,25 @@ public:
 	long BasePicDepth;
 
 	HBITMAP	Sel_BaseBitmap;
+
 	// ----------------------------------------
 
 	int Check_if_Name_Exist(const char* Name);
-
-	signed int Load_New(const char* FileName);
-	signed int AddTexture_New(geVFile* pVFS, const char* TextureName);
-	signed int AddBitmap_New(const char* BitmapFileName);
 
 	char mFileName[MAX_PATH];
 	char Add_Texture_FileName[MAX_PATH];
 	
 private:
-	static LRESULT CALLBACK A_Proc_Texture_Lib(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Proc_Texture_Lib(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static bool CALLBACK Proc_ViewerBasePic(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
+
+	bool Scan_Textures_Group(); // Private
+	void UpDateList();
+	bool SelectBitmap();
+	void Texture_To_HBITMP(char* TextureFileName);
 
 	void Create_New_pData();
 	void Delete_pData();
-
-	HBITMAP CreateHBitmapFromgeBitmap(geBitmap* Bitmap, HDC hdc);
-	void UpDateGeList(int Location);
-	void UpDateList();
-	
-	bool Render2d_Blit(HDC hDC, HBITMAP Bmp, HBITMAP Alpha, const RECT* SourceRect, const RECT* DestRect);
 
 	TPack_WindowData*	pData;
 	BitmapEntry*		Current_Entry;
