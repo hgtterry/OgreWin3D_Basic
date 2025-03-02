@@ -48,6 +48,7 @@ CL64_TXL_Editor::CL64_TXL_Editor()
 	Current_Entry = NULL;
 
 	Texture_Count = 0;
+	Selected_Texure_Index = 0;
 
 	int Count = 0;
 	while (Count < 199)
@@ -81,13 +82,17 @@ LRESULT CALLBACK CL64_TXL_Editor::Proc_Texl_Dialog(HWND hDlg, UINT message, WPAR
 		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_TEXTURELIST2, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ST_TEXTURE_NAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_GEINFO, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
 		SetWindowLongPtr(GetDlgItem(hDlg, IDC_PREVIEW), GWLP_WNDPROC, (LONG_PTR)Proc_ViewerBasePic);
 
 		App->CL_TXL_Editor->TXL_Dlg_HWND = hDlg;
 		App->CL_TXL_Editor->UpDateList();
 		App->CL_TXL_Editor->SelectBitmap();
+		int TrueIndex = App->CL_TXL_Editor->GetIndex_From_FileName(App->CL_TXL_Editor->mTextureName);
 
+		App->CL_TXL_Editor->Update_Texture_Info(TrueIndex);
+		
 		return TRUE;
 	}
 	case WM_CTLCOLORSTATIC:
@@ -134,6 +139,10 @@ LRESULT CALLBACK CL64_TXL_Editor::Proc_Texl_Dialog(HWND hDlg, UINT message, WPAR
 		if (LOWORD(wParam) == IDC_TEXTURELIST2)
 		{
 			App->CL_TXL_Editor->SelectBitmap();
+
+			int TrueIndex = App->CL_TXL_Editor->GetIndex_From_FileName(App->CL_TXL_Editor->mTextureName);
+			App->CL_TXL_Editor->Update_Texture_Info(TrueIndex);
+
 			return TRUE;
 		}
 
@@ -204,6 +213,8 @@ void CL64_TXL_Editor::Scan_Textures_Resource_Group()
 
 	if (flag_Textures_Scanned == 1)
 	{
+		char Just_Name[20];
+
 		Ogre::FileInfoListPtr RFI = ResourceGroupManager::getSingleton().listResourceFileInfo(App->CL_Ogre->Texture_Resource_Group, false);
 		Ogre::FileInfoList::const_iterator i, iend;
 		iend = RFI->end();
@@ -213,7 +224,12 @@ void CL64_TXL_Editor::Scan_Textures_Resource_Group()
 		{
 			Texture_List[Count] = new BitmapEntry;
 			strcpy(Texture_List[Count]->FileName, i->filename.c_str());
-			strcpy(Texture_List[Count]->Name, "");
+
+			// Just Name no Extension
+			strcpy(Just_Name, i->filename.c_str());
+			int Len = strlen(Just_Name);
+			Just_Name[Len - 4] = 0;
+			strcpy(Texture_List[Count]->Name, Just_Name);
 
 			Texture_List[Count]->Deleted = 0;
 			Texture_List[Count]->Dib_Index = Count;
@@ -367,6 +383,81 @@ int CL64_TXL_Editor::Check_if_Name_Exist(const char* Name)
 	}
 
 	return 0;
+}
+
+// *************************************************************************
+// *		GetIndex_From_FileName:- Terry and Hazel Flanigan 2025 	  	   *
+// *************************************************************************
+int CL64_TXL_Editor::GetIndex_From_FileName(const char* Name)
+{
+	int	Count = 0;
+
+	while (Count < Texture_Count)
+	{
+		if (!strcmp(Name, Texture_List[Count]->FileName))
+		{
+			return Count;
+		}
+
+		Count++;
+	}
+
+	return -1;
+}
+
+// *************************************************************************
+// *			GetIndex_From_Name:- Terry and Hazel Flanigan 2025 	  	   *
+// *************************************************************************
+int CL64_TXL_Editor::GetIndex_From_Name(const char* Name)
+{
+	int	Count = 0;
+
+	while (Count < Texture_Count)
+	{
+		if (!strcmp(Name, Texture_List[Count]->Name))
+		{
+			return Count;
+		}
+
+		Count++;
+	}
+
+	return -1;
+}
+
+// *************************************************************************
+// *			Update_Texture_Info:- Terry and Hazel Flanigan 2025		   *
+// *************************************************************************
+void CL64_TXL_Editor::Update_Texture_Info(int Index)
+{
+	int B = 0;
+	//geBitmap_Info	MPInfo;
+	//geBitmap_Info	MSInfo;
+
+	char buff[256];
+	strcpy(buff, "no info");
+	SendDlgItemMessage(TXL_Dlg_HWND, IDC_GEINFO, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
+
+	sprintf(buff, "%s %s", "Texture Name :-", Texture_List[Index]->Name);
+	SendDlgItemMessage(TXL_Dlg_HWND, IDC_GEINFO, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);
+
+	sprintf(buff, "%s %s", "File Name :-", Texture_List[Index]->FileName);
+	SendDlgItemMessage(TXL_Dlg_HWND, IDC_GEINFO, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);
+
+	//sprintf(buff, "%s %i", "Index :-", Location);
+	//SendDlgItemMessage(TXL_Dlg_HWND, IDC_GEINFO, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);
+
+	/*sprintf(buff, "%s %s", "Bitmap :-", "Valid");
+	SendDlgItemMessage(TXL_Dlg_HWND, IDC_GEINFO, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);
+
+	sprintf(buff, "%s %d", "Width :-", geBitmap_Width(NewBitmapList[Location]->Bitmap));
+	SendDlgItemMessage(TXL_Dlg_HWND, IDC_GEINFO, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);
+
+	sprintf(buff, "%s %d", "Height :-", geBitmap_Height(NewBitmapList[Location]->Bitmap));
+	SendDlgItemMessage(TXL_Dlg_HWND, IDC_GEINFO, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);*/
+
+	//geBitmap_GetInfo(NewBitmapList[Location]->Bitmap, &MPInfo, &MSInfo);
+
 }
 
 

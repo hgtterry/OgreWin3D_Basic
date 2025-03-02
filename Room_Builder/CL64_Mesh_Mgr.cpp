@@ -243,6 +243,8 @@ bool CL64_Mesh_Mgr::Brush_Build_Level_Brushes(Level3* pLevel, const char* Filena
 			strncpy(matname, pWad->mBitmaps[i].Name, MAX_PATH - 1);
 			strcpy(TextureName2[AdjustedIndex], matname);
 
+			//App->Say(matname);
+
 			if (geBitmap_HasAlpha(pWad->mBitmaps[i].bmp))
 			{
 				IsTextureAlpha[AdjustedIndex] = 1;
@@ -597,16 +599,21 @@ bool CL64_Mesh_Mgr::WE_Convert_All_Texture_Groups()
 		strcpy(App->CL_Model->Group[Count]->GroupName, TextureName2[Count]);
 		strcpy(App->CL_Model->Group[Count]->MaterialName, TextureName2[Count]);
 
+		int TrueIndex = App->CL_TXL_Editor->GetIndex_From_Name(TextureName2[Count]);
+		
+		//App->Say(TextureName2[Count]);
+		//App->Say(App->CL_TXL_Editor->Texture_List[TrueIndex]->FileName);
+
 		char buff[MAX_PATH];
-		strcpy(buff, TextureName2[Count]);
-		if (IsTextureAlpha[Count] == 1)
+		strcpy(buff, App->CL_TXL_Editor->Texture_List[TrueIndex]->FileName);
+		/*if (IsTextureAlpha[Count] == 1)
 		{
 			strcat(buff, ".tga");
 		}
 		else
 		{
 			strcat(buff, ".bmp");
-		}
+		}*/
 
 		strcpy(App->CL_Model->Group[Count]->Text_FileName, buff);
 		//App->Say_Win(App->CL_Model->Group[Count]->Text_FileName);

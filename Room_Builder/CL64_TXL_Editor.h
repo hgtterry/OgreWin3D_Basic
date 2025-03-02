@@ -53,6 +53,9 @@ public:
 	void Start_Texl_Dialog();
 	void Scan_Textures_Resource_Group();
 
+	int GetIndex_From_FileName(const char* Name);
+	int GetIndex_From_Name(const char* Name);
+
 	int Texture_Count;
 	Ogre::String mFileString;
 
@@ -61,7 +64,7 @@ public:
 	long BasePicDepth;
 
 	HBITMAP	Sel_BaseBitmap;
-
+	BitmapEntry* Texture_List[200];
 	// ----------------------------------------
 
 	int Check_if_Name_Exist(const char* Name);
@@ -81,13 +84,14 @@ private:
 
 	void Create_New_pData();
 	void Delete_pData();
+	void Update_Texture_Info(int Index);
 
 	TPack_WindowData*	pData;
 	BitmapEntry*		Current_Entry;
-	BitmapEntry*		Texture_List[200];
-
+	
 	HWND TXL_Dlg_HWND;
 
+	int Selected_Texure_Index;
 	char mTextureName[MAX_PATH];
 	char Just_Name[MAX_PATH];
 
