@@ -572,7 +572,6 @@ void CL64_Ogre3D::Get_Data(int Index, int FaceIndex)
 // *************************************************************************
 bool CL64_Ogre3D::DecompileTextures_TXL(char* PathAndFile)
 {
-	
 	char buf[MAX_PATH];
 
 	int GroupCount = 0;
@@ -581,10 +580,7 @@ bool CL64_Ogre3D::DecompileTextures_TXL(char* PathAndFile)
 	while (GroupCount < GroupCountTotal)
 	{
 		strcpy(buf, App->CL_Model->Group[GroupCount]->Text_FileName);
-		int Len = strlen(buf);
-		buf[Len - 4] = 0;
-
-		Extract_TXL_Texture(buf, PathAndFile);
+		Export_Texture(buf, PathAndFile);
 
 		GroupCount++;
 	}
@@ -593,90 +589,40 @@ bool CL64_Ogre3D::DecompileTextures_TXL(char* PathAndFile)
 }
 
 // *************************************************************************
-// *		Extract_TXL_Texture:- Terry and Hazel Flanigan 2023    	 	   *
+// *			Export_Texture:- Terry and Hazel Flanigan 2025    	 	   *
 // *************************************************************************
-bool CL64_Ogre3D::Extract_TXL_Texture(char* Name, char* Folder)
+bool CL64_Ogre3D::Export_Texture(char* Name, char* Folder)
 {
-	WadFileEntry* BitmapPtr = App->CL_Doc->GetDibBitmap(Name);
+	Ogre::String mFileString;
+	
+	Ogre::FileInfoListPtr RFI = ResourceGroupManager::getSingleton().listResourceFileInfo(App->CL_Ogre->Texture_Resource_Group, false);
+	Ogre::FileInfoList::const_iterator i, iend;
+	iend = RFI->end();
 
-	int nErrorCode;
-
-	char Name2[MAX_PATH];
-	strcpy(Name2, Folder);
-
-	if (geBitmap_HasAlpha(BitmapPtr->bmp)) // hgtterry Need to do Alpha
+	for (i = RFI->begin(); i != iend; ++i)
 	{
-		//LoadTextures_TXL(Name);
+		if (i->filename == Name)
+		{
+			mFileString.clear();
 
-		////App->Say(BitmapPtr->Name);
+			Ogre::DataStreamPtr ff = i->archive->open(i->filename);
 
-		//char Buf1[200];
-		//strcpy(Buf1, BitmapPtr->Name);
-		//strcat(Buf1, ".tga");
+			mFileString = ff->getAsString();
 
-		//strcat(Name2, Buf1);
-		//nErrorCode = WriteTGA(Name2, Temp_RF_Bitmap);
-	}
-	else
-	{
-		char Buf1[200];
-		strcpy(Buf1, BitmapPtr->Name);
-		strcat(Buf1, ".bmp");
+			char mFileName[MAX_PATH];
+			strcpy(mFileName, Folder);
+			strcat(mFileName, Name);
 
-		strcat(Name2, Buf1);
+			std::ofstream outFile;
+			outFile.open(mFileName, std::ios::binary);
+			outFile << mFileString;
+			outFile.close();
 
-		nErrorCode = App->CL_Textures->Write_BMP(Name2, BitmapPtr->bmp);
+			mFileString.clear();
+			return 1;
+		}
 	}
 
 	return 1;
 }
 
-// *************************************************************************
-// *			LoadTextures_TXL:- Terry and Hazel Flanigan 2025 		   *
-// *************************************************************************
-bool CL64_Ogre3D::LoadTextures_TXL(char* Name)
-{
-	//VFS = NULL;
-
-	//geVFile* File = NULL;
-	//geVFile_Finder* Finder = NULL;
-
-	////NameCount = 0;
-
-	//VFS = geVFile_OpenNewSystem(NULL, GE_VFILE_TYPE_VIRTUAL, App->CL_World->mCurrent_TXL_FilePath, NULL, GE_VFILE_OPEN_READONLY | GE_VFILE_OPEN_DIRECTORY);
-	//if (!VFS)
-	//{
-	//	App->Say("Could not open file", App->CL_World->mCurrent_TXL_FilePath);
-	//	return 0;
-	//}
-
-	//Finder = geVFile_CreateFinder(VFS, "*.*");
-	//if (!Finder)
-	//{
-	//	App->Say("Could not create Finder *.* ");
-
-	//	geVFile_Close(VFS);
-	//	return 0;
-	//}
-
-
-	//if (VFS)
-	//{
-	//	File = geVFile_Open(VFS, Name, GE_VFILE_OPEN_READONLY);
-	//}
-
-	//if (!File)
-	//{
-	//	App->Say("Could not open", Name);
-	//	return 0;
-	//}
-
-	//Temp_RF_Bitmap = geBitmap_CreateFromFile(File);
-
-	////geBitmap_Destroy(&Temp_RF_Bitmap);
-
-	//geVFile_Close(File);
-	//geVFile_Close(VFS);
-
-	return 1;
-}

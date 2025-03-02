@@ -563,7 +563,7 @@ bool CL64_Properties_Textures::RenderTexture_Blit(HDC hDC, HBITMAP Bmp, const RE
 }
 
 // *************************************************************************
-// *			A_SelectBitmap:- Terry and Hazel Flanigan 2025 	  	   *
+// *			A_SelectBitmap:- Terry and Hazel Flanigan 2025		  	   *
 // *************************************************************************
 bool CL64_Properties_Textures::SelectBitmap()
 {
