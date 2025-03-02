@@ -31,6 +31,9 @@ typedef	struct	BitmapEntry
 	int			Dib_Index;
 	bool		Dirty;
 	bool		Deleted;
+	bool		Has_Alpha;
+	int			Width;
+	int			Height;
 }	BitmapEntry;
 
 typedef struct	TPack_WindowData

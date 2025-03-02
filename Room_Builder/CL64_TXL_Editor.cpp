@@ -214,6 +214,9 @@ void CL64_TXL_Editor::Scan_Textures_Resource_Group()
 	if (flag_Textures_Scanned == 1)
 	{
 		char Just_Name[20];
+		uint Height = 0;
+		
+		Ogre::TextureManager* texture_manager = Ogre::TextureManager::getSingletonPtr();
 
 		Ogre::FileInfoListPtr RFI = ResourceGroupManager::getSingleton().listResourceFileInfo(App->CL_Ogre->Texture_Resource_Group, false);
 		Ogre::FileInfoList::const_iterator i, iend;
@@ -234,6 +237,19 @@ void CL64_TXL_Editor::Scan_Textures_Resource_Group()
 			Texture_List[Count]->Deleted = 0;
 			Texture_List[Count]->Dib_Index = Count;
 			Texture_List[Count]->Dirty = 0;
+
+			Ogre::TexturePtr ogre_texture = texture_manager->getByName(i->filename, App->CL_Ogre->Texture_Resource_Group);
+			if (ogre_texture == NULL)
+			{
+				ogre_texture = texture_manager->load(Ogre::String(i->filename),
+					App->CL_Ogre->Texture_Resource_Group,
+					Ogre::TEX_TYPE_2D,
+					0);
+			}
+
+			Texture_List[Count]->Width = ogre_texture->getWidth();
+			Texture_List[Count]->Height = ogre_texture->getHeight();
+			Texture_List[Count]->Has_Alpha = ogre_texture->hasAlpha();
 
 			Count++;
 		}

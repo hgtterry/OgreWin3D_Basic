@@ -70,7 +70,6 @@ void CL64_Properties_Textures::Start_TextureDialog()
 	//Set_Txl_FileName();
 	Fill_ListBox();
 	SelectBitmap();
-	//Get_BitMap();
 }
 
 // *************************************************************************
@@ -343,7 +342,7 @@ void CL64_Properties_Textures::Apply_Texture()
 		return;
 	}
 
-	//App->m_pDoc->SetModifiedFlag();
+	App->CL_Doc->flag_Is_Modified = 1;
 
 	App->CL_Doc->mAdjustMode = ADJUST_MODE_FACE;
 
@@ -406,12 +405,6 @@ void CL64_Properties_Textures::Apply_Texture()
 	}
 
 	App->CL_Doc->UpdateAllViews(Enums::UpdateViews_All);
-
-	/*if (App->CLSB_Equity->EquitySB_Dialog_Visible == 1)
-	{
-		App->CLSB_Mesh_Mgr->Update_World();
-	}*/
-
 }
 
 // *************************************************************************
@@ -462,8 +455,6 @@ void CL64_Properties_Textures::List_Selection_Changed()
 		(void) strcpy(m_CurrentTexture, TextureName);
 		//App->Say_Win(m_CurrentTexture);
 		SelectBitmap();
-		//Get_BitMap();
-		//Debug
 	}
 
 	char buf[255];
