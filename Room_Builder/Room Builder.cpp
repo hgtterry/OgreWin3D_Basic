@@ -74,11 +74,13 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     App->CL_Ogre->Init_Ogre();
 
+    App->CL_Resources->Load_Texture_Resources();
+    App->CL_TXL_Editor->Scan_Textures_Resource_Group();
+
     App->CL_Top_Tabs->Start_Headers();
     App->CL_Properties_Tabs->Start_Tabs_Control_Dlg();
 
-    App->CL_Resources->Load_Texture_Resources();
-    App->CL_TXL_Editor->Scan_Textures_Resource_Group();
+    
 
     SetTimer(App->MainHwnd, 1, 100, NULL);
 

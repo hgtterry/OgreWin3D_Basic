@@ -34,6 +34,8 @@ CL64_Properties_Textures::CL64_Properties_Textures()
 
 	Dialog_Created = 0;
 
+	mFileString.clear();
+
 	Sel_BaseBitmap = NULL;
 	BasePicWidth = NULL;
 	BasePicHeight = NULL;
@@ -67,7 +69,8 @@ void CL64_Properties_Textures::Start_TextureDialog()
 	Dialog_Created = 1;
 	//Set_Txl_FileName();
 	Fill_ListBox();
-	Get_BitMap();
+	SelectBitmap();
+	//Get_BitMap();
 }
 
 // *************************************************************************
@@ -458,7 +461,8 @@ void CL64_Properties_Textures::List_Selection_Changed()
 		SendDlgItemMessage(Textures_Dlg_Hwnd, IDC_LISTTDTEXTURES, LB_GETTEXT, (WPARAM)Index, (LPARAM)TextureName);
 		(void) strcpy(m_CurrentTexture, TextureName);
 		//App->Say_Win(m_CurrentTexture);
-		Get_BitMap();
+		SelectBitmap();
+		//Get_BitMap();
 		//Debug
 	}
 
@@ -559,138 +563,64 @@ bool CL64_Properties_Textures::RenderTexture_Blit(HDC hDC, HBITMAP Bmp, const RE
 }
 
 // *************************************************************************
-// *	  		Get_BitMap:- Terry and Hazel Flanigan 2025				   *
+// *			A_SelectBitmap:- Terry and Hazel Flanigan 2025 	  	   *
 // *************************************************************************
-void CL64_Properties_Textures::Get_BitMap()
+bool CL64_Properties_Textures::SelectBitmap()
 {
-	WadFileEntry* BitmapPtr = App->CL_Doc->GetDibBitmap(m_CurrentTexture);
+	char mTextureName[MAX_PATH];
+	int TrueIndex = App->CL_TXL_Editor->GetIndex_From_Name(m_CurrentTexture);
+	strcpy(mTextureName, App->CL_TXL_Editor->Texture_List[TrueIndex]->FileName);
+	//App->Say(mTextureName);
 
-	HWND	PreviewWnd;
-	HBITMAP	hbm;
-	HDC		hDC;
-	
-	PreviewWnd = GetDlgItem(Textures_Dlg_Hwnd, IDC_BASETEXTURE2);
-	hDC = GetDC(PreviewWnd);
-	hbm = CreateHBitmapFromgeBitmap(BitmapPtr->bmp, hDC);
+	Ogre::FileInfoListPtr RFI = ResourceGroupManager::getSingleton().listResourceFileInfo(App->CL_Ogre->Texture_Resource_Group, false);
+	Ogre::FileInfoList::const_iterator i, iend;
+	iend = RFI->end();
 
-	if (geBitmap_HasAlpha(BitmapPtr->bmp))
+	for (i = RFI->begin(); i != iend; ++i)
 	{
-		//hbm = CreateHBitmapFromgeBitmap(BitmapPtr->bmp, hDC);
-		hbm = CreateHBitmapFromgeBitmap(geBitmap_GetAlpha(BitmapPtr->bmp), hDC);
-		if (hbm == NULL)
+		if (i->filename == mTextureName)
 		{
-			App->Say("Cant Assign Bitmap", (LPSTR)"");
-			Sel_BaseBitmap = NULL;
-			return;
+			Ogre::DataStreamPtr ff = i->archive->open(i->filename);
+
+			mFileString = ff->getAsString();
+
+			char mFileName[MAX_PATH];
+			strcpy(mFileName, App->RB_Directory_FullPath);
+			strcat(mFileName, "\\Data\\");
+			strcat(mFileName, mTextureName);
+
+			std::ofstream outFile;
+			outFile.open(mFileName, std::ios::binary);
+			outFile << mFileString;
+			outFile.close();
+
+			mFileString.clear();
+
+			Texture_To_HBITMP(mFileName);
+			remove(mFileName);
+			return 1;
 		}
-
-		Sel_BaseBitmap = hbm;
-	}
-	else
-	{
-		hbm = CreateHBitmapFromgeBitmap(BitmapPtr->bmp, hDC);
-		if (hbm == NULL)
-		{
-			App->Say("Cant Assign Bitmap",(LPSTR)"");
-			Sel_BaseBitmap = NULL;
-			return;
-		}
-
-		Sel_BaseBitmap = hbm;
 	}
 
-	App->CL_Properties_Textures->BasePicHeight = BitmapPtr->Height;
-	App->CL_Properties_Textures->BasePicWidth = BitmapPtr->Width;
-
-	ReleaseDC(PreviewWnd, hDC);
-	InvalidateRect(GetDlgItem(Textures_Dlg_Hwnd, IDC_BASETEXTURE2), NULL, TRUE);
+	return 0;
 }
 
 // *************************************************************************
-// *				CreateHBitmapFromgeBitmap  06/06/08 		  		   *
+// *			 Texture_To_HBITMP:- Terry and Hazel Flanigan 2024	 	   *
 // *************************************************************************
-HBITMAP CL64_Properties_Textures::CreateHBitmapFromgeBitmap(geBitmap* Bitmap, HDC hdc)
+void CL64_Properties_Textures::Texture_To_HBITMP(char* TextureFileName)
 {
-	geBitmap* Lock;
-	gePixelFormat Format;
-	geBitmap_Info info;
-	HBITMAP hbm = NULL;
+	HWND PreviewWnd = GetDlgItem(Textures_Dlg_Hwnd, IDC_BASETEXTURE2);
+	HDC	hDC = GetDC(PreviewWnd);
 
-	// <> choose format to be 8,16,or 24, whichever is closest to Bitmap
-	Format = GE_PIXELFORMAT_24BIT_BGR;
+	Sel_BaseBitmap = App->CL_Textures->Get_HBITMP(TextureFileName, hDC);
 
-	if (geBitmap_GetBits(Bitmap))
-	{
-		Lock = Bitmap;
-	}
-	else
-	{
-		if (!geBitmap_LockForRead(Bitmap, &Lock, 0, 0, Format, GE_FALSE, 0))
-		{
-			return NULL;
-		}
-	}
-
-	geBitmap_GetInfo(Lock, &info, NULL);
-
-	if (info.Format != Format)
-		return NULL;
-
-	{
-		void* bits;
-		BITMAPINFOHEADER bmih;
-		int pelbytes;
-
-		pelbytes = gePixelFormat_BytesPerPel(Format);
-		bits = geBitmap_GetBits(Lock);
-
-		bmih.biSize = sizeof(bmih);
-		bmih.biHeight = -info.Height;
-		bmih.biPlanes = 1;
-		bmih.biBitCount = 24;
-		bmih.biCompression = BI_RGB;
-		bmih.biSizeImage = 0;
-		bmih.biXPelsPerMeter = bmih.biYPelsPerMeter = 10000;
-		bmih.biClrUsed = bmih.biClrImportant = 0;
-
-		if ((info.Stride * pelbytes) == (((info.Stride * pelbytes) + 3) & (~3)))
-		{
-			bmih.biWidth = info.Stride;
-			hbm = CreateDIBitmap(hdc, &bmih, CBM_INIT, bits, (BITMAPINFO*)&bmih, DIB_RGB_COLORS);
-		}
-		else
-		{
-			void* newbits;
-			int Stride;
-
-			bmih.biWidth = info.Width;
-			Stride = (((info.Width * pelbytes) + 3) & (~3));
-			newbits = App->CL_Maths->Ram_Allocate(Stride * info.Height);
-			if (newbits)
-			{
-				char* newptr, * oldptr;
-				int y;
-
-				newptr = (char*)newbits;
-				oldptr = (char*)bits;
-				for (y = 0; y < info.Height; y++)
-				{
-					memcpy(newptr, oldptr, (info.Width) * pelbytes);
-					oldptr += info.Stride * pelbytes;
-					newptr += Stride;
-				}
-				hbm = CreateDIBitmap(hdc, &bmih, CBM_INIT, newbits, (BITMAPINFO*)&bmih, DIB_RGB_COLORS);
-				App->CL_Maths->Ram_Free(newbits);
-			}
-		}
-	}
-
-	if (Lock != Bitmap)
-	{
-		geBitmap_UnLock(Lock);
-	}
-
-	return hbm;
+	BasePicWidth = App->CL_Textures->BasePicWidth;
+	BasePicHeight = App->CL_Textures->BasePicHeight;
+	//BasePicDepth = ilGetInteger(IL_IMAGE_DEPTH);
+	
+	ReleaseDC(PreviewWnd, hDC);
+	RedrawWindow(Textures_Dlg_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 }
 
 // *************************************************************************
@@ -702,31 +632,17 @@ void CL64_Properties_Textures::Fill_ListBox()
 
 	//if (f_TextureDlg_Active == 1)
 	{
-		CL64_WadFile* pWad;
-		pWad = NULL;
-
-		SendDlgItemMessage(Textures_Dlg_Hwnd, IDC_LISTTDTEXTURES, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
-
-		pWad = App->CL_Level->Level_GetWadFile(App->CL_Doc->pLevel);
-		if (pWad == NULL)
-		{
-			App->Say("Error Getting Wad File",(LPSTR)"");
-			return;
-		}
-		
-		for (int index = 0; index < pWad->mBitmapCount; index++)
+		for (int index = 0; index < App->CL_TXL_Editor->Texture_Count; index++)
 		{
 			char mName[MAX_PATH];
 
-			strcpy(mName, pWad->mBitmaps[index].Name);
+			strcpy(mName, App->CL_TXL_Editor->Texture_List[index]->Name);
 
 			LBIndex = SendDlgItemMessage(Textures_Dlg_Hwnd, IDC_LISTTDTEXTURES, LB_ADDSTRING, (WPARAM)0, (LPARAM)mName);
 		}
 
 		SendDlgItemMessage(Textures_Dlg_Hwnd, IDC_LISTTDTEXTURES, LB_SETCURSEL, (WPARAM)0, (LPARAM)0);
 		
-		//Set_Txl_FileName();
-		//List_Selection_Changed();
 	}
 }
 

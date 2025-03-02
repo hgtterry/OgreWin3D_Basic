@@ -32,9 +32,7 @@ public:
 	void Show_Textures_Dialog(bool Show);
 	void Start_TextureDialog();
 	void Fill_ListBox();
-	void Get_BitMap();
-	HBITMAP CreateHBitmapFromgeBitmap(geBitmap* Bitmap, HDC hdc);
-
+	
 	void List_Selection_Changed();
 	void Get_Selected_Face();
 	void Enable_FaceProps_Button(bool Enable);
@@ -55,6 +53,10 @@ private:
 	static bool CALLBACK ViewerBasePic(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 	bool RenderTexture_Blit(HDC hDC, HBITMAP Bmp, const RECT* SourceRect, const RECT* DestRect);
+
+	Ogre::String mFileString;
+	bool SelectBitmap();
+	void Texture_To_HBITMP(char* TextureFileName);
 
 	void Apply_Texture();
 	int Get_Index_FromName(char* TextureName);
