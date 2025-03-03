@@ -46,6 +46,7 @@ private:
 	void Update_Face_List(HWND hDlg);
 	void Update_Face_Members();
 	void UpdateDialog(HWND hDlg);
+	void Update_Face_Info(HWND hDlg);
 
 	void Fill_ComboBox_AngleValues(HWND hDlg);
 	void Fill_ComboBox_ScaleValues(HWND hDlg);

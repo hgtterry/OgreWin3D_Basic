@@ -95,6 +95,9 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 		SendDlgItemMessage(hDlg, IDC_FLIPHORIZONTAL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_FLIPVERTICAL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
+		SendDlgItemMessage(hDlg, IDC_ST_FACEINFO, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_LST_FACE_INFO, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
 		SendDlgItemMessage(hDlg, IDC_ST_EDITXOFFSET, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ST_EDITYOFFSET, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ST_EDITXSCALE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
@@ -135,6 +138,8 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 		App->CL_Properties_Faces->Fill_ComboBox_ScaleValues(CB_hWnd);
 
 		App->CL_Properties_Faces->Fill_ComboBox_AngleValues(hDlg);
+
+		App->CL_Properties_Faces->Update_Face_Info(hDlg);
 
 		return TRUE;
 	}
@@ -236,6 +241,14 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 			return (UINT)App->Brush_White;
 		}
 
+		if (GetDlgItem(hDlg, IDC_ST_FACEINFO) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+		
 		/*if (GetDlgItem(hDlg, IDC_TEXTURELOCK) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 0, 0));
@@ -516,6 +529,7 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 
 				App->CL_Top_Tabs->Select_Face();
 				App->CL_Properties_Faces->Change_Selection();
+				App->CL_Properties_Faces->Update_Face_Info(hDlg);
 			}
 
 			return TRUE;
@@ -713,6 +727,28 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 	}
 
 	return FALSE;
+}
+
+// *************************************************************************
+// *			Update_Face_Info:- Terry and Hazel Flanigan 2025           *
+// *************************************************************************
+void CL64_Properties_Faces::Update_Face_Info(HWND hDlg)
+{
+	SendDlgItemMessage(hDlg, IDC_LST_FACE_INFO, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
+
+	char buff[MAX_PATH];
+	Brush* pBrush;
+
+	pBrush = App->CL_SelBrushList->SelBrushList_GetBrush(App->CL_Doc->pSelBrushes, 0);
+
+	sprintf(buff, "%s %s     %s %i", "Brush Name: ", App->CL_Brush->Brush_GetName(pBrush),"Selected Face: ", App->CL_Face->Selected_Face_Index+1);
+	SendDlgItemMessage(hDlg, IDC_LST_FACE_INFO, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);
+	
+	sprintf(buff, "%s %s", "Texture: ", App->CL_Face->Face_GetTextureName(m_Selected_Face));
+	SendDlgItemMessage(hDlg, IDC_LST_FACE_INFO, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);
+
+	sprintf(buff, "%s %i", "Bitmap ID: ", App->CL_Face->Face_GetTextureDibId(m_Selected_Face));
+	SendDlgItemMessage(hDlg, IDC_LST_FACE_INFO, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);
 }
 
 // *************************************************************************
