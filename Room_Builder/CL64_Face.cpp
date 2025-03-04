@@ -517,6 +517,7 @@ int	CL64_Face::Face_GetNumPoints(const Face* f)
 // *************************************************************************
 int	CL64_Face::Face_GetTextureDibId(const Face* f)
 {
+	
 	return	f->Tex.Dib;
 }
 
