@@ -80,7 +80,7 @@ static int wadCountFiles(geVFile* vfs, const char* fspec)
 // *************************************************************************
 // *								 Setup								   *
 // *************************************************************************
-signed int CL64_WadFile::Setup(const char* Filename)
+signed int CL64_WadFile::Setup()
 {
 		DestroyBitmapArray();
 

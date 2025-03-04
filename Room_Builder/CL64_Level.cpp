@@ -42,7 +42,7 @@ CL64_Level::~CL64_Level(void)
 // *************************************************************************
 // *							Level_Create							   *
 // *************************************************************************
-Level* CL64_Level::Level_Create(const char* pWadName, const char* HeadersDir, const char* ActorsDir, const char* PawnIni)
+Level* CL64_Level::Level_Create()
 {
 	Level* pLevel = NULL;
 
@@ -57,20 +57,8 @@ Level* CL64_Level::Level_Create(const char* pWadName, const char* HeadersDir, co
 			return pLevel;
 		}
 
-		//pLevel->Groups = Group_CreateList();
-		//if (pLevel->Groups == NULL) goto CreateError;
 
-		//{
-		//	// add the default group
-		//	Group* pGroup = Group_Create(0, "Default");
-		//	if (pGroup != NULL)
-		//	{
-		//		GroupList_Add(pLevel->Groups, pGroup);
-		//	}
-		//}
-
-
-		pLevel->WadPath = (LPSTR)pWadName;
+		pLevel->WadPath = (LPSTR)"Wad Gone";// (LPSTR)pWadName;
 		pLevel->WadFile = NULL;
 		pLevel->WadSizeInfos = NULL;
 
@@ -229,7 +217,7 @@ signed int CL64_Level::Level_LoadWad(Level* pLevel)
 	}
 
 
-	if (pLevel->WadFile->Setup(pLevel->WadPath))
+	if (pLevel->WadFile->Setup())
 	{
 		pLevel->WadSizeInfos = (SizeInfo*)App->CL_Maths->Ram_Allocate(sizeof(SizeInfo) * pLevel->WadFile->mBitmapCount);
 
@@ -237,7 +225,7 @@ signed int CL64_Level::Level_LoadWad(Level* pLevel)
 		{
 			int i;
 
-			for (i = 0; i < App->CL_TXL_Editor->Texture_Count; i++)//pLevel->WadFile->mBitmapCount; i++)
+			for (i = 0; i < App->CL_TXL_Editor->Texture_Count; i++)
 			{
 				SizeInfo* pInfo;
 				WadFileEntry* Entry;

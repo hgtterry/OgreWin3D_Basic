@@ -96,23 +96,10 @@ CL64_Doc::~CL64_Doc(void)
 // *************************************************************************
 void CL64_Doc::Init_Doc()
 {
-    //App->CL_Resources->Load_Texture_Resources();
-
-    const char* DefaultWadName;
+  
     strcpy(LastTemplateTypeName, "Box");
 
-    DefaultWadName = App->CL_Prefs->Wad_File_Name;
-
-    //strcpy(LastPath, Prefs_GetProjectDir(pPrefs));
-
-    const char* WadPath = FindTextureLibrary(DefaultWadName);
-
-	pLevel = App->CL_Level->Level_Create(WadPath, NULL,NULL, NULL);
-
-	/*if (!App->CL_Level->Level_LoadWad(pLevel))
-	{
-		App->Say_Win("Can not load Wad File");
-	}*/
+	pLevel = App->CL_Level->Level_Create();
 
 	pSelBrushes = App->CL_SelBrushList->SelBrushList_Create();
 	pTempSelBrushes = App->CL_SelBrushList->SelBrushList_Create();

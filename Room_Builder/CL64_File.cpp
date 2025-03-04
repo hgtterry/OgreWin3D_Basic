@@ -393,7 +393,7 @@ bool CL64_File::Load_File(const char* FileName)
 			App->CL_Doc->pLevel->Brushes = NULL;
 		}
 		
-		pLevel = App->CL_Level->Level_Create(WadPath, NULL, NULL, NULL);
+		pLevel = App->CL_Level->Level_Create();
 		if (pLevel == NULL)
 		{
 			App->Say("Can not Create Level");

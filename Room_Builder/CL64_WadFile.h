@@ -43,7 +43,7 @@ public:
 	int			mBitmapCount;
 	WadFileEntry* mBitmaps;
 
-	signed int Setup(const char* Filename);
+	signed int Setup();
 
 };
 

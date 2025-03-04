@@ -35,7 +35,7 @@ public:
 	CL64_Level(void);
 	~CL64_Level(void);
 
-	Level* Level_Create(const char* pWadName, const char* HeadersDir, const char* ActorsDir, const char* PawnIni);
+	Level* Level_Create();
 	BrushList* Level_GetBrushes(Level* pLevel);
 
 	BrushTemplate_Box* Level_GetBoxTemplate(Level* pLevel);

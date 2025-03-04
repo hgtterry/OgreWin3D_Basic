@@ -81,16 +81,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     App->CL_Top_Tabs->Start_Headers();
     App->CL_Properties_Tabs->Start_Tabs_Control_Dlg();
   
-    //strcpy(LastPath, Prefs_GetProjectDir(pPrefs));
-
     // ------------------ Reload Textures
 
-    const char* DefaultWadName;
-    DefaultWadName = App->CL_Prefs->Wad_File_Name;
-
-    const char* WadPath = App->CL_Doc->FindTextureLibrary(DefaultWadName);
-
-    App->CL_Doc->pLevel = App->CL_Level->Level_Create(WadPath, NULL, NULL, NULL);
+    App->CL_Doc->pLevel = App->CL_Level->Level_Create();
 
     if (!App->CL_Level->Level_LoadWad(App->CL_Doc->pLevel))
     {
