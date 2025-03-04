@@ -667,7 +667,7 @@ static void Face_UpdateLockedTextureVecs(Face* f)
 
 	// compute offsets...
 	{
-		geFloat uOffset, vOffset;
+		float uOffset, vOffset;
 
 		uOffset = App->CL_Maths->Vector3_DotProduct(&t->TVecs.uVec, &f->Tex.Pos);
 		vOffset = App->CL_Maths->Vector3_DotProduct(&t->TVecs.vVec, &f->Tex.Pos);
@@ -689,8 +689,8 @@ static void Face_UpdateWorldTextureVecs(Face* f)
 	if (t->yScale == 0.0f) t->yScale = 1.0f;
 
 	ang = UNITS_DEGREES_TO_RADIANS(-t->Rotate);
-	sinv = (geFloat)sin(ang);
-	cosv = (geFloat)cos(ang);
+	sinv = (float)sin(ang);
+	cosv = (float)cos(ang);
 
 	// the normal has to be normal, no?
 	assert((t->VecNormal.X != 0.0f) ||
@@ -730,8 +730,8 @@ static void Face_UpdateWorldTextureVecs(Face* f)
 		break;
 	}
 
-	t->TVecs.uOffset = (geFloat)(t->xShift);
-	t->TVecs.vOffset = (geFloat)(t->yShift);
+	t->TVecs.uOffset = (float)(t->xShift);
+	t->TVecs.vOffset = (float)(t->yShift);
 
 	App->CL_Maths->Vector3_Scale(&uVec, (1.0f / t->xScale), &t->TVecs.uVec);
 	App->CL_Maths->Vector3_Scale(&vVec, (1.0f / t->yScale), &t->TVecs.vVec);
@@ -879,7 +879,7 @@ void CL64_Face::Face_Split(const Face* f,const GPlane* p,Face** ff,Face** bf,flo
 void CL64_Face::Face_MostlyOnSide(const Face* f, const GPlane* p, float* max, int* side)
 {
 	int		i;
-	geFloat	d;
+	float	d;
 
 	for (i = 0; i < f->NumPoints; i++)
 	{
@@ -932,7 +932,7 @@ static void Face_UpdateFaceAngle(Face* f, const T_Vec3* OldNormal)
 {
 	T_Vec3 VecDest;
 	T_Vec3 VecAxis;
-	geFloat cosv, Theta;
+	float cosv, Theta;
 	Matrix3d Xfm;
 
 	// Compute rotation from 
@@ -944,7 +944,7 @@ static void Face_UpdateFaceAngle(Face* f, const T_Vec3* OldNormal)
 	{
 		cosv = 1.0f;
 	}
-	Theta = (geFloat)acos(cosv);
+	Theta = (float)acos(cosv);
 	if (App->CL_Maths->Vector3_Normalize(&VecAxis) == 0.0f)
 	{
 		App->CL_Maths->XForm3d_SetIdentity(&Xfm);

@@ -296,7 +296,7 @@ Brush* CL64_BrushTemplate::BrushTemplate_CreateCylinder(const BrushTemplate_Cyli
 	}
 
 	App->CL_Maths->XForm3d_SetIdentity(&YRotation);
-	App->CL_Maths->XForm3d_SetYRotation(&YRotation, (M_PI * 2.0f) / (geFloat)NumVerticalBands);
+	App->CL_Maths->XForm3d_SetYRotation(&YRotation, (M_PI * 2.0f) / (float)NumVerticalBands);
 
 	// Start with the top of cylinder
 	CurrentXDiameter = pTemplate->TopXSize;
@@ -597,9 +597,9 @@ Brush* CL64_BrushTemplate::BrushTemplate_CreateCone(const BrushTemplate_Cone* pT
 Brush* CL64_BrushTemplate::BrushTemplate_CreateStaircase(const BrushTemplate_Staircase* pTemplate)
 {
 	int			i;
-	float		HalfWidth = (geFloat)(pTemplate->Width / 2);
-	float		HalfHeight = (geFloat)(pTemplate->Height / 2);
-	float		HalfLength = (geFloat)(pTemplate->Length / 2);
+	float		HalfWidth = (float)(pTemplate->Width / 2);
+	float		HalfHeight = (float)(pTemplate->Height / 2);
+	float		HalfLength = (float)(pTemplate->Length / 2);
 	Brush* b, * b2;
 	BrushList* MBList = App->CL_Brush->BrushList_Create();
 	FaceList* fl;
@@ -663,9 +663,9 @@ Brush* CL64_BrushTemplate::BrushTemplate_CreateStaircase(const BrushTemplate_Sta
 	}
 	else
 	{
-		float	StairYSize = (geFloat)pTemplate->Height / (geFloat)pTemplate->NumberOfStairs;
-		float	DZ = (geFloat)pTemplate->Length / (geFloat)pTemplate->NumberOfStairs;
-		float	ZSize = (geFloat)pTemplate->Length;
+		float	StairYSize = (float)pTemplate->Height / (float)pTemplate->NumberOfStairs;
+		float	DZ = (float)pTemplate->Length / (float)pTemplate->NumberOfStairs;
+		float	ZSize = (float)pTemplate->Length;
 		BrushTemplate_Box BoxTemplate;
 
 		BoxTemplate.Solid = 0;

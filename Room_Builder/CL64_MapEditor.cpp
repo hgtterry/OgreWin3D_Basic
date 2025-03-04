@@ -1510,7 +1510,7 @@ void CL64_MapEditor::Pan_View(HWND hDlg, int Dx, int Dy)
 	App->CL_MapEditor->Draw_Screen(hDlg);
 }
 
-static geBoolean BrushDrawSelFacesOrtho(Brush* pBrush, void* lParam)
+static signed int BrushDrawSelFacesOrtho(Brush* pBrush, void* lParam)
 {
 	BrushDrawData* pData;
 
@@ -1550,13 +1550,13 @@ void CL64_MapEditor::Render_RenderBrushSelFacesOrtho(ViewVars* Cam, Brush* b, HD
 	}
 }
 
-static geBoolean fdocBrushNotDetail(const Brush* b)
+static signed int fdocBrushNotDetail(const Brush* b)
 {
 	return !App->CL_Brush->Brush_IsDetail(b);
 }
 
 
-static geBoolean fdocBrushIsSubtract(const Brush* b)
+static signed int fdocBrushIsSubtract(const Brush* b)
 {
 	return (App->CL_Brush->Brush_IsSubtract(b) && !App->CL_Brush->Brush_IsHollowCut(b));
 }

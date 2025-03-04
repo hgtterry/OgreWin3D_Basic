@@ -353,7 +353,7 @@ void CL64_Properties_Brushes::List_Selection_Changed(bool Clear)
 void CL64_Properties_Brushes::OnSelchangeBrushlist(int Index, bool Clear)
 {
 	int			c;
-	geBoolean	bChanged = FALSE;
+	signed int	bChanged = FALSE;
 
 	c = App->CL_Brush->Get_Brush_Count();
 

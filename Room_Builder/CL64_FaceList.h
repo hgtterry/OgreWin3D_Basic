@@ -41,7 +41,7 @@ public:
 	void FaceList_RemoveFace(FaceList* pList, int WhichFace);
 	FaceList* FaceList_Clone(const FaceList* pList);
 	void FaceList_SetDirty(FaceList* pList);
-	signed int FaceList_GetUsedTextures(const FaceList* pList, geBoolean* WrittenTex, CL64_WadFile* WadFile);
+	signed int FaceList_GetUsedTextures(const FaceList* pList, signed int* WrittenTex, CL64_WadFile* WadFile);
 	void FaceList_CopyFaceInfo(const FaceList* src, FaceList* dst);
 	void FaceList_ClipFaceToList(const FaceList* fl, Face** f);
 	void FaceList_Move(FaceList* pList, const T_Vec3* trans);

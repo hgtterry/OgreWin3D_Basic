@@ -139,7 +139,7 @@ typedef struct FindClosestInfoTag
     CL64_Doc* pDoc;
     ViewVars* v;
     Brush** ppFoundBrush;
-    geFloat* pMinEdgeDist;
+    float* pMinEdgeDist;
     const POINT* ptFrom;
 } FindClosestInfo;
 

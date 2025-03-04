@@ -24,7 +24,7 @@ THE SOFTWARE.
 
 #pragma once
 
-#include "bitmap.h"
+//#include "bitmap.h"
 
 struct WadFileEntry
 {

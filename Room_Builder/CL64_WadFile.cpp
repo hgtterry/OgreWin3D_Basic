@@ -25,7 +25,7 @@ THE SOFTWARE.
 #include "pch.h"
 #include "CL64_App.h"
 #include "CL64_WadFile.h"
-#include "vfile.h"
+//#include "vfile.h"
 
 CL64_WadFile::CL64_WadFile()
 {
@@ -57,27 +57,6 @@ static void WadFileEntry_Free(WadFileEntry* pe)
 }
 
 // *************************************************************************
-// *						 wadCountFiles								   *
-// *************************************************************************
-static int wadCountFiles(geVFile* vfs, const char* fspec)
-{
-	int nFiles = 0;
-	geVFile_Finder* Finder;
-
-	// count the number of files
-	Finder = geVFile_CreateFinder(vfs, fspec);
-	if (Finder != NULL)
-	{
-		while (geVFile_FinderGetNextFile(Finder) != GE_FALSE)
-		{
-			++nFiles;
-		}
-		geVFile_DestroyFinder(Finder);
-	}
-	return nFiles;
-}
-
-// *************************************************************************
 // *								 Setup								   *
 // *************************************************************************
 signed int CL64_WadFile::Setup()
@@ -105,7 +84,7 @@ signed int CL64_WadFile::Setup()
 
 		}
 
-	return GE_TRUE;
+	return true;
 }
 
 // *************************************************************************

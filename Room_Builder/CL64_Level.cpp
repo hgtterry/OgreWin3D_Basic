@@ -282,7 +282,7 @@ static Ogre::uint16 Level_GetDibIdFromWad(const CL64_WadFile* WadFile, const cha
 // *************************************************************************
 WadFileEntry* CL64_Level::Level_GetWadBitmap(Level* pLevel, const char* Name)
 {
-	Guint16 i;
+	Ogre::uint16 i;
 
 	if ((!pLevel) || (!pLevel->WadFile))
 		return NULL;
@@ -301,7 +301,7 @@ WadFileEntry* CL64_Level::Level_GetWadBitmap(Level* pLevel, const char* Name)
 // *************************************************************************
 // *							Level_GetDibId							   *
 // *************************************************************************
-Guint16 CL64_Level::Level_GetDibId(const Level* pLevel, const char* Name)
+Ogre::uint16 CL64_Level::Level_GetDibId(const Level* pLevel, const char* Name)
 {
 	return Level_GetDibIdFromWad(pLevel->WadFile, Name);
 }

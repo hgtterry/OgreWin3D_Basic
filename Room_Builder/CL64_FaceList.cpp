@@ -195,7 +195,7 @@ void CL64_FaceList::FaceList_SetDirty(FaceList* pList)
 // *************************************************************************
 // *					FaceList_GetUsedTextures					 	   *
 // *************************************************************************
-signed int CL64_FaceList::FaceList_GetUsedTextures(const FaceList* pList, geBoolean* WrittenTex, CL64_WadFile* WadFile)
+signed int CL64_FaceList::FaceList_GetUsedTextures(const FaceList* pList, signed int* WrittenTex, CL64_WadFile* WadFile)
 {
 	int i, index;
 	for (i = 0; i < pList->NumFaces; i++)
@@ -256,7 +256,7 @@ void CL64_FaceList::FaceList_ClipFaceToList(const FaceList* fl, Face** f)
 {
 	int			i;
 	const GPlane* p;
-	Guint8		cnt[3];
+	Ogre::uint8		cnt[3];
 
 	for (i = 0; i < fl->NumFaces; i++)
 	{

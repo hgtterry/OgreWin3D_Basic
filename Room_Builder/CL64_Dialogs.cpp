@@ -820,7 +820,7 @@ bool CL64_Dialogs::Show_Face_Data(int Index, const Face* f, HWND hDlg)
 
 	const TexInfo_Vectors* TVecs = App->CL_Face->Face_GetTextureVecs(f);
 	T_Vec3 uVec, vVec;
-	geFloat U, V;
+	float U, V;
 
 	int txSize, tySize;
 
@@ -832,8 +832,8 @@ bool CL64_Dialogs::Show_Face_Data(int Index, const Face* f, HWND hDlg)
 	if (tySize == 0)
 		tySize = 32;
 
-	App->CL_Maths->Vector3_Scale(&TVecs->uVec, 1.f / (geFloat)txSize, &uVec);
-	App->CL_Maths->Vector3_Scale(&TVecs->vVec, -1.f / (geFloat)tySize, &vVec);
+	App->CL_Maths->Vector3_Scale(&TVecs->uVec, 1.f / (float)txSize, &uVec);
+	App->CL_Maths->Vector3_Scale(&TVecs->vVec, -1.f / (float)tySize, &vVec);
 
 	const T_Vec3* verts = App->CL_Face->Face_GetPoints(f);
 

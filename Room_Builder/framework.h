@@ -36,6 +36,10 @@
 #define Do_Timer App->CL_Ogre->Processes_Start_Time();
 #define Get_Timer App->CL_Ogre->Processes_Get_Time();
 
+#define GE_FALSE	(0)
+#define GE_TRUE		(1)
+#define	GE_PI		((float)3.14159265358979323846f)
+
 namespace Enums
 {
 	enum Camera

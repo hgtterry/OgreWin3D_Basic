@@ -31,7 +31,6 @@ public:
 	~CL64_Textures(void);
 
 	void RenderTexture_Blit(HDC hDC, HBITMAP Bmp, const RECT* SourceRect, const RECT* DestRect);
-	int Write_BMP(const char* pszFile, geBitmap* pBitmap);
 	bool Soil_Load_Texture(UINT textureArray[], LPSTR strFileName, int textureID);
 	
 	void Texture_To_HBITMP(char* TextureFileName);

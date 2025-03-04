@@ -777,7 +777,7 @@ signed int CL64_Brush::Brush_IsSubtract(const Brush* b)
 // *************************************************************************
 signed int CL64_Brush::Brush_IsDetail(const Brush* b)
 {
-	return	(b->Flags & BRUSH_DETAIL) ? GE_TRUE : GE_FALSE;
+	return	(b->Flags & BRUSH_DETAIL) ? true : false;
 }
 
 // *************************************************************************
@@ -785,7 +785,7 @@ signed int CL64_Brush::Brush_IsDetail(const Brush* b)
 // *************************************************************************
 signed int CL64_Brush::Brush_IsHollowCut(const Brush* b)
 {
-	return	(b->Flags & BRUSH_HOLLOWCUT) ? GE_TRUE : GE_FALSE;
+	return	(b->Flags & BRUSH_HOLLOWCUT) ? true : false;
 }
 
 // *************************************************************************
@@ -1137,12 +1137,12 @@ signed int CL64_Brush::BrushList_GetUsedTextures(BrushList* BList, signed int* U
 	pBrush = BrushList_GetFirst(BList, &bi);
 	while (pBrush != NULL)
 	{
-		if (!Brush_GetUsedTextures(pBrush, UsedTex, WadFile)) return GE_FALSE;
+		if (!Brush_GetUsedTextures(pBrush, UsedTex, WadFile)) return false;
 
 		pBrush = BrushList_GetNext(&bi);
 	}
 
-	return GE_TRUE;
+	return true;
 }
 
 // *************************************************************************
@@ -1182,7 +1182,7 @@ signed int CL64_Brush::Brush_GetUsedTextures(const Brush* b, signed int* UsedTex
 		assert(0);		// invalid brush type
 		break;
 	}
-	return GE_TRUE;
+	return true;
 }
 
 // *************************************************************************
@@ -1202,7 +1202,7 @@ signed int CL64_Brush::Brush_GetParent(const BrushList* pList,const Brush* b,Bru
 		if (b2 == b)
 		{
 			*bParent = (Brush*)b;	//const override!
-			return		GE_TRUE;
+			return true;
 		}
 
 		if (b2->Type == BRUSH_LEAF)
@@ -1212,7 +1212,7 @@ signed int CL64_Brush::Brush_GetParent(const BrushList* pList,const Brush* b,Bru
 				if (Brush_GetParent(b2->BList, b, bParent))
 				{
 					*bParent = b2;
-					return		GE_TRUE;
+					return true;
 				}
 			}
 		}
@@ -1221,12 +1221,12 @@ signed int CL64_Brush::Brush_GetParent(const BrushList* pList,const Brush* b,Bru
 			if (Brush_GetParent(b2->BList, b, bParent))
 			{
 				*bParent = b2;
-				return		GE_TRUE;
+				return true;
 			}
 		}
 	}
 
-	return	GE_FALSE;
+	return	false;
 }
 
 // *************************************************************************
@@ -1270,7 +1270,7 @@ int CL64_Brush::BrushList_Count(BrushList const* pList,int CountFlags)
 	b = pList->First;
 	while (b != NULL)
 	{
-		geBoolean CountIt;
+		signed int CountIt;
 		switch (b->Type)
 		{
 		case BRUSH_MULTI:
@@ -1287,7 +1287,7 @@ int CL64_Brush::BrushList_Count(BrushList const* pList,int CountFlags)
 
 		default:
 			assert(0);
-			CountIt = GE_FALSE;
+			CountIt = false;
 			break;
 		}
 		if (CountIt)
@@ -1385,7 +1385,7 @@ static Brush* Brush_CreateFromParent(const Brush* ParentBrush, const FaceList* f
 static int	Brush_MostlyOnSide(const Brush* b, const GPlane* p)
 {
 	int		i, side;
-	geFloat	max;
+	float	max;
 
 	max = 0;
 	side = SIDE_FRONT;
@@ -1403,11 +1403,11 @@ void CL64_Brush::Brush_SplitByFace(Brush* ogb,Face* sf,Brush** fb,Brush** bb)
 {
 	const GPlane* p;
 	int			i;
-	Guint8		cnt[3], fcnt[4];
+	Ogre::uint8		cnt[3], fcnt[4];
 	FaceList* fl, * bl;
 	const Face* f;
 	Face* cpf, * ff, * bf, * midf;
-	geBoolean	WasSplit = GE_FALSE;
+	signed int	WasSplit = false;
 
 	assert(ogb);
 	assert(sf);
@@ -1465,7 +1465,7 @@ void CL64_Brush::Brush_SplitByFace(Brush* ogb,Face* sf,Brush** fb,Brush** bb)
 		fl = App->CL_FaceList->FaceList_Create(fcnt[SIDE_FRONT] + fcnt[SIDE_SPLIT] + 1);
 		bl = App->CL_FaceList->FaceList_Create(fcnt[SIDE_BACK] + fcnt[SIDE_SPLIT] + 1);
 
-		WasSplit = GE_FALSE;
+		WasSplit = false;
 		for (i = 0; i < App->CL_FaceList->FaceList_GetNumFaces(ogb->Faces); i++)
 		{
 			f = App->CL_FaceList->FaceList_GetFace(ogb->Faces, i);
@@ -1505,7 +1505,7 @@ void CL64_Brush::Brush_SplitByFace(Brush* ogb,Face* sf,Brush** fb,Brush** bb)
 				}
 				else	//split
 				{
-					WasSplit = GE_TRUE;
+					WasSplit = true;
 					App->CL_Face->Face_Split(f, p, &ff, &bf, dists, sides);
 				}
 
@@ -1976,7 +1976,7 @@ void CL64_Brush::BrushList_RebuildHollowFaces(BrushList* inList, int mid, Brush_
 			bh = Brush_CreateHollowFromBrush(b);
 			if (bh)
 			{
-				Brush_SetHollowCut(bh, GE_TRUE);
+				Brush_SetHollowCut(bh, true);
 				BrushList_Append(inList, bh);
 				bh->Flags = b->Flags & (~BRUSH_HOLLOW);	//clear hollow
 				bh->Type = b->Type;
@@ -1984,7 +1984,7 @@ void CL64_Brush::BrushList_RebuildHollowFaces(BrushList* inList, int mid, Brush_
 				bh->GroupId = b->GroupId;
 				bh->HullSize = b->HullSize;
 				bh->Color = b->Color;
-				Brush_SetHollowCut(bh, GE_TRUE);
+				Brush_SetHollowCut(bh, true);
 				/*if (bh->Name)
 				{
 					geRam_Free(bh->Name);
@@ -2000,7 +2000,7 @@ void CL64_Brush::BrushList_RebuildHollowFaces(BrushList* inList, int mid, Brush_
 // *************************************************************************
 signed int CL64_Brush::Brush_IsVisible(const Brush* b)
 {
-	return	(b->Flags & BRUSH_HIDDEN) ? GE_FALSE : GE_TRUE;
+	return	(b->Flags & BRUSH_HIDDEN) ? false : true;
 }
 
 // *************************************************************************
@@ -2307,7 +2307,7 @@ Brush* CL64_Brush::Get_By_Index(int Index)
 // *************************************************************************
 signed int CL64_Brush::BrushList_Enum(BrushList const* pList,void* lParam,BrushList_CB	CallBack)
 {
-	geBoolean bResult = true;	// TRUE means entire list was processed
+	signed int bResult = true;	// TRUE means entire list was processed
 	Brush* b;
 
 	b = pList->First;
@@ -2337,7 +2337,7 @@ Face* CL64_Brush::Brush_SelectFirstFace(Brush* b)
 	{
 		pFace = App->CL_FaceList->FaceList_GetFace(b->Faces, 0);
 
-		App->CL_Face->Face_SetSelected(pFace, GE_TRUE);
+		App->CL_Face->Face_SetSelected(pFace, true);
 		return pFace;
 	}
 }
@@ -2358,7 +2358,7 @@ Face* CL64_Brush::Brush_SelectLastFace(Brush* b)
 		Face* pFace;
 
 		pFace = App->CL_FaceList->FaceList_GetFace(b->Faces, 0);
-		App->CL_Face->Face_SetSelected(pFace, GE_TRUE);
+		App->CL_Face->Face_SetSelected(pFace, true);
 		return pFace;
 	}
 }
@@ -2470,17 +2470,17 @@ static signed int BrushList_SetNextSelectedFace(BrushList* pList)
 	if (!b)	//no faces found selected
 	{
 		App->CL_Brush->Brush_SelectFirstFace(pList->First);	//in case it's also a multi
-		return	GE_TRUE;
+		return	true;
 	}
 	for (; b; b = b->Next)
 	{
 		if (App->CL_Brush->Brush_SetNextSelectedFace(b))
 		{
-			return	GE_TRUE;
+			return	true;
 		}
 	}
 
-	return	GE_FALSE;	//wrapped around the end... handle outside
+	return	false;	//wrapped around the end... handle outside
 }
 
 // *************************************************************************
@@ -2502,16 +2502,16 @@ static signed int BrushList_SetPrevSelectedFace(BrushList* pList)
 	if (!b)	//no faces found selected
 	{
 		App->CL_Brush->Brush_SelectLastFace(pList->Last);	//in case it's also a multi
-		return	GE_TRUE;
+		return	true;
 	}
 	for (; b; b = b->Prev)
 	{
 		if (App->CL_Brush->Brush_SetPrevSelectedFace(b))
 		{
-			return	GE_TRUE;
+			return	true;
 		}
 	}
-	return	GE_FALSE;	//wrapped around the end... handle outside
+	return	false;	//wrapped around the end... handle outside
 }
 
 // *************************************************************************
@@ -2640,7 +2640,7 @@ void CL64_Brush::Brush_SnapScaleNearest(Brush* b, float gsize, int sides, int in
 	int		i;
 	T_Vec3	FixOrg, BrushOrg;
 	T_Vec3	dmin, vsnap, sbound;
-	float	const	gsizeinv = 1.0f / (geFloat)gsize;
+	float	const	gsizeinv = 1.0f / (float)gsize;
 
 	App->CL_Maths->Vector3_Add(&b->BoundingBox.Min, &b->BoundingBox.Max, &BrushOrg);
 	App->CL_Maths->Vector3_Scale(&BrushOrg, 0.5f, &BrushOrg);
@@ -2700,7 +2700,7 @@ void CL64_Brush::Brush_SnapScaleNearest(Brush* b, float gsize, int sides, int in
 
 	for (i = 0; i < 3; i++)
 	{
-		VectorToSUB(vsnap, i) = (geFloat)Units_Trunc(VectorToSUB(sbound, i));
+		VectorToSUB(vsnap, i) = (float)Units_Trunc(VectorToSUB(sbound, i));
 	}
 
 	App->CL_Maths->Vector3_Subtract(&sbound, &vsnap, &sbound);

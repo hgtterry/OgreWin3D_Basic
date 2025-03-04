@@ -84,8 +84,6 @@ public:
 	float radius;
 
 	HBITMAP Base_Bitmap;
-	geBitmap* RF_Bitmap;
-
 	HTREEITEM ListView_Item;
 
 };

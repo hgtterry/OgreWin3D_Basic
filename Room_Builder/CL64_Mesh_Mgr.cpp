@@ -58,7 +58,7 @@ struct tag_Level3
 	char* HeadersDir;
 	// changed QD Actors
 	char* ActorsDir;
-	geBoolean ShowActors;
+	signed int ShowActors;
 	char* PawnIniPath;
 	// end change
 	SizeInfo* WadSizeInfos;
@@ -67,14 +67,14 @@ struct tag_Level3
 	//ModelInfo_Type	ModelInfo;
 
 	
-	geFloat SkyRotationSpeed;
-	geFloat	SkyTextureScale;
+	float SkyRotationSpeed;
+	float	SkyTextureScale;
 
 	// level edit settings
 	
 	int GroupVisSetting;
 	//GridInfo GridSettings;
-	geBoolean BspRebuildFlag;
+	signed int BspRebuildFlag;
 	//ViewStateInfo ViewInfo[NUM_VIEWS];
 
 	BrushTemplate_Arch ArchTemplate;
@@ -215,7 +215,7 @@ void CL64_Mesh_Mgr::Brush_Build_List(int ExpSelected)
 // *************************************************************************
 // *		Brush_Build_Level_Brushes:- Terry and Hazel Flanigan 2025	   *
 // *************************************************************************
-bool CL64_Mesh_Mgr::Brush_Build_Level_Brushes(Level3* pLevel, const char* Filename, BrushList* BList, int ExpSelected, geBoolean ExpLights, int GroupID)
+bool CL64_Mesh_Mgr::Brush_Build_Level_Brushes(Level3* pLevel, const char* Filename, BrushList* BList, int ExpSelected, signed int ExpLights, int GroupID)
 {
 	CL64_WadFile* pWad;
 	pWad = NULL;
@@ -258,7 +258,7 @@ bool CL64_Mesh_Mgr::Brush_Build_Level_Brushes(Level3* pLevel, const char* Filena
 
 			if (App->CL_Ogre->OGL_Listener->Flag_Render_Brushes == 0)
 			{
-				AddTexture_GL(NULL, matname, AdjustedIndex);
+				//AddTexture_GL(NULL, matname, AdjustedIndex);
 			}
 
 			AdjustedIndex++;
@@ -272,7 +272,7 @@ bool CL64_Mesh_Mgr::Brush_Build_Level_Brushes(Level3* pLevel, const char* Filena
 		App->Say("No Textures in Brush");
 	}
 
-	Brush_Decode_List(BList, GE_FALSE);
+	Brush_Decode_List(BList, false);
 
 	return 1;
 }
@@ -300,7 +300,7 @@ bool CL64_Mesh_Mgr::Brush_Decode_List(BrushList* BList, signed int SubBrush)
 
 		if (!Brush_Create(pBrush, Actual_Brush_Index))
 		{
-			return GE_FALSE;
+			return false;
 		}
 
 		pBrush = App->CL_Brush->BrushList_GetNext(&bi);
@@ -323,7 +323,7 @@ bool CL64_Mesh_Mgr::Brush_Decode_List(BrushList* BList, signed int SubBrush)
 		mBrushCount = 0;
 	}
 
-	return GE_TRUE;
+	return true;
 }
 
 // *************************************************************************
@@ -334,12 +334,12 @@ bool CL64_Mesh_Mgr::Brush_Create(const Brush* b, int Actual_Brush_Index)
 	switch (b->Type)
 	{
 	case BRUSH_MULTI:
-		return Brush_Decode_List(b->BList, GE_TRUE); // Recursive
+		return Brush_Decode_List(b->BList, true); // Recursive
 
 	case BRUSH_LEAF:
 		if (b->BList)
 		{
-			return Brush_Decode_List(b->BList, GE_TRUE); // Recursive
+			return Brush_Decode_List(b->BList, true); // Recursive
 		}
 		else
 		{
@@ -364,7 +364,7 @@ bool CL64_Mesh_Mgr::Brush_Create(const Brush* b, int Actual_Brush_Index)
 		break;
 	}
 
-	return GE_TRUE;
+	return true;
 }
 
 // *************************************************************************
@@ -457,8 +457,8 @@ bool CL64_Mesh_Mgr::Brush_FaceList_Create(const Brush* b, const FaceList* pList,
 		if (tySize == 0)
 			tySize = 32;
 
-		App->CL_Maths->Vector3_Scale(&TVecs->uVec, 1.f / (geFloat)txSize, &uVec);
-		App->CL_Maths->Vector3_Scale(&TVecs->vVec, -1.f / (geFloat)tySize, &vVec);
+		App->CL_Maths->Vector3_Scale(&TVecs->uVec, 1.f / (float)txSize, &uVec);
+		App->CL_Maths->Vector3_Scale(&TVecs->vVec, -1.f / (float)tySize, &vVec);
 
 		verts = App->CL_Face->Face_GetPoints(pList->Faces[i]);
 		curnum_verts = App->CL_Face->Face_GetNumPoints(pList->Faces[i]);
@@ -572,7 +572,7 @@ bool CL64_Mesh_Mgr::Brush_FaceList_Create(const Brush* b, const FaceList* pList,
 
 	App->CL_Model->BrushCount++;
 
-	return GE_TRUE;
+	return true;
 }
 
 // *************************************************************************
@@ -833,11 +833,11 @@ int CL64_Mesh_Mgr::Get_Adjusted_Index(int RealIndex)
 	return -1;
 }
 
-// *************************************************************************
-// *			AddTexture_GL:- Terry and Hazel Flanigan 2025		  	   *
-// *************************************************************************
-bool CL64_Mesh_Mgr::AddTexture_GL(geVFile* BaseFile, const char* TextureName, int GroupIndex)
-{
+//// *************************************************************************
+//// *			AddTexture_GL:- Terry and Hazel Flanigan 2025		  	   *
+//// *************************************************************************
+//bool CL64_Mesh_Mgr::AddTexture_GL(geVFile* BaseFile, const char* TextureName, int GroupIndex)
+//{
 	//Debug
 	
 	//int index = 0;
@@ -884,5 +884,5 @@ bool CL64_Mesh_Mgr::AddTexture_GL(geVFile* BaseFile, const char* TextureName, in
 	//	}
 	//}
 
-	return TRUE;
-}
+//	return TRUE;
+//}

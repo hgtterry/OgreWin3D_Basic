@@ -454,22 +454,22 @@ WadFileEntry* CL64_Doc::GetDibBitmap(const char* Name)
 // *************************************************************************
 // *			                 PointToLineDist	                   	   *
 // *************************************************************************
-static geFloat PointToLineDist
+static float PointToLineDist
 (
     POINT const* ptFrom,
     POINT const* ptLine1,
     POINT const* ptLine2
 )
 {
-    geFloat xkj, ykj;
-    geFloat xlk, ylk;
-    geFloat denom;
-    geFloat dist;
+    float xkj, ykj;
+    float xlk, ylk;
+    float denom;
+    float dist;
 
-    xkj = (geFloat)(ptLine1->x - ptFrom->x);
-    ykj = (geFloat)(ptLine1->y - ptFrom->y);
-    xlk = (geFloat)(ptLine2->x - ptLine1->x);
-    ylk = (geFloat)(ptLine2->y - ptLine1->y);
+    xkj = (float)(ptLine1->x - ptFrom->x);
+    ykj = (float)(ptLine1->y - ptFrom->y);
+    xlk = (float)(ptLine2->x - ptLine1->x);
+    ylk = (float)(ptLine2->y - ptLine1->y);
     denom = (xlk * xlk) + (ylk * ylk);
     if (denom < .0005f)
     {
@@ -478,8 +478,8 @@ static geFloat PointToLineDist
     }
     else
     {
-        geFloat t;
-        geFloat xfac, yfac;
+        float t;
+        float xfac, yfac;
 
         t = -(xkj * xlk + ykj * ylk) / denom;
         t = std::max(t, 0.0f);
@@ -489,13 +489,13 @@ static geFloat PointToLineDist
         dist = xfac * xfac + yfac * yfac;
     }
 
-    return (geFloat)sqrt(dist);
+    return (float)sqrt(dist);
 }
 
 // *************************************************************************
 // *			            FindClosestBrushCB	                       	   *
 // *************************************************************************
-static geBoolean FindClosestBrushCB(Brush* pBrush, void* pVoid)
+static  signed int FindClosestBrushCB(Brush* pBrush, void* pVoid)
 {
     FindClosestInfo* fci = (FindClosestInfo*)pVoid;
 
@@ -514,7 +514,7 @@ static geBoolean FindClosestBrushCB(Brush* pBrush, void* pVoid)
             pt1 = App->CL_Render->Render_OrthoWorldToView(fci->v, &FacePoints[NumPoints - 1]);
             for (int iPoint = 0; iPoint < NumPoints; ++iPoint)
             {
-                geFloat Dist;
+                float Dist;
 
                 pt2 = App->CL_Render->Render_OrthoWorldToView(fci->v, &FacePoints[iPoint]);
                 Dist = PointToLineDist(fci->ptFrom, &pt1, &pt2);
@@ -531,7 +531,7 @@ static geBoolean FindClosestBrushCB(Brush* pBrush, void* pVoid)
 }
 
 #pragma warning (disable:4100)
-static geBoolean ResetSelectedFacesCB(Brush* b, void* pVoid)
+static signed int ResetSelectedFacesCB(Brush* b, void* pVoid)
 {
     int	i;
 
@@ -552,7 +552,7 @@ static geBoolean ResetSelectedFacesCB(Brush* b, void* pVoid)
 void CL64_Doc::SelectOrtho(POINT point, ViewVars* v)
 {
     Brush* pMinBrush;
-    geFloat Dist;
+    float Dist;
     int FoundThingType;
 
    if ((GetAsyncKeyState(VK_SHIFT) & 0x8000) == 0)
@@ -679,7 +679,7 @@ signed int CL64_Doc::BrushIsSelected(Brush const* pBrush)
 // *************************************************************************
 // *            FindClosestThing:- Terry and Hazel Flanigan 2025           *
 // *************************************************************************
-int CL64_Doc::FindClosestThing(POINT const* ptFrom, ViewVars* v, Brush** ppMinBrush, geFloat* pDist)
+int CL64_Doc::FindClosestThing(POINT const* ptFrom, ViewVars* v, Brush** ppMinBrush, float* pDist)
 {
     int rslt;
 
@@ -705,7 +705,7 @@ int CL64_Doc::FindClosestThing(POINT const* ptFrom, ViewVars* v, Brush** ppMinBr
 // *************************************************************************
 // *            FindClosestBrush:- Terry and Hazel Flanigan 2025           *
 // *************************************************************************
-signed int CL64_Doc::FindClosestBrush(POINT const* ptFrom, ViewVars* v, Brush** ppFoundBrush, geFloat* pMinEdgeDist)
+signed int CL64_Doc::FindClosestBrush(POINT const* ptFrom, ViewVars* v, Brush** ppFoundBrush, float* pMinEdgeDist)
 {
     // determine the distance to the closest brush edge in the current view.
     FindClosestInfo	fci;
@@ -1015,7 +1015,7 @@ void CL64_Doc::DoneMovingBrushes()
         const T_Vec3* vMin, * vMax;
         const Box3d* pBox;
         T_Vec3 SnapDelta;
-        geBoolean SnapX, SnapY, SnapZ;
+        signed int SnapX, SnapY, SnapZ;
 
         fSnapSize = 1.0f;
 
@@ -1075,7 +1075,7 @@ void CL64_Doc::DoneMovingBrushes()
     }*/
 }
 
-#define	M_PI		((geFloat)3.14159265358979323846f)
+#define	M_PI		((float)3.14159265358979323846f)
 #define Units_DegreesToRadians(d) ((((float)(d)) * M_PI) / 180.0f)
 // *************************************************************************
 // *              DoneRotate:- Terry and Hazel Flanigan 2025              *
@@ -1658,7 +1658,7 @@ void CL64_Doc::Set_Current_TxlPath(void)
 // *************************************************************************
 void CL64_Doc::SnapScaleNearest(int sides, int inidx, ViewVars* v)
 {
-    geFloat	bsnap;
+    float	bsnap;
 
     flag_Is_Modified = 1;
 

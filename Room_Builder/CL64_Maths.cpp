@@ -326,12 +326,12 @@ void CL64_Maths::XForm3d_SetXRotation(Matrix3d* M, float RadianAngle)
 // *************************************************************************
 void CL64_Maths::XForm3d_SetYRotation(Matrix3d* M, float RadianAngle)
 {
-	geFloat Cos, Sin;
+	float Cos, Sin;
 	assert(M != NULL);
 	assert(RadianAngle * RadianAngle >= 0.0f);
 
-	Cos = (geFloat)cos(RadianAngle);
-	Sin = (geFloat)sin(RadianAngle);
+	Cos = (float)cos(RadianAngle);
+	Sin = (float)sin(RadianAngle);
 
 	M->AX = Cos;
 	M->AZ = Sin;
@@ -347,12 +347,12 @@ void CL64_Maths::XForm3d_SetYRotation(Matrix3d* M, float RadianAngle)
 // *************************************************************************
 void CL64_Maths::XForm3d_SetZRotation(Matrix3d* M, float RadianAngle)
 {
-	geFloat Cos, Sin;
+	float Cos, Sin;
 	assert(M != NULL);
 	assert(RadianAngle * RadianAngle >= 0.0f);
 
-	Cos = (geFloat)cos(RadianAngle);
-	Sin = (geFloat)sin(RadianAngle);
+	Cos = (float)cos(RadianAngle);
+	Sin = (float)sin(RadianAngle);
 
 	M->AX = Cos;
 	M->AY = -Sin;

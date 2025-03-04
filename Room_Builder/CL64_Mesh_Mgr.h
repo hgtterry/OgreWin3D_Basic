@@ -34,7 +34,7 @@ public:
 
 	bool Update_World();
 	void Brush_Build_List(int ExpSelected);
-	bool Brush_Build_Level_Brushes(Level3* pLevel, const char* Filename, BrushList* BList, int ExpSelected, geBoolean ExpLights, int GroupID);
+	bool Brush_Build_Level_Brushes(Level3* pLevel, const char* Filename, BrushList* BList, int ExpSelected, signed int ExpLights, int GroupID);
 	bool Brush_Decode_List(BrushList* BList, signed int SubBrush);
 	bool Brush_Create(const Brush* b, int Actual_Brush_Index);
 	bool Brush_FaceList_Create(const Brush* b, const FaceList* pList, int BrushCount, int SubBrushCount, int Actual_Brush_Index);
@@ -47,7 +47,7 @@ public:
 	void Delete_Group_Brushes();
 
 	int Get_Adjusted_Index(int RealIndex);
-	bool AddTexture_GL(geVFile* BaseFile, const char* TextureName, int GroupIndex);
+	//bool AddTexture_GL(geVFile* BaseFile, const char* TextureName, int GroupIndex);
 
 	int ActualFaceCount;
 

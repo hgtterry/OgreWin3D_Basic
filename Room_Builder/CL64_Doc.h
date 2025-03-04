@@ -114,8 +114,8 @@ public:
 	void DoneResize(int sides, int inidx);
 	void ScaleSelectedBrushes(T_Vec3* ScaleVector);
 
-	int FindClosestThing(POINT const* ptFrom, ViewVars* v, Brush** ppMinBrush, geFloat* pDist);
-	signed int FindClosestBrush(POINT const* ptFrom, ViewVars* v, Brush** ppFoundBrush, geFloat* pMinEdgeDist);
+	int FindClosestThing(POINT const* ptFrom, ViewVars* v, Brush** ppMinBrush, float* pDist);
+	signed int FindClosestBrush(POINT const* ptFrom, ViewVars* v, Brush** ppFoundBrush, float* pMinEdgeDist);
 	signed int BrushIsSelected(Brush const* pBrush);
 	void UpdateSelected(void);
 	DWORD GetSelState(void) { return SelState; }
