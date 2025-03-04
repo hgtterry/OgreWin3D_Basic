@@ -184,7 +184,7 @@ void CL64_Face::Face_InitTexInfo(TexInfo* t, T_Vec3 const* pNormal)
 	t->xShift = 0;
 	t->yShift = 0;
 	t->Rotate = 0.0f;
-	t->Dib = 0;
+	t->Dib = 10;
 	t->DirtyFlag = false;
 	t->txSize = 0;
 	t->tySize = 0;
@@ -518,7 +518,7 @@ int	CL64_Face::Face_GetNumPoints(const Face* f)
 int	CL64_Face::Face_GetTextureDibId(const Face* f)
 {
 	
-	return	f->Tex.Dib;
+	return f->Tex.Dib;
 }
 
 // *************************************************************************

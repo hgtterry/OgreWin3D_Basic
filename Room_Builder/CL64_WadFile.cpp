@@ -42,7 +42,7 @@ CL64_WadFile::~CL64_WadFile()
 // *************************************************************************
 static void WadFileEntry_Free(WadFileEntry* pe)
 {
-	if (pe->LockedBitmap != NULL)
+	/*if (pe->LockedBitmap != NULL)
 	{
 		geBitmap_UnLock(pe->LockedBitmap);
 	}
@@ -53,7 +53,7 @@ static void WadFileEntry_Free(WadFileEntry* pe)
 	if (pe->Name != NULL)
 	{
 		App->CL_Maths->Ram_Free(pe->Name);
-	}
+	}*/
 }
 
 // *************************************************************************
@@ -82,84 +82,28 @@ static int wadCountFiles(geVFile* vfs, const char* fspec)
 // *************************************************************************
 signed int CL64_WadFile::Setup(const char* Filename)
 {
-	geVFile* Library;
-
-	signed int	NoErrors = GE_FALSE;
-
-	Library = geVFile_OpenNewSystem(NULL, GE_VFILE_TYPE_VIRTUAL, Filename, NULL, GE_VFILE_OPEN_READONLY | GE_VFILE_OPEN_DIRECTORY);
-	if (Library != NULL)
-	{
-		NoErrors = GE_TRUE;
-
 		DestroyBitmapArray();
 
-		int nFiles = wadCountFiles(Library, "*.*");
+		int Count = 0;
+		int nFiles = App->CL_TXL_Editor->Texture_Count;
 
 		if (nFiles > 0)
 		{
-			// make new array and fill it with loaded bitmaps
 			mBitmaps = (WadFileEntry*)App->CL_Maths->Ram_Allocate(nFiles * sizeof(WadFileEntry));
 
-			// and fill array with filenames
-			NoErrors = GE_FALSE;
-			geVFile_Finder* Finder = geVFile_CreateFinder(Library, "*.*");
-			if (Finder != NULL)
+			while (Count < nFiles)
 			{
-				NoErrors = GE_TRUE;
-				geVFile_Properties Props;
-			
-				while (geVFile_FinderGetNextFile(Finder) != GE_FALSE)
-				{
-					geVFile_FinderGetProperties(Finder, &Props);
+				WadFileEntry* pe;
+				pe = &mBitmaps[mBitmapCount];
+				pe->Height = App->CL_TXL_Editor->Texture_List[Count]->Height;
+				pe->Width = App->CL_TXL_Editor->Texture_List[Count]->Width;
+				strcpy(pe->Name, App->CL_TXL_Editor->Texture_List[Count]->Name);
 
-					// load the file and create a DibBitmap from it
-					geVFile* BmpFile = geVFile_Open(Library, Props.Name, GE_VFILE_OPEN_READONLY);
-					geBitmap* TheBitmap;
-
-					if (BmpFile == NULL)
-					{
-						NoErrors = GE_FALSE;
-					}
-					else
-					{
-						TheBitmap = geBitmap_CreateFromFile(BmpFile);
-						geVFile_Close(BmpFile);
-						if (TheBitmap == NULL)
-						{
-							NoErrors = GE_FALSE;
-						}
-						else
-						{
-							if (geBitmap_SetFormat(TheBitmap, GE_PIXELFORMAT_16BIT_555_RGB, GE_FALSE, 0, NULL) != GE_FALSE)
-							{
-								WadFileEntry* pe;
-								geBitmap_Info info, info2;
-
-								geBitmap_GetInfo(TheBitmap, &info, &info2);
-								pe = &mBitmaps[mBitmapCount];
-								pe->bmp = TheBitmap;
-								pe->Height = info.Height;
-								pe->Width = info.Width;
-								strcpy(pe->Name,Props.Name);
-								geBitmap_LockForReadNative(pe->bmp, &pe->LockedBitmap, 0, 0);
-								pe->BitsPtr = geBitmap_GetBits(pe->LockedBitmap);
-
-								++mBitmapCount;
-							}
-							else
-							{
-								geBitmap_Destroy(&TheBitmap);
-								NoErrors = GE_FALSE;
-							}
-						}
-					}
-				}
-
-				geVFile_DestroyFinder(Finder);
+				++mBitmapCount;
+				Count++;
 			}
+
 		}
-		geVFile_Close(Library);
-	}
 
 	return GE_TRUE;
 }

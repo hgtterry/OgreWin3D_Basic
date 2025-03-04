@@ -237,7 +237,7 @@ signed int CL64_Level::Level_LoadWad(Level* pLevel)
 		{
 			int i;
 
-			for (i = 0; i < pLevel->WadFile->mBitmapCount; i++)
+			for (i = 0; i < App->CL_TXL_Editor->Texture_Count; i++)//pLevel->WadFile->mBitmapCount; i++)
 			{
 				SizeInfo* pInfo;
 				WadFileEntry* Entry;
@@ -247,7 +247,7 @@ signed int CL64_Level::Level_LoadWad(Level* pLevel)
 
 				pInfo->TexWidth = Entry->Width;
 				pInfo->TexHeight = Entry->Height;
-				pInfo->TexData = (Guint8*)Entry->BitsPtr;
+				//pInfo->TexData = (Guint8*)Entry->BitsPtr;
 			}
 		}
 	}

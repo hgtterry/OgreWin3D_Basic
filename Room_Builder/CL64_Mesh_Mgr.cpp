@@ -245,14 +245,14 @@ bool CL64_Mesh_Mgr::Brush_Build_Level_Brushes(Level3* pLevel, const char* Filena
 
 			//App->Say(matname);
 
-			if (geBitmap_HasAlpha(pWad->mBitmaps[i].bmp))
+			/*if (geBitmap_HasAlpha(pWad->mBitmaps[i].bmp))
 			{
 				IsTextureAlpha[AdjustedIndex] = 1;
 			}
 			else
 			{
 				IsTextureAlpha[AdjustedIndex] = 0;
-			}
+			}*/
 
 			mAdjusedIndex_Store[AdjustedIndex] = i;
 
@@ -372,7 +372,6 @@ bool CL64_Mesh_Mgr::Brush_Create(const Brush* b, int Actual_Brush_Index)
 // *************************************************************************
 bool CL64_Mesh_Mgr::Brush_FaceList_Create(const Brush* b, const FaceList* pList, int BrushCount, int SubBrushCount, int Actual_Brush_Index)
 {
-
 	App->CL_Model->Create_Brush_XX(App->CL_Model->BrushCount);
 	App->CL_Model->B_Brush[App->CL_Model->BrushCount]->Group_Index = mBrush_Index;
 	strcpy(App->CL_Model->B_Brush[App->CL_Model->BrushCount]->Brush_Name, mBrush_Name);
@@ -841,49 +840,49 @@ bool CL64_Mesh_Mgr::AddTexture_GL(geVFile* BaseFile, const char* TextureName, in
 {
 	//Debug
 	
-	int index = 0;
-	geBitmap* Bitmap = NULL;
-	CL64_WadFile* pWad;
-	pWad = NULL;
-	pWad = App->CL_Level->Level_GetWadFile(App->CL_Doc->pLevel);
-	for (index = 0; index < pWad->mBitmapCount; index++)
-	{
-		char mName[MAX_PATH];
-		char TempTextureFile[MAX_PATH];
+	//int index = 0;
+	//geBitmap* Bitmap = NULL;
+	//CL64_WadFile* pWad;
+	//pWad = NULL;
+	//pWad = App->CL_Level->Level_GetWadFile(App->CL_Doc->pLevel);
+	//for (index = 0; index < pWad->mBitmapCount; index++)
+	//{
+	//	char mName[MAX_PATH];
+	//	char TempTextureFile[MAX_PATH];
 
-		strcpy(mName, pWad->mBitmaps[index].Name);
+	//	strcpy(mName, pWad->mBitmaps[index].Name);
 
-		bool test = strcmp(mName, TextureName);
-		if (test == 0)
-		{
-			Bitmap = pWad->mBitmaps[index].bmp;
+	//	bool test = strcmp(mName, TextureName);
+	//	if (test == 0)
+	//	{
+	//		Bitmap = pWad->mBitmaps[index].bmp;
 
-			if (geBitmap_HasAlpha(Bitmap))
-			{
-				//App->CL_Textures->LoadTextures_TXL(pWad->mBitmaps[index].Name);
+	//		if (geBitmap_HasAlpha(Bitmap))
+	//		{
+	//			//App->CL_Textures->LoadTextures_TXL(pWad->mBitmaps[index].Name);
 
-				strcpy(TempTextureFile, App->RB_Directory_FullPath);
-				strcat(TempTextureFile, "\\");
-				strcat(TempTextureFile, "TextureLoad.tga");
+	//			strcpy(TempTextureFile, App->RB_Directory_FullPath);
+	//			strcat(TempTextureFile, "\\");
+	//			strcat(TempTextureFile, "TextureLoad.tga");
 
-				//App->CL_Textures->WriteTGA(TempTextureFile, App->CLSB_Textures->Temp_RF_Bitmap);
+	//			//App->CL_Textures->WriteTGA(TempTextureFile, App->CLSB_Textures->Temp_RF_Bitmap);
 
-				//App->CL_Textures->Soil_Load_Texture(App->CL_Ogre->OGL_Listener->g_BrushTexture, TempTextureFile, GroupIndex);
-			}
-			else
-			{
-				strcpy(TempTextureFile, App->RB_Directory_FullPath);
-				strcat(TempTextureFile, "\\");
-				strcat(TempTextureFile, "TextureLoad.bmp");
+	//			//App->CL_Textures->Soil_Load_Texture(App->CL_Ogre->OGL_Listener->g_BrushTexture, TempTextureFile, GroupIndex);
+	//		}
+	//		else
+	//		{
+	//			strcpy(TempTextureFile, App->RB_Directory_FullPath);
+	//			strcat(TempTextureFile, "\\");
+	//			strcat(TempTextureFile, "TextureLoad.bmp");
 
-				App->CL_Textures->Write_BMP(TempTextureFile,Bitmap);
+	//			App->CL_Textures->Write_BMP(TempTextureFile,Bitmap);
 
-				App->CL_Textures->Soil_Load_Texture(App->CL_Ogre->OGL_Listener->g_BrushTexture, TempTextureFile, GroupIndex);
-			}
+	//			App->CL_Textures->Soil_Load_Texture(App->CL_Ogre->OGL_Listener->g_BrushTexture, TempTextureFile, GroupIndex);
+	//		}
 
-			DeleteFile((LPCTSTR)TempTextureFile);
-		}
-	}
+	//		DeleteFile((LPCTSTR)TempTextureFile);
+	//	}
+	//}
 
 	return TRUE;
 }
