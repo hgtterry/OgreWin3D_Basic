@@ -36,11 +36,12 @@ public:
 	bool Check_File_Exist(char* Full_Path);
 	void Get_FileName_FromPath(char* pString, char* FileName);
 	void Delete_Folder_Contents(char* Folder);
-	void UnZip_Test();
-	void UnZip_Test_2(char* Folder);
 
-	ZRESULT RemoveFileFromZip(const char* zipfn, const char* zename);
-	ZRESULT AddFileToZip(const char* zipfn, const char* zename, const char* zefn);
+	void UnZip_Test_2(char* Folder);
+	bool Zip_Assets(char* SourceFolder, char* DestinationFolder);
+
+	void RemoveFileFromZip(const char* File);
+	
 
 	char JustFileName[MAX_PATH];
 };

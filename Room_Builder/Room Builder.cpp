@@ -200,7 +200,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 }
 
                 RedrawWindow(App->CL_Properties_Textures->Textures_Dlg_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);*/
-                App->CL_Utilities->UnZip_Test_2(NULL);
+                
+                App->CL_Utilities->RemoveFileFromZip("");
 
                 return 1;
             }

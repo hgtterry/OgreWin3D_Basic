@@ -138,37 +138,32 @@ void CL64_Utilities::Get_FileName_FromPath(char* pString, char* FileName)
 }
 
 // *************************************************************************
-// *			UnZip_Test:- Terry and Hazel Flanigan 2025			   *
+// *							RemoveFileFromZip						   *
 // *************************************************************************
-void CL64_Utilities::UnZip_Test()
+void CL64_Utilities::RemoveFileFromZip(const char* File)
 {
-	char BufPath[MAX_PATH];
-	strcpy(BufPath, App->RB_Directory_FullPath);
-	strcat(BufPath, "\\Data\\Room_Builder\\Default.zip");
+	App->CL_Utilities->UnZip_Test_2(NULL);
 
-	char OutDir[MAX_PATH];
-	strcpy(OutDir, App->RB_Directory_FullPath);
-	strcat(OutDir, "\\Data\\Poo\\");
+	char mFileName[MAX_PATH];
+	strcpy(mFileName, App->RB_Directory_FullPath);
+	strcat(mFileName, "\\Data\\Texture_Test\\");
 
-	SetCurrentDirectory(OutDir);
+	App->CL_Utilities->Zip_Assets(mFileName, mFileName);
 
-	HZIP hz = OpenZip(BufPath, 0);
-	ZIPENTRY ze; GetZipItem(hz, -1, &ze); int numitems = ze.index;
-	// -1 gives overall information about the zipfile
-	for (int zi = 0; zi < numitems; zi++)
-	{
-		ZIPENTRY ze; GetZipItem(hz, zi, &ze); // fetch individual details
-		ZRESULT test = UnzipItem(hz, zi, ze.name);         // e.g. the item's name.
+	strcpy(mFileName, App->RB_Directory_FullPath);
+	strcat(mFileName, "\\Data\\Texture_Test\\Assets.zip");
 
-		char buff[MAX_PATH];
-		FormatZipMessage(test, buff,MAX_PATH);
-		App->Say(buff);
-	}
+	char mFileName2[MAX_PATH];
+	strcpy(mFileName2, App->RB_Directory_FullPath);
+	strcat(mFileName2, "\\Data\\Room_Builder\\Assets.zip");
 
-	CloseZip(hz);
-	
-	//RemoveFileFromZip(const TCHAR * zip, const TCHAR * name);
-	//AddFileToZip(const TCHAR * zip, const TCHAR * name, const TCHAR * fn);
+	CopyFile(mFileName, mFileName2, true);
+
+	char mWorld_File_PathAndFile[MAX_PATH];
+	strcpy(mWorld_File_PathAndFile, App->RB_Directory_FullPath);
+	strcat(mWorld_File_PathAndFile, "\\Data\\Texture_Test");
+	App->CL_Utilities->Delete_Folder_Contents(mWorld_File_PathAndFile);
+
 }
 
 // *************************************************************************
@@ -177,10 +172,6 @@ void CL64_Utilities::UnZip_Test()
 void CL64_Utilities::UnZip_Test_2(char* Folder)
 {
 	Ogre::String mFileString;
-
-	char BufPath[MAX_PATH];
-	strcpy(BufPath, App->RB_Directory_FullPath);
-	strcat(BufPath, "\\Data\\Room_Builder\\Default.zip");
 
 	char OutDir[MAX_PATH];
 	strcpy(OutDir, App->RB_Directory_FullPath);
@@ -211,49 +202,49 @@ void CL64_Utilities::UnZip_Test_2(char* Folder)
 }
 
 // *************************************************************************
-// *							RemoveFileFromZip						   *
+// *	  		Zip_Assets:- Terry and Hazel Flanigan 2024				   *
 // *************************************************************************
-ZRESULT CL64_Utilities::RemoveFileFromZip(const char* zipfn, const char* zename)
+bool CL64_Utilities::Zip_Assets(char* SourceFolder, char* DestinationFolder)
 {
-	return AddFileToZip(zipfn, zename, 0);
-}
+	HZIP hz;
 
-// *************************************************************************
-// *								AddFileToZip						   *
-// *************************************************************************
-ZRESULT CL64_Utilities::AddFileToZip(const char* zipfn, const char* zename, const char* zefn)
-{
-	if (GetFileAttributes(zipfn) == 0xFFFFFFFF || (zefn != 0 && GetFileAttributes(zefn) == 0xFFFFFFFF)) return ZR_NOFILE;
-	// Expected size of the new zip will be the size of the old zip plus the size of the new file
-	HANDLE hf = CreateFile(zipfn, GENERIC_READ, FILE_SHARE_READ, 0, OPEN_EXISTING, 0, 0); if (hf == INVALID_HANDLE_VALUE) return ZR_NOFILE; DWORD size = GetFileSize(hf, 0); CloseHandle(hf);
-	if (zefn != 0) { hf = CreateFile(zefn, GENERIC_READ, FILE_SHARE_READ, 0, OPEN_EXISTING, 0, 0); if (hf == INVALID_HANDLE_VALUE) return ZR_NOFILE; size += GetFileSize(hf, 0); CloseHandle(hf); }
-	size *= 2; // just to be on the safe side.
-	//
-	HZIP hzsrc = OpenZip(zipfn, 0); if (hzsrc == 0) return ZR_READ;
-	HZIP hzdst = CreateZip(0, size, 0); if (hzdst == 0) { CloseZip(hzsrc); return ZR_WRITE; }
-	// hzdst is created in the system pagefile
-	// Now go through the old zip, unzipping each item into a memory buffer, and adding it to the new one
-	char* buf = 0; unsigned int bufsize = 0; // we'll unzip each item into this memory buffer
-	ZIPENTRY ze; ZRESULT zr = GetZipItem(hzsrc, -1, &ze); int numitems = ze.index; if (zr != ZR_OK) { CloseZip(hzsrc); CloseZip(hzdst); return zr; }
-	for (int i = 0; i < numitems; i++)
-	{
-		zr = GetZipItem(hzsrc, i, &ze); if (zr != ZR_OK) { CloseZip(hzsrc); CloseZip(hzdst); return zr; }
-		if (_stricmp(ze.name, zename) == 0) continue; // don't copy over the old version of the file we're changing
-		if (ze.attr & FILE_ATTRIBUTE_DIRECTORY) { zr = ZipAddFolder(hzdst, ze.name); if (zr != ZR_OK) { CloseZip(hzsrc); CloseZip(hzdst); return zr; } continue; }
-		if (ze.unc_size > (long)bufsize) { if (buf != 0) delete[] buf; bufsize = ze.unc_size * 2; buf = new char[bufsize]; }
-		zr = UnzipItem(hzsrc, i, buf, bufsize); if (zr != ZR_OK) { CloseZip(hzsrc); CloseZip(hzdst); return zr; }
-		zr = ZipAdd(hzdst, ze.name, buf, bufsize); if (zr != ZR_OK) { CloseZip(hzsrc); CloseZip(hzdst); return zr; }
+	char poop[MAX_PATH];
+	strcpy(poop, DestinationFolder);
+	strcat(poop, "Assets.zip");
+
+	hz = CreateZip(_T(poop), 0);
+
+	char SourceFile[MAX_PATH];
+	char DestinationFile[MAX_PATH];
+
+	char Path[MAX_PATH];
+	strcpy(Path, SourceFolder);
+	strcat(Path, "*.*");
+
+	WIN32_FIND_DATA fd;
+	HANDLE hFind = ::FindFirstFile(Path, &fd);
+	if (hFind != INVALID_HANDLE_VALUE) {
+		do {
+
+			if (!(fd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY))
+			{
+				strcpy(SourceFile, SourceFolder);
+				strcat(SourceFile, fd.cFileName);
+
+				strcpy(DestinationFile, DestinationFolder);
+				strcat(DestinationFile, fd.cFileName);
+
+				//CopyFile(SourceFile, DestinationFile, false);
+				ZipAdd(hz, _T(fd.cFileName), _T(SourceFile));
+			}
+
+		} while (::FindNextFile(hFind, &fd));
+		::FindClose(hFind);
 	}
-	delete[] buf;
-	// Now add the new file
-	if (zefn != 0) { zr = ZipAdd(hzdst, zename, zefn); if (zr != ZR_OK) { CloseZip(hzsrc); CloseZip(hzdst); return zr; } }
-	zr = CloseZip(hzsrc); if (zr != ZR_OK) { CloseZip(hzdst); return zr; }
-	//
-	// The new file has been put into pagefile memory. Let's store it to disk, overwriting the original zip
-	zr = ZipGetMemory(hzdst, (void**)&buf, &size); if (zr != ZR_OK) { CloseZip(hzdst); return zr; }
-	hf = CreateFile(zipfn, GENERIC_WRITE, 0, 0, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, 0); if (hf == INVALID_HANDLE_VALUE) { CloseZip(hzdst); return ZR_WRITE; }
-	DWORD writ; WriteFile(hf, buf, size, &writ, 0); CloseHandle(hf);
-	zr = CloseZip(hzdst); if (zr != ZR_OK) return zr;
 
-	return ZR_OK;
+	CloseZip(hz);
+
+	Debug
+	return 1;
 }
+

@@ -2760,13 +2760,10 @@ unsigned int FormatZipMessageZ(ZRESULT code, char *buf,unsigned int len)
   return mlen;
 }
 
-
-
 typedef struct
 { DWORD flag;
   TZip *zip;
 } TZipHandleData;
-
 
 HZIP CreateZipInternal(void *z,unsigned int len,DWORD flags, const char *password)
 { TZip *zip = new TZip(password);
