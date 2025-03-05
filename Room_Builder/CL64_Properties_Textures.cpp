@@ -199,13 +199,13 @@ LRESULT CALLBACK CL64_Properties_Textures::Proc_TextureDialog(HWND hDlg, UINT me
 		
 		if (LOWORD(wParam) == IDC_BT_TXL_FILE_EDIT)
 		{
-			//App->CL_TXL_Editor->Start_Texl_Dialog();
+			App->CL_TXL_Editor->Start_Texl_Dialog();
 
 			//App->CL_Level->Level_SetWadPath(App->CLSB_Doc->pLevel, Level_GetWadPath(App->CLSB_Doc->pLevel));
 			//App->CL_World->Set_Current_TxlPath();
-			App->CL_Doc->UpdateAfterWadChange();
+			//App->CL_Doc->UpdateAfterWadChange();
 
-			App->CL_Properties_Textures->Fill_ListBox();
+			//App->CL_Properties_Textures->Fill_ListBox();
 
 			return TRUE;
 		}

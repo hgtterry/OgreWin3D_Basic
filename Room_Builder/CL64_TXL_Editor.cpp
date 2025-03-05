@@ -36,16 +36,13 @@ CL64_TXL_Editor::CL64_TXL_Editor()
 	BasePicDepth = 0;
 
 	mFileName[0] = 0;
-	mTextureName[0] = 0;
+	m_Selected_TextureName[0] = 0;
 	Add_Texture_FileName[0] = 0;
 	Just_Name[0] = 0;
 
 	mFileString.clear();
 	flag_Textures_Scanned = 0;
 	Sel_BaseBitmap = NULL;
-
-	pData = NULL;
-	Current_Entry = NULL;
 
 	Texture_Count = 0;
 	Selected_Texure_Index = 0;
@@ -63,7 +60,7 @@ CL64_TXL_Editor::~CL64_TXL_Editor()
 }
 
 // *************************************************************************
-// *	  		Dialog_Text:- Terry and Hazel Flanigan 2025				   *
+// *	  		Start_Texl_Dialog:- Terry and Hazel Flanigan 2025		   *
 // *************************************************************************
 void CL64_TXL_Editor::Start_Texl_Dialog()
 {
@@ -79,17 +76,20 @@ LRESULT CALLBACK CL64_TXL_Editor::Proc_Texl_Dialog(HWND hDlg, UINT message, WPAR
 	{
 	case WM_INITDIALOG:
 	{
-		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_TEXTURELIST2, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ST_TEXTURE_NAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_GEINFO, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
+		SendDlgItemMessage(hDlg, IDC_TXL_DELETE_TEXTURE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
+		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
 		SetWindowLongPtr(GetDlgItem(hDlg, IDC_PREVIEW), GWLP_WNDPROC, (LONG_PTR)Proc_ViewerBasePic);
 
 		App->CL_TXL_Editor->TXL_Dlg_HWND = hDlg;
 		App->CL_TXL_Editor->UpDateList();
 		App->CL_TXL_Editor->SelectBitmap();
-		int TrueIndex = App->CL_TXL_Editor->GetIndex_From_FileName(App->CL_TXL_Editor->mTextureName);
+		int TrueIndex = App->CL_TXL_Editor->GetIndex_From_FileName(App->CL_TXL_Editor->m_Selected_TextureName);
 
 		App->CL_TXL_Editor->Update_Texture_Info(TrueIndex);
 		
@@ -116,6 +116,13 @@ LRESULT CALLBACK CL64_TXL_Editor::Proc_Texl_Dialog(HWND hDlg, UINT message, WPAR
 	{
 		LPNMHDR some_item = (LPNMHDR)lParam;
 
+		if (some_item->idFrom == IDC_TXL_DELETE_TEXTURE)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
 		if (some_item->idFrom == IDOK)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
@@ -140,12 +147,19 @@ LRESULT CALLBACK CL64_TXL_Editor::Proc_Texl_Dialog(HWND hDlg, UINT message, WPAR
 		{
 			App->CL_TXL_Editor->SelectBitmap();
 
-			int TrueIndex = App->CL_TXL_Editor->GetIndex_From_FileName(App->CL_TXL_Editor->mTextureName);
+			int TrueIndex = App->CL_TXL_Editor->GetIndex_From_FileName(App->CL_TXL_Editor->m_Selected_TextureName);
 			App->CL_TXL_Editor->Update_Texture_Info(TrueIndex);
 
 			return TRUE;
 		}
 
+		if (LOWORD(wParam) == IDC_TXL_DELETE_TEXTURE)
+		{
+			App->Say(App->CL_TXL_Editor->m_Selected_TextureName);
+
+			return TRUE;
+		}
+		
 		if (LOWORD(wParam) == IDCANCEL)
 		{
 			EndDialog(hDlg, LOWORD(wParam));
@@ -294,9 +308,9 @@ bool CL64_TXL_Editor::SelectBitmap()
 	else
 	{
 		char buff[MAX_PATH]{ 0 };
-		SendDlgItemMessage(TXL_Dlg_HWND, IDC_TEXTURELIST2, LB_GETTEXT, (WPARAM)Index, (LPARAM)mTextureName);
+		SendDlgItemMessage(TXL_Dlg_HWND, IDC_TEXTURELIST2, LB_GETTEXT, (WPARAM)Index, (LPARAM)m_Selected_TextureName);
 
-		SetDlgItemText(TXL_Dlg_HWND, IDC_ST_TEXTURE_NAME, (LPCTSTR)mTextureName);
+		SetDlgItemText(TXL_Dlg_HWND, IDC_ST_TEXTURE_NAME, (LPCTSTR)m_Selected_TextureName);
 		
 		Ogre::FileInfoListPtr RFI = ResourceGroupManager::getSingleton().listResourceFileInfo(App->CL_Ogre->Texture_Resource_Group, false);
 		Ogre::FileInfoList::const_iterator i, iend;
@@ -304,7 +318,7 @@ bool CL64_TXL_Editor::SelectBitmap()
 
 		for (i = RFI->begin(); i != iend; ++i)
 		{
-			if (i->filename == mTextureName)
+			if (i->filename == m_Selected_TextureName)
 			{
 				Ogre::DataStreamPtr ff = i->archive->open(i->filename);
 
@@ -313,7 +327,7 @@ bool CL64_TXL_Editor::SelectBitmap()
 				char mFileName[MAX_PATH];
 				strcpy(mFileName, App->RB_Directory_FullPath);
 				strcat(mFileName, "\\Data\\");
-				strcat(mFileName, mTextureName);
+				strcat(mFileName, m_Selected_TextureName);
 
 				std::ofstream outFile;
 				outFile.open(mFileName, std::ios::binary);
@@ -349,39 +363,6 @@ void CL64_TXL_Editor::Texture_To_HBITMP(char* TextureFileName)
 	RedrawWindow(TXL_Dlg_HWND, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 }
 
-/// ------------------------------------------
-
-
-// *************************************************************************
-// *						Create_New_pData 						  	   *
-// *************************************************************************
-void CL64_TXL_Editor::Create_New_pData()
-{
-	Delete_pData();
-
-	pData = new TPack_WindowData;
-	pData->BitmapCount = 0;
-	pData->Bitmaps = NULL;
-	pData->Dirty = 0;
-	pData->FileNameIsValid = 0;
-	pData->Instance = App->hInst;
-	pData->SelectedEntry = NULL;
-
-	strcpy(pData->TXLFileName, mFileName);
-}
-
-// *************************************************************************
-// *							Delete_pData 						  	   *
-// *************************************************************************
-void CL64_TXL_Editor::Delete_pData()
-{
-	if (pData)
-	{
-		delete pData;
-		pData = NULL;
-	}
-}
-
 // *************************************************************************
 // *				Check_if_Name_Exist:- Terry and Hazel Flanigan 2025 		  	   *
 // *************************************************************************
@@ -389,7 +370,7 @@ int CL64_TXL_Editor::Check_if_Name_Exist(const char* Name)
 {
 	int	i;
 
-	for (i = 0; i < pData->BitmapCount; i++)
+	for (i = 0; i < Texture_Count; i++)
 	{
 
 		if (!strcmp(Name, Texture_List[i]->Name))

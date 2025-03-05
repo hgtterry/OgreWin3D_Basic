@@ -26,26 +26,15 @@ THE SOFTWARE.
 
 typedef	struct	BitmapEntry
 {
-	char Name[20];
-	char FileName[20];
-	int			Dib_Index;
-	bool		Dirty;
-	bool		Deleted;
-	bool		Has_Alpha;
-	int			Width;
-	int			Height;
+	char	Name[20];
+	char	FileName[20];
+	int		Dib_Index;
+	bool	Dirty;
+	bool	Deleted;
+	bool	Has_Alpha;
+	int		Width;
+	int		Height;
 }	BitmapEntry;
-
-typedef struct	TPack_WindowData
-{
-	HINSTANCE		Instance;
-	int				BitmapCount;
-	BitmapEntry*	Bitmaps;
-	BitmapEntry*	SelectedEntry;
-	BOOL			FileNameIsValid;
-	char			TXLFileName[256];
-	BOOL			Dirty;
-}	TPack_WindowData;
 
 class CL64_TXL_Editor
 {
@@ -84,18 +73,12 @@ private:
 	void UpDateList();
 	bool SelectBitmap();
 	void Texture_To_HBITMP(char* TextureFileName);
-
-	void Create_New_pData();
-	void Delete_pData();
 	void Update_Texture_Info(int Index);
 
-	TPack_WindowData*	pData;
-	BitmapEntry*		Current_Entry;
-	
 	HWND TXL_Dlg_HWND;
 
 	int Selected_Texure_Index;
-	char mTextureName[MAX_PATH];
+	char m_Selected_TextureName[MAX_PATH];
 	char Just_Name[MAX_PATH];
 
 };
