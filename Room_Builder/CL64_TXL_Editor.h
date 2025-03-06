@@ -74,6 +74,7 @@ private:
 	bool SelectBitmap();
 	void Texture_To_HBITMP(char* TextureFileName);
 	void Update_Texture_Info(int Index);
+	void Delete_File(const char* File);
 
 	HWND TXL_Dlg_HWND;
 

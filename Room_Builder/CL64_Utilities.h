@@ -40,9 +40,6 @@ public:
 	void UnZip_Test_2(const char* FileName);
 	bool Zip_Assets(char* SourceFolder, char* DestinationFolder);
 
-	void RemoveFileFromZip(const char* File);
-	
-
 	char JustFileName[MAX_PATH];
 };
 

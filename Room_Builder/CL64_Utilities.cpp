@@ -138,40 +138,6 @@ void CL64_Utilities::Get_FileName_FromPath(char* pString, char* FileName)
 }
 
 // *************************************************************************
-// *							RemoveFileFromZip						   *
-// *************************************************************************
-void CL64_Utilities::RemoveFileFromZip(const char* File)
-{
-	Do_Timer
-
-	App->CL_Utilities->UnZip_Test_2(File);
-
-	char mFileName[MAX_PATH];
-	strcpy(mFileName, App->RB_Directory_FullPath);
-	strcat(mFileName, "\\Data\\Texture_Test\\");
-
-	App->CL_Utilities->Zip_Assets(mFileName, mFileName);
-
-	strcpy(mFileName, App->RB_Directory_FullPath);
-	strcat(mFileName, "\\Data\\Texture_Test\\Assets.zip");
-
-	char mFileName2[MAX_PATH];
-	strcpy(mFileName2, App->RB_Directory_FullPath);
-	strcat(mFileName2, "\\Data\\Room_Builder\\Assets.zip");
-
-	CopyFile(mFileName, mFileName2, false);
-
-	char mWorld_File_PathAndFile[MAX_PATH];
-	strcpy(mWorld_File_PathAndFile, App->RB_Directory_FullPath);
-	strcat(mWorld_File_PathAndFile, "\\Data\\Texture_Test");
-	App->CL_Utilities->Delete_Folder_Contents(mWorld_File_PathAndFile);
-
-	Get_Timer
-
-	Debug
-}
-
-// *************************************************************************
 // *			UnZip_Test_2:- Terry and Hazel Flanigan 2025			   *
 // *************************************************************************
 void CL64_Utilities::UnZip_Test_2(const char* FileName)

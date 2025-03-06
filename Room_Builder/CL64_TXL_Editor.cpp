@@ -155,9 +155,17 @@ LRESULT CALLBACK CL64_TXL_Editor::Proc_Texl_Dialog(HWND hDlg, UINT message, WPAR
 
 		if (LOWORD(wParam) == IDC_TXL_DELETE_TEXTURE)
 		{
+			App->CL_Dialogs->YesNo("Are you sure", "Do you want to Delete the selected Texture");
 
-			App->Say(App->CL_TXL_Editor->m_Selected_TextureName);
-			App->CL_Utilities->RemoveFileFromZip(App->CL_TXL_Editor->m_Selected_TextureName);
+			bool Doit = App->CL_Dialogs->flag_Dlg_Canceled;
+			if (Doit == 0)
+			{
+				App->CL_TXL_Editor->Delete_File(App->CL_TXL_Editor->m_Selected_TextureName);
+			}
+			else
+			{
+
+			}
 
 			return TRUE;
 		}
@@ -457,6 +465,40 @@ void CL64_TXL_Editor::Update_Texture_Info(int Index)
 
 	//geBitmap_GetInfo(NewBitmapList[Location]->Bitmap, &MPInfo, &MSInfo);
 
+}
+
+// *************************************************************************
+// *				Delete_File:- Terry and Hazel Flanigan 2025			   *
+// *************************************************************************
+void CL64_TXL_Editor::Delete_File(const char* File)
+{
+	Do_Timer
+
+		App->CL_Utilities->UnZip_Test_2(File);
+
+	char mFileName[MAX_PATH];
+	strcpy(mFileName, App->RB_Directory_FullPath);
+	strcat(mFileName, "\\Data\\Texture_Test\\");
+
+	App->CL_Utilities->Zip_Assets(mFileName, mFileName);
+
+	strcpy(mFileName, App->RB_Directory_FullPath);
+	strcat(mFileName, "\\Data\\Texture_Test\\Assets.zip");
+
+	char mFileName2[MAX_PATH];
+	strcpy(mFileName2, App->RB_Directory_FullPath);
+	strcat(mFileName2, "\\Data\\Room_Builder\\Assets.zip");
+
+	CopyFile(mFileName, mFileName2, false);
+
+	char mWorld_File_PathAndFile[MAX_PATH];
+	strcpy(mWorld_File_PathAndFile, App->RB_Directory_FullPath);
+	strcat(mWorld_File_PathAndFile, "\\Data\\Texture_Test");
+	App->CL_Utilities->Delete_Folder_Contents(mWorld_File_PathAndFile);
+
+	Get_Timer
+
+		Debug
 }
 
 
