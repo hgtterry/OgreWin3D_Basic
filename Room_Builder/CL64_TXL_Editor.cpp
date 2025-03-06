@@ -474,11 +474,13 @@ void CL64_TXL_Editor::Delete_File(const char* File)
 {
 	Do_Timer
 
-		App->CL_Utilities->UnZip_Test_2(File);
-
 	char mFileName[MAX_PATH];
 	strcpy(mFileName, App->RB_Directory_FullPath);
 	strcat(mFileName, "\\Data\\Texture_Test\\");
+
+	CreateDirectory(mFileName,NULL);
+
+	App->CL_Utilities->UnZip_Test_2(File);
 
 	App->CL_Utilities->Zip_Assets(mFileName, mFileName);
 
@@ -496,9 +498,12 @@ void CL64_TXL_Editor::Delete_File(const char* File)
 	strcat(mWorld_File_PathAndFile, "\\Data\\Texture_Test");
 	App->CL_Utilities->Delete_Folder_Contents(mWorld_File_PathAndFile);
 
+	RemoveDirectory(mWorld_File_PathAndFile);
+
 	Get_Timer
 
-		Debug
+	App->Say("Deleted");
+
 }
 
 
