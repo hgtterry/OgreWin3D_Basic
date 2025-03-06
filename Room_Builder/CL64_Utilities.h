@@ -37,7 +37,7 @@ public:
 	void Get_FileName_FromPath(char* pString, char* FileName);
 	void Delete_Folder_Contents(char* Folder);
 
-	void UnZip_Test_2(char* Folder);
+	void UnZip_Test_2(const char* FileName);
 	bool Zip_Assets(char* SourceFolder, char* DestinationFolder);
 
 	void RemoveFileFromZip(const char* File);

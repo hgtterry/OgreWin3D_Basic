@@ -308,7 +308,7 @@ void CL64_Ogre3D::Export_MaterialFile(char* MatFileName)
 // *************************************************************************
 void CL64_Ogre3D::Convert_ToOgre3D(bool Create)
 {
-	Do_Timer
+	//Do_Timer
 
 	if (App->CL_Mesh_Mgr->World_Ent)
 	{
@@ -489,7 +489,7 @@ void CL64_Ogre3D::Convert_ToOgre3D(bool Create)
 	remove(mWorld_File_PathAndFile);
 	remove(Material_PathAndFile);
 
-	Get_Timer
+	//Get_Timer
 }
 
 // *************************************************************************

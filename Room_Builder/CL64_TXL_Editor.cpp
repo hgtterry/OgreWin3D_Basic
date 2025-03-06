@@ -155,12 +155,9 @@ LRESULT CALLBACK CL64_TXL_Editor::Proc_Texl_Dialog(HWND hDlg, UINT message, WPAR
 
 		if (LOWORD(wParam) == IDC_TXL_DELETE_TEXTURE)
 		{
-			char BufPath[MAX_PATH];
-			strcpy(BufPath, App->RB_Directory_FullPath);
-			strcat(BufPath, "\\Data\\Room_Builder\\Default.zip");
 
-			/*App->Say(App->CL_TXL_Editor->m_Selected_TextureName);
-			App->CL_Utilities->RemoveFileFromZip(BufPath,App->CL_TXL_Editor->m_Selected_TextureName);*/
+			App->Say(App->CL_TXL_Editor->m_Selected_TextureName);
+			App->CL_Utilities->RemoveFileFromZip(App->CL_TXL_Editor->m_Selected_TextureName);
 
 			return TRUE;
 		}

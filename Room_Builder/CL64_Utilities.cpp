@@ -142,7 +142,9 @@ void CL64_Utilities::Get_FileName_FromPath(char* pString, char* FileName)
 // *************************************************************************
 void CL64_Utilities::RemoveFileFromZip(const char* File)
 {
-	App->CL_Utilities->UnZip_Test_2(NULL);
+	Do_Timer
+
+	App->CL_Utilities->UnZip_Test_2(File);
 
 	char mFileName[MAX_PATH];
 	strcpy(mFileName, App->RB_Directory_FullPath);
@@ -157,19 +159,22 @@ void CL64_Utilities::RemoveFileFromZip(const char* File)
 	strcpy(mFileName2, App->RB_Directory_FullPath);
 	strcat(mFileName2, "\\Data\\Room_Builder\\Assets.zip");
 
-	CopyFile(mFileName, mFileName2, true);
+	CopyFile(mFileName, mFileName2, false);
 
 	char mWorld_File_PathAndFile[MAX_PATH];
 	strcpy(mWorld_File_PathAndFile, App->RB_Directory_FullPath);
 	strcat(mWorld_File_PathAndFile, "\\Data\\Texture_Test");
 	App->CL_Utilities->Delete_Folder_Contents(mWorld_File_PathAndFile);
 
+	Get_Timer
+
+	Debug
 }
 
 // *************************************************************************
 // *			UnZip_Test_2:- Terry and Hazel Flanigan 2025			   *
 // *************************************************************************
-void CL64_Utilities::UnZip_Test_2(char* Folder)
+void CL64_Utilities::UnZip_Test_2(const char* FileName)
 {
 	Ogre::String mFileString;
 
@@ -183,21 +188,28 @@ void CL64_Utilities::UnZip_Test_2(char* Folder)
 
 	for (i = RFI->begin(); i != iend; ++i)
 	{
-		Ogre::DataStreamPtr ff = i->archive->open(i->filename);
+		if (i->filename == FileName)
+		{
 
-		mFileString = ff->getAsString();
+		}
+		else
+		{
+			Ogre::DataStreamPtr ff = i->archive->open(i->filename);
 
-		char mFileName[MAX_PATH];
-		strcpy(mFileName, App->RB_Directory_FullPath);
-		strcat(mFileName, "\\Data\\Texture_Test\\");
-		strcat(mFileName, i->filename.c_str());
+			mFileString = ff->getAsString();
 
-		std::ofstream outFile;
-		outFile.open(mFileName, std::ios::binary);
-		outFile << mFileString;
-		outFile.close();
+			char mFileName[MAX_PATH];
+			strcpy(mFileName, App->RB_Directory_FullPath);
+			strcat(mFileName, "\\Data\\Texture_Test\\");
+			strcat(mFileName, i->filename.c_str());
 
-		mFileString.clear();
+			std::ofstream outFile;
+			outFile.open(mFileName, std::ios::binary);
+			outFile << mFileString;
+			outFile.close();
+
+			mFileString.clear();
+		}
 	}
 }
 
@@ -244,7 +256,6 @@ bool CL64_Utilities::Zip_Assets(char* SourceFolder, char* DestinationFolder)
 
 	CloseZip(hz);
 
-	Debug
 	return 1;
 }
 
