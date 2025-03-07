@@ -40,6 +40,8 @@ CL64_TXL_Editor::CL64_TXL_Editor()
 	Add_Texture_FileName[0] = 0;
 	Just_Name[0] = 0;
 
+	flag_Texl_Dialog_Active = 0;
+
 	mFileString.clear();
 	flag_Textures_Scanned = 0;
 	Sel_BaseBitmap = NULL;
@@ -64,7 +66,11 @@ CL64_TXL_Editor::~CL64_TXL_Editor()
 // *************************************************************************
 void CL64_TXL_Editor::Start_Texl_Dialog()
 {
-	DialogBox(App->hInst, (LPCTSTR)IDD_TXL_EDITOR, App->MainHwnd, (DLGPROC)Proc_Texl_Dialog);
+	if (flag_Texl_Dialog_Active == 0)
+	{
+		DialogBox(App->hInst, (LPCTSTR)IDD_TXL_EDITOR, App->MainHwnd, (DLGPROC)Proc_Texl_Dialog);
+
+	}
 }
 
 // **************************************************************************
@@ -76,12 +82,15 @@ LRESULT CALLBACK CL64_TXL_Editor::Proc_Texl_Dialog(HWND hDlg, UINT message, WPAR
 	{
 	case WM_INITDIALOG:
 	{
+		App->CL_TXL_Editor->flag_Texl_Dialog_Active = 1;
+
 		SendDlgItemMessage(hDlg, IDC_TEXTURELIST2, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ST_TEXTURE_NAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_GEINFO, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ST_TXL_COUNT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
 		SendDlgItemMessage(hDlg, IDC_TXL_DELETE_TEXTURE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_TXL_ADD_TEXTURE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
 		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
@@ -127,6 +136,13 @@ LRESULT CALLBACK CL64_TXL_Editor::Proc_Texl_Dialog(HWND hDlg, UINT message, WPAR
 		LPNMHDR some_item = (LPNMHDR)lParam;
 
 		if (some_item->idFrom == IDC_TXL_DELETE_TEXTURE)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_TXL_ADD_TEXTURE)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
@@ -185,8 +201,26 @@ LRESULT CALLBACK CL64_TXL_Editor::Proc_Texl_Dialog(HWND hDlg, UINT message, WPAR
 			return TRUE;
 		}
 		
+		if (LOWORD(wParam) == IDC_TXL_ADD_TEXTURE)
+		{
+			App->CL_TXL_Editor->Add_File();
+
+			App->CL_Resources->Load_Texture_Resources();
+			App->CL_TXL_Editor->Scan_Textures_Resource_Group();
+			App->CL_Properties_Textures->Fill_ListBox();
+
+			App->CL_TXL_Editor->Selected_Texure_Index--;
+			App->CL_TXL_Editor->UpDateList();
+			App->CL_TXL_Editor->SelectBitmap();
+
+			App->CL_Level->Level_LoadWad(App->CL_Doc->pLevel);
+
+			return TRUE;
+		}
+		
 		if (LOWORD(wParam) == IDCANCEL)
 		{
+			App->CL_TXL_Editor->flag_Texl_Dialog_Active = 0;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
@@ -500,7 +534,7 @@ void CL64_TXL_Editor::Delete_File(const char* File)
 
 	CreateDirectory(mFileName,NULL);
 
-	App->CL_Utilities->Extract_Textures(File);
+	App->CL_Utilities->Extract_Textures(false, File);
 
 	App->CL_Utilities->Zip_Assets(mFileName, mFileName);
 
@@ -524,7 +558,64 @@ void CL64_TXL_Editor::Delete_File(const char* File)
 	Get_Timer
 
 	App->Say("Deleted");
+}
 
+// *************************************************************************
+// *				Add_File:- Terry and Hazel Flanigan 2025			   *
+// *************************************************************************
+void CL64_TXL_Editor::Add_File()
+{
+	LPCWSTR mType = L"Texture Files";
+	LPCWSTR mExtensions = L"*.bmp;*.tga;*.jpg;*.dds";
+
+
+	int test = App->CL_File_IO->Open_File((LPCWSTR)mType, (LPCWSTR)mExtensions);
+	if (test == 0)
+	{
+		return;
+	}
+
+	//App->Say_Win(App->CL_File_IO->s_Path_And_File.c_str());
+	//App->Say_Win(App->CL_File_IO->s_Just_FileName.c_str());
+
+	char mFileName[MAX_PATH];
+	strcpy(mFileName, App->RB_Directory_FullPath);
+	strcat(mFileName, "\\Data\\Texture_Test\\");
+
+	CreateDirectory(mFileName, NULL);
+
+	App->CL_Utilities->Extract_Textures(false, "z");
+
+
+	char Dest[MAX_PATH];
+	strcpy(Dest, App->RB_Directory_FullPath);
+	strcat(Dest, "\\Data\\Texture_Test\\");
+	strcat(Dest, App->CL_File_IO->s_Just_FileName.c_str());
+
+	CopyFile(App->CL_File_IO->s_Path_And_File.c_str(), Dest, false); // Overwrite
+
+	App->CL_Utilities->Zip_Assets(mFileName, mFileName);
+
+	char Source[MAX_PATH];
+	strcpy(Source, App->RB_Directory_FullPath);
+	strcat(Source, "\\Data\\Texture_Test\\Assets.zip");
+
+	char Destination[MAX_PATH];
+	strcpy(Destination, App->RB_Directory_FullPath);
+	strcat(Destination, "\\Data\\Room_Builder\\Default.zip");
+
+	CopyFile(Source, Destination, false); // Overwrite
+
+	char Empty_Folder[MAX_PATH];
+	strcpy(Empty_Folder, App->RB_Directory_FullPath);
+	strcat(Empty_Folder, "\\Data\\Texture_Test");
+	App->CL_Utilities->Delete_Folder_Contents(Empty_Folder);
+
+	RemoveDirectory(Empty_Folder);
+
+	Get_Timer
+
+		App->Say("Added");
 }
 
 

@@ -81,7 +81,6 @@ signed int CL64_WadFile::Setup()
 				++mBitmapCount;
 				Count++;
 			}
-
 		}
 
 	return true;

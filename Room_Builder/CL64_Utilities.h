@@ -37,7 +37,7 @@ public:
 	void Get_FileName_FromPath(char* pString, char* FileName);
 	void Delete_Folder_Contents(char* Folder);
 
-	void Extract_Textures(const char* Exclude_File);
+	void Extract_Textures(bool Extract_All,const char* Exclude_File);
 	bool Zip_Assets(char* SourceFolder, char* DestinationFolder);
 
 	char JustFileName[MAX_PATH];

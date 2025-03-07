@@ -35,7 +35,7 @@ CL64_Properties_Textures::CL64_Properties_Textures()
 	Dialog_Created = 0;
 
 	mFileString.clear();
-
+	Selected_Index = 0;
 	Sel_BaseBitmap = NULL;
 	BasePicWidth = NULL;
 	BasePicHeight = NULL;
@@ -67,7 +67,6 @@ void CL64_Properties_Textures::Start_TextureDialog()
 	Textures_Dlg_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_PROPS_TEXTURES, App->CL_Properties_Tabs->Tabs_Control_Hwnd, (DLGPROC)Proc_TextureDialog);
 
 	Dialog_Created = 1;
-	//Set_Txl_FileName();
 	Fill_ListBox();
 	SelectBitmap();
 }
@@ -185,12 +184,12 @@ LRESULT CALLBACK CL64_Properties_Textures::Proc_TextureDialog(HWND hDlg, UINT me
 
 		if (LOWORD(wParam) == IDC_BT_TXL_FILE_EDIT)
 		{
+			App->CL_TXL_Editor->Selected_Texure_Index = App->CL_Properties_Textures->Selected_Index;
 			App->CL_TXL_Editor->Start_Texl_Dialog();
 
 			//App->CL_Level->Level_SetWadPath(App->CLSB_Doc->pLevel, Level_GetWadPath(App->CLSB_Doc->pLevel));
 			//App->CL_World->Set_Current_TxlPath();
 			//App->CL_Doc->UpdateAfterWadChange();
-
 			//App->CL_Properties_Textures->Fill_ListBox();
 
 			return TRUE;
@@ -447,6 +446,7 @@ void CL64_Properties_Textures::List_Selection_Changed()
 	sprintf(buf, "Index = %i        %i X %i", Index, BasePicWidth, BasePicHeight);
 	SetDlgItemText(Textures_Dlg_Hwnd, IDC_STWIDTHHEIGHT, (LPCTSTR)buf);
 
+	Selected_Index = Index;
 	//IDC_STWIDTHHEIGHT
 	//	Also set the current selection value in the document...
 	//m_pDoc->mCurTextureSelection = SelNum;

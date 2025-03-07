@@ -48,7 +48,11 @@ public:
 	int GetIndex_From_FileName(const char* Name);
 	int GetIndex_From_Name(const char* Name);
 
+	bool flag_Texl_Dialog_Active;
+
 	int Texture_Count;
+	int Selected_Texure_Index;
+
 	Ogre::String mFileString;
 
 	long BasePicWidth;
@@ -74,11 +78,12 @@ private:
 	bool SelectBitmap();
 	void Texture_To_HBITMP(char* TextureFileName);
 	void Update_Texture_Info(int Index);
+
 	void Delete_File(const char* File);
+	void Add_File();
 
 	HWND TXL_Dlg_HWND;
 
-	int Selected_Texure_Index;
 	char m_Selected_TextureName[MAX_PATH];
 	char Just_Name[MAX_PATH];
 

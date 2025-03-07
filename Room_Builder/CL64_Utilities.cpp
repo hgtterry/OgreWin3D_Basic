@@ -140,13 +140,9 @@ void CL64_Utilities::Get_FileName_FromPath(char* pString, char* FileName)
 // *************************************************************************
 // *			Extract_Textures:- Terry and Hazel Flanigan 2025		   *
 // *************************************************************************
-void CL64_Utilities::Extract_Textures(const char* Exclude_File)
+void CL64_Utilities::Extract_Textures(bool Extract_All,const char* Exclude_File)
 {
 	Ogre::String mFileString;
-
-	char OutDir[MAX_PATH];
-	strcpy(OutDir, App->RB_Directory_FullPath);
-	strcat(OutDir, "\\Data\\Poo\\");
 
 	Ogre::FileInfoListPtr RFI = ResourceGroupManager::getSingleton().listResourceFileInfo(App->CL_Ogre->Texture_Resource_Group, false);
 	Ogre::FileInfoList::const_iterator i, iend;
@@ -154,7 +150,7 @@ void CL64_Utilities::Extract_Textures(const char* Exclude_File)
 
 	for (i = RFI->begin(); i != iend; ++i)
 	{
-		if (i->filename == Exclude_File)
+		if (i->filename == Exclude_File && Extract_All == 0)
 		{
 
 		}

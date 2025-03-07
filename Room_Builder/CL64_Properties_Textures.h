@@ -41,6 +41,8 @@ public:
 	long BasePicWidth;
 	long BasePicHeight;
 
+	int Selected_Index;
+
 	bool Dialog_Created;
 	char m_CurrentTexture[MAX_PATH];
 
