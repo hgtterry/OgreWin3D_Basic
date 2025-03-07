@@ -79,6 +79,7 @@ LRESULT CALLBACK CL64_TXL_Editor::Proc_Texl_Dialog(HWND hDlg, UINT message, WPAR
 		SendDlgItemMessage(hDlg, IDC_TEXTURELIST2, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ST_TEXTURE_NAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_GEINFO, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_ST_TXL_COUNT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
 		SendDlgItemMessage(hDlg, IDC_TXL_DELETE_TEXTURE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
@@ -104,6 +105,15 @@ LRESULT CALLBACK CL64_TXL_Editor::Proc_Texl_Dialog(HWND hDlg, UINT message, WPAR
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->AppBackground;
 		}
+
+		if (GetDlgItem(hDlg, IDC_ST_TXL_COUNT) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->Brush_White;
+		}
+		
 		return FALSE;
 	}
 
@@ -162,10 +172,13 @@ LRESULT CALLBACK CL64_TXL_Editor::Proc_Texl_Dialog(HWND hDlg, UINT message, WPAR
 			{
 				App->CL_TXL_Editor->Delete_File(App->CL_TXL_Editor->m_Selected_TextureName);
 
-
 				App->CL_Resources->Load_Texture_Resources();
 				App->CL_TXL_Editor->Scan_Textures_Resource_Group();
 				App->CL_Properties_Textures->Fill_ListBox();
+				
+				App->CL_TXL_Editor->Selected_Texure_Index--;
+				App->CL_TXL_Editor->UpDateList();
+				App->CL_TXL_Editor->SelectBitmap();
 
 			}
 			
@@ -285,11 +298,12 @@ void CL64_TXL_Editor::Scan_Textures_Resource_Group()
 }
 
 // *************************************************************************
-// *						UpDateList  13/06/08 					  	   *
+// *			UpDateList:- Terry and Hazel Flanigan 2025 			  	   *
 // *************************************************************************
 void CL64_TXL_Editor::UpDateList()
 {
-	int Index = 0;// SendDlgItemMessage(A_TXL_Dlg_HWND, IDC_TEXTURELIST2, LB_GETCURSEL, (WPARAM)0, (LPARAM)0);
+	int Index = Selected_Texure_Index;
+
 	SendDlgItemMessage(TXL_Dlg_HWND, IDC_TEXTURELIST2, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
 
 	int Count = 0;
@@ -301,10 +315,12 @@ void CL64_TXL_Editor::UpDateList()
 
 	SendDlgItemMessage(TXL_Dlg_HWND, IDC_TEXTURELIST2, LB_SETCURSEL, (WPARAM)Index, (LPARAM)0);
 
+	SetDlgItemInt(TXL_Dlg_HWND, IDC_ST_TXL_COUNT, Texture_Count,false);
+	
 }
 
 // *************************************************************************
-// *			A_SelectBitmap:- Terry and Hazel Flanigan 2025 	  	   *
+// *			SelectBitmap:- Terry and Hazel Flanigan 2025		  	   *
 // *************************************************************************
 bool CL64_TXL_Editor::SelectBitmap()
 {
@@ -350,6 +366,8 @@ bool CL64_TXL_Editor::SelectBitmap()
 
 				Texture_To_HBITMP(mFileName);
 				remove(mFileName);
+
+				Selected_Texure_Index = Index;
 				return 1;
 			}
 		}
