@@ -527,19 +527,11 @@ void CL64_TXL_Editor::Update_Texture_Info(int Index)
 	sprintf(buff, "%s %s", "File Name :-", Texture_List[Index]->FileName);
 	SendDlgItemMessage(TXL_Dlg_HWND, IDC_GEINFO, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);
 
-	//sprintf(buff, "%s %i", "Index :-", Location);
-	//SendDlgItemMessage(TXL_Dlg_HWND, IDC_GEINFO, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);
-
-	/*sprintf(buff, "%s %s", "Bitmap :-", "Valid");
+	sprintf(buff, "%s %d", "Width :-", Texture_List[Index]->Width);
 	SendDlgItemMessage(TXL_Dlg_HWND, IDC_GEINFO, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);
 
-	sprintf(buff, "%s %d", "Width :-", geBitmap_Width(NewBitmapList[Location]->Bitmap));
+	sprintf(buff, "%s %d", "Height :-", Texture_List[Index]->Height);
 	SendDlgItemMessage(TXL_Dlg_HWND, IDC_GEINFO, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);
-
-	sprintf(buff, "%s %d", "Height :-", geBitmap_Height(NewBitmapList[Location]->Bitmap));
-	SendDlgItemMessage(TXL_Dlg_HWND, IDC_GEINFO, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);*/
-
-	//geBitmap_GetInfo(NewBitmapList[Location]->Bitmap, &MPInfo, &MSInfo);
 
 }
 
