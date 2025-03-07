@@ -429,4 +429,5 @@ void CL64_Ogre::Processes_Get_Time(void)
 {
 	m_Processes_Time = Processes_timer.getMilliseconds();
 	Processes_timer.reset();
+	App->CL_Ogre->RenderFrame(5);
 }

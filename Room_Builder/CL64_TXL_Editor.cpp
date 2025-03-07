@@ -155,18 +155,20 @@ LRESULT CALLBACK CL64_TXL_Editor::Proc_Texl_Dialog(HWND hDlg, UINT message, WPAR
 
 		if (LOWORD(wParam) == IDC_TXL_DELETE_TEXTURE)
 		{
-			App->CL_Dialogs->YesNo("Are you sure", "Do you want to Delete the selected Texture");
+			App->CL_Dialogs->YesNo("Do you want to Delete the selected Texture", App->CL_TXL_Editor->m_Selected_TextureName);
 
 			bool Doit = App->CL_Dialogs->flag_Dlg_Canceled;
 			if (Doit == 0)
 			{
 				App->CL_TXL_Editor->Delete_File(App->CL_TXL_Editor->m_Selected_TextureName);
-			}
-			else
-			{
+
+
+				App->CL_Resources->Load_Texture_Resources();
+				App->CL_TXL_Editor->Scan_Textures_Resource_Group();
+				App->CL_Properties_Textures->Fill_ListBox();
 
 			}
-
+			
 			return TRUE;
 		}
 		
@@ -480,25 +482,26 @@ void CL64_TXL_Editor::Delete_File(const char* File)
 
 	CreateDirectory(mFileName,NULL);
 
-	App->CL_Utilities->UnZip_Test_2(File);
+	App->CL_Utilities->Extract_Textures(File);
 
 	App->CL_Utilities->Zip_Assets(mFileName, mFileName);
 
-	strcpy(mFileName, App->RB_Directory_FullPath);
-	strcat(mFileName, "\\Data\\Texture_Test\\Assets.zip");
+	char Source[MAX_PATH];
+	strcpy(Source, App->RB_Directory_FullPath);
+	strcat(Source, "\\Data\\Texture_Test\\Assets.zip");
 
-	char mFileName2[MAX_PATH];
-	strcpy(mFileName2, App->RB_Directory_FullPath);
-	strcat(mFileName2, "\\Data\\Room_Builder\\Assets.zip");
+	char Destination[MAX_PATH];
+	strcpy(Destination, App->RB_Directory_FullPath);
+	strcat(Destination, "\\Data\\Room_Builder\\Default.zip");
 
-	CopyFile(mFileName, mFileName2, false);
+	CopyFile(Source, Destination, false); // Overwrite
 
-	char mWorld_File_PathAndFile[MAX_PATH];
-	strcpy(mWorld_File_PathAndFile, App->RB_Directory_FullPath);
-	strcat(mWorld_File_PathAndFile, "\\Data\\Texture_Test");
-	App->CL_Utilities->Delete_Folder_Contents(mWorld_File_PathAndFile);
+	char Empty_Folder[MAX_PATH];
+	strcpy(Empty_Folder, App->RB_Directory_FullPath);
+	strcat(Empty_Folder, "\\Data\\Texture_Test");
+	App->CL_Utilities->Delete_Folder_Contents(Empty_Folder);
 
-	RemoveDirectory(mWorld_File_PathAndFile);
+	RemoveDirectory(Empty_Folder);
 
 	Get_Timer
 

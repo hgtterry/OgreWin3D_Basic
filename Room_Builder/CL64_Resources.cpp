@@ -871,6 +871,7 @@ void CL64_Resources::Load_Texture_Resources()
 
 	if (Ogre::ResourceGroupManager::getSingleton().resourceGroupExists(App->CL_Ogre->Texture_Resource_Group))
 	{
+		Ogre::ResourceGroupManager::getSingleton().removeResourceLocation(BufPath, App->CL_Ogre->Texture_Resource_Group);
 		Ogre::ResourceGroupManager::getSingleton().destroyResourceGroup(App->CL_Ogre->Texture_Resource_Group);
 	}
 

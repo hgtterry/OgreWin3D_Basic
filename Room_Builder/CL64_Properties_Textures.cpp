@@ -623,6 +623,8 @@ void CL64_Properties_Textures::Fill_ListBox()
 
 	//if (f_TextureDlg_Active == 1)
 	{
+		SendDlgItemMessage(Textures_Dlg_Hwnd, IDC_LISTTDTEXTURES, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
+
 		for (int index = 0; index < App->CL_TXL_Editor->Texture_Count; index++)
 		{
 			char mName[MAX_PATH];

@@ -138,9 +138,9 @@ void CL64_Utilities::Get_FileName_FromPath(char* pString, char* FileName)
 }
 
 // *************************************************************************
-// *			UnZip_Test_2:- Terry and Hazel Flanigan 2025			   *
+// *			Extract_Textures:- Terry and Hazel Flanigan 2025		   *
 // *************************************************************************
-void CL64_Utilities::UnZip_Test_2(const char* FileName)
+void CL64_Utilities::Extract_Textures(const char* Exclude_File)
 {
 	Ogre::String mFileString;
 
@@ -154,7 +154,7 @@ void CL64_Utilities::UnZip_Test_2(const char* FileName)
 
 	for (i = RFI->begin(); i != iend; ++i)
 	{
-		if (i->filename == FileName)
+		if (i->filename == Exclude_File)
 		{
 
 		}
@@ -173,7 +173,6 @@ void CL64_Utilities::UnZip_Test_2(const char* FileName)
 			outFile.open(mFileName, std::ios::binary);
 			outFile << mFileString;
 			outFile.close();
-
 			mFileString.clear();
 		}
 	}
@@ -211,12 +210,11 @@ bool CL64_Utilities::Zip_Assets(char* SourceFolder, char* DestinationFolder)
 
 				strcpy(DestinationFile, DestinationFolder);
 				strcat(DestinationFile, fd.cFileName);
-
-				//CopyFile(SourceFile, DestinationFile, false);
 				ZipAdd(hz, _T(fd.cFileName), _T(SourceFile));
 			}
 
 		} while (::FindNextFile(hFind, &fd));
+
 		::FindClose(hFind);
 	}
 
