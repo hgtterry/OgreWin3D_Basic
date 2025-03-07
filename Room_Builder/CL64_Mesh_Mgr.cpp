@@ -239,20 +239,9 @@ bool CL64_Mesh_Mgr::Brush_Build_Level_Brushes(Level3* pLevel, const char* Filena
 		if (UsedTextures[i])
 		{
 			char matname[MAX_PATH];
-			//int j, k;
+
 			strncpy(matname, pWad->mBitmaps[i].Name, MAX_PATH - 1);
 			strcpy(TextureName2[AdjustedIndex], matname);
-
-			//App->Say(matname);
-
-			/*if (geBitmap_HasAlpha(pWad->mBitmaps[i].bmp))
-			{
-				IsTextureAlpha[AdjustedIndex] = 1;
-			}
-			else
-			{
-				IsTextureAlpha[AdjustedIndex] = 0;
-			}*/
 
 			mAdjusedIndex_Store[AdjustedIndex] = i;
 

@@ -52,6 +52,7 @@
 #define IDD_RESOURCE_VIEWER             167
 #define IDD_TEXTUREVIEWER               168
 #define IDD_TXL_EDITOR                  169
+#define IDD_LISTDATA                    170
 #define IDC_BANNER                      1000
 #define IDC_STTEXT                      1001
 #define IDC_STMESSAGE                   1002
@@ -323,6 +324,8 @@
 #define IDC_ST_FACEINFO                 1258
 #define IDC_LIST1                       1259
 #define IDC_LST_FACE_INFO               1259
+#define ERAL                            1259
+#define IDC_LST_GENERAL                 1259
 #define IDC_TXL_DELETE_TEXTURE          1260
 #define IDC_ST_TXL_COUNT                1261
 #define IDC_TXL_ADD_TEXTURE             1262
@@ -361,6 +364,8 @@
 #define ID_GRID_SNAPOPTOPNS             32801
 #define ID_TOOLS_RESOURCEVIEWER         32802
 #define ID_TOOLS_TEXTURESEDITORNEW      32803
+#define ID_TEXTURES_TEXTURESFILEEDITOR  32804
+#define ID_TEXTURES_USEDTEXTURES        32805
 #define ID_GENERALSELECT                32886
 #define ID_TOOLS_TEMPLATE               32910
 #define IDC_STATIC                      -1
@@ -370,8 +375,8 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
-#define _APS_NEXT_RESOURCE_VALUE        169
-#define _APS_NEXT_COMMAND_VALUE         32804
+#define _APS_NEXT_RESOURCE_VALUE        171
+#define _APS_NEXT_COMMAND_VALUE         32806
 #define _APS_NEXT_CONTROL_VALUE         1263
 #define _APS_NEXT_SYMED_VALUE           110
 #endif

@@ -37,6 +37,7 @@ public:
 	void Dialog_Text(int What_Check);
 	void Dialog_SnapOptions();
 	void Start_TextureViewer_Dialog(char* TextureFile, HWND Owner_hDlg);
+	void Start_General_ListBox(int ListType);
 
 	char btext[MAX_PATH];
 	char Chr_Text[MAX_PATH];
@@ -59,7 +60,10 @@ private:
 	static LRESULT CALLBACK Proc_YesNo(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Proc_SnapOptions(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Proc_TextureViewer(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	
 	static bool CALLBACK Proc_ViewerBasePic(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);;
+	
+	static LRESULT CALLBACK Proc_General_ListBox(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	// Brush Information
 	void Fill_Brush_Combo(HWND hDlg);
@@ -67,10 +71,13 @@ private:
 	bool Show_Brush_Info(const Brush* b, HWND hDlg);
 	bool Show_Brush_ListInfo(BrushList* BList, HWND hDlg);
 	bool Show_Brush_Faces_Info(const FaceList* pList, HWND hDlg);
-	bool Show_Face_Data(int Index, const Face* f, HWND hDlg);
-	
-	int Check_What;
 
+
+	bool Show_Face_Data(int Index, const Face* f, HWND hDlg);
+	void List_Used_Textures(HWND List);
+
+	int Check_What;
+	int m_ListType;
 	char Message_Text_Header[MAX_PATH];
 	char Message_Text_Message[MAX_PATH];
 

@@ -208,19 +208,21 @@ LRESULT CALLBACK CL64_TXL_Editor::Proc_Texl_Dialog(HWND hDlg, UINT message, WPAR
 		
 		if (LOWORD(wParam) == IDC_TXL_ADD_TEXTURE)
 		{
-			App->CL_TXL_Editor->Add_File();
+			bool test = App->CL_TXL_Editor->Add_File();
+			if (test == 1)
+			{
+				App->CL_Resources->Load_Texture_Resources();
+				App->CL_TXL_Editor->Scan_Textures_Resource_Group();
+				App->CL_Properties_Textures->Fill_ListBox();
 
-			App->CL_Resources->Load_Texture_Resources();
-			App->CL_TXL_Editor->Scan_Textures_Resource_Group();
-			App->CL_Properties_Textures->Fill_ListBox();
+				App->CL_TXL_Editor->UpDateList();
 
-			App->CL_TXL_Editor->UpDateList();
+				App->CL_Level->Level_LoadWad(App->CL_Doc->pLevel);
+
+				App->CL_TXL_Editor->Select_From_TextureName(App->CL_File_IO->s_Just_FileName.c_str());
+				App->CL_Properties_Textures->Select_With_List_Index(App->CL_TXL_Editor->Selected_Texure_Index);
+			}
 			
-			App->CL_Level->Level_LoadWad(App->CL_Doc->pLevel);
-
-			App->CL_TXL_Editor->Select_From_TextureName(App->CL_File_IO->s_Just_FileName.c_str());
-			App->CL_Properties_Textures->Select_With_List_Index(App->CL_TXL_Editor->Selected_Texure_Index);
-
 			return TRUE;
 		}
 		
@@ -568,7 +570,7 @@ void CL64_TXL_Editor::Update_Texture_Info(int Index)
 // *************************************************************************
 void CL64_TXL_Editor::Delete_File(const char* File)
 {
-	Do_Timer
+	//Do_Timer
 
 	char mFileName[MAX_PATH];
 	strcpy(mFileName, App->RB_Directory_FullPath);
@@ -597,7 +599,7 @@ void CL64_TXL_Editor::Delete_File(const char* File)
 
 	RemoveDirectory(Empty_Folder);
 
-	Get_Timer
+	//Get_Timer
 
 	App->Say("Deleted");
 }
@@ -620,7 +622,7 @@ bool CL64_TXL_Editor::Add_File()
 	test = Check_if_FileName_Exist(App->CL_File_IO->s_Just_FileName.c_str());
 	if (test == 1)
 	{
-		App->Say("File Exists", App->CL_File_IO->s_Just_FileName.c_str());
+		App->Say("File Already Exists", App->CL_File_IO->s_Just_FileName.c_str());
 		return 0;
 	}
 
@@ -659,9 +661,9 @@ bool CL64_TXL_Editor::Add_File()
 
 	RemoveDirectory(Empty_Folder);
 
-	Get_Timer
+	//Get_Timer
 
-		App->Say("Added", App->CL_File_IO->s_Just_FileName.c_str());
+	App->Say("Added", App->CL_File_IO->s_Just_FileName.c_str());
 
 	return 1;
 }

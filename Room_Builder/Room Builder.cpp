@@ -467,21 +467,26 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 return 1;
             }
             
+            // ----------------------------- Textures
+            case ID_TEXTURES_TEXTURESFILEEDITOR:
+            {
+                App->CL_TXL_Editor->Start_Texl_Dialog();
+                return 1;
+            }
+         
+            case ID_TEXTURES_USEDTEXTURES:
+            {
+                App->CL_Dialogs->Start_General_ListBox(Enums::ListBox_Used_Textures);
+                return 1;
+            }
+
             // ----------------------------- Tools
-           
             case ID_TOOLS_RESOURCEVIEWER:
             {
                 App->CL_Resources->Start_Resources();
                 return 1;
             }
-
-            case ID_TOOLS_TEXTURESEDITORNEW:
-            {
-                App->CL_TXL_Editor->Start_Texl_Dialog();
-                return 1;
-            }
-            
-           
+ 
             // ----------------------------- Windows
             case ID_WINDOW_PROPERTIES:
             {

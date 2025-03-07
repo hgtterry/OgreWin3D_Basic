@@ -59,6 +59,8 @@ CL64_Dialogs::CL64_Dialogs(void)
 	TextureView_Hwnd = NULL;
 	Sel_BaseBitmap = NULL;
 
+	m_ListType = Enums::ListBox_None;
+
 	btext[0] = 0;
 	Chr_Text[0] = 0;;
 	mTextureFile[0] = 0;
@@ -1410,4 +1412,89 @@ bool CALLBACK CL64_Dialogs::Proc_ViewerBasePic(HWND hwnd, UINT msg, WPARAM wPara
 	}
 
 	return 0;
+}
+
+// *************************************************************************
+// *	  		Start_Gen_ListBox:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+void CL64_Dialogs::Start_General_ListBox(int ListType)
+{
+	m_ListType = ListType;
+
+	DialogBox(App->hInst, (LPCTSTR)IDD_LISTDATA, App->MainHwnd, (DLGPROC)Proc_General_ListBox);
+}
+
+// *************************************************************************
+// *		Proc_General_ListBox:- Terry and Hazel Flanigan 2024 		   *
+// *************************************************************************
+LRESULT CALLBACK CL64_Dialogs::Proc_General_ListBox(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+	switch (message)
+	{
+
+	case WM_INITDIALOG:
+	{
+		SendDlgItemMessage(hDlg, IDC_LST_GENERAL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		HWND List = GetDlgItem(hDlg, IDC_LST_GENERAL);
+
+		if (App->CL_Dialogs->m_ListType == Enums::ListBox_Used_Textures)
+		{
+			App->CL_Dialogs->List_Used_Textures(List);
+		}
+
+		return TRUE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->AppBackground;
+	}
+
+	break;
+	case WM_CTLCOLORSTATIC:
+	{
+
+		return FALSE;
+	}
+
+	case WM_COMMAND:
+	{
+		if (LOWORD(wParam) == IDCANCEL)
+		{
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+
+		break;
+	}
+	}
+	return FALSE;
+}
+
+// *************************************************************************
+// *	  	List_Used_Textures:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void CL64_Dialogs::List_Used_Textures(HWND List)
+{
+	SendMessage(List, LB_RESETCONTENT, 0, 0);
+	
+	int Count = 0;
+	memset(App->CL_Mesh_Mgr->UsedTextures, 0, 500);
+
+	App->CL_Brush_X->BrushList_GetUsedTextures_X(App->CL_Mesh_Mgr->UsedTextures);
+
+	while (Count < App->CL_TXL_Editor->Texture_Count)
+	{
+		if (App->CL_Mesh_Mgr->UsedTextures[Count])
+		{
+			char matname[MAX_PATH];
+			strncpy(matname, App->CL_TXL_Editor->Texture_List[Count]->Name, MAX_PATH - 1);
+			SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)matname);
+		}
+
+		Count++;
+	}
+	
 }

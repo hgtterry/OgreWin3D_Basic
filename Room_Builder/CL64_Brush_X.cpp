@@ -146,18 +146,8 @@ bool CL64_Brush_X::Get_Brush_Faces_Info(const FaceList* pList)
 // *************************************************************************
 bool CL64_Brush_X::Get_Face_Data(int Index, const Face* f)
 {
-	//char buf[MAX_PATH];
-
-	//int  i = 0;
-	
-	/*char buf2[MAX_PATH];
-	strcpy(buf, App->CL_Face->Face_GetTextureName(f));*/
 	int Dib = App->CL_Face->Face_GetTextureDibId(f);
-
-	//sprintf(buf2, "%s%s %i", "Texture: = ", buf, Dib);
-
 	App->CL_Mesh_Mgr->UsedTextures[Dib] = 1;
-	//App->Say(buf2);
 	
 	return 1;
 }

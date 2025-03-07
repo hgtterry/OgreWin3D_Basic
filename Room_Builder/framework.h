@@ -98,4 +98,11 @@ namespace Enums
 		Resource_File_Type_Texture = 4,
 		Resource_File_Type_Overlay = 5
 	};
+
+	enum ListBox_Type
+	{
+		ListBox_None = 0,
+		ListBox_Used_Textures = 1
+	};
+
 }
