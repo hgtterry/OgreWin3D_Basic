@@ -214,11 +214,12 @@ LRESULT CALLBACK CL64_TXL_Editor::Proc_Texl_Dialog(HWND hDlg, UINT message, WPAR
 			App->CL_TXL_Editor->Scan_Textures_Resource_Group();
 			App->CL_Properties_Textures->Fill_ListBox();
 
-			App->CL_TXL_Editor->Selected_Texure_Index--;
 			App->CL_TXL_Editor->UpDateList();
-			App->CL_TXL_Editor->SelectBitmap();
-
+			
 			App->CL_Level->Level_LoadWad(App->CL_Doc->pLevel);
+
+			App->CL_TXL_Editor->Select_From_TextureName(App->CL_File_IO->s_Just_FileName.c_str());
+			App->CL_Properties_Textures->Select_With_List_Index(App->CL_TXL_Editor->Selected_Texure_Index);
 
 			return TRUE;
 		}
@@ -414,6 +415,21 @@ bool CL64_TXL_Editor::SelectBitmap()
 	}
 
 	return 0;
+}
+
+// *************************************************************************
+// *		Select_From_TextureName:- Terry and Hazel Flanigan 2024	 	   *
+// *************************************************************************
+void CL64_TXL_Editor::Select_From_TextureName(const  char* TextureName)
+{
+	SendDlgItemMessage(TXL_Dlg_HWND, IDC_TEXTURELIST2, LB_SELECTSTRING, (WPARAM)-1, (LPARAM)TextureName);
+	
+	App->CL_TXL_Editor->SelectBitmap();
+	int TrueIndex = App->CL_TXL_Editor->GetIndex_From_FileName(App->CL_TXL_Editor->m_Selected_TextureName);
+	App->CL_TXL_Editor->Update_Texture_Info(TrueIndex);
+
+	int Index = SendDlgItemMessage(TXL_Dlg_HWND, IDC_TEXTURELIST2, LB_GETCURSEL, (WPARAM)0, (LPARAM)0);
+	Selected_Texure_Index = Index;
 }
 
 // *************************************************************************
