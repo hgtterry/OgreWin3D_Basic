@@ -184,6 +184,13 @@ LRESULT CALLBACK CL64_TXL_Editor::Proc_Texl_Dialog(HWND hDlg, UINT message, WPAR
 
 		if (LOWORD(wParam) == IDC_TXL_DELETE_TEXTURE)
 		{
+			bool TU = App->CL_TXL_Editor->Check_If_Texture_Used(App->CL_TXL_Editor->m_Selected_TextureName);
+			if (TU == 1)
+			{
+				App->Say("Texture is being used", App->CL_TXL_Editor->m_Selected_TextureName);
+				return TRUE;
+			}
+
 			App->CL_Dialogs->YesNo("Do you want to Delete the selected Texture", App->CL_TXL_Editor->m_Selected_TextureName);
 
 			bool Doit = App->CL_Dialogs->flag_Dlg_Canceled;
@@ -483,6 +490,32 @@ int CL64_TXL_Editor::Check_if_FileName_Exist(const char* Name)
 		{
 			return 1;
 		}
+	}
+
+	return 0;
+}
+
+// *************************************************************************
+// *	  	Check_If_Textures_Used:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+bool CL64_TXL_Editor::Check_If_Texture_Used(const char* TextureName)
+{
+	int Count = 0;
+	memset(App->CL_Mesh_Mgr->UsedTextures, 0, 500);
+
+	App->CL_Brush_X->BrushList_GetUsedTextures_X(App->CL_Mesh_Mgr->UsedTextures);
+
+	while (Count < App->CL_TXL_Editor->Texture_Count)
+	{
+		if (App->CL_Mesh_Mgr->UsedTextures[Count])
+		{
+			if (!strcmp(TextureName, Texture_List[Count]->FileName))
+			{
+				return 1;
+			}
+		}
+
+		Count++;
 	}
 
 	return 0;

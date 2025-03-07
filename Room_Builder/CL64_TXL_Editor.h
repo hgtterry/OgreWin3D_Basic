@@ -66,6 +66,7 @@ public:
 
 	int Check_if_Name_Exist(const char* Name);
 	int Check_if_FileName_Exist(const char* Name);
+	bool Check_If_Texture_Used(const char* TextureName);
 
 	char mFileName[MAX_PATH];
 	char Add_Texture_FileName[MAX_PATH];
