@@ -138,7 +138,7 @@ public:
 	void SetMainWinCentre(void) const;
 
 	void Report_Error(const char* Msg, ...);
-	void Say(const char* Message, char* Message2 = NULL);
+	void Say(const char* Message, const char* Message2 = NULL);
 	void Say_Int(int Value);
 	void Say_Float(float Value);
 	void Say_Vector3(Ogre::Vector3 Vector);

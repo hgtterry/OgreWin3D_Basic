@@ -543,6 +543,11 @@ void CL64_Ogre3D::CreateMaterialFile()
 				ogremat->getTechnique(0)->getPass(0)->setAlphaRejectSettings(Ogre::CMPF_GREATER, 128);
 			}
 
+			if (_stricmp(File + strlen(File) - 4, ".png") == 0)
+			{
+				ogremat->getTechnique(0)->getPass(0)->setAlphaRejectSettings(Ogre::CMPF_GREATER, 128);
+			}
+
 			if (_stricmp(File + strlen(File) - 4, ".dds") == 0)
 			{
 				//Debug

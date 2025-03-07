@@ -33,6 +33,7 @@ public:
 	void Start_TextureDialog();
 	void Fill_ListBox();
 	
+	void Select_With_List_Index(int Index);
 	void List_Selection_Changed();
 	void Get_Selected_Face();
 	void Enable_FaceProps_Button(bool Enable);

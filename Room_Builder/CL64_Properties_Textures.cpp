@@ -436,9 +436,11 @@ void CL64_Properties_Textures::List_Selection_Changed()
 	{
 		
 		char TextureName[MAX_PATH];
+		TextureName[0] = 0;
+
 		SendDlgItemMessage(Textures_Dlg_Hwnd, IDC_LISTTDTEXTURES, LB_GETTEXT, (WPARAM)Index, (LPARAM)TextureName);
-		(void) strcpy(m_CurrentTexture, TextureName);
-		//App->Say_Win(m_CurrentTexture);
+		strcpy(m_CurrentTexture, TextureName);
+		
 		SelectBitmap();
 	}
 
@@ -447,9 +449,6 @@ void CL64_Properties_Textures::List_Selection_Changed()
 	SetDlgItemText(Textures_Dlg_Hwnd, IDC_STWIDTHHEIGHT, (LPCTSTR)buf);
 
 	Selected_Index = Index;
-	//IDC_STWIDTHHEIGHT
-	//	Also set the current selection value in the document...
-	//m_pDoc->mCurTextureSelection = SelNum;
 }
 
 // *************************************************************************
@@ -648,6 +647,15 @@ void CL64_Properties_Textures::Get_Selected_Face()
 		SendDlgItemMessage(Textures_Dlg_Hwnd, IDC_LISTTDTEXTURES, LB_SELECTSTRING, (WPARAM)-1, (LPARAM)buff);
 		List_Selection_Changed();
 	}
+}
+
+// *************************************************************************
+// *		Select_With_List_Index:- Terry and Hazel Flanigan 2025         *
+// *************************************************************************
+void CL64_Properties_Textures::Select_With_List_Index(int Index)
+{
+	SendDlgItemMessage(Textures_Dlg_Hwnd, IDC_LISTTDTEXTURES, LB_SETCURSEL, (WPARAM)Index, (LPARAM)0);
+	List_Selection_Changed();
 }
 
 // *************************************************************************

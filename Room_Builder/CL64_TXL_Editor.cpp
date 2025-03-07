@@ -68,6 +68,7 @@ void CL64_TXL_Editor::Start_Texl_Dialog()
 {
 	if (flag_Texl_Dialog_Active == 0)
 	{
+		App->CL_Properties_Tabs->Enable_Tabs_Dlg(false);
 		DialogBox(App->hInst, (LPCTSTR)IDD_TXL_EDITOR, App->MainHwnd, (DLGPROC)Proc_Texl_Dialog);
 
 	}
@@ -176,6 +177,8 @@ LRESULT CALLBACK CL64_TXL_Editor::Proc_Texl_Dialog(HWND hDlg, UINT message, WPAR
 			int TrueIndex = App->CL_TXL_Editor->GetIndex_From_FileName(App->CL_TXL_Editor->m_Selected_TextureName);
 			App->CL_TXL_Editor->Update_Texture_Info(TrueIndex);
 
+			App->CL_Properties_Textures->Select_With_List_Index(App->CL_TXL_Editor->Selected_Texure_Index);
+
 			return TRUE;
 		}
 
@@ -190,6 +193,8 @@ LRESULT CALLBACK CL64_TXL_Editor::Proc_Texl_Dialog(HWND hDlg, UINT message, WPAR
 
 				App->CL_Resources->Load_Texture_Resources();
 				App->CL_TXL_Editor->Scan_Textures_Resource_Group();
+				
+				
 				App->CL_Properties_Textures->Fill_ListBox();
 				
 				App->CL_TXL_Editor->Selected_Texure_Index--;
@@ -220,6 +225,7 @@ LRESULT CALLBACK CL64_TXL_Editor::Proc_Texl_Dialog(HWND hDlg, UINT message, WPAR
 		
 		if (LOWORD(wParam) == IDCANCEL)
 		{
+			App->CL_Properties_Tabs->Enable_Tabs_Dlg(true);
 			App->CL_TXL_Editor->flag_Texl_Dialog_Active = 0;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
@@ -566,7 +572,7 @@ void CL64_TXL_Editor::Delete_File(const char* File)
 void CL64_TXL_Editor::Add_File()
 {
 	LPCWSTR mType = L"Texture Files";
-	LPCWSTR mExtensions = L"*.bmp;*.tga;*.jpg;*.dds";
+	LPCWSTR mExtensions = L"*.bmp;*.tga;*.jpg;*.dds;*.png";
 
 
 	int test = App->CL_File_IO->Open_File((LPCWSTR)mType, (LPCWSTR)mExtensions);
@@ -615,7 +621,7 @@ void CL64_TXL_Editor::Add_File()
 
 	Get_Timer
 
-		App->Say("Added");
+		App->Say("Added", App->CL_File_IO->s_Just_FileName.c_str());
 }
 
 

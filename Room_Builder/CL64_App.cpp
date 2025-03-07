@@ -513,7 +513,7 @@ void CL64_App::SetMainWinCentre(void) const
 // *************************************************************************
 // *				Say:- Terry and Hazel Flanigan 2024					   *
 // *************************************************************************
-void CL64_App::Say(const char* Message, char* Message2)
+void CL64_App::Say(const char* Message, const char* Message2)
 {
 	char text[MAX_PATH];
 	char text2[MAX_PATH];
