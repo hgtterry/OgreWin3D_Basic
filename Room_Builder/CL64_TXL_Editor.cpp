@@ -444,8 +444,7 @@ void CL64_TXL_Editor::Texture_To_HBITMP(char* TextureFileName)
 
 	BasePicWidth = App->CL_Textures->BasePicWidth;
 	BasePicHeight = App->CL_Textures->BasePicHeight;
-	//BasePicDepth = ilGetInteger(IL_IMAGE_DEPTH);
-
+	
 	RedrawWindow(TXL_Dlg_HWND, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 }
 
@@ -460,6 +459,25 @@ int CL64_TXL_Editor::Check_if_Name_Exist(const char* Name)
 	{
 
 		if (!strcmp(Name, Texture_List[i]->Name))
+		{
+			return 1;
+		}
+	}
+
+	return 0;
+}
+
+// *************************************************************************
+// *		Check_if_FileName_Exist:- Terry and Hazel Flanigan 2025   	   *
+// *************************************************************************
+int CL64_TXL_Editor::Check_if_FileName_Exist(const char* Name)
+{
+	int	i;
+
+	for (i = 0; i < Texture_Count; i++)
+	{
+
+		if (!strcmp(Name, Texture_List[i]->FileName))
 		{
 			return 1;
 		}
@@ -514,10 +532,8 @@ int CL64_TXL_Editor::GetIndex_From_Name(const char* Name)
 void CL64_TXL_Editor::Update_Texture_Info(int Index)
 {
 	int B = 0;
-	//geBitmap_Info	MPInfo;
-	//geBitmap_Info	MSInfo;
-
-	char buff[256];
+	
+	char buff[MAX_PATH];
 	strcpy(buff, "no info");
 	SendDlgItemMessage(TXL_Dlg_HWND, IDC_GEINFO, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
 
@@ -533,6 +549,18 @@ void CL64_TXL_Editor::Update_Texture_Info(int Index)
 	sprintf(buff, "%s %d", "Height :-", Texture_List[Index]->Height);
 	SendDlgItemMessage(TXL_Dlg_HWND, IDC_GEINFO, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);
 
+	char chr_Alpha[MAX_PATH];
+	if (Texture_List[Index]->Has_Alpha == 1)
+	{
+		strcpy(chr_Alpha, "Yes");
+	}
+	else
+	{
+		strcpy(chr_Alpha, "No");
+	}
+
+	sprintf(buff, "%s %s", "Has Alpha :-", chr_Alpha);
+	SendDlgItemMessage(TXL_Dlg_HWND, IDC_GEINFO, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);
 }
 
 // *************************************************************************
@@ -577,7 +605,7 @@ void CL64_TXL_Editor::Delete_File(const char* File)
 // *************************************************************************
 // *				Add_File:- Terry and Hazel Flanigan 2025			   *
 // *************************************************************************
-void CL64_TXL_Editor::Add_File()
+bool CL64_TXL_Editor::Add_File()
 {
 	LPCWSTR mType = L"Texture Files";
 	LPCWSTR mExtensions = L"*.bmp;*.tga;*.jpg;*.dds;*.png";
@@ -586,11 +614,15 @@ void CL64_TXL_Editor::Add_File()
 	int test = App->CL_File_IO->Open_File((LPCWSTR)mType, (LPCWSTR)mExtensions);
 	if (test == 0)
 	{
-		return;
+		return 0;
 	}
 
-	//App->Say_Win(App->CL_File_IO->s_Path_And_File.c_str());
-	//App->Say_Win(App->CL_File_IO->s_Just_FileName.c_str());
+	test = Check_if_FileName_Exist(App->CL_File_IO->s_Just_FileName.c_str());
+	if (test == 1)
+	{
+		App->Say("File Exists", App->CL_File_IO->s_Just_FileName.c_str());
+		return 0;
+	}
 
 	char mFileName[MAX_PATH];
 	strcpy(mFileName, App->RB_Directory_FullPath);
@@ -630,6 +662,8 @@ void CL64_TXL_Editor::Add_File()
 	Get_Timer
 
 		App->Say("Added", App->CL_File_IO->s_Just_FileName.c_str());
+
+	return 1;
 }
 
 

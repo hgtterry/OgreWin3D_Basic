@@ -291,7 +291,7 @@ void CL64_Ogre3D::Export_MaterialFile(char* MatFileName)
 		{
 			ogremat->getTechnique(0)->getPass(0)->createTextureUnitState(File);
 
-			if (_stricmp(File + strlen(File) - 4, ".TGA") == 0)
+			if (App->CL_Model->Group[i]->Has_Alpha == 1)
 			{
 				ogremat->getTechnique(0)->getPass(0)->setAlphaRejectSettings(Ogre::CMPF_GREATER, 128);
 			}
@@ -538,21 +538,9 @@ void CL64_Ogre3D::CreateMaterialFile()
 		{
 			ogremat->getTechnique(0)->getPass(0)->createTextureUnitState(File);
 
-			if (_stricmp(File + strlen(File) - 4, ".TGA") == 0)
+			if (App->CL_Model->Group[i]->Has_Alpha == 1)
 			{
 				ogremat->getTechnique(0)->getPass(0)->setAlphaRejectSettings(Ogre::CMPF_GREATER, 128);
-			}
-
-			if (_stricmp(File + strlen(File) - 4, ".png") == 0)
-			{
-				ogremat->getTechnique(0)->getPass(0)->setAlphaRejectSettings(Ogre::CMPF_GREATER, 128);
-			}
-
-			if (_stricmp(File + strlen(File) - 4, ".dds") == 0)
-			{
-				//Debug
-				//ogremat->getTechnique(0)->getPass(0)->setAlphaRejectSettings(Ogre::CMPF_GREATER, 128);
-				//ogremat->getTechnique(0)->getPass(0)->setDepthWriteEnabled(true);
 			}
 		}
 

@@ -605,18 +605,9 @@ bool CL64_Mesh_Mgr::WE_Convert_All_Texture_Groups()
 
 		char buff[MAX_PATH];
 		strcpy(buff, App->CL_TXL_Editor->Texture_List[TrueIndex]->FileName);
-		/*if (IsTextureAlpha[Count] == 1)
-		{
-			strcat(buff, ".tga");
-		}
-		else
-		{
-			strcat(buff, ".bmp");
-		}*/
-
 		strcpy(App->CL_Model->Group[Count]->Text_FileName, buff);
-		//App->Say_Win(App->CL_Model->Group[Count]->Text_FileName);
 
+		App->CL_Model->Group[Count]->Has_Alpha = App->CL_TXL_Editor->Texture_List[TrueIndex]->Has_Alpha;
 		App->CL_Model->Group[Count]->MaterialIndex = Count;
 		App->CL_Model->Group[Count]->vertex_Data.resize(FaceCount * 3);
 		App->CL_Model->Group[Count]->Normal_Data.resize(FaceCount * 3);

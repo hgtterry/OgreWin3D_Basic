@@ -65,6 +65,7 @@ public:
 	// ----------------------------------------
 
 	int Check_if_Name_Exist(const char* Name);
+	int Check_if_FileName_Exist(const char* Name);
 
 	char mFileName[MAX_PATH];
 	char Add_Texture_FileName[MAX_PATH];
@@ -81,7 +82,7 @@ private:
 	void Update_Texture_Info(int Index);
 
 	void Delete_File(const char* File);
-	void Add_File();
+	bool Add_File();
 
 	HWND TXL_Dlg_HWND;
 

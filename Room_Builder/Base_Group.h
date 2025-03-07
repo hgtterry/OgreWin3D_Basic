@@ -61,6 +61,7 @@ public:
 	long Width;
 
 	bool Bitmap_Loaded;
+	bool Has_Alpha;
 
 	bool Dont_Use;
 

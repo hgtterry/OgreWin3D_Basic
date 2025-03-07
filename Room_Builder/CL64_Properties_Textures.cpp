@@ -229,21 +229,6 @@ LRESULT CALLBACK CL64_Properties_Textures::Proc_TextureDialog(HWND hDlg, UINT me
 			return TRUE;
 		}
 
-		//// -----------------------------------------------------------------
-		//if (LOWORD(wParam) == IDOK)
-		//{
-		//	//App->CL_TextureDialog->f_TextureDlg_Active = 0;
-		//	//EndDialog(hDlg, LOWORD(wParam));
-		//	return TRUE;
-		//}
-
-		//if (LOWORD(wParam) == IDCANCEL)
-		//{
-		//	//App->CL_TextureDialog->f_TextureDlg_Active = 0;
-		//	//EndDialog(hDlg, LOWORD(wParam));
-		//	return TRUE;
-		//}
-
 		break;
 	}
 	}
@@ -593,7 +578,6 @@ void CL64_Properties_Textures::Texture_To_HBITMP(char* TextureFileName)
 
 	BasePicWidth = App->CL_Textures->BasePicWidth;
 	BasePicHeight = App->CL_Textures->BasePicHeight;
-	//BasePicDepth = ilGetInteger(IL_IMAGE_DEPTH);
 	
 	ReleaseDC(PreviewWnd, hDC);
 	RedrawWindow(Textures_Dlg_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);

@@ -51,6 +51,7 @@ Base_Group::Base_Group()
 	//RF_Bitmap = NULL;
 	ListView_Item = NULL;
 
+	Has_Alpha = 0;
 	// Bounding Box
 	BB_Max.x = 0;
 	BB_Max.y = 0;
