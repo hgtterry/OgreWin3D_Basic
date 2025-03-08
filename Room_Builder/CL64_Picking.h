@@ -28,5 +28,41 @@ class CL64_Picking
 public:
 	CL64_Picking(void);
 	~CL64_Picking(void);
+
+	Ogre::RaySceneQuery* mRaySceneQuery;
+
+	void Init_Picking();
+	void Mouse_Pick_Entity();
+
+	Ogre::MovableObject* pentity;
+	Ogre::String Pl_Entity_Name;
+
+	float closest_distance;
+
+	char TestName[MAX_PATH];
+	char FaceMaterial[MAX_PATH];
+	char TextureName[MAX_PATH];
+
+	int Face_Index;
+	int Sub_Mesh_Count;
+	int SubMesh_Face;
+
+	bool flag_Selected_Ok;
+	bool flag_Hit_Player;
+
+	size_t Total_vertex_count;
+	size_t Total_index_count;
+
+private:
+
+	void Clear_Picking_Data();
+	bool raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::MovableObject*& target, float& closest_distance, const Ogre::uint32 queryMask);
+	void GetMeshInformation(const Ogre::MeshPtr mesh, const Ogre::Vector3& position, const Ogre::Quaternion& orient, const Ogre::Vector3& scale);
+
+	Ogre::Vector3* vertices;
+	Ogre::Vector2* TextCords;
+	Ogre::uint32* indices;
+	Ogre::uint32* Sub_Mesh_Indexs;
+
 };
 

@@ -278,7 +278,7 @@ void CL64_App::LoadProgramResource(void)
 }
 
 // *************************************************************************
-// *					Custom_Button_Greyed Terry Bernie   		  	   *
+// *		Custom_Button_Greyed:- Terry and Hazel Flanigan 2025   	  	   *
 // *************************************************************************
 bool CL64_App::Custom_Button_Greyed(LPNMCUSTOMDRAW item)
 {
@@ -297,7 +297,7 @@ bool CL64_App::Custom_Button_Greyed(LPNMCUSTOMDRAW item)
 }
 
 // *************************************************************************
-// *					Custom_Button_Normal Terry Bernie   		  	   *
+// *		Custom_Button_Normal:- Terry and Hazel Flanigan 2025   	  	   *
 // *************************************************************************
 bool CL64_App::Custom_Button_Normal(LPNMCUSTOMDRAW item)
 {
@@ -357,7 +357,7 @@ bool CL64_App::Custom_Button_Normal(LPNMCUSTOMDRAW item)
 }
 
 // *************************************************************************
-// *					Custom_Button Terry Bernie   			 	 	   *
+// *			Custom_Button:- Terry and Hazel Flanigan 2025   	  	   *
 // *************************************************************************
 bool CL64_App::Custom_Button_Toggle(LPNMCUSTOMDRAW item, bool Toggle)
 {

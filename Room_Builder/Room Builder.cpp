@@ -73,6 +73,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     UpdateWindow(App->MainHwnd);
 
     App->CL_Ogre->Init_Ogre();
+    App->CL_Picking->Init_Picking();
 
     App->CL_Resources->Load_Texture_Resources();
     App->CL_TXL_Editor->Scan_Textures_Resource_Group();
