@@ -272,6 +272,10 @@ void CL64_ImGui::App_Tool_Selection_GUI(void)
 		ImGui::Text("Texture Count:= %i", App->CL_TXL_Editor->Texture_Count);
 		ImGui::Text("Processes Time:= %i %s", App->CL_Ogre->m_Processes_Time," ms");
 		
+		ImGui::Text("Picking");
+		ImGui::Text("Picked:= %i ", App->CL_Picking->flag_Selected_Ok);
+		ImGui::Text("Mesh Name:= %s ", App->CL_Picking->Pl_Entity_Name);
+		ImGui::Text("Texture Name:= %s ", App->CL_Picking->TextureName);
 		if (ImGui::Button("Close"))
 		{
 			flag_Show_Tool_ID_Debug = 0;

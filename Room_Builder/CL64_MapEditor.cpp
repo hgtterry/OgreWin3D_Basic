@@ -1168,6 +1168,9 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Bottom_Right_Ogre(HWND hDlg, UINT message,
 			ReleaseCapture();
 			App->CL_Ogre->Ogre3D_Listener->flag_RightMouseDown = 0;
 			SetCursor(App->CUR);
+
+			App->CL_Picking->Mouse_Pick_Entity();
+
 			return 1;
 		}
 	}

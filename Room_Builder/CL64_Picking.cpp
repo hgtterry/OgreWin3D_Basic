@@ -233,13 +233,12 @@ bool CL64_Picking::raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::Mo
 
     for (size_t qr_idx = 0; qr_idx < query_result.size(); qr_idx++)
     {
-        strcpy(TextureName, "None");
         // stop checking if we have found a raycast hit that is closer
         // than all remaining entities
         if ((closest_distance >= 0.0f) &&
             (closest_distance < query_result[qr_idx].distance))
         {
-            //strcpy(TextureName, query_result[0].movable->getMovableType().c_str());
+            strcpy(TextureName, query_result[0].movable->getMovableType().c_str());
             break;
         }
 
@@ -303,9 +302,9 @@ bool CL64_Picking::raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::Mo
                             App->CL_Grid->HitFaceUVs[1] = TextCords[Face_Index + 1];
                             App->CL_Grid->HitFaceUVs[2] = TextCords[Face_Index + 2];*/
 
-                            //SubMesh_Face = Sub_Mesh_Indexs[Face_Index];
+                            SubMesh_Face = Sub_Mesh_Indexs[Face_Index];
 
-                            //Get_Material_Data();
+                            Get_Material_Data();
 
                             //App->CL_Grid->FaceNode->setVisible(true);
                         }
@@ -505,5 +504,26 @@ void CL64_Picking::GetMeshInformation(const Ogre::MeshPtr mesh, const Ogre::Vect
             vbufText->unlock();
         }
     }
+}
 
+// *************************************************************************
+// *		  Get_Material_Data:- Terry and Hazel Flanigan 2024		   	   *
+// *************************************************************************
+void CL64_Picking::Get_Material_Data()
+{
+    int test = ((Ogre::Entity*)pentity)->getMesh()->getNumSubMeshes();
+
+    if (SubMesh_Face > test)
+    {
+        //App->Say("Sub Mesh Out of bounds");
+    }
+    else
+    {
+        strcpy(FaceMaterial, ((Ogre::Entity*)pentity)->getMesh()->getSubMesh(SubMesh_Face)->getMaterialName().c_str());
+        Ogre::MaterialPtr  MatCurent = static_cast<Ogre::MaterialPtr> (Ogre::MaterialManager::getSingleton().getByName(FaceMaterial));
+        strcpy(TextureName, MatCurent->getTechnique(0)->getPass(0)->getTextureUnitState(0)->getTextureName().c_str());
+
+    }
+
+    
 }
