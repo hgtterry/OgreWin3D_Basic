@@ -70,6 +70,7 @@ CL64_App::CL64_App(void)
 	CL_TXL_Editor =				nullptr;
 	CL_Textures =				nullptr;
 	CL_Resources =				nullptr;
+	CL_Picking =				nullptr;
 
 	// Templates Dialogs
 	CL_CreateBoxDialog =		nullptr;
@@ -166,6 +167,7 @@ void CL64_App::InitApp(void)
 	CL_TXL_Editor =				new CL64_TXL_Editor();
 	CL_Textures =				new CL64_Textures();
 	CL_Resources =				new CL64_Resources();
+	CL_Picking =				new CL64_Picking();
 
 	// Templates Dialogs
 	CL_CreateBoxDialog =		new A_CreateBoxDialog();

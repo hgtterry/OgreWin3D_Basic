@@ -258,6 +258,11 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Main_Dlg(HWND hDlg, UINT message, WPARAM w
 		return FALSE;
 	}
 
+	/*case WM_CONTEXTMENU:
+	{
+		Debug
+			break;
+	}*/
 	/*case WM_ERASEBKGND:
 	{
 		return (LRESULT)1;
@@ -1044,7 +1049,14 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Bottom_Right_Ogre(HWND hDlg, UINT message,
 		{
 			return (LONG)App->BlackBrush;
 		}
+		break;
 	}
+
+	/*case WM_CONTEXTMENU:
+	{
+		Debug
+		return 0;
+	}*/
 
 	case WM_MOUSEMOVE:
 	{
@@ -1161,7 +1173,7 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Bottom_Right_Ogre(HWND hDlg, UINT message,
 	}
 
 	}
-
+	
 	return FALSE;
 }
 
