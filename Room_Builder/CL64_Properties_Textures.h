@@ -35,7 +35,10 @@ public:
 	
 	void Select_With_List_Index(int Index);
 	void List_Selection_Changed();
+
 	void Get_Selected_Face();
+	void Set_Selected_Texture(const char* TextureName);
+
 	void Enable_FaceProps_Button(bool Enable);
 
 	HBITMAP	Sel_BaseBitmap;

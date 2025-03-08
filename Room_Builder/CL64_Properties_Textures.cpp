@@ -621,16 +621,17 @@ void CL64_Properties_Textures::Get_Selected_Face()
 	{
 		mSelected_Face = App->CL_SelFaceList->SelFaceList_GetFace(App->CL_Doc->pSelFaces, (NumberOfFaces - 1));
 
-		char buff[100];
-		App->CL_Face->Face_GetTextureName(mSelected_Face);
-
-		strcpy(buff, App->CL_Face->Face_GetTextureName(mSelected_Face));
-
-		int Index = Get_Index_FromName(buff);
-
-		SendDlgItemMessage(Textures_Dlg_Hwnd, IDC_LISTTDTEXTURES, LB_SELECTSTRING, (WPARAM)-1, (LPARAM)buff);
-		List_Selection_Changed();
+		Set_Selected_Texture(App->CL_Face->Face_GetTextureName(mSelected_Face));
 	}
+}
+
+// *************************************************************************
+// *	  	Get_Selected_Texture:- Terry and Hazel Flanigan 2025		   *
+// *************************************************************************
+void CL64_Properties_Textures::Set_Selected_Texture(const char* TextureName)
+{
+	SendDlgItemMessage(Textures_Dlg_Hwnd, IDC_LISTTDTEXTURES, LB_SELECTSTRING, (WPARAM)-1, (LPARAM)TextureName);
+	List_Selection_Changed();
 }
 
 // *************************************************************************

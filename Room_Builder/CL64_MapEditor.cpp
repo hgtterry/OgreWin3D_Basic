@@ -1171,6 +1171,11 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Bottom_Right_Ogre(HWND hDlg, UINT message,
 
 			App->CL_Picking->Mouse_Pick_Entity();
 
+			int Index = App->CL_TXL_Editor->GetIndex_From_FileName(App->CL_Picking->TextureName);
+
+			App->CL_Properties_Textures->Set_Selected_Texture(App->CL_TXL_Editor->Texture_List[Index]->Name);
+			App->CL_Properties_Tabs->Select_Textures_Tab();
+
 			return 1;
 		}
 	}
