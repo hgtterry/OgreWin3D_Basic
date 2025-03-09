@@ -37,7 +37,7 @@ public:
 	void List_Selection_Changed();
 
 	void Get_Selected_Face();
-	void Set_Selected_Texture(const char* TextureName);
+	void Select_With_TextureName(const char* TextureName);
 
 	void Enable_FaceProps_Button(bool Enable);
 
@@ -48,6 +48,8 @@ public:
 	int Selected_Index;
 
 	bool Dialog_Created;
+	bool Dialog_Textures_Visible;
+
 	char m_CurrentTexture[MAX_PATH];
 
 	HWND Textures_Dlg_Hwnd;

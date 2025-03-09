@@ -33,6 +33,7 @@ CL64_Properties_Textures::CL64_Properties_Textures()
 	strcpy(m_CurrentTexture, "stfloor1");
 
 	Dialog_Created = 0;
+	Dialog_Textures_Visible = 0;
 
 	mFileString.clear();
 	Selected_Index = 0;
@@ -52,11 +53,10 @@ CL64_Properties_Textures::~CL64_Properties_Textures()
 // *************************************************************************
 void CL64_Properties_Textures::Show_Textures_Dialog(bool Show)
 {
-	//if (App->CL_Properties_Textures->f_TextureDlg_Active == 1)
-	{
-		ShowWindow(Textures_Dlg_Hwnd, Show);
-		Get_Selected_Face();
-	}
+	ShowWindow(Textures_Dlg_Hwnd, Show);
+	Dialog_Textures_Visible = Show;
+
+	Get_Selected_Face();
 }
 
 // *************************************************************************
@@ -419,7 +419,6 @@ void CL64_Properties_Textures::List_Selection_Changed()
 	}
 	else
 	{
-		
 		char TextureName[MAX_PATH];
 		TextureName[0] = 0;
 
@@ -580,7 +579,8 @@ void CL64_Properties_Textures::Texture_To_HBITMP(char* TextureFileName)
 	BasePicHeight = App->CL_Textures->BasePicHeight;
 	
 	ReleaseDC(PreviewWnd, hDC);
-	RedrawWindow(Textures_Dlg_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+	RedrawWindow(PreviewWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 }
 
 // *************************************************************************
@@ -621,16 +621,18 @@ void CL64_Properties_Textures::Get_Selected_Face()
 	{
 		mSelected_Face = App->CL_SelFaceList->SelFaceList_GetFace(App->CL_Doc->pSelFaces, (NumberOfFaces - 1));
 
-		Set_Selected_Texture(App->CL_Face->Face_GetTextureName(mSelected_Face));
+		Select_With_TextureName(App->CL_Face->Face_GetTextureName(mSelected_Face));
 	}
 }
 
 // *************************************************************************
-// *	  	Get_Selected_Texture:- Terry and Hazel Flanigan 2025		   *
+// *	  	Select_With_TextureName:- Terry and Hazel Flanigan 2025		   *
 // *************************************************************************
-void CL64_Properties_Textures::Set_Selected_Texture(const char* TextureName)
+void CL64_Properties_Textures::Select_With_TextureName(const char* TextureName)
 {
 	SendDlgItemMessage(Textures_Dlg_Hwnd, IDC_LISTTDTEXTURES, LB_SELECTSTRING, (WPARAM)-1, (LPARAM)TextureName);
+	
+	strcpy(m_CurrentTexture, TextureName);
 	List_Selection_Changed();
 }
 

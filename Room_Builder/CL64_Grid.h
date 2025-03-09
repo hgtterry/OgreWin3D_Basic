@@ -32,14 +32,22 @@ public:
 	void Grid_Update(bool Create);
 	void Hair_Update(bool Create);
 
+	void Face_Update(bool Create);
+	void Face_Update2();
+
 	Ogre::ManualObject* GridManual;
 	Ogre::SceneNode* GridNode;
 
 	Ogre::ManualObject* HairManual;
 	Ogre::SceneNode* HairNode;
 
+	Ogre::ManualObject* FaceManual;
+	Ogre::SceneNode* FaceNode;
+
 	Ogre::ColourValue ColourMain;
 	Ogre::ColourValue ColourDivision;
+
+	Ogre::ColourValue FaceColour;
 
 	int XAxis_min;
 	int	XAxis_max;
@@ -60,6 +68,8 @@ public:
 	Ogre::ColourValue ColourHairZ;
 	Ogre::ColourValue ColourHairX;
 	Ogre::ColourValue ColourHairY;
+
+	Ogre::Vector3 HitVertices[2];
 
 	bool flag_ShowGrid;
 	bool flag_ShowDivisions;

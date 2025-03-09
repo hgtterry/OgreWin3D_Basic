@@ -34,6 +34,9 @@ CL64_Grid::CL64_Grid()
 	HairManual = nullptr;
 	HairNode = nullptr;
 
+	FaceManual = nullptr;
+	FaceNode = nullptr;
+
 	ColourMain = ColourValue(0.7, 0.7, 0, 0.6);
 	ColourDivision = ColourValue(1, 1, 1, 0.4);
 
@@ -41,6 +44,12 @@ CL64_Grid::CL64_Grid()
 	ColourHairZ = ColourValue(1, 0, 0, 1);
 	ColourHairX = ColourValue(0, 0, 1, 1);
 	ColourHairY = ColourValue(0, 1, 0, 1);
+
+	FaceColour = ColourValue(1, 0, 0, 1);
+
+	HitVertices[0] = Ogre::Vector3(0, 0, 0);
+	HitVertices[1] = Ogre::Vector3(0, 0, 0);
+	HitVertices[2] = Ogre::Vector3(0, 0, 0);
 
 	YAxis_min = -8;
 	YAxis_max = 8;
@@ -180,4 +189,61 @@ void CL64_Grid::Hair_Update(bool Create)
 	HairNode->setPosition(0, 0, 0);
 	HairNode->setVisible(true);
 	HairNode->setScale(Scale_X, Scale_Y, Scale_Z);
+}
+
+// *************************************************************************
+// *	  		Face_Update:- Terry and Hazel Flanigan 2025				   *
+// *************************************************************************
+void CL64_Grid::Face_Update(bool Create)
+{
+	if (Create == 1)
+	{
+		FaceManual = App->CL_Ogre->mSceneMgr->createManualObject("Face_Manual");
+		FaceManual->setDynamic(true);
+		FaceManual->setRenderQueueGroup(RENDER_QUEUE_MAX);
+	}
+
+	FaceManual->clear();
+	FaceManual->begin("Template/Alpha_Blend_GD64", RenderOperation::OT_LINE_STRIP);
+
+	// X Axis
+	FaceManual->position(HitVertices[0]);
+	FaceManual->colour(FaceColour);
+
+	FaceManual->position(HitVertices[1]);
+	FaceManual->colour(FaceColour);
+
+	FaceManual->position(HitVertices[2]);
+	FaceManual->colour(FaceColour);
+
+	FaceManual->position(HitVertices[0]);
+	FaceManual->colour(FaceColour);
+
+	FaceManual->end();
+
+	if (Create == 1)
+	{
+		FaceNode = App->CL_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+		FaceNode->attachObject(FaceManual);
+
+		FaceNode->setPosition(0, 0, 0);
+		FaceNode->setVisible(false);
+	}
+}
+
+// *************************************************************************
+// *	  		Face_Update2:- Terry and Hazel Flanigan 2025			   *
+// *************************************************************************
+void CL64_Grid::Face_Update2()
+{
+	FaceManual->beginUpdate(0);
+
+	FaceManual->position(HitVertices[0]);
+
+	FaceManual->position(HitVertices[1]);
+
+	FaceManual->position(HitVertices[2]);
+
+	FaceManual->position(HitVertices[0]);
+	FaceManual->end();
 }

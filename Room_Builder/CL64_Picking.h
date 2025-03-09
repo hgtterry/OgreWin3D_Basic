@@ -42,6 +42,7 @@ public:
 	char TestName[MAX_PATH];
 	char FaceMaterial[MAX_PATH];
 	char TextureName[MAX_PATH];
+	char m_Texture_FileName[MAX_PATH];
 
 	int Face_Index;
 	int Sub_Mesh_Count;
@@ -59,6 +60,14 @@ private:
 	bool raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::MovableObject*& target, float& closest_distance, const Ogre::uint32 queryMask);
 	void GetMeshInformation(const Ogre::MeshPtr mesh, const Ogre::Vector3& position, const Ogre::Quaternion& orient, const Ogre::Vector3& scale);
 	void Get_Material_Data();
+
+	void Get_Face();
+	bool Get_Brush_Info(const Brush* b);
+	bool Get_Brush_Faces_Info(const FaceList* pList);
+	bool Get_Brush_ListInfo(BrushList* BList);
+	bool Get_Face_Data(int Index, const Face* f);
+
+	int Face_Count;
 
 	Ogre::Vector3* vertices;
 	Ogre::Vector2* TextCords;

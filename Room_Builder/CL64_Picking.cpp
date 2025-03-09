@@ -25,6 +25,7 @@ THE SOFTWARE.
 #include "pch.h"
 #include "CL64_App.h"
 #include "CL64_Picking.h"
+#include "Structures.cpp"
 
 CL64_Picking::CL64_Picking(void)
 {
@@ -40,11 +41,14 @@ CL64_Picking::CL64_Picking(void)
     Face_Index = 0;
     Sub_Mesh_Count = 0;
     SubMesh_Face = 0;
+    Face_Count = 0;
     flag_Selected_Ok = 0;
    
     FaceMaterial[0] = 0;
     TextureName[0] = 0;
     TestName[0] = 0;
+
+    m_Texture_FileName[0] = 0;
 }
 
 CL64_Picking::~CL64_Picking(void)
@@ -79,6 +83,8 @@ void CL64_Picking::Clear_Picking_Data()
     Sub_Mesh_Count = 0;
     SubMesh_Face = 0;
     flag_Selected_Ok = 0;
+
+    strcpy(m_Texture_FileName, "No_Texture");
 }
 
 // *************************************************************************
@@ -188,6 +194,8 @@ void CL64_Picking::Mouse_Pick_Entity()
     }
 }
 
+#pragma warning( disable: 6386 )
+
 // *************************************************************************
 // *		        raycast:- Terry and Hazel Flanigan 2024		       	   *
 // *************************************************************************
@@ -219,22 +227,13 @@ bool CL64_Picking::raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::Mo
         return (false);
     }
 
-    // at this point we have raycast to a series of different objects bounding boxes.
-    // we need to test these different objects to see which is the first polygon hit.
-    // there are some minor optimizations (distance based) that mean we wont have to
-    // check all of the objects most of the time, but the worst case scenario is that
-    // we need to test every triangle of every object.
-    //Ogre::Ogre::Real closest_distance = -1.0f;
     closest_distance = -1.0f;
+
     Ogre::Vector3 closest_result;
     Ogre::RaySceneQueryResult query_result = mRaySceneQuery->getLastResults();
 
-
-
     for (size_t qr_idx = 0; qr_idx < query_result.size(); qr_idx++)
     {
-        // stop checking if we have found a raycast hit that is closer
-        // than all remaining entities
         if ((closest_distance >= 0.0f) &&
             (closest_distance < query_result[qr_idx].distance))
         {
@@ -274,7 +273,7 @@ bool CL64_Picking::raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::Mo
 
                 // test for hitting individual triangles on the mesh
                 bool new_closest_found = false;
-                for (size_t i = 0; i < Total_index_count; i += 3)
+                for (int i = 0; i < Total_index_count; i += 3)
                 {
                     // check for a hit against this triangle
                     std::pair<bool, Ogre::Real> hit = Ogre::Math::intersects(ray, vertices[indices[i]],
@@ -296,9 +295,9 @@ bool CL64_Picking::raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::Mo
                             App->CL_Grid->HitVertices[1] = vertices[indices[i + 1]];
                             App->CL_Grid->HitVertices[2] = vertices[indices[i + 2]];
 
-                            App->CL_Grid->Face_Update2();
-
-                            App->CL_Grid->HitFaceUVs[0] = TextCords[Face_Index];
+                            App->CL_Grid->Face_Update2();*/
+                            //Get_Face();
+                            /*App->CL_Grid->HitFaceUVs[0] = TextCords[Face_Index];
                             App->CL_Grid->HitFaceUVs[1] = TextCords[Face_Index + 1];
                             App->CL_Grid->HitFaceUVs[2] = TextCords[Face_Index + 2];*/
 
@@ -346,6 +345,192 @@ bool CL64_Picking::raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::Mo
         Pl_Entity_Name = "---------";
         return (false);
     }
+}
+
+// *************************************************************************
+// *	        Get_Face:- Terry and Hazel Flanigan 2024		      	   *
+// *************************************************************************
+void CL64_Picking::Get_Face()
+{
+    Face_Count = 0;
+
+    int NumSelBrushes = App->CL_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes);
+    if (NumSelBrushes > 0)
+    {
+        Brush* pBrush;
+
+        pBrush = App->CL_SelBrushList->SelBrushList_GetBrush(App->CL_Doc->pSelBrushes, 0);
+        Get_Brush_Info(pBrush);
+
+       // App->Say_Int(Face_Count);
+    }
+}
+
+// *************************************************************************
+// *	  	Get_Brush_Info:- Terry and Hazel Flanigan 2025				   *
+// *************************************************************************
+bool CL64_Picking::Get_Brush_Info(const Brush* b)
+{
+    if (b->Type == BRUSH_MULTI)
+    {
+        return Get_Brush_ListInfo(b->BList);
+    }
+    if (b->Type == BRUSH_LEAF)
+    {
+        return Get_Brush_Faces_Info(b->Faces);
+    }
+    if (b->Type == BRUSH_CSG)
+    {
+        App->Say("BRUSH_CSG");
+    }
+
+    return 1;
+}
+
+// *************************************************************************
+// *	  Get_Brush_Faces_Info:- Terry and Hazel Flanigan 2025			   *
+// *************************************************************************
+bool CL64_Picking::Get_Brush_Faces_Info(const FaceList* pList)
+{
+    int i;
+   
+    if (pList->NumFaces < 0)
+    {
+    }
+    else
+    {
+        for (i = 0; i < pList->NumFaces; i++)
+        {
+            if (!Get_Face_Data(i, pList->Faces[i])) return 0;
+        }
+    }
+
+    return 1;
+}
+
+// *************************************************************************
+// *	  	Get_Brush_ListInfo:- Terry and Hazel Flanigan 2025			   *
+// *************************************************************************
+bool CL64_Picking::Get_Brush_ListInfo(BrushList* BList)
+{
+    Brush* pBrush;
+    BrushIterator bi;
+    int Count;
+
+    Count = App->CL_Brush->BrushList_Count(BList, (BRUSH_COUNT_MULTI | BRUSH_COUNT_LEAF | BRUSH_COUNT_NORECURSE));
+    if (Count < 0)
+    {
+        return 0;
+    }
+    else
+    {
+    }
+
+    pBrush = App->CL_Brush->BrushList_GetFirst(BList, &bi);
+    while (pBrush != NULL)
+    {
+        Get_Brush_Info(pBrush);
+        pBrush = App->CL_Brush->BrushList_GetNext(&bi);
+    }
+
+    return 1;
+}
+
+// *************************************************************************
+// *		  Get_Face_Data:- Terry and Hazel Flanigan 2025			   *
+// *************************************************************************
+bool CL64_Picking::Get_Face_Data(int Index, const Face* f)
+{
+    Face_Count++;
+
+    char buf[MAX_PATH];
+
+    int  i = 0;
+
+   // App->Say_Int(f->NumPoints);
+
+   //for (i = 0; i < f->NumPoints; i++)
+   // {
+   //     T_Vec3 Face_Vecs{ 0 };
+   //     T_Vec3 Hit_Vecs{ 0 };
+
+   //     Face_Vecs.x = f->Points[i].x;
+   //     Face_Vecs.y = f->Points[i].y;
+   //     Face_Vecs.z = f->Points[i].z;
+
+   //     Hit_Vecs.x = App->CL_Grid->HitVertices[0].x;
+   //     Hit_Vecs.y = App->CL_Grid->HitVertices[0].y;
+   //     Hit_Vecs.z = App->CL_Grid->HitVertices[0].z;
+
+   //     int test = App->CL_Maths->Vector3_Compare(&Face_Vecs, &Hit_Vecs, 0.1);
+   //     if (test == 1)
+   //     {
+   //         Face_Vecs.x = f->Points[i+3].x;
+   //         Face_Vecs.y = f->Points[i+3].y;
+   //         Face_Vecs.z = f->Points[i+3].z;
+
+   //         Hit_Vecs.x = App->CL_Grid->HitVertices[1].x;
+   //         Hit_Vecs.y = App->CL_Grid->HitVertices[1].y;
+   //         Hit_Vecs.z = App->CL_Grid->HitVertices[1].z;
+
+   //         int test2 = App->CL_Maths->Vector3_Compare(&Face_Vecs, &Hit_Vecs, 0.1);
+   //         if (test2 == 1)
+   //         {
+   //             App->Say("Hit2");
+
+   //            /* Face_Vecs.x = f->Points[i + 5].x;
+   //             Face_Vecs.y = f->Points[i + 5].y;
+   //             Face_Vecs.z = f->Points[i + 5].z;
+
+   //             Hit_Vecs.x = App->CL_Grid->HitVertices[2].x;
+   //             Hit_Vecs.y = App->CL_Grid->HitVertices[2].y;
+   //             Hit_Vecs.z = App->CL_Grid->HitVertices[2].z;
+
+   //             int test3 = App->CL_Maths->Vector3_Compare(&Face_Vecs, &Hit_Vecs, 0.1);
+
+   //             if (test3 == 1)
+   //             {
+   //                 App->Say("Hit3");
+   //             }*/
+   //         }
+   //     }
+   // }
+
+
+    const TexInfo_Vectors* TVecs = App->CL_Face->Face_GetTextureVecs(f);
+    T_Vec3 uVec, vVec;
+    float U, V;
+
+    int txSize, tySize;
+
+    App->CL_Face->Face_GetTextureSize(f, &txSize, &tySize);
+
+    // make sure that the texture size is set correctly (division!)
+    if (txSize == 0)
+        txSize = 32;
+    if (tySize == 0)
+        tySize = 32;
+
+    App->CL_Maths->Vector3_Scale(&TVecs->uVec, 1.f / (float)txSize, &uVec);
+    App->CL_Maths->Vector3_Scale(&TVecs->vVec, -1.f / (float)tySize, &vVec);
+
+    const T_Vec3* verts = App->CL_Face->Face_GetPoints(f);
+
+    int j = 0;
+    for (j = 0; j < f->NumPoints; j++)
+    {
+        U = App->CL_Maths->Vector3_DotProduct(&(verts[j]), &uVec);
+        V = App->CL_Maths->Vector3_DotProduct(&(verts[j]), &vVec);
+        U += (TVecs->uOffset / txSize);
+        V -= (TVecs->vOffset / tySize);
+
+        // sprintf(buf, "UV %.3f %.3f", U, V);
+        // SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+    }
+
+    strcpy(buf, App->CL_Face->Face_GetTextureName(f));
+
+    return 1;
 }
 
 // *************************************************************************
@@ -515,15 +700,13 @@ void CL64_Picking::Get_Material_Data()
 
     if (SubMesh_Face > test)
     {
-        //App->Say("Sub Mesh Out of bounds");
+        strcpy(m_Texture_FileName, "No_Texture");
     }
     else
     {
         strcpy(FaceMaterial, ((Ogre::Entity*)pentity)->getMesh()->getSubMesh(SubMesh_Face)->getMaterialName().c_str());
         Ogre::MaterialPtr  MatCurent = static_cast<Ogre::MaterialPtr> (Ogre::MaterialManager::getSingleton().getByName(FaceMaterial));
-        strcpy(TextureName, MatCurent->getTechnique(0)->getPass(0)->getTextureUnitState(0)->getTextureName().c_str());
+        strcpy(m_Texture_FileName, MatCurent->getTechnique(0)->getPass(0)->getTextureUnitState(0)->getTextureName().c_str());
 
-    }
-
-    
+    } 
 }
