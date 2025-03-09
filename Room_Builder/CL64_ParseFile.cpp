@@ -47,6 +47,8 @@ CL64_ParseFile::CL64_ParseFile(void)
 {
 	str_buff_1[0] = 0;
 	str_buff_2[0] = 0;
+	Brush_Name[0] = 0;
+
 	Tag_Float = 0;
 	Tag_Int = 0;
 }
@@ -58,7 +60,7 @@ CL64_ParseFile::~CL64_ParseFile(void)
 // *************************************************************************
 // *	    BrushList_CreateFromFile:- Terry and Hazel Flanigan 2025       *
 // *************************************************************************
-BrushList* CL64_ParseFile::BrushList_CreateFromFile()
+BrushList* CL64_ParseFile::BrushList_CreateFromFile(bool SubBrush)
 {
 	memset(App->CL_File->Read_Buffer, 0, MAX_PATH);
 
@@ -76,7 +78,7 @@ BrushList* CL64_ParseFile::BrushList_CreateFromFile()
 		{
 			Brush* pBrush;
 
-			pBrush = Brush_CreateFromFile();
+			pBrush = Brush_CreateFromFile(SubBrush);
 			if (pBrush == NULL)
 			{
 				//App->CL_Brush->BrushList_Destroy(&blist);
@@ -100,8 +102,9 @@ BrushList* CL64_ParseFile::BrushList_CreateFromFile()
 // *************************************************************************
 // *		 Brush_CreateFromFile:- Terry and Hazel Flanigan 2025		    *
 // *************************************************************************
-Brush* CL64_ParseFile::Brush_CreateFromFile()
+Brush* CL64_ParseFile::Brush_CreateFromFile(bool SubBrush)
 {
+	//App->Say_Int(Index);
 	memset(App->CL_File->Read_Buffer, 0, MAX_PATH);
 
 	FaceList* fl;
@@ -115,7 +118,17 @@ Brush* CL64_ParseFile::Brush_CreateFromFile()
 
 	b = NULL;
 
-	if (!Get_String("Brush", szTemp)) { return NULL; }
+	if (SubBrush == false)
+	{
+		if (!Get_String("Brush", szTemp)) { return NULL; }
+		strcpy(Brush_Name, szTemp);
+	}
+	else
+	{
+		if (!Get_String("Brush", szTemp)) { return NULL; }
+		strcpy(szTemp, Brush_Name);
+	}
+
 	if (!Get_Int("Flags", &tmpFlags)) { return NULL; }
 	if (!Get_Int("ModelId", &tmpModelId)) { return NULL; }
 	if (!Get_Int("GroupId", &tmpGroupId)) { return NULL; }
@@ -147,7 +160,7 @@ Brush* CL64_ParseFile::Brush_CreateFromFile()
 		break;
 	}
 	case BRUSH_MULTI:
-		blist = BrushList_CreateFromFile(); // Recursive
+		blist = BrushList_CreateFromFile(true); // Recursive
 		if (blist == NULL)
 		{
 			App->Say("Can not create BrushList");
@@ -188,8 +201,6 @@ Brush* CL64_ParseFile::Brush_CreateFromFile()
 		b->ModelId = tmpModelId;
 		b->GroupId = tmpGroupId;
 		App->CL_Brush->Brush_SetName(b, szTemp);
-
-		//App->CL_Face->FaceList_SetTextureLock(fl, true);
 	}
 
 	return	b;
@@ -213,9 +224,10 @@ FaceList* CL64_ParseFile::FaceList_CreateFromFile()
 		{
 			Face* pFace;
 
-			pFace = Face_CreateFromFile();
+			pFace = Face_CreateFromFile("Face_Test");
 			if (pFace != NULL)
 			{
+				App->CL_Face->Face_SetBrushName(pFace, "poo2");
 				App->CL_FaceList->FaceList_AddFace(pList, pFace);
 			}
 		}
@@ -232,9 +244,9 @@ FaceList* CL64_ParseFile::FaceList_CreateFromFile()
 }
 
 // *************************************************************************
-// *	     FaceList_CreateFromFile:- Terry and Hazel Flanigan 2025       *
+// *		   Face_CreateFromFile:- Terry and Hazel Flanigan 2025		   *
 // *************************************************************************
-Face* CL64_ParseFile::Face_CreateFromFile()
+Face* CL64_ParseFile::Face_CreateFromFile(const char* Brush_Name)
 {
 	Face* f = NULL;
 	int		i, flg, NumPnts, xShift, yShift, Light;
@@ -312,9 +324,10 @@ Face* CL64_ParseFile::Face_CreateFromFile()
 			App->CL_Face->Face_SetTextureScale(f, xScale, yScale);
 			App->CL_Face->Face_SetTexturePos(f);
 
+			App->CL_Face->Face_SetBrushName(f, "poo");
 			f->LightXScale = LightXScale;
 			f->LightYScale = LightYScale;
-
+			
 			if (!Get_Matrix3d("Transform", &f->Tex.XfmFaceAngle)) { Debug }
 			
 			//App->Say_Float(f->Tex.XfmFaceAngle.Translation.z);

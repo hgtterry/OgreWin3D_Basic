@@ -749,6 +749,9 @@ void CL64_Properties_Faces::Update_Face_Info(HWND hDlg)
 
 	sprintf(buff, "%s %i", "Bitmap ID: ", App->CL_Face->Face_GetTextureDibId(m_Selected_Face));
 	SendDlgItemMessage(hDlg, IDC_LST_FACE_INFO, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);
+
+	sprintf(buff, "%s %s", "Brush: ", m_Selected_Face->Brush_Name);
+	SendDlgItemMessage(hDlg, IDC_LST_FACE_INFO, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);
 }
 
 // *************************************************************************

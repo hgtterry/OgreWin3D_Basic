@@ -31,10 +31,10 @@ public:
 
 //private:
 
-	BrushList* BrushList_CreateFromFile();
-	Brush* Brush_CreateFromFile();
+	BrushList* BrushList_CreateFromFile(bool SubBrush);
+	Brush* Brush_CreateFromFile(bool SubBrush);
 	FaceList* FaceList_CreateFromFile();
-	Face* Face_CreateFromFile();
+	Face* Face_CreateFromFile(const char* Brush_Name);
 
 	bool Get_Version(char* Buffer);
 	bool Get_TextureLib(char* Buffer);
@@ -49,6 +49,9 @@ public:
 
 	char str_buff_1[MAX_PATH];
 	char str_buff_2[MAX_PATH];
+
+	char Brush_Name[MAX_PATH];
+
 	float Tag_Float;
 	int Tag_Int;
 	Ogre::Vector3 Tag_Vector3;

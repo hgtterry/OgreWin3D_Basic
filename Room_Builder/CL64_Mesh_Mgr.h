@@ -24,6 +24,11 @@ THE SOFTWARE.
 
 #pragma once
 
+typedef	struct	Face_Data
+{
+	char	Brush_Name[MAX_PATH];
+}	Face_Data;
+
 typedef struct tag_Level3 Level3;
 
 class CL64_Mesh_Mgr
@@ -47,6 +52,9 @@ public:
 	void Delete_Group_Brushes();
 
 	int Get_Adjusted_Index(int RealIndex);
+
+	void Create_V_Face(int Index);
+
 	//bool AddTexture_GL(geVFile* BaseFile, const char* TextureName, int GroupIndex);
 
 	int ActualFaceCount;
@@ -65,6 +73,10 @@ public:
 	int mBrush_Index;
 
 	signed int UsedTextures[500];
+
+	char Actual_mBrush_Name[MAX_PATH];
+	int v_Face_Data_Count;
+	Face_Data* v_Face_Data[1000];
 
 	char mBrush_Name[MAX_PATH];
 	char TextureName2[20][MAX_PATH];

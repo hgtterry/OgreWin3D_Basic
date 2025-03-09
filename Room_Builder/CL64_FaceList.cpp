@@ -36,6 +36,16 @@ CL64_FaceList::~CL64_FaceList(void)
 {
 }
 
+void CL64_FaceList::FaceList_SetBrushNames(const FaceList* fl, const char* Name)
+{
+	int			i;
+	
+	for (i = 0; i < fl->NumFaces; i++)
+	{
+		App->CL_Face->Face_SetBrushName(fl->Faces[i], Name);
+	}
+}
+ 
 // *************************************************************************
 // *							FaceList_Create						 	   *
 // *************************************************************************

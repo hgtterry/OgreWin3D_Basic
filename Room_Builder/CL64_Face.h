@@ -71,8 +71,13 @@ public:
 	void Face_SetLightScale(Face* f, const float xScale, const float yScale);
 	void Face_SetTextureScale(Face* f, const float xScale, const float yScale);
 	void Face_SetTextureName(Face* f, const char* pName);
+	void Face_SetBrushName(Face* f, const char* pName);
 	void Face_SetTextureSize(Face* f, const int txSize, const int tySize);
 	char const* Face_GetTextureName(const Face* f);
+	char const* Face_GetBrushName(const Face* f);
+
+	//void FaceList_SetBrushNames(const FaceList* fl, const char* Name);
+
 	void Face_GetTextureSize(const Face* f, int* ptxSize, int* ptySize);
 	const TexInfo_Vectors* Face_GetTextureVecs(const Face* f);
 	Face* Face_CloneReverse(const Face* src);

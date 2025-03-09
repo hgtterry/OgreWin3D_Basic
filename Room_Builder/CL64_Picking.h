@@ -47,6 +47,8 @@ public:
 	int Face_Index;
 	int Sub_Mesh_Count;
 	int SubMesh_Face;
+	int Actual_Face;
+	int Face_Hit;
 
 	bool flag_Selected_Ok;
 	bool flag_Hit_Player;

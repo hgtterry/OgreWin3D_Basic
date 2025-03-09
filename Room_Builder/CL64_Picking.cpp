@@ -44,6 +44,8 @@ CL64_Picking::CL64_Picking(void)
     Face_Count = 0;
     flag_Selected_Ok = 0;
    
+    Face_Hit = 0;
+    Actual_Face = 0;
     FaceMaterial[0] = 0;
     TextureName[0] = 0;
     TestName[0] = 0;
@@ -204,6 +206,8 @@ bool CL64_Picking::raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::Mo
     target = NULL;
     Pl_Entity_Name = "---------";
     flag_Hit_Player = 0;
+    Actual_Face = 0;
+    Face_Hit = 0;
 
     if (mRaySceneQuery != NULL)
     {
@@ -275,6 +279,7 @@ bool CL64_Picking::raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::Mo
                 bool new_closest_found = false;
                 for (int i = 0; i < Total_index_count; i += 3)
                 {
+                    Actual_Face = Actual_Face + 1;
                     // check for a hit against this triangle
                     std::pair<bool, Ogre::Real> hit = Ogre::Math::intersects(ray, vertices[indices[i]],
                         vertices[indices[i + 1]], vertices[indices[i + 2]], true, false);
@@ -288,14 +293,15 @@ bool CL64_Picking::raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::Mo
                             // this is the closest so far, save it off
                             closest_distance = hit.second;
                             new_closest_found = true;
+                            Face_Hit = Actual_Face;
 
                             Face_Index = i;
 
-                           /* App->CL_Grid->HitVertices[0] = vertices[indices[i]];
+                            App->CL_Grid->HitVertices[0] = vertices[indices[i]];
                             App->CL_Grid->HitVertices[1] = vertices[indices[i + 1]];
                             App->CL_Grid->HitVertices[2] = vertices[indices[i + 2]];
 
-                            App->CL_Grid->Face_Update2();*/
+                            App->CL_Grid->Face_Update2();
                             //Get_Face();
                             /*App->CL_Grid->HitFaceUVs[0] = TextCords[Face_Index];
                             App->CL_Grid->HitFaceUVs[1] = TextCords[Face_Index + 1];

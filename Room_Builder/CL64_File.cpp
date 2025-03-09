@@ -400,7 +400,7 @@ bool CL64_File::Load_File(const char* FileName)
 			break;
 		}
 		
-		pLevel->Brushes = App->CL_ParseFile->BrushList_CreateFromFile();
+		pLevel->Brushes = App->CL_ParseFile->BrushList_CreateFromFile(false);
 		if (pLevel->Brushes == NULL)
 		{
 			App->Say("Can not Create Brushes");

@@ -32,6 +32,7 @@ typedef struct TexInfoTag
 // *************************************************************************
 typedef struct FaceTag
 {
+	char			Brush_Name[MAX_PATH];
 	int				NumPoints;
 	int				Flags;
 	bool			Selected;

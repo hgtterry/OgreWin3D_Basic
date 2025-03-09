@@ -32,6 +32,8 @@ public:
 	CL64_FaceList(void);
 	~CL64_FaceList(void);
 
+	void FaceList_SetBrushNames(const FaceList* fl, const char* Name);
+
 	FaceList* FaceList_Create(int NumFaces);
 	void FaceList_AddFace(FaceList* pList, Face* pFace);
 	void FaceList_GetBounds(const FaceList* pList, Box3d* pBounds);

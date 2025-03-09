@@ -106,7 +106,7 @@ Face* CL64_Face::Face_Create(int NumPnts, const T_Vec3* pnts, int DibId)
 		f->LightXScale = 1.0f;
 		f->LightYScale = 1.0f;
 		f->Selected = 0;
-
+		strcpy(f->Brush_Name, "No_Brush");
 		Face_SetVisible(f, true);
 
 		f->Points = (T_Vec3*)App->CL_Maths->Ram_Allocate(sizeof(T_Vec3) * NumPnts);
@@ -571,6 +571,16 @@ void CL64_Face::Face_SetTextureName(Face* f, const char* pName)
 }
 
 // *************************************************************************
+// *						Face_SetTextureName						 	   *
+// *************************************************************************
+void CL64_Face::Face_SetBrushName(Face* f, const char* pName)
+{
+	// copy the name (safely), and then nul-terminate
+	strncpy(f->Brush_Name, pName, sizeof(f->Brush_Name));
+	f->Brush_Name[sizeof(f->Brush_Name) - 1] = '\0';
+}
+
+// *************************************************************************
 // *							Face_SetTextureSize					 	   *
 // *************************************************************************
 void CL64_Face::Face_SetTextureSize(Face* f, const int txSize, const int tySize)
@@ -586,6 +596,24 @@ char const* CL64_Face::Face_GetTextureName(const Face* f)
 {
 	return	f->Tex.Name;
 }
+
+// *************************************************************************
+// *							Face_GetBrushName					 	   *
+// *************************************************************************
+char const* CL64_Face::Face_GetBrushName(const Face* f)
+{
+	return	f->Brush_Name;
+}
+
+//void CL64_Face::FaceList_SetBrushNames(const FaceList* fl, const char* Name)
+//{
+//	int			i;
+//	
+//	for (i = 0; i < fl->NumFaces; i++)
+//	{
+//		Face_SetBrushName(fl->Faces[i], "lll");
+//	}
+//}
 
 // *************************************************************************
 // *							Face_GetTextureSize					 	   *

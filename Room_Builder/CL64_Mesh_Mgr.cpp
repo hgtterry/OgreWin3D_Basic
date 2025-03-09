@@ -106,6 +106,16 @@ CL64_Mesh_Mgr::CL64_Mesh_Mgr()
 	mBrush_Name[0] = 0;
 
 	memset(mAdjusedIndex_Store, 0, 500);
+
+	v_Face_Data_Count = 0;
+	
+	int Count = 0;
+	while (Count < 999)
+	{
+		v_Face_Data[Count] = nullptr;
+		Count++;
+	}
+
 }
 
 CL64_Mesh_Mgr::~CL64_Mesh_Mgr()
@@ -160,6 +170,7 @@ void CL64_Mesh_Mgr::Delete_Group_Brushes()
 
 	App->CL_Model->GroupCount = 0;
 	App->CL_Model->VerticeCount = 0;
+	
 }
 
 // *************************************************************************
@@ -167,6 +178,8 @@ void CL64_Mesh_Mgr::Delete_Group_Brushes()
 // *************************************************************************
 bool CL64_Mesh_Mgr::Update_World()
 {
+	v_Face_Data_Count = 0;
+
 	int BC = App->CL_Brush->Get_Brush_Count();
 	if (BC > 0)
 	{
@@ -293,8 +306,6 @@ bool CL64_Mesh_Mgr::Brush_Decode_List(BrushList* BList, signed int SubBrush)
 			return false;
 		}
 
-		pBrush = App->CL_Brush->BrushList_GetNext(&bi);
-
 		if (SubBrush)
 		{
 			mSubBrushCount++;
@@ -303,7 +314,10 @@ bool CL64_Mesh_Mgr::Brush_Decode_List(BrushList* BList, signed int SubBrush)
 		{
 			mBrushCount++;
 			Actual_Brush_Index++;
+			strcpy(Actual_mBrush_Name, pBrush->Name);
 		}
+
+		pBrush = App->CL_Brush->BrushList_GetNext(&bi);
 	}
 
 	mSubBrushCount = 0;
@@ -368,6 +382,7 @@ bool CL64_Mesh_Mgr::Brush_FaceList_Create(const Brush* b, const FaceList* pList,
 
 	m_Total_Faces = m_Total_Faces + pList->NumFaces;
 
+	
 	int i, j, k, num_faces, num_verts, num_mats, num_chars, curnum_verts;
 	char matname[MAX_PATH];
 
@@ -482,6 +497,9 @@ bool CL64_Mesh_Mgr::Brush_FaceList_Create(const Brush* b, const FaceList* pList,
 
 		for (j = 0; j < curnum_verts - 2; j++)
 		{
+			Create_V_Face(v_Face_Data_Count);
+			strcpy(v_Face_Data[v_Face_Data_Count]->Brush_Name, b->Name);
+			
 			App->CL_Model->B_Brush[App->CL_Model->BrushCount]->Face_Data[FaceIndex].a = num_verts;
 			App->CL_Model->B_Brush[App->CL_Model->BrushCount]->Face_Data[FaceIndex].b = num_verts + 2 + j;
 			App->CL_Model->B_Brush[App->CL_Model->BrushCount]->Face_Data[FaceIndex].c = num_verts + 1 + j;
@@ -492,6 +510,7 @@ bool CL64_Mesh_Mgr::Brush_FaceList_Create(const Brush* b, const FaceList* pList,
 
 			FaceIndex++;
 			Global_Faces_Index++;
+			v_Face_Data_Count++;
 		}
 
 		num_verts += curnum_verts;
@@ -565,6 +584,22 @@ bool CL64_Mesh_Mgr::Brush_FaceList_Create(const Brush* b, const FaceList* pList,
 	App->CL_Model->BrushCount++;
 
 	return true;
+}
+
+// *************************************************************************
+// *			Create_V_Face:- Terry and Hazel Flanigan 2025		  	   *
+// *************************************************************************
+void CL64_Mesh_Mgr::Create_V_Face(int Index)
+{
+	if (v_Face_Data[Index] != nullptr)
+	{
+		delete v_Face_Data[Index];
+		v_Face_Data[Index] = nullptr;
+	}
+
+	v_Face_Data[Index] = new Face_Data;
+
+	strcpy(v_Face_Data[Index]->Brush_Name,"No_Brush");
 }
 
 // *************************************************************************
