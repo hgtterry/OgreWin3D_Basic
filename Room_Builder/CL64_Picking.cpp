@@ -291,7 +291,7 @@ bool CL64_Picking::raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::Mo
 
                             Face_Index = i;
 
-                            /*App->CL_Grid->HitVertices[0] = vertices[indices[i]];
+                           /* App->CL_Grid->HitVertices[0] = vertices[indices[i]];
                             App->CL_Grid->HitVertices[1] = vertices[indices[i + 1]];
                             App->CL_Grid->HitVertices[2] = vertices[indices[i + 2]];
 
@@ -305,7 +305,7 @@ bool CL64_Picking::raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::Mo
 
                             Get_Material_Data();
 
-                            //App->CL_Grid->FaceNode->setVisible(true);
+                            App->CL_Grid->FaceNode->setVisible(true);
                         }
                     }
                 }

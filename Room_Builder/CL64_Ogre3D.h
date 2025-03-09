@@ -72,5 +72,6 @@ public:
 	float z;
 
 	int NameIndex;
+	int m_Total_Faces;
 };
 

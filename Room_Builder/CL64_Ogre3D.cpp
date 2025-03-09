@@ -45,6 +45,8 @@ CL64_Ogre3D::CL64_Ogre3D(void)
 	mExport_Just_Name[0] = 0;
 	Material_PathAndFile[0] = 0;
 
+	m_Total_Faces = 0;
+
 	x, y, z = 0;
 	nx, ny, nz = 0;
 	u, v = 0;
@@ -351,7 +353,7 @@ void CL64_Ogre3D::Convert_ToOgre3D(bool Create)
 	int Count = 0;
 	int FaceCount = 0;
 	int FaceIndex = 0;
-	int TotalFaces = 0;
+	m_Total_Faces = 0;
 
 	if (App->CL_Model->GroupCount == 0)
 	{
@@ -371,7 +373,8 @@ void CL64_Ogre3D::Convert_ToOgre3D(bool Create)
 		FaceCount = 0;
 		FaceIndex = 0;
 
-		TotalFaces = TotalFaces + App->CL_Model->Group[Count]->GroupFaceCount;
+		m_Total_Faces = m_Total_Faces + App->CL_Model->Group[Count]->GroupFaceCount;
+		
 		if (App->CL_Model->Group[Count]->GroupFaceCount == 0)
 		{
 			//App->Say("No Faces"); hgtterry Debug

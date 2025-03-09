@@ -50,6 +50,7 @@ public:
 	//bool AddTexture_GL(geVFile* BaseFile, const char* TextureName, int GroupIndex);
 
 	int ActualFaceCount;
+	int m_Total_Faces;
 
 	Ogre::SceneNode* World_Node;
 	Ogre::Entity* World_Ent;

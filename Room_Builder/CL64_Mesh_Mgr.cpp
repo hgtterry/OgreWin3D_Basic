@@ -95,6 +95,7 @@ CL64_Mesh_Mgr::CL64_Mesh_Mgr()
 	World_Node = nullptr;
 	World_Ent = nullptr;
 
+	m_Total_Faces = 0;
 	mBrushCount = 0;
 	mSubBrushCount = 0;
 	Global_Faces_Index = 0;
@@ -134,7 +135,7 @@ void CL64_Mesh_Mgr::Delete_Brush_List()
 	App->CL_Model->BrushCount = 0;
 	App->CL_Model->Brush_Face_Count = 0;
 	Global_Faces_Index = 0;
-
+	m_Total_Faces = 0;
 }
 
 // *************************************************************************
@@ -364,6 +365,8 @@ bool CL64_Mesh_Mgr::Brush_FaceList_Create(const Brush* b, const FaceList* pList,
 	App->CL_Model->Create_Brush_XX(App->CL_Model->BrushCount);
 	App->CL_Model->B_Brush[App->CL_Model->BrushCount]->Group_Index = mBrush_Index;
 	strcpy(App->CL_Model->B_Brush[App->CL_Model->BrushCount]->Brush_Name, mBrush_Name);
+
+	m_Total_Faces = m_Total_Faces + pList->NumFaces;
 
 	int i, j, k, num_faces, num_verts, num_mats, num_chars, curnum_verts;
 	char matname[MAX_PATH];
