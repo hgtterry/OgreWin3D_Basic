@@ -1356,12 +1356,16 @@ void CL64_Doc::OnToolsTemplate()
 static signed int SelAllBrushFaces(Brush* pBrush, void* lParam)
 {
     int iFace, nFaces;
+    char buff[MAX_PATH];
 
     nFaces = App->CL_Brush->Brush_GetNumFaces(pBrush);
     for (iFace = 0; iFace < nFaces; ++iFace)
     {
         Face* pFace;
         pFace = App->CL_Brush->Brush_GetFace(pBrush, iFace);
+
+        strcpy(buff, App->CL_Brush->Brush_GetName(App->CL_Doc->CurBrush));
+        App->CL_Face->Face_SetBrushName(pFace, buff);
 
         App->CL_Face->Face_SetSelected(pFace, GE_TRUE);
         App->CL_SelFaceList->SelFaceList_Add(App->CL_Doc->pSelFaces, pFace);  
@@ -1398,6 +1402,33 @@ void CL64_Doc::SelectAllFacesInBrushes(void)
 
     UpdateSelected();
     //ConfigureCurrentTool();
+}
+
+// *************************************************************************
+// *		Set_Face_Brush_Name:- Terry and Hazel Flanigan 2025 		   *
+// *************************************************************************
+void CL64_Doc::Set_Face_Brush_Name()
+{
+    BrushList* pList = App->CL_Level->Level_GetBrushes(App->CL_Doc->pLevel);
+
+    int Count = 0;
+    Brush* b;
+    b = pList->First;
+    while (b != NULL)
+    {
+        App->CL_Doc->DoGeneralSelect(false);
+
+        App->CL_Properties_Brushes->Selected_Index = Count;
+        App->CL_Properties_Brushes->OnSelchangeBrushlist(Count, true);
+
+        App->CL_Doc->SelectAllFacesInBrushes();
+        App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
+
+        Count++;
+        b = b->Next;
+    }
+
+    App->CL_Panels->Deselect_All_Brushes_Update_Dlgs();
 }
 
 static signed int fdocSelectBrush(Brush* pBrush, void* lParam)

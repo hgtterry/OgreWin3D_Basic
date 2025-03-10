@@ -397,7 +397,6 @@ void CL64_Properties_Brushes::Fill_ListBox()
 	{
 		SendDlgItemMessage(BrushesDlg_Hwnd, IDC_GD_BRUSHLIST, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
 
-		Level* pLevel = App->CL_Doc->pLevel;
 		BrushList* pList = App->CL_Level->Level_GetBrushes(App->CL_Doc->pLevel);
 
 		int Count = 0;

@@ -172,6 +172,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             // ----------------------------- Debug
             case ID_DEBUG_GENERAL:
             {
+                App->CL_Doc->Set_Face_Brush_Name();
                /* int Count = 0;
 
                 while (Count < 3)

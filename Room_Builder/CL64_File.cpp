@@ -309,7 +309,6 @@ void CL64_File::Start_Load(bool Use_Open_Dialog)
 		Set_Editor();
 
 		App->CL_Doc->UpdateAllViews(Enums::UpdateViews_All);
-
 		App->Say("File Loaded", App->CL_File->FileName_3dt);
 	}
 	else
