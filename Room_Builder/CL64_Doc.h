@@ -93,7 +93,9 @@ public:
 
 	const char* FindTextureLibrary(char const* WadName);
 	void SetLockAxis(int Lock) { mLockAxis = Lock; };
-	void Set_Faces_To_Brush_Name();
+
+	void Set_Faces_To_Brush_Name_All();
+	void Set_Faces_To_Brush_Name_Selected();
 
 	void AddBrushToWorld();
 	void Brush_Add_To_world();

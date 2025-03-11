@@ -32,6 +32,7 @@ public:
 	void BrushList_GetUsedTextures_X(signed int* UsedTex);
 	int Get_Brush_All_Faces_Count(void);
 	int	BrushList_EnumLeafBrushes(const BrushList* pList, void* pVoid, BrushList_CB	CallBack);
+	bool Check_if_Brush_Name_Exist(char* Name);
 
 	int Face_Count;
 

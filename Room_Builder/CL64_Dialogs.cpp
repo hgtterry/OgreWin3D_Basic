@@ -87,6 +87,8 @@ void CL64_Dialogs::YesNo(const char* Text, const char* Text2)
 	strcpy(MessageString, Text);
 	strcpy(MessageString2, Text2);
 
+	App->CL_Properties_Tabs->Enable_Tabs_Dlg(false);
+
 	DialogBox(App->hInst, (LPCTSTR)IDD_YESNO_DLG, App->MainHwnd, (DLGPROC)Proc_YesNo);
 	
 }
@@ -98,6 +100,7 @@ LRESULT CALLBACK CL64_Dialogs::Proc_YesNo(HWND hDlg, UINT message, WPARAM wParam
 {
 	switch (message)
 	{
+
 	case WM_INITDIALOG:
 	{
 		SendDlgItemMessage(hDlg, IDC_BANNER, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
@@ -110,6 +113,7 @@ LRESULT CALLBACK CL64_Dialogs::Proc_YesNo(HWND hDlg, UINT message, WPARAM wParam
 		SetDlgItemText(hDlg, IDC_STTEXT, App->CL_Dialogs->MessageString2);
 		return TRUE;
 	}
+
 	case WM_CTLCOLORSTATIC:
 	{
 		if (GetDlgItem(hDlg, IDC_BANNER) == (HWND)lParam)
@@ -128,6 +132,7 @@ LRESULT CALLBACK CL64_Dialogs::Proc_YesNo(HWND hDlg, UINT message, WPARAM wParam
 		}
 		return FALSE;
 	}
+
 	case WM_NOTIFY:
 	{
 		LPNMHDR some_item = (LPNMHDR)lParam;
@@ -153,10 +158,12 @@ LRESULT CALLBACK CL64_Dialogs::Proc_YesNo(HWND hDlg, UINT message, WPARAM wParam
 	{
 		return (LONG)App->AppBackground;
 	}
+
 	case WM_COMMAND:
 
 		if (LOWORD(wParam) == IDOK)
 		{
+			App->CL_Properties_Tabs->Enable_Tabs_Dlg(true);
 			App->CL_Dialogs->flag_Dlg_Canceled = 0;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
@@ -164,6 +171,7 @@ LRESULT CALLBACK CL64_Dialogs::Proc_YesNo(HWND hDlg, UINT message, WPARAM wParam
 
 		if (LOWORD(wParam) == IDCANCEL)
 		{
+			App->CL_Properties_Tabs->Enable_Tabs_Dlg(true);
 			App->CL_Dialogs->flag_Dlg_Canceled = 1;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
@@ -172,6 +180,7 @@ LRESULT CALLBACK CL64_Dialogs::Proc_YesNo(HWND hDlg, UINT message, WPARAM wParam
 		break;
 
 	}
+
 	return FALSE;
 }
 
@@ -182,7 +191,7 @@ void CL64_Dialogs::Dialog_Text(int What_Check)
 {
 	flag_Dlg_Canceled = 0;
 	Check_What = What_Check;
-
+	App->CL_Properties_Tabs->Enable_Tabs_Dlg(false);
 	DialogBox(App->hInst, (LPCTSTR)IDD_TEXT_DIALOG, App->MainHwnd, (DLGPROC)Proc_Dialog_Text);
 }
 
@@ -193,6 +202,7 @@ LRESULT CALLBACK CL64_Dialogs::Proc_Dialog_Text(HWND hDlg, UINT message, WPARAM 
 {
 	switch (message)
 	{
+
 	case WM_INITDIALOG:
 	{
 		HFONT Font;
@@ -210,6 +220,7 @@ LRESULT CALLBACK CL64_Dialogs::Proc_Dialog_Text(HWND hDlg, UINT message, WPARAM 
 
 		return TRUE;
 	}
+
 	case WM_CTLCOLORSTATIC:
 	{
 		if (GetDlgItem(hDlg, IDC_TITLENAME) == (HWND)lParam)
@@ -267,6 +278,17 @@ LRESULT CALLBACK CL64_Dialogs::Proc_Dialog_Text(HWND hDlg, UINT message, WPARAM 
 				}
 			}
 
+			if (App->CL_Dialogs->Check_What == Enums::Check_Name_Brushes)
+			{
+				bool test = App->CL_Brush_X->Check_if_Brush_Name_Exist(buff);
+				if (test == 1)
+				{
+					App->Say("Brush Name Exist");
+					return TRUE;
+				}
+			}
+
+			App->CL_Properties_Tabs->Enable_Tabs_Dlg(true);
 			App->CL_Dialogs->flag_Dlg_Canceled = 0;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
@@ -274,6 +296,7 @@ LRESULT CALLBACK CL64_Dialogs::Proc_Dialog_Text(HWND hDlg, UINT message, WPARAM 
 
 		if (LOWORD(wParam) == IDCANCEL)
 		{
+			App->CL_Properties_Tabs->Enable_Tabs_Dlg(true);
 			App->CL_Dialogs->flag_Dlg_Canceled = 1;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
@@ -312,6 +335,7 @@ LRESULT CALLBACK CL64_Dialogs::Proc_Message(HWND hDlg, UINT message, WPARAM wPar
 {
 	switch (message)
 	{
+
 	case WM_INITDIALOG:
 	{
 		SendDlgItemMessage(hDlg, IDC_STTEXT, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
@@ -431,6 +455,7 @@ LRESULT CALLBACK CL64_Dialogs::Proc_PleaseWait(HWND hDlg, UINT message, WPARAM w
 		return FALSE;
 	}
 	}
+
 	return FALSE;
 }
 
@@ -441,6 +466,7 @@ void CL64_Dialogs::Start_Brush_Properties_Dlg()
 {
 	if (flag_boolBrush_Properties_Dialog_Active == 0)
 	{
+		App->CL_Properties_Tabs->Enable_Tabs_Dlg(false);
 		DialogBox(App->hInst, (LPCTSTR)IDD_SB_BRUSH_PROPERTIES, App->MainHwnd, (DLGPROC)Proc_Brush_Properties);
 	}
 }
@@ -452,6 +478,7 @@ LRESULT CALLBACK CL64_Dialogs::Proc_Brush_Properties(HWND hDlg, UINT message, WP
 {
 	switch (message)
 	{
+
 	case WM_INITDIALOG:
 	{
 		App->CL_Dialogs->flag_boolBrush_Properties_Dialog_Active = 1;
@@ -568,6 +595,7 @@ LRESULT CALLBACK CL64_Dialogs::Proc_Brush_Properties(HWND hDlg, UINT message, WP
 		// -----------------------------------------------------------------
 		if (LOWORD(wParam) == IDOK)
 		{
+			App->CL_Properties_Tabs->Enable_Tabs_Dlg(true);
 			App->CL_Dialogs->flag_boolBrush_Properties_Dialog_Active = 0;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
@@ -575,6 +603,7 @@ LRESULT CALLBACK CL64_Dialogs::Proc_Brush_Properties(HWND hDlg, UINT message, WP
 
 		if (LOWORD(wParam) == IDCANCEL)
 		{
+			App->CL_Properties_Tabs->Enable_Tabs_Dlg(true);
 			App->CL_Dialogs->flag_boolBrush_Properties_Dialog_Active = 0;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
@@ -583,6 +612,7 @@ LRESULT CALLBACK CL64_Dialogs::Proc_Brush_Properties(HWND hDlg, UINT message, WP
 		break;
 	}
 	}
+
 	return FALSE;
 }
 

@@ -218,4 +218,28 @@ int	CL64_Brush_X::BrushList_EnumLeafBrushes(const BrushList* pList, void* pVoid,
 	return bResult;
 }
 
+// *************************************************************************
+// *		Check_if_Brush_Name_Exist:- Terry and Hazel Flanigan 2025			   *
+// *************************************************************************
+bool CL64_Brush_X::Check_if_Brush_Name_Exist(char* Name)
+{
+	int Result = 1;
+	Brush* b;
+
+	BrushList* pList = App->CL_Level->Level_GetBrushes(App->CL_Doc->pLevel);
+
+	b = pList->First;
+	while (b != NULL)
+	{
+		Result = strcmp(b->Name, Name);
+		if (Result == 0)
+		{
+			return 1;
+		}
+
+		b = b->Next;
+	}
+
+	return 0;
+}
 

@@ -1405,9 +1405,9 @@ void CL64_Doc::SelectAllFacesInBrushes(void)
 }
 
 // *************************************************************************
-// *		Set_Faces_Brush_Name:- Terry and Hazel Flanigan 2025 		   *
+// *		Set_Faces_Brush_Name_All:- Terry and Hazel Flanigan 2025 	   *
 // *************************************************************************
-void CL64_Doc::Set_Faces_To_Brush_Name()
+void CL64_Doc::Set_Faces_To_Brush_Name_All()
 {
     Do_Timer
 
@@ -1440,9 +1440,25 @@ void CL64_Doc::Set_Faces_To_Brush_Name()
     Get_Timer
 }
 
+// *************************************************************************
+// *	Set_Faces_To_Brush_Name_Selected:- Terry and Hazel Flanigan 2025   *
+// *************************************************************************
+void CL64_Doc::Set_Faces_To_Brush_Name_Selected()
+{
+    int NumSelBrushes = App->CL_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes);
+
+    if (NumSelBrushes > 0)
+    {
+        App->CL_Doc->DoGeneralSelect(false);
+        App->CL_Doc->SelectAllFacesInBrushes();
+    }
+}
+
+// *************************************************************************
+// *	( Static )  fdocSelectBrush:- Terry and Hazel Flanigan 2025        *
+// *************************************************************************
 static signed int fdocSelectBrush(Brush* pBrush, void* lParam)
 {
-
     App->CL_SelBrushList->SelBrushList_Add(App->CL_Doc->pSelBrushes, pBrush);
 
     return GE_TRUE;

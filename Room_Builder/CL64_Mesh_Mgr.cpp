@@ -206,7 +206,7 @@ void CL64_Mesh_Mgr::Brush_Build_List(int ExpSelected)
 {
 	Delete_Brush_List();
 
-	App->CL_Doc->Set_Faces_To_Brush_Name();
+	App->CL_Doc->Set_Faces_To_Brush_Name_All();
 
 	App->CL_Model->BrushCount = 0;
 

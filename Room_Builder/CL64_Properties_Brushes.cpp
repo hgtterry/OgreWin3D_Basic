@@ -289,7 +289,7 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Brush_Tabs(HWND hDlg, UINT messag
 			{
 				char Name[MAX_PATH];
 
-				strcpy(App->CL_Dialogs->btext, "Change File Name");
+				strcpy(App->CL_Dialogs->btext, "Change Brush Name");
 				strcpy(App->CL_Dialogs->Chr_Text, App->CL_Properties_Brushes->Selected_Brush->Name);
 
 				App->CL_Dialogs->Dialog_Text(Enums::Check_Name_Brushes);
@@ -306,7 +306,11 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Brush_Tabs(HWND hDlg, UINT messag
 				App->CL_Brush->Brush_SetName(App->CL_Properties_Brushes->Selected_Brush, Name);
 				App->CL_Properties_Brushes->Fill_ListBox();
 
+				App->CL_Doc->Set_Faces_To_Brush_Name_Selected();
+
 				App->CL_Doc->flag_Is_Modified = 1;
+
+				SendDlgItemMessage(hDlg, IDC_GD_BRUSHLIST, LB_SETCURSEL, (WPARAM)App->CL_Properties_Brushes->Selected_Index, (LPARAM)0);
 			}
 			else
 			{
