@@ -68,6 +68,9 @@ private:
 	void Groups_Render_Textures(void);
 	void Groups_Textured_Parts(int Count);
 
+	void Groups_Render_Faces(void);
+	void Groups_Faces_Parts(int Count);
+
 	void Render_Selected_Brush();
 	void Render_Selected_Face();
 

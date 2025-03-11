@@ -186,12 +186,8 @@ void CL64_OGL_Listener::Render_Loop()
 
 	if (Render_Mode == Enums::Render_Groups && Flag_Render_Brushes == 1)
 	{
-		glEnable(GL_DEPTH_TEST);
-		glShadeModel(GL_SMOOTH);
-
-		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-
-		Groups_Render_Textures();
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		Groups_Render_Faces();
 	}
 
 	// ---------------------- Brush
@@ -334,6 +330,57 @@ void CL64_OGL_Listener::Groups_Textured_Parts(int Count)
 
 		glEnd();
 
+	}
+}
+
+// *************************************************************************
+// *		Groups_Render_Faces:- Terry and Hazel Flanigan 2025		 	   *
+// *************************************************************************
+void CL64_OGL_Listener::Groups_Render_Faces(void)
+{
+	int Count = 0;
+	int GroupCount = App->CL_Model->GroupCount;
+
+	Count = 0;
+	while (Count < GroupCount)
+	{
+		Groups_Faces_Parts(Count);
+		Count++;
+	}
+
+	glDisable(GL_TEXTURE_2D);
+
+}
+
+// *************************************************************************
+// *		Groups_Face_Part:- Terry and Hazel Flanigan 2025		 	   *
+// *************************************************************************
+void CL64_OGL_Listener::Groups_Faces_Parts(int Count)
+{
+	int FaceCount = 0;
+	int A = 0;
+	int B = 0;
+	int C = 0;
+
+	while (FaceCount < App->CL_Model->Group[Count]->GroupFaceCount)
+	{
+		A = App->CL_Model->Group[Count]->Face_Data[FaceCount].a;
+		B = App->CL_Model->Group[Count]->Face_Data[FaceCount].b;
+		C = App->CL_Model->Group[Count]->Face_Data[FaceCount].c;
+
+		glBegin(GL_POLYGON);
+
+		//-----------------------------------------------
+		
+		glVertex3fv(&App->CL_Model->Group[Count]->vertex_Data[A].x);
+		glVertex3fv(&App->CL_Model->Group[Count]->vertex_Data[B].x);
+		glVertex3fv(&App->CL_Model->Group[Count]->vertex_Data[C].x);
+
+		FaceCount++;
+
+		//-----------------------------------------------
+
+		glEnd();
 	}
 }
 

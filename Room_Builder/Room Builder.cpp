@@ -172,22 +172,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             // ----------------------------- Debug
             case ID_DEBUG_GENERAL:
             {
-               /* int Count = 0;
 
-                while (Count < 3)
-                {
-                    App->CL_MapEditor->VCam[Count]->CamPos.x = 0;
-                    App->CL_MapEditor->VCam[Count]->CamPos.y = 0;
-                    App->CL_MapEditor->VCam[Count]->CamPos.z = 0;
-
-                    App->CL_MapEditor->VCam[Count]->ZoomFactor = 0.3;
-
-                    Count++;
-                }
-
-                App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);*/
-               // App->CL_Resources->Load_Texture_Resources();
-               /* if (App->CL_Ogre->OGL_Listener->Render_Mode == Enums::Render_Groups)
+               if (App->CL_Ogre->OGL_Listener->Render_Mode == Enums::Render_Groups)
                 {
                     App->CL_Ogre->OGL_Listener->Flag_Render_Brushes = 0;
                     App->CL_Ogre->OGL_Listener->Render_Mode = Enums::Render_Nothing;
@@ -200,7 +186,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                     App->CL_Mesh_Mgr->World_Node->setVisible(false);
                 }
 
-                RedrawWindow(App->CL_Properties_Textures->Textures_Dlg_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);*/
+                RedrawWindow(App->CL_Properties_Textures->Textures_Dlg_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
                 
                 return 1;
             }
@@ -380,6 +366,28 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             }
            
             // ----------------------------- Camera
+            case ID_CAMERA_TEXTURED:
+            {
+                App->CL_Ogre->OGL_Listener->Flag_Render_Brushes = 0;
+                App->CL_Ogre->OGL_Listener->Render_Mode = Enums::Render_Nothing;
+                App->CL_Mesh_Mgr->World_Node->setVisible(true);
+
+                CheckMenuItem(App->mMenu, ID_CAMERA_TEXTURED, MF_BYCOMMAND | MF_CHECKED);
+                CheckMenuItem(App->mMenu, ID_CAMERA_WIREFRAMED, MF_BYCOMMAND | MF_UNCHECKED);
+                return 1;
+            }
+
+            case ID_CAMERA_WIREFRAMED:
+            {
+                App->CL_Ogre->OGL_Listener->Flag_Render_Brushes = 1;
+                App->CL_Ogre->OGL_Listener->Render_Mode = Enums::Render_Groups;
+                App->CL_Mesh_Mgr->World_Node->setVisible(false);
+
+                CheckMenuItem(App->mMenu, ID_CAMERA_WIREFRAMED, MF_BYCOMMAND | MF_CHECKED);
+                CheckMenuItem(App->mMenu, ID_CAMERA_TEXTURED, MF_BYCOMMAND | MF_UNCHECKED);
+                return 1;
+            }
+            
 			case ID_CAMERA_TRACKCAMERA:
 			{
 				if (App->CL_Doc->flag_Track_Camera == 1)

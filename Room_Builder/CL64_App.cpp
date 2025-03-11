@@ -275,6 +275,7 @@ void CL64_App::LoadProgramResource(void)
 	// Set Defaults for now
 	App->CL_Level->flag_UseGrid = 1;
 	CheckMenuItem(App->mMenu, ID_GRID_GRIDSNAP, MF_BYCOMMAND | MF_CHECKED);
+	CheckMenuItem(App->mMenu, ID_CAMERA_TEXTURED, MF_BYCOMMAND | MF_CHECKED);
 }
 
 // *************************************************************************
