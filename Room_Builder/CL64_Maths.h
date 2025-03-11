@@ -58,6 +58,7 @@ public:
 	void Vector3_AddScaled(const T_Vec3* V1, const T_Vec3* V2, float Scale, T_Vec3* V1PlusV2Scaled);
 	void Vector3_MA(T_Vec3* V1, float Scale, const T_Vec3* V2, T_Vec3* V1PlusV2Scaled);
 
+	int Ogre_Vector3_Compare(Ogre::Vector3* V1, Ogre::Vector3* V2, float Tolerance);
 
 	void XForm3d_SetIdentity(Matrix3d* M);
 	void XForm3d_RotateX(Matrix3d* M, float RadianAngle);

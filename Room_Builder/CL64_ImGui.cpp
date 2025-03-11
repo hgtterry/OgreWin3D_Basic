@@ -277,7 +277,7 @@ void CL64_ImGui::App_Tool_Selection_GUI(void)
 		ImGui::Text("Mesh Name:= %s ", App->CL_Picking->Pl_Entity_Name);
 		ImGui::Text("Texture Name:= %s ", App->CL_Picking->TextureName);
 		ImGui::Text("Ogre Model Faces:= %i ", App->CL_Ogre3D->m_Total_Faces);
-		ImGui::Text("Brushes2 Faces:= %i ", App->CL_Mesh_Mgr->ActualFaceCount);
+		ImGui::Text("Ogre Faces:= %i ", App->CL_Mesh_Mgr->ActualFaceCount);
 		ImGui::Text("Brushes3 Faces:= %i ", App->CL_Mesh_Mgr->Global_Faces_Index);
 		ImGui::Text("Brushes Faces:= %i ", App->CL_Mesh_Mgr->m_Total_Faces);
 		ImGui::Text("V_Face Count:= %i ", App->CL_Mesh_Mgr->v_Face_Data_Count);

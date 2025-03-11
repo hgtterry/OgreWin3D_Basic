@@ -168,7 +168,7 @@ LRESULT CALLBACK CL64_Properties_Templates::Proc_Templates(HWND hDlg, UINT messa
 			App->CL_Properties_Brushes->Fill_ListBox();
 
 			App->CL_Properties_Templates->Enable_Insert_Button(false);
-			App->CL_Properties_Brushes->Enable_Options_Buttons(false);
+			App->CL_Properties_Brushes->Set_Dlg_Brush_Options_Buttons(false);
 			return 1;
 		}
 

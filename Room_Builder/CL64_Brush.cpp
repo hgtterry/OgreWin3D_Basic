@@ -159,7 +159,6 @@ Brush* CL64_Brush::Brush_Create(int Type, const FaceList* fl, const BrushList* B
 			pBrush->BList = NULL;
 			pBrush->Flags = BRUSH_SOLID;
 			App->CL_FaceList->FaceList_GetBounds(fl, &pBrush->BoundingBox);
-			App->CL_FaceList->FaceList_SetBrushNames(fl, "Terry");
 			break;
 
 		default:

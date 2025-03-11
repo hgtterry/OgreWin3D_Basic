@@ -69,7 +69,7 @@ public:
 	Ogre::ColourValue ColourHairX;
 	Ogre::ColourValue ColourHairY;
 
-	Ogre::Vector3 HitVertices[2];
+	Ogre::Vector3 HitVertices[3];
 
 	bool flag_ShowGrid;
 	bool flag_ShowDivisions;

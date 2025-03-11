@@ -206,6 +206,8 @@ void CL64_Mesh_Mgr::Brush_Build_List(int ExpSelected)
 {
 	Delete_Brush_List();
 
+	App->CL_Doc->Set_Faces_To_Brush_Name();
+
 	App->CL_Model->BrushCount = 0;
 
 	mBrushCount = 0;
@@ -382,7 +384,6 @@ bool CL64_Mesh_Mgr::Brush_FaceList_Create(const Brush* b, const FaceList* pList,
 
 	m_Total_Faces = m_Total_Faces + pList->NumFaces;
 
-	
 	int i, j, k, num_faces, num_verts, num_mats, num_chars, curnum_verts;
 	char matname[MAX_PATH];
 
@@ -427,11 +428,14 @@ bool CL64_Mesh_Mgr::Brush_FaceList_Create(const Brush* b, const FaceList* pList,
 
 	for (i = 0; i < pList->NumFaces; i++)
 	{
+		
 		const T_Vec3* verts;
 		verts = App->CL_Face->Face_GetPoints(pList->Faces[i]);
 		curnum_verts = App->CL_Face->Face_GetNumPoints(pList->Faces[i]);
 		for (j = 0; j < curnum_verts; j++)
 		{
+	
+
 			App->CL_Model->B_Brush[App->CL_Model->BrushCount]->vertex_Data[VertIndex].x = verts[j].x;
 			App->CL_Model->B_Brush[App->CL_Model->BrushCount]->vertex_Data[VertIndex].y = verts[j].y;
 			App->CL_Model->B_Brush[App->CL_Model->BrushCount]->vertex_Data[VertIndex].z = verts[j].z;
@@ -442,6 +446,7 @@ bool CL64_Mesh_Mgr::Brush_FaceList_Create(const Brush* b, const FaceList* pList,
 
 			VertIndex++;
 		}
+
 	}
 
 	int UVIndex = 0;
@@ -483,9 +488,9 @@ bool CL64_Mesh_Mgr::Brush_FaceList_Create(const Brush* b, const FaceList* pList,
 		}
 	}
 
-	int FaceIndex = 0;
-	// -----------------------------------  Faces
 
+	// -----------------------------------  Faces
+	int FaceIndex = 0;
 	App->CL_Model->Brush_Face_Count = App->CL_Model->Brush_Face_Count + num_faces;
 	App->CL_Model->B_Brush[App->CL_Model->BrushCount]->Face_Count = num_faces;
 	App->CL_Model->B_Brush[App->CL_Model->BrushCount]->Face_Data.resize(num_faces);
@@ -497,12 +502,16 @@ bool CL64_Mesh_Mgr::Brush_FaceList_Create(const Brush* b, const FaceList* pList,
 
 		for (j = 0; j < curnum_verts - 2; j++)
 		{
+			char buff[20];
+
 			Create_V_Face(v_Face_Data_Count);
-			strcpy(v_Face_Data[v_Face_Data_Count]->Brush_Name, b->Name);
-			
+			//App->Say(App->CL_Face->Face_GetBrushName(pList->Faces[i]));
+			strcpy(v_Face_Data[v_Face_Data_Count]->Brush_Name, App->CL_Face->Face_GetBrushName(pList->Faces[i]));
+
 			App->CL_Model->B_Brush[App->CL_Model->BrushCount]->Face_Data[FaceIndex].a = num_verts;
 			App->CL_Model->B_Brush[App->CL_Model->BrushCount]->Face_Data[FaceIndex].b = num_verts + 2 + j;
 			App->CL_Model->B_Brush[App->CL_Model->BrushCount]->Face_Data[FaceIndex].c = num_verts + 1 + j;
+			App->CL_Model->B_Brush[App->CL_Model->BrushCount]->Face_Data[FaceIndex].face_Index = v_Face_Data_Count;
 
 			App->CL_Model->B_Brush[App->CL_Model->BrushCount]->Picking_Data[FaceIndex].WE_Face_Index = i;
 			App->CL_Model->B_Brush[App->CL_Model->BrushCount]->Picking_Data[FaceIndex].Global_Face = Global_Faces_Index;
@@ -569,8 +578,11 @@ bool CL64_Mesh_Mgr::Brush_FaceList_Create(const Brush* b, const FaceList* pList,
 					matf[j] = 1;
 					for (k = 0; k < curnum_verts - 2; k++)
 					{
+						
 						TextureId = Get_Adjusted_Index(App->CL_Face->Face_GetTextureDibId(pList->Faces[i]));
 						App->CL_Model->B_Brush[App->CL_Model->BrushCount]->Picking_Data[curnum_faces + k].TextID = TextureId;
+						
+						
 					}
 				}
 
@@ -684,6 +696,7 @@ bool CL64_Mesh_Mgr::WE_Convert_To_Texture_Group(int TextureID)
 	int BrushCount = App->CL_Model->BrushCount;
 	Count = 0;
 	
+
 	while (Count < BrushCount)
 	{
 		//App->Say("Conv2");
@@ -699,6 +712,8 @@ bool CL64_Mesh_Mgr::WE_Convert_To_Texture_Group(int TextureID)
 				B = App->CL_Model->B_Brush[Count]->Face_Data[FaceCount].b;
 				C = App->CL_Model->B_Brush[Count]->Face_Data[FaceCount].c;
 
+				int FI = App->CL_Model->B_Brush[Count]->Face_Data[FaceCount].face_Index;
+
 				X = App->CL_Model->B_Brush[Count]->vertex_Data[A].x;
 				Y = App->CL_Model->B_Brush[Count]->vertex_Data[A].y;
 				Z = App->CL_Model->B_Brush[Count]->vertex_Data[A].z;
@@ -708,7 +723,7 @@ bool CL64_Mesh_Mgr::WE_Convert_To_Texture_Group(int TextureID)
 				App->CL_Model->Group[TextureID]->vertex_Data[vertexIndex].z = Z;
 
 				U = App->CL_Model->B_Brush[Count]->MapCord_Data[A].u,
-					V = App->CL_Model->B_Brush[Count]->MapCord_Data[A].v;
+				V = App->CL_Model->B_Brush[Count]->MapCord_Data[A].v;
 
 				App->CL_Model->Group[TextureID]->MapCord_Data[vertexIndex].u = U;
 				App->CL_Model->Group[TextureID]->MapCord_Data[vertexIndex].v = V;
@@ -781,7 +796,7 @@ bool CL64_Mesh_Mgr::WE_Convert_To_Texture_Group(int TextureID)
 
 				int Brush_Index = App->CL_Model->B_Brush[Count]->Picking_Data[FaceCount].Actual_Brush_Index;
 				App->CL_Model->Group[TextureID]->Face_Data[FacePos].Brush_Index = Brush_Index;
-				App->CL_Model->Group[TextureID]->Face_Data[FacePos].Face_Index = App->CL_Model->B_Brush[Count]->Picking_Data[FaceCount].WE_Face_Index;
+				App->CL_Model->Group[TextureID]->Face_Data[FacePos].WE_Face_Index = FI;// App->CL_Model->B_Brush[Count]->Picking_Data[FaceCount].WE_Face_Index;
 				FaceIndexNum++;
 				ActualFaceCount++;
 

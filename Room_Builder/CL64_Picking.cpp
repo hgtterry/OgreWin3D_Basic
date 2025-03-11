@@ -308,9 +308,6 @@ bool CL64_Picking::raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::Mo
                             App->CL_Grid->HitFaceUVs[2] = TextCords[Face_Index + 2];*/
 
                             SubMesh_Face = Sub_Mesh_Indexs[Face_Index];
-
-                            Get_Material_Data();
-
                             App->CL_Grid->FaceNode->setVisible(true);
                         }
                     }
@@ -342,6 +339,78 @@ bool CL64_Picking::raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::Mo
         // raycast success
         result = closest_result;
         flag_Selected_Ok = 1;
+
+        Get_Material_Data();
+
+        Ogre::Vector3 Pick_Vecs;
+        Ogre::Vector3 Face_Vecs;
+
+        Pick_Vecs.x = App->CL_Grid->HitVertices[0].x;
+        Pick_Vecs.y = App->CL_Grid->HitVertices[0].y;
+        Pick_Vecs.z = App->CL_Grid->HitVertices[0].z;
+
+        int A = 0;
+        int B = 0;
+        int C = 0;
+
+        int Count = 0;
+       // App->Say_Int(SubMesh_Face);
+
+        int FaceCount = App->CL_Model->Group[SubMesh_Face]->GroupFaceCount;
+        while (Count < FaceCount)
+        {
+   
+            A = App->CL_Model->Group[SubMesh_Face]->Face_Data[Count].a;
+            B = App->CL_Model->Group[SubMesh_Face]->Face_Data[Count].b;
+            C = App->CL_Model->Group[SubMesh_Face]->Face_Data[Count].c;
+
+            Face_Vecs.x = App->CL_Model->Group[SubMesh_Face]->vertex_Data[A].x;
+            Face_Vecs.y = App->CL_Model->Group[SubMesh_Face]->vertex_Data[A].y;
+            Face_Vecs.z = App->CL_Model->Group[SubMesh_Face]->vertex_Data[A].z;
+
+            int HT = App->CL_Maths->Ogre_Vector3_Compare(&Pick_Vecs, &Face_Vecs,1);
+           
+            if (HT == 1)
+            {
+                App->Say("Hit");
+
+            
+                Pick_Vecs.x = App->CL_Grid->HitVertices[1].x;
+                Pick_Vecs.y = App->CL_Grid->HitVertices[1].y;
+                Pick_Vecs.z = App->CL_Grid->HitVertices[1].z;
+
+                Face_Vecs.x = App->CL_Model->Group[SubMesh_Face]->vertex_Data[B].x;
+                Face_Vecs.y = App->CL_Model->Group[SubMesh_Face]->vertex_Data[B].y;
+                Face_Vecs.z = App->CL_Model->Group[SubMesh_Face]->vertex_Data[B].z;
+
+                App->Say_Vector3(Pick_Vecs);
+                App->Say_Vector3(Face_Vecs);
+
+                int HT = App->CL_Maths->Ogre_Vector3_Compare(&Pick_Vecs, &Face_Vecs, 1);
+                if (HT == 1)
+                {
+                    App->Say("Hit 2");
+                    Pick_Vecs.x = App->CL_Grid->HitVertices[2].x;
+                    Pick_Vecs.y = App->CL_Grid->HitVertices[2].y;
+                    Pick_Vecs.z = App->CL_Grid->HitVertices[2].z;
+
+                    Face_Vecs.x = App->CL_Model->Group[SubMesh_Face]->vertex_Data[C].x;
+                    Face_Vecs.y = App->CL_Model->Group[SubMesh_Face]->vertex_Data[C].y;
+                    Face_Vecs.z = App->CL_Model->Group[SubMesh_Face]->vertex_Data[C].z;
+
+                    int HT = App->CL_Maths->Ogre_Vector3_Compare(&Pick_Vecs, &Face_Vecs, 1);
+                    if (HT == 1)
+                    {
+                        //App->Say("Hit");
+                       // App->Say_Float(Pick_Vecs.y);
+                       // App->Say_Float(Face_Vecs.y);
+                    }
+                }
+            }
+
+            Count++;
+        }
+
         return (true);
     }
     else

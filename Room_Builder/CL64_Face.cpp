@@ -393,6 +393,8 @@ void CL64_Face::Face_CopyFaceInfo(const Face* src, Face* dst)
 	dst->LightXScale = src->LightXScale;
 	dst->LightYScale = src->LightYScale;
 
+	strcpy(dst->Brush_Name, src->Brush_Name);
+
 	//make sure the texinfos plane and vecs are good
 	Face_SetPlaneFromFace(dst);
 }

@@ -224,10 +224,9 @@ FaceList* CL64_ParseFile::FaceList_CreateFromFile()
 		{
 			Face* pFace;
 
-			pFace = Face_CreateFromFile("Face_Test");
+			pFace = Face_CreateFromFile();
 			if (pFace != NULL)
 			{
-				App->CL_Face->Face_SetBrushName(pFace, "poo2");
 				App->CL_FaceList->FaceList_AddFace(pList, pFace);
 			}
 		}
@@ -246,7 +245,7 @@ FaceList* CL64_ParseFile::FaceList_CreateFromFile()
 // *************************************************************************
 // *		   Face_CreateFromFile:- Terry and Hazel Flanigan 2025		   *
 // *************************************************************************
-Face* CL64_ParseFile::Face_CreateFromFile(const char* Brush_Name)
+Face* CL64_ParseFile::Face_CreateFromFile()
 {
 	Face* f = NULL;
 	int		i, flg, NumPnts, xShift, yShift, Light;
@@ -324,7 +323,6 @@ Face* CL64_ParseFile::Face_CreateFromFile(const char* Brush_Name)
 			App->CL_Face->Face_SetTextureScale(f, xScale, yScale);
 			App->CL_Face->Face_SetTexturePos(f);
 
-			App->CL_Face->Face_SetBrushName(f, "poo");
 			f->LightXScale = LightXScale;
 			f->LightYScale = LightYScale;
 			

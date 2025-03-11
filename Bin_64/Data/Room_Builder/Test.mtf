@@ -8,7 +8,7 @@ Brush Box_Hollow
 	HullSize 16.000000
 	Type 1
 Brushlist 2
-Brush Box
+Brush Box_Hollow
 	Flags 1025
 	ModelId 0
 	GroupId 0
@@ -99,7 +99,7 @@ Brush Box
 		LightScale 2.000000 2.000000
 	Transform 0.000000 0.000000 1.000000 -0.000345 1.000000 0.000000 -1.000000 -0.000345 0.000000 0.000000 0.000000 0.000000
 	Pos 0.000000 0.000000 0.000000
-Brush Box
+Brush Box_Hollow
 	Flags 145
 	ModelId 0
 	GroupId 0

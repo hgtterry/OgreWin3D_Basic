@@ -81,7 +81,7 @@ void CL64_Panels::Deselect_All_Brushes_Update_Dlgs(void)
 	App->CL_Top_Tabs->Reset_Brush_Buttons();
 	App->CL_Top_Tabs->flag_Brush_Select = 1;
 
-	App->CL_Properties_Brushes->Enable_Options_Buttons(false);
+	App->CL_Properties_Brushes->Set_Dlg_Brush_Options_Buttons(false);
 
 	App->CL_Top_Tabs->Deselect_Faces_Dlg_Buttons();
 

@@ -581,7 +581,7 @@ void CL64_Doc::SelectOrtho(POINT point, ViewVars* v)
                 App->CL_Properties_Brushes->Get_Index(CurBrush);
 
                 App->CL_Top_Tabs->Enable_Brush_Options_Buttons(true, false);
-                App->CL_Properties_Brushes->Enable_Options_Buttons(true);
+                App->CL_Properties_Brushes->Set_Dlg_Brush_Options_Buttons(true);
 
                 App->CL_Properties_Brushes->Update_SelectedBrushesCount_Dlg();
 
@@ -1405,30 +1405,39 @@ void CL64_Doc::SelectAllFacesInBrushes(void)
 }
 
 // *************************************************************************
-// *		Set_Face_Brush_Name:- Terry and Hazel Flanigan 2025 		   *
+// *		Set_Faces_Brush_Name:- Terry and Hazel Flanigan 2025 		   *
 // *************************************************************************
-void CL64_Doc::Set_Face_Brush_Name()
+void CL64_Doc::Set_Faces_To_Brush_Name()
 {
+    Do_Timer
+
     BrushList* pList = App->CL_Level->Level_GetBrushes(App->CL_Doc->pLevel);
 
     int Count = 0;
-    Brush* b;
-    b = pList->First;
-    while (b != NULL)
+    int BC = App->CL_Brush->Get_Brush_Count();
+   
+    while (Count < BC)
     {
         App->CL_Doc->DoGeneralSelect(false);
 
         App->CL_Properties_Brushes->Selected_Index = Count;
-        App->CL_Properties_Brushes->OnSelchangeBrushlist(Count, true);
+
+        App->CL_Doc->ResetAllSelections();
+        App->CL_Doc->UpdateSelected();
+        App->CL_Properties_Brushes->Selected_Brush = App->CL_Brush->Get_Brush_ByIndex(Count);
+        App->CL_SelBrushList->SelBrushList_Add(App->CL_Doc->pSelBrushes, App->CL_Properties_Brushes->Selected_Brush);
+        App->CL_Doc->UpdateSelected();
 
         App->CL_Doc->SelectAllFacesInBrushes();
-        App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
 
         Count++;
-        b = b->Next;
     }
 
-    App->CL_Panels->Deselect_All_Brushes_Update_Dlgs();
+    App->CL_Doc->DoGeneralSelect(false);
+    App->CL_Doc->ResetAllSelections();
+    App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
+
+    Get_Timer
 }
 
 static signed int fdocSelectBrush(Brush* pBrush, void* lParam)

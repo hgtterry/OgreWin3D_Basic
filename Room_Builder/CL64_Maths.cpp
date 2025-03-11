@@ -242,6 +242,22 @@ signed int CL64_Maths::Vector3_Compare(const T_Vec3* V1, const T_Vec3* V2, float
 }
 
 // *************************************************************************
+// *						Ogre_Vector3_Compare						   *
+// *************************************************************************
+int CL64_Maths::Ogre_Vector3_Compare(Ogre::Vector3* V1, Ogre::Vector3* V2, float Tolerance)
+{
+
+	if (fabs(V2->x - V1->x) > Tolerance)
+		return false;
+	if (fabs(V2->y - V1->y) > Tolerance)
+		return false;
+	if (fabs(V2->z - V1->z) > Tolerance)
+		return false;
+
+	return true;
+}
+
+// *************************************************************************
 // *			Vector3_Compare:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
 void CL64_Maths::Vector3_Inverse(T_Vec3* V)

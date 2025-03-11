@@ -310,6 +310,8 @@ void CL64_File::Start_Load(bool Use_Open_Dialog)
 
 		App->CL_Doc->UpdateAllViews(Enums::UpdateViews_All);
 		App->Say("File Loaded", App->CL_File->FileName_3dt);
+
+		App->CL_Doc->Set_Faces_To_Brush_Name();
 	}
 	else
 	{
@@ -443,7 +445,7 @@ void CL64_File::Set_Editor()
 	App->CL_MapEditor->Reset_Views();
 
 	App->CL_Doc->Editor_Set_Dlgs(Enums::Editor_Dlgs_First_Brush);
-	App->CL_Properties_Brushes->Enable_Options_Buttons(false);
+	App->CL_Properties_Brushes->Set_Dlg_Brush_Options_Buttons(false);
 	App->CL_Ogre->RenderFrame(7);
 
 }

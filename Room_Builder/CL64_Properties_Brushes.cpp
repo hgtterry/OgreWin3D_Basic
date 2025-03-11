@@ -75,14 +75,14 @@ void CL64_Properties_Brushes::Show_Brushes_Dialog(bool Show)
 }
 
 // *************************************************************************
-// *	  Enable_Options_Buttons:- Terry and Hazel Flanigan 2025		*
+// *		 Set_Dlg_Options_Buttons:- Terry and Hazel Flanigan 2025	   *
 // *************************************************************************
-void CL64_Properties_Brushes::Enable_Options_Buttons(bool Enable)
+void CL64_Properties_Brushes::Set_Dlg_Brush_Options_Buttons(bool Enable)
 {
 	EnableWindow(GetDlgItem(BrushesDlg_Hwnd, IDC_BT_GD_BRUSHPROPERTIES), Enable);
 	EnableWindow(GetDlgItem(BrushesDlg_Hwnd, IDC_BT_BRUSH_DIMENSIONS), Enable);
 	EnableWindow(GetDlgItem(BrushesDlg_Hwnd, IDC_BT_DELETE_SEL_BRUSH), Enable);
-
+	EnableWindow(GetDlgItem(BrushesDlg_Hwnd, IDC_BT_BRUSH_RENAME), Enable);
 }
 
 // *************************************************************************
@@ -118,8 +118,8 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Brush_Tabs(HWND hDlg, UINT messag
 		SendDlgItemMessage(hDlg, IDC_ST_SELECTED_NUM, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
 		SendDlgItemMessage(hDlg, IDC_BT_GD_BRUSHPROPERTIES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-
 		SendDlgItemMessage(hDlg, IDC_BT_BRUSH_DIMENSIONS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_BRUSH_RENAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_DELETE_SEL_BRUSH, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		return TRUE;
@@ -195,6 +195,24 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Brush_Tabs(HWND hDlg, UINT messag
 			return CDRF_DODEFAULT;
 		}
 
+		if (some_item->idFrom == IDC_BT_BRUSH_RENAME && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_BRUSH_RENAME));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
+			else
+			{
+				App->Custom_Button_Normal(item);
+			}
+
+			return CDRF_DODEFAULT;
+		}
+
+
 		if (some_item->idFrom == IDC_BT_BRUSH_DIMENSIONS)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
@@ -263,6 +281,41 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Brush_Tabs(HWND hDlg, UINT messag
 			return TRUE;
 		}
 
+		if (LOWORD(wParam) == IDC_BT_BRUSH_RENAME)
+		{
+			int NumSelBrushes = App->CL_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes);
+
+			if (NumSelBrushes > 0)
+			{
+				char Name[MAX_PATH];
+
+				strcpy(App->CL_Dialogs->btext, "Change File Name");
+				strcpy(App->CL_Dialogs->Chr_Text, App->CL_Properties_Brushes->Selected_Brush->Name);
+
+				App->CL_Dialogs->Dialog_Text(Enums::Check_Name_Brushes);
+
+				if (App->CL_Dialogs->flag_Dlg_Canceled == 0)
+				{
+					strcpy(Name, App->CL_Dialogs->Chr_Text);
+				}
+				else
+				{
+					return TRUE;
+				}
+
+				App->CL_Brush->Brush_SetName(App->CL_Properties_Brushes->Selected_Brush, Name);
+				App->CL_Properties_Brushes->Fill_ListBox();
+
+				App->CL_Doc->flag_Is_Modified = 1;
+			}
+			else
+			{
+				App->Say("No Brush Selected");
+			}
+
+			return TRUE;
+		}
+
 		if (LOWORD(wParam) == IDC_BT_DELETE_SEL_BRUSH)
 		{
 			int NumSelBrushes = App->CL_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes);
@@ -292,7 +345,7 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Brush_Tabs(HWND hDlg, UINT messag
 			{
 				App->CL_Doc->DoGeneralSelect(false);
 
-				App->CL_Properties_Brushes->Enable_Options_Buttons(true);
+				App->CL_Properties_Brushes->Set_Dlg_Brush_Options_Buttons(true);
 
 				App->CL_Properties_Brushes->List_Selection_Changed(1);
 

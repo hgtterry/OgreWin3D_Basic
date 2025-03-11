@@ -219,6 +219,7 @@
 #define IDC_BT_BRUSH_DIMENSIONS         1163
 #define IDC_BUTTON3                     1164
 #define IDC_ED_BRUSH_POSX               1164
+#define IDC_BT_BRUSH_DIMENSIONS2        1164
 #define IDC_BUTTON4                     1165
 #define IDC_ED_BRUSH_POSY               1165
 #define IDC_ED_BRUSH_POSZ               1166
@@ -324,7 +325,6 @@
 #define IDC_ST_FACEINFO                 1258
 #define IDC_LIST1                       1259
 #define IDC_LST_FACE_INFO               1259
-#define ERAL                            1259
 #define IDC_LST_GENERAL                 1259
 #define IDC_TXL_DELETE_TEXTURE          1260
 #define IDC_ST_TXL_COUNT                1261

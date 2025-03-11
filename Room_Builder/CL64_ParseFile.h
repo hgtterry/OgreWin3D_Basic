@@ -34,7 +34,7 @@ public:
 	BrushList* BrushList_CreateFromFile(bool SubBrush);
 	Brush* Brush_CreateFromFile(bool SubBrush);
 	FaceList* FaceList_CreateFromFile();
-	Face* Face_CreateFromFile(const char* Brush_Name);
+	Face* Face_CreateFromFile();
 
 	bool Get_Version(char* Buffer);
 	bool Get_TextureLib(char* Buffer);
