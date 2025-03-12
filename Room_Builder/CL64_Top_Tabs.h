@@ -44,6 +44,8 @@ public:
 	bool flag_Brush_Move;
 	bool flag_Brush_Rotate;
 
+	bool flag_Full_View_3D;
+
 	HWND Headers_hWnd;
 
 private:

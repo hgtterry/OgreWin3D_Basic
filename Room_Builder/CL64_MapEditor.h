@@ -49,6 +49,8 @@ public:
 	void Render_RenderBrushSelFacesOrtho(ViewVars* Cam, Brush* b, HDC ViewDC);
 	void Reset_Views();
 
+	void Resize_Windows(HWND hDlg, int NewWidth, int NewDepth);
+
 	HWND Main_Dlg_Hwnd;
 	HWND Bottom_Right_Hwnd;
 
@@ -57,6 +59,10 @@ public:
 	HWND Bottom_Left_Hwnd;
 
 	float GridSize, GridSnapSize;
+	int Windows_Split_Ratio;
+
+	int nleftWnd_width;
+	int nleftWnd_Depth;
 
 	ViewVars* VCam[4];
 	ViewVars* Current_View;
@@ -84,8 +90,6 @@ private:
 	void Create_Bottom_Left_Window();
 	void Create_Bottom_Right_Ogre();
 
-	void Resize_Windows(HWND hDlg, int NewWidth, int NewDepth);
-
 	// Draw Routines
 	void Draw_Screen(HWND hwnd);
 	static signed int BrushDraw(Brush* pBrush, void* lParam);
@@ -111,9 +115,6 @@ private:
 
 	int RIGHT_MINIMUM_SPACE;
 	int LEFT_MINIMUM_SPACE;
-
-	int nleftWnd_width;
-	int nleftWnd_Depth;
 
 	bool Do_Width;
 	bool Do_Depth;

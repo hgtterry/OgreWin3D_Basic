@@ -40,6 +40,8 @@ CL64_Top_Tabs::CL64_Top_Tabs(void)
 	flag_All_Faces = 0;
 	flag_Next_Face = 0;
 	flag_Prev_Face = 0;
+
+	flag_Full_View_3D = 0;
 }
 
 CL64_Top_Tabs::~CL64_Top_Tabs(void)
@@ -63,10 +65,13 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Headers(HWND hDlg, UINT message, WPARAM wPa
 {
 	switch (message)
 	{
+
 	case WM_INITDIALOG:
 	{
 		SendDlgItemMessage(hDlg, IDC_ST_HEADER_BRUSHES, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_BRUSH_SELECT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
+		SendDlgItemMessage(hDlg, IDC_BT_FULL_3D, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
 		SendDlgItemMessage(hDlg, IDC_BT_BRUSH_MOVE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_BRUSH_ROTATE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
@@ -111,6 +116,14 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Headers(HWND hDlg, UINT message, WPARAM wPa
 	case WM_NOTIFY:
 	{
 		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		if (some_item->idFrom == IDC_BT_FULL_3D)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle_Tabs(item, App->CL_Top_Tabs->flag_Full_View_3D);
+			
+			return CDRF_DODEFAULT;
+		}
 
 		if (some_item->idFrom == IDC_BT_BRUSH_SELECT)
 		{
@@ -253,6 +266,29 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Headers(HWND hDlg, UINT message, WPARAM wPa
 
 	case WM_COMMAND:
 	{
+		if (LOWORD(wParam) == IDC_BT_FULL_3D)
+		{
+			if (App->CL_Top_Tabs->flag_Full_View_3D == 1)
+			{
+				App->CL_Top_Tabs->flag_Full_View_3D = 0;
+
+				App->CL_MapEditor->Windows_Split_Ratio = 2;
+				App->CL_MapEditor->Init_Views();
+				App->CL_MapEditor->Resize_Windows(App->CL_MapEditor->Main_Dlg_Hwnd, App->CL_MapEditor->nleftWnd_width, App->CL_MapEditor->nleftWnd_Depth);
+			}
+			else
+			{
+				App->CL_Top_Tabs->flag_Full_View_3D = 1;
+
+				App->CL_MapEditor->Windows_Split_Ratio = 64;
+				App->CL_MapEditor->Init_Views();
+				App->CL_MapEditor->Resize_Windows(App->CL_MapEditor->Main_Dlg_Hwnd, App->CL_MapEditor->nleftWnd_width, App->CL_MapEditor->nleftWnd_Depth);
+			}
+			
+
+			return TRUE;
+		}
+		
 		if (LOWORD(wParam) == IDC_BT_BRUSH_SELECT)
 		{
 			App->CL_Panels->Deselect_All_Brushes_Update_Dlgs();

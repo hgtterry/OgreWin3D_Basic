@@ -67,6 +67,7 @@ CL64_OGL_Listener::CL64_OGL_Listener(void)
 	Flag_Show_Selected_Brush = 1;
 	Flag_Show_Selected_Face = 1;
 	Flag_Render_Brushes = 0;
+	Flag_Just_Face = 0;
 
 	Render_Mode = Enums::Render_Nothing;
 
@@ -341,14 +342,19 @@ void CL64_OGL_Listener::Groups_Render_Faces(void)
 	int Count = 0;
 	int GroupCount = App->CL_Model->GroupCount;
 
-	Count = 0;
-	while (Count < GroupCount)
+	if (Flag_Just_Face == 1)
 	{
-		Groups_Faces_Parts(Count);
-		Count++;
+		Groups_Faces_Parts(0);
 	}
-
-	glDisable(GL_TEXTURE_2D);
+	else
+	{
+		Count = 0;
+		while (Count < GroupCount)
+		{
+			Groups_Faces_Parts(Count);
+			Count++;
+		}
+	}
 
 }
 

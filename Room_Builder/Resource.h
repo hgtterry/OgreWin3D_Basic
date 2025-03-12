@@ -221,6 +221,7 @@
 #define IDC_ED_BRUSH_POSX               1164
 #define IDC_BUTTON4                     1165
 #define IDC_ED_BRUSH_POSY               1165
+#define IDC_BT_FULL_3D                  1165
 #define IDC_ED_BRUSH_POSZ               1166
 #define IDC_ED_BRUSH_ROTX               1167
 #define IDC_ED_BRUSH_ROTY               1168

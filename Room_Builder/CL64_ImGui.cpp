@@ -44,6 +44,7 @@ CL64_ImGui::CL64_ImGui()
 
 	flag_Show_Tool_ID_Debug = 0;
 	flag_Show_Paths = 0;
+	flag_Show_Render_Reports = 0;
 }
 
 CL64_ImGui::~CL64_ImGui()
@@ -184,6 +185,11 @@ void CL64_ImGui::ImGui_Render_Loop(void)
 		Paths_GUI();
 	}
 	
+	if (flag_Show_Render_Reports == 1)
+	{
+		Render_Report_GUI();
+	}
+	
 	/*if (flag_Show_ImGui_Demo == 1)
 	{
 		ImGui::ShowDemoWindow();
@@ -286,6 +292,33 @@ void CL64_ImGui::App_Tool_Selection_GUI(void)
 		if (ImGui::Button("Close"))
 		{
 			flag_Show_Tool_ID_Debug = 0;
+		}
+
+		ImGui::End();
+	}
+}
+
+// *************************************************************************
+// *			Render_Report:- Terry and Hazel Flanigan 2025			   *
+// *************************************************************************
+void CL64_ImGui::Render_Report_GUI(void)
+{
+	ImGui::SetNextWindowPos(ImVec2(10, 10), ImGuiCond_FirstUseEver);
+
+	if (!ImGui::Begin("Render_Report", &flag_Show_Render_Reports, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_AlwaysAutoResize))
+	{
+		ImGui::End();
+	}
+	else
+	{
+		ImGui::Text("Render Reports");
+		ImGui::Separator();
+		ImGui::Text("Groups:= %i", App->CL_Model->GroupCount);
+		//ImGui::Text("Current Brush:= %s", App->CL_Doc->CurBrush->Name);
+		
+		if (ImGui::Button("Close"))
+		{
+			flag_Show_Render_Reports = 0;
 		}
 
 		ImGui::End();

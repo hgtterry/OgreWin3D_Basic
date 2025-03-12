@@ -172,21 +172,16 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             // ----------------------------- Debug
             case ID_DEBUG_GENERAL:
             {
-
-               if (App->CL_Ogre->OGL_Listener->Render_Mode == Enums::Render_Groups)
+                if (App->CL_Ogre->OGL_Listener->Flag_Just_Face == 1)
                 {
-                    App->CL_Ogre->OGL_Listener->Flag_Render_Brushes = 0;
-                    App->CL_Ogre->OGL_Listener->Render_Mode = Enums::Render_Nothing;
-                    App->CL_Mesh_Mgr->World_Node->setVisible(true);
+                    App->CL_Ogre->OGL_Listener->Flag_Just_Face = 0;
+                    App->CL_ImGui->flag_Show_Render_Reports = 0;
                 }
                 else
                 {
-                    App->CL_Ogre->OGL_Listener->Flag_Render_Brushes = 1;
-                    App->CL_Ogre->OGL_Listener->Render_Mode = Enums::Render_Groups;
-                    App->CL_Mesh_Mgr->World_Node->setVisible(false);
+                    App->CL_Ogre->OGL_Listener->Flag_Just_Face = 1;
+                    App->CL_ImGui->flag_Show_Render_Reports = 1;
                 }
-
-                RedrawWindow(App->CL_Properties_Textures->Textures_Dlg_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
                 
                 return 1;
             }
@@ -324,6 +319,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             // ----------------------------- View
             case ID_VIEW_RESETVIEWS:
             {
+                App->CL_MapEditor->Windows_Split_Ratio = 2;
                 App->CL_MapEditor->Reset_Views();
                 return 1;
             }
@@ -368,23 +364,31 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             // ----------------------------- Camera
             case ID_CAMERA_TEXTURED:
             {
-                App->CL_Ogre->OGL_Listener->Flag_Render_Brushes = 0;
-                App->CL_Ogre->OGL_Listener->Render_Mode = Enums::Render_Nothing;
-                App->CL_Mesh_Mgr->World_Node->setVisible(true);
+                if (App->CL_Brush->Get_Brush_Count() > 0)
+                {
+                    App->CL_Ogre->OGL_Listener->Flag_Render_Brushes = 0;
+                    App->CL_Ogre->OGL_Listener->Render_Mode = Enums::Render_Nothing;
+                    App->CL_Mesh_Mgr->World_Node->setVisible(true);
 
-                CheckMenuItem(App->mMenu, ID_CAMERA_TEXTURED, MF_BYCOMMAND | MF_CHECKED);
-                CheckMenuItem(App->mMenu, ID_CAMERA_WIREFRAMED, MF_BYCOMMAND | MF_UNCHECKED);
+                    CheckMenuItem(App->mMenu, ID_CAMERA_TEXTURED, MF_BYCOMMAND | MF_CHECKED);
+                    CheckMenuItem(App->mMenu, ID_CAMERA_WIREFRAMED, MF_BYCOMMAND | MF_UNCHECKED);
+                }
+
                 return 1;
             }
 
             case ID_CAMERA_WIREFRAMED:
             {
-                App->CL_Ogre->OGL_Listener->Flag_Render_Brushes = 1;
-                App->CL_Ogre->OGL_Listener->Render_Mode = Enums::Render_Groups;
-                App->CL_Mesh_Mgr->World_Node->setVisible(false);
+                if (App->CL_Brush->Get_Brush_Count() > 0)
+                {
+                    App->CL_Ogre->OGL_Listener->Flag_Render_Brushes = 1;
+                    App->CL_Ogre->OGL_Listener->Render_Mode = Enums::Render_Groups;
+                    App->CL_Mesh_Mgr->World_Node->setVisible(false);
 
-                CheckMenuItem(App->mMenu, ID_CAMERA_WIREFRAMED, MF_BYCOMMAND | MF_CHECKED);
-                CheckMenuItem(App->mMenu, ID_CAMERA_TEXTURED, MF_BYCOMMAND | MF_UNCHECKED);
+                    CheckMenuItem(App->mMenu, ID_CAMERA_WIREFRAMED, MF_BYCOMMAND | MF_CHECKED);
+                    CheckMenuItem(App->mMenu, ID_CAMERA_TEXTURED, MF_BYCOMMAND | MF_UNCHECKED);
+                }
+
                 return 1;
             }
             

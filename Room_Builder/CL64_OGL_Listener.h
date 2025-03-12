@@ -40,6 +40,7 @@ public:
 	bool Flag_Show_Selected_Brush;
 	bool Flag_Show_Selected_Face;
 	bool Flag_Render_Brushes;
+	bool Flag_Just_Face;
 
 	bool Get_Brush(const Brush* b, int Actual_Brush_Index);
 	bool Brush_Decode_List(BrushList* BList, signed int SubBrush);

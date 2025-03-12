@@ -63,6 +63,8 @@ CL64_MapEditor::CL64_MapEditor()
 	GridSize = 128, 
 	GridSnapSize = 8;
 
+	Windows_Split_Ratio = 2;
+
 	Left_Window_Hwnd = NULL;
 	Right_Window_Hwnd = NULL;
 
@@ -153,11 +155,11 @@ void CL64_MapEditor::Init_Views()
 	RECT rect;
 	GetClientRect(Main_Dlg_Hwnd, &rect);
 
-	LEFT_WINDOW_WIDTH = rect.right / 2;
-	nleftWnd_width = rect.right / 2;
+	LEFT_WINDOW_WIDTH = rect.right / Windows_Split_Ratio;
+	nleftWnd_width = rect.right / Windows_Split_Ratio;
 
-	LEFT_WINDOW_DEPTH = rect.bottom / 2;
-	TOP_POS_BOTLEFT = rect.bottom / 2;
+	LEFT_WINDOW_DEPTH = rect.bottom / Windows_Split_Ratio;
+	TOP_POS_BOTLEFT = rect.bottom / Windows_Split_Ratio;
 	nleftWnd_Depth = LEFT_WINDOW_DEPTH;
 
 	RIGHT_MINIMUM_SPACE = rect.right - 15;
