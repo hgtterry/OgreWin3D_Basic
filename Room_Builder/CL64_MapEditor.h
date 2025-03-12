@@ -61,6 +61,7 @@ public:
 	float GridSize, GridSnapSize;
 	int Windows_Split_Ratio;
 
+	// TODO hgtterry Make Private
 	int nleftWnd_width;
 	int nleftWnd_Depth;
 

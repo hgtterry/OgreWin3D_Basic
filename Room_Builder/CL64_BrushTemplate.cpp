@@ -211,7 +211,7 @@ Brush* CL64_BrushTemplate::BrushTemplate_CreateBox(const BrushTemplate_Box* pTem
 		b = App->CL_Brush->Brush_Create(BRUSH_LEAF, fl, 0);
 		if (b)
 		{
-			Brush_SetSubtract(b, pTemplate->TCut); // hgtterry Problem
+			Brush_SetSubtract(b, pTemplate->TCut); // TODO hgtterry Problem
 			App->CL_Brush->Brush_SetSheet(b, pTemplate->TSheet);
 			
 		}

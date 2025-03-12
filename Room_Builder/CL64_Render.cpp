@@ -83,7 +83,7 @@ bool CL64_Render::Render_RenderOrthoGridFromSize(ViewVars* cv, int Interval, HDC
 	VectorToSUB(ystep, yaxis) = (float)Interval;
 	VectorToSUB(xstep, xaxis) = (float)Interval;
 
-	cnt = Rect.bottom / Interval; // hgtterry Debug Odd
+	cnt = Rect.bottom / Interval; // TODO hgtterry Debug Odd
 
 	// horizontal lines
 	int Count = 0;

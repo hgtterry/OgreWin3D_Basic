@@ -2264,7 +2264,7 @@ void CL64_Brush::Brush_ResizeFinal(Brush* b, int sides, int inidx, T_Vec3* fnsca
 
 	pClone = Brush_Clone(b);
 	if (Brush_Scale3d(pClone, fnscale))
-		Brush_Scale3d(b, fnscale); // hgtterry Debug
+		Brush_Scale3d(b, fnscale); // TODO hgtterry Debug
 	Brush_Destroy(&pClone);
 	
 
