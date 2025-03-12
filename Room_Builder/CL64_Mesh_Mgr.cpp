@@ -294,11 +294,12 @@ bool CL64_Mesh_Mgr::Brush_Decode_List(BrushList* BList, signed int SubBrush)
 
 	while (pBrush != NULL)
 	{
+		strcpy(mBrush_Name, pBrush->Name);
+
 		if (mSubBrushCount == 0 && pBrush->Flags & 1 || pBrush->Flags & 1024)
 		{
 			if (SubBrush == 0)
 			{
-				strcpy(mBrush_Name, pBrush->Name);
 				mBrush_Index = mBrushCount;
 			}
 		}
@@ -502,10 +503,7 @@ bool CL64_Mesh_Mgr::Brush_FaceList_Create(const Brush* b, const FaceList* pList,
 
 		for (j = 0; j < curnum_verts - 2; j++)
 		{
-			char buff[20];
-
 			Create_V_Face(v_Face_Data_Count);
-			//App->Say(App->CL_Face->Face_GetBrushName(pList->Faces[i]));
 			strcpy(v_Face_Data[v_Face_Data_Count]->Brush_Name, App->CL_Face->Face_GetBrushName(pList->Faces[i]));
 
 			App->CL_Model->B_Brush[App->CL_Model->BrushCount]->Face_Data[FaceIndex].a = num_verts;
@@ -548,10 +546,6 @@ bool CL64_Mesh_Mgr::Brush_FaceList_Create(const Brush* b, const FaceList* pList,
 
 			// Material Name
 			int DibId = Get_Adjusted_Index(App->CL_Face->Face_GetTextureDibId(pList->Faces[i]));
-
-
-			// write number of faces that have this texture
-
 
 			// write face numbers
 			curnum_faces = 0;
@@ -699,7 +693,6 @@ bool CL64_Mesh_Mgr::WE_Convert_To_Texture_Group(int TextureID)
 
 	while (Count < BrushCount)
 	{
-		//App->Say("Conv2");
 		FaceCount = 0;
 
 		while (FaceCount < App->CL_Model->B_Brush[Count]->Face_Count)
@@ -796,7 +789,7 @@ bool CL64_Mesh_Mgr::WE_Convert_To_Texture_Group(int TextureID)
 
 				int Brush_Index = App->CL_Model->B_Brush[Count]->Picking_Data[FaceCount].Actual_Brush_Index;
 				App->CL_Model->Group[TextureID]->Face_Data[FacePos].Brush_Index = Brush_Index;
-				App->CL_Model->Group[TextureID]->Face_Data[FacePos].WE_Face_Index = FI;// App->CL_Model->B_Brush[Count]->Picking_Data[FaceCount].WE_Face_Index;
+				App->CL_Model->Group[TextureID]->Face_Data[FacePos].WE_Face_Index = App->CL_Model->B_Brush[Count]->Picking_Data[FaceCount].WE_Face_Index;
 				FaceIndexNum++;
 				ActualFaceCount++;
 

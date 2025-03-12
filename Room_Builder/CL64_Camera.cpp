@@ -23,6 +23,7 @@ THE SOFTWARE.
 */
 
 #include "pch.h"
+#include "resource.h"
 #include "CL64_App.h"
 #include "CL64_Camera.h"
 
@@ -33,3 +34,64 @@ CL64_Camera::CL64_Camera(void)
 CL64_Camera::~CL64_Camera(void)
 {
 }
+
+// *************************************************************************
+// *			SetBrushes_Fonts:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+void CL64_Camera::Track_Camera(void)
+{
+	if (App->CL_Doc->flag_Track_Camera == 1)
+	{
+		App->CL_Doc->flag_Track_Camera = 0;
+		CheckMenuItem(App->mMenu, ID_CAMERA_TRACKCAMERA, MF_BYCOMMAND | MF_UNCHECKED);
+	}
+	else
+	{
+		App->CL_Doc->flag_Track_Camera = 1;
+		CheckMenuItem(App->mMenu, ID_CAMERA_TRACKCAMERA, MF_BYCOMMAND | MF_CHECKED);
+	}
+
+	App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
+}
+
+// *************************************************************************
+// *			SetBrushes_Fonts:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+void CL64_Camera::Camera_Reset_Zero(void)
+{
+	App->CL_Ogre->Camera_Reset_Zero();
+	App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
+}
+
+// *************************************************************************
+// *			Camera_Textured:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void CL64_Camera::Camera_Textured(void)
+{
+	if (App->CL_Brush->Get_Brush_Count() > 0)
+	{
+		App->CL_Ogre->OGL_Listener->Flag_Render_Brushes = 0;
+		App->CL_Ogre->OGL_Listener->Render_Mode = Enums::Render_Nothing;
+		App->CL_Mesh_Mgr->World_Node->setVisible(true);
+
+		CheckMenuItem(App->mMenu, ID_CAMERA_TEXTURED, MF_BYCOMMAND | MF_CHECKED);
+		CheckMenuItem(App->mMenu, ID_CAMERA_WIREFRAMED, MF_BYCOMMAND | MF_UNCHECKED);
+	}
+}
+
+// *************************************************************************
+// *			Camera_Wired:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void CL64_Camera::Camera_Wired(void)
+{
+	if (App->CL_Brush->Get_Brush_Count() > 0)
+	{
+		App->CL_Ogre->OGL_Listener->Flag_Render_Brushes = 1;
+		App->CL_Ogre->OGL_Listener->Render_Mode = Enums::Render_Groups;
+		App->CL_Mesh_Mgr->World_Node->setVisible(false);
+
+		CheckMenuItem(App->mMenu, ID_CAMERA_WIREFRAMED, MF_BYCOMMAND | MF_CHECKED);
+		CheckMenuItem(App->mMenu, ID_CAMERA_TEXTURED, MF_BYCOMMAND | MF_UNCHECKED);
+	}
+}
+

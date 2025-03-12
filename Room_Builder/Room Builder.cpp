@@ -362,56 +362,25 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             // ----------------------------- Camera
             case ID_CAMERA_TEXTURED:
             {
-                if (App->CL_Brush->Get_Brush_Count() > 0)
-                {
-                    App->CL_Ogre->OGL_Listener->Flag_Render_Brushes = 0;
-                    App->CL_Ogre->OGL_Listener->Render_Mode = Enums::Render_Nothing;
-                    App->CL_Mesh_Mgr->World_Node->setVisible(true);
-
-                    CheckMenuItem(App->mMenu, ID_CAMERA_TEXTURED, MF_BYCOMMAND | MF_CHECKED);
-                    CheckMenuItem(App->mMenu, ID_CAMERA_WIREFRAMED, MF_BYCOMMAND | MF_UNCHECKED);
-                }
-
+                App->CL_Camera->Camera_Textured();
                 return 1;
             }
 
             case ID_CAMERA_WIREFRAMED:
             {
-                if (App->CL_Brush->Get_Brush_Count() > 0)
-                {
-                    App->CL_Ogre->OGL_Listener->Flag_Render_Brushes = 1;
-                    App->CL_Ogre->OGL_Listener->Render_Mode = Enums::Render_Groups;
-                    App->CL_Mesh_Mgr->World_Node->setVisible(false);
-
-                    CheckMenuItem(App->mMenu, ID_CAMERA_WIREFRAMED, MF_BYCOMMAND | MF_CHECKED);
-                    CheckMenuItem(App->mMenu, ID_CAMERA_TEXTURED, MF_BYCOMMAND | MF_UNCHECKED);
-                }
-
+                App->CL_Camera->Camera_Wired();
                 return 1;
             }
             
 			case ID_CAMERA_TRACKCAMERA:
 			{
-				if (App->CL_Doc->flag_Track_Camera == 1)
-				{
-					App->CL_Doc->flag_Track_Camera = 0;
-					CheckMenuItem(App->mMenu, ID_CAMERA_TRACKCAMERA, MF_BYCOMMAND | MF_UNCHECKED);
-				}
-				else
-				{
-					App->CL_Doc->flag_Track_Camera = 1;
-					CheckMenuItem(App->mMenu, ID_CAMERA_TRACKCAMERA, MF_BYCOMMAND | MF_CHECKED);
-				}
-
-                App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
-
+                App->CL_Camera->Track_Camera();
 				return 1;
 			}
 
             case ID_CAMERA_RESETCAMERAZERO:
             {
-                App->CL_Ogre->Camera_Reset_Zero();
-                App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
+                App->CL_Camera->Camera_Reset_Zero();
                 return 1;
             }
            

@@ -33,6 +33,7 @@ public:
 
 	void Init_Picking();
 	void Mouse_Pick_Entity();
+	int Get_Local_Face(int SelectedGroup);
 
 	Ogre::MovableObject* pentity;
 	Ogre::String Pl_Entity_Name;
@@ -46,9 +47,10 @@ public:
 
 	int Face_Index;
 	int Sub_Mesh_Count;
-	int SubMesh_Face;
+	int m_SubMesh;
 	int Actual_Face;
 	int Face_Hit;
+	int Local_Face;
 
 	bool flag_Selected_Ok;
 	bool flag_Hit_Player;

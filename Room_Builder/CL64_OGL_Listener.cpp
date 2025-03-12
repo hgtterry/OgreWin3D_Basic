@@ -344,7 +344,7 @@ void CL64_OGL_Listener::Groups_Render_Faces(void)
 
 	if (Flag_Just_Face == 1)
 	{
-		Groups_Faces_Parts(0);
+		Groups_Faces_Parts(App->CL_Picking->m_SubMesh);
 	}
 	else
 	{

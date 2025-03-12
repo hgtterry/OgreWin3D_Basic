@@ -1171,17 +1171,20 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Bottom_Right_Ogre(HWND hDlg, UINT message,
 			App->CL_Ogre->Ogre3D_Listener->flag_RightMouseDown = 0;
 			SetCursor(App->CUR);
 
-			App->CL_Picking->Mouse_Pick_Entity();
-
-			int Index = App->CL_TXL_Editor->GetIndex_From_FileName(App->CL_Picking->m_Texture_FileName);
-			
-			if (Index > -1)
+			if (GetAsyncKeyState(VK_CONTROL) < 0)
 			{
-				App->CL_Properties_Textures->Select_With_TextureName(App->CL_TXL_Editor->Texture_List[Index]->Name);
+				App->CL_Picking->Mouse_Pick_Entity();
 
-				if (App->CL_Properties_Textures->Dialog_Textures_Visible == 0)
+				int Index = App->CL_TXL_Editor->GetIndex_From_FileName(App->CL_Picking->m_Texture_FileName);
+
+				if (Index > -1)
 				{
-					App->CL_Properties_Tabs->Select_Textures_Tab();
+					App->CL_Properties_Textures->Select_With_TextureName(App->CL_TXL_Editor->Texture_List[Index]->Name);
+
+					if (App->CL_Properties_Textures->Dialog_Textures_Visible == 0)
+					{
+						App->CL_Properties_Tabs->Select_Textures_Tab();
+					}
 				}
 			}
 

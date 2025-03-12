@@ -40,7 +40,7 @@ CL64_Picking::CL64_Picking(void)
     Total_index_count = 0;
     Face_Index = 0;
     Sub_Mesh_Count = 0;
-    SubMesh_Face = 0;
+    m_SubMesh = 0;
     Face_Count = 0;
     flag_Selected_Ok = 0;
    
@@ -51,6 +51,8 @@ CL64_Picking::CL64_Picking(void)
     TestName[0] = 0;
 
     m_Texture_FileName[0] = 0;
+
+    Local_Face = 0;
 }
 
 CL64_Picking::~CL64_Picking(void)
@@ -83,8 +85,10 @@ void CL64_Picking::Clear_Picking_Data()
     Total_index_count = 0;
     Face_Index = 0;
     Sub_Mesh_Count = 0;
-    SubMesh_Face = 0;
+    m_SubMesh = 0;
     flag_Selected_Ok = 0;
+
+    Local_Face = 0;
 
     strcpy(m_Texture_FileName, "No_Texture");
 }
@@ -301,14 +305,13 @@ bool CL64_Picking::raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::Mo
                             App->CL_Grid->HitVertices[1] = vertices[indices[i + 1]];
                             App->CL_Grid->HitVertices[2] = vertices[indices[i + 2]];
 
-                            App->CL_Grid->Face_Update2();
-                            //Get_Face();
-                            /*App->CL_Grid->HitFaceUVs[0] = TextCords[Face_Index];
-                            App->CL_Grid->HitFaceUVs[1] = TextCords[Face_Index + 1];
-                            App->CL_Grid->HitFaceUVs[2] = TextCords[Face_Index + 2];*/
+                            //App->CL_Grid->Face_Update2();
+                            
+                            m_SubMesh = Sub_Mesh_Indexs[Face_Index];
 
-                            SubMesh_Face = Sub_Mesh_Indexs[Face_Index];
-                            App->CL_Grid->FaceNode->setVisible(true);
+                            Local_Face = Get_Local_Face(m_SubMesh);
+
+                            //App->CL_Grid->FaceNode->setVisible(true);
                         }
                     }
                 }
@@ -354,63 +357,6 @@ bool CL64_Picking::raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::Mo
         int C = 0;
 
         int Count = 0;
-       // App->Say_Int(SubMesh_Face);
-
-        //int FaceCount = App->CL_Model->Group[SubMesh_Face]->GroupFaceCount;
-        //while (Count < FaceCount)
-        //{
-   
-        //    A = App->CL_Model->Group[SubMesh_Face]->Face_Data[Count].a;
-        //    B = App->CL_Model->Group[SubMesh_Face]->Face_Data[Count].b;
-        //    C = App->CL_Model->Group[SubMesh_Face]->Face_Data[Count].c;
-
-        //    Face_Vecs.x = App->CL_Model->Group[SubMesh_Face]->vertex_Data[A].x;
-        //    Face_Vecs.y = App->CL_Model->Group[SubMesh_Face]->vertex_Data[A].y;
-        //    Face_Vecs.z = App->CL_Model->Group[SubMesh_Face]->vertex_Data[A].z;
-
-        //    int HT = App->CL_Maths->Ogre_Vector3_Compare(&Pick_Vecs, &Face_Vecs,1);
-        //   
-        //    if (HT == 1)
-        //    {
-        //        App->Say("Hit");
-
-        //    
-        //        Pick_Vecs.x = App->CL_Grid->HitVertices[1].x;
-        //        Pick_Vecs.y = App->CL_Grid->HitVertices[1].y;
-        //        Pick_Vecs.z = App->CL_Grid->HitVertices[1].z;
-
-        //        Face_Vecs.x = App->CL_Model->Group[SubMesh_Face]->vertex_Data[B].x;
-        //        Face_Vecs.y = App->CL_Model->Group[SubMesh_Face]->vertex_Data[B].y;
-        //        Face_Vecs.z = App->CL_Model->Group[SubMesh_Face]->vertex_Data[B].z;
-
-        //        App->Say_Vector3(Pick_Vecs);
-        //        App->Say_Vector3(Face_Vecs);
-
-        //        int HT = App->CL_Maths->Ogre_Vector3_Compare(&Pick_Vecs, &Face_Vecs, 1);
-        //        if (HT == 1)
-        //        {
-        //            App->Say("Hit 2");
-        //            Pick_Vecs.x = App->CL_Grid->HitVertices[2].x;
-        //            Pick_Vecs.y = App->CL_Grid->HitVertices[2].y;
-        //            Pick_Vecs.z = App->CL_Grid->HitVertices[2].z;
-
-        //            Face_Vecs.x = App->CL_Model->Group[SubMesh_Face]->vertex_Data[C].x;
-        //            Face_Vecs.y = App->CL_Model->Group[SubMesh_Face]->vertex_Data[C].y;
-        //            Face_Vecs.z = App->CL_Model->Group[SubMesh_Face]->vertex_Data[C].z;
-
-        //            int HT = App->CL_Maths->Ogre_Vector3_Compare(&Pick_Vecs, &Face_Vecs, 1);
-        //            if (HT == 1)
-        //            {
-        //                //App->Say("Hit");
-        //               // App->Say_Float(Pick_Vecs.y);
-        //               // App->Say_Float(Face_Vecs.y);
-        //            }
-        //        }
-        //    }
-
-        //    Count++;
-        //}
-
         return (true);
     }
     else
@@ -420,6 +366,31 @@ bool CL64_Picking::raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::Mo
         Pl_Entity_Name = "---------";
         return (false);
     }
+}
+
+// *************************************************************************
+// *		    Get_Local_Face:- Terry and Hazel Flanigan 2023		   	   *
+// *************************************************************************
+int CL64_Picking::Get_Local_Face(int SelectedGroup)
+{
+    Ogre::MeshPtr mesh = ((Ogre::Entity*)pentity)->getMesh();
+
+    //bool added_shared = false;
+    int TotalFaces = 0;
+    int Count = 0;
+    //int SubMeshes = mesh->getNumSubMeshes();
+
+    while (Count < SelectedGroup)
+    {
+        Ogre::SubMesh* submesh = mesh->getSubMesh(Count);
+        TotalFaces += submesh->indexData->indexCount;
+
+        Count++;
+    }
+
+    int Result = (Face_Index / 3) - (TotalFaces / 3);
+
+    return Result;
 }
 
 // *************************************************************************
@@ -522,56 +493,6 @@ bool CL64_Picking::Get_Face_Data(int Index, const Face* f)
 
     int  i = 0;
 
-   // App->Say_Int(f->NumPoints);
-
-   //for (i = 0; i < f->NumPoints; i++)
-   // {
-   //     T_Vec3 Face_Vecs{ 0 };
-   //     T_Vec3 Hit_Vecs{ 0 };
-
-   //     Face_Vecs.x = f->Points[i].x;
-   //     Face_Vecs.y = f->Points[i].y;
-   //     Face_Vecs.z = f->Points[i].z;
-
-   //     Hit_Vecs.x = App->CL_Grid->HitVertices[0].x;
-   //     Hit_Vecs.y = App->CL_Grid->HitVertices[0].y;
-   //     Hit_Vecs.z = App->CL_Grid->HitVertices[0].z;
-
-   //     int test = App->CL_Maths->Vector3_Compare(&Face_Vecs, &Hit_Vecs, 0.1);
-   //     if (test == 1)
-   //     {
-   //         Face_Vecs.x = f->Points[i+3].x;
-   //         Face_Vecs.y = f->Points[i+3].y;
-   //         Face_Vecs.z = f->Points[i+3].z;
-
-   //         Hit_Vecs.x = App->CL_Grid->HitVertices[1].x;
-   //         Hit_Vecs.y = App->CL_Grid->HitVertices[1].y;
-   //         Hit_Vecs.z = App->CL_Grid->HitVertices[1].z;
-
-   //         int test2 = App->CL_Maths->Vector3_Compare(&Face_Vecs, &Hit_Vecs, 0.1);
-   //         if (test2 == 1)
-   //         {
-   //             App->Say("Hit2");
-
-   //            /* Face_Vecs.x = f->Points[i + 5].x;
-   //             Face_Vecs.y = f->Points[i + 5].y;
-   //             Face_Vecs.z = f->Points[i + 5].z;
-
-   //             Hit_Vecs.x = App->CL_Grid->HitVertices[2].x;
-   //             Hit_Vecs.y = App->CL_Grid->HitVertices[2].y;
-   //             Hit_Vecs.z = App->CL_Grid->HitVertices[2].z;
-
-   //             int test3 = App->CL_Maths->Vector3_Compare(&Face_Vecs, &Hit_Vecs, 0.1);
-
-   //             if (test3 == 1)
-   //             {
-   //                 App->Say("Hit3");
-   //             }*/
-   //         }
-   //     }
-   // }
-
-
     const TexInfo_Vectors* TVecs = App->CL_Face->Face_GetTextureVecs(f);
     T_Vec3 uVec, vVec;
     float U, V;
@@ -652,9 +573,10 @@ void CL64_Picking::GetMeshInformation(const Ogre::MeshPtr mesh, const Ogre::Vect
 
     added_shared = false;
 
-    // Run through the submeshes again, adding the data into the arrays
+    // ----------------- Vertices
     for (unsigned short i = 0; i < mesh->getNumSubMeshes(); ++i)
     {
+
         Ogre::SubMesh* submesh = mesh->getSubMesh(i);
 
         Ogre::VertexData* vertex_data = submesh->useSharedVertices ? mesh->sharedVertexData : submesh->vertexData;
@@ -692,6 +614,7 @@ void CL64_Picking::GetMeshInformation(const Ogre::MeshPtr mesh, const Ogre::Vect
             next_offset += vertex_data->vertexCount;
         }
 
+        // ----------------- Indices
         Ogre::IndexData* index_data = submesh->indexData;
         size_t numTris = index_data->indexCount / 3;
         Ogre::HardwareIndexBufferSharedPtr ibuf = index_data->indexBuffer;
@@ -724,7 +647,7 @@ void CL64_Picking::GetMeshInformation(const Ogre::MeshPtr mesh, const Ogre::Vect
         current_offset = next_offset;
     }
 
-    // Texture Cords UVS
+    // // ----------------- Texture Chords
     int textoffsset = 0;
 
     for (unsigned short i = 0; i < mesh->getNumSubMeshes(); ++i)
@@ -756,7 +679,7 @@ void CL64_Picking::GetMeshInformation(const Ogre::MeshPtr mesh, const Ogre::Vect
                 TextCords[textoffsset].x = pRealText[0];
                 TextCords[textoffsset].y = pRealText[1];
 
-                Sub_Mesh_Indexs[textoffsset] = i;
+                Sub_Mesh_Indexs[textoffsset] = i; // Track which Submesh
 
                 textoffsset++;
             }
@@ -773,13 +696,13 @@ void CL64_Picking::Get_Material_Data()
 {
     int test = ((Ogre::Entity*)pentity)->getMesh()->getNumSubMeshes();
 
-    if (SubMesh_Face > test)
+    if (m_SubMesh > test)
     {
         strcpy(m_Texture_FileName, "No_Texture");
     }
     else
     {
-        strcpy(FaceMaterial, ((Ogre::Entity*)pentity)->getMesh()->getSubMesh(SubMesh_Face)->getMaterialName().c_str());
+        strcpy(FaceMaterial, ((Ogre::Entity*)pentity)->getMesh()->getSubMesh(m_SubMesh)->getMaterialName().c_str());
         Ogre::MaterialPtr  MatCurent = static_cast<Ogre::MaterialPtr> (Ogre::MaterialManager::getSingleton().getByName(FaceMaterial));
         strcpy(m_Texture_FileName, MatCurent->getTechnique(0)->getPass(0)->getTextureUnitState(0)->getTextureName().c_str());
 

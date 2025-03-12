@@ -314,8 +314,25 @@ void CL64_ImGui::Render_Report_GUI(void)
 		ImGui::Text("Render Reports");
 		ImGui::Separator();
 		ImGui::Text("Groups:= %i", App->CL_Model->GroupCount);
-		//ImGui::Text("Current Brush:= %s", App->CL_Doc->CurBrush->Name);
+
+		ImGui::Text("Selected Group:= %i", App->CL_Picking->m_SubMesh);
+		ImGui::Text("Group Face Count:= %i", App->CL_Model->Group[App->CL_Picking->m_SubMesh]->GroupFaceCount);
+		ImGui::Text("Selected Face:= %i", App->CL_Picking->Local_Face);
 		
+		ImGui::Separator();
+		ImGui::Text("WE_Brush:= %i", App->CL_Model->Group[App->CL_Picking->m_SubMesh]->Face_Data[App->CL_Picking->Local_Face].Brush_Index);
+		ImGui::Text("WE_Face:= %i", App->CL_Model->Group[App->CL_Picking->m_SubMesh]->Face_Data[App->CL_Picking->Local_Face].WE_Face_Index);
+
+		if (ImGui::Button("Textured"))
+		{
+			App->CL_Camera->Camera_Textured();
+		}
+
+		if (ImGui::Button("Wired"))
+		{
+			App->CL_Camera->Camera_Wired();
+		}
+
 		if (ImGui::Button("Close"))
 		{
 			flag_Show_Render_Reports = 0;

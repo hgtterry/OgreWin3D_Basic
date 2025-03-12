@@ -28,5 +28,11 @@ class CL64_Camera
 public:
 	CL64_Camera(void);
 	~CL64_Camera(void);
+
+	void Track_Camera(void);
+	void Camera_Reset_Zero(void);
+	void Camera_Textured(void);
+	void Camera_Wired(void);
+
 };
 
