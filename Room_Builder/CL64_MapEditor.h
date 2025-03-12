@@ -44,7 +44,7 @@ public:
 	~CL64_MapEditor();
 
 	void Init_Map_Views();
-	void Init_Views();
+	void Init_Views(int View);
 	void Render_RenderBrushFacesOrtho(const ViewVars* Cam, Brush* b, HDC ViewDC);
 	void Render_RenderBrushSelFacesOrtho(ViewVars* Cam, Brush* b, HDC ViewDC);
 	void Reset_Views();
@@ -59,8 +59,7 @@ public:
 	HWND Bottom_Left_Hwnd;
 
 	float GridSize, GridSnapSize;
-	int Windows_Split_Ratio;
-
+	
 	// TODO hgtterry Make Private
 	int nleftWnd_width;
 	int nleftWnd_Depth;

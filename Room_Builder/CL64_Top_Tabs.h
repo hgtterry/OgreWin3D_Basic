@@ -45,6 +45,9 @@ public:
 	bool flag_Brush_Rotate;
 
 	bool flag_Full_View_3D;
+	bool flag_View_Top_Left;
+	bool flag_View_Top_Right;
+	bool flag_View_Bottom_Left;
 
 	HWND Headers_hWnd;
 

@@ -42,6 +42,9 @@ CL64_Top_Tabs::CL64_Top_Tabs(void)
 	flag_Prev_Face = 0;
 
 	flag_Full_View_3D = 0;
+	flag_View_Top_Left = 0;
+	flag_View_Top_Right = 0;
+	flag_View_Bottom_Left = 0;
 }
 
 CL64_Top_Tabs::~CL64_Top_Tabs(void)
@@ -72,6 +75,9 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Headers(HWND hDlg, UINT message, WPARAM wPa
 		SendDlgItemMessage(hDlg, IDC_BT_BRUSH_SELECT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
 		SendDlgItemMessage(hDlg, IDC_BT_FULL_3D, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_TOP_LEFT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_TOP_RIGHT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_BOTTOM_LEFT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
 		SendDlgItemMessage(hDlg, IDC_BT_BRUSH_MOVE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_BRUSH_ROTATE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
@@ -120,11 +126,36 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Headers(HWND hDlg, UINT message, WPARAM wPa
 		if (some_item->idFrom == IDC_BT_FULL_3D)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle_Tabs(item, App->CL_Top_Tabs->flag_Full_View_3D);
+			App->Custom_Button_Toggle(item, App->CL_Top_Tabs->flag_Full_View_3D);
 			
 			return CDRF_DODEFAULT;
 		}
 
+		if (some_item->idFrom == IDC_BT_TOP_LEFT)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->CL_Top_Tabs->flag_View_Top_Left);
+
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BT_TOP_RIGHT)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->CL_Top_Tabs->flag_View_Top_Right);
+
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BT_BOTTOM_LEFT)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->CL_Top_Tabs->flag_View_Bottom_Left);
+
+			return CDRF_DODEFAULT;
+		}
+
+		
 		if (some_item->idFrom == IDC_BT_BRUSH_SELECT)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
@@ -266,29 +297,106 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Headers(HWND hDlg, UINT message, WPARAM wPa
 
 	case WM_COMMAND:
 	{
+		// 3D
 		if (LOWORD(wParam) == IDC_BT_FULL_3D)
 		{
 			if (App->CL_Top_Tabs->flag_Full_View_3D == 1)
 			{
 				App->CL_Top_Tabs->flag_Full_View_3D = 0;
 
-				App->CL_MapEditor->Windows_Split_Ratio = 2;
-				App->CL_MapEditor->Init_Views();
+				App->CL_MapEditor->Init_Views(Enums::Selected_View_None);
 				App->CL_MapEditor->Resize_Windows(App->CL_MapEditor->Main_Dlg_Hwnd, App->CL_MapEditor->nleftWnd_width, App->CL_MapEditor->nleftWnd_Depth);
 			}
 			else
 			{
 				App->CL_Top_Tabs->flag_Full_View_3D = 1;
+				App->CL_Top_Tabs->flag_View_Top_Left = 0;
+				App->CL_Top_Tabs->flag_View_Top_Right = 0;
+				App->CL_Top_Tabs->flag_View_Bottom_Left = 0;
 
-				App->CL_MapEditor->Windows_Split_Ratio = 64;
-				App->CL_MapEditor->Init_Views();
+				App->CL_MapEditor->Init_Views(Enums::Selected_View_3D);
 				App->CL_MapEditor->Resize_Windows(App->CL_MapEditor->Main_Dlg_Hwnd, App->CL_MapEditor->nleftWnd_width, App->CL_MapEditor->nleftWnd_Depth);
 			}
 			
+			RedrawWindow(App->CL_Top_Tabs->Headers_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			
+			return TRUE;
+		}
 
+		// Top Left
+		if (LOWORD(wParam) == IDC_BT_TOP_LEFT)
+		{
+			if (App->CL_Top_Tabs->flag_View_Top_Left == 1)
+			{
+				App->CL_Top_Tabs->flag_View_Top_Left = 0;
+				App->CL_MapEditor->Init_Views(Enums::Selected_View_None);
+				App->CL_MapEditor->Resize_Windows(App->CL_MapEditor->Main_Dlg_Hwnd, App->CL_MapEditor->nleftWnd_width, App->CL_MapEditor->nleftWnd_Depth);
+			}
+			else
+			{
+				App->CL_Top_Tabs->flag_View_Top_Left = 1;
+				App->CL_Top_Tabs->flag_Full_View_3D = 0;
+				App->CL_Top_Tabs->flag_View_Top_Right = 0;
+				App->CL_Top_Tabs->flag_View_Bottom_Left = 0;
+
+				App->CL_MapEditor->Init_Views(Enums::Selected_View_TL);
+				App->CL_MapEditor->Resize_Windows(App->CL_MapEditor->Main_Dlg_Hwnd, App->CL_MapEditor->nleftWnd_width, App->CL_MapEditor->nleftWnd_Depth);
+			}
+
+			RedrawWindow(App->CL_Top_Tabs->Headers_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			
 			return TRUE;
 		}
 		
+		// Top Right
+		if (LOWORD(wParam) == IDC_BT_TOP_RIGHT)
+		{
+			if (App->CL_Top_Tabs->flag_View_Top_Right == 1)
+			{
+				App->CL_Top_Tabs->flag_View_Top_Right = 0;
+				App->CL_MapEditor->Init_Views(Enums::Selected_View_None);
+				App->CL_MapEditor->Resize_Windows(App->CL_MapEditor->Main_Dlg_Hwnd, App->CL_MapEditor->nleftWnd_width, App->CL_MapEditor->nleftWnd_Depth);
+			}
+			else
+			{
+				App->CL_Top_Tabs->flag_View_Top_Right = 1;
+				App->CL_Top_Tabs->flag_Full_View_3D = 0;
+				App->CL_Top_Tabs->flag_View_Top_Left = 0;
+				App->CL_Top_Tabs->flag_View_Bottom_Left = 0;
+
+				App->CL_MapEditor->Init_Views(Enums::Selected_View_TR);
+				App->CL_MapEditor->Resize_Windows(App->CL_MapEditor->Main_Dlg_Hwnd, App->CL_MapEditor->nleftWnd_width, App->CL_MapEditor->nleftWnd_Depth);
+			}
+
+			RedrawWindow(App->CL_Top_Tabs->Headers_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_BT_BOTTOM_LEFT)
+		{
+			if (App->CL_Top_Tabs->flag_View_Bottom_Left == 1)
+			{
+				App->CL_Top_Tabs->flag_View_Bottom_Left = 0;
+				App->CL_MapEditor->Init_Views(Enums::Selected_View_None);
+				App->CL_MapEditor->Resize_Windows(App->CL_MapEditor->Main_Dlg_Hwnd, App->CL_MapEditor->nleftWnd_width, App->CL_MapEditor->nleftWnd_Depth);
+			}
+			else
+			{
+				App->CL_Top_Tabs->flag_View_Bottom_Left = 1;
+				App->CL_Top_Tabs->flag_Full_View_3D = 0;
+				App->CL_Top_Tabs->flag_View_Top_Left = 0;
+				App->CL_Top_Tabs->flag_View_Top_Right = 0;
+
+				App->CL_MapEditor->Init_Views(Enums::Selected_View_BL);
+				App->CL_MapEditor->Resize_Windows(App->CL_MapEditor->Main_Dlg_Hwnd, App->CL_MapEditor->nleftWnd_width, App->CL_MapEditor->nleftWnd_Depth);
+			}
+
+			RedrawWindow(App->CL_Top_Tabs->Headers_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+			return TRUE;
+		}
+
 		if (LOWORD(wParam) == IDC_BT_BRUSH_SELECT)
 		{
 			App->CL_Panels->Deselect_All_Brushes_Update_Dlgs();

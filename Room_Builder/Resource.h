@@ -215,10 +215,13 @@
 #define IDC_BT_VL17                     1161
 #define IDC_ST_HEADER_BRUSHES           1161
 #define IDC_BUTTON1                     1162
+#define IDC_BT_TOP_LEFT                 1162
 #define IDC_BUTTON2                     1163
 #define IDC_BT_BRUSH_DIMENSIONS         1163
+#define IDC_BT_TOP_RIGHT                1163
 #define IDC_BUTTON3                     1164
 #define IDC_ED_BRUSH_POSX               1164
+#define IDC_BT_BOTTOM_LEFT              1164
 #define IDC_BUTTON4                     1165
 #define IDC_ED_BRUSH_POSY               1165
 #define IDC_BT_FULL_3D                  1165

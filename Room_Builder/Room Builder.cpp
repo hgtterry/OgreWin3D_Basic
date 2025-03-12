@@ -317,7 +317,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             // ----------------------------- View
             case ID_VIEW_RESETVIEWS:
             {
-                App->CL_MapEditor->Windows_Split_Ratio = 2;
                 App->CL_MapEditor->Reset_Views();
                 return 1;
             }
@@ -534,7 +533,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         RECT rcl;
         GetClientRect(App->MainHwnd, &rcl);
         MoveWindow(App->CL_MapEditor->Main_Dlg_Hwnd, 0, 50, rcl.right, rcl.bottom - 50, TRUE);
-        App->CL_MapEditor->Init_Views();
+        App->CL_MapEditor->Init_Views(Enums::Selected_View_None);
        
         return 0;
     }

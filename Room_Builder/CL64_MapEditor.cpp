@@ -63,8 +63,6 @@ CL64_MapEditor::CL64_MapEditor()
 	GridSize = 128, 
 	GridSnapSize = 8;
 
-	Windows_Split_Ratio = 2;
-
 	Left_Window_Hwnd = NULL;
 	Right_Window_Hwnd = NULL;
 
@@ -127,7 +125,7 @@ CL64_MapEditor::~CL64_MapEditor()
 // *************************************************************************
 void CL64_MapEditor::Reset_Views()
 {
-	App->CL_MapEditor->Init_Views();
+	App->CL_MapEditor->Init_Views(Enums::Selected_View_None);
 	App->CL_MapEditor->Resize_Windows(Main_Dlg_Hwnd, nleftWnd_width, nleftWnd_Depth);
 
 	int Count = 0;
@@ -150,16 +148,56 @@ void CL64_MapEditor::Reset_Views()
 // *************************************************************************
 // *	  			Init_Views:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-void CL64_MapEditor::Init_Views()
+void CL64_MapEditor::Init_Views(int View)
 {
 	RECT rect;
 	GetClientRect(Main_Dlg_Hwnd, &rect);
 
-	LEFT_WINDOW_WIDTH = rect.right / Windows_Split_Ratio;
-	nleftWnd_width = rect.right / Windows_Split_Ratio;
+	if (View == Enums::Selected_View_None)
+	{
+		LEFT_WINDOW_WIDTH = rect.right / 2;
+		nleftWnd_width = rect.right / 2;
 
-	LEFT_WINDOW_DEPTH = rect.bottom / Windows_Split_Ratio;
-	TOP_POS_BOTLEFT = rect.bottom / Windows_Split_Ratio;
+		LEFT_WINDOW_DEPTH = rect.bottom / 2;
+		TOP_POS_BOTLEFT = rect.bottom / 2;
+	}
+
+	if (View == Enums::Selected_View_3D)
+	{
+		LEFT_WINDOW_WIDTH = 0;
+		nleftWnd_width = 0;
+
+		LEFT_WINDOW_DEPTH = 0;
+		TOP_POS_BOTLEFT = 0;
+	}
+
+	if (View == Enums::Selected_View_TL)
+	{
+		LEFT_WINDOW_WIDTH = rect.right;
+		nleftWnd_width = rect.right;
+
+		LEFT_WINDOW_DEPTH = rect.bottom;
+		TOP_POS_BOTLEFT = rect.bottom;
+	}
+
+	if (View == Enums::Selected_View_TR)
+	{
+		LEFT_WINDOW_WIDTH = 0;
+		nleftWnd_width = 0;
+
+		LEFT_WINDOW_DEPTH = rect.bottom;
+		TOP_POS_BOTLEFT = rect.bottom;
+	}
+
+	if (View == Enums::Selected_View_BL)
+	{
+		LEFT_WINDOW_WIDTH = rect.right;
+		nleftWnd_width = rect.right;
+
+		LEFT_WINDOW_DEPTH = 0;
+		TOP_POS_BOTLEFT = 0;
+	}
+
 	nleftWnd_Depth = LEFT_WINDOW_DEPTH;
 
 	RIGHT_MINIMUM_SPACE = rect.right - 15;
@@ -229,7 +267,7 @@ void CL64_MapEditor::Init_Map_Views()
 	GetClientRect(App->MainHwnd, &rcl);
 	MoveWindow(App->CL_MapEditor->Main_Dlg_Hwnd, 0, 50, rcl.right, rcl.bottom - 50, TRUE);
 	
-	App->CL_MapEditor->Init_Views();
+	App->CL_MapEditor->Init_Views(Enums::Selected_View_None);
 	RedrawWindow(App->CL_MapEditor->Main_Dlg_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
 }
@@ -287,7 +325,7 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Main_Dlg(HWND hDlg, UINT message, WPARAM w
 
 	case WM_SIZE:
 	{
-		App->CL_MapEditor->Init_Views();
+		App->CL_MapEditor->Init_Views(Enums::Selected_View_None);
 		App->CL_MapEditor->Resize_Windows(hDlg, App->CL_MapEditor->nleftWnd_width, App->CL_MapEditor->nleftWnd_Depth);
 
 		return 0;
@@ -1136,6 +1174,17 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Bottom_Right_Ogre(HWND hDlg, UINT message,
 			App->CL_Ogre->Ogre3D_Listener->flag_LeftMouseDown = 0;
 			SetCursor(App->CUR);
 			App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
+
+			/*if (GetAsyncKeyState(VK_CONTROL) < 0)
+			{
+				App->CL_Picking->Mouse_Pick_Entity();
+
+				int BI = App->CL_Model->Group[App->CL_Picking->m_SubMesh]->Face_Data[App->CL_Picking->Local_Face].Brush_Index;
+				Brush* b;
+				b = App->CL_Brush->Get_By_Index(BI);
+				App->CL_Doc->DoBrushSelection(b, brushSelAlways);
+			}*/
+
 			return 1;
 		}
 
