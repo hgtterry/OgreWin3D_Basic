@@ -127,7 +127,16 @@ LRESULT CALLBACK CL64_Properties_Textures::Proc_TextureDialog(HWND hDlg, UINT me
 		if (some_item->idFrom == IDC_BTTDAPPLY)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Normal(item);
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BTTDAPPLY));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
+			else
+			{
+				App->Custom_Button_Normal(item);
+			}
+
 			return CDRF_DODEFAULT;
 		}
 
@@ -646,9 +655,10 @@ void CL64_Properties_Textures::Select_With_List_Index(int Index)
 }
 
 // *************************************************************************
-// *		Enable_FaceProps_Button:- Terry and Hazel Flanigan 2025		*
+// *	Enable_FaceProps_Button:- Terry and Hazel Flanigan 2025			   *
 // *************************************************************************
 void CL64_Properties_Textures::Enable_FaceProps_Button(bool Enable)
 {
 	EnableWindow(GetDlgItem(Textures_Dlg_Hwnd, IDC_BT_TEXTURE_FACE_PROPS), Enable);
+	EnableWindow(GetDlgItem(Textures_Dlg_Hwnd, IDC_BTTDAPPLY), Enable);
 }

@@ -42,9 +42,9 @@ public:
 	bool Flag_Render_Brushes;
 	bool Flag_Just_Face;
 
-	bool Get_Brush(const Brush* b, int Actual_Brush_Index);
-	bool Brush_Decode_List(BrushList* BList, signed int SubBrush);
-	bool Brush_FaceList_Create(const Brush* b, const FaceList* pList, int BrushCount, int SubBrushCount, int Actual_Brush_Index);
+	bool Get_Brush(const Brush* b);
+	bool Brush_Decode_List(BrushList* BList);
+	bool Brush_FaceList_Render(const Brush* b, const FaceList* pList);
 
 	int Render_Mode;
 

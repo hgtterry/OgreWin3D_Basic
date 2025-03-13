@@ -437,7 +437,7 @@ void CL64_OGL_Listener::Render_Selected_Brush()
 
 	if (App->CL_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes) > 0)
 	{
-		if (!Get_Brush(pBrush, Actual_Brush_Index))
+		if (!Get_Brush(pBrush))
 		{
 
 		}
@@ -447,30 +447,30 @@ void CL64_OGL_Listener::Render_Selected_Brush()
 // *************************************************************************
 // *				Get_Brush:- Terry and Hazel Flanigan 2025			   *
 // *************************************************************************
-bool CL64_OGL_Listener::Get_Brush(const Brush* b, int Actual_Brush_Index)
+bool CL64_OGL_Listener::Get_Brush(const Brush* b)
 {
 	switch (b->Type)
 	{
 	case BRUSH_MULTI:
 	{
-		return Brush_Decode_List(b->BList, GE_TRUE); // Recursive
+		return Brush_Decode_List(b->BList); // Recursive
 	}
 
 	case BRUSH_LEAF:
 		if (b->BList)
 		{
-			return Brush_Decode_List(b->BList, GE_TRUE); // Recursive
+			return Brush_Decode_List(b->BList); // Recursive
 		}
 		else
 		{
 			if (!(b->Flags & (BRUSH_HOLLOW | BRUSH_HOLLOWCUT | BRUSH_SUBTRACT)))
 			{
-				return Brush_FaceList_Create(b, b->Faces, mBrushCount, mSubBrushCount, Actual_Brush_Index);
+				return Brush_FaceList_Render(b, b->Faces);
 
 			}
 			else if ((b->Flags & BRUSH_SUBTRACT) && !(b->Flags & (BRUSH_HOLLOW | BRUSH_HOLLOWCUT)))
 			{
-				return Brush_FaceList_Create(b, b->Faces, mBrushCount, mSubBrushCount, Actual_Brush_Index);
+				return Brush_FaceList_Render(b, b->Faces);
 				mBrushCount--;
 			}
 		}
@@ -479,7 +479,7 @@ bool CL64_OGL_Listener::Get_Brush(const Brush* b, int Actual_Brush_Index)
 	case BRUSH_CSG:
 		if (!(b->Flags & (BRUSH_HOLLOW | BRUSH_HOLLOWCUT | BRUSH_SUBTRACT)))
 		{
-			return Brush_FaceList_Create(b, b->Faces, mBrushCount, mSubBrushCount, Actual_Brush_Index);
+			return Brush_FaceList_Render(b, b->Faces);
 		}
 
 		break;
@@ -495,7 +495,7 @@ bool CL64_OGL_Listener::Get_Brush(const Brush* b, int Actual_Brush_Index)
 // *************************************************************************
 // *			Brush_Decode_List:- Terry and Hazel Flanigan 2025		   *
 // *************************************************************************
-bool CL64_OGL_Listener::Brush_Decode_List(BrushList* BList, signed int SubBrush)
+bool CL64_OGL_Listener::Brush_Decode_List(BrushList* BList)
 {
 	Brush* pBrush;
 	BrushIterator bi;
@@ -504,54 +504,30 @@ bool CL64_OGL_Listener::Brush_Decode_List(BrushList* BList, signed int SubBrush)
 
 	while (pBrush != NULL)
 	{
-		if (mSubBrushCount == 0 && pBrush->Flags & 1 || pBrush->Flags & 1024)
-		{
-			if (SubBrush == 0)
-			{
-				//strcpy(mBrush_Name, pBrush->Name);
-				//mBrush_Index = mBrushCount;
-			}
-		}
-
-		if (!Get_Brush(pBrush, 0))
+		if (!Get_Brush(pBrush)) // Recursive
 		{
 			return GE_FALSE;
 		}
 
 		pBrush = App->CL_Brush->BrushList_GetNext(&bi);
-
-		if (SubBrush)
-		{
-			mSubBrushCount++;
-		}
-		else
-		{
-			//mBrushCount++;
-			//Actual_Brush_Index++;
-		}
-	}
-
-	mSubBrushCount = 0;
-
-	if (!SubBrush)
-	{
-		mBrushCount = 0;
 	}
 
 	return GE_TRUE;
 }
 
 // *************************************************************************
-// *		Brush_FaceList_Create:- Terry and Hazel Flanigan 2025		   *
+// *		Brush_FaceList_Render:- Terry and Hazel Flanigan 2025		   *
 // *************************************************************************
-bool CL64_OGL_Listener::Brush_FaceList_Create(const Brush* b, const FaceList* pList, int BrushCount, int SubBrushCount, int Actual_Brush_Index)
+bool CL64_OGL_Listener::Brush_FaceList_Render(const Brush* b, const FaceList* pList)
 {
-	int i, j, num_faces, num_verts, num_mats, num_chars, curnum_verts;
+	int i, j, num_verts, curnum_verts;
 
-	num_faces = num_verts = num_mats = num_chars = 0;
-	
+	num_verts = 0;
+	curnum_verts = 0;
+
 	// -----------------------------------  Vertices
-	glColor3f(0.0f, 1.0f, 0.0f);
+	glColor3f(0.0f, 1.0f, 1.0f);
+
 	for (i = 0; i < pList->NumFaces; i++)
 	{
 		const T_Vec3* verts;
