@@ -58,20 +58,18 @@ A_CreateArchDialog::~A_CreateArchDialog(void)
 }
 
 // *************************************************************************
-// *	  	Start_CreateArch_Dlg:- Terry and Hazel Flanigan 2023		   *
+// *	  	Start_CreateArch_Dlg:- Terry and Hazel Flanigan 2025		   *
 // *************************************************************************
 void A_CreateArchDialog::Start_CreateArch_Dlg()
 {
-	/*m_pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
+	//pArchTemplate = Level_GetArchTemplate (App->CLSB_Doc->pLevel);
 
-	pArchTemplate = Level_GetArchTemplate (App->CLSB_Doc->pLevel);
-
-	App->CLSB_TabsControl->Enable_Tabs_Dlg(false);
-	DialogBox(App->hInst, (LPCTSTR)IDD_CREATE_ARCH, App->MainHwnd, (DLGPROC)CreateArch_Proc);*/
+	//App->CLSB_TabsControl->Enable_Tabs_Dlg(false);
+	DialogBox(App->hInst, (LPCTSTR)IDD_CREATE_ARCH, App->MainHwnd, (DLGPROC)CreateArch_Proc);
 }
 
 // *************************************************************************
-// *        CreateBox_Proc:- Terry and Hazel Flanigan 2023				   *
+// *        CreateBox_Proc:- Terry and Hazel Flanigan 2025				   *
 // *************************************************************************
 LRESULT CALLBACK A_CreateArchDialog::CreateArch_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {

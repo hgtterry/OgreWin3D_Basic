@@ -53,6 +53,7 @@
 #define IDD_TEXTUREVIEWER               168
 #define IDD_TXL_EDITOR                  169
 #define IDD_LISTDATA                    170
+#define IDD_CREATE_ARCH                 171
 #define IDC_BANNER                      1000
 #define IDC_STTEXT                      1001
 #define IDC_STMESSAGE                   1002
@@ -309,11 +310,16 @@
 #define IDC_EDIT1                       1241
 #define IDC_ED_DEGREES                  1241
 #define IDC_SPIN1                       1242
+#define IDC_EDIT2                       1242
 #define IDC_ST_DEGREES                  1243
 #define IDC_LST_GROUPS                  1243
+#define IDC_EDIT3                       1243
 #define IDC_STCOUNT                     1244
+#define IDC_EDIT4                       1244
 #define IDC_ST_GB_OPTIONS               1245
+#define IDC_EDIT5                       1245
 #define IDC_BT_VIEWFILE                 1246
+#define IDC_EDIT6                       1246
 #define IDC_ST_SELECTEDFILE             1247
 #define IDC_BASETEXTURE                 1248
 #define IDC_ST_GB_LISTOPTIONS           1249
@@ -332,6 +338,7 @@
 #define IDC_TXL_DELETE_TEXTURE          1260
 #define IDC_ST_TXL_COUNT                1261
 #define IDC_TXL_ADD_TEXTURE             1262
+#define IDB_CREATEARCH                  1263
 #define ID_DEBUG_GENERAL                32771
 #define ID_TEMPLATES_INSERT             32772
 #define ID_BRUSH_SELECT                 32773
@@ -383,9 +390,9 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
-#define _APS_NEXT_RESOURCE_VALUE        171
+#define _APS_NEXT_RESOURCE_VALUE        173
 #define _APS_NEXT_COMMAND_VALUE         32811
-#define _APS_NEXT_CONTROL_VALUE         1263
+#define _APS_NEXT_CONTROL_VALUE         1264
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif

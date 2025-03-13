@@ -280,6 +280,7 @@
     <Image Include="res\arch.ico" />
     <Image Include="res\bitmap1.bmp" />
     <Image Include="res\cone.ico" />
+    <Image Include="res\createar.bmp" />
     <Image Include="res\createco.bmp" />
     <Image Include="res\createst.bmp" />
     <Image Include="res\cube.ico" />

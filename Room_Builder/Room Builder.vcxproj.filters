@@ -417,5 +417,8 @@
     <Image Include="res\hollowbo.bmp">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="res\createar.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>
