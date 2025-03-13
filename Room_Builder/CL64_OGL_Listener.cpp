@@ -470,6 +470,7 @@ bool CL64_OGL_Listener::Get_Brush(const Brush* b, int Actual_Brush_Index)
 			}
 			else if ((b->Flags & BRUSH_SUBTRACT) && !(b->Flags & (BRUSH_HOLLOW | BRUSH_HOLLOWCUT)))
 			{
+				return Brush_FaceList_Create(b, b->Faces, mBrushCount, mSubBrushCount, Actual_Brush_Index);
 				mBrushCount--;
 			}
 		}
