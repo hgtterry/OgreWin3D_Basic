@@ -149,6 +149,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="A_CreateArchDialog.h" />
     <ClInclude Include="A_CreateBoxDialog.h" />
     <ClInclude Include="A_CreateConeDialog.h" />
     <ClInclude Include="A_CreateCylDialog.h" />
@@ -209,6 +210,7 @@
     <ClInclude Include="zip.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="A_CreateArchDialog.cpp" />
     <ClCompile Include="A_CreateBoxDialog.cpp" />
     <ClCompile Include="A_CreateConeDialog.cpp" />
     <ClCompile Include="A_CreateCylDialog.cpp" />

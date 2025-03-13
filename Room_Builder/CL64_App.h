@@ -73,6 +73,7 @@ THE SOFTWARE.
 #include "A_CreateCylDialog.h"
 #include "A_CreateConeDialog.h"
 #include "A_CreateStaircaseDialog.h"
+#include "A_CreateArchDialog.h"
 
 class CL64_App
 {
@@ -128,6 +129,7 @@ public:
 	A_CreateCylDialog*			CL_CreateCylDialog;
 	A_CreateConeDialog*			CL_CreateConeDialog;
 	A_CreateStaircaseDialog*	CL_CreateStaircaseDialog;
+	A_CreateArchDialog*			CL_CreateArchDialog;
 
 	void InitApp(void);
 	void SetBrushes_Fonts(void);

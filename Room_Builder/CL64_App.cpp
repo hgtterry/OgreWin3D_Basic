@@ -78,6 +78,7 @@ CL64_App::CL64_App(void)
 	CL_CreateCylDialog =		nullptr;
 	CL_CreateConeDialog =		nullptr;
 	CL_CreateStaircaseDialog =	nullptr;
+	CL_CreateArchDialog =		nullptr;
 
 	CUR = 0;
 	mMenu = 0;
@@ -176,6 +177,7 @@ void CL64_App::InitApp(void)
 	CL_CreateCylDialog =		new A_CreateCylDialog();
 	CL_CreateConeDialog =		new A_CreateConeDialog();
 	CL_CreateStaircaseDialog =	new A_CreateStaircaseDialog();
+	CL_CreateArchDialog =		new A_CreateArchDialog();
 
 	SetBrushes_Fonts();
 

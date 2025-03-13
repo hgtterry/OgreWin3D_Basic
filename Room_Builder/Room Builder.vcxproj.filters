@@ -189,6 +189,9 @@
     <ClInclude Include="CL64_Camera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="A_CreateArchDialog.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Room Builder.cpp">
@@ -357,6 +360,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CL64_Camera.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="A_CreateArchDialog.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
