@@ -398,7 +398,6 @@ LRESULT CALLBACK A_CreateBoxDialog::Proc_CreateBox(HWND hDlg, UINT message, WPAR
 			App->CL_CreateBoxDialog->Set_BoxTemplate();
 			App->CL_CreateBoxDialog->CreateCube();
 			
-
 			App->CL_Properties_Tabs->Enable_Tabs_Dlg(true);
 			App->CL_Properties_Templates->Enable_Insert_Button(true);
 

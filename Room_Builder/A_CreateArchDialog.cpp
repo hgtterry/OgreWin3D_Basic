@@ -64,7 +64,7 @@ void A_CreateArchDialog::Start_CreateArch_Dlg()
 {
 	pArchTemplate = App->CL_Level->Level_GetArchTemplate (App->CL_Doc->pLevel);
 
-	//App->CLSB_TabsControl->Enable_Tabs_Dlg(false);
+	App->CL_Properties_Tabs->Enable_Tabs_Dlg(false);
 	DialogBox(App->hInst, (LPCTSTR)IDD_CREATE_ARCH, App->MainHwnd, (DLGPROC)CreateArch_Proc);
 }
 
@@ -521,10 +521,8 @@ LRESULT CALLBACK A_CreateArchDialog::CreateArch_Proc(HWND hDlg, UINT message, WP
 				App->CL_CreateArchDialog->Set_ArchTemplate(); 
 				App->CL_CreateArchDialog->CreateArch();
 
-
-				/*App->CLSB_TabsControl->Enable_Tabs_Dlg(true);
-
-				App->CLSB_Tabs_Templates_Dlg->Enable_Insert_Button(true);*/
+				App->CL_Properties_Tabs->Enable_Tabs_Dlg(true);
+				App->CL_Properties_Templates->Enable_Insert_Button(true);
 
 				EndDialog(hDlg, LOWORD(wParam));
 				return TRUE;
@@ -532,7 +530,7 @@ LRESULT CALLBACK A_CreateArchDialog::CreateArch_Proc(HWND hDlg, UINT message, WP
 
 			if (LOWORD(wParam) == IDCANCEL)
 			{
-				//App->CLSB_TabsControl->Enable_Tabs_Dlg(true);
+				App->CL_Properties_Tabs->Enable_Tabs_Dlg(true);
 				EndDialog(hDlg, LOWORD(wParam));
 				return TRUE;
 			}
@@ -548,20 +546,21 @@ LRESULT CALLBACK A_CreateArchDialog::CreateArch_Proc(HWND hDlg, UINT message, WP
 // *************************************************************************
 void A_CreateArchDialog::CreateArch() 
 {
-	/*m_pDoc->OnToolsTemplate();
+	App->CL_Doc->OnToolsTemplate();
 
 	Brush *pArch;
 
-	pArch = BrushTemplate_CreateArch (pArchTemplate);
+	pArch = App->CL_BrushTemplate->BrushTemplate_CreateArch (pArchTemplate);
 	if (pArch != NULL)
 	{
-		m_pDoc->LastTemplateTypeName = ArchName;
+		strcpy(App->CL_Doc->LastTemplateTypeName, ArchName);
+		strcpy(pArch->Name, "Test"); // TODO Why
 		CreateNewTemplateBrush (pArch);
 	}
 	else
 	{
 		App->Say("No Arch");
-	}*/
+	}
 }
 
 // *************************************************************************
@@ -569,50 +568,50 @@ void A_CreateArchDialog::CreateArch()
 // *************************************************************************
 void A_CreateArchDialog::CreateNewTemplateBrush(Brush *pBrush)
 {
-	/*geVec3d *pTemplatePos;
-	geVec3d MoveVec;
-	geVec3d BrushPos;
+	T_Vec3 *pTemplatePos;
+	T_Vec3 MoveVec;
+	T_Vec3 BrushPos;
 
 	assert (pBrush != NULL);
 
-	if (App->CLSB_Doc->BTemplate != NULL)
+	if (App->CL_Doc->BTemplate != NULL)
 	{
-		Brush_Destroy (&App->CLSB_Doc->BTemplate);
+		App->CL_Brush->Brush_Destroy (&App->CL_Doc->BTemplate);
 	}
 
-	App->CLSB_Doc->CurBrush = pBrush;
+	App->CL_Doc->CurBrush = pBrush;
 
-	App->CLSB_Doc->TempEnt	= FALSE;
-	m_pDoc->SetDefaultBrushTexInfo (App->CLSB_Doc->CurBrush);
-	Brush_Bound (App->CLSB_Doc->CurBrush);
-	Brush_Center (App->CLSB_Doc->CurBrush, &BrushPos);
+	App->CL_Doc->TempEnt	= FALSE;
+	App->CL_Doc->SetDefaultBrushTexInfo (App->CL_Doc->CurBrush);
+	App->CL_Brush->Brush_Bound (App->CL_Doc->CurBrush);
+	App->CL_Brush->Brush_Center (App->CL_Doc->CurBrush, &BrushPos);
 
-	pTemplatePos = Level_GetTemplatePos (App->CLSB_Doc->pLevel);
+	pTemplatePos = App->CL_Level->Level_GetTemplatePos (App->CL_Doc->pLevel);
 
 	if (m_UseCamPos == 1)
 	{
-		geVec3d Pos;
+		Ogre::Vector3 Pos;
 
-		Pos = App->CLSB_Camera_WE->Get_Camera_Position();
+		Pos = App->CL_Ogre->camNode->getPosition();
 
-		pTemplatePos->X = Pos.X;
-		pTemplatePos->Y = Pos.Y;
-		pTemplatePos->Z = Pos.Z;
+		pTemplatePos->x = Pos.x;
+		pTemplatePos->y = Pos.y;
+		pTemplatePos->z = Pos.z;
 	}
 	else
 	{
-		pTemplatePos->X = 0;
-		pTemplatePos->Y = 0;
-		pTemplatePos->Z = 0;
+		pTemplatePos->x = 0;
+		pTemplatePos->y = 0;
+		pTemplatePos->z = 0;
 	}
 	
 
-	geVec3d_Subtract (pTemplatePos, &BrushPos, &MoveVec);
+	App->CL_Maths->Vector3_Subtract(pTemplatePos, &BrushPos, &MoveVec);
 
-	Brush_Move (App->CLSB_Doc->CurBrush, &MoveVec);*/
+	App->CL_Brush->Brush_Move (App->CL_Doc->CurBrush, &MoveVec);
 
-	/*App->CLSB_Doc->UpdateAllViews (UAV_ALL3DVIEWS, NULL);
-	m_pDoc->SetModifiedFlag ();*/
+	App->CL_Doc->UpdateAllViews (Enums::UpdateViews_All);
+	App->CL_Doc->flag_Is_Modified = 1;
 }
 
 // *************************************************************************
