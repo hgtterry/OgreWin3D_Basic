@@ -136,6 +136,14 @@ BrushTemplate_Staircase* CL64_Level::Level_GetStaircaseTemplate(Level* pLevel)
 }
 
 // *************************************************************************
+// *						Level_GetArchTemplate						   *
+// *************************************************************************
+BrushTemplate_Arch* CL64_Level::Level_GetArchTemplate(Level* pLevel)
+{
+	return &pLevel->ArchTemplate;
+}
+
+// *************************************************************************
 // *							Level_GetBrushes						   *
 // *************************************************************************
 BrushList* CL64_Level::Level_GetBrushes(Level* pLevel)

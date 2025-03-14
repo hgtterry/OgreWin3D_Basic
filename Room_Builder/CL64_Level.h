@@ -42,6 +42,7 @@ public:
 	BrushTemplate_Cylinder* Level_GetCylinderTemplate(Level* pLevel);
 	BrushTemplate_Cone* Level_GetConeTemplate(Level* pLevel);
 	BrushTemplate_Staircase* Level_GetStaircaseTemplate(Level* pLevel);
+	BrushTemplate_Arch* Level_GetArchTemplate(Level* pLevel);
 
 	T_Vec3* Level_GetTemplatePos(Level* pLevel);
 	float Level_GetDrawScale(const Level* pLevel);

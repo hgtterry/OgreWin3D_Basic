@@ -32,7 +32,7 @@ public:
 
 	void Start_CreateArch_Dlg();
 
-	//BrushTemplate_Arch *pArchTemplate;
+	BrushTemplate_Arch *pArchTemplate;
 
 	int		m_NumSlits;
 	float	m_Thickness;

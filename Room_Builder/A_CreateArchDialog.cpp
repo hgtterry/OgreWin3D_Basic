@@ -62,7 +62,7 @@ A_CreateArchDialog::~A_CreateArchDialog(void)
 // *************************************************************************
 void A_CreateArchDialog::Start_CreateArch_Dlg()
 {
-	//pArchTemplate = Level_GetArchTemplate (App->CLSB_Doc->pLevel);
+	pArchTemplate = App->CL_Level->Level_GetArchTemplate (App->CL_Doc->pLevel);
 
 	//App->CLSB_TabsControl->Enable_Tabs_Dlg(false);
 	DialogBox(App->hInst, (LPCTSTR)IDD_CREATE_ARCH, App->MainHwnd, (DLGPROC)CreateArch_Proc);
@@ -79,10 +79,10 @@ LRESULT CALLBACK A_CreateArchDialog::CreateArch_Proc(HWND hDlg, UINT message, WP
 	case WM_INITDIALOG:
 	{
 		
-		//App->CL_CreateArchDialog->Set_Members();
-		//App->CL_CreateArchDialog->Set_DLG_Members(hDlg);
+		App->CL_CreateArchDialog->Set_Members();
+		App->CL_CreateArchDialog->Set_DLG_Members(hDlg);
 
-		//SetDlgItemText(hDlg, IDC_EDITNAME, (LPCTSTR)"Arch");
+		SetDlgItemText(hDlg, IDC_EDITNAME, (LPCTSTR)"Arch");
 
 		//// ----------- Style Solid Hollow Funnel
 		//if(App->CL_CreateArchDialog->m_Style == 0)
@@ -517,12 +517,12 @@ LRESULT CALLBACK A_CreateArchDialog::CreateArch_Proc(HWND hDlg, UINT message, WP
 			// -----------------------------------------------------------------
 			if (LOWORD(wParam) == IDOK)
 			{
-				/*App->CL_CreateArchDialog->Get_DLG_Members(hDlg);
+				App->CL_CreateArchDialog->Get_DLG_Members(hDlg);
 				App->CL_CreateArchDialog->Set_ArchTemplate(); 
 				App->CL_CreateArchDialog->CreateArch();
 
 
-				App->CLSB_TabsControl->Enable_Tabs_Dlg(true);
+				/*App->CLSB_TabsControl->Enable_Tabs_Dlg(true);
 
 				App->CLSB_Tabs_Templates_Dlg->Enable_Insert_Button(true);*/
 
@@ -620,7 +620,7 @@ void A_CreateArchDialog::CreateNewTemplateBrush(Brush *pBrush)
 // *************************************************************************
 void A_CreateArchDialog::Set_Members() 
 {
-	/*m_NumSlits	= pArchTemplate->NumSlits;
+	m_NumSlits	= pArchTemplate->NumSlits;
 	m_Thickness	= pArchTemplate->Thickness;
 	m_Width		= pArchTemplate->Width;
 	m_Radius	= pArchTemplate->Radius;
@@ -635,15 +635,15 @@ void A_CreateArchDialog::Set_Members()
 	m_Shape = pArchTemplate->Shape;
 	m_Sides = pArchTemplate->Sides;
 	m_Steps = pArchTemplate->Steps;
-	m_CW = pArchTemplate->CW;*/
+	m_CW = pArchTemplate->CW;
 }
 
 // *************************************************************************
-// *		 Set_DLG_Members:- Terry and Hazel Flanigan 2023			   *
+// *		 Set_DLG_Members:- Terry and Hazel Flanigan 2025			   *
 // *************************************************************************
 void A_CreateArchDialog::Set_DLG_Members(HWND hDlg) 
 {
-	/*char buf[MAX_PATH];
+	char buf[MAX_PATH];
 	sprintf(buf, "%0.0f", m_StartAngle);
 	SetDlgItemText(hDlg, IDC_STARTANGLE, (LPCTSTR)buf);
 
@@ -674,7 +674,7 @@ void A_CreateArchDialog::Set_DLG_Members(HWND hDlg)
 	sprintf(buf, "%i", m_Sides);
 	SetDlgItemText(hDlg, IDC_SIDES, (LPCTSTR)buf);
 
-	HWND temp = GetDlgItem(hDlg, IDC_TCUT);
+	/*HWND temp = GetDlgItem(hDlg, IDC_TCUT);
 	if (m_TCut == 1)
 	{
 		SendMessage(temp,BM_SETCHECK,1,0);
@@ -693,7 +693,7 @@ void A_CreateArchDialog::Get_DLG_Members(HWND hDlg)
 {
 	char buf[MAX_PATH];
 
-	/*GetDlgItemText(hDlg, IDC_STARTANGLE, (LPTSTR)buf,MAX_PATH);
+	GetDlgItemText(hDlg, IDC_STARTANGLE, (LPTSTR)buf,MAX_PATH);
 	m_StartAngle = (float)atof(buf);
 
 	GetDlgItemText(hDlg, IDC_ENDANGLE, (LPTSTR)buf,MAX_PATH);
@@ -724,16 +724,16 @@ void A_CreateArchDialog::Get_DLG_Members(HWND hDlg)
 	m_Sides = (int)atoi(buf);
 
 	GetDlgItemText(hDlg,IDC_EDITNAME,(LPTSTR)buf,MAX_PATH);
-	strcpy(ArchName,buf);*/
+	strcpy(ArchName,buf);
 
 }
 
 // *************************************************************************
-// *		 Set_StaircaseTemplate:- Terry and Hazel Flanigan 2023		   *
+// *		 Set_StaircaseTemplate:- Terry and Hazel Flanigan 2025		   *
 // *************************************************************************
 void A_CreateArchDialog::Set_ArchTemplate() 
 {
-	/*pArchTemplate->CW = m_CW;
+	pArchTemplate->CW = m_CW;
 	pArchTemplate->EndAngle = m_EndAngle;
 	pArchTemplate->Height = m_Height;
 	pArchTemplate->Massive = m_Massive;
@@ -748,7 +748,7 @@ void A_CreateArchDialog::Set_ArchTemplate()
 	pArchTemplate->TCut = m_TCut;
 	pArchTemplate->Thickness = m_Thickness;
 	pArchTemplate->WallSize = m_WallSize;
-	pArchTemplate->Width = m_Width;*/
+	pArchTemplate->Width = m_Width;
 }
 
 // *************************************************************************

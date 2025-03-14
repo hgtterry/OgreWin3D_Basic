@@ -124,6 +124,7 @@ public:
 	Brush* BrushTemplate_CreateCylinder(const BrushTemplate_Cylinder* pTemplate);
 	Brush* BrushTemplate_CreateCone(const BrushTemplate_Cone* pTemplate);
 	Brush* BrushTemplate_CreateStaircase(const BrushTemplate_Staircase* pTemplate);
+	Brush* BrushTemplate_CreateArch(const BrushTemplate_Arch* pTemplate);
 
 };
 
