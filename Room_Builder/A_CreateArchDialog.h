@@ -72,6 +72,8 @@ private:
 	bool flag_Hollow_Flag;
 	bool flag_Ring_Flag;
 	bool flag_Cut_Flag;
+	bool flag_Rectangle_Flag;
+	bool flag_Round_Flag;
 
 	char ArchName[MAX_PATH];
 };

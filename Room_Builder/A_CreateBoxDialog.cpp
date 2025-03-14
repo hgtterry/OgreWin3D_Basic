@@ -425,7 +425,6 @@ LRESULT CALLBACK A_CreateBoxDialog::Proc_CreateBox(HWND hDlg, UINT message, WPAR
 // *************************************************************************
 void A_CreateBoxDialog::CreateCube() 
 {
-	
 	App->CL_Doc->OnToolsTemplate();
 
 	Brush *pCube;

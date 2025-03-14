@@ -352,8 +352,16 @@
 #define IDC_STSHAPE                     1264
 #define IDC_STSTYLE                     1265
 #define IDC_BT_ARCHRECTANGLE            1266
-#define IDC_BUTTON6                     1267
 #define IDC_BT_ARCHROUND                1267
+#define IDC_STSTARTANGLE                1268
+#define IDC_STENDANGLE                  1269
+#define IDC_STINNERRADIUS               1270
+#define IDC_STNUMSEGS                   1271
+#define IDC_STHEIGHT                    1272
+#define IDC_STTHICKNESS                 1273
+#define IDC_STWIDTH                     1274
+#define IDC_STRADIUS                    1275
+#define IDC_STSIDES                     1276
 #define ID_DEBUG_GENERAL                32771
 #define ID_TEMPLATES_INSERT             32772
 #define ID_BRUSH_SELECT                 32773
@@ -407,7 +415,7 @@
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        173
 #define _APS_NEXT_COMMAND_VALUE         32811
-#define _APS_NEXT_CONTROL_VALUE         1267
+#define _APS_NEXT_CONTROL_VALUE         1277
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif
