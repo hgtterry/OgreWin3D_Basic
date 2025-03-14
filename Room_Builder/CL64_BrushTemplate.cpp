@@ -697,780 +697,782 @@ Brush* CL64_BrushTemplate::BrushTemplate_CreateStaircase(const BrushTemplate_Sta
 	return	b;
 }
 
+// *************************************************************************
+// *					BrushTemplate_CreateArch						   *
+// *************************************************************************
 Brush* CL64_BrushTemplate::BrushTemplate_CreateArch(const BrushTemplate_Arch* pTemplate)
 {
-//	Brush* b, * b2;
-//	BrushList* MBList = App->CL_Brush->BrushList_Create();
-//	FaceList* fl;
-//	Face* f;
-//	T_Vec3		FaceVerts[4];
-//
-//	int		i, NumSlits = pTemplate->NumSlits;
-//	// changed QD 11/03
-//	int		NumCrossSections = NumSlits;//+2;
-//	float Height = pTemplate->Height;
-//	float HeightDelta = 0;
-//	int		NumSides = pTemplate->Sides;
-//	float Radius2 = pTemplate->Radius2;
-//	int		CW = pTemplate->CW;
-//	geBoolean Steps = pTemplate->Steps;
-//	geBoolean Massive = pTemplate->Massive;
-//	// end change
-//	float	Thickness = pTemplate->Thickness;
-//	float	Width = pTemplate->Width;
-//	float	InnerRadius = pTemplate->Radius;
-//	//	geFloat	WallSize			=pTemplate->WallSize;
-//	double	StartAngleDegrees = pTemplate->StartAngle;
-//	double	EndAngleDegrees = pTemplate->EndAngle;
-//	double	AngleDelta = 0;
-//	double	CurAngle = 0;
-//	double	StartAngle = Units_DegreesToRadians(StartAngleDegrees);
-//	double	EndAngle = Units_DegreesToRadians(EndAngleDegrees);
-//	double	Temp;
-//	T_Vec3	TopInnerPoint;
-//	T_Vec3	TopOuterPoint;
-//	T_Vec3	FinalTopInnerPoint;
-//	T_Vec3	FinalTopOuterPoint;
-//	T_Vec3	FinalBottomInnerPoint;
-//	T_Vec3	FinalBottomOuterPoint;
-//	T_Vec3	OldTopInner;
-//	T_Vec3	OldTopOuter;
-//	T_Vec3	OldBottomInner;
-//	T_Vec3	OldBottomOuter;
-//
-//	//If angles are equal, we have an empty shape...
-//	if (StartAngle == EndAngle)
-//	{
-//		return	0;
-//	}
-//
-//	//	Put the angles in order...
-//	if (StartAngle > EndAngle)
-//	{
-//		Temp = StartAngle;
-//		StartAngle = EndAngle;
-//		EndAngle = Temp;
-//	}
-//
-//	AngleDelta = (EndAngle - StartAngle) / (NumCrossSections); // changed QD 11/03
-//	CurAngle = StartAngle + AngleDelta;
-//
-//	// changed QD 11/03
-//	HeightDelta = Height / NumCrossSections;
-//	if (CW)
-//		HeightDelta = -HeightDelta;
-//
-//	////////////////
-//	// Shape = Round
-//	if (pTemplate->Shape > 0)
-//	{
-//		int			index, BottomCount;
-//		T_Vec3		StartPoint, CurPoint;
-//		T_Vec3* CrossVerts, * OldVerts, * StartVerts;
-//
-//		double CurAngle2;
-//		double AngleDelta2Degrees = 360.0f / (float)NumSides;
-//		double AngleDelta2 = Units_DegreesToRadians(AngleDelta2Degrees);
-//
-//		geVec3d_Set(&StartPoint, -(float)Radius2, 0.0, 0.0);
-//
-//		CurPoint = StartPoint;
-//		CrossVerts = (geVec3d*)geRam_Allocate(sizeof(geVec3d) * NumSides);
-//		OldVerts = (geVec3d*)geRam_Allocate(sizeof(geVec3d) * NumSides);
-//		StartVerts = (geVec3d*)geRam_Allocate(sizeof(geVec3d) * NumSides);
-//		StartVerts[0] = CurPoint;
-//		StartVerts[0].X += InnerRadius + Radius2;
-//		//		if(CW)
-//		//			StartVerts[0].Z+=Height;
-//		OldVerts[0] = StartVerts[0];
-//
-//		CurAngle2 = BottomCount = 0;
-//		for (index = 1; index < NumSides; index++)
-//		{
-//			//	Rotate around to create our successive points...
-//			CurAngle2 += AngleDelta2;
-//
-//			geVec3d_Set
-//			(
-//				&CurPoint,
-//				(float)((StartPoint.x * cos(CurAngle2)) + (StartPoint.z * sin(CurAngle2))),
-//				StartPoint.y,
-//				(float)((StartPoint.z * cos(CurAngle2)) - (StartPoint.x * sin(CurAngle2)))
-//			);
-//
-//			CurPoint.x += InnerRadius + Radius2;
-//			//	CurPoint.Z+=Height;
-//
-//			geVec3d_Set
-//			(
-//				&(StartVerts[index]),
-//				(float)((CurPoint.x * cos(StartAngle)) - (CurPoint.y * sin(StartAngle))),
-//				(float)((CurPoint.x * sin(StartAngle)) + (CurPoint.y * cos(StartAngle))),
-//				CurPoint.z
-//			);
-//
-//			OldVerts[index] = StartVerts[index];
-//
-//		}
-//
-//		/////////////////////////////////
-//		for (i = 0; i < NumCrossSections; i++) //changed QD 11/03
-//		{
-//			for (index = 0; index < NumSides; index++)
-//			{
-//				geVec3d_Set
-//				(
-//					&(CrossVerts[index]),
-//					(float)((StartVerts[index].x * cos(CurAngle)) - (StartVerts[index].y * sin(CurAngle))),
-//					(float)((StartVerts[index].x * sin(CurAngle)) + (StartVerts[index].y * cos(CurAngle))),
-//					StartVerts[index].z + (i + 1) * HeightDelta
-//				);
-//			}
-//
-//			CurAngle += AngleDelta;
-//
-//			//			if(InnerRadius>0.0f)
-//			fl = FaceList_Create(NumSides + 2);
-//			//			else
-//			//				fl	=FaceList_Create(2*NumSides);
-//
-//						// Sides ...
-//			for (index = 1; index < NumSides - 1; index++)
-//			{
-//
-//				//	geVec3d FaceVerts2[3];
-//				FaceVerts[0] = CrossVerts[index];//FinalTopInnerPoint;
-//				FaceVerts[1] = CrossVerts[index + 1];//FinalTopOuterPoint;
-//				FaceVerts[2] = OldVerts[index + 1];
-//				FaceVerts[3] = OldVerts[index];
-//				f = Face_Create(4, FaceVerts, 0);
-//
-//				if (f)
-//				{
-//					FaceList_AddFace(fl, f);
-//				}
-//
-//				/*				FaceVerts2[0] = CrossVerts[index];//FinalTopInnerPoint;
-//								//FaceVerts2[1] = CrossVerts[index+1];//FinalTopOuterPoint;
-//								FaceVerts2[1] = OldVerts[index+1];
-//								FaceVerts2[2] = OldVerts[index];
-//								f = Face_Create(3, FaceVerts2, 0);
-//
-//								if(f)
-//								{
-//									FaceList_AddFace(fl, f);
-//								}*/
-//			}
-//
-//			//first side, last side are triangles if radius=0
-//			if (InnerRadius > 0.0f)
-//			{
-//				//first side
-//			//	geVec3d FaceVerts2[3];
-//				FaceVerts[0] = CrossVerts[0];
-//				FaceVerts[1] = CrossVerts[1];
-//				FaceVerts[2] = OldVerts[1];
-//				FaceVerts[3] = OldVerts[0];
-//				f = Face_Create(4, FaceVerts, 0);
-//
-//				if (f)
-//				{
-//					FaceList_AddFace(fl, f);
-//				}
-//
-//				/*			FaceVerts2[0] = CrossVerts[0];
-//							//FaceVerts2[1] = CrossVerts[1];
-//							FaceVerts2[1] = OldVerts[1];
-//							FaceVerts2[2] = OldVerts[0];
-//							f = Face_Create(3, FaceVerts2, 0);
-//
-//							if(f)
-//							{
-//								FaceList_AddFace(fl, f);
-//							}*/
-//
-//							//last side
-//				FaceVerts[0] = CrossVerts[NumSides - 1];
-//				FaceVerts[1] = CrossVerts[0];
-//				FaceVerts[2] = OldVerts[0];
-//				FaceVerts[3] = OldVerts[NumSides - 1];
-//				f = Face_Create(4, FaceVerts, 0);
-//
-//				if (f)
-//				{
-//					FaceList_AddFace(fl, f);
-//				}
-//
-//				/*				FaceVerts2[0] = CrossVerts[NumSides-1];
-//								//FaceVerts2[1] = CrossVerts[0];
-//								FaceVerts2[1] = OldVerts[0];
-//								FaceVerts2[2] = OldVerts[NumSides-1];
-//								f = Face_Create(3, FaceVerts2, 0);
-//
-//								if(f)
-//								{
-//									FaceList_AddFace(fl, f);
-//								}*/
-//			}
-//			else
-//			{
-//				T_Vec3 FaceVerts2[3];
-//
-//				FaceVerts2[0] = CrossVerts[0];
-//				FaceVerts2[1] = CrossVerts[1];
-//				FaceVerts2[2] = OldVerts[1];
-//				f = Face_Create(3, FaceVerts2, 0);
-//
-//				if (f)
-//				{
-//					FaceList_AddFace(fl, f);
-//				}
-//
-//				FaceVerts2[0] = CrossVerts[NumSides - 1];
-//				FaceVerts2[1] = CrossVerts[0];
-//				FaceVerts2[2] = OldVerts[NumSides - 1];
-//				f = Face_Create(3, FaceVerts2, 0);
-//
-//				if (f)
-//				{
-//					FaceList_AddFace(fl, f);
-//				}
-//			}
-//
-//			//make the end faces
-//			f = Face_Create(NumSides, OldVerts, 0);
-//
-//			if (f)
-//			{
-//				if (pTemplate->Style < 2)	//default to hollow (if they make hollow later)
-//				{
-//					if (i)
-//					{
-//						Face_SetFixedHull(f, GE_TRUE);
-//					}
-//				}
-//				else
-//				{
-//					Face_SetFixedHull(f, GE_TRUE);
-//				}
-//				FaceList_AddFace(fl, f);
-//			}
-//
-//			//need reverse order for the other end
-//			for (index = 0; index < NumSides; index++)
-//				OldVerts[NumSides - index - 1] = CrossVerts[index];
-//
-//			f = Face_Create(NumSides, OldVerts, 0);
-//
-//			if (f)
-//			{
-//				if (pTemplate->Style < 2)	//default to hollow (if they make hollow later)
-//				{
-//					if (i < (NumCrossSections - 1)) // changed QD
-//					{
-//						Face_SetFixedHull(f, GE_TRUE);
-//					}
-//				}
-//				else
-//				{
-//					Face_SetFixedHull(f, GE_TRUE);
-//				}
-//				FaceList_AddFace(fl, f);
-//			}
-//
-//			if (!pTemplate->Style)
-//			{
-//				b2 = App->CL_Brush->Brush_Create(BRUSH_LEAF, fl, 0);
-//				if (b2)
-//				{
-//					Brush_SetSubtract(b2, pTemplate->TCut);
-//				}
-//				App->CL_Brush->BrushList_Append(MBList, b2);
-//			}
-//			else
-//			{
-//				BrushList* bl = App->CL_Brush->BrushList_Create();
-//				Brush* bh, * bm;
-//
-//				b2 = App->CL_Brush->Brush_Create(BRUSH_LEAF, fl, 0);
-//				if (b2)
-//				{
-//					Brush_SetHollow(b2, GE_TRUE);
-//					Brush_SetHullSize(b2, pTemplate->WallSize);
-//					bh = App->CL_Brush->Brush_CreateHollowFromBrush(b2);
-//					if (bh)
-//					{
-//						App->CL_Brush->Brush_SetHollowCut(bh, GE_TRUE);
-//						App->CL_Brush->BrushList_Append(bl, b2);
-//						App->CL_Brush->BrushList_Append(bl, bh);
-//
-//						bm = Brush_Create(BRUSH_MULTI, 0, bl);
-//						if (bm)
-//						{
-//							Brush_SetHollow(bm, GE_TRUE);
-//							Brush_SetSubtract(bm, pTemplate->TCut);
-//							Brush_SetHullSize(bm, pTemplate->WallSize);
-//
-//							App->CL_Brush->BrushList_Append(MBList, bm);
-//						}
-//					}
-//					else
-//					{
-//						App->CL_Brush->Brush_Destroy(&b2);
-//						App->CL_Brush->BrushList_Destroy(&bl);
-//					}
-//				}
-//				else
-//				{
-//					App->CL_Brush->BrushList_Destroy(&bl);
-//				}
-//			}
-//
-//			//	Set old points...
-//			for (index = 0; index < NumSides; index++)
-//				OldVerts[index] = CrossVerts[index];
-//
-//		}
-//
-//		//free allocated verts
-////		geRam_Free(StartVerts);
-////		geRam_Free(OldVerts);
-////		geRam_Free(CrossVerts);
-//	}
-//	//////////////////////
-//	// Shape = Rectangular
-//	else
-//	{
-//		// end change
-//		geVec3d_Set(&TopInnerPoint, (float)InnerRadius, 0.0, (float)(Width / 2));
-//		geVec3d_Set(&TopOuterPoint, (float)(InnerRadius + Thickness), 0.0, (float)(Width / 2));
-//
-//		//	Create first cross section of 4 vertices ( outer face @ start angle)...
-//		geVec3d_Set
-//		(
-//			&FinalTopInnerPoint,
-//			(float)((TopInnerPoint.X * cos(StartAngle)) - (TopInnerPoint.Y * sin(StartAngle))),
-//			(float)((TopInnerPoint.X * sin(StartAngle)) + (TopInnerPoint.Y * cos(StartAngle))),
-//			TopInnerPoint.Z
-//		);
-//		geVec3d_Set
-//		(
-//			&FinalTopOuterPoint,
-//			(float)((TopOuterPoint.X * cos(StartAngle)) - (TopInnerPoint.Y * sin(StartAngle))),
-//			(float)((TopOuterPoint.X * sin(StartAngle)) + (TopInnerPoint.Y * cos(StartAngle))),
-//			TopOuterPoint.Z
-//		);
-//
-//		FinalBottomInnerPoint = FinalTopInnerPoint;
-//		FinalBottomInnerPoint.Z = -FinalTopInnerPoint.Z;
-//		FinalBottomOuterPoint = FinalTopOuterPoint;
-//		FinalBottomOuterPoint.Z = -FinalTopOuterPoint.Z;
-//		// changed QD 11/03
-//		if (CW)
-//		{
-//			FinalTopInnerPoint.Z += Height;
-//			FinalTopOuterPoint.Z += Height;
-//			if (!Massive)
-//			{
-//				FinalBottomInnerPoint.Z += Height;
-//				FinalBottomOuterPoint.Z += Height;
-//			}
-//			else if (Steps)
-//			{
-//				FinalBottomInnerPoint.Z -= HeightDelta;
-//				FinalBottomOuterPoint.Z -= HeightDelta;
-//			}
-//		}
-//		// end change
-//		OldTopInner = FinalTopInnerPoint;
-//		OldTopOuter = FinalTopOuterPoint;
-//		OldBottomInner = FinalBottomInnerPoint;
-//		OldBottomOuter = FinalBottomOuterPoint;
-//
-//		//Create the other cross sections and assign verts to polys after each...
-//		for (i = 0; i < NumCrossSections; i++) // changed QD 11/03
-//		{
-//			geVec3d_Set
-//			(
-//				&FinalTopInnerPoint,
-//				(float)((TopInnerPoint.x * cos(CurAngle)) - (TopInnerPoint.y * sin(CurAngle))),
-//				(float)((TopInnerPoint.x * sin(CurAngle)) + (TopInnerPoint.y * cos(CurAngle))),
-//				TopInnerPoint.z
-//			);
-//			geVec3d_Set
-//			(
-//				&FinalTopOuterPoint,
-//				(float)((TopOuterPoint.x * cos(CurAngle)) - (TopInnerPoint.y * sin(CurAngle))),
-//				(float)((TopOuterPoint.x * sin(CurAngle)) + (TopInnerPoint.y * cos(CurAngle))),
-//				TopOuterPoint.z
-//			);
-//			FinalBottomInnerPoint = FinalTopInnerPoint;
-//			FinalBottomInnerPoint.z = -FinalTopInnerPoint.z;
-//			// changed QD 11/03
-//			if (CW)
-//			{
-//				if (!Massive)
-//					FinalBottomInnerPoint.z += Height;
-//				else if (Steps)
-//					FinalBottomInnerPoint.z -= HeightDelta;
-//				FinalTopInnerPoint.z += Height;
-//			}
-//			if (!Steps)
-//			{
-//				if (!Massive)
-//					FinalBottomInnerPoint.z += ((i + 1) * HeightDelta);
-//				FinalTopInnerPoint.z += ((i + 1) * HeightDelta);
-//
-//
-//			}
-//			else if (i > 0)
-//			{
-//				if (!Massive)
-//					FinalBottomInnerPoint.z += ((i)*HeightDelta);
-//				FinalTopInnerPoint.z += ((i)*HeightDelta);
-//			}
-//			// end change
-//			FinalBottomOuterPoint = FinalTopOuterPoint;
-//			FinalBottomOuterPoint.z = -FinalTopOuterPoint.z;
-//			// changed QD 11/03
-//			if (CW)
-//			{
-//				if (!Massive)
-//					FinalBottomOuterPoint.z += Height;
-//				else if (Steps)
-//					FinalBottomOuterPoint.z -= HeightDelta;
-//				FinalTopOuterPoint.z += Height;
-//			}
-//			if (!Steps)
-//			{
-//				if (!Massive)
-//					FinalBottomOuterPoint.z += ((i + 1) * HeightDelta);
-//				FinalTopOuterPoint.z += ((i + 1) * HeightDelta);
-//			}
-//			else if (i > 0)//Steps&&i>0)
-//			{
-//				if (!Massive)
-//					FinalBottomOuterPoint.z += ((i)*HeightDelta);
-//				FinalTopOuterPoint.z += ((i)*HeightDelta);
-//			}
-//			// end change
-//
-//			CurAngle += AngleDelta;
-//
-//			// changed QD 11/03
-//			if (InnerRadius > 0.0f)
-//			{
-//				if (Height > 0.0f && !Steps)
-//				{
-//					if (Massive)
-//						fl = FaceList_Create(7);
-//					else
-//						fl = FaceList_Create(8);
-//				}
-//				else
-//				{
-//					fl = FaceList_Create(6);
-//				}
-//			}
-//			else
-//			{
-//				if (Height > 0.0f && !Steps)
-//
-//				{
-//					if (Massive)
-//						fl = FaceList_Create(6);
-//					else
-//						fl = FaceList_Create(7);
-//				}
-//				else
-//				{
-//					fl = FaceList_Create(5);
-//				}
-//			}
-//
-//			//Assign points to the 4 outer poly faces...
-//
-//				//Top face...
-//			if (Height > 0.0f && !Steps)
-//			{
-//				if (CW)
-//				{
-//					FaceVerts[0] = FinalTopInnerPoint;
-//					FaceVerts[1] = FinalTopOuterPoint;
-//					FaceVerts[2] = OldTopInner;
-//					f = Face_Create(3, FaceVerts, 0);
-//					if (f)
-//					{
-//						FaceList_AddFace(fl, f);
-//					}
-//
-//					FaceVerts[0] = FinalTopOuterPoint;
-//					FaceVerts[1] = OldTopOuter;
-//					FaceVerts[2] = OldTopInner;
-//					f = Face_Create(3, FaceVerts, 0);
-//					if (f)
-//					{
-//						FaceList_AddFace(fl, f);
-//					}
-//				}
-//				else
-//				{
-//					FaceVerts[0] = FinalTopInnerPoint;
-//					FaceVerts[1] = FinalTopOuterPoint;
-//					FaceVerts[2] = OldTopOuter;
-//					f = Face_Create(3, FaceVerts, 0);
-//					if (f)
-//					{
-//						FaceList_AddFace(fl, f);
-//					}
-//
-//					FaceVerts[0] = FinalTopInnerPoint;
-//					FaceVerts[1] = OldTopOuter;
-//					FaceVerts[2] = OldTopInner;
-//					f = Face_Create(3, FaceVerts, 0);
-//					if (f)
-//					{
-//						FaceList_AddFace(fl, f);
-//					}
-//				}
-//			}
-//			else
-//			{
-//				if (InnerRadius > 0.0f)
-//				{
-//					FaceVerts[0] = FinalTopInnerPoint;
-//					FaceVerts[1] = FinalTopOuterPoint;
-//					FaceVerts[2] = OldTopOuter;
-//					FaceVerts[3] = OldTopInner;
-//					f = Face_Create(4, FaceVerts, 0);
-//				}
-//				else
-//				{
-//					FaceVerts[0] = FinalTopInnerPoint;
-//					FaceVerts[1] = FinalTopOuterPoint;
-//					FaceVerts[2] = OldTopOuter;
-//					f = Face_Create(3, FaceVerts, 0);
-//				}
-//
-//				if (f)
-//				{
-//					FaceList_AddFace(fl, f);
-//				}
-//			}
-//
-//
-//			//	Bottom face...
-//			if (Height > 0.0f && !Steps && !Massive)
-//			{
-//				if (CW)
-//				{
-//					FaceVerts[2] = FinalBottomInnerPoint;
-//					FaceVerts[1] = FinalBottomOuterPoint;
-//					FaceVerts[0] = OldBottomOuter;
-//					f = Face_Create(3, FaceVerts, 0);
-//					if (f)
-//					{
-//						FaceList_AddFace(fl, f);
-//					}
-//
-//					FaceVerts[2] = FinalBottomInnerPoint;
-//					FaceVerts[1] = OldBottomOuter;
-//					FaceVerts[0] = OldBottomInner;
-//					f = Face_Create(3, FaceVerts, 0);
-//					if (f)
-//					{
-//						FaceList_AddFace(fl, f);
-//					}
-//				}
-//				else
-//				{
-//					FaceVerts[2] = FinalBottomInnerPoint;
-//					FaceVerts[1] = FinalBottomOuterPoint;
-//					FaceVerts[0] = OldBottomInner;
-//					f = Face_Create(3, FaceVerts, 0);
-//					if (f)
-//					{
-//						FaceList_AddFace(fl, f);
-//					}
-//
-//					FaceVerts[2] = FinalBottomOuterPoint;
-//					FaceVerts[1] = OldBottomOuter;
-//					FaceVerts[0] = OldBottomInner;
-//					f = Face_Create(3, FaceVerts, 0);
-//					if (f)
-//					{
-//						FaceList_AddFace(fl, f);
-//					}
-//				}
-//			}
-//			else
-//			{
-//				if (InnerRadius > 0.0f)
-//				{
-//					FaceVerts[3] = FinalBottomInnerPoint;
-//					FaceVerts[2] = FinalBottomOuterPoint;
-//					FaceVerts[1] = OldBottomOuter;
-//					FaceVerts[0] = OldBottomInner;
-//					f = Face_Create(4, FaceVerts, 0);
-//				}
-//				else
-//				{
-//					FaceVerts[2] = FinalBottomInnerPoint;
-//					FaceVerts[1] = FinalBottomOuterPoint;
-//					FaceVerts[0] = OldBottomOuter;
-//					f = Face_Create(3, FaceVerts, 0);
-//				}
-//				if (f)
-//				{
-//					FaceList_AddFace(fl, f);
-//				}
-//			}
-//
-//			if (InnerRadius > 0.0f)
-//			{
-//				//	Inner side face...
-//				FaceVerts[0] = FinalTopInnerPoint;
-//				FaceVerts[1] = OldTopInner;
-//				FaceVerts[2] = OldBottomInner;
-//				FaceVerts[3] = FinalBottomInnerPoint;
-//				f = Face_Create(4, FaceVerts, 0);
-//				if (f)
-//				{
-//					FaceList_AddFace(fl, f);
-//				}
-//			}
-//			// end change
-//
-//						//	Outer side face...
-//			FaceVerts[3] = FinalTopOuterPoint;
-//			FaceVerts[2] = OldTopOuter;
-//			FaceVerts[1] = OldBottomOuter;
-//			FaceVerts[0] = FinalBottomOuterPoint;
-//			f = Face_Create(4, FaceVerts, 0);
-//			if (f)
-//			{
-//				FaceList_AddFace(fl, f);
-//			}
-//
-//			//make the end faces
-//			FaceVerts[0] = OldTopOuter;
-//			FaceVerts[1] = OldBottomOuter;
-//			FaceVerts[2] = OldBottomInner;
-//			FaceVerts[3] = OldTopInner;
-//			f = Face_Create(4, FaceVerts, 0);
-//
-//			if (f)
-//			{
-//				if (pTemplate->Style < 2)	//default to hollow (if they make hollow later)
-//				{
-//					if (i)
-//					{
-//						Face_SetFixedHull(f, GE_TRUE);
-//					}
-//				}
-//				else
-//				{
-//					Face_SetFixedHull(f, GE_TRUE);
-//				}
-//				FaceList_AddFace(fl, f);
-//			}
-//
-//			FaceVerts[3] = FinalTopOuterPoint;
-//			FaceVerts[2] = FinalBottomOuterPoint;
-//			FaceVerts[1] = FinalBottomInnerPoint;
-//			FaceVerts[0] = FinalTopInnerPoint;
-//			f = Face_Create(4, FaceVerts, 0);
-//
-//			if (f)
-//			{
-//				if (pTemplate->Style < 2)	//default to hollow (if they make hollow later)
-//				{
-//					if (i < (NumCrossSections - 1)) // changed QD 11/03
-//					{
-//						Face_SetFixedHull(f, GE_TRUE);
-//					}
-//				}
-//				else
-//				{
-//					Face_SetFixedHull(f, GE_TRUE);
-//				}
-//				FaceList_AddFace(fl, f);
-//			}
-//
-//			if (!pTemplate->Style)
-//			{
-//				b2 = App->CL_Brush->Brush_Create(BRUSH_LEAF, fl, 0);
-//				if (b2)
-//				{
-//					Brush_SetSubtract(b2, pTemplate->TCut);
-//				}
-//				App->CL_Brush->BrushList_Append(MBList, b2);
-//			}
-//			else
-//			{
-//				BrushList* bl = App->CL_Brush->BrushList_Create();
-//				Brush* bh, * bm;
-//
-//				b2 = App->CL_Brush->Brush_Create(BRUSH_LEAF, fl, 0);
-//				if (b2)
-//				{
-//					Brush_SetHollow(b2, GE_TRUE);
-//					Brush_SetHullSize(b2, pTemplate->WallSize);
-//					bh = App->CL_Brush->Brush_CreateHollowFromBrush(b2);
-//					if (bh)
-//					{
-//						App->CL_Brush->Brush_SetHollowCut(bh, GE_TRUE);
-//						App->CL_Brush->BrushList_Append(bl, b2);
-//						App->CL_Brush->BrushList_Append(bl, bh);
-//
-//						bm = App->CL_Brush->Brush_Create(BRUSH_MULTI, 0, bl);
-//						if (bm)
-//						{
-//							Brush_SetHollow(bm, GE_TRUE);
-//							Brush_SetSubtract(bm, pTemplate->TCut);
-//							Brush_SetHullSize(bm, pTemplate->WallSize);
-//
-//							App->CL_Brush->BrushList_Append(MBList, bm);
-//						}
-//					}
-//					else
-//					{
-//						App->CL_Brush->Brush_Destroy(&b2);
-//						App->CL_Brush->BrushList_Destroy(&bl);
-//					}
-//				}
-//				else
-//				{
-//					App->CL_Brush->BrushList_Destroy(&bl);
-//				}
-//			}
-//
-//			//	Set old points...
-//			OldTopInner = FinalTopInnerPoint;
-//			OldTopOuter = FinalTopOuterPoint;
-//			OldBottomInner = FinalBottomInnerPoint;
-//			OldBottomOuter = FinalBottomOuterPoint;
-//			// changed QD 11/03
-//			if (Steps)
-//			{
-//				OldTopInner.z += HeightDelta;
-//				OldTopOuter.z += HeightDelta;
-//				if (!Massive)
-//				{
-//					OldBottomInner.z += HeightDelta;
-//					OldBottomOuter.z += HeightDelta;
-//				}
-//			}
-//			// end change
-//		}
-//	}
-//	b = App->CL_Brush->Brush_Create(BRUSH_MULTI, 0, MBList);
-//
-//	if (b)
-//	{
-//		Brush_SetSubtract(b, pTemplate->TCut);
-//	}
+	Brush* b, * b2;
+	BrushList* MBList = App->CL_Brush->BrushList_Create();
+	FaceList* fl;
+	Face* f;
+	T_Vec3		FaceVerts[4];
 
-Brush* b; // temp
+	int		i, NumSlits = pTemplate->NumSlits;
+	// changed QD 11/03
+	int		NumCrossSections = NumSlits;//+2;
+	float Height = pTemplate->Height;
+	float HeightDelta = 0;
+	int		NumSides = pTemplate->Sides;
+	float Radius2 = pTemplate->Radius2;
+	int		CW = pTemplate->CW;
+	signed int Steps = pTemplate->Steps;
+	signed int Massive = pTemplate->Massive;
+	// end change
+	float	Thickness = pTemplate->Thickness;
+	float	Width = pTemplate->Width;
+	float	InnerRadius = pTemplate->Radius;
+	//	geFloat	WallSize			=pTemplate->WallSize;
+	double	StartAngleDegrees = pTemplate->StartAngle;
+	double	EndAngleDegrees = pTemplate->EndAngle;
+	double	AngleDelta = 0;
+	double	CurAngle = 0;
+	double	StartAngle = Units_DegreesToRadians(StartAngleDegrees);
+	double	EndAngle = Units_DegreesToRadians(EndAngleDegrees);
+	double	Temp;
+	T_Vec3	TopInnerPoint;
+	T_Vec3	TopOuterPoint;
+	T_Vec3	FinalTopInnerPoint;
+	T_Vec3	FinalTopOuterPoint;
+	T_Vec3	FinalBottomInnerPoint;
+	T_Vec3	FinalBottomOuterPoint;
+	T_Vec3	OldTopInner;
+	T_Vec3	OldTopOuter;
+	T_Vec3	OldBottomInner;
+	T_Vec3	OldBottomOuter;
+
+	//If angles are equal, we have an empty shape...
+	if (StartAngle == EndAngle)
+	{
+		return	0;
+	}
+
+	//	Put the angles in order...
+	if (StartAngle > EndAngle)
+	{
+		Temp = StartAngle;
+		StartAngle = EndAngle;
+		EndAngle = Temp;
+	}
+
+	AngleDelta = (EndAngle - StartAngle) / (NumCrossSections); // changed QD 11/03
+	CurAngle = StartAngle + AngleDelta;
+
+	// changed QD 11/03
+	HeightDelta = Height / NumCrossSections;
+	if (CW)
+		HeightDelta = -HeightDelta;
+
+	////////////////
+	// Shape = Round
+	if (pTemplate->Shape > 0)
+	{
+		int			index, BottomCount;
+		T_Vec3		StartPoint, CurPoint;
+		T_Vec3* CrossVerts, * OldVerts, * StartVerts;
+
+		double CurAngle2;
+		double AngleDelta2Degrees = 360.0f / (float)NumSides;
+		double AngleDelta2 = Units_DegreesToRadians(AngleDelta2Degrees);
+
+		App->CL_Maths->Vector3_Set(&StartPoint, -(float)Radius2, 0.0, 0.0);
+
+		CurPoint = StartPoint;
+		CrossVerts = (T_Vec3*)App->CL_Maths->Ram_Allocate(sizeof(T_Vec3) * NumSides);
+		OldVerts = (T_Vec3*)App->CL_Maths->Ram_Allocate(sizeof(T_Vec3) * NumSides);
+		StartVerts = (T_Vec3*)App->CL_Maths->Ram_Allocate(sizeof(T_Vec3) * NumSides);
+		StartVerts[0] = CurPoint;
+		StartVerts[0].x += InnerRadius + Radius2;
+		//		if(CW)
+		//			StartVerts[0].Z+=Height;
+		OldVerts[0] = StartVerts[0];
+
+		CurAngle2 = BottomCount = 0;
+		for (index = 1; index < NumSides; index++)
+		{
+			//	Rotate around to create our successive points...
+			CurAngle2 += AngleDelta2;
+
+			App->CL_Maths->Vector3_Set
+			(
+				&CurPoint,
+				(float)((StartPoint.x * cos(CurAngle2)) + (StartPoint.z * sin(CurAngle2))),
+				StartPoint.y,
+				(float)((StartPoint.z * cos(CurAngle2)) - (StartPoint.x * sin(CurAngle2)))
+			);
+
+			CurPoint.x += InnerRadius + Radius2;
+			//	CurPoint.Z+=Height;
+
+			App->CL_Maths->Vector3_Set
+			(
+				&(StartVerts[index]),
+				(float)((CurPoint.x * cos(StartAngle)) - (CurPoint.y * sin(StartAngle))),
+				(float)((CurPoint.x * sin(StartAngle)) + (CurPoint.y * cos(StartAngle))),
+				CurPoint.z
+			);
+
+			OldVerts[index] = StartVerts[index];
+
+		}
+
+		/////////////////////////////////
+		for (i = 0; i < NumCrossSections; i++) //changed QD 11/03
+		{
+			for (index = 0; index < NumSides; index++)
+			{
+				App->CL_Maths->Vector3_Set
+				(
+					&(CrossVerts[index]),
+					(float)((StartVerts[index].x * cos(CurAngle)) - (StartVerts[index].y * sin(CurAngle))),
+					(float)((StartVerts[index].x * sin(CurAngle)) + (StartVerts[index].y * cos(CurAngle))),
+					StartVerts[index].z + (i + 1) * HeightDelta
+				);
+			}
+
+			CurAngle += AngleDelta;
+
+			//			if(InnerRadius>0.0f)
+			fl = App->CL_FaceList->FaceList_Create(NumSides + 2);
+			//			else
+			//				fl	=FaceList_Create(2*NumSides);
+
+						// Sides ...
+			for (index = 1; index < NumSides - 1; index++)
+			{
+
+				//	geVec3d FaceVerts2[3];
+				FaceVerts[0] = CrossVerts[index];//FinalTopInnerPoint;
+				FaceVerts[1] = CrossVerts[index + 1];//FinalTopOuterPoint;
+				FaceVerts[2] = OldVerts[index + 1];
+				FaceVerts[3] = OldVerts[index];
+				f = App->CL_Face->Face_Create(4, FaceVerts, 0);
+
+				if (f)
+				{
+					App->CL_FaceList->FaceList_AddFace(fl, f);
+				}
+
+				/*				FaceVerts2[0] = CrossVerts[index];//FinalTopInnerPoint;
+								//FaceVerts2[1] = CrossVerts[index+1];//FinalTopOuterPoint;
+								FaceVerts2[1] = OldVerts[index+1];
+								FaceVerts2[2] = OldVerts[index];
+								f = Face_Create(3, FaceVerts2, 0);
+
+								if(f)
+								{
+									FaceList_AddFace(fl, f);
+								}*/
+			}
+
+			//first side, last side are triangles if radius=0
+			if (InnerRadius > 0.0f)
+			{
+				//first side
+			//	geVec3d FaceVerts2[3];
+				FaceVerts[0] = CrossVerts[0];
+				FaceVerts[1] = CrossVerts[1];
+				FaceVerts[2] = OldVerts[1];
+				FaceVerts[3] = OldVerts[0];
+				f = App->CL_Face->Face_Create(4, FaceVerts, 0);
+
+				if (f)
+				{
+					App->CL_FaceList->FaceList_AddFace(fl, f);
+				}
+
+				/*			FaceVerts2[0] = CrossVerts[0];
+							//FaceVerts2[1] = CrossVerts[1];
+							FaceVerts2[1] = OldVerts[1];
+							FaceVerts2[2] = OldVerts[0];
+							f = Face_Create(3, FaceVerts2, 0);
+
+							if(f)
+							{
+								FaceList_AddFace(fl, f);
+							}*/
+
+							//last side
+				FaceVerts[0] = CrossVerts[NumSides - 1];
+				FaceVerts[1] = CrossVerts[0];
+				FaceVerts[2] = OldVerts[0];
+				FaceVerts[3] = OldVerts[NumSides - 1];
+				f = App->CL_Face->Face_Create(4, FaceVerts, 0);
+
+				if (f)
+				{
+					App->CL_FaceList->FaceList_AddFace(fl, f);
+				}
+
+				/*				FaceVerts2[0] = CrossVerts[NumSides-1];
+								//FaceVerts2[1] = CrossVerts[0];
+								FaceVerts2[1] = OldVerts[0];
+								FaceVerts2[2] = OldVerts[NumSides-1];
+								f = Face_Create(3, FaceVerts2, 0);
+
+								if(f)
+								{
+									FaceList_AddFace(fl, f);
+								}*/
+			}
+			else
+			{
+				T_Vec3 FaceVerts2[3];
+
+				FaceVerts2[0] = CrossVerts[0];
+				FaceVerts2[1] = CrossVerts[1];
+				FaceVerts2[2] = OldVerts[1];
+				f = App->CL_Face->Face_Create(3, FaceVerts2, 0);
+
+				if (f)
+				{
+					App->CL_FaceList->FaceList_AddFace(fl, f);
+				}
+
+				FaceVerts2[0] = CrossVerts[NumSides - 1];
+				FaceVerts2[1] = CrossVerts[0];
+				FaceVerts2[2] = OldVerts[NumSides - 1];
+				f = App->CL_Face->Face_Create(3, FaceVerts2, 0);
+
+				if (f)
+				{
+					App->CL_FaceList->FaceList_AddFace(fl, f);
+				}
+			}
+
+			//make the end faces
+			f = App->CL_Face->Face_Create(NumSides, OldVerts, 0);
+
+			if (f)
+			{
+				if (pTemplate->Style < 2)	//default to hollow (if they make hollow later)
+				{
+					if (i)
+					{
+						App->CL_Face->Face_SetFixedHull(f, GE_TRUE);
+					}
+				}
+				else
+				{
+					App->CL_Face->Face_SetFixedHull(f, GE_TRUE);
+				}
+				App->CL_FaceList->FaceList_AddFace(fl, f);
+			}
+
+			//need reverse order for the other end
+			for (index = 0; index < NumSides; index++)
+				OldVerts[NumSides - index - 1] = CrossVerts[index];
+
+			f = App->CL_Face->Face_Create(NumSides, OldVerts, 0);
+
+			if (f)
+			{
+				if (pTemplate->Style < 2)	//default to hollow (if they make hollow later)
+				{
+					if (i < (NumCrossSections - 1)) // changed QD
+					{
+						App->CL_Face->Face_SetFixedHull(f, GE_TRUE);
+					}
+				}
+				else
+				{
+					App->CL_Face->Face_SetFixedHull(f, GE_TRUE);
+				}
+				App->CL_FaceList->FaceList_AddFace(fl, f);
+			}
+
+			if (!pTemplate->Style)
+			{
+				b2 = App->CL_Brush->Brush_Create(BRUSH_LEAF, fl, 0);
+				if (b2)
+				{
+					Brush_SetSubtract(b2, pTemplate->TCut);
+				}
+				App->CL_Brush->BrushList_Append(MBList, b2);
+			}
+			else
+			{
+				BrushList* bl = App->CL_Brush->BrushList_Create();
+				Brush* bh, * bm;
+
+				b2 = App->CL_Brush->Brush_Create(BRUSH_LEAF, fl, 0);
+				if (b2)
+				{
+					Brush_SetHollow(b2, GE_TRUE);
+					Brush_SetHullSize(b2, pTemplate->WallSize);
+					bh = App->CL_Brush->Brush_CreateHollowFromBrush(b2);
+					if (bh)
+					{
+						App->CL_Brush->Brush_SetHollowCut(bh, GE_TRUE);
+						App->CL_Brush->BrushList_Append(bl, b2);
+						App->CL_Brush->BrushList_Append(bl, bh);
+
+						bm = App->CL_Brush->Brush_Create(BRUSH_MULTI, 0, bl);
+						if (bm)
+						{
+							Brush_SetHollow(bm, GE_TRUE);
+							Brush_SetSubtract(bm, pTemplate->TCut);
+							Brush_SetHullSize(bm, pTemplate->WallSize);
+
+							App->CL_Brush->BrushList_Append(MBList, bm);
+						}
+					}
+					else
+					{
+						App->CL_Brush->Brush_Destroy(&b2);
+						App->CL_Brush->BrushList_Destroy(&bl);
+					}
+				}
+				else
+				{
+					App->CL_Brush->BrushList_Destroy(&bl);
+				}
+			}
+
+			//	Set old points...
+			for (index = 0; index < NumSides; index++)
+				OldVerts[index] = CrossVerts[index];
+
+		}
+
+		//free allocated verts
+//		geRam_Free(StartVerts);
+//		geRam_Free(OldVerts);
+//		geRam_Free(CrossVerts);
+	}
+	//////////////////////
+	// Shape = Rectangular
+	else
+	{
+		// end change
+		App->CL_Maths->Vector3_Set(&TopInnerPoint, (float)InnerRadius, 0.0, (float)(Width / 2));
+		App->CL_Maths->Vector3_Set(&TopOuterPoint, (float)(InnerRadius + Thickness), 0.0, (float)(Width / 2));
+
+		//	Create first cross section of 4 vertices ( outer face @ start angle)...
+		App->CL_Maths->Vector3_Set
+		(
+			&FinalTopInnerPoint,
+			(float)((TopInnerPoint.x * cos(StartAngle)) - (TopInnerPoint.y * sin(StartAngle))),
+			(float)((TopInnerPoint.x * sin(StartAngle)) + (TopInnerPoint.y * cos(StartAngle))),
+			TopInnerPoint.z
+		);
+		App->CL_Maths->Vector3_Set
+		(
+			&FinalTopOuterPoint,
+			(float)((TopOuterPoint.x * cos(StartAngle)) - (TopInnerPoint.y * sin(StartAngle))),
+			(float)((TopOuterPoint.x * sin(StartAngle)) + (TopInnerPoint.y * cos(StartAngle))),
+			TopOuterPoint.z
+		);
+
+		FinalBottomInnerPoint = FinalTopInnerPoint;
+		FinalBottomInnerPoint.z = -FinalTopInnerPoint.z;
+		FinalBottomOuterPoint = FinalTopOuterPoint;
+		FinalBottomOuterPoint.z = -FinalTopOuterPoint.z;
+		// changed QD 11/03
+		if (CW)
+		{
+			FinalTopInnerPoint.z += Height;
+			FinalTopOuterPoint.z += Height;
+			if (!Massive)
+			{
+				FinalBottomInnerPoint.z += Height;
+				FinalBottomOuterPoint.z += Height;
+			}
+			else if (Steps)
+			{
+				FinalBottomInnerPoint.z -= HeightDelta;
+				FinalBottomOuterPoint.z -= HeightDelta;
+			}
+		}
+		// end change
+		OldTopInner = FinalTopInnerPoint;
+		OldTopOuter = FinalTopOuterPoint;
+		OldBottomInner = FinalBottomInnerPoint;
+		OldBottomOuter = FinalBottomOuterPoint;
+
+		//Create the other cross sections and assign verts to polys after each...
+		for (i = 0; i < NumCrossSections; i++) // changed QD 11/03
+		{
+			App->CL_Maths->Vector3_Set
+			(
+				&FinalTopInnerPoint,
+				(float)((TopInnerPoint.x * cos(CurAngle)) - (TopInnerPoint.y * sin(CurAngle))),
+				(float)((TopInnerPoint.x * sin(CurAngle)) + (TopInnerPoint.y * cos(CurAngle))),
+				TopInnerPoint.z
+			);
+			App->CL_Maths->Vector3_Set
+			(
+				&FinalTopOuterPoint,
+				(float)((TopOuterPoint.x * cos(CurAngle)) - (TopInnerPoint.y * sin(CurAngle))),
+				(float)((TopOuterPoint.x * sin(CurAngle)) + (TopInnerPoint.y * cos(CurAngle))),
+				TopOuterPoint.z
+			);
+			FinalBottomInnerPoint = FinalTopInnerPoint;
+			FinalBottomInnerPoint.z = -FinalTopInnerPoint.z;
+			// changed QD 11/03
+			if (CW)
+			{
+				if (!Massive)
+					FinalBottomInnerPoint.z += Height;
+				else if (Steps)
+					FinalBottomInnerPoint.z -= HeightDelta;
+				FinalTopInnerPoint.z += Height;
+			}
+			if (!Steps)
+			{
+				if (!Massive)
+					FinalBottomInnerPoint.z += ((i + 1) * HeightDelta);
+				FinalTopInnerPoint.z += ((i + 1) * HeightDelta);
+
+
+			}
+			else if (i > 0)
+			{
+				if (!Massive)
+					FinalBottomInnerPoint.z += ((i)*HeightDelta);
+				FinalTopInnerPoint.z += ((i)*HeightDelta);
+			}
+			// end change
+			FinalBottomOuterPoint = FinalTopOuterPoint;
+			FinalBottomOuterPoint.z = -FinalTopOuterPoint.z;
+			// changed QD 11/03
+			if (CW)
+			{
+				if (!Massive)
+					FinalBottomOuterPoint.z += Height;
+				else if (Steps)
+					FinalBottomOuterPoint.z -= HeightDelta;
+				FinalTopOuterPoint.z += Height;
+			}
+			if (!Steps)
+			{
+				if (!Massive)
+					FinalBottomOuterPoint.z += ((i + 1) * HeightDelta);
+				FinalTopOuterPoint.z += ((i + 1) * HeightDelta);
+			}
+			else if (i > 0)//Steps&&i>0)
+			{
+				if (!Massive)
+					FinalBottomOuterPoint.z += ((i)*HeightDelta);
+				FinalTopOuterPoint.z += ((i)*HeightDelta);
+			}
+			// end change
+
+			CurAngle += AngleDelta;
+
+			// changed QD 11/03
+			if (InnerRadius > 0.0f)
+			{
+				if (Height > 0.0f && !Steps)
+				{
+					if (Massive)
+						fl = App->CL_FaceList->FaceList_Create(7);
+					else
+						fl = App->CL_FaceList->FaceList_Create(8);
+				}
+				else
+				{
+					fl = App->CL_FaceList->FaceList_Create(6);
+				}
+			}
+			else
+			{
+				if (Height > 0.0f && !Steps)
+
+				{
+					if (Massive)
+						fl = App->CL_FaceList->FaceList_Create(6);
+					else
+						fl = App->CL_FaceList->FaceList_Create(7);
+				}
+				else
+				{
+					fl = App->CL_FaceList->FaceList_Create(5);
+				}
+			}
+
+			//Assign points to the 4 outer poly faces...
+
+				//Top face...
+			if (Height > 0.0f && !Steps)
+			{
+				if (CW)
+				{
+					FaceVerts[0] = FinalTopInnerPoint;
+					FaceVerts[1] = FinalTopOuterPoint;
+					FaceVerts[2] = OldTopInner;
+					f = App->CL_Face->Face_Create(3, FaceVerts, 0);
+					if (f)
+					{
+						App->CL_FaceList->FaceList_AddFace(fl, f);
+					}
+
+					FaceVerts[0] = FinalTopOuterPoint;
+					FaceVerts[1] = OldTopOuter;
+					FaceVerts[2] = OldTopInner;
+					f = App->CL_Face->Face_Create(3, FaceVerts, 0);
+					if (f)
+					{
+						App->CL_FaceList->FaceList_AddFace(fl, f);
+					}
+				}
+				else
+				{
+					FaceVerts[0] = FinalTopInnerPoint;
+					FaceVerts[1] = FinalTopOuterPoint;
+					FaceVerts[2] = OldTopOuter;
+					f = App->CL_Face->Face_Create(3, FaceVerts, 0);
+					if (f)
+					{
+						App->CL_FaceList->FaceList_AddFace(fl, f);
+					}
+
+					FaceVerts[0] = FinalTopInnerPoint;
+					FaceVerts[1] = OldTopOuter;
+					FaceVerts[2] = OldTopInner;
+					f = App->CL_Face->Face_Create(3, FaceVerts, 0);
+					if (f)
+					{
+						App->CL_FaceList->FaceList_AddFace(fl, f);
+					}
+				}
+			}
+			else
+			{
+				if (InnerRadius > 0.0f)
+				{
+					FaceVerts[0] = FinalTopInnerPoint;
+					FaceVerts[1] = FinalTopOuterPoint;
+					FaceVerts[2] = OldTopOuter;
+					FaceVerts[3] = OldTopInner;
+					f = App->CL_Face->Face_Create(4, FaceVerts, 0);
+				}
+				else
+				{
+					FaceVerts[0] = FinalTopInnerPoint;
+					FaceVerts[1] = FinalTopOuterPoint;
+					FaceVerts[2] = OldTopOuter;
+					f = App->CL_Face->Face_Create(3, FaceVerts, 0);
+				}
+
+				if (f)
+				{
+					App->CL_FaceList->FaceList_AddFace(fl, f);
+				}
+			}
+
+
+			//	Bottom face...
+			if (Height > 0.0f && !Steps && !Massive)
+			{
+				if (CW)
+				{
+					FaceVerts[2] = FinalBottomInnerPoint;
+					FaceVerts[1] = FinalBottomOuterPoint;
+					FaceVerts[0] = OldBottomOuter;
+					f = App->CL_Face->Face_Create(3, FaceVerts, 0);
+					if (f)
+					{
+						App->CL_FaceList->FaceList_AddFace(fl, f);
+					}
+
+					FaceVerts[2] = FinalBottomInnerPoint;
+					FaceVerts[1] = OldBottomOuter;
+					FaceVerts[0] = OldBottomInner;
+					f = App->CL_Face->Face_Create(3, FaceVerts, 0);
+					if (f)
+					{
+						App->CL_FaceList->FaceList_AddFace(fl, f);
+					}
+				}
+				else
+				{
+					FaceVerts[2] = FinalBottomInnerPoint;
+					FaceVerts[1] = FinalBottomOuterPoint;
+					FaceVerts[0] = OldBottomInner;
+					f = App->CL_Face->Face_Create(3, FaceVerts, 0);
+					if (f)
+					{
+						App->CL_FaceList->FaceList_AddFace(fl, f);
+					}
+
+					FaceVerts[2] = FinalBottomOuterPoint;
+					FaceVerts[1] = OldBottomOuter;
+					FaceVerts[0] = OldBottomInner;
+					f = App->CL_Face->Face_Create(3, FaceVerts, 0);
+					if (f)
+					{
+						App->CL_FaceList->FaceList_AddFace(fl, f);
+					}
+				}
+			}
+			else
+			{
+				if (InnerRadius > 0.0f)
+				{
+					FaceVerts[3] = FinalBottomInnerPoint;
+					FaceVerts[2] = FinalBottomOuterPoint;
+					FaceVerts[1] = OldBottomOuter;
+					FaceVerts[0] = OldBottomInner;
+					f = App->CL_Face->Face_Create(4, FaceVerts, 0);
+				}
+				else
+				{
+					FaceVerts[2] = FinalBottomInnerPoint;
+					FaceVerts[1] = FinalBottomOuterPoint;
+					FaceVerts[0] = OldBottomOuter;
+					f = App->CL_Face->Face_Create(3, FaceVerts, 0);
+				}
+				if (f)
+				{
+					App->CL_FaceList->FaceList_AddFace(fl, f);
+				}
+			}
+
+			if (InnerRadius > 0.0f)
+			{
+				//	Inner side face...
+				FaceVerts[0] = FinalTopInnerPoint;
+				FaceVerts[1] = OldTopInner;
+				FaceVerts[2] = OldBottomInner;
+				FaceVerts[3] = FinalBottomInnerPoint;
+				f = App->CL_Face->Face_Create(4, FaceVerts, 0);
+				if (f)
+				{
+					App->CL_FaceList->FaceList_AddFace(fl, f);
+				}
+			}
+			// end change
+
+						//	Outer side face...
+			FaceVerts[3] = FinalTopOuterPoint;
+			FaceVerts[2] = OldTopOuter;
+			FaceVerts[1] = OldBottomOuter;
+			FaceVerts[0] = FinalBottomOuterPoint;
+			f = App->CL_Face->Face_Create(4, FaceVerts, 0);
+			if (f)
+			{
+				App->CL_FaceList->FaceList_AddFace(fl, f);
+			}
+
+			//make the end faces
+			FaceVerts[0] = OldTopOuter;
+			FaceVerts[1] = OldBottomOuter;
+			FaceVerts[2] = OldBottomInner;
+			FaceVerts[3] = OldTopInner;
+			f = App->CL_Face->Face_Create(4, FaceVerts, 0);
+
+			if (f)
+			{
+				if (pTemplate->Style < 2)	//default to hollow (if they make hollow later)
+				{
+					if (i)
+					{
+						App->CL_Face->Face_SetFixedHull(f, GE_TRUE);
+					}
+				}
+				else
+				{
+					App->CL_Face->Face_SetFixedHull(f, GE_TRUE);
+				}
+				App->CL_FaceList->FaceList_AddFace(fl, f);
+			}
+
+			FaceVerts[3] = FinalTopOuterPoint;
+			FaceVerts[2] = FinalBottomOuterPoint;
+			FaceVerts[1] = FinalBottomInnerPoint;
+			FaceVerts[0] = FinalTopInnerPoint;
+			f = App->CL_Face->Face_Create(4, FaceVerts, 0);
+
+			if (f)
+			{
+				if (pTemplate->Style < 2)	//default to hollow (if they make hollow later)
+				{
+					if (i < (NumCrossSections - 1)) // changed QD 11/03
+					{
+						App->CL_Face->Face_SetFixedHull(f, GE_TRUE);
+					}
+				}
+				else
+				{
+					App->CL_Face->Face_SetFixedHull(f, GE_TRUE);
+				}
+				App->CL_FaceList->FaceList_AddFace(fl, f);
+			}
+
+			if (!pTemplate->Style)
+			{
+				b2 = App->CL_Brush->Brush_Create(BRUSH_LEAF, fl, 0);
+				if (b2)
+				{
+					Brush_SetSubtract(b2, pTemplate->TCut);
+				}
+				App->CL_Brush->BrushList_Append(MBList, b2);
+			}
+			else
+			{
+				BrushList* bl = App->CL_Brush->BrushList_Create();
+				Brush* bh, * bm;
+
+				b2 = App->CL_Brush->Brush_Create(BRUSH_LEAF, fl, 0);
+				if (b2)
+				{
+					Brush_SetHollow(b2, GE_TRUE);
+					Brush_SetHullSize(b2, pTemplate->WallSize);
+					bh = App->CL_Brush->Brush_CreateHollowFromBrush(b2);
+					if (bh)
+					{
+						App->CL_Brush->Brush_SetHollowCut(bh, GE_TRUE);
+						App->CL_Brush->BrushList_Append(bl, b2);
+						App->CL_Brush->BrushList_Append(bl, bh);
+
+						bm = App->CL_Brush->Brush_Create(BRUSH_MULTI, 0, bl);
+						if (bm)
+						{
+							Brush_SetHollow(bm, GE_TRUE);
+							Brush_SetSubtract(bm, pTemplate->TCut);
+							Brush_SetHullSize(bm, pTemplate->WallSize);
+
+							App->CL_Brush->BrushList_Append(MBList, bm);
+						}
+					}
+					else
+					{
+						App->CL_Brush->Brush_Destroy(&b2);
+						App->CL_Brush->BrushList_Destroy(&bl);
+					}
+				}
+				else
+				{
+					App->CL_Brush->BrushList_Destroy(&bl);
+				}
+			}
+
+			//	Set old points...
+			OldTopInner = FinalTopInnerPoint;
+			OldTopOuter = FinalTopOuterPoint;
+			OldBottomInner = FinalBottomInnerPoint;
+			OldBottomOuter = FinalBottomOuterPoint;
+			// changed QD 11/03
+			if (Steps)
+			{
+				OldTopInner.z += HeightDelta;
+				OldTopOuter.z += HeightDelta;
+				if (!Massive)
+				{
+					OldBottomInner.z += HeightDelta;
+					OldBottomOuter.z += HeightDelta;
+				}
+			}
+			// end change
+		}
+	}
+	b = App->CL_Brush->Brush_Create(BRUSH_MULTI, 0, MBList);
+
+	if (b)
+	{
+		Brush_SetSubtract(b, pTemplate->TCut);
+	}
+
 	return	b;
 }
