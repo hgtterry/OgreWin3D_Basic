@@ -127,7 +127,14 @@ LRESULT CALLBACK A_CreateArchDialog::CreateArch_Proc(HWND hDlg, UINT message, WP
 		App->CL_CreateArchDialog->Set_DLG_Members(hDlg);
 		App->CL_CreateArchDialog->Set_Defaults(hDlg);
 
-		SetDlgItemText(hDlg, IDC_EDITNAME, (LPCTSTR)"Arch");
+		int Count = App->CL_Brush->Get_Brush_Count();
+		char Num[32];
+		char Name[32];
+		_itoa(Count, Num, 10);
+		strcpy(Name, "Arch_");
+		strcat(Name, Num);
+
+		SetDlgItemText(hDlg, IDC_EDITNAME, (LPCTSTR)Name);
 
 		//// ----------- Style Solid Hollow Funnel
 		//if(App->CL_CreateArchDialog->m_Style == 0)
