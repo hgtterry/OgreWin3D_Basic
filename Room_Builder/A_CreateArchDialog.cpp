@@ -50,6 +50,11 @@ A_CreateArchDialog::A_CreateArchDialog(void)
 
 	m_UseCamPos = 0;
 
+	flag_Solid_Flag = 0;
+	flag_Hollow_Flag = 0;
+	flag_Ring_Flag = 0;
+	flag_Cut_Flag = 0;
+
 	strcpy(ArchName,"Arch");
 }
 
@@ -78,6 +83,14 @@ LRESULT CALLBACK A_CreateArchDialog::CreateArch_Proc(HWND hDlg, UINT message, WP
 	{
 	case WM_INITDIALOG:
 	{
+		SendDlgItemMessage(hDlg, IDC_BT_ARCHSOLID, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_ARCHHOLLOW, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_ARCHRING, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_ARCHCUT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		SendDlgItemMessage(hDlg, IDC_BT_ARCHRECTANGLE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_ARCHROUND, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
 		
 		App->CL_CreateArchDialog->Set_Members();
 		App->CL_CreateArchDialog->Set_DLG_Members(hDlg);
@@ -381,6 +394,83 @@ LRESULT CALLBACK A_CreateArchDialog::CreateArch_Proc(HWND hDlg, UINT message, WP
 		return (LONG)App->AppBackground;
 	}
 
+	case WM_NOTIFY:
+	{
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		if (some_item->idFrom == IDC_BT_ARCHSOLID)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle_Tabs(item, App->CL_CreateArchDialog->flag_Solid_Flag);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BT_ARCHHOLLOW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle_Tabs(item, App->CL_CreateArchDialog->flag_Hollow_Flag);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BT_ARCHRING)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle_Tabs(item, App->CL_CreateArchDialog->flag_Ring_Flag);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BT_ARCHCUT)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle_Tabs(item, App->CL_CreateArchDialog->flag_Cut_Flag);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BT_ARCHRECTANGLE)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle_Tabs(item, 0);// App->CL_CreateBoxDialog->Cut_Flag);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BT_ARCHROUND)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle_Tabs(item, 0);// App->CL_CreateBoxDialog->Cut_Flag);
+			return CDRF_DODEFAULT;
+		}
+
+		/*if (some_item->idFrom == IDC_BOXDEFAULTS)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BT_BOXROOM)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDOK)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDCANCEL)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}*/
+
+		return CDRF_DODEFAULT;
+	}
+
 	case WM_COMMAND:
 		{
 
@@ -406,46 +496,61 @@ LRESULT CALLBACK A_CreateArchDialog::CreateArch_Proc(HWND hDlg, UINT message, WP
 
 				App->CL_CreateArchDialog->m_UseCamPos = 1;
 				return TRUE;
-			}
+			}*/
 
-			if (LOWORD(wParam) == IDC_HOLLOW)
+			if (LOWORD(wParam) == IDC_BT_ARCHSOLID)
 			{
-				App->CL_CreateArchDialog->m_Style = 1;
-				return TRUE;
-			}
-
-			if (LOWORD(wParam) == IDC_SOLID)
-			{
+				App->CL_CreateArchDialog->Zero_Dlg_Flags(hDlg);
 				App->CL_CreateArchDialog->m_Style = 0;
+				App->CL_CreateArchDialog->flag_Solid_Flag = 1;
+
+				RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 				return TRUE;
 			}
 
-			if (LOWORD(wParam) == IDC_RING)
+			if (LOWORD(wParam) == IDC_BT_ARCHHOLLOW)
 			{
+				App->CL_CreateArchDialog->Zero_Dlg_Flags(hDlg);
+				App->CL_CreateArchDialog->m_Style = 1;
+				App->CL_CreateArchDialog->flag_Hollow_Flag = 1;
+
+				RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+				return TRUE;
+			}
+
+			if (LOWORD(wParam) == IDC_BT_ARCHRING)
+			{
+				App->CL_CreateArchDialog->Zero_Dlg_Flags(hDlg);
 				App->CL_CreateArchDialog->m_Style = 2;
+				App->CL_CreateArchDialog->flag_Ring_Flag = 1;
+
+				RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 				return TRUE;
 			}
 
-			if (LOWORD(wParam) == IDC_TCUT)
+			if (LOWORD(wParam) == IDC_BT_ARCHCUT)
 			{
-				HWND temp = GetDlgItem(hDlg, IDC_TCUT);
-
-				int test = SendMessage(temp, BM_GETCHECK, 0, 0);
-				if (test == BST_CHECKED)
+				if (App->CL_CreateArchDialog->flag_Cut_Flag == 0)
 				{
 					App->CL_CreateArchDialog->m_TCut = 1;
+					App->CL_CreateArchDialog->flag_Cut_Flag = 1;
+
+					RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 					return 1;
 				}
 				else
 				{
 					App->CL_CreateArchDialog->m_TCut = 0;
+					App->CL_CreateArchDialog->flag_Cut_Flag = 0;
+
+					RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 					return 1;
 				}
 
 				return TRUE;
 			}
 
-			if (LOWORD(wParam) == IDC_RECTANGULAR)
+			/*if (LOWORD(wParam) == IDC_RECTANGULAR)
 			{
 				App->CL_CreateArchDialog->m_Shape = 0;
 				return TRUE;
@@ -539,6 +644,18 @@ LRESULT CALLBACK A_CreateArchDialog::CreateArch_Proc(HWND hDlg, UINT message, WP
 		}
 	}
 	return FALSE;
+}
+
+// *************************************************************************
+// *			Zero_Dlg_Flags:- Terry and Hazel Flanigan 2025			   *
+// *************************************************************************
+void A_CreateArchDialog::Zero_Dlg_Flags(HWND hDlg)
+{
+	flag_Solid_Flag = 0;
+	flag_Hollow_Flag = 0;
+	flag_Ring_Flag = 0;
+
+	RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 }
 
 // *************************************************************************
@@ -728,7 +845,7 @@ void A_CreateArchDialog::Get_DLG_Members(HWND hDlg)
 }
 
 // *************************************************************************
-// *		 Set_StaircaseTemplate:- Terry and Hazel Flanigan 2025		   *
+// *		 Set_ArchTemplate:- Terry and Hazel Flanigan 2025			   *
 // *************************************************************************
 void A_CreateArchDialog::Set_ArchTemplate() 
 {

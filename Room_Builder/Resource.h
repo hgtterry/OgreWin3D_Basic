@@ -217,15 +217,19 @@
 #define IDC_ST_HEADER_BRUSHES           1161
 #define IDC_BUTTON1                     1162
 #define IDC_BT_TOP_LEFT                 1162
+#define IDC_BT_ARCHSOLID                1162
 #define IDC_BUTTON2                     1163
 #define IDC_BT_BRUSH_DIMENSIONS         1163
 #define IDC_BT_TOP_RIGHT                1163
+#define IDC_BT_ARCHHOLLOW               1163
 #define IDC_BUTTON3                     1164
 #define IDC_ED_BRUSH_POSX               1164
 #define IDC_BT_BOTTOM_LEFT              1164
+#define IDC_BT_ARCHRING                 1164
 #define IDC_BUTTON4                     1165
 #define IDC_ED_BRUSH_POSY               1165
 #define IDC_BT_FULL_3D                  1165
+#define IDC_BT_ARCHCUT                  1165
 #define IDC_ED_BRUSH_POSZ               1166
 #define IDC_ED_BRUSH_ROTX               1167
 #define IDC_ED_BRUSH_ROTY               1168
@@ -347,6 +351,9 @@
 #define IDB_CREATEARCH                  1263
 #define IDC_STSHAPE                     1264
 #define IDC_STSTYLE                     1265
+#define IDC_BT_ARCHRECTANGLE            1266
+#define IDC_BUTTON6                     1267
+#define IDC_BT_ARCHROUND                1267
 #define ID_DEBUG_GENERAL                32771
 #define ID_TEMPLATES_INSERT             32772
 #define ID_BRUSH_SELECT                 32773
@@ -400,7 +407,7 @@
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        173
 #define _APS_NEXT_COMMAND_VALUE         32811
-#define _APS_NEXT_CONTROL_VALUE         1266
+#define _APS_NEXT_CONTROL_VALUE         1267
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif

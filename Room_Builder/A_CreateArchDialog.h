@@ -66,6 +66,12 @@ private:
 
 	void CreateArch();
 	void CreateNewTemplateBrush(Brush *pBrush);
+	void Zero_Dlg_Flags(HWND hDlg);
+
+	bool flag_Solid_Flag;
+	bool flag_Hollow_Flag;
+	bool flag_Ring_Flag;
+	bool flag_Cut_Flag;
 
 	char ArchName[MAX_PATH];
 };
