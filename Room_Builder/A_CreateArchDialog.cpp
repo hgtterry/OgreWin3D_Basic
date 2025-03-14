@@ -155,29 +155,29 @@ LRESULT CALLBACK A_CreateArchDialog::CreateArch_Proc(HWND hDlg, UINT message, WP
 	case WM_CTLCOLORSTATIC:
 	{
 
-		//if (GetDlgItem(hDlg, IDC_STGENERAL) == (HWND)lParam)
-		//{
-		//	SetBkColor((HDC)wParam, RGB(0, 0, 0));
-		//	SetTextColor((HDC)wParam, RGB(0, 0, 0));
-		//	SetBkMode((HDC)wParam, TRANSPARENT);
-		//	return (UINT)App->AppBackground;
-		//}
+		if (GetDlgItem(hDlg, IDC_STGENERAL) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
 
-		//if (GetDlgItem(hDlg, IDC_STSTARTANGLE) == (HWND)lParam)
-		//{
-		//	SetBkColor((HDC)wParam, RGB(0, 0, 0));
-		//	SetTextColor((HDC)wParam, RGB(0, 0, 0));
-		//	SetBkMode((HDC)wParam, TRANSPARENT);
-		//	return (UINT)App->AppBackground;
-		//}
+		/*if (GetDlgItem(hDlg, IDC_STSTARTANGLE) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
 
-		//if (GetDlgItem(hDlg, IDC_STENDANGLE) == (HWND)lParam)
-		//{
-		//	SetBkColor((HDC)wParam, RGB(0, 0, 0));
-		//	SetTextColor((HDC)wParam, RGB(0, 0, 0));
-		//	SetBkMode((HDC)wParam, TRANSPARENT);
-		//	return (UINT)App->AppBackground;
-		//}
+		if (GetDlgItem(hDlg, IDC_STENDANGLE) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}*/
 
 		//if (GetDlgItem(hDlg, IDC_STINNERRADIUS) == (HWND)lParam)
 		//{
@@ -227,13 +227,13 @@ LRESULT CALLBACK A_CreateArchDialog::CreateArch_Proc(HWND hDlg, UINT message, WP
 		//	return (UINT)App->AppBackground;
 		//}
 
-		//if (GetDlgItem(hDlg, IDC_STSHAPE) == (HWND)lParam)
-		//{
-		//	SetBkColor((HDC)wParam, RGB(0, 0, 0));
-		//	SetTextColor((HDC)wParam, RGB(0, 0, 0));
-		//	SetBkMode((HDC)wParam, TRANSPARENT);
-		//	return (UINT)App->AppBackground;
-		//}
+		if (GetDlgItem(hDlg, IDC_STSHAPE) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
 
 		//if (GetDlgItem(hDlg, IDC_RECTANGULAR) == (HWND)lParam)
 		//{
@@ -299,13 +299,13 @@ LRESULT CALLBACK A_CreateArchDialog::CreateArch_Proc(HWND hDlg, UINT message, WP
 		//	return (UINT)App->AppBackground;
 		//}
 
-		//if (GetDlgItem(hDlg, IDC_STSTYLE) == (HWND)lParam)
-		//{
-		//	SetBkColor((HDC)wParam, RGB(0, 0, 0));
-		//	SetTextColor((HDC)wParam, RGB(0, 0, 0));
-		//	SetBkMode((HDC)wParam, TRANSPARENT);
-		//	return (UINT)App->AppBackground;
-		//}
+		if (GetDlgItem(hDlg, IDC_STSTYLE) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
 
 
 		//if (GetDlgItem(hDlg, IDC_SOLID) == (HWND)lParam)
@@ -605,12 +605,12 @@ void A_CreateArchDialog::CreateNewTemplateBrush(Brush *pBrush)
 		pTemplatePos->z = 0;
 	}
 	
-
 	App->CL_Maths->Vector3_Subtract(pTemplatePos, &BrushPos, &MoveVec);
 
 	App->CL_Brush->Brush_Move (App->CL_Doc->CurBrush, &MoveVec);
 
-	App->CL_Doc->UpdateAllViews (Enums::UpdateViews_All);
+	App->CL_Doc->UpdateAllViews (Enums::UpdateViews_Grids);
+
 	App->CL_Doc->flag_Is_Modified = 1;
 }
 
