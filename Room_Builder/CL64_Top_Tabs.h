@@ -49,6 +49,8 @@ public:
 	bool flag_View_Top_Right;
 	bool flag_View_Bottom_Left;
 
+	bool flag_All_Faces;
+
 	HWND Headers_hWnd;
 
 private:
@@ -56,7 +58,6 @@ private:
 
 	bool flag_Brush_Scale;
 
-	bool flag_All_Faces;
 	bool flag_Next_Face;
 	bool flag_Prev_Face;
 

@@ -136,45 +136,6 @@ LRESULT CALLBACK A_CreateArchDialog::CreateArch_Proc(HWND hDlg, UINT message, WP
 
 		SetDlgItemText(hDlg, IDC_EDITNAME, (LPCTSTR)Name);
 
-		//// ----------- Style Solid Hollow Funnel
-		//if(App->CL_CreateArchDialog->m_Style == 0)
-		//{
-		//	HWND temp = GetDlgItem(hDlg, IDC_SOLID);
-		//	SendMessage(temp, BM_SETCHECK, 1, 0);
-		//}
-
-		//if(App->CL_CreateArchDialog->m_Style == 1)
-		//{
-		//	HWND temp = GetDlgItem(hDlg, IDC_HOLLOW);
-		//	SendMessage(temp, BM_SETCHECK, 1, 0);
-		//}
-
-		//if(App->CL_CreateArchDialog->m_Style == 2)
-		//{
-		//	HWND temp = GetDlgItem(hDlg, IDC_RING);
-		//	SendMessage(temp, BM_SETCHECK, 1, 0);
-		//}
-
-		//// ----------- Shape
-		//if(App->CL_CreateArchDialog->m_Shape == 0)
-		//{
-		//	HWND temp = GetDlgItem(hDlg, IDC_RECTANGULAR);
-		//	SendMessage(temp, BM_SETCHECK, 1, 0);
-		//}
-
-		//if(App->CL_CreateArchDialog->m_Shape == 1)
-		//{
-		//	HWND temp = GetDlgItem(hDlg, IDC_ROUND);
-		//	SendMessage(temp, BM_SETCHECK, 1, 0);
-		//}
-
-		//// ----------- Steps
-		//if(App->CL_CreateArchDialog->m_Steps == 1)
-		//{
-		//	HWND temp = GetDlgItem(hDlg, IDC_STEPS);
-		//	SendMessage(temp, BM_SETCHECK, 1, 0);
-		//}
-
 		//// ----------- Massive
 		//if(App->CL_CreateArchDialog->m_Massive == 1)
 		//{
