@@ -151,6 +151,7 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 
 		return TRUE;
 	}
+
 	case WM_CTLCOLORSTATIC:
 	{
 		if (GetDlgItem(hDlg, IDC_STTEXTOFFSET) == (HWND)lParam)

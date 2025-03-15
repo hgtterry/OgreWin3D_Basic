@@ -1127,3 +1127,13 @@ bool CL64_Face::Face_IsSelected(const Face* f)
 	//return	(f->Flags & FACE_SELECTED) ? GE_TRUE : GE_FALSE;
 }
 
+// *************************************************************************
+// *						Face_SetTextureLock						 	   *
+// *************************************************************************
+void CL64_Face::Face_SetTextureLock(Face* f, const signed int bState)
+{
+	f->Flags = (bState) ? (f->Flags | FACE_TEXTURELOCKED) : (f->Flags & ~FACE_TEXTURELOCKED);
+	Face_InitFaceAngle(&f->Tex, &f->Face_Plane.Normal);
+	Face_SetTexturePos(f);
+}
+

@@ -97,6 +97,7 @@ public:
 	void Select_Face_From_Index(int mFace_Index);
 	
 	bool Face_IsSelected(const Face* f);
+	void Face_SetTextureLock(Face* f, const signed int bState);
 
 	int Selected_Face_Index;
 };
