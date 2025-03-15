@@ -218,10 +218,13 @@
 #define IDC_BUTTON1                     1162
 #define IDC_BT_TOP_LEFT                 1162
 #define IDC_BT_ARCHSOLID                1162
+#define IDC_BT_COPY_TEXTINFO            1162
 #define IDC_BUTTON2                     1163
 #define IDC_BT_BRUSH_DIMENSIONS         1163
 #define IDC_BT_TOP_RIGHT                1163
 #define IDC_BT_ARCHHOLLOW               1163
+#define IDC_BT_COPY_TEXTINFO2           1163
+#define IDC_BT_PASTE_TEXTINFO           1163
 #define IDC_BUTTON3                     1164
 #define IDC_ED_BRUSH_POSX               1164
 #define IDC_BT_BOTTOM_LEFT              1164

@@ -36,18 +36,23 @@ CL64_Properties_Faces::CL64_Properties_Faces(void)
 
 	m_NumberOfFaces = 0;
 
+	m_TextureAngle_Copy = 0;
 	m_TextureAngle = 0;
 	m_TextureAngle_Delta = 15;
 
+	m_TextureXScale_Copy = 0;
 	m_TextureXScale = 0;
 	ScaleX_Delta = 0.01;
 
+	m_TextureYScale_Copy = 0;
 	m_TextureYScale = 0;
 	ScaleY_Delta = 0.01;
 
+	m_TextureXOffset_Copy = 0;
 	m_TextureXOffset = 0;
 	m_TextureXOffset_Delta = 16;
 
+	m_TextureYOffset_Copy = 0;
 	m_TextureYOffset = 0;
 	m_TextureYOffset_Delta = 16;
 
@@ -110,7 +115,10 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 		SendDlgItemMessage(hDlg, IDC_CBYSCALE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
 		SendDlgItemMessage(hDlg, IDC_CBANGLE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		
+
+		SendDlgItemMessage(hDlg, IDC_BT_COPY_TEXTINFO, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_PASTE_TEXTINFO, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
 		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
@@ -277,6 +285,20 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 		}
 
 		if (some_item->idFrom == IDC_FLIPVERTICAL)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BT_COPY_TEXTINFO)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BT_PASTE_TEXTINFO)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
@@ -701,6 +723,39 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 			App->CL_Face->Face_GetTextureScale(App->CL_Properties_Faces->m_Selected_Face, &xScale, &yScale);
 			App->CL_Face->Face_SetTextureScale(App->CL_Properties_Faces->m_Selected_Face, -xScale, yScale);
 
+			App->CL_Properties_Faces->UpdateDialog(hDlg);
+			App->CL_Properties_Faces->Update();
+
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_BT_COPY_TEXTINFO)
+		{
+			App->CL_Properties_Faces->m_TextureAngle_Copy = App->CL_Properties_Faces->m_TextureAngle;
+
+			App->CL_Properties_Faces->m_TextureXScale_Copy = App->CL_Properties_Faces->m_TextureXScale;
+			App->CL_Properties_Faces->m_TextureYScale_Copy = App->CL_Properties_Faces->m_TextureYScale;
+
+			App->CL_Properties_Faces->m_TextureXOffset_Copy = App->CL_Properties_Faces->m_TextureXOffset;
+			App->CL_Properties_Faces->m_TextureYOffset_Copy = App->CL_Properties_Faces->m_TextureYOffset;
+
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_BT_PASTE_TEXTINFO)
+		{
+			App->CL_Properties_Faces->m_TextureAngle = App->CL_Properties_Faces->m_TextureAngle_Copy;
+
+			App->CL_Properties_Faces->m_TextureXScale = App->CL_Properties_Faces->m_TextureXScale_Copy;
+			App->CL_Properties_Faces->m_TextureYScale = App->CL_Properties_Faces->m_TextureYScale_Copy;
+
+			App->CL_Properties_Faces->m_TextureXOffset = App->CL_Properties_Faces->m_TextureXOffset_Copy;
+			App->CL_Properties_Faces->m_TextureYOffset = App->CL_Properties_Faces->m_TextureYOffset_Copy;
+			
+			App->CL_Face->Face_SetTextureRotate(App->CL_Properties_Faces->m_Selected_Face, App->CL_Properties_Faces->m_TextureAngle);
+			App->CL_Face->Face_SetTextureShift(App->CL_Properties_Faces->m_Selected_Face, App->CL_Properties_Faces->m_TextureXOffset, App->CL_Properties_Faces->m_TextureYOffset);
+			App->CL_Face->Face_SetTextureScale(App->CL_Properties_Faces->m_Selected_Face, App->CL_Properties_Faces->m_TextureXScale, App->CL_Properties_Faces->m_TextureYScale);
+			
 			App->CL_Properties_Faces->UpdateDialog(hDlg);
 			App->CL_Properties_Faces->Update();
 

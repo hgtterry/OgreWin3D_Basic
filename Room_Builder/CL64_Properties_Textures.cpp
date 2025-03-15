@@ -224,7 +224,6 @@ LRESULT CALLBACK CL64_Properties_Textures::Proc_TextureDialog(HWND hDlg, UINT me
 			}
 			else
 			{
-				//App->CL_Doc->SelectAllFacesInBrushes();
 				App->CL_Properties_Textures->Apply_Texture();
 
 				App->CL_Doc->ResetAllSelectedFaces();

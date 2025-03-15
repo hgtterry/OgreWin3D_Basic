@@ -54,21 +54,25 @@ private:
 
 	Face* m_Selected_Face;
 
+	float m_TextureAngle_Copy;
 	float m_TextureAngle;
 	float m_TextureAngle_Delta;
 
+	float m_TextureXScale_Copy;
 	float m_TextureXScale;
 	float ScaleX_Delta;
 
+	float m_TextureYScale_Copy;
 	float m_TextureYScale;
 	float ScaleY_Delta;
 	
-
-	int m_TextureYOffset;
-	int m_TextureYOffset_Delta;
-
+	int m_TextureXOffset_Copy;
 	int m_TextureXOffset;
 	int m_TextureXOffset_Delta;
+
+	int m_TextureYOffset_Copy;
+	int m_TextureYOffset;
+	int m_TextureYOffset_Delta;
 
 	int m_Selected_Face_Index;
 };
