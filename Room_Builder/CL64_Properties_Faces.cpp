@@ -744,6 +744,13 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 
 		if (LOWORD(wParam) == IDC_BT_PASTE_TEXTINFO)
 		{
+			App->CL_Dialogs->YesNo("Update Face Settings", "Are you sure");
+
+			if (App->CL_Dialogs->flag_Dlg_Canceled == 1)
+			{
+				return 1;
+			}
+
 			App->CL_Properties_Faces->m_TextureAngle = App->CL_Properties_Faces->m_TextureAngle_Copy;
 
 			App->CL_Properties_Faces->m_TextureXScale = App->CL_Properties_Faces->m_TextureXScale_Copy;
