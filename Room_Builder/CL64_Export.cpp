@@ -364,7 +364,10 @@ bool CL64_Export::Create_ObjectFile(void)
 
 	WriteMTLFile();
 
-	App->Say("Exported");
+	char File[MAX_PATH];
+	strcpy(File,App->CL_Export->mJustName);
+	strcat(File, ".obj");
+	App->Say(File,"Exported");
 
 	return 1;
 }
@@ -412,7 +415,6 @@ void CL64_Export::Write_ObjectFile_Commit(void)
 	char MaterialName[MAX_PATH];
 
 	//--------------------------------------------- Vertices v-
-
 	fprintf(Write_OBJECTFILE, "%s %i\n", "#", App->CL_Model->VerticeCount);
 
 	while (GroupCount < GroupCountTotal)
@@ -434,7 +436,6 @@ void CL64_Export::Write_ObjectFile_Commit(void)
 	fprintf(Write_OBJECTFILE, "%s \n", " ");
 
 	//--------------------------------------------- Texture Cords vt-
-
 	fprintf(Write_OBJECTFILE, "%s %i\n", "#", App->CL_Model->VerticeCount);
 
 	GroupCount = 0;
@@ -457,7 +458,6 @@ void CL64_Export::Write_ObjectFile_Commit(void)
 	fprintf(Write_OBJECTFILE, "%s \n", " ");
 
 	//--------------------------------------------- Normals vn-
-
 	fprintf(Write_OBJECTFILE, "%s %i\n", "#", App->CL_Model->VerticeCount);
 
 	GroupCount = 0;

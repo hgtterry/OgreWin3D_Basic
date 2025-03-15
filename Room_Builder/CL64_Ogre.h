@@ -52,6 +52,7 @@ public:
 
 	void Processes_Start_Time(void);
 	void Processes_Get_Time(void);
+	void Get_OpenGL_Version(char* buff);
 
 	char Return_Chr[MAX_PATH];
 	Ogre::String mResourcePath;

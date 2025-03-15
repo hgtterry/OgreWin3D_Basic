@@ -251,7 +251,7 @@ void CL64_Ogre3D::Export_To_Ogre3D()
 	char File[MAX_PATH];
 	strcpy(File, mExport_Just_Name);
 	strcat(File, ".mesh");
-	App->Say(File,(LPSTR)"Exported");
+	App->Say(File,"Exported");
 
 }
 

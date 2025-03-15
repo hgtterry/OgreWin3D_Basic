@@ -698,7 +698,89 @@ INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
     switch (message)
     {
     case WM_INITDIALOG:
+    {
+        SendDlgItemMessage(hDlg, IDC_ST_ABOUT_BANNER, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
+        SendDlgItemMessage(hDlg, IDC_ST_ABOUT_VERSION, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+        SendDlgItemMessage(hDlg, IDC_LIST_ABOUT_VERSIONS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+        SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+       
+        char buf[MAX_PATH];
+
+        SetDlgItemText(hDlg, IDC_ST_ABOUT_VERSION, App->App_Title);
+
+        strcpy(buf, "OgreWin3D Mesh Builder:- ");
+        strcat(buf, App->App_Title);
+        strcat(buf, "  (64bit Build)");
+        SendDlgItemMessage(hDlg, IDC_LIST_ABOUT_VERSIONS, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+
+        SendDlgItemMessage(hDlg, IDC_LIST_ABOUT_VERSIONS, LB_ADDSTRING, (WPARAM)0, (LPARAM)" ");
+
+        sprintf(buf, "%s", "Ogre Version:- Version 14.3.2 (Tsathoggua)");
+        SendDlgItemMessage(hDlg, IDC_LIST_ABOUT_VERSIONS, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+
+        sprintf(buf, "%s", "Imgui Version:- 1.91.2");
+        SendDlgItemMessage(hDlg, IDC_LIST_ABOUT_VERSIONS, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+
+        sprintf(buf, "%s", "Bullet Version:- 2.86.1");
+        SendDlgItemMessage(hDlg, IDC_LIST_ABOUT_VERSIONS, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+
+
+        SendDlgItemMessage(hDlg, IDC_LIST_ABOUT_VERSIONS, LB_ADDSTRING, (WPARAM)0, (LPARAM)" ");
+
+        sprintf(buf, "%s", "Instalation Path:- ");
+        strcat(buf, App->RB_Directory_FullPath);
+        SendDlgItemMessage(hDlg, IDC_LIST_ABOUT_VERSIONS, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+
+        char buff[MAX_PATH];
+        App->CL_Ogre->Get_OpenGL_Version(buff);
+        SendDlgItemMessage(hDlg, IDC_LIST_ABOUT_VERSIONS, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);
+
+        SendDlgItemMessage(hDlg, IDC_LIST_ABOUT_VERSIONS, LB_ADDSTRING, (WPARAM)0, (LPARAM)" ");
+
+        sprintf(buf, "%s", "Terry and Hazel Flanigan (Inflanite_HGT)");
+        SendDlgItemMessage(hDlg, IDC_LIST_ABOUT_VERSIONS, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+
         return (INT_PTR)TRUE;
+    }
+
+    case WM_CTLCOLORSTATIC:
+    {
+        if (GetDlgItem(hDlg, IDC_ST_ABOUT_BANNER) == (HWND)lParam)
+        {
+            SetBkColor((HDC)wParam, RGB(0, 0, 0));
+            SetTextColor((HDC)wParam, RGB(0, 0, 0));
+            SetBkMode((HDC)wParam, TRANSPARENT);
+            return (UINT)App->AppBackground;
+        }
+
+        if (GetDlgItem(hDlg, IDC_ST_ABOUT_VERSION) == (HWND)lParam)
+        {
+            SetBkColor((HDC)wParam, RGB(0, 0, 0));
+            SetTextColor((HDC)wParam, RGB(0, 0, 0));
+            SetBkMode((HDC)wParam, TRANSPARENT);
+            return (UINT)App->AppBackground;
+        }
+
+        return FALSE;
+    }
+
+    case WM_CTLCOLORDLG:
+    {
+        return (LONG)App->AppBackground;
+    }
+
+    case WM_NOTIFY:
+    {
+        LPNMHDR some_item = (LPNMHDR)lParam;
+
+        if (some_item->idFrom == IDOK)
+        {
+            LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+            App->Custom_Button_Normal(item);
+            return CDRF_DODEFAULT;
+        }
+        return CDRF_DODEFAULT;
+    }
 
     case WM_COMMAND:
         if (LOWORD(wParam) == IDOK || LOWORD(wParam) == IDCANCEL)

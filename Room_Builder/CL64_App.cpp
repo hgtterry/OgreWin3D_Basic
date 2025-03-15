@@ -604,3 +604,4 @@ void CL64_App::Set_Title(const char* Title)
 	strcat(TitleBar, Title);
 	SetWindowText(App->MainHwnd, TitleBar);
 }
+
