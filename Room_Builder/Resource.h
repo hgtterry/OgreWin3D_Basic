@@ -54,6 +54,7 @@
 #define IDD_TXL_EDITOR                  169
 #define IDD_LISTDATA                    170
 #define IDD_CREATE_ARCH                 171
+#define IDD_OBJECT_EXPORT               172
 #define IDC_BANNER                      1000
 #define IDC_STTEXT                      1001
 #define IDC_STMESSAGE                   1002
@@ -223,7 +224,6 @@
 #define IDC_BT_BRUSH_DIMENSIONS         1163
 #define IDC_BT_TOP_RIGHT                1163
 #define IDC_BT_ARCHHOLLOW               1163
-#define IDC_BT_COPY_TEXTINFO2           1163
 #define IDC_BT_PASTE_TEXTINFO           1163
 #define IDC_BUTTON3                     1164
 #define IDC_ED_BRUSH_POSX               1164
@@ -407,6 +407,7 @@
 #define ID_RENDER_TEXTURED32808         32808
 #define ID_CAMERA_TEXTURED              32809
 #define ID_CAMERA_WIREFRAMED            32810
+#define ID_EXPORT_OBJECTWAVEFRONT       32811
 #define ID_GENERALSELECT                32886
 #define ID_TOOLS_TEMPLATE               32910
 #define IDC_STATIC                      -1
@@ -417,7 +418,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        173
-#define _APS_NEXT_COMMAND_VALUE         32811
+#define _APS_NEXT_COMMAND_VALUE         32812
 #define _APS_NEXT_CONTROL_VALUE         1277
 #define _APS_NEXT_SYMED_VALUE           110
 #endif

@@ -296,6 +296,21 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 return 1;
             }
 
+            case ID_EXPORT_OBJECTWAVEFRONT:
+            {
+                int BC = App->CL_Brush->Get_Brush_Count();
+                if (BC > 0)
+                {
+                    App->CL_Export->Object_Export_Dlg();
+                }
+                else
+                {
+                    App->Say("No Geometry to Export");
+                }
+
+                return 1;
+            }
+
             // ----------------------------- Edit
             case ID_EDIT_SELECTALL:
             {

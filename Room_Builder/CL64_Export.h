@@ -30,12 +30,19 @@ public:
 	~CL64_Export();
 
 	void Ogre_Export_Dlg();
+	void Object_Export_Dlg();
+
+	bool Create_ObjectFile(void);
+
+	void Export_To_Object(void);
 
 	char mFolder_Path[MAX_PATH];
 	char mDirectory_Name[MAX_PATH];
 	char mJustName[MAX_PATH];
 
 	char DeskTop_Folder[MAX_PATH];
+
+	char Object_OutputFolder[MAX_PATH];
 
 	bool flag_Build_Edge_List;
 	bool flag_Version_Latest;
@@ -46,6 +53,19 @@ public:
 
 private:
 	static LRESULT CALLBACK Proc_Ogre_Export_Dlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Proc_Object_Export_Dlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+
+	bool Export_Object_Textures(void);
+	void Write_ObjectFile(void);
+	void Write_ObjectFile_Commit(void);
+	bool WriteMTLFile(void);
+
+	char Object_FileName[MAX_PATH];
+	char mtl_FileName[MAX_PATH];
+	char Just_mtl_FileName[MAX_PATH];
+
+	FILE* Write_OBJECTFILE;
+	FILE* Write_MTLFile;
 
 };
 
