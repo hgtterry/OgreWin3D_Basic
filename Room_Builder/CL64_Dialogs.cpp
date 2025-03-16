@@ -325,6 +325,7 @@ void CL64_Dialogs::Message(char* pString, char* pString2)
 	strcat(Message_Text_Message, pString2);
 	strcat(Message_Text_Message, " ");
 
+	App->CL_Properties_Tabs->Enable_Tabs_Dlg(false);
 	DialogBox(App->hInst, (LPCTSTR)IDD_MESSAGE, App->MainHwnd, (DLGPROC)Proc_Message);
 }
 
@@ -398,12 +399,14 @@ LRESULT CALLBACK CL64_Dialogs::Proc_Message(HWND hDlg, UINT message, WPARAM wPar
 	case WM_COMMAND:
 		if (LOWORD(wParam) == IDOK)
 		{
+			App->CL_Properties_Tabs->Enable_Tabs_Dlg(true);
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == IDCANCEL)
 		{
+			App->CL_Properties_Tabs->Enable_Tabs_Dlg(true);
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
@@ -897,6 +900,7 @@ bool CL64_Dialogs::Show_Face_Data(int Index, const Face* f, HWND hDlg)
 // *************************************************************************
 void CL64_Dialogs::Dialog_SnapOptions()
 {
+	App->CL_Properties_Tabs->Enable_Tabs_Dlg(false);
 	DialogBox(App->hInst, (LPCTSTR)IDD_SNAPOPTIONS, App->MainHwnd, (DLGPROC)Proc_SnapOptions);
 }
 
@@ -1257,12 +1261,14 @@ LRESULT CALLBACK CL64_Dialogs::Proc_SnapOptions(HWND hDlg, UINT message, WPARAM 
 		
 		if (LOWORD(wParam) == IDOK)
 		{
+			App->CL_Properties_Tabs->Enable_Tabs_Dlg(true);
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == IDCANCEL)
 		{
+			App->CL_Properties_Tabs->Enable_Tabs_Dlg(true);
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
@@ -1453,7 +1459,7 @@ bool CALLBACK CL64_Dialogs::Proc_ViewerBasePic(HWND hwnd, UINT msg, WPARAM wPara
 void CL64_Dialogs::Start_General_ListBox(int ListType)
 {
 	m_ListType = ListType;
-
+	App->CL_Properties_Tabs->Enable_Tabs_Dlg(false);
 	DialogBox(App->hInst, (LPCTSTR)IDD_LISTDATA, App->MainHwnd, (DLGPROC)Proc_General_ListBox);
 }
 
@@ -1496,6 +1502,7 @@ LRESULT CALLBACK CL64_Dialogs::Proc_General_ListBox(HWND hDlg, UINT message, WPA
 	{
 		if (LOWORD(wParam) == IDCANCEL)
 		{
+			App->CL_Properties_Tabs->Enable_Tabs_Dlg(true);
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}

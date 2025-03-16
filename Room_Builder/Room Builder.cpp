@@ -740,6 +740,8 @@ INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
         sprintf(buf, "%s", "Terry and Hazel Flanigan (Inflanite_HGT)");
         SendDlgItemMessage(hDlg, IDC_LIST_ABOUT_VERSIONS, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
+        App->CL_Properties_Tabs->Enable_Tabs_Dlg(false);
+
         return (INT_PTR)TRUE;
     }
 
@@ -785,6 +787,7 @@ INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
     case WM_COMMAND:
         if (LOWORD(wParam) == IDOK || LOWORD(wParam) == IDCANCEL)
         {
+            App->CL_Properties_Tabs->Enable_Tabs_Dlg(true);
             EndDialog(hDlg, LOWORD(wParam));
             return (INT_PTR)TRUE;
         }

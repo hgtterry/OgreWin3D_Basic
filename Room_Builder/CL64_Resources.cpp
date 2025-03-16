@@ -63,6 +63,7 @@ CL64_Resources::~CL64_Resources()
 // *************************************************************************
 void CL64_Resources::Start_Resources()
 {
+	App->CL_Properties_Tabs->Enable_Tabs_Dlg(false);
 	DialogBox(App->hInst, (LPCTSTR)IDD_RESOURCE_VIEWER, App->MainHwnd, (DLGPROC)Proc_Resources);
 }
 
@@ -452,6 +453,7 @@ LRESULT CALLBACK CL64_Resources::Proc_Resources(HWND hDlg, UINT message, WPARAM 
 
 		if (LOWORD(wParam) == IDCANCEL)
 		{
+			App->CL_Properties_Tabs->Enable_Tabs_Dlg(true);
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
