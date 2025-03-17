@@ -420,5 +420,11 @@
     <Image Include="res\createar.bmp">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="res\TR_On.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\TR_Off.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

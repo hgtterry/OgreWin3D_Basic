@@ -291,6 +291,8 @@
     <Image Include="res\solidbox.bmp" />
     <Image Include="res\sphere.ico" />
     <Image Include="res\stairs.ico" />
+    <Image Include="res\TR_Off.bmp" />
+    <Image Include="res\TR_On.bmp" />
     <Image Include="Room Builder.ico" />
     <Image Include="small.ico" />
   </ItemGroup>

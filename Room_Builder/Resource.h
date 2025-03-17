@@ -55,6 +55,9 @@
 #define IDD_LISTDATA                    170
 #define IDD_CREATE_ARCH                 171
 #define IDD_OBJECT_EXPORT               172
+#define IDB_TR_ON                       174
+#define IDB_BITMAP1                     175
+#define IDB_TR_OFF                      175
 #define IDC_BANNER                      1000
 #define IDC_STTEXT                      1001
 #define IDC_STMESSAGE                   1002
@@ -425,7 +428,7 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
-#define _APS_NEXT_RESOURCE_VALUE        173
+#define _APS_NEXT_RESOURCE_VALUE        176
 #define _APS_NEXT_COMMAND_VALUE         32817
 #define _APS_NEXT_CONTROL_VALUE         1279
 #define _APS_NEXT_SYMED_VALUE           110

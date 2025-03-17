@@ -56,6 +56,8 @@ public:
 private:
 	static LRESULT CALLBACK Proc_Headers(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
+	void Init_Bmps_Globals(void);
+
 	bool flag_Brush_Scale;
 
 	bool flag_Next_Face;

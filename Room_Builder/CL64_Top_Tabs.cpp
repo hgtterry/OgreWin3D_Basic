@@ -57,6 +57,8 @@ CL64_Top_Tabs::~CL64_Top_Tabs(void)
 void CL64_Top_Tabs::Start_Headers()
 {
 	Headers_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_TOP_TABS_HEADERS, App->MainHwnd, (DLGPROC)Proc_Headers);
+	Init_Bmps_Globals();
+
 	Update_Faces_Combo();
 
 }
@@ -142,7 +144,7 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Headers(HWND hDlg, UINT message, WPARAM wPa
 		if (some_item->idFrom == IDC_BT_TOP_RIGHT)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CL_Top_Tabs->flag_View_Top_Right);
+			App->Custom_Button_Normal(item);// App->CL_Top_Tabs->flag_View_Top_Right);
 
 			return CDRF_DODEFAULT;
 		}
@@ -351,11 +353,15 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Headers(HWND hDlg, UINT message, WPARAM wPa
 		// Top Right
 		if (LOWORD(wParam) == IDC_BT_TOP_RIGHT)
 		{
+			HWND Temp = GetDlgItem(hDlg, IDC_BT_TOP_RIGHT);
+
 			if (App->CL_Top_Tabs->flag_View_Top_Right == 1)
 			{
 				App->CL_Top_Tabs->flag_View_Top_Right = 0;
 				App->CL_MapEditor->Init_Views(Enums::Selected_View_None);
 				App->CL_MapEditor->Resize_Windows(App->CL_MapEditor->Main_Dlg_Hwnd, App->CL_MapEditor->nleftWnd_width, App->CL_MapEditor->nleftWnd_Depth);
+
+				SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_TR_Off_Bmp);
 			}
 			else
 			{
@@ -366,9 +372,12 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Headers(HWND hDlg, UINT message, WPARAM wPa
 
 				App->CL_MapEditor->Init_Views(Enums::Selected_View_TR);
 				App->CL_MapEditor->Resize_Windows(App->CL_MapEditor->Main_Dlg_Hwnd, App->CL_MapEditor->nleftWnd_width, App->CL_MapEditor->nleftWnd_Depth);
+
+				SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_TR_On_Bmp);
+
 			}
 
-			RedrawWindow(App->CL_Top_Tabs->Headers_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			//RedrawWindow(App->CL_Top_Tabs->Headers_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
 			return TRUE;
 		}
@@ -551,6 +560,16 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Headers(HWND hDlg, UINT message, WPARAM wPa
 	}
 
 	return FALSE;
+}
+
+// *************************************************************************
+// *			Init_Bmps_Globals:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+void CL64_Top_Tabs::Init_Bmps_Globals(void)
+{
+	HWND Temp = GetDlgItem(Headers_hWnd, IDC_BT_TOP_RIGHT);
+	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_TR_Off_Bmp);
+
 }
 
 // *************************************************************************
