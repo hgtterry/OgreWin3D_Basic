@@ -95,3 +95,65 @@ void CL64_Camera::Camera_Wired(void)
 	}
 }
 
+// *************************************************************************
+// *			Camera_Speed_Normal:- Terry and Hazel Flanigan 2025			   *
+// *************************************************************************
+void CL64_Camera::Camera_Speed_Normal(void)
+{
+	App->CL_Ogre->Ogre3D_Listener->mMoveSensitivity = 50;
+	App->CL_Ogre->Ogre3D_Listener->mMoveSensitivityMouse = 50;
+
+	Camera_Set_Menu_Clear();
+	CheckMenuItem(App->mMenu, ID_SPEED_NORMAL, MF_BYCOMMAND | MF_CHECKED);
+}
+
+// *************************************************************************
+// *			Camera_Speed_Slow:- Terry and Hazel Flanigan 2025			   *
+// *************************************************************************
+void CL64_Camera::Camera_Speed_Slow(void)
+{
+	App->CL_Ogre->Ogre3D_Listener->mMoveSensitivity = 5;
+	App->CL_Ogre->Ogre3D_Listener->mMoveSensitivityMouse = 20;
+
+	Camera_Set_Menu_Clear();
+	CheckMenuItem(App->mMenu, ID_SPEED_SLOW, MF_BYCOMMAND | MF_CHECKED);
+}
+
+// *************************************************************************
+// *		Camera_Speed_Very_Slow:- Terry and Hazel Flanigan 2025		   *
+// *************************************************************************
+void CL64_Camera::Camera_Speed_Very_Slow(void)
+{
+	App->CL_Ogre->Ogre3D_Listener->mMoveSensitivity = 1;
+	App->CL_Ogre->Ogre3D_Listener->mMoveSensitivityMouse = 1;
+
+	Camera_Set_Menu_Clear();
+	CheckMenuItem(App->mMenu, ID_SPEED_VERYSLOW, MF_BYCOMMAND | MF_CHECKED);
+}
+
+// *************************************************************************
+// *			Camera_Speed_Normal:- Terry and Hazel Flanigan 2025			   *
+// *************************************************************************
+void CL64_Camera::Camera_Speed_Fast(void)
+{
+	App->CL_Ogre->Ogre3D_Listener->mMoveSensitivity = 250;
+	App->CL_Ogre->Ogre3D_Listener->mMoveSensitivityMouse = 250;
+
+	Camera_Set_Menu_Clear();
+	CheckMenuItem(App->mMenu, ID_SPEED_FAST, MF_BYCOMMAND | MF_CHECKED);
+}
+
+// *************************************************************************
+// *		Camera_Set_Menu_Clear:- Terry and Hazel Flanigan 2025		   *
+// *************************************************************************
+void CL64_Camera::Camera_Set_Menu_Clear(void)
+{
+	CheckMenuItem(App->mMenu, ID_SPEED_NORMAL, MF_BYCOMMAND | MF_UNCHECKED);
+	CheckMenuItem(App->mMenu, ID_SPEED_SLOW, MF_BYCOMMAND | MF_UNCHECKED);
+	CheckMenuItem(App->mMenu, ID_SPEED_VERYSLOW, MF_BYCOMMAND | MF_UNCHECKED);
+	CheckMenuItem(App->mMenu, ID_SPEED_FAST, MF_BYCOMMAND | MF_UNCHECKED);
+}
+
+
+
+

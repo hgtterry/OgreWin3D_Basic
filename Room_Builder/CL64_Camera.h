@@ -34,5 +34,11 @@ public:
 	void Camera_Textured(void);
 	void Camera_Wired(void);
 
+	void Camera_Speed_Normal(void);
+	void Camera_Speed_Slow(void);
+	void Camera_Speed_Very_Slow(void);
+	void Camera_Speed_Fast(void);
+	void Camera_Set_Menu_Clear(void);
+
 };
 

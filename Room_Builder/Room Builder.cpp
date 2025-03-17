@@ -397,7 +397,31 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 App->CL_Camera->Camera_Reset_Zero();
                 return 1;
             }
-           
+
+            case ID_SPEED_NORMAL:
+            {
+                App->CL_Camera->Camera_Speed_Normal();
+                return 1;
+            }
+
+            case ID_SPEED_SLOW:
+            {
+                App->CL_Camera->Camera_Speed_Slow();
+                return 1;
+            }
+            
+            case ID_SPEED_VERYSLOW:
+            {
+                App->CL_Camera->Camera_Speed_Very_Slow();
+                return 1;
+            }
+
+            case ID_SPEED_FAST:
+            {
+                App->CL_Camera->Camera_Speed_Fast();
+                return 1;
+            }
+            
             // ----------------------------- Templates
             case ID_TEMPLATES_INSERT:
             {
