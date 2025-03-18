@@ -27,6 +27,13 @@ THE SOFTWARE.
 #include "CL64_App.h"
 #include "CL64_MapEditor.h"
 
+#define IDM_FILE_NEW 1
+#define IDM_FILE_DELETE 2
+#define IDM_FILE_RENAME 3
+#define IDM_COPY 4
+#define IDM_PASTE 5
+#define IDM_GOTO 6
+
 #define	M_PI		((float)3.14159265358979323846f)
 #define	TOP_POS					8
 #define	BOTTOM_POS				400
@@ -570,7 +577,7 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Main_Dlg(HWND hDlg, UINT message, WPARAM w
 
 	case WM_COMMAND:
 	{
-		
+	
 	}
 
 	break;
@@ -629,6 +636,15 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Left_Window(HWND hDlg, UINT message, W
 		return TRUE;
 	}
 
+	case WM_COMMAND:
+	{
+		if (LOWORD(wParam) == IDM_FILE_RENAME)
+		{
+			Debug
+				return TRUE;
+		}
+	}
+	
 	case WM_CTLCOLORDLG:
 	{
 		return (LONG)App->CL_MapEditor->BackGround_Brush;
@@ -722,14 +738,23 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Left_Window(HWND hDlg, UINT message, W
 
 	case WM_RBUTTONDOWN:
 	{
-		GetCursorPos(&App->CL_MapEditor->mStartPoint);
-		ScreenToClient(hDlg, &App->CL_MapEditor->mStartPoint);
 
-		App->CL_MapEditor->flag_Right_Button_Down = 1;
-		App->CL_MapEditor->flag_Left_Button_Down = 0;
+		if (GetAsyncKeyState(VK_CONTROL) < 0)
+		{
+			GetCursorPos(&App->CL_MapEditor->mStartPoint);
+			ScreenToClient(hDlg, &App->CL_MapEditor->mStartPoint);
 
-		App->CL_MapEditor->Current_View = App->CL_MapEditor->VCam[V_TL];
-		App->CUR = SetCursor(NULL);
+			App->CL_MapEditor->flag_Right_Button_Down = 1;
+			App->CL_MapEditor->flag_Left_Button_Down = 0;
+
+			App->CL_MapEditor->Current_View = App->CL_MapEditor->VCam[V_TL];
+			App->CUR = SetCursor(NULL);
+		}
+		else
+		{
+			App->CL_MapEditor->Current_View = App->CL_MapEditor->VCam[V_TL];
+			App->CL_MapEditor->Context_Menu(hDlg);
+		}
 
 		return 1;
 	}
@@ -757,7 +782,33 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Left_Window(HWND hDlg, UINT message, W
 	return FALSE;
 }
 
+// *************************************************************************
+// *			Context_Menu:- Terry and Hazel Flanigan 2024		 	   *
+// *************************************************************************
+void CL64_MapEditor::Context_Menu(HWND hDlg)
+{
+	RECT rcTree;
+	TVHITTESTINFO htInfo = { 0 };
+	POINT pt;
+	GetCursorPos(&pt);
 
+	long xPos = pt.x;   // x position from message, in screen coordinates
+	long yPos = pt.y;   // y position from message, in screen coordinates 
+
+	GetWindowRect(hDlg, &rcTree);        // get its window coordinates
+	htInfo.pt.x = xPos - rcTree.left;      // convert to client coordinates
+	htInfo.pt.y = yPos - rcTree.top;
+
+	hMenu = CreatePopupMenu();
+	AppendMenuW(hMenu, MF_STRING, IDM_FILE_RENAME, L"&Rename");
+	AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_COPY, L"&Copy");
+	AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_PASTE, L"&Paste");
+	AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
+	AppendMenuW(hMenu, MF_STRING, IDM_FILE_DELETE, L"&Delete");
+	TrackPopupMenu(hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, hDlg, NULL);
+	DestroyMenu(hMenu);
+
+}
 
 // *************************************************************************
 // *	  	Create_Top_Right_Window:- Terry and Hazel Flanigan 2024			   *

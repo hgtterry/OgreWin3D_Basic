@@ -50,6 +50,7 @@ public:
 	void Reset_Views();
 
 	void Resize_Windows(HWND hDlg, int NewWidth, int NewDepth);
+	void Context_Menu(HWND hDlg);
 
 	HWND Main_Dlg_Hwnd;
 	HWND Bottom_Right_Hwnd;
@@ -75,6 +76,8 @@ public:
 	HCURSOR	hcSizeEW;
 	HCURSOR	hcSizeNS;
 	HCURSOR	hcBoth;
+
+	HMENU hMenu;
 
 private:
 	static LRESULT CALLBACK Proc_Main_Dlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
