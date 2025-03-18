@@ -57,7 +57,7 @@ CL64_Top_Tabs::~CL64_Top_Tabs(void)
 void CL64_Top_Tabs::Start_Headers()
 {
 	Headers_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_TOP_TABS_HEADERS, App->MainHwnd, (DLGPROC)Proc_Headers);
-	Init_Bmps_Globals();
+	//Init_Bmps_Globals();
 
 	Update_Faces_Combo();
 
@@ -144,7 +144,7 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Headers(HWND hDlg, UINT message, WPARAM wPa
 		if (some_item->idFrom == IDC_BT_TOP_RIGHT)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Normal(item);// App->CL_Top_Tabs->flag_View_Top_Right);
+			App->Custom_Button_Toggle(item,App->CL_Top_Tabs->flag_View_Top_Right);
 
 			return CDRF_DODEFAULT;
 		}
@@ -361,7 +361,6 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Headers(HWND hDlg, UINT message, WPARAM wPa
 				App->CL_MapEditor->Init_Views(Enums::Selected_View_None);
 				App->CL_MapEditor->Resize_Windows(App->CL_MapEditor->Main_Dlg_Hwnd, App->CL_MapEditor->nleftWnd_width, App->CL_MapEditor->nleftWnd_Depth);
 
-				SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_TR_Off_Bmp);
 			}
 			else
 			{
@@ -372,8 +371,6 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Headers(HWND hDlg, UINT message, WPARAM wPa
 
 				App->CL_MapEditor->Init_Views(Enums::Selected_View_TR);
 				App->CL_MapEditor->Resize_Windows(App->CL_MapEditor->Main_Dlg_Hwnd, App->CL_MapEditor->nleftWnd_width, App->CL_MapEditor->nleftWnd_Depth);
-
-				SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_TR_On_Bmp);
 
 			}
 
