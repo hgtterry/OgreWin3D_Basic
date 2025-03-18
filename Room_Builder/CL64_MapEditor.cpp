@@ -27,8 +27,8 @@ THE SOFTWARE.
 #include "CL64_App.h"
 #include "CL64_MapEditor.h"
 
-#define IDM_FILE_NEW 1
-#define IDM_FILE_DELETE 2
+#define IDM_GRID_SNAP 1
+#define IDM_RESET_VIEW 2
 #define IDM_FILE_RENAME 3
 #define IDM_COPY 4
 #define IDM_PASTE 5
@@ -92,6 +92,7 @@ CL64_MapEditor::CL64_MapEditor()
 
 	flag_Left_Button_Down = 0;
 	flag_Right_Button_Down = 0;
+	flag_Context_Menu_Active = 0;
 
 	BackGround_Brush = CreateSolidBrush(RGB(64, 64, 64));
 
@@ -128,9 +129,9 @@ CL64_MapEditor::~CL64_MapEditor()
 }
 
 // *************************************************************************
-// *	  			Reset_Views:- Terry and Hazel Flanigan 2024			   *
+// *	  		Reset_Views_All:- Terry and Hazel Flanigan 2024	     *
 // *************************************************************************
-void CL64_MapEditor::Reset_Views()
+void CL64_MapEditor::Reset_Views_All()
 {
 	App->CL_MapEditor->Init_Views(Enums::Selected_View_None);
 	App->CL_MapEditor->Resize_Windows(Main_Dlg_Hwnd, nleftWnd_width, nleftWnd_Depth);
@@ -139,6 +140,12 @@ void CL64_MapEditor::Reset_Views()
 
 	while (Count < 3)
 	{
+		RECT		Rect;
+		GetClientRect(App->CL_MapEditor->VCam[Count]->hDlg, &Rect);
+
+		App->CL_MapEditor->VCam[Count]->XCenter = (float)Rect.right / 2;
+		App->CL_MapEditor->VCam[Count]->YCenter = (float)Rect.bottom / 2;
+
 		App->CL_MapEditor->VCam[Count]->CamPos.x = 0;
 		App->CL_MapEditor->VCam[Count]->CamPos.y = 0;
 		App->CL_MapEditor->VCam[Count]->CamPos.z = 0;
@@ -305,15 +312,10 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Main_Dlg(HWND hDlg, UINT message, WPARAM w
 		return FALSE;
 	}
 
-	/*case WM_CONTEXTMENU:
-	{
-		Debug
-			break;
-	}*/
-	/*case WM_ERASEBKGND:
+	case WM_ERASEBKGND:
 	{
 		return (LRESULT)1;
-	}*/
+	}
 
 	case WM_PAINT:
 	{
@@ -638,11 +640,40 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Left_Window(HWND hDlg, UINT message, W
 
 	case WM_COMMAND:
 	{
-		if (LOWORD(wParam) == IDM_FILE_RENAME)
+		if (LOWORD(wParam) == IDM_GRID_SNAP)
 		{
-			Debug
-				return TRUE;
+			if (App->CL_Level->flag_UseGrid == 1)
+			{
+				App->CL_Level->flag_UseGrid = 0;
+				CheckMenuItem(App->mMenu, ID_GRID_GRIDSNAP, MF_BYCOMMAND | MF_UNCHECKED);
+			}
+			else
+			{
+				App->CL_Level->flag_UseGrid = 1;
+				CheckMenuItem(App->mMenu, ID_GRID_GRIDSNAP, MF_BYCOMMAND | MF_CHECKED);
+			}
+			return TRUE;
 		}
+
+		if (LOWORD(wParam) == IDM_RESET_VIEW)
+		{
+			RECT		Rect;
+			GetClientRect(App->CL_MapEditor->Current_View->hDlg, &Rect);
+			
+			App->CL_MapEditor->Current_View->XCenter = Rect.right / 2;
+			App->CL_MapEditor->Current_View->YCenter = Rect.bottom / 2;
+
+			App->CL_MapEditor->Current_View->CamPos.x = 0;
+			App->CL_MapEditor->Current_View->CamPos.y = 0;
+			App->CL_MapEditor->Current_View->CamPos.z = 0;
+
+			App->CL_MapEditor->Current_View->ZoomFactor = 0.3;
+
+			App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
+
+			return TRUE;
+		}
+
 	}
 	
 	case WM_CTLCOLORDLG:
@@ -657,6 +688,11 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Left_Window(HWND hDlg, UINT message, W
 
 	case WM_SETCURSOR:
 	{
+		if (App->CL_MapEditor->flag_Context_Menu_Active == 1)
+		{
+			return false;
+		}
+
 		if (App->CL_MapEditor->flag_Right_Button_Down == 1 || App->CL_MapEditor->flag_Left_Button_Down == 1)
 		{
 			return true;
@@ -738,6 +774,7 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Left_Window(HWND hDlg, UINT message, W
 
 	case WM_RBUTTONDOWN:
 	{
+		App->CL_MapEditor->Current_View = App->CL_MapEditor->VCam[V_TL];
 
 		if (GetAsyncKeyState(VK_CONTROL) < 0)
 		{
@@ -800,12 +837,25 @@ void CL64_MapEditor::Context_Menu(HWND hDlg)
 	htInfo.pt.y = yPos - rcTree.top;
 
 	hMenu = CreatePopupMenu();
-	AppendMenuW(hMenu, MF_STRING, IDM_FILE_RENAME, L"&Rename");
-	AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_COPY, L"&Copy");
-	AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_PASTE, L"&Paste");
-	AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
-	AppendMenuW(hMenu, MF_STRING, IDM_FILE_DELETE, L"&Delete");
+
+	if (App->CL_Level->flag_UseGrid == 1)
+	{
+		AppendMenuW(hMenu, MF_STRING | MF_CHECKED, IDM_GRID_SNAP, L"&Grid Snap");
+	}
+	else
+	{
+		AppendMenuW(hMenu, MF_STRING | MF_UNCHECKED, IDM_GRID_SNAP, L"&Grid Snap");
+	}
+	
+	AppendMenuW(hMenu, MF_STRING , IDM_RESET_VIEW, L"&Reset View");
+	//AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_PASTE, L"&Paste");
+	//AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
+	//AppendMenuW(hMenu, MF_STRING, IDM_FILE_DELETE, L"&Delete");
+
+	flag_Context_Menu_Active = 1;
 	TrackPopupMenu(hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, hDlg, NULL);
+	flag_Context_Menu_Active = 0;
+	
 	DestroyMenu(hMenu);
 
 }

@@ -64,11 +64,13 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     App->CL_Doc->Init_Doc();
     App->CL_MapEditor->Init_Map_Views();
-    App->CL_MapEditor->Reset_Views();
+   
     App->SetMainWinCentre();
 
     ShowWindow(App->MainHwnd, SW_SHOWMAXIMIZED);
     UpdateWindow(App->MainHwnd);
+
+    App->CL_MapEditor->Reset_Views_All();
 
     App->CL_Ogre->Init_Ogre();
     App->CL_Picking->Init_Picking();
@@ -89,7 +91,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         App->Say_Win("Can not load Wad File");
     }
     // ----------------------------------------------------------
-
 
     SetTimer(App->MainHwnd, 1, 100, NULL);
 
@@ -332,7 +333,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             // ----------------------------- View
             case ID_VIEW_RESETVIEWS:
             {
-                App->CL_MapEditor->Reset_Views();
+                App->CL_MapEditor->Reset_Views_All();
                 return 1;
             }
             

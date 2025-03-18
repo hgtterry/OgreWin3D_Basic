@@ -47,7 +47,7 @@ public:
 	void Init_Views(int View);
 	void Render_RenderBrushFacesOrtho(const ViewVars* Cam, Brush* b, HDC ViewDC);
 	void Render_RenderBrushSelFacesOrtho(ViewVars* Cam, Brush* b, HDC ViewDC);
-	void Reset_Views();
+	void Reset_Views_All();
 
 	void Resize_Windows(HWND hDlg, int NewWidth, int NewDepth);
 	void Context_Menu(HWND hDlg);
@@ -72,6 +72,7 @@ public:
 
 	bool flag_Left_Button_Down;
 	bool flag_Right_Button_Down;
+	bool flag_Context_Menu_Active;
 
 	HCURSOR	hcSizeEW;
 	HCURSOR	hcSizeNS;
