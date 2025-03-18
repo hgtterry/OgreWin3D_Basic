@@ -660,8 +660,8 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Left_Window(HWND hDlg, UINT message, W
 			RECT		Rect;
 			GetClientRect(App->CL_MapEditor->Current_View->hDlg, &Rect);
 			
-			App->CL_MapEditor->Current_View->XCenter = Rect.right / 2;
-			App->CL_MapEditor->Current_View->YCenter = Rect.bottom / 2;
+			App->CL_MapEditor->Current_View->XCenter = (float)Rect.right / 2;
+			App->CL_MapEditor->Current_View->YCenter = (float)Rect.bottom / 2;
 
 			App->CL_MapEditor->Current_View->CamPos.x = 0;
 			App->CL_MapEditor->Current_View->CamPos.y = 0;
@@ -740,15 +740,6 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Left_Window(HWND hDlg, UINT message, W
 		App->CL_MapEditor->flag_Left_Button_Down = 1;
 
 		App->CL_MapEditor->On_Left_Button_Down(RealCursorPosition,hDlg);
-
-		/*GetCursorPos(&App->CL_MapEditor->mStartPoint);
-		ScreenToClient(hDlg, &App->CL_MapEditor->mStartPoint);
-
-		App->CL_MapEditor->flag_Right_Button_Down = 0;
-		App->CL_MapEditor->flag_Left_Button_Down = 1;
-
-		App->CL_MapEditor->Current_View = App->CL_MapEditor->VCam[V_TL];
-		App->CUR = SetCursor(NULL);*/
 
 		return 1;
 	}
@@ -891,6 +882,44 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Right_Window(HWND hDlg, UINT message, 
 		return TRUE;
 	}
 
+	case WM_COMMAND:
+	{
+		if (LOWORD(wParam) == IDM_GRID_SNAP)
+		{
+			if (App->CL_Level->flag_UseGrid == 1)
+			{
+				App->CL_Level->flag_UseGrid = 0;
+				CheckMenuItem(App->mMenu, ID_GRID_GRIDSNAP, MF_BYCOMMAND | MF_UNCHECKED);
+			}
+			else
+			{
+				App->CL_Level->flag_UseGrid = 1;
+				CheckMenuItem(App->mMenu, ID_GRID_GRIDSNAP, MF_BYCOMMAND | MF_CHECKED);
+			}
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDM_RESET_VIEW)
+		{
+			RECT		Rect;
+			GetClientRect(App->CL_MapEditor->Current_View->hDlg, &Rect);
+
+			App->CL_MapEditor->Current_View->XCenter = (float)Rect.right / 2;
+			App->CL_MapEditor->Current_View->YCenter = (float)Rect.bottom / 2;
+
+			App->CL_MapEditor->Current_View->CamPos.x = 0;
+			App->CL_MapEditor->Current_View->CamPos.y = 0;
+			App->CL_MapEditor->Current_View->CamPos.z = 0;
+
+			App->CL_MapEditor->Current_View->ZoomFactor = 0.3;
+
+			App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
+
+			return TRUE;
+		}
+
+	}
+
 	case WM_CTLCOLORDLG:
 	{
 		return (LONG)App->CL_MapEditor->BackGround_Brush;
@@ -903,6 +932,11 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Right_Window(HWND hDlg, UINT message, 
 
 	case WM_SETCURSOR:
 	{
+		if (App->CL_MapEditor->flag_Context_Menu_Active == 1)
+		{
+			return false;
+		}
+
 		if (App->CL_MapEditor->flag_Right_Button_Down == 1 || App->CL_MapEditor->flag_Left_Button_Down == 1)
 		{
 			return true;
@@ -977,15 +1011,22 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Right_Window(HWND hDlg, UINT message, 
 
 	case WM_RBUTTONDOWN:
 	{
-		GetCursorPos(&App->CL_MapEditor->mStartPoint);
-		ScreenToClient(hDlg, &App->CL_MapEditor->mStartPoint);
+		if (GetAsyncKeyState(VK_CONTROL) < 0)
+		{
+			GetCursorPos(&App->CL_MapEditor->mStartPoint);
+			ScreenToClient(hDlg, &App->CL_MapEditor->mStartPoint);
 
-		App->CL_MapEditor->flag_Right_Button_Down = 1;
-		App->CL_MapEditor->flag_Left_Button_Down = 0;
+			App->CL_MapEditor->flag_Right_Button_Down = 1;
+			App->CL_MapEditor->flag_Left_Button_Down = 0;
 
-		App->CL_MapEditor->Current_View = App->CL_MapEditor->VCam[V_TR];
-		App->CUR = SetCursor(NULL);
-
+			App->CL_MapEditor->Current_View = App->CL_MapEditor->VCam[V_TR];
+			App->CUR = SetCursor(NULL);
+		}
+		else
+		{
+			App->CL_MapEditor->Current_View = App->CL_MapEditor->VCam[V_TR];
+			App->CL_MapEditor->Context_Menu(hDlg);
+		}
 		return 1;
 	}
 
@@ -1043,6 +1084,43 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Bottom_Left_Window(HWND hDlg, UINT message
 		return TRUE;
 	}
 
+	case WM_COMMAND:
+	{
+		if (LOWORD(wParam) == IDM_GRID_SNAP)
+		{
+			if (App->CL_Level->flag_UseGrid == 1)
+			{
+				App->CL_Level->flag_UseGrid = 0;
+				CheckMenuItem(App->mMenu, ID_GRID_GRIDSNAP, MF_BYCOMMAND | MF_UNCHECKED);
+			}
+			else
+			{
+				App->CL_Level->flag_UseGrid = 1;
+				CheckMenuItem(App->mMenu, ID_GRID_GRIDSNAP, MF_BYCOMMAND | MF_CHECKED);
+			}
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDM_RESET_VIEW)
+		{
+			RECT		Rect;
+			GetClientRect(App->CL_MapEditor->Current_View->hDlg, &Rect);
+
+			App->CL_MapEditor->Current_View->XCenter = (float)Rect.right / 2;
+			App->CL_MapEditor->Current_View->YCenter = (float)Rect.bottom / 2;
+
+			App->CL_MapEditor->Current_View->CamPos.x = 0;
+			App->CL_MapEditor->Current_View->CamPos.y = 0;
+			App->CL_MapEditor->Current_View->CamPos.z = 0;
+
+			App->CL_MapEditor->Current_View->ZoomFactor = 0.3;
+
+			App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
+
+			return TRUE;
+		}
+	}
+
 	case WM_CTLCOLORDLG:
 	{
 		return (LONG)App->CL_MapEditor->BackGround_Brush;
@@ -1055,6 +1133,11 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Bottom_Left_Window(HWND hDlg, UINT message
 
 	case WM_SETCURSOR:
 	{
+		if (App->CL_MapEditor->flag_Context_Menu_Active == 1)
+		{
+			return false;
+		}
+
 		if (App->CL_MapEditor->flag_Right_Button_Down == 1 || App->CL_MapEditor->flag_Left_Button_Down == 1)
 		{
 			return true;
@@ -1129,15 +1212,24 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Bottom_Left_Window(HWND hDlg, UINT message
 
 	case WM_RBUTTONDOWN:
 	{
-		GetCursorPos(&App->CL_MapEditor->mStartPoint);
-		ScreenToClient(hDlg, &App->CL_MapEditor->mStartPoint);
+		if (GetAsyncKeyState(VK_CONTROL) < 0)
+		{
+			GetCursorPos(&App->CL_MapEditor->mStartPoint);
+			ScreenToClient(hDlg, &App->CL_MapEditor->mStartPoint);
 
-		App->CL_MapEditor->flag_Left_Button_Down = 0;
-		App->CL_MapEditor->flag_Right_Button_Down = 1;
+			App->CL_MapEditor->flag_Left_Button_Down = 0;
+			App->CL_MapEditor->flag_Right_Button_Down = 1;
 
-		//App->CL_MapEditor->Current_View = App->CL_MapEditor->VCam[V_BL];
+			App->CL_MapEditor->Current_View = App->CL_MapEditor->VCam[V_BL];
 
-		App->CUR = SetCursor(NULL);
+			App->CUR = SetCursor(NULL);
+		}
+		else
+		{
+			App->CL_MapEditor->Current_View = App->CL_MapEditor->VCam[V_BL];
+			App->CL_MapEditor->Context_Menu(hDlg);
+		}
+
 		return 1;
 	}
 
@@ -1309,6 +1401,12 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Bottom_Right_Ogre(HWND hDlg, UINT message,
 			App->CUR = SetCursor(NULL);
 			return 1;
 		}
+		else
+		{
+			App->CL_MapEditor->Current_View = App->CL_MapEditor->VCam[V_TR];
+			App->CL_MapEditor->Context_Menu(hDlg);
+		}
+
 
 		return 1;
 	}
