@@ -132,7 +132,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <LanguageStandard>stdcpp14</LanguageStandard>
-      <AdditionalIncludeDirectories>..\Common_64\Ogre3D\include\OGRE\RTShaderSystem;..\Common_64\Ogre3D\include\OGRE\Bites;..\Common_64\Ogre3D\include\OGRE;..\Common_64\Ogre3D\include\OGRE\Overlay;..\Common_64\Devil\include\IL;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Common_64\Ogre3D\include\OGRE\RTShaderSystem;..\Common_64\Ogre3D\include\OGRE\Bites;..\Common_64\Ogre3D\include\OGRE;..\Common_64\Ogre3D\include\OGRE\Overlay;..\Common_64\Bullet\Source;..\Common_64\Bullet\Source\LinearMath;..\Common_64\Devil\include\IL;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -143,8 +143,8 @@
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <OutputFile>$(OutDir)OW3D_Mesh_Builder.exe</OutputFile>
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
-      <AdditionalDependencies>comctl32.lib;OgreMain.lib;OgreOverlay.lib;OgreRTShaderSystem.lib;OgreBites.lib;opengl32.lib;glu32.lib;DevIL.lib;ILU.lib;ILUT.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\Common_64\Ogre3D\libs;..\Common_64\Devil\lib\x64\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>comctl32.lib;OgreMain.lib;OgreOverlay.lib;OgreRTShaderSystem.lib;OgreBites.lib;BulletDynamics.lib;BulletCollision.lib;LinearMath.lib;opengl32.lib;glu32.lib;DevIL.lib;ILU.lib;ILUT.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\Common_64\Ogre3D\libs;..\Common_64\Bullet\lib;..\Common_64\Devil\lib\x64\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>LIBCMT.lib;libcpmt.lib</IgnoreSpecificDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>
@@ -162,6 +162,7 @@
     <ClInclude Include="CL64_Brush.h" />
     <ClInclude Include="CL64_BrushTemplate.h" />
     <ClInclude Include="CL64_Brush_X.h" />
+    <ClInclude Include="CL64_Bullet.h" />
     <ClInclude Include="CL64_Camera.h" />
     <ClInclude Include="CL64_Dialogs.h" />
     <ClInclude Include="CL64_Doc.h" />
@@ -223,6 +224,7 @@
     <ClCompile Include="CL64_Brush.cpp" />
     <ClCompile Include="CL64_BrushTemplate.cpp" />
     <ClCompile Include="CL64_Brush_X.cpp" />
+    <ClCompile Include="CL64_Bullet.cpp" />
     <ClCompile Include="CL64_Camera.cpp" />
     <ClCompile Include="CL64_Dialogs.cpp" />
     <ClCompile Include="CL64_Doc.cpp" />

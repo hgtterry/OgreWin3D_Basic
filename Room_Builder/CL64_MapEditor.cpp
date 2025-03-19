@@ -1842,9 +1842,6 @@ void CL64_MapEditor::Draw_Screen(HWND hwnd)
 	Current_View->XScreenScale = Rect.left;
 	Current_View->YScreenScale = Rect.bottom;
 
-	/*Current_View->XCenter = Rect.left/2;
-	Current_View->YCenter = Rect.bottom/2;*/
-
 	T_Vec3 XTemp;
 	Box3d ViewBox;
 	inidx = App->CL_Render->Render_GetInidx(Current_View);
