@@ -804,47 +804,6 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Left_Window(HWND hDlg, UINT message, W
 }
 
 // *************************************************************************
-// *			Context_Menu:- Terry and Hazel Flanigan 2024		 	   *
-// *************************************************************************
-void CL64_MapEditor::Context_Menu(HWND hDlg)
-{
-	RECT rcTree;
-	TVHITTESTINFO htInfo = { 0 };
-	POINT pt;
-	GetCursorPos(&pt);
-
-	long xPos = pt.x;   // x position from message, in screen coordinates
-	long yPos = pt.y;   // y position from message, in screen coordinates 
-
-	GetWindowRect(hDlg, &rcTree);        // get its window coordinates
-	htInfo.pt.x = xPos - rcTree.left;      // convert to client coordinates
-	htInfo.pt.y = yPos - rcTree.top;
-
-	hMenu = CreatePopupMenu();
-
-	if (App->CL_Level->flag_UseGrid == 1)
-	{
-		AppendMenuW(hMenu, MF_STRING | MF_CHECKED, IDM_GRID_SNAP, L"&Grid Snap");
-	}
-	else
-	{
-		AppendMenuW(hMenu, MF_STRING | MF_UNCHECKED, IDM_GRID_SNAP, L"&Grid Snap");
-	}
-	
-	AppendMenuW(hMenu, MF_STRING , IDM_RESET_VIEW, L"&Reset View");
-	AppendMenuW(hMenu, MF_STRING , IDM_CENTRE_ONCAMERA, L"&Centre On Camera");
-	//AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
-	//AppendMenuW(hMenu, MF_STRING, IDM_FILE_DELETE, L"&Delete");
-
-	flag_Context_Menu_Active = 1;
-	TrackPopupMenu(hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, hDlg, NULL);
-	flag_Context_Menu_Active = 0;
-	
-	DestroyMenu(hMenu);
-
-}
-
-// *************************************************************************
 // *	  	Create_Top_Right_Window:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
 void CL64_MapEditor::Create_Top_Right_Window()
@@ -1014,52 +973,6 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Right_Window(HWND hDlg, UINT message, 
 	}
 
 	return FALSE;
-}
-
-// *************************************************************************
-// *	  Create_Bottom_Left_Window:- Terry and Hazel Flanigan 2024		   *
-// *************************************************************************
-bool CL64_MapEditor::Context_Command(WPARAM wParam)
-{
-	if (LOWORD(wParam) == IDM_GRID_SNAP)
-	{
-		if (App->CL_Level->flag_UseGrid == 1)
-		{
-			App->CL_Level->flag_UseGrid = 0;
-			CheckMenuItem(App->mMenu, ID_GRID_GRIDSNAP, MF_BYCOMMAND | MF_UNCHECKED);
-		}
-		else
-		{
-			App->CL_Level->flag_UseGrid = 1;
-			CheckMenuItem(App->mMenu, ID_GRID_GRIDSNAP, MF_BYCOMMAND | MF_CHECKED);
-		}
-		return TRUE;
-	}
-
-	if (LOWORD(wParam) == IDM_RESET_VIEW)
-	{
-		RECT		Rect;
-		GetClientRect(App->CL_MapEditor->Current_View->hDlg, &Rect);
-
-		App->CL_MapEditor->Current_View->XCenter = (float)Rect.right / 2;
-		App->CL_MapEditor->Current_View->YCenter = (float)Rect.bottom / 2;
-
-		App->CL_MapEditor->Current_View->CamPos.x = 0;
-		App->CL_MapEditor->Current_View->CamPos.y = 0;
-		App->CL_MapEditor->Current_View->CamPos.z = 0;
-
-		App->CL_MapEditor->Current_View->ZoomFactor = 0.3;
-
-		App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
-
-		return TRUE;
-	}
-
-	if (LOWORD(wParam) == IDM_CENTRE_ONCAMERA)
-	{
-		App->CL_MapEditor->Reset_To_Camera();
-		return TRUE;
-	}
 }
 
 // *************************************************************************
@@ -1423,6 +1336,92 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Bottom_Right_Ogre(HWND hDlg, UINT message,
 	}
 	
 	return FALSE;
+}
+
+// *************************************************************************
+// *			 Context_Command:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+bool CL64_MapEditor::Context_Command(WPARAM wParam)
+{
+	if (LOWORD(wParam) == IDM_GRID_SNAP)
+	{
+		if (App->CL_Level->flag_UseGrid == 1)
+		{
+			App->CL_Level->flag_UseGrid = 0;
+			CheckMenuItem(App->mMenu, ID_GRID_GRIDSNAP, MF_BYCOMMAND | MF_UNCHECKED);
+		}
+		else
+		{
+			App->CL_Level->flag_UseGrid = 1;
+			CheckMenuItem(App->mMenu, ID_GRID_GRIDSNAP, MF_BYCOMMAND | MF_CHECKED);
+		}
+		return TRUE;
+	}
+
+	if (LOWORD(wParam) == IDM_RESET_VIEW)
+	{
+		RECT		Rect;
+		GetClientRect(App->CL_MapEditor->Current_View->hDlg, &Rect);
+
+		App->CL_MapEditor->Current_View->XCenter = (float)Rect.right / 2;
+		App->CL_MapEditor->Current_View->YCenter = (float)Rect.bottom / 2;
+
+		App->CL_MapEditor->Current_View->CamPos.x = 0;
+		App->CL_MapEditor->Current_View->CamPos.y = 0;
+		App->CL_MapEditor->Current_View->CamPos.z = 0;
+
+		App->CL_MapEditor->Current_View->ZoomFactor = 0.3;
+
+		App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
+
+		return TRUE;
+	}
+
+	if (LOWORD(wParam) == IDM_CENTRE_ONCAMERA)
+	{
+		App->CL_MapEditor->Reset_To_Camera();
+		return TRUE;
+	}
+}
+
+// *************************************************************************
+// *			Context_Menu:- Terry and Hazel Flanigan 2024		 	   *
+// *************************************************************************
+void CL64_MapEditor::Context_Menu(HWND hDlg)
+{
+	RECT rcTree;
+	TVHITTESTINFO htInfo = { 0 };
+	POINT pt;
+	GetCursorPos(&pt);
+
+	long xPos = pt.x;   // x position from message, in screen coordinates
+	long yPos = pt.y;   // y position from message, in screen coordinates 
+
+	GetWindowRect(hDlg, &rcTree);        // get its window coordinates
+	htInfo.pt.x = xPos - rcTree.left;      // convert to client coordinates
+	htInfo.pt.y = yPos - rcTree.top;
+
+	hMenu = CreatePopupMenu();
+
+	if (App->CL_Level->flag_UseGrid == 1)
+	{
+		AppendMenuW(hMenu, MF_STRING | MF_CHECKED, IDM_GRID_SNAP, L"&Grid Snap");
+	}
+	else
+	{
+		AppendMenuW(hMenu, MF_STRING | MF_UNCHECKED, IDM_GRID_SNAP, L"&Grid Snap");
+	}
+
+	AppendMenuW(hMenu, MF_STRING, IDM_RESET_VIEW, L"&Reset View");
+	AppendMenuW(hMenu, MF_STRING, IDM_CENTRE_ONCAMERA, L"&Centre On Camera");
+	//AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
+	//AppendMenuW(hMenu, MF_STRING, IDM_FILE_DELETE, L"&Delete");
+
+	flag_Context_Menu_Active = 1;
+	TrackPopupMenu(hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, hDlg, NULL);
+	flag_Context_Menu_Active = 0;
+
+	DestroyMenu(hMenu);
 }
 
 // *************************************************************************
