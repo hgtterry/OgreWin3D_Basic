@@ -47,8 +47,12 @@ public:
 	void Init_Views(int View);
 	void Render_RenderBrushFacesOrtho(const ViewVars* Cam, Brush* b, HDC ViewDC);
 	void Render_RenderBrushSelFacesOrtho(ViewVars* Cam, Brush* b, HDC ViewDC);
-	void Reset_Views_All();
+	
+	bool Context_Command(WPARAM wParam);
 
+	void Reset_Views_All();
+	void Reset_To_Camera();
+	
 	void Resize_Windows(HWND hDlg, int NewWidth, int NewDepth);
 	void Context_Menu(HWND hDlg);
 

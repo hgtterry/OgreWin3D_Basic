@@ -29,7 +29,7 @@ THE SOFTWARE.
 
 #define IDM_GRID_SNAP 1
 #define IDM_RESET_VIEW 2
-#define IDM_FILE_RENAME 3
+#define IDM_CENTRE_ONCAMERA 3
 #define IDM_COPY 4
 #define IDM_PASTE 5
 #define IDM_GOTO 6
@@ -154,6 +154,29 @@ void CL64_MapEditor::Reset_Views_All()
 
 		Count++;
 	}
+
+	App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
+}
+
+// *************************************************************************
+// *	  	Reset_To_Camera:- Terry and Hazel Flanigan 2024				   *
+// *************************************************************************
+void CL64_MapEditor::Reset_To_Camera()
+{
+	RECT		Rect;
+	GetClientRect(App->CL_MapEditor->Current_View->hDlg, &Rect);
+
+	App->CL_MapEditor->Current_View->XCenter = (float)Rect.right / 2;
+	App->CL_MapEditor->Current_View->YCenter = (float)Rect.bottom / 2;
+
+	Ogre::Vector3 Pos;
+	Pos = App->CL_Ogre->camNode->getPosition();
+
+	App->CL_MapEditor->Current_View->CamPos.x = Pos.x;
+	App->CL_MapEditor->Current_View->CamPos.y = Pos.y;
+	App->CL_MapEditor->Current_View->CamPos.z = Pos.z;
+
+	App->CL_MapEditor->Current_View->ZoomFactor = 0.3;
 
 	App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
 
@@ -640,40 +663,10 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Left_Window(HWND hDlg, UINT message, W
 
 	case WM_COMMAND:
 	{
-		if (LOWORD(wParam) == IDM_GRID_SNAP)
+		if (App->CL_MapEditor->Context_Command(LOWORD(wParam)))
 		{
-			if (App->CL_Level->flag_UseGrid == 1)
-			{
-				App->CL_Level->flag_UseGrid = 0;
-				CheckMenuItem(App->mMenu, ID_GRID_GRIDSNAP, MF_BYCOMMAND | MF_UNCHECKED);
-			}
-			else
-			{
-				App->CL_Level->flag_UseGrid = 1;
-				CheckMenuItem(App->mMenu, ID_GRID_GRIDSNAP, MF_BYCOMMAND | MF_CHECKED);
-			}
 			return TRUE;
 		}
-
-		if (LOWORD(wParam) == IDM_RESET_VIEW)
-		{
-			RECT		Rect;
-			GetClientRect(App->CL_MapEditor->Current_View->hDlg, &Rect);
-			
-			App->CL_MapEditor->Current_View->XCenter = (float)Rect.right / 2;
-			App->CL_MapEditor->Current_View->YCenter = (float)Rect.bottom / 2;
-
-			App->CL_MapEditor->Current_View->CamPos.x = 0;
-			App->CL_MapEditor->Current_View->CamPos.y = 0;
-			App->CL_MapEditor->Current_View->CamPos.z = 0;
-
-			App->CL_MapEditor->Current_View->ZoomFactor = 0.3;
-
-			App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
-
-			return TRUE;
-		}
-
 	}
 	
 	case WM_CTLCOLORDLG:
@@ -839,7 +832,7 @@ void CL64_MapEditor::Context_Menu(HWND hDlg)
 	}
 	
 	AppendMenuW(hMenu, MF_STRING , IDM_RESET_VIEW, L"&Reset View");
-	//AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_PASTE, L"&Paste");
+	AppendMenuW(hMenu, MF_STRING , IDM_CENTRE_ONCAMERA, L"&Centre On Camera");
 	//AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
 	//AppendMenuW(hMenu, MF_STRING, IDM_FILE_DELETE, L"&Delete");
 
@@ -884,40 +877,10 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Right_Window(HWND hDlg, UINT message, 
 
 	case WM_COMMAND:
 	{
-		if (LOWORD(wParam) == IDM_GRID_SNAP)
+		if (App->CL_MapEditor->Context_Command(LOWORD(wParam)))
 		{
-			if (App->CL_Level->flag_UseGrid == 1)
-			{
-				App->CL_Level->flag_UseGrid = 0;
-				CheckMenuItem(App->mMenu, ID_GRID_GRIDSNAP, MF_BYCOMMAND | MF_UNCHECKED);
-			}
-			else
-			{
-				App->CL_Level->flag_UseGrid = 1;
-				CheckMenuItem(App->mMenu, ID_GRID_GRIDSNAP, MF_BYCOMMAND | MF_CHECKED);
-			}
 			return TRUE;
 		}
-
-		if (LOWORD(wParam) == IDM_RESET_VIEW)
-		{
-			RECT		Rect;
-			GetClientRect(App->CL_MapEditor->Current_View->hDlg, &Rect);
-
-			App->CL_MapEditor->Current_View->XCenter = (float)Rect.right / 2;
-			App->CL_MapEditor->Current_View->YCenter = (float)Rect.bottom / 2;
-
-			App->CL_MapEditor->Current_View->CamPos.x = 0;
-			App->CL_MapEditor->Current_View->CamPos.y = 0;
-			App->CL_MapEditor->Current_View->CamPos.z = 0;
-
-			App->CL_MapEditor->Current_View->ZoomFactor = 0.3;
-
-			App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
-
-			return TRUE;
-		}
-
 	}
 
 	case WM_CTLCOLORDLG:
@@ -1056,6 +1019,52 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Right_Window(HWND hDlg, UINT message, 
 // *************************************************************************
 // *	  Create_Bottom_Left_Window:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
+bool CL64_MapEditor::Context_Command(WPARAM wParam)
+{
+	if (LOWORD(wParam) == IDM_GRID_SNAP)
+	{
+		if (App->CL_Level->flag_UseGrid == 1)
+		{
+			App->CL_Level->flag_UseGrid = 0;
+			CheckMenuItem(App->mMenu, ID_GRID_GRIDSNAP, MF_BYCOMMAND | MF_UNCHECKED);
+		}
+		else
+		{
+			App->CL_Level->flag_UseGrid = 1;
+			CheckMenuItem(App->mMenu, ID_GRID_GRIDSNAP, MF_BYCOMMAND | MF_CHECKED);
+		}
+		return TRUE;
+	}
+
+	if (LOWORD(wParam) == IDM_RESET_VIEW)
+	{
+		RECT		Rect;
+		GetClientRect(App->CL_MapEditor->Current_View->hDlg, &Rect);
+
+		App->CL_MapEditor->Current_View->XCenter = (float)Rect.right / 2;
+		App->CL_MapEditor->Current_View->YCenter = (float)Rect.bottom / 2;
+
+		App->CL_MapEditor->Current_View->CamPos.x = 0;
+		App->CL_MapEditor->Current_View->CamPos.y = 0;
+		App->CL_MapEditor->Current_View->CamPos.z = 0;
+
+		App->CL_MapEditor->Current_View->ZoomFactor = 0.3;
+
+		App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
+
+		return TRUE;
+	}
+
+	if (LOWORD(wParam) == IDM_CENTRE_ONCAMERA)
+	{
+		App->CL_MapEditor->Reset_To_Camera();
+		return TRUE;
+	}
+}
+
+// *************************************************************************
+// *	  Create_Bottom_Left_Window:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
 void CL64_MapEditor::Create_Bottom_Left_Window()
 {
 	Bottom_Left_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MAP_BOTTOM_LEFT, Main_Dlg_Hwnd, (DLGPROC)Proc_Bottom_Left_Window);
@@ -1086,37 +1095,8 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Bottom_Left_Window(HWND hDlg, UINT message
 
 	case WM_COMMAND:
 	{
-		if (LOWORD(wParam) == IDM_GRID_SNAP)
+		if (App->CL_MapEditor->Context_Command(LOWORD(wParam)))
 		{
-			if (App->CL_Level->flag_UseGrid == 1)
-			{
-				App->CL_Level->flag_UseGrid = 0;
-				CheckMenuItem(App->mMenu, ID_GRID_GRIDSNAP, MF_BYCOMMAND | MF_UNCHECKED);
-			}
-			else
-			{
-				App->CL_Level->flag_UseGrid = 1;
-				CheckMenuItem(App->mMenu, ID_GRID_GRIDSNAP, MF_BYCOMMAND | MF_CHECKED);
-			}
-			return TRUE;
-		}
-
-		if (LOWORD(wParam) == IDM_RESET_VIEW)
-		{
-			RECT		Rect;
-			GetClientRect(App->CL_MapEditor->Current_View->hDlg, &Rect);
-
-			App->CL_MapEditor->Current_View->XCenter = (float)Rect.right / 2;
-			App->CL_MapEditor->Current_View->YCenter = (float)Rect.bottom / 2;
-
-			App->CL_MapEditor->Current_View->CamPos.x = 0;
-			App->CL_MapEditor->Current_View->CamPos.y = 0;
-			App->CL_MapEditor->Current_View->CamPos.z = 0;
-
-			App->CL_MapEditor->Current_View->ZoomFactor = 0.3;
-
-			App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
-
 			return TRUE;
 		}
 	}
