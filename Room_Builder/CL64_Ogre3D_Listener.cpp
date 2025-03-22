@@ -323,7 +323,7 @@ void CL64_Ogre3D_Listener::Capture_Left_Mouse_Free(void)
 	if (Pl_MouseX < Pl_Cent500X)
 	{
 		long test = Pl_Cent500X - Pl_MouseX; // Positive
-		if (test > 2)
+		if (test > 1)
 		{
 			Pl_DeltaMouse = float(Pl_Cent500X - Pl_MouseX);
 			mRotX = Degree(Pl_DeltaMouse * (float)0.08);//S_Player[0]->TurnRate);
@@ -334,7 +334,7 @@ void CL64_Ogre3D_Listener::Capture_Left_Mouse_Free(void)
 	{
 		long test = Pl_MouseX - Pl_Cent500X; // Positive
 
-		if (test > 2)
+		if (test > 1)
 		{
 			Pl_DeltaMouse = float(Pl_MouseX - Pl_Cent500X);
 			mRotX = Degree(-Pl_DeltaMouse * (float)0.08);//S_Player[0]->TurnRate);
@@ -347,7 +347,7 @@ void CL64_Ogre3D_Listener::Capture_Left_Mouse_Free(void)
 	{
 		long test = Pl_Cent500Y - Pl_MouseY; // Positive
 
-		if (test > 2)
+		if (test > 1)
 		{
 			Pl_DeltaMouse = float(Pl_Cent500Y - Pl_MouseY);
 			mRotY = Degree(Pl_DeltaMouse * (float)0.08);//S_Player[0]->TurnRate);
@@ -358,7 +358,7 @@ void CL64_Ogre3D_Listener::Capture_Left_Mouse_Free(void)
 	{
 		long test = Pl_MouseY - Pl_Cent500Y; // Positive
 
-		if (test > 2)
+		if (test > 1)
 		{
 			Pl_DeltaMouse = float(Pl_MouseY - Pl_Cent500Y);
 			mRotY = Degree(-Pl_DeltaMouse * (float)0.08);//S_Player[0]->TurnRate);

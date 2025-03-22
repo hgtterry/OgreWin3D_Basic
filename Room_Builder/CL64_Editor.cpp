@@ -39,6 +39,8 @@ CL64_Editor::CL64_Editor()
 
 	JustName[0] = 0;
 
+	Parent_hWnd = NULL;
+
 	flag_PreviewMode_Running = 0;
 
 	int Count = 0;
@@ -135,6 +137,10 @@ void CL64_Editor::Preview_Mode(void)
 
 	//Show_Entities(false); // Hide All Visible Trigers
 
+	Parent_hWnd = GetParent(App->CL_MapEditor->Bottom_Right_Hwnd);
+
+	App->CL_Properties_Tabs->Enable_Tabs_Dlg(false);
+
 	SetCursorPos(App->CursorPosX, App->CursorPosY);
 
 	int cx = GetSystemMetrics(SM_CXSCREEN);
@@ -172,12 +178,12 @@ void CL64_Editor::Editor_Mode(void)
 {
 	flag_PreviewMode_Running = 0;
 
-	SetParent(App->CL_MapEditor->Bottom_Right_Hwnd, App->CL_MapEditor->Main_Dlg_Hwnd);
+	SetParent(App->CL_MapEditor->Bottom_Right_Hwnd, Parent_hWnd);
 	
 	App->CL_MapEditor->Init_Views(Enums::Selected_View_None);
 	App->CL_MapEditor->Resize_Windows(App->CL_MapEditor->Main_Dlg_Hwnd, App->CL_MapEditor->nleftWnd_width, App->CL_MapEditor->nleftWnd_Depth);
 
-
+	App->CL_Properties_Tabs->Enable_Tabs_Dlg(true);
 	
 	//App->CL_Front_Dialog->flag_Show_Front_Dlg_Flag = 0; // temp
 

@@ -298,7 +298,7 @@ void CL64_MapEditor::Init_Map_Views()
 	App->CL_MapEditor->Create_Top_Left_Window();
 	App->CL_MapEditor->Create_Top_Right_Window();
 	App->CL_MapEditor->Create_Bottom_Left_Window();
-	App->CL_MapEditor->Create_Bottom_Right_Ogre();
+	App->CL_MapEditor->Create_Ogre_Bottom_Right();
 
 	RECT rcl;
 	GetClientRect(App->MainHwnd, &rcl);
@@ -1149,18 +1149,18 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Bottom_Left_Window(HWND hDlg, UINT message
 }
 
 // *************************************************************************
-// *	  Create_Bottom_Right_Window:- Terry and Hazel Flanigan 2024	   *
+// *		 Create_Ogre_Bottom_Right:- Terry and Hazel Flanigan 2024	   *
 // *************************************************************************
-void CL64_MapEditor::Create_Bottom_Right_Ogre()
+void CL64_MapEditor::Create_Ogre_Bottom_Right()
 {
-	Bottom_Right_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MAP_BOTTOM_RIGHT, Main_Dlg_Hwnd, (DLGPROC)Proc_Bottom_Right_Ogre);
+	Bottom_Right_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MAP_BOTTOM_RIGHT, Main_Dlg_Hwnd, (DLGPROC)Proc_Ogre_BR);
 	App->CL_Ogre->RenderHwnd = Bottom_Right_Hwnd;
 }
 
 // *************************************************************************
 // *		Proc_Bottom_Right_Ogre:- Terry and Hazel Flanigan 2024 		   *
 // *************************************************************************
-LRESULT CALLBACK CL64_MapEditor::Proc_Bottom_Right_Ogre(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK CL64_MapEditor::Proc_Ogre_BR(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	switch (message)
 	{
@@ -1183,6 +1183,28 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Bottom_Right_Ogre(HWND hDlg, UINT message,
 		Debug
 		return 0;
 	}*/
+
+	case WM_MOUSEWHEEL:
+	{
+		if (App->CL_Editor->flag_PreviewMode_Running == 1)
+		{
+			if (App->CL_Ogre->Ogre3D_Listener->flag_LeftMouseDown == 0)
+			{
+				int zDelta = (short)HIWORD(wParam);    // wheel rotation
+
+				if (zDelta > 0)
+				{
+					App->CL_Ogre->Ogre3D_Listener->Wheel = -1;
+				}
+				else if (zDelta < 0)
+				{
+					App->CL_Ogre->Ogre3D_Listener->Wheel = 1;
+				}
+
+				return 1;
+			}
+		}
+	}
 
 	case WM_MOUSEMOVE:
 	{
@@ -1312,7 +1334,7 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Bottom_Right_Ogre(HWND hDlg, UINT message,
 			App->CL_Ogre->Ogre3D_Listener->flag_RightMouseDown = 0;
 			SetCursor(App->CUR);
 
-			if (GetAsyncKeyState(VK_CONTROL) < 0)
+			if (GetAsyncKeyState(VK_CONTROL) < 0 && App->CL_Editor->flag_PreviewMode_Running == 0)
 			{
 				App->CL_Picking->Mouse_Pick_Entity();
 
@@ -1827,6 +1849,12 @@ void CL64_MapEditor::Draw_Screen(HWND hwnd)
 {
 	//Do_Timer
 	//flag_IsDrawing = 1;
+
+	if (App->CL_Editor->flag_PreviewMode_Running == 1)
+	{
+		return;
+	}
+
 	int			inidx = 0;
 	HDC			RealhDC;
 	RECT		Rect;

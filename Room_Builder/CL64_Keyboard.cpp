@@ -218,9 +218,9 @@ void CL64_Keyboard::Keyboard_Mode_Model(float deltaTime)
 	}
 
 	//------------------------------------------------ Escape 
-	if (GetAsyncKeyState(VK_ESCAPE) < 0) // Back to Editor mode;
+	if (GetAsyncKeyState(VK_ESCAPE) < 0 && App->CL_Editor->flag_PreviewMode_Running == 1) // Back to Editor mode;
 	{
-		
+		App->CL_Editor->Editor_Mode();
 	}
 }
 

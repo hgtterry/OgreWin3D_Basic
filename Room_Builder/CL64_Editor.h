@@ -51,6 +51,8 @@ public:
 	int BrushCount;
 	int Brush_Face_Count;
 
+	HWND Parent_hWnd;
+
 	bool flag_PreviewMode_Running;
 
 };
