@@ -54,7 +54,7 @@ THE SOFTWARE.
 #include "CL64_Grid.h"
 #include "CL64_Panels.h"
 #include "CL64_Keyboard.h"
-#include "CL64_Model.h"
+#include "CL64_Editor.h"
 #include "CL64_Ogre3D.h"
 #include "CL64_Top_Tabs.h"
 #include "CL64_File.h"
@@ -110,7 +110,7 @@ public:
 	CL64_Grid*					CL_Grid;
 	CL64_Panels*				CL_Panels;
 	CL64_Keyboard*				CL_Keyboard;
-	CL64_Model*					CL_Model;
+	CL64_Editor*				CL_Editor;
 	CL64_Ogre3D*				CL_Ogre3D;
 	CL64_Top_Tabs*				CL_Top_Tabs;
 	CL64_File*					CL_File;

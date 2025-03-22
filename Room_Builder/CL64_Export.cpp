@@ -410,21 +410,21 @@ void CL64_Export::Write_ObjectFile_Commit(void)
 	int FaceCount = 0;
 	int FaceIndex = 1;
 
-	int GroupCountTotal = App->CL_Model->GroupCount;
+	int GroupCountTotal = App->CL_Editor->GroupCount;
 
 	char MaterialName[MAX_PATH];
 
 	//--------------------------------------------- Vertices v-
-	fprintf(Write_OBJECTFILE, "%s %i\n", "#", App->CL_Model->VerticeCount);
+	fprintf(Write_OBJECTFILE, "%s %i\n", "#", App->CL_Editor->VerticeCount);
 
 	while (GroupCount < GroupCountTotal)
 	{
 		VertCount = 0;
-		while (VertCount < App->CL_Model->Group[GroupCount]->GroupVertCount)
+		while (VertCount < App->CL_Editor->Group[GroupCount]->GroupVertCount)
 		{
-			float X = App->CL_Model->Group[GroupCount]->vertex_Data[VertCount].x;
-			float Y = App->CL_Model->Group[GroupCount]->vertex_Data[VertCount].y;
-			float Z = App->CL_Model->Group[GroupCount]->vertex_Data[VertCount].z;
+			float X = App->CL_Editor->Group[GroupCount]->vertex_Data[VertCount].x;
+			float Y = App->CL_Editor->Group[GroupCount]->vertex_Data[VertCount].y;
+			float Z = App->CL_Editor->Group[GroupCount]->vertex_Data[VertCount].z;
 
 			fprintf(Write_OBJECTFILE, "v %.06f %.06f %.06f\n", X, Y, Z);
 
@@ -436,17 +436,17 @@ void CL64_Export::Write_ObjectFile_Commit(void)
 	fprintf(Write_OBJECTFILE, "%s \n", " ");
 
 	//--------------------------------------------- Texture Cords vt-
-	fprintf(Write_OBJECTFILE, "%s %i\n", "#", App->CL_Model->VerticeCount);
+	fprintf(Write_OBJECTFILE, "%s %i\n", "#", App->CL_Editor->VerticeCount);
 
 	GroupCount = 0;
 
 	while (GroupCount < GroupCountTotal)
 	{
 		VertTextCords = 0;
-		while (VertTextCords < App->CL_Model->Group[GroupCount]->GroupVertCount)
+		while (VertTextCords < App->CL_Editor->Group[GroupCount]->GroupVertCount)
 		{
-			float U = App->CL_Model->Group[GroupCount]->MapCord_Data[VertTextCords].u;
-			float V = App->CL_Model->Group[GroupCount]->MapCord_Data[VertTextCords].v;
+			float U = App->CL_Editor->Group[GroupCount]->MapCord_Data[VertTextCords].u;
+			float V = App->CL_Editor->Group[GroupCount]->MapCord_Data[VertTextCords].v;
 
 			fprintf(Write_OBJECTFILE, "vt %.06f %.06f\n", U, V);
 
@@ -458,18 +458,18 @@ void CL64_Export::Write_ObjectFile_Commit(void)
 	fprintf(Write_OBJECTFILE, "%s \n", " ");
 
 	//--------------------------------------------- Normals vn-
-	fprintf(Write_OBJECTFILE, "%s %i\n", "#", App->CL_Model->VerticeCount);
+	fprintf(Write_OBJECTFILE, "%s %i\n", "#", App->CL_Editor->VerticeCount);
 
 	GroupCount = 0;
 
 	while (GroupCount < GroupCountTotal)
 	{
 		VertNormals = 0;
-		while (VertNormals < App->CL_Model->Group[GroupCount]->GroupVertCount)
+		while (VertNormals < App->CL_Editor->Group[GroupCount]->GroupVertCount)
 		{
-			float X = App->CL_Model->Group[GroupCount]->Normal_Data[VertNormals].x;
-			float Y = App->CL_Model->Group[GroupCount]->Normal_Data[VertNormals].y;
-			float Z = App->CL_Model->Group[GroupCount]->Normal_Data[VertNormals].z;
+			float X = App->CL_Editor->Group[GroupCount]->Normal_Data[VertNormals].x;
+			float Y = App->CL_Editor->Group[GroupCount]->Normal_Data[VertNormals].y;
+			float Z = App->CL_Editor->Group[GroupCount]->Normal_Data[VertNormals].z;
 
 			fprintf(Write_OBJECTFILE, "vn %.06f %.06f %.06f\n", X, Y, Z);
 
@@ -488,22 +488,22 @@ void CL64_Export::Write_ObjectFile_Commit(void)
 		FaceCount = 0;
 		int LineIndex = 0;
 
-		strcpy(MaterialName, App->CL_Model->Group[GroupCount]->MaterialName);
+		strcpy(MaterialName, App->CL_Editor->Group[GroupCount]->MaterialName);
 		fprintf(Write_OBJECTFILE, "usemtl %s\n", MaterialName);
 
-		while (FaceCount < App->CL_Model->Group[GroupCount]->GroupFaceCount)
+		while (FaceCount < App->CL_Editor->Group[GroupCount]->GroupFaceCount)
 		{
-			int A0 = App->CL_Model->Group[GroupCount]->Face_Data[FaceCount].a + Offset;
-			int B0 = App->CL_Model->Group[GroupCount]->Face_Data[FaceCount].a + Offset;
-			int C0 = App->CL_Model->Group[GroupCount]->Face_Data[FaceCount].a + Offset;
+			int A0 = App->CL_Editor->Group[GroupCount]->Face_Data[FaceCount].a + Offset;
+			int B0 = App->CL_Editor->Group[GroupCount]->Face_Data[FaceCount].a + Offset;
+			int C0 = App->CL_Editor->Group[GroupCount]->Face_Data[FaceCount].a + Offset;
 
-			int A1 = App->CL_Model->Group[GroupCount]->Face_Data[FaceCount].b + Offset;
-			int B1 = App->CL_Model->Group[GroupCount]->Face_Data[FaceCount].b + Offset;
-			int C1 = App->CL_Model->Group[GroupCount]->Face_Data[FaceCount].b + Offset;
+			int A1 = App->CL_Editor->Group[GroupCount]->Face_Data[FaceCount].b + Offset;
+			int B1 = App->CL_Editor->Group[GroupCount]->Face_Data[FaceCount].b + Offset;
+			int C1 = App->CL_Editor->Group[GroupCount]->Face_Data[FaceCount].b + Offset;
 
-			int A2 = App->CL_Model->Group[GroupCount]->Face_Data[FaceCount].c + Offset;
-			int B2 = App->CL_Model->Group[GroupCount]->Face_Data[FaceCount].c + Offset;
-			int C2 = App->CL_Model->Group[GroupCount]->Face_Data[FaceCount].c + Offset;
+			int A2 = App->CL_Editor->Group[GroupCount]->Face_Data[FaceCount].c + Offset;
+			int B2 = App->CL_Editor->Group[GroupCount]->Face_Data[FaceCount].c + Offset;
+			int C2 = App->CL_Editor->Group[GroupCount]->Face_Data[FaceCount].c + Offset;
 
 			FaceCount++;
 
@@ -511,7 +511,7 @@ void CL64_Export::Write_ObjectFile_Commit(void)
 
 		}
 
-		Offset = Offset + App->CL_Model->Group[GroupCount]->GroupVertCount;
+		Offset = Offset + App->CL_Editor->Group[GroupCount]->GroupVertCount;
 
 		fprintf(Write_OBJECTFILE, "%s \n", " ");
 
@@ -542,11 +542,11 @@ bool CL64_Export::WriteMTLFile(void)
 	fprintf(Write_MTLFile, "%s \n", " ");
 
 	int GroupCount = 0;
-	int GroupCountTotal = App->CL_Model->GroupCount;
+	int GroupCountTotal = App->CL_Editor->GroupCount;
 
 	while (GroupCount < GroupCountTotal)
 	{
-		strcpy(buf, App->CL_Model->Group[GroupCount]->MaterialName);
+		strcpy(buf, App->CL_Editor->Group[GroupCount]->MaterialName);
 		fprintf(Write_MTLFile, "newmtl %s\n", buf);
 
 		fprintf(Write_MTLFile, "illum 2\n");
@@ -556,7 +556,7 @@ bool CL64_Export::WriteMTLFile(void)
 		fprintf(Write_MTLFile, "Ke 0.000000 0.000000 0.000000\n");
 		fprintf(Write_MTLFile, "Ns 0.000000\n");
 
-		strcpy(buf, App->CL_Model->Group[GroupCount]->Text_FileName);
+		strcpy(buf, App->CL_Editor->Group[GroupCount]->Text_FileName);
 
 		fprintf(Write_MTLFile, "map_Kd %s\n", buf);
 
@@ -578,11 +578,11 @@ bool CL64_Export::Export_Object_Textures(void)
 	char buf[MAX_PATH];
 
 	int GroupCount = 0;
-	int GroupCountTotal = App->CL_Model->GroupCount;
+	int GroupCountTotal = App->CL_Editor->GroupCount;
 
 	while (GroupCount < GroupCountTotal)
 	{
-		strcpy(buf, App->CL_Model->Group[GroupCount]->Text_FileName);
+		strcpy(buf, App->CL_Editor->Group[GroupCount]->Text_FileName);
 		App->CL_Ogre3D->Export_Texture(buf, Object_OutputFolder);
 
 		GroupCount++;

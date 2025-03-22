@@ -147,13 +147,13 @@ void CL64_Ogre3D::Export_To_Ogre3D()
 	Export_Manual->setDynamic(false);
 	Export_Manual->setCastShadows(false);
 
-	Export_Manual->estimateVertexCount(App->CL_Model->VerticeCount);
-	Export_Manual->estimateIndexCount(App->CL_Model->FaceCount);
+	Export_Manual->estimateVertexCount(App->CL_Editor->VerticeCount);
+	Export_Manual->estimateIndexCount(App->CL_Editor->FaceCount);
 
 	char MaterialNumber[MAX_PATH];
 	char MatName[MAX_PATH];
 
-	int GroupCountTotal = App->CL_Model->GroupCount;
+	int GroupCountTotal = App->CL_Editor->GroupCount;
 	int Count = 0;
 	int FaceCount = 0;
 	int FaceIndex = 0;
@@ -170,11 +170,11 @@ void CL64_Ogre3D::Export_To_Ogre3D()
 		FaceCount = 0;
 		FaceIndex = 0;
 
-		while (FaceCount < App->CL_Model->Group[Count]->GroupFaceCount)
+		while (FaceCount < App->CL_Editor->Group[Count]->GroupFaceCount)
 		{
-			A = App->CL_Model->Group[Count]->Face_Data[FaceCount].a;
-			B = App->CL_Model->Group[Count]->Face_Data[FaceCount].b;
-			C = App->CL_Model->Group[Count]->Face_Data[FaceCount].c;
+			A = App->CL_Editor->Group[Count]->Face_Data[FaceCount].a;
+			B = App->CL_Editor->Group[Count]->Face_Data[FaceCount].b;
+			C = App->CL_Editor->Group[Count]->Face_Data[FaceCount].c;
 
 			// --------------------------------------------------
 
@@ -268,7 +268,7 @@ void CL64_Ogre3D::Export_MaterialFile(char* MatFileName)
 	Ogre::String OFile;
 	Ogre::String OMatName;
 
-	int numMaterials = App->CL_Model->GroupCount;
+	int numMaterials = App->CL_Editor->GroupCount;
 
 	Ogre::MaterialManager& matMgrSgl = Ogre::MaterialManager::getSingleton();
 
@@ -281,7 +281,7 @@ void CL64_Ogre3D::Export_MaterialFile(char* MatFileName)
 		strcat(MatName, "_Material_");
 		strcat(MatName, MaterialNumber);
 
-		strcpy(File, App->CL_Model->Group[i]->Text_FileName);
+		strcpy(File, App->CL_Editor->Group[i]->Text_FileName);
 
 		OMatName = MatName;
 		OFile = File;
@@ -293,7 +293,7 @@ void CL64_Ogre3D::Export_MaterialFile(char* MatFileName)
 		{
 			ogremat->getTechnique(0)->getPass(0)->createTextureUnitState(File);
 
-			if (App->CL_Model->Group[i]->Has_Alpha == 1)
+			if (App->CL_Editor->Group[i]->Has_Alpha == 1)
 			{
 				ogremat->getTechnique(0)->getPass(0)->setAlphaRejectSettings(Ogre::CMPF_GREATER, 128);
 			}
@@ -343,19 +343,19 @@ void CL64_Ogre3D::Convert_ToOgre3D(bool Create)
 	World_Manual->setDynamic(false);
 	World_Manual->setCastShadows(false);
 
-	World_Manual->estimateVertexCount(App->CL_Model->VerticeCount);
-	World_Manual->estimateIndexCount(App->CL_Model->FaceCount);
+	World_Manual->estimateVertexCount(App->CL_Editor->VerticeCount);
+	World_Manual->estimateIndexCount(App->CL_Editor->FaceCount);
 
 	char MaterialNumber[255];
 	char MatName[255];
 
-	int GroupCountTotal = App->CL_Model->GroupCount;
+	int GroupCountTotal = App->CL_Editor->GroupCount;
 	int Count = 0;
 	int FaceCount = 0;
 	int FaceIndex = 0;
 	m_Total_Faces = 0;
 
-	if (App->CL_Model->GroupCount == 0)
+	if (App->CL_Editor->GroupCount == 0)
 	{
 		App->Say("No Groups");
 		return;
@@ -373,18 +373,18 @@ void CL64_Ogre3D::Convert_ToOgre3D(bool Create)
 		FaceCount = 0;
 		FaceIndex = 0;
 
-		m_Total_Faces = m_Total_Faces + App->CL_Model->Group[Count]->GroupFaceCount;
+		m_Total_Faces = m_Total_Faces + App->CL_Editor->Group[Count]->GroupFaceCount;
 		
-		if (App->CL_Model->Group[Count]->GroupFaceCount == 0)
+		if (App->CL_Editor->Group[Count]->GroupFaceCount == 0)
 		{
 			//App->Say("No Faces"); hgtterry Debug
 		}
 
-		while (FaceCount < App->CL_Model->Group[Count]->GroupFaceCount)
+		while (FaceCount < App->CL_Editor->Group[Count]->GroupFaceCount)
 		{
-			A = App->CL_Model->Group[Count]->Face_Data[FaceCount].a;
-			B = App->CL_Model->Group[Count]->Face_Data[FaceCount].b;
-			C = App->CL_Model->Group[Count]->Face_Data[FaceCount].c;
+			A = App->CL_Editor->Group[Count]->Face_Data[FaceCount].a;
+			B = App->CL_Editor->Group[Count]->Face_Data[FaceCount].b;
+			C = App->CL_Editor->Group[Count]->Face_Data[FaceCount].c;
 
 			// --------------------------------------------------
 
@@ -515,7 +515,7 @@ void CL64_Ogre3D::CreateMaterialFile()
 	Ogre::String OFile;
 	Ogre::String OMatName;
 
-	int numMaterials = App->CL_Model->GroupCount;
+	int numMaterials = App->CL_Editor->GroupCount;
 
 	Ogre::MaterialManager& matMgrSgl = Ogre::MaterialManager::getSingleton();
 
@@ -528,7 +528,7 @@ void CL64_Ogre3D::CreateMaterialFile()
 		strcat(MatName, "_Material_");
 		strcat(MatName, MaterialNumber);
 
-		strcpy(File, App->CL_Model->Group[i]->Text_FileName);
+		strcpy(File, App->CL_Editor->Group[i]->Text_FileName);
 		//App->Say_Win(File);
 
 		OMatName = MatName;
@@ -541,7 +541,7 @@ void CL64_Ogre3D::CreateMaterialFile()
 		{
 			ogremat->getTechnique(0)->getPass(0)->createTextureUnitState(File);
 
-			if (App->CL_Model->Group[i]->Has_Alpha == 1)
+			if (App->CL_Editor->Group[i]->Has_Alpha == 1)
 			{
 				ogremat->getTechnique(0)->getPass(0)->setAlphaRejectSettings(Ogre::CMPF_GREATER, 128);
 			}
@@ -558,16 +558,16 @@ void CL64_Ogre3D::CreateMaterialFile()
 // *************************************************************************
 void CL64_Ogre3D::Get_Data(int Index, int FaceIndex)
 {
-	x = App->CL_Model->Group[Index]->vertex_Data[FaceIndex].x;
-	y = App->CL_Model->Group[Index]->vertex_Data[FaceIndex].y;
-	z = App->CL_Model->Group[Index]->vertex_Data[FaceIndex].z;
+	x = App->CL_Editor->Group[Index]->vertex_Data[FaceIndex].x;
+	y = App->CL_Editor->Group[Index]->vertex_Data[FaceIndex].y;
+	z = App->CL_Editor->Group[Index]->vertex_Data[FaceIndex].z;
 
-	u = App->CL_Model->Group[Index]->MapCord_Data[FaceIndex].u;
-	v = App->CL_Model->Group[Index]->MapCord_Data[FaceIndex].v;
+	u = App->CL_Editor->Group[Index]->MapCord_Data[FaceIndex].u;
+	v = App->CL_Editor->Group[Index]->MapCord_Data[FaceIndex].v;
 
-	nx = App->CL_Model->Group[Index]->Normal_Data[FaceIndex].x;
-	ny = App->CL_Model->Group[Index]->Normal_Data[FaceIndex].y;
-	nz = App->CL_Model->Group[Index]->Normal_Data[FaceIndex].z;
+	nx = App->CL_Editor->Group[Index]->Normal_Data[FaceIndex].x;
+	ny = App->CL_Editor->Group[Index]->Normal_Data[FaceIndex].y;
+	nz = App->CL_Editor->Group[Index]->Normal_Data[FaceIndex].z;
 }
 
 // *************************************************************************
@@ -578,11 +578,11 @@ bool CL64_Ogre3D::DecompileTextures_TXL(char* PathAndFile)
 	char buf[MAX_PATH];
 
 	int GroupCount = 0;
-	int GroupCountTotal = App->CL_Model->GroupCount;
+	int GroupCountTotal = App->CL_Editor->GroupCount;
 
 	while (GroupCount < GroupCountTotal)
 	{
-		strcpy(buf, App->CL_Model->Group[GroupCount]->Text_FileName);
+		strcpy(buf, App->CL_Editor->Group[GroupCount]->Text_FileName);
 		Export_Texture(buf, PathAndFile);
 
 		GroupCount++;

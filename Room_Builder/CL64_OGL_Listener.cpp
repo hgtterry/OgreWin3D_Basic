@@ -242,7 +242,7 @@ void CL64_OGL_Listener::Groups_Render_Textures(void)
 	glEnable(GL_TEXTURE_2D);
 	glColor3f(1, 1, 1);
 
-	int GroupCount = App->CL_Model->GroupCount;
+	int GroupCount = App->CL_Editor->GroupCount;
 
 	//if (ShowOnlySubMesh == 1) // Show Only Selected SubMesh
 	//{
@@ -291,12 +291,12 @@ void CL64_OGL_Listener::Groups_Textured_Parts(int Count)
 	int B = 0;
 	int C = 0;
 
-	if (App->CL_Model->Group[Count]->MaterialIndex > -1)
+	if (App->CL_Editor->Group[Count]->MaterialIndex > -1)
 	{
 		glEnable(GL_TEXTURE_2D);
 		glColor3f(1, 1, 1);
 
-		glBindTexture(GL_TEXTURE_2D, g_BrushTexture[App->CL_Model->Group[Count]->MaterialIndex]);
+		glBindTexture(GL_TEXTURE_2D, g_BrushTexture[App->CL_Editor->Group[Count]->MaterialIndex]);
 
 	}
 	else
@@ -304,28 +304,28 @@ void CL64_OGL_Listener::Groups_Textured_Parts(int Count)
 		glDisable(GL_TEXTURE_2D);
 	}
 
-	while (VertCount < App->CL_Model->Group[Count]->GroupFaceCount)
+	while (VertCount < App->CL_Editor->Group[Count]->GroupFaceCount)
 	{
-		A = App->CL_Model->Group[Count]->Face_Data[VertCount].a;
-		B = App->CL_Model->Group[Count]->Face_Data[VertCount].b;
-		C = App->CL_Model->Group[Count]->Face_Data[VertCount].c;
+		A = App->CL_Editor->Group[Count]->Face_Data[VertCount].a;
+		B = App->CL_Editor->Group[Count]->Face_Data[VertCount].b;
+		C = App->CL_Editor->Group[Count]->Face_Data[VertCount].c;
 
 		glBegin(GL_POLYGON);
 
 		//-----------------------------------------------
-		glTexCoord2f(App->CL_Model->Group[Count]->MapCord_Data[A].u, App->CL_Model->Group[Count]->MapCord_Data[A].v);
-		glNormal3fv(&App->CL_Model->Group[Count]->Normal_Data[A].x);
-		glVertex3fv(&App->CL_Model->Group[Count]->vertex_Data[A].x);
+		glTexCoord2f(App->CL_Editor->Group[Count]->MapCord_Data[A].u, App->CL_Editor->Group[Count]->MapCord_Data[A].v);
+		glNormal3fv(&App->CL_Editor->Group[Count]->Normal_Data[A].x);
+		glVertex3fv(&App->CL_Editor->Group[Count]->vertex_Data[A].x);
 
 		//-----------------------------------------------
-		glTexCoord2f(App->CL_Model->Group[Count]->MapCord_Data[B].u, App->CL_Model->Group[Count]->MapCord_Data[B].v);
-		glNormal3fv(&App->CL_Model->Group[Count]->Normal_Data[B].x);
-		glVertex3fv(&App->CL_Model->Group[Count]->vertex_Data[B].x);
+		glTexCoord2f(App->CL_Editor->Group[Count]->MapCord_Data[B].u, App->CL_Editor->Group[Count]->MapCord_Data[B].v);
+		glNormal3fv(&App->CL_Editor->Group[Count]->Normal_Data[B].x);
+		glVertex3fv(&App->CL_Editor->Group[Count]->vertex_Data[B].x);
 
 		//-----------------------------------------------
-		glTexCoord2f(App->CL_Model->Group[Count]->MapCord_Data[C].u, App->CL_Model->Group[Count]->MapCord_Data[C].v);
-		glNormal3fv(&App->CL_Model->Group[Count]->Normal_Data[C].x);
-		glVertex3fv(&App->CL_Model->Group[Count]->vertex_Data[C].x);
+		glTexCoord2f(App->CL_Editor->Group[Count]->MapCord_Data[C].u, App->CL_Editor->Group[Count]->MapCord_Data[C].v);
+		glNormal3fv(&App->CL_Editor->Group[Count]->Normal_Data[C].x);
+		glVertex3fv(&App->CL_Editor->Group[Count]->vertex_Data[C].x);
 		VertCount++;
 		//-----------------------------------------------
 
@@ -340,7 +340,7 @@ void CL64_OGL_Listener::Groups_Textured_Parts(int Count)
 void CL64_OGL_Listener::Groups_Render_Faces(void)
 {
 	int Count = 0;
-	int GroupCount = App->CL_Model->GroupCount;
+	int GroupCount = App->CL_Editor->GroupCount;
 
 	if (Flag_Just_Face == 1)
 	{
@@ -368,19 +368,19 @@ void CL64_OGL_Listener::Groups_Faces_Parts(int Count)
 	int B = 0;
 	int C = 0;
 
-	while (FaceCount < App->CL_Model->Group[Count]->GroupFaceCount)
+	while (FaceCount < App->CL_Editor->Group[Count]->GroupFaceCount)
 	{
-		A = App->CL_Model->Group[Count]->Face_Data[FaceCount].a;
-		B = App->CL_Model->Group[Count]->Face_Data[FaceCount].b;
-		C = App->CL_Model->Group[Count]->Face_Data[FaceCount].c;
+		A = App->CL_Editor->Group[Count]->Face_Data[FaceCount].a;
+		B = App->CL_Editor->Group[Count]->Face_Data[FaceCount].b;
+		C = App->CL_Editor->Group[Count]->Face_Data[FaceCount].c;
 
 		glBegin(GL_POLYGON);
 
 		//-----------------------------------------------
 		
-		glVertex3fv(&App->CL_Model->Group[Count]->vertex_Data[A].x);
-		glVertex3fv(&App->CL_Model->Group[Count]->vertex_Data[B].x);
-		glVertex3fv(&App->CL_Model->Group[Count]->vertex_Data[C].x);
+		glVertex3fv(&App->CL_Editor->Group[Count]->vertex_Data[A].x);
+		glVertex3fv(&App->CL_Editor->Group[Count]->vertex_Data[B].x);
+		glVertex3fv(&App->CL_Editor->Group[Count]->vertex_Data[C].x);
 
 		FaceCount++;
 
