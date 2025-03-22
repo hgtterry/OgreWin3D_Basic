@@ -85,7 +85,7 @@ LRESULT CALLBACK CL64_Properties_Tabs::Proc_Tabs_Control(HWND hDlg, UINT message
 		SendDlgItemMessage(hDlg, IDC_TBTEXTURES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_TBTEMPLATES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_TBGROUPS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_BT_3DSETTINGS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_ED_PREVIEW, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		SetWindowLong(hDlg, GWL_EXSTYLE, GetWindowLong(hDlg, GWL_EXSTYLE) | WS_EX_LAYERED);
 		SetLayeredWindowAttributes(hDlg, RGB(213, 222, 242), 230, LWA_ALPHA);
@@ -145,10 +145,10 @@ LRESULT CALLBACK CL64_Properties_Tabs::Proc_Tabs_Control(HWND hDlg, UINT message
 			return CDRF_DODEFAULT;
 		}
 
-		if (some_item->idFrom == IDC_BT_3DSETTINGS)
+		if (some_item->idFrom == IDC_ED_PREVIEW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_3DSETTINGS));
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_ED_PREVIEW));
 			if (test == 0)
 			{
 				App->Custom_Button_Greyed(item);
@@ -195,6 +195,12 @@ LRESULT CALLBACK CL64_Properties_Tabs::Proc_Tabs_Control(HWND hDlg, UINT message
 			//App->CL_Properties_Brushes->Fill_ListBox();
 
 			RedrawWindow(App->CL_Properties_Tabs->Tabs_Control_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_ED_PREVIEW)
+		{
+			App->CL_Editor->Preview_Mode();
 			return TRUE;
 		}
 

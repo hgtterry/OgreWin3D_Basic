@@ -231,6 +231,11 @@ void CL64_Keyboard::Keyboard_Mode_Free(float deltaTime)
 {
 	if (flag_Block_Keyboard == 0)
 	{
+		if (GetAsyncKeyState(80) < 0 && App->CL_Editor->flag_PreviewMode_Running == 1) // p Key
+		{
+			App->CL_Editor->Editor_Mode();
+		}
+
 		// Forward
 		if (App->CL_Ogre->Ogre3D_Listener->Wheel < 0) // Mouse Wheel Forward
 		{
@@ -322,9 +327,9 @@ void CL64_Keyboard::Keyboard_Mode_Free(float deltaTime)
 		}
 
 		//------------------------------------------------ Escape 
-		if (GetAsyncKeyState(VK_ESCAPE) < 0) 
+		if (GetAsyncKeyState(VK_ESCAPE) < 0 && App->CL_Editor->flag_PreviewMode_Running == 1)
 		{
-
+			App->CL_Editor->Editor_Mode();
 		}
 
 		//------------------------------------------------ Space Key - Jump and Selection

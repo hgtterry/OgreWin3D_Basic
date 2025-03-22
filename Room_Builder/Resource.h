@@ -65,6 +65,7 @@
 #define IDC_TBTEXTURES                  1004
 #define IDC_TBGROUPS                    1005
 #define IDC_BT_3DSETTINGS               1006
+#define IDC_ED_PREVIEW                  1006
 #define IDC_BTINSERT                    1007
 #define IDC_GD_BRUSHLIST                1008
 #define IDC_ST_GD_GROUPS                1009

@@ -34,6 +34,9 @@ public:
 	void Create_Brush_XX(int Index);
 	void Create_Mesh_Group(int Index);
 
+	void Preview_Mode(void);
+	void Editor_Mode(void);
+
 	Base_Group* Group[5000];
 	Base_Brush* B_Brush[12000];
 
@@ -47,5 +50,8 @@ public:
 	// Brushes
 	int BrushCount;
 	int Brush_Face_Count;
+
+	bool flag_PreviewMode_Running;
+
 };
 
