@@ -155,6 +155,8 @@ void CL64_Editor::Preview_Mode(void)
 	App->CL_Ogre->mWindow->windowMovedOrResized();
 	App->CL_Ogre->mCamera->setAspectRatio((Ogre::Real)App->CL_Ogre->mWindow->getWidth() / (Ogre::Real)App->CL_Ogre->mWindow->getHeight());
 
+	App->CL_ImGui->flag_Show_Press_Excape = 1;
+
 	Root::getSingletonPtr()->renderOneFrame();
 
 	/*if (App->CL_Build_Game->flag_Use_Front_Dlg == 0)
@@ -177,6 +179,8 @@ void CL64_Editor::Preview_Mode(void)
 void CL64_Editor::Editor_Mode(void)
 {
 	flag_PreviewMode_Running = 0;
+
+	App->CL_ImGui->flag_Show_Press_Excape = 0;
 
 	SetParent(App->CL_MapEditor->Bottom_Right_Hwnd, Parent_hWnd);
 	

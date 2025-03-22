@@ -36,6 +36,7 @@ public:
 	bool flag_Show_Tool_ID_Debug;
 	bool flag_Show_Paths;
 	bool flag_Show_Render_Reports;
+	bool flag_Show_Press_Excape;
 
 private:
 
@@ -46,6 +47,8 @@ private:
 	void App_Tool_Selection_GUI(void);
 	void Paths_GUI(void);
 	void Render_Report_GUI(void);
+
+	void ImGui_Press_Excape(void);
 
 	ImFont* font0;
 	ImFont* font1;

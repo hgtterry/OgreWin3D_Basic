@@ -45,6 +45,7 @@ CL64_ImGui::CL64_ImGui()
 	flag_Show_Tool_ID_Debug = 0;
 	flag_Show_Paths = 0;
 	flag_Show_Render_Reports = 0;
+	flag_Show_Press_Excape = 0;
 }
 
 CL64_ImGui::~CL64_ImGui()
@@ -190,6 +191,11 @@ void CL64_ImGui::ImGui_Render_Loop(void)
 		Render_Report_GUI();
 	}
 	
+	if (flag_Show_Press_Excape == 1)
+	{
+		ImGui_Press_Excape();
+	}
+
 	/*if (flag_Show_ImGui_Demo == 1)
 	{
 		ImGui::ShowDemoWindow();
@@ -223,8 +229,31 @@ void CL64_ImGui::ImGui_FPS(void)
 		ImGui::Text("FPS average %.0f", ImGui::GetIO().Framerate);
 
 		ImVec2 Size = ImGui::GetWindowSize();
-		PosX = 20;// ((float)App->CL_Ogre->Ogre3D_Listener->View_Width / 2) - (Size.x / 2);
+		PosX = ((float)App->CL_Ogre->mWindow->getViewport(0)->getActualWidth() / 2) - (Size.x / 2);
 		PosY = 10;
+
+		ImGui::PopStyleColor();
+		ImGui::End();
+	}
+}
+
+// *************************************************************************
+// *				ImGui_FPS:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void CL64_ImGui::ImGui_Press_Excape(void)
+{
+	ImGui::SetNextWindowPos(ImVec2(10, 10));
+
+	ImGui::PushStyleColor(ImGuiCol_WindowBg, IM_COL32(239, 239, 239, 255));
+
+	if (!ImGui::Begin("Press Excape", &flag_Show_Press_Excape, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize
+		| ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoTitleBar))
+	{
+		ImGui::End();
+	}
+	else
+	{
+		ImGui::Text("Press Excape to Exit");
 
 		ImGui::PopStyleColor();
 		ImGui::End();

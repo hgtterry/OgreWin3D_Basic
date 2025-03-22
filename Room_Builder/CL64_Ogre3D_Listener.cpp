@@ -455,3 +455,5 @@ void CL64_Ogre3D_Listener::MoveCamera(void)
 	mCamNode->translate(mTranslateVector, Ogre::Node::TS_LOCAL); // Position Relative
 	Wheel = 0;
 }
+
+
