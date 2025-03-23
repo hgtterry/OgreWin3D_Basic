@@ -276,17 +276,25 @@ void CL64_ImGui::Press_Excape_GUI(void)
 void CL64_ImGui::Camera_Mode_GUI(void)
 {
 	ImGui::SetNextWindowPos(ImVec2(Cam_Mode_PosX, Cam_Mode_PosY));
+	ImGui::SetNextWindowSize(ImVec2(150, 160), ImGuiCond_FirstUseEver);
 
 	ImGui::PushStyleColor(ImGuiCol_WindowBg, IM_COL32(239, 239, 239, 255));
 
-	if (!ImGui::Begin("Mode", &flag_Show_Camera_Mode, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize
-		| ImGuiWindowFlags_AlwaysAutoResize ))
+	if (!ImGui::Begin("Mode", &flag_Show_Camera_Mode, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize))
 	{
 		ImGui::End();
 	}
 	else
 	{
-		ImGui::Text("Camera Mode");
+		if (ImGui::Button("Free"))
+		{
+			
+		}
+
+		if (ImGui::Button("Player"))
+		{
+			
+		}
 
 		ImVec2 Size = ImGui::GetWindowSize();
 		Cam_Mode_PosX = ((float)App->CL_Ogre->mWindow->getViewport(0)->getActualWidth()) - (Size.x) - 10;
