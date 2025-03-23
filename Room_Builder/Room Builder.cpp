@@ -72,8 +72,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     App->CL_MapEditor->Reset_Views_All();
 
-    App->CL_Ogre->Init_Ogre();
     App->CL_Bullet->Init_Bullet();
+    App->CL_Ogre->Init_Ogre();
     App->CL_Picking->Init_Picking();
 
     App->CL_Resources->Load_Texture_Resources();

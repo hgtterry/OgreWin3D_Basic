@@ -99,8 +99,15 @@ void CL64_Editor::Create_Mesh_Group(int Index)
 // *************************************************************************
 void CL64_Editor::Preview_Mode(void)
 {
-	App->CL_Bullet->Create_New_Trimesh(App->CL_Mesh_Mgr->World_Ent, App->CL_Mesh_Mgr->World_Node);
+	if (App->CL_Bullet->flag_TriMesh_Created == 1)
+	{
+		App->CL_Bullet->Clear_Trimesh();
+	}
 
+	App->CL_Bullet->Create_New_Trimesh(App->CL_Mesh_Mgr->World_Ent, App->CL_Mesh_Mgr->World_Node);
+	App->CL_Ogre->Bullet_Debug_Listener->flag_Render_Debug_Flag = 1;
+	
+	//App->CL_Bullet->Show_Debug_Area(true);
 	/*if (App->CL_Build_Game->flag_Use_Front_Dlg == 1)
 	{
 		if (App->CL_Dialogs->flag_Game_Start_Option == Enums::Game_Start_Full)
@@ -182,6 +189,12 @@ void CL64_Editor::Preview_Mode(void)
 void CL64_Editor::Editor_Mode(void)
 {
 	flag_PreviewMode_Running = 0;
+
+	if (App->CL_Bullet->flag_TriMesh_Created == 1)
+	{
+		App->CL_Bullet->Clear_Trimesh();
+		App->CL_Ogre->Bullet_Debug_Listener->flag_Render_Debug_Flag = 0;
+	}
 
 	App->CL_ImGui->flag_Show_Press_Excape = 0;
 	App->CL_ImGui->flag_Show_Camera_Mode = 0;

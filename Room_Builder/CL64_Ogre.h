@@ -30,6 +30,7 @@ THE SOFTWARE.
 #include "OgreTrays.h"
 #include "SdkSample.h"
 #include "CL64_OGL_Listener.h"
+#include "CL64_Bullet_Debug.h"
 
 using namespace Ogre;
 using namespace OgreBites;
@@ -73,8 +74,9 @@ public:
 
 	Ogre::OverlaySystem* mOverlaySystem;
 
-	CL64_Ogre3D_Listener* Ogre3D_Listener;
-	CL64_OGL_Listener* OGL_Listener;
+	CL64_Ogre3D_Listener*	Ogre3D_Listener;
+	CL64_OGL_Listener*		OGL_Listener;
+	CL64_Bullet_Debug*		Bullet_Debug_Listener;
 
 	Ogre::Timer FPStimer;
 	Ogre::Timer Processes_timer;

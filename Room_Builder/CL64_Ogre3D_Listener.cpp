@@ -63,6 +63,10 @@ CL64_Ogre3D_Listener::~CL64_Ogre3D_Listener()
 // *************************************************************************
 bool CL64_Ogre3D_Listener::frameStarted(const FrameEvent& evt)
 {
+	//if (flag_Run_Physics == 1 && App->flag_OgreStarted == 1)
+	//{
+	App->CL_Bullet->dynamicsWorld->stepSimulation(evt.timeSinceLastFrame * 5);
+
 
 	return true;
 }
@@ -74,6 +78,13 @@ bool CL64_Ogre3D_Listener::frameRenderingQueued(const FrameEvent& evt)
 {
 	Ogre::ImGuiOverlay::NewFrame();
 	App->CL_ImGui->ImGui_Render_Loop();
+
+	
+	if (App->CL_Bullet->flag_TriMesh_Created == 1)
+	{
+		App->CL_Bullet->dynamicsWorld->debugDrawWorld();
+	}
+
 
 	if (CameraMode == Enums::Cam_Mode_None)
 	{

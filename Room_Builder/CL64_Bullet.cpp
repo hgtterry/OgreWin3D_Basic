@@ -56,13 +56,10 @@ void CL64_Bullet::Init_Bullet()
 {
 	collisionConfiguration = new btDefaultCollisionConfiguration();
 
-	///use the default collision dispatcher. For parallel processing you can use a diffent dispatcher (see Extras/BulletMultiThreaded)
 	dispatcher = new	btCollisionDispatcher(collisionConfiguration);
 
-	///btDbvtBroadphase is a good general purpose broadphase. You can also try out btAxis3Sweep.
 	overlappingPairCache = new btDbvtBroadphase();
 
-	///the default constraint solver. For parallel processing you can use a different solver (see Extras/BulletMultiThreaded)
 	solver = new btSequentialImpulseConstraintSolver;
 
 	dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher, overlappingPairCache, solver, collisionConfiguration);
@@ -279,7 +276,7 @@ void CL64_Bullet::Clear_Trimesh()
 // *************************************************************************
 void CL64_Bullet::Show_Debug_Area(bool Show)
 {
-	/*int f = Phys_Body->getCollisionFlags();
+	int f = Phys_Body->getCollisionFlags();
 
 	if (Show == 1)
 	{
@@ -292,7 +289,7 @@ void CL64_Bullet::Show_Debug_Area(bool Show)
 
 	App->CL_Ogre->Bullet_Debug_Listener->flag_Render_Debug_Flag = 0;
 	App->CL_Ogre->RenderFrame(1);
-	App->CL_Ogre->Bullet_Debug_Listener->flag_Render_Debug_Flag = 1;*/
+	App->CL_Ogre->Bullet_Debug_Listener->flag_Render_Debug_Flag = 1;
 }
 
 // *************************************************************************

@@ -39,8 +39,9 @@ CL64_Ogre::CL64_Ogre()
 	manObj =	nullptr;
 	ModelNode = nullptr;
 
-	Ogre3D_Listener =	nullptr;
-	OGL_Listener =		nullptr;
+	Ogre3D_Listener =		nullptr;
+	OGL_Listener =			nullptr;
+	Bullet_Debug_Listener = nullptr;
 
 	mResourcePath = "";
 	Return_Chr[0] = 0;
@@ -323,6 +324,14 @@ bool CL64_Ogre::Init_CreateFrameListener(void)
 
 		OGL_Listener = new CL64_OGL_Listener();
 		mSceneMgr->addRenderQueueListener(OGL_Listener);
+
+		Bullet_Debug_Listener = new CL64_Bullet_Debug();
+		mSceneMgr->addRenderQueueListener(Bullet_Debug_Listener);
+
+		Bullet_Debug_Listener->setDebugMode(Bullet_Debug_Listener->getDebugMode()
+			| btIDebugDraw::DBG_MAX_DEBUG_DRAW_MODE);
+		App->CL_Bullet->dynamicsWorld->setDebugDrawer(Bullet_Debug_Listener);
+
 	}
 	else
 	{
