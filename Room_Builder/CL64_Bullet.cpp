@@ -288,7 +288,7 @@ void CL64_Bullet::Show_Debug_Area(bool Show)
 	}
 
 	App->CL_Ogre->Bullet_Debug_Listener->flag_Render_Debug_Flag = 0;
-	App->CL_Ogre->RenderFrame(1);
+	App->CL_Ogre->Bullet_Debug_Listener->Clear_Debug_Render();
 	App->CL_Ogre->Bullet_Debug_Listener->flag_Render_Debug_Flag = 1;
 }
 

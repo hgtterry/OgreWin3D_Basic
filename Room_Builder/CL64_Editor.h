@@ -54,6 +54,7 @@ public:
 	HWND Parent_hWnd;
 
 	bool flag_PreviewMode_Running;
-
+	bool flag_Show_Debug_Area;
+	bool flag_Enable_Physics_Debug;
 };
 

@@ -42,6 +42,7 @@ CL64_Editor::CL64_Editor()
 	Parent_hWnd = NULL;
 
 	flag_PreviewMode_Running = 0;
+	flag_Show_Debug_Area = 0;
 
 	int Count = 0;
 	while (Count < 11999)
@@ -107,50 +108,17 @@ void CL64_Editor::Preview_Mode(void)
 	App->CL_Bullet->Create_New_Trimesh(App->CL_Mesh_Mgr->World_Ent, App->CL_Mesh_Mgr->World_Node);
 	App->CL_Ogre->Bullet_Debug_Listener->flag_Render_Debug_Flag = 1;
 	
-	//App->CL_Bullet->Show_Debug_Area(true);
-	/*if (App->CL_Build_Game->flag_Use_Front_Dlg == 1)
-	{
-		if (App->CL_Dialogs->flag_Game_Start_Option == Enums::Game_Start_Full)
-		{
-			App->CL_Ogre->Ogre3D_Listener->flag_Block_Mouse = 1;
-			App->CL_Keyboard->flag_Block_Keyboard = 1;
-			App->flag_Block_Mouse_Buttons = 1;
-			App->CL_Front_Dialog->flag_Show_Front_Dlg_Flag = 1;
-		}
-		else
-		{
-			SetCapture(App->ViewGLhWnd);
-			App->CL_Ogre->Ogre3D_Listener->flag_LeftMouseDown = 1;
-			App->CUR = SetCursor(NULL);
-			App->CL_Front_Dialog->flag_Game_Running_Flag = 1;
-		}
-	}
-
-	App->CL_ImGui->flag_Show_FPS = App->CL_Build_Game->flag_Show_FPS;*/
-
 	flag_PreviewMode_Running = 1;
-
-	//App->CL_Ogre->Bullet_Debug_Listener->Render_Debug_Flag = 0;
-
-	/*App->CL_Grid->Grid_SetVisible(false);
-	App->CL_Grid->Hair_SetVisible(false);
-	App->CL_Gizmos->Show_MarkerBox(false);*/
-
-	//App->CL_Com_Environments->Set_Environment_GameMode(true);
-
-	//App->CL_Ogre->Ogre3D_Listener->Run_Physics = 1;
-
-	//CurrentCamMode = App->CL_Ogre->Ogre3D_Listener->CameraMode;
-
-	//App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_First;
-
-	//Show_Entities(false); // Hide All Visible Trigers
 
 	Parent_hWnd = GetParent(App->CL_MapEditor->Bottom_Right_Hwnd);
 
 	App->CL_Properties_Tabs->Enable_Tabs_Dlg(false);
 
-	SetCursorPos(App->CursorPosX, App->CursorPosY);
+	App->CL_Ogre->OGL_Listener->Flag_Show_Selected_Brush = 0;
+	App->CL_Ogre->OGL_Listener->Flag_Show_Selected_Face = 0;
+
+
+	//SetCursorPos(App->CursorPosX, App->CursorPosY);
 
 	int cx = GetSystemMetrics(SM_CXSCREEN);
 	int cy = GetSystemMetrics(SM_CYSCREEN);
@@ -168,18 +136,6 @@ void CL64_Editor::Preview_Mode(void)
 	App->CL_ImGui->flag_Show_Camera_Mode = 1;
 
 	Root::getSingletonPtr()->renderOneFrame();
-
-	/*if (App->CL_Build_Game->flag_Use_Front_Dlg == 0)
-	{
-		SetCapture(App->ViewGLhWnd);
-		App->CL_Ogre->Ogre3D_Listener->flag_LeftMouseDown = 1;
-		App->CUR = SetCursor(NULL);
-	}
-
-	App->CL_Physics->Reset_Triggers();
-
-	App->CL_ImGui_Dialogs->flag_Show_Physics_Console = 0;
-	App->CL_Com_Player->Show_Player_And_Physics(false);*/
 
 }
 
@@ -206,43 +162,7 @@ void CL64_Editor::Editor_Mode(void)
 
 	App->CL_Properties_Tabs->Enable_Tabs_Dlg(true);
 	
-	//App->CL_Front_Dialog->flag_Show_Front_Dlg_Flag = 0; // temp
-
-	//flag_GameMode_Running = 0;
-	//flag_FullScreen_Mode = 0;
-
-	////App->CL_Ogre->BulletListener->Render_Debug_Flag = 1;
-
-	//App->CL_Grid->Grid_SetVisible(true);
-	//App->CL_Grid->Hair_SetVisible(true);
-
-	//App->CL_Ogre->Ogre3D_Listener->flag_LeftMouseDown = 0;
-	//ReleaseCapture();
-	//SetCursor(App->CUR);
-
-	//if (App->CL_Scene->flag_Scene_Loaded == 1)
-	//{
-	//	App->CL_Com_Environments->Set_Environment_GameMode(false);
-
-	//	Show_Entities(true); // Show All Visible Trigers
-
-	//	App->CL_Physics->Reset_Triggers();
-	//}
-
-
-	//App->CL_Ogre->Ogre3D_Listener->CameraMode = CurrentCamMode;
-
-	//if (CurrentCamMode == Enums::Cam_Mode_Free)
-	//{
-	//	App->CL_Com_Player->Show_Player_And_Physics(true);
-	//}
-	//else
-	//{
-	//	App->CL_Com_Player->Show_Player_And_Physics(false);
-	//}
-
-	//App->CL_ImGui->flag_Show_FPS = App->CL_Build_Game->flag_Saved_Show_FPS;
-
-	//App->CL_ImGui_Dialogs->flag_Show_Physics_Console = 1;
+	App->CL_Ogre->OGL_Listener->Flag_Show_Selected_Brush = 1;
+	App->CL_Ogre->OGL_Listener->Flag_Show_Selected_Face = 1;
 
 }

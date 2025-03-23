@@ -276,24 +276,60 @@ void CL64_ImGui::Press_Excape_GUI(void)
 void CL64_ImGui::Camera_Mode_GUI(void)
 {
 	ImGui::SetNextWindowPos(ImVec2(Cam_Mode_PosX, Cam_Mode_PosY));
-	ImGui::SetNextWindowSize(ImVec2(150, 160), ImGuiCond_FirstUseEver);
+	ImGui::SetNextWindowSize(ImVec2(165, 160), ImGuiCond_FirstUseEver);
 
 	ImGui::PushStyleColor(ImGuiCol_WindowBg, IM_COL32(239, 239, 239, 255));
+	ImGuiStyle* style = &ImGui::GetStyle();
 
-	if (!ImGui::Begin("Mode", &flag_Show_Camera_Mode, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize))
+	if (!ImGui::Begin("Options", NULL, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize))
 	{
 		ImGui::End();
 	}
 	else
 	{
-		if (ImGui::Button("Free"))
+		/*if (ImGui::Button("Free"))
+		{
+			
+		}*/
+		style->Colors[ImGuiCol_Button] = ImVec4(1.0f, 1.0f, 1.0f, 1.00f);
+		if (ImGui::Button("Test", ImVec2(150, 30)))
 		{
 			
 		}
 
-		if (ImGui::Button("Player"))
+		if (App->CL_Editor->flag_Show_Debug_Area == 1)
 		{
-			
+			style->Colors[ImGuiCol_Button] = ImVec4(0.0f, 1.0f, 0.0f, 1.00f);
+		}
+		else
+		{
+			style->Colors[ImGuiCol_Button] = ImVec4(1.0f, 1.0f, 1.0f, 1.00f);
+		}
+
+		if (ImGui::Button("Physics Debug", ImVec2(150, 30)))
+		{
+			if (App->CL_Editor->flag_Show_Debug_Area == 1)
+			{
+				App->CL_Bullet->Show_Debug_Area(false);
+				App->CL_Editor->flag_Show_Debug_Area = 0;
+			}
+			else
+			{
+				App->CL_Bullet->Show_Debug_Area(true);
+				App->CL_Editor->flag_Show_Debug_Area = 1;
+			}
+		}
+
+		ImGui::Spacing();
+		ImGui::Spacing();
+		ImGui::Separator();
+		ImGui::Spacing();
+		ImGui::Spacing();
+
+		style->Colors[ImGuiCol_Button] = ImVec4(0.26f, 0.59f, 0.98f, 0.40f);
+		if (ImGui::Button("Exit-Return", ImVec2(150, 30)))
+		{
+			App->CL_Editor->Editor_Mode();
 		}
 
 		ImVec2 Size = ImGui::GetWindowSize();
