@@ -73,6 +73,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     App->CL_MapEditor->Reset_Views_All();
 
     App->CL_Ogre->Init_Ogre();
+    App->CL_Bullet->Init_Bullet();
     App->CL_Picking->Init_Picking();
 
     App->CL_Resources->Load_Texture_Resources();
@@ -700,6 +701,10 @@ void Close_App()
         App->CL_Ogre->mRoot = NULL;
     }
 
+    App->CL_Bullet->ShutDown_Bullet();
+
+    ImGui::DestroyContext();
+
     // Delete Contents of working folder
     char mWorld_File_PathAndFile[MAX_PATH];
     strcpy(mWorld_File_PathAndFile, App->RB_Directory_FullPath);
@@ -708,8 +713,6 @@ void Close_App()
     strcat(mWorld_File_PathAndFile, "\\");
     strcat(mWorld_File_PathAndFile, "World_Test");
     App->CL_Utilities->Delete_Folder_Contents(mWorld_File_PathAndFile);
-
-
 
     PostQuitMessage(0);
 }

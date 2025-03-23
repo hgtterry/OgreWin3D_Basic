@@ -99,6 +99,8 @@ void CL64_Editor::Create_Mesh_Group(int Index)
 // *************************************************************************
 void CL64_Editor::Preview_Mode(void)
 {
+	App->CL_Bullet->Create_New_Trimesh(App->CL_Mesh_Mgr->World_Ent, App->CL_Mesh_Mgr->World_Node);
+
 	/*if (App->CL_Build_Game->flag_Use_Front_Dlg == 1)
 	{
 		if (App->CL_Dialogs->flag_Game_Start_Option == Enums::Game_Start_Full)

@@ -67,6 +67,7 @@ THE SOFTWARE.
 #include "CL64_Resources.h"
 #include "CL64_Picking.h"
 #include "CL64_Camera.h"
+#include "CL64_Bullet.h"
 
 // Templates Dialogs
 #include "A_CreateBoxDialog.h"
@@ -123,6 +124,7 @@ public:
 	CL64_Resources*				CL_Resources;
 	CL64_Picking*				CL_Picking;
 	CL64_Camera*				CL_Camera;
+	CL64_Bullet*				CL_Bullet;
 
 	// Templates Dialogs
 	A_CreateBoxDialog*			CL_CreateBoxDialog;
