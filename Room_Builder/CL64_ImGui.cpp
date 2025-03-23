@@ -39,6 +39,9 @@ CL64_ImGui::CL64_ImGui()
 	PosX = 500;
 	PosY = 500;
 
+	Cam_Mode_PosX = 10;
+	Cam_Mode_PosY = 10;
+
 	flag_Show_FPS = 1;
 	flag_StartPos = 0;
 
@@ -46,6 +49,8 @@ CL64_ImGui::CL64_ImGui()
 	flag_Show_Paths = 0;
 	flag_Show_Render_Reports = 0;
 	flag_Show_Press_Excape = 0;
+	flag_Show_Camera_Mode = 0;
+
 }
 
 CL64_ImGui::~CL64_ImGui()
@@ -193,9 +198,14 @@ void CL64_ImGui::ImGui_Render_Loop(void)
 	
 	if (flag_Show_Press_Excape == 1)
 	{
-		ImGui_Press_Excape();
+		Press_Excape_GUI();
 	}
 
+	if (flag_Show_Camera_Mode == 1)
+	{
+		Camera_Mode_GUI();
+	}
+	
 	/*if (flag_Show_ImGui_Demo == 1)
 	{
 		ImGui::ShowDemoWindow();
@@ -238,9 +248,9 @@ void CL64_ImGui::ImGui_FPS(void)
 }
 
 // *************************************************************************
-// *				ImGui_FPS:- Terry and Hazel Flanigan 2024			   *
+// *		Press_Excape_GUI:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-void CL64_ImGui::ImGui_Press_Excape(void)
+void CL64_ImGui::Press_Excape_GUI(void)
 {
 	ImGui::SetNextWindowPos(ImVec2(10, 10));
 
@@ -254,6 +264,33 @@ void CL64_ImGui::ImGui_Press_Excape(void)
 	else
 	{
 		ImGui::Text("Press Excape to Exit");
+
+		ImGui::PopStyleColor();
+		ImGui::End();
+	}
+}
+
+// *************************************************************************
+// *			Camera_Mode_GUI:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void CL64_ImGui::Camera_Mode_GUI(void)
+{
+	ImGui::SetNextWindowPos(ImVec2(Cam_Mode_PosX, Cam_Mode_PosY));
+
+	ImGui::PushStyleColor(ImGuiCol_WindowBg, IM_COL32(239, 239, 239, 255));
+
+	if (!ImGui::Begin("Mode", &flag_Show_Camera_Mode, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize
+		| ImGuiWindowFlags_AlwaysAutoResize ))
+	{
+		ImGui::End();
+	}
+	else
+	{
+		ImGui::Text("Camera Mode");
+
+		ImVec2 Size = ImGui::GetWindowSize();
+		Cam_Mode_PosX = ((float)App->CL_Ogre->mWindow->getViewport(0)->getActualWidth()) - (Size.x) - 10;
+		Cam_Mode_PosY = 10;
 
 		ImGui::PopStyleColor();
 		ImGui::End();

@@ -37,6 +37,7 @@ public:
 	bool flag_Show_Paths;
 	bool flag_Show_Render_Reports;
 	bool flag_Show_Press_Excape;
+	bool flag_Show_Camera_Mode;
 
 private:
 
@@ -48,7 +49,8 @@ private:
 	void Paths_GUI(void);
 	void Render_Report_GUI(void);
 
-	void ImGui_Press_Excape(void);
+	void Press_Excape_GUI(void);
+	void Camera_Mode_GUI(void);
 
 	ImFont* font0;
 	ImFont* font1;
@@ -58,6 +60,9 @@ private:
 
 	float PosX;
 	float PosY;
+
+	float Cam_Mode_PosX;
+	float Cam_Mode_PosY;
 
 	bool flag_Show_FPS;
 	bool flag_StartPos;

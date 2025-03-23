@@ -156,6 +156,7 @@ void CL64_Editor::Preview_Mode(void)
 	App->CL_Ogre->mCamera->setAspectRatio((Ogre::Real)App->CL_Ogre->mWindow->getWidth() / (Ogre::Real)App->CL_Ogre->mWindow->getHeight());
 
 	App->CL_ImGui->flag_Show_Press_Excape = 1;
+	App->CL_ImGui->flag_Show_Camera_Mode = 1;
 
 	Root::getSingletonPtr()->renderOneFrame();
 
@@ -181,6 +182,7 @@ void CL64_Editor::Editor_Mode(void)
 	flag_PreviewMode_Running = 0;
 
 	App->CL_ImGui->flag_Show_Press_Excape = 0;
+	App->CL_ImGui->flag_Show_Camera_Mode = 0;
 
 	SetParent(App->CL_MapEditor->Bottom_Right_Hwnd, Parent_hWnd);
 	
