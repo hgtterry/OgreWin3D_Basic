@@ -23,6 +23,7 @@ THE SOFTWARE.
 */
 #include "Base_Brush.h"
 #include "Base_Group.h"
+#include "Base_Player.h"
 
 #pragma once
 class CL64_Editor
@@ -51,10 +52,17 @@ public:
 	int BrushCount;
 	int Brush_Face_Count;
 
+	// Player
+	int Player_Count;
+	bool flag_Player_Added;
+
 	HWND Parent_hWnd;
 
 	bool flag_PreviewMode_Running;
 	bool flag_Show_Debug_Area;
 	bool flag_Enable_Physics_Debug;
+
+	std::vector<Base_Player*> B_Player;
+
 };
 

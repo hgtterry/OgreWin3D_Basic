@@ -113,4 +113,10 @@ namespace Enums
 		Selected_View_TR = 3,
 		Selected_View_BL = 4
 	};
+
+	enum Usage
+	{
+		Usage_None = -1,
+		Usage_Player = 2
+	};
 }

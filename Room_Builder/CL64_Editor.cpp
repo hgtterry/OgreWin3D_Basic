@@ -28,6 +28,7 @@ THE SOFTWARE.
 
 CL64_Editor::CL64_Editor()
 {
+	
 	// Groups
 	GroupCount = 0;
 	VerticeCount = 0;
@@ -37,12 +38,17 @@ CL64_Editor::CL64_Editor()
 	BrushCount = 0;
 	Brush_Face_Count = 0;
 
+	// Player
+	Player_Count = 0;
+	flag_Player_Added = 0;
+
 	JustName[0] = 0;
 
 	Parent_hWnd = NULL;
 
 	flag_PreviewMode_Running = 0;
 	flag_Show_Debug_Area = 0;
+	flag_Enable_Physics_Debug = 0;
 
 	int Count = 0;
 	while (Count < 11999)
@@ -57,6 +63,8 @@ CL64_Editor::CL64_Editor()
 		Group[Count] = nullptr;
 		Count++;
 	}
+
+	B_Player.reserve(20);
 
 }
 

@@ -74,6 +74,8 @@ CL64_App::CL64_App(void)
 	CL_Camera =					nullptr;
 	CL_Bullet =					nullptr;
 
+	CL_Com_Player =				nullptr;
+
 	// Templates Dialogs
 	CL_CreateBoxDialog =		nullptr;
 	CL_CreateCylDialog =		nullptr;
@@ -176,6 +178,8 @@ void CL64_App::InitApp(void)
 	CL_Camera =					new CL64_Camera();
 	CL_Bullet =					new CL64_Bullet();
 	
+	CL_Com_Player =				new CL64_Com_Player();
+
 	// Templates Dialogs
 	CL_CreateBoxDialog =		new A_CreateBoxDialog();
 	CL_CreateCylDialog =		new A_CreateCylDialog();
