@@ -52,6 +52,7 @@ CL64_Ogre3D_Listener::CL64_Ogre3D_Listener()
 	CameraMode = Enums::Cam_Mode_Model;
 
 	flag_StopOgre = 0;
+	flag_Run_Physics = 0;
 }
 
 CL64_Ogre3D_Listener::~CL64_Ogre3D_Listener()
@@ -63,9 +64,10 @@ CL64_Ogre3D_Listener::~CL64_Ogre3D_Listener()
 // *************************************************************************
 bool CL64_Ogre3D_Listener::frameStarted(const FrameEvent& evt)
 {
-	//if (flag_Run_Physics == 1 && App->flag_OgreStarted == 1)
-	//{
-	App->CL_Bullet->dynamicsWorld->stepSimulation(evt.timeSinceLastFrame * 5);
+	if (flag_Run_Physics == 1 && App->flag_OgreStarted == 1)
+	{
+		App->CL_Bullet->dynamicsWorld->stepSimulation(evt.timeSinceLastFrame * 5);
+	}
 
 
 	return true;

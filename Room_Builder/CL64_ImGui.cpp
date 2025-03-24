@@ -311,11 +311,13 @@ void CL64_ImGui::Camera_Mode_GUI(void)
 			if (App->CL_Editor->flag_Show_Debug_Area == 1)
 			{
 				App->CL_Bullet->Show_Debug_Area(false);
+				App->CL_Com_Player->Show_Physics(false);
 				App->CL_Editor->flag_Show_Debug_Area = 0;
 			}
 			else
 			{
 				App->CL_Bullet->Show_Debug_Area(true);
+				App->CL_Com_Player->Show_Physics(true);
 				App->CL_Editor->flag_Show_Debug_Area = 1;
 			}
 		}

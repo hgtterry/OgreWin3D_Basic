@@ -85,6 +85,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	App->CL_Ogre->Clear_ErrorLog();
 	App->Init_Dialogs();
 	App->CL_File_IO->Init_History();
+	App->CL_Com_Player->Create_Player_Object();
 
 	MSG  msg;
 	while (PeekMessage(&msg, NULL, 0U, 0U, PM_REMOVE))

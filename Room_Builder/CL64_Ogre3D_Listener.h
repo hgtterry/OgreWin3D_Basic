@@ -69,5 +69,6 @@ public:
 	Vector3	mTranslateVector;
 
 	bool flag_StopOgre;
+	bool flag_Run_Physics;
 };
 

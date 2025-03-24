@@ -123,7 +123,7 @@ void CL64_Com_Player::Initialize() const
 	pBase->Player_Node->attachObject(pBase->Player_Ent);
 	
 	pBase->Player_Node->setOrientation(Ogre::Quaternion::IDENTITY);
-	pBase->Player_Node->setVisible(true);
+	pBase->Player_Node->setVisible(false);
 	pBase->Player_Node->scale(3, 3, 3);
 
 	Pos.x = pBase->StartPos.x;
@@ -156,6 +156,7 @@ void CL64_Com_Player::Initialize() const
 	App->CL_Bullet->dynamicsWorld->addRigidBody(pBase->Phys_Body);
 
 	App->CL_Editor->flag_Player_Added = 1;
+	
 }
 
 // *************************************************************************
