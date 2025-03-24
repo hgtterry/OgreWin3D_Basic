@@ -198,6 +198,12 @@
     <ClInclude Include="CL64_Bullet_Debug.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Base_Player.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CL64_Com_Player.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Room Builder.cpp">
@@ -375,6 +381,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CL64_Bullet_Debug.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Base_Player.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CL64_Com_Player.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
