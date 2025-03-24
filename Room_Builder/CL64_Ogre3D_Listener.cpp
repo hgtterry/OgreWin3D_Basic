@@ -93,6 +93,35 @@ bool CL64_Ogre3D_Listener::frameRenderingQueued(const FrameEvent& evt)
 		return 1;
 	}
 
+	if (CameraMode == Enums::Cam_Mode_First)
+	{
+		Ogre::Vector3 Pos;
+		Ogre::Radian mmPitch;
+		Ogre::Radian mYaw;
+
+		Pos = App->CL_Editor->B_Player[0]->Player_Node->getPosition();
+
+		mmPitch = App->CL_Editor->B_Player[0]->CameraPitch_Node->getOrientation().getPitch();
+		mYaw = App->CL_Editor->B_Player[0]->Player_Node->getOrientation().getYaw();
+		Pos.y = Pos.y + App->CL_Editor->B_Player[0]->PlayerHeight;
+
+		App->CL_Ogre->camNode->setPosition(Pos);
+		App->CL_Ogre->camNode->setOrientation(Ogre::Quaternion(1, 0, 0, 0));
+		App->CL_Ogre->camNode->yaw(mYaw);
+		App->CL_Ogre->camNode->pitch(mmPitch);
+		App->CL_Ogre->camNode->yaw(Ogre::Degree(180));
+
+		App->CL_Keyboard->Keyboard_Mode_First(evt.timeSinceLastFrame);
+
+		App->CL_Com_Player->Update_Player(NULL, evt.timeSinceLastFrame);
+
+		if (flag_LeftMouseDown == 1 && flag_RightMouseDown == 0)
+		{
+			Capture_Mouse_FirstPerson(evt.timeSinceLastFrame);
+			SetCursorPos(App->CursorPosX, App->CursorPosY);
+		}
+	}
+
 	if (CameraMode == Enums::Cam_Mode_Model)
 	{
 		Mode_Camera_Model(evt.timeSinceLastFrame);
@@ -121,6 +150,94 @@ bool CL64_Ogre3D_Listener::frameEnded(const FrameEvent& evt)
 	return true;
 }
 
+// *************************************************************************
+// *	Capture_Mouse_FirstPerson_World:- Terry and Hazel Flanigan 2024	   *
+// *************************************************************************
+bool CL64_Ogre3D_Listener::Capture_Mouse_FirstPerson(float DeltaTime)
+{
+	/*if (flag_Block_Mouse == 1)
+	{
+		return 0;
+	}*/
+
+	GetCursorPos(&Mouse_point);
+
+	Pl_MouseX = (int(Mouse_point.x));
+	Pl_MouseY = (int(Mouse_point.y));
+
+	// Left Right
+	if (Pl_MouseX < Pl_Cent500X)
+	{
+		long test = Pl_Cent500X - Pl_MouseX; // Rotate Left
+		if (test > 2)
+		{
+			Pl_DeltaMouse = float(Pl_Cent500X - Pl_MouseX);
+
+			float Delta2 = DeltaTime * 150;
+			float mTurn = (App->CL_Editor->B_Player[0]->TurnRate * Pl_DeltaMouse) * Delta2;
+
+			App->CL_Editor->B_Player[0]->Rotate_FromCam(Ogre::Vector3(0, -1, 0), mTurn, false);
+
+		}
+	}
+	else if (Pl_MouseX > Pl_Cent500X)
+	{
+		long test = Pl_MouseX - Pl_Cent500X; // Rotate Right
+
+		if (test > 2)
+		{
+			Pl_DeltaMouse = float(Pl_MouseX - Pl_Cent500X);
+
+			float Delta2 = DeltaTime * 150;
+			float mTurn = (App->CL_Editor->B_Player[0]->TurnRate * Pl_DeltaMouse) * Delta2;
+
+			App->CL_Editor->B_Player[0]->Rotate_FromCam(Ogre::Vector3(0, 1, 0), mTurn, false);
+		}
+	}
+
+	//Up Down
+	if (Pl_MouseY < Pl_Cent500Y)
+	{
+		long test = Pl_Cent500Y - Pl_MouseY; // Look Up
+
+		if (test > 1)
+		{
+			float Limit = App->CL_Editor->B_Player[0]->CameraPitch_Node->getOrientation().getPitch().valueDegrees();
+
+			//if (Limit > App->CL_Scene->B_Player[0]->Limit_Look_Up)
+			{
+
+			}
+			//else
+			{
+				Pl_DeltaMouse = float(Pl_Cent500Y - Pl_MouseY);
+				Ogre::Radian pp = Degree(-Pl_DeltaMouse * DeltaTime) * 1;
+				App->CL_Editor->B_Player[0]->CameraPitch_Node->pitch(pp);
+			}
+		}
+
+	}
+	else if (Pl_MouseY > Pl_Cent500Y)
+	{
+		long test = Pl_MouseY - Pl_Cent500Y; // Look Down
+
+		if (test > 1)
+		{
+			//if (App->CL_Scene->B_Player[0]->CameraPitch_Node->getOrientation().getPitch().valueDegrees() < -App->CL_Scene->B_Player[0]->Limit_Look_Down)
+			{
+
+			}
+			//else
+			{
+				Pl_DeltaMouse = float(Pl_MouseY - Pl_Cent500Y);
+				Ogre::Radian pp = Degree(Pl_DeltaMouse * DeltaTime) * 1;
+				App->CL_Editor->B_Player[0]->CameraPitch_Node->pitch(pp);
+			}
+		}
+	}
+
+	return 1;
+}
 // *************************************************************************
 // *		Mode_Camera_Model:- Terry and Hazel Flanigan 2025  			   *
 // *************************************************************************
@@ -415,7 +532,7 @@ void CL64_Ogre3D_Listener::Capture_Right_Mouse_Free(void)
 		}
 	}
 
-	//// Up Down
+	// Up Down
 	if (Pl_MouseY < Pl_Cent500Y)
 	{
 		long test = Pl_Cent500Y - Pl_MouseY; // Positive

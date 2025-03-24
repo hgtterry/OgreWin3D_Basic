@@ -36,6 +36,8 @@ public:
 	bool frameEnded(const FrameEvent& evt);
 	bool frameRenderingQueued(const FrameEvent& evt);
 
+	bool Capture_Mouse_FirstPerson(float DeltaTime);
+
 	void Mode_Camera_Model(float DeltaTime);
 	void Capture_LeftMouse_Model(void);
 	void Capture_RightMouse_Model(void);
