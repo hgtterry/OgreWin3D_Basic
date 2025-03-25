@@ -34,12 +34,14 @@ CL64_Keyboard::~CL64_Keyboard(void)
 // *************************************************************************
 void CL64_Keyboard::Keyboard_Mode_First(float deltaTime)
 {
+	//App->Flash_Window();
+
 	if (GetAsyncKeyState(80) < 0) // p Key
 	{
 		App->CL_Editor->Editor_Mode();
 	}
 
-	if (flag_Block_Keyboard == 0)
+	//if (flag_Block_Keyboard == 0)
 	{
 		//	------------------------------------------------ Move Forward
 		if (GetAsyncKeyState(87) < 0) // W Key

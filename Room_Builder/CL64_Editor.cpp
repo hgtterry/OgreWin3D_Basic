@@ -152,6 +152,9 @@ void CL64_Editor::Preview_Mode(void)
 // *************************************************************************
 void CL64_Editor::Editor_Mode(void)
 {
+	App->CL_Ogre->Ogre3D_Listener->flag_Run_Physics = 0;
+	App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_Free;
+
 	flag_PreviewMode_Running = 0;
 
 	if (App->CL_Bullet->flag_TriMesh_Created == 1)

@@ -64,11 +64,7 @@ CL64_Ogre3D_Listener::~CL64_Ogre3D_Listener()
 // *************************************************************************
 bool CL64_Ogre3D_Listener::frameStarted(const FrameEvent& evt)
 {
-	if (flag_Run_Physics == 1 && App->flag_OgreStarted == 1)
-	{
-		App->CL_Bullet->dynamicsWorld->stepSimulation(evt.timeSinceLastFrame * 5);
-	}
-
+	Update_Game_Logic(evt.timeSinceLastFrame);
 
 	return true;
 }
@@ -148,6 +144,99 @@ bool CL64_Ogre3D_Listener::frameEnded(const FrameEvent& evt)
 	}
 
 	return true;
+}
+
+// *************************************************************************
+// *			Update_Game_Logic:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+void CL64_Ogre3D_Listener::Update_Game_Logic(float DeltaTime)
+{
+	/*Get_View_Height_Width();
+
+	int Count = 0;
+	while (Count < App->CL_Scene->Counters_Count)
+	{
+		if (App->CL_Scene->B_Counter)
+		{
+			if (App->CL_Scene->B_Counter[Count]->flag_Show_Panel_Flag == 1)
+			{
+				App->CL_Scene->B_Counter[Count]->Render_ImGui_Panel();
+			}
+		}
+
+		Count++;
+	}*/
+
+	/*Count = 0;
+	while (Count < App->CL_Scene->Object_Count)
+	{
+		if (App->CL_Scene->B_Object[Count]->Usage == Enums::Obj_Usage_Message)
+		{
+			if (App->CL_Scene->B_Object[Count]->flag_Show_Message_Flag == 1)
+			{
+				App->CL_Scene->B_Object[Count]->Render_ImGui_Panel();
+			}
+		}
+
+		Count++;
+	}*/
+
+	//Count = 0;
+
+	if (flag_Run_Physics == 1 && App->flag_OgreStarted == 1)
+	{
+		App->CL_Bullet->dynamicsWorld->stepSimulation(DeltaTime * 2);// Bullet_Step);
+
+		//for (int j = App->CL_Bullet->dynamicsWorld->getNumCollisionObjects() - 1; j >= 0; j--)
+		//{
+
+		//	btCollisionObject* obj = App->CL_Bullet->dynamicsWorld->getCollisionObjectArray()[j];
+		//	btRigidBody* body = btRigidBody::upcast(obj);
+		//	btTransform trans;
+
+		//	if (body && body->getMotionState()) //&& Block == 0)
+		//	{
+		//		int UI = body->getUserIndex();
+		//		int Index = body->getUserIndex2();
+
+		//		if (UI == Enums::Obj_Usage_Dynamic)
+		//		{
+
+		//			body->getMotionState()->getWorldTransform(trans);
+		//			btQuaternion orientation = trans.getRotation();
+
+		//			float x = obj->getWorldTransform().getOrigin().getX();
+		//			float y = obj->getWorldTransform().getOrigin().getY();
+		//			float z = obj->getWorldTransform().getOrigin().getZ();
+
+		//			if (Index > -1)
+		//			{
+		//				if (App->CL_Scene->B_Object[Index]->Object_Node)
+		//				{
+		//					App->CL_Scene->B_Object[Index]->Object_Node->setPosition(x, y, z);
+		//					App->CL_Scene->B_Object[Index]->Object_Node->setOrientation(Ogre::Quaternion(orientation.getW(), orientation.getX(), orientation.getY(), orientation.getZ()));
+
+		//					Ogre::Vector3 WC = App->CL_Scene->B_Object[Index]->Object_Ent->getWorldBoundingBox(true).getCenter();
+		//					Ogre::Vector3 NewPos = Ogre::Vector3(x, y, z) - WC;
+
+		//					App->CL_Scene->B_Object[Index]->Object_Node->setPosition((Ogre::Vector3(x, y, z)) + NewPos);
+		//				}
+		//			}
+		//		}
+		//	}
+		//}
+	}
+
+	if (flag_Run_Physics == 1 && App->CL_Editor->flag_Player_Added == 1)
+	{
+		btTransform trans;
+		App->CL_Editor->B_Player[0]->Phys_Body->getMotionState()->getWorldTransform(trans);
+		btQuaternion orientation = trans.getRotation();
+
+		App->CL_Editor->B_Player[0]->Player_Node->setPosition(Ogre::Vector3(trans.getOrigin().getX(), trans.getOrigin().getY() + 2, trans.getOrigin().getZ()));
+		App->CL_Editor->B_Player[0]->Player_Node->setOrientation(Ogre::Quaternion(orientation.getW(), orientation.getX(), orientation.getY(), orientation.getZ()));
+		App->CL_Editor->B_Player[0]->Player_Node->pitch(Ogre::Degree(180));
+	}
 }
 
 // *************************************************************************
