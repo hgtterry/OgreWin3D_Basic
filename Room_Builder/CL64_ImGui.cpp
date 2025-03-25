@@ -287,27 +287,61 @@ void CL64_ImGui::Camera_Mode_GUI(void)
 	}
 	else
 	{
-		style->Colors[ImGuiCol_Button] = ImVec4(1.0f, 1.0f, 1.0f, 1.00f);
+		// -------------- First Person
+		if (App->CL_Ogre->Ogre3D_Listener->CameraMode == Enums::Cam_Mode_First)
+		{
+			style->Colors[ImGuiCol_Button] = ImVec4(0.0f, 1.0f, 0.0f, 1.00f);
+		}
+		else
+		{
+			style->Colors[ImGuiCol_Button] = ImVec4(1.0f, 1.0f, 1.0f, 1.00f);
+		}
+
 		if (ImGui::Button("First Person", ImVec2(150, 30)))
 		{
 			App->CL_Ogre->Ogre3D_Listener->flag_Run_Physics = 1;
 			App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_First;
 		}
 
-		style->Colors[ImGuiCol_Button] = ImVec4(1.0f, 1.0f, 1.0f, 1.00f);
+		// -------------- Camera Free
+		if (App->CL_Ogre->Ogre3D_Listener->CameraMode == Enums::Cam_Mode_Free)
+		{
+			style->Colors[ImGuiCol_Button] = ImVec4(0.0f, 1.0f, 0.0f, 1.00f);
+		}
+		else
+		{
+			style->Colors[ImGuiCol_Button] = ImVec4(1.0f, 1.0f, 1.0f, 1.00f);
+		}
+
 		if (ImGui::Button("Free", ImVec2(150, 30)))
 		{
 			App->CL_Ogre->Ogre3D_Listener->flag_Run_Physics = 0;
 			App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_Free;
 		}
 
-		style->Colors[ImGuiCol_Button] = ImVec4(1.0f, 1.0f, 1.0f, 1.00f);
-		if (ImGui::Button("Reste Physics", ImVec2(150, 30)))
+		// -------------- Physics On
+		if (App->CL_Ogre->Ogre3D_Listener->flag_Run_Physics == 1)
 		{
-			//App->CL_Ogre->Ogre3D_Listener->flag_Run_Physics = 0;
-			//App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_Free;
+			style->Colors[ImGuiCol_Button] = ImVec4(0.0f, 1.0f, 0.0f, 1.00f);
+		}
+		else
+		{
+			style->Colors[ImGuiCol_Button] = ImVec4(1.0f, 1.0f, 1.0f, 1.00f);
 		}
 
+		if (ImGui::Button("Physics On", ImVec2(150, 30)))
+		{
+			/*if (App->CL_Ogre->Ogre3D_Listener->flag_Run_Physics == 1)
+			{
+				App->CL_Ogre->Ogre3D_Listener->flag_Run_Physics = 0;
+			}
+			else
+			{
+				App->CL_Ogre->Ogre3D_Listener->flag_Run_Physics = 1;
+			}*/
+		}
+
+		// -------------- Physics Debug
 		if (App->CL_Editor->flag_Show_Debug_Area == 1)
 		{
 			style->Colors[ImGuiCol_Button] = ImVec4(0.0f, 1.0f, 0.0f, 1.00f);
