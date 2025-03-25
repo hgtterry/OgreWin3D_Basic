@@ -150,7 +150,7 @@ void CL64_Com_Player::Initialize() const
 	pBase->Phys_Body->setUserIndex(Enums::Usage_Player);
 
 	int f = pBase->Phys_Body->getCollisionFlags();
-	pBase->Phys_Body->setCollisionFlags(f | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
+	//pBase->Phys_Body->setCollisionFlags(f | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
 
 	App->CL_Editor->B_Player[0]->Phys_Body->getWorldTransform().setRotation(App->CL_Editor->B_Player[0]->Physics_Rotation);
 	App->CL_Physics->dynamicsWorld->addRigidBody(pBase->Phys_Body);
