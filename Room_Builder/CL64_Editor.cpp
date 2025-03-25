@@ -108,12 +108,12 @@ void CL64_Editor::Create_Mesh_Group(int Index)
 // *************************************************************************
 void CL64_Editor::Preview_Mode(void)
 {
-	if (App->CL_Bullet->flag_TriMesh_Created == 1)
+	if (App->CL_Physics->flag_TriMesh_Created == 1)
 	{
-		App->CL_Bullet->Clear_Trimesh();
+		App->CL_Physics->Clear_Trimesh();
 	}
 
-	App->CL_Bullet->Create_New_Trimesh(App->CL_Mesh_Mgr->World_Ent, App->CL_Mesh_Mgr->World_Node);
+	App->CL_Physics->Create_New_Trimesh(App->CL_Mesh_Mgr->World_Ent, App->CL_Mesh_Mgr->World_Node);
 	App->CL_Ogre->Bullet_Debug_Listener->flag_Render_Debug_Flag = 1;
 	
 	flag_PreviewMode_Running = 1;
@@ -157,9 +157,9 @@ void CL64_Editor::Editor_Mode(void)
 
 	flag_PreviewMode_Running = 0;
 
-	if (App->CL_Bullet->flag_TriMesh_Created == 1)
+	if (App->CL_Physics->flag_TriMesh_Created == 1)
 	{
-		App->CL_Bullet->Clear_Trimesh();
+		App->CL_Physics->Clear_Trimesh();
 		App->CL_Ogre->Bullet_Debug_Listener->flag_Render_Debug_Flag = 0;
 	}
 

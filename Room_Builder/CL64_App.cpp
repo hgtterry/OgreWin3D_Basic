@@ -72,7 +72,7 @@ CL64_App::CL64_App(void)
 	CL_Resources =				nullptr;
 	CL_Picking =				nullptr;
 	CL_Camera =					nullptr;
-	CL_Bullet =					nullptr;
+	CL_Physics =				nullptr;
 
 	CL_Com_Player =				nullptr;
 
@@ -176,7 +176,7 @@ void CL64_App::InitApp(void)
 	CL_Resources =				new CL64_Resources();
 	CL_Picking =				new CL64_Picking();
 	CL_Camera =					new CL64_Camera();
-	CL_Bullet =					new CL64_Bullet();
+	CL_Physics =				new CL64_Physics();
 	
 	CL_Com_Player =				new CL64_Com_Player();
 

@@ -330,7 +330,7 @@ bool CL64_Ogre::Init_CreateFrameListener(void)
 
 		Bullet_Debug_Listener->setDebugMode(Bullet_Debug_Listener->getDebugMode()
 			| btIDebugDraw::DBG_MAX_DEBUG_DRAW_MODE);
-		App->CL_Bullet->dynamicsWorld->setDebugDrawer(Bullet_Debug_Listener);
+		App->CL_Physics->dynamicsWorld->setDebugDrawer(Bullet_Debug_Listener);
 
 	}
 	else

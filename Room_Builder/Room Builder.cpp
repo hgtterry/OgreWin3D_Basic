@@ -72,7 +72,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     App->CL_MapEditor->Reset_Views_All();
 
-    App->CL_Bullet->Init_Bullet();
+    App->CL_Physics->Init_Bullet();
     App->CL_Ogre->Init_Ogre();
     App->CL_Picking->Init_Picking();
 
@@ -703,7 +703,7 @@ void Close_App()
         App->CL_Ogre->mRoot = NULL;
     }
 
-    App->CL_Bullet->ShutDown_Bullet();
+    App->CL_Physics->ShutDown_Bullet();
 
     ImGui::DestroyContext();
 

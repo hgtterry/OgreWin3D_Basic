@@ -153,7 +153,7 @@ void CL64_Com_Player::Initialize() const
 	pBase->Phys_Body->setCollisionFlags(f | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
 
 	App->CL_Editor->B_Player[0]->Phys_Body->getWorldTransform().setRotation(App->CL_Editor->B_Player[0]->Physics_Rotation);
-	App->CL_Bullet->dynamicsWorld->addRigidBody(pBase->Phys_Body);
+	App->CL_Physics->dynamicsWorld->addRigidBody(pBase->Phys_Body);
 
 	App->CL_Editor->flag_Player_Added = 1;
 	
@@ -286,7 +286,7 @@ void CL64_Com_Player::Get_Height(void)
 	//App->CL_Gizmos->Crosshair_Node->setPosition(Origin.getX(), Origin.getY() - Ray_End_Gravity, Origin.getZ());
 
 	btCollisionWorld::ClosestRayResultCallback resultCallback(from, to);
-	App->CL_Bullet->dynamicsWorld->rayTest(from, to, resultCallback);
+	App->CL_Physics->dynamicsWorld->rayTest(from, to, resultCallback);
 	if (resultCallback.hasHit())
 	{
 		flag_AddGravity = 0;

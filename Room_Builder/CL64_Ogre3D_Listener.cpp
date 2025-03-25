@@ -78,9 +78,9 @@ bool CL64_Ogre3D_Listener::frameRenderingQueued(const FrameEvent& evt)
 	App->CL_ImGui->ImGui_Render_Loop();
 
 	
-	if (App->CL_Bullet->flag_TriMesh_Created == 1)
+	if (App->CL_Physics->flag_TriMesh_Created == 1)
 	{
-		App->CL_Bullet->dynamicsWorld->debugDrawWorld();
+		App->CL_Physics->dynamicsWorld->debugDrawWorld();
 	}
 
 
@@ -185,7 +185,7 @@ void CL64_Ogre3D_Listener::Update_Game_Logic(float DeltaTime)
 
 	if (flag_Run_Physics == 1 && App->flag_OgreStarted == 1)
 	{
-		App->CL_Bullet->dynamicsWorld->stepSimulation(DeltaTime * 2);// Bullet_Step);
+		App->CL_Physics->dynamicsWorld->stepSimulation(DeltaTime * 2);// Bullet_Step);
 
 		//for (int j = App->CL_Bullet->dynamicsWorld->getNumCollisionObjects() - 1; j >= 0; j--)
 		//{

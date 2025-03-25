@@ -163,7 +163,6 @@
     <ClInclude Include="CL64_Brush.h" />
     <ClInclude Include="CL64_BrushTemplate.h" />
     <ClInclude Include="CL64_Brush_X.h" />
-    <ClInclude Include="CL64_Bullet.h" />
     <ClInclude Include="CL64_Bullet_Debug.h" />
     <ClInclude Include="CL64_Camera.h" />
     <ClInclude Include="CL64_Com_Player.h" />
@@ -189,6 +188,7 @@
     <ClInclude Include="CL64_Ogre3D_Listener.h" />
     <ClInclude Include="CL64_Panels.h" />
     <ClInclude Include="CL64_ParseFile.h" />
+    <ClInclude Include="CL64_Physics.h" />
     <ClInclude Include="CL64_Picking.h" />
     <ClInclude Include="CL64_Prefs.h" />
     <ClInclude Include="CL64_Properties_Brushes.h" />
@@ -228,7 +228,6 @@
     <ClCompile Include="CL64_Brush.cpp" />
     <ClCompile Include="CL64_BrushTemplate.cpp" />
     <ClCompile Include="CL64_Brush_X.cpp" />
-    <ClCompile Include="CL64_Bullet.cpp" />
     <ClCompile Include="CL64_Bullet_Debug.cpp" />
     <ClCompile Include="CL64_Camera.cpp" />
     <ClCompile Include="CL64_Com_Player.cpp" />
@@ -254,6 +253,7 @@
     <ClCompile Include="CL64_Ogre3D_Listener.cpp" />
     <ClCompile Include="CL64_Panels.cpp" />
     <ClCompile Include="CL64_ParseFile.cpp" />
+    <ClCompile Include="CL64_Physics.cpp" />
     <ClCompile Include="CL64_Picking.cpp" />
     <ClCompile Include="CL64_Prefs.cpp" />
     <ClCompile Include="CL64_Properties_Brushes.cpp" />

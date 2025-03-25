@@ -67,7 +67,7 @@ THE SOFTWARE.
 #include "CL64_Resources.h"
 #include "CL64_Picking.h"
 #include "CL64_Camera.h"
-#include "CL64_Bullet.h"
+#include "CL64_Physics.h"
 
 #include "CL64_Com_Player.h"
 
@@ -127,7 +127,7 @@ public:
 	CL64_Resources*				CL_Resources;
 	CL64_Picking*				CL_Picking;
 	CL64_Camera*				CL_Camera;
-	CL64_Bullet*				CL_Bullet;
+	CL64_Physics*				CL_Physics;
 
 	CL64_Com_Player*			CL_Com_Player;
 

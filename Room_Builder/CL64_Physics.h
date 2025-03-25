@@ -23,12 +23,12 @@ THE SOFTWARE.
 */
 
 #pragma once
-class CL64_Bullet
+class CL64_Physics
 {
 public:
 
-	CL64_Bullet(void);
-	~CL64_Bullet(void);
+	CL64_Physics(void);
+	~CL64_Physics(void);
 
 	void Init_Bullet();
 	void ShutDown_Bullet();
@@ -36,6 +36,7 @@ public:
 	void Show_Debug_Area(bool Show);
 	void Show_Debug_Objects(bool Show);
 	bool Create_New_Trimesh(Ogre::Entity* Entity, Ogre::SceneNode* Node);
+	void Reset_Scene(void);
 
 	btDefaultCollisionConfiguration* collisionConfiguration;
 	btCollisionDispatcher* dispatcher;

@@ -276,7 +276,7 @@ void CL64_ImGui::Press_Excape_GUI(void)
 void CL64_ImGui::Camera_Mode_GUI(void)
 {
 	ImGui::SetNextWindowPos(ImVec2(Cam_Mode_PosX, Cam_Mode_PosY));
-	ImGui::SetNextWindowSize(ImVec2(165, 260), ImGuiCond_FirstUseEver);
+	ImGui::SetNextWindowSize(ImVec2(165, 300), ImGuiCond_FirstUseEver);
 
 	ImGui::PushStyleColor(ImGuiCol_WindowBg, IM_COL32(239, 239, 239, 255));
 	ImGuiStyle* style = &ImGui::GetStyle();
@@ -329,6 +329,12 @@ void CL64_ImGui::Camera_Mode_GUI(void)
 			style->Colors[ImGuiCol_Button] = ImVec4(1.0f, 1.0f, 1.0f, 1.00f);
 		}
 
+		ImGui::Spacing();
+		ImGui::Spacing();
+		ImGui::Separator();
+		ImGui::Spacing();
+		ImGui::Spacing();
+
 		if (ImGui::Button("Physics On", ImVec2(150, 30)))
 		{
 			/*if (App->CL_Ogre->Ogre3D_Listener->flag_Run_Physics == 1)
@@ -355,16 +361,25 @@ void CL64_ImGui::Camera_Mode_GUI(void)
 		{
 			if (App->CL_Editor->flag_Show_Debug_Area == 1)
 			{
-				App->CL_Bullet->Show_Debug_Area(false);
+				App->CL_Physics->Show_Debug_Area(false);
 				App->CL_Com_Player->Show_Physics(false);
 				App->CL_Editor->flag_Show_Debug_Area = 0;
 			}
 			else
 			{
-				App->CL_Bullet->Show_Debug_Area(true);
+				App->CL_Physics->Show_Debug_Area(true);
 				App->CL_Com_Player->Show_Physics(true);
 				App->CL_Editor->flag_Show_Debug_Area = 1;
 			}
+		}
+
+		// -------------- Reset Scene
+		style->Colors[ImGuiCol_Button] = ImVec4(1.0f, 1.0f, 1.0f, 1.00f);
+
+		if (ImGui::Button("Reset Scene", ImVec2(150, 30)))
+		{
+
+
 		}
 
 		ImGui::Spacing();

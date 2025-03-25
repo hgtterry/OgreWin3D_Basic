@@ -24,9 +24,9 @@ THE SOFTWARE.
 
 #include "pch.h"
 #include "CL64_App.h"
-#include "CL64_Bullet.h"
+#include "CL64_Physics.h"
 
-CL64_Bullet::CL64_Bullet(void)
+CL64_Physics::CL64_Physics(void)
 {
 	collisionConfiguration = NULL;
 	dispatcher = NULL;
@@ -45,14 +45,14 @@ CL64_Bullet::CL64_Bullet(void)
 	flag_Debug_All = 0;
 }
 
-CL64_Bullet::~CL64_Bullet(void)
+CL64_Physics::~CL64_Physics(void)
 {
 }
 
 // *************************************************************************
 // *			Init_Bullet:- Terry and Hazel Flanigan 2024   	 	 	   *
 // *************************************************************************
-void CL64_Bullet::Init_Bullet()
+void CL64_Physics::Init_Bullet()
 {
 	collisionConfiguration = new btDefaultCollisionConfiguration();
 
@@ -74,7 +74,7 @@ void CL64_Bullet::Init_Bullet()
 // *************************************************************************
 // *			ShutDown_Bullet:- Terry and Hazel Flanigan 2024   	  	   *
 // *************************************************************************
-void CL64_Bullet::ShutDown_Bullet()
+void CL64_Physics::ShutDown_Bullet()
 {
 	int i = 0;
 
@@ -114,7 +114,7 @@ void CL64_Bullet::ShutDown_Bullet()
 // *************************************************************************
 //			Create_New_Trimesh:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-bool CL64_Bullet::Create_New_Trimesh(Ogre::Entity* Entity, Ogre::SceneNode* Node)
+bool CL64_Physics::Create_New_Trimesh(Ogre::Entity* Entity, Ogre::SceneNode* Node)
 {
 #pragma warning(disable : 4996) // Nightmare why
 
@@ -252,7 +252,7 @@ bool CL64_Bullet::Create_New_Trimesh(Ogre::Entity* Entity, Ogre::SceneNode* Node
 // *************************************************************************
 // *			Clear_Trimesh:- Terry and Hazel Flanigan 2024   	  	   *
 // *************************************************************************
-void CL64_Bullet::Clear_Trimesh()
+void CL64_Physics::Clear_Trimesh()
 {
 	if (mShape && flag_TriMesh_Created == 1)
 	{
@@ -274,7 +274,7 @@ void CL64_Bullet::Clear_Trimesh()
 // *************************************************************************
 // *			Show_Debug_Area:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-void CL64_Bullet::Show_Debug_Area(bool Show)
+void CL64_Physics::Show_Debug_Area(bool Show)
 {
 	int f = Phys_Body->getCollisionFlags();
 
@@ -293,9 +293,33 @@ void CL64_Bullet::Show_Debug_Area(bool Show)
 }
 
 // *************************************************************************
+// *	  		Reset_Scene:- Terry and Hazel Flanigan 2024				   *
+// *************************************************************************
+void CL64_Physics::Reset_Scene(void)
+{
+	/*int Saved = App->CL_Ogre->Ogre3D_Listener->CameraMode;
+	App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_First;
+
+	App->CL_Physics->Reset_Physics();
+	App->CL_Ogre->Ogre3D_Listener->flag_Run_Physics = 1;
+	App->CL_Physics->Reset_Triggers();
+	App->CL_Ogre->Ogre3D_Listener->flag_Run_Physics = 1;
+
+	App->CL_Ogre->camNode->setOrientation(1, 0, 0, 0);
+	App->CL_Scene->B_Player[0]->CameraPitch_Node->setOrientation(1, 0, 0, 0);
+
+	App->CL_TopDlg->flag_Toggle_Cam_FirstMode = 1;
+	App->CL_TopDlg->flag_Toggle_Cam_FreeMode = 0;
+	RedrawWindow(App->CL_TopDlg->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+	App->CL_Com_Environments->Set_Environment_GameMode(0);
+	App->CL_Com_Player->Show_Player_And_Physics(false);*/
+}
+
+// *************************************************************************
 // *			Show_Debug_Objects:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
-void CL64_Bullet::Show_Debug_Objects(bool Show)
+void CL64_Physics::Show_Debug_Objects(bool Show)
 {
 	/*int Count = 0;
 	while (Count < App->CL_Scene->Object_Count)
