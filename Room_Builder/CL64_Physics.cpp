@@ -293,27 +293,61 @@ void CL64_Physics::Show_Debug_Area(bool Show)
 }
 
 // *************************************************************************
+// *	  		Reset_Physics:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void CL64_Physics::Reset_Physics(void)
+{
+	App->CL_Ogre->Ogre3D_Listener->flag_Run_Physics = 0;
+
+	float w = 1;
+	float x = 0;
+	float y = 0;
+	float z = 0;
+
+	if (App->CL_Editor->flag_Player_Added == 1)// && GD_Reset_Player == 1)
+	{
+		btVector3 zeroVector(0, 0, 0);
+
+		x = App->CL_Editor->B_Player[0]->StartPos.x;
+		y = App->CL_Editor->B_Player[0]->StartPos.y;
+		z = App->CL_Editor->B_Player[0]->StartPos.z;
+
+		btVector3 initialPosition(x, y, z);
+
+		btTransform startTransform;
+		startTransform.setIdentity();
+		startTransform.setRotation(btQuaternion(App->CL_Editor->B_Player[0]->Physics_Rotation));
+		startTransform.setOrigin(initialPosition);
+
+		App->CL_Editor->B_Player[0]->Phys_Body->clearForces();
+		App->CL_Editor->B_Player[0]->Phys_Body->setLinearVelocity(zeroVector);
+		App->CL_Editor->B_Player[0]->Phys_Body->setAngularVelocity(zeroVector);
+
+		App->CL_Editor->B_Player[0]->Phys_Body->setWorldTransform(startTransform);
+		App->CL_Editor->B_Player[0]->Phys_Body->getMotionState()->setWorldTransform(startTransform);
+		App->CL_Editor->B_Player[0]->Phys_Body->activate(true);
+
+		App->CL_Editor->B_Player[0]->Phys_Body->getWorldTransform().setRotation(App->CL_Editor->B_Player[0]->Physics_Rotation);
+
+		App->CL_Com_Player->Set_Player_Physics_Position(0);
+	}
+}
+
+// *************************************************************************
 // *	  		Reset_Scene:- Terry and Hazel Flanigan 2024				   *
 // *************************************************************************
 void CL64_Physics::Reset_Scene(void)
 {
-	/*int Saved = App->CL_Ogre->Ogre3D_Listener->CameraMode;
-	App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_First;
+	App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_Free;
 
 	App->CL_Physics->Reset_Physics();
-	App->CL_Ogre->Ogre3D_Listener->flag_Run_Physics = 1;
+	/*App->CL_Ogre->Ogre3D_Listener->flag_Run_Physics = 1;
 	App->CL_Physics->Reset_Triggers();
 	App->CL_Ogre->Ogre3D_Listener->flag_Run_Physics = 1;
 
 	App->CL_Ogre->camNode->setOrientation(1, 0, 0, 0);
-	App->CL_Scene->B_Player[0]->CameraPitch_Node->setOrientation(1, 0, 0, 0);
+	App->CL_Scene->B_Player[0]->CameraPitch_Node->setOrientation(1, 0, 0, 0);*/
 
-	App->CL_TopDlg->flag_Toggle_Cam_FirstMode = 1;
-	App->CL_TopDlg->flag_Toggle_Cam_FreeMode = 0;
-	RedrawWindow(App->CL_TopDlg->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-
-	App->CL_Com_Environments->Set_Environment_GameMode(0);
-	App->CL_Com_Player->Show_Player_And_Physics(false);*/
 }
 
 // *************************************************************************

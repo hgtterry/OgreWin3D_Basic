@@ -374,12 +374,11 @@ void CL64_ImGui::Camera_Mode_GUI(void)
 		}
 
 		// -------------- Reset Scene
-		style->Colors[ImGuiCol_Button] = ImVec4(1.0f, 1.0f, 1.0f, 1.00f);
+		style->Colors[ImGuiCol_Button] = ImVec4(1.0f, 1.0f, 0.5f, 1.00f);
 
 		if (ImGui::Button("Reset Scene", ImVec2(150, 30)))
 		{
-
-
+			App->CL_Physics->Reset_Scene();
 		}
 
 		ImGui::Spacing();
