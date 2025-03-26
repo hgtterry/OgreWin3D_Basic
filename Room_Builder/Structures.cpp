@@ -94,7 +94,6 @@ typedef struct
 struct tag_Level
 {
 	BrushList* Brushes;
-	BrushList* Entity_Brushes;
 	char* WadPath;
 	char* HeadersDir;
 	char* ActorsDir;

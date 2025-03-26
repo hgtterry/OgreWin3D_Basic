@@ -109,9 +109,7 @@ void CL64_Doc::Init_Doc()
 
 	// create our default box
 	BrushTemplate_Box* pBoxTemplate;
-    BrushTemplate_Box* pPlayer_Template;
-
-    pPlayer_Template = App->CL_Level->Level_GetBoxTemplate(pLevel);
+   
 	pBoxTemplate = App->CL_Level->Level_GetBoxTemplate(pLevel);
 
 	BTemplate = App->CL_BrushTemplate->BrushTemplate_CreateBox(pBoxTemplate);
@@ -297,10 +295,6 @@ void CL64_Doc::Brush_Add_To_world()
 	{
 		App->CL_Doc->flag_Is_Modified = 1;
 	}
-
-
-
-   // App->CL_Doc->CurBrush->Faces[0]->
 }
 
 // *************************************************************************

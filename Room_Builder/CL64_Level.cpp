@@ -50,10 +50,9 @@ Level* CL64_Level::Level_Create()
 
 	if (pLevel != NULL)
 	{
-		pLevel->Entity_Brushes = App->CL_Brush->BrushList_Create();
 		pLevel->Brushes = App->CL_Brush->BrushList_Create();
 
-		if (pLevel->Brushes == NULL || pLevel->Entity_Brushes == NULL)
+		if (pLevel->Brushes == NULL)
 		{
 			App->Say_Win("Can not create brush lists");
 			return pLevel;

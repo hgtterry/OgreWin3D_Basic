@@ -25,6 +25,8 @@ THE SOFTWARE.
 #include "pch.h"
 #include "CL64_App.h"
 #include "CL64_Entities.h"
+#include "Room Builder.h"
+#include "Structures.cpp"
 
 CL64_Entities::CL64_Entities()
 {
@@ -33,11 +35,76 @@ CL64_Entities::CL64_Entities()
 CL64_Entities::~CL64_Entities()
 {
 }
+// *************************************************************************
+// *						Brush_SetGroupId							   *
+// *************************************************************************
+//void Brush_SetGroupId(Brush* b, const int gid)
+//{
+//	if (b->Type == BRUSH_MULTI)
+//	{
+//		//BrushList_SetInt(b->BList, gid, Brush_SetGroupId);
+//	}
+//
+//	b->GroupId = gid;
+//}
+
+struct fdocFaceScales
+{
+	float DrawScale;
+	float LightmapScale;
+};
+
+// *************************************************************************
+// *			       ( Static ) fdocSetFaceScales	                   	   *
+// *************************************************************************
+static signed int fdocSetFaceScales(Face* pFace, void* lParam)
+{
+	fdocFaceScales* pScales = (fdocFaceScales*)lParam;
+
+	App->CL_Face->Face_SetTextureScale(pFace, pScales->DrawScale, pScales->DrawScale);
+	App->CL_Face->Face_SetLightScale(pFace, pScales->LightmapScale, pScales->LightmapScale);
+
+	return false;
+}
 
 // *************************************************************************
 // *		Create_Player_Entity:- Terry and Hazel Flanigan 2025	 	   *
 // *************************************************************************
 void CL64_Entities::Create_Player_Entity()
 {
+	Brush* Player_Brush;
+
+	BrushTemplate_Box* pBoxTemplate;
+
+	pBoxTemplate = App->CL_Level->Level_GetBoxTemplate(App->CL_Doc->pLevel);
+
+
+	pBoxTemplate->Solid = 0;
+	pBoxTemplate->YSize = 25;
+
+	pBoxTemplate->XSizeBot = 8;
+	pBoxTemplate->XSizeTop = 8;
+	pBoxTemplate->ZSizeBot = 8;
+	pBoxTemplate->ZSizeTop = 8;
+
+	Player_Brush = App->CL_BrushTemplate->BrushTemplate_CreateBox(pBoxTemplate);
+
+	App->CL_Brush->Brush_Bound(Player_Brush);
+
+	App->CL_Doc->SetDefaultBrushTexInfo(Player_Brush);
+
+	App->CL_Brush->Brush_Bound(Player_Brush);
+
+	Brush_SetGroupId(Player_Brush, 1); // 0 = Main Mesh 1 = Entities
+
+	fdocFaceScales Scales;
+
+	Scales.DrawScale = App->CL_Level->Level_GetDrawScale(App->CL_Doc->pLevel);
+	Scales.LightmapScale = App->CL_Level->Level_GetLightmapScale(App->CL_Doc->pLevel);
+	App->CL_Brush->Brush_EnumFaces(Player_Brush, &Scales, fdocSetFaceScales);
+
+	strcpy(Player_Brush->Name, "Player");
+
+	App->CL_Level->Level_AppendBrush(App->CL_Doc->pLevel, Player_Brush);
 
 }
