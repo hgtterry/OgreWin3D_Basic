@@ -347,8 +347,12 @@ bool CL64_File::Open_3dt_File()
 
 		App->CL_Doc->UpdateAfterWadChange();
 
-		App->CL_Entities->Create_Player_Entity();
-
+		bool test = App->CL_Brush_X->Check_if_Brush_Name_Exist((LPSTR)"Player");
+		if (test == 0)
+		{
+			App->CL_Entities->Create_Player_Entity();
+		}
+		
 		App->CL_Properties_Brushes->Fill_ListBox();
 
 		App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_Free;
