@@ -1171,8 +1171,7 @@ void CL64_Doc::DoneRotate(void)
 void CL64_Doc::DoneMove(void)
 {
     int	i;
-    //BrushList *BList = App->CL_Level->Level_GetBrushes (pLevel);
-
+   
     mLastOp = BRUSH_MOVE;
 
     TempDeleteSelected();
@@ -1192,6 +1191,7 @@ void CL64_Doc::DoneMove(void)
     else
     {
         int NumSelBrushes = App->CL_SelBrushList->SelBrushList_GetSize(pSelBrushes);
+       
         for (i = 0; i < NumSelBrushes; i++)
         {
             Brush* pBrush;
@@ -1199,16 +1199,21 @@ void CL64_Doc::DoneMove(void)
             pBrush = App->CL_SelBrushList->SelBrushList_GetBrush(pSelBrushes, i);
 
             App->CL_Brush->Brush_Move(pBrush, &FinalPos);
-        }
 
-        if (GetSelState() & ANYENTITY)
-        {
-            //DoneMoveEntity();
+            if (pBrush->GroupId == 1) // Player
+            {
+                App->CL_SelBrushList->SelBrushList_Center(App->CL_Doc->pSelBrushes, &App->CL_Doc->SelectedGeoCenter);
+                T_Vec3 CenterOfSelection = App->CL_Doc->SelectedGeoCenter;
+
+                App->CL_Editor->B_Player[0]->StartPos.x = CenterOfSelection.x;
+                App->CL_Editor->B_Player[0]->StartPos.y = CenterOfSelection.y;
+                App->CL_Editor->B_Player[0]->StartPos.z = CenterOfSelection.z;
+
+                App->CL_Physics->Reset_Physics();
+            }
         }
 
         UpdateSelected();
-
-       // App->m_pDoc->UpdateSelectedModel(BRUSH_MOVE, &FinalPos);
     }
 
     App->CL_Maths->Vector3_Clear(&FinalPos);

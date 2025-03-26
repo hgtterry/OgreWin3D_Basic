@@ -37,6 +37,9 @@ public:
 	void Get_Index(const Brush* b);
 	void OnSelchangeBrushlist(int Index, bool Clear);
 	void Update_SelectedBrushesCount_Dlg();
+	void Move_Brush();
+
+	T_Vec3 CenterOfSelection;
 
 	int Selected_Index;
 	Brush* Selected_Brush;
@@ -57,7 +60,6 @@ private:
 	void Update_From_Brush_Dlg(HWND hDlg);
 	void Get_Brush();
 
-	void Move_Brush();
 	void Rotate_Brush(float SX, float SY, float SZ);
 	void Scale_Brush(float SX, float SY, float SZ);
 
@@ -75,7 +77,7 @@ private:
 
 	T_Vec3 FinalScale;
 	T_Vec3 FinalRot;
-	T_Vec3 CenterOfSelection;
+	
 	T_Vec3 Rotation;
 	T_Vec3 Size;
 
