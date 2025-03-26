@@ -99,7 +99,7 @@ void CL64_Doc::Init_Doc()
   
     strcpy(LastTemplateTypeName, "Box");
 
-	pLevel = App->CL_Level->Level_Create();
+	pLevel = App->CL_Level->Level_Create(); // TODO Creating Twice one in Win Main
 
 	pSelBrushes = App->CL_SelBrushList->SelBrushList_Create();
 	pTempSelBrushes = App->CL_SelBrushList->SelBrushList_Create();
@@ -109,7 +109,11 @@ void CL64_Doc::Init_Doc()
 
 	// create our default box
 	BrushTemplate_Box* pBoxTemplate;
+    BrushTemplate_Box* pPlayer_Template;
+
+    pPlayer_Template = App->CL_Level->Level_GetBoxTemplate(pLevel);
 	pBoxTemplate = App->CL_Level->Level_GetBoxTemplate(pLevel);
+
 	BTemplate = App->CL_BrushTemplate->BrushTemplate_CreateBox(pBoxTemplate);
     
 	App->CL_Brush->Brush_Bound(BTemplate);

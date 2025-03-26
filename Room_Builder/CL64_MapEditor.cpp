@@ -2141,23 +2141,11 @@ void CL64_MapEditor::Draw_Camera(HDC ViewDC)
 
 	// Get the Radius and the Angle  ONE of these must be present to show UI
 	bUIAvailable = GE_FALSE;
-	//if (pEnt->GetRadius(&fRadius, pEntityDefs) == GE_FALSE)
-		fRadius = 100.0f;
-	//else
-		bUIAvailable = GE_TRUE;
+	
+	fRadius = 100.0f;
+	
+	bUIAvailable = GE_TRUE;
 
-	//if (pEnt->GetAngles(&Angles, pEntityDefs) == GE_FALSE)
-		//App->CL_Maths->Vector3_Clear(&Angles);
-	//else
-		//bUIAvailable = GE_TRUE;
-
-	//if (bUIAvailable == GE_FALSE)
-		//return;
-
-	// The camera angles are given in camera coordinates rather than
-	// world coordinates (don't ask).
-	// So we convert them here.
-	/*if (pEnt->IsCamera())*/
 	{
 		App->CL_Maths->Vector3_Set(&Cam_Angles, Cam_Angles.z, (-Cam_Angles.y - M_PI / 2.0f), Cam_Angles.x);
 	}

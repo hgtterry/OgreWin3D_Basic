@@ -50,13 +50,14 @@ Level* CL64_Level::Level_Create()
 
 	if (pLevel != NULL)
 	{
+		pLevel->Entity_Brushes = App->CL_Brush->BrushList_Create();
 		pLevel->Brushes = App->CL_Brush->BrushList_Create();
-		if (pLevel->Brushes == NULL)
+
+		if (pLevel->Brushes == NULL || pLevel->Entity_Brushes == NULL)
 		{
-			App->Say_Win("Can not create brush list");
+			App->Say_Win("Can not create brush lists");
 			return pLevel;
 		}
-
 
 		pLevel->WadPath = (LPSTR)"Wad Gone";// (LPSTR)pWadName;
 		pLevel->WadFile = NULL;
@@ -93,7 +94,6 @@ Level* CL64_Level::Level_Create()
 
 		pLevel->DrawScale = 1.0f;
 		pLevel->LightmapScale = 2.0f;
-		//Debug
 	}
 
 	return pLevel;
