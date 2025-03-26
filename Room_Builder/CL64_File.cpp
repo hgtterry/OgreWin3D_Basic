@@ -347,6 +347,10 @@ bool CL64_File::Open_3dt_File()
 
 		App->CL_Doc->UpdateAfterWadChange();
 
+		App->CL_Entities->Create_Player_Entity();
+
+		App->CL_Properties_Brushes->Fill_ListBox();
+
 		App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_Free;
 		App->CL_Doc->UpdateAllViews(Enums::UpdateViews_All);
 
@@ -417,8 +421,6 @@ bool CL64_File::Load_File(const char* FileName)
 	fclose(fp);
 	
 	App->CL_Doc->pLevel = pLevel;
-
-	App->CL_Properties_Brushes->Fill_ListBox();
 
 	return true;
 }

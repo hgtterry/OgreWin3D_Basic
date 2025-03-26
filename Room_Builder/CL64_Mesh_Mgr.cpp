@@ -294,30 +294,37 @@ bool CL64_Mesh_Mgr::Brush_Decode_List(BrushList* BList, signed int SubBrush)
 
 	while (pBrush != NULL)
 	{
-		strcpy(mBrush_Name, pBrush->Name);
-
-		if (mSubBrushCount == 0 && pBrush->Flags & 1 || pBrush->Flags & 1024)
+		if (pBrush->GroupId == 1)
 		{
-			if (SubBrush == 0)
-			{
-				mBrush_Index = mBrushCount;
-			}
-		}
 
-		if (!Brush_Create(pBrush, Actual_Brush_Index))
-		{
-			return false;
-		}
-
-		if (SubBrush)
-		{
-			mSubBrushCount++;
 		}
 		else
 		{
-			mBrushCount++;
-			Actual_Brush_Index++;
-			strcpy(Actual_mBrush_Name, pBrush->Name);
+			strcpy(mBrush_Name, pBrush->Name);
+
+			if (mSubBrushCount == 0 && pBrush->Flags & 1 || pBrush->Flags & 1024)
+			{
+				if (SubBrush == 0)
+				{
+					mBrush_Index = mBrushCount;
+				}
+			}
+
+			if (!Brush_Create(pBrush, Actual_Brush_Index))
+			{
+				return false;
+			}
+
+			if (SubBrush)
+			{
+				mSubBrushCount++;
+			}
+			else
+			{
+				mBrushCount++;
+				Actual_Brush_Index++;
+				strcpy(Actual_mBrush_Name, pBrush->Name);
+			}
 		}
 
 		pBrush = App->CL_Brush->BrushList_GetNext(&bi);
@@ -329,6 +336,7 @@ bool CL64_Mesh_Mgr::Brush_Decode_List(BrushList* BList, signed int SubBrush)
 	{
 		mBrushCount = 0;
 	}
+
 
 	return true;
 }
