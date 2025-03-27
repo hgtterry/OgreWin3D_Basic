@@ -434,8 +434,8 @@ void CL64_ImGui::App_Tool_Selection_GUI(void)
 			strcpy(Tool, "TEMPLATE");
 		}
 
-		ImGui::Text("Width:= %i", App->CL_MapEditor->nleftWnd_width);
-		ImGui::Text("Depth:= %i", App->CL_MapEditor->nleftWnd_Depth);
+		//ImGui::Text("Width:= %i", App->CL_MapEditor->nleftWnd_width);
+		//ImGui::Text("Depth:= %i", App->CL_MapEditor->nleftWnd_Depth);
 
 		ImGui::Text("mModeTool:= %s", Tool);
 		ImGui::Separator();
@@ -445,7 +445,7 @@ void CL64_ImGui::App_Tool_Selection_GUI(void)
 		
 		ImGui::Separator();
 
-		ImGui::Text("Selected Faces:= %i", App->CL_SelFaceList->SelFaceList_GetSize(App->CL_Doc->pSelFaces));
+		/*ImGui::Text("Selected Faces:= %i", App->CL_SelFaceList->SelFaceList_GetSize(App->CL_Doc->pSelFaces));
 		ImGui::Text("Current Face:= %i", App->CL_Face->Selected_Face_Index);
 		ImGui::Text("Texture Count:= %i", App->CL_TXL_Editor->Texture_Count);
 		ImGui::Text("Processes Time:= %i %s", App->CL_Ogre->m_Processes_Time," ms");
@@ -460,7 +460,8 @@ void CL64_ImGui::App_Tool_Selection_GUI(void)
 		ImGui::Text("Brushes Faces:= %i ", App->CL_Mesh_Mgr->m_Total_Faces);
 		ImGui::Text("V_Face Count:= %i ", App->CL_Mesh_Mgr->v_Face_Data_Count);
 		ImGui::Text("Face Hit:= %i ", App->CL_Picking->Face_Hit);
-		ImGui::Text("Brush Hit:= %s ", App->CL_Mesh_Mgr->v_Face_Data[App->CL_Picking->Face_Hit]->Brush_Name);
+		ImGui::Text("Brush Hit:= %s ", App->CL_Mesh_Mgr->v_Face_Data[App->CL_Picking->Face_Hit]->Brush_Name);*/
+		
 		if (ImGui::Button("Close"))
 		{
 			flag_Show_Tool_ID_Debug = 0;

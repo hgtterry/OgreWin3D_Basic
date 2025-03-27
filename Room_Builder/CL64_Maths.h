@@ -67,6 +67,7 @@ public:
 	void XForm3d_SetYRotation(Matrix3d* M, float RadianAngle);
 	void XForm3d_SetZRotation(Matrix3d* M, float RadianAngle);
 	void XForm3d_Transform(const Matrix3d* M, const T_Vec3* V, T_Vec3* Result);
+	void XForm3d_GetEulerAngles(const Matrix3d* M, T_Vec3* Angles);
 	void XForm3d_SetEulerAngles(Matrix3d* M, const T_Vec3* Angles);
 
 

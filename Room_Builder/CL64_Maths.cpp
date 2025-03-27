@@ -476,6 +476,35 @@ void CL64_Maths::XForm3d_Multiply(const Matrix3d* M1,const Matrix3d* M2, Matrix3
 }
 
 // *************************************************************************
+// *					geXForm3d_GetEulerAngles						   *
+// *************************************************************************
+void CL64_Maths::XForm3d_GetEulerAngles(const Matrix3d* M, T_Vec3* Angles)
+{
+	// order of angles z,y,x
+	float AZ;
+	
+	AZ = M->AZ;
+	if (AZ > 1.0f)
+		AZ = 1.0f;
+	if (AZ < -1.0f)
+		AZ = -1.0f;
+
+	Angles->y = -(float)asin(-AZ);
+
+	if (cos(Angles->y) != 0)
+	{
+		Angles->x = -(float)atan2(M->BZ, M->CZ);
+		Angles->z = -(float)atan2(M->AY, M->AX);
+	}
+	else
+	{
+		Angles->x = -(float)atan2(M->BX, M->BY);
+		Angles->z = 0.0f;
+	}
+
+}
+
+// *************************************************************************
 // *					geXForm3d_SetEulerAngles						   *
 // *************************************************************************
 void CL64_Maths::XForm3d_SetEulerAngles(Matrix3d* M, const T_Vec3* Angles)

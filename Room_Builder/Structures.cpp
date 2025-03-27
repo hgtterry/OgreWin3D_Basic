@@ -144,3 +144,62 @@ typedef struct FindClosestInfoTag
     const POINT* ptFrom;
 } FindClosestInfo;
 
+typedef struct
+{
+	CL64_Doc* pDoc;
+	const char* TexName;
+} BrushTexSetData;
+
+struct fdocFaceScales
+{
+	float DrawScale;
+	float LightmapScale;
+};
+
+// *************************************************************************
+// *			       ( Static ) fdocSetFaceScales	                   	   *
+// *************************************************************************
+static signed int fdocSetFaceScales(Face* pFace, void* lParam)
+{
+	fdocFaceScales* pScales = (fdocFaceScales*)lParam;
+
+	App->CL_Face->Face_SetTextureScale(pFace, pScales->DrawScale, pScales->DrawScale);
+	App->CL_Face->Face_SetLightScale(pFace, pScales->LightmapScale, pScales->LightmapScale);
+
+	return false;
+}
+
+// *************************************************************************
+// *			               BrushTexSetCB	                       	   *
+// *************************************************************************
+static signed int BrushTexSetCB(Brush* b, void* lParam)
+{
+	int			i;
+	BrushTexSetData* pData;
+
+	pData = (BrushTexSetData*)lParam;
+
+	//	Brush_SetName(b, pData->TexName);
+	App->CL_Brush->Brush_SetName(b, pData->pDoc->LastTemplateTypeName);
+	//	char const * const BrushName = Brush_GetName (b);
+	const int NumFaces = App->CL_Brush->Brush_GetNumFaces(b);
+
+	//copy face TexInfos
+	for (i = 0; i < NumFaces; i++) // hgtterry Debug
+	{
+		Face* f = App->CL_Brush->Brush_GetFace(b, i);
+		WadFileEntry* pbmp;
+		// 
+		App->CL_Face->Face_SetTextureName(f, pData->TexName);
+		App->CL_Face->Face_SetTextureDibId(f, App->CL_Level->Level_GetDibId(App->CL_Doc->pLevel, pData->TexName));
+		pbmp = App->CL_Level->Level_GetWadBitmap(App->CL_Doc->pLevel, pData->TexName);
+		if (pbmp != NULL)
+		{
+			App->CL_Face->Face_SetTextureSize(f, pbmp->Width, pbmp->Height);
+		}
+	}
+
+	App->CL_Brush->Brush_SetFaceListDirty(b);
+
+	return true;
+}

@@ -186,12 +186,9 @@ void CL64_Doc::AddBrushToWorld()
     flag_Is_Modified = 1;
 }
 
-struct fdocFaceScales
-{
-    float DrawScale;
-    float LightmapScale;
-};
-
+// *************************************************************************
+// *			        OnBrushSubtractfromworld	                   	   *
+// *************************************************************************
 void CL64_Doc::OnBrushSubtractfromworld()
 {
     Brush* nb;
@@ -232,19 +229,6 @@ void CL64_Doc::OnBrushSubtractfromworld()
 }
 
 // *************************************************************************
-// *			       ( Static ) fdocSetFaceScales	                   	   *
-// *************************************************************************
-static signed int fdocSetFaceScales(Face* pFace, void* lParam)
-{
-    fdocFaceScales* pScales = (fdocFaceScales*)lParam;
-
-    App->CL_Face->Face_SetTextureScale(pFace, pScales->DrawScale, pScales->DrawScale);
-    App->CL_Face->Face_SetLightScale(pFace, pScales->LightmapScale, pScales->LightmapScale);
-    
-    return false;
-}
-
-// *************************************************************************
 // *			        	Brush_Add_To_world	                       	   *
 // *************************************************************************
 void CL64_Doc::Brush_Add_To_world()
@@ -276,7 +260,7 @@ void CL64_Doc::Brush_Add_To_world()
 
 	Scales.DrawScale = App->CL_Level->Level_GetDrawScale(pLevel);
 	Scales.LightmapScale = App->CL_Level->Level_GetLightmapScale(pLevel);
-	App->CL_Brush->Brush_EnumFaces(nb, &Scales, ::fdocSetFaceScales);
+	App->CL_Brush->Brush_EnumFaces(nb, &Scales, fdocSetFaceScales);
 
 	App->CL_Level->Level_AppendBrush(pLevel, nb);
 
@@ -376,47 +360,6 @@ void CL64_Doc::UpdateAllViews(int Update_Mode)
     }
 }
 
-typedef struct
-{
-    CL64_Doc* pDoc;
-    const char* TexName;
-} BrushTexSetData;
-
-// *************************************************************************
-// *			               BrushTexSetCB	                       	   *
-// *************************************************************************
-static signed int BrushTexSetCB(Brush* b, void* lParam)
-{
-    int			i;
-    BrushTexSetData* pData;
-
-    pData = (BrushTexSetData*)lParam;
-
-    //	Brush_SetName(b, pData->TexName);
-    App->CL_Brush->Brush_SetName(b, pData->pDoc->LastTemplateTypeName);
-    //	char const * const BrushName = Brush_GetName (b);
-    const int NumFaces = App->CL_Brush->Brush_GetNumFaces(b);
-
-    //copy face TexInfos
-    for (i = 0; i < NumFaces; i++) // hgtterry Debug
-    {
-        Face* f = App->CL_Brush->Brush_GetFace(b, i);
-        WadFileEntry* pbmp;
-        // 
-        App->CL_Face->Face_SetTextureName(f, pData->TexName);
-        App->CL_Face->Face_SetTextureDibId(f, App->CL_Level->Level_GetDibId(App->CL_Doc->pLevel, pData->TexName));
-        pbmp = App->CL_Level->Level_GetWadBitmap(App->CL_Doc->pLevel, pData->TexName);
-        if (pbmp != NULL)
-        {
-            App->CL_Face->Face_SetTextureSize(f, pbmp->Width, pbmp->Height);
-        }
-    }
-
-    App->CL_Brush->Brush_SetFaceListDirty(b);
-
-    return true;
-}
-
 // *************************************************************************
 // *			        SetDefaultBrushTexInfo	                       	   *
 // *************************************************************************
@@ -438,7 +381,7 @@ void CL64_Doc::SetDefaultBrushTexInfo(Brush* b)
     }
     else
     {
-        ::BrushTexSetCB(b, &CallbackData);
+        BrushTexSetCB(b, &CallbackData);
     }
 }
 
@@ -453,12 +396,7 @@ WadFileEntry* CL64_Doc::GetDibBitmap(const char* Name)
 // *************************************************************************
 // *			                 PointToLineDist	                   	   *
 // *************************************************************************
-static float PointToLineDist
-(
-    POINT const* ptFrom,
-    POINT const* ptLine1,
-    POINT const* ptLine2
-)
+static float PointToLineDist(POINT const* ptFrom,POINT const* ptLine1,POINT const* ptLine2)
 {
     float xkj, ykj;
     float xlk, ylk;
@@ -526,6 +464,7 @@ static  signed int FindClosestBrushCB(Brush* pBrush, void* pVoid)
             }
         }
     }
+
     return GE_TRUE;
 }
 

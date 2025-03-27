@@ -48,25 +48,6 @@ CL64_Entities::~CL64_Entities()
 //	b->GroupId = gid;
 //}
 
-struct fdocFaceScales
-{
-	float DrawScale;
-	float LightmapScale;
-};
-
-// *************************************************************************
-// *			       ( Static ) fdocSetFaceScales	                   	   *
-// *************************************************************************
-static signed int fdocSetFaceScales(Face* pFace, void* lParam)
-{
-	fdocFaceScales* pScales = (fdocFaceScales*)lParam;
-
-	App->CL_Face->Face_SetTextureScale(pFace, pScales->DrawScale, pScales->DrawScale);
-	App->CL_Face->Face_SetLightScale(pFace, pScales->LightmapScale, pScales->LightmapScale);
-
-	return false;
-}
-
 // *************************************************************************
 // *		Create_Player_Entity:- Terry and Hazel Flanigan 2025	 	   *
 // *************************************************************************

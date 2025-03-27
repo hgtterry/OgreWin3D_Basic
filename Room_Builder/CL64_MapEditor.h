@@ -70,9 +70,7 @@ public:
 	// TODO hgtterry Make Private
 	int nleftWnd_width;
 	int nleftWnd_Depth;
-	int Copy_nleftWnd_width;
-	int Copy_nleftWnd_Depth;
-
+	
 	ViewVars* VCam[4];
 	ViewVars* Current_View;
 

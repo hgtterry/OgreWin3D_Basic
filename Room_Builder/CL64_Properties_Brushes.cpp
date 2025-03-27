@@ -44,17 +44,17 @@ CL64_Properties_Brushes::CL64_Properties_Brushes()
 	App->CL_Maths->Vector3_Clear(&Rotation);
 	App->CL_Maths->Vector3_Clear(&Size);
 
-	PosX_Delta = 10;
-	PosY_Delta = 10;
-	PosZ_Delta = 10;
+	PosX_Delta = 1;
+	PosY_Delta = 1;
+	PosZ_Delta = 1;
 
 	ScaleX_Delta = 1;
 	ScaleY_Delta = 1;
 	ScaleZ_Delta = 1;
 
-	RotX_Delta = 45;
-	RotY_Delta = 45;
-	RotZ_Delta = 45;
+	RotX_Delta = 1;
+	RotY_Delta = 1;
+	RotZ_Delta = 1;
 
 	Rotation;
 	Size;
@@ -593,6 +593,8 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Dimensions_Dlg(HWND hDlg, UINT me
 		SendDlgItemMessage(hDlg, IDC_CBROTYDELTA, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_CBROTZDELTA, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
+		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
 		//SendDlgItemMessage(hDlg, IDC_SIZELOCK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		App->CL_Properties_Brushes->Update_Deltas_Dlg(hDlg);
@@ -756,7 +758,7 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Dimensions_Dlg(HWND hDlg, UINT me
 			{
 			case SB_LINERIGHT:
 			{
-				App->CL_Properties_Brushes->CenterOfSelection.x += App->CL_Properties_Brushes->PosY_Delta;
+				App->CL_Properties_Brushes->CenterOfSelection.x += App->CL_Properties_Brushes->PosX_Delta;
 				App->CL_Properties_Brushes->Move_Brush();
 				break;
 			}
@@ -1168,13 +1170,6 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Dimensions_Dlg(HWND hDlg, UINT me
 			return TRUE;
 		}
 
-		if (LOWORD(wParam) == IDOK)
-		{
-			App->CL_Properties_Brushes->flag_Dimension_Dlg_Active = 0;
-			EndDialog(hDlg, LOWORD(wParam));
-			return TRUE;
-		}
-
 		if (LOWORD(wParam) == IDCANCEL)
 		{
 			App->CL_Properties_Brushes->flag_Dimension_Dlg_Active = 0;
@@ -1228,7 +1223,7 @@ void CL64_Properties_Brushes::Fill_ComboBox_PosDelta(HWND hDlg)
 	SendMessage(hDlg, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"100");
 	SendMessage(hDlg, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"128");
 
-	SendMessage(hDlg, CB_SETCURSEL, 4, 0);
+	SendMessage(hDlg, CB_SETCURSEL, 3, 0);
 }
 
 // *************************************************************************
@@ -1240,7 +1235,7 @@ void CL64_Properties_Brushes::Fill_ComboBox_RotDelta(HWND hDlg)
 	SendMessage(hDlg, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"45");
 	SendMessage(hDlg, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"90");
 
-	SendMessage(hDlg, CB_SETCURSEL, 1, 0);
+	SendMessage(hDlg, CB_SETCURSEL, 0, 0);
 }
 
 // *************************************************************************
