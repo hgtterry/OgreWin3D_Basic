@@ -78,9 +78,11 @@ CL64_MapEditor::CL64_MapEditor()
 
 	LEFT_WINDOW_WIDTH = 500;
 	nleftWnd_width = 500;
+	Copy_nleftWnd_width = 500;
 
 	LEFT_WINDOW_DEPTH = 215;
 	nleftWnd_Depth = 215;
+	Copy_nleftWnd_Depth = 215;
 	TOP_POS_BOTLEFT = 215;
 
 	RIGHT_MINIMUM_SPACE = 1000;
@@ -478,6 +480,9 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Main_Dlg(HWND hDlg, UINT message, WPARAM w
 			}
 
 			App->CL_MapEditor->Resize_Windows(hDlg, App->CL_MapEditor->nleftWnd_width, App->CL_MapEditor->nleftWnd_Depth);
+			
+			App->CL_Top_Tabs->Copy_Spliter_Depth = App->CL_MapEditor->nleftWnd_Depth;
+			App->CL_Top_Tabs->Copy_Spliter_Width = App->CL_MapEditor->nleftWnd_width;
 		}
 
 		return 1;
@@ -502,7 +507,6 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Main_Dlg(HWND hDlg, UINT message, WPARAM w
 			// Checks if the left button is pressed during dragging the splitter
 			if (wParam == MK_LBUTTON)
 			{
-
 				if (xSizing && App->CL_MapEditor->Do_Width == 1)
 				{
 					RECT    focusrect;
@@ -554,7 +558,6 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Main_Dlg(HWND hDlg, UINT message, WPARAM w
 
 					ReleaseDC(hDlg, hdc);
 				}
-
 			}
 
 			if ((xPos > App->CL_MapEditor->nleftWnd_width - SPLITTER_BAR_WIDTH && xPos < App->CL_MapEditor->nleftWnd_width + SPLITTER_BAR_WIDTH))
@@ -632,6 +635,15 @@ void CL64_MapEditor::Set_Views_Defaults(int Index, Ogre::int32 View, const char*
 	App->CL_Maths->Vector3_Set(&App->CL_MapEditor->VCam[Index]->CamPos,0,0,0);
 
 	App->CL_MapEditor->VCam[Index]->MaxScreenScaleInv = 100;
+}
+
+// *************************************************************************
+// *	  	Set_Splitter_WidthDepth:- Terry and Hazel Flanigan 2024		  *
+// *************************************************************************
+void CL64_MapEditor::Set_Splitter_WidthDepth(int Width, int Depth)
+{
+	nleftWnd_width = Width;
+	nleftWnd_Depth = Depth;
 }
 
 // *************************************************************************
@@ -1436,7 +1448,9 @@ void CL64_MapEditor::Context_Menu(HWND hDlg)
 
 	AppendMenuW(hMenu, MF_STRING, IDM_RESET_VIEW, L"&Reset View");
 	AppendMenuW(hMenu, MF_STRING, IDM_CENTRE_ONCAMERA, L"&Centre On Camera");
-	//AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
+	AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
+	AppendMenuW(hMenu, MF_STRING | MF_GRAYED, NULL, L"&Zoom Ctrl+Right Mouse Button");
+	AppendMenuW(hMenu, MF_STRING | MF_GRAYED, NULL, L"&Pan Ctrl+Left Mouse Button");
 	//AppendMenuW(hMenu, MF_STRING, IDM_FILE_DELETE, L"&Delete");
 
 	flag_Context_Menu_Active = 1;

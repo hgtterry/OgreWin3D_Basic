@@ -33,7 +33,7 @@ enum View
 	V_TL = 0,
 	V_TR = 1,
 	V_BL = 2,
-	V_BR = 3
+	V_Ogre = 3
 };
 
 
@@ -54,6 +54,8 @@ public:
 	void Reset_To_Camera();
 	
 	void Resize_Windows(HWND hDlg, int NewWidth, int NewDepth);
+	void Set_Splitter_WidthDepth(int Width, int Depth);
+	
 	void Context_Menu(HWND hDlg);
 
 	HWND Main_Dlg_Hwnd;
@@ -68,6 +70,8 @@ public:
 	// TODO hgtterry Make Private
 	int nleftWnd_width;
 	int nleftWnd_Depth;
+	int Copy_nleftWnd_width;
+	int Copy_nleftWnd_Depth;
 
 	ViewVars* VCam[4];
 	ViewVars* Current_View;

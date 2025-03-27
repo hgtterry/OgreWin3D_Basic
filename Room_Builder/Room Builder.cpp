@@ -174,7 +174,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             // ----------------------------- Debug
             case ID_DEBUG_GENERAL:
             {
-                if (App->CL_Ogre->OGL_Listener->Flag_Just_Face == 1)
+                /*if (App->CL_Ogre->OGL_Listener->Flag_Just_Face == 1)
                 {
                     App->CL_Ogre->OGL_Listener->Flag_Just_Face = 0;
                     App->CL_ImGui->flag_Show_Render_Reports = 0;
@@ -183,8 +183,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 {
                     App->CL_Ogre->OGL_Listener->Flag_Just_Face = 1;
                     App->CL_ImGui->flag_Show_Render_Reports = 1;
-                }
+                }*/
                 
+                App->CL_MapEditor->nleftWnd_Depth = 130;
+                App->CL_MapEditor->Resize_Windows(App->CL_MapEditor->Main_Dlg_Hwnd, App->CL_MapEditor->nleftWnd_width, App->CL_MapEditor->nleftWnd_Depth);
+
                 return 1;
             }
 

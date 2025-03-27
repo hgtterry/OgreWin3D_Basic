@@ -168,7 +168,6 @@ void CL64_Editor::Editor_Mode(void)
 
 	SetParent(App->CL_MapEditor->Bottom_Right_Hwnd, Parent_hWnd);
 	
-	App->CL_MapEditor->Init_Views(Enums::Selected_View_None);
 	App->CL_MapEditor->Resize_Windows(App->CL_MapEditor->Main_Dlg_Hwnd, App->CL_MapEditor->nleftWnd_width, App->CL_MapEditor->nleftWnd_Depth);
 
 	App->CL_Properties_Tabs->Enable_Tabs_Dlg(true);

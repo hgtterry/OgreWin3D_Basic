@@ -40,6 +40,9 @@ public:
 	void Select_Face();
 	void Update_Faces_Combo();
 
+	int Copy_Spliter_Depth;
+	int Copy_Spliter_Width;
+
 	bool flag_Brush_Select;
 	bool flag_Brush_Move;
 	bool flag_Brush_Rotate;
