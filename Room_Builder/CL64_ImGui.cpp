@@ -434,8 +434,8 @@ void CL64_ImGui::App_Tool_Selection_GUI(void)
 			strcpy(Tool, "TEMPLATE");
 		}
 
-		//ImGui::Text("Width:= %i", App->CL_MapEditor->nleftWnd_width);
-		//ImGui::Text("Depth:= %i", App->CL_MapEditor->nleftWnd_Depth);
+		ImGui::Text("Width:= %i", App->CL_MapEditor->nleftWnd_width);
+		ImGui::Text("Depth:= %i", App->CL_MapEditor->nleftWnd_Depth);
 
 		ImGui::Text("mModeTool:= %s", Tool);
 		ImGui::Separator();

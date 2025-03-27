@@ -137,6 +137,9 @@ void CL64_MapEditor::Reset_Views_All()
 	App->CL_MapEditor->Init_Views(Enums::Selected_View_None);
 	App->CL_MapEditor->Resize_Windows(Main_Dlg_Hwnd, nleftWnd_width, nleftWnd_Depth);
 
+	App->CL_Top_Tabs->Copy_Spliter_Width = nleftWnd_width;
+	App->CL_Top_Tabs->Copy_Spliter_Depth = nleftWnd_Depth;
+
 	int Count = 0;
 
 	while (Count < 3)
@@ -663,6 +666,8 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Left_Window(HWND hDlg, UINT message, W
 	{
 	case WM_INITDIALOG:
 	{
+		SendDlgItemMessage(hDlg, IDC_ST_TL_TITLE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
 		RECT r;
 		GetClientRect(hDlg, &r);
 
@@ -680,6 +685,18 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Left_Window(HWND hDlg, UINT message, W
 		}
 	}
 	
+	case WM_CTLCOLORSTATIC:
+	{
+		if (GetDlgItem(hDlg, IDC_ST_TL_TITLE) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+		return FALSE;
+	}
+
 	case WM_CTLCOLORDLG:
 	{
 		return (LONG)App->CL_MapEditor->BackGround_Brush;
@@ -831,6 +848,8 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Right_Window(HWND hDlg, UINT message, 
 	{
 	case WM_INITDIALOG:
 	{
+		SendDlgItemMessage(hDlg, IDC_ST_TR_TITLE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
 		App->CL_MapEditor->VCam[V_TR] = new ViewVars;
 		strcpy(App->CL_MapEditor->VCam[V_TR]->Name, "TRV");
 		App->CL_MapEditor->VCam[V_TR]->ViewType = 32;
@@ -851,6 +870,18 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Right_Window(HWND hDlg, UINT message, 
 		{
 			return TRUE;
 		}
+	}
+
+	case WM_CTLCOLORSTATIC:
+	{
+		if (GetDlgItem(hDlg, IDC_ST_TR_TITLE) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+		return FALSE;
 	}
 
 	case WM_CTLCOLORDLG:
@@ -1003,6 +1034,8 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Bottom_Left_Window(HWND hDlg, UINT message
 	{
 	case WM_INITDIALOG:
 	{
+		SendDlgItemMessage(hDlg, IDC_ST_BL_TITLE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
 		App->CL_MapEditor->VCam[V_BL] = new ViewVars;
 		strcpy(App->CL_MapEditor->VCam[2]->Name, "BLV");
 		App->CL_MapEditor->VCam[V_BL]->ViewType = 16;
@@ -1023,6 +1056,18 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Bottom_Left_Window(HWND hDlg, UINT message
 		{
 			return TRUE;
 		}
+	}
+
+	case WM_CTLCOLORSTATIC:
+	{
+		if (GetDlgItem(hDlg, IDC_ST_BL_TITLE) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+		return FALSE;
 	}
 
 	case WM_CTLCOLORDLG:
@@ -1506,6 +1551,7 @@ void CL64_MapEditor::On_Mouse_Move(POINT CursorPosition, HWND hDlg)
 				App->CL_Doc->LockAxis(&dv);
 				App->CL_Doc->MoveSelectedBrushes(&dv);
 				Draw_Screen(hDlg);
+				/*ShowWindow(Left_Test_Hwnd, 1);*/
 			}
 
 			if (App->CL_Top_Tabs->flag_Brush_Rotate == 1)
@@ -2016,13 +2062,13 @@ void CL64_MapEditor::Draw_Screen(HWND hwnd)
 
 	}
 
-	BitBlt(RealhDC, Rect.left, Rect.top, Rect.right - Rect.left, Rect.bottom - Rect.top, MemoryhDC, 0, 0, SRCCOPY);
+	BitBlt(RealhDC, Rect.left, Rect.top+20, Rect.right - Rect.left, Rect.bottom - Rect.top, MemoryhDC, 0, 0, SRCCOPY);
 
 	DeleteObject(OffScreenBitmap);
 	DeleteDC(MemoryhDC);
 	ReleaseDC(hwnd, RealhDC);
 	//flag_IsDrawing = 0;
-
+	//ShowWindow(Left_Test_Hwnd, true);
 	//Get_Timer
 }
 

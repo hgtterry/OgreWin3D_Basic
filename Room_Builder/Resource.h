@@ -372,6 +372,9 @@
 #define IDC_STSIDES                     1276
 #define IDC_ST_ABOUT_BANNER             1277
 #define IDC_ST_ABOUT_VERSION            1278
+#define IDC_ST_TL_TITLE                 1280
+#define IDC_ST_TR_TITLE                 1281
+#define IDC_ST_BL_TITLE                 1282
 #define ID_DEBUG_GENERAL                32771
 #define ID_TEMPLATES_INSERT             32772
 #define ID_BRUSH_SELECT                 32773
@@ -431,7 +434,7 @@
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        176
 #define _APS_NEXT_COMMAND_VALUE         32817
-#define _APS_NEXT_CONTROL_VALUE         1279
+#define _APS_NEXT_CONTROL_VALUE         1283
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif

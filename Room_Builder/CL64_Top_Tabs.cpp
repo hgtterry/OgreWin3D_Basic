@@ -31,9 +31,9 @@ CL64_Top_Tabs::CL64_Top_Tabs(void)
 {
 	Headers_hWnd = nullptr;
 
-	Copy_Spliter_Depth = 0;
-	Copy_Spliter_Width = 0;
-
+	Copy_Spliter_Width = 500;
+	Copy_Spliter_Depth = 215;
+	
 	flag_Brush_Select = 1;
 
 	flag_Brush_Move = 0;
