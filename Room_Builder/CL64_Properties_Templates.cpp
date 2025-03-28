@@ -158,7 +158,7 @@ LRESULT CALLBACK CL64_Properties_Templates::Proc_Templates(HWND hDlg, UINT messa
 				}
 			}
 
-			App->CL_Mesh_Mgr->Update_World();
+			App->CL_Mesh_Mgr->Update_World(0);
 
 			App->CL_Doc->DoGeneralSelect(true);
 

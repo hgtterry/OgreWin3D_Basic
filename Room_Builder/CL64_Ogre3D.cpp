@@ -121,8 +121,15 @@ void CL64_Ogre3D::Set_Export_Paths(void)
 // *************************************************************************
 // *	  		Export_To_Ogre3D:- Terry and Hazel Flanigan 2025		   *
 // *************************************************************************
-void CL64_Ogre3D::Export_To_Ogre3D()
+void CL64_Ogre3D::Export_To_Ogre3D(bool Selected)
 {
+	if (Selected == 1)
+	{
+		Debug
+		App->CL_Mesh_Mgr->Update_World(Selected);
+	}
+
+
 	Set_Export_Paths();
 
 	CreateDirectory(mExport_Path, NULL);

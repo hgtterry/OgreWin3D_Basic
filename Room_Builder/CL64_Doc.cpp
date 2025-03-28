@@ -333,7 +333,7 @@ void CL64_Doc::UpdateAllViews(int Update_Mode)
         if (BC > 0)
         {
             App->CL_Doc->RebuildTrees();
-            App->CL_Mesh_Mgr->Update_World(); // Will Set Node Visable
+            App->CL_Mesh_Mgr->Update_World(0); // Will Set Node Visable
         }
         else
         {
@@ -351,7 +351,7 @@ void CL64_Doc::UpdateAllViews(int Update_Mode)
         if (BC > 0)
         {
             App->CL_Doc->RebuildTrees();
-            App->CL_Mesh_Mgr->Update_World(); // Will Set Node Visable
+            App->CL_Mesh_Mgr->Update_World(0); // Will Set Node Visable
         }
         else
         {

@@ -253,10 +253,10 @@ void CL64_MapEditor::Resize_Windows(HWND hDlg, int NewWidth, int NewDepth)
 	RECT rect;
 	GetClientRect(hDlg, &rect);
 
-	int Top_Windows_Top_Y = 8;
+	int Top_Windows_Top_Y = 0;
 	int Left_Windows_Start_X = 0;
 
-	int NewDepth_Depth = NewDepth - 11;
+	int NewDepth_Depth = NewDepth - 3;
 
 	MoveWindow(Left_Window_Hwnd,
 		Left_Windows_Start_X,
@@ -1725,7 +1725,7 @@ signed int CL64_MapEditor::BrushDraw(Brush* pBrush, void* lParam)
 	BrushDrawData* pData = (BrushDrawData*)lParam;
 	
 
-	//if ((pData->GroupId == fdoc_SHOW_ALL_GROUPS) || (Brush_GetGroupId(pBrush) == pData->GroupId))
+	//if (App->CL_Brush->Brush_GetGroupId(pBrush) == pData->GroupId))
 	{
 		if ((pData->FlagTest == NULL) || pData->FlagTest(pBrush))
 		{

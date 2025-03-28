@@ -1523,7 +1523,9 @@ void CL64_Dialogs::List_Used_Textures(HWND List)
 	int Count = 0;
 	memset(App->CL_Mesh_Mgr->UsedTextures, 0, 500);
 
-	App->CL_Brush_X->BrushList_GetUsedTextures_X(App->CL_Mesh_Mgr->UsedTextures);
+	BrushList* pList = App->CL_Level->Level_GetBrushes(App->CL_Doc->pLevel);
+
+	App->CL_Brush_X->BrushList_GetUsedTextures_X(pList, App->CL_Mesh_Mgr->UsedTextures);
 
 	while (Count < App->CL_TXL_Editor->Texture_Count)
 	{

@@ -32,7 +32,7 @@ public:
 	void Set_Export_Paths(void);
 	void Set_World_Paths(void);
 
-	void Export_To_Ogre3D();
+	void Export_To_Ogre3D(bool Selected);
 	void Export_MaterialFile(char* MatFileName);
 
 	void Convert_ToOgre3D(bool Create);

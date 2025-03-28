@@ -943,7 +943,7 @@ LRESULT CALLBACK CL64_Export::Proc_Ogre_Export_Dlg(HWND hDlg, UINT message, WPAR
 			strcpy(App->CL_Export->mDirectory_Name, App->CL_Export->mJustName);
 			strcat(App->CL_Export->mDirectory_Name, "_Ogre_All");
 
-			App->CL_Ogre3D->Export_To_Ogre3D();
+			App->CL_Ogre3D->Export_To_Ogre3D(false);
 
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;

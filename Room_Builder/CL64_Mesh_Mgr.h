@@ -37,8 +37,10 @@ public:
 	CL64_Mesh_Mgr();
 	~CL64_Mesh_Mgr();
 
-	bool Update_World();
+	bool Update_World(int Selected);
 	void Brush_Build_List(int ExpSelected);
+	bool Brush_Build_Selected(BrushList* BList);
+
 	bool Brush_Build_Level_Brushes(Level3* pLevel, const char* Filename, BrushList* BList, int ExpSelected, signed int ExpLights, int GroupID);
 	bool Brush_Decode_List(BrushList* BList, signed int SubBrush);
 	bool Brush_Create(const Brush* b, int Actual_Brush_Index);

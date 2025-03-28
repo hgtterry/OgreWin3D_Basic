@@ -40,16 +40,12 @@ CL64_Brush_X::~CL64_Brush_X()
 // *************************************************************************
 // *		BrushList_GetUsedTextures_X:- Terry and Hazel Flanigan 2025	   *
 // *************************************************************************
-void CL64_Brush_X::BrushList_GetUsedTextures_X(signed int* UsedTex)
+void CL64_Brush_X::BrushList_GetUsedTextures_X(BrushList* BList, signed int* UsedTex)
 {
-	Level* pLevel = App->CL_Doc->pLevel;
-	BrushList* pList = App->CL_Level->Level_GetBrushes(App->CL_Doc->pLevel);
-
 	Brush* b;
-	b = pList->First;
+	b = BList->First;
 	while (b != NULL)
 	{
-		//Scan_Faces(b);
 		Get_BrushData(b);
 		b = b->Next;
 	}

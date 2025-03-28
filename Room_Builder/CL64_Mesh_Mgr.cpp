@@ -176,14 +176,14 @@ void CL64_Mesh_Mgr::Delete_Group_Brushes()
 // *************************************************************************
 // *		Update_World:- Terry and Hazel Flanigan 2025	 			   *
 // *************************************************************************
-bool CL64_Mesh_Mgr::Update_World()
+bool CL64_Mesh_Mgr::Update_World(int Selected)
 {
 	v_Face_Data_Count = 0;
 
 	int BC = App->CL_Brush->Get_Brush_Count();
 	if (BC > 0)
 	{
-		Brush_Build_List(0);
+		Brush_Build_List(Selected);
 		WE_Convert_All_Texture_Groups();
 
 		if (App->CL_Ogre->OGL_Listener->Flag_Render_Brushes == 0)
@@ -226,6 +226,76 @@ void CL64_Mesh_Mgr::Brush_Build_List(int ExpSelected)
 	{
 		fResult = Brush_Build_Level_Brushes(reinterpret_cast<tag_Level3*> (App->CL_Doc->pLevel), "FileName", BList, 0, 0, -1);
 	}
+	else
+	{
+		Brush_Build_Selected(BList);
+	}
+}
+
+// *************************************************************************
+// *		Brush_Build_Selected:- Terry and Hazel Flanigan 2025		   *
+// *************************************************************************
+bool CL64_Mesh_Mgr::Brush_Build_Selected(BrushList* BList)
+{
+	signed int fResult;
+	int i, GroupID, GroupCount;
+	char NewFileName[MAX_PATH];
+	GroupID = -1;
+	GroupCount = 1;
+
+	for (i = 0; i < GroupCount; i++)
+	{
+		BrushList* SBList;
+		Brush* pBrush;
+		BrushIterator bi;
+
+		SBList = App->CL_Brush->BrushList_Create();
+		pBrush = App->CL_Brush->BrushList_GetFirst(BList, &bi);
+
+		while (pBrush != NULL)
+		{
+
+			if (App->CL_SelBrushList->SelBrushList_Find(App->CL_Doc->pSelBrushes, pBrush))
+			{
+				Brush* pClone = App->CL_Brush->Brush_Clone(pBrush);
+				App->CL_Brush->BrushList_Append(SBList, pClone);
+			}
+
+			pBrush = App->CL_Brush->BrushList_GetNext(&bi);
+		}
+		// do CSG
+		{
+			//ModelIterator	mi;
+			//int				i, CurId = 0;
+			//ModelInfo_Type* ModelInfo;
+			//Model* pMod;
+
+			//App->CL_Brush->BrushList_ClearAllCSG(SBList);
+
+			//App->CL_Brush->BrushList_DoCSG(SBList, CurId, Brush_CSG_Callback, this);
+
+			////build individual model mini trees
+			//ModelInfo = App->CL_Level->Level_GetModelInfo(App->CL_Doc->pLevel);
+			//pMod = ModelList_GetFirst(ModelInfo->Models, &mi);
+
+			//for (i = 0; i < ModelList_GetCount(ModelInfo->Models); i++)
+			//{
+			//	CurId = Model_GetId(pMod);
+
+			//	BrushList_DoCSG(SBList, CurId, Brush_CSG_Callback, this);
+			//}
+		}
+
+		fResult = Brush_Build_Level_Brushes(reinterpret_cast<tag_Level3*>(App->CL_Doc->pLevel), NewFileName, SBList, 0, 0, -1);
+		if (!fResult)
+		{
+			App->Say("Error exporting group");
+		}
+
+		App->CL_Brush->BrushList_Destroy(&SBList);
+	}
+
+	return 1;
 }
 
 // *************************************************************************
@@ -245,7 +315,7 @@ bool CL64_Mesh_Mgr::Brush_Build_Level_Brushes(Level3* pLevel, const char* Filena
 
 	int i;
 
-	App->CL_Brush_X->BrushList_GetUsedTextures_X(UsedTextures);
+	App->CL_Brush_X->BrushList_GetUsedTextures_X(BList,UsedTextures);
 
 	// Add Textures GL
 	int AdjustedIndex = 0;
@@ -920,3 +990,5 @@ int CL64_Mesh_Mgr::Get_Adjusted_Index(int RealIndex)
 
 //	return TRUE;
 //}
+
+
