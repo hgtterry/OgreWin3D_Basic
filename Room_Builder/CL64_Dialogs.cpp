@@ -1519,7 +1519,8 @@ LRESULT CALLBACK CL64_Dialogs::Proc_General_ListBox(HWND hDlg, UINT message, WPA
 void CL64_Dialogs::List_Used_Textures(HWND List)
 {
 	SendMessage(List, LB_RESETCONTENT, 0, 0);
-	
+	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)" ------- Textures Used in Mesh");
+
 	int Count = 0;
 	memset(App->CL_Mesh_Mgr->UsedTextures, 0, 500);
 
@@ -1539,4 +1540,51 @@ void CL64_Dialogs::List_Used_Textures(HWND List)
 		Count++;
 	}
 	
+	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)" -------  Textures Selected Brush");
+
+	memset(App->CL_Mesh_Mgr->UsedTextures, 0, 500);
+
+	int SB = App->CL_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes);
+
+	if (SB > 0)
+	{
+		BrushList* BList = NULL;
+		BrushList* SBList = NULL;
+		Brush* pBrush = NULL;
+		BrushIterator bi;
+
+		BList = App->CL_Level->Level_GetBrushes(App->CL_Doc->pLevel);
+
+		SBList = App->CL_Brush->BrushList_Create();
+		pBrush = App->CL_Brush->BrushList_GetFirst(BList, &bi);
+
+		while (pBrush != NULL)
+		{
+			if (App->CL_SelBrushList->SelBrushList_Find(App->CL_Doc->pSelBrushes, pBrush))
+			{
+				Brush* pClone = App->CL_Brush->Brush_Clone(pBrush);
+				App->CL_Brush->BrushList_Append(SBList, pClone);
+			}
+
+			pBrush = App->CL_Brush->BrushList_GetNext(&bi);
+		}
+
+		App->CL_Brush_X->BrushList_GetUsedTextures_X(SBList, App->CL_Mesh_Mgr->UsedTextures);
+		
+		Count = 0;
+		while (Count < App->CL_TXL_Editor->Texture_Count)
+		{
+			if (App->CL_Mesh_Mgr->UsedTextures[Count])
+			{
+				char matname[MAX_PATH];
+				strncpy(matname, App->CL_TXL_Editor->Texture_List[Count]->Name, MAX_PATH - 1);
+				SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)matname);
+			}
+
+			Count++;
+		}
+
+		App->CL_Brush->BrushList_Destroy(&SBList);
+	}
+
 }
