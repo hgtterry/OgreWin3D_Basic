@@ -56,6 +56,7 @@ public:
 	int Get_Adjusted_Index(int RealIndex);
 
 	void Create_V_Face(int Index);
+	static signed int Brush_CSG_Callback(const Brush* pBrush, void* lParam);
 
 	//bool AddTexture_GL(geVFile* BaseFile, const char* TextureName, int GroupIndex);
 

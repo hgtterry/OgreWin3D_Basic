@@ -123,6 +123,14 @@ CL64_Mesh_Mgr::~CL64_Mesh_Mgr()
 }
 
 // *************************************************************************
+// * 		Brush_CSG_Callback:- Terry and Hazel Flanigan 2023			   *
+// *************************************************************************
+signed int CL64_Mesh_Mgr::Brush_CSG_Callback(const Brush* pBrush, void* lParam)
+{
+	return 1;// (App->CL_Doc->BrushIsVisible(pBrush));
+}
+
+// *************************************************************************
 // * 		Delete_Brush_List:- Terry and Hazel Flanigan 2025			   *
 // *************************************************************************
 void CL64_Mesh_Mgr::Delete_Brush_List()
@@ -266,13 +274,13 @@ bool CL64_Mesh_Mgr::Brush_Build_Selected(BrushList* BList)
 		// do CSG
 		{
 			//ModelIterator	mi;
-			//int				i, CurId = 0;
+			int				i, CurId = 0;
 			//ModelInfo_Type* ModelInfo;
 			//Model* pMod;
 
-			//App->CL_Brush->BrushList_ClearAllCSG(SBList);
+			App->CL_Brush->BrushList_ClearAllCSG(SBList);
 
-			//App->CL_Brush->BrushList_DoCSG(SBList, CurId, Brush_CSG_Callback, this);
+			App->CL_Brush->BrushList_DoCSG(SBList, CurId, Brush_CSG_Callback, this);
 
 			////build individual model mini trees
 			//ModelInfo = App->CL_Level->Level_GetModelInfo(App->CL_Doc->pLevel);

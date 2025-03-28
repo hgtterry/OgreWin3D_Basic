@@ -1510,6 +1510,7 @@ LRESULT CALLBACK CL64_Dialogs::Proc_General_ListBox(HWND hDlg, UINT message, WPA
 		break;
 	}
 	}
+
 	return FALSE;
 }
 
