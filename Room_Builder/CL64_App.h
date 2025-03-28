@@ -177,6 +177,7 @@ public:
 	HBRUSH Brush_White;
 	HBRUSH Brush_Green;
 
+	HFONT Font_CB10;
 	HFONT Font_CB15;
 	HFONT Font_CB18;
 	HFONT Font_Arial20;

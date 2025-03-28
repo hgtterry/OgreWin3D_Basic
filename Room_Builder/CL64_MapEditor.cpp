@@ -666,7 +666,7 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Left_Window(HWND hDlg, UINT message, W
 	{
 	case WM_INITDIALOG:
 	{
-		SendDlgItemMessage(hDlg, IDC_ST_TL_TITLE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_ST_TL_TITLE, WM_SETFONT, (WPARAM)App->Font_CB10, MAKELPARAM(TRUE, 0));
 		
 		RECT r;
 		GetClientRect(hDlg, &r);
@@ -848,7 +848,7 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Right_Window(HWND hDlg, UINT message, 
 	{
 	case WM_INITDIALOG:
 	{
-		SendDlgItemMessage(hDlg, IDC_ST_TR_TITLE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_ST_TR_TITLE, WM_SETFONT, (WPARAM)App->Font_CB10, MAKELPARAM(TRUE, 0));
 
 		App->CL_MapEditor->VCam[V_TR] = new ViewVars;
 		strcpy(App->CL_MapEditor->VCam[V_TR]->Name, "TRV");
@@ -1034,7 +1034,7 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Bottom_Left_Window(HWND hDlg, UINT message
 	{
 	case WM_INITDIALOG:
 	{
-		SendDlgItemMessage(hDlg, IDC_ST_BL_TITLE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_ST_BL_TITLE, WM_SETFONT, (WPARAM)App->Font_CB10, MAKELPARAM(TRUE, 0));
 
 		App->CL_MapEditor->VCam[V_BL] = new ViewVars;
 		strcpy(App->CL_MapEditor->VCam[2]->Name, "BLV");
@@ -1378,7 +1378,6 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Ogre_BR(HWND hDlg, UINT message, WPARAM wP
 			App->CL_MapEditor->Context_Menu(hDlg);
 		}
 
-
 		return 1;
 	}
 
@@ -1406,6 +1405,8 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Ogre_BR(HWND hDlg, UINT message, WPARAM wP
 					}
 				}
 			}
+
+			App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
 
 			return 1;
 		}
@@ -2062,7 +2063,7 @@ void CL64_MapEditor::Draw_Screen(HWND hwnd)
 
 	}
 
-	BitBlt(RealhDC, Rect.left, Rect.top+20, Rect.right - Rect.left, Rect.bottom - Rect.top, MemoryhDC, 0, 0, SRCCOPY);
+	BitBlt(RealhDC, Rect.left, Rect.top+17, Rect.right - Rect.left, Rect.bottom - Rect.top, MemoryhDC, 0, 0, SRCCOPY);
 
 	DeleteObject(OffScreenBitmap);
 	DeleteDC(MemoryhDC);
