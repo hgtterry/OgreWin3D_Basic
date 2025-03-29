@@ -203,3 +203,48 @@ static signed int BrushTexSetCB(Brush* b, void* lParam)
 
 	return true;
 }
+
+// *************************************************************************
+// *      ( Static ) SelAllBrushFaces:- Terry and Hazel Flanigan 2025      *
+// *************************************************************************
+static signed int SelAllBrushFaces(Brush* pBrush, void* lParam)
+{
+	int iFace, nFaces;
+	char buff[MAX_PATH];
+
+	nFaces = App->CL_Brush->Brush_GetNumFaces(pBrush);
+	for (iFace = 0; iFace < nFaces; ++iFace)
+	{
+		Face* pFace;
+		pFace = App->CL_Brush->Brush_GetFace(pBrush, iFace);
+
+		strcpy(buff, App->CL_Brush->Brush_GetName(App->CL_Doc->CurBrush));
+		App->CL_Face->Face_SetBrushName(pFace, buff);
+
+		App->CL_Face->Face_SetSelected(pFace, GE_TRUE);
+		App->CL_SelFaceList->SelFaceList_Add(App->CL_Doc->pSelFaces, pFace);
+	}
+
+	return GE_TRUE;
+}
+
+// *************************************************************************
+// *      ( Static ) SelAllBrushFaces:- Terry and Hazel Flanigan 2025      *
+// *************************************************************************
+static signed int Set_BrushFaces_Name(Brush* pBrush, void* lParam)
+{
+	int iFace, nFaces;
+	char buff[MAX_PATH];
+
+	nFaces = App->CL_Brush->Brush_GetNumFaces(pBrush);
+	for (iFace = 0; iFace < nFaces; ++iFace)
+	{
+		Face* pFace;
+		pFace = App->CL_Brush->Brush_GetFace(pBrush, iFace);
+
+		strcpy(buff, App->CL_Brush->Brush_GetName(App->CL_Doc->CurBrush));
+		App->CL_Face->Face_SetBrushName(pFace, buff);
+	}
+
+	return GE_TRUE;
+}

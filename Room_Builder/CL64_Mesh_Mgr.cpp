@@ -271,27 +271,16 @@ bool CL64_Mesh_Mgr::Brush_Build_Selected(BrushList* BList)
 
 			pBrush = App->CL_Brush->BrushList_GetNext(&bi);
 		}
-		// do CSG
-		{
-			//ModelIterator	mi;
-			int				i, CurId = 0;
-			//ModelInfo_Type* ModelInfo;
-			//Model* pMod;
 
+		bool Do_CSG = 1;
+		if (Do_CSG == 1)
+		{
+			int CurId = 0;
+			
 			App->CL_Brush->BrushList_ClearAllCSG(SBList);
 
 			App->CL_Brush->BrushList_DoCSG(SBList, CurId, Brush_CSG_Callback, this);
 
-			////build individual model mini trees
-			//ModelInfo = App->CL_Level->Level_GetModelInfo(App->CL_Doc->pLevel);
-			//pMod = ModelList_GetFirst(ModelInfo->Models, &mi);
-
-			//for (i = 0; i < ModelList_GetCount(ModelInfo->Models); i++)
-			//{
-			//	CurId = Model_GetId(pMod);
-
-			//	BrushList_DoCSG(SBList, CurId, Brush_CSG_Callback, this);
-			//}
 		}
 
 		fResult = Brush_Build_Level_Brushes(reinterpret_cast<tag_Level3*>(App->CL_Doc->pLevel), NewFileName, SBList, 0, 0, -1);

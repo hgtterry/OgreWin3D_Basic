@@ -222,10 +222,14 @@ void CL64_Doc::OnBrushSubtractfromworld()
         Brush_SetGroupId(nb, App->CL_Doc->mCurrentGroup);
 
         App->CL_Brush->BrushList_Append(BList, nb);
+
+        App->CL_Doc->CurBrush = nb;
+        App->CL_Brush_X->Set_Brush_Faces_Name(App->CL_Doc->CurBrush);
     }
 
     //App->CLSB_Doc->UpdateSelected();
     App->CL_Doc->UpdateAllViews(Enums::UpdateViews_All);
+
 }
 
 // *************************************************************************
@@ -263,6 +267,7 @@ void CL64_Doc::Brush_Add_To_world()
 	App->CL_Brush->Brush_EnumFaces(nb, &Scales, fdocSetFaceScales);
 
 	App->CL_Level->Level_AppendBrush(pLevel, nb);
+   
 
 	if (!App->CL_Brush->Brush_IsHollow(nb) && !App->CL_Brush->Brush_IsMulti(nb))
 	{
@@ -272,6 +277,9 @@ void CL64_Doc::Brush_Add_To_world()
 	{
 		App->CL_Doc->UpdateAllViews(Enums::UpdateViews_All);
 	}
+
+    App->CL_Doc->CurBrush = nb;
+    App->CL_Brush_X->Set_Brush_Faces_Name(App->CL_Doc->CurBrush);
 
 	Placed = true;
 
@@ -1294,30 +1302,6 @@ void CL64_Doc::OnToolsTemplate()
 }
 
 // *************************************************************************
-// *      ( Static ) SelAllBrushFaces:- Terry and Hazel Flanigan 2025      *
-// *************************************************************************
-static signed int SelAllBrushFaces(Brush* pBrush, void* lParam)
-{
-    int iFace, nFaces;
-    char buff[MAX_PATH];
-
-    nFaces = App->CL_Brush->Brush_GetNumFaces(pBrush);
-    for (iFace = 0; iFace < nFaces; ++iFace)
-    {
-        Face* pFace;
-        pFace = App->CL_Brush->Brush_GetFace(pBrush, iFace);
-
-        strcpy(buff, App->CL_Brush->Brush_GetName(App->CL_Doc->CurBrush));
-        App->CL_Face->Face_SetBrushName(pFace, buff);
-
-        App->CL_Face->Face_SetSelected(pFace, GE_TRUE);
-        App->CL_SelFaceList->SelFaceList_Add(App->CL_Doc->pSelFaces, pFace);  
-    }
-
-    return GE_TRUE;
-}
-
-// *************************************************************************
 // *        SelectAllFacesInBrushes:- Terry and Hazel Flanigan 2025        *
 // *************************************************************************
 void CL64_Doc::SelectAllFacesInBrushes(void)
@@ -1335,7 +1319,7 @@ void CL64_Doc::SelectAllFacesInBrushes(void)
         pBrush = App->CL_SelBrushList->SelBrushList_GetBrush(pSelBrushes, iBrush);
         if (App->CL_Brush->Brush_IsMulti(pBrush))
         {
-            App->CL_Brush->BrushList_EnumLeafBrushes(App->CL_Brush->Brush_GetBrushList(pBrush), this, ::SelAllBrushFaces);
+            App->CL_Brush->BrushList_EnumLeafBrushes(App->CL_Brush->Brush_GetBrushList(pBrush), this, SelAllBrushFaces);
         }
         else
         {

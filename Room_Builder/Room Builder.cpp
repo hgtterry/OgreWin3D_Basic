@@ -185,8 +185,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                     App->CL_ImGui->flag_Show_Render_Reports = 1;
                 }*/
                 
-                App->CL_MapEditor->nleftWnd_Depth = 130;
-                App->CL_MapEditor->Resize_Windows(App->CL_MapEditor->Main_Dlg_Hwnd, App->CL_MapEditor->nleftWnd_width, App->CL_MapEditor->nleftWnd_Depth);
+                App->CL_Brush_X->Set_Brush_Faces_Name(App->CL_Doc->CurBrush);
 
                 return 1;
             }

@@ -489,8 +489,7 @@ LRESULT CALLBACK CL64_Dialogs::Proc_Brush_Properties(HWND hDlg, UINT message, WP
 		SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_CB_SELECTED_BRUSH, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ST_BP_SELECTEDBRUSHES, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_BT_BRUSH_RENAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-
+		
 		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 
@@ -529,13 +528,6 @@ LRESULT CALLBACK CL64_Dialogs::Proc_Brush_Properties(HWND hDlg, UINT message, WP
 			return CDRF_DODEFAULT;
 		}
 
-		if (some_item->idFrom == IDC_BT_BRUSH_RENAME)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Normal(item);
-			return CDRF_DODEFAULT;
-		}
-
 		return CDRF_DODEFAULT;
 	}
 
@@ -562,35 +554,6 @@ LRESULT CALLBACK CL64_Dialogs::Proc_Brush_Properties(HWND hDlg, UINT message, WP
 				//App->CL_Properties_Brushes->OnSelchangeBrushlist(Index, 1);
 			}
 			}
-
-			return TRUE;
-		}
-
-		if (LOWORD(wParam) == IDC_BT_BRUSH_RENAME)
-		{
-			char Name[MAX_PATH];
-
-			strcpy(App->CL_Dialogs->btext, "Change File Name");
-			strcpy(App->CL_Dialogs->Chr_Text, App->CL_Properties_Brushes->Selected_Brush->Name);
-
-			App->CL_Dialogs->Dialog_Text(Enums::Check_Name_Brushes);
-
-			if (App->CL_Dialogs->flag_Dlg_Canceled == 0)
-			{
-				strcpy(Name, App->CL_Dialogs->Chr_Text);
-			}
-			else
-			{
-				return TRUE;
-			}
-
-			App->CL_Brush->Brush_SetName(App->CL_Properties_Brushes->Selected_Brush, Name);
-
-			App->CL_Dialogs->Fill_Brush_Combo(hDlg);
-			App->CL_Dialogs->List_BrushData(hDlg);
-			App->CL_Properties_Brushes->Fill_ListBox();
-
-			//App->m_pDoc->SetModifiedFlag(TRUE);
 
 			return TRUE;
 		}

@@ -186,6 +186,21 @@ int CL64_Brush_X::Get_Brush_All_Faces_Count(void)
 }
 
 // *************************************************************************
+// *		  Set_Brush_Faces_Name:- Terry and Hazel Flanigan 2025		   *
+// *************************************************************************
+void CL64_Brush_X::Set_Brush_Faces_Name(Brush* b)
+{
+	if (App->CL_Brush->Brush_IsMulti(b))
+	{
+		App->CL_Brush->BrushList_EnumLeafBrushes(App->CL_Brush->Brush_GetBrushList(b), this, Set_BrushFaces_Name);
+	}
+	else
+	{
+		Set_BrushFaces_Name(b, this);
+	}
+}
+
+// *************************************************************************
 // *						BrushList_EnumLeafBrushes					   *
 // *************************************************************************
 int	CL64_Brush_X::BrushList_EnumLeafBrushes(const BrushList* pList, void* pVoid, BrushList_CB	CallBack)

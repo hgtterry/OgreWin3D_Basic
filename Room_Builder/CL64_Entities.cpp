@@ -88,4 +88,7 @@ void CL64_Entities::Create_Player_Entity()
 
 	App->CL_Level->Level_AppendBrush(App->CL_Doc->pLevel, Player_Brush);
 
+	App->CL_Doc->CurBrush = Player_Brush;
+	App->CL_Brush_X->Set_Brush_Faces_Name(App->CL_Doc->CurBrush);
+
 }
