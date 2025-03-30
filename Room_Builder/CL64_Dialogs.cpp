@@ -28,26 +28,6 @@ THE SOFTWARE.
 #include "CL64_Dialogs.h"
 #include "Structures.cpp"
 
-enum BrushFlags
-{
-	BRUSH_SOLID = 0x0001,
-	BRUSH_WINDOW = 0x0002,
-	BRUSH_WAVY = 0x0004,
-	BRUSH_DETAIL = 0x0008,	//not included in vis calculations
-	BRUSH_HOLLOWCUT = 0x0010,
-	BRUSH_TRANSLUCENT = 0x0020,
-	BRUSH_EMPTY = 0x0040,
-	BRUSH_SUBTRACT = 0x0080,
-	BRUSH_CLIP = 0x0100,
-	BRUSH_FLOCKING = 0x0200,
-	BRUSH_HOLLOW = 0x0400,
-	BRUSH_SHEET = 0x0800,
-	BRUSH_HIDDEN = 0x1000,
-	BRUSH_LOCKED = 0x2000,
-	BRUSH_HINT = 0x4000,
-	BRUSH_AREA = 0x8000
-};
-
 CL64_Dialogs::CL64_Dialogs(void)
 {
 	Message_Text_Header[0] = 0;
@@ -663,6 +643,19 @@ bool CL64_Dialogs::Show_Brush_Info(const Brush* b, HWND hDlg)
 	else
 	{
 		sprintf(buf, "%s%d%s", "Type Flags XX ", b->Flags, "  Unknown");
+		SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+	}
+
+	// Main Brush test locked
+	bool locked = App->CL_Brush->Brush_IsLocked(b);
+	if (locked == 1)	
+	{
+		sprintf(buf, "%s %s", "Brush Locked ","Yes");
+		SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+	}
+	else
+	{
+		sprintf(buf, "%s %s", "Brush Locked ", "No");
 		SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 	}
 

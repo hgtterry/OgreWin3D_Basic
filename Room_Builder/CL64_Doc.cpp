@@ -515,23 +515,31 @@ void CL64_Doc::SelectOrtho(POINT point, ViewVars* v)
         {
             //Do_Timer
 
-            DoBrushSelection(pMinBrush, brushSelToggle);    
-
-            int Bnum = App->CL_Brush->Get_Brush_Count();
-            if (Bnum > 0)
+            bool locked = App->CL_Brush->Brush_IsLocked(pMinBrush);
+            if (locked == 1)
             {
-                UpdateSelected();
-                App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
+                // Dont Select if Locked
+            }
+            else
+            {
+                DoBrushSelection(pMinBrush, brushSelToggle);
 
-                App->CL_Properties_Tabs->Select_Brushes_Tab();
-                App->CL_Properties_Brushes->Get_Index(CurBrush);
+                int Bnum = App->CL_Brush->Get_Brush_Count();
+                if (Bnum > 0)
+                {
+                    UpdateSelected();
+                    App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
 
-                App->CL_Top_Tabs->Enable_Brush_Options_Buttons(true, false);
-                App->CL_Properties_Brushes->Set_Dlg_Brush_Options_Buttons(true);
+                    App->CL_Properties_Tabs->Select_Brushes_Tab();
+                    App->CL_Properties_Brushes->Get_Index(CurBrush);
 
-                App->CL_Properties_Brushes->Update_SelectedBrushesCount_Dlg();
+                    App->CL_Top_Tabs->Enable_Brush_Options_Buttons(true, false);
+                    App->CL_Properties_Brushes->Set_Dlg_Brush_Options_Buttons(true);
 
-                App->CL_Top_Tabs->Update_Faces_Combo();
+                    App->CL_Properties_Brushes->Update_SelectedBrushesCount_Dlg();
+
+                    App->CL_Top_Tabs->Update_Faces_Combo();
+                }
             }
 
             //Get_Timer

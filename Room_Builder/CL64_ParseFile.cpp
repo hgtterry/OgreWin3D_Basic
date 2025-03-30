@@ -27,22 +27,6 @@ THE SOFTWARE.
 #include "CL64_ParseFile.h"
 #include "Structures.cpp"
 
-enum FaceFlags
-{
-	FACE_MIRROR = (1 << 0),
-	FACE_FULLBRIGHT = (1 << 1),
-	FACE_SKY = (1 << 2),
-	FACE_LIGHT = (1 << 3),
-	FACE_SELECTED = (1 << 4),
-	FACE_FIXEDHULL = (1 << 5),		//doesn't expand (rings)
-	FACE_GOURAUD = (1 << 6),
-	FACE_FLAT = (1 << 7),
-	FACE_TEXTURELOCKED = (1 << 8),
-	FACE_VISIBLE = (1 << 9),
-	FACE_SHEET = (1 << 10),		//visible from both sides
-	FACE_TRANSPARENT = (1 << 11)		//use transparency value for something
-};
-
 CL64_ParseFile::CL64_ParseFile(void)
 {
 	str_buff_1[0] = 0;

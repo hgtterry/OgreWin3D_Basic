@@ -156,5 +156,8 @@ public:
 	// Scale
 	void Brush_SnapScaleNearest(Brush* b, float gsize, int sides, int inidx, T_Vec3* fnscale, int* ScaleNum);
 
+	void Brush_SetLocked(Brush* b, const bool bState);
+	bool Brush_IsLocked(const Brush* b);
+
 };
 

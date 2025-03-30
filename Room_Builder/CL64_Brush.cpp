@@ -29,27 +29,6 @@ THE SOFTWARE.
 
 #define	VectorToSUB(a, b)			(*((((float *)(&a))) + (b)))
 static const int		axidx[3][2] = { 2, 1, 0, 2, 0, 1 };
-enum BrushFlags
-{
-	BRUSH_SOLID = 0x0001,
-	BRUSH_WINDOW = 0x0002,
-	BRUSH_WAVY = 0x0004,
-	BRUSH_DETAIL = 0x0008,	//not included in vis calculations
-	BRUSH_HOLLOWCUT = 0x0010,
-	BRUSH_TRANSLUCENT = 0x0020,
-	BRUSH_EMPTY = 0x0040,
-	BRUSH_SUBTRACT = 0x0080,
-	BRUSH_CLIP = 0x0100,
-	BRUSH_FLOCKING = 0x0200,
-	BRUSH_HOLLOW = 0x0400,
-	BRUSH_SHEET = 0x0800,
-	BRUSH_HIDDEN = 0x1000,
-	BRUSH_LOCKED = 0x2000,
-	BRUSH_HINT = 0x4000,
-	BRUSH_AREA = 0x8000
-	// All flags larger than 0x8000 (i.e. 0x00010000 through 0x80000000)
-	// are reserved for user contents.
-};
 
 static	float			dists[256];
 static	Ogre::uint8		sides[256];
@@ -2740,6 +2719,22 @@ void CL64_Brush::Brush_SnapScaleNearest(Brush* b, float gsize, int sides, int in
 	Brush_Resize(b, VectorToSUB(sbound, axidx[inidx][0]), VectorToSUB(sbound, axidx[inidx][1]), sides, inidx, fnscale, ScaleNum);
 
 	Brush_Bound(b);
+}
+
+// *************************************************************************
+// *							Brush_SetLocked							   *
+// *************************************************************************
+void CL64_Brush::Brush_SetLocked(Brush* b, const bool bState)
+{
+	b->Flags = (bState) ? b->Flags | BRUSH_LOCKED : b->Flags & ~BRUSH_LOCKED;
+}
+
+// *************************************************************************
+// *						Brush_IsLocked								   *
+// *************************************************************************
+bool CL64_Brush::Brush_IsLocked(const Brush* b)
+{
+	return	(b->Flags & BRUSH_LOCKED) ? GE_TRUE : GE_FALSE;
 }
 
 
