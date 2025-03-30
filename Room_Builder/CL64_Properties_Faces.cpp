@@ -66,6 +66,20 @@ CL64_Properties_Faces::~CL64_Properties_Faces(void)
 }
 
 // *************************************************************************
+// *		  ChangeTextureYScale:- Terry and Hazel Flanigan 2023		   *
+// *************************************************************************
+signed int CL64_Properties_Faces::ChangeTextureYScale(Face* pFace, void* lParam)
+{
+	float* pYScale = (float*)lParam;
+	float xScale, yScale;
+
+	App->CL_Face->Face_GetTextureScale(pFace, &xScale, &yScale);
+	App->CL_Face->Face_SetTextureScale(pFace, xScale, *pYScale);
+
+	return GE_TRUE;
+}
+
+// *************************************************************************
 // *	  	Start_FaceDialog:- Terry and Hazel Flanigan 2025			   *
 // *************************************************************************
 void CL64_Properties_Faces::Start_FaceDialog()
@@ -468,6 +482,8 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 
 				App->CL_Properties_Faces->Update();
 
+				//App->CL_SelFaceList->SelFaceList_Enum(App->CL_Doc->pSelFaces, App->CL_Properties_Faces->ChangeTextureYScale, &pXScale);
+				//App->CL_Doc->UpdateAllViews(Enums::UpdateViews_3D);
 				break;
 			}
 			case SB_LINELEFT:

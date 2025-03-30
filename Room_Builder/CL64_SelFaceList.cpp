@@ -146,3 +146,19 @@ signed int CL64_SelFaceList::SelFaceList_Add(SelFaceList* pList, Face* pFace)
 	return GE_TRUE;
 }
 
+// *************************************************************************
+// *						SelFaceList_Enum							   *
+// *************************************************************************
+void CL64_SelFaceList::SelFaceList_Enum(SelFaceList* pList, SelFaceList_Callback Callback, void* lParam)
+{
+	int i;
+
+	for (i = 0; i < pList->FirstFree; ++i)
+	{
+		Face* pFace;
+
+		pFace = SelFaceList_GetFace(pList, i);
+		Callback(pFace, lParam);
+	}
+}
+

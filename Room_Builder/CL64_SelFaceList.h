@@ -25,6 +25,7 @@ THE SOFTWARE.
 #pragma once
 
 typedef struct tag_SelFaceList SelFaceList;
+typedef signed int(*SelFaceList_Callback)(Face* pFace, void* lParam);
 
 class CL64_SelFaceList
 {
@@ -38,6 +39,7 @@ public:
 	void SelFaceList_RemoveAll(SelFaceList* pList);
 	Face* SelFaceList_GetFace(SelFaceList* pList, int FaceIndex);
 	signed int SelFaceList_Add(SelFaceList* pList, Face* pFace);
+	void SelFaceList_Enum(SelFaceList* pList, SelFaceList_Callback Callback, void* lParam);
 
 };
 
