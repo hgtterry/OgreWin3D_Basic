@@ -1120,3 +1120,11 @@ void CL64_Face::Face_SetTextureLock(Face* f, const signed int bState)
 	Face_SetTexturePos(f);
 }
 
+// *************************************************************************
+// *						Face_IsTextureLocked			   			   *
+// *************************************************************************
+bool CL64_Face::Face_IsTextureLocked(const Face* f)
+{
+	return (f->Flags & FACE_TEXTURELOCKED) ? GE_TRUE : GE_FALSE;
+}
+

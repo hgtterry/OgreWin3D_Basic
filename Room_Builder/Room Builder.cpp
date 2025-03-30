@@ -498,6 +498,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 return 1;
             }
          
+            case ID_TEXTURES_LOCKALLTEXTURES:
+            {
+                App->CL_Textures->Lock_All_Textures();
+                return 1;
+            }
+
             case ID_TEXTURES_USEDTEXTURES:
             {
                 App->CL_Dialogs->Start_General_ListBox(Enums::ListBox_Used_Textures);

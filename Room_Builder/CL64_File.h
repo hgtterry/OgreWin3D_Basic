@@ -50,6 +50,7 @@ private:
 
 	bool Open_3dt_File();
 	bool Load_File(const char* FileName);
+	void Set_Player();
 
 	signed int BrushList_Write(BrushList* BList, FILE* ofile);
 	signed int Brush_Write(const Brush* b, FILE* ofile);

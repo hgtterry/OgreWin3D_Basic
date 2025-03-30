@@ -40,6 +40,7 @@ public:
 
 	bool Covert_Texture(const char* File);
 	void Remove_Temp_Texture();
+	void Lock_All_Textures();
 
 	long BasePicWidth;
 	long BasePicHeight;

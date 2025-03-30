@@ -704,12 +704,6 @@ bool CL64_Dialogs::Show_Brush_Info(const Brush* b, HWND hDlg)
 		App->Say("BRUSH_CSG");
 	}
 
-	//// Bounding Box
-	//sprintf(buf, "Max X = %f Y = %f Z = %f", b->BoundingBox.Max.X, b->BoundingBox.Max.Y, b->BoundingBox.Max.Z);
-	//SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
-
-	//sprintf(buf, "Min X = %f Y = %f Z = %f", b->BoundingBox.Min.X, b->BoundingBox.Min.Y, b->BoundingBox.Min.Z);
-	//SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 	return 1;
 }
 
@@ -780,7 +774,6 @@ bool CL64_Dialogs::Show_Brush_Faces_Info(const FaceList* pList, HWND hDlg)
 // *************************************************************************
 bool CL64_Dialogs::Show_Face_Data(int Index, const Face* f, HWND hDlg)
 {
-
 	char buf[MAX_PATH];
 
 	int  i = 0;
@@ -847,6 +840,16 @@ bool CL64_Dialogs::Show_Face_Data(int Index, const Face* f, HWND hDlg)
 	strcpy(buf, App->CL_Face->Face_GetTextureName(f));
 	sprintf(buf2, "%s%s", "Texture: = ", buf);
 	SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf2);
+
+	bool faceLocked = App->CL_Face->Face_IsTextureLocked(f);
+	if (faceLocked == 1)
+	{
+		SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)"Texture Locked Yes");
+	}
+	else
+	{
+		SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)"Texture Locked No");
+	}
 
 	return 1;
 }

@@ -207,7 +207,6 @@ HBITMAP CL64_Textures::Get_HBITMP(char* TextureFileName, HDC hDC)
 // *************************************************************************
 bool CL64_Textures::Texture_To_Bmp(char* File)
 {
-
 	ilLoadImage(File);
 	ilSaveImage("Etemp.bmp");
 	return 1;
@@ -264,6 +263,14 @@ bool CL64_Textures::Covert_Texture(const char* File)
 void CL64_Textures::Remove_Temp_Texture()
 {
 	remove(Temp_Texture_File);
+}
+
+// *************************************************************************
+// *			Lock_All_Textures:- Terry and Hazel Flanigan 2025		   *
+// *************************************************************************
+void CL64_Textures::Lock_All_Textures()
+{
+	
 }
 
 
