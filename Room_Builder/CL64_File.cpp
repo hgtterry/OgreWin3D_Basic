@@ -352,7 +352,13 @@ bool CL64_File::Open_3dt_File()
 		{
 			App->CL_Entities->Create_Player_Entity();
 		}
-		
+
+		Brush* Player = App->CL_Brush_X->Get_Brush_By_Name("Player");
+		if (Player)
+		{
+			App->CL_Brush->Brush_SetLocked(Player, true);
+		}
+
 		App->CL_Properties_Brushes->Fill_ListBox();
 
 		App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_Free;

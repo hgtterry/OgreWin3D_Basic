@@ -34,6 +34,7 @@ public:
 	int	BrushList_EnumLeafBrushes(const BrushList* pList, void* pVoid, BrushList_CB	CallBack);
 	bool Check_if_Brush_Name_Exist(char* Name);
 	void Set_Brush_Faces_Name(Brush* b);
+	Brush* Get_Brush_By_Name(const char* Name);
 
 	int Face_Count;
 
