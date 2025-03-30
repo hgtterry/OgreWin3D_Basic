@@ -473,16 +473,30 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 			case SB_LINELEFT:
 			{
 				App->CL_Properties_Faces->m_TextureXScale -= App->CL_Properties_Faces->ScaleX_Delta;
+				
+				if (App->CL_Properties_Faces->m_TextureXScale < 0.001)
+				{
+					App->CL_Properties_Faces->m_TextureXScale = 0;
+				}
+				
 				App->CL_Properties_Faces->UpdateDialog(hDlg);
 				
 				float pXScale = (float)App->CL_Properties_Faces->m_TextureXScale;
 				float xScale, yScale;
 
 				App->CL_Face->Face_GetTextureScale(App->CL_Properties_Faces->m_Selected_Face, &xScale, &yScale);
-				App->CL_Face->Face_SetTextureScale(App->CL_Properties_Faces->m_Selected_Face, pXScale, yScale);
-
-				App->CL_Properties_Faces->Update();
 				
+				if (pXScale > 0)
+				{
+					App->CL_Face->Face_SetTextureScale(App->CL_Properties_Faces->m_Selected_Face, pXScale, yScale);
+					App->CL_Properties_Faces->Update();
+				}
+				else
+				{
+					App->CL_Face->Face_SetTextureScale(App->CL_Properties_Faces->m_Selected_Face, 0.001, yScale);
+					App->CL_Properties_Faces->Update();
+				}
+	
 				break;
 			}
 			}
@@ -514,15 +528,29 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 			case SB_LINELEFT:
 			{
 				App->CL_Properties_Faces->m_TextureYScale -= App->CL_Properties_Faces->ScaleY_Delta;
-				App->CL_Properties_Faces->UpdateDialog(hDlg);
 				
+				if (App->CL_Properties_Faces->m_TextureYScale < 0.001)
+				{
+					App->CL_Properties_Faces->m_TextureYScale = 0;
+				}
+
+				App->CL_Properties_Faces->UpdateDialog(hDlg);
+			
 				float pYScale = (float)App->CL_Properties_Faces->m_TextureYScale;
 				float xScale, yScale;
 
 				App->CL_Face->Face_GetTextureScale(App->CL_Properties_Faces->m_Selected_Face, &xScale, &yScale);
-				App->CL_Face->Face_SetTextureScale(App->CL_Properties_Faces->m_Selected_Face, xScale, pYScale);
 
-				App->CL_Properties_Faces->Update();
+				if (pYScale > 0)
+				{
+					App->CL_Face->Face_SetTextureScale(App->CL_Properties_Faces->m_Selected_Face, xScale, pYScale);
+					App->CL_Properties_Faces->Update();
+				}
+				else
+				{
+					App->CL_Face->Face_SetTextureScale(App->CL_Properties_Faces->m_Selected_Face, xScale, 0.001);
+					App->CL_Properties_Faces->Update();
+				}
 
 				break;
 			}
