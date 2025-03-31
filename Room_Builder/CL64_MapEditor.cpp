@@ -34,6 +34,9 @@ THE SOFTWARE.
 #define IDM_PASTE 5
 #define IDM_GOTO 6
 
+#define IDM_3D_WIRED 7
+#define IDM_3D_TEXTURED 8
+
 #define	M_PI		((float)3.14159265358979323846f)
 #define	TOP_POS					8
 #define	BOTTOM_POS				400
@@ -799,21 +802,24 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Left_Window(HWND hDlg, UINT message, W
 			App->CL_MapEditor->Current_View = App->CL_MapEditor->VCam[V_TL];
 			App->CUR = SetCursor(NULL);
 		}
-		else
-		{
-			App->CL_MapEditor->Current_View = App->CL_MapEditor->VCam[V_TL];
-			App->CL_MapEditor->Context_Menu(hDlg);
-		}
-
+		
 		return 1;
 	}
 
 	case WM_RBUTTONUP:
 	{
-		App->CL_MapEditor->flag_Right_Button_Down = 0;
-		App->CL_MapEditor->flag_Left_Button_Down = 0;
+		if (GetAsyncKeyState(VK_CONTROL) < 0)
+		{
+			App->CL_MapEditor->flag_Right_Button_Down = 0;
+			App->CL_MapEditor->flag_Left_Button_Down = 0;
 
-		App->CUR = SetCursor(App->CUR);
+			App->CUR = SetCursor(App->CUR);
+		}
+		else
+		{
+			App->CL_MapEditor->Current_View = App->CL_MapEditor->VCam[V_TL];
+			App->CL_MapEditor->Context_Menu(hDlg);
+		}
 
 		return 1;
 	}
@@ -986,21 +992,25 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Top_Right_Window(HWND hDlg, UINT message, 
 			App->CL_MapEditor->Current_View = App->CL_MapEditor->VCam[V_TR];
 			App->CUR = SetCursor(NULL);
 		}
-		else
-		{
-			App->CL_MapEditor->Current_View = App->CL_MapEditor->VCam[V_TR];
-			App->CL_MapEditor->Context_Menu(hDlg);
-		}
+	
 		return 1;
 	}
 
 	case WM_RBUTTONUP:
 	{
-		App->CL_MapEditor->flag_Right_Button_Down = 0;
-		App->CL_MapEditor->flag_Left_Button_Down = 0;
 
-		App->CUR = SetCursor(App->CUR);
+		if (GetAsyncKeyState(VK_CONTROL) < 0)
+		{
+			App->CL_MapEditor->flag_Right_Button_Down = 0;
+			App->CL_MapEditor->flag_Left_Button_Down = 0;
 
+			App->CUR = SetCursor(App->CUR);
+		}
+		else
+		{
+			App->CL_MapEditor->Current_View = App->CL_MapEditor->VCam[V_TR];
+			App->CL_MapEditor->Context_Menu(hDlg);
+		}
 		return 1;
 	}
 
@@ -1173,21 +1183,24 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Bottom_Left_Window(HWND hDlg, UINT message
 
 			App->CUR = SetCursor(NULL);
 		}
-		else
-		{
-			App->CL_MapEditor->Current_View = App->CL_MapEditor->VCam[V_BL];
-			App->CL_MapEditor->Context_Menu(hDlg);
-		}
-
+		
 		return 1;
 	}
 
 	case WM_RBUTTONUP:
 	{
-		App->CL_MapEditor->flag_Left_Button_Down = 0;
-		App->CL_MapEditor->flag_Right_Button_Down = 0;
+		if (GetAsyncKeyState(VK_CONTROL) < 0)
+		{
+			App->CL_MapEditor->flag_Left_Button_Down = 0;
+			App->CL_MapEditor->flag_Right_Button_Down = 0;
 
 		App->CUR = SetCursor(App->CUR);
+		}
+		else
+		{
+			App->CL_MapEditor->Current_View = App->CL_MapEditor->VCam[V_BL];
+			App->CL_MapEditor->Context_Menu(hDlg);
+		}
 
 		return 1;
 	}
@@ -1234,11 +1247,13 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Ogre_BR(HWND hDlg, UINT message, WPARAM wP
 		break;
 	}
 
-	/*case WM_CONTEXTMENU:
+	case WM_COMMAND:
 	{
-		Debug
-		return 0;
-	}*/
+		if (App->CL_MapEditor->Context_Command_Ogre(LOWORD(wParam)))
+		{
+			return TRUE;
+		}
+	}
 
 	case WM_MOUSEWHEEL:
 	{
@@ -1372,12 +1387,7 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Ogre_BR(HWND hDlg, UINT message, WPARAM wP
 			App->CUR = SetCursor(NULL);
 			return 1;
 		}
-		else
-		{
-			App->CL_MapEditor->Current_View = App->CL_MapEditor->VCam[V_TR];
-			App->CL_MapEditor->Context_Menu(hDlg);
-		}
-
+		
 		return 1;
 	}
 
@@ -1404,6 +1414,12 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Ogre_BR(HWND hDlg, UINT message, WPARAM wP
 						App->CL_Properties_Tabs->Select_Textures_Tab();
 					}
 				}
+			}
+			else
+			{
+				// TODO Test Mouse Moved 
+				App->CL_MapEditor->Current_View = App->CL_MapEditor->VCam[V_TR];
+				App->CL_MapEditor->Context_Menu_Ogre(hDlg);
 			}
 
 			App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
@@ -1503,6 +1519,74 @@ void CL64_MapEditor::Context_Menu(HWND hDlg)
 	flag_Context_Menu_Active = 0;
 
 	DestroyMenu(hMenu);
+}
+
+// *************************************************************************
+// *			Context_Menu_Ogre:- Terry and Hazel Flanigan 2024	 	   *
+// *************************************************************************
+void CL64_MapEditor::Context_Menu_Ogre(HWND hDlg)
+{
+	RECT rcTree;
+	TVHITTESTINFO htInfo = { 0 };
+	POINT pt;
+	GetCursorPos(&pt);
+
+	long xPos = pt.x;   // x position from message, in screen coordinates
+	long yPos = pt.y;   // y position from message, in screen coordinates 
+
+	GetWindowRect(hDlg, &rcTree);        // get its window coordinates
+	htInfo.pt.x = xPos - rcTree.left;      // convert to client coordinates
+	htInfo.pt.y = yPos - rcTree.top;
+
+	hMenu = CreatePopupMenu();
+
+	if (App->CL_Ogre->OGL_Listener->Flag_Render_Brushes == 1)
+	{
+		AppendMenuW(hMenu, MF_STRING | MF_CHECKED, IDM_3D_WIRED, L"&Wireframed");
+	}
+	else
+	{
+		AppendMenuW(hMenu, MF_STRING | MF_UNCHECKED, IDM_3D_WIRED, L"&Wireframed");
+	}
+
+	if (App->CL_Ogre->OGL_Listener->Flag_Render_Brushes == 0)
+	{
+		AppendMenuW(hMenu, MF_STRING | MF_CHECKED, IDM_3D_TEXTURED, L"&Textured");
+	}
+	else
+	{
+		AppendMenuW(hMenu, MF_STRING | MF_UNCHECKED, IDM_3D_TEXTURED, L"&Textured");
+	}
+
+	
+	AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
+	AppendMenuW(hMenu, MF_STRING | MF_GRAYED, NULL, L"&Pick Texture Ctrl+Right Mouse Button");
+	AppendMenuW(hMenu, MF_STRING | MF_GRAYED, NULL, L"&Pan Right Mouse Button");
+	
+
+	flag_Context_Menu_Active = 1;
+	TrackPopupMenu(hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, hDlg, NULL);
+	flag_Context_Menu_Active = 0;
+
+	DestroyMenu(hMenu);
+}
+
+// *************************************************************************
+// *		Context_Command_Ogre:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+bool CL64_MapEditor::Context_Command_Ogre(WPARAM wParam)
+{
+	if (LOWORD(wParam) == IDM_3D_TEXTURED)
+	{
+		App->CL_Camera->Camera_Textured();
+		return TRUE;
+	}
+
+	if (LOWORD(wParam) == IDM_3D_WIRED)
+	{
+		App->CL_Camera->Camera_Wired();
+		return TRUE;
+	}
 }
 
 // *************************************************************************
