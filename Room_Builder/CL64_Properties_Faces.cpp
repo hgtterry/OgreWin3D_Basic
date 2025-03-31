@@ -66,6 +66,20 @@ CL64_Properties_Faces::~CL64_Properties_Faces(void)
 }
 
 // *************************************************************************
+// *		  ChangeTextureXScale:- Terry and Hazel Flanigan 2023		   *
+// *************************************************************************
+signed int CL64_Properties_Faces::ChangeTextureXScale(Face* pFace, void* lParam)
+{
+	float* pXScale = (float*)lParam;
+	float xScale, yScale;
+
+	App->CL_Face->Face_GetTextureScale(pFace, &xScale, &yScale);
+	App->CL_Face->Face_SetTextureScale(pFace, *pXScale, yScale);
+
+	return GE_TRUE;
+}
+
+// *************************************************************************
 // *		  ChangeTextureYScale:- Terry and Hazel Flanigan 2023		   *
 // *************************************************************************
 signed int CL64_Properties_Faces::ChangeTextureYScale(Face* pFace, void* lParam)
@@ -477,13 +491,18 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 				float pXScale = (float)App->CL_Properties_Faces->m_TextureXScale;
 				float xScale, yScale;
 
-				App->CL_Face->Face_GetTextureScale(App->CL_Properties_Faces->m_Selected_Face, &xScale, &yScale);
-				App->CL_Face->Face_SetTextureScale(App->CL_Properties_Faces->m_Selected_Face, pXScale, yScale);
+				if (App->CL_Top_Tabs->flag_All_Faces == 1)
+				{
+					App->CL_SelFaceList->SelFaceList_Enum(App->CL_Doc->pSelFaces, App->CL_Properties_Faces->ChangeTextureXScale, &pXScale);
+				}
+				else
+				{
+					App->CL_Face->Face_GetTextureScale(App->CL_Properties_Faces->m_Selected_Face, &xScale, &yScale);
+					App->CL_Face->Face_SetTextureScale(App->CL_Properties_Faces->m_Selected_Face, pXScale, yScale);
+				}
 
 				App->CL_Properties_Faces->Update();
 
-				//App->CL_SelFaceList->SelFaceList_Enum(App->CL_Doc->pSelFaces, App->CL_Properties_Faces->ChangeTextureYScale, &pXScale);
-				//App->CL_Doc->UpdateAllViews(Enums::UpdateViews_3D);
 				break;
 			}
 			case SB_LINELEFT:
@@ -500,19 +519,40 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 				float pXScale = (float)App->CL_Properties_Faces->m_TextureXScale;
 				float xScale, yScale;
 
-				App->CL_Face->Face_GetTextureScale(App->CL_Properties_Faces->m_Selected_Face, &xScale, &yScale);
-				
-				if (pXScale > 0)
+				if (App->CL_Top_Tabs->flag_All_Faces == 1)
 				{
-					App->CL_Face->Face_SetTextureScale(App->CL_Properties_Faces->m_Selected_Face, pXScale, yScale);
-					App->CL_Properties_Faces->Update();
 				}
 				else
 				{
-					App->CL_Face->Face_SetTextureScale(App->CL_Properties_Faces->m_Selected_Face, 0.001, yScale);
-					App->CL_Properties_Faces->Update();
+					App->CL_Face->Face_GetTextureScale(App->CL_Properties_Faces->m_Selected_Face, &xScale, &yScale);
+				}
+				
+				if (pXScale > 0)
+				{
+					if (App->CL_Top_Tabs->flag_All_Faces == 1)
+					{
+						App->CL_SelFaceList->SelFaceList_Enum(App->CL_Doc->pSelFaces, App->CL_Properties_Faces->ChangeTextureXScale, &pXScale);
+					}
+					else
+					{
+						App->CL_Face->Face_SetTextureScale(App->CL_Properties_Faces->m_Selected_Face, pXScale, yScale);
+					}
+				}
+				else
+				{
+					if (App->CL_Top_Tabs->flag_All_Faces == 1)
+					{
+						pXScale = 0.001;
+						App->CL_SelFaceList->SelFaceList_Enum(App->CL_Doc->pSelFaces, App->CL_Properties_Faces->ChangeTextureXScale, &pXScale);
+					}
+					else
+					{
+						App->CL_Face->Face_SetTextureScale(App->CL_Properties_Faces->m_Selected_Face, 0.001, yScale);
+					}
 				}
 	
+				App->CL_Properties_Faces->Update();
+
 				break;
 			}
 			}
@@ -533,8 +573,15 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 				float pYScale = (float)App->CL_Properties_Faces->m_TextureYScale;
 				float xScale, yScale;
 
-				App->CL_Face->Face_GetTextureScale(App->CL_Properties_Faces->m_Selected_Face, &xScale, &yScale);
-				App->CL_Face->Face_SetTextureScale(App->CL_Properties_Faces->m_Selected_Face, xScale, pYScale);
+				if (App->CL_Top_Tabs->flag_All_Faces == 1)
+				{
+					App->CL_SelFaceList->SelFaceList_Enum(App->CL_Doc->pSelFaces, App->CL_Properties_Faces->ChangeTextureYScale, &pYScale);
+				}
+				else
+				{
+					App->CL_Face->Face_GetTextureScale(App->CL_Properties_Faces->m_Selected_Face, &xScale, &yScale);
+					App->CL_Face->Face_SetTextureScale(App->CL_Properties_Faces->m_Selected_Face, xScale, pYScale);
+				}
 
 				App->CL_Properties_Faces->Update();
 
@@ -554,19 +601,39 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 			
 				float pYScale = (float)App->CL_Properties_Faces->m_TextureYScale;
 				float xScale, yScale;
-
-				App->CL_Face->Face_GetTextureScale(App->CL_Properties_Faces->m_Selected_Face, &xScale, &yScale);
-
-				if (pYScale > 0)
+				if (App->CL_Top_Tabs->flag_All_Faces == 1)
 				{
-					App->CL_Face->Face_SetTextureScale(App->CL_Properties_Faces->m_Selected_Face, xScale, pYScale);
-					App->CL_Properties_Faces->Update();
 				}
 				else
 				{
-					App->CL_Face->Face_SetTextureScale(App->CL_Properties_Faces->m_Selected_Face, xScale, 0.001);
-					App->CL_Properties_Faces->Update();
+					App->CL_Face->Face_GetTextureScale(App->CL_Properties_Faces->m_Selected_Face, &xScale, &yScale);
 				}
+
+				if (pYScale > 0)
+				{
+					if (App->CL_Top_Tabs->flag_All_Faces == 1)
+					{
+						App->CL_SelFaceList->SelFaceList_Enum(App->CL_Doc->pSelFaces, App->CL_Properties_Faces->ChangeTextureYScale, &pYScale);
+					}
+					else
+					{
+						App->CL_Face->Face_SetTextureScale(App->CL_Properties_Faces->m_Selected_Face, xScale, pYScale);
+					}
+				}
+				else
+				{
+					if (App->CL_Top_Tabs->flag_All_Faces == 1)
+					{
+						pYScale = 0.001;
+						App->CL_SelFaceList->SelFaceList_Enum(App->CL_Doc->pSelFaces, App->CL_Properties_Faces->ChangeTextureYScale, &pYScale);
+					}
+					else
+					{
+						App->CL_Face->Face_SetTextureScale(App->CL_Properties_Faces->m_Selected_Face, xScale, 0.001);
+					}
+				}
+
+				App->CL_Properties_Faces->Update();
 
 				break;
 			}
@@ -866,13 +933,18 @@ void CL64_Properties_Faces::Update_Face_Info(HWND hDlg)
 // *************************************************************************
 void CL64_Properties_Faces::Update()
 {
-	App->CL_Doc->UpdateAllViews(Enums::UpdateViews_3D);
-
-	App->CL_SelFaceList->SelFaceList_RemoveAll(App->CL_Doc->pSelFaces);
-
-	App->CL_Doc->SelectAllFacesInBrushes();
-
-	App->CL_Face->Select_Face_From_Index(App->CL_Face->Selected_Face_Index);
+	if (App->CL_Top_Tabs->flag_All_Faces == 1)
+	{
+		App->CL_Doc->UpdateAllViews(Enums::UpdateViews_3D);
+		App->CL_Doc->SelectAllFacesInBrushes();
+	}
+	else
+	{
+		App->CL_Doc->UpdateAllViews(Enums::UpdateViews_3D);
+		App->CL_SelFaceList->SelFaceList_RemoveAll(App->CL_Doc->pSelFaces);
+		App->CL_Doc->SelectAllFacesInBrushes();
+		App->CL_Face->Select_Face_From_Index(App->CL_Face->Selected_Face_Index);
+	}
 
 	App->CL_Ogre->RenderFrame(2);
 
