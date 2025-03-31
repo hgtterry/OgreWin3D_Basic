@@ -52,8 +52,11 @@ private:
 	void Fill_ComboBox_ScaleValues(HWND hDlg);
 	void Fill_ComboBox_OffSetValues(HWND hDlg);
 
+	static signed int ChangeTextureAngle(Face* pFace, void* lParam);
 	static signed int ChangeTextureXScale(Face* pFace, void* lParam);
 	static signed int ChangeTextureYScale(Face* pFace, void* lParam);
+	static signed int ChangeXOffset(Face* pFace, void* lParam);
+	static signed int ChangeYOffset(Face* pFace, void* lParam);
 
 	Face* m_Selected_Face;
 

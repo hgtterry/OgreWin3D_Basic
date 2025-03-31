@@ -213,7 +213,6 @@ FaceList* CL64_ParseFile::FaceList_CreateFromFile()
 			{
 				App->CL_FaceList->FaceList_AddFace(pList, pFace);
 				App->CL_Face->Face_SetTextureLock(pFace, true);
-
 			}
 		}
 		if (pList->NumFaces < 4)

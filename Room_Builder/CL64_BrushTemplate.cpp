@@ -149,6 +149,7 @@ Brush* CL64_BrushTemplate::BrushTemplate_CreateBox(const BrushTemplate_Box* pTem
 	if (f)
 	{
 		App->CL_FaceList->FaceList_AddFace(fl, f);
+		App->CL_Face->Face_SetTextureLock(f, true);
 	}
 
 	FaceVerts[3] = Verts[4];
@@ -160,6 +161,7 @@ Brush* CL64_BrushTemplate::BrushTemplate_CreateBox(const BrushTemplate_Box* pTem
 	if (f)
 	{
 		App->CL_FaceList->FaceList_AddFace(fl, f);
+		App->CL_Face->Face_SetTextureLock(f, true);
 	}
 
 	FaceVerts[3] = Verts[1];
@@ -171,6 +173,7 @@ Brush* CL64_BrushTemplate::BrushTemplate_CreateBox(const BrushTemplate_Box* pTem
 	if (f)
 	{
 		App->CL_FaceList->FaceList_AddFace(fl, f);
+		App->CL_Face->Face_SetTextureLock(f, true);
 	}
 
 	FaceVerts[3] = Verts[0];
@@ -182,6 +185,7 @@ Brush* CL64_BrushTemplate::BrushTemplate_CreateBox(const BrushTemplate_Box* pTem
 	if (f)
 	{
 		App->CL_FaceList->FaceList_AddFace(fl, f);
+		App->CL_Face->Face_SetTextureLock(f, true);
 	}
 
 	FaceVerts[3] = Verts[0];
@@ -193,6 +197,7 @@ Brush* CL64_BrushTemplate::BrushTemplate_CreateBox(const BrushTemplate_Box* pTem
 	if (f)
 	{
 		App->CL_FaceList->FaceList_AddFace(fl, f);
+		App->CL_Face->Face_SetTextureLock(f, true);
 	}
 
 	FaceVerts[3] = Verts[3];
@@ -204,6 +209,7 @@ Brush* CL64_BrushTemplate::BrushTemplate_CreateBox(const BrushTemplate_Box* pTem
 	if (f)
 	{
 		App->CL_FaceList->FaceList_AddFace(fl, f);
+		App->CL_Face->Face_SetTextureLock(f, true);
 	}
 
 	if (!pTemplate->Solid)
@@ -367,6 +373,7 @@ Brush* CL64_BrushTemplate::BrushTemplate_CreateCylinder(const BrushTemplate_Cyli
 			App->CL_Face->Face_SetFixedHull(f, GE_TRUE);
 		}
 		App->CL_FaceList->FaceList_AddFace(fl, f);
+		App->CL_Face->Face_SetTextureLock(f, true);
 	}
 
 	for (VBand = NumVerticalBands - 1, HBand = 0; VBand >= 0; VBand--, HBand++)
@@ -382,6 +389,7 @@ Brush* CL64_BrushTemplate::BrushTemplate_CreateCylinder(const BrushTemplate_Cyli
 			App->CL_Face->Face_SetFixedHull(f, GE_TRUE);
 		}
 		App->CL_FaceList->FaceList_AddFace(fl, f);
+		App->CL_Face->Face_SetTextureLock(f, true);
 	}
 
 	// Generate the polygons
@@ -399,6 +407,7 @@ Brush* CL64_BrushTemplate::BrushTemplate_CreateCylinder(const BrushTemplate_Cyli
 			if (f)
 			{
 				App->CL_FaceList->FaceList_AddFace(fl, f);
+				App->CL_Face->Face_SetTextureLock(f, true);
 			}
 		}
 	}
@@ -501,7 +510,10 @@ Brush* CL64_BrushTemplate::BrushTemplate_CreateCone(const BrushTemplate_Cone* pT
 
 		f = App->CL_Face->Face_Create(3, FaceVerts, 0);
 		if (f)
+		{
 			App->CL_FaceList->FaceList_AddFace(fl, f);
+			App->CL_Face->Face_SetTextureLock(f, true);
+		}
 
 		OldPoint = CurPoint;
 
@@ -528,6 +540,7 @@ Brush* CL64_BrushTemplate::BrushTemplate_CreateCone(const BrushTemplate_Cone* pT
 	if (f)
 	{
 		App->CL_FaceList->FaceList_AddFace(fl, f);
+		App->CL_Face->Face_SetTextureLock(f, true);
 	}
 
 	f = App->CL_Face->Face_Create(pTemplate->VerticalStrips, BottomVerts, 0);
@@ -539,6 +552,7 @@ Brush* CL64_BrushTemplate::BrushTemplate_CreateCone(const BrushTemplate_Cone* pT
 			App->CL_Face->Face_SetFixedHull(f, GE_TRUE);
 		}
 		App->CL_FaceList->FaceList_AddFace(fl, f);
+		App->CL_Face->Face_SetTextureLock(f, true);
 	}
 	//	geRam_Free(BottomVerts);
 
@@ -619,6 +633,7 @@ Brush* CL64_BrushTemplate::BrushTemplate_CreateStaircase(const BrushTemplate_Sta
 		if (f)
 		{
 			App->CL_FaceList->FaceList_AddFace(fl, f);
+			App->CL_Face->Face_SetTextureLock(f, true);
 		}
 
 		App->CL_Maths->Vector3_Set(&(FaceVerts[3]), HalfWidth, -HalfHeight, HalfLength);
@@ -629,6 +644,7 @@ Brush* CL64_BrushTemplate::BrushTemplate_CreateStaircase(const BrushTemplate_Sta
 		if (f)
 		{
 			App->CL_FaceList->FaceList_AddFace(fl, f);
+			App->CL_Face->Face_SetTextureLock(f, true);
 		}
 
 		App->CL_Maths->Vector3_Set(&(FaceVerts[3]), -HalfWidth, HalfHeight, HalfLength);
@@ -639,6 +655,7 @@ Brush* CL64_BrushTemplate::BrushTemplate_CreateStaircase(const BrushTemplate_Sta
 		if (f)
 		{
 			App->CL_FaceList->FaceList_AddFace(fl, f);
+			App->CL_Face->Face_SetTextureLock(f, true);
 		}
 
 		App->CL_Maths->Vector3_Set(&(FaceVerts[2]), HalfWidth, HalfHeight, HalfLength);
@@ -648,6 +665,7 @@ Brush* CL64_BrushTemplate::BrushTemplate_CreateStaircase(const BrushTemplate_Sta
 		if (f)
 		{
 			App->CL_FaceList->FaceList_AddFace(fl, f);
+			App->CL_Face->Face_SetTextureLock(f, true);
 		}
 
 		App->CL_Maths->Vector3_Set(&(FaceVerts[0]), -HalfWidth, HalfHeight, HalfLength);
@@ -657,6 +675,7 @@ Brush* CL64_BrushTemplate::BrushTemplate_CreateStaircase(const BrushTemplate_Sta
 		if (f)
 		{
 			App->CL_FaceList->FaceList_AddFace(fl, f);
+			App->CL_Face->Face_SetTextureLock(f, true);
 		}
 
 		b = App->CL_Brush->Brush_Create(BRUSH_LEAF, fl, 0);
@@ -851,6 +870,7 @@ Brush* CL64_BrushTemplate::BrushTemplate_CreateArch(const BrushTemplate_Arch* pT
 				if (f)
 				{
 					App->CL_FaceList->FaceList_AddFace(fl, f);
+					App->CL_Face->Face_SetTextureLock(f, true);
 				}
 
 				/*				FaceVerts2[0] = CrossVerts[index];//FinalTopInnerPoint;
@@ -879,6 +899,7 @@ Brush* CL64_BrushTemplate::BrushTemplate_CreateArch(const BrushTemplate_Arch* pT
 				if (f)
 				{
 					App->CL_FaceList->FaceList_AddFace(fl, f);
+					App->CL_Face->Face_SetTextureLock(f, true);
 				}
 
 				/*			FaceVerts2[0] = CrossVerts[0];
@@ -902,6 +923,7 @@ Brush* CL64_BrushTemplate::BrushTemplate_CreateArch(const BrushTemplate_Arch* pT
 				if (f)
 				{
 					App->CL_FaceList->FaceList_AddFace(fl, f);
+					App->CL_Face->Face_SetTextureLock(f, true);
 				}
 
 				/*				FaceVerts2[0] = CrossVerts[NumSides-1];
@@ -927,6 +949,7 @@ Brush* CL64_BrushTemplate::BrushTemplate_CreateArch(const BrushTemplate_Arch* pT
 				if (f)
 				{
 					App->CL_FaceList->FaceList_AddFace(fl, f);
+					App->CL_Face->Face_SetTextureLock(f, true);
 				}
 
 				FaceVerts2[0] = CrossVerts[NumSides - 1];
@@ -937,6 +960,7 @@ Brush* CL64_BrushTemplate::BrushTemplate_CreateArch(const BrushTemplate_Arch* pT
 				if (f)
 				{
 					App->CL_FaceList->FaceList_AddFace(fl, f);
+					App->CL_Face->Face_SetTextureLock(f, true);
 				}
 			}
 
@@ -957,6 +981,7 @@ Brush* CL64_BrushTemplate::BrushTemplate_CreateArch(const BrushTemplate_Arch* pT
 					App->CL_Face->Face_SetFixedHull(f, GE_TRUE);
 				}
 				App->CL_FaceList->FaceList_AddFace(fl, f);
+				App->CL_Face->Face_SetTextureLock(f, true);
 			}
 
 			//need reverse order for the other end
@@ -979,6 +1004,7 @@ Brush* CL64_BrushTemplate::BrushTemplate_CreateArch(const BrushTemplate_Arch* pT
 					App->CL_Face->Face_SetFixedHull(f, GE_TRUE);
 				}
 				App->CL_FaceList->FaceList_AddFace(fl, f);
+				App->CL_Face->Face_SetTextureLock(f, true);
 			}
 
 			if (!pTemplate->Style)
@@ -1205,6 +1231,7 @@ Brush* CL64_BrushTemplate::BrushTemplate_CreateArch(const BrushTemplate_Arch* pT
 					if (f)
 					{
 						App->CL_FaceList->FaceList_AddFace(fl, f);
+						App->CL_Face->Face_SetTextureLock(f, true);
 					}
 
 					FaceVerts[0] = FinalTopOuterPoint;
@@ -1214,6 +1241,7 @@ Brush* CL64_BrushTemplate::BrushTemplate_CreateArch(const BrushTemplate_Arch* pT
 					if (f)
 					{
 						App->CL_FaceList->FaceList_AddFace(fl, f);
+						App->CL_Face->Face_SetTextureLock(f, true);
 					}
 				}
 				else
@@ -1225,6 +1253,7 @@ Brush* CL64_BrushTemplate::BrushTemplate_CreateArch(const BrushTemplate_Arch* pT
 					if (f)
 					{
 						App->CL_FaceList->FaceList_AddFace(fl, f);
+						App->CL_Face->Face_SetTextureLock(f, true);
 					}
 
 					FaceVerts[0] = FinalTopInnerPoint;
@@ -1234,6 +1263,7 @@ Brush* CL64_BrushTemplate::BrushTemplate_CreateArch(const BrushTemplate_Arch* pT
 					if (f)
 					{
 						App->CL_FaceList->FaceList_AddFace(fl, f);
+						App->CL_Face->Face_SetTextureLock(f, true);
 					}
 				}
 			}
@@ -1258,6 +1288,7 @@ Brush* CL64_BrushTemplate::BrushTemplate_CreateArch(const BrushTemplate_Arch* pT
 				if (f)
 				{
 					App->CL_FaceList->FaceList_AddFace(fl, f);
+					App->CL_Face->Face_SetTextureLock(f, true);
 				}
 			}
 
@@ -1274,6 +1305,7 @@ Brush* CL64_BrushTemplate::BrushTemplate_CreateArch(const BrushTemplate_Arch* pT
 					if (f)
 					{
 						App->CL_FaceList->FaceList_AddFace(fl, f);
+						App->CL_Face->Face_SetTextureLock(f, true);
 					}
 
 					FaceVerts[2] = FinalBottomInnerPoint;
@@ -1283,6 +1315,7 @@ Brush* CL64_BrushTemplate::BrushTemplate_CreateArch(const BrushTemplate_Arch* pT
 					if (f)
 					{
 						App->CL_FaceList->FaceList_AddFace(fl, f);
+						App->CL_Face->Face_SetTextureLock(f, true);
 					}
 				}
 				else
@@ -1294,6 +1327,7 @@ Brush* CL64_BrushTemplate::BrushTemplate_CreateArch(const BrushTemplate_Arch* pT
 					if (f)
 					{
 						App->CL_FaceList->FaceList_AddFace(fl, f);
+						App->CL_Face->Face_SetTextureLock(f, true);
 					}
 
 					FaceVerts[2] = FinalBottomOuterPoint;
@@ -1303,6 +1337,7 @@ Brush* CL64_BrushTemplate::BrushTemplate_CreateArch(const BrushTemplate_Arch* pT
 					if (f)
 					{
 						App->CL_FaceList->FaceList_AddFace(fl, f);
+						App->CL_Face->Face_SetTextureLock(f, true);
 					}
 				}
 			}
@@ -1326,6 +1361,7 @@ Brush* CL64_BrushTemplate::BrushTemplate_CreateArch(const BrushTemplate_Arch* pT
 				if (f)
 				{
 					App->CL_FaceList->FaceList_AddFace(fl, f);
+					App->CL_Face->Face_SetTextureLock(f, true);
 				}
 			}
 
@@ -1340,6 +1376,7 @@ Brush* CL64_BrushTemplate::BrushTemplate_CreateArch(const BrushTemplate_Arch* pT
 				if (f)
 				{
 					App->CL_FaceList->FaceList_AddFace(fl, f);
+					App->CL_Face->Face_SetTextureLock(f, true);
 				}
 			}
 			// end change
@@ -1353,6 +1390,7 @@ Brush* CL64_BrushTemplate::BrushTemplate_CreateArch(const BrushTemplate_Arch* pT
 			if (f)
 			{
 				App->CL_FaceList->FaceList_AddFace(fl, f);
+				App->CL_Face->Face_SetTextureLock(f, true);
 			}
 
 			//make the end faces
@@ -1375,7 +1413,9 @@ Brush* CL64_BrushTemplate::BrushTemplate_CreateArch(const BrushTemplate_Arch* pT
 				{
 					App->CL_Face->Face_SetFixedHull(f, GE_TRUE);
 				}
+
 				App->CL_FaceList->FaceList_AddFace(fl, f);
+				App->CL_Face->Face_SetTextureLock(f, true);
 			}
 
 			FaceVerts[3] = FinalTopOuterPoint;
@@ -1397,7 +1437,9 @@ Brush* CL64_BrushTemplate::BrushTemplate_CreateArch(const BrushTemplate_Arch* pT
 				{
 					App->CL_Face->Face_SetFixedHull(f, GE_TRUE);
 				}
+
 				App->CL_FaceList->FaceList_AddFace(fl, f);
+				App->CL_Face->Face_SetTextureLock(f, true);
 			}
 
 			if (!pTemplate->Style)
