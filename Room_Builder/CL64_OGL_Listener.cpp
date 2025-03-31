@@ -374,35 +374,41 @@ void CL64_OGL_Listener::Groups_Faces_Parts(int Count)
 // *************************************************************************
 void CL64_OGL_Listener::Render_Selected_Face()
 {
-	int FC = App->CL_SelFaceList->SelFaceList_GetSize(App->CL_Doc->pSelFaces);
-	if (FC > 0)
+	Brush* pBrush = App->CL_Doc->CurBrush;
+	const T_Vec3* verts;
+	int j = 0;
+	int curnum_verts = 0;
+
+	int Count = 0;
+	int Face_Count = App->CL_SelFaceList->SelFaceList_GetSize(App->CL_Doc->pSelFaces);;
+	
+	if (Face_Count > 0)
 	{
-		int j = 0;
-		int curnum_verts = 0;
-
-		Brush* pBrush;
-		Face* pFace;
-
-		int Actual_Brush_Index = 0;
-		pBrush = App->CL_Doc->CurBrush;
-
-		pFace = App->CL_SelFaceList->SelFaceList_GetFace(App->CL_Doc->pSelFaces, 0);
-
-		const T_Vec3* verts;
-		verts = App->CL_Face->Face_GetPoints(pFace);
-		curnum_verts = App->CL_Face->Face_GetNumPoints(pFace);
-
-		glColor3f(1.0f, 0.0f, 1.0f);
-		glBegin(GL_POLYGON);
-
-		for (j = 0; j < curnum_verts; j++)
+		while (Count < Face_Count)
 		{
-			glVertex3f(verts[j].x, verts[j].y, verts[j].z);
+			j = 0;
+			curnum_verts = 0;
+
+			Face* pFace;
+
+			pFace = App->CL_SelFaceList->SelFaceList_GetFace(App->CL_Doc->pSelFaces, Count);
+
+			verts = App->CL_Face->Face_GetPoints(pFace);
+			curnum_verts = App->CL_Face->Face_GetNumPoints(pFace);
+
+			glColor3f(1.0f, 0.0f, 1.0f);
+			glBegin(GL_POLYGON);
+
+			for (j = 0; j < curnum_verts; j++)
+			{
+				glVertex3f(verts[j].x, verts[j].y, verts[j].z);
+			}
+
+			glEnd();
+
+			Count++;
 		}
-
-		glEnd();
 	}
-
 }
 
 // *************************************************************************
