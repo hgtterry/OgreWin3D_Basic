@@ -77,6 +77,32 @@ signed int CL64_Properties_Faces::ChangeTextureAngle(Face* pFace, void* lParam)
 }
 
 // *************************************************************************
+// *		  FlipVertical:- Terry and Hazel Flanigan 2023				   *
+// *************************************************************************
+signed int CL64_Properties_Faces::FlipVertical(Face* pFace, void*)
+{
+	float xScale, yScale;
+
+	App->CL_Face->Face_GetTextureScale(pFace, &xScale, &yScale);
+	App->CL_Face->Face_SetTextureScale(pFace, xScale, -yScale);
+
+	return GE_TRUE;
+}
+
+// *************************************************************************
+// *		  FlipHorizontal:- Terry and Hazel Flanigan 2023			   *
+// *************************************************************************
+signed int CL64_Properties_Faces::FlipHorizontal(Face* pFace, void*)
+{
+	float xScale, yScale;
+
+	App->CL_Face->Face_GetTextureScale(pFace, &xScale, &yScale);
+	App->CL_Face->Face_SetTextureScale(pFace, -xScale, yScale);
+
+	return GE_TRUE;
+}
+
+// *************************************************************************
 // *		  ChangeTextureXScale:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
 signed int CL64_Properties_Faces::ChangeTextureXScale(Face* pFace, void* lParam)
@@ -153,8 +179,8 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 		SendDlgItemMessage(hDlg, IDC_ST_NUM_FACES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_LST_FACELIST, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
-		SendDlgItemMessage(hDlg, IDC_STTEXTOFFSET, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_STTEXTSCALE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_STTEXTOFFSET, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_STTEXTSCALE, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ST_ANGLE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		SendDlgItemMessage(hDlg, IDC_ST_X, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
@@ -181,7 +207,8 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 
 		SendDlgItemMessage(hDlg, IDC_BT_COPY_TEXTINFO, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_PASTE_TEXTINFO, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-
+		SendDlgItemMessage(hDlg, IDC_CK_ALLFACES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
 		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
@@ -192,7 +219,11 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 		sprintf(buf, "%i", App->CL_Properties_Faces->m_NumberOfFaces);
 		SetDlgItemText(hDlg, IDC_ST_NUM_FACES, (LPCTSTR)buf);
 
-		App->CL_Properties_Faces->Update_Face_List(hDlg);
+		if (App->CL_Top_Tabs->flag_All_Faces == 0)
+		{
+			App->CL_Properties_Faces->Update_Face_List(hDlg);
+		}
+
 		App->CL_Properties_Faces->Update_Face_Members();
 		App->CL_Properties_Faces->UpdateDialog(hDlg);
 
@@ -210,7 +241,27 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 
 		App->CL_Properties_Faces->Fill_ComboBox_AngleValues(hDlg);
 
-		App->CL_Properties_Faces->Update_Face_Info(hDlg);
+		if (App->CL_Top_Tabs->flag_All_Faces == 0)
+		{
+			App->CL_Properties_Faces->Update_Face_Info(hDlg);
+		}
+
+	if(App->CL_Top_Tabs->flag_All_Faces == 1)
+	{
+		HWND temp = GetDlgItem(hDlg, IDC_CK_ALLFACES);
+		SendMessage(temp,BM_SETCHECK,1,0);
+		EnableWindow(GetDlgItem(hDlg, IDC_LST_FACELIST), false);
+		EnableWindow(GetDlgItem(hDlg, IDC_BT_COPY_TEXTINFO), false);
+		EnableWindow(GetDlgItem(hDlg, IDC_BT_PASTE_TEXTINFO), false);
+	}
+	else
+	{
+		HWND temp = GetDlgItem(hDlg, IDC_CK_ALLFACES);
+		SendMessage(temp,BM_SETCHECK,0,0);
+		EnableWindow(GetDlgItem(hDlg, IDC_LST_FACELIST), true);
+		EnableWindow(GetDlgItem(hDlg, IDC_BT_COPY_TEXTINFO), true);
+		EnableWindow(GetDlgItem(hDlg, IDC_BT_PASTE_TEXTINFO), true);
+	}
 
 		return TRUE;
 	}
@@ -321,13 +372,13 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 			return (UINT)App->AppBackground;
 		}
 		
-		/*if (GetDlgItem(hDlg, IDC_TEXTURELOCK) == (HWND)lParam)
+		if (GetDlgItem(hDlg, IDC_CK_ALLFACES) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 0, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->AppBackground;
-		}*/
+		}
 
 		return FALSE;
 	}
@@ -898,8 +949,15 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 		{
 			float xScale, yScale;
 
-			App->CL_Face->Face_GetTextureScale(App->CL_Properties_Faces->m_Selected_Face, &xScale, &yScale);
-			App->CL_Face->Face_SetTextureScale(App->CL_Properties_Faces->m_Selected_Face, xScale, -yScale);
+			if (App->CL_Top_Tabs->flag_All_Faces == 1)
+			{
+				App->CL_SelFaceList->SelFaceList_Enum(App->CL_Doc->pSelFaces, FlipHorizontal, NULL);
+			}
+			else
+			{
+				App->CL_Face->Face_GetTextureScale(App->CL_Properties_Faces->m_Selected_Face, &xScale, &yScale);
+				App->CL_Face->Face_SetTextureScale(App->CL_Properties_Faces->m_Selected_Face, xScale, -yScale);
+			}
 
 			App->CL_Properties_Faces->UpdateDialog(hDlg);
 			App->CL_Properties_Faces->Update();
@@ -911,8 +969,15 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 		{
 			float xScale, yScale;
 
-			App->CL_Face->Face_GetTextureScale(App->CL_Properties_Faces->m_Selected_Face, &xScale, &yScale);
-			App->CL_Face->Face_SetTextureScale(App->CL_Properties_Faces->m_Selected_Face, -xScale, yScale);
+			if (App->CL_Top_Tabs->flag_All_Faces == 1)
+			{
+				App->CL_SelFaceList->SelFaceList_Enum(App->CL_Doc->pSelFaces, FlipVertical, NULL);
+			}
+			else
+			{
+				App->CL_Face->Face_GetTextureScale(App->CL_Properties_Faces->m_Selected_Face, &xScale, &yScale);
+				App->CL_Face->Face_SetTextureScale(App->CL_Properties_Faces->m_Selected_Face, -xScale, yScale);
+			}
 
 			App->CL_Properties_Faces->UpdateDialog(hDlg);
 			App->CL_Properties_Faces->Update();
