@@ -212,7 +212,7 @@ FaceList* CL64_ParseFile::FaceList_CreateFromFile()
 			if (pFace != NULL)
 			{
 				App->CL_FaceList->FaceList_AddFace(pList, pFace);
-				App->CL_Face->Face_SetTextureLock(pFace, true);
+				//App->CL_Face->Face_SetTextureLock(pFace, true);
 			}
 		}
 		if (pList->NumFaces < 4)
@@ -278,7 +278,7 @@ Face* CL64_ParseFile::Face_CreateFromFile()
 
 		if (f)
 		{
-			//App->Say("Face Created");
+			//App->CL_Face->Face_SetTextureLock(f, true);
 			f->Flags = flg;
 			f->LightIntensity = Light;
 			f->MipMapBias = MipMapBias;

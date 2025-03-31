@@ -487,8 +487,6 @@ bool CL64_Mesh_Mgr::Brush_FaceList_Create(const Brush* b, const FaceList* pList,
 		curnum_verts = App->CL_Face->Face_GetNumPoints(pList->Faces[i]);
 		for (j = 0; j < curnum_verts; j++)
 		{
-	
-
 			App->CL_Editor->B_Brush[App->CL_Editor->BrushCount]->vertex_Data[VertIndex].x = verts[j].x;
 			App->CL_Editor->B_Brush[App->CL_Editor->BrushCount]->vertex_Data[VertIndex].y = verts[j].y;
 			App->CL_Editor->B_Brush[App->CL_Editor->BrushCount]->vertex_Data[VertIndex].z = verts[j].z;
@@ -518,9 +516,14 @@ bool CL64_Mesh_Mgr::Brush_FaceList_Create(const Brush* b, const FaceList* pList,
 
 		// make sure that the texture size is set correctly (division!)
 		if (txSize == 0)
-			txSize = 32;
+		{
+			txSize = 128;
+		}
+
 		if (tySize == 0)
-			tySize = 32;
+		{
+			tySize = 128;
+		}
 
 		App->CL_Maths->Vector3_Scale(&TVecs->uVec, 1.f / (float)txSize, &uVec);
 		App->CL_Maths->Vector3_Scale(&TVecs->vVec, -1.f / (float)tySize, &vVec);
@@ -540,7 +543,6 @@ bool CL64_Mesh_Mgr::Brush_FaceList_Create(const Brush* b, const FaceList* pList,
 			UVIndex++;
 		}
 	}
-
 
 	// -----------------------------------  Faces
 	int FaceIndex = 0;
