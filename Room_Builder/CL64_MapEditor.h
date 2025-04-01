@@ -51,6 +51,7 @@ public:
 	bool Context_Command(WPARAM wParam);
 	bool Context_Command_Ogre(WPARAM wParam);
 
+	void Set_View();
 	void Reset_Views_All();
 	void Reset_To_Camera();
 	

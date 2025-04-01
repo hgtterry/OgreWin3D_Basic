@@ -1510,20 +1510,7 @@ bool CL64_MapEditor::Context_Command(WPARAM wParam)
 
 	if (LOWORD(wParam) == IDM_RESET_VIEW)
 	{
-		RECT		Rect;
-		GetClientRect(App->CL_MapEditor->Current_View->hDlg, &Rect);
-
-		App->CL_MapEditor->Current_View->XCenter = (float)Rect.right / 2;
-		App->CL_MapEditor->Current_View->YCenter = (float)Rect.bottom / 2;
-
-		App->CL_MapEditor->Current_View->CamPos.x = 0;
-		App->CL_MapEditor->Current_View->CamPos.y = 0;
-		App->CL_MapEditor->Current_View->CamPos.z = 0;
-
-		App->CL_MapEditor->Current_View->ZoomFactor = 0.3;
-
-		App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
-
+		Set_View();
 		return TRUE;
 	}
 
@@ -1532,6 +1519,26 @@ bool CL64_MapEditor::Context_Command(WPARAM wParam)
 		App->CL_MapEditor->Reset_To_Camera();
 		return TRUE;
 	}
+}
+
+// *************************************************************************
+// *				Set_View:- Terry and Hazel Flanigan 2024		 	   *
+// *************************************************************************
+void CL64_MapEditor::Set_View()
+{
+	RECT		Rect;
+	GetClientRect(App->CL_MapEditor->Current_View->hDlg, &Rect);
+
+	App->CL_MapEditor->Current_View->XCenter = (float)Rect.right / 2;
+	App->CL_MapEditor->Current_View->YCenter = (float)Rect.bottom / 2;
+
+	//App->CL_MapEditor->Current_View->CamPos.x = 0;
+	//App->CL_MapEditor->Current_View->CamPos.y = 0;
+	//App->CL_MapEditor->Current_View->CamPos.z = 0;
+
+	//App->CL_MapEditor->Current_View->ZoomFactor = 0.3;
+
+	App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
 }
 
 // *************************************************************************
