@@ -43,9 +43,8 @@ void CL64_Panels::Resize_OgreWin(void)
 
 	GetClientRect(App->CL_MapEditor->Bottom_Right_Hwnd, &rcl);
 
-	//-----------------Ogre Window
-	//SetWindowPos(App->CL_MapEditor->Bottom_Right_Hwnd, NULL, 4, 2, NewWidth + 380, NewHeight + 58, SWP_NOZORDER);
-
+	SetWindowPos(App->ViewGLhWnd, NULL,0, 17, rcl.right, rcl.bottom - 17 , SWP_NOZORDER);
+	
 	if (App->flag_OgreStarted == 1)
 	{
 		RECT rect;

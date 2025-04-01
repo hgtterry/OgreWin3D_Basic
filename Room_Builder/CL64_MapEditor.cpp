@@ -1224,8 +1224,36 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Bottom_Left_Window(HWND hDlg, UINT message
 // *************************************************************************
 void CL64_MapEditor::Create_Ogre_Bottom_Right()
 {
-	Bottom_Right_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MAP_BOTTOM_RIGHT, Main_Dlg_Hwnd, (DLGPROC)Proc_Ogre_BR);
-	App->CL_Ogre->RenderHwnd = Bottom_Right_Hwnd;
+	Bottom_Right_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MAP_BOTTOM_RIGHT, Main_Dlg_Hwnd, (DLGPROC)ViewerMain_Proc);
+	App->CL_Ogre->RenderHwnd = App->ViewGLhWnd;
+}
+
+// *************************************************************************
+// *			ViewerMain_Proc:- Terry and Hazel Flanigan 2023			   *
+// *************************************************************************
+LRESULT CALLBACK CL64_MapEditor::ViewerMain_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+
+	switch (message)
+	{
+
+	case WM_INITDIALOG:
+	{
+		App->ViewGLhWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MAP_RENDER_WINDOW, hDlg, (DLGPROC)Proc_Ogre_BR);
+		return TRUE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->AppBackground;
+	}
+	case WM_COMMAND:
+	{
+
+	}
+	break;
+	}
+	return FALSE;
 }
 
 // *************************************************************************
@@ -1283,7 +1311,7 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Ogre_BR(HWND hDlg, UINT message, WPARAM wP
 	{
 		POINT pos;
 		GetCursorPos(&pos);
-		ScreenToClient(App->CL_MapEditor->Bottom_Right_Hwnd, &pos);
+		ScreenToClient(App->ViewGLhWnd, &pos);
 
 		if (App->CL_ImGui->flag_Imgui_Initialized == 1)
 		{
@@ -1294,10 +1322,10 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Ogre_BR(HWND hDlg, UINT message, WPARAM wP
 
 		if (GetCursorPos(&pos) && App->flag_OgreStarted == 1)// && App->CL10_Dimensions->Mouse_Move_Mode == Enums::Edit_Mouse_None)
 		{
-			if (ScreenToClient(App->CL_MapEditor->Bottom_Right_Hwnd, &pos))
+			if (ScreenToClient(App->ViewGLhWnd, &pos))
 			{
 				RECT rc;
-				GetClientRect(App->CL_MapEditor->Bottom_Right_Hwnd, &rc);
+				GetClientRect(App->ViewGLhWnd, &rc);
 				int width = rc.right - rc.left;
 				int height = rc.bottom - rc.top;
 
@@ -1305,7 +1333,7 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Ogre_BR(HWND hDlg, UINT message, WPARAM wP
 			}
 		}
 
-		SetFocus(App->CL_MapEditor->Bottom_Right_Hwnd);
+		SetFocus(App->ViewGLhWnd);
 		
 		break;
 	}
@@ -1330,7 +1358,7 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Ogre_BR(HWND hDlg, UINT message, WPARAM wP
 				App->CL_Ogre->Ogre3D_Listener->Pl_Cent500X = p.x;
 				App->CL_Ogre->Ogre3D_Listener->Pl_Cent500Y = p.y;
 
-				SetCapture(App->CL_MapEditor->Bottom_Right_Hwnd);
+				SetCapture(App->ViewGLhWnd);
 				SetCursorPos(App->CursorPosX, App->CursorPosY);
 				App->CL_Ogre->Ogre3D_Listener->flag_LeftMouseDown = 1;
 				App->CUR = SetCursor(NULL);
@@ -1383,7 +1411,7 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Ogre_BR(HWND hDlg, UINT message, WPARAM wP
 			App->CursorPosY = p.y;
 			App->CL_Ogre->Ogre3D_Listener->Pl_Cent500X = p.x;
 			App->CL_Ogre->Ogre3D_Listener->Pl_Cent500Y = p.y;
-			SetCapture(App->CL_MapEditor->Bottom_Right_Hwnd);
+			SetCapture(App->ViewGLhWnd);
 			SetCursorPos(App->CursorPosX, App->CursorPosY);
 			App->CL_Ogre->Ogre3D_Listener->flag_RightMouseDown = 1;
 			App->CUR = SetCursor(NULL);

@@ -202,6 +202,8 @@ public:
 	HCURSOR CUR;
 	HMENU mMenu;
 
+	HWND ViewGLhWnd;
+
 	bool flag_Debug_App;
 	bool flag_OgreStarted;
 
