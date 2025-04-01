@@ -125,7 +125,6 @@ void CL64_Editor::Preview_Mode(void)
 	App->CL_Ogre->OGL_Listener->Flag_Show_Selected_Brush = 0;
 	App->CL_Ogre->OGL_Listener->Flag_Show_Selected_Face = 0;
 
-
 	//SetCursorPos(App->CursorPosX, App->CursorPosY);
 
 	int cx = GetSystemMetrics(SM_CXSCREEN);
@@ -134,6 +133,8 @@ void CL64_Editor::Preview_Mode(void)
 	SetWindowPos(App->CL_MapEditor->Bottom_Right_Hwnd, HWND_TOP, 0, 0, 0, 0, SWP_NOSIZE | SWP_NOZORDER);
 	SetWindowPos(App->CL_MapEditor->Bottom_Right_Hwnd, NULL, 0, 0, cx, cy, SWP_NOZORDER);
 	SetParent(App->CL_MapEditor->Bottom_Right_Hwnd, NULL);
+
+	SetWindowPos(App->ViewGLhWnd, NULL, 0, 0, cx, cy, SWP_NOZORDER);
 
 	App->CL_Ogre->mWindow->resize(cx, cy);
 

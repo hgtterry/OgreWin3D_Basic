@@ -55,7 +55,6 @@
 #define IDD_LISTDATA                    170
 #define IDD_CREATE_ARCH                 171
 #define IDD_OBJECT_EXPORT               172
-#define IDD_MAP_BOTTOM_RIGHT1           173
 #define IDD_MAP_RENDER_WINDOW           173
 #define IDB_TR_ON                       174
 #define IDB_BITMAP1                     175
@@ -378,6 +377,7 @@
 #define IDC_ST_TR_TITLE                 1281
 #define IDC_ST_BL_TITLE                 1282
 #define IDC_CK_ALLFACES                 1283
+#define IDC_ST_3D_TITLE                 1284
 #define ID_DEBUG_GENERAL                32771
 #define ID_TEMPLATES_INSERT             32772
 #define ID_BRUSH_SELECT                 32773
@@ -438,7 +438,7 @@
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        176
 #define _APS_NEXT_COMMAND_VALUE         32818
-#define _APS_NEXT_CONTROL_VALUE         1284
+#define _APS_NEXT_CONTROL_VALUE         1285
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif
