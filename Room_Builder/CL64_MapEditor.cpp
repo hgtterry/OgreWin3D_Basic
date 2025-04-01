@@ -33,9 +33,11 @@ THE SOFTWARE.
 #define IDM_COPY 4
 #define IDM_PASTE 5
 #define IDM_GOTO 6
+#define IDM_PREVIEW 6
 
-#define IDM_3D_WIRED 7
-#define IDM_3D_TEXTURED 8
+#define IDM_3D_WIRED 20
+#define IDM_3D_TEXTURED 21
+#define IDM_3D_PREVIEW 22
 
 #define	M_PI		((float)3.14159265358979323846f)
 #define	TOP_POS					8
@@ -1385,6 +1387,9 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Ogre_BR(HWND hDlg, UINT message, WPARAM wP
 			SetCursorPos(App->CursorPosX, App->CursorPosY);
 			App->CL_Ogre->Ogre3D_Listener->flag_RightMouseDown = 1;
 			App->CUR = SetCursor(NULL);
+
+			App->CL_MapEditor->Saved_MousePos = App->CL_Ogre->camNode->getPosition();
+			
 			return 1;
 		}
 		
@@ -1417,9 +1422,18 @@ LRESULT CALLBACK CL64_MapEditor::Proc_Ogre_BR(HWND hDlg, UINT message, WPARAM wP
 			}
 			else
 			{
-				// TODO Test Mouse Moved 
-				App->CL_MapEditor->Current_View = App->CL_MapEditor->VCam[V_TR];
-				App->CL_MapEditor->Context_Menu_Ogre(hDlg);
+				if (App->CL_Editor->flag_PreviewMode_Running == 0)
+				{
+					Ogre::Vector3 test = App->CL_Ogre->camNode->getPosition();
+
+					int cam_test = App->CL_Maths->Ogre_Vector3_Compare(&test, &App->CL_MapEditor->Saved_MousePos, 0);
+
+					if (cam_test == 1)
+					{
+						App->CL_MapEditor->Current_View = App->CL_MapEditor->VCam[V_TR];
+						App->CL_MapEditor->Context_Menu_Ogre(hDlg);
+					}
+				}
 			}
 
 			App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
@@ -1558,7 +1572,18 @@ void CL64_MapEditor::Context_Menu_Ogre(HWND hDlg)
 		AppendMenuW(hMenu, MF_STRING | MF_UNCHECKED, IDM_3D_TEXTURED, L"&Textured");
 	}
 
-	
+	AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
+
+	int BC = App->CL_Brush->Get_Brush_Count();
+	if (BC > 0 && App->CL_Editor->flag_PreviewMode_Running == 0)
+	{
+		AppendMenuW(hMenu, MF_STRING, IDM_3D_PREVIEW, L"&Preview");
+	}
+	else
+	{
+		AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_3D_PREVIEW, L"&Preview");
+	}
+
 	AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
 	AppendMenuW(hMenu, MF_STRING | MF_GRAYED, NULL, L"&Pick Texture Ctrl+Right Mouse Button");
 	AppendMenuW(hMenu, MF_STRING | MF_GRAYED, NULL, L"&Pan Right Mouse Button");
@@ -1587,6 +1612,13 @@ bool CL64_MapEditor::Context_Command_Ogre(WPARAM wParam)
 		App->CL_Camera->Camera_Wired();
 		return TRUE;
 	}
+
+	if (LOWORD(wParam) == IDM_3D_PREVIEW)
+	{
+		App->CL_Editor->Preview_Mode();
+		return TRUE;
+	}
+
 }
 
 // *************************************************************************
