@@ -29,7 +29,7 @@ THE SOFTWARE.
 
 CL64_App::CL64_App(void)
 {
-	CL_MapEditor =				nullptr;
+	CL_Editor_Map =				nullptr;
 	CL_Maths =					nullptr;
 	CL_Box =					nullptr;
 	CL_Render =					nullptr;
@@ -76,6 +76,8 @@ CL64_App::CL64_App(void)
 	CL_Entities =				nullptr;
 
 	CL_Com_Player =				nullptr;
+
+	CL_SceneEditor =			nullptr;
 
 	// Templates Dialogs
 	CL_CreateBoxDialog =		nullptr;
@@ -135,7 +137,7 @@ CL64_App::~CL64_App(void)
 // *************************************************************************
 void CL64_App::InitApp(void)
 {
-	CL_MapEditor =				new CL64_MapEditor();
+	CL_Editor_Map =				new CL64_Editor_Map();
 	CL_Maths =					new CL64_Maths();
 	CL_Box =					new CL64_Box();
 	CL_Render =					new CL64_Render();
@@ -184,6 +186,8 @@ void CL64_App::InitApp(void)
 	CL_Entities =				new CL64_Entities();
 	
 	CL_Com_Player =				new CL64_Com_Player();
+
+	CL_SceneEditor =			new CL64_Editor_Scene();
 
 	// Templates Dialogs
 	CL_CreateBoxDialog =		new A_CreateBoxDialog();

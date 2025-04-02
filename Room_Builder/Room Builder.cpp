@@ -63,14 +63,14 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     App->LoadProgramResource();
 
     App->CL_Doc->Init_Doc();
-    App->CL_MapEditor->Init_Map_Views();
+    App->CL_Editor_Map->Init_Map_Views();
    
     App->SetMainWinCentre();
 
     ShowWindow(App->MainHwnd, SW_SHOWMAXIMIZED);
     UpdateWindow(App->MainHwnd);
 
-    App->CL_MapEditor->Reset_Views_All();
+    App->CL_Editor_Map->Reset_Views_All();
 
     App->CL_Physics->Init_Bullet();
     App->CL_Ogre->Init_Ogre();
@@ -338,7 +338,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             // ----------------------------- View
             case ID_VIEW_RESETVIEWS:
             {
-                App->CL_MapEditor->Reset_Views_All();
+                App->CL_Editor_Map->Reset_Views_All();
                 return 1;
             }
             
@@ -583,8 +583,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     {
         RECT rcl;
         GetClientRect(App->MainHwnd, &rcl);
-        MoveWindow(App->CL_MapEditor->Main_Dlg_Hwnd, 0, 50, rcl.right, rcl.bottom - 50, TRUE);
-        App->CL_MapEditor->Init_Views(Enums::Selected_View_None);
+        MoveWindow(App->CL_Editor_Map->Main_Dlg_Hwnd, 0, 50, rcl.right, rcl.bottom - 50, TRUE);
+        App->CL_Editor_Map->Init_Views(Enums::Selected_View_None);
        
         return 0;
     }

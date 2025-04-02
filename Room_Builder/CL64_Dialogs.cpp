@@ -1116,7 +1116,7 @@ LRESULT CALLBACK CL64_Dialogs::Proc_SnapOptions(HWND hDlg, UINT message, WPARAM 
 
 		if (LOWORD(wParam) == IDC_RADIO1)
 		{
-			App->CL_MapEditor->GridSnapSize = 1;
+			App->CL_Editor_Map->GridSnapSize = 1;
 			App->CL_Doc->pLevel->GridSettings.TexelSnapSize = 1;
 
 			App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
@@ -1125,7 +1125,7 @@ LRESULT CALLBACK CL64_Dialogs::Proc_SnapOptions(HWND hDlg, UINT message, WPARAM 
 
 		if (LOWORD(wParam) == IDC_RADIO2)
 		{
-			App->CL_MapEditor->GridSnapSize = 2;
+			App->CL_Editor_Map->GridSnapSize = 2;
 			App->CL_Doc->pLevel->GridSettings.TexelSnapSize = 2;
 
 			App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
@@ -1134,7 +1134,7 @@ LRESULT CALLBACK CL64_Dialogs::Proc_SnapOptions(HWND hDlg, UINT message, WPARAM 
 
 		if (LOWORD(wParam) == IDC_RADIO4)
 		{
-			App->CL_MapEditor->GridSnapSize = 4;
+			App->CL_Editor_Map->GridSnapSize = 4;
 			App->CL_Doc->pLevel->GridSettings.TexelSnapSize = 4;
 
 			App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
@@ -1143,7 +1143,7 @@ LRESULT CALLBACK CL64_Dialogs::Proc_SnapOptions(HWND hDlg, UINT message, WPARAM 
 
 		if (LOWORD(wParam) == IDC_RADIO8)
 		{
-			App->CL_MapEditor->GridSnapSize = 8;
+			App->CL_Editor_Map->GridSnapSize = 8;
 			App->CL_Doc->pLevel->GridSettings.TexelSnapSize = 8;
 
 			App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
@@ -1152,7 +1152,7 @@ LRESULT CALLBACK CL64_Dialogs::Proc_SnapOptions(HWND hDlg, UINT message, WPARAM 
 
 		if (LOWORD(wParam) == IDC_RADIO16)
 		{
-			App->CL_MapEditor->GridSnapSize = 16;
+			App->CL_Editor_Map->GridSnapSize = 16;
 			App->CL_Doc->pLevel->GridSettings.TexelSnapSize = 16;
 
 			App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
@@ -1161,7 +1161,7 @@ LRESULT CALLBACK CL64_Dialogs::Proc_SnapOptions(HWND hDlg, UINT message, WPARAM 
 
 		if (LOWORD(wParam) == IDC_RADIO32)
 		{
-			App->CL_MapEditor->GridSnapSize = 32;
+			App->CL_Editor_Map->GridSnapSize = 32;
 			App->CL_Doc->pLevel->GridSettings.TexelSnapSize = 32;
 
 			App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);

@@ -33,9 +33,6 @@
     <ClInclude Include="CL64_App.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CL64_MapEditor.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="CL64_Maths.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -207,6 +204,12 @@
     <ClInclude Include="CL64_Entities.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="CL64_Editor_Scene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CL64_Editor_Map.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Room Builder.cpp">
@@ -216,9 +219,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CL64_App.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CL64_MapEditor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CL64_Maths.cpp">
@@ -393,6 +393,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CL64_Entities.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CL64_Editor_Scene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CL64_Editor_Map.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

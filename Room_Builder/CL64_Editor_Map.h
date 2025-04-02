@@ -37,11 +37,11 @@ enum View
 };
 
 
-class CL64_MapEditor
+class CL64_Editor_Map
 {
 public:
-	CL64_MapEditor();
-	~CL64_MapEditor();
+	CL64_Editor_Map();
+	~CL64_Editor_Map();
 
 	void Init_Map_Views();
 	void Init_Views(int View);

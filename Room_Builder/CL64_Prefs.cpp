@@ -57,8 +57,8 @@ void CL64_Prefs::Read_Preferences()
 	Grid_Fine_Spacing = App->CL_Ini_File->GetInt("Grid", "Grid_Fine_Spacing", 0, 10);
 	Grid_Spacing = App->CL_Ini_File->GetInt("Grid", "Grid_Spacing", 0, 10);
 
-	App->CL_MapEditor->GridSize = Grid_Spacing;
-	App->CL_MapEditor->GridSnapSize = Grid_Fine_Spacing;
+	App->CL_Editor_Map->GridSize = Grid_Spacing;
+	App->CL_Editor_Map->GridSnapSize = Grid_Fine_Spacing;
 
 	App->CL_Ini_File->GetString("Wad", "Wad_File_Name", chr_Tag1, MAX_PATH);
 	strcpy(Wad_File_Name, chr_Tag1);

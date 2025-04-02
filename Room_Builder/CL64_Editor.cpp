@@ -118,7 +118,7 @@ void CL64_Editor::Preview_Mode(void)
 	
 	flag_PreviewMode_Running = 1;
 
-	Parent_hWnd = GetParent(App->CL_MapEditor->Bottom_Right_Hwnd);
+	Parent_hWnd = GetParent(App->CL_Editor_Map->Bottom_Right_Hwnd);
 
 	App->CL_Properties_Tabs->Enable_Tabs_Dlg(false);
 
@@ -130,9 +130,9 @@ void CL64_Editor::Preview_Mode(void)
 	int cx = GetSystemMetrics(SM_CXSCREEN);
 	int cy = GetSystemMetrics(SM_CYSCREEN);
 
-	SetWindowPos(App->CL_MapEditor->Bottom_Right_Hwnd, HWND_TOP, 0, 0, 0, 0, SWP_NOSIZE | SWP_NOZORDER);
-	SetWindowPos(App->CL_MapEditor->Bottom_Right_Hwnd, NULL, 0, 0, cx, cy, SWP_NOZORDER);
-	SetParent(App->CL_MapEditor->Bottom_Right_Hwnd, NULL);
+	SetWindowPos(App->CL_Editor_Map->Bottom_Right_Hwnd, HWND_TOP, 0, 0, 0, 0, SWP_NOSIZE | SWP_NOZORDER);
+	SetWindowPos(App->CL_Editor_Map->Bottom_Right_Hwnd, NULL, 0, 0, cx, cy, SWP_NOZORDER);
+	SetParent(App->CL_Editor_Map->Bottom_Right_Hwnd, NULL);
 
 	SetWindowPos(App->ViewGLhWnd, NULL, 0, 0, cx, cy, SWP_NOZORDER);
 
@@ -167,9 +167,9 @@ void CL64_Editor::Editor_Mode(void)
 	App->CL_ImGui->flag_Show_Press_Excape = 0;
 	App->CL_ImGui->flag_Show_Camera_Mode = 0;
 
-	SetParent(App->CL_MapEditor->Bottom_Right_Hwnd, Parent_hWnd);
+	SetParent(App->CL_Editor_Map->Bottom_Right_Hwnd, Parent_hWnd);
 	
-	App->CL_MapEditor->Resize_Windows(App->CL_MapEditor->Main_Dlg_Hwnd, App->CL_MapEditor->nleftWnd_width, App->CL_MapEditor->nleftWnd_Depth);
+	App->CL_Editor_Map->Resize_Windows(App->CL_Editor_Map->Main_Dlg_Hwnd, App->CL_Editor_Map->nleftWnd_width, App->CL_Editor_Map->nleftWnd_Depth);
 
 	App->CL_Properties_Tabs->Enable_Tabs_Dlg(true);
 	

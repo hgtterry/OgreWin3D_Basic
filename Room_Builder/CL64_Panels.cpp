@@ -41,14 +41,14 @@ void CL64_Panels::Resize_OgreWin(void)
 {
 	RECT rcl;
 
-	GetClientRect(App->CL_MapEditor->Bottom_Right_Hwnd, &rcl);
+	GetClientRect(App->CL_Editor_Map->Bottom_Right_Hwnd, &rcl);
 
 	SetWindowPos(App->ViewGLhWnd, NULL,0, 17, rcl.right, rcl.bottom - 17 , SWP_NOZORDER);
 	
 	if (App->flag_OgreStarted == 1)
 	{
 		RECT rect;
-		GetClientRect(App->CL_MapEditor->Bottom_Right_Hwnd, &rect);
+		GetClientRect(App->CL_Editor_Map->Bottom_Right_Hwnd, &rect);
 
 		if ((rect.bottom - rect.top) != 0 && App->CL_Ogre->mCamera != 0)
 		{

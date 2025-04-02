@@ -474,7 +474,7 @@ void CL64_File::Set_Editor()
 	App->CL_Properties_Tabs->Select_Templates_Tab();
 	App->CL_Ogre->Camera_Reset_Zero();
 
-	App->CL_MapEditor->Reset_Views_All();
+	App->CL_Editor_Map->Reset_Views_All();
 
 	App->CL_Doc->Editor_Set_Dlgs(Enums::Editor_Dlgs_First_Brush);
 	App->CL_Properties_Brushes->Set_Dlg_Brush_Options_Buttons(false);
