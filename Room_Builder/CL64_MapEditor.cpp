@@ -1597,10 +1597,21 @@ void CL64_MapEditor::Context_Menu(HWND hDlg)
 		AppendMenuW(hMenu, MF_STRING | MF_UNCHECKED, IDM_GRID_SNAP, L"&Grid Snap");
 	}
 
+	// Move Scale Rotate
 	AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
-	AppendMenuW(hMenu, MF_STRING, IDM_MOVE, L"&Move Brush");
-	AppendMenuW(hMenu, MF_STRING, IDM_SCALE, L"&Scale Brush");
-	AppendMenuW(hMenu, MF_STRING, IDM_ROTATE, L"&Rotate Brush");
+	if (App->CL_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes))
+	{
+		AppendMenuW(hMenu, MF_STRING, IDM_MOVE, L"&Move Brush");
+		AppendMenuW(hMenu, MF_STRING, IDM_SCALE, L"&Scale Brush");
+		AppendMenuW(hMenu, MF_STRING, IDM_ROTATE, L"&Rotate Brush");
+	}
+	else
+	{
+		AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_MOVE, L"&Move Brush");
+		AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_SCALE, L"&Scale Brush");
+		AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_ROTATE, L"&Rotate Brush");
+		
+	}
 	AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
 
 	AppendMenuW(hMenu, MF_STRING, IDM_RESET_VIEW, L"&Reset View");
