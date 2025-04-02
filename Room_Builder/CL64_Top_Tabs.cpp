@@ -437,58 +437,19 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Headers(HWND hDlg, UINT message, WPARAM wPa
 
 		if (LOWORD(wParam) == IDC_BT_BRUSH_MOVE)
 		{
-			SetCursor(App->CL_MapEditor->hcBoth);
-
-			App->CL_Doc->ResetAllSelectedFaces();;
-			App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
-
-			App->CL_Top_Tabs->Reset_Brush_Buttons();
-			App->CL_Top_Tabs->flag_Brush_Move = 1;
-
-			App->CL_Top_Tabs->Deselect_Faces_Dlg_Buttons();
-
-			RedrawWindow(App->CL_Top_Tabs->Headers_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-
-			App->CL_Doc->mCurrentTool = CURTOOL_NONE;
-			App->CL_Doc->mModeTool = ID_TOOLS_BRUSH_MOVEROTATEBRUSH;
-			return TRUE;
-		}
-
-		if (LOWORD(wParam) == IDC_BT_BRUSH_ROTATE)
-		{
-			SetCursor(App->CL_MapEditor->hcBoth);
-
-			App->CL_Doc->ResetAllSelectedFaces();;
-			App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
-
-			App->CL_Top_Tabs->Reset_Brush_Buttons();
-			App->CL_Top_Tabs->flag_Brush_Rotate = 1;
-
-			App->CL_Top_Tabs->Deselect_Faces_Dlg_Buttons();
-
-			RedrawWindow(App->CL_Top_Tabs->Headers_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-
-			App->CL_Doc->mCurrentTool = CURTOOL_NONE;
-			App->CL_Doc->mModeTool = ID_TOOLS_BRUSH_MOVEROTATEBRUSH;
+			App->CL_Top_Tabs->Set_Brush_Mode(ID_TOOLS_BRUSH_MOVEROTATEBRUSH,1);
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == IDC_BT_BRUSH_SCALE)
 		{
-			SetCursor(App->CL_MapEditor->hcBoth);
+			App->CL_Top_Tabs->Set_Brush_Mode(ID_TOOLS_BRUSH_SCALEBRUSH, 2);
+			return TRUE;
+		}
 
-			App->CL_Doc->ResetAllSelectedFaces();;
-			App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
-
-			App->CL_Top_Tabs->Reset_Brush_Buttons();
-			App->CL_Top_Tabs->flag_Brush_Scale = 1;
-
-			App->CL_Top_Tabs->Deselect_Faces_Dlg_Buttons();
-
-			RedrawWindow(App->CL_Top_Tabs->Headers_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-			
-			App->CL_Doc->mCurrentTool = CURTOOL_NONE;
-			App->CL_Doc->mModeTool = ID_TOOLS_BRUSH_SCALEBRUSH;
+		if (LOWORD(wParam) == IDC_BT_BRUSH_ROTATE)
+		{
+			App->CL_Top_Tabs->Set_Brush_Mode(ID_TOOLS_BRUSH_MOVEROTATEBRUSH, 3);
 			return TRUE;
 		}
 
@@ -583,13 +544,91 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Headers(HWND hDlg, UINT message, WPARAM wPa
 }
 
 // *************************************************************************
+// *			Set_Brush_Mode:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void CL64_Top_Tabs::Set_Brush_Mode(int Mode, int Dlg_Selection)
+{
+	SetCursor(App->CL_MapEditor->hcBoth);
+
+	App->CL_Doc->ResetAllSelectedFaces();;
+	App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
+
+	Reset_Brush_Buttons();
+
+	if (Dlg_Selection == 1)
+	{
+		flag_Brush_Move = 1;
+	}
+
+	if (Dlg_Selection == 2)
+	{
+		flag_Brush_Scale = 1;
+	}
+
+	if (Dlg_Selection == 3)
+	{
+		flag_Brush_Rotate = 1;
+	}
+	
+	Deselect_Faces_Dlg_Buttons();
+
+	RedrawWindow(Headers_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+	App->CL_Doc->mCurrentTool = CURTOOL_NONE;
+	//App->CL_Doc->mModeTool = ID_TOOLS_BRUSH_SCALEBRUSH;
+	App->CL_Doc->mModeTool = Mode;
+}
+
+//// *************************************************************************
+//// *			Set_Brush_Move:- Terry and Hazel Flanigan 2024			   *
+//// *************************************************************************
+//void CL64_Top_Tabs::Set_Brush_Move(void)
+//{
+//	SetCursor(App->CL_MapEditor->hcBoth);
+//
+//	App->CL_Doc->ResetAllSelectedFaces();;
+//	App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
+//
+//	Reset_Brush_Buttons();
+//	flag_Brush_Move = 1;
+//
+//	Deselect_Faces_Dlg_Buttons();
+//
+//	RedrawWindow(Headers_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+//
+//	App->CL_Doc->mCurrentTool = CURTOOL_NONE;
+//	App->CL_Doc->mModeTool = ID_TOOLS_BRUSH_MOVEROTATEBRUSH;
+//
+//}
+//
+//// *************************************************************************
+//// *			Set_Brush_Scale:- Terry and Hazel Flanigan 2024			   *
+//// *************************************************************************
+//void CL64_Top_Tabs::Set_Brush_Scale(void)
+//{
+//	SetCursor(App->CL_MapEditor->hcBoth);
+//
+//	App->CL_Doc->ResetAllSelectedFaces();;
+//	App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
+//
+//	App->CL_Top_Tabs->Reset_Brush_Buttons();
+//	App->CL_Top_Tabs->flag_Brush_Scale = 1;
+//
+//	App->CL_Top_Tabs->Deselect_Faces_Dlg_Buttons();
+//
+//	RedrawWindow(App->CL_Top_Tabs->Headers_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+//
+//	App->CL_Doc->mCurrentTool = CURTOOL_NONE;
+//	App->CL_Doc->mModeTool = ID_TOOLS_BRUSH_SCALEBRUSH;
+//}
+
+// *************************************************************************
 // *			Init_Bmps_Globals:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
 void CL64_Top_Tabs::Init_Bmps_Globals(void)
 {
 	HWND Temp = GetDlgItem(Headers_hWnd, IDC_BT_TOP_RIGHT);
 	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_TR_Off_Bmp);
-
 }
 
 // *************************************************************************

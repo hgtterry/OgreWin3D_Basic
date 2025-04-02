@@ -40,6 +40,10 @@ public:
 	void Select_Face();
 	void Update_Faces_Combo();
 
+	void Set_Brush_Mode(int Mode, int Dlg_Selection);
+	//void Set_Brush_Move(void);
+	//void Set_Brush_Scale(void);
+
 	int Copy_Spliter_Depth;
 	int Copy_Spliter_Width;
 

@@ -33,7 +33,10 @@ THE SOFTWARE.
 #define IDM_COPY 4
 #define IDM_PASTE 5
 #define IDM_GOTO 6
-#define IDM_PREVIEW 6
+#define IDM_PREVIEW 7
+#define IDM_MOVE 8
+#define IDM_SCALE 9
+#define IDM_ROTATE 10
 
 #define IDM_3D_WIRED 20
 #define IDM_3D_TEXTURED 21
@@ -1519,6 +1522,31 @@ bool CL64_MapEditor::Context_Command(WPARAM wParam)
 		App->CL_MapEditor->Reset_To_Camera();
 		return TRUE;
 	}
+
+	if (LOWORD(wParam) == IDM_PREVIEW)
+	{
+		App->CL_Editor->Preview_Mode();
+		return TRUE;
+	}
+
+	if (LOWORD(wParam) == IDM_MOVE)
+	{
+		App->CL_Top_Tabs->Set_Brush_Mode(ID_TOOLS_BRUSH_MOVEROTATEBRUSH,1);
+		return TRUE;
+	}
+
+	if (LOWORD(wParam) == IDM_SCALE)
+	{
+		App->CL_Top_Tabs->Set_Brush_Mode(ID_TOOLS_BRUSH_SCALEBRUSH,2);
+		return TRUE;
+	}
+
+	if (LOWORD(wParam) == IDM_ROTATE)
+	{
+		App->CL_Top_Tabs->Set_Brush_Mode(ID_TOOLS_BRUSH_MOVEROTATEBRUSH, 3);
+		return TRUE;
+	}
+
 }
 
 // *************************************************************************
@@ -1555,7 +1583,7 @@ void CL64_MapEditor::Context_Menu(HWND hDlg)
 	long yPos = pt.y;   // y position from message, in screen coordinates 
 
 	GetWindowRect(hDlg, &rcTree);        // get its window coordinates
-	htInfo.pt.x = xPos - rcTree.left;      // convert to client coordinates
+	htInfo.pt.x = xPos - rcTree.left;    // convert to client coordinates
 	htInfo.pt.y = yPos - rcTree.top;
 
 	hMenu = CreatePopupMenu();
@@ -1569,8 +1597,25 @@ void CL64_MapEditor::Context_Menu(HWND hDlg)
 		AppendMenuW(hMenu, MF_STRING | MF_UNCHECKED, IDM_GRID_SNAP, L"&Grid Snap");
 	}
 
+	AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
+	AppendMenuW(hMenu, MF_STRING, IDM_MOVE, L"&Move Brush");
+	AppendMenuW(hMenu, MF_STRING, IDM_SCALE, L"&Scale Brush");
+	AppendMenuW(hMenu, MF_STRING, IDM_ROTATE, L"&Rotate Brush");
+	AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
+
 	AppendMenuW(hMenu, MF_STRING, IDM_RESET_VIEW, L"&Reset View");
 	AppendMenuW(hMenu, MF_STRING, IDM_CENTRE_ONCAMERA, L"&Centre On Camera");
+	
+	int BC = App->CL_Brush->Get_Brush_Count();
+	if (BC > 0 && App->CL_Editor->flag_PreviewMode_Running == 0)
+	{
+		AppendMenuW(hMenu, MF_STRING, IDM_PREVIEW, L"&Preview");
+	}
+	else
+	{
+		AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_PREVIEW, L"&Preview");
+	}
+	
 	AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
 	AppendMenuW(hMenu, MF_STRING | MF_GRAYED, NULL, L"&Zoom Ctrl+Right Mouse Button");
 	AppendMenuW(hMenu, MF_STRING | MF_GRAYED, NULL, L"&Pan Ctrl+Left Mouse Button");
