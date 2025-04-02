@@ -33,3 +33,11 @@ CL64_Editor_Scene::CL64_Editor_Scene()
 CL64_Editor_Scene::~CL64_Editor_Scene()
 {
 }
+
+// *************************************************************************
+// *			Set_Editor_Scene:- Terry and Hazel Flanigan 2024	 	   *
+// *************************************************************************
+void CL64_Editor_Scene::Set_Editor_Scene(void)
+{
+	Debug
+}

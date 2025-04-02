@@ -28,5 +28,8 @@ class CL64_Editor_Scene
 public:
 	CL64_Editor_Scene();
 	~CL64_Editor_Scene();
+
+	void Set_Editor_Scene(void);
+
 };
 

@@ -77,7 +77,7 @@ CL64_App::CL64_App(void)
 
 	CL_Com_Player =				nullptr;
 
-	CL_SceneEditor =			nullptr;
+	CL_Editor_Scene =			nullptr;
 
 	// Templates Dialogs
 	CL_CreateBoxDialog =		nullptr;
@@ -187,7 +187,7 @@ void CL64_App::InitApp(void)
 	
 	CL_Com_Player =				new CL64_Com_Player();
 
-	CL_SceneEditor =			new CL64_Editor_Scene();
+	CL_Editor_Scene =			new CL64_Editor_Scene();
 
 	// Templates Dialogs
 	CL_CreateBoxDialog =		new A_CreateBoxDialog();

@@ -37,6 +37,7 @@ THE SOFTWARE.
 #define IDM_MOVE 8
 #define IDM_SCALE 9
 #define IDM_ROTATE 10
+#define IDM_SCENE_EDITOR 11
 
 #define IDM_3D_WIRED 20
 #define IDM_3D_TEXTURED 21
@@ -1547,6 +1548,11 @@ bool CL64_Editor_Map::Context_Command(WPARAM wParam)
 		return TRUE;
 	}
 
+	if (LOWORD(wParam) == IDM_SCENE_EDITOR)
+	{
+		App->CL_Editor_Scene->Set_Editor_Scene();
+		return TRUE;
+	}
 }
 
 // *************************************************************************
@@ -1627,10 +1633,11 @@ void CL64_Editor_Map::Context_Menu(HWND hDlg)
 		AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_PREVIEW, L"&Preview");
 	}
 	
+	AppendMenuW(hMenu, MF_STRING, IDM_SCENE_EDITOR, L"&Scene Editor");
+
 	AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
 	AppendMenuW(hMenu, MF_STRING | MF_GRAYED, NULL, L"&Zoom Ctrl+Right Mouse Button");
 	AppendMenuW(hMenu, MF_STRING | MF_GRAYED, NULL, L"&Pan Ctrl+Left Mouse Button");
-	//AppendMenuW(hMenu, MF_STRING, IDM_FILE_DELETE, L"&Delete");
 
 	flag_Context_Menu_Active = 1;
 	TrackPopupMenu(hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, hDlg, NULL);

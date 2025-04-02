@@ -134,7 +134,7 @@ public:
 
 	CL64_Com_Player*			CL_Com_Player;
 
-	CL64_Editor_Scene*			CL_SceneEditor;
+	CL64_Editor_Scene*			CL_Editor_Scene;
 
 	// Templates Dialogs
 	A_CreateBoxDialog*			CL_CreateBoxDialog;
