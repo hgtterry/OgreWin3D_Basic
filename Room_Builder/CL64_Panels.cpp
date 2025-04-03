@@ -23,6 +23,7 @@ THE SOFTWARE.
 */
 
 #include "pch.h"
+#include "resource.h"
 #include "CL64_App.h"
 #include "CL64_Panels.h"
 
@@ -84,4 +85,54 @@ void CL64_Panels::Deselect_All_Brushes_Update_Dlgs(void)
 
 	App->CL_Top_Tabs->Deselect_Faces_Dlg_Buttons();
 
+}
+
+// *************************************************************************
+// *		Move_FileView_Window:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+void CL64_Panels::Move_FileView_Window(void)
+{
+	POINT p = { 0 };
+
+	int Diff = MapWindowPoints(App->ViewGLhWnd, NULL, &p, 1);
+
+	int PosX = p.x;
+	int PosY = p.y;
+
+	SetWindowPos(App->ListPanel, NULL, PosX + 0, PosY + 5,
+		0, 0, SWP_NOSIZE | SWP_NOZORDER);
+
+}
+
+// *************************************************************************
+// *			Resize_FileView:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+bool CL64_Panels::Resize_FileView(void)
+{
+	RECT rcl;
+
+	HDWP hdwp;
+
+	int WidthClient = 0;
+	int HeightClient;
+	int NewWidth = 0;
+	int NewHeight = 0;
+
+	GetClientRect(App->ListPanel, &rcl);
+
+	WidthClient = rcl.right - rcl.left - 1010;
+	NewWidth = 417 + WidthClient + 200;
+
+	HeightClient = rcl.bottom - rcl.top;
+	NewHeight = HeightClient - 150;
+
+	HWND Temp = GetDlgItem(App->ListPanel, IDC_TREE1);
+	//HWND Temp3 = GetDlgItem(App->ListPanel, IDC_BT_INFO_FILEVIEW);
+
+	hdwp = BeginDeferWindowPos(4);
+
+	DeferWindowPos(hdwp, Temp, NULL, 2, 2,
+		NewWidth + 388, NewHeight + 100, SWP_NOZORDER);
+
+	return EndDeferWindowPos(hdwp);
 }

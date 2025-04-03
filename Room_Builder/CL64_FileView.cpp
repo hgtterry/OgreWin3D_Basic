@@ -57,6 +57,8 @@ CL64_FileView::CL64_FileView()
 	FV_Players_Folder = nullptr;
 	FV_Areas_Folder = nullptr;
 
+	flag_FileView_Active = 0;
+
 	tvinsert = { 0 };
 }
 
@@ -82,12 +84,11 @@ LRESULT CALLBACK CL64_FileView::Proc_ListPanel(HWND hDlg, UINT message, WPARAM w
 
 	case WM_INITDIALOG:
 	{
-		/*App->CL_FileView->flag_FileView_Active = 1;
+		App->CL_FileView->flag_FileView_Active = 1;
 
 		SendDlgItemMessage(hDlg, IDC_TREE1, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_BT_MAINENVIRONMENT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		//SendDlgItemMessage(hDlg, IDC_BT_MAINENVIRONMENT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
-		CheckMenuItem(App->mMenu, ID_WINDOWS_FILEVIEW, MF_BYCOMMAND | MF_CHECKED);*/
 		return TRUE;
 	}
 
@@ -98,7 +99,7 @@ LRESULT CALLBACK CL64_FileView::Proc_ListPanel(HWND hDlg, UINT message, WPARAM w
 
 	case WM_SIZE:
 	{
-		//App->CL_Panels->Resize_FileView();
+		App->CL_Panels->Resize_FileView();
 
 	}break;
 
@@ -304,6 +305,7 @@ void CL64_FileView::Init_FileView(void)
 	AddRootFolder();
 	MoreFolders(); //  Folders under root 
 	ExpandRoot();
+
 }
 
 // *************************************************************************
@@ -477,4 +479,21 @@ void CL64_FileView::ExpandRoot(void)
 	TreeView_Expand(Temp, GD_ProjectFolder, TVE_EXPAND);
 	TreeView_Expand(Temp, FV_LevelFolder, TVE_EXPAND);
 	TreeView_Expand(Temp, FV_EntitiesFolder, TVE_EXPAND);
+}
+
+// **************************************************************************
+// *			Show_FileView:- Terry and Hazel Flanigan 2024				*
+// **************************************************************************
+void CL64_FileView::Show_FileView(bool Enable)
+{
+	if (Enable == 1)
+	{
+		App->CL_FileView->flag_FileView_Active = 1;
+		ShowWindow(App->ListPanel, 1);
+	}
+	else
+	{
+		App->CL_FileView->flag_FileView_Active = 0;
+		ShowWindow(App->ListPanel, 0);
+	}
 }

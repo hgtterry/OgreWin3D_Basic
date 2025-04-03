@@ -32,6 +32,11 @@ public:
 	void Set_Editor_Scene(void);
 	void Back_To_Map_Editor(void);
 
+	void Context_Menu_Ogre(HWND hDlg);
+	bool Context_Command_Ogre(WPARAM wParam);
+
 	bool flag_Scene_Editor_Active;
+
+	HMENU hMenu;
 };
 

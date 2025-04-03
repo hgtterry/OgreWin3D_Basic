@@ -31,6 +31,8 @@ public:
 
 	void Start_FileView(void);
 	void Init_FileView(void);
+	void Show_FileView(bool Enable);
+
 
 private:
 	static LRESULT CALLBACK Proc_ListPanel(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
@@ -66,6 +68,8 @@ private:
 
 	HIMAGELIST hImageList;
 	HBITMAP hBitMap;
+
+	bool flag_FileView_Active;
 
 	TV_INSERTSTRUCT tvinsert;
 };

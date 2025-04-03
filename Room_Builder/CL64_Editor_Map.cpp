@@ -42,6 +42,7 @@ THE SOFTWARE.
 #define IDM_3D_WIRED 20
 #define IDM_3D_TEXTURED 21
 #define IDM_3D_PREVIEW 22
+#define IDM_3D_SCENE_EDITOR 23
 
 #define	M_PI		((float)3.14159265358979323846f)
 #define	TOP_POS					8
@@ -1296,6 +1297,16 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Ogre_BR(HWND hDlg, UINT message, WPARAM w
 
 	case WM_COMMAND:
 	{
+		if (App->CL_Editor_Scene->flag_Scene_Editor_Active == 1)
+		{
+			if (App->CL_Editor_Scene->Context_Command_Ogre(LOWORD(wParam)))
+			{
+				return TRUE;
+			}
+
+			return TRUE;
+		}
+
 		if (App->CL_Editor_Map->Context_Command_Ogre(LOWORD(wParam)))
 		{
 			return TRUE;
@@ -1467,7 +1478,19 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Ogre_BR(HWND hDlg, UINT message, WPARAM w
 			}
 			else
 			{
-				if (App->CL_Editor->flag_PreviewMode_Running == 0)
+				if (App->CL_Editor_Scene->flag_Scene_Editor_Active == 1)
+				{
+					Ogre::Vector3 test = App->CL_Ogre->camNode->getPosition();
+
+					int cam_test = App->CL_Maths->Ogre_Vector3_Compare(&test, &App->CL_Editor_Map->Saved_MousePos, 0);
+
+					if (cam_test == 1)
+					{
+						App->CL_Editor_Map->Current_View = App->CL_Editor_Map->VCam[V_TR];
+						App->CL_Editor_Scene->Context_Menu_Ogre(hDlg);
+					}
+				}
+				else if (App->CL_Editor->flag_PreviewMode_Running == 0 && App->CL_Editor_Scene->flag_Scene_Editor_Active == 0)
 				{
 					Ogre::Vector3 test = App->CL_Ogre->camNode->getPosition();
 
@@ -1490,69 +1513,6 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Ogre_BR(HWND hDlg, UINT message, WPARAM w
 	}
 	
 	return FALSE;
-}
-
-// *************************************************************************
-// *			 Context_Command:- Terry and Hazel Flanigan 2024		   *
-// *************************************************************************
-bool CL64_Editor_Map::Context_Command(WPARAM wParam)
-{
-	if (LOWORD(wParam) == IDM_GRID_SNAP)
-	{
-		if (App->CL_Level->flag_UseGrid == 1)
-		{
-			App->CL_Level->flag_UseGrid = 0;
-			CheckMenuItem(App->mMenu, ID_GRID_GRIDSNAP, MF_BYCOMMAND | MF_UNCHECKED);
-		}
-		else
-		{
-			App->CL_Level->flag_UseGrid = 1;
-			CheckMenuItem(App->mMenu, ID_GRID_GRIDSNAP, MF_BYCOMMAND | MF_CHECKED);
-		}
-		return TRUE;
-	}
-
-	if (LOWORD(wParam) == IDM_RESET_VIEW)
-	{
-		Set_View();
-		return TRUE;
-	}
-
-	if (LOWORD(wParam) == IDM_CENTRE_ONCAMERA)
-	{
-		Reset_To_Camera();
-		return TRUE;
-	}
-
-	if (LOWORD(wParam) == IDM_PREVIEW)
-	{
-		App->CL_Editor->Preview_Mode();
-		return TRUE;
-	}
-
-	if (LOWORD(wParam) == IDM_MOVE)
-	{
-		App->CL_Top_Tabs->Set_Brush_Mode(ID_TOOLS_BRUSH_MOVEROTATEBRUSH,1);
-		return TRUE;
-	}
-
-	if (LOWORD(wParam) == IDM_SCALE)
-	{
-		App->CL_Top_Tabs->Set_Brush_Mode(ID_TOOLS_BRUSH_SCALEBRUSH,2);
-		return TRUE;
-	}
-
-	if (LOWORD(wParam) == IDM_ROTATE)
-	{
-		App->CL_Top_Tabs->Set_Brush_Mode(ID_TOOLS_BRUSH_MOVEROTATEBRUSH, 3);
-		return TRUE;
-	}
-
-	if (LOWORD(wParam) == IDM_SCENE_EDITOR)
-	{
-		App->CL_Editor_Scene->Set_Editor_Scene();
-		return TRUE;
-	}
 }
 
 // *************************************************************************
@@ -1695,6 +1655,15 @@ void CL64_Editor_Map::Context_Menu_Ogre(HWND hDlg)
 		AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_3D_PREVIEW, L"&Preview");
 	}
 
+	if (BC > 0)
+	{
+		AppendMenuW(hMenu, MF_STRING, IDM_3D_SCENE_EDITOR, L"&Scene Editor");
+	}
+	else
+	{
+		AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_3D_SCENE_EDITOR, L"&Scene Editor");
+	}
+	
 	AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
 	AppendMenuW(hMenu, MF_STRING | MF_GRAYED, NULL, L"&Pick Texture Ctrl+Right Mouse Button");
 	AppendMenuW(hMenu, MF_STRING | MF_GRAYED, NULL, L"&Pan Right Mouse Button");
@@ -1730,6 +1699,75 @@ bool CL64_Editor_Map::Context_Command_Ogre(WPARAM wParam)
 		return TRUE;
 	}
 
+	if (LOWORD(wParam) == IDM_3D_SCENE_EDITOR)
+	{
+		App->CL_Editor_Scene->Set_Editor_Scene();
+		return TRUE;
+	}
+
+}
+
+// *************************************************************************
+// *			 Context_Command:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+bool CL64_Editor_Map::Context_Command(WPARAM wParam)
+{
+	if (LOWORD(wParam) == IDM_GRID_SNAP)
+	{
+		if (App->CL_Level->flag_UseGrid == 1)
+		{
+			App->CL_Level->flag_UseGrid = 0;
+			CheckMenuItem(App->mMenu, ID_GRID_GRIDSNAP, MF_BYCOMMAND | MF_UNCHECKED);
+		}
+		else
+		{
+			App->CL_Level->flag_UseGrid = 1;
+			CheckMenuItem(App->mMenu, ID_GRID_GRIDSNAP, MF_BYCOMMAND | MF_CHECKED);
+		}
+		return TRUE;
+	}
+
+	if (LOWORD(wParam) == IDM_RESET_VIEW)
+	{
+		Set_View();
+		return TRUE;
+	}
+
+	if (LOWORD(wParam) == IDM_CENTRE_ONCAMERA)
+	{
+		Reset_To_Camera();
+		return TRUE;
+	}
+
+	if (LOWORD(wParam) == IDM_PREVIEW)
+	{
+		App->CL_Editor->Preview_Mode();
+		return TRUE;
+	}
+
+	if (LOWORD(wParam) == IDM_MOVE)
+	{
+		App->CL_Top_Tabs->Set_Brush_Mode(ID_TOOLS_BRUSH_MOVEROTATEBRUSH, 1);
+		return TRUE;
+	}
+
+	if (LOWORD(wParam) == IDM_SCALE)
+	{
+		App->CL_Top_Tabs->Set_Brush_Mode(ID_TOOLS_BRUSH_SCALEBRUSH, 2);
+		return TRUE;
+	}
+
+	if (LOWORD(wParam) == IDM_ROTATE)
+	{
+		App->CL_Top_Tabs->Set_Brush_Mode(ID_TOOLS_BRUSH_MOVEROTATEBRUSH, 3);
+		return TRUE;
+	}
+
+	if (LOWORD(wParam) == IDM_SCENE_EDITOR)
+	{
+		App->CL_Editor_Scene->Set_Editor_Scene();
+		return TRUE;
+	}
 }
 
 // *************************************************************************
