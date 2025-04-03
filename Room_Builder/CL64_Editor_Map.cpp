@@ -1578,23 +1578,25 @@ void CL64_Editor_Map::Context_Menu(HWND hDlg)
 		AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_ROTATE, L"&Rotate Brush");
 		
 	}
-	AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
 
-	AppendMenuW(hMenu, MF_STRING, IDM_RESET_VIEW, L"&Reset View");
-	AppendMenuW(hMenu, MF_STRING, IDM_CENTRE_ONCAMERA, L"&Centre On Camera");
-	
+	AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
 	int BC = App->CL_Brush->Get_Brush_Count();
 	if (BC > 0 && App->CL_Editor->flag_PreviewMode_Running == 0)
 	{
 		AppendMenuW(hMenu, MF_STRING, IDM_PREVIEW, L"&Preview");
+		AppendMenuW(hMenu, MF_STRING, IDM_SCENE_EDITOR, L"&Scene Editor");
 	}
 	else
 	{
 		AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_PREVIEW, L"&Preview");
+		AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_SCENE_EDITOR, L"&Scene Editor");
 	}
-	
-	AppendMenuW(hMenu, MF_STRING, IDM_SCENE_EDITOR, L"&Scene Editor");
+	AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
 
+
+	AppendMenuW(hMenu, MF_STRING, IDM_RESET_VIEW, L"&Reset View");
+	AppendMenuW(hMenu, MF_STRING, IDM_CENTRE_ONCAMERA, L"&Centre On Camera");
+	
 	AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
 	AppendMenuW(hMenu, MF_STRING | MF_GRAYED, NULL, L"&Zoom Ctrl+Right Mouse Button");
 	AppendMenuW(hMenu, MF_STRING | MF_GRAYED, NULL, L"&Pan Ctrl+Left Mouse Button");
