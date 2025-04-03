@@ -210,6 +210,7 @@ public:
 	HMENU mMenu;
 
 	HWND ViewGLhWnd;
+	HWND ListPanel;
 
 	bool flag_Debug_App;
 	bool flag_OgreStarted;

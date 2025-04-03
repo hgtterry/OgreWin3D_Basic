@@ -59,6 +59,15 @@
 #define IDB_TR_ON                       174
 #define IDB_BITMAP1                     175
 #define IDB_TR_OFF                      175
+#define IDD_LISTSCENE                   176
+#define IDB_FILEINACTIVE                177
+#define IDB_TREE                        178
+#define IDB_FILE                        179
+#define IDB_FILESELECTED                180
+#define IDB_FILECHANGED                 181
+#define IDB_FILECHANGEDSELECTED         182
+#define IDB_BITMAP2                     183
+#define IDB_FVFOLDERRED                 183
 #define IDC_BANNER                      1000
 #define IDC_STTEXT                      1001
 #define IDC_STMESSAGE                   1002
@@ -378,6 +387,7 @@
 #define IDC_ST_BL_TITLE                 1282
 #define IDC_CK_ALLFACES                 1283
 #define IDC_ST_3D_TITLE                 1284
+#define IDC_TREE1                       1285
 #define ID_DEBUG_GENERAL                32771
 #define ID_TEMPLATES_INSERT             32772
 #define ID_BRUSH_SELECT                 32773
@@ -436,9 +446,9 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
-#define _APS_NEXT_RESOURCE_VALUE        176
+#define _APS_NEXT_RESOURCE_VALUE        184
 #define _APS_NEXT_COMMAND_VALUE         32818
-#define _APS_NEXT_CONTROL_VALUE         1285
+#define _APS_NEXT_CONTROL_VALUE         1286
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif

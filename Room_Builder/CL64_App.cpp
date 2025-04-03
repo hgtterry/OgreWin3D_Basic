@@ -121,6 +121,7 @@ CL64_App::CL64_App(void)
 	Hnd_Stairs_Icon = NULL;
 	
 	ViewGLhWnd = NULL;
+	ListPanel = NULL;
 
 	flag_Debug_App = 0;
 	flag_OgreStarted = 0;

@@ -303,6 +303,13 @@
     <Image Include="res\cube.ico" />
     <Image Include="res\cylinder.bmp" />
     <Image Include="res\cylinder.ico" />
+    <Image Include="res\FileView\File.bmp" />
+    <Image Include="res\FileView\filechanged.bmp" />
+    <Image Include="res\FileView\fileChange_Selected.bmp" />
+    <Image Include="res\FileView\FileInactive.bmp" />
+    <Image Include="res\FileView\FIleSelected.bmp" />
+    <Image Include="res\FileView\Folder.bmp" />
+    <Image Include="res\FileView\Folder_Altered.bmp" />
     <Image Include="res\hollowbo.bmp" />
     <Image Include="res\Ramp.bmp" />
     <Image Include="res\solidbox.bmp" />

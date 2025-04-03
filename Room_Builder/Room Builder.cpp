@@ -95,6 +95,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     App->CL_Com_Player->Create_Player_Object();
 
+    App->CL_FileView->Start_FileView();
+    App->CL_FileView->Init_FileView();
+
     SetTimer(App->MainHwnd, 1, 100, NULL);
 
     HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_ROOMBUILDER));
