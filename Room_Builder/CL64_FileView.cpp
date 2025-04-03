@@ -22,16 +22,14 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-#pragma once
-class CL64_Editor_Scene
+#include "pch.h"
+#include "CL64_App.h"
+#include "CL64_FileView.h"
+
+CL64_FileView::CL64_FileView()
 {
-public:
-	CL64_Editor_Scene();
-	~CL64_Editor_Scene();
+}
 
-	void Set_Editor_Scene(void);
-	void Back_To_Map_Editor(void);
-
-	bool flag_Scene_Editor_Active;
-};
-
+CL64_FileView::~CL64_FileView()
+{
+}

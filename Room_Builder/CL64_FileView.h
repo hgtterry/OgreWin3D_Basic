@@ -23,15 +23,11 @@ THE SOFTWARE.
 */
 
 #pragma once
-class CL64_Editor_Scene
+class CL64_FileView
 {
 public:
-	CL64_Editor_Scene();
-	~CL64_Editor_Scene();
+	CL64_FileView();
+	~CL64_FileView();
 
-	void Set_Editor_Scene(void);
-	void Back_To_Map_Editor(void);
-
-	bool flag_Scene_Editor_Active;
 };
 

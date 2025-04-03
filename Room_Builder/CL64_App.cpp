@@ -77,7 +77,9 @@ CL64_App::CL64_App(void)
 
 	CL_Com_Player =				nullptr;
 
+	// Scene Editor
 	CL_Editor_Scene =			nullptr;
+	CL_FileView =				nullptr;
 
 	// Templates Dialogs
 	CL_CreateBoxDialog =		nullptr;
@@ -187,8 +189,10 @@ void CL64_App::InitApp(void)
 	
 	CL_Com_Player =				new CL64_Com_Player();
 
+	// Scene Editor
 	CL_Editor_Scene =			new CL64_Editor_Scene();
-
+	CL_FileView =				new CL64_FileView();
+	
 	// Templates Dialogs
 	CL_CreateBoxDialog =		new A_CreateBoxDialog();
 	CL_CreateCylDialog =		new A_CreateCylDialog();

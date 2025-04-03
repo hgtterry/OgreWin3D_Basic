@@ -72,7 +72,9 @@ THE SOFTWARE.
 
 #include "CL64_Com_Player.h"
 
+// Scene Editor
 #include "CL64_Editor_Scene.h"
+#include "CL64_FileView.h"
 
 // Templates Dialogs
 #include "A_CreateBoxDialog.h"
@@ -134,7 +136,9 @@ public:
 
 	CL64_Com_Player*			CL_Com_Player;
 
+	// Scene Editor
 	CL64_Editor_Scene*			CL_Editor_Scene;
+	CL64_FileView*				CL_FileView;
 
 	// Templates Dialogs
 	A_CreateBoxDialog*			CL_CreateBoxDialog;

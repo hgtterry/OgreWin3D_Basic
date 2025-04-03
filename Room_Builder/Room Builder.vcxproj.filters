@@ -210,6 +210,9 @@
     <ClInclude Include="CL64_Editor_Map.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="CL64_FileView.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Room Builder.cpp">
@@ -399,6 +402,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CL64_Editor_Map.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CL64_FileView.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
