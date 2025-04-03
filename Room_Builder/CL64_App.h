@@ -207,7 +207,8 @@ public:
 	HANDLE Hnd_Stairs_Icon;
 
 	HCURSOR CUR;
-	HMENU mMenu;
+	HMENU Menu_Map;
+	HMENU Menu_Scene;
 
 	HWND ViewGLhWnd;
 	HWND ListPanel;

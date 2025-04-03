@@ -89,7 +89,8 @@ CL64_App::CL64_App(void)
 	CL_CreateArchDialog =		nullptr;
 
 	CUR = 0;
-	mMenu = 0;
+	Menu_Map = 0;
+	Menu_Scene = 0;
 
 	hInst = nullptr;
 	MainHwnd = nullptr;
@@ -272,9 +273,9 @@ void CL64_App::LoadProgramResource(void)
 
 	// Set Defaults for now
 	App->CL_Level->flag_UseGrid = 1;
-	CheckMenuItem(App->mMenu, ID_GRID_GRIDSNAP, MF_BYCOMMAND | MF_CHECKED);
-	CheckMenuItem(App->mMenu, ID_CAMERA_TEXTURED, MF_BYCOMMAND | MF_CHECKED);
-	CheckMenuItem(App->mMenu, ID_SPEED_NORMAL, MF_BYCOMMAND | MF_CHECKED);
+	CheckMenuItem(App->Menu_Map, ID_GRID_GRIDSNAP, MF_BYCOMMAND | MF_CHECKED);
+	CheckMenuItem(App->Menu_Map, ID_CAMERA_TEXTURED, MF_BYCOMMAND | MF_CHECKED);
+	CheckMenuItem(App->Menu_Map, ID_SPEED_NORMAL, MF_BYCOMMAND | MF_CHECKED);
 }
 
 // *************************************************************************

@@ -1101,13 +1101,13 @@ LRESULT CALLBACK CL64_Dialogs::Proc_SnapOptions(HWND hDlg, UINT message, WPARAM 
 			{
 				App->CL_Level->flag_UseGrid = 0;
 				SendMessage(Temp, BM_SETCHECK, 0, 0);
-				CheckMenuItem(App->mMenu, ID_GRID_GRIDSNAP, MF_BYCOMMAND | MF_UNCHECKED);
+				CheckMenuItem(App->Menu_Map, ID_GRID_GRIDSNAP, MF_BYCOMMAND | MF_UNCHECKED);
 			}
 			else
 			{
 				App->CL_Level->flag_UseGrid = 1;
 				SendMessage(Temp, BM_SETCHECK, 1, 0);
-				CheckMenuItem(App->mMenu, ID_GRID_GRIDSNAP, MF_BYCOMMAND | MF_CHECKED);
+				CheckMenuItem(App->Menu_Map, ID_GRID_GRIDSNAP, MF_BYCOMMAND | MF_CHECKED);
 			}
 
 			return TRUE;

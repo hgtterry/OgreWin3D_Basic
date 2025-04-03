@@ -1717,12 +1717,12 @@ bool CL64_Editor_Map::Context_Command(WPARAM wParam)
 		if (App->CL_Level->flag_UseGrid == 1)
 		{
 			App->CL_Level->flag_UseGrid = 0;
-			CheckMenuItem(App->mMenu, ID_GRID_GRIDSNAP, MF_BYCOMMAND | MF_UNCHECKED);
+			CheckMenuItem(App->Menu_Map, ID_GRID_GRIDSNAP, MF_BYCOMMAND | MF_UNCHECKED);
 		}
 		else
 		{
 			App->CL_Level->flag_UseGrid = 1;
-			CheckMenuItem(App->mMenu, ID_GRID_GRIDSNAP, MF_BYCOMMAND | MF_CHECKED);
+			CheckMenuItem(App->Menu_Map, ID_GRID_GRIDSNAP, MF_BYCOMMAND | MF_CHECKED);
 		}
 		return TRUE;
 	}

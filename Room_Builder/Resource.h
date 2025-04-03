@@ -66,8 +66,9 @@
 #define IDB_FILESELECTED                180
 #define IDB_FILECHANGED                 181
 #define IDB_FILECHANGEDSELECTED         182
-#define IDB_BITMAP2                     183
 #define IDB_FVFOLDERRED                 183
+#define IDR_MENU1                       184
+#define IDR_SCENE_MENU                  184
 #define IDC_BANNER                      1000
 #define IDC_STTEXT                      1001
 #define IDC_STMESSAGE                   1002
@@ -446,7 +447,7 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
-#define _APS_NEXT_RESOURCE_VALUE        184
+#define _APS_NEXT_RESOURCE_VALUE        185
 #define _APS_NEXT_COMMAND_VALUE         32818
 #define _APS_NEXT_CONTROL_VALUE         1286
 #define _APS_NEXT_SYMED_VALUE           110

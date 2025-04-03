@@ -123,7 +123,7 @@ void CL64_Doc::Init_Doc()
 
     strcpy(App->CL_Export->mJustName, mDoc_MTF_JustName_NoExt);
 
-    CheckMenuItem(App->mMenu, ID_CAMERA_TRACKCAMERA, MF_BYCOMMAND | MF_CHECKED);
+    CheckMenuItem(App->Menu_Map, ID_CAMERA_TRACKCAMERA, MF_BYCOMMAND | MF_CHECKED);
 
 }
 

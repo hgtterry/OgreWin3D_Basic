@@ -41,8 +41,8 @@ public:
 	void Update_Faces_Combo();
 
 	void Set_Brush_Mode(int Mode, int Dlg_Selection);
-	//void Set_Brush_Move(void);
-	//void Set_Brush_Scale(void);
+	void Show_TopTabs(bool Enable);
+
 
 	int Copy_Spliter_Depth;
 	int Copy_Spliter_Width;
@@ -57,6 +57,8 @@ public:
 	bool flag_View_Bottom_Left;
 
 	bool flag_All_Faces;
+
+	bool flag_TopTabs_Active;
 
 	HWND Headers_hWnd;
 

@@ -23,6 +23,7 @@ THE SOFTWARE.
 */
 
 #include "pch.h"
+#include "resource.h"
 #include "CL64_App.h"
 #include "CL64_Editor_Scene.h"
 
@@ -63,6 +64,9 @@ void CL64_Editor_Scene::Set_Editor_Scene(void)
 	App->CL_Ogre->mWindow->windowMovedOrResized();
 	App->CL_Ogre->mCamera->setAspectRatio((Ogre::Real)App->CL_Ogre->mWindow->getWidth() / (Ogre::Real)App->CL_Ogre->mWindow->getHeight());
 
+	// Hide Top Tabs
+	App->CL_Top_Tabs->Show_TopTabs(false);
+
 	// Hide Properties window
 	App->CL_Properties_Tabs->Show_Tabs_Control_Dlg(false);
 	App->CL_Properties_Tabs->flag_Tabs_Dlg_Active = 0;
@@ -71,6 +75,8 @@ void CL64_Editor_Scene::Set_Editor_Scene(void)
 	App->CL_FileView->Show_FileView(true);
 	App->CL_Panels->Move_FileView_Window();
 	App->CL_Panels->Resize_FileView();
+
+	SetMenu(App->MainHwnd, App->Menu_Scene);
 }
 
 // *************************************************************************
@@ -84,12 +90,17 @@ void CL64_Editor_Scene::Back_To_Map_Editor(void)
 
 	App->CL_Top_Tabs->flag_Full_View_3D = 0;
 
+	// Hide Top Tabs
+	App->CL_Top_Tabs->Show_TopTabs(true);
+
 	App->CL_Editor_Map->Set_Splitter_WidthDepth(App->CL_Top_Tabs->Copy_Spliter_Width, App->CL_Top_Tabs->Copy_Spliter_Depth);
 
 	App->CL_Editor_Map->Resize_Windows(App->CL_Editor_Map->Main_Dlg_Hwnd, App->CL_Editor_Map->nleftWnd_width, App->CL_Editor_Map->nleftWnd_Depth);
 
 
 	App->CL_Properties_Tabs->Show_Tabs_Control_Dlg(true);
+
+	SetMenu(App->MainHwnd, App->Menu_Map);
 
 }
 

@@ -43,12 +43,12 @@ void CL64_Camera::Track_Camera(void)
 	if (App->CL_Doc->flag_Track_Camera == 1)
 	{
 		App->CL_Doc->flag_Track_Camera = 0;
-		CheckMenuItem(App->mMenu, ID_CAMERA_TRACKCAMERA, MF_BYCOMMAND | MF_UNCHECKED);
+		CheckMenuItem(App->Menu_Map, ID_CAMERA_TRACKCAMERA, MF_BYCOMMAND | MF_UNCHECKED);
 	}
 	else
 	{
 		App->CL_Doc->flag_Track_Camera = 1;
-		CheckMenuItem(App->mMenu, ID_CAMERA_TRACKCAMERA, MF_BYCOMMAND | MF_CHECKED);
+		CheckMenuItem(App->Menu_Map, ID_CAMERA_TRACKCAMERA, MF_BYCOMMAND | MF_CHECKED);
 	}
 
 	App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
@@ -74,8 +74,8 @@ void CL64_Camera::Camera_Textured(void)
 		App->CL_Ogre->OGL_Listener->Render_Mode = Enums::Render_Nothing;
 		App->CL_Mesh_Mgr->World_Node->setVisible(true);
 
-		CheckMenuItem(App->mMenu, ID_CAMERA_TEXTURED, MF_BYCOMMAND | MF_CHECKED);
-		CheckMenuItem(App->mMenu, ID_CAMERA_WIREFRAMED, MF_BYCOMMAND | MF_UNCHECKED);
+		CheckMenuItem(App->Menu_Map, ID_CAMERA_TEXTURED, MF_BYCOMMAND | MF_CHECKED);
+		CheckMenuItem(App->Menu_Map, ID_CAMERA_WIREFRAMED, MF_BYCOMMAND | MF_UNCHECKED);
 	}
 }
 
@@ -90,8 +90,8 @@ void CL64_Camera::Camera_Wired(void)
 		App->CL_Ogre->OGL_Listener->Render_Mode = Enums::Render_Groups;
 		App->CL_Mesh_Mgr->World_Node->setVisible(false);
 
-		CheckMenuItem(App->mMenu, ID_CAMERA_WIREFRAMED, MF_BYCOMMAND | MF_CHECKED);
-		CheckMenuItem(App->mMenu, ID_CAMERA_TEXTURED, MF_BYCOMMAND | MF_UNCHECKED);
+		CheckMenuItem(App->Menu_Map, ID_CAMERA_WIREFRAMED, MF_BYCOMMAND | MF_CHECKED);
+		CheckMenuItem(App->Menu_Map, ID_CAMERA_TEXTURED, MF_BYCOMMAND | MF_UNCHECKED);
 	}
 }
 
@@ -104,7 +104,7 @@ void CL64_Camera::Camera_Speed_Normal(void)
 	App->CL_Ogre->Ogre3D_Listener->mMoveSensitivityMouse = 50;
 
 	Camera_Set_Menu_Clear();
-	CheckMenuItem(App->mMenu, ID_SPEED_NORMAL, MF_BYCOMMAND | MF_CHECKED);
+	CheckMenuItem(App->Menu_Map, ID_SPEED_NORMAL, MF_BYCOMMAND | MF_CHECKED);
 }
 
 // *************************************************************************
@@ -116,7 +116,7 @@ void CL64_Camera::Camera_Speed_Slow(void)
 	App->CL_Ogre->Ogre3D_Listener->mMoveSensitivityMouse = 20;
 
 	Camera_Set_Menu_Clear();
-	CheckMenuItem(App->mMenu, ID_SPEED_SLOW, MF_BYCOMMAND | MF_CHECKED);
+	CheckMenuItem(App->Menu_Map, ID_SPEED_SLOW, MF_BYCOMMAND | MF_CHECKED);
 }
 
 // *************************************************************************
@@ -128,7 +128,7 @@ void CL64_Camera::Camera_Speed_Very_Slow(void)
 	App->CL_Ogre->Ogre3D_Listener->mMoveSensitivityMouse = 1;
 
 	Camera_Set_Menu_Clear();
-	CheckMenuItem(App->mMenu, ID_SPEED_VERYSLOW, MF_BYCOMMAND | MF_CHECKED);
+	CheckMenuItem(App->Menu_Map, ID_SPEED_VERYSLOW, MF_BYCOMMAND | MF_CHECKED);
 }
 
 // *************************************************************************
@@ -140,7 +140,7 @@ void CL64_Camera::Camera_Speed_Fast(void)
 	App->CL_Ogre->Ogre3D_Listener->mMoveSensitivityMouse = 250;
 
 	Camera_Set_Menu_Clear();
-	CheckMenuItem(App->mMenu, ID_SPEED_FAST, MF_BYCOMMAND | MF_CHECKED);
+	CheckMenuItem(App->Menu_Map, ID_SPEED_FAST, MF_BYCOMMAND | MF_CHECKED);
 }
 
 // *************************************************************************
@@ -148,10 +148,10 @@ void CL64_Camera::Camera_Speed_Fast(void)
 // *************************************************************************
 void CL64_Camera::Camera_Set_Menu_Clear(void)
 {
-	CheckMenuItem(App->mMenu, ID_SPEED_NORMAL, MF_BYCOMMAND | MF_UNCHECKED);
-	CheckMenuItem(App->mMenu, ID_SPEED_SLOW, MF_BYCOMMAND | MF_UNCHECKED);
-	CheckMenuItem(App->mMenu, ID_SPEED_VERYSLOW, MF_BYCOMMAND | MF_UNCHECKED);
-	CheckMenuItem(App->mMenu, ID_SPEED_FAST, MF_BYCOMMAND | MF_UNCHECKED);
+	CheckMenuItem(App->Menu_Map, ID_SPEED_NORMAL, MF_BYCOMMAND | MF_UNCHECKED);
+	CheckMenuItem(App->Menu_Map, ID_SPEED_SLOW, MF_BYCOMMAND | MF_UNCHECKED);
+	CheckMenuItem(App->Menu_Map, ID_SPEED_VERYSLOW, MF_BYCOMMAND | MF_UNCHECKED);
+	CheckMenuItem(App->Menu_Map, ID_SPEED_FAST, MF_BYCOMMAND | MF_UNCHECKED);
 }
 
 

@@ -59,7 +59,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     }
 
 
-    App->mMenu = GetMenu(App->MainHwnd);
+    App->Menu_Map = GetMenu(App->MainHwnd);
+    App->Menu_Scene = LoadMenuA(App->hInst, (LPCSTR)IDR_SCENE_MENU);
+
     App->LoadProgramResource();
 
     App->CL_Doc->Init_Doc();
@@ -365,12 +367,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 if (App->CL_Level->flag_UseGrid == 1)
                 {
                     App->CL_Level->flag_UseGrid = 0;
-                    CheckMenuItem(App->mMenu, ID_GRID_GRIDSNAP, MF_BYCOMMAND | MF_UNCHECKED);
+                    CheckMenuItem(App->Menu_Map, ID_GRID_GRIDSNAP, MF_BYCOMMAND | MF_UNCHECKED);
                 }
                 else
                 {
                     App->CL_Level->flag_UseGrid = 1;
-                    CheckMenuItem(App->mMenu, ID_GRID_GRIDSNAP, MF_BYCOMMAND | MF_CHECKED);
+                    CheckMenuItem(App->Menu_Map, ID_GRID_GRIDSNAP, MF_BYCOMMAND | MF_CHECKED);
                 }
 
                 return 1;
@@ -527,13 +529,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 {
                     App->CL_Properties_Tabs->Show_Tabs_Control_Dlg(false);
                     App->CL_Properties_Tabs->flag_Tabs_Dlg_Active = 0;
-                    CheckMenuItem(App->mMenu, ID_WINDOW_PROPERTIES, MF_BYCOMMAND | MF_UNCHECKED);
+                    CheckMenuItem(App->Menu_Map, ID_WINDOW_PROPERTIES, MF_BYCOMMAND | MF_UNCHECKED);
                 }
                 else
                 {
                     App->CL_Properties_Tabs->Show_Tabs_Control_Dlg(true);
                     App->CL_Properties_Tabs->flag_Tabs_Dlg_Active = 1;
-                    CheckMenuItem(App->mMenu, ID_WINDOW_PROPERTIES, MF_BYCOMMAND | MF_CHECKED);
+                    CheckMenuItem(App->Menu_Map, ID_WINDOW_PROPERTIES, MF_BYCOMMAND | MF_CHECKED);
                 }
 
                 return 1;

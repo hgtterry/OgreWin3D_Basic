@@ -69,7 +69,7 @@ void CL64_Properties_Tabs::Start_Tabs_Control_Dlg()
 	App->CL_Properties_Templates->Start_TemplatesDialog();
 	App->CL_Properties_Templates->Show_TemplatesDialog(true);
 
-	CheckMenuItem(App->mMenu, ID_WINDOW_PROPERTIES, MF_BYCOMMAND | MF_CHECKED);
+	CheckMenuItem(App->Menu_Map, ID_WINDOW_PROPERTIES, MF_BYCOMMAND | MF_CHECKED);
 }
 
 // *************************************************************************
@@ -209,7 +209,7 @@ LRESULT CALLBACK CL64_Properties_Tabs::Proc_Tabs_Control(HWND hDlg, UINT message
 		{
 			App->CL_Properties_Tabs->flag_Tabs_Dlg_Active = 0;
 			App->CL_Properties_Tabs->Show_Tabs_Control_Dlg(false);
-			CheckMenuItem(App->mMenu, ID_WINDOW_PROPERTIES, MF_BYCOMMAND | MF_UNCHECKED);
+			CheckMenuItem(App->Menu_Map, ID_WINDOW_PROPERTIES, MF_BYCOMMAND | MF_UNCHECKED);
 			//EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
@@ -218,7 +218,7 @@ LRESULT CALLBACK CL64_Properties_Tabs::Proc_Tabs_Control(HWND hDlg, UINT message
 		{
 			App->CL_Properties_Tabs->flag_Tabs_Dlg_Active = 0;
 			App->CL_Properties_Tabs->Show_Tabs_Control_Dlg(false);
-			CheckMenuItem(App->mMenu, ID_WINDOW_PROPERTIES, MF_BYCOMMAND | MF_UNCHECKED);
+			CheckMenuItem(App->Menu_Map, ID_WINDOW_PROPERTIES, MF_BYCOMMAND | MF_UNCHECKED);
 			//EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}

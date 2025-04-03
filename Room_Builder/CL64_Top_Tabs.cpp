@@ -49,6 +49,8 @@ CL64_Top_Tabs::CL64_Top_Tabs(void)
 	flag_View_Top_Left = 0;
 	flag_View_Top_Right = 0;
 	flag_View_Bottom_Left = 0;
+
+	flag_TopTabs_Active = 0;
 }
 
 CL64_Top_Tabs::~CL64_Top_Tabs(void)
@@ -61,10 +63,9 @@ CL64_Top_Tabs::~CL64_Top_Tabs(void)
 void CL64_Top_Tabs::Start_Headers()
 {
 	Headers_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_TOP_TABS_HEADERS, App->MainHwnd, (DLGPROC)Proc_Headers);
-	//Init_Bmps_Globals();
-
 	Update_Faces_Combo();
 
+	flag_TopTabs_Active = 1;
 }
 
 // *************************************************************************
@@ -758,4 +759,21 @@ void CL64_Top_Tabs::Update_Faces_Combo()
 	}
 
 	//Get_Timer
+}
+
+// **************************************************************************
+// *				Show_TopTabs:- Terry and Hazel Flanigan 2024			*
+// **************************************************************************
+void CL64_Top_Tabs::Show_TopTabs(bool Enable)
+{
+	if (Enable == 1)
+	{
+		flag_TopTabs_Active = 1;
+		ShowWindow(Headers_hWnd, 1);
+	}
+	else
+	{
+		flag_TopTabs_Active = 0;
+		ShowWindow(Headers_hWnd, 0);
+	}
 }
