@@ -71,6 +71,7 @@ THE SOFTWARE.
 #include "CL64_Entities.h"
 
 #include "CL64_Com_Player.h"
+#include "CL64_Com_Environments.h"
 
 // Scene Editor
 #include "CL64_Editor_Scene.h"
@@ -135,6 +136,7 @@ public:
 	CL64_Entities*				CL_Entities;
 
 	CL64_Com_Player*			CL_Com_Player;
+	CL64_Com_Environments*		CL_Com_Environments;
 
 	// Scene Editor
 	CL64_Editor_Scene*			CL_Editor_Scene;
