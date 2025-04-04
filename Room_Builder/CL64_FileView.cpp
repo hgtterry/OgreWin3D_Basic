@@ -497,3 +497,57 @@ void CL64_FileView::Show_FileView(bool Enable)
 		ShowWindow(App->ListPanel, 0);
 	}
 }
+
+// *************************************************************************
+// *				Add_Item:- Terry and Hazel Flanigan 2024		 	   *
+// *************************************************************************
+HTREEITEM CL64_FileView::Add_Item(HTREEITEM Folder, char* SFileName, int Index, bool NewItem)
+{
+	HWND Temp2 = GetDlgItem(App->ListPanel, IDC_TREE1);
+
+	tvinsert.hParent = Folder;
+	tvinsert.hInsertAfter = TVI_LAST;
+	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE | TVIF_PARAM;
+	tvinsert.item.pszText = SFileName;
+
+	if (NewItem == 1)
+	{
+		tvinsert.item.iImage = 6;
+		tvinsert.item.iSelectedImage = 7;
+		tvinsert.item.lParam = Index;
+	}
+	else
+	{
+		tvinsert.item.iImage = 4;
+		tvinsert.item.iSelectedImage = 5;
+		tvinsert.item.lParam = Index;
+	}
+
+	HTREEITEM Temp = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
+
+	return Temp;
+}
+
+// *************************************************************************
+// *			Set_FolderActive:- Terry and Hazel Flanigan 2024	 	   *
+// *************************************************************************
+void CL64_FileView::Set_FolderActive(HTREEITEM Folder)
+{
+	TVITEM Sitem;
+
+	Sitem.mask = TVIF_IMAGE | TVIF_SELECTEDIMAGE;
+	Sitem.hItem = Folder;
+	Sitem.iImage = 3;
+	Sitem.iSelectedImage = 3;
+
+	SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_SETITEM, 0, (LPARAM)(const LPTVITEM)&Sitem);
+}
+
+// *************************************************************************
+// *				SelectItem:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void CL64_FileView::SelectItem(HTREEITEM TreeItem)
+{
+	HWND Temp = GetDlgItem(App->ListPanel, IDC_TREE1);
+	TreeView_Select(Temp, TreeItem, TVGN_CARET);
+}

@@ -192,7 +192,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                     App->CL_ImGui->flag_Show_Render_Reports = 1;
                 }*/
                 
-                App->CL_Brush_X->Set_Brush_Faces_Name(App->CL_Doc->CurBrush);
+                //App->CL_Brush_X->Set_Brush_Faces_Name(App->CL_Doc->CurBrush);
+                App->CL_Com_Environments->Create_Test_Environment();
 
                 return 1;
             }

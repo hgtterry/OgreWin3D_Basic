@@ -69,6 +69,7 @@ CL64_Editor::CL64_Editor()
 	}
 
 	B_Player.reserve(20);
+	B_Object.reserve(200);
 
 }
 

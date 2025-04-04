@@ -32,7 +32,11 @@ public:
 	void Start_FileView(void);
 	void Init_FileView(void);
 	void Show_FileView(bool Enable);
+	HTREEITEM Add_Item(HTREEITEM Folder, char* SFileName, int Index, bool NewItem);
+	void Set_FolderActive(HTREEITEM Folder);
+	void SelectItem(HTREEITEM TreeItem);
 
+	HTREEITEM FV_Evirons_Folder;
 
 private:
 	static LRESULT CALLBACK Proc_ListPanel(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
@@ -61,7 +65,6 @@ private:
 	HTREEITEM FV_Counters_Folder;
 	HTREEITEM FV_Counters2_Folder;
 	HTREEITEM FV_EntitiesFolder;
-	HTREEITEM FV_Evirons_Folder;
 	HTREEITEM FV_Particles_Folder;
 	HTREEITEM FV_Lights_Folder;
 	HTREEITEM FV_UserObjects_Folder;

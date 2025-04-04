@@ -144,4 +144,32 @@ namespace Enums
 		Shape_VolumeBox = 7
 	};
 
+	enum Stage_Usage
+	{
+		Obj_Usage_None = -1,
+		Obj_Usage_Room = 0,
+		Obj_Usage_Static = 1,
+		Obj_Usage_Dynamic = 2,
+		Obj_Usage_Object = 3,
+		Obj_Usage_Ammo = 4,
+		Obj_Usage_Weapon = 5,
+		Obj_Usage_Teleport = 6,
+		Obj_Usage_ChangeLevel = 7,
+		Obj_Usage_MediKit = 8,
+		Obj_Usage_Recevier = 9,
+		Obj_Usage_Particle = 10,
+		Obj_Usage_Light = 11,
+		Obj_Usage_Collectable = 12,
+		Obj_Usage_Message = 13,
+		Obj_Usage_Move = 14,
+		Obj_Usage_Sound = 15,
+		Obj_Usage_PlayerDeath = 16,
+		Obj_Usage_Counter = 17,
+		Obj_Usage_Player = 18,
+		Obj_Usage_Environment = 19,
+		Obj_Usage_RoomChange = 20,
+		Obj_Usage_EnvironEntity = 21,
+		Obj_Usage_UserObject = 22
+	};
+
 }

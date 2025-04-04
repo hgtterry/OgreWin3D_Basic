@@ -346,7 +346,7 @@ void CL64_Physics::Reset_Scene(void)
 	App->CL_Ogre->Ogre3D_Listener->flag_Run_Physics = 1;
 
 	App->CL_Ogre->camNode->setOrientation(1, 0, 0, 0);
-	App->CL_Scene->B_Player[0]->CameraPitch_Node->setOrientation(1, 0, 0, 0);*/
+	App->CL_Editor->B_Player[0]->CameraPitch_Node->setOrientation(1, 0, 0, 0);*/
 
 }
 
@@ -356,20 +356,20 @@ void CL64_Physics::Reset_Scene(void)
 void CL64_Physics::Show_Debug_Objects(bool Show)
 {
 	/*int Count = 0;
-	while (Count < App->CL_Scene->Object_Count)
+	while (Count < App->CL_Editor->Object_Count)
 	{
 
-		if (App->CL_Scene->B_Object[Count]->Phys_Body)
+		if (App->CL_Editor->B_Object[Count]->Phys_Body)
 		{
-			int f = App->CL_Scene->B_Object[Count]->Phys_Body->getCollisionFlags();
+			int f = App->CL_Editor->B_Object[Count]->Phys_Body->getCollisionFlags();
 
 			if (Show == true)
 			{
-				App->CL_Scene->B_Object[Count]->Phys_Body->setCollisionFlags(f & (~(1 << 5)));
+				App->CL_Editor->B_Object[Count]->Phys_Body->setCollisionFlags(f & (~(1 << 5)));
 			}
 			else
 			{
-				App->CL_Scene->B_Object[Count]->Phys_Body->setCollisionFlags(f | (1 << 5));
+				App->CL_Editor->B_Object[Count]->Phys_Body->setCollisionFlags(f | (1 << 5));
 			}
 		}
 
@@ -377,20 +377,20 @@ void CL64_Physics::Show_Debug_Objects(bool Show)
 	}
 
 	Count = 0;
-	while (Count < App->CL_Scene->Player_Count)
+	while (Count < App->CL_Editor->Player_Count)
 	{
 
-		if (App->CL_Scene->B_Player[Count]->Phys_Body)
+		if (App->CL_Editor->B_Player[Count]->Phys_Body)
 		{
-			int f = App->CL_Scene->B_Player[Count]->Phys_Body->getCollisionFlags();
+			int f = App->CL_Editor->B_Player[Count]->Phys_Body->getCollisionFlags();
 
 			if (Show == true)
 			{
-				App->CL_Scene->B_Player[Count]->Phys_Body->setCollisionFlags(f & (~(1 << 5)));
+				App->CL_Editor->B_Player[Count]->Phys_Body->setCollisionFlags(f & (~(1 << 5)));
 			}
 			else
 			{
-				App->CL_Scene->B_Player[Count]->Phys_Body->setCollisionFlags(f | (1 << 5));
+				App->CL_Editor->B_Player[Count]->Phys_Body->setCollisionFlags(f | (1 << 5));
 			}
 		}
 
@@ -398,20 +398,20 @@ void CL64_Physics::Show_Debug_Objects(bool Show)
 	}
 
 	Count = 0;
-	while (Count < App->CL_Scene->Area_Count)
+	while (Count < App->CL_Editor->Area_Count)
 	{
 
-		if (App->CL_Scene->B_Area[Count]->Phys_Body)
+		if (App->CL_Editor->B_Area[Count]->Phys_Body)
 		{
-			int f = App->CL_Scene->B_Area[Count]->Phys_Body->getCollisionFlags();
+			int f = App->CL_Editor->B_Area[Count]->Phys_Body->getCollisionFlags();
 
 			if (Show == true)
 			{
-				App->CL_Scene->B_Area[Count]->Phys_Body->setCollisionFlags(f & (~(1 << 5)));
+				App->CL_Editor->B_Area[Count]->Phys_Body->setCollisionFlags(f & (~(1 << 5)));
 			}
 			else
 			{
-				App->CL_Scene->B_Area[Count]->Phys_Body->setCollisionFlags(f | (1 << 5));
+				App->CL_Editor->B_Area[Count]->Phys_Body->setCollisionFlags(f | (1 << 5));
 			}
 		}
 
@@ -421,4 +421,34 @@ void CL64_Physics::Show_Debug_Objects(bool Show)
 	App->CL_Ogre->Bullet_Debug_Listener->flag_Render_Debug_Flag = 0;
 	App->CL_Ogre->RenderFrame(1);
 	App->CL_Ogre->Bullet_Debug_Listener->flag_Render_Debug_Flag = 1;*/
+}
+
+// *************************************************************************
+//				Set_Physics_New:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void CL64_Physics::Set_Physics_New(int Index)
+{
+	// Rotation
+	App->CL_Editor->B_Object[Index]->Physics_Quat = App->CL_Editor->B_Object[Index]->Object_Node->getOrientation();
+
+	float w = App->CL_Editor->B_Object[Index]->Physics_Quat.w;
+	float x = App->CL_Editor->B_Object[Index]->Physics_Quat.x;
+	float y = App->CL_Editor->B_Object[Index]->Physics_Quat.y;
+	float z = App->CL_Editor->B_Object[Index]->Physics_Quat.z;
+
+	App->CL_Editor->B_Object[Index]->Phys_Body->getWorldTransform().setRotation(btQuaternion(x, y, z, w));
+
+	// Scale
+	App->CL_Editor->B_Object[Index]->Object_Node->setScale(App->CL_Editor->B_Object[Index]->Mesh_Scale);
+
+	Ogre::Vector3 Scale = App->CL_Editor->B_Object[Index]->Object_Node->getScale();
+	App->CL_Editor->B_Object[Index]->Phys_Body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
+
+	// Position
+	Ogre::Vector3 Centre = App->CL_Editor->B_Object[Index]->Object_Ent->getWorldBoundingBox(true).getCenter();
+	App->CL_Editor->B_Object[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
+	App->CL_Editor->B_Object[Index]->Physics_Pos = Centre;
+
+	// All Good
+	App->CL_Editor->B_Object[Index]->flag_Physics_Valid = 1;
 }
