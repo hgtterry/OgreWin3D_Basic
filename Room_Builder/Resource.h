@@ -61,13 +61,13 @@
 #define IDB_TR_OFF                      175
 #define IDD_LISTSCENE                   176
 #define IDB_FILEINACTIVE                177
+#define IDD_TOP_TABS_HEADERS_SCENE      177
 #define IDB_TREE                        178
 #define IDB_FILE                        179
 #define IDB_FILESELECTED                180
 #define IDB_FILECHANGED                 181
 #define IDB_FILECHANGEDSELECTED         182
 #define IDB_FVFOLDERRED                 183
-#define IDR_MENU1                       184
 #define IDR_SCENE_MENU                  184
 #define IDC_BANNER                      1000
 #define IDC_STTEXT                      1001
@@ -78,6 +78,7 @@
 #define IDC_BT_3DSETTINGS               1006
 #define IDC_ED_PREVIEW                  1006
 #define IDC_BTINSERT                    1007
+#define IDC_ED_SCENE_EDITOR             1007
 #define IDC_GD_BRUSHLIST                1008
 #define IDC_ST_GD_GROUPS                1009
 #define IDC_ST_GD_BRUSHCOUNT            1010
@@ -235,6 +236,7 @@
 #define IDC_BT_TOP_LEFT                 1162
 #define IDC_BT_ARCHSOLID                1162
 #define IDC_BT_COPY_TEXTINFO            1162
+#define IDC_BT_MAINENVIRONMENT          1162
 #define IDC_BUTTON2                     1163
 #define IDC_BT_BRUSH_DIMENSIONS         1163
 #define IDC_BT_TOP_RIGHT                1163
@@ -389,6 +391,7 @@
 #define IDC_CK_ALLFACES                 1283
 #define IDC_ST_3D_TITLE                 1284
 #define IDC_TREE1                       1285
+#define IDC_BT_MAP_EDITOR               1286
 #define ID_DEBUG_GENERAL                32771
 #define ID_TEMPLATES_INSERT             32772
 #define ID_BRUSH_SELECT                 32773
@@ -449,7 +452,7 @@
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        185
 #define _APS_NEXT_COMMAND_VALUE         32818
-#define _APS_NEXT_CONTROL_VALUE         1286
+#define _APS_NEXT_CONTROL_VALUE         1287
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif

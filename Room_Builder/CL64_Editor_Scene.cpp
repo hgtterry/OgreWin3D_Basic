@@ -33,11 +33,88 @@ CL64_Editor_Scene::CL64_Editor_Scene()
 {
 	flag_Scene_Editor_Active = 0;
 
+	Scene_Headers_hWnd = NULL;
 	hMenu = NULL;
 }
 
 CL64_Editor_Scene::~CL64_Editor_Scene()
 {
+}
+
+// *************************************************************************
+// *	  		Start_Headers_Scene:- Terry and Hazel Flanigan 2025		   *
+// *************************************************************************
+void CL64_Editor_Scene::Start_Headers_Scene()
+{
+	Scene_Headers_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_TOP_TABS_HEADERS_SCENE, App->MainHwnd, (DLGPROC)Proc_Headers_Scene);
+}
+
+// *************************************************************************
+// *        	Proc_Headers_Scene:- Terry and Hazel Flanigan 2025		   *
+// *************************************************************************
+LRESULT CALLBACK CL64_Editor_Scene::Proc_Headers_Scene(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+	switch (message)
+	{
+
+	case WM_INITDIALOG:
+	{
+		SendDlgItemMessage(hDlg, IDC_BT_MAP_EDITOR, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+	
+		return TRUE;
+	}
+
+	case WM_CTLCOLORSTATIC:
+	{
+		return FALSE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->AppBackground;
+	}
+
+	case WM_NOTIFY:
+	{
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		if (some_item->idFrom == IDC_BT_MAP_EDITOR)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+
+			return CDRF_DODEFAULT;
+		}
+
+		return CDRF_DODEFAULT;
+	}
+
+	case WM_COMMAND:
+	{
+		if (LOWORD(wParam) == IDC_BT_MAP_EDITOR)
+		{
+			App->CL_Editor_Scene->Back_To_Map_Editor();
+			return TRUE;
+		}
+	}
+	}
+
+	return FALSE;
+}
+
+// **************************************************************************
+// *			Show_Headers:- Terry and Hazel Flanigan 2024				*
+// **************************************************************************
+void CL64_Editor_Scene::Show_Headers(bool Enable)
+{
+	if (Enable == 1)
+	{
+		ShowWindow(Scene_Headers_hWnd, 1);
+	}
+	else
+	{
+		ShowWindow(Scene_Headers_hWnd, 0);
+	}
 }
 
 // *************************************************************************
@@ -71,6 +148,9 @@ void CL64_Editor_Scene::Set_Editor_Scene(void)
 	App->CL_Properties_Tabs->Show_Tabs_Control_Dlg(false);
 	App->CL_Properties_Tabs->flag_Tabs_Dlg_Active = 0;
 
+	// Headers
+	Show_Headers(true);
+
 	// Fileview
 	App->CL_FileView->Show_FileView(true);
 	App->CL_Panels->Move_FileView_Window();
@@ -90,7 +170,8 @@ void CL64_Editor_Scene::Back_To_Map_Editor(void)
 
 	App->CL_Top_Tabs->flag_Full_View_3D = 0;
 
-	// Hide Top Tabs
+	// Show Top Tabs
+	Show_Headers(false);
 	App->CL_Top_Tabs->Show_TopTabs(true);
 
 	App->CL_Editor_Map->Set_Splitter_WidthDepth(App->CL_Top_Tabs->Copy_Spliter_Width, App->CL_Top_Tabs->Copy_Spliter_Depth);

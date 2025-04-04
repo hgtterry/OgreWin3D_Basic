@@ -127,12 +127,15 @@ bool CL64_Panels::Resize_FileView(void)
 	NewHeight = HeightClient - 150;
 
 	HWND Temp = GetDlgItem(App->ListPanel, IDC_TREE1);
-	//HWND Temp3 = GetDlgItem(App->ListPanel, IDC_BT_INFO_FILEVIEW);
+	HWND Temp1 = GetDlgItem(App->ListPanel, IDC_BT_MAINENVIRONMENT);
 
 	hdwp = BeginDeferWindowPos(4);
 
 	DeferWindowPos(hdwp, Temp, NULL, 2, 2,
 		NewWidth + 388, NewHeight + 100, SWP_NOZORDER);
+
+	DeferWindowPos(hdwp, Temp1, NULL, 12, NewHeight + 110,
+		0, 7, SWP_NOSIZE | SWP_NOZORDER);
 
 	return EndDeferWindowPos(hdwp);
 }

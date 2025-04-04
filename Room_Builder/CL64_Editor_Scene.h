@@ -29,14 +29,24 @@ public:
 	CL64_Editor_Scene();
 	~CL64_Editor_Scene();
 
+	void Start_Headers_Scene();
+
 	void Set_Editor_Scene(void);
 	void Back_To_Map_Editor(void);
 
 	void Context_Menu_Ogre(HWND hDlg);
 	bool Context_Command_Ogre(WPARAM wParam);
 
+	void Show_Headers(bool Enable);
+
 	bool flag_Scene_Editor_Active;
 
+	HWND Scene_Headers_hWnd;
+
 	HMENU hMenu;
+
+private:
+	static LRESULT CALLBACK Proc_Headers_Scene(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+
 };
 

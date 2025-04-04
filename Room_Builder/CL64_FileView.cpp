@@ -87,7 +87,7 @@ LRESULT CALLBACK CL64_FileView::Proc_ListPanel(HWND hDlg, UINT message, WPARAM w
 		App->CL_FileView->flag_FileView_Active = 1;
 
 		SendDlgItemMessage(hDlg, IDC_TREE1, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		//SendDlgItemMessage(hDlg, IDC_BT_MAINENVIRONMENT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_MAINENVIRONMENT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		return TRUE;
 	}
@@ -125,14 +125,14 @@ LRESULT CALLBACK CL64_FileView::Proc_ListPanel(HWND hDlg, UINT message, WPARAM w
 			}
 		}*/
 
-		/*LPNMHDR some_item = (LPNMHDR)lParam;
+		LPNMHDR some_item = (LPNMHDR)lParam;
 
 		if (some_item->idFrom == IDC_BT_MAINENVIRONMENT)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
 			return CDRF_DODEFAULT;
-		}*/
+		}
 
 		/*if (some_item->idFrom == IDC_STOCK && some_item->code == NM_CUSTOMDRAW)
 		{

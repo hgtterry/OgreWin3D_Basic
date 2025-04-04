@@ -83,6 +83,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
    // App->CL_Doc->Init_Doc();
 
     App->CL_Top_Tabs->Start_Headers();
+    App->CL_Editor_Scene->Start_Headers_Scene();
+
     App->CL_Properties_Tabs->Start_Tabs_Control_Dlg();
   
     // ------------------ Reload Textures
@@ -588,8 +590,31 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     {
         RECT rcl;
         GetClientRect(App->MainHwnd, &rcl);
-        MoveWindow(App->CL_Editor_Map->Main_Dlg_Hwnd, 0, 50, rcl.right, rcl.bottom - 50, TRUE);
-        App->CL_Editor_Map->Init_Views(Enums::Selected_View_None);
+
+        if (App->CL_Editor_Scene->flag_Scene_Editor_Active == 0)
+        {
+            MoveWindow(App->CL_Editor_Map->Main_Dlg_Hwnd, 0, 50, rcl.right, rcl.bottom - 50, TRUE);
+            App->CL_Editor_Map->Init_Views(Enums::Selected_View_None);
+
+            if (App->flag_OgreStarted == 1)
+            {
+                App->CL_Ogre->RenderFrame(2);
+            }
+        }
+        else
+        {
+            GetClientRect(App->CL_Editor_Map->Bottom_Right_Hwnd, &rcl);
+
+            SetWindowPos(App->ViewGLhWnd, NULL, 0, 0, rcl.right, rcl.bottom, SWP_NOZORDER);
+            App->CL_Ogre->mWindow->windowMovedOrResized();
+            App->CL_Ogre->mCamera->setAspectRatio((Ogre::Real)App->CL_Ogre->mWindow->getWidth() / (Ogre::Real)App->CL_Ogre->mWindow->getHeight());
+           
+            if (App->flag_OgreStarted == 1)
+            {
+                App->CL_Ogre->RenderFrame(2);
+            }
+
+        }
        
         return 0;
     }
