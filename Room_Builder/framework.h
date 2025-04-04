@@ -119,4 +119,29 @@ namespace Enums
 		Usage_None = -1,
 		Usage_Player = 2
 	};
+
+	// Scene Editor
+	enum Bullet_Type
+	{
+		Bullet_Type_None = 0,
+		Bullet_Type_Dynamic = 1, // Free Moving Physics
+		Bullet_Type_Static = 2, // Fixed Non Moving Shape
+		Bullet_Type_TriMesh = 3,
+		Type_NXS_Convex = 4,
+		Type_JustOgre = 5,
+		Bullet_Type_Volume = 6
+	};
+
+	enum Shape
+	{
+		Shape_None = 0,
+		Shape_Box = 1,
+		Shape_Sphere = 2,
+		Shape_Capsule = 3,
+		Shape_Cylinder = 4,
+		Shape_Cone = 5,
+		Shape_TriMesh = 6,
+		Shape_VolumeBox = 7
+	};
+
 }

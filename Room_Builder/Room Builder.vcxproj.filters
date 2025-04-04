@@ -216,6 +216,12 @@
     <ClInclude Include="CL64_Com_Environments.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Base_Object.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CL64_Com_Objects.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Room Builder.cpp">
@@ -411,6 +417,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CL64_Com_Environments.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Base_Object.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CL64_Com_Objects.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

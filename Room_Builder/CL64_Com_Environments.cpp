@@ -42,48 +42,49 @@ bool CL64_Com_Environments::Add_New_Environ_Entity(bool FirstOne)
 	char B_Name[MAX_PATH];
 	char ConNum[MAX_PATH];
 
-	//int Index = App->CL_Scene->Object_Count;
+	int Index = App->CL_Editor->Object_Count;
 
-	//App->CL_Scene->B_Object[Index] = new Base_Object();
-	//App->CL_Scene->B_Object[Index]->S_Environ[0] = new Environ_type;
-	//V_Set_Environ_Defaults(Index);
+	App->CL_Editor->B_Object[Index] = new Base_Object();
+	App->CL_Editor->B_Object[Index]->S_Environ[0] = new Environ_type;
+	V_Set_Environ_Defaults(Index);
 
 
-	//App->CL_Scene->B_Object[Index]->Type = Enums::Bullet_Type_Static;
-	//App->CL_Scene->B_Object[Index]->Shape = Enums::Shape_Box;
-	//App->CL_Scene->B_Object[Index]->This_Object_UniqueID = App->CL_Scene->UniqueID_Object_Counter; // Unique ID
+	App->CL_Editor->B_Object[Index]->Type = Enums::Bullet_Type_Static;
+	App->CL_Editor->B_Object[Index]->Shape = Enums::Shape_Box;
+	App->CL_Editor->B_Object[Index]->This_Object_UniqueID = App->CL_Editor->UniqueID_Object_Counter; // Unique ID
 
-	//strcpy(App->CL_Scene->B_Object[Index]->Mesh_FileName, "EnvironmentEntity_GD.mesh");
+	strcpy(App->CL_Editor->B_Object[Index]->Mesh_FileName, "EnvironmentEntity_GD.mesh");
 
-	//strcpy_s(B_Name, "Environ_");
-	//_itoa(Index, ConNum, 10);
-	//strcat(B_Name, ConNum);
-	//strcpy(App->CL_Scene->B_Object[Index]->Object_Name, B_Name);
+	strcpy_s(B_Name, "Environ_");
+	_itoa(Index, ConNum, 10);
+	strcat(B_Name, ConNum);
+	strcpy(App->CL_Editor->B_Object[Index]->Object_Name, B_Name);
 
-	//if (FirstOne == 0)
-	//{
-	//	Ogre::Vector3 Pos = App->CL_Com_Objects->GetPlacement(-50);
-	//	App->CL_Scene->B_Object[Index]->Mesh_Pos = Pos;
-	//}
-	//else
-	//{
-	//	Ogre::Vector3 Pos = Ogre::Vector3(0, 0, 0);
-	//}
+	if (FirstOne == 0)
+	{
+		Ogre::Vector3 Pos = App->CL_Com_Objects->GetPlacement(-50);
+		App->CL_Editor->B_Object[Index]->Mesh_Pos = Pos;
+	}
+	else
+	{
+		Ogre::Vector3 Pos = Ogre::Vector3(0, 0, 0);
+	}
 
-	//Create_Environ_Entity(Index);
+	Create_Environ_Entity(Index);
 
 	//HTREEITEM Temp = App->CL_FileView->Add_Item(App->CL_FileView->FV_Evirons_Folder, App->CL_Scene->B_Object[Index]->Object_Name, Index, true);
-	//App->CL_Scene->B_Object[Index]->FileViewItem = Temp;
+	//App->CL_Editor->B_Object[Index]->FileViewItem = Temp;
 
-	//App->CL_Scene->B_Object[Index]->flag_Altered = 1;
+	App->CL_Editor->B_Object[Index]->flag_Altered = 1;
 
 	//App->CL_FileView->Set_FolderActive(App->CL_FileView->FV_Evirons_Folder);
 	//App->CL_FileView->SelectItem(App->CL_Scene->B_Object[Index]->FileViewItem);
 
-	//App->CL_Scene->UniqueID_Object_Counter++;
-	//App->CL_Scene->Object_Count++;
+	App->CL_Editor->UniqueID_Object_Counter++;
+	App->CL_Editor->Object_Count++;
 
 	//App->CL_FileView->Set_FolderActive(App->CL_FileView->FV_Evirons_Folder);
+	
 	return 1;
 }
 

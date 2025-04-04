@@ -1,7 +1,7 @@
 /*
-Copyright (c) 2024 - 2025 Inflanite_HGT W.T.Flanigan H.C.Flanigan
+Copyright (c) 2024 Inflanite_HGT W.T.Flanigan H.C.Flanigan
 
-Room Builder
+OgreWin3D_Stage
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -21,54 +21,30 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
-#include "Base_Brush.h"
-#include "Base_Group.h"
-#include "Base_Player.h"
-#include "Base_Object.h"
 
 #pragma once
-class CL64_Editor
+class CL64_Com_Objects
 {
 public:
-	CL64_Editor();
-	~CL64_Editor();
 
-	void Create_Brush_XX(int Index);
-	void Create_Mesh_Group(int Index);
+	CL64_Com_Objects(void);
+	~CL64_Com_Objects(void);
 
-	void Preview_Mode(void);
-	void Editor_Mode(void);
+	float GetMesh_BB_Radius(SceneNode* mNode);
+	Ogre::Vector3 GetMesh_BB_Size(SceneNode* mNode);
+	void Rename_Object(int Index);
+	Ogre::Vector3 GetPlacement(int Distance = -6);
+	void Hide_AllObjects_Except(int Index, bool Show);
+	void Delete_Object();
+	int GetIndex_By_Name(char* Name);
+	void Clear_Modified_Objects();
+	int CheckNames_Objects(char* Name);
+	int Get_Adjusted_Object_Count(void);
+	Ogre::Vector3 Get_BoundingBox_World_Centre(int Object_Index);
 
-	Base_Group* Group[5000];
-	Base_Brush* B_Brush[12000];
-
-	char JustName[MAX_PATH];
-
-	// Groups
-	int VerticeCount;
-	int GroupCount;
-	int FaceCount;
-
-	// Brushes
-	int BrushCount;
-	int Brush_Face_Count;
-
-	// Player
-	int Player_Count;
-	bool flag_Player_Added;
-
-	// Scene
-	int Object_Count;
-	int UniqueID_Object_Counter;
-
-	HWND Parent_hWnd;
-
-	bool flag_PreviewMode_Running;
-	bool flag_Show_Debug_Area;
-	bool flag_Enable_Physics_Debug;
-
-	std::vector<Base_Player*> B_Player;
-	std::vector<Base_Object*> B_Object;
-
+	bool flag_Show_Physics_Debug;
+	bool flag_Hide_All_Except;
+	bool flag_Show_Mesh_Debug;
+	bool flag_Dont_Clear_Objects;
 };
 

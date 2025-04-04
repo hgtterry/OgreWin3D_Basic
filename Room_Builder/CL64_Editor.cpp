@@ -42,6 +42,10 @@ CL64_Editor::CL64_Editor()
 	Player_Count = 0;
 	flag_Player_Added = 0;
 
+	// Scene
+	Object_Count = 0;
+	UniqueID_Object_Counter = 0;
+
 	JustName[0] = 0;
 
 	Parent_hWnd = NULL;
