@@ -144,7 +144,11 @@ LRESULT CALLBACK CL64_Properties_Templates::Proc_Templates(HWND hDlg, UINT messa
 
 					// Scene
 					App->CL_Entities->Create_Player_Entity();
-					App->CL_Com_Environments->Create_Test_Environment();
+
+					if (App->Development == 1)
+					{
+						App->CL_Com_Environments->Create_Test_Environment();
+					}
 					// ----------------
 
 

@@ -634,6 +634,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                    }
                }
                else*/
+
+
+        if (App->CL_Editor_Scene->flag_Scene_Editor_Active == 1)
+        {
+            App->CL_Editor_Scene->Back_To_Map_Editor();
+            return 1;
+        }
+
         {
             App->CL_Dialogs->YesNo("Close Room Builder", "Are you sure");
 

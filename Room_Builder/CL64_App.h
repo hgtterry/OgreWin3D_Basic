@@ -224,6 +224,8 @@ public:
 	bool flag_Debug_App;
 	bool flag_OgreStarted;
 
+	bool Development;
+
 	int CursorPosX;
 	int CursorPosY;
 

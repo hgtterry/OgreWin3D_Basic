@@ -330,6 +330,10 @@ void CL64_Properties_Tabs::Enable_Tabs(bool Enable)
 	EnableWindow(GetDlgItem(Tabs_Control_Hwnd, IDC_TBTEXTURES), Enable);
 	EnableWindow(GetDlgItem(Tabs_Control_Hwnd, IDC_TBGROUPS), Enable);
 	EnableWindow(GetDlgItem(Tabs_Control_Hwnd, IDC_ED_PREVIEW), Enable);
-	EnableWindow(GetDlgItem(Tabs_Control_Hwnd, IDC_ED_SCENE_EDITOR), Enable);
+
+	if (App->Development == 1)
+	{
+		EnableWindow(GetDlgItem(Tabs_Control_Hwnd, IDC_ED_SCENE_EDITOR), Enable);
+	}
 }
 

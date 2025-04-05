@@ -59,6 +59,9 @@ CL64_FileView::CL64_FileView()
 
 	flag_FileView_Active = 0;
 
+	FileView_Folder[0] = 0;
+	FileView_File[0] = 0;
+
 	tvinsert = { 0 };
 }
 
@@ -111,7 +114,7 @@ LRESULT CALLBACK CL64_FileView::Proc_ListPanel(HWND hDlg, UINT message, WPARAM w
 
 	case WM_NOTIFY:
 	{
-		/*LPNMHDR nmhdr = (LPNMHDR)lParam;
+		LPNMHDR nmhdr = (LPNMHDR)lParam;
 		if (nmhdr->idFrom == IDC_TREE1)
 		{
 			switch (nmhdr->code)
@@ -123,7 +126,7 @@ LRESULT CALLBACK CL64_FileView::Proc_ListPanel(HWND hDlg, UINT message, WPARAM w
 			}
 
 			}
-		}*/
+		}
 
 		LPNMHDR some_item = (LPNMHDR)lParam;
 
@@ -504,6 +507,116 @@ void CL64_FileView::Show_FileView(bool Enable)
 	{
 		App->CL_FileView->flag_FileView_Active = 0;
 		ShowWindow(App->ListPanel, 0);
+	}
+}
+
+// *************************************************************************
+// *		Get_Selection Terry:- Terry and Hazel Flanigan 2024		 	   *
+// *************************************************************************
+void CL64_FileView::Get_Selection(LPNMHDR lParam)
+{
+	strcpy(FileView_Folder, "");
+	strcpy(FileView_File, "");
+
+	int Index = 0;
+	HWND Temp = GetDlgItem(App->ListPanel, IDC_TREE1);
+	HTREEITEM i = TreeView_GetSelection(Temp);
+
+	TVITEM item;
+	item.hItem = i;
+	item.pszText = FileView_Folder;
+	item.cchTextMax = sizeof(FileView_Folder);
+	item.mask = TVIF_TEXT | TVIF_PARAM;
+	TreeView_GetItem(((LPNMHDR)lParam)->hwndFrom, &item);
+	Index = item.lParam;
+
+	HTREEITEM p = TreeView_GetParent(Temp, i);
+
+	TVITEM item1;
+	item1.hItem = p;
+	item1.pszText = FileView_File;
+	item1.cchTextMax = sizeof(FileView_File);
+	item1.mask = TVIF_TEXT;
+	TreeView_GetItem(((LPNMHDR)lParam)->hwndFrom, &item1);
+
+	// ---- Areas
+	//if (!strcmp(FileView_Folder, "Area")) // Folder
+	//{
+	//	Context_Selection = Enums::FileView_Areas_Folder;
+
+	//	return;
+	//}
+
+	//if (!strcmp(FileView_File, "Area"))
+	//{
+	//	Context_Selection = Enums::FileView_Areas_File;
+
+	//	HideRightPanes();
+	//	App->CL_Props_Dialogs->Show_Details_Goto_Dlg(true);
+
+	//	App->CL_Props_Dialogs->Hide_Debug_Dlg(1);
+	//	App->CL_Props_Dialogs->Show_Dimensions_Dlg(1);
+	//	//App->SBC_Props_Dialog->Hide_Details_Goto_Dlg(1);
+	//	//App->CL_Props_Dialogs->Show_Materials_Dlg(true);
+
+	//	//----------------------------------------------------------------------------
+	//	//App->SBC_Properties->Reset_Last_Selected_Object(App->SBC_Properties->Last_Selected_Object);
+	//	//App->SBC_Properties->Last_Selected_Object = Index;
+	//	//----------------------------------------------------------------------------
+
+	//	App->CL_Properties->Current_Selected_Object = Index;
+	//	App->CL_Properties->Edit_Category = Enums::Edit_Area;
+	//	App->CL_LookUps->Update_Types();
+
+	//	ShowWindow(App->CL_Properties->Properties_Dlg_hWnd, 1);
+	//	App->CL_Properties->Update_ListView_Area();
+
+
+	//	/*if (App->SBC_Dimensions->Show_Dimensions == 1)
+	//	{
+	//		App->SBC_Dimensions->Prepare_Dimensions();
+	//	}*/
+
+	//	return;
+	//}
+
+	// ------------------------------------------------------------ Eviron_Entities
+	if (!strcmp(FileView_Folder, "Evironments")) // Folder
+	{
+		//Context_Selection = Enums::FileView_EnvironEntity_Folder;
+		return;
+	}
+	if (!strcmp(FileView_File, "Evironments"))
+	{
+		//Context_Selection = Enums::FileView_EnvironEntity_File;
+
+		//HideRightPanes();
+		//App->CL_Props_Dialogs->Show_Details_Goto_Dlg(true);
+
+		//App->CL_Props_Dialogs->Show_Dimensions_Dlg(true);
+		//App->CL_Props_Dialogs->Hide_Debug_Dlg(1);
+
+		//---------------------------------------------------------------------------
+
+		/*App->SBC_Properties->Reset_Last_Selected_Object(App->SBC_Properties->Last_Selected_Object);
+		App->SBC_Properties->Last_Selected_Object = Index;*/
+		//----------------------------------------------------------------------------
+
+		//App->CL_Gizmos->MarkerBox_Addjust(Index);
+
+		App->CL_Properties_Scene->Current_Selected_Object = Index;
+		//App->CL_Properties->Edit_Category = Enums::Edit_Environs;
+		//App->CL_LookUps->Update_Types();
+
+		//ShowWindow(App->CL_Properties->Properties_Dlg_hWnd, 1);
+		//App->CL_Properties->Update_ListView_Environs();
+
+		/*if (App->SBC_Dimensions->Show_Dimensions == 1)
+		{
+			App->SBC_Dimensions->Prepare_Dimensions();
+		}*/
+
+		return;
 	}
 }
 

@@ -141,6 +141,8 @@ CL64_App::CL64_App(void)
 	flag_Debug_App = 0;
 	flag_OgreStarted = 0;
 
+	Development = 1; // Allow New Code to Run for Testing
+
 	ViewPLeaseWait = nullptr;
 
 	RB_Directory_FullPath[0] = 0;

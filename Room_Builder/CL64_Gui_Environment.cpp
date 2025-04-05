@@ -552,9 +552,9 @@ void CL64_Gui_Environment::Set_To_PlayerView()
 // *************************************************************************
 void CL64_Gui_Environment::SetSky(bool Enable)
 {
-	//int Index = App->CL_Properties->Current_Selected_Object;
+	int Index = App->CL_Properties_Scene->Current_Selected_Object;
 
-	//App->CL_Ogre->mSceneMgr->setSkyDome(Enable, "OW3D/CloudySky", App->CL_Editor->B_Object[Index]->S_Environ[0]->Curvature, App->CL_Editor->B_Object[Index]->S_Environ[0]->Tiling, App->CL_Editor->B_Object[Index]->S_Environ[0]->Distance);
+	App->CL_Ogre->mSceneMgr->setSkyDome(Enable, "OW3D/CloudySky", App->CL_Editor->B_Object[Index]->S_Environ[0]->Curvature, App->CL_Editor->B_Object[Index]->S_Environ[0]->Tiling, App->CL_Editor->B_Object[Index]->S_Environ[0]->Distance);
 
 	/*App->CL_Ogre->mSceneMgr->setSkyDome(Enable,
 		App->CL_Editor->B_Object[Index]->S_Environ[0]->Material,
@@ -568,7 +568,7 @@ void CL64_Gui_Environment::SetSky(bool Enable)
 // *************************************************************************
 bool CL64_Gui_Environment::EnableFog(bool SetFog)
 {
-	/*int Index = App->CL_Properties->Current_Selected_Object;
+	int Index = App->CL_Properties_Scene->Current_Selected_Object;
 
 	if (SetFog == true)
 	{
@@ -585,7 +585,7 @@ bool CL64_Gui_Environment::EnableFog(bool SetFog)
 	else
 	{
 		App->CL_Ogre->mSceneMgr->setFog(FOG_NONE, ColourValue(0.7, 0.7, 0.8), 0, 100, 1000);
-	}*/
+	}
 
 	return 1;
 }

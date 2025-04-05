@@ -46,6 +46,8 @@ private:
 	void MoreFolders(void);
 	void ExpandRoot(void);
 
+	void Get_Selection(LPNMHDR lParam);
+
 	HTREEITEM Root;
 	HTREEITEM GD_ProjectFolder;
 	HTREEITEM GD_TriggerFolder;
@@ -74,6 +76,9 @@ private:
 	HBITMAP hBitMap;
 
 	bool flag_FileView_Active;
+
+	char FileView_Folder[MAX_PATH];
+	char FileView_File[MAX_PATH];
 
 	TV_INSERTSTRUCT tvinsert;
 };
