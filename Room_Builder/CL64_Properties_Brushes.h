@@ -51,13 +51,15 @@ private:
 	static LRESULT CALLBACK Proc_Dimensions_Dlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	void List_Selection_Changed(bool Clear);
-	void Start_Dimensions_Dlg();
+	void StartDimensionsDialog();
 
 	void Update_Deltas_Dlg(HWND hDlg);
 	void Fill_ComboBox_PosDelta(HWND hDlg);
 	void Fill_ComboBox_RotDelta(HWND hDlg);
 
 	void Update_From_Brush_Dlg(HWND hDlg);
+	void UpdateDialogItem(HWND hDlg, int itemId, float value, const char* format);
+
 	void Get_Brush();
 
 	void Rotate_Brush(float SX, float SY, float SZ);

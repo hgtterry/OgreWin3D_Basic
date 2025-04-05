@@ -1297,41 +1297,31 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Ogre_BR(HWND hDlg, UINT message, WPARAM w
 
 	case WM_COMMAND:
 	{
-		if (App->CL_Editor_Scene->flag_Scene_Editor_Active == 1)
-		{
-			if (App->CL_Editor_Scene->Context_Command_Ogre(LOWORD(wParam)))
-			{
-				return TRUE;
-			}
+		bool isSceneEditorActive = (App->CL_Editor_Scene->flag_Scene_Editor_Active == 1);
+		bool commandHandled = false;
 
-			return TRUE;
+		if (isSceneEditorActive)
+		{
+			commandHandled = App->CL_Editor_Scene->Context_Command_Ogre(LOWORD(wParam));
+		}
+		else
+		{
+			commandHandled = App->CL_Editor_Map->Context_Command_Ogre(LOWORD(wParam));
 		}
 
-		if (App->CL_Editor_Map->Context_Command_Ogre(LOWORD(wParam)))
-		{
-			return TRUE;
-		}
+		return commandHandled ? TRUE : FALSE;
 	}
 
 	case WM_MOUSEWHEEL:
 	{
-		if (App->CL_Editor->flag_PreviewMode_Running == 1)
+		if (App->CL_Editor->flag_PreviewMode_Running == 1 &&
+			App->CL_Ogre->Ogre3D_Listener->flag_LeftMouseDown == 0)
 		{
-			if (App->CL_Ogre->Ogre3D_Listener->flag_LeftMouseDown == 0)
-			{
-				int zDelta = (short)HIWORD(wParam);    // wheel rotation
+			int zDelta = static_cast<short>(HIWORD(wParam)); // wheel rotation
 
-				if (zDelta > 0)
-				{
-					App->CL_Ogre->Ogre3D_Listener->Wheel = -1;
-				}
-				else if (zDelta < 0)
-				{
-					App->CL_Ogre->Ogre3D_Listener->Wheel = 1;
-				}
+			App->CL_Ogre->Ogre3D_Listener->Wheel = (zDelta > 0) ? -1 : (zDelta < 0) ? 1 : App->CL_Ogre->Ogre3D_Listener->Wheel;
 
-				return 1;
-			}
+			return 1;
 		}
 	}
 
@@ -1429,26 +1419,31 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Ogre_BR(HWND hDlg, UINT message, WPARAM w
 	}
 
 	// Right Mouse Button
-	case WM_RBUTTONDOWN: // BERNIE_HEAR_FIRE 
+	case WM_RBUTTONDOWN:
 	{
 		if (App->flag_OgreStarted == 1)
 		{
-			POINT p;
-			GetCursorPos(&p);
-			App->CursorPosX = p.x;
-			App->CursorPosY = p.y;
-			App->CL_Ogre->Ogre3D_Listener->Pl_Cent500X = p.x;
-			App->CL_Ogre->Ogre3D_Listener->Pl_Cent500Y = p.y;
+			POINT cursorPosition;
+			GetCursorPos(&cursorPosition);
+
+			App->CursorPosX = cursorPosition.x;
+			App->CursorPosY = cursorPosition.y;
+
+			auto& listener = App->CL_Ogre->Ogre3D_Listener;
+			listener->Pl_Cent500X = cursorPosition.x;
+			listener->Pl_Cent500Y = cursorPosition.y;
+
 			SetCapture(App->ViewGLhWnd);
 			SetCursorPos(App->CursorPosX, App->CursorPosY);
-			App->CL_Ogre->Ogre3D_Listener->flag_RightMouseDown = 1;
+
+			listener->flag_RightMouseDown = 1;
 			App->CUR = SetCursor(NULL);
 
 			App->CL_Editor_Map->Saved_MousePos = App->CL_Ogre->camNode->getPosition();
-			
+
 			return 1;
 		}
-		
+
 		return 1;
 	}
 
@@ -1463,13 +1458,11 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Ogre_BR(HWND hDlg, UINT message, WPARAM w
 			if (GetAsyncKeyState(VK_CONTROL) < 0 && App->CL_Editor->flag_PreviewMode_Running == 0)
 			{
 				App->CL_Picking->Mouse_Pick_Entity();
+				int index = App->CL_TXL_Editor->GetIndex_From_FileName(App->CL_Picking->m_Texture_FileName);
 
-				int Index = App->CL_TXL_Editor->GetIndex_From_FileName(App->CL_Picking->m_Texture_FileName);
-
-				if (Index > -1)
+				if (index > -1)
 				{
-					App->CL_Properties_Textures->Select_With_TextureName(App->CL_TXL_Editor->Texture_List[Index]->Name);
-
+					App->CL_Properties_Textures->Select_With_TextureName(App->CL_TXL_Editor->Texture_List[index]->Name);
 					if (App->CL_Properties_Textures->Dialog_Textures_Visible == 0)
 					{
 						App->CL_Properties_Tabs->Select_Textures_Tab();
@@ -1478,34 +1471,27 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Ogre_BR(HWND hDlg, UINT message, WPARAM w
 			}
 			else
 			{
-				if (App->CL_Editor_Scene->flag_Scene_Editor_Active == 1)
+				bool isSceneEditorActive = App->CL_Editor_Scene->flag_Scene_Editor_Active == 1;
+				bool isPreviewModeRunning = App->CL_Editor->flag_PreviewMode_Running == 0;
+
+				Ogre::Vector3 cameraPosition = App->CL_Ogre->camNode->getPosition();
+				int cameraComparison = App->CL_Maths->Ogre_Vector3_Compare(&cameraPosition, &App->CL_Editor_Map->Saved_MousePos, 0);
+
+				if (cameraComparison == 1)
 				{
-					Ogre::Vector3 test = App->CL_Ogre->camNode->getPosition();
-
-					int cam_test = App->CL_Maths->Ogre_Vector3_Compare(&test, &App->CL_Editor_Map->Saved_MousePos, 0);
-
-					if (cam_test == 1)
+					App->CL_Editor_Map->Current_View = App->CL_Editor_Map->VCam[V_TR];
+					if (isSceneEditorActive)
 					{
-						App->CL_Editor_Map->Current_View = App->CL_Editor_Map->VCam[V_TR];
 						App->CL_Editor_Scene->Context_Menu_Ogre(hDlg);
 					}
-				}
-				else if (App->CL_Editor->flag_PreviewMode_Running == 0 && App->CL_Editor_Scene->flag_Scene_Editor_Active == 0)
-				{
-					Ogre::Vector3 test = App->CL_Ogre->camNode->getPosition();
-
-					int cam_test = App->CL_Maths->Ogre_Vector3_Compare(&test, &App->CL_Editor_Map->Saved_MousePos, 0);
-
-					if (cam_test == 1)
+					else if (isPreviewModeRunning)
 					{
-						App->CL_Editor_Map->Current_View = App->CL_Editor_Map->VCam[V_TR];
 						App->CL_Editor_Map->Context_Menu_Ogre(hDlg);
 					}
 				}
 			}
 
 			App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
-
 			return 1;
 		}
 	}
@@ -1615,62 +1601,33 @@ void CL64_Editor_Map::Context_Menu(HWND hDlg)
 void CL64_Editor_Map::Context_Menu_Ogre(HWND hDlg)
 {
 	RECT rcTree;
-	TVHITTESTINFO htInfo = { 0 };
 	POINT pt;
 	GetCursorPos(&pt);
 
-	long xPos = pt.x;   // x position from message, in screen coordinates
-	long yPos = pt.y;   // y position from message, in screen coordinates 
+	GetWindowRect(hDlg, &rcTree);
+	long xPos = pt.x - rcTree.left; // Convert to client coordinates
+	long yPos = pt.y - rcTree.top;
 
-	GetWindowRect(hDlg, &rcTree);        // get its window coordinates
-	htInfo.pt.x = xPos - rcTree.left;      // convert to client coordinates
-	htInfo.pt.y = yPos - rcTree.top;
+	HMENU hMenu = CreatePopupMenu();
 
-	hMenu = CreatePopupMenu();
+	// Append Wireframed option
+	AppendMenuW(hMenu, MF_STRING | (App->CL_Ogre->OGL_Listener->Flag_Render_Brushes ? MF_CHECKED : MF_UNCHECKED), IDM_3D_WIRED, L"&Wireframed");
 
-	if (App->CL_Ogre->OGL_Listener->Flag_Render_Brushes == 1)
-	{
-		AppendMenuW(hMenu, MF_STRING | MF_CHECKED, IDM_3D_WIRED, L"&Wireframed");
-	}
-	else
-	{
-		AppendMenuW(hMenu, MF_STRING | MF_UNCHECKED, IDM_3D_WIRED, L"&Wireframed");
-	}
-
-	if (App->CL_Ogre->OGL_Listener->Flag_Render_Brushes == 0)
-	{
-		AppendMenuW(hMenu, MF_STRING | MF_CHECKED, IDM_3D_TEXTURED, L"&Textured");
-	}
-	else
-	{
-		AppendMenuW(hMenu, MF_STRING | MF_UNCHECKED, IDM_3D_TEXTURED, L"&Textured");
-	}
+	// Append Textured option
+	AppendMenuW(hMenu, MF_STRING | (App->CL_Ogre->OGL_Listener->Flag_Render_Brushes == 0 ? MF_CHECKED : MF_UNCHECKED), IDM_3D_TEXTURED, L"&Textured");
 
 	AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
 
-	int BC = App->CL_Brush->Get_Brush_Count();
-	if (BC > 0 && App->CL_Editor->flag_PreviewMode_Running == 0)
-	{
-		AppendMenuW(hMenu, MF_STRING, IDM_3D_PREVIEW, L"&Preview");
-	}
-	else
-	{
-		AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_3D_PREVIEW, L"&Preview");
-	}
+	int brushCount = App->CL_Brush->Get_Brush_Count();
+	// Append Preview option
+	AppendMenuW(hMenu, MF_STRING | (brushCount > 0 && App->CL_Editor->flag_PreviewMode_Running == 0 ? 0 : MF_GRAYED), IDM_3D_PREVIEW, L"&Preview");
 
-	if (BC > 0)
-	{
-		AppendMenuW(hMenu, MF_STRING, IDM_3D_SCENE_EDITOR, L"&Scene Editor");
-	}
-	else
-	{
-		AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_3D_SCENE_EDITOR, L"&Scene Editor");
-	}
-	
+	// Append Scene Editor option
+	AppendMenuW(hMenu, MF_STRING | (brushCount > 0 ? 0 : MF_GRAYED), IDM_3D_SCENE_EDITOR, L"&Scene Editor");
+
 	AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
 	AppendMenuW(hMenu, MF_STRING | MF_GRAYED, NULL, L"&Pick Texture Ctrl+Right Mouse Button");
 	AppendMenuW(hMenu, MF_STRING | MF_GRAYED, NULL, L"&Pan Right Mouse Button");
-	
 
 	flag_Context_Menu_Active = 1;
 	TrackPopupMenu(hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, hDlg, NULL);
@@ -1684,30 +1641,27 @@ void CL64_Editor_Map::Context_Menu_Ogre(HWND hDlg)
 // *************************************************************************
 bool CL64_Editor_Map::Context_Command_Ogre(WPARAM wParam)
 {
-	if (LOWORD(wParam) == IDM_3D_TEXTURED)
+	switch (LOWORD(wParam))
 	{
+	case IDM_3D_TEXTURED:
 		App->CL_Camera->Camera_Textured();
 		return TRUE;
-	}
 
-	if (LOWORD(wParam) == IDM_3D_WIRED)
-	{
+	case IDM_3D_WIRED:
 		App->CL_Camera->Camera_Wired();
 		return TRUE;
-	}
 
-	if (LOWORD(wParam) == IDM_3D_PREVIEW)
-	{
+	case IDM_3D_PREVIEW:
 		App->CL_Editor->Preview_Mode();
 		return TRUE;
-	}
 
-	if (LOWORD(wParam) == IDM_3D_SCENE_EDITOR)
-	{
+	case IDM_3D_SCENE_EDITOR:
 		App->CL_Editor_Scene->Set_Editor_Scene();
 		return TRUE;
-	}
 
+	default:
+		return FALSE;
+	}
 }
 
 // *************************************************************************
@@ -1715,61 +1669,44 @@ bool CL64_Editor_Map::Context_Command_Ogre(WPARAM wParam)
 // *************************************************************************
 bool CL64_Editor_Map::Context_Command(WPARAM wParam)
 {
-	if (LOWORD(wParam) == IDM_GRID_SNAP)
+	switch (LOWORD(wParam))
 	{
-		if (App->CL_Level->flag_UseGrid == 1)
-		{
-			App->CL_Level->flag_UseGrid = 0;
-			CheckMenuItem(App->Menu_Map, ID_GRID_GRIDSNAP, MF_BYCOMMAND | MF_UNCHECKED);
-		}
-		else
-		{
-			App->CL_Level->flag_UseGrid = 1;
-			CheckMenuItem(App->Menu_Map, ID_GRID_GRIDSNAP, MF_BYCOMMAND | MF_CHECKED);
-		}
+	case IDM_GRID_SNAP:
+		App->CL_Level->flag_UseGrid = !App->CL_Level->flag_UseGrid;
+		CheckMenuItem(App->Menu_Map, ID_GRID_GRIDSNAP,
+			MF_BYCOMMAND | (App->CL_Level->flag_UseGrid ? MF_CHECKED : MF_UNCHECKED));
 		return TRUE;
-	}
 
-	if (LOWORD(wParam) == IDM_RESET_VIEW)
-	{
+	case IDM_RESET_VIEW:
 		Set_View();
 		return TRUE;
-	}
 
-	if (LOWORD(wParam) == IDM_CENTRE_ONCAMERA)
-	{
+	case IDM_CENTRE_ONCAMERA:
 		Reset_To_Camera();
 		return TRUE;
-	}
 
-	if (LOWORD(wParam) == IDM_PREVIEW)
-	{
+	case IDM_PREVIEW:
 		App->CL_Editor->Preview_Mode();
 		return TRUE;
-	}
 
-	if (LOWORD(wParam) == IDM_MOVE)
-	{
+	case IDM_MOVE:
 		App->CL_Top_Tabs->Set_Brush_Mode(ID_TOOLS_BRUSH_MOVEROTATEBRUSH, 1);
 		return TRUE;
-	}
 
-	if (LOWORD(wParam) == IDM_SCALE)
-	{
+	case IDM_SCALE:
 		App->CL_Top_Tabs->Set_Brush_Mode(ID_TOOLS_BRUSH_SCALEBRUSH, 2);
 		return TRUE;
-	}
 
-	if (LOWORD(wParam) == IDM_ROTATE)
-	{
+	case IDM_ROTATE:
 		App->CL_Top_Tabs->Set_Brush_Mode(ID_TOOLS_BRUSH_MOVEROTATEBRUSH, 3);
 		return TRUE;
-	}
 
-	if (LOWORD(wParam) == IDM_SCENE_EDITOR)
-	{
+	case IDM_SCENE_EDITOR:
 		App->CL_Editor_Scene->Set_Editor_Scene();
 		return TRUE;
+
+	default:
+		return FALSE;
 	}
 }
 
@@ -1847,16 +1784,10 @@ void CL64_Editor_Map::On_Mouse_Move(POINT CursorPosition, HWND hDlg)
 	}
 	else
 	{
-		//int Tool;
-
+		
 		if (App->CL_Doc->mModeTool == ID_TOOLS_BRUSH_SCALEBRUSH) //|| (Tool == ID_TOOLS_BRUSH_MOVESELECTEDBRUSHES))
 		{
 			SetEditCursor(ID_TOOLS_BRUSH_SCALEBRUSH, &CursorPosition);
-
-			//POINT pt = mStartPoint;	// The position works on the delta mStartPoint...
-			//ClientToScreen(hDlg, &pt);
-			//SetCursorPos(pt.x, pt.y);
-
 		}
 	}
 
@@ -2014,38 +1945,22 @@ signed int CL64_Editor_Map::BrushDraw(Brush* pBrush, void* lParam)
 // *************************************************************************
 void CL64_Editor_Map::Zoom_View(HWND hDlg, int Dx, int Dy)
 {
+	// Check if the right mouse button is pressed
 	if (flag_Right_Button_Down == 1)
 	{
-		if (Dy < mStartPoint.y)
+		long deltaY = Dy - mStartPoint.y;
+
+		// Adjust zoom factor based on the change in Y position
+		if (deltaY != 0)
 		{
-			long test = mStartPoint.y - Dy;
-
-			if (test > 0)
-			{
-				Current_View->ZoomFactor = Current_View->ZoomFactor + 0.01;
-				Draw_Screen(hDlg);
-			}
-
-			POINT pt = mStartPoint;
-			ClientToScreen(hDlg, &pt);
-			SetCursorPos(pt.x, pt.y);
-
+			Current_View->ZoomFactor += (deltaY > 0) ? -0.01 : 0.01;
+			Draw_Screen(hDlg);
 		}
-		else if (Dy > mStartPoint.y)
-		{
-			long test = Dy - mStartPoint.y;
-			if (test > 0)
-			{
-				Current_View->ZoomFactor = Current_View->ZoomFactor - 0.01;
-				Draw_Screen(hDlg);
 
-			}
-
-			POINT pt = mStartPoint;
-			ClientToScreen(hDlg, &pt);
-			SetCursorPos(pt.x, pt.y);
-
-		}
+		// Update cursor position
+		POINT pt = mStartPoint;
+		ClientToScreen(hDlg, &pt);
+		SetCursorPos(pt.x, pt.y);
 	}
 }
 
@@ -2054,69 +1969,32 @@ void CL64_Editor_Map::Zoom_View(HWND hDlg, int Dx, int Dy)
 // *************************************************************************
 void CL64_Editor_Map::Pan_View(HWND hDlg, int Dx, int Dy)
 {
-	T_Vec3 sp, wp, dv;;
-	T_Vec3 dcamv;
-	int Tolerence = 20;
-	int	dx, dy;
-	POINT RealCursorPosition;
+    T_Vec3 sp, wp, dv, dcamv;
+    POINT RealCursorPosition;
 
-	GetCursorPos(&RealCursorPosition);
-	ScreenToClient(hDlg,&RealCursorPosition);
+    GetCursorPos(&RealCursorPosition);
+    ScreenToClient(hDlg, &RealCursorPosition);
 
-	dx = (RealCursorPosition.x - mStartPoint.x);
-	dy = (RealCursorPosition.y - mStartPoint.y);
+    int dx = RealCursorPosition.x - mStartPoint.x;
+    int dy = RealCursorPosition.y - mStartPoint.y;
 
-	if ((dx == 0) && (dy == 0))
-	{
-		return;
-	}
+    if (dx == 0 && dy == 0)
+    {
+        return;
+    }
 
-	App->CL_Render->Render_ViewToWorld(Current_View, mStartPoint.x, mStartPoint.y, &sp);
-	App->CL_Render->Render_ViewToWorld(Current_View, RealCursorPosition.x, RealCursorPosition.y, &wp);
-	App->CL_Maths->Vector3_Subtract(&wp, &sp, &dv);	// delta in world space
+    App->CL_Render->Render_ViewToWorld(Current_View, mStartPoint.x, mStartPoint.y, &sp);
+    App->CL_Render->Render_ViewToWorld(Current_View, RealCursorPosition.x, RealCursorPosition.y, &wp);
+    App->CL_Maths->Vector3_Subtract(&wp, &sp, &dv); // delta in world space
+    App->CL_Maths->Vector3_Scale(&dv, -1.0f, &dcamv);
 
-	App->CL_Maths->Vector3_Scale(&dv, -1.0f, &dcamv);
+    App->CL_Render->Render_MoveCamPosOrtho(Current_View, &dcamv);
 
+    POINT pt = mStartPoint;
+    ClientToScreen(hDlg, &pt);
+    SetCursorPos(pt.x, pt.y);
 
-	switch (Current_View->ViewType)
-	{
-	case VIEWTOP:  // Top Left
-	{
-		App->CL_Render->Render_MoveCamPosOrtho(Current_View, &dcamv);
-
-		POINT pt = mStartPoint;
-		ClientToScreen(hDlg, &pt);
-		SetCursorPos(pt.x, pt.y);
-
-		break;
-	}
-
-	case VIEWFRONT:  // Bottom Left
-	{
-		App->CL_Render->Render_MoveCamPosOrtho(Current_View, &dcamv);
-
-		POINT pt = mStartPoint;
-		ClientToScreen(hDlg, &pt);
-		SetCursorPos(pt.x, pt.y);
-
-		break;
-	}
-	case VIEWSIDE: // Top Right
-	{
-		App->CL_Render->Render_MoveCamPosOrtho(Current_View, &dcamv);
-
-		POINT pt = mStartPoint;
-		ClientToScreen(hDlg, &pt);
-		SetCursorPos(pt.x, pt.y);
-
-		break;
-	}
-	default:
-
-		break;
-	}
-
-	Draw_Screen(hDlg);
+    Draw_Screen(hDlg);
 }
 
 static signed int BrushDrawSelFacesOrtho(Brush* pBrush, void* lParam)
@@ -2366,59 +2244,48 @@ void CL64_Editor_Map::Render_RenderBrushFacesOrtho(const ViewVars* Cam, Brush* b
 // *************************************************************************
 // *			Draw_Camera:- Terry and Hazel Flanigan 2024	 		   *
 // *************************************************************************
-void CL64_Editor_Map::Draw_Camera(HDC ViewDC)
+void CL64_Editor_Map::Draw_Camera(HDC ViewDC) 
 {
-#define ENTITY_SIZE (32.0f)  // 16" across
-	
-	T_Vec3 VecOrigin;
-	T_Vec3 EntSizeWorld;	// entity size in world space
-	T_Vec3 DummyPos;
+	constexpr float ENTITY_SIZE = 32.0f;  // 16" across
 
-	DummyPos.x = 0;
-	DummyPos.y = 0;
-	DummyPos.z = 0;
+	T_Vec3 VecOrigin{};
+	T_Vec3 EntSizeWorld{};
+	T_Vec3 DummyPos{ 0, 0, 0 };
+	T_Vec3 OgrePos{};
+	Ogre::Vector3 OgreRot{};
+	T_Vec3 Cam_Angles{};
 
-	T_Vec3 OgrePos;
-	Ogre::Vector3 OgreRot;
-	T_Vec3 Cam_Angles;
+	POINT EntPosView{};
+	POINT EntSizeView{};
+	POINT EntWidthHeight{};
+	POINT OriginView{};
 
-	POINT EntPosView;
-	POINT EntSizeView;
-	POINT EntWidthHeight;
-	POINT OriginView;
+	POINT TopLeft{}, BottomRight{}, TopRight{}, BottomLeft{};
 
-	POINT TopLeft, BottomRight;
-	POINT TopRight, BottomLeft;
+	static const float COS45 = static_cast<float>(cos(M_PI / 4.0f));
+	static const float SIN45 = static_cast<float>(sin(M_PI / 4.0f));
+	static const float MCOS45 = static_cast<float>(cos(-M_PI / 4.0f));
+	static const float MSIN45 = static_cast<float>(sin(-M_PI / 4.0f));
 
-	static const float COS45 = (float)cos(M_PI / 4.0f);
-	static const float SIN45 = (float)sin(M_PI / 4.0f);
-	static const float MCOS45 = (float)cos(-(M_PI / 4.0f));
-	static const float MSIN45 = (float)sin(-(M_PI / 4.0f));
-
-	// compute entity size in view coordinates
+	// Compute entity size in view coordinates
 	App->CL_Maths->Vector3_Set(&EntSizeWorld, ENTITY_SIZE, ENTITY_SIZE, ENTITY_SIZE);
-	EntSizeView = App->CL_Render->Render_OrthoWorldToView(Current_View ,&EntSizeWorld);
+	EntSizeView = App->CL_Render->Render_OrthoWorldToView(Current_View, &EntSizeWorld);
 	App->CL_Maths->Vector3_Clear(&VecOrigin);
-	OriginView = App->CL_Render->Render_OrthoWorldToView(Current_View ,&VecOrigin);
-	// This one is the width and height of the Entity
-	EntWidthHeight.x = std::max(OriginView.x, EntSizeView.x) - std::min(OriginView.x, EntSizeView.x);
-	EntWidthHeight.y = std::max(OriginView.y, EntSizeView.y) - std::min(OriginView.y, EntSizeView.y);
+	OriginView = App->CL_Render->Render_OrthoWorldToView(Current_View, &VecOrigin);
 
-	// This can have negative numbers
+	// Calculate width and height of the entity
+	EntWidthHeight.x = std::abs(OriginView.x - EntSizeView.x);
+	EntWidthHeight.y = std::abs(OriginView.y - EntSizeView.y);
+
+	// Adjust entity size view
 	EntSizeView.x -= OriginView.x;
 	EntSizeView.y -= OriginView.y;
-	
-	// entity's position in the view
 
-	if (App->flag_OgreStarted == 1)
-	{
+	// Entity's position in the view
+	if (App->flag_OgreStarted == 1) {
 		OgreRot.x = App->CL_Ogre->camNode->getOrientation().getPitch().valueRadians();
 		OgreRot.y = App->CL_Ogre->camNode->getOrientation().getYaw().valueRadians();
-		OgreRot.z = 0;
-
-		Cam_Angles.x = 3.141593 - OgreRot.x;
-		Cam_Angles.y = -OgreRot.y;
-		Cam_Angles.z = 0;
+		Cam_Angles = { M_PI - OgreRot.x, -OgreRot.y, 0 };
 
 		OgrePos.x = App->CL_Ogre->camNode->getPosition().x;
 		OgrePos.y = App->CL_Ogre->camNode->getPosition().y;
@@ -2426,99 +2293,66 @@ void CL64_Editor_Map::Draw_Camera(HDC ViewDC)
 
 		EntPosView = App->CL_Render->Render_OrthoWorldToView(Current_View, &OgrePos);
 	}
-	else
+	else 
 	{
 		EntPosView = App->CL_Render->Render_OrthoWorldToView(Current_View, &DummyPos);
 	}
 
 	// Draw an X at the Camera position
-	{
-		TopLeft.x = EntPosView.x - EntSizeView.x;
-		TopLeft.y = EntPosView.y - EntSizeView.y;
-		BottomRight.x = EntPosView.x + EntSizeView.x;
-		BottomRight.y = EntPosView.y + EntSizeView.y;
-		TopRight.x = BottomRight.x;
-		TopRight.y = TopLeft.y;
-		BottomLeft.x = TopLeft.x;
-		BottomLeft.y = BottomRight.y;
+	TopLeft = { EntPosView.x - EntSizeView.x, EntPosView.y - EntSizeView.y };
+	BottomRight = { EntPosView.x + EntSizeView.x, EntPosView.y + EntSizeView.y };
+	TopRight = { BottomRight.x, TopLeft.y };
+	BottomLeft = { TopLeft.x, BottomRight.y };
 
-		MoveToEx(ViewDC, TopLeft.x, TopLeft.y, NULL);
-		LineTo(ViewDC, BottomRight.x, BottomRight.y);
+	MoveToEx(ViewDC, TopLeft.x, TopLeft.y, NULL);
+	LineTo(ViewDC, BottomRight.x, BottomRight.y);
+	MoveToEx(ViewDC, TopRight.x, TopRight.y, NULL);
+	LineTo(ViewDC, BottomLeft.x, BottomLeft.y);
 
-		MoveToEx(ViewDC, TopRight.x, TopRight.y, NULL);
-		LineTo(ViewDC, BottomLeft.x, BottomLeft.y);
-	}
+	// Prepare for drawing the direction line
+	POINT ptDirSlope{};
+	POINT ptRotationPoint{};
+	POINT ptRelRotatePoint{};
+	POINT ptPlus45{}, ptMinus45{};
 
-	// ------------------------------------------------------
-	POINT		ptDirSlope;		// Slope of the "Direction" line
-	POINT		ptRotationPoint;	// Point near end of "Direction" line we rotate to get arrowhead points
-	POINT		ptRelRotatePoint;	// Rotation points about zero
-	POINT		ptPlus45;			// Final Arrowhead point
-	POINT		ptMinus45;			// Final Arrowhead point
+	float fRadius = 100.0f;
+	bool bUIAvailable = true;
 
-	float		fPercentIntoLine;	// Distance into Direction line for rotation point
-	float		fDirLength;		// Direction line length
-	float		fEntityLength;		// Entity length
-	float		fRadius;
-	
-	Matrix3d	Xfm;
-	T_Vec3		VecTarg;
-	
-	POINT		LineEndView{ 0 };
-	bool	bUIAvailable;
+	// Set camera angles
+	App->CL_Maths->Vector3_Set(&Cam_Angles, Cam_Angles.z, (-Cam_Angles.y - M_PI / 2.0f), Cam_Angles.x);
 
-	// Get the Radius and the Angle  ONE of these must be present to show UI
-	bUIAvailable = GE_FALSE;
-	
-	fRadius = 100.0f;
-	
-	bUIAvailable = GE_TRUE;
-
-	{
-		App->CL_Maths->Vector3_Set(&Cam_Angles, Cam_Angles.z, (-Cam_Angles.y - M_PI / 2.0f), Cam_Angles.x);
-	}
-
-	
+	Matrix3d Xfm{};
+	T_Vec3 VecTarg{};
 	App->CL_Maths->XForm3d_SetEulerAngles(&Xfm, &Cam_Angles);
 	App->CL_Maths->Vector3_Set(&VecTarg, fRadius, 0.0f, 0.0f);
 	App->CL_Maths->XForm3d_Transform(&Xfm, &VecTarg, &VecTarg);
-	App->CL_Maths->Vector3_Add(&(OgrePos), &VecTarg, &VecTarg);
+	App->CL_Maths->Vector3_Add(&OgrePos, &VecTarg, &VecTarg);
 
-	LineEndView = App->CL_Render->Render_OrthoWorldToView(Current_View, &VecTarg);
+	POINT LineEndView = App->CL_Render->Render_OrthoWorldToView(Current_View, &VecTarg);
 
 	// Draw to the end point
 	MoveToEx(ViewDC, EntPosView.x, EntPosView.y, NULL);
 	LineTo(ViewDC, LineEndView.x, LineEndView.y);
 
-	ptDirSlope.x = LineEndView.x - EntPosView.x;	// Slope of Direction line
-	ptDirSlope.y = LineEndView.y - EntPosView.y;
+	ptDirSlope = { LineEndView.x - EntPosView.x, LineEndView.y - EntPosView.y };
+	float fDirLength = sqrt(ptDirSlope.x * ptDirSlope.x + ptDirSlope.y * ptDirSlope.y);
+	float fEntityLength = sqrt(EntSizeView.x * EntSizeView.x + EntSizeView.y * EntSizeView.y) * 1; // Arrow 2x entity size
+	float fPercentIntoLine = 1.0f - (fEntityLength / fDirLength);
 
-	fDirLength = sqrt((float)(ptDirSlope.x * ptDirSlope.x) + (ptDirSlope.y * ptDirSlope.y));	// Length of Direction line
-	fEntityLength = sqrt((float)(EntSizeView.x * EntSizeView.x) + (EntSizeView.y * EntSizeView.y));
-	fEntityLength *= 1;	// Arrow 2x entity size
-	fPercentIntoLine = 1.0f - (fEntityLength / fDirLength);
-	ptRotationPoint.x = (long)(ptDirSlope.x * fPercentIntoLine);
-	ptRotationPoint.y = (long)(ptDirSlope.y * fPercentIntoLine);
-	ptRotationPoint.x += EntPosView.x;
-	ptRotationPoint.y += EntPosView.y;
+	ptRotationPoint = { static_cast<long>(ptDirSlope.x * fPercentIntoLine + EntPosView.x),
+					   static_cast<long>(ptDirSlope.y * fPercentIntoLine + EntPosView.y) };
 
-	ptRelRotatePoint.x = ptRotationPoint.x - LineEndView.x;
-	ptRelRotatePoint.y = ptRotationPoint.y - LineEndView.y;
+	ptRelRotatePoint = { ptRotationPoint.x - LineEndView.x, ptRotationPoint.y - LineEndView.y };
 
-	ptPlus45.x = (long)(ptRelRotatePoint.x * COS45 - ptRelRotatePoint.y * SIN45);
-	ptPlus45.y = (long)(ptRelRotatePoint.y * COS45 + ptRelRotatePoint.x * SIN45);
-	ptMinus45.x = (long)(ptRelRotatePoint.x * MCOS45 - ptRelRotatePoint.y * MSIN45);
-	ptMinus45.y = (long)(ptRelRotatePoint.y * MCOS45 + ptRelRotatePoint.x * MSIN45);
+	ptPlus45 = { static_cast<long>(ptRelRotatePoint.x * COS45 - ptRelRotatePoint.y * SIN45 + LineEndView.x),
+				static_cast<long>(ptRelRotatePoint.y * COS45 + ptRelRotatePoint.x * SIN45 + LineEndView.y) };
 
-	ptPlus45.x += LineEndView.x;
-	ptPlus45.y += LineEndView.y;
-	ptMinus45.x += LineEndView.x;
-	ptMinus45.y += LineEndView.y;
+	ptMinus45 = { static_cast<long>(ptRelRotatePoint.x * MCOS45 - ptRelRotatePoint.y * MSIN45 + LineEndView.x),
+				 static_cast<long>(ptRelRotatePoint.y * MCOS45 + ptRelRotatePoint.x * MSIN45 + LineEndView.y) };
 
 	LineTo(ViewDC, ptPlus45.x, ptPlus45.y);
 	LineTo(ViewDC, ptMinus45.x, ptMinus45.y);
 	LineTo(ViewDC, LineEndView.x, LineEndView.y);
-
 }
 
 // *************************************************************************

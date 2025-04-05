@@ -120,44 +120,41 @@ void CL64_Gui_Environment::Reset_Class()
 // *************************************************************************
 // *	 Start_Environment_Editor:- Terry and Hazel Flanigan 2023  		   *
 // *************************************************************************
-void CL64_Gui_Environment::Start_Environment_Editor(int Index,bool IsTeleport)
-{
-	Eviron_Index = Index;
-	flag_Is_Teleport = IsTeleport;
-
+void CL64_Gui_Environment::Start_Environment_Editor(int index, bool isTeleport) {
+	Eviron_Index = index;
+	flag_Is_Teleport = isTeleport;
 	flag_Float_Exit = 0;
 
-	Ambient_Colour_Copy.x = App->CL_Editor->B_Object[Eviron_Index]->S_Environ[0]->AmbientColour.x;
-	Ambient_Colour_Copy.y = App->CL_Editor->B_Object[Eviron_Index]->S_Environ[0]->AmbientColour.y;
-	Ambient_Colour_Copy.z = App->CL_Editor->B_Object[Eviron_Index]->S_Environ[0]->AmbientColour.z;
+	auto& environment = App->CL_Editor->B_Object[Eviron_Index]->S_Environ[0];
 
-	Ambient_Colour.x = App->CL_Editor->B_Object[Eviron_Index]->S_Environ[0]->AmbientColour.x;
-	Ambient_Colour.y = App->CL_Editor->B_Object[Eviron_Index]->S_Environ[0]->AmbientColour.y;
-	Ambient_Colour.z = App->CL_Editor->B_Object[Eviron_Index]->S_Environ[0]->AmbientColour.z;
+	Ambient_Colour_Copy.x = environment->AmbientColour.x;
+	Ambient_Colour_Copy.y = environment->AmbientColour.y;
+	Ambient_Colour_Copy.z = environment->AmbientColour.z;
 
-	Ambient_Int_Red = Ambient_Colour.x * 255;
-	Ambient_Int_Green = Ambient_Colour.y * 255;
-	Ambient_Int_Blue = Ambient_Colour.z * 255;
+	Ambient_Colour.x = environment->AmbientColour.x;
+	Ambient_Colour.y = environment->AmbientColour.y;
+	Ambient_Colour.z = environment->AmbientColour.z;
 
-	Fog_Colour_Copy.x = App->CL_Editor->B_Object[Eviron_Index]->S_Environ[0]->Fog_Colour.x;
-	Fog_Colour_Copy.y = App->CL_Editor->B_Object[Eviron_Index]->S_Environ[0]->Fog_Colour.y;
-	Fog_Colour_Copy.z = App->CL_Editor->B_Object[Eviron_Index]->S_Environ[0]->Fog_Colour.z;
+	Ambient_Int_Red = static_cast<int>(Ambient_Colour.x * 255);
+	Ambient_Int_Green = static_cast<int>(Ambient_Colour.y * 255);
+	Ambient_Int_Blue = static_cast<int>(Ambient_Colour.z * 255);
 
-	Fog_Colour.x = App->CL_Editor->B_Object[Eviron_Index]->S_Environ[0]->Fog_Colour.x;
-	Fog_Colour.y = App->CL_Editor->B_Object[Eviron_Index]->S_Environ[0]->Fog_Colour.y;
-	Fog_Colour.z = App->CL_Editor->B_Object[Eviron_Index]->S_Environ[0]->Fog_Colour.z;
+	Fog_Colour_Copy.x = environment->Fog_Colour.x;
+	Fog_Colour_Copy.y = environment->Fog_Colour.y;
+	Fog_Colour_Copy.z = environment->Fog_Colour.z;
 
-	Fog_Colour_Int_Red = Fog_Colour.x * 255;
-	Fog_Colour_Int_Green = Fog_Colour.y * 255;
-	Fog_Colour_Int_Blue = Fog_Colour.z * 255;
+	Fog_Colour.x = environment->Fog_Colour.x;
+	Fog_Colour.y = environment->Fog_Colour.x;
+	Fog_Colour.z = environment->Fog_Colour.z;
 
-	flag_ClickOnFogVisible = App->CL_Editor->B_Object[Eviron_Index]->S_Environ[0]->Fog_On;
-	flag_ClickOnSkyEnabled = App->CL_Editor->B_Object[Eviron_Index]->S_Environ[0]->flag_Enabled;
-	flag_ClickOnPlay = App->CL_Editor->B_Object[Eviron_Index]->S_Environ[0]->flag_Play;
-	flag_ClickOnLoop = App->CL_Editor->B_Object[Eviron_Index]->S_Environ[0]->flag_Loop;
+	Fog_Colour_Int_Red = static_cast<int>(Fog_Colour.x * 255);
+	Fog_Colour_Int_Green = static_cast<int>(Fog_Colour.y * 255);
+	Fog_Colour_Int_Blue = static_cast<int>(Fog_Colour.z * 255);
 
-	/*App->Disable_Panels(true);
-	App->Show_Panels(false);*/
+	flag_ClickOnFogVisible = environment->Fog_On;
+	flag_ClickOnSkyEnabled = environment->flag_Enabled;
+	flag_ClickOnPlay = environment->flag_Play;
+	flag_ClickOnLoop = environment->flag_Loop;
 
 	App->CL_FileView->Show_FileView(false);
 	App->CL_Com_Environments->Set_Environment_By_Index(1, Eviron_Index);
@@ -570,22 +567,21 @@ bool CL64_Gui_Environment::EnableFog(bool SetFog)
 {
 	int Index = App->CL_Properties_Scene->Current_Selected_Object;
 
-	if (SetFog == true)
+	if (SetFog)
 	{
-		float Start = App->CL_Editor->B_Object[Index]->S_Environ[0]->Fog_Start;
-		float End = App->CL_Editor->B_Object[Index]->S_Environ[0]->Fog_End;
-		float Density = App->CL_Editor->B_Object[Index]->S_Environ[0]->Fog_Density;
-
-		float x = App->CL_Editor->B_Object[Index]->S_Environ[0]->Fog_Colour.x;
-		float y = App->CL_Editor->B_Object[Index]->S_Environ[0]->Fog_Colour.y;
-		float z = App->CL_Editor->B_Object[Index]->S_Environ[0]->Fog_Colour.z;
-
-		App->CL_Ogre->mSceneMgr->setFog(FOG_LINEAR, ColourValue(x, y, z), Density, (Ogre::Real)Start, (Ogre::Real)End);
+		const auto& fogProperties = App->CL_Editor->B_Object[Index]->S_Environ[0];
+		App->CL_Ogre->mSceneMgr->setFog(FOG_LINEAR,
+			ColourValue(fogProperties->Fog_Colour.x,
+				fogProperties->Fog_Colour.y,
+				fogProperties->Fog_Colour.z),
+			fogProperties->Fog_Density,
+			static_cast<Ogre::Real>(fogProperties->Fog_Start),
+			static_cast<Ogre::Real>(fogProperties->Fog_End));
 	}
 	else
 	{
-		App->CL_Ogre->mSceneMgr->setFog(FOG_NONE, ColourValue(0.7, 0.7, 0.8), 0, 100, 1000);
+		App->CL_Ogre->mSceneMgr->setFog(FOG_NONE, ColourValue(0.7f, 0.7f, 0.8f), 0, 100, 1000);
 	}
 
-	return 1;
+	return true;
 }

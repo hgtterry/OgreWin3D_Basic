@@ -161,27 +161,27 @@ void CL64_Mesh_Mgr::Delete_Group_Brushes()
 // *************************************************************************
 // *		Update_World:- Terry and Hazel Flanigan 2025	 			   *
 // *************************************************************************
-bool CL64_Mesh_Mgr::Update_World(int Selected)
+bool CL64_Mesh_Mgr::Update_World(int selected)
 {
 	v_Face_Data_Count = 0;
 
-	int BC = App->CL_Brush->Get_Brush_Count();
-	if (BC > 0)
+	int brushCount = App->CL_Brush->Get_Brush_Count();
+	if (brushCount > 0)
 	{
-		Brush_Build_List(Selected);
+		Brush_Build_List(selected);
 		WE_Convert_All_Texture_Groups();
 
 		if (App->CL_Ogre->OGL_Listener->Flag_Render_Brushes == 0)
 		{
-			App->CL_Ogre3D->Convert_ToOgre3D(1); // Will Set Node Visable
+			App->CL_Ogre3D->Convert_ToOgre3D(1); // Will Set Node Visible
 		}
 	}
 	else
 	{
 		App->CL_Mesh_Mgr->World_Node->setVisible(false);
 	}
-	
-	return 1;
+
+	return true;
 }
 
 // *************************************************************************
@@ -191,25 +191,21 @@ void CL64_Mesh_Mgr::Brush_Build_List(int ExpSelected)
 {
 	Delete_Brush_List();
 
-	//App->CL_Doc->Set_Faces_To_Brush_Name_All();
-
 	App->CL_Editor->BrushCount = 0;
-
 	mBrushCount = 0;
 	mSubBrushCount = 0;
 
-	BrushList* BList = NULL;
-	signed int fResult;
-
-	BList = App->CL_Level->Level_GetBrushes(App->CL_Doc->pLevel);
-	if (BList == NULL)
+	BrushList* BList = App->CL_Level->Level_GetBrushes(App->CL_Doc->pLevel);
+	if (!BList)
 	{
-		App->Say("Error");
+		App->Say("Error: No brushes found.");
+		return;
 	}
 
-	if (ExpSelected == 0)	// Build All
+	if (ExpSelected == 0) // Build All
 	{
-		fResult = Brush_Build_Level_Brushes(reinterpret_cast<tag_Level3*> (App->CL_Doc->pLevel), "FileName", BList, 0, 0, -1);
+		signed int fResult = Brush_Build_Level_Brushes(reinterpret_cast<tag_Level3*>(App->CL_Doc->pLevel), "FileName", BList, 0, 0, -1);
+
 	}
 	else
 	{
@@ -277,37 +273,34 @@ bool CL64_Mesh_Mgr::Brush_Build_Selected(BrushList* BList)
 // *************************************************************************
 bool CL64_Mesh_Mgr::Brush_Build_Level_Brushes(Level3* pLevel, const char* Filename, BrushList* BList, int ExpSelected, signed int ExpLights, int GroupID)
 {
-	CL64_WadFile* pWad;
-	pWad = NULL;
-	pWad = App->CL_Level->Level_GetWadFile(App->CL_Doc->pLevel);
-	int ml_BitMap_Count = pWad->mBitmapCount;
+	CL64_WadFile* pWad = App->CL_Level->Level_GetWadFile(App->CL_Doc->pLevel);
+	if (!pWad) {
+		App->Say("Failed to retrieve WAD file.");
+		return false;
+	}
 
+	int ml_BitMap_Count = pWad->mBitmapCount;
 	mTextureCount = 0;
-	memset(mAdjusedIndex_Store, 0, 500);
-	memset(UsedTextures, 0, 500);
+	memset(mAdjusedIndex_Store, 0, sizeof(mAdjusedIndex_Store));
+	memset(UsedTextures, 0, sizeof(UsedTextures));
 	Actual_Brush_Index = 0;
 
-	int i;
-
-	App->CL_Brush_X->BrushList_GetUsedTextures_X(BList,UsedTextures);
+	App->CL_Brush_X->BrushList_GetUsedTextures_X(BList, UsedTextures);
 
 	// Add Textures GL
 	int AdjustedIndex = 0;
 
-	for (i = 0; i < ml_BitMap_Count; i++)
+	for (int i = 0; i < ml_BitMap_Count; i++)
 	{
 		if (UsedTextures[i])
 		{
-			char matname[MAX_PATH];
-
-			strncpy(matname, pWad->mBitmaps[i].Name, MAX_PATH - 1);
-			strcpy(TextureName2[AdjustedIndex], matname);
-
+			strncpy(TextureName2[AdjustedIndex], pWad->mBitmaps[i].Name, MAX_PATH - 1);
+			TextureName2[AdjustedIndex][MAX_PATH - 1] = '\0'; // Ensure null-termination
 			mAdjusedIndex_Store[AdjustedIndex] = i;
 
 			if (App->CL_Ogre->OGL_Listener->Flag_Render_Brushes == 0)
 			{
-				//AddTexture_GL(NULL, matname, AdjustedIndex);
+				// AddTexture_GL(NULL, TextureName2[AdjustedIndex], AdjustedIndex);
 			}
 
 			AdjustedIndex++;
@@ -322,8 +315,7 @@ bool CL64_Mesh_Mgr::Brush_Build_Level_Brushes(Level3* pLevel, const char* Filena
 	}
 
 	Brush_Decode_List(BList, false);
-
-	return 1;
+	return true;
 }
 
 // *************************************************************************
@@ -336,22 +328,16 @@ bool CL64_Mesh_Mgr::Brush_Decode_List(BrushList* BList, signed int SubBrush)
 
 	pBrush = App->CL_Brush->BrushList_GetFirst(BList, &bi);
 
-	while (pBrush != NULL)
+	while (pBrush != nullptr)
 	{
-		if (pBrush->GroupId == 1)
-		{
-
-		}
-		else
+		if (pBrush->GroupId != 1)
 		{
 			strcpy(mBrush_Name, pBrush->Name);
 
-			if (mSubBrushCount == 0 && pBrush->Flags & 1 || pBrush->Flags & 1024)
+			bool isFirstBrush = (mSubBrushCount == 0 && (pBrush->Flags & 1)) || (pBrush->Flags & 1024);
+			if (isFirstBrush && SubBrush == 0)
 			{
-				if (SubBrush == 0)
-				{
-					mBrush_Index = mBrushCount;
-				}
+				mBrush_Index = mBrushCount;
 			}
 
 			if (!Brush_Create(pBrush, Actual_Brush_Index))
@@ -376,11 +362,10 @@ bool CL64_Mesh_Mgr::Brush_Decode_List(BrushList* BList, signed int SubBrush)
 
 	mSubBrushCount = 0;
 
-	if (!SubBrush)
+	if (SubBrush == 0)
 	{
 		mBrushCount = 0;
 	}
-
 
 	return true;
 }
@@ -390,39 +375,53 @@ bool CL64_Mesh_Mgr::Brush_Decode_List(BrushList* BList, signed int SubBrush)
 // *************************************************************************
 bool CL64_Mesh_Mgr::Brush_Create(const Brush* b, int Actual_Brush_Index)
 {
+	if (!b) return false; // Check for null pointer
+
 	switch (b->Type)
 	{
 	case BRUSH_MULTI:
 		return Brush_Decode_List(b->BList, true); // Recursive
 
 	case BRUSH_LEAF:
-		if (b->BList)
-		{
-			return Brush_Decode_List(b->BList, true); // Recursive
-		}
-		else
-		{
-			if (!(b->Flags & (BRUSH_HOLLOW | BRUSH_HOLLOWCUT | BRUSH_SUBTRACT)))
-			{
-				return Brush_FaceList_Create(b, b->Faces, mBrushCount, mSubBrushCount, Actual_Brush_Index);
-			}
-			else if ((b->Flags & BRUSH_SUBTRACT) && !(b->Flags & (BRUSH_HOLLOW | BRUSH_HOLLOWCUT)))
-				mBrushCount--;
-		}
-		break;
-
+		return HandleLeafBrush(b, Actual_Brush_Index);
 
 	case BRUSH_CSG:
-		if (!(b->Flags & (BRUSH_HOLLOW | BRUSH_HOLLOWCUT | BRUSH_SUBTRACT)))
-		{
-			return Brush_FaceList_Create(b, b->Faces, mBrushCount, mSubBrushCount, Actual_Brush_Index);
-		}
-		break;
-	default:
-		assert(0);		// invalid brush type
-		break;
-	}
+		return HandleCSGBrush(b, Actual_Brush_Index);
 
+	default:
+		return false;
+	}
+}
+
+// *************************************************************************
+// *			HandleLeafBrush:- Terry and Hazel Flanigan 2025			   *
+// *************************************************************************
+bool CL64_Mesh_Mgr::HandleLeafBrush(const Brush* b, int Actual_Brush_Index)
+{
+	if (b->BList)
+	{
+		return Brush_Decode_List(b->BList, true); // Recursive
+	}
+	else if (!(b->Flags & (BRUSH_HOLLOW | BRUSH_HOLLOWCUT | BRUSH_SUBTRACT)))
+	{
+		return Brush_FaceList_Create(b, b->Faces, mBrushCount, mSubBrushCount, Actual_Brush_Index);
+	}
+	else if ((b->Flags & BRUSH_SUBTRACT) && !(b->Flags & (BRUSH_HOLLOW | BRUSH_HOLLOWCUT)))
+	{
+		mBrushCount--;
+	}
+	return true;
+}
+
+// *************************************************************************
+// *			HandleCSGBrush:- Terry and Hazel Flanigan 2025			   *
+// *************************************************************************
+bool CL64_Mesh_Mgr::HandleCSGBrush(const Brush* b, int Actual_Brush_Index)
+{
+	if (!(b->Flags & (BRUSH_HOLLOW | BRUSH_HOLLOWCUT | BRUSH_SUBTRACT)))
+	{
+		return Brush_FaceList_Create(b, b->Faces, mBrushCount, mSubBrushCount, Actual_Brush_Index);
+	}
 	return true;
 }
 
@@ -434,16 +433,13 @@ bool CL64_Mesh_Mgr::Brush_FaceList_Create(const Brush* b, const FaceList* pList,
 	App->CL_Editor->Create_Brush_XX(App->CL_Editor->BrushCount);
 	App->CL_Editor->B_Brush[App->CL_Editor->BrushCount]->Group_Index = mBrush_Index;
 	strcpy(App->CL_Editor->B_Brush[App->CL_Editor->BrushCount]->Brush_Name, mBrush_Name);
-
+	
 	m_Total_Faces = m_Total_Faces + pList->NumFaces;
 
 	int i, j, k, num_faces, num_verts, num_mats, num_chars, curnum_verts;
 	char matname[MAX_PATH];
 
-	char* matf = (char*)calloc(sizeof(char), pList->NumFaces);
-
-	assert(pList != NULL);
-	assert(f != NULL);
+	std::vector<bool> matf(pList->NumFaces, false);
 
 	num_faces = num_verts = num_mats = num_chars = 0;
 	// get the total number of verts, faces and materials of the object
@@ -470,7 +466,9 @@ bool CL64_Mesh_Mgr::Brush_FaceList_Create(const Brush* b, const FaceList* pList,
 	}
 
 	for (i = 0; i < pList->NumFaces; i++)
-		matf[i] = 0;
+	{
+		matf[i] = false;
+	}
 
 	// -----------------------------------  Vertices
 	int VertIndex = 0;
@@ -584,7 +582,7 @@ bool CL64_Mesh_Mgr::Brush_FaceList_Create(const Brush* b, const FaceList* pList,
 	{
 		if (!matf[i])
 		{
-			matf[i] = 1;
+			matf[i] = true;
 
 			int curnum_faces = (App->CL_Face->Face_GetNumPoints(pList->Faces[i]) - 2);
 
@@ -623,14 +621,12 @@ bool CL64_Mesh_Mgr::Brush_FaceList_Create(const Brush* b, const FaceList* pList,
 				curnum_verts = App->CL_Face->Face_GetNumPoints(pList->Faces[j]);
 				if (strcmp(App->CL_Face->Face_GetTextureName(pList->Faces[i]), App->CL_Face->Face_GetTextureName(pList->Faces[j])) == 0)
 				{
-					matf[j] = 1;
+					matf[j] = true;
 					for (k = 0; k < curnum_verts - 2; k++)
 					{
-						
 						TextureId = Get_Adjusted_Index(App->CL_Face->Face_GetTextureDibId(pList->Faces[i]));
 						App->CL_Editor->B_Brush[App->CL_Editor->BrushCount]->Picking_Data[curnum_faces + k].TextID = TextureId;
-						
-						
+
 					}
 				}
 
@@ -638,8 +634,6 @@ bool CL64_Mesh_Mgr::Brush_FaceList_Create(const Brush* b, const FaceList* pList,
 			}
 		}
 	}
-
-	free(matf);
 
 	App->CL_Editor->BrushCount++;
 
@@ -665,56 +659,42 @@ void CL64_Mesh_Mgr::Create_V_Face(int Index)
 // *************************************************************************
 // *	WE_Convert_All_Texture_Groups:- Terry and Hazel Flanigan 2025	   *
 // *************************************************************************
-bool CL64_Mesh_Mgr::WE_Convert_All_Texture_Groups()
-{
-	int mTotalVertices = 0;
+bool CL64_Mesh_Mgr::WE_Convert_All_Texture_Groups() {
+	int totalVertices = 0;
 	ActualFaceCount = 0;
 
 	Delete_Group_Brushes();
-
 	strcpy(App->CL_Editor->JustName, "Test");
-
 	App->CL_Editor->GroupCount = mTextureCount;
 
-	int Count = 0;
-	while (Count < mTextureCount)
+	for (int count = 0; count < mTextureCount; ++count) 
 	{
-		App->CL_Editor->Create_Mesh_Group(Count);
-		int FaceCount = WE_Get_Vertice_Count(Count);
+		App->CL_Editor->Create_Mesh_Group(count);
+		int64_t faceCount = WE_Get_Vertice_Count(count);
 
-		strcpy(App->CL_Editor->Group[Count]->GroupName, TextureName2[Count]);
-		strcpy(App->CL_Editor->Group[Count]->MaterialName, TextureName2[Count]);
+		// Get Group
+		auto& group = App->CL_Editor->Group[count];
 
-		int TrueIndex = App->CL_TXL_Editor->GetIndex_From_Name(TextureName2[Count]);
-		
-		//App->Say(TextureName2[Count]);
-		//App->Say(App->CL_TXL_Editor->Texture_List[TrueIndex]->FileName);
+		strcpy(group->GroupName, TextureName2[count]);
+		strcpy(group->MaterialName, TextureName2[count]);
 
-		char buff[MAX_PATH];
-		strcpy(buff, App->CL_TXL_Editor->Texture_List[TrueIndex]->FileName);
-		strcpy(App->CL_Editor->Group[Count]->Text_FileName, buff);
+		int trueIndex = App->CL_TXL_Editor->GetIndex_From_Name(TextureName2[count]);
+		strcpy(group->Text_FileName, App->CL_TXL_Editor->Texture_List[trueIndex]->FileName);
 
-		App->CL_Editor->Group[Count]->Has_Alpha = App->CL_TXL_Editor->Texture_List[TrueIndex]->Has_Alpha;
-		App->CL_Editor->Group[Count]->MaterialIndex = Count;
-		App->CL_Editor->Group[Count]->vertex_Data.resize(FaceCount * 3);
-		App->CL_Editor->Group[Count]->Normal_Data.resize(FaceCount * 3);
-		App->CL_Editor->Group[Count]->MapCord_Data.resize(FaceCount * 3);
-		App->CL_Editor->Group[Count]->Face_Data.resize(FaceCount);
-		App->CL_Editor->Group[Count]->FaceIndex_Data.resize(FaceCount * 3);
+		group->Has_Alpha = App->CL_TXL_Editor->Texture_List[trueIndex]->Has_Alpha;
+		group->MaterialIndex = count;
+		group->vertex_Data.resize(faceCount * 3);
+		group->Normal_Data.resize(faceCount * 3);
+		group->MapCord_Data.resize(faceCount * 3);
+		group->Face_Data.resize(faceCount);
+		group->FaceIndex_Data.resize(faceCount * 3);
 
-		WE_Convert_To_Texture_Group(Count);
-
-		mTotalVertices = mTotalVertices + FaceCount;
-
-		Count++;
+		WE_Convert_To_Texture_Group(count);
+		totalVertices += faceCount;
 	}
 
-	App->CL_Editor->VerticeCount = mTotalVertices * 3;
-	App->CL_Editor->FaceCount = mTotalVertices;
-
-	//App->CL_Editor->Render_Type = Enums::LoadedFile_Assimp;
-
-	//Update_Brush_List(Mesh_Viewer_HWND);
+	App->CL_Editor->VerticeCount = totalVertices * 3;
+	App->CL_Editor->FaceCount = totalVertices;
 
 	return true;
 }

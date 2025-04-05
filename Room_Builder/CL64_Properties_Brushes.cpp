@@ -271,7 +271,7 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Brush_Tabs(HWND hDlg, UINT messag
 
 			if (NumSelBrushes > 0)
 			{
-				App->CL_Properties_Brushes->Start_Dimensions_Dlg();
+				App->CL_Properties_Brushes->StartDimensionsDialog();
 			}
 			else
 			{
@@ -464,25 +464,21 @@ void CL64_Properties_Brushes::OnSelchangeBrushlist(int Index, bool Clear)
 // *************************************************************************
 void CL64_Properties_Brushes::Fill_ListBox()
 {
-	if (flag_Brushes_Dlg_Created == 1)
+	if (flag_Brushes_Dlg_Created != 1) return;
+
+	SendDlgItemMessage(BrushesDlg_Hwnd, IDC_GD_BRUSHLIST, LB_RESETCONTENT, 0, 0);
+
+	BrushList* pList = App->CL_Level->Level_GetBrushes(App->CL_Doc->pLevel);
+	int count = 0;
+
+	for (Brush* b = pList->First; b != nullptr; b = b->Next)
 	{
-		SendDlgItemMessage(BrushesDlg_Hwnd, IDC_GD_BRUSHLIST, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
-
-		BrushList* pList = App->CL_Level->Level_GetBrushes(App->CL_Doc->pLevel);
-
-		int Count = 0;
-		Brush* b;
-		b = pList->First;
-		while (b != NULL)
-		{
-			SendDlgItemMessage(BrushesDlg_Hwnd, IDC_GD_BRUSHLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)App->CL_Brush->Brush_GetName(b));
-			Count++;
-			b = b->Next;
-		}
-
-		char buff[100];
-		SetDlgItemText(BrushesDlg_Hwnd, IDC_BRUSHCOUNT, _itoa(Count, buff, 10));
+		SendDlgItemMessage(BrushesDlg_Hwnd, IDC_GD_BRUSHLIST, LB_ADDSTRING, 0, (LPARAM)App->CL_Brush->Brush_GetName(b));
+		count++;
 	}
+
+	char buff[100];
+	SetDlgItemText(BrushesDlg_Hwnd, IDC_BRUSHCOUNT, _itoa(count, buff, 10));
 }
 
 // *************************************************************************
@@ -506,7 +502,6 @@ void CL64_Properties_Brushes::Get_Index(const Brush* b)
 		{
 			SendDlgItemMessage(BrushesDlg_Hwnd, IDC_GD_BRUSHLIST, LB_SETCURSEL, (WPARAM)Count, (LPARAM)0);
 			Selected_Index = Count;
-			//Selected_Brush = App->CL_Brush->Get_Brush_ByIndex(Selected_Index);
 			List_Selection_Changed(0);
 		}
 
@@ -518,7 +513,7 @@ void CL64_Properties_Brushes::Get_Index(const Brush* b)
 }
 
 // *************************************************************************
-// * Update_SelectedBrushesCount_Dlg:- Terry and Hazel Flanigan 2025	*
+// *	Update_SelectedBrushesCount_Dlg:- Terry and Hazel Flanigan 2025	   *
 // *************************************************************************
 void CL64_Properties_Brushes::Update_SelectedBrushesCount_Dlg()
 {
@@ -528,17 +523,17 @@ void CL64_Properties_Brushes::Update_SelectedBrushesCount_Dlg()
 }
 
 // *************************************************************************
-// *	  	Start_Dimensions_Dlg:- Terry and Hazel Flanigan 2025		   *
+// *	  	StartDimensionsDialog:- Terry and Hazel Flanigan 2025		   *
 // *************************************************************************
-void CL64_Properties_Brushes::Start_Dimensions_Dlg()
+void CL64_Properties_Brushes::StartDimensionsDialog()
 {
-	if (flag_Dimension_Dlg_Active == 0)
+	if (!flag_Dimension_Dlg_Active)
 	{
-		int NumberOfBrushes = App->CL_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes);
-		if (NumberOfBrushes > 0)
+		int numberOfBrushes = App->CL_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes);
+		if (numberOfBrushes > 0)
 		{
 			Dimensions_Dlg_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_BRUSH_DIMENSIONS, App->MainHwnd, (DLGPROC)Proc_Dimensions_Dlg);
-			flag_Dimension_Dlg_Active = 1;
+			flag_Dimension_Dlg_Active = true;
 		}
 		else
 		{
@@ -750,29 +745,22 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Dimensions_Dlg(HWND hDlg, UINT me
 
 	case WM_HSCROLL:
 	{
-		// ------------------------------------------------------------- Position
 		// -------- Pos X
-		if (HWND(lParam) == GetDlgItem(hDlg, IDC_SBPOSXH))
-		{
-			switch ((int)LOWORD(wParam))
+		if (HWND(lParam) == GetDlgItem(hDlg, IDC_SBPOSXH)) {
+			int delta = App->CL_Properties_Brushes->PosX_Delta;
+			switch ((int)LOWORD(wParam)) 
 			{
 			case SB_LINERIGHT:
-			{
-				App->CL_Properties_Brushes->CenterOfSelection.x += App->CL_Properties_Brushes->PosX_Delta;
-				App->CL_Properties_Brushes->Move_Brush();
+				App->CL_Properties_Brushes->CenterOfSelection.x += delta;
 				break;
-			}
 
 			case SB_LINELEFT:
-			{
-				App->CL_Properties_Brushes->CenterOfSelection.x -= App->CL_Properties_Brushes->PosX_Delta;
-				App->CL_Properties_Brushes->Move_Brush();
+				App->CL_Properties_Brushes->CenterOfSelection.x -= delta;
 				break;
 			}
-			}
 
+			App->CL_Properties_Brushes->Move_Brush();
 			App->CL_Properties_Brushes->Update_From_Brush_Dlg(hDlg);
-
 			return 0;
 		}
 
@@ -1239,47 +1227,35 @@ void CL64_Properties_Brushes::Fill_ComboBox_RotDelta(HWND hDlg)
 }
 
 // *************************************************************************
-// *		Update_From_Brush_Dlg:- Terry and Hazel Flanigan 2025	    *
+// *			Update_From_Brush_Dlg:- Terry and Hazel Flanigan 2025	   *
 // *************************************************************************
 void CL64_Properties_Brushes::Update_From_Brush_Dlg(HWND hDlg)
 {
-	//Lock_Textures(true);
-
 	Get_Brush();
 	App->CL_SelBrushList->SelBrushList_Center(App->CL_Doc->pSelBrushes, &App->CL_Doc->SelectedGeoCenter);
 	CenterOfSelection = App->CL_Doc->SelectedGeoCenter;
 
+	UpdateDialogItem(hDlg, IDC_ED_BRUSH_POSX, CenterOfSelection.x, "%.3f");
+	UpdateDialogItem(hDlg, IDC_ED_BRUSH_POSY, CenterOfSelection.y, "%.3f");
+	UpdateDialogItem(hDlg, IDC_ED_BRUSH_POSZ, CenterOfSelection.z, "%.3f");
+
+	UpdateDialogItem(hDlg, IDC_ED_BRUSH_ROTX, Rotation.x, "%.2f");
+	UpdateDialogItem(hDlg, IDC_ED_BRUSH_ROTY, Rotation.y, "%.2f");
+	UpdateDialogItem(hDlg, IDC_ED_BRUSH_ROTZ, Rotation.z, "%.2f");
+
+	UpdateDialogItem(hDlg, IDC_ED_BRUSH_SCALEX, Size.x, "%.2f");
+	UpdateDialogItem(hDlg, IDC_ED_BRUSH_SCALEY, Size.y, "%.2f");
+	UpdateDialogItem(hDlg, IDC_ED_BRUSH_SCALEZ, Size.z, "%.2f");
+}
+
+// *************************************************************************
+// *			UpdateDialogItem:- Terry and Hazel Flanigan 2025		   *
+// *************************************************************************
+void CL64_Properties_Brushes::UpdateDialogItem(HWND hDlg, int itemId, float value, const char* format)
+{
 	char buf[255];
-
-	// Pos
-	sprintf(buf, "%.3f", CenterOfSelection.x);
-	SetDlgItemText(hDlg, IDC_ED_BRUSH_POSX, buf);
-
-	sprintf(buf, "%.3f", CenterOfSelection.y);
-	SetDlgItemText(hDlg, IDC_ED_BRUSH_POSY, buf);
-
-	sprintf(buf, "%.3f", CenterOfSelection.z);
-	SetDlgItemText(hDlg, IDC_ED_BRUSH_POSZ, buf);
-
-	// Rotation
-	sprintf(buf, "%.2f", Rotation.x);
-	SetDlgItemText(hDlg, IDC_ED_BRUSH_ROTX, buf);
-
-	sprintf(buf, "%.2f", Rotation.y);
-	SetDlgItemText(hDlg, IDC_ED_BRUSH_ROTY, buf);
-
-	sprintf(buf, "%.2f", Rotation.z);
-	SetDlgItemText(hDlg, IDC_ED_BRUSH_ROTZ, buf);
-
-	// Scale
-	sprintf(buf, "%.2f", Size.x);
-	SetDlgItemText(hDlg, IDC_ED_BRUSH_SCALEX, buf);
-
-	sprintf(buf, "%.2f", Size.y);
-	SetDlgItemText(hDlg, IDC_ED_BRUSH_SCALEY, buf);
-
-	sprintf(buf, "%.2f", Size.z);
-	SetDlgItemText(hDlg, IDC_ED_BRUSH_SCALEZ, buf);
+	sprintf(buf, format, value);
+	SetDlgItemText(hDlg, itemId, buf);
 }
 
 // *************************************************************************
