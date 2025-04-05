@@ -206,6 +206,11 @@ void CL64_ImGui::ImGui_Render_Loop(void)
 		Camera_Mode_GUI();
 	}
 	
+	if (App->CL_Gui_Environment->flag_Show_PropertyEditor == 1)
+	{
+		App->CL_Gui_Environment->Environ_PropertyEditor();
+	}
+
 	/*if (flag_Show_ImGui_Demo == 1)
 	{
 		ImGui::ShowDemoWindow();

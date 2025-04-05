@@ -35,6 +35,7 @@ public:
 	HTREEITEM Add_Item(HTREEITEM Folder, char* SFileName, int Index, bool NewItem);
 	void Set_FolderActive(HTREEITEM Folder);
 	void SelectItem(HTREEITEM TreeItem);
+	void Enable_Environment_Button(bool Enable);
 
 	HTREEITEM FV_Evirons_Folder;
 

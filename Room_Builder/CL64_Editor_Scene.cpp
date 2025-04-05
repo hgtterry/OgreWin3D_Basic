@@ -32,6 +32,7 @@ THE SOFTWARE.
 CL64_Editor_Scene::CL64_Editor_Scene()
 {
 	flag_Scene_Editor_Active = 0;
+	flag_Environment_Available = 0;
 
 	Scene_Headers_hWnd = NULL;
 	hMenu = NULL;

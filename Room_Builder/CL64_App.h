@@ -77,6 +77,8 @@ THE SOFTWARE.
 // Scene Editor
 #include "CL64_Editor_Scene.h"
 #include "CL64_FileView.h"
+#include "CL64_Gui_Environment.h"
+#include "CL64_Properties_Scene.h"
 
 // Templates Dialogs
 #include "A_CreateBoxDialog.h"
@@ -139,6 +141,8 @@ public:
 	CL64_Com_Player*			CL_Com_Player;
 	CL64_Com_Environments*		CL_Com_Environments;
 	CL64_Com_Objects*			CL_Com_Objects;
+	CL64_Gui_Environment*		CL_Gui_Environment;
+	CL64_Properties_Scene*		CL_Properties_Scene;
 
 	// Scene Editor
 	CL64_Editor_Scene*			CL_Editor_Scene;

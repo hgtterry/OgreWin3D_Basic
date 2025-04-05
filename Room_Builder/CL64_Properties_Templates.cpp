@@ -141,7 +141,12 @@ LRESULT CALLBACK CL64_Properties_Templates::Proc_Templates(HWND hDlg, UINT messa
 				if (App->CL_Brush->Get_Brush_Count() == 0)
 				{
 					App->CL_Doc->AddBrushToWorld();
+
+					// Scene
 					App->CL_Entities->Create_Player_Entity();
+					App->CL_Com_Environments->Create_Test_Environment();
+					// ----------------
+
 
 					App->CL_Ogre->Camera_Reset_Zero();
 					App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_Free;

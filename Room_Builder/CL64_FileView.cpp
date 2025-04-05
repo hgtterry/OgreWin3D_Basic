@@ -130,7 +130,16 @@ LRESULT CALLBACK CL64_FileView::Proc_ListPanel(HWND hDlg, UINT message, WPARAM w
 		if (some_item->idFrom == IDC_BT_MAINENVIRONMENT)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Normal(item);
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_MAINENVIRONMENT));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
+			else
+			{
+				App->Custom_Button_Normal(item);
+			}
+
 			return CDRF_DODEFAULT;
 		}
 
@@ -214,7 +223,7 @@ LRESULT CALLBACK CL64_FileView::Proc_ListPanel(HWND hDlg, UINT message, WPARAM w
 		//	return TRUE;
 		//}
 
-		/*if (LOWORD(wParam) == IDC_BT_MAINENVIRONMENT)
+		if (LOWORD(wParam) == IDC_BT_MAINENVIRONMENT)
 		{
 			int Index = App->CL_Com_Environments->Get_First_Environ();
 			if (Index == -1)
@@ -223,14 +232,14 @@ LRESULT CALLBACK CL64_FileView::Proc_ListPanel(HWND hDlg, UINT message, WPARAM w
 			}
 			else
 			{
-				HTREEITEM Temp = App->CL_Scene->B_Object[Index]->FileViewItem;
+				HTREEITEM Temp = App->CL_Editor->B_Object[Index]->FileViewItem;
 				App->CL_FileView->SelectItem(Temp);
 
 				App->CL_Gui_Environment->Start_Environment_Editor(Index, false);
 			}
 
 			return TRUE;
-		}*/
+		}
 
 		break;
 	}
@@ -550,4 +559,13 @@ void CL64_FileView::SelectItem(HTREEITEM TreeItem)
 {
 	HWND Temp = GetDlgItem(App->ListPanel, IDC_TREE1);
 	TreeView_Select(Temp, TreeItem, TVGN_CARET);
+}
+
+// *************************************************************************
+// *	  Enable_Environment_Button:- Terry and Hazel Flanigan 2025		   *
+// *************************************************************************
+void CL64_FileView::Enable_Environment_Button(bool Enable)
+{
+	EnableWindow(GetDlgItem(App->ListPanel, IDC_BT_MAINENVIRONMENT), Enable);
+
 }
