@@ -47,6 +47,9 @@ A_CreateBoxDialog::A_CreateBoxDialog(void)
 	Hollow_Flag = 0;
 	Cut_Flag = 0;
 
+	flag_Default = 1;
+	flag_Room = 0;
+
 	strcpy(BoxName,"Box");
 }
 
@@ -112,9 +115,9 @@ LRESULT CALLBACK A_CreateBoxDialog::Proc_CreateBox(HWND hDlg, UINT message, WPAR
 		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
-		App->CL_CreateBoxDialog->Set_Members();
-		App->CL_CreateBoxDialog->Set_DLG_Members(hDlg);
-		App->CL_CreateBoxDialog->Set_Defaults(hDlg);
+		App->CL_CreateBoxDialog->SetMembers();
+		App->CL_CreateBoxDialog->Set_Dialog_Members(hDlg);
+		App->CL_CreateBoxDialog->SetDefaults(hDlg);
 
 		int Count = App->CL_Brush->Get_Brush_Count();
 		char Num[32];
@@ -124,8 +127,6 @@ LRESULT CALLBACK A_CreateBoxDialog::Proc_CreateBox(HWND hDlg, UINT message, WPAR
 		strcat(Name, Num);
 
 		SetDlgItemText(hDlg, IDC_EDITNAME, (LPCTSTR)Name);
-
-		//HWND Temp = GetDlgItem(hDlg, IDC_PICTURE);
 
 		HWND Temp = GetDlgItem(hDlg, IDC_CKWORLDCENTRE);
 		SendMessage(Temp,BM_SETCHECK,1,0);
@@ -276,14 +277,14 @@ LRESULT CALLBACK A_CreateBoxDialog::Proc_CreateBox(HWND hDlg, UINT message, WPAR
 		if (some_item->idFrom == IDC_BOXDEFAULTS)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Normal(item);
+			App->Custom_Button_Toggle_Tabs(item, App->CL_CreateBoxDialog->flag_Default);
 			return CDRF_DODEFAULT;
 		}
 
 		if (some_item->idFrom == IDC_BT_BOXROOM)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Normal(item);
+			App->Custom_Button_Toggle_Tabs(item, App->CL_CreateBoxDialog->flag_Room);
 			return CDRF_DODEFAULT;
 		}
 
@@ -334,25 +335,17 @@ LRESULT CALLBACK A_CreateBoxDialog::Proc_CreateBox(HWND hDlg, UINT message, WPAR
 
 		if (LOWORD(wParam) == IDC_BT_BOXCUTBRUSH)
 		{
+			App->CL_CreateBoxDialog->m_TCut = !App->CL_CreateBoxDialog->Cut_Flag;
+			App->CL_CreateBoxDialog->Cut_Flag = !App->CL_CreateBoxDialog->Cut_Flag;
 
-			if (App->CL_CreateBoxDialog->Cut_Flag == 0)
-			{
-				App->CL_CreateBoxDialog->m_TCut = 1;
-				App->CL_CreateBoxDialog->Cut_Flag = 1;
+			int Count = App->CL_Brush->Get_Brush_Count();
+			char Name[32];
+			snprintf(Name, sizeof(Name), "Box_%d%s", Count, App->CL_CreateBoxDialog->Cut_Flag ? "_Cut" : "");
 
-				RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-				return 1;
-			}
-			else
-			{
-				App->CL_CreateBoxDialog->m_TCut = 0;
-				App->CL_CreateBoxDialog->Cut_Flag = 0;
+			SetDlgItemText(hDlg, IDC_EDITNAME, (LPTSTR)Name);
+			RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
-				RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-				return 1;
-			}
-
-			return TRUE;
+			return 1;
 		}
 
 		if (LOWORD(wParam) == IDC_CKWORLDCENTRE)
@@ -379,22 +372,40 @@ LRESULT CALLBACK A_CreateBoxDialog::Proc_CreateBox(HWND hDlg, UINT message, WPAR
 			return TRUE;
 		}
 
-		if (LOWORD(wParam) == IDC_BOXDEFAULTS)
+		if (LOWORD(wParam) == IDC_BOXDEFAULTS) 
 		{
-			App->CL_CreateBoxDialog->Set_Defaults(hDlg);
+			App->CL_CreateBoxDialog->flag_Default = 1;
+			App->CL_CreateBoxDialog->flag_Room = 0;
+			RedrawWindow(hDlg, nullptr, nullptr, RDW_INVALIDATE | RDW_UPDATENOW);
+
+			int brushCount = App->CL_Brush->Get_Brush_Count();
+			std::string name = "Box_" + std::to_string(brushCount);
+
+			SetDlgItemText(hDlg, IDC_EDITNAME, name.c_str());
+
+			App->CL_CreateBoxDialog->SetDefaults(hDlg);
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == IDC_BT_BOXROOM)
 		{
-			App->CL_CreateBoxDialog->Set_Room(hDlg);
+			App->CL_CreateBoxDialog->flag_Default = 0;
+			App->CL_CreateBoxDialog->flag_Room = 1;
+			RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+			int brushCount = App->CL_Brush->Get_Brush_Count();
+			std::string boxName = "Box_" + std::to_string(brushCount);
+
+			SetDlgItemText(hDlg, IDC_EDITNAME, boxName.c_str());
+
+			App->CL_CreateBoxDialog->SetRoom(hDlg);
 			return TRUE;
 		}
 		
 		// -----------------------------------------------------------------
 		if (LOWORD(wParam) == IDOK)
 		{
-			App->CL_CreateBoxDialog->Get_DLG_Members(hDlg);
+			App->CL_CreateBoxDialog->Get_Dialog_Members(hDlg);
 			App->CL_CreateBoxDialog->Set_BoxTemplate();
 			App->CL_CreateBoxDialog->CreateCube();
 			
@@ -429,7 +440,6 @@ void A_CreateBoxDialog::CreateCube()
 
 	Brush *pCube;
 	pCube = App->CL_BrushTemplate->BrushTemplate_CreateBox(pBoxTemplate);
-	//pCube = BrushTemplate_BoxReverseTexture(pBoxTemplate);
 	if (pCube != NULL)
 	{
 		strcpy(App->CL_Doc->LastTemplateTypeName,BoxName);
@@ -446,56 +456,46 @@ void A_CreateBoxDialog::CreateCube()
 // *************************************************************************
 // *       CreateNewTemplateBrush:- Terry and Hazel Flanigan 2025		   *
 // *************************************************************************
-void A_CreateBoxDialog::CreateNewTemplateBrush(Brush *pBrush)
+void A_CreateBoxDialog::CreateNewTemplateBrush(Brush* pBrush)
 {
-	T_Vec3*pTemplatePos;
-	T_Vec3 MoveVec;
-	T_Vec3 BrushPos;
-
-	if (App->CL_Doc->BTemplate != NULL)
+	if (App->CL_Doc->BTemplate != nullptr)
 	{
-		App->CL_Brush->Brush_Destroy (&App->CL_Doc->BTemplate);
+		App->CL_Brush->Brush_Destroy(&App->CL_Doc->BTemplate);
 	}
 
 	App->CL_Doc->CurBrush = pBrush;
+	App->CL_Doc->TempEnt = false;
+	App->CL_Doc->SetDefaultBrushTexInfo(App->CL_Doc->CurBrush);
+	App->CL_Brush->Brush_Bound(App->CL_Doc->CurBrush);
 
-	App->CL_Doc->TempEnt	= FALSE;
-	App->CL_Doc->SetDefaultBrushTexInfo (App->CL_Doc->CurBrush);
-	App->CL_Brush->Brush_Bound (App->CL_Doc->CurBrush);
-	App->CL_Brush->Brush_Center (App->CL_Doc->CurBrush, &BrushPos);
+	T_Vec3 BrushPos;
+	App->CL_Brush->Brush_Center(App->CL_Doc->CurBrush, &BrushPos);
 
-	pTemplatePos = App->CL_Level->Level_GetTemplatePos (App->CL_Doc->pLevel);
+	T_Vec3* pTemplatePos = App->CL_Level->Level_GetTemplatePos(App->CL_Doc->pLevel);
+	Ogre::Vector3 Pos;
 
 	if (m_UseCamPos == 1 && App->flag_OgreStarted == 1)
 	{
-		Ogre::Vector3 Pos;
-
 		Pos = App->CL_Ogre->camNode->getPosition();
-
-		pTemplatePos->x = Pos.x;
-		pTemplatePos->y = Pos.y;
-		pTemplatePos->z = Pos.z;
+		*pTemplatePos = { Pos.x, Pos.y, Pos.z };
 	}
 	else
 	{
-		pTemplatePos->x = 0;
-		pTemplatePos->y = 0;
-		pTemplatePos->z = 0;
+		*pTemplatePos = { 0, 0, 0 };
 	}
-	
-	App->CL_Maths->Vector3_Subtract(pTemplatePos, &BrushPos, &MoveVec);
 
+	T_Vec3 MoveVec;
+	App->CL_Maths->Vector3_Subtract(pTemplatePos, &BrushPos, &MoveVec);
 	App->CL_Brush->Brush_Move(App->CL_Doc->CurBrush, &MoveVec);
 
 	App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
-
-	App->CL_Doc->flag_Is_Modified = 1;
+	App->CL_Doc->flag_Is_Modified = true;
 }
 
 // *************************************************************************
-// *		 Set_Members:- Terry and Hazel Flanigan 2025				   *
+// *			 SetMembers:- Terry and Hazel Flanigan 2025				   *
 // *************************************************************************
-void A_CreateBoxDialog::Set_Members() 
+void A_CreateBoxDialog::SetMembers() 
 {
 	m_YSize = pBoxTemplate->YSize;
 	m_Solid = pBoxTemplate->Solid;
@@ -509,34 +509,30 @@ void A_CreateBoxDialog::Set_Members()
 }
 
 // *************************************************************************
-// *		 Set_DLG_Members:- Terry and Hazel Flanigan 2025			   *
+// *		 Set_Dialog_Members:- Terry and Hazel Flanigan 2025			   *
 // *************************************************************************
-void A_CreateBoxDialog::Set_DLG_Members(HWND hDlg) 
+void A_CreateBoxDialog::Set_Dialog_Members(HWND hDlg)
 {
-	char buf[MAX_PATH];
-	sprintf(buf, "%0.0f", m_XSizeTop);
-	SetDlgItemText(hDlg, IDC_XSIZETOP, (LPCTSTR)buf);
+	auto setDlgItemText = [&](int itemId, float value)
+		{
+			char buf[MAX_PATH];
+			snprintf(buf, sizeof(buf), "%0.0f", value);
+			SetDlgItemText(hDlg, itemId, buf);
+		};
 
-	sprintf(buf, "%0.0f", m_ZSizeTop);
-	SetDlgItemText(hDlg, IDC_ZSIZETOP, (LPCTSTR)buf);
-
-	sprintf(buf, "%0.0f", m_XSizeBot);
-	SetDlgItemText(hDlg, IDC_XSIZEBOT, (LPCTSTR)buf);
-
-	sprintf(buf, "%0.0f", m_ZSizeBot);
-	SetDlgItemText(hDlg, IDC_ZSIZEBOT, (LPCTSTR)buf);
-
-	sprintf(buf, "%0.0f", m_YSize);
-	SetDlgItemText(hDlg, IDC_YSIZE, (LPCTSTR)buf);
-
-	sprintf(buf, "%0.0f", m_Thickness);
-	SetDlgItemText(hDlg, IDC_THICKNESS, (LPCTSTR)buf);
+	// Set dialog members
+	setDlgItemText(IDC_XSIZETOP, m_XSizeTop);
+	setDlgItemText(IDC_ZSIZETOP, m_ZSizeTop);
+	setDlgItemText(IDC_XSIZEBOT, m_XSizeBot);
+	setDlgItemText(IDC_ZSIZEBOT, m_ZSizeBot);
+	setDlgItemText(IDC_YSIZE, m_YSize);
+	setDlgItemText(IDC_THICKNESS, m_Thickness);
 }
 
 // *************************************************************************
-// *		 Get_DLG_Members:- Terry and Hazel Flanigan 2025			   *
+// *		 Get_Dialog_Members:- Terry and Hazel Flanigan 2025			   *
 // *************************************************************************
-void A_CreateBoxDialog::Get_DLG_Members(HWND hDlg) 
+void A_CreateBoxDialog::Get_Dialog_Members(HWND hDlg) 
 {
 
 	char buff[MAX_PATH];
@@ -584,7 +580,7 @@ void A_CreateBoxDialog::Set_BoxTemplate()
 // *************************************************************************
 // *	    	Set_Defaults:- Terry and Hazel Flanigan 2025			   *
 // *************************************************************************
-void A_CreateBoxDialog::Set_Defaults(HWND hDlg) 
+void A_CreateBoxDialog::SetDefaults(HWND hDlg) 
 {
 	m_YSize = 128.0f;
 	m_Solid = 0;
@@ -596,7 +592,7 @@ void A_CreateBoxDialog::Set_Defaults(HWND hDlg)
 	m_Thickness = 16.0f;
 	m_TSheet = false;
 
-	Set_DLG_Members(hDlg);
+	Set_Dialog_Members(hDlg);
 
 	App->CL_CreateBoxDialog->Zero_Dlg_Flags(hDlg);
 	App->CL_CreateBoxDialog->m_Solid = 0;
@@ -605,18 +601,18 @@ void A_CreateBoxDialog::Set_Defaults(HWND hDlg)
 	App->CL_CreateBoxDialog->m_TCut = 0;
 	App->CL_CreateBoxDialog->Cut_Flag = 0;
 
-	//HWND Temp = GetDlgItem(hDlg, IDC_PICTURE);
-	//SendMessage(Temp, STM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_SolidBox_Bmp);
+	HWND Temp = GetDlgItem(hDlg, IDC_PICTURE);
+	SendMessage(Temp, STM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_SolidBox_Bmp);
 
 	RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 }
 
 // *************************************************************************
-// *	    		Set_Room:- Terry and Hazel Flanigan 2025			   *
+// *	    		SetRoom:- Terry and Hazel Flanigan 2025				   *
 // *************************************************************************
-void A_CreateBoxDialog::Set_Room(HWND hDlg)
+void A_CreateBoxDialog::SetRoom(HWND hDlg)
 {
-	m_YSize = 512.0f;
+	m_YSize = 256.0f;
 	m_Solid = 1;
 	m_XSizeBot = 768.0f;
 	m_XSizeTop = 768.0f;
@@ -626,7 +622,7 @@ void A_CreateBoxDialog::Set_Room(HWND hDlg)
 	m_Thickness = 16.0f;
 	m_TSheet = false;
 
-	Set_DLG_Members(hDlg);
+	Set_Dialog_Members(hDlg);
 
 	App->CL_CreateBoxDialog->Zero_Dlg_Flags(hDlg);
 	App->CL_CreateBoxDialog->m_Solid = 1;
@@ -636,8 +632,8 @@ void A_CreateBoxDialog::Set_Room(HWND hDlg)
 	App->CL_CreateBoxDialog->m_TCut = 0;
 	App->CL_CreateBoxDialog->Cut_Flag = 0;
 
-	//HWND Temp = GetDlgItem(hDlg, IDC_PICTURE);
-	//SendMessage(Temp, STM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_HollowBox_Bmp);
+	HWND Temp = GetDlgItem(hDlg, IDC_PICTURE);
+	SendMessage(Temp, STM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_HollowBox_Bmp);
 
 	RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 }
@@ -649,10 +645,6 @@ void A_CreateBoxDialog::CreateDefault_TemplateCube()
 {
 	pBoxTemplate = App->CL_Level->Level_GetBoxTemplate(App->CL_Doc->pLevel);
 
-	//Set_Members();
-
-	//Set_BoxTemplate();
-
 	Brush* pCube = NULL;
 	pCube = App->CL_BrushTemplate->BrushTemplate_CreateBox(pBoxTemplate);
 	if (pCube != NULL)
@@ -660,7 +652,6 @@ void A_CreateBoxDialog::CreateDefault_TemplateCube()
 		strcpy(App->CL_Doc->LastTemplateTypeName,BoxName);
 		CreateNewTemplateBrush(pCube);
 		
-		//App->CL_TabsControl->Enable_Tabs_Dlg(true);
 		App->CL_Properties_Templates->Enable_Insert_Button(true);
 
 		Debug

@@ -53,14 +53,14 @@ private:
 
 	static LRESULT CALLBACK Proc_CreateBox(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
-	void Set_Members();
-	void Get_DLG_Members(HWND hDlg);
-	void Set_DLG_Members(HWND hDlg);
+	void SetMembers();
+	void Get_Dialog_Members(HWND hDlg);
+	void Set_Dialog_Members(HWND hDlg);
 	
 	void Set_BoxTemplate();
 
-	void Set_Defaults(HWND hDlg);
-	void Set_Room(HWND hDlg);
+	void SetDefaults(HWND hDlg);
+	void SetRoom(HWND hDlg);
 
 	void CreateNewTemplateBrush(Brush *pBrush);
 	void Zero_Dlg_Flags(HWND hDlg);
@@ -68,6 +68,9 @@ private:
 	bool Solid_Flag;
 	bool Hollow_Flag;
 	bool Cut_Flag;
+
+	bool flag_Default;
+	bool flag_Room;
 
 	char BoxName[MAX_PATH];
 };

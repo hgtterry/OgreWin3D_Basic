@@ -61,7 +61,7 @@ void CL64_BrushTemplate::BrushTemplate_BoxDefaults(BrushTemplate_Box* pBoxTempla
 	pBoxTemplate->Thickness = 16.0f;
 	pBoxTemplate->XSizeBot = 768.0f;
 	pBoxTemplate->XSizeTop = 768.0f;
-	pBoxTemplate->YSize = 512.0f;
+	pBoxTemplate->YSize = 256.0f;
 	pBoxTemplate->ZSizeBot = 512.0f;
 	pBoxTemplate->ZSizeTop = 512.0f;
 }
