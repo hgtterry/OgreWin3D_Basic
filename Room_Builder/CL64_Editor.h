@@ -46,29 +46,29 @@ public:
 
 	// Groups
 	int VerticeCount;
-	int GroupCount;
+	int GroupCount;		// Total number of groups created
 	int FaceCount;
 
 	// Brushes
-	int BrushCount;
+	int BrushCount;		// Total number of brushes created
 	int Brush_Face_Count;
 
 	// Player
-	int Player_Count;
-	bool flag_Player_Added;
+	int Player_Count;		// Total number of players in the scene
+	bool flag_Player_Added; // Flag to indicate if a player has been added
 
 	// Scene
 	int Object_Count;
 	int UniqueID_Object_Counter;
 
-	HWND Parent_hWnd;
+	HWND Parent_hWnd;				// Handle to the parent window for the editor
 
-	bool flag_PreviewMode_Running;
-	bool flag_Show_Debug_Area;
-	bool flag_Enable_Physics_Debug;
+	bool flag_PreviewMode_Running;	// Flag to indicate if preview mode is currently active
+	bool flag_Show_Debug_Area;		// Flag to indicate if the debug area should be displayed
+	bool flag_Enable_Physics_Debug; // Flag to indicate if physics debugging is enabled
 
-	std::vector<Base_Player*> B_Player;
-	std::vector<Base_Object*> B_Object;
+	std::vector<Base_Player*> B_Player; // Vector to hold pointers to Base_Player objects
+	std::vector<Base_Object*> B_Object; // Vector to hold pointers to Base_Object objects
 
 };
 

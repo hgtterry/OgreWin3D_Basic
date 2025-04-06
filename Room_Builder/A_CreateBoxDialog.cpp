@@ -80,165 +80,62 @@ LRESULT CALLBACK A_CreateBoxDialog::Proc_CreateBox(HWND hDlg, UINT message, WPAR
 	{
 	case WM_INITDIALOG:
 	{
-		SendDlgItemMessage(hDlg, IDC_STBOTTOM, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_STBOTX, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_STBOTZ, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_XSIZEBOT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_ZSIZEBOT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		
-		SendDlgItemMessage(hDlg, IDC_STTOP, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_STTOPX, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_STZTOP, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_XSIZETOP, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_ZSIZETOP, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		
-		SendDlgItemMessage(hDlg, IDC_BT_BOXSOLID, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_BT_BOXHOLLOW, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_BT_BOXCUTBRUSH, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		// Array of control IDs to set font to Font_CB15
+		const int controlIDs[] = 
+		{
+			IDC_STBOTTOM, IDC_STBOTX, IDC_STBOTZ, IDC_XSIZEBOT, IDC_ZSIZEBOT,
+			IDC_STTOP, IDC_STTOPX, IDC_STZTOP, IDC_XSIZETOP, IDC_ZSIZETOP,
+			IDC_BT_BOXSOLID, IDC_BT_BOXHOLLOW, IDC_BT_BOXCUTBRUSH,
+			IDC_STGENERAL, IDC_STYSIZE, IDC_STWALL, IDC_YSIZE, IDC_THICKNESS,
+			IDC_STNAME, IDC_EDITNAME,
+			IDC_BOXDEFAULTS, IDC_BT_BOXROOM,
+			IDC_STCAMPOS, IDC_CKWORLDCENTRE, IDC_CKCAMPOSITION,
+			IDOK, IDCANCEL
+		};
 
-		SendDlgItemMessage(hDlg, IDC_STGENERAL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_STYSIZE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_STWALL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_YSIZE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_THICKNESS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-	
-		SendDlgItemMessage(hDlg, IDC_STNAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_EDITNAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		// Set font for each control
+		for (int id : controlIDs) {
+			SendDlgItemMessage(hDlg, id, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		}
 
-		SendDlgItemMessage(hDlg, IDC_BOXDEFAULTS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_BT_BOXROOM, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		
-		SendDlgItemMessage(hDlg, IDC_STCAMPOS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_CKWORLDCENTRE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_CKCAMPOSITION, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-
-		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-
+		// Initialize dialog members
 		App->CL_CreateBoxDialog->SetMembers();
 		App->CL_CreateBoxDialog->Set_Dialog_Members(hDlg);
 		App->CL_CreateBoxDialog->SetDefaults(hDlg);
 
+		// Generate and set the box name
 		int Count = App->CL_Brush->Get_Brush_Count();
-		char Num[32];
 		char Name[32];
-		_itoa(Count, Num, 10);
-		strcpy(Name, "Box_");
-		strcat(Name, Num);
+		snprintf(Name, sizeof(Name), "Box_%d", Count);
+		SetDlgItemText(hDlg, IDC_EDITNAME, Name);
 
-		SetDlgItemText(hDlg, IDC_EDITNAME, (LPCTSTR)Name);
-
+		// Set checkbox state
 		HWND Temp = GetDlgItem(hDlg, IDC_CKWORLDCENTRE);
-		SendMessage(Temp,BM_SETCHECK,1,0);
+		SendMessage(Temp, BM_SETCHECK, 1, 0);
 		App->CL_CreateBoxDialog->m_UseCamPos = 0;
 
 		return TRUE;
 	}
+
 	case WM_CTLCOLORSTATIC:
 	{
-		if (GetDlgItem(hDlg, IDC_STTOP) == (HWND)lParam)
+		const int controlIds[] = 
 		{
-			SetBkColor((HDC)wParam, RGB(0, 0, 0));
-			SetTextColor((HDC)wParam, RGB(0, 0, 0));
-			SetBkMode((HDC)wParam, TRANSPARENT);
-			return (UINT)App->AppBackground;
-		}
+			IDC_STTOP, IDC_STBOTTOM, IDC_STTOPX, IDC_STWALL,
+			IDC_STGENERAL, IDC_STZTOP, IDC_STBOTX, IDC_STBOTZ,
+			IDC_STYSIZE, IDC_STNAME, IDC_STCAMPOS,
+			IDC_CKWORLDCENTRE, IDC_CKCAMPOSITION
+		};
 
-		if (GetDlgItem(hDlg, IDC_STBOTTOM) == (HWND)lParam)
+		for (const auto& id : controlIds)
 		{
-			SetBkColor((HDC)wParam, RGB(0, 0, 0));
-			SetTextColor((HDC)wParam, RGB(0, 0, 0));
-			SetBkMode((HDC)wParam, TRANSPARENT);
-			return (UINT)App->AppBackground;
-		}
-
-		if (GetDlgItem(hDlg, IDC_STTOPX) == (HWND)lParam)
-		{
-			SetBkColor((HDC)wParam, RGB(0, 0, 0));
-			SetTextColor((HDC)wParam, RGB(0, 0, 0));
-			SetBkMode((HDC)wParam, TRANSPARENT);
-			return (UINT)App->AppBackground;
-		}
-
-		if (GetDlgItem(hDlg, IDC_STWALL) == (HWND)lParam)
-		{
-			SetBkColor((HDC)wParam, RGB(0, 0, 0));
-			SetTextColor((HDC)wParam, RGB(0, 0, 0));
-			SetBkMode((HDC)wParam, TRANSPARENT);
-			return (UINT)App->AppBackground;
-		}
-
-		if (GetDlgItem(hDlg, IDC_STGENERAL) == (HWND)lParam)
-		{
-			SetBkColor((HDC)wParam, RGB(0, 0, 0));
-			SetTextColor((HDC)wParam, RGB(0, 0, 0));
-			SetBkMode((HDC)wParam, TRANSPARENT);
-			return (UINT)App->AppBackground;
-		}
-
-		if (GetDlgItem(hDlg, IDC_STZTOP) == (HWND)lParam)
-		{
-			SetBkColor((HDC)wParam, RGB(0, 0, 0));
-			SetTextColor((HDC)wParam, RGB(0, 0, 0));
-			SetBkMode((HDC)wParam, TRANSPARENT);
-			return (UINT)App->AppBackground;
-		}
-
-		if (GetDlgItem(hDlg, IDC_STBOTX) == (HWND)lParam)
-		{
-			SetBkColor((HDC)wParam, RGB(0, 0, 0));
-			SetTextColor((HDC)wParam, RGB(0, 0, 0));
-			SetBkMode((HDC)wParam, TRANSPARENT);
-			return (UINT)App->AppBackground;
-		}
-
-		if (GetDlgItem(hDlg, IDC_STBOTZ) == (HWND)lParam)
-		{
-			SetBkColor((HDC)wParam, RGB(0, 0, 0));
-			SetTextColor((HDC)wParam, RGB(0, 0, 0));
-			SetBkMode((HDC)wParam, TRANSPARENT);
-			return (UINT)App->AppBackground;
-		}
-
-		if (GetDlgItem(hDlg, IDC_STYSIZE) == (HWND)lParam)
-		{
-			SetBkColor((HDC)wParam, RGB(0, 0, 0));
-			SetTextColor((HDC)wParam, RGB(0, 0, 0));
-			SetBkMode((HDC)wParam, TRANSPARENT);
-			return (UINT)App->AppBackground;
-		}
-
-		// --------------------------------------------------
-		if (GetDlgItem(hDlg, IDC_STNAME) == (HWND)lParam)
-		{
-			SetBkColor((HDC)wParam, RGB(0, 0, 0));
-			SetTextColor((HDC)wParam, RGB(0, 0, 0));
-			SetBkMode((HDC)wParam, TRANSPARENT);
-			return (UINT)App->AppBackground;
-		}
-
-		if (GetDlgItem(hDlg, IDC_STCAMPOS) == (HWND)lParam)
-		{
-			SetBkColor((HDC)wParam, RGB(0, 0, 0));
-			SetTextColor((HDC)wParam, RGB(0, 0, 0));
-			SetBkMode((HDC)wParam, TRANSPARENT);
-			return (UINT)App->AppBackground;
-		}
-
-		if (GetDlgItem(hDlg, IDC_CKWORLDCENTRE) == (HWND)lParam)
-		{
-			SetBkColor((HDC)wParam, RGB(0, 0, 0));
-			SetTextColor((HDC)wParam, RGB(0, 0, 0));
-			SetBkMode((HDC)wParam, TRANSPARENT);
-			return (UINT)App->AppBackground;
-		}
-
-		if (GetDlgItem(hDlg, IDC_CKCAMPOSITION) == (HWND)lParam)
-		{
-			SetBkColor((HDC)wParam, RGB(0, 0, 0));
-			SetTextColor((HDC)wParam, RGB(0, 0, 0));
-			SetBkMode((HDC)wParam, TRANSPARENT);
-			return (UINT)App->AppBackground;
+			if (GetDlgItem(hDlg, id) == (HWND)lParam)
+			{
+				SetBkColor((HDC)wParam, RGB(0, 0, 0));
+				SetTextColor((HDC)wParam, RGB(0, 0, 0));
+				SetBkMode((HDC)wParam, TRANSPARENT);
+				return (UINT)App->AppBackground;
+			}
 		}
 
 		return FALSE;
@@ -252,56 +149,39 @@ LRESULT CALLBACK A_CreateBoxDialog::Proc_CreateBox(HWND hDlg, UINT message, WPAR
 	case WM_NOTIFY:
 	{
 		LPNMHDR some_item = (LPNMHDR)lParam;
+		LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 
-		if (some_item->idFrom == IDC_BT_BOXSOLID)
+		switch (some_item->idFrom)
 		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+		case IDC_BT_BOXSOLID:
 			App->Custom_Button_Toggle_Tabs(item, App->CL_CreateBoxDialog->Solid_Flag);
-			return CDRF_DODEFAULT;
-		}
+			break;
 
-		if (some_item->idFrom == IDC_BT_BOXHOLLOW)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+		case IDC_BT_BOXHOLLOW:
 			App->Custom_Button_Toggle_Tabs(item, App->CL_CreateBoxDialog->Hollow_Flag);
-			return CDRF_DODEFAULT;
-		}
+			break;
 
-		if (some_item->idFrom == IDC_BT_BOXCUTBRUSH)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+		case IDC_BT_BOXCUTBRUSH:
 			App->Custom_Button_Toggle_Tabs(item, App->CL_CreateBoxDialog->Cut_Flag);
-			return CDRF_DODEFAULT;
-		}
+			break;
 
-		if (some_item->idFrom == IDC_BOXDEFAULTS)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+		case IDC_BOXDEFAULTS:
 			App->Custom_Button_Toggle_Tabs(item, App->CL_CreateBoxDialog->flag_Default);
-			return CDRF_DODEFAULT;
-		}
+			break;
 
-		if (some_item->idFrom == IDC_BT_BOXROOM)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+		case IDC_BT_BOXROOM:
 			App->Custom_Button_Toggle_Tabs(item, App->CL_CreateBoxDialog->flag_Room);
+			break;
+
+		case IDOK:
+		case IDCANCEL:
+			App->Custom_Button_Normal(item);
+			break;
+
+		default:
 			return CDRF_DODEFAULT;
 		}
 
-		if (some_item->idFrom == IDOK)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Normal(item);
-			return CDRF_DODEFAULT;
-		}
-
-		if (some_item->idFrom == IDCANCEL)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Normal(item);
-			return CDRF_DODEFAULT;
-		}
-		
 		return CDRF_DODEFAULT;
 	}
 
