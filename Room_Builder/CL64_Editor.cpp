@@ -239,5 +239,6 @@ void CL64_Editor_Com::Clear_Level(bool FromFile)
 	App->CL_Properties_Textures->Reset_Class();
 	App->CL_Properties_Brushes->Reset_Class();
 	App->CL_Properties_Tabs->Reset_Class();
+	App->CL_Top_Tabs->Reset_Class();
 
 }

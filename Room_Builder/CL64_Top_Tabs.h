@@ -29,6 +29,8 @@ public:
 	CL64_Top_Tabs(void);
 	~CL64_Top_Tabs(void);
 
+	void Reset_Class();
+
 	void Start_Headers();
 
 	void Enable_Brush_Options_Buttons(bool Enable, bool Active);

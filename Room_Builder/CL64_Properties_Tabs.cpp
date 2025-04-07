@@ -48,6 +48,7 @@ CL64_Properties_Tabs::~CL64_Properties_Tabs()
 void CL64_Properties_Tabs::Reset_Class()
 {
 	Enable_Tabs(false);
+	Select_Templates_Tab();
 }
 
 // *************************************************************************

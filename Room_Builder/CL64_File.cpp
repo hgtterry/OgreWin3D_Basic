@@ -301,16 +301,18 @@ void CL64_File::Start_Load(bool Use_Open_Dialog)
 
 	}
 
+	App->CL_Editor_Com->Clear_Level(true);
+
 	bool Test = Open_3dt_File();
 	if (Test == true)
 	{
 		App->CL_Doc->DoGeneralSelect(false);
 
 		Set_Editor();
-
+	
 		App->CL_Doc->UpdateAllViews(Enums::UpdateViews_All);
 		App->Say("File Loaded", App->CL_File->FileName_3dt);
-
+	
 		App->CL_Doc->Set_Faces_To_Brush_Name_All(); // Fix up Brush Names
 	}
 	else
@@ -443,7 +445,6 @@ void CL64_File::Set_Editor()
 	App->CL_Top_Tabs->Enable_Brush_Options_Buttons(false, false);
 	App->CL_Properties_Tabs->Select_Templates_Tab();
 	App->CL_Ogre->Camera_Reset_Zero();
-
 	App->CL_Editor_Map->Reset_Views_All();
 
 	App->CL_Doc->Editor_Set_Dlgs(Enums::Editor_Dlgs_First_Brush);

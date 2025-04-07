@@ -58,6 +58,14 @@ CL64_Top_Tabs::~CL64_Top_Tabs(void)
 }
 
 // *************************************************************************
+// *			Reset_Class:- Terry and Hazel Flanigan 2024			 	   *
+// *************************************************************************
+void CL64_Top_Tabs::Reset_Class()
+{
+	Enable_Brush_Options_Buttons(false, false);
+}
+
+// *************************************************************************
 // *	  			Message:- Terry and Hazel Flanigan 2025				   *
 // *************************************************************************
 void CL64_Top_Tabs::Start_Headers()
@@ -458,12 +466,18 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Headers(HWND hDlg, UINT message, WPARAM wPa
 				HWND temp = GetDlgItem(hDlg, IDC_CB_FACELIST);
 				int Index = SendMessage(temp, CB_GETCURSEL, 0, 0);
 
-				App->CL_Face->Selected_Face_Index = Index;
-				App->CL_Top_Tabs->Select_Face();
-
-				if (App->CL_Properties_Faces->flag_FaceDlg_Active == 1)
+				if (Index == -1)
+				{ 
+				}
+				else
 				{
-					App->CL_Properties_Faces->Change_Selection();
+					App->CL_Face->Selected_Face_Index = Index;
+					App->CL_Top_Tabs->Select_Face();
+
+					if (App->CL_Properties_Faces->flag_FaceDlg_Active == 1)
+					{
+						App->CL_Properties_Faces->Change_Selection();
+					}
 				}
 			}
 			}
