@@ -236,9 +236,24 @@ void CL64_Editor_Com::Clear_Level(bool FromFile)
 	App->CL_Doc->SelectAll();
 	App->CL_Doc->DeleteCurrentThing();
 
+	App->CL_Ogre->Camera_Reset_Zero();
+
 	App->CL_Properties_Textures->Reset_Class();
 	App->CL_Properties_Brushes->Reset_Class();
 	App->CL_Properties_Tabs->Reset_Class();
 	App->CL_Top_Tabs->Reset_Class();
+	App->CL_Editor_Map->Reset_Class();
 
+	if (FromFile == false)
+	{
+		App->CL_Doc->Init_Doc();
+		App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
+
+		if (!App->CL_Level->Level_LoadWad(App->CL_Doc->pLevel))
+		{
+			App->Say_Win("Can not load Wad File");
+		}
+
+		App->CL_Properties_Templates->Enable_Insert_Button(true);
+	}
 }

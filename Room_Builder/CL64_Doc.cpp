@@ -98,9 +98,9 @@ void CL64_Doc::Init_Doc()
 {
   
     strcpy(LastTemplateTypeName, "Box");
-
+   
 	pLevel = App->CL_Level->Level_Create(); // TODO Creating Twice one in Win Main
-
+  
 	pSelBrushes = App->CL_SelBrushList->SelBrushList_Create();
 	pTempSelBrushes = App->CL_SelBrushList->SelBrushList_Create();
 	pSelFaces = App->CL_SelFaceList->SelFaceList_Create();
@@ -249,23 +249,25 @@ void CL64_Doc::Brush_Add_To_world()
 	Brush* nb;
     T_Vec3* pTemplatePos;
 
+    
 	nb = App->CL_Brush->Brush_Clone(App->CL_Doc->CurBrush);
-
+   
 	SetDefaultBrushTexInfo(nb);
+   
 	App->CL_Brush->Brush_Bound(nb);
 	pTemplatePos = App->CL_Level->Level_GetTemplatePos(pLevel);
-
+    
 	App->CL_Brush->Brush_Center(nb, pTemplatePos);
 
 	// add to current group
 	Brush_SetGroupId(nb, mCurrentGroup);
-
+   
 	fdocFaceScales Scales;
-
+   
 	Scales.DrawScale = App->CL_Level->Level_GetDrawScale(pLevel);
 	Scales.LightmapScale = App->CL_Level->Level_GetLightmapScale(pLevel);
 	App->CL_Brush->Brush_EnumFaces(nb, &Scales, fdocSetFaceScales);
-
+   
 	App->CL_Level->Level_AppendBrush(pLevel, nb);
    
 

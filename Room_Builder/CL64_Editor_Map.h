@@ -43,6 +43,8 @@ public:
 	CL64_Editor_Map();
 	~CL64_Editor_Map();
 
+	void Reset_Class();
+
 	void Init_Map_Views();
 	void Init_Views(int View);
 	void Render_RenderBrushFacesOrtho(const ViewVars* Cam, Brush* b, HDC ViewDC);

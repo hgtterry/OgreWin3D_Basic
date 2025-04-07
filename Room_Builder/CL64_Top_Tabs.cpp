@@ -63,6 +63,13 @@ CL64_Top_Tabs::~CL64_Top_Tabs(void)
 void CL64_Top_Tabs::Reset_Class()
 {
 	Enable_Brush_Options_Buttons(false, false);
+
+	App->CL_Top_Tabs->flag_Full_View_3D = 0;
+	App->CL_Top_Tabs->flag_View_Top_Left = 0;
+	App->CL_Top_Tabs->flag_View_Top_Right = 0;
+	App->CL_Top_Tabs->flag_View_Bottom_Left = 0;
+
+	RedrawWindow(App->CL_Top_Tabs->Headers_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 }
 
 // *************************************************************************
