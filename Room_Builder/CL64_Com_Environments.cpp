@@ -145,8 +145,8 @@ void CL64_Com_Environments::V_Set_Environ_Defaults(int Index)
 	B_Object->S_Environ[0]->Fog_On = 0;
 	B_Object->S_Environ[0]->Fog_Mode = FOG_LINEAR;
 	B_Object->S_Environ[0]->Fog_Density = 0.001000;
-	B_Object->S_Environ[0]->Fog_Start = 50;
-	B_Object->S_Environ[0]->Fog_End = 300;
+	B_Object->S_Environ[0]->Fog_Start = 100;
+	B_Object->S_Environ[0]->Fog_End = 700;
 	B_Object->S_Environ[0]->Fog_Colour = Ogre::Vector3(1, 1, 1);
 }
 

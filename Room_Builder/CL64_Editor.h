@@ -38,6 +38,7 @@ public:
 
 	void Preview_Mode(void);
 	void Editor_Mode(void);
+	void Clear_Level(bool FromFile);
 
 	Base_Group* Group[5000];
 	Base_Brush* B_Brush[12000];

@@ -342,6 +342,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 App->CL_Panels->Deselect_All_Brushes_Update_Dlgs();
                 return 1;
             }
+
+            case ID_FILE_CLEAR:
+            {
+                App->CL_Editor_Com->Clear_Level(false);
+                return 1;
+            }
+            
             
             // ----------------------------- View
             case ID_VIEW_RESETVIEWS:

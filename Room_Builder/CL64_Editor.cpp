@@ -182,3 +182,11 @@ void CL64_Editor_Com::Editor_Mode(void)
 	App->CL_Ogre->OGL_Listener->Flag_Show_Selected_Face = 1;
 
 }
+
+// *************************************************************************
+// *			Clear_Level:- Terry and Hazel Flanigan 2024				   *
+// *************************************************************************
+void CL64_Editor_Com::Clear_Level(bool FromFile)
+{
+	Debug
+}
