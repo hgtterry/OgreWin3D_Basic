@@ -381,9 +381,9 @@ void CL64_File::Set_Player()
 	T_Vec3 BrushPos;
 	App->CL_Brush->Brush_Center(Player, &BrushPos);
 
-	App->CL_Editor->B_Player[0]->StartPos.x = BrushPos.x;
-	App->CL_Editor->B_Player[0]->StartPos.y = BrushPos.y;
-	App->CL_Editor->B_Player[0]->StartPos.z = BrushPos.z;
+	App->CL_Editor_Com->B_Player[0]->StartPos.x = BrushPos.x;
+	App->CL_Editor_Com->B_Player[0]->StartPos.y = BrushPos.y;
+	App->CL_Editor_Com->B_Player[0]->StartPos.z = BrushPos.z;
 
 	App->CL_Physics->Reset_Physics();
 

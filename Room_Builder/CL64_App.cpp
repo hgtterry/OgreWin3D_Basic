@@ -58,7 +58,7 @@ CL64_App::CL64_App(void)
 	CL_Grid =					nullptr;
 	CL_Panels =					nullptr;
 	CL_Keyboard =				nullptr;
-	CL_Editor =					nullptr;
+	CL_Editor_Com =				nullptr;
 	CL_Ogre3D =					nullptr;
 	CL_Brush_X =				nullptr;
 	CL_Top_Tabs =				nullptr;
@@ -187,7 +187,7 @@ void CL64_App::InitApp(void)
 	CL_Grid =					new CL64_Grid();
 	CL_Panels =					new CL64_Panels();
 	CL_Keyboard =				new CL64_Keyboard();
-	CL_Editor =					new CL64_Editor();
+	CL_Editor_Com =				new CL64_Editor_Com();
 	CL_Ogre3D =					new CL64_Ogre3D();
 	CL_Top_Tabs =				new CL64_Top_Tabs();
 	

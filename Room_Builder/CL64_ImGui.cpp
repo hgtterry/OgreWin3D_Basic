@@ -353,7 +353,7 @@ void CL64_ImGui::Camera_Mode_GUI(void)
 		}
 
 		// -------------- Physics Debug
-		if (App->CL_Editor->flag_Show_Debug_Area == 1)
+		if (App->CL_Editor_Com->flag_Show_Debug_Area == 1)
 		{
 			style->Colors[ImGuiCol_Button] = ImVec4(0.0f, 1.0f, 0.0f, 1.00f);
 		}
@@ -364,15 +364,15 @@ void CL64_ImGui::Camera_Mode_GUI(void)
 
 		if (ImGui::Button("Physics Debug", ImVec2(150, 30)))
 		{
-			if (App->CL_Editor->flag_Show_Debug_Area == 1)
+			if (App->CL_Editor_Com->flag_Show_Debug_Area == 1)
 			{
 				App->CL_Physics->Show_Debug_Area(false);
-				App->CL_Editor->flag_Show_Debug_Area = 0;
+				App->CL_Editor_Com->flag_Show_Debug_Area = 0;
 			}
 			else
 			{
 				App->CL_Physics->Show_Debug_Area(true);
-				App->CL_Editor->flag_Show_Debug_Area = 1;
+				App->CL_Editor_Com->flag_Show_Debug_Area = 1;
 			}
 		}
 
@@ -393,7 +393,7 @@ void CL64_ImGui::Camera_Mode_GUI(void)
 		style->Colors[ImGuiCol_Button] = ImVec4(0.26f, 0.59f, 0.98f, 0.40f);
 		if (ImGui::Button("Exit-Return", ImVec2(150, 30)))
 		{
-			App->CL_Editor->Editor_Mode();
+			App->CL_Editor_Com->Editor_Mode();
 		}
 
 		ImVec2 Size = ImGui::GetWindowSize();
@@ -491,15 +491,15 @@ void CL64_ImGui::Render_Report_GUI(void)
 	{
 		ImGui::Text("Render Reports");
 		ImGui::Separator();
-		ImGui::Text("Groups:= %i", App->CL_Editor->GroupCount);
+		ImGui::Text("Groups:= %i", App->CL_Editor_Com->GroupCount);
 
 		ImGui::Text("Selected Group:= %i", App->CL_Picking->m_SubMesh);
-		ImGui::Text("Group Face Count:= %i", App->CL_Editor->Group[App->CL_Picking->m_SubMesh]->GroupFaceCount);
+		ImGui::Text("Group Face Count:= %i", App->CL_Editor_Com->Group[App->CL_Picking->m_SubMesh]->GroupFaceCount);
 		ImGui::Text("Selected Face:= %i", App->CL_Picking->Local_Face);
 		
 		ImGui::Separator();
-		ImGui::Text("WE_Brush:= %i", App->CL_Editor->Group[App->CL_Picking->m_SubMesh]->Face_Data[App->CL_Picking->Local_Face].Brush_Index);
-		ImGui::Text("WE_Face:= %i", App->CL_Editor->Group[App->CL_Picking->m_SubMesh]->Face_Data[App->CL_Picking->Local_Face].WE_Face_Index);
+		ImGui::Text("WE_Brush:= %i", App->CL_Editor_Com->Group[App->CL_Picking->m_SubMesh]->Face_Data[App->CL_Picking->Local_Face].Brush_Index);
+		ImGui::Text("WE_Face:= %i", App->CL_Editor_Com->Group[App->CL_Picking->m_SubMesh]->Face_Data[App->CL_Picking->Local_Face].WE_Face_Index);
 
 		if (ImGui::Button("Textured"))
 		{

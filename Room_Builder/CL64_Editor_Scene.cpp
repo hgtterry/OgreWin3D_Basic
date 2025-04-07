@@ -239,9 +239,9 @@ bool CL64_Editor_Scene::Context_Command_Ogre(WPARAM wParam)
 // *************************************************************************
 void CL64_Editor_Scene::Show_Entities(bool Enable)
 {
-	for (int Count = 0; Count < App->CL_Editor->Object_Count; ++Count)
+	for (int Count = 0; Count < App->CL_Editor_Com->Object_Count; ++Count)
 	{
-		auto& currentObject = App->CL_Editor->B_Object[Count];
+		auto& currentObject = App->CL_Editor_Com->B_Object[Count];
 
 		if (currentObject->flag_Deleted == 0)
 		{

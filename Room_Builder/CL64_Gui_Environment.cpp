@@ -76,7 +76,7 @@ CL64_Gui_Environment::~CL64_Gui_Environment(void)
 // *************************************************************************
 void CL64_Gui_Environment::Reset_Class()
 {
-	//if (App->CL_Editor->flag_Scene_Loaded == 1)
+	//if (App->CL_Editor_Com->flag_Scene_Loaded == 1)
 	{
 		App->CL_Ogre->mSceneMgr->setSkyDome(false, "Examples/CloudySky"); // Look At Terry
 
@@ -125,7 +125,7 @@ void CL64_Gui_Environment::Start_Environment_Editor(int index, bool isTeleport) 
 	flag_Is_Teleport = isTeleport;
 	flag_Float_Exit = 0;
 
-	auto& environment = App->CL_Editor->B_Object[Eviron_Index]->S_Environ[0];
+	auto& environment = App->CL_Editor_Com->B_Object[Eviron_Index]->S_Environ[0];
 
 	Ambient_Colour_Copy.x = environment->AmbientColour.x;
 	Ambient_Colour_Copy.y = environment->AmbientColour.y;
@@ -182,7 +182,7 @@ void CL64_Gui_Environment::Environ_PropertyEditor()
 	ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(2, 2));
 	ImGui::PushStyleColor(ImGuiCol_WindowBg, IM_COL32(213, 222, 242, 255));
 	
-	ImGui::Text("Environment:  %s", App->CL_Editor->B_Object[Eviron_Index]->Object_Name);
+	ImGui::Text("Environment:  %s", App->CL_Editor_Com->B_Object[Eviron_Index]->Object_Name);
 	ImGui::Separator();
 
 	ImGui::Columns(2);
@@ -228,7 +228,7 @@ void CL64_Gui_Environment::Environ_PropertyEditor()
 			Ambient_Int_Green = Ambient_Colour.y * 255;
 			Ambient_Int_Blue = Ambient_Colour.z * 255;
 
-			App->CL_Editor->B_Object[Eviron_Index]->S_Environ[0]->AmbientColour = Ogre::Vector3(Ambient_Colour.x, Ambient_Colour.y, Ambient_Colour.z);
+			App->CL_Editor_Com->B_Object[Eviron_Index]->S_Environ[0]->AmbientColour = Ogre::Vector3(Ambient_Colour.x, Ambient_Colour.y, Ambient_Colour.z);
 			App->CL_Ogre->mSceneMgr->setAmbientLight(ColourValue(Ambient_Colour.x, Ambient_Colour.y, Ambient_Colour.z));
 
 			App->CL_Com_Environments->Mark_As_Altered_Environ(Eviron_Index);
@@ -244,14 +244,14 @@ void CL64_Gui_Environment::Environ_PropertyEditor()
 		
 		ImGui::Selectable("Track:- ", &flag_ClickOnTrack);
 		ImGui::SameLine();
-		ImGui::Text("%s", App->CL_Editor->B_Object[Eviron_Index]->S_Environ[0]->Sound_File);
+		ImGui::Text("%s", App->CL_Editor_Com->B_Object[Eviron_Index]->S_Environ[0]->Sound_File);
 
 		if (flag_ClickOnTrack)
 		{
 			ImGui::TextColored(ImVec4(0.f, 1.f, 0.24f, 1.f), "ON");
 
 			/*App->CL_SoundMgr->flag_Accessed = 1;
-			strcpy(App->CL_SoundMgr->Access_File, App->CL_Editor->B_Object[Eviron_Index]->S_Environ[0]->Sound_File);
+			strcpy(App->CL_SoundMgr->Access_File, App->CL_Editor_Com->B_Object[Eviron_Index]->S_Environ[0]->Sound_File);
 
 			App->CL_Com_Environments->Set_Environment_By_Index(0, Eviron_Index);
 			App->CL_SoundMgr->Dialog_SoundFile();
@@ -259,8 +259,8 @@ void CL64_Gui_Environment::Environ_PropertyEditor()
 			if (App->CL_SoundMgr->flag_IsCancelled == 0)
 			{
 
-				strcpy(App->CL_Editor->B_Object[Eviron_Index]->S_Environ[0]->Sound_File, App->CL_SoundMgr->Access_File);
-				App->CL_Editor->B_Object[Eviron_Index]->S_Environ[0]->SndVolume = App->CL_SoundMgr->SndVolume;
+				strcpy(App->CL_Editor_Com->B_Object[Eviron_Index]->S_Environ[0]->Sound_File, App->CL_SoundMgr->Access_File);
+				App->CL_Editor_Com->B_Object[Eviron_Index]->S_Environ[0]->SndVolume = App->CL_SoundMgr->SndVolume;
 
 				App->CL_Com_Environments->Set_Environment_By_Index(1, Eviron_Index);
 
@@ -277,7 +277,7 @@ void CL64_Gui_Environment::Environ_PropertyEditor()
 		// ----------------- Volume
 		ImGui::Selectable("Volume:- ", &flag_ClickOnVolume);
 		ImGui::SameLine();
-		ImGui::Text("%f", App->CL_Editor->B_Object[Eviron_Index]->S_Environ[0]->SndVolume);
+		ImGui::Text("%f", App->CL_Editor_Com->B_Object[Eviron_Index]->S_Environ[0]->SndVolume);
 		if (flag_ClickOnVolume)
 		{
 			App->CL_Com_Environments->Mark_As_Altered_Environ(Eviron_Index);
@@ -292,12 +292,12 @@ void CL64_Gui_Environment::Environ_PropertyEditor()
 		{
 			if (flag_ClickOnPlay == 1)
 			{
-				App->CL_Editor->B_Object[Eviron_Index]->S_Environ[0]->flag_Play = 1;
+				App->CL_Editor_Com->B_Object[Eviron_Index]->S_Environ[0]->flag_Play = 1;
 				App->CL_Com_Environments->Set_Environment_By_Index(1, Eviron_Index);
 			}
 			else
 			{
-				App->CL_Editor->B_Object[Eviron_Index]->S_Environ[0]->flag_Play = 0;
+				App->CL_Editor_Com->B_Object[Eviron_Index]->S_Environ[0]->flag_Play = 0;
 				App->CL_Com_Environments->Set_Environment_By_Index(0, Eviron_Index);
 			}
 
@@ -312,13 +312,13 @@ void CL64_Gui_Environment::Environ_PropertyEditor()
 		{
 			if (flag_ClickOnLoop == 1)
 			{
-				App->CL_Editor->B_Object[Eviron_Index]->S_Environ[0]->flag_Loop = 1;
+				App->CL_Editor_Com->B_Object[Eviron_Index]->S_Environ[0]->flag_Loop = 1;
 				App->CL_Com_Environments->Set_Environment_By_Index(0, Eviron_Index);
 				App->CL_Com_Environments->Set_Environment_By_Index(1, Eviron_Index);
 			}
 			else
 			{
-				App->CL_Editor->B_Object[Eviron_Index]->S_Environ[0]->flag_Loop = 0;
+				App->CL_Editor_Com->B_Object[Eviron_Index]->S_Environ[0]->flag_Loop = 0;
 				App->CL_Com_Environments->Set_Environment_By_Index(0, Eviron_Index);
 				App->CL_Com_Environments->Set_Environment_By_Index(1, Eviron_Index);
 			}
@@ -341,12 +341,12 @@ void CL64_Gui_Environment::Environ_PropertyEditor()
 		{
 			if (flag_ClickOnFogVisible == 1)
 			{
-				App->CL_Editor->B_Object[Eviron_Index]->S_Environ[0]->Fog_On = 1;
+				App->CL_Editor_Com->B_Object[Eviron_Index]->S_Environ[0]->Fog_On = 1;
 				EnableFog(true);
 			}
 			else
 			{
-				App->CL_Editor->B_Object[Eviron_Index]->S_Environ[0]->Fog_On = 0;
+				App->CL_Editor_Com->B_Object[Eviron_Index]->S_Environ[0]->Fog_On = 0;
 				EnableFog(false);
 			}
 
@@ -356,7 +356,7 @@ void CL64_Gui_Environment::Environ_PropertyEditor()
 		// ----------------- Mode
 		ImGui::Selectable("Mode:- ", &flag_ClickOnFogMode);
 		ImGui::SameLine();
-		ImGui::Text("%i", App->CL_Editor->B_Object[Eviron_Index]->S_Environ[0]->Fog_Mode);
+		ImGui::Text("%i", App->CL_Editor_Com->B_Object[Eviron_Index]->S_Environ[0]->Fog_Mode);
 		if (flag_ClickOnFogMode)
 		{
 			flag_ClickOnFogMode = 0;
@@ -372,9 +372,9 @@ void CL64_Gui_Environment::Environ_PropertyEditor()
 			Ambient_Int_Green = Fog_Colour.y * 255;
 			Ambient_Int_Blue = Fog_Colour.z * 255;
 
-			App->CL_Editor->B_Object[Eviron_Index]->S_Environ[0]->Fog_Colour = Ogre::Vector3(Fog_Colour.x, Fog_Colour.y, Fog_Colour.z);
+			App->CL_Editor_Com->B_Object[Eviron_Index]->S_Environ[0]->Fog_Colour = Ogre::Vector3(Fog_Colour.x, Fog_Colour.y, Fog_Colour.z);
 
-			if (App->CL_Editor->B_Object[Eviron_Index]->S_Environ[0]->Fog_On == 1)
+			if (App->CL_Editor_Com->B_Object[Eviron_Index]->S_Environ[0]->Fog_On == 1)
 			{
 				EnableFog(true);
 			}
@@ -385,12 +385,12 @@ void CL64_Gui_Environment::Environ_PropertyEditor()
 
 
 		// ----------------- Start
-		ImGui::Text("Start:- ", App->CL_Editor->B_Object[Eviron_Index]->S_Environ[0]->Fog_Start);
+		ImGui::Text("Start:- ", App->CL_Editor_Com->B_Object[Eviron_Index]->S_Environ[0]->Fog_Start);
 		ImGui::SameLine();
 		
-		if (ImGui::InputFloat("##1", &App->CL_Editor->B_Object[Eviron_Index]->S_Environ[0]->Fog_Start, 1, 0, "%.3f"))
+		if (ImGui::InputFloat("##1", &App->CL_Editor_Com->B_Object[Eviron_Index]->S_Environ[0]->Fog_Start, 1, 0, "%.3f"))
 		{
-			if (App->CL_Editor->B_Object[Eviron_Index]->S_Environ[0]->Fog_On == 1)
+			if (App->CL_Editor_Com->B_Object[Eviron_Index]->S_Environ[0]->Fog_On == 1)
 			{
 				EnableFog(true);
 			}
@@ -399,12 +399,12 @@ void CL64_Gui_Environment::Environ_PropertyEditor()
 		}
 
 		// ----------------- End
-		ImGui::Text("End:-   ", App->CL_Editor->B_Object[Eviron_Index]->S_Environ[0]->Fog_End);
+		ImGui::Text("End:-   ", App->CL_Editor_Com->B_Object[Eviron_Index]->S_Environ[0]->Fog_End);
 		ImGui::SameLine();
 
-		if (ImGui::InputFloat("##2", &App->CL_Editor->B_Object[Eviron_Index]->S_Environ[0]->Fog_End, 1, 0, "%.3f"))
+		if (ImGui::InputFloat("##2", &App->CL_Editor_Com->B_Object[Eviron_Index]->S_Environ[0]->Fog_End, 1, 0, "%.3f"))
 		{
-			if (App->CL_Editor->B_Object[Eviron_Index]->S_Environ[0]->Fog_On == 1)
+			if (App->CL_Editor_Com->B_Object[Eviron_Index]->S_Environ[0]->Fog_On == 1)
 			{
 				EnableFog(true);
 			}
@@ -428,12 +428,12 @@ void CL64_Gui_Environment::Environ_PropertyEditor()
 		{
 			if (flag_ClickOnSkyEnabled == 1)
 			{
-				App->CL_Editor->B_Object[Eviron_Index]->S_Environ[0]->flag_Enabled = 1;
+				App->CL_Editor_Com->B_Object[Eviron_Index]->S_Environ[0]->flag_Enabled = 1;
 				SetSky(true);
 			}
 			else
 			{
-				App->CL_Editor->B_Object[Eviron_Index]->S_Environ[0]->flag_Enabled = 0;
+				App->CL_Editor_Com->B_Object[Eviron_Index]->S_Environ[0]->flag_Enabled = 0;
 				SetSky(false);
 			}
 
@@ -441,12 +441,12 @@ void CL64_Gui_Environment::Environ_PropertyEditor()
 		}
 
 		// ----------------- Tiling
-		ImGui::Text("Tiling:- ", App->CL_Editor->B_Object[Eviron_Index]->S_Environ[0]->Tiling);
+		ImGui::Text("Tiling:- ", App->CL_Editor_Com->B_Object[Eviron_Index]->S_Environ[0]->Tiling);
 		ImGui::SameLine();
 
-		if (ImGui::InputFloat("##5", &App->CL_Editor->B_Object[Eviron_Index]->S_Environ[0]->Tiling, 0.5, 0, "%.3f"))
+		if (ImGui::InputFloat("##5", &App->CL_Editor_Com->B_Object[Eviron_Index]->S_Environ[0]->Tiling, 0.5, 0, "%.3f"))
 		{
-			if (App->CL_Editor->B_Object[Eviron_Index]->S_Environ[0]->flag_Enabled == 1)
+			if (App->CL_Editor_Com->B_Object[Eviron_Index]->S_Environ[0]->flag_Enabled == 1)
 			{
 				SetSky(true);
 			}
@@ -455,12 +455,12 @@ void CL64_Gui_Environment::Environ_PropertyEditor()
 		}
 
 		// ----------------- Curvature
-		ImGui::Text("Curve:- ", App->CL_Editor->B_Object[Eviron_Index]->S_Environ[0]->Curvature);
+		ImGui::Text("Curve:- ", App->CL_Editor_Com->B_Object[Eviron_Index]->S_Environ[0]->Curvature);
 		ImGui::SameLine();
 
-		if (ImGui::InputFloat("##6", &App->CL_Editor->B_Object[Eviron_Index]->S_Environ[0]->Curvature, 0.5, 0, "%.3f"))
+		if (ImGui::InputFloat("##6", &App->CL_Editor_Com->B_Object[Eviron_Index]->S_Environ[0]->Curvature, 0.5, 0, "%.3f"))
 		{
-			if (App->CL_Editor->B_Object[Eviron_Index]->S_Environ[0]->flag_Enabled == 1)
+			if (App->CL_Editor_Com->B_Object[Eviron_Index]->S_Environ[0]->flag_Enabled == 1)
 			{
 				SetSky(true);
 			}
@@ -490,13 +490,13 @@ void CL64_Gui_Environment::Environ_PropertyEditor()
 		ImGui::SameLine();
 		if (ImGui::Button("Goto Location", ImVec2(120, 0)))
 		{
-			App->CL_Editor->B_Player[0]->Phys_Body->getWorldTransform().setOrigin(App->CL_Editor->B_Object[Eviron_Index]->S_Teleport[0]->Physics_Position);
-			App->CL_Editor->B_Player[0]->Phys_Body->getWorldTransform().setRotation(App->CL_Editor->B_Object[Eviron_Index]->S_Teleport[0]->Physics_Rotation);
+			App->CL_Editor_Com->B_Player[0]->Phys_Body->getWorldTransform().setOrigin(App->CL_Editor_Com->B_Object[Eviron_Index]->S_Teleport[0]->Physics_Position);
+			App->CL_Editor_Com->B_Player[0]->Phys_Body->getWorldTransform().setRotation(App->CL_Editor_Com->B_Object[Eviron_Index]->S_Teleport[0]->Physics_Rotation);
 			Set_To_PlayerView();
 		}
 
 		ImGui::SameLine();
-		if (ImGui::Checkbox("Enabled", &App->CL_Editor->B_Object[Eviron_Index]->S_Environ[0]->flag_Environ_Enabled))
+		if (ImGui::Checkbox("Enabled", &App->CL_Editor_Com->B_Object[Eviron_Index]->S_Environ[0]->flag_Environ_Enabled))
 		{
 			//App->CL_Properties->Update_ListView_Teleport();
 		}
@@ -531,10 +531,10 @@ void CL64_Gui_Environment::Set_To_PlayerView()
 	App->SBC_TopTabs->Toggle_FirstCam_Flag = 1;
 	App->SBC_TopTabs->Toggle_FreeCam_Flag = 0;
 
-	App->CL_Editor->B_Player[0]->Player_Node->setVisible(false);
+	App->CL_Editor_Com->B_Player[0]->Player_Node->setVisible(false);
 
-	int f = App->CL_Editor->B_Player[0]->Phys_Body->getCollisionFlags();
-	App->CL_Editor->B_Player[0]->Phys_Body->setCollisionFlags(f | (1 << 5));
+	int f = App->CL_Editor_Com->B_Player[0]->Phys_Body->getCollisionFlags();
+	App->CL_Editor_Com->B_Player[0]->Phys_Body->setCollisionFlags(f | (1 << 5));
 
 	App->CL_Ogre->BulletListener->Render_Debug_Flag = 0;
 	App->CL_Ogre->BulletListener->Render_Debug_Flag = 1;
@@ -551,13 +551,13 @@ void CL64_Gui_Environment::SetSky(bool Enable)
 {
 	int Index = App->CL_Properties_Scene->Current_Selected_Object;
 
-	App->CL_Ogre->mSceneMgr->setSkyDome(Enable, "OW3D/CloudySky", App->CL_Editor->B_Object[Index]->S_Environ[0]->Curvature, App->CL_Editor->B_Object[Index]->S_Environ[0]->Tiling, App->CL_Editor->B_Object[Index]->S_Environ[0]->Distance);
+	App->CL_Ogre->mSceneMgr->setSkyDome(Enable, "OW3D/CloudySky", App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->Curvature, App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->Tiling, App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->Distance);
 
 	/*App->CL_Ogre->mSceneMgr->setSkyDome(Enable,
-		App->CL_Editor->B_Object[Index]->S_Environ[0]->Material,
-		App->CL_Editor->B_Object[Index]->S_Environ[0]->Curvature,
-		App->CL_Editor->B_Object[Index]->S_Environ[0]->Tiling,
-		App->CL_Editor->B_Object[Index]->S_Environ[0]->Distance);*/
+		App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->Material,
+		App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->Curvature,
+		App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->Tiling,
+		App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->Distance);*/
 }
 
 // *************************************************************************
@@ -569,7 +569,7 @@ bool CL64_Gui_Environment::EnableFog(bool SetFog)
 
 	if (SetFog)
 	{
-		const auto& fogProperties = App->CL_Editor->B_Object[Index]->S_Environ[0];
+		const auto& fogProperties = App->CL_Editor_Com->B_Object[Index]->S_Environ[0];
 		App->CL_Ogre->mSceneMgr->setFog(FOG_LINEAR,
 			ColourValue(fogProperties->Fog_Colour.x,
 				fogProperties->Fog_Colour.y,

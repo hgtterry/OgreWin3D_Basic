@@ -304,30 +304,30 @@ void CL64_Physics::Reset_Physics(void)
 	float y = 0;
 	float z = 0;
 
-	if (App->CL_Editor->flag_Player_Added == 1)// && GD_Reset_Player == 1)
+	if (App->CL_Editor_Com->flag_Player_Added == 1)// && GD_Reset_Player == 1)
 	{
 		btVector3 zeroVector(0, 0, 0);
 
-		x = App->CL_Editor->B_Player[0]->StartPos.x;
-		y = App->CL_Editor->B_Player[0]->StartPos.y;
-		z = App->CL_Editor->B_Player[0]->StartPos.z;
+		x = App->CL_Editor_Com->B_Player[0]->StartPos.x;
+		y = App->CL_Editor_Com->B_Player[0]->StartPos.y;
+		z = App->CL_Editor_Com->B_Player[0]->StartPos.z;
 
 		btVector3 initialPosition(x, y, z);
 
 		btTransform startTransform;
 		startTransform.setIdentity();
-		startTransform.setRotation(btQuaternion(App->CL_Editor->B_Player[0]->Physics_Rotation));
+		startTransform.setRotation(btQuaternion(App->CL_Editor_Com->B_Player[0]->Physics_Rotation));
 		startTransform.setOrigin(initialPosition);
 
-		App->CL_Editor->B_Player[0]->Phys_Body->clearForces();
-		App->CL_Editor->B_Player[0]->Phys_Body->setLinearVelocity(zeroVector);
-		App->CL_Editor->B_Player[0]->Phys_Body->setAngularVelocity(zeroVector);
+		App->CL_Editor_Com->B_Player[0]->Phys_Body->clearForces();
+		App->CL_Editor_Com->B_Player[0]->Phys_Body->setLinearVelocity(zeroVector);
+		App->CL_Editor_Com->B_Player[0]->Phys_Body->setAngularVelocity(zeroVector);
 
-		App->CL_Editor->B_Player[0]->Phys_Body->setWorldTransform(startTransform);
-		App->CL_Editor->B_Player[0]->Phys_Body->getMotionState()->setWorldTransform(startTransform);
-		App->CL_Editor->B_Player[0]->Phys_Body->activate(true);
+		App->CL_Editor_Com->B_Player[0]->Phys_Body->setWorldTransform(startTransform);
+		App->CL_Editor_Com->B_Player[0]->Phys_Body->getMotionState()->setWorldTransform(startTransform);
+		App->CL_Editor_Com->B_Player[0]->Phys_Body->activate(true);
 
-		App->CL_Editor->B_Player[0]->Phys_Body->getWorldTransform().setRotation(App->CL_Editor->B_Player[0]->Physics_Rotation);
+		App->CL_Editor_Com->B_Player[0]->Phys_Body->getWorldTransform().setRotation(App->CL_Editor_Com->B_Player[0]->Physics_Rotation);
 
 		App->CL_Com_Player->Set_Player_Physics_Position(0);
 	}
@@ -429,26 +429,26 @@ void CL64_Physics::Show_Debug_Objects(bool Show)
 void CL64_Physics::Set_Physics_New(int Index)
 {
 	// Rotation
-	App->CL_Editor->B_Object[Index]->Physics_Quat = App->CL_Editor->B_Object[Index]->Object_Node->getOrientation();
+	App->CL_Editor_Com->B_Object[Index]->Physics_Quat = App->CL_Editor_Com->B_Object[Index]->Object_Node->getOrientation();
 
-	float w = App->CL_Editor->B_Object[Index]->Physics_Quat.w;
-	float x = App->CL_Editor->B_Object[Index]->Physics_Quat.x;
-	float y = App->CL_Editor->B_Object[Index]->Physics_Quat.y;
-	float z = App->CL_Editor->B_Object[Index]->Physics_Quat.z;
+	float w = App->CL_Editor_Com->B_Object[Index]->Physics_Quat.w;
+	float x = App->CL_Editor_Com->B_Object[Index]->Physics_Quat.x;
+	float y = App->CL_Editor_Com->B_Object[Index]->Physics_Quat.y;
+	float z = App->CL_Editor_Com->B_Object[Index]->Physics_Quat.z;
 
-	App->CL_Editor->B_Object[Index]->Phys_Body->getWorldTransform().setRotation(btQuaternion(x, y, z, w));
+	App->CL_Editor_Com->B_Object[Index]->Phys_Body->getWorldTransform().setRotation(btQuaternion(x, y, z, w));
 
 	// Scale
-	App->CL_Editor->B_Object[Index]->Object_Node->setScale(App->CL_Editor->B_Object[Index]->Mesh_Scale);
+	App->CL_Editor_Com->B_Object[Index]->Object_Node->setScale(App->CL_Editor_Com->B_Object[Index]->Mesh_Scale);
 
-	Ogre::Vector3 Scale = App->CL_Editor->B_Object[Index]->Object_Node->getScale();
-	App->CL_Editor->B_Object[Index]->Phys_Body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
+	Ogre::Vector3 Scale = App->CL_Editor_Com->B_Object[Index]->Object_Node->getScale();
+	App->CL_Editor_Com->B_Object[Index]->Phys_Body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
 
 	// Position
-	Ogre::Vector3 Centre = App->CL_Editor->B_Object[Index]->Object_Ent->getWorldBoundingBox(true).getCenter();
-	App->CL_Editor->B_Object[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
-	App->CL_Editor->B_Object[Index]->Physics_Pos = Centre;
+	Ogre::Vector3 Centre = App->CL_Editor_Com->B_Object[Index]->Object_Ent->getWorldBoundingBox(true).getCenter();
+	App->CL_Editor_Com->B_Object[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
+	App->CL_Editor_Com->B_Object[Index]->Physics_Pos = Centre;
 
 	// All Good
-	App->CL_Editor->B_Object[Index]->flag_Physics_Valid = 1;
+	App->CL_Editor_Com->B_Object[Index]->flag_Physics_Valid = 1;
 }

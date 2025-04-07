@@ -26,7 +26,7 @@ THE SOFTWARE.
 #include "CL64_App.h"
 #include "CL64_Editor.h"
 
-CL64_Editor::CL64_Editor()
+CL64_Editor_Com::CL64_Editor_Com()
 {
 	
 	// Groups
@@ -73,14 +73,14 @@ CL64_Editor::CL64_Editor()
 
 }
 
-CL64_Editor::~CL64_Editor()
+CL64_Editor_Com::~CL64_Editor_Com()
 {
 }
 
 // *************************************************************************
 // *			Create_Brush_XX:- Terry and Hazel Flanigan 2025		  	   *
 // *************************************************************************
-void CL64_Editor::Create_Brush_XX(int Index)
+void CL64_Editor_Com::Create_Brush_XX(int Index)
 {
 	if (B_Brush[Index] != nullptr)
 	{
@@ -97,7 +97,7 @@ void CL64_Editor::Create_Brush_XX(int Index)
 // *************************************************************************
 // *		Create_Mesh_Group:- Terry and Hazel Flanigan 2023		  	   *
 // *************************************************************************
-void CL64_Editor::Create_Mesh_Group(int Index)
+void CL64_Editor_Com::Create_Mesh_Group(int Index)
 {
 	if (Group[Index] != nullptr)
 	{
@@ -111,7 +111,7 @@ void CL64_Editor::Create_Mesh_Group(int Index)
 // *************************************************************************
 // *			Preview_Mode:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-void CL64_Editor::Preview_Mode(void)
+void CL64_Editor_Com::Preview_Mode(void)
 {
 	if (App->CL_Physics->flag_TriMesh_Created == 1)
 	{
@@ -156,7 +156,7 @@ void CL64_Editor::Preview_Mode(void)
 // *************************************************************************
 // *				Editor_Mode:- Terry and Hazel Flanigan 2024	 	 	   *
 // *************************************************************************
-void CL64_Editor::Editor_Mode(void)
+void CL64_Editor_Com::Editor_Mode(void)
 {
 	App->CL_Ogre->Ogre3D_Listener->flag_Run_Physics = 0;
 	App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_Free;

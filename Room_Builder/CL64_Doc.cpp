@@ -1160,9 +1160,9 @@ void CL64_Doc::DoneMove(void)
                 App->CL_SelBrushList->SelBrushList_Center(App->CL_Doc->pSelBrushes, &App->CL_Doc->SelectedGeoCenter);
                 T_Vec3 CenterOfSelection = App->CL_Doc->SelectedGeoCenter;
 
-                App->CL_Editor->B_Player[0]->StartPos.x = CenterOfSelection.x;
-                App->CL_Editor->B_Player[0]->StartPos.y = CenterOfSelection.y;
-                App->CL_Editor->B_Player[0]->StartPos.z = CenterOfSelection.z;
+                App->CL_Editor_Com->B_Player[0]->StartPos.x = CenterOfSelection.x;
+                App->CL_Editor_Com->B_Player[0]->StartPos.y = CenterOfSelection.y;
+                App->CL_Editor_Com->B_Player[0]->StartPos.z = CenterOfSelection.z;
 
                 App->CL_Physics->Reset_Physics();
             }

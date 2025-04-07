@@ -60,29 +60,29 @@ void CL64_Com_Player::Reset_Class(void)
 {
 	int Count = 0;
 
-	while (Count < App->CL_Editor->Player_Count) // Remove Ogre Objects
+	while (Count < App->CL_Editor_Com->Player_Count) // Remove Ogre Objects
 	{
-		if (App->CL_Editor->B_Player[Count])
+		if (App->CL_Editor_Com->B_Player[Count])
 		{
-			if (App->CL_Editor->B_Player[Count]->Player_Ent && App->CL_Editor->B_Player[Count]->Player_Node)
+			if (App->CL_Editor_Com->B_Player[Count]->Player_Ent && App->CL_Editor_Com->B_Player[Count]->Player_Node)
 			{
-				App->CL_Ogre->mSceneMgr->destroySceneNode(App->CL_Editor->B_Player[Count]->Player_Node);
-				App->CL_Ogre->mSceneMgr->destroyEntity(App->CL_Editor->B_Player[Count]->Player_Ent);
-				App->CL_Ogre->mSceneMgr->destroyCamera(App->CL_Editor->B_Player[Count]->CameraPitch);
-				App->CL_Editor->B_Player[Count]->Player_Ent = nullptr;
-				App->CL_Editor->B_Player[Count]->Player_Node = nullptr;
-				App->CL_Editor->B_Player[Count]->CameraPitch = nullptr;
+				App->CL_Ogre->mSceneMgr->destroySceneNode(App->CL_Editor_Com->B_Player[Count]->Player_Node);
+				App->CL_Ogre->mSceneMgr->destroyEntity(App->CL_Editor_Com->B_Player[Count]->Player_Ent);
+				App->CL_Ogre->mSceneMgr->destroyCamera(App->CL_Editor_Com->B_Player[Count]->CameraPitch);
+				App->CL_Editor_Com->B_Player[Count]->Player_Ent = nullptr;
+				App->CL_Editor_Com->B_Player[Count]->Player_Node = nullptr;
+				App->CL_Editor_Com->B_Player[Count]->CameraPitch = nullptr;
 			}
 
-			delete App->CL_Editor->B_Player[Count];
-			App->CL_Editor->B_Player[Count] = nullptr;
+			delete App->CL_Editor_Com->B_Player[Count];
+			App->CL_Editor_Com->B_Player[Count] = nullptr;
 		}
 
 		Count++;
 	}
 
-	App->CL_Editor->Player_Count = 0;
-	App->CL_Editor->flag_Player_Added = 0;
+	App->CL_Editor_Com->Player_Count = 0;
+	App->CL_Editor_Com->flag_Player_Added = 0;
 
 }
 
@@ -91,19 +91,19 @@ void CL64_Com_Player::Reset_Class(void)
 // *************************************************************************
 void CL64_Com_Player::Create_Player_Object(void)
 {
-	int Index = App->CL_Editor->Player_Count;
+	int Index = App->CL_Editor_Com->Player_Count;
 
-	App->CL_Editor->B_Player[Index] = new Base_Player();
+	App->CL_Editor_Com->B_Player[Index] = new Base_Player();
 	
 	Initialize();
 
-	App->CL_Editor->B_Player[Index]->CameraPitch = App->CL_Ogre->mSceneMgr->createCamera("PlayerPitch");
+	App->CL_Editor_Com->B_Player[Index]->CameraPitch = App->CL_Ogre->mSceneMgr->createCamera("PlayerPitch");
 
-	App->CL_Editor->B_Player[Index]->CameraPitch_Node = App->CL_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
-	App->CL_Editor->B_Player[Index]->CameraPitch_Node->attachObject(App->CL_Editor->B_Player[Index]->CameraPitch);
-	App->CL_Editor->B_Player[Index]->CameraPitch_Node->setPosition(0, 0, 0);
+	App->CL_Editor_Com->B_Player[Index]->CameraPitch_Node = App->CL_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	App->CL_Editor_Com->B_Player[Index]->CameraPitch_Node->attachObject(App->CL_Editor_Com->B_Player[Index]->CameraPitch);
+	App->CL_Editor_Com->B_Player[Index]->CameraPitch_Node->setPosition(0, 0, 0);
 
-	App->CL_Editor->Player_Count++;
+	App->CL_Editor_Com->Player_Count++;
 
 }
 
@@ -114,9 +114,9 @@ void CL64_Com_Player::Initialize() const
 {
 	Ogre::Vector3 Pos;
 
-	int Index = App->CL_Editor->Player_Count;
+	int Index = App->CL_Editor_Com->Player_Count;
 
-	Base_Player* pBase = App->CL_Editor->B_Player[Index];
+	Base_Player* pBase = App->CL_Editor_Com->B_Player[Index];
 	
 	pBase->Player_Ent = App->CL_Ogre->mSceneMgr->createEntity("Player_1", "Sinbad.mesh", App->CL_Ogre->App_Resource_Group);
 	pBase->Player_Node = App->CL_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
@@ -152,10 +152,10 @@ void CL64_Com_Player::Initialize() const
 	int f = pBase->Phys_Body->getCollisionFlags();
 	//pBase->Phys_Body->setCollisionFlags(f | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
 
-	App->CL_Editor->B_Player[0]->Phys_Body->getWorldTransform().setRotation(App->CL_Editor->B_Player[0]->Physics_Rotation);
+	App->CL_Editor_Com->B_Player[0]->Phys_Body->getWorldTransform().setRotation(App->CL_Editor_Com->B_Player[0]->Physics_Rotation);
 	App->CL_Physics->dynamicsWorld->addRigidBody(pBase->Phys_Body);
 
-	App->CL_Editor->flag_Player_Added = 1;
+	App->CL_Editor_Com->flag_Player_Added = 1;
 	
 }
 
@@ -164,19 +164,19 @@ void CL64_Com_Player::Initialize() const
 // *************************************************************************
 void CL64_Com_Player::Show_Player_And_Physics(bool Show)
 {
-	int f = App->CL_Editor->B_Player[0]->Phys_Body->getCollisionFlags();
+	int f = App->CL_Editor_Com->B_Player[0]->Phys_Body->getCollisionFlags();
 
 	if (Show == 1)
 	{
-		App->CL_Editor->B_Player[0]->Phys_Body->setCollisionFlags(f & (~(1 << 5)));
-		App->CL_Editor->B_Player[0]->Player_Node->setVisible(true);
+		App->CL_Editor_Com->B_Player[0]->Phys_Body->setCollisionFlags(f & (~(1 << 5)));
+		App->CL_Editor_Com->B_Player[0]->Player_Node->setVisible(true);
 		//App->CL_Scene->B_Player[0]->Player_Node->scale(3, 3, 3);
 		flag_Show_Physics_Debug = 1;
 	}
 	else
 	{
-		App->CL_Editor->B_Player[0]->Phys_Body->setCollisionFlags(f | (1 << 5));
-		App->CL_Editor->B_Player[0]->Player_Node->setVisible(false);
+		App->CL_Editor_Com->B_Player[0]->Phys_Body->setCollisionFlags(f | (1 << 5));
+		App->CL_Editor_Com->B_Player[0]->Player_Node->setVisible(false);
 		//App->CL_Scene->B_Player[0]->Player_Node->scale(0, 0, 0);
 		flag_Show_Physics_Debug = 0;
 	}
@@ -193,16 +193,16 @@ void CL64_Com_Player::Show_Player_And_Physics(bool Show)
 // *************************************************************************
 void CL64_Com_Player::Show_Physics(bool Show)
 {
-	int f = App->CL_Editor->B_Player[0]->Phys_Body->getCollisionFlags();
+	int f = App->CL_Editor_Com->B_Player[0]->Phys_Body->getCollisionFlags();
 
 	if (Show == 1)
 	{
-		App->CL_Editor->B_Player[0]->Phys_Body->setCollisionFlags(f & (~(1 << 5)));
+		App->CL_Editor_Com->B_Player[0]->Phys_Body->setCollisionFlags(f & (~(1 << 5)));
 		flag_Show_Physics_Debug = 1;
 	}
 	else
 	{
-		App->CL_Editor->B_Player[0]->Phys_Body->setCollisionFlags(f | (1 << 5));
+		App->CL_Editor_Com->B_Player[0]->Phys_Body->setCollisionFlags(f | (1 << 5));
 		flag_Show_Physics_Debug = 0;
 	}
 
@@ -218,10 +218,10 @@ void CL64_Com_Player::Show_Physics(bool Show)
 // *************************************************************************
 void CL64_Com_Player::Adjust_Capsule(void)
 {
-	App->CL_Editor->B_Player[0]->Phys_Shape = new btCapsuleShape(btScalar(App->CL_Editor->B_Player[0]->Capsule_Radius), btScalar(App->CL_Editor->B_Player[0]->Capsule_Height));
-	App->CL_Editor->B_Player[0]->Phys_Body->setCollisionShape(App->CL_Editor->B_Player[0]->Phys_Shape);
+	App->CL_Editor_Com->B_Player[0]->Phys_Shape = new btCapsuleShape(btScalar(App->CL_Editor_Com->B_Player[0]->Capsule_Radius), btScalar(App->CL_Editor_Com->B_Player[0]->Capsule_Height));
+	App->CL_Editor_Com->B_Player[0]->Phys_Body->setCollisionShape(App->CL_Editor_Com->B_Player[0]->Phys_Shape);
 
-	Ray_End_Gravity = (App->CL_Editor->B_Player[0]->Capsule_Height + 12) / 2;
+	Ray_End_Gravity = (App->CL_Editor_Com->B_Player[0]->Capsule_Height + 12) / 2;
 	Get_Height();
 }
 
@@ -230,7 +230,7 @@ void CL64_Com_Player::Adjust_Capsule(void)
 // *************************************************************************
 void CL64_Com_Player::Update_Player(btCollisionWorld* collisionWorld, btScalar deltaTimeStep)
 {
-	mWorld_Height = App->CL_Editor->B_Player[0]->Phys_Body->getWorldTransform().getOrigin();
+	mWorld_Height = App->CL_Editor_Com->B_Player[0]->Phys_Body->getWorldTransform().getOrigin();
 
 	Get_Height();
 	
@@ -243,18 +243,18 @@ void CL64_Com_Player::Update_Player(btCollisionWorld* collisionWorld, btScalar d
 void CL64_Com_Player::Update_Velocity(float dt)
 {
 	btTransform transform;
-	App->CL_Editor->B_Player[0]->Phys_Body->getMotionState()->getWorldTransform(transform);
+	App->CL_Editor_Com->B_Player[0]->Phys_Body->getMotionState()->getWorldTransform(transform);
 	btMatrix3x3& basis = transform.getBasis();
 
 	btMatrix3x3 inv = basis.transpose();
 
-	btVector3 linearVelocity = inv * App->CL_Editor->B_Player[0]->Phys_Body->getLinearVelocity();
+	btVector3 linearVelocity = inv * App->CL_Editor_Com->B_Player[0]->Phys_Body->getLinearVelocity();
 
 	//flag_Is_On_Ground = 1;
 
 	if (flag_Is_On_Ground == 1)// || mJump == 1)
 	{
-		btVector3 dv = mMoveDirection * ((App->CL_Editor->B_Player[0]->Ground_speed * 100)*dt);
+		btVector3 dv = mMoveDirection * ((App->CL_Editor_Com->B_Player[0]->Ground_speed * 100)*dt);
 		linearVelocity = dv;
 	}
 	else
@@ -270,7 +270,7 @@ void CL64_Com_Player::Update_Velocity(float dt)
 		}
 	}
 
-	App->CL_Editor->B_Player[0]->Phys_Body->setLinearVelocity(basis * linearVelocity);
+	App->CL_Editor_Com->B_Player[0]->Phys_Body->setLinearVelocity(basis * linearVelocity);
 
 }
 
@@ -279,7 +279,7 @@ void CL64_Com_Player::Update_Velocity(float dt)
 // *************************************************************************
 void CL64_Com_Player::Get_Height(void)
 {
-	btVector3 Origin = App->CL_Editor->B_Player[0]->Phys_Body->getWorldTransform().getOrigin();
+	btVector3 Origin = App->CL_Editor_Com->B_Player[0]->Phys_Body->getWorldTransform().getOrigin();
 	btVector3 from = btVector3(Origin.getX(), Origin.getY(), Origin.getZ());
 	btVector3 to = btVector3(Origin.getX(), Origin.getY() - Ray_End_Gravity, Origin.getZ());
 
@@ -308,7 +308,7 @@ void CL64_Com_Player::Set_Player_Position(Ogre::Vector3 Position)
 	float py = Position.y;
 	float pz = Position.z;
 
-	App->CL_Editor->B_Player[0]->Phys_Body->getWorldTransform().setOrigin(btVector3(px, py, pz));
+	App->CL_Editor_Com->B_Player[0]->Phys_Body->getWorldTransform().setOrigin(btVector3(px, py, pz));
 
 }
 
@@ -318,12 +318,12 @@ void CL64_Com_Player::Set_Player_Position(Ogre::Vector3 Position)
 void CL64_Com_Player::Set_Player_Physics_Position(int Index)
 {
 	btTransform trans;
-	App->CL_Editor->B_Player[0]->Phys_Body->getMotionState()->getWorldTransform(trans);
+	App->CL_Editor_Com->B_Player[0]->Phys_Body->getMotionState()->getWorldTransform(trans);
 	btQuaternion orientation = trans.getRotation();
 
-	App->CL_Editor->B_Player[0]->Player_Node->setPosition(Ogre::Vector3(trans.getOrigin().getX(), trans.getOrigin().getY() + 2, trans.getOrigin().getZ()));
-	App->CL_Editor->B_Player[0]->Player_Node->setOrientation(Ogre::Quaternion(orientation.getW(), orientation.getX(), orientation.getY(), orientation.getZ()));
-	App->CL_Editor->B_Player[0]->Player_Node->pitch(Ogre::Degree(180));
+	App->CL_Editor_Com->B_Player[0]->Player_Node->setPosition(Ogre::Vector3(trans.getOrigin().getX(), trans.getOrigin().getY() + 2, trans.getOrigin().getZ()));
+	App->CL_Editor_Com->B_Player[0]->Player_Node->setOrientation(Ogre::Quaternion(orientation.getW(), orientation.getX(), orientation.getY(), orientation.getZ()));
+	App->CL_Editor_Com->B_Player[0]->Player_Node->pitch(Ogre::Degree(180));
 
 }
 
@@ -332,7 +332,7 @@ void CL64_Com_Player::Set_Player_Physics_Position(int Index)
 // *************************************************************************
 void CL64_Com_Player::Set_Player_Rotation(btQuaternion Rotation)
 {
-	App->CL_Editor->B_Player[0]->Phys_Body->getWorldTransform().setRotation(Rotation);
+	App->CL_Editor_Com->B_Player[0]->Phys_Body->getWorldTransform().setRotation(Rotation);
 }
 
 // *************************************************************************
@@ -340,7 +340,7 @@ void CL64_Com_Player::Set_Player_Rotation(btQuaternion Rotation)
 // *************************************************************************
 void CL64_Com_Player::Set_Player_GroundSpeed(float GroundSpeed)
 {
-	App->CL_Editor->B_Player[0]->Ground_speed = GroundSpeed;
+	App->CL_Editor_Com->B_Player[0]->Ground_speed = GroundSpeed;
 }
 
 // *************************************************************************
@@ -348,13 +348,13 @@ void CL64_Com_Player::Set_Player_GroundSpeed(float GroundSpeed)
 // *************************************************************************
 void CL64_Com_Player::Reset_Player()
 {
-	if (App->CL_Editor->flag_Player_Added == 1)// && GD_Reset_Player == 1)
+	if (App->CL_Editor_Com->flag_Player_Added == 1)// && GD_Reset_Player == 1)
 	{
 		btVector3 zeroVector(0, 0, 0);
 
-		float x = App->CL_Editor->B_Player[0]->StartPos.x;
-		float y = App->CL_Editor->B_Player[0]->StartPos.y;
-		float z = App->CL_Editor->B_Player[0]->StartPos.z;
+		float x = App->CL_Editor_Com->B_Player[0]->StartPos.x;
+		float y = App->CL_Editor_Com->B_Player[0]->StartPos.y;
+		float z = App->CL_Editor_Com->B_Player[0]->StartPos.z;
 
 		btVector3 initialPosition(x, y, z);
 
@@ -363,15 +363,15 @@ void CL64_Com_Player::Reset_Player()
 		startTransform.setRotation(btQuaternion(1.0f, 0.0f, 0.0f, 0.0f));
 		startTransform.setOrigin(initialPosition);
 
-		App->CL_Editor->B_Player[0]->Phys_Body->clearForces();
-		App->CL_Editor->B_Player[0]->Phys_Body->setLinearVelocity(zeroVector);
-		App->CL_Editor->B_Player[0]->Phys_Body->setAngularVelocity(zeroVector);
+		App->CL_Editor_Com->B_Player[0]->Phys_Body->clearForces();
+		App->CL_Editor_Com->B_Player[0]->Phys_Body->setLinearVelocity(zeroVector);
+		App->CL_Editor_Com->B_Player[0]->Phys_Body->setAngularVelocity(zeroVector);
 
-		App->CL_Editor->B_Player[0]->Phys_Body->setWorldTransform(startTransform);
-		App->CL_Editor->B_Player[0]->Phys_Body->getMotionState()->setWorldTransform(startTransform);
-		App->CL_Editor->B_Player[0]->Phys_Body->activate(true);
+		App->CL_Editor_Com->B_Player[0]->Phys_Body->setWorldTransform(startTransform);
+		App->CL_Editor_Com->B_Player[0]->Phys_Body->getMotionState()->setWorldTransform(startTransform);
+		App->CL_Editor_Com->B_Player[0]->Phys_Body->activate(true);
 
-		App->CL_Editor->B_Player[0]->Phys_Body->getWorldTransform().setRotation(App->CL_Editor->B_Player[0]->Physics_Rotation);
+		App->CL_Editor_Com->B_Player[0]->Phys_Body->getWorldTransform().setRotation(App->CL_Editor_Com->B_Player[0]->Physics_Rotation);
 
 		Adjust_Capsule();
 	}

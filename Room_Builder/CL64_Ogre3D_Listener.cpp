@@ -95,11 +95,11 @@ bool CL64_Ogre3D_Listener::frameRenderingQueued(const FrameEvent& evt)
 		Ogre::Radian mmPitch;
 		Ogre::Radian mYaw;
 
-		Pos = App->CL_Editor->B_Player[0]->Player_Node->getPosition();
+		Pos = App->CL_Editor_Com->B_Player[0]->Player_Node->getPosition();
 
-		mmPitch = App->CL_Editor->B_Player[0]->CameraPitch_Node->getOrientation().getPitch();
-		mYaw = App->CL_Editor->B_Player[0]->Player_Node->getOrientation().getYaw();
-		Pos.y = Pos.y + App->CL_Editor->B_Player[0]->PlayerHeight;
+		mmPitch = App->CL_Editor_Com->B_Player[0]->CameraPitch_Node->getOrientation().getPitch();
+		mYaw = App->CL_Editor_Com->B_Player[0]->Player_Node->getOrientation().getYaw();
+		Pos.y = Pos.y + App->CL_Editor_Com->B_Player[0]->PlayerHeight;
 
 		App->CL_Ogre->camNode->setPosition(Pos);
 		App->CL_Ogre->camNode->setOrientation(Ogre::Quaternion(1, 0, 0, 0));
@@ -227,15 +227,15 @@ void CL64_Ogre3D_Listener::Update_Game_Logic(float DeltaTime)
 		//}
 	}
 
-	if (flag_Run_Physics == 1 && App->CL_Editor->flag_Player_Added == 1)
+	if (flag_Run_Physics == 1 && App->CL_Editor_Com->flag_Player_Added == 1)
 	{
 		btTransform trans;
-		App->CL_Editor->B_Player[0]->Phys_Body->getMotionState()->getWorldTransform(trans);
+		App->CL_Editor_Com->B_Player[0]->Phys_Body->getMotionState()->getWorldTransform(trans);
 		btQuaternion orientation = trans.getRotation();
 
-		App->CL_Editor->B_Player[0]->Player_Node->setPosition(Ogre::Vector3(trans.getOrigin().getX(), trans.getOrigin().getY() + 2, trans.getOrigin().getZ()));
-		App->CL_Editor->B_Player[0]->Player_Node->setOrientation(Ogre::Quaternion(orientation.getW(), orientation.getX(), orientation.getY(), orientation.getZ()));
-		App->CL_Editor->B_Player[0]->Player_Node->pitch(Ogre::Degree(180));
+		App->CL_Editor_Com->B_Player[0]->Player_Node->setPosition(Ogre::Vector3(trans.getOrigin().getX(), trans.getOrigin().getY() + 2, trans.getOrigin().getZ()));
+		App->CL_Editor_Com->B_Player[0]->Player_Node->setOrientation(Ogre::Quaternion(orientation.getW(), orientation.getX(), orientation.getY(), orientation.getZ()));
+		App->CL_Editor_Com->B_Player[0]->Player_Node->pitch(Ogre::Degree(180));
 	}
 }
 
@@ -263,9 +263,9 @@ bool CL64_Ogre3D_Listener::Capture_Mouse_FirstPerson(float DeltaTime)
 			Pl_DeltaMouse = float(Pl_Cent500X - Pl_MouseX);
 
 			float Delta2 = DeltaTime * 150;
-			float mTurn = (App->CL_Editor->B_Player[0]->TurnRate * Pl_DeltaMouse) * Delta2;
+			float mTurn = (App->CL_Editor_Com->B_Player[0]->TurnRate * Pl_DeltaMouse) * Delta2;
 
-			App->CL_Editor->B_Player[0]->Rotate_FromCam(Ogre::Vector3(0, -1, 0), mTurn, false);
+			App->CL_Editor_Com->B_Player[0]->Rotate_FromCam(Ogre::Vector3(0, -1, 0), mTurn, false);
 
 		}
 	}
@@ -278,9 +278,9 @@ bool CL64_Ogre3D_Listener::Capture_Mouse_FirstPerson(float DeltaTime)
 			Pl_DeltaMouse = float(Pl_MouseX - Pl_Cent500X);
 
 			float Delta2 = DeltaTime * 150;
-			float mTurn = (App->CL_Editor->B_Player[0]->TurnRate * Pl_DeltaMouse) * Delta2;
+			float mTurn = (App->CL_Editor_Com->B_Player[0]->TurnRate * Pl_DeltaMouse) * Delta2;
 
-			App->CL_Editor->B_Player[0]->Rotate_FromCam(Ogre::Vector3(0, 1, 0), mTurn, false);
+			App->CL_Editor_Com->B_Player[0]->Rotate_FromCam(Ogre::Vector3(0, 1, 0), mTurn, false);
 		}
 	}
 
@@ -291,7 +291,7 @@ bool CL64_Ogre3D_Listener::Capture_Mouse_FirstPerson(float DeltaTime)
 
 		if (test > 1)
 		{
-			float Limit = App->CL_Editor->B_Player[0]->CameraPitch_Node->getOrientation().getPitch().valueDegrees();
+			float Limit = App->CL_Editor_Com->B_Player[0]->CameraPitch_Node->getOrientation().getPitch().valueDegrees();
 
 			//if (Limit > App->CL_Scene->B_Player[0]->Limit_Look_Up)
 			{
@@ -301,7 +301,7 @@ bool CL64_Ogre3D_Listener::Capture_Mouse_FirstPerson(float DeltaTime)
 			{
 				Pl_DeltaMouse = float(Pl_Cent500Y - Pl_MouseY);
 				Ogre::Radian pp = Degree(-Pl_DeltaMouse * DeltaTime) * 1;
-				App->CL_Editor->B_Player[0]->CameraPitch_Node->pitch(pp);
+				App->CL_Editor_Com->B_Player[0]->CameraPitch_Node->pitch(pp);
 			}
 		}
 
@@ -320,7 +320,7 @@ bool CL64_Ogre3D_Listener::Capture_Mouse_FirstPerson(float DeltaTime)
 			{
 				Pl_DeltaMouse = float(Pl_MouseY - Pl_Cent500Y);
 				Ogre::Radian pp = Degree(Pl_DeltaMouse * DeltaTime) * 1;
-				App->CL_Editor->B_Player[0]->CameraPitch_Node->pitch(pp);
+				App->CL_Editor_Com->B_Player[0]->CameraPitch_Node->pitch(pp);
 			}
 		}
 	}

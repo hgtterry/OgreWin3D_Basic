@@ -27,11 +27,11 @@ THE SOFTWARE.
 #include "Base_Object.h"
 
 #pragma once
-class CL64_Editor
+class CL64_Editor_Com
 {
 public:
-	CL64_Editor();
-	~CL64_Editor();
+	CL64_Editor_Com();
+	~CL64_Editor_Com();
 
 	void Create_Brush_XX(int Index);
 	void Create_Mesh_Group(int Index);

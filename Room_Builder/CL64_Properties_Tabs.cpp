@@ -217,7 +217,7 @@ LRESULT CALLBACK CL64_Properties_Tabs::Proc_Tabs_Control(HWND hDlg, UINT message
 
 		if (LOWORD(wParam) == IDC_ED_PREVIEW)
 		{
-			App->CL_Editor->Preview_Mode();
+			App->CL_Editor_Com->Preview_Mode();
 			return TRUE;
 		}
 
