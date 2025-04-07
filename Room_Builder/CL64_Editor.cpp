@@ -78,6 +78,46 @@ CL64_Editor_Com::~CL64_Editor_Com()
 }
 
 // *************************************************************************
+// *			Reset_Class:- Terry and Hazel Flanigan 2024				   *
+// *************************************************************************
+void CL64_Editor_Com::Reset_Class()
+{
+	int Count = 0; // Remove Ogre Objects
+	while (Count < Object_Count)
+	{
+		if (B_Object[Count]->Object_Node && B_Object[Count]->Object_Ent)
+		{
+			B_Object[Count]->Object_Node->detachAllObjects();
+
+			App->CL_Ogre->mSceneMgr->destroySceneNode(B_Object[Count]->Object_Node);
+
+			App->CL_Ogre->mSceneMgr->destroyEntity(B_Object[Count]->Object_Ent);
+
+			B_Object[Count]->Object_Node = nullptr;
+			B_Object[Count]->Object_Ent = nullptr;
+		}
+
+		Count++;
+	}
+
+	// Remove B_Objects
+	Count = 0;
+	int NumObjects = B_Object.size();
+
+	while (Count < NumObjects)
+	{
+		delete B_Object[Count];
+		B_Object[Count] = nullptr;
+		Count++;
+	}
+
+	B_Object.resize(0);
+
+	Object_Count = 0;
+	UniqueID_Object_Counter = 0;
+}
+
+// *************************************************************************
 // *			Create_Brush_XX:- Terry and Hazel Flanigan 2025		  	   *
 // *************************************************************************
 void CL64_Editor_Com::Create_Brush_XX(int Index)
@@ -188,5 +228,16 @@ void CL64_Editor_Com::Editor_Mode(void)
 // *************************************************************************
 void CL64_Editor_Com::Clear_Level(bool FromFile)
 {
-	Debug
+	Reset_Class(); // This Class
+
+	App->CL_FileView->Reset_Class();
+
+	App->CL_Doc->ResetAllSelectedFaces();
+	App->CL_Doc->SelectAll();
+	App->CL_Doc->DeleteCurrentThing();
+
+	App->CL_Properties_Textures->Reset_Class();
+	App->CL_Properties_Brushes->Reset_Class();
+	App->CL_Properties_Tabs->Reset_Class();
+
 }

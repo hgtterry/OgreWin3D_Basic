@@ -53,6 +53,8 @@ CL64_FileView::CL64_FileView()
 	FV_Particles_Folder = nullptr;
 
 	FV_Counters_Folder = nullptr;
+	FV_Counters2_Folder = nullptr;
+	FV_UserObjects_Folder = nullptr;
 
 	FV_Players_Folder = nullptr;
 	FV_Areas_Folder = nullptr;
@@ -67,6 +69,42 @@ CL64_FileView::CL64_FileView()
 
 CL64_FileView::~CL64_FileView()
 {
+}
+
+// *************************************************************************
+// *			Reset_Class:- Terry and Hazel Flanigan 2024			 	   *
+// *************************************************************************
+void CL64_FileView::Reset_Class()
+{
+	TreeView_DeleteAllItems(GetDlgItem(App->ListPanel, IDC_TREE1));
+
+	Root = nullptr;
+	GD_ProjectFolder = nullptr;
+	FV_Objects_Folder = nullptr;
+	FV_LevelFolder = nullptr;
+	FV_Cameras_Folder = nullptr;
+	GD_TriggerFolder = nullptr;
+	FV_EntitiesFolder = nullptr;
+	FV_Sounds_Folder = nullptr;
+	FV_Message_Trigger_Folder = nullptr;
+	FV_Move_Folder = nullptr;
+	FV_Collectables_Folder = nullptr;
+	FV_Teleporters_Folder = nullptr;
+	GD_Environment_Folder = nullptr;
+	GD_Area_Change_Folder = nullptr;
+	GD_Level_Change_Folder = nullptr;
+	FV_Particles_Folder = nullptr;
+	FV_UserObjects_Folder = nullptr;
+
+
+	FV_Players_Folder = nullptr;
+	FV_Areas_Folder = nullptr;
+
+	//strcpy(App->CL_Project->m_Level_File_Name, "No Level");
+
+	AddRootFolder();
+	MoreFolders(); //  Folders under root 
+	ExpandRoot();
 }
 
 // **************************************************************************

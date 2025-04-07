@@ -29,6 +29,8 @@ public:
 	CL64_FileView();
 	~CL64_FileView();
 
+	void Reset_Class();
+
 	void Start_FileView(void);
 	void Init_FileView(void);
 	void Show_FileView(bool Enable);

@@ -29,6 +29,8 @@ public:
 	CL64_Properties_Tabs();
 	~CL64_Properties_Tabs();
 
+	void Reset_Class();
+
 	void Show_Tabs_Control_Dlg(bool Show);
 	void Start_Tabs_Control_Dlg();
 

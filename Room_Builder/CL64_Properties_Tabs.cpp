@@ -43,6 +43,14 @@ CL64_Properties_Tabs::~CL64_Properties_Tabs()
 }
 
 // *************************************************************************
+// *			Reset_Class:- Terry and Hazel Flanigan 2024			 	   *
+// *************************************************************************
+void CL64_Properties_Tabs::Reset_Class()
+{
+	Enable_Tabs(false);
+}
+
+// *************************************************************************
 // *	  Show_Tabs_Control_Dlg:- Terry and Hazel Flanigan 2025		*
 // *************************************************************************
 void CL64_Properties_Tabs::Show_Tabs_Control_Dlg(bool Show)

@@ -67,6 +67,14 @@ CL64_Properties_Brushes::~CL64_Properties_Brushes()
 }
 
 // *************************************************************************
+// *			Reset_Class:- Terry and Hazel Flanigan 2024			 	   *
+// *************************************************************************
+void CL64_Properties_Brushes::Reset_Class()
+{
+	App->CL_Properties_Brushes->Set_Dlg_Brush_Options_Buttons(false);
+}
+
+// *************************************************************************
 // *	  	Show_Brushes_Dialog:- Terry and Hazel Flanigan 2025			   *
 // *************************************************************************
 void CL64_Properties_Brushes::Show_Brushes_Dialog(bool Show)

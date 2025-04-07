@@ -55,6 +55,7 @@ CL64_FileView::CL64_FileView(void)
 	FV_Teleporters_Folder = nullptr;
 	FV_Evirons_Folder = nullptr;
 	FV_Lights_Folder = nullptr;
+	FV_UserObjects_Folder = nullptr;
 
 	GD_Environment_Folder = nullptr;
 	GD_Area_Change_Folder = nullptr;
@@ -62,7 +63,7 @@ CL64_FileView::CL64_FileView(void)
 	FV_Particles_Folder = nullptr;
 
 	FV_Counters_Folder = nullptr;
-
+	FV_Counters2_Folder = nullptr;
 	FV_Players_Folder = nullptr;
 	FV_Areas_Folder = nullptr;
 
@@ -72,6 +73,8 @@ CL64_FileView::CL64_FileView(void)
 
 	hImageList = nullptr;
 	hBitMap = nullptr;
+
+	tvinsert = { 0 };
 }
 
 CL64_FileView::~CL64_FileView(void)

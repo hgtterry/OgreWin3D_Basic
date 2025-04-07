@@ -33,6 +33,8 @@ public:
 	CL64_Editor_Com();
 	~CL64_Editor_Com();
 
+	void Reset_Class();
+
 	void Create_Brush_XX(int Index);
 	void Create_Mesh_Group(int Index);
 

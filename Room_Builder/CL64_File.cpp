@@ -360,36 +360,6 @@ bool CL64_File::Open_3dt_File()
 }
 
 // *************************************************************************
-// *			Set_Player:- Terry and Hazel Flanigan 2025 				   *
-// *************************************************************************
-void CL64_File::Set_Player()
-{
-	// TODO Needed at the Moment to test for Player Brush and Set Ogre Player
-
-	bool test = App->CL_Brush_X->Check_if_Brush_Name_Exist((LPSTR)"Player");
-	if (test == 0)
-	{
-		App->CL_Entities->Create_Player_Entity();
-	}
-
-	Brush* Player = App->CL_Brush_X->Get_Brush_By_Name("Player");
-	if (Player)
-	{
-		App->CL_Brush->Brush_SetLocked(Player, true);
-	}
-
-	T_Vec3 BrushPos;
-	App->CL_Brush->Brush_Center(Player, &BrushPos);
-
-	App->CL_Editor_Com->B_Player[0]->StartPos.x = BrushPos.x;
-	App->CL_Editor_Com->B_Player[0]->StartPos.y = BrushPos.y;
-	App->CL_Editor_Com->B_Player[0]->StartPos.z = BrushPos.z;
-
-	App->CL_Physics->Reset_Physics();
-
-}
-
-// *************************************************************************
 // *								Load_File 							   *
 // *************************************************************************
 bool CL64_File::Load_File(const char* FileName)
@@ -489,6 +459,36 @@ void CL64_File::Set_Editor()
 	}
 
 	App->CL_Ogre->RenderFrame(7);
+
+}
+
+// *************************************************************************
+// *			Set_Player:- Terry and Hazel Flanigan 2025 				   *
+// *************************************************************************
+void CL64_File::Set_Player()
+{
+	// TODO Needed at the Moment to test for Player Brush and Set Ogre Player
+
+	bool test = App->CL_Brush_X->Check_if_Brush_Name_Exist((LPSTR)"Player");
+	if (test == 0)
+	{
+		App->CL_Entities->Create_Player_Entity();
+	}
+
+	Brush* Player = App->CL_Brush_X->Get_Brush_By_Name("Player");
+	if (Player)
+	{
+		App->CL_Brush->Brush_SetLocked(Player, true);
+	}
+
+	T_Vec3 BrushPos;
+	App->CL_Brush->Brush_Center(Player, &BrushPos);
+
+	App->CL_Editor_Com->B_Player[0]->StartPos.x = BrushPos.x;
+	App->CL_Editor_Com->B_Player[0]->StartPos.y = BrushPos.y;
+	App->CL_Editor_Com->B_Player[0]->StartPos.z = BrushPos.z;
+
+	App->CL_Physics->Reset_Physics();
 
 }
 

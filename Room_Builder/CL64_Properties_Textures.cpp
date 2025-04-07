@@ -49,6 +49,14 @@ CL64_Properties_Textures::~CL64_Properties_Textures()
 }
 
 // *************************************************************************
+// *			Reset_Class:- Terry and Hazel Flanigan 2024			 	   *
+// *************************************************************************
+void CL64_Properties_Textures::Reset_Class()
+{
+	App->CL_Properties_Textures->Enable_FaceProps_Button(false);
+}
+
+// *************************************************************************
 // *	  	Show_Textures_Dialog:- Terry and Hazel Flanigan 2025		   *
 // *************************************************************************
 void CL64_Properties_Textures::Show_Textures_Dialog(bool Show)

@@ -29,6 +29,8 @@ public:
 	CL64_Properties_Brushes();
 	~CL64_Properties_Brushes();
 
+	void Reset_Class();
+
 	void Show_Brushes_Dialog(bool Show);
 	void Set_Dlg_Brush_Options_Buttons(bool Enable);
 
