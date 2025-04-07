@@ -38,6 +38,7 @@ public:
 	bool Context_Command_Ogre(WPARAM wParam);
 
 	void Show_Headers(bool Enable);
+	void Show_Entities(bool Enable);
 
 	bool flag_Scene_Editor_Active;
 	bool flag_Environment_Available;

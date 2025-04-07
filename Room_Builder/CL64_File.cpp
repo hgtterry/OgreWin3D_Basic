@@ -478,6 +478,16 @@ void CL64_File::Set_Editor()
 
 	App->CL_Doc->Editor_Set_Dlgs(Enums::Editor_Dlgs_First_Brush);
 	App->CL_Properties_Brushes->Set_Dlg_Brush_Options_Buttons(false);
+
+
+	if (App->Development == 1)
+	{
+		App->CL_Entities->Create_Player_Entity();
+
+		App->CL_Com_Environments->Create_Test_Environment();
+		App->CL_Editor_Scene->Show_Entities(false);
+	}
+
 	App->CL_Ogre->RenderFrame(7);
 
 }

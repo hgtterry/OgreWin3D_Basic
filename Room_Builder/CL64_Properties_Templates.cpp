@@ -148,6 +148,7 @@ LRESULT CALLBACK CL64_Properties_Templates::Proc_Templates(HWND hDlg, UINT messa
 					if (App->Development == 1)
 					{
 						App->CL_Com_Environments->Create_Test_Environment();
+						App->CL_Editor_Scene->Show_Entities(false);
 					}
 					// ----------------
 
