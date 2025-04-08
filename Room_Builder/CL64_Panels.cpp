@@ -62,11 +62,11 @@ void CL64_Panels::Resize_OgreWin(void)
 }
 
 // *************************************************************************
-// *  Deselect_All_Brushes_Update_Dlgs:- Terry and Hazel Flanigan 2025   *
+// *  Deselect_All_Brushes_Update_Dlgs:- Terry and Hazel Flanigan 2025     *
 // *************************************************************************
 void CL64_Panels::Deselect_All_Brushes_Update_Dlgs(void)
 {
-	App->CL_Doc->DoGeneralSelect(false);
+	App->CL_Doc->Set_GeneralSelect();
 	App->CL_Doc->ResetAllSelections();
 	App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
 

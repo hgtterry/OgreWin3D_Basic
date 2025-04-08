@@ -369,7 +369,7 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Brush_Tabs(HWND hDlg, UINT messag
 		{
 			if (App->CL_Properties_Brushes->flag_Brushes_Dlg_Created == 1)
 			{
-				App->CL_Doc->DoGeneralSelect(false);
+				App->CL_Doc->Do_General_Select_Dlg(false);
 
 				App->CL_Properties_Brushes->Set_Dlg_Brush_Options_Buttons(true);
 

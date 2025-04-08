@@ -1825,7 +1825,7 @@ void CL64_Editor_Map::On_Left_Button_Up(POINT CursorPosition)
 			App->CL_Doc->UpdateSelected();
 			App->CL_Doc->DoneRotate();
 
-			App->CL_Doc->DoGeneralSelect(false);
+			App->CL_Doc->Do_General_Select_Dlg(false);
 
 			int Selected = App->CL_Properties_Brushes->Selected_Index;
 			App->CL_Properties_Brushes->Selected_Index = Selected;

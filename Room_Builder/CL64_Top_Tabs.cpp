@@ -69,6 +69,8 @@ void CL64_Top_Tabs::Reset_Class()
 	App->CL_Top_Tabs->flag_View_Top_Right = 0;
 	App->CL_Top_Tabs->flag_View_Bottom_Left = 0;
 
+	App->CL_Panels->Deselect_All_Brushes_Update_Dlgs();
+
 	RedrawWindow(App->CL_Top_Tabs->Headers_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 }
 

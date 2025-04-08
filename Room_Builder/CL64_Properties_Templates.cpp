@@ -171,7 +171,7 @@ LRESULT CALLBACK CL64_Properties_Templates::Proc_Templates(HWND hDlg, UINT messa
 
 			App->CL_Mesh_Mgr->Update_World(0);
 
-			App->CL_Doc->DoGeneralSelect(true);
+			App->CL_Doc->Do_General_Select_Dlg(true);
 
 			App->CL_Doc->mCurrentTool = CURTOOL_NONE;
 			App->CL_Doc->mModeTool = ID_GENERALSELECT;

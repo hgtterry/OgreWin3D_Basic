@@ -306,7 +306,7 @@ void CL64_File::Start_Load(bool Use_Open_Dialog)
 	bool Test = Open_3dt_File();
 	if (Test == true)
 	{
-		App->CL_Doc->DoGeneralSelect(false);
+		App->CL_Doc->Do_General_Select_Dlg(false);
 
 		Set_Editor();
 	
@@ -315,7 +315,7 @@ void CL64_File::Start_Load(bool Use_Open_Dialog)
 		
 		App->CL_Doc->Set_Faces_To_Brush_Name_All(); // Fix up Brush Names
 		
-		App->CL_Doc->DoGeneralSelect(true);
+		App->CL_Doc->Do_General_Select_Dlg(true);
 	}
 	else
 	{
@@ -329,7 +329,7 @@ void CL64_File::Start_Load(bool Use_Open_Dialog)
 bool CL64_File::Open_3dt_File()
 {
 	App->CL_Doc->ResetAllSelections();
-	App->CL_Doc->DoGeneralSelect(false);
+	App->CL_Doc->Do_General_Select_Dlg(false);
 	
 	bool Test = Load_File(PathFileName_3dt);
 

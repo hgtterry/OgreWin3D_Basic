@@ -294,14 +294,24 @@ void CL64_Doc::Brush_Add_To_world()
 // *************************************************************************
 // *           DoGeneralSelect:- Terry and Hazel Flanigan 2023             *
 // *************************************************************************
-void CL64_Doc::DoGeneralSelect(bool from_Insert)
+void CL64_Doc::Set_GeneralSelect()
 {
+	mCurrentTool = CURTOOL_NONE;
+	mModeTool = ID_GENERALSELECT;
+}
+
+// *************************************************************************
+// *           Do_General_Select_Dlg:- Terry and Hazel Flanigan 2023       *
+// *************************************************************************
+void CL64_Doc::Do_General_Select_Dlg(bool from_Insert)
+{
+    // TODO Check All references to this
+
     if (from_Insert == true)
     {
         if (App->CL_Brush->Get_Brush_Count() > 0)
         {
-            mCurrentTool = CURTOOL_NONE;
-            mModeTool = ID_GENERALSELECT;
+            Set_GeneralSelect();
 
             App->CL_Top_Tabs->Enable_Brush_Options_Buttons(false, false);
             App->CL_Top_Tabs->Enable_Select_Button(true, true);
@@ -314,15 +324,13 @@ void CL64_Doc::DoGeneralSelect(bool from_Insert)
 
     if (App->CL_Brush->Get_Brush_Count() > 0)
     {
-        mCurrentTool = CURTOOL_NONE;
-        mModeTool = ID_GENERALSELECT;
+        Set_GeneralSelect();
 
         App->CL_Top_Tabs->Enable_Brush_Options_Buttons(true, false);
         App->CL_Top_Tabs->Enable_Select_Button(true, true);
 
         RedrawWindow(App->CL_Top_Tabs->Headers_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
     }
-
 }
 
 // *************************************************************************
@@ -1316,7 +1324,7 @@ void CL64_Doc::OnToolsTemplate()
 // *************************************************************************
 void CL64_Doc::SelectAllFacesInBrushes(void)
 {
-    DoGeneralSelect(false); // hgtterry check function
+    Do_General_Select_Dlg(false); // hgtterry check function
 
     // Select all faces on all selected brushes
     int iBrush;
@@ -1353,7 +1361,7 @@ void CL64_Doc::Set_Faces_To_Brush_Name_All()
    
     while (Count < BC)
     {
-        App->CL_Doc->DoGeneralSelect(true);
+        App->CL_Doc->Set_GeneralSelect();
 
         App->CL_Properties_Brushes->Selected_Index = Count;
 
@@ -1368,7 +1376,7 @@ void CL64_Doc::Set_Faces_To_Brush_Name_All()
         Count++;
     }
 
-    App->CL_Doc->DoGeneralSelect(true);
+    App->CL_Doc->Set_GeneralSelect();
     App->CL_Doc->ResetAllSelections();
     App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
 
@@ -1383,7 +1391,7 @@ void CL64_Doc::Set_Faces_To_Brush_Name_Selected()
 
     if (NumSelBrushes > 0)
     {
-        App->CL_Doc->DoGeneralSelect(false);
+        App->CL_Doc->Do_General_Select_Dlg(false);
         App->CL_Doc->SelectAllFacesInBrushes();
     }
 }
@@ -1403,7 +1411,7 @@ static signed int fdocSelectBrush(Brush* pBrush, void* lParam)
 // *************************************************************************
 void CL64_Doc::SelectAll(void)
 {
-    DoGeneralSelect(false);
+    Do_General_Select_Dlg(false);
     App->CL_Level->Level_EnumBrushes(pLevel, this, fdocSelectBrush);
 
     // Select all faces on all selected brushes
