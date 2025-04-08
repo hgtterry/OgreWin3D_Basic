@@ -38,6 +38,7 @@ public:
 	bool flag_Show_Render_Reports;
 	bool flag_Show_Press_Excape;
 	bool flag_Show_Camera_Mode;
+	bool flag_Show_App_Stats;
 
 private:
 
@@ -51,6 +52,10 @@ private:
 
 	void Press_Excape_GUI(void);
 	void Camera_Mode_GUI(void);
+
+	void App_Stats_GUI(void);
+
+	std::vector<std::pair<bool, std::function<void()>>> guiFunctions;
 
 	ImFont* font0;
 	ImFont* font1;

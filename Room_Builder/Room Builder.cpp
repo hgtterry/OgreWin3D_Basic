@@ -242,6 +242,20 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 return 1;
             }
             
+            case  ID_DEBUG_APPSTATS:
+            {
+                if (App->CL_ImGui->flag_Show_App_Stats == 1)
+                {
+                    App->CL_ImGui->flag_Show_App_Stats = 0;
+                }
+                else
+                {
+                    App->CL_ImGui->flag_Show_App_Stats = 1;
+                }
+
+                return 1;
+            }
+            
             // ----------------------------- File
             case ID_FILE_OPEN:
             {

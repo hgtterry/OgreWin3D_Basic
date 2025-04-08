@@ -317,7 +317,7 @@ void CL64_Doc::DoGeneralSelect(bool from_Insert)
         mCurrentTool = CURTOOL_NONE;
         mModeTool = ID_GENERALSELECT;
 
-        App->CL_Top_Tabs->Enable_Brush_Options_Buttons(false, false);
+        App->CL_Top_Tabs->Enable_Brush_Options_Buttons(true, false);
         App->CL_Top_Tabs->Enable_Select_Button(true, true);
 
         RedrawWindow(App->CL_Top_Tabs->Headers_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
@@ -1353,7 +1353,7 @@ void CL64_Doc::Set_Faces_To_Brush_Name_All()
    
     while (Count < BC)
     {
-        App->CL_Doc->DoGeneralSelect(false);
+        App->CL_Doc->DoGeneralSelect(true);
 
         App->CL_Properties_Brushes->Selected_Index = Count;
 
@@ -1368,7 +1368,7 @@ void CL64_Doc::Set_Faces_To_Brush_Name_All()
         Count++;
     }
 
-    App->CL_Doc->DoGeneralSelect(false);
+    App->CL_Doc->DoGeneralSelect(true);
     App->CL_Doc->ResetAllSelections();
     App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
 

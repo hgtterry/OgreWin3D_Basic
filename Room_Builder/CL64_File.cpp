@@ -312,8 +312,10 @@ void CL64_File::Start_Load(bool Use_Open_Dialog)
 	
 		App->CL_Doc->UpdateAllViews(Enums::UpdateViews_All);
 		App->Say("File Loaded", App->CL_File->FileName_3dt);
-	
+		
 		App->CL_Doc->Set_Faces_To_Brush_Name_All(); // Fix up Brush Names
+		
+		App->CL_Doc->DoGeneralSelect(true);
 	}
 	else
 	{
