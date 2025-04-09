@@ -37,10 +37,14 @@ public:
 
 	int Selected_Face_Group;
 
-	bool Flag_Show_Selected_Brush;
-	bool Flag_Show_Selected_Face;
-	bool Flag_Render_Brushes;
-	bool Flag_Just_Face;
+	bool flag_Show_Selected_Brush;
+	bool flag_Show_Selected_Face;
+
+	bool flag_Render_Groups;
+	bool flag_Render_Brushes;
+	bool flag_Render_Ogre;
+
+	bool flag_Just_Face;
 
 	// Brushes
 	bool flag_Render_Just_Brush;
@@ -70,8 +74,8 @@ private:
 	void Render_Loop();
 	void Translate(void);
 
-	void Brushes_Face_Parts_XX(int Count);
-	void Brushes_Render_Faces_XX(void);
+	void Brushes_Face_Parts(int Count);
+	void Brushes_Render_Faces(void);
 
 	void Groups_Render_Textures(void);
 	void Groups_Textured_Parts(int Count);

@@ -216,13 +216,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
             case  ID_DEBUG_SHOWALLFACES3D:
             {
-                if (App->CL_Ogre->OGL_Listener->Flag_Show_Selected_Brush == 1)
+                if (App->CL_Ogre->OGL_Listener->flag_Show_Selected_Brush == 1)
                 {
-                    App->CL_Ogre->OGL_Listener->Flag_Show_Selected_Brush = 0;
+                    App->CL_Ogre->OGL_Listener->flag_Show_Selected_Brush = 0;
                 }
                 else
                 {
-                    App->CL_Ogre->OGL_Listener->Flag_Show_Selected_Brush = 1;
+                    App->CL_Ogre->OGL_Listener->flag_Show_Selected_Brush = 1;
                 }
 
                 return 1;
@@ -230,13 +230,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
             case  ID_DEBUG_RENDERSELECTEDFACE:
             {
-                if (App->CL_Ogre->OGL_Listener->Flag_Show_Selected_Face == 1)
+                if (App->CL_Ogre->OGL_Listener->flag_Show_Selected_Face == 1)
                 {
-                    App->CL_Ogre->OGL_Listener->Flag_Show_Selected_Face = 0;
+                    App->CL_Ogre->OGL_Listener->flag_Show_Selected_Face = 0;
                 }
                 else
                 {
-                    App->CL_Ogre->OGL_Listener->Flag_Show_Selected_Face = 1;
+                    App->CL_Ogre->OGL_Listener->flag_Show_Selected_Face = 1;
                 }
 
                 return 1;

@@ -175,7 +175,7 @@ LRESULT CALLBACK CL64_Properties_Textures::Proc_TextureDialog(HWND hDlg, UINT me
 		if (some_item->idFrom == IDC_BT_GL)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CL_Ogre->OGL_Listener->Flag_Render_Brushes);
+			App->Custom_Button_Toggle(item, App->CL_Ogre->OGL_Listener->flag_Render_Groups);
 			return CDRF_DODEFAULT;
 		}
 		

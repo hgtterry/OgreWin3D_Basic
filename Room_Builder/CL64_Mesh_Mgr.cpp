@@ -171,7 +171,7 @@ bool CL64_Mesh_Mgr::Update_World(int selected)
 		Brush_Build_List(selected);
 		WE_Convert_All_Texture_Groups();
 
-		if (App->CL_Ogre->OGL_Listener->Flag_Render_Brushes == 0)
+		if (App->CL_Ogre->OGL_Listener->flag_Render_Groups == 0)
 		{
 			App->CL_Ogre3D->Convert_ToOgre3D(1); // Will Set Node Visible
 		}
@@ -298,7 +298,7 @@ bool CL64_Mesh_Mgr::Brush_Build_Level_Brushes(Level3* pLevel, const char* Filena
 			TextureName2[AdjustedIndex][MAX_PATH - 1] = '\0'; // Ensure null-termination
 			mAdjusedIndex_Store[AdjustedIndex] = i;
 
-			if (App->CL_Ogre->OGL_Listener->Flag_Render_Brushes == 0)
+			if (App->CL_Ogre->OGL_Listener->flag_Render_Groups == 0)
 			{
 				// AddTexture_GL(NULL, TextureName2[AdjustedIndex], AdjustedIndex);
 			}

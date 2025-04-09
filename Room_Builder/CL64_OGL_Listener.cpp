@@ -46,10 +46,14 @@ CL64_OGL_Listener::CL64_OGL_Listener(void)
 	mBrushCount = 0;
 	mSubBrushCount = 0;
 
-	Flag_Show_Selected_Brush = 1;
-	Flag_Show_Selected_Face = 1;
-	Flag_Render_Brushes = 0;
-	Flag_Just_Face = 0;
+	flag_Show_Selected_Brush = 1;
+	flag_Show_Selected_Face = 1;
+
+	flag_Render_Ogre = 1;
+	flag_Render_Groups = 0;
+	flag_Render_Brushes = 0;
+
+	flag_Just_Face = 0;
 
 	Render_Mode = Enums::Render_Nothing;
 
@@ -167,14 +171,21 @@ void CL64_OGL_Listener::Render_Loop()
 	glColor3f(0.8f, 0.8f, 0.8f);
 	Translate();
 
-	if (Render_Mode == Enums::Render_Groups && Flag_Render_Brushes == 1)
+	if (Render_Mode == Enums::Render_Groups && flag_Render_Groups == 1)
 	{
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 		Groups_Render_Faces();
 	}
 
+	if (Render_Mode == Enums::Render_Brushes && flag_Render_Brushes == 1)
+	{
+		glColor4f(0.0f, 1.0f, 0.0f, 0.8f);
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		Brushes_Render_Faces();
+	}
+
 	// ---------------------- Brush
-	if (Flag_Show_Selected_Brush == 1)
+	if (flag_Show_Selected_Brush == 1)
 	{
 		glDisable(GL_CULL_FACE);
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
@@ -182,7 +193,7 @@ void CL64_OGL_Listener::Render_Loop()
 	}
 
 	// ---------------------- Face
-	if (Flag_Show_Selected_Face == 1)
+	if (flag_Show_Selected_Face == 1)
 	{
 		glDisable(GL_CULL_FACE);
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
@@ -215,7 +226,7 @@ void CL64_OGL_Listener::Translate(void)
 // *************************************************************************
 // *						Bruses_Render_Faces_XX Terry Bernie	   		   *
 // *************************************************************************
-void CL64_OGL_Listener::Brushes_Render_Faces_XX(void)
+void CL64_OGL_Listener::Brushes_Render_Faces(void)
 {
 	int Count = 0;
 
@@ -225,26 +236,26 @@ void CL64_OGL_Listener::Brushes_Render_Faces_XX(void)
 	{
 		if (flag_Render_Just_Brush == 0)
 		{
-			glColor3f(1, 1, 1);
+			//glColor3f(1, 1, 1);
 			glLineWidth(1);
 
-			Brushes_Face_Parts_XX(Count);
+			Brushes_Face_Parts(Count);
 		}
 		else
 		{
 			if (Count == Selected_Brush_Index)
 			{
-				glColor3f(1, 0, 0);
+				//glColor3f(1, 0, 0);
 				glLineWidth(3);
 
-				Brushes_Face_Parts_XX(Count);
+				Brushes_Face_Parts(Count);
 			}
 			else
 			{
-				glColor3f(1, 1, 1);
+				//glColor3f(1, 1, 1);
 				glLineWidth(1);
 
-				Brushes_Face_Parts_XX(Count);
+				Brushes_Face_Parts(Count);
 			}
 		}
 
@@ -255,7 +266,7 @@ void CL64_OGL_Listener::Brushes_Render_Faces_XX(void)
 // *************************************************************************
 // *					Bruses_Face_Parts_xx Terry Bernie		   			   *
 // *************************************************************************
-void CL64_OGL_Listener::Brushes_Face_Parts_XX(int Count)
+void CL64_OGL_Listener::Brushes_Face_Parts(int Count)
 {
 	int FaceCount = 0;
 	int A = 0;
@@ -399,7 +410,7 @@ void CL64_OGL_Listener::Groups_Render_Faces(void)
 	int Count = 0;
 	int GroupCount = App->CL_Editor_Com->GroupCount;
 
-	if (Flag_Just_Face == 1)
+	if (flag_Just_Face == 1)
 	{
 		Groups_Faces_Parts(App->CL_Picking->m_SubMesh);
 	}

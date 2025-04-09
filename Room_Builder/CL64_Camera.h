@@ -31,8 +31,10 @@ public:
 
 	void Track_Camera(void);
 	void Camera_Reset_Zero(void);
+
 	void Camera_Textured(void);
 	void Camera_Wired(void);
+	void Camera_Brushes(void);
 
 	void Camera_Speed_Normal(void);
 	void Camera_Speed_Slow(void);

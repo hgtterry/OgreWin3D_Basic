@@ -39,6 +39,7 @@ THE SOFTWARE.
 #define IDM_ROTATE 10
 #define IDM_SCENE_EDITOR 11
 
+#define IDM_3D_BRUSHES 19
 #define IDM_3D_WIRED 20
 #define IDM_3D_TEXTURED 21
 #define IDM_3D_PREVIEW 22
@@ -1618,11 +1619,35 @@ void CL64_Editor_Map::Context_Menu_Ogre(HWND hDlg)
 
 	HMENU hMenu = CreatePopupMenu();
 
-	// Append Wireframed option
-	AppendMenuW(hMenu, MF_STRING | (App->CL_Ogre->OGL_Listener->Flag_Render_Brushes ? MF_CHECKED : MF_UNCHECKED), IDM_3D_WIRED, L"&Wireframed");
+	// Render Textured
+	if (App->CL_Ogre->OGL_Listener->flag_Render_Ogre == 0)
+	{
+		AppendMenuW(hMenu, MF_STRING | MF_UNCHECKED, IDM_3D_TEXTURED, L"&Textured");
+	}
+	else
+	{
+		AppendMenuW(hMenu, MF_STRING | MF_CHECKED, IDM_3D_TEXTURED, L"&Textured");
+	}
 
-	// Append Textured option
-	AppendMenuW(hMenu, MF_STRING | (App->CL_Ogre->OGL_Listener->Flag_Render_Brushes == 0 ? MF_CHECKED : MF_UNCHECKED), IDM_3D_TEXTURED, L"&Textured");
+	// Render Groups
+	if (App->CL_Ogre->OGL_Listener->flag_Render_Groups == 0)
+	{
+		AppendMenuW(hMenu, MF_STRING | MF_UNCHECKED, IDM_3D_WIRED, L"&Wireframed");
+	}
+	else
+	{
+		AppendMenuW(hMenu, MF_STRING | MF_CHECKED, IDM_3D_WIRED, L"&Wireframed");
+	}
+
+	// Render Brushes
+	if (App->CL_Ogre->OGL_Listener->flag_Render_Brushes == 0)
+	{
+		AppendMenuW(hMenu, MF_STRING | MF_UNCHECKED, IDM_3D_BRUSHES, L"&Brushes");
+	}
+	else
+	{
+		AppendMenuW(hMenu, MF_STRING | MF_CHECKED, IDM_3D_BRUSHES, L"&Brushes");
+	}
 
 	AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
 
@@ -1659,6 +1684,10 @@ bool CL64_Editor_Map::Context_Command_Ogre(WPARAM wParam)
 		App->CL_Camera->Camera_Wired();
 		return TRUE;
 
+	case IDM_3D_BRUSHES:
+		App->CL_Camera->Camera_Brushes();
+		return TRUE;
+		
 	case IDM_3D_PREVIEW:
 		App->CL_Editor_Com->Preview_Mode();
 		return TRUE;

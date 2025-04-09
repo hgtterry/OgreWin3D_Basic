@@ -522,6 +522,16 @@ void CL64_ImGui::App_Stats_GUI(void)
 			ImGui::Separator();
 			ImGui::TreePop();
 		}
+
+		if (ImGui::TreeNode("Render"))
+		{
+			ImGui::Separator();
+			ImGui::Text("Render Groups:= %i", App->CL_Ogre->OGL_Listener->flag_Render_Groups);
+			ImGui::Text("Render Mode:= %i", App->CL_Ogre->OGL_Listener->Render_Mode);
+			
+			ImGui::Separator();
+			ImGui::TreePop();
+		}
 		
 		if (ImGui::Button("Close"))
 		{
