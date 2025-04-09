@@ -37,6 +37,8 @@ public:
 	CL64_Mesh_Mgr();
 	~CL64_Mesh_Mgr();
 
+	void Start_Mesh_Viewer();
+
 	bool Update_World(int Selected);
 	void Brush_Build_List(int ExpSelected);
 	bool Brush_Build_Selected(BrushList* BList);
@@ -87,5 +89,12 @@ public:
 
 	char mBrush_Name[MAX_PATH];
 	char TextureName2[20][MAX_PATH];
+
+	HWND Mesh_Viewer_HWND;
+
+private:
+	static LRESULT CALLBACK Proc_Mesh_Viewer(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+
+
 };
 

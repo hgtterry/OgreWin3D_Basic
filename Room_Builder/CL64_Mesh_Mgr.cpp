@@ -23,6 +23,7 @@ THE SOFTWARE.
 */
 
 #include "pch.h"
+#include "resource.h"
 #include "CL64_App.h"
 #include "CL64_Mesh_Mgr.h"
 #include "CL64_WadFile.h"
@@ -81,6 +82,8 @@ CL64_Mesh_Mgr::CL64_Mesh_Mgr()
 	ActualFaceCount = 0;
 	mBrush_Index = 0;
 	mBrush_Name[0] = 0;
+
+	Mesh_Viewer_HWND = nullptr;
 
 	memset(mAdjusedIndex_Store, 0, 500);
 
@@ -946,5 +949,379 @@ int CL64_Mesh_Mgr::Get_Adjusted_Index(int RealIndex)
 
 //	return TRUE;
 //}
+
+// *************************************************************************
+// *	  		Start_Mesh_Viewer:- Terry and Hazel Flanigan 2025		   *
+// *************************************************************************
+void CL64_Mesh_Mgr::Start_Mesh_Viewer()
+{
+	//if (Brush_Viewer_Dialog_Active == 0)
+	//{
+		Mesh_Viewer_HWND = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_BRUSH_VIEWER, App->MainHwnd, (DLGPROC)Proc_Mesh_Viewer);
+	//	Brush_Viewer_Dialog_Active = 1;
+	//}
+}
+
+// *************************************************************************
+// *			Brush_Viewer_Proc:- Terry and Hazel Flanigan 2023			   *
+// *************************************************************************
+LRESULT CALLBACK CL64_Mesh_Mgr::Proc_Mesh_Viewer(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+
+	switch (message)
+	{
+	case WM_INITDIALOG:
+	{
+		/*SendDlgItemMessage(hDlg, IDC_LISTBRUSHES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_LISTDATA, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_LT_WORLDINFO, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		SendDlgItemMessage(hDlg, IDC_BTJUSTBRUSH, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_LOOKAT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		SendDlgItemMessage(hDlg, IDC_BT_CONVERT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		SendDlgItemMessage(hDlg, IDC_CB_RENDERMODE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		SendDlgItemMessage(hDlg, IDC_BT_PICKSELECT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_SHOWDATA, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));*/
+
+
+		//SendDlgItemMessage(hDlg, IDC_LISTBRUSHES, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
+
+		//HWND CB_hWnd = GetDlgItem(hDlg, IDC_CB_RENDERMODE);
+		//App->CLSB_Mesh_Mgr->Populate_RenderMode_Combo(CB_hWnd); // Populate Combo
+
+		//HWND Temp = GetDlgItem(hDlg, IDC_BT_MESH);
+		//if (App->CLSB_Ogre_Setup->RenderListener->ShowFaces == 1)
+		//{
+		//	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshOn_Bmp);
+		//}
+		//else
+		//{
+		//	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshOff_Bmp);
+		//}
+
+		//App->CLSB_Mesh_Mgr->Update_Brush_List(hDlg);
+		//App->CLSB_Mesh_Mgr->UpdateBrushData(hDlg, App->CLSB_Mesh_Mgr->Compiled_List_Index);
+
+		//App->CLSB_Ogre_Setup->RenderListener->Render_Just_Brush = 0;
+
+		return TRUE;
+	}
+
+	case WM_CTLCOLORSTATIC:
+	{
+		/*if (GetDlgItem(hDlg, IDC_ST_TEXTURE) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}*/
+
+		return FALSE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->AppBackground;
+	}
+
+	case WM_NOTIFY:
+	{
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		/*if (some_item->idFrom == IDC_BTJUSTBRUSH && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BTJUSTBRUSH));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
+			else
+			{
+				App->Custom_Button_Toggle(item, App->CLSB_Ogre_Setup->RenderListener->Render_Just_Brush);
+			}
+
+			return CDRF_DODEFAULT;
+		}*/
+
+		/*if (some_item->idFrom == IDC_BT_LOOKAT && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_LOOKAT));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
+			else
+			{
+				App->Custom_Button_Normal(item);
+			}
+
+			return CDRF_DODEFAULT;
+		}*/
+
+		/*if (some_item->idFrom == IDOK && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BT_PICKSELECT && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->CLSB_Mesh_Mgr->Picking_Active_Flag);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BT_SHOWDATA && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->CLSB_Mesh_Mgr->Show_Data_Flag);
+			return CDRF_DODEFAULT;
+		}*/
+
+		return CDRF_DODEFAULT;
+	}
+
+	case WM_COMMAND:
+
+		/*if (LOWORD(wParam) == IDC_BT_CONVERT)
+		{
+			App->CLSB_Mesh_Mgr->WE_Convert_All_Texture_Groups();
+			return TRUE;
+		}*/
+
+		/*if (LOWORD(wParam) == IDC_BT_PICKSELECT)
+		{
+			if (App->CLSB_Ogre_Setup->OgreListener->GD_Selection_Mode == 1)
+			{
+				App->CLSB_Ogre_Setup->OgreListener->GD_Selection_Mode = 0;
+				App->CLSB_Mesh_Mgr->Picking_Active_Flag = 0;
+			}
+			else
+			{
+				App->CLSB_Ogre_Setup->OgreListener->GD_Selection_Mode = 1;
+				App->CLSB_Mesh_Mgr->Picking_Active_Flag = 1;
+			}
+			return TRUE;
+		}*/
+
+		/*if (LOWORD(wParam) == IDC_BT_SHOWDATA)
+		{
+			if (App->CLSB_ImGui->Show_Face_Selection == 1)
+			{
+				App->CLSB_ImGui->Show_Face_Selection = 0;
+				App->CLSB_Mesh_Mgr->Show_Data_Flag = 0;
+				App->CLSB_FileView->Show_FileView(1);
+			}
+			else
+			{
+				App->CLSB_ImGui->Show_Face_Selection = 1;
+				App->CLSB_Mesh_Mgr->Show_Data_Flag = 1;
+				App->CLSB_FileView->Show_FileView(0);
+			}
+			return TRUE;
+		}*/
+
+
+		/*if (LOWORD(wParam) == IDC_BT_TEXTUREIDPLUSE)
+		{
+			App->CLSB_Ogre->RenderListener->TextureID++;
+
+			char buf[MAX_PATH];
+			sprintf(buf, "%i %s", App->CLSB_Ogre->RenderListener->TextureID, App->CLSB_Mesh_Mgr->TextureName2[App->CLSB_Ogre->RenderListener->TextureID]);
+			SetDlgItemText(hDlg, IDC_ST_TEXTURE, (LPCTSTR)buf);
+
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_BT_TEXTUREIDMINUS)
+		{
+			App->CLSB_Ogre->RenderListener->TextureID--;
+
+			char buf[MAX_PATH];
+			sprintf(buf, "%i %s", App->CLSB_Ogre->RenderListener->TextureID, App->CLSB_Mesh_Mgr->TextureName2[App->CLSB_Ogre->RenderListener->TextureID]);
+			SetDlgItemText(hDlg, IDC_ST_TEXTURE, (LPCTSTR)buf);
+
+			return TRUE;
+		}*/
+
+		/*if (LOWORD(wParam) == IDC_BT_MESH)
+		{
+			HWND Temp = GetDlgItem(hDlg, IDC_BT_MESH);
+
+			if (App->CLSB_Ogre_Setup->RenderListener->ShowFaces == 1)
+			{
+				App->CLSB_Ogre_Setup->RenderListener->ShowFaces = 0;
+				SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshOff_Bmp);
+			}
+			else
+			{
+				App->CLSB_Ogre_Setup->RenderListener->ShowFaces = 1;
+				SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshOn_Bmp);
+			}
+
+			return TRUE;
+		}*/
+
+		/*if (LOWORD(wParam) == IDC_BT_LOOKAT)
+		{
+			App->CLSB_Mesh_Mgr->Set_BBox_Selected_Brush(App->CLSB_Ogre_Setup->RenderListener->Selected_Brush_Index);
+			App->CLSB_Ogre_Setup->mCamera->lookAt(Ogre::Vector3(App->CLSB_Model->Sel_Brush_Centre.x, App->CLSB_Model->Sel_Brush_Centre.y, App->CLSB_Model->Sel_Brush_Centre.z));
+			return TRUE;
+		}*/
+
+		/*if (LOWORD(wParam) == IDC_BTJUSTBRUSH)
+		{
+			if (App->CLSB_Model->Render_Type == Enums::Render_Brushes)
+			{
+				if (App->CLSB_Ogre_Setup->RenderListener->Render_Just_Brush == 1)
+				{
+					App->CLSB_Ogre_Setup->RenderListener->Render_Just_Brush = 0;
+				}
+				else
+				{
+					App->CLSB_Ogre_Setup->RenderListener->Render_Just_Brush = 1;
+				}
+			}
+
+			if (App->CLSB_Model->Render_Type == Enums::Render_Groups)
+			{
+				if (App->CLSB_Ogre_Setup->RenderListener->ShowOnlySubMesh == 1)
+				{
+					App->CLSB_Ogre_Setup->RenderListener->ShowOnlySubMesh = 0;
+				}
+				else
+				{
+					App->CLSB_Ogre_Setup->RenderListener->ShowOnlySubMesh = 1;
+				}
+			}
+
+			App->CLSB_Ogre_Setup->RenderFrame();
+
+			return TRUE;
+		}*/
+
+		//if (LOWORD(wParam) == IDC_LISTBRUSHES)
+		//{
+		//	char buff[256];
+		//	int Index = 0;
+		//	Index = SendDlgItemMessage(hDlg, IDC_LISTBRUSHES, LB_GETCURSEL, (WPARAM)0, (LPARAM)0);
+
+		//	if (Index == -1)
+		//	{
+		//		return 1;
+		//	}
+
+		//	if (App->CLSB_Model->Render_Type == Enums::Render_Brushes)
+		//	{
+		//		App->CLSB_Ogre_Setup->RenderListener->Selected_Brush_Index = Index;
+		//		App->CLSB_Ogre_Setup->RenderListener->Selected_Group_Index = App->CLSB_Model->B_Brush[Index]->Group_Index;
+		//	}
+
+		//	if (App->CLSB_Model->Render_Type == Enums::Render_Groups)
+		//	{
+		//		App->CLSB_Ogre_Setup->RenderListener->Selected_Group = Index;
+		//	}
+
+		//	// ------------------- Compiled
+		//	if (App->CLSB_Mesh_Mgr->Selected_Render_Mode == Enums::Mesh_Mgr_Compiled)
+		//	{
+		//		App->CLSB_Mesh_Mgr->Compiled_List_Index = Index;
+		//	}
+
+		//	// ------------------- Groups
+		//	if (App->CLSB_Mesh_Mgr->Selected_Render_Mode == Enums::Mesh_Mgr_Groups)
+		//	{
+		//		App->CLSB_Mesh_Mgr->Groups_List_Index = Index;
+		//	}
+
+		//	// ------------------- Brushes
+		//	if (App->CLSB_Mesh_Mgr->Selected_Render_Mode == Enums::Mesh_Mgr_Brushes)
+		//	{
+		//		App->CLSB_Mesh_Mgr->Brushes_List_Index = Index;
+		//	}
+
+		//	App->CLSB_Mesh_Mgr->UpdateBrushData(hDlg, Index);
+
+		//	return TRUE;
+		//}
+
+		//if (LOWORD(wParam) == IDC_CB_RENDERMODE)
+		//{
+		//	switch (HIWORD(wParam)) // Find out what message it was
+		//	{
+		//	case CBN_DROPDOWN:
+		//		break;
+		//	case CBN_CLOSEUP:
+		//	{
+
+		//		HWND temp = GetDlgItem(hDlg, IDC_CB_RENDERMODE);
+		//		int Index = SendMessage(temp, CB_GETCURSEL, 0, 0);
+		//		if (Index == -1)
+		//		{
+		//			return 1;
+		//		}
+
+		//		App->CLSB_Mesh_Mgr->Selected_Render_Mode = Index;
+
+		//		if (Index == Enums::Mesh_Mgr_Compiled) // Compiled
+		//		{
+		//			App->CLSB_Mesh_Mgr->Set_RenderMode_Compiled();
+
+		//			EnableWindow(GetDlgItem(hDlg, IDC_BTJUSTBRUSH), false);
+		//			EnableWindow(GetDlgItem(hDlg, IDC_BT_LOOKAT), false);
+		//		}
+
+		//		if (Index == Enums::Mesh_Mgr_Groups) // Groups
+		//		{
+		//			App->CLSB_Mesh_Mgr->Set_RenderMode_Groups();
+		//		}
+
+		//		if (Index == Enums::Mesh_Mgr_Brushes) // Brushes
+		//		{
+		//			App->CLSB_Mesh_Mgr->Set_RenderMode_Brushes();
+
+		//			EnableWindow(GetDlgItem(hDlg, IDC_BTJUSTBRUSH), true);
+		//			EnableWindow(GetDlgItem(hDlg, IDC_BT_LOOKAT), true);
+		//		}
+
+		//		if (Index == 3) // No Render
+		//		{
+		//			App->CLSB_Mesh_Mgr->Set_RenderMode_NoRender();
+		//		}
+		//	}
+		//	}
+
+		//	return TRUE;
+		//}
+
+		if (LOWORD(wParam) == IDOK)
+		{
+			//App->CLSB_Mesh_Mgr->Brush_Viewer_Dialog_Active = 0;
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDCANCEL)
+		{
+			//App->CLSB_Mesh_Mgr->Brush_Viewer_Dialog_Active = 0;
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+
+		break;
+	}
+
+	return FALSE;
+}
 
 

@@ -44,6 +44,7 @@ THE SOFTWARE.
 #define IDM_3D_TEXTURED 21
 #define IDM_3D_PREVIEW 22
 #define IDM_3D_SCENE_EDITOR 23
+#define IDM_3D_MESH_VIEWER 24
 
 #define	M_PI		((float)3.14159265358979323846f)
 #define	TOP_POS					8
@@ -1649,6 +1650,8 @@ void CL64_Editor_Map::Context_Menu_Ogre(HWND hDlg)
 		AppendMenuW(hMenu, MF_STRING | MF_CHECKED, IDM_3D_BRUSHES, L"&Brushes");
 	}
 
+	AppendMenuW(hMenu, MF_STRING | MF_UNCHECKED, IDM_3D_MESH_VIEWER, L"&Mesh Viewer");
+	
 	AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
 
 	int brushCount = App->CL_Brush->Get_Brush_Count();
@@ -1686,6 +1689,10 @@ bool CL64_Editor_Map::Context_Command_Ogre(WPARAM wParam)
 
 	case IDM_3D_BRUSHES:
 		App->CL_Camera->Camera_Brushes();
+		return TRUE;
+		
+	case IDM_3D_MESH_VIEWER:
+		App->CL_Mesh_Mgr->Start_Mesh_Viewer();
 		return TRUE;
 		
 	case IDM_3D_PREVIEW:

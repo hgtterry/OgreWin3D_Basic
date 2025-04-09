@@ -224,7 +224,7 @@ void CL64_OGL_Listener::Translate(void)
 }
 
 // *************************************************************************
-// *						Bruses_Render_Faces_XX Terry Bernie	   		   *
+// *		Bruses_Render_Faces:- Terry and Hazel Flanigan 2025	   		   *
 // *************************************************************************
 void CL64_OGL_Listener::Brushes_Render_Faces(void)
 {
@@ -264,7 +264,7 @@ void CL64_OGL_Listener::Brushes_Render_Faces(void)
 }
 
 // *************************************************************************
-// *					Bruses_Face_Parts_xx Terry Bernie		   			   *
+// *		Bruses_Face_Parts:- Terry and Hazel Flanigan 2025			   *
 // *************************************************************************
 void CL64_OGL_Listener::Brushes_Face_Parts(int Count)
 {
