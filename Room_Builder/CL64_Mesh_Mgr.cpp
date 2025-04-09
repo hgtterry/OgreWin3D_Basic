@@ -972,28 +972,28 @@ LRESULT CALLBACK CL64_Mesh_Mgr::Proc_Mesh_Viewer(HWND hDlg, UINT message, WPARAM
 	{
 	case WM_INITDIALOG:
 	{
-		/*SendDlgItemMessage(hDlg, IDC_LISTBRUSHES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_LISTBRUSHES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_LISTDATA, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_LT_WORLDINFO, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
-		SendDlgItemMessage(hDlg, IDC_BTJUSTBRUSH, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_BT_LOOKAT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		//SendDlgItemMessage(hDlg, IDC_BTJUSTBRUSH, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		//SendDlgItemMessage(hDlg, IDC_BT_LOOKAT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
-		SendDlgItemMessage(hDlg, IDC_BT_CONVERT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		//SendDlgItemMessage(hDlg, IDC_BT_CONVERT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		SendDlgItemMessage(hDlg, IDC_CB_RENDERMODE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
-		SendDlgItemMessage(hDlg, IDC_BT_PICKSELECT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		/*SendDlgItemMessage(hDlg, IDC_BT_PICKSELECT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_SHOWDATA, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));*/
 
 
 		//SendDlgItemMessage(hDlg, IDC_LISTBRUSHES, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
 
-		//HWND CB_hWnd = GetDlgItem(hDlg, IDC_CB_RENDERMODE);
-		//App->CLSB_Mesh_Mgr->Populate_RenderMode_Combo(CB_hWnd); // Populate Combo
+		HWND CB_hWnd = GetDlgItem(hDlg, IDC_CB_RENDERMODE);
+		App->CL_Mesh_Mgr->Populate_RenderMode_Combo(CB_hWnd); // Populate Combo
 
 		//HWND Temp = GetDlgItem(hDlg, IDC_BT_MESH);
 		//if (App->CLSB_Ogre_Setup->RenderListener->ShowFaces == 1)
@@ -1255,54 +1255,54 @@ LRESULT CALLBACK CL64_Mesh_Mgr::Proc_Mesh_Viewer(HWND hDlg, UINT message, WPARAM
 		//	return TRUE;
 		//}
 
-		//if (LOWORD(wParam) == IDC_CB_RENDERMODE)
-		//{
-		//	switch (HIWORD(wParam)) // Find out what message it was
-		//	{
-		//	case CBN_DROPDOWN:
-		//		break;
-		//	case CBN_CLOSEUP:
-		//	{
+		if (LOWORD(wParam) == IDC_CB_RENDERMODE)
+		{
+			switch (HIWORD(wParam)) // Find out what message it was
+			{
+			case CBN_DROPDOWN:
+				break;
+			case CBN_CLOSEUP:
+			{
 
-		//		HWND temp = GetDlgItem(hDlg, IDC_CB_RENDERMODE);
-		//		int Index = SendMessage(temp, CB_GETCURSEL, 0, 0);
-		//		if (Index == -1)
-		//		{
-		//			return 1;
-		//		}
+				HWND temp = GetDlgItem(hDlg, IDC_CB_RENDERMODE);
+				int Index = SendMessage(temp, CB_GETCURSEL, 0, 0);
+				if (Index == -1)
+				{
+					return 1;
+				}
 
-		//		App->CLSB_Mesh_Mgr->Selected_Render_Mode = Index;
+				//App->CLSB_Mesh_Mgr->Selected_Render_Mode = Index;
 
-		//		if (Index == Enums::Mesh_Mgr_Compiled) // Compiled
-		//		{
-		//			App->CLSB_Mesh_Mgr->Set_RenderMode_Compiled();
+				//if (Index == Enums::Mesh_Mgr_Compiled) // Compiled
+				//{
+				//	App->CLSB_Mesh_Mgr->Set_RenderMode_Compiled();
 
-		//			EnableWindow(GetDlgItem(hDlg, IDC_BTJUSTBRUSH), false);
-		//			EnableWindow(GetDlgItem(hDlg, IDC_BT_LOOKAT), false);
-		//		}
+				//	EnableWindow(GetDlgItem(hDlg, IDC_BTJUSTBRUSH), false);
+				//	EnableWindow(GetDlgItem(hDlg, IDC_BT_LOOKAT), false);
+				//}
 
-		//		if (Index == Enums::Mesh_Mgr_Groups) // Groups
-		//		{
-		//			App->CLSB_Mesh_Mgr->Set_RenderMode_Groups();
-		//		}
+				//if (Index == Enums::Mesh_Mgr_Groups) // Groups
+				//{
+				//	App->CLSB_Mesh_Mgr->Set_RenderMode_Groups();
+				//}
 
-		//		if (Index == Enums::Mesh_Mgr_Brushes) // Brushes
-		//		{
-		//			App->CLSB_Mesh_Mgr->Set_RenderMode_Brushes();
+				//if (Index == Enums::Mesh_Mgr_Brushes) // Brushes
+				//{
+				//	App->CLSB_Mesh_Mgr->Set_RenderMode_Brushes();
 
-		//			EnableWindow(GetDlgItem(hDlg, IDC_BTJUSTBRUSH), true);
-		//			EnableWindow(GetDlgItem(hDlg, IDC_BT_LOOKAT), true);
-		//		}
+				//	EnableWindow(GetDlgItem(hDlg, IDC_BTJUSTBRUSH), true);
+				//	EnableWindow(GetDlgItem(hDlg, IDC_BT_LOOKAT), true);
+				//}
 
-		//		if (Index == 3) // No Render
-		//		{
-		//			App->CLSB_Mesh_Mgr->Set_RenderMode_NoRender();
-		//		}
-		//	}
-		//	}
+				//if (Index == 3) // No Render
+				//{
+				//	App->CLSB_Mesh_Mgr->Set_RenderMode_NoRender();
+				//}
+			}
+			}
 
-		//	return TRUE;
-		//}
+			return TRUE;
+		}
 
 		if (LOWORD(wParam) == IDOK)
 		{
@@ -1322,6 +1322,17 @@ LRESULT CALLBACK CL64_Mesh_Mgr::Proc_Mesh_Viewer(HWND hDlg, UINT message, WPARAM
 	}
 
 	return FALSE;
+}
+
+// *************************************************************************
+// *	  	Populate_RenderMode_Combo:- Terry and Hazel Flanigan 2023	   *
+// *************************************************************************
+void CL64_Mesh_Mgr::Populate_RenderMode_Combo(HWND DropHwnd)
+{
+	SendMessage(DropHwnd, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"Ogre");
+	SendMessage(DropHwnd, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"Groups");
+	SendMessage(DropHwnd, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"Brushes");
+	SendMessage(DropHwnd, CB_SETCURSEL, 0, 0);
 }
 
 

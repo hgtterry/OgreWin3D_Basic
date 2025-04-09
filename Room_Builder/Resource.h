@@ -69,7 +69,6 @@
 #define IDB_FILECHANGEDSELECTED         182
 #define IDB_FVFOLDERRED                 183
 #define IDR_SCENE_MENU                  184
-#define IDD_DIALOG1                     185
 #define IDD_SB_BRUSH_VIEWER             185
 #define IDC_BANNER                      1000
 #define IDC_STTEXT                      1001
@@ -368,6 +367,7 @@
 #define IDC_LST_FACE_INFO               1259
 #define IDC_LST_GENERAL                 1259
 #define IDC_LIST_ABOUT_VERSIONS         1259
+#define IDC_LISTBRUSHES                 1259
 #define IDC_TXL_DELETE_TEXTURE          1260
 #define IDC_ST_TXL_COUNT                1261
 #define IDC_TXL_ADD_TEXTURE             1262
@@ -394,6 +394,10 @@
 #define IDC_ST_3D_TITLE                 1284
 #define IDC_TREE1                       1285
 #define IDC_BT_MAP_EDITOR               1286
+#define IDC_LISTDATA                    1287
+#define IDC_LT_WORLDINFO                1288
+#define IDC_COMBO1                      1289
+#define IDC_CB_RENDERMODE               1289
 #define ID_DEBUG_GENERAL                32771
 #define ID_TEMPLATES_INSERT             32772
 #define ID_BRUSH_SELECT                 32773
@@ -456,7 +460,7 @@
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        186
 #define _APS_NEXT_COMMAND_VALUE         32820
-#define _APS_NEXT_CONTROL_VALUE         1287
+#define _APS_NEXT_CONTROL_VALUE         1290
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif

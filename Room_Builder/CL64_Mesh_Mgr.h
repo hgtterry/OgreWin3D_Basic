@@ -95,6 +95,6 @@ public:
 private:
 	static LRESULT CALLBACK Proc_Mesh_Viewer(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
-
+	void Populate_RenderMode_Combo(HWND DropHwnd);
 };
 
