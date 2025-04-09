@@ -473,29 +473,56 @@ void CL64_ImGui::App_Stats_GUI(void)
 	}
 	else
 	{
-		ImGui::Text("Selected Brushs Count:= %i", App->CL_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes));
-		ImGui::Text("Current Brush:= %s", App->CL_Doc->CurBrush->Name);
-		//ImGui::Text("Current Brush Faces:= %i", App->CL_Brush->Brush_GetNumFaces(App->CL_Doc->CurBrush));
+		if (ImGui::TreeNode("Paths"))
+		{
+			ImGui::Text("Path And File:= %s", App->CL_Doc->mDoc_MTF_PathAndFile);
+			ImGui::Text("Just_FileName:= %s", App->CL_Doc->mDoc_MTF_Just_FileName);
+			ImGui::Text("Just_File:= %s", App->CL_Doc->mDoc_MTF_JustName_NoExt);
+			ImGui::Separator();
+			ImGui::Text("TXL Path And File:= %s", App->CL_Doc->mDoc_TXL_Path_And_File);
+			ImGui::Text("TXL Just_File:= %s", App->CL_Doc->mDoc_TXL_Just_FileName);
+			ImGui::Separator();
+			ImGui::TreePop();
+		}
 
-		ImGui::Separator();
+		if (ImGui::TreeNode("Brushes"))
+		{
+			ImGui::Separator();
+			ImGui::Text("Brush Count:= %i", App->CL_Brush->Get_Brush_Count());
+			ImGui::Text("Selected Brushs Count:= %i", App->CL_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes));
+			ImGui::Text("Current Brush:= %s", App->CL_Doc->CurBrush->Name);
+			ImGui::Separator();
+			ImGui::TreePop();
+		}
+	
+		if (ImGui::TreeNode("Faces"))
+		{
+			ImGui::Separator();
+			ImGui::Text("Selected Faces:= %i", App->CL_SelFaceList->SelFaceList_GetSize(App->CL_Doc->pSelFaces));
+			ImGui::Separator();
+			ImGui::TreePop();
+		}
 
-		ImGui::Text("Selected Faces:= %i", App->CL_SelFaceList->SelFaceList_GetSize(App->CL_Doc->pSelFaces));
-		ImGui::Text("Current Face:= %i", App->CL_Face->Selected_Face_Index);
-		ImGui::Text("Texture Count:= %i", App->CL_TXL_Editor->Texture_Count);
-		ImGui::Text("Processes Time:= %i %s", App->CL_Ogre->m_Processes_Time," ms");
+		if (ImGui::TreeNode("App Editor"))
+		{
+			ImGui::Separator();
+			ImGui::Text("Player_Count:= %i", App->CL_Editor_Com->Player_Count);
+			ImGui::Text("Player Added:= %i", App->CL_Editor_Com->flag_Player_Added);
+			ImGui::Separator();
+			ImGui::Text("Object_Count:= %i", App->CL_Editor_Com->Object_Count);
+			ImGui::Text("Unique_Object_Count:= %i", App->CL_Editor_Com->Object_Count);
+			ImGui::Separator();
+			ImGui::TreePop();
+		}
 
-		/*ImGui::Text("Picking");
-		ImGui::Text("Picked:= %i ", App->CL_Picking->flag_Selected_Ok);
-		ImGui::Text("Mesh Name:= %s ", App->CL_Picking->Pl_Entity_Name);
-		ImGui::Text("Texture Name:= %s ", App->CL_Picking->TextureName);
-		ImGui::Text("Ogre Model Faces:= %i ", App->CL_Ogre3D->m_Total_Faces);
-		ImGui::Text("Ogre Faces:= %i ", App->CL_Mesh_Mgr->ActualFaceCount);
-		ImGui::Text("Brushes3 Faces:= %i ", App->CL_Mesh_Mgr->Global_Faces_Index);
-		ImGui::Text("Brushes Faces:= %i ", App->CL_Mesh_Mgr->m_Total_Faces);
-		ImGui::Text("V_Face Count:= %i ", App->CL_Mesh_Mgr->v_Face_Data_Count);
-		ImGui::Text("Face Hit:= %i ", App->CL_Picking->Face_Hit);
-		ImGui::Text("Brush Hit:= %s ", App->CL_Mesh_Mgr->v_Face_Data[App->CL_Picking->Face_Hit]->Brush_Name);*/
-
+		if (ImGui::TreeNode("Physics"))
+		{
+			ImGui::Separator();
+			ImGui::Text("Physics Running:= %i", App->CL_Ogre->Ogre3D_Listener->flag_Run_Physics);
+			ImGui::Separator();
+			ImGui::TreePop();
+		}
+		
 		if (ImGui::Button("Close"))
 		{
 			flag_Show_App_Stats = 0;

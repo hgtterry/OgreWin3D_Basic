@@ -42,6 +42,10 @@ public:
 	bool Flag_Render_Brushes;
 	bool Flag_Just_Face;
 
+	// Brushes
+	bool flag_Render_Just_Brush;
+	int Selected_Brush_Index;
+
 	bool Get_Brush(const Brush* b);
 	bool Brush_Decode_List(BrushList* BList);
 	bool Brush_FaceList_Render(const Brush* b, const FaceList* pList);
@@ -65,6 +69,9 @@ private:
 	void PostRender();
 	void Render_Loop();
 	void Translate(void);
+
+	void Brushes_Face_Parts_XX(int Count);
+	void Brushes_Render_Faces_XX(void);
 
 	void Groups_Render_Textures(void);
 	void Groups_Textured_Parts(int Count);

@@ -40,6 +40,9 @@ CL64_OGL_Listener::CL64_OGL_Listener(void)
 
 	Light_Activated = 0;
 
+	flag_Render_Just_Brush = 0;
+	Selected_Brush_Index = 0;
+	
 	mBrushCount = 0;
 	mSubBrushCount = 0;
 
@@ -207,6 +210,81 @@ void CL64_OGL_Listener::Translate(void)
 
 	glRotatef(RZ, 0.0, 1.0, 0.0);
 	glRotatef(0.0, 0.0, 0.0, 1.0);
+}
+
+// *************************************************************************
+// *						Bruses_Render_Faces_XX Terry Bernie	   		   *
+// *************************************************************************
+void CL64_OGL_Listener::Brushes_Render_Faces_XX(void)
+{
+	int Count = 0;
+
+	int BrushCount = App->CL_Editor_Com->BrushCount;
+
+	while (Count < BrushCount)
+	{
+		if (flag_Render_Just_Brush == 0)
+		{
+			glColor3f(1, 1, 1);
+			glLineWidth(1);
+
+			Brushes_Face_Parts_XX(Count);
+		}
+		else
+		{
+			if (Count == Selected_Brush_Index)
+			{
+				glColor3f(1, 0, 0);
+				glLineWidth(3);
+
+				Brushes_Face_Parts_XX(Count);
+			}
+			else
+			{
+				glColor3f(1, 1, 1);
+				glLineWidth(1);
+
+				Brushes_Face_Parts_XX(Count);
+			}
+		}
+
+		Count++;
+	}
+}
+
+// *************************************************************************
+// *					Bruses_Face_Parts_xx Terry Bernie		   			   *
+// *************************************************************************
+void CL64_OGL_Listener::Brushes_Face_Parts_XX(int Count)
+{
+	int FaceCount = 0;
+	int A = 0;
+	int B = 0;
+	int C = 0;
+
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
+	while (FaceCount < App->CL_Editor_Com->B_Brush[Count]->Face_Count)
+	{
+		A = App->CL_Editor_Com->B_Brush[Count]->Face_Data[FaceCount].a;
+		B = App->CL_Editor_Com->B_Brush[Count]->Face_Data[FaceCount].b;
+		C = App->CL_Editor_Com->B_Brush[Count]->Face_Data[FaceCount].c;
+
+		glBegin(GL_POLYGON);
+
+		//-----------------------------------------------
+		glVertex3fv(&App->CL_Editor_Com->B_Brush[Count]->vertex_Data[A].x);
+
+		//-----------------------------------------------
+		glVertex3fv(&App->CL_Editor_Com->B_Brush[Count]->vertex_Data[B].x);
+
+		//-----------------------------------------------
+		glVertex3fv(&App->CL_Editor_Com->B_Brush[Count]->vertex_Data[C].x);
+
+		FaceCount++;
+
+		glEnd();
+	}
 }
 
 // *************************************************************************

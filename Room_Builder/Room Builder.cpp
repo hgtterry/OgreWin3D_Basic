@@ -341,6 +341,19 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 return 1;
             }
 
+            case ID_FILE_CLEAR:
+            {
+                App->CL_Dialogs->YesNo("Clear Editor", "Are you sure");
+
+                if (App->CL_Dialogs->flag_Dlg_Canceled == 1)
+                {
+                    return 1;
+                }
+
+                App->CL_Editor_Com->Clear_Level(false);
+                return 1;
+            }
+
             // ----------------------------- Edit
             case ID_EDIT_SELECTALL:
             {
@@ -359,13 +372,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 return 1;
             }
 
-            case ID_FILE_CLEAR:
-            {
-                App->CL_Editor_Com->Clear_Level(false);
-                return 1;
-            }
-            
-            
             // ----------------------------- View
             case ID_VIEW_RESETVIEWS:
             {

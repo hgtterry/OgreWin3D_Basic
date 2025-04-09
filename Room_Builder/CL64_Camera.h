@@ -40,5 +40,7 @@ public:
 	void Camera_Speed_Fast(void);
 	void Camera_Set_Menu_Clear(void);
 
+	void Reset_View_Editor(void);
+
 };
 

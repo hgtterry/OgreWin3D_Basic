@@ -64,6 +64,26 @@ void CL64_Camera::Camera_Reset_Zero(void)
 }
 
 // *************************************************************************
+// *			Reset_View_Editor:- Terry and Hazel Flanigan 2024				   *
+// *************************************************************************
+void CL64_Camera::Reset_View_Editor(void)
+{
+	App->CL_Grid->GridNode->setPosition(0, 0, 0);
+	App->CL_Grid->GridNode->resetOrientation();
+
+	App->CL_Grid->HairNode->setPosition(0, 0, 0);
+	App->CL_Grid->HairNode->resetOrientation();
+
+	App->CL_Ogre->OGL_Listener->RX = 0;
+	App->CL_Ogre->OGL_Listener->RZ = 0;
+
+	App->CL_Ogre->camNode->resetOrientation();
+	App->CL_Ogre->camNode->setPosition(Ogre::Vector3(0, 5, 15));
+	App->CL_Ogre->camNode->lookAt(Ogre::Vector3(0, 0, 0), Ogre::Node::TS_WORLD);
+
+}
+
+// *************************************************************************
 // *			Camera_Textured:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
 void CL64_Camera::Camera_Textured(void)

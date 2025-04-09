@@ -244,7 +244,10 @@ void CL64_Editor_Com::Clear_Level(bool FromFile)
 	App->CL_Top_Tabs->Reset_Class();
 	App->CL_Editor_Map->Reset_Class();
 
-	if (FromFile == false)
+	App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_Free;
+	
+
+	if (FromFile == false) // Not from a file load
 	{
 		App->CL_Doc->Init_Doc();
 		App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
@@ -255,5 +258,10 @@ void CL64_Editor_Com::Clear_Level(bool FromFile)
 		}
 
 		App->CL_Properties_Templates->Enable_Insert_Button(true);
+
+		App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_Model;
+
+		App->CL_Camera->Reset_View_Editor();
+	
 	}
 }

@@ -106,133 +106,109 @@ bool CL64_Com_Environments::Add_New_Environ_Entity(bool FirstOne)
 // *************************************************************************
 // *		V_Set_Environ_Defaults:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
-void CL64_Com_Environments::V_Set_Environ_Defaults(int Index)
+void CL64_Com_Environments::V_Set_Environ_Defaults(int index)
 {
-	Base_Object* B_Object = App->CL_Editor_Com->B_Object[Index];
+	Base_Object* bObject = App->CL_Editor_Com->B_Object[index];
 
-	B_Object->flag_Altered = 1;
+	bObject->flag_Altered = true;
 
-	B_Object->S_Environ[0]->Environment_ID = 0;
-	strcpy(B_Object->S_Environ[0]->Environment_Name, "Not_Set");
+	auto& environment = bObject->S_Environ[0];
+	environment->Environment_ID = 0;
+	strcpy(environment->Environment_Name, "Not_Set");
+	environment->flag_Environ_Enabled = true;
 
-	B_Object->S_Environ[0]->flag_Environ_Enabled = 1;
+	// Sound Configuration
+	strcpy(environment->Sound_File, "The_Sun.ogg");
+	environment->flag_Play = false;
+	environment->flag_Loop = true;
+	environment->SndVolume = 0.5f;
 
-	//----------------------- Sound
-	strcpy(B_Object->S_Environ[0]->Sound_File, "The_Sun.ogg");
-	//B_Object->S_Environ[0]->SndFile = NULL;
-	B_Object->S_Environ[0]->flag_Play = 0;
-	B_Object->S_Environ[0]->flag_Loop = 1;
-	B_Object->S_Environ[0]->SndVolume = 0.5;
+	// Light Configuration
+	environment->AmbientColour = { 1.0f, 1.0f, 1.0f };
+	environment->Light_Position = { 0.0f, 0.0f, 0.0f };
 
-	//----------------------- Light
-	B_Object->S_Environ[0]->AmbientColour.x = 1;
-	B_Object->S_Environ[0]->AmbientColour.y = 1;
-	B_Object->S_Environ[0]->AmbientColour.z = 1;
+	// Sky Configuration
+	environment->Curvature = 15;
+	environment->Distance = 4000;
+	environment->flag_Enabled = false;
+	strcpy(environment->Material, "Examples/CloudySky");
+	environment->Tiling = 15;
+	environment->type = 1;
 
-	B_Object->S_Environ[0]->Light_Position.x = 0;
-	B_Object->S_Environ[0]->Light_Position.y = 0;
-	B_Object->S_Environ[0]->Light_Position.z = 0;
-
-	// Sky
-	B_Object->S_Environ[0]->Curvature = 15;
-	B_Object->S_Environ[0]->Distance = 4000;
-	B_Object->S_Environ[0]->flag_Enabled = 0;
-	strcpy(B_Object->S_Environ[0]->Material, "Examples/CloudySky");
-	B_Object->S_Environ[0]->Tiling = 15;
-	B_Object->S_Environ[0]->type = 1;
-
-	// Fog
-	B_Object->S_Environ[0]->Fog_On = 0;
-	B_Object->S_Environ[0]->Fog_Mode = FOG_LINEAR;
-	B_Object->S_Environ[0]->Fog_Density = 0.001000;
-	B_Object->S_Environ[0]->Fog_Start = 100;
-	B_Object->S_Environ[0]->Fog_End = 700;
-	B_Object->S_Environ[0]->Fog_Colour = Ogre::Vector3(1, 1, 1);
+	// Fog Configuration
+	environment->Fog_On = false;
+	environment->Fog_Mode = FOG_LINEAR;
+	environment->Fog_Density = 0.001f;
+	environment->Fog_Start = 100;
+	environment->Fog_End = 700;
+	environment->Fog_Colour = Ogre::Vector3(1.0f, 1.0f, 1.0f);
 }
 
 // *************************************************************************
 // *		Create_Environ_Entity:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
-bool CL64_Com_Environments::Create_Environ_Entity(int Index)
-{
-	char Mesh_File[255];
-	char ConNum[256];
-	char Ogre_Name[256];
+bool CL64_Com_Environments::Create_Environ_Entity(int index) {
+	const int bufferSize = MAX_PATH;
+	char meshFile[bufferSize];
+	char ogreName[bufferSize];
 
-	Base_Object* Object = App->CL_Editor_Com->B_Object[Index];
+	Base_Object* object = App->CL_Editor_Com->B_Object[index];
 
-	// ----------------- Mesh
-	strcpy_s(Ogre_Name, "GDEnt_");
-	_itoa(Index, ConNum, 10);
-	strcat(Ogre_Name, ConNum);
+	// Generate Ogre Name
+	snprintf(ogreName, sizeof(ogreName), "GDEnt_%d", index);
+	strcpy(meshFile, object->Mesh_FileName);
 
-	strcpy(Mesh_File, Object->Mesh_FileName);
+	// Create Entity and Node
+	object->Object_Ent = App->CL_Ogre->mSceneMgr->createEntity(ogreName, meshFile, App->CL_Ogre->App_Resource_Group);
+	object->Object_Node = App->CL_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	object->Object_Node->attachObject(object->Object_Ent);
+	object->Object_Node->setVisible(true);
+	object->Object_Node->setOrientation(object->Mesh_Quat);
+	object->Object_Node->setPosition(object->Mesh_Pos);
+	strcpy(object->Material_File, "Internal");
 
-	Object->Object_Ent = App->CL_Ogre->mSceneMgr->createEntity(Ogre_Name, Mesh_File, App->CL_Ogre->App_Resource_Group);
-	Object->Object_Node = App->CL_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
-	Object->Object_Node->attachObject(Object->Object_Ent);
-
-	Object->Object_Node->setVisible(true);
-
-	Object->Object_Node->setOrientation(Object->Mesh_Quat);
-	Object->Object_Node->setPosition(Object->Mesh_Pos);
-
-	strcpy(Object->Material_File, "Internal");
-
-	// ----------------- Physics
-	Ogre::Vector3 Centre = App->CL_Editor_Com->B_Object[Index]->Object_Ent->getWorldBoundingBox(true).getCenter();
-	Object->Physics_Pos = Ogre::Vector3(Centre.x, Centre.y, Centre.z);
+	// Physics Setup
+	Ogre::Vector3 center = object->Object_Ent->getWorldBoundingBox(true).getCenter();
+	object->Physics_Pos = center;
 
 	btTransform startTransform;
 	startTransform.setIdentity();
-	startTransform.setRotation(btQuaternion(0, 0, 0, 1));
+	startTransform.setOrigin(btVector3(center.x, center.y, center.z));
 
-	btScalar mass;
-	mass = 0.0f;
-
+	btScalar mass = 0.0f;
 	btVector3 localInertia(0, 0, 0);
-	btVector3 initialPosition(Centre.x, Centre.y, Centre.z);
-	startTransform.setOrigin(initialPosition);
+	Ogre::Vector3 size = App->CL_Com_Objects->GetMesh_BB_Size(object->Object_Node);
+	btVector3 halfSize(size.x / 2, size.y / 2, size.z / 2);
 
-	Ogre::Vector3 Size = App->CL_Com_Objects->GetMesh_BB_Size(Object->Object_Node);
-	float sx = Size.x / 2;
-	float sy = Size.y / 2;
-	float sz = Size.z / 2;
-
-	Object->Physics_Size = Ogre::Vector3(sx, sy, sz);
-
-	btCollisionShape* newRigidShape = new btBoxShape(btVector3(sx, sy, sz));
+	object->Physics_Size = Ogre::Vector3(halfSize.x(), halfSize.y(), halfSize.z());
+	btCollisionShape* newRigidShape = new btBoxShape(halfSize);
 	newRigidShape->calculateLocalInertia(mass, localInertia);
-
 	App->CL_Physics->collisionShapes.push_back(newRigidShape);
 
 	btDefaultMotionState* myMotionState = new btDefaultMotionState(startTransform);
-
 	btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, myMotionState, newRigidShape, localInertia);
 
-	Object->Phys_Body = new btRigidBody(rbInfo);
-	Object->Phys_Body->setRestitution(1.0);
-	Object->Phys_Body->setFriction(1.5);
-	Object->Phys_Body->setUserPointer(Object->Object_Node);
-	Object->Phys_Body->setWorldTransform(startTransform);
+	object->Phys_Body = new btRigidBody(rbInfo);
+	object->Phys_Body->setRestitution(1.0);
+	object->Phys_Body->setFriction(1.5);
+	object->Phys_Body->setUserPointer(object->Object_Node);
+	object->Phys_Body->setWorldTransform(startTransform);
+	object->Usage = Enums::Obj_Usage_EnvironEntity;
+	object->Phys_Body->setUserIndex(Enums::Obj_Usage_EnvironEntity);
+	object->Phys_Body->setUserIndex2(index);
 
-	Object->Usage = Enums::Obj_Usage_EnvironEntity;
-	Object->Phys_Body->setUserIndex(Enums::Obj_Usage_EnvironEntity);
-	Object->Phys_Body->setUserIndex2(Index);
-
-	int f = Object->Phys_Body->getCollisionFlags();
-
-	Object->Phys_Body->setCollisionFlags(f | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT
+	int collisionFlags = object->Phys_Body->getCollisionFlags();
+	object->Phys_Body->setCollisionFlags(collisionFlags | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT
 		| btCollisionObject::CF_KINEMATIC_OBJECT
 		| btCollisionObject::CF_NO_CONTACT_RESPONSE);
 
+	App->CL_Physics->dynamicsWorld->addRigidBody(object->Phys_Body);
+	App->CL_Physics->Set_Physics_New(index);
 
-	App->CL_Physics->dynamicsWorld->addRigidBody(Object->Phys_Body);
-
-	App->CL_Physics->Set_Physics_New(Index);
-
-	return 1;
+	//object->Phys_Body->setCollisionFlags(collisionFlags & (~(1 << 5)));
+	return true;
 }
+
 
 // *************************************************************************
 // *		Set_Environment_By_Index:- Terry and Hazel Flanigan 2024 	   *
@@ -310,17 +286,13 @@ void CL64_Com_Environments::Mark_As_Altered_Environ(int Index)
 // *************************************************************************
 // *		Get_First_Environ:- Terry and Hazel Flanigan 2024		 	   *
 // *************************************************************************
-int CL64_Com_Environments::Get_First_Environ()
+int CL64_Com_Environments::Get_First_Environ() 
 {
-	int Count = 0;
-	while (Count < App->CL_Editor_Com->Object_Count)
+	for (int count = 0; count < App->CL_Editor_Com->Object_Count; ++count) 
 	{
-		if (App->CL_Editor_Com->B_Object[Count]->Usage == Enums::Obj_Usage_EnvironEntity)
-		{
-			return Count;
+		if (App->CL_Editor_Com->B_Object[count]->Usage == Enums::Obj_Usage_EnvironEntity) {
+			return count;
 		}
-
-		Count++;
 	}
 
 	return -1;
@@ -361,11 +333,6 @@ void CL64_Com_Environments::Set_First_Environment(int Index)
 		App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->Tiling, 
 		App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->Distance);
 		
-	/*App->CL_Ogre->mSceneMgr->setSkyDome(true,
-			App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->Material,
-			App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->Curvature,
-			App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->Tiling,
-			App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->Distance);*/
 	}
 	else
 	{
