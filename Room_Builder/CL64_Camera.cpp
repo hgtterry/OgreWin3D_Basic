@@ -94,7 +94,9 @@ void CL64_Camera::Camera_Textured(void)
 		App->CL_Ogre->OGL_Listener->flag_Render_Groups = 0;
 		App->CL_Ogre->OGL_Listener->flag_Render_Brushes = 0;
 
-		App->CL_Ogre->OGL_Listener->Render_Mode = Enums::Render_Nothing;
+		App->CL_Ogre->OGL_Listener->Render_Mode = Enums::Render_Ogre;
+		App->CL_Mesh_Mgr->Selected_Render_Mode = Enums::Render_Ogre;
+
 		App->CL_Mesh_Mgr->World_Node->setVisible(true);
 
 		CheckMenuItem(App->Menu_Map, ID_CAMERA_TEXTURED, MF_BYCOMMAND | MF_CHECKED);
@@ -114,6 +116,8 @@ void CL64_Camera::Camera_Wired(void)
 		App->CL_Ogre->OGL_Listener->flag_Render_Ogre = 0;
 
 		App->CL_Ogre->OGL_Listener->Render_Mode = Enums::Render_Groups;
+		App->CL_Mesh_Mgr->Selected_Render_Mode = Enums::Render_Groups;
+
 		App->CL_Mesh_Mgr->World_Node->setVisible(false);
 
 		CheckMenuItem(App->Menu_Map, ID_CAMERA_WIREFRAMED, MF_BYCOMMAND | MF_CHECKED);
@@ -133,6 +137,8 @@ void CL64_Camera::Camera_Brushes(void)
 		App->CL_Ogre->OGL_Listener->flag_Render_Ogre = 0;
 
 		App->CL_Ogre->OGL_Listener->Render_Mode = Enums::Render_Brushes;
+		App->CL_Mesh_Mgr->Selected_Render_Mode = Enums::Render_Brushes;
+
 		App->CL_Mesh_Mgr->World_Node->setVisible(false);
 
 		CheckMenuItem(App->Menu_Map, ID_CAMERA_WIREFRAMED, MF_BYCOMMAND | MF_CHECKED);

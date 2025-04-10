@@ -87,6 +87,7 @@ CL64_Mesh_Mgr::CL64_Mesh_Mgr()
 
 	memset(mAdjusedIndex_Store, 0, 500);
 
+	Selected_Render_Mode = 0;
 	v_Face_Data_Count = 0;
 	
 	int Count = 0;
@@ -1332,7 +1333,7 @@ void CL64_Mesh_Mgr::Populate_RenderMode_Combo(HWND DropHwnd)
 	SendMessage(DropHwnd, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"Ogre");
 	SendMessage(DropHwnd, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"Groups");
 	SendMessage(DropHwnd, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"Brushes");
-	SendMessage(DropHwnd, CB_SETCURSEL, 0, 0);
+	SendMessage(DropHwnd, CB_SETCURSEL, Selected_Render_Mode, 0);
 }
 
 

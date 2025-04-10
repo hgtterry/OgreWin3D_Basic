@@ -81,6 +81,8 @@ public:
 	int IsTextureAlpha[20];
 	int mBrush_Index;
 
+	int Selected_Render_Mode;
+
 	signed int UsedTextures[500];
 
 	char Actual_mBrush_Name[MAX_PATH];
