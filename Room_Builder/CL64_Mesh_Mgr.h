@@ -81,6 +81,8 @@ public:
 	int IsTextureAlpha[20];
 	int mBrush_Index;
 
+	int Brushes_List_Index;
+
 	int Selected_Render_Mode;
 
 	signed int UsedTextures[500];

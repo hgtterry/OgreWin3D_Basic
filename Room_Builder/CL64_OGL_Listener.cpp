@@ -234,25 +234,26 @@ void CL64_OGL_Listener::Brushes_Render_Faces(void)
 
 	while (Count < BrushCount)
 	{
-		if (flag_Render_Just_Brush == 0)
+		/*if (flag_Render_Just_Brush == 0)
 		{
-			//glColor3f(1, 1, 1);
 			glLineWidth(1);
 
 			Brushes_Face_Parts(Count);
 		}
-		else
+		else*/
 		{
 			if (Count == Selected_Brush_Index)
 			{
-				//glColor3f(1, 0, 0);
-				glLineWidth(3);
+				glDisable(GL_CULL_FACE);
+				glColor3f(1, 0, 0);
+				glLineWidth(1);
 
 				Brushes_Face_Parts(Count);
 			}
 			else
 			{
-				//glColor3f(1, 1, 1);
+				glEnable(GL_CULL_FACE);
+				glColor3f(0, 1, 0);
 				glLineWidth(1);
 
 				Brushes_Face_Parts(Count);

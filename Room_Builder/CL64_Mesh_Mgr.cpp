@@ -87,6 +87,8 @@ CL64_Mesh_Mgr::CL64_Mesh_Mgr()
 
 	memset(mAdjusedIndex_Store, 0, 500);
 
+	Brushes_List_Index = 0;
+
 	Selected_Render_Mode = 0;
 	v_Face_Data_Count = 0;
 	
@@ -1007,7 +1009,7 @@ LRESULT CALLBACK CL64_Mesh_Mgr::Proc_Mesh_Viewer(HWND hDlg, UINT message, WPARAM
 		//}
 
 		App->CL_Mesh_Mgr->Update_Brush_List(hDlg);
-		//App->CL_Mesh_Mgr->UpdateBrushData(hDlg, App->CLSB_Mesh_Mgr->Compiled_List_Index);
+		App->CL_Mesh_Mgr->UpdateBrushData(hDlg, 0);// App->CLSB_Mesh_Mgr->Compiled_List_Index);
 
 		//App->CLSB_Ogre_Setup->RenderListener->Render_Just_Brush = 0;
 
@@ -1211,50 +1213,51 @@ LRESULT CALLBACK CL64_Mesh_Mgr::Proc_Mesh_Viewer(HWND hDlg, UINT message, WPARAM
 			return TRUE;
 		}*/
 
-		//if (LOWORD(wParam) == IDC_LISTBRUSHES)
-		//{
-		//	char buff[256];
-		//	int Index = 0;
-		//	Index = SendDlgItemMessage(hDlg, IDC_LISTBRUSHES, LB_GETCURSEL, (WPARAM)0, (LPARAM)0);
+		if (LOWORD(wParam) == IDC_LISTBRUSHES)
+		{
+			char buff[256];
+			int Index = 0;
+			Index = SendDlgItemMessage(hDlg, IDC_LISTBRUSHES, LB_GETCURSEL, (WPARAM)0, (LPARAM)0);
 
-		//	if (Index == -1)
-		//	{
-		//		return 1;
-		//	}
+			if (Index == -1)
+			{
+				return 1;
+			}
 
-		//	if (App->CLSB_Model->Render_Type == Enums::Render_Brushes)
-		//	{
-		//		App->CLSB_Ogre_Setup->RenderListener->Selected_Brush_Index = Index;
-		//		App->CLSB_Ogre_Setup->RenderListener->Selected_Group_Index = App->CLSB_Model->B_Brush[Index]->Group_Index;
-		//	}
+			/*if (App->CLSB_Model->Render_Type == Enums::Render_Brushes)
+			{
+				App->CLSB_Ogre_Setup->RenderListener->Selected_Brush_Index = Index;
+				App->CLSB_Ogre_Setup->RenderListener->Selected_Group_Index = App->CLSB_Model->B_Brush[Index]->Group_Index;
+			}
 
-		//	if (App->CLSB_Model->Render_Type == Enums::Render_Groups)
-		//	{
-		//		App->CLSB_Ogre_Setup->RenderListener->Selected_Group = Index;
-		//	}
+			if (App->CLSB_Model->Render_Type == Enums::Render_Groups)
+			{
+				App->CLSB_Ogre_Setup->RenderListener->Selected_Group = Index;
+			}*/
 
-		//	// ------------------- Compiled
-		//	if (App->CLSB_Mesh_Mgr->Selected_Render_Mode == Enums::Mesh_Mgr_Compiled)
-		//	{
-		//		App->CLSB_Mesh_Mgr->Compiled_List_Index = Index;
-		//	}
+			// ------------------- Ogre
+			if (App->CL_Mesh_Mgr->Selected_Render_Mode == Enums::Render_Ogre)
+			{
+				//App->CL_Mesh_Mgr->Compiled_List_Index = Index;
+			}
 
-		//	// ------------------- Groups
-		//	if (App->CLSB_Mesh_Mgr->Selected_Render_Mode == Enums::Mesh_Mgr_Groups)
-		//	{
-		//		App->CLSB_Mesh_Mgr->Groups_List_Index = Index;
-		//	}
+			// ------------------- Groups
+			if (App->CL_Mesh_Mgr->Selected_Render_Mode == Enums::Render_Groups)
+			{
+				//App->CLSB_Mesh_Mgr->Groups_List_Index = Index;
+			}
 
-		//	// ------------------- Brushes
-		//	if (App->CLSB_Mesh_Mgr->Selected_Render_Mode == Enums::Mesh_Mgr_Brushes)
-		//	{
-		//		App->CLSB_Mesh_Mgr->Brushes_List_Index = Index;
-		//	}
+			// ------------------- Brushes
+			if (App->CL_Mesh_Mgr->Selected_Render_Mode == Enums::Render_Brushes)
+			{
+				App->CL_Mesh_Mgr->Brushes_List_Index = Index;
+				App->CL_Ogre->OGL_Listener->Selected_Brush_Index = Index;
+			}
 
-		//	App->CLSB_Mesh_Mgr->UpdateBrushData(hDlg, Index);
+			App->CL_Mesh_Mgr->UpdateBrushData(hDlg, Index);
 
-		//	return TRUE;
-		//}
+			return TRUE;
+		}
 
 		if (LOWORD(wParam) == IDC_CB_RENDERMODE)
 		{
@@ -1353,7 +1356,7 @@ void CL64_Mesh_Mgr::Update_Brush_List(HWND hDlg)
 
 	char buf[MAX_PATH];
 
-	// ------------------- Compiled
+	// ------------------- Ogre
 	if (App->CL_Mesh_Mgr->Selected_Render_Mode == Enums::Render_Ogre)
 	{
 		int SubCount = World_Ent->getNumSubEntities();
@@ -1401,8 +1404,8 @@ void CL64_Mesh_Mgr::Update_Brush_List(HWND hDlg)
 		}
 
 		//Update_World_Model_Info(hDlg);
-		//UpdateBrushData(hDlg, App->CLSB_Mesh_Mgr->Brushes_List_Index);
-		//SendDlgItemMessage(hDlg, IDC_LISTBRUSHES, LB_SETCURSEL, (WPARAM)App->CLSB_Mesh_Mgr->Brushes_List_Index, (LPARAM)0);
+		UpdateBrushData(hDlg, Brushes_List_Index);
+		SendDlgItemMessage(hDlg, IDC_LISTBRUSHES, LB_SETCURSEL, (WPARAM)Brushes_List_Index, (LPARAM)0);
 	}
 
 	// ------------------- No Render
@@ -1425,7 +1428,7 @@ void CL64_Mesh_Mgr::UpdateBrushData(HWND hDlg, int Index)
 
 	char buf[MAX_PATH];
 
-	// ------------------- Compiled
+	// ------------------- Ogre
 	if (App->CL_Mesh_Mgr->Selected_Render_Mode == Enums::Render_Ogre)
 	{
 		World_Ent->getNumSubEntities();
@@ -1449,7 +1452,7 @@ void CL64_Mesh_Mgr::UpdateBrushData(HWND hDlg, int Index)
 		SendDlgItemMessage(hDlg, IDC_LISTDATA, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 	}
 
-	// ------------------- Groups
+	// ------------------- Groups / Wireframed
 	if (App->CL_Mesh_Mgr->Selected_Render_Mode == Enums::Render_Groups)
 	{
 		sprintf(buf, "Group Name %s", App->CL_Editor_Com->Group[Index]->GroupName);
