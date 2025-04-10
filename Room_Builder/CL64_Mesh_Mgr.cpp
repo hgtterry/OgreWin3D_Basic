@@ -1480,7 +1480,10 @@ void CL64_Mesh_Mgr::UpdateBrushData(HWND hDlg, int Index)
 	// ------------------- Brushes
 	if (App->CL_Mesh_Mgr->Selected_Render_Mode == Enums::Render_Brushes)
 	{
-		sprintf(buf, "Group Index %i %s", App->CL_Editor_Com->B_Brush[Index]->Group_Index, App->CL_Editor_Com->B_Brush[Index]->Brush_Name);
+		sprintf(buf, "Brush Name %s",App->CL_Editor_Com->B_Brush[Index]->Brush_Name);
+		SendDlgItemMessage(hDlg, IDC_LISTDATA, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+
+		sprintf(buf, "Brush Index %i", App->CL_Editor_Com->B_Brush[Index]->Group_Index);
 		SendDlgItemMessage(hDlg, IDC_LISTDATA, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
 		sprintf(buf, "Faces %i", App->CL_Editor_Com->B_Brush[Index]->Face_Count);
