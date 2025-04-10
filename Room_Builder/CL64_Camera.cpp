@@ -205,6 +205,3 @@ void CL64_Camera::Camera_Set_Menu_Clear(void)
 	CheckMenuItem(App->Menu_Map, ID_SPEED_FAST, MF_BYCOMMAND | MF_UNCHECKED);
 }
 
-
-
-

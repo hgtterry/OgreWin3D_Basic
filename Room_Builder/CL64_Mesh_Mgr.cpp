@@ -1006,8 +1006,8 @@ LRESULT CALLBACK CL64_Mesh_Mgr::Proc_Mesh_Viewer(HWND hDlg, UINT message, WPARAM
 		//	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshOff_Bmp);
 		//}
 
-		//App->CLSB_Mesh_Mgr->Update_Brush_List(hDlg);
-		//App->CLSB_Mesh_Mgr->UpdateBrushData(hDlg, App->CLSB_Mesh_Mgr->Compiled_List_Index);
+		App->CL_Mesh_Mgr->Update_Brush_List(hDlg);
+		//App->CL_Mesh_Mgr->UpdateBrushData(hDlg, App->CLSB_Mesh_Mgr->Compiled_List_Index);
 
 		//App->CLSB_Ogre_Setup->RenderListener->Render_Just_Brush = 0;
 
@@ -1272,28 +1272,36 @@ LRESULT CALLBACK CL64_Mesh_Mgr::Proc_Mesh_Viewer(HWND hDlg, UINT message, WPARAM
 					return 1;
 				}
 
-				//App->CLSB_Mesh_Mgr->Selected_Render_Mode = Index;
+				App->CL_Mesh_Mgr->Selected_Render_Mode = Index;
 
-				//if (Index == Enums::Mesh_Mgr_Compiled) // Compiled
-				//{
-				//	App->CLSB_Mesh_Mgr->Set_RenderMode_Compiled();
+				if (Index == Enums::Render_Ogre)
+				{
+					App->CL_Mesh_Mgr->Selected_Render_Mode = Enums::Render_Ogre;
+					App->CL_Camera->Camera_Textured();
 
-				//	EnableWindow(GetDlgItem(hDlg, IDC_BTJUSTBRUSH), false);
-				//	EnableWindow(GetDlgItem(hDlg, IDC_BT_LOOKAT), false);
-				//}
+					App->CL_Mesh_Mgr->Update_Brush_List(hDlg);
+					//EnableWindow(GetDlgItem(hDlg, IDC_BTJUSTBRUSH), false);
+					//EnableWindow(GetDlgItem(hDlg, IDC_BT_LOOKAT), false);
+				}
 
-				//if (Index == Enums::Mesh_Mgr_Groups) // Groups
-				//{
-				//	App->CLSB_Mesh_Mgr->Set_RenderMode_Groups();
-				//}
+				if (Index == Enums::Render_Groups) // Groups
+				{
+					App->CL_Mesh_Mgr->Selected_Render_Mode = Enums::Render_Groups;
+					App->CL_Camera->Camera_Wired();
 
-				//if (Index == Enums::Mesh_Mgr_Brushes) // Brushes
-				//{
-				//	App->CLSB_Mesh_Mgr->Set_RenderMode_Brushes();
+					App->CL_Mesh_Mgr->Update_Brush_List(hDlg);
+				}
 
-				//	EnableWindow(GetDlgItem(hDlg, IDC_BTJUSTBRUSH), true);
-				//	EnableWindow(GetDlgItem(hDlg, IDC_BT_LOOKAT), true);
-				//}
+				if (Index == Enums::Render_Brushes) // Brushes
+				{
+					App->CL_Mesh_Mgr->Selected_Render_Mode = Enums::Render_Brushes;
+					App->CL_Camera->Camera_Brushes();
+
+					App->CL_Mesh_Mgr->Update_Brush_List(hDlg);
+
+					//EnableWindow(GetDlgItem(hDlg, IDC_BTJUSTBRUSH), true);
+					//EnableWindow(GetDlgItem(hDlg, IDC_BT_LOOKAT), true);
+				}
 
 				//if (Index == 3) // No Render
 				//{
@@ -1335,5 +1343,169 @@ void CL64_Mesh_Mgr::Populate_RenderMode_Combo(HWND DropHwnd)
 	SendMessage(DropHwnd, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"Brushes");
 	SendMessage(DropHwnd, CB_SETCURSEL, Selected_Render_Mode, 0);
 }
+
+// *************************************************************************
+// *		Update_Brush_List:- Terry and Hazel Flanigan 2025		 	   *
+// *************************************************************************
+void CL64_Mesh_Mgr::Update_Brush_List(HWND hDlg)
+{
+	SendDlgItemMessage(hDlg, IDC_LISTBRUSHES, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
+
+	char buf[MAX_PATH];
+
+	// ------------------- Compiled
+	if (App->CL_Mesh_Mgr->Selected_Render_Mode == Enums::Render_Ogre)
+	{
+		int SubCount = World_Ent->getNumSubEntities();
+		int Count = 0;
+		while (Count < SubCount)
+		{
+			sprintf(buf, "%s %i", "Sub mesh - ", Count);
+			SendDlgItemMessage(hDlg, IDC_LISTBRUSHES, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+			Count++;
+		}
+
+		//Update_World_Model_Info(hDlg);
+		//UpdateBrushData(hDlg, App->CLSB_Mesh_Mgr->Compiled_List_Index);
+		//SendDlgItemMessage(hDlg, IDC_LISTBRUSHES, LB_SETCURSEL, (WPARAM)App->CLSB_Mesh_Mgr->Compiled_List_Index, (LPARAM)0);
+
+	}
+
+	// ------------------- Groups
+	if (App->CL_Mesh_Mgr->Selected_Render_Mode == Enums::Render_Groups)
+	{
+		int SubCount = App->CL_Editor_Com->GroupCount;
+		int Count = 0;
+		while (Count < SubCount)
+		{
+			sprintf(buf, "%s %i", "Group - ", Count);
+			SendDlgItemMessage(hDlg, IDC_LISTBRUSHES, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+			Count++;
+		}
+
+		//Update_World_Model_Info(hDlg);
+		//UpdateBrushData(hDlg, App->CLSB_Mesh_Mgr->Groups_List_Index);
+		//SendDlgItemMessage(hDlg, IDC_LISTBRUSHES, LB_SETCURSEL, (WPARAM)App->CLSB_Mesh_Mgr->Groups_List_Index, (LPARAM)0);
+	}
+
+	// ------------------- Brushes
+	if (App->CL_Mesh_Mgr->Selected_Render_Mode == Enums::Render_Brushes)
+	{
+		int SubCount = App->CL_Editor_Com->BrushCount;
+		int Count = 0;
+		while (Count < SubCount)
+		{
+			sprintf(buf, "%s %i", "Brushes - ", Count);
+			SendDlgItemMessage(hDlg, IDC_LISTBRUSHES, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+			Count++;
+		}
+
+		//Update_World_Model_Info(hDlg);
+		//UpdateBrushData(hDlg, App->CLSB_Mesh_Mgr->Brushes_List_Index);
+		//SendDlgItemMessage(hDlg, IDC_LISTBRUSHES, LB_SETCURSEL, (WPARAM)App->CLSB_Mesh_Mgr->Brushes_List_Index, (LPARAM)0);
+	}
+
+	// ------------------- No Render
+	/*if (App->CLSB_Mesh_Mgr->Selected_Render_Mode == 3)
+	{
+		sprintf(buf, "%s", "No Render");
+		SendDlgItemMessage(hDlg, IDC_LISTBRUSHES, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+
+		Update_World_Model_Info(hDlg);
+		UpdateBrushData(hDlg, -1);
+	}*/
+}
+
+// *************************************************************************
+// *			UpdateBrushData:- Terry and Hazel Flanigan 2025		 	   *
+// *************************************************************************
+void CL64_Mesh_Mgr::UpdateBrushData(HWND hDlg, int Index)
+{
+	SendDlgItemMessage(hDlg, IDC_LISTDATA, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
+
+	char buf[MAX_PATH];
+
+	// ------------------- Compiled
+	if (App->CL_Mesh_Mgr->Selected_Render_Mode == Enums::Render_Ogre)
+	{
+		World_Ent->getNumSubEntities();
+
+		Ogre::SubMesh const* subMesh = World_Ent->getSubEntity(Index)->getSubMesh();
+
+		int FaceCount = subMesh->indexData->indexCount;
+		sprintf(buf, "Face Count - %i", FaceCount / 3);
+		SendDlgItemMessage(hDlg, IDC_LISTDATA, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+
+		int VerticesCount = subMesh->vertexData->vertexCount;
+		sprintf(buf, "Vertices Count - %i", VerticesCount);
+		SendDlgItemMessage(hDlg, IDC_LISTDATA, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+
+		Ogre::String MatName = subMesh->getMaterialName();
+		sprintf(buf, "Material Name - %s", MatName.c_str());
+		SendDlgItemMessage(hDlg, IDC_LISTDATA, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+
+		Ogre::MaterialPtr  MatCurent = static_cast<Ogre::MaterialPtr> (Ogre::MaterialManager::getSingleton().getByName(MatName));
+		sprintf(buf, "Texture Name - %s", MatCurent->getTechnique(0)->getPass(0)->getTextureUnitState(0)->getTextureName().c_str());
+		SendDlgItemMessage(hDlg, IDC_LISTDATA, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+	}
+
+	// ------------------- Groups
+	if (App->CL_Mesh_Mgr->Selected_Render_Mode == Enums::Render_Groups)
+	{
+		sprintf(buf, "Group Name %s", App->CL_Editor_Com->Group[Index]->GroupName);
+		SendDlgItemMessage(hDlg, IDC_LISTDATA, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+
+		sprintf(buf, "Faces %i", App->CL_Editor_Com->Group[Index]->GroupFaceCount);
+		SendDlgItemMessage(hDlg, IDC_LISTDATA, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+
+		sprintf(buf, "Vertices %i", App->CL_Editor_Com->Group[Index]->GroupVertCount);
+		SendDlgItemMessage(hDlg, IDC_LISTDATA, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+
+		sprintf(buf, "Mat Index %i", App->CL_Editor_Com->Group[Index]->MaterialIndex);
+		SendDlgItemMessage(hDlg, IDC_LISTDATA, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+
+		sprintf(buf, "Mat Name %s", App->CL_Editor_Com->Group[Index]->MaterialName);
+		SendDlgItemMessage(hDlg, IDC_LISTDATA, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+
+		sprintf(buf, "Mat File Name %s", App->CL_Editor_Com->Group[Index]->Text_FileName);
+		SendDlgItemMessage(hDlg, IDC_LISTDATA, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+
+		//sprintf(buf, "Faces2 %i", App->CLSB_Mesh_Mgr->ActualFaceCount);
+		//SendDlgItemMessage(hDlg, IDC_LISTDATA, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+	}
+
+	// ------------------- Brushes
+	if (App->CL_Mesh_Mgr->Selected_Render_Mode == Enums::Render_Brushes)
+	{
+		sprintf(buf, "Group Index %i %s", App->CL_Editor_Com->B_Brush[Index]->Group_Index, App->CL_Editor_Com->B_Brush[Index]->Brush_Name);
+		SendDlgItemMessage(hDlg, IDC_LISTDATA, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+
+		sprintf(buf, "Faces %i", App->CL_Editor_Com->B_Brush[Index]->Face_Count);
+		SendDlgItemMessage(hDlg, IDC_LISTDATA, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+
+		sprintf(buf, "Vertices %i", App->CL_Editor_Com->B_Brush[Index]->Vertice_Count);
+		SendDlgItemMessage(hDlg, IDC_LISTDATA, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+
+		int Count = 0;
+
+		while (Count < App->CL_Editor_Com->B_Brush[Index]->Face_Count)
+		{
+			int TextureID = App->CL_Editor_Com->B_Brush[Index]->Picking_Data[Count].TextID;
+
+			int WE_Face = App->CL_Editor_Com->B_Brush[Index]->Picking_Data[Count].WE_Face_Index;
+			int Global_Face = App->CL_Editor_Com->B_Brush[Index]->Picking_Data[Count].Global_Face;
+
+			sprintf(buf, "Text_ID %i %s %i %i", TextureID, TextureName2[TextureID], WE_Face, Global_Face);
+			SendDlgItemMessage(hDlg, IDC_LISTDATA, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+			Count++;
+		}
+
+		//App->CL_Mesh_Mgr->Set_BBox_Selected_Brush(Index);
+	}
+}
+
+
+
+
 
 

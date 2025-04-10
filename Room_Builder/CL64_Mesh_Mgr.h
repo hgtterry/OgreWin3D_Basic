@@ -98,5 +98,8 @@ private:
 	static LRESULT CALLBACK Proc_Mesh_Viewer(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	void Populate_RenderMode_Combo(HWND DropHwnd);
+	void Update_Brush_List(HWND hDlg);
+	void UpdateBrushData(HWND hDlg, int Index);
+
 };
 
