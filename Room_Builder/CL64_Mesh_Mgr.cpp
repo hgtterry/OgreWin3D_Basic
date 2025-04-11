@@ -29,45 +29,6 @@ THE SOFTWARE.
 #include "CL64_WadFile.h"
 #include "Structures.cpp"
 
-struct tag_Level3
-{
-	BrushList* Brushes;
-	char* WadPath;
-	char* HeadersDir;
-	// changed QD Actors
-	char* ActorsDir;
-	signed int ShowActors;
-	char* PawnIniPath;
-	// end change
-	SizeInfo* WadSizeInfos;
-	CL64_WadFile* WadFile;
-
-	//ModelInfo_Type	ModelInfo;
-
-	
-	float SkyRotationSpeed;
-	float	SkyTextureScale;
-
-	// level edit settings
-	
-	int GroupVisSetting;
-	//GridInfo GridSettings;
-	signed int BspRebuildFlag;
-	//ViewStateInfo ViewInfo[NUM_VIEWS];
-
-	BrushTemplate_Arch ArchTemplate;
-	BrushTemplate_Box	BoxTemplate;
-	BrushTemplate_Cone	ConeTemplate;
-	BrushTemplate_Cylinder CylinderTemplate;
-	BrushTemplate_Spheroid	SpheroidTemplate;
-	BrushTemplate_Staircase StaircaseTemplate;
-
-	Ogre::Vector3 TemplatePos;
-
-	float DrawScale;		// default draw scale
-	float LightmapScale;	// default lightmap scale
-};
-
 CL64_Mesh_Mgr::CL64_Mesh_Mgr()
 {
 	World_Node = nullptr;
@@ -87,8 +48,10 @@ CL64_Mesh_Mgr::CL64_Mesh_Mgr()
 
 	memset(mAdjusedIndex_Store, 0, 500);
 
+	Ogre_List_Index = 0;
+	Groups_List_Index = 0;
 	Brushes_List_Index = 0;
-
+	
 	Selected_Render_Mode = 0;
 	v_Face_Data_Count = 0;
 	
@@ -103,6 +66,14 @@ CL64_Mesh_Mgr::CL64_Mesh_Mgr()
 
 CL64_Mesh_Mgr::~CL64_Mesh_Mgr()
 {
+}
+
+// *************************************************************************
+// *			Reset_Class:- Terry and Hazel Flanigan 2024				   *
+// *************************************************************************
+void CL64_Mesh_Mgr::Reset_Class()
+{
+	
 }
 
 // *************************************************************************
@@ -1215,7 +1186,6 @@ LRESULT CALLBACK CL64_Mesh_Mgr::Proc_Mesh_Viewer(HWND hDlg, UINT message, WPARAM
 
 		if (LOWORD(wParam) == IDC_LISTBRUSHES)
 		{
-			char buff[256];
 			int Index = 0;
 			Index = SendDlgItemMessage(hDlg, IDC_LISTBRUSHES, LB_GETCURSEL, (WPARAM)0, (LPARAM)0);
 
@@ -1224,27 +1194,16 @@ LRESULT CALLBACK CL64_Mesh_Mgr::Proc_Mesh_Viewer(HWND hDlg, UINT message, WPARAM
 				return 1;
 			}
 
-			/*if (App->CLSB_Model->Render_Type == Enums::Render_Brushes)
-			{
-				App->CLSB_Ogre_Setup->RenderListener->Selected_Brush_Index = Index;
-				App->CLSB_Ogre_Setup->RenderListener->Selected_Group_Index = App->CLSB_Model->B_Brush[Index]->Group_Index;
-			}
-
-			if (App->CLSB_Model->Render_Type == Enums::Render_Groups)
-			{
-				App->CLSB_Ogre_Setup->RenderListener->Selected_Group = Index;
-			}*/
-
 			// ------------------- Ogre
 			if (App->CL_Mesh_Mgr->Selected_Render_Mode == Enums::Render_Ogre)
 			{
-				//App->CL_Mesh_Mgr->Compiled_List_Index = Index;
+				App->CL_Mesh_Mgr->Ogre_List_Index = Index;
 			}
 
 			// ------------------- Groups
 			if (App->CL_Mesh_Mgr->Selected_Render_Mode == Enums::Render_Groups)
 			{
-				//App->CLSB_Mesh_Mgr->Groups_List_Index = Index;
+				App->CL_Mesh_Mgr->Groups_List_Index = Index;
 			}
 
 			// ------------------- Brushes
@@ -1305,11 +1264,6 @@ LRESULT CALLBACK CL64_Mesh_Mgr::Proc_Mesh_Viewer(HWND hDlg, UINT message, WPARAM
 					//EnableWindow(GetDlgItem(hDlg, IDC_BTJUSTBRUSH), true);
 					//EnableWindow(GetDlgItem(hDlg, IDC_BT_LOOKAT), true);
 				}
-
-				//if (Index == 3) // No Render
-				//{
-				//	App->CLSB_Mesh_Mgr->Set_RenderMode_NoRender();
-				//}
 			}
 			}
 
@@ -1368,9 +1322,8 @@ void CL64_Mesh_Mgr::Update_Brush_List(HWND hDlg)
 			Count++;
 		}
 
-		//Update_World_Model_Info(hDlg);
-		//UpdateBrushData(hDlg, App->CLSB_Mesh_Mgr->Compiled_List_Index);
-		//SendDlgItemMessage(hDlg, IDC_LISTBRUSHES, LB_SETCURSEL, (WPARAM)App->CLSB_Mesh_Mgr->Compiled_List_Index, (LPARAM)0);
+		UpdateBrushData(hDlg, App->CL_Mesh_Mgr->Ogre_List_Index);
+		SendDlgItemMessage(hDlg, IDC_LISTBRUSHES, LB_SETCURSEL, (WPARAM)App->CL_Mesh_Mgr->Ogre_List_Index, (LPARAM)0);
 
 	}
 
@@ -1386,9 +1339,8 @@ void CL64_Mesh_Mgr::Update_Brush_List(HWND hDlg)
 			Count++;
 		}
 
-		//Update_World_Model_Info(hDlg);
-		//UpdateBrushData(hDlg, App->CLSB_Mesh_Mgr->Groups_List_Index);
-		//SendDlgItemMessage(hDlg, IDC_LISTBRUSHES, LB_SETCURSEL, (WPARAM)App->CLSB_Mesh_Mgr->Groups_List_Index, (LPARAM)0);
+		UpdateBrushData(hDlg, App->CL_Mesh_Mgr->Groups_List_Index);
+		SendDlgItemMessage(hDlg, IDC_LISTBRUSHES, LB_SETCURSEL, (WPARAM)App->CL_Mesh_Mgr->Groups_List_Index, (LPARAM)0);
 	}
 
 	// ------------------- Brushes
@@ -1403,7 +1355,6 @@ void CL64_Mesh_Mgr::Update_Brush_List(HWND hDlg)
 			Count++;
 		}
 
-		//Update_World_Model_Info(hDlg);
 		UpdateBrushData(hDlg, Brushes_List_Index);
 		SendDlgItemMessage(hDlg, IDC_LISTBRUSHES, LB_SETCURSEL, (WPARAM)Brushes_List_Index, (LPARAM)0);
 	}

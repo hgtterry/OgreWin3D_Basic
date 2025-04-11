@@ -37,6 +37,8 @@ public:
 	CL64_Mesh_Mgr();
 	~CL64_Mesh_Mgr();
 
+	void Reset_Class();
+
 	void Start_Mesh_Viewer();
 
 	bool Update_World(int Selected);
@@ -81,6 +83,8 @@ public:
 	int IsTextureAlpha[20];
 	int mBrush_Index;
 
+	int Ogre_List_Index;
+	int Groups_List_Index;
 	int Brushes_List_Index;
 
 	int Selected_Render_Mode;
