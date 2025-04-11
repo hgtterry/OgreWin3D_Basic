@@ -95,7 +95,7 @@ public:
 	int v_Face_Data_Count;
 	Face_Data* v_Face_Data[1000];
 
-	char mBrush_Name[MAX_PATH];
+	char m_Main_Brush_Name[MAX_PATH]; // Main Brush Name not sub mesh names
 	char TextureName2[20][MAX_PATH];
 
 	HWND Mesh_Viewer_HWND;

@@ -279,3 +279,30 @@ Brush* CL64_Brush_X::Get_Brush_By_Name(const char* Name)
 	return NULL;
 }
 
+// *************************************************************************
+// *			Get_Brush_Index_By_Name:- Terry and Hazel Flanigan 2025	   *
+// *************************************************************************
+int CL64_Brush_X::Get_Brush_Index_By_Name(const char* Name)
+{
+	int Count = 0;
+	int Result = 1;
+	Brush* b;
+
+	BrushList* pList = App->CL_Level->Level_GetBrushes(App->CL_Doc->pLevel);
+
+	b = pList->First;
+	while (b != NULL)
+	{
+		Result = strcmp(b->Name, Name);
+		if (Result == 0)
+		{
+			return Count;
+		}
+
+		b = b->Next;
+		Count++;
+	}
+
+	return -1;
+}
+

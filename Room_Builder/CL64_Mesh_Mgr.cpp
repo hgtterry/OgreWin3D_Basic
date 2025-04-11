@@ -42,7 +42,7 @@ CL64_Mesh_Mgr::CL64_Mesh_Mgr()
 	Actual_Brush_Index = 0;
 	ActualFaceCount = 0;
 	mBrush_Index = 0;
-	mBrush_Name[0] = 0;
+	m_Main_Brush_Name[0] = 0;
 
 	Mesh_Viewer_HWND = nullptr;
 
@@ -322,7 +322,8 @@ bool CL64_Mesh_Mgr::Brush_Decode_List(BrushList* BList, signed int SubBrush)
 	{
 		if (pBrush->GroupId != 1)
 		{
-			strcpy(mBrush_Name, pBrush->Name);
+			// Get Main Brush Name not sub brushes 
+			strcpy(m_Main_Brush_Name, pBrush->Name);
 
 			bool isFirstBrush = (mSubBrushCount == 0 && (pBrush->Flags & 1)) || (pBrush->Flags & 1024);
 			if (isFirstBrush && SubBrush == 0)
@@ -421,9 +422,18 @@ bool CL64_Mesh_Mgr::HandleCSGBrush(const Brush* b, int Actual_Brush_Index)
 bool CL64_Mesh_Mgr::Brush_FaceList_Create(const Brush* b, const FaceList* pList, int BrushCount, int SubBrushCount, int Actual_Brush_Index)
 {
 	App->CL_Editor_Com->Create_Brush_XX(App->CL_Editor_Com->BrushCount);
-	App->CL_Editor_Com->B_Brush[App->CL_Editor_Com->BrushCount]->Group_Index = mBrush_Index;
-	strcpy(App->CL_Editor_Com->B_Brush[App->CL_Editor_Com->BrushCount]->Brush_Name, mBrush_Name);
-	
+	strcpy(App->CL_Editor_Com->B_Brush[App->CL_Editor_Com->BrushCount]->Brush_Name, m_Main_Brush_Name);
+
+	// Get Brush Index
+	int Index = App->CL_Brush_X->Get_Brush_Index_By_Name(m_Main_Brush_Name);
+	if (Index == -1)
+	{
+		App->Say("Can not find Brush");
+	}
+
+	App->CL_Editor_Com->B_Brush[App->CL_Editor_Com->BrushCount]->Group_Index = Index;
+
+
 	m_Total_Faces = m_Total_Faces + pList->NumFaces;
 
 	int i, j, k, num_faces, num_verts, num_mats, num_chars, curnum_verts;
