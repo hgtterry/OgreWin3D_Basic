@@ -81,8 +81,7 @@ public:
 	int Actual_Brush_Index;
 	int mAdjusedIndex_Store[500];
 	int IsTextureAlpha[20];
-	int mBrush_Index;
-
+	
 	int Ogre_List_Index;
 	int Groups_List_Index;
 	int Brushes_List_Index;
@@ -108,6 +107,6 @@ private:
 	void UpdateBrushData(HWND hDlg, int Index);
 
 	bool flag_Mesh_Viewer_Active;
-
+	bool flag_Select_Brush;
 };
 

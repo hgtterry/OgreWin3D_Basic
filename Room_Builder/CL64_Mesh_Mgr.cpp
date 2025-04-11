@@ -41,7 +41,6 @@ CL64_Mesh_Mgr::CL64_Mesh_Mgr()
 	mTextureCount = 0;
 	Actual_Brush_Index = 0;
 	ActualFaceCount = 0;
-	mBrush_Index = 0;
 	m_Main_Brush_Name[0] = 0;
 
 	Mesh_Viewer_HWND = nullptr;
@@ -49,6 +48,7 @@ CL64_Mesh_Mgr::CL64_Mesh_Mgr()
 	memset(mAdjusedIndex_Store, 0, 500);
 
 	flag_Mesh_Viewer_Active = 0;
+	flag_Select_Brush = 0;
 
 	Ogre_List_Index = 0;
 	Groups_List_Index = 0;
@@ -328,7 +328,7 @@ bool CL64_Mesh_Mgr::Brush_Decode_List(BrushList* BList, signed int SubBrush)
 			bool isFirstBrush = (mSubBrushCount == 0 && (pBrush->Flags & 1)) || (pBrush->Flags & 1024);
 			if (isFirstBrush && SubBrush == 0)
 			{
-				mBrush_Index = mBrushCount;
+				
 			}
 
 			if (!Brush_Create(pBrush, Actual_Brush_Index))
@@ -974,7 +974,7 @@ LRESULT CALLBACK CL64_Mesh_Mgr::Proc_Mesh_Viewer(HWND hDlg, UINT message, WPARAM
 		SendDlgItemMessage(hDlg, IDC_LISTDATA, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_LT_WORLDINFO, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
-		//SendDlgItemMessage(hDlg, IDC_BTJUSTBRUSH, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_SELECT_BRUSH, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		//SendDlgItemMessage(hDlg, IDC_BT_LOOKAT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
@@ -1072,142 +1072,38 @@ LRESULT CALLBACK CL64_Mesh_Mgr::Proc_Mesh_Viewer(HWND hDlg, UINT message, WPARAM
 			return CDRF_DODEFAULT;
 		}
 
-		/*if (some_item->idFrom == IDC_BT_PICKSELECT && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDC_BT_SELECT_BRUSH)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CLSB_Mesh_Mgr->Picking_Active_Flag);
+			App->Custom_Button_Toggle(item, App->CL_Mesh_Mgr->flag_Select_Brush);
 			return CDRF_DODEFAULT;
-		}*/
-
-		/*if (some_item->idFrom == IDC_BT_SHOWDATA && some_item->code == NM_CUSTOMDRAW)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CLSB_Mesh_Mgr->Show_Data_Flag);
-			return CDRF_DODEFAULT;
-		}*/
+		}
 
 		return CDRF_DODEFAULT;
 	}
 
 	case WM_COMMAND:
 
-		/*if (LOWORD(wParam) == IDC_BT_CONVERT)
+		if (LOWORD(wParam) == IDC_BT_SELECT_BRUSH)
 		{
-			App->CLSB_Mesh_Mgr->WE_Convert_All_Texture_Groups();
-			return TRUE;
-		}*/
-
-		/*if (LOWORD(wParam) == IDC_BT_PICKSELECT)
-		{
-			if (App->CLSB_Ogre_Setup->OgreListener->GD_Selection_Mode == 1)
+			if (App->CL_Mesh_Mgr->flag_Select_Brush == 1)
 			{
-				App->CLSB_Ogre_Setup->OgreListener->GD_Selection_Mode = 0;
-				App->CLSB_Mesh_Mgr->Picking_Active_Flag = 0;
+				App->CL_Mesh_Mgr->flag_Select_Brush = 0;
+				App->CL_Doc->ResetAllSelections();
+				App->CL_Doc->UpdateSelected();
+				App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
 			}
 			else
 			{
-				App->CLSB_Ogre_Setup->OgreListener->GD_Selection_Mode = 1;
-				App->CLSB_Mesh_Mgr->Picking_Active_Flag = 1;
+				int Brush_Index = App->CL_Editor_Com->B_Brush[App->CL_Mesh_Mgr->Brushes_List_Index]->Group_Index;
+				
+				App->CL_Mesh_Mgr->flag_Select_Brush = 1;
+				App->CL_Properties_Brushes->OnSelchangeBrushlist(Brush_Index, true);
 			}
-			return TRUE;
-		}*/
-
-		/*if (LOWORD(wParam) == IDC_BT_SHOWDATA)
-		{
-			if (App->CLSB_ImGui->Show_Face_Selection == 1)
-			{
-				App->CLSB_ImGui->Show_Face_Selection = 0;
-				App->CLSB_Mesh_Mgr->Show_Data_Flag = 0;
-				App->CLSB_FileView->Show_FileView(1);
-			}
-			else
-			{
-				App->CLSB_ImGui->Show_Face_Selection = 1;
-				App->CLSB_Mesh_Mgr->Show_Data_Flag = 1;
-				App->CLSB_FileView->Show_FileView(0);
-			}
-			return TRUE;
-		}*/
-
-
-		/*if (LOWORD(wParam) == IDC_BT_TEXTUREIDPLUSE)
-		{
-			App->CLSB_Ogre->RenderListener->TextureID++;
-
-			char buf[MAX_PATH];
-			sprintf(buf, "%i %s", App->CLSB_Ogre->RenderListener->TextureID, App->CLSB_Mesh_Mgr->TextureName2[App->CLSB_Ogre->RenderListener->TextureID]);
-			SetDlgItemText(hDlg, IDC_ST_TEXTURE, (LPCTSTR)buf);
 
 			return TRUE;
 		}
-
-		if (LOWORD(wParam) == IDC_BT_TEXTUREIDMINUS)
-		{
-			App->CLSB_Ogre->RenderListener->TextureID--;
-
-			char buf[MAX_PATH];
-			sprintf(buf, "%i %s", App->CLSB_Ogre->RenderListener->TextureID, App->CLSB_Mesh_Mgr->TextureName2[App->CLSB_Ogre->RenderListener->TextureID]);
-			SetDlgItemText(hDlg, IDC_ST_TEXTURE, (LPCTSTR)buf);
-
-			return TRUE;
-		}*/
-
-		/*if (LOWORD(wParam) == IDC_BT_MESH)
-		{
-			HWND Temp = GetDlgItem(hDlg, IDC_BT_MESH);
-
-			if (App->CLSB_Ogre_Setup->RenderListener->ShowFaces == 1)
-			{
-				App->CLSB_Ogre_Setup->RenderListener->ShowFaces = 0;
-				SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshOff_Bmp);
-			}
-			else
-			{
-				App->CLSB_Ogre_Setup->RenderListener->ShowFaces = 1;
-				SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshOn_Bmp);
-			}
-
-			return TRUE;
-		}*/
-
-		/*if (LOWORD(wParam) == IDC_BT_LOOKAT)
-		{
-			App->CLSB_Mesh_Mgr->Set_BBox_Selected_Brush(App->CLSB_Ogre_Setup->RenderListener->Selected_Brush_Index);
-			App->CLSB_Ogre_Setup->mCamera->lookAt(Ogre::Vector3(App->CLSB_Model->Sel_Brush_Centre.x, App->CLSB_Model->Sel_Brush_Centre.y, App->CLSB_Model->Sel_Brush_Centre.z));
-			return TRUE;
-		}*/
-
-		/*if (LOWORD(wParam) == IDC_BTJUSTBRUSH)
-		{
-			if (App->CLSB_Model->Render_Type == Enums::Render_Brushes)
-			{
-				if (App->CLSB_Ogre_Setup->RenderListener->Render_Just_Brush == 1)
-				{
-					App->CLSB_Ogre_Setup->RenderListener->Render_Just_Brush = 0;
-				}
-				else
-				{
-					App->CLSB_Ogre_Setup->RenderListener->Render_Just_Brush = 1;
-				}
-			}
-
-			if (App->CLSB_Model->Render_Type == Enums::Render_Groups)
-			{
-				if (App->CLSB_Ogre_Setup->RenderListener->ShowOnlySubMesh == 1)
-				{
-					App->CLSB_Ogre_Setup->RenderListener->ShowOnlySubMesh = 0;
-				}
-				else
-				{
-					App->CLSB_Ogre_Setup->RenderListener->ShowOnlySubMesh = 1;
-				}
-			}
-
-			App->CLSB_Ogre_Setup->RenderFrame();
-
-			return TRUE;
-		}*/
-
+		
 		if (LOWORD(wParam) == IDC_LISTBRUSHES)
 		{
 			int Index = 0;
@@ -1235,6 +1131,12 @@ LRESULT CALLBACK CL64_Mesh_Mgr::Proc_Mesh_Viewer(HWND hDlg, UINT message, WPARAM
 			{
 				App->CL_Mesh_Mgr->Brushes_List_Index = Index;
 				App->CL_Ogre->OGL_Listener->Selected_Brush_Index = Index;
+
+				if (App->CL_Mesh_Mgr->flag_Select_Brush == 1)
+				{
+					int Brush_Index = App->CL_Editor_Com->B_Brush[Index]->Group_Index;
+					App->CL_Properties_Brushes->OnSelchangeBrushlist(Brush_Index, true);
+				}
 			}
 
 			App->CL_Mesh_Mgr->UpdateBrushData(hDlg, Index);

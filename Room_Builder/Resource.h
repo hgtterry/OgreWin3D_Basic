@@ -238,6 +238,7 @@
 #define IDC_BT_ARCHSOLID                1162
 #define IDC_BT_COPY_TEXTINFO            1162
 #define IDC_BT_MAINENVIRONMENT          1162
+#define IDC_BT_SELECT_BRUSH             1162
 #define IDC_BUTTON2                     1163
 #define IDC_BT_BRUSH_DIMENSIONS         1163
 #define IDC_BT_TOP_RIGHT                1163
@@ -396,7 +397,6 @@
 #define IDC_BT_MAP_EDITOR               1286
 #define IDC_LISTDATA                    1287
 #define IDC_LT_WORLDINFO                1288
-#define IDC_COMBO1                      1289
 #define IDC_CB_RENDERMODE               1289
 #define ID_DEBUG_GENERAL                32771
 #define ID_TEMPLATES_INSERT             32772
