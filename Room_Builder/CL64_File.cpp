@@ -461,6 +461,9 @@ void CL64_File::Set_Editor()
 		App->CL_Editor_Scene->Show_Entities(false);
 	}
 
+	App->CL_Mesh_Mgr->Selected_Render_Mode = Enums::Render_Ogre;
+	App->CL_Camera->Camera_Textured();
+
 	App->CL_Ogre->RenderFrame(7);
 
 }

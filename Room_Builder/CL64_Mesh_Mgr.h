@@ -107,5 +107,7 @@ private:
 	void Update_Brush_List(HWND hDlg);
 	void UpdateBrushData(HWND hDlg, int Index);
 
+	bool flag_Mesh_Viewer_Active;
+
 };
 

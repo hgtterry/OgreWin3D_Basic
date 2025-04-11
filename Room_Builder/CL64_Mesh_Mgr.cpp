@@ -48,6 +48,8 @@ CL64_Mesh_Mgr::CL64_Mesh_Mgr()
 
 	memset(mAdjusedIndex_Store, 0, 500);
 
+	flag_Mesh_Viewer_Active = 0;
+
 	Ogre_List_Index = 0;
 	Groups_List_Index = 0;
 	Brushes_List_Index = 0;
@@ -73,7 +75,18 @@ CL64_Mesh_Mgr::~CL64_Mesh_Mgr()
 // *************************************************************************
 void CL64_Mesh_Mgr::Reset_Class()
 {
-	
+	App->CL_Mesh_Mgr->Selected_Render_Mode = Enums::Render_Ogre;
+	App->CL_Camera->Camera_Textured();
+
+	if (flag_Mesh_Viewer_Active == 1)
+	{
+		flag_Mesh_Viewer_Active = 0;
+		EndDialog(Mesh_Viewer_HWND, LOWORD(0));
+	}
+
+	Ogre_List_Index = 0;
+	Groups_List_Index = 0;
+	Brushes_List_Index = 0;
 }
 
 // *************************************************************************
@@ -929,11 +942,12 @@ int CL64_Mesh_Mgr::Get_Adjusted_Index(int RealIndex)
 // *************************************************************************
 void CL64_Mesh_Mgr::Start_Mesh_Viewer()
 {
-	//if (Brush_Viewer_Dialog_Active == 0)
-	//{
+	if (App->CL_Mesh_Mgr->flag_Mesh_Viewer_Active == 0 && App->CL_Brush->Get_Brush_Count() > 0)
+	{
+		App->CL_Mesh_Mgr->flag_Mesh_Viewer_Active = 1;
 		Mesh_Viewer_HWND = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_BRUSH_VIEWER, App->MainHwnd, (DLGPROC)Proc_Mesh_Viewer);
-	//	Brush_Viewer_Dialog_Active = 1;
-	//}
+
+	}
 }
 
 // *************************************************************************
@@ -1041,21 +1055,21 @@ LRESULT CALLBACK CL64_Mesh_Mgr::Proc_Mesh_Viewer(HWND hDlg, UINT message, WPARAM
 			return CDRF_DODEFAULT;
 		}*/
 
-		/*if (some_item->idFrom == IDOK && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDCANCEL)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
 			return CDRF_DODEFAULT;
 		}
 
-		if (some_item->idFrom == IDC_BT_PICKSELECT && some_item->code == NM_CUSTOMDRAW)
+		/*if (some_item->idFrom == IDC_BT_PICKSELECT && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Toggle(item, App->CLSB_Mesh_Mgr->Picking_Active_Flag);
 			return CDRF_DODEFAULT;
-		}
+		}*/
 
-		if (some_item->idFrom == IDC_BT_SHOWDATA && some_item->code == NM_CUSTOMDRAW)
+		/*if (some_item->idFrom == IDC_BT_SHOWDATA && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Toggle(item, App->CLSB_Mesh_Mgr->Show_Data_Flag);
@@ -1272,14 +1286,17 @@ LRESULT CALLBACK CL64_Mesh_Mgr::Proc_Mesh_Viewer(HWND hDlg, UINT message, WPARAM
 
 		if (LOWORD(wParam) == IDOK)
 		{
-			//App->CLSB_Mesh_Mgr->Brush_Viewer_Dialog_Active = 0;
+			App->CL_Mesh_Mgr->flag_Mesh_Viewer_Active = 0;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == IDCANCEL)
 		{
-			//App->CLSB_Mesh_Mgr->Brush_Viewer_Dialog_Active = 0;
+			App->CL_Mesh_Mgr->Selected_Render_Mode = Enums::Render_Ogre;
+			App->CL_Camera->Camera_Textured();
+
+			App->CL_Mesh_Mgr->flag_Mesh_Viewer_Active = 0;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
@@ -1359,15 +1376,6 @@ void CL64_Mesh_Mgr::Update_Brush_List(HWND hDlg)
 		SendDlgItemMessage(hDlg, IDC_LISTBRUSHES, LB_SETCURSEL, (WPARAM)Brushes_List_Index, (LPARAM)0);
 	}
 
-	// ------------------- No Render
-	/*if (App->CLSB_Mesh_Mgr->Selected_Render_Mode == 3)
-	{
-		sprintf(buf, "%s", "No Render");
-		SendDlgItemMessage(hDlg, IDC_LISTBRUSHES, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
-
-		Update_World_Model_Info(hDlg);
-		UpdateBrushData(hDlg, -1);
-	}*/
 }
 
 // *************************************************************************
