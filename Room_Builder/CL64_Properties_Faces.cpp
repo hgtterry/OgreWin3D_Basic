@@ -460,7 +460,7 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 					App->CL_Face->Face_SetTextureRotate(App->CL_Properties_Faces->m_Selected_Face, pAngle);
 				}
 
-				App->CL_Properties_Faces->Update();
+				App->CL_Properties_Faces->Update_Faces();
 				
 				break;
 			}
@@ -481,7 +481,7 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 					App->CL_Face->Face_SetTextureRotate(App->CL_Properties_Faces->m_Selected_Face, pAngle);
 				}
 
-				App->CL_Properties_Faces->Update();
+				App->CL_Properties_Faces->Update_Faces();
 				
 				break;
 			}
@@ -517,7 +517,7 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 					App->CL_Face->Face_SetTextureShift(App->CL_Properties_Faces->m_Selected_Face, pXOffset, yOff);
 				}
 
-				App->CL_Properties_Faces->Update();
+				App->CL_Properties_Faces->Update_Faces();
 				
 				break;
 			}
@@ -544,7 +544,7 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 					App->CL_Face->Face_SetTextureShift(App->CL_Properties_Faces->m_Selected_Face, pXOffset, yOff);
 				}
 
-				App->CL_Properties_Faces->Update();
+				App->CL_Properties_Faces->Update_Faces();
 				
 				break;
 			}
@@ -576,7 +576,7 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 					App->CL_Face->Face_SetTextureShift(App->CL_Properties_Faces->m_Selected_Face, xOff, pYOffset);
 				}
 
-				App->CL_Properties_Faces->Update();
+				App->CL_Properties_Faces->Update_Faces();
 				
 				break;
 			}
@@ -599,7 +599,7 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 					App->CL_Face->Face_SetTextureShift(App->CL_Properties_Faces->m_Selected_Face, xOff, pYOffset);
 				}
 
-				App->CL_Properties_Faces->Update();
+				App->CL_Properties_Faces->Update_Faces();
 				
 				break;
 			}
@@ -631,7 +631,7 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 					App->CL_Face->Face_SetTextureScale(App->CL_Properties_Faces->m_Selected_Face, pXScale, yScale);
 				}
 
-				App->CL_Properties_Faces->Update();
+				App->CL_Properties_Faces->Update_Faces();
 
 				break;
 			}
@@ -681,7 +681,7 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 					}
 				}
 	
-				App->CL_Properties_Faces->Update();
+				App->CL_Properties_Faces->Update_Faces();
 
 				break;
 			}
@@ -713,7 +713,7 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 					App->CL_Face->Face_SetTextureScale(App->CL_Properties_Faces->m_Selected_Face, xScale, pYScale);
 				}
 
-				App->CL_Properties_Faces->Update();
+				App->CL_Properties_Faces->Update_Faces();
 
 				break;
 			}
@@ -763,7 +763,7 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 					}
 				}
 
-				App->CL_Properties_Faces->Update();
+				App->CL_Properties_Faces->Update_Faces();
 
 				break;
 			}
@@ -960,7 +960,7 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 			}
 
 			App->CL_Properties_Faces->UpdateDialog(hDlg);
-			App->CL_Properties_Faces->Update();
+			App->CL_Properties_Faces->Update_Faces();
 
 			return TRUE;
 		}
@@ -980,7 +980,7 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 			}
 
 			App->CL_Properties_Faces->UpdateDialog(hDlg);
-			App->CL_Properties_Faces->Update();
+			App->CL_Properties_Faces->Update_Faces();
 
 			return TRUE;
 		}
@@ -1020,7 +1020,7 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 			App->CL_Face->Face_SetTextureScale(App->CL_Properties_Faces->m_Selected_Face, App->CL_Properties_Faces->m_TextureXScale, App->CL_Properties_Faces->m_TextureYScale);
 			
 			App->CL_Properties_Faces->UpdateDialog(hDlg);
-			App->CL_Properties_Faces->Update();
+			App->CL_Properties_Faces->Update_Faces();
 
 			return TRUE;
 		}
@@ -1073,9 +1073,9 @@ void CL64_Properties_Faces::Update_Face_Info(HWND hDlg)
 }
 
 // *************************************************************************
-// *			Update:- Terry and Hazel Flanigan 2025                     *
+// *			Update_Faces:- Terry and Hazel Flanigan 2025               *
 // *************************************************************************
-void CL64_Properties_Faces::Update()
+void CL64_Properties_Faces::Update_Faces()
 {
 	if (App->CL_Top_Tabs->flag_All_Faces == 1)
 	{

@@ -668,36 +668,38 @@ bool CL64_Mesh_Mgr::WE_Convert_All_Texture_Groups() {
 	Delete_Group_Brushes();
 	strcpy(App->CL_Editor_Com->JustName, "Test");
 	//App->CL_Editor_Com->GroupCount = mTextureCount;
-
+	//Debug
 	for (int count = 0; count < mTextureCount; ++count)
 	{
 		int64_t faceCount = WE_Get_Vertice_Count(count);
 
 		//if (faceCount > 0)
 		{
-			
-			App->CL_Editor_Com->Create_Mesh_Group(count);
+			//if (faceCount > 0)
+			{
+				App->CL_Editor_Com->Create_Mesh_Group(Group_Count);
+			}
 			
 			// Get Group
 			if (faceCount > 0)
 			{
-				auto& group = App->CL_Editor_Com->Group[count];
+				auto& group = App->CL_Editor_Com->Group[Group_Count];
 
-				strcpy(group->GroupName, TextureName2[count]);
-				strcpy(group->MaterialName, TextureName2[count]);
+				strcpy(group->GroupName, TextureName2[Group_Count]);
+				strcpy(group->MaterialName, TextureName2[Group_Count]);
 
-				int trueIndex = App->CL_TXL_Editor->GetIndex_From_Name(TextureName2[count]);
+				int trueIndex = App->CL_TXL_Editor->GetIndex_From_Name(TextureName2[Group_Count]);
 				strcpy(group->Text_FileName, App->CL_TXL_Editor->Texture_List[trueIndex]->FileName);
 
 				group->Has_Alpha = App->CL_TXL_Editor->Texture_List[trueIndex]->Has_Alpha;
-				group->MaterialIndex = count;
+				group->MaterialIndex = Group_Count;
 				group->vertex_Data.resize(faceCount * 3);
 				group->Normal_Data.resize(faceCount * 3);
 				group->MapCord_Data.resize(faceCount * 3);
 				group->Face_Data.resize(faceCount);
 				group->FaceIndex_Data.resize(faceCount * 3);
 
-				WE_Convert_To_Texture_Group(count);
+				WE_Convert_To_Texture_Group(Group_Count);
 				totalVertices += faceCount;
 			}
 
@@ -706,6 +708,12 @@ bool CL64_Mesh_Mgr::WE_Convert_All_Texture_Groups() {
 				Group_Count++;
 			}
 		}
+	}
+	
+	bool Get_Call = 1;
+	if (Get_Call == 1)
+	{
+		App->Say("Rebuild Called");
 	}
 
 	App->CL_Editor_Com->GroupCount = Group_Count;

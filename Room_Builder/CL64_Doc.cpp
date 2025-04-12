@@ -226,10 +226,6 @@ void CL64_Doc::OnBrushSubtractfromworld()
         App->CL_Doc->CurBrush = nb;
         App->CL_Brush_X->Set_Brush_Faces_Name(App->CL_Doc->CurBrush);
     }
-
-    //App->CLSB_Doc->UpdateSelected();
-    App->CL_Doc->UpdateAllViews(Enums::UpdateViews_All);
-
 }
 
 // *************************************************************************
@@ -273,11 +269,11 @@ void CL64_Doc::Brush_Add_To_world()
 
 	if (!App->CL_Brush->Brush_IsHollow(nb) && !App->CL_Brush->Brush_IsMulti(nb))
 	{
-		App->CL_Doc->UpdateAllViews(Enums::UpdateViews_All);
+		//App->CL_Doc->UpdateAllViews(Enums::UpdateViews_All);
 	}
 	else
 	{
-		App->CL_Doc->UpdateAllViews(Enums::UpdateViews_All);
+		//App->CL_Doc->UpdateAllViews(Enums::UpdateViews_All);
 	}
 
     App->CL_Doc->CurBrush = nb;

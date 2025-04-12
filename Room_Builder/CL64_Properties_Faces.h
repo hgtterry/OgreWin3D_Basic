@@ -42,7 +42,7 @@ public:
 private:
 	static LRESULT CALLBACK Proc_FaceDialog(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
-	void Update();
+	void Update_Faces();
 	void Update_Face_List(HWND hDlg);
 	void Update_Face_Members();
 	void UpdateDialog(HWND hDlg);
