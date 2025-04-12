@@ -168,7 +168,10 @@ bool CL64_Mesh_Mgr::Update_World(int selected)
 	}
 	else
 	{
-		App->CL_Mesh_Mgr->World_Node->setVisible(false);
+		if (App->CL_Mesh_Mgr->World_Ent && App->CL_Mesh_Mgr->World_Node)
+		{
+			App->CL_Mesh_Mgr->World_Node->setVisible(false);
+		}
 	}
 
 	return true;
@@ -669,7 +672,9 @@ bool CL64_Mesh_Mgr::WE_Convert_All_Texture_Groups() {
 	strcpy(App->CL_Editor_Com->JustName, "Test");
 	//App->CL_Editor_Com->GroupCount = mTextureCount;
 	//Debug
-	for (int count = 0; count < mTextureCount; ++count)
+	int count = 0;
+
+	while (count < mTextureCount)
 	{
 		int64_t faceCount = WE_Get_Vertice_Count(count);
 
@@ -708,6 +713,8 @@ bool CL64_Mesh_Mgr::WE_Convert_All_Texture_Groups() {
 				Group_Count++;
 			}
 		}
+
+		count++;
 	}
 	
 	bool Get_Call = 0;

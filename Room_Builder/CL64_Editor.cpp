@@ -158,38 +158,41 @@ void CL64_Editor_Com::Preview_Mode(void)
 		App->CL_Physics->Clear_Trimesh();
 	}
 
-	App->CL_Physics->Create_New_Trimesh(App->CL_Mesh_Mgr->World_Ent, App->CL_Mesh_Mgr->World_Node);
-	App->CL_Ogre->Bullet_Debug_Listener->flag_Render_Debug_Flag = 1;
-	
-	flag_PreviewMode_Running = 1;
+	if (App->CL_Mesh_Mgr->World_Ent && App->CL_Mesh_Mgr->World_Node)
+	{
+		App->CL_Physics->Create_New_Trimesh(App->CL_Mesh_Mgr->World_Ent, App->CL_Mesh_Mgr->World_Node);
+		App->CL_Ogre->Bullet_Debug_Listener->flag_Render_Debug_Flag = 1;
 
-	Parent_hWnd = GetParent(App->CL_Editor_Map->Bottom_Right_Hwnd);
+		flag_PreviewMode_Running = 1;
 
-	App->CL_Properties_Tabs->Enable_Tabs_Dlg(false);
+		Parent_hWnd = GetParent(App->CL_Editor_Map->Bottom_Right_Hwnd);
 
-	App->CL_Ogre->OGL_Listener->flag_Show_Selected_Brush = 0;
-	App->CL_Ogre->OGL_Listener->flag_Show_Selected_Face = 0;
+		App->CL_Properties_Tabs->Enable_Tabs_Dlg(false);
 
-	//SetCursorPos(App->CursorPosX, App->CursorPosY);
+		App->CL_Ogre->OGL_Listener->flag_Show_Selected_Brush = 0;
+		App->CL_Ogre->OGL_Listener->flag_Show_Selected_Face = 0;
 
-	int cx = GetSystemMetrics(SM_CXSCREEN);
-	int cy = GetSystemMetrics(SM_CYSCREEN);
+		//SetCursorPos(App->CursorPosX, App->CursorPosY);
 
-	SetWindowPos(App->CL_Editor_Map->Bottom_Right_Hwnd, HWND_TOP, 0, 0, 0, 0, SWP_NOSIZE | SWP_NOZORDER);
-	SetWindowPos(App->CL_Editor_Map->Bottom_Right_Hwnd, NULL, 0, 0, cx, cy, SWP_NOZORDER);
-	SetParent(App->CL_Editor_Map->Bottom_Right_Hwnd, NULL);
+		int cx = GetSystemMetrics(SM_CXSCREEN);
+		int cy = GetSystemMetrics(SM_CYSCREEN);
 
-	SetWindowPos(App->ViewGLhWnd, NULL, 0, 0, cx, cy, SWP_NOZORDER);
+		SetWindowPos(App->CL_Editor_Map->Bottom_Right_Hwnd, HWND_TOP, 0, 0, 0, 0, SWP_NOSIZE | SWP_NOZORDER);
+		SetWindowPos(App->CL_Editor_Map->Bottom_Right_Hwnd, NULL, 0, 0, cx, cy, SWP_NOZORDER);
+		SetParent(App->CL_Editor_Map->Bottom_Right_Hwnd, NULL);
 
-	App->CL_Ogre->mWindow->resize(cx, cy);
+		SetWindowPos(App->ViewGLhWnd, NULL, 0, 0, cx, cy, SWP_NOZORDER);
 
-	App->CL_Ogre->mWindow->windowMovedOrResized();
-	App->CL_Ogre->mCamera->setAspectRatio((Ogre::Real)App->CL_Ogre->mWindow->getWidth() / (Ogre::Real)App->CL_Ogre->mWindow->getHeight());
+		App->CL_Ogre->mWindow->resize(cx, cy);
 
-	App->CL_ImGui->flag_Show_Press_Excape = 1;
-	App->CL_ImGui->flag_Show_Camera_Mode = 1;
+		App->CL_Ogre->mWindow->windowMovedOrResized();
+		App->CL_Ogre->mCamera->setAspectRatio((Ogre::Real)App->CL_Ogre->mWindow->getWidth() / (Ogre::Real)App->CL_Ogre->mWindow->getHeight());
 
-	Root::getSingletonPtr()->renderOneFrame();
+		App->CL_ImGui->flag_Show_Press_Excape = 1;
+		App->CL_ImGui->flag_Show_Camera_Mode = 1;
+
+		Root::getSingletonPtr()->renderOneFrame();
+	}
 
 }
 
@@ -229,13 +232,12 @@ void CL64_Editor_Com::Editor_Mode(void)
 void CL64_Editor_Com::Clear_Level(bool FromFile)
 {
 	Reset_Class(); // This Class
-
+	
 	App->CL_FileView->Reset_Class();
-
+	
 	App->CL_Doc->ResetAllSelectedFaces();
 	App->CL_Doc->SelectAll();
 	App->CL_Doc->DeleteCurrentThing();
-
 	App->CL_Ogre->Camera_Reset_Zero();
 	
 	App->CL_Properties_Textures->Reset_Class();
@@ -246,7 +248,6 @@ void CL64_Editor_Com::Clear_Level(bool FromFile)
 	
 	App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_Free;
 	
-
 	if (FromFile == false) // Not from a file load
 	{
 		App->CL_Editor_Map->Reset_Class();
@@ -261,7 +262,10 @@ void CL64_Editor_Com::Clear_Level(bool FromFile)
 
 		App->CL_Properties_Templates->Enable_Insert_Button(true);
 
-		App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_Model;
+		if (App->CL_Mesh_Mgr->World_Ent && App->CL_Mesh_Mgr->World_Node)
+		{
+			App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_Model;
+		}
 
 		App->CL_Camera->Reset_View_Editor();
 	

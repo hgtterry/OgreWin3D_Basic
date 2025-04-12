@@ -302,7 +302,7 @@ void CL64_File::Start_Load(bool Use_Open_Dialog)
 	}
 	
 	App->CL_Editor_Com->Clear_Level(true);
-
+	
 	bool Test = Open_3dt_File();
 	if (Test == true)
 	{
@@ -434,6 +434,7 @@ bool CL64_File::Load_File(const char* FileName)
 // *************************************************************************
 void CL64_File::Set_Editor()
 {
+	
 	App->Set_Title(App->CL_Doc->mDoc_MTF_PathAndFile);
 	App->CL_Top_Tabs->Enable_Select_Button(true, 1);
 	App->CL_Properties_Templates->Enable_Insert_Button(false);
@@ -451,7 +452,7 @@ void CL64_File::Set_Editor()
 
 	App->CL_Doc->Editor_Set_Dlgs(Enums::Editor_Dlgs_First_Brush);
 	App->CL_Properties_Brushes->Set_Dlg_Brush_Options_Buttons(false);
-
+	
 
 	if (App->Development == 1)
 	{
@@ -460,10 +461,11 @@ void CL64_File::Set_Editor()
 		App->CL_Com_Environments->Create_Test_Environment();
 		App->CL_Editor_Scene->Show_Entities(false);
 	}
-
+	
 	App->CL_Mesh_Mgr->Selected_Render_Mode = Enums::Render_Ogre;
+	
 	App->CL_Camera->Camera_Textured();
-
+	
 	App->CL_Ogre->RenderFrame(7);
 
 }

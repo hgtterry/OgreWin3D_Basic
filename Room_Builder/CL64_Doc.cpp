@@ -351,7 +351,10 @@ void CL64_Doc::UpdateAllViews(int Update_Mode)
         }
         else
         {
-            App->CL_Mesh_Mgr->World_Node->setVisible(false);
+            if (App->CL_Mesh_Mgr->World_Ent && App->CL_Mesh_Mgr->World_Node)
+            {
+                App->CL_Mesh_Mgr->World_Node->setVisible(false);
+            }
         }
     }
 
@@ -369,7 +372,10 @@ void CL64_Doc::UpdateAllViews(int Update_Mode)
         }
         else
         {
-            App->CL_Mesh_Mgr->World_Node->setVisible(false);
+            if (App->CL_Mesh_Mgr->World_Ent && App->CL_Mesh_Mgr->World_Node)
+            {
+                App->CL_Mesh_Mgr->World_Node->setVisible(false);
+            }
         }
     }
 }
