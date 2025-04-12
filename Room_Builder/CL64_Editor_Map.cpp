@@ -1894,7 +1894,7 @@ void CL64_Editor_Map::On_Left_Button_Up(POINT CursorPosition)
 		//}
 		//else
 		{
-			App->CL_Doc->UpdateAllViews(Enums::UpdateViews_All);
+			//App->CL_Doc->UpdateAllViews(Enums::UpdateViews_All);
 		}
 	}
 

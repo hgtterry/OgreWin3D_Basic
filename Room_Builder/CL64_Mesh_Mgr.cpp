@@ -710,7 +710,7 @@ bool CL64_Mesh_Mgr::WE_Convert_All_Texture_Groups() {
 		}
 	}
 	
-	bool Get_Call = 1;
+	bool Get_Call = 0;
 	if (Get_Call == 1)
 	{
 		App->Say("Rebuild Called");
