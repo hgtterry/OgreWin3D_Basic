@@ -526,6 +526,9 @@ void CL64_ImGui::App_Stats_GUI(void)
 		if (ImGui::TreeNode("Render"))
 		{
 			ImGui::Separator();
+			ImGui::Text("Groups:= %i", App->CL_Editor_Com->GroupCount);
+			ImGui::Text("Brushes:= %i", App->CL_Editor_Com->BrushCount);
+
 			ImGui::Text("Render Groups:= %i", App->CL_Ogre->OGL_Listener->flag_Render_Groups);
 			ImGui::Text("Render Brushes:= %i", App->CL_Ogre->OGL_Listener->flag_Render_Brushes);
 			ImGui::Text("Render Ogre:= %i", App->CL_Ogre->OGL_Listener->flag_Render_Ogre);

@@ -759,6 +759,10 @@ bool CL64_Mesh_Mgr::WE_Convert_To_Texture_Group(int TextureID)
 	while (Count < BrushCount)
 	{
 		FaceCount = 0;
+		if (!App->CL_Editor_Com->B_Brush[Count])
+		{
+			App->Say("Brush Error");
+		}
 
 		while (FaceCount < App->CL_Editor_Com->B_Brush[Count]->Face_Count)
 		{
@@ -776,23 +780,33 @@ bool CL64_Mesh_Mgr::WE_Convert_To_Texture_Group(int TextureID)
 				Y = App->CL_Editor_Com->B_Brush[Count]->vertex_Data[A].y;
 				Z = App->CL_Editor_Com->B_Brush[Count]->vertex_Data[A].z;
 
-				App->CL_Editor_Com->Group[TextureID]->vertex_Data[vertexIndex].x = X;
-				App->CL_Editor_Com->Group[TextureID]->vertex_Data[vertexIndex].y = Y;
-				App->CL_Editor_Com->Group[TextureID]->vertex_Data[vertexIndex].z = Z;
+				if (App->CL_Editor_Com->Group[TextureID])
+				{
+					App->CL_Editor_Com->Group[TextureID]->vertex_Data[vertexIndex].x = X;
+					App->CL_Editor_Com->Group[TextureID]->vertex_Data[vertexIndex].y = Y;
+					App->CL_Editor_Com->Group[TextureID]->vertex_Data[vertexIndex].z = Z;
+				}
 
 				U = App->CL_Editor_Com->B_Brush[Count]->MapCord_Data[A].u,
 				V = App->CL_Editor_Com->B_Brush[Count]->MapCord_Data[A].v;
 
-				App->CL_Editor_Com->Group[TextureID]->MapCord_Data[vertexIndex].u = U;
-				App->CL_Editor_Com->Group[TextureID]->MapCord_Data[vertexIndex].v = V;
+				if (App->CL_Editor_Com->Group[TextureID])
+				{
+					App->CL_Editor_Com->Group[TextureID]->MapCord_Data[vertexIndex].u = U;
+					App->CL_Editor_Com->Group[TextureID]->MapCord_Data[vertexIndex].v = V;
+				}
+				
 
 				X = App->CL_Editor_Com->B_Brush[Count]->Normal_Data[A].x;
 				Y = App->CL_Editor_Com->B_Brush[Count]->Normal_Data[A].y;
 				Z = App->CL_Editor_Com->B_Brush[Count]->Normal_Data[A].z;
 
-				App->CL_Editor_Com->Group[TextureID]->Normal_Data[vertexIndex].x = X;
-				App->CL_Editor_Com->Group[TextureID]->Normal_Data[vertexIndex].y = Y;
-				App->CL_Editor_Com->Group[TextureID]->Normal_Data[vertexIndex].z = Z;
+				if (App->CL_Editor_Com->Group[TextureID])
+				{
+					App->CL_Editor_Com->Group[TextureID]->Normal_Data[vertexIndex].x = X;
+					App->CL_Editor_Com->Group[TextureID]->Normal_Data[vertexIndex].y = Y;
+					App->CL_Editor_Com->Group[TextureID]->Normal_Data[vertexIndex].z = Z;
+				}
 
 				vertexIndex++;
 
@@ -800,23 +814,32 @@ bool CL64_Mesh_Mgr::WE_Convert_To_Texture_Group(int TextureID)
 				Y = App->CL_Editor_Com->B_Brush[Count]->vertex_Data[B].y;
 				Z = App->CL_Editor_Com->B_Brush[Count]->vertex_Data[B].z;
 
-				App->CL_Editor_Com->Group[TextureID]->vertex_Data[vertexIndex].x = X;
-				App->CL_Editor_Com->Group[TextureID]->vertex_Data[vertexIndex].y = Y;
-				App->CL_Editor_Com->Group[TextureID]->vertex_Data[vertexIndex].z = Z;
+				if (App->CL_Editor_Com->Group[TextureID])
+				{
+					App->CL_Editor_Com->Group[TextureID]->vertex_Data[vertexIndex].x = X;
+					App->CL_Editor_Com->Group[TextureID]->vertex_Data[vertexIndex].y = Y;
+					App->CL_Editor_Com->Group[TextureID]->vertex_Data[vertexIndex].z = Z;
+				}
 
 				U = App->CL_Editor_Com->B_Brush[Count]->MapCord_Data[B].u,
-					V = App->CL_Editor_Com->B_Brush[Count]->MapCord_Data[B].v;
+				V = App->CL_Editor_Com->B_Brush[Count]->MapCord_Data[B].v;
 
-				App->CL_Editor_Com->Group[TextureID]->MapCord_Data[vertexIndex].u = U;
-				App->CL_Editor_Com->Group[TextureID]->MapCord_Data[vertexIndex].v = V;
+				if (App->CL_Editor_Com->Group[TextureID])
+				{
+					App->CL_Editor_Com->Group[TextureID]->MapCord_Data[vertexIndex].u = U;
+					App->CL_Editor_Com->Group[TextureID]->MapCord_Data[vertexIndex].v = V;
+				}
 
 				X = App->CL_Editor_Com->B_Brush[Count]->Normal_Data[B].x;
 				Y = App->CL_Editor_Com->B_Brush[Count]->Normal_Data[B].y;
 				Z = App->CL_Editor_Com->B_Brush[Count]->Normal_Data[B].z;
 
-				App->CL_Editor_Com->Group[TextureID]->Normal_Data[vertexIndex].x = X;
-				App->CL_Editor_Com->Group[TextureID]->Normal_Data[vertexIndex].y = Y;
-				App->CL_Editor_Com->Group[TextureID]->Normal_Data[vertexIndex].z = Z;
+				if (App->CL_Editor_Com->Group[TextureID])
+				{
+					App->CL_Editor_Com->Group[TextureID]->Normal_Data[vertexIndex].x = X;
+					App->CL_Editor_Com->Group[TextureID]->Normal_Data[vertexIndex].y = Y;
+					App->CL_Editor_Com->Group[TextureID]->Normal_Data[vertexIndex].z = Z;
+				}
 
 				vertexIndex++;
 
@@ -824,38 +847,51 @@ bool CL64_Mesh_Mgr::WE_Convert_To_Texture_Group(int TextureID)
 				Y = App->CL_Editor_Com->B_Brush[Count]->vertex_Data[C].y;
 				Z = App->CL_Editor_Com->B_Brush[Count]->vertex_Data[C].z;
 
-				App->CL_Editor_Com->Group[TextureID]->vertex_Data[vertexIndex].x = X;
-				App->CL_Editor_Com->Group[TextureID]->vertex_Data[vertexIndex].y = Y;
-				App->CL_Editor_Com->Group[TextureID]->vertex_Data[vertexIndex].z = Z;
+				if (App->CL_Editor_Com->Group[TextureID])
+				{
+					App->CL_Editor_Com->Group[TextureID]->vertex_Data[vertexIndex].x = X;
+					App->CL_Editor_Com->Group[TextureID]->vertex_Data[vertexIndex].y = Y;
+					App->CL_Editor_Com->Group[TextureID]->vertex_Data[vertexIndex].z = Z;
+				}
 
 				U = App->CL_Editor_Com->B_Brush[Count]->MapCord_Data[C].u,
 				V = App->CL_Editor_Com->B_Brush[Count]->MapCord_Data[C].v;
 
-				App->CL_Editor_Com->Group[TextureID]->MapCord_Data[vertexIndex].u = U;
-				App->CL_Editor_Com->Group[TextureID]->MapCord_Data[vertexIndex].v = V;
+				if (App->CL_Editor_Com->Group[TextureID])
+				{
+					App->CL_Editor_Com->Group[TextureID]->MapCord_Data[vertexIndex].u = U;
+					App->CL_Editor_Com->Group[TextureID]->MapCord_Data[vertexIndex].v = V;
+				}
 
 				X = App->CL_Editor_Com->B_Brush[Count]->Normal_Data[C].x;
 				Y = App->CL_Editor_Com->B_Brush[Count]->Normal_Data[C].y;
 				Z = App->CL_Editor_Com->B_Brush[Count]->Normal_Data[C].z;
 
-				App->CL_Editor_Com->Group[TextureID]->Normal_Data[vertexIndex].x = X;
-				App->CL_Editor_Com->Group[TextureID]->Normal_Data[vertexIndex].y = Y;
-				App->CL_Editor_Com->Group[TextureID]->Normal_Data[vertexIndex].z = Z;
+				if (App->CL_Editor_Com->Group[TextureID])
+				{
+					App->CL_Editor_Com->Group[TextureID]->Normal_Data[vertexIndex].x = X;
+					App->CL_Editor_Com->Group[TextureID]->Normal_Data[vertexIndex].y = Y;
+					App->CL_Editor_Com->Group[TextureID]->Normal_Data[vertexIndex].z = Z;
+				}
 
 				vertexIndex++;
 
-				App->CL_Editor_Com->Group[TextureID]->Face_Data[FacePos].a = FaceIndex;
-				FaceIndex++;
-				App->CL_Editor_Com->Group[TextureID]->Face_Data[FacePos].b = FaceIndex;
-				FaceIndex++;
-				App->CL_Editor_Com->Group[TextureID]->Face_Data[FacePos].c = FaceIndex;
-				//App->CL_Editor_Com->Group[TextureID]->Face_Data[FacePos].Brush_Index = App->CL_Editor_Com->B_Brush[Count]->Face_Data[FaceCount].Brush_Index;
+				if (App->CL_Editor_Com->Group[TextureID])
+				{
+					App->CL_Editor_Com->Group[TextureID]->Face_Data[FacePos].a = FaceIndex;
+					FaceIndex++;
+					App->CL_Editor_Com->Group[TextureID]->Face_Data[FacePos].b = FaceIndex;
+					FaceIndex++;
+					App->CL_Editor_Com->Group[TextureID]->Face_Data[FacePos].c = FaceIndex;
+					//App->CL_Editor_Com->Group[TextureID]->Face_Data[FacePos].Brush_Index = App->CL_Editor_Com->B_Brush[Count]->Face_Data[FaceCount].Brush_Index;
 
-				App->CL_Editor_Com->Group[TextureID]->FaceIndex_Data[FacePos].Index = ActualFaceCount;
-				
-				//int Brush_Index = App->CL_Editor_Com->B_Brush[Count]->Picking_Data[FaceCount].Actual_Brush_Index;
-				App->CL_Editor_Com->Group[TextureID]->Face_Data[FacePos].Brush_Index = App->CL_Editor_Com->B_Brush[Count]->Face_Data[FaceCount].Brush_Index;;
-				App->CL_Editor_Com->Group[TextureID]->Face_Data[FacePos].WE_Face_Index = App->CL_Editor_Com->B_Brush[Count]->Picking_Data[FaceCount].WE_Face_Index;
+					App->CL_Editor_Com->Group[TextureID]->FaceIndex_Data[FacePos].Index = ActualFaceCount;
+
+					//int Brush_Index = App->CL_Editor_Com->B_Brush[Count]->Picking_Data[FaceCount].Actual_Brush_Index;
+					App->CL_Editor_Com->Group[TextureID]->Face_Data[FacePos].Brush_Index = App->CL_Editor_Com->B_Brush[Count]->Face_Data[FaceCount].Brush_Index;;
+					App->CL_Editor_Com->Group[TextureID]->Face_Data[FacePos].WE_Face_Index = App->CL_Editor_Com->B_Brush[Count]->Picking_Data[FaceCount].WE_Face_Index;
+				}
+
 				FaceIndexNum++;
 				ActualFaceCount++;
 
@@ -869,8 +905,11 @@ bool CL64_Mesh_Mgr::WE_Convert_To_Texture_Group(int TextureID)
 		Count++;
 	}
 
-	App->CL_Editor_Com->Group[TextureID]->GroupVertCount = vertexIndex;
-	App->CL_Editor_Com->Group[TextureID]->GroupFaceCount = vertexIndex / 3;
+	if (App->CL_Editor_Com->Group[TextureID])
+	{
+		App->CL_Editor_Com->Group[TextureID]->GroupVertCount = vertexIndex;
+		App->CL_Editor_Com->Group[TextureID]->GroupFaceCount = vertexIndex / 3;
+	}
 
 	return 1;
 }
@@ -1284,17 +1323,20 @@ void CL64_Mesh_Mgr::Update_Brush_List(HWND hDlg)
 	// ------------------- Ogre
 	if (App->CL_Mesh_Mgr->Selected_Render_Mode == Enums::Render_Ogre)
 	{
-		int SubCount = World_Ent->getNumSubEntities();
-		int Count = 0;
-		while (Count < SubCount)
+		if (App->CL_Mesh_Mgr->World_Ent && App->CL_Mesh_Mgr->World_Node)
 		{
-			sprintf(buf, "%s %i", "Sub mesh - ", Count);
-			SendDlgItemMessage(hDlg, IDC_LISTBRUSHES, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
-			Count++;
-		}
+			int SubCount = World_Ent->getNumSubEntities();
+			int Count = 0;
+			while (Count < SubCount)
+			{
+				sprintf(buf, "%s %i", "Sub mesh - ", Count);
+				SendDlgItemMessage(hDlg, IDC_LISTBRUSHES, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+				Count++;
+			}
 
-		UpdateBrushData(hDlg, App->CL_Mesh_Mgr->Ogre_List_Index);
-		SendDlgItemMessage(hDlg, IDC_LISTBRUSHES, LB_SETCURSEL, (WPARAM)App->CL_Mesh_Mgr->Ogre_List_Index, (LPARAM)0);
+			UpdateBrushData(hDlg, App->CL_Mesh_Mgr->Ogre_List_Index);
+			SendDlgItemMessage(hDlg, IDC_LISTBRUSHES, LB_SETCURSEL, (WPARAM)App->CL_Mesh_Mgr->Ogre_List_Index, (LPARAM)0);
+		}
 
 	}
 
@@ -1344,25 +1386,28 @@ void CL64_Mesh_Mgr::UpdateBrushData(HWND hDlg, int Index)
 	// ------------------- Ogre
 	if (App->CL_Mesh_Mgr->Selected_Render_Mode == Enums::Render_Ogre)
 	{
-		World_Ent->getNumSubEntities();
+		if (App->CL_Mesh_Mgr->World_Ent && App->CL_Mesh_Mgr->World_Node)
+		{
+			World_Ent->getNumSubEntities();
 
-		Ogre::SubMesh const* subMesh = World_Ent->getSubEntity(Index)->getSubMesh();
+			Ogre::SubMesh const* subMesh = World_Ent->getSubEntity(Index)->getSubMesh();
 
-		int FaceCount = subMesh->indexData->indexCount;
-		sprintf(buf, "Face Count - %i", FaceCount / 3);
-		SendDlgItemMessage(hDlg, IDC_LISTDATA, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+			int FaceCount = subMesh->indexData->indexCount;
+			sprintf(buf, "Face Count - %i", FaceCount / 3);
+			SendDlgItemMessage(hDlg, IDC_LISTDATA, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
-		int VerticesCount = subMesh->vertexData->vertexCount;
-		sprintf(buf, "Vertices Count - %i", VerticesCount);
-		SendDlgItemMessage(hDlg, IDC_LISTDATA, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+			int VerticesCount = subMesh->vertexData->vertexCount;
+			sprintf(buf, "Vertices Count - %i", VerticesCount);
+			SendDlgItemMessage(hDlg, IDC_LISTDATA, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
-		Ogre::String MatName = subMesh->getMaterialName();
-		sprintf(buf, "Material Name - %s", MatName.c_str());
-		SendDlgItemMessage(hDlg, IDC_LISTDATA, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+			Ogre::String MatName = subMesh->getMaterialName();
+			sprintf(buf, "Material Name - %s", MatName.c_str());
+			SendDlgItemMessage(hDlg, IDC_LISTDATA, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
-		Ogre::MaterialPtr  MatCurent = static_cast<Ogre::MaterialPtr> (Ogre::MaterialManager::getSingleton().getByName(MatName));
-		sprintf(buf, "Texture Name - %s", MatCurent->getTechnique(0)->getPass(0)->getTextureUnitState(0)->getTextureName().c_str());
-		SendDlgItemMessage(hDlg, IDC_LISTDATA, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+			Ogre::MaterialPtr  MatCurent = static_cast<Ogre::MaterialPtr> (Ogre::MaterialManager::getSingleton().getByName(MatName));
+			sprintf(buf, "Texture Name - %s", MatCurent->getTechnique(0)->getPass(0)->getTextureUnitState(0)->getTextureName().c_str());
+			SendDlgItemMessage(hDlg, IDC_LISTDATA, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+		}
 	}
 
 	// ------------------- Groups / Wireframed
