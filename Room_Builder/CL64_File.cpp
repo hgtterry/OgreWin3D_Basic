@@ -356,7 +356,7 @@ bool CL64_File::Open_3dt_File()
 		App->CL_Properties_Brushes->Fill_ListBox();
 
 		App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_Free;
-		//App->CL_Doc->UpdateAllViews(Enums::UpdateViews_All);
+		App->CL_Doc->UpdateAllViews(Enums::UpdateViews_All);
 
 	}
 
