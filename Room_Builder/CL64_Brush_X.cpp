@@ -317,7 +317,7 @@ void CL64_Brush_X::Select_Brush_Editor(Brush* b)
 		App->CL_Doc->UpdateSelected();
 		App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
 
-		App->CL_Properties_Tabs->Select_Brushes_Tab();
+		
 		App->CL_Properties_Brushes->Get_Index(App->CL_Doc->CurBrush);
 
 		App->CL_Top_Tabs->Enable_Brush_Options_Buttons(true, false);
@@ -326,6 +326,8 @@ void CL64_Brush_X::Select_Brush_Editor(Brush* b)
 		App->CL_Properties_Brushes->Update_SelectedBrushesCount_Dlg();
 
 		App->CL_Top_Tabs->Update_Faces_Combo();
+
+		App->CL_Properties_Tabs->Select_Brushes_Tab();
 	}
 }
 
