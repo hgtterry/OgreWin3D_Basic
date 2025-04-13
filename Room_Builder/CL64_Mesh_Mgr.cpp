@@ -1419,9 +1419,6 @@ void CL64_Mesh_Mgr::UpdateBrushData(HWND hDlg, int Index)
 		sprintf(buf, "Group Name %s", App->CL_Editor_Com->Group[Index]->GroupName);
 		SendDlgItemMessage(hDlg, IDC_LISTDATA, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
-		sprintf(buf, "Faces %i", App->CL_Editor_Com->Group[Index]->GroupFaceCount);
-		SendDlgItemMessage(hDlg, IDC_LISTDATA, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
-
 		sprintf(buf, "Vertices %i", App->CL_Editor_Com->Group[Index]->GroupVertCount);
 		SendDlgItemMessage(hDlg, IDC_LISTDATA, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
@@ -1434,6 +1431,20 @@ void CL64_Mesh_Mgr::UpdateBrushData(HWND hDlg, int Index)
 		sprintf(buf, "Mat File Name %s", App->CL_Editor_Com->Group[Index]->Text_FileName);
 		SendDlgItemMessage(hDlg, IDC_LISTDATA, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
+		sprintf(buf, "Faces %i", App->CL_Editor_Com->Group[Index]->GroupFaceCount);
+		SendDlgItemMessage(hDlg, IDC_LISTDATA, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+
+		int Count = 0;
+
+		while (Count < App->CL_Editor_Com->Group[Index]->GroupFaceCount)
+		{
+			int Brush_Index = App->CL_Editor_Com->Group[Index]->Face_Data[Count].Brush_Index;
+
+			sprintf(buf, "Face %i Brush_Index %i", Count, Brush_Index);
+			SendDlgItemMessage(hDlg, IDC_LISTDATA, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+
+			Count++;
+		}
 		//sprintf(buf, "Faces2 %i", App->CLSB_Mesh_Mgr->ActualFaceCount);
 		//SendDlgItemMessage(hDlg, IDC_LISTDATA, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 	}

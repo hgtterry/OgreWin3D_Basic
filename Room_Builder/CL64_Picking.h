@@ -30,6 +30,7 @@ public:
 	~CL64_Picking(void);
 
 	Ogre::RaySceneQuery* mRaySceneQuery;
+	Ogre::MovableObject* target;
 
 	void Init_Picking();
 	void Mouse_Pick_Entity();
@@ -51,7 +52,10 @@ public:
 	int m_SubMesh;
 	int Actual_Face;
 	int Face_Hit;
+
 	int Local_Face;
+	int Group_Index;
+	int Brush_Index;
 
 	bool flag_Selected_Ok;
 	bool flag_Hit_Player;
@@ -64,7 +68,10 @@ private:
 	void Clear_Picking_Data();
 	bool raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::MovableObject*& target, float& closest_distance, const Ogre::uint32 queryMask);
 	void GetMeshInformation(const Ogre::MeshPtr mesh, const Ogre::Vector3& position, const Ogre::Quaternion& orient, const Ogre::Vector3& scale);
+	
 	void Get_Material_Data();
+	int  Get_Group_Index();
+	int Get_Brush_Index();
 
 	void Get_Face();
 	bool Get_Brush_Info(const Brush* b);

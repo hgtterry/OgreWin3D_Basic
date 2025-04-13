@@ -44,6 +44,9 @@ CL64_Picking::CL64_Picking(void)
     Face_Count = 0;
     flag_Selected_Ok = 0;
    
+    Group_Index = 0;
+    Brush_Index = 0;
+
     Face_Hit = 0;
     Actual_Face = 0;
     FaceMaterial[0] = 0;
@@ -112,7 +115,7 @@ void CL64_Picking::Mouse_Pick_Entity()
 
     Ogre::uint32 queryMask = -1;
     Ogre::Vector3 result = Ogre::Vector3(0, 0, 0);
-    Ogre::MovableObject* target = NULL;
+    target = NULL;
     closest_distance = 0;
 
     Pl_Entity_Name = " ";
@@ -259,20 +262,16 @@ bool CL64_Picking::raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::Mo
             pentity = static_cast<Ogre::MovableObject*>(query_result[qr_idx].movable);
             strcpy(TestName, (LPSTR)(Ogre::Entity*)pentity->getName().c_str());
 
-            // Test for player
-            int test = strcmp(TestName, "Player_1");
-            if (test == 0)
+            pentity = static_cast<Ogre::MovableObject*>(query_result[qr_idx].movable);
+            char buff[255];
+            char* pdest;
+            strcpy(buff, pentity->getName().c_str());
+            pdest = strstr(buff, "Ogre/MO");
+           
+            if (pdest != NULL)
             {
-                flag_Hit_Player = 1;
-            }
-            else
-            {
+               // App->Say(((Ogre::Entity*)pentity)->getName().c_str());
                 flag_Hit_Player = 0;
-            }
-
-
-            if (flag_Hit_Player == 0)
-            {
                 // get the mesh information
                 GetMeshInformation(((Ogre::Entity*)pentity)->getMesh(),
                     pentity->getParentNode()->_getDerivedPosition(),
@@ -342,13 +341,16 @@ bool CL64_Picking::raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::Mo
 
     }
 
-    if (closest_distance >= 0.0f)
+    if (closest_distance >= 0.0f && flag_Hit_Player == 0)
     {
         // raycast success
         result = closest_result;
         flag_Selected_Ok = 1;
 
         Get_Material_Data();
+        Group_Index = Get_Group_Index();
+        Brush_Index = Get_Brush_Index();
+
 
         Ogre::Vector3 Pick_Vecs;
         Ogre::Vector3 Face_Vecs;
@@ -371,6 +373,61 @@ bool CL64_Picking::raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::Mo
         Pl_Entity_Name = "---------";
         return (false);
     }
+}
+
+// *************************************************************************
+// *		  Get_Material_Data:- Terry and Hazel Flanigan 2024		   	   *
+// *************************************************************************
+int CL64_Picking::Get_Brush_Index()
+{
+    int m_Brush_Index = 0;
+    m_Brush_Index = App->CL_Editor_Com->Group[Group_Index]->Face_Data[Local_Face].Brush_Index;
+
+    App->CL_Properties_Brushes->OnSelchangeBrushlist(m_Brush_Index, true);
+
+    return m_Brush_Index;
+}
+
+// *************************************************************************
+// *		  Get_Material_Data:- Terry and Hazel Flanigan 2024		   	   *
+// *************************************************************************
+void CL64_Picking::Get_Material_Data()
+{
+    int test = ((Ogre::Entity*)target)->getMesh()->getNumSubMeshes();
+
+    if (m_SubMesh > test)
+    {
+        strcpy(m_Texture_FileName, "No_Texture");
+    }
+    else
+    {
+        strcpy(FaceMaterial, ((Ogre::Entity*)target)->getMesh()->getSubMesh(m_SubMesh)->getMaterialName().c_str());
+        Ogre::MaterialPtr  MatCurent = static_cast<Ogre::MaterialPtr> (Ogre::MaterialManager::getSingleton().getByName(FaceMaterial));
+        strcpy(m_Texture_FileName, MatCurent->getTechnique(0)->getPass(0)->getTextureUnitState(0)->getTextureName().c_str());
+
+    }
+}
+
+// *************************************************************************
+// *		  Get_Group_Index:- Terry and Hazel Flanigan 2024		   	   *
+// *************************************************************************
+int CL64_Picking::Get_Group_Index()
+{
+    int Result = 0;
+    int Count = 0;
+
+    while (Count < App->CL_Editor_Com->GroupCount)
+    {
+        Result = strcmp(App->CL_Editor_Com->Group[Count]->Text_FileName, m_Texture_FileName);
+        if (Result == 0)
+        {
+            return Count;
+        }
+
+        Count++;
+    }
+
+    return -1;
 }
 
 // *************************************************************************
@@ -719,22 +776,3 @@ void CL64_Picking::GetMeshInformation(const Ogre::MeshPtr mesh, const Ogre::Vect
     }
 }
 
-// *************************************************************************
-// *		  Get_Material_Data:- Terry and Hazel Flanigan 2024		   	   *
-// *************************************************************************
-void CL64_Picking::Get_Material_Data()
-{
-    int test = ((Ogre::Entity*)pentity)->getMesh()->getNumSubMeshes();
-
-    if (m_SubMesh > test)
-    {
-        strcpy(m_Texture_FileName, "No_Texture");
-    }
-    else
-    {
-        strcpy(FaceMaterial, ((Ogre::Entity*)pentity)->getMesh()->getSubMesh(m_SubMesh)->getMaterialName().c_str());
-        Ogre::MaterialPtr  MatCurent = static_cast<Ogre::MaterialPtr> (Ogre::MaterialManager::getSingleton().getByName(FaceMaterial));
-        strcpy(m_Texture_FileName, MatCurent->getTechnique(0)->getPass(0)->getTextureUnitState(0)->getTextureName().c_str());
-
-    } 
-}
