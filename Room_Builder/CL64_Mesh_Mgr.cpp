@@ -1491,31 +1491,25 @@ void CL64_Mesh_Mgr::Update_World_Model_Info(HWND hDlg)
 		SendDlgItemMessage(hDlg, IDC_LT_WORLDINFO, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 	}
 
-	//// ------------------- Groups
-	//if (App->CLSB_Mesh_Mgr->Selected_Render_Mode == Enums::Mesh_Mgr_Groups)
-	//{
-	//	sprintf(buf, "%s %i", "Total Groups - ", App->CLSB_Model->GroupCount);
-	//	SendDlgItemMessage(hDlg, IDC_LT_WORLDINFO, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+	// ------------------- Groups
+	if (App->CL_Mesh_Mgr->Selected_Render_Mode == Enums::Render_Groups)
+	{
+		sprintf(buf, "%s %i", "Total Groups - ", App->CL_Editor_Com->GroupCount);
+		SendDlgItemMessage(hDlg, IDC_LT_WORLDINFO, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
-	//	sprintf(buf, "%s %i", "Total Faces - ", App->CLSB_Mesh_Mgr->ActualFaceCount);
-	//	SendDlgItemMessage(hDlg, IDC_LT_WORLDINFO, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
-	//}
+		sprintf(buf, "%s %i", "Total Faces - ", App->CL_Mesh_Mgr->ActualFaceCount);
+		SendDlgItemMessage(hDlg, IDC_LT_WORLDINFO, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+	}
 
-	//// ------------------- Brushes
-	//if (App->CLSB_Mesh_Mgr->Selected_Render_Mode == Enums::Mesh_Mgr_Brushes)
-	//{
-	//	sprintf(buf, "%s %i", "Total Brushes - ", App->CLSB_Model->BrushCount);
-	//	SendDlgItemMessage(hDlg, IDC_LT_WORLDINFO, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+	// ------------------- Brushes
+	if (App->CL_Mesh_Mgr->Selected_Render_Mode == Enums::Render_Brushes)
+	{
+		sprintf(buf, "%s %i", "Total Brushes - ", App->CL_Editor_Com->BrushCount);
+		SendDlgItemMessage(hDlg, IDC_LT_WORLDINFO, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
-	//	sprintf(buf, "%s %i", "Total Faces - ", App->CLSB_Model->Ogre_Face_Count);
-	//	SendDlgItemMessage(hDlg, IDC_LT_WORLDINFO, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
-	//}
-
-	//// ------------------- No Render
-	//if (App->CLSB_Mesh_Mgr->Selected_Render_Mode == 3)
-	//{
-
-	//}
+		sprintf(buf, "%s %i", "Total Faces - ", App->CL_Editor_Com->Ogre_Face_Count);
+		SendDlgItemMessage(hDlg, IDC_LT_WORLDINFO, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+	}
 
 }
 

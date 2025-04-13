@@ -34,6 +34,7 @@ public:
 	void Init_Picking();
 	void Mouse_Pick_Entity();
 	int Get_Local_Face(int SelectedGroup);
+	int Get_Global_Face(int SelectedGroup);
 
 	Ogre::MovableObject* pentity;
 	Ogre::String Pl_Entity_Name;

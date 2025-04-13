@@ -447,9 +447,14 @@ void CL64_ImGui::App_Tool_Selection_GUI(void)
 		ImGui::Text("Ogre Faces:= %i ", App->CL_Mesh_Mgr->ActualFaceCount);
 		ImGui::Text("Brushes3 Faces:= %i ", App->CL_Mesh_Mgr->Global_Faces_Index);
 		ImGui::Text("Brushes Faces:= %i ", App->CL_Mesh_Mgr->m_Total_Faces);
-		ImGui::Text("V_Face Count:= %i ", App->CL_Mesh_Mgr->v_Face_Data_Count);
+		ImGui::Text("V_Face Count:= %i ", App->CL_Mesh_Mgr->v_Face_Data_Count);*/
+		
+		
+		ImGui::Text("Total Indexs:= %i ", App->CL_Picking->Total_index_count);
 		ImGui::Text("Face Hit:= %i ", App->CL_Picking->Face_Hit);
-		ImGui::Text("Brush Hit:= %s ", App->CL_Mesh_Mgr->v_Face_Data[App->CL_Picking->Face_Hit]->Brush_Name);*/
+		ImGui::Text("Face Index:= %i ", App->CL_Picking->Face_Index);
+		ImGui::Text("Local Face:= %i ", App->CL_Picking->Local_Face);
+		//ImGui::Text("Brush Hit:= %s ", App->CL_Mesh_Mgr->v_Face_Data[App->CL_Picking->Face_Hit]->Brush_Name);
 		
 		if (ImGui::Button("Close"))
 		{

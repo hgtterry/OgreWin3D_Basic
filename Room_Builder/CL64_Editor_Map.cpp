@@ -1413,7 +1413,7 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Ogre_BR(HWND hDlg, UINT message, WPARAM w
 
 			if (GetAsyncKeyState(VK_CONTROL) < 0)
 			{
-				//App->CL_Picking->Mouse_Pick_Entity();
+				App->CL_Picking->Mouse_Pick_Entity();
 
 				/*int BI = App->CL_Editor_Com->Group[App->CL_Picking->m_SubMesh]->Face_Data[App->CL_Picking->Local_Face].Brush_Index;
 				App->Say_Int(BI);*/
