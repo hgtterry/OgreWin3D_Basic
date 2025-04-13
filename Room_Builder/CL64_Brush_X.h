@@ -36,6 +36,7 @@ public:
 	void Set_Brush_Faces_Name(Brush* b);
 	Brush* Get_Brush_By_Name(const char* Name);
 	int Get_Brush_Index_By_Name(const char* Name);
+	void Select_Brush_Editor(Brush* b);
 
 	int Face_Count;
 

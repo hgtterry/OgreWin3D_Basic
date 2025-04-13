@@ -1413,7 +1413,7 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Ogre_BR(HWND hDlg, UINT message, WPARAM w
 
 			if (GetAsyncKeyState(VK_CONTROL) < 0)
 			{
-				App->CL_Picking->Mouse_Pick_Entity();
+				App->CL_Picking->Mouse_Pick_Entity(false);
 
 				/*int BI = App->CL_Editor_Com->Group[App->CL_Picking->m_SubMesh]->Face_Data[App->CL_Picking->Local_Face].Brush_Index;
 				App->Say_Int(BI);*/
@@ -1467,7 +1467,7 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Ogre_BR(HWND hDlg, UINT message, WPARAM w
 
 			if (GetAsyncKeyState(VK_CONTROL) < 0 && App->CL_Editor_Com->flag_PreviewMode_Running == 0)
 			{
-				App->CL_Picking->Mouse_Pick_Entity();
+				App->CL_Picking->Mouse_Pick_Entity(true);
 				int index = App->CL_TXL_Editor->GetIndex_From_FileName(App->CL_Picking->m_Texture_FileName);
 
 				if (index > -1)

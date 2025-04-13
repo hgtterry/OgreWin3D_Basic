@@ -33,9 +33,8 @@ public:
 	Ogre::MovableObject* target;
 
 	void Init_Picking();
-	void Mouse_Pick_Entity();
+	void Mouse_Pick_Entity(bool JustTexture);
 	int Get_Local_Face(int SelectedGroup);
-	int Get_Global_Face(int SelectedGroup);
 
 	Ogre::MovableObject* pentity;
 	Ogre::String Pl_Entity_Name;
@@ -50,9 +49,7 @@ public:
 	int Face_Index;
 	int Sub_Mesh_Count;
 	int m_SubMesh;
-	int Actual_Face;
-	int Face_Hit;
-
+	
 	int Local_Face;
 	int Group_Index;
 	int Brush_Index;
@@ -79,7 +76,7 @@ private:
 	bool Get_Brush_ListInfo(BrushList* BList);
 	bool Get_Face_Data(int Index, const Face* f);
 
-	int Face_Count;
+	bool flag_Just_Texture;
 
 	Ogre::Vector3* vertices;
 	Ogre::Vector2* TextCords;

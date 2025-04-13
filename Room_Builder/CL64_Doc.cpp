@@ -532,29 +532,12 @@ void CL64_Doc::SelectOrtho(POINT point, ViewVars* v)
             {
                 // Dont Select if Locked
             }
-            else
-            {
-                DoBrushSelection(pMinBrush, brushSelToggle);
+			else
+			{
+				DoBrushSelection(pMinBrush, brushSelToggle);
+				App->CL_Brush_X->Select_Brush_Editor(pMinBrush);
+			}
 
-                int Bnum = App->CL_Brush->Get_Brush_Count();
-                if (Bnum > 0)
-                {
-                    UpdateSelected();
-                    App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
-
-                    App->CL_Properties_Tabs->Select_Brushes_Tab();
-                    App->CL_Properties_Brushes->Get_Index(CurBrush);
-
-                    App->CL_Top_Tabs->Enable_Brush_Options_Buttons(true, false);
-                    App->CL_Properties_Brushes->Set_Dlg_Brush_Options_Buttons(true);
-
-                    App->CL_Properties_Brushes->Update_SelectedBrushesCount_Dlg();
-
-                    App->CL_Top_Tabs->Update_Faces_Combo();
-                }
-            }
-
-            //Get_Timer
         } 
     }
     else

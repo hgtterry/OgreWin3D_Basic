@@ -306,3 +306,26 @@ int CL64_Brush_X::Get_Brush_Index_By_Name(const char* Name)
 	return -1;
 }
 
+// *************************************************************************
+// *		  Select_Brush_Editor:- Terry and Hazel Flanigan 2025		   *
+// *************************************************************************
+void CL64_Brush_X::Select_Brush_Editor(Brush* b)
+{
+	int Bnum = App->CL_Brush->Get_Brush_Count();
+	if (Bnum > 0)
+	{
+		App->CL_Doc->UpdateSelected();
+		App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
+
+		App->CL_Properties_Tabs->Select_Brushes_Tab();
+		App->CL_Properties_Brushes->Get_Index(App->CL_Doc->CurBrush);
+
+		App->CL_Top_Tabs->Enable_Brush_Options_Buttons(true, false);
+		App->CL_Properties_Brushes->Set_Dlg_Brush_Options_Buttons(true);
+
+		App->CL_Properties_Brushes->Update_SelectedBrushesCount_Dlg();
+
+		App->CL_Top_Tabs->Update_Faces_Combo();
+	}
+}
+

@@ -33,7 +33,7 @@ CL64_Picking::CL64_Picking(void)
 
     pentity = NULL;
     Pl_Entity_Name.clear();
-
+    target = NULL;
     flag_Hit_Player = 0;
     closest_distance = 0;
     Total_vertex_count = 0;
@@ -41,17 +41,16 @@ CL64_Picking::CL64_Picking(void)
     Face_Index = 0;
     Sub_Mesh_Count = 0;
     m_SubMesh = 0;
-    Face_Count = 0;
     flag_Selected_Ok = 0;
    
     Group_Index = 0;
     Brush_Index = 0;
 
-    Face_Hit = 0;
-    Actual_Face = 0;
     FaceMaterial[0] = 0;
     TextureName[0] = 0;
     TestName[0] = 0;
+
+    flag_Just_Texture = 0;
 
     m_Texture_FileName[0] = 0;
 
@@ -92,6 +91,8 @@ void CL64_Picking::Clear_Picking_Data()
     flag_Selected_Ok = 0;
 
     Local_Face = 0;
+    Group_Index = 0;
+    Brush_Index = 0;
 
     strcpy(m_Texture_FileName, "No_Texture");
 }
@@ -99,9 +100,11 @@ void CL64_Picking::Clear_Picking_Data()
 // *************************************************************************
 // *		Mouse_Pick_Entity:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-void CL64_Picking::Mouse_Pick_Entity()
+void CL64_Picking::Mouse_Pick_Entity(bool JustTexture)
 {
     Clear_Picking_Data();
+
+    flag_Just_Texture = JustTexture;
 
     Ogre::RenderWindow* rw = App->CL_Ogre->mWindow;
     Ogre::Camera* camera = App->CL_Ogre->mCamera;
@@ -119,8 +122,7 @@ void CL64_Picking::Mouse_Pick_Entity()
     closest_distance = 0;
 
     Pl_Entity_Name = " ";
-    //App->CL_Ogre->Ogre3D_Listener->Selected_Object_Name[0] = 0;
-
+   
     Ogre::SceneNode* mNode;
 
     Ogre::Ray ray2 = camera->getCameraToViewportRay(tx, ty);
@@ -213,9 +215,7 @@ bool CL64_Picking::raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::Mo
     target = NULL;
     Pl_Entity_Name = "---------";
     flag_Hit_Player = 0;
-    Actual_Face = 0;
-    Face_Hit = 0;
-
+    
     if (mRaySceneQuery != NULL)
     {
         mRaySceneQuery->setRay(ray);
@@ -270,7 +270,6 @@ bool CL64_Picking::raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::Mo
            
             if (pdest != NULL)
             {
-               // App->Say(((Ogre::Entity*)pentity)->getName().c_str());
                 flag_Hit_Player = 0;
                 // get the mesh information
                 GetMeshInformation(((Ogre::Entity*)pentity)->getMesh(),
@@ -289,35 +288,28 @@ bool CL64_Picking::raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::Mo
                     // if it was a hit check if its the closest
                     if (hit.first)
                     {
-                        if ((closest_distance < 0.0f) ||
-                            (hit.second < closest_distance))
+                        if ((closest_distance < 0.0f) || (hit.second < closest_distance))
                         {
                             // this is the closest so far, save it off
                             closest_distance = hit.second;
                             new_closest_found = true;
 
-
-                            //Face_Hit = (Actual_Face / 3) - (Face_Index / 3);
-
                             Face_Index = i;
 
-                            App->CL_Grid->HitVertices[0] = vertices[indices[i]];
-                            App->CL_Grid->HitVertices[1] = vertices[indices[i + 1]];
-                            App->CL_Grid->HitVertices[2] = vertices[indices[i + 2]];
-
-                            App->CL_Grid->Face_Update2();
+                            // Keep for testing
+                            //App->CL_Grid->HitVertices[0] = vertices[indices[i]];
+                            //App->CL_Grid->HitVertices[1] = vertices[indices[i + 1]];
+                            //App->CL_Grid->HitVertices[2] = vertices[indices[i + 2]];
+                            //App->CL_Grid->FaceNode->setVisible(true);
+                            //App->CL_Grid->Face_Update2();
                             
                             m_SubMesh = Sub_Mesh_Indexs[Face_Index];
 
                             Local_Face = Get_Local_Face(m_SubMesh);
 
-                            Face_Hit = Get_Global_Face(m_SubMesh) + Actual_Face;
-
-                            App->CL_Grid->FaceNode->setVisible(true);
                         }
                     }
 
-                    Actual_Face++;// = 3;
                 }
 
                 // free the verticies and indicies memory
@@ -347,23 +339,17 @@ bool CL64_Picking::raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::Mo
         result = closest_result;
         flag_Selected_Ok = 1;
 
-        Get_Material_Data();
-        Group_Index = Get_Group_Index();
-        Brush_Index = Get_Brush_Index();
+        if (flag_Just_Texture == true)
+        {
+            Get_Material_Data();
+        }
+        else
+        {
+            Get_Material_Data();
+            Group_Index = Get_Group_Index();
+            Brush_Index = Get_Brush_Index();
+        }
 
-
-        Ogre::Vector3 Pick_Vecs;
-        Ogre::Vector3 Face_Vecs;
-
-       // Pick_Vecs.x = App->CL_Grid->HitVertices[0].x;
-       // Pick_Vecs.y = App->CL_Grid->HitVertices[0].y;
-       // Pick_Vecs.z = App->CL_Grid->HitVertices[0].z;
-
-        int A = 0;
-        int B = 0;
-        int C = 0;
-
-        int Count = 0;
         return (true);
     }
     else
@@ -383,7 +369,14 @@ int CL64_Picking::Get_Brush_Index()
     int m_Brush_Index = 0;
     m_Brush_Index = App->CL_Editor_Com->Group[Group_Index]->Face_Data[Local_Face].Brush_Index;
 
+    App->CL_Panels->Deselect_All_Brushes_Update_Dlgs();
+
     App->CL_Properties_Brushes->OnSelchangeBrushlist(m_Brush_Index, true);
+
+    Brush* Selected_Brush = App->CL_Brush->Get_Brush_ByIndex(m_Brush_Index);
+
+    App->CL_Doc->DoBrushSelection(Selected_Brush, brushSelToggle);
+    App->CL_Brush_X->Select_Brush_Editor(Selected_Brush);
 
     return m_Brush_Index;
 }
@@ -437,11 +430,9 @@ int CL64_Picking::Get_Local_Face(int SelectedGroup)
 {
     Ogre::MeshPtr mesh = ((Ogre::Entity*)pentity)->getMesh();
 
-    //bool added_shared = false;
     int TotalFaces = 0;
     int Count = 0;
-    //int SubMeshes = mesh->getNumSubMeshes();
-
+ 
     while (Count < SelectedGroup)
     {
         Ogre::SubMesh* submesh = mesh->getSubMesh(Count);
@@ -456,37 +447,10 @@ int CL64_Picking::Get_Local_Face(int SelectedGroup)
 }
 
 // *************************************************************************
-// *		    Get_Global_Face:- Terry and Hazel Flanigan 2023		   	   *
-// *************************************************************************
-int CL64_Picking::Get_Global_Face(int SelectedGroup)
-{
-    Ogre::MeshPtr mesh = ((Ogre::Entity*)pentity)->getMesh();
-
-    //bool added_shared = false;
-    int TotalFaces = 0;
-    int Count = 0;
-    //int SubMeshes = mesh->getNumSubMeshes();
-
-    while (Count < SelectedGroup)
-    {
-        Ogre::SubMesh* submesh = mesh->getSubMesh(Count);
-        TotalFaces += submesh->indexData->indexCount;
-
-        Count++;
-    }
-
-    int Result = (TotalFaces / 3);
-
-    return Result;
-}
-
-// *************************************************************************
 // *	        Get_Face:- Terry and Hazel Flanigan 2024		      	   *
 // *************************************************************************
 void CL64_Picking::Get_Face()
 {
-    Face_Count = 0;
-
     int NumSelBrushes = App->CL_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes);
     if (NumSelBrushes > 0)
     {
@@ -574,8 +538,6 @@ bool CL64_Picking::Get_Brush_ListInfo(BrushList* BList)
 // *************************************************************************
 bool CL64_Picking::Get_Face_Data(int Index, const Face* f)
 {
-    Face_Count++;
-
     char buf[MAX_PATH];
 
     int  i = 0;
