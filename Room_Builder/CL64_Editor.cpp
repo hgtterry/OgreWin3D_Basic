@@ -46,6 +46,9 @@ CL64_Editor_Com::CL64_Editor_Com()
 	Object_Count = 0;
 	UniqueID_Object_Counter = 0;
 
+	// Ogre
+	Ogre_Face_Count = 0;
+
 	JustName[0] = 0;
 
 	Parent_hWnd = NULL;

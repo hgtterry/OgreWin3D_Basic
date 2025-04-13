@@ -1334,6 +1334,7 @@ void CL64_Mesh_Mgr::Update_Brush_List(HWND hDlg)
 				Count++;
 			}
 
+			Update_World_Model_Info(hDlg);
 			UpdateBrushData(hDlg, App->CL_Mesh_Mgr->Ogre_List_Index);
 			SendDlgItemMessage(hDlg, IDC_LISTBRUSHES, LB_SETCURSEL, (WPARAM)App->CL_Mesh_Mgr->Ogre_List_Index, (LPARAM)0);
 		}
@@ -1352,6 +1353,7 @@ void CL64_Mesh_Mgr::Update_Brush_List(HWND hDlg)
 			Count++;
 		}
 
+		Update_World_Model_Info(hDlg);
 		UpdateBrushData(hDlg, App->CL_Mesh_Mgr->Groups_List_Index);
 		SendDlgItemMessage(hDlg, IDC_LISTBRUSHES, LB_SETCURSEL, (WPARAM)App->CL_Mesh_Mgr->Groups_List_Index, (LPARAM)0);
 	}
@@ -1368,6 +1370,7 @@ void CL64_Mesh_Mgr::Update_Brush_List(HWND hDlg)
 			Count++;
 		}
 
+		Update_World_Model_Info(hDlg);
 		UpdateBrushData(hDlg, Brushes_List_Index);
 		SendDlgItemMessage(hDlg, IDC_LISTBRUSHES, LB_SETCURSEL, (WPARAM)Brushes_List_Index, (LPARAM)0);
 	}
@@ -1467,6 +1470,53 @@ void CL64_Mesh_Mgr::UpdateBrushData(HWND hDlg, int Index)
 
 		//App->CL_Mesh_Mgr->Set_BBox_Selected_Brush(Index);
 	}
+}
+
+// *************************************************************************
+// *		Update_World_Model_Info:- Terry and Hazel Flanigan 2023		   *
+// *************************************************************************
+void CL64_Mesh_Mgr::Update_World_Model_Info(HWND hDlg)
+{
+	SendDlgItemMessage(hDlg, IDC_LT_WORLDINFO, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
+	
+	char buf[MAX_PATH];
+
+	// ------------------- Ogre
+	if (App->CL_Mesh_Mgr->Selected_Render_Mode == Enums::Render_Ogre)
+	{
+		sprintf(buf, "%s %i", "Total Sub Meshs - ", (int)World_Ent->getNumSubEntities());
+		SendDlgItemMessage(hDlg, IDC_LT_WORLDINFO, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+
+		sprintf(buf, "%s %i", "Total Faces - ", App->CL_Editor_Com->Ogre_Face_Count);
+		SendDlgItemMessage(hDlg, IDC_LT_WORLDINFO, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+	}
+
+	//// ------------------- Groups
+	//if (App->CLSB_Mesh_Mgr->Selected_Render_Mode == Enums::Mesh_Mgr_Groups)
+	//{
+	//	sprintf(buf, "%s %i", "Total Groups - ", App->CLSB_Model->GroupCount);
+	//	SendDlgItemMessage(hDlg, IDC_LT_WORLDINFO, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+
+	//	sprintf(buf, "%s %i", "Total Faces - ", App->CLSB_Mesh_Mgr->ActualFaceCount);
+	//	SendDlgItemMessage(hDlg, IDC_LT_WORLDINFO, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+	//}
+
+	//// ------------------- Brushes
+	//if (App->CLSB_Mesh_Mgr->Selected_Render_Mode == Enums::Mesh_Mgr_Brushes)
+	//{
+	//	sprintf(buf, "%s %i", "Total Brushes - ", App->CLSB_Model->BrushCount);
+	//	SendDlgItemMessage(hDlg, IDC_LT_WORLDINFO, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+
+	//	sprintf(buf, "%s %i", "Total Faces - ", App->CLSB_Model->Ogre_Face_Count);
+	//	SendDlgItemMessage(hDlg, IDC_LT_WORLDINFO, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+	//}
+
+	//// ------------------- No Render
+	//if (App->CLSB_Mesh_Mgr->Selected_Render_Mode == 3)
+	//{
+
+	//}
+
 }
 
 

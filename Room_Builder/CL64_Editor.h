@@ -64,6 +64,9 @@ public:
 	int Object_Count;
 	int UniqueID_Object_Counter;
 
+	// Ogre
+	int Ogre_Face_Count;
+
 	HWND Parent_hWnd;				// Handle to the parent window for the editor
 
 	bool flag_PreviewMode_Running;	// Flag to indicate if preview mode is currently active

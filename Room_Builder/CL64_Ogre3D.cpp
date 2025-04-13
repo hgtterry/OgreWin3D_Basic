@@ -317,7 +317,7 @@ void CL64_Ogre3D::Export_MaterialFile(char* MatFileName)
 // *************************************************************************
 void CL64_Ogre3D::Convert_ToOgre3D(bool Create)
 {
-	//Do_Timer
+	App->CL_Editor_Com->Ogre_Face_Count = 0;
 
 	if (App->CL_Mesh_Mgr->World_Ent)
 	{
@@ -426,6 +426,8 @@ void CL64_Ogre3D::Convert_ToOgre3D(bool Create)
 
 		Count++;
 	}
+
+	App->CL_Editor_Com->Ogre_Face_Count = m_Total_Faces;
 
 	if (World_Manual->getNumSections() == 0)
 	{

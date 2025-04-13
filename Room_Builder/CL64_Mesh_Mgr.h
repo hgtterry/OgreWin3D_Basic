@@ -105,6 +105,7 @@ private:
 	void Populate_RenderMode_Combo(HWND DropHwnd);
 	void Update_Brush_List(HWND hDlg);
 	void UpdateBrushData(HWND hDlg, int Index);
+	void Update_World_Model_Info(HWND hDlg);
 
 	bool flag_Mesh_Viewer_Active;
 	bool flag_Select_Brush;

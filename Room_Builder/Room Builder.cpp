@@ -553,6 +553,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 App->CL_Resources->Start_Resources();
                 return 1;
             }
+
+            case  ID_TOOLS_MESHDATA:
+            {
+                App->CL_Mesh_Mgr->Start_Mesh_Viewer();
+                return 1;
+            }
  
             // ----------------------------- Windows
             case ID_WINDOW_PROPERTIES:

@@ -449,6 +449,7 @@
 #define ID_TEXTURES_LOCKALLTEXTURES     32817
 #define ID_FILE_CLEAR                   32818
 #define ID_DEBUG_APPSTATS               32819
+#define ID_TOOLS_MESHDATA               32820
 #define ID_GENERALSELECT                32886
 #define ID_TOOLS_TEMPLATE               32910
 #define IDC_STATIC                      -1
@@ -459,7 +460,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        186
-#define _APS_NEXT_COMMAND_VALUE         32820
+#define _APS_NEXT_COMMAND_VALUE         32821
 #define _APS_NEXT_CONTROL_VALUE         1290
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
