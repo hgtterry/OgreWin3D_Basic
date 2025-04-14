@@ -53,6 +53,12 @@ CL64_Entities::~CL64_Entities()
 // *************************************************************************
 void CL64_Entities::Create_Player_Entity()
 {
+	/*bool test = App->CL_Brush_X->Check_if_Brush_Name_Exist((LPSTR)"Player_Main");
+	if (test == 0)
+	{
+		return;
+	}*/
+
 	Brush* Player_Brush;
 
 	BrushTemplate_Box* pBoxTemplate;

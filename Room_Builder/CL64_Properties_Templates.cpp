@@ -138,7 +138,7 @@ LRESULT CALLBACK CL64_Properties_Templates::Proc_Templates(HWND hDlg, UINT messa
 			if (App->CL_Doc->mModeTool == ID_TOOLS_TEMPLATE)
 			{
 
-				if (App->CL_Brush->Get_Brush_Count() == 0)
+				if (App->CL_Brush->Get_Brush_Count() == 0) // New Scene
 				{
 					
 					App->CL_Doc->AddBrushToWorld();
