@@ -345,6 +345,8 @@ Brush* CL64_Brush::Brush_CreateHollowFromBrush(const Brush* b)
 		sf = App->CL_Face->Face_CreateFromPlane(&ExpandPlane, BOGUS_RANGE, 0);
 		App->CL_Face->Face_CopyFaceInfo(f, sf);
 
+		sf->Main_Brush_Face = i + 7;
+
 		App->CL_FaceList->FaceList_AddFace(fl, sf);
 	}
 	b2 = Brush_Create(BRUSH_LEAF, fl, NULL);

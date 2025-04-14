@@ -25,6 +25,7 @@ THE SOFTWARE.
 #include "pch.h"
 #include "CL64_App.h"
 #include "CL64_BrushTemplate.h"
+#include "Structures.cpp"
 
 CL64_BrushTemplate::CL64_BrushTemplate(void)
 {
@@ -148,6 +149,7 @@ Brush* CL64_BrushTemplate::BrushTemplate_CreateBox(const BrushTemplate_Box* pTem
 	f = App->CL_Face->Face_Create(4, FaceVerts, 0);
 	if (f)
 	{
+		f->Main_Brush_Face = 1;
 		App->CL_FaceList->FaceList_AddFace(fl, f);
 		App->CL_Face->Face_SetTextureLock(f, true);
 	}
@@ -160,6 +162,7 @@ Brush* CL64_BrushTemplate::BrushTemplate_CreateBox(const BrushTemplate_Box* pTem
 	f = App->CL_Face->Face_Create(4, FaceVerts, 0);
 	if (f)
 	{
+		f->Main_Brush_Face = 2;
 		App->CL_FaceList->FaceList_AddFace(fl, f);
 		App->CL_Face->Face_SetTextureLock(f, true);
 	}
@@ -172,6 +175,7 @@ Brush* CL64_BrushTemplate::BrushTemplate_CreateBox(const BrushTemplate_Box* pTem
 	f = App->CL_Face->Face_Create(4, FaceVerts, 0);
 	if (f)
 	{
+		f->Main_Brush_Face = 3;
 		App->CL_FaceList->FaceList_AddFace(fl, f);
 		App->CL_Face->Face_SetTextureLock(f, true);
 	}
@@ -184,6 +188,7 @@ Brush* CL64_BrushTemplate::BrushTemplate_CreateBox(const BrushTemplate_Box* pTem
 	f = App->CL_Face->Face_Create(4, FaceVerts, 0);
 	if (f)
 	{
+		f->Main_Brush_Face = 4;
 		App->CL_FaceList->FaceList_AddFace(fl, f);
 		App->CL_Face->Face_SetTextureLock(f, true);
 	}
@@ -196,6 +201,7 @@ Brush* CL64_BrushTemplate::BrushTemplate_CreateBox(const BrushTemplate_Box* pTem
 	f = App->CL_Face->Face_Create(4, FaceVerts, 0);
 	if (f)
 	{
+		f->Main_Brush_Face = 5;
 		App->CL_FaceList->FaceList_AddFace(fl, f);
 		App->CL_Face->Face_SetTextureLock(f, true);
 	}
@@ -208,6 +214,7 @@ Brush* CL64_BrushTemplate::BrushTemplate_CreateBox(const BrushTemplate_Box* pTem
 	f = App->CL_Face->Face_Create(4, FaceVerts, 0);
 	if (f)
 	{
+		f->Main_Brush_Face = 6;
 		App->CL_FaceList->FaceList_AddFace(fl, f);
 		App->CL_Face->Face_SetTextureLock(f, true);
 	}

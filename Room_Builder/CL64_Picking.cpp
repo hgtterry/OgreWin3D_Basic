@@ -368,6 +368,7 @@ int CL64_Picking::Get_Brush_Index()
 {
     int m_Brush_Index = 0;
     m_Brush_Index = App->CL_Editor_Com->Group[Group_Index]->Face_Data[Local_Face].Brush_Index;
+    WE_Face_Index = App->CL_Editor_Com->Group[Group_Index]->Face_Data[Local_Face].WE_Face_Index;
 
     App->CL_Panels->Deselect_All_Brushes_Update_Dlgs();
 

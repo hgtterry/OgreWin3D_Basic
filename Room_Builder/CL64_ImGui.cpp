@@ -455,6 +455,7 @@ void CL64_ImGui::App_Tool_Selection_GUI(void)
 		ImGui::Text("Brush Index:= %i ", App->CL_Picking->Brush_Index);
 		//ImGui::Text("Face Index:= %i ", App->CL_Picking->Face_Index);
 		ImGui::Text("Local Face:= %i ", App->CL_Picking->Local_Face);
+		ImGui::Text("WE Face:= %i ", App->CL_Picking->WE_Face_Index);
 		//ImGui::Text("Brush Hit:= %s ", App->CL_Mesh_Mgr->v_Face_Data[App->CL_Picking->Face_Hit]->Brush_Name);
 		
 		if (ImGui::Button("Close"))

@@ -135,7 +135,7 @@ Brush* CL64_ParseFile::Brush_CreateFromFile(bool SubBrush)
 	{
 	case BRUSH_LEAF:
 	{
-		fl = FaceList_CreateFromFile();
+		fl = FaceList_CreateFromFile(false);
 		if (fl == NULL)
 		{
 			App->Say("Can not create face");
@@ -193,7 +193,7 @@ Brush* CL64_ParseFile::Brush_CreateFromFile(bool SubBrush)
 // *************************************************************************
 // *	     FaceList_CreateFromFile:- Terry and Hazel Flanigan 2025       *
 // *************************************************************************
-FaceList* CL64_ParseFile::FaceList_CreateFromFile()
+FaceList* CL64_ParseFile::FaceList_CreateFromFile(bool SubBrush)
 {
 	int NumFaces;
 	FaceList* pList = NULL;
@@ -211,6 +211,15 @@ FaceList* CL64_ParseFile::FaceList_CreateFromFile()
 			pFace = Face_CreateFromFile();
 			if (pFace != NULL)
 			{
+				if (SubBrush == true)
+				{
+					pFace->Main_Brush_Face = i + 7;
+				}
+				else
+				{
+					pFace->Main_Brush_Face = i + 1;
+				}
+
 				App->CL_FaceList->FaceList_AddFace(pList, pFace);
 				//App->CL_Face->Face_SetTextureLock(pFace, true);
 			}
@@ -284,6 +293,7 @@ Face* CL64_ParseFile::Face_CreateFromFile()
 			f->MipMapBias = MipMapBias;
 			f->Reflectivity = Reflectivity;
 			f->Translucency = Translucency;
+			f->Main_Brush_Face = 0;
 		}
 
 		Get_Text_Info("TexInfo", &Rotate, &Shift, &Scale, szTemp);

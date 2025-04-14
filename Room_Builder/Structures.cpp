@@ -78,6 +78,7 @@ typedef struct FaceTag
 	float			Translucency;
 	float			MipMapBias;
 	float			LightXScale, LightYScale;
+	int				Main_Brush_Face;
 	TexInfo			Tex;
 	T_Vec3* Points;
 

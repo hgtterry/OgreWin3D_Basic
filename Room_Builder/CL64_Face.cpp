@@ -89,6 +89,8 @@ Face* CL64_Face::Face_Create(int NumPnts, const T_Vec3* pnts, int DibId)
 		f->LightXScale = 1.0f;
 		f->LightYScale = 1.0f;
 		f->Selected = 0;
+		f->Main_Brush_Face = -1;
+
 		strcpy(f->Brush_Name, "No_Brush");
 		Face_SetVisible(f, true);
 
@@ -375,6 +377,7 @@ void CL64_Face::Face_CopyFaceInfo(const Face* src, Face* dst)
 	dst->Tex = src->Tex;
 	dst->LightXScale = src->LightXScale;
 	dst->LightYScale = src->LightYScale;
+	dst->Main_Brush_Face = src->Main_Brush_Face;
 
 	strcpy(dst->Brush_Name, src->Brush_Name);
 
