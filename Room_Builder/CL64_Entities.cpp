@@ -84,7 +84,7 @@ void CL64_Entities::Create_Player_Entity()
 	Scales.LightmapScale = App->CL_Level->Level_GetLightmapScale(App->CL_Doc->pLevel);
 	App->CL_Brush->Brush_EnumFaces(Player_Brush, &Scales, fdocSetFaceScales);
 
-	strcpy(Player_Brush->Name, "Player");
+	strcpy(Player_Brush->Name, "Player_Main");
 
 	App->CL_Level->Level_AppendBrush(App->CL_Doc->pLevel, Player_Brush);
 

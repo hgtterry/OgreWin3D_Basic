@@ -291,7 +291,7 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Brush_Tabs(HWND hDlg, UINT messag
 
 		if (LOWORD(wParam) == IDC_BT_BRUSH_RENAME)
 		{
-			int Result = strcmp(App->CL_Doc->CurBrush->Name, "Player");
+			int Result = strcmp(App->CL_Doc->CurBrush->Name, "Player_Main");
 			if (Result == 0)
 			{
 				App->Say("This Brush can not be Renamed");
@@ -337,7 +337,7 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Brush_Tabs(HWND hDlg, UINT messag
 
 		if (LOWORD(wParam) == IDC_BT_DELETE_SEL_BRUSH)
 		{
-			int Result = strcmp(App->CL_Doc->CurBrush->Name, "Player");
+			int Result = strcmp(App->CL_Doc->CurBrush->Name, "Player_Main");
 			if (Result == 0)
 			{
 				App->Say("This Brush can not be Deleted");
