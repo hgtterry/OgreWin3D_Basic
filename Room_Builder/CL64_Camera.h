@@ -43,6 +43,9 @@ public:
 	void Camera_Set_Menu_Clear(void);
 
 	void Reset_View_Editor(void);
+	void Camera_Save_Location(void);
 
+	Ogre::Vector3 Saved_Cam_Pos;
+	Ogre::Quaternion Saved_Rotation;
 };
 

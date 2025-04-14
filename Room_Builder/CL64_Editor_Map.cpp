@@ -39,7 +39,6 @@ THE SOFTWARE.
 #define IDM_ROTATE 10
 #define IDM_SCENE_EDITOR 11
 
-#define IDM_3D_BRUSHES 19
 #define IDM_3D_WIRED 20
 #define IDM_3D_TEXTURED 21
 #define IDM_3D_PREVIEW 22
@@ -1389,6 +1388,9 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Ogre_BR(HWND hDlg, UINT message, WPARAM w
 				SetCursorPos(App->CursorPosX, App->CursorPosY);
 				App->CL_Ogre->Ogre3D_Listener->flag_LeftMouseDown = 1;
 				App->CUR = SetCursor(NULL);
+
+				App->CL_Camera->Camera_Save_Location();
+				
 			}
 			else
 			{
@@ -1413,13 +1415,13 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Ogre_BR(HWND hDlg, UINT message, WPARAM w
 
 			if (GetAsyncKeyState(VK_CONTROL) < 0)
 			{
-				App->CL_Picking->Mouse_Pick_Entity(false);
-
-				/*int BI = App->CL_Editor_Com->Group[App->CL_Picking->m_SubMesh]->Face_Data[App->CL_Picking->Local_Face].Brush_Index;
-				App->Say_Int(BI);*/
-				/*Brush* b;
-				b = App->CL_Brush->Get_By_Index(BI);
-				App->CL_Doc->DoBrushSelection(b, brushSelAlways);*/
+				Ogre::Quaternion cameraRotation = App->CL_Ogre->camNode->getOrientation();
+				
+				int cameraComparison = App->CL_Maths->Ogre_Quaternion_Compare(&cameraRotation, &App->CL_Camera->Saved_Rotation, 0);
+				if (cameraComparison == 1)
+				{
+					App->CL_Picking->Mouse_Pick_Entity(false);
+				}
 			}
 
 			return 1;
@@ -1449,8 +1451,8 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Ogre_BR(HWND hDlg, UINT message, WPARAM w
 			listener->flag_RightMouseDown = 1;
 			App->CUR = SetCursor(NULL);
 
-			App->CL_Editor_Map->Saved_MousePos = App->CL_Ogre->camNode->getPosition();
-
+			App->CL_Camera->Camera_Save_Location();
+			
 			return 1;
 		}
 
@@ -1485,7 +1487,7 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Ogre_BR(HWND hDlg, UINT message, WPARAM w
 				bool isPreviewModeRunning = App->CL_Editor_Com->flag_PreviewMode_Running == 0;
 
 				Ogre::Vector3 cameraPosition = App->CL_Ogre->camNode->getPosition();
-				int cameraComparison = App->CL_Maths->Ogre_Vector3_Compare(&cameraPosition, &App->CL_Editor_Map->Saved_MousePos, 0);
+				int cameraComparison = App->CL_Maths->Ogre_Vector3_Compare(&cameraPosition, &App->CL_Camera->Saved_Cam_Pos, 0);
 
 				if (cameraComparison == 1)
 				{
@@ -1640,16 +1642,6 @@ void CL64_Editor_Map::Context_Menu_Ogre(HWND hDlg)
 		AppendMenuW(hMenu, MF_STRING | MF_CHECKED, IDM_3D_WIRED, L"&Wireframed");
 	}
 
-	// Render Brushes
-	if (App->CL_Ogre->OGL_Listener->flag_Render_Brushes == 0)
-	{
-		AppendMenuW(hMenu, MF_STRING | MF_UNCHECKED, IDM_3D_BRUSHES, L"&Brushes");
-	}
-	else
-	{
-		AppendMenuW(hMenu, MF_STRING | MF_CHECKED, IDM_3D_BRUSHES, L"&Brushes");
-	}
-
 	AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
 
 	int brushCount = App->CL_Brush->Get_Brush_Count();
@@ -1685,10 +1677,6 @@ bool CL64_Editor_Map::Context_Command_Ogre(WPARAM wParam)
 		App->CL_Camera->Camera_Wired();
 		return TRUE;
 
-	case IDM_3D_BRUSHES:
-		App->CL_Camera->Camera_Brushes();
-		return TRUE;
-		
 	case IDM_3D_PREVIEW:
 		App->CL_Editor_Com->Preview_Mode();
 		return TRUE;

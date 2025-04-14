@@ -128,8 +128,6 @@ private:
 	int LEFT_WINDOW_DEPTH;
 	int TOP_POS_BOTLEFT;
 
-	Ogre::Vector3 Saved_MousePos;
-
 	int RIGHT_MINIMUM_SPACE;
 	int LEFT_MINIMUM_SPACE;
 

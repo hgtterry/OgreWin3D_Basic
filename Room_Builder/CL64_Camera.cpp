@@ -29,6 +29,8 @@ THE SOFTWARE.
 
 CL64_Camera::CL64_Camera(void)
 {
+	Saved_Cam_Pos = { 0, 0, 0 };
+	Saved_Rotation = {1, 0, 0, 0 };
 }
 
 CL64_Camera::~CL64_Camera(void)
@@ -212,5 +214,14 @@ void CL64_Camera::Camera_Set_Menu_Clear(void)
 	CheckMenuItem(App->Menu_Map, ID_SPEED_SLOW, MF_BYCOMMAND | MF_UNCHECKED);
 	CheckMenuItem(App->Menu_Map, ID_SPEED_VERYSLOW, MF_BYCOMMAND | MF_UNCHECKED);
 	CheckMenuItem(App->Menu_Map, ID_SPEED_FAST, MF_BYCOMMAND | MF_UNCHECKED);
+}
+
+// *************************************************************************
+// *		Camera_Save_Location:- Terry and Hazel Flanigan 2025		   *
+// *************************************************************************
+void CL64_Camera::Camera_Save_Location(void)
+{
+	Saved_Cam_Pos = App->CL_Ogre->camNode->getPosition();
+	Saved_Rotation = App->CL_Ogre->camNode->getOrientation();
 }
 

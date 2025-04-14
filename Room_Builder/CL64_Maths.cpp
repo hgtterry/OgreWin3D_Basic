@@ -581,3 +581,28 @@ void CL64_Maths::Quaternion_ToMatrix(const Ogre::Quaternion* Q, Matrix3d* M)
 
 }
 
+// *************************************************************************
+// *		Ogre_Quaternion_Compare:- Terry and Hazel Flanigan 2025		   *
+// *************************************************************************
+int CL64_Maths::Ogre_Quaternion_Compare(Ogre::Quaternion* Q1, Ogre::Quaternion* Q2, float Tolerance)
+{
+	if (	// they are the same but with opposite signs
+		((fabs(Q1->x + Q2->x) <= Tolerance)
+			&& (fabs(Q1->y + Q2->y) <= Tolerance)
+			&& (fabs(Q1->z + Q2->z) <= Tolerance)
+			&& (fabs(Q1->w + Q2->w) <= Tolerance)
+			)
+		||  // they are the same with same signs
+		((fabs(Q1->x - Q2->x) <= Tolerance)
+			&& (fabs(Q1->y - Q2->y) <= Tolerance)
+			&& (fabs(Q1->z - Q2->z) <= Tolerance)
+			&& (fabs(Q1->w - Q2->w) <= Tolerance)
+			)
+		)
+		return GE_TRUE;
+	else
+	{
+		return GE_FALSE;
+	}
+}
+
