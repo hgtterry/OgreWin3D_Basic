@@ -569,7 +569,7 @@ bool CL64_Mesh_Mgr::Brush_FaceList_Create(const Brush* b, const FaceList* pList,
 			App->CL_Editor_Com->B_Brush[App->CL_Editor_Com->BrushCount]->Face_Data[FaceIndex].c = num_verts + 1 + j;
 			App->CL_Editor_Com->B_Brush[App->CL_Editor_Com->BrushCount]->Face_Data[FaceIndex].face_Index = v_Face_Data_Count;
 			App->CL_Editor_Com->B_Brush[App->CL_Editor_Com->BrushCount]->Face_Data[FaceIndex].Brush_Index = Main_Brush_Index;
-			App->CL_Editor_Com->B_Brush[App->CL_Editor_Com->BrushCount]->Face_Data[FaceIndex].Sub_Brush = i;
+			App->CL_Editor_Com->B_Brush[App->CL_Editor_Com->BrushCount]->Face_Data[FaceIndex].Main_Face = pList->Faces[i]->Main_Brush_Face;
 
 			App->CL_Editor_Com->B_Brush[App->CL_Editor_Com->BrushCount]->Picking_Data[FaceIndex].WE_Face_Index = i;
 			App->CL_Editor_Com->B_Brush[App->CL_Editor_Com->BrushCount]->Picking_Data[FaceIndex].Global_Face = Global_Faces_Index;
@@ -891,8 +891,8 @@ bool CL64_Mesh_Mgr::WE_Convert_To_Texture_Group(int TextureID)
 					App->CL_Editor_Com->Group[TextureID]->FaceIndex_Data[FacePos].Index = ActualFaceCount;
 
 					//int Brush_Index = App->CL_Editor_Com->B_Brush[Count]->Picking_Data[FaceCount].Actual_Brush_Index;
-					App->CL_Editor_Com->Group[TextureID]->Face_Data[FacePos].Brush_Index = App->CL_Editor_Com->B_Brush[Count]->Face_Data[FaceCount].Brush_Index;;
-					App->CL_Editor_Com->Group[TextureID]->Face_Data[FacePos].WE_Face_Index = App->CL_Editor_Com->B_Brush[Count]->Picking_Data[FaceCount].WE_Face_Index;
+					App->CL_Editor_Com->Group[TextureID]->Face_Data[FacePos].Brush_Index = App->CL_Editor_Com->B_Brush[Count]->Face_Data[FaceCount].Brush_Index;
+					App->CL_Editor_Com->Group[TextureID]->Face_Data[FacePos].WE_Face_Index = App->CL_Editor_Com->B_Brush[Count]->Face_Data[FaceCount].Main_Face;
 				}
 
 				FaceIndexNum++;
@@ -1476,9 +1476,9 @@ void CL64_Mesh_Mgr::UpdateBrushData(HWND hDlg, int Index)
 			int WE_Face = App->CL_Editor_Com->B_Brush[Index]->Picking_Data[Count].WE_Face_Index;
 			int Global_Face = App->CL_Editor_Com->B_Brush[Index]->Picking_Data[Count].Global_Face;
 			int Brush_Index = App->CL_Editor_Com->B_Brush[Index]->Face_Data[Count].Brush_Index;
-			int Sub_Brush = App->CL_Editor_Com->B_Brush[Index]->Face_Data[Count].Sub_Brush;
+			int Main_Face = App->CL_Editor_Com->B_Brush[Index]->Face_Data[Count].Main_Face;
 
-			sprintf(buf, "Text_ID %i %s %i %i Brush_Index %i Sub_Brush %i", TextureID, TextureName2[TextureID], WE_Face, Global_Face, Brush_Index, Sub_Brush);
+			sprintf(buf, "Text_ID %i %s %i %i Brush_Index %i Main_Face %i", TextureID, TextureName2[TextureID], WE_Face, Global_Face, Brush_Index, Main_Face);
 			SendDlgItemMessage(hDlg, IDC_LISTDATA, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 			Count++;
 		}

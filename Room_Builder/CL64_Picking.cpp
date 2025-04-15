@@ -379,6 +379,9 @@ int CL64_Picking::Get_Brush_Index()
     App->CL_Doc->DoBrushSelection(Selected_Brush, brushSelToggle);
     App->CL_Brush_X->Select_Brush_Editor(Selected_Brush);
 
+    App->CL_Face->Selected_Face_Index = App->CL_Editor_Com->Group[Group_Index]->Face_Data[Local_Face].WE_Face_Index-1;
+    App->CL_Top_Tabs->Select_Face();
+
     return m_Brush_Index;
 }
 
