@@ -33,7 +33,7 @@ public:
 
 	BrushList* BrushList_CreateFromFile(bool SubBrush);
 	Brush* Brush_CreateFromFile(bool SubBrush);
-	FaceList* FaceList_CreateFromFile(bool SubBrush);
+	FaceList* FaceList_CreateFromFile();
 	Face* Face_CreateFromFile();
 
 	bool Get_Version(char* Buffer);

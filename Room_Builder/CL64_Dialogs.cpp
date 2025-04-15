@@ -44,7 +44,7 @@ CL64_Dialogs::CL64_Dialogs(void)
 	btext[0] = 0;
 	Chr_Text[0] = 0;;
 	mTextureFile[0] = 0;
-
+	Face_Index = 0;
 	Check_What = 0;
 
 	flag_Dlg_Canceled = 0;
@@ -591,7 +591,10 @@ void CL64_Dialogs::Fill_Brush_Combo(HWND hDlg)
 // *************************************************************************
 void CL64_Dialogs::List_BrushData(HWND hDlg)
 {
+
 	SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
+	Face_Index = 0;
+	
 	char buf[255];
 	int Count = App->CL_Brush->Get_Brush_Count();
 
@@ -759,7 +762,8 @@ bool CL64_Dialogs::Show_Brush_Faces_Info(const FaceList* pList, HWND hDlg)
 
 		for (i = 0; i < pList->NumFaces; i++)
 		{
-			if (!Show_Face_Data(i, pList->Faces[i], hDlg)) return 0;
+			if (!Show_Face_Data(Face_Index, pList->Faces[i], hDlg)) return 0;
+			Face_Index++;
 		}
 
 		sprintf(buf, "%s", " -------------------------------------------");

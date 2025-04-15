@@ -1356,7 +1356,9 @@ void CL64_Doc::Set_Faces_To_Brush_Name_All()
         App->CL_SelBrushList->SelBrushList_Add(App->CL_Doc->pSelBrushes, App->CL_Properties_Brushes->Selected_Brush);
         App->CL_Doc->UpdateSelected();
 
+        // TODO are these in the right Place;
         App->CL_Doc->SelectAllFacesInBrushes();
+        App->CL_Brush_X->Set_Brush_Faces_Index(App->CL_Properties_Brushes->Selected_Brush);
 
         Count++;
     }

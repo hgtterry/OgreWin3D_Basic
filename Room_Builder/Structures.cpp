@@ -257,7 +257,7 @@ static signed int SelAllBrushFaces(Brush* pBrush, void* lParam)
 
 		strcpy(buff, App->CL_Brush->Brush_GetName(App->CL_Doc->CurBrush));
 		App->CL_Face->Face_SetBrushName(pFace, buff);
-
+		
 		App->CL_Face->Face_SetSelected(pFace, GE_TRUE);
 		App->CL_SelFaceList->SelFaceList_Add(App->CL_Doc->pSelFaces, pFace);
 	}

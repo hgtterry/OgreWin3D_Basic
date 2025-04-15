@@ -135,7 +135,7 @@ Brush* CL64_ParseFile::Brush_CreateFromFile(bool SubBrush)
 	{
 	case BRUSH_LEAF:
 	{
-		fl = FaceList_CreateFromFile(false);
+		fl = FaceList_CreateFromFile();
 		if (fl == NULL)
 		{
 			App->Say("Can not create face");
@@ -193,7 +193,7 @@ Brush* CL64_ParseFile::Brush_CreateFromFile(bool SubBrush)
 // *************************************************************************
 // *	     FaceList_CreateFromFile:- Terry and Hazel Flanigan 2025       *
 // *************************************************************************
-FaceList* CL64_ParseFile::FaceList_CreateFromFile(bool SubBrush)
+FaceList* CL64_ParseFile::FaceList_CreateFromFile()
 {
 	int NumFaces;
 	FaceList* pList = NULL;
@@ -211,15 +211,8 @@ FaceList* CL64_ParseFile::FaceList_CreateFromFile(bool SubBrush)
 			pFace = Face_CreateFromFile();
 			if (pFace != NULL)
 			{
-				if (SubBrush == true)
-				{
-					pFace->Main_Brush_Face = i + 7;
-				}
-				else
-				{
-					pFace->Main_Brush_Face = i + 1;
-				}
 
+				pFace->Main_Brush_Face = 0;
 				App->CL_FaceList->FaceList_AddFace(pList, pFace);
 				//App->CL_Face->Face_SetTextureLock(pFace, true);
 			}

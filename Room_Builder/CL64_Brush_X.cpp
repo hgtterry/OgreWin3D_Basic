@@ -31,6 +31,7 @@ THE SOFTWARE.
 CL64_Brush_X::CL64_Brush_X()
 {
 	Face_Count = 0;
+	Face_Index_Set = 0;
 }
 
 CL64_Brush_X::~CL64_Brush_X()
@@ -329,5 +330,100 @@ void CL64_Brush_X::Select_Brush_Editor(Brush* b)
 
 		App->CL_Properties_Tabs->Select_Brushes_Tab();
 	}
+}
+
+// *************************************************************************
+// *	  	  Set_Brush_Faces_Index:- Terry and Hazel Flanigan 2025		   *
+// *************************************************************************
+void CL64_Brush_X::Set_Brush_Faces_Index(Brush* b)
+{
+	Face_Index_Set = 0;
+
+	if (b)
+	{
+		if (b)
+		{
+			Show_Brush_Info(App->CL_Properties_Brushes->Selected_Brush);
+		}
+	}
+	else
+	{
+		char buf[20];
+		sprintf(buf, "%s", "Brushes Invalid");
+		App->Say(buf);
+	}
+}
+
+// *************************************************************************
+// *	  	Show_Brush_Info:- Terry and Hazel Flanigan 2025				   *
+// *************************************************************************
+bool CL64_Brush_X::Show_Brush_Info(const Brush* b)
+{
+	if (b->Type == BRUSH_MULTI)
+	{
+		return Show_Brush_ListInfo(b->BList);
+	}
+	if (b->Type == BRUSH_LEAF)
+	{
+		return Show_Brush_Faces_Info(b->Faces);
+	}
+	if (b->Type == BRUSH_CSG)
+	{
+		App->Say("BRUSH_CSG");
+	}
+
+	return 1;
+}
+
+// *************************************************************************
+// *	  	Show_Brush_ListInfo:- Terry and Hazel Flanigan 2025			   *
+// *************************************************************************
+bool CL64_Brush_X::Show_Brush_ListInfo(BrushList* BList)
+{
+	Brush* pBrush;
+	BrushIterator bi;
+
+	pBrush = App->CL_Brush->BrushList_GetFirst(BList, &bi);
+	while (pBrush != NULL)
+	{
+		Show_Brush_Info(pBrush); // Recursive
+		pBrush = App->CL_Brush->BrushList_GetNext(&bi);
+	}
+
+	return 1;
+}
+
+// *************************************************************************
+// *	  Show_Brush_Faces_Info:- Terry and Hazel Flanigan 2025			   *
+// *************************************************************************
+bool CL64_Brush_X::Show_Brush_Faces_Info(const FaceList* pList)
+{
+	int i;
+
+	if (pList->NumFaces < 0)
+	{
+	}
+	else
+	{
+		for (i = 0; i < pList->NumFaces; i++)
+		{
+			if (!Show_Face_Data(Face_Index_Set, pList->Faces[i])) return 0;
+			Face_Index_Set++;
+		}
+	}
+
+	return 1;
+}
+
+// *************************************************************************
+// *		  Show_Face_Data:- Terry and Hazel Flanigan 2025			   *
+// *************************************************************************
+bool CL64_Brush_X::Show_Face_Data(int Index, Face* f)
+{
+	int m_Index = Index+1;
+
+	f->Main_Brush_Face = m_Index;
+	
+	return 1;
 }
 

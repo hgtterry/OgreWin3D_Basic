@@ -76,6 +76,7 @@ private:
 	bool Show_Face_Data(int Index, const Face* f, HWND hDlg);
 	void List_Used_Textures(HWND List);
 
+	int Face_Index;
 	int Check_What;
 	int m_ListType;
 	char Message_Text_Header[MAX_PATH];
