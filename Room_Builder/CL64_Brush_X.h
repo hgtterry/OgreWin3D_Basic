@@ -39,10 +39,10 @@ public:
 	void Select_Brush_Editor(Brush* b);
 
 	void Set_Brush_Faces_Index(Brush* b);
-	bool Show_Brush_Info(const Brush* b);
-	bool Show_Brush_ListInfo(BrushList* BList);
-	bool Show_Brush_Faces_Info(const FaceList* pList);
-	bool Show_Face_Data(int Index, Face* f);
+	bool Decode_Brush(const Brush* b);
+	bool Set_Sub_Brush_Faces_Indexs(BrushList* BList);
+	bool Set_Brush_Faces_Indexs(const FaceList* pList);
+	bool Set_Face_Index(int Index, Face* f);
 
 	int Face_Count;
 	int Face_Index_Set;

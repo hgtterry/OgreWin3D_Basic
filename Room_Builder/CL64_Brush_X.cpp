@@ -343,7 +343,7 @@ void CL64_Brush_X::Set_Brush_Faces_Index(Brush* b)
 	{
 		if (b)
 		{
-			Show_Brush_Info(App->CL_Properties_Brushes->Selected_Brush);
+			Decode_Brush(App->CL_Properties_Brushes->Selected_Brush);
 		}
 	}
 	else
@@ -357,15 +357,15 @@ void CL64_Brush_X::Set_Brush_Faces_Index(Brush* b)
 // *************************************************************************
 // *	  	Show_Brush_Info:- Terry and Hazel Flanigan 2025				   *
 // *************************************************************************
-bool CL64_Brush_X::Show_Brush_Info(const Brush* b)
+bool CL64_Brush_X::Decode_Brush(const Brush* b)
 {
 	if (b->Type == BRUSH_MULTI)
 	{
-		return Show_Brush_ListInfo(b->BList);
+		return Set_Sub_Brush_Faces_Indexs(b->BList);
 	}
-	if (b->Type == BRUSH_LEAF)
+	if (b->Type == BRUSH_LEAF) // Single
 	{
-		return Show_Brush_Faces_Info(b->Faces);
+		return Set_Brush_Faces_Indexs(b->Faces);
 	}
 	if (b->Type == BRUSH_CSG)
 	{
@@ -376,9 +376,9 @@ bool CL64_Brush_X::Show_Brush_Info(const Brush* b)
 }
 
 // *************************************************************************
-// *	  	Show_Brush_ListInfo:- Terry and Hazel Flanigan 2025			   *
+// *	  Set_Sub_Brush_Faces_Indexs:- Terry and Hazel Flanigan 2025	   *
 // *************************************************************************
-bool CL64_Brush_X::Show_Brush_ListInfo(BrushList* BList)
+bool CL64_Brush_X::Set_Sub_Brush_Faces_Indexs(BrushList* BList)
 {
 	Brush* pBrush;
 	BrushIterator bi;
@@ -386,7 +386,7 @@ bool CL64_Brush_X::Show_Brush_ListInfo(BrushList* BList)
 	pBrush = App->CL_Brush->BrushList_GetFirst(BList, &bi);
 	while (pBrush != NULL)
 	{
-		Show_Brush_Info(pBrush); // Recursive
+		Decode_Brush(pBrush); // Recursive
 		pBrush = App->CL_Brush->BrushList_GetNext(&bi);
 	}
 
@@ -394,9 +394,9 @@ bool CL64_Brush_X::Show_Brush_ListInfo(BrushList* BList)
 }
 
 // *************************************************************************
-// *	  Show_Brush_Faces_Info:- Terry and Hazel Flanigan 2025			   *
+// *	  Set_Brush_Faces_Indexs:- Terry and Hazel Flanigan 2025		   *
 // *************************************************************************
-bool CL64_Brush_X::Show_Brush_Faces_Info(const FaceList* pList)
+bool CL64_Brush_X::Set_Brush_Faces_Indexs(const FaceList* pList)
 {
 	int i;
 
@@ -407,7 +407,7 @@ bool CL64_Brush_X::Show_Brush_Faces_Info(const FaceList* pList)
 	{
 		for (i = 0; i < pList->NumFaces; i++)
 		{
-			if (!Show_Face_Data(Face_Index_Set, pList->Faces[i])) return 0;
+			if (!Set_Face_Index(Face_Index_Set, pList->Faces[i])) return 0;
 			Face_Index_Set++;
 		}
 	}
@@ -416,9 +416,9 @@ bool CL64_Brush_X::Show_Brush_Faces_Info(const FaceList* pList)
 }
 
 // *************************************************************************
-// *		  Show_Face_Data:- Terry and Hazel Flanigan 2025			   *
+// *		  Set_Face_Index:- Terry and Hazel Flanigan 2025			   *
 // *************************************************************************
-bool CL64_Brush_X::Show_Face_Data(int Index, Face* f)
+bool CL64_Brush_X::Set_Face_Index(int Index, Face* f)
 {
 	int m_Index = Index+1;
 
