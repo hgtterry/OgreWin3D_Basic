@@ -48,11 +48,11 @@ public:
 	bool Brush_Build_Level_Brushes(Level3* pLevel, const char* Filename, BrushList* BList, int ExpSelected, signed int ExpLights, int GroupID);
 	bool Brush_Decode_List(BrushList* BList, signed int SubBrush);
 
-	bool Brush_Create(const Brush* b, int Actual_Brush_Index);
-	bool HandleLeafBrush(const Brush* b, int Actual_Brush_Index);
-	bool HandleCSGBrush(const Brush* b, int Actual_Brush_Index);
+	bool Brush_Create(const Brush* b);
+	bool HandleLeafBrush(const Brush* b);
+	bool HandleCSGBrush(const Brush* b);
 
-	bool Brush_FaceList_Create(const Brush* b, const FaceList* pList, int BrushCount, int SubBrushCount, int Actual_Brush_Index);
+	bool Brush_FaceList_Create(const Brush* b, const FaceList* pList, int BrushCount, int SubBrushCount);
 
 	bool WE_Convert_All_Texture_Groups();
 	int WE_Get_Vertice_Count(int TextureID);
@@ -77,8 +77,7 @@ public:
 	int	mBrushCount;
 	int	mSubBrushCount;
 	int mTextureCount;
-	int Global_Faces_Index;
-	int Actual_Brush_Index;
+	
 	int mAdjusedIndex_Store[500];
 	int IsTextureAlpha[20];
 	

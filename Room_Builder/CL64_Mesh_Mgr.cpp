@@ -37,9 +37,7 @@ CL64_Mesh_Mgr::CL64_Mesh_Mgr()
 	m_Total_Faces = 0;
 	mBrushCount = 0;
 	mSubBrushCount = 0;
-	Global_Faces_Index = 0;
 	mTextureCount = 0;
-	Actual_Brush_Index = 0;
 	ActualFaceCount = 0;
 	m_Main_Brush_Name[0] = 0;
 
@@ -119,7 +117,6 @@ void CL64_Mesh_Mgr::Delete_Brush_List()
 
 	App->CL_Editor_Com->BrushCount = 0;
 	App->CL_Editor_Com->Brush_Face_Count = 0;
-	Global_Faces_Index = 0;
 	m_Total_Faces = 0;
 }
 
@@ -276,8 +273,7 @@ bool CL64_Mesh_Mgr::Brush_Build_Level_Brushes(Level3* pLevel, const char* Filena
 	mTextureCount = 0;
 	memset(mAdjusedIndex_Store, 0, sizeof(mAdjusedIndex_Store));
 	memset(UsedTextures, 0, sizeof(UsedTextures));
-	Actual_Brush_Index = 0;
-
+	
 	App->CL_Brush_X->BrushList_GetUsedTextures_X(BList, UsedTextures);
 
 	// Add Textures GL
@@ -334,7 +330,7 @@ bool CL64_Mesh_Mgr::Brush_Decode_List(BrushList* BList, signed int SubBrush)
 				
 			}
 
-			if (!Brush_Create(pBrush, Actual_Brush_Index))
+			if (!Brush_Create(pBrush))
 			{
 				return false;
 			}
@@ -346,7 +342,6 @@ bool CL64_Mesh_Mgr::Brush_Decode_List(BrushList* BList, signed int SubBrush)
 			else
 			{
 				mBrushCount++;
-				Actual_Brush_Index++;
 				strcpy(Actual_mBrush_Name, pBrush->Name);
 			}
 		}
@@ -368,7 +363,7 @@ bool CL64_Mesh_Mgr::Brush_Decode_List(BrushList* BList, signed int SubBrush)
 // *************************************************************************
 // *			Brush_Create:- Terry and Hazel Flanigan 2025			   *
 // *************************************************************************
-bool CL64_Mesh_Mgr::Brush_Create(const Brush* b, int Actual_Brush_Index)
+bool CL64_Mesh_Mgr::Brush_Create(const Brush* b)
 {
 	if (!b) return false; // Check for null pointer
 	
@@ -378,10 +373,10 @@ bool CL64_Mesh_Mgr::Brush_Create(const Brush* b, int Actual_Brush_Index)
 		return Brush_Decode_List(b->BList, true); // Recursive
 
 	case BRUSH_LEAF:
-		return HandleLeafBrush(b, Actual_Brush_Index);
+		return HandleLeafBrush(b);
 
 	case BRUSH_CSG:
-		return HandleCSGBrush(b, Actual_Brush_Index);
+		return HandleCSGBrush(b);
 
 	default:
 		return false;
@@ -391,7 +386,7 @@ bool CL64_Mesh_Mgr::Brush_Create(const Brush* b, int Actual_Brush_Index)
 // *************************************************************************
 // *			HandleLeafBrush:- Terry and Hazel Flanigan 2025			   *
 // *************************************************************************
-bool CL64_Mesh_Mgr::HandleLeafBrush(const Brush* b, int Actual_Brush_Index)
+bool CL64_Mesh_Mgr::HandleLeafBrush(const Brush* b)
 {
 	if (b->BList)
 	{
@@ -399,7 +394,7 @@ bool CL64_Mesh_Mgr::HandleLeafBrush(const Brush* b, int Actual_Brush_Index)
 	}
 	else if (!(b->Flags & (BRUSH_HOLLOW | BRUSH_HOLLOWCUT | BRUSH_SUBTRACT)))
 	{
-		return Brush_FaceList_Create(b, b->Faces, mBrushCount, mSubBrushCount, Actual_Brush_Index);
+		return Brush_FaceList_Create(b, b->Faces, mBrushCount, mSubBrushCount);
 	}
 	else if ((b->Flags & BRUSH_SUBTRACT) && !(b->Flags & (BRUSH_HOLLOW | BRUSH_HOLLOWCUT)))
 	{
@@ -411,11 +406,11 @@ bool CL64_Mesh_Mgr::HandleLeafBrush(const Brush* b, int Actual_Brush_Index)
 // *************************************************************************
 // *			HandleCSGBrush:- Terry and Hazel Flanigan 2025			   *
 // *************************************************************************
-bool CL64_Mesh_Mgr::HandleCSGBrush(const Brush* b, int Actual_Brush_Index)
+bool CL64_Mesh_Mgr::HandleCSGBrush(const Brush* b)
 {
 	if (!(b->Flags & (BRUSH_HOLLOW | BRUSH_HOLLOWCUT | BRUSH_SUBTRACT)))
 	{
-		return Brush_FaceList_Create(b, b->Faces, mBrushCount, mSubBrushCount, Actual_Brush_Index);
+		return Brush_FaceList_Create(b, b->Faces, mBrushCount, mSubBrushCount);
 	}
 
 	return true;
@@ -424,7 +419,7 @@ bool CL64_Mesh_Mgr::HandleCSGBrush(const Brush* b, int Actual_Brush_Index)
 // *************************************************************************
 // *		Brush_FaceList_Create:- Terry and Hazel Flanigan 2025		   *
 // *************************************************************************
-bool CL64_Mesh_Mgr::Brush_FaceList_Create(const Brush* b, const FaceList* pList, int BrushCount, int SubBrushCount, int Actual_Brush_Index)
+bool CL64_Mesh_Mgr::Brush_FaceList_Create(const Brush* b, const FaceList* pList, int BrushCount, int SubBrushCount)
 {
 	App->CL_Editor_Com->Create_Brush_XX(App->CL_Editor_Com->BrushCount);
 	strcpy(App->CL_Editor_Com->B_Brush[App->CL_Editor_Com->BrushCount]->Brush_Name, m_Main_Brush_Name);
@@ -567,16 +562,10 @@ bool CL64_Mesh_Mgr::Brush_FaceList_Create(const Brush* b, const FaceList* pList,
 			App->CL_Editor_Com->B_Brush[App->CL_Editor_Com->BrushCount]->Face_Data[FaceIndex].a = num_verts;
 			App->CL_Editor_Com->B_Brush[App->CL_Editor_Com->BrushCount]->Face_Data[FaceIndex].b = num_verts + 2 + j;
 			App->CL_Editor_Com->B_Brush[App->CL_Editor_Com->BrushCount]->Face_Data[FaceIndex].c = num_verts + 1 + j;
-			App->CL_Editor_Com->B_Brush[App->CL_Editor_Com->BrushCount]->Face_Data[FaceIndex].face_Index = v_Face_Data_Count;
 			App->CL_Editor_Com->B_Brush[App->CL_Editor_Com->BrushCount]->Face_Data[FaceIndex].Brush_Index = Main_Brush_Index;
 			App->CL_Editor_Com->B_Brush[App->CL_Editor_Com->BrushCount]->Face_Data[FaceIndex].Main_Face = pList->Faces[i]->Main_Brush_Face;
 
-			App->CL_Editor_Com->B_Brush[App->CL_Editor_Com->BrushCount]->Picking_Data[FaceIndex].WE_Face_Index = i;
-			App->CL_Editor_Com->B_Brush[App->CL_Editor_Com->BrushCount]->Picking_Data[FaceIndex].Global_Face = Global_Faces_Index;
-			App->CL_Editor_Com->B_Brush[App->CL_Editor_Com->BrushCount]->Picking_Data[FaceIndex].Actual_Brush_Index = Actual_Brush_Index;
-
 			FaceIndex++;
-			Global_Faces_Index++;
 			v_Face_Data_Count++;
 		}
 
@@ -777,8 +766,6 @@ bool CL64_Mesh_Mgr::WE_Convert_To_Texture_Group(int TextureID)
 				B = App->CL_Editor_Com->B_Brush[Count]->Face_Data[FaceCount].b;
 				C = App->CL_Editor_Com->B_Brush[Count]->Face_Data[FaceCount].c;
 
-				int FI = App->CL_Editor_Com->B_Brush[Count]->Face_Data[FaceCount].face_Index;
-
 				X = App->CL_Editor_Com->B_Brush[Count]->vertex_Data[A].x;
 				Y = App->CL_Editor_Com->B_Brush[Count]->vertex_Data[A].y;
 				Z = App->CL_Editor_Com->B_Brush[Count]->vertex_Data[A].z;
@@ -892,7 +879,7 @@ bool CL64_Mesh_Mgr::WE_Convert_To_Texture_Group(int TextureID)
 
 					//int Brush_Index = App->CL_Editor_Com->B_Brush[Count]->Picking_Data[FaceCount].Actual_Brush_Index;
 					App->CL_Editor_Com->Group[TextureID]->Face_Data[FacePos].Brush_Index = App->CL_Editor_Com->B_Brush[Count]->Face_Data[FaceCount].Brush_Index;
-					App->CL_Editor_Com->Group[TextureID]->Face_Data[FacePos].WE_Face_Index = App->CL_Editor_Com->B_Brush[Count]->Face_Data[FaceCount].Main_Face;
+					App->CL_Editor_Com->Group[TextureID]->Face_Data[FacePos].Main_Face = App->CL_Editor_Com->B_Brush[Count]->Face_Data[FaceCount].Main_Face;
 				}
 
 				FaceIndexNum++;
@@ -1472,13 +1459,10 @@ void CL64_Mesh_Mgr::UpdateBrushData(HWND hDlg, int Index)
 		while (Count < App->CL_Editor_Com->B_Brush[Index]->Face_Count)
 		{
 			int TextureID = App->CL_Editor_Com->B_Brush[Index]->Picking_Data[Count].TextID;
-
-			int WE_Face = App->CL_Editor_Com->B_Brush[Index]->Picking_Data[Count].WE_Face_Index;
-			int Global_Face = App->CL_Editor_Com->B_Brush[Index]->Picking_Data[Count].Global_Face;
 			int Brush_Index = App->CL_Editor_Com->B_Brush[Index]->Face_Data[Count].Brush_Index;
 			int Main_Face = App->CL_Editor_Com->B_Brush[Index]->Face_Data[Count].Main_Face;
 
-			sprintf(buf, "Text_ID %i %s %i %i Brush_Index %i Main_Face %i", TextureID, TextureName2[TextureID], WE_Face, Global_Face, Brush_Index, Main_Face);
+			sprintf(buf, "Text_ID %i %s Brush_Index %i Main_Face %i", TextureID, TextureName2[TextureID], Brush_Index, Main_Face);
 			SendDlgItemMessage(hDlg, IDC_LISTDATA, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 			Count++;
 		}

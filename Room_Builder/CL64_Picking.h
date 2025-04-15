@@ -46,7 +46,7 @@ public:
 	char TextureName[MAX_PATH];
 	char m_Texture_FileName[MAX_PATH];
 
-	int WE_Face_Index;
+	int m_Main_Face;
 	int Face_Index;
 	int Sub_Mesh_Count;
 	int m_SubMesh;
