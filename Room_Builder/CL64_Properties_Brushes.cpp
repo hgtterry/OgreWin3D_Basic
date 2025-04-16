@@ -353,8 +353,9 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Brush_Tabs(HWND hDlg, UINT messag
 				bool Doit = App->CL_Dialogs->flag_Dlg_Canceled;
 				if (Doit == 0)
 				{
+					App->CL_Ogre->OGL_Listener->Show_Visuals(false);
 					App->CL_Doc->DeleteCurrentThing();
-					App->CL_Doc->ResetAllSelectedBrushes();
+					//App->CL_Doc->ResetAllSelectedBrushes();
 				}
 			}
 			else

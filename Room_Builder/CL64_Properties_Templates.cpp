@@ -169,6 +169,8 @@ LRESULT CALLBACK CL64_Properties_Templates::Proc_Templates(HWND hDlg, UINT messa
 				}
 			}
 
+			App->CL_Doc->Set_Faces_To_Brush_Name_All();
+
 			App->CL_Doc->Do_General_Select_Dlg(true);
 
 			App->CL_Doc->mCurrentTool = CURTOOL_NONE;
