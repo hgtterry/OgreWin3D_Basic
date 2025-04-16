@@ -728,7 +728,7 @@ void CL64_Top_Tabs::Select_Face()
 	{
 		App->CL_Top_Tabs->Deselect_Faces_Dlg_Buttons();
 		App->CL_Top_Tabs->flag_Next_Face = 1;
-		//RedrawWindow(App->CL_Top_Tabs->Headers_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+		RedrawWindow(App->CL_Top_Tabs->Headers_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
 		App->CL_Doc->SelectAllFacesInBrushes();
 		App->CL_Face->Select_Face_From_Index(App->CL_Face->Selected_Face_Index);
@@ -737,7 +737,7 @@ void CL64_Top_Tabs::Select_Face()
 	{
 		App->CL_Top_Tabs->Deselect_Faces_Dlg_Buttons();
 		App->CL_Top_Tabs->flag_Next_Face = 1;
-		//RedrawWindow(App->CL_Top_Tabs->Headers_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+		RedrawWindow(App->CL_Top_Tabs->Headers_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
 		App->CL_Face->Select_Face_From_Index(App->CL_Face->Selected_Face_Index);
 	}

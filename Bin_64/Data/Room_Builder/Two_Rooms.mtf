@@ -1,7 +1,7 @@
 MTF_Version 1.000000
 TextureLib Default.txl
 Brushlist 6
-Brush Box
+Brush Box_Room_2
 	Flags 1025
 	ModelId 0
 	GroupId 0
@@ -190,7 +190,7 @@ Brush Box
 		LightScale 2.000000 2.000000
 	Transform 0.000000 0.000000 1.000000 0.000000 1.000000 0.000000 -1.000000 0.000000 0.000000 0.000000 0.000000 0.000000
 	Pos -9.999969 0.000000 -663.000000
-Brush Box_1
+Brush Box_Room_1
 	Flags 1025
 	ModelId 0
 	GroupId 0
@@ -379,7 +379,7 @@ Brush Box_1
 		LightScale 2.000000 2.000000
 	Transform 0.000000 0.000000 1.000000 0.000000 1.000000 0.000000 -1.000000 0.000000 0.000000 0.000000 0.000000 0.000000
 	Pos 0.000000 0.000000 0.000000
-Brush Box_2
+Brush Box_Passage_1
 	Flags 1025
 	ModelId 0
 	GroupId 0
@@ -659,7 +659,7 @@ Brush Box_3_Cut
 		LightScale 1.000000 1.000000
 	Transform 0.000000 0.000000 1.000000 -0.000691 1.000000 0.000000 -1.000000 -0.000691 0.000000 0.000000 0.000000 0.000000
 	Pos 0.000000 -17.000000 -245.000000
-Brush Box_4
+Brush Box_Test_TGA
 	Flags 1
 	ModelId 0
 	GroupId 0

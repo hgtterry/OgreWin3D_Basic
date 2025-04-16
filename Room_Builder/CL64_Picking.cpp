@@ -370,18 +370,21 @@ int CL64_Picking::Get_Brush_Index()
     m_Brush_Index = App->CL_Editor_Com->Group[Group_Index]->Face_Data[Local_Face].Brush_Index;
     m_Main_Face = App->CL_Editor_Com->Group[Group_Index]->Face_Data[Local_Face].Main_Face;
                    
-    App->CL_Panels->Deselect_All_Brushes_Update_Dlgs();
-
     App->CL_Properties_Brushes->OnSelchangeBrushlist(m_Brush_Index, true);
 
     Brush* Selected_Brush = App->CL_Brush->Get_Brush_ByIndex(m_Brush_Index);
 
+    // Select Brush but dont show Brush Panel
     App->CL_Doc->DoBrushSelection(Selected_Brush, brushSelToggle);
-    App->CL_Brush_X->Select_Brush_Editor(Selected_Brush);
+    App->CL_Properties_Brushes->Get_Index(Selected_Brush);
+    App->CL_Properties_Brushes->Set_Dlg_Brush_Options_Buttons(true);
+    App->CL_Properties_Brushes->Update_SelectedBrushesCount_Dlg();
 
+    // Select Face Show Face Panel
     App->CL_Face->Selected_Face_Index = m_Main_Face -1;
     App->CL_Top_Tabs->Select_Face();
 
+    // Show Brush Selection and Face Selection Outlines
     App->CL_Ogre->OGL_Listener->Show_Visuals(true);
   
     return m_Brush_Index;
