@@ -300,11 +300,18 @@ void CL64_Properties_Tabs::Select_Textures_Tab()
 {
 	if (Tabs_Control_Hwnd && flag_Tabs_Dlg_Active == 1)
 	{
-		Hide_Dialogs();
-		App->CL_Properties_Textures->Show_Textures_Dialog(true);
-		flag_Tab_Texture = 1;
+		if (flag_Tab_Texture == false)
+		{
+			Hide_Dialogs();
+			App->CL_Properties_Textures->Show_Textures_Dialog(true);
+			flag_Tab_Texture = 1;
 
-		RedrawWindow(Tabs_Control_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			RedrawWindow(Tabs_Control_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+		}
+		else
+		{
+			App->CL_Properties_Textures->Get_Selected_Face();
+		}
 	}
 }
 
