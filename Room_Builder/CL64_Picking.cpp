@@ -382,6 +382,8 @@ int CL64_Picking::Get_Brush_Index()
     App->CL_Face->Selected_Face_Index = m_Main_Face -1;
     App->CL_Top_Tabs->Select_Face();
 
+    App->CL_Ogre->OGL_Listener->Show_Visuals(true);
+  
     return m_Brush_Index;
 }
 

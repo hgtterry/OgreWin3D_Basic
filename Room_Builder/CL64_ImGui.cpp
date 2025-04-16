@@ -542,6 +542,9 @@ void CL64_ImGui::App_Stats_GUI(void)
 
 			ImGui::Text("Render Mode:= %i", App->CL_Ogre->OGL_Listener->Render_Mode);
 			
+			ImGui::Text("Render Selected Brush:= %i", App->CL_Ogre->OGL_Listener->flag_Show_Selected_Brush);
+			ImGui::Text("Render Selected Face:= %i", App->CL_Ogre->OGL_Listener->flag_Show_Selected_Face);
+
 			ImGui::Separator();
 			ImGui::TreePop();
 		}

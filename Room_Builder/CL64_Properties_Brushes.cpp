@@ -464,6 +464,9 @@ void CL64_Properties_Brushes::OnSelchangeBrushlist(int Index, bool Clear)
 		App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
 		Update_SelectedBrushesCount_Dlg();
 		App->CL_Top_Tabs->Update_Faces_Combo();
+
+		App->CL_Ogre->OGL_Listener->Show_Visuals(true);
+		
 	}
 }
 

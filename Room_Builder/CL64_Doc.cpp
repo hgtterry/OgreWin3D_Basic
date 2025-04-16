@@ -536,6 +536,7 @@ void CL64_Doc::SelectOrtho(POINT point, ViewVars* v)
 			{
 				DoBrushSelection(pMinBrush, brushSelToggle);
 				App->CL_Brush_X->Select_Brush_Editor(pMinBrush);
+                App->CL_Ogre->OGL_Listener->Show_Visuals(true);
 			}
 
         } 
@@ -549,6 +550,7 @@ void CL64_Doc::SelectOrtho(POINT point, ViewVars* v)
 
         App->CL_Panels->Deselect_All_Brushes_Update_Dlgs();
         App->CL_Top_Tabs->Update_Faces_Combo();
+        App->CL_Ogre->OGL_Listener->Show_Visuals(false);
     }
 
 }
@@ -577,6 +579,7 @@ void CL64_Doc::ResetAllSelectedFaces(void)
 void CL64_Doc::ResetAllSelectedBrushes(void)
 {
     App->CL_SelBrushList->SelBrushList_RemoveAll(pSelBrushes);
+
    // CurBrush = BTemplate; // hgtterry Check
 }
 

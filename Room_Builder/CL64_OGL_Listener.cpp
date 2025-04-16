@@ -46,8 +46,8 @@ CL64_OGL_Listener::CL64_OGL_Listener(void)
 	mBrushCount = 0;
 	mSubBrushCount = 0;
 
-	flag_Show_Selected_Brush = 1;
-	flag_Show_Selected_Face = 1;
+	flag_Show_Selected_Brush =0;
+	flag_Show_Selected_Face = 0;
 
 	flag_Render_Ogre = 1;
 	flag_Render_Groups = 0;
@@ -62,6 +62,23 @@ CL64_OGL_Listener::CL64_OGL_Listener(void)
 
 CL64_OGL_Listener::~CL64_OGL_Listener(void)
 {
+}
+
+// *************************************************************************
+// *				Show_Visuals:- Terry and Hazel Flanigan 2025		   *
+// *************************************************************************
+void CL64_OGL_Listener::Show_Visuals(bool Show)
+{
+	if (Show == true)
+	{
+		flag_Show_Selected_Brush = 1;
+		flag_Show_Selected_Face = 1;
+	}
+	else
+	{
+		flag_Show_Selected_Brush = 0;
+		flag_Show_Selected_Face = 0;
+	}
 }
 
 // *************************************************************************
@@ -184,15 +201,20 @@ void CL64_OGL_Listener::Render_Loop()
 		Brushes_Render_Faces();
 	}
 
-	// ---------------------- Brush
+	// ---------------------- Selected Brush
 	if (flag_Show_Selected_Brush == 1)
 	{
-		glDisable(GL_CULL_FACE);
-		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-		Render_Selected_Brush();
+		int BC = App->CL_Brush->Get_Brush_Count();
+		if (BC > 0)
+		{
+			glDisable(GL_CULL_FACE);
+			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+			//Render_Selected_Brush();
+			Render_Brush(App->CL_Doc->CurBrush);
+		}
 	}
 
-	// ---------------------- Face
+	// ---------------------- Selected Face
 	if (flag_Show_Selected_Face == 1)
 	{
 		glDisable(GL_CULL_FACE);
@@ -470,7 +492,7 @@ void CL64_OGL_Listener::Render_Selected_Face()
 	int curnum_verts = 0;
 
 	int Count = 0;
-	int Face_Count = App->CL_SelFaceList->SelFaceList_GetSize(App->CL_Doc->pSelFaces);;
+	int Face_Count = App->CL_SelFaceList->SelFaceList_GetSize(App->CL_Doc->pSelFaces);
 	
 	if (Face_Count > 0)
 	{
@@ -618,6 +640,97 @@ bool CL64_OGL_Listener::Brush_FaceList_Render(const Brush* b, const FaceList* pL
 
 		glEnd();
 	}
+
+	return GE_TRUE;
+}
+
+// *************************************************************************
+// *	  	Render_Brush:- Terry and Hazel Flanigan 2025				   *
+// *************************************************************************
+bool CL64_OGL_Listener::Render_Brush(const Brush* b)
+{
+
+	if (b->Type == BRUSH_MULTI)
+	{
+		return Render_Sub_Brushes(b->BList); // Recursive
+	}
+	if (b->Type == BRUSH_LEAF)
+	{
+		return Render_Faces(b->Faces);
+	}
+	if (b->Type == BRUSH_CSG)
+	{
+		//App->Say("BRUSH_CSG");
+	}
+
+	return 1;
+}
+
+// *************************************************************************
+// *	  	Render_Sub_Brushes:- Terry and Hazel Flanigan 2025			   *
+// *************************************************************************
+bool CL64_OGL_Listener::Render_Sub_Brushes(BrushList* BList)
+{
+	Brush* pBrush;
+	BrushIterator bi;
+
+	pBrush = App->CL_Brush->BrushList_GetFirst(BList, &bi);
+	while (pBrush != NULL)
+	{
+		Render_Brush(pBrush);  // Recursive
+
+		pBrush = App->CL_Brush->BrushList_GetNext(&bi);
+	}
+
+	return 1;
+}
+
+// *************************************************************************
+// *			Render_Faces:- Terry and Hazel Flanigan 2025			   *
+// *************************************************************************
+bool CL64_OGL_Listener::Render_Faces(const FaceList* pList)
+{
+	int i;
+
+	if (pList->NumFaces < 0)
+	{
+	}
+	else
+	{
+		for (i = 0; i < pList->NumFaces; i++)
+		{
+			if (!Render_Face(pList->Faces[i])) return 0;
+		}
+	}
+
+	return 1;
+}
+
+// *************************************************************************
+// *				Render_Face:- Terry and Hazel Flanigan 2025			   *
+// *************************************************************************
+bool CL64_OGL_Listener::Render_Face(const Face* f)
+{
+	int j, num_verts, curnum_verts;
+
+	num_verts = 0;
+	curnum_verts = 0;
+
+	// -----------------------------------  Vertices
+	glColor3f(0.0f, 1.0f, 1.0f);
+
+	const T_Vec3* verts;
+	verts = App->CL_Face->Face_GetPoints(f);
+	curnum_verts = App->CL_Face->Face_GetNumPoints(f);
+
+	glBegin(GL_POLYGON);
+
+	for (j = 0; j < curnum_verts; j++)
+	{
+		glVertex3f(verts[j].x, verts[j].y, verts[j].z);
+	}
+
+	glEnd();
 
 	return GE_TRUE;
 }

@@ -32,6 +32,13 @@ public:
 	CL64_OGL_Listener(void);
 	~CL64_OGL_Listener(void);
 
+	// Show Selected Brush and Face Outlines
+	void Show_Visuals(bool Show);
+
+	bool Get_Brush(const Brush* b);
+	bool Brush_Decode_List(BrushList* BList);
+	bool Brush_FaceList_Render(const Brush* b, const FaceList* pList);
+
 	float RX;
 	float RZ;
 
@@ -49,10 +56,6 @@ public:
 	// Brushes
 	bool flag_Render_Just_Brush;
 	int Selected_Brush_Index;
-
-	bool Get_Brush(const Brush* b);
-	bool Brush_Decode_List(BrushList* BList);
-	bool Brush_FaceList_Render(const Brush* b, const FaceList* pList);
 
 	int Render_Mode;
 
@@ -85,6 +88,11 @@ private:
 
 	void Render_Selected_Brush();
 	void Render_Selected_Face();
+
+	bool Render_Brush(const Brush* b);
+	bool Render_Sub_Brushes(BrushList* BList);
+	bool Render_Faces(const FaceList* pList);
+	bool Render_Face(const Face* f);
 
 	bool Light_Activated;
 

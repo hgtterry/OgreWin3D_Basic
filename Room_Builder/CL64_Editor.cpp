@@ -172,8 +172,7 @@ void CL64_Editor_Com::Preview_Mode(void)
 
 		App->CL_Properties_Tabs->Enable_Tabs_Dlg(false);
 
-		App->CL_Ogre->OGL_Listener->flag_Show_Selected_Brush = 0;
-		App->CL_Ogre->OGL_Listener->flag_Show_Selected_Face = 0;
+		App->CL_Ogre->OGL_Listener->Show_Visuals(false);
 
 		//SetCursorPos(App->CursorPosX, App->CursorPosY);
 
@@ -224,8 +223,7 @@ void CL64_Editor_Com::Editor_Mode(void)
 
 	App->CL_Properties_Tabs->Enable_Tabs_Dlg(true);
 	
-	App->CL_Ogre->OGL_Listener->flag_Show_Selected_Brush = 1;
-	App->CL_Ogre->OGL_Listener->flag_Show_Selected_Face = 1;
+	App->CL_Ogre->OGL_Listener->Show_Visuals(true);
 
 }
 
@@ -234,6 +232,8 @@ void CL64_Editor_Com::Editor_Mode(void)
 // *************************************************************************
 void CL64_Editor_Com::Clear_Level(bool FromFile)
 {
+	App->CL_Ogre->OGL_Listener->Show_Visuals(false);
+
 	Reset_Class(); // This Class
 	
 	App->CL_FileView->Reset_Class();
