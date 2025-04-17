@@ -59,7 +59,7 @@ Level* CL64_Level::Level_Create()
 		}
 
 		strcpy(pLevel->WadPathFile,"Empty");
-		pLevel->CL_WadFile = NULL;
+		pLevel->CL_Wad_Class = NULL;
 		pLevel->WadSizeInfos = NULL;
 
 		GridInfo* pGridInfo;
@@ -200,10 +200,10 @@ void Level_UnloadWad(Level* pLevel)
 		App->CL_Maths->Ram_Free(pLevel->WadSizeInfos);
 		pLevel->WadSizeInfos = NULL;
 	}
-	if (pLevel->CL_WadFile != NULL)
+	if (pLevel->CL_Wad_Class != NULL)
 	{
-		delete pLevel->CL_WadFile;
-		pLevel->CL_WadFile = NULL;
+		delete pLevel->CL_Wad_Class;
+		pLevel->CL_Wad_Class = NULL;
 	}
 }
 
@@ -215,8 +215,8 @@ signed int CL64_Level::Level_LoadWad(Level* pLevel)
 	// get rid of the old wad...
 	//Level_UnloadWad(pLevel);
 
-	pLevel->CL_WadFile = new CL64_WadFile();
-	if (pLevel->CL_WadFile == NULL)
+	pLevel->CL_Wad_Class = new CL64_WadFile();
+	if (pLevel->CL_Wad_Class == NULL)
 	{
 		App->Say("Cant Create Wad File", (LPSTR)"");
 
@@ -224,9 +224,9 @@ signed int CL64_Level::Level_LoadWad(Level* pLevel)
 	}
 
 
-	if (pLevel->CL_WadFile->Setup())
+	if (pLevel->CL_Wad_Class->Setup())
 	{
-		pLevel->WadSizeInfos = (SizeInfo*)App->CL_Maths->Ram_Allocate(sizeof(SizeInfo) * pLevel->CL_WadFile->mBitmapCount);
+		pLevel->WadSizeInfos = (SizeInfo*)App->CL_Maths->Ram_Allocate(sizeof(SizeInfo) * pLevel->CL_Wad_Class->mBitmapCount);
 
 		if (pLevel->WadSizeInfos != NULL)
 		{
@@ -238,7 +238,7 @@ signed int CL64_Level::Level_LoadWad(Level* pLevel)
 				WadFileEntry* Entry;
 
 				pInfo = &(pLevel->WadSizeInfos[i]);
-				Entry = &(pLevel->CL_WadFile->mBitmaps[i]);
+				Entry = &(pLevel->CL_Wad_Class->mBitmaps[i]);
 
 				pInfo->TexWidth = Entry->Width;
 				pInfo->TexHeight = Entry->Height;
@@ -267,11 +267,11 @@ void CL64_Level::Level_SetWadPath(Level* pLevel, const char* NewWad)
 }
 
 // *************************************************************************
-// *							Level_GetWadFile						   *
+// *							Level_GetWad_Class						   *
 // *************************************************************************
-CL64_WadFile* CL64_Level::Level_GetWadFile(Level* pLevel)
+CL64_WadFile* CL64_Level::Level_GetWad_Class(Level* pLevel)
 {
-	return pLevel->CL_WadFile;
+	return pLevel->CL_Wad_Class;
 }
 
 // *************************************************************************
@@ -299,13 +299,13 @@ WadFileEntry* CL64_Level::Level_GetWadBitmap(Level* pLevel, const char* Name)
 {
 	Ogre::uint16 i;
 
-	if ((!pLevel) || (!pLevel->CL_WadFile))
+	if ((!pLevel) || (!pLevel->CL_Wad_Class))
 		return NULL;
 
-	i = Level_GetDibIdFromWad(pLevel->CL_WadFile, Name);
+	i = Level_GetDibIdFromWad(pLevel->CL_Wad_Class, Name);
 	if (i != 0xffff)
 	{
-		return &(pLevel->CL_WadFile->mBitmaps[i]);
+		return &(pLevel->CL_Wad_Class->mBitmaps[i]);
 	}
 	else
 	{
@@ -318,7 +318,7 @@ WadFileEntry* CL64_Level::Level_GetWadBitmap(Level* pLevel, const char* Name)
 // *************************************************************************
 Ogre::uint16 CL64_Level::Level_GetDibId(const Level* pLevel, const char* Name)
 {
-	return Level_GetDibIdFromWad(pLevel->CL_WadFile, Name);
+	return Level_GetDibIdFromWad(pLevel->CL_Wad_Class, Name);
 }
 
 // *************************************************************************

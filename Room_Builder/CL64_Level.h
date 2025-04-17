@@ -51,7 +51,7 @@ public:
 	int Level_EnumLeafBrushes(Level* pLevel, void* lParam, BrushList_CB Callback);
 	signed int Level_LoadWad(Level* pLevel);
 	const char* Level_GetWadPath(const Level* pLevel);
-	CL64_WadFile* Level_GetWadFile(Level* pLevel);
+	CL64_WadFile* Level_GetWad_Class(Level* pLevel);
 	void Level_SetWadPath(Level* pLevel, const char* NewWad);
 
 	WadFileEntry* Level_GetWadBitmap(Level* pLevel, const char* Name);

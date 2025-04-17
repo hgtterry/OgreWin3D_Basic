@@ -137,7 +137,7 @@ struct tag_Level
 	char* ActorsDir;
 	char* PawnIniPath;
 	SizeInfo* WadSizeInfos;
-	CL64_WadFile* CL_WadFile;
+	CL64_WadFile* CL_Wad_Class;
 	int GroupVisSetting;
 
 	GridInfo GridSettings;

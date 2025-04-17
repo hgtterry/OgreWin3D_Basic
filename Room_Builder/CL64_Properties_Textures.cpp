@@ -407,10 +407,10 @@ int CL64_Properties_Textures::Get_Index_FromName(char* TextureName)
 	CL64_WadFile* pWad;
 	pWad = NULL;
 
-	pWad = App->CL_Level->Level_GetWadFile(App->CL_Doc->pLevel);
+	pWad = App->CL_Level->Level_GetWad_Class(App->CL_Doc->pLevel);
 	if (pWad == NULL)
 	{
-		App->Say("Error Getting Wad File");
+		App->Say("Error Getting Wad Class");
 		return -1;
 	}
 
