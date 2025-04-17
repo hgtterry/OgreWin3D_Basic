@@ -266,7 +266,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             case ID_OPENEXAMPLES_TESTSCENE:
             {
                 strcpy(App->CL_File->PathFileName_3dt, App->RB_Directory_FullPath);
-                strcat(App->CL_File->PathFileName_3dt, "\\Data\\Room_Builder\\Test.mtf");
+                strcat(App->CL_File->PathFileName_3dt, "\\Data\\Room_Builder\\Test_owp\\Test.mtf");
 
                 strcpy(App->CL_File->FileName_3dt, "Test.mtf");
     
@@ -278,7 +278,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             case ID_OPENEXAMPLES_CUTBRUSHES:
             {
                 strcpy(App->CL_File->PathFileName_3dt, App->RB_Directory_FullPath);
-                strcat(App->CL_File->PathFileName_3dt, "\\Data\\Room_Builder\\CutBrushs.mtf");
+                strcat(App->CL_File->PathFileName_3dt, "\\Data\\Room_Builder\\CutBrushes.owp\\CutBrushs.mtf");
 
                 strcpy(App->CL_File->FileName_3dt, "CutBrushs.mtf");
 
@@ -290,7 +290,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             case ID_OPENEXAMPLES_TWOROOMS:
             {
                 strcpy(App->CL_File->PathFileName_3dt, App->RB_Directory_FullPath);
-                strcat(App->CL_File->PathFileName_3dt, "\\Data\\Room_Builder\\Two_Rooms.mtf");
+                strcat(App->CL_File->PathFileName_3dt, "\\Data\\Room_Builder\\Two_Rooms_owp\\Two_Rooms.mtf");
 
                 strcpy(App->CL_File->FileName_3dt, "Two_Rooms.mtf");
 

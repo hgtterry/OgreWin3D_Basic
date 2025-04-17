@@ -1554,6 +1554,7 @@ static void	Brush_CutBrush(Brush* b, Brush* b2)
 	assert(b2->Type != BRUSH_CSG);
 	assert(b->Flags & BRUSH_SUBTRACT);
 
+	int Cut_Brush_Index = App->CL_Brush_X->Get_Brush_Index_By_Name(b->Name);
 	b2->Has_Been_Cut = 1;
 
 	if (b2->Type == BRUSH_LEAF)
@@ -1576,7 +1577,7 @@ static void	Brush_CutBrush(Brush* b, Brush* b2)
 					//create a new face from the split plane
 					sf = App->CL_Face->Face_CreateFromPlane(p, BOGUS_RANGE, 0);
 					App->CL_Face->Face_CopyFaceInfo(f, sf);
-
+					f->Cut_Brush_Index = Cut_Brush_Index;
 					fb = bb = NULL;
 
 					//split b by sf, adding the front brush to the brushlist
@@ -1617,6 +1618,7 @@ static void	Brush_CutBrush(Brush* b, Brush* b2)
 				//create a new face from the split plane
 				sf = App->CL_Face->Face_CreateFromPlane(p, BOGUS_RANGE, 0);
 				App->CL_Face->Face_CopyFaceInfo(f, sf);
+				f->Cut_Brush_Index = Cut_Brush_Index;
 
 				fb = bb = NULL;
 

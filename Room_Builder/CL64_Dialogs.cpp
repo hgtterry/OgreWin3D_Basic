@@ -798,6 +798,9 @@ bool CL64_Dialogs::Show_Face_Data(int Index, const Face* f, HWND hDlg)
 	sprintf(buf, "%s %i", "Main_Brush_Face", f->Real_Brush_Face_Index);
 	SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
+	sprintf(buf, "%s %i", "Cut_Brush_Index", f->Cut_Brush_Index);
+	SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+
 	sprintf(buf, "%s %i", "Flags", f->Flags);
 	SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
