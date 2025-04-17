@@ -117,6 +117,7 @@ Brush* CL64_Brush::Brush_Create(int Type, const FaceList* fl, const BrushList* B
 		strcpy(pBrush->Name,"NoName");
 		pBrush->Type = Type;
 		pBrush->Centre_Marker = 0;
+		pBrush->Has_Been_Cut = 0;
 		switch (Type)
 		{
 		case	BRUSH_MULTI:
@@ -1537,6 +1538,9 @@ void CL64_Brush::Brush_SplitByFace(Brush* ogb,Face* sf,Brush** fb,Brush** bb)
 	}
 }
 
+// *************************************************************************
+// *    ( Static )     Brush_CutBrush:- Terry and Hazel Flanigan 2025      *
+// *************************************************************************
 //cuts b2 by b (b should be a cut brush)
 static void	Brush_CutBrush(Brush* b, Brush* b2)
 {
@@ -1646,13 +1650,16 @@ static void	Brush_CutBrush(Brush* b, Brush* b2)
 			{
 				if (!(cb->Flags & BRUSH_SUBTRACT))
 				{
-					Brush_CutBrush(b, cb);
+					Brush_CutBrush(b, cb); // Recursive
 				}
 			}
 		}
 	}
 }
 
+// *************************************************************************
+// *    ( Static ) BrushList_DoHollowCuts:- Terry and Hazel Flanigan 2025  *
+// *************************************************************************
 static void	BrushList_DoHollowCuts(BrushList* pList, int mid, Brush_CSGCallback Callback, void* lParam)
 {
 	Brush* b, * b2, * cb;

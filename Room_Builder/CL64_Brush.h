@@ -29,7 +29,6 @@ THE SOFTWARE.
 
 typedef struct tag_FaceList FaceList;
 typedef struct tag_BrushList BrushList;
-//typedef struct tag_Brush Brush;
 
 #define BRUSH_COUNT_MULTI 1
 #define BRUSH_COUNT_LEAF  2
@@ -51,6 +50,7 @@ typedef struct BrushTag
 	char			Name[MAX_PATH];
 	Box3d			BoundingBox;
 	bool			Centre_Marker;
+	bool			Has_Been_Cut;
 } Brush;
 
 enum BrushTypeFlags

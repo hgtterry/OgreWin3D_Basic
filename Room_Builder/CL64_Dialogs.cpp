@@ -672,6 +672,9 @@ bool CL64_Dialogs::Show_Brush_Info(const Brush* b, HWND hDlg)
 	sprintf(buf, "%s%f", "Hull Size ", b->HullSize);
 	SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
+	sprintf(buf, "%s%i", "Has Been Cut ", b->Has_Been_Cut);
+	SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+
 	// ----------------------------------- Type
 	if (b->Type == BRUSH_MULTI)
 	{
@@ -723,8 +726,7 @@ bool CL64_Dialogs::Show_Brush_ListInfo(BrushList* BList, HWND hDlg)
 	Count = App->CL_Brush->BrushList_Count(BList, (BRUSH_COUNT_MULTI | BRUSH_COUNT_LEAF | BRUSH_COUNT_NORECURSE));
 	if (Count < 0)
 	{
-		Debug
-			sprintf(buf, "%s%d", " ===== Sub Brushes ", Count);
+		sprintf(buf, "%s%d", " ===== Sub Brushes ", Count);
 		SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 		return 0;
 	}
@@ -766,7 +768,7 @@ bool CL64_Dialogs::Show_Brush_Faces_Info(const FaceList* pList, HWND hDlg)
 			Face_Index++;
 		}
 
-		sprintf(buf, "%s", " -------------------------------------------");
+		sprintf(buf, "%s", " ------");
 		SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 	}
 
@@ -784,7 +786,7 @@ bool CL64_Dialogs::Show_Face_Data(int Index, const Face* f, HWND hDlg)
 	//int		i, xShift, yShift, Rotate;
 	//geFloat xScale, yScale, rot;
 
-	sprintf(buf, "%s", " -------------------------------------------");
+	sprintf(buf, "%s %i", " --------------------- Face ", f->Main_Brush_Face);
 	SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
 	sprintf(buf, "%s %s", "Brush: = ", App->CL_Face->Face_GetBrushName(f));
