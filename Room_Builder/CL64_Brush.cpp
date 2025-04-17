@@ -1554,6 +1554,8 @@ static void	Brush_CutBrush(Brush* b, Brush* b2)
 	assert(b2->Type != BRUSH_CSG);
 	assert(b->Flags & BRUSH_SUBTRACT);
 
+	b2->Has_Been_Cut = 1;
+
 	if (b2->Type == BRUSH_LEAF)
 	{
 		if (b2->BList)
@@ -1809,6 +1811,10 @@ static void	BrushList_DoCuts(BrushList* pList, int mid, Brush_CSGCallback Callba
 								Brush_CutBrush(cb, b2);
 							}
 						}
+						else
+						{
+							b2->Has_Been_Cut = 0;
+						}
 					}
 					cb = cb->Next;
 				}
@@ -1827,6 +1833,10 @@ static void	BrushList_DoCuts(BrushList* pList, int mid, Brush_CSGCallback Callba
 						assert(b2->Type != BRUSH_CSG);
 
 						Brush_CutBrush(b, b2);
+					}
+					else
+					{
+						b2->Has_Been_Cut = 0;
 					}
 				}
 			}
