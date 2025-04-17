@@ -58,7 +58,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         return FALSE;
     }
 
-
     App->Menu_Map = GetMenu(App->MainHwnd);
     App->Menu_Scene = LoadMenuA(App->hInst, (LPCSTR)IDR_SCENE_MENU);
 
@@ -78,10 +77,18 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     App->CL_Ogre->Init_Ogre();
     App->CL_Picking->Init_Picking();
 
+
+    // Load Default Wad Ogre
+    char DefaultWad[MAX_PATH];
+    strcpy(DefaultWad, App->RB_Directory_FullPath);
+    strcat(DefaultWad, "\\Data\\Room_Builder\\Default.zip");
+
+    strcpy(App->CL_File->WadPath, DefaultWad);
+
     App->CL_Resources->Load_Texture_Resources();
     App->CL_TXL_Editor->Scan_Textures_Resource_Group();
-   // App->CL_Doc->Init_Doc();
-
+    // --------------------------------
+   
     App->CL_Top_Tabs->Start_Headers();
     App->CL_Editor_Scene->Start_Headers_Scene();
 
@@ -90,12 +97,14 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     // ------------------ Reload Textures
 
     App->CL_Doc->pLevel = App->CL_Level->Level_Create();
-
+    App->CL_Level->Level_SetWadPath(App->CL_Doc->pLevel, App->CL_File->WadPath);
+   
     if (!App->CL_Level->Level_LoadWad(App->CL_Doc->pLevel))
     {
-        App->Say_Win("Can not load Wad File");
+       App->Say_Win("Can not load Wad File");
     }
-    // ----------------------------------------------------------
+
+    // ---------------------------------------------------------
 
     App->CL_Com_Player->Create_Player_Object();
 

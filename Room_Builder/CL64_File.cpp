@@ -397,6 +397,8 @@ bool CL64_File::Load_File(const char* FileName)
 			break;
 		}
 
+		//App->Say(App->CL_File->WadPath);
+
 		if (App->CL_Doc->pLevel->Brushes != NULL)
 		{
 			App->CL_Brush->BrushList_Destroy(&App->CL_Doc->pLevel->Brushes);
@@ -435,7 +437,6 @@ bool CL64_File::Load_File(const char* FileName)
 // *************************************************************************
 void CL64_File::Set_Editor()
 {
-	
 	App->Set_Title(App->CL_Doc->mDoc_MTF_PathAndFile);
 	App->CL_Top_Tabs->Enable_Select_Button(true, 1);
 	App->CL_Properties_Templates->Enable_Insert_Button(false);

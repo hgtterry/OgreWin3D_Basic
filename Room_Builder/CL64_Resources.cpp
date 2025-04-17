@@ -866,20 +866,20 @@ bool CL64_Resources::View_Texture(char* FileName, HWND Owner_hDlg)
 // *************************************************************************
 void CL64_Resources::Load_Texture_Resources()
 {
-	char BufPath[MAX_PATH];
-	strcpy(BufPath, App->RB_Directory_FullPath);
-	strcat(BufPath, "\\Data\\Room_Builder\\Default.zip");
-
+	// Load Default Wad Ogre
+	char WadFile[MAX_PATH];
+	strcpy(WadFile, App->RB_Directory_FullPath);
+	strcat(WadFile, "\\Data\\Room_Builder\\Default.zip");
 
 	if (Ogre::ResourceGroupManager::getSingleton().resourceGroupExists(App->CL_Ogre->Texture_Resource_Group))
 	{
-		Ogre::ResourceGroupManager::getSingleton().removeResourceLocation(BufPath, App->CL_Ogre->Texture_Resource_Group);
+		Ogre::ResourceGroupManager::getSingleton().removeResourceLocation(WadFile, App->CL_Ogre->Texture_Resource_Group);
 		Ogre::ResourceGroupManager::getSingleton().destroyResourceGroup(App->CL_Ogre->Texture_Resource_Group);
 	}
 
 	Ogre::ResourceGroupManager::getSingleton().createResourceGroup(App->CL_Ogre->Texture_Resource_Group);
 	
-	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(BufPath, "Zip", App->CL_Ogre->Texture_Resource_Group);
+	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(WadFile, "Zip", App->CL_Ogre->Texture_Resource_Group);
 	Ogre::ResourceGroupManager::getSingleton().clearResourceGroup(App->CL_Ogre->Texture_Resource_Group);
 	Ogre::ResourceGroupManager::getSingleton().initialiseResourceGroup(App->CL_Ogre->Texture_Resource_Group);
 
