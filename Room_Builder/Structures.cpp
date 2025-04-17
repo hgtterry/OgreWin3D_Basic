@@ -78,7 +78,7 @@ typedef struct FaceTag
 	float			Translucency;
 	float			MipMapBias;
 	float			LightXScale, LightYScale;
-	int				Main_Brush_Face;
+	signed int		Real_Brush_Face_Index; // The brush face with no Cuts
 	TexInfo			Tex;
 	T_Vec3* Points;
 

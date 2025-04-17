@@ -1059,7 +1059,7 @@ void CL64_Properties_Faces::Update_Face_Info(HWND hDlg)
 
 	pBrush = App->CL_SelBrushList->SelBrushList_GetBrush(App->CL_Doc->pSelBrushes, 0);
 
-	sprintf(buff, "%s %i", "Main Face:", m_Selected_Face->Main_Brush_Face);
+	sprintf(buff, "%s %i", "Main Face:", m_Selected_Face->Real_Brush_Face_Index);
 	SendDlgItemMessage(hDlg, IDC_LST_FACE_INFO, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);
 
 	sprintf(buff, "%s %s     %s %i", "Brush Name: ", App->CL_Brush->Brush_GetName(pBrush),"Selected Face: ", App->CL_Face->Selected_Face_Index+1);

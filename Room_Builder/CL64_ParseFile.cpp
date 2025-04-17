@@ -212,7 +212,7 @@ FaceList* CL64_ParseFile::FaceList_CreateFromFile()
 			if (pFace != NULL)
 			{
 
-				pFace->Main_Brush_Face = 0;
+				pFace->Real_Brush_Face_Index = 0;
 				App->CL_FaceList->FaceList_AddFace(pList, pFace);
 				//App->CL_Face->Face_SetTextureLock(pFace, true);
 			}
@@ -286,7 +286,7 @@ Face* CL64_ParseFile::Face_CreateFromFile()
 			f->MipMapBias = MipMapBias;
 			f->Reflectivity = Reflectivity;
 			f->Translucency = Translucency;
-			f->Main_Brush_Face = 0;
+			f->Real_Brush_Face_Index = 0;
 		}
 
 		Get_Text_Info("TexInfo", &Rotate, &Shift, &Scale, szTemp);

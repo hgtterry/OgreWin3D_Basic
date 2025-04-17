@@ -422,7 +422,7 @@ bool CL64_Brush_X::Set_Face_Index(int Index, Face* f)
 {
 	int m_Index = Index+1;
 
-	f->Main_Brush_Face = m_Index;
+	f->Real_Brush_Face_Index = m_Index;
 	
 	return 1;
 }

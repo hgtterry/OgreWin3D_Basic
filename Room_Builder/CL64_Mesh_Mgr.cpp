@@ -563,7 +563,7 @@ bool CL64_Mesh_Mgr::Brush_FaceList_Create(const Brush* b, const FaceList* pList,
 			App->CL_Editor_Com->B_Brush[App->CL_Editor_Com->BrushCount]->Face_Data[FaceIndex].b = num_verts + 2 + j;
 			App->CL_Editor_Com->B_Brush[App->CL_Editor_Com->BrushCount]->Face_Data[FaceIndex].c = num_verts + 1 + j;
 			App->CL_Editor_Com->B_Brush[App->CL_Editor_Com->BrushCount]->Face_Data[FaceIndex].Brush_Index = Main_Brush_Index;
-			App->CL_Editor_Com->B_Brush[App->CL_Editor_Com->BrushCount]->Face_Data[FaceIndex].Main_Face = pList->Faces[i]->Main_Brush_Face;
+			App->CL_Editor_Com->B_Brush[App->CL_Editor_Com->BrushCount]->Face_Data[FaceIndex].Main_Face = pList->Faces[i]->Real_Brush_Face_Index;
 
 			FaceIndex++;
 			v_Face_Data_Count++;
