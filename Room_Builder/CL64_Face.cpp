@@ -90,7 +90,7 @@ Face* CL64_Face::Face_Create(int NumPnts, const T_Vec3* pnts, int DibId)
 		f->LightYScale = 1.0f;
 		f->Selected = 0;
 		f->Real_Brush_Face_Index = -1;
-
+		f->Cut_Brush_Index = 0; // TODO does this need to be -1
 		strcpy(f->Brush_Name, "No_Brush");
 		Face_SetVisible(f, true);
 

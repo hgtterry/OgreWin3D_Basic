@@ -287,6 +287,7 @@ Face* CL64_ParseFile::Face_CreateFromFile()
 			f->Reflectivity = Reflectivity;
 			f->Translucency = Translucency;
 			f->Real_Brush_Face_Index = 0;
+			f->Cut_Brush_Index = 0; // TODO does this need to be -1
 		}
 
 		Get_Text_Info("TexInfo", &Rotate, &Shift, &Scale, szTemp);
