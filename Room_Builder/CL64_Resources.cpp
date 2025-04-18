@@ -866,11 +866,9 @@ bool CL64_Resources::View_Texture(char* FileName, HWND Owner_hDlg)
 // *************************************************************************
 void CL64_Resources::Load_Texture_Resources()
 {
-	// Load Default Wad Ogre
 	char WadFile[MAX_PATH];
-	strcpy(WadFile, App->RB_Directory_FullPath);
-	strcat(WadFile, "\\Data\\Room_Builder\\Default.zip");
-
+	strcpy(WadFile, App->CL_File->WadPathFile);
+	
 	if (Ogre::ResourceGroupManager::getSingleton().resourceGroupExists(App->CL_Ogre->Texture_Resource_Group))
 	{
 		Ogre::ResourceGroupManager::getSingleton().removeResourceLocation(WadFile, App->CL_Ogre->Texture_Resource_Group);

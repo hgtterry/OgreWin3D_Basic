@@ -488,7 +488,7 @@ void CL64_ImGui::App_Stats_GUI(void)
 			ImGui::Separator();
 			ImGui::Text("TXL Path And File:= %s", App->CL_Doc->mDoc_TXL_Path_And_File);
 			ImGui::Text("TXL Just_File:= %s", App->CL_Doc->mDoc_TXL_Just_FileName);
-			ImGui::Text("File Wad Path:= %s", App->CL_File->WadPath);
+			ImGui::Text("File Wad Path:= %s", App->CL_File->WadPathFile);
 			ImGui::Text("Level Wad_File:= %s", App->CL_Level->Level_GetWadPath(App->CL_Doc->pLevel));
 
 			ImGui::Separator();

@@ -38,7 +38,7 @@ CL64_File::CL64_File(void)
 	FileName_3dt[0] = 0;
 
 	Read_Buffer[0] = 0;
-	WadPath[0] = 0;
+	WadPathFile[0] = 0;
 	WadFile_Name[0] = 0;
 
 	fp = NULL;
@@ -334,11 +334,11 @@ bool CL64_File::Open_3dt_File()
 		App->CL_Doc->Set_Paths();
 
 		// TODO Temporary for now hgttery Debug
-		static char Path_And_File[MAX_PATH];
+		/*static char Path_And_File[MAX_PATH];
 		strcpy(Path_And_File, App->RB_Directory_FullPath);
 		strcat(Path_And_File, "\\Data\\Room_Builder\\");
 		strcat(Path_And_File, "Default.txl");
-		strcpy(WadPath, Path_And_File);
+		strcpy(WadPathFile, Path_And_File);*/
 
 		if (!App->CL_Level->Level_LoadWad(App->CL_Doc->pLevel))
 		{

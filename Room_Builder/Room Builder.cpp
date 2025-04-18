@@ -83,7 +83,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     strcpy(DefaultWad, App->RB_Directory_FullPath);
     strcat(DefaultWad, "\\Data\\Room_Builder\\Default.zip");
 
-    strcpy(App->CL_File->WadPath, DefaultWad);
+    strcpy(App->CL_File->WadPathFile, DefaultWad);
 
     App->CL_Resources->Load_Texture_Resources();
     App->CL_TXL_Editor->Scan_Textures_Resource_Group();
@@ -97,7 +97,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     // ------------------ Reload Textures
 
     App->CL_Doc->pLevel = App->CL_Level->Level_Create();
-    App->CL_Level->Level_SetWadPath(App->CL_Doc->pLevel, App->CL_File->WadPath);
+    App->CL_Level->Level_SetWadPath(App->CL_Doc->pLevel, App->CL_File->WadPathFile);
    
     if (!App->CL_Level->Level_LoadWad(App->CL_Doc->pLevel))
     {

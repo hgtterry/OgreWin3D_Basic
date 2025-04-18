@@ -213,7 +213,7 @@ void Level_UnloadWad(Level* pLevel)
 signed int CL64_Level::Level_LoadWad(Level* pLevel)
 {
 	// get rid of the old wad...
-	//Level_UnloadWad(pLevel);
+	Level_UnloadWad(pLevel);
 
 	pLevel->CL_Wad_Class = new CL64_WadFile();
 	if (pLevel->CL_Wad_Class == NULL)
