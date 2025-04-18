@@ -238,7 +238,7 @@ bool CL64_Brush_X::Check_if_Brush_Name_Exist(char* Name)
 	int Result = 1;
 	Brush* b;
 
-	BrushList* pList = App->CL_Level->Level_GetBrushes(App->CL_Doc->Current_Level);
+	BrushList* pList = App->CL_Level->Level_Get_Main_Brushes();
 
 	b = pList->First;
 	while (b != NULL)
@@ -263,7 +263,7 @@ Brush* CL64_Brush_X::Get_Brush_By_Name(const char* Name)
 	int Result = 1;
 	Brush* b;
 
-	BrushList* pList = App->CL_Level->Level_GetBrushes(App->CL_Doc->Current_Level);
+	BrushList* pList = App->CL_Level->Level_Get_Main_Brushes();
 
 	b = pList->First;
 	while (b != NULL)
@@ -289,7 +289,7 @@ int CL64_Brush_X::Get_Brush_Index_By_Name(const char* Name)
 	int Result = 1;
 	Brush* b;
 
-	BrushList* pList = App->CL_Level->Level_GetBrushes(App->CL_Doc->Current_Level);
+	BrushList* pList = App->CL_Level->Level_Get_Main_Brushes();
 
 	b = pList->First;
 	while (b != NULL)

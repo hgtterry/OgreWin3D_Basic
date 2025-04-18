@@ -185,7 +185,7 @@ void CL64_Mesh_Mgr::Brush_Build_List(int ExpSelected)
 	mBrushCount = 0;
 	mSubBrushCount = 0;
 
-	BrushList* BList = App->CL_Level->Level_GetBrushes(App->CL_Doc->Current_Level);
+	BrushList* BList = App->CL_Level->Level_Get_Main_Brushes();
 	if (!BList)
 	{
 		App->Say("Error: No brushes found.");

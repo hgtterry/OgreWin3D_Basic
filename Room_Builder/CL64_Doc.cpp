@@ -192,7 +192,7 @@ void CL64_Doc::AddBrushToWorld()
 void CL64_Doc::OnBrushSubtractfromworld()
 {
     Brush* nb;
-    BrushList* BList = App->CL_Level->Level_GetBrushes(Current_Level);
+    BrushList* BList = App->CL_Level->Level_Get_Main_Brushes();
 
     if ((App->CL_Doc->mModeTool == ID_GENERALSELECT) && (App->CL_Brush->BrushList_Count(BList, BRUSH_COUNT_MULTI | BRUSH_COUNT_LEAF) < 2))
     {
@@ -410,7 +410,7 @@ void CL64_Doc::SetDefaultBrushTexInfo(Brush* b)
 // *************************************************************************
 WadFileEntry* CL64_Doc::GetDibBitmap(const char* Name)
 {
-    return App->CL_Level->Level_GetWadBitmap(Current_Level, Name);
+    return App->CL_Level->Level_GetWadBitmap(Name);
 }
 
 // *************************************************************************
@@ -569,7 +569,7 @@ void CL64_Doc::ResetAllSelections(void)
 // *************************************************************************
 void CL64_Doc::ResetAllSelectedFaces(void)
 {
-    App->CL_Brush->BrushList_EnumLeafBrushes(App->CL_Level->Level_GetBrushes(Current_Level), NULL, ResetSelectedFacesCB);
+    App->CL_Brush->BrushList_EnumLeafBrushes(App->CL_Level->Level_Get_Main_Brushes(), NULL, ResetSelectedFacesCB);
     App->CL_SelFaceList->SelFaceList_RemoveAll(pSelFaces);
 }
 
@@ -597,7 +597,7 @@ void CL64_Doc::DoBrushSelection(Brush* pBrush, BrushSel	nSelType) //	brushSelTog
     BrushList* BList;
     Brush* pBParent = NULL;
 
-    BList = App->CL_Level->Level_GetBrushes(Current_Level);
+    BList = App->CL_Level->Level_Get_Main_Brushes();
 
     if (App->CL_Brush->Brush_GetParent(BList, pBrush, &pBParent))
     {
@@ -671,7 +671,7 @@ signed int CL64_Doc::FindClosestBrush(POINT const* ptFrom, ViewVars* v, Brush** 
     fci.pMinEdgeDist = pMinEdgeDist;
     fci.ptFrom = ptFrom;
 
-    App->CL_Brush->BrushList_EnumLeafBrushes(App->CL_Level->Level_GetBrushes(Current_Level), &fci, ::FindClosestBrushCB);
+    App->CL_Brush->BrushList_EnumLeafBrushes(App->CL_Level->Level_Get_Main_Brushes(), &fci, ::FindClosestBrushCB);
 
     return	(*ppFoundBrush) ? GE_TRUE : GE_FALSE;
 }
@@ -733,7 +733,7 @@ void CL64_Doc::RebuildTrees(void)
   
     BrushList* BList;
    
-    BList = App->CL_Level->Level_GetBrushes(Current_Level);
+    BList = App->CL_Level->Level_Get_Main_Brushes();
     //SetModifiedFlag();
 
     App->CL_Brush->BrushList_ClearAllCSG(BList);
@@ -1089,7 +1089,7 @@ void CL64_Doc::DoneRotate(void)
     }
     else
     {
-        BrushList* BList = App->CL_Level->Level_GetBrushes(Current_Level);
+        BrushList* BList = App->CL_Level->Level_Get_Main_Brushes();
 
         for (i = 0; i < NumSelBrushes; i++)
         {
@@ -1343,7 +1343,7 @@ void CL64_Doc::SelectAllFacesInBrushes(void)
 // *************************************************************************
 void CL64_Doc::Set_Faces_To_Brush_Name_All()
 {
-    BrushList* pList = App->CL_Level->Level_GetBrushes(Current_Level);
+    BrushList* pList = App->CL_Level->Level_Get_Main_Brushes();
 
     int Count = 0;
     int BC = App->CL_Brush->Get_Brush_Count();
@@ -1403,7 +1403,8 @@ static signed int fdocSelectBrush(Brush* pBrush, void* lParam)
 void CL64_Doc::SelectAll(void)
 {
     Do_General_Select_Dlg(false);
-    App->CL_Level->Level_EnumBrushes(Current_Level, this, fdocSelectBrush);
+
+    App->CL_Level->Level_EnumBrushes(this, fdocSelectBrush);
 
     // Select all faces on all selected brushes
     int iBrush;
@@ -1476,18 +1477,18 @@ void CL64_Doc::UpdateSelected(void)
         }
     }
 
-    // App->m_pDoc->UpdateFaceAttributesDlg();
-    // App->m_pDoc->UpdateBrushAttributesDlg();
 }
 
 static signed int fdocUpdateFaceTextures(Face* pFace, void* lParam)
 {
-    App->CL_Face->Face_SetTextureDibId(pFace, App->CL_Level->Level_GetDibId(App->CL_Doc->Current_Level, App->CL_Face->Face_GetTextureName(pFace)));
-    // changed QD 12/03
-    const WadFileEntry* const pbmp = App->CL_Level->Level_GetWadBitmap(App->CL_Doc->Current_Level, App->CL_Face->Face_GetTextureName(pFace));
+    App->CL_Face->Face_SetTextureDibId(pFace, App->CL_Level->Level_GetDibId(App->CL_Face->Face_GetTextureName(pFace)));
+   
+    const WadFileEntry* const pbmp = App->CL_Level->Level_GetWadBitmap(App->CL_Face->Face_GetTextureName(pFace));
     if (pbmp)
+    {
         App->CL_Face->Face_SetTextureSize(pFace, pbmp->Width, pbmp->Height);
-    // end change
+    }
+  
     return GE_TRUE;
 }
 
@@ -1514,7 +1515,7 @@ void CL64_Doc::UpdateAfterWadChange()
     //App->CLSB_TextureDialog->Fill_ListBox();
 
     // update all brush faces
-    App->CL_Brush->BrushList_EnumLeafBrushes(App->CL_Level->Level_GetBrushes(Current_Level), this, ::fdocUpdateBrushFaceTextures);
+    App->CL_Brush->BrushList_EnumLeafBrushes(App->CL_Level->Level_Get_Main_Brushes(), this, ::fdocUpdateBrushFaceTextures);
     {
         // find the rendered view and set the wad size infos for it
         //POSITION		pos;

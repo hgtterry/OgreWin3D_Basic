@@ -2222,7 +2222,7 @@ void CL64_Editor_Map::Draw_Screen(HWND hwnd)
 		}
 
 		BrushList* BList;
-		BList = App->CL_Level->Level_GetBrushes(App->CL_Doc->Current_Level);
+		BList = App->CL_Level->Level_Get_Main_Brushes();
 
 		SelectObject(MemoryhDC, PenSelectedFaces);
 		App->CL_Brush->BrushList_EnumLeafBrushes(BList, &brushDrawData, BrushDrawSelFacesOrtho);

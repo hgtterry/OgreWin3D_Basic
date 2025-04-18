@@ -229,8 +229,8 @@ static signed int BrushTexSetCB(Brush* b, void* lParam)
 		WadFileEntry* pbmp;
 		// 
 		App->CL_Face->Face_SetTextureName(f, pData->TexName);
-		App->CL_Face->Face_SetTextureDibId(f, App->CL_Level->Level_GetDibId(App->CL_Doc->Current_Level, pData->TexName));
-		pbmp = App->CL_Level->Level_GetWadBitmap(App->CL_Doc->Current_Level, pData->TexName);
+		App->CL_Face->Face_SetTextureDibId(f, App->CL_Level->Level_GetDibId(pData->TexName));
+		pbmp = App->CL_Level->Level_GetWadBitmap(pData->TexName);
 		if (pbmp != NULL)
 		{
 			App->CL_Face->Face_SetTextureSize(f, pbmp->Width, pbmp->Height);

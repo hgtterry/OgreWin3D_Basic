@@ -480,7 +480,7 @@ void CL64_Properties_Brushes::Fill_ListBox()
 
 	SendDlgItemMessage(BrushesDlg_Hwnd, IDC_GD_BRUSHLIST, LB_RESETCONTENT, 0, 0);
 
-	BrushList* pList = App->CL_Level->Level_GetBrushes(App->CL_Doc->Current_Level);
+	BrushList* pList = App->CL_Level->Level_Get_Main_Brushes();
 	int count = 0;
 
 	for (Brush* b = pList->First; b != nullptr; b = b->Next)
@@ -498,7 +498,7 @@ void CL64_Properties_Brushes::Fill_ListBox()
 // *************************************************************************
 void CL64_Properties_Brushes::Get_Index(const Brush* b)
 {
-	BrushList* pList = App->CL_Level->Level_GetBrushes(App->CL_Doc->Current_Level);
+	BrushList* pList = App->CL_Level->Level_Get_Main_Brushes();
 
 	int Selected = 0;
 	int Count = 0;

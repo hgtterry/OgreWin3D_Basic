@@ -36,7 +36,9 @@ public:
 	~CL64_Level(void);
 
 	Level* Level_Create();
-	BrushList* Level_GetBrushes(Level* pLevel);
+
+	// Get Main Top Level Brush List
+	BrushList* Level_Get_Main_Brushes();
 
 	BrushTemplate_Box* Level_GetBoxTemplate();
 	BrushTemplate_Cylinder* Level_GetCylinderTemplate();
@@ -54,10 +56,10 @@ public:
 	CL64_WadFile* Level_GetWad_Class();
 	void Level_SetWadPath(Level* pLevel, const char* NewWad);
 
-	WadFileEntry* Level_GetWadBitmap(Level* pLevel, const char* Name);
-	Ogre::uint16 Level_GetDibId(const Level* pLevel, const char* Name);
+	WadFileEntry* Level_GetWadBitmap(const char* Name);
+	Ogre::uint16 Level_GetDibId(const char* Name);
 	void Level_RemoveBrush(Brush* pBrush);
-	int Level_EnumBrushes(Level* pLevel, void* lParam, BrushList_CB Callback);
+	int Level_EnumBrushes(void* lParam, BrushList_CB Callback);
 	signed int Level_UseGrid(const Level* pLevel);
 	int Level_GetRotationSnap(const Level* pLevel);
 	float Level_GetGridSnapSize(const Level* pLevel);

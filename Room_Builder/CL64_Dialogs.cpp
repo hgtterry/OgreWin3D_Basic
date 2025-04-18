@@ -571,7 +571,7 @@ void CL64_Dialogs::Fill_Brush_Combo(HWND hDlg)
 	SendDlgItemMessage(hDlg, IDC_CB_SELECTED_BRUSH, CB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
 
 	Level* pLevel = App->CL_Doc->Current_Level;
-	BrushList* pList = App->CL_Level->Level_GetBrushes(App->CL_Doc->Current_Level);
+	BrushList* pList = App->CL_Level->Level_Get_Main_Brushes();
 
 	int Count = 0;
 	Brush* b;
@@ -1496,7 +1496,7 @@ void CL64_Dialogs::List_Used_Textures(HWND List)
 	int Count = 0;
 	memset(App->CL_Mesh_Mgr->UsedTextures, 0, 500);
 
-	BrushList* pList = App->CL_Level->Level_GetBrushes(App->CL_Doc->Current_Level);
+	BrushList* pList = App->CL_Level->Level_Get_Main_Brushes();
 
 	App->CL_Brush_X->BrushList_GetUsedTextures_X(pList, App->CL_Mesh_Mgr->UsedTextures);
 
@@ -1525,7 +1525,7 @@ void CL64_Dialogs::List_Used_Textures(HWND List)
 		Brush* pBrush = NULL;
 		BrushIterator bi;
 
-		BList = App->CL_Level->Level_GetBrushes(App->CL_Doc->Current_Level);
+		BList = App->CL_Level->Level_Get_Main_Brushes();
 
 		SBList = App->CL_Brush->BrushList_Create();
 		pBrush = App->CL_Brush->BrushList_GetFirst(BList, &bi);

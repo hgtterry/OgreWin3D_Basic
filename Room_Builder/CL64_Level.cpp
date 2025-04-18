@@ -143,11 +143,11 @@ BrushTemplate_Arch* CL64_Level::Level_GetArchTemplate()
 }
 
 // *************************************************************************
-// *							Level_GetBrushes						   *
+// *					Level_Get_Main_Brushes							   *
 // *************************************************************************
-BrushList* CL64_Level::Level_GetBrushes(Level* pLevel)
+BrushList* CL64_Level::Level_Get_Main_Brushes()
 {
-	return pLevel->Brushes;
+	return App->CL_Doc->Current_Level->Brushes;
 }
 
 // *************************************************************************
@@ -298,17 +298,15 @@ static Ogre::uint16 Level_GetDibIdFromWad(const CL64_WadFile* WadFile, const cha
 // *************************************************************************
 // *							Level_GetWadBitmap						   *
 // *************************************************************************
-WadFileEntry* CL64_Level::Level_GetWadBitmap(Level* pLevel, const char* Name)
+WadFileEntry* CL64_Level::Level_GetWadBitmap(const char* Name)
 {
 	Ogre::uint16 i;
 
-	if ((!pLevel) || (!pLevel->CL_Wad_Class))
-		return NULL;
+	i = Level_GetDibIdFromWad(App->CL_Doc->Current_Level->CL_Wad_Class, Name);
 
-	i = Level_GetDibIdFromWad(pLevel->CL_Wad_Class, Name);
 	if (i != 0xffff)
 	{
-		return &(pLevel->CL_Wad_Class->mBitmaps[i]);
+		return &(App->CL_Doc->Current_Level->CL_Wad_Class->mBitmaps[i]);
 	}
 	else
 	{
@@ -319,9 +317,9 @@ WadFileEntry* CL64_Level::Level_GetWadBitmap(Level* pLevel, const char* Name)
 // *************************************************************************
 // *							Level_GetDibId							   *
 // *************************************************************************
-Ogre::uint16 CL64_Level::Level_GetDibId(const Level* pLevel, const char* Name)
+Ogre::uint16 CL64_Level::Level_GetDibId(const char* Name)
 {
-	return Level_GetDibIdFromWad(pLevel->CL_Wad_Class, Name);
+	return Level_GetDibIdFromWad(App->CL_Doc->Current_Level->CL_Wad_Class, Name);
 }
 
 // *************************************************************************
@@ -335,9 +333,9 @@ void CL64_Level::Level_RemoveBrush(Brush* pBrush)
 // *************************************************************************
 // *						Level_EnumBrushes							   *
 // *************************************************************************
-int CL64_Level::Level_EnumBrushes(Level* pLevel, void* lParam, BrushList_CB Callback)
+int CL64_Level::Level_EnumBrushes(void* lParam, BrushList_CB Callback)
 {
-	return App->CL_Brush->BrushList_Enum(pLevel->Brushes, lParam, Callback);
+	return App->CL_Brush->BrushList_Enum(App->CL_Doc->Current_Level->Brushes, lParam, Callback);
 }
 
 // *************************************************************************
