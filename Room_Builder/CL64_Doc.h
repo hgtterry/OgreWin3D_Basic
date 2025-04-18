@@ -168,7 +168,7 @@ public:
 
 	BOOL SelectLock, TempEnt;
 
-	Level* pLevel;
+	Level* Current_Level;
 	Brush* BTemplate, * CurBrush, * TempShearTemplate;
 	SelBrushList* pSelBrushes;
 	SelBrushList* pTempSelBrushes;

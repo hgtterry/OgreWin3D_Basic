@@ -2164,11 +2164,11 @@ void CL64_Editor_Map::Draw_Screen(HWND hwnd)
 		
 		brushDrawData.FlagTest = fdocBrushNotDetail;
 		SelectObject(MemoryhDC, PenBrushes);
-		App->CL_Level->Level_EnumLeafBrushes(App->CL_Doc->pLevel, &brushDrawData, BrushDraw);
+		App->CL_Level->Level_EnumLeafBrushes(App->CL_Doc->Current_Level, &brushDrawData, BrushDraw);
 
 		SelectObject(MemoryhDC, PenCutBrush);
 		brushDrawData.FlagTest = fdocBrushIsSubtract;
-		App->CL_Level->Level_EnumLeafBrushes(App->CL_Doc->pLevel, &brushDrawData, BrushDraw);
+		App->CL_Level->Level_EnumLeafBrushes(App->CL_Doc->Current_Level, &brushDrawData, BrushDraw);
 		
 		brushDrawData.FlagTest = fdocBrushNotDetail;
 
@@ -2222,7 +2222,7 @@ void CL64_Editor_Map::Draw_Screen(HWND hwnd)
 		}
 
 		BrushList* BList;
-		BList = App->CL_Level->Level_GetBrushes(App->CL_Doc->pLevel);
+		BList = App->CL_Level->Level_GetBrushes(App->CL_Doc->Current_Level);
 
 		SelectObject(MemoryhDC, PenSelectedFaces);
 		App->CL_Brush->BrushList_EnumLeafBrushes(BList, &brushDrawData, BrushDrawSelFacesOrtho);

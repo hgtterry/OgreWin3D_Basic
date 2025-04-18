@@ -69,7 +69,7 @@ A_CreateArchDialog::~A_CreateArchDialog(void)
 // *************************************************************************
 void A_CreateArchDialog::Start_CreateArch_Dlg()
 {
-	pArchTemplate = App->CL_Level->Level_GetArchTemplate (App->CL_Doc->pLevel);
+	pArchTemplate = App->CL_Level->Level_GetArchTemplate (App->CL_Doc->Current_Level);
 
 	App->CL_Properties_Tabs->Enable_Tabs_Dlg(false);
 	DialogBox(App->hInst, (LPCTSTR)IDD_CREATE_ARCH, App->MainHwnd, (DLGPROC)CreateArch_Proc);
@@ -662,7 +662,7 @@ void A_CreateArchDialog::CreateNewTemplateBrush(Brush *pBrush)
 	App->CL_Brush->Brush_Bound (App->CL_Doc->CurBrush);
 	App->CL_Brush->Brush_Center (App->CL_Doc->CurBrush, &BrushPos);
 
-	pTemplatePos = App->CL_Level->Level_GetTemplatePos (App->CL_Doc->pLevel);
+	pTemplatePos = App->CL_Level->Level_GetTemplatePos (App->CL_Doc->Current_Level);
 
 	if (m_UseCamPos == 1)
 	{

@@ -224,7 +224,7 @@ LRESULT CALLBACK CL64_TXL_Editor::Proc_Texl_Dialog(HWND hDlg, UINT message, WPAR
 
 				App->CL_TXL_Editor->UpDateList();
 
-				App->CL_Level->Level_LoadWad(App->CL_Doc->pLevel);
+				App->CL_Level->Level_LoadWad(App->CL_Doc->Current_Level);
 
 				App->CL_TXL_Editor->Select_From_TextureName(App->CL_File_IO->s_Just_FileName.c_str());
 				App->CL_Properties_Textures->Select_With_List_Index(App->CL_TXL_Editor->Selected_Texure_Index);
@@ -503,7 +503,7 @@ bool CL64_TXL_Editor::Check_If_Texture_Used(const char* TextureName)
 	int Count = 0;
 	memset(App->CL_Mesh_Mgr->UsedTextures, 0, 500);
 
-	BrushList* pList = App->CL_Level->Level_GetBrushes(App->CL_Doc->pLevel);
+	BrushList* pList = App->CL_Level->Level_GetBrushes(App->CL_Doc->Current_Level);
 
 	App->CL_Brush_X->BrushList_GetUsedTextures_X(pList,App->CL_Mesh_Mgr->UsedTextures);
 

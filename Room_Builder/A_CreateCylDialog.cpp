@@ -64,7 +64,7 @@ A_CreateCylDialog::~A_CreateCylDialog(void)
 // *************************************************************************
 void A_CreateCylDialog::Start_CreateCyl_Dlg()
 {
-	pCylinderTemplate = App->CL_Level->Level_GetCylinderTemplate (App->CL_Doc->pLevel);
+	pCylinderTemplate = App->CL_Level->Level_GetCylinderTemplate (App->CL_Doc->Current_Level);
 
 	App->CL_Properties_Tabs->Enable_Tabs_Dlg(false);
 	DialogBox(App->hInst, (LPCTSTR)IDD_CREATE_CYLINDER, App->MainHwnd, (DLGPROC)Proc_Create_Cylinder);
@@ -545,7 +545,7 @@ void A_CreateCylDialog::CreateNewTemplateBrush(Brush *pBrush)
 	App->CL_Brush->Brush_Bound (App->CL_Doc->CurBrush);
 	App->CL_Brush->Brush_Center (App->CL_Doc->CurBrush, &BrushPos);
 
-	pTemplatePos = App->CL_Level->Level_GetTemplatePos (App->CL_Doc->pLevel);
+	pTemplatePos = App->CL_Level->Level_GetTemplatePos (App->CL_Doc->Current_Level);
 
 	if (m_UseCamPos == 1 && App->flag_OgreStarted == 1)
 	{

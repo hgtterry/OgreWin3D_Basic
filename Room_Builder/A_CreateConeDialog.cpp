@@ -56,7 +56,7 @@ A_CreateConeDialog::~A_CreateConeDialog(void)
 // *************************************************************************
 void A_CreateConeDialog::Start_CreateCone_Dlg()
 {
-	pConeTemplate = App->CL_Level->Level_GetConeTemplate(App->CL_Doc->pLevel);
+	pConeTemplate = App->CL_Level->Level_GetConeTemplate(App->CL_Doc->Current_Level);
 
 	App->CL_Properties_Tabs->Enable_Tabs_Dlg(false);
 
@@ -438,7 +438,7 @@ void A_CreateConeDialog::CreateNewTemplateBrush(Brush *pBrush)
 	App->CL_Brush->Brush_Bound (App->CL_Doc->CurBrush);
 	App->CL_Brush->Brush_Center (App->CL_Doc->CurBrush, &BrushPos);
 
-	pTemplatePos = App->CL_Level->Level_GetTemplatePos (App->CL_Doc->pLevel);
+	pTemplatePos = App->CL_Level->Level_GetTemplatePos (App->CL_Doc->Current_Level);
 
 	if (m_UseCamPos == 1 && App->flag_OgreStarted == 1)
 	{

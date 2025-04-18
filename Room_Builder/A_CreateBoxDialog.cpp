@@ -63,7 +63,7 @@ A_CreateBoxDialog::~A_CreateBoxDialog(void)
 void A_CreateBoxDialog::Start_CreateBox_Dlg()
 {
 
-	pBoxTemplate = App->CL_Level->Level_GetBoxTemplate(App->CL_Doc->pLevel);
+	pBoxTemplate = App->CL_Level->Level_GetBoxTemplate(App->CL_Doc->Current_Level);
 
 	App->CL_Properties_Tabs->Enable_Tabs_Dlg(false);
 
@@ -351,7 +351,7 @@ void A_CreateBoxDialog::CreateNewTemplateBrush(Brush* pBrush)
 	T_Vec3 BrushPos;
 	App->CL_Brush->Brush_Center(App->CL_Doc->CurBrush, &BrushPos);
 
-	T_Vec3* pTemplatePos = App->CL_Level->Level_GetTemplatePos(App->CL_Doc->pLevel);
+	T_Vec3* pTemplatePos = App->CL_Level->Level_GetTemplatePos(App->CL_Doc->Current_Level);
 	Ogre::Vector3 Pos;
 
 	if (m_UseCamPos == 1 && App->flag_OgreStarted == 1)
@@ -523,7 +523,7 @@ void A_CreateBoxDialog::SetRoom(HWND hDlg)
 // *************************************************************************
 void A_CreateBoxDialog::CreateDefault_TemplateCube()
 {
-	pBoxTemplate = App->CL_Level->Level_GetBoxTemplate(App->CL_Doc->pLevel);
+	pBoxTemplate = App->CL_Level->Level_GetBoxTemplate(App->CL_Doc->Current_Level);
 
 	Brush* pCube = NULL;
 	pCube = App->CL_BrushTemplate->BrushTemplate_CreateBox(pBoxTemplate);

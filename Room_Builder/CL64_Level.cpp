@@ -330,7 +330,7 @@ void CL64_Level::Level_RemoveBrush(Level* pLevel, Brush* pBrush)
 }
 
 // *************************************************************************
-// *						Level_RemoveBrush							   *
+// *						Level_EnumBrushes							   *
 // *************************************************************************
 int CL64_Level::Level_EnumBrushes(Level* pLevel, void* lParam, BrushList_CB Callback)
 {

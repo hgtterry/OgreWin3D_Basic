@@ -54,7 +54,7 @@ A_CreateStaircaseDialog::~A_CreateStaircaseDialog(void)
 // *************************************************************************
 void A_CreateStaircaseDialog::Start_CreateStaircase_Dlg()
 {
-	pStaircaseTemplate = App->CL_Level->Level_GetStaircaseTemplate (App->CL_Doc->pLevel);
+	pStaircaseTemplate = App->CL_Level->Level_GetStaircaseTemplate (App->CL_Doc->Current_Level);
 
 	App->CL_Properties_Tabs->Enable_Tabs_Dlg(false);
 	DialogBox(App->hInst, (LPCTSTR)IDD_CREATE_STAIRCASE, App->MainHwnd, (DLGPROC)Proc_CreateStaircase);
@@ -422,7 +422,7 @@ void A_CreateStaircaseDialog::CreateNewTemplateBrush(Brush *pBrush)
 	App->CL_Brush->Brush_Bound (App->CL_Doc->CurBrush);
 	App->CL_Brush->Brush_Center (App->CL_Doc->CurBrush, &BrushPos);
 
-	pTemplatePos = App->CL_Level->Level_GetTemplatePos (App->CL_Doc->pLevel);
+	pTemplatePos = App->CL_Level->Level_GetTemplatePos (App->CL_Doc->Current_Level);
 
 	if (m_UseCamPos == 1 && App->flag_OgreStarted == 1)
 	{

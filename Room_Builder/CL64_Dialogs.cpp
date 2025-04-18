@@ -570,8 +570,8 @@ void CL64_Dialogs::Fill_Brush_Combo(HWND hDlg)
 
 	SendDlgItemMessage(hDlg, IDC_CB_SELECTED_BRUSH, CB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
 
-	Level* pLevel = App->CL_Doc->pLevel;
-	BrushList* pList = App->CL_Level->Level_GetBrushes(App->CL_Doc->pLevel);
+	Level* pLevel = App->CL_Doc->Current_Level;
+	BrushList* pList = App->CL_Level->Level_GetBrushes(App->CL_Doc->Current_Level);
 
 	int Count = 0;
 	Brush* b;
@@ -918,7 +918,7 @@ LRESULT CALLBACK CL64_Dialogs::Proc_SnapOptions(HWND hDlg, UINT message, WPARAM 
 		}
 		
 
-		float fSnapSize = App->CL_Level->Level_GetGridSnapSize(App->CL_Doc->pLevel);
+		float fSnapSize = App->CL_Level->Level_GetGridSnapSize(App->CL_Doc->Current_Level);
 
 		if (fSnapSize == 1)
 		{
@@ -952,7 +952,7 @@ LRESULT CALLBACK CL64_Dialogs::Proc_SnapOptions(HWND hDlg, UINT message, WPARAM 
 
 		char buff[10];
 
-		int fRotation = App->CL_Level->Level_GetRotationSnap(App->CL_Doc->pLevel);
+		int fRotation = App->CL_Level->Level_GetRotationSnap(App->CL_Doc->Current_Level);
 		SetDlgItemText(hDlg, IDC_ED_DEGREES, (LPCTSTR)_itoa(fRotation,buff,10));
 		
 		return TRUE;
@@ -1129,7 +1129,7 @@ LRESULT CALLBACK CL64_Dialogs::Proc_SnapOptions(HWND hDlg, UINT message, WPARAM 
 		if (LOWORD(wParam) == IDC_RADIO1)
 		{
 			App->CL_Editor_Map->GridSnapSize = 1;
-			App->CL_Doc->pLevel->GridSettings.TexelSnapSize = 1;
+			App->CL_Doc->Current_Level->GridSettings.TexelSnapSize = 1;
 
 			App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
 			return TRUE;
@@ -1138,7 +1138,7 @@ LRESULT CALLBACK CL64_Dialogs::Proc_SnapOptions(HWND hDlg, UINT message, WPARAM 
 		if (LOWORD(wParam) == IDC_RADIO2)
 		{
 			App->CL_Editor_Map->GridSnapSize = 2;
-			App->CL_Doc->pLevel->GridSettings.TexelSnapSize = 2;
+			App->CL_Doc->Current_Level->GridSettings.TexelSnapSize = 2;
 
 			App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
 			return TRUE;
@@ -1147,7 +1147,7 @@ LRESULT CALLBACK CL64_Dialogs::Proc_SnapOptions(HWND hDlg, UINT message, WPARAM 
 		if (LOWORD(wParam) == IDC_RADIO4)
 		{
 			App->CL_Editor_Map->GridSnapSize = 4;
-			App->CL_Doc->pLevel->GridSettings.TexelSnapSize = 4;
+			App->CL_Doc->Current_Level->GridSettings.TexelSnapSize = 4;
 
 			App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
 			return TRUE;
@@ -1156,7 +1156,7 @@ LRESULT CALLBACK CL64_Dialogs::Proc_SnapOptions(HWND hDlg, UINT message, WPARAM 
 		if (LOWORD(wParam) == IDC_RADIO8)
 		{
 			App->CL_Editor_Map->GridSnapSize = 8;
-			App->CL_Doc->pLevel->GridSettings.TexelSnapSize = 8;
+			App->CL_Doc->Current_Level->GridSettings.TexelSnapSize = 8;
 
 			App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
 			return TRUE;
@@ -1165,7 +1165,7 @@ LRESULT CALLBACK CL64_Dialogs::Proc_SnapOptions(HWND hDlg, UINT message, WPARAM 
 		if (LOWORD(wParam) == IDC_RADIO16)
 		{
 			App->CL_Editor_Map->GridSnapSize = 16;
-			App->CL_Doc->pLevel->GridSettings.TexelSnapSize = 16;
+			App->CL_Doc->Current_Level->GridSettings.TexelSnapSize = 16;
 
 			App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
 			return TRUE;
@@ -1174,7 +1174,7 @@ LRESULT CALLBACK CL64_Dialogs::Proc_SnapOptions(HWND hDlg, UINT message, WPARAM 
 		if (LOWORD(wParam) == IDC_RADIO32)
 		{
 			App->CL_Editor_Map->GridSnapSize = 32;
-			App->CL_Doc->pLevel->GridSettings.TexelSnapSize = 32;
+			App->CL_Doc->Current_Level->GridSettings.TexelSnapSize = 32;
 
 			App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
 			return TRUE;
@@ -1182,50 +1182,50 @@ LRESULT CALLBACK CL64_Dialogs::Proc_SnapOptions(HWND hDlg, UINT message, WPARAM 
 		
 		if (LOWORD(wParam) == IDC_SNAP15)
 		{
-			App->CL_Doc->pLevel->GridSettings.RotationSnap = 15;
+			App->CL_Doc->Current_Level->GridSettings.RotationSnap = 15;
 
 			char buff[10];
-			int fRotation = App->CL_Level->Level_GetRotationSnap(App->CL_Doc->pLevel);
+			int fRotation = App->CL_Level->Level_GetRotationSnap(App->CL_Doc->Current_Level);
 			SetDlgItemText(hDlg, IDC_ED_DEGREES, (LPCTSTR)_itoa(fRotation, buff, 10));
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == IDC_SNAP30)
 		{
-			App->CL_Doc->pLevel->GridSettings.RotationSnap = 30;
+			App->CL_Doc->Current_Level->GridSettings.RotationSnap = 30;
 
 			char buff[10];
-			int fRotation = App->CL_Level->Level_GetRotationSnap(App->CL_Doc->pLevel);
+			int fRotation = App->CL_Level->Level_GetRotationSnap(App->CL_Doc->Current_Level);
 			SetDlgItemText(hDlg, IDC_ED_DEGREES, (LPCTSTR)_itoa(fRotation, buff, 10));
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == IDC_SNAP45)
 		{
-			App->CL_Doc->pLevel->GridSettings.RotationSnap = 45;
+			App->CL_Doc->Current_Level->GridSettings.RotationSnap = 45;
 
 			char buff[10];
-			int fRotation = App->CL_Level->Level_GetRotationSnap(App->CL_Doc->pLevel);
+			int fRotation = App->CL_Level->Level_GetRotationSnap(App->CL_Doc->Current_Level);
 			SetDlgItemText(hDlg, IDC_ED_DEGREES, (LPCTSTR)_itoa(fRotation, buff, 10));
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == IDC_SNAP60)
 		{
-			App->CL_Doc->pLevel->GridSettings.RotationSnap = 60;
+			App->CL_Doc->Current_Level->GridSettings.RotationSnap = 60;
 
 			char buff[10];
-			int fRotation = App->CL_Level->Level_GetRotationSnap(App->CL_Doc->pLevel);
+			int fRotation = App->CL_Level->Level_GetRotationSnap(App->CL_Doc->Current_Level);
 			SetDlgItemText(hDlg, IDC_ED_DEGREES, (LPCTSTR)_itoa(fRotation, buff, 10));
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == IDC_SNAP90)
 		{
-			App->CL_Doc->pLevel->GridSettings.RotationSnap = 90;
+			App->CL_Doc->Current_Level->GridSettings.RotationSnap = 90;
 
 			char buff[10];
-			int fRotation = App->CL_Level->Level_GetRotationSnap(App->CL_Doc->pLevel);
+			int fRotation = App->CL_Level->Level_GetRotationSnap(App->CL_Doc->Current_Level);
 			SetDlgItemText(hDlg, IDC_ED_DEGREES, (LPCTSTR)_itoa(fRotation, buff, 10));
 			return TRUE;
 		}
@@ -1496,7 +1496,7 @@ void CL64_Dialogs::List_Used_Textures(HWND List)
 	int Count = 0;
 	memset(App->CL_Mesh_Mgr->UsedTextures, 0, 500);
 
-	BrushList* pList = App->CL_Level->Level_GetBrushes(App->CL_Doc->pLevel);
+	BrushList* pList = App->CL_Level->Level_GetBrushes(App->CL_Doc->Current_Level);
 
 	App->CL_Brush_X->BrushList_GetUsedTextures_X(pList, App->CL_Mesh_Mgr->UsedTextures);
 
@@ -1525,7 +1525,7 @@ void CL64_Dialogs::List_Used_Textures(HWND List)
 		Brush* pBrush = NULL;
 		BrushIterator bi;
 
-		BList = App->CL_Level->Level_GetBrushes(App->CL_Doc->pLevel);
+		BList = App->CL_Level->Level_GetBrushes(App->CL_Doc->Current_Level);
 
 		SBList = App->CL_Brush->BrushList_Create();
 		pBrush = App->CL_Brush->BrushList_GetFirst(BList, &bi);

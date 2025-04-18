@@ -136,7 +136,7 @@ bool CL64_File::Save(const char* FileName)
 
 	//fprintf(Write_File, "Brush_Count %i\n", App->CL_Brush->Get_Brush_Count());
 
-	BrushList_Write(App->CL_Doc->pLevel->Brushes, Write_File);
+	BrushList_Write(App->CL_Doc->Current_Level->Brushes, Write_File);
 
 	fclose(Write_File);
 
@@ -340,7 +340,7 @@ bool CL64_File::Open_3dt_File()
 		strcat(Path_And_File, "Default.txl");
 		strcpy(WadPathFile, Path_And_File);*/
 
-		if (!App->CL_Level->Level_LoadWad(App->CL_Doc->pLevel))
+		if (!App->CL_Level->Level_LoadWad(App->CL_Doc->Current_Level))
 		{
 			App->Say_Win("Can not load Wad File");
 		}
@@ -399,10 +399,10 @@ bool CL64_File::Load_File(const char* FileName)
 
 		//App->Say(App->CL_File->WadPath);
 
-		if (App->CL_Doc->pLevel->Brushes != NULL)
+		if (App->CL_Doc->Current_Level->Brushes != NULL)
 		{
-			App->CL_Brush->BrushList_Destroy(&App->CL_Doc->pLevel->Brushes);
-			App->CL_Doc->pLevel->Brushes = NULL;
+			App->CL_Brush->BrushList_Destroy(&App->CL_Doc->Current_Level->Brushes);
+			App->CL_Doc->Current_Level->Brushes = NULL;
 		}
 		
 		pLevel = App->CL_Level->Level_Create();
@@ -427,7 +427,7 @@ bool CL64_File::Load_File(const char* FileName)
 
 	fclose(fp);
 	
-	App->CL_Doc->pLevel = pLevel;
+	App->CL_Doc->Current_Level = pLevel;
 
 	return true;
 }

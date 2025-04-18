@@ -50,7 +50,7 @@ CL64_Doc::CL64_Doc(void)
     mDoc_TXL_Path_And_File[0] = 0;
     mDoc_TXL_Just_FileName[0] = 0;
 
-	pLevel = NULL;
+    Current_Level = NULL;
    
     BTemplate = NULL;
     CurBrush = NULL;
@@ -99,7 +99,7 @@ void CL64_Doc::Init_Doc()
   
     strcpy(LastTemplateTypeName, "Box");
    
-	pLevel = App->CL_Level->Level_Create(); // TODO Creating Twice one in Win Main
+    Current_Level = App->CL_Level->Level_Create(); // TODO Creating Twice one in Win Main
   
 	pSelBrushes = App->CL_SelBrushList->SelBrushList_Create();
 	pTempSelBrushes = App->CL_SelBrushList->SelBrushList_Create();
@@ -110,7 +110,7 @@ void CL64_Doc::Init_Doc()
 	// create our default box
 	BrushTemplate_Box* pBoxTemplate;
    
-	pBoxTemplate = App->CL_Level->Level_GetBoxTemplate(pLevel);
+	pBoxTemplate = App->CL_Level->Level_GetBoxTemplate(Current_Level);
 
 	BTemplate = App->CL_BrushTemplate->BrushTemplate_CreateBox(pBoxTemplate);
     
@@ -192,7 +192,7 @@ void CL64_Doc::AddBrushToWorld()
 void CL64_Doc::OnBrushSubtractfromworld()
 {
     Brush* nb;
-    BrushList* BList = App->CL_Level->Level_GetBrushes(App->CL_Doc->pLevel);
+    BrushList* BList = App->CL_Level->Level_GetBrushes(Current_Level);
 
     if ((App->CL_Doc->mModeTool == ID_GENERALSELECT) && (App->CL_Brush->BrushList_Count(BList, BRUSH_COUNT_MULTI | BRUSH_COUNT_LEAF) < 2))
     {
@@ -251,7 +251,7 @@ void CL64_Doc::Brush_Add_To_world()
 	SetDefaultBrushTexInfo(nb);
    
 	App->CL_Brush->Brush_Bound(nb);
-	pTemplatePos = App->CL_Level->Level_GetTemplatePos(pLevel);
+	pTemplatePos = App->CL_Level->Level_GetTemplatePos(Current_Level);
     
 	App->CL_Brush->Brush_Center(nb, pTemplatePos);
 
@@ -260,11 +260,11 @@ void CL64_Doc::Brush_Add_To_world()
    
 	fdocFaceScales Scales;
    
-	Scales.DrawScale = App->CL_Level->Level_GetDrawScale(pLevel);
-	Scales.LightmapScale = App->CL_Level->Level_GetLightmapScale(pLevel);
+	Scales.DrawScale = App->CL_Level->Level_GetDrawScale(Current_Level);
+	Scales.LightmapScale = App->CL_Level->Level_GetLightmapScale(Current_Level);
 	App->CL_Brush->Brush_EnumFaces(nb, &Scales, fdocSetFaceScales);
    
-	App->CL_Level->Level_AppendBrush(pLevel, nb);
+	App->CL_Level->Level_AppendBrush(Current_Level, nb);
    
 
 	if (!App->CL_Brush->Brush_IsHollow(nb) && !App->CL_Brush->Brush_IsMulti(nb))
@@ -410,7 +410,7 @@ void CL64_Doc::SetDefaultBrushTexInfo(Brush* b)
 // *************************************************************************
 WadFileEntry* CL64_Doc::GetDibBitmap(const char* Name)
 {
-    return App->CL_Level->Level_GetWadBitmap(pLevel, Name);
+    return App->CL_Level->Level_GetWadBitmap(Current_Level, Name);
 }
 
 // *************************************************************************
@@ -569,7 +569,7 @@ void CL64_Doc::ResetAllSelections(void)
 // *************************************************************************
 void CL64_Doc::ResetAllSelectedFaces(void)
 {
-    App->CL_Brush->BrushList_EnumLeafBrushes(App->CL_Level->Level_GetBrushes(pLevel), NULL, ResetSelectedFacesCB);
+    App->CL_Brush->BrushList_EnumLeafBrushes(App->CL_Level->Level_GetBrushes(Current_Level), NULL, ResetSelectedFacesCB);
     App->CL_SelFaceList->SelFaceList_RemoveAll(pSelFaces);
 }
 
@@ -597,7 +597,7 @@ void CL64_Doc::DoBrushSelection(Brush* pBrush, BrushSel	nSelType) //	brushSelTog
     BrushList* BList;
     Brush* pBParent = NULL;
 
-    BList = App->CL_Level->Level_GetBrushes(pLevel);
+    BList = App->CL_Level->Level_GetBrushes(Current_Level);
 
     if (App->CL_Brush->Brush_GetParent(BList, pBrush, &pBParent))
     {
@@ -671,7 +671,7 @@ signed int CL64_Doc::FindClosestBrush(POINT const* ptFrom, ViewVars* v, Brush** 
     fci.pMinEdgeDist = pMinEdgeDist;
     fci.ptFrom = ptFrom;
 
-    App->CL_Brush->BrushList_EnumLeafBrushes(App->CL_Level->Level_GetBrushes(pLevel), &fci, ::FindClosestBrushCB);
+    App->CL_Brush->BrushList_EnumLeafBrushes(App->CL_Level->Level_GetBrushes(Current_Level), &fci, ::FindClosestBrushCB);
 
     return	(*ppFoundBrush) ? GE_TRUE : GE_FALSE;
 }
@@ -733,7 +733,7 @@ void CL64_Doc::RebuildTrees(void)
   
     BrushList* BList;
    
-    BList = App->CL_Level->Level_GetBrushes(App->CL_Doc->pLevel);
+    BList = App->CL_Level->Level_GetBrushes(Current_Level);
     //SetModifiedFlag();
 
     App->CL_Brush->BrushList_ClearAllCSG(BList);
@@ -761,7 +761,7 @@ void CL64_Doc::TempCopySelectedBrushes(void)
 
         pBrush = App->CL_SelBrushList->SelBrushList_GetBrush(App->CL_Doc->pSelBrushes, i);
         pClone = App->CL_Brush->Brush_Clone(pBrush);
-        App->CL_Level->Level_AppendBrush(App->CL_Doc->pLevel, pClone);
+        App->CL_Level->Level_AppendBrush(Current_Level, pClone);
         App->CL_SelBrushList->SelBrushList_Add(App->CL_Doc->pTempSelBrushes, pClone);
     }
 }
@@ -973,7 +973,7 @@ void CL64_Doc::DoneMovingBrushes()
 
         if (App->CL_Level->flag_UseGrid == 1)
         {
-            fSnapSize = App->CL_Level->Level_GetGridSnapSize(App->CL_Doc->pLevel);
+            fSnapSize = App->CL_Level->Level_GetGridSnapSize(Current_Level);
         }
 
         // do the snap thing...
@@ -1052,7 +1052,7 @@ void CL64_Doc::DoneRotate(void)
 
     if (App->CL_Level->flag_UseGrid == 1)
     {
-        RSnap = Units_DegreesToRadians((float)App->CL_Level->Level_GetRotationSnap(pLevel));
+        RSnap = Units_DegreesToRadians((float)App->CL_Level->Level_GetRotationSnap(Current_Level));
         FinalRot.x = ((float)((int)(FinalRot.x / RSnap))) * RSnap;
         FinalRot.y = ((float)((int)(FinalRot.y / RSnap))) * RSnap;
         FinalRot.z = ((float)((int)(FinalRot.z / RSnap))) * RSnap;
@@ -1089,7 +1089,7 @@ void CL64_Doc::DoneRotate(void)
     }
     else
     {
-        BrushList* BList = App->CL_Level->Level_GetBrushes(pLevel);
+        BrushList* BList = App->CL_Level->Level_GetBrushes(Current_Level);
 
         for (i = 0; i < NumSelBrushes; i++)
         {
@@ -1188,7 +1188,7 @@ BOOL CL64_Doc::TempDeleteSelected(void)
 
         pBrush = App->CL_SelBrushList->SelBrushList_GetBrush(pTempSelBrushes, 0);
 
-        App->CL_Level->Level_RemoveBrush(pLevel, pBrush);
+        App->CL_Level->Level_RemoveBrush(Current_Level, pBrush);
         App->CL_SelBrushList->SelBrushList_Remove(pTempSelBrushes, pBrush);
         App->CL_Brush->Brush_Destroy(&pBrush);
         ret = TRUE;
@@ -1342,7 +1342,7 @@ void CL64_Doc::SelectAllFacesInBrushes(void)
 // *************************************************************************
 void CL64_Doc::Set_Faces_To_Brush_Name_All()
 {
-    BrushList* pList = App->CL_Level->Level_GetBrushes(App->CL_Doc->pLevel);
+    BrushList* pList = App->CL_Level->Level_GetBrushes(Current_Level);
 
     int Count = 0;
     int BC = App->CL_Brush->Get_Brush_Count();
@@ -1402,7 +1402,7 @@ static signed int fdocSelectBrush(Brush* pBrush, void* lParam)
 void CL64_Doc::SelectAll(void)
 {
     Do_General_Select_Dlg(false);
-    App->CL_Level->Level_EnumBrushes(pLevel, this, fdocSelectBrush);
+    App->CL_Level->Level_EnumBrushes(Current_Level, this, fdocSelectBrush);
 
     // Select all faces on all selected brushes
     int iBrush;
@@ -1481,9 +1481,9 @@ void CL64_Doc::UpdateSelected(void)
 
 static signed int fdocUpdateFaceTextures(Face* pFace, void* lParam)
 {
-    App->CL_Face->Face_SetTextureDibId(pFace, App->CL_Level->Level_GetDibId(App->CL_Doc->pLevel, App->CL_Face->Face_GetTextureName(pFace)));
+    App->CL_Face->Face_SetTextureDibId(pFace, App->CL_Level->Level_GetDibId(App->CL_Doc->Current_Level, App->CL_Face->Face_GetTextureName(pFace)));
     // changed QD 12/03
-    const WadFileEntry* const pbmp = App->CL_Level->Level_GetWadBitmap(App->CL_Doc->pLevel, App->CL_Face->Face_GetTextureName(pFace));
+    const WadFileEntry* const pbmp = App->CL_Level->Level_GetWadBitmap(App->CL_Doc->Current_Level, App->CL_Face->Face_GetTextureName(pFace));
     if (pbmp)
         App->CL_Face->Face_SetTextureSize(pFace, pbmp->Width, pbmp->Height);
     // end change
@@ -1503,7 +1503,7 @@ void CL64_Doc::UpdateAfterWadChange()
 {
    flag_Is_Modified = 1;
 
-   if (!App->CL_Level->Level_LoadWad(pLevel))
+   if (!App->CL_Level->Level_LoadWad(Current_Level))
     {
        App->Say("Cant Load TXL File");
     }
@@ -1513,7 +1513,7 @@ void CL64_Doc::UpdateAfterWadChange()
     //App->CLSB_TextureDialog->Fill_ListBox();
 
     // update all brush faces
-    App->CL_Brush->BrushList_EnumLeafBrushes(App->CL_Level->Level_GetBrushes(pLevel), this, ::fdocUpdateBrushFaceTextures);
+    App->CL_Brush->BrushList_EnumLeafBrushes(App->CL_Level->Level_GetBrushes(Current_Level), this, ::fdocUpdateBrushFaceTextures);
     {
         // find the rendered view and set the wad size infos for it
         //POSITION		pos;
@@ -1575,7 +1575,7 @@ bool CL64_Doc::DeleteSelectedBrushes()
 
             pBrush = App->CL_SelBrushList->SelBrushList_GetBrush(pSelBrushes, 0);
             
-            App->CL_Level->Level_RemoveBrush(pLevel, pBrush);
+            App->CL_Level->Level_RemoveBrush(Current_Level, pBrush);
             App->CL_SelBrushList->SelBrushList_Remove(pSelBrushes, pBrush);
             App->CL_Brush->Brush_Destroy(&pBrush);
 
@@ -1632,7 +1632,7 @@ void CL64_Doc::Set_Current_3DT_Paths(void)
 void CL64_Doc::Set_Current_TxlPath(void)
 {
     const char* WadFilePath;
-    WadFilePath = App->CL_Level->Level_GetWadPath(App->CL_Doc->pLevel);
+    WadFilePath = App->CL_Level->Level_GetWadPath(Current_Level);
 
     strcpy(mDoc_TXL_Path_And_File, WadFilePath);
 
@@ -1655,7 +1655,7 @@ void CL64_Doc::SnapScaleNearest(int sides, int inidx, ViewVars* v)
     bsnap = 1.0f;
     if (App->CL_Level->flag_UseGrid == 1)
     {
-        bsnap = App->CL_Level->Level_GetGridSnapSize(App->CL_Doc->pLevel);
+        bsnap = App->CL_Level->Level_GetGridSnapSize(Current_Level);
     }
 
    /* if (App->CLSB_Doc->mModeTool == ID_TOOLS_TEMPLATE)

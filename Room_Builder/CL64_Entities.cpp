@@ -63,7 +63,7 @@ void CL64_Entities::Create_Player_Entity()
 
 	BrushTemplate_Box* pBoxTemplate;
 
-	pBoxTemplate = App->CL_Level->Level_GetBoxTemplate(App->CL_Doc->pLevel);
+	pBoxTemplate = App->CL_Level->Level_GetBoxTemplate(App->CL_Doc->Current_Level);
 
 
 	pBoxTemplate->Solid = 0;
@@ -86,13 +86,13 @@ void CL64_Entities::Create_Player_Entity()
 
 	fdocFaceScales Scales;
 
-	Scales.DrawScale = App->CL_Level->Level_GetDrawScale(App->CL_Doc->pLevel);
-	Scales.LightmapScale = App->CL_Level->Level_GetLightmapScale(App->CL_Doc->pLevel);
+	Scales.DrawScale = App->CL_Level->Level_GetDrawScale(App->CL_Doc->Current_Level);
+	Scales.LightmapScale = App->CL_Level->Level_GetLightmapScale(App->CL_Doc->Current_Level);
 	App->CL_Brush->Brush_EnumFaces(Player_Brush, &Scales, fdocSetFaceScales);
 
 	strcpy(Player_Brush->Name, "Player_Main");
 
-	App->CL_Level->Level_AppendBrush(App->CL_Doc->pLevel, Player_Brush);
+	App->CL_Level->Level_AppendBrush(App->CL_Doc->Current_Level, Player_Brush);
 
 	App->CL_Doc->CurBrush = Player_Brush;
 	App->CL_Brush_X->Set_Brush_Faces_Name(App->CL_Doc->CurBrush);

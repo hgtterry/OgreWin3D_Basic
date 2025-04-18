@@ -185,7 +185,7 @@ void CL64_Mesh_Mgr::Brush_Build_List(int ExpSelected)
 	mBrushCount = 0;
 	mSubBrushCount = 0;
 
-	BrushList* BList = App->CL_Level->Level_GetBrushes(App->CL_Doc->pLevel);
+	BrushList* BList = App->CL_Level->Level_GetBrushes(App->CL_Doc->Current_Level);
 	if (!BList)
 	{
 		App->Say("Error: No brushes found.");
@@ -194,7 +194,7 @@ void CL64_Mesh_Mgr::Brush_Build_List(int ExpSelected)
 
 	if (ExpSelected == 0) // Build All
 	{
-		signed int fResult = Brush_Build_Level_Brushes(reinterpret_cast<tag_Level3*>(App->CL_Doc->pLevel), "FileName", BList, 0, 0, -1);
+		signed int fResult = Brush_Build_Level_Brushes(reinterpret_cast<tag_Level3*>(App->CL_Doc->Current_Level), "FileName", BList, 0, 0, -1);
 
 	}
 	else
@@ -246,7 +246,7 @@ bool CL64_Mesh_Mgr::Brush_Build_Selected(BrushList* BList)
 
 		}
 
-		fResult = Brush_Build_Level_Brushes(reinterpret_cast<tag_Level3*>(App->CL_Doc->pLevel), NewFileName, SBList, 0, 0, -1);
+		fResult = Brush_Build_Level_Brushes(reinterpret_cast<tag_Level3*>(App->CL_Doc->Current_Level), NewFileName, SBList, 0, 0, -1);
 		if (!fResult)
 		{
 			App->Say("Error exporting group");
@@ -263,7 +263,7 @@ bool CL64_Mesh_Mgr::Brush_Build_Selected(BrushList* BList)
 // *************************************************************************
 bool CL64_Mesh_Mgr::Brush_Build_Level_Brushes(Level3* pLevel, const char* Filename, BrushList* BList, int ExpSelected, signed int ExpLights, int GroupID)
 {
-	CL64_WadFile* pWad = App->CL_Level->Level_GetWad_Class(App->CL_Doc->pLevel);
+	CL64_WadFile* pWad = App->CL_Level->Level_GetWad_Class(App->CL_Doc->Current_Level);
 	if (!pWad) {
 		App->Say("Failed to retrieve WAD Class.");
 		return false;

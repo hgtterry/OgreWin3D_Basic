@@ -733,7 +733,7 @@ int CL64_Brush::Get_Brush_Count(void)
 	int Count = 0;
 	Brush* b;
 
-	Level* pLevel = App->CL_Doc->pLevel;
+	Level* pLevel = App->CL_Doc->Current_Level;
 	BrushList* pList = App->CL_Level->Level_GetBrushes(pLevel);
 
 	b = pList->First;
@@ -1216,8 +1216,7 @@ signed int CL64_Brush::Brush_GetParent(const BrushList* pList,const Brush* b,Bru
 // *************************************************************************
 Brush* CL64_Brush::Get_Brush_ByIndex(int Index)
 {
-	Level* pLevel = App->CL_Doc->pLevel;
-	BrushList* pList = App->CL_Level->Level_GetBrushes(App->CL_Doc->pLevel);
+	BrushList* pList = App->CL_Level->Level_GetBrushes(App->CL_Doc->Current_Level);
 
 	int Count = 0;
 	Brush* b;
@@ -2284,7 +2283,7 @@ Brush* CL64_Brush::Get_By_Index(int Index)
 	int Result = 1;
 	Brush* b;
 
-	BrushList* pList = App->CL_Level->Level_GetBrushes(App->CL_Doc->pLevel);
+	BrushList* pList = App->CL_Level->Level_GetBrushes(App->CL_Doc->Current_Level);
 
 	b = pList->First;
 	while (b != NULL)
