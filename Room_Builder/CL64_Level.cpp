@@ -185,38 +185,41 @@ void CL64_Level::Level_AppendBrush(Brush* pBrush)
 // *************************************************************************
 // *						Level_EnumLeafBrushes						   *
 // *************************************************************************
-int CL64_Level::Level_EnumLeafBrushes(Level* pLevel, void* lParam, BrushList_CB Callback)
+int CL64_Level::Level_EnumLeafBrushes(void* lParam, BrushList_CB Callback)
 {
-	return App->CL_Brush->BrushList_EnumLeafBrushes(pLevel->Brushes, lParam, Callback);
+	return App->CL_Brush->BrushList_EnumLeafBrushes(App->CL_Doc->Current_Level->Brushes, lParam, Callback);
 }
 
 // *************************************************************************
 // *							Level_UnloadWad							   *
 // *************************************************************************
-void Level_UnloadWad(Level* pLevel)
+void Level_UnloadWad()
 {
-	if (pLevel->WadSizeInfos != NULL)
+	Level* m_pLevel = App->CL_Doc->Current_Level;
+
+	if (m_pLevel->WadSizeInfos != NULL)
 	{
-		App->CL_Maths->Ram_Free(pLevel->WadSizeInfos);
-		pLevel->WadSizeInfos = NULL;
+		App->CL_Maths->Ram_Free(m_pLevel->WadSizeInfos);
+		m_pLevel->WadSizeInfos = NULL;
 	}
-	if (pLevel->CL_Wad_Class != NULL)
+	if (m_pLevel->CL_Wad_Class != NULL)
 	{
-		delete pLevel->CL_Wad_Class;
-		pLevel->CL_Wad_Class = NULL;
+		delete m_pLevel->CL_Wad_Class;
+		m_pLevel->CL_Wad_Class = NULL;
 	}
 }
 
 // *************************************************************************
 // *							Level_LoadWad							   *
 // *************************************************************************
-signed int CL64_Level::Level_LoadWad(Level* pLevel)
+signed int CL64_Level::Level_LoadWad()
 {
-	// get rid of the old wad...
-	Level_UnloadWad(pLevel);
+	Level* m_pLevel = App->CL_Doc->Current_Level;
 
-	pLevel->CL_Wad_Class = new CL64_WadFile();
-	if (pLevel->CL_Wad_Class == NULL)
+	Level_UnloadWad();
+
+	m_pLevel->CL_Wad_Class = new CL64_WadFile();
+	if (App->CL_Doc->Current_Level->CL_Wad_Class == NULL)
 	{
 		App->Say("Cant Create Wad File", (LPSTR)"");
 
@@ -224,11 +227,11 @@ signed int CL64_Level::Level_LoadWad(Level* pLevel)
 	}
 
 
-	if (pLevel->CL_Wad_Class->Setup())
+	if (m_pLevel->CL_Wad_Class->Setup())
 	{
-		pLevel->WadSizeInfos = (SizeInfo*)App->CL_Maths->Ram_Allocate(sizeof(SizeInfo) * pLevel->CL_Wad_Class->mBitmapCount);
+		m_pLevel->WadSizeInfos = (SizeInfo*)App->CL_Maths->Ram_Allocate(sizeof(SizeInfo) * m_pLevel->CL_Wad_Class->mBitmapCount);
 
-		if (pLevel->WadSizeInfos != NULL)
+		if (m_pLevel->WadSizeInfos != NULL)
 		{
 			int i;
 
@@ -237,8 +240,8 @@ signed int CL64_Level::Level_LoadWad(Level* pLevel)
 				SizeInfo* pInfo;
 				WadFileEntry* Entry;
 
-				pInfo = &(pLevel->WadSizeInfos[i]);
-				Entry = &(pLevel->CL_Wad_Class->mBitmaps[i]);
+				pInfo = &(m_pLevel->WadSizeInfos[i]);
+				Entry = &(m_pLevel->CL_Wad_Class->mBitmaps[i]);
 
 				pInfo->TexWidth = Entry->Width;
 				pInfo->TexHeight = Entry->Height;
@@ -247,15 +250,15 @@ signed int CL64_Level::Level_LoadWad(Level* pLevel)
 		}
 	}
 
-	return  (pLevel->WadSizeInfos != NULL);
+	return  (m_pLevel->WadSizeInfos != NULL);
 }
 
 // *************************************************************************
 // *							Level_GetWadPath						   *
 // *************************************************************************
-const char* CL64_Level::Level_GetWadPath(const Level* pLevel)
+const char* CL64_Level::Level_GetWadPath()
 {
-	return (pLevel->WadPathFile);
+	return (App->CL_Doc->Current_Level->WadPathFile);
 }
 
 // *************************************************************************
@@ -269,9 +272,9 @@ void CL64_Level::Level_SetWadPath(Level* pLevel, const char* NewWad)
 // *************************************************************************
 // *							Level_GetWad_Class						   *
 // *************************************************************************
-CL64_WadFile* CL64_Level::Level_GetWad_Class(Level* pLevel)
+CL64_WadFile* CL64_Level::Level_GetWad_Class()
 {
-	return pLevel->CL_Wad_Class;
+	return App->CL_Doc->Current_Level->CL_Wad_Class;
 }
 
 // *************************************************************************

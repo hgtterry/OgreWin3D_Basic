@@ -1504,7 +1504,7 @@ void CL64_Doc::UpdateAfterWadChange()
 {
    flag_Is_Modified = 1;
 
-   if (!App->CL_Level->Level_LoadWad(Current_Level))
+   if (!App->CL_Level->Level_LoadWad())
     {
        App->Say("Cant Load TXL File");
     }
@@ -1633,7 +1633,7 @@ void CL64_Doc::Set_Current_3DT_Paths(void)
 void CL64_Doc::Set_Current_TxlPath(void)
 {
     const char* WadFilePath;
-    WadFilePath = App->CL_Level->Level_GetWadPath(Current_Level);
+    WadFilePath = App->CL_Level->Level_GetWadPath();
 
     strcpy(mDoc_TXL_Path_And_File, WadFilePath);
 

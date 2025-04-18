@@ -263,7 +263,7 @@ bool CL64_Mesh_Mgr::Brush_Build_Selected(BrushList* BList)
 // *************************************************************************
 bool CL64_Mesh_Mgr::Brush_Build_Level_Brushes(Level3* pLevel, const char* Filename, BrushList* BList, int ExpSelected, signed int ExpLights, int GroupID)
 {
-	CL64_WadFile* pWad = App->CL_Level->Level_GetWad_Class(App->CL_Doc->Current_Level);
+	CL64_WadFile* pWad = App->CL_Level->Level_GetWad_Class();
 	if (!pWad) {
 		App->Say("Failed to retrieve WAD Class.");
 		return false;

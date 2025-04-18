@@ -99,7 +99,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     App->CL_Doc->Current_Level = App->CL_Level->Level_Create();
     App->CL_Level->Level_SetWadPath(App->CL_Doc->Current_Level, App->CL_File->WadPathFile);
    
-    if (!App->CL_Level->Level_LoadWad(App->CL_Doc->Current_Level))
+    if (!App->CL_Level->Level_LoadWad())
     {
        App->Say_Win("Can not load Wad File");
     }

@@ -340,7 +340,7 @@ bool CL64_File::Open_3dt_File()
 		strcat(Path_And_File, "Default.txl");
 		strcpy(WadPathFile, Path_And_File);*/
 
-		if (!App->CL_Level->Level_LoadWad(App->CL_Doc->Current_Level))
+		if (!App->CL_Level->Level_LoadWad())
 		{
 			App->Say_Win("Can not load Wad File");
 		}

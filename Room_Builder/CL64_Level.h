@@ -48,10 +48,10 @@ public:
 	float Level_GetDrawScale(const Level* pLevel);
 	float Level_GetLightmapScale(const Level* pLevel);
 	void Level_AppendBrush(Brush* pBrush);
-	int Level_EnumLeafBrushes(Level* pLevel, void* lParam, BrushList_CB Callback);
-	signed int Level_LoadWad(Level* pLevel);
-	const char* Level_GetWadPath(const Level* pLevel);
-	CL64_WadFile* Level_GetWad_Class(Level* pLevel);
+	int Level_EnumLeafBrushes(void* lParam, BrushList_CB Callback);
+	signed int Level_LoadWad();
+	const char* Level_GetWadPath();
+	CL64_WadFile* Level_GetWad_Class();
 	void Level_SetWadPath(Level* pLevel, const char* NewWad);
 
 	WadFileEntry* Level_GetWadBitmap(Level* pLevel, const char* Name);
