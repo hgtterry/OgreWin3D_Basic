@@ -56,7 +56,7 @@ A_CreateConeDialog::~A_CreateConeDialog(void)
 // *************************************************************************
 void A_CreateConeDialog::Start_CreateCone_Dlg()
 {
-	pConeTemplate = App->CL_Level->Level_GetConeTemplate(App->CL_Doc->Current_Level);
+	pConeTemplate = App->CL_Level->Level_GetConeTemplate();
 
 	App->CL_Properties_Tabs->Enable_Tabs_Dlg(false);
 
@@ -64,7 +64,7 @@ void A_CreateConeDialog::Start_CreateCone_Dlg()
 }
 
 // *************************************************************************
-// *        CreateBox_Proc:- Terry and Hazel Flanigan 2025				   *
+// *        Proc_CreateCone:- Terry and Hazel Flanigan 2025				   *
 // *************************************************************************
 LRESULT CALLBACK A_CreateConeDialog::Proc_CreateCone(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {

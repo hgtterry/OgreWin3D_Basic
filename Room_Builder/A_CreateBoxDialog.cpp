@@ -63,7 +63,7 @@ A_CreateBoxDialog::~A_CreateBoxDialog(void)
 void A_CreateBoxDialog::Start_CreateBox_Dlg()
 {
 
-	pBoxTemplate = App->CL_Level->Level_GetBoxTemplate(App->CL_Doc->Current_Level);
+	pBoxTemplate = App->CL_Level->Level_GetBoxTemplate();
 
 	App->CL_Properties_Tabs->Enable_Tabs_Dlg(false);
 
@@ -523,7 +523,7 @@ void A_CreateBoxDialog::SetRoom(HWND hDlg)
 // *************************************************************************
 void A_CreateBoxDialog::CreateDefault_TemplateCube()
 {
-	pBoxTemplate = App->CL_Level->Level_GetBoxTemplate(App->CL_Doc->Current_Level);
+	pBoxTemplate = App->CL_Level->Level_GetBoxTemplate();
 
 	Brush* pCube = NULL;
 	pCube = App->CL_BrushTemplate->BrushTemplate_CreateBox(pBoxTemplate);

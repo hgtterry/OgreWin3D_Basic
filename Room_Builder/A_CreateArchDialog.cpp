@@ -69,7 +69,7 @@ A_CreateArchDialog::~A_CreateArchDialog(void)
 // *************************************************************************
 void A_CreateArchDialog::Start_CreateArch_Dlg()
 {
-	pArchTemplate = App->CL_Level->Level_GetArchTemplate (App->CL_Doc->Current_Level);
+	pArchTemplate = App->CL_Level->Level_GetArchTemplate ();
 
 	App->CL_Properties_Tabs->Enable_Tabs_Dlg(false);
 	DialogBox(App->hInst, (LPCTSTR)IDD_CREATE_ARCH, App->MainHwnd, (DLGPROC)CreateArch_Proc);

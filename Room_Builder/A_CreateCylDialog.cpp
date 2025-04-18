@@ -64,14 +64,14 @@ A_CreateCylDialog::~A_CreateCylDialog(void)
 // *************************************************************************
 void A_CreateCylDialog::Start_CreateCyl_Dlg()
 {
-	pCylinderTemplate = App->CL_Level->Level_GetCylinderTemplate (App->CL_Doc->Current_Level);
+	pCylinderTemplate = App->CL_Level->Level_GetCylinderTemplate();
 
 	App->CL_Properties_Tabs->Enable_Tabs_Dlg(false);
 	DialogBox(App->hInst, (LPCTSTR)IDD_CREATE_CYLINDER, App->MainHwnd, (DLGPROC)Proc_Create_Cylinder);
 }
 
 // *************************************************************************
-// *        CreateBox_Proc:- Terry and Hazel Flanigan 2025				   *
+// *        Proc_Create_Cylinder:- Terry and Hazel Flanigan 2025		   *
 // *************************************************************************
 LRESULT CALLBACK A_CreateCylDialog::Proc_Create_Cylinder(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {

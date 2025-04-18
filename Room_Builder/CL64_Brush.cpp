@@ -733,8 +733,7 @@ int CL64_Brush::Get_Brush_Count(void)
 	int Count = 0;
 	Brush* b;
 
-	Level* pLevel = App->CL_Doc->Current_Level;
-	BrushList* pList = App->CL_Level->Level_GetBrushes(pLevel);
+	BrushList* pList = App->CL_Level->Level_GetBrushes(App->CL_Doc->Current_Level);
 
 	b = pList->First;
 	while (b != NULL)

@@ -63,7 +63,7 @@ void CL64_Entities::Create_Player_Entity()
 
 	BrushTemplate_Box* pBoxTemplate;
 
-	pBoxTemplate = App->CL_Level->Level_GetBoxTemplate(App->CL_Doc->Current_Level);
+	pBoxTemplate = App->CL_Level->Level_GetBoxTemplate();
 
 
 	pBoxTemplate->Solid = 0;
@@ -92,7 +92,7 @@ void CL64_Entities::Create_Player_Entity()
 
 	strcpy(Player_Brush->Name, "Player_Main");
 
-	App->CL_Level->Level_AppendBrush(App->CL_Doc->Current_Level, Player_Brush);
+	App->CL_Level->Level_AppendBrush(Player_Brush);
 
 	App->CL_Doc->CurBrush = Player_Brush;
 	App->CL_Brush_X->Set_Brush_Faces_Name(App->CL_Doc->CurBrush);

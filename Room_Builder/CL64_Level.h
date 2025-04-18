@@ -38,16 +38,16 @@ public:
 	Level* Level_Create();
 	BrushList* Level_GetBrushes(Level* pLevel);
 
-	BrushTemplate_Box* Level_GetBoxTemplate(Level* pLevel);
-	BrushTemplate_Cylinder* Level_GetCylinderTemplate(Level* pLevel);
-	BrushTemplate_Cone* Level_GetConeTemplate(Level* pLevel);
-	BrushTemplate_Staircase* Level_GetStaircaseTemplate(Level* pLevel);
-	BrushTemplate_Arch* Level_GetArchTemplate(Level* pLevel);
+	BrushTemplate_Box* Level_GetBoxTemplate();
+	BrushTemplate_Cylinder* Level_GetCylinderTemplate();
+	BrushTemplate_Cone* Level_GetConeTemplate();
+	BrushTemplate_Staircase* Level_GetStaircaseTemplate();
+	BrushTemplate_Arch* Level_GetArchTemplate();
 
 	T_Vec3* Level_GetTemplatePos(Level* pLevel);
 	float Level_GetDrawScale(const Level* pLevel);
 	float Level_GetLightmapScale(const Level* pLevel);
-	void Level_AppendBrush(Level* pLevel, Brush* pBrush);
+	void Level_AppendBrush(Brush* pBrush);
 	int Level_EnumLeafBrushes(Level* pLevel, void* lParam, BrushList_CB Callback);
 	signed int Level_LoadWad(Level* pLevel);
 	const char* Level_GetWadPath(const Level* pLevel);
@@ -56,7 +56,7 @@ public:
 
 	WadFileEntry* Level_GetWadBitmap(Level* pLevel, const char* Name);
 	Ogre::uint16 Level_GetDibId(const Level* pLevel, const char* Name);
-	void Level_RemoveBrush(Level* pLevel, Brush* pBrush);
+	void Level_RemoveBrush(Brush* pBrush);
 	int Level_EnumBrushes(Level* pLevel, void* lParam, BrushList_CB Callback);
 	signed int Level_UseGrid(const Level* pLevel);
 	int Level_GetRotationSnap(const Level* pLevel);

@@ -110,7 +110,7 @@ void CL64_Doc::Init_Doc()
 	// create our default box
 	BrushTemplate_Box* pBoxTemplate;
    
-	pBoxTemplate = App->CL_Level->Level_GetBoxTemplate(Current_Level);
+	pBoxTemplate = App->CL_Level->Level_GetBoxTemplate();
 
 	BTemplate = App->CL_BrushTemplate->BrushTemplate_CreateBox(pBoxTemplate);
     
@@ -242,32 +242,32 @@ void CL64_Doc::Brush_Add_To_world()
 
 	Placed = false;
 
-	Brush* nb;
+	Brush* NewBrush;
     T_Vec3* pTemplatePos;
 
     
-	nb = App->CL_Brush->Brush_Clone(App->CL_Doc->CurBrush);
+	NewBrush = App->CL_Brush->Brush_Clone(App->CL_Doc->CurBrush);
    
-	SetDefaultBrushTexInfo(nb);
+	SetDefaultBrushTexInfo(NewBrush);
    
-	App->CL_Brush->Brush_Bound(nb);
+	App->CL_Brush->Brush_Bound(NewBrush);
 	pTemplatePos = App->CL_Level->Level_GetTemplatePos(Current_Level);
     
-	App->CL_Brush->Brush_Center(nb, pTemplatePos);
+	App->CL_Brush->Brush_Center(NewBrush, pTemplatePos);
 
 	// add to current group
-	Brush_SetGroupId(nb, mCurrentGroup);
+	Brush_SetGroupId(NewBrush, mCurrentGroup);
    
 	fdocFaceScales Scales;
    
 	Scales.DrawScale = App->CL_Level->Level_GetDrawScale(Current_Level);
 	Scales.LightmapScale = App->CL_Level->Level_GetLightmapScale(Current_Level);
-	App->CL_Brush->Brush_EnumFaces(nb, &Scales, fdocSetFaceScales);
+	App->CL_Brush->Brush_EnumFaces(NewBrush, &Scales, fdocSetFaceScales);
    
-	App->CL_Level->Level_AppendBrush(Current_Level, nb);
+	App->CL_Level->Level_AppendBrush(NewBrush);
    
 
-	if (!App->CL_Brush->Brush_IsHollow(nb) && !App->CL_Brush->Brush_IsMulti(nb))
+	if (!App->CL_Brush->Brush_IsHollow(NewBrush) && !App->CL_Brush->Brush_IsMulti(NewBrush))
 	{
 		//App->CL_Doc->UpdateAllViews(Enums::UpdateViews_All);
 	}
@@ -276,7 +276,7 @@ void CL64_Doc::Brush_Add_To_world()
 		//App->CL_Doc->UpdateAllViews(Enums::UpdateViews_All);
 	}
 
-    App->CL_Doc->CurBrush = nb;
+    App->CL_Doc->CurBrush = NewBrush;
     App->CL_Brush_X->Set_Brush_Faces_Name(App->CL_Doc->CurBrush);
 
 	Placed = true;
@@ -761,7 +761,7 @@ void CL64_Doc::TempCopySelectedBrushes(void)
 
         pBrush = App->CL_SelBrushList->SelBrushList_GetBrush(App->CL_Doc->pSelBrushes, i);
         pClone = App->CL_Brush->Brush_Clone(pBrush);
-        App->CL_Level->Level_AppendBrush(Current_Level, pClone);
+        App->CL_Level->Level_AppendBrush(pClone);
         App->CL_SelBrushList->SelBrushList_Add(App->CL_Doc->pTempSelBrushes, pClone);
     }
 }
@@ -1188,11 +1188,12 @@ BOOL CL64_Doc::TempDeleteSelected(void)
 
         pBrush = App->CL_SelBrushList->SelBrushList_GetBrush(pTempSelBrushes, 0);
 
-        App->CL_Level->Level_RemoveBrush(Current_Level, pBrush);
+        App->CL_Level->Level_RemoveBrush(pBrush);
         App->CL_SelBrushList->SelBrushList_Remove(pTempSelBrushes, pBrush);
         App->CL_Brush->Brush_Destroy(&pBrush);
         ret = TRUE;
     }
+
     return	ret;
 }
 
@@ -1575,7 +1576,7 @@ bool CL64_Doc::DeleteSelectedBrushes()
 
             pBrush = App->CL_SelBrushList->SelBrushList_GetBrush(pSelBrushes, 0);
             
-            App->CL_Level->Level_RemoveBrush(Current_Level, pBrush);
+            App->CL_Level->Level_RemoveBrush(pBrush);
             App->CL_SelBrushList->SelBrushList_Remove(pSelBrushes, pBrush);
             App->CL_Brush->Brush_Destroy(&pBrush);
 

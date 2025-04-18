@@ -44,26 +44,26 @@ CL64_Level::~CL64_Level(void)
 // *************************************************************************
 Level* CL64_Level::Level_Create()
 {
-	Level* pLevel = NULL;
+	Level* m_pLevel = NULL;
 
-	pLevel = new Level;
+	m_pLevel = new Level;
 
-	if (pLevel != NULL)
+	if (m_pLevel != NULL)
 	{
-		pLevel->Brushes = App->CL_Brush->BrushList_Create();
+		m_pLevel->Brushes = App->CL_Brush->BrushList_Create();
 
-		if (pLevel->Brushes == NULL)
+		if (m_pLevel->Brushes == NULL)
 		{
 			App->Say_Win("Can not create brush lists");
-			return pLevel;
+			return m_pLevel;
 		}
 
-		strcpy(pLevel->WadPathFile,"Empty");
-		pLevel->CL_Wad_Class = NULL;
-		pLevel->WadSizeInfos = NULL;
+		strcpy(m_pLevel->WadPathFile,"Empty");
+		m_pLevel->CL_Wad_Class = NULL;
+		m_pLevel->WadSizeInfos = NULL;
 
 		GridInfo* pGridInfo;
-		pGridInfo = &pLevel->GridSettings;
+		pGridInfo = &m_pLevel->GridSettings;
 		pGridInfo->GridType = GridTexel;
 		pGridInfo->SnapType = GridTexel;
 		pGridInfo->MetricSnapSize = GridSize_Decimeter;
@@ -82,20 +82,20 @@ Level* CL64_Level::Level_Create()
 			geVec3d_Set(&pInfo->CameraPos, 0.0f, 0.0f, 0.0f);
 		}*/
 
-		App->CL_BrushTemplate->BrushTemplate_ArchDefaults(&pLevel->ArchTemplate);
-		App->CL_BrushTemplate->BrushTemplate_BoxDefaults(&pLevel->BoxTemplate);
-		App->CL_BrushTemplate->BrushTemplate_ConeDefaults(&pLevel->ConeTemplate);
-		App->CL_BrushTemplate->BrushTemplate_CylinderDefaults(&pLevel->CylinderTemplate);
-		App->CL_BrushTemplate->BrushTemplate_SpheroidDefaults(&pLevel->SpheroidTemplate);
-		App->CL_BrushTemplate->BrushTemplate_StaircaseDefaults(&pLevel->StaircaseTemplate);
+		App->CL_BrushTemplate->BrushTemplate_ArchDefaults(&m_pLevel->ArchTemplate);
+		App->CL_BrushTemplate->BrushTemplate_BoxDefaults(&m_pLevel->BoxTemplate);
+		App->CL_BrushTemplate->BrushTemplate_ConeDefaults(&m_pLevel->ConeTemplate);
+		App->CL_BrushTemplate->BrushTemplate_CylinderDefaults(&m_pLevel->CylinderTemplate);
+		App->CL_BrushTemplate->BrushTemplate_SpheroidDefaults(&m_pLevel->SpheroidTemplate);
+		App->CL_BrushTemplate->BrushTemplate_StaircaseDefaults(&m_pLevel->StaircaseTemplate);
 
-		App->CL_Maths->Vector3_Clear(&pLevel->TemplatePos);
+		App->CL_Maths->Vector3_Clear(&m_pLevel->TemplatePos);
 
-		pLevel->DrawScale = 1.0f;
-		pLevel->LightmapScale = 2.0f;
+		m_pLevel->DrawScale = 1.0f;
+		m_pLevel->LightmapScale = 2.0f;
 	}
 
-	return pLevel;
+	return m_pLevel;
 
 //CreateError:
 //	Level_Destroy(&pLevel);
@@ -105,41 +105,41 @@ Level* CL64_Level::Level_Create()
 // *************************************************************************
 // *						Level_GetBoxTemplate						   *
 // *************************************************************************
-BrushTemplate_Box* CL64_Level::Level_GetBoxTemplate(Level* pLevel)
+BrushTemplate_Box* CL64_Level::Level_GetBoxTemplate()
 {
-	return &pLevel->BoxTemplate;
+	return &App->CL_Doc->Current_Level->BoxTemplate;
 }
 
 // *************************************************************************
 // *					Level_GetCylinderTemplate						   *
 // *************************************************************************
-BrushTemplate_Cylinder* CL64_Level::Level_GetCylinderTemplate(Level* pLevel)
+BrushTemplate_Cylinder* CL64_Level::Level_GetCylinderTemplate()
 {
-	return &pLevel->CylinderTemplate;
+	return &App->CL_Doc->Current_Level->CylinderTemplate;
 }
 
 // *************************************************************************
 // *						Level_GetConeTemplate						   *
 // *************************************************************************
-BrushTemplate_Cone* CL64_Level::Level_GetConeTemplate(Level* pLevel)
+BrushTemplate_Cone* CL64_Level::Level_GetConeTemplate()
 {
-	return &pLevel->ConeTemplate;
+	return &App->CL_Doc->Current_Level->ConeTemplate;
 }
 
 // *************************************************************************
 // *						Level_GetStaircaseTemplate					   *
 // *************************************************************************
-BrushTemplate_Staircase* CL64_Level::Level_GetStaircaseTemplate(Level* pLevel)
+BrushTemplate_Staircase* CL64_Level::Level_GetStaircaseTemplate()
 {
-	return &pLevel->StaircaseTemplate;
+	return &App->CL_Doc->Current_Level->StaircaseTemplate;
 }
 
 // *************************************************************************
 // *						Level_GetArchTemplate						   *
 // *************************************************************************
-BrushTemplate_Arch* CL64_Level::Level_GetArchTemplate(Level* pLevel)
+BrushTemplate_Arch* CL64_Level::Level_GetArchTemplate()
 {
-	return &pLevel->ArchTemplate;
+	return &App->CL_Doc->Current_Level->ArchTemplate;
 }
 
 // *************************************************************************
@@ -177,9 +177,9 @@ float CL64_Level::Level_GetLightmapScale(const Level* pLevel)
 // *************************************************************************
 // *						Level_AppendBrush							   *
 // *************************************************************************
-void CL64_Level::Level_AppendBrush(Level* pLevel, Brush* pBrush)
+void CL64_Level::Level_AppendBrush(Brush* pBrush)
 {
-	App->CL_Brush->BrushList_Append(pLevel->Brushes, pBrush);
+	App->CL_Brush->BrushList_Append(App->CL_Doc->Current_Level->Brushes, pBrush);
 }
 
 // *************************************************************************
@@ -324,9 +324,9 @@ Ogre::uint16 CL64_Level::Level_GetDibId(const Level* pLevel, const char* Name)
 // *************************************************************************
 // *						Level_RemoveBrush							   *
 // *************************************************************************
-void CL64_Level::Level_RemoveBrush(Level* pLevel, Brush* pBrush)
+void CL64_Level::Level_RemoveBrush(Brush* pBrush)
 {
-	App->CL_Brush->BrushList_Remove(pLevel->Brushes, pBrush);
+	App->CL_Brush->BrushList_Remove(App->CL_Doc->Current_Level->Brushes, pBrush);
 }
 
 // *************************************************************************

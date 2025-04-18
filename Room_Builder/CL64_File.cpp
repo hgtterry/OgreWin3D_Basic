@@ -370,7 +370,7 @@ bool CL64_File::Open_3dt_File()
 // *************************************************************************
 bool CL64_File::Load_File(const char* FileName)
 {
-	Level* pLevel = NULL;
+	Level* m_pLevel = NULL;
 
 	int Count = 0;
 
@@ -405,15 +405,15 @@ bool CL64_File::Load_File(const char* FileName)
 			App->CL_Doc->Current_Level->Brushes = NULL;
 		}
 		
-		pLevel = App->CL_Level->Level_Create();
-		if (pLevel == NULL)
+		m_pLevel = App->CL_Level->Level_Create();
+		if (m_pLevel == NULL)
 		{
 			App->Say("Can not Create Level");
 			break;
 		}
 		
-		pLevel->Brushes = App->CL_ParseFile->BrushList_CreateFromFile(false);
-		if (pLevel->Brushes == NULL)
+		m_pLevel->Brushes = App->CL_ParseFile->BrushList_CreateFromFile(false);
+		if (m_pLevel->Brushes == NULL)
 		{
 			App->Say("Can not Create Brushes");
 			break;
@@ -427,7 +427,7 @@ bool CL64_File::Load_File(const char* FileName)
 
 	fclose(fp);
 	
-	App->CL_Doc->Current_Level = pLevel;
+	App->CL_Doc->Current_Level = m_pLevel;
 
 	return true;
 }

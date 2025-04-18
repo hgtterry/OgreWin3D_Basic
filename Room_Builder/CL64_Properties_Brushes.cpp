@@ -498,7 +498,6 @@ void CL64_Properties_Brushes::Fill_ListBox()
 // *************************************************************************
 void CL64_Properties_Brushes::Get_Index(const Brush* b)
 {
-	Level* pLevel = App->CL_Doc->Current_Level;
 	BrushList* pList = App->CL_Level->Level_GetBrushes(App->CL_Doc->Current_Level);
 
 	int Selected = 0;
