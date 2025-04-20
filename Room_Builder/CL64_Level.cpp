@@ -36,6 +36,7 @@ CL64_Level::CL64_Level(void)
 
 	Wad_PathAndFile[0] = 0;
 	Wad_Just_File_Name[0] = 0;
+	Wad_Origin_File_Name[0] = 0;
 
 	CL_Wad_Class = nullptr;
 

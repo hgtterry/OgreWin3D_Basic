@@ -73,5 +73,6 @@ public:
 
 	char Wad_PathAndFile[MAX_PATH];
 	char Wad_Just_File_Name[MAX_PATH];
+	char Wad_Origin_File_Name[MAX_PATH];
 };
 

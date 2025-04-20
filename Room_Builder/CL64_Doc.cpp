@@ -44,6 +44,8 @@ CL64_Doc::CL64_Doc(void)
     strcpy(mDoc_MTF_PathAndFile, App->RB_Directory_FullPath);
     strcat(mDoc_MTF_PathAndFile, "\\Data\\Room_Builder\\Room_1.mtf");
 
+    strcpy(mDoc_MTF_Just_Path, "");
+
     strcpy(mDoc_MTF_Just_FileName,"Room_1.mtf");
     strcpy(mDoc_MTF_JustName_NoExt, "Room_1");
 
@@ -128,20 +130,20 @@ void CL64_Doc::Init_Doc()
 // *************************************************************************
 void CL64_Doc::Load_Wad_File(char* TXL_File)
 {
-     strcpy(App->CL_Level->Wad_PathAndFile, TXL_File);
+	strcpy(App->CL_Level->Wad_PathAndFile, TXL_File);
 
-     App->CL_Utilities->Get_FileName_FromPath(TXL_File, TXL_File);
-     strcpy(App->CL_Level->Wad_Just_File_Name, App->CL_Utilities->JustFileName);
+	App->CL_Utilities->Get_FileName_FromPath(TXL_File, TXL_File);
+	strcpy(App->CL_Level->Wad_Just_File_Name, App->CL_Utilities->JustFileName);
 
-     App->CL_Resources->Load_Texture_Resources();
-     App->CL_TXL_Editor->Scan_Textures_Resource_Group();
+	App->CL_Resources->Load_Texture_Resources();
+	App->CL_TXL_Editor->Scan_Textures_Resource_Group();
 
-     App->CL_Level->Level_SetWadPath(App->CL_Doc->Current_Level, App->CL_Level->Wad_PathAndFile);
+	App->CL_Level->Level_SetWadPath(App->CL_Doc->Current_Level, App->CL_Level->Wad_PathAndFile);
 
-     if (!App->CL_Level->Level_Create_TXL_Class())
-     {
-         App->Say_Win("Can not load Wad File");
-     }
+	if (!App->CL_Level->Level_Create_TXL_Class())
+	{
+		App->Say_Win("Can not Create Class");
+	}
 }
 
 // *************************************************************************
@@ -1496,9 +1498,20 @@ void CL64_Doc::UpdateSelected(void)
 
 }
 
+// *************************************************************************
+// *        fdocUpdateFaceTextures:- Terry and Hazel Flanigan 2025         *
+// *************************************************************************
 static signed int fdocUpdateFaceTextures(Face* pFace, void* lParam)
 {
-    App->CL_Face->Face_SetTextureDibId(pFace, App->CL_Level->Level_GetDibId(App->CL_Face->Face_GetTextureName(pFace)));
+    Ogre::uint16 TestDibID = App->CL_Level->Level_GetDibId(App->CL_Face->Face_GetTextureName(pFace));
+    if (TestDibID == 0xffff)
+    {
+        App->CL_Face->Face_SetTextureDibId(pFace, 0);
+    }
+    else
+    {
+        App->CL_Face->Face_SetTextureDibId(pFace, App->CL_Level->Level_GetDibId(App->CL_Face->Face_GetTextureName(pFace)));
+    }
    
     const WadFileEntry* const pbmp = App->CL_Level->Level_GetWadBitmap(App->CL_Face->Face_GetTextureName(pFace));
     if (pbmp)
@@ -1509,9 +1522,12 @@ static signed int fdocUpdateFaceTextures(Face* pFace, void* lParam)
     return GE_TRUE;
 }
 
+// *************************************************************************
+// *      fdocUpdateBrushFaceTextures:- Terry and Hazel Flanigan 2025      *
+// *************************************************************************
 static signed int fdocUpdateBrushFaceTextures(Brush* pBrush, void* pVoid)
 {
-    App->CL_Brush->Brush_EnumFaces(pBrush, pVoid, ::fdocUpdateFaceTextures);
+    App->CL_Brush->Brush_EnumFaces(pBrush, pVoid, fdocUpdateFaceTextures);
     return GE_TRUE;
 }
 
@@ -1520,41 +1536,11 @@ static signed int fdocUpdateBrushFaceTextures(Brush* pBrush, void* pVoid)
 // *************************************************************************
 void CL64_Doc::UpdateAfterWadChange()
 {
-   flag_Is_Modified = 1;
+	flag_Is_Modified = 1;
 
-   if (!App->CL_Level->Level_Create_TXL_Class())
-    {
-       App->Say("Cant Create TXL Class");
-    }
+	// update all brush faces
+	App->CL_Brush->BrushList_EnumLeafBrushes(App->CL_Level->Level_Get_Main_Brushes(), this, fdocUpdateBrushFaceTextures);
 
-    // update textures tab
-   // mCurTextureSelection = 0;
-    //App->CLSB_TextureDialog->Fill_ListBox();
-
-    // update all brush faces
-    App->CL_Brush->BrushList_EnumLeafBrushes(App->CL_Level->Level_Get_Main_Brushes(), this, ::fdocUpdateBrushFaceTextures);
-    {
-        // find the rendered view and set the wad size infos for it
-        //POSITION		pos;
-        //CFusionView* pView;
-
-        //pos = App->m_pDoc->GetFirstViewPosition();
-        //while (pos != NULL)
-        //{
-        //    pView = (CFusionView*)App->m_pDoc->GetNextView(pos);
-        //    if (Render_GetViewType(pView->VCam) & (VIEWSOLID | VIEWTEXTURE | VIEWWIRE))
-        //    {
-        //        Render_SetWadSizes(pView->VCam, Level_GetWadSizeInfos(pLevel));
-        //        break;	// Only 1 rendered view for now
-        //    }
-        //}
-    }
-
-   /* if (Level_RebuildBspAlways(pLevel))
-    {
-        App->m_pDoc->RebuildTrees();
-        UpdateAllViews(UAV_ALL3DVIEWS, NULL);
-    }*/
 }
 
 // *************************************************************************
@@ -1624,7 +1610,7 @@ bool CL64_Doc::DeleteSelectedBrushes()
 void CL64_Doc::Set_Paths(void)
 {
     Set_Current_3DT_Paths();
-    Set_Current_TxlPath();
+    //Set_Current_TxlPath();
 }
 
 // *************************************************************************
@@ -1643,6 +1629,16 @@ void CL64_Doc::Set_Current_3DT_Paths(void)
 
     strcpy(App->CL_Export->mJustName, App->CL_Doc->mDoc_MTF_JustName_NoExt);
 
+    // Just Path
+    char Just_Path[MAX_PATH];
+    strcpy(Just_Path, App->CL_Doc->mDoc_MTF_PathAndFile);
+
+    int Len1 = strlen(App->CL_Doc->mDoc_MTF_PathAndFile);
+    int Len2 = strlen(App->CL_Doc->mDoc_MTF_Just_FileName);
+    Just_Path[Len1 - Len2] = 0;
+
+    strcpy(mDoc_MTF_Just_Path, Just_Path);
+   
 }
 
 // *************************************************************************
@@ -1650,14 +1646,14 @@ void CL64_Doc::Set_Current_3DT_Paths(void)
 // *************************************************************************
 void CL64_Doc::Set_Current_TxlPath(void)
 {
-    const char* WadFilePath;
+    /*const char* WadFilePath;
     WadFilePath = App->CL_Level->Level_GetWadPath();
 
     strcpy(App->CL_Level->Wad_PathAndFile, WadFilePath);
 
     App->CL_Utilities->Get_FileName_FromPath(App->CL_Level->Wad_PathAndFile, App->CL_Level->Wad_PathAndFile);
 
-    strcpy(App->CL_Level->Wad_Just_File_Name, App->CL_Utilities->JustFileName);
+    strcpy(App->CL_Level->Wad_Just_File_Name, App->CL_Utilities->JustFileName);*/
 }
 
 // *************************************************************************

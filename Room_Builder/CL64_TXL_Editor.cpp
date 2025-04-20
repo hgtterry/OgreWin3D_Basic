@@ -622,9 +622,8 @@ void CL64_TXL_Editor::Delete_File(const char* File)
 	strcat(Source, "\\Data\\Texture_Test\\Assets.zip");
 
 	char Destination[MAX_PATH];
-	strcpy(Destination, App->RB_Directory_FullPath);
-	strcat(Destination, "\\Data\\Room_Builder\\Default.zip");
-
+	strcpy(Destination, App->CL_Level->Wad_PathAndFile);
+	
 	CopyFile(Source, Destination, false); // Overwrite
 
 	char Empty_Folder[MAX_PATH];
@@ -684,9 +683,8 @@ bool CL64_TXL_Editor::Add_File()
 	strcat(Source, "\\Data\\Texture_Test\\Assets.zip");
 
 	char Destination[MAX_PATH];
-	strcpy(Destination, App->RB_Directory_FullPath);
-	strcat(Destination, "\\Data\\Room_Builder\\Default.zip");
-
+	strcpy(Destination, App->CL_Level->Wad_PathAndFile);
+	
 	CopyFile(Source, Destination, false); // Overwrite
 
 	char Empty_Folder[MAX_PATH];

@@ -452,15 +452,13 @@ void CL64_Ogre3D::Convert_ToOgre3D(bool Create)
 	strcpy(OutputFolder, mWorld_File_Path);
 	strcat(OutputFolder, "\\");
 
-	//DecompileTextures_TXL(OutputFolder);
-
 	char Name[MAX_PATH];
 	strcpy(Name, mWorld_Mesh_JustName);
 	strcat(Name, ".mesh");
 
 	char BufPath[MAX_PATH];
-	strcpy(BufPath, App->RB_Directory_FullPath);
-	strcat(BufPath, "\\Data\\Room_Builder\\Default.zip");
+	strcpy(BufPath, App->CL_Level->Wad_PathAndFile);
+	//strcat(BufPath, "\\Data\\Room_Builder\\Default.zip");
 
 	if (App->CL_Mesh_Mgr->World_Ent)
 	{

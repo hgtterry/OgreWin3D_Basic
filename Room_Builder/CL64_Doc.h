@@ -163,6 +163,7 @@ public:
 	// File Paths
 	char mDoc_MTF_Just_FileName[MAX_PATH];
 	char mDoc_MTF_PathAndFile[MAX_PATH];
+	char mDoc_MTF_Just_Path[MAX_PATH];
 	char mDoc_MTF_JustName_NoExt[MAX_PATH];
 
 	BOOL SelectLock, TempEnt;

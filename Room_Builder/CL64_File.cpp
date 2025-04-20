@@ -124,13 +124,17 @@ void CL64_File::Save_Document()
 // *************************************************************************
 bool CL64_File::Save(const char* FileName)
 {
+	char TXL_File_Name[MAX_PATH];
+	strcpy(TXL_File_Name, App->CL_Doc->mDoc_MTF_JustName_NoExt);
+	strcat(TXL_File_Name, ".zip");
+
 	FILE* Write_File = NULL;
 
 	Write_File = fopen(FileName, "wt");
 
 	fprintf(Write_File, "MTF_Version %f\n", Level_Version);
 
-	fprintf(Write_File, "TextureLib %s\n", "Default.txl");// App->CL_Doc->pLevel->WadPath);
+	fprintf(Write_File, "TextureLib %s\n", TXL_File_Name);
 
 	//fprintf(Write_File, "Brush_Count %i\n", App->CL_Brush->Get_Brush_Count());
 
@@ -138,6 +142,17 @@ bool CL64_File::Save(const char* FileName)
 
 	fclose(Write_File);
 
+	char Source[MAX_PATH];
+	strcpy(Source, App->CL_Level->Wad_PathAndFile);
+	
+	char Destination[MAX_PATH];
+	strcpy(Destination, FileName);
+	int Len = strlen(Destination);
+	Destination[Len - 4] = 0;
+	strcat(Destination, ".zip");
+	
+	CopyFile(Source, Destination, false); // Overwrite
+	
 	return 1;
 }
 
@@ -330,24 +345,27 @@ bool CL64_File::Open_3dt_File()
 	if (Test == true)
 	{
 		App->CL_Doc->Set_Paths();
-
-		// TODO Temporary for now hgttery Debug
-		/*static char Path_And_File[MAX_PATH];
-		strcpy(Path_And_File, App->RB_Directory_FullPath);
-		strcat(Path_And_File, "\\Data\\Room_Builder\\");
-		strcat(Path_And_File, "Default.txl");
-		strcpy(WadPathFile, Path_And_File);*/
-
-		if (!App->CL_Level->Level_Create_TXL_Class())
+		
+		char Path_And_File[MAX_PATH];
+		strcpy(Path_And_File, App->CL_Doc->mDoc_MTF_Just_Path);
+		strcat(Path_And_File, App->CL_Level->Wad_Just_File_Name);
+		
+		bool test = App->CL_Utilities->Check_File_Exist(Path_And_File);
+		if (test == 0)
 		{
-			App->Say_Win("Can not Create TXL Class");
+			App->Say("Texture Library Does Not Exsist","Loading Default");
+			strcpy(Path_And_File, App->RB_Directory_FullPath);
+			strcat(Path_And_File, "\\Data\\Room_Builder\\Default.zip");
 		}
-
+	
+		App->CL_Doc->Load_Wad_File(Path_And_File);
+		
 		App->CL_Doc->UpdateAfterWadChange();
 
 		Set_Player();
 
 		App->CL_Properties_Brushes->Fill_ListBox();
+		App->CL_Properties_Textures->Fill_ListBox();
 
 		App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_Free;
 
@@ -355,10 +373,10 @@ bool CL64_File::Open_3dt_File()
 
 		App->CL_Doc->UpdateAllViews(Enums::UpdateViews_All);
 	}
-	else
+	/*else
 	{
 		return 0;
-	}
+	}*/
 
 	return true;
 }
@@ -389,13 +407,13 @@ bool CL64_File::Load_File(const char* FileName)
 			break;
 		}
 		
+		m_pLevel = App->CL_Level->Level_Create();
+
 		fgets(Read_Buffer, sizeof(Read_Buffer), fp);
 		if (App->CL_ParseFile->Get_TextureLib(Read_Buffer) == 0)
 		{
 			break;
 		}
-
-		//App->Say(App->CL_File->WadPath);
 
 		if (App->CL_Doc->Current_Level->Brushes != NULL)
 		{
@@ -403,7 +421,6 @@ bool CL64_File::Load_File(const char* FileName)
 			App->CL_Doc->Current_Level->Brushes = NULL;
 		}
 		
-		m_pLevel = App->CL_Level->Level_Create();
 		if (m_pLevel == NULL)
 		{
 			App->Say("Can not Create Level");
