@@ -1,5 +1,5 @@
 MTF_Version 1.000000
-TextureLib Default.txl
+TextureLib Two_Rooms.zip
 Brushlist 6
 Brush Box_Room_2
 	Flags 1025
@@ -8,7 +8,7 @@ Brush Box_Room_2
 	HullSize 16.000000
 	Type 1
 Brushlist 2
-Brush Box
+Brush Box_Room_2
 	Flags 1025
 	ModelId 0
 	GroupId 0
@@ -99,7 +99,7 @@ Brush Box
 		LightScale 2.000000 2.000000
 	Transform 0.000000 0.000000 1.000000 -0.000345 1.000000 0.000000 -1.000000 -0.000345 0.000000 0.000000 0.000000 0.000000
 	Pos -9.999969 0.000000 -663.000000
-Brush Box
+Brush Box_Room_2
 	Flags 145
 	ModelId 0
 	GroupId 0
@@ -197,7 +197,7 @@ Brush Box_Room_1
 	HullSize 16.000000
 	Type 1
 Brushlist 2
-Brush Box_1
+Brush Box_Room_1
 	Flags 1025
 	ModelId 0
 	GroupId 0
@@ -288,7 +288,7 @@ Brush Box_1
 		LightScale 2.000000 2.000000
 	Transform 0.000000 0.000000 1.000000 -0.000345 1.000000 0.000000 -1.000000 -0.000345 0.000000 0.000000 0.000000 0.000000
 	Pos 0.000000 0.000000 0.000000
-Brush Box_1
+Brush Box_Room_1
 	Flags 145
 	ModelId 0
 	GroupId 0
@@ -386,7 +386,7 @@ Brush Box_Passage_1
 	HullSize 16.000000
 	Type 1
 Brushlist 2
-Brush Box_2
+Brush Box_Passage_1
 	Flags 1025
 	ModelId 0
 	GroupId 0
@@ -477,7 +477,7 @@ Brush Box_2
 		LightScale 2.000000 2.000000
 	Transform 0.000000 0.000000 1.000000 -0.003049 0.999995 0.000000 -0.999995 -0.003049 0.000000 0.000000 0.000000 0.000000
 	Pos 0.000000 5.000000 -383.000000
-Brush Box_2
+Brush Box_Passage_1
 	Flags 145
 	ModelId 0
 	GroupId 0

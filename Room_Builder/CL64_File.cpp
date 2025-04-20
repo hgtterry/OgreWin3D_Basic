@@ -153,6 +153,9 @@ bool CL64_File::Save(const char* FileName)
 	
 	CopyFile(Source, Destination, false); // Overwrite
 	
+	strcpy(App->CL_Level->Wad_PathAndFile, Destination);
+	strcpy(App->CL_Level->Wad_Just_File_Name, TXL_File_Name);
+
 	return 1;
 }
 
