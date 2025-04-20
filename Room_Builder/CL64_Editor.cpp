@@ -258,9 +258,9 @@ void CL64_Editor_Com::Clear_Level(bool FromFile)
 		App->CL_Doc->Init_Doc();
 		App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
 
-		if (!App->CL_Level->Level_LoadWad())
+		if (!App->CL_Level->Level_Create_TXL_Class())
 		{
-			App->Say_Win("Can not load Wad File");
+			App->Say_Win("Can not create TXL Class");
 		}
 
 		App->CL_Properties_Templates->Enable_Insert_Button(true);

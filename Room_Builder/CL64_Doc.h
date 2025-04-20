@@ -89,6 +89,8 @@ public:
 	~CL64_Doc(void);
 
 	void Init_Doc();
+	void Load_Wad_File(char* TXL_File);
+
 	void Editor_Set_Dlgs(int Set_State);
 
 	const char* FindTextureLibrary(char const* WadName);

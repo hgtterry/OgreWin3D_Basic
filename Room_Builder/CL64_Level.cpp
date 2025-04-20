@@ -198,9 +198,9 @@ int CL64_Level::Level_EnumLeafBrushes(void* lParam, BrushList_CB Callback)
 }
 
 // *************************************************************************
-// *							Level_UnloadWad							   *
+// *					Level_Delete_TXL_Class							   *
 // *************************************************************************
-void CL64_Level::Level_Unload_Wad()
+void CL64_Level::Level_Delete_TXL_Class()
 {
 	Level* m_pLevel = App->CL_Doc->Current_Level;
 
@@ -218,13 +218,13 @@ void CL64_Level::Level_Unload_Wad()
 }
 
 // *************************************************************************
-// *							Level_LoadWad							   *
+// *					Level_Create_TXL_Class							   *
 // *************************************************************************
-signed int CL64_Level::Level_LoadWad()
+signed int CL64_Level::Level_Create_TXL_Class()
 {
 	Level* m_pLevel = App->CL_Doc->Current_Level;
 
-	Level_Unload_Wad();
+	Level_Delete_TXL_Class();
 
 	CL_Wad_Class = new CL64_WadFile();
 
@@ -232,7 +232,7 @@ signed int CL64_Level::Level_LoadWad()
 	{
 		App->Say("Cant Create Wad File", (LPSTR)"");
 
-		return GE_FALSE;
+		return false;
 	}
 
 

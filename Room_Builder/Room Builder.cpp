@@ -77,35 +77,17 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     App->CL_Ogre->Init_Ogre();
     App->CL_Picking->Init_Picking();
 
-
-    // Load Default Wad Ogre
     char DefaultWad[MAX_PATH];
     strcpy(DefaultWad, App->RB_Directory_FullPath);
     strcat(DefaultWad, "\\Data\\Room_Builder\\Default.zip");
 
-    strcpy(App->CL_Level->Wad_PathAndFile, DefaultWad);
-    strcpy(App->CL_Level->Wad_Just_File_Name, "Default.zip");
-
-    App->CL_Resources->Load_Texture_Resources();
-    App->CL_TXL_Editor->Scan_Textures_Resource_Group();
-    // --------------------------------
+    App->CL_Doc->Load_Wad_File(DefaultWad); // Needs Ogre at the Moment
    
     App->CL_Top_Tabs->Start_Headers();
     App->CL_Editor_Scene->Start_Headers_Scene();
 
     App->CL_Properties_Tabs->Start_Tabs_Control_Dlg();
   
-    // ------------------ Reload Textures
-
-    App->CL_Level->Level_SetWadPath(App->CL_Doc->Current_Level, App->CL_Level->Wad_PathAndFile);
-   
-    if (!App->CL_Level->Level_LoadWad())
-    {
-       App->Say_Win("Can not load Wad File");
-    }
-
-    // ---------------------------------------------------------
-
     App->CL_Com_Player->Create_Player_Object();
 
     App->CL_FileView->Start_FileView();

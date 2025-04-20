@@ -338,9 +338,9 @@ bool CL64_File::Open_3dt_File()
 		strcat(Path_And_File, "Default.txl");
 		strcpy(WadPathFile, Path_And_File);*/
 
-		if (!App->CL_Level->Level_LoadWad())
+		if (!App->CL_Level->Level_Create_TXL_Class())
 		{
-			App->Say_Win("Can not load Wad File");
+			App->Say_Win("Can not Create TXL Class");
 		}
 
 		App->CL_Doc->UpdateAfterWadChange();

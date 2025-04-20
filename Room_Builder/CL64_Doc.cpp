@@ -93,7 +93,6 @@ CL64_Doc::~CL64_Doc(void)
 // *************************************************************************
 void CL64_Doc::Init_Doc()
 {
-  
     strcpy(LastTemplateTypeName, "Box");
    
     Current_Level = App->CL_Level->Level_Create(); // TODO Creating Twice one in Win Main
@@ -122,6 +121,27 @@ void CL64_Doc::Init_Doc()
 
     CheckMenuItem(App->Menu_Map, ID_CAMERA_TRACKCAMERA, MF_BYCOMMAND | MF_CHECKED);
 
+}
+
+// *************************************************************************
+// *		    Load_Default_Wad:- Terry and Hazel Flanigan 2025 	  	   *
+// *************************************************************************
+void CL64_Doc::Load_Wad_File(char* TXL_File)
+{
+     strcpy(App->CL_Level->Wad_PathAndFile, TXL_File);
+
+     App->CL_Utilities->Get_FileName_FromPath(TXL_File, TXL_File);
+     strcpy(App->CL_Level->Wad_Just_File_Name, App->CL_Utilities->JustFileName);
+
+     App->CL_Resources->Load_Texture_Resources();
+     App->CL_TXL_Editor->Scan_Textures_Resource_Group();
+
+     App->CL_Level->Level_SetWadPath(App->CL_Doc->Current_Level, App->CL_Level->Wad_PathAndFile);
+
+     if (!App->CL_Level->Level_Create_TXL_Class())
+     {
+         App->Say_Win("Can not load Wad File");
+     }
 }
 
 // *************************************************************************
@@ -1502,9 +1522,9 @@ void CL64_Doc::UpdateAfterWadChange()
 {
    flag_Is_Modified = 1;
 
-   if (!App->CL_Level->Level_LoadWad())
+   if (!App->CL_Level->Level_Create_TXL_Class())
     {
-       App->Say("Cant Load TXL File");
+       App->Say("Cant Create TXL Class");
     }
 
     // update textures tab

@@ -37,6 +37,9 @@ public:
 
 	Level* Level_Create();
 
+	void Level_Delete_TXL_Class();
+	signed int Level_Create_TXL_Class();
+
 	// Get Main Top Level Brush List
 	BrushList* Level_Get_Main_Brushes();
 
@@ -51,7 +54,7 @@ public:
 	float Level_GetLightmapScale(const Level* pLevel);
 	void Level_AppendBrush(Brush* pBrush);
 	int Level_EnumLeafBrushes(void* lParam, BrushList_CB Callback);
-	signed int Level_LoadWad();
+
 	const char* Level_GetWadPath();
 	CL64_WadFile* Level_GetWad_Class();
 	void Level_SetWadPath(Level* pLevel, const char* NewWad);
@@ -63,7 +66,6 @@ public:
 	signed int Level_UseGrid(const Level* pLevel);
 	int Level_GetRotationSnap(const Level* pLevel);
 	float Level_GetGridSnapSize(const Level* pLevel);
-	void Level_Unload_Wad();
 
 	bool flag_UseGrid;
 
