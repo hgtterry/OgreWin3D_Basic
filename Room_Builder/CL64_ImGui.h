@@ -33,7 +33,6 @@ public:
 	void ImGui_Render_Loop(void);
 
 	bool flag_Imgui_Initialized;
-	bool flag_Show_Tool_ID_Debug;
 	bool flag_Show_Paths;
 	bool flag_Show_Render_Reports;
 	bool flag_Show_Press_Excape;

@@ -38,8 +38,6 @@ CL64_File::CL64_File(void)
 	FileName_3dt[0] = 0;
 
 	Read_Buffer[0] = 0;
-	WadPathFile[0] = 0;
-	WadFile_Name[0] = 0;
 
 	fp = NULL;
 }

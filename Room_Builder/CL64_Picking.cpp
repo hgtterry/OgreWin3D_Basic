@@ -297,11 +297,15 @@ bool CL64_Picking::raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::Mo
                             Face_Index = i;
 
                             // Keep for testing
-                            //App->CL_Grid->HitVertices[0] = vertices[indices[i]];
-                            //App->CL_Grid->HitVertices[1] = vertices[indices[i + 1]];
-                            //App->CL_Grid->HitVertices[2] = vertices[indices[i + 2]];
-                            //App->CL_Grid->FaceNode->setVisible(true);
-                            //App->CL_Grid->Face_Update2();
+                            bool Test = 0;
+                           /* if (Test == 1)
+                            {
+                                App->CL_Grid->HitVertices[0] = vertices[indices[i]];
+                                App->CL_Grid->HitVertices[1] = vertices[indices[i + 1]];
+                                App->CL_Grid->HitVertices[2] = vertices[indices[i + 2]];
+                                App->CL_Grid->FaceNode->setVisible(true);
+                                App->CL_Grid->Face_Update2();
+                            }*/
                             
                             m_SubMesh = Sub_Mesh_Indexs[Face_Index];
 

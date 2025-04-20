@@ -33,6 +33,12 @@ enum { GridMetric = 0, GridTexel = 1 };
 CL64_Level::CL64_Level(void)
 {
 	flag_UseGrid = 1;
+
+	Wad_PathAndFile[0] = 0;
+	Wad_Just_File_Name[0] = 0;
+
+	CL_Wad_Class = nullptr;
+
 }
 
 CL64_Level::~CL64_Level(void)
@@ -58,8 +64,9 @@ Level* CL64_Level::Level_Create()
 			return m_pLevel;
 		}
 
-		strcpy(m_pLevel->WadPathFile,"Empty");
-		m_pLevel->CL_Wad_Class = NULL;
+		strcpy(Wad_PathAndFile,"Empty");
+		strcpy(Wad_Just_File_Name, "Empty");
+
 		m_pLevel->WadSizeInfos = NULL;
 
 		GridInfo* pGridInfo;
@@ -193,7 +200,7 @@ int CL64_Level::Level_EnumLeafBrushes(void* lParam, BrushList_CB Callback)
 // *************************************************************************
 // *							Level_UnloadWad							   *
 // *************************************************************************
-void Level_UnloadWad()
+void CL64_Level::Level_Unload_Wad()
 {
 	Level* m_pLevel = App->CL_Doc->Current_Level;
 
@@ -202,10 +209,11 @@ void Level_UnloadWad()
 		App->CL_Maths->Ram_Free(m_pLevel->WadSizeInfos);
 		m_pLevel->WadSizeInfos = NULL;
 	}
-	if (m_pLevel->CL_Wad_Class != NULL)
+
+	if (CL_Wad_Class != NULL)
 	{
-		delete m_pLevel->CL_Wad_Class;
-		m_pLevel->CL_Wad_Class = NULL;
+		delete CL_Wad_Class;
+		CL_Wad_Class = NULL;
 	}
 }
 
@@ -216,10 +224,11 @@ signed int CL64_Level::Level_LoadWad()
 {
 	Level* m_pLevel = App->CL_Doc->Current_Level;
 
-	Level_UnloadWad();
+	Level_Unload_Wad();
 
-	m_pLevel->CL_Wad_Class = new CL64_WadFile();
-	if (App->CL_Doc->Current_Level->CL_Wad_Class == NULL)
+	CL_Wad_Class = new CL64_WadFile();
+
+	if (CL_Wad_Class == NULL)
 	{
 		App->Say("Cant Create Wad File", (LPSTR)"");
 
@@ -227,9 +236,9 @@ signed int CL64_Level::Level_LoadWad()
 	}
 
 
-	if (m_pLevel->CL_Wad_Class->Setup())
+	if (CL_Wad_Class->Setup())
 	{
-		m_pLevel->WadSizeInfos = (SizeInfo*)App->CL_Maths->Ram_Allocate(sizeof(SizeInfo) * m_pLevel->CL_Wad_Class->mBitmapCount);
+		m_pLevel->WadSizeInfos = (SizeInfo*)App->CL_Maths->Ram_Allocate(sizeof(SizeInfo) * CL_Wad_Class->mBitmapCount);
 
 		if (m_pLevel->WadSizeInfos != NULL)
 		{
@@ -241,7 +250,7 @@ signed int CL64_Level::Level_LoadWad()
 				WadFileEntry* Entry;
 
 				pInfo = &(m_pLevel->WadSizeInfos[i]);
-				Entry = &(m_pLevel->CL_Wad_Class->mBitmaps[i]);
+				Entry = &(CL_Wad_Class->mBitmaps[i]);
 
 				pInfo->TexWidth = Entry->Width;
 				pInfo->TexHeight = Entry->Height;
@@ -258,7 +267,7 @@ signed int CL64_Level::Level_LoadWad()
 // *************************************************************************
 const char* CL64_Level::Level_GetWadPath()
 {
-	return (App->CL_Doc->Current_Level->WadPathFile);
+	return (Wad_PathAndFile);
 }
 
 // *************************************************************************
@@ -266,7 +275,7 @@ const char* CL64_Level::Level_GetWadPath()
 // *************************************************************************
 void CL64_Level::Level_SetWadPath(Level* pLevel, const char* NewWad)
 {
-	strcpy(pLevel->WadPathFile, NewWad);
+	strcpy(Wad_PathAndFile, NewWad);
 }
 
 // *************************************************************************
@@ -274,7 +283,7 @@ void CL64_Level::Level_SetWadPath(Level* pLevel, const char* NewWad)
 // *************************************************************************
 CL64_WadFile* CL64_Level::Level_GetWad_Class()
 {
-	return App->CL_Doc->Current_Level->CL_Wad_Class;
+	return CL_Wad_Class;
 }
 
 // *************************************************************************
@@ -302,11 +311,11 @@ WadFileEntry* CL64_Level::Level_GetWadBitmap(const char* Name)
 {
 	Ogre::uint16 i;
 
-	i = Level_GetDibIdFromWad(App->CL_Doc->Current_Level->CL_Wad_Class, Name);
+	i = Level_GetDibIdFromWad(CL_Wad_Class, Name);
 
 	if (i != 0xffff)
 	{
-		return &(App->CL_Doc->Current_Level->CL_Wad_Class->mBitmaps[i]);
+		return &(CL_Wad_Class->mBitmaps[i]);
 	}
 	else
 	{
@@ -319,7 +328,7 @@ WadFileEntry* CL64_Level::Level_GetWadBitmap(const char* Name)
 // *************************************************************************
 Ogre::uint16 CL64_Level::Level_GetDibId(const char* Name)
 {
-	return Level_GetDibIdFromWad(App->CL_Doc->Current_Level->CL_Wad_Class, Name);
+	return Level_GetDibIdFromWad(CL_Wad_Class, Name);
 }
 
 // *************************************************************************

@@ -63,7 +63,13 @@ public:
 	signed int Level_UseGrid(const Level* pLevel);
 	int Level_GetRotationSnap(const Level* pLevel);
 	float Level_GetGridSnapSize(const Level* pLevel);
+	void Level_Unload_Wad();
 
 	bool flag_UseGrid;
+
+	CL64_WadFile* CL_Wad_Class;
+
+	char Wad_PathAndFile[MAX_PATH];
+	char Wad_Just_File_Name[MAX_PATH];
 };
 

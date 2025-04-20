@@ -45,7 +45,6 @@ CL64_ImGui::CL64_ImGui()
 	flag_Show_FPS = 1;
 	flag_StartPos = 0;
 
-	flag_Show_Tool_ID_Debug = 0;
 	flag_Show_Paths = 0;
 	flag_Show_Render_Reports = 0;
 	flag_Show_Press_Excape = 0;
@@ -182,7 +181,6 @@ void CL64_ImGui::ImGui_Render_Loop(void)
 	guiFunctions =
 	{
 		{flag_Show_FPS == 1, [&]() { ImGui_FPS(); }},
-		{flag_Show_Tool_ID_Debug == 1, [&]() { App_Tool_Selection_GUI(); }},
 		{flag_Show_Paths == 1, [&]() { Paths_GUI(); }},
 		{flag_Show_Render_Reports == 1, [&]() { Render_Report_GUI(); }},
 		{flag_Show_Press_Excape == 1, [&]() { Press_Excape_GUI(); }},
@@ -390,84 +388,6 @@ void CL64_ImGui::Camera_Mode_GUI(void)
 }
 
 // *************************************************************************
-// *		App_Tool_Selection_GUI:- Terry and Hazel Flanigan 2025		   *
-// *************************************************************************
-void CL64_ImGui::App_Tool_Selection_GUI(void)
-{
-	ImGui::SetNextWindowPos(ImVec2(10, 10), ImGuiCond_FirstUseEver);
-
-	if (!ImGui::Begin("App_Debug", &flag_Show_Tool_ID_Debug, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_AlwaysAutoResize))
-	{
-		ImGui::End();
-	}
-	else
-	{
-		char Tool[MAX_PATH];
-		if (App->CL_Doc->mModeTool == 32886)
-		{
-			strcpy(Tool, "GENERAL_SELECT");
-		}
-
-		if (App->CL_Doc->mModeTool == 32784)
-		{
-			strcpy(Tool, "MOVE_ROTATE");
-		}
-
-		if (App->CL_Doc->mModeTool == 32785)
-		{
-			strcpy(Tool, "SCALE");
-		}
-
-		if (App->CL_Doc->mModeTool == 32910)
-		{
-			strcpy(Tool, "TEMPLATE");
-		}
-
-		ImGui::Text("Width:= %i", App->CL_Editor_Map->nleftWnd_width);
-		ImGui::Text("Depth:= %i", App->CL_Editor_Map->nleftWnd_Depth);
-
-		ImGui::Text("mModeTool:= %s", Tool);
-		ImGui::Separator();
-		ImGui::Text("Selected Brushs:= %i", App->CL_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes));
-		ImGui::Text("Current Brush:= %s", App->CL_Doc->CurBrush->Name);
-		//ImGui::Text("Current Brush Faces:= %i", App->CL_Brush->Brush_GetNumFaces(App->CL_Doc->CurBrush));
-		
-		ImGui::Separator();
-
-		/*ImGui::Text("Selected Faces:= %i", App->CL_SelFaceList->SelFaceList_GetSize(App->CL_Doc->pSelFaces));
-		ImGui::Text("Current Face:= %i", App->CL_Face->Selected_Face_Index);
-		ImGui::Text("Texture Count:= %i", App->CL_TXL_Editor->Texture_Count);
-		ImGui::Text("Processes Time:= %i %s", App->CL_Ogre->m_Processes_Time," ms");
-		
-		ImGui::Text("Picking");
-		ImGui::Text("Picked:= %i ", App->CL_Picking->flag_Selected_Ok);
-		ImGui::Text("Mesh Name:= %s ", App->CL_Picking->Pl_Entity_Name);
-		ImGui::Text("Texture Name:= %s ", App->CL_Picking->TextureName);
-		ImGui::Text("Ogre Model Faces:= %i ", App->CL_Ogre3D->m_Total_Faces);
-		ImGui::Text("Ogre Faces:= %i ", App->CL_Mesh_Mgr->ActualFaceCount);
-		ImGui::Text("Brushes3 Faces:= %i ", App->CL_Mesh_Mgr->Global_Faces_Index);
-		ImGui::Text("Brushes Faces:= %i ", App->CL_Mesh_Mgr->m_Total_Faces);
-		ImGui::Text("V_Face Count:= %i ", App->CL_Mesh_Mgr->v_Face_Data_Count);*/
-		
-
-		ImGui::Text("Texture:= %s ", App->CL_Picking->m_Texture_FileName);
-		ImGui::Text("Group Index:= %i ", App->CL_Picking->Group_Index);
-		ImGui::Text("Brush Index:= %i ", App->CL_Picking->Brush_Index);
-		//ImGui::Text("Face Index:= %i ", App->CL_Picking->Face_Index);
-		ImGui::Text("Local Face:= %i ", App->CL_Picking->Local_Face);
-		ImGui::Text("WE Face:= %i ", App->CL_Picking->m_Main_Face);
-		//ImGui::Text("Brush Hit:= %s ", App->CL_Mesh_Mgr->v_Face_Data[App->CL_Picking->Face_Hit]->Brush_Name);
-		
-		if (ImGui::Button("Close"))
-		{
-			flag_Show_Tool_ID_Debug = 0;
-		}
-
-		ImGui::End();
-	}
-}
-
-// *************************************************************************
 // *			App_Stats_GUI:- Terry and Hazel Flanigan 2025			   *
 // *************************************************************************
 void CL64_ImGui::App_Stats_GUI(void)
@@ -486,10 +406,8 @@ void CL64_ImGui::App_Stats_GUI(void)
 			ImGui::Text("Just_FileName:= %s", App->CL_Doc->mDoc_MTF_Just_FileName);
 			ImGui::Text("Just_File:= %s", App->CL_Doc->mDoc_MTF_JustName_NoExt);
 			ImGui::Separator();
-			ImGui::Text("TXL Path And File:= %s", App->CL_Doc->mDoc_TXL_Path_And_File);
-			ImGui::Text("TXL Just_File:= %s", App->CL_Doc->mDoc_TXL_Just_FileName);
-			ImGui::Text("File Wad Path:= %s", App->CL_File->WadPathFile);
-			ImGui::Text("Level Wad_File:= %s", App->CL_Level->Level_GetWadPath());
+			ImGui::Text("TXL Path And File:= %s", App->CL_Level->Wad_PathAndFile);
+			ImGui::Text("TXL Just_File:= %s", App->CL_Level->Wad_Just_File_Name);
 
 			ImGui::Separator();
 			ImGui::TreePop();
@@ -624,8 +542,8 @@ void CL64_ImGui::Paths_GUI(void)
 
 		ImGui::Separator();
 
-		ImGui::Text("TXL Path And File:= %s", App->CL_Doc->mDoc_TXL_Path_And_File);
-		ImGui::Text("TXL Just_File:= %s", App->CL_Doc->mDoc_TXL_Just_FileName);
+		ImGui::Text("TXL Path And File:= %s", App->CL_Level->Wad_PathAndFile);
+		ImGui::Text("TXL Just_File:= %s", App->CL_Level->Wad_Just_File_Name);
 
 		if (ImGui::Button("Close"))
 		{

@@ -39,9 +39,6 @@ public:
 	char PathFileName_3dt[MAX_PATH];
 	char FileName_3dt[MAX_PATH];
 
-	char WadPathFile[MAX_PATH];
-	char WadFile_Name[MAX_PATH];
-
 	FILE* fp;
 private:
 

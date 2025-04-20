@@ -83,7 +83,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     strcpy(DefaultWad, App->RB_Directory_FullPath);
     strcat(DefaultWad, "\\Data\\Room_Builder\\Default.zip");
 
-    strcpy(App->CL_File->WadPathFile, DefaultWad);
+    strcpy(App->CL_Level->Wad_PathAndFile, DefaultWad);
+    strcpy(App->CL_Level->Wad_Just_File_Name, "Default.zip");
 
     App->CL_Resources->Load_Texture_Resources();
     App->CL_TXL_Editor->Scan_Textures_Resource_Group();
@@ -96,8 +97,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
   
     // ------------------ Reload Textures
 
-    App->CL_Doc->Current_Level = App->CL_Level->Level_Create();
-    App->CL_Level->Level_SetWadPath(App->CL_Doc->Current_Level, App->CL_File->WadPathFile);
+    App->CL_Level->Level_SetWadPath(App->CL_Doc->Current_Level, App->CL_Level->Wad_PathAndFile);
    
     if (!App->CL_Level->Level_LoadWad())
     {
@@ -205,20 +205,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 //App->CL_Com_Environments->Create_Test_Environment();
                 App->CL_Doc->SelectAll();
                 App->CL_Doc->DeleteCurrentThing();
-
-                return 1;
-            }
-
-            case  ID_DEBUG_SELECTIONSTATES:
-            {
-                if(App->CL_ImGui->flag_Show_Tool_ID_Debug == 1)
-                {
-                    App->CL_ImGui->flag_Show_Tool_ID_Debug = 0;
-                }
-                else
-                {
-                    App->CL_ImGui->flag_Show_Tool_ID_Debug = 1;
-                }
 
                 return 1;
             }

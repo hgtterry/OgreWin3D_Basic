@@ -132,12 +132,11 @@ typedef struct
 struct tag_Level
 {
 	BrushList* Brushes;
-	char WadPathFile [MAX_PATH];
+	//char WadPathFile [MAX_PATH];
 	char* HeadersDir;
 	char* ActorsDir;
 	char* PawnIniPath;
 	SizeInfo* WadSizeInfos;
-	CL64_WadFile* CL_Wad_Class;
 	int GroupVisSetting;
 
 	GridInfo GridSettings;

@@ -47,9 +47,6 @@ CL64_Doc::CL64_Doc(void)
     strcpy(mDoc_MTF_Just_FileName,"Room_1.mtf");
     strcpy(mDoc_MTF_JustName_NoExt, "Room_1");
 
-    mDoc_TXL_Path_And_File[0] = 0;
-    mDoc_TXL_Just_FileName[0] = 0;
-
     Current_Level = NULL;
    
     BTemplate = NULL;
@@ -152,19 +149,19 @@ const char* CL64_Doc::FindTextureLibrary(char const* WadName)
 	bool test = App->CL_Utilities->Check_File_Exist(Path_And_File);
 	if (test == 1)
 	{
-        strcpy(App->CL_Doc->mDoc_TXL_Path_And_File, Path_And_File);
+        strcpy(App->CL_Level->Wad_PathAndFile, Path_And_File);
 		return Path_And_File;
 	}
 	else
 	{
 		App->Say_Win("File Does not Exist");
 
-        strcpy(App->CL_Doc->mDoc_TXL_Path_And_File, "No_File");
+        strcpy(App->CL_Level->Wad_PathAndFile, "No_File");
 		strcpy(Path_And_File, "");
 		return Path_And_File;
 	}
 	
-    strcpy(App->CL_Doc->mDoc_TXL_Path_And_File, "No_File");
+    strcpy(App->CL_Level->Wad_PathAndFile, "No_File");
 	strcpy(Path_And_File, "");
 	return Path_And_File;
 }
@@ -1636,11 +1633,11 @@ void CL64_Doc::Set_Current_TxlPath(void)
     const char* WadFilePath;
     WadFilePath = App->CL_Level->Level_GetWadPath();
 
-    strcpy(mDoc_TXL_Path_And_File, WadFilePath);
+    strcpy(App->CL_Level->Wad_PathAndFile, WadFilePath);
 
-    App->CL_Utilities->Get_FileName_FromPath(mDoc_TXL_Path_And_File, mDoc_TXL_Path_And_File);
+    App->CL_Utilities->Get_FileName_FromPath(App->CL_Level->Wad_PathAndFile, App->CL_Level->Wad_PathAndFile);
 
-    strcpy(mDoc_TXL_Just_FileName, App->CL_Utilities->JustFileName);
+    strcpy(App->CL_Level->Wad_Just_File_Name, App->CL_Utilities->JustFileName);
 }
 
 // *************************************************************************

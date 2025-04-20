@@ -867,7 +867,7 @@ bool CL64_Resources::View_Texture(char* FileName, HWND Owner_hDlg)
 void CL64_Resources::Load_Texture_Resources()
 {
 	char WadFile[MAX_PATH];
-	strcpy(WadFile, App->CL_File->WadPathFile);
+	strcpy(WadFile, App->CL_Level->Wad_PathAndFile);
 	
 	if (Ogre::ResourceGroupManager::getSingleton().resourceGroupExists(App->CL_Ogre->Texture_Resource_Group))
 	{
