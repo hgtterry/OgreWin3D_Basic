@@ -239,6 +239,7 @@
 #define IDC_BT_COPY_TEXTINFO            1162
 #define IDC_BT_MAINENVIRONMENT          1162
 #define IDC_BT_SELECT_BRUSH             1162
+#define IDC_BT_TXL_CLEANUP              1162
 #define IDC_BUTTON2                     1163
 #define IDC_BT_BRUSH_DIMENSIONS         1163
 #define IDC_BT_TOP_RIGHT                1163
@@ -398,6 +399,8 @@
 #define IDC_LISTDATA                    1287
 #define IDC_LT_WORLDINFO                1288
 #define IDC_CB_RENDERMODE               1289
+#define IDC_ST_TXL_TEXTURE              1290
+#define IDC_ST_TXL_LIST                 1291
 #define ID_DEBUG_GENERAL                32771
 #define ID_TEMPLATES_INSERT             32772
 #define ID_BRUSH_SELECT                 32773
@@ -461,7 +464,7 @@
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        186
 #define _APS_NEXT_COMMAND_VALUE         32821
-#define _APS_NEXT_CONTROL_VALUE         1290
+#define _APS_NEXT_CONTROL_VALUE         1292
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif

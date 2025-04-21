@@ -118,9 +118,10 @@ bool CL64_File::Save(const char* FileName)
 
 	// Open the file for writing
 	FILE* Write_File = fopen(FileName, "wt");
-	if (!Write_File) {
-		App->Say("Failed to open file for writing");
-		return false; // Return false if file opening fails
+	if (!Write_File) 
+	{
+		App->Say("Error: Failed to open file for writing");
+		return false;
 	}
 
 	// Write version and texture library name to the file
@@ -139,9 +140,10 @@ bool CL64_File::Save(const char* FileName)
 	Destination.replace(Destination.end() - 4, Destination.end(), ".zip");
 
 	// Copy the file, overwriting if it exists
-	if (!CopyFile(Source.c_str(), Destination.c_str(), false)) {
-		perror("Failed to copy file");
-		return false; // Return false if file copying fails
+	if (!CopyFile(Source.c_str(), Destination.c_str(), false)) 
+	{
+		App->Say("Error: Failed to copy file");
+		return false;
 	}
 
 	// Update the level's file paths

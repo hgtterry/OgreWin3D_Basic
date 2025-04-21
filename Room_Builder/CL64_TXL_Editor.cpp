@@ -85,6 +85,9 @@ LRESULT CALLBACK CL64_TXL_Editor::Proc_Texl_Dialog(HWND hDlg, UINT message, WPAR
 	{
 		App->CL_TXL_Editor->flag_Texl_Dialog_Active = 1;
 
+		SendDlgItemMessage(hDlg, IDC_ST_TXL_TEXTURE, WM_SETFONT, (WPARAM)App->Font_Banner, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_ST_TXL_LIST, WM_SETFONT, (WPARAM)App->Font_Banner, MAKELPARAM(TRUE, 0));
+		
 		SendDlgItemMessage(hDlg, IDC_TEXTURELIST2, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ST_TEXTURE_NAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_GEINFO, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
@@ -92,6 +95,7 @@ LRESULT CALLBACK CL64_TXL_Editor::Proc_Texl_Dialog(HWND hDlg, UINT message, WPAR
 		
 		SendDlgItemMessage(hDlg, IDC_TXL_DELETE_TEXTURE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_TXL_ADD_TEXTURE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_TXL_CLEANUP, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
 		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
@@ -108,9 +112,25 @@ LRESULT CALLBACK CL64_TXL_Editor::Proc_Texl_Dialog(HWND hDlg, UINT message, WPAR
 	}
 	case WM_CTLCOLORSTATIC:
 	{
+		if (GetDlgItem(hDlg, IDC_ST_TXL_TEXTURE) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 1));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		if (GetDlgItem(hDlg, IDC_ST_TXL_LIST) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 1));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
 		if (GetDlgItem(hDlg, IDC_ST_TEXTURE_NAME) == (HWND)lParam)
 		{
-			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->AppBackground;
@@ -118,7 +138,7 @@ LRESULT CALLBACK CL64_TXL_Editor::Proc_Texl_Dialog(HWND hDlg, UINT message, WPAR
 
 		if (GetDlgItem(hDlg, IDC_ST_TXL_COUNT) == (HWND)lParam)
 		{
-			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->Brush_White;
@@ -150,6 +170,13 @@ LRESULT CALLBACK CL64_TXL_Editor::Proc_Texl_Dialog(HWND hDlg, UINT message, WPAR
 			return CDRF_DODEFAULT;
 		}
 
+		if (some_item->idFrom == IDC_BT_TXL_CLEANUP)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+		
 		if (some_item->idFrom == IDOK)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
@@ -230,6 +257,35 @@ LRESULT CALLBACK CL64_TXL_Editor::Proc_Texl_Dialog(HWND hDlg, UINT message, WPAR
 				App->CL_Properties_Textures->Select_With_List_Index(App->CL_TXL_Editor->Selected_Texure_Index);
 			}
 			
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_BT_TXL_CLEANUP)
+		{
+			return true;
+			int Count = 0;
+			while (Count < App->CL_TXL_Editor->Texture_Count)
+			{
+				bool TU = App->CL_TXL_Editor->Check_If_Texture_Used(App->CL_TXL_Editor->Texture_List[Count]->FileName);
+				if (TU == 1)
+				{
+					// Being Used
+				}
+				else
+				{
+					App->CL_TXL_Editor->Delete_File(App->CL_TXL_Editor->Texture_List[Count]->FileName);
+
+					App->CL_Resources->Load_Texture_Resources();
+					App->CL_TXL_Editor->Scan_Textures_Resource_Group();
+					App->CL_Properties_Textures->Fill_ListBox();
+
+					App->CL_TXL_Editor->UpDateList();
+
+				}
+
+				Count++;
+			}
+
 			return TRUE;
 		}
 		
@@ -635,7 +691,7 @@ void CL64_TXL_Editor::Delete_File(const char* File)
 
 	//Get_Timer
 
-	App->Say("Deleted");
+	App->Say(File,"Deleted");
 }
 
 // *************************************************************************
