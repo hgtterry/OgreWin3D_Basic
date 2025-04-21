@@ -402,9 +402,9 @@ void CL64_ImGui::App_Stats_GUI(void)
 	{
 		if (ImGui::TreeNode("Paths"))
 		{
-			ImGui::Text("Path And File:= %s", App->CL_Doc->mDoc_MTF_PathAndFile);
-			ImGui::Text("Just_FileName:= %s", App->CL_Doc->mDoc_MTF_Just_FileName);
-			ImGui::Text("Just_File:= %s", App->CL_Doc->mDoc_MTF_JustName_NoExt);
+			ImGui::Text("Path And File:= %s", App->CL_Level->MTF_PathAndFile);
+			ImGui::Text("Just_FileName:= %s", App->CL_Level->MTF_Just_FileName);
+			ImGui::Text("Just_File:= %s", App->CL_Level->MTF_JustName_NoExt);
 			ImGui::Separator();
 			ImGui::Text("TXL Path And File:= %s", App->CL_Level->Wad_PathAndFile);
 			ImGui::Text("TXL Just_File:= %s", App->CL_Level->Wad_Just_File_Name);
@@ -536,9 +536,9 @@ void CL64_ImGui::Paths_GUI(void)
 	}
 	else
 	{
-		ImGui::Text("Path And File:= %s", App->CL_Doc->mDoc_MTF_PathAndFile);
-		ImGui::Text("Just_FileName:= %s", App->CL_Doc->mDoc_MTF_Just_FileName);
-		ImGui::Text("Just_File:= %s", App->CL_Doc->mDoc_MTF_JustName_NoExt);
+		ImGui::Text("Path And File:= %s", App->CL_Level->MTF_PathAndFile);
+		ImGui::Text("Just_FileName:= %s", App->CL_Level->MTF_Just_FileName);
+		ImGui::Text("Just_File:= %s", App->CL_Level->MTF_JustName_NoExt);
 
 		ImGui::Separator();
 

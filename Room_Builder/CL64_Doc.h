@@ -160,12 +160,6 @@ public:
 
 	char LastTemplateTypeName[MAX_PATH];
 
-	// File Paths
-	char mDoc_MTF_Just_FileName[MAX_PATH];
-	char mDoc_MTF_PathAndFile[MAX_PATH];
-	char mDoc_MTF_Just_Path[MAX_PATH];
-	char mDoc_MTF_JustName_NoExt[MAX_PATH];
-
 	BOOL SelectLock, TempEnt;
 
 	Level* Current_Level;
@@ -194,7 +188,5 @@ public:
 	bool flag_Is_Modified;
 	bool flag_IsNewDocument;
 	bool flag_Track_Camera;
-
-	//SelFaceList* pSelFaces;
 };
 

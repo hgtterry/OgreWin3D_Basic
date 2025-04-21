@@ -34,6 +34,12 @@ CL64_Level::CL64_Level(void)
 {
 	flag_UseGrid = 1;
 
+	strcpy(MTF_PathAndFile, App->RB_Directory_FullPath);
+	strcat(MTF_PathAndFile, "\\Data\\Room_Builder\\Room_1.mtf");
+
+	strcpy(MTF_Just_FileName, "Room_1.mtf");
+	strcpy(MTF_JustName_NoExt, "Room_1");
+
 	Wad_PathAndFile[0] = 0;
 	Wad_Just_File_Name[0] = 0;
 	Wad_Origin_File_Name[0] = 0;

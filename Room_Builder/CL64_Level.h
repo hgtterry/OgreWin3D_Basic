@@ -71,6 +71,13 @@ public:
 
 	CL64_WadFile* CL_Wad_Class;
 
+	// MTF File
+	char MTF_PathAndFile[MAX_PATH];
+	char MTF_Just_FileName[MAX_PATH];
+	char MTF_Just_Path[MAX_PATH];
+	char MTF_JustName_NoExt[MAX_PATH];
+
+	// TXL File
 	char Wad_PathAndFile[MAX_PATH];
 	char Wad_Just_File_Name[MAX_PATH];
 	char Wad_Origin_File_Name[MAX_PATH];

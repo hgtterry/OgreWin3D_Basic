@@ -159,7 +159,7 @@ LRESULT CALLBACK CL64_Properties_Templates::Proc_Templates(HWND hDlg, UINT messa
 					
 					App->CL_Doc->Editor_Set_Dlgs(Enums::Editor_Dlgs_First_Brush);
 					
-					App->Set_Title(App->CL_Doc->mDoc_MTF_PathAndFile);
+					App->Set_Title(App->CL_Level->MTF_PathAndFile);
 					App->CL_Doc->flag_Is_Modified = 1;
 				}
 				else
