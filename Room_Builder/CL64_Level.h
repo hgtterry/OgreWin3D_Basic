@@ -57,7 +57,7 @@ public:
 
 	const char* Level_GetWadPath();
 	CL64_WadFile* Level_GetWad_Class();
-	void Level_SetWadPath(Level* pLevel, const char* NewWad);
+	void Level_SetWadPath(const char* NewWad);
 
 	WadFileEntry* Level_GetWadBitmap(const char* Name);
 	Ogre::uint16 Level_GetDibId(const char* Name);

@@ -30,7 +30,7 @@ public:
 	CL64_File(void);
 	~CL64_File(void);
 
-	void Start_Save(bool Use_Save_Dialog);
+	void Start_Save(bool useSaveDialog);
 	void Start_Load(bool Use_Open_Dialog);
 
 	void Set_Editor();

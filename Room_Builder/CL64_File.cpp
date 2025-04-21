@@ -49,59 +49,48 @@ CL64_File::~CL64_File(void)
 // *************************************************************************
 // *	          Start_Save:- Terry and Hazel Flanigan 2025		       *
 // *************************************************************************
-void CL64_File::Start_Save(bool Use_Save_Dialog)
+void CL64_File::Start_Save(bool useSaveDialog)
 {
-	int BC = App->CL_Brush->Get_Brush_Count();
-	if (BC > 0)
-	{
-		if (Use_Save_Dialog == 1)
-		{
-			LPCWSTR mType = L"Mesh Text File(*.mtf) *.mtf";
-			LPCWSTR mExtension = L" *.mtf";
-
-			App->CL_File_IO->Save_File(mType, mExtension);
-
-			if (App->CL_File_IO->flag_Canceled == 1)
-			{
-				return;
-			}
-
-			strcpy(App->CL_Level->MTF_PathAndFile, App->CL_File_IO->s_Path_And_File.c_str());
-
-			if (_stricmp(App->CL_Level->MTF_PathAndFile + strlen(App->CL_Level->MTF_PathAndFile) - 4, ".mtf") == 0)
-			{
-				
-			}
-			else
-			{
-				strcat(App->CL_Level->MTF_PathAndFile, ".mtf");
-			}
-
-			App->CL_Utilities->Get_FileName_FromPath(App->CL_Level->MTF_PathAndFile, App->CL_Level->MTF_PathAndFile);
-
-			strcpy(App->CL_Level->MTF_Just_FileName, App->CL_Utilities->JustFileName);
-			
-			char buf[MAX_PATH];
-			strcpy(buf, App->CL_Level->MTF_Just_FileName);
-			int Len = strlen(buf);
-			buf[Len - 4] = 0;
-			strcpy(App->CL_Level->MTF_JustName_NoExt, buf);
-
-			strcpy(App->CL_Export->mJustName, App->CL_Level->MTF_JustName_NoExt);
-
-		}
-
-		Save_Document();
-
-		App->Set_Title(App->CL_Level->MTF_PathAndFile);
-
-		App->Say("Saved", App->CL_Level->MTF_Just_FileName);
-	}
-	else
+	int brushCount = App->CL_Brush->Get_Brush_Count();
+	if (brushCount <= 0)
 	{
 		App->Say("No Brushes to Save");
+		return;
 	}
 
+	if (useSaveDialog)
+	{
+		LPCWSTR fileType = L"Mesh Text File(*.mtf) *.mtf";
+		LPCWSTR fileExtension = L" *.mtf";
+
+		App->CL_File_IO->Save_File(fileType, fileExtension);
+
+		if (App->CL_File_IO->flag_Canceled)
+		{
+			return;
+		}
+
+		std::string& pathAndFile = App->CL_File_IO->s_Path_And_File;
+		strcpy(App->CL_Level->MTF_PathAndFile, pathAndFile.c_str());
+
+		if (_stricmp(App->CL_Level->MTF_PathAndFile + pathAndFile.length() - 4, ".mtf") != 0)
+		{
+			strcat(App->CL_Level->MTF_PathAndFile, ".mtf");
+		}
+
+		App->CL_Utilities->Get_FileName_FromPath(App->CL_Level->MTF_PathAndFile, App->CL_Level->MTF_PathAndFile);
+		strcpy(App->CL_Level->MTF_Just_FileName, App->CL_Utilities->JustFileName);
+
+		char buf[MAX_PATH];
+		strcpy(buf, App->CL_Level->MTF_Just_FileName);
+		buf[strlen(buf) - 4] = '\0';
+		strcpy(App->CL_Level->MTF_JustName_NoExt, buf);
+		strcpy(App->CL_Export->mJustName, App->CL_Level->MTF_JustName_NoExt);
+	}
+
+	Save_Document();
+	App->Set_Title(App->CL_Level->MTF_PathAndFile);
+	App->Say("Saved", App->CL_Level->MTF_Just_FileName);
 }
 
 // *************************************************************************
@@ -109,13 +98,13 @@ void CL64_File::Start_Save(bool Use_Save_Dialog)
 // *************************************************************************
 void CL64_File::Save_Document()
 {
-	if (Save(App->CL_Level->MTF_PathAndFile) == GE_FALSE)
+	if (Save(App->CL_Level->MTF_PathAndFile) == false)
 	{
 		App->Say("Error: Unable to save file");
-		return;;
+		return;
 	}
 
-	App->CL_Doc->flag_IsNewDocument = 0;
+	App->CL_Doc->flag_IsNewDocument = false;
 	App->CL_Doc->flag_Is_Modified = false;
 }
 
@@ -124,39 +113,42 @@ void CL64_File::Save_Document()
 // *************************************************************************
 bool CL64_File::Save(const char* FileName)
 {
-	char TXL_File_Name[MAX_PATH];
-	strcpy(TXL_File_Name, App->CL_Level->MTF_JustName_NoExt);
-	strcat(TXL_File_Name, ".zip");
+	// Construct the TXL file name
+	std::string TXL_File_Name = std::string(App->CL_Level->MTF_JustName_NoExt) + ".zip";
 
-	FILE* Write_File = NULL;
+	// Open the file for writing
+	FILE* Write_File = fopen(FileName, "wt");
+	if (!Write_File) {
+		App->Say("Failed to open file for writing");
+		return false; // Return false if file opening fails
+	}
 
-	Write_File = fopen(FileName, "wt");
+	// Write version and texture library name to the file
+	fprintf(Write_File, "MTF_Version %.2f\n", Level_Version);
+	fprintf(Write_File, "TextureLib %s\n", TXL_File_Name.c_str());
 
-	fprintf(Write_File, "MTF_Version %f\n", Level_Version);
-
-	fprintf(Write_File, "TextureLib %s\n", TXL_File_Name);
-
-	//fprintf(Write_File, "Brush_Count %i\n", App->CL_Brush->Get_Brush_Count());
-
+	// Write brush list to the file
 	BrushList_Write(App->CL_Doc->Current_Level->Brushes, Write_File);
 
+	// Close the file
 	fclose(Write_File);
 
-	char Source[MAX_PATH];
-	strcpy(Source, App->CL_Level->Wad_PathAndFile);
-	
-	char Destination[MAX_PATH];
-	strcpy(Destination, FileName);
-	int Len = strlen(Destination);
-	Destination[Len - 4] = 0;
-	strcat(Destination, ".zip");
-	
-	CopyFile(Source, Destination, false); // Overwrite
-	
-	strcpy(App->CL_Level->Wad_PathAndFile, Destination);
-	strcpy(App->CL_Level->Wad_Just_File_Name, TXL_File_Name);
+	// Prepare source and destination paths for file copying
+	std::string Source = App->CL_Level->Wad_PathAndFile;
+	std::string Destination = std::string(FileName);
+	Destination.replace(Destination.end() - 4, Destination.end(), ".zip");
 
-	return 1;
+	// Copy the file, overwriting if it exists
+	if (!CopyFile(Source.c_str(), Destination.c_str(), false)) {
+		perror("Failed to copy file");
+		return false; // Return false if file copying fails
+	}
+
+	// Update the level's file paths
+	strcpy(App->CL_Level->Wad_PathAndFile,Destination.c_str());
+	strcpy(App->CL_Level->Wad_Just_File_Name,TXL_File_Name.c_str());
+
+	return true;
 }
 
 // *************************************************************************
@@ -164,20 +156,23 @@ bool CL64_File::Save(const char* FileName)
 // *************************************************************************
 signed int CL64_File::BrushList_Write(BrushList* BList, FILE* ofile)
 {
+	if (!BList || !ofile) return false; // Check for null pointers
+
 	Brush* pBrush;
 	BrushIterator bi;
 	int Count;
 
 	Count = App->CL_Brush->BrushList_Count(BList, (BRUSH_COUNT_MULTI | BRUSH_COUNT_LEAF | BRUSH_COUNT_NORECURSE));
-	if (fprintf(ofile, "Brushlist %d\n", Count) < 0) return GE_FALSE;
+	if (fprintf(ofile, "Brushlist %d\n", Count) < 0) return false;
 
 	pBrush = App->CL_Brush->BrushList_GetFirst(BList, &bi);
 	while (pBrush != NULL)
 	{
-		if (!Brush_Write(pBrush, ofile)) return GE_FALSE;
+		if (!Brush_Write(pBrush, ofile)) return false;
 		pBrush = App->CL_Brush->BrushList_GetNext(&bi);
 	}
-	return GE_TRUE;
+
+	return true;
 }
 
 // *************************************************************************
@@ -185,9 +180,11 @@ signed int CL64_File::BrushList_Write(BrushList* BList, FILE* ofile)
 // *************************************************************************
 signed int CL64_File::Brush_Write(const Brush* b, FILE* ofile)
 {
+	if (!b || !ofile) return false; // Check for null pointers
+
 	if (b->Type == BRUSH_CSG)
 	{
-		return GE_TRUE;
+		return true;
 	}
 
 	{
@@ -218,7 +215,7 @@ signed int CL64_File::Brush_Write(const Brush* b, FILE* ofile)
 		assert(0);		// invalid brush type
 		break;
 	}
-	return GE_TRUE;
+	return true;
 }
 
 // *************************************************************************
@@ -226,17 +223,20 @@ signed int CL64_File::Brush_Write(const Brush* b, FILE* ofile)
 // *************************************************************************
 signed int CL64_File::FaceList_Write(const FaceList* pList, FILE* f)
 {
+	if (!pList || !f) return false; // Check for null pointers
+
 	int i;
 
 	assert(pList != NULL);
 	assert(f != NULL);
 
-	if (fprintf(f, "\tBrushFaces %d\n", pList->NumFaces) < 0) return GE_FALSE;
+	if (fprintf(f, "\tBrushFaces %d\n", pList->NumFaces) < 0) return false;
 	for (i = 0; i < pList->NumFaces; i++)
 	{
-		if (!Face_Write(pList->Faces[i], f)) return GE_FALSE;
+		if (!Face_Write(pList->Faces[i], f)) return false;
 	}
-	return GE_TRUE;
+
+	return true;
 }
 
 // *************************************************************************
@@ -244,6 +244,8 @@ signed int CL64_File::FaceList_Write(const FaceList* pList, FILE* f)
 // *************************************************************************
 signed int CL64_File::Face_Write(const Face* f, FILE* wf)
 {
+	if (!f || !wf) return false; // Check for null pointers
+
 	int	i, xShift, yShift;
 	float xScale, yScale, Rotate;
 
@@ -336,50 +338,39 @@ void CL64_File::Start_Load(bool Use_Open_Dialog)
 }
 
 // *************************************************************************
-// *			Open_3dt_File:- Terry and Hazel Flanigan 2025			   *
+// *							Open_3dt_File 							   *
 // *************************************************************************
 bool CL64_File::Open_3dt_File()
 {
 	App->CL_Doc->ResetAllSelections();
 	App->CL_Doc->Do_General_Select_Dlg(false);
-	
-	bool Test = Load_File(PathFileName_3dt);
 
-	if (Test == true)
+	if (!Load_File(PathFileName_3dt))
 	{
-		App->CL_Doc->Set_Paths();
-		
-		char Path_And_File[MAX_PATH];
-		strcpy(Path_And_File, App->CL_Level->MTF_Just_Path);
-		strcat(Path_And_File, App->CL_Level->Wad_Just_File_Name);
-		
-		bool test = App->CL_Utilities->Check_File_Exist(Path_And_File);
-		if (test == 0)
-		{
-			App->Say("Texture Library Does Not Exsist","Loading Default");
-			strcpy(Path_And_File, App->RB_Directory_FullPath);
-			strcat(Path_And_File, "\\Data\\Room_Builder\\Default.zip");
-		}
-	
-		App->CL_Doc->Load_Wad_File(Path_And_File);
-		
-		App->CL_Doc->UpdateAfterWadChange();
-
-		Set_Player();
-
-		App->CL_Properties_Brushes->Fill_ListBox();
-		App->CL_Properties_Textures->Fill_ListBox();
-
-		App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_Free;
-
-		App->CL_Doc->Set_Faces_To_Brush_Name_All(); // TODO Fix up Brush Names and set Indexs
-
-		App->CL_Doc->UpdateAllViews(Enums::UpdateViews_All);
+		return false;
 	}
-	/*else
+
+	App->CL_Doc->Set_Paths();
+
+	char pathAndFile[MAX_PATH];
+	strcpy(pathAndFile, App->CL_Level->MTF_Just_Path);
+	strcat(pathAndFile, App->CL_Level->Wad_Just_File_Name);
+	
+	if (!App->CL_Utilities->Check_File_Exist(pathAndFile))
 	{
-		return 0;
-	}*/
+		App->Say("Texture Library Does Not Exist", "Loading Default");
+		strcpy(pathAndFile, App->RB_Directory_FullPath);
+		strcat(pathAndFile, "\\Data\\Room_Builder\\Default.zip");
+	}
+
+	App->CL_Doc->Load_Wad_File(pathAndFile);
+	App->CL_Doc->UpdateAfterWadChange();
+	Set_Player();
+	App->CL_Properties_Brushes->Fill_ListBox();
+	App->CL_Properties_Textures->Fill_ListBox();
+	App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_Free;
+	App->CL_Doc->Set_Faces_To_Brush_Name_All(); // TODO: Fix up Brush Names and set Indexes
+	App->CL_Doc->UpdateAllViews(Enums::UpdateViews_All);
 
 	return true;
 }

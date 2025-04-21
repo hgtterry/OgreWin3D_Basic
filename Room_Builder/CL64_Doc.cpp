@@ -122,20 +122,22 @@ void CL64_Doc::Init_Doc()
 // *************************************************************************
 void CL64_Doc::Load_Wad_File(char* TXL_File)
 {
-	strcpy(App->CL_Level->Wad_PathAndFile, TXL_File);
+    // Set the Wad path and file
+    strcpy(App->CL_Level->Wad_PathAndFile,TXL_File);
 
-	App->CL_Utilities->Get_FileName_FromPath(TXL_File, TXL_File);
-	strcpy(App->CL_Level->Wad_Just_File_Name, App->CL_Utilities->JustFileName);
+    // Extract the file name from the path
+    App->CL_Utilities->Get_FileName_FromPath(TXL_File, TXL_File);
+    strcpy(App->CL_Level->Wad_Just_File_Name,App->CL_Utilities->JustFileName);
 
-	App->CL_Resources->Load_Texture_Resources();
-	App->CL_TXL_Editor->Scan_Textures_Resource_Group();
+    // Load texture resources and scan the texture resource group
+    App->CL_Resources->Load_Texture_Resources();
+    App->CL_TXL_Editor->Scan_Textures_Resource_Group();
 
-	App->CL_Level->Level_SetWadPath(App->CL_Doc->Current_Level, App->CL_Level->Wad_PathAndFile);
-
-	if (!App->CL_Level->Level_Create_TXL_Class())
-	{
-		App->Say_Win("Can not Create Class");
-	}
+    // Create the TXL class and handle failure
+    if (!App->CL_Level->Level_Create_TXL_Class())
+    {
+        App->Say_Win("Cannot create class");
+    }
 }
 
 // *************************************************************************

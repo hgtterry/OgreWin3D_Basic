@@ -280,7 +280,7 @@ const char* CL64_Level::Level_GetWadPath()
 // *************************************************************************
 // *							Level_SetWadPath						   *
 // *************************************************************************
-void CL64_Level::Level_SetWadPath(Level* pLevel, const char* NewWad)
+void CL64_Level::Level_SetWadPath(const char* NewWad)
 {
 	strcpy(Wad_PathAndFile, NewWad);
 }
