@@ -228,6 +228,8 @@ LRESULT CALLBACK CL64_TXL_Editor::Proc_Texl_Dialog(HWND hDlg, UINT message, WPAR
 				App->CL_Resources->Load_Texture_Resources();
 				App->CL_TXL_Editor->Scan_Textures_Resource_Group();
 				
+				App->CL_Level->Level_Create_TXL_Class();
+				App->CL_Doc->UpdateAfterWadChange();
 				
 				App->CL_Properties_Textures->Fill_ListBox();
 				
@@ -252,6 +254,7 @@ LRESULT CALLBACK CL64_TXL_Editor::Proc_Texl_Dialog(HWND hDlg, UINT message, WPAR
 				App->CL_TXL_Editor->UpDateList();
 
 				App->CL_Level->Level_Create_TXL_Class();
+				App->CL_Doc->UpdateAfterWadChange();
 
 				App->CL_TXL_Editor->Select_From_TextureName(App->CL_File_IO->s_Just_FileName.c_str());
 				App->CL_Properties_Textures->Select_With_List_Index(App->CL_TXL_Editor->Selected_Texure_Index);
@@ -262,29 +265,47 @@ LRESULT CALLBACK CL64_TXL_Editor::Proc_Texl_Dialog(HWND hDlg, UINT message, WPAR
 
 		if (LOWORD(wParam) == IDC_BT_TXL_CLEANUP)
 		{
-			return true;
+			//return true;
+
+			char FileName[200][200]{ 0 };
+			char Buf[200];
+			int New_Count = 0;
+
+			int T_Count = 0;
+			while (T_Count < App->CL_TXL_Editor->Texture_Count)
+			{
+				strcpy(FileName[T_Count], App->CL_TXL_Editor->Texture_List[T_Count]->FileName);
+				T_Count++;
+			}
+
 			int Count = 0;
 			while (Count < App->CL_TXL_Editor->Texture_Count)
 			{
-				bool TU = App->CL_TXL_Editor->Check_If_Texture_Used(App->CL_TXL_Editor->Texture_List[Count]->FileName);
+				strcpy(Buf, FileName[Count]);
+				
+				bool TU = App->CL_TXL_Editor->Check_If_Texture_Used(Buf);
 				if (TU == 1)
 				{
-					// Being Used
+					New_Count++;
 				}
 				else
 				{
-					App->CL_TXL_Editor->Delete_File(App->CL_TXL_Editor->Texture_List[Count]->FileName);
-
+					App->CL_TXL_Editor->Delete_File(Buf);
 					App->CL_Resources->Load_Texture_Resources();
-					App->CL_TXL_Editor->Scan_Textures_Resource_Group();
-					App->CL_Properties_Textures->Fill_ListBox();
-
-					App->CL_TXL_Editor->UpDateList();
-
 				}
 
 				Count++;
 			}
+
+			App->CL_TXL_Editor->Scan_Textures_Resource_Group();
+			App->CL_Properties_Textures->Fill_ListBox();
+
+			App->CL_TXL_Editor->UpDateList();
+
+			App->CL_TXL_Editor->Texture_Count = New_Count;
+
+			App->CL_Level->Level_Create_TXL_Class();
+			App->CL_Doc->UpdateAfterWadChange();
 
 			return TRUE;
 		}
@@ -691,7 +712,7 @@ void CL64_TXL_Editor::Delete_File(const char* File)
 
 	//Get_Timer
 
-	App->Say(File,"Deleted");
+	//App->Say(File,"Deleted");
 }
 
 // *************************************************************************
