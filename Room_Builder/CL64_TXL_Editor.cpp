@@ -265,10 +265,17 @@ LRESULT CALLBACK CL64_TXL_Editor::Proc_Texl_Dialog(HWND hDlg, UINT message, WPAR
 
 		if (LOWORD(wParam) == IDC_BT_TXL_CLEANUP)
 		{
+			App->CL_Dialogs->YesNo("Are you sure", "Delete all Unused Textures");
+
+			bool Doit = App->CL_Dialogs->flag_Dlg_Canceled;
+			if (Doit == 1)
+			{
+				return TRUE;
+			}
+
 			int Used = App->CL_TXL_Editor->Get_Used_Textures_Count();
 			int Total = App->CL_TXL_Editor->Texture_Count - Used;
 			
-
 			App->CL_PB->Start_ProgressBar();
 			App->CL_PB->Set_Progress((LPSTR)"Deleting Textures", Total);
 
