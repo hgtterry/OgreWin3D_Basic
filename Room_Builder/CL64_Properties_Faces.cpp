@@ -1071,8 +1071,18 @@ void CL64_Properties_Faces::Update_Face_Info(HWND hDlg)
 	sprintf(buff, "%s %i", "Bitmap ID: ", App->CL_Face->Face_GetTextureDibId(m_Selected_Face));
 	SendDlgItemMessage(hDlg, IDC_LST_FACE_INFO, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);
 
-	sprintf(buff, "%s %s", "Brush: ", m_Selected_Face->Brush_Name);
-	SendDlgItemMessage(hDlg, IDC_LST_FACE_INFO, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);
+	bool Test_Lock = App->CL_Face->Face_IsTextureLocked(m_Selected_Face);
+
+	if (Test_Lock)
+	{
+		sprintf(buff, "%s %s", "Locked: ", "Yes");
+		SendDlgItemMessage(hDlg, IDC_LST_FACE_INFO, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);
+	}
+	else
+	{
+		sprintf(buff, "%s %s", "Locked: ", "No");
+		SendDlgItemMessage(hDlg, IDC_LST_FACE_INFO, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);
+	}
 }
 
 // *************************************************************************

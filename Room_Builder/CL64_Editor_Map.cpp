@@ -1652,7 +1652,8 @@ void CL64_Editor_Map::Context_Menu_Ogre(HWND hDlg)
 	AppendMenuW(hMenu, MF_STRING | (brushCount > 0 ? 0 : MF_GRAYED), IDM_3D_SCENE_EDITOR, L"&Scene Editor");
 
 	AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
-	AppendMenuW(hMenu, MF_STRING | MF_GRAYED, NULL, L"&Pick Texture Ctrl+Right Mouse Button");
+	AppendMenuW(hMenu, MF_STRING | MF_GRAYED, NULL, L"&Ctrl+Left Mouse Button Pick Brush and Face");
+	AppendMenuW(hMenu, MF_STRING | MF_GRAYED, NULL, L"&Ctrl+Right Mouse Button Pick Texture ");
 	AppendMenuW(hMenu, MF_STRING | MF_GRAYED, NULL, L"&Pan Right Mouse Button");
 
 	flag_Context_Menu_Active = 1;

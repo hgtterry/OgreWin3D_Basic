@@ -70,12 +70,6 @@ Face* CL64_Face::Face_Create(int NumPnts, const T_Vec3* pnts, int DibId)
 {
 	Face* f;
 
-	assert(NumPnts > 0);
-	// changed QD 11/03
-	assert(NumPnts <= MAX_POINTS);
-	// end change
-	assert(pnts != NULL);
-
 	f = (Face*)App->CL_Maths->Ram_Allocate(sizeof(Face));
 	if (f)
 	{
@@ -164,8 +158,8 @@ void CL64_Face::Face_SetTextureDibId(Face* f, const int Dib)
 void CL64_Face::Face_InitTexInfo(TexInfo* t, T_Vec3 const* pNormal)
 {
 	t->Name[0] = '\0';
-	t->xScale = 1.0f;
-	t->yScale = 1.0f;
+	t->xScale = 0.50f;
+	t->yScale = 0.50f;
 	t->xShift = 0;
 	t->yShift = 0;
 	t->Rotate = 0.0f;
