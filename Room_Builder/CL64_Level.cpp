@@ -105,15 +105,17 @@ Level* CL64_Level::Level_Create()
 
 		App->CL_Maths->Vector3_Clear(&m_pLevel->TemplatePos);
 
-		m_pLevel->DrawScale = 1.0f;
+		m_pLevel->DrawScale = 0.50f;
 		m_pLevel->LightmapScale = 2.0f;
+	}
+	else
+	{
+		App->Say("Cannot Creat Level");
+		return nullptr;
+
 	}
 
 	return m_pLevel;
-
-//CreateError:
-//	Level_Destroy(&pLevel);
-//	return pLevel;
 }
 
 // *************************************************************************

@@ -51,6 +51,7 @@ CL64_File::~CL64_File(void)
 // *************************************************************************
 void CL64_File::Start_Save(bool useSaveDialog)
 {
+	// Check there are brushes to Save
 	int brushCount = App->CL_Brush->Get_Brush_Count();
 	if (brushCount <= 0)
 	{
@@ -58,6 +59,7 @@ void CL64_File::Start_Save(bool useSaveDialog)
 		return;
 	}
 
+	// if Menu->Save As Use Dialog
 	if (useSaveDialog)
 	{
 		LPCWSTR fileType = L"Mesh Text File(*.mtf) *.mtf";
@@ -88,7 +90,23 @@ void CL64_File::Start_Save(bool useSaveDialog)
 		strcpy(App->CL_Export->mJustName, App->CL_Level->MTF_JustName_NoExt);
 	}
 
+	// If from Menu->Save Check if file exsits and ask for conformatin to overwrite
+	if (!useSaveDialog)
+	{
+		bool test = App->CL_Utilities->Check_File_Exist(App->CL_Level->MTF_PathAndFile);
+		if (test == 1)
+		{
+			App->CL_Dialogs->YesNo("File Exsits", "Do you want to update File");
+			bool Doit = App->CL_Dialogs->flag_Dlg_Canceled;
+			if (Doit == 1)
+			{
+				return;
+			}
+		}
+	}
+
 	Save_Document();
+
 	App->Set_Title(App->CL_Level->MTF_PathAndFile);
 	App->Say("Saved", App->CL_Level->MTF_Just_FileName);
 }
@@ -134,13 +152,13 @@ bool CL64_File::Save(const char* FileName)
 	// Close the file
 	fclose(Write_File);
 
-	// Prepare source and destination paths for file copying
+	// Prepare source and destination paths for file copying Textures Zip
 	std::string Source = App->CL_Level->Wad_PathAndFile;
 	std::string Destination = std::string(FileName);
 	Destination.replace(Destination.end() - 4, Destination.end(), ".zip");
 
-	// Copy the file, overwriting if it exists
-	if (!App->CL_Utilities->Check_File_Exist((LPSTR)Destination.c_str()))
+	// Cant copy to its self so test
+	if (Destination != Source)
 	{
 		if (!CopyFile(Source.c_str(), Destination.c_str(), false))
 		{
@@ -385,7 +403,7 @@ bool CL64_File::Open_3dt_File()
 // *************************************************************************
 bool CL64_File::Load_File(const char* FileName)
 {
-	Level* m_pLevel = NULL;
+	Level* m_pLevel = nullptr;
 
 	int Count = 0;
 

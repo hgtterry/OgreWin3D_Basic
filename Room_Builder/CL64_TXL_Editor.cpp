@@ -265,6 +265,16 @@ LRESULT CALLBACK CL64_TXL_Editor::Proc_Texl_Dialog(HWND hDlg, UINT message, WPAR
 
 		if (LOWORD(wParam) == IDC_BT_TXL_CLEANUP)
 		{
+			int usedCount = App->CL_TXL_Editor->Get_Used_Textures_Count();
+			int totalCount = App->CL_TXL_Editor->Texture_Count - usedCount;
+
+			// Check If all textures are currently in use
+			if (usedCount == App->CL_TXL_Editor->Texture_Count)
+			{
+				App->Say("All Textures Used");
+				return TRUE;
+			}
+
 			App->CL_Dialogs->YesNo("Are you sure", "Delete all Unused Textures");
 
 			bool Doit = App->CL_Dialogs->flag_Dlg_Canceled;
@@ -273,49 +283,36 @@ LRESULT CALLBACK CL64_TXL_Editor::Proc_Texl_Dialog(HWND hDlg, UINT message, WPAR
 				return TRUE;
 			}
 
-			int Used = App->CL_TXL_Editor->Get_Used_Textures_Count();
-			int Total = App->CL_TXL_Editor->Texture_Count - Used;
-			
 			App->CL_PB->Start_ProgressBar();
-			App->CL_PB->Set_Progress((LPSTR)"Deleting Textures", Total);
+			App->CL_PB->Set_Progress((LPSTR)"Deleting Textures", totalCount);
 
-			char FileName[200][200]{ 0 };
-			char Buf[200];
-			int New_Count = 0;
-
-			int T_Count = 0;
-			while (T_Count < App->CL_TXL_Editor->Texture_Count)
+			std::vector<std::string> fileNames(App->CL_TXL_Editor->Texture_Count);
+			for (int i = 0; i < App->CL_TXL_Editor->Texture_Count; ++i)
 			{
-				strcpy(FileName[T_Count], App->CL_TXL_Editor->Texture_List[T_Count]->FileName);
-				T_Count++;
+				fileNames[i] = App->CL_TXL_Editor->Texture_List[i]->FileName;
 			}
 
-			int Count = 0;
-			while (Count < App->CL_TXL_Editor->Texture_Count)
+			int newCount = 0;
+			for (const auto& fileName : fileNames)
 			{
-				strcpy(Buf, FileName[Count]);
-				
-				bool TU = App->CL_TXL_Editor->Check_If_Texture_Used(Buf);
-				if (TU == 1)
+				if (App->CL_TXL_Editor->Check_If_Texture_Used(fileName.c_str()))
 				{
-					New_Count++;
+					newCount++;
 				}
 				else
 				{
-					App->CL_PB->Nudge((LPSTR)Buf);
-					App->CL_TXL_Editor->Delete_File(Buf);
+					App->CL_PB->Nudge((LPSTR)fileName.c_str());
+
+					// Delete the unused texture file
+					App->CL_TXL_Editor->Delete_File(fileName.c_str());
 					App->CL_Resources->Load_Texture_Resources();
 				}
-
-				Count++;
 			}
 
 			App->CL_TXL_Editor->Scan_Textures_Resource_Group();
 			App->CL_Properties_Textures->Fill_ListBox();
-
 			App->CL_TXL_Editor->UpDateList();
-
-			App->CL_TXL_Editor->Texture_Count = New_Count;
+			App->CL_TXL_Editor->Texture_Count = newCount;
 
 			App->CL_Level->Level_Create_TXL_Class();
 			App->CL_Doc->UpdateAfterWadChange();

@@ -89,7 +89,7 @@ void CL64_Doc::Init_Doc()
 {
     strcpy(LastTemplateTypeName, "Box");
    
-    Current_Level = App->CL_Level->Level_Create(); // TODO Creating Twice one in Win Main
+    Current_Level = App->CL_Level->Level_Create();
   
 	pSelBrushes = App->CL_SelBrushList->SelBrushList_Create();
 	pTempSelBrushes = App->CL_SelBrushList->SelBrushList_Create();
