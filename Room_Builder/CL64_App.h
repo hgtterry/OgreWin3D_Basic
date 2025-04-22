@@ -73,6 +73,7 @@ THE SOFTWARE.
 #include "CL64_Com_Player.h"
 #include "CL64_Com_Environments.h"
 #include "CL64_Com_Objects.h"
+#include "CL64_PB.h"
 
 // Scene Editor
 #include "CL64_Editor_Scene.h"
@@ -143,6 +144,7 @@ public:
 	CL64_Com_Objects*			CL_Com_Objects;
 	CL64_Gui_Environment*		CL_Gui_Environment;
 	CL64_Properties_Scene*		CL_Properties_Scene;
+	CL64_PB*					CL_PB;
 
 	// Scene Editor
 	CL64_Editor_Scene*			CL_Editor_Scene;

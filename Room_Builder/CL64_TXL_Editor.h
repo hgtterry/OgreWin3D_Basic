@@ -48,6 +48,7 @@ public:
 	int GetIndex_From_FileName(const char* Name);
 	int GetIndex_From_Name(const char* Name);
 	void Select_From_TextureName(const char* TextureName);
+	int Get_Used_Textures_Count();
 
 	bool flag_Texl_Dialog_Active;
 

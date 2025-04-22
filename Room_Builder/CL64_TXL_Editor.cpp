@@ -265,7 +265,12 @@ LRESULT CALLBACK CL64_TXL_Editor::Proc_Texl_Dialog(HWND hDlg, UINT message, WPAR
 
 		if (LOWORD(wParam) == IDC_BT_TXL_CLEANUP)
 		{
-			//return true;
+			int Used = App->CL_TXL_Editor->Get_Used_Textures_Count();
+			int Total = App->CL_TXL_Editor->Texture_Count - Used;
+			
+
+			App->CL_PB->Start_ProgressBar();
+			App->CL_PB->Set_Progress((LPSTR)"Deleting Textures", Total);
 
 			char FileName[200][200]{ 0 };
 			char Buf[200];
@@ -290,6 +295,7 @@ LRESULT CALLBACK CL64_TXL_Editor::Proc_Texl_Dialog(HWND hDlg, UINT message, WPAR
 				}
 				else
 				{
+					App->CL_PB->Nudge((LPSTR)Buf);
 					App->CL_TXL_Editor->Delete_File(Buf);
 					App->CL_Resources->Load_Texture_Resources();
 				}
@@ -306,6 +312,8 @@ LRESULT CALLBACK CL64_TXL_Editor::Proc_Texl_Dialog(HWND hDlg, UINT message, WPAR
 
 			App->CL_Level->Level_Create_TXL_Class();
 			App->CL_Doc->UpdateAfterWadChange();
+
+			App->CL_PB->Stop_Progress_Bar((LPSTR)"Unused Textures Deleted");
 
 			return TRUE;
 		}
@@ -776,6 +784,35 @@ bool CL64_TXL_Editor::Add_File()
 	App->Say("Added", App->CL_File_IO->s_Just_FileName.c_str());
 
 	return 1;
+}
+
+// *************************************************************************
+// *		 Get_Used_Textures_Count:- Terry and Hazel Flanigan 2024	   *
+// *************************************************************************
+int CL64_TXL_Editor::Get_Used_Textures_Count()
+{
+	int Used_Count = 0;
+	int Count = 0;
+
+	memset(App->CL_Mesh_Mgr->UsedTextures, 0, 500);
+
+	BrushList* pList = App->CL_Level->Level_Get_Main_Brushes();
+
+	App->CL_Brush_X->BrushList_GetUsedTextures_X(pList, App->CL_Mesh_Mgr->UsedTextures);
+
+	while (Count < App->CL_TXL_Editor->Texture_Count)
+	{
+		if (App->CL_Mesh_Mgr->UsedTextures[Count])
+		{
+			Used_Count++;
+		}
+
+		Count++;
+	}
+
+	memset(App->CL_Mesh_Mgr->UsedTextures, 0, 500);
+
+	return Used_Count;
 }
 
 

@@ -70,6 +70,8 @@
 #define IDB_FVFOLDERRED                 183
 #define IDR_SCENE_MENU                  184
 #define IDD_SB_BRUSH_VIEWER             185
+#define IDD_DIALOG1                     186
+#define IDD_PROGRESS_BAR                186
 #define IDC_BANNER                      1000
 #define IDC_STTEXT                      1001
 #define IDC_STMESSAGE                   1002
@@ -401,6 +403,10 @@
 #define IDC_CB_RENDERMODE               1289
 #define IDC_ST_TXL_TEXTURE              1290
 #define IDC_ST_TXL_LIST                 1291
+#define IDC_PBBANNER                    1292
+#define IDC_PBACTION                    1293
+#define IDC_STBAR                       1294
+#define IDC_ST_PB_STATUS                1295
 #define ID_DEBUG_GENERAL                32771
 #define ID_TEMPLATES_INSERT             32772
 #define ID_BRUSH_SELECT                 32773
@@ -462,9 +468,9 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
-#define _APS_NEXT_RESOURCE_VALUE        186
+#define _APS_NEXT_RESOURCE_VALUE        187
 #define _APS_NEXT_COMMAND_VALUE         32821
-#define _APS_NEXT_CONTROL_VALUE         1292
+#define _APS_NEXT_CONTROL_VALUE         1296
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif
