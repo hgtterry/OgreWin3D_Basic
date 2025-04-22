@@ -140,12 +140,15 @@ bool CL64_File::Save(const char* FileName)
 	Destination.replace(Destination.end() - 4, Destination.end(), ".zip");
 
 	// Copy the file, overwriting if it exists
-	if (!CopyFile(Source.c_str(), Destination.c_str(), false)) 
+	if (!App->CL_Utilities->Check_File_Exist((LPSTR)Destination.c_str()))
 	{
-		App->Say("Error: Failed to copy file");
-		return false;
+		if (!CopyFile(Source.c_str(), Destination.c_str(), false))
+		{
+			App->Say("Error: Failed to copy file");
+			return false;
+		}
 	}
-
+	
 	// Update the level's file paths
 	strcpy(App->CL_Level->Wad_PathAndFile,Destination.c_str());
 	strcpy(App->CL_Level->Wad_Just_File_Name,TXL_File_Name.c_str());
