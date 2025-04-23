@@ -107,6 +107,17 @@ void CL64_File::Start_Save(bool useSaveDialog)
 
 	Save_Document();
 
+	char ProjectFolder[MAX_PATH];
+	strcpy(ProjectFolder, App->CL_Level->MTF_PathAndFile);
+
+	int Len1 = strlen(App->CL_Level->MTF_PathAndFile);
+	int Len2 = strlen(App->CL_Level->MTF_Just_FileName);
+	ProjectFolder[Len1 - Len2] = 0;
+
+	strcat(ProjectFolder, App->CL_Level->MTF_JustName_NoExt);
+	strcat(ProjectFolder, "_ow_prj");
+	CreateDirectory(ProjectFolder, NULL);
+
 	App->Set_Title(App->CL_Level->MTF_PathAndFile);
 	App->Say("Saved", App->CL_Level->MTF_Just_FileName);
 }
