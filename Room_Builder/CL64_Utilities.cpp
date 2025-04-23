@@ -36,6 +36,17 @@ CL64_Utilities::~CL64_Utilities(void)
 }
 
 // *************************************************************************
+// *		Check_Directory_Exists:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+bool CL64_Utilities::Check_Directory_Exists(char* szPath)
+{
+	DWORD dwAttrib = GetFileAttributes(szPath);
+
+	return (dwAttrib != INVALID_FILE_ATTRIBUTES &&
+		(dwAttrib & FILE_ATTRIBUTE_DIRECTORY));
+}
+
+// *************************************************************************
 // *		Check_File_Exist:- Terry and Hazel Flanigan 2024		 	   *
 // *************************************************************************
 bool CL64_Utilities::Check_File_Exist(char* Full_Path)

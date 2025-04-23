@@ -33,6 +33,7 @@ enum { GridMetric = 0, GridTexel = 1 };
 CL64_Level::CL64_Level(void)
 {
 	flag_UseGrid = 1;
+	flag_Working_Folder_Exists = 0;
 
 	strcpy(MTF_PathAndFile, App->RB_Directory_FullPath);
 	strcat(MTF_PathAndFile, "\\Data\\Room_Builder\\Room_1.mtf");

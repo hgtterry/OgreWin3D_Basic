@@ -68,6 +68,7 @@ public:
 	float Level_GetGridSnapSize(const Level* pLevel);
 
 	bool flag_UseGrid;
+	bool flag_Working_Folder_Exists;
 
 	CL64_WadFile* CL_Wad_Class;
 

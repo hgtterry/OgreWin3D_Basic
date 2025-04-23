@@ -249,6 +249,7 @@ void CL64_Editor_Com::Clear_Level(bool FromFile)
 	App->CL_Top_Tabs->Reset_Class();
 	App->CL_Mesh_Mgr->Reset_Class();
 	
+	App->CL_Level->flag_Working_Folder_Exists = 0;
 	App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_Free;
 	
 	if (FromFile == false) // Not from a file load

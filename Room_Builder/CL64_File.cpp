@@ -114,8 +114,9 @@ void CL64_File::Start_Save(bool useSaveDialog)
 	int Len2 = strlen(App->CL_Level->MTF_Just_FileName);
 	ProjectFolder[Len1 - Len2] = 0;
 
+	// Create Working Folder
 	strcat(ProjectFolder, App->CL_Level->MTF_JustName_NoExt);
-	strcat(ProjectFolder, "_ow_prj");
+	strcat(ProjectFolder, "_ow3d_prj");
 	CreateDirectory(ProjectFolder, NULL);
 
 	App->Set_Title(App->CL_Level->MTF_PathAndFile);
@@ -361,9 +362,19 @@ void CL64_File::Start_Load(bool Use_Open_Dialog)
 		App->CL_Doc->Do_General_Select_Dlg(false);
 
 		Set_Editor();
+
+		// Check if Working Folder Exsits
+		char Work_Folder[MAX_PATH];
+		strcpy(Work_Folder, App->CL_Level->MTF_Just_Path);
+		strcat(Work_Folder, App->CL_Level->MTF_JustName_NoExt);
+		strcat(Work_Folder, "_ow3d_prj");
+		bool Folder_Test = App->CL_Utilities->Check_Directory_Exists(Work_Folder);
+		App->CL_Level->flag_Working_Folder_Exists = Folder_Test;
+
 		App->Say("File Loaded", App->CL_File->FileName_3dt);
 		
 		App->CL_Doc->Do_General_Select_Dlg(true);
+
 	}
 	else
 	{
