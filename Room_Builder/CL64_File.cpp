@@ -363,6 +363,7 @@ void CL64_File::Start_Load(bool Use_Open_Dialog)
 
 		Set_Editor();
 
+
 		// Check if Working Folder Exsits
 		char Work_Folder[MAX_PATH];
 		strcpy(Work_Folder, App->CL_Level->MTF_Just_Path);
@@ -370,6 +371,8 @@ void CL64_File::Start_Load(bool Use_Open_Dialog)
 		strcat(Work_Folder, "_ow3d_prj");
 		bool Folder_Test = App->CL_Utilities->Check_Directory_Exists(Work_Folder);
 		App->CL_Level->flag_Working_Folder_Exists = Folder_Test;
+		// -------------------------------------------------------
+
 
 		App->Say("File Loaded", App->CL_File->FileName_3dt);
 		

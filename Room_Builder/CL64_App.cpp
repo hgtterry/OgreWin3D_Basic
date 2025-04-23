@@ -1,7 +1,7 @@
 /*
 Copyright (c) 2024 - 2025 Inflanite_HGT W.T.Flanigan H.C.Flanigan
 
-OW3D_Mesh_Builder
+OgreWin3D
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -92,6 +92,9 @@ CL64_App::CL64_App(void)
 	CL_CreateConeDialog =		nullptr;
 	CL_CreateStaircaseDialog =	nullptr;
 	CL_CreateArchDialog =		nullptr;
+
+	// Project
+	CL_Project =				nullptr;
 
 	CUR = 0;
 	Menu_Map = 0;
@@ -224,6 +227,9 @@ void CL64_App::InitApp(void)
 	CL_CreateStaircaseDialog =	new A_CreateStaircaseDialog();
 	CL_CreateArchDialog =		new A_CreateArchDialog();
 
+	// Project
+	CL_Project =				new CL64_Project();
+	
 	SetBrushes_Fonts();
 
 	char Deskdir[MAX_PATH];

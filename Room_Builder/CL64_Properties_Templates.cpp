@@ -153,7 +153,6 @@ LRESULT CALLBACK CL64_Properties_Templates::Proc_Templates(HWND hDlg, UINT messa
 					}
 					// ----------------
 
-
 					App->CL_Ogre->Camera_Reset_Zero();
 					App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_Free;
 					
@@ -172,12 +171,12 @@ LRESULT CALLBACK CL64_Properties_Templates::Proc_Templates(HWND hDlg, UINT messa
 			App->CL_Doc->Set_Faces_To_Brush_Name_All();
 
 			App->CL_Doc->Do_General_Select_Dlg(true);
-
+			
 			App->CL_Doc->mCurrentTool = CURTOOL_NONE;
 			App->CL_Doc->mModeTool = ID_GENERALSELECT;
-
+			
 			App->CL_Doc->UpdateAllViews(Enums::UpdateViews_All);
-
+			
 			App->CL_Properties_Brushes->Fill_ListBox();
 
 			App->CL_Properties_Templates->Enable_Insert_Button(false);
