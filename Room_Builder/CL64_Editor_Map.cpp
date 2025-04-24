@@ -1413,17 +1413,16 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Ogre_BR(HWND hDlg, UINT message, WPARAM w
 			SetCursor(App->CUR);
 			App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
 
-			if (GetAsyncKeyState(VK_CONTROL) < 0)
-			{
-				Ogre::Quaternion cameraRotation = App->CL_Ogre->camNode->getOrientation();
-				
-				int cameraComparison = App->CL_Maths->Ogre_Quaternion_Compare(&cameraRotation, &App->CL_Camera->Saved_Rotation, 0);
-				if (cameraComparison == 1)
-				{
-					App->CL_Picking->Mouse_Pick_Entity(false);
-				}
-			}
+			Ogre::Quaternion cameraRotation = App->CL_Ogre->camNode->getOrientation();
 
+			int cameraComparison = App->CL_Maths->Ogre_Quaternion_Compare(&cameraRotation, &App->CL_Camera->Saved_Rotation, 0);
+			
+			// If Mouse has not moved select Brush and Face
+			if (cameraComparison == 1)
+			{
+				App->CL_Picking->Mouse_Pick_Entity(false);
+			}
+			
 			return 1;
 		}
 
@@ -1652,7 +1651,6 @@ void CL64_Editor_Map::Context_Menu_Ogre(HWND hDlg)
 	AppendMenuW(hMenu, MF_STRING | (brushCount > 0 ? 0 : MF_GRAYED), IDM_3D_SCENE_EDITOR, L"&Scene Editor");
 
 	AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
-	AppendMenuW(hMenu, MF_STRING | MF_GRAYED, NULL, L"&Ctrl+Left Mouse Button Pick Brush and Face");
 	AppendMenuW(hMenu, MF_STRING | MF_GRAYED, NULL, L"&Ctrl+Right Mouse Button Pick Texture ");
 	AppendMenuW(hMenu, MF_STRING | MF_GRAYED, NULL, L"&Pan Right Mouse Button");
 

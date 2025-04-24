@@ -98,6 +98,7 @@ private:
 	bool Save_Project_Ini();
 	bool Save_Level_Folder();
 	bool Save_Main_Asset_Folder();
+	bool Save_Assets_Data();
 	bool Save_Area_Folder();
 	bool Save_Areas_Data();
 	bool Save_Players_Folder();

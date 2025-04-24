@@ -404,7 +404,7 @@ LRESULT CALLBACK CL64_Project::Save_Project_Dialog_Proc(HWND hDlg, UINT message,
 }
 
 // *************************************************************************
-// *	  		Save_Project:- Terry and Hazel Flanigan 2024			   *
+// *	  		Save_All:- Terry and Hazel Flanigan 2024				   *
 // *************************************************************************
 bool CL64_Project::Save_All(bool Silent)
 {
@@ -432,14 +432,17 @@ bool CL64_Project::Save_Project()
 	char CurDir[MAX_PATH];
 	char* a_cwd = _getcwd(CurDir, MAX_PATH);
 
-	if (_mkdir(m_Project_Sub_Folder) == 0)
+	strcpy(m_Project_Sub_Folder, App->CL_Level->Prj_Working_Folder);
+	strcpy(m_Project_Name, App->CL_Level->MTF_JustName_NoExt);
+
+	/*if (_mkdir(m_Project_Sub_Folder) == 0)
 	{
 		(void)_chdir(m_Project_Sub_Folder);
 	}
 	else
 	{
 		(void)_chdir(m_Project_Sub_Folder);
-	}
+	}*/
 
 	bool test = Save_Project_Ini();
 	if (test == 0)
@@ -452,15 +455,15 @@ bool CL64_Project::Save_Project()
 	
 	(void)_chdir(m_Level_Folder_Path);
 
-	/*if (App->CL_Scene->flag_Area_Added == 1)
+	//if (App->CL_Scene->flag_Area_Added == 1)
 	{
 		Save_Area_Folder();
 	}
 
-	if (App->CL_Scene->flag_Player_Added == 1)
+	//if (App->CL_Scene->flag_Player_Added == 1)
 	{
 		Save_Players_Folder();
-	}*/
+	}
 
 	Save_Cameras_Folder();
 	Save_Objects_Folder();
@@ -469,11 +472,11 @@ bool CL64_Project::Save_Project()
 	/*App->CL_FileView->Change_Level_Name();
 	App->CL_FileView->Change_Project_Name();*/
 
-	App->CL_Com_Objects->Clear_Modified_Objects(); // Clear Altered FileView Items
+	//App->CL_Com_Objects->Clear_Modified_Objects(); // Clear Altered FileView Items
 	
 	//App->SBC_Project->Directory_Changed_Flag = 0;
 
-	strcpy(Project_Path_File_Name, m_Ini_Path_File_Name);
+	//strcpy(Project_Path_File_Name, m_Ini_Path_File_Name);
 	//App->Set_Title();
 
 	//App->CL_File_IO->RecentFileHistory_Update();
@@ -501,14 +504,13 @@ bool CL64_Project::Save_Project_Ini()
 	m_Ini_Path_File_Name[0] = 0;
 
 	strcpy(m_Ini_Path_File_Name, m_Project_Sub_Folder);
-	strcat(m_Ini_Path_File_Name, "\\");
 	strcat(m_Ini_Path_File_Name, m_Project_Name);
-	strcat(m_Ini_Path_File_Name, ".owproj");
+	strcat(m_Ini_Path_File_Name, ".ini");
 
 	char Filename[MAX_PATH];
 	strcpy(Filename, "\\");
 	strcat(Filename, m_Project_Name);
-	strcat(Filename, ".owproj");
+	strcat(Filename, ".ini");
 	
 	/*if (flag_Silence_SaveAll_Dialogs == 0)
 	{
@@ -536,7 +538,7 @@ bool CL64_Project::Save_Project_Ini()
 	}
 
 	fprintf(WriteFile, "%s\n", "[Version_Data]");
-	fprintf(WriteFile, "%s%s\n", "Version=", "V1.2");
+	fprintf(WriteFile, "%s%s\n", "Version=", "V1.0");
 
 	fprintf(WriteFile, "%s\n", " ");
 
@@ -550,14 +552,14 @@ bool CL64_Project::Save_Project_Ini()
 
 	//int Adjusted_Areas_Count = App->CL_Com_Area->Get_Adjusted_Areas_Count();
 
-	/*fprintf(WriteFile, "%s\n", "[Options]");
-	fprintf(WriteFile, "%s%i\n", "Areas_Count=", Adjusted_Areas_Count);
-	fprintf(WriteFile, "%s%i\n", "Areas_ID_Count=", App->CL_Scene->UniqueID_Area_Count);
+	fprintf(WriteFile, "%s\n", "[Options]");
+	//fprintf(WriteFile, "%s%i\n", "Areas_Count=", Adjusted_Areas_Count);
+	//fprintf(WriteFile, "%s%i\n", "Areas_ID_Count=", App->CL_Scene->UniqueID_Area_Count);
 
-	fprintf(WriteFile, "%s%i\n", "Players_Count=", App->CL_Scene->Player_Count);
-	fprintf(WriteFile, "%s%i\n", "Cameras_Count=", App->CL_Scene->Camera_Count);
-	fprintf(WriteFile, "%s%i\n", "Objects_Count=", App->CL_Scene->Object_Count);
-	fprintf(WriteFile, "%s%i\n", "Objects_ID_Count=", App->CL_Scene->UniqueID_Object_Counter);*/
+	fprintf(WriteFile, "%s%i\n", "Players_Count=", App->CL_Editor_Com->Player_Count);
+	//fprintf(WriteFile, "%s%i\n", "Cameras_Count=", App->CL_Editor_Com->Camera_Count);
+	fprintf(WriteFile, "%s%i\n", "Objects_Count=", App->CL_Editor_Com->Object_Count);
+	fprintf(WriteFile, "%s%i\n", "Objects_ID_Count=", App->CL_Editor_Com->UniqueID_Object_Counter);
 
 
 	/*int Adjusted_Counters_Count = App->CL_LookUps->Get_Adjusted_Counters_Count();
@@ -577,7 +579,7 @@ bool CL64_Project::Save_Project_Ini()
 	fprintf(WriteFile, "%s%i\n", "Use_Front_Dlg=", App->CL_Build_Game->GameOptions->flag_Front_Dialog);*/
 
 	fclose(WriteFile);
-	
+
 	return 1;
 }
 
@@ -587,7 +589,7 @@ bool CL64_Project::Save_Project_Ini()
 bool CL64_Project::Save_Level_Folder()
 {
 	strcpy(m_Level_Folder_Path, m_Project_Sub_Folder);
-	strcat(m_Level_Folder_Path, "\\");
+	//strcat(m_Level_Folder_Path, "\\");
 	strcat(m_Level_Folder_Path, m_Level_Name);
 
 	// First Level Folder
@@ -627,7 +629,9 @@ bool CL64_Project::Save_Main_Asset_Folder()
 		(void)_chdir(m_Main_Assets_Path);
 	}
 	
-	if (flag_Is_New_Project == 0)
+	Save_Assets_Data();
+
+	/*if (flag_Is_New_Project == 0)
 	{
 		Copy_Assets(LastFolder, m_Main_Assets_Path);
 	}
@@ -635,11 +639,51 @@ bool CL64_Project::Save_Main_Asset_Folder()
 	if (flag_Is_New_Project == 1)
 	{
 		Load_Get_Resource_Path();
-	}
+	}*/
 
 	//App->CL_Project->flag_Is_New_Project = 0;
 
 	(void)_chdir(m_Level_Folder_Path); // Return to Level Folder
+
+	return 1;
+}
+
+// *************************************************************************
+// *	  		Save_Asset_Data:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+bool CL64_Project::Save_Assets_Data()
+{
+	Ogre::Vector3 Pos;
+	char File[MAX_PATH];
+
+	strcpy(File, m_Main_Assets_Path);
+	strcat(File, "\\");
+	strcat(File, "Assets.dat");
+
+	WriteFile = nullptr;
+
+	WriteFile = fopen(File, "wt");
+
+	if (!WriteFile)
+	{
+		App->Say("Cant Create File");
+		App->Say_Win(File);
+		return 0;
+	}
+
+	fprintf(WriteFile, "%s\n", "[Version_Data]");
+	fprintf(WriteFile, "%s%s\n", "Version=", "V1.0");
+
+	fprintf(WriteFile, "%s\n", " ");
+
+	//int Adjusted_Areas_Count = App->CL_Com_Area->Get_Adjusted_Areas_Count();
+
+	fprintf(WriteFile, "%s\n", "[Counters]");
+	//fprintf(WriteFile, "%s%i\n", "Areas_Count=", Adjusted_Areas_Count);
+
+	fprintf(WriteFile, "%s\n", " ");
+
+	fclose(WriteFile);
 
 	return 1;
 }
@@ -681,7 +725,7 @@ bool CL64_Project::Save_Areas_Data()
 
 	strcpy(File, m_Aera_Folder_Path);
 	strcat(File, "\\");
-	strcat(File, "Areas.aer");
+	strcat(File, "Areas.dat");
 
 	WriteFile = nullptr;
 
@@ -695,7 +739,7 @@ bool CL64_Project::Save_Areas_Data()
 	}
 
 	fprintf(WriteFile, "%s\n", "[Version_Data]");
-	fprintf(WriteFile, "%s%s\n", "Version=", "V1.2");
+	fprintf(WriteFile, "%s%s\n", "Version=", "V1.0");
 
 	fprintf(WriteFile, "%s\n", " ");
 
@@ -809,7 +853,7 @@ bool CL64_Project::Save_Player_Data()
 
 	strcpy(File, m_Players_Folder_Path);
 	strcat(File, "\\");
-	strcat(File, "Players.ply");
+	strcat(File, "Players.dat");
 
 	WriteFile = nullptr;
 
@@ -823,7 +867,7 @@ bool CL64_Project::Save_Player_Data()
 	}
 
 	fprintf(WriteFile, "%s\n", "[Version_Data]");
-	fprintf(WriteFile, "%s%s\n", "Version=", "V1.2");
+	fprintf(WriteFile, "%s%s\n", "Version=", "V1.0");
 
 	fprintf(WriteFile, "%s\n", " ");
 
@@ -969,7 +1013,7 @@ bool CL64_Project::Save_Cameras_Data()
 
 	strcpy(File, m_Cameras_Folder_Path);
 	strcat(File, "\\");
-	strcat(File, "Cameras.epf");
+	strcat(File, "Cameras.dat");
 
 	WriteFile = nullptr;
 
@@ -983,7 +1027,7 @@ bool CL64_Project::Save_Cameras_Data()
 	}
 
 	fprintf(WriteFile, "%s\n", "[Version_Data]");
-	fprintf(WriteFile, "%s%s\n", "Version=", "V1.2");
+	fprintf(WriteFile, "%s%s\n", "Version=", "V1.0");
 
 	fprintf(WriteFile, "%s\n", " ");
 
@@ -1072,7 +1116,7 @@ bool CL64_Project::Save_Objects_Data()
 
 	strcpy(File, m_Objects_Folder_Path);
 	strcat(File, "\\");
-	strcat(File, "Objects.efd");
+	strcat(File, "Objects.dat");
 
 	WriteFile = nullptr;
 
@@ -1086,7 +1130,7 @@ bool CL64_Project::Save_Objects_Data()
 	}
 
 	fprintf(WriteFile, "%s\n", "[Version_Data]");
-	fprintf(WriteFile, "%s%s\n", "Version=", "V1.2");
+	fprintf(WriteFile, "%s%s\n", "Version=", "V1.0");
 
 	fprintf(WriteFile, "%s\n", " ");
 
@@ -1426,7 +1470,7 @@ bool CL64_Project::Save_Display_Data()
 
 	strcpy(File, m_Display_Folder_Path);
 	strcat(File, "\\");
-	strcat(File, "Counters.edf");
+	strcat(File, "Counters.dat");
 
 	WriteFile = nullptr;
 
@@ -1440,7 +1484,7 @@ bool CL64_Project::Save_Display_Data()
 	}
 
 	fprintf(WriteFile, "%s\n", "[Version_Data]");
-	fprintf(WriteFile, "%s%s\n", "Version=", "V1.2");
+	fprintf(WriteFile, "%s%s\n", "Version=", "V1.0");
 
 	fprintf(WriteFile, "%s\n", " ");
 

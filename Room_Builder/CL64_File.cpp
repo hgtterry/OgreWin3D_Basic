@@ -27,9 +27,6 @@ THE SOFTWARE.
 #include "CL64_File.h"
 #include "Structures.cpp"
 
-
-
-
 CL64_File::CL64_File(void)
 {
 	Level_Version = 1.0;
@@ -122,6 +119,9 @@ void CL64_File::Start_Save(bool useSaveDialog)
 	App->CL_Level->flag_Working_Folder_Exists = true;
 	strcat(ProjectFolder, "\\");
 	strcpy(App->CL_Level->Prj_Working_Folder, ProjectFolder);
+
+	App->CL_Project->Save_All(true);
+
 	// ---------------------------------
 
 
