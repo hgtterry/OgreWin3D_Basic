@@ -406,6 +406,7 @@ void CL64_ImGui::App_Stats_GUI(void)
 			ImGui::Text("Just_Path:= %s", App->CL_Level->MTF_Just_Path);
 			ImGui::Text("Just_FileName:= %s", App->CL_Level->MTF_Just_FileName);
 			ImGui::Text("Just_File:= %s", App->CL_Level->MTF_JustName_NoExt);
+			ImGui::Text("Working Folder:= %s", App->CL_Level->Prj_Working_Folder);
 			ImGui::Separator();
 			ImGui::Text("TXL Path And File:= %s", App->CL_Level->Wad_PathAndFile);
 			ImGui::Text("TXL Just_File:= %s", App->CL_Level->Wad_Just_File_Name);

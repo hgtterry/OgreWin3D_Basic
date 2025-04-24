@@ -119,6 +119,12 @@ void CL64_File::Start_Save(bool useSaveDialog)
 	strcat(ProjectFolder, "_ow3d_prj");
 	CreateDirectory(ProjectFolder, NULL);
 
+	App->CL_Level->flag_Working_Folder_Exists = true;
+	strcat(ProjectFolder, "\\");
+	strcpy(App->CL_Level->Prj_Working_Folder, ProjectFolder);
+	// ---------------------------------
+
+
 	App->Set_Title(App->CL_Level->MTF_PathAndFile);
 	App->Say("Saved", App->CL_Level->MTF_Just_FileName);
 }
@@ -370,7 +376,18 @@ void CL64_File::Start_Load(bool Use_Open_Dialog)
 		strcat(Work_Folder, App->CL_Level->MTF_JustName_NoExt);
 		strcat(Work_Folder, "_ow3d_prj");
 		bool Folder_Test = App->CL_Utilities->Check_Directory_Exists(Work_Folder);
-		App->CL_Level->flag_Working_Folder_Exists = Folder_Test;
+		if (Folder_Test == true)
+		{
+			App->CL_Level->flag_Working_Folder_Exists = true;
+
+			strcat(Work_Folder, "\\");
+			strcpy(App->CL_Level->Prj_Working_Folder, Work_Folder);
+		}
+		else
+		{
+			App->CL_Level->flag_Working_Folder_Exists = false;
+			strcpy(App->CL_Level->Prj_Working_Folder, "None");
+		}
 		// -------------------------------------------------------
 
 
