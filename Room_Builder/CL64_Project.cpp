@@ -538,7 +538,7 @@ bool CL64_Project::Save_Project_Ini()
 
 	fprintf(WriteFile, "%s\n", "[Files]");
 	fprintf(WriteFile, "%s%s\n", "Project_Name=", m_Project_Name);
-	fprintf(WriteFile, "%s%s\n", "Level_Name=", m_Level_Name);
+	fprintf(WriteFile, "%s%s\n", "Level_Name=", "First_Level");// m_Level_Name);
 	
 	//fprintf(WriteFile, "%s%s\n", "Game_Name=", App->CL_Build_Game->GameName);
 
@@ -1649,6 +1649,8 @@ bool CL64_Project::Load_Project()
 	App->CL_Ini_File->GetString("Files", "Level_Name", m_Level_Name, MAX_PATH);
 	App->CL_Ini_File->GetString("Files", "Project_Name", m_Project_Name, MAX_PATH);
 	
+	strcpy(m_Level_Name, "First_Level");
+
 	//App->CL_Ini_File->GetString("Files", "Game_Name", App->CL_Build_Game->GameName, MAX_PATH, "YourGameName");
 
 
@@ -1767,7 +1769,6 @@ bool CL64_Project::Load_Get_Resource_Path()
 	strcat(m_Main_Assets_Path, "Assets");
 	strcat(m_Main_Assets_Path, "\\");
 
-	App->Say_Win(m_Main_Assets_Path);
 	strcpy(m_Main_TXL_Path, m_Main_Assets_Path);
 	strcat(m_Main_TXL_Path, "TXL_Texture.Zip");
 
