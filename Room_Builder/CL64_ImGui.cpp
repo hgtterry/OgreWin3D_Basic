@@ -408,8 +408,8 @@ void CL64_ImGui::App_Stats_GUI(void)
 			ImGui::Text("Just_File:= %s", App->CL_Level->MTF_JustName_NoExt);
 			ImGui::Text("Working Folder:= %s", App->CL_Level->Prj_Working_Folder);
 			ImGui::Separator();
-			ImGui::Text("TXL Path And File:= %s", App->CL_Level->Wad_PathAndFile);
-			ImGui::Text("TXL Just_File:= %s", App->CL_Level->Wad_Just_File_Name);
+			ImGui::Text("TXL Path And File:= %s", App->CL_Level->TXL_PathAndFile);
+			ImGui::Text("TXL Just_File:= %s", App->CL_Level->TXL_Just_File_Name);
 
 			ImGui::Separator();
 			ImGui::TreePop();
@@ -553,8 +553,8 @@ void CL64_ImGui::Paths_GUI(void)
 
 		ImGui::Separator();
 
-		ImGui::Text("TXL Path And File:= %s", App->CL_Level->Wad_PathAndFile);
-		ImGui::Text("TXL Just_File:= %s", App->CL_Level->Wad_Just_File_Name);
+		ImGui::Text("TXL Path And File:= %s", App->CL_Level->TXL_PathAndFile);
+		ImGui::Text("TXL Just_File:= %s", App->CL_Level->TXL_Just_File_Name);
 
 		if (ImGui::Button("Close"))
 		{

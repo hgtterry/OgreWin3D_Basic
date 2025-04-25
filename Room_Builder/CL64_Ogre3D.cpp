@@ -457,7 +457,7 @@ void CL64_Ogre3D::Convert_ToOgre3D(bool Create)
 	strcat(Name, ".mesh");
 
 	char BufPath[MAX_PATH];
-	strcpy(BufPath, App->CL_Level->Wad_PathAndFile);
+	strcpy(BufPath, App->CL_Level->TXL_PathAndFile);
 	//strcat(BufPath, "\\Data\\Room_Builder\\Default.zip");
 
 	if (App->CL_Mesh_Mgr->World_Ent)

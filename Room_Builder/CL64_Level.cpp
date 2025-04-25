@@ -45,9 +45,9 @@ CL64_Level::CL64_Level(void)
 
 	Level_Version = 1.5;
 
-	Wad_PathAndFile[0] = 0;
-	Wad_Just_File_Name[0] = 0;
-	Wad_Origin_File_Name[0] = 0;
+	TXL_PathAndFile[0] = 0;
+	TXL_Just_File_Name[0] = 0;
+	TXL_Origin_File_Name[0] = 0;
 }
 
 CL64_Level::~CL64_Level(void)
@@ -73,8 +73,8 @@ Level* CL64_Level::Level_Create()
 			return m_pLevel;
 		}
 
-		strcpy(Wad_PathAndFile,"Empty");
-		strcpy(Wad_Just_File_Name, "Empty");
+		strcpy(TXL_PathAndFile,"Empty");
+		strcpy(TXL_Just_File_Name, "Empty");
 
 		m_pLevel->WadSizeInfos = NULL;
 
@@ -278,7 +278,7 @@ signed int CL64_Level::Level_Create_TXL_Class()
 // *************************************************************************
 const char* CL64_Level::Level_GetWadPath()
 {
-	return (Wad_PathAndFile);
+	return (TXL_PathAndFile);
 }
 
 // *************************************************************************
@@ -286,7 +286,7 @@ const char* CL64_Level::Level_GetWadPath()
 // *************************************************************************
 void CL64_Level::Level_SetWadPath(const char* NewWad)
 {
-	strcpy(Wad_PathAndFile, NewWad);
+	strcpy(TXL_PathAndFile, NewWad);
 }
 
 // *************************************************************************

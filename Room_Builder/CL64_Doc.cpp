@@ -123,11 +123,11 @@ void CL64_Doc::Init_Doc()
 void CL64_Doc::Load_Wad_File(char* TXL_File)
 {
     // Set the Wad path and file
-    strcpy(App->CL_Level->Wad_PathAndFile,TXL_File);
+    strcpy(App->CL_Level->TXL_PathAndFile,TXL_File);
 
     // Extract the file name from the path
     App->CL_Utilities->Get_FileName_FromPath(TXL_File, TXL_File);
-    strcpy(App->CL_Level->Wad_Just_File_Name,App->CL_Utilities->JustFileName);
+    strcpy(App->CL_Level->TXL_Just_File_Name,App->CL_Utilities->JustFileName);
 
     // Load texture resources and scan the texture resource group
     App->CL_Resources->Load_Texture_Resources();
@@ -165,19 +165,19 @@ const char* CL64_Doc::FindTextureLibrary(char const* WadName)
 	bool test = App->CL_Utilities->Check_File_Exist(Path_And_File);
 	if (test == 1)
 	{
-        strcpy(App->CL_Level->Wad_PathAndFile, Path_And_File);
+        strcpy(App->CL_Level->TXL_PathAndFile, Path_And_File);
 		return Path_And_File;
 	}
 	else
 	{
 		App->Say_Win("File Does not Exist");
 
-        strcpy(App->CL_Level->Wad_PathAndFile, "No_File");
+        strcpy(App->CL_Level->TXL_PathAndFile, "No_File");
 		strcpy(Path_And_File, "");
 		return Path_And_File;
 	}
 	
-    strcpy(App->CL_Level->Wad_PathAndFile, "No_File");
+    strcpy(App->CL_Level->TXL_PathAndFile, "No_File");
 	strcpy(Path_And_File, "");
 	return Path_And_File;
 }

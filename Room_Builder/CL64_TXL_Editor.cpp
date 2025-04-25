@@ -711,7 +711,7 @@ void CL64_TXL_Editor::Delete_File(const char* File)
 	strcat(Source, "\\Data\\Texture_Test\\Assets.zip");
 
 	char Destination[MAX_PATH];
-	strcpy(Destination, App->CL_Level->Wad_PathAndFile);
+	strcpy(Destination, App->CL_Level->TXL_PathAndFile);
 	
 	CopyFile(Source, Destination, false); // Overwrite
 
@@ -772,7 +772,7 @@ bool CL64_TXL_Editor::Add_File()
 	strcat(Source, "\\Data\\Texture_Test\\Assets.zip");
 
 	char Destination[MAX_PATH];
-	strcpy(Destination, App->CL_Level->Wad_PathAndFile);
+	strcpy(Destination, App->CL_Level->TXL_PathAndFile);
 	
 	CopyFile(Source, Destination, false); // Overwrite
 

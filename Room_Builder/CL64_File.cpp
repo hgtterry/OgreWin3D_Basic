@@ -123,25 +123,17 @@ void CL64_File::Start_Save(bool useSaveDialog)
 
 	// Save Texture Zip Version 1.5
 	//-------------------------------------------------
-	std::string TXL_File_Name = std::string(App->CL_Level->MTF_JustName_NoExt) + ".zip";
 	// Prepare source and destination paths for file copying Textures Zip
-	std::string Source = App->CL_Level->Wad_PathAndFile;
-	std::string Destination = std::string(App->CL_Level->MTF_PathAndFile);
-	Destination.replace(Destination.end() - 4, Destination.end(), ".zip");
+	std::string TXL_File_Name = "TXL_Texture.Zip";
+	
+	std::string Source = App->CL_Level->TXL_PathAndFile;
+	std::string Destination = std::string(App->CL_Project->m_Main_Assets_Path);
+	Destination.append("TXL_Texture.Zip");
 
 	// Cant copy to its self so test
 	if (Destination != Source)
 	{
-		if (!CopyFile(Source.c_str(), Destination.c_str(), false))
-		{
-			App->Say("Error: Failed to copy file");
-			return;
-		}
-
-		std::string New_Destination = std::string(App->CL_Project->m_Main_Assets_Path);
-		New_Destination.append("TXL_Texture.Zip");
-		
-		if (!CopyFile(Source.c_str(), New_Destination.c_str(), false))
+		if (!CopyFile(Source.c_str(),Destination.c_str(), false))
 		{
 			App->Say("Error: Failed to copy file");
 			return;
@@ -151,8 +143,8 @@ void CL64_File::Start_Save(bool useSaveDialog)
 	
 
 	// Update the level's file paths
-	strcpy(App->CL_Level->Wad_PathAndFile, Destination.c_str());
-	strcpy(App->CL_Level->Wad_Just_File_Name, TXL_File_Name.c_str());
+	strcpy(App->CL_Level->TXL_PathAndFile,Destination.c_str());
+	strcpy(App->CL_Level->TXL_Just_File_Name, TXL_File_Name.c_str());
 
 	// ---------------------------------
 
@@ -381,7 +373,7 @@ void CL64_File::Start_Load(bool Use_Open_Dialog)
 		App->CL_Doc->Do_General_Select_Dlg(false);
 
 		Set_Editor();
-
+		
 		App->Say("File Loaded", App->CL_File->FileName_3dt);
 		
 		App->CL_Doc->Do_General_Select_Dlg(true);
@@ -435,7 +427,7 @@ bool CL64_File::Open_3dt_File()
 	if (App->CL_Level->Level_Version == 1.0)
 	{
 		strcpy(pathAndFile, App->CL_Level->MTF_Just_Path);
-		strcat(pathAndFile, App->CL_Level->Wad_Just_File_Name); // Gets it from MTF File
+		strcat(pathAndFile, App->CL_Level->TXL_Just_File_Name); // Gets it from MTF File
 
 		if (!App->CL_Utilities->Check_File_Exist(pathAndFile))
 		{
@@ -443,6 +435,8 @@ bool CL64_File::Open_3dt_File()
 			strcpy(pathAndFile, App->RB_Directory_FullPath);
 			strcat(pathAndFile, "\\Data\\Room_Builder\\Default.zip");
 		}
+
+		App->Say("File Version 1.0","Please Re-Save to Update");
 	}
 
 	if (App->CL_Level->Level_Version == 1.5 && App->CL_Level->flag_Working_Folder_Exists == true)

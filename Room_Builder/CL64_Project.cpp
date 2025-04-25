@@ -436,6 +436,8 @@ bool CL64_Project::Save_Project()
 	strcpy(m_Project_Sub_Folder, App->CL_Level->Prj_Working_Folder);
 	strcpy(m_Project_Name, App->CL_Level->MTF_JustName_NoExt);
 
+	strcpy(m_Level_Name, "First_Level");
+
 	/*if (_mkdir(m_Project_Sub_Folder) == 0)
 	{
 		(void)_chdir(m_Project_Sub_Folder);
@@ -502,6 +504,7 @@ bool CL64_Project::Save_Project()
 // *************************************************************************
 bool CL64_Project::Save_Project_Ini()
 {
+	App->Say(m_Level_Name);
 	m_Ini_Path_File_Name[0] = 0;
 
 	strcpy(m_Ini_Path_File_Name, m_Project_Sub_Folder);
@@ -546,6 +549,7 @@ bool CL64_Project::Save_Project_Ini()
 	fprintf(WriteFile, "%s\n", "[Files]");
 	fprintf(WriteFile, "%s%s\n", "Project_Name=", m_Project_Name);
 	fprintf(WriteFile, "%s%s\n", "Level_Name=", m_Level_Name);
+	
 	//fprintf(WriteFile, "%s%s\n", "Game_Name=", App->CL_Build_Game->GameName);
 
 
@@ -590,8 +594,7 @@ bool CL64_Project::Save_Project_Ini()
 bool CL64_Project::Save_Level_Folder()
 {
 	strcpy(m_Level_Folder_Path, m_Project_Sub_Folder);
-	//strcat(m_Level_Folder_Path, "\\");
-	strcat(m_Level_Folder_Path, m_Level_Name);
+	//strcat(m_Level_Folder_Path, m_Level_Name);
 
 	// First Level Folder
 	if (_mkdir(m_Level_Folder_Path) == 0)
@@ -617,7 +620,6 @@ bool CL64_Project::Save_Main_Asset_Folder()
 	m_Main_Assets_Path[0] = 0;
 
 	strcpy(m_Main_Assets_Path, m_Level_Folder_Path);
-	strcat(m_Main_Assets_Path, "\\");
 	strcat(m_Main_Assets_Path, "Assets");
 	strcat(m_Main_Assets_Path, "\\");
 
@@ -1769,9 +1771,6 @@ bool CL64_Project::Load_Get_Resource_Path()
 	m_Main_Assets_Path[0] = 0;
 
 	strcpy(m_Main_Assets_Path, m_Project_Sub_Folder);
-	strcat(m_Main_Assets_Path, m_Level_Name);
-	strcat(m_Main_Assets_Path, "\\");
-
 	strcat(m_Main_Assets_Path, "Assets");
 	strcat(m_Main_Assets_Path, "\\");
 

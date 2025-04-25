@@ -372,8 +372,8 @@ bool CL64_ParseFile::Get_TextureLib(char* Buffer)
 	(void)sscanf(Buffer, "%s %s", &str_buff_1, &str_buff_2);
 	if (!strcmp(str_buff_1, "TextureLib"))
 	{
-		strcpy(App->CL_Level->Wad_Just_File_Name, str_buff_2);
-		strcpy(App->CL_Level->Wad_Origin_File_Name, str_buff_2);
+		strcpy(App->CL_Level->TXL_Just_File_Name, str_buff_2);
+		strcpy(App->CL_Level->TXL_Origin_File_Name, str_buff_2);
 		
 		return 1;
 	}

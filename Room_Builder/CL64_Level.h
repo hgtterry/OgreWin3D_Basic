@@ -80,9 +80,10 @@ public:
 	char MTF_Just_Path[MAX_PATH];
 	char MTF_JustName_NoExt[MAX_PATH];
 	char Prj_Working_Folder[MAX_PATH];
+
 	// TXL File
-	char Wad_PathAndFile[MAX_PATH];
-	char Wad_Just_File_Name[MAX_PATH];
-	char Wad_Origin_File_Name[MAX_PATH];
+	char TXL_PathAndFile[MAX_PATH];
+	char TXL_Just_File_Name[MAX_PATH];
+	char TXL_Origin_File_Name[MAX_PATH];
 };
 
