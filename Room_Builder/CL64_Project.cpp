@@ -39,6 +39,7 @@ CL64_Project::CL64_Project()
 	m_Level_Folder_Path[0] = 0;
 
 	strcpy(m_Main_Assets_Path, "None");
+	strcpy(m_Main_TXL_Path, "None");;
 	strcpy(m_Last_Main_Assets_Path, "None");
 
 	strcpy(m_Project_Sub_Folder, App->RB_Directory_FullPath);
@@ -1613,20 +1614,24 @@ bool CL64_Project::Reload_From_ResentFiles(char* ResentPathAndFile)
 	return 1;
 }
 
-
 // *************************************************************************
 // *	  		Load_Project:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
 bool CL64_Project::Load_Project()
 {
-
-	/*m_Ini_Path_File_Name[0] = 0;
-
-	App->CL_Scene->Clear_Level();
+	strcpy(m_Project_Sub_Folder, App->CL_Level->Prj_Working_Folder);
 	
-	App->CL_Resources->Create_Project_Resources_Group();*/
+	m_Ini_Path_File_Name[0] = 0;
+
+	strcpy(m_Ini_Path_File_Name, m_Project_Sub_Folder);
+	strcat(m_Ini_Path_File_Name, App->CL_Level->MTF_JustName_NoExt);
+	strcat(m_Ini_Path_File_Name, ".ini");
+
+	//App->CL_Scene->Clear_Level();
 	
-	Set_Paths();
+	//App->CL_Resources->Create_Project_Resources_Group();*/
+	
+	//Set_Paths();
 
 	// ------------------------------------------------------------------- 
 	Load_Options* Options = new Load_Options;
@@ -1638,18 +1643,19 @@ bool CL64_Project::Load_Project()
 	Options->Has_Counters = 0;
 
 	int Int1 = 0;
-	char chr_Tag1[1024];
-	char chr_Tag2[1024];
+	char chr_Tag1[MAX_PATH];
+	char chr_Tag2[MAX_PATH];
 
 	chr_Tag1[0] = 0;
 	chr_Tag2[0] = 0;
 
 	App->CL_Ini_File->SetPathName(m_Ini_Path_File_Name);
 
-	App->CL_Ini_File->GetString("Version_Data", "Version", chr_Tag1, 1024);
+	App->CL_Ini_File->GetString("Version_Data", "Version", chr_Tag1, MAX_PATH);
 	
 	App->CL_Ini_File->GetString("Files", "Level_Name", m_Level_Name, MAX_PATH);
 	App->CL_Ini_File->GetString("Files", "Project_Name", m_Project_Name, MAX_PATH);
+	
 	//App->CL_Ini_File->GetString("Files", "Game_Name", App->CL_Build_Game->GameName, MAX_PATH, "YourGameName");
 
 
@@ -1674,7 +1680,7 @@ bool CL64_Project::Load_Project()
 	//-------------------------------------- Set Resource Path
 
 	Load_Get_Resource_Path();
-
+	return 1;
 	// ------------------------------------- Aera
 	if (Options->Has_Area > 0)
 	{
@@ -1763,13 +1769,14 @@ bool CL64_Project::Load_Get_Resource_Path()
 	m_Main_Assets_Path[0] = 0;
 
 	strcpy(m_Main_Assets_Path, m_Project_Sub_Folder);
-	strcat(m_Main_Assets_Path, "\\");
-
 	strcat(m_Main_Assets_Path, m_Level_Name);
 	strcat(m_Main_Assets_Path, "\\");
 
 	strcat(m_Main_Assets_Path, "Assets");
 	strcat(m_Main_Assets_Path, "\\");
+
+	strcpy(m_Main_TXL_Path, m_Main_Assets_Path);
+	strcat(m_Main_TXL_Path, "TXL_Texture.Zip");
 
 	//App->CL_Resources->Add_Resource_Location_Project(m_Main_Assets_Path);
 

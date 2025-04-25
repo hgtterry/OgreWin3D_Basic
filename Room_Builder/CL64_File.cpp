@@ -118,10 +118,43 @@ void CL64_File::Start_Save(bool useSaveDialog)
 	strcat(ProjectFolder, "\\");
 	strcpy(App->CL_Level->Prj_Working_Folder, ProjectFolder);
 
+	// Save Project Data
 	App->CL_Project->Save_All(true);
 
-	// ---------------------------------
+	// Save Texture Zip Version 1.5
+	//-------------------------------------------------
+	std::string TXL_File_Name = std::string(App->CL_Level->MTF_JustName_NoExt) + ".zip";
+	// Prepare source and destination paths for file copying Textures Zip
+	std::string Source = App->CL_Level->Wad_PathAndFile;
+	std::string Destination = std::string(App->CL_Level->MTF_PathAndFile);
+	Destination.replace(Destination.end() - 4, Destination.end(), ".zip");
 
+	// Cant copy to its self so test
+	if (Destination != Source)
+	{
+		if (!CopyFile(Source.c_str(), Destination.c_str(), false))
+		{
+			App->Say("Error: Failed to copy file");
+			return;
+		}
+
+		std::string New_Destination = std::string(App->CL_Project->m_Main_Assets_Path);
+		New_Destination.append("TXL_Texture.Zip");
+		
+		if (!CopyFile(Source.c_str(), New_Destination.c_str(), false))
+		{
+			App->Say("Error: Failed to copy file");
+			return;
+		}
+	}
+	//-------------------------------------------------
+	
+
+	// Update the level's file paths
+	strcpy(App->CL_Level->Wad_PathAndFile, Destination.c_str());
+	strcpy(App->CL_Level->Wad_Just_File_Name, TXL_File_Name.c_str());
+
+	// ---------------------------------
 
 	App->Set_Title(App->CL_Level->MTF_PathAndFile);
 	App->Say("Saved", App->CL_Level->MTF_Just_FileName);
@@ -168,25 +201,6 @@ bool CL64_File::Save(const char* FileName)
 
 	// Close the file
 	fclose(Write_File);
-
-	// Prepare source and destination paths for file copying Textures Zip
-	std::string Source = App->CL_Level->Wad_PathAndFile;
-	std::string Destination = std::string(FileName);
-	Destination.replace(Destination.end() - 4, Destination.end(), ".zip");
-
-	// Cant copy to its self so test
-	if (Destination != Source)
-	{
-		if (!CopyFile(Source.c_str(), Destination.c_str(), false))
-		{
-			App->Say("Error: Failed to copy file");
-			return false;
-		}
-	}
-	
-	// Update the level's file paths
-	strcpy(App->CL_Level->Wad_PathAndFile,Destination.c_str());
-	strcpy(App->CL_Level->Wad_Just_File_Name,TXL_File_Name.c_str());
 
 	return true;
 }
@@ -368,28 +382,6 @@ void CL64_File::Start_Load(bool Use_Open_Dialog)
 
 		Set_Editor();
 
-
-		// Check if Working Folder Exsits
-		char Work_Folder[MAX_PATH];
-		strcpy(Work_Folder, App->CL_Level->MTF_Just_Path);
-		strcat(Work_Folder, App->CL_Level->MTF_JustName_NoExt);
-		strcat(Work_Folder, "_ow3d_prj");
-		bool Folder_Test = App->CL_Utilities->Check_Directory_Exists(Work_Folder);
-		if (Folder_Test == true)
-		{
-			App->CL_Level->flag_Working_Folder_Exists = true;
-
-			strcat(Work_Folder, "\\");
-			strcpy(App->CL_Level->Prj_Working_Folder, Work_Folder);
-		}
-		else
-		{
-			App->CL_Level->flag_Working_Folder_Exists = false;
-			strcpy(App->CL_Level->Prj_Working_Folder, "None");
-		}
-		// -------------------------------------------------------
-
-
 		App->Say("File Loaded", App->CL_File->FileName_3dt);
 		
 		App->CL_Doc->Do_General_Select_Dlg(true);
@@ -416,20 +408,60 @@ bool CL64_File::Open_3dt_File()
 
 	App->CL_Doc->Set_Paths();
 
-	char pathAndFile[MAX_PATH];
-	strcpy(pathAndFile, App->CL_Level->MTF_Just_Path);
-	strcat(pathAndFile, App->CL_Level->Wad_Just_File_Name);
-	
-	if (!App->CL_Utilities->Check_File_Exist(pathAndFile))
+	// Check if Working Folder Exsits
+	char Work_Folder[MAX_PATH];
+	strcpy(Work_Folder, App->CL_Level->MTF_Just_Path);
+	strcat(Work_Folder, App->CL_Level->MTF_JustName_NoExt);
+	strcat(Work_Folder, "_ow3d_prj");
+	bool Folder_Test = App->CL_Utilities->Check_Directory_Exists(Work_Folder);
+	if (Folder_Test == true)
 	{
-		App->Say("Texture Library Does Not Exist", "Loading Default");
-		strcpy(pathAndFile, App->RB_Directory_FullPath);
-		strcat(pathAndFile, "\\Data\\Room_Builder\\Default.zip");
+		App->CL_Level->flag_Working_Folder_Exists = true;
+
+		strcat(Work_Folder, "\\");
+		strcpy(App->CL_Level->Prj_Working_Folder, Work_Folder);
+	}
+	else
+	{
+		App->CL_Level->flag_Working_Folder_Exists = false;
+		strcpy(App->CL_Level->Prj_Working_Folder, "None");
+	}
+	// -------------------------------------------------------
+
+	App->CL_Project->Load_Project();
+
+	char pathAndFile[MAX_PATH];
+
+	if (App->CL_Level->Level_Version == 1.0)
+	{
+		strcpy(pathAndFile, App->CL_Level->MTF_Just_Path);
+		strcat(pathAndFile, App->CL_Level->Wad_Just_File_Name); // Gets it from MTF File
+
+		if (!App->CL_Utilities->Check_File_Exist(pathAndFile))
+		{
+			App->Say("Texture Library Does Not Exist", "Loading Default");
+			strcpy(pathAndFile, App->RB_Directory_FullPath);
+			strcat(pathAndFile, "\\Data\\Room_Builder\\Default.zip");
+		}
+	}
+
+	if (App->CL_Level->Level_Version == 1.5 && App->CL_Level->flag_Working_Folder_Exists == true)
+	{
+		strcpy(pathAndFile, App->CL_Project->m_Main_TXL_Path);
+		
+		if (!App->CL_Utilities->Check_File_Exist(pathAndFile))
+		{
+			App->Say("Texture Library Does Not Exist", "Loading Default");
+			strcpy(pathAndFile, App->RB_Directory_FullPath);
+			strcat(pathAndFile, "\\Data\\Room_Builder\\Default.zip");
+		}
 	}
 
 	App->CL_Doc->Load_Wad_File(pathAndFile);
 	App->CL_Doc->UpdateAfterWadChange();
+
 	Set_Player();
+
 	App->CL_Properties_Brushes->Fill_ListBox();
 	App->CL_Properties_Textures->Fill_ListBox();
 	App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_Free;
