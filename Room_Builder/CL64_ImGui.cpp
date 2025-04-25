@@ -418,6 +418,7 @@ void CL64_ImGui::App_Stats_GUI(void)
 		if (ImGui::TreeNode("Level"))
 		{
 			ImGui::Separator();
+			ImGui::Text("Level Version:= %f", App->CL_Level->Level_Version);
 			ImGui::Text("Level Folder:= %i", App->CL_Level->flag_Working_Folder_Exists);
 			ImGui::Separator();
 			ImGui::TreePop();

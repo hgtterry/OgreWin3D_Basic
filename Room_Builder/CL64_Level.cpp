@@ -43,6 +43,8 @@ CL64_Level::CL64_Level(void)
 
 	strcpy(Prj_Working_Folder, "None");
 
+	Level_Version = 1.5;
+
 	Wad_PathAndFile[0] = 0;
 	Wad_Just_File_Name[0] = 0;
 	Wad_Origin_File_Name[0] = 0;

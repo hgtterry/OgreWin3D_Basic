@@ -72,6 +72,8 @@ public:
 
 	CL64_WadFile* CL_Wad_Class;
 
+	float Level_Version;
+
 	// MTF File
 	char MTF_PathAndFile[MAX_PATH];
 	char MTF_Just_FileName[MAX_PATH];

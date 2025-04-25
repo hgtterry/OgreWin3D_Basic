@@ -777,6 +777,7 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 
 	case WM_COMMAND:
 	{
+	
 		if (LOWORD(wParam) == IDC_LST_FACELIST)
 		{
 			int Index = SendDlgItemMessage(hDlg, IDC_LST_FACELIST, LB_GETCURSEL, (WPARAM)0, (LPARAM)0);

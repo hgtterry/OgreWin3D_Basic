@@ -29,8 +29,6 @@ THE SOFTWARE.
 
 CL64_File::CL64_File(void)
 {
-	Level_Version = 1.0;
-
 	PathFileName_3dt[0] = 0;
 	FileName_3dt[0] = 0;
 
@@ -161,7 +159,8 @@ bool CL64_File::Save(const char* FileName)
 	}
 
 	// Write version and texture library name to the file
-	fprintf(Write_File, "MTF_Version %.2f\n", Level_Version);
+	float Version = 1.5;
+	fprintf(Write_File, "MTF_Version %.2f\n", Version);
 	fprintf(Write_File, "TextureLib %s\n", TXL_File_Name.c_str());
 
 	// Write brush list to the file
@@ -463,6 +462,7 @@ bool CL64_File::Load_File(const char* FileName)
 
 		if (App->CL_ParseFile->Get_Version(Read_Buffer) == 0)
 		{
+			// TODO if Check Verison Fails
 			break;
 		}
 		

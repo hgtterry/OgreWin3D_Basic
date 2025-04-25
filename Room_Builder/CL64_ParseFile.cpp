@@ -348,9 +348,10 @@ bool CL64_ParseFile::Get_Version(char* Buffer)
 	(void)sscanf(Buffer, "%s %f", &str_buff_1, &Tag_Float);
 	if (!strcmp(str_buff_1, "MTF_Version"))
 	{
-		if (Tag_Float == 1.000000)
+		App->CL_Level->Level_Version = Tag_Float;
+
+		if (Tag_Float == 1.000000 || Tag_Float == 1.500000)
 		{
-			//App->Say_Float(Tag_Float);
 			return 1;
 		}
 		else
