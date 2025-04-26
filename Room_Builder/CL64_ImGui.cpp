@@ -424,6 +424,15 @@ void CL64_ImGui::App_Stats_GUI(void)
 			ImGui::TreePop();
 		}
 
+		if (ImGui::TreeNode("Project"))
+		{
+			ImGui::Separator();
+			ImGui::Text("Project Name:= %s", App->CL_Project->m_Project_Name);
+			ImGui::Text("Level Name:= %s", App->CL_Project->m_Level_Name);
+			ImGui::Separator();
+			ImGui::TreePop();
+		}
+
 		if (ImGui::TreeNode("Brushes"))
 		{
 			ImGui::Separator();
@@ -483,6 +492,12 @@ void CL64_ImGui::App_Stats_GUI(void)
 		
 		if (ImGui::Button("Close"))
 		{
+			App->CL_Top_Tabs->flag_Full_View_3D = 0;
+
+			App->CL_Editor_Map->Set_Splitter_WidthDepth(App->CL_Top_Tabs->Copy_Spliter_Width, App->CL_Top_Tabs->Copy_Spliter_Depth);
+
+			App->CL_Editor_Map->Resize_Windows(App->CL_Editor_Map->Main_Dlg_Hwnd, App->CL_Editor_Map->nleftWnd_width, App->CL_Editor_Map->nleftWnd_Depth);
+
 			flag_Show_App_Stats = 0;
 		}
 

@@ -102,6 +102,7 @@ void CL64_File::Start_Save(bool useSaveDialog)
 
 	Save_Document();
 
+	// Create Working Folder
 	char ProjectFolder[MAX_PATH];
 	strcpy(ProjectFolder, App->CL_Level->MTF_PathAndFile);
 
@@ -109,7 +110,6 @@ void CL64_File::Start_Save(bool useSaveDialog)
 	int Len2 = strlen(App->CL_Level->MTF_Just_FileName);
 	ProjectFolder[Len1 - Len2] = 0;
 
-	// Create Working Folder
 	strcat(ProjectFolder, App->CL_Level->MTF_JustName_NoExt);
 	strcat(ProjectFolder, "_ow3d_prj");
 	CreateDirectory(ProjectFolder, NULL);
@@ -123,9 +123,6 @@ void CL64_File::Start_Save(bool useSaveDialog)
 
 	// Save Texture Zip Version 1.5
 	//-------------------------------------------------
-	// Prepare source and destination paths for file copying Textures Zip
-	std::string TXL_File_Name = "TXL_Texture.Zip";
-	
 	std::string Source = App->CL_Level->TXL_PathAndFile;
 	std::string Destination = std::string(App->CL_Project->m_Main_Assets_Path);
 	Destination.append("TXL_Texture.Zip");
@@ -141,10 +138,9 @@ void CL64_File::Start_Save(bool useSaveDialog)
 	}
 	//-------------------------------------------------
 	
-
 	// Update the level's file paths
 	strcpy(App->CL_Level->TXL_PathAndFile,Destination.c_str());
-	strcpy(App->CL_Level->TXL_Just_File_Name, TXL_File_Name.c_str());
+	strcpy(App->CL_Level->TXL_Just_File_Name, "TXL_Texture.Zip");
 
 	// ---------------------------------
 
@@ -436,7 +432,7 @@ bool CL64_File::Open_3dt_File()
 			strcat(pathAndFile, "\\Data\\Room_Builder\\Default.zip");
 		}
 
-		App->Say("File Version 1.0","Please Re-Save to Update");
+		App->Say("File Version is 1.0","Please Re-Save to Update 1.5");
 	}
 
 	if (App->CL_Level->Level_Version == 1.5 && App->CL_Level->flag_Working_Folder_Exists == true)

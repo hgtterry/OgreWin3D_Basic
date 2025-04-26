@@ -100,7 +100,7 @@ void CL64_FileView::Reset_Class()
 	FV_Players_Folder = nullptr;
 	FV_Areas_Folder = nullptr;
 
-	//strcpy(App->CL_Project->m_Level_File_Name, "No Level");
+	strcpy(App->CL_Project->m_Level_File_Name, "No Level");
 
 	AddRootFolder();
 	MoreFolders(); //  Folders under root 
@@ -366,7 +366,7 @@ void CL64_FileView::AddRootFolder(void)
 	tvinsert.hParent = Root;			// top most level no need handle
 	tvinsert.hInsertAfter = TVI_LAST; // work as root level
 	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
-	tvinsert.item.pszText = (LPSTR)"Test";// (LPSTR)App->CL_Project->m_Project_Name;
+	tvinsert.item.pszText = (LPSTR)App->CL_Project->m_Project_Name;
 	tvinsert.item.iImage = 0;
 	tvinsert.item.iSelectedImage = 1;
 	GD_ProjectFolder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
@@ -381,7 +381,7 @@ void CL64_FileView::MoreFolders(void) // last folder level
 	tvinsert.hParent = GD_ProjectFolder;
 	tvinsert.hInsertAfter = TVI_LAST;
 	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
-	tvinsert.item.pszText = (LPSTR)"Test";// App->CL_Project->m_Level_Name;
+	tvinsert.item.pszText = (LPSTR)App->CL_Project->m_Level_Name;
 	tvinsert.item.iImage = 0;
 	tvinsert.item.iSelectedImage = 1;
 	FV_LevelFolder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
@@ -656,6 +656,43 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 
 		return;
 	}
+}
+
+// *************************************************************************
+// *			Redraw_FileViewTerry and Hazel Flanigan 2024		 	   *
+// *************************************************************************
+void CL64_FileView::Redraw_FileView()
+{
+	//App->RedrawWindow_Dlg(GetDlgItem(App->ListPanel, IDC_TREE1));
+}
+
+// *************************************************************************
+// *			Change_Level_NameTerry and Hazel Flanigan 2024 			   *
+// *************************************************************************
+void CL64_FileView::Change_Level_Name(void)
+{
+	TVITEM Sitem;
+	Sitem.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
+	Sitem.hItem = FV_LevelFolder;
+	Sitem.pszText = App->CL_Project->m_Level_Name;
+	Sitem.iImage = 3;
+	Sitem.iSelectedImage = 3;
+	SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_SETITEM, 0, (LPARAM)(const LPTVITEM)&Sitem);
+}
+
+// *************************************************************************
+// *		Change_Project_NameTerry and Hazel Flanigan 2024 			   *
+// *************************************************************************
+void CL64_FileView::Change_Project_Name(void)
+{
+	TVITEM Sitem;
+	Sitem.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
+	Sitem.hItem = GD_ProjectFolder;
+	Sitem.pszText = (LPSTR)App->CL_Project->m_Project_Name;
+	Sitem.iImage = 3;
+	Sitem.iSelectedImage = 3;
+	SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_SETITEM, 0, (LPARAM)(const LPTVITEM)&Sitem);
+
 }
 
 // *************************************************************************

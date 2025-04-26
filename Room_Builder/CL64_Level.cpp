@@ -36,14 +36,17 @@ CL64_Level::CL64_Level(void)
 	flag_Working_Folder_Exists = 0;
 
 	strcpy(MTF_PathAndFile, App->RB_Directory_FullPath);
-	strcat(MTF_PathAndFile, "\\Data\\Room_Builder\\Room_1.mtf");
+	strcat(MTF_PathAndFile, "\\Data\\Room_Builder\\New_Room.mtf");
 
-	strcpy(MTF_Just_FileName, "Room_1.mtf");
-	strcpy(MTF_JustName_NoExt, "Room_1");
+	strcpy(MTF_Just_FileName, "New_Room.mtf");
+	strcpy(MTF_JustName_NoExt, "New_Room");
+	strcpy(MTF_Just_Path, "No_Path");
 
 	strcpy(Prj_Working_Folder, "None");
 
 	Level_Version = 1.5;
+
+	CL_Wad_Class = nullptr;
 
 	TXL_PathAndFile[0] = 0;
 	TXL_Just_File_Name[0] = 0;

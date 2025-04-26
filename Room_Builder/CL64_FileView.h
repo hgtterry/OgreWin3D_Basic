@@ -39,6 +39,10 @@ public:
 	void SelectItem(HTREEITEM TreeItem);
 	void Enable_Environment_Button(bool Enable);
 
+	void Redraw_FileView();
+	void Change_Level_Name(void);
+	void Change_Project_Name(void);
+
 	HTREEITEM FV_Evirons_Folder;
 
 private:

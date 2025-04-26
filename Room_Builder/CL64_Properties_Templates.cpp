@@ -160,6 +160,13 @@ LRESULT CALLBACK CL64_Properties_Templates::Proc_Templates(HWND hDlg, UINT messa
 					
 					App->Set_Title(App->CL_Level->MTF_PathAndFile);
 					App->CL_Doc->flag_Is_Modified = 1;
+
+					strcpy(App->CL_Project->m_Project_Name, "New_Room");
+					strcpy(App->CL_Project->m_Level_Name, "New_Level");
+
+					App->CL_FileView->Change_Level_Name();
+					App->CL_FileView->Change_Project_Name();
+
 				}
 				else
 				{

@@ -1675,7 +1675,7 @@ bool CL64_Project::Load_Project()
 	//-------------------------------------- Set Resource Path
 
 	Load_Get_Resource_Path();
-	return 1;
+	
 	// ------------------------------------- Aera
 	if (Options->Has_Area > 0)
 	{
@@ -1713,10 +1713,11 @@ bool CL64_Project::Load_Project()
 		//App->CL_Com_Counters->Add_Counters_From_File();
 	}
 
-	//App->CL_FileView->Change_Level_Name();
-	//App->CL_FileView->Change_Project_Name();
+	App->CL_FileView->Change_Level_Name();
+	App->CL_FileView->Change_Project_Name();
 
-	//App->SBC_FileView->Redraw_FileView();
+	return 1;
+	App->CL_FileView->Redraw_FileView();
 
 	int Test = App->CL_Com_Environments->Get_First_Environ();
 	if (Test == -1)
