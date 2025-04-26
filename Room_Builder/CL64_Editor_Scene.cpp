@@ -167,29 +167,29 @@ void CL64_Editor_Scene::Set_Editor_Scene(void)
 // *************************************************************************
 void CL64_Editor_Scene::Back_To_Map_Editor(void)
 {
+	// Turn off Editor Dialogs
 	App->CL_FileView->Show_FileView(false);
-	App->CL_Gui_Environment->PropertyEditor_Page = 0;
-	App->CL_Gui_Environment->flag_Show_PropertyEditor = 0;
+	App->CL_Gui_Environment->PropertyEditor_Page = false;
+	App->CL_Gui_Environment->flag_Show_PropertyEditor = false;
 
-	flag_Scene_Editor_Active = 0;
+	// Reset Flags
+	flag_Scene_Editor_Active = false;
+	App->CL_Top_Tabs->flag_Full_View_3D = false;
 
-	App->CL_Top_Tabs->flag_Full_View_3D = 0;
-
-	// Show Top Tabs
+	// Show top tabs and configure editor map
 	Show_Headers(false);
 	App->CL_Top_Tabs->Show_TopTabs(true);
-
 	App->CL_Editor_Map->Set_Splitter_WidthDepth(App->CL_Top_Tabs->Copy_Spliter_Width, App->CL_Top_Tabs->Copy_Spliter_Depth);
-
 	App->CL_Editor_Map->Resize_Windows(App->CL_Editor_Map->Main_Dlg_Hwnd, App->CL_Editor_Map->nleftWnd_width, App->CL_Editor_Map->nleftWnd_Depth);
 
-
+	// Show properties tabs
 	App->CL_Properties_Tabs->Show_Tabs_Control_Dlg(true);
 
+	// Set menu to map
 	SetMenu(App->MainHwnd, App->Menu_Map);
-
 	Show_Entities(false);
 
+	// Set environment if not active
 	if (App->CL_Editor_Map->flag_Environment_On == false)
 	{
 		App->CL_Com_Environments->Set_Environment_By_Index(false, -1);
