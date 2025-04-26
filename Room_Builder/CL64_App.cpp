@@ -95,6 +95,7 @@ CL64_App::CL64_App(void)
 
 	// Project
 	CL_Project =				nullptr;
+	CL_Objects_Create =			nullptr;
 
 	CUR = 0;
 	Menu_Map = 0;
@@ -229,6 +230,7 @@ void CL64_App::InitApp(void)
 
 	// Project
 	CL_Project =				new CL64_Project();
+	CL_Objects_Create =			new CL64_Objects_Create();
 	
 	SetBrushes_Fonts();
 

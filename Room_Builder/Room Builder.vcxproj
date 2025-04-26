@@ -192,6 +192,7 @@
     <ClInclude Include="CL64_Level.h" />
     <ClInclude Include="CL64_Maths.h" />
     <ClInclude Include="CL64_Mesh_Mgr.h" />
+    <ClInclude Include="CL64_Objects_Create.h" />
     <ClInclude Include="CL64_OGL_Listener.h" />
     <ClInclude Include="CL64_Ogre.h" />
     <ClInclude Include="CL64_Ogre3D.h" />
@@ -267,6 +268,7 @@
     <ClCompile Include="CL64_Level.cpp" />
     <ClCompile Include="CL64_Maths.cpp" />
     <ClCompile Include="CL64_Mesh_Mgr.cpp" />
+    <ClCompile Include="CL64_Objects_Create.cpp" />
     <ClCompile Include="CL64_OGL_Listener.cpp" />
     <ClCompile Include="CL64_Ogre.cpp" />
     <ClCompile Include="CL64_Ogre3D.cpp" />

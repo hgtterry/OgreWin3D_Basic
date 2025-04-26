@@ -90,7 +90,7 @@ THE SOFTWARE.
 
 // Project
 #include "CL64_Project.h"
-
+#include "CL64_Objects_Create.h"
 
 class CL64_App
 {
@@ -163,6 +163,7 @@ public:
 
 	// Priject
 	CL64_Project*				CL_Project;
+	CL64_Objects_Create*		CL_Objects_Create;
 
 	void InitApp(void);
 	void SetBrushes_Fonts(void);

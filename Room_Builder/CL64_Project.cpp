@@ -1361,6 +1361,7 @@ bool CL64_Project::Save_Objects_Data()
 			//---------------------------------------------------------------------------------- Environ Entity
 			if (App->CL_Editor_Com->B_Object[Count]->Usage == Enums::Obj_Usage_EnvironEntity)
 			{
+				Debug
 				fprintf(WriteFile, "%s\n", "--------------------------------------------------------------------------------- EnvironEntity");
 				fprintf(WriteFile, "%s%s\n", "Environment_Name=", App->CL_Editor_Com->B_Object[Count]->S_Environ[0]->Environment_Name);
 				fprintf(WriteFile, "%s%i\n", "Environment_ID=", App->CL_Editor_Com->B_Object[Count]->S_Environ[0]->Environment_ID);
@@ -1702,7 +1703,7 @@ bool CL64_Project::Load_Project()
 	// ------------------------------------- Objects
 	if (Options->Has_Objects > 0)
 	{
-		Load_Project_Objects();
+		//Load_Project_Objects();
 		//App->CL_Objects_Create->Add_Objects_From_File();
 	}
 
@@ -1719,20 +1720,20 @@ bool CL64_Project::Load_Project()
 	return 1;
 	App->CL_FileView->Redraw_FileView();
 
-	int Test = App->CL_Com_Environments->Get_First_Environ();
-	if (Test == -1)
-	{
-		/*App->CL_Com_Environments->Add_New_Environ_Entity(1);
-		int mIndex = App->CL_Com_Environments->Get_First_Environ();
-		App->CL_Com_Environments->Set_First_Environment(mIndex);
+	//int Test = App->CL_Com_Environments->Get_First_Environ();
+	//if (Test == -1)
+	//{
+	//	/*App->CL_Com_Environments->Add_New_Environ_Entity(1);
+	//	int mIndex = App->CL_Com_Environments->Get_First_Environ();
+	//	App->CL_Com_Environments->Set_First_Environment(mIndex);
 
-		App->CL_Scene->flag_Scene_Modified = 1;*/
-		Debug
-	}
-	else
-	{
-		App->CL_Com_Environments->Set_First_Environment(Test);
-	}
+	//	App->CL_Scene->flag_Scene_Modified = 1;*/
+	//	Debug
+	//}
+	//else
+	//{
+	//	App->CL_Com_Environments->Set_First_Environment(Test);
+	//}
 
 	//App->CL_Scene->flag_Scene_Modified = 0;
 	//App->CL_Scene->flag_Scene_Loaded = 1;
@@ -1875,10 +1876,10 @@ bool CL64_Project::Load_Project_Objects()
 	strcat(Object_Ini_Path, "Objects");
 	strcat(Object_Ini_Path, "\\");
 
-	//App->Say(m_Level_Name);
+	//App->Say_Win(Object_Ini_Path);
 	//---------------------------------------------------
 
-	strcat(Object_Ini_Path, "Objects.efd");
+	strcat(Object_Ini_Path, "Objects.dat");
 
 	App->CL_Ini_File->SetPathName(Object_Ini_Path);
 
@@ -1895,7 +1896,7 @@ bool CL64_Project::Load_Project_Objects()
 		strcat(mSection, mNumChr);
 
 		App->CL_Editor_Com->B_Object.push_back(new Base_Object());
-
+		
 		Base_Object* B_Object = App->CL_Editor_Com->B_Object[Count];
 
 		App->CL_Ini_File->GetString(mSection, "Mesh_Name", B_Object->Object_Name, MAX_PATH);
@@ -1944,51 +1945,50 @@ bool CL64_Project::Load_Project_Objects()
 
 		B_Object->flag_Dimensions_Locked = App->CL_Ini_File->GetInt(mSection, "Dimensions_Lock", 0,10);
 
-
 		// Message Entity
 		if (B_Object->Usage == Enums::Obj_Usage_Message)
 		{
-			Read_Message(Count, mSection);
+			//Read_Message(Count, mSection);
 		}
 
 		// Sound Entity
 		if (B_Object->Usage == Enums::Obj_Usage_Sound)
 		{
-			App->CL_Ini_File->GetString(mSection, "Sound_File", B_Object->Sound_File, MAX_PATH);
+			/*App->CL_Ini_File->GetString(mSection, "Sound_File", B_Object->Sound_File, MAX_PATH);
 
 			App->CL_Ini_File->GetString(mSection, "Sound_Volume", chr_Tag1, MAX_PATH);
 			(void)sscanf(chr_Tag1, "%f", &x);
-			B_Object->SndVolume = x;
+			B_Object->SndVolume = x;*/
 		}
 
 		// Colectable Entity
 		if (B_Object->Usage == Enums::Obj_Usage_Collectable)
 		{
-			Read_Collectable(Count, mSection);
+			//Read_Collectable(Count, mSection);
 		}
 
 		// Move Enitity
 		if (B_Object->Usage == Enums::Obj_Usage_Move)
 		{
-			Read_MoveEntity(Count, mSection);
+			//Read_MoveEntity(Count, mSection);
 		}
 
 		// Teleport Enitity
 		if (B_Object->Usage == Enums::Obj_Usage_Teleport)
 		{
-			Read_Teleport(Count, mSection);
+			//Read_Teleport(Count, mSection);
 		}
 
 		// Environ Enitity
 		if (B_Object->Usage == Enums::Obj_Usage_EnvironEntity)
 		{
-			Read_EnvironEntity(Count, mSection);
+			//Read_EnvironEntity(Count, mSection);
 		}
 
 		// Particle Enitity
 		if (B_Object->Usage == Enums::Obj_Usage_Particle)
 		{
-			Read_Particle(Count, mSection);
+			//Read_Particle(Count, mSection);
 		}
 
 		Count++;
@@ -1996,7 +1996,7 @@ bool CL64_Project::Load_Project_Objects()
 	}
 
 	App->CL_Editor_Com->Object_Count = Count;
-
+	
 	return 1;
 }
 

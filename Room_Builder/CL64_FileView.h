@@ -44,6 +44,7 @@ public:
 	void Change_Project_Name(void);
 
 	HTREEITEM FV_Evirons_Folder;
+	HTREEITEM FV_Objects_Folder;
 
 private:
 	static LRESULT CALLBACK Proc_ListPanel(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
@@ -65,7 +66,6 @@ private:
 	HTREEITEM FV_Areas_Folder;		// Areas/Rooms Folder FileFView
 	HTREEITEM FV_LevelFolder;
 	HTREEITEM FV_Cameras_Folder;
-	HTREEITEM FV_Objects_Folder;
 	HTREEITEM FV_Message_Trigger_Folder;
 	HTREEITEM FV_Sounds_Folder;
 	HTREEITEM FV_Move_Folder;
