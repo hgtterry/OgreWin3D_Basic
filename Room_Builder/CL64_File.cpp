@@ -145,6 +145,8 @@ void CL64_File::Start_Save(bool useSaveDialog)
 	// ---------------------------------
 
 	App->Set_Title(App->CL_Level->MTF_PathAndFile);
+
+	App->CL_Level->flag_File_Been_Saved = 1;
 	App->Say("Saved", App->CL_Level->MTF_Just_FileName);
 }
 
@@ -372,6 +374,8 @@ void CL64_File::Start_Load(bool Use_Open_Dialog)
 		
 		App->Say("File Loaded", App->CL_File->FileName_3dt);
 		
+		App->CL_Level->flag_File_Been_Saved = 1;
+
 		App->CL_Doc->Do_General_Select_Dlg(true);
 
 	}

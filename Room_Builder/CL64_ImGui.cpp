@@ -420,6 +420,7 @@ void CL64_ImGui::App_Stats_GUI(void)
 			ImGui::Separator();
 			ImGui::Text("Level Version:= %f", App->CL_Level->Level_Version);
 			ImGui::Text("Level Folder:= %i", App->CL_Level->flag_Working_Folder_Exists);
+			ImGui::Text("Been_Saved:= %i", App->CL_Level->flag_File_Been_Saved);
 			ImGui::Separator();
 			ImGui::TreePop();
 		}

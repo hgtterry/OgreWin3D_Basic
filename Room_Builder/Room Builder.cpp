@@ -294,6 +294,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
             case ID_FILE_SAVE:
             {
+                if (App->CL_Level->flag_File_Been_Saved == 0)
+                {
+                    App->Say("This Project is new", "Will use Save As for this first time save");
+                    App->CL_File->Start_Save(true);
+                    return 1;
+                }
+
                 App->CL_File->Start_Save(false);
                 return 1;
             }
