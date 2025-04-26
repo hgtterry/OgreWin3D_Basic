@@ -56,6 +56,7 @@ CL64_Editor_Com::CL64_Editor_Com()
 	flag_PreviewMode_Running = 0;
 	flag_Show_Debug_Area = 0;
 	flag_Enable_Physics_Debug = 0;
+	
 
 	int Count = 0;
 	while (Count < 11999)
@@ -193,6 +194,16 @@ void CL64_Editor_Com::Preview_Mode(void)
 		App->CL_ImGui->flag_Show_Press_Excape = 1;
 		App->CL_ImGui->flag_Show_Camera_Mode = 1;
 
+		int Index = App->CL_Com_Environments->Get_First_Environ();
+		if (Index == -1)
+		{
+		
+		}
+		else
+		{
+			App->CL_Com_Environments->Set_Environment_By_Index(1, Index);
+		}
+
 		Root::getSingletonPtr()->renderOneFrame();
 	}
 
@@ -225,6 +236,10 @@ void CL64_Editor_Com::Editor_Mode(void)
 	
 	App->CL_Ogre->OGL_Listener->Show_Visuals(true);
 
+	if (App->CL_Editor_Map->flag_Environment_On == false)
+	{
+		App->CL_Com_Environments->Set_Environment_By_Index(false, -1);
+	}
 }
 
 // *************************************************************************

@@ -43,6 +43,7 @@ THE SOFTWARE.
 #define IDM_3D_TEXTURED 21
 #define IDM_3D_PREVIEW 22
 #define IDM_3D_SCENE_EDITOR 23
+#define IDM_3D_ENVIRONMENT 24
 
 #define	M_PI		((float)3.14159265358979323846f)
 #define	TOP_POS					8
@@ -104,6 +105,7 @@ CL64_Editor_Map::CL64_Editor_Map()
 	flag_Left_Button_Down = 0;
 	flag_Right_Button_Down = 0;
 	flag_Context_Menu_Active = 0;
+	flag_Environment_On = true;
 
 	BackGround_Brush = CreateSolidBrush(RGB(64, 64, 64));
 
@@ -1644,6 +1646,18 @@ void CL64_Editor_Map::Context_Menu_Ogre(HWND hDlg)
 		AppendMenuW(hMenu, MF_STRING | MF_CHECKED, IDM_3D_WIRED, L"&Wireframed");
 	}
 
+	// Environment
+	AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
+
+	if (flag_Environment_On == false)
+	{
+		AppendMenuW(hMenu, MF_STRING | MF_UNCHECKED, IDM_3D_ENVIRONMENT, L"&Environment");
+	}
+	else
+	{
+		AppendMenuW(hMenu, MF_STRING | MF_CHECKED, IDM_3D_ENVIRONMENT, L"&Environment");
+	}
+
 	AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
 
 	int brushCount = App->CL_Brush->Get_Brush_Count();
@@ -1687,6 +1701,30 @@ bool CL64_Editor_Map::Context_Command_Ogre(WPARAM wParam)
 		App->CL_Editor_Scene->Set_Editor_Scene();
 		return TRUE;
 
+	case IDM_3D_ENVIRONMENT:
+	{
+		if (flag_Environment_On == true)
+		{
+			flag_Environment_On = false;
+			App->CL_Com_Environments->Set_Environment_By_Index(false, -1);
+		}
+		else
+		{
+			flag_Environment_On = true;
+			int Index = App->CL_Com_Environments->Get_First_Environ();
+			if (Index == -1)
+			{
+
+			}
+			else
+			{
+				App->CL_Com_Environments->Set_Environment_By_Index(false, Index);
+			}
+		}
+
+		return TRUE;
+	}
+		
 	default:
 		return FALSE;
 	}

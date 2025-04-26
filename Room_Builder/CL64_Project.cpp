@@ -1361,7 +1361,6 @@ bool CL64_Project::Save_Objects_Data()
 			//---------------------------------------------------------------------------------- Environ Entity
 			if (App->CL_Editor_Com->B_Object[Count]->Usage == Enums::Obj_Usage_EnvironEntity)
 			{
-				Debug
 				fprintf(WriteFile, "%s\n", "--------------------------------------------------------------------------------- EnvironEntity");
 				fprintf(WriteFile, "%s%s\n", "Environment_Name=", App->CL_Editor_Com->B_Object[Count]->S_Environ[0]->Environment_Name);
 				fprintf(WriteFile, "%s%i\n", "Environment_ID=", App->CL_Editor_Com->B_Object[Count]->S_Environ[0]->Environment_ID);
@@ -1703,8 +1702,8 @@ bool CL64_Project::Load_Project()
 	// ------------------------------------- Objects
 	if (Options->Has_Objects > 0)
 	{
-		//Load_Project_Objects();
-		//App->CL_Objects_Create->Add_Objects_From_File();
+		Load_Project_Objects();
+		App->CL_Objects_Create->Add_Objects_From_File();
 	}
 
 	// ------------------------------------- Counters
@@ -1717,6 +1716,7 @@ bool CL64_Project::Load_Project()
 	App->CL_FileView->Change_Level_Name();
 	App->CL_FileView->Change_Project_Name();
 
+	App->CL_FileView->Enable_Environment_Button(true);
 	return 1;
 	App->CL_FileView->Redraw_FileView();
 
@@ -1754,7 +1754,7 @@ bool CL64_Project::Load_Project()
 	//App->SBC_FileView->SelectItem(App->SBC_FileView->FV_LevelFolder);
 
 	//EnableMenuItem(App->mMenu, ID_FILE_SAVEPROJECTALL, MF_GRAYED);
-
+	
 	return 1;
 }
 
@@ -1982,7 +1982,7 @@ bool CL64_Project::Load_Project_Objects()
 		// Environ Enitity
 		if (B_Object->Usage == Enums::Obj_Usage_EnvironEntity)
 		{
-			//Read_EnvironEntity(Count, mSection);
+			Read_EnvironEntity(Count, mSection);
 		}
 
 		// Particle Enitity

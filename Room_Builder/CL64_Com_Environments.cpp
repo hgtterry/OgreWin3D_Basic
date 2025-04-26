@@ -215,58 +215,73 @@ bool CL64_Com_Environments::Create_Environ_Entity(int index) {
 // *************************************************************************
 int CL64_Com_Environments::Set_Environment_By_Index(bool PlayMusic, int Index)
 {
-	float x = App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->AmbientColour.x;
-	float y = App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->AmbientColour.y;
-	float z = App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->AmbientColour.z;
-	App->CL_Ogre->mSceneMgr->setAmbientLight(ColourValue(x, y, z));
-
-
-	// Fog
-	if (App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->Fog_On == 1)
+	if (Index == -1)
 	{
-		float Start = App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->Fog_Start;
-		float End = App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->Fog_End;
-		float Density = App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->Fog_Density;
-
-		float x = App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->Fog_Colour.x;
-		float y = App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->Fog_Colour.y;
-		float z = App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->Fog_Colour.z;
-
-		App->CL_Ogre->mSceneMgr->setFog(FOG_LINEAR, ColourValue(x, y, z), Density, (Ogre::Real)Start, (Ogre::Real)End);
+		App->CL_Ogre->mSceneMgr->setAmbientLight(ColourValue(1, 1, 1));
+		App->CL_Ogre->mSceneMgr->setFog(FOG_NONE, ColourValue(1, 1, 1), 0, 100, 1000);
+		App->CL_Ogre->mSceneMgr->setSkyDome(false, "OW3D/CloudySky");
 	}
 	else
 	{
-		App->CL_Ogre->mSceneMgr->setFog(FOG_NONE, ColourValue(0.7, 0.7, 0.8), 0, 100, 1000);
-	}
+		// -------- Ambient Light
+		float x = App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->AmbientColour.x;
+		float y = App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->AmbientColour.y;
+		float z = App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->AmbientColour.z;
+		App->CL_Ogre->mSceneMgr->setAmbientLight(ColourValue(x, y, z));
 
-	/*if (PlayMusic == 1)
-	{
-		char buff[1024];
-		strcpy(buff, App->CL_SoundMgr->Default_Folder);
-		strcat(buff, "\\Media\\Sounds\\");
-
-		if (App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->flag_Play == 1)
+		// -------- Fog
+		if (App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->Fog_On == 1)
 		{
-			strcat(buff, App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->Sound_File);
+			float Start = App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->Fog_Start;
+			float End = App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->Fog_End;
+			float Density = App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->Fog_Density;
 
-			App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->SndFile = App->CL_SoundMgr->SoundEngine->play2D(buff, App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->flag_Loop, true, true);
+			float x = App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->Fog_Colour.x;
+			float y = App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->Fog_Colour.y;
+			float z = App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->Fog_Colour.z;
 
-			App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->SndFile->setVolume(App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->SndVolume);
-			App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->SndFile->setIsPaused(false);
-		}
-	}
-	else
-	{
-		if (App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->SndFile == NULL)
-		{
+			App->CL_Ogre->mSceneMgr->setFog(FOG_LINEAR, ColourValue(x, y, z), Density, (Ogre::Real)Start, (Ogre::Real)End);
 		}
 		else
 		{
-			App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->SndFile->setIsPaused(true);
-			App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->SndFile->drop();
-			App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->SndFile = NULL;
+			App->CL_Ogre->mSceneMgr->setFog(FOG_NONE, ColourValue(0.7, 0.7, 0.8), 0, 100, 1000);
 		}
-	}*/
+
+		// -------- Sky
+		bool Enable = App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->flag_Enabled;
+		App->CL_Ogre->mSceneMgr->setSkyDome(Enable, "OW3D/CloudySky", App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->Curvature, App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->Tiling, App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->Distance);
+
+		// -------- Music
+		/*if (PlayMusic == 1)
+		{
+			char buff[1024];
+			strcpy(buff, App->CL_SoundMgr->Default_Folder);
+			strcat(buff, "\\Media\\Sounds\\");
+
+			if (App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->flag_Play == 1)
+			{
+				strcat(buff, App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->Sound_File);
+
+				App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->SndFile = App->CL_SoundMgr->SoundEngine->play2D(buff, App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->flag_Loop, true, true);
+
+				App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->SndFile->setVolume(App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->SndVolume);
+				App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->SndFile->setIsPaused(false);
+			}
+		}
+		else
+		{
+			if (App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->SndFile == NULL)
+			{
+			}
+			else
+			{
+				App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->SndFile->setIsPaused(true);
+				App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->SndFile->drop();
+				App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->SndFile = NULL;
+			}
+		}*/
+
+	}
 
 	return 1;
 }
@@ -290,7 +305,8 @@ int CL64_Com_Environments::Get_First_Environ()
 {
 	for (int count = 0; count < App->CL_Editor_Com->Object_Count; ++count) 
 	{
-		if (App->CL_Editor_Com->B_Object[count]->Usage == Enums::Obj_Usage_EnvironEntity) {
+		if (App->CL_Editor_Com->B_Object[count]->Usage == Enums::Obj_Usage_EnvironEntity) 
+		{
 			return count;
 		}
 	}

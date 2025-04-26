@@ -559,11 +559,24 @@ void CL64_File::Set_Editor()
 	if (App->Development == 1)
 	{
 		//App->CL_Entities->Create_Player_Entity();
-
-		App->CL_Com_Environments->Create_Test_Environment();
-		App->CL_Editor_Scene->Show_Entities(false);
+		if (App->CL_Level->Level_Version == 1.0)
+		{
+			App->CL_Com_Environments->Create_Test_Environment();
+		}
 	}
 	
+	App->CL_Editor_Scene->Show_Entities(false);
+
+	int Index = App->CL_Com_Environments->Get_First_Environ();
+	if (Index == -1)
+	{
+
+	}
+	else
+	{
+		App->CL_Com_Environments->Set_Environment_By_Index(false, Index);
+	}
+
 	App->CL_Mesh_Mgr->Selected_Render_Mode = Enums::Render_Ogre;
 	
 	App->CL_Camera->Camera_Textured();

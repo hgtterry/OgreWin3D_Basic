@@ -85,6 +85,8 @@ public:
 	bool flag_Right_Button_Down;
 	bool flag_Context_Menu_Active;
 
+	bool flag_Environment_On;
+
 	HCURSOR	hcSizeEW;
 	HCURSOR	hcSizeNS;
 	HCURSOR	hcBoth;

@@ -190,6 +190,10 @@ void CL64_Editor_Scene::Back_To_Map_Editor(void)
 
 	Show_Entities(false);
 
+	if (App->CL_Editor_Map->flag_Environment_On == false)
+	{
+		App->CL_Com_Environments->Set_Environment_By_Index(false, -1);
+	}
 }
 
 // *************************************************************************
