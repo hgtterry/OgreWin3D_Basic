@@ -1535,20 +1535,34 @@ bool CL64_Project::Save_Display_Data()
 // *************************************************************************
 // *	  		Set_Paths:- Terry and Hazel Flanigan 2024				   *
 // *************************************************************************
-void CL64_Project::Set_Paths()
+void CL64_Project::Set_Paths() 
 {
-	strcpy(m_Level_File_Name, Project_File_Name);
-	strcpy(m_Project_Sub_Folder, Project_Path_File_Name);
-	strcpy(m_Ini_Path_File_Name, Project_Path_File_Name);
+	std::string levelFileName = Project_File_Name;
+	std::string projectSubFolder = Project_Path_File_Name;
+	std::string iniPathFileName = Project_Path_File_Name;
 
-	strcpy(m_Level_Folder_Path, Project_Path_File_Name);
+	// Set the level folder path
+	std::string levelFolderPath = Project_Path_File_Name;
 
-	// Get path no file 
-	int len1 = strlen(m_Level_File_Name);
-	int len2 = strlen(m_Project_Sub_Folder);
-	strcpy(m_Project_Sub_Folder, m_Project_Sub_Folder);
-	m_Project_Sub_Folder[len2 - (len1 + 1)] = 0;
-	
+	// Get path without file
+	size_t len1 = levelFileName.length();
+	size_t len2 = projectSubFolder.length();
+
+	// Check
+	if (len2 > (len1 + 1)) 
+	{
+		projectSubFolder.resize(len2 - (len1 + 1));
+	}
+	else 
+	{
+		projectSubFolder.clear(); // Clear if the condition is not met
+	}
+
+	// Update
+	strcpy(m_Level_File_Name, levelFileName.c_str());
+	strcpy(m_Project_Sub_Folder, projectSubFolder.c_str());
+	strcpy(m_Ini_Path_File_Name, iniPathFileName.c_str());
+	strcpy(m_Level_Folder_Path, levelFolderPath.c_str());
 }
 
 // *************************************************************************
@@ -1767,10 +1781,8 @@ bool CL64_Project::Load_Get_Resource_Path()
 
 	strcpy(m_Main_Assets_Path, m_Project_Sub_Folder);
 	strcat(m_Main_Assets_Path, m_Level_Name);
-	strcat(m_Main_Assets_Path, "\\");
-	strcat(m_Main_Assets_Path, "Assets");
-	strcat(m_Main_Assets_Path, "\\");
-
+	strcat(m_Main_Assets_Path, "\\Assets\\");
+	
 	strcpy(m_Main_TXL_Path, m_Main_Assets_Path);
 	strcat(m_Main_TXL_Path, "TXL_Texture.Zip");
 
@@ -1896,7 +1908,6 @@ bool CL64_Project::Load_Project_Objects()
 		strcat(mSection, mNumChr);
 
 		App->CL_Editor_Com->B_Object.push_back(new Base_Object());
-		
 		Base_Object* B_Object = App->CL_Editor_Com->B_Object[Count];
 
 		App->CL_Ini_File->GetString(mSection, "Mesh_Name", B_Object->Object_Name, MAX_PATH);
@@ -1945,50 +1956,32 @@ bool CL64_Project::Load_Project_Objects()
 
 		B_Object->flag_Dimensions_Locked = App->CL_Ini_File->GetInt(mSection, "Dimensions_Lock", 0,10);
 
-		// Message Entity
-		if (B_Object->Usage == Enums::Obj_Usage_Message)
+		// Deal with Object Sections
+		switch (B_Object->Usage) 
 		{
-			//Read_Message(Count, mSection);
-		}
-
-		// Sound Entity
-		if (B_Object->Usage == Enums::Obj_Usage_Sound)
-		{
-			/*App->CL_Ini_File->GetString(mSection, "Sound_File", B_Object->Sound_File, MAX_PATH);
-
-			App->CL_Ini_File->GetString(mSection, "Sound_Volume", chr_Tag1, MAX_PATH);
-			(void)sscanf(chr_Tag1, "%f", &x);
-			B_Object->SndVolume = x;*/
-		}
-
-		// Colectable Entity
-		if (B_Object->Usage == Enums::Obj_Usage_Collectable)
-		{
-			//Read_Collectable(Count, mSection);
-		}
-
-		// Move Enitity
-		if (B_Object->Usage == Enums::Obj_Usage_Move)
-		{
-			//Read_MoveEntity(Count, mSection);
-		}
-
-		// Teleport Enitity
-		if (B_Object->Usage == Enums::Obj_Usage_Teleport)
-		{
-			//Read_Teleport(Count, mSection);
-		}
-
-		// Environ Enitity
-		if (B_Object->Usage == Enums::Obj_Usage_EnvironEntity)
-		{
+		case Enums::Obj_Usage_Message:
+			// Read_Message(count, section);
+			break;
+		case Enums::Obj_Usage_Sound:
+			// Handle sound loading
+			break;
+		case Enums::Obj_Usage_Collectable:
+			// Read_Collectable(count, section);
+			break;
+		case Enums::Obj_Usage_Move:
+			// Read_MoveEntity(count, section);
+			break;
+		case Enums::Obj_Usage_Teleport:
+			// Read_Teleport(count, section);
+			break;
+		case Enums::Obj_Usage_EnvironEntity:
 			Read_EnvironEntity(Count, mSection);
-		}
-
-		// Particle Enitity
-		if (B_Object->Usage == Enums::Obj_Usage_Particle)
-		{
-			//Read_Particle(Count, mSection);
+			break;
+		case Enums::Obj_Usage_Particle:
+			// Read_Particle(count, section);
+			break;
+		default:
+			break;
 		}
 
 		Count++;
@@ -2009,18 +2002,20 @@ bool CL64_Project::Read_EnvironEntity(int Index, char* Section)
 	char chr_Tag1[MAX_PATH] = { 0 };
 	Ogre::Vector4 V4 = Ogre::Vector4::ZERO;
 
+	// Create Object and Reference
 	Base_Object* B_Object = App->CL_Editor_Com->B_Object[Index];
-
 	B_Object->S_Environ[0] = new Environ_type;
 	App->CL_Com_Environments->V_Set_Environ_Defaults(Index);
 
+	// Read Environment Name
 	App->CL_Ini_File->GetString(Section, "Environment_Name", chr_Tag1, MAX_PATH);
 	strcpy(B_Object->S_Environ[0]->Environment_Name, chr_Tag1);
 
+	// Read Environment ID
 	Int_Tag = App->CL_Ini_File->GetInt(Section, "Environment_ID", 0, 10);
 	B_Object->S_Environ[0]->Environment_ID = Int_Tag;
 
-	//--------------- Sound
+	// Read Sound settings
 	App->CL_Ini_File->GetString(Section, "Sound_File", chr_Tag1, MAX_PATH);
 	strcpy(B_Object->S_Environ[0]->Sound_File, chr_Tag1);
 
@@ -2034,7 +2029,7 @@ bool CL64_Project::Read_EnvironEntity(int Index, char* Section)
 	Int_Tag = App->CL_Ini_File->GetInt(Section, "Sound_Loop", 0, 10);
 	B_Object->S_Environ[0]->flag_Loop = Int_Tag;
 
-	//--------------- Light
+	// Read Light settings
 	App->CL_Ini_File->GetString(Section, "Ambient_Colour", chr_Tag1, MAX_PATH);
 	(void)sscanf(chr_Tag1, "%f,%f,%f", &V4.x, &V4.y, &V4.z);
 	B_Object->S_Environ[0]->AmbientColour = Ogre::Vector3(V4.x, V4.y, V4.z);
@@ -2043,7 +2038,7 @@ bool CL64_Project::Read_EnvironEntity(int Index, char* Section)
 	(void)sscanf(chr_Tag1, "%f,%f,%f", &V4.x, &V4.y, &V4.z);
 	B_Object->S_Environ[0]->Light_Position = Ogre::Vector3(V4.x, V4.y, V4.z);
 
-	//--------------- Sky
+	// Read Sky settings
 	Int_Tag = App->CL_Ini_File->GetInt(Section, "Sky_Enable", 0, 10);
 	B_Object->S_Environ[0]->flag_Enabled = Int_Tag;
 
@@ -2065,7 +2060,7 @@ bool CL64_Project::Read_EnvironEntity(int Index, char* Section)
 	(void)sscanf(chr_Tag1, "%f", &V4.x);
 	B_Object->S_Environ[0]->Distance = V4.x;
 
-	//--------------- Fog
+	// Read Fog settings
 	Int_Tag = App->CL_Ini_File->GetInt(Section, "Fog_On", 0, 10);
 	B_Object->S_Environ[0]->Fog_On = Int_Tag;
 
@@ -2395,6 +2390,24 @@ bool CL64_Project::Read_Teleport(int Index, char* Section)
 
 	return 1;
 }
+
+//float ReadFloatFromIni(const char* Section, const char* Key)
+//{
+//	char chr_Tag1[MAX_PATH] = { 0 };
+//	App->CL_Ini_File->GetString(Section, Key, chr_Tag1, MAX_PATH);
+//	float value;
+//	sscanf(chr_Tag1, "%f", &value);
+//	return value;
+//}
+//
+//Ogre::Vector3 ReadVector3FromIni(const char* Section, const char* Key)
+//{
+//	char chr_Tag1[MAX_PATH] = { 0 };
+//	App->CL_Ini_File->GetString(Section, Key, chr_Tag1, MAX_PATH);
+//	Ogre::Vector4 V4;
+//	sscanf(chr_Tag1, "%f,%f,%f", &V4.x, &V4.y, &V4.z);
+//	return Ogre::Vector3(V4.x, V4.y, V4.z);
+//}
 
 // *************************************************************************
 // *	  		Load_Project_Aera:- Terry and Hazel Flanigan 2022		   *
