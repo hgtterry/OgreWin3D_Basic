@@ -86,6 +86,8 @@ CL64_App::CL64_App(void)
 	CL_Gui_Environment =		nullptr;
 	CL_Properties_Scene =		nullptr;
 
+	CL_Editor_Preview =			nullptr;
+
 	// Templates Dialogs
 	CL_CreateBoxDialog =		nullptr;
 	CL_CreateCylDialog =		nullptr;
@@ -221,6 +223,8 @@ void CL64_App::InitApp(void)
 	CL_FileView =				new CL64_FileView();
 	CL_Gui_Environment =		new CL64_Gui_Environment();
 	CL_Properties_Scene =		new CL64_Properties_Scene();
+	
+	CL_Editor_Preview =			new CL64_Editor_Preview();
 	
 	// Templates Dialogs
 	CL_CreateBoxDialog =		new A_CreateBoxDialog();

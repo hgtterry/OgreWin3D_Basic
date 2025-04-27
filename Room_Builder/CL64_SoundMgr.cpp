@@ -114,10 +114,11 @@ LRESULT CALLBACK CL64_SoundMgr::Proc_Dialog_SoundFile(HWND hDlg, UINT message, W
 		SendDlgItemMessage(hDlg, IDC_SOUNDLIST, LB_GETTEXT, (WPARAM)0, (LPARAM)Sound);
 		SetDlgItemText(hDlg, IDC_EDITINT, (LPTSTR)Sound);
 
-		//int Sel = SendMessage(GetDlgItem(hDlg, IDC_SOUNDLIST), LB_SELECTSTRING, -1, (LPARAM)App->CL_SoundMgr->Current_Object_Sound);
-		//char buff[255];
-		//SendDlgItemMessage(hDlg, IDC_SOUNDLIST, LB_GETTEXT, (WPARAM)Sel, (LPARAM)buff);
-		//SetDlgItemText(hDlg, IDC_EDITINT, (LPTSTR)buff);
+		int Sel = SendMessage(GetDlgItem(hDlg, IDC_SOUNDLIST), LB_SELECTSTRING, -1, (LPARAM)App->CL_SoundMgr->Access_File);
+
+		char buff[MAX_PATH]{ 0 };
+		SendDlgItemMessage(hDlg, IDC_SOUNDLIST, LB_GETTEXT, (WPARAM)Sel, (LPARAM)buff);
+		SetDlgItemText(hDlg, IDC_EDITINT, (LPTSTR)buff);
 
 		int VolPer = int(App->CL_SoundMgr->SndVolume * 10);
 
@@ -140,14 +141,6 @@ LRESULT CALLBACK CL64_SoundMgr::Proc_Dialog_SoundFile(HWND hDlg, UINT message, W
 	}
 	case WM_CTLCOLORSTATIC:
 	{
-		/*if(GetDlgItem(hDlg,IDC_STPER) == (HWND)lParam)
-		{
-			SetBkColor((HDC) wParam, RGB(0, 255, 0));
-			SetTextColor((HDC) wParam, RGB(0,0,0));
-			SetBkMode((HDC) wParam, TRANSPARENT);
-			return (UINT) App->AppBackground;
-		}*/
-
 		if (GetDlgItem(hDlg, IDC_STVOLUME) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 255, 0));

@@ -176,6 +176,7 @@
     <ClInclude Include="CL64_Doc.h" />
     <ClInclude Include="CL64_Editor.h" />
     <ClInclude Include="CL64_Editor_Map.h" />
+    <ClInclude Include="CL64_Editor_Preview.h" />
     <ClInclude Include="CL64_Editor_Scene.h" />
     <ClInclude Include="CL64_Entities.h" />
     <ClInclude Include="CL64_Export.h" />
@@ -253,6 +254,7 @@
     <ClCompile Include="CL64_Doc.cpp" />
     <ClCompile Include="CL64_Editor.cpp" />
     <ClCompile Include="CL64_Editor_Map.cpp" />
+    <ClCompile Include="CL64_Editor_Preview.cpp" />
     <ClCompile Include="CL64_Editor_Scene.cpp" />
     <ClCompile Include="CL64_Entities.cpp" />
     <ClCompile Include="CL64_Export.cpp" />

@@ -516,10 +516,10 @@ void CL64_Gui_Environment::Close_Environment_Editor()
 
 	App->CL_FileView->Show_FileView(true);
 	/*int Index = App->CL_Properties->Current_Selected_Object;
-	App->CL_Com_Environments->Set_Environment_By_Index(0, Index);
-
-	Index = App->CL_Com_Environments->Get_First_Environ();
 	App->CL_Com_Environments->Set_Environment_By_Index(0, Index);*/
+
+	int Index = App->CL_Com_Environments->Get_First_Environ();
+	App->CL_Com_Environments->Set_Environment_By_Index(0, Index);
 }
 
 // *************************************************************************
