@@ -167,6 +167,8 @@ void CL64_Editor_Scene::Set_Editor_Scene(void)
 // *************************************************************************
 void CL64_Editor_Scene::Back_To_Map_Editor(void)
 {
+	App->CL_SoundMgr->SoundEngine->stopAllSounds();
+
 	// Turn off Editor Dialogs
 	App->CL_FileView->Show_FileView(false);
 	App->CL_Gui_Environment->PropertyEditor_Page = false;

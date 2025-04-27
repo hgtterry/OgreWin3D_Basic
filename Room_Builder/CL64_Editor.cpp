@@ -214,6 +214,8 @@ void CL64_Editor_Com::Preview_Mode(void)
 // *************************************************************************
 void CL64_Editor_Com::Editor_Mode(void)
 {
+	App->CL_SoundMgr->SoundEngine->stopAllSounds();
+
 	App->CL_Ogre->Ogre3D_Listener->flag_Run_Physics = 0;
 	App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_Free;
 

@@ -122,6 +122,7 @@ void CL64_Com_Environments::V_Set_Environ_Defaults(int index)
 	environment->flag_Play = false;
 	environment->flag_Loop = true;
 	environment->SndVolume = 0.5f;
+	environment->SndFile = nullptr;
 
 	// Light Configuration
 	environment->AmbientColour = { 1.0f, 1.0f, 1.0f };
@@ -220,6 +221,8 @@ int CL64_Com_Environments::Set_Environment_By_Index(bool PlayMusic, int Index)
 		App->CL_Ogre->mSceneMgr->setAmbientLight(ColourValue(1, 1, 1));
 		App->CL_Ogre->mSceneMgr->setFog(FOG_NONE, ColourValue(1, 1, 1), 0, 100, 1000);
 		App->CL_Ogre->mSceneMgr->setSkyDome(false, "OW3D/CloudySky");
+
+		App->CL_SoundMgr->SoundEngine->stopAllSounds();	
 	}
 	else
 	{
@@ -252,9 +255,9 @@ int CL64_Com_Environments::Set_Environment_By_Index(bool PlayMusic, int Index)
 		App->CL_Ogre->mSceneMgr->setSkyDome(Enable, "OW3D/CloudySky", App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->Curvature, App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->Tiling, App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->Distance);
 
 		// -------- Music
-		/*if (PlayMusic == 1)
+		if (PlayMusic == 1)
 		{
-			char buff[1024];
+			char buff[MAX_PATH];
 			strcpy(buff, App->CL_SoundMgr->Default_Folder);
 			strcat(buff, "\\Media\\Sounds\\");
 
@@ -270,16 +273,16 @@ int CL64_Com_Environments::Set_Environment_By_Index(bool PlayMusic, int Index)
 		}
 		else
 		{
-			if (App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->SndFile == NULL)
+			if (App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->SndFile == nullptr)
 			{
 			}
 			else
 			{
 				App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->SndFile->setIsPaused(true);
 				App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->SndFile->drop();
-				App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->SndFile = NULL;
+				App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->SndFile = nullptr;
 			}
-		}*/
+		}
 
 	}
 
