@@ -28,6 +28,7 @@
 #include "OgreStringConverter.h"
 #include "OgreException.h"
 #include "OgreTextAreaOverlayElement.h"
+#include "irrKlang.h"
 
 #include <gl/gl.h>
 #include <gl/glu.h>
