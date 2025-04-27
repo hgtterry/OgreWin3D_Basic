@@ -187,7 +187,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 //App->CL_Com_Environments->Create_Test_Environment();
                 //App->CL_Level->Level_Create_TXL_Class();
                // App->CL_Doc->UpdateAfterWadChange();
-                App->CL_SoundMgr->Show_Sound_Manager();
+                App->CL_SoundMgr->Show_Sound_Player();
 
                 return 1;
             }
@@ -576,6 +576,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                     CheckMenuItem(App->Menu_Map, ID_WINDOW_PROPERTIES, MF_BYCOMMAND | MF_CHECKED);
                 }
 
+                return 1;
+            }
+           
+            // ----------------------------- Scene Editor Tools
+            case ID_TOOLS_SOUNDPLAYER:
+            {
+                App->CL_SoundMgr->Show_Sound_Player();
                 return 1;
             }
            

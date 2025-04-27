@@ -250,11 +250,11 @@ void CL64_Gui_Environment::Environ_PropertyEditor()
 		{
 			ImGui::TextColored(ImVec4(0.f, 1.f, 0.24f, 1.f), "ON");
 
-			/*App->CL_SoundMgr->flag_Accessed = 1;
+			App->CL_SoundMgr->flag_Accessed = 1;
 			strcpy(App->CL_SoundMgr->Access_File, App->CL_Editor_Com->B_Object[Eviron_Index]->S_Environ[0]->Sound_File);
 
 			App->CL_Com_Environments->Set_Environment_By_Index(0, Eviron_Index);
-			App->CL_SoundMgr->Dialog_SoundFile();
+			App->CL_SoundMgr->Show_Sound_Player();
 
 			if (App->CL_SoundMgr->flag_IsCancelled == 0)
 			{
@@ -269,7 +269,7 @@ void CL64_Gui_Environment::Environ_PropertyEditor()
 			else
 			{
 				App->CL_Com_Environments->Set_Environment_By_Index(1, Eviron_Index);
-			}*/
+			}
 
 			flag_ClickOnTrack = 0;
 		}

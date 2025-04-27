@@ -20,9 +20,9 @@ Dimensions_Lock=0
 --------------------------------------------------------------------------------- EnvironEntity
 Environment_Name=Not_Set
 Environment_ID=0
-Sound_File=The_Sun.ogg
+Sound_File=game-music-7408.mp3
 Snd_Volume=0.500000
-Sound_Play=0
+Sound_Play=1
 Sound_Loop=1
 Ambient_Colour=1.000000,1.000000,1.000000
 Light_Position=0.000000,0.000000,0.000000

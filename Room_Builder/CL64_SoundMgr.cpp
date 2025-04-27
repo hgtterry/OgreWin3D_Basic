@@ -68,9 +68,9 @@ bool CL64_SoundMgr::Play_StartUp_Sound()
 }
 
 // *************************************************************************
-// *	  		Show_Sound_Manager:- Terry and Hazel Flanigan 2024		   *
+// *	  		Show_Sound_Player:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
-void CL64_SoundMgr::Show_Sound_Manager()
+void CL64_SoundMgr::Show_Sound_Player()
 {
 	flag_IsCancelled = 0;
 	SndFile = nullptr;
@@ -105,6 +105,7 @@ LRESULT CALLBACK CL64_SoundMgr::Proc_Dialog_SoundFile(HWND hDlg, UINT message, W
 
 		App->CL_SoundMgr->GetSoundFiles(hDlg, (LPSTR)"*.ogg");
 		App->CL_SoundMgr->GetSoundFiles(hDlg, (LPSTR)"*.wav");
+		App->CL_SoundMgr->GetSoundFiles(hDlg, (LPSTR)"*.mp3");
 
 		char Sound[MAX_PATH]{ 0 };
 		HWND ListHwnd = GetDlgItem(hDlg, IDC_SOUNDLIST);
