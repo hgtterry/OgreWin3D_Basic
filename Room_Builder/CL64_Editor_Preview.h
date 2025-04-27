@@ -29,6 +29,15 @@ public:
 	CL64_Editor_Preview(void);
 	~CL64_Editor_Preview(void);
 
+	void Preview_Mode(void);
+	void Editor_Mode(void);
+
+	bool flag_PreviewMode_Running;	// Flag to indicate if preview mode is currently active
+
+	HWND Parent_hWnd;				// Handle to the parent window for the editor
+
+private:
+	
 
 };
 

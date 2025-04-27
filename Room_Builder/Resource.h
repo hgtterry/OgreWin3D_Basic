@@ -73,6 +73,7 @@
 #define IDD_DIALOG1                     186
 #define IDD_PROGRESS_BAR                186
 #define IDD_SOUNDPLAYER                 187
+#define IDD_GMSTART                     188
 #define IDC_BANNER                      1000
 #define IDC_STTEXT                      1001
 #define IDC_STMESSAGE                   1002
@@ -244,17 +245,20 @@
 #define IDC_BT_SELECT_BRUSH             1162
 #define IDC_BT_TXL_CLEANUP              1162
 #define IDC_PLAY                        1162
+#define IDC_STARTLEVEL                  1162
 #define IDC_BUTTON2                     1163
 #define IDC_BT_BRUSH_DIMENSIONS         1163
 #define IDC_BT_TOP_RIGHT                1163
 #define IDC_BT_ARCHHOLLOW               1163
 #define IDC_BT_PASTE_TEXTINFO           1163
 #define IDC_BT_PAUSE                    1163
+#define IDC_STARTCUR                    1163
 #define IDC_BUTTON3                     1164
 #define IDC_ED_BRUSH_POSX               1164
 #define IDC_BT_BOTTOM_LEFT              1164
 #define IDC_BT_ARCHRING                 1164
 #define IDC_BT_STOP                     1164
+#define IDC_QUITGM                      1164
 #define IDC_BUTTON4                     1165
 #define IDC_ED_BRUSH_POSY               1165
 #define IDC_BT_FULL_3D                  1165
@@ -479,7 +483,7 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
-#define _APS_NEXT_RESOURCE_VALUE        188
+#define _APS_NEXT_RESOURCE_VALUE        189
 #define _APS_NEXT_COMMAND_VALUE         32823
 #define _APS_NEXT_CONTROL_VALUE         1300
 #define _APS_NEXT_SYMED_VALUE           110

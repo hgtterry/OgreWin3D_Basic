@@ -38,7 +38,7 @@ void CL64_Keyboard::Keyboard_Mode_First(float deltaTime)
 
 	if (GetAsyncKeyState(80) < 0) // p Key
 	{
-		App->CL_Editor_Com->Editor_Mode();
+		App->CL_Editor_Preview->Editor_Mode();
 	}
 
 	//if (flag_Block_Keyboard == 0)
@@ -128,7 +128,8 @@ void CL64_Keyboard::Keyboard_Mode_First(float deltaTime)
 		//------------------------------------------------ Escape 
 		if (GetAsyncKeyState(VK_ESCAPE) < 0) // Back to Editor mode;
 		{
-			App->CL_Editor_Com->Editor_Mode();
+			App->CL_ImGui->flag_Show_Camera_Mode = 1;
+			//App->CL_Editor_Preview->Editor_Mode();
 		}
 
 		//------------------------------------------------ Space Key - Jump and Selection
@@ -198,9 +199,10 @@ void CL64_Keyboard::Keyboard_Mode_Model(float deltaTime)
 	}
 
 	//------------------------------------------------ Escape 
-	if (GetAsyncKeyState(VK_ESCAPE) < 0 && App->CL_Editor_Com->flag_PreviewMode_Running == 1) // Back to Editor mode;
+	if (GetAsyncKeyState(VK_ESCAPE) < 0 && App->CL_Editor_Preview->flag_PreviewMode_Running == 1) // Back to Editor mode;
 	{
-		App->CL_Editor_Com->Editor_Mode();
+		App->CL_ImGui->flag_Show_Camera_Mode = 1;
+		//App->CL_Editor_Preview->Editor_Mode();
 	}
 }
 
@@ -211,9 +213,9 @@ void CL64_Keyboard::Keyboard_Mode_Free(float deltaTime)
 {
 	if (flag_Block_Keyboard == 0)
 	{
-		if (GetAsyncKeyState(80) < 0 && App->CL_Editor_Com->flag_PreviewMode_Running == 1) // p Key
+		if (GetAsyncKeyState(80) < 0 && App->CL_Editor_Preview->flag_PreviewMode_Running == 1) // p Key
 		{
-			App->CL_Editor_Com->Editor_Mode();
+			App->CL_Editor_Preview->Editor_Mode();
 		}
 
 		// Forward
@@ -307,9 +309,10 @@ void CL64_Keyboard::Keyboard_Mode_Free(float deltaTime)
 		}
 
 		//------------------------------------------------ Escape 
-		if (GetAsyncKeyState(VK_ESCAPE) < 0 && App->CL_Editor_Com->flag_PreviewMode_Running == 1)
+		if (GetAsyncKeyState(VK_ESCAPE) < 0 && App->CL_Editor_Preview->flag_PreviewMode_Running == 1)
 		{
-			App->CL_Editor_Com->Editor_Mode();
+			App->CL_ImGui->flag_Show_Camera_Mode = 1;
+			//App->CL_Editor_Preview->Editor_Mode();
 		}
 
 		//------------------------------------------------ Space Key - Jump and Selection

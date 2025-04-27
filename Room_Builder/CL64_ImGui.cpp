@@ -263,124 +263,48 @@ void CL64_ImGui::Press_Excape_GUI(void)
 void CL64_ImGui::Camera_Mode_GUI(void)
 {
 	ImGui::SetNextWindowPos(ImVec2(Cam_Mode_PosX, Cam_Mode_PosY));
-	ImGui::SetNextWindowSize(ImVec2(165, 300), ImGuiCond_FirstUseEver);
+	ImGui::SetNextWindowSize(ImVec2(166, 350), ImGuiCond_FirstUseEver);
 
 	ImGui::PushStyleColor(ImGuiCol_WindowBg, IM_COL32(239, 239, 239, 255));
 	ImGuiStyle* style = &ImGui::GetStyle();
 
-	if (!ImGui::Begin("Options", NULL, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize))
+	if (!ImGui::Begin("Options", NULL, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize))
 	{
 		ImGui::End();
 	}
 	else
 	{
-		// -------------- First Person
-		if (App->CL_Ogre->Ogre3D_Listener->CameraMode == Enums::Cam_Mode_First)
+		style->Colors[ImGuiCol_Button] = ImVec4(1.0f, 1.0f, 0.5f, 1.00f);
+	
+		// -------------- Level Start
+		if (ImGui::Button("Level Start", ImVec2(150, 100)))
 		{
-			style->Colors[ImGuiCol_Button] = ImVec4(0.0f, 1.0f, 0.0f, 1.00f);
-		}
-		else
-		{
-			style->Colors[ImGuiCol_Button] = ImVec4(1.0f, 1.0f, 1.0f, 1.00f);
+			App->CL_Physics->Reset_Physics();
+			App->CL_Physics->Reset_Scene();
+
+			App->CL_Ogre->Ogre3D_Listener->flag_Run_Physics = 1;
+			App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_First;
+			flag_Show_Camera_Mode = 0;
 		}
 
-		if (ImGui::Button("First Person", ImVec2(150, 30)))
+		if (ImGui::Button("Player Position", ImVec2(150, 100)))
 		{
 			App->CL_Ogre->Ogre3D_Listener->flag_Run_Physics = 1;
 			App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_First;
+			flag_Show_Camera_Mode = 0;
 		}
 
-		// -------------- Camera Free
-		if (App->CL_Ogre->Ogre3D_Listener->CameraMode == Enums::Cam_Mode_Free)
+		// -------------- Return
+		if (ImGui::Button("Return", ImVec2(150, 100)))
 		{
-			style->Colors[ImGuiCol_Button] = ImVec4(0.0f, 1.0f, 0.0f, 1.00f);
-		}
-		else
-		{
-			style->Colors[ImGuiCol_Button] = ImVec4(1.0f, 1.0f, 1.0f, 1.00f);
-		}
-
-		if (ImGui::Button("Free", ImVec2(150, 30)))
-		{
-			App->CL_Ogre->Ogre3D_Listener->flag_Run_Physics = 0;
-			App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_Free;
-		}
-
-		// -------------- Physics On
-		if (App->CL_Ogre->Ogre3D_Listener->flag_Run_Physics == 1)
-		{
-			style->Colors[ImGuiCol_Button] = ImVec4(0.0f, 1.0f, 0.0f, 1.00f);
-		}
-		else
-		{
-			style->Colors[ImGuiCol_Button] = ImVec4(1.0f, 1.0f, 1.0f, 1.00f);
-		}
-
-		ImGui::Spacing();
-		ImGui::Spacing();
-		ImGui::Separator();
-		ImGui::Spacing();
-		ImGui::Spacing();
-
-		if (ImGui::Button("Physics On", ImVec2(150, 30)))
-		{
-			/*if (App->CL_Ogre->Ogre3D_Listener->flag_Run_Physics == 1)
-			{
-				App->CL_Ogre->Ogre3D_Listener->flag_Run_Physics = 0;
-			}
-			else
-			{
-				App->CL_Ogre->Ogre3D_Listener->flag_Run_Physics = 1;
-			}*/
-		}
-
-		// -------------- Physics Debug
-		if (App->CL_Editor_Com->flag_Show_Debug_Area == 1)
-		{
-			style->Colors[ImGuiCol_Button] = ImVec4(0.0f, 1.0f, 0.0f, 1.00f);
-		}
-		else
-		{
-			style->Colors[ImGuiCol_Button] = ImVec4(1.0f, 1.0f, 1.0f, 1.00f);
-		}
-
-		if (ImGui::Button("Physics Debug", ImVec2(150, 30)))
-		{
-			if (App->CL_Editor_Com->flag_Show_Debug_Area == 1)
-			{
-				App->CL_Physics->Show_Debug_Area(false);
-				App->CL_Editor_Com->flag_Show_Debug_Area = 0;
-			}
-			else
-			{
-				App->CL_Physics->Show_Debug_Area(true);
-				App->CL_Editor_Com->flag_Show_Debug_Area = 1;
-			}
-		}
-
-		// -------------- Reset Scene
-		style->Colors[ImGuiCol_Button] = ImVec4(1.0f, 1.0f, 0.5f, 1.00f);
-
-		if (ImGui::Button("Reset Scene", ImVec2(150, 30)))
-		{
-			App->CL_Physics->Reset_Scene();
-		}
-
-		ImGui::Spacing();
-		ImGui::Spacing();
-		ImGui::Separator();
-		ImGui::Spacing();
-		ImGui::Spacing();
-
-		style->Colors[ImGuiCol_Button] = ImVec4(0.26f, 0.59f, 0.98f, 0.40f);
-		if (ImGui::Button("Exit-Return", ImVec2(150, 30)))
-		{
-			App->CL_Editor_Com->Editor_Mode();
+			App->CL_Editor_Preview->Editor_Mode();
 		}
 
 		ImVec2 Size = ImGui::GetWindowSize();
-		Cam_Mode_PosX = ((float)App->CL_Ogre->mWindow->getViewport(0)->getActualWidth()) - (Size.x) - 10;
-		Cam_Mode_PosY = 10;
+		Cam_Mode_PosX = ((float)App->CL_Ogre->mWindow->getViewport(0)->getActualWidth() / 2) - (Size.x / 2);
+		Cam_Mode_PosY = ((float)App->CL_Ogre->mWindow->getViewport(0)->getActualHeight() / 2) - (Size.y / 2);
+
+		style->Colors[ImGuiCol_Button] = ImVec4(0.26f, 0.59f, 0.98f, 0.40f);
 
 		ImGui::PopStyleColor();
 		ImGui::End();

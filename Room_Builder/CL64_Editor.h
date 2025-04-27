@@ -38,8 +38,6 @@ public:
 	void Create_Brush_XX(int Index);
 	void Create_Mesh_Group(int Index);
 
-	void Preview_Mode(void);
-	void Editor_Mode(void);
 	void Clear_Level(bool FromFile);
 
 	Base_Group* Group[5000];
@@ -67,9 +65,6 @@ public:
 	// Ogre
 	int Ogre_Face_Count;
 
-	HWND Parent_hWnd;				// Handle to the parent window for the editor
-
-	bool flag_PreviewMode_Running;	// Flag to indicate if preview mode is currently active
 	bool flag_Show_Debug_Area;		// Flag to indicate if the debug area should be displayed
 	bool flag_Enable_Physics_Debug; // Flag to indicate if physics debugging is enabled
 
