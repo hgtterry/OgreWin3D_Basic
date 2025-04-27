@@ -72,6 +72,7 @@
 #define IDD_SB_BRUSH_VIEWER             185
 #define IDD_DIALOG1                     186
 #define IDD_PROGRESS_BAR                186
+#define IDD_SOUNDPLAYER                 187
 #define IDC_BANNER                      1000
 #define IDC_STTEXT                      1001
 #define IDC_STMESSAGE                   1002
@@ -242,15 +243,18 @@
 #define IDC_BT_MAINENVIRONMENT          1162
 #define IDC_BT_SELECT_BRUSH             1162
 #define IDC_BT_TXL_CLEANUP              1162
+#define IDC_PLAY                        1162
 #define IDC_BUTTON2                     1163
 #define IDC_BT_BRUSH_DIMENSIONS         1163
 #define IDC_BT_TOP_RIGHT                1163
 #define IDC_BT_ARCHHOLLOW               1163
 #define IDC_BT_PASTE_TEXTINFO           1163
+#define IDC_BT_PAUSE                    1163
 #define IDC_BUTTON3                     1164
 #define IDC_ED_BRUSH_POSX               1164
 #define IDC_BT_BOTTOM_LEFT              1164
 #define IDC_BT_ARCHRING                 1164
+#define IDC_BT_STOP                     1164
 #define IDC_BUTTON4                     1165
 #define IDC_ED_BRUSH_POSY               1165
 #define IDC_BT_FULL_3D                  1165
@@ -372,6 +376,7 @@
 #define IDC_LST_GENERAL                 1259
 #define IDC_LIST_ABOUT_VERSIONS         1259
 #define IDC_LISTBRUSHES                 1259
+#define IDC_SOUNDLIST                   1259
 #define IDC_TXL_DELETE_TEXTURE          1260
 #define IDC_ST_TXL_COUNT                1261
 #define IDC_TXL_ADD_TEXTURE             1262
@@ -407,6 +412,10 @@
 #define IDC_PBACTION                    1293
 #define IDC_STBAR                       1294
 #define IDC_ST_PB_STATUS                1295
+#define IDC_EDITINT                     1296
+#define IDC_SLVOLUME                    1297
+#define IDC_VOLBOX                      1298
+#define IDC_STVOLUME                    1299
 #define ID_DEBUG_GENERAL                32771
 #define ID_TEMPLATES_INSERT             32772
 #define ID_BRUSH_SELECT                 32773
@@ -468,9 +477,9 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
-#define _APS_NEXT_RESOURCE_VALUE        187
+#define _APS_NEXT_RESOURCE_VALUE        188
 #define _APS_NEXT_COMMAND_VALUE         32821
-#define _APS_NEXT_CONTROL_VALUE         1296
+#define _APS_NEXT_CONTROL_VALUE         1300
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif

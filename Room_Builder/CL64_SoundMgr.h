@@ -30,7 +30,7 @@ public:
 	CL64_SoundMgr(void);
 	~CL64_SoundMgr(void);
 
-	void Dialog_SoundFile();
+	void Show_Sound_Manager();
 	bool Play_StartUp_Sound();
 
 	irrklang::ISoundEngine* SoundEngine;

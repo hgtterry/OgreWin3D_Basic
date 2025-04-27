@@ -185,9 +185,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 
                 //App->CL_Brush_X->Set_Brush_Faces_Name(App->CL_Doc->CurBrush);
                 //App->CL_Com_Environments->Create_Test_Environment();
-                App->CL_Level->Level_Create_TXL_Class();
-                App->CL_Doc->UpdateAfterWadChange();
-                
+                //App->CL_Level->Level_Create_TXL_Class();
+               // App->CL_Doc->UpdateAfterWadChange();
+                App->CL_SoundMgr->Show_Sound_Manager();
 
                 return 1;
             }
