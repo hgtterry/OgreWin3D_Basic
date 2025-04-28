@@ -29,6 +29,20 @@ public:
 	CL64_Properties_Scene();
 	~CL64_Properties_Scene();
 
+	void Start_Properties(void);
+	void Create_Properties_hLV(void);
+	void Show_Properties_Scene(bool Enable);
+
+
+	HWND Properties_Dlg_hWnd;
+	HWND Properties_hLV;
+
 	int Current_Selected_Object;
+
+	bool flag_Properties_Dlg_Active;
+
+private:
+	static LRESULT CALLBACK Proc_Properties(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+
 };
 

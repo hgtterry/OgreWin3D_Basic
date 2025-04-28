@@ -99,9 +99,36 @@ void CL64_Panels::Move_FileView_Window(void)
 	int PosX = p.x;
 	int PosY = p.y;
 
-	SetWindowPos(App->ListPanel, NULL, PosX + 0, PosY + 5,
+	SetWindowPos(App->ListPanel, NULL, PosX + 0, PosY + 5,0, 0, SWP_NOSIZE | SWP_NOZORDER);
+
+}
+
+// *************************************************************************
+// *			Place_Properties_Dlg:- Terry and Hazel Flanigan 2024	   *
+// *************************************************************************
+bool CL64_Panels::Place_Properties_Dlg(void)
+{
+	POINT p = { 0 };
+
+	int Diff = MapWindowPoints(App->ViewGLhWnd, NULL, &p, 1);
+
+	HDWP hdwp;
+
+	RECT rect;
+	GetWindowRect(App->ViewGLhWnd, &rect);
+
+	int widthX = rect.right - rect.left;
+	int heightY = rect.bottom - rect.top;
+
+	int PosX = p.x;
+	int PosY = p.y;
+
+	hdwp = BeginDeferWindowPos(2);
+
+	DeferWindowPos(hdwp, App->CL_Properties_Scene->Properties_Dlg_hWnd, NULL, p.x + widthX - 255, PosY + 5,
 		0, 0, SWP_NOSIZE | SWP_NOZORDER);
 
+	return EndDeferWindowPos(hdwp);
 }
 
 // *************************************************************************

@@ -2658,7 +2658,7 @@ bool CL64_Project::Load_Project_Player()
 		}
 		else { App->CL_Editor_Com->B_Player[Count]->PlayerHeight = 16; }
 
-		//App->CL_Editor_Com->B_Player[Count]->FileViewItem = App->CL_FileView->Add_Item(App->CL_FileView->FV_Players_Folder, Player_Name, Count, false);
+		App->CL_Editor_Com->B_Player[Count]->FileViewItem = App->CL_FileView->Add_Item(App->CL_FileView->FV_Players_Folder, Player_Name, Count, false);
 
 		Count++;
 
@@ -2721,7 +2721,7 @@ bool CL64_Project::Load_Project_Player()
 
 	//App->CL_Scene->Player_Location_Count = Count;
 
-	//App->CL_FileView->Set_FolderActive(App->CL_FileView->FV_Players_Folder);
+	App->CL_FileView->Set_FolderActive(App->CL_FileView->FV_Players_Folder);
 
 	return 1;
 }

@@ -157,6 +157,9 @@ void CL64_Editor_Scene::Set_Editor_Scene(void)
 	App->CL_Panels->Move_FileView_Window();
 	App->CL_Panels->Resize_FileView();
 
+	App->CL_Panels->Place_Properties_Dlg();
+	App->CL_Properties_Scene->Show_Properties_Scene(true);
+
 	SetMenu(App->MainHwnd, App->Menu_Scene);
 
 	Show_Entities(true);
@@ -171,6 +174,7 @@ void CL64_Editor_Scene::Back_To_Map_Editor(void)
 
 	// Turn off Editor Dialogs
 	App->CL_FileView->Show_FileView(false);
+	App->CL_Properties_Scene->Show_Properties_Scene(false);
 	App->CL_Gui_Environment->PropertyEditor_Page = false;
 	App->CL_Gui_Environment->flag_Show_PropertyEditor = false;
 

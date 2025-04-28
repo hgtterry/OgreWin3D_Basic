@@ -45,6 +45,7 @@ public:
 
 	HTREEITEM FV_Evirons_Folder;
 	HTREEITEM FV_Objects_Folder;
+	HTREEITEM FV_Players_Folder;	// Players Folder FileFView
 
 private:
 	static LRESULT CALLBACK Proc_ListPanel(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
@@ -62,7 +63,6 @@ private:
 	HTREEITEM GD_Area_Change_Folder;
 	HTREEITEM GD_Level_Change_Folder;
 
-	HTREEITEM FV_Players_Folder;	// Players Folder FileFView
 	HTREEITEM FV_Areas_Folder;		// Areas/Rooms Folder FileFView
 	HTREEITEM FV_LevelFolder;
 	HTREEITEM FV_Cameras_Folder;

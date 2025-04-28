@@ -74,6 +74,8 @@
 #define IDD_PROGRESS_BAR                186
 #define IDD_SOUNDPLAYER                 187
 #define IDD_GMSTART                     188
+#define IDD_DIALOG2                     189
+#define IDD_PROPERTIES_SCENE            189
 #define IDC_BANNER                      1000
 #define IDC_STTEXT                      1001
 #define IDC_STMESSAGE                   1002
@@ -483,7 +485,7 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
-#define _APS_NEXT_RESOURCE_VALUE        189
+#define _APS_NEXT_RESOURCE_VALUE        190
 #define _APS_NEXT_COMMAND_VALUE         32823
 #define _APS_NEXT_CONTROL_VALUE         1300
 #define _APS_NEXT_SYMED_VALUE           110
