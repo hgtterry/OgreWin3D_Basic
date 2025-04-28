@@ -639,7 +639,7 @@ void A_CreateCylDialog::Set_DLG_Members(HWND hDlg)
 	SetDlgItemText(hDlg, IDC_RINGLENGTH, (LPCTSTR)buf);
 
 
-	HWND temp = GetDlgItem(hDlg, IDC_TCUT);
+	/*HWND temp = GetDlgItem(hDlg, IDC_TCUT);
 	if (m_TCut == 1)
 	{
 		SendMessage(temp,BM_SETCHECK,1,0);
@@ -647,7 +647,7 @@ void A_CreateCylDialog::Set_DLG_Members(HWND hDlg)
 	else
 	{
 		SendMessage(temp,BM_SETCHECK,0,0);
-	}
+	}*/
 }
 
 // *************************************************************************

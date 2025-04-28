@@ -36,7 +36,7 @@ public:
 	bool flag_Show_Paths;
 	bool flag_Show_Render_Reports;
 	bool flag_Show_Press_Excape;
-	bool flag_Show_Camera_Mode;
+	bool flag_Show_Preview_Options;
 	bool flag_Show_App_Stats;
 
 private:
@@ -45,12 +45,11 @@ private:
 	void ImGui_Set_Colours(void);
 
 	void ImGui_FPS(void);
-	void App_Tool_Selection_GUI(void);
 	void Paths_GUI(void);
 	void Render_Report_GUI(void);
 
 	void Press_Excape_GUI(void);
-	void Camera_Mode_GUI(void);
+	void Preview_Options_GUI(void);
 
 	void App_Stats_GUI(void);
 

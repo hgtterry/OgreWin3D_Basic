@@ -61,7 +61,8 @@ LRESULT CALLBACK CL64_Editor_Scene::Proc_Headers_Scene(HWND hDlg, UINT message, 
 	case WM_INITDIALOG:
 	{
 		SendDlgItemMessage(hDlg, IDC_BT_MAP_EDITOR, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-	
+		SendDlgItemMessage(hDlg, IDC_BT_HD_PREVIEW_ED, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
 		return TRUE;
 	}
 
@@ -87,6 +88,14 @@ LRESULT CALLBACK CL64_Editor_Scene::Proc_Headers_Scene(HWND hDlg, UINT message, 
 			return CDRF_DODEFAULT;
 		}
 
+		if (some_item->idFrom == IDC_BT_HD_PREVIEW_ED)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+
+			return CDRF_DODEFAULT;
+		}
+		
 		return CDRF_DODEFAULT;
 	}
 
@@ -97,6 +106,13 @@ LRESULT CALLBACK CL64_Editor_Scene::Proc_Headers_Scene(HWND hDlg, UINT message, 
 			App->CL_Editor_Scene->Back_To_Map_Editor();
 			return TRUE;
 		}
+
+		if (LOWORD(wParam) == IDC_BT_HD_PREVIEW_ED)
+		{
+			App->CL_Editor_Preview->Preview_Mode();
+			return TRUE;
+		}
+		
 	}
 	}
 
@@ -163,6 +179,30 @@ void CL64_Editor_Scene::Set_Editor_Scene(void)
 	SetMenu(App->MainHwnd, App->Menu_Scene);
 
 	Show_Entities(true);
+}
+
+// *************************************************************************
+// *			Return_From_Preview:- Terry and Hazel Flanigan 2025	 	   *
+// *************************************************************************
+void CL64_Editor_Scene::Return_From_Preview(void)
+{
+	App->CL_Top_Tabs->flag_Full_View_3D = 1;
+	App->CL_Top_Tabs->flag_View_Top_Left = 0;
+	App->CL_Top_Tabs->flag_View_Top_Right = 0;
+	App->CL_Top_Tabs->flag_View_Bottom_Left = 0;
+
+	App->CL_Editor_Map->Init_Views(Enums::Selected_View_3D);
+	App->CL_Editor_Map->Resize_Windows(App->CL_Editor_Map->Main_Dlg_Hwnd, App->CL_Editor_Map->nleftWnd_width, App->CL_Editor_Map->nleftWnd_Depth);
+
+	RECT rcl;
+
+	GetClientRect(App->CL_Editor_Map->Bottom_Right_Hwnd, &rcl);
+
+	SetWindowPos(App->ViewGLhWnd, NULL, 0, 0, rcl.right, rcl.bottom, SWP_NOZORDER);
+
+	App->CL_Ogre->mWindow->windowMovedOrResized();
+	App->CL_Ogre->mCamera->setAspectRatio((Ogre::Real)App->CL_Ogre->mWindow->getWidth() / (Ogre::Real)App->CL_Ogre->mWindow->getHeight());
+
 }
 
 // *************************************************************************

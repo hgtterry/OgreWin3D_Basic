@@ -48,7 +48,7 @@ CL64_ImGui::CL64_ImGui()
 	flag_Show_Paths = 0;
 	flag_Show_Render_Reports = 0;
 	flag_Show_Press_Excape = 0;
-	flag_Show_Camera_Mode = 0;
+	flag_Show_Preview_Options = 0;
 	flag_Show_App_Stats = 0;
 
 	guiFunctions.reserve(20);
@@ -184,7 +184,7 @@ void CL64_ImGui::ImGui_Render_Loop(void)
 		{flag_Show_Paths == 1, [&]() { Paths_GUI(); }},
 		{flag_Show_Render_Reports == 1, [&]() { Render_Report_GUI(); }},
 		{flag_Show_Press_Excape == 1, [&]() { Press_Excape_GUI(); }},
-		{flag_Show_Camera_Mode == 1, [&]() { Camera_Mode_GUI(); }},
+		{flag_Show_Preview_Options == 1, [&]() { Preview_Options_GUI(); }},
 		{App->CL_Gui_Environment->flag_Show_PropertyEditor == 1, [&]() { App->CL_Gui_Environment->Environ_PropertyEditor(); }},
 		{flag_Show_App_Stats == 1, [&]() { App_Stats_GUI(); }}
 	};
@@ -258,9 +258,9 @@ void CL64_ImGui::Press_Excape_GUI(void)
 }
 
 // *************************************************************************
-// *			Camera_Mode_GUI:- Terry and Hazel Flanigan 2024			   *
+// *		Preview_Options_GUI:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-void CL64_ImGui::Camera_Mode_GUI(void)
+void CL64_ImGui::Preview_Options_GUI(void)
 {
 	ImGui::SetNextWindowPos(ImVec2(Cam_Mode_PosX, Cam_Mode_PosY));
 	ImGui::SetNextWindowSize(ImVec2(166, 350), ImGuiCond_FirstUseEver);
@@ -284,20 +284,25 @@ void CL64_ImGui::Camera_Mode_GUI(void)
 
 			App->CL_Ogre->Ogre3D_Listener->flag_Run_Physics = 1;
 			App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_First;
-			flag_Show_Camera_Mode = 0;
+			flag_Show_Preview_Options = 0;
 		}
 
 		if (ImGui::Button("Player Position", ImVec2(150, 100)))
 		{
 			App->CL_Ogre->Ogre3D_Listener->flag_Run_Physics = 1;
 			App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_First;
-			flag_Show_Camera_Mode = 0;
+			flag_Show_Preview_Options = 0;
 		}
 
 		// -------------- Return
 		if (ImGui::Button("Return", ImVec2(150, 100)))
 		{
 			App->CL_Editor_Preview->Editor_Mode();
+
+			if (App->CL_Editor_Scene->flag_Scene_Editor_Active == 1)
+			{
+				App->CL_Editor_Scene->Return_From_Preview();
+			}
 		}
 
 		ImVec2 Size = ImGui::GetWindowSize();
@@ -384,6 +389,7 @@ void CL64_ImGui::App_Stats_GUI(void)
 			ImGui::Separator();
 			ImGui::Text("Object_Count:= %i", App->CL_Editor_Com->Object_Count);
 			ImGui::Text("Unique_Object_Count:= %i", App->CL_Editor_Com->Object_Count);
+			ImGui::Text("Scene Editor Active:= %i", App->CL_Editor_Scene->flag_Scene_Editor_Active);
 			ImGui::Separator();
 			ImGui::TreePop();
 		}
