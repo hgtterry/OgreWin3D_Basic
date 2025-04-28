@@ -600,7 +600,7 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 		//App->CL_Properties->Edit_Category = Enums::Edit_Player;
 		//App->CL_LookUps->Update_Types();
 
-		ShowWindow(App->CL_Properties_Scene->Properties_Dlg_hWnd, 1);
+		//ShowWindow(App->CL_Properties_Scene->Properties_Dlg_hWnd, 1);
 		App->CL_Properties_Scene->Update_ListView_Player();
 
 		return;

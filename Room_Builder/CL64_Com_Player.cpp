@@ -106,6 +106,7 @@ void CL64_Com_Player::Create_Player_Object(void)
 	strcpy(App->CL_Editor_Com->B_Player[0]->Player_Name, "Player_1");
 	HTREEITEM Temp1 = App->CL_FileView->Add_Item(App->CL_FileView->FV_Players_Folder, (LPSTR)"Player_1", 0, true);
 	App->CL_FileView->Set_FolderActive(App->CL_FileView->FV_Players_Folder);
+	App->CL_FileView->SelectItem(Temp1);
 
 	App->CL_Editor_Com->Player_Count++;
 
