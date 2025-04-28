@@ -247,3 +247,12 @@ void CL64_Grid::Face_Update2()
 	FaceManual->position(HitVertices[0]);
 	FaceManual->end();
 }
+
+// *************************************************************************
+// *	  	Enable_Grid_And_Hair:- Terry and Hazel Flanigan 2025		   *
+// *************************************************************************
+void CL64_Grid::Enable_Grid_And_Hair(bool Enable)
+{
+	GridNode->setVisible(Enable);
+	HairNode->setVisible(Enable);
+}

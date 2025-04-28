@@ -297,7 +297,7 @@ void CL64_ImGui::Preview_Options_GUI(void)
 		// -------------- Return
 		if (ImGui::Button("Return", ImVec2(150, 100)))
 		{
-			App->CL_Editor_Preview->Editor_Mode();
+			App->CL_Editor_Preview->Map_Editor_Mode();
 
 			if (App->CL_Editor_Scene->flag_Scene_Editor_Active == 1)
 			{

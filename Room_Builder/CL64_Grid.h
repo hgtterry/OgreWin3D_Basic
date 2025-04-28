@@ -34,6 +34,7 @@ public:
 
 	void Face_Update(bool Create);
 	void Face_Update2();
+	void Enable_Grid_And_Hair(bool Enable);
 
 	Ogre::ManualObject* GridManual;
 	Ogre::SceneNode* GridNode;

@@ -565,7 +565,7 @@ void CL64_File::Set_Editor()
 		}
 	}
 	
-	App->CL_Editor_Scene->Show_Entities(false);
+	App->CL_Com_Objects->Show_Entities(false);
 
 	int Index = App->CL_Com_Environments->Get_First_Environ();
 	if (Index == -1)

@@ -178,7 +178,7 @@ void CL64_Editor_Scene::Set_Editor_Scene(void)
 
 	SetMenu(App->MainHwnd, App->Menu_Scene);
 
-	Show_Entities(true);
+	App->CL_Com_Objects->Show_Entities(true);
 }
 
 // *************************************************************************
@@ -202,7 +202,7 @@ void CL64_Editor_Scene::Return_From_Preview(void)
 
 	App->CL_Ogre->mWindow->windowMovedOrResized();
 	App->CL_Ogre->mCamera->setAspectRatio((Ogre::Real)App->CL_Ogre->mWindow->getWidth() / (Ogre::Real)App->CL_Ogre->mWindow->getHeight());
-
+	App->CL_Com_Objects->Show_Entities(true);
 }
 
 // *************************************************************************
@@ -233,7 +233,7 @@ void CL64_Editor_Scene::Back_To_Map_Editor(void)
 
 	// Set menu to map
 	SetMenu(App->MainHwnd, App->Menu_Map);
-	Show_Entities(false);
+	App->CL_Com_Objects->Show_Entities(false);
 
 	// Set environment if not active
 	if (App->CL_Editor_Map->flag_Environment_On == false)
@@ -284,30 +284,3 @@ bool CL64_Editor_Scene::Context_Command_Ogre(WPARAM wParam)
 	}
 }
 
-// *************************************************************************
-// *			Show_Entities:- Terry and Hazel Flanigan 2024	 	 	   *
-// *************************************************************************
-void CL64_Editor_Scene::Show_Entities(bool Enable)
-{
-	for (int Count = 0; Count < App->CL_Editor_Com->Object_Count; ++Count)
-	{
-		auto& currentObject = App->CL_Editor_Com->B_Object[Count];
-
-		if (currentObject->flag_Deleted == 0)
-		{
-			switch (currentObject->Usage)
-			{
-			case Enums::Obj_Usage_Sound:
-			case Enums::Obj_Usage_Message:
-			case Enums::Obj_Usage_Move:
-			case Enums::Obj_Usage_Teleport:
-			case Enums::Obj_Usage_Environment:
-			case Enums::Obj_Usage_EnvironEntity:
-				currentObject->Object_Node->setVisible(Enable);
-				break;
-			default:
-				break;
-			}
-		}
-	}
-}

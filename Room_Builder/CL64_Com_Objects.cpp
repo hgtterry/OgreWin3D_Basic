@@ -356,3 +356,31 @@ Ogre::Vector3 CL64_Com_Objects::Get_BoundingBox_World_Centre(int Object_Index)
 		return Centre;
 	}
 }
+
+// *************************************************************************
+// *			Show_Entities:- Terry and Hazel Flanigan 2024	 	 	   *
+// *************************************************************************
+void CL64_Com_Objects::Show_Entities(bool Enable)
+{
+	for (int Count = 0; Count < App->CL_Editor_Com->Object_Count; ++Count)
+	{
+		auto& currentObject = App->CL_Editor_Com->B_Object[Count];
+
+		if (currentObject->flag_Deleted == 0)
+		{
+			switch (currentObject->Usage)
+			{
+			case Enums::Obj_Usage_Sound:
+			case Enums::Obj_Usage_Message:
+			case Enums::Obj_Usage_Move:
+			case Enums::Obj_Usage_Teleport:
+			case Enums::Obj_Usage_Environment:
+			case Enums::Obj_Usage_EnvironEntity:
+				currentObject->Object_Node->setVisible(Enable);
+				break;
+			default:
+				break;
+			}
+		}
+	}
+}

@@ -60,6 +60,8 @@ void CL64_Editor_Preview::Preview_Mode(void)
 		App->CL_Properties_Tabs->Enable_Tabs_Dlg(false);
 
 		App->CL_Ogre->OGL_Listener->Show_Visuals(false);
+		App->CL_Com_Objects->Show_Entities(false);
+		App->CL_Grid->Enable_Grid_And_Hair(false);
 
 		//SetCursorPos(App->CursorPosX, App->CursorPosY);
 
@@ -98,7 +100,7 @@ void CL64_Editor_Preview::Preview_Mode(void)
 // *************************************************************************
 // *				Editor_Mode:- Terry and Hazel Flanigan 2024	 	 	   *
 // *************************************************************************
-void CL64_Editor_Preview::Editor_Mode(void)
+void CL64_Editor_Preview::Map_Editor_Mode(void)
 {
 	App->CL_SoundMgr->SoundEngine->stopAllSounds();
 
@@ -115,6 +117,7 @@ void CL64_Editor_Preview::Editor_Mode(void)
 
 	App->CL_ImGui->flag_Show_Press_Excape = 0;
 	App->CL_ImGui->flag_Show_Preview_Options = 0;
+	App->CL_Grid->Enable_Grid_And_Hair(true);
 
 	SetParent(App->CL_Editor_Map->Bottom_Right_Hwnd, Parent_hWnd);
 
@@ -122,7 +125,10 @@ void CL64_Editor_Preview::Editor_Mode(void)
 
 	App->CL_Properties_Tabs->Enable_Tabs_Dlg(true);
 
-	App->CL_Ogre->OGL_Listener->Show_Visuals(true);
+	if (App->CL_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes) > 0)
+	{
+		App->CL_Ogre->OGL_Listener->Show_Visuals(true);
+	}
 
 	if (App->CL_Editor_Map->flag_Environment_On == false)
 	{
