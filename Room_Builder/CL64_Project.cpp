@@ -1702,6 +1702,7 @@ bool CL64_Project::Load_Project()
 	{
 		bool test = Load_Project_Player();
 		App->CL_Com_Player->Reset_Player();
+		HTREEITEM Temp1 = App->CL_FileView->Add_Item(App->CL_FileView->FV_Players_Folder, (LPSTR)"Player_1", 0, false);
 	}
 
 	// ------------------------------------- Camera

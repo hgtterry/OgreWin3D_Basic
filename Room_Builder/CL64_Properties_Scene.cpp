@@ -71,7 +71,7 @@ LRESULT CALLBACK CL64_Properties_Scene::Proc_Properties(HWND hDlg, UINT message,
 	{
 	case WM_INITDIALOG:
 	{
-		//SendDlgItemMessage(hDlg, IDC_STOBJECTNAME, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_STOBJECTNAME, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
 
 		//App->SBC_Properties->Edit_Category = Enums::FV_Edit_Object;*/
 
@@ -80,14 +80,13 @@ LRESULT CALLBACK CL64_Properties_Scene::Proc_Properties(HWND hDlg, UINT message,
 
 	case WM_CTLCOLORSTATIC:
 	{
-
-		/*if (GetDlgItem(hDlg, IDC_STOBJECTNAME) == (HWND)lParam)
+		if (GetDlgItem(hDlg, IDC_STOBJECTNAME) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 255, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
 			SetBkMode((HDC)wParam, TRANSPARENT);
-			return (UINT)App->DialogBackGround;
-		}*/
+			return (UINT)App->AppBackground;
+		}
 
 		return FALSE;
 	}
@@ -213,4 +212,66 @@ void CL64_Properties_Scene::Show_Properties_Scene(bool Enable)
 		flag_Properties_Dlg_Active = 0;
 		ShowWindow(Properties_Dlg_hWnd, 0);
 	}
+}
+
+// *************************************************************************
+// *		Update_ListView_Player:- Terry and Hazel Flanigan 2025	 	   *
+// *************************************************************************
+bool CL64_Properties_Scene::Update_ListView_Player() 
+{
+	int index = Current_Selected_Object;
+
+	// Update the properties dialog title
+	std::string title = "Properties ID=0";
+	SetWindowText(Properties_Dlg_hWnd, title.c_str());
+	SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, App->CL_Editor_Com->B_Player[0]->Player_Name);
+
+	// Prepare player properties
+	std::string str_Speed = std::to_string(App->CL_Editor_Com->B_Player[0]->Ground_speed / 100.0f);
+	std::string str_TurnRate = std::to_string(App->CL_Editor_Com->B_Player[0]->TurnRate);
+	std::string str_Height = std::to_string(App->CL_Editor_Com->B_Player[0]->PlayerHeight);
+	std::string str_StartPosX = std::to_string(App->CL_Editor_Com->B_Player[0]->StartPos.x);
+	std::string str_StartPosY = std::to_string(App->CL_Editor_Com->B_Player[0]->StartPos.y);
+	std::string str_StartPosZ = std::to_string(App->CL_Editor_Com->B_Player[0]->StartPos.z);
+	std::string str_LookUp_Limit = std::to_string(App->CL_Editor_Com->B_Player[0]->Limit_Look_Up);
+	std::string str_LookDown_Limit = std::to_string(App->CL_Editor_Com->B_Player[0]->Limit_Look_Down);
+
+	const int NUM_ITEMS = 13;
+	const int NUM_COLS = 2;
+	std::string grid[NUM_COLS][NUM_ITEMS]; // string table
+
+	// Populate the grid with player properties
+	grid[0][0] = "Name";			grid[1][0] = App->CL_Editor_Com->B_Player[0]->Player_Name;
+	grid[0][1] = "Game Mode";		grid[1][1] = "1st_Person";
+	grid[0][2] = " ";				grid[1][2] = " ";
+	grid[0][3] = "Ground Speed";	grid[1][3] = str_Speed;
+	grid[0][4] = "Turn Rate";		grid[1][4] = str_TurnRate;
+	grid[0][5] = "Player Height";	grid[1][5] = str_Height;
+	grid[0][6] = " ";				grid[1][6] = " ";
+	grid[0][7] = "Start Pos_X";		grid[1][7] = str_StartPosX;
+	grid[0][8] = "Start Pos_Y";		grid[1][8] = str_StartPosY;
+	grid[0][9] = "Start Pos_Z";		grid[1][9] = str_StartPosZ;
+	grid[0][10] = " ";				grid[1][10] = " ";
+	grid[0][11] = "Look Up";		grid[1][11] = str_LookUp_Limit;
+	grid[0][12] = "Look Down";		grid[1][12] = str_LookDown_Limit;
+
+	// Clear existing items in the ListView
+	ListView_DeleteAllItems(Properties_hLV);
+
+	// Insert new items into the ListView
+	LV_ITEM pitem;
+	memset(&pitem, 0, sizeof(LV_ITEM));
+	pitem.mask = LVIF_TEXT;
+
+	for (DWORD row = 0; row < NUM_ITEMS; row++) {
+		pitem.iItem = row;
+		pitem.pszText = const_cast<char*>(grid[0][row].c_str());
+		ListView_InsertItem(Properties_hLV, &pitem);
+
+		for (DWORD col = 1; col < NUM_COLS; col++) {
+			ListView_SetItemText(Properties_hLV, row, col, const_cast<char*>(grid[col][row].c_str()));
+		}
+	}
+
+	return true;
 }

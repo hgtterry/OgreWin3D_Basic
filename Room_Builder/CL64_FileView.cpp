@@ -577,6 +577,35 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 	item1.mask = TVIF_TEXT;
 	TreeView_GetItem(((LPNMHDR)lParam)->hwndFrom, &item1);
 
+	// ---------------------------------------------------- Player
+	if (!strcmp(FileView_Folder, "Player")) // Folder
+	{
+		//Context_Selection = Enums::FileView_Player_Folder;
+		return;
+	}
+	if (!strcmp(FileView_File, "Player"))
+	{
+		//Context_Selection = Enums::FileView_Player_File;
+
+		//HideRightPanes();
+		//App->CL_Props_Dialogs->Show_Player_Dlg(true);
+		//----------------------------------------------------------------------------
+
+		//App->SBC_Properties->Reset_Last_Selected_Object(App->SBC_Properties->Last_Selected_Object);
+		//App->SBC_Properties->Last_Selected_Object = Index;
+		//----------------------------------------------------------------------------
+
+		App->CL_Properties_Scene->Current_Selected_Object = Index;
+
+		//App->CL_Properties->Edit_Category = Enums::Edit_Player;
+		//App->CL_LookUps->Update_Types();
+
+		ShowWindow(App->CL_Properties_Scene->Properties_Dlg_hWnd, 1);
+		App->CL_Properties_Scene->Update_ListView_Player();
+
+		return;
+	}
+
 	// ---- Areas
 	//if (!strcmp(FileView_Folder, "Area")) // Folder
 	//{

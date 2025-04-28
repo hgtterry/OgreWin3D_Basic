@@ -88,13 +88,13 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     App->CL_Properties_Tabs->Start_Tabs_Control_Dlg();
   
-    App->CL_Com_Player->Create_Player_Object();
-
     App->CL_FileView->Start_FileView();
     App->CL_FileView->Init_FileView();
 
     App->CL_Properties_Scene->Start_Properties();
     App->CL_Panels->Place_Properties_Dlg();
+
+    App->CL_Com_Player->Create_Player_Object();
 
     SetTimer(App->MainHwnd, 1, 100, NULL);
 

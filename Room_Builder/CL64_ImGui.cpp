@@ -250,7 +250,9 @@ void CL64_ImGui::Press_Excape_GUI(void)
 	}
 	else
 	{
+		
 		ImGui::Text("Press Excape to Exit");
+		ImGui::Text("Keys WASD");
 
 		ImGui::PopStyleColor();
 		ImGui::End();

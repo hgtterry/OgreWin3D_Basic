@@ -158,6 +158,8 @@ void CL64_Editor_Scene::Set_Editor_Scene(void)
 	App->CL_Ogre->mWindow->windowMovedOrResized();
 	App->CL_Ogre->mCamera->setAspectRatio((Ogre::Real)App->CL_Ogre->mWindow->getWidth() / (Ogre::Real)App->CL_Ogre->mWindow->getHeight());
 
+	App->CL_Ogre->OGL_Listener->Show_Visuals(false);
+
 	// Hide Top Tabs
 	App->CL_Top_Tabs->Show_TopTabs(false);
 
@@ -179,6 +181,8 @@ void CL64_Editor_Scene::Set_Editor_Scene(void)
 	SetMenu(App->MainHwnd, App->Menu_Scene);
 
 	App->CL_Com_Objects->Show_Entities(true);
+
+	App->CL_Ogre->Bullet_Debug_Listener->flag_Render_Debug_Flag = 1;
 }
 
 // *************************************************************************
@@ -230,6 +234,7 @@ void CL64_Editor_Scene::Back_To_Map_Editor(void)
 
 	// Show properties tabs
 	App->CL_Properties_Tabs->Show_Tabs_Control_Dlg(true);
+	App->CL_Properties_Tabs->flag_Tabs_Dlg_Active = 1;
 
 	// Set menu to map
 	SetMenu(App->MainHwnd, App->Menu_Map);

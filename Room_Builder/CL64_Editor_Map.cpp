@@ -1422,7 +1422,7 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Ogre_BR(HWND hDlg, UINT message, WPARAM w
 			// If Mouse has not moved select Brush and Face
 			if (cameraComparison == 1)
 			{
-				if (App->CL_Editor_Preview->flag_PreviewMode_Running == 0)
+				if (App->CL_Editor_Preview->flag_PreviewMode_Running == 0 && App->CL_Editor_Scene->flag_Scene_Editor_Active == 0)
 				{
 					App->CL_Picking->Mouse_Pick_Entity(false);
 				}

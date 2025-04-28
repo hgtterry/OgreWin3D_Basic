@@ -33,6 +33,8 @@ public:
 	void Create_Properties_hLV(void);
 	void Show_Properties_Scene(bool Enable);
 
+	bool Update_ListView_Player();
+
 
 	HWND Properties_Dlg_hWnd;
 	HWND Properties_hLV;

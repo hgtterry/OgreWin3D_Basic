@@ -124,7 +124,8 @@ void CL64_Editor_Preview::Map_Editor_Mode(void)
 	App->CL_Editor_Map->Resize_Windows(App->CL_Editor_Map->Main_Dlg_Hwnd, App->CL_Editor_Map->nleftWnd_width, App->CL_Editor_Map->nleftWnd_Depth);
 
 	App->CL_Properties_Tabs->Enable_Tabs_Dlg(true);
-
+	App->CL_Properties_Tabs->flag_Tabs_Dlg_Active = 1;
+	
 	if (App->CL_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes) > 0)
 	{
 		App->CL_Ogre->OGL_Listener->Show_Visuals(true);
