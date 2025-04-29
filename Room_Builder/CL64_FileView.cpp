@@ -138,6 +138,11 @@ LRESULT CALLBACK CL64_FileView::Proc_ListPanel(HWND hDlg, UINT message, WPARAM w
 		return (LONG)App->AppBackground;
 	}
 
+	case WM_CTLCOLORBTN:
+	{
+		return (LRESULT)App->AppBackground;
+	}
+
 	case WM_SIZE:
 	{
 		App->CL_Panels->Resize_FileView();

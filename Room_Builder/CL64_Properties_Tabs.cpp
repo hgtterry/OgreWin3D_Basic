@@ -112,6 +112,11 @@ LRESULT CALLBACK CL64_Properties_Tabs::Proc_Tabs_Control(HWND hDlg, UINT message
 		return (LONG)App->AppBackground;
 	}
 
+	case WM_CTLCOLORBTN:
+	{
+		return (LRESULT)App->AppBackground;
+	}
+
 	case WM_NOTIFY:
 	{
 		LPNMHDR some_item = (LPNMHDR)lParam;

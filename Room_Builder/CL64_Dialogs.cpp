@@ -146,6 +146,12 @@ LRESULT CALLBACK CL64_Dialogs::Proc_YesNoCancel(HWND hDlg, UINT message, WPARAM 
 	{
 		return (LONG)App->AppBackground;
 	}
+
+	case WM_CTLCOLORBTN:
+	{
+		return (LRESULT)App->AppBackground;
+	}
+
 	case WM_COMMAND:
 
 		if (LOWORD(wParam) == IDOK) // Yes

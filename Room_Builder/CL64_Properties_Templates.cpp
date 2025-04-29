@@ -105,6 +105,11 @@ LRESULT CALLBACK CL64_Properties_Templates::Proc_Templates(HWND hDlg, UINT messa
 		return (LONG)App->AppBackground;
 	}
 
+	case WM_CTLCOLORBTN:
+	{
+		return (LRESULT)App->AppBackground;
+	}
+
 	case WM_NOTIFY:
 	{
 		LPNMHDR some_item = (LPNMHDR)lParam;

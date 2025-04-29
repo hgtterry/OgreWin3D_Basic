@@ -76,6 +76,11 @@ LRESULT CALLBACK CL64_Editor_Scene::Proc_Headers_Scene(HWND hDlg, UINT message, 
 		return (LONG)App->AppBackground;
 	}
 
+	case WM_CTLCOLORBTN:
+	{
+		return (LRESULT)App->AppBackground;
+	}
+
 	case WM_NOTIFY:
 	{
 		LPNMHDR some_item = (LPNMHDR)lParam;
