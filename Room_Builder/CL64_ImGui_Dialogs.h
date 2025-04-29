@@ -36,6 +36,9 @@ public:
 	void Start_Dialog_Float(float Step, int Combo_Step, float StartValue, char* Banner);
 	void Dialog_Float(void);
 
+	void Start_Dialog_Float_Vec3(float Step, int Combo_Step, Ogre::Vector3 StartValue, char* Banner);
+	void Dialog_Float_Vec3(void);
+
 	void Start_Dialog_MessageEditor(int Index);
 	void Dialog_MessageEditor(void);
 
@@ -73,6 +76,11 @@ public:
 	bool flag_Float_Exit;
 	bool flag_Float_Altetered;
 	int Float_Combo_Step;
+
+	// -------------- Float Dialog Vec3
+	bool flag_Show_Dialog_Float_Vec3;
+	Ogre::Vector3 m_Dialog_Float_Vec3;
+	Ogre::Vector3 m_Dialog_Float_Copy_Vec3;
 
 	// -------------- General
 	ImVec4 Float_Colour;

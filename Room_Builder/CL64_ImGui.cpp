@@ -195,6 +195,11 @@ void CL64_ImGui::ImGui_Render_Loop(void)
 		App->CL_ImGui_Dialogs->Dialog_Float();
 	}
 
+	if (App->CL_ImGui_Dialogs->flag_Show_Dialog_Float_Vec3 == 1)
+	{
+		App->CL_ImGui_Dialogs->Dialog_Float_Vec3();
+	}
+
 	// Iterate through the mapping and call the functions where the flag is true
 	for (const auto& guiFunction : guiFunctions)
 	{

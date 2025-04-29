@@ -57,6 +57,8 @@ CL64_ImGui_Dialogs::CL64_ImGui_Dialogs(void)
 	Float_Combo_Step = 0;
 	flag_Float_Altetered = 0;
 
+	flag_Show_Dialog_Float_Vec3 = 0;
+
 	// Mesage Editor
 	flag_Centre_X_Selected = 0;
 	flag_Centre_Y_Selected = 0;
@@ -877,5 +879,126 @@ void CL64_ImGui_Dialogs::Physics_Console_Gui(void)
 
 	//	ImGui::End();
 	//}
+}
+
+// *************************************************************************
+// *		Start_Dialog_Float_Vec3:- Terry and Hazel Flanigan 2024 	   *
+// *************************************************************************
+void CL64_ImGui_Dialogs::Start_Dialog_Float_Vec3(float Step, int Combo_Step, Ogre::Vector3 StartValue, char* Banner)
+{
+	flag_Float_Exit = 0;
+	flag_Float_Canceld = 0;
+	Float_Step = Step;
+	Float_Combo_Step = Combo_Step;
+	//m_Dialog_Float = StartValue;
+	m_Dialog_Float_Vec3 = StartValue;
+
+	strcpy(Float_Banner, Banner);
+
+	m_Dialog_Float_Copy_Vec3 = StartValue;
+	
+	//App->CL_Panels->Disable_Panels(true);
+
+	Float_PosX = ((float)App->CL_Ogre->mWindow->getViewport(0)->getActualWidth() / 2) - (200 / 2);
+	Float_PosY = ((float)App->CL_Ogre->mWindow->getViewport(0)->getActualHeight() / 2) - (130 / 2);
+
+	flag_Float_StartPos = 0;
+
+	flag_Show_Dialog_Float_Vec3 = 1;
+}
+// *************************************************************************
+// *			Dialog_Float_Vec3:- Terry and Hazel Flanigan 2024  		   *
+// *************************************************************************
+void CL64_ImGui_Dialogs::Dialog_Float_Vec3(void)
+{
+	ImGui::SetNextWindowPos(ImVec2(Float_PosX, Float_PosY), ImGuiCond_FirstUseEver);
+	ImGui::SetNextWindowSize(ImVec2(210, 220), ImGuiCond_FirstUseEver);
+
+	ImGui::PushStyleColor(ImGuiCol_WindowBg, IM_COL32(239, 239, 239, 255));
+
+	if (!ImGui::Begin(Float_Banner, &flag_Show_Dialog_Float_Vec3, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoResize))
+	{
+		ImGui::End();
+	}
+	else
+	{
+		if (flag_Float_StartPos == 0)
+		{
+			Float_PosX = ((float)App->CL_Ogre->mWindow->getViewport(0)->getActualWidth() / 2) - (200 / 2);
+			Float_PosY = ((float)App->CL_Ogre->mWindow->getViewport(0)->getActualHeight() / 2) - (130 / 2);
+			ImGui::SetWindowPos(Float_Banner, ImVec2(Float_PosX, Float_PosY));
+
+			flag_Float_StartPos = 1;
+		}
+
+		float spacingX = ImGui::GetStyle().ItemInnerSpacing.x;
+
+		ImGui::Indent();
+		ImGui::Spacing();
+
+		int Test_X = ImGui::InputFloat(" X", &m_Dialog_Float_Vec3.x, Float_Step, 0, "%.3f");
+		if (Test_X == 1)
+		{
+			flag_Float_Altetered = 1;
+		}
+
+		int Test_Y = ImGui::InputFloat(" Y ", &m_Dialog_Float_Vec3.y, Float_Step, 0, "%.3f");
+		if (Test_Y == 1)
+		{
+			flag_Float_Altetered = 1;
+		}
+
+		int Test_Z = ImGui::InputFloat(" Z ", &m_Dialog_Float_Vec3.z, Float_Step, 0, "%.3f");
+		if (Test_Z == 1)
+		{
+			flag_Float_Altetered = 1;
+		}
+
+		ImGui::Spacing();
+		ImGui::Spacing();
+
+		ImGui::SetNextItemWidth(100);
+		const char* XitemsPosXX[] = { "0.001","0.01","0.1","0.5","1", "2", "5", "10", "20" };
+		bool ChangedPosX = ImGui::Combo("Step", &Float_Combo_Step, XitemsPosXX, IM_ARRAYSIZE(XitemsPosXX));
+		if (ChangedPosX == 1)
+		{
+			Float_Step = (float)atof(XitemsPosXX[Float_Combo_Step]);
+		}
+
+		ImGui::Spacing();
+		ImGui::Separator();
+		ImGui::Spacing();
+		ImGui::Spacing();
+		ImGui::Indent();
+
+		if (ImGui::Button("Apply"))
+		{
+			flag_Float_Exit = 1;
+			flag_Show_Dialog_Float_Vec3 = 0;
+			flag_Float_StartPos = 0;
+			flag_Float_Canceld = 0;
+			ImGui::PopStyleColor();
+			ImGui::End();
+		}
+
+		ImGui::SameLine(0.0f, spacingX);
+
+		if (ImGui::Button("Cancel"))
+		{
+			flag_Float_StartPos = 0;
+			flag_Float_Exit = 1;
+			flag_Show_Dialog_Float_Vec3 = 0;
+			flag_Float_Canceld = 1;
+			ImGui::PopStyleColor();
+			ImGui::End();
+		}
+
+		if (flag_Float_Exit == 0)
+		{
+			flag_Float_Canceld = 1;
+			ImGui::PopStyleColor();
+			ImGui::End();
+		}
+	}
 }
 

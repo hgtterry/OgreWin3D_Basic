@@ -253,84 +253,85 @@ void CL64_Properties_Scene::ListView_OnClickOptions(LPARAM lParam)
 	}
 
 	// Objects
-	/*if (Edit_Category == Enums::Edit_Object)
+	if (Edit_Category == Enums::Edit_Object)
 	{
-		Edit_Object(lParam);
+		//Edit_Object(lParam);
 		return;
-	}*/
+	}
 
 	// Messages
-	/*if (Edit_Category == Enums::Edit_Message)
+	if (Edit_Category == Enums::Edit_Message)
 	{
-		Edit_Messages(lParam);
+		//Edit_Messages(lParam);
 		return;
-	}*/
+	}
 
 	// Move Entity
-	///*if (Edit_Category == Enums::Edit_Move_Entity)
-	//{
-	//	Edit_Move_Entity(lParam);
-	//	return;
-	//}*/
+	if (Edit_Category == Enums::Edit_Move_Entity)
+	{
+		//Edit_Move_Entity(lParam);
+		return;
+	}
 
 	// Sounds
-	/*if (Edit_Category == Enums::Edit_Sounds)
+	if (Edit_Category == Enums::Edit_Sounds)
 	{
-		Edit_Sounds(lParam);
+		//Edit_Sounds(lParam);
 		return;
-	}*/
+	}
 
 	// Teleports
-	/*if (Edit_Category == Enums::Edit_Teleport)
+	if (Edit_Category == Enums::Edit_Teleport)
 	{
-		Edit_Teleport_Entity(lParam);
+		//Edit_Teleport_Entity(lParam);
 		return;
-	}*/
+	}
 
 	// Collectables
-	/*if (Edit_Category == Enums::Edit_Collectable)
+	if (Edit_Category == Enums::Edit_Collectable)
 	{
-		Edit_Collectables(lParam);
+		//Edit_Collectables(lParam);
 		return;
-	}*/
+	}
 
 	// Counters
-	/*if (Edit_Category == Enums::Edit_Counters)
+	if (Edit_Category == Enums::Edit_Counters)
 	{
-		Edit_Counters_OnClick(lParam);
+		//Edit_Counters_OnClick(lParam);
 		return;
-	}*/
+	}
 
 	// Environs
-	/*if (Edit_Category == Enums::Edit_Environs)
+	if (Edit_Category == Enums::Edit_Environs)
 	{
 		Edit_Environs_OnClick(lParam);
 		return;
-	}*/
+	}
 
 	// Particles
-	/*if (Edit_Category == Enums::Edit_Particles)
+	if (Edit_Category == Enums::Edit_Particles)
 	{
-		Edit_Particle(lParam);
+		//Edit_Particle(lParam);
 		return;
-	}*/
+	}
 
 	// Lights
-	/*if (Edit_Category == Enums::Edit_Lights)
+	if (Edit_Category == Enums::Edit_Lights)
 	{
-		Edit_Light_Onclick(lParam);
+		//Edit_Light_Onclick(lParam);
 		return;
-	}*/
+	}
 
-	//// UserObjects
-	//if (Edit_Category == Enums::Edit_UserObjects)
-	//{
-	//	if (Edit_Physics == 0)
-	//	{
-	//		Edit_UserObjects_Onclick(lParam);
-	//	}
-	//	return;
-	//}
+	// UserObjects
+	if (Edit_Category == Enums::Edit_UserObjects)
+	{
+		if (flag_Edit_Physics == 0)
+		{
+			//Edit_UserObjects_Onclick(lParam);
+		}
+
+		return;
+	}
 
 	return;
 }
@@ -391,6 +392,51 @@ bool CL64_Properties_Scene::Update_ListView_Player()
 
 		for (DWORD col = 1; col < NUM_COLS; col++) {
 			ListView_SetItemText(Properties_hLV, row, col, const_cast<char*>(grid[col][row].c_str()));
+		}
+	}
+
+	return true;
+}
+
+// *************************************************************************
+// *		Update_ListView_Environs:- Terry and Hazel Flanigan 2025	   *
+// *************************************************************************
+bool CL64_Properties_Scene::Update_ListView_Environs()
+{
+	int index = Current_Selected_Object;
+
+	// Update the properties dialog title
+	std::string str_uniqueID = std::to_string(App->CL_Editor_Com->B_Object[index]->This_Object_UniqueID);
+	std::string str_index = std::to_string(index);
+	std::string str_chr_ID = "Unique ID " + str_uniqueID + "  Object Index " + str_index;
+
+	SetWindowText(Properties_Dlg_hWnd, str_chr_ID.c_str());
+	SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, App->CL_Editor_Com->B_Object[index]->Object_Name);
+
+	const int NUM_ITEMS = 4;
+	const int NUM_COLS = 2;
+	std::string grid[NUM_COLS][NUM_ITEMS];
+	LV_ITEM pitem;
+	memset(&pitem, 0, sizeof(LV_ITEM));
+	pitem.mask = LVIF_TEXT;
+
+	grid[0][0] = "Name",		grid[1][0] = App->CL_Editor_Com->B_Object[index]->Object_Name;
+	grid[0][1] = " ",			grid[1][1] = " ";
+	grid[0][2] = "Evironment",	grid[1][2] = "Settings";
+	grid[0][3] = "Position",	grid[1][3] = "Set";
+
+	ListView_DeleteAllItems(Properties_hLV);
+
+	for (DWORD row = 0; row < NUM_ITEMS; row++)
+	{
+		pitem.iItem = row;
+		pitem.pszText = const_cast<char*>(grid[0][row].c_str());
+		ListView_InsertItem(Properties_hLV, &pitem);
+
+		for (DWORD col = 1; col < NUM_COLS; col++)
+		{
+			ListView_SetItemText(Properties_hLV, row, col,
+				const_cast<char*>(grid[col][row].c_str()));
 		}
 	}
 
@@ -726,6 +772,78 @@ bool CL64_Properties_Scene::Edit_Player(LPARAM lParam)
 	//	return 1;
 	//}
 
+
+	return 1;
+}
+
+// *************************************************************************
+// *		Edit_Environs_OnClick:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+bool CL64_Properties_Scene::Edit_Environs_OnClick(LPARAM lParam)
+{
+	int Index = Current_Selected_Object;
+
+	int result = 1;
+	int test;
+
+	LPNMLISTVIEW poo = (LPNMLISTVIEW)lParam;
+	test = poo->iItem;
+	ListView_GetItemText(Properties_hLV, test, 0, btext, 20);
+
+	result = strcmp(btext, "Name");
+	if (result == 0)
+	{
+		App->CL_Com_Environments->Rename_Environ_Entity(Index);
+		Update_ListView_Environs();
+	}
+
+	result = strcmp(btext, "Evironment");
+	if (result == 0)
+	{
+		App->CL_Gui_Environment->Start_Environment_Editor(Index, false);
+		return 1;
+	}
+
+	result = strcmp(btext, "Position");
+	if (result == 0)
+	{
+		App->CL_ImGui_Dialogs->Start_Dialog_Float_Vec3(0.50, 3, App->CL_Editor_Com->B_Object[Index]->Object_Node->getPosition(), (LPSTR)"Position");
+
+		while (App->CL_ImGui_Dialogs->flag_Show_Dialog_Float_Vec3 == 1)
+		{
+			App->CL_ImGui_Dialogs->BackGround_Render_Loop();
+
+			App->CL_Editor_Com->B_Object[Index]->Object_Node->setPosition(App->CL_ImGui_Dialogs->m_Dialog_Float_Vec3);
+			App->CL_Physics->Reset_Physics();
+		}
+
+		App->CL_ImGui_Dialogs->flag_Show_Dialog_Float_Vec3 = 0;
+
+		if (App->CL_ImGui_Dialogs->flag_Float_Canceld == 0)
+		{
+			App->CL_ImGui_Dialogs->flag_Show_Dialog_Float_Vec3 = 0;
+
+			App->CL_Editor_Com->B_Object[Index]->Object_Node->setPosition(App->CL_ImGui_Dialogs->m_Dialog_Float_Vec3);
+			App->CL_Editor_Com->B_Object[Index]->Mesh_Pos = App->CL_ImGui_Dialogs->m_Dialog_Float_Vec3;
+			//App->CL_Brush_X->Move_Player_Brush();
+
+			App->CL_Editor_Com->B_Player[0]->flag_Altered = 1;
+			App->CL_Doc->flag_Is_Modified = 1;
+			App->CL_FileView->Mark_Altered(App->CL_Editor_Com->B_Player[0]->FileViewItem);
+		}
+		else
+		{
+			App->CL_ImGui_Dialogs->m_Dialog_Float_Vec3 = App->CL_ImGui_Dialogs->m_Dialog_Float_Copy_Vec3;
+			App->CL_Editor_Com->B_Object[Index]->Object_Node->setPosition(App->CL_ImGui_Dialogs->m_Dialog_Float_Copy_Vec3);
+			App->CL_Physics->Reset_Physics();
+		}
+
+		//App->CL_Panels->Disable_Panels(false);
+
+		Update_ListView_Environs();
+
+		return 1;
+	}
 
 	return 1;
 }

@@ -672,11 +672,11 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 		//App->CL_Gizmos->MarkerBox_Addjust(Index);
 
 		App->CL_Properties_Scene->Current_Selected_Object = Index;
-		//App->CL_Properties->Edit_Category = Enums::Edit_Environs;
+		App->CL_Properties_Scene->Edit_Category = Enums::Edit_Environs;
 		//App->CL_LookUps->Update_Types();
 
 		//ShowWindow(App->CL_Properties->Properties_Dlg_hWnd, 1);
-		//App->CL_Properties->Update_ListView_Environs();
+		App->CL_Properties_Scene->Update_ListView_Environs();
 
 		/*if (App->SBC_Dimensions->Show_Dimensions == 1)
 		{
