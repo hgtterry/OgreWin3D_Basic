@@ -243,6 +243,9 @@
     <ClInclude Include="CL64_Editor_Preview.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="CL64_ImGui_Dialogs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Room Builder.cpp">
@@ -465,6 +468,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CL64_Editor_Preview.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CL64_ImGui_Dialogs.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
