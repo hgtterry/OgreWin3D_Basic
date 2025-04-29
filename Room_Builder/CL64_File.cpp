@@ -162,7 +162,7 @@ void CL64_File::Save_Document()
 	}
 
 	App->CL_Doc->flag_IsNewDocument = false;
-	App->CL_Doc->flag_Is_Modified = false;
+	App->CL_Level->flag_Level_is_Modified = false;
 }
 
 // *************************************************************************

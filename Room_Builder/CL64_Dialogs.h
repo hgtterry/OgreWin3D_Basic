@@ -30,7 +30,7 @@ public:
 	CL64_Dialogs(void);
 	~CL64_Dialogs(void);
 
-	void YesNo(const char* Text, const char* Text2);
+	void YesNo(const char* Text, const char* Text2, const char* Text3 = NULL);
 	void Message(char* pString, char* pString2);
 	void PleaseWait();
 	void Start_Brush_Properties_Dlg();
@@ -44,6 +44,7 @@ public:
 	char mTextureFile[MAX_PATH];
 	char MessageString[MAX_PATH];
 	char MessageString2[MAX_PATH];
+	char MessageString3[MAX_PATH];
 
 	bool flag_Dlg_Canceled;
 

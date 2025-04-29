@@ -334,7 +334,7 @@ void CL64_Properties_Textures::Apply_Texture()
 		return;
 	}
 
-	App->CL_Doc->flag_Is_Modified = 1;
+	App->CL_Level->flag_Level_is_Modified = true;
 
 	App->CL_Doc->mAdjustMode = ADJUST_MODE_FACE;
 

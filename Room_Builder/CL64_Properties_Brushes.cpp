@@ -323,7 +323,7 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Brush_Tabs(HWND hDlg, UINT messag
 
 				App->CL_Doc->Set_Faces_To_Brush_Name_Selected();
 
-				App->CL_Doc->flag_Is_Modified = 1;
+				App->CL_Level->flag_Level_is_Modified = true;
 
 				SendDlgItemMessage(hDlg, IDC_GD_BRUSHLIST, LB_SETCURSEL, (WPARAM)App->CL_Properties_Brushes->Selected_Index, (LPARAM)0);
 			}

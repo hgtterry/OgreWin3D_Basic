@@ -185,8 +185,8 @@ public:
 	int mCurrentTool;
 	int NumSelEntities;
 
-	bool flag_Is_Modified;
 	bool flag_IsNewDocument;
 	bool flag_Track_Camera;
+
 };
 

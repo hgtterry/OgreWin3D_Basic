@@ -101,6 +101,7 @@ CL64_ImGui_Dialogs::~CL64_ImGui_Dialogs(void)
 void CL64_ImGui_Dialogs::Close_All_Dialogs(void)
 {
 	flag_Show_Dialog_Float = 0;
+	flag_Show_Dialog_Float_Vec3 = 0;
 	flag_Show_Dialog_MessageEditor = 0;
 	flag_Show_Move_Ent_Editor = 0;
 	flag_Show_Dialog_list = 0;

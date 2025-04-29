@@ -476,12 +476,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                     if (App->CL_Brush->Get_Brush_Count() == 0)
                     {
                        App->CL_Doc->AddBrushToWorld();
-                       App->CL_Doc->flag_Is_Modified = 1;
+                       App->CL_Level->flag_Level_is_Modified = true;
                     }
                     else
                     {
                        App->CL_Doc->AddBrushToWorld();
-                       App->CL_Doc->flag_Is_Modified = 1;
+                       App->CL_Level->flag_Level_is_Modified = true;
                     }
                 }
 
@@ -597,25 +597,27 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             case IDM_EXIT:
             {
             
-                /*if (App->CL_Scene->flag_Scene_Modified == 1)
+                if (App->CL_Level->flag_Level_is_Modified == true)
                 {
-                    App->CL_Dialogs->Show_YesNo_Dlg((LPSTR)"Save Scene", (LPSTR)"Scene has been Modified", (LPSTR)"Do you wont to save changes");
+                    App->CL_Dialogs->YesNo((LPSTR)"Save Scene", (LPSTR)"Scene has been Modified", (LPSTR)"Do you wont to save changes");
 
-                    bool Doit = App->CL_Dialogs->flag_Canceled;
+                    bool Doit = App->CL_Dialogs->flag_Dlg_Canceled;
                     if (Doit == 0)
                     {
-                        App->CL_Project->Start_Save_Project_Dialog();
+                        App->CL_File->Start_Save(true);
                     }
                 }
-                else*/
+                else
                 {
-                    App->CL_Dialogs->YesNo("Close Room Builder","Are you sure");
+                    App->CL_Dialogs->YesNo("Close OgreWin3D","Are you sure");
 
                     if (App->CL_Dialogs->flag_Dlg_Canceled == 1)
                     {
                         return 1;
                     }
                 }
+
+                App->CL_ImGui_Dialogs->Close_All_Dialogs();
 
                 if (App->CL_Ogre->Ogre3D_Listener->flag_StopOgre == 0)
                 {
@@ -667,34 +669,33 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     
     case WM_CLOSE:
     {
- 
-        /*if (App->CL_Scene->flag_Scene_Modified == 1)
-               {
-                   App->CL_Dialogs->Show_YesNo_Dlg((LPSTR)"Save Scene", (LPSTR)"Scene has been Modified", (LPSTR)"Do you wont to save changes");
-
-                   bool Doit = App->CL_Dialogs->flag_Canceled;
-                   if (Doit == 0)
-                   {
-                       App->CL_Project->Start_Save_Project_Dialog();
-                   }
-               }
-               else*/
-
-
         if (App->CL_Editor_Scene->flag_Scene_Editor_Active == 1)
         {
             App->CL_Editor_Scene->Back_To_Map_Editor();
             return 1;
         }
 
+        if (App->CL_Level->flag_Level_is_Modified == true)
         {
-            App->CL_Dialogs->YesNo("Close Room Builder", "Are you sure");
+            App->CL_Dialogs->YesNo((LPSTR)"Save Scene", (LPSTR)"Scene has been Modified", (LPSTR)"Do you wont to save changes");
+
+            bool Doit = App->CL_Dialogs->flag_Dlg_Canceled;
+            if (Doit == 0)
+            {
+                App->CL_File->Start_Save(true);
+            }
+        }
+        else
+        {
+            App->CL_Dialogs->YesNo("Close OgreWin3D", "Are you sure");
 
             if (App->CL_Dialogs->flag_Dlg_Canceled == 1)
             {
                 return 1;
             }
         }
+
+        App->CL_ImGui_Dialogs->Close_All_Dialogs();
 
 		if (App->CL_Ogre->Ogre3D_Listener->flag_StopOgre == 0)
 		{

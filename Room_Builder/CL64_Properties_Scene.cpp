@@ -489,7 +489,7 @@ bool CL64_Properties_Scene::Edit_Player(LPARAM lParam)
 			App->CL_Editor_Com->B_Player[0]->Ground_speed = App->CL_ImGui_Dialogs->m_Dialog_Float * 100;
 
 			App->CL_Editor_Com->B_Object[Index]->flag_Altered = 1;
-			App->CL_Doc->flag_Is_Modified = 1;
+			App->CL_Level->flag_Level_is_Modified = true;
 			App->CL_FileView->Mark_Altered(App->CL_Editor_Com->B_Object[Index]->FileViewItem);
 		}
 		else
@@ -532,7 +532,7 @@ bool CL64_Properties_Scene::Edit_Player(LPARAM lParam)
 			App->CL_Editor_Com->B_Player[0]->TurnRate = App->CL_ImGui_Dialogs->m_Dialog_Float;
 
 			App->CL_Editor_Com->B_Object[Index]->flag_Altered = 1;
-			App->CL_Doc->flag_Is_Modified = 1;
+			App->CL_Level->flag_Level_is_Modified = true;
 			App->CL_FileView->Mark_Altered(App->CL_Editor_Com->B_Object[Index]->FileViewItem);
 		}
 		else
@@ -575,7 +575,7 @@ bool CL64_Properties_Scene::Edit_Player(LPARAM lParam)
 			App->CL_Editor_Com->B_Player[0]->PlayerHeight = App->CL_ImGui_Dialogs->m_Dialog_Float;
 
 			App->CL_Editor_Com->B_Object[Index]->flag_Altered = 1;
-			App->CL_Doc->flag_Is_Modified = 1;
+			App->CL_Level->flag_Level_is_Modified = true;
 			App->CL_FileView->Mark_Altered(App->CL_Editor_Com->B_Object[Index]->FileViewItem);
 		}
 		else
@@ -615,7 +615,7 @@ bool CL64_Properties_Scene::Edit_Player(LPARAM lParam)
 			App->CL_Brush_X->Move_Player_Brush();
 			
 			App->CL_Editor_Com->B_Player[0]->flag_Altered = 1;
-			App->CL_Doc->flag_Is_Modified = 1;
+			App->CL_Level->flag_Level_is_Modified = true;
 			App->CL_FileView->Mark_Altered(App->CL_Editor_Com->B_Player[0]->FileViewItem);
 		}
 		else
@@ -657,7 +657,7 @@ bool CL64_Properties_Scene::Edit_Player(LPARAM lParam)
 			App->CL_Brush_X->Move_Player_Brush();
 
 			App->CL_Editor_Com->B_Player[0]->flag_Altered = 1;
-			App->CL_Doc->flag_Is_Modified = 1;
+			App->CL_Level->flag_Level_is_Modified = true;
 			App->CL_FileView->Mark_Altered(App->CL_Editor_Com->B_Player[0]->FileViewItem);
 		}
 		else
@@ -698,7 +698,7 @@ bool CL64_Properties_Scene::Edit_Player(LPARAM lParam)
 			App->CL_Brush_X->Move_Player_Brush();
 
 			App->CL_Editor_Com->B_Player[0]->flag_Altered = 1;
-			App->CL_Doc->flag_Is_Modified = 1;
+			App->CL_Level->flag_Level_is_Modified = true;
 			App->CL_FileView->Mark_Altered(App->CL_Editor_Com->B_Player[0]->FileViewItem);
 		}
 		else
@@ -828,8 +828,8 @@ bool CL64_Properties_Scene::Edit_Environs_OnClick(LPARAM lParam)
 			//App->CL_Brush_X->Move_Player_Brush();
 
 			App->CL_Editor_Com->B_Player[0]->flag_Altered = 1;
-			App->CL_Doc->flag_Is_Modified = 1;
-			App->CL_FileView->Mark_Altered(App->CL_Editor_Com->B_Player[0]->FileViewItem);
+			App->CL_Level->flag_Level_is_Modified = true;
+			App->CL_FileView->Mark_Altered(App->CL_Editor_Com->B_Object[Index]->FileViewItem);
 		}
 		else
 		{

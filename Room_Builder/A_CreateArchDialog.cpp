@@ -687,7 +687,7 @@ void A_CreateArchDialog::CreateNewTemplateBrush(Brush *pBrush)
 
 	App->CL_Doc->UpdateAllViews (Enums::UpdateViews_Grids);
 
-	App->CL_Doc->flag_Is_Modified = 1;
+	App->CL_Level->flag_Level_is_Modified = 1;
 }
 
 // *************************************************************************

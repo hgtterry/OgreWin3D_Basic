@@ -70,7 +70,6 @@ CL64_Doc::CL64_Doc(void)
     mCurrentTool = CURTOOL_NONE;
     mCurrentGroup = 0;
 
-    flag_Is_Modified = 0;
     flag_IsNewDocument = 0;
     flag_Track_Camera = 1;
 
@@ -196,7 +195,7 @@ void CL64_Doc::AddBrushToWorld()
 		OnBrushSubtractfromworld();
 	}
 
-    flag_Is_Modified = 1;
+    App->CL_Level->flag_Level_is_Modified = true;
 }
 
 // *************************************************************************
@@ -296,7 +295,7 @@ void CL64_Doc::Brush_Add_To_world()
 
 	if (Placed)
 	{
-		App->CL_Doc->flag_Is_Modified = 1;
+        App->CL_Level->flag_Level_is_Modified = true;
 	}
 }
 
@@ -972,7 +971,7 @@ static float SnapSide(float CurMin, float CurMax, float Delta, float SnapSize)
 void CL64_Doc::DoneMovingBrushes()
 {
  
-    flag_Is_Modified = 1;
+    App->CL_Level->flag_Level_is_Modified = true;
 
     if (App->CL_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes) > 0)// || ModeTool == ID_TOOLS_TEMPLATE)
     {
@@ -1530,7 +1529,7 @@ static signed int fdocUpdateBrushFaceTextures(Brush* pBrush, void* pVoid)
 // *************************************************************************
 void CL64_Doc::UpdateAfterWadChange()
 {
-	flag_Is_Modified = 1;
+	//flag_Is_Modified = 1;
 
 	// update all brush faces
 	App->CL_Brush->BrushList_EnumLeafBrushes(App->CL_Level->Level_Get_Main_Brushes(), this, fdocUpdateBrushFaceTextures);
@@ -1584,7 +1583,7 @@ bool CL64_Doc::DeleteSelectedBrushes()
         //turn off any operation tools
         mCurrentTool = CURTOOL_NONE;
 
-        flag_Is_Modified = 1;
+        App->CL_Level->flag_Level_is_Modified = true;
     }
 
     
@@ -1657,7 +1656,7 @@ void CL64_Doc::SnapScaleNearest(int sides, int inidx, ViewVars* v)
 {
     float	bsnap;
 
-    flag_Is_Modified = 1;
+    App->CL_Level->flag_Level_is_Modified = true;
 
     //App->CLSB_Doc->mLastOp = BRUSH_SCALE;
 

@@ -69,7 +69,8 @@ public:
 
 	bool flag_UseGrid;
 	bool flag_Working_Folder_Exists;
-	bool flag_File_Been_Saved; 
+	bool flag_File_Been_Saved;
+	bool flag_Level_is_Modified;
 
 	CL64_WadFile* CL_Wad_Class;
 

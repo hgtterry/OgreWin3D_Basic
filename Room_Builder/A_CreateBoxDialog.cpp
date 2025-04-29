@@ -369,7 +369,7 @@ void A_CreateBoxDialog::CreateNewTemplateBrush(Brush* pBrush)
 	App->CL_Brush->Brush_Move(App->CL_Doc->CurBrush, &MoveVec);
 
 	App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
-	App->CL_Doc->flag_Is_Modified = true;
+	App->CL_Level->flag_Level_is_Modified = true;
 }
 
 // *************************************************************************

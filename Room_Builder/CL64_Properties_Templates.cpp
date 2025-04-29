@@ -162,7 +162,7 @@ LRESULT CALLBACK CL64_Properties_Templates::Proc_Templates(HWND hDlg, UINT messa
 					App->CL_Doc->Editor_Set_Dlgs(Enums::Editor_Dlgs_First_Brush);
 					
 					App->Set_Title(App->CL_Level->MTF_PathAndFile);
-					App->CL_Doc->flag_Is_Modified = 1;
+					App->CL_Level->flag_Level_is_Modified = true;
 
 					// Set for new level
 					strcpy(App->CL_Project->m_Project_Name, "New_Room");
@@ -176,7 +176,7 @@ LRESULT CALLBACK CL64_Properties_Templates::Proc_Templates(HWND hDlg, UINT messa
 				else
 				{
 					App->CL_Doc->AddBrushToWorld();
-					App->CL_Doc->flag_Is_Modified = 1;
+					App->CL_Level->flag_Level_is_Modified = true;
 				}
 			}
 
