@@ -203,6 +203,7 @@ void CL64_Editor_Scene::Set_Editor_Scene()
 // *************************************************************************
 void CL64_Editor_Scene::Return_From_Preview(void)
 {
+
 	// Set view flags
 	auto& topTabs = App->CL_Top_Tabs;
 	topTabs->flag_Full_View_3D = true;
@@ -224,6 +225,19 @@ void CL64_Editor_Scene::Return_From_Preview(void)
 	App->CL_Ogre->mWindow->windowMovedOrResized();
 	App->CL_Ogre->mCamera->setAspectRatio((Ogre::Real)App->CL_Ogre->mWindow->getWidth() / (Ogre::Real)App->CL_Ogre->mWindow->getHeight());
 	App->CL_Com_Objects->Show_Entities(true);
+
+	// TODO Recreating Physics Not Nessasery
+	if (App->CL_Physics->flag_TriMesh_Created == 1)
+	{
+		App->CL_Physics->Clear_Trimesh();
+	}
+
+	if (App->CL_Mesh_Mgr->World_Ent && App->CL_Mesh_Mgr->World_Node)
+	{
+		App->CL_Physics->Create_New_Trimesh(App->CL_Mesh_Mgr->World_Ent, App->CL_Mesh_Mgr->World_Node);
+		App->CL_Ogre->Bullet_Debug_Listener->flag_Render_Debug_Flag = 1;
+	}
+	
 }
 
 // *************************************************************************
@@ -261,6 +275,12 @@ void CL64_Editor_Scene::Back_To_Map_Editor(void)
 	if (App->CL_Editor_Map->flag_Environment_On == false)
 	{
 		App->CL_Com_Environments->Set_Environment_By_Index(false, -1);
+	}
+
+	if (App->CL_Physics->flag_TriMesh_Created == 1)
+	{
+		App->CL_Physics->Clear_Trimesh();
+		App->CL_Ogre->Bullet_Debug_Listener->flag_Render_Debug_Flag = 0;
 	}
 }
 
