@@ -33,8 +33,12 @@ CL64_Properties_Scene::CL64_Properties_Scene()
 	Properties_hLV = nullptr;
 
 	flag_Properties_Dlg_Active = 0;
+	flag_Edit_Physics = 0;
 
+	Edit_Category = Enums::Edit_Object;
 	Current_Selected_Object = 0;
+
+	btext[0] = 0;
 }
 
 CL64_Properties_Scene::~CL64_Properties_Scene()
@@ -118,7 +122,7 @@ LRESULT CALLBACK CL64_Properties_Scene::Proc_Properties(HWND hDlg, UINT message,
 			{
 			case NM_CLICK:
 			{
-				//App->CL_Properties_Scene->ListView_OnClickOptions(lParam);
+				App->CL_Properties_Scene->ListView_OnClickOptions(lParam);
 			}
 			}
 		}
@@ -215,6 +219,123 @@ void CL64_Properties_Scene::Show_Properties_Scene(bool Enable)
 }
 
 // *************************************************************************
+// *		ListView_OnClickOptions:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+void CL64_Properties_Scene::ListView_OnClickOptions(LPARAM lParam)
+{
+	// Area
+	/*if (Edit_Category == Enums::Edit_Area)
+	{
+		Edit_Area_Onclick(lParam);
+		return;
+	}*/
+
+	// Camera
+	/*if (Edit_Category == Enums::Edit_Camera)
+	{
+		Edit_Camera_Onclick(lParam);
+		return;
+	}*/
+
+	// Player
+	if (Edit_Category == Enums::Edit_Player)
+	{
+		if (flag_Edit_Physics == 0)
+		{
+			Edit_Player(lParam);
+		}
+		else
+		{
+			//Edit_Player_Physics(lParam);
+		}
+
+		return;
+	}
+
+	// Objects
+	/*if (Edit_Category == Enums::Edit_Object)
+	{
+		Edit_Object(lParam);
+		return;
+	}*/
+
+	// Messages
+	/*if (Edit_Category == Enums::Edit_Message)
+	{
+		Edit_Messages(lParam);
+		return;
+	}*/
+
+	// Move Entity
+	///*if (Edit_Category == Enums::Edit_Move_Entity)
+	//{
+	//	Edit_Move_Entity(lParam);
+	//	return;
+	//}*/
+
+	// Sounds
+	/*if (Edit_Category == Enums::Edit_Sounds)
+	{
+		Edit_Sounds(lParam);
+		return;
+	}*/
+
+	// Teleports
+	/*if (Edit_Category == Enums::Edit_Teleport)
+	{
+		Edit_Teleport_Entity(lParam);
+		return;
+	}*/
+
+	// Collectables
+	/*if (Edit_Category == Enums::Edit_Collectable)
+	{
+		Edit_Collectables(lParam);
+		return;
+	}*/
+
+	// Counters
+	/*if (Edit_Category == Enums::Edit_Counters)
+	{
+		Edit_Counters_OnClick(lParam);
+		return;
+	}*/
+
+	// Environs
+	/*if (Edit_Category == Enums::Edit_Environs)
+	{
+		Edit_Environs_OnClick(lParam);
+		return;
+	}*/
+
+	// Particles
+	/*if (Edit_Category == Enums::Edit_Particles)
+	{
+		Edit_Particle(lParam);
+		return;
+	}*/
+
+	// Lights
+	/*if (Edit_Category == Enums::Edit_Lights)
+	{
+		Edit_Light_Onclick(lParam);
+		return;
+	}*/
+
+	//// UserObjects
+	//if (Edit_Category == Enums::Edit_UserObjects)
+	//{
+	//	if (Edit_Physics == 0)
+	//	{
+	//		Edit_UserObjects_Onclick(lParam);
+	//	}
+	//	return;
+	//}
+
+	return;
+}
+
+// *************************************************************************
 // *		Update_ListView_Player:- Terry and Hazel Flanigan 2025	 	   *
 // *************************************************************************
 bool CL64_Properties_Scene::Update_ListView_Player() 
@@ -274,4 +395,331 @@ bool CL64_Properties_Scene::Update_ListView_Player()
 	}
 
 	return true;
+}
+
+// *************************************************************************
+// *			Edit_Player:- Terry and Hazel Flanigan 2025				   *
+// *************************************************************************
+bool CL64_Properties_Scene::Edit_Player(LPARAM lParam)
+{
+	int Index = Current_Selected_Object;
+	int result = 1;
+	int test;
+
+	LPNMLISTVIEW poo = (LPNMLISTVIEW)lParam;
+	test = poo->iItem;
+	ListView_GetItemText(Properties_hLV, test, 0, btext, 20);
+
+	result = strcmp(btext, "Name");
+	if (result == 0)
+	{
+		App->CL_Com_Player->Rename_Player(Index);
+		Update_ListView_Player();
+	}
+
+	result = strcmp(btext, "Ground Speed");
+	if (result == 0)
+	{
+		App->CL_ImGui_Dialogs->Start_Dialog_Float(0.01, 1, App->CL_Editor_Com->B_Player[0]->Ground_speed / 100, (LPSTR)"Ground Speed");
+
+		while (App->CL_ImGui_Dialogs->flag_Show_Dialog_Float == 1)
+		{
+			App->CL_ImGui_Dialogs->BackGround_Render_Loop();
+
+			if (App->CL_ImGui_Dialogs->m_Dialog_Float < 0)
+			{
+				App->CL_ImGui_Dialogs->m_Dialog_Float = 0;
+			}
+
+			App->CL_Editor_Com->B_Player[0]->Ground_speed = App->CL_ImGui_Dialogs->m_Dialog_Float * 100;
+		}
+
+		App->CL_ImGui_Dialogs->flag_Show_Dialog_Float = 0;
+
+		if (App->CL_ImGui_Dialogs->flag_Float_Canceld == 0)
+		{
+			App->CL_ImGui_Dialogs->flag_Show_Dialog_Float = 0;
+
+			App->CL_Editor_Com->B_Player[0]->Ground_speed = App->CL_ImGui_Dialogs->m_Dialog_Float * 100;
+
+			App->CL_Editor_Com->B_Object[Index]->flag_Altered = 1;
+			App->CL_Doc->flag_Is_Modified = 1;
+			App->CL_FileView->Mark_Altered(App->CL_Editor_Com->B_Object[Index]->FileViewItem);
+		}
+		else
+		{
+			App->CL_ImGui_Dialogs->m_Dialog_Float = App->CL_ImGui_Dialogs->m_Dialog_Float_Copy * 100;
+			App->CL_Editor_Com->B_Player[0]->Ground_speed = App->CL_ImGui_Dialogs->m_Dialog_Float_Copy * 100;
+
+		}
+
+		//App->CL_Panels->Disable_Panels(false);
+
+		Update_ListView_Player();
+
+		return 1;
+	}
+
+	result = strcmp(btext, "Turn Rate");
+	if (result == 0)
+	{
+		App->CL_ImGui_Dialogs->Start_Dialog_Float(0.01, 1, App->CL_Editor_Com->B_Player[0]->TurnRate, (LPSTR)"Turn Rate");
+
+		while (App->CL_ImGui_Dialogs->flag_Show_Dialog_Float == 1)
+		{
+			App->CL_ImGui_Dialogs->BackGround_Render_Loop();
+
+			if (App->CL_ImGui_Dialogs->m_Dialog_Float < 0)
+			{
+				App->CL_ImGui_Dialogs->m_Dialog_Float = 0;
+			}
+
+			App->CL_Editor_Com->B_Player[0]->TurnRate = App->CL_ImGui_Dialogs->m_Dialog_Float;
+		}
+
+		App->CL_ImGui_Dialogs->flag_Show_Dialog_Float = 0;
+
+		if (App->CL_ImGui_Dialogs->flag_Float_Canceld == 0)
+		{
+			App->CL_ImGui_Dialogs->flag_Show_Dialog_Float = 0;
+
+			App->CL_Editor_Com->B_Player[0]->TurnRate = App->CL_ImGui_Dialogs->m_Dialog_Float;
+
+			App->CL_Editor_Com->B_Object[Index]->flag_Altered = 1;
+			App->CL_Doc->flag_Is_Modified = 1;
+			App->CL_FileView->Mark_Altered(App->CL_Editor_Com->B_Object[Index]->FileViewItem);
+		}
+		else
+		{
+			App->CL_ImGui_Dialogs->m_Dialog_Float = App->CL_ImGui_Dialogs->m_Dialog_Float_Copy;
+			App->CL_Editor_Com->B_Player[0]->TurnRate = App->CL_ImGui_Dialogs->m_Dialog_Float_Copy;
+
+		}
+
+		//App->CL_Panels->Disable_Panels(false);
+
+		Update_ListView_Player();
+
+		return 1;
+	}
+
+	result = strcmp(btext, "Player Height");
+	if (result == 0)
+	{
+		App->CL_ImGui_Dialogs->Start_Dialog_Float(0.1, 2, App->CL_Editor_Com->B_Player[0]->PlayerHeight, (LPSTR)"Player Height");
+
+		while (App->CL_ImGui_Dialogs->flag_Show_Dialog_Float == 1)
+		{
+			App->CL_ImGui_Dialogs->BackGround_Render_Loop();
+
+			if (App->CL_ImGui_Dialogs->m_Dialog_Float < 0)
+			{
+				App->CL_ImGui_Dialogs->m_Dialog_Float = 0;
+			}
+
+			App->CL_Editor_Com->B_Player[0]->PlayerHeight = App->CL_ImGui_Dialogs->m_Dialog_Float;
+		}
+
+		App->CL_ImGui_Dialogs->flag_Show_Dialog_Float = 0;
+
+		if (App->CL_ImGui_Dialogs->flag_Float_Canceld == 0)
+		{
+			App->CL_ImGui_Dialogs->flag_Show_Dialog_Float = 0;
+
+			App->CL_Editor_Com->B_Player[0]->PlayerHeight = App->CL_ImGui_Dialogs->m_Dialog_Float;
+
+			App->CL_Editor_Com->B_Object[Index]->flag_Altered = 1;
+			App->CL_Doc->flag_Is_Modified = 1;
+			App->CL_FileView->Mark_Altered(App->CL_Editor_Com->B_Object[Index]->FileViewItem);
+		}
+		else
+		{
+			App->CL_ImGui_Dialogs->m_Dialog_Float = App->CL_ImGui_Dialogs->m_Dialog_Float_Copy;
+			App->CL_Editor_Com->B_Player[0]->PlayerHeight = App->CL_ImGui_Dialogs->m_Dialog_Float_Copy;
+
+		}
+
+		//App->CL_Panels->Disable_Panels(false);
+
+		Update_ListView_Player();
+		return 1;
+	}
+
+	result = strcmp(btext, "Start Pos_X");
+	if (result == 0)
+	{
+		App->CL_ImGui_Dialogs->Start_Dialog_Float(0.50, 3, App->CL_Editor_Com->B_Player[0]->StartPos.x, (LPSTR)"Start Pos_X");
+
+		while (App->CL_ImGui_Dialogs->flag_Show_Dialog_Float == 1)
+		{
+			App->CL_ImGui_Dialogs->BackGround_Render_Loop();
+
+			App->CL_Editor_Com->B_Player[0]->StartPos.x = App->CL_ImGui_Dialogs->m_Dialog_Float;
+			App->CL_Physics->Reset_Physics();
+		}
+
+		App->CL_ImGui_Dialogs->flag_Show_Dialog_Float = 0;
+
+		if (App->CL_ImGui_Dialogs->flag_Float_Canceld == 0)
+		{
+			App->CL_ImGui_Dialogs->flag_Show_Dialog_Float = 0;
+
+			App->CL_Editor_Com->B_Player[0]->StartPos.x = App->CL_ImGui_Dialogs->m_Dialog_Float;
+
+			App->CL_Editor_Com->B_Player[0]->flag_Altered = 1;
+			App->CL_Doc->flag_Is_Modified = 1;
+			App->CL_FileView->Mark_Altered(App->CL_Editor_Com->B_Player[0]->FileViewItem);
+		}
+		else
+		{
+			App->CL_ImGui_Dialogs->m_Dialog_Float = App->CL_ImGui_Dialogs->m_Dialog_Float_Copy;
+			App->CL_Editor_Com->B_Player[0]->StartPos.x = App->CL_ImGui_Dialogs->m_Dialog_Float_Copy;
+			App->CL_Physics->Reset_Physics();
+		}
+
+		//App->CL_Panels->Disable_Panels(false);
+
+		Update_ListView_Player();
+
+		return 1;
+	}
+
+	result = strcmp(btext, "Start Pos_Y");
+	if (result == 0)
+	{
+		//App->CL_Player->Show_Player_And_Physics(true);
+		App->CL_ImGui_Dialogs->Start_Dialog_Float(0.50, 3, App->CL_Editor_Com->B_Player[0]->StartPos.y, (LPSTR)"Start Pos_Y");
+
+		while (App->CL_ImGui_Dialogs->flag_Show_Dialog_Float == 1)
+		{
+			App->CL_ImGui_Dialogs->BackGround_Render_Loop();
+
+			App->CL_Editor_Com->B_Player[0]->StartPos.y = App->CL_ImGui_Dialogs->m_Dialog_Float;
+			App->CL_Physics->Reset_Physics();
+		}
+
+		App->CL_ImGui_Dialogs->flag_Show_Dialog_Float = 0;
+
+		if (App->CL_ImGui_Dialogs->flag_Float_Canceld == 0)
+		{
+			App->CL_ImGui_Dialogs->flag_Show_Dialog_Float = 0;
+
+			App->CL_Editor_Com->B_Player[0]->StartPos.y = App->CL_ImGui_Dialogs->m_Dialog_Float;
+
+			App->CL_Editor_Com->B_Player[0]->flag_Altered = 1;
+			App->CL_Doc->flag_Is_Modified = 1;
+			App->CL_FileView->Mark_Altered(App->CL_Editor_Com->B_Player[0]->FileViewItem);
+		}
+		else
+		{
+			App->CL_ImGui_Dialogs->m_Dialog_Float = App->CL_ImGui_Dialogs->m_Dialog_Float_Copy;
+			App->CL_Editor_Com->B_Player[0]->StartPos.y = App->CL_ImGui_Dialogs->m_Dialog_Float_Copy;
+			App->CL_Physics->Reset_Physics();
+		}
+
+		//App->CL_Panels->Disable_Panels(false);
+
+		Update_ListView_Player();
+
+		return 1;
+	}
+
+	result = strcmp(btext, "Start Pos_Z");
+	if (result == 0)
+	{
+		App->CL_ImGui_Dialogs->Start_Dialog_Float(0.50, 3, App->CL_Editor_Com->B_Player[0]->StartPos.z, (LPSTR)"Start Pos_Z");
+
+		while (App->CL_ImGui_Dialogs->flag_Show_Dialog_Float == 1)
+		{
+			App->CL_ImGui_Dialogs->BackGround_Render_Loop();
+
+			App->CL_Editor_Com->B_Player[0]->StartPos.z = App->CL_ImGui_Dialogs->m_Dialog_Float;
+			App->CL_Physics->Reset_Physics();
+		}
+
+		App->CL_ImGui_Dialogs->flag_Show_Dialog_Float = 0;
+
+		if (App->CL_ImGui_Dialogs->flag_Float_Canceld == 0)
+		{
+			App->CL_ImGui_Dialogs->flag_Show_Dialog_Float = 0;
+
+			App->CL_Editor_Com->B_Player[0]->StartPos.z = App->CL_ImGui_Dialogs->m_Dialog_Float;
+
+			App->CL_Editor_Com->B_Player[0]->flag_Altered = 1;
+			App->CL_Doc->flag_Is_Modified = 1;
+			App->CL_FileView->Mark_Altered(App->CL_Editor_Com->B_Player[0]->FileViewItem);
+		}
+		else
+		{
+			App->CL_ImGui_Dialogs->m_Dialog_Float = App->CL_ImGui_Dialogs->m_Dialog_Float_Copy;
+			App->CL_Editor_Com->B_Player[0]->StartPos.z = App->CL_ImGui_Dialogs->m_Dialog_Float_Copy;
+			App->CL_Physics->Reset_Physics();
+		}
+
+		//App->CL_Panels->Disable_Panels(false);
+
+		Update_ListView_Player();
+
+		return 1;
+	}
+
+	//result = strcmp(App->SBC_Properties->btext, "Look Up");
+	//if (result == 0)
+	//{
+	//	App->SBC_Gui_Dialogs->Start_Dialog_Float(0.5, App->CL_Editor_Com->B_Player[0]->Limit_Look_Up, "Player Look Up Limit");
+
+	//	while (App->SBC_Gui_Dialogs->Show_Dialog_Float == 1)
+	//	{
+	//		App->SBC_Gui_Dialogs->BackGround_Render_Loop();
+	//	}
+
+	//	App->SBC_Gui_Dialogs->Show_Dialog_Float = 0;
+
+	//	if (App->SBC_Gui_Dialogs->Float_Canceld == 0)
+	//	{
+	//		App->CL_Editor_Com->B_Player[0]->Limit_Look_Up = App->SBC_Gui_Dialogs->m_Dialog_Float;
+
+	//		App->CL_Editor_Com->B_Player[0]->Altered = 1;
+	//		App->CL_Editor_Com->Scene_Modified = 1;
+	//		App->SBC_FileView->Mark_Altered(App->CL_Editor_Com->B_Player[0]->FileViewItem);
+	//	}
+
+	//	App->Disable_Panels(false);
+
+	//	Update_ListView_Player();
+
+	//	return 1;
+	//}
+
+	//result = strcmp(App->SBC_Properties->btext, "Look Down");
+	//if (result == 0)
+	//{
+
+	//	App->SBC_Gui_Dialogs->Start_Dialog_Float(0.5, App->CL_Editor_Com->B_Player[0]->Limit_Look_Down, "Player Look Down Limit");
+
+	//	while (App->SBC_Gui_Dialogs->Show_Dialog_Float == 1)
+	//	{
+	//		App->SBC_Gui_Dialogs->BackGround_Render_Loop();
+	//	}
+
+	//	App->SBC_Gui_Dialogs->Show_Dialog_Float = 0;
+
+	//	if (App->SBC_Gui_Dialogs->Float_Canceld == 0)
+	//	{
+	//		App->CL_Editor_Com->B_Player[0]->Limit_Look_Down = App->SBC_Gui_Dialogs->m_Dialog_Float;
+
+	//		App->CL_Editor_Com->B_Player[0]->Altered = 1;
+	//		App->CL_Editor_Com->Scene_Modified = 1;
+	//		App->SBC_FileView->Mark_Altered(App->CL_Editor_Com->B_Player[0]->FileViewItem);
+	//	}
+
+	//	App->Disable_Panels(false);
+
+	//	Update_ListView_Player();
+
+	//	return 1;
+	//}
+
+
+	return 1;
 }

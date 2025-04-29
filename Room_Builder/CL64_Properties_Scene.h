@@ -34,17 +34,23 @@ public:
 	void Show_Properties_Scene(bool Enable);
 
 	bool Update_ListView_Player();
+	bool Edit_Player(LPARAM lParam);
 
 
 	HWND Properties_Dlg_hWnd;
 	HWND Properties_hLV;
 
+	int Edit_Category;
 	int Current_Selected_Object;
 
 	bool flag_Properties_Dlg_Active;
+	bool flag_Edit_Physics;
 
 private:
 	static LRESULT CALLBACK Proc_Properties(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
+	void ListView_OnClickOptions(LPARAM lParam);
+
+	char btext[20]; // ListView_GetItemText Text Holder for Compare
 };
 

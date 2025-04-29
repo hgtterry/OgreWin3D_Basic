@@ -189,6 +189,12 @@ void CL64_ImGui::ImGui_Render_Loop(void)
 		{flag_Show_App_Stats == 1, [&]() { App_Stats_GUI(); }}
 	};
 
+	// SBC_Gui_Dialogs
+	if (App->CL_ImGui_Dialogs->flag_Show_Dialog_Float == 1)
+	{
+		App->CL_ImGui_Dialogs->Dialog_Float();
+	}
+
 	// Iterate through the mapping and call the functions where the flag is true
 	for (const auto& guiFunction : guiFunctions)
 	{

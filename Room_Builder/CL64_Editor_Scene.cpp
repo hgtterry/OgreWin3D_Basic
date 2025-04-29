@@ -137,52 +137,65 @@ void CL64_Editor_Scene::Show_Headers(bool Enable)
 // *************************************************************************
 // *			Set_Editor_Scene:- Terry and Hazel Flanigan 2025	 	   *
 // *************************************************************************
-void CL64_Editor_Scene::Set_Editor_Scene(void)
+void CL64_Editor_Scene::Set_Editor_Scene()
 {
-	flag_Scene_Editor_Active = 1;
+	flag_Scene_Editor_Active = true;
 
-	App->CL_Top_Tabs->flag_Full_View_3D = 1;
-	App->CL_Top_Tabs->flag_View_Top_Left = 0;
-	App->CL_Top_Tabs->flag_View_Top_Right = 0;
-	App->CL_Top_Tabs->flag_View_Bottom_Left = 0;
+	// Handle physics and trimesh
+	if (App->CL_Physics->flag_TriMesh_Created)
+	{
+		App->CL_Physics->Clear_Trimesh();
+	}
 
+	if (App->CL_Mesh_Mgr->World_Ent && App->CL_Mesh_Mgr->World_Node)
+	{
+		App->CL_Physics->Create_New_Trimesh(App->CL_Mesh_Mgr->World_Ent,
+			App->CL_Mesh_Mgr->World_Node);
+		App->CL_Ogre->Bullet_Debug_Listener->flag_Render_Debug_Flag = true;
+	}
+
+	// Set view flags
+	auto& topTabs = App->CL_Top_Tabs;
+	topTabs->flag_Full_View_3D = true;
+	topTabs->flag_View_Top_Left = false;
+	topTabs->flag_View_Top_Right = false;
+	topTabs->flag_View_Bottom_Left = false;
+
+	// Initialize views and resize windows
 	App->CL_Editor_Map->Init_Views(Enums::Selected_View_3D);
-	App->CL_Editor_Map->Resize_Windows(App->CL_Editor_Map->Main_Dlg_Hwnd, App->CL_Editor_Map->nleftWnd_width, App->CL_Editor_Map->nleftWnd_Depth);
+	App->CL_Editor_Map->Resize_Windows(App->CL_Editor_Map->Main_Dlg_Hwnd,
+		App->CL_Editor_Map->nleftWnd_width,
+		App->CL_Editor_Map->nleftWnd_Depth);
 
-	RECT rcl;
+	// Adjust window position
+	RECT clientRect;
+	GetClientRect(App->CL_Editor_Map->Bottom_Right_Hwnd, &clientRect);
+	SetWindowPos(App->ViewGLhWnd, nullptr, 0, 0, clientRect.right, clientRect.bottom, SWP_NOZORDER);
 
-	GetClientRect(App->CL_Editor_Map->Bottom_Right_Hwnd, &rcl);
+	// Update Ogre window and camera aspect ratio
+	auto& ogre = App->CL_Ogre;
+	ogre->mWindow->windowMovedOrResized();
+	ogre->mCamera->setAspectRatio(static_cast<Ogre::Real>(ogre->mWindow->getWidth()) /
+		static_cast<Ogre::Real>(ogre->mWindow->getHeight()));
 
-	SetWindowPos(App->ViewGLhWnd, NULL, 0, 0, rcl.right, rcl.bottom, SWP_NOZORDER);
-
-	App->CL_Ogre->mWindow->windowMovedOrResized();
-	App->CL_Ogre->mCamera->setAspectRatio((Ogre::Real)App->CL_Ogre->mWindow->getWidth() / (Ogre::Real)App->CL_Ogre->mWindow->getHeight());
-
-	App->CL_Ogre->OGL_Listener->Show_Visuals(false);
-
-	// Hide Top Tabs
-	App->CL_Top_Tabs->Show_TopTabs(false);
-
-	// Hide Properties window
+	// Hide visuals and tabs
+	ogre->OGL_Listener->Show_Visuals(false);
+	topTabs->Show_TopTabs(false);
 	App->CL_Properties_Tabs->Show_Tabs_Control_Dlg(false);
-	App->CL_Properties_Tabs->flag_Tabs_Dlg_Active = 0;
+	App->CL_Properties_Tabs->flag_Tabs_Dlg_Active = false;
 
-	// Headers
+	// Show headers and file view
 	Show_Headers(true);
-
-	// Fileview
 	App->CL_FileView->Show_FileView(true);
 	App->CL_Panels->Move_FileView_Window();
 	App->CL_Panels->Resize_FileView();
-
 	App->CL_Panels->Place_Properties_Dlg();
 	App->CL_Properties_Scene->Show_Properties_Scene(true);
 
+	// Set menu
 	SetMenu(App->MainHwnd, App->Menu_Scene);
-
 	App->CL_Com_Objects->Show_Entities(true);
 
-	App->CL_Ogre->Bullet_Debug_Listener->flag_Render_Debug_Flag = 1;
 }
 
 // *************************************************************************
@@ -190,13 +203,17 @@ void CL64_Editor_Scene::Set_Editor_Scene(void)
 // *************************************************************************
 void CL64_Editor_Scene::Return_From_Preview(void)
 {
-	App->CL_Top_Tabs->flag_Full_View_3D = 1;
-	App->CL_Top_Tabs->flag_View_Top_Left = 0;
-	App->CL_Top_Tabs->flag_View_Top_Right = 0;
-	App->CL_Top_Tabs->flag_View_Bottom_Left = 0;
+	// Set view flags
+	auto& topTabs = App->CL_Top_Tabs;
+	topTabs->flag_Full_View_3D = true;
+	topTabs->flag_View_Top_Left = false;
+	topTabs->flag_View_Top_Right = false;
+	topTabs->flag_View_Bottom_Left = false;
 
 	App->CL_Editor_Map->Init_Views(Enums::Selected_View_3D);
-	App->CL_Editor_Map->Resize_Windows(App->CL_Editor_Map->Main_Dlg_Hwnd, App->CL_Editor_Map->nleftWnd_width, App->CL_Editor_Map->nleftWnd_Depth);
+	App->CL_Editor_Map->Resize_Windows(App->CL_Editor_Map->Main_Dlg_Hwnd, 
+									   App->CL_Editor_Map->nleftWnd_width, 
+									   App->CL_Editor_Map->nleftWnd_Depth);
 
 	RECT rcl;
 

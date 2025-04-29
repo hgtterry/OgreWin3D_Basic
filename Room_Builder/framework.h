@@ -173,4 +173,28 @@ namespace Enums
 		Obj_Usage_UserObject = 22
 	};
 
+	enum Edit_Type
+	{
+		Edit_None = 0,
+		Edit_Object = 1,
+		Edit_Physics_Object = 2,
+		Edit_Player = 3,
+		Edit_Message = 4,
+		Edit_Move_Entity = 5,
+		Edit_Sounds = 6,
+		Edit_Collectable = 7,
+		Edit_Teleport = 8,
+		Edit_Environment = 9,
+		Edit_Area_Change = 10,
+		Edit_Change_Level = 11,
+		Edit_Particles = 12,
+		Edit_Camera = 13,
+		Edit_Area = 14,
+		Edit_Level = 15,
+		Edit_Counters = 16,
+		Edit_Environs = 17,
+		Edit_Lights = 18,
+		Edit_UserObjects = 19
+	};
+
 }

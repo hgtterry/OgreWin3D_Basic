@@ -147,8 +147,8 @@ void CL64_ImGui_Dialogs::Start_Dialog_Float(float Step,int Combo_Step, float Sta
 
 	//App->CL_Panels->Disable_Panels(true);
 
-	//Float_PosX = ((float)App->CL_Ogre->Ogre3D_Listener->View_Width / 2) - (200 / 2);
-	//Float_PosY = ((float)App->CL_Ogre->Ogre3D_Listener->View_Height / 2) - (130 / 2);
+	Float_PosX = ((float)App->CL_Ogre->mWindow->getViewport(0)->getActualWidth() / 2) - (200 / 2);
+	Float_PosY = ((float)App->CL_Ogre->mWindow->getViewport(0)->getActualHeight() / 2) - (130 / 2);
 
 	flag_Float_StartPos = 0;
 
@@ -173,8 +173,8 @@ void CL64_ImGui_Dialogs::Dialog_Float(void)
 	{
 		if (flag_Float_StartPos == 0)
 		{
-			//Float_PosX = ((float)App->CL_Ogre->Ogre3D_Listener->View_Width / 2) - (200 / 2);
-			//Float_PosY = ((float)App->CL_Ogre->Ogre3D_Listener->View_Height / 2) - (130 / 2);
+			Float_PosX = ((float)App->CL_Ogre->mWindow->getViewport(0)->getActualWidth() / 2) - (200 / 2);
+			Float_PosY = ((float)App->CL_Ogre->mWindow->getViewport(0)->getActualHeight() / 2) - (130 / 2);
 			ImGui::SetWindowPos(Float_Banner, ImVec2(Float_PosX, Float_PosY));
 
 			flag_Float_StartPos = 1;

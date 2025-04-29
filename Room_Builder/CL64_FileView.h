@@ -38,6 +38,7 @@ public:
 	void Set_FolderActive(HTREEITEM Folder);
 	void SelectItem(HTREEITEM TreeItem);
 	void Enable_Environment_Button(bool Enable);
+	void Mark_Altered(HTREEITEM Item);
 
 	void Redraw_FileView();
 	void Change_Level_Name(void);

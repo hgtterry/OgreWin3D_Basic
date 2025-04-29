@@ -597,7 +597,7 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 
 		App->CL_Properties_Scene->Current_Selected_Object = Index;
 
-		//App->CL_Properties->Edit_Category = Enums::Edit_Player;
+		App->CL_Properties_Scene->Edit_Category = Enums::Edit_Player;
 		//App->CL_LookUps->Update_Types();
 
 		//ShowWindow(App->CL_Properties_Scene->Properties_Dlg_hWnd, 1);
@@ -784,5 +784,19 @@ void CL64_FileView::SelectItem(HTREEITEM TreeItem)
 void CL64_FileView::Enable_Environment_Button(bool Enable)
 {
 	EnableWindow(GetDlgItem(App->ListPanel, IDC_BT_MAINENVIRONMENT), Enable);
+}
 
+// *************************************************************************
+// *			Mark_Altered:- Terry and Hazel Flanigan 2024		 	   *
+// *************************************************************************
+void CL64_FileView::Mark_Altered(HTREEITEM Item)
+{
+	TVITEM Sitem;
+	Sitem.mask = TVIF_IMAGE | TVIF_SELECTEDIMAGE;
+	Sitem.hItem = Item;
+	Sitem.iImage = 6;
+	Sitem.iSelectedImage = 7;
+	SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_SETITEM, 0, (LPARAM)(const LPTVITEM)&Sitem);
+
+	//EnableMenuItem(App->mMenu, ID_FILE_SAVEPROJECTALL, MF_ENABLED);
 }
