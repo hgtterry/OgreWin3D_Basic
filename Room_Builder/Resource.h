@@ -3,6 +3,8 @@
 // Used by Room Builder.rc
 //
 #define IDC_MYICON                      2
+#define IDCANCEL2                       3
+#define IDC_NONO                        3
 #define IDD_ROOMBUILDER_DIALOG          102
 #define IDS_APP_TITLE                   103
 #define IDD_ABOUTBOX                    103
@@ -74,6 +76,7 @@
 #define IDD_SOUNDPLAYER                 187
 #define IDD_GMSTART                     188
 #define IDD_PROPERTIES_SCENE            189
+#define IDD_YESNOCANCEL                 190
 #define IDC_BANNER                      1000
 #define IDC_STTEXT                      1001
 #define IDC_STMESSAGE                   1002
@@ -470,7 +473,7 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
-#define _APS_NEXT_RESOURCE_VALUE        190
+#define _APS_NEXT_RESOURCE_VALUE        191
 #define _APS_NEXT_COMMAND_VALUE         32824
 #define _APS_NEXT_CONTROL_VALUE         1302
 #define _APS_NEXT_SYMED_VALUE           110

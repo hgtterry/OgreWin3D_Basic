@@ -599,13 +599,27 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             
                 if (App->CL_Level->flag_Level_is_Modified == true)
                 {
-                    App->CL_Dialogs->YesNo((LPSTR)"Save Scene", (LPSTR)"Scene has been Modified", (LPSTR)"Do you wont to save changes");
+                    char Text[200];
+                    strcpy(Text, "Save Changes To ");
+                    strcat(Text, App->CL_Level->MTF_Just_FileName);
 
-                    bool Doit = App->CL_Dialogs->flag_Dlg_Canceled;
-                    if (Doit == 0)
+                    App->CL_Dialogs->YesNoCancel((LPSTR)"File has been Modified", Text);
+
+                    if (App->CL_Dialogs->YesNoCancel_Result == 1)
                     {
                         App->CL_File->Start_Save(true);
                     }
+
+                    if (App->CL_Dialogs->YesNoCancel_Result == 2)
+                    {
+
+                    }
+
+                    if (App->CL_Dialogs->YesNoCancel_Result == 3)
+                    {
+                        return 1;
+                    }
+
                 }
                 else
                 {
@@ -677,13 +691,27 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
         if (App->CL_Level->flag_Level_is_Modified == true)
         {
-            App->CL_Dialogs->YesNo((LPSTR)"Save Scene", (LPSTR)"Scene has been Modified", (LPSTR)"Do you wont to save changes");
+            char Text[200];
+            strcpy(Text, "Save Changes To ");
+            strcat(Text, App->CL_Level->MTF_Just_FileName);
 
-            bool Doit = App->CL_Dialogs->flag_Dlg_Canceled;
-            if (Doit == 0)
+            App->CL_Dialogs->YesNoCancel((LPSTR)"File has been Modified", Text);
+
+            if (App->CL_Dialogs->YesNoCancel_Result == 1)
             {
                 App->CL_File->Start_Save(true);
             }
+
+            if (App->CL_Dialogs->YesNoCancel_Result == 2)
+            {
+                
+            }
+
+            if (App->CL_Dialogs->YesNoCancel_Result == 3)
+            {
+                return 1;
+            }
+
         }
         else
         {

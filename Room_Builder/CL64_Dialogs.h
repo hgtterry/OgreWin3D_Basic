@@ -30,7 +30,8 @@ public:
 	CL64_Dialogs(void);
 	~CL64_Dialogs(void);
 
-	void YesNo(const char* Text, const char* Text2, const char* Text3 = NULL);
+	void YesNoCancel(char* Text, char* Text2);
+	void YesNo(const char* Text, const char* Text2);
 	void Message(char* pString, char* pString2);
 	void PleaseWait();
 	void Start_Brush_Properties_Dlg();
@@ -46,6 +47,7 @@ public:
 	char MessageString2[MAX_PATH];
 	char MessageString3[MAX_PATH];
 
+	int YesNoCancel_Result;
 	bool flag_Dlg_Canceled;
 
 	HWND TextureView_Hwnd;
@@ -54,6 +56,7 @@ public:
 
 private:
 
+	static LRESULT CALLBACK Proc_YesNoCancel(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Proc_Message(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Proc_PleaseWait(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Proc_Brush_Properties(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
