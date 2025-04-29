@@ -43,6 +43,7 @@ public:
 	bool Set_Sub_Brush_Faces_Indexs(BrushList* BList);
 	bool Set_Brush_Faces_Indexs(const FaceList* pList);
 	bool Set_Face_Index(int Index, Face* f);
+	void Move_Player_Brush();
 
 	int Face_Count;
 	int Face_Index_Set;

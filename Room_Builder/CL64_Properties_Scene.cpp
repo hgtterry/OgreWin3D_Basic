@@ -566,6 +566,8 @@ bool CL64_Properties_Scene::Edit_Player(LPARAM lParam)
 
 			App->CL_Editor_Com->B_Player[0]->StartPos.x = App->CL_ImGui_Dialogs->m_Dialog_Float;
 
+			App->CL_Brush_X->Move_Player_Brush();
+			
 			App->CL_Editor_Com->B_Player[0]->flag_Altered = 1;
 			App->CL_Doc->flag_Is_Modified = 1;
 			App->CL_FileView->Mark_Altered(App->CL_Editor_Com->B_Player[0]->FileViewItem);
@@ -606,6 +608,8 @@ bool CL64_Properties_Scene::Edit_Player(LPARAM lParam)
 
 			App->CL_Editor_Com->B_Player[0]->StartPos.y = App->CL_ImGui_Dialogs->m_Dialog_Float;
 
+			App->CL_Brush_X->Move_Player_Brush();
+
 			App->CL_Editor_Com->B_Player[0]->flag_Altered = 1;
 			App->CL_Doc->flag_Is_Modified = 1;
 			App->CL_FileView->Mark_Altered(App->CL_Editor_Com->B_Player[0]->FileViewItem);
@@ -644,6 +648,8 @@ bool CL64_Properties_Scene::Edit_Player(LPARAM lParam)
 			App->CL_ImGui_Dialogs->flag_Show_Dialog_Float = 0;
 
 			App->CL_Editor_Com->B_Player[0]->StartPos.z = App->CL_ImGui_Dialogs->m_Dialog_Float;
+
+			App->CL_Brush_X->Move_Player_Brush();
 
 			App->CL_Editor_Com->B_Player[0]->flag_Altered = 1;
 			App->CL_Doc->flag_Is_Modified = 1;

@@ -427,3 +427,22 @@ bool CL64_Brush_X::Set_Face_Index(int Index, Face* f)
 	return 1;
 }
 
+// *************************************************************************
+// *		  Move_Player_Brush:- Terry and Hazel Flanigan 2025			   *
+// *************************************************************************
+void CL64_Brush_X::Move_Player_Brush()
+{
+	Brush* b = NULL;
+	b = App->CL_Brush_X->Get_Brush_By_Name("Player_Main");
+	if (b)
+	{
+		T_Vec3 Pos;
+		Pos.x = App->CL_Editor_Com->B_Player[0]->StartPos.x;
+		Pos.y = App->CL_Editor_Com->B_Player[0]->StartPos.y;
+		Pos.z = App->CL_Editor_Com->B_Player[0]->StartPos.z;
+
+		App->CL_Brush->Brush_Move(b, &Pos);
+
+	}
+}
+
