@@ -51,7 +51,7 @@ CL64_Entities::~CL64_Entities()
 // *************************************************************************
 // *		Create_Player_Entity:- Terry and Hazel Flanigan 2025	 	   *
 // *************************************************************************
-void CL64_Entities::Create_Player_Entity()
+void CL64_Entities::Create_Player_Brush()
 {
 	/*bool test = App->CL_Brush_X->Check_if_Brush_Name_Exist((LPSTR)"Player_Main");
 	if (test == 0)
@@ -98,4 +98,68 @@ void CL64_Entities::Create_Player_Entity()
 	App->CL_Brush_X->Set_Brush_Faces_Name(App->CL_Doc->CurBrush);
 
 	App->CL_Brush->Brush_SetLocked(Player_Brush, true);
+}
+
+// *************************************************************************
+// *		Create_Environment_Brush:- Terry and Hazel Flanigan 2025 	   *
+// *************************************************************************
+void CL64_Entities::Create_Environment_Brush(int Object_Index)
+{
+	char m_Name[100];
+	strcpy(m_Name, App->CL_Editor_Com->B_Object[Object_Index]->Object_Name);
+
+	bool test = App->CL_Brush_X->Check_if_Brush_Name_Exist((LPSTR)m_Name);
+	if (test == true)
+	{
+		return;
+	}
+
+	Brush* Environ_Brush = NULL;
+
+	BrushTemplate_Box* pBoxTemplate;
+
+	pBoxTemplate = App->CL_Level->Level_GetBoxTemplate();
+
+	Ogre::Vector3 size = App->CL_Com_Objects->GetMesh_BB_Size(App->CL_Editor_Com->B_Object[Object_Index]->Object_Node);
+
+
+	pBoxTemplate->Solid = 0;
+	pBoxTemplate->YSize = size.y / 2;
+
+	pBoxTemplate->XSizeBot = size.x / 2;
+	pBoxTemplate->XSizeTop = size.x / 2;
+	pBoxTemplate->ZSizeBot = size.z / 2;
+	pBoxTemplate->ZSizeTop = size.z / 2;
+
+	Environ_Brush = App->CL_BrushTemplate->BrushTemplate_CreateBox(pBoxTemplate);
+
+	App->CL_Brush->Brush_Bound(Environ_Brush);
+
+	App->CL_Doc->SetDefaultBrushTexInfo(Environ_Brush);
+
+	App->CL_Brush->Brush_Bound(Environ_Brush);
+
+	Brush_SetGroupId(Environ_Brush, 1); // 0 = Main Mesh 1 = Entities
+
+	fdocFaceScales Scales;
+
+	Scales.DrawScale = App->CL_Level->Level_GetDrawScale(App->CL_Doc->Current_Level);
+	Scales.LightmapScale = App->CL_Level->Level_GetLightmapScale(App->CL_Doc->Current_Level);
+	App->CL_Brush->Brush_EnumFaces(Environ_Brush, &Scales, fdocSetFaceScales);
+
+	strcpy(Environ_Brush->Name, App->CL_Editor_Com->B_Object[Object_Index]->Object_Name);
+
+	T_Vec3 Pos;
+	Pos.x = App->CL_Editor_Com->B_Object[Object_Index]->Mesh_Pos.x;
+	Pos.y = App->CL_Editor_Com->B_Object[Object_Index]->Mesh_Pos.y;
+	Pos.z = App->CL_Editor_Com->B_Object[Object_Index]->Mesh_Pos.z;
+
+	App->CL_Brush->Brush_Move(Environ_Brush, &Pos);
+
+	App->CL_Level->Level_AppendBrush(Environ_Brush);
+
+	App->CL_Doc->CurBrush = Environ_Brush;
+	App->CL_Brush_X->Set_Brush_Faces_Name(App->CL_Doc->CurBrush);
+
+	App->CL_Brush->Brush_SetLocked(Environ_Brush, true);
 }

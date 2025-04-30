@@ -100,6 +100,7 @@ CL64_App::CL64_App(void)
 	CL_Project =				nullptr;
 	CL_Objects_Create =			nullptr;
 	CL_SoundMgr =				nullptr;
+	CL_Collision =				nullptr;
 
 	CUR = 0;
 	Menu_Map = 0;
@@ -239,6 +240,7 @@ void CL64_App::InitApp(void)
 	CL_Project =				new CL64_Project();
 	CL_Objects_Create =			new CL64_Objects_Create();
 	CL_SoundMgr =				new CL64_SoundMgr();
+	CL_Collision =				new CL64_Collision();
 
 	SetBrushes_Fonts();
 

@@ -104,48 +104,6 @@ bool CL64_Com_Environments::Add_New_Environ_Entity(bool FirstOne)
 }
 
 // *************************************************************************
-// *		V_Set_Environ_Defaults:- Terry and Hazel Flanigan 2024		   *
-// *************************************************************************
-void CL64_Com_Environments::V_Set_Environ_Defaults(int index)
-{
-	Base_Object* bObject = App->CL_Editor_Com->B_Object[index];
-
-	bObject->flag_Altered = true;
-
-	auto& environment = bObject->S_Environ[0];
-	environment->Environment_ID = 0;
-	strcpy(environment->Environment_Name, "Not_Set");
-	environment->flag_Environ_Enabled = true;
-
-	// Sound Configuration
-	strcpy(environment->Sound_File, "The_Sun.ogg");
-	environment->flag_Play = false;
-	environment->flag_Loop = true;
-	environment->SndVolume = 0.5f;
-	environment->SndFile = nullptr;
-
-	// Light Configuration
-	environment->AmbientColour = { 1.0f, 1.0f, 1.0f };
-	environment->Light_Position = { 0.0f, 0.0f, 0.0f };
-
-	// Sky Configuration
-	environment->Curvature = 15;
-	environment->Distance = 4000;
-	environment->flag_Enabled = false;
-	strcpy(environment->Material, "Examples/CloudySky");
-	environment->Tiling = 15;
-	environment->type = 1;
-
-	// Fog Configuration
-	environment->Fog_On = false;
-	environment->Fog_Mode = FOG_LINEAR;
-	environment->Fog_Density = 0.001f;
-	environment->Fog_Start = 100;
-	environment->Fog_End = 700;
-	environment->Fog_Colour = Ogre::Vector3(1.0f, 1.0f, 1.0f);
-}
-
-// *************************************************************************
 // *		Create_Environ_Entity:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
 bool CL64_Com_Environments::Create_Environ_Entity(int index) {
@@ -206,10 +164,54 @@ bool CL64_Com_Environments::Create_Environ_Entity(int index) {
 	App->CL_Physics->dynamicsWorld->addRigidBody(object->Phys_Body);
 	App->CL_Physics->Set_Physics_New(index);
 
+	App->CL_Entities->Create_Environment_Brush(index);
+
 	//object->Phys_Body->setCollisionFlags(collisionFlags & (~(1 << 5)));
+
 	return true;
 }
 
+// *************************************************************************
+// *		V_Set_Environ_Defaults:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+void CL64_Com_Environments::V_Set_Environ_Defaults(int index)
+{
+	Base_Object* bObject = App->CL_Editor_Com->B_Object[index];
+
+	bObject->flag_Altered = true;
+
+	auto& environment = bObject->S_Environ[0];
+	environment->Environment_ID = 0;
+	strcpy(environment->Environment_Name, "Not_Set");
+	environment->flag_Environ_Enabled = true;
+
+	// Sound Configuration
+	strcpy(environment->Sound_File, "The_Sun.ogg");
+	environment->flag_Play = false;
+	environment->flag_Loop = true;
+	environment->SndVolume = 0.5f;
+	environment->SndFile = nullptr;
+
+	// Light Configuration
+	environment->AmbientColour = { 1.0f, 1.0f, 1.0f };
+	environment->Light_Position = { 0.0f, 0.0f, 0.0f };
+
+	// Sky Configuration
+	environment->Curvature = 15;
+	environment->Distance = 4000;
+	environment->flag_Enabled = false;
+	strcpy(environment->Material, "Examples/CloudySky");
+	environment->Tiling = 15;
+	environment->type = 1;
+
+	// Fog Configuration
+	environment->Fog_On = false;
+	environment->Fog_Mode = FOG_LINEAR;
+	environment->Fog_Density = 0.001f;
+	environment->Fog_Start = 100;
+	environment->Fog_End = 700;
+	environment->Fog_Colour = Ogre::Vector3(1.0f, 1.0f, 1.0f);
+}
 
 // *************************************************************************
 // *		Set_Environment_By_Index:- Terry and Hazel Flanigan 2024 	   *

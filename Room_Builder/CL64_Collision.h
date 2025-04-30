@@ -1,7 +1,7 @@
 /*
-Copyright (c) 2024 - 2025 Inflanite_HGT W.T.Flanigan H.C.Flanigan
+Copyright (c) 2024 Inflanite_HGT W.T.Flanigan H.C.Flanigan
 
-OW3D_Mesh_Builder
+OgreWin3D_Stage
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -23,14 +23,36 @@ THE SOFTWARE.
 */
 
 #pragma once
-class CL64_Entities
+class CL64_Collision
 {
 public:
-	CL64_Entities();
-	~CL64_Entities();
 
-	void Create_Player_Brush();
-	void Create_Environment_Brush(int Object_Index);
+	CL64_Collision(void);
+	~CL64_Collision(void);
+
+	bool Do_Teleport(int Index);
+	bool Do_Collectable(int Index);
+	bool Do_Environment(int Index);
+	bool Move_Entity_Collision(int Index);
+	void Set_Move_Entity(int Index);
+	void MoveObject_Listener(Ogre::Real Time);
+	bool Message_Entity(int Index);
+
+	bool Play_Sound(int Index);
+
+	float FinalPosition;
+	int ObjectIndex;
+	bool flag_DoMove;
+
+	int Old_Sound_Index;
+
+	float x;
+	float y;
+	float z;
+
+	float px;
+	float py;
+	float pz;
 
 };
 

@@ -685,6 +685,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     {
         if (App->CL_Editor_Scene->flag_Scene_Editor_Active == 1)
         {
+            App->CL_Ogre->Ogre3D_Listener->flag_Run_Physics = 0;
+            App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_Free;
             App->CL_Editor_Scene->Back_To_Map_Editor();
             return 1;
         }

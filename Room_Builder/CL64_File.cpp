@@ -595,7 +595,7 @@ void CL64_File::Set_Player()
 	bool test = App->CL_Brush_X->Check_if_Brush_Name_Exist((LPSTR)"Player_Main");
 	if (test == 0)
 	{
-		App->CL_Entities->Create_Player_Entity();
+		App->CL_Entities->Create_Player_Brush();
 	}
 
 	Brush* Player = App->CL_Brush_X->Get_Brush_By_Name("Player_Main");

@@ -152,7 +152,7 @@ void CL64_Com_Player::Initialize() const
 
 	pBase->Phys_Body->setUserPointer(pBase->Player_Node);
 
-	pBase->Phys_Body->setUserIndex(Enums::Usage_Player);
+	pBase->Phys_Body->setUserIndex(Enums::Obj_Usage_Player);
 
 	int f = pBase->Phys_Body->getCollisionFlags();
 	//pBase->Phys_Body->setCollisionFlags(f | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
@@ -175,14 +175,14 @@ void CL64_Com_Player::Show_Player_And_Physics(bool Show)
 	{
 		App->CL_Editor_Com->B_Player[0]->Phys_Body->setCollisionFlags(f & (~(1 << 5)));
 		App->CL_Editor_Com->B_Player[0]->Player_Node->setVisible(true);
-		//App->CL_Scene->B_Player[0]->Player_Node->scale(3, 3, 3);
+		//App->CL_Editor_Com->B_Player[0]->Player_Node->scale(3, 3, 3);
 		flag_Show_Physics_Debug = 1;
 	}
 	else
 	{
 		App->CL_Editor_Com->B_Player[0]->Phys_Body->setCollisionFlags(f | (1 << 5));
 		App->CL_Editor_Com->B_Player[0]->Player_Node->setVisible(false);
-		//App->CL_Scene->B_Player[0]->Player_Node->scale(0, 0, 0);
+		//App->CL_Editor_Com->B_Player[0]->Player_Node->scale(0, 0, 0);
 		flag_Show_Physics_Debug = 0;
 	}
 
@@ -388,7 +388,7 @@ void CL64_Com_Player::Reset_Player()
 void CL64_Com_Player::Rename_Player(int Index)
 {
 	//strcpy(App->CL_Dialogs->btext, "Change Player Name");
-	//strcpy(App->CL_Dialogs->Chr_Text, App->CL_Scene->B_Player[0]->Player_Name);
+	//strcpy(App->CL_Dialogs->Chr_Text, App->CL_Editor_Com->B_Player[0]->Player_Name);
 
 	//App->CL_Dialogs->Dialog_Text(Enums::Check_Names_Player);
 
@@ -398,13 +398,13 @@ void CL64_Com_Player::Rename_Player(int Index)
 	//}
 
 	//// Needs Duplicate Name test 
-	//strcpy(App->CL_Scene->B_Player[0]->Player_Name, App->CL_Dialogs->Chr_Text);
+	//strcpy(App->CL_Editor_Com->B_Player[0]->Player_Name, App->CL_Dialogs->Chr_Text);
 
-	//App->CL_Scene->B_Player[0]->flag_Altered = 1;
-	//App->CL_Scene->flag_Scene_Modified = 1;
-	//App->CL_FileView->Mark_Altered(App->CL_Scene->B_Player[0]->FileViewItem);
+	//App->CL_Editor_Com->B_Player[0]->flag_Altered = 1;
+	//App->CL_Editor_Com->flag_Scene_Modified = 1;
+	//App->CL_FileView->Mark_Altered(App->CL_Editor_Com->B_Player[0]->FileViewItem);
 
-	//App->CL_FileView->Change_Item_Name(App->CL_Scene->B_Player[0]->FileViewItem, App->CL_Dialogs->Chr_Text);
+	//App->CL_FileView->Change_Item_Name(App->CL_Editor_Com->B_Player[0]->FileViewItem, App->CL_Dialogs->Chr_Text);
 
 }
 
@@ -414,14 +414,14 @@ void CL64_Com_Player::Rename_Player(int Index)
 int CL64_Com_Player::CheckNames_Player(char* Name)
 {
 	/*int Count = 0;
-	int Total = App->CL_Scene->Player_Count;
+	int Total = App->CL_Editor_Com->Player_Count;
 
 	while (Count < Total)
 	{
-		if (App->CL_Scene->B_Player[0]->flag_Deleted == 0)
+		if (App->CL_Editor_Com->B_Player[0]->flag_Deleted == 0)
 		{
 			int Result = 1;
-			Result = strcmp(App->CL_Scene->B_Player[0]->Player_Name, Name);
+			Result = strcmp(App->CL_Editor_Com->B_Player[0]->Player_Name, Name);
 
 			if (Result == 0)
 			{
@@ -439,208 +439,207 @@ int CL64_Com_Player::CheckNames_Player(char* Name)
 // *************************************************************************
 void CL64_Com_Player::Check_Collisions(void)
 {
-	
-	//int UsageIndex = 0;
-	//Col_Player_Index = 0;
-	//Col_Usage_Index = 0;
-	//Col_numManifolds = 0;
+	int UsageIndex = 0;
+	Col_Player_Index = 0;
+	Col_Usage_Index = 0;
+	Col_numManifolds = 0;
 
-	///* Browse all collision pairs */
-	//Col_numManifolds = App->CL_Bullet->dynamicsWorld->getDispatcher()->getNumManifolds();
+	/* Browse all collision pairs */
+	Col_numManifolds = App->CL_Physics->dynamicsWorld->getDispatcher()->getNumManifolds();
 
-	//for (int i = 0; i < Col_numManifolds; i++)
-	//{
-	//	btPersistentManifold* contactManifold = App->CL_Bullet->dynamicsWorld->getDispatcher()->getManifoldByIndexInternal(i);
-	//	btCollisionObject* obA = (btCollisionObject*)(contactManifold->getBody0());
-	//	btCollisionObject* obB = (btCollisionObject*)(contactManifold->getBody1());
+	for (int i = 0; i < Col_numManifolds; i++)
+	{
+		btPersistentManifold* contactManifold = App->CL_Physics->dynamicsWorld->getDispatcher()->getManifoldByIndexInternal(i);
+		btCollisionObject* obA = (btCollisionObject*)(contactManifold->getBody0());
+		btCollisionObject* obB = (btCollisionObject*)(contactManifold->getBody1());
 
-	//	Col_Player_Index = obA->getUserIndex();  // Should Be Player
+		Col_Player_Index = obA->getUserIndex();  // Should Be Player
 
-	//	Col_Object_Index = obB->getUserIndex2(); // Object Index
+		Col_Object_Index = obB->getUserIndex2(); // Object Index
 
-	//	Col_Usage_Index = obB->getUserIndex();
-	//
-	//	if (Col_Player_Index == Enums::Obj_Usage_Player)
-	//	{
-	//		if (Col_Usage_Index == 123)// && App->SBC_Scene->B_Object[Last_Message_Index]->Triggered == 1)
-	//		{
-	//			if (App->CL_Scene->Object_Count > 0)
-	//			{
-	//				App->CL_Scene->B_Object[Last_Message_Index]->flag_Show_Message_Flag = 0;
-	//				App->CL_Scene->B_Object[Last_Message_Index]->flag_Triggered = 0;
-	//			}
-	//		}
-	//		else
-	//		{
-	//			// -------------------- Message Collision
-	//			if (Col_Usage_Index == Enums::Obj_Usage_Message)
-	//			{
-	//				int numContacts = contactManifold->getNumContacts();
-	//				for (int j = 0; j < numContacts; j++)
-	//				{
-	//					btManifoldPoint& pt = contactManifold->getContactPoint(j);
+		Col_Usage_Index = obB->getUserIndex();
 
-	//					Life_Time = pt.getLifeTime();
-	//					Distance = pt.getDistance();
-	//					Round = (int)Distance;
+		if (Col_Player_Index == Enums::Obj_Usage_Player)
+		{
+			if (Col_Usage_Index == 123)// && App->SBC_Scene->B_Object[Last_Message_Index]->Triggered == 1)
+			{
+				if (App->CL_Editor_Com->Object_Count > 0)
+				{
+					App->CL_Editor_Com->B_Object[Last_Message_Index]->flag_Show_Message_Flag = 0;
+					App->CL_Editor_Com->B_Object[Last_Message_Index]->flag_Triggered = 0;
+				}
+			}
+			else
+			{
+				// -------------------- Message Collision
+				if (Col_Usage_Index == Enums::Obj_Usage_Message)
+				{
+					int numContacts = contactManifold->getNumContacts();
+					for (int j = 0; j < numContacts; j++)
+					{
+						btManifoldPoint& pt = contactManifold->getContactPoint(j);
 
-	//					if (Round < 0)
-	//					{
-	//						if (App->CL_Scene->B_Object[Col_Object_Index]->flag_Triggered == 0)
-	//						{
-	//							Last_Message_Index = Col_Object_Index;
-	//							App->CL_Collision->Message_Entity(Col_Object_Index);
-	//						}
-	//					}
-	//					else if (Round == 0)
-	//					{
-	//						if (App->CL_Scene->B_Object[Col_Object_Index]->flag_Triggered == 1)
-	//						{
-	//							App->CL_Scene->B_Object[Col_Object_Index]->flag_Show_Message_Flag = 0;
-	//							App->CL_Scene->B_Object[Col_Object_Index]->flag_Triggered = 0;
+						Life_Time = pt.getLifeTime();
+						Distance = pt.getDistance();
+						Round = (int)Distance;
 
-	//						}
-	//					}
-	//				}
-	//			}
+						if (Round < 0)
+						{
+							if (App->CL_Editor_Com->B_Object[Col_Object_Index]->flag_Triggered == 0)
+							{
+								Last_Message_Index = Col_Object_Index;
+								App->CL_Collision->Message_Entity(Col_Object_Index);
+							}
+						}
+						else if (Round == 0)
+						{
+							if (App->CL_Editor_Com->B_Object[Col_Object_Index]->flag_Triggered == 1)
+							{
+								App->CL_Editor_Com->B_Object[Col_Object_Index]->flag_Show_Message_Flag = 0;
+								App->CL_Editor_Com->B_Object[Col_Object_Index]->flag_Triggered = 0;
 
-	//			// -------------------- Sound Collision
-	//			if (Col_Usage_Index == Enums::Obj_Usage_Sound)
-	//			{
-	//				int numContacts = contactManifold->getNumContacts();
-	//				for (int j = 0; j < numContacts; j++)
-	//				{
+							}
+						}
+					}
+				}
 
-	//					btManifoldPoint& pt = contactManifold->getContactPoint(j);
+				// -------------------- Sound Collision
+				if (Col_Usage_Index == Enums::Obj_Usage_Sound)
+				{
+					int numContacts = contactManifold->getNumContacts();
+					for (int j = 0; j < numContacts; j++)
+					{
 
-	//					Life_Time = pt.getLifeTime();
-	//					Distance = pt.getDistance();
-	//					Round = (int)Distance;
+						btManifoldPoint& pt = contactManifold->getContactPoint(j);
 
-	//					if (Round < 0)
-	//					{
-	//						if (App->CL_Scene->B_Object[Col_Object_Index]->flag_Triggered == 0)
-	//						{
-	//							App->CL_Collision->Play_Sound(Col_Object_Index);
-	//							//Last_ColisionIndex = Col_Object_Index;
-	//						}
-	//					}
-	//					else if (Life_Time < 10)
-	//					{
-	//						if (App->CL_Scene->B_Object[Col_Object_Index]->flag_Triggered == 1)
-	//						{
-	//							App->CL_Scene->B_Object[Col_Object_Index]->flag_Triggered = 0;
-	//						}
-	//					}
-	//				}
-	//			}
+						Life_Time = pt.getLifeTime();
+						Distance = pt.getDistance();
+						Round = (int)Distance;
 
-	//			// -------------------- Move Collision
-	//			if (Col_Usage_Index == Enums::Obj_Usage_Move)
-	//			{
+						if (Round < 0)
+						{
+							if (App->CL_Editor_Com->B_Object[Col_Object_Index]->flag_Triggered == 0)
+							{
+								App->CL_Collision->Play_Sound(Col_Object_Index);
+								//Last_ColisionIndex = Col_Object_Index;
+							}
+						}
+						else if (Life_Time < 10)
+						{
+							if (App->CL_Editor_Com->B_Object[Col_Object_Index]->flag_Triggered == 1)
+							{
+								App->CL_Editor_Com->B_Object[Col_Object_Index]->flag_Triggered = 0;
+							}
+						}
+					}
+				}
 
-	//				int numContacts = contactManifold->getNumContacts();
-	//				for (int j = 0; j < numContacts; j++)
-	//				{
-	//					btManifoldPoint& pt = contactManifold->getContactPoint(j);
+				// -------------------- Move Collision
+				if (Col_Usage_Index == Enums::Obj_Usage_Move)
+				{
 
-	//					Life_Time = pt.getLifeTime();
-	//					Distance = pt.getDistance();
-	//					Round = (int)Distance;
+					int numContacts = contactManifold->getNumContacts();
+					for (int j = 0; j < numContacts; j++)
+					{
+						btManifoldPoint& pt = contactManifold->getContactPoint(j);
 
-	//					if (Round < 0)
-	//					{
-	//						if (App->CL_Scene->B_Object[Col_Object_Index]->flag_Triggered == 0)
-	//						{
-	//							
-	//							App->CL_Collision->Move_Entity_Collision(Col_Object_Index);
-	//						}
-	//					}
-	//					else if (Round == 0)
-	//					{
-	//						if (App->CL_Scene->B_Object[Col_Object_Index]->flag_Triggered == 1)
-	//						{
+						Life_Time = pt.getLifeTime();
+						Distance = pt.getDistance();
+						Round = (int)Distance;
 
-	//						}
-	//					}
+						if (Round < 0)
+						{
+							if (App->CL_Editor_Com->B_Object[Col_Object_Index]->flag_Triggered == 0)
+							{
 
-	//				}
-	//			}
+								App->CL_Collision->Move_Entity_Collision(Col_Object_Index);
+							}
+						}
+						else if (Round == 0)
+						{
+							if (App->CL_Editor_Com->B_Object[Col_Object_Index]->flag_Triggered == 1)
+							{
 
-	//			// -------------------- Collectable Collision
-	//			if (Col_Usage_Index == Enums::Obj_Usage_Collectable)
-	//			{
-	//				int numContacts = contactManifold->getNumContacts();
-	//				for (int j = 0; j < numContacts; j++)
-	//				{
-	//					if (App->CL_Scene->B_Object[Col_Object_Index]->flag_Triggered == 0)
-	//					{
-	//						App->CL_Collision->Do_Collectable(Col_Object_Index);
-	//					}
-	//				}
-	//			}
+							}
+						}
 
-	//			// -------------------- Teleport Collision
-	//			if (Col_Usage_Index == Enums::Obj_Usage_Teleport)
-	//			{
-	//				int numContacts = contactManifold->getNumContacts();
-	//				for (int j = 0; j < numContacts; j++)
-	//				{
-	//					App->CL_Collision->Do_Teleport(Col_Object_Index);
-	//			
-	//					btManifoldPoint& pt = contactManifold->getContactPoint(j);
+					}
+				}
 
-	//					Life_Time = pt.getLifeTime();
-	//					Distance = pt.getDistance();
-	//					Round = (int)Distance;
+				// -------------------- Collectable Collision
+				if (Col_Usage_Index == Enums::Obj_Usage_Collectable)
+				{
+					int numContacts = contactManifold->getNumContacts();
+					for (int j = 0; j < numContacts; j++)
+					{
+						if (App->CL_Editor_Com->B_Object[Col_Object_Index]->flag_Triggered == 0)
+						{
+							App->CL_Collision->Do_Collectable(Col_Object_Index);
+						}
+					}
+				}
 
-	//					if (Round < 0)
-	//					{
-	//						if (App->CL_Scene->B_Object[Col_Object_Index]->flag_Triggered == 0)
-	//						{
-	//							App->CL_Collision->Do_Teleport(Col_Object_Index);
-	//						}
-	//					}
-	//					else if (Round == 0)
-	//					{
-	//						if (App->CL_Scene->B_Object[Col_Object_Index]->flag_Triggered == 1)
-	//						{
+				// -------------------- Teleport Collision
+				if (Col_Usage_Index == Enums::Obj_Usage_Teleport)
+				{
+					int numContacts = contactManifold->getNumContacts();
+					for (int j = 0; j < numContacts; j++)
+					{
+						App->CL_Collision->Do_Teleport(Col_Object_Index);
 
-	//						}
-	//					}
-	//				}
-	//			}
+						btManifoldPoint& pt = contactManifold->getContactPoint(j);
 
-	//			// -------------------- EnvironEntity Collision
-	//			if (Col_Usage_Index == Enums::Obj_Usage_EnvironEntity)
-	//			{
-	//				int numContacts = contactManifold->getNumContacts();
-	//				for (int j = 0; j < numContacts; j++)
-	//				{
-	//					btManifoldPoint& pt = contactManifold->getContactPoint(j);
+						Life_Time = pt.getLifeTime();
+						Distance = pt.getDistance();
+						Round = (int)Distance;
 
-	//					Life_Time = pt.getLifeTime();
-	//					Distance = pt.getDistance();
-	//					Round = (int)Distance;
+						if (Round < 0)
+						{
+							if (App->CL_Editor_Com->B_Object[Col_Object_Index]->flag_Triggered == 0)
+							{
+								App->CL_Collision->Do_Teleport(Col_Object_Index);
+							}
+						}
+						else if (Round == 0)
+						{
+							if (App->CL_Editor_Com->B_Object[Col_Object_Index]->flag_Triggered == 1)
+							{
 
-	//					if (Round < 0)
-	//					{
-	//						if (App->CL_Scene->B_Object[Col_Object_Index]->flag_Triggered == 0)
-	//						{
-	//							App->CL_Collision->Do_Environment(Col_Object_Index);
-	//						}
-	//					}
-	//					else if (Round == 0)
-	//					{
-	//						if (App->CL_Scene->B_Object[Col_Object_Index]->flag_Triggered == 1)
-	//						{
-	//							App->CL_Scene->B_Object[Col_Object_Index]->flag_Triggered = 0;
-	//						}
-	//					}
-	//				}
-	//			}
+							}
+						}
+					}
+				}
 
-	//		}
-	//	}
-	//}
+				// -------------------- EnvironEntity Collision
+				if (Col_Usage_Index == Enums::Obj_Usage_EnvironEntity)
+				{
+					int numContacts = contactManifold->getNumContacts();
+					for (int j = 0; j < numContacts; j++)
+					{
+						btManifoldPoint& pt = contactManifold->getContactPoint(j);
+
+						Life_Time = pt.getLifeTime();
+						Distance = pt.getDistance();
+						Round = (int)Distance;
+
+						if (Round < 0)
+						{
+							if (App->CL_Editor_Com->B_Object[Col_Object_Index]->flag_Triggered == 0)
+							{
+								App->CL_Collision->Do_Environment(Col_Object_Index);
+							}
+						}
+						else if (Round == 0)
+						{
+							if (App->CL_Editor_Com->B_Object[Col_Object_Index]->flag_Triggered == 1)
+							{
+								App->CL_Editor_Com->B_Object[Col_Object_Index]->flag_Triggered = 0;
+							}
+						}
+					}
+				}
+
+			}
+		}
+	}
 }

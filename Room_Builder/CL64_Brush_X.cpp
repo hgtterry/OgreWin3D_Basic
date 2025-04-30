@@ -446,3 +446,22 @@ void CL64_Brush_X::Move_Player_Brush()
 	}
 }
 
+// *************************************************************************
+// *		  Move_Brush_By_Name:- Terry and Hazel Flanigan 2025		   *
+// *************************************************************************
+void CL64_Brush_X::Move_Brush_By_Name(char* Brush_Name, int Object_Index)
+{
+	Brush* b = NULL;
+	b = App->CL_Brush_X->Get_Brush_By_Name(Brush_Name);
+	if (b)
+	{
+		T_Vec3 Pos;
+		Pos.x = App->CL_Editor_Com->B_Object[Object_Index]->Mesh_Pos.x;
+		Pos.y = App->CL_Editor_Com->B_Object[Object_Index]->Mesh_Pos.y;
+		Pos.z = App->CL_Editor_Com->B_Object[Object_Index]->Mesh_Pos.z;
+
+		App->CL_Brush->Brush_Move(b, &Pos);
+
+	}
+}
+

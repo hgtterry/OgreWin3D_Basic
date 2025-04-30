@@ -187,44 +187,44 @@ void CL64_Ogre3D_Listener::Update_Game_Logic(float DeltaTime)
 	{
 		App->CL_Physics->dynamicsWorld->stepSimulation(DeltaTime * 2);// Bullet_Step);
 
-		//for (int j = App->CL_Bullet->dynamicsWorld->getNumCollisionObjects() - 1; j >= 0; j--)
-		//{
+		for (int j = App->CL_Physics->dynamicsWorld->getNumCollisionObjects() - 1; j >= 0; j--)
+		{
 
-		//	btCollisionObject* obj = App->CL_Bullet->dynamicsWorld->getCollisionObjectArray()[j];
-		//	btRigidBody* body = btRigidBody::upcast(obj);
-		//	btTransform trans;
+			btCollisionObject* obj = App->CL_Physics->dynamicsWorld->getCollisionObjectArray()[j];
+			btRigidBody* body = btRigidBody::upcast(obj);
+			btTransform trans;
 
-		//	if (body && body->getMotionState()) //&& Block == 0)
-		//	{
-		//		int UI = body->getUserIndex();
-		//		int Index = body->getUserIndex2();
+			if (body && body->getMotionState()) //&& Block == 0)
+			{
+				int UI = body->getUserIndex();
+				int Index = body->getUserIndex2();
 
-		//		if (UI == Enums::Obj_Usage_Dynamic)
-		//		{
+				if (UI == Enums::Obj_Usage_Dynamic)
+				{
 
-		//			body->getMotionState()->getWorldTransform(trans);
-		//			btQuaternion orientation = trans.getRotation();
+					body->getMotionState()->getWorldTransform(trans);
+					btQuaternion orientation = trans.getRotation();
 
-		//			float x = obj->getWorldTransform().getOrigin().getX();
-		//			float y = obj->getWorldTransform().getOrigin().getY();
-		//			float z = obj->getWorldTransform().getOrigin().getZ();
+					float x = obj->getWorldTransform().getOrigin().getX();
+					float y = obj->getWorldTransform().getOrigin().getY();
+					float z = obj->getWorldTransform().getOrigin().getZ();
 
-		//			if (Index > -1)
-		//			{
-		//				if (App->CL_Scene->B_Object[Index]->Object_Node)
-		//				{
-		//					App->CL_Scene->B_Object[Index]->Object_Node->setPosition(x, y, z);
-		//					App->CL_Scene->B_Object[Index]->Object_Node->setOrientation(Ogre::Quaternion(orientation.getW(), orientation.getX(), orientation.getY(), orientation.getZ()));
+					if (Index > -1)
+					{
+						if (App->CL_Editor_Com->B_Object[Index]->Object_Node)
+						{
+							App->CL_Editor_Com->B_Object[Index]->Object_Node->setPosition(x, y, z);
+							App->CL_Editor_Com->B_Object[Index]->Object_Node->setOrientation(Ogre::Quaternion(orientation.getW(), orientation.getX(), orientation.getY(), orientation.getZ()));
 
-		//					Ogre::Vector3 WC = App->CL_Scene->B_Object[Index]->Object_Ent->getWorldBoundingBox(true).getCenter();
-		//					Ogre::Vector3 NewPos = Ogre::Vector3(x, y, z) - WC;
+							Ogre::Vector3 WC = App->CL_Editor_Com->B_Object[Index]->Object_Ent->getWorldBoundingBox(true).getCenter();
+							Ogre::Vector3 NewPos = Ogre::Vector3(x, y, z) - WC;
 
-		//					App->CL_Scene->B_Object[Index]->Object_Node->setPosition((Ogre::Vector3(x, y, z)) + NewPos);
-		//				}
-		//			}
-		//		}
-		//	}
-		//}
+							App->CL_Editor_Com->B_Object[Index]->Object_Node->setPosition((Ogre::Vector3(x, y, z)) + NewPos);
+						}
+					}
+				}
+			}
+		}
 	}
 
 	if (flag_Run_Physics == 1 && App->CL_Editor_Com->flag_Player_Added == 1)

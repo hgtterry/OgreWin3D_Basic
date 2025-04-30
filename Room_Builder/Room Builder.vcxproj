@@ -169,6 +169,7 @@
     <ClInclude Include="CL64_Brush_X.h" />
     <ClInclude Include="CL64_Bullet_Debug.h" />
     <ClInclude Include="CL64_Camera.h" />
+    <ClInclude Include="CL64_Collision.h" />
     <ClInclude Include="CL64_Com_Environments.h" />
     <ClInclude Include="CL64_Com_Objects.h" />
     <ClInclude Include="CL64_Com_Player.h" />
@@ -248,6 +249,7 @@
     <ClCompile Include="CL64_Brush_X.cpp" />
     <ClCompile Include="CL64_Bullet_Debug.cpp" />
     <ClCompile Include="CL64_Camera.cpp" />
+    <ClCompile Include="CL64_Collision.cpp" />
     <ClCompile Include="CL64_Com_Environments.cpp" />
     <ClCompile Include="CL64_Com_Objects.cpp" />
     <ClCompile Include="CL64_Com_Player.cpp" />

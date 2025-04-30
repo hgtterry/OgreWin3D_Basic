@@ -44,6 +44,7 @@ public:
 	bool Set_Brush_Faces_Indexs(const FaceList* pList);
 	bool Set_Face_Index(int Index, Face* f);
 	void Move_Player_Brush();
+	void Move_Brush_By_Name(char* Brush_Name,int Object_Index);
 
 	int Face_Count;
 	int Face_Index_Set;

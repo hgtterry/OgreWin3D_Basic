@@ -62,6 +62,9 @@ LRESULT CALLBACK CL64_Editor_Scene::Proc_Headers_Scene(HWND hDlg, UINT message, 
 	{
 		SendDlgItemMessage(hDlg, IDC_BT_MAP_EDITOR, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_HD_PREVIEW_ED, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		SendDlgItemMessage(hDlg, IDC_BT_SCENE_FIRST, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_SCENE_FREE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
 		return TRUE;
 	}
@@ -100,6 +103,23 @@ LRESULT CALLBACK CL64_Editor_Scene::Proc_Headers_Scene(HWND hDlg, UINT message, 
 
 			return CDRF_DODEFAULT;
 		}
+
+		if (some_item->idFrom == IDC_BT_SCENE_FIRST)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BT_SCENE_FREE)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+
+			return CDRF_DODEFAULT;
+		}
+		
 		
 		return CDRF_DODEFAULT;
 	}
@@ -108,6 +128,9 @@ LRESULT CALLBACK CL64_Editor_Scene::Proc_Headers_Scene(HWND hDlg, UINT message, 
 	{
 		if (LOWORD(wParam) == IDC_BT_MAP_EDITOR)
 		{
+			App->CL_Ogre->Ogre3D_Listener->flag_Run_Physics = 0;
+			App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_Free;
+
 			App->CL_Editor_Scene->Back_To_Map_Editor();
 			return TRUE;
 		}
@@ -115,6 +138,20 @@ LRESULT CALLBACK CL64_Editor_Scene::Proc_Headers_Scene(HWND hDlg, UINT message, 
 		if (LOWORD(wParam) == IDC_BT_HD_PREVIEW_ED)
 		{
 			App->CL_Editor_Preview->Preview_Mode();
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_BT_SCENE_FIRST)
+		{
+			App->CL_Ogre->Ogre3D_Listener->flag_Run_Physics = 1;
+			App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_First;
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_BT_SCENE_FREE)
+		{
+			App->CL_Ogre->Ogre3D_Listener->flag_Run_Physics = 0;
+			App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_Free;
 			return TRUE;
 		}
 		

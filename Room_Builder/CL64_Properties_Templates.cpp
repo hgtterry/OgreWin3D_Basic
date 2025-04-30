@@ -149,7 +149,7 @@ LRESULT CALLBACK CL64_Properties_Templates::Proc_Templates(HWND hDlg, UINT messa
 					App->CL_Doc->AddBrushToWorld();
 					
 					// Scene
-					App->CL_Entities->Create_Player_Entity();
+					App->CL_Entities->Create_Player_Brush();
 
 					if (App->Development == 1)
 					{
