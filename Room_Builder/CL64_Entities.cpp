@@ -124,12 +124,12 @@ void CL64_Entities::Create_Environment_Brush(int Object_Index)
 
 
 	pBoxTemplate->Solid = 0;
-	pBoxTemplate->YSize = size.y / 2;
+	pBoxTemplate->YSize = size.y;
 
-	pBoxTemplate->XSizeBot = size.x / 2;
-	pBoxTemplate->XSizeTop = size.x / 2;
-	pBoxTemplate->ZSizeBot = size.z / 2;
-	pBoxTemplate->ZSizeTop = size.z / 2;
+	pBoxTemplate->XSizeBot = size.x;
+	pBoxTemplate->XSizeTop = size.x;
+	pBoxTemplate->ZSizeBot = size.z;
+	pBoxTemplate->ZSizeTop = size.z;
 
 	Environ_Brush = App->CL_BrushTemplate->BrushTemplate_CreateBox(pBoxTemplate);
 
