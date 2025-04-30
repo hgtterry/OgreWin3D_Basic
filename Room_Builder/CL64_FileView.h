@@ -48,12 +48,16 @@ public:
 	HTREEITEM FV_Objects_Folder;
 	HTREEITEM FV_Players_Folder;	// Players Folder FileFView
 
+	HMENU hMenu;
+
 private:
 	static LRESULT CALLBACK Proc_ListPanel(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	void AddRootFolder(void);
 	void MoreFolders(void);
 	void ExpandRoot(void);
+
+	void Context_Menu(HWND hDlg);
 
 	void Get_Selection(LPNMHDR lParam);
 
@@ -86,6 +90,9 @@ private:
 
 	char FileView_Folder[MAX_PATH];
 	char FileView_File[MAX_PATH];
+
+	int Context_Selection;
+	void Context_New(HWND hDlg);
 
 	TV_INSERTSTRUCT tvinsert;
 };

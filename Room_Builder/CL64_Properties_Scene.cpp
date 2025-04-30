@@ -413,7 +413,7 @@ bool CL64_Properties_Scene::Update_ListView_Environs()
 	SetWindowText(Properties_Dlg_hWnd, str_chr_ID.c_str());
 	SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, App->CL_Editor_Com->B_Object[index]->Object_Name);
 
-	const int NUM_ITEMS = 4;
+	const int NUM_ITEMS = 8;
 	const int NUM_COLS = 2;
 	std::string grid[NUM_COLS][NUM_ITEMS];
 	LV_ITEM pitem;
@@ -421,9 +421,13 @@ bool CL64_Properties_Scene::Update_ListView_Environs()
 	pitem.mask = LVIF_TEXT;
 
 	grid[0][0] = "Name",		grid[1][0] = App->CL_Editor_Com->B_Object[index]->Object_Name;
-	grid[0][1] = " ",			grid[1][1] = " ";
-	grid[0][2] = "Evironment",	grid[1][2] = "Settings";
-	grid[0][3] = "Position",	grid[1][3] = "Set";
+	grid[0][1] = "Evironment",	grid[1][1] = "Settings";
+	grid[0][2] = " ",			grid[1][2] = " ";
+	grid[0][3] = " ",			grid[1][3] = " ";
+	grid[0][4] = " ",			grid[1][4] = " ";
+	grid[0][5] = " ",			grid[1][5] = " ";
+	grid[0][6] = " ",			grid[1][6] = " ";
+	grid[0][7] = "Position",	grid[1][7] = "Set";
 
 	ListView_DeleteAllItems(Properties_hLV);
 
