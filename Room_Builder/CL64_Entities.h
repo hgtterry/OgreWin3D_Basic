@@ -29,6 +29,7 @@ public:
 	CL64_Entities();
 	~CL64_Entities();
 
+	int GetIndex_By_Name(char* Name);
 	void Create_Player_Brush();
 	void Create_Environment_Brush(int Object_Index);
 

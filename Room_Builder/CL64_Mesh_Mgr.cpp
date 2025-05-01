@@ -319,7 +319,7 @@ bool CL64_Mesh_Mgr::Brush_Decode_List(BrushList* BList, signed int SubBrush)
 
 	while (pBrush != nullptr)
 	{
-		if (pBrush->GroupId != 1)
+		if (pBrush->GroupId == 0)
 		{
 			// Get Main Brush Name not sub brushes 
 			strcpy(m_Main_Brush_Name, pBrush->Name);

@@ -1176,6 +1176,22 @@ void CL64_Doc::DoneMove(void)
 
                 App->CL_Physics->Reset_Physics();
             }
+
+            if (pBrush->GroupId == 2) // Environment
+            {
+                char Name[MAX_PATH]{ 0 };
+                strcpy(Name, pBrush->Name);
+
+                int Index = App->CL_Entities->GetIndex_By_Name(Name);
+
+                App->CL_SelBrushList->SelBrushList_Center(App->CL_Doc->pSelBrushes, &App->CL_Doc->SelectedGeoCenter);
+                T_Vec3 CenterOfSelection = App->CL_Doc->SelectedGeoCenter;
+
+                App->CL_Editor_Com->B_Object[Index]->Object_Node->setPosition(CenterOfSelection.x, CenterOfSelection.y, CenterOfSelection.z);
+             
+                App->CL_Physics->Set_Physics_New(Index);
+
+            }
         }
 
         UpdateSelected();

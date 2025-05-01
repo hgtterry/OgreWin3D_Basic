@@ -48,6 +48,32 @@ CL64_Entities::~CL64_Entities()
 //	b->GroupId = gid;
 //}
 
+// **************************************************************************
+// *	  		GetIndex_By_Name:- Terry and Hazel Flanigan 2024			*
+// **************************************************************************
+int CL64_Entities::GetIndex_By_Name(char* Name)
+{
+	int Count = 0;
+	int Total = App->CL_Editor_Com->Object_Count;
+
+	while (Count < Total)
+	{
+		if (App->CL_Editor_Com->B_Object[Count]->flag_Deleted == 0)
+		{
+			int Result = 1;
+			Result = strcmp(App->CL_Editor_Com->B_Object[Count]->Object_Name, Name);
+			if (Result == 0)
+			{
+				return Count;
+			}
+		}
+
+		Count++;
+	}
+
+	return -1;
+}
+
 // *************************************************************************
 // *		Create_Player_Entity:- Terry and Hazel Flanigan 2025	 	   *
 // *************************************************************************
@@ -105,7 +131,7 @@ void CL64_Entities::Create_Player_Brush()
 // *************************************************************************
 void CL64_Entities::Create_Environment_Brush(int Object_Index)
 {
-	char m_Name[100];
+	char m_Name[MAX_PATH];
 	strcpy(m_Name, App->CL_Editor_Com->B_Object[Object_Index]->Object_Name);
 
 	bool test = App->CL_Brush_X->Check_if_Brush_Name_Exist((LPSTR)m_Name);
@@ -139,7 +165,7 @@ void CL64_Entities::Create_Environment_Brush(int Object_Index)
 
 	App->CL_Brush->Brush_Bound(Environ_Brush);
 
-	Brush_SetGroupId(Environ_Brush, 1); // 0 = Main Mesh 1 = Entities
+	Brush_SetGroupId(Environ_Brush, 2); // 0 = Main Mesh 1 = Players 2 = Environments
 
 	fdocFaceScales Scales;
 
