@@ -38,6 +38,8 @@ public:
 	bool flag_Show_Press_Excape;
 	bool flag_Show_Preview_Options;
 	bool flag_Show_App_Stats;
+	bool flag_Show_Player_Data;
+	bool flag_PlayerData_Start_Pos;
 
 private:
 
@@ -52,6 +54,7 @@ private:
 	void Preview_Options_GUI(void);
 
 	void App_Stats_GUI(void);
+	void Player_Data_GUI(void);
 
 	std::vector<std::pair<bool, std::function<void()>>> guiFunctions;
 
@@ -66,6 +69,9 @@ private:
 
 	float Cam_Mode_PosX;
 	float Cam_Mode_PosY;
+
+	float Player_Data_PosX;
+	float Player_Data_PosY;
 
 	bool flag_Show_FPS;
 	bool flag_StartPos;

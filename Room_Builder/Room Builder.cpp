@@ -588,7 +588,21 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 App->CL_SoundMgr->Show_Sound_Player();
                 return 1;
             }
+
+            case ID_INFO_PLAYERDATA:
+            {
+                if (App->CL_ImGui->flag_Show_Player_Data == 1)
+                {
+                    App->CL_ImGui->flag_Show_Player_Data = 0;  
+                }
+                else
+                {
+                    App->CL_ImGui->flag_Show_Player_Data = 1;
+                }
+                return 1;
+            }
            
+          
             // ---------------------------------------------
             case IDM_ABOUT:
                 DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
