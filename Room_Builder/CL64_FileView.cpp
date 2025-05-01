@@ -665,12 +665,12 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 	// ------------------------------------------------------------ Eviron_Entities
 	if (!strcmp(FileView_Folder, "Evironments")) // Folder
 	{
-		Context_Selection = Enums::FileView_EnvironEntity_Folder;
+		//Context_Selection = Enums::FileView_EnvironEntity_Folder;
 		return;
 	}
 	if (!strcmp(FileView_File, "Evironments"))
 	{
-		Context_Selection = Enums::FileView_EnvironEntity_File;
+		//Context_Selection = Enums::FileView_EnvironEntity_File;
 
 		//HideRightPanes();
 		//App->CL_Props_Dialogs->Show_Details_Goto_Dlg(true);
@@ -1068,7 +1068,7 @@ void CL64_FileView::Context_New(HWND hDlg)
 		bool Doit = App->CL_Dialogs->flag_Dlg_Canceled;
 		if (Doit == 0)
 		{
-			App->CL_Com_Environments->Add_New_Environ_Entity(0);
+			App->CL_Com_Environments->Add_New_Environ_Entity(false);
 		}
 
 		return;

@@ -39,7 +39,7 @@ CL64_Com_Environments::~CL64_Com_Environments()
 // *************************************************************************
 void CL64_Com_Environments::Create_Test_Environment()
 {
-	App->CL_Com_Environments->Add_New_Environ_Entity(1);
+	App->CL_Com_Environments->Add_New_Environ_Entity(true);
 	int mIndex = App->CL_Com_Environments->Get_First_Environ();
 	App->CL_Com_Environments->Set_First_Environment(mIndex);
 
@@ -106,7 +106,8 @@ bool CL64_Com_Environments::Add_New_Environ_Entity(bool FirstOne)
 // *************************************************************************
 // *		Create_Environ_Entity:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
-bool CL64_Com_Environments::Create_Environ_Entity(int index) {
+bool CL64_Com_Environments::Create_Environ_Entity(int index) 
+{
 	const int bufferSize = MAX_PATH;
 	char meshFile[bufferSize];
 	char ogreName[bufferSize];

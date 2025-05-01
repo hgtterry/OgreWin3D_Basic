@@ -522,7 +522,7 @@ bool CL64_Collision::Do_Environment(int Index)
 		return 1;
 	}
 
-	if (App->CL_Scene->flag_GameMode_Running == 1)
+	/*if (App->CL_Scene->flag_GameMode_Running == 1)
 	{
 		App->CL_Com_Environments->Set_Environment_By_Index(0, Old_Sound_Index);
 		App->CL_Com_Environments->Set_Environment_By_Index(1, Index);
@@ -530,7 +530,7 @@ bool CL64_Collision::Do_Environment(int Index)
 		Old_Sound_Index = Index;
 		App->CL_Scene->B_Object[Index]->flag_Triggered = 1;
 	}
-	else
+	else*/
 	{
 		App->CL_Com_Environments->Set_Environment_By_Index(0, Index);
 

@@ -160,7 +160,7 @@ void CL64_Gui_Environment::Start_Environment_Editor(int Index,bool IsTeleport)
 	App->Show_Panels(false);*/
 
 	App->CL_FileView->Show_FileView(false);
-	App->CL_Com_Environments->Set_Environment_By_Index(1, Eviron_Index);
+	//App->CL_Com_Environments->Set_Environment_By_Index(1, Eviron_Index);
 
 	flag_Show_PropertyEditor = 1;
 }
