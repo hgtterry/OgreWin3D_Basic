@@ -198,5 +198,4 @@ void CL64_Editor_Com::Clear_Level(bool FromFile)
 		App->CL_Camera->Reset_View_Editor();
 
 	}
-
 }

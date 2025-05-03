@@ -44,7 +44,7 @@ void CL64_Com_Environments::Create_Test_Environment()
 	App->CL_Com_Environments->Set_First_Environment(mIndex);
 
 	App->CL_FileView->Enable_Environment_Button(true);
-	//App->CL_Scene->flag_Scene_Modified = 1;
+	////App->CL_Scene->flag_Scene_Modified = 1;
 
 	App->CL_Editor_Scene->flag_Environment_Available = 1;
 }

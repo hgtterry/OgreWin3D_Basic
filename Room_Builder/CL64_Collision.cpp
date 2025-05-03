@@ -32,7 +32,7 @@ CL64_Collision::CL64_Collision(void)
 	flag_DoMove = 0;
 
 	FinalPosition = 0;
-	Old_Sound_Index = 0;
+	Old_Sound_Index = -1;
 
 	x = 0;
 	y = 0;

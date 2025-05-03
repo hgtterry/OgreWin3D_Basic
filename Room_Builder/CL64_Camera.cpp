@@ -29,6 +29,9 @@ THE SOFTWARE.
 
 CL64_Camera::CL64_Camera(void)
 {
+	flag_First_Person = 0;
+	flag_Free = 1;
+
 	Saved_Cam_Pos = { 0, 0, 0 };
 	Saved_Rotation = {1, 0, 0, 0 };
 }
@@ -223,5 +226,34 @@ void CL64_Camera::Camera_Save_Location(void)
 {
 	Saved_Cam_Pos = App->CL_Ogre->camNode->getPosition();
 	Saved_Rotation = App->CL_Ogre->camNode->getOrientation();
+}
+
+// *************************************************************************
+// *	Set_Camera_Mode_First_Person:- Terry and Hazel Flanigan 2025  	   *
+// *************************************************************************
+void CL64_Camera::Set_Camera_Mode_First_Person()
+{
+	flag_First_Person = 1;
+	flag_Free = 0;
+
+	App->CL_Ogre->Ogre3D_Listener->flag_Run_Physics = 1;
+	App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_First;
+
+	RedrawWindow(App->CL_Editor_Scene->Scene_Headers_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+}
+
+// *************************************************************************
+// *		Set_Camera_Mode_Free:- Terry and Hazel Flanigan 2025	 	   *
+// *************************************************************************
+void CL64_Camera::Set_Camera_Mode_Free()
+{
+	flag_Free = 1;
+	flag_First_Person = 0;
+
+	App->CL_Ogre->Ogre3D_Listener->flag_Run_Physics = 0;
+	App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_Free;
+
+	RedrawWindow(App->CL_Editor_Scene->Scene_Headers_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 }
 

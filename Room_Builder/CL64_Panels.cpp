@@ -166,3 +166,39 @@ bool CL64_Panels::Resize_FileView(void)
 
 	return EndDeferWindowPos(hdwp);
 }
+
+// *************************************************************************
+// *	Enable_Scene_Editor_Dialogs:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+void CL64_Panels::Enable_Scene_Editor_Dialogs(bool Enable)
+{
+	if (Enable == true)
+	{
+		EnableWindow(App->CL_Editor_Scene->Scene_Headers_hWnd, true);
+		EnableWindow(App->CL_Properties_Scene->Properties_Dlg_hWnd, true);
+		HMENU Hmenu = GetMenu(App->MainHwnd);
+
+		for (int i = 0; i < GetMenuItemCount(Hmenu); ++i)
+		{
+			EnableMenuItem(Hmenu, i, MF_BYPOSITION | MF_ENABLED);
+		}
+
+		DrawMenuBar(App->MainHwnd);
+
+	}
+	else
+	{
+		EnableWindow(App->CL_Editor_Scene->Scene_Headers_hWnd, false);
+		EnableWindow(App->CL_Properties_Scene->Properties_Dlg_hWnd, false);
+		
+		HMENU Hmenu = GetMenu(App->MainHwnd);
+
+		for (int i = 0; i < GetMenuItemCount(Hmenu); ++i)
+		{
+			EnableMenuItem(Hmenu, i, MF_BYPOSITION | MF_GRAYED);
+		}
+
+		DrawMenuBar(App->MainHwnd);
+
+	}
+}

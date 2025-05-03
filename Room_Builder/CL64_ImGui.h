@@ -29,6 +29,8 @@ public:
 	CL64_ImGui();
 	~CL64_ImGui();
 
+	void Close_Dialogs(void);
+
 	void Init_ImGui(void);
 	void ImGui_Render_Loop(void);
 

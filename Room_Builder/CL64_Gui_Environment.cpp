@@ -157,6 +157,8 @@ void CL64_Gui_Environment::Start_Environment_Editor(int index, bool isTeleport) 
 	flag_ClickOnLoop = environment->flag_Loop;
 
 	App->CL_FileView->Show_FileView(false);
+	App->CL_Panels->Enable_Scene_Editor_Dialogs(false);
+
 	App->CL_Com_Environments->Set_Environment_By_Index(1, Eviron_Index);
 
 	flag_Show_PropertyEditor = 1;
@@ -511,6 +513,8 @@ void CL64_Gui_Environment::Environ_PropertyEditor()
 // *************************************************************************
 void CL64_Gui_Environment::Close_Environment_Editor()
 {
+	App->CL_Panels->Enable_Scene_Editor_Dialogs(true);
+
 	/*App->Disable_Panels(false);
 	App->Show_Panels(true);*/
 

@@ -36,7 +36,7 @@ CL64_Physics::CL64_Physics(void)
 
 	mShape = NULL;
 	myMotionState = NULL;
-	Phys_Body = NULL;
+	Area_Phys_Body = NULL;
 	triMesh = NULL;
 
 	flag_GD_Physics_On = 0;
@@ -233,16 +233,16 @@ bool CL64_Physics::Create_New_Trimesh(Ogre::Entity* Entity, Ogre::SceneNode* Nod
 		inertia			// local inertia
 	);
 
-	Phys_Body = new btRigidBody(rigidBodyCI);
-	Phys_Body->clearForces();
-	Phys_Body->setLinearVelocity(btVector3(0, 0, 0));
-	Phys_Body->setAngularVelocity(btVector3(0, 0, 0));
-	Phys_Body->setWorldTransform(startTransform);
+	Area_Phys_Body = new btRigidBody(rigidBodyCI);
+	Area_Phys_Body->clearForces();
+	Area_Phys_Body->setLinearVelocity(btVector3(0, 0, 0));
+	Area_Phys_Body->setAngularVelocity(btVector3(0, 0, 0));
+	Area_Phys_Body->setWorldTransform(startTransform);
 
-	int f = Phys_Body->getCollisionFlags();
-	Phys_Body->setCollisionFlags(f | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
+	int f = Area_Phys_Body->getCollisionFlags();
+	Area_Phys_Body->setCollisionFlags(f | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
 
-	dynamicsWorld->addRigidBody(Phys_Body);
+	dynamicsWorld->addRigidBody(Area_Phys_Body);
 
 	flag_TriMesh_Created = 1;
 
@@ -262,7 +262,7 @@ void CL64_Physics::Clear_Trimesh()
 		delete myMotionState;
 		myMotionState = NULL;
 
-		dynamicsWorld->removeCollisionObject(Phys_Body);
+		dynamicsWorld->removeCollisionObject(Area_Phys_Body);
 
 		delete triMesh;
 		triMesh = NULL;
@@ -276,15 +276,15 @@ void CL64_Physics::Clear_Trimesh()
 // *************************************************************************
 void CL64_Physics::Show_Debug_Area(bool Show)
 {
-	int f = Phys_Body->getCollisionFlags();
+	int f = Area_Phys_Body->getCollisionFlags();
 
 	if (Show == 1)
 	{
-		Phys_Body->setCollisionFlags(f & (~(1 << 5)));
+		Area_Phys_Body->setCollisionFlags(f & (~(1 << 5)));
 	}
 	else
 	{
-		Phys_Body->setCollisionFlags(f | (1 << 5));
+		Area_Phys_Body->setCollisionFlags(f | (1 << 5));
 	}
 
 	App->CL_Ogre->Bullet_Debug_Listener->flag_Render_Debug_Flag = 0;
@@ -355,28 +355,27 @@ void CL64_Physics::Reset_Scene(void)
 // *************************************************************************
 void CL64_Physics::Show_Debug_Objects(bool Show)
 {
-	/*int Count = 0;
-	while (Count < App->CL_Editor->Object_Count)
+	int Count = 0;
+	while (Count < App->CL_Editor_Com->Object_Count)
 	{
-
-		if (App->CL_Editor->B_Object[Count]->Phys_Body)
+		if (App->CL_Editor_Com->B_Object[Count]->Phys_Body)
 		{
-			int f = App->CL_Editor->B_Object[Count]->Phys_Body->getCollisionFlags();
+			int f = App->CL_Editor_Com->B_Object[Count]->Phys_Body->getCollisionFlags();
 
 			if (Show == true)
 			{
-				App->CL_Editor->B_Object[Count]->Phys_Body->setCollisionFlags(f & (~(1 << 5)));
+				App->CL_Editor_Com->B_Object[Count]->Phys_Body->setCollisionFlags(f & (~(1 << 5)));
 			}
 			else
 			{
-				App->CL_Editor->B_Object[Count]->Phys_Body->setCollisionFlags(f | (1 << 5));
+				App->CL_Editor_Com->B_Object[Count]->Phys_Body->setCollisionFlags(f | (1 << 5));
 			}
 		}
 
 		Count++;
 	}
 
-	Count = 0;
+	/*Count = 0;
 	while (Count < App->CL_Editor->Player_Count)
 	{
 
@@ -395,9 +394,9 @@ void CL64_Physics::Show_Debug_Objects(bool Show)
 		}
 
 		Count++;
-	}
+	}*/
 
-	Count = 0;
+	/*Count = 0;
 	while (Count < App->CL_Editor->Area_Count)
 	{
 
@@ -416,11 +415,11 @@ void CL64_Physics::Show_Debug_Objects(bool Show)
 		}
 
 		Count++;
-	}
+	}*/
 
 	App->CL_Ogre->Bullet_Debug_Listener->flag_Render_Debug_Flag = 0;
 	App->CL_Ogre->RenderFrame(1);
-	App->CL_Ogre->Bullet_Debug_Listener->flag_Render_Debug_Flag = 1;*/
+	App->CL_Ogre->Bullet_Debug_Listener->flag_Render_Debug_Flag = 1;
 }
 
 // *************************************************************************

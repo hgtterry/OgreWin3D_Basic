@@ -33,6 +33,7 @@ CL64_Editor_Scene::CL64_Editor_Scene()
 {
 	flag_Scene_Editor_Active = 0;
 	flag_Environment_Available = 0;
+	flag_Show_Physics_Objects = 0;
 
 	Scene_Headers_hWnd = NULL;
 	hMenu = NULL;
@@ -107,7 +108,7 @@ LRESULT CALLBACK CL64_Editor_Scene::Proc_Headers_Scene(HWND hDlg, UINT message, 
 		if (some_item->idFrom == IDC_BT_SCENE_FIRST)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Normal(item);
+			App->Custom_Button_Toggle(item,App->CL_Camera->flag_First_Person);
 
 			return CDRF_DODEFAULT;
 		}
@@ -115,7 +116,7 @@ LRESULT CALLBACK CL64_Editor_Scene::Proc_Headers_Scene(HWND hDlg, UINT message, 
 		if (some_item->idFrom == IDC_BT_SCENE_FREE)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Normal(item);
+			App->Custom_Button_Toggle(item, App->CL_Camera->flag_Free);
 
 			return CDRF_DODEFAULT;
 		}
@@ -128,9 +129,7 @@ LRESULT CALLBACK CL64_Editor_Scene::Proc_Headers_Scene(HWND hDlg, UINT message, 
 	{
 		if (LOWORD(wParam) == IDC_BT_MAP_EDITOR)
 		{
-			App->CL_Ogre->Ogre3D_Listener->flag_Run_Physics = 0;
-			App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_Free;
-
+			App->CL_Camera->Set_Camera_Mode_Free();
 			App->CL_Editor_Scene->Back_To_Map_Editor();
 			return TRUE;
 		}
@@ -143,15 +142,13 @@ LRESULT CALLBACK CL64_Editor_Scene::Proc_Headers_Scene(HWND hDlg, UINT message, 
 
 		if (LOWORD(wParam) == IDC_BT_SCENE_FIRST)
 		{
-			App->CL_Ogre->Ogre3D_Listener->flag_Run_Physics = 1;
-			App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_First;
+			App->CL_Camera->Set_Camera_Mode_First_Person();
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == IDC_BT_SCENE_FREE)
 		{
-			App->CL_Ogre->Ogre3D_Listener->flag_Run_Physics = 0;
-			App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_Free;
+			App->CL_Camera->Set_Camera_Mode_Free();
 			return TRUE;
 		}
 		
@@ -237,6 +234,8 @@ void CL64_Editor_Scene::Set_Editor_Scene()
 	// Set menu
 	SetMenu(App->MainHwnd, App->Menu_Scene);
 	App->CL_Com_Objects->Show_Entities(true);
+
+	//App->CL_Physics->Show_Debug_Objects(true);
 
 }
 

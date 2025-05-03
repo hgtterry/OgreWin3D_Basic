@@ -49,7 +49,7 @@ public:
 
 	btBvhTriangleMeshShape* mShape;
 	btDefaultMotionState* myMotionState;
-	btRigidBody* Phys_Body;
+	btRigidBody* Area_Phys_Body;
 	btTriangleMesh* triMesh;
 
 	bool flag_GD_Physics_On;

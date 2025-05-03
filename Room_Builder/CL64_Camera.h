@@ -42,8 +42,14 @@ public:
 	void Camera_Speed_Fast(void);
 	void Camera_Set_Menu_Clear(void);
 
+	void Set_Camera_Mode_First_Person();
+	void Set_Camera_Mode_Free();
+
 	void Reset_View_Editor(void);
 	void Camera_Save_Location(void);
+
+	bool flag_First_Person;
+	bool flag_Free;
 
 	Ogre::Vector3 Saved_Cam_Pos;
 	Ogre::Quaternion Saved_Rotation;

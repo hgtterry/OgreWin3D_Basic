@@ -33,6 +33,7 @@ public:
 	void Move_FileView_Window(void);
 	bool Place_Properties_Dlg(void);
 	bool Resize_FileView(void);
+	void Enable_Scene_Editor_Dialogs(bool Enable);
 
 
 	void Deselect_All_Brushes_Update_Dlgs(void);

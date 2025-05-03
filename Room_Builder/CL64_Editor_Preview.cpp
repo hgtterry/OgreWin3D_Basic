@@ -43,6 +43,8 @@ CL64_Editor_Preview::~CL64_Editor_Preview(void)
 // *************************************************************************
 void CL64_Editor_Preview::Preview_Mode(void)
 {
+	App->CL_ImGui->Close_Dialogs();
+
 	if (App->CL_Physics->flag_TriMesh_Created == 1)
 	{
 		App->CL_Physics->Clear_Trimesh();

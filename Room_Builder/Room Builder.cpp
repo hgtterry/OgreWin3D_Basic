@@ -601,8 +601,23 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 }
                 return 1;
             }
+
+            case ID_INFO_PHYSICSOBJECTSDEBUG:
+            {
+                if (App->CL_Editor_Scene->flag_Show_Physics_Objects == 1)
+                {
+                    App->CL_Physics->Show_Debug_Objects(false);
+                    App->CL_Editor_Scene->flag_Show_Physics_Objects = 0;
+                }
+                else
+                {
+                    App->CL_Physics->Show_Debug_Objects(true);
+                    App->CL_Editor_Scene->flag_Show_Physics_Objects = 1;
+                }
+
+                return 1;
+            }
            
-          
             // ---------------------------------------------
             case IDM_ABOUT:
                 DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);

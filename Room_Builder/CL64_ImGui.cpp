@@ -64,6 +64,14 @@ CL64_ImGui::~CL64_ImGui()
 }
 
 // *************************************************************************
+// *			Close_Dialogs:- Terry and Hazel Flanigan 2025				   *
+// *************************************************************************
+void CL64_ImGui::Close_Dialogs(void)
+{
+	flag_Show_Player_Data = 0;
+}
+
+// *************************************************************************
 // *			Init_ImGui:- Terry and Hazel Flanigan 2025				   *
 // *************************************************************************
 void CL64_ImGui::Init_ImGui(void)
@@ -305,15 +313,15 @@ void CL64_ImGui::Preview_Options_GUI(void)
 			App->CL_Physics->Reset_Physics();
 			App->CL_Physics->Reset_Scene();
 
-			App->CL_Ogre->Ogre3D_Listener->flag_Run_Physics = 1;
-			App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_First;
+			App->CL_Camera->Set_Camera_Mode_First_Person();
+		
 			flag_Show_Preview_Options = 0;
 		}
 
 		if (ImGui::Button("Player Position", ImVec2(150, 100)))
 		{
-			App->CL_Ogre->Ogre3D_Listener->flag_Run_Physics = 1;
-			App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_First;
+			App->CL_Camera->Set_Camera_Mode_First_Person();
+
 			flag_Show_Preview_Options = 0;
 		}
 

@@ -43,6 +43,7 @@ public:
 
 	bool flag_Scene_Editor_Active;
 	bool flag_Environment_Available;
+	bool flag_Show_Physics_Objects;
 
 	HWND Scene_Headers_hWnd;
 

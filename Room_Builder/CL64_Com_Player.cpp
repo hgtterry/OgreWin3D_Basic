@@ -431,6 +431,7 @@ int CL64_Com_Player::CheckNames_Player(char* Name)
 
 		Count++;
 	}*/
+
 	return 0;
 }
 
@@ -454,9 +455,7 @@ void CL64_Com_Player::Check_Collisions(void)
 		btCollisionObject* obB = (btCollisionObject*)(contactManifold->getBody1());
 
 		Col_Player_Index = obA->getUserIndex();  // Should Be Player
-
 		Col_Object_Index = obB->getUserIndex2(); // Object Index
-
 		Col_Usage_Index = obB->getUserIndex();
 
 		if (Col_Player_Index == Enums::Obj_Usage_Player)
