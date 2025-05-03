@@ -82,6 +82,7 @@ void CL64_Ogre::Init_Ogre(void)
 	App->CL_Grid->Grid_Update(1);
 	App->CL_Grid->Hair_Update(1);
 	App->CL_Grid->Face_Update(1);
+	App->CL_Gizmos->Set_Gizmos();
 
 	App->CL_ImGui->Init_ImGui();
 }

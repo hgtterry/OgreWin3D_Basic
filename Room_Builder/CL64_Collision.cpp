@@ -505,7 +505,7 @@ bool CL64_Collision::Message_Entity(int Index)
 
 	return 1;
 }
-
+ 
 // *************************************************************************
 // *			Do_Environment:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
@@ -516,11 +516,11 @@ bool CL64_Collision::Do_Environment(int Index)
 		return 1;
 	}
 
-	if (Old_Sound_Index == Index)
+	/*if (Old_Sound_Index == Index)
 	{
 		App->CL_Editor_Com->B_Object[Index]->flag_Triggered = 1;
 		return 1;
-	}
+	}*/
 
 	/*if (App->CL_Editor_Com->flag_GameMode_Running == 1)
 	{

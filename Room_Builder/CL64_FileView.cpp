@@ -609,6 +609,7 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 		//App->SBC_Properties->Reset_Last_Selected_Object(App->SBC_Properties->Last_Selected_Object);
 		//App->SBC_Properties->Last_Selected_Object = Index;
 		//----------------------------------------------------------------------------
+		App->CL_Gizmos->Show_MarkerBox(false);
 
 		App->CL_Properties_Scene->Current_Selected_Object = Index;
 
@@ -684,7 +685,7 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 		App->SBC_Properties->Last_Selected_Object = Index;*/
 		//----------------------------------------------------------------------------
 
-		//App->CL_Gizmos->MarkerBox_Addjust(Index);
+		App->CL_Gizmos->MarkerBox_Addjust(Index);
 
 		App->CL_Properties_Scene->Current_Selected_Object = Index;
 		App->CL_Properties_Scene->Edit_Category = Enums::Edit_Environs;

@@ -829,9 +829,9 @@ bool CL64_Properties_Scene::Edit_Environs_OnClick(LPARAM lParam)
 
 			App->CL_Editor_Com->B_Object[Index]->Object_Node->setPosition(App->CL_ImGui_Dialogs->m_Dialog_Float_Vec3);
 			App->CL_Editor_Com->B_Object[Index]->Mesh_Pos = App->CL_ImGui_Dialogs->m_Dialog_Float_Vec3;
-			
-			App->CL_Brush_X->Move_Brush_By_Name(App->CL_Editor_Com->B_Object[Index]->Object_Name,Index);
 
+			App->CL_Physics->Set_Physics_New(Index);
+			App->CL_Brush_X->Move_Brush_By_Name(App->CL_Editor_Com->B_Object[Index]->Object_Name,Index);
 
 			App->CL_Editor_Com->B_Player[0]->flag_Altered = 1;
 			App->CL_Level->flag_Level_is_Modified = true;
