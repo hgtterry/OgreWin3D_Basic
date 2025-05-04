@@ -471,3 +471,45 @@ void CL64_Brush_X::Move_Brush_By_Name(char* Brush_Name, int Object_Index)
 	}
 }
 
+// *************************************************************************
+// *		  Scale_Brush_By_Name:- Terry and Hazel Flanigan 2025		   *
+// *************************************************************************
+void CL64_Brush_X::Scale_Brush_By_Name(char* Brush_Name, int Object_Index)
+{
+	Brush* b = NULL;
+	b = App->CL_Brush_X->Get_Brush_By_Name(Brush_Name);
+	if (b)
+	{
+		App->CL_Brush->Brush_Center(b, &App->CL_Doc->SelectedGeoCenter);
+
+		T_Vec3 Size { 0 };
+
+		Ogre::Vector3 Ogre_Size = App->CL_Editor_Com->B_Object[Object_Index]->Object_Node->_getWorldAABB().getSize();
+
+		Size.x = Ogre_Size.x;
+		Size.y = Ogre_Size.y;
+		Size.z = Ogre_Size.z;
+
+		T_Vec3	VecOrigin = { 0.0f, 0.0f, 0.0f };
+		T_Vec3 MoveTo;
+		T_Vec3 MoveBack;
+
+		App->CL_Maths->Vector3_Subtract(&VecOrigin, &App->CL_Doc->SelectedGeoCenter, &MoveTo);
+		App->CL_Maths->Vector3_Subtract(&App->CL_Doc->SelectedGeoCenter, &VecOrigin, &MoveBack);
+		App->CL_Maths->Vector3_Subtract(&Size, &App->CL_Doc->SelectedGeoCenter, &Size);
+
+		App->CL_Brush->Brush_Move(b, &MoveTo);
+		App->CL_Brush->Brush_Scale3d(b, &Size);
+		App->CL_Brush->Brush_Move(b, &MoveBack);
+
+		if (App->CL_Brush->Brush_IsMulti(b))
+		{
+			//App->CL_Brush->BrushList_ClearCSGAndHollows((BrushList*)App->CL_Brush->Brush_GetBrushList(b), App->CL_Brush->Brush_GetModelId(b));
+			//App->CL_Brush->BrushList_RebuildHollowFaces((BrushList*)App->CL_Brush->Brush_GetBrushList(b), App->CL_Brush->Brush_GetModelId(b), ::fdocBrushCSGCallback, this);
+		}
+
+		//App->CL_Brush->Brush_Move(b, &Pos);
+
+	}
+}
+

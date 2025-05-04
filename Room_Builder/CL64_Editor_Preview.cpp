@@ -64,6 +64,7 @@ void CL64_Editor_Preview::Preview_Mode(void)
 		App->CL_Ogre->OGL_Listener->Show_Visuals(false);
 		App->CL_Com_Objects->Show_Entities(false);
 		App->CL_Grid->Enable_Grid_And_Hair(false);
+		App->CL_Gizmos->Show_MarkerBox(false);
 
 		//SetCursorPos(App->CursorPosX, App->CursorPosY);
 

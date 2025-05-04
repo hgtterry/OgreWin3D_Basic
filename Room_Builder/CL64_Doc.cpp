@@ -885,6 +885,7 @@ void CL64_Doc::ScaleSelectedBrushes(T_Vec3* ScaleVector)
 
     T_Vec3 MoveTo;
     T_Vec3 MoveBack;
+
     App->CL_Maths->Vector3_Subtract(&VecOrigin, &App->CL_Doc->SelectedGeoCenter, &MoveTo);
     App->CL_Maths->Vector3_Subtract(&App->CL_Doc->SelectedGeoCenter, &VecOrigin, &MoveBack);
 

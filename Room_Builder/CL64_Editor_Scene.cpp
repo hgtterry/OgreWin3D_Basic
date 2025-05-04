@@ -244,7 +244,6 @@ void CL64_Editor_Scene::Set_Editor_Scene()
 // *************************************************************************
 void CL64_Editor_Scene::Return_From_Preview(void)
 {
-
 	// Set view flags
 	auto& topTabs = App->CL_Top_Tabs;
 	topTabs->flag_Full_View_3D = true;
@@ -266,6 +265,7 @@ void CL64_Editor_Scene::Return_From_Preview(void)
 	App->CL_Ogre->mWindow->windowMovedOrResized();
 	App->CL_Ogre->mCamera->setAspectRatio((Ogre::Real)App->CL_Ogre->mWindow->getWidth() / (Ogre::Real)App->CL_Ogre->mWindow->getHeight());
 	App->CL_Com_Objects->Show_Entities(true);
+	App->CL_Gizmos->Show_MarkerBox(true);
 
 	// TODO Recreating Physics Not Nessasery
 	if (App->CL_Physics->flag_TriMesh_Created == 1)
@@ -288,11 +288,12 @@ void CL64_Editor_Scene::Back_To_Map_Editor(void)
 {
 	App->CL_SoundMgr->SoundEngine->stopAllSounds();
 
-	// Turn off Editor Dialogs
+	// Turn off Editor Dialogs and Gizmos
 	App->CL_FileView->Show_FileView(false);
 	App->CL_Properties_Scene->Show_Properties_Scene(false);
 	App->CL_Gui_Environment->PropertyEditor_Page = false;
 	App->CL_Gui_Environment->flag_Show_PropertyEditor = false;
+	App->CL_Gizmos->Show_MarkerBox(false);
 
 	// Reset Flags
 	flag_Scene_Editor_Active = false;
