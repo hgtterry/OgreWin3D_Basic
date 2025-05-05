@@ -451,24 +451,22 @@ void CL64_Brush_X::Move_Player_Brush()
 // *************************************************************************
 void CL64_Brush_X::Move_Brush_By_Name(char* Brush_Name, int Object_Index)
 {
-	Brush* b = NULL;
-	b = App->CL_Brush_X->Get_Brush_By_Name(Brush_Name);
-	if (b)
-	{
-		App->CL_Brush->Brush_Center(b, &App->CL_Doc->SelectedGeoCenter);
+	Brush* b = App->CL_Brush_X->Get_Brush_By_Name(Brush_Name);
+	if (!b) return; // No Nrush
 
-		T_Vec3 Pos;
-		Ogre::Vector3 Centre = App->CL_Editor_Com->B_Object[Object_Index]->Object_Ent->getWorldBoundingBox(true).getCenter();
-		
-		Pos.x = Centre.x;
-		Pos.y = Centre.y;
-		Pos.z = Centre.z;
+	App->CL_Brush->Brush_Center(b, &App->CL_Doc->SelectedGeoCenter);
 
-		App->CL_Maths->Vector3_Subtract(&Pos, &App->CL_Doc->SelectedGeoCenter, &Pos);
+	T_Vec3 Pos;
+	Ogre::Vector3 Centre = App->CL_Editor_Com->B_Object[Object_Index]->Object_Ent->getWorldBoundingBox(true).getCenter();
 
-		App->CL_Brush->Brush_Move(b, &Pos);
+	Pos.x = Centre.x;
+	Pos.y = Centre.y;
+	Pos.z = Centre.z;
 
-	}
+	App->CL_Maths->Vector3_Subtract(&Pos, &App->CL_Doc->SelectedGeoCenter, &Pos);
+
+	App->CL_Brush->Brush_Move(b, &Pos);
+
 }
 
 // *************************************************************************
