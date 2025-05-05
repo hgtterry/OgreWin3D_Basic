@@ -898,7 +898,7 @@ void CL64_ImGui_Dialogs::Start_Dialog_Float_Vec3(float Step, int Combo_Step, Ogr
 
 	m_Dialog_Float_Copy_Vec3 = StartValue;
 	
-	//App->CL_Panels->Disable_Panels(true);
+	App->CL_Panels->Enable_Scene_Editor_Dialogs(false);
 
 	Float_PosX = ((float)App->CL_Ogre->mWindow->getViewport(0)->getActualWidth() / 2) - (200 / 2);
 	Float_PosY = ((float)App->CL_Ogre->mWindow->getViewport(0)->getActualHeight() / 2) - (130 / 2);

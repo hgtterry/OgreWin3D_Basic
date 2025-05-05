@@ -812,7 +812,7 @@ bool CL64_Properties_Scene::Edit_Environs_OnClick(LPARAM lParam)
 	result = strcmp(btext, "Position");
 	if (result == 0)
 	{
-		App->CL_ImGui_Dialogs->Start_Dialog_Float_Vec3(0.50, 3, App->CL_Editor_Com->B_Object[Index]->Object_Node->getPosition(), (LPSTR)"Position");
+		App->CL_ImGui_Dialogs->Start_Dialog_Float_Vec3(1.00, 4, App->CL_Editor_Com->B_Object[Index]->Object_Node->getPosition(), (LPSTR)"Position");
 
 		while (App->CL_ImGui_Dialogs->flag_Show_Dialog_Float_Vec3 == 1)
 		{
@@ -834,6 +834,8 @@ bool CL64_Properties_Scene::Edit_Environs_OnClick(LPARAM lParam)
 			App->CL_Physics->Set_Physics_New(Index);
 			App->CL_Brush_X->Move_Brush_By_Name(App->CL_Editor_Com->B_Object[Index]->Object_Name,Index);
 
+			App->CL_Gizmos->MarkerBox_Addjust(Index);
+
 			App->CL_Editor_Com->B_Object[Index]->flag_Altered = 1;
 			App->CL_Level->flag_Level_is_Modified = true;
 			App->CL_FileView->Mark_Altered(App->CL_Editor_Com->B_Object[Index]->FileViewItem);
@@ -845,7 +847,7 @@ bool CL64_Properties_Scene::Edit_Environs_OnClick(LPARAM lParam)
 			App->CL_Physics->Reset_Physics();
 		}
 
-		//App->CL_Panels->Disable_Panels(false);
+		App->CL_Panels->Enable_Scene_Editor_Dialogs(true);
 
 		Update_ListView_Environs();
 		
@@ -876,7 +878,13 @@ bool CL64_Properties_Scene::Edit_Environs_OnClick(LPARAM lParam)
 
 			App->CL_Physics->Set_Physics_New(Index);
 
-			App->CL_Brush_X->Scale_Brush_By_Name(App->CL_Editor_Com->B_Object[Index]->Object_Name, Index);
+			float sizeX = App->CL_Editor_Com->B_Object[Index]->Object_Node->_getWorldAABB().getSize().x;
+			float sizeY = App->CL_Editor_Com->B_Object[Index]->Object_Node->_getWorldAABB().getSize().y;
+			float sizeZ = App->CL_Editor_Com->B_Object[Index]->Object_Node->_getWorldAABB().getSize().z;
+
+			App->CL_Brush_X->Scale_Brush_By_Name(App->CL_Editor_Com->B_Object[Index]->Object_Name, Index, sizeX, sizeY, sizeZ);
+			
+			App->CL_Gizmos->MarkerBox_Addjust(Index);
 
 			App->CL_Editor_Com->B_Object[Index]->flag_Altered = 1;
 			App->CL_Level->flag_Level_is_Modified = true;
@@ -889,12 +897,9 @@ bool CL64_Properties_Scene::Edit_Environs_OnClick(LPARAM lParam)
 			App->CL_Physics->Reset_Physics();
 		}
 
-		//App->CL_Panels->Disable_Panels(false);
+		App->CL_Panels->Enable_Scene_Editor_Dialogs(true);
 
 		Update_ListView_Environs();
-
-		//float poo = App->CL_Editor_Com->B_Object[Index]->Object_Node->_getWorldAABB().getSize().x;
-		//App->Say_Float(poo);
 
 		return 1;
 	}

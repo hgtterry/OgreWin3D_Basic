@@ -176,7 +176,11 @@ void CL64_Panels::Enable_Scene_Editor_Dialogs(bool Enable)
 	{
 		EnableWindow(App->CL_Editor_Scene->Scene_Headers_hWnd, true);
 		EnableWindow(App->CL_Properties_Scene->Properties_Dlg_hWnd, true);
+		EnableWindow(App->ListPanel, true);
+
 		HMENU Hmenu = GetMenu(App->MainHwnd);
+
+		EnableMenuItem(GetSystemMenu(App->MainHwnd, FALSE), SC_CLOSE,MF_BYCOMMAND | MF_ENABLED);
 
 		for (int i = 0; i < GetMenuItemCount(Hmenu); ++i)
 		{
@@ -190,6 +194,9 @@ void CL64_Panels::Enable_Scene_Editor_Dialogs(bool Enable)
 	{
 		EnableWindow(App->CL_Editor_Scene->Scene_Headers_hWnd, false);
 		EnableWindow(App->CL_Properties_Scene->Properties_Dlg_hWnd, false);
+		EnableWindow(App->ListPanel, false);
+
+		EnableMenuItem(GetSystemMenu(App->MainHwnd, FALSE), SC_CLOSE,MF_BYCOMMAND | MF_DISABLED | MF_GRAYED);
 		
 		HMENU Hmenu = GetMenu(App->MainHwnd);
 

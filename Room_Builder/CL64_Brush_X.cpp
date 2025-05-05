@@ -474,42 +474,41 @@ void CL64_Brush_X::Move_Brush_By_Name(char* Brush_Name, int Object_Index)
 // *************************************************************************
 // *		  Scale_Brush_By_Name:- Terry and Hazel Flanigan 2025		   *
 // *************************************************************************
-void CL64_Brush_X::Scale_Brush_By_Name(char* Brush_Name, int Object_Index)
+void CL64_Brush_X::Scale_Brush_By_Name(const char* Brush_Name, int Object_Index, float SX, float SY, float SZ)
 {
-	Brush* b = NULL;
-	b = App->CL_Brush_X->Get_Brush_By_Name(Brush_Name);
-	if (b)
+	Brush* b = App->CL_Brush_X->Get_Brush_By_Name(Brush_Name);
+	if (!b) return; // No Nrush
+
+	T_Vec3 mFinalScale;
+	float mSizeX = fabs(b->BoundingBox.Max.x - b->BoundingBox.Min.x);
+	float mSizeY = fabs(b->BoundingBox.Max.y - b->BoundingBox.Min.y);
+	float mSizeZ = fabs(b->BoundingBox.Max.z - b->BoundingBox.Min.z);
+
+	// Convert to a Scale
+	mFinalScale.x = SX / mSizeX;
+	mFinalScale.y = SY / mSizeY;
+	mFinalScale.z = SZ / mSizeZ;
+
+	T_Vec3 mSelectedGeoCenter = { 0, 0, 0 };
+	T_Vec3 VecOrigin = { 0.0f, 0.0f, 0.0f };
+	T_Vec3 MoveTo, MoveBack;
+
+	// Calculate movement vectors
+	App->CL_Maths->Vector3_Subtract(&VecOrigin, &mSelectedGeoCenter, &MoveTo);
+	App->CL_Maths->Vector3_Subtract(&mSelectedGeoCenter, &VecOrigin, &MoveBack);
+	App->CL_Maths->Vector3_Subtract(&mFinalScale, &mSelectedGeoCenter, &mFinalScale);
+
+	// Move and scale the brush
+	App->CL_Brush->Brush_Move(b, &MoveTo);
+	App->CL_Brush->Brush_Scale3d(b, &mFinalScale);
+
+	if (App->CL_Brush->Brush_IsMulti(b))
 	{
-		App->CL_Brush->Brush_Center(b, &App->CL_Doc->SelectedGeoCenter);
-
-		T_Vec3 Size { 0 };
-
-		Ogre::Vector3 Ogre_Size = App->CL_Editor_Com->B_Object[Object_Index]->Object_Node->_getWorldAABB().getSize();
-
-		Size.x = Ogre_Size.x;
-		Size.y = Ogre_Size.y;
-		Size.z = Ogre_Size.z;
-
-		T_Vec3	VecOrigin = { 0.0f, 0.0f, 0.0f };
-		T_Vec3 MoveTo;
-		T_Vec3 MoveBack;
-
-		App->CL_Maths->Vector3_Subtract(&VecOrigin, &App->CL_Doc->SelectedGeoCenter, &MoveTo);
-		App->CL_Maths->Vector3_Subtract(&App->CL_Doc->SelectedGeoCenter, &VecOrigin, &MoveBack);
-		App->CL_Maths->Vector3_Subtract(&Size, &App->CL_Doc->SelectedGeoCenter, &Size);
-
-		App->CL_Brush->Brush_Move(b, &MoveTo);
-		App->CL_Brush->Brush_Scale3d(b, &Size);
-		App->CL_Brush->Brush_Move(b, &MoveBack);
-
-		if (App->CL_Brush->Brush_IsMulti(b))
-		{
-			//App->CL_Brush->BrushList_ClearCSGAndHollows((BrushList*)App->CL_Brush->Brush_GetBrushList(b), App->CL_Brush->Brush_GetModelId(b));
-			//App->CL_Brush->BrushList_RebuildHollowFaces((BrushList*)App->CL_Brush->Brush_GetBrushList(b), App->CL_Brush->Brush_GetModelId(b), ::fdocBrushCSGCallback, this);
-		}
-
-		//App->CL_Brush->Brush_Move(b, &Pos);
-
+		// App->CL_Brush->BrushList_ClearCSGAndHollows((BrushList*)App->CL_Brush->Brush_GetBrushList(b), App->CL_Brush->Brush_GetModelId(b));
+		// App->CL_Brush->BrushList_RebuildHollowFaces((BrushList*)App->CL_Brush->Brush_GetBrushList(b), App->CL_Brush->Brush_GetModelId(b), ::fdocBrushCSGCallback, this);
 	}
+
+	App->CL_Brush_X->Move_Brush_By_Name(App->CL_Editor_Com->B_Object[Object_Index]->Object_Name, Object_Index);
 }
+
 
