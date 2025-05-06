@@ -1166,7 +1166,7 @@ void CL64_Doc::DoneMove(void)
 
             App->CL_Brush->Brush_Move(pBrush, &FinalPos);
 
-            if (pBrush->GroupId == 1) // Player
+            if (pBrush->GroupId == Enums::Brushs_ID_Players)
             {
                 App->CL_SelBrushList->SelBrushList_Center(App->CL_Doc->pSelBrushes, &App->CL_Doc->SelectedGeoCenter);
                 T_Vec3 CenterOfSelection = App->CL_Doc->SelectedGeoCenter;
@@ -1178,7 +1178,7 @@ void CL64_Doc::DoneMove(void)
                 App->CL_Physics->Reset_Physics();
             }
 
-            if (pBrush->GroupId == 2) // Environment
+            if (pBrush->GroupId == Enums::Brushs_ID_Evirons)
             {
                 char Name[MAX_PATH]{ 0 };
                 strcpy(Name, pBrush->Name);
@@ -1312,6 +1312,23 @@ void CL64_Doc::DoneResize(int sides, int inidx)
         {
             App->CL_Brush->BrushList_ClearCSGAndHollows((BrushList*)App->CL_Brush->Brush_GetBrushList(pBrush), App->CL_Brush->Brush_GetModelId(pBrush));
             App->CL_Brush->BrushList_RebuildHollowFaces((BrushList*)App->CL_Brush->Brush_GetBrushList(pBrush), App->CL_Brush->Brush_GetModelId(pBrush), fdocBrushCSGCallback, NULL);
+        }
+
+        if (pBrush->GroupId == Enums::Brushs_ID_Evirons)
+        {
+            // TODO Ratation Entity
+            /*char Name[MAX_PATH]{ 0 };
+            strcpy(Name, pBrush->Name);
+
+            int Index = App->CL_Entities->GetIndex_By_Name(Name);
+
+            App->CL_SelBrushList->SelBrushList_Center(App->CL_Doc->pSelBrushes, &App->CL_Doc->SelectedGeoCenter);
+            T_Vec3 CenterOfSelection = App->CL_Doc->SelectedGeoCenter;
+
+            App->CL_Editor_Com->B_Object[Index]->Object_Node->setPosition(CenterOfSelection.x, CenterOfSelection.y, CenterOfSelection.z);
+
+            App->CL_Physics->Set_Physics_New(Index);*/
+
         }
     }
 

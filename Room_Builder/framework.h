@@ -234,4 +234,11 @@ namespace Enums
 		FileView_UserObjects_File = 32
 	};
 
+	enum Brushs_ID
+	{
+		Brushs_ID_None = -1,
+		Brushs_ID_Area = 0,
+		Brushs_ID_Players = 1,
+		Brushs_ID_Evirons = 2
+	};
 }

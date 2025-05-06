@@ -108,7 +108,7 @@ void CL64_Entities::Create_Player_Brush()
 
 	App->CL_Brush->Brush_Bound(Player_Brush);
 
-	Brush_SetGroupId(Player_Brush, 1); // 0 = Main Mesh 1 = Entities
+	Brush_SetGroupId(Player_Brush, Enums::Brushs_ID_Players);
 
 	fdocFaceScales Scales;
 
@@ -165,7 +165,7 @@ void CL64_Entities::Create_Environment_Brush(int Object_Index)
 
 	App->CL_Brush->Brush_Bound(Environ_Brush);
 
-	Brush_SetGroupId(Environ_Brush, 2); // 0 = Main Mesh 1 = Players 2 = Environments
+	Brush_SetGroupId(Environ_Brush, Enums::Brushs_ID_Evirons);
 
 	fdocFaceScales Scales;
 
