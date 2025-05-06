@@ -1144,12 +1144,7 @@ void CL64_Doc::DoneMove(void)
 
     if (mModeTool == ID_TOOLS_TEMPLATE)
     {
-       /* if (TempEnt)
-        {
-            DoneMoveEntity();
-        }
-        else*/
-      /*  {
+       /* {
             App->CL_Brush->Brush_Move(CurBrush, &FinalPos);
         }*/
         return;
@@ -1193,7 +1188,8 @@ void CL64_Doc::DoneMove(void)
                 CenterOfSelection.y = CenterOfSelection.y - True_Center;
 
                 App->CL_Editor_Com->B_Object[Index]->Object_Node->setPosition(CenterOfSelection.x, CenterOfSelection.y, CenterOfSelection.z);
-             
+                App->CL_Editor_Com->B_Object[Index]->Mesh_Pos = { CenterOfSelection.x, CenterOfSelection.y, CenterOfSelection.z };
+
                 App->CL_Physics->Set_Physics_New(Index);
 
             }
