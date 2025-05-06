@@ -251,14 +251,6 @@ void CL64_FaceList::FaceList_CopyFaceInfo(const FaceList* src, FaceList* dst)
 static	float		dists[256];
 static	Ogre::uint8		sides[256];
 
-enum SideFlags
-{
-	SIDE_FRONT = 0,
-	SIDE_BACK = 1,
-	SIDE_ON = 2,
-	SIDE_SPLIT = 3
-};
-
 // *************************************************************************
 // *						FaceList_ClipFaceToList					 	   *
 // *************************************************************************

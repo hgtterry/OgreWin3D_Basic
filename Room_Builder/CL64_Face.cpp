@@ -39,13 +39,6 @@ const T_Vec3 VecOrigin = { 0.0f, 0.0f, 0.0f };
 #define FACE_DEFAULT_TRANSLUCENCY	(255.0f)
 #define FACE_DEFAULT_REFLECTIVITY	(1.0f)
 
-enum SideFlags
-{
-	SIDE_FRONT = 0,
-	SIDE_BACK = 1,
-	SIDE_ON = 2
-};
-
 CL64_Face::CL64_Face(void)
 {
 	Selected_Face_Index = 0;

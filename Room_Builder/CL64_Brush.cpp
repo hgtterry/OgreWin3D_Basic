@@ -34,14 +34,6 @@ static	float			dists[256];
 static	Ogre::uint8		sides[256];
 static	Ogre::uint8		fsides[256];
 
-enum SideFlags
-{
-	SIDE_FRONT = 0,
-	SIDE_BACK = 1,
-	SIDE_ON = 2,
-	SIDE_SPLIT = 3
-};
-
 #define BOGUS_RANGE					32000.0f
 
 CL64_Brush::CL64_Brush(void)

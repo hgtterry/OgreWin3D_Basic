@@ -285,3 +285,11 @@ static signed int Set_BrushFaces_Name(Brush* pBrush, void* lParam)
 
 	return GE_TRUE;
 }
+
+enum SideFlags
+{
+	SIDE_FRONT = 0,
+	SIDE_BACK = 1,
+	SIDE_ON = 2,
+	SIDE_SPLIT = 3
+};
