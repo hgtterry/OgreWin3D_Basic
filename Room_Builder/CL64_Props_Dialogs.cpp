@@ -475,11 +475,11 @@ LRESULT CALLBACK CL64_Props_Dialogs::Proc_Dialog_Dimensions(HWND hDlg, UINT mess
 			if (App->CL_Dimensions->flag_Show_Position == 1)
 			{
 				App->CL_Dimensions->flag_Show_Position = 0;
-				//App->SBC_Markers->Hide_Axis_Marker();
+				App->CL_Gizmos->Hide_Axis_Marker();
 			}
 			else
 			{
-				//App->SBC_Markers->Hide_Axis_Marker();
+				App->CL_Gizmos->Hide_Axis_Marker();
 
 				App->CL_Dimensions->Prepare_Dimensions();
 				App->CL_Dimensions->flag_Show_Position = 1;

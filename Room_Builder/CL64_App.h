@@ -182,6 +182,7 @@ public:
 	CL64_Props_Dialogs*			CL_Props_Dialogs;
 
 	void InitApp(void);
+	void Init_Dialogs(void);
 	void SetBrushes_Fonts(void);
 	void LoadProgramResource(void);
 

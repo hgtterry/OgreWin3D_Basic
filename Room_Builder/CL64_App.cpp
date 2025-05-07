@@ -267,6 +267,17 @@ void CL64_App::InitApp(void)
 }
 
 // *************************************************************************
+// *			Init_Dialogs:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void CL64_App::Init_Dialogs(void)
+{
+	CL_Properties_Scene->Start_Properties();
+	CL_Panels->Place_Properties_Dlg();
+	CL_Props_Dialogs->Start_Props_Dialogs();
+	CL_Com_Player->Create_Player_Object();
+}
+
+// *************************************************************************
 // *			SetBrushes_Fonts:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
 void CL64_App::SetBrushes_Fonts(void)

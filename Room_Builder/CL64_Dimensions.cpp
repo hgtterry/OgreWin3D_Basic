@@ -431,6 +431,8 @@ void CL64_Dimensions::Set_Position(Ogre::Vector3 Pos)
 	pBase_Mesh_Pos->y = Pos.y;
 	pBase_Mesh_Pos->z = Pos.z;
 
+	App->CL_Brush_X->Move_Brush_By_Name(App->CL_Editor_Com->B_Object[Index]->Object_Name, Index);
+
 	if (pBase_Phys_Body)
 	{
 
@@ -689,6 +691,12 @@ void CL64_Dimensions::Set_Scale(Ogre::Vector3 Scale)
 	pBase_Mesh_Scale->x = Scale.x;
 	pBase_Mesh_Scale->y = Scale.y;
 	pBase_Mesh_Scale->z = Scale.z;
+
+	float sizeX = App->CL_Editor_Com->B_Object[Index]->Object_Node->_getWorldAABB().getSize().x;
+	float sizeY = App->CL_Editor_Com->B_Object[Index]->Object_Node->_getWorldAABB().getSize().y;
+	float sizeZ = App->CL_Editor_Com->B_Object[Index]->Object_Node->_getWorldAABB().getSize().z;
+
+	App->CL_Brush_X->Scale_Brush_By_Name(App->CL_Editor_Com->B_Object[Index]->Object_Name, Index, sizeX, sizeY, sizeZ);
 
 	if (pBase_Phys_Body)
 	{
