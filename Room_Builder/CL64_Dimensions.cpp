@@ -896,6 +896,12 @@ void CL64_Dimensions::Set_Rotation(Ogre::Vector3 Rotation, float Delta)
 		App->CL_Gizmos->MarkerBox_Addjust(Index);
 	}
 
+	float RotX = App->CL_Editor_Com->B_Object[Index]->Mesh_Rot.x;
+	float RotY = App->CL_Editor_Com->B_Object[Index]->Mesh_Rot.y;
+	float RotZ = App->CL_Editor_Com->B_Object[Index]->Mesh_Rot.z;
+
+	//App->CL_Brush_X->Rotate_Brush_By_Name(App->CL_Editor_Com->B_Object[Index]->Object_Name, Index, RotX, RotY, RotZ);
+
 //	App->SBC_Markers->MarkerBB_Addjust(Index);
 }
 

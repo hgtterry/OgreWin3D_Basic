@@ -862,7 +862,7 @@ void CL64_Doc::RotateSelectedBrushList(SelBrushList* pList,T_Vec3 const* v)
    // App->CLSB_Doc->mLastOp = BRUSH_ROTATE;
 
     GetRotationPoint(&RotationPoint);
-
+    App->CL_Maths->XForm3d_SetIdentity(&rm);
 
     App->CL_Maths->Vector3_Add(v, &App->CL_Doc->FinalRot, &App->CL_Doc->FinalRot);
     App->CL_Maths->XForm3d_SetEulerAngles(&rm, v);

@@ -47,6 +47,7 @@ public:
 
 	void Move_Brush_By_Name(char* Brush_Name,int Object_Index);
 	void Scale_Brush_By_Name(const char* Brush_Name, int Object_Index,float SX, float SY, float SZ);
+	void Rotate_Brush_By_Name(const char* Brush_Name, int Object_Index, float SX, float SY, float SZ);
 
 	int Face_Count;
 	int Face_Index_Set;

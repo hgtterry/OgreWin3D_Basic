@@ -563,6 +563,7 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Dimensions_Dlg(HWND hDlg, UINT me
 	{
 	case WM_INITDIALOG:
 	{
+		SendDlgItemMessage(hDlg, IDC_ST_BRUSH_NAME, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ST_DIM_POSITION, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ST_DIM_ROTATION, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ST_DIM_SCALE, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
@@ -605,6 +606,14 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Dimensions_Dlg(HWND hDlg, UINT me
 
 		App->CL_Properties_Brushes->Update_Deltas_Dlg(hDlg);
 
+		SetDlgItemText(hDlg, IDC_ST_BRUSH_NAME, App->CL_Properties_Brushes->Selected_Brush->Name);
+
+		int Index = App->CL_Entities->GetIndex_By_Name(App->CL_Properties_Brushes->Selected_Brush->Name);
+
+		App->CL_Properties_Brushes->Rotation.x = App->CL_Editor_Com->B_Object[Index]->Mesh_Rot.x;
+		App->CL_Properties_Brushes->Rotation.y = App->CL_Editor_Com->B_Object[Index]->Mesh_Rot.y;
+		App->CL_Properties_Brushes->Rotation.z = App->CL_Editor_Com->B_Object[Index]->Mesh_Rot.z;
+
 		//// ----------- ScaleLock
 		//if (App->CLSB_Brushes->ScaleLock_Flag == 1)
 		//{
@@ -615,11 +624,23 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Dimensions_Dlg(HWND hDlg, UINT me
 
 		App->CL_Properties_Brushes->Update_From_Brush_Dlg(hDlg);
 
+
+		//App->CL_Properties_Brushes->Rotation.x
+
 		return TRUE;
 	}
 
 	case WM_CTLCOLORSTATIC:
 	{
+
+		if (GetDlgItem(hDlg, IDC_ST_BRUSH_NAME) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
 		// Position
 		if (GetDlgItem(hDlg, IDC_STPOSX) == (HWND)lParam)
 		{
@@ -829,7 +850,7 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Dimensions_Dlg(HWND hDlg, UINT me
 		// -------- Rot X
 		if (HWND(lParam) == GetDlgItem(hDlg, IDC_SBROTX))
 		{
-			float m_Delta = App->CL_Properties_Brushes->RotX_Delta * GE_PI / 180;
+			float m_Delta = App->CL_Properties_Brushes->Rotation.x * GE_PI / 180;
 
 			switch ((int)LOWORD(wParam))
 			{

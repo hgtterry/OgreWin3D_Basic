@@ -509,4 +509,29 @@ void CL64_Brush_X::Scale_Brush_By_Name(const char* Brush_Name, int Object_Index,
 	App->CL_Brush_X->Move_Brush_By_Name(App->CL_Editor_Com->B_Object[Object_Index]->Object_Name, Object_Index);
 }
 
+// *************************************************************************
+// *		  Rotate_Brush_By_Name:- Terry and Hazel Flanigan 2025		   *
+// *************************************************************************
+void CL64_Brush_X::Rotate_Brush_By_Name(const char* Brush_Name, int Object_Index, float SX, float SY, float SZ)
+{
+	Brush* b = App->CL_Brush_X->Get_Brush_By_Name(Brush_Name);
+	if (!b) return; // No Nrush
+
+	App->CL_Brush->Brush_Center(b, &App->CL_Doc->SelectedGeoCenter);
+
+	Matrix3d		rm;
+	T_Vec3 RotationPoint;
+	T_Vec3 FinalRot;
+
+	FinalRot.x = SX;
+	FinalRot.y = SY;
+	FinalRot.z = SZ;
+
+	RotationPoint = App->CL_Doc->SelectedGeoCenter;
+
+	App->CL_Maths->XForm3d_SetEulerAngles(&rm, &FinalRot);
+
+	App->CL_Brush->Brush_Rotate(b, &rm, &RotationPoint);
+}
+
 
