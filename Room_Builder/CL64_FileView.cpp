@@ -602,7 +602,7 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 	{
 		//Context_Selection = Enums::FileView_Player_File;
 
-		//HideRightPanes();
+		HideRightPanes();
 		//App->CL_Props_Dialogs->Show_Player_Dlg(true);
 		//----------------------------------------------------------------------------
 
@@ -673,10 +673,10 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 	{
 		//Context_Selection = Enums::FileView_EnvironEntity_File;
 
-		//HideRightPanes();
+		HideRightPanes();
 		//App->CL_Props_Dialogs->Show_Details_Goto_Dlg(true);
 
-		//App->CL_Props_Dialogs->Show_Dimensions_Dlg(true);
+		App->CL_Props_Dialogs->Show_Dimensions_Dlg(true);
 		//App->CL_Props_Dialogs->Hide_Debug_Dlg(1);
 
 		//---------------------------------------------------------------------------
@@ -694,9 +694,9 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 		//ShowWindow(App->CL_Properties->Properties_Dlg_hWnd, 1);
 		App->CL_Properties_Scene->Update_ListView_Environs();
 
-		/*if (App->SBC_Dimensions->Show_Dimensions == 1)
+		/*if (App->CL_Dimensions->Show_Dimensions == 1)
 		{
-			App->SBC_Dimensions->Prepare_Dimensions();
+			App->CL_Dimensions->Prepare_Dimensions();
 		}*/
 
 		return;
@@ -1190,4 +1190,19 @@ void CL64_FileView::Mark_Altered(HTREEITEM Item)
 	SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_SETITEM, 0, (LPARAM)(const LPTVITEM)&Sitem);
 
 	//EnableMenuItem(App->mMenu, ID_FILE_SAVEPROJECTALL, MF_ENABLED);
+}
+
+// *************************************************************************
+// *			HideRightPanesTerry and Hazel Flanigan 2024				   *
+// *************************************************************************
+void CL64_FileView::HideRightPanes(void)
+{
+	App->CL_Props_Dialogs->Show_Details_Goto_Dlg(false);
+	App->CL_Props_Dialogs->Show_Dimensions_Dlg(false);
+	App->CL_Props_Dialogs->Show_Physics_Test_Dlg(false);
+	App->CL_Props_Dialogs->Hide_Debug_Dlg(false);
+	App->CL_Props_Dialogs->Show_Materials_Dlg(false);
+	App->CL_Props_Dialogs->Show_Cameras_Dlg(false);
+	App->CL_Props_Dialogs->Show_Player_Dlg(false);
+	App->CL_Props_Dialogs->Show_Override_Counter_Dlg(false);
 }

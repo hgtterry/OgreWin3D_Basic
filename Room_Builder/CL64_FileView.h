@@ -60,6 +60,7 @@ private:
 	void Context_Menu(HWND hDlg);
 
 	void Get_Selection(LPNMHDR lParam);
+	void HideRightPanes(void);
 
 	HTREEITEM Root;
 	HTREEITEM GD_ProjectFolder;

@@ -93,7 +93,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     App->CL_Properties_Scene->Start_Properties();
     App->CL_Panels->Place_Properties_Dlg();
-
+    App->CL_Props_Dialogs->Start_Props_Dialogs();
     App->CL_Com_Player->Create_Player_Object();
 
     SetTimer(App->MainHwnd, 1, 100, NULL);

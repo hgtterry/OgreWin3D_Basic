@@ -87,7 +87,7 @@ CL64_App::CL64_App(void)
 	CL_Gui_Environment =		nullptr;
 	CL_Properties_Scene =		nullptr;
 	CL_Dimensions =				nullptr;
-
+	CL_Props_Dialogs =			nullptr;
 	CL_Editor_Preview =			nullptr;
 
 	// Templates Dialogs
@@ -228,7 +228,8 @@ void CL64_App::InitApp(void)
 	CL_FileView =				new CL64_FileView();
 	CL_Gui_Environment =		new CL64_Gui_Environment();
 	CL_Properties_Scene =		new CL64_Properties_Scene();
-	
+	CL_Props_Dialogs =			new CL64_Props_Dialogs();
+
 	CL_Editor_Preview =			new CL64_Editor_Preview();
 	
 	// Templates Dialogs
@@ -320,6 +321,7 @@ void CL64_App::LoadProgramResource(void)
 	CheckMenuItem(App->Menu_Map, ID_GRID_GRIDSNAP, MF_BYCOMMAND | MF_CHECKED);
 	CheckMenuItem(App->Menu_Map, ID_CAMERA_TEXTURED, MF_BYCOMMAND | MF_CHECKED);
 	CheckMenuItem(App->Menu_Map, ID_SPEED_NORMAL, MF_BYCOMMAND | MF_CHECKED);
+
 }
 
 // *************************************************************************

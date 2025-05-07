@@ -76,6 +76,7 @@
 #define IDD_GMSTART                     188
 #define IDD_PROPERTIES_SCENE            189
 #define IDD_YESNOCANCEL                 190
+#define IDD_PROPS_DIMENSIONS            191
 #define IDC_BANNER                      1000
 #define IDC_STTEXT                      1001
 #define IDC_STMESSAGE                   1002
@@ -412,6 +413,11 @@
 #define IDC_STOBJECTNAME                1300
 #define IDC_BT_SCENE_FIRST              1302
 #define IDC_BT_SCENE_FREE               1303
+#define IDC_BT_POSITION                 1303
+#define IDC_BT_SCALE                    1304
+#define IDC_BT_ROTATION                 1305
+#define IDC_CHECK1                      1306
+#define IDC_CK_LOCK                     1306
 #define ID_DEBUG_GENERAL                32771
 #define ID_TEMPLATES_INSERT             32772
 #define ID_BRUSH_SELECT                 32773
@@ -475,9 +481,9 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
-#define _APS_NEXT_RESOURCE_VALUE        191
+#define _APS_NEXT_RESOURCE_VALUE        192
 #define _APS_NEXT_COMMAND_VALUE         32826
-#define _APS_NEXT_CONTROL_VALUE         1303
+#define _APS_NEXT_CONTROL_VALUE         1307
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif
