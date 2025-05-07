@@ -413,7 +413,7 @@ bool CL64_Properties_Scene::Update_ListView_Environs()
 	SetWindowText(Properties_Dlg_hWnd, str_chr_ID.c_str());
 	SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, App->CL_Editor_Com->B_Object[index]->Object_Name);
 
-	const int NUM_ITEMS = 9;
+	const int NUM_ITEMS = 10;
 	const int NUM_COLS = 2;
 	std::string grid[NUM_COLS][NUM_ITEMS];
 	LV_ITEM pitem;
@@ -429,6 +429,7 @@ bool CL64_Properties_Scene::Update_ListView_Environs()
 	grid[0][6] = " ",			grid[1][6] = " ";
 	grid[0][7] = "Position",	grid[1][7] = "Click";
 	grid[0][8] = "Scale",		grid[1][8] = "Click";
+	grid[0][9] = "Rotation",	grid[1][9] = "Click";
 
 	ListView_DeleteAllItems(Properties_hLV);
 
@@ -894,6 +895,71 @@ bool CL64_Properties_Scene::Edit_Environs_OnClick(LPARAM lParam)
 		{
 			App->CL_ImGui_Dialogs->m_Dialog_Float_Vec3 = App->CL_ImGui_Dialogs->m_Dialog_Float_Copy_Vec3;
 			App->CL_Editor_Com->B_Object[Index]->Object_Node->setScale(App->CL_ImGui_Dialogs->m_Dialog_Float_Copy_Vec3);
+			App->CL_Physics->Reset_Physics();
+		}
+
+		
+		App->CL_Panels->Enable_Scene_Editor_Dialogs(true);
+
+		Update_ListView_Environs();
+
+		return 1;
+	}
+
+	result = strcmp(btext, "Rotation");
+	if (result == 0)
+	{
+		Ogre::Vector3 Angles;
+
+		Angles.x = App->CL_Editor_Com->B_Object[Index]->Object_Node->getOrientation().getPitch().valueDegrees();
+		Angles.y = App->CL_Editor_Com->B_Object[Index]->Object_Node->getOrientation().getYaw().valueDegrees();
+		Angles.z = App->CL_Editor_Com->B_Object[Index]->Object_Node->getOrientation().getRoll().valueDegrees();
+
+
+		App->CL_ImGui_Dialogs->Start_Dialog_Float_Vec3(0.10, 2, Angles, (LPSTR)"Rotation");
+
+		while (App->CL_ImGui_Dialogs->flag_Show_Dialog_Float_Vec3 == 1)
+		{
+			App->CL_ImGui_Dialogs->BackGround_Render_Loop();
+
+			if (App->CL_ImGui_Dialogs->flag_Float_Altetered == 1)
+			{
+				Ogre::Vector3 Rotation = { 1,0,0 };
+				App->CL_Editor_Com->B_Object[Index]->Object_Node->rotate(Ogre::Quaternion(Ogre::Degree(1), Rotation), Ogre::Node::TransformSpace::TS_LOCAL);
+				//App->CL_Editor_Com->B_Object[Index]->Object_Node->setOrientation(;
+				App->CL_Physics->Reset_Physics();
+			}
+
+			App->CL_ImGui_Dialogs->flag_Float_Altetered = 0;
+		}
+
+		App->CL_ImGui_Dialogs->flag_Show_Dialog_Float_Vec3 = 0;
+
+		if (App->CL_ImGui_Dialogs->flag_Float_Canceld == 0)
+		{
+			App->CL_ImGui_Dialogs->flag_Show_Dialog_Float_Vec3 = 0;
+
+			//App->CL_Editor_Com->B_Object[Index]->Object_Node->setScale(App->CL_ImGui_Dialogs->m_Dialog_Float_Vec3);
+			//App->CL_Editor_Com->B_Object[Index]->Mesh_Scale = App->CL_ImGui_Dialogs->m_Dialog_Float_Vec3;
+
+			App->CL_Physics->Set_Physics_New(Index);
+
+			//float sizeX = App->CL_Editor_Com->B_Object[Index]->Object_Node->_getWorldAABB().getSize().x;
+			//float sizeY = App->CL_Editor_Com->B_Object[Index]->Object_Node->_getWorldAABB().getSize().y;
+			//float sizeZ = App->CL_Editor_Com->B_Object[Index]->Object_Node->_getWorldAABB().getSize().z;
+
+			//App->CL_Brush_X->Scale_Brush_By_Name(App->CL_Editor_Com->B_Object[Index]->Object_Name, Index, sizeX, sizeY, sizeZ);
+
+			App->CL_Gizmos->MarkerBox_Addjust(Index);
+
+			App->CL_Editor_Com->B_Object[Index]->flag_Altered = 1;
+			App->CL_Level->flag_Level_is_Modified = true;
+			App->CL_FileView->Mark_Altered(App->CL_Editor_Com->B_Object[Index]->FileViewItem);
+		}
+		else
+		{
+			App->CL_ImGui_Dialogs->m_Dialog_Float_Vec3 = App->CL_ImGui_Dialogs->m_Dialog_Float_Copy_Vec3;
+			//App->CL_Editor_Com->B_Object[Index]->Object_Node->setScale(App->CL_ImGui_Dialogs->m_Dialog_Float_Copy_Vec3);
 			App->CL_Physics->Reset_Physics();
 		}
 

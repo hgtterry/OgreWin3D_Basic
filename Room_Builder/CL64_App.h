@@ -97,6 +97,7 @@ THE SOFTWARE.
 #include "CL64_SoundMgr.h"
 #include "CL64_Collision.h"
 #include "CL64_Gizmos.h"
+#include "CL64_Dimensions.h"
 
 class CL64_App
 {
@@ -176,6 +177,7 @@ public:
 	CL64_SoundMgr*				CL_SoundMgr;
 	CL64_Collision*				CL_Collision;
 	CL64_Gizmos*				CL_Gizmos;
+	CL64_Dimensions*			CL_Dimensions;
 
 	void InitApp(void);
 	void SetBrushes_Fonts(void);

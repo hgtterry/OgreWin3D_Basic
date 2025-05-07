@@ -86,6 +86,7 @@ CL64_App::CL64_App(void)
 	CL_FileView =				nullptr;
 	CL_Gui_Environment =		nullptr;
 	CL_Properties_Scene =		nullptr;
+	CL_Dimensions =				nullptr;
 
 	CL_Editor_Preview =			nullptr;
 
@@ -243,6 +244,7 @@ void CL64_App::InitApp(void)
 	CL_SoundMgr =				new CL64_SoundMgr();
 	CL_Collision =				new CL64_Collision();
 	CL_Gizmos =					new CL64_Gizmos();
+	CL_Dimensions =				new CL64_Dimensions();
 
 	SetBrushes_Fonts();
 

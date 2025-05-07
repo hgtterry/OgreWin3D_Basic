@@ -174,6 +174,7 @@
     <ClInclude Include="CL64_Com_Objects.h" />
     <ClInclude Include="CL64_Com_Player.h" />
     <ClInclude Include="CL64_Dialogs.h" />
+    <ClInclude Include="CL64_Dimensions.h" />
     <ClInclude Include="CL64_Doc.h" />
     <ClInclude Include="CL64_Editor.h" />
     <ClInclude Include="CL64_Editor_Map.h" />
@@ -255,6 +256,7 @@
     <ClCompile Include="CL64_Com_Objects.cpp" />
     <ClCompile Include="CL64_Com_Player.cpp" />
     <ClCompile Include="CL64_Dialogs.cpp" />
+    <ClCompile Include="CL64_Dimensions.cpp" />
     <ClCompile Include="CL64_Doc.cpp" />
     <ClCompile Include="CL64_Editor.cpp" />
     <ClCompile Include="CL64_Editor_Map.cpp" />
