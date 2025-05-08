@@ -172,22 +172,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             // ----------------------------- Debug
             case ID_DEBUG_GENERAL:
             {
-                /*if (App->CL_Ogre->OGL_Listener->Flag_Just_Face == 1)
-                {
-                    App->CL_Ogre->OGL_Listener->Flag_Just_Face = 0;
-                    App->CL_ImGui->flag_Show_Render_Reports = 0;
-                }
-                else
-                {
-                    App->CL_Ogre->OGL_Listener->Flag_Just_Face = 1;
-                    App->CL_ImGui->flag_Show_Render_Reports = 1;
-                }*/
                 
-                //App->CL_Brush_X->Set_Brush_Faces_Name(App->CL_Doc->CurBrush);
-                //App->CL_Com_Environments->Create_Test_Environment();
-                //App->CL_Level->Level_Create_TXL_Class();
-               // App->CL_Doc->UpdateAfterWadChange();
-                App->CL_SoundMgr->Show_Sound_Player();
+                App->CL_Brush_X->Rotate_Brush_By_Name("Environ_0", NULL, 10, 25, 50);
+                App->CL_Ogre->RenderFrame(5);
+                Debug
+
+                App->CL_Brush_X->Rotate_Reset_Brush_By_Name("Environ_0", NULL, -10, -25, -50);
 
                 return 1;
             }

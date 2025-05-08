@@ -2591,6 +2591,19 @@ void CL64_Brush::Brush_Rotate(Brush* b,const Matrix3d* pXfmRotate,const T_Vec3* 
 }
 
 // *************************************************************************
+// *							Brush_Rotate							   *
+// *************************************************************************
+void CL64_Brush::BrushList_Rotate(BrushList* pList, const Matrix3d* pXfmRotate, const T_Vec3* pCenter)
+{
+	Brush* b;
+
+	for (b = pList->First; b; b = b->Next)
+	{
+		Brush_Rotate(b, pXfmRotate, pCenter); // Recursive
+	}
+}
+
+// *************************************************************************
 // *						BrushList_InsertAfter						   *
 // *************************************************************************
 void CL64_Brush::BrushList_InsertAfter(BrushList* pList, Brush* pBMarker, Brush* pBrush)
@@ -2607,19 +2620,6 @@ void CL64_Brush::BrushList_InsertAfter(BrushList* pList, Brush* pBMarker, Brush*
 		pBrush->Next->Prev = pBrush;
 	}
 	pBMarker->Next = pBrush;
-}
-
-// *************************************************************************
-// *							Brush_Rotate							   *
-// *************************************************************************
-void CL64_Brush::BrushList_Rotate(BrushList* pList, const Matrix3d* pXfmRotate, const T_Vec3* pCenter)
-{
-	Brush* b;
-
-	for (b = pList->First; b; b = b->Next)
-	{
-		Brush_Rotate(b, pXfmRotate, pCenter); // Recursive
-	}
 }
 
 // *************************************************************************

@@ -850,13 +850,12 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Dimensions_Dlg(HWND hDlg, UINT me
 		// -------- Rot X
 		if (HWND(lParam) == GetDlgItem(hDlg, IDC_SBROTX))
 		{
-			float m_Delta = App->CL_Properties_Brushes->Rotation.x * GE_PI / 180;
+			float m_Delta = App->CL_Properties_Brushes->RotX_Delta * GE_PI / 180;
 
 			switch ((int)LOWORD(wParam))
 			{
 			case SB_LINERIGHT:
 			{
-
 				App->CL_Properties_Brushes->Rotation.x += +App->CL_Properties_Brushes->RotX_Delta;
 				App->CL_Properties_Brushes->Rotate_Brush(m_Delta, 0, 0);
 				break;
@@ -1344,7 +1343,8 @@ void CL64_Properties_Brushes::Rotate_Brush(float SX, float SY, float SZ)
 	FinalRot.y = SY;
 	FinalRot.z = SZ;
 
-	App->CL_Doc->RotateSelectedBrushList(App->CL_Doc->pSelBrushes, &FinalRot);
+	//App->CL_Doc->RotateSelectedBrushList(App->CL_Doc->pSelBrushes, &FinalRot);
+
 
 	App->CL_Doc->UpdateAllViews(Enums::UpdateViews_All);
 }

@@ -317,7 +317,10 @@ Face* CL64_ParseFile::Face_CreateFromFile()
 			
 			if (!Get_Matrix3d("Transform", &f->Tex.XfmFaceAngle)) { Debug }
 			
-			//App->Say_Float(f->Tex.XfmFaceAngle.Translation.z);
+			/*T_Vec3 Angles = { 0,0,0 };
+			App->CL_Maths->XForm3d_GetEulerAngles(&f->Tex.XfmFaceAngle, &Angles);
+			App->Say_Vector3(Ogre::Vector3(Units_RadiansToDegrees(Angles.x), Units_RadiansToDegrees(Angles.y), Units_RadiansToDegrees(Angles.z)));*/
+
 
 			if (!Get_Vector3("Pos", &f->Tex.Pos)) { return NULL; }
 		}

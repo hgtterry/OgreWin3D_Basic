@@ -510,28 +510,79 @@ void CL64_Brush_X::Scale_Brush_By_Name(const char* Brush_Name, int Object_Index,
 }
 
 // *************************************************************************
+// *		Rotate_Reset_Brush_By_Name:- Terry and Hazel Flanigan 2025	   *
+// *************************************************************************
+void CL64_Brush_X::Rotate_Reset_Brush_By_Name(const char* Brush_Name, int Object_Index, float SX, float SY, float SZ)
+{
+	Brush* b = App->CL_Brush_X->Get_Brush_By_Name(Brush_Name);
+	if (b)
+	{
+		Matrix3d rm;
+		T_Vec3 RotationPoint;
+		T_Vec3 FinalRot = { 0,0,0 };
+
+		float rotationAngleX = Units_DegreesToRadians(SX);
+		float rotationAngleY = Units_DegreesToRadians(SY);
+		float rotationAngleZ = Units_DegreesToRadians(SZ);
+
+		const int maxCount = 3;
+
+		for (int Count = 0; Count < maxCount; ++Count)
+		{
+			switch (Count) 
+			{
+			case 0:
+				FinalRot = { rotationAngleX, 0, 0 };
+				break;
+			case 1:
+				FinalRot = { 0, rotationAngleY, 0 };
+				break;
+			case 2:
+				FinalRot = { 0, 0, rotationAngleZ };
+				break;
+			}
+
+			App->CL_Brush->Brush_Center(b, &RotationPoint);
+
+			App->CL_Maths->XForm3d_SetIdentity(&rm);
+
+			App->CL_Maths->XForm3d_SetEulerAngles(&rm, &FinalRot);
+
+			App->CL_Brush->Brush_Rotate(b, &rm, &RotationPoint);
+			App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
+		}
+	}
+}
+
+// *************************************************************************
 // *		  Rotate_Brush_By_Name:- Terry and Hazel Flanigan 2025		   *
 // *************************************************************************
 void CL64_Brush_X::Rotate_Brush_By_Name(const char* Brush_Name, int Object_Index, float SX, float SY, float SZ)
 {
 	Brush* b = App->CL_Brush_X->Get_Brush_By_Name(Brush_Name);
-	if (!b) return; // No Nrush
+	if (b)
+	{
+		T_Vec3 FinalRot = { 0,0,0 };
 
-	App->CL_Brush->Brush_Center(b, &App->CL_Doc->SelectedGeoCenter);
+		FinalRot.x = Units_DegreesToRadians(SX);
+		FinalRot.y = Units_DegreesToRadians(SY);
+		FinalRot.z = Units_DegreesToRadians(SZ);
 
-	Matrix3d		rm;
-	T_Vec3 RotationPoint;
-	T_Vec3 FinalRot;
+		Matrix3d rm;
+		T_Vec3 RotationPoint;
 
-	FinalRot.x = SX;
-	FinalRot.y = SY;
-	FinalRot.z = SZ;
+		App->CL_Brush->Brush_Center(b, &RotationPoint);
 
-	RotationPoint = App->CL_Doc->SelectedGeoCenter;
+		App->CL_Maths->XForm3d_SetIdentity(&rm);
 
-	App->CL_Maths->XForm3d_SetEulerAngles(&rm, &FinalRot);
+		//App->CL_Maths->Vector3_Add(&FinalRot, &App->CL_Doc->FinalRot, &App->CL_Doc->FinalRot);
+		App->CL_Maths->XForm3d_SetEulerAngles(&rm, &FinalRot);
 
-	App->CL_Brush->Brush_Rotate(b, &rm, &RotationPoint);
+		App->CL_Brush->Brush_Rotate(b, &rm, &RotationPoint);
+
+		App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
+
+	}
 }
 
 

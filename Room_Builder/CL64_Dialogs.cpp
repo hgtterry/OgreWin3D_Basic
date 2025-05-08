@@ -944,7 +944,11 @@ bool CL64_Dialogs::Show_Face_Data(int Index, const Face* f, HWND hDlg)
 		SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 	}
 
-
+	T_Vec3 Angles = { 0,0,0 };
+	App->CL_Maths->XForm3d_GetEulerAngles(&f->Tex.XfmFaceAngle, &Angles);
+	sprintf(buf, "Angle %.0f %.0f %.0f", Units_RadiansToDegrees(Angles.x), Units_RadiansToDegrees(Angles.y), Units_RadiansToDegrees(Angles.z));
+	SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+	
 	const TexInfo_Vectors* TVecs = App->CL_Face->Face_GetTextureVecs(f);
 	T_Vec3 uVec, vVec;
 	float U, V;
