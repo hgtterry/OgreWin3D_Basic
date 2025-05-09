@@ -110,6 +110,8 @@ Brush* CL64_Brush::Brush_Create(int Type, const FaceList* fl, const BrushList* B
 		pBrush->Type = Type;
 		pBrush->Centre_Marker = 0;
 		pBrush->Has_Been_Cut = 0;
+		pBrush->Last_Rotation = { 0, 0, 0 };
+
 		switch (Type)
 		{
 		case	BRUSH_MULTI:
@@ -816,6 +818,7 @@ Brush* CL64_Brush::Brush_Clone(Brush const* from)
 		to->Color = from->Color;
 		Brush_SetName(to, from->Name);
 		to->BoundingBox = from->BoundingBox;
+		to->Last_Rotation = from->Last_Rotation;
 	}
 
 	return	to;

@@ -170,19 +170,27 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             {
 
             // ----------------------------- Debug
-            case ID_DEBUG_GENERAL:
-            {
-                T_Vec3 Test = { 45.5,0,0 };
-                
-                App->CL_Brush_X->Rotate_Brush_By_Name("Environ_0", NULL, Test.x, Test.y, Test.z);
-                App->CL_Ogre->RenderFrame(5);
-                Debug
+			case ID_DEBUG_GENERAL:
+			{
+				T_Vec3 Test = { 45.5,0,0 };
 
-                App->CL_Maths->Vector3_Inverse(&Test);
-                App->CL_Brush_X->Rotate_Reset_Brush_By_Name("Environ_0", NULL, Test.x, Test.y, Test.z);
+				int Index = App->CL_Entities->GetIndex_By_Name((LPSTR)"Environ_0");
 
-                return 1;
-            }
+
+				App->CL_Brush_X->Rotate_Brush_By_Name("Environ_0", NULL, Test.x, Test.y, Test.z);
+
+
+                App->CL_Editor_Com->B_Object[Index]->Object_Node->pitch(((Ogre::Degree)Test.x));
+
+
+				// App->CL_Ogre->RenderFrame(5);
+
+			   /* Debug
+				App->CL_Maths->Vector3_Inverse(&Test);
+				App->CL_Brush_X->Rotate_Reset_Brush_By_Name("Environ_0", NULL, Test.x, Test.y, Test.z);*/
+
+				return 1;
+			}
 
             case  ID_DEBUG_SHOWALLFACES3D:
             {

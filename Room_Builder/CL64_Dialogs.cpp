@@ -803,6 +803,9 @@ bool CL64_Dialogs::Show_Brush_Info(const Brush* b, HWND hDlg)
 	sprintf(buf, "%s%i", "Has Been Cut ", b->Has_Been_Cut);
 	SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
+	sprintf(buf, "%s %f %f %f", "Last Rotation ", b->Last_Rotation.x, b->Last_Rotation.y, b->Last_Rotation.z);
+	SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+
 	// ----------------------------------- Type
 	if (b->Type == BRUSH_MULTI)
 	{

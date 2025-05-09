@@ -51,6 +51,7 @@ typedef struct BrushTag
 	Box3d			BoundingBox;
 	bool			Centre_Marker;
 	bool			Has_Been_Cut;
+	T_Vec3			Last_Rotation;
 } Brush;
 
 enum BrushTypeFlags
@@ -102,8 +103,10 @@ public:
 	Face* Brush_GetFace(const Brush* b, int i);
 	int Get_Brush_Count(void);
 	signed int Brush_IsSubtract(const Brush* b);
+
 	Brush* Brush_Clone(Brush const* from);
 	BrushList* BrushList_Clone(BrushList* inList);
+
 	void Brush_SetName(Brush* b, const char* newname);
 	void Brush_SetFaceListDirty(Brush* b);
 	void Brush_Center(const Brush* b, T_Vec3* center);
