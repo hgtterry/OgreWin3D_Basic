@@ -265,7 +265,7 @@ void CL64_Doc::Brush_Add_To_world()
 	App->CL_Brush->Brush_Bound(NewBrush);
 	pTemplatePos = App->CL_Level->Level_GetTemplatePos(Current_Level);
     
-	App->CL_Brush->Brush_Center(NewBrush, pTemplatePos);
+	App->CL_Brush->Brush_Get_Center(NewBrush, pTemplatePos);
 
 	// add to current group
 	Brush_SetGroupId(NewBrush, mCurrentGroup);
@@ -1539,7 +1539,7 @@ void CL64_Doc::UpdateSelected(void)
 
     if (mModeTool == ID_TOOLS_TEMPLATE)
     {
-        App->CL_Brush->Brush_Center(CurBrush, &SelectedGeoCenter);
+        App->CL_Brush->Brush_Get_Center(CurBrush, &SelectedGeoCenter);
     }
     else if (SelState != NOSELECTIONS)
     {

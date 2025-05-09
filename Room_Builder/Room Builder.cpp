@@ -171,18 +171,52 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
             // ----------------------------- Debug
 			case ID_DEBUG_GENERAL:
-			{
-				T_Vec3 Test = { 45.5,0,0 };
+			{ 
+				T_Vec3 Test = { 15,15,15 };
+                int Index = App->CL_Entities->GetIndex_By_Name((LPSTR)"Environ_0");
 
-				int Index = App->CL_Entities->GetIndex_By_Name((LPSTR)"Environ_0");
+                App->CL_Editor_Com->B_Object[Index]->Object_Node->pitch(((Ogre::Degree)Test.x));
+                App->CL_Editor_Com->B_Object[Index]->Object_Node->yaw(((Ogre::Degree)Test.y));
+                App->CL_Editor_Com->B_Object[Index]->Object_Node->roll(((Ogre::Degree)Test.z));
 
+
+                App->CL_Editor_Com->B_Object[Index]->Mesh_Rot = Ogre::Vector3(Test.x, Test.y, Test.z);
+
+
+                App->CL_Brush_X->Rotate_Brush_By_Name("Environ_0", NULL, Test.x, Test.y, Test.z);
+                App->CL_Brush_X->Move_Brush_By_Name((LPSTR)"Environ_0", Index);
+              
+
+                return 1;
+
+				/*int Index = App->CL_Entities->GetIndex_By_Name((LPSTR)"Environ_0");
+                Brush* b = App->CL_Brush_X->Get_Brush_By_Name("Environ_0");
+
+                App->CL_Brush_X->Move_Brush_By_Name((LPSTR)"Environ_0", Index);
 
 				App->CL_Brush_X->Rotate_Brush_By_Name("Environ_0", NULL, Test.x, Test.y, Test.z);
 
 
-                App->CL_Editor_Com->B_Object[Index]->Object_Node->pitch(((Ogre::Degree)Test.x));
+                App->CL_Editor_Com->B_Object[Index]->Object_Node->pitch(((Ogre::Degree)Test.x));*/
+               // App->CL_Ogre->RenderFrame(5);
+
+                //----------------------------------------------------
+               /* Index = App->CL_Entities->GetIndex_By_Name((LPSTR)"Environ_0");
+
+                T_Vec3 CenterOfSelection = { 0, 0 ,0 };
+                App->CL_Brush->Brush_Get_Center(b, &CenterOfSelection);
 
 
+                float True_Center = (App->CL_Editor_Com->B_Object[Index]->Object_Node->_getWorldAABB().getSize().y) / 2;
+                CenterOfSelection.y = CenterOfSelection.y - True_Center;
+
+                App->CL_Editor_Com->B_Object[Index]->Object_Node->setPosition(CenterOfSelection.x, CenterOfSelection.y, CenterOfSelection.z);
+                App->CL_Editor_Com->B_Object[Index]->Mesh_Pos = { CenterOfSelection.x, CenterOfSelection.y, CenterOfSelection.z };
+
+                App->CL_Physics->Set_Physics_New(Index);
+                App->CL_Editor_Com->B_Object[Index]->Object_Node->showBoundingBox(true);*/
+
+                //----------------------------------------------------
 				// App->CL_Ogre->RenderFrame(5);
 
 			   /* Debug

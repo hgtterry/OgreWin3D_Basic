@@ -660,7 +660,7 @@ void A_CreateArchDialog::CreateNewTemplateBrush(Brush *pBrush)
 	App->CL_Doc->TempEnt	= FALSE;
 	App->CL_Doc->SetDefaultBrushTexInfo (App->CL_Doc->CurBrush);
 	App->CL_Brush->Brush_Bound (App->CL_Doc->CurBrush);
-	App->CL_Brush->Brush_Center (App->CL_Doc->CurBrush, &BrushPos);
+	App->CL_Brush->Brush_Get_Center (App->CL_Doc->CurBrush, &BrushPos);
 
 	pTemplatePos = App->CL_Level->Level_GetTemplatePos (App->CL_Doc->Current_Level);
 

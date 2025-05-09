@@ -349,7 +349,7 @@ void A_CreateBoxDialog::CreateNewTemplateBrush(Brush* pBrush)
 	App->CL_Brush->Brush_Bound(App->CL_Doc->CurBrush);
 
 	T_Vec3 BrushPos;
-	App->CL_Brush->Brush_Center(App->CL_Doc->CurBrush, &BrushPos);
+	App->CL_Brush->Brush_Get_Center(App->CL_Doc->CurBrush, &BrushPos);
 
 	T_Vec3* pTemplatePos = App->CL_Level->Level_GetTemplatePos(App->CL_Doc->Current_Level);
 	Ogre::Vector3 Pos;

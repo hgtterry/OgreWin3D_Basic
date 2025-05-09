@@ -109,7 +109,7 @@ public:
 
 	void Brush_SetName(Brush* b, const char* newname);
 	void Brush_SetFaceListDirty(Brush* b);
-	void Brush_Center(const Brush* b, T_Vec3* center);
+	void Brush_Get_Center(const Brush* b, T_Vec3* center);
 	void Brush_EnumFaces(Brush* b, void* lParam, Brush_FaceCallback Callback);
 	void Brush_UpdateChildFaces(Brush* b);
 	signed int	Brush_TestBoundsIntersect(const Brush* b, const Box3d* pBox);

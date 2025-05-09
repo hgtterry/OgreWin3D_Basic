@@ -866,9 +866,9 @@ void CL64_Brush::Brush_SetFaceListDirty(Brush* b)
 }
 
 // *************************************************************************
-// *							Brush_Center							   *
+// *							Brush_Get_Center						   *
 // *************************************************************************
-void CL64_Brush::Brush_Center(const Brush* b, T_Vec3* center)
+void CL64_Brush::Brush_Get_Center(const Brush* b, T_Vec3* center)
 {
 	App->CL_Box->Box3d_GetCenter(&b->BoundingBox, center);
 }

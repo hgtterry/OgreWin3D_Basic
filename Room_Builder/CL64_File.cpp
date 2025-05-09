@@ -605,7 +605,7 @@ void CL64_File::Set_Player()
 	}
 
 	T_Vec3 BrushPos;
-	App->CL_Brush->Brush_Center(Player, &BrushPos);
+	App->CL_Brush->Brush_Get_Center(Player, &BrushPos);
 
 	App->CL_Editor_Com->B_Player[0]->StartPos.x = BrushPos.x;
 	App->CL_Editor_Com->B_Player[0]->StartPos.y = BrushPos.y;

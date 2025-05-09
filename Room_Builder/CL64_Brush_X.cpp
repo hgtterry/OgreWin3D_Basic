@@ -455,7 +455,7 @@ void CL64_Brush_X::Move_Brush_By_Name(char* Brush_Name, int Object_Index)
 	Brush* b = App->CL_Brush_X->Get_Brush_By_Name(Brush_Name);
 	if (!b) return; // No Nrush
 
-	App->CL_Brush->Brush_Center(b, &App->CL_Doc->SelectedGeoCenter);
+	App->CL_Brush->Brush_Get_Center(b, &App->CL_Doc->SelectedGeoCenter);
 
 	T_Vec3 Pos;
 	Ogre::Vector3 Centre = App->CL_Editor_Com->B_Object[Object_Index]->Object_Ent->getWorldBoundingBox(true).getCenter();
@@ -543,7 +543,7 @@ void CL64_Brush_X::Rotate_Reset_Brush_By_Name(const char* Brush_Name, int Object
 				break;
 			}
 
-			App->CL_Brush->Brush_Center(b, &RotationPoint);
+			App->CL_Brush->Brush_Get_Center(b, &RotationPoint);
 
 			App->CL_Maths->XForm3d_SetIdentity(&rm);
 
@@ -572,7 +572,7 @@ void CL64_Brush_X::Rotate_Brush_By_Name(const char* Brush_Name, int Object_Index
 		Matrix3d rm;
 		T_Vec3 RotationPoint;
 
-		App->CL_Brush->Brush_Center(b, &RotationPoint);
+		App->CL_Brush->Brush_Get_Center(b, &RotationPoint);
 
 		App->CL_Maths->XForm3d_SetIdentity(&rm);
 
@@ -582,6 +582,8 @@ void CL64_Brush_X::Rotate_Brush_By_Name(const char* Brush_Name, int Object_Index
 		App->CL_Brush->Brush_Rotate(b, &rm, &RotationPoint);
 
 		App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
+
+		b->Last_Rotation = { SX ,SY ,SZ };
 
 	}
 }
