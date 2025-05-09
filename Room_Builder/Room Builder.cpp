@@ -172,12 +172,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             // ----------------------------- Debug
             case ID_DEBUG_GENERAL:
             {
+                T_Vec3 Test = { 45.5,0,0 };
                 
-                App->CL_Brush_X->Rotate_Brush_By_Name("Environ_0", NULL, 10, 25, 50);
+                App->CL_Brush_X->Rotate_Brush_By_Name("Environ_0", NULL, Test.x, Test.y, Test.z);
                 App->CL_Ogre->RenderFrame(5);
                 Debug
 
-                App->CL_Brush_X->Rotate_Reset_Brush_By_Name("Environ_0", NULL, -10, -25, -50);
+                App->CL_Maths->Vector3_Inverse(&Test);
+                App->CL_Brush_X->Rotate_Reset_Brush_By_Name("Environ_0", NULL, Test.x, Test.y, Test.z);
 
                 return 1;
             }

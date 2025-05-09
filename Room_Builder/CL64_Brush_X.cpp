@@ -32,6 +32,7 @@ CL64_Brush_X::CL64_Brush_X()
 {
 	Face_Count = 0;
 	Face_Index_Set = 0;
+	Last_FinalRot = { 0, 0 ,0 };
 }
 
 CL64_Brush_X::~CL64_Brush_X()

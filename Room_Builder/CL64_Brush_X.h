@@ -54,6 +54,8 @@ public:
 	int Face_Count;
 	int Face_Index_Set;
 
+	T_Vec3 Last_FinalRot;
+
 private:
 
 	void Get_BrushData(Brush* b);
