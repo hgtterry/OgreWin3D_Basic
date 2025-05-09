@@ -513,7 +513,7 @@ void CL64_Brush_X::Scale_Brush_By_Name(const char* Brush_Name, int Object_Index,
 // *************************************************************************
 // *		Rotate_Reset_Brush_By_Name:- Terry and Hazel Flanigan 2025	   *
 // *************************************************************************
-void CL64_Brush_X::Rotate_Reset_Brush_By_Name(const char* Brush_Name, int Object_Index, float SX, float SY, float SZ)
+void CL64_Brush_X::Rotate_Reset_Brush_By_Name(const char* Brush_Name, float SX, float SY, float SZ)
 {
 	Brush* b = App->CL_Brush_X->Get_Brush_By_Name(Brush_Name);
 	if (b)
@@ -558,7 +558,7 @@ void CL64_Brush_X::Rotate_Reset_Brush_By_Name(const char* Brush_Name, int Object
 // *************************************************************************
 // *		  Rotate_Brush_By_Name:- Terry and Hazel Flanigan 2025		   *
 // *************************************************************************
-void CL64_Brush_X::Rotate_Brush_By_Name(const char* Brush_Name, int Object_Index, float SX, float SY, float SZ)
+void CL64_Brush_X::Rotate_Brush_By_Name(const char* Brush_Name, float SX, float SY, float SZ)
 {
 	Brush* b = App->CL_Brush_X->Get_Brush_By_Name(Brush_Name);
 	if (b)
@@ -576,7 +576,6 @@ void CL64_Brush_X::Rotate_Brush_By_Name(const char* Brush_Name, int Object_Index
 
 		App->CL_Maths->XForm3d_SetIdentity(&rm);
 
-		//App->CL_Maths->Vector3_Add(&FinalRot, &App->CL_Doc->FinalRot, &App->CL_Doc->FinalRot);
 		App->CL_Maths->XForm3d_SetEulerAngles(&rm, &FinalRot);
 
 		App->CL_Brush->Brush_Rotate(b, &rm, &RotationPoint);

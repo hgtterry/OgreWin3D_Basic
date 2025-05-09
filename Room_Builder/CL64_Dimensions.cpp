@@ -960,3 +960,89 @@ void CL64_Dimensions::Set_Physics_Position()
 
 }
 
+// *************************************************************************
+// *			Do_Rotation_New:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void CL64_Dimensions::Do_Rotation_New()
+{
+	int Index = App->CL_Properties_Scene->Current_Selected_Object;
+
+	auto& m_object = App->CL_Editor_Com->B_Object[Index];
+
+	Ogre::Vector3 Angles;
+
+	// Last Updated Saved Angles
+	Angles = m_object->Mesh_Rot;
+
+	App->CL_ImGui_Dialogs->Start_Dialog_Float_Vec3(1.0, 4, Angles, (LPSTR)"Rotation");
+
+	// Monitor
+	while (App->CL_ImGui_Dialogs->flag_Show_Dialog_Float_Vec3 == 1)
+	{
+		App->CL_ImGui_Dialogs->BackGround_Render_Loop();
+
+		if (App->CL_ImGui_Dialogs->flag_Float_Altetered == 1)
+		{
+			m_object->Object_Node->resetOrientation();
+			m_object->Object_Node->pitch(((Ogre::Degree)App->CL_ImGui_Dialogs->m_Dialog_Float_Vec3.x));
+			m_object->Object_Node->yaw(((Ogre::Degree)App->CL_ImGui_Dialogs->m_Dialog_Float_Vec3.y));
+			m_object->Object_Node->roll(((Ogre::Degree)App->CL_ImGui_Dialogs->m_Dialog_Float_Vec3.z));
+
+		}
+
+		App->CL_ImGui_Dialogs->flag_Float_Altetered = 0;
+	}
+
+	App->CL_ImGui_Dialogs->flag_Show_Dialog_Float_Vec3 = 0;
+
+	// Apply Update Rotation
+	if (App->CL_ImGui_Dialogs->flag_Float_Canceld == 0)
+	{
+		App->CL_ImGui_Dialogs->flag_Show_Dialog_Float_Vec3 = 0;
+
+		m_object->Mesh_Rot.x = App->CL_ImGui_Dialogs->m_Dialog_Float_Vec3.x;
+		m_object->Mesh_Rot.y = App->CL_ImGui_Dialogs->m_Dialog_Float_Vec3.y;
+		m_object->Mesh_Rot.z = App->CL_ImGui_Dialogs->m_Dialog_Float_Vec3.z;
+
+		m_object->Mesh_Quat.w = m_object->Object_Node->getOrientation().w;
+		m_object->Mesh_Quat.x = m_object->Object_Node->getOrientation().x;
+		m_object->Mesh_Quat.y = m_object->Object_Node->getOrientation().y;
+		m_object->Mesh_Quat.z = m_object->Object_Node->getOrientation().z;
+
+		App->CL_Physics->Set_Physics_New(Index);
+
+		App->CL_Gizmos->MarkerBox_Addjust(Index);
+
+		Brush* B = App->CL_Brush_X->Get_Brush_By_Name(m_object->Object_Name);
+		if (B)
+		{
+			T_Vec3 FinalRot = { 0,0,0 };
+			FinalRot = B->Last_Rotation;
+
+			App->CL_Maths->Vector3_Inverse(&FinalRot);
+			App->CL_Brush_X->Rotate_Reset_Brush_By_Name(B->Name, FinalRot.x, FinalRot.y, FinalRot.z);
+
+			// Will Save Last Rotation Angles
+			App->CL_Brush_X->Rotate_Brush_By_Name(B->Name, App->CL_ImGui_Dialogs->m_Dialog_Float_Vec3.x, App->CL_ImGui_Dialogs->m_Dialog_Float_Vec3.y, App->CL_ImGui_Dialogs->m_Dialog_Float_Vec3.z);
+			App->CL_Brush_X->Move_Brush_By_Name(B->Name, Index);
+
+		}
+
+		m_object->flag_Altered = 1;
+		App->CL_Level->flag_Level_is_Modified = true;
+		App->CL_FileView->Mark_Altered(m_object->FileViewItem);
+	}
+	else // Canceled Reset 
+	{
+		App->CL_ImGui_Dialogs->m_Dialog_Float_Vec3 = App->CL_ImGui_Dialogs->m_Dialog_Float_Copy_Vec3;
+
+		m_object->Object_Node->resetOrientation();
+
+		m_object->Object_Node->pitch(((Ogre::Degree)App->CL_ImGui_Dialogs->m_Dialog_Float_Copy_Vec3.x));
+		m_object->Object_Node->yaw(((Ogre::Degree)App->CL_ImGui_Dialogs->m_Dialog_Float_Copy_Vec3.y));
+		m_object->Object_Node->roll(((Ogre::Degree)App->CL_ImGui_Dialogs->m_Dialog_Float_Copy_Vec3.z));
+
+		App->CL_Physics->Reset_Physics();
+	}
+}
+

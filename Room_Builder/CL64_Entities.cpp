@@ -137,6 +137,14 @@ void CL64_Entities::Create_Environment_Brush(int Object_Index)
 	bool test = App->CL_Brush_X->Check_if_Brush_Name_Exist((LPSTR)m_Name);
 	if (test == true)
 	{
+		Brush* B = App->CL_Brush_X->Get_Brush_By_Name(m_Name);
+		if (B)
+		{
+			B->Last_Rotation.x = App->CL_Editor_Com->B_Object[Object_Index]->Mesh_Rot.x;
+			B->Last_Rotation.y = App->CL_Editor_Com->B_Object[Object_Index]->Mesh_Rot.y;
+			B->Last_Rotation.z = App->CL_Editor_Com->B_Object[Object_Index]->Mesh_Rot.z;
+		}
+
 		return;
 	}
 

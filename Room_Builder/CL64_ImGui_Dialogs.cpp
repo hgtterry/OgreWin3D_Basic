@@ -900,8 +900,8 @@ void CL64_ImGui_Dialogs::Start_Dialog_Float_Vec3(float Step, int Combo_Step, Ogr
 	
 	App->CL_Panels->Enable_Scene_Editor_Dialogs(false);
 
-	Float_PosX = ((float)App->CL_Ogre->mWindow->getViewport(0)->getActualWidth() / 2) - (200 / 2);
-	Float_PosY = ((float)App->CL_Ogre->mWindow->getViewport(0)->getActualHeight() / 2) - (130 / 2);
+	Float_PosX = 250;// ((float)App->CL_Ogre->mWindow->getViewport(0)->getActualWidth() / 2) - (200 / 2);
+	Float_PosY = 10;// ((float)App->CL_Ogre->mWindow->getViewport(0)->getActualHeight() / 2) - (130 / 2);
 
 	flag_Float_StartPos = 0;
 
@@ -925,9 +925,9 @@ void CL64_ImGui_Dialogs::Dialog_Float_Vec3(void)
 	{
 		if (flag_Float_StartPos == 0)
 		{
-			Float_PosX = ((float)App->CL_Ogre->mWindow->getViewport(0)->getActualWidth() / 2) - (200 / 2);
-			Float_PosY = ((float)App->CL_Ogre->mWindow->getViewport(0)->getActualHeight() / 2) - (130 / 2);
-			ImGui::SetWindowPos(Float_Banner, ImVec2(Float_PosX, Float_PosY));
+			//Float_PosX = ((float)App->CL_Ogre->mWindow->getViewport(0)->getActualWidth() / 2) - (200 / 2);
+			//Float_PosY = ((float)App->CL_Ogre->mWindow->getViewport(0)->getActualHeight() / 2) - (130 / 2);
+			//ImGui::SetWindowPos(Float_Banner, ImVec2(Float_PosX, Float_PosY));
 
 			flag_Float_StartPos = 1;
 		}

@@ -69,6 +69,8 @@ private:
 	bool flag_Toggle_Physics;
 	bool flag_Toggle_OverrideCounter;
 
+	bool flag_Show_Rotation;
+
 	HWND Override_Counter_Goto_Hwnd;
 	HWND Details_Goto_Hwnd;
 	HWND PhysicsTest_Dlg_hWnd;

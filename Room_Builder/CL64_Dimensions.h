@@ -33,6 +33,8 @@ public:
 	void Prepare_Dimensions(void);
 	void ImGui_Dimensions(void);
 
+	void Do_Rotation_New();
+
 	bool flag_Show_Dimensions;
 	bool flag_Show_Position;
 	bool flag_Show_Scale;

@@ -183,7 +183,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 App->CL_Editor_Com->B_Object[Index]->Mesh_Rot = Ogre::Vector3(Test.x, Test.y, Test.z);
 
 
-                App->CL_Brush_X->Rotate_Brush_By_Name("Environ_0", NULL, Test.x, Test.y, Test.z);
+                App->CL_Brush_X->Rotate_Brush_By_Name("Environ_0", Test.x, Test.y, Test.z);
                 App->CL_Brush_X->Move_Brush_By_Name((LPSTR)"Environ_0", Index);
               
 
