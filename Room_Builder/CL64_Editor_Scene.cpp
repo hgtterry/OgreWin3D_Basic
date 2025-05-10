@@ -279,6 +279,7 @@ void CL64_Editor_Scene::Return_From_Preview(void)
 		App->CL_Ogre->Bullet_Debug_Listener->flag_Render_Debug_Flag = 1;
 	}
 	
+	App->CL_Camera->Set_Camera_Mode_Free();
 }
 
 // *************************************************************************

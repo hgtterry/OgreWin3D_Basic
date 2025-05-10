@@ -159,7 +159,9 @@ void CL64_Gui_Environment::Start_Environment_Editor(int index, bool isTeleport) 
 	App->CL_FileView->Show_FileView(false);
 	App->CL_Panels->Enable_Scene_Editor_Dialogs(false);
 
-	App->CL_Com_Environments->Set_Environment_By_Index(1, Eviron_Index);
+	App->CL_SoundMgr->SoundEngine->stopAllSounds();
+
+	App->CL_Com_Environments->Set_Environment_By_Index(true, Eviron_Index);
 
 	flag_Show_PropertyEditor = 1;
 }

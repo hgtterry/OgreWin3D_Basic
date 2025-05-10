@@ -87,15 +87,9 @@ void CL64_Editor_Preview::Preview_Mode(void)
 
 		App->CL_Ogre->RenderFrame(1);
 
-		int Index = App->CL_Com_Environments->Get_First_Environ();
-		if (Index == -1)
-		{
+		App->CL_SoundMgr->SoundEngine->stopAllSounds();
+		App->CL_Com_Environments->Set_Environment_GameMode();
 
-		}
-		else
-		{
-			App->CL_Com_Environments->Set_Environment_By_Index(1, Index);
-		}
 	}
 
 }
