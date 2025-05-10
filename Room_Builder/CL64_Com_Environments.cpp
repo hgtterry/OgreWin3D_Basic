@@ -260,7 +260,7 @@ int CL64_Com_Environments::Set_Environment_By_Index(bool PlayMusic, int Index)
 		App->CL_Ogre->mSceneMgr->setSkyDome(Enable, "OW3D/CloudySky", App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->Curvature, App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->Tiling, App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->Distance);
 
 		// -------- Music
-		if (PlayMusic == 1)
+		if (PlayMusic == true)
 		{
 			char buff[MAX_PATH];
 			strcpy(buff, App->CL_SoundMgr->Default_Folder);
@@ -278,20 +278,31 @@ int CL64_Com_Environments::Set_Environment_By_Index(bool PlayMusic, int Index)
 		}
 		else
 		{
-			if (App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->SndFile == nullptr)
-			{
-			}
-			else
-			{
-				App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->SndFile->setIsPaused(true);
-				App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->SndFile->drop();
-				App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->SndFile = nullptr;
-			}
+			Stop_All_Sounds(Index);
 		}
 
 	}
 
 	return 1;
+}
+
+// *************************************************************************
+// *			Stop_All_Sounds:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void CL64_Com_Environments::Stop_All_Sounds(int Index)
+{
+	App->CL_SoundMgr->SoundEngine->stopAllSounds();
+
+	if (App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->SndFile == nullptr)
+	{
+	}
+	else
+	{
+		App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->SndFile->setIsPaused(true);
+		App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->SndFile->drop();
+		App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->SndFile = nullptr;
+	}
+
 }
 
 // *************************************************************************

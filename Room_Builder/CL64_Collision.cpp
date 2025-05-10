@@ -532,7 +532,8 @@ bool CL64_Collision::Do_Environment(int Index)
 	}
 	else*/
 	{
-		App->CL_Com_Environments->Set_Environment_By_Index(0, Index);
+		App->CL_Com_Environments->Stop_All_Sounds(Index);
+		App->CL_Com_Environments->Set_Environment_By_Index(true, Index);
 
 		Old_Sound_Index = Index;
 

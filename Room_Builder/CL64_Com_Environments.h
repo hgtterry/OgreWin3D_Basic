@@ -41,6 +41,7 @@ public:
 	void Rename_Environ_Entity(int Index);
 	void Mark_As_Altered_Environ(int Index);
 	int Get_First_Environ();
-	
+	void Stop_All_Sounds(int Index);
+
 };
 
