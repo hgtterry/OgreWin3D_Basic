@@ -89,6 +89,8 @@ bool CL64_Com_Environments::Add_New_Environ_Entity(bool FirstOne)
 
 	Create_Environ_Entity(Index);
 
+	App->CL_Entities->Create_Environment_Brush(Index);
+
 	HTREEITEM Temp = App->CL_FileView->Add_Item(App->CL_FileView->FV_Evirons_Folder, App->CL_Editor_Com->B_Object[Index]->Object_Name, Index, true);
 	App->CL_Editor_Com->B_Object[Index]->FileViewItem = Temp;
 
@@ -166,8 +168,6 @@ bool CL64_Com_Environments::Create_Environ_Entity(int index)
 
 	App->CL_Physics->dynamicsWorld->addRigidBody(object->Phys_Body);
 	App->CL_Physics->Set_Physics_New(index);
-
-	App->CL_Entities->Create_Environment_Brush(index);
 
 	//object->Phys_Body->setCollisionFlags(collisionFlags & (~(1 << 5)));
 

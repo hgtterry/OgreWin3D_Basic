@@ -196,4 +196,6 @@ void CL64_Entities::Create_Environment_Brush(int Object_Index)
 	App->CL_Brush_X->Set_Brush_Faces_Name(App->CL_Doc->CurBrush);
 
 	App->CL_Brush->Brush_SetLocked(Environ_Brush, true);
+
+	App->CL_Properties_Brushes->Fill_ListBox();
 }
