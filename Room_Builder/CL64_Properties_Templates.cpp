@@ -151,14 +151,13 @@ LRESULT CALLBACK CL64_Properties_Templates::Proc_Templates(HWND hDlg, UINT messa
 					// Scene
 					App->CL_Entities->Create_Player_Brush();
 
-					if (App->Development == 1)
+					//if (App->CL_Level->Level_Version == 1.0)
 					{
-						//if (App->CL_Level->Level_Version == 1.0)
-						{
-							App->CL_Com_Environments->Create_Test_Environment();
-							App->CL_Com_Objects->Show_Entities(false);
-						}
+						App->CL_Com_Environments->Create_Test_Environment();
+						App->CL_Com_Objects->Show_Entities(false);
+						App->CL_Gizmos->Show_MarkerBox(false);
 					}
+					
 					// ----------------
 
 					App->CL_Ogre->Camera_Reset_Zero();

@@ -923,6 +923,8 @@ void CL64_ImGui_Dialogs::Dialog_Float_Vec3(void)
 	}
 	else
 	{
+		ImGuiStyle* style = &ImGui::GetStyle();
+
 		if (flag_Float_StartPos == 0)
 		{
 			//Float_PosX = ((float)App->CL_Ogre->mWindow->getViewport(0)->getActualWidth() / 2) - (200 / 2);
@@ -937,11 +939,17 @@ void CL64_ImGui_Dialogs::Dialog_Float_Vec3(void)
 		ImGui::Indent();
 		ImGui::Spacing();
 
+		style->Colors[ImGuiCol_Button] = ImVec4(0.26f, 0.59f, 0.98f, 0.40f);
+		style->Colors[ImGuiCol_ButtonHovered] = ImVec4(0.26f, 0.59f, 0.98f, 1.00f);
+
 		int Test_X = ImGui::InputFloat(" X", &m_Dialog_Float_Vec3.x, Float_Step, 0, "%.3f");
 		if (Test_X == 1)
 		{
 			flag_Float_Altetered = 1;
 		}
+
+		style->Colors[ImGuiCol_Button] = ImVec4(0.0f, 0.9f, 0.0f, 1.00f);
+		style->Colors[ImGuiCol_ButtonHovered] = ImVec4(0.f, 1.f, 0.f, 1.00f);
 
 		int Test_Y = ImGui::InputFloat(" Y ", &m_Dialog_Float_Vec3.y, Float_Step, 0, "%.3f");
 		if (Test_Y == 1)
@@ -949,11 +957,17 @@ void CL64_ImGui_Dialogs::Dialog_Float_Vec3(void)
 			flag_Float_Altetered = 1;
 		}
 
+		style->Colors[ImGuiCol_Button] = ImVec4(0.7f, 0.0f, 0.0f, 0.50f);
+		style->Colors[ImGuiCol_ButtonHovered] = ImVec4(1.0f, 0.f, 0.f, 0.50f);
+
 		int Test_Z = ImGui::InputFloat(" Z ", &m_Dialog_Float_Vec3.z, Float_Step, 0, "%.3f");
 		if (Test_Z == 1)
 		{
 			flag_Float_Altetered = 1;
 		}
+
+		style->Colors[ImGuiCol_Button] = ImVec4(0.26f, 0.59f, 0.98f, 0.40f);
+		style->Colors[ImGuiCol_ButtonHovered] = ImVec4(0.26f, 0.59f, 0.98f, 1.00f);
 
 		ImGui::Spacing();
 		ImGui::Spacing();
@@ -966,10 +980,14 @@ void CL64_ImGui_Dialogs::Dialog_Float_Vec3(void)
 			Float_Step = (float)atof(XitemsPosXX[Float_Combo_Step]);
 		}
 
+		
 		ImGui::Spacing();
+
+		ImGui::Unindent();
 		ImGui::Separator();
 		ImGui::Spacing();
 		ImGui::Spacing();
+		ImGui::Indent();
 		ImGui::Indent();
 
 		if (ImGui::Button("Apply"))

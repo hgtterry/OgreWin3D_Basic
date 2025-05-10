@@ -289,51 +289,46 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Brush_Tabs(HWND hDlg, UINT messag
 			return TRUE;
 		}
 
-		if (LOWORD(wParam) == IDC_BT_BRUSH_RENAME)
+		if (LOWORD(wParam) == IDC_BT_BRUSH_RENAME) 
 		{
-			int Result = strcmp(App->CL_Doc->CurBrush->Name, "Player_Main");
-			if (Result == 0)
+			const char* brushName = App->CL_Doc->CurBrush->Name;
+
+			if (strcmp(brushName, "Player_Main") == 0 || strcmp(brushName, "Environ_0") == 0) 
 			{
-				App->Say("This Brush can not be Renamed");
+				App->Say("This Brush cannot be Renamed");
 				return TRUE;
 			}
 
-			int NumSelBrushes = App->CL_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes);
+			int numSelBrushes = App->CL_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes);
 
-			if (NumSelBrushes > 0)
+			if (numSelBrushes > 0) 
 			{
-				char Name[MAX_PATH];
+				char name[MAX_PATH];
 
 				strcpy(App->CL_Dialogs->btext, "Change Brush Name");
 				strcpy(App->CL_Dialogs->Chr_Text, App->CL_Properties_Brushes->Selected_Brush->Name);
 
 				App->CL_Dialogs->Dialog_Text(Enums::Check_Name_Brushes);
 
-				if (App->CL_Dialogs->flag_Dlg_Canceled == 0)
+				if (App->CL_Dialogs->flag_Dlg_Canceled == 0) 
 				{
-					strcpy(Name, App->CL_Dialogs->Chr_Text);
+					strcpy(name, App->CL_Dialogs->Chr_Text);
+					App->CL_Brush->Brush_SetName(App->CL_Properties_Brushes->Selected_Brush, name);
+					App->CL_Properties_Brushes->Fill_ListBox();
+					App->CL_Doc->Set_Faces_To_Brush_Name_Selected();
+					App->CL_Level->flag_Level_is_Modified = true;
+
+					SendDlgItemMessage(hDlg, IDC_GD_BRUSHLIST, LB_SETCURSEL, (WPARAM)App->CL_Properties_Brushes->Selected_Index, (LPARAM)0);
 				}
-				else
-				{
-					return TRUE;
-				}
-
-				App->CL_Brush->Brush_SetName(App->CL_Properties_Brushes->Selected_Brush, Name);
-				App->CL_Properties_Brushes->Fill_ListBox();
-
-				App->CL_Doc->Set_Faces_To_Brush_Name_Selected();
-
-				App->CL_Level->flag_Level_is_Modified = true;
-
-				SendDlgItemMessage(hDlg, IDC_GD_BRUSHLIST, LB_SETCURSEL, (WPARAM)App->CL_Properties_Brushes->Selected_Index, (LPARAM)0);
 			}
-			else
+			else 
 			{
 				App->Say("No Brush Selected");
 			}
 
 			return TRUE;
 		}
+
 
 		if (LOWORD(wParam) == IDC_BT_DELETE_SEL_BRUSH)
 		{

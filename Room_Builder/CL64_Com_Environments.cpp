@@ -40,12 +40,14 @@ CL64_Com_Environments::~CL64_Com_Environments()
 void CL64_Com_Environments::Create_Test_Environment()
 {
 	App->CL_Com_Environments->Add_New_Environ_Entity(true);
-	int mIndex = App->CL_Com_Environments->Get_First_Environ();
-	App->CL_Com_Environments->Set_First_Environment(mIndex);
+
+	int Index = App->CL_Com_Environments->Get_First_Environ();
+	App->CL_Com_Environments->Set_First_Environment(Index);
+
+	App->CL_Brush_X->Move_Brush_By_Name((LPSTR)"Environ_0", Index);
 
 	App->CL_FileView->Enable_Environment_Button(true);
-	////App->CL_Scene->flag_Scene_Modified = 1;
-
+	
 	App->CL_Editor_Scene->flag_Environment_Available = 1;
 }
 
