@@ -414,3 +414,22 @@ void CL64_Com_Environments::Rename_Environ_Entity(int Index)
 	Mark_As_Altered_Environ(Index);
 
 }
+
+// *************************************************************************
+// *			Reset_Triggers:- Terry and Hazel Flanigan 2024	 	 	   *
+// *************************************************************************
+void CL64_Com_Environments::Reset_Triggers()
+{
+	for (int Count = 0; Count < App->CL_Editor_Com->Object_Count; ++Count)
+	{
+		auto& currentObject = App->CL_Editor_Com->B_Object[Count];
+
+		if (currentObject->flag_Deleted == 0)
+		{
+			if (currentObject->Usage == Enums::Obj_Usage_EnvironEntity)
+			{
+				currentObject->flag_Triggered = 0;
+			}
+		}
+	}
+}

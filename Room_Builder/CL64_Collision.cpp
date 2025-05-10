@@ -511,34 +511,12 @@ bool CL64_Collision::Message_Entity(int Index)
 // *************************************************************************
 bool CL64_Collision::Do_Environment(int Index)
 {
-	if (App->CL_Editor_Com->B_Object[Index]->flag_Triggered == 1) // return
-	{
-		return 1;
-	}
 
-	/*if (Old_Sound_Index == Index)
-	{
-		App->CL_Editor_Com->B_Object[Index]->flag_Triggered = 1;
-		return 1;
-	}*/
+	App->CL_Com_Environments->Stop_All_Sounds(Index);
+	App->CL_Com_Environments->Set_Environment_By_Index(true, Index);
+	App->CL_Com_Environments->Reset_Triggers();
 
-	/*if (App->CL_Editor_Com->flag_GameMode_Running == 1)
-	{
-		App->CL_Com_Environments->Set_Environment_By_Index(0, Old_Sound_Index);
-		App->CL_Com_Environments->Set_Environment_By_Index(1, Index);
-
-		Old_Sound_Index = Index;
-		App->CL_Editor_Com->B_Object[Index]->flag_Triggered = 1;
-	}
-	else*/
-	{
-		App->CL_Com_Environments->Stop_All_Sounds(Index);
-		App->CL_Com_Environments->Set_Environment_By_Index(true, Index);
-
-		Old_Sound_Index = Index;
-
-		App->CL_Editor_Com->B_Object[Index]->flag_Triggered = 1;
-	}
+	App->CL_Editor_Com->B_Object[Index]->flag_Triggered = 1;
 
 	return 1;
 }

@@ -593,6 +593,14 @@ void CL64_ImGui::Player_Data_GUI(void)
 			ImGui::Text("Player_ID %i", App->CL_Com_Player->Col_Player_Index);
 			ImGui::Text("Usage_ID %i", App->CL_Com_Player->Col_Usage_Index);
 			ImGui::Text("Object_ID %i", App->CL_Com_Player->Col_Object_Index);
+
+			ImGui::Text(" ");
+			ImGui::Text("Life Time %i", App->CL_Com_Player->Life_Time);
+			ImGui::Text("Distance %f", App->CL_Com_Player->Distance);
+			ImGui::Text("Round %i", App->CL_Com_Player->Round);
+			ImGui::Text("Trigger %i", App->CL_Com_Player->Col_Object_Trigger);
+
+			
 			ImGui::Separator();
 			ImGui::TreePop();
 		}

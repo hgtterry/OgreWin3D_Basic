@@ -36,6 +36,7 @@ CL64_Com_Player::CL64_Com_Player(void)
 	Col_Player_Index = 0;
 	Col_Usage_Index = 0;
 	Col_Object_Index = 0;
+	Col_Object_Trigger = 0;
 
 	Round = 0;
 	Distance = 0;
@@ -444,6 +445,7 @@ void CL64_Com_Player::Check_Collisions(void)
 	Col_Player_Index = 0;
 	Col_Usage_Index = 0;
 	Col_numManifolds = 0;
+	Col_Object_Trigger = 0;
 
 	/* Browse all collision pairs */
 	Col_numManifolds = App->CL_Physics->dynamicsWorld->getDispatcher()->getNumManifolds();
@@ -457,6 +459,11 @@ void CL64_Com_Player::Check_Collisions(void)
 		Col_Player_Index = obA->getUserIndex();  // Should Be Player
 		Col_Object_Index = obB->getUserIndex2(); // Object Index
 		Col_Usage_Index = obB->getUserIndex();
+
+		if (Col_Object_Index > 0)
+		{
+			Col_Object_Trigger = App->CL_Editor_Com->B_Object[Col_Object_Index]->flag_Triggered;
+		}
 
 		if (Col_Player_Index == Enums::Obj_Usage_Player)
 		{
@@ -627,14 +634,10 @@ void CL64_Com_Player::Check_Collisions(void)
 							{
 								App->CL_Collision->Do_Environment(Col_Object_Index);
 							}
+
+							Round = 0;
 						}
-						else if (Round == 0)
-						{
-							if (App->CL_Editor_Com->B_Object[Col_Object_Index]->flag_Triggered == 1)
-							{
-								App->CL_Editor_Com->B_Object[Col_Object_Index]->flag_Triggered = 0;
-							}
-						}
+		
 					}
 				}
 

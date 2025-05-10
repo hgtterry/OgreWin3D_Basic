@@ -42,6 +42,7 @@ public:
 	void Mark_As_Altered_Environ(int Index);
 	int Get_First_Environ();
 	void Stop_All_Sounds(int Index);
+	void Reset_Triggers();
 
 };
 

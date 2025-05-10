@@ -65,6 +65,7 @@ public:
 	int Col_Player_Index;
 	int Col_Usage_Index;
 	int Col_Object_Index;
+	int Col_Object_Trigger;
 
 	int Round;
 	float Distance;
