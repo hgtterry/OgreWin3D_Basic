@@ -130,7 +130,7 @@ void CL64_Keyboard::Keyboard_Mode_First(float deltaTime)
 		{
 			App->CL_ImGui->flag_Show_Preview_Options = 1;
 			App->CL_Ogre->Ogre3D_Listener->flag_LeftMouseDown = 0;
-			App->flag_Block_Mouse_Buttons = 1;
+			App->flag_Block_Mouse_Buttons = 0;
 			ReleaseCapture();
 			SetCursor(App->CUR);
 
