@@ -329,6 +329,11 @@ void CL64_ImGui::Preview_Options_GUI(void)
 			App->CL_SoundMgr->SoundEngine->stopAllSounds();
 			App->CL_Com_Environments->Set_Environment_GameMode();
 			
+			SetCapture(App->ViewGLhWnd);
+			App->CL_Ogre->Ogre3D_Listener->flag_LeftMouseDown = 1;
+			App->flag_Block_Mouse_Buttons = 1;
+			App->CUR = SetCursor(NULL);
+			
 			flag_Show_Preview_Options = 0;
 		}
 

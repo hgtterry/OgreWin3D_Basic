@@ -202,6 +202,7 @@ public:
 
 	void Say_Win(const char* Message);
 	void Set_Title(const char* Title);
+	void BeepBeep();
 
 	HINSTANCE hInst;
 	HWND MainHwnd;
@@ -250,6 +251,7 @@ public:
 
 	bool flag_Debug_App;
 	bool flag_OgreStarted;
+	bool flag_Block_Mouse_Buttons;
 
 	bool Development;
 

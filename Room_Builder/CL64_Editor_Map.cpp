@@ -1348,19 +1348,6 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Ogre_BR(HWND hDlg, UINT message, WPARAM w
 			io.MousePos.y = static_cast<float>(pos.y);
 		}
 
-		if (GetCursorPos(&pos) && App->flag_OgreStarted == 1)// && App->CL10_Dimensions->Mouse_Move_Mode == Enums::Edit_Mouse_None)
-		{
-			if (ScreenToClient(App->ViewGLhWnd, &pos))
-			{
-				RECT rc;
-				GetClientRect(App->ViewGLhWnd, &rc);
-				int width = rc.right - rc.left;
-				int height = rc.bottom - rc.top;
-
-				float tx = ((float)width / 2) - (float)pos.x;
-			}
-		}
-
 		SetFocus(App->ViewGLhWnd);
 		
 		break;
@@ -1374,29 +1361,32 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Ogre_BR(HWND hDlg, UINT message, WPARAM w
 
 		if (App->flag_OgreStarted == 1)
 		{
-			if (!ImGui::GetIO().WantCaptureMouse)
+			if (App->flag_Block_Mouse_Buttons == 0)
 			{
-				POINT p;
-				GetCursorPos(&p);
-				App->CL_Editor_Map->mStartPoint = p;
+				if (!ImGui::GetIO().WantCaptureMouse)
+				{
+					POINT p;
+					GetCursorPos(&p);
+					App->CL_Editor_Map->mStartPoint = p;
 
-				GetCursorPos(&p);
-				App->CursorPosX = p.x;
-				App->CursorPosY = p.y;
-				App->CL_Ogre->Ogre3D_Listener->Pl_Cent500X = p.x;
-				App->CL_Ogre->Ogre3D_Listener->Pl_Cent500Y = p.y;
+					GetCursorPos(&p);
+					App->CursorPosX = p.x;
+					App->CursorPosY = p.y;
+					App->CL_Ogre->Ogre3D_Listener->Pl_Cent500X = p.x;
+					App->CL_Ogre->Ogre3D_Listener->Pl_Cent500Y = p.y;
 
-				SetCapture(App->ViewGLhWnd);
-				SetCursorPos(App->CursorPosX, App->CursorPosY);
-				App->CL_Ogre->Ogre3D_Listener->flag_LeftMouseDown = 1;
-				App->CUR = SetCursor(NULL);
+					SetCapture(App->ViewGLhWnd);
+					SetCursorPos(App->CursorPosX, App->CursorPosY);
+					App->CL_Ogre->Ogre3D_Listener->flag_LeftMouseDown = 1;
+					App->CUR = SetCursor(NULL);
 
-				App->CL_Camera->Camera_Save_Location();
-				
-			}
-			else
-			{
-				//App->CL_Ogre->Ogre3D_Listener->flag_LeftMouseDown = 1;
+					App->CL_Camera->Camera_Save_Location();
+					//App->BeepBeep();
+				}
+				else
+				{
+					//App->CL_Ogre->Ogre3D_Listener->flag_LeftMouseDown = 1;
+				}
 			}
 		}
 
@@ -1410,27 +1400,30 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Ogre_BR(HWND hDlg, UINT message, WPARAM w
 
 		if (App->flag_OgreStarted == 1)
 		{
-			ReleaseCapture();
-			App->CL_Ogre->Ogre3D_Listener->flag_LeftMouseDown = 0;
-			SetCursor(App->CUR);
-			App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
-
-			Ogre::Quaternion cameraRotation = App->CL_Ogre->camNode->getOrientation();
-
-			int cameraComparison = App->CL_Maths->Ogre_Quaternion_Compare(&cameraRotation, &App->CL_Camera->Saved_Rotation, 0);
-			
-			// If Mouse has not moved select Brush and Face
-			if (cameraComparison == 1)
+			if (App->flag_Block_Mouse_Buttons == 0)
 			{
-				if (App->CL_Editor_Preview->flag_PreviewMode_Running == 0 && App->CL_Editor_Scene->flag_Scene_Editor_Active == 0)
-				{
-					App->CL_Picking->Mouse_Pick_Entity(false);
-				}
-			}
-			
-			return 1;
-		}
+				ReleaseCapture();
+				App->CL_Ogre->Ogre3D_Listener->flag_LeftMouseDown = 0;
+				SetCursor(App->CUR);
+				App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
 
+				Ogre::Quaternion cameraRotation = App->CL_Ogre->camNode->getOrientation();
+
+				int cameraComparison = App->CL_Maths->Ogre_Quaternion_Compare(&cameraRotation, &App->CL_Camera->Saved_Rotation, 0);
+
+				// If Mouse has not moved select Brush and Face
+				if (cameraComparison == 1)
+				{
+					if (App->CL_Editor_Preview->flag_PreviewMode_Running == 0 && App->CL_Editor_Scene->flag_Scene_Editor_Active == 0)
+					{
+						App->CL_Picking->Mouse_Pick_Entity(false);
+					}
+				}
+				//App->BeepBeep();
+				return 1;
+			}
+		}
+		
 		return 1;
 	}
 
@@ -1439,25 +1432,28 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Ogre_BR(HWND hDlg, UINT message, WPARAM w
 	{
 		if (App->flag_OgreStarted == 1)
 		{
-			POINT cursorPosition;
-			GetCursorPos(&cursorPosition);
+			if (App->flag_Block_Mouse_Buttons == 0)
+			{
+				POINT cursorPosition;
+				GetCursorPos(&cursorPosition);
 
-			App->CursorPosX = cursorPosition.x;
-			App->CursorPosY = cursorPosition.y;
+				App->CursorPosX = cursorPosition.x;
+				App->CursorPosY = cursorPosition.y;
 
-			auto& listener = App->CL_Ogre->Ogre3D_Listener;
-			listener->Pl_Cent500X = cursorPosition.x;
-			listener->Pl_Cent500Y = cursorPosition.y;
+				auto& listener = App->CL_Ogre->Ogre3D_Listener;
+				listener->Pl_Cent500X = cursorPosition.x;
+				listener->Pl_Cent500Y = cursorPosition.y;
 
-			SetCapture(App->ViewGLhWnd);
-			SetCursorPos(App->CursorPosX, App->CursorPosY);
+				SetCapture(App->ViewGLhWnd);
+				SetCursorPos(App->CursorPosX, App->CursorPosY);
 
-			listener->flag_RightMouseDown = 1;
-			App->CUR = SetCursor(NULL);
+				listener->flag_RightMouseDown = 1;
+				App->CUR = SetCursor(NULL);
 
-			App->CL_Camera->Camera_Save_Location();
-			
-			return 1;
+				App->CL_Camera->Camera_Save_Location();
+
+				return 1;
+			}
 		}
 
 		return 1;
@@ -1467,48 +1463,51 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Ogre_BR(HWND hDlg, UINT message, WPARAM w
 	{
 		if (App->flag_OgreStarted == 1)
 		{
-			ReleaseCapture();
-			App->CL_Ogre->Ogre3D_Listener->flag_RightMouseDown = 0;
-			SetCursor(App->CUR);
-
-			if (GetAsyncKeyState(VK_CONTROL) < 0 && App->CL_Editor_Preview->flag_PreviewMode_Running == 0)
+			if (App->flag_Block_Mouse_Buttons == 0)
 			{
-				App->CL_Picking->Mouse_Pick_Entity(true);
-				int index = App->CL_TXL_Editor->GetIndex_From_FileName(App->CL_Picking->m_Texture_FileName);
+				ReleaseCapture();
+				App->CL_Ogre->Ogre3D_Listener->flag_RightMouseDown = 0;
+				SetCursor(App->CUR);
 
-				if (index > -1)
+				if (GetAsyncKeyState(VK_CONTROL) < 0 && App->CL_Editor_Preview->flag_PreviewMode_Running == 0)
 				{
-					App->CL_Properties_Textures->Select_With_TextureName(App->CL_TXL_Editor->Texture_List[index]->Name);
-					if (App->CL_Properties_Textures->Dialog_Textures_Visible == 0)
+					App->CL_Picking->Mouse_Pick_Entity(true);
+					int index = App->CL_TXL_Editor->GetIndex_From_FileName(App->CL_Picking->m_Texture_FileName);
+
+					if (index > -1)
 					{
-						App->CL_Properties_Tabs->Select_Textures_Tab();
+						App->CL_Properties_Textures->Select_With_TextureName(App->CL_TXL_Editor->Texture_List[index]->Name);
+						if (App->CL_Properties_Textures->Dialog_Textures_Visible == 0)
+						{
+							App->CL_Properties_Tabs->Select_Textures_Tab();
+						}
 					}
 				}
-			}
-			else
-			{
-				bool isSceneEditorActive = App->CL_Editor_Scene->flag_Scene_Editor_Active == 1;
-				bool isPreviewModeRunning = App->CL_Editor_Preview->flag_PreviewMode_Running == 0;
-
-				Ogre::Vector3 cameraPosition = App->CL_Ogre->camNode->getPosition();
-				int cameraComparison = App->CL_Maths->Ogre_Vector3_Compare(&cameraPosition, &App->CL_Camera->Saved_Cam_Pos, 0);
-
-				if (cameraComparison == 1)
+				else
 				{
-					App->CL_Editor_Map->Current_View = App->CL_Editor_Map->VCam[V_TR];
-					if (isSceneEditorActive)
+					bool isSceneEditorActive = App->CL_Editor_Scene->flag_Scene_Editor_Active == 1;
+					bool isPreviewModeRunning = App->CL_Editor_Preview->flag_PreviewMode_Running == 0;
+
+					Ogre::Vector3 cameraPosition = App->CL_Ogre->camNode->getPosition();
+					int cameraComparison = App->CL_Maths->Ogre_Vector3_Compare(&cameraPosition, &App->CL_Camera->Saved_Cam_Pos, 0);
+
+					if (cameraComparison == 1)
 					{
-						App->CL_Editor_Scene->Context_Menu_Ogre(hDlg);
-					}
-					else if (isPreviewModeRunning)
-					{
-						App->CL_Editor_Map->Context_Menu_Ogre(hDlg);
+						App->CL_Editor_Map->Current_View = App->CL_Editor_Map->VCam[V_TR];
+						if (isSceneEditorActive)
+						{
+							App->CL_Editor_Scene->Context_Menu_Ogre(hDlg);
+						}
+						else if (isPreviewModeRunning)
+						{
+							App->CL_Editor_Map->Context_Menu_Ogre(hDlg);
+						}
 					}
 				}
-			}
 
-			App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
-			return 1;
+				App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
+				return 1;
+			}
 		}
 	}
 

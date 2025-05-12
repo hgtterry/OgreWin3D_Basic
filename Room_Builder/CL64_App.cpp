@@ -152,6 +152,7 @@ CL64_App::CL64_App(void)
 
 	flag_Debug_App = 0;
 	flag_OgreStarted = 0;
+	flag_Block_Mouse_Buttons = 0;
 
 	Development = 1; // Allow New Code to Run for Testing
 
@@ -656,5 +657,13 @@ void CL64_App::Set_Title(const char* Title)
 	strcat(TitleBar, "    ");
 	strcat(TitleBar, Title);
 	SetWindowText(App->MainHwnd, TitleBar);
+}
+
+// *************************************************************************
+// *				Beep:- Terry and Hazel Flanigan 2024				   *
+// *************************************************************************
+void CL64_App::BeepBeep()
+{
+	Beep(400, 200);
 }
 

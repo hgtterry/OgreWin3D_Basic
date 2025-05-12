@@ -533,18 +533,16 @@ void CL64_Doc::SelectOrtho(POINT point, ViewVars* v)
 
     FoundThingType = FindClosestThing(&point, v, &pMinBrush,&Dist);
 
-    if ((FoundThingType != fctNOTHING) && (Dist <= MAX_PIXEL_SELECT_DIST))
+    if ((FoundThingType != fctNOTHING) && (Dist <= 25)) //MAX_PIXEL_SELECT_DIST))
     {
         if (FoundThingType == fctBRUSH)
         {
-            //Do_Timer
-
-            bool locked = App->CL_Brush->Brush_IsLocked(pMinBrush);
-            if (locked == 1)
-            {
-                // Dont Select if Locked
-            }
-			else
+   //         bool locked = App->CL_Brush->Brush_IsLocked(pMinBrush);
+   //         if (locked == 1)
+   //         {
+   //             // Dont Select if Locked
+   //         }
+			//else
 			{
 				DoBrushSelection(pMinBrush, brushSelToggle);
 				App->CL_Brush_X->Select_Brush_Editor(pMinBrush);

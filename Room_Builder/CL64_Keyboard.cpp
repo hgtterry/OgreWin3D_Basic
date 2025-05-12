@@ -129,7 +129,11 @@ void CL64_Keyboard::Keyboard_Mode_First(float deltaTime)
 		if (GetAsyncKeyState(VK_ESCAPE) < 0) // Back to Editor mode;
 		{
 			App->CL_ImGui->flag_Show_Preview_Options = 1;
-			//App->CL_Editor_Preview->Editor_Mode();
+			App->CL_Ogre->Ogre3D_Listener->flag_LeftMouseDown = 0;
+			App->flag_Block_Mouse_Buttons = 1;
+			ReleaseCapture();
+			SetCursor(App->CUR);
+
 		}
 
 		//------------------------------------------------ Space Key - Jump and Selection

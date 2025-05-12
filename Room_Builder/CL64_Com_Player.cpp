@@ -460,12 +460,7 @@ void CL64_Com_Player::Check_Collisions(void)
 		Col_Object_Index = obB->getUserIndex2(); // Object Index
 		Col_Usage_Index = obB->getUserIndex();
 
-		if (Col_Object_Index > 0)
-		{
-			Col_Object_Trigger = App->CL_Editor_Com->B_Object[Col_Object_Index]->flag_Triggered;
-		}
-
-		if (Col_Player_Index == Enums::Obj_Usage_Player)
+		if (Col_Player_Index == Enums::Obj_Usage_Player && Col_Object_Index > -1)
 		{
 			if (Col_Usage_Index == 123)// && App->SBC_Scene->B_Object[Last_Message_Index]->Triggered == 1)
 			{
