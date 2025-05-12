@@ -326,6 +326,7 @@ void CL64_ImGui::Preview_Options_GUI(void)
 
 			App->CL_Camera->Set_Camera_Mode_First_Person();
 		
+			App->CL_Com_Environments->Reset_Environment_Triggers();
 			App->CL_SoundMgr->SoundEngine->stopAllSounds();
 			App->CL_Com_Environments->Set_Environment_GameMode();
 			

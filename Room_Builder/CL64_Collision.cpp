@@ -514,7 +514,7 @@ bool CL64_Collision::Do_Environment(int Index)
 
 	App->CL_Com_Environments->Stop_All_Sounds(Index);
 	App->CL_Com_Environments->Set_Environment_By_Index(true, Index);
-	App->CL_Com_Environments->Reset_Triggers();
+	App->CL_Com_Environments->Reset_Environment_Triggers();
 
 	App->CL_Editor_Com->B_Object[Index]->flag_Triggered = 1;
 

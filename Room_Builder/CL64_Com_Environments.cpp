@@ -274,6 +274,9 @@ int CL64_Com_Environments::Set_Environment_By_Index(bool PlayMusic, int Index)
 
 				App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->SndFile->setVolume(App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->SndVolume);
 				App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->SndFile->setIsPaused(false);
+
+				
+				App->CL_Editor_Com->B_Object[Index]->flag_Triggered = 1;
 			}
 		}
 		else
@@ -416,9 +419,9 @@ void CL64_Com_Environments::Rename_Environ_Entity(int Index)
 }
 
 // *************************************************************************
-// *			Reset_Triggers:- Terry and Hazel Flanigan 2024	 	 	   *
+// *	Reset_Environment_Triggers:- Terry and Hazel Flanigan 2024	 	   *
 // *************************************************************************
-void CL64_Com_Environments::Reset_Triggers()
+void CL64_Com_Environments::Reset_Environment_Triggers()
 {
 	for (int Count = 0; Count < App->CL_Editor_Com->Object_Count; ++Count)
 	{
