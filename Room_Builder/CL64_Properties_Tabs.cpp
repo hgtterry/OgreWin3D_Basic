@@ -94,8 +94,6 @@ LRESULT CALLBACK CL64_Properties_Tabs::Proc_Tabs_Control(HWND hDlg, UINT message
 		SendDlgItemMessage(hDlg, IDC_TBTEXTURES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_TBTEMPLATES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_TBGROUPS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_ED_PREVIEW, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_ED_SCENE_EDITOR, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
 		SetWindowLong(hDlg, GWL_EXSTYLE, GetWindowLong(hDlg, GWL_EXSTYLE) | WS_EX_LAYERED);
 		SetLayeredWindowAttributes(hDlg, RGB(213, 222, 242), 230, LWA_ALPHA);
@@ -160,38 +158,6 @@ LRESULT CALLBACK CL64_Properties_Tabs::Proc_Tabs_Control(HWND hDlg, UINT message
 			return CDRF_DODEFAULT;
 		}
 
-		if (some_item->idFrom == IDC_ED_PREVIEW)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_ED_PREVIEW));
-			if (test == 0)
-			{
-				App->Custom_Button_Greyed(item);
-			}
-			else
-			{
-				App->Custom_Button_Toggle_Tabs(item, App->CL_Properties_Tabs->flag_Tab_3DSettings);
-			}
-
-			return CDRF_DODEFAULT;
-		}
-
-		if (some_item->idFrom == IDC_ED_SCENE_EDITOR)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_ED_SCENE_EDITOR));
-			if (test == 0)
-			{
-				App->Custom_Button_Greyed(item);
-			}
-			else
-			{
-				App->Custom_Button_Toggle_Tabs(item, App->CL_Properties_Tabs->flag_Tab_3DSettings);
-			}
-
-			return CDRF_DODEFAULT;
-		}
-		
 		return CDRF_DODEFAULT;
 	}
 
@@ -229,18 +195,6 @@ LRESULT CALLBACK CL64_Properties_Tabs::Proc_Tabs_Control(HWND hDlg, UINT message
 			return TRUE;
 		}
 
-		if (LOWORD(wParam) == IDC_ED_PREVIEW)
-		{
-			App->CL_Editor_Preview->Preview_Mode();
-			return TRUE;
-		}
-
-		if (LOWORD(wParam) == IDC_ED_SCENE_EDITOR)
-		{
-			App->CL_Editor_Scene->Set_Editor_Scene();
-			return TRUE;
-		}
-		
 		// -----------------------------------------------------------------
 		if (LOWORD(wParam) == IDOK)
 		{
@@ -350,11 +304,10 @@ void CL64_Properties_Tabs::Enable_Tabs(bool Enable)
 {
 	EnableWindow(GetDlgItem(Tabs_Control_Hwnd, IDC_TBTEXTURES), Enable);
 	EnableWindow(GetDlgItem(Tabs_Control_Hwnd, IDC_TBGROUPS), Enable);
-	EnableWindow(GetDlgItem(Tabs_Control_Hwnd, IDC_ED_PREVIEW), Enable);
-
-	if (App->Development == 1)
-	{
-		EnableWindow(GetDlgItem(Tabs_Control_Hwnd, IDC_ED_SCENE_EDITOR), Enable);
-	}
+	
+	
+	EnableWindow(GetDlgItem(App->CL_Top_Tabs->Headers_hWnd, IDC_BT_HD_PREVIEW), Enable);
+	EnableWindow(GetDlgItem(App->CL_Top_Tabs->Headers_hWnd, IDC_BT_HD_SCENEEDITOR), Enable);
+	
 }
 
