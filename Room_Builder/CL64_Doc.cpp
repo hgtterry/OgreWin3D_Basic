@@ -521,6 +521,8 @@ static signed int ResetSelectedFacesCB(Brush* b, void* pVoid)
 // *************************************************************************
 void CL64_Doc::SelectOrtho(POINT point, ViewVars* v)
 {
+    point.y = point.y - 5;
+
     Brush* pMinBrush;
     float Dist;
     int FoundThingType;
@@ -537,12 +539,11 @@ void CL64_Doc::SelectOrtho(POINT point, ViewVars* v)
     {
         if (FoundThingType == fctBRUSH)
         {
-   //         bool locked = App->CL_Brush->Brush_IsLocked(pMinBrush);
-   //         if (locked == 1)
-   //         {
-   //             // Dont Select if Locked
-   //         }
-			//else
+            if (pMinBrush->GroupId == Enums::Brushs_ID_Players)
+            {
+               // App->Say("Brush is Locked");
+            }
+			else
 			{
 				DoBrushSelection(pMinBrush, brushSelToggle);
 				App->CL_Brush_X->Select_Brush_Editor(pMinBrush);
