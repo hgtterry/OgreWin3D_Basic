@@ -35,6 +35,8 @@ public:
 
 	void CreateCube();
 
+	void CreateNewTemplateBrush(Brush* pBrush);
+
 	BrushTemplate_Box *pBoxTemplate;
 
 	float	m_YSize;
@@ -62,7 +64,6 @@ private:
 	void SetDefaults(HWND hDlg);
 	void SetRoom(HWND hDlg);
 
-	void CreateNewTemplateBrush(Brush *pBrush);
 	void Zero_Dlg_Flags(HWND hDlg);
 
 	bool Solid_Flag;

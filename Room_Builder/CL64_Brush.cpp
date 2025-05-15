@@ -139,6 +139,7 @@ Brush* CL64_Brush::Brush_Create(int Type, const FaceList* fl, const BrushList* B
 			assert(0);
 		}
 	}
+
 	return pBrush;
 }
 

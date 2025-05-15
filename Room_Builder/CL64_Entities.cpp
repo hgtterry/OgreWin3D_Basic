@@ -30,6 +30,7 @@ THE SOFTWARE.
 
 CL64_Entities::CL64_Entities()
 {
+	Vertice_Count_Copy = 0;
 }
 
 CL64_Entities::~CL64_Entities()
@@ -137,14 +138,19 @@ void CL64_Entities::Create_Environment_Brush(int Object_Index)
 	bool test = App->CL_Brush_X->Check_if_Brush_Name_Exist((LPSTR)m_Name);
 	if (test == true)
 	{
-		Brush* B = App->CL_Brush_X->Get_Brush_By_Name(m_Name);
-		if (B)
+		Brush* b = App->CL_Brush_X->Get_Brush_By_Name(m_Name);
+		if (b)
 		{
-			B->Last_Rotation.x = App->CL_Editor_Com->B_Object[Object_Index]->Mesh_Rot.x;
-			B->Last_Rotation.y = App->CL_Editor_Com->B_Object[Object_Index]->Mesh_Rot.y;
-			B->Last_Rotation.z = App->CL_Editor_Com->B_Object[Object_Index]->Mesh_Rot.z;
+			App->CL_Entities->Ogre_To_Mesh_Data(App->CL_Editor_Com->B_Object[Object_Index]->Object_Ent, App->CL_Editor_Com->B_Object[Object_Index]->Object_Node);
+			App->CL_Brush_X->Set_Brush_Face_Points(b);
+
+
+			b->Last_Rotation.x = App->CL_Editor_Com->B_Object[Object_Index]->Mesh_Rot.x;
+			b->Last_Rotation.y = App->CL_Editor_Com->B_Object[Object_Index]->Mesh_Rot.y;
+			b->Last_Rotation.z = App->CL_Editor_Com->B_Object[Object_Index]->Mesh_Rot.z;
 		}
 
+		Debug
 		return;
 	}
 
@@ -198,4 +204,176 @@ void CL64_Entities::Create_Environment_Brush(int Object_Index)
 	App->CL_Brush->Brush_SetLocked(Environ_Brush, true);
 
 	App->CL_Properties_Brushes->Fill_ListBox();
+}
+
+// *************************************************************************
+// *			Ogre_To_Mesh_Data:- Terry and Hazel Flanigan 2024	   	   *
+// *************************************************************************
+bool CL64_Entities::Ogre_To_Mesh_Data(Ogre::Entity* Ogre_Entity, Ogre::Node* Ogre_Node)
+{
+	Vertice_Count_Copy = 0;
+
+	Convert_To_Mesh_Data(Ogre_Entity, Ogre_Node);
+
+	return 1;
+}
+
+// *************************************************************************
+// *		Convert_To_Mesh_Data:- Terry and Hazel Flanigan 2024	   	   *
+// *************************************************************************
+bool CL64_Entities::Convert_To_Mesh_Data(Ogre::Entity* Ogre_Entity, Ogre::Node* Ogre_Node)
+{
+	bool Has_Shared_Vertices = 0;
+
+	int Count = 0;
+	int SubMeshCount = Ogre_Entity->getNumSubEntities();
+
+	if (Has_Shared_Vertices == 0)
+	{
+		Has_Shared_Vertices = 0;
+
+		int FaceCount = 0;
+		int FaceNum = 0;
+		int FaceIndexNum = 0;
+		int mFaceIndex = 0;
+		int xx = 0;
+		size_t vertex_count = 0;
+		size_t  index_count = 0;
+
+		Vector3* vertices = { 0 };
+
+		Vector3* normals = { 0 };
+		unsigned long* indices = 0;
+
+		Ogre::int16* BoneIndices = 0;	// Bone Index
+
+		int SubMeshCount = Ogre_Entity->getNumSubEntities();
+
+		unsigned int Vertloop = 0;
+		unsigned int Faceloop = 0;
+		int Count = 0;
+		int New_Vert_Count = 0;
+
+		vertex_Data.resize(36);
+
+		while (Count < SubMeshCount)
+		{
+			Get_SubPose_MeshInstance(Ogre_Entity->getMesh(), vertex_count, vertices, Count, Ogre_Node);
+
+			FaceIndexNum = 0;
+			int Faceit = 0;
+			FaceCount = 0;
+			Vertloop = 0;
+			xx = 0;
+
+			while (Vertloop < vertex_count) // Process Vertices
+			{
+				vertex_Data[New_Vert_Count].x = vertices[Vertloop].x;
+				vertex_Data[New_Vert_Count].y = vertices[Vertloop].y;
+				vertex_Data[New_Vert_Count].z = vertices[Vertloop].z;
+
+				New_Vert_Count++;
+				Vertloop++;
+			}
+
+
+			Count++;
+		}
+
+		Vertice_Count_Copy = New_Vert_Count;
+	}
+
+	for (int i = 0; i < vertex_Data.size(); i++)
+	{
+
+		for (int j = i + 1; j < vertex_Data.size();) {
+
+			// Erase duplicates
+			if (vertex_Data[j].x == vertex_Data[i].x && vertex_Data[j].y == vertex_Data[i].y && vertex_Data[j].z == vertex_Data[i].z)
+			{
+				vertex_Data.erase(vertex_Data.begin() + j);
+			}
+			else
+			{
+				j++;
+			}
+		}
+	}
+
+
+	// Vertices 0 to 3 are the 4 corners of the top face
+	Verts[0] = { vertex_Data[0].x,vertex_Data[0].y,vertex_Data[0].z };
+	Verts[1] = { vertex_Data[2].x,vertex_Data[2].y,vertex_Data[2].z };
+	Verts[2] = { vertex_Data[6].x,vertex_Data[6].y,vertex_Data[6].z };
+	Verts[3] = { vertex_Data[4].x,vertex_Data[4].y,vertex_Data[4].z };
+
+	// Vertices 4 to 7 are the 4 corners of the bottom face
+	Verts[4] = { vertex_Data[1].x,vertex_Data[1].y,vertex_Data[1].z };
+	Verts[5] = { vertex_Data[5].x,vertex_Data[5].y,vertex_Data[5].z };
+	Verts[6] = { vertex_Data[7].x,vertex_Data[7].y,vertex_Data[7].z };
+	Verts[7] = { vertex_Data[3].x,vertex_Data[3].y,vertex_Data[3].z };
+
+	return 1;
+}
+
+// *************************************************************************
+// *	   Get_SubPose_MeshInstance:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+void CL64_Entities::Get_SubPose_MeshInstance(Ogre::MeshPtr mesh,
+	size_t& vertex_count, Ogre::Vector3*& vertices, int SubMesh, Ogre::Node* Ogre_Node)
+{
+
+	bool added_shared = false;
+	size_t current_offset = 0;
+	size_t shared_offset = 0;
+	size_t next_offset = 0;
+
+	const Vector3& position = Ogre_Node->getPosition();
+	const Quaternion& orient = Ogre_Node->getOrientation();
+	const Vector3& scale = Ogre_Node->getScale();
+
+	Ogre::SubMesh* submesh = mesh->getSubMesh(SubMesh);
+
+	vertex_count = submesh->vertexData->vertexCount;
+	Ogre::SubMesh::VertexBoneAssignmentList plist = submesh->getBoneAssignments();
+
+	// Allocate space for the vertices and indices
+	vertices = new Ogre::Vector3[vertex_count];
+
+	//-------------------- Get Data
+	Ogre::VertexData* vertex_data = submesh->useSharedVertices ? mesh->sharedVertexData : submesh->vertexData;
+
+	if ((!submesh->useSharedVertices) || (submesh->useSharedVertices && !added_shared))
+	{
+		if (submesh->useSharedVertices)
+		{
+			added_shared = true;
+			shared_offset = current_offset;
+		}
+
+		const Ogre::VertexElement* posElem =
+			vertex_data->vertexDeclaration->findElementBySemantic(Ogre::VES_POSITION);
+
+		Ogre::HardwareVertexBufferSharedPtr vbuf =
+			vertex_data->vertexBufferBinding->getBuffer(posElem->getSource());
+
+		unsigned char* vertex =
+			static_cast<unsigned char*>(vbuf->lock(Ogre::HardwareBuffer::HBL_READ_ONLY));
+
+		float* pReal;
+
+		{
+			for (size_t j = 0; j < vertex_data->vertexCount; ++j, vertex += vbuf->getVertexSize())
+			{
+				posElem->baseVertexPointerToElement(vertex, &pReal);
+				Ogre::Vector3 pt(pReal[0], pReal[1], pReal[2]);
+				vertices[current_offset + j] = (orient * (pt * scale)) + position;
+			}
+		}
+
+		vbuf->unlock();
+		next_offset += vertex_data->vertexCount;
+	}
+
+	current_offset = next_offset;
 }

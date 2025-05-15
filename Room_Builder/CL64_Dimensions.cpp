@@ -1013,19 +1013,12 @@ void CL64_Dimensions::Do_Rotation_New()
 
 		App->CL_Gizmos->MarkerBox_Addjust(Index);
 
-		Brush* B = App->CL_Brush_X->Get_Brush_By_Name(m_object->Object_Name);
-		if (B)
+		App->CL_Entities->Ogre_To_Mesh_Data(App->CL_Editor_Com->B_Object[Index]->Object_Ent, App->CL_Editor_Com->B_Object[Index]->Object_Node);
+
+		Brush* b = App->CL_Brush_X->Get_Brush_By_Name(App->CL_Editor_Com->B_Object[Index]->Object_Name);
+		if (b)
 		{
-			T_Vec3 FinalRot = { 0,0,0 };
-			FinalRot = B->Last_Rotation;
-
-			App->CL_Maths->Vector3_Inverse(&FinalRot);
-			App->CL_Brush_X->Rotate_Reset_Brush_By_Name(B->Name, FinalRot.x, FinalRot.y, FinalRot.z);
-
-			// Will Save Last Rotation Angles
-			App->CL_Brush_X->Rotate_Brush_By_Name(B->Name, App->CL_ImGui_Dialogs->m_Dialog_Float_Vec3.x, App->CL_ImGui_Dialogs->m_Dialog_Float_Vec3.y, App->CL_ImGui_Dialogs->m_Dialog_Float_Vec3.z);
-			App->CL_Brush_X->Move_Brush_By_Name(B->Name, Index);
-
+			App->CL_Brush_X->Set_Brush_Face_Points(b);
 		}
 
 		m_object->flag_Altered = 1;

@@ -145,6 +145,11 @@ public:
 	void Set_ImGui_Panel_Name(void);
 	void Render_ImGui_Panel(void);
 
+	void Create_Brush(void);
+	Brush* BrushTemplate_CreateBox(const BrushTemplate_Box* pTemplate);
+	
+	int Vertice_Count_Copy;
+
 	Ogre::SceneNode		*Object_Node;
 	Ogre::Entity		*Object_Ent;
 	btRigidBody			*Phys_Body;
@@ -192,6 +197,9 @@ public:
 	Ogre::Quaternion Mesh_BB_Quat;
 	Ogre::Vector3 Mesh_BB_Center;
 
+	Brush* Br_Test;
+	BrushTemplate_Box* Brus_BoxTemplate;
+
 	bool flag_Deleted;
 	bool flag_Altered;
 	bool flag_Physics_Debug_On;
@@ -216,6 +224,9 @@ public:
 	Environ_type*	S_Environ[1];
 	Particle_type*	S_Particle[1];
 	Light_type*		S_Light[1];
+
+	std::vector<vertex_type> vertex_Data;			// XYZ
+	T_Vec3	Verts[8];
 
 	bool flag_OverRide_Counter;
 

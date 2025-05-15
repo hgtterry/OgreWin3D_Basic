@@ -833,7 +833,14 @@ bool CL64_Properties_Scene::Edit_Environs_OnClick(LPARAM lParam)
 			App->CL_Editor_Com->B_Object[Index]->Mesh_Pos = App->CL_ImGui_Dialogs->m_Dialog_Float_Vec3;
 
 			App->CL_Physics->Set_Physics_New(Index);
-			App->CL_Brush_X->Move_Brush_By_Name(App->CL_Editor_Com->B_Object[Index]->Object_Name,Index);
+			App->CL_Entities->Ogre_To_Mesh_Data(App->CL_Editor_Com->B_Object[Index]->Object_Ent, App->CL_Editor_Com->B_Object[Index]->Object_Node);
+
+			Brush* b = App->CL_Brush_X->Get_Brush_By_Name(App->CL_Editor_Com->B_Object[Index]->Object_Name);
+			if (b)
+			{
+				App->CL_Brush_X->Set_Brush_Face_Points(b);
+			}
+			
 
 			App->CL_Gizmos->MarkerBox_Addjust(Index);
 
@@ -879,11 +886,13 @@ bool CL64_Properties_Scene::Edit_Environs_OnClick(LPARAM lParam)
 
 			App->CL_Physics->Set_Physics_New(Index);
 
-			float sizeX = App->CL_Editor_Com->B_Object[Index]->Object_Node->_getWorldAABB().getSize().x;
-			float sizeY = App->CL_Editor_Com->B_Object[Index]->Object_Node->_getWorldAABB().getSize().y;
-			float sizeZ = App->CL_Editor_Com->B_Object[Index]->Object_Node->_getWorldAABB().getSize().z;
+			App->CL_Entities->Ogre_To_Mesh_Data(App->CL_Editor_Com->B_Object[Index]->Object_Ent, App->CL_Editor_Com->B_Object[Index]->Object_Node);
 
-			App->CL_Brush_X->Scale_Brush_By_Name(App->CL_Editor_Com->B_Object[Index]->Object_Name, Index, sizeX, sizeY, sizeZ);
+			Brush* b = App->CL_Brush_X->Get_Brush_By_Name(App->CL_Editor_Com->B_Object[Index]->Object_Name);
+			if (b)
+			{
+				App->CL_Brush_X->Set_Brush_Face_Points(b);
+			}
 			
 			App->CL_Gizmos->MarkerBox_Addjust(Index);
 

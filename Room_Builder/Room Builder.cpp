@@ -172,7 +172,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             // ----------------------------- Debug
 			case ID_DEBUG_GENERAL:
 			{ 
-				T_Vec3 Test = { 15,15,15 };
+               
+                //Debug;
+                //App->CL_Editor_Com->B_Object[0]->Create_Brush();
+
+				/*T_Vec3 Test = { 15,15,15 };
                 int Index = App->CL_Entities->GetIndex_By_Name((LPSTR)"Environ_0");
 
                 App->CL_Editor_Com->B_Object[Index]->Object_Node->pitch(((Ogre::Degree)Test.x));
@@ -184,7 +188,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 
                 App->CL_Brush_X->Rotate_Brush_By_Name("Environ_0", Test.x, Test.y, Test.z);
-                App->CL_Brush_X->Move_Brush_By_Name((LPSTR)"Environ_0", Index);
+                App->CL_Brush_X->Move_Brush_By_Name((LPSTR)"Environ_0", Index);*/
               
 
                 return 1;

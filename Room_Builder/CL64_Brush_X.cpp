@@ -587,4 +587,58 @@ void CL64_Brush_X::Rotate_Brush_By_Name(const char* Brush_Name, float SX, float 
 	}
 }
 
+// *************************************************************************
+// *		Set_Brush_Face_Points:- Terry and Hazel Flanigan 2025	       *
+// *************************************************************************
+void CL64_Brush_X::Set_Brush_Face_Points(Brush* pBrush)
+{
+	Face* pFace;
+
+	pFace = App->CL_Brush->Brush_GetFace(pBrush, 0);
+
+	pFace->Points[3] = App->CL_Entities->Verts[0];
+	pFace->Points[2] = App->CL_Entities->Verts[1];
+	pFace->Points[1] = App->CL_Entities->Verts[2];
+	pFace->Points[0] = App->CL_Entities->Verts[3];
+
+	pFace = App->CL_Brush->Brush_GetFace(pBrush, 1);
+
+	pFace->Points[3] = App->CL_Entities->Verts[4];
+	pFace->Points[2] = App->CL_Entities->Verts[5];
+	pFace->Points[1] = App->CL_Entities->Verts[6];
+	pFace->Points[0] = App->CL_Entities->Verts[7];
+
+	pFace = App->CL_Brush->Brush_GetFace(pBrush, 2);
+
+	pFace->Points[3] = App->CL_Entities->Verts[1];
+	pFace->Points[2] = App->CL_Entities->Verts[7];
+	pFace->Points[1] = App->CL_Entities->Verts[6];
+	pFace->Points[0] = App->CL_Entities->Verts[2];
+
+	pFace = App->CL_Brush->Brush_GetFace(pBrush, 3);
+
+	pFace->Points[3] = App->CL_Entities->Verts[0];
+	pFace->Points[2] = App->CL_Entities->Verts[3];
+	pFace->Points[1] = App->CL_Entities->Verts[5];
+	pFace->Points[0] = App->CL_Entities->Verts[4];
+
+	pFace = App->CL_Brush->Brush_GetFace(pBrush, 4);
+
+	pFace->Points[3] = App->CL_Entities->Verts[0];
+	pFace->Points[2] = App->CL_Entities->Verts[4];
+	pFace->Points[1] = App->CL_Entities->Verts[7];
+	pFace->Points[0] = App->CL_Entities->Verts[1];
+
+	pFace = App->CL_Brush->Brush_GetFace(pBrush, 5);
+
+	pFace->Points[3] = App->CL_Entities->Verts[3];
+	pFace->Points[2] = App->CL_Entities->Verts[2];
+	pFace->Points[1] = App->CL_Entities->Verts[6];
+	pFace->Points[0] = App->CL_Entities->Verts[5];
+
+	App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
+
+}
+
+
 

@@ -16,6 +16,7 @@ appreciated but is not required.
 #include "pch.h"
 #include "CL64_App.h"
 #include "Base_Object.h"
+#include "Structures.cpp"
 
 Base_Object::Base_Object()
 {
@@ -36,6 +37,10 @@ bool Base_Object::Init_Object(void)
 
 	Phys_Body = nullptr;
 	Phys_Shape = nullptr;
+
+	Br_Test = nullptr;
+	Brus_BoxTemplate = { 0 };
+
 
 	strcpy(Object_Name, "None");
 	strcpy(Mesh_FileName, "None");
@@ -125,6 +130,7 @@ bool Base_Object::Init_Object(void)
 	//strcpy(Message_Text, "Welcome");
 	strcpy(ImGui_Panel_Name, "TextMessage_");
 
+	Vertice_Count_Copy = 0;
 	return 1;
 }
 
@@ -203,4 +209,146 @@ void Base_Object::Render_ImGui_Panel(void)
 
 	}*/
 }
+
+// *************************************************************************
+// *			Create_Brush:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void Base_Object::Create_Brush(void)
+{
+	Brus_BoxTemplate = App->CL_Level->Level_GetBoxTemplate();
+
+	Brus_BoxTemplate->Solid = 0;
+	Brus_BoxTemplate->TCut = 0;
+	Brus_BoxTemplate->Thickness = 16;
+	Brus_BoxTemplate->TSheet = 0;
+
+	Brus_BoxTemplate->XSizeBot = 100;
+	Brus_BoxTemplate->XSizeTop = 100;
+	Brus_BoxTemplate->YSize = 100;
+	Brus_BoxTemplate->ZSizeBot = 100;
+	Brus_BoxTemplate->ZSizeTop = 100;
+
+	Br_Test = BrushTemplate_CreateBox(Brus_BoxTemplate);
+	if (Br_Test != NULL)
+	{
+
+		strcpy(Br_Test->Name, "Test");
+		App->CL_Level->Level_AppendBrush(Br_Test);
+
+		App->CL_Doc->Set_Faces_To_Brush_Name_All();
+		//App->CL_Brush_X->Set_Brush_Faces_Name(Br_Test);
+
+		App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
+		App->CL_Properties_Brushes->Fill_ListBox();
+
+		//Set_Brush_Vecs(Br_Test);
+		//Ogre_To_Mesh_Data(Object_Ent);
+	}
+	else
+	{
+		App->Say("No pCube");
+	}
+}
+
+// *************************************************************************
+// *					BrushTemplate_CreateBox							   *
+// *************************************************************************
+Brush* Base_Object::BrushTemplate_CreateBox(const BrushTemplate_Box* pTemplate)
+{
+	
+	T_Vec3	FaceVerts[4]{ 0 };
+	FaceList* fl;
+	Face* f;
+	Brush* b;
+
+	fl = App->CL_FaceList->FaceList_Create(6);
+
+	FaceVerts[3] = Verts[0];
+	FaceVerts[2] = Verts[1];
+	FaceVerts[1] = Verts[2];
+	FaceVerts[0] = Verts[3];
+
+	f = App->CL_Face->Face_Create(4, FaceVerts, 0);
+	if (f)
+	{
+		f->Real_Brush_Face_Index = 1;
+		App->CL_FaceList->FaceList_AddFace(fl, f);
+		App->CL_Face->Face_SetTextureLock(f, true);
+	}
+
+	FaceVerts[3] = Verts[4];
+	FaceVerts[2] = Verts[5];
+	FaceVerts[1] = Verts[6];
+	FaceVerts[0] = Verts[7];
+
+	f = App->CL_Face->Face_Create(4, FaceVerts, 0);
+	if (f)
+	{
+		f->Real_Brush_Face_Index = 2;
+		App->CL_FaceList->FaceList_AddFace(fl, f);
+		App->CL_Face->Face_SetTextureLock(f, true);
+	}
+
+	FaceVerts[3] = Verts[1];
+	FaceVerts[2] = Verts[7];
+	FaceVerts[1] = Verts[6];
+	FaceVerts[0] = Verts[2];
+
+	f = App->CL_Face->Face_Create(4, FaceVerts, 0);
+	if (f)
+	{
+		f->Real_Brush_Face_Index = 3;
+		App->CL_FaceList->FaceList_AddFace(fl, f);
+		App->CL_Face->Face_SetTextureLock(f, true);
+	}
+
+	FaceVerts[3] = Verts[0];
+	FaceVerts[2] = Verts[3];
+	FaceVerts[1] = Verts[5];
+	FaceVerts[0] = Verts[4];
+
+	f = App->CL_Face->Face_Create(4, FaceVerts, 0);
+	if (f)
+	{
+		f->Real_Brush_Face_Index = 4;
+		App->CL_FaceList->FaceList_AddFace(fl, f);
+		App->CL_Face->Face_SetTextureLock(f, true);
+	}
+
+	FaceVerts[3] = Verts[0];
+	FaceVerts[2] = Verts[4];
+	FaceVerts[1] = Verts[7];
+	FaceVerts[0] = Verts[1];
+
+	f = App->CL_Face->Face_Create(4, FaceVerts, 0);
+	if (f)
+	{
+		f->Real_Brush_Face_Index = 5;
+		App->CL_FaceList->FaceList_AddFace(fl, f);
+		App->CL_Face->Face_SetTextureLock(f, true);
+	}
+
+	FaceVerts[3] = Verts[3];
+	FaceVerts[2] = Verts[2];
+	FaceVerts[1] = Verts[6];
+	FaceVerts[0] = Verts[5];
+
+	f = App->CL_Face->Face_Create(4, FaceVerts, 0);
+	if (f)
+	{
+		f->Real_Brush_Face_Index = 6;
+		App->CL_FaceList->FaceList_AddFace(fl, f);
+		App->CL_Face->Face_SetTextureLock(f, true);
+	}
+
+	b = App->CL_Brush->Brush_Create(BRUSH_LEAF, fl, 0);
+
+	if (b)
+	{
+		return	b;
+	}
+	
+	return	NULL;
+}
+
 
