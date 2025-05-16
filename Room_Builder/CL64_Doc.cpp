@@ -1093,6 +1093,18 @@ void CL64_Doc::DoneRotate(void)
 
         pBrush = App->CL_SelBrushList->SelBrushList_GetBrush(pTempSelBrushes, i);
         App->CL_Brush->Brush_Rotate(pBrush, &rm, &RotationPoint);
+
+        int Index = App->CL_Entities->GetIndex_By_Name(pBrush->Name);
+        if (Index > -1)
+        {
+            Ogre::Quaternion Rot;
+            App->CL_Maths->Quaternion_From_Matrix(&rm, &Rot);
+
+            App->CL_Editor_Com->B_Object[Index]->Object_Node->setOrientation(Rot);
+            App->CL_Entities->Ogre_To_Mesh_Data(App->CL_Editor_Com->B_Object[Index]->Object_Ent, App->CL_Editor_Com->B_Object[Index]->Object_Node);
+            App->CL_Brush_X->Set_Brush_Face_Points(pBrush);
+        }
+
     }
 
     if (i < NumSelBrushes)

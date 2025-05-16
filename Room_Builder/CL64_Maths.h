@@ -74,6 +74,8 @@ public:
 
 	void Quaternion_SetFromAxisAngle(Ogre::Quaternion* Q, const T_Vec3* Axis, float Theta);
 	void Quaternion_ToMatrix(const Ogre::Quaternion* Q, Matrix3d* M);
+	void Quaternion_From_Matrix(const Matrix3d* M, Ogre::Quaternion* Q);
+
 	void XForm3d_Rotate(const Matrix3d* M, const T_Vec3* V, T_Vec3* Result);
 
 

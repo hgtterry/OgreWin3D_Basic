@@ -26,6 +26,8 @@ THE SOFTWARE.
 #include "CL64_App.h"
 #include "CL64_Maths.h"
 
+#define TRACE_QZERO_TOLERANCE 0.1
+
 CL64_Maths::CL64_Maths()
 {
 }
@@ -579,6 +581,158 @@ void CL64_Maths::Quaternion_ToMatrix(const Ogre::Quaternion* Q, Matrix3d* M)
 
 	M->Translation.x = M->Translation.y = M->Translation.z = 0.0f;
 
+}
+
+// *************************************************************************
+// *		Quaternion_From_Matrix:- Terry and Hazel Flanigan 2025		   *
+// *************************************************************************
+void CL64_Maths::Quaternion_From_Matrix(const Matrix3d* M, Ogre::Quaternion* Q)
+{
+	float trace, s;
+
+	//geQuaternion_Assert(geXForm3d_IsOrthonormal(M) == GE_TRUE);
+
+	trace = M->AX + M->BY + M->CZ;
+	if (trace > 0.0f)
+	{
+		s = (float)sqrt(trace + 1.0f);
+		Q->w = s * 0.5f;
+		s = 0.5f / s;
+
+		Q->x = (M->CY - M->BZ) * s;
+		Q->y = (M->AZ - M->CX) * s;
+		Q->z = (M->BX - M->AY) * s;
+	}
+	else
+	{
+		int biggest;
+		enum { A, E, I };
+		if (M->AX > M->BY)
+		{
+			if (M->CZ > M->AX)
+				biggest = I;
+			else
+				biggest = A;
+		}
+		else
+		{
+			if (M->CZ > M->AX)
+				biggest = I;
+			else
+				biggest = E;
+		}
+
+		// in the unusual case the original trace fails to produce a good sqrt, try others...
+		switch (biggest)
+		{
+		case A:
+			s = (float)sqrt(M->AX - (M->BY + M->CZ) + 1.0);
+			if (s > TRACE_QZERO_TOLERANCE)
+			{
+				Q->x = s * 0.5f;
+				s = 0.5f / s;
+				Q->w = (M->CY - M->BZ) * s;
+				Q->y = (M->AY + M->BX) * s;
+				Q->z = (M->AZ + M->CX) * s;
+				break;
+			}
+			// I
+			s = (float)sqrt(M->CZ - (M->AX + M->BY) + 1.0);
+			if (s > TRACE_QZERO_TOLERANCE)
+			{
+				Q->z = s * 0.5f;
+				s = 0.5f / s;
+				Q->w = (M->BX - M->AY) * s;
+				Q->x = (M->CX + M->AZ) * s;
+				Q->y = (M->CY + M->BZ) * s;
+				break;
+			}
+			// E
+			s = (float)sqrt(M->BY - (M->CZ + M->AX) + 1.0);
+			if (s > TRACE_QZERO_TOLERANCE)
+			{
+				Q->y = s * 0.5f;
+				s = 0.5f / s;
+				Q->w = (M->AZ - M->CX) * s;
+				Q->z = (M->BZ + M->CY) * s;
+				Q->x = (M->BX + M->AY) * s;
+				break;
+			}
+			break;
+		case E:
+			s = (float)sqrt(M->BY - (M->CZ + M->AX) + 1.0);
+			if (s > TRACE_QZERO_TOLERANCE)
+			{
+				Q->y = s * 0.5f;
+				s = 0.5f / s;
+				Q->w = (M->AZ - M->CX) * s;
+				Q->z = (M->BZ + M->CY) * s;
+				Q->x = (M->BX + M->AY) * s;
+				break;
+			}
+			// I
+			s = (float)sqrt(M->CZ - (M->AX + M->BY) + 1.0);
+			if (s > TRACE_QZERO_TOLERANCE)
+			{
+				Q->z = s * 0.5f;
+				s = 0.5f / s;
+				Q->w = (M->BX - M->AY) * s;
+				Q->x = (M->CX + M->AZ) * s;
+				Q->y = (M->CY + M->BZ) * s;
+				break;
+			}
+			// A
+			s = (float)sqrt(M->AX - (M->BY + M->CZ) + 1.0);
+			if (s > TRACE_QZERO_TOLERANCE)
+			{
+				Q->x = s * 0.5f;
+				s = 0.5f / s;
+				Q->w = (M->CY - M->BZ) * s;
+				Q->y = (M->AY + M->BX) * s;
+				Q->z = (M->AZ + M->CX) * s;
+				break;
+			}
+			break;
+		case I:
+			s = (float)sqrt(M->CZ - (M->AX + M->BY) + 1.0);
+			if (s > TRACE_QZERO_TOLERANCE)
+			{
+				Q->z = s * 0.5f;
+				s = 0.5f / s;
+				Q->w = (M->BX - M->AY) * s;
+				Q->x = (M->CX + M->AZ) * s;
+				Q->y = (M->CY + M->BZ) * s;
+				break;
+			}
+			// A
+			s = (float)sqrt(M->AX - (M->BY + M->CZ) + 1.0);
+			if (s > TRACE_QZERO_TOLERANCE)
+			{
+				Q->x = s * 0.5f;
+				s = 0.5f / s;
+				Q->w = (M->CY - M->BZ) * s;
+				Q->y = (M->AY + M->BX) * s;
+				Q->z = (M->AZ + M->CX) * s;
+				break;
+			}
+			// E
+			s = (float)sqrt(M->BY - (M->CZ + M->AX) + 1.0);
+			if (s > TRACE_QZERO_TOLERANCE)
+			{
+				Q->y = s * 0.5f;
+				s = 0.5f / s;
+				Q->w = (M->AZ - M->CX) * s;
+				Q->z = (M->BZ + M->CY) * s;
+				Q->x = (M->BX + M->AY) * s;
+				break;
+			}
+			break;
+		default:
+			assert(0);
+		}
+	}
+
+	//geQuaternion_Assert(geQuaternion_IsUnit(Q) == GE_TRUE);
 }
 
 // *************************************************************************
