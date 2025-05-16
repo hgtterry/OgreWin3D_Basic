@@ -51,7 +51,7 @@ public:
 	void Rotate_Reset_Brush_By_Name(const char* Brush_Name, float SX, float SY, float SZ);
 	void Rotate_Brush_By_Name(const char* Brush_Name, float SX, float SY, float SZ);
 
-	void Set_Brush_Face_Points(Brush* pBrush);
+	void Set_Brush_Face_Points(Brush* pBrush, bool Update);
 
 	int Face_Count;
 	int Face_Index_Set;

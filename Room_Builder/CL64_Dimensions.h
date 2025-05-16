@@ -35,6 +35,8 @@ public:
 
 	void Do_Rotation_New();
 
+	void Set_Rotation(Ogre::Vector3 Rotation, float Delta);
+
 	bool flag_Show_Dimensions;
 	bool flag_Show_Position;
 	bool flag_Show_Scale;
@@ -49,7 +51,7 @@ protected:
 	void Set_Scale(Ogre::Vector3 Scale);
 
 	void ImGui_Rotation(void);
-	void Set_Rotation(Ogre::Vector3 Rotation, float Delta);
+	
 
 	Ogre::Vector3 Get_BoundingBox_World_Centre();
 	void UpDate_Physics(int Index);

@@ -476,6 +476,17 @@ void CL64_ImGui::App_Stats_GUI(void)
 			ImGui::Separator();
 			ImGui::TreePop();
 		}
+
+		if (ImGui::TreeNode("Debug"))
+		{
+			ImGui::Separator();
+			ImGui::Text("X:= %f", Vec_Debug.x);
+			ImGui::Text("Y:= %f", Vec_Debug.y);
+			ImGui::Text("Z:= %f", Vec_Debug.z);
+
+			ImGui::Separator();
+			ImGui::TreePop();
+		}
 		
 		if (ImGui::Button("Close"))
 		{

@@ -838,7 +838,7 @@ bool CL64_Properties_Scene::Edit_Environs_OnClick(LPARAM lParam)
 			Brush* b = App->CL_Brush_X->Get_Brush_By_Name(App->CL_Editor_Com->B_Object[Index]->Object_Name);
 			if (b)
 			{
-				App->CL_Brush_X->Set_Brush_Face_Points(b);
+				App->CL_Brush_X->Set_Brush_Face_Points(b,true);
 			}
 			
 
@@ -891,7 +891,7 @@ bool CL64_Properties_Scene::Edit_Environs_OnClick(LPARAM lParam)
 			Brush* b = App->CL_Brush_X->Get_Brush_By_Name(App->CL_Editor_Com->B_Object[Index]->Object_Name);
 			if (b)
 			{
-				App->CL_Brush_X->Set_Brush_Face_Points(b);
+				App->CL_Brush_X->Set_Brush_Face_Points(b,true);
 			}
 			
 			App->CL_Gizmos->MarkerBox_Addjust(Index);

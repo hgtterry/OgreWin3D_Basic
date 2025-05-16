@@ -1018,7 +1018,7 @@ void CL64_Dimensions::Do_Rotation_New()
 		Brush* b = App->CL_Brush_X->Get_Brush_By_Name(App->CL_Editor_Com->B_Object[Index]->Object_Name);
 		if (b)
 		{
-			App->CL_Brush_X->Set_Brush_Face_Points(b);
+			App->CL_Brush_X->Set_Brush_Face_Points(b,true);
 		}
 
 		m_object->flag_Altered = 1;

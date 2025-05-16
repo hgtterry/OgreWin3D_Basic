@@ -1822,14 +1822,15 @@ void CL64_Editor_Map::On_Mouse_Move(POINT CursorPosition, HWND hDlg)
 				App->CL_Doc->LockAxis(&dv);
 				App->CL_Doc->MoveSelectedBrushes(&dv);
 				Draw_Screen(hDlg);
-				/*ShowWindow(Left_Test_Hwnd, 1);*/
 			}
 
 			if (App->CL_Top_Tabs->flag_Brush_Rotate == 1)
 			{
 				App->CL_Doc->LockAxis(&dv);
 				App->CL_Render->Render_ViewDeltaToRotation(Current_View, (float)dx, &dv);
+				
 				App->CL_Doc->RotateSelectedBrushes(&dv);
+
 				Draw_Screen(hDlg);
 			}
 		}
@@ -1880,6 +1881,7 @@ void CL64_Editor_Map::On_Left_Button_Up(POINT CursorPosition)
 		if (App->CL_Top_Tabs->flag_Brush_Rotate == 1)
 		{
 			App->CL_Doc->UpdateSelected();
+
 			App->CL_Doc->DoneRotate();
 
 			App->CL_Doc->Do_General_Select_Dlg(false);

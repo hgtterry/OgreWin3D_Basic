@@ -43,6 +43,8 @@ public:
 	bool flag_Show_Player_Data;
 	bool flag_PlayerData_Start_Pos;
 
+	Ogre::Vector3 Vec_Debug;
+
 private:
 
 	void Load_Font(void);

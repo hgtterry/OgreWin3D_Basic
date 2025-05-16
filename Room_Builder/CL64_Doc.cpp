@@ -869,7 +869,33 @@ void CL64_Doc::RotateSelectedBrushList(SelBrushList* pList,T_Vec3 const* v)
     for (i = 0; i < NumBrushes; i++)
     {
         Brush* pBrush = App->CL_SelBrushList->SelBrushList_GetBrush(pList, i);
-        App->CL_Brush->Brush_Rotate(pBrush, &rm, &RotationPoint);
+       
+        if (pBrush->GroupId == Enums::Brushs_ID_Evirons)
+        {
+            auto& m_object = App->CL_Editor_Com->B_Object[0];
+            if (v->y > 0)
+            {
+                m_object->Object_Node->rotate(Ogre::Quaternion(Ogre::Degree(1.0f), Ogre::Vector3(0, 1, 0)), Ogre::Node::TransformSpace::TS_LOCAL);
+            }
+
+            if (v->y < 0)
+            {
+                m_object->Object_Node->rotate(Ogre::Quaternion(Ogre::Degree(-1.0f), Ogre::Vector3(0, 1, 0)), Ogre::Node::TransformSpace::TS_LOCAL);
+            }
+
+            App->CL_Entities->Ogre_To_Mesh_Data(App->CL_Editor_Com->B_Object[0]->Object_Ent, App->CL_Editor_Com->B_Object[0]->Object_Node);
+
+            // Brush* b = App->CL_Brush_X->Get_Brush_By_Name(App->CL_Editor_Com->B_Object[Index]->Object_Name);
+            // if (b)
+            {
+                App->CL_Brush_X->Set_Brush_Face_Points(pBrush, false);
+            }
+        }
+        else
+        {
+            App->CL_Brush->Brush_Rotate(pBrush, &rm, &RotationPoint);
+        }
+      
     }
 }
 
@@ -1092,17 +1118,36 @@ void CL64_Doc::DoneRotate(void)
         Brush* pBrush;
 
         pBrush = App->CL_SelBrushList->SelBrushList_GetBrush(pTempSelBrushes, i);
-        App->CL_Brush->Brush_Rotate(pBrush, &rm, &RotationPoint);
-
-        int Index = App->CL_Entities->GetIndex_By_Name(pBrush->Name);
-        if (Index > -1)
+       
+        if (pBrush->GroupId == Enums::Brushs_ID_Evirons)
         {
-            Ogre::Quaternion Rot;
-            App->CL_Maths->Quaternion_From_Matrix(&rm, &Rot);
+            App->CL_Entities->Ogre_To_Mesh_Data(App->CL_Editor_Com->B_Object[0]->Object_Ent, App->CL_Editor_Com->B_Object[0]->Object_Node);
 
-            App->CL_Editor_Com->B_Object[Index]->Object_Node->setOrientation(Rot);
-            App->CL_Entities->Ogre_To_Mesh_Data(App->CL_Editor_Com->B_Object[Index]->Object_Ent, App->CL_Editor_Com->B_Object[Index]->Object_Node);
-            App->CL_Brush_X->Set_Brush_Face_Points(pBrush);
+            // Brush* b = App->CL_Brush_X->Get_Brush_By_Name(App->CL_Editor_Com->B_Object[Index]->Object_Name);
+            // if (b)
+            {
+                App->CL_Brush_X->Set_Brush_Face_Points(pBrush, true);
+            }
+            //int Index = App->CL_Entities->GetIndex_By_Name(pBrush->Name);
+            //if (Index > -1)
+            //{
+            //    auto& m_object = App->CL_Editor_Com->B_Object[Index];
+            //    Ogre::Quaternion Rot;
+            //    App->CL_Maths->Quaternion_From_Matrix(&rm, &Rot);
+
+            //   /* m_object->Object_Node->resetOrientation();
+            //    m_object->Object_Node->pitch(((Ogre::Degree)App->CL_ImGui_Dialogs->m_Dialog_Float_Vec3.x));
+            //    m_object->Object_Node->yaw(((Ogre::Degree)App->CL_ImGui_Dialogs->m_Dialog_Float_Vec3.y));
+            //    m_object->Object_Node->roll(((Ogre::Degree)App->CL_ImGui_Dialogs->m_Dialog_Float_Vec3.z));*/
+
+            //    App->CL_Editor_Com->B_Object[Index]->Object_Node->setOrientation(Rot);
+            //    App->CL_Entities->Ogre_To_Mesh_Data(App->CL_Editor_Com->B_Object[Index]->Object_Ent, App->CL_Editor_Com->B_Object[Index]->Object_Node);
+            //    App->CL_Brush_X->Set_Brush_Face_Points(pBrush);
+            //}
+        }
+        else
+        {
+            App->CL_Brush->Brush_Rotate(pBrush, &rm, &RotationPoint);
         }
 
     }

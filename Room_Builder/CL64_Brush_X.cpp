@@ -590,7 +590,7 @@ void CL64_Brush_X::Rotate_Brush_By_Name(const char* Brush_Name, float SX, float 
 // *************************************************************************
 // *		Set_Brush_Face_Points:- Terry and Hazel Flanigan 2025	       *
 // *************************************************************************
-void CL64_Brush_X::Set_Brush_Face_Points(Brush* pBrush)
+void CL64_Brush_X::Set_Brush_Face_Points(Brush* pBrush, bool Update)
 {
 	Face* pFace;
 
@@ -636,7 +636,10 @@ void CL64_Brush_X::Set_Brush_Face_Points(Brush* pBrush)
 	pFace->Points[1] = App->CL_Entities->Verts[6];
 	pFace->Points[0] = App->CL_Entities->Verts[5];
 
-	App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
+	if (Update == true)
+	{
+		App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
+	}
 
 }
 
