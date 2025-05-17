@@ -1013,13 +1013,7 @@ void CL64_Dimensions::Do_Rotation_New()
 
 		App->CL_Gizmos->MarkerBox_Addjust(Index);
 
-		App->CL_Entities->Ogre_To_Mesh_Data(App->CL_Editor_Com->B_Object[Index]->Object_Ent, App->CL_Editor_Com->B_Object[Index]->Object_Node);
-
-		Brush* b = App->CL_Brush_X->Get_Brush_By_Name(App->CL_Editor_Com->B_Object[Index]->Object_Name);
-		if (b)
-		{
-			App->CL_Brush_X->Set_Brush_Face_Points(b,true);
-		}
+		App->CL_Brush_X->Set_Brush_From_Entity_ByName(m_object->Object_Name,true);
 
 		m_object->flag_Altered = 1;
 		App->CL_Level->flag_Level_is_Modified = true;

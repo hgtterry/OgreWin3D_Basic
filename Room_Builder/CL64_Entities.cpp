@@ -138,17 +138,7 @@ void CL64_Entities::Create_Environment_Brush(int Object_Index)
 	bool test = App->CL_Brush_X->Check_if_Brush_Name_Exist((LPSTR)m_Name);
 	if (test == true)
 	{
-		Brush* b = App->CL_Brush_X->Get_Brush_By_Name(m_Name);
-		if (b)
-		{
-			App->CL_Entities->Ogre_To_Mesh_Data(App->CL_Editor_Com->B_Object[Object_Index]->Object_Ent, App->CL_Editor_Com->B_Object[Object_Index]->Object_Node);
-			App->CL_Brush_X->Set_Brush_Face_Points(b,true);
-
-
-			b->Last_Rotation.x = App->CL_Editor_Com->B_Object[Object_Index]->Mesh_Rot.x;
-			b->Last_Rotation.y = App->CL_Editor_Com->B_Object[Object_Index]->Mesh_Rot.y;
-			b->Last_Rotation.z = App->CL_Editor_Com->B_Object[Object_Index]->Mesh_Rot.z;
-		}
+		App->CL_Brush_X->Set_Brush_From_Entity_ByName(m_Name, true);
 
 		Debug
 		return;

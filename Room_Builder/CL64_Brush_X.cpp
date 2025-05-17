@@ -643,5 +643,29 @@ void CL64_Brush_X::Set_Brush_Face_Points(Brush* pBrush, bool Update)
 
 }
 
+// *************************************************************************
+// *		Set_Brush_From_Entity:- Terry and Hazel Flanigan 2025	      *
+// *************************************************************************
+void CL64_Brush_X::Set_Brush_From_Entity_ByName(char* Name, bool Update)
+{
+	int Index = App->CL_Entities->GetIndex_By_Name(Name);
+
+	if (Index > -1)
+	{
+		auto& m_object = App->CL_Editor_Com->B_Object[Index];
+
+		Brush* pBrush = NULL;
+
+		pBrush = Get_Brush_By_Name(Name);
+
+		if (pBrush)
+		{
+			App->CL_Entities->Ogre_To_Mesh_Data(m_object->Object_Ent, m_object->Object_Node);
+			Set_Brush_Face_Points(pBrush, Update);
+		}
+	}
+
+}
+
 
 

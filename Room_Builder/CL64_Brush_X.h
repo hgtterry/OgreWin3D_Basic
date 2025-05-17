@@ -51,7 +51,8 @@ public:
 	void Rotate_Reset_Brush_By_Name(const char* Brush_Name, float SX, float SY, float SZ);
 	void Rotate_Brush_By_Name(const char* Brush_Name, float SX, float SY, float SZ);
 
-	void Set_Brush_Face_Points(Brush* pBrush, bool Update);
+	void Set_Brush_From_Entity_ByName(char* Name, bool Update);
+
 
 	int Face_Count;
 	int Face_Index_Set;
@@ -65,6 +66,8 @@ private:
 	bool Get_Brush_ListInfo(BrushList* BList);
 	bool Get_Brush_Faces_Info(const FaceList* pList);
 	bool Get_Face_Data(int Index, const Face* f);
+
+	void Set_Brush_Face_Points(Brush* pBrush, bool Update);
 
 };
 

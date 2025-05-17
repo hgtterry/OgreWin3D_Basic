@@ -858,8 +858,6 @@ void CL64_Doc::RotateSelectedBrushList(SelBrushList* pList,T_Vec3 const* v)
     T_Vec3 RotationPoint;
     int NumBrushes = App->CL_SelBrushList->SelBrushList_GetSize(pList);
 
-   // App->CLSB_Doc->mLastOp = BRUSH_ROTATE;
-
     GetRotationPoint(&RotationPoint);
     App->CL_Maths->XForm3d_SetIdentity(&rm);
 
@@ -872,24 +870,48 @@ void CL64_Doc::RotateSelectedBrushList(SelBrushList* pList,T_Vec3 const* v)
        
         if (pBrush->GroupId == Enums::Brushs_ID_Evirons)
         {
-            auto& m_object = App->CL_Editor_Com->B_Object[0];
+            int Index = App->CL_Entities->GetIndex_By_Name(pBrush->Name);
+
+            auto& m_object = App->CL_Editor_Com->B_Object[Index];
+           
             if (v->y > 0)
             {
+                m_object->Mesh_Rot.y += 1;
                 m_object->Object_Node->rotate(Ogre::Quaternion(Ogre::Degree(1.0f), Ogre::Vector3(0, 1, 0)), Ogre::Node::TransformSpace::TS_LOCAL);
             }
 
             if (v->y < 0)
             {
+                m_object->Mesh_Rot.y -= 1;
                 m_object->Object_Node->rotate(Ogre::Quaternion(Ogre::Degree(-1.0f), Ogre::Vector3(0, 1, 0)), Ogre::Node::TransformSpace::TS_LOCAL);
             }
 
-            App->CL_Entities->Ogre_To_Mesh_Data(App->CL_Editor_Com->B_Object[0]->Object_Ent, App->CL_Editor_Com->B_Object[0]->Object_Node);
-
-            // Brush* b = App->CL_Brush_X->Get_Brush_By_Name(App->CL_Editor_Com->B_Object[Index]->Object_Name);
-            // if (b)
+            if (v->x > 0)
             {
-                App->CL_Brush_X->Set_Brush_Face_Points(pBrush, false);
+                m_object->Mesh_Rot.x += 1;
+                m_object->Object_Node->rotate(Ogre::Quaternion(Ogre::Degree(1.0f), Ogre::Vector3(1, 0, 0)), Ogre::Node::TransformSpace::TS_LOCAL);
             }
+
+            if (v->x < 0)
+            {
+                m_object->Mesh_Rot.x -= 1;
+                m_object->Object_Node->rotate(Ogre::Quaternion(Ogre::Degree(-1.0f), Ogre::Vector3(1, 0, 0)), Ogre::Node::TransformSpace::TS_LOCAL);
+            }
+
+            if (v->z > 0)
+            {
+                m_object->Mesh_Rot.z += 1;
+                m_object->Object_Node->rotate(Ogre::Quaternion(Ogre::Degree(1.0f), Ogre::Vector3(0, 0, 1)), Ogre::Node::TransformSpace::TS_LOCAL);
+            }
+
+            if (v->z < 0)
+            {
+                m_object->Mesh_Rot.z -= 1;
+                m_object->Object_Node->rotate(Ogre::Quaternion(Ogre::Degree(-1.0f), Ogre::Vector3(0, 0, 1)), Ogre::Node::TransformSpace::TS_LOCAL);
+            }
+
+            App->CL_Brush_X->Set_Brush_From_Entity_ByName(pBrush->Name,false);
+
         }
         else
         {
@@ -1121,29 +1143,8 @@ void CL64_Doc::DoneRotate(void)
        
         if (pBrush->GroupId == Enums::Brushs_ID_Evirons)
         {
-            App->CL_Entities->Ogre_To_Mesh_Data(App->CL_Editor_Com->B_Object[0]->Object_Ent, App->CL_Editor_Com->B_Object[0]->Object_Node);
+            App->CL_Brush_X->Set_Brush_From_Entity_ByName(pBrush->Name, true);
 
-            // Brush* b = App->CL_Brush_X->Get_Brush_By_Name(App->CL_Editor_Com->B_Object[Index]->Object_Name);
-            // if (b)
-            {
-                App->CL_Brush_X->Set_Brush_Face_Points(pBrush, true);
-            }
-            //int Index = App->CL_Entities->GetIndex_By_Name(pBrush->Name);
-            //if (Index > -1)
-            //{
-            //    auto& m_object = App->CL_Editor_Com->B_Object[Index];
-            //    Ogre::Quaternion Rot;
-            //    App->CL_Maths->Quaternion_From_Matrix(&rm, &Rot);
-
-            //   /* m_object->Object_Node->resetOrientation();
-            //    m_object->Object_Node->pitch(((Ogre::Degree)App->CL_ImGui_Dialogs->m_Dialog_Float_Vec3.x));
-            //    m_object->Object_Node->yaw(((Ogre::Degree)App->CL_ImGui_Dialogs->m_Dialog_Float_Vec3.y));
-            //    m_object->Object_Node->roll(((Ogre::Degree)App->CL_ImGui_Dialogs->m_Dialog_Float_Vec3.z));*/
-
-            //    App->CL_Editor_Com->B_Object[Index]->Object_Node->setOrientation(Rot);
-            //    App->CL_Entities->Ogre_To_Mesh_Data(App->CL_Editor_Com->B_Object[Index]->Object_Ent, App->CL_Editor_Com->B_Object[Index]->Object_Node);
-            //    App->CL_Brush_X->Set_Brush_Face_Points(pBrush);
-            //}
         }
         else
         {
