@@ -1013,6 +1013,7 @@ void CL64_Dimensions::Do_Rotation_New()
 
 		App->CL_Gizmos->MarkerBox_Addjust(Index);
 
+		// TODO Test
 		App->CL_Brush_X->Set_Brush_From_Entity_ByName(m_object->Object_Name,true);
 
 		m_object->flag_Altered = 1;

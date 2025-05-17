@@ -843,15 +843,15 @@ void CL64_Doc::MoveSelectedBrushList(SelBrushList* pList, T_Vec3 const* v)
 // *************************************************************************
 // *         RotateSelectedBrushes:- Terry and Hazel Flanigan 2025         *
 // *************************************************************************
-void CL64_Doc::RotateSelectedBrushes(T_Vec3 const* v)
+void CL64_Doc::RotateSelectedBrushes(const ViewVars* view, T_Vec3 const* v)
 {
-    RotateSelectedBrushList(App->CL_Doc->pTempSelBrushes, v);
+    RotateSelectedBrushList(view,App->CL_Doc->pTempSelBrushes, v);
 }
 
 // *************************************************************************
 // *         RotateSelectedBrushList:- Terry and Hazel Flanigan 2025       *
 // *************************************************************************
-void CL64_Doc::RotateSelectedBrushList(SelBrushList* pList,T_Vec3 const* v)
+void CL64_Doc::RotateSelectedBrushList(const ViewVars* view, SelBrushList* pList,T_Vec3 const* v)
 {
     int i;
     Matrix3d rm;
@@ -868,51 +868,69 @@ void CL64_Doc::RotateSelectedBrushList(SelBrushList* pList,T_Vec3 const* v)
     {
         Brush* pBrush = App->CL_SelBrushList->SelBrushList_GetBrush(pList, i);
        
-        if (pBrush->GroupId == Enums::Brushs_ID_Evirons)
-        {
-            int Index = App->CL_Entities->GetIndex_By_Name(pBrush->Name);
+		if (pBrush->GroupId == Enums::Brushs_ID_Evirons)
+		{
+			int Index = App->CL_Entities->GetIndex_By_Name(pBrush->Name);
 
-            auto& m_object = App->CL_Editor_Com->B_Object[Index];
-           
-            if (v->y > 0)
+			auto& m_object = App->CL_Editor_Com->B_Object[Index];
+
+			switch (view->ViewType)
+			{
+			case VIEWTOP:
+			{
+				if (v->y > 0)
+				{
+					m_object->Mesh_Rot.y += 1;
+					m_object->Object_Node->rotate(Ogre::Quaternion(Ogre::Degree(1.0f), Ogre::Vector3(0, 1, 0)), Ogre::Node::TransformSpace::TS_LOCAL);
+				}
+
+				if (v->y < 0)
+				{
+					m_object->Mesh_Rot.y -= 1;
+					m_object->Object_Node->rotate(Ogre::Quaternion(Ogre::Degree(-1.0f), Ogre::Vector3(0, 1, 0)), Ogre::Node::TransformSpace::TS_LOCAL);
+				}
+				break;
+			}
+			case VIEWFRONT:
+			{
+				if (v->z > 0)
+				{
+					m_object->Mesh_Rot.z += 1;
+					m_object->Object_Node->rotate(Ogre::Quaternion(Ogre::Degree(1.0f), Ogre::Vector3(0, 0, 1)), Ogre::Node::TransformSpace::TS_LOCAL);
+				}
+
+				if (v->z < 0)
+				{
+					m_object->Mesh_Rot.z -= 1;
+					m_object->Object_Node->rotate(Ogre::Quaternion(Ogre::Degree(-1.0f), Ogre::Vector3(0, 0, 1)), Ogre::Node::TransformSpace::TS_LOCAL);
+				}
+				break;
+			}
+			case VIEWSIDE:
+			{
+				if (v->x > 0)
+				{
+					m_object->Mesh_Rot.x += 1;
+					m_object->Object_Node->rotate(Ogre::Quaternion(Ogre::Degree(1.0f), Ogre::Vector3(1, 0, 0)), Ogre::Node::TransformSpace::TS_LOCAL);
+				}
+
+				if (v->x < 0)
+				{
+					m_object->Mesh_Rot.x -= 1;
+					m_object->Object_Node->rotate(Ogre::Quaternion(Ogre::Degree(-1.0f), Ogre::Vector3(1, 0, 0)), Ogre::Node::TransformSpace::TS_LOCAL);
+				}
+				break;
+			}
+            default:
             {
-                m_object->Mesh_Rot.y += 1;
-                m_object->Object_Node->rotate(Ogre::Quaternion(Ogre::Degree(1.0f), Ogre::Vector3(0, 1, 0)), Ogre::Node::TransformSpace::TS_LOCAL);
+                App->Say("No View");
             }
+			}
 
-            if (v->y < 0)
-            {
-                m_object->Mesh_Rot.y -= 1;
-                m_object->Object_Node->rotate(Ogre::Quaternion(Ogre::Degree(-1.0f), Ogre::Vector3(0, 1, 0)), Ogre::Node::TransformSpace::TS_LOCAL);
-            }
+			// TODO Test
+			App->CL_Brush_X->Set_Brush_From_Entity_ByName(pBrush->Name, false);
 
-            if (v->x > 0)
-            {
-                m_object->Mesh_Rot.x += 1;
-                m_object->Object_Node->rotate(Ogre::Quaternion(Ogre::Degree(1.0f), Ogre::Vector3(1, 0, 0)), Ogre::Node::TransformSpace::TS_LOCAL);
-            }
-
-            if (v->x < 0)
-            {
-                m_object->Mesh_Rot.x -= 1;
-                m_object->Object_Node->rotate(Ogre::Quaternion(Ogre::Degree(-1.0f), Ogre::Vector3(1, 0, 0)), Ogre::Node::TransformSpace::TS_LOCAL);
-            }
-
-            if (v->z > 0)
-            {
-                m_object->Mesh_Rot.z += 1;
-                m_object->Object_Node->rotate(Ogre::Quaternion(Ogre::Degree(1.0f), Ogre::Vector3(0, 0, 1)), Ogre::Node::TransformSpace::TS_LOCAL);
-            }
-
-            if (v->z < 0)
-            {
-                m_object->Mesh_Rot.z -= 1;
-                m_object->Object_Node->rotate(Ogre::Quaternion(Ogre::Degree(-1.0f), Ogre::Vector3(0, 0, 1)), Ogre::Node::TransformSpace::TS_LOCAL);
-            }
-
-            App->CL_Brush_X->Set_Brush_From_Entity_ByName(pBrush->Name,false);
-
-        }
+		}
         else
         {
             App->CL_Brush->Brush_Rotate(pBrush, &rm, &RotationPoint);
@@ -1143,6 +1161,7 @@ void CL64_Doc::DoneRotate(void)
        
         if (pBrush->GroupId == Enums::Brushs_ID_Evirons)
         {
+            // TODO Test
             App->CL_Brush_X->Set_Brush_From_Entity_ByName(pBrush->Name, true);
 
         }

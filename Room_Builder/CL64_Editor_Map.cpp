@@ -1829,7 +1829,7 @@ void CL64_Editor_Map::On_Mouse_Move(POINT CursorPosition, HWND hDlg)
 				App->CL_Doc->LockAxis(&dv);
 				App->CL_Render->Render_ViewDeltaToRotation(Current_View, (float)dx, &dv);
 				
-				App->CL_Doc->RotateSelectedBrushes(&dv);
+				App->CL_Doc->RotateSelectedBrushes(Current_View, &dv);
 
 				Draw_Screen(hDlg);
 			}

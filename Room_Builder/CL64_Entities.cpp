@@ -138,6 +138,7 @@ void CL64_Entities::Create_Environment_Brush(int Object_Index)
 	bool test = App->CL_Brush_X->Check_if_Brush_Name_Exist((LPSTR)m_Name);
 	if (test == true)
 	{
+		// TODO Test
 		App->CL_Brush_X->Set_Brush_From_Entity_ByName(m_Name, true);
 
 		Debug

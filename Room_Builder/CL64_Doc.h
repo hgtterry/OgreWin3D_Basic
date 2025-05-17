@@ -151,8 +151,8 @@ public:
 	void Set_Current_TxlPath(void);
 
 	// Rotation
-	void RotateSelectedBrushes(T_Vec3 const* v);
-	void RotateSelectedBrushList(SelBrushList* pList, T_Vec3 const* v);
+	void RotateSelectedBrushes(const ViewVars* view, T_Vec3 const* v);
+	void RotateSelectedBrushList(const ViewVars* view, SelBrushList* pList, T_Vec3 const* v);
 	void GetRotationPoint(T_Vec3* pVec);
 	void SnapScaleNearest(int sides, int inidx, ViewVars* v);
 

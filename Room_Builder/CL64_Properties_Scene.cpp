@@ -834,6 +834,7 @@ bool CL64_Properties_Scene::Edit_Environs_OnClick(LPARAM lParam)
 
 			App->CL_Physics->Set_Physics_New(Index);
 			
+			// TODO Test
 			App->CL_Brush_X->Set_Brush_From_Entity_ByName(App->CL_Editor_Com->B_Object[Index]->Object_Name, true);
 			
 			App->CL_Gizmos->MarkerBox_Addjust(Index);
@@ -880,6 +881,7 @@ bool CL64_Properties_Scene::Edit_Environs_OnClick(LPARAM lParam)
 
 			App->CL_Physics->Set_Physics_New(Index);
 
+			// TODO Test
 			App->CL_Brush_X->Set_Brush_From_Entity_ByName(App->CL_Editor_Com->B_Object[Index]->Object_Name, true);
 
 			App->CL_Gizmos->MarkerBox_Addjust(Index);
