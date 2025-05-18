@@ -480,6 +480,11 @@ void CL64_ImGui::App_Stats_GUI(void)
 		if (ImGui::TreeNode("Debug"))
 		{
 			ImGui::Separator();
+
+			ImGui::Text("X:= %f", App->CL_Editor_Com->B_Object[0]->Mesh_Rot.x);
+			ImGui::Text("Y:= %f", App->CL_Editor_Com->B_Object[0]->Mesh_Rot.y);
+			ImGui::Text("Z:= %f", App->CL_Editor_Com->B_Object[0]->Mesh_Rot.z);
+
 			ImGui::Text("X:= %f", Vec_Debug.x);
 			ImGui::Text("Y:= %f", Vec_Debug.y);
 			ImGui::Text("Z:= %f", Vec_Debug.z);
