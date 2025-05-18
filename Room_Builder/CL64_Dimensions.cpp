@@ -1028,7 +1028,6 @@ void CL64_Dimensions::Do_Rotation_New()
 		App->CL_ImGui_Dialogs->m_Dialog_Float_Vec3 = App->CL_ImGui_Dialogs->m_Dialog_Float_Copy_Vec3;
 
 		m_object->Object_Node->resetOrientation();
-
 		m_object->Object_Node->pitch(((Ogre::Degree)App->CL_ImGui_Dialogs->m_Dialog_Float_Copy_Vec3.x), Ogre::Node::TS_WORLD);
 		m_object->Object_Node->yaw(((Ogre::Degree)App->CL_ImGui_Dialogs->m_Dialog_Float_Copy_Vec3.y), Ogre::Node::TS_WORLD);
 		m_object->Object_Node->roll(((Ogre::Degree)App->CL_ImGui_Dialogs->m_Dialog_Float_Copy_Vec3.z), Ogre::Node::TS_WORLD);
