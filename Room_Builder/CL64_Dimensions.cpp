@@ -972,6 +972,7 @@ void CL64_Dimensions::Do_Rotation_New()
 	Ogre::Vector3 Angles;
 
 	// Last Updated Saved Angles
+
 	Angles.x = m_object->Object_Node->getOrientation().getPitch(false).valueDegrees();
 	Angles.y = m_object->Object_Node->getOrientation().getYaw(false).valueDegrees();
 	Angles.z = m_object->Object_Node->getOrientation().getRoll(false).valueDegrees();
@@ -1028,9 +1029,9 @@ void CL64_Dimensions::Do_Rotation_New()
 
 		m_object->Object_Node->resetOrientation();
 
-		m_object->Object_Node->pitch(((Ogre::Degree)App->CL_ImGui_Dialogs->m_Dialog_Float_Copy_Vec3.x));
-		m_object->Object_Node->yaw(((Ogre::Degree)App->CL_ImGui_Dialogs->m_Dialog_Float_Copy_Vec3.y));
-		m_object->Object_Node->roll(((Ogre::Degree)App->CL_ImGui_Dialogs->m_Dialog_Float_Copy_Vec3.z));
+		m_object->Object_Node->pitch(((Ogre::Degree)App->CL_ImGui_Dialogs->m_Dialog_Float_Copy_Vec3.x), Ogre::Node::TS_WORLD);
+		m_object->Object_Node->yaw(((Ogre::Degree)App->CL_ImGui_Dialogs->m_Dialog_Float_Copy_Vec3.y), Ogre::Node::TS_WORLD);
+		m_object->Object_Node->roll(((Ogre::Degree)App->CL_ImGui_Dialogs->m_Dialog_Float_Copy_Vec3.z), Ogre::Node::TS_WORLD);
 
 		App->CL_Physics->Reset_Physics();
 	}
