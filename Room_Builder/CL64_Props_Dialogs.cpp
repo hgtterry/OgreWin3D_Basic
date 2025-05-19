@@ -484,8 +484,6 @@ LRESULT CALLBACK CL64_Props_Dialogs::Proc_Dialog_Dimensions(HWND hDlg, UINT mess
 			App->CL_Props_Dialogs->flag_Show_Position = 0;
 			App->CL_Panels->Enable_Scene_Editor_Dialogs(true);
 
-			App->CL_Properties_Scene->Update_ListView_Environs();
-
 			RedrawWindow(App->CL_Props_Dialogs->Dimensions_Dlg_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
 			return 1;
@@ -502,8 +500,6 @@ LRESULT CALLBACK CL64_Props_Dialogs::Proc_Dialog_Dimensions(HWND hDlg, UINT mess
 			App->CL_Props_Dialogs->flag_Show_Scale = 0;
 			App->CL_Panels->Enable_Scene_Editor_Dialogs(true);
 
-			App->CL_Properties_Scene->Update_ListView_Environs();
-
 			RedrawWindow(App->CL_Props_Dialogs->Dimensions_Dlg_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
 			return 1;
@@ -518,8 +514,6 @@ LRESULT CALLBACK CL64_Props_Dialogs::Proc_Dialog_Dimensions(HWND hDlg, UINT mess
 
 			App->CL_Props_Dialogs->flag_Show_Rotation = 0;
 			App->CL_Panels->Enable_Scene_Editor_Dialogs(true);
-
-			App->CL_Properties_Scene->Update_ListView_Environs();
 
 			RedrawWindow(App->CL_Props_Dialogs->Dimensions_Dlg_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 

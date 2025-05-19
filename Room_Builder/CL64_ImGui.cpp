@@ -446,6 +446,7 @@ void CL64_ImGui::App_Stats_GUI(void)
 			ImGui::Text("Object_Count:= %i", App->CL_Editor_Com->Object_Count);
 			ImGui::Text("Unique_Object_Count:= %i", App->CL_Editor_Com->Object_Count);
 			ImGui::Text("Scene Editor Active:= %i", App->CL_Editor_Scene->flag_Scene_Editor_Active);
+			ImGui::Text("Preview Active:= %i", App->CL_Editor_Preview->flag_PreviewMode_Running);
 			ImGui::Separator();
 			ImGui::TreePop();
 		}

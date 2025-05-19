@@ -126,7 +126,7 @@ void CL64_Keyboard::Keyboard_Mode_First(float deltaTime)
 		}
 
 		//------------------------------------------------ Escape 
-		if (GetAsyncKeyState(VK_ESCAPE) < 0) // Back to Editor mode;
+		if (GetAsyncKeyState(VK_ESCAPE) < 0 && App->CL_Editor_Preview->flag_PreviewMode_Running == 1)
 		{
 			App->CL_ImGui->flag_Show_Preview_Options = 1;
 			App->CL_Ogre->Ogre3D_Listener->flag_LeftMouseDown = 0;
