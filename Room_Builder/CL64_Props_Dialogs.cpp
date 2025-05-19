@@ -45,6 +45,9 @@ CL64_Props_Dialogs::CL64_Props_Dialogs(void)
 	flag_Toggle_OverrideCounter = 0;
 
 	flag_Show_Rotation = 0;
+	flag_Show_Scale = 0;
+	flag_Show_Position = 0;
+
 }
 
 CL64_Props_Dialogs::~CL64_Props_Dialogs(void)
@@ -391,14 +394,14 @@ LRESULT CALLBACK CL64_Props_Dialogs::Proc_Dialog_Dimensions(HWND hDlg, UINT mess
 		if (some_item->idFrom == IDC_BT_POSITION)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CL_Dimensions->flag_Show_Position);
+			App->Custom_Button_Toggle(item, App->CL_Props_Dialogs->flag_Show_Position);
 			return CDRF_DODEFAULT;
 		}
 
 		if (some_item->idFrom == IDC_BT_SCALE)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CL_Dimensions->flag_Show_Scale);
+			App->Custom_Button_Toggle(item, App->CL_Props_Dialogs->flag_Show_Scale);
 			return CDRF_DODEFAULT;
 		}
 
@@ -473,21 +476,15 @@ LRESULT CALLBACK CL64_Props_Dialogs::Proc_Dialog_Dimensions(HWND hDlg, UINT mess
 
 		if (LOWORD(wParam) == IDC_BT_POSITION)
 		{
+			App->CL_Props_Dialogs->flag_Show_Position = 1;
+			RedrawWindow(App->CL_Props_Dialogs->Dimensions_Dlg_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
-			if (App->CL_Dimensions->flag_Show_Position == 1)
-			{
-				App->CL_Dimensions->flag_Show_Position = 0;
-				App->CL_Gizmos->Hide_Axis_Marker();
-			}
-			else
-			{
-				App->CL_Gizmos->Hide_Axis_Marker();
+			App->CL_Dimensions->Do_Position_New();
 
-				App->CL_Dimensions->Prepare_Dimensions();
-				App->CL_Dimensions->flag_Show_Position = 1;
-				App->CL_Dimensions->flag_Show_Scale = 0;
-				App->CL_Dimensions->flag_Show_Rotation = 0;
-			}
+			App->CL_Props_Dialogs->flag_Show_Position = 0;
+			App->CL_Panels->Enable_Scene_Editor_Dialogs(true);
+
+			App->CL_Properties_Scene->Update_ListView_Environs();
 
 			RedrawWindow(App->CL_Props_Dialogs->Dimensions_Dlg_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
@@ -496,21 +493,16 @@ LRESULT CALLBACK CL64_Props_Dialogs::Proc_Dialog_Dimensions(HWND hDlg, UINT mess
 
 		if (LOWORD(wParam) == IDC_BT_SCALE)
 		{
+			App->CL_Props_Dialogs->flag_Show_Scale = 1;
+			RedrawWindow(App->CL_Props_Dialogs->Dimensions_Dlg_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
-			if (App->CL_Dimensions->flag_Show_Scale == 1)
-			{
-				App->CL_Dimensions->flag_Show_Scale = 0;
-				//App->SBC_Markers->Hide_Axis_Marker();
-			}
-			else
-			{
-				//App->SBC_Markers->Hide_Axis_Marker();
 
-				App->CL_Dimensions->Prepare_Dimensions();
-				App->CL_Dimensions->flag_Show_Scale = 1;
-				App->CL_Dimensions->flag_Show_Position = 0;
-				App->CL_Dimensions->flag_Show_Rotation = 0;
-			}
+			App->CL_Dimensions->Do_Scale_New();
+
+			App->CL_Props_Dialogs->flag_Show_Scale = 0;
+			App->CL_Panels->Enable_Scene_Editor_Dialogs(true);
+
+			App->CL_Properties_Scene->Update_ListView_Environs();
 
 			RedrawWindow(App->CL_Props_Dialogs->Dimensions_Dlg_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 

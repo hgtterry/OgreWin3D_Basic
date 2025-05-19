@@ -33,7 +33,9 @@ public:
 	void Prepare_Dimensions(void);
 	void ImGui_Dimensions(void);
 
+	void Do_Scale_New();
 	void Do_Rotation_New();
+	void Do_Position_New();
 
 	void Set_Rotation(Ogre::Vector3 Rotation, float Delta);
 

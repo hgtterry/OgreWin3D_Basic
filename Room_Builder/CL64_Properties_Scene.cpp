@@ -413,7 +413,7 @@ bool CL64_Properties_Scene::Update_ListView_Environs()
 	SetWindowText(Properties_Dlg_hWnd, str_chr_ID.c_str());
 	SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, App->CL_Editor_Com->B_Object[index]->Object_Name);
 
-	const int NUM_ITEMS = 10;
+	const int NUM_ITEMS = 7;
 	const int NUM_COLS = 2;
 	std::string grid[NUM_COLS][NUM_ITEMS];
 	LV_ITEM pitem;
@@ -421,16 +421,13 @@ bool CL64_Properties_Scene::Update_ListView_Environs()
 	pitem.mask = LVIF_TEXT;
 
 	grid[0][0] = "Name",		grid[1][0] = App->CL_Editor_Com->B_Object[index]->Object_Name;
-	grid[0][1] = "Evironment",	grid[1][1] = "Settings";
-	grid[0][2] = " ",			grid[1][2] = " ";
+	grid[0][1] = " ",			grid[1][1] = " ";
+	grid[0][2] = "Evironment",	grid[1][2] = "Settings";
 	grid[0][3] = " ",			grid[1][3] = " ";
 	grid[0][4] = " ",			grid[1][4] = " ";
 	grid[0][5] = " ",			grid[1][5] = " ";
 	grid[0][6] = " ",			grid[1][6] = " ";
-	grid[0][7] = "Position",	grid[1][7] = "Click";
-	grid[0][8] = "Scale",		grid[1][8] = "Click";
-	grid[0][9] = "Rotation",	grid[1][9] = "Click";
-
+	
 	ListView_DeleteAllItems(Properties_hLV);
 
 	for (DWORD row = 0; row < NUM_ITEMS; row++)
@@ -860,44 +857,8 @@ bool CL64_Properties_Scene::Edit_Environs_OnClick(LPARAM lParam)
 	result = strcmp(btext, "Scale");
 	if (result == 0)
 	{
-		App->CL_ImGui_Dialogs->Start_Dialog_Float_Vec3(0.10, 2, App->CL_Editor_Com->B_Object[Index]->Object_Node->getScale(), (LPSTR)"Scale");
+		App->CL_Dimensions->Do_Scale_New();
 
-		while (App->CL_ImGui_Dialogs->flag_Show_Dialog_Float_Vec3 == 1)
-		{
-			App->CL_ImGui_Dialogs->BackGround_Render_Loop();
-
-			App->CL_Editor_Com->B_Object[Index]->Object_Node->setScale(App->CL_ImGui_Dialogs->m_Dialog_Float_Vec3);
-			App->CL_Physics->Reset_Physics();
-		}
-
-		App->CL_ImGui_Dialogs->flag_Show_Dialog_Float_Vec3 = 0;
-
-		if (App->CL_ImGui_Dialogs->flag_Float_Canceld == 0)
-		{
-			App->CL_ImGui_Dialogs->flag_Show_Dialog_Float_Vec3 = 0;
-
-			App->CL_Editor_Com->B_Object[Index]->Object_Node->setScale(App->CL_ImGui_Dialogs->m_Dialog_Float_Vec3);
-			App->CL_Editor_Com->B_Object[Index]->Mesh_Scale = App->CL_ImGui_Dialogs->m_Dialog_Float_Vec3;
-
-			App->CL_Physics->Set_Physics_New(Index);
-
-			// TODO Test
-			App->CL_Brush_X->Set_Brush_From_Entity_ByName(App->CL_Editor_Com->B_Object[Index]->Object_Name, true);
-
-			App->CL_Gizmos->MarkerBox_Addjust(Index);
-
-			App->CL_Editor_Com->B_Object[Index]->flag_Altered = 1;
-			App->CL_Level->flag_Level_is_Modified = true;
-			App->CL_FileView->Mark_Altered(App->CL_Editor_Com->B_Object[Index]->FileViewItem);
-		}
-		else
-		{
-			App->CL_ImGui_Dialogs->m_Dialog_Float_Vec3 = App->CL_ImGui_Dialogs->m_Dialog_Float_Copy_Vec3;
-			App->CL_Editor_Com->B_Object[Index]->Object_Node->setScale(App->CL_ImGui_Dialogs->m_Dialog_Float_Copy_Vec3);
-			App->CL_Physics->Reset_Physics();
-		}
-
-		
 		App->CL_Panels->Enable_Scene_Editor_Dialogs(true);
 
 		Update_ListView_Environs();

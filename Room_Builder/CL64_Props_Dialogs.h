@@ -70,6 +70,8 @@ private:
 	bool flag_Toggle_OverrideCounter;
 
 	bool flag_Show_Rotation;
+	bool flag_Show_Scale;
+	bool flag_Show_Position;
 
 	HWND Override_Counter_Goto_Hwnd;
 	HWND Details_Goto_Hwnd;

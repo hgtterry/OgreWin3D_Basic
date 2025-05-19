@@ -961,7 +961,102 @@ void CL64_Dimensions::Set_Physics_Position()
 }
 
 // *************************************************************************
-// *			Do_Rotation_New:- Terry and Hazel Flanigan 2024			   *
+// *			Do_Position_New:- Terry and Hazel Flanigan 2025			   *
+// *************************************************************************
+void CL64_Dimensions::Do_Position_New()
+{
+	int Index = App->CL_Properties_Scene->Current_Selected_Object;
+
+	auto& m_object = App->CL_Editor_Com->B_Object[Index];
+
+	App->CL_ImGui_Dialogs->Start_Dialog_Float_Vec3(1.00, 4, m_object->Object_Node->getPosition(), (LPSTR)"Position");
+
+	while (App->CL_ImGui_Dialogs->flag_Show_Dialog_Float_Vec3 == 1)
+	{
+		App->CL_ImGui_Dialogs->BackGround_Render_Loop();
+
+		m_object->Object_Node->setPosition(App->CL_ImGui_Dialogs->m_Dialog_Float_Vec3);
+		App->CL_Physics->Reset_Physics();
+	}
+
+	App->CL_ImGui_Dialogs->flag_Show_Dialog_Float_Vec3 = 0;
+
+	if (App->CL_ImGui_Dialogs->flag_Float_Canceld == 0)
+	{
+		App->CL_ImGui_Dialogs->flag_Show_Dialog_Float_Vec3 = 0;
+
+		m_object->Object_Node->setPosition(App->CL_ImGui_Dialogs->m_Dialog_Float_Vec3);
+		m_object->Mesh_Pos = App->CL_ImGui_Dialogs->m_Dialog_Float_Vec3;
+
+		App->CL_Physics->Set_Physics_New(Index);
+
+		// TODO Test
+		App->CL_Brush_X->Set_Brush_From_Entity_ByName(m_object->Object_Name, true);
+
+		App->CL_Gizmos->MarkerBox_Addjust(Index);
+
+		App->CL_Editor_Com->B_Object[Index]->flag_Altered = 1;
+		App->CL_Level->flag_Level_is_Modified = true;
+		App->CL_FileView->Mark_Altered(m_object->FileViewItem);
+	}
+	else
+	{
+		App->CL_ImGui_Dialogs->m_Dialog_Float_Vec3 = App->CL_ImGui_Dialogs->m_Dialog_Float_Copy_Vec3;
+		m_object->Object_Node->setPosition(App->CL_ImGui_Dialogs->m_Dialog_Float_Copy_Vec3);
+		App->CL_Physics->Reset_Physics();
+	}
+
+}
+
+// *************************************************************************
+// *			Do_Scale_New:- Terry and Hazel Flanigan 2025			   *
+// *************************************************************************
+void CL64_Dimensions::Do_Scale_New()
+{
+	int Index = App->CL_Properties_Scene->Current_Selected_Object;
+
+	auto& m_object = App->CL_Editor_Com->B_Object[Index];
+
+	App->CL_ImGui_Dialogs->Start_Dialog_Float_Vec3(0.10, 2, m_object->Object_Node->getScale(), (LPSTR)"Scale");
+
+	while (App->CL_ImGui_Dialogs->flag_Show_Dialog_Float_Vec3 == 1)
+	{
+		App->CL_ImGui_Dialogs->BackGround_Render_Loop();
+
+		m_object->Object_Node->setScale(App->CL_ImGui_Dialogs->m_Dialog_Float_Vec3);
+		App->CL_Physics->Reset_Physics();
+	}
+
+	App->CL_ImGui_Dialogs->flag_Show_Dialog_Float_Vec3 = 0;
+
+	if (App->CL_ImGui_Dialogs->flag_Float_Canceld == 0)
+	{
+		App->CL_ImGui_Dialogs->flag_Show_Dialog_Float_Vec3 = 0;
+
+		m_object->Object_Node->setScale(App->CL_ImGui_Dialogs->m_Dialog_Float_Vec3);
+		m_object->Mesh_Scale = App->CL_ImGui_Dialogs->m_Dialog_Float_Vec3;
+
+		App->CL_Physics->Set_Physics_New(Index);
+
+		// TODO Test
+		App->CL_Brush_X->Set_Brush_From_Entity_ByName(m_object->Object_Name, true);
+
+		App->CL_Gizmos->MarkerBox_Addjust(Index);
+
+		m_object->flag_Altered = 1;
+		App->CL_Level->flag_Level_is_Modified = true;
+		App->CL_FileView->Mark_Altered(m_object->FileViewItem);
+	}
+	else
+	{
+		App->CL_ImGui_Dialogs->m_Dialog_Float_Vec3 = App->CL_ImGui_Dialogs->m_Dialog_Float_Copy_Vec3;
+		m_object->Object_Node->setScale(App->CL_ImGui_Dialogs->m_Dialog_Float_Copy_Vec3);
+		App->CL_Physics->Reset_Physics();
+	}
+}
+
+// *************************************************************************
+// *			Do_Rotation_New:- Terry and Hazel Flanigan 2025			   *
 // *************************************************************************
 void CL64_Dimensions::Do_Rotation_New()
 {

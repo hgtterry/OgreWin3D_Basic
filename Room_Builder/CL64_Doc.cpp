@@ -1237,8 +1237,6 @@ void CL64_Doc::DoneMove(void)
 
             pBrush = App->CL_SelBrushList->SelBrushList_GetBrush(pSelBrushes, i);
 
-            App->CL_Brush->Brush_Move(pBrush, &FinalPos);
-
             if (pBrush->GroupId == Enums::Brushs_ID_Players)
             {
                 App->CL_SelBrushList->SelBrushList_Center(App->CL_Doc->pSelBrushes, &App->CL_Doc->SelectedGeoCenter);
@@ -1253,6 +1251,8 @@ void CL64_Doc::DoneMove(void)
 
             if (pBrush->GroupId == Enums::Brushs_ID_Evirons)
             {
+                App->CL_Brush->Brush_Move(pBrush, &FinalPos);
+
                 char Name[MAX_PATH]{ 0 };
                 strcpy(Name, pBrush->Name);
 
@@ -1265,11 +1265,18 @@ void CL64_Doc::DoneMove(void)
                 float True_Center = (App->CL_Editor_Com->B_Object[Index]->Object_Node->_getWorldAABB().getSize().y) / 2;
                 CenterOfSelection.y = CenterOfSelection.y - True_Center;
 
+               // App->CL_Editor_Com->B_Object[Index]->Object_Node->setPosition(FinalPos.x, FinalPos.y, FinalPos.z);
                 App->CL_Editor_Com->B_Object[Index]->Object_Node->setPosition(CenterOfSelection.x, CenterOfSelection.y, CenterOfSelection.z);
                 App->CL_Editor_Com->B_Object[Index]->Mesh_Pos = { CenterOfSelection.x, CenterOfSelection.y, CenterOfSelection.z };
 
+                App->CL_Brush_X->Set_Brush_From_Entity_ByName(pBrush->Name, true);
+         
                 App->CL_Physics->Set_Physics_New(Index);
 
+            }
+            else
+            {
+                App->CL_Brush->Brush_Move(pBrush, &FinalPos);
             }
         }
 
