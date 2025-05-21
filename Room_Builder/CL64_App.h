@@ -99,6 +99,7 @@ THE SOFTWARE.
 #include "CL64_Gizmos.h"
 #include "CL64_Dimensions.h"
 #include "CL64_Props_Dialogs.h"
+#include "CL64_MeshViewer.h"
 
 class CL64_App
 {
@@ -172,7 +173,7 @@ public:
 	A_CreateStaircaseDialog*	CL_CreateStaircaseDialog;
 	A_CreateArchDialog*			CL_CreateArchDialog;
 
-	// Priject
+	// Project
 	CL64_Project*				CL_Project;
 	CL64_Objects_Create*		CL_Objects_Create;
 	CL64_SoundMgr*				CL_SoundMgr;
@@ -180,6 +181,7 @@ public:
 	CL64_Gizmos*				CL_Gizmos;
 	CL64_Dimensions*			CL_Dimensions;
 	CL64_Props_Dialogs*			CL_Props_Dialogs;
+	CL64_MeshViewer*			CL_MeshViewer;
 
 	void InitApp(void);
 	void Init_Dialogs(void);
