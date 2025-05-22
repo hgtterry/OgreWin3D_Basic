@@ -171,8 +171,8 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 		//SendDlgItemMessage(hDlg, IDC_STFOLDER, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		//SendDlgItemMessage(hDlg, IDC_STNAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
-		//SendDlgItemMessage(hDlg, IDC_BT_PROPERTIES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		//SendDlgItemMessage(hDlg, IDC_BT_MV_RESOURCES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_PROPERTIES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_MV_RESOURCES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		//
 		//SendDlgItemMessage(hDlg, IDC_OBJECTNAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
@@ -298,20 +298,20 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 	{
 		LPNMHDR some_item = (LPNMHDR)lParam;
 
-		//if (some_item->idFrom == IDC_BT_PROPERTIES)
-		//{
-		//	LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-		//	App->Custom_Button_Normal(item);
-		//	return CDRF_DODEFAULT;
-		//}
+		if (some_item->idFrom == IDC_BT_PROPERTIES)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
 
-		//if (some_item->idFrom == IDC_BT_MV_RESOURCES)
-		//{
-		//	LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-		//	App->Custom_Button_Normal(item);
-		//	return CDRF_DODEFAULT;
-		//}
-		//
+		if (some_item->idFrom == IDC_BT_MV_RESOURCES)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+		
 		//if (some_item->idFrom == IDC_MVSTATIC)
 		//{
 		//	LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
@@ -525,18 +525,18 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 			return TRUE;
 		}
 
-	//	if (LOWORD(wParam) == IDC_BT_PROPERTIES)
-	//	{
-	//		App->CL_MeshViewer->Show_Mesh_Properties();
-	//		return TRUE;
-	//	}
+		if (LOWORD(wParam) == IDC_BT_PROPERTIES)
+		{
+			App->CL_MeshViewer->Show_Mesh_Properties();
+			return TRUE;
+		}
 
-	//	if (LOWORD(wParam) == IDC_BT_MV_RESOURCES)
-	//	{
-	//		App->CL_Resources->Start_Resources();
-	//		return TRUE;
-	//	}
-	//	
+		if (LOWORD(wParam) == IDC_BT_MV_RESOURCES)
+		{
+			App->CL_Resources->Start_Resources();
+			return TRUE;
+		}
+		
 		if (LOWORD(wParam) == IDC_LISTFILES)
 		{
 			char buff[MAX_PATH] { 0 };
@@ -2093,10 +2093,10 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_Mesh_Properties(HWND hDlg, UINT message, 
 
 	case WM_INITDIALOG:
 	{
-		/*SendDlgItemMessage(hDlg, IDC_LISTGROUP, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_LST_GENERAL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
-		HWND List = GetDlgItem(hDlg, IDC_LISTGROUP);
+		HWND List = GetDlgItem(hDlg, IDC_LST_GENERAL);
 		ListView_DeleteAllItems(List);
 
 		SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->CL_MeshViewer->m_Resource_Folder_Full);
@@ -2120,7 +2120,7 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_Mesh_Properties(HWND hDlg, UINT message, 
 			SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)buf4);
 
 			Count++;
-		}*/
+		}
 
 		return TRUE;
 	}
