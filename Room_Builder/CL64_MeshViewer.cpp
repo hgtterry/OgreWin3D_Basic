@@ -469,14 +469,14 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 	{
 		int zDelta = (short)HIWORD(wParam);    // wheel rotation
 
-		/*if (zDelta > 0)
+		if (zDelta > 0)
 		{
 			App->CL_MeshViewer->RenderListener->Wheel_Move = -1;
 		}
 		else if (zDelta < 0)
 		{
 			App->CL_MeshViewer->RenderListener->Wheel_Move = 1;
-		}*/
+		}
 
 		return 1;
 	}
@@ -720,13 +720,13 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 
 
 	//		App->CL_Ogre->RenderFrame(10);
-	//		App->CL_MeshViewer->Close_OgreWindow();
-	//		App->CL_MeshViewer->Delete_Resources_Group();
+			App->CL_MeshViewer->Close_OgreWindow();
+			App->CL_MeshViewer->Delete_Resources_Group();
 
 	//		App->CL_MeshViewer->Clear_Shape_Buttons();
 	//		App->CL_MeshViewer->Clear_Type_Buttons();
 	//		
-	//		App->CL_MeshViewer->flag_MeshViewer_Running = 0;
+			App->CL_MeshViewer->flag_MeshViewer_Running = 0;
 
 	//		App->CL_Panels->Disable_Panels(false);
 	//		App->CL_ImGui_Dialogs->flag_Disable_Physics_Console = 0;
@@ -740,12 +740,12 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 
 	if (LOWORD(wParam) == IDCANCEL)
 	{
-		//		App->CL_MeshViewer->Close_OgreWindow();
-		//		App->CL_MeshViewer->Delete_Resources_Group();
+				App->CL_MeshViewer->Close_OgreWindow();
+				App->CL_MeshViewer->Delete_Resources_Group();
 
 		//		App->CL_MeshViewer->Clear_Type_Buttons();
 
-		//		App->CL_MeshViewer->flag_MeshViewer_Running = 0;
+				App->CL_MeshViewer->flag_MeshViewer_Running = 0;
 
 		//		App->CL_Panels->Disable_Panels(false);
 		//		App->CL_ImGui_Dialogs->flag_Disable_Physics_Console = 0;
@@ -832,14 +832,13 @@ void CL64_MeshViewer::Clear_Type_Buttons()
 // *************************************************************************
 void CL64_MeshViewer::Close_OgreWindow(void)
 {
-	/*App->CL_MeshViewer->flag_MV_Render_Debug = 0;
-
+	App->CL_MeshViewer->flag_MV_Render_Debug = 0;
 
 	App->CL_Ogre->mRoot->removeFrameListener(RenderListener);
 
 	App->CL_Ogre->mRoot->detachRenderTarget("MeshViewWin");
 	Ogre_MV_Window->destroy();
-	App->CL_Ogre->mRoot->destroySceneManager(Ogre_MV_SceneMgr);*/
+	App->CL_Ogre->mRoot->destroySceneManager(Ogre_MV_SceneMgr);
 }
 
 // *************************************************************************
@@ -1019,7 +1018,7 @@ bool CL64_MeshViewer::Delete_Resources_Group()
 
 	// if scene loaded need to goto project resources
 	//App->CL_Resources->mSelected_Resource_Group = "App_Resource_Group";
-	//flag_MV_Resource_Path_Loaded = 0;
+	flag_MV_Resource_Path_Loaded = 0;
 
 	return 1;
 }
