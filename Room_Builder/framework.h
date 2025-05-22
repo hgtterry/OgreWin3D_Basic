@@ -241,4 +241,12 @@ namespace Enums
 		Brushs_ID_Players = 1,
 		Brushs_ID_Evirons = 2
 	};
+
+	enum Mesh_Viewer
+	{
+		Mesh_Viewer_None = -1,
+		Mesh_Viewer_Objects = 0,
+		Mesh_Viewer_Collectables = 1,
+		Mesh_Viewer_Area = 2
+	};
 }

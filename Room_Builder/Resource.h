@@ -78,7 +78,6 @@
 #define IDD_YESNOCANCEL                 190
 #define IDD_PROPS_DIMENSIONS            191
 #define IDD_MESHVIEWER                  192
-#define IDD_DIALOG1                     193
 #define IDD_MESHVIEWER_3D               193
 #define IDC_BANNER                      1000
 #define IDC_STTEXT                      1001
@@ -424,6 +423,9 @@
 #define IDC_BT_HD_SCENEEDITOR           1308
 #define IDC_BT_HD_SCENEEDITOR2          1309
 #define IDC_BT_HD_PREVIEW               1309
+#define IDC_LISTFILES                   1309
+#define IDC_COMBO1                      1310
+#define IDC_CB_FOLDERS                  1310
 #define ID_DEBUG_GENERAL                32771
 #define ID_TEMPLATES_INSERT             32772
 #define ID_BRUSH_SELECT                 32773
@@ -489,7 +491,7 @@
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        194
 #define _APS_NEXT_COMMAND_VALUE         32826
-#define _APS_NEXT_CONTROL_VALUE         1309
+#define _APS_NEXT_CONTROL_VALUE         1311
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif

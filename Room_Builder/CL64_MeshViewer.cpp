@@ -151,10 +151,10 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 
 	case WM_INITDIALOG:
 	{
-		//SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		//SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		//SendDlgItemMessage(hDlg, IDC_CB_FOLDERS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		//SendDlgItemMessage(hDlg, IDC_LISTFILES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_CB_FOLDERS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_LISTFILES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		//SendDlgItemMessage(hDlg, IDC_SELECTEDNAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		//SendDlgItemMessage(hDlg, IDC_BOX, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
@@ -177,13 +177,12 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 		//SendDlgItemMessage(hDlg, IDC_OBJECTNAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		App->CL_MeshViewer->MainDlgHwnd = hDlg;
-		//App->CL_MeshViewer->ListHwnd = GetDlgItem(hDlg, IDC_LISTFILES);
-		//App->CL_MeshViewer->CB_hWnd = GetDlgItem(hDlg, IDC_CB_FOLDERS);
+		App->CL_MeshViewer->ListHwnd = GetDlgItem(hDlg, IDC_LISTFILES);
+		App->CL_MeshViewer->CB_hWnd = GetDlgItem(hDlg, IDC_CB_FOLDERS);
 
 		App->CL_MeshViewer->MeshViewer_3D_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MESHVIEWER_3D, hDlg, (DLGPROC)Proc_MeshViewer_3D);
 		App->CL_MeshViewer->Set_OgreWindow();
-		//App->CL_Ogre->Log_Message_To_File((LPSTR)"MeshVierer Ogre Started");
-
+		
 		//if (App->CL_MeshViewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Area)
 		//{
 		//	App->CL_MeshViewer->Set_For_Areas(hDlg);
@@ -202,15 +201,15 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 		//	App->CL_MeshViewer->Get_Stock_Folders(App->CL_MeshViewer->CB_hWnd);
 		//}
 		//else
-		//{
-		//	App->CL_MeshViewer->Get_Stock_Folders(App->CL_MeshViewer->CB_hWnd);
-		//	App->CL_MeshViewer->Add_Resources();
-		//	App->CL_MeshViewer->Get_Mesh_Files();
-		//	App->CL_Ogre->Log_Message_To_File((LPSTR)"Get_Mesh_Files");
+		{
+			App->CL_MeshViewer->Get_Stock_Folders(App->CL_MeshViewer->CB_hWnd);
+			App->CL_MeshViewer->Add_Resources();
+			App->CL_MeshViewer->Get_Mesh_Files();
+			//App->CL_Ogre->Log_Message_To_File((LPSTR)"Get_Mesh_Files");
 
-		//	App->CL_MeshViewer->Show_Mesh(App->CL_MeshViewer->Selected_MeshFile);
-		//	App->CL_Ogre->Log_Message_To_File((LPSTR)"Show Mesh");
-		//}
+			//App->CL_MeshViewer->Show_Mesh(App->CL_MeshViewer->Selected_MeshFile);
+			//App->CL_Ogre->Log_Message_To_File((LPSTR)"Show Mesh");
+		}
 
 		//SetWindowText(hDlg, App->CL_MeshViewer->m_Resource_Folder_Full);
 
@@ -449,19 +448,19 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 		//	return CDRF_DODEFAULT;
 		//}
 
-		//if (some_item->idFrom == IDOK)
-		//{
-		//	LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-		//	App->Custom_Button_Normal(item);
-		//	return CDRF_DODEFAULT;
-		//}
+		if (some_item->idFrom == IDOK)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
 
-		//if (some_item->idFrom == IDCANCEL)
-		//{
-		//	LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-		//	App->Custom_Button_Normal(item);
-		//	return CDRF_DODEFAULT;
-		//}
+		if (some_item->idFrom == IDCANCEL)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
 
 		return CDRF_DODEFAULT;
 	}
@@ -484,47 +483,47 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 
 	case WM_COMMAND:
 	
-	//	if (LOWORD(wParam) == IDC_CB_FOLDERS)
-	//	{
-	//		switch (HIWORD(wParam)) // Find out what message it was
-	//		{
-	//		case CBN_DROPDOWN:
-	//			break;
-	//		case CBN_CLOSEUP:
-	//		{
-	//			HWND temp = GetDlgItem(hDlg, IDC_CB_FOLDERS);
-	//			int Index = SendMessage(temp, CB_GETCURSEL, 0, 0);
-	//			SendMessage(temp, CB_GETLBTEXT, Index, (LPARAM)App->CL_MeshViewer->m_Just_Folder);
+		if (LOWORD(wParam) == IDC_CB_FOLDERS)
+		{
+			switch (HIWORD(wParam)) // Find out what message it was
+			{
+			case CBN_DROPDOWN:
+				break;
+			case CBN_CLOSEUP:
+			{
+				HWND temp = GetDlgItem(hDlg, IDC_CB_FOLDERS);
+				int Index = SendMessage(temp, CB_GETCURSEL, 0, 0);
+				SendMessage(temp, CB_GETLBTEXT, Index, (LPARAM)App->CL_MeshViewer->m_Just_Folder);
 
-	//			SendMessage(App->CL_MeshViewer->ListHwnd, LB_RESETCONTENT, 0, 0);
+				SendMessage(App->CL_MeshViewer->ListHwnd, LB_RESETCONTENT, 0, 0);
 
-	//			int cmp = strcmp(App->CL_MeshViewer->m_Just_Folder, "Project_Assets");
-	//			if (cmp == 0)
-	//			{
-	//				strcpy(App->CL_MeshViewer->m_Resource_Folder_Full, App->CL_Project->m_Main_Assets_Path);
-	//			}
-	//			else
-	//			{
-	//				strcpy(App->CL_MeshViewer->m_Resource_Folder_Full, App->GD_Directory_FullPath);
-	//				strcat(App->CL_MeshViewer->m_Resource_Folder_Full, "\\Stock\\");
-	//				strcat(App->CL_MeshViewer->m_Resource_Folder_Full, App->CL_MeshViewer->m_Just_Folder);
-	//				strcat(App->CL_MeshViewer->m_Resource_Folder_Full, "\\");
-	//			}
-	//			
-	//			//SetDlgItemText(hDlg, IDC_ST_CURRENTFOLDER, App->SBC_MeshViewer->mResource_Folder);
-	//			SetWindowText(hDlg, App->CL_MeshViewer->m_Resource_Folder_Full);
+				int cmp = strcmp(App->CL_MeshViewer->m_Just_Folder, "Project_Assets");
+				if (cmp == 0)
+				{
+					strcpy(App->CL_MeshViewer->m_Resource_Folder_Full, App->CL_Project->m_Main_Assets_Path);
+				}
+				else
+				{
+					strcpy(App->CL_MeshViewer->m_Resource_Folder_Full, App->RB_Directory_FullPath);
+					strcat(App->CL_MeshViewer->m_Resource_Folder_Full, "\\Stock\\");
+					strcat(App->CL_MeshViewer->m_Resource_Folder_Full, App->CL_MeshViewer->m_Just_Folder);
+					strcat(App->CL_MeshViewer->m_Resource_Folder_Full, "\\");
+				}
+				
+				//SetDlgItemText(hDlg, IDC_ST_CURRENTFOLDER, App->SBC_MeshViewer->mResource_Folder);
+				SetWindowText(hDlg, App->CL_MeshViewer->m_Resource_Folder_Full);
 
-	//			App->CL_MeshViewer->Delete_Resources_Group();
-	//			App->CL_MeshViewer->Add_Resources();
-	//			App->CL_MeshViewer->Get_Mesh_Files();
-	//			App->CL_MeshViewer->Show_Mesh(App->CL_MeshViewer->Selected_MeshFile);
-	//			
-	//			//App->CL_MeshViewer->GridNode->resetOrientation();
-	//		}
-	//		}
+				App->CL_MeshViewer->Delete_Resources_Group();
+				App->CL_MeshViewer->Add_Resources();
+				App->CL_MeshViewer->Get_Mesh_Files();
+				App->CL_MeshViewer->Show_Mesh(App->CL_MeshViewer->Selected_MeshFile);
+				
+				//App->CL_MeshViewer->GridNode->resetOrientation();
+			}
+			}
 
-	//		return TRUE;
-	//	}
+			return TRUE;
+		}
 
 	//	if (LOWORD(wParam) == IDC_BT_PROPERTIES)
 	//	{
@@ -538,27 +537,27 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 	//		return TRUE;
 	//	}
 	//	
-	//	if (LOWORD(wParam) == IDC_LISTFILES)
-	//	{
-	//		char buff[MAX_PATH] { 0 };
-	//		int Index = 0;
-	//		Index = SendDlgItemMessage(hDlg, IDC_LISTFILES, LB_GETCURSEL, (WPARAM)0, (LPARAM)0);
+		if (LOWORD(wParam) == IDC_LISTFILES)
+		{
+			char buff[MAX_PATH] { 0 };
+			int Index = 0;
+			Index = SendDlgItemMessage(hDlg, IDC_LISTFILES, LB_GETCURSEL, (WPARAM)0, (LPARAM)0);
 
-	//		if (Index == -1)
-	//		{
-	//			return 1;
-	//		}
+			if (Index == -1)
+			{
+				return 1;
+			}
 
-	//		SendDlgItemMessage(hDlg, IDC_LISTFILES, LB_GETTEXT, (WPARAM)Index, (LPARAM)buff);
-	//		SetDlgItemText(hDlg, IDC_SELECTEDNAME, buff);
+			SendDlgItemMessage(hDlg, IDC_LISTFILES, LB_GETTEXT, (WPARAM)Index, (LPARAM)buff);
+			//SetDlgItemText(hDlg, IDC_SELECTEDNAME, buff);
 
-	//		strcpy(App->CL_MeshViewer->Selected_MeshFile, buff);
+			strcpy(App->CL_MeshViewer->Selected_MeshFile, buff);
 
-	//		App->CL_MeshViewer->Show_Mesh(App->CL_MeshViewer->Selected_MeshFile);
+			App->CL_MeshViewer->Show_Mesh(App->CL_MeshViewer->Selected_MeshFile);
 
-	//		return TRUE;
+			return TRUE;
 
-	//	}
+		}
 
 	//	if (LOWORD(wParam) == IDC_MVSTATIC)
 	//	{
@@ -873,9 +872,9 @@ bool CL64_MeshViewer::Set_OgreWindow(void)
 
 	Ogre_MV_SceneMgr->setAmbientLight(ColourValue(0.7, 0.7, 0.7));
 
-	//RenderListener = new CL64_MeshView_Listener();
+	RenderListener = new CL64_MeshView_Listener();
 
-	//App->CL_Ogre->mRoot->addFrameListener(RenderListener);
+	App->CL_Ogre->mRoot->addFrameListener(RenderListener);
 
 	//Reset_Camera();
 
@@ -933,7 +932,7 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_3D(HWND hDlg, UINT message, WP
 		{
 			SetCapture(App->CL_MeshViewer->MeshViewer_3D_hWnd);// Bernie
 			SetCursorPos(App->CursorPosX, App->CursorPosY);
-			//App->CL_MeshViewer->RenderListener->flag_Pl_RightMouseDown = 1;
+			App->CL_MeshViewer->RenderListener->flag_Pl_RightMouseDown = 1;
 			App->CUR = SetCursor(NULL);
 			return 1;
 		}
@@ -945,7 +944,7 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_3D(HWND hDlg, UINT message, WP
 		if (App->flag_OgreStarted == 1)
 		{
 			ReleaseCapture();
-			//App->CL_MeshViewer->RenderListener->flag_Pl_RightMouseDown = 0;
+			App->CL_MeshViewer->RenderListener->flag_Pl_RightMouseDown = 0;
 			SetCursor(App->CUR);
 			return 1;
 		}
@@ -961,7 +960,7 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_3D(HWND hDlg, UINT message, WP
 			SetCapture(App->CL_MeshViewer->MeshViewer_3D_hWnd);// Bernie
 			SetCursorPos(App->CursorPosX, App->CursorPosY);
 
-			//App->CL_MeshViewer->RenderListener->flag_Pl_LeftMouseDown = 1;
+			App->CL_MeshViewer->RenderListener->flag_Pl_LeftMouseDown = 1;
 
 			App->CUR = SetCursor(NULL);
 
@@ -976,7 +975,7 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_3D(HWND hDlg, UINT message, WP
 		if (App->flag_OgreStarted == 1)
 		{
 			ReleaseCapture();
-			//App->CL_MeshViewer->RenderListener->flag_Pl_LeftMouseDown = 0;
+			App->CL_MeshViewer->RenderListener->flag_Pl_LeftMouseDown = 0;
 			SetCursor(App->CUR);
 			return 1;
 		}
@@ -1005,7 +1004,7 @@ bool CL64_MeshViewer::Add_Resources()
 	}
 
 	//App->CL_Resources->mSelected_Resource_Group = "MV_Resource_Group";
-	//flag_MV_Resource_Path_Loaded = 1;
+	flag_MV_Resource_Path_Loaded = 1;
 
 	return 1;
 }
@@ -1037,7 +1036,7 @@ void CL64_MeshViewer::Get_Stock_Folders(HWND DropHwnd)
 	WIN32_FIND_DATA FindFileData;
 	HANDLE hFind;
 
-	/*strcpy(Path, App->GD_Directory_FullPath);
+	strcpy(Path, App->RB_Directory_FullPath);
 	strcat(Path, "\\Stock\\*.*");
 
 	hFind = FindFirstFile(Path, &FindFileData);
@@ -1059,56 +1058,56 @@ void CL64_MeshViewer::Get_Stock_Folders(HWND DropHwnd)
 		} while (FindNextFile(hFind, &FindFileData));
 
 		FindClose(hFind);
-	}*/
+	}
 
 	// -------------------------------------------------- Colectables
-	//if (Mesh_Viewer_Mode == Enums::Mesh_Viewer_Collectables)
-	//{
-	//	strcpy(m_Just_Folder, "Collectables");
+	if (Mesh_Viewer_Mode == Enums::Mesh_Viewer_Collectables)
+	{
+		strcpy(m_Just_Folder, "Collectables");
 
-	//	strcpy(m_Resource_Folder_Full, App->GD_Directory_FullPath); // Full Path Stock Folders 
-	//	strcat(m_Resource_Folder_Full, "\\Stock\\");
-	//	strcat(m_Resource_Folder_Full, m_Just_Folder);
-	//	strcat(m_Resource_Folder_Full, "\\");
+		strcpy(m_Resource_Folder_Full, App->RB_Directory_FullPath); // Full Path Stock Folders 
+		strcat(m_Resource_Folder_Full, "\\Stock\\");
+		strcat(m_Resource_Folder_Full, m_Just_Folder);
+		strcat(m_Resource_Folder_Full, "\\");
 
-	//	SendMessage(DropHwnd, CB_SELECTSTRING, -1, (LPARAM)"Collectables");
+		SendMessage(DropHwnd, CB_SELECTSTRING, -1, (LPARAM)"Collectables");
 
-	//	return;
-	//}
+		return;
+	}
 
 	// -------------------------------------------------- Objects
-	//if (Mesh_Viewer_Mode == Enums::Mesh_Viewer_Objects)
-	//{
-	//	SendMessage(DropHwnd, CB_SETCURSEL, 0, 0);
+	if (Mesh_Viewer_Mode == Enums::Mesh_Viewer_Objects)
+	{
+		SendMessage(DropHwnd, CB_SETCURSEL, 0, 0);
 
-	//	int Index = SendMessage(DropHwnd, CB_GETCURSEL, 0, 0); // Default Project Assets
-	//	SendMessage(CB_hWnd, CB_GETLBTEXT, Index, (LPARAM)m_Just_Folder);
+		int Index = SendMessage(DropHwnd, CB_GETCURSEL, 0, 0); // Default Project Assets
+		SendMessage(CB_hWnd, CB_GETLBTEXT, Index, (LPARAM)m_Just_Folder);
 
-	//	int cmp = strcmp(m_Just_Folder, "Project_Assets");
-	//	if (cmp == 0)
-	//	{
-	//		strcpy(m_Resource_Folder_Full, App->CL_Project->m_Main_Assets_Path); // Projects Full Resource Path
-	//		return;
-	//	}
+		int cmp = strcmp(m_Just_Folder, "Project_Assets");
+		if (cmp == 0)
+		{
+			strcpy(m_Resource_Folder_Full, App->CL_Project->m_Main_Assets_Path); // Projects Full Resource Path
+			return;
+		}
 
-	//	strcpy(m_Resource_Folder_Full, App->GD_Directory_FullPath); // Full Path Stock Folders 
-	//	strcat(m_Resource_Folder_Full, "\\Stock\\");
-	//	strcat(m_Resource_Folder_Full, m_Just_Folder);
-	//	strcat(m_Resource_Folder_Full, "\\");
-	//}
+		strcpy(m_Resource_Folder_Full, App->RB_Directory_FullPath); // Full Path Stock Folders 
+		strcat(m_Resource_Folder_Full, "\\Stock\\");
+		strcat(m_Resource_Folder_Full, m_Just_Folder);
+		strcat(m_Resource_Folder_Full, "\\");
+	}
 
 	// -------------------------------------------------- Areas
-	//if (Mesh_Viewer_Mode == Enums::Mesh_Viewer_Area)
-	//{
-	//	strcpy(m_Just_Folder, "Areas");
-	//	strcpy(m_Resource_Folder_Full, App->GD_Directory_FullPath); // Full Path Stock Folders 
-	//	strcat(m_Resource_Folder_Full, "\\Stock\\");
-	//	strcat(m_Resource_Folder_Full, m_Just_Folder);
-	//	strcat(m_Resource_Folder_Full, "\\");
+	if (Mesh_Viewer_Mode == Enums::Mesh_Viewer_Area)
+	{
+		strcpy(m_Just_Folder, "Areas");
+		strcpy(m_Resource_Folder_Full, App->RB_Directory_FullPath); // Full Path Stock Folders 
+		strcat(m_Resource_Folder_Full, "\\Stock\\");
+		strcat(m_Resource_Folder_Full, m_Just_Folder);
+		strcat(m_Resource_Folder_Full, "\\");
 
-	//	SendMessage(DropHwnd, CB_SELECTSTRING, -1, (LPARAM)"Areas");
+		SendMessage(DropHwnd, CB_SELECTSTRING, -1, (LPARAM)"Areas");
 
-	//}
+	}
 	
 }
 
@@ -1152,7 +1151,7 @@ void CL64_MeshViewer::Get_Mesh_Files()
 	}
 
 	char buff[MAX_PATH]{ 0 };
-	//SendDlgItemMessage(MainDlgHwnd, IDC_LISTFILES, LB_GETTEXT, (WPARAM)0, (LPARAM)buff);
+	SendDlgItemMessage(MainDlgHwnd, IDC_LISTFILES, LB_GETTEXT, (WPARAM)0, (LPARAM)buff);
 	//SetDlgItemText(MainDlgHwnd, IDC_SELECTEDNAME, buff);
 
 	strcpy(Selected_MeshFile, buff);

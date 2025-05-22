@@ -24,7 +24,7 @@ THE SOFTWARE.
 
 #pragma once
 
-//#include "CL64_MeshView_Listener.h"
+#include "CL64_MeshView_Listener.h"
 
 
 class CL64_MeshViewer
@@ -145,7 +145,7 @@ private:
 	bool flag_Selected_Shape_Cylinder;
 	bool flag_Selected_Shape_Cone;
 
-	//CL64_MeshView_Listener* RenderListener;
+	CL64_MeshView_Listener* RenderListener;
 
 	btRigidBody* Ogre_MV_Phys_Body;
 	btCollisionShape* Ogre_MV_Phys_Shape;

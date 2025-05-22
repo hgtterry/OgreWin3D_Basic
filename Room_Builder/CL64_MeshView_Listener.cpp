@@ -157,61 +157,64 @@ void CL64_MeshView_Listener::MoveCamera(void)
 // *************************************************************************
 bool CL64_MeshView_Listener::Capture_LeftMouse_Model(void)
 {
-	GetCursorPos(&Pl_pt);
-
-	Pl_MouseX = (int(Pl_pt.x));
-	Pl_MouseY = (int(Pl_pt.y));
-
-	//// Left Right
-	if (Pl_MouseX < Pl_Cent500X)
+	if (App->CL_MeshViewer->MV_btDebug_Node && App->CL_MeshViewer->Ogre_MvNode)
 	{
-		long test = Pl_Cent500X - Pl_MouseX; // Positive
+		GetCursorPos(&Pl_pt);
 
-		if (test > 2)
+		Pl_MouseX = (int(Pl_pt.x));
+		Pl_MouseY = (int(Pl_pt.y));
+
+		//// Left Right
+		if (Pl_MouseX < Pl_Cent500X)
 		{
-			Pl_DeltaMouse = float(Pl_Cent500X - Pl_MouseX);
-			App->CL_MeshViewer->MV_btDebug_Node->yaw(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
-			App->CL_MeshViewer->Ogre_MvNode->yaw(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
-			SetCursorPos(App->CursorPosX, App->CursorPosY);
+			long test = Pl_Cent500X - Pl_MouseX; // Positive
+
+			if (test > 2)
+			{
+				Pl_DeltaMouse = float(Pl_Cent500X - Pl_MouseX);
+				App->CL_MeshViewer->MV_btDebug_Node->yaw(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
+				App->CL_MeshViewer->Ogre_MvNode->yaw(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
+				SetCursorPos(App->CursorPosX, App->CursorPosY);
+			}
 		}
-	}
-	else if (Pl_MouseX > Pl_Cent500X)
-	{
-		long test = Pl_MouseX - Pl_Cent500X; // Positive
-
-		if (test > 2)
+		else if (Pl_MouseX > Pl_Cent500X)
 		{
-			Pl_DeltaMouse = float(Pl_MouseX - Pl_Cent500X);
-			App->CL_MeshViewer->MV_btDebug_Node->yaw(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
-			App->CL_MeshViewer->Ogre_MvNode->yaw(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
+			long test = Pl_MouseX - Pl_Cent500X; // Positive
 
-			SetCursorPos(App->CursorPosX, App->CursorPosY);
+			if (test > 2)
+			{
+				Pl_DeltaMouse = float(Pl_MouseX - Pl_Cent500X);
+				App->CL_MeshViewer->MV_btDebug_Node->yaw(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
+				App->CL_MeshViewer->Ogre_MvNode->yaw(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
+
+				SetCursorPos(App->CursorPosX, App->CursorPosY);
+			}
 		}
-	}
 
-	// Up Down
-	if (Pl_MouseY < Pl_Cent500Y)
-	{
-		long test = Pl_Cent500Y - Pl_MouseY; // Positive
-
-		if (test > 2)
+		// Up Down
+		if (Pl_MouseY < Pl_Cent500Y)
 		{
-			Pl_DeltaMouse = float(Pl_Cent500Y - Pl_MouseY);
-			App->CL_MeshViewer->MV_btDebug_Node->pitch(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
-			App->CL_MeshViewer->Ogre_MvNode->pitch(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
-			SetCursorPos(App->CursorPosX, App->CursorPosY);
+			long test = Pl_Cent500Y - Pl_MouseY; // Positive
+
+			if (test > 2)
+			{
+				Pl_DeltaMouse = float(Pl_Cent500Y - Pl_MouseY);
+				App->CL_MeshViewer->MV_btDebug_Node->pitch(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
+				App->CL_MeshViewer->Ogre_MvNode->pitch(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
+				SetCursorPos(App->CursorPosX, App->CursorPosY);
+			}
 		}
-	}
-	else if (Pl_MouseY > Pl_Cent500Y)
-	{
-		long test = Pl_MouseY - Pl_Cent500Y; // Positive
-
-		if (test > 2)
+		else if (Pl_MouseY > Pl_Cent500Y)
 		{
-			Pl_DeltaMouse = float(Pl_MouseY - Pl_Cent500Y);
-			App->CL_MeshViewer->MV_btDebug_Node->pitch(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
-			App->CL_MeshViewer->Ogre_MvNode->pitch(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
-			SetCursorPos(App->CursorPosX, App->CursorPosY);
+			long test = Pl_MouseY - Pl_Cent500Y; // Positive
+
+			if (test > 2)
+			{
+				Pl_DeltaMouse = float(Pl_MouseY - Pl_Cent500Y);
+				App->CL_MeshViewer->MV_btDebug_Node->pitch(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
+				App->CL_MeshViewer->Ogre_MvNode->pitch(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
+				SetCursorPos(App->CursorPosX, App->CursorPosY);
+			}
 		}
 	}
 
