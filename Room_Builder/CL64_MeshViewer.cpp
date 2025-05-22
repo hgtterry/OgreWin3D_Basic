@@ -131,13 +131,13 @@ void CL64_MeshViewer::Start_MeshViewer_Dlg()
 	App->CL_Panels->Disable_Panels(true);
 	App->CL_Ogre->Ogre3D_Listener->flag_Block_Mouse = 1;
 	App->CL_ImGui_Dialogs->flag_Disable_Physics_Console = 1;
-	App->CL_Keyboard->flag_Block_Keyboard = 1;
+	App->CL_Keyboard->flag_Block_Keyboard = 1;*/
 
 	Reset_Data();
 
-	App->CL_Ogre->RenderFrame(1);*/
+	App->CL_Ogre->RenderFrame(1);
 
-	//CreateDialog(App->hInst, (LPCTSTR)IDD_MESHVIEWER, App->Fdlg, (DLGPROC)Proc_MeshViewer_Dlg);
+	CreateDialog(App->hInst, (LPCTSTR)IDD_MESHVIEWER, App->MainHwnd, (DLGPROC)Proc_MeshViewer_Dlg);
 	
 }
 
@@ -176,12 +176,12 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 		//
 		//SendDlgItemMessage(hDlg, IDC_OBJECTNAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
-		//App->CL_MeshViewer->MainDlgHwnd = hDlg;
+		App->CL_MeshViewer->MainDlgHwnd = hDlg;
 		//App->CL_MeshViewer->ListHwnd = GetDlgItem(hDlg, IDC_LISTFILES);
 		//App->CL_MeshViewer->CB_hWnd = GetDlgItem(hDlg, IDC_CB_FOLDERS);
 
-		//App->CL_MeshViewer->MeshViewer_3D_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MESHVIEWER_3D, hDlg, (DLGPROC)Proc_MeshViewer_3D);
-		//App->CL_MeshViewer->Set_OgreWindow();
+		App->CL_MeshViewer->MeshViewer_3D_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MESHVIEWER_3D, hDlg, (DLGPROC)Proc_MeshViewer_3D);
+		App->CL_MeshViewer->Set_OgreWindow();
 		//App->CL_Ogre->Log_Message_To_File((LPSTR)"MeshVierer Ogre Started");
 
 		//if (App->CL_MeshViewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Area)
@@ -682,8 +682,8 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 	//		return TRUE;
 	//	}
 
-	//	if (LOWORD(wParam) == IDOK)
-	//	{
+	if (LOWORD(wParam) == IDOK)
+	{
 	//		if (App->CL_MeshViewer->Physics_Type == Enums::Bullet_Type_TriMesh)
 	//		{
 
@@ -735,27 +735,28 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 	//		App->CL_Keyboard->flag_Block_Keyboard = 0;
 	//		
 
-	//		EndDialog(hDlg, LOWORD(wParam));
-	//		return TRUE;
-	//	}
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
 
-	//	if (LOWORD(wParam) == IDCANCEL)
-	//	{
-	//		App->CL_MeshViewer->Close_OgreWindow();
-	//		App->CL_MeshViewer->Delete_Resources_Group();
+	if (LOWORD(wParam) == IDCANCEL)
+	{
+		//		App->CL_MeshViewer->Close_OgreWindow();
+		//		App->CL_MeshViewer->Delete_Resources_Group();
 
-	//		App->CL_MeshViewer->Clear_Type_Buttons();
+		//		App->CL_MeshViewer->Clear_Type_Buttons();
 
-	//		App->CL_MeshViewer->flag_MeshViewer_Running = 0;
+		//		App->CL_MeshViewer->flag_MeshViewer_Running = 0;
 
-	//		App->CL_Panels->Disable_Panels(false);
-	//		App->CL_ImGui_Dialogs->flag_Disable_Physics_Console = 0;
-	//		App->CL_Ogre->Ogre3D_Listener->flag_Block_Mouse = 0;
-	//		App->CL_Keyboard->flag_Block_Keyboard = 0;
+		//		App->CL_Panels->Disable_Panels(false);
+		//		App->CL_ImGui_Dialogs->flag_Disable_Physics_Console = 0;
+		//		App->CL_Ogre->Ogre3D_Listener->flag_Block_Mouse = 0;
+		//		App->CL_Keyboard->flag_Block_Keyboard = 0;
 
-	//		EndDialog(hDlg, LOWORD(wParam));
-	//		return TRUE;
-	//	}
+		EndDialog(hDlg, LOWORD(wParam));
+		return TRUE;
+	}
+	
 
 		break;
 	}

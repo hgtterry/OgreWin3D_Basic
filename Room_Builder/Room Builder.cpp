@@ -173,6 +173,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			case ID_DEBUG_GENERAL:
 			{ 
                
+                App->CL_MeshViewer->Start_MeshViewer_Dlg();
                 //Debug;
                 //App->CL_Editor_Com->B_Object[0]->Create_Brush();
 

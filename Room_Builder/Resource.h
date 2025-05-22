@@ -77,6 +77,9 @@
 #define IDD_PROPERTIES_SCENE            189
 #define IDD_YESNOCANCEL                 190
 #define IDD_PROPS_DIMENSIONS            191
+#define IDD_MESHVIEWER                  192
+#define IDD_DIALOG1                     193
+#define IDD_MESHVIEWER_3D               193
 #define IDC_BANNER                      1000
 #define IDC_STTEXT                      1001
 #define IDC_STMESSAGE                   1002
@@ -484,7 +487,7 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
-#define _APS_NEXT_RESOURCE_VALUE        192
+#define _APS_NEXT_RESOURCE_VALUE        194
 #define _APS_NEXT_COMMAND_VALUE         32826
 #define _APS_NEXT_CONTROL_VALUE         1309
 #define _APS_NEXT_SYMED_VALUE           110
