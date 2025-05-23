@@ -662,6 +662,47 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 
 	//	return;
 	//}
+	// 
+	// 
+	// ---- Objects
+	if (!strcmp(FileView_Folder, "Objects")) // Folder
+	{
+		Context_Selection = Enums::FileView_Objects_Folder;
+		return;
+	}
+	if (!strcmp(FileView_File, "Objects"))
+	{
+		Context_Selection = Enums::FileView_Objects_File;
+
+		HideRightPanes();
+		App->CL_Props_Dialogs->Show_Details_Goto_Dlg(true);
+
+		App->CL_Props_Dialogs->Show_Dimensions_Dlg(1);
+		App->CL_Props_Dialogs->Hide_Debug_Dlg(1);
+		App->CL_Props_Dialogs->Show_Materials_Dlg(true);
+
+		//----------------------------------------------------------------------------
+		/*App->SBC_Properties->Reset_Last_Selected_Object(App->SBC_Properties->Last_Selected_Object);
+		App->SBC_Properties->Last_Selected_Object = Index;*/
+		//----------------------------------------------------------------------------
+
+		App->CL_Gizmos->MarkerBox_Addjust(Index);
+
+		App->CL_Properties_Scene->Current_Selected_Object = Index;
+		App->CL_Properties_Scene->Edit_Category = Enums::Edit_Object;
+		//App->CL_LookUps->Update_Types();
+
+		ShowWindow(App->CL_Properties_Scene->Properties_Dlg_hWnd, 1);
+		//App->CL_Properties_Scene->Update_ListView_Objects();
+
+
+		//if (App->SBC_Dimensions->Show_Dimensions == 1)
+		//{
+		//	App->SBC_Dimensions->Prepare_Dimensions();
+		//}
+
+		return;
+	}
 
 	// ------------------------------------------------------------ Eviron_Entities
 	if (!strcmp(FileView_Folder, "Evironments")) // Folder
@@ -1060,6 +1101,21 @@ void CL64_FileView::Context_New(HWND hDlg)
 
 		return;
 	}*/
+
+	// Objects
+	if (App->CL_FileView->Context_Selection == Enums::FileView_Objects_Folder)
+	{
+		App->CL_Dialogs->YesNo((LPSTR)"Add Object", (LPSTR)"Do you want to add a new Object Entity");
+
+		bool Doit = App->CL_Dialogs->flag_Dlg_Canceled;
+		if (Doit == 0)
+		{
+			App->CL_MeshViewer->Mesh_Viewer_Mode = Enums::Mesh_Viewer_Objects;
+			App->CL_MeshViewer->Start_MeshViewer_Dlg();
+		}
+
+		return;
+	}
 
 	// Environment
 	if (App->CL_FileView->Context_Selection == Enums::FileView_EnvironEntity_Folder)

@@ -2094,7 +2094,7 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_Mesh_Properties(HWND hDlg, UINT message, 
 	case WM_INITDIALOG:
 	{
 		SendDlgItemMessage(hDlg, IDC_LST_GENERAL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		HWND List = GetDlgItem(hDlg, IDC_LST_GENERAL);
 		ListView_DeleteAllItems(List);
@@ -2140,7 +2140,7 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_Mesh_Properties(HWND hDlg, UINT message, 
 		LPNMHDR some_item = (LPNMHDR)lParam;
 
 
-		if (some_item->idFrom == IDOK)
+		if (some_item->idFrom == IDCANCEL)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
