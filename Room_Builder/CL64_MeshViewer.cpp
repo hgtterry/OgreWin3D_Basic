@@ -557,27 +557,27 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 
 		}
 
-	//	if (LOWORD(wParam) == IDC_MVSTATIC)
-	//	{
-	//		/*if (App->CL_MeshViewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Collectables)
-	//		{
-	//			return 1;
-	//		}*/
+		if (LOWORD(wParam) == IDC_MVSTATIC)
+		{
+			if (App->CL_MeshViewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Collectables)
+			{
+				return 1;
+			}
 
-	//		App->CL_MeshViewer->Physics_Type = Enums::Bullet_Type_Static;
-	//		App->CL_MeshViewer->Physics_Shape = Enums::Shape_None;
-	//		App->CL_MeshViewer->flag_SelectStatic = 1;
-	//		App->CL_MeshViewer->flag_SelectDynamic = 0;
-	//		App->CL_MeshViewer->flag_SelectTriMesh = 0;
+			App->CL_MeshViewer->Physics_Type = Enums::Bullet_Type_Static;
+			App->CL_MeshViewer->Physics_Shape = Enums::Shape_None;
+			App->CL_MeshViewer->flag_SelectStatic = 1;
+			App->CL_MeshViewer->flag_SelectDynamic = 0;
+			App->CL_MeshViewer->flag_SelectTriMesh = 0;
 
-	//		App->CL_MeshViewer->Enable_ShapeButtons(true);
+			App->CL_MeshViewer->Enable_ShapeButtons(true);
 
-	//		RedrawWindow(App->CL_MeshViewer->MainDlgHwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			RedrawWindow(App->CL_MeshViewer->MainDlgHwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
-	//		App->CL_MeshViewer->Show_Physics_None();
+			App->CL_MeshViewer->Show_Physics_None();
 
-	//		return 1;
-	//	}
+			return 1;
+		}
 
 	//	if (LOWORD(wParam) == IDC_DYNAMIC)
 	//	{
@@ -614,18 +614,18 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 	//		return 1;
 	//	}
 
-	//	if (LOWORD(wParam) == IDC_BOX)
-	//	{
-	//		App->CL_MeshViewer->Clear_Shape_Buttons();
-	//		App->CL_MeshViewer->flag_Selected_Shape_Box = 1;
-	//		RedrawWindow(App->CL_MeshViewer->MainDlgHwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+		if (LOWORD(wParam) == IDC_BOX)
+		{
+			App->CL_MeshViewer->Clear_Shape_Buttons();
+			App->CL_MeshViewer->flag_Selected_Shape_Box = 1;
+			RedrawWindow(App->CL_MeshViewer->MainDlgHwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
-	//		App->CL_MeshViewer->Physics_Shape = Enums::Shape_Box;
+			App->CL_MeshViewer->Physics_Shape = Enums::Shape_Box;
 
-	//		App->CL_MeshViewer->Show_Physics_Box();
+			App->CL_MeshViewer->Show_Physics_Box();
 
-	//		return TRUE;
-	//	}
+			return TRUE;
+		}
 
 	//	if (LOWORD(wParam) == IDC_SPHERE)
 	//	{
@@ -1391,7 +1391,7 @@ void CL64_MeshViewer::Show_Physics_Box()
 
 	if (Ogre_MV_Phys_Body)
 	{
-		//App->CL_Bullet->dynamicsWorld->removeCollisionObject(Ogre_MV_Phys_Body);
+		App->CL_Physics->dynamicsWorld->removeCollisionObject(Ogre_MV_Phys_Body);
 		Ogre_MV_Phys_Body = nullptr;
 	}
 
@@ -1429,7 +1429,7 @@ void CL64_MeshViewer::Show_Physics_Box()
 	Ogre_MV_Phys_Body->setUserPointer(Ogre_MvNode);
 	Ogre_MV_Phys_Body->setWorldTransform(startTransform);
 
-	//App->CL_Bullet->dynamicsWorld->addRigidBody(Ogre_MV_Phys_Body);
+	App->CL_Physics->dynamicsWorld->addRigidBody(Ogre_MV_Phys_Body);
 
 	Set_Physics();
 }
