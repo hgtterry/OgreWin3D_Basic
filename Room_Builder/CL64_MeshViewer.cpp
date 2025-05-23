@@ -155,20 +155,20 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_CB_FOLDERS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_LISTFILES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		//SendDlgItemMessage(hDlg, IDC_SELECTEDNAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_SELECTEDNAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
-		//SendDlgItemMessage(hDlg, IDC_BOX, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		//SendDlgItemMessage(hDlg, IDC_MVSTATIC, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		//SendDlgItemMessage(hDlg, IDC_DYNAMIC, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		//SendDlgItemMessage(hDlg, IDC_TRIMESH, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		//SendDlgItemMessage(hDlg, IDC_SPHERE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		//SendDlgItemMessage(hDlg, IDC_CAPSULE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		//SendDlgItemMessage(hDlg, IDC_CYLINDER, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		//SendDlgItemMessage(hDlg, IDC_CONE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BOX, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_MVSTATIC, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_DYNAMIC, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_TRIMESH, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_SPHERE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_CAPSULE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_CYLINDER, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_CONE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
-		//SendDlgItemMessage(hDlg, IDC_STSHAPE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		//SendDlgItemMessage(hDlg, IDC_STTYPE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		//SendDlgItemMessage(hDlg, IDC_STFOLDER, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_STSHAPE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_STTYPE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_STFOLDER, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		//SendDlgItemMessage(hDlg, IDC_STNAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		SendDlgItemMessage(hDlg, IDC_BT_PROPERTIES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
@@ -242,7 +242,7 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 
 	case WM_CTLCOLORSTATIC:
 	{
-		/*if (GetDlgItem(hDlg, IDC_SELECTEDNAME) == (HWND)lParam)
+		if (GetDlgItem(hDlg, IDC_SELECTEDNAME) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 255, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
@@ -282,7 +282,7 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 			return (UINT)App->AppBackground;
 		}
 
-		if (GetDlgItem(hDlg, IDC_OBJECTNAME) == (HWND)lParam)
+		/*if (GetDlgItem(hDlg, IDC_OBJECTNAME) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 255, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
@@ -312,141 +312,141 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 			return CDRF_DODEFAULT;
 		}
 		
-		//if (some_item->idFrom == IDC_MVSTATIC)
-		//{
-		//	LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-		//	App->Custom_Button_Toggle(item, App->CL_MeshViewer->flag_SelectStatic);
-		//	return CDRF_DODEFAULT;
-		//}
+		if (some_item->idFrom == IDC_MVSTATIC)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->CL_MeshViewer->flag_SelectStatic);
+			return CDRF_DODEFAULT;
+		}
 
-		//if (some_item->idFrom == IDC_DYNAMIC)
-		//{
-		//	LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-		//	App->Custom_Button_Toggle(item, App->CL_MeshViewer->flag_SelectDynamic);
-		//	return CDRF_DODEFAULT;
-		//}
+		if (some_item->idFrom == IDC_DYNAMIC)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->CL_MeshViewer->flag_SelectDynamic);
+			return CDRF_DODEFAULT;
+		}
 
-		//if (some_item->idFrom == IDC_TRIMESH)
-		//{
-		//	LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-		//	App->Custom_Button_Toggle(item, App->CL_MeshViewer->flag_SelectTriMesh);
-		//	return CDRF_DODEFAULT;
-		//}
+		if (some_item->idFrom == IDC_TRIMESH)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->CL_MeshViewer->flag_SelectTriMesh);
+			return CDRF_DODEFAULT;
+		}
 
 
-		//if (some_item->idFrom == IDC_JUSTOGRE)
-		//{
-		//	LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+		if (some_item->idFrom == IDC_JUSTOGRE)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 
-		//	bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_JUSTOGRE));
-		//	if (test == 0)
-		//	{
-		//		App->Custom_Button_Greyed(item);
-		//	}
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_JUSTOGRE));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
 
-		//	//App->Custom_Button_Toggle(item, App->CL_MeshViewer->flag_SelectTriMesh);
-		//	return CDRF_DODEFAULT;
-		//}
+			//App->Custom_Button_Toggle(item, App->CL_MeshViewer->flag_SelectTriMesh);
+			return CDRF_DODEFAULT;
+		}
 
-		//if (some_item->idFrom == IDC_TEST)
-		//{
-		//	LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+		if (some_item->idFrom == IDC_TEST)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 
-		//	bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_TEST));
-		//	if (test == 0)
-		//	{
-		//		App->Custom_Button_Greyed(item);
-		//	}
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_TEST));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
 
-		//	//App->Custom_Button_Toggle(item, App->CL_MeshViewer->flag_SelectTriMesh);
-		//	return CDRF_DODEFAULT;
-		//}
+			//App->Custom_Button_Toggle(item, App->CL_MeshViewer->flag_SelectTriMesh);
+			return CDRF_DODEFAULT;
+		}
 
-		//// ---------------------------------------------------------------------
-		//if (some_item->idFrom == IDC_BOX)
-		//{
-		//	LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+		// ---------------------------------------------------------------------
+		if (some_item->idFrom == IDC_BOX)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 
-		//	bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BOX));
-		//	if (test == 0)
-		//	{
-		//		App->Custom_Button_Greyed(item);
-		//	}
-		//	else
-		//	{
-		//		App->Custom_Button_Toggle(item, App->CL_MeshViewer->flag_Selected_Shape_Box);
-		//	}
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BOX));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
+			else
+			{
+				App->Custom_Button_Toggle(item, App->CL_MeshViewer->flag_Selected_Shape_Box);
+			}
 
-		//	return CDRF_DODEFAULT;
-		//}
+			return CDRF_DODEFAULT;
+		}
 
-		//if (some_item->idFrom == IDC_SPHERE)
-		//{
-		//	LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+		if (some_item->idFrom == IDC_SPHERE)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 
-		//	bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_SPHERE));
-		//	if (test == 0)
-		//	{
-		//		App->Custom_Button_Greyed(item);
-		//	}
-		//	else
-		//	{
-		//		App->Custom_Button_Toggle(item, App->CL_MeshViewer->flag_Selected_Shape_Sphere);
-		//	}
-		//	
-		//	return CDRF_DODEFAULT;
-		//}
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_SPHERE));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
+			else
+			{
+				App->Custom_Button_Toggle(item, App->CL_MeshViewer->flag_Selected_Shape_Sphere);
+			}
+			
+			return CDRF_DODEFAULT;
+		}
 
-		//if (some_item->idFrom == IDC_CAPSULE)
-		//{
-		//	LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+		if (some_item->idFrom == IDC_CAPSULE)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 
-		//	bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_CAPSULE));
-		//	if (test == 0)
-		//	{
-		//		App->Custom_Button_Greyed(item);
-		//	}
-		//	else
-		//	{
-		//		App->Custom_Button_Toggle(item, App->CL_MeshViewer->flag_Selected_Shape_Capsule);
-		//	}
-		//	
-		//	return CDRF_DODEFAULT;
-		//}
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_CAPSULE));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
+			else
+			{
+				App->Custom_Button_Toggle(item, App->CL_MeshViewer->flag_Selected_Shape_Capsule);
+			}
+			
+			return CDRF_DODEFAULT;
+		}
 
-		//if (some_item->idFrom == IDC_CYLINDER)
-		//{
-		//	LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+		if (some_item->idFrom == IDC_CYLINDER)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 
-		//	bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_CYLINDER));
-		//	if (test == 0)
-		//	{
-		//		App->Custom_Button_Greyed(item);
-		//	}
-		//	else
-		//	{
-		//		App->Custom_Button_Toggle(item, App->CL_MeshViewer->flag_Selected_Shape_Cylinder);
-		//	}
-		//	
-		//	return CDRF_DODEFAULT;
-		//}
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_CYLINDER));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
+			else
+			{
+				App->Custom_Button_Toggle(item, App->CL_MeshViewer->flag_Selected_Shape_Cylinder);
+			}
+			
+			return CDRF_DODEFAULT;
+		}
 
-		//if (some_item->idFrom == IDC_CONE)
-		//{
-		//	LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+		if (some_item->idFrom == IDC_CONE)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 
-		//	bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_CONE));
-		//	if (test == 0)
-		//	{
-		//		App->Custom_Button_Greyed(item);
-		//	}
-		//	else
-		//	{
-		//		App->Custom_Button_Toggle(item, App->CL_MeshViewer->flag_Selected_Shape_Cone);
-		//	}
-		//	
-		//	return CDRF_DODEFAULT;
-		//}
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_CONE));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
+			else
+			{
+				App->Custom_Button_Toggle(item, App->CL_MeshViewer->flag_Selected_Shape_Cone);
+			}
+			
+			return CDRF_DODEFAULT;
+		}
 
 		if (some_item->idFrom == IDOK)
 		{
@@ -549,7 +549,7 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 			}
 
 			SendDlgItemMessage(hDlg, IDC_LISTFILES, LB_GETTEXT, (WPARAM)Index, (LPARAM)buff);
-			//SetDlgItemText(hDlg, IDC_SELECTEDNAME, buff);
+			SetDlgItemText(hDlg, IDC_SELECTEDNAME, buff);
 
 			strcpy(App->CL_MeshViewer->Selected_MeshFile, buff);
 
@@ -1151,7 +1151,7 @@ void CL64_MeshViewer::Get_Mesh_Files()
 
 	char buff[MAX_PATH]{ 0 };
 	SendDlgItemMessage(MainDlgHwnd, IDC_LISTFILES, LB_GETTEXT, (WPARAM)0, (LPARAM)buff);
-	//SetDlgItemText(MainDlgHwnd, IDC_SELECTEDNAME, buff);
+	SetDlgItemText(MainDlgHwnd, IDC_SELECTEDNAME, buff);
 
 	strcpy(Selected_MeshFile, buff);
 

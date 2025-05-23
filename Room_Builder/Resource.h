@@ -426,8 +426,21 @@
 #define IDC_LISTFILES                   1309
 #define IDC_CB_FOLDERS                  1310
 #define IDC_BT_PROPERTIES               1311
-#define IDC_BT_PROPERTIES2              1312
 #define IDC_BT_MV_RESOURCES             1312
+#define IDC_SELECTEDNAME                1313
+#define IDC_STFOLDER                    1314
+#define IDC_MVSTATIC                    1315
+#define IDC_DYNAMIC                     1316
+#define IDC_TRIMESH                     1317
+#define IDC_BOX                         1318
+#define IDC_SPHERE                      1319
+#define IDC_CAPSULE                     1320
+#define IDC_JUSTOGRE                    1321
+#define IDC_CYLINDER                    1322
+#define IDC_TEST                        1323
+#define IDC_BUTTON11                    1324
+#define IDC_CONE                        1324
+#define IDC_STTYPE                      1325
 #define ID_DEBUG_GENERAL                32771
 #define ID_TEMPLATES_INSERT             32772
 #define ID_BRUSH_SELECT                 32773
@@ -493,7 +506,7 @@
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        194
 #define _APS_NEXT_COMMAND_VALUE         32826
-#define _APS_NEXT_CONTROL_VALUE         1312
+#define _APS_NEXT_CONTROL_VALUE         1326
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif
