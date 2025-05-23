@@ -78,7 +78,7 @@ CL64_MeshViewer::CL64_MeshViewer(void)
 	m_Resource_Folder_Full[0] = 0;
 	Selected_MeshFile[0] = 0;
 
-	Mesh_Viewer_Mode = 0; // 0 = Defaulet Objects 1 = Collectables
+	Mesh_Viewer_Mode = Enums::Mesh_Viewer_Area;// 0; // 0 = Defaulet Objects 1 = Collectables
 
 	Physics_Shape = Enums::Shape_None;
 	Physics_Type = Enums::Bullet_Type_None;
@@ -169,12 +169,12 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 		SendDlgItemMessage(hDlg, IDC_STSHAPE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_STTYPE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_STFOLDER, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		//SendDlgItemMessage(hDlg, IDC_STNAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_STNAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		SendDlgItemMessage(hDlg, IDC_BT_PROPERTIES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_MV_RESOURCES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		//
-		//SendDlgItemMessage(hDlg, IDC_OBJECTNAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_OBJECTNAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		App->CL_MeshViewer->MainDlgHwnd = hDlg;
 		App->CL_MeshViewer->ListHwnd = GetDlgItem(hDlg, IDC_LISTFILES);
@@ -183,24 +183,24 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 		App->CL_MeshViewer->MeshViewer_3D_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MESHVIEWER_3D, hDlg, (DLGPROC)Proc_MeshViewer_3D);
 		App->CL_MeshViewer->Set_OgreWindow();
 		
-		//if (App->CL_MeshViewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Area)
-		//{
-		//	App->CL_MeshViewer->Set_For_Areas(hDlg);
+		if (App->CL_MeshViewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Area)
+		{
+			App->CL_MeshViewer->Set_For_Areas(hDlg);
 
-		//	strcpy(App->CL_MeshViewer->Selected_MeshFile, "Indoor.mesh");
-		//	strcpy(App->CL_MeshViewer->m_Just_Folder, "Areas");
-		//	strcpy(App->CL_MeshViewer->m_Resource_Folder_Full, App->GD_Directory_FullPath); // Full Path Stock Folders 
-		//	strcat(App->CL_MeshViewer->m_Resource_Folder_Full, "\\Stock\\");
-		//	strcat(App->CL_MeshViewer->m_Resource_Folder_Full, App->CL_MeshViewer->m_Just_Folder);
-		//	strcat(App->CL_MeshViewer->m_Resource_Folder_Full, "\\");
-		//	App->CL_MeshViewer->Add_Resources();
-		//	App->CL_MeshViewer->Get_Mesh_Files();
-		//	App->CL_Ogre->Log_Message_To_File((LPSTR)"Area Get_Mesh_Files");
-		//	App->CL_MeshViewer->Show_Mesh(App->CL_MeshViewer->Selected_MeshFile);
-		//	App->CL_Ogre->Log_Message_To_File((LPSTR)"Area Show Mesh");
-		//	App->CL_MeshViewer->Get_Stock_Folders(App->CL_MeshViewer->CB_hWnd);
-		//}
-		//else
+			strcpy(App->CL_MeshViewer->Selected_MeshFile, "Indoor.mesh");
+			strcpy(App->CL_MeshViewer->m_Just_Folder, "Areas");
+			strcpy(App->CL_MeshViewer->m_Resource_Folder_Full, App->RB_Directory_FullPath); // Full Path Stock Folders 
+			strcat(App->CL_MeshViewer->m_Resource_Folder_Full, "\\Stock\\");
+			strcat(App->CL_MeshViewer->m_Resource_Folder_Full, App->CL_MeshViewer->m_Just_Folder);
+			strcat(App->CL_MeshViewer->m_Resource_Folder_Full, "\\");
+			App->CL_MeshViewer->Add_Resources();
+			App->CL_MeshViewer->Get_Mesh_Files();
+			App->CL_Ogre->Log_Message_To_File((LPSTR)"Area Get_Mesh_Files");
+			App->CL_MeshViewer->Show_Mesh(App->CL_MeshViewer->Selected_MeshFile);
+			App->CL_Ogre->Log_Message_To_File((LPSTR)"Area Show Mesh");
+			App->CL_MeshViewer->Get_Stock_Folders(App->CL_MeshViewer->CB_hWnd);
+		}
+		else
 		{
 			App->CL_MeshViewer->Get_Stock_Folders(App->CL_MeshViewer->CB_hWnd);
 			App->CL_MeshViewer->Add_Resources();
@@ -211,26 +211,24 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 			//App->CL_Ogre->Log_Message_To_File((LPSTR)"Show Mesh");
 		}
 
-		//SetWindowText(hDlg, App->CL_MeshViewer->m_Resource_Folder_Full);
+		SetWindowText(hDlg, App->CL_MeshViewer->m_Resource_Folder_Full);
 
-		//App->CL_MeshViewer->Enable_ShapeButtons(false);
+		App->CL_MeshViewer->Enable_ShapeButtons(false);
 
-		//if (App->CL_MeshViewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Objects)
-		//{
-		//	char ATest[MAX_PATH];
-		//	char ConNum[MAX_PATH];
+		if (App->CL_MeshViewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Objects)
+		{
+			char ATest[MAX_PATH];
+			char ConNum[MAX_PATH];
 
-		//	strcpy(ATest, "Object_");
-		//	_itoa(App->CL_Scene->Object_Count, ConNum, 10);
-		//	strcat(ATest, ConNum);
+			strcpy(ATest, "Object_");
+			_itoa(App->CL_Editor_Com->Object_Count, ConNum, 10);
+			strcat(ATest, ConNum);
 
-		//	SetDlgItemText(hDlg, IDC_OBJECTNAME, ATest);
-		//	strcpy(App->CL_MeshViewer->Object_Name, ATest);
-		//}
+			SetDlgItemText(hDlg, IDC_OBJECTNAME, ATest);
+			strcpy(App->CL_MeshViewer->Object_Name, ATest);
+		}
 
-		//
-
-		//App->CL_MeshViewer->flag_MeshViewer_Running = 1;
+		App->CL_MeshViewer->flag_MeshViewer_Running = 1;
 
 		return TRUE;
 	}
@@ -282,13 +280,13 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 			return (UINT)App->AppBackground;
 		}
 
-		/*if (GetDlgItem(hDlg, IDC_OBJECTNAME) == (HWND)lParam)
+		if (GetDlgItem(hDlg, IDC_OBJECTNAME) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 255, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->Brush_White;
-		}*/
+		}
 
 
 		return FALSE;
@@ -1077,12 +1075,12 @@ void CL64_MeshViewer::Get_Stock_Folders(HWND DropHwnd)
 	// -------------------------------------------------- Objects
 	if (Mesh_Viewer_Mode == Enums::Mesh_Viewer_Objects)
 	{
-		SendMessage(DropHwnd, CB_SETCURSEL, 0, 0);
+		SendMessage(DropHwnd, CB_SETCURSEL, 3, 0);
 
 		int Index = SendMessage(DropHwnd, CB_GETCURSEL, 0, 0); // Default Project Assets
 		SendMessage(CB_hWnd, CB_GETLBTEXT, Index, (LPARAM)m_Just_Folder);
 
-		int cmp = strcmp(m_Just_Folder, "Project_Assets");
+		int cmp = strcmp(m_Just_Folder, "Geometry");
 		if (cmp == 0)
 		{
 			strcpy(m_Resource_Folder_Full, App->CL_Project->m_Main_Assets_Path); // Projects Full Resource Path
@@ -1093,6 +1091,8 @@ void CL64_MeshViewer::Get_Stock_Folders(HWND DropHwnd)
 		strcat(m_Resource_Folder_Full, "\\Stock\\");
 		strcat(m_Resource_Folder_Full, m_Just_Folder);
 		strcat(m_Resource_Folder_Full, "\\");
+
+		SendMessage(DropHwnd, CB_SELECTSTRING, -1, (LPARAM)"Geometry");
 	}
 
 	// -------------------------------------------------- Areas
@@ -1700,11 +1700,11 @@ void CL64_MeshViewer::Set_Physics()
 // *************************************************************************
 void CL64_MeshViewer::Enable_ShapeButtons(bool state)
 {
-	/*EnableWindow(GetDlgItem(MainDlgHwnd, IDC_BOX), state);
+	EnableWindow(GetDlgItem(MainDlgHwnd, IDC_BOX), state);
 	EnableWindow(GetDlgItem(MainDlgHwnd, IDC_SPHERE), state);
 	EnableWindow(GetDlgItem(MainDlgHwnd, IDC_CAPSULE), state);
 	EnableWindow(GetDlgItem(MainDlgHwnd, IDC_CYLINDER), state);
-	EnableWindow(GetDlgItem(MainDlgHwnd, IDC_CONE), state);*/
+	EnableWindow(GetDlgItem(MainDlgHwnd, IDC_CONE), state);
 
 	flag_Selected_Shape_Box = 0;
 	flag_Selected_Shape_Sphere = 0;
