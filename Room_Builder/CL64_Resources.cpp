@@ -32,6 +32,7 @@ CL64_Resources::CL64_Resources()
 	FX_General_hLV = NULL;
 	Resource_Dlg_hWnd = NULL;
 
+	Project_Resource_Group = "Project_Resource_Group";
 	mSelected_Resource_Group = "App_Resource_Group";
 
 	Extension_Type = Enums::Resource_File_Type_None;
@@ -882,5 +883,57 @@ void CL64_Resources::Load_Texture_Resources()
 	Ogre::ResourceGroupManager::getSingleton().initialiseResourceGroup(App->CL_Ogre->Texture_Resource_Group);
 
 	App->CL_TXL_Editor->flag_Textures_Scanned = 1;
+}
+
+// *************************************************************************
+// *	Create_Project_Resources_Group:- Terry and Hazel Flanigan 2025	   *
+// *************************************************************************
+bool CL64_Resources::Create_Project_Resources_Group()
+{
+	// Check if the project resources have already been created
+	if (App->CL_Editor_Com->flag_Project_Resources_Created == false)
+	{
+		Ogre::ResourceGroupManager::getSingleton().createResourceGroup(Project_Resource_Group);
+		App->CL_Editor_Com->flag_Project_Resources_Created = true;
+	}
+
+	return true;
+}
+
+// *************************************************************************
+// *	Delete_Project_Resources_Group:- Terry and Hazel Flanigan 2025 	   *
+// *************************************************************************
+bool CL64_Resources::Delete_Project_Resources_Group()
+{
+	// Check if the project resources have already been created
+	if (App->CL_Editor_Com->flag_Project_Resources_Created)
+	{
+		Ogre::ResourceGroupManager::getSingleton().destroyResourceGroup(App->CL_Resources->Project_Resource_Group);
+		App->CL_Editor_Com->flag_Project_Resources_Created = false;
+		App->CL_Resources->mSelected_Resource_Group = "App_Resource_Group";
+	}
+
+	return true;
+}
+
+// *************************************************************************
+// *	Add_Resource_Location_Project:- Terry and Hazel Flanigan 2025	   *
+// *************************************************************************
+bool CL64_Resources::Add_Resource_Location_Project(char* Resource_Location)
+{
+	bool Test = Ogre::ResourceGroupManager::getSingleton().resourceLocationExists(Resource_Location, Project_Resource_Group);
+
+	if (Test == 0)
+	{
+		Ogre::ResourceGroupManager::getSingleton().addResourceLocation(Resource_Location, "FileSystem", Project_Resource_Group);
+		Ogre::ResourceGroupManager::getSingleton().clearResourceGroup(Project_Resource_Group);
+		Ogre::ResourceGroupManager::getSingleton().initialiseResourceGroup(Project_Resource_Group);
+	}
+
+	mSelected_Resource_Group = "Project_Resource_Group";
+
+	App->CL_Editor_Com->flag_Project_Resources_Created = true;
+
+	return true;
 }
 

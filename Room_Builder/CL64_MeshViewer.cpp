@@ -581,40 +581,40 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 			return 1;
 		}
 
-	//	if (LOWORD(wParam) == IDC_DYNAMIC)
-	//	{
-	//		App->CL_MeshViewer->Physics_Type = Enums::Bullet_Type_Dynamic;
-	//		App->CL_MeshViewer->Physics_Shape = Enums::Shape_None;
-	//		App->CL_MeshViewer->flag_SelectDynamic = 1;
-	//		App->CL_MeshViewer->flag_SelectStatic = 0;
-	//		App->CL_MeshViewer->flag_SelectTriMesh = 0;
+		if (LOWORD(wParam) == IDC_DYNAMIC)
+		{
+			App->CL_MeshViewer->Physics_Type = Enums::Bullet_Type_Dynamic;
+			App->CL_MeshViewer->Physics_Shape = Enums::Shape_None;
+			App->CL_MeshViewer->flag_SelectDynamic = 1;
+			App->CL_MeshViewer->flag_SelectStatic = 0;
+			App->CL_MeshViewer->flag_SelectTriMesh = 0;
 
-	//		App->CL_MeshViewer->Enable_ShapeButtons(true);
+			App->CL_MeshViewer->Enable_ShapeButtons(true);
 
-	//		RedrawWindow(App->CL_MeshViewer->MainDlgHwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			RedrawWindow(App->CL_MeshViewer->MainDlgHwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
-	//		App->CL_MeshViewer->Show_Physics_None();
+			App->CL_MeshViewer->Show_Physics_None();
 
-	//		return 1;
-	//	}
+			return 1;
+		}
 
-	//	if (LOWORD(wParam) == IDC_TRIMESH)
-	//	{
-	//		App->CL_MeshViewer->Physics_Type = Enums::Bullet_Type_TriMesh;
-	//		App->CL_MeshViewer->flag_SelectStatic = 0;
-	//		App->CL_MeshViewer->flag_SelectDynamic = 0;
-	//		App->CL_MeshViewer->flag_SelectTriMesh = 1;
+		if (LOWORD(wParam) == IDC_TRIMESH)
+		{
+			App->CL_MeshViewer->Physics_Type = Enums::Bullet_Type_TriMesh;
+			App->CL_MeshViewer->flag_SelectStatic = 0;
+			App->CL_MeshViewer->flag_SelectDynamic = 0;
+			App->CL_MeshViewer->flag_SelectTriMesh = 1;
 
-	//		App->CL_MeshViewer->Enable_ShapeButtons(false);
+			App->CL_MeshViewer->Enable_ShapeButtons(false);
 
-	//		RedrawWindow(App->CL_MeshViewer->MainDlgHwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			RedrawWindow(App->CL_MeshViewer->MainDlgHwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
-	//		App->CL_MeshViewer->Physics_Shape = Enums::Shape_None;
+			App->CL_MeshViewer->Physics_Shape = Enums::Shape_None;
 
-	//		App->CL_MeshViewer->Show_Physics_Trimesh();
+			App->CL_MeshViewer->Show_Physics_Trimesh();
 
-	//		return 1;
-	//	}
+			return 1;
+		}
 
 		if (LOWORD(wParam) == IDC_BOX)
 		{
@@ -683,15 +683,15 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 
 	if (LOWORD(wParam) == IDOK)
 	{
-	//		if (App->CL_MeshViewer->Physics_Type == Enums::Bullet_Type_TriMesh)
-	//		{
+			if (App->CL_MeshViewer->Physics_Type == Enums::Bullet_Type_TriMesh)
+			{
 
-	//		}
-	//		else if (App->CL_MeshViewer->Physics_Type == Enums::Bullet_Type_None || App->CL_MeshViewer->Physics_Shape == Enums::Shape_None)
-	//		{
-	//			App->Say("No Type or Shape Selected");
-	//			return TRUE;
-	//		}
+			}
+			else if (App->CL_MeshViewer->Physics_Type == Enums::Bullet_Type_None || App->CL_MeshViewer->Physics_Shape == Enums::Shape_None)
+			{
+				App->Say("No Physics Type or Shape Selected");
+				return TRUE;
+			}
 
 
 			if (App->CL_MeshViewer->Ogre_MV_Phys_Body)
@@ -700,23 +700,23 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 				App->CL_MeshViewer->Ogre_MV_Phys_Body = nullptr;
 			}
 
-	//		int cmp = strcmp(App->CL_MeshViewer->m_Just_Folder, "Project_Assets");
-	//		if (cmp == 0)
-	//		{
-	//			strcpy(App->CL_MeshViewer->m_Resource_Folder_Full, App->CL_Project->m_Main_Assets_Path);
-	//			App->CL_Objects_Create->Add_Objects_From_MeshViewer();
-	//		}
-	//		else if (App->CL_MeshViewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Area)
-	//		{
+			int cmp = strcmp(App->CL_MeshViewer->m_Just_Folder, "Project_Assets");
+			if (cmp == 0)
+			{
+				strcpy(App->CL_MeshViewer->m_Resource_Folder_Full, App->CL_Project->m_Main_Assets_Path);
+				App->CL_Objects_Create->Add_Objects_From_MeshViewer();
+			}
+			else if (App->CL_MeshViewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Area)
+			{
 
-	//			App->CL_MeshViewer->Copy_Assets();
-	//			App->CL_Com_Area->Add_New_Area();
-	//		}
-	//		else
-	//		{
-	//			App->CL_MeshViewer->Copy_Assets();
-	//			App->CL_Objects_Create->Add_Objects_From_MeshViewer();
-	//		}
+				App->CL_MeshViewer->Copy_Assets();
+				//App->CL_Com_Area->Add_New_Area();
+			}
+			else
+			{
+				App->CL_MeshViewer->Copy_Assets();
+				App->CL_Objects_Create->Add_Objects_From_MeshViewer();
+			}
 
 
 	//		App->CL_Ogre->RenderFrame(10);
@@ -1031,7 +1031,7 @@ bool CL64_MeshViewer::Delete_Resources_Group()
 	Ogre::ResourceGroupManager::getSingleton().destroyResourceGroup(MV_Resource_Group);
 
 	// if scene loaded need to goto project resources
-	//App->CL_Resources->mSelected_Resource_Group = "App_Resource_Group";
+	App->CL_Resources->mSelected_Resource_Group = "App_Resource_Group";
 	flag_MV_Resource_Path_Loaded = 0;
 
 	return 1;
@@ -1042,7 +1042,7 @@ bool CL64_MeshViewer::Delete_Resources_Group()
 // *************************************************************************
 void CL64_MeshViewer::Get_Stock_Folders(HWND DropHwnd)
 {
-	SendMessage(DropHwnd, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"Project_Assets");
+	//SendMessage(DropHwnd, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"Project_Assets");
 
 	char Path[MAX_PATH]{ 0 };
 
@@ -1073,55 +1073,45 @@ void CL64_MeshViewer::Get_Stock_Folders(HWND DropHwnd)
 		FindClose(hFind);
 	}
 
-	// -------------------------------------------------- Colectables
-	if (Mesh_Viewer_Mode == Enums::Mesh_Viewer_Collectables)
+	// Handle different mesh viewer modes
+	switch (Mesh_Viewer_Mode)
+	{
+	case Enums::Mesh_Viewer_Collectables:
 	{
 		strcpy(m_Just_Folder, "Collectables");
-
-		strcpy(m_Resource_Folder_Full, App->RB_Directory_FullPath); // Full Path Stock Folders 
-		strcat(m_Resource_Folder_Full, "\\Stock\\");
-		strcat(m_Resource_Folder_Full, m_Just_Folder);
-		strcat(m_Resource_Folder_Full, "\\");
-
+		snprintf(m_Resource_Folder_Full, sizeof(m_Resource_Folder_Full), "%s\\Stock\\%s\\", App->RB_Directory_FullPath, m_Just_Folder);
 		SendMessage(DropHwnd, CB_SELECTSTRING, -1, (LPARAM)"Collectables");
-
 		return;
 	}
 
-	// -------------------------------------------------- Objects
-	if (Mesh_Viewer_Mode == Enums::Mesh_Viewer_Objects)
+	case Enums::Mesh_Viewer_Objects:
 	{
 		SendMessage(DropHwnd, CB_SETCURSEL, 3, 0);
+		int Index = SendMessage(DropHwnd, CB_GETCURSEL, 0, 0); // Get the current selection index
+		SendMessage(DropHwnd, CB_GETLBTEXT, Index, (LPARAM)m_Just_Folder);
 
-		int Index = SendMessage(DropHwnd, CB_GETCURSEL, 0, 0); // Default Project Assets
-		SendMessage(CB_hWnd, CB_GETLBTEXT, Index, (LPARAM)m_Just_Folder);
-
-		int cmp = strcmp(m_Just_Folder, "Geometry");
-		if (cmp == 0)
-		{
-			strcpy(m_Resource_Folder_Full, App->CL_Project->m_Main_Assets_Path); // Projects Full Resource Path
+		// Check if the selected folder is "Geometry"
+		if (strcmp(m_Just_Folder, "Geometry") == 0) {
+			strcpy(m_Resource_Folder_Full, App->CL_Project->m_Main_Assets_Path); // Set to project's full resource path
 			return;
 		}
 
-		strcpy(m_Resource_Folder_Full, App->RB_Directory_FullPath); // Full Path Stock Folders 
-		strcat(m_Resource_Folder_Full, "\\Stock\\");
-		strcat(m_Resource_Folder_Full, m_Just_Folder);
-		strcat(m_Resource_Folder_Full, "\\");
-
+		snprintf(m_Resource_Folder_Full, sizeof(m_Resource_Folder_Full), "%s\\Stock\\%s\\", App->RB_Directory_FullPath, m_Just_Folder);
 		SendMessage(DropHwnd, CB_SELECTSTRING, -1, (LPARAM)"Geometry");
+		break;
 	}
 
-	// -------------------------------------------------- Areas
-	if (Mesh_Viewer_Mode == Enums::Mesh_Viewer_Area)
+	case Enums::Mesh_Viewer_Area:
 	{
 		strcpy(m_Just_Folder, "Areas");
-		strcpy(m_Resource_Folder_Full, App->RB_Directory_FullPath); // Full Path Stock Folders 
-		strcat(m_Resource_Folder_Full, "\\Stock\\");
-		strcat(m_Resource_Folder_Full, m_Just_Folder);
-		strcat(m_Resource_Folder_Full, "\\");
-
+		snprintf(m_Resource_Folder_Full, sizeof(m_Resource_Folder_Full), "%s\\Stock\\%s\\", App->RB_Directory_FullPath, m_Just_Folder);
 		SendMessage(DropHwnd, CB_SELECTSTRING, -1, (LPARAM)"Areas");
+		break;
+	}
 
+	default:
+		App->Say("No Mesh Viewer Mode");
+		break;
 	}
 	
 }
@@ -1175,20 +1165,22 @@ void CL64_MeshViewer::Get_Mesh_Files()
 }
 
 // *************************************************************************
-// *			Update_Mesh:- Terry and Hazel Flanigan 2022				   *
+// *			Show_Mesh:- Terry and Hazel Flanigan 2025				   *
 // *************************************************************************
-void CL64_MeshViewer::Show_Mesh(char* MeshFile)
+void CL64_MeshViewer::Show_Mesh(const char* MeshFile)
 {
+	// Detach and destroy existing mesh entities and nodes if they exist
 	if (Ogre_MvEnt || Ogre_MvNode)
 	{
 		Ogre_MvNode->detachAllObjects();
 		Ogre_MV_SceneMgr->destroySceneNode(Ogre_MvNode);
 		Ogre_MV_SceneMgr->destroyEntity(Ogre_MvEnt);
-		Ogre_MvEnt = NULL;
-		Ogre_MvNode = NULL;
+		Ogre_MvEnt = nullptr; // Use nullptr for better type safety
+		Ogre_MvNode = nullptr; // Use nullptr for better type safety
 	}
 
-	if (Ogre_MvEnt == NULL)
+	// Create a new entity and node if none exists
+	if (!Ogre_MvEnt)
 	{
 		Ogre_MvEnt = Ogre_MV_SceneMgr->createEntity("MV", MeshFile, MV_Resource_Group);
 		Ogre_MvNode = Ogre_MV_SceneMgr->getRootSceneNode()->createChildSceneNode();
@@ -1196,45 +1188,40 @@ void CL64_MeshViewer::Show_Mesh(char* MeshFile)
 		Ogre_MvNode->setPosition(0, 0, 0);
 	}
 
-	App->CL_Ogre->Log_Message_To_File((LPSTR)"Show Mesh Create Entity");
+	// Set camera position based on the mesh's bounding box
+	Ogre::Vector3 Centre = Ogre_MvEnt->getBoundingBox().getCenter();
+	Ogre::Real Radius = Ogre_MvEnt->getBoundingRadius();
+	Ogre_MV_CamNode->setPosition(0, Centre.y, Radius * 2.5);
+	Ogre_MV_CamNode->lookAt(Ogre::Vector3(0, Centre.y, 0), Ogre::Node::TS_WORLD);
 
-	//if (App->SBC_MeshViewer->View_Zoomed_Flag == 1)
-	{
-		Ogre::Vector3 Centre = Ogre_MvEnt->getBoundingBox().getCenter();
-		Ogre::Real Radius = Ogre_MvEnt->getBoundingRadius();
-
-		Ogre_MV_CamNode->setPosition(0, Centre.y, Radius * 2.5);
-		Ogre_MV_CamNode->lookAt(Ogre::Vector3(0, Centre.y, 0), Ogre::Node::TS_WORLD);
-	}
-
+	// Retrieve mesh data for further processing
 	Get_Ogre_Mesh_Data(Ogre_MvEnt);
 
+	// Clear any existing debug shapes
 	Clear_Debug_Shape();
 	MV_btDebug_Node->setOrientation(Ogre::Quaternion::IDENTITY);
 
-	if (Physics_Shape == Enums::Shape_Box)
+	// Show physics shape based on the current shape type
+	switch (Physics_Shape)
 	{
+	case Enums::Shape_Box:
 		Show_Physics_Box();
-	}
-
-	if (Physics_Shape == Enums::Shape_Sphere)
-	{
+		break;
+	case Enums::Shape_Sphere:
 		Show_Physics_Sphere();
-	}
-
-	if (Physics_Shape == Enums::Shape_Capsule)
-	{
+		break;
+	case Enums::Shape_Capsule:
 		Show_Physics_Capsule();
-	}
-
-	if (Physics_Shape == Enums::Shape_Cylinder)
-	{
+		break;
+	case Enums::Shape_Cylinder:
 		Show_Physics_Cylinder();
-	}
-
-	if (Physics_Shape == Enums::Shape_Cone)
-	{
+		break;
+	case Enums::Shape_Cone:
 		Show_Physics_Cone();
+		break;
+	default:
+		// Handle unknown shape type if necessary
+		break;
 	}
 }
 
@@ -1248,7 +1235,7 @@ void CL64_MeshViewer::Show_Physics_Trimesh()
 
 	if (Ogre_MV_Phys_Body)
 	{
-		//App->CL_Bullet->dynamicsWorld->removeCollisionObject(Ogre_MV_Phys_Body);
+		App->CL_Physics->dynamicsWorld->removeCollisionObject(Ogre_MV_Phys_Body);
 		Ogre_MV_Phys_Body = nullptr;
 	}
 
@@ -1376,7 +1363,7 @@ void CL64_MeshViewer::Show_Physics_Trimesh()
 	Ogre_MV_Phys_Body->setAngularVelocity(btVector3(0, 0, 0));
 	Ogre_MV_Phys_Body->setWorldTransform(startTransform);
 
-	//App->CL_Bullet->dynamicsWorld->addRigidBody(Ogre_MV_Phys_Body);
+	App->CL_Physics->dynamicsWorld->addRigidBody(Ogre_MV_Phys_Body);
 
 }
 
@@ -1687,28 +1674,36 @@ void CL64_MeshViewer::Clear_Debug_Shape()
 // *************************************************************************
 void CL64_MeshViewer::Set_Physics()
 {
+	// Reset the orientation of the debug node and the Ogre node
 	MV_btDebug_Node->resetOrientation();
 	Ogre_MvNode->resetOrientation();
-	// Rotation
-	Ogre::Quaternion Rot = Ogre_MvNode->getOrientation();
 
-	float w = Rot.w;
-	float x = Rot.x;
-	float y = Rot.y;
-	float z = Rot.z;
+	 // Retrieve the current rotation as a quaternion
+	Ogre::Quaternion rotation = Ogre_MvNode->getOrientation();
 
+	// Extract the components of the quaternion
+	float w = rotation.w;
+	float x = rotation.x;
+	float y = rotation.y;
+	float z = rotation.z;
+
+	// Set the rotation for the physics body using the extracted quaternion
 	Ogre_MV_Phys_Body->getWorldTransform().setRotation(btQuaternion(x, y, z, w));
 
-	// Scale
-	Ogre_MvNode->setScale(1,1,1);
+	// Set the scale of the Ogre node to (1, 1, 1)
+	Ogre_MvNode->setScale(1.0f, 1.0f, 1.0f);
 
-	Ogre::Vector3 Scale = Ogre_MvNode->getScale();
-	Ogre_MV_Phys_Body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
+	// Retrieve the scale of the Ogre node
+	Ogre::Vector3 scale = Ogre_MvNode->getScale();
 
-	// Position
-	Ogre::Vector3 Centre = Ogre_MvEnt->getWorldBoundingBox(true).getCenter();
-	Ogre_MV_Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
+	// Set the local scaling for the collision shape
+	Ogre_MV_Phys_Body->getCollisionShape()->setLocalScaling(btVector3(scale.x, scale.y, scale.z));
 
+	// Get the center position of the entity's bounding box
+	Ogre::Vector3 center = Ogre_MvEnt->getWorldBoundingBox(true).getCenter();
+
+	// Set the origin for the physics body using the center position
+	Ogre_MV_Phys_Body->getWorldTransform().setOrigin(btVector3(center.x, center.y, center.z));
 }
 
 // *************************************************************************

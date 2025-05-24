@@ -29,6 +29,8 @@ THE SOFTWARE.
 CL64_Editor_Com::CL64_Editor_Com()
 {
 	
+	flag_Project_Resources_Created = 0;
+
 	// Groups
 	GroupCount = 0;
 	VerticeCount = 0;

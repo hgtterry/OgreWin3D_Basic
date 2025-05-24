@@ -45,6 +45,9 @@ public:
 
 	char JustName[MAX_PATH];
 
+	// Resources
+	bool flag_Project_Resources_Created;
+
 	// Groups
 	int VerticeCount;
 	int GroupCount;		// Total number of groups created

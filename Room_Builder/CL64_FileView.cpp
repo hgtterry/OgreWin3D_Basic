@@ -1110,7 +1110,7 @@ void CL64_FileView::Context_New(HWND hDlg)
 		bool Doit = App->CL_Dialogs->flag_Dlg_Canceled;
 		if (Doit == 0)
 		{
-			App->CL_MeshViewer->Mesh_Viewer_Mode = Enums::Mesh_Viewer_Area;
+			App->CL_MeshViewer->Mesh_Viewer_Mode = Enums::Mesh_Viewer_Objects;
 			App->CL_MeshViewer->Start_MeshViewer_Dlg();
 		}
 

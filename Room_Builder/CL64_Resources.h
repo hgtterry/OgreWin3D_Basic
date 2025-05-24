@@ -33,6 +33,13 @@ public:
 	void Load_Texture_Resources();
 	bool View_Texture(char* FileName, HWND Owner_hDlg);
 
+	// Project
+	bool Create_Project_Resources_Group();
+	bool Delete_Project_Resources_Group();
+	bool Add_Resource_Location_Project(char* Resource_Location);
+
+	Ogre::String mSelected_Resource_Group;
+
 private:
 	static LRESULT CALLBACK Proc_Resources(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
@@ -53,7 +60,7 @@ private:
 	char mSelected_File[MAX_PATH];
 	char mbtext[MAX_PATH];
 
-	Ogre::String mSelected_Resource_Group;
+	Ogre::String Project_Resource_Group;
 	Ogre::String mFileString;
 
 	HWND FX_General_hLV;

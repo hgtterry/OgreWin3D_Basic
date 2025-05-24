@@ -42,37 +42,35 @@ void CL64_Objects_Create::Add_Objects_From_MeshViewer()
 
 	//if (App->CL_MeshViewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Collectables) // Collectables
 	//{
-	//	App->CL_Com_Collectables->Add_New_Collectable();
+	//	//App->CL_Com_Collectables->Add_New_Collectable();
 	//	return;
 	//}
 
 
-	//int Index = App->CL_Scene->Object_Count;
+	int Index = App->CL_Editor_Com->Object_Count;
 
-	//App->CL_Scene->B_Object[Index] = new Base_Object();
+	App->CL_Editor_Com->B_Object[Index] = new Base_Object();
 
-	//Base_Object* Object = App->CL_Scene->B_Object[Index];
-	//Object->This_Object_UniqueID = App->CL_Scene->UniqueID_Object_Counter; // Unique ID
-
-
-	//strcpy(Object->Object_Name, App->CL_MeshViewer->Object_Name);
-	//strcpy(Object->Mesh_FileName, App->CL_MeshViewer->Selected_MeshFile);
-	////strcpy(Object->Mesh_Resource_Path, m_ResourcePath);
-	////strcpy(Object->Material_File, App->CL_MeshViewer->m_Material_File);
-
-	//Object->Type = App->CL_MeshViewer->Physics_Type;
-	//Object->Shape = App->CL_MeshViewer->Physics_Shape;
+	Base_Object* Object = App->CL_Editor_Com->B_Object[Index];
+	Object->This_Object_UniqueID = App->CL_Editor_Com->UniqueID_Object_Counter; // Unique ID
 
 
-	//App->CL_Objects_Create->Dispatch_MeshViewer();
+	strcpy(Object->Object_Name, App->CL_MeshViewer->Object_Name);
+	strcpy(Object->Mesh_FileName, App->CL_MeshViewer->Selected_MeshFile);
+	
+	Object->Type = App->CL_MeshViewer->Physics_Type;
+	Object->Shape = App->CL_MeshViewer->Physics_Shape;
 
-	//App->CL_FileView->SelectItem(App->CL_Scene->B_Object[Index]->FileViewItem);
+
+	App->CL_Objects_Create->Dispatch_MeshViewer();
+
+	App->CL_FileView->SelectItem(App->CL_Editor_Com->B_Object[Index]->FileViewItem);
 
 
-	//App->CL_Scene->UniqueID_Object_Counter++; // Unique ID
-	//App->CL_Scene->Object_Count++;  // Must be last line
+	App->CL_Editor_Com->UniqueID_Object_Counter++; // Unique ID
+	App->CL_Editor_Com->Object_Count++;  // Must be last line
 
-	//App->CL_Scene->flag_Scene_Modified = 1;
+	App->CL_Level->flag_Level_is_Modified = 1;
 
 }
 
@@ -81,22 +79,23 @@ void CL64_Objects_Create::Add_Objects_From_MeshViewer()
 // *************************************************************************
 bool CL64_Objects_Create::Dispatch_MeshViewer()
 {
-	//int Index = App->CL_Scene->Object_Count;
+	return 1;
+	int Index = App->CL_Editor_Com->Object_Count;
 
-	//if (App->CL_MeshViewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Area) // Area
-	//{
-	//	App->CL_Com_Area->Add_Aera_To_Project(0, App->CL_MeshViewer->Selected_MeshFile, (LPSTR)App->CL_Resources->Project_Resource_Group.c_str());
-	//	App->Say("Dispatch_MeshViewer");
-	//}
-	//else
-	//{
-	//	Add_New_Object(Index, true);
-	//	App->CL_Scene->B_Object[Index]->flag_Altered = 1;
-	//	App->CL_Scene->B_Object[Index]->Folder = Enums::Folder_Objects;
-	//	App->CL_Scene->B_Object[Index]->FileViewItem = App->CL_FileView->Add_Item(App->CL_FileView->FV_Objects_Folder,
-	//	App->CL_Scene->B_Object[Index]->Object_Name, Index, true);
+	if (App->CL_MeshViewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Area) // Area
+	{
+		//App->CL_Com_Area->Add_Aera_To_Project(0, App->CL_MeshViewer->Selected_MeshFile, (LPSTR)App->CL_Resources->Project_Resource_Group.c_str());
+		//App->Say("Dispatch_MeshViewer");
+	}
+	else
+	{
+		//Add_New_Object(Index, true);
+		App->CL_Editor_Com->B_Object[Index]->flag_Altered = 1;
+		//App->CL_Editor_Com->B_Object[Index]->Folder = Enums::Folder_Objects;
+		App->CL_Editor_Com->B_Object[Index]->FileViewItem = App->CL_FileView->Add_Item(App->CL_FileView->FV_Objects_Folder,
+		App->CL_Editor_Com->B_Object[Index]->Object_Name, Index, true);
 
-	//}
+	}
 
 	return 1;
 }

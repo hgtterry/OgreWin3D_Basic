@@ -81,7 +81,7 @@ private:
 
 	void Get_Stock_Folders(HWND DropHwnd);
 	void Get_Mesh_Files();
-	void Show_Mesh(char* MeshFile);
+	void Show_Mesh(const char* MeshFile);
 
 	void Clear_Shape_Buttons();
 	void Clear_Type_Buttons();
