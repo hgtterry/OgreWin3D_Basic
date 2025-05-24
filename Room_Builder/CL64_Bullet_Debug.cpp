@@ -173,20 +173,41 @@ bool CL64_Bullet_Debug::Render_Debug(void)
 	{
 		if (V_Count > 0)
 		{
-
-			btDebug_Manual->beginUpdate(0);
-
-			int Count = 0;
-			while (Count < V_Count)
+			if (App->CL_MeshViewer->flag_MeshViewer_Running == 1 && App->CL_MeshViewer->Ogre_MV_Phys_Body)
 			{
-				btDebug_Manual->position(vertex_From[Count].x, vertex_From[Count].y, vertex_From[Count].z);
-				btDebug_Manual->colour(ColourMain);
-				btDebug_Manual->position(vertex_To[Count].x, vertex_To[Count].y, vertex_To[Count].z);
-				btDebug_Manual->colour(ColourMain);
-				Count++;
-			}
+				if (App->CL_MeshViewer->flag_MV_Render_Debug == 1)
+				{
+					App->CL_MeshViewer->MV_btDebug_Manual->beginUpdate(0);
 
-			btDebug_Manual->end();
+					int Count = 0;
+					while (Count < V_Count)
+					{
+						App->CL_MeshViewer->MV_btDebug_Manual->position(vertex_From[Count].x, vertex_From[Count].y, vertex_From[Count].z);
+						App->CL_MeshViewer->MV_btDebug_Manual->colour(ColourMain);
+						App->CL_MeshViewer->MV_btDebug_Manual->position(vertex_To[Count].x, vertex_To[Count].y, vertex_To[Count].z);
+						App->CL_MeshViewer->MV_btDebug_Manual->colour(ColourMain);
+						Count++;
+					}
+
+					App->CL_MeshViewer->MV_btDebug_Manual->end();
+				}
+			}
+			else
+			{
+				btDebug_Manual->beginUpdate(0);
+
+				int Count = 0;
+				while (Count < V_Count)
+				{
+					btDebug_Manual->position(vertex_From[Count].x, vertex_From[Count].y, vertex_From[Count].z);
+					btDebug_Manual->colour(ColourMain);
+					btDebug_Manual->position(vertex_To[Count].x, vertex_To[Count].y, vertex_To[Count].z);
+					btDebug_Manual->colour(ColourMain);
+					Count++;
+				}
+
+				btDebug_Manual->end();
+			}
 
 			V_Count = 0;
 		}
@@ -198,6 +219,7 @@ bool CL64_Bullet_Debug::Render_Debug(void)
 	}
 
 	V_Count = 0;
+
 	return 1;
 }
 

@@ -195,9 +195,9 @@ void CL64_Com_Player::Show_Player_And_Physics(bool Show)
 }
 
 // *************************************************************************
-// *		Show_Physics:- Terry and Hazel Flanigan 2024				   *
+// *		Show_Player_Physics:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-void CL64_Com_Player::Show_Physics(bool Show)
+void CL64_Com_Player::Show_Player_Physics(bool Show)
 {
 	int f = App->CL_Editor_Com->B_Player[0]->Phys_Body->getCollisionFlags();
 

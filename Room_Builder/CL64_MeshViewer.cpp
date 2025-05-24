@@ -124,14 +124,15 @@ void CL64_MeshViewer::Reset_Data()
 // *************************************************************************
 void CL64_MeshViewer::Start_MeshViewer_Dlg()
 {
-	/*App->CL_Ogre->Bullet_Debug_Listener->flag_Render_Debug_Flag = 0;
+	App->CL_Ogre->Bullet_Debug_Listener->flag_Render_Debug_Flag = 0;
 
-	App->CL_Bullet->Show_Debug_Objects(false);
+	App->CL_Physics->Show_Debug_Objects(false);
+	App->CL_Com_Player->Show_Player_Physics(false);
+	//App->CL_Panels->Disable_Panels(true);
+	//App->CL_Ogre->Ogre3D_Listener->flag_Block_Mouse = 1;
+	//App->CL_ImGui_Dialogs->flag_Disable_Physics_Console = 1;
+	//App->CL_Keyboard->flag_Block_Keyboard = 1;
 
-	App->CL_Panels->Disable_Panels(true);
-	App->CL_Ogre->Ogre3D_Listener->flag_Block_Mouse = 1;
-	App->CL_ImGui_Dialogs->flag_Disable_Physics_Console = 1;
-	App->CL_Keyboard->flag_Block_Keyboard = 1;*/
 
 	Reset_Data();
 
@@ -228,6 +229,7 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 			strcpy(App->CL_MeshViewer->Object_Name, ATest);
 		}
 
+		App->CL_MeshViewer->Show_Physics_None();
 		App->CL_MeshViewer->flag_MeshViewer_Running = 1;
 
 		return TRUE;
@@ -627,57 +629,57 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 			return TRUE;
 		}
 
-	//	if (LOWORD(wParam) == IDC_SPHERE)
-	//	{
-	//		App->CL_MeshViewer->Clear_Shape_Buttons();
-	//		App->CL_MeshViewer->flag_Selected_Shape_Sphere = 1;
-	//		RedrawWindow(App->CL_MeshViewer->MainDlgHwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+		if (LOWORD(wParam) == IDC_SPHERE)
+		{
+			App->CL_MeshViewer->Clear_Shape_Buttons();
+			App->CL_MeshViewer->flag_Selected_Shape_Sphere = 1;
+			RedrawWindow(App->CL_MeshViewer->MainDlgHwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
-	//		App->CL_MeshViewer->Physics_Shape = Enums::Shape_Sphere;
+			App->CL_MeshViewer->Physics_Shape = Enums::Shape_Sphere;
 
-	//		App->CL_MeshViewer->Show_Physics_Sphere();
+			App->CL_MeshViewer->Show_Physics_Sphere();
 
-	//		return TRUE;
-	//	}
+			return TRUE;
+		}
 
-	//	if (LOWORD(wParam) == IDC_CAPSULE)
-	//	{
-	//		App->CL_MeshViewer->Clear_Shape_Buttons();
-	//		App->CL_MeshViewer->flag_Selected_Shape_Capsule = 1;
-	//		RedrawWindow(App->CL_MeshViewer->MainDlgHwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+		if (LOWORD(wParam) == IDC_CAPSULE)
+		{
+			App->CL_MeshViewer->Clear_Shape_Buttons();
+			App->CL_MeshViewer->flag_Selected_Shape_Capsule = 1;
+			RedrawWindow(App->CL_MeshViewer->MainDlgHwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
-	//		App->CL_MeshViewer->Physics_Shape = Enums::Shape_Capsule;
+			App->CL_MeshViewer->Physics_Shape = Enums::Shape_Capsule;
 
-	//		App->CL_MeshViewer->Show_Physics_Capsule();
+			App->CL_MeshViewer->Show_Physics_Capsule();
 
-	//		return TRUE;
-	//	}
+			return TRUE;
+		}
 
-	//	if (LOWORD(wParam) == IDC_CYLINDER)
-	//	{
-	//		App->CL_MeshViewer->Clear_Shape_Buttons();
-	//		App->CL_MeshViewer->flag_Selected_Shape_Cylinder = 1;
-	//		RedrawWindow(App->CL_MeshViewer->MainDlgHwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+		if (LOWORD(wParam) == IDC_CYLINDER)
+		{
+			App->CL_MeshViewer->Clear_Shape_Buttons();
+			App->CL_MeshViewer->flag_Selected_Shape_Cylinder = 1;
+			RedrawWindow(App->CL_MeshViewer->MainDlgHwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
-	//		App->CL_MeshViewer->Physics_Shape = Enums::Shape_Cylinder;
+			App->CL_MeshViewer->Physics_Shape = Enums::Shape_Cylinder;
 
-	//		App->CL_MeshViewer->Show_Physics_Cylinder();
+			App->CL_MeshViewer->Show_Physics_Cylinder();
 
-	//		return TRUE;
-	//	}
+			return TRUE;
+		}
 
-	//	if (LOWORD(wParam) == IDC_CONE)
-	//	{
-	//		App->CL_MeshViewer->Clear_Shape_Buttons();
-	//		App->CL_MeshViewer->flag_Selected_Shape_Cone = 1;
-	//		RedrawWindow(App->CL_MeshViewer->MainDlgHwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+		if (LOWORD(wParam) == IDC_CONE)
+		{
+			App->CL_MeshViewer->Clear_Shape_Buttons();
+			App->CL_MeshViewer->flag_Selected_Shape_Cone = 1;
+			RedrawWindow(App->CL_MeshViewer->MainDlgHwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
-	//		App->CL_MeshViewer->Physics_Shape = Enums::Shape_Cone;
+			App->CL_MeshViewer->Physics_Shape = Enums::Shape_Cone;
 
-	//		App->CL_MeshViewer->Show_Physics_Cone();
+			App->CL_MeshViewer->Show_Physics_Cone();
 
-	//		return TRUE;
-	//	}
+			return TRUE;
+		}
 
 	if (LOWORD(wParam) == IDOK)
 	{
@@ -692,11 +694,11 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 	//		}
 
 
-	//		if (App->CL_MeshViewer->Ogre_MV_Phys_Body)
-	//		{
-	//			App->CL_Bullet->dynamicsWorld->removeCollisionObject(App->CL_MeshViewer->Ogre_MV_Phys_Body);
-	//			App->CL_MeshViewer->Ogre_MV_Phys_Body = nullptr;
-	//		}
+			if (App->CL_MeshViewer->Ogre_MV_Phys_Body)
+			{
+				App->CL_Physics->dynamicsWorld->removeCollisionObject(App->CL_MeshViewer->Ogre_MV_Phys_Body);
+				App->CL_MeshViewer->Ogre_MV_Phys_Body = nullptr;
+			}
 
 	//		int cmp = strcmp(App->CL_MeshViewer->m_Just_Folder, "Project_Assets");
 	//		if (cmp == 0)
@@ -721,10 +723,15 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 			App->CL_MeshViewer->Close_OgreWindow();
 			App->CL_MeshViewer->Delete_Resources_Group();
 
-	//		App->CL_MeshViewer->Clear_Shape_Buttons();
-	//		App->CL_MeshViewer->Clear_Type_Buttons();
-	//		
+			App->CL_MeshViewer->Clear_Shape_Buttons();
+			App->CL_MeshViewer->Clear_Type_Buttons();
+		
 			App->CL_MeshViewer->flag_MeshViewer_Running = 0;
+			App->CL_MeshViewer->flag_MV_Render_Debug = 0;
+
+			App->CL_Ogre->Bullet_Debug_Listener->Clear_Debug_Render();
+
+			App->CL_Com_Player->Show_Player_Physics(true);
 
 	//		App->CL_Panels->Disable_Panels(false);
 	//		App->CL_ImGui_Dialogs->flag_Disable_Physics_Console = 0;
@@ -738,13 +745,22 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 
 	if (LOWORD(wParam) == IDCANCEL)
 	{
-				App->CL_MeshViewer->Close_OgreWindow();
-				App->CL_MeshViewer->Delete_Resources_Group();
+		App->CL_MeshViewer->Close_OgreWindow();
+		App->CL_MeshViewer->Delete_Resources_Group();
 
-		//		App->CL_MeshViewer->Clear_Type_Buttons();
+		if (App->CL_MeshViewer->Ogre_MV_Phys_Body)
+		{
+			App->CL_Physics->dynamicsWorld->removeCollisionObject(App->CL_MeshViewer->Ogre_MV_Phys_Body);
+			App->CL_MeshViewer->Ogre_MV_Phys_Body = nullptr;
+		}
 
-				App->CL_MeshViewer->flag_MeshViewer_Running = 0;
+		App->CL_MeshViewer->Clear_Type_Buttons();
 
+		App->CL_Com_Player->Show_Player_Physics(true);
+
+		App->CL_MeshViewer->flag_MeshViewer_Running = 0;
+		App->CL_MeshViewer->flag_MV_Render_Debug = 0;
+		App->CL_Ogre->Bullet_Debug_Listener->Clear_Debug_Render();
 		//		App->CL_Panels->Disable_Panels(false);
 		//		App->CL_ImGui_Dialogs->flag_Disable_Physics_Console = 0;
 		//		App->CL_Ogre->Ogre3D_Listener->flag_Block_Mouse = 0;
@@ -754,7 +770,6 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 		return TRUE;
 	}
 	
-
 		break;
 	}
 
@@ -876,6 +891,7 @@ bool CL64_MeshViewer::Set_OgreWindow(void)
 	//Reset_Camera();
 
 	// Debug Physics Shape
+
 	MV_btDebug_Manual = Ogre_MV_SceneMgr->createManualObject("MVManual");
 	MV_btDebug_Manual->setRenderQueueGroup(RENDER_QUEUE_MAX);
 	MV_btDebug_Manual->setDynamic(true);
@@ -1373,7 +1389,7 @@ void CL64_MeshViewer::Show_Physics_None()
 
 	if (Ogre_MV_Phys_Body)
 	{
-		//App->CL_Bullet->dynamicsWorld->removeCollisionObject(Ogre_MV_Phys_Body);
+		App->CL_Physics->dynamicsWorld->removeCollisionObject(Ogre_MV_Phys_Body);
 		Ogre_MV_Phys_Body = nullptr;
 	}
 
@@ -1443,7 +1459,7 @@ void CL64_MeshViewer::Show_Physics_Sphere()
 
 	if (Ogre_MV_Phys_Body)
 	{
-		//App->CL_Bullet->dynamicsWorld->removeCollisionObject(Ogre_MV_Phys_Body);
+		App->CL_Physics->dynamicsWorld->removeCollisionObject(Ogre_MV_Phys_Body);
 		Ogre_MV_Phys_Body = nullptr;
 	}
 
@@ -1479,7 +1495,7 @@ void CL64_MeshViewer::Show_Physics_Sphere()
 	Ogre_MV_Phys_Body->setUserPointer(Ogre_MvNode);
 	Ogre_MV_Phys_Body->setWorldTransform(startTransform);
 
-	//App->CL_Bullet->dynamicsWorld->addRigidBody(Ogre_MV_Phys_Body);
+	App->CL_Physics->dynamicsWorld->addRigidBody(Ogre_MV_Phys_Body);
 
 	Set_Physics();
 }
@@ -1493,7 +1509,7 @@ void CL64_MeshViewer::Show_Physics_Capsule()
 
 	if (Ogre_MV_Phys_Body)
 	{
-		//App->CL_Bullet->dynamicsWorld->removeCollisionObject(Ogre_MV_Phys_Body);
+		App->CL_Physics->dynamicsWorld->removeCollisionObject(Ogre_MV_Phys_Body);
 		Ogre_MV_Phys_Body = nullptr;
 	}
 
@@ -1534,7 +1550,7 @@ void CL64_MeshViewer::Show_Physics_Capsule()
 	Ogre_MV_Phys_Body->setWorldTransform(startTransform);
 
 
-	//App->CL_Bullet->dynamicsWorld->addRigidBody(Ogre_MV_Phys_Body);
+	App->CL_Physics->dynamicsWorld->addRigidBody(Ogre_MV_Phys_Body);
 
 	Set_Physics();
 }
@@ -1548,7 +1564,7 @@ void CL64_MeshViewer::Show_Physics_Cylinder()
 
 	if (Ogre_MV_Phys_Body)
 	{
-		//App->CL_Bullet->dynamicsWorld->removeCollisionObject(Ogre_MV_Phys_Body);
+		App->CL_Physics->dynamicsWorld->removeCollisionObject(Ogre_MV_Phys_Body);
 		Ogre_MV_Phys_Body = nullptr;
 	}
 
@@ -1589,7 +1605,7 @@ void CL64_MeshViewer::Show_Physics_Cylinder()
 	Ogre_MV_Phys_Body->setUserPointer(Ogre_MvNode);
 	Ogre_MV_Phys_Body->setWorldTransform(startTransform);
 
-	//App->CL_Bullet->dynamicsWorld->addRigidBody(Ogre_MV_Phys_Body);
+	App->CL_Physics->dynamicsWorld->addRigidBody(Ogre_MV_Phys_Body);
 
 	Set_Physics();
 }
@@ -1603,7 +1619,7 @@ void CL64_MeshViewer::Show_Physics_Cone()
 	Clear_Debug_Shape();
 	if (Ogre_MV_Phys_Body)
 	{
-		//App->CL_Bullet->dynamicsWorld->removeCollisionObject(Ogre_MV_Phys_Body);
+		App->CL_Physics->dynamicsWorld->removeCollisionObject(Ogre_MV_Phys_Body);
 		Ogre_MV_Phys_Body = nullptr;
 	}
 
@@ -1643,7 +1659,7 @@ void CL64_MeshViewer::Show_Physics_Cone()
 	Ogre_MV_Phys_Body->setUserPointer(Ogre_MvNode);
 	Ogre_MV_Phys_Body->setWorldTransform(startTransform);
 
-	//App->CL_Bullet->dynamicsWorld->addRigidBody(Ogre_MV_Phys_Body);
+	App->CL_Physics->dynamicsWorld->addRigidBody(Ogre_MV_Phys_Body);
 
 	Set_Physics();
 

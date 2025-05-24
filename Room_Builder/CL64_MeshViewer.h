@@ -60,7 +60,7 @@ public:
 	char m_Resource_Folder_Full[MAX_PATH];
 	// ------------------------------------------
 
-
+	btRigidBody* Ogre_MV_Phys_Body;
 	int Physics_Shape;
 	int Physics_Type;
 
@@ -147,7 +147,6 @@ private:
 
 	CL64_MeshView_Listener* RenderListener;
 
-	btRigidBody* Ogre_MV_Phys_Body;
 	btCollisionShape* Ogre_MV_Phys_Shape;
 };
 
