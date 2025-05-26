@@ -36,6 +36,7 @@ public:
 	bool Update_ListView_Player();
 	bool Update_ListView_Environs();
 
+	bool Update_ListView_Objects();
 	bool Edit_Player(LPARAM lParam);
 	bool Edit_Environs_OnClick(LPARAM lParam);
 

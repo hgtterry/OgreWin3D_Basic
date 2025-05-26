@@ -714,15 +714,8 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 			}
 			else
 			{
-				if (App->CL_Editor_Com->flag_Project_Resources_Created == true)
-				{
-					App->CL_MeshViewer->Copy_Assets();
-					App->CL_Objects_Create->Add_Objects_From_MeshViewer();
-				}
-				else
-				{
-					App->Say("No Project Resource Location");
-				}
+				App->CL_MeshViewer->Copy_Assets();
+				App->CL_Objects_Create->Add_Objects_From_MeshViewer();
 			}
 
 
@@ -1952,13 +1945,6 @@ bool CL64_MeshViewer::Create_Mesh(char* File)
 		DataStreamPtr stream(memstream);
 		meshSerializer.importMesh(stream, pMesh.getPointer());
 		
-		
-		/*Ogre::Entity* Testxx_1 = App->CL_Ogre->mSceneMgr->createEntity("LocalMesh_Ent", Selected_MeshFile,App->CL_Resources->Project_Resource_Group);
-		Ogre::SceneNode* vNode = App->CL_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
-		vNode->attachObject(Testxx_1);
-		vNode->setVisible(true);
-		vNode->scale(1, 1, 1);*/
-
 	}
 
 	return 1;

@@ -337,6 +337,62 @@ void CL64_Properties_Scene::ListView_OnClickOptions(LPARAM lParam)
 }
 
 // *************************************************************************
+// *		Update_ListView_Objects:- Terry and Hazel Flanigan 2024 	   *
+// *************************************************************************
+bool CL64_Properties_Scene::Update_ListView_Objects()
+{
+	int index = Current_Selected_Object;
+
+	Base_Object* m_Object = App->CL_Editor_Com->B_Object[index];
+
+	char Num[10];
+	char chr_ID[50];
+	char IndexNum[10];
+	_itoa(m_Object->This_Object_UniqueID, Num, 10);
+	_itoa(index, IndexNum, 10);
+	strcpy(chr_ID, "Unique ID ");
+	strcat(chr_ID, Num);
+	strcat(chr_ID, "  Object Index ");
+	strcat(chr_ID, IndexNum);
+
+
+	SetWindowText(Properties_Dlg_hWnd, chr_ID);
+	SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)m_Object->Object_Name);
+
+
+	const int NUM_ITEMS = 4;
+	const int NUM_COLS = 2;
+	std::string grid[NUM_COLS][NUM_ITEMS]; // string table
+	LV_ITEM pitem;
+	memset(&pitem, 0, sizeof(LV_ITEM));
+	pitem.mask = LVIF_TEXT;
+
+	grid[0][0] = "Name",		grid[1][0] = m_Object->Object_Name;
+	grid[0][1] = "Mesh File",	grid[1][1] = m_Object->Mesh_FileName;
+	grid[0][2] = "Materials",	grid[1][2] = m_Object->Material_File;
+	grid[0][3] = " ",			grid[1][3] = " ";
+
+	ListView_DeleteAllItems(Properties_hLV);
+
+	for (DWORD row = 0; row < NUM_ITEMS; row++)
+	{
+		pitem.iItem = row;
+		pitem.pszText = const_cast<char*>(grid[0][row].c_str());
+		ListView_InsertItem(Properties_hLV, &pitem);
+
+		//ListView_SetItemText
+
+		for (DWORD col = 1; col < NUM_COLS; col++)
+		{
+			ListView_SetItemText(Properties_hLV, row, col,
+				const_cast<char*>(grid[col][row].c_str()));
+		}
+	}
+
+	return 1;
+}
+
+// *************************************************************************
 // *		Update_ListView_Player:- Terry and Hazel Flanigan 2025	 	   *
 // *************************************************************************
 bool CL64_Properties_Scene::Update_ListView_Player() 

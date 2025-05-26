@@ -693,7 +693,7 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 		//App->CL_LookUps->Update_Types();
 
 		ShowWindow(App->CL_Properties_Scene->Properties_Dlg_hWnd, 1);
-		//App->CL_Properties_Scene->Update_ListView_Objects();
+		App->CL_Properties_Scene->Update_ListView_Objects();
 
 
 		//if (App->SBC_Dimensions->Show_Dimensions == 1)
@@ -1105,13 +1105,39 @@ void CL64_FileView::Context_New(HWND hDlg)
 	// Objects
 	if (App->CL_FileView->Context_Selection == Enums::FileView_Objects_Folder)
 	{
-		App->CL_Dialogs->YesNo((LPSTR)"Add Object", (LPSTR)"Do you want to add a new Object Entity");
-
-		bool Doit = App->CL_Dialogs->flag_Dlg_Canceled;
-		if (Doit == 0)
+		if (App->CL_Editor_Com->flag_Project_Resources_Created == true)
 		{
-			App->CL_MeshViewer->Mesh_Viewer_Mode = Enums::Mesh_Viewer_Objects;
-			App->CL_MeshViewer->Start_MeshViewer_Dlg();
+			App->CL_Dialogs->YesNo((LPSTR)"Add Object", (LPSTR)"Do you want to add a new Object Entity");
+
+			bool Doit = App->CL_Dialogs->flag_Dlg_Canceled;
+			if (Doit == 0)
+			{
+				App->CL_MeshViewer->Mesh_Viewer_Mode = Enums::Mesh_Viewer_Objects;
+				App->CL_MeshViewer->Start_MeshViewer_Dlg();
+			}
+		}
+		else
+		{
+			if (App->CL_Level->flag_File_Been_Saved == 0)
+			{
+				App->Say("This Project is new", "Will use Save As for this first time save");
+				App->CL_File->Start_Save(true);
+
+				if (App->CL_Editor_Com->flag_Project_Resources_Created == true)
+				{
+					App->CL_Dialogs->YesNo((LPSTR)"Add Object", (LPSTR)"Do you want to add a new Object Entity");
+
+					bool Doit = App->CL_Dialogs->flag_Dlg_Canceled;
+					if (Doit == 0)
+					{
+						App->CL_MeshViewer->Mesh_Viewer_Mode = Enums::Mesh_Viewer_Objects;
+						App->CL_MeshViewer->Start_MeshViewer_Dlg();
+					}
+				}
+
+				return ;
+			}
+
 		}
 
 		return;
