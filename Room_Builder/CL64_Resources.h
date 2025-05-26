@@ -38,6 +38,7 @@ public:
 	bool Delete_Project_Resources_Group();
 	bool Add_Resource_Location_Project(char* Resource_Location);
 
+	Ogre::String Project_Resource_Group;
 	Ogre::String mSelected_Resource_Group;
 
 private:
@@ -60,7 +61,6 @@ private:
 	char mSelected_File[MAX_PATH];
 	char mbtext[MAX_PATH];
 
-	Ogre::String Project_Resource_Group;
 	Ogre::String mFileString;
 
 	HWND FX_General_hLV;

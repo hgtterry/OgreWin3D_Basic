@@ -415,6 +415,8 @@ void CL64_ImGui::App_Stats_GUI(void)
 			ImGui::Separator();
 			ImGui::Text("Project Name:= %s", App->CL_Project->m_Project_Name);
 			ImGui::Text("Level Name:= %s", App->CL_Project->m_Level_Name);
+			ImGui::Text("Level Name:= %s", App->CL_Project->m_Level_Name);
+			ImGui::Text("Assert Folder:= %s", App->CL_Project->m_Main_Assets_Path);
 			ImGui::Separator();
 			ImGui::TreePop();
 		}

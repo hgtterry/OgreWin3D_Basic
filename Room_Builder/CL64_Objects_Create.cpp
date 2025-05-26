@@ -89,7 +89,7 @@ bool CL64_Objects_Create::Dispatch_MeshViewer()
 	}
 	else
 	{
-		//Add_New_Object(Index, true);
+		Add_New_Object(Index, true);
 		App->CL_Editor_Com->B_Object[Index]->flag_Altered = 1;
 		//App->CL_Editor_Com->B_Object[Index]->Folder = Enums::Folder_Objects;
 		App->CL_Editor_Com->B_Object[Index]->FileViewItem = App->CL_FileView->Add_Item(App->CL_FileView->FV_Objects_Folder,
@@ -117,15 +117,17 @@ bool CL64_Objects_Create::Add_New_Object(int Index, bool From_MeshViewer)
 	strcat(Ogre_Name, ConNum);
 
 	strcpy(Mesh_File, Object->Mesh_FileName);
+	Debug
 
-	Object->Object_Ent = App->CL_Ogre->mSceneMgr->createEntity(Ogre_Name, Mesh_File, App->CL_Ogre->App_Resource_Group);
+	Object->Object_Ent = App->CL_Ogre->mSceneMgr->createEntity(Ogre_Name, Mesh_File, App->CL_Resources->Project_Resource_Group);// App->CL_Ogre->App_Resource_Group);
 	
-
+	
 	Object->Object_Node = App->CL_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	Object->Object_Node->attachObject(Object->Object_Ent);
 	Object->Object_Node->setVisible(true);
 	Object->Object_Node->setOrientation(Object->Mesh_Quat);
 
+	Debug
 	// Get Material Name
 	Ogre::String text = Object->Object_Ent->getMesh()->getSubMesh(0)->getMaterialName().c_str();
 	Ogre::MaterialPtr  Mat = static_cast<Ogre::MaterialPtr> (Ogre::MaterialManager::getSingleton().getByName(text));

@@ -79,6 +79,10 @@ bool CL64_Project::Reset_Class()
 	strcpy(m_Project_Name, "First_Project");
 	strcpy(m_Level_Name, "First_Level");
 
+	strcpy(m_Main_Assets_Path, "None");
+	strcpy(m_Main_TXL_Path, "None");;
+	strcpy(m_Last_Main_Assets_Path, "None");
+
 	return 1;
 }
 
@@ -628,14 +632,14 @@ bool CL64_Project::Save_Main_Asset_Folder()
 	/*if (flag_Is_New_Project == 0)
 	{
 		Copy_Assets(LastFolder, m_Main_Assets_Path);
-	}
+	}*/
 	
-	if (flag_Is_New_Project == 1)
+	//if (flag_Is_New_Project == 1)
 	{
 		Load_Get_Resource_Path();
-	}*/
+	}
 
-	//App->CL_Project->flag_Is_New_Project = 0;
+	App->CL_Project->flag_Is_New_Project = 0;
 
 	(void)_chdir(m_Level_Folder_Path); // Return to Level Folder
 
@@ -1789,7 +1793,7 @@ bool CL64_Project::Load_Get_Resource_Path()
 	strcpy(m_Main_TXL_Path, m_Main_Assets_Path);
 	strcat(m_Main_TXL_Path, "TXL_Texture.Zip");
 
-	//App->CL_Resources->Add_Resource_Location_Project(m_Main_Assets_Path);
+	App->CL_Resources->Add_Resource_Location_Project(m_Main_Assets_Path);
 
 	return 1;
 }
