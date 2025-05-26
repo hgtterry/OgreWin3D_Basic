@@ -117,8 +117,7 @@ bool CL64_Objects_Create::Add_New_Object(int Index, bool From_MeshViewer)
 	strcat(Ogre_Name, ConNum);
 
 	strcpy(Mesh_File, Object->Mesh_FileName);
-	Debug
-
+	
 	Object->Object_Ent = App->CL_Ogre->mSceneMgr->createEntity(Ogre_Name, Mesh_File, App->CL_Resources->Project_Resource_Group);// App->CL_Ogre->App_Resource_Group);
 	
 	
@@ -127,7 +126,6 @@ bool CL64_Objects_Create::Add_New_Object(int Index, bool From_MeshViewer)
 	Object->Object_Node->setVisible(true);
 	Object->Object_Node->setOrientation(Object->Mesh_Quat);
 
-	Debug
 	// Get Material Name
 	Ogre::String text = Object->Object_Ent->getMesh()->getSubMesh(0)->getMaterialName().c_str();
 	Ogre::MaterialPtr  Mat = static_cast<Ogre::MaterialPtr> (Ogre::MaterialManager::getSingleton().getByName(text));
