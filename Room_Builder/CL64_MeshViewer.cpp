@@ -719,7 +719,7 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 			}
 
 
-	//		App->CL_Ogre->RenderFrame(10);
+			App->CL_Ogre->RenderFrame(10);
 			App->CL_MeshViewer->Close_OgreWindow();
 			App->CL_MeshViewer->Delete_Resources_Group();
 

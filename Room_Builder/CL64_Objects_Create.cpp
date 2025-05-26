@@ -39,19 +39,20 @@ CL64_Objects_Create::~CL64_Objects_Create(void)
 // *************************************************************************
 void CL64_Objects_Create::Add_Objects_From_MeshViewer()
 {
+	// Check if the current mode is for collectables
+	if (App->CL_MeshViewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Collectables) // Collectables
+	{
+		//App->CL_Com_Collectables->Add_New_Collectable();
+		return;
+	}
 
-	//if (App->CL_MeshViewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Collectables) // Collectables
-	//{
-	//	//App->CL_Com_Collectables->Add_New_Collectable();
-	//	return;
-	//}
 
+	// Retrieve the current object count
+	int index = App->CL_Editor_Com->Object_Count;
 
-	int Index = App->CL_Editor_Com->Object_Count;
+	App->CL_Editor_Com->B_Object[index] = new Base_Object();
 
-	App->CL_Editor_Com->B_Object[Index] = new Base_Object();
-
-	Base_Object* Object = App->CL_Editor_Com->B_Object[Index];
+	Base_Object* Object = App->CL_Editor_Com->B_Object[index];
 	Object->This_Object_UniqueID = App->CL_Editor_Com->UniqueID_Object_Counter; // Unique ID
 
 
@@ -64,7 +65,7 @@ void CL64_Objects_Create::Add_Objects_From_MeshViewer()
 
 	App->CL_Objects_Create->Dispatch_MeshViewer();
 
-	App->CL_FileView->SelectItem(App->CL_Editor_Com->B_Object[Index]->FileViewItem);
+	App->CL_FileView->SelectItem(App->CL_Editor_Com->B_Object[index]->FileViewItem);
 
 
 	App->CL_Editor_Com->UniqueID_Object_Counter++; // Unique ID
@@ -79,7 +80,7 @@ void CL64_Objects_Create::Add_Objects_From_MeshViewer()
 // *************************************************************************
 bool CL64_Objects_Create::Dispatch_MeshViewer()
 {
-	return 1;
+
 	int Index = App->CL_Editor_Com->Object_Count;
 
 	if (App->CL_MeshViewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Area) // Area
@@ -91,10 +92,9 @@ bool CL64_Objects_Create::Dispatch_MeshViewer()
 	{
 		Add_New_Object(Index, true);
 		App->CL_Editor_Com->B_Object[Index]->flag_Altered = 1;
-		//App->CL_Editor_Com->B_Object[Index]->Folder = Enums::Folder_Objects;
+		App->CL_Editor_Com->B_Object[Index]->Folder = Enums::Folder_Objects;
 		App->CL_Editor_Com->B_Object[Index]->FileViewItem = App->CL_FileView->Add_Item(App->CL_FileView->FV_Objects_Folder,
 		App->CL_Editor_Com->B_Object[Index]->Object_Name, Index, true);
-
 	}
 
 	return 1;
