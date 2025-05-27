@@ -304,6 +304,44 @@ void CL64_Physics::Reset_Physics(void)
 	float y = 0;
 	float z = 0;
 
+	/*int Count = 0;
+	while (Count < App->CL_Scene->Object_Count)
+	{
+		if (App->CL_Scene->B_Object[Count]->Usage == Enums::Obj_Usage_Dynamic)
+		{
+			btVector3 zeroVector(0, 0, 0);
+
+			x = App->CL_Scene->B_Object[Count]->Physics_Pos.x;
+			y = App->CL_Scene->B_Object[Count]->Physics_Pos.y;
+			z = App->CL_Scene->B_Object[Count]->Physics_Pos.z;
+			btVector3 initialPosition(x, y, z);
+
+			btTransform startTransform;
+			startTransform.setIdentity();
+
+			startTransform.setRotation(btQuaternion(App->CL_Scene->B_Object[Count]->Physics_Quat.x,
+				App->CL_Scene->B_Object[Count]->Physics_Quat.y,
+				App->CL_Scene->B_Object[Count]->Physics_Quat.z,
+				App->CL_Scene->B_Object[Count]->Physics_Quat.w));
+
+			startTransform.setOrigin(initialPosition);
+
+			App->CL_Scene->B_Object[Count]->Phys_Body->clearForces();
+			App->CL_Scene->B_Object[Count]->Phys_Body->setLinearVelocity(zeroVector);
+			App->CL_Scene->B_Object[Count]->Phys_Body->setAngularVelocity(zeroVector);
+
+			App->CL_Scene->B_Object[Count]->Phys_Body->setWorldTransform(startTransform);
+			App->CL_Scene->B_Object[Count]->Phys_Body->getMotionState()->setWorldTransform(startTransform);
+			App->CL_Scene->B_Object[Count]->Phys_Body->activate(true);
+
+			App->CL_Scene->B_Object[Count]->Object_Node->setPosition(App->CL_Scene->B_Object[Count]->Mesh_Pos);
+			App->CL_Scene->B_Object[Count]->Object_Node->setOrientation(App->CL_Scene->B_Object[Count]->Mesh_Quat);
+
+		}
+
+		Count++;
+	}*/
+
 	if (App->CL_Scene->flag_Player_Added == 1)// && GD_Reset_Player == 1)
 	{
 		btVector3 zeroVector(0, 0, 0);
@@ -341,6 +379,50 @@ void CL64_Physics::Reset_Scene(void)
 	App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_Free;
 
 	App->CL_Physics->Reset_Physics();
+
+	float w = 1;
+	float x = 0;
+	float y = 0;
+	float z = 0;
+
+	int Count = 0;
+	while (Count < App->CL_Scene->Object_Count)
+	{
+		if (App->CL_Scene->B_Object[Count]->Usage == Enums::Obj_Usage_Dynamic)
+		{
+			btVector3 zeroVector(0, 0, 0);
+
+			x = App->CL_Scene->B_Object[Count]->Physics_Pos.x;
+			y = App->CL_Scene->B_Object[Count]->Physics_Pos.y;
+			z = App->CL_Scene->B_Object[Count]->Physics_Pos.z;
+			btVector3 initialPosition(x, y, z);
+
+			btTransform startTransform;
+			startTransform.setIdentity();
+
+			startTransform.setRotation(btQuaternion(App->CL_Scene->B_Object[Count]->Physics_Quat.x,
+				App->CL_Scene->B_Object[Count]->Physics_Quat.y,
+				App->CL_Scene->B_Object[Count]->Physics_Quat.z,
+				App->CL_Scene->B_Object[Count]->Physics_Quat.w));
+
+			startTransform.setOrigin(initialPosition);
+
+			App->CL_Scene->B_Object[Count]->Phys_Body->clearForces();
+			App->CL_Scene->B_Object[Count]->Phys_Body->setLinearVelocity(zeroVector);
+			App->CL_Scene->B_Object[Count]->Phys_Body->setAngularVelocity(zeroVector);
+
+			App->CL_Scene->B_Object[Count]->Phys_Body->setWorldTransform(startTransform);
+			App->CL_Scene->B_Object[Count]->Phys_Body->getMotionState()->setWorldTransform(startTransform);
+			App->CL_Scene->B_Object[Count]->Phys_Body->activate(true);
+
+			App->CL_Scene->B_Object[Count]->Object_Node->setPosition(App->CL_Scene->B_Object[Count]->Mesh_Pos);
+			App->CL_Scene->B_Object[Count]->Object_Node->setOrientation(App->CL_Scene->B_Object[Count]->Mesh_Quat);
+
+		}
+
+		Count++;
+	}
+
 	/*App->CL_Ogre->Ogre3D_Listener->flag_Run_Physics = 1;
 	App->CL_Physics->Reset_Triggers();
 	App->CL_Ogre->Ogre3D_Listener->flag_Run_Physics = 1;
