@@ -26,7 +26,7 @@ THE SOFTWARE.
 #include "CL64_App.h"
 #include "CL64_Editor.h"
 
-CL64_Editor_Com::CL64_Editor_Com()
+CL64_Scene::CL64_Scene()
 {
 	
 	flag_Project_Resources_Created = 0;
@@ -76,14 +76,14 @@ CL64_Editor_Com::CL64_Editor_Com()
 
 }
 
-CL64_Editor_Com::~CL64_Editor_Com()
+CL64_Scene::~CL64_Scene()
 {
 }
 
 // *************************************************************************
 // *			Reset_Class:- Terry and Hazel Flanigan 2024				   *
 // *************************************************************************
-void CL64_Editor_Com::Reset_Class()
+void CL64_Scene::Reset_Class()
 {
 	int Count = 0; // Remove Ogre Objects
 	while (Count < Object_Count)
@@ -123,7 +123,7 @@ void CL64_Editor_Com::Reset_Class()
 // *************************************************************************
 // *			Create_Brush_XX:- Terry and Hazel Flanigan 2025		  	   *
 // *************************************************************************
-void CL64_Editor_Com::Create_Brush_XX(int Index)
+void CL64_Scene::Create_Brush_XX(int Index)
 {
 	if (B_Brush[Index] != nullptr)
 	{
@@ -140,7 +140,7 @@ void CL64_Editor_Com::Create_Brush_XX(int Index)
 // *************************************************************************
 // *		Create_Mesh_Group:- Terry and Hazel Flanigan 2023		  	   *
 // *************************************************************************
-void CL64_Editor_Com::Create_Mesh_Group(int Index)
+void CL64_Scene::Create_Mesh_Group(int Index)
 {
 	if (Group[Index] != nullptr)
 	{
@@ -154,7 +154,7 @@ void CL64_Editor_Com::Create_Mesh_Group(int Index)
 // *************************************************************************
 // *			Clear_Level:- Terry and Hazel Flanigan 2024				   *
 // *************************************************************************
-void CL64_Editor_Com::Clear_Level(bool FromFile)
+void CL64_Scene::Clear_Level(bool FromFile)
 {
 	App->CL_Ogre->OGL_Listener->Show_Visuals(false);
 

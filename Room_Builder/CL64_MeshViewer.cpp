@@ -218,7 +218,7 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 			char ConNum[MAX_PATH];
 
 			strcpy(ATest, "Object_");
-			_itoa(App->CL_Editor_Com->Object_Count, ConNum, 10);
+			_itoa(App->CL_Scene->Object_Count, ConNum, 10);
 			strcat(ATest, ConNum);
 
 			SetDlgItemText(hDlg, IDC_OBJECTNAME, ATest);

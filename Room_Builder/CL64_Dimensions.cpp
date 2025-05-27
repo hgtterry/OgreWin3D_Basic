@@ -84,43 +84,43 @@ void CL64_Dimensions::Prepare_Dimensions(void)
 
 	if (App->CL_Properties_Scene->Edit_Category == Enums::Edit_Area)
 	{
-		/*pBase_Mesh_Name = App->CL_Editor_Com->B_Area[Index]->Area_Name;
+		/*pBase_Mesh_Name = App->CL_Scene->B_Area[Index]->Area_Name;
 
-		pBase_Shape = &App->CL_Editor_Com->B_Area[Index]->Shape;
+		pBase_Shape = &App->CL_Scene->B_Area[Index]->Shape;
 
-		pBase_Object_Ent = App->CL_Editor_Com->B_Area[Index]->Area_Ent;
-		pBase_Object_Node = App->CL_Editor_Com->B_Area[Index]->Area_Node;
-		pBase_Mesh_Pos = &App->CL_Editor_Com->B_Area[Index]->Mesh_Pos;
-		pBase_Mesh_Scale = &App->CL_Editor_Com->B_Area[Index]->Mesh_Scale;
-		pBase_Mesh_Rot = &App->CL_Editor_Com->B_Area[Index]->Mesh_Rot;
-		pBase_Mesh_Quat = &App->CL_Editor_Com->B_Area[Index]->Mesh_Quat;
+		pBase_Object_Ent = App->CL_Scene->B_Area[Index]->Area_Ent;
+		pBase_Object_Node = App->CL_Scene->B_Area[Index]->Area_Node;
+		pBase_Mesh_Pos = &App->CL_Scene->B_Area[Index]->Mesh_Pos;
+		pBase_Mesh_Scale = &App->CL_Scene->B_Area[Index]->Mesh_Scale;
+		pBase_Mesh_Rot = &App->CL_Scene->B_Area[Index]->Mesh_Rot;
+		pBase_Mesh_Quat = &App->CL_Scene->B_Area[Index]->Mesh_Quat;
 
-		pBase_Phys_Body = App->CL_Editor_Com->B_Area[Index]->Phys_Body;
-		pBase_Physics_Pos = &App->CL_Editor_Com->B_Area[Index]->Physics_Pos;
-		pBase_Physics_Scale = &App->CL_Editor_Com->B_Area[Index]->Physics_Scale;
-		pBase_Physics_Rot = &App->CL_Editor_Com->B_Area[Index]->Physics_Rot;
-		pBase_Physics_Quat = &App->CL_Editor_Com->B_Area[Index]->Physics_Quat;*/
+		pBase_Phys_Body = App->CL_Scene->B_Area[Index]->Phys_Body;
+		pBase_Physics_Pos = &App->CL_Scene->B_Area[Index]->Physics_Pos;
+		pBase_Physics_Scale = &App->CL_Scene->B_Area[Index]->Physics_Scale;
+		pBase_Physics_Rot = &App->CL_Scene->B_Area[Index]->Physics_Rot;
+		pBase_Physics_Quat = &App->CL_Scene->B_Area[Index]->Physics_Quat;*/
 
 		//App->Say("Area");
 	}
 	else
 	{
-		pBase_Mesh_Name = App->CL_Editor_Com->B_Object[Index]->Object_Name;
+		pBase_Mesh_Name = App->CL_Scene->B_Object[Index]->Object_Name;
 
-		pBase_Shape = &App->CL_Editor_Com->B_Object[Index]->Shape;
+		pBase_Shape = &App->CL_Scene->B_Object[Index]->Shape;
 
-		pBase_Object_Ent = App->CL_Editor_Com->B_Object[Index]->Object_Ent;
-		pBase_Object_Node = App->CL_Editor_Com->B_Object[Index]->Object_Node;
-		pBase_Mesh_Pos = &App->CL_Editor_Com->B_Object[Index]->Mesh_Pos;
-		pBase_Mesh_Scale = &App->CL_Editor_Com->B_Object[Index]->Mesh_Scale;
-		pBase_Mesh_Rot = &App->CL_Editor_Com->B_Object[Index]->Mesh_Rot;
-		pBase_Mesh_Quat = &App->CL_Editor_Com->B_Object[Index]->Mesh_Quat;
+		pBase_Object_Ent = App->CL_Scene->B_Object[Index]->Object_Ent;
+		pBase_Object_Node = App->CL_Scene->B_Object[Index]->Object_Node;
+		pBase_Mesh_Pos = &App->CL_Scene->B_Object[Index]->Mesh_Pos;
+		pBase_Mesh_Scale = &App->CL_Scene->B_Object[Index]->Mesh_Scale;
+		pBase_Mesh_Rot = &App->CL_Scene->B_Object[Index]->Mesh_Rot;
+		pBase_Mesh_Quat = &App->CL_Scene->B_Object[Index]->Mesh_Quat;
 
-		pBase_Phys_Body = App->CL_Editor_Com->B_Object[Index]->Phys_Body;
-		pBase_Physics_Pos = &App->CL_Editor_Com->B_Object[Index]->Physics_Pos;
-		pBase_Physics_Scale = &App->CL_Editor_Com->B_Object[Index]->Physics_Scale;
-		pBase_Physics_Rot = &App->CL_Editor_Com->B_Object[Index]->Physics_Rot;
-		pBase_Physics_Quat = &App->CL_Editor_Com->B_Object[Index]->Physics_Quat;
+		pBase_Phys_Body = App->CL_Scene->B_Object[Index]->Phys_Body;
+		pBase_Physics_Pos = &App->CL_Scene->B_Object[Index]->Physics_Pos;
+		pBase_Physics_Scale = &App->CL_Scene->B_Object[Index]->Physics_Scale;
+		pBase_Physics_Rot = &App->CL_Scene->B_Object[Index]->Physics_Rot;
+		pBase_Physics_Quat = &App->CL_Scene->B_Object[Index]->Physics_Quat;
 
 		//App->Say("Object");
 	}
@@ -350,7 +350,7 @@ void CL64_Dimensions::ImGui_Position(void)
 	ImGui::PushItemFlag(ImGuiItemFlags_ButtonRepeat, true);
 	if (ImGui::Button("+##PosP", ImVec2(30, 0)))
 	{
-		//if (App->CL_Editor_Com->flag_Scene_Loaded == 1)
+		//if (App->CL_Scene->flag_Scene_Loaded == 1)
 		{
 			if (flag_PosX_Selected == 1)
 			{
@@ -375,7 +375,7 @@ void CL64_Dimensions::ImGui_Position(void)
 	ImGui::SameLine();
 	if (ImGui::Button("-##PosM", ImVec2(30, 0)))
 	{
-		//if (App->CL_Editor_Com->flag_Scene_Loaded == 1)
+		//if (App->CL_Scene->flag_Scene_Loaded == 1)
 		{
 			if (flag_PosX_Selected == 1)
 			{
@@ -431,7 +431,7 @@ void CL64_Dimensions::Set_Position(Ogre::Vector3 Pos)
 	pBase_Mesh_Pos->y = Pos.y;
 	pBase_Mesh_Pos->z = Pos.z;
 
-	App->CL_Brush_X->Move_Brush_By_Name(App->CL_Editor_Com->B_Object[Index]->Object_Name, Index);
+	App->CL_Brush_X->Move_Brush_By_Name(App->CL_Scene->B_Object[Index]->Object_Name, Index);
 
 	if (pBase_Phys_Body)
 	{
@@ -571,7 +571,7 @@ void CL64_Dimensions::ImGui_Scale(void)
 
 	if (ImGui::Button("+##ScaleP", ImVec2(30, 0)))
 	{
-		//if (App->CL_Editor_Com->flag_Scene_Loaded == 1)
+		//if (App->CL_Scene->flag_Scene_Loaded == 1)
 		{
 			if (flag_Scale_Lock == 1)
 			{
@@ -612,7 +612,7 @@ void CL64_Dimensions::ImGui_Scale(void)
 	ImGui::SameLine();
 	if (ImGui::Button("-##ScaleM", ImVec2(30, 0)))
 	{
-		//if (App->CL_Editor_Com->flag_Scene_Loaded == 1)
+		//if (App->CL_Scene->flag_Scene_Loaded == 1)
 		{
 			if (flag_Scale_Lock == 1)
 			{
@@ -692,11 +692,11 @@ void CL64_Dimensions::Set_Scale(Ogre::Vector3 Scale)
 	pBase_Mesh_Scale->y = Scale.y;
 	pBase_Mesh_Scale->z = Scale.z;
 
-	float sizeX = App->CL_Editor_Com->B_Object[Index]->Object_Node->_getWorldAABB().getSize().x;
-	float sizeY = App->CL_Editor_Com->B_Object[Index]->Object_Node->_getWorldAABB().getSize().y;
-	float sizeZ = App->CL_Editor_Com->B_Object[Index]->Object_Node->_getWorldAABB().getSize().z;
+	float sizeX = App->CL_Scene->B_Object[Index]->Object_Node->_getWorldAABB().getSize().x;
+	float sizeY = App->CL_Scene->B_Object[Index]->Object_Node->_getWorldAABB().getSize().y;
+	float sizeZ = App->CL_Scene->B_Object[Index]->Object_Node->_getWorldAABB().getSize().z;
 
-	App->CL_Brush_X->Scale_Brush_By_Name(App->CL_Editor_Com->B_Object[Index]->Object_Name, Index, sizeX, sizeY, sizeZ);
+	App->CL_Brush_X->Scale_Brush_By_Name(App->CL_Scene->B_Object[Index]->Object_Name, Index, sizeX, sizeY, sizeZ);
 
 	if (pBase_Phys_Body)
 	{
@@ -791,7 +791,7 @@ void CL64_Dimensions::ImGui_Rotation(void)
 	ImGui::PushItemFlag(ImGuiItemFlags_ButtonRepeat,true);
 	if (ImGui::Button("+##RotP", ImVec2(30, 0)))
 	{
-		//if (App->CL_Editor_Com->flag_Scene_Loaded == 1)
+		//if (App->CL_Scene->flag_Scene_Loaded == 1)
 		{
 			if (flag_RotationX_Selected == 1)
 			{
@@ -818,7 +818,7 @@ void CL64_Dimensions::ImGui_Rotation(void)
 	ImGui::SameLine();
 	if (ImGui::Button("-##RotM", ImVec2(30, 0)))
 	{
-		//if (App->CL_Editor_Com->flag_Scene_Loaded == 1)
+		//if (App->CL_Scene->flag_Scene_Loaded == 1)
 		{
 
 			if (flag_RotationX_Selected == 1)
@@ -896,11 +896,11 @@ void CL64_Dimensions::Set_Rotation(Ogre::Vector3 Rotation, float Delta)
 		App->CL_Gizmos->MarkerBox_Addjust(Index);
 	}
 
-	float RotX = App->CL_Editor_Com->B_Object[Index]->Mesh_Rot.x;
-	float RotY = App->CL_Editor_Com->B_Object[Index]->Mesh_Rot.y;
-	float RotZ = App->CL_Editor_Com->B_Object[Index]->Mesh_Rot.z;
+	float RotX = App->CL_Scene->B_Object[Index]->Mesh_Rot.x;
+	float RotY = App->CL_Scene->B_Object[Index]->Mesh_Rot.y;
+	float RotZ = App->CL_Scene->B_Object[Index]->Mesh_Rot.z;
 
-	//App->CL_Brush_X->Rotate_Brush_By_Name(App->CL_Editor_Com->B_Object[Index]->Object_Name, Index, RotX, RotY, RotZ);
+	//App->CL_Brush_X->Rotate_Brush_By_Name(App->CL_Scene->B_Object[Index]->Object_Name, Index, RotX, RotY, RotZ);
 
 //	App->SBC_Markers->MarkerBB_Addjust(Index);
 }
@@ -940,8 +940,8 @@ void CL64_Dimensions::UpDate_Physics(int Index)
 	}
 
 	// Needs Looking at
-	App->CL_Editor_Com->B_Object[Index]->flag_Altered = 1;
-	App->CL_FileView->Mark_Altered(App->CL_Editor_Com->B_Object[Index]->FileViewItem);
+	App->CL_Scene->B_Object[Index]->flag_Altered = 1;
+	App->CL_FileView->Mark_Altered(App->CL_Scene->B_Object[Index]->FileViewItem);
 	App->CL_Level->flag_Level_is_Modified = 1;
 }
 
@@ -967,7 +967,7 @@ void CL64_Dimensions::Do_Position_New()
 {
 	int Index = App->CL_Properties_Scene->Current_Selected_Object;
 
-	auto& m_object = App->CL_Editor_Com->B_Object[Index];
+	auto& m_object = App->CL_Scene->B_Object[Index];
 
 	App->CL_ImGui_Dialogs->Start_Dialog_Float_Vec3(1.00, 4, m_object->Object_Node->getPosition(), (LPSTR)"Position");
 
@@ -995,7 +995,7 @@ void CL64_Dimensions::Do_Position_New()
 
 		App->CL_Gizmos->MarkerBox_Addjust(Index);
 
-		App->CL_Editor_Com->B_Object[Index]->flag_Altered = 1;
+		App->CL_Scene->B_Object[Index]->flag_Altered = 1;
 		App->CL_Level->flag_Level_is_Modified = true;
 		App->CL_FileView->Mark_Altered(m_object->FileViewItem);
 	}
@@ -1015,7 +1015,7 @@ void CL64_Dimensions::Do_Scale_New()
 {
 	int Index = App->CL_Properties_Scene->Current_Selected_Object;
 
-	auto& m_object = App->CL_Editor_Com->B_Object[Index];
+	auto& m_object = App->CL_Scene->B_Object[Index];
 
 	App->CL_ImGui_Dialogs->Start_Dialog_Float_Vec3(0.10, 2, m_object->Object_Node->getScale(), (LPSTR)"Scale");
 
@@ -1062,7 +1062,7 @@ void CL64_Dimensions::Do_Rotation_New()
 {
 	int Index = App->CL_Properties_Scene->Current_Selected_Object;
 
-	auto& m_object = App->CL_Editor_Com->B_Object[Index];
+	auto& m_object = App->CL_Scene->B_Object[Index];
 
 	Ogre::Vector3 Angles;
 

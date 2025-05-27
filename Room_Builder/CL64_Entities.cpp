@@ -55,14 +55,14 @@ CL64_Entities::~CL64_Entities()
 int CL64_Entities::GetIndex_By_Name(char* Name)
 {
 	int Count = 0;
-	int Total = App->CL_Editor_Com->Object_Count;
+	int Total = App->CL_Scene->Object_Count;
 
 	while (Count < Total)
 	{
-		if (App->CL_Editor_Com->B_Object[Count]->flag_Deleted == 0)
+		if (App->CL_Scene->B_Object[Count]->flag_Deleted == 0)
 		{
 			int Result = 1;
-			Result = strcmp(App->CL_Editor_Com->B_Object[Count]->Object_Name, Name);
+			Result = strcmp(App->CL_Scene->B_Object[Count]->Object_Name, Name);
 			if (Result == 0)
 			{
 				return Count;
@@ -133,7 +133,7 @@ void CL64_Entities::Create_Player_Brush()
 void CL64_Entities::Create_Environment_Brush(int Object_Index)
 {
 	char m_Name[MAX_PATH];
-	strcpy(m_Name, App->CL_Editor_Com->B_Object[Object_Index]->Object_Name);
+	strcpy(m_Name, App->CL_Scene->B_Object[Object_Index]->Object_Name);
 
 	bool test = App->CL_Brush_X->Check_if_Brush_Name_Exist((LPSTR)m_Name);
 	if (test == true)
@@ -151,7 +151,7 @@ void CL64_Entities::Create_Environment_Brush(int Object_Index)
 
 	pBoxTemplate = App->CL_Level->Level_GetBoxTemplate();
 
-	Ogre::Vector3 size = App->CL_Com_Objects->GetMesh_BB_Size(App->CL_Editor_Com->B_Object[Object_Index]->Object_Node);
+	Ogre::Vector3 size = App->CL_Com_Objects->GetMesh_BB_Size(App->CL_Scene->B_Object[Object_Index]->Object_Node);
 
 
 	pBoxTemplate->Solid = 0;
@@ -178,12 +178,12 @@ void CL64_Entities::Create_Environment_Brush(int Object_Index)
 	Scales.LightmapScale = App->CL_Level->Level_GetLightmapScale(App->CL_Doc->Current_Level);
 	App->CL_Brush->Brush_EnumFaces(Environ_Brush, &Scales, fdocSetFaceScales);
 
-	strcpy(Environ_Brush->Name, App->CL_Editor_Com->B_Object[Object_Index]->Object_Name);
+	strcpy(Environ_Brush->Name, App->CL_Scene->B_Object[Object_Index]->Object_Name);
 
 	T_Vec3 Pos;
-	Pos.x = App->CL_Editor_Com->B_Object[Object_Index]->Mesh_Pos.x;
-	Pos.y = App->CL_Editor_Com->B_Object[Object_Index]->Mesh_Pos.y;
-	Pos.z = App->CL_Editor_Com->B_Object[Object_Index]->Mesh_Pos.z;
+	Pos.x = App->CL_Scene->B_Object[Object_Index]->Mesh_Pos.x;
+	Pos.y = App->CL_Scene->B_Object[Object_Index]->Mesh_Pos.y;
+	Pos.z = App->CL_Scene->B_Object[Object_Index]->Mesh_Pos.z;
 
 	App->CL_Brush->Brush_Move(Environ_Brush, &Pos);
 

@@ -48,12 +48,12 @@ void CL64_Objects_Create::Add_Objects_From_MeshViewer()
 
 
 	// Retrieve the current object count
-	int index = App->CL_Editor_Com->Object_Count;
+	int index = App->CL_Scene->Object_Count;
 
-	App->CL_Editor_Com->B_Object[index] = new Base_Object();
+	App->CL_Scene->B_Object[index] = new Base_Object();
 
-	Base_Object* Object = App->CL_Editor_Com->B_Object[index];
-	Object->This_Object_UniqueID = App->CL_Editor_Com->UniqueID_Object_Counter; // Unique ID
+	Base_Object* Object = App->CL_Scene->B_Object[index];
+	Object->This_Object_UniqueID = App->CL_Scene->UniqueID_Object_Counter; // Unique ID
 
 
 	strcpy(Object->Object_Name, App->CL_MeshViewer->Object_Name);
@@ -65,11 +65,11 @@ void CL64_Objects_Create::Add_Objects_From_MeshViewer()
 
 	App->CL_Objects_Create->Dispatch_MeshViewer();
 
-	App->CL_FileView->SelectItem(App->CL_Editor_Com->B_Object[index]->FileViewItem);
+	App->CL_FileView->SelectItem(App->CL_Scene->B_Object[index]->FileViewItem);
 
 
-	App->CL_Editor_Com->UniqueID_Object_Counter++; // Unique ID
-	App->CL_Editor_Com->Object_Count++;  // Must be last line
+	App->CL_Scene->UniqueID_Object_Counter++; // Unique ID
+	App->CL_Scene->Object_Count++;  // Must be last line
 
 	App->CL_Level->flag_Level_is_Modified = 1;
 
@@ -81,7 +81,7 @@ void CL64_Objects_Create::Add_Objects_From_MeshViewer()
 bool CL64_Objects_Create::Dispatch_MeshViewer()
 {
 
-	int Index = App->CL_Editor_Com->Object_Count;
+	int Index = App->CL_Scene->Object_Count;
 
 	if (App->CL_MeshViewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Area) // Area
 	{
@@ -91,10 +91,10 @@ bool CL64_Objects_Create::Dispatch_MeshViewer()
 	else
 	{
 		Add_New_Object(Index, true);
-		App->CL_Editor_Com->B_Object[Index]->flag_Altered = 1;
-		App->CL_Editor_Com->B_Object[Index]->Folder = Enums::Folder_Objects;
-		App->CL_Editor_Com->B_Object[Index]->FileViewItem = App->CL_FileView->Add_Item(App->CL_FileView->FV_Objects_Folder,
-		App->CL_Editor_Com->B_Object[Index]->Object_Name, Index, true);
+		App->CL_Scene->B_Object[Index]->flag_Altered = 1;
+		App->CL_Scene->B_Object[Index]->Folder = Enums::Folder_Objects;
+		App->CL_Scene->B_Object[Index]->FileViewItem = App->CL_FileView->Add_Item(App->CL_FileView->FV_Objects_Folder,
+		App->CL_Scene->B_Object[Index]->Object_Name, Index, true);
 	}
 
 	return 1;
@@ -109,7 +109,7 @@ bool CL64_Objects_Create::Add_New_Object(int Index, bool From_MeshViewer)
 	char ConNum[256];
 	char Ogre_Name[256];
 
-	Base_Object* Object = App->CL_Editor_Com->B_Object[Index];
+	Base_Object* Object = App->CL_Scene->B_Object[Index];
 
 
 	strcpy_s(Ogre_Name, "GDEnt_");
@@ -146,7 +146,7 @@ bool CL64_Objects_Create::Add_New_Object(int Index, bool From_MeshViewer)
 	}
 
 
-	//App->CL_Editor_Com->flag_Scene_Loaded = 1;
+	//App->CL_Scene->flag_Scene_Loaded = 1;
 
 
 	//---------------------- Static
@@ -258,16 +258,16 @@ bool CL64_Objects_Create::Add_New_Object(int Index, bool From_MeshViewer)
 // *************************************************************************
 bool CL64_Objects_Create::Add_Objects_From_File() // From File
 {
-	int Object_Count = App->CL_Editor_Com->Object_Count;
+	int Object_Count = App->CL_Scene->Object_Count;
 	int Count = 0;
 
 	while (Count < Object_Count)
 	{
 		char Test_For_Mesh[MAX_PATH];
 		strcpy(Test_For_Mesh, App->CL_Project->m_Main_Assets_Path);
-		strcat(Test_For_Mesh, App->CL_Editor_Com->B_Object[Count]->Mesh_FileName);
+		strcat(Test_For_Mesh, App->CL_Scene->B_Object[Count]->Mesh_FileName);
 		
-		if (App->CL_Editor_Com->B_Object[Count]->Usage == Enums::Obj_Usage_Sound)
+		if (App->CL_Scene->B_Object[Count]->Usage == Enums::Obj_Usage_Sound)
 		{
 			/*App->CL_Com_Sounds->Create_Sound_Entity(Count);
 
@@ -276,7 +276,7 @@ bool CL64_Objects_Create::Add_Objects_From_File() // From File
 
 			App->CL_FileView->Set_FolderActive(App->CL_FileView->FV_Sounds_Folder);*/
 		}
-		else if (App->CL_Editor_Com->B_Object[Count]->Usage == Enums::Obj_Usage_Message)
+		else if (App->CL_Scene->B_Object[Count]->Usage == Enums::Obj_Usage_Message)
 		{
 			/*App->CL_Com_Messages->Create_Message_Entity(Count);
 			App->CL_Scene->B_Object[Count]->Set_ImGui_Panel_Name();
@@ -286,7 +286,7 @@ bool CL64_Objects_Create::Add_Objects_From_File() // From File
 
 			App->CL_FileView->Set_FolderActive(App->CL_FileView->FV_Message_Trigger_Folder);*/
 		}
-		else if (App->CL_Editor_Com->B_Object[Count]->Usage == Enums::Obj_Usage_Move)
+		else if (App->CL_Scene->B_Object[Count]->Usage == Enums::Obj_Usage_Move)
 		{
 			/*App->CL_Com_MoveEntity->Create_Move_Entity(Count);
 
@@ -296,7 +296,7 @@ bool CL64_Objects_Create::Add_Objects_From_File() // From File
 			App->CL_FileView->Set_FolderActive(App->CL_FileView->FV_Move_Folder);*/
 
 		}
-		else if (App->CL_Editor_Com->B_Object[Count]->Usage == Enums::Obj_Usage_Teleport)
+		else if (App->CL_Scene->B_Object[Count]->Usage == Enums::Obj_Usage_Teleport)
 		{
 			/*App->CL_Com_Teleporters->Create_Teleport_Entity(Count);
 
@@ -306,7 +306,7 @@ bool CL64_Objects_Create::Add_Objects_From_File() // From File
 			App->CL_FileView->Set_FolderActive(App->CL_FileView->FV_Teleporters_Folder);*/
 
 		}
-		else if (App->CL_Editor_Com->B_Object[Count]->Usage == Enums::Obj_Usage_Collectable)
+		else if (App->CL_Scene->B_Object[Count]->Usage == Enums::Obj_Usage_Collectable)
 		{
 			/*bool Test = App->CL_File_IO->Check_File_Exist(Test_For_Mesh);
 			if (Test == 0)
@@ -325,17 +325,17 @@ bool CL64_Objects_Create::Add_Objects_From_File() // From File
 			}*/
 
 		}
-		else if (App->CL_Editor_Com->B_Object[Count]->Usage == Enums::Obj_Usage_EnvironEntity)
+		else if (App->CL_Scene->B_Object[Count]->Usage == Enums::Obj_Usage_EnvironEntity)
 		{
 			App->CL_Com_Environments->Create_Environ_Entity(Count);
 
-			HTREEITEM Temp = App->CL_FileView->Add_Item(App->CL_FileView->FV_Evirons_Folder, App->CL_Editor_Com->B_Object[Count]->Object_Name, Count, false);
-			App->CL_Editor_Com->B_Object[Count]->FileViewItem = Temp;
+			HTREEITEM Temp = App->CL_FileView->Add_Item(App->CL_FileView->FV_Evirons_Folder, App->CL_Scene->B_Object[Count]->Object_Name, Count, false);
+			App->CL_Scene->B_Object[Count]->FileViewItem = Temp;
 
 			App->CL_FileView->Set_FolderActive(App->CL_FileView->FV_Evirons_Folder);
 
 		} // -------------------------------------------------------------------------- Particles
-		else if (App->CL_Editor_Com->B_Object[Count]->Usage == Enums::Obj_Usage_Particle)
+		else if (App->CL_Scene->B_Object[Count]->Usage == Enums::Obj_Usage_Particle)
 		{
 			/*App->CL_Com_Particles->Create_Particle_Entity(Count);
 
@@ -355,15 +355,15 @@ bool CL64_Objects_Create::Add_Objects_From_File() // From File
 			else*/
 			{
 				Add_New_Object(Count, 0);
-				App->CL_Editor_Com->B_Object[Count]->flag_Altered = 0;
-				//App->CL_Editor_Com->B_Object[Count]->Folder = Enums::Folder_Objects;
-				App->CL_Editor_Com->B_Object[Count]->FileViewItem = App->CL_FileView->Add_Item(App->CL_FileView->FV_Objects_Folder, App->CL_Editor_Com->B_Object[Count]->Object_Name, Count, false);
+				App->CL_Scene->B_Object[Count]->flag_Altered = 0;
+				//App->CL_Scene->B_Object[Count]->Folder = Enums::Folder_Objects;
+				App->CL_Scene->B_Object[Count]->FileViewItem = App->CL_FileView->Add_Item(App->CL_FileView->FV_Objects_Folder, App->CL_Scene->B_Object[Count]->Object_Name, Count, false);
 
 				if (Object_Count > 0)
 				{
 					App->CL_FileView->Set_FolderActive(App->CL_FileView->FV_Objects_Folder);
 					//ShowWindow(App->CL_Properties->Properties_Dlg_hWnd, 1);
-					App->CL_FileView->SelectItem(App->CL_Editor_Com->B_Object[0]->FileViewItem);
+					App->CL_FileView->SelectItem(App->CL_Scene->B_Object[0]->FileViewItem);
 				}
 			}
 		}
@@ -380,7 +380,7 @@ bool CL64_Objects_Create::Add_Objects_From_File() // From File
 void CL64_Objects_Create::Add_Physics_Box(bool Dynamic, int Index)
 {
 
-	Base_Object* Object = App->CL_Editor_Com->B_Object[Index];
+	Base_Object* Object = App->CL_Scene->B_Object[Index];
 
 	if (Dynamic == 1)
 	{
@@ -394,7 +394,7 @@ void CL64_Objects_Create::Add_Physics_Box(bool Dynamic, int Index)
 		Object->Shape = Enums::Shape_Box;
 	}
 
-	Ogre::Vector3 Centre = App->CL_Editor_Com->B_Object[Index]->Object_Ent->getWorldBoundingBox(true).getCenter();
+	Ogre::Vector3 Centre = App->CL_Scene->B_Object[Index]->Object_Ent->getWorldBoundingBox(true).getCenter();
 	Object->Physics_Pos = Ogre::Vector3(Centre.x, Centre.y, Centre.z);
 
 	btTransform startTransform;
@@ -456,7 +456,7 @@ void CL64_Objects_Create::Add_Physics_Box(bool Dynamic, int Index)
 
 	App->CL_Physics->dynamicsWorld->addRigidBody(Object->Phys_Body);
 
-	App->CL_Editor_Com->B_Object[Index]->flag_Physics_Valid = 1;
+	App->CL_Scene->B_Object[Index]->flag_Physics_Valid = 1;
 
 	App->CL_Physics->Set_Physics_New(Index);
 
@@ -467,7 +467,7 @@ void CL64_Objects_Create::Add_Physics_Box(bool Dynamic, int Index)
 // *************************************************************************
 void CL64_Objects_Create::Add_Physics_Sphere(bool Dynamic, int Index)
 {
-	Base_Object* Object = App->CL_Editor_Com->B_Object[Index];
+	Base_Object* Object = App->CL_Scene->B_Object[Index];
 
 	if (Dynamic == 1)
 	{
@@ -481,7 +481,7 @@ void CL64_Objects_Create::Add_Physics_Sphere(bool Dynamic, int Index)
 		Object->Shape = Enums::Shape_Sphere;
 	}
 
-	Ogre::Vector3 Centre = App->CL_Editor_Com->B_Object[Index]->Object_Ent->getWorldBoundingBox(true).getCenter();
+	Ogre::Vector3 Centre = App->CL_Scene->B_Object[Index]->Object_Ent->getWorldBoundingBox(true).getCenter();
 	Object->Physics_Pos = Ogre::Vector3(Centre.x, Centre.y, Centre.z);
 
 	btTransform startTransform;
@@ -541,7 +541,7 @@ void CL64_Objects_Create::Add_Physics_Sphere(bool Dynamic, int Index)
 
 	App->CL_Physics->dynamicsWorld->addRigidBody(Object->Phys_Body);
 
-	App->CL_Editor_Com->B_Object[Index]->flag_Physics_Valid = 1;
+	App->CL_Scene->B_Object[Index]->flag_Physics_Valid = 1;
 
 	App->CL_Physics->Set_Physics_New(Index);
 }
@@ -551,7 +551,7 @@ void CL64_Objects_Create::Add_Physics_Sphere(bool Dynamic, int Index)
 // *************************************************************************
 void CL64_Objects_Create::Add_Physics_Capsule(bool Dynamic, int Index)
 {
-	Base_Object* Object = App->CL_Editor_Com->B_Object[Index];
+	Base_Object* Object = App->CL_Scene->B_Object[Index];
 
 	if (Dynamic == 1)
 	{
@@ -565,7 +565,7 @@ void CL64_Objects_Create::Add_Physics_Capsule(bool Dynamic, int Index)
 		Object->Shape = Enums::Shape_Capsule;
 	}
 
-	Ogre::Vector3 Centre = App->CL_Editor_Com->B_Object[Index]->Object_Ent->getWorldBoundingBox(true).getCenter();
+	Ogre::Vector3 Centre = App->CL_Scene->B_Object[Index]->Object_Ent->getWorldBoundingBox(true).getCenter();
 	Object->Physics_Pos = Ogre::Vector3(Centre.x, Centre.y, Centre.z);
 
 	btTransform startTransform;
@@ -628,7 +628,7 @@ void CL64_Objects_Create::Add_Physics_Capsule(bool Dynamic, int Index)
 
 	App->CL_Physics->dynamicsWorld->addRigidBody(Object->Phys_Body);
 
-	App->CL_Editor_Com->B_Object[Index]->flag_Physics_Valid = 1;
+	App->CL_Scene->B_Object[Index]->flag_Physics_Valid = 1;
 
 	App->CL_Physics->Set_Physics_New(Index);
 }
@@ -638,7 +638,7 @@ void CL64_Objects_Create::Add_Physics_Capsule(bool Dynamic, int Index)
 // *************************************************************************
 void CL64_Objects_Create::Add_Physics_Cylinder(bool Dynamic, int Index)
 {
-	Base_Object* Object = App->CL_Editor_Com->B_Object[Index];
+	Base_Object* Object = App->CL_Scene->B_Object[Index];
 
 	if (Dynamic == 1)
 	{
@@ -651,7 +651,7 @@ void CL64_Objects_Create::Add_Physics_Cylinder(bool Dynamic, int Index)
 		Object->Shape = Enums::Shape_Cylinder;
 	}
 
-	Ogre::Vector3 Centre = App->CL_Editor_Com->B_Object[Index]->Object_Ent->getWorldBoundingBox(true).getCenter();
+	Ogre::Vector3 Centre = App->CL_Scene->B_Object[Index]->Object_Ent->getWorldBoundingBox(true).getCenter();
 	Object->Physics_Pos = Ogre::Vector3(Centre.x, Centre.y, Centre.z);
 
 	btTransform startTransform;
@@ -714,7 +714,7 @@ void CL64_Objects_Create::Add_Physics_Cylinder(bool Dynamic, int Index)
 
 	App->CL_Physics->dynamicsWorld->addRigidBody(Object->Phys_Body);
 
-	App->CL_Editor_Com->B_Object[Index]->flag_Physics_Valid = 1;
+	App->CL_Scene->B_Object[Index]->flag_Physics_Valid = 1;
 
 	App->CL_Physics->Set_Physics_New(Index);
 }
@@ -724,7 +724,7 @@ void CL64_Objects_Create::Add_Physics_Cylinder(bool Dynamic, int Index)
 // *************************************************************************
 void CL64_Objects_Create::Add_Physics_Cone(bool Dynamic, int Index)
 {
-	Base_Object* Object = App->CL_Editor_Com->B_Object[Index];
+	Base_Object* Object = App->CL_Scene->B_Object[Index];
 
 	if (Dynamic == 1)
 	{
@@ -737,7 +737,7 @@ void CL64_Objects_Create::Add_Physics_Cone(bool Dynamic, int Index)
 		Object->Shape = Enums::Shape_Cone;
 	}
 
-	Ogre::Vector3 Centre = App->CL_Editor_Com->B_Object[Index]->Object_Ent->getWorldBoundingBox(true).getCenter();
+	Ogre::Vector3 Centre = App->CL_Scene->B_Object[Index]->Object_Ent->getWorldBoundingBox(true).getCenter();
 	Object->Physics_Pos = Ogre::Vector3(Centre.x, Centre.y, Centre.z);
 
 	btTransform startTransform;
@@ -800,7 +800,7 @@ void CL64_Objects_Create::Add_Physics_Cone(bool Dynamic, int Index)
 
 	App->CL_Physics->dynamicsWorld->addRigidBody(Object->Phys_Body);
 
-	App->CL_Editor_Com->B_Object[Index]->flag_Physics_Valid = 1;
+	App->CL_Scene->B_Object[Index]->flag_Physics_Valid = 1;
 
 	App->CL_Physics->Set_Physics_New(Index);
 }
@@ -811,7 +811,7 @@ void CL64_Objects_Create::Add_Physics_Cone(bool Dynamic, int Index)
 btBvhTriangleMeshShape* CL64_Objects_Create::create_New_Trimesh(int Index)
 {
 #pragma warning(disable : 4996) // Nightmare why
-	Base_Object* Object = App->CL_Editor_Com->B_Object[Index];
+	Base_Object* Object = App->CL_Scene->B_Object[Index];
 
 	// Get the mesh from the entity
 	Ogre::MeshPtr myMesh = Object->Object_Ent->getMesh();

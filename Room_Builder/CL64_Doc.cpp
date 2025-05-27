@@ -873,7 +873,7 @@ void CL64_Doc::RotateSelectedBrushList(const ViewVars* view, SelBrushList* pList
             int Delta = 1;
 			int Index = App->CL_Entities->GetIndex_By_Name(pBrush->Name);
 
-			auto& m_object = App->CL_Editor_Com->B_Object[Index];
+			auto& m_object = App->CL_Scene->B_Object[Index];
 
 			switch (view->ViewType)
 			{
@@ -1242,9 +1242,9 @@ void CL64_Doc::DoneMove(void)
                 App->CL_SelBrushList->SelBrushList_Center(App->CL_Doc->pSelBrushes, &App->CL_Doc->SelectedGeoCenter);
                 T_Vec3 CenterOfSelection = App->CL_Doc->SelectedGeoCenter;
 
-                App->CL_Editor_Com->B_Player[0]->StartPos.x = CenterOfSelection.x;
-                App->CL_Editor_Com->B_Player[0]->StartPos.y = CenterOfSelection.y;
-                App->CL_Editor_Com->B_Player[0]->StartPos.z = CenterOfSelection.z;
+                App->CL_Scene->B_Player[0]->StartPos.x = CenterOfSelection.x;
+                App->CL_Scene->B_Player[0]->StartPos.y = CenterOfSelection.y;
+                App->CL_Scene->B_Player[0]->StartPos.z = CenterOfSelection.z;
 
                 App->CL_Physics->Reset_Physics();
             }
@@ -1262,12 +1262,12 @@ void CL64_Doc::DoneMove(void)
                 T_Vec3 CenterOfSelection = App->CL_Doc->SelectedGeoCenter;
 
 
-                float True_Center = (App->CL_Editor_Com->B_Object[Index]->Object_Node->_getWorldAABB().getSize().y) / 2;
+                float True_Center = (App->CL_Scene->B_Object[Index]->Object_Node->_getWorldAABB().getSize().y) / 2;
                 CenterOfSelection.y = CenterOfSelection.y - True_Center;
 
-               // App->CL_Editor_Com->B_Object[Index]->Object_Node->setPosition(FinalPos.x, FinalPos.y, FinalPos.z);
-                App->CL_Editor_Com->B_Object[Index]->Object_Node->setPosition(CenterOfSelection.x, CenterOfSelection.y, CenterOfSelection.z);
-                App->CL_Editor_Com->B_Object[Index]->Mesh_Pos = { CenterOfSelection.x, CenterOfSelection.y, CenterOfSelection.z };
+               // App->CL_Scene->B_Object[Index]->Object_Node->setPosition(FinalPos.x, FinalPos.y, FinalPos.z);
+                App->CL_Scene->B_Object[Index]->Object_Node->setPosition(CenterOfSelection.x, CenterOfSelection.y, CenterOfSelection.z);
+                App->CL_Scene->B_Object[Index]->Mesh_Pos = { CenterOfSelection.x, CenterOfSelection.y, CenterOfSelection.z };
 
                 App->CL_Brush_X->Set_Brush_From_Entity_ByName(pBrush->Name, true);
          
@@ -1408,16 +1408,16 @@ void CL64_Doc::DoneResize(int sides, int inidx)
 
             T_Vec3 Brush_Size = { 0,0,0 };
 
-            App->CL_Editor_Com->B_Object[Index]->Object_Node->setScale(1,1,1);
+            App->CL_Scene->B_Object[Index]->Object_Node->setScale(1,1,1);
             App->CL_Ogre->RenderFrame(2);
 
             Brush_Size.x = (fabs(pBrush->BoundingBox.Max.x - pBrush->BoundingBox.Min.x));
             Brush_Size.y = (fabs(pBrush->BoundingBox.Max.y - pBrush->BoundingBox.Min.y));
             Brush_Size.z = (fabs(pBrush->BoundingBox.Max.z - pBrush->BoundingBox.Min.z));
 
-            float Ogre_sizeX = App->CL_Editor_Com->B_Object[Index]->Object_Node->_getWorldAABB().getSize().x;
-            float Ogre_sizeY = App->CL_Editor_Com->B_Object[Index]->Object_Node->_getWorldAABB().getSize().y;
-            float Ogre_sizeZ = App->CL_Editor_Com->B_Object[Index]->Object_Node->_getWorldAABB().getSize().z;
+            float Ogre_sizeX = App->CL_Scene->B_Object[Index]->Object_Node->_getWorldAABB().getSize().x;
+            float Ogre_sizeY = App->CL_Scene->B_Object[Index]->Object_Node->_getWorldAABB().getSize().y;
+            float Ogre_sizeZ = App->CL_Scene->B_Object[Index]->Object_Node->_getWorldAABB().getSize().z;
 
             T_Vec3 Ogre_NewScale;
             // Convert to a Scale
@@ -1425,18 +1425,18 @@ void CL64_Doc::DoneResize(int sides, int inidx)
             Ogre_NewScale.y = Brush_Size.y / Ogre_sizeY;
             Ogre_NewScale.z = Brush_Size.z / Ogre_sizeZ;
 
-            App->CL_Editor_Com->B_Object[Index]->Object_Node->setScale(Ogre_NewScale.x, Ogre_NewScale.y, Ogre_NewScale.z);
-            App->CL_Editor_Com->B_Object[Index]->Mesh_Scale = { Ogre_NewScale.x, Ogre_NewScale.y , Ogre_NewScale.z };
+            App->CL_Scene->B_Object[Index]->Object_Node->setScale(Ogre_NewScale.x, Ogre_NewScale.y, Ogre_NewScale.z);
+            App->CL_Scene->B_Object[Index]->Mesh_Scale = { Ogre_NewScale.x, Ogre_NewScale.y , Ogre_NewScale.z };
             App->CL_Ogre->RenderFrame(2);
          
-            float True_Center = (App->CL_Editor_Com->B_Object[Index]->Object_Node->_getWorldAABB().getSize().y) / 2;
+            float True_Center = (App->CL_Scene->B_Object[Index]->Object_Node->_getWorldAABB().getSize().y) / 2;
 
             App->CL_SelBrushList->SelBrushList_Center(App->CL_Doc->pSelBrushes, &App->CL_Doc->SelectedGeoCenter);
             T_Vec3 CenterOfSelection = App->CL_Doc->SelectedGeoCenter;
 
             CenterOfSelection.y = CenterOfSelection.y - True_Center;
 
-            App->CL_Editor_Com->B_Object[Index]->Object_Node->setPosition(CenterOfSelection.x, CenterOfSelection.y, CenterOfSelection.z);
+            App->CL_Scene->B_Object[Index]->Object_Node->setPosition(CenterOfSelection.x, CenterOfSelection.y, CenterOfSelection.z);
 
             App->CL_Physics->Set_Physics_New(Index);
 

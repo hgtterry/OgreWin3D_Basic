@@ -136,7 +136,7 @@ public:
 	CL64_Grid*					CL_Grid;
 	CL64_Panels*				CL_Panels;
 	CL64_Keyboard*				CL_Keyboard;
-	CL64_Editor_Com*			CL_Editor_Com;
+	CL64_Scene*					CL_Scene;
 	CL64_Ogre3D*				CL_Ogre3D;
 	CL64_Top_Tabs*				CL_Top_Tabs;
 	CL64_File*					CL_File;

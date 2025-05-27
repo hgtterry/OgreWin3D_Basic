@@ -397,7 +397,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                     return 1;
                 }
 
-                App->CL_Editor_Com->Clear_Level(false);
+                App->CL_Scene->Clear_Level(false);
                 return 1;
             }
 

@@ -288,7 +288,7 @@ LRESULT CALLBACK CL64_FileView::Proc_ListPanel(HWND hDlg, UINT message, WPARAM w
 			}
 			else
 			{
-				HTREEITEM Temp = App->CL_Editor_Com->B_Object[Index]->FileViewItem;
+				HTREEITEM Temp = App->CL_Scene->B_Object[Index]->FileViewItem;
 				App->CL_FileView->SelectItem(Temp);
 
 				App->CL_Gui_Environment->Start_Environment_Editor(Index, false);
@@ -1105,7 +1105,7 @@ void CL64_FileView::Context_New(HWND hDlg)
 	// Objects
 	if (App->CL_FileView->Context_Selection == Enums::FileView_Objects_Folder)
 	{
-		if (App->CL_Editor_Com->flag_Project_Resources_Created == true)
+		if (App->CL_Scene->flag_Project_Resources_Created == true)
 		{
 			App->CL_Dialogs->YesNo((LPSTR)"Add Object", (LPSTR)"Do you want to add a new Object Entity");
 
@@ -1123,7 +1123,7 @@ void CL64_FileView::Context_New(HWND hDlg)
 				App->Say("This Project is new", "Will use Save As for this first time save");
 				App->CL_File->Start_Save(true);
 
-				if (App->CL_Editor_Com->flag_Project_Resources_Created == true)
+				if (App->CL_Scene->flag_Project_Resources_Created == true)
 				{
 					App->CL_Dialogs->YesNo((LPSTR)"Add Object", (LPSTR)"Do you want to add a new Object Entity");
 

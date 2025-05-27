@@ -438,9 +438,9 @@ void CL64_Brush_X::Move_Player_Brush()
 	if (b)
 	{
 		T_Vec3 Pos;
-		Pos.x = App->CL_Editor_Com->B_Player[0]->StartPos.x;
-		Pos.y = App->CL_Editor_Com->B_Player[0]->StartPos.y;
-		Pos.z = App->CL_Editor_Com->B_Player[0]->StartPos.z;
+		Pos.x = App->CL_Scene->B_Player[0]->StartPos.x;
+		Pos.y = App->CL_Scene->B_Player[0]->StartPos.y;
+		Pos.z = App->CL_Scene->B_Player[0]->StartPos.z;
 
 		App->CL_Brush->Brush_Move(b, &Pos);
 
@@ -458,7 +458,7 @@ void CL64_Brush_X::Move_Brush_By_Name(char* Brush_Name, int Object_Index)
 	App->CL_Brush->Brush_Get_Center(b, &App->CL_Doc->SelectedGeoCenter);
 
 	T_Vec3 Pos;
-	Ogre::Vector3 Centre = App->CL_Editor_Com->B_Object[Object_Index]->Object_Ent->getWorldBoundingBox(true).getCenter();
+	Ogre::Vector3 Centre = App->CL_Scene->B_Object[Object_Index]->Object_Ent->getWorldBoundingBox(true).getCenter();
 
 	Pos.x = Centre.x;
 	Pos.y = Centre.y;
@@ -507,7 +507,7 @@ void CL64_Brush_X::Scale_Brush_By_Name(const char* Brush_Name, int Object_Index,
 		// App->CL_Brush->BrushList_RebuildHollowFaces((BrushList*)App->CL_Brush->Brush_GetBrushList(b), App->CL_Brush->Brush_GetModelId(b), ::fdocBrushCSGCallback, this);
 	}
 
-	App->CL_Brush_X->Move_Brush_By_Name(App->CL_Editor_Com->B_Object[Object_Index]->Object_Name, Object_Index);
+	App->CL_Brush_X->Move_Brush_By_Name(App->CL_Scene->B_Object[Object_Index]->Object_Name, Object_Index);
 }
 
 // *************************************************************************
@@ -652,7 +652,7 @@ void CL64_Brush_X::Set_Brush_From_Entity_ByName(char* Name, bool Update)
 
 	if (Index > -1)
 	{
-		auto& m_object = App->CL_Editor_Com->B_Object[Index];
+		auto& m_object = App->CL_Scene->B_Object[Index];
 
 		Brush* pBrush = NULL;
 

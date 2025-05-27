@@ -442,11 +442,11 @@ void CL64_ImGui::App_Stats_GUI(void)
 		if (ImGui::TreeNode("App Editor"))
 		{
 			ImGui::Separator();
-			ImGui::Text("Player_Count:= %i", App->CL_Editor_Com->Player_Count);
-			ImGui::Text("Player Added:= %i", App->CL_Editor_Com->flag_Player_Added);
+			ImGui::Text("Player_Count:= %i", App->CL_Scene->Player_Count);
+			ImGui::Text("Player Added:= %i", App->CL_Scene->flag_Player_Added);
 			ImGui::Separator();
-			ImGui::Text("Object_Count:= %i", App->CL_Editor_Com->Object_Count);
-			ImGui::Text("Unique_Object_Count:= %i", App->CL_Editor_Com->Object_Count);
+			ImGui::Text("Object_Count:= %i", App->CL_Scene->Object_Count);
+			ImGui::Text("Unique_Object_Count:= %i", App->CL_Scene->Object_Count);
 			ImGui::Text("Scene Editor Active:= %i", App->CL_Editor_Scene->flag_Scene_Editor_Active);
 			ImGui::Text("Preview Active:= %i", App->CL_Editor_Preview->flag_PreviewMode_Running);
 			ImGui::Separator();
@@ -464,8 +464,8 @@ void CL64_ImGui::App_Stats_GUI(void)
 		if (ImGui::TreeNode("Render"))
 		{
 			ImGui::Separator();
-			ImGui::Text("Groups:= %i", App->CL_Editor_Com->GroupCount);
-			ImGui::Text("Brushes:= %i", App->CL_Editor_Com->BrushCount);
+			ImGui::Text("Groups:= %i", App->CL_Scene->GroupCount);
+			ImGui::Text("Brushes:= %i", App->CL_Scene->BrushCount);
 
 			ImGui::Text("Render Groups:= %i", App->CL_Ogre->OGL_Listener->flag_Render_Groups);
 			ImGui::Text("Render Brushes:= %i", App->CL_Ogre->OGL_Listener->flag_Render_Brushes);
@@ -484,9 +484,9 @@ void CL64_ImGui::App_Stats_GUI(void)
 		{
 			ImGui::Separator();
 
-			ImGui::Text("X:= %f", App->CL_Editor_Com->B_Object[0]->Mesh_Rot.x);
-			ImGui::Text("Y:= %f", App->CL_Editor_Com->B_Object[0]->Mesh_Rot.y);
-			ImGui::Text("Z:= %f", App->CL_Editor_Com->B_Object[0]->Mesh_Rot.z);
+			ImGui::Text("X:= %f", App->CL_Scene->B_Object[0]->Mesh_Rot.x);
+			ImGui::Text("Y:= %f", App->CL_Scene->B_Object[0]->Mesh_Rot.y);
+			ImGui::Text("Z:= %f", App->CL_Scene->B_Object[0]->Mesh_Rot.z);
 
 			ImGui::Text("X:= %f", Vec_Debug.x);
 			ImGui::Text("Y:= %f", Vec_Debug.y);
@@ -526,15 +526,15 @@ void CL64_ImGui::Render_Report_GUI(void)
 	{
 		ImGui::Text("Render Reports");
 		ImGui::Separator();
-		ImGui::Text("Groups:= %i", App->CL_Editor_Com->GroupCount);
+		ImGui::Text("Groups:= %i", App->CL_Scene->GroupCount);
 
 		ImGui::Text("Selected Group:= %i", App->CL_Picking->m_SubMesh);
-		ImGui::Text("Group Face Count:= %i", App->CL_Editor_Com->Group[App->CL_Picking->m_SubMesh]->GroupFaceCount);
+		ImGui::Text("Group Face Count:= %i", App->CL_Scene->Group[App->CL_Picking->m_SubMesh]->GroupFaceCount);
 		ImGui::Text("Selected Face:= %i", App->CL_Picking->Local_Face);
 		
 		ImGui::Separator();
-		ImGui::Text("WE_Brush:= %i", App->CL_Editor_Com->Group[App->CL_Picking->m_SubMesh]->Face_Data[App->CL_Picking->Local_Face].Brush_Index);
-		ImGui::Text("WE_Face:= %i", App->CL_Editor_Com->Group[App->CL_Picking->m_SubMesh]->Face_Data[App->CL_Picking->Local_Face].Main_Face);
+		ImGui::Text("WE_Brush:= %i", App->CL_Scene->Group[App->CL_Picking->m_SubMesh]->Face_Data[App->CL_Picking->Local_Face].Brush_Index);
+		ImGui::Text("WE_Face:= %i", App->CL_Scene->Group[App->CL_Picking->m_SubMesh]->Face_Data[App->CL_Picking->Local_Face].Main_Face);
 
 		if (ImGui::Button("Textured"))
 		{

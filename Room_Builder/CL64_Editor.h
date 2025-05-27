@@ -27,11 +27,11 @@ THE SOFTWARE.
 #include "Base_Object.h"
 
 #pragma once
-class CL64_Editor_Com
+class CL64_Scene
 {
 public:
-	CL64_Editor_Com();
-	~CL64_Editor_Com();
+	CL64_Scene();
+	~CL64_Scene();
 
 	void Reset_Class();
 

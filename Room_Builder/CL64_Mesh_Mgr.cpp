@@ -100,7 +100,7 @@ signed int CL64_Mesh_Mgr::Brush_CSG_Callback(const Brush* pBrush, void* lParam)
 // *************************************************************************
 void CL64_Mesh_Mgr::Delete_Brush_List()
 {
-	CL64_Editor_Com* pModel = App->CL_Editor_Com;
+	CL64_Scene* pModel = App->CL_Scene;
 
 	int Count = 0;
 	while (Count < 11999)
@@ -115,8 +115,8 @@ void CL64_Mesh_Mgr::Delete_Brush_List()
 		Count++;
 	}
 
-	App->CL_Editor_Com->BrushCount = 0;
-	App->CL_Editor_Com->Brush_Face_Count = 0;
+	App->CL_Scene->BrushCount = 0;
+	App->CL_Scene->Brush_Face_Count = 0;
 	m_Total_Faces = 0;
 }
 
@@ -125,7 +125,7 @@ void CL64_Mesh_Mgr::Delete_Brush_List()
 // *************************************************************************
 void CL64_Mesh_Mgr::Delete_Group_Brushes()
 {
-	CL64_Editor_Com* pModel = App->CL_Editor_Com;
+	CL64_Scene* pModel = App->CL_Scene;
 
 	int Count = 0;
 	while (Count < 4999)
@@ -140,8 +140,8 @@ void CL64_Mesh_Mgr::Delete_Group_Brushes()
 		Count++;
 	}
 
-	App->CL_Editor_Com->GroupCount = 0;
-	App->CL_Editor_Com->VerticeCount = 0;
+	App->CL_Scene->GroupCount = 0;
+	App->CL_Scene->VerticeCount = 0;
 	
 }
 
@@ -181,7 +181,7 @@ void CL64_Mesh_Mgr::Brush_Build_List(int ExpSelected)
 {
 	Delete_Brush_List();
 
-	App->CL_Editor_Com->BrushCount = 0;
+	App->CL_Scene->BrushCount = 0;
 	mBrushCount = 0;
 	mSubBrushCount = 0;
 
@@ -421,8 +421,8 @@ bool CL64_Mesh_Mgr::HandleCSGBrush(const Brush* b)
 // *************************************************************************
 bool CL64_Mesh_Mgr::Brush_FaceList_Create(const Brush* b, const FaceList* pList, int BrushCount, int SubBrushCount)
 {
-	App->CL_Editor_Com->Create_Brush_XX(App->CL_Editor_Com->BrushCount);
-	strcpy(App->CL_Editor_Com->B_Brush[App->CL_Editor_Com->BrushCount]->Brush_Name, m_Main_Brush_Name);
+	App->CL_Scene->Create_Brush_XX(App->CL_Scene->BrushCount);
+	strcpy(App->CL_Scene->B_Brush[App->CL_Scene->BrushCount]->Brush_Name, m_Main_Brush_Name);
 
 	// Get Brush Index
 	int Main_Brush_Index = App->CL_Brush_X->Get_Brush_Index_By_Name(m_Main_Brush_Name);
@@ -431,7 +431,7 @@ bool CL64_Mesh_Mgr::Brush_FaceList_Create(const Brush* b, const FaceList* pList,
 		App->Say("Can not find Brush");
 	}
 
-	App->CL_Editor_Com->B_Brush[App->CL_Editor_Com->BrushCount]->Group_Index = Main_Brush_Index;
+	App->CL_Scene->B_Brush[App->CL_Scene->BrushCount]->Group_Index = Main_Brush_Index;
 
 
 	m_Total_Faces = m_Total_Faces + pList->NumFaces;
@@ -474,9 +474,9 @@ bool CL64_Mesh_Mgr::Brush_FaceList_Create(const Brush* b, const FaceList* pList,
 	// -----------------------------------  Vertices
 	int VertIndex = 0;
 
-	App->CL_Editor_Com->B_Brush[App->CL_Editor_Com->BrushCount]->Vertice_Count = num_verts;
-	App->CL_Editor_Com->B_Brush[App->CL_Editor_Com->BrushCount]->vertex_Data.resize(num_verts);
-	App->CL_Editor_Com->B_Brush[App->CL_Editor_Com->BrushCount]->Normal_Data.resize(num_verts);
+	App->CL_Scene->B_Brush[App->CL_Scene->BrushCount]->Vertice_Count = num_verts;
+	App->CL_Scene->B_Brush[App->CL_Scene->BrushCount]->vertex_Data.resize(num_verts);
+	App->CL_Scene->B_Brush[App->CL_Scene->BrushCount]->Normal_Data.resize(num_verts);
 
 	for (i = 0; i < pList->NumFaces; i++)
 	{
@@ -486,13 +486,13 @@ bool CL64_Mesh_Mgr::Brush_FaceList_Create(const Brush* b, const FaceList* pList,
 		curnum_verts = App->CL_Face->Face_GetNumPoints(pList->Faces[i]);
 		for (j = 0; j < curnum_verts; j++)
 		{
-			App->CL_Editor_Com->B_Brush[App->CL_Editor_Com->BrushCount]->vertex_Data[VertIndex].x = verts[j].x;
-			App->CL_Editor_Com->B_Brush[App->CL_Editor_Com->BrushCount]->vertex_Data[VertIndex].y = verts[j].y;
-			App->CL_Editor_Com->B_Brush[App->CL_Editor_Com->BrushCount]->vertex_Data[VertIndex].z = verts[j].z;
+			App->CL_Scene->B_Brush[App->CL_Scene->BrushCount]->vertex_Data[VertIndex].x = verts[j].x;
+			App->CL_Scene->B_Brush[App->CL_Scene->BrushCount]->vertex_Data[VertIndex].y = verts[j].y;
+			App->CL_Scene->B_Brush[App->CL_Scene->BrushCount]->vertex_Data[VertIndex].z = verts[j].z;
 
-			App->CL_Editor_Com->B_Brush[App->CL_Editor_Com->BrushCount]->Normal_Data[VertIndex].x = 0.5;
-			App->CL_Editor_Com->B_Brush[App->CL_Editor_Com->BrushCount]->Normal_Data[VertIndex].y = 0.5;
-			App->CL_Editor_Com->B_Brush[App->CL_Editor_Com->BrushCount]->Normal_Data[VertIndex].z = 0.5;
+			App->CL_Scene->B_Brush[App->CL_Scene->BrushCount]->Normal_Data[VertIndex].x = 0.5;
+			App->CL_Scene->B_Brush[App->CL_Scene->BrushCount]->Normal_Data[VertIndex].y = 0.5;
+			App->CL_Scene->B_Brush[App->CL_Scene->BrushCount]->Normal_Data[VertIndex].z = 0.5;
 
 			VertIndex++;
 		}
@@ -501,7 +501,7 @@ bool CL64_Mesh_Mgr::Brush_FaceList_Create(const Brush* b, const FaceList* pList,
 
 	int UVIndex = 0;
 	// -----------------------------------  UVS
-	App->CL_Editor_Com->B_Brush[App->CL_Editor_Com->BrushCount]->MapCord_Data.resize(num_verts);
+	App->CL_Scene->B_Brush[App->CL_Scene->BrushCount]->MapCord_Data.resize(num_verts);
 	for (i = 0; i < pList->NumFaces; i++)
 	{
 		const TexInfo_Vectors* TVecs = App->CL_Face->Face_GetTextureVecs(pList->Faces[i]); // hgtterry needs finishing
@@ -537,18 +537,18 @@ bool CL64_Mesh_Mgr::Brush_FaceList_Create(const Brush* b, const FaceList* pList,
 			U += (TVecs->uOffset / txSize);
 			V -= (TVecs->vOffset / tySize);
 
-			App->CL_Editor_Com->B_Brush[App->CL_Editor_Com->BrushCount]->MapCord_Data[UVIndex].u = U;
-			App->CL_Editor_Com->B_Brush[App->CL_Editor_Com->BrushCount]->MapCord_Data[UVIndex].v = V;
+			App->CL_Scene->B_Brush[App->CL_Scene->BrushCount]->MapCord_Data[UVIndex].u = U;
+			App->CL_Scene->B_Brush[App->CL_Scene->BrushCount]->MapCord_Data[UVIndex].v = V;
 			UVIndex++;
 		}
 	}
 
 	// -----------------------------------  Faces
 	int FaceIndex = 0;
-	App->CL_Editor_Com->Brush_Face_Count = App->CL_Editor_Com->Brush_Face_Count + num_faces;
-	App->CL_Editor_Com->B_Brush[App->CL_Editor_Com->BrushCount]->Face_Count = num_faces;
-	App->CL_Editor_Com->B_Brush[App->CL_Editor_Com->BrushCount]->Face_Data.resize(num_faces);
-	App->CL_Editor_Com->B_Brush[App->CL_Editor_Com->BrushCount]->Picking_Data.resize(num_faces);
+	App->CL_Scene->Brush_Face_Count = App->CL_Scene->Brush_Face_Count + num_faces;
+	App->CL_Scene->B_Brush[App->CL_Scene->BrushCount]->Face_Count = num_faces;
+	App->CL_Scene->B_Brush[App->CL_Scene->BrushCount]->Face_Data.resize(num_faces);
+	App->CL_Scene->B_Brush[App->CL_Scene->BrushCount]->Picking_Data.resize(num_faces);
 	num_verts = 0;
 	for (i = 0; i < pList->NumFaces; i++)
 	{
@@ -559,11 +559,11 @@ bool CL64_Mesh_Mgr::Brush_FaceList_Create(const Brush* b, const FaceList* pList,
 			Create_V_Face(v_Face_Data_Count);
 			strcpy(v_Face_Data[v_Face_Data_Count]->Brush_Name, App->CL_Face->Face_GetBrushName(pList->Faces[i]));
 
-			App->CL_Editor_Com->B_Brush[App->CL_Editor_Com->BrushCount]->Face_Data[FaceIndex].a = num_verts;
-			App->CL_Editor_Com->B_Brush[App->CL_Editor_Com->BrushCount]->Face_Data[FaceIndex].b = num_verts + 2 + j;
-			App->CL_Editor_Com->B_Brush[App->CL_Editor_Com->BrushCount]->Face_Data[FaceIndex].c = num_verts + 1 + j;
-			App->CL_Editor_Com->B_Brush[App->CL_Editor_Com->BrushCount]->Face_Data[FaceIndex].Brush_Index = Main_Brush_Index;
-			App->CL_Editor_Com->B_Brush[App->CL_Editor_Com->BrushCount]->Face_Data[FaceIndex].Main_Face = pList->Faces[i]->Real_Brush_Face_Index;
+			App->CL_Scene->B_Brush[App->CL_Scene->BrushCount]->Face_Data[FaceIndex].a = num_verts;
+			App->CL_Scene->B_Brush[App->CL_Scene->BrushCount]->Face_Data[FaceIndex].b = num_verts + 2 + j;
+			App->CL_Scene->B_Brush[App->CL_Scene->BrushCount]->Face_Data[FaceIndex].c = num_verts + 1 + j;
+			App->CL_Scene->B_Brush[App->CL_Scene->BrushCount]->Face_Data[FaceIndex].Brush_Index = Main_Brush_Index;
+			App->CL_Scene->B_Brush[App->CL_Scene->BrushCount]->Face_Data[FaceIndex].Main_Face = pList->Faces[i]->Real_Brush_Face_Index;
 
 			FaceIndex++;
 			v_Face_Data_Count++;
@@ -607,7 +607,7 @@ bool CL64_Mesh_Mgr::Brush_FaceList_Create(const Brush* b, const FaceList* pList,
 			for (j = 0; j < curnum_verts - 2; j++)
 			{
 				TextureId = Get_Adjusted_Index(App->CL_Face->Face_GetTextureDibId(pList->Faces[i]));
-				App->CL_Editor_Com->B_Brush[App->CL_Editor_Com->BrushCount]->Picking_Data[curnum_faces + j].TextID = TextureId;
+				App->CL_Scene->B_Brush[App->CL_Scene->BrushCount]->Picking_Data[curnum_faces + j].TextID = TextureId;
 
 			}
 
@@ -622,7 +622,7 @@ bool CL64_Mesh_Mgr::Brush_FaceList_Create(const Brush* b, const FaceList* pList,
 					for (k = 0; k < curnum_verts - 2; k++)
 					{
 						TextureId = Get_Adjusted_Index(App->CL_Face->Face_GetTextureDibId(pList->Faces[i]));
-						App->CL_Editor_Com->B_Brush[App->CL_Editor_Com->BrushCount]->Picking_Data[curnum_faces + k].TextID = TextureId;
+						App->CL_Scene->B_Brush[App->CL_Scene->BrushCount]->Picking_Data[curnum_faces + k].TextID = TextureId;
 
 					}
 				}
@@ -632,7 +632,7 @@ bool CL64_Mesh_Mgr::Brush_FaceList_Create(const Brush* b, const FaceList* pList,
 		}
 	}
 
-	App->CL_Editor_Com->BrushCount++;
+	App->CL_Scene->BrushCount++;
 
 	return true;
 }
@@ -661,8 +661,8 @@ bool CL64_Mesh_Mgr::WE_Convert_All_Texture_Groups() {
 	ActualFaceCount = 0;
 	int Group_Count = 0;
 	Delete_Group_Brushes();
-	strcpy(App->CL_Editor_Com->JustName, "Test");
-	//App->CL_Editor_Com->GroupCount = mTextureCount;
+	strcpy(App->CL_Scene->JustName, "Test");
+	//App->CL_Scene->GroupCount = mTextureCount;
 	//Debug
 	int count = 0;
 
@@ -674,13 +674,13 @@ bool CL64_Mesh_Mgr::WE_Convert_All_Texture_Groups() {
 		{
 			//if (faceCount > 0)
 			{
-				App->CL_Editor_Com->Create_Mesh_Group(Group_Count);
+				App->CL_Scene->Create_Mesh_Group(Group_Count);
 			}
 			
 			// Get Group
 			if (faceCount > 0)
 			{
-				auto& group = App->CL_Editor_Com->Group[Group_Count];
+				auto& group = App->CL_Scene->Group[Group_Count];
 
 				strcpy(group->GroupName, TextureName2[Group_Count]);
 				strcpy(group->MaterialName, TextureName2[Group_Count]);
@@ -715,9 +715,9 @@ bool CL64_Mesh_Mgr::WE_Convert_All_Texture_Groups() {
 		App->Say("Rebuild Called");
 	}
 
-	App->CL_Editor_Com->GroupCount = Group_Count;
-	App->CL_Editor_Com->VerticeCount = totalVertices * 3;
-	App->CL_Editor_Com->FaceCount = totalVertices;
+	App->CL_Scene->GroupCount = Group_Count;
+	App->CL_Scene->VerticeCount = totalVertices * 3;
+	App->CL_Scene->FaceCount = totalVertices;
 
 	return true;
 }
@@ -744,142 +744,142 @@ bool CL64_Mesh_Mgr::WE_Convert_To_Texture_Group(int TextureID)
 	float U = 0;
 	float V = 0;
 
-	int BrushCount = App->CL_Editor_Com->BrushCount;
+	int BrushCount = App->CL_Scene->BrushCount;
 	Count = 0;
 	
 
 	while (Count < BrushCount)
 	{
 		FaceCount = 0;
-		if (!App->CL_Editor_Com->B_Brush[Count])
+		if (!App->CL_Scene->B_Brush[Count])
 		{
 			App->Say("Brush Error");
 		}
 
-		while (FaceCount < App->CL_Editor_Com->B_Brush[Count]->Face_Count)
+		while (FaceCount < App->CL_Scene->B_Brush[Count]->Face_Count)
 		{
 			int FaceIndexNum = 0;
 
-			if (App->CL_Editor_Com->B_Brush[Count]->Picking_Data[FaceCount].TextID == TextureID)
+			if (App->CL_Scene->B_Brush[Count]->Picking_Data[FaceCount].TextID == TextureID)
 			{
-				A = App->CL_Editor_Com->B_Brush[Count]->Face_Data[FaceCount].a;
-				B = App->CL_Editor_Com->B_Brush[Count]->Face_Data[FaceCount].b;
-				C = App->CL_Editor_Com->B_Brush[Count]->Face_Data[FaceCount].c;
+				A = App->CL_Scene->B_Brush[Count]->Face_Data[FaceCount].a;
+				B = App->CL_Scene->B_Brush[Count]->Face_Data[FaceCount].b;
+				C = App->CL_Scene->B_Brush[Count]->Face_Data[FaceCount].c;
 
-				X = App->CL_Editor_Com->B_Brush[Count]->vertex_Data[A].x;
-				Y = App->CL_Editor_Com->B_Brush[Count]->vertex_Data[A].y;
-				Z = App->CL_Editor_Com->B_Brush[Count]->vertex_Data[A].z;
+				X = App->CL_Scene->B_Brush[Count]->vertex_Data[A].x;
+				Y = App->CL_Scene->B_Brush[Count]->vertex_Data[A].y;
+				Z = App->CL_Scene->B_Brush[Count]->vertex_Data[A].z;
 
-				if (App->CL_Editor_Com->Group[TextureID])
+				if (App->CL_Scene->Group[TextureID])
 				{
-					App->CL_Editor_Com->Group[TextureID]->vertex_Data[vertexIndex].x = X;
-					App->CL_Editor_Com->Group[TextureID]->vertex_Data[vertexIndex].y = Y;
-					App->CL_Editor_Com->Group[TextureID]->vertex_Data[vertexIndex].z = Z;
+					App->CL_Scene->Group[TextureID]->vertex_Data[vertexIndex].x = X;
+					App->CL_Scene->Group[TextureID]->vertex_Data[vertexIndex].y = Y;
+					App->CL_Scene->Group[TextureID]->vertex_Data[vertexIndex].z = Z;
 				}
 
-				U = App->CL_Editor_Com->B_Brush[Count]->MapCord_Data[A].u,
-				V = App->CL_Editor_Com->B_Brush[Count]->MapCord_Data[A].v;
+				U = App->CL_Scene->B_Brush[Count]->MapCord_Data[A].u,
+				V = App->CL_Scene->B_Brush[Count]->MapCord_Data[A].v;
 
-				if (App->CL_Editor_Com->Group[TextureID])
+				if (App->CL_Scene->Group[TextureID])
 				{
-					App->CL_Editor_Com->Group[TextureID]->MapCord_Data[vertexIndex].u = U;
-					App->CL_Editor_Com->Group[TextureID]->MapCord_Data[vertexIndex].v = V;
+					App->CL_Scene->Group[TextureID]->MapCord_Data[vertexIndex].u = U;
+					App->CL_Scene->Group[TextureID]->MapCord_Data[vertexIndex].v = V;
 				}
 				
 
-				X = App->CL_Editor_Com->B_Brush[Count]->Normal_Data[A].x;
-				Y = App->CL_Editor_Com->B_Brush[Count]->Normal_Data[A].y;
-				Z = App->CL_Editor_Com->B_Brush[Count]->Normal_Data[A].z;
+				X = App->CL_Scene->B_Brush[Count]->Normal_Data[A].x;
+				Y = App->CL_Scene->B_Brush[Count]->Normal_Data[A].y;
+				Z = App->CL_Scene->B_Brush[Count]->Normal_Data[A].z;
 
-				if (App->CL_Editor_Com->Group[TextureID])
+				if (App->CL_Scene->Group[TextureID])
 				{
-					App->CL_Editor_Com->Group[TextureID]->Normal_Data[vertexIndex].x = X;
-					App->CL_Editor_Com->Group[TextureID]->Normal_Data[vertexIndex].y = Y;
-					App->CL_Editor_Com->Group[TextureID]->Normal_Data[vertexIndex].z = Z;
+					App->CL_Scene->Group[TextureID]->Normal_Data[vertexIndex].x = X;
+					App->CL_Scene->Group[TextureID]->Normal_Data[vertexIndex].y = Y;
+					App->CL_Scene->Group[TextureID]->Normal_Data[vertexIndex].z = Z;
 				}
 
 				vertexIndex++;
 
-				X = App->CL_Editor_Com->B_Brush[Count]->vertex_Data[B].x;
-				Y = App->CL_Editor_Com->B_Brush[Count]->vertex_Data[B].y;
-				Z = App->CL_Editor_Com->B_Brush[Count]->vertex_Data[B].z;
+				X = App->CL_Scene->B_Brush[Count]->vertex_Data[B].x;
+				Y = App->CL_Scene->B_Brush[Count]->vertex_Data[B].y;
+				Z = App->CL_Scene->B_Brush[Count]->vertex_Data[B].z;
 
-				if (App->CL_Editor_Com->Group[TextureID])
+				if (App->CL_Scene->Group[TextureID])
 				{
-					App->CL_Editor_Com->Group[TextureID]->vertex_Data[vertexIndex].x = X;
-					App->CL_Editor_Com->Group[TextureID]->vertex_Data[vertexIndex].y = Y;
-					App->CL_Editor_Com->Group[TextureID]->vertex_Data[vertexIndex].z = Z;
+					App->CL_Scene->Group[TextureID]->vertex_Data[vertexIndex].x = X;
+					App->CL_Scene->Group[TextureID]->vertex_Data[vertexIndex].y = Y;
+					App->CL_Scene->Group[TextureID]->vertex_Data[vertexIndex].z = Z;
 				}
 
-				U = App->CL_Editor_Com->B_Brush[Count]->MapCord_Data[B].u,
-				V = App->CL_Editor_Com->B_Brush[Count]->MapCord_Data[B].v;
+				U = App->CL_Scene->B_Brush[Count]->MapCord_Data[B].u,
+				V = App->CL_Scene->B_Brush[Count]->MapCord_Data[B].v;
 
-				if (App->CL_Editor_Com->Group[TextureID])
+				if (App->CL_Scene->Group[TextureID])
 				{
-					App->CL_Editor_Com->Group[TextureID]->MapCord_Data[vertexIndex].u = U;
-					App->CL_Editor_Com->Group[TextureID]->MapCord_Data[vertexIndex].v = V;
+					App->CL_Scene->Group[TextureID]->MapCord_Data[vertexIndex].u = U;
+					App->CL_Scene->Group[TextureID]->MapCord_Data[vertexIndex].v = V;
 				}
 
-				X = App->CL_Editor_Com->B_Brush[Count]->Normal_Data[B].x;
-				Y = App->CL_Editor_Com->B_Brush[Count]->Normal_Data[B].y;
-				Z = App->CL_Editor_Com->B_Brush[Count]->Normal_Data[B].z;
+				X = App->CL_Scene->B_Brush[Count]->Normal_Data[B].x;
+				Y = App->CL_Scene->B_Brush[Count]->Normal_Data[B].y;
+				Z = App->CL_Scene->B_Brush[Count]->Normal_Data[B].z;
 
-				if (App->CL_Editor_Com->Group[TextureID])
+				if (App->CL_Scene->Group[TextureID])
 				{
-					App->CL_Editor_Com->Group[TextureID]->Normal_Data[vertexIndex].x = X;
-					App->CL_Editor_Com->Group[TextureID]->Normal_Data[vertexIndex].y = Y;
-					App->CL_Editor_Com->Group[TextureID]->Normal_Data[vertexIndex].z = Z;
-				}
-
-				vertexIndex++;
-
-				X = App->CL_Editor_Com->B_Brush[Count]->vertex_Data[C].x;
-				Y = App->CL_Editor_Com->B_Brush[Count]->vertex_Data[C].y;
-				Z = App->CL_Editor_Com->B_Brush[Count]->vertex_Data[C].z;
-
-				if (App->CL_Editor_Com->Group[TextureID])
-				{
-					App->CL_Editor_Com->Group[TextureID]->vertex_Data[vertexIndex].x = X;
-					App->CL_Editor_Com->Group[TextureID]->vertex_Data[vertexIndex].y = Y;
-					App->CL_Editor_Com->Group[TextureID]->vertex_Data[vertexIndex].z = Z;
-				}
-
-				U = App->CL_Editor_Com->B_Brush[Count]->MapCord_Data[C].u,
-				V = App->CL_Editor_Com->B_Brush[Count]->MapCord_Data[C].v;
-
-				if (App->CL_Editor_Com->Group[TextureID])
-				{
-					App->CL_Editor_Com->Group[TextureID]->MapCord_Data[vertexIndex].u = U;
-					App->CL_Editor_Com->Group[TextureID]->MapCord_Data[vertexIndex].v = V;
-				}
-
-				X = App->CL_Editor_Com->B_Brush[Count]->Normal_Data[C].x;
-				Y = App->CL_Editor_Com->B_Brush[Count]->Normal_Data[C].y;
-				Z = App->CL_Editor_Com->B_Brush[Count]->Normal_Data[C].z;
-
-				if (App->CL_Editor_Com->Group[TextureID])
-				{
-					App->CL_Editor_Com->Group[TextureID]->Normal_Data[vertexIndex].x = X;
-					App->CL_Editor_Com->Group[TextureID]->Normal_Data[vertexIndex].y = Y;
-					App->CL_Editor_Com->Group[TextureID]->Normal_Data[vertexIndex].z = Z;
+					App->CL_Scene->Group[TextureID]->Normal_Data[vertexIndex].x = X;
+					App->CL_Scene->Group[TextureID]->Normal_Data[vertexIndex].y = Y;
+					App->CL_Scene->Group[TextureID]->Normal_Data[vertexIndex].z = Z;
 				}
 
 				vertexIndex++;
 
-				if (App->CL_Editor_Com->Group[TextureID])
+				X = App->CL_Scene->B_Brush[Count]->vertex_Data[C].x;
+				Y = App->CL_Scene->B_Brush[Count]->vertex_Data[C].y;
+				Z = App->CL_Scene->B_Brush[Count]->vertex_Data[C].z;
+
+				if (App->CL_Scene->Group[TextureID])
 				{
-					App->CL_Editor_Com->Group[TextureID]->Face_Data[FacePos].a = FaceIndex;
+					App->CL_Scene->Group[TextureID]->vertex_Data[vertexIndex].x = X;
+					App->CL_Scene->Group[TextureID]->vertex_Data[vertexIndex].y = Y;
+					App->CL_Scene->Group[TextureID]->vertex_Data[vertexIndex].z = Z;
+				}
+
+				U = App->CL_Scene->B_Brush[Count]->MapCord_Data[C].u,
+				V = App->CL_Scene->B_Brush[Count]->MapCord_Data[C].v;
+
+				if (App->CL_Scene->Group[TextureID])
+				{
+					App->CL_Scene->Group[TextureID]->MapCord_Data[vertexIndex].u = U;
+					App->CL_Scene->Group[TextureID]->MapCord_Data[vertexIndex].v = V;
+				}
+
+				X = App->CL_Scene->B_Brush[Count]->Normal_Data[C].x;
+				Y = App->CL_Scene->B_Brush[Count]->Normal_Data[C].y;
+				Z = App->CL_Scene->B_Brush[Count]->Normal_Data[C].z;
+
+				if (App->CL_Scene->Group[TextureID])
+				{
+					App->CL_Scene->Group[TextureID]->Normal_Data[vertexIndex].x = X;
+					App->CL_Scene->Group[TextureID]->Normal_Data[vertexIndex].y = Y;
+					App->CL_Scene->Group[TextureID]->Normal_Data[vertexIndex].z = Z;
+				}
+
+				vertexIndex++;
+
+				if (App->CL_Scene->Group[TextureID])
+				{
+					App->CL_Scene->Group[TextureID]->Face_Data[FacePos].a = FaceIndex;
 					FaceIndex++;
-					App->CL_Editor_Com->Group[TextureID]->Face_Data[FacePos].b = FaceIndex;
+					App->CL_Scene->Group[TextureID]->Face_Data[FacePos].b = FaceIndex;
 					FaceIndex++;
-					App->CL_Editor_Com->Group[TextureID]->Face_Data[FacePos].c = FaceIndex;
-					//App->CL_Editor_Com->Group[TextureID]->Face_Data[FacePos].Brush_Index = App->CL_Editor_Com->B_Brush[Count]->Face_Data[FaceCount].Brush_Index;
+					App->CL_Scene->Group[TextureID]->Face_Data[FacePos].c = FaceIndex;
+					//App->CL_Scene->Group[TextureID]->Face_Data[FacePos].Brush_Index = App->CL_Scene->B_Brush[Count]->Face_Data[FaceCount].Brush_Index;
 
-					App->CL_Editor_Com->Group[TextureID]->FaceIndex_Data[FacePos].Index = ActualFaceCount;
+					App->CL_Scene->Group[TextureID]->FaceIndex_Data[FacePos].Index = ActualFaceCount;
 
-					//int Brush_Index = App->CL_Editor_Com->B_Brush[Count]->Picking_Data[FaceCount].Actual_Brush_Index;
-					App->CL_Editor_Com->Group[TextureID]->Face_Data[FacePos].Brush_Index = App->CL_Editor_Com->B_Brush[Count]->Face_Data[FaceCount].Brush_Index;
-					App->CL_Editor_Com->Group[TextureID]->Face_Data[FacePos].Main_Face = App->CL_Editor_Com->B_Brush[Count]->Face_Data[FaceCount].Main_Face;
+					//int Brush_Index = App->CL_Scene->B_Brush[Count]->Picking_Data[FaceCount].Actual_Brush_Index;
+					App->CL_Scene->Group[TextureID]->Face_Data[FacePos].Brush_Index = App->CL_Scene->B_Brush[Count]->Face_Data[FaceCount].Brush_Index;
+					App->CL_Scene->Group[TextureID]->Face_Data[FacePos].Main_Face = App->CL_Scene->B_Brush[Count]->Face_Data[FaceCount].Main_Face;
 				}
 
 				FaceIndexNum++;
@@ -895,10 +895,10 @@ bool CL64_Mesh_Mgr::WE_Convert_To_Texture_Group(int TextureID)
 		Count++;
 	}
 
-	if (App->CL_Editor_Com->Group[TextureID])
+	if (App->CL_Scene->Group[TextureID])
 	{
-		App->CL_Editor_Com->Group[TextureID]->GroupVertCount = vertexIndex;
-		App->CL_Editor_Com->Group[TextureID]->GroupFaceCount = vertexIndex / 3;
+		App->CL_Scene->Group[TextureID]->GroupVertCount = vertexIndex;
+		App->CL_Scene->Group[TextureID]->GroupFaceCount = vertexIndex / 3;
 	}
 
 	return 1;
@@ -913,15 +913,15 @@ int CL64_Mesh_Mgr::WE_Get_Vertice_Count(int TextureID)
 	int FaceCount = 0;
 	int TotalFaceCount = 0;
 
-	int BrushCount = App->CL_Editor_Com->BrushCount;
+	int BrushCount = App->CL_Scene->BrushCount;
 	Count = 0;
 
 	while (Count < BrushCount)
 	{
 		FaceCount = 0;
-		while (FaceCount < App->CL_Editor_Com->B_Brush[Count]->Face_Count)
+		while (FaceCount < App->CL_Scene->B_Brush[Count]->Face_Count)
 		{
-			if (App->CL_Editor_Com->B_Brush[Count]->Picking_Data[FaceCount].TextID == TextureID)
+			if (App->CL_Scene->B_Brush[Count]->Picking_Data[FaceCount].TextID == TextureID)
 			{
 				TotalFaceCount++;
 			}
@@ -1166,7 +1166,7 @@ LRESULT CALLBACK CL64_Mesh_Mgr::Proc_Mesh_Viewer(HWND hDlg, UINT message, WPARAM
 			}
 			else
 			{
-				int Brush_Index = App->CL_Editor_Com->B_Brush[App->CL_Mesh_Mgr->Brushes_List_Index]->Group_Index;
+				int Brush_Index = App->CL_Scene->B_Brush[App->CL_Mesh_Mgr->Brushes_List_Index]->Group_Index;
 				
 				App->CL_Mesh_Mgr->flag_Select_Brush = 1;
 				App->CL_Properties_Brushes->OnSelchangeBrushlist(Brush_Index, true);
@@ -1205,7 +1205,7 @@ LRESULT CALLBACK CL64_Mesh_Mgr::Proc_Mesh_Viewer(HWND hDlg, UINT message, WPARAM
 
 				if (App->CL_Mesh_Mgr->flag_Select_Brush == 1)
 				{
-					int Brush_Index = App->CL_Editor_Com->B_Brush[Index]->Group_Index;
+					int Brush_Index = App->CL_Scene->B_Brush[Index]->Group_Index;
 					App->CL_Properties_Brushes->OnSelchangeBrushlist(Brush_Index, true);
 				}
 			}
@@ -1334,7 +1334,7 @@ void CL64_Mesh_Mgr::Update_Brush_List(HWND hDlg)
 	// ------------------- Groups
 	if (App->CL_Mesh_Mgr->Selected_Render_Mode == Enums::Render_Groups)
 	{
-		int SubCount = App->CL_Editor_Com->GroupCount;
+		int SubCount = App->CL_Scene->GroupCount;
 		int Count = 0;
 		while (Count < SubCount)
 		{
@@ -1351,7 +1351,7 @@ void CL64_Mesh_Mgr::Update_Brush_List(HWND hDlg)
 	// ------------------- Brushes
 	if (App->CL_Mesh_Mgr->Selected_Render_Mode == Enums::Render_Brushes)
 	{
-		int SubCount = App->CL_Editor_Com->BrushCount;
+		int SubCount = App->CL_Scene->BrushCount;
 		int Count = 0;
 		while (Count < SubCount)
 		{
@@ -1406,29 +1406,29 @@ void CL64_Mesh_Mgr::UpdateBrushData(HWND hDlg, int Index)
 	// ------------------- Groups / Wireframed
 	if (App->CL_Mesh_Mgr->Selected_Render_Mode == Enums::Render_Groups)
 	{
-		sprintf(buf, "Group Name %s", App->CL_Editor_Com->Group[Index]->GroupName);
+		sprintf(buf, "Group Name %s", App->CL_Scene->Group[Index]->GroupName);
 		SendDlgItemMessage(hDlg, IDC_LISTDATA, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
-		sprintf(buf, "Vertices %i", App->CL_Editor_Com->Group[Index]->GroupVertCount);
+		sprintf(buf, "Vertices %i", App->CL_Scene->Group[Index]->GroupVertCount);
 		SendDlgItemMessage(hDlg, IDC_LISTDATA, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
-		sprintf(buf, "Mat Index %i", App->CL_Editor_Com->Group[Index]->MaterialIndex);
+		sprintf(buf, "Mat Index %i", App->CL_Scene->Group[Index]->MaterialIndex);
 		SendDlgItemMessage(hDlg, IDC_LISTDATA, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
-		sprintf(buf, "Mat Name %s", App->CL_Editor_Com->Group[Index]->MaterialName);
+		sprintf(buf, "Mat Name %s", App->CL_Scene->Group[Index]->MaterialName);
 		SendDlgItemMessage(hDlg, IDC_LISTDATA, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
-		sprintf(buf, "Mat File Name %s", App->CL_Editor_Com->Group[Index]->Text_FileName);
+		sprintf(buf, "Mat File Name %s", App->CL_Scene->Group[Index]->Text_FileName);
 		SendDlgItemMessage(hDlg, IDC_LISTDATA, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
-		sprintf(buf, "Faces %i", App->CL_Editor_Com->Group[Index]->GroupFaceCount);
+		sprintf(buf, "Faces %i", App->CL_Scene->Group[Index]->GroupFaceCount);
 		SendDlgItemMessage(hDlg, IDC_LISTDATA, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
 		int Count = 0;
 
-		while (Count < App->CL_Editor_Com->Group[Index]->GroupFaceCount)
+		while (Count < App->CL_Scene->Group[Index]->GroupFaceCount)
 		{
-			int Brush_Index = App->CL_Editor_Com->Group[Index]->Face_Data[Count].Brush_Index;
+			int Brush_Index = App->CL_Scene->Group[Index]->Face_Data[Count].Brush_Index;
 
 			sprintf(buf, "Face %i Brush_Index %i", Count, Brush_Index);
 			SendDlgItemMessage(hDlg, IDC_LISTDATA, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
@@ -1442,25 +1442,25 @@ void CL64_Mesh_Mgr::UpdateBrushData(HWND hDlg, int Index)
 	// ------------------- Brushes
 	if (App->CL_Mesh_Mgr->Selected_Render_Mode == Enums::Render_Brushes)
 	{
-		sprintf(buf, "Brush Name %s",App->CL_Editor_Com->B_Brush[Index]->Brush_Name);
+		sprintf(buf, "Brush Name %s",App->CL_Scene->B_Brush[Index]->Brush_Name);
 		SendDlgItemMessage(hDlg, IDC_LISTDATA, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
-		sprintf(buf, "Brush Index %i", App->CL_Editor_Com->B_Brush[Index]->Group_Index);
+		sprintf(buf, "Brush Index %i", App->CL_Scene->B_Brush[Index]->Group_Index);
 		SendDlgItemMessage(hDlg, IDC_LISTDATA, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
-		sprintf(buf, "Faces %i", App->CL_Editor_Com->B_Brush[Index]->Face_Count);
+		sprintf(buf, "Faces %i", App->CL_Scene->B_Brush[Index]->Face_Count);
 		SendDlgItemMessage(hDlg, IDC_LISTDATA, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
-		sprintf(buf, "Vertices %i", App->CL_Editor_Com->B_Brush[Index]->Vertice_Count);
+		sprintf(buf, "Vertices %i", App->CL_Scene->B_Brush[Index]->Vertice_Count);
 		SendDlgItemMessage(hDlg, IDC_LISTDATA, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
 		int Count = 0;
 
-		while (Count < App->CL_Editor_Com->B_Brush[Index]->Face_Count)
+		while (Count < App->CL_Scene->B_Brush[Index]->Face_Count)
 		{
-			int TextureID = App->CL_Editor_Com->B_Brush[Index]->Picking_Data[Count].TextID;
-			int Brush_Index = App->CL_Editor_Com->B_Brush[Index]->Face_Data[Count].Brush_Index;
-			int Main_Face = App->CL_Editor_Com->B_Brush[Index]->Face_Data[Count].Main_Face;
+			int TextureID = App->CL_Scene->B_Brush[Index]->Picking_Data[Count].TextID;
+			int Brush_Index = App->CL_Scene->B_Brush[Index]->Face_Data[Count].Brush_Index;
+			int Main_Face = App->CL_Scene->B_Brush[Index]->Face_Data[Count].Main_Face;
 
 			sprintf(buf, "Text_ID %i %s Brush_Index %i Main_Face %i", TextureID, TextureName2[TextureID], Brush_Index, Main_Face);
 			SendDlgItemMessage(hDlg, IDC_LISTDATA, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
@@ -1486,14 +1486,14 @@ void CL64_Mesh_Mgr::Update_World_Model_Info(HWND hDlg)
 		sprintf(buf, "%s %i", "Total Sub Meshs - ", (int)World_Ent->getNumSubEntities());
 		SendDlgItemMessage(hDlg, IDC_LT_WORLDINFO, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
-		sprintf(buf, "%s %i", "Total Faces - ", App->CL_Editor_Com->Ogre_Face_Count);
+		sprintf(buf, "%s %i", "Total Faces - ", App->CL_Scene->Ogre_Face_Count);
 		SendDlgItemMessage(hDlg, IDC_LT_WORLDINFO, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 	}
 
 	// ------------------- Groups
 	if (App->CL_Mesh_Mgr->Selected_Render_Mode == Enums::Render_Groups)
 	{
-		sprintf(buf, "%s %i", "Total Groups - ", App->CL_Editor_Com->GroupCount);
+		sprintf(buf, "%s %i", "Total Groups - ", App->CL_Scene->GroupCount);
 		SendDlgItemMessage(hDlg, IDC_LT_WORLDINFO, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
 		sprintf(buf, "%s %i", "Total Faces - ", App->CL_Mesh_Mgr->ActualFaceCount);
@@ -1503,10 +1503,10 @@ void CL64_Mesh_Mgr::Update_World_Model_Info(HWND hDlg)
 	// ------------------- Brushes
 	if (App->CL_Mesh_Mgr->Selected_Render_Mode == Enums::Render_Brushes)
 	{
-		sprintf(buf, "%s %i", "Total Brushes - ", App->CL_Editor_Com->BrushCount);
+		sprintf(buf, "%s %i", "Total Brushes - ", App->CL_Scene->BrushCount);
 		SendDlgItemMessage(hDlg, IDC_LT_WORLDINFO, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
-		sprintf(buf, "%s %i", "Total Faces - ", App->CL_Editor_Com->Ogre_Face_Count);
+		sprintf(buf, "%s %i", "Total Faces - ", App->CL_Scene->Ogre_Face_Count);
 		SendDlgItemMessage(hDlg, IDC_LT_WORLDINFO, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 	}
 

@@ -59,28 +59,28 @@ bool CL64_Com_Environments::Add_New_Environ_Entity(bool FirstOne)
 	char B_Name[MAX_PATH];
 	char ConNum[MAX_PATH];
 
-	int Index = App->CL_Editor_Com->Object_Count;
+	int Index = App->CL_Scene->Object_Count;
 	
-	App->CL_Editor_Com->B_Object[Index] = new Base_Object();
+	App->CL_Scene->B_Object[Index] = new Base_Object();
 
-	App->CL_Editor_Com->B_Object[Index]->S_Environ[0] = new Environ_type;
+	App->CL_Scene->B_Object[Index]->S_Environ[0] = new Environ_type;
 	V_Set_Environ_Defaults(Index);
 	
-	App->CL_Editor_Com->B_Object[Index]->Type = Enums::Bullet_Type_Static;
-	App->CL_Editor_Com->B_Object[Index]->Shape = Enums::Shape_Box;
-	App->CL_Editor_Com->B_Object[Index]->This_Object_UniqueID = App->CL_Editor_Com->UniqueID_Object_Counter; // Unique ID
+	App->CL_Scene->B_Object[Index]->Type = Enums::Bullet_Type_Static;
+	App->CL_Scene->B_Object[Index]->Shape = Enums::Shape_Box;
+	App->CL_Scene->B_Object[Index]->This_Object_UniqueID = App->CL_Scene->UniqueID_Object_Counter; // Unique ID
 
-	strcpy(App->CL_Editor_Com->B_Object[Index]->Mesh_FileName, "EnvironmentEntity_GD.mesh");
+	strcpy(App->CL_Scene->B_Object[Index]->Mesh_FileName, "EnvironmentEntity_GD.mesh");
 
 	strcpy_s(B_Name, "Environ_");
 	_itoa(Index, ConNum, 10);
 	strcat(B_Name, ConNum);
-	strcpy(App->CL_Editor_Com->B_Object[Index]->Object_Name, B_Name);
+	strcpy(App->CL_Scene->B_Object[Index]->Object_Name, B_Name);
 
 	if (FirstOne == 0)
 	{
 		Ogre::Vector3 Pos = App->CL_Com_Objects->GetPlacement(-50);
-		App->CL_Editor_Com->B_Object[Index]->Mesh_Pos = Pos;
+		App->CL_Scene->B_Object[Index]->Mesh_Pos = Pos;
 	}
 	else
 	{
@@ -91,16 +91,16 @@ bool CL64_Com_Environments::Add_New_Environ_Entity(bool FirstOne)
 
 	App->CL_Entities->Create_Environment_Brush(Index);
 
-	HTREEITEM Temp = App->CL_FileView->Add_Item(App->CL_FileView->FV_Evirons_Folder, App->CL_Editor_Com->B_Object[Index]->Object_Name, Index, true);
-	App->CL_Editor_Com->B_Object[Index]->FileViewItem = Temp;
+	HTREEITEM Temp = App->CL_FileView->Add_Item(App->CL_FileView->FV_Evirons_Folder, App->CL_Scene->B_Object[Index]->Object_Name, Index, true);
+	App->CL_Scene->B_Object[Index]->FileViewItem = Temp;
 
-	App->CL_Editor_Com->B_Object[Index]->flag_Altered = 1;
+	App->CL_Scene->B_Object[Index]->flag_Altered = 1;
 
 	App->CL_FileView->Set_FolderActive(App->CL_FileView->FV_Evirons_Folder);
-	App->CL_FileView->SelectItem(App->CL_Editor_Com->B_Object[Index]->FileViewItem);
+	App->CL_FileView->SelectItem(App->CL_Scene->B_Object[Index]->FileViewItem);
 
-	App->CL_Editor_Com->UniqueID_Object_Counter++;
-	App->CL_Editor_Com->Object_Count++;
+	App->CL_Scene->UniqueID_Object_Counter++;
+	App->CL_Scene->Object_Count++;
 
 	App->CL_FileView->Set_FolderActive(App->CL_FileView->FV_Evirons_Folder);
 	
@@ -116,7 +116,7 @@ bool CL64_Com_Environments::Create_Environ_Entity(int index)
 	char meshFile[bufferSize];
 	char ogreName[bufferSize];
 
-	Base_Object* object = App->CL_Editor_Com->B_Object[index];
+	Base_Object* object = App->CL_Scene->B_Object[index];
 
 	// Generate Ogre Name
 	snprintf(ogreName, sizeof(ogreName), "GDEnt_%d", index);
@@ -179,7 +179,7 @@ bool CL64_Com_Environments::Create_Environ_Entity(int index)
 // *************************************************************************
 void CL64_Com_Environments::V_Set_Environ_Defaults(int index)
 {
-	Base_Object* bObject = App->CL_Editor_Com->B_Object[index];
+	Base_Object* bObject = App->CL_Scene->B_Object[index];
 
 	bObject->flag_Altered = true;
 
@@ -232,21 +232,21 @@ int CL64_Com_Environments::Set_Environment_By_Index(bool PlayMusic, int Index)
 	else
 	{
 		// -------- Ambient Light
-		float x = App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->AmbientColour.x;
-		float y = App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->AmbientColour.y;
-		float z = App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->AmbientColour.z;
+		float x = App->CL_Scene->B_Object[Index]->S_Environ[0]->AmbientColour.x;
+		float y = App->CL_Scene->B_Object[Index]->S_Environ[0]->AmbientColour.y;
+		float z = App->CL_Scene->B_Object[Index]->S_Environ[0]->AmbientColour.z;
 		App->CL_Ogre->mSceneMgr->setAmbientLight(ColourValue(x, y, z));
 
 		// -------- Fog
-		if (App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->Fog_On == 1)
+		if (App->CL_Scene->B_Object[Index]->S_Environ[0]->Fog_On == 1)
 		{
-			float Start = App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->Fog_Start;
-			float End = App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->Fog_End;
-			float Density = App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->Fog_Density;
+			float Start = App->CL_Scene->B_Object[Index]->S_Environ[0]->Fog_Start;
+			float End = App->CL_Scene->B_Object[Index]->S_Environ[0]->Fog_End;
+			float Density = App->CL_Scene->B_Object[Index]->S_Environ[0]->Fog_Density;
 
-			float x = App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->Fog_Colour.x;
-			float y = App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->Fog_Colour.y;
-			float z = App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->Fog_Colour.z;
+			float x = App->CL_Scene->B_Object[Index]->S_Environ[0]->Fog_Colour.x;
+			float y = App->CL_Scene->B_Object[Index]->S_Environ[0]->Fog_Colour.y;
+			float z = App->CL_Scene->B_Object[Index]->S_Environ[0]->Fog_Colour.z;
 
 			App->CL_Ogre->mSceneMgr->setFog(FOG_LINEAR, ColourValue(x, y, z), Density, (Ogre::Real)Start, (Ogre::Real)End);
 		}
@@ -256,8 +256,8 @@ int CL64_Com_Environments::Set_Environment_By_Index(bool PlayMusic, int Index)
 		}
 
 		// -------- Sky
-		bool Enable = App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->flag_Enabled;
-		App->CL_Ogre->mSceneMgr->setSkyDome(Enable, "OW3D/CloudySky", App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->Curvature, App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->Tiling, App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->Distance);
+		bool Enable = App->CL_Scene->B_Object[Index]->S_Environ[0]->flag_Enabled;
+		App->CL_Ogre->mSceneMgr->setSkyDome(Enable, "OW3D/CloudySky", App->CL_Scene->B_Object[Index]->S_Environ[0]->Curvature, App->CL_Scene->B_Object[Index]->S_Environ[0]->Tiling, App->CL_Scene->B_Object[Index]->S_Environ[0]->Distance);
 
 		// -------- Music
 		if (PlayMusic == true)
@@ -266,17 +266,17 @@ int CL64_Com_Environments::Set_Environment_By_Index(bool PlayMusic, int Index)
 			strcpy(buff, App->CL_SoundMgr->Default_Folder);
 			strcat(buff, "\\Media\\Sounds\\");
 
-			if (App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->flag_Play == 1)
+			if (App->CL_Scene->B_Object[Index]->S_Environ[0]->flag_Play == 1)
 			{
-				strcat(buff, App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->Sound_File);
+				strcat(buff, App->CL_Scene->B_Object[Index]->S_Environ[0]->Sound_File);
 
-				App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->SndFile = App->CL_SoundMgr->SoundEngine->play2D(buff, App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->flag_Loop, true, true);
+				App->CL_Scene->B_Object[Index]->S_Environ[0]->SndFile = App->CL_SoundMgr->SoundEngine->play2D(buff, App->CL_Scene->B_Object[Index]->S_Environ[0]->flag_Loop, true, true);
 
-				App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->SndFile->setVolume(App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->SndVolume);
-				App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->SndFile->setIsPaused(false);
+				App->CL_Scene->B_Object[Index]->S_Environ[0]->SndFile->setVolume(App->CL_Scene->B_Object[Index]->S_Environ[0]->SndVolume);
+				App->CL_Scene->B_Object[Index]->S_Environ[0]->SndFile->setIsPaused(false);
 
 				
-				App->CL_Editor_Com->B_Object[Index]->flag_Triggered = 1;
+				App->CL_Scene->B_Object[Index]->flag_Triggered = 1;
 			}
 		}
 		else
@@ -296,14 +296,14 @@ void CL64_Com_Environments::Stop_All_Sounds(int Index)
 {
 	App->CL_SoundMgr->SoundEngine->stopAllSounds();
 
-	if (App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->SndFile == nullptr)
+	if (App->CL_Scene->B_Object[Index]->S_Environ[0]->SndFile == nullptr)
 	{
 	}
 	else
 	{
-		App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->SndFile->setIsPaused(true);
-		App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->SndFile->drop();
-		App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->SndFile = nullptr;
+		App->CL_Scene->B_Object[Index]->S_Environ[0]->SndFile->setIsPaused(true);
+		App->CL_Scene->B_Object[Index]->S_Environ[0]->SndFile->drop();
+		App->CL_Scene->B_Object[Index]->S_Environ[0]->SndFile = nullptr;
 	}
 
 }
@@ -313,7 +313,7 @@ void CL64_Com_Environments::Stop_All_Sounds(int Index)
 // *************************************************************************
 void CL64_Com_Environments::Mark_As_Altered_Environ(int Index)
 {
-	App->CL_Editor_Com->B_Object[Index]->flag_Altered = 1;
+	App->CL_Scene->B_Object[Index]->flag_Altered = 1;
 
 	//App->CL_Editor->flag_Scene_Modified = 1;
 
@@ -325,9 +325,9 @@ void CL64_Com_Environments::Mark_As_Altered_Environ(int Index)
 // *************************************************************************
 int CL64_Com_Environments::Get_First_Environ() 
 {
-	for (int count = 0; count < App->CL_Editor_Com->Object_Count; ++count) 
+	for (int count = 0; count < App->CL_Scene->Object_Count; ++count) 
 	{
-		if (App->CL_Editor_Com->B_Object[count]->Usage == Enums::Obj_Usage_EnvironEntity) 
+		if (App->CL_Scene->B_Object[count]->Usage == Enums::Obj_Usage_EnvironEntity) 
 		{
 			return count;
 		}
@@ -341,21 +341,21 @@ int CL64_Com_Environments::Get_First_Environ()
 // *************************************************************************
 void CL64_Com_Environments::Set_First_Environment(int Index)
 {
-	float x = App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->AmbientColour.x;
-	float y = App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->AmbientColour.y;
-	float z = App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->AmbientColour.z;
+	float x = App->CL_Scene->B_Object[Index]->S_Environ[0]->AmbientColour.x;
+	float y = App->CL_Scene->B_Object[Index]->S_Environ[0]->AmbientColour.y;
+	float z = App->CL_Scene->B_Object[Index]->S_Environ[0]->AmbientColour.z;
 
 	App->CL_Ogre->mSceneMgr->setAmbientLight(ColourValue(x, y, z));
 
-	if (App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->Fog_On == 1)
+	if (App->CL_Scene->B_Object[Index]->S_Environ[0]->Fog_On == 1)
 	{
-		float Start = App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->Fog_Start;
-		float End = App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->Fog_End;
-		float Density = App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->Fog_Density;
+		float Start = App->CL_Scene->B_Object[Index]->S_Environ[0]->Fog_Start;
+		float End = App->CL_Scene->B_Object[Index]->S_Environ[0]->Fog_End;
+		float Density = App->CL_Scene->B_Object[Index]->S_Environ[0]->Fog_Density;
 
-		float x = App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->Fog_Colour.x;
-		float y = App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->Fog_Colour.y;
-		float z = App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->Fog_Colour.z;
+		float x = App->CL_Scene->B_Object[Index]->S_Environ[0]->Fog_Colour.x;
+		float y = App->CL_Scene->B_Object[Index]->S_Environ[0]->Fog_Colour.y;
+		float z = App->CL_Scene->B_Object[Index]->S_Environ[0]->Fog_Colour.z;
 
 		App->CL_Ogre->mSceneMgr->setFog(FOG_LINEAR, ColourValue(x, y, z), Density, (Ogre::Real)Start, (Ogre::Real)End);
 	}
@@ -364,12 +364,12 @@ void CL64_Com_Environments::Set_First_Environment(int Index)
 		App->CL_Ogre->mSceneMgr->setFog(FOG_NONE, ColourValue(0.7, 0.7, 0.8), 0, 100, 1000);
 	}
 
-	if (App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->flag_Enabled == 1)
+	if (App->CL_Scene->B_Object[Index]->S_Environ[0]->flag_Enabled == 1)
 	{
 	App->CL_Ogre->mSceneMgr->setSkyDome(true, "OW3D/CloudySky", 
-		App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->Curvature, 
-		App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->Tiling, 
-		App->CL_Editor_Com->B_Object[Index]->S_Environ[0]->Distance);
+		App->CL_Scene->B_Object[Index]->S_Environ[0]->Curvature, 
+		App->CL_Scene->B_Object[Index]->S_Environ[0]->Tiling, 
+		App->CL_Scene->B_Object[Index]->S_Environ[0]->Distance);
 		
 	}
 	else
@@ -401,7 +401,7 @@ void CL64_Com_Environments::Set_Environment_GameMode()
 void CL64_Com_Environments::Rename_Environ_Entity(int Index)
 {
 	strcpy(App->CL_Dialogs->btext, "Change Environ Name");
-	strcpy(App->CL_Dialogs->Chr_Text, App->CL_Editor_Com->B_Object[Index]->Object_Name);
+	strcpy(App->CL_Dialogs->Chr_Text, App->CL_Scene->B_Object[Index]->Object_Name);
 
 	App->CL_Dialogs->Dialog_Text(Enums::Check_Names_Objects);
 
@@ -410,7 +410,7 @@ void CL64_Com_Environments::Rename_Environ_Entity(int Index)
 		return;
 	}
 
-	strcpy(App->CL_Editor_Com->B_Object[Index]->Object_Name, App->CL_Dialogs->Chr_Text);
+	strcpy(App->CL_Scene->B_Object[Index]->Object_Name, App->CL_Dialogs->Chr_Text);
 
 	//App->CL_FileView->Change_Item_Name(App->CL_Editor->B_Object[Index]->FileViewItem, App->CL_Dialogs->Chr_Text);
 
@@ -423,9 +423,9 @@ void CL64_Com_Environments::Rename_Environ_Entity(int Index)
 // *************************************************************************
 void CL64_Com_Environments::Reset_Environment_Triggers()
 {
-	for (int Count = 0; Count < App->CL_Editor_Com->Object_Count; ++Count)
+	for (int Count = 0; Count < App->CL_Scene->Object_Count; ++Count)
 	{
-		auto& currentObject = App->CL_Editor_Com->B_Object[Count];
+		auto& currentObject = App->CL_Scene->B_Object[Count];
 
 		if (currentObject->flag_Deleted == 0)
 		{

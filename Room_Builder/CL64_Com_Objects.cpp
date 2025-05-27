@@ -185,14 +185,14 @@ void CL64_Com_Objects::Delete_Object()
 int CL64_Com_Objects::GetIndex_By_Name(char* Name)
 {
 	int Count = 0;
-	int Total = App->CL_Editor_Com->Object_Count;
+	int Total = App->CL_Scene->Object_Count;
 
 	while (Count < Total)
 	{
-		if (App->CL_Editor_Com->B_Object[Count]->flag_Deleted == 0)
+		if (App->CL_Scene->B_Object[Count]->flag_Deleted == 0)
 		{
 			int Result = 1;
-			Result = strcmp(App->CL_Editor_Com->B_Object[Count]->Object_Name, Name);
+			Result = strcmp(App->CL_Scene->B_Object[Count]->Object_Name, Name);
 			if (Result == 0)
 			{
 				return Count;
@@ -298,14 +298,14 @@ void CL64_Com_Objects::Clear_Modified_Objects()
 int CL64_Com_Objects::CheckNames_Objects(char* Name)
 {
 	int Count = 0;
-	int Total = App->CL_Editor_Com->Object_Count;
+	int Total = App->CL_Scene->Object_Count;
 
 	while (Count < Total)
 	{
-		if (App->CL_Editor_Com->B_Object[Count]->flag_Deleted == 0)
+		if (App->CL_Scene->B_Object[Count]->flag_Deleted == 0)
 		{
 			int Result = 1;
-			Result = strcmp(App->CL_Editor_Com->B_Object[Count]->Object_Name, Name);
+			Result = strcmp(App->CL_Scene->B_Object[Count]->Object_Name, Name);
 
 			if (Result == 0)
 			{
@@ -325,11 +325,11 @@ int CL64_Com_Objects::Get_Adjusted_Object_Count(void)
 {
 	int New_Count = 0;
 	int Count = 0;
-	int Total = App->CL_Editor_Com->Object_Count;
+	int Total = App->CL_Scene->Object_Count;
 
 	while (Count < Total)
 	{
-		if (App->CL_Editor_Com->B_Object[Count]->flag_Deleted == 0)
+		if (App->CL_Scene->B_Object[Count]->flag_Deleted == 0)
 		{
 			New_Count++;
 		}
@@ -345,14 +345,14 @@ int CL64_Com_Objects::Get_Adjusted_Object_Count(void)
 // *************************************************************************
 Ogre::Vector3 CL64_Com_Objects::Get_BoundingBox_World_Centre(int Object_Index)
 {
-	if (App->CL_Editor_Com->B_Object[Object_Index]->Shape == Enums::Shape_TriMesh)
+	if (App->CL_Scene->B_Object[Object_Index]->Shape == Enums::Shape_TriMesh)
 	{
-		Ogre::Vector3 Pos = App->CL_Editor_Com->B_Object[Object_Index]->Object_Node->getPosition();
+		Ogre::Vector3 Pos = App->CL_Scene->B_Object[Object_Index]->Object_Node->getPosition();
 		return Pos;
 	}
 	else
 	{
-		Ogre::Vector3 Centre = App->CL_Editor_Com->B_Object[Object_Index]->Object_Ent->getWorldBoundingBox(true).getCenter();
+		Ogre::Vector3 Centre = App->CL_Scene->B_Object[Object_Index]->Object_Ent->getWorldBoundingBox(true).getCenter();
 		return Centre;
 	}
 }
@@ -362,9 +362,9 @@ Ogre::Vector3 CL64_Com_Objects::Get_BoundingBox_World_Centre(int Object_Index)
 // *************************************************************************
 void CL64_Com_Objects::Show_Entities(bool Enable)
 {
-	for (int Count = 0; Count < App->CL_Editor_Com->Object_Count; ++Count)
+	for (int Count = 0; Count < App->CL_Scene->Object_Count; ++Count)
 	{
-		auto& currentObject = App->CL_Editor_Com->B_Object[Count];
+		auto& currentObject = App->CL_Scene->B_Object[Count];
 
 		if (currentObject->flag_Deleted == 0)
 		{

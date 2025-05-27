@@ -363,7 +363,7 @@ void CL64_File::Start_Load(bool Use_Open_Dialog)
 
 	}
 	
-	App->CL_Editor_Com->Clear_Level(true);
+	App->CL_Scene->Clear_Level(true);
 
 	bool Test = Open_3dt_File();
 	if (Test == true)
@@ -607,9 +607,9 @@ void CL64_File::Set_Player()
 	T_Vec3 BrushPos;
 	App->CL_Brush->Brush_Get_Center(Player, &BrushPos);
 
-	App->CL_Editor_Com->B_Player[0]->StartPos.x = BrushPos.x;
-	App->CL_Editor_Com->B_Player[0]->StartPos.y = BrushPos.y;
-	App->CL_Editor_Com->B_Player[0]->StartPos.z = BrushPos.z;
+	App->CL_Scene->B_Player[0]->StartPos.x = BrushPos.x;
+	App->CL_Scene->B_Player[0]->StartPos.y = BrushPos.y;
+	App->CL_Scene->B_Player[0]->StartPos.z = BrushPos.z;
 
 	App->CL_Physics->Reset_Physics();
 

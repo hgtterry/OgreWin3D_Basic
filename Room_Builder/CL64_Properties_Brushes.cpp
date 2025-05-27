@@ -605,9 +605,9 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Dimensions_Dlg(HWND hDlg, UINT me
 
 		int Index = App->CL_Entities->GetIndex_By_Name(App->CL_Properties_Brushes->Selected_Brush->Name);
 
-		App->CL_Properties_Brushes->Rotation.x = App->CL_Editor_Com->B_Object[Index]->Mesh_Rot.x;
-		App->CL_Properties_Brushes->Rotation.y = App->CL_Editor_Com->B_Object[Index]->Mesh_Rot.y;
-		App->CL_Properties_Brushes->Rotation.z = App->CL_Editor_Com->B_Object[Index]->Mesh_Rot.z;
+		App->CL_Properties_Brushes->Rotation.x = App->CL_Scene->B_Object[Index]->Mesh_Rot.x;
+		App->CL_Properties_Brushes->Rotation.y = App->CL_Scene->B_Object[Index]->Mesh_Rot.y;
+		App->CL_Properties_Brushes->Rotation.z = App->CL_Scene->B_Object[Index]->Mesh_Rot.z;
 
 		//// ----------- ScaleLock
 		//if (App->CLSB_Brushes->ScaleLock_Flag == 1)

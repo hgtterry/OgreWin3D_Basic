@@ -371,8 +371,8 @@ bool CL64_Picking::raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::Mo
 int CL64_Picking::Get_Brush_Index()
 {
     int m_Brush_Index = 0;
-    m_Brush_Index = App->CL_Editor_Com->Group[Group_Index]->Face_Data[Local_Face].Brush_Index;
-    m_Main_Face = App->CL_Editor_Com->Group[Group_Index]->Face_Data[Local_Face].Main_Face;
+    m_Brush_Index = App->CL_Scene->Group[Group_Index]->Face_Data[Local_Face].Brush_Index;
+    m_Main_Face = App->CL_Scene->Group[Group_Index]->Face_Data[Local_Face].Main_Face;
                    
     App->CL_Properties_Brushes->OnSelchangeBrushlist(m_Brush_Index, true);
 
@@ -422,9 +422,9 @@ int CL64_Picking::Get_Group_Index()
     int Result = 0;
     int Count = 0;
 
-    while (Count < App->CL_Editor_Com->GroupCount)
+    while (Count < App->CL_Scene->GroupCount)
     {
-        Result = strcmp(App->CL_Editor_Com->Group[Count]->Text_FileName, m_Texture_FileName);
+        Result = strcmp(App->CL_Scene->Group[Count]->Text_FileName, m_Texture_FileName);
         if (Result == 0)
         {
             return Count;

@@ -891,10 +891,10 @@ void CL64_Resources::Load_Texture_Resources()
 bool CL64_Resources::Create_Project_Resources_Group()
 {
 	// Check if the project resources have already been created
-	if (App->CL_Editor_Com->flag_Project_Resources_Created == false)
+	if (App->CL_Scene->flag_Project_Resources_Created == false)
 	{
 		Ogre::ResourceGroupManager::getSingleton().createResourceGroup(Project_Resource_Group);
-		App->CL_Editor_Com->flag_Project_Resources_Created = true;
+		App->CL_Scene->flag_Project_Resources_Created = true;
 	}
 
 	return true;
@@ -906,10 +906,10 @@ bool CL64_Resources::Create_Project_Resources_Group()
 bool CL64_Resources::Delete_Project_Resources_Group()
 {
 	// Check if the project resources have already been created
-	if (App->CL_Editor_Com->flag_Project_Resources_Created)
+	if (App->CL_Scene->flag_Project_Resources_Created)
 	{
 		Ogre::ResourceGroupManager::getSingleton().destroyResourceGroup(App->CL_Resources->Project_Resource_Group);
-		App->CL_Editor_Com->flag_Project_Resources_Created = false;
+		App->CL_Scene->flag_Project_Resources_Created = false;
 		App->CL_Resources->mSelected_Resource_Group = "App_Resource_Group";
 	}
 
@@ -932,7 +932,7 @@ bool CL64_Resources::Add_Resource_Location_Project(char* Resource_Location)
 
 	mSelected_Resource_Group = "Project_Resource_Group";
 
-	App->CL_Editor_Com->flag_Project_Resources_Created = true;
+	App->CL_Scene->flag_Project_Resources_Created = true;
 
 	return true;
 }
