@@ -24,7 +24,7 @@ THE SOFTWARE.
 
 #include "pch.h"
 #include "CL64_App.h"
-#include "CL64_Editor.h"
+#include "CL64_Scene.h"
 
 CL64_Scene::CL64_Scene()
 {

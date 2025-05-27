@@ -54,7 +54,7 @@ THE SOFTWARE.
 #include "CL64_Grid.h"
 #include "CL64_Panels.h"
 #include "CL64_Keyboard.h"
-#include "CL64_Editor.h"
+#include "CL64_Scene.h"
 #include "CL64_Ogre3D.h"
 #include "CL64_Top_Tabs.h"
 #include "CL64_File.h"

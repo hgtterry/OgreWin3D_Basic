@@ -176,7 +176,6 @@
     <ClInclude Include="CL64_Dialogs.h" />
     <ClInclude Include="CL64_Dimensions.h" />
     <ClInclude Include="CL64_Doc.h" />
-    <ClInclude Include="CL64_Editor.h" />
     <ClInclude Include="CL64_Editor_Map.h" />
     <ClInclude Include="CL64_Editor_Preview.h" />
     <ClInclude Include="CL64_Editor_Scene.h" />
@@ -220,6 +219,7 @@
     <ClInclude Include="CL64_Props_Dialogs.h" />
     <ClInclude Include="CL64_Render.h" />
     <ClInclude Include="CL64_Resources.h" />
+    <ClInclude Include="CL64_Scene.h" />
     <ClInclude Include="CL64_SelBrushList.h" />
     <ClInclude Include="CL64_SelFaceList.h" />
     <ClInclude Include="CL64_SoundMgr.h" />
@@ -261,7 +261,6 @@
     <ClCompile Include="CL64_Dialogs.cpp" />
     <ClCompile Include="CL64_Dimensions.cpp" />
     <ClCompile Include="CL64_Doc.cpp" />
-    <ClCompile Include="CL64_Editor.cpp" />
     <ClCompile Include="CL64_Editor_Map.cpp" />
     <ClCompile Include="CL64_Editor_Preview.cpp" />
     <ClCompile Include="CL64_Editor_Scene.cpp" />
@@ -305,6 +304,7 @@
     <ClCompile Include="CL64_Props_Dialogs.cpp" />
     <ClCompile Include="CL64_Render.cpp" />
     <ClCompile Include="CL64_Resources.cpp" />
+    <ClCompile Include="CL64_Scene.cpp" />
     <ClCompile Include="CL64_SelBrushList.cpp" />
     <ClCompile Include="CL64_SelFaceList.cpp" />
     <ClCompile Include="CL64_SoundMgr.cpp" />
