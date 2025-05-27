@@ -1679,8 +1679,8 @@ bool CL64_Project::Load_Project()
 	Options->Has_Objects = App->CL_Ini_File->GetInt("Options", "Objects_Count", 0, 10);
 	Options->Has_Counters = App->CL_Ini_File->GetInt("Options", "Counters_Count", 0, 10);
 
-	/*App->CL_Editor_Com->UniqueID_Object_Counter = App->CL_Ini_File->GetInt("Options", "Objects_ID_Count", 0, 10);
-	App->CL_Editor_Com->UniqueID_Counters_Count = App->CL_Ini_File->GetInt("Options", "Counters_ID_Count", 0, 10);
+	App->CL_Editor_Com->UniqueID_Object_Counter = App->CL_Ini_File->GetInt("Options", "Objects_ID_Count", 0, 10);
+	/*App->CL_Editor_Com->UniqueID_Counters_Count = App->CL_Ini_File->GetInt("Options", "Counters_ID_Count", 0, 10);
 	App->CL_Editor_Com->UniqueID_Area_Count = App->CL_Ini_File->GetInt("Options", "Areas_ID_Count", 0, 10);
 
 	App->CL_Build_Game->GameOptions->flag_Show_FPS = App->CL_Ini_File->GetInt("Config", "Show_FPS", 0, 10);

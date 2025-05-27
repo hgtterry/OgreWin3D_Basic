@@ -27,8 +27,6 @@ THE SOFTWARE.
 #include "CL64_App.h"
 #include "CL64_MeshViewer.h"
 
-//#include "CL64_MeshView_Listener.h"
-
 #pragma warning(disable : 4101)
 
 CL64_MeshViewer::CL64_MeshViewer(void)
@@ -78,7 +76,7 @@ CL64_MeshViewer::CL64_MeshViewer(void)
 	m_Resource_Folder_Full[0] = 0;
 	Selected_MeshFile[0] = 0;
 
-	Mesh_Viewer_Mode = Enums::Mesh_Viewer_Area;// 0; // 0 = Defaulet Objects 1 = Collectables
+	Mesh_Viewer_Mode = Enums::Mesh_Viewer_Objects;
 
 	Physics_Shape = Enums::Shape_None;
 	Physics_Type = Enums::Bullet_Type_None;
@@ -206,10 +204,8 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 			App->CL_MeshViewer->Get_Stock_Folders(App->CL_MeshViewer->CB_hWnd);
 			App->CL_MeshViewer->Add_Resources();
 			App->CL_MeshViewer->Get_Mesh_Files();
-			//App->CL_Ogre->Log_Message_To_File((LPSTR)"Get_Mesh_Files");
+			App->CL_MeshViewer->Show_Mesh(App->CL_MeshViewer->Selected_MeshFile);
 
-			//App->CL_MeshViewer->Show_Mesh(App->CL_MeshViewer->Selected_MeshFile);
-			//App->CL_Ogre->Log_Message_To_File((LPSTR)"Show Mesh");
 		}
 
 		SetWindowText(hDlg, App->CL_MeshViewer->m_Resource_Folder_Full);
@@ -1016,7 +1012,7 @@ bool CL64_MeshViewer::Add_Resources()
 
 	}
 
-	//App->CL_Resources->mSelected_Resource_Group = "MV_Resource_Group";
+	App->CL_Resources->mSelected_Resource_Group = "MV_Resource_Group";
 	flag_MV_Resource_Path_Loaded = 1;
 
 	return 1;
@@ -1086,18 +1082,19 @@ void CL64_MeshViewer::Get_Stock_Folders(HWND DropHwnd)
 
 	case Enums::Mesh_Viewer_Objects:
 	{
-		SendMessage(DropHwnd, CB_SETCURSEL, 3, 0);
+		SendMessage(DropHwnd, CB_SETCURSEL, 4, 0); // Structure
 		int Index = SendMessage(DropHwnd, CB_GETCURSEL, 0, 0); // Get the current selection index
 		SendMessage(DropHwnd, CB_GETLBTEXT, Index, (LPARAM)m_Just_Folder);
 
 		// Check if the selected folder is "Geometry"
-		if (strcmp(m_Just_Folder, "Geometry") == 0) {
-			strcpy(m_Resource_Folder_Full, App->CL_Project->m_Main_Assets_Path); // Set to project's full resource path
-			return;
-		}
+		//if (strcmp(m_Just_Folder, "Structure") == 0) 
+		//{
+		//	strcpy(m_Resource_Folder_Full, App->CL_Project->m_Main_Assets_Path); // Set to project's full resource path
+		//	return;
+		//}
 
 		snprintf(m_Resource_Folder_Full, sizeof(m_Resource_Folder_Full), "%s\\Stock\\%s\\", App->RB_Directory_FullPath, m_Just_Folder);
-		SendMessage(DropHwnd, CB_SELECTSTRING, -1, (LPARAM)"Geometry");
+		SendMessage(DropHwnd, CB_SELECTSTRING, -1, (LPARAM)"Structure");
 		break;
 	}
 
@@ -1128,6 +1125,7 @@ void CL64_MeshViewer::Get_Mesh_Files()
 	WIN32_FIND_DATA FindFileData;
 	HANDLE hFind;
 
+	// Construct the search path for mesh files
 	strcpy(Path, m_Resource_Folder_Full);
 	strcat(Path, "*.*");
 
@@ -1161,7 +1159,6 @@ void CL64_MeshViewer::Get_Mesh_Files()
 
 	strcpy(Selected_MeshFile, buff);
 
-	//App->SBC_MeshViewer->Update_Mesh(App->SBC_MeshViewer->Selected_MeshFile);
 }
 
 // *************************************************************************

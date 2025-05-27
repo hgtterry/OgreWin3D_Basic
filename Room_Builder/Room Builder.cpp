@@ -36,13 +36,16 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 {
     InitCommonControls();
 
+    // Create Main App Control
     App = new CL64_App();
 
+    // Get current working directory
     char* a_cwd = _getcwd(App->RB_Directory_FullPath, MAX_PATH);
 
+    // Initialize application
     App->InitApp();
-
     App->CL_Prefs->Read_Preferences();
+
 
     UNREFERENCED_PARAMETER(hPrevInstance);
     UNREFERENCED_PARAMETER(lpCmdLine);
@@ -58,43 +61,48 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         return FALSE;
     }
 
+    // Load menus
     App->Menu_Map = GetMenu(App->MainHwnd);
     App->Menu_Scene = LoadMenuA(App->hInst, (LPCSTR)IDR_SCENE_MENU);
 
+    // Load program resources
     App->LoadProgramResource();
 
+    // Initialize document and views
     App->CL_Doc->Init_Doc();
     App->CL_Editor_Map->Init_Map_Views();
-   
     App->SetMainWinCentre();
 
+    // Show and update main window
     ShowWindow(App->MainHwnd, SW_SHOWMAXIMIZED);
     UpdateWindow(App->MainHwnd);
 
+    // Reset views and initialize components
     App->CL_Editor_Map->Reset_Views_All();
-
     App->CL_Physics->Init_Bullet();
     App->CL_Ogre->Init_Ogre();
     App->CL_Picking->Init_Picking();
 
+    // Load default WAD  --- file Zipped Texture file
     char DefaultWad[MAX_PATH];
     strcpy(DefaultWad, App->RB_Directory_FullPath);
     strcat(DefaultWad, "\\Data\\Room_Builder\\Default.zip");
-
     App->CL_Doc->Load_Wad_File(DefaultWad); // Needs Ogre at the Moment
    
+    // Start headers and tabs
     App->CL_Top_Tabs->Start_Headers();
     App->CL_Editor_Scene->Start_Headers_Scene();
-
     App->CL_Properties_Tabs->Start_Tabs_Control_Dlg();
-  
     App->CL_FileView->Start_FileView();
     App->CL_FileView->Init_FileView();
 
+    // Initialize dialogs
     App->Init_Dialogs();
    
+    // Set timer for the main window
     SetTimer(App->MainHwnd, 1, 100, NULL);
 
+    // Start main window/proc loop
     HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_ROOMBUILDER));
 
     MSG msg;

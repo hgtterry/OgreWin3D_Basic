@@ -362,57 +362,38 @@ bool CL64_App::Custom_Button_Greyed(LPNMCUSTOMDRAW item)
 // *************************************************************************
 bool CL64_App::Custom_Button_Normal(LPNMCUSTOMDRAW item)
 {
+	// Determine the pen color based on the button state
+	COLORREF penColor;
+	HGDIOBJ old_pen, old_brush;
 
-	if (item->uItemState & CDIS_SELECTED) // Push Down
+	if (item->uItemState & CDIS_SELECTED) // Button is pressed
 	{
-		//Create pen for button border
-		HPEN pen = CreatePen(PS_INSIDEFRAME, 0, RGB(0, 0, 0));
-
-		//Select our brush into hDC
-		HGDIOBJ old_pen = SelectObject(item->hdc, pen);
-		HGDIOBJ old_brush = SelectObject(item->hdc, App->Brush_But_Pressed);
-
-		RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 5, 5);
-
-		//Clean up
-		SelectObject(item->hdc, old_pen);
-		SelectObject(item->hdc, old_brush);
-		DeleteObject(pen);
-
-		return CDRF_DODEFAULT;
+		penColor = RGB(0, 0, 0); // Black for pressed state
+		old_brush = App->Brush_But_Pressed;
 	}
-	else
+	else if (item->uItemState & CDIS_HOT) // Mouse is over the button
 	{
-		if (item->uItemState & CDIS_HOT) //Our mouse is over the button
-		{
-
-			HPEN pen = CreatePen(PS_INSIDEFRAME, 0, RGB(0, 255, 0));
-
-			HGDIOBJ old_pen = SelectObject(item->hdc, pen);
-			HGDIOBJ old_brush = SelectObject(item->hdc, App->Brush_But_Hover);
-
-			RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 5, 5);
-
-			SelectObject(item->hdc, old_pen);
-			SelectObject(item->hdc, old_brush);
-			DeleteObject(pen);
-
-			return CDRF_DODEFAULT;
-		}
-
-		HPEN pen = CreatePen(PS_INSIDEFRAME, 0, RGB(0, 0, 0)); // Idle 
-
-		HGDIOBJ old_pen = SelectObject(item->hdc, pen);
-		HGDIOBJ old_brush = SelectObject(item->hdc, App->Brush_But_Normal);
-
-		RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 5, 5);
-
-		SelectObject(item->hdc, old_pen);
-		SelectObject(item->hdc, old_brush);
-		DeleteObject(pen);
-
-		return CDRF_DODEFAULT;
+		penColor = RGB(0, 255, 0); // Green for hover state
+		old_brush = App->Brush_But_Hover;
 	}
+	else // Idle state
+	{
+		penColor = RGB(0, 0, 0); // Black for idle state
+		old_brush = App->Brush_But_Normal;
+	}
+
+	// Create pen for button border
+	HPEN pen = CreatePen(PS_INSIDEFRAME, 0, penColor);
+	old_pen = SelectObject(item->hdc, pen);
+	old_brush = SelectObject(item->hdc, old_brush);
+
+	// Draw the rounded rectangle
+	RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 5, 5);
+
+	// Clean up
+	SelectObject(item->hdc, old_pen);
+	SelectObject(item->hdc, old_brush);
+	DeleteObject(pen);
 
 	return CDRF_DODEFAULT;
 }

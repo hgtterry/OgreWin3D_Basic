@@ -43,6 +43,7 @@ public:
 
 	// Setup --------------------------------
 	void Init_Ogre(void);
+	void InitializeOgreComponents();
 
 	bool Ogre_Render_Loop(void);
 

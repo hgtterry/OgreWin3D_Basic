@@ -62,7 +62,34 @@ CL64_Ogre::~CL64_Ogre()
 {
 }
 
+// *************************************************************************
+// *				Init_Ogre:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
 void CL64_Ogre::Init_Ogre(void)
+{
+	
+	// Initialize Ogre components
+	InitializeOgreComponents();
+
+	// Create manual object and attach it to the scene
+	manObj = mSceneMgr->createManualObject("sampleArea");
+	ModelNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	ModelNode->attachObject(manObj);
+	
+	// Update grid and gizmos
+	App->CL_Grid->Grid_Update(1);
+	App->CL_Grid->Hair_Update(1);
+	App->CL_Grid->Face_Update(1);
+	App->CL_Gizmos->Set_Gizmos();
+
+	// Initialize ImGui
+	App->CL_ImGui->Init_ImGui();
+}
+
+// *************************************************************************
+// *		InitializeOgreComponents:- Terry and Hazel Flanigan 2024	   *
+// *************************************************************************
+void CL64_Ogre::InitializeOgreComponents() 
 {
 	Init_OgreCreateRoot();
 	Init_Load_Resources();
@@ -71,20 +98,7 @@ void CL64_Ogre::Init_Ogre(void)
 	Init_CreateCamera();
 	Init_CreateViewports();
 	Init_Resources();
-
 	Init_CreateFrameListener();
-
-	manObj = mSceneMgr->createManualObject("sampleArea");
-	ModelNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
-	ModelNode->attachObject(manObj);
-	
-	// Set Up Grid Functions
-	App->CL_Grid->Grid_Update(1);
-	App->CL_Grid->Hair_Update(1);
-	App->CL_Grid->Face_Update(1);
-	App->CL_Gizmos->Set_Gizmos();
-
-	App->CL_ImGui->Init_ImGui();
 }
 
 // *************************************************************************
