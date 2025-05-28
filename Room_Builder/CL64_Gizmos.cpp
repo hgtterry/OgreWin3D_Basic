@@ -154,30 +154,36 @@ void CL64_Gizmos::MarkerBox_Update(float Depth, float Height, float Width)
 // *************************************************************************
 // *	  		MarkerBB_Addjust:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
-void CL64_Gizmos::MarkerBox_Addjust(int Index)
+void CL64_Gizmos::MarkerBox_Adjust(int index)
 {
+	// Retrieve the object from the scene
+	Base_Object* object = App->CL_Scene->B_Object[index];
 
-	Base_Object* Object = App->CL_Scene->B_Object[Index];
+	// Get the position and orientation of the object's node
+	Ogre::Vector3 position = object->Object_Node->getPosition();
+	Ogre::Quaternion rotation = object->Object_Node->getOrientation();
 
-	Ogre::Vector3 Position = Object->Object_Node->getPosition();
-	Ogre::Quaternion Rot = Object->Object_Node->getOrientation();
+	// Get the bounding box size of the object's mesh
+	Ogre::Vector3 size = App->CL_Com_Objects->GetMeshBoundingBoxSize(object->Object_Node);
 
-	Ogre::Vector3 Size = App->CL_Com_Objects->GetMesh_BB_Size(Object->Object_Node);
+	// Extract rotation angles in degrees
+	float rotYaw = rotation.getYaw().valueDegrees();
+	float rotPitch = rotation.getPitch().valueDegrees();
+	float rotRoll = rotation.getRoll().valueDegrees();
 
-	float Rot_Yaw = Object->Object_Node->getOrientation().getYaw().valueDegrees();
-	float Rot_Pitch = Object->Object_Node->getOrientation().getPitch().valueDegrees();
-	float Rot_Roll = Object->Object_Node->getOrientation().getRoll().valueDegrees();
+	// Update the marker box dimensions
+	MarkerBox_Update(size.x / 2, size.y / 2, size.z / 2);
 
-	App->CL_Ogre->OGL_Listener->MarkerBox_Update(Size.x / 2, Size.y / 2, Size.z / 2);
+	// Calculate the center of the bounding box and convert to world space
+	Ogre::Vector3 center = object->Object_Node->getAttachedObject(0)->getBoundingBox().getCenter();
+	Ogre::Vector3 worldSpacePosition = object->Object_Node->convertLocalToWorldPosition(center);
 
-	Ogre::Vector3 Centre = Object->Object_Node->getAttachedObject(0)->getBoundingBox().getCenter();
-	Ogre::Vector3 WS = Object->Object_Node->convertLocalToWorldPosition(Centre);
-
-	BoxNode->setPosition(WS);
-	BoxNode->setOrientation(Rot);
+	// Set the position and orientation of the box node
+	BoxNode->setPosition(worldSpacePosition);
+	BoxNode->setOrientation(rotation);
 	BoxNode->setVisible(true);
 
-	//App->SBC_Markers->Move_Arrow(WS);
+	// App->SBC_Markers->Move_Arrow(worldSpacePosition);
 }
 
 // *************************************************************************
@@ -331,8 +337,6 @@ void CL64_Gizmos::Hide_Axis_Marker()
 // **************************************************************************
 void CL64_Gizmos::highlight(Ogre::Entity* entity)
 {
-#pragma warning(disable : 4996) // Nightmare why
-
 	unsigned short count = entity->getNumSubEntities();
 
 	const Ogre::String file_name = "sdk_text_box.png";
@@ -347,7 +351,7 @@ void CL64_Gizmos::highlight(Ogre::Entity* entity)
 
 		Ogre::MaterialPtr new_material = MaterialManager::getSingleton().getByName(new_material_name);
 
-		if (new_material.isNull())
+		if (new_material == nullptr)
 		{
 			MaterialPtr old_material = MaterialManager::getSingleton().getByName(old_material_name);
 			new_material = old_material->clone(new_material_name);
@@ -365,6 +369,9 @@ void CL64_Gizmos::highlight(Ogre::Entity* entity)
 	}
 }
 
+// **************************************************************************
+// *			unhighlight:- Terry and Hazel Flanigan 2024					*
+// **************************************************************************
 void CL64_Gizmos::unhighlight(Ogre::Entity* entity)
 {
 	unsigned short count = entity->getNumSubEntities();
@@ -378,7 +385,7 @@ void CL64_Gizmos::unhighlight(Ogre::Entity* entity)
 		const Ogre::String& new_material_name = subentity->getMaterialName();
 
 		// if the entity is already using the original material then we're done. 
-		if (0 == stricmp(old_material_name.c_str(), new_material_name.c_str()))
+		if (0 == _stricmp(old_material_name.c_str(), new_material_name.c_str()))
 			continue;
 
 		// otherwise restore the original material name.

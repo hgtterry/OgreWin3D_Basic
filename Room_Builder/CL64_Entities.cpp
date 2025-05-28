@@ -151,7 +151,7 @@ void CL64_Entities::Create_Environment_Brush(int Object_Index)
 
 	pBoxTemplate = App->CL_Level->Level_GetBoxTemplate();
 
-	Ogre::Vector3 size = App->CL_Com_Objects->GetMesh_BB_Size(App->CL_Scene->B_Object[Object_Index]->Object_Node);
+	Ogre::Vector3 size = App->CL_Com_Objects->GetMeshBoundingBoxSize(App->CL_Scene->B_Object[Object_Index]->Object_Node);
 
 
 	pBoxTemplate->Solid = 0;

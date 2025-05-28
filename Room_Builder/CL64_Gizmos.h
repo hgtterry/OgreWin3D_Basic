@@ -34,7 +34,7 @@ public:
 
 	void MarkerBox_Setup(void);
 	void MarkerBox_Update(float Depth, float Height, float Width);
-	void MarkerBox_Addjust(int Index);
+	void MarkerBox_Adjust(int index);
 	void Show_MarkerBox(bool Show);
 
 	void Load_PickSight(void);

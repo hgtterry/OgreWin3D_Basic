@@ -1409,7 +1409,7 @@ void CL64_MeshViewer::Show_Physics_Box()
 	btVector3 initialPosition(Centre.x, Centre.y, Centre.z);
 	startTransform.setOrigin(initialPosition);
 
-	Ogre::Vector3 Size = App->CL_Com_Objects->GetMesh_BB_Size(Ogre_MvNode);
+	Ogre::Vector3 Size = App->CL_Com_Objects->GetMeshBoundingBoxSize(Ogre_MvNode);
 	float sx = Size.x / 2;
 	float sy = Size.y / 2;
 	float sz = Size.z / 2;
@@ -1511,7 +1511,7 @@ void CL64_MeshViewer::Show_Physics_Capsule()
 
 	startTransform.setOrigin(initialPosition);
 
-	Ogre::Vector3 Size = App->CL_Com_Objects->GetMesh_BB_Size(Ogre_MvNode);
+	Ogre::Vector3 Size = App->CL_Com_Objects->GetMeshBoundingBoxSize(Ogre_MvNode);
 	float sx = Size.x / 2;
 	float sy = Size.y / 2;
 	float sz = Size.z / 2;
@@ -1567,7 +1567,7 @@ void CL64_MeshViewer::Show_Physics_Cylinder()
 
 	startTransform.setOrigin(initialPosition);
 
-	Ogre::Vector3 Size = App->CL_Com_Objects->GetMesh_BB_Size(Ogre_MvNode);
+	Ogre::Vector3 Size = App->CL_Com_Objects->GetMeshBoundingBoxSize(Ogre_MvNode);
 	float sx = Size.x / 2;
 	float sy = Size.y / 2;
 	float sz = Size.z / 2;
@@ -1621,7 +1621,7 @@ void CL64_MeshViewer::Show_Physics_Cone()
 
 	startTransform.setOrigin(initialPosition);
 
-	Ogre::Vector3 Size = App->CL_Com_Objects->GetMesh_BB_Size(Ogre_MvNode);
+	Ogre::Vector3 Size = App->CL_Com_Objects->GetMeshBoundingBoxSize(Ogre_MvNode);
 	float sx = Size.x / 2;
 	float sy = Size.y;// / 2;
 	float sz = Size.z / 2;

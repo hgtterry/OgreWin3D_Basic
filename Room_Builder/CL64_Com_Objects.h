@@ -31,16 +31,16 @@ public:
 	~CL64_Com_Objects(void);
 
 	float GetMesh_BB_Radius(SceneNode* mNode);
-	Ogre::Vector3 GetMesh_BB_Size(SceneNode* mNode);
+	Ogre::Vector3 GetMeshBoundingBoxSize(SceneNode* mNode);
 	void Rename_Object(int Index);
 	Ogre::Vector3 GetPlacement(int Distance = -6);
 	void Hide_AllObjects_Except(int Index, bool Show);
 	void Delete_Object();
 	int GetIndex_By_Name(char* Name);
 	void Clear_Modified_Objects();
-	int CheckNames_Objects(char* Name);
-	int Get_Adjusted_Object_Count(void);
-	Ogre::Vector3 Get_BoundingBox_World_Centre(int Object_Index);
+	int CheckNames_Objects(const char* name);
+	int Get_Adjusted_Object_Count(void) const;
+	Ogre::Vector3 Get_BoundingBox_World_Centre(int objectIndex);
 	void Show_Entities(bool Enable);
 
 	bool flag_Show_Physics_Debug;

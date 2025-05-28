@@ -65,17 +65,29 @@ float CL64_Com_Objects::GetMesh_BB_Radius(SceneNode* mNode)
 // *************************************************************************
 // *	  		GetMesh_BB_Size:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-Ogre::Vector3 CL64_Com_Objects::GetMesh_BB_Size(SceneNode* mNode)
+Ogre::Vector3 CL64_Com_Objects::GetMeshBoundingBoxSize(SceneNode* mNode)
 {
+	// Retrieve the attached object's bounding box
 	AxisAlignedBox aab = mNode->getAttachedObject(0)->getBoundingBox();
-	Ogre::Vector3 min = aab.getMinimum() * mNode->getScale();
-	Ogre::Vector3 max = aab.getMaximum() * mNode->getScale();
-	Ogre::Vector3 center = aab.getCenter() * mNode->getScale();
-	Ogre::Vector3 size(fabs(max.x - min.x), fabs(max.y - min.y), fabs(max.z - min.z));
+
+	// Scale the minimum and maximum points of the bounding box
+	Ogre::Vector3 scaledMin = aab.getMinimum() * mNode->getScale();
+	Ogre::Vector3 scaledMax = aab.getMaximum() * mNode->getScale();
+
+	// Calculate the size of the bounding box
+	Ogre::Vector3 size = Ogre::Vector3
+	(
+		fabs(scaledMax.x - scaledMin.x),
+		fabs(scaledMax.y - scaledMin.y),
+		fabs(scaledMax.z - scaledMin.z)
+	);
+
+	// Calculate the radius based on the size dimensions
 	float radius = (size.x > size.z) ? size.z / 2.0f : size.x / 2.0f;
 
-	return size;
+	return size; // Return the calculated size
 }
+
 
 // *************************************************************************
 // *			Rename_Object:- Terry and Hazel Flanigan 2024			   *
@@ -293,67 +305,66 @@ void CL64_Com_Objects::Clear_Modified_Objects()
 }
 
 // *************************************************************************
-// *		 CheckNames_Objects:- Terry and Hazel Flanigan 2024			   *
+// *		 CheckNames_Objects:- Terry and Hazel Flanigan 2025			   *
 // *************************************************************************
-int CL64_Com_Objects::CheckNames_Objects(char* Name)
+int CL64_Com_Objects::CheckNames_Objects(const char* name) 
 {
-	int Count = 0;
-	int Total = App->CL_Scene->Object_Count;
+	int totalObjects = App->CL_Scene->Object_Count;
 
-	while (Count < Total)
+	for (int count = 0; count < totalObjects; ++count) 
 	{
-		if (App->CL_Scene->B_Object[Count]->flag_Deleted == 0)
+		// Check if the object is not deleted
+		if (App->CL_Scene->B_Object[count]->flag_Deleted == 0) 
 		{
-			int Result = 1;
-			Result = strcmp(App->CL_Scene->B_Object[Count]->Object_Name, Name);
-
-			if (Result == 0)
+			// Compare the object name with the provided name
+			if (strcmp(App->CL_Scene->B_Object[count]->Object_Name, name) == 0) 
 			{
-				return 1;
+				return 1; // Name found
 			}
 		}
-
-		Count++;
 	}
-	return 0;
+	return 0; // Name not found
 }
 
 // *************************************************************************
-// *	  Get_Adjusted_Object_Count:- Terry and Hazel Flanigan 2024		   *
+// *	  Get_Adjusted_Object_Count:- Terry and Hazel Flanigan 2025		   *
 // *************************************************************************
-int CL64_Com_Objects::Get_Adjusted_Object_Count(void)
+int CL64_Com_Objects::Get_Adjusted_Object_Count() const
 {
-	int New_Count = 0;
-	int Count = 0;
-	int Total = App->CL_Scene->Object_Count;
+	int newCount = 0; // Initialize the count of non-deleted objects
+	int total = App->CL_Scene->Object_Count; // Get the total number of objects
 
-	while (Count < Total)
+	// Iterate through all objects in the scene
+	for (int count = 0; count < total; ++count)
 	{
-		if (App->CL_Scene->B_Object[Count]->flag_Deleted == 0)
+		// Increment newCount if the object is not marked as deleted
+		if (App->CL_Scene->B_Object[count]->flag_Deleted == 0)
 		{
-			New_Count++;
+			++newCount;
 		}
-
-		Count++;
 	}
 
-	return New_Count;
+	return newCount; // Return the count of non-deleted objects
 }
 
 // *************************************************************************
-//		Get_BoundingBox_World_Centre:- Terry and Hazel Flanigan 2024	   *
+//		Get_BoundingBox_World_Centre:- Terry and Hazel Flanigan 2025	   *
 // *************************************************************************
-Ogre::Vector3 CL64_Com_Objects::Get_BoundingBox_World_Centre(int Object_Index)
+Ogre::Vector3 CL64_Com_Objects::Get_BoundingBox_World_Centre(int objectIndex)
 {
-	if (App->CL_Scene->B_Object[Object_Index]->Shape == Enums::Shape_TriMesh)
+	// Retrieve the object shape
+	auto objectShape = App->CL_Scene->B_Object[objectIndex]->Shape;
+
+	// Check if the shape is a TriMesh
+	if (objectShape == Enums::Shape_TriMesh)
 	{
-		Ogre::Vector3 Pos = App->CL_Scene->B_Object[Object_Index]->Object_Node->getPosition();
-		return Pos;
+		// Get the position of the object node
+		return App->CL_Scene->B_Object[objectIndex]->Object_Node->getPosition();
 	}
 	else
 	{
-		Ogre::Vector3 Centre = App->CL_Scene->B_Object[Object_Index]->Object_Ent->getWorldBoundingBox(true).getCenter();
-		return Centre;
+		// Get the center of the world bounding box for other shapes
+		return App->CL_Scene->B_Object[objectIndex]->Object_Ent->getWorldBoundingBox(true).getCenter();
 	}
 }
 

@@ -36,7 +36,7 @@ public:
 	bool Add_Objects_From_File();
 	bool Add_New_Object(int Index, bool From_MeshViewer);
 
-	void Add_Physics_Box(bool Dynamic, int Index);
+	void Add_Physics_Box(bool isDynamic, int index);
 	void Add_Physics_Sphere(bool Dynamic, int Index);
 	void Add_Physics_Capsule(bool Dynamic, int Index);
 	void Add_Physics_Cylinder(bool Dynamic, int Index);

@@ -441,7 +441,7 @@ void CL64_Dimensions::Set_Position(Ogre::Vector3 Pos)
 		pBase_Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
 
 		UpDate_Physics(Index);
-		App->CL_Gizmos->MarkerBox_Addjust(Index);
+		App->CL_Gizmos->MarkerBox_Adjust(Index);
 	}
 	else
 	{
@@ -706,7 +706,7 @@ void CL64_Dimensions::Set_Scale(Ogre::Vector3 Scale)
 		pBase_Physics_Scale->z = Scale.z;
 
 		UpDate_Physics(Index);
-		App->CL_Gizmos->MarkerBox_Addjust(Index);
+		App->CL_Gizmos->MarkerBox_Adjust(Index);
 	}
 
 //	App->SBC_Markers->MarkerBB_Addjust(Index);
@@ -893,7 +893,7 @@ void CL64_Dimensions::Set_Rotation(Ogre::Vector3 Rotation, float Delta)
 			pBase_Physics_Quat->y, pBase_Physics_Quat->z, pBase_Physics_Quat->w));
 
 		UpDate_Physics(Index);
-		App->CL_Gizmos->MarkerBox_Addjust(Index);
+		App->CL_Gizmos->MarkerBox_Adjust(Index);
 	}
 
 	float RotX = App->CL_Scene->B_Object[Index]->Mesh_Rot.x;
@@ -993,7 +993,7 @@ void CL64_Dimensions::Do_Position_New()
 		// TODO Test
 		App->CL_Brush_X->Set_Brush_From_Entity_ByName(m_object->Object_Name, true);
 
-		App->CL_Gizmos->MarkerBox_Addjust(Index);
+		App->CL_Gizmos->MarkerBox_Adjust(Index);
 
 		App->CL_Scene->B_Object[Index]->flag_Altered = 1;
 		App->CL_Level->flag_Level_is_Modified = true;
@@ -1041,7 +1041,7 @@ void CL64_Dimensions::Do_Scale_New()
 		// TODO Test
 		App->CL_Brush_X->Set_Brush_From_Entity_ByName(m_object->Object_Name, true);
 
-		App->CL_Gizmos->MarkerBox_Addjust(Index);
+		App->CL_Gizmos->MarkerBox_Adjust(Index);
 
 		m_object->flag_Altered = 1;
 		App->CL_Level->flag_Level_is_Modified = true;
@@ -1109,7 +1109,7 @@ void CL64_Dimensions::Do_Rotation_New()
 
 		App->CL_Physics->Set_Physics_New(Index);
 
-		App->CL_Gizmos->MarkerBox_Addjust(Index);
+		App->CL_Gizmos->MarkerBox_Adjust(Index);
 
 		// TODO Test
 		App->CL_Brush_X->Set_Brush_From_Entity_ByName(m_object->Object_Name,true);

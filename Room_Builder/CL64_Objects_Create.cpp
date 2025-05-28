@@ -375,91 +375,66 @@ bool CL64_Objects_Create::Add_Objects_From_File() // From File
 }
 
 // *************************************************************************
-//				Add_Physics_Box:- Terry and Hazel Flanigan 2024			   *
+//				Add_Physics_Box:- Terry and Hazel Flanigan 2025			   *
 // *************************************************************************
-void CL64_Objects_Create::Add_Physics_Box(bool Dynamic, int Index)
+void CL64_Objects_Create::Add_Physics_Box(bool isDynamic, int index)
 {
+	Base_Object* object = App->CL_Scene->B_Object[index];
 
-	Base_Object* Object = App->CL_Scene->B_Object[Index];
+	// Set object type and shape based on dynamic status
+	object->Type = isDynamic ? Enums::Bullet_Type_Dynamic : Enums::Bullet_Type_Static;
+	object->Shape = Enums::Shape_Box;
 
-	if (Dynamic == 1)
-	{
-		Object->Type = Enums::Bullet_Type_Dynamic;
-		Object->Shape = Enums::Shape_Box;
+	// Get the center of the object's bounding box
+	Ogre::Vector3 center = object->Object_Ent->getWorldBoundingBox(true).getCenter();
+	object->Physics_Pos = center;
 
-	}
-	else
-	{
-		Object->Type = Enums::Bullet_Type_Static;
-		Object->Shape = Enums::Shape_Box;
-	}
-
-	Ogre::Vector3 Centre = App->CL_Scene->B_Object[Index]->Object_Ent->getWorldBoundingBox(true).getCenter();
-	Object->Physics_Pos = Ogre::Vector3(Centre.x, Centre.y, Centre.z);
-
+	// Initialize physics properties
 	btTransform startTransform;
 	startTransform.setIdentity();
 	startTransform.setRotation(btQuaternion(0, 0, 0, 1));
 
-	btScalar mass;
-	if (Dynamic == 1)
-	{
-		mass = 1.0f;
-	}
-	else
-	{
-		mass = 0.0f;
-	}
-
+	btScalar mass = isDynamic ? 1.0f : 0.0f;
 
 	btVector3 localInertia(0, 0, 0);
-	btVector3 initialPosition(Centre.x, Centre.y, Centre.z);
-	startTransform.setOrigin(initialPosition);
+	startTransform.setOrigin(btVector3(center.x, center.y, center.z));
 
-	Ogre::Vector3 Size = App->CL_Com_Objects->GetMesh_BB_Size(Object->Object_Node);
-	float sx = Size.x / 2;
-	float sy = Size.y / 2;
-	float sz = Size.z / 2;
+	// Calculate size for the physics box
+	Ogre::Vector3 size = App->CL_Com_Objects->GetMeshBoundingBoxSize(object->Object_Node);
+	btVector3 halfSize(size.x / 2, size.y / 2, size.z / 2);
+	object->Physics_Size = Ogre::Vector3(halfSize.x(), halfSize.y(), halfSize.z());
 
-	Object->Physics_Size = Ogre::Vector3(sx, sy, sz);
-
-	btCollisionShape* newRigidShape = new btBoxShape(btVector3(sx, sy, sz));
+	// Create collision shape and calculate inertia
+	btCollisionShape* newRigidShape = new btBoxShape(halfSize);
 	newRigidShape->calculateLocalInertia(mass, localInertia);
-
 	App->CL_Physics->collisionShapes.push_back(newRigidShape);
 
+	// Create motion state and rigid body
 	btDefaultMotionState* myMotionState = new btDefaultMotionState(startTransform);
-
 	btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, myMotionState, newRigidShape, localInertia);
+	object->Phys_Body = new btRigidBody(rbInfo);
 
-	Object->Phys_Body = new btRigidBody(rbInfo);
-	Object->Phys_Body->setRestitution(1.0);
-	Object->Phys_Body->setFriction(1.5);
-	Object->Phys_Body->setUserPointer(Object->Object_Node);
-	Object->Phys_Body->setWorldTransform(startTransform);
+	// Set physical properties
+	object->Phys_Body->setRestitution(1.0);
+	object->Phys_Body->setFriction(1.5);
+	object->Phys_Body->setUserPointer(object->Object_Node);
+	object->Phys_Body->setWorldTransform(startTransform);
 
-	if (Dynamic == 1)
-	{
-		Object->Usage = Enums::Obj_Usage_Dynamic;
-		Object->Phys_Body->setUserIndex(Enums::Obj_Usage_Dynamic);
-		Object->Phys_Body->setUserIndex2(Index);
-	}
-	else
-	{
-		Object->Usage = Enums::Obj_Usage_Static;
-		Object->Phys_Body->setUserIndex(Enums::Obj_Usage_Static);
-		Object->Phys_Body->setUserIndex2(Index);
-	}
+	// Set usage and user index based on dynamic status
+	object->Usage = isDynamic ? Enums::Obj_Usage_Dynamic : Enums::Obj_Usage_Static;
+	object->Phys_Body->setUserIndex(object->Usage);
+	object->Phys_Body->setUserIndex2(index);
 
-	int f = Object->Phys_Body->getCollisionFlags();
-	Object->Phys_Body->setCollisionFlags(f | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
+	// Set collision flags
+	int collisionFlags = object->Phys_Body->getCollisionFlags();
+	object->Phys_Body->setCollisionFlags(collisionFlags | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
 
-	App->CL_Physics->dynamicsWorld->addRigidBody(Object->Phys_Body);
+	// Add the rigid body to the dynamics world
+	App->CL_Physics->dynamicsWorld->addRigidBody(object->Phys_Body);
 
-	App->CL_Scene->B_Object[Index]->flag_Physics_Valid = 1;
-
-	App->CL_Physics->Set_Physics_New(Index);
-
+	// Mark physics as valid and update physics state
+	App->CL_Scene->B_Object[index]->flag_Physics_Valid = true;
+	App->CL_Physics->Set_Physics_New(index);
 }
 
 // *************************************************************************
@@ -587,7 +562,7 @@ void CL64_Objects_Create::Add_Physics_Capsule(bool Dynamic, int Index)
 
 	startTransform.setOrigin(initialPosition);
 
-	Ogre::Vector3 Size = App->CL_Com_Objects->GetMesh_BB_Size(Object->Object_Node);
+	Ogre::Vector3 Size = App->CL_Com_Objects->GetMeshBoundingBoxSize(Object->Object_Node);
 	float sx = Size.x / 2;
 	float sy = Size.y / 2;
 	float sz = Size.z / 2;
@@ -673,7 +648,7 @@ void CL64_Objects_Create::Add_Physics_Cylinder(bool Dynamic, int Index)
 
 	startTransform.setOrigin(initialPosition);
 
-	Ogre::Vector3 Size = App->CL_Com_Objects->GetMesh_BB_Size(Object->Object_Node);
+	Ogre::Vector3 Size = App->CL_Com_Objects->GetMeshBoundingBoxSize(Object->Object_Node);
 	float sx = Size.x / 2;
 	float sy = Size.y / 2;
 	float sz = Size.z / 2;
@@ -759,7 +734,7 @@ void CL64_Objects_Create::Add_Physics_Cone(bool Dynamic, int Index)
 
 	startTransform.setOrigin(initialPosition);
 
-	Ogre::Vector3 Size = App->CL_Com_Objects->GetMesh_BB_Size(Object->Object_Node);
+	Ogre::Vector3 Size = App->CL_Com_Objects->GetMeshBoundingBoxSize(Object->Object_Node);
 	float sx = Size.x / 2;
 	float sy = Size.y;// / 2;
 	float sz = Size.z / 2;

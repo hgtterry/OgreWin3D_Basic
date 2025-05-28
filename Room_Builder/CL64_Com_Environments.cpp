@@ -141,7 +141,7 @@ bool CL64_Com_Environments::Create_Environ_Entity(int index)
 
 	btScalar mass = 0.0f;
 	btVector3 localInertia(0, 0, 0);
-	Ogre::Vector3 size = App->CL_Com_Objects->GetMesh_BB_Size(object->Object_Node);
+	Ogre::Vector3 size = App->CL_Com_Objects->GetMeshBoundingBoxSize(object->Object_Node);
 	btVector3 halfSize(size.x / 2, size.y / 2, size.z / 2);
 
 	object->Physics_Size = Ogre::Vector3(halfSize.x(), halfSize.y(), halfSize.z());
