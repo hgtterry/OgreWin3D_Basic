@@ -85,7 +85,7 @@ void CL64_Editor_Preview::Preview_Mode(void)
 		App->CL_ImGui->flag_Show_Press_Excape = 1;
 		App->CL_ImGui->flag_Show_Preview_Options = 1;
 
-		App->CL_Physics->Reset_Scene();
+		App->CL_Physics->Reset_Scene(true);
 		
 		App->CL_Ogre->RenderFrame(1);
 

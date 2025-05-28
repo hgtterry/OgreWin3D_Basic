@@ -66,7 +66,8 @@ LRESULT CALLBACK CL64_Editor_Scene::Proc_Headers_Scene(HWND hDlg, UINT message, 
 
 		SendDlgItemMessage(hDlg, IDC_BT_SCENE_FIRST, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_SCENE_FREE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		
+		SendDlgItemMessage(hDlg, IDC_BT_SCENE_RESET, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
 		return TRUE;
 	}
 
@@ -121,6 +122,13 @@ LRESULT CALLBACK CL64_Editor_Scene::Proc_Headers_Scene(HWND hDlg, UINT message, 
 			return CDRF_DODEFAULT;
 		}
 		
+		if (some_item->idFrom == IDC_BT_SCENE_RESET)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+
+			return CDRF_DODEFAULT;
+		}
 		
 		return CDRF_DODEFAULT;
 	}
@@ -149,6 +157,12 @@ LRESULT CALLBACK CL64_Editor_Scene::Proc_Headers_Scene(HWND hDlg, UINT message, 
 		if (LOWORD(wParam) == IDC_BT_SCENE_FREE)
 		{
 			App->CL_Camera->Set_Camera_Mode_Free();
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_BT_SCENE_RESET)
+		{
+			App->CL_Physics->Reset_Scene(false);
 			return TRUE;
 		}
 		
