@@ -46,6 +46,7 @@ public:
 
 	int Edit_Category;
 	int Current_Selected_Object;
+	int Last_Selected_Object;
 
 	bool flag_Properties_Dlg_Active;
 	bool flag_Edit_Physics;

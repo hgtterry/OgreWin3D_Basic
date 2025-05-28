@@ -76,14 +76,19 @@ void CL64_Ogre::Init_Ogre(void)
 	ModelNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	ModelNode->attachObject(manObj);
 	
+	/*Ogre::RenderSystem* pp = mRoot->getRenderSystem();
+	pp->_setLineWidth(15);*/
+
 	// Update grid and gizmos
 	App->CL_Grid->Grid_Update(1);
 	App->CL_Grid->Hair_Update(1);
 	App->CL_Grid->Face_Update(1);
 	App->CL_Gizmos->Set_Gizmos();
 
+
 	// Initialize ImGui
 	App->CL_ImGui->Init_ImGui();
+
 }
 
 // *************************************************************************
@@ -218,6 +223,7 @@ bool CL64_Ogre::Init_Configure(void)
 	try
 	{
 		mWindow = mRoot->createRenderWindow("Main RenderWindow", 1024, 768, false, &options);
+
 	}
 	catch (...)
 	{
@@ -401,7 +407,7 @@ bool CL64_Ogre::Ogre_Render_Loop(void)
 
 	while (true)
 	{
-
+	
 		MSG  msg;
 		while (PeekMessage(&msg, NULL, 0U, 0U, PM_REMOVE))
 		{
@@ -417,7 +423,7 @@ bool CL64_Ogre::Ogre_Render_Loop(void)
 
 			//if (flag_Block_Rendering == 0)
 			{
-
+				
 				if (!mRoot->_fireFrameStarted())
 				{
 					return false;

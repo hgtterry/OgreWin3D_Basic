@@ -163,6 +163,7 @@ void CL64_OGL_Listener::PostRender()
 // *************************************************************************
 void CL64_OGL_Listener::Render_Loop()
 {
+
 	GLboolean depthTestEnabled = glIsEnabled(GL_DEPTH_TEST);
 	glDisable(GL_DEPTH_TEST);
 	GLboolean stencilTestEnabled = glIsEnabled(GL_STENCIL_TEST);
@@ -733,5 +734,42 @@ bool CL64_OGL_Listener::Render_Face(const Face* f)
 	glEnd();
 
 	return GE_TRUE;
+}
+
+// *************************************************************************
+// *		  	MarkerBox_Update:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+void CL64_OGL_Listener::MarkerBox_Update(float Depth, float Height, float Width)
+{
+	App->CL_Gizmos->BoxManual->beginUpdate(0);
+	App->CL_Gizmos->BoxManual->colour(0, 1, 0, 1);
+
+	App->CL_Gizmos->BoxManual->position(-Depth, -Height, Width);
+	App->CL_Gizmos->BoxManual->position(Depth, -Height, Width);
+	App->CL_Gizmos->BoxManual->position(Depth, Height, Width);
+	App->CL_Gizmos->BoxManual->position(-Depth, Height, Width);
+	App->CL_Gizmos->BoxManual->position(-Depth, -Height, -Width);
+	App->CL_Gizmos->BoxManual->position(Depth, -Height, -Width);
+	App->CL_Gizmos->BoxManual->position(Depth, Height, -Width);
+	App->CL_Gizmos->BoxManual->position(-Depth, Height, -Width);
+
+	App->CL_Gizmos->BoxManual->index(0);
+	App->CL_Gizmos->BoxManual->index(1);
+	App->CL_Gizmos->BoxManual->index(2);
+	App->CL_Gizmos->BoxManual->index(3);
+	App->CL_Gizmos->BoxManual->index(0);
+	App->CL_Gizmos->BoxManual->index(4);
+	App->CL_Gizmos->BoxManual->index(5);
+	App->CL_Gizmos->BoxManual->index(6);
+	App->CL_Gizmos->BoxManual->index(7);
+	App->CL_Gizmos->BoxManual->index(4);
+	App->CL_Gizmos->BoxManual->index(5);
+	App->CL_Gizmos->BoxManual->index(1);
+	App->CL_Gizmos->BoxManual->index(2);
+	App->CL_Gizmos->BoxManual->index(6);
+	App->CL_Gizmos->BoxManual->index(7);
+	App->CL_Gizmos->BoxManual->index(3);
+
+	App->CL_Gizmos->BoxManual->end();
 }
 

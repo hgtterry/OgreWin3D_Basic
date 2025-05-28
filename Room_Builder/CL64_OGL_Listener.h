@@ -39,6 +39,8 @@ public:
 	bool Brush_Decode_List(BrushList* BList);
 	bool Brush_FaceList_Render(const Brush* b, const FaceList* pList);
 
+	void MarkerBox_Update(float Depth, float Height, float Width);
+
 	float RX;
 	float RZ;
 

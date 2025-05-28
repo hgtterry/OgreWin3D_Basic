@@ -207,8 +207,7 @@ bool CL64_Physics::Create_New_Trimesh(Ogre::Entity* Entity, Ogre::SceneNode* Nod
 
 	const bool useQuantizedAABB = true;
 	mShape = new btBvhTriangleMeshShape(triMesh, false, true);
-	//collisionShapes.push_back(mShape); Not Needed in this Application
-
+	
 	float x = Node->getPosition().x;
 	float y = Node->getPosition().y;
 	float z = Node->getPosition().z;
@@ -227,7 +226,7 @@ bool CL64_Physics::Create_New_Trimesh(Ogre::Entity* Entity, Ogre::SceneNode* Nod
 
 	btRigidBody::btRigidBodyConstructionInfo rigidBodyCI
 	(
-		0,				// mass
+		0,				// mass 0 does not move
 		myMotionState,	// initial position
 		mShape,			// collision shape of body
 		inertia			// local inertia
@@ -299,38 +298,6 @@ void CL64_Physics::Reset_Physics(void)
 {
 	App->CL_Ogre->Ogre3D_Listener->flag_Run_Physics = 0;
 
-	float w = 1;
-	float x = 0;
-	float y = 0;
-	float z = 0;
-
-	if (App->CL_Scene->flag_Player_Added == 1)// && GD_Reset_Player == 1)
-	{
-		btVector3 zeroVector(0, 0, 0);
-
-		x = App->CL_Scene->B_Player[0]->StartPos.x;
-		y = App->CL_Scene->B_Player[0]->StartPos.y;
-		z = App->CL_Scene->B_Player[0]->StartPos.z;
-
-		btVector3 initialPosition(x, y, z);
-
-		btTransform startTransform;
-		startTransform.setIdentity();
-		startTransform.setRotation(btQuaternion(App->CL_Scene->B_Player[0]->Physics_Rotation));
-		startTransform.setOrigin(initialPosition);
-
-		App->CL_Scene->B_Player[0]->Phys_Body->clearForces();
-		App->CL_Scene->B_Player[0]->Phys_Body->setLinearVelocity(zeroVector);
-		App->CL_Scene->B_Player[0]->Phys_Body->setAngularVelocity(zeroVector);
-
-		App->CL_Scene->B_Player[0]->Phys_Body->setWorldTransform(startTransform);
-		App->CL_Scene->B_Player[0]->Phys_Body->getMotionState()->setWorldTransform(startTransform);
-		App->CL_Scene->B_Player[0]->Phys_Body->activate(true);
-
-		App->CL_Scene->B_Player[0]->Phys_Body->getWorldTransform().setRotation(App->CL_Scene->B_Player[0]->Physics_Rotation);
-
-		App->CL_Com_Player->Set_Player_Physics_Position(0);
-	}
 }
 
 // *************************************************************************
@@ -338,41 +305,40 @@ void CL64_Physics::Reset_Physics(void)
 // *************************************************************************
 void CL64_Physics::Reset_Player(void)
 {
+	// Stop Physics
 	App->CL_Ogre->Ogre3D_Listener->flag_Run_Physics = 0;
 
-	float w = 1;
-	float x = 0;
-	float y = 0;
-	float z = 0;
-
-	if (App->CL_Scene->flag_Player_Added == 1)// && GD_Reset_Player == 1)
+	// Check Player exsists 
+	if (App->CL_Scene->flag_Player_Added == true)
 	{
+		const auto& player = App->CL_Scene->B_Player[0];
+
+		// Initialize the zero vector for velocity
 		btVector3 zeroVector(0, 0, 0);
 
-		x = App->CL_Scene->B_Player[0]->StartPos.x;
-		y = App->CL_Scene->B_Player[0]->StartPos.y;
-		z = App->CL_Scene->B_Player[0]->StartPos.z;
+		// Retrieve the player's starting position
+		btVector3 initialPosition(player->StartPos.x, player->StartPos.y, player->StartPos.z);
 
-		btVector3 initialPosition(x, y, z);
-
+		// Set up the transformation for the player's physics body
 		btTransform startTransform;
 		startTransform.setIdentity();
-		startTransform.setRotation(btQuaternion(App->CL_Scene->B_Player[0]->Physics_Rotation));
+		startTransform.setRotation(btQuaternion(player->Physics_Rotation));
 		startTransform.setOrigin(initialPosition);
 
-		App->CL_Scene->B_Player[0]->Phys_Body->clearForces();
-		App->CL_Scene->B_Player[0]->Phys_Body->setLinearVelocity(zeroVector);
-		App->CL_Scene->B_Player[0]->Phys_Body->setAngularVelocity(zeroVector);
-
-		App->CL_Scene->B_Player[0]->Phys_Body->setWorldTransform(startTransform);
-		App->CL_Scene->B_Player[0]->Phys_Body->getMotionState()->setWorldTransform(startTransform);
-		App->CL_Scene->B_Player[0]->Phys_Body->activate(true);
-
-		App->CL_Scene->B_Player[0]->Phys_Body->getWorldTransform().setRotation(App->CL_Scene->B_Player[0]->Physics_Rotation);
-
+		// Reset the player's physics body
+		player->Phys_Body->clearForces();
+		player->Phys_Body->setLinearVelocity(zeroVector);
+		player->Phys_Body->setAngularVelocity(zeroVector);
+		player->Phys_Body->setWorldTransform(startTransform);
+		player->Phys_Body->getMotionState()->setWorldTransform(startTransform);
+		player->Phys_Body->activate(true);
+	
+		// Set the player's physics rotation and position
+		player->Phys_Body->getWorldTransform().setRotation(player->Physics_Rotation);
 		App->CL_Com_Player->Set_Player_Physics_Position(0);
 	}
 }
+
 // *************************************************************************
 // *	  		Reset_Scene:- Terry and Hazel Flanigan 2024				   *
 // *************************************************************************

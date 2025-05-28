@@ -51,6 +51,9 @@ public:
 
 	void Hide_Axis_Marker();
 
+	void highlight(Ogre::Entity* entity);
+	void unhighlight(Ogre::Entity* entity);
+
 	ManualObject* BoxManual;
 	SceneNode* BoxNode;
 

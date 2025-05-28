@@ -68,7 +68,7 @@ void CL64_Gizmos::MarkerBox_Setup(void)
 	float BoxDepth = 2.5;
 	float BoxHeight = 2.5;
 	float BoxWidth = 2.5;
-
+	
 	BoxManual = App->CL_Ogre->mSceneMgr->createManualObject("BB_Box");
 	BoxManual->begin("Template/Alpha_Blend_GD64", RenderOperation::OT_LINE_STRIP, App->CL_Ogre->App_Resource_Group);
 
@@ -120,7 +120,7 @@ void CL64_Gizmos::MarkerBox_Setup(void)
 void CL64_Gizmos::MarkerBox_Update(float Depth, float Height, float Width)
 {
 	BoxManual->beginUpdate(0);
-	BoxManual->colour(0, 1, 0, 0.5);
+	BoxManual->colour(0, 1, 0, 1);
 
 	BoxManual->position(-Depth, -Height, Width);
 	BoxManual->position(Depth, -Height, Width);
@@ -149,7 +149,6 @@ void CL64_Gizmos::MarkerBox_Update(float Depth, float Height, float Width)
 	BoxManual->index(3);
 
 	BoxManual->end();
-
 }
 
 // *************************************************************************
@@ -169,7 +168,7 @@ void CL64_Gizmos::MarkerBox_Addjust(int Index)
 	float Rot_Pitch = Object->Object_Node->getOrientation().getPitch().valueDegrees();
 	float Rot_Roll = Object->Object_Node->getOrientation().getRoll().valueDegrees();
 
-	MarkerBox_Update(Size.x / 2, Size.y / 2, Size.z / 2);
+	App->CL_Ogre->OGL_Listener->MarkerBox_Update(Size.x / 2, Size.y / 2, Size.z / 2);
 
 	Ogre::Vector3 Centre = Object->Object_Node->getAttachedObject(0)->getBoundingBox().getCenter();
 	Ogre::Vector3 WS = Object->Object_Node->convertLocalToWorldPosition(Centre);
@@ -325,4 +324,65 @@ void CL64_Gizmos::Hide_Axis_Marker()
 	BlueAxis_Node->setVisible(false);
 	RedAxis_Node->setVisible(false);
 	GreenAxis_Node->setVisible(false);
+}
+
+// **************************************************************************
+// *			highlight:- Terry and Hazel Flanigan 2024					*
+// **************************************************************************
+void CL64_Gizmos::highlight(Ogre::Entity* entity)
+{
+#pragma warning(disable : 4996) // Nightmare why
+
+	unsigned short count = entity->getNumSubEntities();
+
+	const Ogre::String file_name = "sdk_text_box.png";
+	const Ogre::String rim_material_name = "_rim";
+
+	for (unsigned short i = 0; i < count; ++i)
+	{
+		Ogre::SubEntity* subentity = entity->getSubEntity(i);
+
+		const Ogre::String& old_material_name = subentity->getMaterialName();
+		Ogre::String new_material_name = old_material_name + rim_material_name;
+
+		Ogre::MaterialPtr new_material = MaterialManager::getSingleton().getByName(new_material_name);
+
+		if (new_material.isNull())
+		{
+			MaterialPtr old_material = MaterialManager::getSingleton().getByName(old_material_name);
+			new_material = old_material->clone(new_material_name);
+
+			Pass* pass = new_material->getTechnique(0)->getPass(0);
+			Ogre::TextureUnitState* texture = pass->createTextureUnitState();
+			texture->setTextureName(file_name);
+			//texture->setTextureAddressingMode(TextureUnitState::TAM_CLAMP);
+			texture->setColourOperationEx(Ogre::LBX_ADD, Ogre::LBS_TEXTURE, Ogre::LBS_CURRENT);
+			texture->setColourOpMultipassFallback(Ogre::SBF_ONE, Ogre::SBF_ONE);
+			//texture->setEnvironmentMap(true, Ogre::TextureUnitState::ENV_NORMAL);
+		}
+
+		subentity->setMaterial(new_material);
+	}
+}
+
+void CL64_Gizmos::unhighlight(Ogre::Entity* entity)
+{
+	unsigned short count = entity->getNumSubEntities();
+
+	for (unsigned short i = 0; i < count; ++i)
+	{
+		Ogre::SubEntity* subentity = entity->getSubEntity(i);
+		Ogre::SubMesh* submesh = subentity->getSubMesh();
+
+		const Ogre::String& old_material_name = submesh->getMaterialName();
+		const Ogre::String& new_material_name = subentity->getMaterialName();
+
+		// if the entity is already using the original material then we're done. 
+		if (0 == stricmp(old_material_name.c_str(), new_material_name.c_str()))
+			continue;
+
+		// otherwise restore the original material name.
+		subentity->setMaterialName(old_material_name);
+
+	}
 }

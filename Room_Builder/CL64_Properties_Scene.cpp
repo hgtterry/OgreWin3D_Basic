@@ -37,7 +37,7 @@ CL64_Properties_Scene::CL64_Properties_Scene()
 
 	Edit_Category = Enums::Edit_Object;
 	Current_Selected_Object = 0;
-
+	Last_Selected_Object = 0;
 	btext[0] = 0;
 }
 
