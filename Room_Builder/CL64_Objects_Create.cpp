@@ -91,6 +91,9 @@ bool CL64_Objects_Create::Dispatch_MeshViewer()
 	else
 	{
 		Add_New_Object(Index, true);
+
+		//App->CL_Entities->Create_Environment_Brush(Index);
+
 		App->CL_Scene->B_Object[Index]->flag_Altered = 1;
 		App->CL_Scene->B_Object[Index]->Folder = Enums::Folder_Objects;
 		App->CL_Scene->B_Object[Index]->FileViewItem = App->CL_FileView->Add_Item(App->CL_FileView->FV_Objects_Folder,

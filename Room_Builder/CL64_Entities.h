@@ -33,7 +33,7 @@ public:
 	void Create_Player_Brush();
 	void Create_Environment_Brush(int Object_Index);
 
-	bool Ogre_To_Mesh_Data(Ogre::Entity* Ogre_Entity, Ogre::Node* Ogre_Node);
+	bool Ogre_To_Mesh_Data(Ogre::Entity* Ogre_Entity, Ogre::SceneNode* Ogre_Node);
 	
 	int Vertice_Count_Copy;
 	std::vector<vertex_type> vertex_Data;			// XYZ
@@ -41,7 +41,7 @@ public:
 
 private:
 
-	bool Convert_To_Mesh_Data(Ogre::Entity* Ogre_Entity, Ogre::Node* Ogre_Node);
+	bool Convert_To_Mesh_Data(Ogre::Entity* Ogre_Entity, Ogre::SceneNode* Ogre_Node);
 	void Get_SubPose_MeshInstance(Ogre::MeshPtr mesh, size_t& vertex_count, Ogre::Vector3*& vertices, int SubMesh, Ogre::Node* Ogre_Node);
 
 };

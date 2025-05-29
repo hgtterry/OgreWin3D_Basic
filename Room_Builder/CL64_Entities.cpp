@@ -200,7 +200,7 @@ void CL64_Entities::Create_Environment_Brush(int Object_Index)
 // *************************************************************************
 // *			Ogre_To_Mesh_Data:- Terry and Hazel Flanigan 2024	   	   *
 // *************************************************************************
-bool CL64_Entities::Ogre_To_Mesh_Data(Ogre::Entity* Ogre_Entity, Ogre::Node* Ogre_Node)
+bool CL64_Entities::Ogre_To_Mesh_Data(Ogre::Entity* Ogre_Entity, Ogre::SceneNode* Ogre_Node)
 {
 	Vertice_Count_Copy = 0;
 
@@ -212,8 +212,39 @@ bool CL64_Entities::Ogre_To_Mesh_Data(Ogre::Entity* Ogre_Entity, Ogre::Node* Ogr
 // *************************************************************************
 // *		Convert_To_Mesh_Data:- Terry and Hazel Flanigan 2024	   	   *
 // *************************************************************************
-bool CL64_Entities::Convert_To_Mesh_Data(Ogre::Entity* Ogre_Entity, Ogre::Node* Ogre_Node)
+bool CL64_Entities::Convert_To_Mesh_Data(Ogre::Entity* Ogre_Entity, Ogre::SceneNode* Ogre_Node)
 {
+	//Ogre_Node->_update();
+	//Ogre_Entity->
+	//Ogre::AxisAlignedBox myAAB = Ogre_Node->getAttachedObject(0)->getWorldBoundingBox(true);  // the local AAB of the entity
+	//Ogre::Quaternion q = Ogre_Node->getOrientation();  // the orientation of the node (a quarternion which tells us how much it has been rotated)
+	//Ogre::Vector3 p = Ogre_Node->getPosition();  // the position of the node where it is now
+	//Ogre::Vector3 s = Ogre_Node->getScale();
+
+	//Ogre::Vector3 NLT = (q * myAAB.getCorner(Ogre::AxisAlignedBox::NEAR_LEFT_TOP) + p) * s;
+	//Ogre::Vector3 NLB = (q * myAAB.getCorner(Ogre::AxisAlignedBox::NEAR_LEFT_BOTTOM) + p) * s;
+	//Ogre::Vector3 NRT = (q * myAAB.getCorner(Ogre::AxisAlignedBox::NEAR_RIGHT_TOP) + p) * s;
+	//Ogre::Vector3 NRB = (q * myAAB.getCorner(Ogre::AxisAlignedBox::NEAR_RIGHT_BOTTOM) + p) * s;
+	//
+	//Ogre::Vector3 FLT = (q * myAAB.getCorner(Ogre::AxisAlignedBox::FAR_LEFT_TOP) + p )* s ;
+	//Ogre::Vector3 FLB = (q * myAAB.getCorner(Ogre::AxisAlignedBox::FAR_LEFT_BOTTOM) + p) * s;
+	//Ogre::Vector3 FRT = (q * myAAB.getCorner(Ogre::AxisAlignedBox::FAR_RIGHT_TOP) + p) * s;
+	//Ogre::Vector3 FRB = (q * myAAB.getCorner(Ogre::AxisAlignedBox::FAR_RIGHT_BOTTOM) + p) * s;
+
+	//// Vertices 0 to 3 are the 4 corners of the top face
+	//Verts[0] = { NLT.x,NLT.y,NLT.z };
+	//Verts[1] = { NRT.x,NRT.y,NRT.z };
+	//Verts[2] = { FRT.x,FRT.y,FRT.z };
+	//Verts[3] = { FLT.x,FLT.y,FLT.z };
+
+	//// Vertices 4 to 7 are the 4 corners of the bottom face
+	//Verts[4] = { NLB.x,NLB.y,NLB.z };
+	//Verts[5] = { NRB.x,NRB.y,NRB.z };
+	//Verts[6] = { FRB.x,FRB.y,FRB.z };
+	//Verts[7] = { FLB.x,FLB.y,FLB.z };
+
+	//return 1;
+
 	bool Has_Shared_Vertices = 0;
 
 	int Count = 0;

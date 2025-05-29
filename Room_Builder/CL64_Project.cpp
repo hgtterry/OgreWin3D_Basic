@@ -611,10 +611,10 @@ bool CL64_Project::Save_Main_Asset_Folder()
 	char lastFolder[MAX_PATH];
 	strcpy(lastFolder, m_Main_Assets_Path);
 	
-	// Clear the main assets path
+	// Clear the main Assets path
 	m_Main_Assets_Path[0] = '\0';
 
-	// Rebuild assets path
+	// Rebuild Assets path
 	strcpy(m_Main_Assets_Path, m_Level_Folder_Path);
 	strcat(m_Main_Assets_Path, "\\");
 	strcat(m_Main_Assets_Path, "Assets");
@@ -633,7 +633,7 @@ bool CL64_Project::Save_Main_Asset_Folder()
 	Save_Assets_Data();
 
 	// Handle project state
-	if (flag_Is_New_Project == 0) 
+	if (flag_Is_New_Project == false) 
 	{
 		Copy_Assets(lastFolder, m_Main_Assets_Path);
 	}
@@ -642,7 +642,7 @@ bool CL64_Project::Save_Main_Asset_Folder()
 		Load_Get_Resource_Path();
 	}
 
-	App->CL_Project->flag_Is_New_Project = 0;
+	App->CL_Project->flag_Is_New_Project = false;
 
 	// Return to Level Folder
 	(void)_chdir(m_Level_Folder_Path);
@@ -1788,18 +1788,19 @@ bool CL64_Project::Load_Project()
 // *************************************************************************
 bool CL64_Project::Load_Get_Resource_Path()
 {
-	m_Main_Assets_Path[0] = 0;
+	// Initialize the main assets path
+	m_Main_Assets_Path[0] = '\0';
 
-	strcpy(m_Main_Assets_Path, m_Project_Sub_Folder);
-	strcat(m_Main_Assets_Path, m_Level_Name);
-	strcat(m_Main_Assets_Path, "\\Assets\\");
-	
-	strcpy(m_Main_TXL_Path, m_Main_Assets_Path);
-	strcat(m_Main_TXL_Path, "TXL_Texture.Zip");
+	// Construct the main assets path
+	snprintf(m_Main_Assets_Path, sizeof(m_Main_Assets_Path), "%s%s\\Assets\\", m_Project_Sub_Folder, m_Level_Name);
 
+	// Construct the texture Zip File path
+	snprintf(m_Main_TXL_Path, sizeof(m_Main_TXL_Path), "%sTXL_Texture.Zip", m_Main_Assets_Path);
+
+	// Add the resource location to the project
 	App->CL_Resources->Add_Resource_Location_Project(m_Main_Assets_Path);
 
-	return 1;
+	return true;
 }
 
 // *************************************************************************

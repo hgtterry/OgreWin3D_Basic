@@ -930,6 +930,7 @@ bool CL64_Resources::Add_Resource_Location_Project(char* Resource_Location)
 		Ogre::ResourceGroupManager::getSingleton().initialiseResourceGroup(Project_Resource_Group);
 	}
 
+	// Set the selected resource group to the project resource group
 	mSelected_Resource_Group = "Project_Resource_Group";
 
 	App->CL_Scene->flag_Project_Resources_Created = true;

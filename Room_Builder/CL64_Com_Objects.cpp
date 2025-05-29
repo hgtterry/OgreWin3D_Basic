@@ -67,9 +67,18 @@ float CL64_Com_Objects::GetMesh_BB_Radius(SceneNode* mNode)
 // *************************************************************************
 Ogre::Vector3 CL64_Com_Objects::GetMeshBoundingBoxSize(SceneNode* mNode)
 {
+	Ogre::AxisAlignedBox myAAB = mNode->getAttachedObject(0)->getBoundingBox();  // the local AAB of the entity
+	Ogre::Quaternion q = mNode->getOrientation();  // the orientation of the node (a quarternion which tells us how much it has been rotated)
+	Ogre::Vector3 p = mNode->getPosition();  // the position of the node where it is now
+
+	Ogre::Vector3 rotatedNearLeftTopCorner = q * myAAB.getCorner(Ogre::AxisAlignedBox::NEAR_LEFT_TOP) + p;
+
+
 	// Retrieve the attached object's bounding box
 	AxisAlignedBox aab = mNode->getAttachedObject(0)->getBoundingBox();
 
+	AxisAlignedBox::Corners cc = mNode->getAttachedObject(0)->getBoundingBox().getAllCorners();
+	
 	// Scale the minimum and maximum points of the bounding box
 	Ogre::Vector3 scaledMin = aab.getMinimum() * mNode->getScale();
 	Ogre::Vector3 scaledMax = aab.getMaximum() * mNode->getScale();

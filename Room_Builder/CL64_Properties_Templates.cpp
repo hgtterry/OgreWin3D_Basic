@@ -145,7 +145,7 @@ LRESULT CALLBACK CL64_Properties_Templates::Proc_Templates(HWND hDlg, UINT messa
 
 				if (App->CL_Brush->Get_Brush_Count() == 0) // New Scene
 				{
-					
+					App->CL_Project->flag_Is_New_Project = true;
 					App->CL_Doc->AddBrushToWorld();
 					
 					// Scene
