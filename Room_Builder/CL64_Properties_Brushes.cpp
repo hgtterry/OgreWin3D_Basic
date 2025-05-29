@@ -291,6 +291,7 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Brush_Tabs(HWND hDlg, UINT messag
 
 		if (LOWORD(wParam) == IDC_BT_BRUSH_RENAME) 
 		{
+			return TRUE;
 			const char* brushName = App->CL_Doc->CurBrush->Name;
 
 			if (strcmp(brushName, "Player_Main") == 0 || strcmp(brushName, "Environ_0") == 0) 

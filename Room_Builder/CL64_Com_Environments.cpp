@@ -410,6 +410,7 @@ void CL64_Com_Environments::Set_Environment_GameMode()
 // *************************************************************************
 void CL64_Com_Environments::Rename_Environ_Entity(int Index)
 {
+	return;
 	strcpy(App->CL_Dialogs->btext, "Change Environ Name");
 	strcpy(App->CL_Dialogs->Chr_Text, App->CL_Scene->B_Object[Index]->Object_Name);
 
