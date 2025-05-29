@@ -41,7 +41,7 @@ CL64_Camera::~CL64_Camera(void)
 }
 
 // *************************************************************************
-// *			SetBrushes_Fonts:- Terry and Hazel Flanigan 2024		   *
+// *			Track_Camera:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
 void CL64_Camera::Track_Camera(void)
 {
@@ -60,7 +60,7 @@ void CL64_Camera::Track_Camera(void)
 }
 
 // *************************************************************************
-// *			SetBrushes_Fonts:- Terry and Hazel Flanigan 2024		   *
+// *			Camera_Reset_Zero:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
 void CL64_Camera::Camera_Reset_Zero(void)
 {

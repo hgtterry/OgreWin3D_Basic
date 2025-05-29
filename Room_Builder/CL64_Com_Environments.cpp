@@ -294,18 +294,23 @@ int CL64_Com_Environments::Set_Environment_By_Index(bool PlayMusic, int Index)
 // *************************************************************************
 void CL64_Com_Environments::Stop_All_Sounds(int Index)
 {
+	// Stop all sounds in the sound engine
 	App->CL_SoundMgr->SoundEngine->stopAllSounds();
 
-	if (App->CL_Scene->B_Object[Index]->S_Environ[0]->SndFile == nullptr)
+	auto& soundFile = App->CL_Scene->B_Object[Index]->S_Environ[0]->SndFile;
+	
+	// Check if the sound file is valid before proceeding
+	if (soundFile != nullptr)
 	{
-	}
-	else
-	{
-		App->CL_Scene->B_Object[Index]->S_Environ[0]->SndFile->setIsPaused(true);
-		App->CL_Scene->B_Object[Index]->S_Environ[0]->SndFile->drop();
-		App->CL_Scene->B_Object[Index]->S_Environ[0]->SndFile = nullptr;
-	}
+		// Pause the sound file if it exists
+		soundFile->setIsPaused(true);
 
+		// Release the sound file resources
+		soundFile->drop();
+
+		// Set the sound file pointer to nullptr to avoid dangling references
+		soundFile = nullptr;
+	}
 }
 
 // *************************************************************************
@@ -323,16 +328,20 @@ void CL64_Com_Environments::Mark_As_Altered_Environ(int Index)
 // *************************************************************************
 // *		Get_First_Environ:- Terry and Hazel Flanigan 2024		 	   *
 // *************************************************************************
-int CL64_Com_Environments::Get_First_Environ() 
+int CL64_Com_Environments::Get_First_Environ()
 {
-	for (int count = 0; count < App->CL_Scene->Object_Count; ++count) 
+	// Iterate through all objects in the scene
+	for (int count = 0; count < App->CL_Scene->Object_Count; ++count)
 	{
-		if (App->CL_Scene->B_Object[count]->Usage == Enums::Obj_Usage_EnvironEntity) 
+		// Check if the object is of type EnvironEntity
+		if (App->CL_Scene->B_Object[count]->Usage == Enums::Obj_Usage_EnvironEntity)
 		{
+			// Return the index of the first EnvironEntity found
 			return count;
 		}
 	}
 
+	// Return -1 if no EnvironEntity is found
 	return -1;
 }
 
@@ -405,14 +414,14 @@ void CL64_Com_Environments::Rename_Environ_Entity(int Index)
 
 	App->CL_Dialogs->Dialog_Text(Enums::Check_Names_Objects);
 
-	//if (App->CL_Dialogs->flag_Canceled == 1)
+	if (App->CL_Dialogs->flag_Dlg_Canceled == 1)
 	{
 		return;
 	}
 
 	strcpy(App->CL_Scene->B_Object[Index]->Object_Name, App->CL_Dialogs->Chr_Text);
 
-	//App->CL_FileView->Change_Item_Name(App->CL_Editor->B_Object[Index]->FileViewItem, App->CL_Dialogs->Chr_Text);
+	App->CL_FileView->Change_Item_Name(App->CL_Scene->B_Object[Index]->FileViewItem, App->CL_Dialogs->Chr_Text);
 
 	Mark_As_Altered_Environ(Index);
 

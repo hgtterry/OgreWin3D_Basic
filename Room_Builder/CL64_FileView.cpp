@@ -1171,7 +1171,7 @@ void CL64_FileView::Context_New(HWND hDlg)
 }
 
 // *************************************************************************
-// *			Redraw_FileViewTerry and Hazel Flanigan 2024		 	   *
+// *			Redraw_FileView:- Terry and Hazel Flanigan 2024	 		   *
 // *************************************************************************
 void CL64_FileView::Redraw_FileView()
 {
@@ -1179,7 +1179,7 @@ void CL64_FileView::Redraw_FileView()
 }
 
 // *************************************************************************
-// *			Change_Level_NameTerry and Hazel Flanigan 2024 			   *
+// *			Change_Level_Name:- Terry and Hazel Flanigan 2024 		   *
 // *************************************************************************
 void CL64_FileView::Change_Level_Name(void)
 {
@@ -1193,7 +1193,7 @@ void CL64_FileView::Change_Level_Name(void)
 }
 
 // *************************************************************************
-// *		Change_Project_NameTerry and Hazel Flanigan 2024 			   *
+// *		Change_Project_Name:- Terry and Hazel Flanigan 2024 		   *
 // *************************************************************************
 void CL64_FileView::Change_Project_Name(void)
 {
@@ -1235,6 +1235,18 @@ HTREEITEM CL64_FileView::Add_Item(HTREEITEM Folder, char* SFileName, int Index, 
 	HTREEITEM Temp = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
 
 	return Temp;
+}
+
+// *************************************************************************
+// *		Change_Item_Name:- Terry and Hazel Flanigan 2024		 	   *
+// *************************************************************************
+void CL64_FileView::Change_Item_Name(HTREEITEM Folder, char* FolderName)
+{
+	TVITEM Sitem;
+	Sitem.mask = TVIF_TEXT;
+	Sitem.hItem = Folder;
+	Sitem.pszText = FolderName;
+	SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_SETITEM, 0, (LPARAM)(const LPTVITEM)&Sitem);
 }
 
 // *************************************************************************
