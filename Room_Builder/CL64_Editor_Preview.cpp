@@ -39,61 +39,64 @@ CL64_Editor_Preview::~CL64_Editor_Preview(void)
 }
 
 // *************************************************************************
-// *			Preview_Mode:- Terry and Hazel Flanigan 2024			   *
+// *				Preview_Mode:- Terry and Hazel Flanigan 2025	  	   *
 // *************************************************************************
 void CL64_Editor_Preview::Preview_Mode(void)
 {
-	App->CL_ImGui->Close_Dialogs();
+    App->CL_ImGui->Close_Dialogs();
 
-	if (App->CL_Physics->flag_TriMesh_Created == 1)
-	{
-		App->CL_Physics->Clear_Trimesh();
-	}
+    // Clear existing trimesh if it has been created
+    if (App->CL_Physics->flag_TriMesh_Created)
+    {
+        App->CL_Physics->Clear_Trimesh();
+    }
 
-	if (App->CL_Mesh_Mgr->World_Ent && App->CL_Mesh_Mgr->World_Node)
-	{
-		App->CL_Physics->Create_New_Trimesh(App->CL_Mesh_Mgr->World_Ent, App->CL_Mesh_Mgr->World_Node);
-		App->CL_Ogre->Bullet_Debug_Listener->flag_Render_Debug_Flag = 1;
+    // Check if World Entity and Node are valid
+    if (App->CL_Mesh_Mgr->World_Ent && App->CL_Mesh_Mgr->World_Node)
+    {
+        // Create a new trimesh and set debug rendering flag
+        App->CL_Physics->Create_New_Trimesh(App->CL_Mesh_Mgr->World_Ent, App->CL_Mesh_Mgr->World_Node);
+        App->CL_Ogre->Bullet_Debug_Listener->flag_Render_Debug_Flag = true;
 
-		flag_PreviewMode_Running = 1;
+        flag_PreviewMode_Running = true;
 
-		Parent_hWnd = GetParent(App->CL_Editor_Map->Bottom_Right_Hwnd);
+        // Get the parent window handle
+        Parent_hWnd = GetParent(App->CL_Editor_Map->Bottom_Right_Hwnd);
 
-		App->CL_Properties_Tabs->Enable_Tabs_Dlg(false);
+        // Disable property tabs and hide visuals
+        App->CL_Properties_Tabs->Enable_Tabs_Dlg(false);
+        App->CL_Ogre->OGL_Listener->Show_Visuals(false);
+        App->CL_Com_Objects->Show_Entities(false);
+        App->CL_Grid->Enable_Grid_And_Hair(false);
+        App->CL_Gizmos->Show_MarkerBox(false);
+        App->CL_Gizmos->unhighlight(App->CL_Scene->B_Object[App->CL_Gizmos->Last_Selected_Object]->Object_Ent);
 
-		App->CL_Ogre->OGL_Listener->Show_Visuals(false);
-		App->CL_Com_Objects->Show_Entities(false);
-		App->CL_Grid->Enable_Grid_And_Hair(false);
-		App->CL_Gizmos->Show_MarkerBox(false);
+        // Get screen dimensions
+        int cx = GetSystemMetrics(SM_CXSCREEN);
+        int cy = GetSystemMetrics(SM_CYSCREEN);
 
-		//SetCursorPos(App->CursorPosX, App->CursorPosY);
+        // Set window positions and sizes
+        SetWindowPos(App->CL_Editor_Map->Bottom_Right_Hwnd, HWND_TOP, 0, 0, cx, cy, SWP_NOZORDER);
+        SetParent(App->CL_Editor_Map->Bottom_Right_Hwnd, NULL);
+        SetWindowPos(App->ViewGLhWnd, NULL, 0, 0, cx, cy, SWP_NOZORDER);
 
-		int cx = GetSystemMetrics(SM_CXSCREEN);
-		int cy = GetSystemMetrics(SM_CYSCREEN);
+        // Resize the Ogre window
+        App->CL_Ogre->mWindow->resize(cx, cy);
+        App->CL_Ogre->mWindow->windowMovedOrResized();
+        App->CL_Ogre->mCamera->setAspectRatio(static_cast<Ogre::Real>(cx) / static_cast<Ogre::Real>(cy));
 
-		SetWindowPos(App->CL_Editor_Map->Bottom_Right_Hwnd, HWND_TOP, 0, 0, 0, 0, SWP_NOSIZE | SWP_NOZORDER);
-		SetWindowPos(App->CL_Editor_Map->Bottom_Right_Hwnd, NULL, 0, 0, cx, cy, SWP_NOZORDER);
-		SetParent(App->CL_Editor_Map->Bottom_Right_Hwnd, NULL);
+        // Set flags for ImGui
+        App->CL_ImGui->flag_Show_Press_Excape = true;
+        App->CL_ImGui->flag_Show_Preview_Options = true;
 
-		SetWindowPos(App->ViewGLhWnd, NULL, 0, 0, cx, cy, SWP_NOZORDER);
+        // Reset the physics scene and render the frame
+        App->CL_Physics->Reset_Scene(true);
+        App->CL_Ogre->RenderFrame(1);
 
-		App->CL_Ogre->mWindow->resize(cx, cy);
-
-		App->CL_Ogre->mWindow->windowMovedOrResized();
-		App->CL_Ogre->mCamera->setAspectRatio((Ogre::Real)App->CL_Ogre->mWindow->getWidth() / (Ogre::Real)App->CL_Ogre->mWindow->getHeight());
-
-		App->CL_ImGui->flag_Show_Press_Excape = 1;
-		App->CL_ImGui->flag_Show_Preview_Options = 1;
-
-		App->CL_Physics->Reset_Scene(true);
-		
-		App->CL_Ogre->RenderFrame(1);
-
-		App->CL_SoundMgr->SoundEngine->stopAllSounds();
-		App->CL_Com_Environments->Set_Environment_GameMode();
-
-	}
-
+        // Stop all sounds and set environment mode
+        App->CL_SoundMgr->SoundEngine->stopAllSounds();
+        App->CL_Com_Environments->Set_Environment_GameMode();
+    }
 }
 
 // *************************************************************************
@@ -117,6 +120,7 @@ void CL64_Editor_Preview::Map_Editor_Mode(void)
 	App->CL_ImGui->flag_Show_Press_Excape = 0;
 	App->CL_ImGui->flag_Show_Preview_Options = 0;
 	App->CL_Grid->Enable_Grid_And_Hair(true);
+	App->CL_Gizmos->highlight(App->CL_Scene->B_Object[App->CL_Gizmos->Last_Selected_Object]->Object_Ent);
 
 	SetParent(App->CL_Editor_Map->Bottom_Right_Hwnd, Parent_hWnd);
 

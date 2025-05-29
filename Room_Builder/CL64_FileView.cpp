@@ -682,9 +682,9 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 		App->CL_Props_Dialogs->Show_Materials_Dlg(true);
 
 		//----------------------------------------------------------------------------
-		//App->CL_Properties_Scene->Reset_Last_Selected_Object(App->SBC_Properties->Last_Selected_Object);
 		App->CL_Gizmos->unhighlight(App->CL_Scene->B_Object[App->CL_Properties_Scene->Last_Selected_Object]->Object_Ent);
 		App->CL_Properties_Scene->Last_Selected_Object = Index;
+		App->CL_Gizmos->Last_Selected_Object = Index;
 		//----------------------------------------------------------------------------
 
 		App->CL_Gizmos->MarkerBox_Adjust(Index);

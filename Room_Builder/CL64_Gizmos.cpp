@@ -40,6 +40,8 @@ CL64_Gizmos::CL64_Gizmos(void)
 	GreenAxis_Ent = nullptr;
 	GreenAxis_Node = nullptr;
 
+	Last_Selected_Object = 0;
+
 	BoxManual = NULL;
 	BoxNode = NULL;
 	mPickSight = NULL;

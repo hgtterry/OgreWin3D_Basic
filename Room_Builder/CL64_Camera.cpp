@@ -229,31 +229,36 @@ void CL64_Camera::Camera_Save_Location(void)
 }
 
 // *************************************************************************
-// *	Set_Camera_Mode_First_Person:- Terry and Hazel Flanigan 2025  	   *
+// *		SetCameraMode_FirstPerson:- Terry and Hazel Flanigan 2025  	   *
 // *************************************************************************
-void CL64_Camera::Set_Camera_Mode_First_Person()
+void CL64_Camera::SetCameraMode_FirstPerson()
 {
-	flag_First_Person = 1;
-	flag_Free = 0;
+	// Set the camera mode flags
+	flag_First_Person = true; 
+	flag_Free = false;
 
-	App->CL_Ogre->Ogre3D_Listener->flag_Run_Physics = 1;
+	// Update the physics and camera mode in the Ogre3D listener
+	App->CL_Ogre->Ogre3D_Listener->flag_Run_Physics = true;
 	App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_First;
 
-	RedrawWindow(App->CL_Editor_Scene->Scene_Headers_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-
+	// Redraw the window to reflect the changes
+	RedrawWindow(App->CL_Editor_Scene->Scene_Headers_hWnd, nullptr, nullptr, RDW_INVALIDATE | RDW_UPDATENOW);
 }
 
 // *************************************************************************
-// *		Set_Camera_Mode_Free:- Terry and Hazel Flanigan 2025	 	   *
+// *			SetCameraMode_Free:- Terry and Hazel Flanigan 2025	 	   *
 // *************************************************************************
-void CL64_Camera::Set_Camera_Mode_Free()
+void CL64_Camera::SetCameraMode_Free()
 {
-	flag_Free = 1;
-	flag_First_Person = 0;
+	// Set the camera mode flags
+	flag_Free = true;
+	flag_First_Person = false;
 
-	App->CL_Ogre->Ogre3D_Listener->flag_Run_Physics = 0;
+	// Update the physics and camera mode in the Ogre3D listener
+	App->CL_Ogre->Ogre3D_Listener->flag_Run_Physics = false;
 	App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_Free;
 
-	RedrawWindow(App->CL_Editor_Scene->Scene_Headers_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+	// Redraw the window to reflect the changes
+	RedrawWindow(App->CL_Editor_Scene->Scene_Headers_hWnd, nullptr, nullptr, RDW_INVALIDATE | RDW_UPDATENOW);
 }
 

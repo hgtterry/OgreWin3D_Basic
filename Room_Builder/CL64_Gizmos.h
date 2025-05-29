@@ -54,6 +54,8 @@ public:
 	void highlight(Ogre::Entity* entity);
 	void unhighlight(Ogre::Entity* entity);
 
+	int Last_Selected_Object;
+
 	ManualObject* BoxManual;
 	SceneNode* BoxNode;
 

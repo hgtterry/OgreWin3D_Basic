@@ -137,7 +137,7 @@ LRESULT CALLBACK CL64_Editor_Scene::Proc_Headers_Scene(HWND hDlg, UINT message, 
 	{
 		if (LOWORD(wParam) == IDC_BT_MAP_EDITOR)
 		{
-			App->CL_Camera->Set_Camera_Mode_Free();
+			App->CL_Camera->SetCameraMode_Free();
 			App->CL_Editor_Scene->Back_To_Map_Editor();
 			return TRUE;
 		}
@@ -150,13 +150,13 @@ LRESULT CALLBACK CL64_Editor_Scene::Proc_Headers_Scene(HWND hDlg, UINT message, 
 
 		if (LOWORD(wParam) == IDC_BT_SCENE_FIRST)
 		{
-			App->CL_Camera->Set_Camera_Mode_First_Person();
+			App->CL_Camera->SetCameraMode_FirstPerson();
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == IDC_BT_SCENE_FREE)
 		{
-			App->CL_Camera->Set_Camera_Mode_Free();
+			App->CL_Camera->SetCameraMode_Free();
 			return TRUE;
 		}
 
@@ -293,7 +293,7 @@ void CL64_Editor_Scene::Return_From_Preview(void)
 		App->CL_Ogre->Bullet_Debug_Listener->flag_Render_Debug_Flag = 1;
 	}
 	
-	App->CL_Camera->Set_Camera_Mode_Free();
+	App->CL_Camera->SetCameraMode_Free();
 }
 
 // *************************************************************************

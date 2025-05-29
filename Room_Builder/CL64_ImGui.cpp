@@ -324,7 +324,7 @@ void CL64_ImGui::Preview_Options_GUI(void)
 			App->CL_Physics->Reset_Physics();
 			App->CL_Physics->Reset_Scene(true);
 
-			App->CL_Camera->Set_Camera_Mode_First_Person();
+			App->CL_Camera->SetCameraMode_FirstPerson();
 		
 			App->CL_Com_Environments->Reset_Environment_Triggers();
 			App->CL_SoundMgr->SoundEngine->stopAllSounds();
@@ -340,7 +340,7 @@ void CL64_ImGui::Preview_Options_GUI(void)
 
 		if (ImGui::Button("Player Position", ImVec2(150, 100)))
 		{
-			App->CL_Camera->Set_Camera_Mode_First_Person();
+			App->CL_Camera->SetCameraMode_FirstPerson();
 
 			SetCapture(App->ViewGLhWnd);
 			App->CL_Ogre->Ogre3D_Listener->flag_LeftMouseDown = 1;

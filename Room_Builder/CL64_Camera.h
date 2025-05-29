@@ -42,8 +42,8 @@ public:
 	void Camera_Speed_Fast(void);
 	void Camera_Set_Menu_Clear(void);
 
-	void Set_Camera_Mode_First_Person();
-	void Set_Camera_Mode_Free();
+	void SetCameraMode_FirstPerson();
+	void SetCameraMode_Free();
 
 	void Reset_View_Editor(void);
 	void Camera_Save_Location(void);
