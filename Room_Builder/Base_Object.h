@@ -197,7 +197,7 @@ public:
 	Ogre::Quaternion Mesh_BB_Quat;
 	Ogre::Vector3 Mesh_BB_Center;
 
-	Brush* Br_Test;
+	Brush* Object_Brush;
 	BrushTemplate_Box* Brus_BoxTemplate;
 
 	bool flag_Deleted;

@@ -38,7 +38,7 @@ bool Base_Object::Init_Object(void)
 	Phys_Body = nullptr;
 	Phys_Shape = nullptr;
 
-	Br_Test = nullptr;
+	Object_Brush = nullptr;
 	Brus_BoxTemplate = { 0 };
 
 
@@ -228,12 +228,12 @@ void Base_Object::Create_Brush(void)
 	Brus_BoxTemplate->ZSizeBot = 100;
 	Brus_BoxTemplate->ZSizeTop = 100;
 
-	Br_Test = BrushTemplate_CreateBox(Brus_BoxTemplate);
-	if (Br_Test != NULL)
+	Object_Brush = BrushTemplate_CreateBox(Brus_BoxTemplate);
+	if (Object_Brush != NULL)
 	{
 
-		strcpy(Br_Test->Name, "Test");
-		App->CL_Level->Level_AppendBrush(Br_Test);
+		strcpy(Object_Brush->Name, "Test");
+		App->CL_Level->Level_AppendBrush(Object_Brush);
 
 		App->CL_Doc->Set_Faces_To_Brush_Name_All();
 		//App->CL_Brush_X->Set_Brush_Faces_Name(Br_Test);

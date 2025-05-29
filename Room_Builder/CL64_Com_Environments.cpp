@@ -56,6 +56,7 @@ void CL64_Com_Environments::Create_Test_Environment()
 // *************************************************************************
 bool CL64_Com_Environments::Add_New_Environ_Entity(bool FirstOne)
 {
+	//Debug
 	char B_Name[MAX_PATH];
 	char ConNum[MAX_PATH];
 
