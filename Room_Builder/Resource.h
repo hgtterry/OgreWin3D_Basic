@@ -441,7 +441,6 @@
 #define IDC_CONE                        1324
 #define IDC_STTYPE                      1325
 #define IDC_OBJECTNAME                  1326
-#define IDC_BUTTON1                     1327
 #define IDC_BT_SCENE_RESET              1327
 #define IDC_BUTTON2                     1328
 #define ID_DEBUG_GENERAL                32771
@@ -498,6 +497,7 @@
 #define ID_FILE_SAVE32823               32823
 #define ID_INFO_PLAYERDATA              32824
 #define ID_INFO_PHYSICSOBJECTSDEBUG     32825
+#define ID_FILE_SAVEAS32826             32826
 #define ID_GENERALSELECT                32886
 #define ID_TOOLS_TEMPLATE               32910
 #define IDC_STATIC                      -1
@@ -508,7 +508,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        194
-#define _APS_NEXT_COMMAND_VALUE         32826
+#define _APS_NEXT_COMMAND_VALUE         32827
 #define _APS_NEXT_CONTROL_VALUE         1328
 #define _APS_NEXT_SYMED_VALUE           110
 #endif

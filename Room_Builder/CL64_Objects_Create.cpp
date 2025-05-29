@@ -267,6 +267,7 @@ bool CL64_Objects_Create::Add_Objects_From_File() // From File
 		strcpy(Test_For_Mesh, App->CL_Project->m_Main_Assets_Path);
 		strcat(Test_For_Mesh, App->CL_Scene->B_Object[Count]->Mesh_FileName);
 		
+
 		if (App->CL_Scene->B_Object[Count]->Usage == Enums::Obj_Usage_Sound)
 		{
 			/*App->CL_Com_Sounds->Create_Sound_Entity(Count);
@@ -347,12 +348,12 @@ bool CL64_Objects_Create::Add_Objects_From_File() // From File
 		}
 		else
 		{
-			/*bool Test = App->CL_File_IO->Check_File_Exist(Test_For_Mesh);
+			bool Test = App->CL_Utilities->Check_File_Exist(Test_For_Mesh);
 			if (Test == 0)
 			{
 				App->Say("Can not find", App->CL_Scene->B_Object[Count]->Mesh_FileName);	
 			}
-			else*/
+			else
 			{
 				Add_New_Object(Count, 0);
 				App->CL_Scene->B_Object[Count]->flag_Altered = 0;

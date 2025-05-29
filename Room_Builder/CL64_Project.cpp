@@ -604,20 +604,23 @@ bool CL64_Project::Save_Level_Folder()
 }
 
 // *************************************************************************
-// *	  	Save_Main_Asset_Folder:- Terry and Hazel Flanigan 2022		   *
+// *	  	Save_Main_Asset_Folder:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
 bool CL64_Project::Save_Main_Asset_Folder()
 {
-	char LastFolder[MAX_PATH];
-	strcpy(LastFolder, m_Main_Assets_Path);
+	char lastFolder[MAX_PATH];
+	strcpy(lastFolder, m_Main_Assets_Path);
 	
-	m_Main_Assets_Path[0] = 0;
+	// Clear the main assets path
+	m_Main_Assets_Path[0] = '\0';
 
+	// Rebuild assets path
 	strcpy(m_Main_Assets_Path, m_Level_Folder_Path);
 	strcat(m_Main_Assets_Path, "\\");
 	strcat(m_Main_Assets_Path, "Assets");
 	strcat(m_Main_Assets_Path, "\\");
 
+	// Attempt to create the directory and change to it
 	if (_mkdir(m_Main_Assets_Path) == 0)
 	{
 		(void)_chdir(m_Main_Assets_Path);
@@ -629,21 +632,22 @@ bool CL64_Project::Save_Main_Asset_Folder()
 	
 	Save_Assets_Data();
 
-	/*if (flag_Is_New_Project == 0)
+	// Handle project state
+	if (flag_Is_New_Project == 0) 
 	{
-		Copy_Assets(LastFolder, m_Main_Assets_Path);
-	}*/
-	
-	//if (flag_Is_New_Project == 1)
+		Copy_Assets(lastFolder, m_Main_Assets_Path);
+	}
+	else 
 	{
 		Load_Get_Resource_Path();
 	}
 
 	App->CL_Project->flag_Is_New_Project = 0;
 
-	(void)_chdir(m_Level_Folder_Path); // Return to Level Folder
+	// Return to Level Folder
+	(void)_chdir(m_Level_Folder_Path);
 
-	return 1;
+	return true;
 }
 
 // *************************************************************************
@@ -1914,6 +1918,7 @@ bool CL64_Project::Load_Project_Objects()
 		_itoa(Count, mNumChr, 10);
 		strcat(mSection, mNumChr);
 
+		// Create Object 
 		App->CL_Scene->B_Object.push_back(new Base_Object());
 		Base_Object* B_Object = App->CL_Scene->B_Object[Count];
 
