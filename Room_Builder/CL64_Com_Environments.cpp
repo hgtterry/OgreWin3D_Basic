@@ -54,58 +54,93 @@ void CL64_Com_Environments::Create_Test_Environment()
 // *************************************************************************
 // *		Add_New_Environ_Entiry:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
-bool CL64_Com_Environments::Add_New_Environ_Entity(bool FirstOne)
+bool CL64_Com_Environments::Add_New_Environ_Entity(bool isFirstEntity) 
 {
-	//Debug
-	char B_Name[MAX_PATH];
-	char ConNum[MAX_PATH];
+	const int index = App->CL_Scene->Object_Count;
 
-	int Index = App->CL_Scene->Object_Count;
-	
-	App->CL_Scene->B_Object[Index] = new Base_Object();
+	// Create a new Base_Object and assign it to the scene
+	App->CL_Scene->B_Object[index] = new Base_Object();
+	App->CL_Scene->B_Object[index]->S_Environ[0] = new Environ_type;
 
-	App->CL_Scene->B_Object[Index]->S_Environ[0] = new Environ_type;
-	V_Set_Environ_Defaults(Index);
-	
-	App->CL_Scene->B_Object[Index]->Type = Enums::Bullet_Type_Static;
-	App->CL_Scene->B_Object[Index]->Shape = Enums::Shape_Box;
-	App->CL_Scene->B_Object[Index]->This_Object_UniqueID = App->CL_Scene->UniqueID_Object_Counter; // Unique ID
+	// Set default environment values
+	V_Set_Environ_Defaults(index);
 
-	strcpy(App->CL_Scene->B_Object[Index]->Mesh_FileName, "EnvironmentEntity_GD.mesh");
+	// Set object properties
+	App->CL_Scene->B_Object[index]->Type = Enums::Bullet_Type_Static;
+	App->CL_Scene->B_Object[index]->Shape = Enums::Shape_Box;
+	App->CL_Scene->B_Object[index]->This_Object_UniqueID = App->CL_Scene->UniqueID_Object_Counter; // Unique ID
+	strcpy(App->CL_Scene->B_Object[index]->Mesh_FileName, "EnvironmentEntity_GD.mesh");
 
-	strcpy_s(B_Name, "Environ_");
-	_itoa(Index, ConNum, 10);
-	strcat(B_Name, ConNum);
-	strcpy(App->CL_Scene->B_Object[Index]->Object_Name, B_Name);
+	// Generate a unique object name
+	std::string objectName = "Environ_" + std::to_string(index);
+	strcpy(App->CL_Scene->B_Object[index]->Object_Name, objectName.c_str());
 
-	if (FirstOne == 0)
-	{
-		Ogre::Vector3 Pos = App->CL_Com_Objects->GetPlacement(-50);
-		App->CL_Scene->B_Object[Index]->Mesh_Pos = Pos;
-	}
-	else
-	{
-		Ogre::Vector3 Pos = Ogre::Vector3(0, 0, 0);
-	}
+	// Set position based on whether it's the first entity
+	Ogre::Vector3 position = isFirstEntity ? Ogre::Vector3(0, 0, 0) : App->CL_Com_Objects->GetPlacement(-50);
+	App->CL_Scene->B_Object[index]->Mesh_Pos = position;
 
-	Create_Environ_Entity(Index);
+	// Create the environment entity and brush
+	Create_Environ_Entity(index);
+	App->CL_Entities->Create_Entity_Brush(index);
 
-	App->CL_Entities->Create_Environment_Brush(Index);
+	// Add item to the file view
+	HTREEITEM tempItem = App->CL_FileView->Add_Item(App->CL_FileView->FV_Evirons_Folder, App->CL_Scene->B_Object[index]->Object_Name, index, true);
+	App->CL_Scene->B_Object[index]->FileViewItem = tempItem;
 
-	HTREEITEM Temp = App->CL_FileView->Add_Item(App->CL_FileView->FV_Evirons_Folder, App->CL_Scene->B_Object[Index]->Object_Name, Index, true);
-	App->CL_Scene->B_Object[Index]->FileViewItem = Temp;
+	// Mark the object as altered
+	App->CL_Scene->B_Object[index]->flag_Altered = 1;
 
-	App->CL_Scene->B_Object[Index]->flag_Altered = 1;
-
+	// Update the file view
 	App->CL_FileView->Set_FolderActive(App->CL_FileView->FV_Evirons_Folder);
-	App->CL_FileView->SelectItem(App->CL_Scene->B_Object[Index]->FileViewItem);
+	App->CL_FileView->SelectItem(App->CL_Scene->B_Object[index]->FileViewItem);
 
+	// Increment counters
 	App->CL_Scene->UniqueID_Object_Counter++;
 	App->CL_Scene->Object_Count++;
 
-	App->CL_FileView->Set_FolderActive(App->CL_FileView->FV_Evirons_Folder);
-	
-	return 1;
+	return true;
+}
+
+// *************************************************************************
+// *		V_Set_Environ_Defaults:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+void CL64_Com_Environments::V_Set_Environ_Defaults(int index)
+{
+	Base_Object* bObject = App->CL_Scene->B_Object[index];
+
+	bObject->flag_Altered = true;
+
+	auto& environment = bObject->S_Environ[0];
+	environment->Environment_ID = 0;
+	strcpy(environment->Environment_Name, "Not_Set");
+	environment->flag_Environ_Enabled = true;
+
+	// Sound Configuration
+	strcpy(environment->Sound_File, "The_Sun.ogg");
+	environment->flag_Play = false;
+	environment->flag_Loop = true;
+	environment->SndVolume = 0.5f;
+	environment->SndFile = nullptr;
+
+	// Light Configuration
+	environment->AmbientColour = { 1.0f, 1.0f, 1.0f };
+	environment->Light_Position = { 0.0f, 0.0f, 0.0f };
+
+	// Sky Configuration
+	environment->Curvature = 15;
+	environment->Distance = 4000;
+	environment->flag_Enabled = false;
+	strcpy(environment->Material, "Examples/CloudySky");
+	environment->Tiling = 15;
+	environment->type = 1;
+
+	// Fog Configuration
+	environment->Fog_On = false;
+	environment->Fog_Mode = FOG_LINEAR;
+	environment->Fog_Density = 0.001f;
+	environment->Fog_Start = 100;
+	environment->Fog_End = 700;
+	environment->Fog_Colour = Ogre::Vector3(1.0f, 1.0f, 1.0f);
 }
 
 // *************************************************************************
@@ -173,48 +208,6 @@ bool CL64_Com_Environments::Create_Environ_Entity(int index)
 	//object->Phys_Body->setCollisionFlags(collisionFlags & (~(1 << 5)));
 
 	return true;
-}
-
-// *************************************************************************
-// *		V_Set_Environ_Defaults:- Terry and Hazel Flanigan 2024		   *
-// *************************************************************************
-void CL64_Com_Environments::V_Set_Environ_Defaults(int index)
-{
-	Base_Object* bObject = App->CL_Scene->B_Object[index];
-
-	bObject->flag_Altered = true;
-
-	auto& environment = bObject->S_Environ[0];
-	environment->Environment_ID = 0;
-	strcpy(environment->Environment_Name, "Not_Set");
-	environment->flag_Environ_Enabled = true;
-
-	// Sound Configuration
-	strcpy(environment->Sound_File, "The_Sun.ogg");
-	environment->flag_Play = false;
-	environment->flag_Loop = true;
-	environment->SndVolume = 0.5f;
-	environment->SndFile = nullptr;
-
-	// Light Configuration
-	environment->AmbientColour = { 1.0f, 1.0f, 1.0f };
-	environment->Light_Position = { 0.0f, 0.0f, 0.0f };
-
-	// Sky Configuration
-	environment->Curvature = 15;
-	environment->Distance = 4000;
-	environment->flag_Enabled = false;
-	strcpy(environment->Material, "Examples/CloudySky");
-	environment->Tiling = 15;
-	environment->type = 1;
-
-	// Fog Configuration
-	environment->Fog_On = false;
-	environment->Fog_Mode = FOG_LINEAR;
-	environment->Fog_Density = 0.001f;
-	environment->Fog_Start = 100;
-	environment->Fog_End = 700;
-	environment->Fog_Colour = Ogre::Vector3(1.0f, 1.0f, 1.0f);
 }
 
 // *************************************************************************

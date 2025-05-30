@@ -92,7 +92,7 @@ bool CL64_Objects_Create::Dispatch_MeshViewer()
 	{
 		Add_New_Object(Index, true);
 
-		//App->CL_Entities->Create_Environment_Brush(Index);
+		App->CL_Entities->Create_Entity_Brush(Index);
 
 		App->CL_Scene->B_Object[Index]->flag_Altered = 1;
 		App->CL_Scene->B_Object[Index]->Folder = Enums::Folder_Objects;

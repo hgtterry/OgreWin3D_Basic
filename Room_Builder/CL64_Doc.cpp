@@ -1269,10 +1269,18 @@ void CL64_Doc::DoneMove(void)
                     App->CL_SelBrushList->SelBrushList_Center(App->CL_Doc->pSelBrushes, &App->CL_Doc->SelectedGeoCenter);
                     T_Vec3 CenterOfSelection = App->CL_Doc->SelectedGeoCenter;
 
+                    Ogre::Vector3 Ogre_Center = App->CL_Scene->B_Object[Index]->Object_Node->getPosition();
+                    Ogre::Vector3 Ogre_BBCenter = App->CL_Scene->B_Object[Index]->Object_Node->_getWorldAABB().getCenter();
 
                     float True_Center = (App->CL_Scene->B_Object[Index]->Object_Node->_getWorldAABB().getSize().y) / 2;
-                    CenterOfSelection.y = CenterOfSelection.y - True_Center;
 
+                    // Adjust the center of selection based on the bounding box center
+                    if (fabs(Ogre_BBCenter.y - Ogre_Center.y) > 1)
+                    {
+                        CenterOfSelection.y = CenterOfSelection.y - True_Center;
+                    }
+                   
+                    // Update the position of the object in the scene
                     App->CL_Scene->B_Object[Index]->Object_Node->setPosition(CenterOfSelection.x, CenterOfSelection.y, CenterOfSelection.z);
                     App->CL_Scene->B_Object[Index]->Mesh_Pos = { CenterOfSelection.x, CenterOfSelection.y, CenterOfSelection.z };
 

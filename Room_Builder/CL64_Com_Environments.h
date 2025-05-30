@@ -31,7 +31,7 @@ public:
 
 	void Create_Test_Environment();
 
-	bool Add_New_Environ_Entity(bool FirstOne);
+	bool Add_New_Environ_Entity(bool isFirstEntity);
 	void V_Set_Environ_Defaults(int Index);
 	bool Create_Environ_Entity(int Index);
 	int Set_Environment_By_Index(bool PlayMusic, int Index);
