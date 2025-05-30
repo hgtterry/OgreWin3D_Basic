@@ -28,10 +28,6 @@ THE SOFTWARE.
 
 CL64_Dimensions::CL64_Dimensions(void)
 {
-	flag_Show_Position = 0;
-	flag_Show_Scale = 0;
-	flag_Show_Rotation = 0;
-
 	flag_PosX_Selected = 1;
 	flag_PosY_Selected = 0;
 	flag_PosZ_Selected = 0;
@@ -49,24 +45,6 @@ CL64_Dimensions::CL64_Dimensions(void)
 	Model_Rotation_Delta = 1;
 
 	flag_Scale_Lock = 1;
-
-	// -------------------------- Pointers
-	pBase_Mesh_Name = NULL;
-
-	pBase_Shape = NULL;
-
-	pBase_Object_Ent = NULL;
-	pBase_Object_Node = NULL;
-	pBase_Mesh_Pos = NULL;
-	pBase_Mesh_Rot = NULL;
-	pBase_Mesh_Quat = NULL;
-	pBase_Mesh_Scale = NULL;
-	pBase_Phys_Body = NULL;
-	pBase_Physics_Pos = NULL;
-	pBase_Physics_Scale = NULL;
-	pBase_Physics_Rot = NULL;
-	pBase_Physics_Quat = NULL;
-
 }
 
 CL64_Dimensions::~CL64_Dimensions(void)
@@ -78,7 +56,7 @@ CL64_Dimensions::~CL64_Dimensions(void)
 // *************************************************************************
 Ogre::Vector3 CL64_Dimensions::Get_BoundingBox_World_Centre()
 {
-	if (*pBase_Shape == Enums::Shape_TriMesh)
+	/*if (*pBase_Shape == Enums::Shape_TriMesh)
 	{
 		Ogre::Vector3 Pos = pBase_Object_Node->getPosition();
 		return Pos;
@@ -88,7 +66,7 @@ Ogre::Vector3 CL64_Dimensions::Get_BoundingBox_World_Centre()
 	
 		Ogre::Vector3 Centre = pBase_Object_Ent->getWorldBoundingBox(true).getCenter();
 		return Centre;
-	}
+	}*/
 }
 
 // *************************************************************************
@@ -96,21 +74,21 @@ Ogre::Vector3 CL64_Dimensions::Get_BoundingBox_World_Centre()
 // *************************************************************************
 void CL64_Dimensions::UpDate_Physics(int Index)
 {
-	if (*pBase_Shape == Enums::Shape_TriMesh)
-	{
+	//if (*pBase_Shape == Enums::Shape_TriMesh)
+	//{
 
-	}
-	else
-	{
-		{
-			Set_Physics_Position();
-		}
-	}
+	//}
+	//else
+	//{
+	//	{
+	//		Set_Physics_Position();
+	//	}
+	//}
 
-	// Needs Looking at
-	App->CL_Scene->B_Object[Index]->flag_Altered = 1;
-	App->CL_FileView->Mark_Altered(App->CL_Scene->B_Object[Index]->FileViewItem);
-	App->CL_Level->flag_Level_is_Modified = 1;
+	//// Needs Looking at
+	//App->CL_Scene->B_Object[Index]->flag_Altered = 1;
+	//App->CL_FileView->Mark_Altered(App->CL_Scene->B_Object[Index]->FileViewItem);
+	//App->CL_Level->flag_Level_is_Modified = 1;
 }
 
 // *************************************************************************
@@ -119,12 +97,12 @@ void CL64_Dimensions::UpDate_Physics(int Index)
 void CL64_Dimensions::Set_Physics_Position()
 {
 
-	Ogre::Vector3 Centre = pBase_Object_Ent->getWorldBoundingBox(true).getCenter();
+	/*Ogre::Vector3 Centre = pBase_Object_Ent->getWorldBoundingBox(true).getCenter();
 	pBase_Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
 
 	pBase_Physics_Pos->x = Centre.x;
 	pBase_Physics_Pos->y = Centre.y;
-	pBase_Physics_Pos->z = Centre.z;
+	pBase_Physics_Pos->z = Centre.z;*/
 
 }
 

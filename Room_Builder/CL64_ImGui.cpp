@@ -218,16 +218,6 @@ void CL64_ImGui::ImGui_Render_Loop(void)
 		Player_Data_GUI();
 	}
 
-	// SBC_Dimensions
-	if (App->CL_Dimensions->flag_Show_Position == 1 || App->CL_Dimensions->flag_Show_Scale == 1 || App->CL_Dimensions->flag_Show_Rotation == 1)
-	{
-		
-	}
-	else
-	{
-		
-	}
-
 	// Iterate through the mapping and call the functions where the flag is true
 	for (const auto& guiFunction : guiFunctions)
 	{
