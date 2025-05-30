@@ -72,6 +72,7 @@ public:
 
 	Ogre::Entity* BlueAxis_Ent;
 	Ogre::SceneNode* BlueAxis_Node;
+
 };
 
 

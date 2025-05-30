@@ -35,8 +35,10 @@ public:
 
 	bool Ogre_To_Mesh_Data(Ogre::Entity* Ogre_Entity, Ogre::SceneNode* Ogre_Node);
 	
+	void Get_Mesh_Data(Ogre::SceneNode* Ogre_Node);
+
 	int Vertice_Count_Copy;
-	std::vector<vertex_type> vertex_Data;			// XYZ
+	std::vector<vertex_type> vertex_Data; // XYZ
 	T_Vec3	Verts[8];
 
 private:

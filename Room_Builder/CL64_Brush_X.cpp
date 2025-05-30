@@ -590,57 +590,38 @@ void CL64_Brush_X::Rotate_Brush_By_Name(const char* Brush_Name, float SX, float 
 // *************************************************************************
 // *		Set_Brush_Face_Points:- Terry and Hazel Flanigan 2025	       *
 // *************************************************************************
-void CL64_Brush_X::Set_Brush_Face_Points(Brush* pBrush, bool Update)
+void CL64_Brush_X::Set_Brush_Face_Points(Brush* pBrush, bool Update) 
 {
-	Face* pFace;
+	// 0=NBL 1=NBR 2=NTR 3=NTL 4=FBL 5=FBR 6=FTR 7=FTL
+	// Anticlockwise
+	
+	// Array of face indices corresponding to the brush faces
+	const int faceIndices[6][4] = 
+	{
+		{3, 2, 1, 0}, // Top
+		{0, 1, 5, 4}, // Bottom
+		{3, 0, 1, 2}, // Front
+		{7, 4, 5, 6}, // Back
+		{7, 4, 0, 3}, // Left
+		{2, 1, 5, 6}  // Right
+	};
 
-	pFace = App->CL_Brush->Brush_GetFace(pBrush, 0);
+	// Loop through each face and set the points
+	for (int i = 0; i < 6; ++i) 
+	{
+		Face* pFace = App->CL_Brush->Brush_GetFace(pBrush, i);
 
-	pFace->Points[3] = App->CL_Entities->Verts[0];
-	pFace->Points[2] = App->CL_Entities->Verts[1];
-	pFace->Points[1] = App->CL_Entities->Verts[2];
-	pFace->Points[0] = App->CL_Entities->Verts[3];
+		for (int j = 0; j < 4; ++j) 
+		{
+			pFace->Points[j] = App->CL_Entities->Verts[faceIndices[i][j]];
+		}
+	}
 
-	pFace = App->CL_Brush->Brush_GetFace(pBrush, 1);
-
-	pFace->Points[3] = App->CL_Entities->Verts[4];
-	pFace->Points[2] = App->CL_Entities->Verts[5];
-	pFace->Points[1] = App->CL_Entities->Verts[6];
-	pFace->Points[0] = App->CL_Entities->Verts[7];
-
-	pFace = App->CL_Brush->Brush_GetFace(pBrush, 2);
-
-	pFace->Points[3] = App->CL_Entities->Verts[1];
-	pFace->Points[2] = App->CL_Entities->Verts[7];
-	pFace->Points[1] = App->CL_Entities->Verts[6];
-	pFace->Points[0] = App->CL_Entities->Verts[2];
-
-	pFace = App->CL_Brush->Brush_GetFace(pBrush, 3);
-
-	pFace->Points[3] = App->CL_Entities->Verts[0];
-	pFace->Points[2] = App->CL_Entities->Verts[3];
-	pFace->Points[1] = App->CL_Entities->Verts[5];
-	pFace->Points[0] = App->CL_Entities->Verts[4];
-
-	pFace = App->CL_Brush->Brush_GetFace(pBrush, 4);
-
-	pFace->Points[3] = App->CL_Entities->Verts[0];
-	pFace->Points[2] = App->CL_Entities->Verts[4];
-	pFace->Points[1] = App->CL_Entities->Verts[7];
-	pFace->Points[0] = App->CL_Entities->Verts[1];
-
-	pFace = App->CL_Brush->Brush_GetFace(pBrush, 5);
-
-	pFace->Points[3] = App->CL_Entities->Verts[3];
-	pFace->Points[2] = App->CL_Entities->Verts[2];
-	pFace->Points[1] = App->CL_Entities->Verts[6];
-	pFace->Points[0] = App->CL_Entities->Verts[5];
-
-	if (Update == true)
+	// Update views if required
+	if (Update) 
 	{
 		App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
 	}
-
 }
 
 // *************************************************************************

@@ -884,13 +884,13 @@ void CL64_Doc::RotateSelectedBrushList(const ViewVars* view, SelBrushList* pList
                     if (v->y > 0)
                     {
                         m_object->Mesh_Rot.y += Delta;
-                        m_object->Object_Node->rotate(Ogre::Quaternion(Ogre::Degree(1.0f), Ogre::Vector3(0, 1, 0)), Ogre::Node::TransformSpace::TS_WORLD);
+                        m_object->Object_Node->rotate(Ogre::Quaternion(Ogre::Degree(1.0f), Ogre::Vector3(0, 1, 0)), Ogre::Node::TransformSpace::TS_LOCAL);
                     }
 
                     if (v->y < 0)
                     {
                         m_object->Mesh_Rot.y -= Delta;
-                        m_object->Object_Node->rotate(Ogre::Quaternion(Ogre::Degree(-1.0f), Ogre::Vector3(0, 1, 0)), Ogre::Node::TransformSpace::TS_WORLD);
+                        m_object->Object_Node->rotate(Ogre::Quaternion(Ogre::Degree(-1.0f), Ogre::Vector3(0, 1, 0)), Ogre::Node::TransformSpace::TS_LOCAL);
                     }
                     break;
                 }

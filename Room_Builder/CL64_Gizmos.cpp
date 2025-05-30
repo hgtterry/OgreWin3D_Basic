@@ -117,6 +117,36 @@ void CL64_Gizmos::MarkerBox_Setup(void)
 }
 
 // *************************************************************************
+// *	  		MarkerBB_Addjust:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+void CL64_Gizmos::MarkerBox_Adjust(int index)
+{
+	// Retrieve the object from the scene
+	Base_Object* object = App->CL_Scene->B_Object[index];
+
+	// Get the position and orientation of the object's node
+	Ogre::Vector3 position = object->Object_Node->getPosition();
+	Ogre::Quaternion rotation = object->Object_Node->getOrientation();
+
+	// Get the bounding box size of the object's mesh
+	Ogre::Vector3 size = App->CL_Com_Objects->GetMeshBoundingBoxSize(object->Object_Node);
+
+	// Update the marker box dimensions
+	MarkerBox_Update(size.x / 2, size.y / 2, size.z / 2);
+
+	// Calculate the center of the bounding box and convert to world space
+	Ogre::Vector3 center = object->Object_Node->getAttachedObject(0)->getBoundingBox().getCenter();
+	Ogre::Vector3 worldSpacePosition = object->Object_Node->convertLocalToWorldPosition(center);
+
+	// Set the position and orientation of the box node
+	BoxNode->setPosition(worldSpacePosition);
+	BoxNode->setOrientation(rotation);
+	BoxNode->setVisible(true);
+
+	// App->SBC_Markers->Move_Arrow(worldSpacePosition);
+}
+
+// *************************************************************************
 // *		  	MarkerBox_Update:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
 void CL64_Gizmos::MarkerBox_Update(float Depth, float Height, float Width)
@@ -151,41 +181,6 @@ void CL64_Gizmos::MarkerBox_Update(float Depth, float Height, float Width)
 	BoxManual->index(3);
 
 	BoxManual->end();
-}
-
-// *************************************************************************
-// *	  		MarkerBB_Addjust:- Terry and Hazel Flanigan 2024		   *
-// *************************************************************************
-void CL64_Gizmos::MarkerBox_Adjust(int index)
-{
-	// Retrieve the object from the scene
-	Base_Object* object = App->CL_Scene->B_Object[index];
-
-	// Get the position and orientation of the object's node
-	Ogre::Vector3 position = object->Object_Node->getPosition();
-	Ogre::Quaternion rotation = object->Object_Node->getOrientation();
-
-	// Get the bounding box size of the object's mesh
-	Ogre::Vector3 size = App->CL_Com_Objects->GetMeshBoundingBoxSize(object->Object_Node);
-
-	// Extract rotation angles in degrees
-	float rotYaw = rotation.getYaw().valueDegrees();
-	float rotPitch = rotation.getPitch().valueDegrees();
-	float rotRoll = rotation.getRoll().valueDegrees();
-
-	// Update the marker box dimensions
-	MarkerBox_Update(size.x / 2, size.y / 2, size.z / 2);
-
-	// Calculate the center of the bounding box and convert to world space
-	Ogre::Vector3 center = object->Object_Node->getAttachedObject(0)->getBoundingBox().getCenter();
-	Ogre::Vector3 worldSpacePosition = object->Object_Node->convertLocalToWorldPosition(center);
-
-	// Set the position and orientation of the box node
-	BoxNode->setPosition(worldSpacePosition);
-	BoxNode->setOrientation(rotation);
-	BoxNode->setVisible(true);
-
-	// App->SBC_Markers->Move_Arrow(worldSpacePosition);
 }
 
 // *************************************************************************
