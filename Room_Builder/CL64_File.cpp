@@ -363,8 +363,9 @@ void CL64_File::Start_Load(bool Use_Open_Dialog)
 
 	}
 	
+	
 	App->CL_Scene->Clear_Level(true);
-
+	
 	bool Test = Open_3dt_File();
 	if (Test == true)
 	{
@@ -397,7 +398,7 @@ bool CL64_File::Open_3dt_File()
 	{
 		return false;
 	}
-
+	
 	App->CL_Doc->Set_Paths();
 
 	// Check if Working Folder Exsits
@@ -420,8 +421,9 @@ bool CL64_File::Open_3dt_File()
 	}
 	// -------------------------------------------------------
 
+	
 	App->CL_Project->Load_Project();
-
+	
 	char pathAndFile[MAX_PATH];
 
 	if (App->CL_Level->Level_Version == 1.0)

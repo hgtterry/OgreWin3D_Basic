@@ -1696,9 +1696,8 @@ bool CL64_Project::Load_Project()
 	App->CL_Build_Game->flag_Use_Front_Dlg = App->CL_Build_Game->GameOptions->flag_Front_Dialog;*/
 
 	//-------------------------------------- Set Resource Path
-
 	Load_Get_Resource_Path();
-	
+
 	// ------------------------------------- Aera
 	if (Options->Has_Area > 0)
 	{

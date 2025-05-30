@@ -1286,7 +1286,14 @@ void CL64_Doc::DoneMove(void)
 
                     App->CL_Brush_X->Set_Brush_From_Entity_ByName(pBrush->Name, true);
 
-                    App->CL_Physics->Set_Physics_New(Index);
+                    if (App->CL_Scene->B_Object[Index]->Shape == Enums::Shape_TriMesh)
+                    {
+                        App->CL_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(CenterOfSelection.x, CenterOfSelection.y, CenterOfSelection.z));
+                    }
+                    else
+                    {
+                        App->CL_Physics->Set_Physics_New(Index);
+                    }
                 }
 
             }

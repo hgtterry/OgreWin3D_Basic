@@ -177,7 +177,20 @@ void CL64_Scene::Clear_Level(bool FromFile)
 	strcpy(App->CL_Level->Prj_Working_Folder, "None");
 
 	App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_Free;
-	
+	App->CL_Gizmos->Show_MarkerBox(false);
+
+	App->CL_Resources->Delete_Project_Resources_Group();
+	flag_Project_Resources_Created = 0;
+
+	// Bullet Related
+	/*int i;
+	for (i = App->CL_Physics->dynamicsWorld->getNumCollisionObjects() - 1; i >= 0; i--)
+	{
+		btCollisionObject* obj = App->CL_Physics->dynamicsWorld->getCollisionObjectArray()[i];
+		App->CL_Physics->dynamicsWorld->removeCollisionObject(obj);
+		delete obj;
+	}*/
+
 	if (FromFile == false) // Not from a file load
 	{
 		App->CL_Editor_Map->Reset_Class();

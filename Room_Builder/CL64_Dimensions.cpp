@@ -988,7 +988,14 @@ void CL64_Dimensions::Do_Position_New()
 		m_object->Object_Node->setPosition(App->CL_ImGui_Dialogs->m_Dialog_Float_Vec3);
 		m_object->Mesh_Pos = App->CL_ImGui_Dialogs->m_Dialog_Float_Vec3;
 
-		App->CL_Physics->Set_Physics_New(Index);
+		if (m_object->Shape == Enums::Shape_TriMesh)
+		{
+			m_object->Phys_Body->getWorldTransform().setOrigin(btVector3(m_object->Mesh_Pos.x, m_object->Mesh_Pos.y, m_object->Mesh_Pos.z));
+		}
+		else
+		{
+			App->CL_Physics->Set_Physics_New(Index);
+		}
 
 		// TODO Test
 		App->CL_Brush_X->Set_Brush_From_Entity_ByName(m_object->Object_Name, true);
@@ -1036,7 +1043,15 @@ void CL64_Dimensions::Do_Scale_New()
 		m_object->Object_Node->setScale(App->CL_ImGui_Dialogs->m_Dialog_Float_Vec3);
 		m_object->Mesh_Scale = App->CL_ImGui_Dialogs->m_Dialog_Float_Vec3;
 
-		App->CL_Physics->Set_Physics_New(Index);
+		if (m_object->Shape == Enums::Shape_TriMesh)
+		{
+			m_object->Phys_Body->getCollisionShape()->setLocalScaling(btVector3(m_object->Mesh_Scale.x, m_object->Mesh_Scale.y, m_object->Mesh_Scale.z));
+			m_object->Phys_Body->getWorldTransform().setOrigin(btVector3(m_object->Mesh_Pos.x, m_object->Mesh_Pos.y, m_object->Mesh_Pos.z));
+		}
+		else
+		{
+			App->CL_Physics->Set_Physics_New(Index);
+		}
 
 		// TODO Test
 		App->CL_Brush_X->Set_Brush_From_Entity_ByName(m_object->Object_Name, true);
@@ -1107,7 +1122,17 @@ void CL64_Dimensions::Do_Rotation_New()
 		m_object->Mesh_Quat.y = m_object->Object_Node->getOrientation().y;
 		m_object->Mesh_Quat.z = m_object->Object_Node->getOrientation().z;
 
-		App->CL_Physics->Set_Physics_New(Index);
+		if (m_object->Shape == Enums::Shape_TriMesh)
+		{
+			m_object->Phys_Body->getWorldTransform().setRotation(btQuaternion(m_object->Mesh_Quat.x,
+				m_object->Mesh_Quat.y, m_object->Mesh_Quat.z, m_object->Mesh_Quat.w));
+
+			m_object->Phys_Body->getWorldTransform().setOrigin(btVector3(m_object->Mesh_Pos.x, m_object->Mesh_Pos.y, m_object->Mesh_Pos.z));
+		}
+		else
+		{
+			App->CL_Physics->Set_Physics_New(Index);
+		}
 
 		App->CL_Gizmos->MarkerBox_Adjust(Index);
 

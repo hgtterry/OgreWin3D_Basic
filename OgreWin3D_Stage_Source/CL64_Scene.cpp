@@ -129,6 +129,9 @@ void CL64_Scene::Reset_Class()
 
 	B_Camera.resize(0);
 	B_Object.resize(0);
+
+	Object_Count = 0;
+	UniqueID_Object_Counter = 0;
 }
 
 // *************************************************************************

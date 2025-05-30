@@ -203,8 +203,6 @@ void CL64_Entities::Create_Entity_Brush(int Object_Index)
 bool CL64_Entities::Ogre_To_Mesh_Data(Ogre::SceneNode* Ogre_Node)
 {
 	Get_Mesh_Data(Ogre_Node);
-	App->BeepBeep();
-
 	return 1;
 }
 
