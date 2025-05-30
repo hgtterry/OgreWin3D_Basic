@@ -30,30 +30,15 @@ public:
 	CL64_Dimensions(void);
 	~CL64_Dimensions(void);
 
-	void Prepare_Dimensions(void);
-	void ImGui_Dimensions(void);
-
 	void Do_Scale_New();
 	void Do_Rotation_New();
 	void Do_Position_New();
 
-	void Set_Rotation(Ogre::Vector3 Rotation, float Delta);
-
-	bool flag_Show_Dimensions;
 	bool flag_Show_Position;
 	bool flag_Show_Scale;
 	bool flag_Show_Rotation;
 
 protected:
-
-	void ImGui_Position(void);
-	void Set_Position(Ogre::Vector3 Pos);
-
-	void ImGui_Scale(void);
-	void Set_Scale(Ogre::Vector3 Scale);
-
-	void ImGui_Rotation(void);
-	
 
 	Ogre::Vector3 Get_BoundingBox_World_Centre();
 	void UpDate_Physics(int Index);
