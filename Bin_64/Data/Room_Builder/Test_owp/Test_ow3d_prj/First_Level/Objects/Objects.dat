@@ -91,7 +91,7 @@ Mesh_Pos=-93.953979,-112.464890,34.053429
 Mesh_Scale=1.000000,1.000000,1.000000
 Mesh_Rot=0.000000,0.000000,0.000000
 Mesh_Quat=1.000000,0.000000,0.000000,0.000000
-Physics_Quat=0.999995,-0.000015,0.003248,0.000028
+Physics_Quat=1.000000,0.000000,0.000000,0.000000
 Dimensions_Lock=0
  
 *************************************************************************************
@@ -129,5 +129,22 @@ Physics_Quat=1.000000,0.000000,0.000000,0.000000
 Dimensions_Lock=0
  
 *************************************************************************************
+[Object_5]
+Mesh_Name=Object_5
+Mesh_File=Tunnel.mesh
+Mesh_Resource_Path=
+Material_File=C:\Users\Terry\Desktop\OgreWin3D_Basic\Bin_64\Stock\Structure\Tunnel.material
+Object_ID=3
+Object_Type=3
+Object_Shape=6
+Object_Usage=-1
+Mesh_Pos=157.268311,-23.605907,97.534622
+Mesh_Scale=1.000000,1.000000,1.000000
+Mesh_Rot=0.000000,0.000000,0.000000
+Mesh_Quat=1.000000,0.000000,0.000000,0.000000
+Physics_Quat=1.000000,0.000000,0.000000,0.000000
+Dimensions_Lock=0
+ 
+*************************************************************************************
 [Counters]
-Objects_Count=5
+Objects_Count=6

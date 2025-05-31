@@ -38,7 +38,7 @@ public:
 	bool Start_Player_PropsPanel();
 	void Start_Override_Counter(void);
 
-	void Hide_Debug_Dlg(bool Show);
+	void Show_Debug_Dlg(bool Show);
 	void Show_Physics_Test_Dlg(bool Show);
 	void Show_Details_Goto_Dlg(bool Show);
 	void Show_Dimensions_Dlg(bool Show);
@@ -54,8 +54,8 @@ private:
 
 	static LRESULT CALLBACK Proc_Details_Goto(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Proc_Dialog_PhysicsTest(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
-	static LRESULT CALLBACK Proc_Dialog_Dimensions(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
-	static LRESULT CALLBACK Proc_Dialog_Debug(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Proc_Dimensions_Dlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Proc_Debug_Dlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Prop_Materials_PropsPanel(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Proc_Camera_PropsPanel(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Proc_Player_PropsPanel(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);

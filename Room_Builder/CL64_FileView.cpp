@@ -677,8 +677,8 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 		HideRightPanes();
 		App->CL_Props_Dialogs->Show_Details_Goto_Dlg(true);
 
-		App->CL_Props_Dialogs->Show_Dimensions_Dlg(1);
-		App->CL_Props_Dialogs->Hide_Debug_Dlg(1);
+		App->CL_Props_Dialogs->Show_Dimensions_Dlg(true);
+		App->CL_Props_Dialogs->Show_Debug_Dlg(true);
 		App->CL_Props_Dialogs->Show_Materials_Dlg(true);
 
 		//----------------------------------------------------------------------------
@@ -1304,7 +1304,7 @@ void CL64_FileView::HideRightPanes(void)
 	App->CL_Props_Dialogs->Show_Details_Goto_Dlg(false);
 	App->CL_Props_Dialogs->Show_Dimensions_Dlg(false);
 	App->CL_Props_Dialogs->Show_Physics_Test_Dlg(false);
-	App->CL_Props_Dialogs->Hide_Debug_Dlg(false);
+	//App->CL_Props_Dialogs->Show_Debug_Dlg(false);
 	App->CL_Props_Dialogs->Show_Materials_Dlg(false);
 	App->CL_Props_Dialogs->Show_Cameras_Dlg(false);
 	App->CL_Props_Dialogs->Show_Player_Dlg(false);

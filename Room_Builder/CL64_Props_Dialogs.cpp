@@ -67,7 +67,6 @@ void CL64_Props_Dialogs::Start_Props_Dialogs()
 	Start_Materials_PropsPanel();
 	Start_Player_PropsPanel();
 	Start_Override_Counter();
-
 }
 
 // *************************************************************************
@@ -345,16 +344,16 @@ LRESULT CALLBACK CL64_Props_Dialogs::Proc_Dialog_PhysicsTest(HWND hDlg, UINT mes
 // *************************************************************************
 void CL64_Props_Dialogs::Start_Dialog_Dimensions()
 {
-	Dimensions_Dlg_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_PROPS_DIMENSIONS, App->CL_Properties_Scene->Properties_Dlg_hWnd, (DLGPROC)Proc_Dialog_Dimensions);
+	Dimensions_Dlg_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_PROPS_DIMENSIONS, App->CL_Properties_Scene->Properties_Dlg_hWnd, (DLGPROC)Proc_Dimensions_Dlg);
 
 	//Init_Bmps_Dimensions();
 	Show_Dimensions_Dlg(false);
 }
 
 // *************************************************************************
-// *		Proc_Dialog_Dimensions:- Terry and Hazel Flanigan 2024		   *
+// *		Proc_Dimensions_Dlg:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-LRESULT CALLBACK CL64_Props_Dialogs::Proc_Dialog_Dimensions(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK CL64_Props_Dialogs::Proc_Dimensions_Dlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	switch (message)
 	{
@@ -531,27 +530,25 @@ LRESULT CALLBACK CL64_Props_Dialogs::Proc_Dialog_Dimensions(HWND hDlg, UINT mess
 // *************************************************************************
 void CL64_Props_Dialogs::Start_Dialog_Debug()
 {
-	//Debug_Dlg_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_PROPS_DEBUG, App->CL_Properties->Properties_Dlg_hWnd, (DLGPROC)Proc_Dialog_Debug);
+	Debug_Dlg_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_PROPS_DEBUG, App->CL_Properties_Scene->Properties_Dlg_hWnd, (DLGPROC)Proc_Debug_Dlg);
 
 	//Init_Bmps_Debug();
 
-	Hide_Debug_Dlg(true);
-
+	Show_Debug_Dlg(true);
 }
 
 // *************************************************************************
-// *			Proc_Dialog_Debug:- Terry and Hazel Flanigan 2024  		   *
+// *			Proc_Debug_Dlg:- Terry and Hazel Flanigan 2024  		   *
 // *************************************************************************
-LRESULT CALLBACK CL64_Props_Dialogs::Proc_Dialog_Debug(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK CL64_Props_Dialogs::Proc_Debug_Dlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	switch (message)
 	{
 	case WM_INITDIALOG:
 	{
-		//SendDlgItemMessage(hDlg, IDC_BT_PHYSDEBUG, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		//SendDlgItemMessage(hDlg, IDC_BT_SHOWMESH, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		//SendDlgItemMessage(hDlg, IDC_BT_ONLYMESH, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-
+		SendDlgItemMessage(hDlg, IDC_BT_PHYSDEBUG, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_SHOWMESH, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_ONLYMESH, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		return TRUE;
 	}
 	case WM_CTLCOLORSTATIC:
@@ -561,18 +558,18 @@ LRESULT CALLBACK CL64_Props_Dialogs::Proc_Dialog_Debug(HWND hDlg, UINT message, 
 
 	case WM_CTLCOLORDLG:
 	{
-		//return (LONG)App->Brush_Panel;
+		return (LONG)App->AppBackground;
 	}
 
 	case WM_NOTIFY:
 	{
 		LPNMHDR some_item = (LPNMHDR)lParam;
 
-		//if (some_item->idFrom == IDC_BT_PHYSDEBUG)
+		if (some_item->idFrom == IDC_BT_PHYSDEBUG)
 		{
-			/*if (App->CL_Scene->Object_Count > 0)
+			if (App->CL_Scene->Object_Count > 0)
 			{
-				int Index = App->CL_Properties->Current_Selected_Object;
+				int Index = App->CL_Properties_Scene->Current_Selected_Object;
 
 				LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 				App->Custom_Button_Toggle(item, App->CL_Scene->B_Object[Index]->flag_Physics_Debug_On);
@@ -583,10 +580,10 @@ LRESULT CALLBACK CL64_Props_Dialogs::Proc_Dialog_Debug(HWND hDlg, UINT message, 
 				LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 				App->Custom_Button_Toggle(item, 0);
 				return CDRF_DODEFAULT;
-			}*/
+			}
 		}
 
-		/*if (some_item->idFrom == IDC_BT_SHOWMESH)
+		if (some_item->idFrom == IDC_BT_SHOWMESH)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Toggle(item, App->CL_Com_Objects->flag_Show_Mesh_Debug);
@@ -598,7 +595,7 @@ LRESULT CALLBACK CL64_Props_Dialogs::Proc_Dialog_Debug(HWND hDlg, UINT message, 
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Toggle(item, App->CL_Com_Objects->flag_Hide_All_Except);
 			return CDRF_DODEFAULT;
-		}*/
+		}
 
 		return CDRF_DODEFAULT;
 	}
@@ -674,71 +671,69 @@ LRESULT CALLBACK CL64_Props_Dialogs::Proc_Dialog_Debug(HWND hDlg, UINT message, 
 		//	return 1;
 		//}
 
-		//if (LOWORD(wParam) == IDC_BT_PHYSDEBUG)
-		//{
-		//	HWND Temp = GetDlgItem(hDlg, IDC_BT_PHYSDEBUG);
+		if (LOWORD(wParam) == IDC_BT_PHYSDEBUG)
+		{
+			HWND Temp = GetDlgItem(hDlg, IDC_BT_PHYSDEBUG);
 
-		//	int Index = App->CL_Properties->Current_Selected_Object;
+			int Index = App->CL_Properties_Scene->Current_Selected_Object;
 
 
-		//	// -----------------------  Area
-		//	if (App->CL_Properties->Edit_Category == Enums::Edit_Area)
-		//	{
+			// -----------------------  Area
+			//if (App->CL_Properties->Edit_Category == Enums::Edit_Area)
+			//{
 
-		//		int f = App->CL_Scene->B_Area[Index]->Phys_Body->getCollisionFlags();
+			//	int f = App->CL_Scene->B_Area[Index]->Phys_Body->getCollisionFlags();
 
-		//		if (App->CL_Props_Dialogs->flag_Show_Area_Physics_Debug == 1)
-		//		{
-		//			App->CL_Props_Dialogs->flag_Show_Area_Physics_Debug = 0;
-		//			App->CL_Scene->B_Area[Index]->Phys_Body->setCollisionFlags(f | (1 << 5)); // Off
+			//	if (App->CL_Props_Dialogs->flag_Show_Area_Physics_Debug == 1)
+			//	{
+			//		App->CL_Props_Dialogs->flag_Show_Area_Physics_Debug = 0;
+			//		App->CL_Scene->B_Area[Index]->Phys_Body->setCollisionFlags(f | (1 << 5)); // Off
 
-		//			App->CL_Ogre->Bullet_Debug_Listener->flag_Render_Debug_Flag = 0;
-		//			App->CL_Ogre->RenderFrame(4);
-		//			App->CL_Ogre->Bullet_Debug_Listener->flag_Render_Debug_Flag = 1;
+			//		App->CL_Ogre->Bullet_Debug_Listener->flag_Render_Debug_Flag = 0;
+			//		App->CL_Ogre->RenderFrame(4);
+			//		App->CL_Ogre->Bullet_Debug_Listener->flag_Render_Debug_Flag = 1;
 
-		//			//SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_PhysicsOff_Bmp);
-		//		}
-		//		else
-		//		{
-		//			App->CL_Props_Dialogs->flag_Show_Area_Physics_Debug = 1;
-		//			App->CL_Scene->B_Area[Index]->Phys_Body->setCollisionFlags(f & (~(1 << 5))); // on
+			//		//SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_PhysicsOff_Bmp);
+			//	}
+			//	else
+			//	{
+			//		App->CL_Props_Dialogs->flag_Show_Area_Physics_Debug = 1;
+			//		App->CL_Scene->B_Area[Index]->Phys_Body->setCollisionFlags(f & (~(1 << 5))); // on
 
-		//			//SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_PhysicsOn_Bmp);
-		//		}
+			//		//SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_PhysicsOn_Bmp);
+			//	}
 
-		//		return 1;
-		//	}
+			//	return 1;
+			//}
 
-		//	// -----------------------  Objects
-		//	if (App->CL_Scene->Object_Count > 0)
-		//	{
-		//		int f = App->CL_Scene->B_Object[Index]->Phys_Body->getCollisionFlags();
+			// -----------------------  Objects
+			if (App->CL_Scene->Object_Count > 0)
+			{
+				int f = App->CL_Scene->B_Object[Index]->Phys_Body->getCollisionFlags();
 
-		//		if (App->CL_Scene->B_Object[Index]->flag_Physics_Debug_On == 1)
-		//		{
-		//			App->CL_Com_Objects->flag_Show_Physics_Debug = 0;
-		//			App->CL_Scene->B_Object[Index]->Phys_Body->setCollisionFlags(f | (1 << 5)); // Off
+				if (App->CL_Scene->B_Object[Index]->flag_Physics_Debug_On == 1)
+				{
+					App->CL_Com_Objects->flag_Show_Physics_Debug = 0;
+					App->CL_Scene->B_Object[Index]->Phys_Body->setCollisionFlags(f | (1 << 5)); // Off
 
-		//			App->CL_Scene->B_Object[Index]->flag_Physics_Debug_On = 0;
+					App->CL_Scene->B_Object[Index]->flag_Physics_Debug_On = 0;
 
-		//			App->CL_Ogre->Bullet_Debug_Listener->flag_Render_Debug_Flag = 0;
-		//			App->CL_Ogre->RenderFrame(4);
-		//			App->CL_Ogre->Bullet_Debug_Listener->flag_Render_Debug_Flag = 1;
+					App->CL_Ogre->Bullet_Debug_Listener->flag_Render_Debug_Flag = 0;
+					App->CL_Ogre->RenderFrame(4);
+					App->CL_Ogre->Bullet_Debug_Listener->flag_Render_Debug_Flag = 1;
+				
+				}
+				else
+				{
+					App->CL_Scene->B_Object[Index]->flag_Physics_Debug_On = 1;
+					App->CL_Com_Objects->flag_Show_Physics_Debug = 1;
+					App->CL_Scene->B_Object[Index]->Phys_Body->setCollisionFlags(f & (~(1 << 5))); // on
 
-		//			//SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_PhysicsOff_Bmp);
-		//		}
-		//		else
-		//		{
-		//			App->CL_Scene->B_Object[Index]->flag_Physics_Debug_On = 1;
-		//			App->CL_Com_Objects->flag_Show_Physics_Debug = 1;
-		//			App->CL_Scene->B_Object[Index]->Phys_Body->setCollisionFlags(f & (~(1 << 5))); // on
-
-		//			//SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_PhysicsOn_Bmp);
-		//		}
-		//	}
+				}
+			}
 
 			return 1;
-		//}
+		}
 
 		/*if (LOWORD(wParam) == IDCANCEL)
 		{
@@ -1147,7 +1142,7 @@ void CL64_Props_Dialogs::Show_Player_Dlg(bool Show)
 // *************************************************************************
 // *			Hide_Debug_Dlg:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-void CL64_Props_Dialogs::Hide_Debug_Dlg(bool Show)
+void CL64_Props_Dialogs::Show_Debug_Dlg(bool Show)
 {
 	ShowWindow(Debug_Dlg_hWnd, Show);
 }

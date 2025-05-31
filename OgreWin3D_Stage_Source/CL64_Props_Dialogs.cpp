@@ -342,7 +342,7 @@ LRESULT CALLBACK CL64_Props_Dialogs::Proc_Dialog_PhysicsTest(HWND hDlg, UINT mes
 void CL64_Props_Dialogs::Start_Dialog_Dimensions()
 {
 
-	Dimensions_Dlg_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_PROPS_DIMENSIONS, App->CL_Properties->Properties_Dlg_hWnd, (DLGPROC)Proc_Dialog_Dimensions);
+	Dimensions_Dlg_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_PROPS_DIMENSIONS, App->CL_Properties->Properties_Dlg_hWnd, (DLGPROC)Proc_Dimensions_Dlg);
 
 	//Init_Bmps_Dimensions();
 	Show_Dimensions_Dlg(0);
@@ -352,7 +352,7 @@ void CL64_Props_Dialogs::Start_Dialog_Dimensions()
 // *************************************************************************
 // *		Proc_Dialog_Dimensions:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
-LRESULT CALLBACK CL64_Props_Dialogs::Proc_Dialog_Dimensions(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK CL64_Props_Dialogs::Proc_Dimensions_Dlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	switch (message)
 	{
@@ -564,7 +564,7 @@ LRESULT CALLBACK CL64_Props_Dialogs::Proc_Dialog_Dimensions(HWND hDlg, UINT mess
 // *************************************************************************
 void CL64_Props_Dialogs::Start_Dialog_Debug()
 {
-	Debug_Dlg_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_PROPS_DEBUG, App->CL_Properties->Properties_Dlg_hWnd, (DLGPROC)Proc_Dialog_Debug);
+	Debug_Dlg_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_PROPS_DEBUG, App->CL_Properties->Properties_Dlg_hWnd, (DLGPROC)Proc_Debug_Dlg);
 
 	//Init_Bmps_Debug();
 
@@ -573,9 +573,9 @@ void CL64_Props_Dialogs::Start_Dialog_Debug()
 }
 
 // *************************************************************************
-// *			Proc_Dialog_Debug:- Terry and Hazel Flanigan 2024  		   *
+// *		Proc_Debug_Dlg:- Terry and Hazel Flanigan 2024				   *
 // *************************************************************************
-LRESULT CALLBACK CL64_Props_Dialogs::Proc_Dialog_Debug(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK CL64_Props_Dialogs::Proc_Debug_Dlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	switch (message)
 	{

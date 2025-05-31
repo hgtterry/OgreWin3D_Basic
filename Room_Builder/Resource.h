@@ -79,6 +79,7 @@
 #define IDD_PROPS_DIMENSIONS            191
 #define IDD_MESHVIEWER                  192
 #define IDD_MESHVIEWER_3D               193
+#define IDD_PROPS_DEBUG                 194
 #define IDC_BANNER                      1000
 #define IDC_STTEXT                      1001
 #define IDC_STMESSAGE                   1002
@@ -443,6 +444,9 @@
 #define IDC_OBJECTNAME                  1326
 #define IDC_BT_SCENE_RESET              1327
 #define IDC_BUTTON2                     1328
+#define IDC_BT_PHYSDEBUG                1328
+#define IDC_BT_SHOWMESH                 1329
+#define IDC_BT_ONLYMESH                 1330
 #define ID_DEBUG_GENERAL                32771
 #define ID_TEMPLATES_INSERT             32772
 #define ID_BRUSH_SELECT                 32773
@@ -509,7 +513,7 @@
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        194
 #define _APS_NEXT_COMMAND_VALUE         32827
-#define _APS_NEXT_CONTROL_VALUE         1328
+#define _APS_NEXT_CONTROL_VALUE         1331
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif
