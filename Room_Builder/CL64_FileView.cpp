@@ -727,7 +727,7 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 		App->CL_Properties_Scene->Edit_Category = Enums::Edit_Environs;
 		//App->CL_LookUps->Update_Types();
 
-		ShowWindow(App->CL_Properties_Scene->Properties_Dlg_hWnd, 1);
+		//ShowWindow(App->CL_Properties_Scene->Properties_Dlg_hWnd, 1);
 		App->CL_Properties_Scene->Update_ListView_Environs();
 
 		App->CL_Gizmos->highlight(App->CL_Scene->B_Object[Index]->Object_Ent);
