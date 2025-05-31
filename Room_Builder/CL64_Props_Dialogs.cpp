@@ -707,28 +707,36 @@ LRESULT CALLBACK CL64_Props_Dialogs::Proc_Debug_Dlg(HWND hDlg, UINT message, WPA
 			//}
 
 			// -----------------------  Objects
-			if (App->CL_Scene->Object_Count > 0)
+			if (App->CL_Scene->Object_Count > 0) 
 			{
-				int f = App->CL_Scene->B_Object[Index]->Phys_Body->getCollisionFlags();
+				auto& currentObject = App->CL_Scene->B_Object[Index];
 
-				if (App->CL_Scene->B_Object[Index]->flag_Physics_Debug_On == 1)
+				// Check if the physics body is null
+				if (currentObject->Phys_Body == nullptr) 
+				{
+					App->Say("No Physics Shape");
+					return 1;
+				}
+
+				int collisionFlags = currentObject->Phys_Body->getCollisionFlags();
+
+				// Toggle physics debug mode
+				if (currentObject->flag_Physics_Debug_On == 1) 
 				{
 					App->CL_Com_Objects->flag_Show_Physics_Debug = 0;
-					App->CL_Scene->B_Object[Index]->Phys_Body->setCollisionFlags(f | (1 << 5)); // Off
+					currentObject->Phys_Body->setCollisionFlags(collisionFlags | (1 << 5)); // Disable debug
+					currentObject->flag_Physics_Debug_On = 0;
 
-					App->CL_Scene->B_Object[Index]->flag_Physics_Debug_On = 0;
-
+					// Draw debug shape
 					App->CL_Ogre->Bullet_Debug_Listener->flag_Render_Debug_Flag = 0;
 					App->CL_Ogre->RenderFrame(4);
 					App->CL_Ogre->Bullet_Debug_Listener->flag_Render_Debug_Flag = 1;
-				
 				}
-				else
+				else 
 				{
-					App->CL_Scene->B_Object[Index]->flag_Physics_Debug_On = 1;
+					currentObject->flag_Physics_Debug_On = 1;
 					App->CL_Com_Objects->flag_Show_Physics_Debug = 1;
-					App->CL_Scene->B_Object[Index]->Phys_Body->setCollisionFlags(f & (~(1 << 5))); // on
-
+					currentObject->Phys_Body->setCollisionFlags(collisionFlags & (~(1 << 5))); // Enable debug
 				}
 			}
 

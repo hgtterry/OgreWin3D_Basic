@@ -464,27 +464,37 @@ void CL64_Physics::Show_Debug_Objects(bool Show)
 // *************************************************************************
 void CL64_Physics::Set_Physics_New(int Index)
 {
+	// Retrieve the object reference
+	auto& object = App->CL_Scene->B_Object[Index];
+
 	// Rotation
-	App->CL_Scene->B_Object[Index]->Physics_Quat = App->CL_Scene->B_Object[Index]->Object_Node->getOrientation();
+	object->Physics_Quat = object->Object_Node->getOrientation();
+	const auto& quat = object->Physics_Quat;
 
-	float w = App->CL_Scene->B_Object[Index]->Physics_Quat.w;
-	float x = App->CL_Scene->B_Object[Index]->Physics_Quat.x;
-	float y = App->CL_Scene->B_Object[Index]->Physics_Quat.y;
-	float z = App->CL_Scene->B_Object[Index]->Physics_Quat.z;
-
-	App->CL_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setRotation(btQuaternion(x, y, z, w));
+	// Set the rotation of the physics body
+	object->Phys_Body->getWorldTransform().setRotation(btQuaternion(quat.x, quat.y, quat.z, quat.w));
 
 	// Scale
-	App->CL_Scene->B_Object[Index]->Object_Node->setScale(App->CL_Scene->B_Object[Index]->Mesh_Scale);
+	object->Object_Node->setScale(object->Mesh_Scale);
+	const Ogre::Vector3& scale = object->Object_Node->getScale();
+	object->Phys_Body->getCollisionShape()->setLocalScaling(btVector3(scale.x, scale.y, scale.z));
 
-	Ogre::Vector3 Scale = App->CL_Scene->B_Object[Index]->Object_Node->getScale();
-	App->CL_Scene->B_Object[Index]->Phys_Body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
+	// TODO may need more work the node position can be joint related 
+	// Position 
+	Ogre::Vector3 centre{ 0,0,0 };
 
-	// Position
-	Ogre::Vector3 Centre = App->CL_Scene->B_Object[Index]->Object_Ent->getWorldBoundingBox(true).getCenter();
-	App->CL_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
-	App->CL_Scene->B_Object[Index]->Physics_Pos = Centre;
+	if (object->Type == Enums::Bullet_Type_TriMesh)
+	{
+		centre = object->Object_Node->getPosition();
+	}
+	else
+	{
+		centre = object->Object_Ent->getWorldBoundingBox(true).getCenter();
+	}
 
-	// All Good
-	App->CL_Scene->B_Object[Index]->flag_Physics_Valid = 1;
+	object->Phys_Body->getWorldTransform().setOrigin(btVector3(centre.x, centre.y, centre.z));
+	object->Physics_Pos = centre;
+
+	// Mark physics as valid
+	object->flag_Physics_Valid = true;
 }

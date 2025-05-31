@@ -138,11 +138,11 @@ Object_ID=3
 Object_Type=3
 Object_Shape=6
 Object_Usage=-1
-Mesh_Pos=157.268311,-23.605907,97.534622
+Mesh_Pos=159.999969,-112.587502,96.634613
 Mesh_Scale=1.000000,1.000000,1.000000
-Mesh_Rot=0.000000,0.000000,0.000000
-Mesh_Quat=1.000000,0.000000,0.000000,0.000000
-Physics_Quat=1.000000,0.000000,0.000000,0.000000
+Mesh_Rot=0.000000,90.000000,0.000000
+Mesh_Quat=0.707107,0.000000,0.707107,0.000000
+Physics_Quat=0.707107,0.000000,0.707107,0.000000
 Dimensions_Lock=0
  
 *************************************************************************************
@@ -150,16 +150,16 @@ Dimensions_Lock=0
 Mesh_Name=Object_6
 Mesh_File=GDPanel1.mesh
 Mesh_Resource_Path=
-Material_File=C:\Users\Terry\Desktop\OgreWin3D_Basic\Bin_64\Stock\Geometry\GDPanel1.material
+Material_File=GDPanel1.material
 Object_ID=4
 Object_Type=3
 Object_Shape=6
 Object_Usage=-1
 Mesh_Pos=304.000000,-80.000000,-20.631447
 Mesh_Scale=1.000000,1.000000,1.000000
-Mesh_Rot=0.000000,0.000000,0.000000
-Mesh_Quat=1.000000,0.000000,0.000000,0.000000
-Physics_Quat=1.000000,0.000000,0.000000,0.000000
+Mesh_Rot=0.000000,-0.000046,0.000000
+Mesh_Quat=1.000000,0.000000,-0.000000,0.000000
+Physics_Quat=0.987688,0.000000,0.156434,0.000000
 Dimensions_Lock=0
  
 *************************************************************************************
