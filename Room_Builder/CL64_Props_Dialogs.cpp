@@ -38,6 +38,8 @@ CL64_Props_Dialogs::CL64_Props_Dialogs(void)
 	Player_Props_HWND =				nullptr;
 	Override_Counter_Goto_Hwnd =	nullptr;
 
+	flag_isHighlighted = false;
+
 	flag_Show_Area_Physics_Debug = 0;
 
 	flag_Toggle_Objects = 1;
@@ -549,6 +551,8 @@ LRESULT CALLBACK CL64_Props_Dialogs::Proc_Debug_Dlg(HWND hDlg, UINT message, WPA
 		SendDlgItemMessage(hDlg, IDC_BT_PHYSDEBUG, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_SHOWMESH, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_ONLYMESH, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_HIGHLIGHT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
 		return TRUE;
 	}
 	case WM_CTLCOLORSTATIC:
@@ -597,6 +601,13 @@ LRESULT CALLBACK CL64_Props_Dialogs::Proc_Debug_Dlg(HWND hDlg, UINT message, WPA
 			return CDRF_DODEFAULT;
 		}
 
+		if (some_item->idFrom == IDC_BT_HIGHLIGHT)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->CL_Props_Dialogs->flag_isHighlighted);
+			return CDRF_DODEFAULT;
+		}
+		
 		return CDRF_DODEFAULT;
 	}
 
@@ -740,9 +751,25 @@ LRESULT CALLBACK CL64_Props_Dialogs::Proc_Debug_Dlg(HWND hDlg, UINT message, WPA
 				}
 			}
 
-			return 1;
+			return TRUE;
 		}
 
+		if (LOWORD(wParam) == IDC_BT_HIGHLIGHT)
+		{
+			int index = App->CL_Properties_Scene->Current_Selected_Object;
+
+			if (App->CL_Props_Dialogs->flag_isHighlighted == true)
+			{
+				App->CL_Gizmos->unhighlight(App->CL_Scene->B_Object[index]->Object_Ent);
+			}
+			else
+			{
+				App->CL_Gizmos->highlight(App->CL_Scene->B_Object[index]->Object_Ent);
+			}
+
+			return TRUE;
+		}
+		
 		/*if (LOWORD(wParam) == IDCANCEL)
 		{
 			EndDialog(hDlg, LOWORD(wParam));
@@ -751,6 +778,7 @@ LRESULT CALLBACK CL64_Props_Dialogs::Proc_Debug_Dlg(HWND hDlg, UINT message, WPA
 	}
 
 	}
+
 	return FALSE;
 }
 

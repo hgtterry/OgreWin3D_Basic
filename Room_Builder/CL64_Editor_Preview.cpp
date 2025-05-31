@@ -91,6 +91,7 @@ void CL64_Editor_Preview::Preview_Mode(void)
 
         // Reset the physics scene and render the frame
         App->CL_Physics->Reset_Scene(true);
+        App->CL_Ogre->Bullet_Debug_Listener->flag_Render_Debug_Flag = false;
         App->CL_Ogre->RenderFrame(1);
 
         // Stop all sounds and set environment mode

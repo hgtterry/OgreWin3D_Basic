@@ -336,7 +336,7 @@ void CL64_Gizmos::highlight(Ogre::Entity* entity)
 {
 	unsigned short count = entity->getNumSubEntities();
 
-	const Ogre::String file_name = "sdk_text_box.png";
+	const Ogre::String file_name = "rim.dds";
 	const Ogre::String rim_material_name = "_rim";
 
 	for (unsigned short i = 0; i < count; ++i)
@@ -354,16 +354,19 @@ void CL64_Gizmos::highlight(Ogre::Entity* entity)
 			new_material = old_material->clone(new_material_name);
 
 			Pass* pass = new_material->getTechnique(0)->getPass(0);
+
 			Ogre::TextureUnitState* texture = pass->createTextureUnitState();
 			texture->setTextureName(file_name);
-			//texture->setTextureAddressingMode(TextureUnitState::TAM_CLAMP);
+			texture->setTextureAddressingMode(TextureUnitState::TAM_CLAMP);
 			texture->setColourOperationEx(Ogre::LBX_ADD, Ogre::LBS_TEXTURE, Ogre::LBS_CURRENT);
 			texture->setColourOpMultipassFallback(Ogre::SBF_ONE, Ogre::SBF_ONE);
-			//texture->setEnvironmentMap(true, Ogre::TextureUnitState::ENV_NORMAL);
 		}
 
 		subentity->setMaterial(new_material);
+
 	}
+
+	App->CL_Props_Dialogs->flag_isHighlighted = true;
 }
 
 // **************************************************************************
@@ -389,4 +392,6 @@ void CL64_Gizmos::unhighlight(Ogre::Entity* entity)
 		subentity->setMaterialName(old_material_name);
 
 	}
+
+	App->CL_Props_Dialogs->flag_isHighlighted = false;
 }

@@ -47,6 +47,8 @@ public:
 	void Show_Player_Dlg(bool Show);
 	void Show_Override_Counter_Dlg(bool Show);
 
+	bool flag_isHighlighted;
+
 	HWND Player_Props_HWND;
 	HWND Dimensions_Dlg_hWnd;
 
