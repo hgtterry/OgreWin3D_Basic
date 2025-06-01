@@ -225,15 +225,18 @@ LRESULT CALLBACK CL64_Properties_Tabs::Proc_Tabs_Control(HWND hDlg, UINT message
 // *************************************************************************
 void CL64_Properties_Tabs::Hide_Dialogs()
 {
+	// Reset all tab flags to indicate they are hidden
 	flag_Tab_Texture = 0;
 	flag_Tab_Group = 0;
 	flag_Tab_Templates = 0;
 	flag_Tab_3DSettings = 0;
 
+	// Hide the respective dialogs for textures, brushes, and templates
 	App->CL_Properties_Textures->Show_Textures_Dialog(false);
 	App->CL_Properties_Brushes->Show_Brushes_Dialog(false);
 	App->CL_Properties_Templates->Show_TemplatesDialog(false);
 
+	// Redraw
 	RedrawWindow(Tabs_Control_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 }
 
@@ -242,12 +245,18 @@ void CL64_Properties_Tabs::Hide_Dialogs()
 // *************************************************************************
 void CL64_Properties_Tabs::Select_Brushes_Tab()
 {
-	if (Tabs_Control_Hwnd && flag_Tabs_Dlg_Active == 1)
+	// Check is valid
+	if (Tabs_Control_Hwnd && flag_Tabs_Dlg_Active == true)
 	{
+		// Hide any open dialogs
 		Hide_Dialogs();
+
+		// Show the brushes dialog
 		App->CL_Properties_Brushes->Show_Brushes_Dialog(true);
-		flag_Tab_Group = 1;
-		RedrawWindow(Tabs_Control_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+		flag_Tab_Group = true; 
+
+		// Redraw
+		RedrawWindow(Tabs_Control_Hwnd, nullptr, nullptr, RDW_INVALIDATE | RDW_UPDATENOW); // Redraw the tabs control
 	}
 }
 

@@ -319,13 +319,13 @@ void CL64_Properties_Textures::Apply_Texture()
 	int SelectedItem;
 	int		i;
 
-	char TextureName[MAX_PATH];
+	char TextureName[MAX_PATH]{ 0 };
 
 	SelectedItem = SendDlgItemMessage(Textures_Dlg_Hwnd, IDC_LISTTDTEXTURES, LB_GETCURSEL, (WPARAM)0, (LPARAM)0);
 
 	SendDlgItemMessage(Textures_Dlg_Hwnd, IDC_LISTTDTEXTURES, LB_GETTEXT, (WPARAM)SelectedItem, (LPARAM)TextureName);
 
-	SelectedItem = Get_Index_FromName(TextureName);
+	SelectedItem = GetIndexFromTextureName(TextureName);
 	if (SelectedItem == -1)
 	{
 		App->Say("Cant Find Texture");
@@ -405,20 +405,20 @@ void CL64_Properties_Textures::Apply_Texture()
 }
 
 // *************************************************************************
-// *	  	Get_Index_FromName:- Terry and Hazel Flanigan 2025			   *
+// *		 GetIndexFromTextureName:- Terry and Hazel Flanigan 2025	   *
 // *************************************************************************
-int CL64_Properties_Textures::Get_Index_FromName(char* TextureName)
+int CL64_Properties_Textures::GetIndexFromTextureName(char* TextureName)
 {
-	CL64_WadFile* pWad;
-	pWad = NULL;
-
-	pWad = App->CL_Level->Level_GetWad_Class();
-	if (pWad == NULL)
+	CL64_WadFile* pWad = App->CL_Level->Level_GetWad_Class();
+	
+	// Check 
+	if (pWad == nullptr) 
 	{
 		App->Say("Error Getting Wad Class");
 		return -1;
 	}
 
+	// Search Textures
 	for (int index = 0; index < pWad->mBitmapCount; index++)
 	{
 		char mName[MAX_PATH];
@@ -427,10 +427,12 @@ int CL64_Properties_Textures::Get_Index_FromName(char* TextureName)
 		bool test = strcmp(mName, TextureName);
 		if (test == 0)
 		{
+			// Found return texture index
 			return index;
 		}
 	}
 
+	// No Texture Found
 	return -1;
 }
 
@@ -463,73 +465,66 @@ void CL64_Properties_Textures::List_Selection_Changed()
 }
 
 // *************************************************************************
-// *						ViewerBasePic Terry Flanigan	  			   *
+// *			ViewerBasePic:- Terry and Hazel Flanigan 2025	  		   *
 // *************************************************************************
 bool CALLBACK CL64_Properties_Textures::ViewerBasePic(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
 	if (msg == WM_PAINT)
 	{
-		PAINTSTRUCT	ps;
-		HDC			hDC;
-		RECT		Rect;
+		PAINTSTRUCT ps;
+		HDC hDC = BeginPaint(hwnd, &ps);
+		RECT clientRect;
 
-		hDC = BeginPaint(hwnd, &ps);
-		GetClientRect(hwnd, &Rect);
-		Rect.left--;
-		Rect.bottom--;
-		FillRect(hDC, &Rect, (HBRUSH)(RGB(0, 255, 0)));
+		// Get the client rectangle and adjust its dimensions
+		GetClientRect(hwnd, &clientRect);
+		clientRect.left--;
+		clientRect.bottom--;
 
-		if (App->CL_Properties_Textures->Sel_BaseBitmap != NULL)
+		// Fill the rectangle with a green brush
+		FillRect(hDC, &clientRect, (HBRUSH)(RGB(0, 255, 0)));
+
+		// Check if a base bitmap is selected
+		if (App->CL_Properties_Textures->Sel_BaseBitmap != nullptr)
 		{
-			RECT	Source;
-			RECT	Dest;
-			HDC		hDC;
+			RECT sourceRect = { 0, 0, App->CL_Properties_Textures->BasePicWidth, App->CL_Properties_Textures->BasePicHeight };
+			RECT destRect = clientRect;
 
-			Source.left = 0;
-			Source.top = 0;
-			Source.bottom = App->CL_Properties_Textures->BasePicHeight;
-			Source.right = App->CL_Properties_Textures->BasePicWidth;
+			// Get the device context and set the stretch mode
+			HDC renderDC = GetDC(hwnd);
+			SetStretchBltMode(renderDC, HALFTONE);
 
-			Dest = Rect;
-
-			hDC = GetDC(hwnd);
-			SetStretchBltMode(hDC, HALFTONE);
-
-			App->CL_Properties_Textures->RenderTexture_Blit(hDC, App->CL_Properties_Textures->Sel_BaseBitmap, &Source, &Dest);
-			ReleaseDC(hwnd, hDC);
-
+			// Render the texture
+			App->CL_Properties_Textures->RenderTexture_Blit(renderDC, App->CL_Properties_Textures->Sel_BaseBitmap, &sourceRect, &destRect);
+			ReleaseDC(hwnd, renderDC);
 		}
-		
+
 		EndPaint(hwnd, &ps);
 		return 0;
 	}
 
-	DefWindowProc(hwnd, msg, wParam, lParam);
+	return DefWindowProc(hwnd, msg, wParam, lParam);
 }
 
 // *************************************************************************
-// *					RenderTexture_Blit Terry Bernie		  		   *
+// *		RenderTexture_Blit:- Terry and Hazel Flanigan 2025		 	   *
 // *************************************************************************
 bool CL64_Properties_Textures::RenderTexture_Blit(HDC hDC, HBITMAP Bmp, const RECT* SourceRect, const RECT* DestRect)
 {
-	HDC		MemDC;
-	int		SourceWidth;
-	int		SourceHeight;
-	int		DestWidth;
-	int		DestHeight;
-
-	MemDC = CreateCompatibleDC(hDC);
+	HDC MemDC = CreateCompatibleDC(hDC);
 	if (MemDC == NULL)
+	{
 		return FALSE;
+	}
 
+	// Check if the bitmap is valid
 	if (Bmp)
 	{
 		SelectObject(MemDC, Bmp);
 
-		SourceWidth = SourceRect->right - SourceRect->left;
-		SourceHeight = SourceRect->bottom - SourceRect->top;
-		DestWidth = DestRect->right - DestRect->left;
-		DestHeight = DestRect->bottom - DestRect->top;
+		int SourceWidth = SourceRect->right - SourceRect->left;
+		int SourceHeight = SourceRect->bottom - SourceRect->top;
+		int DestWidth = DestRect->right - DestRect->left;
+		int DestHeight = DestRect->bottom - DestRect->top;
 		SetStretchBltMode(hDC, COLORONCOLOR);
 		StretchBlt(hDC,
 			DestRect->left,

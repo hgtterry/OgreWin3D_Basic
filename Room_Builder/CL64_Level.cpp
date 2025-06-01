@@ -300,7 +300,8 @@ void CL64_Level::Level_SetWadPath(const char* NewWad)
 // *************************************************************************
 CL64_WadFile* CL64_Level::Level_GetWad_Class()
 {
-	return CL_Wad_Class;
+	// Return CL_Wad_Class if it is not null, otherwise return nullptr
+	return CL_Wad_Class ? CL_Wad_Class : nullptr;
 }
 
 // *************************************************************************

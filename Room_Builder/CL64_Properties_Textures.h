@@ -69,7 +69,7 @@ private:
 	void Texture_To_HBITMP(char* TextureFileName);
 
 	void Apply_Texture();
-	int Get_Index_FromName(char* TextureName);
+	int GetIndexFromTextureName(char* TextureName);
 
 };
 

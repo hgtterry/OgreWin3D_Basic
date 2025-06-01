@@ -376,22 +376,6 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Brush_Tabs(HWND hDlg, UINT messag
 			return TRUE;
 		}
 
-	
-		//// -----------------------------------------------------------------
-		//if (LOWORD(wParam) == IDOK)
-		//{
-		//	//App->CL_TextureDialog->f_TextureDlg_Active = 0;
-		//	//EndDialog(hDlg, LOWORD(wParam));
-		//	return TRUE;
-		//}
-
-		//if (LOWORD(wParam) == IDCANCEL)
-		//{
-		//	//App->CL_TextureDialog->f_TextureDlg_Active = 0;
-		//	//EndDialog(hDlg, LOWORD(wParam));
-		//	return TRUE;
-		//}
-
 		break;
 	}
 	}
@@ -426,65 +410,73 @@ void CL64_Properties_Brushes::List_Selection_Changed(bool Clear)
 // *************************************************************************
 // *		OnSelchangeBrushlist:- Terry and Hazel Flanigan 2025		   *
 // *************************************************************************
-void CL64_Properties_Brushes::OnSelchangeBrushlist(int Index, bool Clear)
+void CL64_Properties_Brushes::OnSelchangeBrushlist(int index, bool clear)
 {
-	int			c;
-	signed int	bChanged = FALSE;
+	int brushCount = App->CL_Brush->Get_Brush_Count();
+	bool hasChanged = false;
 
-	c = App->CL_Brush->Get_Brush_Count();
-
-	if (c > 0)
+	if (brushCount > 0)
 	{
-		if (Clear == 1)
+		if (clear)
 		{
 			App->CL_Doc->ResetAllSelections();
 			App->CL_Doc->UpdateSelected();
 		}
 
-		Selected_Brush = App->CL_Brush->Get_Brush_ByIndex(Index);
-
+		Selected_Brush = App->CL_Brush->Get_Brush_ByIndex(index);
 		App->CL_SelBrushList->SelBrushList_Add(App->CL_Doc->pSelBrushes, Selected_Brush);
 
-		if (Clear == 1)
+		// Select Object in Scene Editor
+		if (Selected_Brush->GroupId > Enums::Brushs_ID_Players)
 		{
-			/*Update_Dlg_Controls();
-			App->CLSB_TopTabs->Update_Dlg_Controls();*/
+			int entityIndex = App->CL_Entities->GetIndex_By_Name(Selected_Brush->Name);
+			App->CL_FileView->SelectItem(App->CL_Scene->B_Object[entityIndex]->FileViewItem);
 		}
-		//m_pDoc->DoBrushSelection( Selected_Brush, brushSelToggle) ;
-		bChanged = GE_TRUE;
+
+		if (clear)
+		{
+			// Update_Dlg_Controls(); // Uncomment if needed
+			// App->CLSB_TopTabs->Update_Dlg_Controls(); // Uncomment if needed
+		}
+
+		hasChanged = true;
 	}
 
-
-	if (bChanged)
+	if (hasChanged)
 	{
 		App->CL_Doc->UpdateSelected();
 		App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
 		Update_SelectedBrushesCount_Dlg();
 		App->CL_Top_Tabs->Update_Faces_Combo();
-
 		App->CL_Ogre->OGL_Listener->Show_Visuals(true);
-		
 	}
 }
+
 
 // *************************************************************************
 // *			 Fill_ListBox:- Terry and Hazel Flanigan 2025			   *
 // *************************************************************************
 void CL64_Properties_Brushes::Fill_ListBox()
 {
-	if (flag_Brushes_Dlg_Created != 1) return;
+	// Check if the Brush Dialog has been created
+	if (flag_Brushes_Dlg_Created != true) return;
 
+	// Reset the content of the brush list box
 	SendDlgItemMessage(BrushesDlg_Hwnd, IDC_GD_BRUSHLIST, LB_RESETCONTENT, 0, 0);
 
+	// Retrieve the main brushes from the level
 	BrushList* pList = App->CL_Level->Level_Get_Main_Brushes();
 	int count = 0;
 
+	// Iterate through the brushes and add them to the list box
 	for (Brush* b = pList->First; b != nullptr; b = b->Next)
 	{
+		// Add the brush name to the list box
 		SendDlgItemMessage(BrushesDlg_Hwnd, IDC_GD_BRUSHLIST, LB_ADDSTRING, 0, (LPARAM)App->CL_Brush->Brush_GetName(b));
 		count++;
 	}
 
+	// Update the brush count display
 	char buff[100];
 	SetDlgItemText(BrushesDlg_Hwnd, IDC_BRUSHCOUNT, _itoa(count, buff, 10));
 }

@@ -532,7 +532,6 @@ void CL64_Doc::SelectOrtho(POINT point, ViewVars* v)
         ResetAllSelections();
     }
 
-
     FoundThingType = FindClosestThing(&point, v, &pMinBrush,&Dist);
 
     if ((FoundThingType != fctNOTHING) && (Dist <= 25)) //MAX_PIXEL_SELECT_DIST))
@@ -541,7 +540,7 @@ void CL64_Doc::SelectOrtho(POINT point, ViewVars* v)
         {
             if (pMinBrush->GroupId == Enums::Brushs_ID_Players)
             {
-               // App->Say("Brush is Locked");
+               
             }
 			else
 			{
@@ -549,14 +548,13 @@ void CL64_Doc::SelectOrtho(POINT point, ViewVars* v)
 				App->CL_Brush_X->Select_Brush_Editor(pMinBrush);
                 App->CL_Ogre->OGL_Listener->Show_Visuals(true);
 
+                // Select Object in Scene Editor
                 if (pMinBrush->GroupId > Enums::Brushs_ID_Players)
                 {
                     int index = App->CL_Entities->GetIndex_By_Name(pMinBrush->Name);
                     App->CL_FileView->SelectItem(App->CL_Scene->B_Object[index]->FileViewItem);
                 }
-
 			}
-
         } 
     }
     else
