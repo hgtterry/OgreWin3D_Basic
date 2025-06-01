@@ -247,7 +247,6 @@ void CL64_Properties_Tabs::Select_Brushes_Tab()
 		Hide_Dialogs();
 		App->CL_Properties_Brushes->Show_Brushes_Dialog(true);
 		flag_Tab_Group = 1;
-
 		RedrawWindow(Tabs_Control_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 	}
 }

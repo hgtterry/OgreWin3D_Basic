@@ -41,6 +41,8 @@ public:
 	void Update_SelectedBrushesCount_Dlg();
 	void Move_Brush();
 
+	void List_Selection_Changed(bool Clear);
+
 	T_Vec3 CenterOfSelection;
 
 	int Selected_Index;
@@ -52,7 +54,6 @@ private:
 	static LRESULT CALLBACK Proc_Brush_Tabs(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Proc_Dimensions_Dlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
-	void List_Selection_Changed(bool Clear);
 	void StartDimensionsDialog();
 
 	void Update_Deltas_Dlg(HWND hDlg);

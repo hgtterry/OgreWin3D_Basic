@@ -370,7 +370,7 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Brush_Tabs(HWND hDlg, UINT messag
 
 				App->CL_Properties_Brushes->Set_Dlg_Brush_Options_Buttons(true);
 
-				App->CL_Properties_Brushes->List_Selection_Changed(1);
+				App->CL_Properties_Brushes->List_Selection_Changed(true);
 
 			}
 			return TRUE;

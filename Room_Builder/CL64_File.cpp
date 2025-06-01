@@ -537,59 +537,60 @@ bool CL64_File::Load_File(const char* FileName)
 // *************************************************************************
 // *			Set_Editor:- Terry and Hazel Flanigan 2025 				   *
 // *************************************************************************
-void CL64_File::Set_Editor()
+void CL64_File::Set_Editor() 
 {
+	// Set title based on the current level's path and file
 	App->Set_Title(App->CL_Level->MTF_PathAndFile);
+
+	// Enable the select button and disable the insert button in the properties templates
 	App->CL_Top_Tabs->Enable_Select_Button(true, 1);
 	App->CL_Properties_Templates->Enable_Insert_Button(false);
 
+	// Deselect any selected face dialog buttons
 	App->CL_Top_Tabs->Deselect_Faces_Dlg_Buttons();
 
+	// Reset the selected face index and all selections in the document
 	App->CL_Face->Selected_Face_Index = 0;
-	//App->CL_Top_Tabs->Update_Faces_Combo();
-	
 	App->CL_Doc->ResetAllSelections();
+
+	// Disable brush options buttons and select the templates tab
 	App->CL_Top_Tabs->Enable_Brush_Options_Buttons(false, false);
 	App->CL_Properties_Tabs->Select_Templates_Tab();
+
+	// Reset the camera and views
 	App->CL_Ogre->Camera_Reset_Zero();
 	App->CL_Editor_Map->Reset_Views_All();
 
+	// Set the editor dialog to the first brush
 	App->CL_Doc->Editor_Set_Dlgs(Enums::Editor_Dlgs_First_Brush);
 	App->CL_Properties_Brushes->Set_Dlg_Brush_Options_Buttons(false);
-	
 
-	if (App->Development == 1)
+	// Create a test environment if in development mode and level version is 1.0
+	if (App->Development == 1 && App->CL_Level->Level_Version == 1.0) 
 	{
-		//App->CL_Entities->Create_Player_Entity();
-		if (App->CL_Level->Level_Version == 1.0)
-		{
-			App->CL_Com_Environments->Create_Test_Environment();
-		}
+		App->CL_Com_Environments->Create_Test_Environment();
 	}
-	
+
+	// Hide entities in the object component
 	App->CL_Com_Objects->Show_Entities(false);
 
-	int Index = App->CL_Com_Environments->Get_First_Environ();
-	if (Index == -1)
+	// Get the first environment index and set it if valid
+	int index = App->CL_Com_Environments->Get_First_Environ();
+	if (index != -1) 
 	{
-
-	}
-	else
-	{
-		App->CL_Com_Environments->Set_Environment_By_Index(false, Index);
+		App->CL_Com_Environments->Set_Environment_By_Index(false, index);
 	}
 
+	// Set the selected render mode and apply textured camera
 	App->CL_Mesh_Mgr->Selected_Render_Mode = Enums::Render_Ogre;
-	
 	App->CL_Camera->Camera_Textured();
-	
-	// Set to Map Editor Mode
+
+	// Switch back to map editor mode and render the frame
 	App->CL_Editor_Scene->Back_To_Map_Editor();
 	App->CL_Properties_Tabs->Select_Templates_Tab();
-
 	App->CL_Ogre->RenderFrame(7);
-
 }
+
 
 // *************************************************************************
 // *			Set_Player:- Terry and Hazel Flanigan 2025 				   *

@@ -548,6 +548,13 @@ void CL64_Doc::SelectOrtho(POINT point, ViewVars* v)
 				DoBrushSelection(pMinBrush, brushSelToggle);
 				App->CL_Brush_X->Select_Brush_Editor(pMinBrush);
                 App->CL_Ogre->OGL_Listener->Show_Visuals(true);
+
+                if (pMinBrush->GroupId > Enums::Brushs_ID_Players)
+                {
+                    int index = App->CL_Entities->GetIndex_By_Name(pMinBrush->Name);
+                    App->CL_FileView->SelectItem(App->CL_Scene->B_Object[index]->FileViewItem);
+                }
+
 			}
 
         } 
