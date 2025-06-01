@@ -203,7 +203,7 @@ bool CL64_Com_Environments::Create_Environ_Entity(int index)
 		| btCollisionObject::CF_NO_CONTACT_RESPONSE);
 
 	App->CL_Physics->dynamicsWorld->addRigidBody(object->Phys_Body);
-	App->CL_Physics->Set_Physics_New(index);
+	App->CL_Physics->Set_Physics_Dimensions(index);
 
 	//object->Phys_Body->setCollisionFlags(collisionFlags & (~(1 << 5)));
 

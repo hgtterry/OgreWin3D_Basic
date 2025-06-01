@@ -118,8 +118,8 @@ void CL64_Editor_Preview::Map_Editor_Mode(void)
 		App->CL_Ogre->Bullet_Debug_Listener->flag_Render_Debug_Flag = 0;
 	}
 
-	App->CL_ImGui->flag_Show_Press_Excape = 0;
-	App->CL_ImGui->flag_Show_Preview_Options = 0;
+	App->CL_ImGui->flag_Show_Press_Excape = false;
+	App->CL_ImGui->flag_Show_Preview_Options = false;
 	App->CL_Grid->Enable_Grid_And_Hair(true);
 	App->CL_Gizmos->highlight(App->CL_Scene->B_Object[App->CL_Gizmos->Last_Selected_Object]->Object_Ent);
 

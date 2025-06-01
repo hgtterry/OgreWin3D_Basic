@@ -439,7 +439,7 @@ void CL64_Objects_Create::Add_Physics_Box(bool isDynamic, int index)
 
 	// Mark physics as valid and update physics state
 	App->CL_Scene->B_Object[index]->flag_Physics_Valid = true;
-	App->CL_Physics->Set_Physics_New(index);
+	App->CL_Physics->Set_Physics_Dimensions(index);
 }
 
 // *************************************************************************
@@ -523,7 +523,7 @@ void CL64_Objects_Create::Add_Physics_Sphere(bool Dynamic, int Index)
 
 	App->CL_Scene->B_Object[Index]->flag_Physics_Valid = 1;
 
-	App->CL_Physics->Set_Physics_New(Index);
+	App->CL_Physics->Set_Physics_Dimensions(Index);
 }
 
 // *************************************************************************
@@ -610,7 +610,7 @@ void CL64_Objects_Create::Add_Physics_Capsule(bool Dynamic, int Index)
 
 	App->CL_Scene->B_Object[Index]->flag_Physics_Valid = 1;
 
-	App->CL_Physics->Set_Physics_New(Index);
+	App->CL_Physics->Set_Physics_Dimensions(Index);
 }
 
 // *************************************************************************
@@ -696,7 +696,7 @@ void CL64_Objects_Create::Add_Physics_Cylinder(bool Dynamic, int Index)
 
 	App->CL_Scene->B_Object[Index]->flag_Physics_Valid = 1;
 
-	App->CL_Physics->Set_Physics_New(Index);
+	App->CL_Physics->Set_Physics_Dimensions(Index);
 }
 
 // *************************************************************************
@@ -782,7 +782,7 @@ void CL64_Objects_Create::Add_Physics_Cone(bool Dynamic, int Index)
 
 	App->CL_Scene->B_Object[Index]->flag_Physics_Valid = 1;
 
-	App->CL_Physics->Set_Physics_New(Index);
+	App->CL_Physics->Set_Physics_Dimensions(Index);
 }
 
 // *************************************************************************
@@ -935,7 +935,7 @@ btBvhTriangleMeshShape* CL64_Objects_Create::create_New_Trimesh(int Index)
 
 	Object->flag_Physics_Valid = 1;
 
-	App->CL_Physics->Set_Physics_New(Index);
+	App->CL_Physics->Set_Physics_Dimensions(Index);
 
 	return mShape;
 }

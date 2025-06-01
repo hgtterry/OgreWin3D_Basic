@@ -39,7 +39,7 @@ public:
 	void Reset_Physics(void);
 	void Reset_Player(void);
 	void Reset_Scene(bool resetPlayer);
-	void Set_Physics_New(int Index);
+	void Set_Physics_Dimensions(int Object_Index);
 
 	btDefaultCollisionConfiguration* collisionConfiguration;
 	btCollisionDispatcher* dispatcher;

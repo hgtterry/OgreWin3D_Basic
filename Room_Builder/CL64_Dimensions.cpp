@@ -140,7 +140,7 @@ void CL64_Dimensions::Do_Position_New()
 		}
 		else
 		{
-			App->CL_Physics->Set_Physics_New(Index);
+			App->CL_Physics->Set_Physics_Dimensions(Index);
 		}
 
 		// TODO Test
@@ -196,7 +196,7 @@ void CL64_Dimensions::Do_Scale_New()
 		}
 		else
 		{
-			App->CL_Physics->Set_Physics_New(Index);
+			App->CL_Physics->Set_Physics_Dimensions(Index);
 		}
 
 		// TODO Test
@@ -277,7 +277,7 @@ void CL64_Dimensions::Do_Rotation_New()
 		}
 		else
 		{
-			App->CL_Physics->Set_Physics_New(Index);
+			App->CL_Physics->Set_Physics_Dimensions(Index);
 		}
 
 		App->CL_Gizmos->MarkerBox_Adjust(Index);

@@ -460,12 +460,12 @@ void CL64_Physics::Show_Debug_Objects(bool Show)
 }
 
 // *************************************************************************
-//				Set_Physics_New:- Terry and Hazel Flanigan 2024			   *
+//		Set_Physics_Dimensions:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-void CL64_Physics::Set_Physics_New(int Index)
+void CL64_Physics::Set_Physics_Dimensions(int Object_Index)
 {
 	// Retrieve the object reference
-	auto& object = App->CL_Scene->B_Object[Index];
+	auto& object = App->CL_Scene->B_Object[Object_Index];
 
 	// Rotation
 	object->Physics_Quat = object->Object_Node->getOrientation();
