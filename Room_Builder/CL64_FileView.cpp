@@ -689,7 +689,7 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 		App->CL_Gizmos->MarkerBox_Adjust(Index);
 		
 		//-----------------------------
-		Brush* pMinBrush = App->CL_Brush_X->Get_Brush_By_Name(App->CL_Scene->B_Object[App->CL_Properties_Scene->Last_Selected_Object]->Object_Name);
+		/*Brush* pMinBrush = App->CL_Brush_X->Get_Brush_By_Name(App->CL_Scene->B_Object[App->CL_Properties_Scene->Last_Selected_Object]->Object_Name);
 
 		if (pMinBrush)
 		{
@@ -707,7 +707,7 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 			App->CL_Panels->Deselect_All_Brushes_Update_Dlgs();
 			App->CL_Top_Tabs->Update_Faces_Combo();
 			App->CL_Ogre->OGL_Listener->Show_Visuals(false);
-		}
+		}*/
 		//-----------------------------
 
 
