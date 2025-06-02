@@ -46,7 +46,6 @@ void CL64_Objects_Create::Add_Objects_From_MeshViewer()
 		return;
 	}
 
-
 	// Retrieve the current object count
 	int index = App->CL_Scene->Object_Count;
 
@@ -65,14 +64,12 @@ void CL64_Objects_Create::Add_Objects_From_MeshViewer()
 
 	App->CL_Objects_Create->Dispatch_MeshViewer();
 
-	//App->CL_FileView->SelectItem(App->CL_Scene->B_Object[index]->FileViewItem);
-
-
 	App->CL_Scene->UniqueID_Object_Counter++; // Unique ID
 	App->CL_Scene->Object_Count++;  // Must be last line
 
 	App->CL_Level->flag_Level_is_Modified = 1;
 
+	App->CL_FileView->SelectItem(Object->FileViewItem);
 }
 
 // *************************************************************************
@@ -80,7 +77,6 @@ void CL64_Objects_Create::Add_Objects_From_MeshViewer()
 // *************************************************************************
 bool CL64_Objects_Create::Dispatch_MeshViewer()
 {
-
 	int Index = App->CL_Scene->Object_Count;
 
 	if (App->CL_MeshViewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Area) // Area

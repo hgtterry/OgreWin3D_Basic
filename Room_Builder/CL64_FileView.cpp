@@ -688,10 +688,13 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 
 		App->CL_Gizmos->MarkerBox_Adjust(Index);
 		
+		App->CL_Properties_Scene->Current_Selected_Object = Index;
+		App->CL_Properties_Scene->Edit_Category = Enums::Edit_Object;
+
 		//-----------------------------
 		if (App->CL_File->flag_loading == false)
 		{
-			Brush* pMinBrush = App->CL_Brush_X->Get_Brush_By_Name(App->CL_Scene->B_Object[App->CL_Properties_Scene->Last_Selected_Object]->Object_Name);
+			Brush* pMinBrush = App->CL_Brush_X->Get_Brush_By_Name(App->CL_Scene->B_Object[Index]->Object_Name);
 			if (pMinBrush)
 			{
 				int NumSelBrushes = App->CL_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes);
@@ -709,11 +712,7 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 			}
 		}
 		//-----------------------------
-
-
-		App->CL_Properties_Scene->Current_Selected_Object = Index;
-		App->CL_Properties_Scene->Edit_Category = Enums::Edit_Object;
-		
+		// 		
 		if (App->CL_Editor_Scene->flag_Scene_Editor_Active == true)
 		{
 			ShowWindow(App->CL_Properties_Scene->Properties_Dlg_hWnd, true);
@@ -749,6 +748,9 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 
 		App->CL_Gizmos->MarkerBox_Adjust(Index);
 
+		App->CL_Properties_Scene->Current_Selected_Object = Index;
+		App->CL_Properties_Scene->Edit_Category = Enums::Edit_Environs;
+
 		//-----------------------------
 		if (App->CL_File->flag_loading == false)
 		{
@@ -766,10 +768,6 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 			}
 		}
 		//-----------------------------
-
-		App->CL_Properties_Scene->Current_Selected_Object = Index;
-		App->CL_Properties_Scene->Edit_Category = Enums::Edit_Environs;
-		
 
 		if (App->CL_Editor_Scene->flag_Scene_Editor_Active == true)
 		{

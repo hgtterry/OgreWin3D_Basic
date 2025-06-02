@@ -734,7 +734,7 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 	//		App->CL_Ogre->Ogre3D_Listener->flag_Block_Mouse = 0;
 	//		App->CL_Keyboard->flag_Block_Keyboard = 0;
 	//		
-
+	//		App->CL_FileView->SelectItem(Object->FileViewItem);
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
