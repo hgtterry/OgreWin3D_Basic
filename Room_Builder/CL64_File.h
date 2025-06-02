@@ -31,13 +31,15 @@ public:
 	~CL64_File(void);
 
 	void Start_Save(bool useSaveDialog);
-	void Start_Load(bool Use_Open_Dialog);
+	void Start_Load(bool useOpenDialog);
 
 	void Set_Editor();
 
 	char Read_Buffer[MAX_PATH];
 	char PathFileName_3dt[MAX_PATH];
 	char FileName_3dt[MAX_PATH];
+
+	bool flag_loading;
 
 	FILE* fp;
 private:

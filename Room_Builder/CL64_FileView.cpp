@@ -689,30 +689,25 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 		App->CL_Gizmos->MarkerBox_Adjust(Index);
 		
 		//-----------------------------
-		//Brush* pMinBrush = App->CL_Brush_X->Get_Brush_By_Name(App->CL_Scene->B_Object[App->CL_Properties_Scene->Last_Selected_Object]->Object_Name);
-
-		/*if (pMinBrush)
+		if (App->CL_File->flag_loading == false)
 		{
-			int NumSelBrushes = App->CL_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes);
-			if (NumSelBrushes > 0)
+			Brush* pMinBrush = App->CL_Brush_X->Get_Brush_By_Name(App->CL_Scene->B_Object[App->CL_Properties_Scene->Last_Selected_Object]->Object_Name);
+			if (pMinBrush)
 			{
-				App->CL_Doc->ResetAllSelections();
+				int NumSelBrushes = App->CL_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes);
+				if (NumSelBrushes > 0)
+				{
+					App->CL_Doc->ResetAllSelections();
+				}
+
+				App->CL_Doc->DoBrushSelection(pMinBrush, brushSelToggle);
+				App->CL_Brush_X->Select_Brush_Editor(pMinBrush);
+
+				App->CL_Properties_Tabs->flag_Tabs_Dlg_Active = 1;
+				App->CL_Properties_Tabs->Select_Brushes_Tab();
+				App->CL_Properties_Tabs->flag_Tabs_Dlg_Active = 0;
 			}
-
-			App->CL_Doc->DoBrushSelection(pMinBrush, brushSelToggle);
-			App->CL_Brush_X->Select_Brush_Editor(pMinBrush);
-
-			App->CL_Properties_Tabs->flag_Tabs_Dlg_Active = 1;
-			App->CL_Properties_Tabs->Select_Brushes_Tab();
-			App->CL_Properties_Tabs->flag_Tabs_Dlg_Active = 0;
 		}
-		else
-		{
-			App->CL_Doc->ResetAllSelections();
-			App->CL_Panels->Deselect_All_Brushes_Update_Dlgs();
-			App->CL_Top_Tabs->Update_Faces_Combo();
-			App->CL_Ogre->OGL_Listener->Show_Visuals(false);
-		}*/
 		//-----------------------------
 
 
@@ -755,24 +750,20 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 		App->CL_Gizmos->MarkerBox_Adjust(Index);
 
 		//-----------------------------
-		Brush* pMinBrush = App->CL_Brush_X->Get_Brush_By_Name(App->CL_Scene->B_Object[App->CL_Properties_Scene->Last_Selected_Object]->Object_Name);
-
-		if (pMinBrush && App->CL_Editor_Scene->flag_Environment_Available == true)
+		if (App->CL_File->flag_loading == false)
 		{
-			App->CL_Doc->ResetAllSelections();
-			App->CL_Doc->DoBrushSelection(pMinBrush, brushSelToggle);
-			App->CL_Brush_X->Select_Brush_Editor(pMinBrush);
+			Brush* pMinBrush = App->CL_Brush_X->Get_Brush_By_Name(App->CL_Scene->B_Object[App->CL_Properties_Scene->Last_Selected_Object]->Object_Name);
 
-			App->CL_Properties_Tabs->flag_Tabs_Dlg_Active = 1;
-			App->CL_Properties_Tabs->Select_Brushes_Tab();
-			App->CL_Properties_Tabs->flag_Tabs_Dlg_Active = 0;
-		}
-		else
-		{
-			App->CL_Doc->ResetAllSelections();
-			App->CL_Panels->Deselect_All_Brushes_Update_Dlgs();
-			App->CL_Top_Tabs->Update_Faces_Combo();
-			App->CL_Ogre->OGL_Listener->Show_Visuals(false);
+			if (pMinBrush && App->CL_Editor_Scene->flag_Environment_Available == true)
+			{
+				App->CL_Doc->ResetAllSelections();
+				App->CL_Doc->DoBrushSelection(pMinBrush, brushSelToggle);
+				App->CL_Brush_X->Select_Brush_Editor(pMinBrush);
+
+				App->CL_Properties_Tabs->flag_Tabs_Dlg_Active = 1;
+				App->CL_Properties_Tabs->Select_Brushes_Tab();
+				App->CL_Properties_Tabs->flag_Tabs_Dlg_Active = 0;
+			}
 		}
 		//-----------------------------
 

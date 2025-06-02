@@ -33,6 +33,7 @@ CL64_File::CL64_File(void)
 	FileName_3dt[0] = 0;
 
 	Read_Buffer[0] = 0;
+	flag_loading = 0;
 
 	fp = NULL;
 }
@@ -334,9 +335,9 @@ signed int CL64_File::Face_Write(const Face* f, FILE* wf)
 // *************************************************************************
 // *	           Start_Load:- Terry and Hazel Flanigan 2025	           *
 // *************************************************************************
-void CL64_File::Start_Load(bool Use_Open_Dialog)
+void CL64_File::Start_Load(bool useOpenDialog)
 {
-	if (Use_Open_Dialog == 1)
+	if (useOpenDialog)
 	{
 		LPCWSTR mType = L"Mesh Text File";
 		LPCWSTR mExtensions = L"*.mtf";
@@ -363,11 +364,13 @@ void CL64_File::Start_Load(bool Use_Open_Dialog)
 
 	}
 	
-	
+	flag_loading = true;
+
+	// Clear the current level
 	App->CL_Scene->Clear_Level(true);
-	
-	bool Test = Open_3dt_File();
-	if (Test == true)
+
+	// Attempt to open the 3DT file
+	if (Open_3dt_File())
 	{
 		App->CL_Doc->Do_General_Select_Dlg(false);
 
@@ -384,6 +387,8 @@ void CL64_File::Start_Load(bool Use_Open_Dialog)
 	{
 		App->Say("Can Not Find File", FileName_3dt);
 	}
+
+	flag_loading = false;
 }
 
 // *************************************************************************
@@ -493,6 +498,7 @@ void CL64_File::Check_Missing_Brushes()
 		{
 			// Create Brush and mark level as modified
 			App->CL_Entities->Create_Entity_Brush(count);
+			App->CL_Brush_X->Set_Brush_From_Entity_ByName(objectName, true);
 			App->CL_Level->flag_Level_is_Modified = true;
 		}
 
@@ -501,7 +507,7 @@ void CL64_File::Check_Missing_Brushes()
 }
 
 // *************************************************************************
-// *								Load_File 							   *
+// *			Load_File:- Terry and Hazel Flanigan 2025 				   *
 // *************************************************************************
 bool CL64_File::Load_File(const char* FileName)
 {
@@ -517,6 +523,7 @@ bool CL64_File::Load_File(const char* FileName)
 
 	memset(Read_Buffer, 0, MAX_PATH);
 
+	// Read File Line by Line 
 	while (fgets(Read_Buffer, sizeof(Read_Buffer), fp))
 	{
 		App->CL_ParseFile->Tag_Float = 0;
@@ -527,6 +534,7 @@ bool CL64_File::Load_File(const char* FileName)
 			break;
 		}
 		
+		// Create Clean Level
 		m_pLevel = App->CL_Level->Level_Create();
 
 		fgets(Read_Buffer, sizeof(Read_Buffer), fp);
@@ -535,6 +543,7 @@ bool CL64_File::Load_File(const char* FileName)
 			break;
 		}
 
+		// Clean up existing brushes if they exist
 		if (App->CL_Doc->Current_Level->Brushes != NULL)
 		{
 			App->CL_Brush->BrushList_Destroy(&App->CL_Doc->Current_Level->Brushes);
@@ -547,6 +556,7 @@ bool CL64_File::Load_File(const char* FileName)
 			break;
 		}
 		
+		// Create brushes from file
 		m_pLevel->Brushes = App->CL_ParseFile->BrushList_CreateFromFile(false);
 		if (m_pLevel->Brushes == NULL)
 		{
@@ -562,6 +572,7 @@ bool CL64_File::Load_File(const char* FileName)
 
 	fclose(fp);
 	
+	// Make Current Level
 	App->CL_Doc->Current_Level = m_pLevel;
 
 	return true;

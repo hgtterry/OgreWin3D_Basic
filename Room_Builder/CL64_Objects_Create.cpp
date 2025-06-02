@@ -65,7 +65,7 @@ void CL64_Objects_Create::Add_Objects_From_MeshViewer()
 
 	App->CL_Objects_Create->Dispatch_MeshViewer();
 
-	App->CL_FileView->SelectItem(App->CL_Scene->B_Object[index]->FileViewItem);
+	//App->CL_FileView->SelectItem(App->CL_Scene->B_Object[index]->FileViewItem);
 
 
 	App->CL_Scene->UniqueID_Object_Counter++; // Unique ID
@@ -368,7 +368,7 @@ bool CL64_Objects_Create::Add_Objects_From_File() // From File
 				{
 					App->CL_FileView->Set_FolderActive(App->CL_FileView->FV_Objects_Folder);
 					//ShowWindow(App->CL_Properties->Properties_Dlg_hWnd, 1);
-					App->CL_FileView->SelectItem(App->CL_Scene->B_Object[0]->FileViewItem);
+					//App->CL_FileView->SelectItem(App->CL_Scene->B_Object[0]->FileViewItem);
 				}
 			}
 		}
