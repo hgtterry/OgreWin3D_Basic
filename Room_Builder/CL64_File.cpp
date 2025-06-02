@@ -394,6 +394,7 @@ bool CL64_File::Open_3dt_File()
 	App->CL_Doc->ResetAllSelections();
 	App->CL_Doc->Do_General_Select_Dlg(false);
 
+	// Load Brushes MTF File
 	if (!Load_File(PathFileName_3dt))
 	{
 		return false;
@@ -421,7 +422,7 @@ bool CL64_File::Open_3dt_File()
 	}
 	// -------------------------------------------------------
 
-	
+	// Load Scene ini File
 	App->CL_Project->Load_Project();
 	
 	char pathAndFile[MAX_PATH];
@@ -464,7 +465,39 @@ bool CL64_File::Open_3dt_File()
 	App->CL_Doc->Set_Faces_To_Brush_Name_All(); // TODO: Fix up Brush Names and set Indexes
 	App->CL_Doc->UpdateAllViews(Enums::UpdateViews_All);
 
+	Check_Missing_Brushes();
+
 	return true;
+}
+
+// *************************************************************************
+// *		Check_Missing_Brushes:- Terry and Hazel Flanigan 2025 		   *
+// *************************************************************************
+void CL64_File::Check_Missing_Brushes()
+{
+	// Initialize the count of objects and a buffer for object names
+	int count = 0;
+	char objectName[MAX_PATH]{ 0 };
+
+	// Iterate through all objects in the scene
+	while (count < App->CL_Scene->Object_Count)
+	{
+		// Copy the object name from the scene to the buffer
+		strcpy(objectName, App->CL_Scene->B_Object[count]->Object_Name);
+
+		// Get the brush index by the object name
+		int index = App->CL_Brush_X->Get_Brush_Index_By_Name(objectName);
+
+		// If the brush index is not found, create a new entity brush
+		if (index == -1)
+		{
+			// Create Brush and mark level as modified
+			App->CL_Entities->Create_Entity_Brush(count);
+			App->CL_Level->flag_Level_is_Modified = true;
+		}
+
+		count++;
+	}
 }
 
 // *************************************************************************
