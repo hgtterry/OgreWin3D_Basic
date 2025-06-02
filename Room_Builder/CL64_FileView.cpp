@@ -689,11 +689,16 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 		App->CL_Gizmos->MarkerBox_Adjust(Index);
 		
 		//-----------------------------
-		/*Brush* pMinBrush = App->CL_Brush_X->Get_Brush_By_Name(App->CL_Scene->B_Object[App->CL_Properties_Scene->Last_Selected_Object]->Object_Name);
+		//Brush* pMinBrush = App->CL_Brush_X->Get_Brush_By_Name(App->CL_Scene->B_Object[App->CL_Properties_Scene->Last_Selected_Object]->Object_Name);
 
-		if (pMinBrush)
+		/*if (pMinBrush)
 		{
-			App->CL_Doc->ResetAllSelections();
+			int NumSelBrushes = App->CL_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes);
+			if (NumSelBrushes > 0)
+			{
+				App->CL_Doc->ResetAllSelections();
+			}
+
 			App->CL_Doc->DoBrushSelection(pMinBrush, brushSelToggle);
 			App->CL_Brush_X->Select_Brush_Editor(pMinBrush);
 

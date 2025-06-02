@@ -549,11 +549,11 @@ void CL64_Doc::SelectOrtho(POINT point, ViewVars* v)
                 App->CL_Ogre->OGL_Listener->Show_Visuals(true);
 
                 // Select Object in Scene Editor
-                if (pMinBrush->GroupId > Enums::Brushs_ID_Players)
+               /* if (pMinBrush->GroupId > Enums::Brushs_ID_Players)
                 {
                     int index = App->CL_Entities->GetIndex_By_Name(pMinBrush->Name);
                     App->CL_FileView->SelectItem(App->CL_Scene->B_Object[index]->FileViewItem);
-                }
+                }*/
 			}
         } 
     }
@@ -615,7 +615,7 @@ void CL64_Doc::DoBrushSelection(Brush* pBrush, BrushSel	nSelType) //	brushSelTog
 
     BList = App->CL_Level->Level_Get_Main_Brushes();
 
-    if (App->CL_Brush->Brush_GetParent(BList, pBrush, &pBParent))
+   if (App->CL_Brush->Brush_GetParent(BList, pBrush, &pBParent))
     {
         pBrush = pBParent;
     }
@@ -623,14 +623,16 @@ void CL64_Doc::DoBrushSelection(Brush* pBrush, BrushSel	nSelType) //	brushSelTog
     ModelLocked = false;
     GroupLocked = false;
 
-    if (nSelType == brushSelToggle && BrushIsSelected(pBrush))
+    if (pBrush)
     {
-       
-    }
-    else
-    {
-       //Debug
-       App->CL_SelBrushList->SelBrushList_Add(pSelBrushes, pBrush);    
+        if (nSelType == brushSelToggle && BrushIsSelected(pBrush))
+        {
+
+        }
+        else
+        {
+           App->CL_SelBrushList->SelBrushList_Add(pSelBrushes, pBrush);
+        }
     }
 }
 
