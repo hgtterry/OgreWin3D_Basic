@@ -313,6 +313,8 @@ int CL64_Brush_X::Get_Brush_Index_By_Name(const char* Name)
 // *************************************************************************
 void CL64_Brush_X::Select_Brush_Editor(Brush* b)
 {
+	// Entity Selected in OnSelchangeBrushlist
+	// 
 	// Check if there are any brushes available
 	int Bnum = App->CL_Brush->Get_Brush_Count();
 	if (Bnum > 0)
@@ -347,7 +349,6 @@ void CL64_Brush_X::Select_Brush_Editor(Brush* b)
 		App->CL_Properties_Tabs->flag_Tabs_Dlg_Active = 1;
 		App->CL_Properties_Tabs->Select_Brushes_Tab();
 
-		// Entity Selected in OnSelchangeBrushlist
 	}
 }
 
