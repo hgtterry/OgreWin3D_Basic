@@ -380,7 +380,7 @@ int CL64_Picking::Get_Brush_Index()
 
     // Select Brush but dont show Brush Panel
     App->CL_Doc->DoBrushSelection(Selected_Brush, brushSelToggle);
-    App->CL_Properties_Brushes->Get_Index(Selected_Brush);
+    App->CL_Properties_Brushes->Select_in_BrushList_Dlg(Selected_Brush);
     App->CL_Properties_Brushes->Set_Dlg_Brush_Options_Buttons(true);
     App->CL_Properties_Brushes->Update_SelectedBrushesCount_Dlg();
 

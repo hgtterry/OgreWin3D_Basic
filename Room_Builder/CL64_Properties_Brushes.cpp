@@ -482,32 +482,37 @@ void CL64_Properties_Brushes::Fill_ListBox()
 }
 
 // *************************************************************************
-// *	  		Get_Index:- Terry and Hazel Flanigan 2025				   *
+// *	  	Select_in_BrushList_Dlg:- Terry and Hazel Flanigan 2025		   *
 // *************************************************************************
-void CL64_Properties_Brushes::Get_Index(const Brush* b)
+void CL64_Properties_Brushes::Select_in_BrushList_Dlg(const Brush* b)
 {
+	// Get all Brushes into a BrushList
 	BrushList* pList = App->CL_Level->Level_Get_Main_Brushes();
 
-	int Selected = 0;
+	int selected = 0;
 	int Count = 0;
 
 	b = pList->First;
 
+	// Search all Brushes
 	while (b != NULL)
 	{
-		Selected = App->CL_Doc->BrushIsSelected(b);
+		// Check if Brush is selected
+		selected = App->CL_Doc->BrushIsSelected(b);
 
-		if (Selected == 1)
+		// If selected select in Brush list Dialog
+		if (selected == 1)
 		{
 			SendDlgItemMessage(BrushesDlg_Hwnd, IDC_GD_BRUSHLIST, LB_SETCURSEL, (WPARAM)Count, (LPARAM)0);
 			Selected_Index = Count;
-			List_Selection_Changed(0);
+			List_Selection_Changed(false);
 		}
 
 		Count++;
 		b = b->Next;
 	}
 
+	// Update Selected Count and Display
 	Update_SelectedBrushesCount_Dlg();
 }
 

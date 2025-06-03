@@ -598,7 +598,8 @@ void CL64_File::Set_Editor()
 	App->CL_Doc->ResetAllSelections();
 
 	// Disable brush options buttons and select the templates tab
-	App->CL_Top_Tabs->Enable_Brush_Options_Buttons(false, false);
+	App->CL_Top_Tabs->Enable_TopBar_Brush_Buttons(false, false);
+	App->CL_Top_Tabs->Enable_TopBar_Face_Buttons(false);
 	App->CL_Properties_Tabs->Select_Templates_Tab();
 
 	// Reset the camera and views

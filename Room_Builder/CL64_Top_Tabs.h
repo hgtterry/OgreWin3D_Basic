@@ -33,7 +33,9 @@ public:
 
 	void Start_Headers();
 
-	void Enable_Brush_Options_Buttons(bool Enable, bool Active);
+	void Enable_TopBar_Brush_Buttons(bool Enable, bool Active);
+	void Enable_TopBar_Face_Buttons(bool Enable);
+
 	void Enable_Select_Button(bool Enable, bool Active);
 	void Enable_Move_Button(bool Enable, bool Active);
 	void Deselect_Faces_Dlg_Buttons();

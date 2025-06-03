@@ -321,7 +321,8 @@ void CL64_Doc::Do_General_Select_Dlg(bool from_Insert)
         {
             Set_GeneralSelect();
 
-            App->CL_Top_Tabs->Enable_Brush_Options_Buttons(false, false);
+            App->CL_Top_Tabs->Enable_TopBar_Brush_Buttons(false, false);
+            App->CL_Top_Tabs->Enable_TopBar_Face_Buttons(false);
             App->CL_Top_Tabs->Enable_Select_Button(true, true);
 
             RedrawWindow(App->CL_Top_Tabs->Headers_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
@@ -334,7 +335,8 @@ void CL64_Doc::Do_General_Select_Dlg(bool from_Insert)
     {
         Set_GeneralSelect();
 
-        App->CL_Top_Tabs->Enable_Brush_Options_Buttons(true, false);
+        App->CL_Top_Tabs->Enable_TopBar_Brush_Buttons(true, false);
+        App->CL_Top_Tabs->Enable_TopBar_Face_Buttons(true);
         App->CL_Top_Tabs->Enable_Select_Button(true, true);
 
         RedrawWindow(App->CL_Top_Tabs->Headers_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
@@ -544,16 +546,10 @@ void CL64_Doc::SelectOrtho(POINT point, ViewVars* v)
             }
 			else
 			{
-				DoBrushSelection(pMinBrush, brushSelToggle);
 				App->CL_Brush_X->Select_Brush_Editor(pMinBrush);
                 App->CL_Ogre->OGL_Listener->Show_Visuals(true);
 
-                // Select Object in Scene Editor
-               /* if (pMinBrush->GroupId > Enums::Brushs_ID_Players)
-                {
-                    int index = App->CL_Entities->GetIndex_By_Name(pMinBrush->Name);
-                    App->CL_FileView->SelectItem(App->CL_Scene->B_Object[index]->FileViewItem);
-                }*/
+                // Entity Selected in OnSelchangeBrushlist
 			}
         } 
     }
@@ -637,12 +633,10 @@ void CL64_Doc::DoBrushSelection(Brush* pBrush, BrushSel	nSelType) //	brushSelTog
 }
 
 // *************************************************************************
-// *            FindClosestThing:- Terry and Hazel Flanigan 2025           *
+// *            BrushIsSelected:- Terry and Hazel Flanigan 2025            *
 // *************************************************************************
 signed int CL64_Doc::BrushIsSelected(Brush const* pBrush)
 {
-    assert(pBrush != NULL);
-
     return App->CL_SelBrushList->SelBrushList_Find(pSelBrushes, pBrush);
 }
 

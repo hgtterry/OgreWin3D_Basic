@@ -92,10 +92,11 @@ signed int CL64_SelBrushList::SelBrushList_Find(SelBrushList* pList, const Brush
 		if (pRet == pBrush)
 		{
 			// Brush already in list
-			return GE_TRUE;
+			return true;
 		}
 	}
-	return GE_FALSE;
+
+	return false;
 }
 
 // *************************************************************************

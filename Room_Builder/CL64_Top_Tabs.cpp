@@ -62,7 +62,8 @@ CL64_Top_Tabs::~CL64_Top_Tabs(void)
 // *************************************************************************
 void CL64_Top_Tabs::Reset_Class()
 {
-	Enable_Brush_Options_Buttons(false, false);
+	Enable_TopBar_Brush_Buttons(false, false);
+	Enable_TopBar_Face_Buttons(false);
 
 	App->CL_Top_Tabs->flag_Full_View_3D = 0;
 	App->CL_Top_Tabs->flag_View_Top_Left = 0;
@@ -702,9 +703,9 @@ void CL64_Top_Tabs::Init_Bmps_Globals(void)
 }
 
 // *************************************************************************
-// *	Enable_Brush_Options_Buttons:- Terry and Hazel Flanigan 2025   	   *
+// *	Enable_TopBar_Brush_Buttons:- Terry and Hazel Flanigan 2025   	   *
 // *************************************************************************
-void CL64_Top_Tabs::Enable_Brush_Options_Buttons(bool Enable, bool Active)
+void CL64_Top_Tabs::Enable_TopBar_Brush_Buttons(bool Enable, bool Active)
 {
 	EnableWindow(GetDlgItem(Headers_hWnd, IDC_BT_BRUSH_MOVE), Enable);
 	flag_Brush_Move = Active;
@@ -714,18 +715,18 @@ void CL64_Top_Tabs::Enable_Brush_Options_Buttons(bool Enable, bool Active)
 
 	EnableWindow(GetDlgItem(Headers_hWnd, IDC_BT_BRUSH_ROTATE), Enable);
 	flag_Brush_Scale = Active;
+}
 
+// *************************************************************************
+// *	Enable_TopBar_Face_Buttons:- Terry and Hazel Flanigan 2025   	   *
+// *************************************************************************
+void CL64_Top_Tabs::Enable_TopBar_Face_Buttons(bool Enable)
+{
 	EnableWindow(GetDlgItem(Headers_hWnd, IDC_BT_ALLFACES), Enable);
-	//flag_Brush_Scale = Active;
-
 	EnableWindow(GetDlgItem(Headers_hWnd, IDC_BT_NEXTFACE), Enable);
-	//flag_Brush_Scale = Active;
-
 	EnableWindow(GetDlgItem(Headers_hWnd, IDC_BT_PREVFACE), Enable);
-	//flag_Brush_Scale = Active;
-
 	EnableWindow(GetDlgItem(Headers_hWnd, IDC_CB_FACELIST), Enable);
-	//flag_Brush_Scale = Active;
+	
 }
 
 // *************************************************************************

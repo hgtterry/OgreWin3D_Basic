@@ -313,23 +313,41 @@ int CL64_Brush_X::Get_Brush_Index_By_Name(const char* Name)
 // *************************************************************************
 void CL64_Brush_X::Select_Brush_Editor(Brush* b)
 {
+	// Check if there are any brushes available
 	int Bnum = App->CL_Brush->Get_Brush_Count();
 	if (Bnum > 0)
 	{
+		// Perform brush selection and update views
+		App->CL_Doc->DoBrushSelection(b, brushSelToggle);
 		App->CL_Doc->UpdateSelected();
 		App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
 
+		// Update the brush list dialog with the current brush
+		App->CL_Properties_Brushes->Select_in_BrushList_Dlg(App->CL_Doc->CurBrush);
+		App->CL_Top_Tabs->Enable_TopBar_Brush_Buttons(true, false);
+
+		// Enable or disable face buttons based on brush group ID
+		if (b->GroupId == Enums::Brushs_ID_Area)
+		{
+			App->CL_Top_Tabs->Enable_TopBar_Face_Buttons(true);
+		}
+		else
+		{
+			App->CL_Top_Tabs->Enable_TopBar_Face_Buttons(false);
+			App->CL_Top_Tabs->Deselect_Faces_Dlg_Buttons();
+			App->CL_Properties_Textures->Enable_FaceProps_Button(false);
+		}
 		
-		App->CL_Properties_Brushes->Get_Index(App->CL_Doc->CurBrush);
-
-		App->CL_Top_Tabs->Enable_Brush_Options_Buttons(true, false);
+		// Update brush options and selected brushes count
 		App->CL_Properties_Brushes->Set_Dlg_Brush_Options_Buttons(true);
-
 		App->CL_Properties_Brushes->Update_SelectedBrushesCount_Dlg();
-
 		App->CL_Top_Tabs->Update_Faces_Combo();
 
+		// Set the active tab to brushes
+		App->CL_Properties_Tabs->flag_Tabs_Dlg_Active = 1;
 		App->CL_Properties_Tabs->Select_Brushes_Tab();
+
+		// Entity Selected in OnSelchangeBrushlist
 	}
 }
 
