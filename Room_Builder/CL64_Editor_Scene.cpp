@@ -144,7 +144,7 @@ LRESULT CALLBACK CL64_Editor_Scene::Proc_Headers_Scene(HWND hDlg, UINT message, 
 
 		if (LOWORD(wParam) == IDC_BT_HD_PREVIEW_ED)
 		{
-			App->CL_Editor_Preview->Preview_Mode();
+			App->CL_Editor_Preview->Start_Preview_Mode();
 			return TRUE;
 		}
 
@@ -188,9 +188,9 @@ void CL64_Editor_Scene::Show_Headers(bool Enable)
 }
 
 // *************************************************************************
-// *			Set_Editor_Scene:- Terry and Hazel Flanigan 2025	 	   *
+// *			Start_Editor_Scene:- Terry and Hazel Flanigan 2025	 	   *
 // *************************************************************************
-void CL64_Editor_Scene::Set_Editor_Scene()
+void CL64_Editor_Scene::Start_Editor_Scene()
 {
 	flag_Scene_Editor_Active = true;
 
@@ -236,6 +236,7 @@ void CL64_Editor_Scene::Set_Editor_Scene()
 	topTabs->Show_TopTabs(false);
 	App->CL_Properties_Tabs->Show_Tabs_Control_Dlg(false);
 	App->CL_Properties_Tabs->flag_Tabs_Dlg_Active = false;
+	App->CL_Ogre->OGL_Listener->Show_Visuals(false);
 
 	// Show headers and file view
 	Show_Headers(true);

@@ -31,7 +31,7 @@ public:
 
 	void Start_Headers_Scene();
 
-	void Set_Editor_Scene(void);
+	void Start_Editor_Scene(void);
 	void Return_From_Preview(void);
 
 	void Back_To_Map_Editor(void);

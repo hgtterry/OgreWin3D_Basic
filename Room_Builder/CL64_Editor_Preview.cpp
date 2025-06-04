@@ -39,9 +39,9 @@ CL64_Editor_Preview::~CL64_Editor_Preview(void)
 }
 
 // *************************************************************************
-// *				Preview_Mode:- Terry and Hazel Flanigan 2025	  	   *
+// *			Start_Preview_Mode:- Terry and Hazel Flanigan 2025	  	   *
 // *************************************************************************
-void CL64_Editor_Preview::Preview_Mode(void)
+void CL64_Editor_Preview::Start_Preview_Mode(void)
 {
     App->CL_ImGui->Close_Dialogs();
 

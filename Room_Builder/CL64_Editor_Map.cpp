@@ -1693,11 +1693,11 @@ bool CL64_Editor_Map::Context_Command_Ogre(WPARAM wParam)
 		return TRUE;
 
 	case IDM_3D_PREVIEW:
-		App->CL_Editor_Preview->Preview_Mode();
+		App->CL_Editor_Preview->Start_Preview_Mode();
 		return TRUE;
 
 	case IDM_3D_SCENE_EDITOR:
-		App->CL_Editor_Scene->Set_Editor_Scene();
+		App->CL_Editor_Scene->Start_Editor_Scene();
 		return TRUE;
 
 	case IDM_3D_ENVIRONMENT:
@@ -1751,7 +1751,7 @@ bool CL64_Editor_Map::Context_Command(WPARAM wParam)
 		return TRUE;
 
 	case IDM_PREVIEW:
-		App->CL_Editor_Preview->Preview_Mode();
+		App->CL_Editor_Preview->Start_Preview_Mode();
 		return TRUE;
 
 	case IDM_MOVE:
@@ -1767,7 +1767,7 @@ bool CL64_Editor_Map::Context_Command(WPARAM wParam)
 		return TRUE;
 
 	case IDM_SCENE_EDITOR:
-		App->CL_Editor_Scene->Set_Editor_Scene();
+		App->CL_Editor_Scene->Start_Editor_Scene();
 		return TRUE;
 
 	default:
