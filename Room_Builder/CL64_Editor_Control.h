@@ -23,11 +23,11 @@ THE SOFTWARE.
 */
 
 #pragma once
-class CL64_Editor_Preview
+class CL64_Editor_Control
 {
 public:
-	CL64_Editor_Preview(void);
-	~CL64_Editor_Preview(void);
+	CL64_Editor_Control(void);
+	~CL64_Editor_Control(void);
 
 	void Start_Preview_Mode(void);
 	void Start_Editor_MapBrush_Mode(void);

@@ -138,13 +138,13 @@ LRESULT CALLBACK CL64_Editor_Scene::Proc_Headers_Scene(HWND hDlg, UINT message, 
 		if (LOWORD(wParam) == IDC_BT_MAP_EDITOR)
 		{
 			App->CL_Camera->SetCameraMode_Free();
-			App->CL_Editor_Preview->Back_To_Map_Editor();
+			App->CL_Editor_Control->Back_To_Map_Editor();
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == IDC_BT_HD_PREVIEW_ED)
 		{
-			App->CL_Editor_Preview->Start_Preview_Mode();
+			App->CL_Editor_Control->Start_Preview_Mode();
 			return TRUE;
 		}
 
@@ -334,7 +334,7 @@ bool CL64_Editor_Scene::Context_Command_Ogre(WPARAM wParam)
 {
 	if (LOWORD(wParam) == IDM_3D_MAP_EDITOR)
 	{
-		App->CL_Editor_Preview->Back_To_Map_Editor();
+		App->CL_Editor_Control->Back_To_Map_Editor();
 		return TRUE;
 	}
 }

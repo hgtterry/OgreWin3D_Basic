@@ -88,7 +88,7 @@ CL64_App::CL64_App(void)
 	CL_Properties_Scene =		nullptr;
 	CL_Dimensions =				nullptr;
 	CL_Props_Dialogs =			nullptr;
-	CL_Editor_Preview =			nullptr;
+	CL_Editor_Control =			nullptr;
 
 	// Templates Dialogs
 	CL_CreateBoxDialog =		nullptr;
@@ -232,7 +232,7 @@ void CL64_App::InitApp(void)
 	CL_Properties_Scene =		new CL64_Properties_Scene();
 	CL_Props_Dialogs =			new CL64_Props_Dialogs();
 
-	CL_Editor_Preview =			new CL64_Editor_Preview();
+	CL_Editor_Control =			new CL64_Editor_Control();
 	
 	// Templates Dialogs
 	CL_CreateBoxDialog =		new A_CreateBoxDialog();

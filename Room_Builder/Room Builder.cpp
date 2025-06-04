@@ -760,7 +760,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         {
             App->CL_Ogre->Ogre3D_Listener->flag_Run_Physics = 0;
             App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_Free;
-            App->CL_Editor_Preview->Back_To_Map_Editor();
+            App->CL_Editor_Control->Back_To_Map_Editor();
             return 1;
         }
 

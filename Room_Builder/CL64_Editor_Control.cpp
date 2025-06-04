@@ -25,23 +25,23 @@ THE SOFTWARE.
 #include "pch.h"
 #include "resource.h"
 #include "CL64_App.h"
-#include "CL64_Editor_Preview.h"
+#include "CL64_Editor_Control.h"
 
-CL64_Editor_Preview::CL64_Editor_Preview(void)
+CL64_Editor_Control::CL64_Editor_Control(void)
 {
 	Parent_hWnd = nullptr;
 
 	flag_PreviewMode_Running = 0;
 }
 
-CL64_Editor_Preview::~CL64_Editor_Preview(void)
+CL64_Editor_Control::~CL64_Editor_Control(void)
 {
 }
 
 // *************************************************************************
 // *			Start_Preview_Mode:- Terry and Hazel Flanigan 2025	  	   *
 // *************************************************************************
-void CL64_Editor_Preview::Start_Preview_Mode(void)
+void CL64_Editor_Control::Start_Preview_Mode(void)
 {
     App->CL_ImGui->Close_Dialogs();
 
@@ -103,7 +103,7 @@ void CL64_Editor_Preview::Start_Preview_Mode(void)
 // *************************************************************************
 // *	Start_Editor_MapBrush_Mode:- Terry and Hazel Flanigan 2024	 	   *
 // *************************************************************************
-void CL64_Editor_Preview::Start_Editor_MapBrush_Mode(void)
+void CL64_Editor_Control::Start_Editor_MapBrush_Mode(void)
 {
 	App->CL_SoundMgr->SoundEngine->stopAllSounds();
 
@@ -146,7 +146,7 @@ void CL64_Editor_Preview::Start_Editor_MapBrush_Mode(void)
 // *************************************************************************
 // *			Back_To_Map_Editor:- Terry and Hazel Flanigan 2025	 	   *
 // *************************************************************************
-void CL64_Editor_Preview::Back_To_Map_Editor(void)
+void CL64_Editor_Control::Back_To_Map_Editor(void)
 {
 	App->CL_SoundMgr->SoundEngine->stopAllSounds();
 

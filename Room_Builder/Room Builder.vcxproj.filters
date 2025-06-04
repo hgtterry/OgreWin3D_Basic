@@ -237,9 +237,6 @@
     <ClInclude Include="CL64_SoundMgr.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CL64_Editor_Preview.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="CL64_ImGui_Dialogs.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -262,6 +259,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CL64_Scene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CL64_Editor_Control.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -482,9 +482,6 @@
     <ClCompile Include="CL64_SoundMgr.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CL64_Editor_Preview.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="CL64_ImGui_Dialogs.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -507,6 +504,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CL64_Scene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CL64_Editor_Control.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

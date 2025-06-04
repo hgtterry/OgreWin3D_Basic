@@ -1324,7 +1324,7 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Ogre_BR(HWND hDlg, UINT message, WPARAM w
 
 	case WM_MOUSEWHEEL:
 	{
-		if (App->CL_Editor_Preview->flag_PreviewMode_Running == 1 &&
+		if (App->CL_Editor_Control->flag_PreviewMode_Running == 1 &&
 			App->CL_Ogre->Ogre3D_Listener->flag_LeftMouseDown == 0)
 		{
 			int zDelta = static_cast<short>(HIWORD(wParam)); // wheel rotation
@@ -1414,7 +1414,7 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Ogre_BR(HWND hDlg, UINT message, WPARAM w
 				// If Mouse has not moved select Brush and Face
 				if (cameraComparison == 1)
 				{
-					if (App->CL_Editor_Preview->flag_PreviewMode_Running == 0 && App->CL_Editor_Scene->flag_Scene_Editor_Active == 0)
+					if (App->CL_Editor_Control->flag_PreviewMode_Running == 0 && App->CL_Editor_Scene->flag_Scene_Editor_Active == 0)
 					{
 						App->CL_Picking->Mouse_Pick_Entity(false);
 					}
@@ -1469,7 +1469,7 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Ogre_BR(HWND hDlg, UINT message, WPARAM w
 				App->CL_Ogre->Ogre3D_Listener->flag_RightMouseDown = 0;
 				SetCursor(App->CUR);
 
-				if (GetAsyncKeyState(VK_CONTROL) < 0 && App->CL_Editor_Preview->flag_PreviewMode_Running == 0)
+				if (GetAsyncKeyState(VK_CONTROL) < 0 && App->CL_Editor_Control->flag_PreviewMode_Running == 0)
 				{
 					App->CL_Picking->Mouse_Pick_Entity(true);
 					int index = App->CL_TXL_Editor->GetIndex_From_FileName(App->CL_Picking->m_Texture_FileName);
@@ -1486,7 +1486,7 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Ogre_BR(HWND hDlg, UINT message, WPARAM w
 				else
 				{
 					bool isSceneEditorActive = App->CL_Editor_Scene->flag_Scene_Editor_Active == 1;
-					bool isPreviewModeRunning = App->CL_Editor_Preview->flag_PreviewMode_Running == 0;
+					bool isPreviewModeRunning = App->CL_Editor_Control->flag_PreviewMode_Running == 0;
 
 					Ogre::Vector3 cameraPosition = App->CL_Ogre->camNode->getPosition();
 					int cameraComparison = App->CL_Maths->Ogre_Vector3_Compare(&cameraPosition, &App->CL_Camera->Saved_Cam_Pos, 0);
@@ -1583,7 +1583,7 @@ void CL64_Editor_Map::Context_Menu(HWND hDlg)
 	AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
 
 	int BC = App->CL_Brush->Get_Brush_Count();
-	if (BC > 0 && App->CL_Editor_Preview->flag_PreviewMode_Running == 0)
+	if (BC > 0 && App->CL_Editor_Control->flag_PreviewMode_Running == 0)
 	{
 		AppendMenuW(hMenu, MF_STRING, IDM_PREVIEW, L"&Preview");
 		AppendMenuW(hMenu, MF_STRING, IDM_SCENE_EDITOR, L"&Scene Editor");
@@ -1661,7 +1661,7 @@ void CL64_Editor_Map::Context_Menu_Ogre(HWND hDlg)
 
 	int brushCount = App->CL_Brush->Get_Brush_Count();
 	// Append Preview option
-	AppendMenuW(hMenu, MF_STRING | (brushCount > 0 && App->CL_Editor_Preview->flag_PreviewMode_Running == 0 ? 0 : MF_GRAYED), IDM_3D_PREVIEW, L"&Preview");
+	AppendMenuW(hMenu, MF_STRING | (brushCount > 0 && App->CL_Editor_Control->flag_PreviewMode_Running == 0 ? 0 : MF_GRAYED), IDM_3D_PREVIEW, L"&Preview");
 
 	// Append Scene Editor option
 	AppendMenuW(hMenu, MF_STRING | (brushCount > 0 ? 0 : MF_GRAYED), IDM_3D_SCENE_EDITOR, L"&Scene Editor");
@@ -1693,7 +1693,7 @@ bool CL64_Editor_Map::Context_Command_Ogre(WPARAM wParam)
 		return TRUE;
 
 	case IDM_3D_PREVIEW:
-		App->CL_Editor_Preview->Start_Preview_Mode();
+		App->CL_Editor_Control->Start_Preview_Mode();
 		return TRUE;
 
 	case IDM_3D_SCENE_EDITOR:
@@ -1751,7 +1751,7 @@ bool CL64_Editor_Map::Context_Command(WPARAM wParam)
 		return TRUE;
 
 	case IDM_PREVIEW:
-		App->CL_Editor_Preview->Start_Preview_Mode();
+		App->CL_Editor_Control->Start_Preview_Mode();
 		return TRUE;
 
 	case IDM_MOVE:
@@ -2123,7 +2123,7 @@ void CL64_Editor_Map::Draw_Screen(HWND hwnd)
 	//Do_Timer
 	//flag_IsDrawing = 1;
 
-	if (App->CL_Editor_Preview->flag_PreviewMode_Running == 1)
+	if (App->CL_Editor_Control->flag_PreviewMode_Running == 1)
 	{
 		return;
 	}
