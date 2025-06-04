@@ -30,7 +30,8 @@ public:
 	~CL64_Editor_Preview(void);
 
 	void Start_Preview_Mode(void);
-	void Map_Editor_Mode(void);
+	void Start_Editor_MapBrush_Mode(void);
+	void Back_To_Map_Editor(void);
 
 	bool flag_PreviewMode_Running;	// Flag to indicate if preview mode is currently active
 

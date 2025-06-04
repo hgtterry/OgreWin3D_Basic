@@ -155,7 +155,7 @@ LRESULT CALLBACK CL64_Properties_Templates::Proc_Templates(HWND hDlg, UINT messa
 					{
 
 						App->CL_Com_Environments->Create_Test_Environment();
-						App->CL_Com_Objects->Show_Entities(false);
+						//App->CL_Com_Objects->Show_Entities(false);
 						App->CL_Gizmos->Show_MarkerBox(false);
 					}
 					

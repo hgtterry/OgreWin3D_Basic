@@ -34,8 +34,6 @@ public:
 	void Start_Editor_Scene(void);
 	void Return_From_Preview(void);
 
-	void Back_To_Map_Editor(void);
-
 	void Context_Menu_Ogre(HWND hDlg);
 	bool Context_Command_Ogre(WPARAM wParam);
 

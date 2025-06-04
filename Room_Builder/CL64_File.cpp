@@ -617,7 +617,7 @@ void CL64_File::Set_Editor()
 	}
 
 	// Hide entities in the object component
-	App->CL_Com_Objects->Show_Entities(false);
+	//App->CL_Com_Objects->Show_Entities(false);
 
 	// Get the first environment index and set it if valid
 	int index = App->CL_Com_Environments->Get_First_Environ();
@@ -631,7 +631,7 @@ void CL64_File::Set_Editor()
 	App->CL_Camera->Camera_Textured();
 
 	// Switch back to map editor mode and render the frame
-	App->CL_Editor_Scene->Back_To_Map_Editor();
+	App->CL_Editor_Preview->Back_To_Map_Editor();
 	App->CL_Properties_Tabs->Select_Templates_Tab();
 	App->CL_Ogre->RenderFrame(7);
 }

@@ -38,7 +38,7 @@ void CL64_Keyboard::Keyboard_Mode_First(float deltaTime)
 
 	if (GetAsyncKeyState(80) < 0) // p Key
 	{
-		App->CL_Editor_Preview->Map_Editor_Mode();
+		App->CL_Editor_Preview->Start_Editor_MapBrush_Mode();
 	}
 
 	//if (flag_Block_Keyboard == 0)
@@ -219,7 +219,7 @@ void CL64_Keyboard::Keyboard_Mode_Free(float deltaTime)
 	{
 		if (GetAsyncKeyState(80) < 0 && App->CL_Editor_Preview->flag_PreviewMode_Running == 1) // p Key
 		{
-			App->CL_Editor_Preview->Map_Editor_Mode();
+			App->CL_Editor_Preview->Start_Editor_MapBrush_Mode();
 		}
 
 		// Forward

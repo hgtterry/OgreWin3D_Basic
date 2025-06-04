@@ -101,16 +101,16 @@ void CL64_Editor_Preview::Start_Preview_Mode(void)
 }
 
 // *************************************************************************
-// *				Editor_Mode:- Terry and Hazel Flanigan 2024	 	 	   *
+// *	Start_Editor_MapBrush_Mode:- Terry and Hazel Flanigan 2024	 	   *
 // *************************************************************************
-void CL64_Editor_Preview::Map_Editor_Mode(void)
+void CL64_Editor_Preview::Start_Editor_MapBrush_Mode(void)
 {
 	App->CL_SoundMgr->SoundEngine->stopAllSounds();
 
 	App->CL_Ogre->Ogre3D_Listener->flag_Run_Physics = 0;
 	App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_Free;
 
-	flag_PreviewMode_Running = 0;
+	flag_PreviewMode_Running = false;
 
 	if (App->CL_Physics->flag_TriMesh_Created == 1)
 	{
@@ -122,6 +122,7 @@ void CL64_Editor_Preview::Map_Editor_Mode(void)
 	App->CL_ImGui->flag_Show_Preview_Options = false;
 	App->CL_Grid->Enable_Grid_And_Hair(true);
 	App->CL_Gizmos->highlight(App->CL_Scene->B_Object[App->CL_Gizmos->Last_Selected_Object]->Object_Ent);
+    App->CL_Com_Objects->Show_Entities(true);
 
 	SetParent(App->CL_Editor_Map->Bottom_Right_Hwnd, Parent_hWnd);
 
@@ -129,6 +130,7 @@ void CL64_Editor_Preview::Map_Editor_Mode(void)
 
 	App->CL_Properties_Tabs->Enable_Tabs_Dlg(true);
 	App->CL_Properties_Tabs->flag_Tabs_Dlg_Active = 1;
+    
 	
 	if (App->CL_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes) > 0)
 	{
@@ -138,5 +140,53 @@ void CL64_Editor_Preview::Map_Editor_Mode(void)
 	if (App->CL_Editor_Map->flag_Environment_On == false)
 	{
 		App->CL_Com_Environments->Set_Environment_By_Index(false, -1);
+	}
+}
+
+// *************************************************************************
+// *			Back_To_Map_Editor:- Terry and Hazel Flanigan 2025	 	   *
+// *************************************************************************
+void CL64_Editor_Preview::Back_To_Map_Editor(void)
+{
+	App->CL_SoundMgr->SoundEngine->stopAllSounds();
+
+	// Turn off Editor Dialogs and Gizmos
+	App->CL_FileView->Show_FileView(false);
+	App->CL_Properties_Scene->Show_Properties_Scene(false);
+	App->CL_Gui_Environment->PropertyEditor_Page = false;
+	App->CL_Gui_Environment->flag_Show_PropertyEditor = false;
+	App->CL_Gizmos->Show_MarkerBox(false);
+
+	// Reset Flags
+	App->CL_Editor_Scene->flag_Scene_Editor_Active = false;
+	App->CL_Top_Tabs->flag_Full_View_3D = false;
+
+	// Show top tabs and configure editor map
+	App->CL_Editor_Scene->Show_Headers(false);
+	App->CL_Top_Tabs->Show_TopTabs(true);
+	App->CL_Editor_Map->Set_Splitter_WidthDepth(App->CL_Top_Tabs->Copy_Spliter_Width, App->CL_Top_Tabs->Copy_Spliter_Depth);
+	App->CL_Editor_Map->Resize_Windows(App->CL_Editor_Map->Main_Dlg_Hwnd, App->CL_Editor_Map->nleftWnd_width, App->CL_Editor_Map->nleftWnd_Depth);
+
+	// Show properties tabs
+	App->CL_Properties_Tabs->Show_Tabs_Control_Dlg(true);
+	App->CL_Properties_Tabs->flag_Tabs_Dlg_Active = 1;
+
+	// Set menu to map
+	SetMenu(App->MainHwnd, App->Menu_Map);
+
+	// Set Visuals
+	App->CL_Com_Objects->Show_Entities(true);
+	App->CL_Ogre->OGL_Listener->Show_Visuals(true);
+
+	// Set environment if not active
+	if (App->CL_Editor_Map->flag_Environment_On == false)
+	{
+		App->CL_Com_Environments->Set_Environment_By_Index(false, -1);
+	}
+
+	if (App->CL_Physics->flag_TriMesh_Created == 1)
+	{
+		App->CL_Physics->Clear_Trimesh();
+		App->CL_Ogre->Bullet_Debug_Listener->flag_Render_Debug_Flag = 0;
 	}
 }

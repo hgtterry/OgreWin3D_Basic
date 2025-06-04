@@ -138,7 +138,7 @@ LRESULT CALLBACK CL64_Editor_Scene::Proc_Headers_Scene(HWND hDlg, UINT message, 
 		if (LOWORD(wParam) == IDC_BT_MAP_EDITOR)
 		{
 			App->CL_Camera->SetCameraMode_Free();
-			App->CL_Editor_Scene->Back_To_Map_Editor();
+			App->CL_Editor_Preview->Back_To_Map_Editor();
 			return TRUE;
 		}
 
@@ -250,8 +250,8 @@ void CL64_Editor_Scene::Start_Editor_Scene()
 	SetMenu(App->MainHwnd, App->Menu_Scene);
 	App->CL_Com_Objects->Show_Entities(true);
 
-	//App->CL_Physics->Show_Debug_Objects(true);
-
+	App->CL_Gizmos->MarkerBox_Adjust(App->CL_Properties_Scene->Current_Selected_Object);
+	
 }
 
 // *************************************************************************
@@ -298,51 +298,6 @@ void CL64_Editor_Scene::Return_From_Preview(void)
 }
 
 // *************************************************************************
-// *			Back_To_Map_Editor:- Terry and Hazel Flanigan 2025	 	   *
-// *************************************************************************
-void CL64_Editor_Scene::Back_To_Map_Editor(void)
-{
-	App->CL_SoundMgr->SoundEngine->stopAllSounds();
-
-	// Turn off Editor Dialogs and Gizmos
-	App->CL_FileView->Show_FileView(false);
-	App->CL_Properties_Scene->Show_Properties_Scene(false);
-	App->CL_Gui_Environment->PropertyEditor_Page = false;
-	App->CL_Gui_Environment->flag_Show_PropertyEditor = false;
-	App->CL_Gizmos->Show_MarkerBox(false);
-
-	// Reset Flags
-	flag_Scene_Editor_Active = false;
-	App->CL_Top_Tabs->flag_Full_View_3D = false;
-
-	// Show top tabs and configure editor map
-	Show_Headers(false);
-	App->CL_Top_Tabs->Show_TopTabs(true);
-	App->CL_Editor_Map->Set_Splitter_WidthDepth(App->CL_Top_Tabs->Copy_Spliter_Width, App->CL_Top_Tabs->Copy_Spliter_Depth);
-	App->CL_Editor_Map->Resize_Windows(App->CL_Editor_Map->Main_Dlg_Hwnd, App->CL_Editor_Map->nleftWnd_width, App->CL_Editor_Map->nleftWnd_Depth);
-
-	// Show properties tabs
-	App->CL_Properties_Tabs->Show_Tabs_Control_Dlg(true);
-	App->CL_Properties_Tabs->flag_Tabs_Dlg_Active = 1;
-
-	// Set menu to map
-	SetMenu(App->MainHwnd, App->Menu_Map);
-	App->CL_Com_Objects->Show_Entities(false);
-
-	// Set environment if not active
-	if (App->CL_Editor_Map->flag_Environment_On == false)
-	{
-		App->CL_Com_Environments->Set_Environment_By_Index(false, -1);
-	}
-
-	if (App->CL_Physics->flag_TriMesh_Created == 1)
-	{
-		App->CL_Physics->Clear_Trimesh();
-		App->CL_Ogre->Bullet_Debug_Listener->flag_Render_Debug_Flag = 0;
-	}
-}
-
-// *************************************************************************
 // *			Context_Menu_Ogre:- Terry and Hazel Flanigan 2024	 	   *
 // *************************************************************************
 void CL64_Editor_Scene::Context_Menu_Ogre(HWND hDlg)
@@ -379,7 +334,7 @@ bool CL64_Editor_Scene::Context_Command_Ogre(WPARAM wParam)
 {
 	if (LOWORD(wParam) == IDM_3D_MAP_EDITOR)
 	{
-		App->CL_Editor_Scene->Back_To_Map_Editor();
+		App->CL_Editor_Preview->Back_To_Map_Editor();
 		return TRUE;
 	}
 }
