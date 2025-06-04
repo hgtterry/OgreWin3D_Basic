@@ -631,7 +631,7 @@ void CL64_File::Set_Editor()
 	App->CL_Camera->Camera_Textured();
 
 	// Switch back to map editor mode and render the frame
-	App->CL_Editor_Control->Back_To_Map_Editor();
+	App->CL_Editor_Control->Return_To_Map_Editor();
 	App->CL_Properties_Tabs->Select_Templates_Tab();
 	App->CL_Ogre->RenderFrame(7);
 }

@@ -726,7 +726,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         RECT rcl;
         GetClientRect(App->MainHwnd, &rcl);
 
-        if (App->CL_Editor_Scene->flag_Scene_Editor_Active == 0)
+        if (App->CL_Editor_Control->flag_Scene_Editor_Active == 0)
         {
             MoveWindow(App->CL_Editor_Map->Main_Dlg_Hwnd, 0, 50, rcl.right, rcl.bottom - 50, TRUE);
             App->CL_Editor_Map->Init_Views(Enums::Selected_View_None);
@@ -756,11 +756,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     
     case WM_CLOSE:
     {
-        if (App->CL_Editor_Scene->flag_Scene_Editor_Active == 1)
+        if (App->CL_Editor_Control->flag_Scene_Editor_Active == 1)
         {
             App->CL_Ogre->Ogre3D_Listener->flag_Run_Physics = 0;
             App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_Free;
-            App->CL_Editor_Control->Back_To_Map_Editor();
+            App->CL_Editor_Control->Return_To_Map_Editor();
             return 1;
         }
 

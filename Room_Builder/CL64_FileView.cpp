@@ -713,7 +713,7 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 		}
 		//-----------------------------
 		// 		
-		if (App->CL_Editor_Scene->flag_Scene_Editor_Active == true)
+		if (App->CL_Editor_Control->flag_Scene_Editor_Active == true)
 		{
 			ShowWindow(App->CL_Properties_Scene->Properties_Dlg_hWnd, true);
 		}
@@ -769,7 +769,7 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 		}
 		//-----------------------------
 
-		if (App->CL_Editor_Scene->flag_Scene_Editor_Active == true)
+		if (App->CL_Editor_Control->flag_Scene_Editor_Active == true)
 		{
 			//ShowWindow(App->CL_Properties_Scene->Properties_Dlg_hWnd, 1);
 		}

@@ -31,7 +31,6 @@ public:
 
 	void Start_Headers_Scene();
 
-	void Start_Editor_Scene(void);
 	void Return_From_Preview(void);
 
 	void Context_Menu_Ogre(HWND hDlg);
@@ -39,7 +38,6 @@ public:
 
 	void Show_Headers(bool Enable);
 
-	bool flag_Scene_Editor_Active;
 	bool flag_Environment_Available;
 	bool flag_Show_Physics_Objects;
 

@@ -31,7 +31,8 @@ CL64_Editor_Control::CL64_Editor_Control(void)
 {
 	Parent_hWnd = nullptr;
 
-	flag_PreviewMode_Running = 0;
+	flag_PreviewMode_Active = 0;
+	flag_Scene_Editor_Active = 0;
 }
 
 CL64_Editor_Control::~CL64_Editor_Control(void)
@@ -58,7 +59,7 @@ void CL64_Editor_Control::Start_Preview_Mode(void)
         App->CL_Physics->Create_New_Trimesh(App->CL_Mesh_Mgr->World_Ent, App->CL_Mesh_Mgr->World_Node);
         App->CL_Ogre->Bullet_Debug_Listener->flag_Render_Debug_Flag = true;
 
-        flag_PreviewMode_Running = true;
+        flag_PreviewMode_Active = true;
 
         // Get the parent window handle
         Parent_hWnd = GetParent(App->CL_Editor_Map->Bottom_Right_Hwnd);
@@ -110,7 +111,7 @@ void CL64_Editor_Control::Start_Editor_MapBrush_Mode(void)
 	App->CL_Ogre->Ogre3D_Listener->flag_Run_Physics = 0;
 	App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_Free;
 
-	flag_PreviewMode_Running = false;
+	flag_PreviewMode_Active = false;
 
 	if (App->CL_Physics->flag_TriMesh_Created == 1)
 	{
@@ -144,9 +145,9 @@ void CL64_Editor_Control::Start_Editor_MapBrush_Mode(void)
 }
 
 // *************************************************************************
-// *			Back_To_Map_Editor:- Terry and Hazel Flanigan 2025	 	   *
+// *		Return_To_Map_Editor:- Terry and Hazel Flanigan 2025	 	   *
 // *************************************************************************
-void CL64_Editor_Control::Back_To_Map_Editor(void)
+void CL64_Editor_Control::Return_To_Map_Editor(void)
 {
 	App->CL_SoundMgr->SoundEngine->stopAllSounds();
 
@@ -158,7 +159,7 @@ void CL64_Editor_Control::Back_To_Map_Editor(void)
 	App->CL_Gizmos->Show_MarkerBox(false);
 
 	// Reset Flags
-	App->CL_Editor_Scene->flag_Scene_Editor_Active = false;
+	App->CL_Editor_Control->flag_Scene_Editor_Active = false;
 	App->CL_Top_Tabs->flag_Full_View_3D = false;
 
 	// Show top tabs and configure editor map
@@ -189,4 +190,71 @@ void CL64_Editor_Control::Back_To_Map_Editor(void)
 		App->CL_Physics->Clear_Trimesh();
 		App->CL_Ogre->Bullet_Debug_Listener->flag_Render_Debug_Flag = 0;
 	}
+}
+
+// *************************************************************************
+// *			Start_Editor_Scene:- Terry and Hazel Flanigan 2025	 	   *
+// *************************************************************************
+void CL64_Editor_Control::Start_Editor_Scene()
+{
+	App->CL_Editor_Control->flag_Scene_Editor_Active = true;
+
+	// Handle physics and trimesh
+	if (App->CL_Physics->flag_TriMesh_Created)
+	{
+		App->CL_Physics->Clear_Trimesh();
+	}
+
+	if (App->CL_Mesh_Mgr->World_Ent && App->CL_Mesh_Mgr->World_Node)
+	{
+		App->CL_Physics->Create_New_Trimesh(App->CL_Mesh_Mgr->World_Ent,
+			App->CL_Mesh_Mgr->World_Node);
+		App->CL_Ogre->Bullet_Debug_Listener->flag_Render_Debug_Flag = true;
+	}
+
+	// Set view flags
+	auto& topTabs = App->CL_Top_Tabs;
+	topTabs->flag_Full_View_3D = true;
+	topTabs->flag_View_Top_Left = false;
+	topTabs->flag_View_Top_Right = false;
+	topTabs->flag_View_Bottom_Left = false;
+
+	// Initialize views and resize windows
+	App->CL_Editor_Map->Init_Views(Enums::Selected_View_3D);
+	App->CL_Editor_Map->Resize_Windows(App->CL_Editor_Map->Main_Dlg_Hwnd,
+		App->CL_Editor_Map->nleftWnd_width,
+		App->CL_Editor_Map->nleftWnd_Depth);
+
+	// Adjust window position
+	RECT clientRect;
+	GetClientRect(App->CL_Editor_Map->Bottom_Right_Hwnd, &clientRect);
+	SetWindowPos(App->ViewGLhWnd, nullptr, 0, 0, clientRect.right, clientRect.bottom, SWP_NOZORDER);
+
+	// Update Ogre window and camera aspect ratio
+	auto& ogre = App->CL_Ogre;
+	ogre->mWindow->windowMovedOrResized();
+	ogre->mCamera->setAspectRatio(static_cast<Ogre::Real>(ogre->mWindow->getWidth()) /
+		static_cast<Ogre::Real>(ogre->mWindow->getHeight()));
+
+	// Hide visuals and tabs
+	ogre->OGL_Listener->Show_Visuals(false);
+	topTabs->Show_TopTabs(false);
+	App->CL_Properties_Tabs->Show_Tabs_Control_Dlg(false);
+	App->CL_Properties_Tabs->flag_Tabs_Dlg_Active = false;
+	App->CL_Ogre->OGL_Listener->Show_Visuals(false);
+
+	// Show headers and file view
+	App->CL_Editor_Scene->Show_Headers(true);
+	App->CL_FileView->Show_FileView(true);
+	App->CL_Panels->Move_FileView_Window();
+	App->CL_Panels->Resize_FileView();
+	App->CL_Panels->Place_Properties_Dlg();
+	App->CL_Properties_Scene->Show_Properties_Scene(true);
+
+	// Set menu
+	SetMenu(App->MainHwnd, App->Menu_Scene);
+	App->CL_Com_Objects->Show_Entities(true);
+
+	App->CL_Gizmos->MarkerBox_Adjust(App->CL_Properties_Scene->Current_Selected_Object);
+
 }

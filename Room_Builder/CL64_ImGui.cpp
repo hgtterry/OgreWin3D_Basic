@@ -344,7 +344,7 @@ void CL64_ImGui::Preview_Options_GUI(void)
 		{
 			App->CL_Editor_Control->Start_Editor_MapBrush_Mode();
 
-			if (App->CL_Editor_Scene->flag_Scene_Editor_Active == 1)
+			if (App->CL_Editor_Control->flag_Scene_Editor_Active == 1)
 			{
 				App->CL_Editor_Scene->Return_From_Preview();
 			}
@@ -436,8 +436,8 @@ void CL64_ImGui::App_Stats_GUI(void)
 			ImGui::Separator();
 			ImGui::Text("Object_Count:= %i", App->CL_Scene->Object_Count);
 			ImGui::Text("Unique_Object_Count:= %i", App->CL_Scene->Object_Count);
-			ImGui::Text("Scene Editor Active:= %i", App->CL_Editor_Scene->flag_Scene_Editor_Active);
-			ImGui::Text("Preview Active:= %i", App->CL_Editor_Control->flag_PreviewMode_Running);
+			ImGui::Text("Scene Editor Active:= %i", App->CL_Editor_Control->flag_Scene_Editor_Active);
+			ImGui::Text("Preview Active:= %i", App->CL_Editor_Control->flag_PreviewMode_Active);
 			ImGui::Separator();
 			ImGui::TreePop();
 		}

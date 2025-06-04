@@ -31,9 +31,11 @@ public:
 
 	void Start_Preview_Mode(void);
 	void Start_Editor_MapBrush_Mode(void);
-	void Back_To_Map_Editor(void);
+	void Start_Editor_Scene();
+	void Return_To_Map_Editor(void);
 
-	bool flag_PreviewMode_Running;	// Flag to indicate if preview mode is currently active
+	bool flag_PreviewMode_Active;	// Flag to indicate if preview mode is currently active
+	bool flag_Scene_Editor_Active;
 
 	HWND Parent_hWnd;				// Handle to the parent window for the editor
 

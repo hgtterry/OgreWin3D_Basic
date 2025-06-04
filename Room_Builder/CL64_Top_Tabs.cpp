@@ -481,7 +481,7 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Headers(HWND hDlg, UINT message, WPARAM wPa
 
 		if (LOWORD(wParam) == IDC_BT_HD_SCENEEDITOR)
 		{
-			App->CL_Editor_Scene->Start_Editor_Scene();
+			App->CL_Editor_Control->Start_Editor_Scene();
 			return TRUE;
 		}
 

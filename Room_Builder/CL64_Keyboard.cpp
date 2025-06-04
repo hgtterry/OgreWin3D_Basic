@@ -126,7 +126,7 @@ void CL64_Keyboard::Keyboard_Mode_First(float deltaTime)
 		}
 
 		//------------------------------------------------ Escape 
-		if (GetAsyncKeyState(VK_ESCAPE) < 0 && App->CL_Editor_Control->flag_PreviewMode_Running == 1)
+		if (GetAsyncKeyState(VK_ESCAPE) < 0 && App->CL_Editor_Control->flag_PreviewMode_Active == 1)
 		{
 			App->CL_ImGui->flag_Show_Preview_Options = 1;
 			App->CL_Ogre->Ogre3D_Listener->flag_LeftMouseDown = 0;
@@ -203,7 +203,7 @@ void CL64_Keyboard::Keyboard_Mode_Model(float deltaTime)
 	}
 
 	//------------------------------------------------ Escape 
-	if (GetAsyncKeyState(VK_ESCAPE) < 0 && App->CL_Editor_Control->flag_PreviewMode_Running == 1) // Back to Editor mode;
+	if (GetAsyncKeyState(VK_ESCAPE) < 0 && App->CL_Editor_Control->flag_PreviewMode_Active == 1) // Back to Editor mode;
 	{
 		App->CL_ImGui->flag_Show_Preview_Options = 1;
 		//App->CL_Editor_Preview->Editor_Mode();
@@ -217,7 +217,7 @@ void CL64_Keyboard::Keyboard_Mode_Free(float deltaTime)
 {
 	if (flag_Block_Keyboard == 0)
 	{
-		if (GetAsyncKeyState(80) < 0 && App->CL_Editor_Control->flag_PreviewMode_Running == 1) // p Key
+		if (GetAsyncKeyState(80) < 0 && App->CL_Editor_Control->flag_PreviewMode_Active == 1) // p Key
 		{
 			App->CL_Editor_Control->Start_Editor_MapBrush_Mode();
 		}
@@ -313,7 +313,7 @@ void CL64_Keyboard::Keyboard_Mode_Free(float deltaTime)
 		}
 
 		//------------------------------------------------ Escape 
-		if (GetAsyncKeyState(VK_ESCAPE) < 0 && App->CL_Editor_Control->flag_PreviewMode_Running == 1)
+		if (GetAsyncKeyState(VK_ESCAPE) < 0 && App->CL_Editor_Control->flag_PreviewMode_Active == 1)
 		{
 			App->CL_ImGui->flag_Show_Preview_Options = 1;
 			//App->CL_Editor_Preview->Editor_Mode();

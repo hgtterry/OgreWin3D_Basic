@@ -31,7 +31,6 @@ THE SOFTWARE.
 
 CL64_Editor_Scene::CL64_Editor_Scene()
 {
-	flag_Scene_Editor_Active = 0;
 	flag_Environment_Available = 0;
 	flag_Show_Physics_Objects = 0;
 
@@ -138,7 +137,7 @@ LRESULT CALLBACK CL64_Editor_Scene::Proc_Headers_Scene(HWND hDlg, UINT message, 
 		if (LOWORD(wParam) == IDC_BT_MAP_EDITOR)
 		{
 			App->CL_Camera->SetCameraMode_Free();
-			App->CL_Editor_Control->Back_To_Map_Editor();
+			App->CL_Editor_Control->Return_To_Map_Editor();
 			return TRUE;
 		}
 
@@ -185,73 +184,6 @@ void CL64_Editor_Scene::Show_Headers(bool Enable)
 	{
 		ShowWindow(Scene_Headers_hWnd, 0);
 	}
-}
-
-// *************************************************************************
-// *			Start_Editor_Scene:- Terry and Hazel Flanigan 2025	 	   *
-// *************************************************************************
-void CL64_Editor_Scene::Start_Editor_Scene()
-{
-	flag_Scene_Editor_Active = true;
-
-	// Handle physics and trimesh
-	if (App->CL_Physics->flag_TriMesh_Created)
-	{
-		App->CL_Physics->Clear_Trimesh();
-	}
-
-	if (App->CL_Mesh_Mgr->World_Ent && App->CL_Mesh_Mgr->World_Node)
-	{
-		App->CL_Physics->Create_New_Trimesh(App->CL_Mesh_Mgr->World_Ent,
-			App->CL_Mesh_Mgr->World_Node);
-		App->CL_Ogre->Bullet_Debug_Listener->flag_Render_Debug_Flag = true;
-	}
-
-	// Set view flags
-	auto& topTabs = App->CL_Top_Tabs;
-	topTabs->flag_Full_View_3D = true;
-	topTabs->flag_View_Top_Left = false;
-	topTabs->flag_View_Top_Right = false;
-	topTabs->flag_View_Bottom_Left = false;
-
-	// Initialize views and resize windows
-	App->CL_Editor_Map->Init_Views(Enums::Selected_View_3D);
-	App->CL_Editor_Map->Resize_Windows(App->CL_Editor_Map->Main_Dlg_Hwnd,
-		App->CL_Editor_Map->nleftWnd_width,
-		App->CL_Editor_Map->nleftWnd_Depth);
-
-	// Adjust window position
-	RECT clientRect;
-	GetClientRect(App->CL_Editor_Map->Bottom_Right_Hwnd, &clientRect);
-	SetWindowPos(App->ViewGLhWnd, nullptr, 0, 0, clientRect.right, clientRect.bottom, SWP_NOZORDER);
-
-	// Update Ogre window and camera aspect ratio
-	auto& ogre = App->CL_Ogre;
-	ogre->mWindow->windowMovedOrResized();
-	ogre->mCamera->setAspectRatio(static_cast<Ogre::Real>(ogre->mWindow->getWidth()) /
-		static_cast<Ogre::Real>(ogre->mWindow->getHeight()));
-
-	// Hide visuals and tabs
-	ogre->OGL_Listener->Show_Visuals(false);
-	topTabs->Show_TopTabs(false);
-	App->CL_Properties_Tabs->Show_Tabs_Control_Dlg(false);
-	App->CL_Properties_Tabs->flag_Tabs_Dlg_Active = false;
-	App->CL_Ogre->OGL_Listener->Show_Visuals(false);
-
-	// Show headers and file view
-	Show_Headers(true);
-	App->CL_FileView->Show_FileView(true);
-	App->CL_Panels->Move_FileView_Window();
-	App->CL_Panels->Resize_FileView();
-	App->CL_Panels->Place_Properties_Dlg();
-	App->CL_Properties_Scene->Show_Properties_Scene(true);
-
-	// Set menu
-	SetMenu(App->MainHwnd, App->Menu_Scene);
-	App->CL_Com_Objects->Show_Entities(true);
-
-	App->CL_Gizmos->MarkerBox_Adjust(App->CL_Properties_Scene->Current_Selected_Object);
-	
 }
 
 // *************************************************************************
@@ -334,7 +266,7 @@ bool CL64_Editor_Scene::Context_Command_Ogre(WPARAM wParam)
 {
 	if (LOWORD(wParam) == IDM_3D_MAP_EDITOR)
 	{
-		App->CL_Editor_Control->Back_To_Map_Editor();
+		App->CL_Editor_Control->Return_To_Map_Editor();
 		return TRUE;
 	}
 }
