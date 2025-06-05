@@ -36,6 +36,7 @@ public:
 
 	void Start_Brush_Tabs_Dialog();
 	void Fill_ListBox();
+	void Select_From_List(int index);
 	void Select_in_BrushList_Dlg(const Brush* b);
 	void OnSelchangeBrushlist(int index, bool clear);
 	void Update_SelectedBrushesCount_Dlg();

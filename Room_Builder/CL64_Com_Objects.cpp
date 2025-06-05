@@ -97,35 +97,6 @@ Ogre::Vector3 CL64_Com_Objects::GetMeshBoundingBoxSize(SceneNode* mNode)
 	return size; // Return the calculated size
 }
 
-
-// *************************************************************************
-// *			Rename_Object:- Terry and Hazel Flanigan 2024			   *
-// *************************************************************************
-void CL64_Com_Objects::Rename_Object(int Index)
-{
-	/*Base_Object* Object = App->CL_Editor->B_Object[Index];
-
-	strcpy(App->CL_Dialogs->btext, "Change Object Name");
-	strcpy(App->CL_Dialogs->Chr_Text, Object->Object_Name);
-
-	App->CL_Dialogs->Dialog_Text(Enums::Check_Names_Objects);
-
-	if (App->CL_Dialogs->flag_Canceled == 1)
-	{
-		return;
-	}
-
-	strcpy(Object->Object_Name, App->CL_Dialogs->Chr_Text);
-
-	Object->flag_Altered = 1;
-
-	App->CL_Editor->flag_Scene_Modified = 1;
-	App->CL_FileView->Mark_Altered(Object->FileViewItem);
-
-	App->CL_FileView->Change_Item_Name(Object->FileViewItem, Object->Object_Name);*/
-
-}
-
 // *************************************************************************
 // *	  		GetPlacement:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************

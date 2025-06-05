@@ -376,6 +376,16 @@ LRESULT CALLBACK CL64_Dialogs::Proc_Dialog_Text(HWND hDlg, UINT message, WPARAM 
 
 			strcpy(App->CL_Dialogs->Chr_Text, buff);
 
+			if (App->CL_Dialogs->Check_What == Enums::Check_Names_Objects)
+			{
+				int test = App->CL_Com_Objects->CheckNames_Objects(buff);
+				if (test == 1)
+				{
+					App->Say("Name Already Exsits");
+					return 1;
+				}
+			}
+
 			if (App->CL_Dialogs->Check_What == Enums::Check_Names_Textures)
 			{
 				bool test = App->CL_TXL_Editor->Check_if_Name_Exist(buff);

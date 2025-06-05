@@ -324,7 +324,7 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Brush_Dlg(HWND hDlg, UINT message
 				if (Doit == 0)
 				{
 					App->CL_Ogre->OGL_Listener->Show_Visuals(false);
-					App->CL_Doc->DeleteCurrentThing();
+					App->CL_Entities->Delete_Brush();
 					//App->CL_Doc->ResetAllSelectedBrushes();
 				}
 			}
@@ -379,6 +379,15 @@ void CL64_Properties_Brushes::List_Selection_Changed(bool Clear)
 			}
 		}
 	}
+}
+
+// *************************************************************************
+// *		 	Select_From_List:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+void CL64_Properties_Brushes::Select_From_List(int index)
+{
+	SendDlgItemMessage(BrushesDlg_Hwnd, IDC_GD_BRUSHLIST, LB_SETCURSEL, (WPARAM)index, (LPARAM)0);
+	List_Selection_Changed(true);
 }
 
 // *************************************************************************

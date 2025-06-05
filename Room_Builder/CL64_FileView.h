@@ -35,10 +35,13 @@ public:
 	void Init_FileView(void);
 	void Show_FileView(bool Enable);
 	HTREEITEM Add_Item(HTREEITEM Folder, char* SFileName, int Index, bool NewItem);
+	void DeleteItem();
 	void Set_FolderActive(HTREEITEM Folder);
 	void SelectItem(HTREEITEM TreeItem);
 	void Enable_Environment_Button(bool Enable);
+
 	void Mark_Altered(HTREEITEM Item);
+	void Mark_Altered_Folder(HTREEITEM Item);
 
 	void Redraw_FileView();
 	void Change_Level_Name(void);
@@ -59,6 +62,9 @@ private:
 	void ExpandRoot(void);
 
 	void Context_Menu(HWND hDlg);
+	void Context_New(HWND hDlg);
+	void Context_Rename() const;
+	void Context_Delete();
 
 	void Get_Selection(LPNMHDR lParam);
 	void HideRightPanes(void);
@@ -94,8 +100,7 @@ private:
 	char FileView_File[MAX_PATH];
 
 	int Context_Selection;
-	void Context_New(HWND hDlg);
-
+	
 	TV_INSERTSTRUCT tvinsert;
 };
 

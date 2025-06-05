@@ -326,5 +326,56 @@ void CL64_Entities::Rename_Object(int Index)
 	App->CL_FileView->Change_Item_Name(Object->FileViewItem, Object->Object_Name);
 }
 
+// **************************************************************************
+// *	  		Delete_Object:- Terry and Hazel Flanigan 2024				*
+// **************************************************************************
+void CL64_Entities::Delete_Brush()
+{
+	//App->CL_Doc->DeleteCurrentThing();
+
+	//if (App->CL_Properties_Brushes->Selected_Brush->GroupId > Enums::Brushs_ID_Players)
+	{
+		Delete_Object();
+	}
+
+	//App->CL_Doc->ResetAllSelections();
+}
+
+// **************************************************************************
+// *	  		Delete_Object:- Terry and Hazel Flanigan 2024				*
+// **************************************************************************
+void CL64_Entities::Delete_Object()
+{
+	App->CL_Doc->DeleteCurrentThing();
+
+	if (App->CL_Properties_Brushes->Selected_Brush->GroupId > Enums::Brushs_ID_Players)
+	{
+		int MeshIndex = App->CL_Properties_Scene->Current_Selected_Object;
+		btRigidBody* body = App->CL_Scene->B_Object[MeshIndex]->Phys_Body;
+
+		if (body)
+		{
+			App->CL_Physics->dynamicsWorld->removeCollisionObject(body);
+		}
+
+		App->CL_FileView->DeleteItem();
+
+		App->CL_Scene->B_Object[MeshIndex]->flag_Deleted = 1;
+		App->CL_Scene->B_Object[MeshIndex]->Object_Node->setVisible(false);
+	}
+	else
+	{
+		int sel = App->CL_Properties_Brushes->Selected_Index - 1;
+		if (sel < 0)
+		{
+			sel = 0;
+		}
+
+		App->CL_Properties_Brushes->Select_From_List(sel);
+	}
+
+	App->CL_Level->flag_Level_is_Modified = 1;
+}
+
 
 

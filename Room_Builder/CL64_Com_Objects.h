@@ -32,7 +32,6 @@ public:
 
 	float GetMesh_BB_Radius(SceneNode* mNode);
 	Ogre::Vector3 GetMeshBoundingBoxSize(SceneNode* mNode);
-	void Rename_Object(int Index);
 	Ogre::Vector3 GetPlacement(int Distance = -6);
 	void Hide_AllObjects_Except(int Index, bool Show);
 	void Delete_Object();

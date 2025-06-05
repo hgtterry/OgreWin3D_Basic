@@ -38,6 +38,9 @@ public:
 	void Rename_Brush();
 	void Rename_Object(int Index);
 
+	void Delete_Brush();
+	void Delete_Object();
+
 	T_Vec3	Verts[8];
 
 private:
