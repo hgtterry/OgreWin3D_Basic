@@ -266,7 +266,6 @@ void CL64_Entities::Rename_Brush()
 
 		if (App->CL_Dialogs->flag_Dlg_Canceled == 0)
 		{
-
 			strcpy(name, App->CL_Dialogs->Chr_Text);
 
 			// Entity
@@ -318,7 +317,6 @@ void CL64_Entities::Rename_Object(int Index)
 	strcpy(b->Name, App->CL_Dialogs->Chr_Text);
 	App->CL_Properties_Brushes->Fill_ListBox();
 	App->CL_Doc->Set_Faces_To_Brush_Name_Selected();
-
 
 	Object->flag_Altered = 1;
 

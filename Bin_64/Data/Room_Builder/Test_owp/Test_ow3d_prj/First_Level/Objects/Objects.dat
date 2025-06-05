@@ -79,7 +79,7 @@ Fog_Density=0.001000
  
 *************************************************************************************
 [Object_2]
-Mesh_Name=Object_2
+Mesh_Name=Barrel_1
 Mesh_File=Barrel_1.mesh
 Mesh_Resource_Path=
 Material_File=Barrel_1.material
@@ -96,7 +96,7 @@ Dimensions_Lock=0
  
 *************************************************************************************
 [Object_3]
-Mesh_Name=Object_3
+Mesh_Name=Barrel_2
 Mesh_File=Barrel_1.mesh
 Mesh_Resource_Path=
 Material_File=Barrel_1.material
@@ -113,7 +113,7 @@ Dimensions_Lock=0
  
 *************************************************************************************
 [Object_4]
-Mesh_Name=Object_4
+Mesh_Name=Barrel_3
 Mesh_File=Barrel_1.mesh
 Mesh_Resource_Path=
 Material_File=Barrel_1.material
@@ -130,7 +130,7 @@ Dimensions_Lock=0
  
 *************************************************************************************
 [Object_5]
-Mesh_Name=Object_5
+Mesh_Name=Tunnel_1
 Mesh_File=Tunnel.mesh
 Mesh_Resource_Path=
 Material_File=Tunnel.material
@@ -147,7 +147,7 @@ Dimensions_Lock=0
  
 *************************************************************************************
 [Object_6]
-Mesh_Name=Object_6
+Mesh_Name=Divide_1
 Mesh_File=GDPanel1.mesh
 Mesh_Resource_Path=
 Material_File=GDPanel1.material
