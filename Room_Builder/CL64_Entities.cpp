@@ -266,7 +266,18 @@ void CL64_Entities::Rename_Brush()
 
 		if (App->CL_Dialogs->flag_Dlg_Canceled == 0)
 		{
+
 			strcpy(name, App->CL_Dialogs->Chr_Text);
+
+			// Entity
+			if (App->CL_Properties_Brushes->Selected_Brush->GroupId > Enums::Brushs_ID_Players)
+			{
+				int index = App->CL_Entities->GetIndex_By_Name(App->CL_Properties_Brushes->Selected_Brush->Name);
+				strcpy(App->CL_Scene->B_Object[index]->Object_Name, name);
+				App->CL_FileView->Change_Item_Name(App->CL_Scene->B_Object[index]->FileViewItem, name);
+			}
+
+			// Brush
 			App->CL_Brush->Brush_SetName(App->CL_Properties_Brushes->Selected_Brush, name);
 			App->CL_Properties_Brushes->Fill_ListBox();
 			App->CL_Doc->Set_Faces_To_Brush_Name_Selected();

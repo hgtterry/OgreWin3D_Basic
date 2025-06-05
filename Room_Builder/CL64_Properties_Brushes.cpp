@@ -291,7 +291,6 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Brush_Dlg(HWND hDlg, UINT message
 
 		if (LOWORD(wParam) == IDC_BT_BRUSH_RENAME) 
 		{
-			//return TRUE;
 			const char* brushName = App->CL_Doc->CurBrush->Name;
 
 			if (strcmp(brushName, "Player_Main") == 0 || strcmp(brushName, "Environ_0") == 0) 
@@ -299,6 +298,7 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Brush_Dlg(HWND hDlg, UINT message
 				App->Say("This Brush cannot be Renamed");
 				return TRUE;
 			}
+
 			App->CL_Entities->Rename_Brush();
 
 			return TRUE;
