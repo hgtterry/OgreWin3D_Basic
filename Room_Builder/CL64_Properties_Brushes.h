@@ -51,7 +51,7 @@ public:
 	HWND BrushesDlg_Hwnd;
 
 private:
-	static LRESULT CALLBACK Proc_Brush_Tabs(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Proc_Brush_Dlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Proc_Dimensions_Dlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	void StartDimensionsDialog();

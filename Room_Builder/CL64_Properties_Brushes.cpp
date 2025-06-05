@@ -98,7 +98,7 @@ void CL64_Properties_Brushes::Set_Dlg_Brush_Options_Buttons(bool Enable)
 // *************************************************************************
 void CL64_Properties_Brushes::Start_Brush_Tabs_Dialog()
 {
-	BrushesDlg_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_PROPS_BRUSHES, App->CL_Properties_Tabs->Tabs_Control_Hwnd, (DLGPROC)Proc_Brush_Tabs);
+	BrushesDlg_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_PROPS_BRUSHES, App->CL_Properties_Tabs->Tabs_Control_Hwnd, (DLGPROC)Proc_Brush_Dlg);
 
 	flag_Brushes_Dlg_Created = 1;
 
@@ -109,7 +109,7 @@ void CL64_Properties_Brushes::Start_Brush_Tabs_Dialog()
 // *************************************************************************
 // *			 Proc_Brush_Tabs:- Terry and Hazel Flanigan 2025		   *
 // *************************************************************************
-LRESULT CALLBACK CL64_Properties_Brushes::Proc_Brush_Tabs(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK CL64_Properties_Brushes::Proc_Brush_Dlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
 
 	switch (message)
@@ -291,7 +291,7 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Brush_Tabs(HWND hDlg, UINT messag
 
 		if (LOWORD(wParam) == IDC_BT_BRUSH_RENAME) 
 		{
-			return TRUE;
+			//return TRUE;
 			const char* brushName = App->CL_Doc->CurBrush->Name;
 
 			if (strcmp(brushName, "Player_Main") == 0 || strcmp(brushName, "Environ_0") == 0) 
@@ -299,33 +299,7 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Brush_Tabs(HWND hDlg, UINT messag
 				App->Say("This Brush cannot be Renamed");
 				return TRUE;
 			}
-
-			int numSelBrushes = App->CL_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes);
-
-			if (numSelBrushes > 0) 
-			{
-				char name[MAX_PATH];
-
-				strcpy(App->CL_Dialogs->btext, "Change Brush Name");
-				strcpy(App->CL_Dialogs->Chr_Text, App->CL_Properties_Brushes->Selected_Brush->Name);
-
-				App->CL_Dialogs->Dialog_Text(Enums::Check_Name_Brushes);
-
-				if (App->CL_Dialogs->flag_Dlg_Canceled == 0) 
-				{
-					strcpy(name, App->CL_Dialogs->Chr_Text);
-					App->CL_Brush->Brush_SetName(App->CL_Properties_Brushes->Selected_Brush, name);
-					App->CL_Properties_Brushes->Fill_ListBox();
-					App->CL_Doc->Set_Faces_To_Brush_Name_Selected();
-					App->CL_Level->flag_Level_is_Modified = true;
-
-					SendDlgItemMessage(hDlg, IDC_GD_BRUSHLIST, LB_SETCURSEL, (WPARAM)App->CL_Properties_Brushes->Selected_Index, (LPARAM)0);
-				}
-			}
-			else 
-			{
-				App->Say("No Brush Selected");
-			}
+			App->CL_Entities->Rename_Brush();
 
 			return TRUE;
 		}
