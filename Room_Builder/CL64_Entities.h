@@ -36,6 +36,7 @@ public:
 	bool Ogre_To_Mesh_Data(Ogre::SceneNode* Ogre_Node);
 	
 	void Rename_Brush();
+	void Rename_Object(int Index);
 
 	T_Vec3	Verts[8];
 

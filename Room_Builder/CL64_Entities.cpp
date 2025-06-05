@@ -256,7 +256,7 @@ void CL64_Entities::Rename_Brush()
 	int numSelBrushes = App->CL_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes);
 
 	if (numSelBrushes > 0)
-	{
+	{ 
 		char name[MAX_PATH];
 
 		strcpy(App->CL_Dialogs->btext, "Change Brush Name");
@@ -280,4 +280,42 @@ void CL64_Entities::Rename_Brush()
 		App->Say("No Brush Selected");
 	}
 }
+
+// *************************************************************************
+// *			Rename_Object:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void CL64_Entities::Rename_Object(int Index)
+{
+	Base_Object* Object = App->CL_Scene->B_Object[Index];
+
+	strcpy(App->CL_Dialogs->btext, "Change Object Name");
+	strcpy(App->CL_Dialogs->Chr_Text, Object->Object_Name);
+
+	App->CL_Dialogs->Dialog_Text(Enums::Check_Names_Objects);
+
+	if (App->CL_Dialogs->flag_Dlg_Canceled == 1)
+	{
+		return;
+	}
+
+	Brush* b = App->CL_Brush_X->Get_Brush_By_Name(Object->Object_Name);
+
+	// Entity
+	strcpy(Object->Object_Name, App->CL_Dialogs->Chr_Text);
+
+	// Brush
+	strcpy(b->Name, App->CL_Dialogs->Chr_Text);
+	App->CL_Properties_Brushes->Fill_ListBox();
+	App->CL_Doc->Set_Faces_To_Brush_Name_Selected();
+
+
+	Object->flag_Altered = 1;
+
+	App->CL_Level->flag_Level_is_Modified = 1;
+	App->CL_FileView->Mark_Altered(Object->FileViewItem);
+
+	App->CL_FileView->Change_Item_Name(Object->FileViewItem, Object->Object_Name);
+}
+
+
 

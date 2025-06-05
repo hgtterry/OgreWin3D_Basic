@@ -520,8 +520,8 @@ void CL64_Properties_Scene::Edit_Object(LPARAM lParam)
 	result = strcmp(btext, "Name");
 	if (result == 0)
 	{
-		Debug
-		//App->CL_Com_Objects->Rename_Object(Index);
+	
+		App->CL_Entities->Rename_Object(Index);
 		Update_ListView_Objects();
 	}
 
