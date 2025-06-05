@@ -39,6 +39,7 @@ public:
 	bool Update_ListView_Objects();
 	bool Edit_Player(LPARAM lParam);
 	bool Edit_Environs_OnClick(LPARAM lParam);
+	void Edit_Object(LPARAM lParam);
 
 
 	HWND Properties_Dlg_hWnd;

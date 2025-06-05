@@ -255,7 +255,7 @@ void CL64_Properties_Scene::ListView_OnClickOptions(LPARAM lParam)
 	// Objects
 	if (Edit_Category == Enums::Edit_Object)
 	{
-		//Edit_Object(lParam);
+		Edit_Object(lParam);
 		return;
 	}
 
@@ -500,6 +500,36 @@ bool CL64_Properties_Scene::Update_ListView_Environs()
 	}
 
 	return true;
+}
+
+// *************************************************************************
+// *			Edit_Object:- Terry and Hazel Flanigan 2024				   *
+// *************************************************************************
+void CL64_Properties_Scene::Edit_Object(LPARAM lParam)
+{
+	int Index = Current_Selected_Object;
+	int result = 1;
+	int List_Index;
+
+	Base_Object* Object = App->CL_Scene->B_Object[Index];
+
+	LPNMLISTVIEW List = (LPNMLISTVIEW)lParam;
+	List_Index = List->iItem;
+	ListView_GetItemText(Properties_hLV, List_Index, 0, btext, 20);
+
+	result = strcmp(btext, "Name");
+	if (result == 0)
+	{
+		Debug
+		//App->CL_Com_Objects->Rename_Object(Index);
+		Update_ListView_Objects();
+	}
+
+	/*result = strcmp(btext, "Materials");
+	if (result == 0)
+	{
+		App->SBC_Materials->Start_Material_Editor();
+	}*/
 }
 
 // *************************************************************************
