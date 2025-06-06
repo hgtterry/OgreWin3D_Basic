@@ -358,13 +358,13 @@ void CL64_Entities::Delete_Object()
 	}
 	else
 	{
-		int sel = App->CL_Properties_Brushes->Selected_Index - 1;
-		if (sel < 0)
+		int selectedIndex = App->CL_Properties_Brushes->Selected_Index - 1;
+		if (selectedIndex < 0)
 		{
-			sel = 0;
+			selectedIndex = 0;
 		}
 
-		App->CL_Properties_Brushes->Select_From_List(sel);
+		App->CL_Properties_Brushes->Select_From_List(selectedIndex);
 	}
 
 	App->CL_Level->flag_Level_is_Modified = 1;

@@ -223,117 +223,77 @@ void CL64_Properties_Scene::Show_Properties_Scene(bool Enable)
 // *************************************************************************
 void CL64_Properties_Scene::ListView_OnClickOptions(LPARAM lParam)
 {
-	// Area
-	/*if (Edit_Category == Enums::Edit_Area)
+	switch (Edit_Category)
 	{
-		Edit_Area_Onclick(lParam);
+	case Enums::Edit_Area:
+		// Edit_Area_Onclick(lParam);
 		return;
-	}*/
 
-	// Camera
-	/*if (Edit_Category == Enums::Edit_Camera)
-	{
-		Edit_Camera_Onclick(lParam);
+	case Enums::Edit_Camera:
+		// Edit_Camera_Onclick(lParam);
 		return;
-	}*/
 
-	// Player
-	if (Edit_Category == Enums::Edit_Player)
-	{
+	case Enums::Edit_Player:
 		if (flag_Edit_Physics == 0)
 		{
 			Edit_Player(lParam);
 		}
 		else
 		{
-			//Edit_Player_Physics(lParam);
+			// Edit_Player_Physics(lParam);
 		}
-
 		return;
-	}
 
-	// Objects
-	if (Edit_Category == Enums::Edit_Object)
-	{
+	case Enums::Edit_Object:
 		Edit_Object(lParam);
 		return;
-	}
 
-	// Messages
-	if (Edit_Category == Enums::Edit_Message)
-	{
-		//Edit_Messages(lParam);
+	case Enums::Edit_Message:
+		// Edit_Messages(lParam);
 		return;
-	}
 
-	// Move Entity
-	if (Edit_Category == Enums::Edit_Move_Entity)
-	{
-		//Edit_Move_Entity(lParam);
+	case Enums::Edit_Move_Entity:
+		// Edit_Move_Entity(lParam);
 		return;
-	}
 
-	// Sounds
-	if (Edit_Category == Enums::Edit_Sounds)
-	{
-		//Edit_Sounds(lParam);
+	case Enums::Edit_Sounds:
+		// Edit_Sounds(lParam);
 		return;
-	}
 
-	// Teleports
-	if (Edit_Category == Enums::Edit_Teleport)
-	{
-		//Edit_Teleport_Entity(lParam);
+	case Enums::Edit_Teleport:
+		// Edit_Teleport_Entity(lParam);
 		return;
-	}
 
-	// Collectables
-	if (Edit_Category == Enums::Edit_Collectable)
-	{
-		//Edit_Collectables(lParam);
+	case Enums::Edit_Collectable:
+		// Edit_Collectables(lParam);
 		return;
-	}
 
-	// Counters
-	if (Edit_Category == Enums::Edit_Counters)
-	{
-		//Edit_Counters_OnClick(lParam);
+	case Enums::Edit_Counters:
+		// Edit_Counters_OnClick(lParam);
 		return;
-	}
 
-	// Environs
-	if (Edit_Category == Enums::Edit_Environs)
-	{
+	case Enums::Edit_Environs:
 		Edit_Environs_OnClick(lParam);
 		return;
-	}
 
-	// Particles
-	if (Edit_Category == Enums::Edit_Particles)
-	{
-		//Edit_Particle(lParam);
+	case Enums::Edit_Particles:
+		// Edit_Particle(lParam);
 		return;
-	}
 
-	// Lights
-	if (Edit_Category == Enums::Edit_Lights)
-	{
-		//Edit_Light_Onclick(lParam);
+	case Enums::Edit_Lights:
+		// Edit_Light_Onclick(lParam);
 		return;
-	}
 
-	// UserObjects
-	if (Edit_Category == Enums::Edit_UserObjects)
-	{
+	case Enums::Edit_UserObjects:
 		if (flag_Edit_Physics == 0)
 		{
-			//Edit_UserObjects_Onclick(lParam);
+			// Edit_UserObjects_Onclick(lParam);
 		}
+		return;
 
+	default:
 		return;
 	}
-
-	return;
 }
 
 // *************************************************************************

@@ -548,7 +548,6 @@ void CL64_Properties_Brushes::StartDimensionsDialog()
 // *************************************************************************
 LRESULT CALLBACK CL64_Properties_Brushes::Proc_Dimensions_Dlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
-
 	switch (message)
 	{
 	case WM_INITDIALOG:
@@ -622,7 +621,6 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Dimensions_Dlg(HWND hDlg, UINT me
 
 	case WM_CTLCOLORSTATIC:
 	{
-
 		if (GetDlgItem(hDlg, IDC_ST_BRUSH_NAME) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 255, 0));
