@@ -147,7 +147,7 @@ private:
 	HPEN Pen_Camera;
 	HPEN PenSelectedFaces;
 	HPEN PenCutBrush;
-
+	HPEN PenEntity;
 	HDC	MemoryhDC;
 };
 
