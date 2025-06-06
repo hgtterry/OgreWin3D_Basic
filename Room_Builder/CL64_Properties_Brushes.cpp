@@ -596,12 +596,16 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Dimensions_Dlg(HWND hDlg, UINT me
 		App->CL_Properties_Brushes->Update_Deltas_Dlg(hDlg);
 
 		SetDlgItemText(hDlg, IDC_ST_BRUSH_NAME, App->CL_Properties_Brushes->Selected_Brush->Name);
+		
+		// Check if the Brush is an Entity
+		if (App->CL_Properties_Brushes->Selected_Brush->GroupId > Enums::Brushs_ID_Area)
+		{
+			int Index = App->CL_Entities->GetIndex_By_Name(App->CL_Properties_Brushes->Selected_Brush->Name);
 
-		int Index = App->CL_Entities->GetIndex_By_Name(App->CL_Properties_Brushes->Selected_Brush->Name);
-
-		App->CL_Properties_Brushes->Rotation.x = App->CL_Scene->B_Object[Index]->Mesh_Rot.x;
-		App->CL_Properties_Brushes->Rotation.y = App->CL_Scene->B_Object[Index]->Mesh_Rot.y;
-		App->CL_Properties_Brushes->Rotation.z = App->CL_Scene->B_Object[Index]->Mesh_Rot.z;
+			App->CL_Properties_Brushes->Rotation.x = App->CL_Scene->B_Object[Index]->Mesh_Rot.x;
+			App->CL_Properties_Brushes->Rotation.y = App->CL_Scene->B_Object[Index]->Mesh_Rot.y;
+			App->CL_Properties_Brushes->Rotation.z = App->CL_Scene->B_Object[Index]->Mesh_Rot.z;
+		}
 
 		//// ----------- ScaleLock
 		//if (App->CLSB_Brushes->ScaleLock_Flag == 1)
@@ -771,15 +775,63 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Dimensions_Dlg(HWND hDlg, UINT me
 			switch ((int)LOWORD(wParam)) 
 			{
 			case SB_LINERIGHT:
-				App->CL_Properties_Brushes->CenterOfSelection.x += delta;
+				if (App->CL_Properties_Brushes->Selected_Brush->GroupId == Enums::Brushs_ID_Area)
+				{
+					App->CL_Properties_Brushes->CenterOfSelection.x += delta;
+				}
+				else
+				{
+					int Index = App->CL_Entities->GetIndex_By_Name(App->CL_Properties_Brushes->Selected_Brush->Name);
+					auto& m_object = App->CL_Scene->B_Object[Index];
+
+					if (m_object)
+					{
+						Ogre::Vector3 Old_Pos = m_object->Object_Node->getPosition();
+						Old_Pos.x += delta;
+						m_object->Object_Node->setPosition(Old_Pos);
+						m_object->Mesh_Pos = Old_Pos;
+
+						App->CL_Physics->Set_Physics_Dimensions(Index);
+
+						App->CL_Brush_X->Set_Brush_From_Entity_ByName(m_object->Object_Name, true);
+						App->CL_Gizmos->MarkerBox_Adjust(Index);
+					}
+				}
 				break;
 
 			case SB_LINELEFT:
-				App->CL_Properties_Brushes->CenterOfSelection.x -= delta;
+				if (App->CL_Properties_Brushes->Selected_Brush->GroupId == Enums::Brushs_ID_Area)
+				{
+					App->CL_Properties_Brushes->CenterOfSelection.x -= delta;
+				}
+				else
+				{
+					int Index = App->CL_Entities->GetIndex_By_Name(App->CL_Properties_Brushes->Selected_Brush->Name);
+					auto& m_object = App->CL_Scene->B_Object[Index];
+
+					if (m_object)
+					{
+						Ogre::Vector3 Old_Pos = m_object->Object_Node->getPosition();
+						Old_Pos.x -= delta;
+						m_object->Object_Node->setPosition(Old_Pos);
+
+						m_object->Mesh_Pos = Old_Pos;
+
+						App->CL_Physics->Set_Physics_Dimensions(Index);
+
+						App->CL_Brush_X->Set_Brush_From_Entity_ByName(m_object->Object_Name, true);
+						App->CL_Gizmos->MarkerBox_Adjust(Index);
+
+					}
+				}
 				break;
 			}
 
-			App->CL_Properties_Brushes->Move_Brush();
+			if (App->CL_Properties_Brushes->Selected_Brush->GroupId == Enums::Brushs_ID_Area)
+			{
+				App->CL_Properties_Brushes->Move_Brush();
+			}
+
 			App->CL_Properties_Brushes->Update_From_Brush_Dlg(hDlg);
 			return 0;
 		}
@@ -1251,20 +1303,50 @@ void CL64_Properties_Brushes::Fill_ComboBox_RotDelta(HWND hDlg)
 void CL64_Properties_Brushes::Update_From_Brush_Dlg(HWND hDlg)
 {
 	Get_Brush();
-	App->CL_SelBrushList->SelBrushList_Center(App->CL_Doc->pSelBrushes, &App->CL_Doc->SelectedGeoCenter);
-	CenterOfSelection = App->CL_Doc->SelectedGeoCenter;
 
-	UpdateDialogItem(hDlg, IDC_ED_BRUSH_POSX, CenterOfSelection.x, "%.3f");
-	UpdateDialogItem(hDlg, IDC_ED_BRUSH_POSY, CenterOfSelection.y, "%.3f");
-	UpdateDialogItem(hDlg, IDC_ED_BRUSH_POSZ, CenterOfSelection.z, "%.3f");
+	if (Selected_Brush->GroupId == Enums::Brushs_ID_Area)
+	{
+		App->CL_SelBrushList->SelBrushList_Center(App->CL_Doc->pSelBrushes, &App->CL_Doc->SelectedGeoCenter);
+		CenterOfSelection = App->CL_Doc->SelectedGeoCenter;
 
-	UpdateDialogItem(hDlg, IDC_ED_BRUSH_ROTX, Rotation.x, "%.2f");
-	UpdateDialogItem(hDlg, IDC_ED_BRUSH_ROTY, Rotation.y, "%.2f");
-	UpdateDialogItem(hDlg, IDC_ED_BRUSH_ROTZ, Rotation.z, "%.2f");
+		UpdateDialogItem(hDlg, IDC_ED_BRUSH_POSX, CenterOfSelection.x, "%.3f");
+		UpdateDialogItem(hDlg, IDC_ED_BRUSH_POSY, CenterOfSelection.y, "%.3f");
+		UpdateDialogItem(hDlg, IDC_ED_BRUSH_POSZ, CenterOfSelection.z, "%.3f");
 
-	UpdateDialogItem(hDlg, IDC_ED_BRUSH_SCALEX, Size.x, "%.2f");
-	UpdateDialogItem(hDlg, IDC_ED_BRUSH_SCALEY, Size.y, "%.2f");
-	UpdateDialogItem(hDlg, IDC_ED_BRUSH_SCALEZ, Size.z, "%.2f");
+		UpdateDialogItem(hDlg, IDC_ED_BRUSH_ROTX, Rotation.x, "%.2f");
+		UpdateDialogItem(hDlg, IDC_ED_BRUSH_ROTY, Rotation.y, "%.2f");
+		UpdateDialogItem(hDlg, IDC_ED_BRUSH_ROTZ, Rotation.z, "%.2f");
+
+		UpdateDialogItem(hDlg, IDC_ED_BRUSH_SCALEX, Size.x, "%.2f");
+		UpdateDialogItem(hDlg, IDC_ED_BRUSH_SCALEY, Size.y, "%.2f");
+		UpdateDialogItem(hDlg, IDC_ED_BRUSH_SCALEZ, Size.z, "%.2f");
+	}
+	else
+	{
+		int Index = App->CL_Entities->GetIndex_By_Name(App->CL_Properties_Brushes->Selected_Brush->Name);
+
+		if (App->CL_Scene->B_Object[Index])
+		{
+			Ogre::Vector3 Pos = App->CL_Scene->B_Object[Index]->Mesh_Pos;
+			Ogre::Vector3 Scale = App->CL_Scene->B_Object[Index]->Mesh_Scale;
+			Ogre::Vector3 Rot = App->CL_Scene->B_Object[Index]->Mesh_Rot;
+
+			UpdateDialogItem(hDlg, IDC_ED_BRUSH_POSX, Pos.x, "%.2f");
+			UpdateDialogItem(hDlg, IDC_ED_BRUSH_POSY, Pos.y, "%.2f");
+			UpdateDialogItem(hDlg, IDC_ED_BRUSH_POSZ, Pos.z, "%.2f");
+
+			UpdateDialogItem(hDlg, IDC_ED_BRUSH_ROTX, Rot.x, "%.2f");
+			UpdateDialogItem(hDlg, IDC_ED_BRUSH_ROTY, Rot.y, "%.2f");
+			UpdateDialogItem(hDlg, IDC_ED_BRUSH_ROTZ, Rot.z, "%.2f");
+
+			UpdateDialogItem(hDlg, IDC_ED_BRUSH_SCALEX, Scale.x, "%.2f");
+			UpdateDialogItem(hDlg, IDC_ED_BRUSH_SCALEY, Scale.y, "%.2f");
+			UpdateDialogItem(hDlg, IDC_ED_BRUSH_SCALEZ, Scale.z, "%.2f");
+		}
+	}
+
+
+
 }
 
 // *************************************************************************
@@ -1297,9 +1379,18 @@ void CL64_Properties_Brushes::Get_Brush()
 		return;
 	}
 
-	Size.x = (fabs(pBrush->BoundingBox.Max.x - pBrush->BoundingBox.Min.x));
-	Size.y = (fabs(pBrush->BoundingBox.Max.y - pBrush->BoundingBox.Min.y));
-	Size.z = (fabs(pBrush->BoundingBox.Max.z - pBrush->BoundingBox.Min.z));
+	//if (pBrush->GroupId == Enums::Brushs_ID_Area)
+	//{
+		Size.x = (fabs(pBrush->BoundingBox.Max.x - pBrush->BoundingBox.Min.x));
+		Size.y = (fabs(pBrush->BoundingBox.Max.y - pBrush->BoundingBox.Min.y));
+		Size.z = (fabs(pBrush->BoundingBox.Max.z - pBrush->BoundingBox.Min.z));
+	//}
+	//else
+	//{
+	//	Size.x = 777;// (fabs(pBrush->BoundingBox.Max.x - pBrush->BoundingBox.Min.x));
+	//	Size.y = 777;//(fabs(pBrush->BoundingBox.Max.y - pBrush->BoundingBox.Min.y));
+	//	Size.z = 777;//(fabs(pBrush->BoundingBox.Max.z - pBrush->BoundingBox.Min.z));
+	//}
 
 	T_Vec3 mSize;
 	mSize.x = 2;

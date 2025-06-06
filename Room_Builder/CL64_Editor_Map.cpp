@@ -2106,59 +2106,47 @@ void CL64_Editor_Map::Render_RenderBrushSelFacesOrtho(ViewVars* Cam, Brush* b, H
 	}
 }
 
-static signed int fdocBrushNotDetail(const Brush* b)
-{
-	return !App->CL_Brush->Brush_IsDetail(b);
-}
-
-
-static signed int fdocBrushIsSubtract(const Brush* b)
-{
-	return (App->CL_Brush->Brush_IsSubtract(b) && !App->CL_Brush->Brush_IsHollowCut(b));
-}
-
 // *************************************************************************
 // *						Draw_Screen Terry Flanigan		  			   *
 // *************************************************************************
 void CL64_Editor_Map::Draw_Screen(HWND hwnd)
 {
-	//Do_Timer
-	//flag_IsDrawing = 1;
-
+	// Exit if preview mode is active
 	if (App->CL_Editor_Control->flag_PreviewMode_Active == 1)
 	{
 		return;
 	}
 
+	// Initialize variables
 	int			inidx = 0;
-	HDC			RealhDC;
+	HDC RealhDC = GetDC(hwnd);
+	MemoryhDC = CreateCompatibleDC(RealhDC);
+
 	RECT		Rect;
 	BrushDrawData	brushDrawData;
 
+	// Get client rectangle and set current view dimensions
 	GetClientRect(hwnd, &Rect);
 	Rect.left--;
 	Rect.bottom--;
-
 	Current_View->Width = Rect.left;
 	Current_View->Height = Rect.bottom;
-
 	Current_View->XScreenScale = Rect.left;
 	Current_View->YScreenScale = Rect.bottom;
 
+	// Set up view box
 	T_Vec3 XTemp;
 	Box3d ViewBox;
 	inidx = App->CL_Render->Render_GetInidx(Current_View);
-
 	App->CL_Box->Box3d_SetBogusBounds(&ViewBox);
 	App->CL_Render->Render_ViewToWorld(Current_View, 0, 0, &XTemp);
 	App->CL_Box->Box3d_AddPoint(&ViewBox, XTemp.x, XTemp.y, XTemp.z);
-
 	App->CL_Render->Render_ViewToWorld(Current_View, App->CL_Render->Render_GetWidth(Current_View), App->CL_Render->Render_GetHeight(Current_View), &XTemp);
 	App->CL_Box->Box3d_AddPoint(&ViewBox, XTemp.x, XTemp.y, XTemp.z);
-
 	VectorToSUB(ViewBox.Min, inidx) = -FLT_MAX;
 	VectorToSUB(ViewBox.Max, inidx) = FLT_MAX;
 
+	// Prepare brush draw data
 	brushDrawData.pViewBox = &ViewBox;
 	brushDrawData.pDC = MemoryhDC;
 	brushDrawData.v = Current_View;
@@ -2166,20 +2154,12 @@ void CL64_Editor_Map::Draw_Screen(HWND hwnd)
 	brushDrawData.GroupId = 0;
 	brushDrawData.FlagTest = NULL;
 
-	RealhDC = GetDC(hwnd);
-
-	MemoryhDC = CreateCompatibleDC(RealhDC);
-
 	GetClipBox(RealhDC, &Rect);
 
-	HBITMAP OffScreenBitmap;
-
-	OffScreenBitmap = CreateCompatibleBitmap(RealhDC, Rect.right - Rect.left, Rect.bottom - Rect.top);
-
+	// Create off-screen bitmap
+	HBITMAP OffScreenBitmap = CreateCompatibleBitmap(RealhDC, Rect.right - Rect.left, Rect.bottom - Rect.top);
 	SelectObject(MemoryhDC, OffScreenBitmap);
-
 	FillRect(MemoryhDC, &Rect, (HBRUSH)BackGround_Brush); // BackGround
-
 
 	// ---------------------- Draw Grid Fine
 	if (Current_View->ZoomFactor > 0.1)
@@ -2203,6 +2183,7 @@ void CL64_Editor_Map::Draw_Screen(HWND hwnd)
 		// ------------------------------------------ Draw Brushes
 		SelectObject(MemoryhDC, PenBrushes);
 
+		// Draw Template Brush
 		if (App->CL_Doc->mModeTool == ID_TOOLS_TEMPLATE)
 		{
 			SelectObject(MemoryhDC, PenTemplate);
@@ -2219,6 +2200,7 @@ void CL64_Editor_Map::Draw_Screen(HWND hwnd)
 			}
 		}
 
+		// Iterate through all brushes
 		int BrushCount = App->CL_Brush->Get_Brush_Count();
 		int Count = 0;
 		Brush* SB = nullptr;
@@ -2262,6 +2244,7 @@ void CL64_Editor_Map::Draw_Screen(HWND hwnd)
 		bool Draw_Sel = 0;
 		if (Draw_Sel == 0)
 		{
+			// Draw selected brushes
 			SelectObject(MemoryhDC, PenSelected);
 			int NumSelBrushes = App->CL_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes);
 
@@ -2271,7 +2254,6 @@ void CL64_Editor_Map::Draw_Screen(HWND hwnd)
 				Brush* pBrush;
 
 				pBrush = App->CL_SelBrushList->SelBrushList_GetBrush(App->CL_Doc->pSelBrushes, i);
-				//if (m_pDoc->fdocShowBrush(pBrush, &ViewBox))
 				{
 					if (App->CL_Brush->Brush_IsMulti(pBrush))
 					{
@@ -2285,13 +2267,14 @@ void CL64_Editor_Map::Draw_Screen(HWND hwnd)
 			}
 		}
 
-		BrushList* BList;
-		BList = App->CL_Level->Level_Get_Main_Brushes();
-
+		// Draw selected faces
+		BrushList* BList = App->CL_Level->Level_Get_Main_Brushes();
 		SelectObject(MemoryhDC, PenSelectedFaces);
 		App->CL_Brush->BrushList_EnumLeafBrushes(BList, &brushDrawData, BrushDrawSelFacesOrtho);
 
-		if (App->CL_Doc->flag_Track_Camera == 1)
+
+		// Draw camera if tracking
+		if (App->CL_Doc->flag_Track_Camera == true)
 		{
 			SelectObject(MemoryhDC, Pen_Camera);
 			Draw_Camera(MemoryhDC);
@@ -2299,14 +2282,13 @@ void CL64_Editor_Map::Draw_Screen(HWND hwnd)
 
 	}
 
+	// BitBlt to the real device context
 	BitBlt(RealhDC, Rect.left, Rect.top+17, Rect.right - Rect.left, Rect.bottom - Rect.top, MemoryhDC, 0, 0, SRCCOPY);
 
+	// Clean up
 	DeleteObject(OffScreenBitmap);
 	DeleteDC(MemoryhDC);
 	ReleaseDC(hwnd, RealhDC);
-	//flag_IsDrawing = 0;
-	//ShowWindow(Left_Test_Hwnd, true);
-	//Get_Timer
 }
 
 // *************************************************************************
@@ -2423,7 +2405,8 @@ void CL64_Editor_Map::Draw_Camera(HDC ViewDC)
 	// Draw to the end point
 	MoveToEx(ViewDC, EntPosView.x, EntPosView.y, NULL);
 	LineTo(ViewDC, LineEndView.x, LineEndView.y);
-
+	//Ellipse(ViewDC, LineEndView.x, LineEndView.x, LineEndView.y+50, LineEndView.y+50);
+	
 	ptDirSlope = { LineEndView.x - EntPosView.x, LineEndView.y - EntPosView.y };
 	float fDirLength = sqrt(ptDirSlope.x * ptDirSlope.x + ptDirSlope.y * ptDirSlope.y);
 	float fEntityLength = sqrt(EntSizeView.x * EntSizeView.x + EntSizeView.y * EntSizeView.y) * 1; // Arrow 2x entity size
@@ -2443,6 +2426,7 @@ void CL64_Editor_Map::Draw_Camera(HDC ViewDC)
 	LineTo(ViewDC, ptPlus45.x, ptPlus45.y);
 	LineTo(ViewDC, ptMinus45.x, ptMinus45.y);
 	LineTo(ViewDC, LineEndView.x, LineEndView.y);
+	
 }
 
 // *************************************************************************

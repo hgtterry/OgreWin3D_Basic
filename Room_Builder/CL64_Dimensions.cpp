@@ -123,6 +123,7 @@ void CL64_Dimensions::Do_Position_New()
 
 		m_object->Object_Node->setPosition(App->CL_ImGui_Dialogs->m_Dialog_Float_Vec3);
 		App->CL_Physics->Reset_Physics();
+		App->CL_Gizmos->MarkerBox_Adjust(Index);
 	}
 
 	App->CL_ImGui_Dialogs->flag_Show_Dialog_Float_Vec3 = 0;
