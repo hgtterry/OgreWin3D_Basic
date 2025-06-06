@@ -331,14 +331,7 @@ void CL64_Entities::Rename_Object(int Index)
 // **************************************************************************
 void CL64_Entities::Delete_Brush()
 {
-	//App->CL_Doc->DeleteCurrentThing();
-
-	//if (App->CL_Properties_Brushes->Selected_Brush->GroupId > Enums::Brushs_ID_Players)
-	{
-		Delete_Object();
-	}
-
-	//App->CL_Doc->ResetAllSelections();
+	Delete_Object();
 }
 
 // **************************************************************************

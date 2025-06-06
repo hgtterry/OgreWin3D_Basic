@@ -293,10 +293,17 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Brush_Dlg(HWND hDlg, UINT message
 		{
 			const char* brushName = App->CL_Doc->CurBrush->Name;
 
-			if (strcmp(brushName, "Player_Main") == 0 || strcmp(brushName, "Environ_0") == 0) 
+			// Array of non- Renameable brush names
+			const char* nonDeletableBrushes[] = { "Player_Main", "Environ_0" };
+
+			// Check if the current brush name is in the non-Renameable list
+			for (const char* nonDeletable : nonDeletableBrushes)
 			{
-				App->Say("This Brush cannot be Renamed");
-				return TRUE;
+				if (strcmp(brushName, nonDeletable) == 0) 
+				{
+					App->Say("This Brush cannot be Renamed");
+					return true;
+				}
 			}
 
 			App->CL_Entities->Rename_Brush();
@@ -307,11 +314,19 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Brush_Dlg(HWND hDlg, UINT message
 
 		if (LOWORD(wParam) == IDC_BT_DELETE_SEL_BRUSH)
 		{
-			int Result = strcmp(App->CL_Doc->CurBrush->Name, "Player_Main");
-			if (Result == 0)
+			const char* brushName = App->CL_Doc->CurBrush->Name;
+
+			// Array of non-deletable brush names
+			const char* nonDeletableBrushes[] = { "Player_Main", "Environ_0" };
+
+			// Check if the current brush name is in the non-deletable list
+			for (const char* nonDeletable : nonDeletableBrushes) 
 			{
-				App->Say("This Brush can not be Deleted");
-				return TRUE;
+				if (strcmp(brushName, nonDeletable) == 0) 
+				{
+					App->Say("This Brush cannot be Deleted");
+					return true;
+				}
 			}
 
 			int NumSelBrushes = App->CL_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes);
@@ -325,7 +340,6 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Brush_Dlg(HWND hDlg, UINT message
 				{
 					App->CL_Ogre->OGL_Listener->Show_Visuals(false);
 					App->CL_Entities->Delete_Brush();
-					//App->CL_Doc->ResetAllSelectedBrushes();
 				}
 			}
 			else
