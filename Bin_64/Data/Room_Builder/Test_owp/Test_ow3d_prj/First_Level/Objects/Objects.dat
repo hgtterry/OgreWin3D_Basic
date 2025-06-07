@@ -163,5 +163,24 @@ Physics_Quat=1.000000,0.000000,-0.000000,0.000000
 Dimensions_Lock=0
  
 *************************************************************************************
+[Object_7]
+Mesh_Name=Sound_7
+Mesh_File=SoundEntity_GD.mesh
+Mesh_Resource_Path=
+Material_File=Internal
+Object_ID=5
+Object_Type=2
+Object_Shape=1
+Object_Usage=15
+Mesh_Pos=145.238281,-112.000015,96.520447
+Mesh_Scale=1.000000,1.200000,1.400000
+Mesh_Rot=0.000000,0.000000,0.000000
+Mesh_Quat=1.000000,0.000000,0.000000,0.000000
+Physics_Quat=1.000000,0.000000,0.000000,0.000000
+Dimensions_Lock=0
+Sound_File=metal_hit.ogg
+Sound_Volume=0.500000
+ 
+*************************************************************************************
 [Counters]
-Objects_Count=7
+Objects_Count=8

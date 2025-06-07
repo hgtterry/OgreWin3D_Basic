@@ -183,7 +183,6 @@ void CL64_Scene::Clear_Level(bool FromFile)
 	flag_Project_Resources_Created = 0;
 
 	// Bullet Related
-
 	int i;
 	int CO = App->CL_Physics->dynamicsWorld->getNumCollisionObjects();
 	if (CO > 0)

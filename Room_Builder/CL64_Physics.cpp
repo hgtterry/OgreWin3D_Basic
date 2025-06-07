@@ -50,6 +50,35 @@ CL64_Physics::~CL64_Physics(void)
 }
 
 // *************************************************************************
+// *			Reset_Class:- Terry and Hazel Flanigan 2024			 	   *
+// *************************************************************************
+void CL64_Physics::Reset_Class()
+{
+	int i;
+	int CO = App->CL_Physics->dynamicsWorld->getNumCollisionObjects();
+	if (CO > 0)
+	{
+		for (i = App->CL_Physics->dynamicsWorld->getNumCollisionObjects() - 1; i >= 0; i--)
+		{
+			btCollisionObject* obj = App->CL_Physics->dynamicsWorld->getCollisionObjectArray()[i];
+
+			if (obj)
+			{
+				if (obj->getUserIndex() == Enums::Obj_Usage_Player)
+				{
+
+				}
+				else
+				{
+					App->CL_Physics->dynamicsWorld->removeCollisionObject(obj);
+					//delete obj;
+				}
+			}
+		}
+	}
+}
+
+// *************************************************************************
 // *			Init_Bullet:- Terry and Hazel Flanigan 2024   	 	 	   *
 // *************************************************************************
 void CL64_Physics::Init_Bullet()

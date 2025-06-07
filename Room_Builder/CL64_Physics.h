@@ -30,6 +30,7 @@ public:
 	CL64_Physics(void);
 	~CL64_Physics(void);
 
+	void Reset_Class();
 	void Init_Bullet();
 	void ShutDown_Bullet();
 	void Clear_Trimesh();
