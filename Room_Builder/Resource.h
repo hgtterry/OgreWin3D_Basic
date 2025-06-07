@@ -285,9 +285,12 @@
 #define IDC_CBROTYDELTA                 1186
 #define IDC_CBROTZDELTA                 1187
 #define IDC_COMBO7                      1188
+#define IDC_CBSCALEZDELTAX              1188
 #define IDC_STPOSX                      1189
 #define IDC_COMBO8                      1190
+#define IDC_CBSCALEZDELTAY              1190
 #define IDC_COMBO9                      1191
+#define IDC_CBSCALEZDELTAZ              1191
 #define IDC_STPOSY                      1192
 #define IDC_STPOSZ                      1193
 #define IDC_STROTX                      1194

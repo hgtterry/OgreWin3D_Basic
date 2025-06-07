@@ -60,6 +60,7 @@ private:
 	void Update_Deltas_Dlg(HWND hDlg);
 	void Fill_ComboBox_PosDelta(HWND hDlg);
 	void Fill_ComboBox_RotDelta(HWND hDlg);
+	void Fill_ComboBox_ScaleDelta(HWND hDlg);
 
 	void Update_From_Brush_Dlg(HWND hDlg);
 	void UpdateDialogItem(HWND hDlg, int itemId, float value, const char* format);

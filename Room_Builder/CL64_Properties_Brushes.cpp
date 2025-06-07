@@ -589,6 +589,11 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Dimensions_Dlg(HWND hDlg, UINT me
 		SendDlgItemMessage(hDlg, IDC_CBROTYDELTA, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_CBROTZDELTA, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
+		SendDlgItemMessage(hDlg, IDC_CBSCALEZDELTAX, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_CBSCALEZDELTAY, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_CBSCALEZDELTAZ, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		
 		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		//SendDlgItemMessage(hDlg, IDC_SIZELOCK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
@@ -1745,6 +1750,16 @@ void CL64_Properties_Brushes::Update_Deltas_Dlg(HWND hDlg)
 
 	CB_hWnd = GetDlgItem(hDlg, IDC_CBROTZDELTA);
 	Fill_ComboBox_RotDelta(CB_hWnd);
+
+	// Scale
+	CB_hWnd = GetDlgItem(hDlg, IDC_CBSCALEZDELTAX);
+	Fill_ComboBox_ScaleDelta(CB_hWnd);
+
+	CB_hWnd = GetDlgItem(hDlg, IDC_CBSCALEZDELTAY);
+	Fill_ComboBox_ScaleDelta(CB_hWnd);
+
+	CB_hWnd = GetDlgItem(hDlg, IDC_CBSCALEZDELTAZ);
+	Fill_ComboBox_ScaleDelta(CB_hWnd);
 }
 
 // *************************************************************************
@@ -1772,6 +1787,18 @@ void CL64_Properties_Brushes::Fill_ComboBox_RotDelta(HWND hDlg)
 	SendMessage(hDlg, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"1");
 	SendMessage(hDlg, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"45");
 	SendMessage(hDlg, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"90");
+
+	SendMessage(hDlg, CB_SETCURSEL, 0, 0);
+}
+
+// *************************************************************************
+// *		Fill_ComboBox_ScaleDelta:- Terry and Hazel Flanigan 2025 	   *
+// *************************************************************************
+void CL64_Properties_Brushes::Fill_ComboBox_ScaleDelta(HWND hDlg)
+{
+	SendMessage(hDlg, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"0.1");
+	//SendMessage(hDlg, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"45");
+	//SendMessage(hDlg, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"90");
 
 	SendMessage(hDlg, CB_SETCURSEL, 0, 0);
 }
