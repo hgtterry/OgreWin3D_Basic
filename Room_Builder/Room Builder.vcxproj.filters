@@ -264,6 +264,9 @@
     <ClInclude Include="CL64_Editor_Control.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="CL64_Com_Sounds.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Room Builder.cpp">
@@ -507,6 +510,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CL64_Editor_Control.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CL64_Com_Sounds.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

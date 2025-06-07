@@ -1975,7 +1975,11 @@ bool CL64_Project::Load_Project_Objects()
 			// Read_Message(count, section);
 			break;
 		case Enums::Obj_Usage_Sound:
-			// Handle sound loading
+			App->CL_Ini_File->GetString(mSection, "Sound_File", B_Object->Sound_File, MAX_PATH);
+
+			App->CL_Ini_File->GetString(mSection, "Sound_Volume", chr_Tag1, MAX_PATH);
+			(void)sscanf(chr_Tag1, "%f", &x);
+			B_Object->SndVolume = x;
 			break;
 		case Enums::Obj_Usage_Collectable:
 			// Read_Collectable(count, section);

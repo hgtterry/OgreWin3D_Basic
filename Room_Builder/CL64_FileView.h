@@ -51,6 +51,8 @@ public:
 	HTREEITEM FV_Evirons_Folder;
 	HTREEITEM FV_Objects_Folder;
 	HTREEITEM FV_Players_Folder;	// Players Folder FileFView
+	HTREEITEM FV_Sounds_Folder;
+
 
 	HMENU hMenu;
 
@@ -80,7 +82,6 @@ private:
 	HTREEITEM FV_LevelFolder;
 	HTREEITEM FV_Cameras_Folder;
 	HTREEITEM FV_Message_Trigger_Folder;
-	HTREEITEM FV_Sounds_Folder;
 	HTREEITEM FV_Move_Folder;
 	HTREEITEM FV_Teleporters_Folder;
 	HTREEITEM FV_Collectables_Folder;

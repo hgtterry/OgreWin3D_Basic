@@ -662,7 +662,7 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 	//	return;
 	//}
 	
-	// ---- Objects
+	// ------------------------- Objects
 	if (!strcmp(FileView_Folder, "Objects")) // Clicked Folder
 	{
 		Context_Selection = Enums::FileView_Objects_Folder;
@@ -723,7 +723,7 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 		return;
 	}
 
-	// ------------------------------------------------------------ Eviron_Entities
+	// ------------------------- Eviron_Entities
 	if (!strcmp(FileView_Folder, "Evironments")) // Folder
 	{
 		Context_Selection = Enums::FileView_EnvironEntity_Folder;
@@ -780,6 +780,49 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 
 		return;
 	}
+
+	// ------------------------- Sound Entity
+	if (!strcmp(FileView_Folder, "Sounds")) // Folder
+	{
+		Context_Selection = Enums::FileView_Sounds_Folder;
+		return;
+	}
+
+	if (!strcmp(FileView_File, "Sounds"))
+	{
+		Context_Selection = Enums::FileView_Sounds_File;
+
+		HideRightPanes();
+		App->CL_Props_Dialogs->Show_Details_Goto_Dlg(true);
+		App->CL_Props_Dialogs->Show_Dimensions_Dlg(1);
+		//App->CL_Props_Dialogs->Hide_Debug_Dlg(1);
+
+		//App->SBC_Properties->Is_Player = 0;*/
+
+		//----------------------------------------------------------------------------
+		/*App->SBC_Properties->Reset_Last_Selected_Object(App->SBC_Properties->Last_Selected_Object);
+		App->SBC_Properties->Last_Selected_Object = Index;*/
+		//----------------------------------------------------------------------------
+
+		App->CL_Gizmos->MarkerBox_Adjust(Index);
+
+		App->CL_Properties_Scene->Current_Selected_Object = Index;
+		App->CL_Properties_Scene->Edit_Category = Enums::Edit_Sounds;
+
+		//App->CL_LookUps->Update_Types();
+
+		//ShowWindow(App->CL_Properties_Scene->Properties_Dlg_hWnd, 1);
+
+		App->CL_Properties_Scene->Update_ListView_Sounds();
+
+		/*if (App->SBC_Dimensions->Show_Dimensions == 1)
+		{
+			App->SBC_Dimensions->Prepare_Dimensions();
+		}*/
+
+		return;
+	}
+
 }
 
 // *************************************************************************
@@ -1191,6 +1234,20 @@ void CL64_FileView::Context_New(HWND hDlg)
 		if (Doit == 0)
 		{
 			App->CL_Com_Environments->Add_New_Environ_Entity(false);
+		}
+
+		return;
+	}
+
+	// Sounds
+	if (App->CL_FileView->Context_Selection == Enums::FileView_Sounds_Folder)
+	{
+		App->CL_Dialogs->YesNo((LPSTR)"Add Sound Entity", (LPSTR)"Do you want to add a new Sound Entity");
+
+		bool Doit = App->CL_Dialogs->flag_Dlg_Canceled;
+		if (Doit == 0)
+		{
+			App->CL_Com_Sounds->Add_New_Sound();
 		}
 
 		return;

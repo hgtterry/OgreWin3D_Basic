@@ -79,6 +79,7 @@ CL64_App::CL64_App(void)
 	CL_Com_Player =				nullptr;
 	CL_Com_Environments =		nullptr;
 	CL_Com_Objects =			nullptr;
+	CL_Com_Sounds =				nullptr;
 	CL_PB =						nullptr;
 
 	// Scene Editor
@@ -223,6 +224,7 @@ void CL64_App::InitApp(void)
 	CL_Com_Player =				new CL64_Com_Player();
 	CL_Com_Environments =		new CL64_Com_Environments();
 	CL_Com_Objects =			new CL64_Com_Objects();
+	CL_Com_Sounds =				new CL64_Com_Sounds();
 	CL_PB =						new CL64_PB();
 
 	// Scene Editor

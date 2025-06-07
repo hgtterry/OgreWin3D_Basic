@@ -269,12 +269,12 @@ bool CL64_Objects_Create::Add_Objects_From_File() // From File
 
 		if (App->CL_Scene->B_Object[Count]->Usage == Enums::Obj_Usage_Sound)
 		{
-			/*App->CL_Com_Sounds->Create_Sound_Entity(Count);
+			App->CL_Com_Sounds->Create_Sound_Entity(Count);
 
 			HTREEITEM Temp = App->CL_FileView->Add_Item(App->CL_FileView->FV_Sounds_Folder, App->CL_Scene->B_Object[Count]->Object_Name, Count, false);
 			App->CL_Scene->B_Object[Count]->FileViewItem = Temp;
 
-			App->CL_FileView->Set_FolderActive(App->CL_FileView->FV_Sounds_Folder);*/
+			App->CL_FileView->Set_FolderActive(App->CL_FileView->FV_Sounds_Folder);
 		}
 		else if (App->CL_Scene->B_Object[Count]->Usage == Enums::Obj_Usage_Message)
 		{

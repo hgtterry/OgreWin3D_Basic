@@ -257,7 +257,7 @@ void CL64_Properties_Scene::ListView_OnClickOptions(LPARAM lParam)
 		return;
 
 	case Enums::Edit_Sounds:
-		// Edit_Sounds(lParam);
+		 Edit_Sounds(lParam);
 		return;
 
 	case Enums::Edit_Teleport:
@@ -460,6 +460,68 @@ bool CL64_Properties_Scene::Update_ListView_Environs()
 	}
 
 	return true;
+}
+
+// *************************************************************************
+// *			Update_ListView_Sounds:- Terry and Hazel Flanigan 2024     *
+// *************************************************************************
+bool CL64_Properties_Scene::Update_ListView_Sounds()
+{
+	int index = Current_Selected_Object;
+
+	char Num[10];
+	char chr_ID[50];
+	char IndexNum[10];
+	_itoa(App->CL_Scene->B_Object[index]->This_Object_UniqueID, Num, 10);
+	_itoa(index, IndexNum, 10);
+	strcpy(chr_ID, "Unique ID ");
+	strcat(chr_ID, Num);
+	strcat(chr_ID, "  Object Index ");
+	strcat(chr_ID, IndexNum);
+
+	char chr_Usage_Num[50];
+	_itoa(App->CL_Scene->B_Object[index]->Usage, chr_Usage_Num, 10);
+
+	SetWindowText(Properties_Dlg_hWnd, chr_ID);
+	SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)App->CL_Scene->B_Object[index]->Object_Name);
+
+
+	char chr_Volume[100];
+	float sum2 = App->CL_Scene->B_Object[index]->SndVolume;
+	int Percent = int(sum2 * 100);
+	_itoa(Percent, chr_Volume, 10);
+
+	const int NUM_ITEMS = 5;
+	const int NUM_COLS = 2;
+	std::string grid[NUM_COLS][NUM_ITEMS]; // string table
+	LV_ITEM pitem;
+	memset(&pitem, 0, sizeof(LV_ITEM));
+	pitem.mask = LVIF_TEXT;
+
+	grid[0][0] = "Name", grid[1][0] = App->CL_Scene->B_Object[index]->Object_Name;
+	grid[0][1] = " ", grid[1][1] = " ";
+	grid[0][2] = "Sound", grid[1][2] = App->CL_Scene->B_Object[index]->Sound_File;
+	grid[0][3] = "Volume", grid[1][3] = chr_Volume;
+	grid[0][4] = "Usage", grid[1][4] = chr_Usage_Num;
+
+	ListView_DeleteAllItems(Properties_hLV);
+
+	for (DWORD row = 0; row < NUM_ITEMS; row++)
+	{
+		pitem.iItem = row;
+		pitem.pszText = const_cast<char*>(grid[0][row].c_str());
+		ListView_InsertItem(Properties_hLV, &pitem);
+
+		//ListView_SetItemText
+
+		for (DWORD col = 1; col < NUM_COLS; col++)
+		{
+			ListView_SetItemText(Properties_hLV, row, col,
+				const_cast<char*>(grid[col][row].c_str()));
+		}
+	}
+
+	return 1;
 }
 
 // *************************************************************************
@@ -854,4 +916,86 @@ bool CL64_Properties_Scene::Edit_Environs_OnClick(LPARAM lParam)
 	}
 
 	return 1;
+}
+
+// *************************************************************************
+// *			Edit_Sounds:- Terry and Hazel Flanigan 2024				   *
+// *************************************************************************
+void CL64_Properties_Scene::Edit_Sounds(LPARAM lParam)
+{
+	int Index = Current_Selected_Object; // Get Selected Object Index 
+	int result = 1;
+	int test;
+
+	LPNMLISTVIEW poo = (LPNMLISTVIEW)lParam;
+	test = poo->iItem;
+	ListView_GetItemText(Properties_hLV, test, 0, btext, 20);
+
+	// Name
+	result = strcmp(btext, "Name");
+	if (result == 0)
+	{
+		App->CL_Com_Sounds->Rename_Sound(Index);
+		Update_ListView_Sounds();
+	}
+
+
+	// Sound
+	result = strcmp(btext, "Sound");
+	if (result == 0)
+	{
+		App->CL_SoundMgr->flag_Accessed = 1;
+		strcpy(App->CL_SoundMgr->Access_File, App->CL_Scene->B_Object[Index]->Sound_File);
+
+		App->CL_SoundMgr->Show_Sound_Player();
+
+		strcpy(App->CL_Scene->B_Object[Index]->Sound_File, App->CL_SoundMgr->Access_File);
+
+		App->CL_Scene->B_Object[Index]->SndVolume = App->CL_SoundMgr->SndVolume;
+
+		//Mark_As_Altered(Index);
+
+		Update_ListView_Sounds();
+
+		return;
+	}
+
+	// Sound
+	result = strcmp(btext, "Volume");
+	if (result == 0)
+	{
+		App->CL_SoundMgr->flag_Accessed = 1;
+		strcpy(App->CL_SoundMgr->Access_File, App->CL_Scene->B_Object[Index]->Sound_File);
+
+		App->CL_SoundMgr->Show_Sound_Player();
+
+		strcpy(App->CL_Scene->B_Object[Index]->Sound_File, App->CL_SoundMgr->Access_File);
+
+		App->CL_Scene->B_Object[Index]->SndVolume = App->CL_SoundMgr->SndVolume;
+
+		//Mark_As_Altered(Index);
+
+		Update_ListView_Sounds();
+
+		return;
+	}
+
+	// Sound
+	result = strcmp(btext, "Play");
+	if (result == 0)
+	{
+
+		/*App->CL_Dialogs->Show_YesNo_Dlg("Play Sound",App->CL_Scene->B_Object[Index]->Sound_File,true);
+
+		if (App->CL_Dialogs->Canceled == 0)
+		{
+			App->CL_Scene->B_Object[Index]->
+		}*/
+
+		//Update_ListView_Teleport();
+
+		return;
+	}
+
+	return;
 }

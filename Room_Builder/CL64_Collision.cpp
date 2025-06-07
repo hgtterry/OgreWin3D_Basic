@@ -459,17 +459,17 @@ void CL64_Collision::MoveObject_Listener(Ogre::Real Time)
 // **************************************************************************
 bool CL64_Collision::Play_Sound(int Index)
 {
-	/*char buff[MAX_PATH];
+	char buff[MAX_PATH];
 	strcpy(buff, App->CL_SoundMgr->Default_Folder);
 	strcat(buff, "\\Media\\Sounds\\");
 
-	strcat(buff, App->CL_Editor_Com->B_Object[Index]->Sound_File);
+	strcat(buff, App->CL_Scene->B_Object[Index]->Sound_File);
 
 	App->CL_SoundMgr->SndFile = App->CL_SoundMgr->SoundEngine->play2D(buff, false, true, true);
-	App->CL_SoundMgr->SndFile->setVolume(App->CL_Editor_Com->B_Object[Index]->SndVolume);
+	App->CL_SoundMgr->SndFile->setVolume(App->CL_Scene->B_Object[Index]->SndVolume);
 	App->CL_SoundMgr->SndFile->setIsPaused(false);
 
-	App->CL_Editor_Com->B_Object[Index]->flag_Triggered = 1;*/
+	App->CL_Scene->B_Object[Index]->flag_Triggered = 1;
 
 	return 1;
 }

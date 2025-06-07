@@ -1,7 +1,7 @@
 /*
 Copyright (c) 2024 - 2025 Inflanite_HGT W.T.Flanigan H.C.Flanigan
 
-OW3D_Mesh_Builder
+OgreWin3D
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -23,42 +23,15 @@ THE SOFTWARE.
 */
 
 #pragma once
-class CL64_Properties_Scene
+class CL64_Com_Sounds
 {
 public:
-	CL64_Properties_Scene();
-	~CL64_Properties_Scene();
 
-	void Start_Properties(void);
-	void Create_Properties_hLV(void);
-	void Show_Properties_Scene(bool Enable);
+	CL64_Com_Sounds(void);
+	~CL64_Com_Sounds(void);
 
-	bool Update_ListView_Player();
-	bool Update_ListView_Environs();
-	bool Update_ListView_Sounds();
-
-	bool Update_ListView_Objects();
-	bool Edit_Player(LPARAM lParam);
-	bool Edit_Environs_OnClick(LPARAM lParam);
-	void Edit_Object(LPARAM lParam);
-	void Edit_Sounds(LPARAM lParam);
-
-
-	HWND Properties_Dlg_hWnd;
-	HWND Properties_hLV;
-
-	int Edit_Category;
-	int Current_Selected_Object;
-	int Last_Selected_Object;
-
-	bool flag_Properties_Dlg_Active;
-	bool flag_Edit_Physics;
-
-private:
-	static LRESULT CALLBACK Proc_Properties(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
-
-	void ListView_OnClickOptions(LPARAM lParam);
-
-	char btext[20]; // ListView_GetItemText Text Holder for Compare
+	bool Add_New_Sound();
+	bool Create_Sound_Entity(int Index);
+	void Rename_Sound(int Index);
 };
 
