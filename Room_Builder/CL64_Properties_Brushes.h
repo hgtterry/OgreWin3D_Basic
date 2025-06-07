@@ -67,6 +67,8 @@ private:
 	void Get_Brush();
 
 	void Rotate_Brush(float SX, float SY, float SZ);
+	void Rotate_Entity(float SX, float SY, float SZ);
+
 	void Scale_Brush(float SX, float SY, float SZ);
 
 	float PosX_Delta;
