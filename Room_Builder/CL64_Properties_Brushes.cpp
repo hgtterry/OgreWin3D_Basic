@@ -48,9 +48,9 @@ CL64_Properties_Brushes::CL64_Properties_Brushes()
 	PosY_Delta = 1;
 	PosZ_Delta = 1;
 
-	ScaleX_Delta = 1;
-	ScaleY_Delta = 1;
-	ScaleZ_Delta = 1;
+	ScaleX_Delta = 0.1;
+	ScaleY_Delta = 0.1;
+	ScaleZ_Delta = 0.1;
 
 	RotX_Delta = 1;
 	RotY_Delta = 1;
