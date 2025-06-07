@@ -1296,16 +1296,38 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Dimensions_Dlg(HWND hDlg, UINT me
 			{
 			case SB_LINERIGHT:
 			{
-				/*if (App->CL_Properties_Brushes->ScaleLock_Flag == 1)
-				{
-					App->CL_Properties_Brushes->Scale_Brush_Lock(1);
-				}
-				else*/
+
+				if (App->CL_Properties_Brushes->Selected_Brush->GroupId == Enums::Brushs_ID_Area)
 				{
 					float Delta = App->CL_Properties_Brushes->ScaleX_Delta;
 					float scale = (App->CL_Properties_Brushes->Size.x + Delta) / App->CL_Properties_Brushes->Size.x;
 
 					App->CL_Properties_Brushes->Scale_Brush(scale, 1, 1);
+				}
+				else
+				{
+					int Index = App->CL_Entities->GetIndex_By_Name(App->CL_Properties_Brushes->Selected_Brush->Name);
+					auto& m_object = App->CL_Scene->B_Object[Index];
+
+					if (m_object)
+					{
+						Ogre::Vector3 Old_Scale = m_object->Mesh_Scale;
+						Old_Scale.x += App->CL_Properties_Brushes->ScaleX_Delta;
+
+						m_object->Object_Node->setScale(Old_Scale);
+						m_object->Mesh_Scale = Old_Scale;
+
+						App->CL_Physics->Set_Physics_Dimensions(Index);
+
+						App->CL_Brush_X->Set_Brush_From_Entity_ByName(m_object->Object_Name, true);
+
+						App->CL_Gizmos->MarkerBox_Adjust(Index);
+						App->CL_Ogre->RenderFrame(2);
+
+						m_object->flag_Altered = 1;
+						App->CL_Level->flag_Level_is_Modified = true;
+						App->CL_FileView->Mark_Altered(m_object->FileViewItem);
+					}
 				}
 
 				break;
@@ -1313,11 +1335,7 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Dimensions_Dlg(HWND hDlg, UINT me
 
 			case SB_LINELEFT:
 			{
-				/*if (App->CLSB_Brushes->ScaleLock_Flag == 1)
-				{
-					App->CLSB_Brushes->Scale_Brush_Lock(0);
-				}
-				else*/
+				if (App->CL_Properties_Brushes->Selected_Brush->GroupId == Enums::Brushs_ID_Area)
 				{
 					if (App->CL_Properties_Brushes->Size.x > 1)
 					{
@@ -1327,6 +1345,32 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Dimensions_Dlg(HWND hDlg, UINT me
 						App->CL_Properties_Brushes->Scale_Brush(scale, 1, 1);
 					}
 				}
+				else
+				{
+					int Index = App->CL_Entities->GetIndex_By_Name(App->CL_Properties_Brushes->Selected_Brush->Name);
+					auto& m_object = App->CL_Scene->B_Object[Index];
+
+					if (m_object)
+					{
+						Ogre::Vector3 Old_Scale = m_object->Mesh_Scale;
+						Old_Scale.x -= App->CL_Properties_Brushes->ScaleX_Delta;
+
+						m_object->Object_Node->setScale(Old_Scale);
+						m_object->Mesh_Scale = Old_Scale;
+
+						App->CL_Physics->Set_Physics_Dimensions(Index);
+
+						App->CL_Brush_X->Set_Brush_From_Entity_ByName(m_object->Object_Name, true);
+
+						App->CL_Gizmos->MarkerBox_Adjust(Index);
+						App->CL_Ogre->RenderFrame(2);
+
+						m_object->flag_Altered = 1;
+						App->CL_Level->flag_Level_is_Modified = true;
+						App->CL_FileView->Mark_Altered(m_object->FileViewItem);
+					}
+				}
+
 				break;
 			}
 			}
@@ -1343,20 +1387,77 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Dimensions_Dlg(HWND hDlg, UINT me
 			{
 			case SB_LINERIGHT:
 			{
-				float scale = (App->CL_Properties_Brushes->Size.y + 1) / App->CL_Properties_Brushes->Size.y;
+				if (App->CL_Properties_Brushes->Selected_Brush->GroupId == Enums::Brushs_ID_Area)
+				{
+					float scale = (App->CL_Properties_Brushes->Size.y + 1) / App->CL_Properties_Brushes->Size.y;
+					App->CL_Properties_Brushes->Scale_Brush(1, scale, 1);
+				}
+				else
+				{
+					int Index = App->CL_Entities->GetIndex_By_Name(App->CL_Properties_Brushes->Selected_Brush->Name);
+					auto& m_object = App->CL_Scene->B_Object[Index];
 
-				App->CL_Properties_Brushes->Scale_Brush(1, scale, 1);
+					if (m_object)
+					{
+						Ogre::Vector3 Old_Scale = m_object->Mesh_Scale;
+						Old_Scale.y += App->CL_Properties_Brushes->ScaleY_Delta;
+
+						m_object->Object_Node->setScale(Old_Scale);
+						m_object->Mesh_Scale = Old_Scale;
+
+						App->CL_Physics->Set_Physics_Dimensions(Index);
+
+						App->CL_Brush_X->Set_Brush_From_Entity_ByName(m_object->Object_Name, true);
+
+						App->CL_Gizmos->MarkerBox_Adjust(Index);
+						App->CL_Ogre->RenderFrame(2);
+
+						m_object->flag_Altered = 1;
+						App->CL_Level->flag_Level_is_Modified = true;
+						App->CL_FileView->Mark_Altered(m_object->FileViewItem);
+					}
+				}
+
 				break;
 			}
 
 			case SB_LINELEFT:
 			{
-				if (App->CL_Properties_Brushes->Size.y > 1)
+				if (App->CL_Properties_Brushes->Selected_Brush->GroupId == Enums::Brushs_ID_Area)
 				{
-					float scale = (App->CL_Properties_Brushes->Size.y + -1) / App->CL_Properties_Brushes->Size.y;
+					if (App->CL_Properties_Brushes->Size.y > 1)
+					{
+						float scale = (App->CL_Properties_Brushes->Size.y + -1) / App->CL_Properties_Brushes->Size.y;
 
-					App->CL_Properties_Brushes->Scale_Brush(1, scale, 1);
+						App->CL_Properties_Brushes->Scale_Brush(1, scale, 1);
+					}
 				}
+				else
+				{
+					int Index = App->CL_Entities->GetIndex_By_Name(App->CL_Properties_Brushes->Selected_Brush->Name);
+					auto& m_object = App->CL_Scene->B_Object[Index];
+
+					if (m_object)
+					{
+						Ogre::Vector3 Old_Scale = m_object->Mesh_Scale;
+						Old_Scale.y -= App->CL_Properties_Brushes->ScaleY_Delta;
+
+						m_object->Object_Node->setScale(Old_Scale);
+						m_object->Mesh_Scale = Old_Scale;
+
+						App->CL_Physics->Set_Physics_Dimensions(Index);
+
+						App->CL_Brush_X->Set_Brush_From_Entity_ByName(m_object->Object_Name, true);
+
+						App->CL_Gizmos->MarkerBox_Adjust(Index);
+						App->CL_Ogre->RenderFrame(2);
+
+						m_object->flag_Altered = 1;
+						App->CL_Level->flag_Level_is_Modified = true;
+						App->CL_FileView->Mark_Altered(m_object->FileViewItem);
+					}
+				}
+
 				break;
 			}
 			}
@@ -1373,20 +1474,78 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Dimensions_Dlg(HWND hDlg, UINT me
 			{
 			case SB_LINERIGHT:
 			{
-				float scale = (App->CL_Properties_Brushes->Size.z + 1) / App->CL_Properties_Brushes->Size.z;
+				if (App->CL_Properties_Brushes->Selected_Brush->GroupId == Enums::Brushs_ID_Area)
+				{
+					float scale = (App->CL_Properties_Brushes->Size.z + 1) / App->CL_Properties_Brushes->Size.z;
 
-				App->CL_Properties_Brushes->Scale_Brush(1, 1, scale);
+					App->CL_Properties_Brushes->Scale_Brush(1, 1, scale);
+				}
+				else
+				{
+					int Index = App->CL_Entities->GetIndex_By_Name(App->CL_Properties_Brushes->Selected_Brush->Name);
+					auto& m_object = App->CL_Scene->B_Object[Index];
+
+					if (m_object)
+					{
+						Ogre::Vector3 Old_Scale = m_object->Mesh_Scale;
+						Old_Scale.z += App->CL_Properties_Brushes->ScaleY_Delta;
+
+						m_object->Object_Node->setScale(Old_Scale);
+						m_object->Mesh_Scale = Old_Scale;
+
+						App->CL_Physics->Set_Physics_Dimensions(Index);
+
+						App->CL_Brush_X->Set_Brush_From_Entity_ByName(m_object->Object_Name, true);
+
+						App->CL_Gizmos->MarkerBox_Adjust(Index);
+						App->CL_Ogre->RenderFrame(2);
+
+						m_object->flag_Altered = 1;
+						App->CL_Level->flag_Level_is_Modified = true;
+						App->CL_FileView->Mark_Altered(m_object->FileViewItem);
+					}
+				}
+
 				break;
 			}
 
 			case SB_LINELEFT:
 			{
-				if (App->CL_Properties_Brushes->Size.z > 1)
+				if (App->CL_Properties_Brushes->Selected_Brush->GroupId == Enums::Brushs_ID_Area)
 				{
-					float scale = (App->CL_Properties_Brushes->Size.z + -1) / App->CL_Properties_Brushes->Size.z;
+					if (App->CL_Properties_Brushes->Size.z > 1)
+					{
+						float scale = (App->CL_Properties_Brushes->Size.z + -1) / App->CL_Properties_Brushes->Size.z;
 
-					App->CL_Properties_Brushes->Scale_Brush(1, 1, scale);
+						App->CL_Properties_Brushes->Scale_Brush(1, 1, scale);
+					}
 				}
+				else
+				{
+					int Index = App->CL_Entities->GetIndex_By_Name(App->CL_Properties_Brushes->Selected_Brush->Name);
+					auto& m_object = App->CL_Scene->B_Object[Index];
+
+					if (m_object)
+					{
+						Ogre::Vector3 Old_Scale = m_object->Mesh_Scale;
+						Old_Scale.z -= App->CL_Properties_Brushes->ScaleY_Delta;
+
+						m_object->Object_Node->setScale(Old_Scale);
+						m_object->Mesh_Scale = Old_Scale;
+
+						App->CL_Physics->Set_Physics_Dimensions(Index);
+
+						App->CL_Brush_X->Set_Brush_From_Entity_ByName(m_object->Object_Name, true);
+
+						App->CL_Gizmos->MarkerBox_Adjust(Index);
+						App->CL_Ogre->RenderFrame(2);
+
+						m_object->flag_Altered = 1;
+						App->CL_Level->flag_Level_is_Modified = true;
+						App->CL_FileView->Mark_Altered(m_object->FileViewItem);
+					}
+				}
+
 				break;
 			}
 			}
