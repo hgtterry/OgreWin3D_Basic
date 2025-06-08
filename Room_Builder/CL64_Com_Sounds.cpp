@@ -46,39 +46,44 @@ bool CL64_Com_Sounds::Add_New_Sound()
 
 	App->CL_Scene->B_Object[Index] = new Base_Object();
 
+	// Set sound file and path
 	strcpy(App->CL_Scene->B_Object[Index]->Sound_File, "Welcome.ogg");
 	strcpy(App->CL_Scene->B_Object[Index]->Sound_Path, App->CL_SoundMgr->Default_Folder);
 	strcat(App->CL_Scene->B_Object[Index]->Sound_Path, "\\Media\\Sounds\\");
 	strcat(App->CL_Scene->B_Object[Index]->Sound_Path, "Welcome.ogg");
 
-	App->CL_Scene->B_Object[Index]->flag_HasSound = 1;
-
+	// Set flags and types
+	App->CL_Scene->B_Object[Index]->flag_HasSound = true;
 	App->CL_Scene->B_Object[Index]->Type = Enums::Bullet_Type_Static;
 	App->CL_Scene->B_Object[Index]->Shape = Enums::Shape_Box;
 	App->CL_Scene->B_Object[Index]->This_Object_UniqueID = App->CL_Scene->UniqueID_Object_Counter; // Unique ID
 
+	// Set mesh file name
 	strcpy(App->CL_Scene->B_Object[Index]->Mesh_FileName, "SoundEntity_GD.mesh");
 
+	// Generate a unique object name
 	strcpy_s(B_Name, "Sound_");
 	_itoa(Index, ConNum, 10);
 	strcat(B_Name, ConNum);
 	strcpy(App->CL_Scene->B_Object[Index]->Object_Name, B_Name);
 
-	Ogre::Vector3 Pos = App->CL_Com_Objects->GetPlacement(-50);
-	App->CL_Scene->B_Object[Index]->Mesh_Pos = Pos;
+	// Set the position of the sound object
+	App->CL_Scene->B_Object[Index]->Mesh_Pos = App->CL_Com_Objects->GetPlacement(-50);
 
+	// Create sound entity and brush
 	Create_Sound_Entity(Index);
+	App->CL_Entities->Create_Entity_Brush(Index);
+	App->CL_Brush_X->Move_Brush_By_Name((LPSTR)B_Name, Index);
 
+	// Add item to file view and select it
 	HTREEITEM Temp = App->CL_FileView->Add_Item(App->CL_FileView->FV_Sounds_Folder, App->CL_Scene->B_Object[Index]->Object_Name, Index, true);
 	App->CL_Scene->B_Object[Index]->FileViewItem = Temp;
-
 	App->CL_FileView->SelectItem(App->CL_Scene->B_Object[Index]->FileViewItem);
 
+	// Update counters and flags
 	App->CL_Scene->UniqueID_Object_Counter++;
 	App->CL_Scene->Object_Count++;
-
 	App->CL_FileView->Set_FolderActive(App->CL_FileView->FV_Sounds_Folder);
-
 	App->CL_Level->flag_Level_is_Modified = true;
 
 	return 1;

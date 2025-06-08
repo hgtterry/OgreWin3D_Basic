@@ -41,6 +41,7 @@ public:
 	void Add_Physics_Capsule(bool Dynamic, int Index);
 	void Add_Physics_Cylinder(bool Dynamic, int Index);
 	void Add_Physics_Cone(bool Dynamic, int Index);
+	void AddItemToFileView(HTREEITEM folder, int count);
 
 	btBvhTriangleMeshShape* create_New_Trimesh(int Index);
 

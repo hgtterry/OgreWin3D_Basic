@@ -257,123 +257,92 @@ bool CL64_Objects_Create::Add_New_Object(int Index, bool From_MeshViewer)
 // *************************************************************************
 bool CL64_Objects_Create::Add_Objects_From_File() // From File
 {
-	int Object_Count = App->CL_Scene->Object_Count;
-	int Count = 0;
+	int objectCount = App->CL_Scene->Object_Count;
 
-	while (Count < Object_Count)
+	for (int count = 0; count < objectCount; ++count)
 	{
-		char Test_For_Mesh[MAX_PATH];
-		strcpy(Test_For_Mesh, App->CL_Project->m_Main_Assets_Path);
-		strcat(Test_For_Mesh, App->CL_Scene->B_Object[Count]->Mesh_FileName);
-		
+		char testForMesh[MAX_PATH];
+		snprintf(testForMesh, sizeof(testForMesh), "%s%s", App->CL_Project->m_Main_Assets_Path, App->CL_Scene->B_Object[count]->Mesh_FileName);
 
-		if (App->CL_Scene->B_Object[Count]->Usage == Enums::Obj_Usage_Sound)
+		switch (App->CL_Scene->B_Object[count]->Usage)
 		{
-			App->CL_Com_Sounds->Create_Sound_Entity(Count);
+		case Enums::Obj_Usage_Sound:
+			App->CL_Com_Sounds->Create_Sound_Entity(count);
+			AddItemToFileView(App->CL_FileView->FV_Sounds_Folder, count);
+			break;
 
-			HTREEITEM Temp = App->CL_FileView->Add_Item(App->CL_FileView->FV_Sounds_Folder, App->CL_Scene->B_Object[Count]->Object_Name, Count, false);
-			App->CL_Scene->B_Object[Count]->FileViewItem = Temp;
+		case Enums::Obj_Usage_Message:
+			// App->CL_Com_Messages->Create_Message_Entity(count);
+			// AddItemToFileView(App->CL_FileView->FV_Message_Trigger_Folder, count);
+			break;
 
-			App->CL_FileView->Set_FolderActive(App->CL_FileView->FV_Sounds_Folder);
-		}
-		else if (App->CL_Scene->B_Object[Count]->Usage == Enums::Obj_Usage_Message)
-		{
-			/*App->CL_Com_Messages->Create_Message_Entity(Count);
-			App->CL_Scene->B_Object[Count]->Set_ImGui_Panel_Name();
+		case Enums::Obj_Usage_Move:
+			// App->CL_Com_MoveEntity->Create_Move_Entity(count);
+			// AddItemToFileView(App->CL_FileView->FV_Move_Folder, count);
+			break;
 
-			HTREEITEM Temp = App->CL_FileView->Add_Item(App->CL_FileView->FV_Message_Trigger_Folder, App->CL_Scene->B_Object[Count]->Object_Name, Count, false);
-			App->CL_Scene->B_Object[Count]->FileViewItem = Temp;
+		case Enums::Obj_Usage_Teleport:
+			// App->CL_Com_Teleporters->Create_Teleport_Entity(count);
+			// AddItemToFileView(App->CL_FileView->FV_Teleporters_Folder, count);
+			break;
 
-			App->CL_FileView->Set_FolderActive(App->CL_FileView->FV_Message_Trigger_Folder);*/
-		}
-		else if (App->CL_Scene->B_Object[Count]->Usage == Enums::Obj_Usage_Move)
-		{
-			/*App->CL_Com_MoveEntity->Create_Move_Entity(Count);
-
-			HTREEITEM Temp = App->CL_FileView->Add_Item(App->CL_FileView->FV_Move_Folder, App->CL_Scene->B_Object[Count]->Object_Name, Count, false);
-			App->CL_Scene->B_Object[Count]->FileViewItem = Temp;
-
-			App->CL_FileView->Set_FolderActive(App->CL_FileView->FV_Move_Folder);*/
-
-		}
-		else if (App->CL_Scene->B_Object[Count]->Usage == Enums::Obj_Usage_Teleport)
-		{
-			/*App->CL_Com_Teleporters->Create_Teleport_Entity(Count);
-
-			HTREEITEM Temp = App->CL_FileView->Add_Item(App->CL_FileView->FV_Teleporters_Folder, App->CL_Scene->B_Object[Count]->Object_Name, Count, false);
-			App->CL_Scene->B_Object[Count]->FileViewItem = Temp;
-
-			App->CL_FileView->Set_FolderActive(App->CL_FileView->FV_Teleporters_Folder);*/
-
-		}
-		else if (App->CL_Scene->B_Object[Count]->Usage == Enums::Obj_Usage_Collectable)
-		{
-			/*bool Test = App->CL_File_IO->Check_File_Exist(Test_For_Mesh);
-			if (Test == 0)
+		case Enums::Obj_Usage_Collectable:
+			/*if (!App->CL_File_IO->Check_File_Exist(testForMesh))
 			{
-				App->Say("Can not find", App->CL_Scene->B_Object[Count]->Mesh_FileName);
+				App->Say("Cannot find", App->CL_Scene->B_Object[count]->Mesh_FileName);
 			}
 			else
 			{
-				App->CL_Com_Collectables->Create_Collectable_Entity(Count);
-
-				HTREEITEM Temp = App->CL_FileView->Add_Item(App->CL_FileView->FV_Collectables_Folder, App->CL_Scene->B_Object[Count]->Object_Name, Count, false);
-				App->CL_Scene->B_Object[Count]->FileViewItem = Temp;
-
-				App->CL_FileView->Set_FolderActive(App->CL_FileView->FV_Collectables_Folder);
+				App->CL_Com_Collectables->Create_Collectable_Entity(count);
+				AddItemToFileView(App->CL_FileView->FV_Collectables_Folder, count);
 				App->CL_FileView->Set_FolderActive(App->CL_FileView->FV_EntitiesFolder);
 			}*/
+			break;
 
-		}
-		else if (App->CL_Scene->B_Object[Count]->Usage == Enums::Obj_Usage_EnvironEntity)
-		{
-			App->CL_Com_Environments->Create_Environ_Entity(Count);
+		case Enums::Obj_Usage_EnvironEntity:
+			App->CL_Com_Environments->Create_Environ_Entity(count);
+			AddItemToFileView(App->CL_FileView->FV_Evirons_Folder, count);
+			break;
 
-			HTREEITEM Temp = App->CL_FileView->Add_Item(App->CL_FileView->FV_Evirons_Folder, App->CL_Scene->B_Object[Count]->Object_Name, Count, false);
-			App->CL_Scene->B_Object[Count]->FileViewItem = Temp;
+		case Enums::Obj_Usage_Particle:
+			// App->CL_Com_Particles->Create_Particle_Entity(count);
+			// AddItemToFileView(App->CL_FileView->FV_Particles_Folder, count);
+			break;
 
-			App->CL_FileView->Set_FolderActive(App->CL_FileView->FV_Evirons_Folder);
-
-		} // -------------------------------------------------------------------------- Particles
-		else if (App->CL_Scene->B_Object[Count]->Usage == Enums::Obj_Usage_Particle)
-		{
-			/*App->CL_Com_Particles->Create_Particle_Entity(Count);
-
-			HTREEITEM Temp = App->CL_FileView->Add_Item(App->CL_FileView->FV_Particles_Folder, App->CL_Scene->B_Object[Count]->Object_Name, Count, false);
-			App->CL_Scene->B_Object[Count]->FileViewItem = Temp;
-
-			App->CL_FileView->Set_FolderActive(App->CL_FileView->FV_Particles_Folder);*/
-
-		}
-		else
-		{
-			bool Test = App->CL_Utilities->Check_File_Exist(Test_For_Mesh);
-			if (Test == 0)
+		default:
+			if (!App->CL_Utilities->Check_File_Exist(testForMesh))
 			{
-				App->Say("Can not find", App->CL_Scene->B_Object[Count]->Mesh_FileName);	
+				App->Say("Cannot find", App->CL_Scene->B_Object[count]->Mesh_FileName);
 			}
 			else
 			{
-				Add_New_Object(Count, 0);
-
-				App->CL_Scene->B_Object[Count]->flag_Altered = 0;
-				App->CL_Scene->B_Object[Count]->Folder = Enums::Folder_Objects;
-				App->CL_Scene->B_Object[Count]->FileViewItem = App->CL_FileView->Add_Item(App->CL_FileView->FV_Objects_Folder, App->CL_Scene->B_Object[Count]->Object_Name, Count, false);
-
-				if (Object_Count > 0)
+				Add_New_Object(count, 0);
+				App->CL_Scene->B_Object[count]->flag_Altered = 0;
+				App->CL_Scene->B_Object[count]->Folder = Enums::Folder_Objects;
+				App->CL_Scene->B_Object[count]->FileViewItem = App->CL_FileView->Add_Item(App->CL_FileView->FV_Objects_Folder, App->CL_Scene->B_Object[count]->Object_Name, count, false);
+				
+				if (objectCount > 0)
 				{
 					App->CL_FileView->Set_FolderActive(App->CL_FileView->FV_Objects_Folder);
-					//ShowWindow(App->CL_Properties->Properties_Dlg_hWnd, 1);
-					//App->CL_FileView->SelectItem(App->CL_Scene->B_Object[0]->FileViewItem);
 				}
 			}
+			break;
 		}
-
-		Count++;
 	}
 
-	return 1;
+	return true;
 }
+
+// *************************************************************************
+//			AddItemToFileView:- Terry and Hazel Flanigan 2025			   *
+// *************************************************************************
+void CL64_Objects_Create::AddItemToFileView(HTREEITEM folder, int count)
+{
+	HTREEITEM temp = App->CL_FileView->Add_Item(folder, App->CL_Scene->B_Object[count]->Object_Name, count, false);
+	App->CL_Scene->B_Object[count]->FileViewItem = temp;
+	App->CL_FileView->Set_FolderActive(folder);
+}
+
 
 // *************************************************************************
 //				Add_Physics_Box:- Terry and Hazel Flanigan 2025			   *
