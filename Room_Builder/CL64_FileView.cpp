@@ -711,7 +711,7 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 			}
 		}
 		//-----------------------------
-		// 		
+				
 		if (App->CL_Editor_Control->flag_Scene_Editor_Active == true)
 		{
 			ShowWindow(App->CL_Properties_Scene->Properties_Dlg_hWnd, true);
@@ -799,27 +799,43 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 
 		//App->SBC_Properties->Is_Player = 0;*/
 
-		//----------------------------------------------------------------------------
-		/*App->SBC_Properties->Reset_Last_Selected_Object(App->SBC_Properties->Last_Selected_Object);
-		App->SBC_Properties->Last_Selected_Object = Index;*/
-		//----------------------------------------------------------------------------
+		//---------------------------------------------------------------------------
+		App->CL_Gizmos->unhighlight(App->CL_Scene->B_Object[App->CL_Properties_Scene->Last_Selected_Object]->Object_Ent);
+		App->CL_Properties_Scene->Last_Selected_Object = Index;
+		App->CL_Gizmos->Last_Selected_Object = Index;
+		//---------------------------------------------------------------------------
 
 		App->CL_Gizmos->MarkerBox_Adjust(Index);
 
 		App->CL_Properties_Scene->Current_Selected_Object = Index;
 		App->CL_Properties_Scene->Edit_Category = Enums::Edit_Sounds;
 
+		//-----------------------------
+		//if (App->CL_File->flag_loading == false)
+		//{
+		//	Brush* pMinBrush = App->CL_Brush_X->Get_Brush_By_Name(App->CL_Scene->B_Object[App->CL_Properties_Scene->Last_Selected_Object]->Object_Name);
+
+		//	// TODO Check App->CL_Editor_Scene->flag_Environment_Available == true
+		//	if (pMinBrush)// && App->CL_Editor_Scene->flag_Environment_Available == true)
+		//	{
+		//		App->CL_Doc->ResetAllSelections();
+		//		App->CL_Doc->DoBrushSelection(pMinBrush, brushSelToggle);
+		//		App->CL_Brush_X->Select_Brush_Editor(pMinBrush);
+
+		//		App->CL_Properties_Tabs->flag_Tabs_Dlg_Active = 1;
+		//		App->CL_Properties_Tabs->Select_Brushes_Tab();
+		//		App->CL_Properties_Tabs->flag_Tabs_Dlg_Active = 0;
+		//	}
+		//}
+		//-----------------------------
+		
 		//App->CL_LookUps->Update_Types();
 
 		//ShowWindow(App->CL_Properties_Scene->Properties_Dlg_hWnd, 1);
 
 		App->CL_Properties_Scene->Update_ListView_Sounds();
-
-		/*if (App->SBC_Dimensions->Show_Dimensions == 1)
-		{
-			App->SBC_Dimensions->Prepare_Dimensions();
-		}*/
-
+		App->CL_Gizmos->highlight(App->CL_Scene->B_Object[Index]->Object_Ent);
+		
 		return;
 	}
 

@@ -49,9 +49,8 @@ bool CL64_Com_Sounds::Add_New_Sound()
 	// Set sound file and path
 	strcpy(App->CL_Scene->B_Object[Index]->Sound_File, "Welcome.ogg");
 	strcpy(App->CL_Scene->B_Object[Index]->Sound_Path, App->CL_SoundMgr->Default_Folder);
-	strcat(App->CL_Scene->B_Object[Index]->Sound_Path, "\\Media\\Sounds\\");
-	strcat(App->CL_Scene->B_Object[Index]->Sound_Path, "Welcome.ogg");
-
+	strcat(App->CL_Scene->B_Object[Index]->Sound_Path, "\\Media\\Sounds\\Welcome.ogg");
+	
 	// Set flags and types
 	App->CL_Scene->B_Object[Index]->flag_HasSound = true;
 	App->CL_Scene->B_Object[Index]->Type = Enums::Bullet_Type_Static;

@@ -481,7 +481,7 @@ void CL64_Properties_Brushes::Fill_ListBox()
 // *************************************************************************
 // *	  	Select_in_BrushList_Dlg:- Terry and Hazel Flanigan 2025		   *
 // *************************************************************************
-void CL64_Properties_Brushes::Select_in_BrushList_Dlg(const Brush* b)
+int CL64_Properties_Brushes::Select_in_BrushList_Dlg(const Brush* b)
 {
 	// Get all Brushes into a BrushList
 	BrushList* pList = App->CL_Level->Level_Get_Main_Brushes();
@@ -503,14 +503,15 @@ void CL64_Properties_Brushes::Select_in_BrushList_Dlg(const Brush* b)
 			SendDlgItemMessage(BrushesDlg_Hwnd, IDC_GD_BRUSHLIST, LB_SETCURSEL, (WPARAM)Count, (LPARAM)0);
 			Selected_Index = Count;
 			List_Selection_Changed(false);
+			Update_SelectedBrushesCount_Dlg();
+			return Count;
 		}
 
 		Count++;
 		b = b->Next;
 	}
 
-	// Update Selected Count and Display
-	Update_SelectedBrushesCount_Dlg();
+	return -1;
 }
 
 // *************************************************************************
