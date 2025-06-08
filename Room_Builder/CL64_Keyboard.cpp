@@ -133,7 +133,6 @@ void CL64_Keyboard::Keyboard_Mode_First(float deltaTime)
 			App->flag_Block_Mouse_Buttons = 0;
 			ReleaseCapture();
 			SetCursor(App->CUR);
-
 		}
 
 		//------------------------------------------------ Space Key - Jump and Selection

@@ -330,7 +330,6 @@ void CL64_ImGui::Preview_Options_GUI(void)
 		if (ImGui::Button("Player Position", ImVec2(150, 100)))
 		{
 			App->CL_Camera->SetCameraMode_FirstPerson();
-
 			SetCapture(App->ViewGLhWnd);
 			App->CL_Ogre->Ogre3D_Listener->flag_LeftMouseDown = 1;
 			App->flag_Block_Mouse_Buttons = 1;

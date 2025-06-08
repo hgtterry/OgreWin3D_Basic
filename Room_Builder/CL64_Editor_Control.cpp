@@ -91,7 +91,7 @@ void CL64_Editor_Control::Start_Preview_Mode(void)
         App->CL_ImGui->flag_Show_Preview_Options = true;
 
         // Reset the physics scene and render the frame
-        App->CL_Physics->Reset_Scene(true);
+       // App->CL_Physics->Reset_Scene(true);
         App->CL_Ogre->Bullet_Debug_Listener->flag_Render_Debug_Flag = false;
         App->CL_Ogre->RenderFrame(1);
 
