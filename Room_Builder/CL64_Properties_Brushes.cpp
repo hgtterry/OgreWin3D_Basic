@@ -426,8 +426,9 @@ void CL64_Properties_Brushes::OnSelchangeBrushlist(int index, bool clear)
 		// Select Object in Scene Editor
 		if (Selected_Brush->GroupId > Enums::Brushs_ID_Players)
 		{
-			int entityIndex = App->CL_Entities->GetIndex_By_Name(Selected_Brush->Name);
-			App->CL_FileView->SelectItem(App->CL_Scene->B_Object[entityIndex]->FileViewItem);
+			// TODO 
+			//int entityIndex = App->CL_Entities->GetIndex_By_Name(Selected_Brush->Name);
+			//App->CL_FileView->SelectItem(App->CL_Scene->B_Object[entityIndex]->FileViewItem);
 		}
 
 		if (clear)

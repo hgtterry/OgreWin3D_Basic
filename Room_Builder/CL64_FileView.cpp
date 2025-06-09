@@ -811,22 +811,22 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 		App->CL_Properties_Scene->Edit_Category = Enums::Edit_Sounds;
 
 		//-----------------------------
-		//if (App->CL_File->flag_loading == false)
-		//{
-		//	Brush* pMinBrush = App->CL_Brush_X->Get_Brush_By_Name(App->CL_Scene->B_Object[App->CL_Properties_Scene->Last_Selected_Object]->Object_Name);
+		if (App->CL_File->flag_loading == false)
+		{
+			Brush* pMinBrush = App->CL_Brush_X->Get_Brush_By_Name(App->CL_Scene->B_Object[App->CL_Properties_Scene->Last_Selected_Object]->Object_Name);
 
-		//	// TODO Check App->CL_Editor_Scene->flag_Environment_Available == true
-		//	if (pMinBrush)// && App->CL_Editor_Scene->flag_Environment_Available == true)
-		//	{
-		//		App->CL_Doc->ResetAllSelections();
-		//		App->CL_Doc->DoBrushSelection(pMinBrush, brushSelToggle);
-		//		App->CL_Brush_X->Select_Brush_Editor(pMinBrush);
+			// TODO Check App->CL_Editor_Scene->flag_Environment_Available == true
+			if (pMinBrush)// && App->CL_Editor_Scene->flag_Environment_Available == true)
+			{
+				App->CL_Doc->ResetAllSelections();
+				App->CL_Doc->DoBrushSelection(pMinBrush, brushSelToggle);
+				App->CL_Brush_X->Select_Brush_Editor(pMinBrush);
 
-		//		App->CL_Properties_Tabs->flag_Tabs_Dlg_Active = 1;
-		//		App->CL_Properties_Tabs->Select_Brushes_Tab();
-		//		App->CL_Properties_Tabs->flag_Tabs_Dlg_Active = 0;
-		//	}
-		//}
+				App->CL_Properties_Tabs->flag_Tabs_Dlg_Active = 1;
+				App->CL_Properties_Tabs->Select_Brushes_Tab();
+				App->CL_Properties_Tabs->flag_Tabs_Dlg_Active = 0;
+			}
+		}
 		//-----------------------------
 		
 		//App->CL_LookUps->Update_Types();

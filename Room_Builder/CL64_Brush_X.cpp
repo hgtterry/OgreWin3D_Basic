@@ -313,6 +313,7 @@ int CL64_Brush_X::Get_Brush_Index_By_Name(const char* Name)
 // *************************************************************************
 void CL64_Brush_X::Select_Brush_Editor(Brush* b)
 {
+	App->CL_Doc->CurBrush = b;
 	// Entity Selected in OnSelchangeBrushlist
 	// 
 	// Check if there are any brushes available
