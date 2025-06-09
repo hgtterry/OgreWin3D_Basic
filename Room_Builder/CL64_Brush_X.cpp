@@ -326,7 +326,6 @@ void CL64_Brush_X::Select_Brush_Editor(Brush* b)
 		App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
 		
 		// Update the brush list dialog with the current brush
-		//App->CL_Doc->CurBrush = b;
 		App->CL_Properties_Brushes->Select_in_BrushList_Dlg(App->CL_Doc->CurBrush);
 		App->CL_Top_Tabs->Enable_TopBar_Brush_Buttons(true, false);
 		

@@ -47,6 +47,8 @@ public:
 	void Change_Level_Name(void);
 	void Change_Project_Name(void);
 	void Change_Item_Name(HTREEITEM Folder, char* FolderName);
+	void Select_Brush(int index);
+
 
 	HTREEITEM FV_Evirons_Folder;
 	HTREEITEM FV_Objects_Folder;
