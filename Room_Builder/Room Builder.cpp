@@ -661,6 +661,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
                 return 1;
             }
+
+            case ID_ADDITEM_OBJECT:
+            {
+                Debug
+                return 1;
+            }
            
             // ---------------------------------------------
             case IDM_ABOUT:

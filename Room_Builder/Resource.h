@@ -508,6 +508,7 @@
 #define ID_INFO_PHYSICSOBJECTSDEBUG     32825
 #define ID_FILE_SAVEAS32826             32826
 #define ID_FILE_OPENEXAMPLES32827       32827
+#define ID_ADDITEM_OBJECT               32828
 #define ID_GENERALSELECT                32886
 #define ID_TOOLS_TEMPLATE               32910
 #define IDC_STATIC                      -1
@@ -518,7 +519,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        194
-#define _APS_NEXT_COMMAND_VALUE         32828
+#define _APS_NEXT_COMMAND_VALUE         32829
 #define _APS_NEXT_CONTROL_VALUE         1332
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
