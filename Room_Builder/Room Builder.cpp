@@ -664,9 +664,73 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
             case ID_ADDITEM_OBJECT:
             {
-                Debug
+               
+                if (App->CL_Scene->flag_Project_Resources_Created == true)
+                {
+                    App->CL_Dialogs->YesNo((LPSTR)"Add Object", (LPSTR)"Do you want to add a new Object Entity");
+
+                    bool Doit = App->CL_Dialogs->flag_Dlg_Canceled;
+                    if (Doit == 0)
+                    {
+                        App->CL_MeshViewer->Mesh_Viewer_Mode = Enums::Mesh_Viewer_Objects;
+                        App->CL_MeshViewer->Start_MeshViewer_Dlg();
+                    }
+                }
+                else
+                {
+                    if (App->CL_Level->flag_File_Been_Saved == 0)
+                    {
+                        App->Say("This Project is new", "Will use Save As for this first time save");
+                        App->CL_File->Start_Save(true);
+
+                        if (App->CL_Scene->flag_Project_Resources_Created == true)
+                        {
+                            App->CL_Dialogs->YesNo((LPSTR)"Add Object", (LPSTR)"Do you want to add a new Object Entity");
+
+                            bool Doit = App->CL_Dialogs->flag_Dlg_Canceled;
+                            if (Doit == 0)
+                            {
+                                App->CL_MeshViewer->Mesh_Viewer_Mode = Enums::Mesh_Viewer_Objects;
+                                App->CL_MeshViewer->Start_MeshViewer_Dlg();
+                            }
+                        }
+
+                        return 1;
+                    }
+
+                }
+
                 return 1;
             }
+
+            case ID_ADDITEM_SOUNDENTITY:
+            {
+
+                App->CL_Dialogs->YesNo((LPSTR)"Add Sound Entity", (LPSTR)"Do you want to add a new Sound Entity");
+
+                bool Doit = App->CL_Dialogs->flag_Dlg_Canceled;
+                if (Doit == 0)
+                {
+                    App->CL_Com_Sounds->Add_New_Sound();
+                }
+
+                return 1;
+            }
+
+            case ID_ADDITEM_ENVIRONMENT:
+            {
+
+                App->CL_Dialogs->YesNo((LPSTR)"Add Environment Entity", (LPSTR)"Do you want to add a new Environ Entity");
+
+                bool Doit = App->CL_Dialogs->flag_Dlg_Canceled;
+                if (Doit == 0)
+                {
+                    App->CL_Com_Environments->Add_New_Environ_Entity(false);
+                }
+
+                return 1;
+            }
+            
            
             // ---------------------------------------------
             case IDM_ABOUT:

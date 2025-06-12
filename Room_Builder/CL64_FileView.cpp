@@ -1186,13 +1186,6 @@ void CL64_FileView::Context_Menu(HWND hDlg)
 // *************************************************************************
 void CL64_FileView::Context_New(HWND hDlg)
 {
-	/*if (App->CL_Scene->flag_Scene_Loaded == 0)
-	{
-		App->Say("A Project must be created First");
-
-		return;
-	}*/
-
 	// Objects
 	if (App->CL_FileView->Context_Selection == Enums::FileView_Objects_Folder)
 	{
