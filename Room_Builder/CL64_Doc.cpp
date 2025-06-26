@@ -300,9 +300,9 @@ void CL64_Doc::Brush_Add_To_world()
 }
 
 // *************************************************************************
-// *           DoGeneralSelect:- Terry and Hazel Flanigan 2023             *
+// *         Set_Tool_GeneralSelect:- Terry and Hazel Flanigan 2023        *
 // *************************************************************************
-void CL64_Doc::Set_GeneralSelect()
+void CL64_Doc::Set_Tool_GeneralSelect()
 {
 	mCurrentTool = CURTOOL_NONE;
 	mModeTool = ID_GENERALSELECT;
@@ -319,7 +319,7 @@ void CL64_Doc::Do_General_Select_Dlg(bool from_Insert)
     {
         if (App->CL_Brush->Get_Brush_Count() > 0)
         {
-            Set_GeneralSelect();
+            Set_Tool_GeneralSelect();
 
             App->CL_Top_Tabs->Enable_TopBar_Brush_Buttons(false, false);
             App->CL_Top_Tabs->Enable_TopBar_Face_Buttons(false);
@@ -333,7 +333,7 @@ void CL64_Doc::Do_General_Select_Dlg(bool from_Insert)
 
     if (App->CL_Brush->Get_Brush_Count() > 0)
     {
-        Set_GeneralSelect();
+        Set_Tool_GeneralSelect();
 
         App->CL_Top_Tabs->Enable_TopBar_Brush_Buttons(true, false);
         App->CL_Top_Tabs->Enable_TopBar_Face_Buttons(true);
@@ -1534,7 +1534,7 @@ void CL64_Doc::Set_Faces_To_Brush_Name_All()
    
     while (Count < BC)
     {
-        App->CL_Doc->Set_GeneralSelect();
+        App->CL_Doc->Set_Tool_GeneralSelect();
 
         App->CL_Properties_Brushes->Selected_Index = Count;
 
@@ -1551,7 +1551,7 @@ void CL64_Doc::Set_Faces_To_Brush_Name_All()
         Count++;
     }
 
-    App->CL_Doc->Set_GeneralSelect();
+    App->CL_Doc->Set_Tool_GeneralSelect();
     App->CL_Doc->ResetAllSelections();
     App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
 

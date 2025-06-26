@@ -35,6 +35,8 @@ public:
 
 	void Start_MeshViewer_Dlg();
 
+	void Show_Position_Dlg();
+
 	Ogre::String MV_Resource_Group;
 
 	HWND MainDlgHwnd;
@@ -70,6 +72,7 @@ private:
 	static LRESULT CALLBACK Proc_MeshViewer_Dlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Proc_MeshViewer_3D(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Proc_Mesh_Properties(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Proc_Position_Dlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	void Reset_Data();
 

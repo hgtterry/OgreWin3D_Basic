@@ -258,3 +258,22 @@ void CL64_Editor_Control::Start_Editor_Scene()
 	App->CL_Gizmos->MarkerBox_Adjust(App->CL_Properties_Scene->Current_Selected_Object);
 
 }
+
+// *************************************************************************
+// *		Set_Map_Editor_Select_Dlg:- Terry and Hazel Flanigan 2025	   *
+// *************************************************************************
+void CL64_Editor_Control::Set_Map_Editor_Select_Dlg()
+{
+	//if (App->CL_Brush->Get_Brush_Count() > 0)
+	{
+		App->CL_Doc->Set_Tool_GeneralSelect();
+
+		App->CL_Top_Tabs->Enable_TopBar_Brush_Buttons(false, false);
+		App->CL_Top_Tabs->Enable_TopBar_Face_Buttons(false);
+		App->CL_Top_Tabs->Enable_Select_Button(true, true);
+
+		RedrawWindow(App->CL_Top_Tabs->Headers_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+		return;
+	}
+}

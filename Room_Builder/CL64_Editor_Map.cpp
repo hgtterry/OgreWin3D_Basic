@@ -899,13 +899,27 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Top_Right_Window(HWND hDlg, UINT message,
 
 	case WM_CTLCOLORSTATIC:
 	{
-		if (GetDlgItem(hDlg, IDC_ST_TR_TITLE) == (HWND)lParam)
+		//if (App->CL_Editor_Map->Current_View->Name == 1)// App->CL_Editor_Map->VCam[V_TR])
+		//{
+		//	if (GetDlgItem(hDlg, IDC_ST_TR_TITLE) == (HWND)lParam)
+		//	{
+		//		SetBkColor((HDC)wParam, RGB(0, 255, 0));
+		//		SetTextColor((HDC)wParam, RGB(0, 0, 0));
+		//		SetBkMode((HDC)wParam, TRANSPARENT);
+		//		return (UINT)App->Brush_Green;
+		//	}
+		//}
+		//else
 		{
-			SetBkColor((HDC)wParam, RGB(0, 255, 0));
-			SetTextColor((HDC)wParam, RGB(0, 0, 0));
-			SetBkMode((HDC)wParam, TRANSPARENT);
-			return (UINT)App->AppBackground;
+			if (GetDlgItem(hDlg, IDC_ST_TR_TITLE) == (HWND)lParam)
+			{
+				SetBkColor((HDC)wParam, RGB(0, 255, 0));
+				SetTextColor((HDC)wParam, RGB(0, 0, 0));
+				SetBkMode((HDC)wParam, TRANSPARENT);
+				return (UINT)App->AppBackground;
+			}
 		}
+
 		return FALSE;
 	}
 

@@ -104,7 +104,7 @@ public:
 	void SetDefaultBrushTexInfo(Brush* b);
 	void UpdateAllViews(int Update_Mode);
 
-	void Set_GeneralSelect();
+	void Set_Tool_GeneralSelect();
 	void Do_General_Select_Dlg(bool from_Insert);
 
 	WadFileEntry* GetDibBitmap(const char* Name);
