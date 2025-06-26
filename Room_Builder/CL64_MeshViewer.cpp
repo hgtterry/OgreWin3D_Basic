@@ -50,24 +50,27 @@ CL64_MeshViewer::CL64_MeshViewer(void)
 	MV_btDebug_Manual =		nullptr;
 	MV_btDebug_Node =		nullptr;
 
-	flag_MV_Resource_Path_Loaded = 0;
-	flag_MeshViewer_Running = 0;
+	flag_MV_Resource_Path_Loaded = false;
+	flag_MeshViewer_Running = false;
 
-	flag_SelectDynamic = 0;
-	flag_SelectStatic = 0;
-	flag_SelectTriMesh = 0;
+	flag_SelectDynamic = false;
+	flag_SelectStatic = false;
+	flag_SelectTriMesh = false;
 
-	flag_SelectDynamic = 0;
-	flag_SelectStatic = 0;
-	flag_SelectTriMesh = 0;
+	flag_SelectDynamic = false;
+	flag_SelectStatic = false;
+	flag_SelectTriMesh = false;
 
-	flag_Selected_Shape_Box = 0;
-	flag_Selected_Shape_Sphere = 0;
-	flag_Selected_Shape_Capsule = 0;
-	flag_Selected_Shape_Cylinder = 0;
-	flag_Selected_Shape_Cone = 0;
+	flag_Selected_Shape_Box = false;
+	flag_Selected_Shape_Sphere = false;
+	flag_Selected_Shape_Capsule = false;
+	flag_Selected_Shape_Cylinder = false;
+	flag_Selected_Shape_Cone = false;
 
-	flag_MV_Render_Debug = 0;
+	flag_MV_Render_Debug = false;
+
+	flag_Placement_Camera = true;
+	flag_Placement_World = false;
 
 	MV_Resource_Group = "MV_Resource_Group";
 
@@ -122,7 +125,7 @@ void CL64_MeshViewer::Reset_Data()
 // *************************************************************************
 void CL64_MeshViewer::Show_Position_Dlg()
 {
-	DialogBox(App->hInst, (LPCTSTR)IDD_TEXT_DIALOG, App->MainHwnd, (DLGPROC)Proc_Position_Dlg);
+	DialogBox(App->hInst, (LPCTSTR)IDD_POSITION_DLG, App->CL_MeshViewer->MainDlgHwnd, (DLGPROC)Proc_Position_Dlg);
 }
 
 // **************************************************************************
@@ -135,9 +138,11 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_Position_Dlg(HWND hDlg, UINT message, WPA
 
 	case WM_INITDIALOG:
 	{
-		
+		SendDlgItemMessage(hDlg, IDC_BUT_AT_CAMERA, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BUT_AT_WORLDPOS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
+		App->CL_Panels->Enable_Scene_Editor_Dialogs(false);
 
 		return TRUE;
 	}
@@ -163,14 +168,21 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_Position_Dlg(HWND hDlg, UINT message, WPA
 	{
 		LPNMHDR some_item = (LPNMHDR)lParam;
 
-		if (some_item->idFrom == IDOK)
+		if (some_item->idFrom == IDC_BUT_AT_CAMERA)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Normal(item);
+			App->Custom_Button_Toggle(item, App->CL_MeshViewer->flag_Placement_Camera);
 			return CDRF_DODEFAULT;
 		}
 
-		if (some_item->idFrom == IDCANCEL)
+		if (some_item->idFrom == IDC_BUT_AT_WORLDPOS)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->CL_MeshViewer->flag_Placement_World);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDOK)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
@@ -182,8 +194,28 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_Position_Dlg(HWND hDlg, UINT message, WPA
 
 	case WM_COMMAND:
 	{
+		if (LOWORD(wParam) == IDC_BUT_AT_CAMERA)
+		{
+			App->CL_MeshViewer->flag_Placement_Camera = true;
+			App->CL_MeshViewer->flag_Placement_World = false;
+
+			RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_BUT_AT_WORLDPOS)
+		{
+			App->CL_MeshViewer->flag_Placement_World = true;
+			App->CL_MeshViewer->flag_Placement_Camera = false;
+
+			RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			return TRUE;
+		}
+
 		if (LOWORD(wParam) == IDOK)
 		{
+			App->CL_Panels->Enable_Scene_Editor_Dialogs(true);
+
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
@@ -773,7 +805,7 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_Dlg(HWND hDlg, UINT message, W
 				return TRUE;
 			}
 
-			Debug 
+			App->CL_MeshViewer->Show_Position_Dlg();
 
 			if (App->CL_MeshViewer->Ogre_MV_Phys_Body)
 			{

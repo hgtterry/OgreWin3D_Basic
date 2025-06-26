@@ -247,37 +247,6 @@ LRESULT CALLBACK CL64_FileView::Proc_ListPanel(HWND hDlg, UINT message, WPARAM w
 			return TRUE;
 		}
 
-		//if (LOWORD(wParam) == IDC_LEVELS)
-		//{
-		//	//App->SBC_FileView->Level_But_Active = 1;
-		//	//App->SBC_FileView->Stock_But_Active = 0;
-		//	//App->RedrawWindow_Dlg(hDlg);
-
-		//	//ShowWindow(GetDlgItem(App->ListPanel, IDC_TREE1), 1);
-
-		//	//App->GDCL_FileView->HideRightPanes();
-		//	//ShowWindow(App->GD_Properties_Hwnd, 1);*/
-
-		//	return TRUE;
-		//}
-
-		//if (LOWORD(wParam) == IDC_STOCK)
-		//{
-		//	if (App->SBC_Scene->Scene_Loaded == 1)
-		//	{
-		//		/*App->Cl_FileView->HideRightPanes();
-		//		ShowWindow(App->GD_Stock_Hwnd, 1);*/
-		//		//App->Cl_Stock->Start_Stock_Dialog();
-		//	}
-		//	return TRUE;
-		//}
-
-		//if (LOWORD(wParam) == IDC_BT_INFO_FILEVIEW)
-		//{
-		//	App->Cl_Utilities->OpenHTML("Help\\FileView.html");
-		//	return TRUE;
-		//}
-
 		if (LOWORD(wParam) == IDC_BT_MAINENVIRONMENT)
 		{
 			int Index = App->CL_Com_Environments->Get_First_Environ();

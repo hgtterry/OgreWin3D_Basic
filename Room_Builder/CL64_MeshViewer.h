@@ -56,6 +56,10 @@ public:
 	bool flag_MeshViewer_Running;
 
 	bool flag_MV_Render_Debug;
+
+	bool flag_Placement_Camera;
+	bool flag_Placement_World;
+
 	// Used for Creating Objects ----------------
 	char Object_Name[MAX_PATH];
 	char Selected_MeshFile[MAX_PATH];

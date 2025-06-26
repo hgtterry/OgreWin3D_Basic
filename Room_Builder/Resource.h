@@ -80,7 +80,6 @@
 #define IDD_MESHVIEWER                  192
 #define IDD_MESHVIEWER_3D               193
 #define IDD_PROPS_DEBUG                 194
-#define IDD_DIALOG1                     195
 #define IDD_POSITION_DLG                195
 #define IDC_BANNER                      1000
 #define IDC_STTEXT                      1001
@@ -454,6 +453,9 @@
 #define IDC_BT_ONLYMESH                 1330
 #define IDC_BUTTON1                     1331
 #define IDC_BT_HIGHLIGHT                1331
+#define IDC_BUT_AT_CAMERA               1331
+#define IDC_BUTTON3                     1333
+#define IDC_BUT_AT_WORLDPOS             1333
 #define ID_DEBUG_GENERAL                32771
 #define ID_TEMPLATES_INSERT             32772
 #define ID_BRUSH_SELECT                 32773

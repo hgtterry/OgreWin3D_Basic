@@ -133,7 +133,7 @@ bool CL64_Objects_Create::Add_New_Object(int Index, bool From_MeshViewer)
 
 
 	// If from MeshViewer Get Placement Method
-	if (From_MeshViewer == 1) //&& App->CL_MeshViewer->Placement_Camera == 1)
+	if (From_MeshViewer == 1 && App->CL_MeshViewer->flag_Placement_Camera == true)
 	{
 		Ogre::Vector3 Pos = App->CL_Com_Objects->GetPlacement();
 		Object->Mesh_Pos = Pos;
