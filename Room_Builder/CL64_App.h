@@ -63,6 +63,7 @@ THE SOFTWARE.
 #include "CL64_File_IO.h"
 #include "CL64_ImGui.h"
 #include "CL64_ImGui_Dialogs.h"
+#include "CL64_ImGui_Editor.h"
 #include "CL64_TXL_Editor.h"
 #include "CL64_Textures.h"
 #include "CL64_Resources.h"
@@ -146,6 +147,7 @@ public:
 	CL64_File_IO*				CL_File_IO;
 	CL64_ImGui*					CL_ImGui;
 	CL64_ImGui_Dialogs*			CL_ImGui_Dialogs;
+	CL64_ImGui_Editor*			CL_ImGui_Editor;
 	CL64_TXL_Editor*			CL_TXL_Editor;
 	CL64_Textures*				CL_Textures;
 	CL64_Resources*				CL_Resources;
