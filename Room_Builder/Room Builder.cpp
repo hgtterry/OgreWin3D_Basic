@@ -205,6 +205,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
                 App->CL_Editor_Control->Start_Editor_Scene();
 
+                App->CL_ImGui_Editor->flag_Show_Visuals = true;
+
                 return 1;
             }
            
