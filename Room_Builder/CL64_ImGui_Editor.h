@@ -29,5 +29,13 @@ public:
 	CL64_ImGui_Editor();
 	~CL64_ImGui_Editor();
 
+	void ImGui_Render_Editor_Loop(void);
+
+	void Visuals_GUI(void);
+
+	int Visuals_PosX;
+	int Visuals_PosY;
+
+	bool flag_Show_Visuals;
 };
 

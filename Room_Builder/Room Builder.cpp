@@ -180,11 +180,34 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             // ----------------------------- Debug
 			case ID_DEBUG_GENERAL:
 			{ 
-                App->CL_Editor_Control->Set_Map_Editor_Select_Dlg();
+               // App->CL_Editor_Control->Set_Map_Editor_Select_Dlg();
+
+                if (App->CL_ImGui_Editor->flag_Show_Visuals == true)
+                {
+                    App->CL_ImGui_Editor->flag_Show_Visuals = false;
+                }
+                else
+                {
+                    App->CL_ImGui_Editor->flag_Show_Visuals = true;
+                }
 
 				return 1;
 			}
 
+            case ID_DEBUG_QUICKLOADSCENEEDITOR:
+            {
+                strcpy(App->CL_File->PathFileName_3dt, App->RB_Directory_FullPath);
+                strcat(App->CL_File->PathFileName_3dt, "\\Data\\Room_Builder\\Test_owp\\Test.mtf");
+
+                strcpy(App->CL_File->FileName_3dt, "Test.mtf");
+
+                App->CL_File->Start_Load(false);
+
+                App->CL_Editor_Control->Start_Editor_Scene();
+
+                return 1;
+            }
+           
             case  ID_DEBUG_SHOWALLFACES3D:
             {
                 if (App->CL_Ogre->OGL_Listener->flag_Show_Selected_Brush == 1)

@@ -187,7 +187,7 @@ void CL64_ImGui::ImGui_Set_Colours(void)
 }
 
 // **************************************************************************
-// *			Render_FPS:- Terry and Hazel Flanigan 2024					*
+// *			ImGui_Render_Loop:- Terry and Hazel Flanigan 2024			*
 // **************************************************************************
 void CL64_ImGui::ImGui_Render_Loop(void)
 {
@@ -218,6 +218,8 @@ void CL64_ImGui::ImGui_Render_Loop(void)
 		Player_Data_GUI();
 	}
 
+	App->CL_ImGui_Editor->ImGui_Render_Editor_Loop();
+	
 	// Iterate through the mapping and call the functions where the flag is true
 	for (const auto& guiFunction : guiFunctions)
 	{
