@@ -124,28 +124,28 @@ Ogre::Vector3 CL64_Com_Objects::GetPlacement(int Distance)
 // *************************************************************************
 void CL64_Com_Objects::Hide_AllObjects_Except(int Index, bool Show)
 {
-	/*int Count = 0;
-	while (Count < App->CL_Editor->Object_Count)
+	int Count = 0;
+	while (Count < App->CL_Scene->Object_Count)
 	{
-		App->CL_Editor->B_Object[Count]->Object_Node->setVisible(Show);
+		App->CL_Scene->B_Object[Count]->Object_Node->setVisible(Show);
 		Count++;
 	}
 
-	Count = 0;
-	while (Count < App->CL_Editor->Area_Count)
+	/*Count = 0;
+	while (Count < App->CL_Scene->Area_Count)
 	{
-		App->CL_Editor->B_Area[Count]->Area_Node->setVisible(Show);
+		App->CL_Scene->B_Area[Count]->Area_Node->setVisible(Show);
 		Count++;
-	}
-
-	if (App->CL_Properties->Edit_Category == Enums::Edit_Area)
-	{
-		App->CL_Editor->B_Area[Index]->Area_Node->setVisible(true);
-	}
-	else
-	{
-		App->CL_Editor->B_Object[Index]->Object_Node->setVisible(true);
 	}*/
+
+	/*if (App->CL_Properties->Edit_Category == Enums::Edit_Area)
+	{
+		App->CL_Scene->B_Area[Index]->Area_Node->setVisible(true);
+	}
+	else*/
+	{
+		App->CL_Scene->B_Object[Index]->Object_Node->setVisible(true);
+	}
 }
 
 // **************************************************************************

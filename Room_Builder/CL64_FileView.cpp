@@ -645,7 +645,7 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 		App->CL_Props_Dialogs->Show_Details_Goto_Dlg(true);
 
 		App->CL_Props_Dialogs->Show_Dimensions_Dlg(true);
-		App->CL_Props_Dialogs->Show_Debug_Dlg(true);
+		App->CL_ImGui_Editor->flag_Show_Visuals = true;
 		App->CL_Props_Dialogs->Show_Materials_Dlg(true);
 
 		//----------------------------------------------------------------------------
@@ -686,7 +686,7 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 		//App->CL_Props_Dialogs->Show_Details_Goto_Dlg(true);
 
 		App->CL_Props_Dialogs->Show_Dimensions_Dlg(true);
-		App->CL_Props_Dialogs->Show_Debug_Dlg(true);
+		//App->CL_Props_Dialogs->Show_Debug_Dlg(true);
 
 		//---------------------------------------------------------------------------
 		App->CL_Gizmos->unhighlight(App->CL_Scene->B_Object[App->CL_Properties_Scene->Last_Selected_Object]->Object_Ent);
@@ -1689,7 +1689,9 @@ void CL64_FileView::HideRightPanes(void)
 	App->CL_Props_Dialogs->Show_Details_Goto_Dlg(false);
 	App->CL_Props_Dialogs->Show_Dimensions_Dlg(false);
 	App->CL_Props_Dialogs->Show_Physics_Test_Dlg(false);
-	App->CL_Props_Dialogs->Show_Debug_Dlg(false);
+
+	App->CL_ImGui_Editor->flag_Show_Visuals = false;
+	
 	App->CL_Props_Dialogs->Show_Materials_Dlg(false);
 	App->CL_Props_Dialogs->Show_Cameras_Dlg(false);
 	App->CL_Props_Dialogs->Show_Player_Dlg(false);

@@ -38,7 +38,6 @@ public:
 	bool Start_Player_PropsPanel();
 	void Start_Override_Counter(void);
 
-	void Show_Debug_Dlg(bool Show);
 	void Show_Physics_Test_Dlg(bool Show);
 	void Show_Details_Goto_Dlg(bool Show);
 	void Show_Dimensions_Dlg(bool Show);
@@ -78,7 +77,6 @@ private:
 	HWND Override_Counter_Goto_Hwnd;
 	HWND Details_Goto_Hwnd;
 	HWND PhysicsTest_Dlg_hWnd;
-	HWND Debug_Dlg_hWnd;
 	HWND Material_Props_Hwnd;
 	HWND Cam_Props_HWND;
 

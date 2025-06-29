@@ -79,7 +79,6 @@
 #define IDD_PROPS_DIMENSIONS            191
 #define IDD_MESHVIEWER                  192
 #define IDD_MESHVIEWER_3D               193
-#define IDD_PROPS_DEBUG                 194
 #define IDD_POSITION_DLG                195
 #define IDC_BANNER                      1000
 #define IDC_STTEXT                      1001
@@ -448,11 +447,7 @@
 #define IDC_OBJECTNAME                  1326
 #define IDC_BT_SCENE_RESET              1327
 #define IDC_BUTTON2                     1328
-#define IDC_BT_PHYSDEBUG                1328
-#define IDC_BT_SHOWMESH                 1329
-#define IDC_BT_ONLYMESH                 1330
 #define IDC_BUTTON1                     1331
-#define IDC_BT_HIGHLIGHT                1331
 #define IDC_BUT_AT_CAMERA               1331
 #define IDC_BUT_AT_WORLDPOS             1333
 #define ID_DEBUG_GENERAL                32771

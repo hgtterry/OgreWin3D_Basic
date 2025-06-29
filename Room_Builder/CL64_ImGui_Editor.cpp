@@ -58,13 +58,17 @@ void CL64_ImGui_Editor::ImGui_Render_Editor_Loop(void)
 // *************************************************************************
 void CL64_ImGui_Editor::Visuals_GUI(void)
 {
+	Visuals_PosX = ((float)App->CL_Ogre->mWindow->getViewport(0)->getActualWidth() -230);
+	Visuals_PosY = ((float)App->CL_Ogre->mWindow->getViewport(0)->getActualHeight() -150);
+
+
 	ImGui::SetNextWindowPos(ImVec2(Visuals_PosX, Visuals_PosY), ImGuiCond_FirstUseEver);
-	ImGui::SetNextWindowSize(ImVec2(166, 180), ImGuiCond_FirstUseEver);
+	ImGui::SetNextWindowSize(ImVec2(216, 140), ImGuiCond_FirstUseEver);
 
 	ImGui::PushStyleColor(ImGuiCol_WindowBg, IM_COL32(239, 239, 239, 255));
 	ImGuiStyle* style = &ImGui::GetStyle();
 
-	if (!ImGui::Begin("Options", NULL, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoResize))
+	if (!ImGui::Begin("Options", NULL, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar))
 	{
 		ImGui::End();
 	}
@@ -75,14 +79,51 @@ void CL64_ImGui_Editor::Visuals_GUI(void)
 		// -------------- Show Mesh
 		Selected_Button(flag_Show_Mesh);
 		
-		if (ImGui::Button("Show Mesh", ImVec2(150, 25)))
+		if (ImGui::Button("Show Mesh", ImVec2(200, 25)))
 		{
+			int Index = App->CL_Properties_Scene->Current_Selected_Object;
+
+			if (App->CL_Scene->Object_Count > 0)
+			{
+				auto& currentObject = App->CL_Scene->B_Object[Index];
+
+				// -----------------------  Area
+				/*if (App->CL_Properties->Edit_Category == Enums::Edit_Area)
+				{
+					if (App->CL_Com_Objects->flag_Show_Mesh_Debug == 1)
+					{
+						App->CL_Scene->B_Area[Index]->Area_Node->setVisible(false);
+						App->CL_Com_Objects->flag_Show_Mesh_Debug = 0;
+					}
+					else
+					{
+						App->CL_Scene->B_Area[Index]->Area_Node->setVisible(true);
+						App->CL_Com_Objects->flag_Show_Mesh_Debug = 1;
+					}
+					return 1;
+				}*/
+
+				if (currentObject->flag_Is_Visible == true)
+				{
+					flag_Show_Mesh = false;
+					currentObject->flag_Is_Visible = false;
+					App->CL_Scene->B_Object[Index]->Object_Node->setVisible(false);
+					//App->CL_Com_Objects->flag_Show_Mesh_Debug = 0;
+				}
+				else
+				{
+					flag_Show_Mesh = true;
+					currentObject->flag_Is_Visible = true;
+					App->CL_Scene->B_Object[Index]->Object_Node->setVisible(true);
+					//App->CL_Com_Objects->flag_Show_Mesh_Debug = true;
+				}
+			}
 		}
 
 		// -------------- Show Physics
 		Selected_Button(flag_Show_Physics_Debug);
 		
-		if (ImGui::Button("Show Physics", ImVec2(150, 25)))
+		if (ImGui::Button("Show Physics", ImVec2(200, 25)))
 		{
 			int Index = App->CL_Properties_Scene->Current_Selected_Object;
 
@@ -134,15 +175,42 @@ void CL64_ImGui_Editor::Visuals_GUI(void)
 			style->Colors[ImGuiCol_Button] = ImVec4(1.0f, 1.0f, 0.5f, 1.00f);
 		}
 
-		if (ImGui::Button("Only Mesh", ImVec2(150, 25)))
+		if (ImGui::Button("Only Mesh", ImVec2(200, 25)))
 		{
+			int Index = App->CL_Properties_Scene->Current_Selected_Object;
 
+			//// -----------------------  Area
+			//if (App->CL_Properties_Scene->Edit_Category == Enums::Edit_Area)
+			//{
+			//	if (App->CL_Com_Objects->flag_Hide_All_Except == 1)
+			//	{
+			//		App->CL_Com_Objects->flag_Hide_All_Except = 0;
+			//		App->CL_Com_Objects->Hide_AllObjects_Except(Index, true);
+			//	}
+			//	else
+			//	{
+			//		App->CL_Com_Objects->flag_Hide_All_Except = 1;
+			//		App->CL_Com_Objects->Hide_AllObjects_Except(Index, false);
+			//	}
+			//	return 1;
+			//}
+
+			if (App->CL_Com_Objects->flag_Hide_All_Except == 1)
+			{
+				App->CL_Com_Objects->flag_Hide_All_Except = 0;
+				App->CL_Com_Objects->Hide_AllObjects_Except(Index, true);
+			}
+			else
+			{
+				App->CL_Com_Objects->flag_Hide_All_Except = 1;
+				App->CL_Com_Objects->Hide_AllObjects_Except(Index, false);
+			}
 		}
 
 		// -------------- Highlight
 		Selected_Button(flag_Object_Highlighted);
 	
-		if (ImGui::Button("Highlight", ImVec2(150, 25)))
+		if (ImGui::Button("Highlight", ImVec2(200, 25)))
 		{
 			int index = App->CL_Properties_Scene->Current_Selected_Object;
 
@@ -157,10 +225,6 @@ void CL64_ImGui_Editor::Visuals_GUI(void)
 				App->CL_Gizmos->highlight(App->CL_Scene->B_Object[index]->Object_Ent);
 			}
 		}
-
-		//ImVec2 Size = ImGui::GetWindowSize();
-		//Visuals_PosX = ((float)App->CL_Ogre->mWindow->getViewport(0)->getActualWidth() / 2) - (Size.x / 2);
-		//Visuals_PosY = ((float)App->CL_Ogre->mWindow->getViewport(0)->getActualHeight() / 2) - (Size.y / 2);
 
 		style->Colors[ImGuiCol_Button] = ImVec4(0.26f, 0.59f, 0.98f, 0.40f);
 
