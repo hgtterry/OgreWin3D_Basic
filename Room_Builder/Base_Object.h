@@ -204,6 +204,7 @@ public:
 	bool flag_Altered;
 	bool flag_Physics_Debug_On;
 	bool flag_Dimensions_Locked;
+	bool flag_Is_Visible;
 
 	//------------------------------ Entity
 	bool Collision;

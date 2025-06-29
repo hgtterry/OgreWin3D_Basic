@@ -31,7 +31,10 @@ CL64_ImGui_Editor::CL64_ImGui_Editor()
 	Visuals_PosX = 500;
 	Visuals_PosY = 300;
 
-	flag_Show_Visuals = 0;
+	flag_Show_Visuals = false;
+	flag_Object_Highlighted = false;
+	flag_Show_Physics_Debug = false;
+	flag_Show_Mesh = true;
 }
 
 CL64_ImGui_Editor::~CL64_ImGui_Editor()
@@ -56,7 +59,7 @@ void CL64_ImGui_Editor::ImGui_Render_Editor_Loop(void)
 void CL64_ImGui_Editor::Visuals_GUI(void)
 {
 	ImGui::SetNextWindowPos(ImVec2(Visuals_PosX, Visuals_PosY), ImGuiCond_FirstUseEver);
-	ImGui::SetNextWindowSize(ImVec2(166, 200), ImGuiCond_FirstUseEver);
+	ImGui::SetNextWindowSize(ImVec2(166, 180), ImGuiCond_FirstUseEver);
 
 	ImGui::PushStyleColor(ImGuiCol_WindowBg, IM_COL32(239, 239, 239, 255));
 	ImGuiStyle* style = &ImGui::GetStyle();
@@ -69,11 +72,16 @@ void CL64_ImGui_Editor::Visuals_GUI(void)
 	{
 		style->Colors[ImGuiCol_Button] = ImVec4(1.0f, 1.0f, 0.5f, 1.00f);
 
-		// -------------- Level Start
+		// -------------- Show Mesh
+		Selected_Button(flag_Show_Mesh);
+		
 		if (ImGui::Button("Show Mesh", ImVec2(150, 25)))
 		{
 		}
 
+		// -------------- Show Physics
+		Selected_Button(flag_Show_Physics_Debug);
+		
 		if (ImGui::Button("Show Physics", ImVec2(150, 25)))
 		{
 			int Index = App->CL_Properties_Scene->Current_Selected_Object;
@@ -95,9 +103,10 @@ void CL64_ImGui_Editor::Visuals_GUI(void)
 				// Toggle physics debug mode
 				if (currentObject->flag_Physics_Debug_On == 1)
 				{
+					flag_Show_Physics_Debug = false;
 					//App->CL_Com_Objects->flag_Show_Physics_Debug = 0;
 					currentObject->Phys_Body->setCollisionFlags(collisionFlags | (1 << 5)); // Disable debug
-					currentObject->flag_Physics_Debug_On = 0;
+					currentObject->flag_Physics_Debug_On = false;
 
 					// Draw debug shape
 					//App->CL_Ogre->Bullet_Debug_Listener->flag_Render_Debug_Flag = 0;
@@ -106,24 +115,47 @@ void CL64_ImGui_Editor::Visuals_GUI(void)
 				}
 				else
 				{
-					currentObject->flag_Physics_Debug_On = 1;
+					flag_Show_Physics_Debug = true;
+					currentObject->flag_Physics_Debug_On = true;
 					//App->CL_Com_Objects->flag_Show_Physics_Debug = 1;
 					currentObject->Phys_Body->setCollisionFlags(collisionFlags & (~(1 << 5))); // Enable debug
 				}
 			}
 
 		}
-
-		// -------------- Return
-		if (ImGui::Button("Only Mesh", ImVec2(150, 25)))
+		
+		// -------------- Only Mesh
+		/*if (flag_Show_Mesh == true)
 		{
-			
+			style->Colors[ImGuiCol_Button] = ImVec4(0.0f, 1.0f, 0.0f, 1.0f);
+		}
+		else*/
+		{
+			style->Colors[ImGuiCol_Button] = ImVec4(1.0f, 1.0f, 0.5f, 1.00f);
 		}
 
-		// -------------- Return
-		if (ImGui::Button("Highlight", ImVec2(150, 25)))
+		if (ImGui::Button("Only Mesh", ImVec2(150, 25)))
 		{
 
+		}
+
+		// -------------- Highlight
+		Selected_Button(flag_Object_Highlighted);
+	
+		if (ImGui::Button("Highlight", ImVec2(150, 25)))
+		{
+			int index = App->CL_Properties_Scene->Current_Selected_Object;
+
+			if (App->CL_Props_Dialogs->flag_isHighlighted == true)
+			{
+				flag_Object_Highlighted = false;
+				App->CL_Gizmos->unhighlight(App->CL_Scene->B_Object[index]->Object_Ent);
+			}
+			else
+			{
+				flag_Object_Highlighted = true;
+				App->CL_Gizmos->highlight(App->CL_Scene->B_Object[index]->Object_Ent);
+			}
 		}
 
 		//ImVec2 Size = ImGui::GetWindowSize();
@@ -134,5 +166,22 @@ void CL64_ImGui_Editor::Visuals_GUI(void)
 
 		ImGui::PopStyleColor();
 		ImGui::End();
+	}
+}
+
+// *************************************************************************
+// *			Selected_Button:- Terry and Hazel Flanigan 2025			   *
+// *************************************************************************
+void CL64_ImGui_Editor::Selected_Button(bool IsSelected)
+{
+	ImGuiStyle* style = &ImGui::GetStyle();
+
+	if (IsSelected == true)
+	{
+		style->Colors[ImGuiCol_Button] = ImVec4(0.0f, 1.0f, 0.0f, 1.0f);
+	}
+	else
+	{
+		style->Colors[ImGuiCol_Button] = ImVec4(1.0f, 1.0f, 0.5f, 1.00f);
 	}
 }

@@ -107,26 +107,28 @@ bool Base_Object::Init_Object(void)
 
 	This_Object_UniqueID = 0; // This Needs Checking
 
-	flag_Deleted = 0;
-	flag_Altered = 0;
+	flag_Deleted = false;
+	flag_Altered = false;
 
-	Collision = 0;
-	flag_Triggered = 0;
-	flag_Physics_Debug_On = 0;
-	flag_Dimensions_Locked = 0;
-	flag_OverRide_Counter = 0;
+	Collision = false;
+	flag_Triggered = false;
+	flag_Physics_Debug_On = false;
+	flag_Dimensions_Locked = false;
+	flag_Is_Visible = true;
+
+	flag_OverRide_Counter = false;
 
 	//------------------------------ Message Entity
 	//strcpy(Message_Text, "This is in the Object");
 
 	//------------------------------ Sound Entity
-	flag_HasSound = 0;
+	flag_HasSound = false;
 	strcpy(Sound_File, "Door_Open.wav");
 	Sound_Path[0] = 0;
 	flag_Play_Sound = 1;
 	SndVolume = 0.5; // Default Half Volume
 
-	flag_Show_Message_Flag = 0;
+	flag_Show_Message_Flag = false;
 	//strcpy(Message_Text, "Welcome");
 	strcpy(ImGui_Panel_Name, "TextMessage_");
 

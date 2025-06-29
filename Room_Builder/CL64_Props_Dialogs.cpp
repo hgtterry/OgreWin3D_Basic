@@ -648,39 +648,39 @@ LRESULT CALLBACK CL64_Props_Dialogs::Proc_Debug_Dlg(HWND hDlg, UINT message, WPA
 		//	return 1;
 		//}
 
-		//if (LOWORD(wParam) == IDC_BT_SHOWMESH)
-		//{
-		//	int Index = App->CL_Properties->Current_Selected_Object;
+		if (LOWORD(wParam) == IDC_BT_SHOWMESH)
+		{
+			int Index = App->CL_Properties_Scene->Current_Selected_Object;
 
-		//	// -----------------------  Area
-		//	if (App->CL_Properties->Edit_Category == Enums::Edit_Area)
-		//	{
-		//		if (App->CL_Com_Objects->flag_Show_Mesh_Debug == 1)
-		//		{
-		//			App->CL_Scene->B_Area[Index]->Area_Node->setVisible(false);
-		//			App->CL_Com_Objects->flag_Show_Mesh_Debug = 0;
-		//		}
-		//		else
-		//		{
-		//			App->CL_Scene->B_Area[Index]->Area_Node->setVisible(true);
-		//			App->CL_Com_Objects->flag_Show_Mesh_Debug = 1;
-		//		}
-		//		return 1;
-		//	}
+			// -----------------------  Area
+			/*if (App->CL_Properties->Edit_Category == Enums::Edit_Area)
+			{
+				if (App->CL_Com_Objects->flag_Show_Mesh_Debug == 1)
+				{
+					App->CL_Scene->B_Area[Index]->Area_Node->setVisible(false);
+					App->CL_Com_Objects->flag_Show_Mesh_Debug = 0;
+				}
+				else
+				{
+					App->CL_Scene->B_Area[Index]->Area_Node->setVisible(true);
+					App->CL_Com_Objects->flag_Show_Mesh_Debug = 1;
+				}
+				return 1;
+			}*/
 
-		//	if (App->CL_Com_Objects->flag_Show_Mesh_Debug == 1)
-		//	{
-		//		App->CL_Scene->B_Object[Index]->Object_Node->setVisible(false);
-		//		App->CL_Com_Objects->flag_Show_Mesh_Debug = 0;
-		//	}
-		//	else
-		//	{
-		//		App->CL_Scene->B_Object[Index]->Object_Node->setVisible(true);
-		//		App->CL_Com_Objects->flag_Show_Mesh_Debug = 1;
-		//	}
+			if (App->CL_Com_Objects->flag_Show_Mesh_Debug == 1)
+			{
+				App->CL_Scene->B_Object[Index]->Object_Node->setVisible(false);
+				App->CL_Com_Objects->flag_Show_Mesh_Debug = 0;
+			}
+			else
+			{
+				App->CL_Scene->B_Object[Index]->Object_Node->setVisible(true);
+				App->CL_Com_Objects->flag_Show_Mesh_Debug = 1;
+			}
 
-		//	return 1;
-		//}
+			return 1;
+		}
 
 		if (LOWORD(wParam) == IDC_BT_PHYSDEBUG)
 		{
