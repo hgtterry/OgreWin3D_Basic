@@ -28,11 +28,19 @@ THE SOFTWARE.
 
 CL64_ImGui_Editor::CL64_ImGui_Editor()
 {
+	flag_Block_GUI = false;
+
 	Visuals_PosX = 500;
 	Visuals_PosY = 300;
-
-	flag_Block_GUI = false;
 	flag_Show_Visuals = false;
+
+	Dimensions_PosX = 500;
+	Dimensions_PosY = 300;
+	flag_Show_Dimensions = false;
+	flag_Show_Position = false;
+	flag_Show_Scale = false;
+	flag_Show_Rotation = false;
+
 	flag_Object_Highlighted = false;
 	flag_Show_Physics_Debug = false;
 	flag_Show_Mesh = true;
@@ -50,10 +58,90 @@ void CL64_ImGui_Editor::ImGui_Render_Editor_Loop(void)
 {
 	if (flag_Block_GUI == false)
 	{
+		if (flag_Show_Dimensions == true)
+		{
+			Dimensions_GUI();
+		}
+		
 		if (flag_Show_Visuals == true)
 		{
 			Visuals_GUI();
 		}
+	}
+}
+
+// *************************************************************************
+// *			Dimensions_GUI:- Terry and Hazel Flanigan 2025			   *
+// *************************************************************************
+void CL64_ImGui_Editor::Dimensions_GUI(void)
+{
+	Dimensions_PosX = ((float)App->CL_Ogre->mWindow->getViewport(0)->getActualWidth() - 530);
+	Dimensions_PosY = ((float)App->CL_Ogre->mWindow->getViewport(0)->getActualHeight() - 150);
+
+
+	ImGui::SetNextWindowPos(ImVec2(Dimensions_PosX, Dimensions_PosY), ImGuiCond_FirstUseEver);
+	ImGui::SetNextWindowSize(ImVec2(250, 60), ImGuiCond_FirstUseEver);
+
+	ImGui::PushStyleColor(ImGuiCol_WindowBg, IM_COL32(239, 239, 239, 255));
+	ImGuiStyle* style = &ImGui::GetStyle();
+
+	float spacingX = ImGui::GetStyle().ItemInnerSpacing.x;
+
+	if (!ImGui::Begin("Dimensions_GUI", NULL, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar))
+	{
+		ImGui::End();
+	}
+	else
+	{
+		style->Colors[ImGuiCol_Button] = ImVec4(1.0f, 1.0f, 0.5f, 1.00f);
+
+		// -------------- Position
+		Selected_Button(flag_Show_Position);
+
+		if (ImGui::Button("Position", ImVec2(75, 25)))
+		{
+			flag_Show_Position = true;
+			
+			App->CL_Dimensions->Do_Position_New();
+
+			flag_Show_Position = false;
+			App->CL_Panels->Enable_Scene_Editor_Dialogs(true);
+		}
+
+		ImGui::SameLine(0.0f, spacingX);
+
+		// -------------- Scale
+		Selected_Button(flag_Show_Scale);
+
+		if (ImGui::Button("Scale", ImVec2(75, 25)))
+		{
+			flag_Show_Scale = true;
+			
+			App->CL_Dimensions->Do_Scale_New();
+
+			flag_Show_Scale = false;
+			App->CL_Panels->Enable_Scene_Editor_Dialogs(true);
+		}
+
+		ImGui::SameLine(0.0f, spacingX);
+
+		// -------------- Rotatioin
+		Selected_Button(flag_Show_Rotation);
+		
+		if (ImGui::Button("Rotation", ImVec2(75, 25)))
+		{
+			flag_Show_Rotation = true;
+			
+			App->CL_Dimensions->Do_Rotation_New(); // Returns on Exit
+
+			flag_Show_Rotation = false;
+			App->CL_Panels->Enable_Scene_Editor_Dialogs(true);
+		}
+
+		style->Colors[ImGuiCol_Button] = ImVec4(0.26f, 0.59f, 0.98f, 0.40f);
+
+		ImGui::PopStyleColor();
+		ImGui::End();
 	}
 }
 

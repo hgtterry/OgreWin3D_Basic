@@ -29,15 +29,23 @@ public:
 	CL64_ImGui_Editor();
 	~CL64_ImGui_Editor();
 
+	void Dimensions_GUI(void);
 	void ImGui_Render_Editor_Loop(void);
 
 	void Visuals_GUI(void);
 
 	int Visuals_PosX;
 	int Visuals_PosY;
+	bool flag_Show_Visuals;
+
+	int Dimensions_PosX;
+	int Dimensions_PosY;
+	bool flag_Show_Dimensions;
+	bool flag_Show_Position;
+	bool flag_Show_Scale;
+	bool flag_Show_Rotation;
 
 	bool flag_Block_GUI;
-	bool flag_Show_Visuals;
 	bool flag_Object_Highlighted;
 	bool flag_Show_Physics_Debug;
 	bool flag_Show_Mesh;

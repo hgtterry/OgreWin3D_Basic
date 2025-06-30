@@ -645,7 +645,10 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 		App->CL_Props_Dialogs->Show_Details_Goto_Dlg(true);
 
 		App->CL_Props_Dialogs->Show_Dimensions_Dlg(true);
+
 		App->CL_ImGui_Editor->flag_Show_Visuals = true;
+		App->CL_ImGui_Editor->flag_Show_Dimensions = true;
+
 		App->CL_Props_Dialogs->Show_Materials_Dlg(true);
 
 		//----------------------------------------------------------------------------
