@@ -76,7 +76,6 @@
 #define IDD_GMSTART                     188
 #define IDD_PROPERTIES_SCENE            189
 #define IDD_YESNOCANCEL                 190
-#define IDD_PROPS_DIMENSIONS            191
 #define IDD_MESHVIEWER                  192
 #define IDD_MESHVIEWER_3D               193
 #define IDD_POSITION_DLG                195
@@ -419,10 +418,6 @@
 #define IDC_STOBJECTNAME                1300
 #define IDC_BT_SCENE_FIRST              1302
 #define IDC_BT_SCENE_FREE               1303
-#define IDC_BT_POSITION                 1303
-#define IDC_BT_SCALE                    1304
-#define IDC_BT_ROTATION                 1305
-#define IDC_CK_LOCK                     1306
 #define IDC_ST_BRUSH_NAME               1307
 #define IDC_BT_HD_SCENEEDITOR           1308
 #define IDC_BT_HD_SCENEEDITOR2          1309

@@ -75,8 +75,8 @@ void CL64_ImGui_Editor::ImGui_Render_Editor_Loop(void)
 // *************************************************************************
 void CL64_ImGui_Editor::Dimensions_GUI(void)
 {
-	Dimensions_PosX = ((float)App->CL_Ogre->mWindow->getViewport(0)->getActualWidth() - 530);
-	Dimensions_PosY = ((float)App->CL_Ogre->mWindow->getViewport(0)->getActualHeight() - 150);
+	Dimensions_PosX = ((float)App->CL_Ogre->mWindow->getViewport(0)->getActualWidth() - 255);
+	Dimensions_PosY = ((float)App->CL_Ogre->mWindow->getViewport(0)->getActualHeight() - 250);
 
 
 	ImGui::SetNextWindowPos(ImVec2(Dimensions_PosX, Dimensions_PosY), ImGuiCond_FirstUseEver);
