@@ -31,6 +31,7 @@ CL64_ImGui_Editor::CL64_ImGui_Editor()
 	Visuals_PosX = 500;
 	Visuals_PosY = 300;
 
+	flag_Block_GUI = false;
 	flag_Show_Visuals = false;
 	flag_Object_Highlighted = false;
 	flag_Show_Physics_Debug = false;
@@ -47,9 +48,12 @@ CL64_ImGui_Editor::~CL64_ImGui_Editor()
 // **************************************************************************
 void CL64_ImGui_Editor::ImGui_Render_Editor_Loop(void)
 {
-	if (flag_Show_Visuals == true)
+	if (flag_Block_GUI == false)
 	{
-		Visuals_GUI();
+		if (flag_Show_Visuals == true)
+		{
+			Visuals_GUI();
+		}
 	}
 }
 
@@ -68,7 +72,7 @@ void CL64_ImGui_Editor::Visuals_GUI(void)
 	ImGui::PushStyleColor(ImGuiCol_WindowBg, IM_COL32(239, 239, 239, 255));
 	ImGuiStyle* style = &ImGui::GetStyle();
 
-	if (!ImGui::Begin("Options", NULL, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar))
+	if (!ImGui::Begin("Debug_Visuals", NULL, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar))
 	{
 		ImGui::End();
 	}

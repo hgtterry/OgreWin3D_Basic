@@ -36,6 +36,7 @@ public:
 	int Visuals_PosX;
 	int Visuals_PosY;
 
+	bool flag_Block_GUI;
 	bool flag_Show_Visuals;
 	bool flag_Object_Highlighted;
 	bool flag_Show_Physics_Debug;

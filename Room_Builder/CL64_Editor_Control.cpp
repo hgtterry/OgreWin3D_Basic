@@ -45,7 +45,7 @@ CL64_Editor_Control::~CL64_Editor_Control(void)
 void CL64_Editor_Control::Start_Preview_Mode(void)
 {
     App->CL_ImGui->Close_Dialogs();
-
+	App->CL_ImGui_Editor->flag_Block_GUI = true;
     // Clear existing trimesh if it has been created
     if (App->CL_Physics->flag_TriMesh_Created)
     {
@@ -157,6 +157,7 @@ void CL64_Editor_Control::Return_To_Map_Editor(void)
 	App->CL_Gui_Environment->PropertyEditor_Page = false;
 	App->CL_Gui_Environment->flag_Show_PropertyEditor = false;
 	App->CL_Gizmos->Show_MarkerBox(false);
+	App->CL_ImGui_Editor->flag_Block_GUI = true;
 
 	// Reset Flags
 	App->CL_Editor_Control->flag_Scene_Editor_Active = false;
@@ -256,7 +257,7 @@ void CL64_Editor_Control::Start_Editor_Scene()
 	App->CL_Com_Objects->Show_Entities(true);
 
 	App->CL_Gizmos->MarkerBox_Adjust(App->CL_Properties_Scene->Current_Selected_Object);
-
+	App->CL_ImGui_Editor->flag_Block_GUI = false;
 }
 
 // *************************************************************************

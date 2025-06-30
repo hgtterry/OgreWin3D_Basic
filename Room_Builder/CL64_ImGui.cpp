@@ -345,7 +345,7 @@ void CL64_ImGui::Preview_Options_GUI(void)
 		{
 			App->CL_Editor_Control->Start_Editor_MapBrush_Mode();
 
-			if (App->CL_Editor_Control->flag_Scene_Editor_Active == 1)
+			if (App->CL_Editor_Control->flag_Scene_Editor_Active == true)
 			{
 				App->CL_Editor_Scene->Return_From_Preview();
 			}
