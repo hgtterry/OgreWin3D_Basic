@@ -5,6 +5,8 @@ VisualStudioVersion = 17.12.35527.113
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Room Builder", "Room_Builder\Room Builder.vcxproj", "{5209937E-733E-493A-9FCB-3B06ED60AD03}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Test_Lib", "Test_Lib\Test_Lib\Test_Lib.vcxproj", "{DA784F3C-F0F7-499A-902C-A8B0DC20F07E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Release|x64 = Release|x64
@@ -12,6 +14,8 @@ Global
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{5209937E-733E-493A-9FCB-3B06ED60AD03}.Release|x64.ActiveCfg = Release|x64
 		{5209937E-733E-493A-9FCB-3B06ED60AD03}.Release|x64.Build.0 = Release|x64
+		{DA784F3C-F0F7-499A-902C-A8B0DC20F07E}.Release|x64.ActiveCfg = Release|x64
+		{DA784F3C-F0F7-499A-902C-A8B0DC20F07E}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

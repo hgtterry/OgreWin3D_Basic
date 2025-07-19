@@ -103,6 +103,8 @@ THE SOFTWARE.
 #include "CL64_Props_Dialogs.h"
 #include "CL64_MeshViewer.h"
 
+#include "Test_Lib_X.h"
+
 class CL64_App
 {
 public:
