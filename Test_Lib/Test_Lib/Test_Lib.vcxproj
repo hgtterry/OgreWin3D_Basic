@@ -127,6 +127,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>..\..\Common_64\Ogre3D\include\OGRE\RTShaderSystem;..\..\Common_64\Ogre3D\include\OGRE\Bites;..\..\Common_64\Ogre3D\include\OGRE\Overlay;..\..\Common_64\Ogre3D\include\OGRE;..\..\Room_Builder;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>

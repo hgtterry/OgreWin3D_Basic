@@ -13,4 +13,12 @@
 //#include "targetver.h"
 
 #include <windows.h>
+
+#include "Ogre.h"
+#include "OgreConfigFile.h"
+#include "OgreStringConverter.h"
+#include "OgreException.h"
+#include "OgreTextAreaOverlayElement.h"
+
+
 //#define WIN32_LEAN_AND_MEAN             // Exclude rarely-used stuff from Windows headers
