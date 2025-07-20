@@ -114,7 +114,7 @@ public:
 	~CL64_App(void);
 
 	Test_Lib_X*					CL_Test_Lib;
-
+	CL64_Lib_Maths*				CL_Lib_Maths;
 
 	CL64_Editor_Map*			CL_Editor_Map;
 	CL64_Maths*					CL_Maths;
