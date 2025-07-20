@@ -11,8 +11,10 @@ public:
 
 private:
 
-	LRESULT CALLBACK Proc_Message(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Proc_Message2(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
+	char Message_Text_Header[MAX_PATH];
+	char Message_Text_Message[MAX_PATH];
 
 };
 

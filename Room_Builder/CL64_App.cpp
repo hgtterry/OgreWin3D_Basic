@@ -107,6 +107,9 @@ CL64_App::CL64_App(void)
 	CL_Gizmos =					nullptr;
 	CL_MeshViewer =				nullptr;
 
+	CL_Test_Lib =				nullptr;
+
+
 	CUR = 0;
 	Menu_Map = 0;
 	Menu_Scene = 0;
@@ -253,6 +256,8 @@ void CL64_App::InitApp(void)
 	CL_Gizmos =					new CL64_Gizmos();
 	CL_Dimensions =				new CL64_Dimensions();
 	CL_MeshViewer =				new CL64_MeshViewer();
+
+	CL_Test_Lib =				new Test_Lib_X();
 
 	SetBrushes_Fonts();
 
