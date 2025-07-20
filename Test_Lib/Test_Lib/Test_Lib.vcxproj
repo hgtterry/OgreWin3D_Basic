@@ -50,7 +50,7 @@
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -127,7 +127,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>..\..\Common_64\Ogre3D\include\OGRE\RTShaderSystem;..\..\Common_64\Ogre3D\include\OGRE\Bites;..\..\Common_64\Ogre3D\include\OGRE\Overlay;..\..\Common_64\Ogre3D\include\OGRE;..\..\Room_Builder;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\Common_64\Ogre3D\include\OGRE\RTShaderSystem;..\..\Common_64\Ogre3D\include\OGRE\Bites;..\..\Common_64\Ogre3D\include\OGRE\Overlay;..\..\Common_64\Ogre3D\include\OGRE;..\..\Common_64\Bullet\Source;..\..\Common_64\Bullet\Source\LinearMath;..\..\Common_64\irrKlang\Headers;..\..\Room_Builder;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>

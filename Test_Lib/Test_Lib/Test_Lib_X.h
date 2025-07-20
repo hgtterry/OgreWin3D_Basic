@@ -7,6 +7,12 @@ public:
 	~Test_Lib_X(void);
 
 	void Try(void);
+	void Message(char* pString, char* pString2);
+
+private:
+
+	LRESULT CALLBACK Proc_Message(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+
 
 };
 
