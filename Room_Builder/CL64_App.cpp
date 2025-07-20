@@ -108,7 +108,7 @@ CL64_App::CL64_App(void)
 	CL_MeshViewer =				nullptr;
 
 	CL_Test_Lib =				nullptr;
-
+	CL_Lib_Maths =				nullptr;
 
 	CUR = 0;
 	Menu_Map = 0;
@@ -258,7 +258,8 @@ void CL64_App::InitApp(void)
 	CL_MeshViewer =				new CL64_MeshViewer();
 
 	CL_Test_Lib =				new Test_Lib_X();
-
+	CL_Lib_Maths =				new CL64_Lib_Maths();
+	
 	SetBrushes_Fonts();
 
 	char Deskdir[MAX_PATH];
