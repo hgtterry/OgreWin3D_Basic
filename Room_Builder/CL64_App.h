@@ -25,7 +25,8 @@ THE SOFTWARE.
 #pragma once
 
 #include "CL64_Editor_Map.h"
-#include "CL64_Maths.h"
+//#include "CL64_Maths.h"
+#include "CL64_Lib_Maths.h"
 #include "CL64_Box.h"
 #include "CL64_Render.h"
 #include "CL64_Level.h"
@@ -104,8 +105,6 @@ THE SOFTWARE.
 #include "CL64_MeshViewer.h"
 
 #include "Test_Lib_X.h"
-#include "CL64_Lib_Maths.h"
-
 
 class CL64_App
 {
@@ -114,10 +113,11 @@ public:
 	~CL64_App(void);
 
 	Test_Lib_X*					CL_Test_Lib;
-	CL64_Lib_Maths*				CL_Lib_Maths;
 
 	CL64_Editor_Map*			CL_Editor_Map;
-	CL64_Maths*					CL_Maths;
+	//CL64_Maths*					CL_Maths;
+	CL64_Lib_Maths*				CL_Maths;
+
 	CL64_Box*					CL_Box;
 	CL64_Render*				CL_Render;
 	CL64_Level*					CL_Level;

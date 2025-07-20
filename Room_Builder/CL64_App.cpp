@@ -108,7 +108,6 @@ CL64_App::CL64_App(void)
 	CL_MeshViewer =				nullptr;
 
 	CL_Test_Lib =				nullptr;
-	CL_Lib_Maths =				nullptr;
 
 	CUR = 0;
 	Menu_Map = 0;
@@ -177,7 +176,7 @@ CL64_App::~CL64_App(void)
 void CL64_App::InitApp(void)
 {
 	CL_Editor_Map =				new CL64_Editor_Map();
-	CL_Maths =					new CL64_Maths();
+	CL_Maths =					new CL64_Lib_Maths();
 	CL_Box =					new CL64_Box();
 	CL_Render =					new CL64_Render();
 	CL_Level =					new CL64_Level();
@@ -258,7 +257,6 @@ void CL64_App::InitApp(void)
 	CL_MeshViewer =				new CL64_MeshViewer();
 
 	CL_Test_Lib =				new Test_Lib_X();
-	CL_Lib_Maths =				new CL64_Lib_Maths();
 	
 	SetBrushes_Fonts();
 

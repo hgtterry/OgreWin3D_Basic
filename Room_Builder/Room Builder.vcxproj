@@ -196,7 +196,6 @@
     <ClInclude Include="CL64_Ini_File.h" />
     <ClInclude Include="CL64_Keyboard.h" />
     <ClInclude Include="CL64_Level.h" />
-    <ClInclude Include="CL64_Maths.h" />
     <ClInclude Include="CL64_MeshViewer.h" />
     <ClInclude Include="CL64_MeshView_Listener.h" />
     <ClInclude Include="CL64_Mesh_Mgr.h" />
@@ -283,7 +282,6 @@
     <ClCompile Include="CL64_Ini_File.cpp" />
     <ClCompile Include="CL64_Keyboard.cpp" />
     <ClCompile Include="CL64_Level.cpp" />
-    <ClCompile Include="CL64_Maths.cpp" />
     <ClCompile Include="CL64_MeshViewer.cpp" />
     <ClCompile Include="CL64_MeshView_Listener.cpp" />
     <ClCompile Include="CL64_Mesh_Mgr.cpp" />

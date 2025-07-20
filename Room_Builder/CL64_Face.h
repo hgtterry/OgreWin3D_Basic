@@ -23,7 +23,7 @@ THE SOFTWARE.
 */
 #pragma once
 
-#include "CL64_Maths.h"
+#include "CL64_Lib_Maths.h"
 
 typedef struct
 {
