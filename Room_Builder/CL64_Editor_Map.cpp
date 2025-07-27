@@ -76,7 +76,7 @@ typedef struct tagBrushDrawData
 
 CL64_Editor_Map::CL64_Editor_Map()
 {
-	Main_Dlg_Hwnd = NULL;
+	Main_View_Dlg_Hwnd = NULL;
 
 	GridSize = 128, 
 	GridSnapSize = 8;
@@ -127,7 +127,7 @@ CL64_Editor_Map::CL64_Editor_Map()
 	mStartPoint.x = 0;
 	mStartPoint.y = 0;
 
-	Current_View = NULL;
+	Current_View = nullptr;
 
 	int Count = 0;
 	while (Count < 3)
@@ -156,8 +156,8 @@ void CL64_Editor_Map::Reset_Class()
 // *************************************************************************
 void CL64_Editor_Map::Reset_Views_All()
 {
-	Init_Views(Enums::Selected_View_None);
-	Resize_Windows(Main_Dlg_Hwnd, nleftWnd_width, nleftWnd_Depth);
+	Init_Views(Enums::Selected_Map_View_None);
+	Resize_Windows(Main_View_Dlg_Hwnd, nleftWnd_width, nleftWnd_Depth);
 
 	App->CL_Top_Tabs->Copy_Spliter_Width = nleftWnd_width;
 	App->CL_Top_Tabs->Copy_Spliter_Depth = nleftWnd_Depth;
@@ -214,9 +214,9 @@ void CL64_Editor_Map::Reset_To_Camera()
 void CL64_Editor_Map::Init_Views(int View)
 {
 	RECT rect;
-	GetClientRect(Main_Dlg_Hwnd, &rect);
+	GetClientRect(Main_View_Dlg_Hwnd, &rect);
 
-	if (View == Enums::Selected_View_None)
+	if (View == Enums::Selected_Map_View_None)
 	{
 		LEFT_WINDOW_WIDTH = rect.right / 2;
 		nleftWnd_width = rect.right / 2;
@@ -225,7 +225,7 @@ void CL64_Editor_Map::Init_Views(int View)
 		TOP_POS_BOTLEFT = rect.bottom / 2;
 	}
 
-	if (View == Enums::Selected_View_3D)
+	if (View == Enums::Selected_Map_View_3D)
 	{
 		LEFT_WINDOW_WIDTH = 0;
 		nleftWnd_width = 0;
@@ -234,7 +234,7 @@ void CL64_Editor_Map::Init_Views(int View)
 		TOP_POS_BOTLEFT = 0;
 	}
 
-	if (View == Enums::Selected_View_TL)
+	if (View == Enums::Selected_Map_View_TL)
 	{
 		LEFT_WINDOW_WIDTH = rect.right;
 		nleftWnd_width = rect.right;
@@ -243,7 +243,7 @@ void CL64_Editor_Map::Init_Views(int View)
 		TOP_POS_BOTLEFT = rect.bottom;
 	}
 
-	if (View == Enums::Selected_View_TR)
+	if (View == Enums::Selected_Map_View_TR)
 	{
 		LEFT_WINDOW_WIDTH = 0;
 		nleftWnd_width = 0;
@@ -252,7 +252,7 @@ void CL64_Editor_Map::Init_Views(int View)
 		TOP_POS_BOTLEFT = rect.bottom;
 	}
 
-	if (View == Enums::Selected_View_BL)
+	if (View == Enums::Selected_Map_View_BL)
 	{
 		LEFT_WINDOW_WIDTH = rect.right;
 		nleftWnd_width = rect.right;
@@ -309,7 +309,7 @@ void CL64_Editor_Map::Resize_Windows(HWND hDlg, int NewWidth, int NewDepth)
 		rect.bottom - (NewDepth + BOTTOM_POS_BOTLEFT),
 		FALSE);
 
-	RedrawWindow(Main_Dlg_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+	RedrawWindow(Main_View_Dlg_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 	
 	App->CL_Panels->Resize_OgreWin();
 }
@@ -319,7 +319,7 @@ void CL64_Editor_Map::Resize_Windows(HWND hDlg, int NewWidth, int NewDepth)
 // *************************************************************************
 void CL64_Editor_Map::Init_Map_Views()
 {
-	Main_Dlg_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MAPEDITOR, App->MainHwnd, (DLGPROC)Proc_Main_Dlg);
+	Main_View_Dlg_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MAPEDITOR, App->MainHwnd, (DLGPROC)Proc_Main_Dlg);
 
 	Create_Top_Left_Window();
 	Create_Top_Right_Window();
@@ -328,10 +328,10 @@ void CL64_Editor_Map::Init_Map_Views()
 
 	RECT rcl;
 	GetClientRect(App->MainHwnd, &rcl);
-	MoveWindow(Main_Dlg_Hwnd, 0, 50, rcl.right, rcl.bottom - 50, TRUE);
+	MoveWindow(Main_View_Dlg_Hwnd, 0, 50, rcl.right, rcl.bottom - 50, TRUE);
 	
-	Init_Views(Enums::Selected_View_None);
-	RedrawWindow(Main_Dlg_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+	Init_Views(Enums::Selected_Map_View_None);
+	RedrawWindow(Main_View_Dlg_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
 }
 
@@ -351,7 +351,7 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Main_Dlg(HWND hDlg, UINT message, WPARAM 
 	{
 	case WM_INITDIALOG:
 	{
-		App->CL_Editor_Map->Main_Dlg_Hwnd = hDlg;
+		App->CL_Editor_Map->Main_View_Dlg_Hwnd = hDlg;
 		
 		return TRUE;
 	}
@@ -383,7 +383,7 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Main_Dlg(HWND hDlg, UINT message, WPARAM 
 
 	case WM_SIZE:
 	{
-		App->CL_Editor_Map->Init_Views(Enums::Selected_View_None);
+		App->CL_Editor_Map->Init_Views(Enums::Selected_Map_View_None);
 		App->CL_Editor_Map->Resize_Windows(hDlg, App->CL_Editor_Map->nleftWnd_width, App->CL_Editor_Map->nleftWnd_Depth);
 
 		return 0;
@@ -425,7 +425,6 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Main_Dlg(HWND hDlg, UINT message, WPARAM 
 
 			if (xSizing && ySizing == 0)
 			{
-				// Api to capture mouse input
 				SetCapture(hDlg);
 				if (xSizing)
 				{
@@ -436,7 +435,6 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Main_Dlg(HWND hDlg, UINT message, WPARAM 
 
 			if (ySizing && xSizing == 0)
 			{
-				// Api to capture mouse input
 				SetCapture(hDlg);
 				if (ySizing)
 				{
@@ -626,12 +624,6 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Main_Dlg(HWND hDlg, UINT message, WPARAM 
 		return 1;
 	}
 
-
-	case WM_COMMAND:
-	{
-	
-	}
-
 	break;
 
 	}
@@ -675,7 +667,11 @@ void CL64_Editor_Map::Set_Splitter_WidthDepth(int Width, int Depth)
 // *************************************************************************
 void CL64_Editor_Map::Create_Top_Left_Window()
 {
-	Left_Window_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MAP_TOP_LEFT, Main_Dlg_Hwnd, (DLGPROC)Proc_Top_Left_Window);
+	VCam[V_TL] = new ViewVars;
+	Set_Views_Defaults(V_TL, VIEWTOP, "TLV");
+
+	Left_Window_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MAP_TOP_LEFT, Main_View_Dlg_Hwnd, (DLGPROC)Proc_Top_Left_Window);
+	
 	VCam[V_TL]->hDlg = Left_Window_Hwnd;
 }
 
@@ -689,12 +685,6 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Top_Left_Window(HWND hDlg, UINT message, 
 	case WM_INITDIALOG:
 	{
 		SendDlgItemMessage(hDlg, IDC_ST_TL_TITLE, WM_SETFONT, (WPARAM)App->Font_CB10, MAKELPARAM(TRUE, 0));
-		
-		RECT r;
-		GetClientRect(hDlg, &r);
-
-		App->CL_Editor_Map->VCam[V_TL] = new ViewVars;
-		App->CL_Editor_Map->Set_Views_Defaults(V_TL,VIEWTOP,"TLV");
 
 		return TRUE;
 	}
@@ -861,7 +851,12 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Top_Left_Window(HWND hDlg, UINT message, 
 // *************************************************************************
 void CL64_Editor_Map::Create_Top_Right_Window()
 {
-	Right_Window_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MAP_TOP_RIGHT, Main_Dlg_Hwnd, (DLGPROC)Proc_Top_Right_Window);
+	VCam[V_TR] = new ViewVars;
+	Set_Views_Defaults(V_TR, VIEWSIDE, "V_TR");
+
+	Right_Window_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MAP_TOP_RIGHT, Main_View_Dlg_Hwnd, (DLGPROC)Proc_Top_Right_Window);
+
+	VCam[V_TR]->hDlg = Right_Window_Hwnd;
 }
 
 // *************************************************************************
@@ -874,17 +869,6 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Top_Right_Window(HWND hDlg, UINT message,
 	case WM_INITDIALOG:
 	{
 		SendDlgItemMessage(hDlg, IDC_ST_TR_TITLE, WM_SETFONT, (WPARAM)App->Font_CB10, MAKELPARAM(TRUE, 0));
-
-		App->CL_Editor_Map->VCam[V_TR] = new ViewVars;
-		strcpy(App->CL_Editor_Map->VCam[V_TR]->Name, "TRV");
-		App->CL_Editor_Map->VCam[V_TR]->ViewType = 32;
-		App->CL_Editor_Map->VCam[V_TR]->ZoomFactor = 0.4;
-
-		App->CL_Editor_Map->VCam[V_TR]->CamPos.x = 0;// App->CL_Ogre->camNode->getPosition();
-		App->CL_Editor_Map->VCam[V_TR]->CamPos.y;
-		App->CL_Editor_Map->VCam[V_TR]->CamPos.z;
-		
-		App->CL_Editor_Map->VCam[V_TR]->hDlg = hDlg;
 
 		return TRUE;
 	}
@@ -1065,7 +1049,12 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Top_Right_Window(HWND hDlg, UINT message,
 // *************************************************************************
 void CL64_Editor_Map::Create_Bottom_Left_Window()
 {
-	Bottom_Left_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MAP_BOTTOM_LEFT, Main_Dlg_Hwnd, (DLGPROC)Proc_Bottom_Left_Window);
+	VCam[V_BL] = new ViewVars;
+	Set_Views_Defaults(V_BL, VIEWFRONT, "BLV");
+
+	Bottom_Left_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MAP_BOTTOM_LEFT, Main_View_Dlg_Hwnd, (DLGPROC)Proc_Bottom_Left_Window);
+
+	VCam[V_BL]->hDlg = Bottom_Left_Hwnd;
 }
 
 // *************************************************************************
@@ -1078,17 +1067,6 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Bottom_Left_Window(HWND hDlg, UINT messag
 	case WM_INITDIALOG:
 	{
 		SendDlgItemMessage(hDlg, IDC_ST_BL_TITLE, WM_SETFONT, (WPARAM)App->Font_CB10, MAKELPARAM(TRUE, 0));
-
-		App->CL_Editor_Map->VCam[V_BL] = new ViewVars;
-		strcpy(App->CL_Editor_Map->VCam[2]->Name, "BLV");
-		App->CL_Editor_Map->VCam[V_BL]->ViewType = 16;
-		App->CL_Editor_Map->VCam[V_BL]->ZoomFactor = 0.4;
-
-		App->CL_Editor_Map->VCam[V_BL]->CamPos.x = 0;//App->CL_Ogre->camNode->getPosition();
-		App->CL_Editor_Map->VCam[V_BL]->CamPos.y = 0;
-		App->CL_Editor_Map->VCam[V_BL]->CamPos.z = 0;
-		
-		App->CL_Editor_Map->VCam[V_BL]->hDlg = hDlg;
 
 		return TRUE;
 	}
@@ -1255,7 +1233,7 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Bottom_Left_Window(HWND hDlg, UINT messag
 // *************************************************************************
 void CL64_Editor_Map::Create_Ogre_Bottom_Right()
 {
-	Bottom_Right_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MAP_BOTTOM_RIGHT, Main_Dlg_Hwnd, (DLGPROC)ViewerMain_Proc);
+	Bottom_Right_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MAP_BOTTOM_RIGHT, Main_View_Dlg_Hwnd, (DLGPROC)ViewerMain_Proc);
 	App->CL_Ogre->RenderHwnd = App->ViewGLhWnd;
 }
 

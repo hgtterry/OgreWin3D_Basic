@@ -198,8 +198,8 @@ void CL64_Editor_Scene::Return_From_Preview(void)
 	topTabs->flag_View_Top_Right = false;
 	topTabs->flag_View_Bottom_Left = false;
 
-	App->CL_Editor_Map->Init_Views(Enums::Selected_View_3D);
-	App->CL_Editor_Map->Resize_Windows(App->CL_Editor_Map->Main_Dlg_Hwnd, 
+	App->CL_Editor_Map->Init_Views(Enums::Selected_Map_View_3D);
+	App->CL_Editor_Map->Resize_Windows(App->CL_Editor_Map->Main_View_Dlg_Hwnd,
 									   App->CL_Editor_Map->nleftWnd_width, 
 									   App->CL_Editor_Map->nleftWnd_Depth);
 

@@ -127,7 +127,7 @@ void CL64_Editor_Control::Start_Editor_MapBrush_Mode(void)
 
 	SetParent(App->CL_Editor_Map->Bottom_Right_Hwnd, Parent_hWnd);
 
-	App->CL_Editor_Map->Resize_Windows(App->CL_Editor_Map->Main_Dlg_Hwnd, App->CL_Editor_Map->nleftWnd_width, App->CL_Editor_Map->nleftWnd_Depth);
+	App->CL_Editor_Map->Resize_Windows(App->CL_Editor_Map->Main_View_Dlg_Hwnd, App->CL_Editor_Map->nleftWnd_width, App->CL_Editor_Map->nleftWnd_Depth);
 
 	App->CL_Properties_Tabs->Enable_Tabs_Dlg(true);
 	App->CL_Properties_Tabs->flag_Tabs_Dlg_Active = 1;
@@ -167,7 +167,7 @@ void CL64_Editor_Control::Return_To_Map_Editor(void)
 	App->CL_Editor_Scene->Show_Headers(false);
 	App->CL_Top_Tabs->Show_TopTabs(true);
 	App->CL_Editor_Map->Set_Splitter_WidthDepth(App->CL_Top_Tabs->Copy_Spliter_Width, App->CL_Top_Tabs->Copy_Spliter_Depth);
-	App->CL_Editor_Map->Resize_Windows(App->CL_Editor_Map->Main_Dlg_Hwnd, App->CL_Editor_Map->nleftWnd_width, App->CL_Editor_Map->nleftWnd_Depth);
+	App->CL_Editor_Map->Resize_Windows(App->CL_Editor_Map->Main_View_Dlg_Hwnd, App->CL_Editor_Map->nleftWnd_width, App->CL_Editor_Map->nleftWnd_Depth);
 
 	// Show properties tabs
 	App->CL_Properties_Tabs->Show_Tabs_Control_Dlg(true);
@@ -221,8 +221,8 @@ void CL64_Editor_Control::Start_Editor_Scene()
 	topTabs->flag_View_Bottom_Left = false;
 
 	// Initialize views and resize windows
-	App->CL_Editor_Map->Init_Views(Enums::Selected_View_3D);
-	App->CL_Editor_Map->Resize_Windows(App->CL_Editor_Map->Main_Dlg_Hwnd,
+	App->CL_Editor_Map->Init_Views(Enums::Selected_Map_View_3D);
+	App->CL_Editor_Map->Resize_Windows(App->CL_Editor_Map->Main_View_Dlg_Hwnd,
 		App->CL_Editor_Map->nleftWnd_width,
 		App->CL_Editor_Map->nleftWnd_Depth);
 

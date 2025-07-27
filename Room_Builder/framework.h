@@ -106,13 +106,13 @@ namespace Enums
 		ListBox_Used_Textures = 1
 	};
 
-	enum Selected_View
+	enum Selected_Map_View
 	{
-		Selected_View_None = 0,
-		Selected_View_3D = 1,
-		Selected_View_TL = 2,
-		Selected_View_TR = 3,
-		Selected_View_BL = 4
+		Selected_Map_View_None = 0,
+		Selected_Map_View_3D = 1,
+		Selected_Map_View_TL = 2,
+		Selected_Map_View_TR = 3,
+		Selected_Map_View_BL = 4
 	};
 
 	enum Usage

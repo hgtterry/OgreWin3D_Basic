@@ -196,7 +196,7 @@ public:
 
 	void InitApp(void);
 	void Init_Dialogs(void);
-	void SetBrushes_Fonts(void);
+	void Set_Brushes_Fonts(void);
 	void LoadProgramResource(void);
 
 	bool Custom_Button_Greyed(LPNMCUSTOMDRAW item);

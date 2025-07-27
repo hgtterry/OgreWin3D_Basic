@@ -63,7 +63,7 @@ public:
 	void Context_Menu(HWND hDlg);
 	void Context_Menu_Ogre(HWND hDlg);
 
-	HWND Main_Dlg_Hwnd;
+	HWND Main_View_Dlg_Hwnd; // Background of MDI
 	HWND Bottom_Right_Hwnd;
 
 	HWND Left_Window_Hwnd;

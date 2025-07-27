@@ -248,7 +248,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
                     App->CL_Editor_Map->Set_Splitter_WidthDepth(App->CL_Top_Tabs->Copy_Spliter_Width, App->CL_Top_Tabs->Copy_Spliter_Depth);
 
-                    App->CL_Editor_Map->Resize_Windows(App->CL_Editor_Map->Main_Dlg_Hwnd, App->CL_Editor_Map->nleftWnd_width, App->CL_Editor_Map->nleftWnd_Depth);
+                    App->CL_Editor_Map->Resize_Windows(App->CL_Editor_Map->Main_View_Dlg_Hwnd, App->CL_Editor_Map->nleftWnd_width, App->CL_Editor_Map->nleftWnd_Depth);
 
                 }
                 else
@@ -258,8 +258,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                     App->CL_Top_Tabs->flag_View_Top_Right = 0;
                     App->CL_Top_Tabs->flag_View_Bottom_Left = 0;
 
-                    App->CL_Editor_Map->Init_Views(Enums::Selected_View_3D);
-                    App->CL_Editor_Map->Resize_Windows(App->CL_Editor_Map->Main_Dlg_Hwnd, App->CL_Editor_Map->nleftWnd_width, App->CL_Editor_Map->nleftWnd_Depth);
+                    App->CL_Editor_Map->Init_Views(Enums::Selected_Map_View_3D);
+                    App->CL_Editor_Map->Resize_Windows(App->CL_Editor_Map->Main_View_Dlg_Hwnd, App->CL_Editor_Map->nleftWnd_width, App->CL_Editor_Map->nleftWnd_Depth);
 
                     App->CL_ImGui->flag_Show_App_Stats = 1;
                 }
@@ -769,8 +769,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
         if (App->CL_Editor_Control->flag_Scene_Editor_Active == 0)
         {
-            MoveWindow(App->CL_Editor_Map->Main_Dlg_Hwnd, 0, 50, rcl.right, rcl.bottom - 50, TRUE);
-            App->CL_Editor_Map->Init_Views(Enums::Selected_View_None);
+            MoveWindow(App->CL_Editor_Map->Main_View_Dlg_Hwnd, 0, 50, rcl.right, rcl.bottom - 50, TRUE);
+            App->CL_Editor_Map->Init_Views(Enums::Selected_Map_View_None);
 
             if (App->flag_OgreStarted == 1)
             {

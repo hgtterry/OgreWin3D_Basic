@@ -258,7 +258,7 @@ void CL64_App::InitApp(void)
 
 	CL_Test_Lib =				new Test_Lib_X();
 	
-	SetBrushes_Fonts();
+	Set_Brushes_Fonts();
 
 	char Deskdir[MAX_PATH];
 	wchar_t* d_path = new wchar_t[128];
@@ -289,28 +289,27 @@ void CL64_App::Init_Dialogs(void)
 }
 
 // *************************************************************************
-// *			SetBrushes_Fonts:- Terry and Hazel Flanigan 2024		   *
+// *			Set_Brushes_Fonts:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
-void CL64_App::SetBrushes_Fonts(void)
+void CL64_App::Set_Brushes_Fonts(void)
 {
+	// Initialize brushes
 	AppBackground = CreateSolidBrush(RGB(213, 222, 242));
-
 	BlackBrush = CreateSolidBrush(RGB(0, 0, 0));
 	Brush_White = CreateSolidBrush(RGB(255, 255, 255));
 	Brush_Green = CreateSolidBrush(RGB(0, 255, 0));
-
 	Brush_Tabs = CreateSolidBrush(RGB(255, 255, 255));
 	Brush_Tabs_UnSelected = CreateSolidBrush(RGB(240, 240, 240));
-
 	Brush_But_Normal = CreateSolidBrush(RGB(255, 255, 180));
 	Brush_But_Hover = CreateSolidBrush(RGB(255, 255, 230));
 	Brush_But_Pressed = CreateSolidBrush(RGB(240, 240, 190));
 
-	Font_CB10 = CreateFont(-12, 0, 0, 0, 0, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Courier Black");
-	Font_CB15 = CreateFont(-15, 0, 0, 0, 0, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Courier Black");
-	Font_CB18 = CreateFont(-18, 0, 0, 0, 0, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Courier Black");
-	Font_Arial20 = CreateFont(-20, 0, 0, 0, 0, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Arial");
-	Font_Banner = CreateFont(-30, 0, 0, 0, FW_BOLD, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Aerial Black");
+	// Initialize fonts
+	Font_CB10 = CreateFont(-12, 0, 0, 0, FW_NORMAL, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Courier Black");
+	Font_CB15 = CreateFont(-15, 0, 0, 0, FW_NORMAL, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Courier Black");
+	Font_CB18 = CreateFont(-18, 0, 0, 0, FW_NORMAL, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Courier Black");
+	Font_Arial20 = CreateFont(-20, 0, 0, 0, FW_NORMAL, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Arial");
+	Font_Banner = CreateFont(-30, 0, 0, 0, FW_BOLD, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Arial Black");
 
 }
 
@@ -370,10 +369,11 @@ bool CL64_App::Custom_Button_Greyed(LPNMCUSTOMDRAW item)
 // *************************************************************************
 bool CL64_App::Custom_Button_Normal(LPNMCUSTOMDRAW item)
 {
-	// Determine the pen color based on the button state
-	COLORREF penColor;
+	// Determine the pen color and brush based on the button state
+	COLORREF penColor = RGB(0, 0, 0); // Default to black for idle state
 	HGDIOBJ old_pen, old_brush;
 
+	// Set pen color and brush based on the button state
 	if (item->uItemState & CDIS_SELECTED) // Button is pressed
 	{
 		penColor = RGB(0, 0, 0); // Black for pressed state
@@ -386,7 +386,6 @@ bool CL64_App::Custom_Button_Normal(LPNMCUSTOMDRAW item)
 	}
 	else // Idle state
 	{
-		penColor = RGB(0, 0, 0); // Black for idle state
 		old_brush = App->Brush_But_Normal;
 	}
 
@@ -402,6 +401,8 @@ bool CL64_App::Custom_Button_Normal(LPNMCUSTOMDRAW item)
 	SelectObject(item->hdc, old_pen);
 	SelectObject(item->hdc, old_brush);
 	DeleteObject(pen);
+
+	return CDRF_DODEFAULT;
 
 	return CDRF_DODEFAULT;
 }
@@ -567,20 +568,12 @@ void CL64_App::SetMainWinCentre(void) const
 // *************************************************************************
 void CL64_App::Say(const char* Message, const char* Message2)
 {
-	char text[MAX_PATH];
-	char text2[MAX_PATH];
+	// Prepare Message
+	std::string text(Message);
+	std::string text2 = (Message2 != nullptr) ? Message2 : " ";
 
-	strcpy(text, Message);
-	if (Message2 == NULL)
-	{
-		strcpy(text2, " ");
-	}
-	else
-	{
-		strcpy(text2, Message2);
-	}
-
-	App->CL_Dialogs->Message(text, text2);
+	// Call the Message function
+	App->CL_Dialogs->Message((LPSTR)text.c_str(), (LPSTR)text2.c_str());
 }
 
 // *************************************************************************
