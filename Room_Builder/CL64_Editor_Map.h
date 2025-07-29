@@ -58,8 +58,10 @@ public:
 	void Reset_To_Camera();
 	
 	void Resize_Windows(HWND hDlg, int NewWidth, int NewDepth);
+
 	void Set_Splitter_WidthDepth(int Width, int Depth);
-	
+	void Save_Splitter_Width_Depth();
+
 	void Context_Menu(HWND hDlg);
 	void Context_Menu_Ogre(HWND hDlg);
 
@@ -75,7 +77,9 @@ public:
 	// TODO hgtterry Make Private
 	int nleftWnd_width;
 	int nleftWnd_Depth;
-	
+	int Copy_Spliter_Depth;
+	int Copy_Spliter_Width;
+
 	ViewVars* VCam[4];
 	ViewVars* Current_View;
 

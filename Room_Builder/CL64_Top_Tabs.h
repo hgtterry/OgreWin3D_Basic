@@ -47,10 +47,6 @@ public:
 	void Set_Brush_Mode(int Mode, int Dlg_Selection);
 	void Show_TopTabs(bool Enable);
 
-
-	int Copy_Spliter_Depth;
-	int Copy_Spliter_Width;
-
 	bool flag_Brush_Select;
 	bool flag_Brush_Move;
 	bool flag_Brush_Rotate;

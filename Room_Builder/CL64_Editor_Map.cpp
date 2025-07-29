@@ -98,6 +98,9 @@ CL64_Editor_Map::CL64_Editor_Map()
 	RIGHT_MINIMUM_SPACE = 1000;
 	LEFT_MINIMUM_SPACE = 15;
 
+	Copy_Spliter_Width = 500;
+	Copy_Spliter_Depth = 215;
+
 	Do_Width = 0;
 	Do_Depth = 0;
 	Do_All = 0;
@@ -159,8 +162,7 @@ void CL64_Editor_Map::Reset_Views_All()
 	Init_Views(Enums::Selected_Map_View_None);
 	Resize_Windows(Main_View_Dlg_Hwnd, nleftWnd_width, nleftWnd_Depth);
 
-	App->CL_Top_Tabs->Copy_Spliter_Width = nleftWnd_width;
-	App->CL_Top_Tabs->Copy_Spliter_Depth = nleftWnd_Depth;
+	Save_Splitter_Width_Depth();
 
 	int Count = 0;
 
@@ -502,9 +504,8 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Main_Dlg(HWND hDlg, UINT message, WPARAM 
 			}
 
 			App->CL_Editor_Map->Resize_Windows(hDlg, App->CL_Editor_Map->nleftWnd_width, App->CL_Editor_Map->nleftWnd_Depth);
+			App->CL_Editor_Map->Save_Splitter_Width_Depth();
 			
-			App->CL_Top_Tabs->Copy_Spliter_Depth = App->CL_Editor_Map->nleftWnd_Depth;
-			App->CL_Top_Tabs->Copy_Spliter_Width = App->CL_Editor_Map->nleftWnd_width;
 		}
 
 		return 1;
@@ -660,6 +661,15 @@ void CL64_Editor_Map::Set_Splitter_WidthDepth(int Width, int Depth)
 {
 	nleftWnd_width = Width;
 	nleftWnd_Depth = Depth;
+}
+
+// *************************************************************************
+// *	  Save_Splitter_Width_Depth:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+void CL64_Editor_Map::Save_Splitter_Width_Depth()
+{
+	Copy_Spliter_Depth = nleftWnd_Depth;
+	Copy_Spliter_Width = nleftWnd_width;
 }
 
 // *************************************************************************

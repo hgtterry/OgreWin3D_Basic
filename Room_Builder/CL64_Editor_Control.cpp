@@ -166,7 +166,7 @@ void CL64_Editor_Control::Return_To_Map_Editor(void)
 	// Show top tabs and configure editor map
 	App->CL_Editor_Scene->Show_Headers(false);
 	App->CL_Top_Tabs->Show_TopTabs(true);
-	App->CL_Editor_Map->Set_Splitter_WidthDepth(App->CL_Top_Tabs->Copy_Spliter_Width, App->CL_Top_Tabs->Copy_Spliter_Depth);
+	App->CL_Editor_Map->Set_Splitter_WidthDepth(App->CL_Editor_Map->Copy_Spliter_Width, App->CL_Editor_Map->Copy_Spliter_Depth);
 	App->CL_Editor_Map->Resize_Windows(App->CL_Editor_Map->Main_View_Dlg_Hwnd, App->CL_Editor_Map->nleftWnd_width, App->CL_Editor_Map->nleftWnd_Depth);
 
 	// Show properties tabs
