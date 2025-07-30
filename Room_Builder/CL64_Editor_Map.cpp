@@ -320,10 +320,38 @@ void CL64_Editor_Map::Resize_Windows(HWND hDlg, int newWidth, int newDepth)
 		clientRect.right - (newWidth + WIDTH_ADJUST),
 		clientRect.bottom - (newDepth + BOTTOM_POS_BOTLEFT),
 		FALSE);
+	MoveWindow(Bottom_Ogre_Banner, 0, 0, clientRect.right - newWidth - WIDTH_ADJUST, bannerHeight, FALSE);
+
 
 	RedrawWindow(Main_View_Dlg_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
-	App->CL_Panels->Resize_OgreWin();
+	Resize_OgreWin();
+}
+
+// ************************************************************************
+// *			Resize_OgreWin:- Terry and Hazel Flanigan 2025			*
+// ************************************************************************
+void CL64_Editor_Map::Resize_OgreWin(void)
+{
+	RECT rcl;
+
+	GetClientRect(Bottom_Ogre_Right_Hwnd, &rcl);
+
+	SetWindowPos(App->ViewGLhWnd, NULL, 0, 17, rcl.right, rcl.bottom - 17, SWP_NOZORDER);
+
+	if (App->flag_OgreStarted == 1)
+	{
+		RECT rect;
+		GetClientRect(Bottom_Ogre_Right_Hwnd, &rect);
+
+		if ((rect.bottom - rect.top) != 0 && App->CL_Ogre->mCamera != 0)
+		{
+			App->CL_Ogre->mWindow->windowMovedOrResized();
+			App->CL_Ogre->mCamera->setAspectRatio((Ogre::Real)App->CL_Ogre->mWindow->getWidth() / (Ogre::Real)App->CL_Ogre->mWindow->getHeight());
+			App->CL_Ogre->camNode->yaw(Radian(0));
+		}
+
+	}
 }
 
 // *************************************************************************
@@ -801,7 +829,7 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Top_Left_Window(HWND hDlg, UINT message, 
 			RedrawWindow(App->CL_Editor_Map->Top_Left_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			RedrawWindow(App->CL_Editor_Map->Top_Right_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			RedrawWindow(App->CL_Editor_Map->Bottom_Left_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-			//App->BeepBeep();
+			RedrawWindow(App->CL_Editor_Map->Bottom_Ogre_Right_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 		}
 
 		App->CL_Editor_Map->Current_View = App->CL_Editor_Map->VCam[V_TL];
@@ -1002,7 +1030,7 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Top_Right_Window(HWND hDlg, UINT message,
 			RedrawWindow(App->CL_Editor_Map->Top_Left_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			RedrawWindow(App->CL_Editor_Map->Top_Right_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			RedrawWindow(App->CL_Editor_Map->Bottom_Left_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-			//App->BeepBeep();
+			RedrawWindow(App->CL_Editor_Map->Bottom_Ogre_Right_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 		}
 
 		App->CL_Editor_Map->flag_Right_Button_Down = 0;
@@ -1201,7 +1229,7 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Bottom_Left_Window(HWND hDlg, UINT messag
 			RedrawWindow(App->CL_Editor_Map->Top_Left_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			RedrawWindow(App->CL_Editor_Map->Top_Right_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			RedrawWindow(App->CL_Editor_Map->Bottom_Left_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-			//App->BeepBeep();
+			RedrawWindow(App->CL_Editor_Map->Bottom_Ogre_Right_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 		}
 
 		App->CL_Editor_Map->flag_Right_Button_Down = 0;
@@ -1292,13 +1320,14 @@ void CL64_Editor_Map::Create_Ogre_Bottom_Right()
 // *************************************************************************
 LRESULT CALLBACK CL64_Editor_Map::ViewerMain_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
-
 	switch (message)
 	{
 
 	case WM_INITDIALOG:
 	{
 		SendDlgItemMessage(hDlg, IDC_ST_3D_TITLE, WM_SETFONT, (WPARAM)App->Font_CB10, MAKELPARAM(TRUE, 0));
+		App->CL_Editor_Map->Bottom_Ogre_Banner = GetDlgItem(hDlg, IDC_ST_3D_TITLE);
+
 		App->ViewGLhWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MAP_RENDER_WINDOW, hDlg, (DLGPROC)Proc_Ogre_BR);
 		return TRUE;
 	}
@@ -1307,12 +1336,37 @@ LRESULT CALLBACK CL64_Editor_Map::ViewerMain_Proc(HWND hDlg, UINT message, WPARA
 	{
 		if (GetDlgItem(hDlg, IDC_ST_3D_TITLE) == (HWND)lParam)
 		{
-			SetBkColor((HDC)wParam, RGB(0, 255, 0));
-			SetTextColor((HDC)wParam, RGB(0, 0, 0));
-			SetBkMode((HDC)wParam, TRANSPARENT);
-			return (UINT)App->AppBackground;
+			if (App->CL_Editor_Map->Selected_Window == Enums::Selected_Map_View_3D)
+			{
+				SetBkColor((HDC)wParam, RGB(0, 255, 0));
+				SetTextColor((HDC)wParam, RGB(0, 0, 0));
+				SetBkMode((HDC)wParam, TRANSPARENT);
+				return (UINT)App->Brush_Green;
+			}
+			else
+			{
+				SetBkColor((HDC)wParam, RGB(0, 255, 0));
+				SetTextColor((HDC)wParam, RGB(0, 0, 0));
+				SetBkMode((HDC)wParam, TRANSPARENT);
+				return (UINT)App->AppBackground;
+			}
 		}
+
 		return FALSE;
+	}
+
+	case WM_LBUTTONDOWN:
+	{
+		if (App->CL_Editor_Map->Selected_Window != Enums::Selected_Map_View_3D)
+		{
+			App->CL_Editor_Map->Selected_Window = Enums::Selected_Map_View_3D;
+			RedrawWindow(App->CL_Editor_Map->Top_Left_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			RedrawWindow(App->CL_Editor_Map->Top_Right_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			RedrawWindow(App->CL_Editor_Map->Bottom_Left_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			RedrawWindow(App->CL_Editor_Map->Bottom_Ogre_Right_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+		}
+
+		return 1;
 	}
 
 	case WM_CTLCOLORDLG:
@@ -1329,7 +1383,7 @@ LRESULT CALLBACK CL64_Editor_Map::ViewerMain_Proc(HWND hDlg, UINT message, WPARA
 }
 
 // *************************************************************************
-// *		Proc_Bottom_Right_Ogre:- Terry and Hazel Flanigan 2024 		   *
+// *		Proc_Ogre_BR:- Terry and Hazel Flanigan 2024 				   *
 // *************************************************************************
 LRESULT CALLBACK CL64_Editor_Map::Proc_Ogre_BR(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -1400,6 +1454,15 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Ogre_BR(HWND hDlg, UINT message, WPARAM w
 	// Left Mouse Button
 	case WM_LBUTTONDOWN:
 	{
+		if (App->CL_Editor_Map->Selected_Window != Enums::Selected_Map_View_3D)
+		{
+			App->CL_Editor_Map->Selected_Window = Enums::Selected_Map_View_3D;
+			RedrawWindow(App->CL_Editor_Map->Top_Left_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			RedrawWindow(App->CL_Editor_Map->Top_Right_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			RedrawWindow(App->CL_Editor_Map->Bottom_Left_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			RedrawWindow(App->CL_Editor_Map->Bottom_Ogre_Right_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+		}
+
 		ImGuiIO& io = ImGui::GetIO();
 		io.MouseDown[0] = true;
 

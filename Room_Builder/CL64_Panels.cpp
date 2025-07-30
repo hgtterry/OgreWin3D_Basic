@@ -35,32 +35,6 @@ CL64_Panels::~CL64_Panels()
 {
 }
 
-// ************************************************************************
-// *			Resize_OgreWin:- Terry and Hazel Flanigan 2025			*
-// ************************************************************************
-void CL64_Panels::Resize_OgreWin(void)
-{
-	RECT rcl;
-
-	GetClientRect(App->CL_Editor_Map->Bottom_Ogre_Right_Hwnd, &rcl);
-
-	SetWindowPos(App->ViewGLhWnd, NULL,0, 17, rcl.right, rcl.bottom - 17 , SWP_NOZORDER);
-	
-	if (App->flag_OgreStarted == 1)
-	{
-		RECT rect;
-		GetClientRect(App->CL_Editor_Map->Bottom_Ogre_Right_Hwnd, &rect);
-
-		if ((rect.bottom - rect.top) != 0 && App->CL_Ogre->mCamera != 0)
-		{
-			App->CL_Ogre->mWindow->windowMovedOrResized();
-			App->CL_Ogre->mCamera->setAspectRatio((Ogre::Real)App->CL_Ogre->mWindow->getWidth() / (Ogre::Real)App->CL_Ogre->mWindow->getHeight());
-			App->CL_Ogre->camNode->yaw(Radian(0));
-		}
-
-	}
-}
-
 // *************************************************************************
 // *  Deselect_All_Brushes_Update_Dlgs:- Terry and Hazel Flanigan 2025     *
 // *************************************************************************

@@ -29,7 +29,6 @@ public:
 	CL64_Panels();
 	~CL64_Panels();
 
-	void Resize_OgreWin(void);
 	void Move_FileView_Window(void);
 	bool Place_Properties_Dlg(void);
 	bool Resize_FileView(void);
