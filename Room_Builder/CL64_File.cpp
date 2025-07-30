@@ -93,8 +93,8 @@ void CL64_File::Start_Save(bool useSaveDialog)
 		if (test == 1)
 		{
 			App->CL_Dialogs->YesNo("File Exsits", "Do you want to update File");
-			bool Doit = App->CL_Dialogs->flag_Dlg_Canceled;
-			if (Doit == 1)
+			
+			if (App->CL_Dialogs->flag_Dlg_Canceled == true)
 			{
 				return;
 			}

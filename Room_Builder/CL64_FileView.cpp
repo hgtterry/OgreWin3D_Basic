@@ -1164,8 +1164,7 @@ void CL64_FileView::Context_New(HWND hDlg)
 		{
 			App->CL_Dialogs->YesNo((LPSTR)"Add Object", (LPSTR)"Do you want to add a new Object Entity");
 
-			bool Doit = App->CL_Dialogs->flag_Dlg_Canceled;
-			if (Doit == 0)
+			if (App->CL_Dialogs->flag_Dlg_Canceled == false)
 			{
 				App->CL_MeshViewer->Mesh_Viewer_Mode = Enums::Mesh_Viewer_Objects;
 				App->CL_MeshViewer->Start_MeshViewer_Dlg();
@@ -1182,8 +1181,7 @@ void CL64_FileView::Context_New(HWND hDlg)
 				{
 					App->CL_Dialogs->YesNo((LPSTR)"Add Object", (LPSTR)"Do you want to add a new Object Entity");
 
-					bool Doit = App->CL_Dialogs->flag_Dlg_Canceled;
-					if (Doit == 0)
+					if (App->CL_Dialogs->flag_Dlg_Canceled == false)
 					{
 						App->CL_MeshViewer->Mesh_Viewer_Mode = Enums::Mesh_Viewer_Objects;
 						App->CL_MeshViewer->Start_MeshViewer_Dlg();
@@ -1203,8 +1201,7 @@ void CL64_FileView::Context_New(HWND hDlg)
 	{
 		App->CL_Dialogs->YesNo((LPSTR)"Add Environment Entity", (LPSTR)"Do you want to add a new Environ Entity");
 
-		bool Doit = App->CL_Dialogs->flag_Dlg_Canceled;
-		if (Doit == 0)
+		if (App->CL_Dialogs->flag_Dlg_Canceled == false)
 		{
 			App->CL_Com_Environments->Add_New_Environ_Entity(false);
 		}
@@ -1217,8 +1214,7 @@ void CL64_FileView::Context_New(HWND hDlg)
 	{
 		App->CL_Dialogs->YesNo((LPSTR)"Add Sound Entity", (LPSTR)"Do you want to add a new Sound Entity");
 
-		bool Doit = App->CL_Dialogs->flag_Dlg_Canceled;
-		if (Doit == 0)
+		if (App->CL_Dialogs->flag_Dlg_Canceled == false)
 		{
 			App->CL_Com_Sounds->Add_New_Sound();
 		}
@@ -1385,8 +1381,7 @@ void CL64_FileView::Context_Delete()
 	{
 		App->CL_Dialogs->YesNo((LPSTR)"Remove Object", (LPSTR)App->CL_Scene->B_Object[Index]->Object_Name);
 
-		bool Doit = App->CL_Dialogs->flag_Dlg_Canceled;
-		if (Doit == 0)
+		if (App->CL_Dialogs->flag_Dlg_Canceled == false)
 		{
 			App->CL_Entities->Delete_Object();
 			App->CL_FileView->Mark_Altered_Folder(FV_Objects_Folder);

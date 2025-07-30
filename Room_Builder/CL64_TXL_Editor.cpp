@@ -220,8 +220,7 @@ LRESULT CALLBACK CL64_TXL_Editor::Proc_Texl_Dialog(HWND hDlg, UINT message, WPAR
 
 			App->CL_Dialogs->YesNo("Do you want to Delete the selected Texture", App->CL_TXL_Editor->m_Selected_TextureName);
 
-			bool Doit = App->CL_Dialogs->flag_Dlg_Canceled;
-			if (Doit == 0)
+			if (App->CL_Dialogs->flag_Dlg_Canceled == false)
 			{
 				App->CL_TXL_Editor->Delete_File(App->CL_TXL_Editor->m_Selected_TextureName);
 
@@ -277,8 +276,7 @@ LRESULT CALLBACK CL64_TXL_Editor::Proc_Texl_Dialog(HWND hDlg, UINT message, WPAR
 
 			App->CL_Dialogs->YesNo("Are you sure", "Delete all Unused Textures");
 
-			bool Doit = App->CL_Dialogs->flag_Dlg_Canceled;
-			if (Doit == 1)
+			if (App->CL_Dialogs->flag_Dlg_Canceled == true)
 			{
 				return TRUE;
 			}

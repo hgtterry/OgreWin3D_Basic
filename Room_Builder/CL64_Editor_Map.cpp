@@ -81,11 +81,15 @@ CL64_Editor_Map::CL64_Editor_Map()
 	GridSize = 128, 
 	GridSnapSize = 8;
 
-	Left_Window_Hwnd = NULL;
-	Right_Window_Hwnd = NULL;
+	Top_Left_Window_Hwnd =		nullptr;
+	Top_Right_Window_Hwnd =		nullptr;
+	Bottom_Left_Window_Hwnd =	nullptr;
+	Bottom_Ogre_Right_Hwnd =	nullptr;
 
-	Bottom_Left_Hwnd = NULL;
-	Bottom_Right_Hwnd = NULL;
+	Top_Left_Banner_Hwnd =		nullptr;
+	Top_Right_Banner_Hwnd =		nullptr;
+	Bottom_Left_Banner_Hwnd =	nullptr;
+	Bottom_Ogre_Banner =		nullptr;
 
 	LEFT_WINDOW_WIDTH = 500;
 	nleftWnd_width = 500;
@@ -270,7 +274,7 @@ void CL64_Editor_Map::Init_Views(int View)
 }
 
 // *************************************************************************
-// *			Resize_Windowns:- Terry and Hazel Flanigan 2024			   *
+// *			Resize_Windows:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
 void CL64_Editor_Map::Resize_Windows(HWND hDlg, int NewWidth, int NewDepth)
 {
@@ -282,14 +286,14 @@ void CL64_Editor_Map::Resize_Windows(HWND hDlg, int NewWidth, int NewDepth)
 
 	int NewDepth_Depth = NewDepth - 3;
 
-	MoveWindow(Left_Window_Hwnd,
+	MoveWindow(Top_Left_Window_Hwnd,
 		Left_Windows_Start_X,
 		Top_Windows_Top_Y,
 		rect.left + (NewWidth - WIDTH_ADJUST),
 		NewDepth_Depth,
 		FALSE);
 
-	MoveWindow(Right_Window_Hwnd,
+	MoveWindow(Top_Right_Window_Hwnd,
 		Left_Windows_Start_X + NewWidth + WIDTH_ADJUST,
 		Top_Windows_Top_Y,
 		rect.right - (NewWidth + WIDTH_ADJUST),
@@ -297,14 +301,14 @@ void CL64_Editor_Map::Resize_Windows(HWND hDlg, int NewWidth, int NewDepth)
 		FALSE);
 
 	// Bottom Windows
-	MoveWindow(Bottom_Left_Hwnd,
+	MoveWindow(Bottom_Left_Window_Hwnd,
 		Left_Windows_Start_X,
 		rect.top + NewDepth,
 		Left_Windows_Start_X + (NewWidth - WIDTH_ADJUST),
 		rect.bottom - (NewDepth + BOTTOM_POS_BOTLEFT),
 		FALSE);
 
-	MoveWindow(Bottom_Right_Hwnd,
+	MoveWindow(Bottom_Ogre_Right_Hwnd,
 		Left_Windows_Start_X + NewWidth + WIDTH_ADJUST,
 		rect.top + NewDepth,
 		rect.right - (NewWidth + WIDTH_ADJUST),
@@ -680,9 +684,9 @@ void CL64_Editor_Map::Create_Top_Left_Window()
 	VCam[V_TL] = new ViewVars;
 	Set_Views_Defaults(V_TL, VIEWTOP, "TLV");
 
-	Left_Window_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MAP_TOP_LEFT, Main_View_Dlg_Hwnd, (DLGPROC)Proc_Top_Left_Window);
+	Top_Left_Window_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MAP_TOP_LEFT, Main_View_Dlg_Hwnd, (DLGPROC)Proc_Top_Left_Window);
 	
-	VCam[V_TL]->hDlg = Left_Window_Hwnd;
+	VCam[V_TL]->hDlg = Top_Left_Window_Hwnd;
 }
 
 // *************************************************************************
@@ -695,7 +699,7 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Top_Left_Window(HWND hDlg, UINT message, 
 	case WM_INITDIALOG:
 	{
 		SendDlgItemMessage(hDlg, IDC_ST_TL_TITLE, WM_SETFONT, (WPARAM)App->Font_CB10, MAKELPARAM(TRUE, 0));
-
+		App->CL_Editor_Map->Top_Left_Banner_Hwnd = GetDlgItem(hDlg, IDC_ST_TL_TITLE);
 		return TRUE;
 	}
 
@@ -796,12 +800,9 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Top_Left_Window(HWND hDlg, UINT message, 
 		App->CL_Editor_Map->Current_View = App->CL_Editor_Map->VCam[V_TL];
 
 		App->CL_Editor_Map->flag_Left_Button_Down = 0;
-		App->CL_Editor_Map->On_Left_Button_Up(RealCursorPosition);
-
-		/*App->CL_Editor_Map->flag_Left_Button_Down = 0;
 		App->CL_Editor_Map->flag_Right_Button_Down = 0;
 
-		App->CUR = SetCursor(App->CUR);*/
+		App->CL_Editor_Map->On_Left_Button_Up(RealCursorPosition);
 
 		return 1;
 	}
@@ -864,9 +865,9 @@ void CL64_Editor_Map::Create_Top_Right_Window()
 	VCam[V_TR] = new ViewVars;
 	Set_Views_Defaults(V_TR, VIEWSIDE, "V_TR");
 
-	Right_Window_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MAP_TOP_RIGHT, Main_View_Dlg_Hwnd, (DLGPROC)Proc_Top_Right_Window);
+	Top_Right_Window_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MAP_TOP_RIGHT, Main_View_Dlg_Hwnd, (DLGPROC)Proc_Top_Right_Window);
 
-	VCam[V_TR]->hDlg = Right_Window_Hwnd;
+	VCam[V_TR]->hDlg = Top_Right_Window_Hwnd;
 }
 
 // *************************************************************************
@@ -879,7 +880,7 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Top_Right_Window(HWND hDlg, UINT message,
 	case WM_INITDIALOG:
 	{
 		SendDlgItemMessage(hDlg, IDC_ST_TR_TITLE, WM_SETFONT, (WPARAM)App->Font_CB10, MAKELPARAM(TRUE, 0));
-
+		App->CL_Editor_Map->Top_Right_Banner_Hwnd = GetDlgItem(hDlg, IDC_ST_TR_TITLE);
 		return TRUE;
 	}
 
@@ -998,11 +999,6 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Top_Right_Window(HWND hDlg, UINT message,
 
 		App->CL_Editor_Map->On_Left_Button_Up(RealCursorPosition);
 
-		/*App->CL_Editor_Map->flag_Left_Button_Down = 0;
-		App->CL_Editor_Map->flag_Right_Button_Down = 0;
-
-		App->CUR = SetCursor(App->CUR);*/
-
 		return 1;
 	}
 
@@ -1062,9 +1058,9 @@ void CL64_Editor_Map::Create_Bottom_Left_Window()
 	VCam[V_BL] = new ViewVars;
 	Set_Views_Defaults(V_BL, VIEWFRONT, "BLV");
 
-	Bottom_Left_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MAP_BOTTOM_LEFT, Main_View_Dlg_Hwnd, (DLGPROC)Proc_Bottom_Left_Window);
+	Bottom_Left_Window_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MAP_BOTTOM_LEFT, Main_View_Dlg_Hwnd, (DLGPROC)Proc_Bottom_Left_Window);
 
-	VCam[V_BL]->hDlg = Bottom_Left_Hwnd;
+	VCam[V_BL]->hDlg = Bottom_Left_Window_Hwnd;
 }
 
 // *************************************************************************
@@ -1077,7 +1073,7 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Bottom_Left_Window(HWND hDlg, UINT messag
 	case WM_INITDIALOG:
 	{
 		SendDlgItemMessage(hDlg, IDC_ST_BL_TITLE, WM_SETFONT, (WPARAM)App->Font_CB10, MAKELPARAM(TRUE, 0));
-
+		App->CL_Editor_Map->Bottom_Left_Banner_Hwnd = GetDlgItem(hDlg, IDC_ST_BL_TITLE);
 		return TRUE;
 	}
 
@@ -1182,11 +1178,6 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Bottom_Left_Window(HWND hDlg, UINT messag
 
 		App->CL_Editor_Map->On_Left_Button_Up(RealCursorPosition);
 
-		/*App->CL_Editor_Map->flag_Left_Button_Down = 0;
-		App->CL_Editor_Map->flag_Right_Button_Down = 0;
-
-		App->CUR = SetCursor(App->CUR);*/
-
 		return 1;
 	}
 
@@ -1243,7 +1234,7 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Bottom_Left_Window(HWND hDlg, UINT messag
 // *************************************************************************
 void CL64_Editor_Map::Create_Ogre_Bottom_Right()
 {
-	Bottom_Right_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MAP_BOTTOM_RIGHT, Main_View_Dlg_Hwnd, (DLGPROC)ViewerMain_Proc);
+	Bottom_Ogre_Right_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MAP_BOTTOM_RIGHT, Main_View_Dlg_Hwnd, (DLGPROC)ViewerMain_Proc);
 	App->CL_Ogre->RenderHwnd = App->ViewGLhWnd;
 }
 

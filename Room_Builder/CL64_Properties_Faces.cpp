@@ -1003,7 +1003,7 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 		{
 			App->CL_Dialogs->YesNo("Update Face Settings", "Are you sure");
 
-			if (App->CL_Dialogs->flag_Dlg_Canceled == 1)
+			if (App->CL_Dialogs->flag_Dlg_Canceled == true)
 			{
 				return 1;
 			}

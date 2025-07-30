@@ -48,10 +48,10 @@ CL64_Dialogs::CL64_Dialogs(void)
 	Face_Index = 0;
 	Check_What = 0;
 
-	YesNoCancel_Result = 0;
+	YesNoCancel_Result = false;
 
-	flag_Dlg_Canceled = 0;
-	flag_boolBrush_Properties_Dialog_Active = 0;
+	flag_Dlg_Canceled = false;
+	flag_boolBrush_Properties_Dialog_Active = false;
 }
 
 CL64_Dialogs::~CL64_Dialogs(void)
@@ -186,7 +186,7 @@ LRESULT CALLBACK CL64_Dialogs::Proc_YesNoCancel(HWND hDlg, UINT message, WPARAM 
 // *************************************************************************
 void CL64_Dialogs::YesNo(const char* Text, const char* Text2)
 {
-	flag_Dlg_Canceled = 0;
+	flag_Dlg_Canceled = false;
 	MessageString[0] = 0;
 	MessageString2[0] = 0;
 	
@@ -272,7 +272,7 @@ LRESULT CALLBACK CL64_Dialogs::Proc_YesNo(HWND hDlg, UINT message, WPARAM wParam
 		if (LOWORD(wParam) == IDOK)
 		{
 			App->CL_Properties_Tabs->Enable_Tabs_Dlg(true);
-			App->CL_Dialogs->flag_Dlg_Canceled = 0;
+			App->CL_Dialogs->flag_Dlg_Canceled = false;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
@@ -280,7 +280,7 @@ LRESULT CALLBACK CL64_Dialogs::Proc_YesNo(HWND hDlg, UINT message, WPARAM wParam
 		if (LOWORD(wParam) == IDCANCEL)
 		{
 			App->CL_Properties_Tabs->Enable_Tabs_Dlg(true);
-			App->CL_Dialogs->flag_Dlg_Canceled = 1;
+			App->CL_Dialogs->flag_Dlg_Canceled = true;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}

@@ -363,7 +363,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             {
                 App->CL_Dialogs->YesNo("Clear Editor", "Are you sure");
 
-                if (App->CL_Dialogs->flag_Dlg_Canceled == 1)
+                if (App->CL_Dialogs->flag_Dlg_Canceled == true)
                 {
                     return 1;
                 }
@@ -640,8 +640,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 {
                     App->CL_Dialogs->YesNo((LPSTR)"Add Object", (LPSTR)"Do you want to add a new Object Entity");
 
-                    bool Doit = App->CL_Dialogs->flag_Dlg_Canceled;
-                    if (Doit == 0)
+                    if (App->CL_Dialogs->flag_Dlg_Canceled == false)
                     {
                         App->CL_MeshViewer->Mesh_Viewer_Mode = Enums::Mesh_Viewer_Objects;
                         App->CL_MeshViewer->Start_MeshViewer_Dlg();
@@ -658,8 +657,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                         {
                             App->CL_Dialogs->YesNo((LPSTR)"Add Object", (LPSTR)"Do you want to add a new Object Entity");
 
-                            bool Doit = App->CL_Dialogs->flag_Dlg_Canceled;
-                            if (Doit == 0)
+                            if (App->CL_Dialogs->flag_Dlg_Canceled == false)
                             {
                                 App->CL_MeshViewer->Mesh_Viewer_Mode = Enums::Mesh_Viewer_Objects;
                                 App->CL_MeshViewer->Start_MeshViewer_Dlg();
@@ -679,8 +677,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
                 App->CL_Dialogs->YesNo((LPSTR)"Add Sound Entity", (LPSTR)"Do you want to add a new Sound Entity");
 
-                bool Doit = App->CL_Dialogs->flag_Dlg_Canceled;
-                if (Doit == 0)
+                if (App->CL_Dialogs->flag_Dlg_Canceled == false)
                 {
                     App->CL_Com_Sounds->Add_New_Sound();
                 }
@@ -693,8 +690,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
                 App->CL_Dialogs->YesNo((LPSTR)"Add Environment Entity", (LPSTR)"Do you want to add a new Environ Entity");
 
-                bool Doit = App->CL_Dialogs->flag_Dlg_Canceled;
-                if (Doit == 0)
+                if (App->CL_Dialogs->flag_Dlg_Canceled == false)
                 {
                     App->CL_Com_Environments->Add_New_Environ_Entity(false);
                 }
@@ -771,6 +767,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         {
             MoveWindow(App->CL_Editor_Map->Main_View_Dlg_Hwnd, 0, 50, rcl.right, rcl.bottom - 50, TRUE);
             App->CL_Editor_Map->Init_Views(Enums::Selected_Map_View_None);
+            App->CL_Editor_Map->Save_Splitter_Width_Depth();
 
             if (App->flag_OgreStarted == 1)
             {
@@ -779,7 +776,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         }
         else
         {
-            GetClientRect(App->CL_Editor_Map->Bottom_Right_Hwnd, &rcl);
+            GetClientRect(App->CL_Editor_Map->Bottom_Ogre_Right_Hwnd, &rcl);
 
             SetWindowPos(App->ViewGLhWnd, NULL, 0, 0, rcl.right, rcl.bottom, SWP_NOZORDER);
             App->CL_Ogre->mWindow->windowMovedOrResized();

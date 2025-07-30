@@ -205,7 +205,7 @@ void CL64_Editor_Scene::Return_From_Preview(void)
 
 	RECT rcl;
 
-	GetClientRect(App->CL_Editor_Map->Bottom_Right_Hwnd, &rcl);
+	GetClientRect(App->CL_Editor_Map->Bottom_Ogre_Right_Hwnd, &rcl);
 
 	SetWindowPos(App->ViewGLhWnd, NULL, 0, 0, rcl.right, rcl.bottom, SWP_NOZORDER);
 

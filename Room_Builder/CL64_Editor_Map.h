@@ -68,12 +68,11 @@ public:
 	void Context_Menu_Ogre(HWND hDlg);
 
 	HWND Main_View_Dlg_Hwnd; // Background of MDI
-	HWND Bottom_Right_Hwnd;
-
-	HWND Left_Window_Hwnd;
-	HWND Right_Window_Hwnd;
-	HWND Bottom_Left_Hwnd;
-
+	HWND Top_Left_Window_Hwnd;
+	HWND Top_Right_Window_Hwnd;
+	HWND Bottom_Left_Window_Hwnd;
+	HWND Bottom_Ogre_Right_Hwnd;
+	
 	float GridSize, GridSnapSize;
 	
 	// TODO hgtterry Make Private
@@ -113,6 +112,11 @@ private:
 	void Create_Top_Right_Window();
 	void Create_Bottom_Left_Window();
 	void Create_Ogre_Bottom_Right();
+
+	HWND Top_Left_Banner_Hwnd;
+	HWND Top_Right_Banner_Hwnd;
+	HWND Bottom_Left_Banner_Hwnd;
+	HWND Bottom_Ogre_Banner;
 
 	// Draw Routines
 	static signed int BrushDraw(Brush* pBrush, void* lParam);

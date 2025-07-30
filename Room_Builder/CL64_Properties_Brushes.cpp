@@ -335,8 +335,7 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Brush_Dlg(HWND hDlg, UINT message
 			{
 				App->CL_Dialogs->YesNo("Are you sure", "Do you want to Delete the selected Brushes");
 
-				bool Doit = App->CL_Dialogs->flag_Dlg_Canceled;
-				if (Doit == 0)
+				if (App->CL_Dialogs->flag_Dlg_Canceled == false)
 				{
 					App->CL_Ogre->OGL_Listener->Show_Visuals(false);
 					App->CL_Entities->Delete_Brush();

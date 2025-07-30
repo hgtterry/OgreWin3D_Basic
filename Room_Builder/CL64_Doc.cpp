@@ -350,9 +350,9 @@ void CL64_Doc::UpdateAllViews(int Update_Mode)
 {
     if (Update_Mode == Enums::UpdateViews_Grids)
     {
-        RedrawWindow(App->CL_Editor_Map->Left_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-        RedrawWindow(App->CL_Editor_Map->Right_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-        RedrawWindow(App->CL_Editor_Map->Bottom_Left_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+        RedrawWindow(App->CL_Editor_Map->Top_Left_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+        RedrawWindow(App->CL_Editor_Map->Top_Right_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+        RedrawWindow(App->CL_Editor_Map->Bottom_Left_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
     }
 
     if (Update_Mode == Enums::UpdateViews_3D)
@@ -374,9 +374,9 @@ void CL64_Doc::UpdateAllViews(int Update_Mode)
 
     if (Update_Mode == Enums::UpdateViews_All)
     {
-        RedrawWindow(App->CL_Editor_Map->Left_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-        RedrawWindow(App->CL_Editor_Map->Right_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-        RedrawWindow(App->CL_Editor_Map->Bottom_Left_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+        RedrawWindow(App->CL_Editor_Map->Top_Left_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+        RedrawWindow(App->CL_Editor_Map->Top_Right_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+        RedrawWindow(App->CL_Editor_Map->Bottom_Left_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
         int BC = App->CL_Brush->Get_Brush_Count();
         if (BC > 0)
