@@ -59,7 +59,7 @@ public:
 	void Reset_Views_All();
 	void Reset_To_Camera();
 	
-	void Resize_Windows(HWND hDlg, int NewWidth, int NewDepth);
+	void Resize_Windows(HWND hDlg, int newWidth, int newDepth);
 
 	void Set_Splitter_WidthDepth(int Width, int Depth);
 	void Save_Splitter_Width_Depth();
@@ -80,6 +80,8 @@ public:
 	int nleftWnd_Depth;
 	int Copy_Spliter_Depth;
 	int Copy_Spliter_Width;
+
+	int Selected_Window;
 
 	ViewVars* VCam[4];
 	ViewVars* Current_View;

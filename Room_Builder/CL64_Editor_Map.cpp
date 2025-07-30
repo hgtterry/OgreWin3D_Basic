@@ -105,6 +105,8 @@ CL64_Editor_Map::CL64_Editor_Map()
 	Copy_Spliter_Width = 500;
 	Copy_Spliter_Depth = 215;
 
+	Selected_Window = Enums::Selected_Map_View_None;
+
 	Do_Width = 0;
 	Do_Depth = 0;
 	Do_All = 0;
@@ -276,47 +278,51 @@ void CL64_Editor_Map::Init_Views(int View)
 // *************************************************************************
 // *			Resize_Windows:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-void CL64_Editor_Map::Resize_Windows(HWND hDlg, int NewWidth, int NewDepth)
+void CL64_Editor_Map::Resize_Windows(HWND hDlg, int newWidth, int newDepth)
 {
-	RECT rect;
-	GetClientRect(hDlg, &rect);
+	RECT clientRect;
+	GetClientRect(hDlg, &clientRect);
 
-	int Top_Windows_Top_Y = 0;
-	int Left_Windows_Start_X = 0;
+	const int adjustedDepth = newDepth - 3;
+	const int bannerHeight = 16;
 
-	int NewDepth_Depth = NewDepth - 3;
-
+	// Resize Top Left Window
 	MoveWindow(Top_Left_Window_Hwnd,
-		Left_Windows_Start_X,
-		Top_Windows_Top_Y,
-		rect.left + (NewWidth - WIDTH_ADJUST),
-		NewDepth_Depth,
+		0,
+		0,
+		clientRect.left + (newWidth - WIDTH_ADJUST),
+		adjustedDepth,
 		FALSE);
+	MoveWindow(Top_Left_Banner_Hwnd, 0, 0, newWidth - WIDTH_ADJUST, bannerHeight, FALSE);
 
+	// Resize Top Right Window
 	MoveWindow(Top_Right_Window_Hwnd,
-		Left_Windows_Start_X + NewWidth + WIDTH_ADJUST,
-		Top_Windows_Top_Y,
-		rect.right - (NewWidth + WIDTH_ADJUST),
-		NewDepth_Depth,
+		newWidth + WIDTH_ADJUST,
+		0,
+		clientRect.right - (newWidth + WIDTH_ADJUST),
+		adjustedDepth,
 		FALSE);
+	MoveWindow(Top_Right_Banner_Hwnd, 0, 0, clientRect.right - newWidth - WIDTH_ADJUST, bannerHeight, FALSE);
 
-	// Bottom Windows
+	// Resize Bottom Left Window
 	MoveWindow(Bottom_Left_Window_Hwnd,
-		Left_Windows_Start_X,
-		rect.top + NewDepth,
-		Left_Windows_Start_X + (NewWidth - WIDTH_ADJUST),
-		rect.bottom - (NewDepth + BOTTOM_POS_BOTLEFT),
+		0,
+		newDepth,
+		newWidth - WIDTH_ADJUST,
+		clientRect.bottom - (newDepth + BOTTOM_POS_BOTLEFT),
 		FALSE);
+	MoveWindow(Bottom_Left_Banner_Hwnd, 0, 0, newWidth - WIDTH_ADJUST, bannerHeight, FALSE);
 
+	// Resize Ogre Window
 	MoveWindow(Bottom_Ogre_Right_Hwnd,
-		Left_Windows_Start_X + NewWidth + WIDTH_ADJUST,
-		rect.top + NewDepth,
-		rect.right - (NewWidth + WIDTH_ADJUST),
-		rect.bottom - (NewDepth + BOTTOM_POS_BOTLEFT),
+		newWidth + WIDTH_ADJUST,
+		newDepth,
+		clientRect.right - (newWidth + WIDTH_ADJUST),
+		clientRect.bottom - (newDepth + BOTTOM_POS_BOTLEFT),
 		FALSE);
 
 	RedrawWindow(Main_View_Dlg_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-	
+
 	App->CL_Panels->Resize_OgreWin();
 }
 
@@ -713,13 +719,21 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Top_Left_Window(HWND hDlg, UINT message, 
 	
 	case WM_CTLCOLORSTATIC:
 	{
-		if (GetDlgItem(hDlg, IDC_ST_TL_TITLE) == (HWND)lParam)
+		if (App->CL_Editor_Map->Selected_Window == Enums::Selected_Map_View_TL)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->Brush_Green;
+		}
+		else
 		{
 			SetBkColor((HDC)wParam, RGB(0, 255, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->AppBackground;
 		}
+
 		return FALSE;
 	}
 
@@ -780,6 +794,15 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Top_Left_Window(HWND hDlg, UINT message, 
 		POINT		RealCursorPosition;
 		GetCursorPos(&RealCursorPosition);
 		ScreenToClient(hDlg, &RealCursorPosition);
+
+		if (App->CL_Editor_Map->Selected_Window != Enums::Selected_Map_View_TL)
+		{
+			App->CL_Editor_Map->Selected_Window = Enums::Selected_Map_View_TL;
+			RedrawWindow(App->CL_Editor_Map->Top_Left_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			RedrawWindow(App->CL_Editor_Map->Top_Right_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			RedrawWindow(App->CL_Editor_Map->Bottom_Left_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			//App->BeepBeep();
+		}
 
 		App->CL_Editor_Map->Current_View = App->CL_Editor_Map->VCam[V_TL];
 		
@@ -894,19 +917,16 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Top_Right_Window(HWND hDlg, UINT message,
 
 	case WM_CTLCOLORSTATIC:
 	{
-		//if (App->CL_Editor_Map->Current_View->Name == 1)// App->CL_Editor_Map->VCam[V_TR])
-		//{
-		//	if (GetDlgItem(hDlg, IDC_ST_TR_TITLE) == (HWND)lParam)
-		//	{
-		//		SetBkColor((HDC)wParam, RGB(0, 255, 0));
-		//		SetTextColor((HDC)wParam, RGB(0, 0, 0));
-		//		SetBkMode((HDC)wParam, TRANSPARENT);
-		//		return (UINT)App->Brush_Green;
-		//	}
-		//}
-		//else
+		if (GetDlgItem(hDlg, IDC_ST_TR_TITLE) == (HWND)lParam)
 		{
-			if (GetDlgItem(hDlg, IDC_ST_TR_TITLE) == (HWND)lParam)
+			if (App->CL_Editor_Map->Selected_Window == Enums::Selected_Map_View_TR)
+			{
+				SetBkColor((HDC)wParam, RGB(0, 255, 0));
+				SetTextColor((HDC)wParam, RGB(0, 0, 0));
+				SetBkMode((HDC)wParam, TRANSPARENT);
+				return (UINT)App->Brush_Green;
+			}
+			else
 			{
 				SetBkColor((HDC)wParam, RGB(0, 255, 0));
 				SetTextColor((HDC)wParam, RGB(0, 0, 0));
@@ -975,6 +995,15 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Top_Right_Window(HWND hDlg, UINT message,
 		POINT		RealCursorPosition;
 		GetCursorPos(&RealCursorPosition);
 		ScreenToClient(hDlg, &RealCursorPosition);
+
+		if (App->CL_Editor_Map->Selected_Window != Enums::Selected_Map_View_TR)
+		{
+			App->CL_Editor_Map->Selected_Window = Enums::Selected_Map_View_TR;
+			RedrawWindow(App->CL_Editor_Map->Top_Left_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			RedrawWindow(App->CL_Editor_Map->Top_Right_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			RedrawWindow(App->CL_Editor_Map->Bottom_Left_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			//App->BeepBeep();
+		}
 
 		App->CL_Editor_Map->flag_Right_Button_Down = 0;
 		App->CL_Editor_Map->flag_Left_Button_Down = 1;
@@ -1089,11 +1118,22 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Bottom_Left_Window(HWND hDlg, UINT messag
 	{
 		if (GetDlgItem(hDlg, IDC_ST_BL_TITLE) == (HWND)lParam)
 		{
-			SetBkColor((HDC)wParam, RGB(0, 255, 0));
-			SetTextColor((HDC)wParam, RGB(0, 0, 0));
-			SetBkMode((HDC)wParam, TRANSPARENT);
-			return (UINT)App->AppBackground;
+			if (App->CL_Editor_Map->Selected_Window == Enums::Selected_Map_View_BL)
+			{
+				SetBkColor((HDC)wParam, RGB(0, 255, 0));
+				SetTextColor((HDC)wParam, RGB(0, 0, 0));
+				SetBkMode((HDC)wParam, TRANSPARENT);
+				return (UINT)App->Brush_Green;
+			}
+			else
+			{
+				SetBkColor((HDC)wParam, RGB(0, 255, 0));
+				SetTextColor((HDC)wParam, RGB(0, 0, 0));
+				SetBkMode((HDC)wParam, TRANSPARENT);
+				return (UINT)App->AppBackground;
+			}
 		}
+
 		return FALSE;
 	}
 
@@ -1154,6 +1194,15 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Bottom_Left_Window(HWND hDlg, UINT messag
 		POINT		RealCursorPosition;
 		GetCursorPos(&RealCursorPosition);
 		ScreenToClient(hDlg, &RealCursorPosition);
+
+		if (App->CL_Editor_Map->Selected_Window != Enums::Selected_Map_View_BL)
+		{
+			App->CL_Editor_Map->Selected_Window = Enums::Selected_Map_View_BL;
+			RedrawWindow(App->CL_Editor_Map->Top_Left_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			RedrawWindow(App->CL_Editor_Map->Top_Right_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			RedrawWindow(App->CL_Editor_Map->Bottom_Left_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			//App->BeepBeep();
+		}
 
 		App->CL_Editor_Map->flag_Right_Button_Down = 0;
 		App->CL_Editor_Map->flag_Left_Button_Down = 1;
