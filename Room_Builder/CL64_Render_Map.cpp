@@ -1,12 +1,12 @@
 #include "pch.h"
 #include "CL64_App.h"
-#include "CL64_Render.h"
+#include "CL64_Render_Map.h"
 
-CL64_Render::CL64_Render(void)
+CL64_Render_Map::CL64_Render_Map(void)
 {
 }
 
-CL64_Render::~CL64_Render(void)
+CL64_Render_Map::~CL64_Render_Map(void)
 {
 }
 
@@ -22,7 +22,7 @@ static const T_Vec3	VecOrigin = { 0.0f, 0.0f, 0.0f };
 // *************************************************************************
 // *	  					Render_GetWidth								   *
 // *************************************************************************
-int	CL64_Render::Render_GetWidth(const ViewVars* v)
+int	CL64_Render_Map::Render_GetWidth(const ViewVars* v)
 {
 	return	v->Width;
 }
@@ -30,7 +30,7 @@ int	CL64_Render::Render_GetWidth(const ViewVars* v)
 // *************************************************************************
 // *	  					Render_GetHeight							   *
 // *************************************************************************
-int	CL64_Render::Render_GetHeight(const ViewVars* v)
+int	CL64_Render_Map::Render_GetHeight(const ViewVars* v)
 {
 	return	v->Height;
 }
@@ -38,7 +38,7 @@ int	CL64_Render::Render_GetHeight(const ViewVars* v)
 // *************************************************************************
 // *	  					Render_GetInidx							   *
 // *************************************************************************
-int	CL64_Render::Render_GetInidx(const ViewVars* v)
+int	CL64_Render_Map::Render_GetInidx(const ViewVars* v)
 {
 	return	(v->ViewType >> 3) & 0x3;
 }
@@ -46,7 +46,7 @@ int	CL64_Render::Render_GetInidx(const ViewVars* v)
 // *************************************************************************
 // *	  				Render_RenderOrthoGridFromSize					   *
 // *************************************************************************
-bool CL64_Render::Render_RenderOrthoGridFromSize(ViewVars* cv, int Interval, HDC hDC, RECT Rect)
+bool CL64_Render_Map::Render_RenderOrthoGridFromSize(ViewVars* cv, int Interval, HDC hDC, RECT Rect)
 {
 	cv->Width = Rect.right;
 	cv->Height = Rect.bottom;
@@ -127,7 +127,7 @@ bool CL64_Render::Render_RenderOrthoGridFromSize(ViewVars* cv, int Interval, HDC
 // *************************************************************************
 // *						Render_ViewToWorld							   *
 // *************************************************************************
-void CL64_Render::Render_ViewToWorld(const ViewVars* cv, const int x, const int y, T_Vec3* wp)
+void CL64_Render_Map::Render_ViewToWorld(const ViewVars* cv, const int x, const int y, T_Vec3* wp)
 {
 	float	ZoomInv = 1.0f / cv->ZoomFactor;
 
@@ -175,7 +175,7 @@ void CL64_Render::Render_ViewToWorld(const ViewVars* cv, const int x, const int 
 // *************************************************************************
 // *	  			Render_OrthoWorldToView								   *
 // *************************************************************************
-POINT CL64_Render::Render_OrthoWorldToView(const ViewVars* cv, T_Vec3 const* wp)
+POINT CL64_Render_Map::Render_OrthoWorldToView(const ViewVars* cv, T_Vec3 const* wp)
 {
 	POINT	sc = { 0, 0 };
 	T_Vec3 ptView;
@@ -220,7 +220,7 @@ POINT CL64_Render::Render_OrthoWorldToView(const ViewVars* cv, T_Vec3 const* wp)
 // *************************************************************************
 // *	  				Render_GetXScreenScale							   *
 // *************************************************************************
-float CL64_Render::Render_GetXScreenScale(const ViewVars* v)
+float CL64_Render_Map::Render_GetXScreenScale(const ViewVars* v)
 {
 	return	v->XScreenScale;
 }
@@ -228,7 +228,7 @@ float CL64_Render::Render_GetXScreenScale(const ViewVars* v)
 // *************************************************************************
 // *	  				Render_ViewDeltaToRotation						   *
 // *************************************************************************
-void CL64_Render::Render_ViewDeltaToRotation(const ViewVars* v,const float dx, T_Vec3* VecRotate)
+void CL64_Render_Map::Render_ViewDeltaToRotation(const ViewVars* v,const float dx, T_Vec3* VecRotate)
 {
 	float RotationRads;
 
@@ -253,7 +253,70 @@ void CL64_Render::Render_ViewDeltaToRotation(const ViewVars* v,const float dx, T
 // *************************************************************************
 // *	  			Render_MoveCamPosOrtho								   *
 // *************************************************************************
-void CL64_Render::Render_MoveCamPosOrtho(ViewVars* v, const T_Vec3* dv)
+void CL64_Render_Map::Render_MoveCamPosOrtho(ViewVars* v, const T_Vec3* dv)
 {
 	App->CL_Maths->Vector3_Add(&v->CamPos, dv, &v->CamPos);
+}
+
+// *************************************************************************
+// *			Pan_View:- Terry and Hazel Flanigan 2025				   *
+// *************************************************************************
+void CL64_Render_Map::Pan_View(ViewVars* currentView, int startPosX, int startPosY)
+{
+	T_Vec3 startPoint, worldPoint, deltaVector, cameraVector;
+
+	// Get the current cursor position
+	POINT realCursorPosition;
+	GetCursorPos(&realCursorPosition);
+	ScreenToClient(currentView->hDlg, &realCursorPosition);
+
+	// Calculate the difference in position
+	int deltaX = realCursorPosition.x - startPosX;
+	int deltaY = realCursorPosition.y - startPosY;
+
+	// If there is no movement, exit the function
+	if (deltaX == 0 && deltaY == 0)
+	{
+		return;
+	}
+
+	// Convert screen coordinates to world coordinates
+	Render_ViewToWorld(currentView, startPosX, startPosY, &startPoint);
+	Render_ViewToWorld(currentView, realCursorPosition.x, realCursorPosition.y, &worldPoint);
+
+	// Calculate the delta in world space
+	App->CL_Maths->Vector3_Subtract(&worldPoint, &startPoint, &deltaVector);
+	App->CL_Maths->Vector3_Scale(&deltaVector, -1.0f, &cameraVector);
+
+	// Move the camera position
+	Render_MoveCamPosOrtho(currentView, &cameraVector);
+
+	// Set Cursor back to Original Position
+	POINT screenPoint = { startPosX, startPosY };
+	ClientToScreen(currentView->hDlg, &screenPoint);
+	SetCursorPos(screenPoint.x, screenPoint.y);
+
+	// Draw the map
+	App->CL_Editor_Map->Draw_Screen(currentView->hDlg);
+}
+
+// *************************************************************************
+// *			Zoom_View:- Terry and Hazel Flanigan 2025				   *
+// *************************************************************************
+void CL64_Render_Map::Zoom_View(ViewVars* currentView, int startPosY, int startPosX, int cursorPositionY)
+{
+	// Calculate the change in Y position
+	long deltaY = cursorPositionY - startPosY;
+
+	// Adjust the zoom factor based on the direction of the cursor movement
+	if (deltaY != 0)
+	{
+		currentView->ZoomFactor += (deltaY > 0) ? -0.01 : 0.01;
+		App->CL_Editor_Map->Draw_Screen(currentView->hDlg);
+	}
+
+	// Set Cursor back to Original Position
+	POINT screenPoint = { startPosX, startPosY };
+	ClientToScreen(currentView->hDlg, &screenPoint);
+	SetCursorPos(screenPoint.x, screenPoint.y);
 }

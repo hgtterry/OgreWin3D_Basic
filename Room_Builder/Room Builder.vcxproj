@@ -218,7 +218,7 @@
     <ClInclude Include="CL64_Properties_Templates.h" />
     <ClInclude Include="CL64_Properties_Textures.h" />
     <ClInclude Include="CL64_Props_Dialogs.h" />
-    <ClInclude Include="CL64_Render.h" />
+    <ClInclude Include="CL64_Render_Map.h" />
     <ClInclude Include="CL64_Resources.h" />
     <ClInclude Include="CL64_Scene.h" />
     <ClInclude Include="CL64_SelBrushList.h" />
@@ -304,7 +304,7 @@
     <ClCompile Include="CL64_Properties_Templates.cpp" />
     <ClCompile Include="CL64_Properties_Textures.cpp" />
     <ClCompile Include="CL64_Props_Dialogs.cpp" />
-    <ClCompile Include="CL64_Render.cpp" />
+    <ClCompile Include="CL64_Render_Map.cpp" />
     <ClCompile Include="CL64_Resources.cpp" />
     <ClCompile Include="CL64_Scene.cpp" />
     <ClCompile Include="CL64_SelBrushList.cpp" />

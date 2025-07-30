@@ -53,11 +53,14 @@ typedef struct SizeInfoTag
 	Ogre::uint32* ZData;
 } SizeInfo;
 
-class CL64_Render
+class CL64_Render_Map
 {
 public:
-	CL64_Render(void);
-	~CL64_Render(void);
+	CL64_Render_Map(void);
+	~CL64_Render_Map(void);
+
+	void Pan_View(ViewVars* currentView, int startPosX, int startPosY);
+	void Zoom_View(ViewVars* currentView, int startPosY, int startPosX, int cursorPositionY);
 
 	int	Render_GetWidth(const ViewVars* v);
 	int	Render_GetHeight(const ViewVars* v);

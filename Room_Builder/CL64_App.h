@@ -28,7 +28,7 @@ THE SOFTWARE.
 //#include "CL64_Maths.h"
 #include "CL64_Lib_Maths.h"
 #include "CL64_Box.h"
-#include "CL64_Render.h"
+#include "CL64_Render_Map.h"
 #include "CL64_Level.h"
 #include "CL64_Prefs.h"
 #include "CL64_Ini_File.h"
@@ -119,7 +119,7 @@ public:
 	CL64_Lib_Maths*				CL_Maths;
 
 	CL64_Box*					CL_Box;
-	CL64_Render*				CL_Render;
+	CL64_Render_Map*			CL_Render;
 	CL64_Level*					CL_Level;
 	CL64_Prefs*					CL_Prefs;
 	CL64_Ini_File*				CL_Ini_File;

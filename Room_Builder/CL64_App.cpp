@@ -178,7 +178,7 @@ void CL64_App::InitApp(void)
 	CL_Editor_Map =				new CL64_Editor_Map();
 	CL_Maths =					new CL64_Lib_Maths();
 	CL_Box =					new CL64_Box();
-	CL_Render =					new CL64_Render();
+	CL_Render =					new CL64_Render_Map();
 	CL_Level =					new CL64_Level();
 	CL_Prefs =					new CL64_Prefs();
 	CL_Ini_File =				new CL64_Ini_File();

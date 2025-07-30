@@ -1795,21 +1795,17 @@ void CL64_Editor_Map::On_Mouse_Move(POINT CursorPosition, HWND hDlg)
 		return;
 	}
 
+	// Zoom
 	if (flag_Right_Button_Down == 1 && GetAsyncKeyState(VK_CONTROL) < 0)
 	{
-		dx = (CursorPosition.x);
-		dy = (CursorPosition.y);
-
-		Zoom_View(Current_View->hDlg, dx, dy);
+		App->CL_Render->Zoom_View(Current_View, mStartPoint.y, mStartPoint.x, CursorPosition.y);
 		return;
 	}
 
+	// Pan
 	if (flag_Left_Button_Down == 1 && GetAsyncKeyState(VK_CONTROL) < 0)
 	{
-		dx = (CursorPosition.x);
-		dy = (CursorPosition.y);
-
-		Pan_View(hDlg, dx, dy);
+		App->CL_Render->Pan_View(Current_View, mStartPoint.x, mStartPoint.y);
 		return;
 	}
 
@@ -2010,63 +2006,6 @@ signed int CL64_Editor_Map::BrushDraw(Brush* pBrush, void* lParam)
 }
 
 #define	VectorToSUB(a, b) (*((((float *)(&a))) + (b)))
-
-// *************************************************************************
-// *			Zoom_View:- Terry and Hazel Flanigan 2024				   *
-// *************************************************************************
-void CL64_Editor_Map::Zoom_View(HWND hDlg, int Dx, int Dy)
-{
-	// Check if the right mouse button is pressed
-	if (flag_Right_Button_Down == 1)
-	{
-		long deltaY = Dy - mStartPoint.y;
-
-		// Adjust zoom factor based on the change in Y position
-		if (deltaY != 0)
-		{
-			Current_View->ZoomFactor += (deltaY > 0) ? -0.01 : 0.01;
-			Draw_Screen(hDlg);
-		}
-
-		// Update cursor position
-		POINT pt = mStartPoint;
-		ClientToScreen(hDlg, &pt);
-		SetCursorPos(pt.x, pt.y);
-	}
-}
-
-// *************************************************************************
-// *			Pan_View:- Terry and Hazel Flanigan 2025				   *
-// *************************************************************************
-void CL64_Editor_Map::Pan_View(HWND hDlg, int Dx, int Dy)
-{
-    T_Vec3 sp, wp, dv, dcamv;
-    POINT RealCursorPosition;
-
-    GetCursorPos(&RealCursorPosition);
-    ScreenToClient(hDlg, &RealCursorPosition);
-
-    int dx = RealCursorPosition.x - mStartPoint.x;
-    int dy = RealCursorPosition.y - mStartPoint.y;
-
-    if (dx == 0 && dy == 0)
-    {
-        return;
-    }
-
-    App->CL_Render->Render_ViewToWorld(Current_View, mStartPoint.x, mStartPoint.y, &sp);
-    App->CL_Render->Render_ViewToWorld(Current_View, RealCursorPosition.x, RealCursorPosition.y, &wp);
-    App->CL_Maths->Vector3_Subtract(&wp, &sp, &dv); // delta in world space
-    App->CL_Maths->Vector3_Scale(&dv, -1.0f, &dcamv);
-
-    App->CL_Render->Render_MoveCamPosOrtho(Current_View, &dcamv);
-
-    POINT pt = mStartPoint;
-    ClientToScreen(hDlg, &pt);
-    SetCursorPos(pt.x, pt.y);
-
-    Draw_Screen(hDlg);
-}
 
 static signed int BrushDrawSelFacesOrtho(Brush* pBrush, void* lParam)
 {

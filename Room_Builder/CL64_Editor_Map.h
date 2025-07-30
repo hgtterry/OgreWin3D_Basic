@@ -24,7 +24,7 @@ THE SOFTWARE.
 
 #pragma once
 
-#include "CL64_Render.h"
+#include "CL64_Render_Map.h"
 #include "CL64_Brush.h"
 
 enum View
@@ -50,6 +50,8 @@ public:
 	void Render_RenderBrushFacesOrtho(const ViewVars* Cam, Brush* b, HDC ViewDC);
 	void Render_RenderBrushSelFacesOrtho(ViewVars* Cam, Brush* b, HDC ViewDC);
 	
+	void Draw_Screen(HWND hwnd);
+
 	bool Context_Command(WPARAM wParam);
 	bool Context_Command_Ogre(WPARAM wParam);
 
@@ -113,11 +115,7 @@ private:
 	void Create_Ogre_Bottom_Right();
 
 	// Draw Routines
-	void Draw_Screen(HWND hwnd);
 	static signed int BrushDraw(Brush* pBrush, void* lParam);
-
-	void Zoom_View(HWND hDlg, int Dx, int Dy);
-	void Pan_View(HWND hDlg, int Dx, int Dy);
 
 	void Draw_Camera(HDC ViewDC);
 
