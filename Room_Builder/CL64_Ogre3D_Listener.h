@@ -40,7 +40,7 @@ public:
 
 	bool Capture_Mouse_FirstPerson(float DeltaTime);
 
-	void Mode_Camera_Model(float DeltaTime);
+	void Camera_Mode_Model(float DeltaTime);
 	void Capture_LeftMouse_Model(void);
 	void Capture_RightMouse_Model(void);
 
@@ -48,13 +48,16 @@ public:
 	void Capture_Left_Mouse_Free(void);
 	void Capture_Right_Mouse_Free(void);
 
+	void MoveCamera(void);
+
+
 	POINT Mouse_point;
 	int	Pl_MouseX;
 	int	Pl_MouseY;
 	long Pl_Cent500X;
 	long Pl_Cent500Y;
 	float Pl_DeltaMouse;
-	void MoveCamera(void);
+	
 
 	Ogre::SceneNode* mCamNode;
 	float mMoveSensitivity;

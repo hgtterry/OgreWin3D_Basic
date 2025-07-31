@@ -36,8 +36,8 @@ CL64_Ogre3D_Listener::CL64_Ogre3D_Listener()
 	mMoveScale = 0;
 	mMoveSensitivityMouse = 50;
 
-	flag_LeftMouseDown = 0;
-	flag_RightMouseDown = 0;
+	flag_LeftMouseDown = false;
+	flag_RightMouseDown = false;
 
 	Pl_Cent500X = App->CursorPosX;
 	Pl_Cent500Y = App->CursorPosY;
@@ -51,8 +51,8 @@ CL64_Ogre3D_Listener::CL64_Ogre3D_Listener()
 
 	CameraMode = Enums::Cam_Mode_Model;
 
-	flag_StopOgre = 0;
-	flag_Run_Physics = 0;
+	flag_StopOgre = false;
+	flag_Run_Physics = false;
 }
 
 CL64_Ogre3D_Listener::~CL64_Ogre3D_Listener()
@@ -116,17 +116,19 @@ bool CL64_Ogre3D_Listener::frameRenderingQueued(const FrameEvent& evt)
 			Capture_Mouse_FirstPerson(evt.timeSinceLastFrame);
 			SetCursorPos(App->CursorPosX, App->CursorPosY);
 		}
+
+		return 1;
 	}
 
 	if (CameraMode == Enums::Cam_Mode_Model)
 	{
-		Mode_Camera_Model(evt.timeSinceLastFrame);
+		Camera_Mode_Model(evt.timeSinceLastFrame);
+		return 1;
 	}
 
 	if (CameraMode == Enums::Cam_Mode_Free)
 	{
 		Camera_Mode_Free(evt.timeSinceLastFrame);
-
 		return 1;
 	}
 
@@ -328,9 +330,9 @@ bool CL64_Ogre3D_Listener::Capture_Mouse_FirstPerson(float DeltaTime)
 	return 1;
 }
 // *************************************************************************
-// *		Mode_Camera_Model:- Terry and Hazel Flanigan 2025  			   *
+// *		Camera_Mode_Model:- Terry and Hazel Flanigan 2025  			   *
 // *************************************************************************
-void CL64_Ogre3D_Listener::Mode_Camera_Model(float DeltaTime)
+void CL64_Ogre3D_Listener::Camera_Mode_Model(float DeltaTime)
 {
 	mRotX = 0;
 	mRotY = 0;

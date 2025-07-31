@@ -47,7 +47,7 @@ public:
 
 	void Init_Map_Views();
 	void Init_Views(int View);
-	void Resize_OgreWin(void);
+	void ResizeOgreWindow(void);
 
 
 	void Render_RenderBrushFacesOrtho(const ViewVars* Cam, Brush* b, HDC ViewDC);

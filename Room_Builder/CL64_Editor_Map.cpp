@@ -325,32 +325,37 @@ void CL64_Editor_Map::Resize_Windows(HWND hDlg, int newWidth, int newDepth)
 
 	RedrawWindow(Main_View_Dlg_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
-	Resize_OgreWin();
+	ResizeOgreWindow();
 }
 
 // ************************************************************************
 // *			Resize_OgreWin:- Terry and Hazel Flanigan 2025			*
 // ************************************************************************
-void CL64_Editor_Map::Resize_OgreWin(void)
+void CL64_Editor_Map::ResizeOgreWindow()
 {
-	RECT rcl;
+	return;
+	RECT clientRect;
+	GetClientRect(Bottom_Ogre_Right_Hwnd, &clientRect);
 
-	GetClientRect(Bottom_Ogre_Right_Hwnd, &rcl);
+	// Set the position and size of the window
+	SetWindowPos(App->ViewGLhWnd, NULL, 0, 17, clientRect.right, clientRect.bottom - 17, SWP_NOZORDER);
 
-	SetWindowPos(App->ViewGLhWnd, NULL, 0, 17, rcl.right, rcl.bottom - 17, SWP_NOZORDER);
-
+	// Check if the Ogre engine has started
 	if (App->flag_OgreStarted == 1)
 	{
-		RECT rect;
-		GetClientRect(Bottom_Ogre_Right_Hwnd, &rect);
+		// Get the updated client rectangle
+		RECT updatedRect;
+		GetClientRect(Bottom_Ogre_Right_Hwnd, &updatedRect);
 
-		if ((rect.bottom - rect.top) != 0 && App->CL_Ogre->mCamera != 0)
+		// Ensure the height is valid and the camera is initialized
+		if ((updatedRect.bottom - updatedRect.top) != 0 && App->CL_Ogre->mCamera != nullptr)
 		{
 			App->CL_Ogre->mWindow->windowMovedOrResized();
-			App->CL_Ogre->mCamera->setAspectRatio((Ogre::Real)App->CL_Ogre->mWindow->getWidth() / (Ogre::Real)App->CL_Ogre->mWindow->getHeight());
+			App->CL_Ogre->mCamera->setAspectRatio(static_cast<Ogre::Real>(App->CL_Ogre->mWindow->getWidth()) /
+				static_cast<Ogre::Real>(App->CL_Ogre->mWindow->getHeight()));
+
 			App->CL_Ogre->camNode->yaw(Radian(0));
 		}
-
 	}
 }
 
@@ -1468,7 +1473,7 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Ogre_BR(HWND hDlg, UINT message, WPARAM w
 
 		if (App->flag_OgreStarted == 1)
 		{
-			if (App->flag_Block_Mouse_Buttons == 0)
+			if (App->flag_Block_Mouse_Buttons == false)
 			{
 				if (!ImGui::GetIO().WantCaptureMouse)
 				{
@@ -1488,7 +1493,7 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Ogre_BR(HWND hDlg, UINT message, WPARAM w
 					App->CUR = SetCursor(NULL);
 
 					App->CL_Camera->Camera_Save_Location();
-					//App->BeepBeep();
+
 				}
 				else
 				{

@@ -6,9 +6,8 @@
 
 // TODO: This is an example of a library function
 
-namespace OW3D
-{
+
 	void fnXLibMaths()
 	{
 	}
-}
+
