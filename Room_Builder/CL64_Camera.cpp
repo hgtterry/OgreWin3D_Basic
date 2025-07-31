@@ -73,11 +73,11 @@ void CL64_Camera::Camera_Reset_Zero(void)
 // *************************************************************************
 void CL64_Camera::Reset_View_Editor(void)
 {
-	App->CL_Grid->GridNode->setPosition(0, 0, 0);
-	App->CL_Grid->GridNode->resetOrientation();
+	App->CL_Gizmos->Grid_Node->setPosition(0, 0, 0);
+	App->CL_Gizmos->Grid_Node->resetOrientation();
 
-	App->CL_Grid->HairNode->setPosition(0, 0, 0);
-	App->CL_Grid->HairNode->resetOrientation();
+	App->CL_Gizmos->Hair_Node->setPosition(0, 0, 0);
+	App->CL_Gizmos->Hair_Node->resetOrientation();
 
 	App->CL_Ogre->OGL_Listener->RX = 0;
 	App->CL_Ogre->OGL_Listener->RZ = 0;

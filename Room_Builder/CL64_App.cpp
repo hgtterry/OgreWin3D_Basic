@@ -55,7 +55,6 @@ CL64_App::CL64_App(void)
 	CL_Properties_Faces =		nullptr;
 
 	CL_Ogre	=					nullptr;
-	CL_Grid =					nullptr;
 	CL_Panels =					nullptr;
 	CL_Keyboard =				nullptr;
 	CL_Scene =					nullptr;
@@ -202,7 +201,6 @@ void CL64_App::InitApp(void)
 	CL_Properties_Faces =		new CL64_Properties_Faces();
 	
 	CL_Ogre =					new CL64_Ogre();
-	CL_Grid =					new CL64_Grid();
 	CL_Panels =					new CL64_Panels();
 	CL_Keyboard =				new CL64_Keyboard();
 	CL_Scene =					new CL64_Scene();

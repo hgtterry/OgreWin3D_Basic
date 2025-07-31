@@ -28,8 +28,45 @@ THE SOFTWARE.
 
 CL64_Gizmos::CL64_Gizmos(void)
 {
+	// Grid
+	Grid_Manual = nullptr;
+	Grid_Node = nullptr;
+
+	Grid_ColourMain = Ogre::ColourValue(0.7, 0.7, 0, 0.6);
+	Grid_ColourDivision = Ogre::ColourValue(1, 1, 1, 0.4);
+
+	Grid_YAxis_min = -8;
+	Grid_YAxis_max = 8;
+	Grid_ZAxis_min = -8;
+	Grid_ZAxis_max = 8;
+	Grid_XAxis_min = -8;
+	Grid_XAxis_max = 8;
+
+	Grid_Division = (Ogre::Vector2(2, 2));
+	Grid_Scale = (Ogre::Vector3(4, 4, 4));
+
+	// Selected Face
+	Face_Manual = nullptr;
+	Face_Node = nullptr;
+	Face_Colour = Ogre::ColourValue(1, 0, 0, 1);
+	HitVertices[0] = Ogre::Vector3(0, 0, 0);
+	HitVertices[1] = Ogre::Vector3(0, 0, 0);
+	HitVertices[2] = Ogre::Vector3(0, 0, 0);
+
+	// Cross Hair
+	Hair_Manual = nullptr;
+	Hair_Node = nullptr;
+
+	Hair_Extend = 8;
+	Colour_HairX = Ogre::ColourValue(0, 0, 1, 1);
+	Colour_HairZ = Ogre::ColourValue(1, 0, 0, 1);
+	Colour_HairY = Ogre::ColourValue(0, 1, 0, 1);
+
 	Crosshair_Ent = nullptr;
 	Crosshair_Node = nullptr;
+
+	flag_ShowGrid = 1;
+	flag_ShowDivisions = 1;
 
 	RedAxis_Ent = nullptr;
 	RedAxis_Node = nullptr;
@@ -51,15 +88,201 @@ CL64_Gizmos::~CL64_Gizmos(void)
 {
 }
 
-// **************************************************************************
-// *	  			Set_Gizmos:- Terry and Hazel Flanigan 2024				*
-// **************************************************************************
-void CL64_Gizmos::Set_Gizmos()
+// *************************************************************************
+// *	  		Init_Gizmos:- Terry and Hazel Flanigan 2025				   *
+// *************************************************************************
+void CL64_Gizmos::Init_Gizmos(Ogre::SceneManager* m_SceneMgr)
 {
+	mSceneMgr = m_SceneMgr;
+
+	Grid_Update(true);
+	Hair_Update(true);
+
+	Face_Update(true);
 	MarkerBox_Setup();
 	Load_PickSight();
 	Load_Crosshair();
 	Load_All_Axis();
+}
+
+// *************************************************************************
+// *	  		Grid_Update:- Terry and Hazel Flanigan 2025				   *
+// *************************************************************************
+void CL64_Gizmos::Grid_Update(bool Create)
+{
+	int i = 0;
+	Ogre::Real r;
+
+	if (Create == 1)
+	{
+		Grid_Manual = mSceneMgr->createManualObject("Grid_Manual");
+	}
+
+	Grid_Manual->clear();
+	Grid_Manual->begin("Template/Alpha_Blend_GD64", Ogre::RenderOperation::OT_LINE_LIST, "App_Resource_Group");
+
+	if (flag_ShowGrid == 1)
+	{
+		for (int x = Grid_XAxis_min; x <= Grid_XAxis_max; ++x)
+		{
+			Grid_Manual->position(x, 0, Grid_ZAxis_min);
+			Grid_Manual->colour(Grid_ColourMain);
+			Grid_Manual->position(x, 0, Grid_ZAxis_max);
+			Grid_Manual->colour(Grid_ColourMain);
+			if (x < Grid_XAxis_max && flag_ShowDivisions == 1)
+			{
+				for (int d = 0; d < Grid_Division.x; ++d)
+				{
+					r = x + (1.0 / Ogre::Real(Grid_Division.x)) * Ogre::Real(d);
+					Grid_Manual->position(r, 0, Grid_ZAxis_min);
+					Grid_Manual->colour(Grid_ColourDivision);
+					Grid_Manual->position(r, 0, Grid_ZAxis_max);
+					Grid_Manual->colour(Grid_ColourDivision);
+				}
+			}
+		}
+
+		for (int z = Grid_ZAxis_min; z <= Grid_ZAxis_max; ++z)
+		{
+			Grid_Manual->position(Ogre::Vector3(Grid_XAxis_min, 0, z));
+			Grid_Manual->colour(Grid_ColourMain);
+			Grid_Manual->position(Ogre::Vector3(Grid_XAxis_max, 0, z));
+			Grid_Manual->colour(Grid_ColourMain);
+			if (z < Grid_ZAxis_max && flag_ShowDivisions == 1)
+			{
+				for (int d = 1; d < Grid_Division.y; ++d)
+				{
+					r = z + (1.0 / Ogre::Real(Grid_Division.y)) * Ogre::Real(d);
+					Grid_Manual->position(Grid_XAxis_min, 0, r);
+					Grid_Manual->colour(Grid_ColourDivision);
+					Grid_Manual->position(Grid_XAxis_max, 0, r);
+					Grid_Manual->colour(Grid_ColourDivision);
+				}
+			}
+		}
+	}
+
+	Grid_Manual->end();
+
+	if (Create == 1)
+	{
+		Grid_Node = mSceneMgr->getRootSceneNode()->createChildSceneNode();
+		Grid_Node->attachObject(Grid_Manual);
+	}
+
+	Grid_Node->setPosition(0, 0, 0);
+	Grid_Node->setVisible(true);
+	Grid_Node->setScale(Grid_Scale.x, Grid_Scale.y, Grid_Scale.z);
+}
+
+// *************************************************************************
+// *	  		Hair_Update:- Terry and Hazel Flanigan 2025				   *
+// *************************************************************************
+void CL64_Gizmos::Hair_Update(bool Create)
+{
+	if (Create == 1)
+	{
+		Hair_Manual = mSceneMgr->createManualObject("Hair_Manual");
+	}
+
+	Hair_Manual->clear();
+
+
+	Hair_Manual->begin("Template/Alpha_Blend_GD64", Ogre::RenderOperation::OT_LINE_LIST, "App_Resource_Group");
+
+	// X Axis
+	Hair_Manual->position(Ogre::Vector3(Grid_YAxis_min - Hair_Extend, 0, 0));
+	Hair_Manual->colour(Colour_HairX);
+	Hair_Manual->position(Ogre::Vector3(Grid_YAxis_max + Hair_Extend, 0, 0));
+	Hair_Manual->colour(Colour_HairX);
+	// Y Axis
+	Hair_Manual->position(Ogre::Vector3(0, Grid_YAxis_min - Hair_Extend, 0));
+	Hair_Manual->colour(Colour_HairY);
+	Hair_Manual->position(Ogre::Vector3(0, Grid_YAxis_max + Hair_Extend, 0));
+	Hair_Manual->colour(Colour_HairY);
+	// Z Axis
+	Hair_Manual->position(Ogre::Vector3(0, 0, Grid_ZAxis_min - Hair_Extend));
+	Hair_Manual->colour(Colour_HairZ);
+	Hair_Manual->position(Ogre::Vector3(0, 0, Grid_ZAxis_max + Hair_Extend));
+	Hair_Manual->colour(Colour_HairZ);
+
+	Hair_Manual->end();
+
+	if (Create == 1)
+	{
+		Hair_Node = mSceneMgr->getRootSceneNode()->createChildSceneNode();
+		Hair_Node->attachObject(Hair_Manual);
+	}
+
+	Hair_Node->setPosition(0, 0, 0);
+	Hair_Node->setVisible(true);
+	Hair_Node->setScale(Grid_Scale.x, Grid_Scale.y, Grid_Scale.z);
+}
+
+// *************************************************************************
+// *	  	Enable_Grid_And_Hair:- Terry and Hazel Flanigan 2025		   *
+// *************************************************************************
+void CL64_Gizmos::Enable_Grid_And_Hair(bool Enable)
+{
+	Grid_Node->setVisible(Enable);
+	Hair_Node->setVisible(Enable);
+}
+
+// *************************************************************************
+// *	  		Face_Update:- Terry and Hazel Flanigan 2025				   *
+// *************************************************************************
+void CL64_Gizmos::Face_Update(bool Create)
+{
+	if (Create == 1)
+	{
+		Face_Manual = mSceneMgr->createManualObject("Face_Manual");
+		Face_Manual->setDynamic(true);
+		Face_Manual->setRenderQueueGroup(Ogre::RENDER_QUEUE_MAX);
+	}
+
+	Face_Manual->clear();
+	Face_Manual->begin("Template/Alpha_Blend_GD64", Ogre::RenderOperation::OT_LINE_STRIP);
+
+	// X Axis
+	Face_Manual->position(HitVertices[0]);
+	Face_Manual->colour(Face_Colour);
+
+	Face_Manual->position(HitVertices[1]);
+	Face_Manual->colour(Face_Colour);
+
+	Face_Manual->position(HitVertices[2]);
+	Face_Manual->colour(Face_Colour);
+
+	Face_Manual->position(HitVertices[0]);
+	Face_Manual->colour(Face_Colour);
+
+	Face_Manual->end();
+
+	if (Create == 1)
+	{
+		Face_Node = mSceneMgr->getRootSceneNode()->createChildSceneNode();
+		Face_Node->attachObject(Face_Manual);
+
+		Face_Node->setPosition(0, 0, 0);
+		Face_Node->setVisible(false);
+	}
+}
+
+// *************************************************************************
+// *	  		Face_Update2:- Terry and Hazel Flanigan 2025			   *
+// *************************************************************************
+void CL64_Gizmos::Face_Update2()
+{
+	Face_Manual->beginUpdate(0);
+
+	Face_Manual->position(HitVertices[0]);
+
+	Face_Manual->position(HitVertices[1]);
+
+	Face_Manual->position(HitVertices[2]);
+
+	Face_Manual->position(HitVertices[0]);
+	Face_Manual->end();
 }
 
 // *************************************************************************
@@ -71,8 +294,8 @@ void CL64_Gizmos::MarkerBox_Setup(void)
 	float BoxHeight = 2.5;
 	float BoxWidth = 2.5;
 	
-	BoxManual = App->CL_Ogre->mSceneMgr->createManualObject("BB_Box");
-	BoxManual->begin("Template/Alpha_Blend_GD64", RenderOperation::OT_LINE_STRIP, App->CL_Ogre->App_Resource_Group);
+	BoxManual = mSceneMgr->createManualObject("BB_Box");
+	BoxManual->begin("Template/Alpha_Blend_GD64", Ogre::RenderOperation::OT_LINE_STRIP, "App_Resource_Group");
 
 	BoxManual->colour(0, 1, 0);
 
@@ -108,7 +331,7 @@ void CL64_Gizmos::MarkerBox_Setup(void)
 	BoxManual->index(3);
 
 	BoxManual->end();
-	BoxNode = App->CL_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	BoxNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	BoxNode->attachObject(BoxManual);
 
 	BoxNode->setPosition(0, 0, 0);
@@ -224,8 +447,8 @@ void CL64_Gizmos::Load_PickSight(void)
 // *************************************************************************
 void CL64_Gizmos::Load_Crosshair()
 {
-	Crosshair_Ent = App->CL_Ogre->mSceneMgr->createEntity("Crosshair", "axes.mesh", App->CL_Ogre->App_Resource_Group);
-	Crosshair_Node = App->CL_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	Crosshair_Ent = mSceneMgr->createEntity("Crosshair", "axes.mesh", "App_Resource_Group");
+	Crosshair_Node = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	Crosshair_Node->attachObject(Crosshair_Ent);
 
 	Crosshair_Node->setPosition(0, 0, 0);
@@ -249,8 +472,8 @@ void CL64_Gizmos::Load_All_Axis()
 // **************************************************************************
 void CL64_Gizmos::Load_Red_Axis()
 {
-	RedAxis_Ent = App->CL_Ogre->mSceneMgr->createEntity("Red_Axis", "RedAxes.mesh", App->CL_Ogre->App_Resource_Group);
-	RedAxis_Node = App->CL_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	RedAxis_Ent = mSceneMgr->createEntity("Red_Axis", "RedAxes.mesh", "App_Resource_Group");
+	RedAxis_Node = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	RedAxis_Node->attachObject(RedAxis_Ent);
 
 	RedAxis_Node->setVisible(false);
@@ -263,8 +486,8 @@ void CL64_Gizmos::Load_Red_Axis()
 // **************************************************************************
 void CL64_Gizmos::Load_Green_Axis()
 {
-	GreenAxis_Ent = App->CL_Ogre->mSceneMgr->createEntity("Green_Axis", "GreenAxes.mesh", App->CL_Ogre->App_Resource_Group);
-	GreenAxis_Node = App->CL_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	GreenAxis_Ent = mSceneMgr->createEntity("Green_Axis", "GreenAxes.mesh", "App_Resource_Group");
+	GreenAxis_Node = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	GreenAxis_Node->attachObject(GreenAxis_Ent);
 
 	GreenAxis_Node->setVisible(false);
@@ -277,8 +500,8 @@ void CL64_Gizmos::Load_Green_Axis()
 // **************************************************************************
 void CL64_Gizmos::Load_Blue_Axis()
 {
-	BlueAxis_Ent = App->CL_Ogre->mSceneMgr->createEntity("Blue_Axis", "BlueAxes.mesh", App->CL_Ogre->App_Resource_Group);
-	BlueAxis_Node = App->CL_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	BlueAxis_Ent = mSceneMgr->createEntity("Blue_Axis", "BlueAxes.mesh", "App_Resource_Group");
+	BlueAxis_Node = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	BlueAxis_Node->attachObject(BlueAxis_Ent);
 
 	BlueAxis_Node->setVisible(false);
@@ -346,18 +569,18 @@ void CL64_Gizmos::highlight(Ogre::Entity* entity)
 		const Ogre::String& old_material_name = subentity->getMaterialName();
 		Ogre::String new_material_name = old_material_name + rim_material_name;
 
-		Ogre::MaterialPtr new_material = MaterialManager::getSingleton().getByName(new_material_name);
+		Ogre::MaterialPtr new_material = Ogre::MaterialManager::getSingleton().getByName(new_material_name);
 
 		if (new_material == nullptr)
 		{
-			MaterialPtr old_material = MaterialManager::getSingleton().getByName(old_material_name);
+			Ogre::MaterialPtr old_material = Ogre::MaterialManager::getSingleton().getByName(old_material_name);
 			new_material = old_material->clone(new_material_name);
 
-			Pass* pass = new_material->getTechnique(0)->getPass(0);
+			Ogre::Pass* pass = new_material->getTechnique(0)->getPass(0);
 
 			Ogre::TextureUnitState* texture = pass->createTextureUnitState();
 			texture->setTextureName(file_name);
-			texture->setTextureAddressingMode(TextureUnitState::TAM_CLAMP);
+			texture->setTextureAddressingMode(Ogre::TextureUnitState::TAM_CLAMP);
 			texture->setColourOperationEx(Ogre::LBX_ADD, Ogre::LBS_TEXTURE, Ogre::LBS_CURRENT);
 			texture->setColourOpMultipassFallback(Ogre::SBF_ONE, Ogre::SBF_ONE);
 		}

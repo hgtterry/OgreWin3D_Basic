@@ -52,7 +52,6 @@ THE SOFTWARE.
 #include "CL64_Properties_Textures.h"
 #include "CL64_Properties_Faces.h"
 #include "CL64_Ogre.h"
-#include "CL64_Grid.h"
 #include "CL64_Panels.h"
 #include "CL64_Keyboard.h"
 #include "CL64_Scene.h"
@@ -142,7 +141,6 @@ public:
 	CL64_Properties_Textures*	CL_Properties_Textures;
 	CL64_Properties_Faces*		CL_Properties_Faces;
 	CL64_Ogre*					CL_Ogre;
-	CL64_Grid*					CL_Grid;
 	CL64_Panels*				CL_Panels;
 	CL64_Keyboard*				CL_Keyboard;
 	CL64_Scene*					CL_Scene;

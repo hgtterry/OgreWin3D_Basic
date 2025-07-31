@@ -76,16 +76,9 @@ void CL64_Ogre::Init_Ogre(void)
 	ModelNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	ModelNode->attachObject(manObj);
 	
-	/*Ogre::RenderSystem* pp = mRoot->getRenderSystem();
-	pp->_setLineWidth(15);*/
-
-	// Update grid and gizmos
-	App->CL_Grid->Grid_Update(1);
-	App->CL_Grid->Hair_Update(1);
-	App->CL_Grid->Face_Update(1);
-	App->CL_Gizmos->Set_Gizmos();
-
-
+	// Init Gizmos
+	App->CL_Gizmos->Init_Gizmos(mSceneMgr);
+	
 	// Initialize ImGui
 	App->CL_ImGui->Init_ImGui();
 

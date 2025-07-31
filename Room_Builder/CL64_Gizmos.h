@@ -30,8 +30,18 @@ public:
 	CL64_Gizmos(void);
 	~CL64_Gizmos(void);
 
-	void Set_Gizmos();
+	void Init_Gizmos(Ogre::SceneManager* m_SceneMgr);
 
+	// Grid and Hair
+	void Grid_Update(bool Create);
+	void Hair_Update(bool Create);
+	void Enable_Grid_And_Hair(bool Enable);
+
+	// Face
+	void Face_Update(bool Create);
+	void Face_Update2();
+
+	// Marker Box
 	void MarkerBox_Setup(void);
 	void MarkerBox_Update(float Depth, float Height, float Width);
 	void MarkerBox_Adjust(int index);
@@ -56,8 +66,45 @@ public:
 
 	int Last_Selected_Object;
 
-	ManualObject* BoxManual;
-	SceneNode* BoxNode;
+	Ogre::SceneManager* mSceneMgr;
+
+	Ogre::ManualObject* Grid_Manual;
+	Ogre::SceneNode* Grid_Node;
+
+	Ogre::ManualObject* Hair_Manual;
+	Ogre::SceneNode* Hair_Node;
+
+	// Face
+	Ogre::ManualObject* Face_Manual;
+	Ogre::SceneNode* Face_Node;
+	Ogre::ColourValue Face_Colour;
+	Ogre::Vector3 HitVertices[3];
+
+
+	// Grid
+	Ogre::ColourValue Grid_ColourMain;
+	Ogre::ColourValue Grid_ColourDivision;
+
+	int Hair_Extend;
+	Ogre::ColourValue Colour_HairX;
+	Ogre::ColourValue Colour_HairZ;
+	Ogre::ColourValue Colour_HairY;
+
+	int Grid_XAxis_min;
+	int	Grid_XAxis_max;
+	int Grid_YAxis_min;
+	int	Grid_YAxis_max;
+	int Grid_ZAxis_min;
+	int	Grid_ZAxis_max;
+
+	Ogre::Vector2 Grid_Division;
+	Ogre::Vector3 Grid_Scale;
+
+	bool flag_ShowGrid;
+	bool flag_ShowDivisions;
+
+	Ogre::ManualObject* BoxManual;
+	Ogre::SceneNode* BoxNode;
 
 	Ogre::Entity* Crosshair_Ent;
 	Ogre::SceneNode* Crosshair_Node;

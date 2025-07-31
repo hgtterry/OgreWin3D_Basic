@@ -374,8 +374,8 @@ void CL64_Ogre3D_Listener::Capture_LeftMouse_Model(void)
 		if (test > 2)
 		{
 			Pl_DeltaMouse = float(Pl_Cent500X - Pl_MouseX);
-			App->CL_Grid->GridNode->yaw(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
-			App->CL_Grid->HairNode->yaw(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
+			App->CL_Gizmos->Grid_Node->yaw(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
+			App->CL_Gizmos->Hair_Node->yaw(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
 			
 			SetCursorPos(App->CursorPosX, App->CursorPosY);
 		}
@@ -387,8 +387,8 @@ void CL64_Ogre3D_Listener::Capture_LeftMouse_Model(void)
 		if (test > 2)
 		{
 			Pl_DeltaMouse = float(Pl_MouseX - Pl_Cent500X);
-			App->CL_Grid->GridNode->yaw(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
-			App->CL_Grid->HairNode->yaw(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
+			App->CL_Gizmos->Grid_Node->yaw(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
+			App->CL_Gizmos->Hair_Node->yaw(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
 			
 			SetCursorPos(App->CursorPosX, App->CursorPosY);
 		}
@@ -402,8 +402,8 @@ void CL64_Ogre3D_Listener::Capture_LeftMouse_Model(void)
 		if (test > 2)
 		{
 			Pl_DeltaMouse = float(Pl_Cent500Y - Pl_MouseY);
-			App->CL_Grid->GridNode->pitch(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
-			App->CL_Grid->HairNode->pitch(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
+			App->CL_Gizmos->Grid_Node->pitch(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
+			App->CL_Gizmos->Hair_Node->pitch(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
 		
 			SetCursorPos(App->CursorPosX, App->CursorPosY);
 		}
@@ -415,8 +415,8 @@ void CL64_Ogre3D_Listener::Capture_LeftMouse_Model(void)
 		if (test > 2)
 		{
 			Pl_DeltaMouse = float(Pl_MouseY - Pl_Cent500Y);
-			App->CL_Grid->GridNode->pitch(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
-			App->CL_Grid->HairNode->pitch(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
+			App->CL_Gizmos->Grid_Node->pitch(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
+			App->CL_Gizmos->Hair_Node->pitch(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
 			
 			SetCursorPos(App->CursorPosX, App->CursorPosY);
 		}

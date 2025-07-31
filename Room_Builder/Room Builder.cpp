@@ -393,10 +393,50 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             // ----------------------------- View
             case ID_VIEW_RESETVIEWS:
             {
-                App->CL_Editor_Map->Reset_Views_All();
+                App->CL_Dialogs->YesNo("Are you Sure", "All Views will be Reset to Default");
+
+                if (App->CL_Dialogs->flag_Dlg_Canceled == false)
+                {
+                    App->CL_Editor_Map->Reset_Views_All();
+                }
+
                 return 1;
             }
             
+            case ID_VIEW_TOPLEFT:
+            {
+                App->CL_Editor_Map->Init_Views(Enums::Selected_Map_View_TL);
+                App->CL_Editor_Map->Resize_Windows(App->CL_Editor_Map->Main_View_Dlg_Hwnd, App->CL_Editor_Map->nleftWnd_width, App->CL_Editor_Map->nleftWnd_Depth);
+                return true;
+            }
+
+            case ID_VIEW_TOPRIGHT:
+            {
+                App->CL_Editor_Map->Init_Views(Enums::Selected_Map_View_TR);
+                App->CL_Editor_Map->Resize_Windows(App->CL_Editor_Map->Main_View_Dlg_Hwnd, App->CL_Editor_Map->nleftWnd_width, App->CL_Editor_Map->nleftWnd_Depth);
+                return true;
+            }
+
+            case ID_VIEW_BOTTOMLEFT:
+            {
+                App->CL_Editor_Map->Init_Views(Enums::Selected_Map_View_BL);
+                App->CL_Editor_Map->Resize_Windows(App->CL_Editor_Map->Main_View_Dlg_Hwnd, App->CL_Editor_Map->nleftWnd_width, App->CL_Editor_Map->nleftWnd_Depth);
+                return true;
+            }
+
+            case ID_VIEW_3DVIEW:
+            {
+                App->CL_Editor_Map->Init_Views(Enums::Selected_Map_View_3D);
+                App->CL_Editor_Map->Resize_Windows(App->CL_Editor_Map->Main_View_Dlg_Hwnd, App->CL_Editor_Map->nleftWnd_width, App->CL_Editor_Map->nleftWnd_Depth);
+                return true;
+            }
+
+            case ID_VIEW_RESTOREVIEWS:
+            {
+                App->CL_Editor_Map->Set_Splitter_WidthDepth(App->CL_Editor_Map->Copy_Spliter_Width, App->CL_Editor_Map->Copy_Spliter_Depth);
+                App->CL_Editor_Map->Resize_Windows(App->CL_Editor_Map->Main_View_Dlg_Hwnd, App->CL_Editor_Map->nleftWnd_width, App->CL_Editor_Map->nleftWnd_Depth);
+                return true;
+            }
             case ID_VIEW_PATHS:
             {
                 if (App->CL_ImGui->flag_Show_Paths == 1)

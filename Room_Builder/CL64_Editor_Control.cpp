@@ -68,7 +68,7 @@ void CL64_Editor_Control::Start_Preview_Mode(void)
         App->CL_Properties_Tabs->Enable_Tabs_Dlg(false);
         App->CL_Ogre->OGL_Listener->Show_Visuals(false);
         App->CL_Com_Objects->Show_Entities(false);
-        App->CL_Grid->Enable_Grid_And_Hair(false);
+        App->CL_Gizmos->Enable_Grid_And_Hair(false);
         App->CL_Gizmos->Show_MarkerBox(false);
         App->CL_Gizmos->unhighlight(App->CL_Scene->B_Object[App->CL_Gizmos->Last_Selected_Object]->Object_Ent);
 
@@ -121,7 +121,7 @@ void CL64_Editor_Control::Start_Editor_MapBrush_Mode(void)
 
 	App->CL_ImGui->flag_Show_Press_Excape = false;
 	App->CL_ImGui->flag_Show_Preview_Options = false;
-	App->CL_Grid->Enable_Grid_And_Hair(true);
+	App->CL_Gizmos->Enable_Grid_And_Hair(true);
 	App->CL_Gizmos->highlight(App->CL_Scene->B_Object[App->CL_Gizmos->Last_Selected_Object]->Object_Ent);
     App->CL_Com_Objects->Show_Entities(true);
 
