@@ -148,66 +148,53 @@ void CL64_Keyboard::Keyboard_Mode_First(float deltaTime)
 // *************************************************************************
 void CL64_Keyboard::Keyboard_Mode_Model(float deltaTime)
 {
-	//	Pan Up
+	// Define movement rate based on sensitivity
+	float rate = (App->CL_Ogre->Ogre3D_Listener->mMoveSensitivity / 1000) * 2;
+	Ogre::Vector3 oldPos = App->CL_Ogre->Ogre3D_Listener->mCamNode->getPosition();
+
+	// Pan Up
 	if (GetAsyncKeyState(69) < 0) // E key 
 	{
-		Rate = (App->CL_Ogre->Ogre3D_Listener->mMoveSensitivity / 1000) * 2;
-		OldPos = App->CL_Ogre->Ogre3D_Listener->mCamNode->getPosition();
-
-		OldPos.y += Rate;
-		App->CL_Ogre->Ogre3D_Listener->mCamNode->setPosition(OldPos);
+		oldPos.y += rate;
 	}
 
 	// Pan Down
-	if (GetAsyncKeyState(81) < 0)  // Q Key
+	if (GetAsyncKeyState(81) < 0) // Q Key
 	{
-		Rate = (App->CL_Ogre->Ogre3D_Listener->mMoveSensitivity / 1000) * 2;
-
-		OldPos = App->CL_Ogre->Ogre3D_Listener->mCamNode->getPosition();
-
-		OldPos.y -= Rate;
-		App->CL_Ogre->Ogre3D_Listener->mCamNode->setPosition(OldPos);
+		oldPos.y -= rate;
 	}
 
-	// Forward
-	if (App->CL_Ogre->Ogre3D_Listener->Wheel < 0) // Mouse Wheel Forward
-	{
-		App->CL_Ogre->Ogre3D_Listener->mTranslateVector.z = -App->CL_Ogre->Ogre3D_Listener->mMoveScale * 25;
-	}
-	if (GetAsyncKeyState(87) < 0) // W Key
-	{
-		App->CL_Ogre->Ogre3D_Listener->mTranslateVector.z = -App->CL_Ogre->Ogre3D_Listener->mMoveScale;
-	}
+	// Update camera position if panning occurred
+	App->CL_Ogre->Ogre3D_Listener->mCamNode->setPosition(oldPos);
 
-	// Back
-	if (App->CL_Ogre->Ogre3D_Listener->Wheel > 0) // Mouse Wheel Back
+	// Forward and Backward movement
+	if (GetAsyncKeyState(87) < 0 || App->CL_Ogre->Ogre3D_Listener->Wheel < 0) // W Key or Mouse Wheel Forward
 	{
-		App->CL_Ogre->Ogre3D_Listener->mTranslateVector.z = App->CL_Ogre->Ogre3D_Listener->mMoveScale * 25;
+		App->CL_Ogre->Ogre3D_Listener->mTranslateVector.z = -App->CL_Ogre->Ogre3D_Listener->mMoveScale * (GetAsyncKeyState(87) < 0 ? 1 : 25);
 	}
-	if (GetAsyncKeyState(83) < 0) // S Key	
+	else if (GetAsyncKeyState(83) < 0 || App->CL_Ogre->Ogre3D_Listener->Wheel > 0) // S Key or Mouse Wheel Back
 	{
-		App->CL_Ogre->Ogre3D_Listener->mTranslateVector.z = App->CL_Ogre->Ogre3D_Listener->mMoveScale;
+		App->CL_Ogre->Ogre3D_Listener->mTranslateVector.z = App->CL_Ogre->Ogre3D_Listener->mMoveScale * (GetAsyncKeyState(83) < 0 ? 1 : 25);
 	}
 
 	// Pan Left
 	if (GetAsyncKeyState(65) < 0) // A Key
 	{
-		App->CL_Ogre->Ogre3D_Listener->mTranslateVector.x = App->CL_Ogre->Ogre3D_Listener->mMoveScale;
-	}
-
-	// Pan Right
-	if (GetAsyncKeyState(68) < 0)  // D Key
-	{
 		App->CL_Ogre->Ogre3D_Listener->mTranslateVector.x = -App->CL_Ogre->Ogre3D_Listener->mMoveScale;
 	}
 
-	//------------------------------------------------ Escape 
-	if (GetAsyncKeyState(VK_ESCAPE) < 0 && App->CL_Editor_Control->flag_PreviewMode_Active == 1) // Back to Editor mode;
+	// Pan Right
+	if (GetAsyncKeyState(68) < 0) // D Key
 	{
-		App->CL_ImGui->flag_Show_Preview_Options = 1;
-		//App->CL_Editor_Preview->Editor_Mode();
+		App->CL_Ogre->Ogre3D_Listener->mTranslateVector.x = App->CL_Ogre->Ogre3D_Listener->mMoveScale;
+	}
+
+	if (GetAsyncKeyState(VK_ESCAPE) < 0 && App->CL_Editor_Control->flag_PreviewMode_Active == 1) 
+	{
+	    App->CL_ImGui->flag_Show_Preview_Options = 1;
 	}
 }
+
 
 // *************************************************************************
 // *		Keyboard_Mode_Free:- Terry and Hazel Flanigan 2025			   *

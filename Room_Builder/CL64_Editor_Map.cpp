@@ -333,7 +333,6 @@ void CL64_Editor_Map::Resize_Windows(HWND hDlg, int newWidth, int newDepth)
 // ************************************************************************
 void CL64_Editor_Map::ResizeOgreWindow()
 {
-	return;
 	RECT clientRect;
 	GetClientRect(Bottom_Ogre_Right_Hwnd, &clientRect);
 
@@ -822,23 +821,20 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Top_Left_Window(HWND hDlg, UINT message, 
 		return 1;
 	}
 
+	// Left Mouse Down
 	case WM_LBUTTONDOWN:
 	{
 		POINT		RealCursorPosition;
 		GetCursorPos(&RealCursorPosition);
 		ScreenToClient(hDlg, &RealCursorPosition);
 
+		App->CL_Editor_Map->Current_View = App->CL_Editor_Map->VCam[V_TL];
+
 		if (App->CL_Editor_Map->Selected_Window != Enums::Selected_Map_View_TL)
 		{
-			App->CL_Editor_Map->Selected_Window = Enums::Selected_Map_View_TL;
-			RedrawWindow(App->CL_Editor_Map->Top_Left_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-			RedrawWindow(App->CL_Editor_Map->Top_Right_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-			RedrawWindow(App->CL_Editor_Map->Bottom_Left_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-			RedrawWindow(App->CL_Editor_Map->Bottom_Ogre_Right_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			App->CL_Editor_Map->Set_Selected_View(Enums::Selected_Map_View_TL);
 		}
 
-		App->CL_Editor_Map->Current_View = App->CL_Editor_Map->VCam[V_TL];
-		
 		App->CL_Editor_Map->flag_Right_Button_Down = 0;
 		App->CL_Editor_Map->flag_Left_Button_Down = 1;
 
@@ -847,6 +843,7 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Top_Left_Window(HWND hDlg, UINT message, 
 		return 1;
 	}
 
+	// Left Mouse Up
 	case WM_LBUTTONUP:
 	{
 		POINT		RealCursorPosition;
@@ -863,9 +860,15 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Top_Left_Window(HWND hDlg, UINT message, 
 		return 1;
 	}
 
+	// Right Mouse Down
 	case WM_RBUTTONDOWN:
 	{
 		App->CL_Editor_Map->Current_View = App->CL_Editor_Map->VCam[V_TL];
+
+		if (App->CL_Editor_Map->Selected_Window != Enums::Selected_Map_View_TL)
+		{
+			App->CL_Editor_Map->Set_Selected_View(Enums::Selected_Map_View_TL);
+		}
 
 		if (GetAsyncKeyState(VK_CONTROL) < 0)
 		{
@@ -875,13 +878,13 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Top_Left_Window(HWND hDlg, UINT message, 
 			App->CL_Editor_Map->flag_Right_Button_Down = 1;
 			App->CL_Editor_Map->flag_Left_Button_Down = 0;
 
-			App->CL_Editor_Map->Current_View = App->CL_Editor_Map->VCam[V_TL];
 			App->CUR = SetCursor(NULL);
 		}
 		
 		return 1;
 	}
 
+	// Right Mouse Up
 	case WM_RBUTTONUP:
 	{
 		if (GetAsyncKeyState(VK_CONTROL) < 0)
@@ -1023,31 +1026,29 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Top_Right_Window(HWND hDlg, UINT message,
 		return 1;
 	}
 
+	// Left Button Down
 	case WM_LBUTTONDOWN:
 	{
 		POINT		RealCursorPosition;
 		GetCursorPos(&RealCursorPosition);
 		ScreenToClient(hDlg, &RealCursorPosition);
 
+		App->CL_Editor_Map->Current_View = App->CL_Editor_Map->VCam[V_TR];
+
 		if (App->CL_Editor_Map->Selected_Window != Enums::Selected_Map_View_TR)
 		{
-			App->CL_Editor_Map->Selected_Window = Enums::Selected_Map_View_TR;
-			RedrawWindow(App->CL_Editor_Map->Top_Left_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-			RedrawWindow(App->CL_Editor_Map->Top_Right_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-			RedrawWindow(App->CL_Editor_Map->Bottom_Left_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-			RedrawWindow(App->CL_Editor_Map->Bottom_Ogre_Right_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			App->CL_Editor_Map->Set_Selected_View(Enums::Selected_Map_View_TR);
 		}
 
 		App->CL_Editor_Map->flag_Right_Button_Down = 0;
 		App->CL_Editor_Map->flag_Left_Button_Down = 1;
 
-		App->CL_Editor_Map->Current_View = App->CL_Editor_Map->VCam[V_TR];
-		
 		App->CL_Editor_Map->On_Left_Button_Down(RealCursorPosition, hDlg);
 
 		return 1;
 	}
 
+	// Left Button Up
 	case WM_LBUTTONUP:
 	{
 		POINT		RealCursorPosition;
@@ -1064,8 +1065,16 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Top_Right_Window(HWND hDlg, UINT message,
 		return 1;
 	}
 
+	// Right Button Down
 	case WM_RBUTTONDOWN:
 	{
+		App->CL_Editor_Map->Current_View = App->CL_Editor_Map->VCam[V_TR];
+
+		if (App->CL_Editor_Map->Selected_Window != Enums::Selected_Map_View_TR)
+		{
+			App->CL_Editor_Map->Set_Selected_View(Enums::Selected_Map_View_TR);
+		}
+
 		if (GetAsyncKeyState(VK_CONTROL) < 0)
 		{
 			GetCursorPos(&App->CL_Editor_Map->mStartPoint);
@@ -1074,13 +1083,13 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Top_Right_Window(HWND hDlg, UINT message,
 			App->CL_Editor_Map->flag_Right_Button_Down = 1;
 			App->CL_Editor_Map->flag_Left_Button_Down = 0;
 
-			App->CL_Editor_Map->Current_View = App->CL_Editor_Map->VCam[V_TR];
 			App->CUR = SetCursor(NULL);
 		}
 	
 		return 1;
 	}
 
+	// Right Button Up
 	case WM_RBUTTONUP:
 	{
 
@@ -1096,6 +1105,7 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Top_Right_Window(HWND hDlg, UINT message,
 			App->CL_Editor_Map->Current_View = App->CL_Editor_Map->VCam[V_TR];
 			App->CL_Editor_Map->Context_Menu(hDlg);
 		}
+
 		return 1;
 	}
 
@@ -1222,31 +1232,29 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Bottom_Left_Window(HWND hDlg, UINT messag
 		return 1;
 	}
 
+	// Left Mouse Down
 	case WM_LBUTTONDOWN:
 	{
 		POINT		RealCursorPosition;
 		GetCursorPos(&RealCursorPosition);
 		ScreenToClient(hDlg, &RealCursorPosition);
 
+		App->CL_Editor_Map->Current_View = App->CL_Editor_Map->VCam[V_BL];
+
 		if (App->CL_Editor_Map->Selected_Window != Enums::Selected_Map_View_BL)
 		{
-			App->CL_Editor_Map->Selected_Window = Enums::Selected_Map_View_BL;
-			RedrawWindow(App->CL_Editor_Map->Top_Left_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-			RedrawWindow(App->CL_Editor_Map->Top_Right_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-			RedrawWindow(App->CL_Editor_Map->Bottom_Left_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-			RedrawWindow(App->CL_Editor_Map->Bottom_Ogre_Right_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			App->CL_Editor_Map->Set_Selected_View(Enums::Selected_Map_View_BL);
 		}
 
 		App->CL_Editor_Map->flag_Right_Button_Down = 0;
 		App->CL_Editor_Map->flag_Left_Button_Down = 1;
-
-		App->CL_Editor_Map->Current_View = App->CL_Editor_Map->VCam[V_BL];
 
 		App->CL_Editor_Map->On_Left_Button_Down(RealCursorPosition, hDlg);
 
 		return 1;
 	}
 
+	// Left Mouse Up
 	case WM_LBUTTONUP:
 	{
 		POINT		RealCursorPosition;
@@ -1263,8 +1271,16 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Bottom_Left_Window(HWND hDlg, UINT messag
 		return 1;
 	}
 
+	// Right Mouse Down
 	case WM_RBUTTONDOWN:
 	{
+		App->CL_Editor_Map->Current_View = App->CL_Editor_Map->VCam[V_BL];
+
+		if (App->CL_Editor_Map->Selected_Window != Enums::Selected_Map_View_BL)
+		{
+			App->CL_Editor_Map->Set_Selected_View(Enums::Selected_Map_View_BL);
+		}
+
 		if (GetAsyncKeyState(VK_CONTROL) < 0)
 		{
 			GetCursorPos(&App->CL_Editor_Map->mStartPoint);
@@ -1273,14 +1289,13 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Bottom_Left_Window(HWND hDlg, UINT messag
 			App->CL_Editor_Map->flag_Left_Button_Down = 0;
 			App->CL_Editor_Map->flag_Right_Button_Down = 1;
 
-			App->CL_Editor_Map->Current_View = App->CL_Editor_Map->VCam[V_BL];
-
 			App->CUR = SetCursor(NULL);
 		}
 		
 		return 1;
 	}
 
+	// Right Mouse up
 	case WM_RBUTTONUP:
 	{
 		if (GetAsyncKeyState(VK_CONTROL) < 0)
@@ -1360,17 +1375,26 @@ LRESULT CALLBACK CL64_Editor_Map::ViewerMain_Proc(HWND hDlg, UINT message, WPARA
 		return FALSE;
 	}
 
+	// Left Mouse Down
 	case WM_LBUTTONDOWN:
 	{
+		App->CL_Editor_Map->Current_View = App->CL_Editor_Map->VCam[V_Ogre];
+
 		if (App->CL_Editor_Map->Selected_Window != Enums::Selected_Map_View_3D)
 		{
-			App->CL_Editor_Map->Selected_Window = Enums::Selected_Map_View_3D;
-			RedrawWindow(App->CL_Editor_Map->Top_Left_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-			RedrawWindow(App->CL_Editor_Map->Top_Right_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-			RedrawWindow(App->CL_Editor_Map->Bottom_Left_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-			RedrawWindow(App->CL_Editor_Map->Bottom_Ogre_Right_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			App->CL_Editor_Map->Set_Selected_View(Enums::Selected_Map_View_3D);
 		}
+	}
 
+	// Right Mouse Down
+	case WM_RBUTTONDOWN:
+	{
+		App->CL_Editor_Map->Current_View = App->CL_Editor_Map->VCam[V_Ogre];
+
+		if (App->CL_Editor_Map->Selected_Window != Enums::Selected_Map_View_3D)
+		{
+			App->CL_Editor_Map->Set_Selected_View(Enums::Selected_Map_View_3D);
+		}
 		return 1;
 	}
 
@@ -1456,16 +1480,14 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Ogre_BR(HWND hDlg, UINT message, WPARAM w
 		break;
 	}
 
-	// Left Mouse Button
+	// Left Mouse Down
 	case WM_LBUTTONDOWN:
 	{
+		App->CL_Editor_Map->Current_View = App->CL_Editor_Map->VCam[V_Ogre];
+
 		if (App->CL_Editor_Map->Selected_Window != Enums::Selected_Map_View_3D)
 		{
-			App->CL_Editor_Map->Selected_Window = Enums::Selected_Map_View_3D;
-			RedrawWindow(App->CL_Editor_Map->Top_Left_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-			RedrawWindow(App->CL_Editor_Map->Top_Right_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-			RedrawWindow(App->CL_Editor_Map->Bottom_Left_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-			RedrawWindow(App->CL_Editor_Map->Bottom_Ogre_Right_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			App->CL_Editor_Map->Set_Selected_View(Enums::Selected_Map_View_3D);
 		}
 
 		ImGuiIO& io = ImGui::GetIO();
@@ -1505,6 +1527,7 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Ogre_BR(HWND hDlg, UINT message, WPARAM w
 		return 1;
 	}
 
+	// Left Mouse Up
 	case WM_LBUTTONUP:
 	{
 		ImGuiIO& io = ImGui::GetIO();
@@ -1539,9 +1562,16 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Ogre_BR(HWND hDlg, UINT message, WPARAM w
 		return 1;
 	}
 
-	// Right Mouse Button
+	// Right Mouse Down
 	case WM_RBUTTONDOWN:
 	{
+		App->CL_Editor_Map->Current_View = App->CL_Editor_Map->VCam[V_Ogre];
+
+		if (App->CL_Editor_Map->Selected_Window != Enums::Selected_Map_View_3D)
+		{
+			App->CL_Editor_Map->Set_Selected_View(Enums::Selected_Map_View_3D);
+		}
+
 		if (App->flag_OgreStarted == 1)
 		{
 			if (App->flag_Block_Mouse_Buttons == 0)
@@ -1571,6 +1601,7 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Ogre_BR(HWND hDlg, UINT message, WPARAM w
 		return 1;
 	}
 
+	// Right Mouse Up
 	case WM_RBUTTONUP:
 	{
 		if (App->flag_OgreStarted == 1)
@@ -1626,6 +1657,18 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Ogre_BR(HWND hDlg, UINT message, WPARAM w
 	}
 	
 	return FALSE;
+}
+
+// *************************************************************************
+// *	  		Set_Selected_View:- Terry and Hazel Flanigan 2025		   *
+// *************************************************************************
+void CL64_Editor_Map::Set_Selected_View(int Selected_View)
+{
+	App->CL_Editor_Map->Selected_Window = Selected_View;
+	RedrawWindow(App->CL_Editor_Map->Top_Left_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+	RedrawWindow(App->CL_Editor_Map->Top_Right_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+	RedrawWindow(App->CL_Editor_Map->Bottom_Left_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+	RedrawWindow(App->CL_Editor_Map->Bottom_Ogre_Right_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 }
 
 // *************************************************************************

@@ -113,6 +113,7 @@ private:
 	static LRESULT CALLBACK ViewerMain_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	void Set_Views_Defaults(int Index,Ogre::int32 View, const char* Name);
+	void Set_Selected_View(int Selected_View);
 	void Create_Top_Left_Window();
 	void Create_Top_Right_Window();
 	void Create_Bottom_Left_Window();
