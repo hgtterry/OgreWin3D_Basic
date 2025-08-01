@@ -1664,11 +1664,11 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Ogre_BR(HWND hDlg, UINT message, WPARAM w
 // *************************************************************************
 void CL64_Editor_Map::Set_Selected_View(int Selected_View)
 {
-	App->CL_Editor_Map->Selected_Window = Selected_View;
-	RedrawWindow(App->CL_Editor_Map->Top_Left_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-	RedrawWindow(App->CL_Editor_Map->Top_Right_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-	RedrawWindow(App->CL_Editor_Map->Bottom_Left_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-	RedrawWindow(App->CL_Editor_Map->Bottom_Ogre_Right_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+	Selected_Window = Selected_View;
+	RedrawWindow(Top_Left_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+	RedrawWindow(Top_Right_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+	RedrawWindow(Bottom_Left_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+	RedrawWindow(Bottom_Ogre_Right_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 }
 
 // *************************************************************************

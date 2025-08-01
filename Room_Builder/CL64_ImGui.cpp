@@ -28,13 +28,13 @@ THE SOFTWARE.
 
 CL64_ImGui::CL64_ImGui()
 {
-	flag_Imgui_Initialized = 0;
+	font0 = NULL;
+	font1 = NULL;
+	font2 = NULL;
+	font3 = NULL;
+	fontDroid = NULL;
 
-	font0 = 0;
-	font1 = 0;
-	font2 = 0;
-	font3 = 0;
-	fontDroid = 0;
+	flag_Imgui_Initialized = false;
 
 	PosX = 500;
 	PosY = 500;
@@ -47,14 +47,14 @@ CL64_ImGui::CL64_ImGui()
 	Player_Data_PosX = 10;
 	Player_Data_PosY = 10;
 
-	flag_Show_FPS = 1;
-	flag_StartPos = 0;
+	flag_Show_FPS = true;
+	flag_StartPos = false;
 
-	flag_Show_Paths = 0;
-	flag_Show_Render_Reports = 0;
-	flag_Show_Press_Excape = 0;
-	flag_Show_Preview_Options = 0;
-	flag_Show_App_Stats = 0;
+	flag_Show_Paths = false;
+	flag_Show_Render_Reports = false;
+	flag_Show_Press_Excape = false;
+	flag_Show_Preview_Options = false;
+	flag_Show_App_Stats = false;
 
 	guiFunctions.reserve(20);
 }
@@ -97,14 +97,13 @@ void CL64_ImGui::Init_ImGui(void)
 				Ogre::ImGuiOverlay::NewFrame();
 			}
 
-			flag_Imgui_Initialized = 1;
+			flag_Imgui_Initialized = true;
 		}
 		else
 		{
 			App->Say("Could Not Initialised Imgui");
 		}
 	}
-
 }
 
 // *************************************************************************
@@ -203,17 +202,17 @@ void CL64_ImGui::ImGui_Render_Loop(void)
 	};
 
 	// SBC_Gui_Dialogs
-	if (App->CL_ImGui_Dialogs->flag_Show_Dialog_Float == 1)
+	if (App->CL_ImGui_Dialogs->flag_Show_Dialog_Float == true)
 	{
 		App->CL_ImGui_Dialogs->Dialog_Float();
 	}
 
-	if (App->CL_ImGui_Dialogs->flag_Show_Dialog_Float_Vec3 == 1)
+	if (App->CL_ImGui_Dialogs->flag_Show_Dialog_Float_Vec3 == true)
 	{
 		App->CL_ImGui_Dialogs->Dialog_Float_Vec3();
 	}
 
-	if (flag_Show_Player_Data == 1)
+	if (flag_Show_Player_Data == true)
 	{
 		Player_Data_GUI();
 	}
@@ -246,11 +245,11 @@ void CL64_ImGui::ImGui_FPS(void)
 	}
 	else
 	{
-		if (flag_StartPos == 0)
+		if (flag_StartPos == false)
 		{
 			ImGui::SetWindowPos("Ogre Data", ImVec2(500, 5));
 			ImGui::SetWindowSize(ImVec2(350, 90));
-			flag_StartPos = 1;
+			flag_StartPos = true;
 		}
 
 		ImGui::Spacing();
