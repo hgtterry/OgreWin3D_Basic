@@ -196,6 +196,20 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				return 1;
 			}
 
+            case ID_DEBUG_DEBUGIMGUI:
+            {
+                if (App->CL_ImGui->flag_Show_Listbox == true)
+                {
+                    App->CL_ImGui->flag_Show_Listbox = false;
+                }
+                else
+                {
+                    App->CL_ImGui->flag_Show_Listbox = true;
+                }
+
+                return 1;
+            }
+           
             case ID_DEBUG_QUICKLOADSCENEEDITOR:
             {
                 strcpy(App->CL_File->PathFileName_3dt, App->RB_Directory_FullPath);

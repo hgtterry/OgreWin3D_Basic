@@ -55,6 +55,7 @@ CL64_ImGui::CL64_ImGui()
 	flag_Show_Press_Excape = false;
 	flag_Show_Preview_Options = false;
 	flag_Show_App_Stats = false;
+	flag_Show_Listbox = false;
 
 	guiFunctions.reserve(20);
 }
@@ -215,6 +216,11 @@ void CL64_ImGui::ImGui_Render_Loop(void)
 	if (flag_Show_Player_Data == true)
 	{
 		Player_Data_GUI();
+	}
+
+	if (flag_Show_Listbox == true)
+	{
+		Listbox_ImGui();
 	}
 
 	App->CL_ImGui_Editor->ImGui_Render_Editor_Loop();
@@ -681,5 +687,58 @@ void CL64_ImGui::Player_Data_GUI(void)
 
 		ImGui::PopStyleColor();
 		ImGui::End();
+	}
+}
+
+// *************************************************************************
+// *				Listbox_ImGui:- Terry and Hazel Flanigan 2025		   *
+// *************************************************************************
+void CL64_ImGui::Listbox_ImGui(void)
+{
+	//ImGui::SetNextWindowPos(ImVec2(PosX, PosY));
+	ImGui::SetNextWindowSize(ImVec2(910, 360));
+	//ImGui::PushStyleColor(ImGuiCol_WindowBg, IM_COL32(239, 239, 239, 255));
+
+	if (!ImGui::Begin("ListBox1", &flag_Show_Listbox, ImGuiWindowFlags_NoSavedSettings
+		| ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoTitleBar))
+	{
+		ImGui::End();
+	}
+	else
+	{
+		if (ImGui::BeginListBox("##listbox2", ImVec2(-FLT_MIN, 5 * ImGui::GetTextLineHeightWithSpacing())))
+		{
+			//for (int n = 0; n < 30; n++)
+			{
+				ImGui::Text("Current View %s", App->CL_Editor_Map->Current_View->Name);
+				ImGui::Text("Selected Window %i", App->CL_Editor_Map->Selected_Window);
+			}
+
+			ImGui::EndListBox();
+		}
+
+		//if (ImGui::Button("Cancel"))
+		//{
+		//	//flag_Show_Listbox = false;
+		//}
+
+		/*if (flag_StartPos == false)
+		{
+			ImGui::SetWindowPos("Ogre Data", ImVec2(500, 5));
+			ImGui::SetWindowSize(ImVec2(350, 90));
+			flag_StartPos = true;
+		}
+
+		ImGui::Spacing();
+		ImGui::Text("FPS average %.0f", ImGui::GetIO().Framerate);
+
+		ImVec2 Size = ImGui::GetWindowSize();
+		PosX = ((float)App->CL_Ogre->mWindow->getViewport(0)->getActualWidth() / 2) - (Size.x / 2);
+		PosY = 10;*/
+
+
+		//ImGui::PopStyleColor();
+		ImGui::End();
+
 	}
 }

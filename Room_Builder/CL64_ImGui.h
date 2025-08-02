@@ -42,6 +42,7 @@ public:
 	bool flag_Show_App_Stats;
 	bool flag_Show_Player_Data;
 	bool flag_PlayerData_Start_Pos;
+	bool flag_Show_Listbox;
 
 	Ogre::Vector3 Vec_Debug;
 
@@ -59,6 +60,7 @@ private:
 
 	void App_Stats_GUI(void);
 	void Player_Data_GUI(void);
+	void Listbox_ImGui(void);
 
 	std::vector<std::pair<bool, std::function<void()>>> guiFunctions;
 
