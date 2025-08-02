@@ -33,6 +33,7 @@
 #  define OGRE_DEPRECATED_NO_EXPORT _OgrePrivate OGRE_DEPRECATED
 #endif
 
+/* NOLINTNEXTLINE(readability-avoid-unconditional-preprocessor-if) */
 #if 0 /* DEFINE_NO_DEPRECATED */
 #  ifndef OGREMAIN_NO_DEPRECATED
 #    define OGREMAIN_NO_DEPRECATED

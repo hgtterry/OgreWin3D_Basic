@@ -130,46 +130,39 @@ bool CL64_Ogre::Init_OgreCreateRoot(void)
 }
 
 // **************************************************************************
-// *			Load_Resources:- Terry and Hazel Flanigan 2024				*
+// *		Init_Load_Resources:- Terry and Hazel Flanigan 2025				*
 // **************************************************************************
-bool CL64_Ogre::Init_Load_Resources(void)
+bool CL64_Ogre::Init_Load_Resources()
 {
+	// Prepare resource file path
+	std::string resourceBasePath = App->RB_Directory_FullPath;
 
-	Ogre::String File;
-	char Copy[MAX_PATH];
+	// Convert backslashes to forward slashes for Ogre compatibility
+	ReverseBackSlash((LPSTR)resourceBasePath.c_str());
 
-	strcpy(Copy, App->RB_Directory_FullPath);
+	// Create the main resource group for the application
+	auto& resourceGroupManager = Ogre::ResourceGroupManager::getSingleton();
+	resourceGroupManager.createResourceGroup(App_Resource_Group);
 
-	ReverseBackSlash(Copy);
-	File = Return_Chr;
+	// Define resource locations
+	const std::vector<std::pair<std::string, std::string>> resourceLocations = {
+		{"Media/Core_Data/Sinbad.zip", "Zip"},
+		{"Media/Core_Data/SdkTrays.zip", "Zip"},
+		{"Media/Core_Data/GDCore.zip", "Zip"},
+		{"Media/Core_Data/Entitys.zip", "Zip"},
+		{"Media/Core_Data/Files", "FileSystem"},
+		{"Media/Core_Data/Files/New_Particles", "FileSystem"}
+	};
 
-	Ogre::ResourceGroupManager::getSingleton().createResourceGroup(App_Resource_Group);
+	// Add resource locations
+	for (const auto& location : resourceLocations) {
+		resourceGroupManager.addResourceLocation(location.first, location.second, App_Resource_Group);
+	}
 
-	////-------------------------------- Zip Files
-	Ogre::ResourceGroupManager::getSingleton().addResourceLocation("Media/Core_Data/Sinbad.zip", "Zip", App_Resource_Group);
-	Ogre::ResourceGroupManager::getSingleton().addResourceLocation("Media/Core_Data/SdkTrays.zip", "Zip", App_Resource_Group);
-	Ogre::ResourceGroupManager::getSingleton().addResourceLocation("Media/Core_Data/GDCore.zip", "Zip", App_Resource_Group);
-	Ogre::ResourceGroupManager::getSingleton().addResourceLocation("Media/Core_Data/Entitys.zip", "Zip", App_Resource_Group);
+	// Log resource setup for debugging
+	Log_Message_To_File((LPSTR)"SetUpResources");
 
-	Ogre::ResourceGroupManager::getSingleton().addResourceLocation("Media/Core_Data/Files", "FileSystem", App_Resource_Group);
-	Ogre::ResourceGroupManager::getSingleton().addResourceLocation("Media/Core_Data/Files/New_Particles", "FileSystem", App_Resource_Group);
-	/*if (flag_Use_RTSS == 1)
-	{
-		Ogre::ResourceGroupManager::getSingleton().addResourceLocation("Media/RTShaderLib",
-			"FileSystem", App_Resource_Group);
-		Ogre::ResourceGroupManager::getSingleton().addResourceLocation("Media/RTShaderLib/GLSL",
-			"FileSystem", App_Resource_Group);
-		Ogre::ResourceGroupManager::getSingleton().addResourceLocation("Media/RTShaderLib/GLSLES",
-			"FileSystem", App_Resource_Group);
-		Ogre::ResourceGroupManager::getSingleton().addResourceLocation("Media/RTShaderLib/HLSL",
-			"FileSystem", App_Resource_Group);
-		Ogre::ResourceGroupManager::getSingleton().addResourceLocation("Media/RTShaderLib/Cg",
-			"FileSystem", App_Resource_Group);
-	}*/
-
-	App->CL_Ogre->Log_Message_To_File((LPSTR)"SetUpResources");
-
-	return 1;
+	return true;
 }
 
 // *************************************************************************

@@ -33,6 +33,7 @@
 #  define OGREBITES_DEPRECATED_NO_EXPORT OGREBITES_NO_EXPORT OGREBITES_DEPRECATED
 #endif
 
+/* NOLINTNEXTLINE(readability-avoid-unconditional-preprocessor-if) */
 #if 0 /* DEFINE_NO_DEPRECATED */
 #  ifndef OGREBITES_NO_DEPRECATED
 #    define OGREBITES_NO_DEPRECATED

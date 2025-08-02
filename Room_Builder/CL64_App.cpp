@@ -154,7 +154,7 @@ CL64_App::CL64_App(void)
 	ViewGLhWnd = NULL;
 	ListPanel = NULL;
 
-	flag_Debug_App = 0;
+	flag_Debug_App = 1;
 	flag_OgreStarted = 0;
 	flag_Block_Mouse_Buttons = 0;
 

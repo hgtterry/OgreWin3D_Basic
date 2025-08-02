@@ -33,6 +33,7 @@
 #  define CODEC_STBI_DEPRECATED_NO_EXPORT CODEC_STBI_NO_EXPORT CODEC_STBI_DEPRECATED
 #endif
 
+/* NOLINTNEXTLINE(readability-avoid-unconditional-preprocessor-if) */
 #if 0 /* DEFINE_NO_DEPRECATED */
 #  ifndef CODEC_STBI_NO_DEPRECATED
 #    define CODEC_STBI_NO_DEPRECATED

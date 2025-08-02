@@ -37,7 +37,7 @@ namespace Ogre {
     class _OgreGLExport GLFBOMultiRenderTarget : public MultiRenderTarget, public GLRenderTarget
     {
     public:
-        GLFBOMultiRenderTarget(GLFBOManager *manager, const String &name);
+        GLFBOMultiRenderTarget(const String &name);
         ~GLFBOMultiRenderTarget();
 
         void getCustomAttribute( const String& name, void *pData ) override;
@@ -48,7 +48,6 @@ namespace Ogre {
 
         /// Override so we can attach the depth buffer to the FBO
         bool attachDepthBuffer( DepthBuffer *depthBuffer ) override;
-        void detachDepthBuffer() override;
         void _detachDepthBuffer() override;
     private:
         void bindSurfaceImpl(size_t attachment, RenderTexture *target) override;

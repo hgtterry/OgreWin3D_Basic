@@ -397,19 +397,19 @@ namespace Ogre {
 
         /** Internal method to notify camera of the visible faces in the last render.
         */
-        void _notifyRenderedFaces(unsigned int numfaces);
+        void _notifyRenderedFaces(unsigned int numfaces) { mVisFacesLastRender = numfaces; }
 
         /** Internal method to notify camera of the visible batches in the last render.
         */
-        void _notifyRenderedBatches(unsigned int numbatches);
+        void _notifyRenderedBatches(unsigned int numbatches) { mVisBatchesLastRender = numbatches; }
 
         /** Internal method to retrieve the number of visible faces in the last render.
         */
-        unsigned int _getNumRenderedFaces(void) const;
+        unsigned int _getNumRenderedFaces(void) const { return mVisFacesLastRender; }
 
         /** Internal method to retrieve the number of visible batches in the last render.
         */
-        unsigned int _getNumRenderedBatches(void) const;
+        unsigned int _getNumRenderedBatches(void) const { return mVisBatchesLastRender; }
 
         /** Gets the derived orientation of the camera, including any
             rotation inherited from a node attachment and reflection matrix. */
@@ -524,22 +524,14 @@ namespace Ogre {
         /** Internal method for OGRE to use for LOD calculations. */
         Real _getLodBiasInverse(void) const;
 
-        /** Sets the viewing window inside of viewport.
-
-            This method can be used to set a subset of the viewport as the rendering
-            target. 
-        @param left Relative to Viewport - 0 corresponds to left edge, 1 - to right edge (default - 0).
-        @param top Relative to Viewport - 0 corresponds to top edge, 1 - to bottom edge (default - 0).
-        @param right Relative to Viewport - 0 corresponds to left edge, 1 - to right edge (default - 1).
-        @param bottom Relative to Viewport - 0 corresponds to top edge, 1 - to bottom edge (default - 1).
-        */
-        virtual void setWindow (Real left, Real top, Real right, Real bottom);
-        /// Cancel view window.
-        virtual void resetWindow (void);
-        /// Returns if a viewport window is being used
-        virtual bool isWindowSet(void) const { return mWindowSet; }
-        /// Gets the window clip planes, only applicable if isWindowSet == true
-        const std::vector<Plane>& getWindowPlanes(void) const;
+        /// @deprecated use RenderSystem::setScissorTest instead
+        OGRE_DEPRECATED void setWindow (Real left, Real top, Real right, Real bottom);
+        /// @deprecated do not use
+        OGRE_DEPRECATED void resetWindow (void);
+        /// @deprecated do not use
+        OGRE_DEPRECATED bool isWindowSet(void) const { return mWindowSet; }
+        /// @deprecated do not use
+        OGRE_DEPRECATED const std::vector<Plane>& getWindowPlanes(void) const;
 
         Real getBoundingRadius(void) const override;
         

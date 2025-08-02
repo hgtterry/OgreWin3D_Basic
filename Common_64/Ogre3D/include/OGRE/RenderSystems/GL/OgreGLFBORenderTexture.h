@@ -44,7 +44,7 @@ namespace Ogre {
     class _OgreGLExport GLFBORenderTexture: public GLRenderTexture
     {
     public:
-        GLFBORenderTexture(GLFBOManager *manager, const String &name, const GLSurfaceDesc &target, bool writeGamma, uint fsaa);
+        GLFBORenderTexture(const String &name, const GLSurfaceDesc &target, bool writeGamma, uint fsaa);
 
         void getCustomAttribute(const String& name, void* pData) override;
 
@@ -53,7 +53,6 @@ namespace Ogre {
 
         /// Override so we can attach the depth buffer to the FBO
         bool attachDepthBuffer( DepthBuffer *depthBuffer ) override;
-        void detachDepthBuffer() override;
         void _detachDepthBuffer() override;
 
         GLContext* getContext() const override { return mFB.getContext(); }

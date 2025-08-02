@@ -42,7 +42,7 @@ namespace Ogre {
     class _OgreGLES2Export GLES2FBORenderTexture: public GLRenderTexture MANAGED_RESOURCE
     {
     public:
-        GLES2FBORenderTexture(GLES2FBOManager *manager, const String &name, const GLSurfaceDesc &target, bool writeGamma, uint fsaa);
+        GLES2FBORenderTexture(const String &name, const GLSurfaceDesc &target, bool writeGamma, uint fsaa);
         
         void getCustomAttribute(const String& name, void* pData) override;
 
@@ -51,7 +51,6 @@ namespace Ogre {
 
         /// Override so we can attach the depth buffer to the FBO
         bool attachDepthBuffer( DepthBuffer *depthBuffer ) override;
-        void detachDepthBuffer() override;
         void _detachDepthBuffer() override;
 
         GLContext* getContext() const override { return mFB.getContext(); }
