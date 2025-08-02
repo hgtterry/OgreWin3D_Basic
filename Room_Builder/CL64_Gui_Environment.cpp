@@ -506,7 +506,7 @@ void CL64_Gui_Environment::Environ_PropertyEditor()
 		}
 	}
 
-	
+	ImGui::PopStyleColor();
 	ImGui::End();
 }
 

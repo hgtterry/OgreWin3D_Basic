@@ -7,7 +7,8 @@ enum ViewTypes
 	VIEWWIRE = 4,
 	VIEWTOP = 8,
 	VIEWFRONT = 16,
-	VIEWSIDE = 32
+	VIEWSIDE = 32,
+	VIEWOGRE = 64
 };
 
 typedef struct PlaneTag

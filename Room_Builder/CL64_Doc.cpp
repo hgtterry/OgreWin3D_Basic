@@ -350,9 +350,13 @@ void CL64_Doc::UpdateAllViews(int Update_Mode)
 {
     if (Update_Mode == Enums::UpdateViews_Grids)
     {
+        ViewVars* Save_View = App->CL_Editor_Map->Current_View;
+
         RedrawWindow(App->CL_Editor_Map->Top_Left_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
         RedrawWindow(App->CL_Editor_Map->Top_Right_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
         RedrawWindow(App->CL_Editor_Map->Bottom_Left_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+        App->CL_Editor_Map->Current_View = Save_View;
     }
 
     if (Update_Mode == Enums::UpdateViews_3D)

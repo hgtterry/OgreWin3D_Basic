@@ -717,10 +717,10 @@ void CL64_ImGui::Listbox_ImGui(void)
 			ImGui::EndListBox();
 		}
 
-		//if (ImGui::Button("Cancel"))
-		//{
-		//	//flag_Show_Listbox = false;
-		//}
+		if (ImGui::Button("Close"))
+		{
+			flag_Show_Listbox = false;
+		}
 
 		/*if (flag_StartPos == false)
 		{

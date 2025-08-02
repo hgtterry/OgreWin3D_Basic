@@ -720,7 +720,7 @@ void CL64_Editor_Map::Save_Splitter_Width_Depth()
 void CL64_Editor_Map::Create_Top_Left_Window()
 {
 	VCam[V_TL] = new ViewVars;
-	Set_Views_Defaults(V_TL, VIEWTOP, "TLV");
+	Set_Views_Defaults(V_TL, VIEWTOP, "Top_Left");
 
 	Top_Left_Window_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MAP_TOP_LEFT, Main_View_Dlg_Hwnd, (DLGPROC)Proc_Top_Left_Window);
 	
@@ -815,7 +815,6 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Top_Left_Window(HWND hDlg, UINT message, 
 		dx = (RealCursorPosition.x);
 		dy = (RealCursorPosition.y);
 
-		App->CL_Editor_Map->Current_View = App->CL_Editor_Map->VCam[V_TL];
 		App->CL_Editor_Map->On_Mouse_Move(RealCursorPosition,hDlg);
 		
 		return 1;
@@ -922,7 +921,7 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Top_Left_Window(HWND hDlg, UINT message, 
 void CL64_Editor_Map::Create_Top_Right_Window()
 {
 	VCam[V_TR] = new ViewVars;
-	Set_Views_Defaults(V_TR, VIEWSIDE, "V_TR");
+	Set_Views_Defaults(V_TR, VIEWSIDE, "Top_Right");
 
 	Top_Right_Window_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MAP_TOP_RIGHT, Main_View_Dlg_Hwnd, (DLGPROC)Proc_Top_Right_Window);
 
@@ -1020,7 +1019,6 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Top_Right_Window(HWND hDlg, UINT message,
 		dx = (RealCursorPosition.x);
 		dy = (RealCursorPosition.y);
 
-		App->CL_Editor_Map->Current_View = App->CL_Editor_Map->VCam[V_TR];
 		App->CL_Editor_Map->On_Mouse_Move(RealCursorPosition, hDlg);
 
 		return 1;
@@ -1128,7 +1126,7 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Top_Right_Window(HWND hDlg, UINT message,
 void CL64_Editor_Map::Create_Bottom_Left_Window()
 {
 	VCam[V_BL] = new ViewVars;
-	Set_Views_Defaults(V_BL, VIEWFRONT, "BLV");
+	Set_Views_Defaults(V_BL, VIEWFRONT, "Bottom_Left");
 
 	Bottom_Left_Window_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MAP_BOTTOM_LEFT, Main_View_Dlg_Hwnd, (DLGPROC)Proc_Bottom_Left_Window);
 
@@ -1226,7 +1224,6 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Bottom_Left_Window(HWND hDlg, UINT messag
 		dx = (RealCursorPosition.x);
 		dy = (RealCursorPosition.y);
 
-		App->CL_Editor_Map->Current_View = App->CL_Editor_Map->VCam[V_BL];
 		App->CL_Editor_Map->On_Mouse_Move(RealCursorPosition, hDlg);
 
 		return 1;
@@ -1331,7 +1328,13 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Bottom_Left_Window(HWND hDlg, UINT messag
 // *************************************************************************
 void CL64_Editor_Map::Create_Ogre_Bottom_Right()
 {
+	VCam[V_Ogre] = new ViewVars;
+	Set_Views_Defaults(V_Ogre, VIEWOGRE, "Ogre_Window");
+
 	Bottom_Ogre_Right_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MAP_BOTTOM_RIGHT, Main_View_Dlg_Hwnd, (DLGPROC)ViewerMain_Proc);
+	
+	VCam[V_Ogre]->hDlg = Bottom_Ogre_Right_Hwnd;
+
 	App->CL_Ogre->RenderHwnd = App->ViewGLhWnd;
 }
 
@@ -1665,10 +1668,10 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Ogre_BR(HWND hDlg, UINT message, WPARAM w
 void CL64_Editor_Map::Set_Selected_View(int Selected_View)
 {
 	Selected_Window = Selected_View;
-	RedrawWindow(Top_Left_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-	RedrawWindow(Top_Right_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-	RedrawWindow(Bottom_Left_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-	RedrawWindow(Bottom_Ogre_Right_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+	RedrawWindow(Top_Left_Banner_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+	RedrawWindow(Top_Right_Banner_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+	RedrawWindow(Bottom_Left_Banner_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+	RedrawWindow(Bottom_Ogre_Banner, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 }
 
 // *************************************************************************
