@@ -37,7 +37,10 @@ THE SOFTWARE.
 #include "CL64_Brush.h"
 #include "CL64_FaceList.h"
 #include "CL64_Face.h"
-#include "CL64_BrushTemplate.h"
+
+#include "BrushTemplate.h"
+//#include "CL64_BrushTemplate.h"
+
 #include "CL64_SelBrushList.h"
 #include "CL64_Array.h"
 #include "CL64_SelFaceList.h"
@@ -124,7 +127,10 @@ public:
 	CL64_Brush*					CL_Brush;
 	CL64_FaceList*				CL_FaceList;
 	CL64_Face*					CL_Face;
-	CL64_BrushTemplate*			CL_BrushTemplate;
+
+	// Libraries
+	BrushTemplate*				CL_X_BrushTemplate;
+	
 	CL64_SelBrushList*			CL_SelBrushList;
 	CL64_Array*					CL_Array;
 	CL64_SelFaceList*			CL_SelFaceList;

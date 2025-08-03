@@ -24,7 +24,7 @@ THE SOFTWARE.
 
 #pragma once
 
-#include "CL64_BrushTemplate.h"
+#include "BrushTemplate.h"
 #include "CL64_WadFile.h"
 
 typedef struct tag_Level Level;

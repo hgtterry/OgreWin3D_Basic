@@ -510,7 +510,7 @@ void A_CreateCylDialog::CreateCylinder()
 
 	Brush *pCylinder;
 
-	pCylinder = App->CL_BrushTemplate->BrushTemplate_CreateCylinder (pCylinderTemplate);
+	pCylinder = App->CL_X_BrushTemplate->BrushTemplate_CreateCylinder (pCylinderTemplate);
 	if (pCylinder != NULL)
 	{
 		strcpy(App->CL_Doc->LastTemplateTypeName,CylinderName);

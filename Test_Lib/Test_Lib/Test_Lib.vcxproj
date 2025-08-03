@@ -147,6 +147,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="BrushTemplate.h" />
     <ClInclude Include="CreateArchDialog.h" />
     <ClInclude Include="CreateConeDialog.h" />
     <ClInclude Include="framework.h" />
@@ -154,6 +155,7 @@
     <ClInclude Include="CreateBoxDialog.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BrushTemplate.cpp" />
     <ClCompile Include="CreateArchDialog.cpp" />
     <ClCompile Include="CreateConeDialog.cpp" />
     <ClCompile Include="pch.cpp">

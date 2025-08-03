@@ -1,7 +1,7 @@
 /*
-Copyright (c) 2024 Inflanite_HGT W.T.Flanigan H.C.Flanigan
+Copyright (c) 2024 - 2025 Inflanite_HGT W.T.Flanigan H.C.Flanigan
 
-Room Builder
+OW3D_Mesh_Builder
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -24,7 +24,7 @@ THE SOFTWARE.
 
 #pragma once
 
-#include "CL64_Brush.h"
+//#include "CL64_Brush.h"
 
 typedef struct
 {
@@ -107,11 +107,11 @@ typedef struct
 	signed int	TCut;
 } BrushTemplate_Staircase;
 
-class CL64_BrushTemplate
+class BrushTemplate
 {
 public:
-	CL64_BrushTemplate(void);
-	~CL64_BrushTemplate(void);
+	BrushTemplate(void);
+	~BrushTemplate(void);
 
 	void BrushTemplate_ArchDefaults(BrushTemplate_Arch* pArchTemplate);
 	void BrushTemplate_BoxDefaults(BrushTemplate_Box* pBoxTemplate);
@@ -125,6 +125,5 @@ public:
 	Brush* BrushTemplate_CreateCone(const BrushTemplate_Cone* pTemplate);
 	Brush* BrushTemplate_CreateStaircase(const BrushTemplate_Staircase* pTemplate);
 	Brush* BrushTemplate_CreateArch(const BrushTemplate_Arch* pTemplate);
-
 };
 

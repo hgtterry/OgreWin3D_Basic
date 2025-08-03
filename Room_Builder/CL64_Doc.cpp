@@ -101,7 +101,7 @@ void CL64_Doc::Init_Doc()
    
 	pBoxTemplate = App->CL_Level->Level_GetBoxTemplate();
 
-	BTemplate = App->CL_BrushTemplate->BrushTemplate_CreateBox(pBoxTemplate);
+	BTemplate = App->CL_X_BrushTemplate->BrushTemplate_CreateBox(pBoxTemplate);
     
 	App->CL_Brush->Brush_Bound(BTemplate);
 	CurBrush = BTemplate;

@@ -1,7 +1,7 @@
 /*
-Copyright (c) 2024 Inflanite_HGT W.T.Flanigan H.C.Flanigan
+Copyright (c) 2024 - 2025 Inflanite_HGT W.T.Flanigan H.C.Flanigan
 
-Room Builder
+OW3D_Mesh_Builder
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -24,18 +24,18 @@ THE SOFTWARE.
 
 #include "pch.h"
 #include "CL64_App.h"
-#include "CL64_BrushTemplate.h"
+#include "BrushTemplate.h"
 #include "Structures.cpp"
 
-CL64_BrushTemplate::CL64_BrushTemplate(void)
+BrushTemplate::BrushTemplate(void)
 {
 }
 
-CL64_BrushTemplate::~CL64_BrushTemplate(void)
+BrushTemplate::~BrushTemplate(void)
 {
 }
 
-void CL64_BrushTemplate::BrushTemplate_ArchDefaults(BrushTemplate_Arch* pArchTemplate)
+void BrushTemplate::BrushTemplate_ArchDefaults(BrushTemplate_Arch* pArchTemplate)
 {
 	pArchTemplate->NumSlits = 3;
 	pArchTemplate->Thickness = 150;
@@ -55,7 +55,7 @@ void CL64_BrushTemplate::BrushTemplate_ArchDefaults(BrushTemplate_Arch* pArchTem
 	pArchTemplate->Steps = false;
 }
 
-void CL64_BrushTemplate::BrushTemplate_BoxDefaults(BrushTemplate_Box* pBoxTemplate)
+void BrushTemplate::BrushTemplate_BoxDefaults(BrushTemplate_Box* pBoxTemplate)
 {
 	pBoxTemplate->Solid = 1;		// hollow
 	pBoxTemplate->TCut = false;
@@ -67,7 +67,7 @@ void CL64_BrushTemplate::BrushTemplate_BoxDefaults(BrushTemplate_Box* pBoxTempla
 	pBoxTemplate->ZSizeTop = 512.0f;
 }
 
-void CL64_BrushTemplate::BrushTemplate_ConeDefaults(BrushTemplate_Cone* pConeTemplate)
+void BrushTemplate::BrushTemplate_ConeDefaults(BrushTemplate_Cone* pConeTemplate)
 {
 	pConeTemplate->Style = 0;
 	pConeTemplate->Width = 200;
@@ -77,7 +77,7 @@ void CL64_BrushTemplate::BrushTemplate_ConeDefaults(BrushTemplate_Cone* pConeTem
 	pConeTemplate->TCut = false;
 }
 
-void CL64_BrushTemplate::BrushTemplate_CylinderDefaults(BrushTemplate_Cylinder* pCylinderTemplate)
+void BrushTemplate::BrushTemplate_CylinderDefaults(BrushTemplate_Cylinder* pCylinderTemplate)
 {
 	pCylinderTemplate->BotXOffset = 0.0;
 	pCylinderTemplate->BotXSize = 128.0;
@@ -95,7 +95,7 @@ void CL64_BrushTemplate::BrushTemplate_CylinderDefaults(BrushTemplate_Cylinder* 
 	pCylinderTemplate->TCut = false;
 }
 
-void CL64_BrushTemplate::BrushTemplate_SpheroidDefaults(BrushTemplate_Spheroid* pSpheroidTemplate)
+void BrushTemplate::BrushTemplate_SpheroidDefaults(BrushTemplate_Spheroid* pSpheroidTemplate)
 {
 	pSpheroidTemplate->HorizontalBands = 4;
 	pSpheroidTemplate->VerticalBands = 8;
@@ -105,7 +105,7 @@ void CL64_BrushTemplate::BrushTemplate_SpheroidDefaults(BrushTemplate_Spheroid* 
 	pSpheroidTemplate->TCut = false;
 }
 
-void CL64_BrushTemplate::BrushTemplate_StaircaseDefaults(BrushTemplate_Staircase* pStaircaseTemplate)
+void BrushTemplate::BrushTemplate_StaircaseDefaults(BrushTemplate_Staircase* pStaircaseTemplate)
 {
 	pStaircaseTemplate->Height = 128.0;
 	pStaircaseTemplate->Length = 128.0;
@@ -119,7 +119,7 @@ void CL64_BrushTemplate::BrushTemplate_StaircaseDefaults(BrushTemplate_Staircase
 // *************************************************************************
 // *					BrushTemplate_CreateBox							   *
 // *************************************************************************
-Brush* CL64_BrushTemplate::BrushTemplate_CreateBox(const BrushTemplate_Box* pTemplate)
+Brush* BrushTemplate::BrushTemplate_CreateBox(const BrushTemplate_Box* pTemplate)
 {
 	T_Vec3	Verts[8];
 	T_Vec3	FaceVerts[4];
@@ -226,7 +226,7 @@ Brush* CL64_BrushTemplate::BrushTemplate_CreateBox(const BrushTemplate_Box* pTem
 		{
 			Brush_SetSubtract(b, pTemplate->TCut); // TODO hgtterry Problem
 			App->CL_Brush->Brush_SetSheet(b, pTemplate->TSheet);
-			
+
 		}
 		return	b;
 	}
@@ -275,7 +275,7 @@ Brush* CL64_BrushTemplate::BrushTemplate_CreateBox(const BrushTemplate_Box* pTem
 // *************************************************************************
 // *					BrushTemplate_CreateCylinder					   *
 // *************************************************************************
-Brush* CL64_BrushTemplate::BrushTemplate_CreateCylinder(const BrushTemplate_Cylinder* pTemplate)
+Brush* BrushTemplate::BrushTemplate_CreateCylinder(const BrushTemplate_Cylinder* pTemplate)
 {
 	double		CurrentXDiameter, CurrentZDiameter;
 	double		DeltaXDiameter, DeltaZDiameter;
@@ -474,7 +474,7 @@ Brush* CL64_BrushTemplate::BrushTemplate_CreateCylinder(const BrushTemplate_Cyli
 // *************************************************************************
 // *					BrushTemplate_CreateCone						   *
 // *************************************************************************
-Brush* CL64_BrushTemplate::BrushTemplate_CreateCone(const BrushTemplate_Cone* pTemplate)
+Brush* BrushTemplate::BrushTemplate_CreateCone(const BrushTemplate_Cone* pTemplate)
 {
 	int			index, BottomCount;
 	T_Vec3		StartPoint, CurPoint, OldPoint, OuterFocus;
@@ -615,7 +615,7 @@ Brush* CL64_BrushTemplate::BrushTemplate_CreateCone(const BrushTemplate_Cone* pT
 // *************************************************************************
 // *					BrushTemplate_CreateStaircase					   *
 // *************************************************************************
-Brush* CL64_BrushTemplate::BrushTemplate_CreateStaircase(const BrushTemplate_Staircase* pTemplate)
+Brush* BrushTemplate::BrushTemplate_CreateStaircase(const BrushTemplate_Staircase* pTemplate)
 {
 	int			i;
 	float		HalfWidth = (float)(pTemplate->Width / 2);
@@ -726,7 +726,7 @@ Brush* CL64_BrushTemplate::BrushTemplate_CreateStaircase(const BrushTemplate_Sta
 // *************************************************************************
 // *					BrushTemplate_CreateArch						   *
 // *************************************************************************
-Brush* CL64_BrushTemplate::BrushTemplate_CreateArch(const BrushTemplate_Arch* pTemplate)
+Brush* BrushTemplate::BrushTemplate_CreateArch(const BrushTemplate_Arch* pTemplate)
 {
 	Brush* b, * b2;
 	BrushList* MBList = App->CL_Brush->BrushList_Create();

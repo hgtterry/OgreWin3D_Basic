@@ -387,7 +387,7 @@ void A_CreateStaircaseDialog::CreateStaircase()
 
 	Brush *pStaircase;
 
-	pStaircase = App->CL_BrushTemplate->BrushTemplate_CreateStaircase (pStaircaseTemplate);
+	pStaircase = App->CL_X_BrushTemplate->BrushTemplate_CreateStaircase (pStaircaseTemplate);
 	if (pStaircase != NULL)
 	{
 		strcpy(App->CL_Doc->LastTemplateTypeName,StaircaseName);

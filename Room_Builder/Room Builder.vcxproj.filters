@@ -60,9 +60,6 @@
     <ClInclude Include="CL64_Face.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CL64_BrushTemplate.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="CL64_SelBrushList.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -291,9 +288,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CL64_Face.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CL64_BrushTemplate.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CL64_SelBrushList.cpp">

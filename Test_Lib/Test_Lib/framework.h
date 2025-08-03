@@ -31,6 +31,10 @@
 #include "OgreTextAreaOverlayElement.h"
 #include "irrKlang.h"
 
+#define GE_FALSE	(0)
+#define GE_TRUE		(1)
+#define	GE_PI		((float)3.14159265358979323846f)
+
 namespace Enums
 {
 	enum UpdateViews

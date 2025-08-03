@@ -104,12 +104,12 @@ Level* CL64_Level::Level_Create()
 			geVec3d_Set(&pInfo->CameraPos, 0.0f, 0.0f, 0.0f);
 		}*/
 
-		App->CL_BrushTemplate->BrushTemplate_ArchDefaults(&m_pLevel->ArchTemplate);
-		App->CL_BrushTemplate->BrushTemplate_BoxDefaults(&m_pLevel->BoxTemplate);
-		App->CL_BrushTemplate->BrushTemplate_ConeDefaults(&m_pLevel->ConeTemplate);
-		App->CL_BrushTemplate->BrushTemplate_CylinderDefaults(&m_pLevel->CylinderTemplate);
-		App->CL_BrushTemplate->BrushTemplate_SpheroidDefaults(&m_pLevel->SpheroidTemplate);
-		App->CL_BrushTemplate->BrushTemplate_StaircaseDefaults(&m_pLevel->StaircaseTemplate);
+		App->CL_X_BrushTemplate->BrushTemplate_ArchDefaults(&m_pLevel->ArchTemplate);
+		App->CL_X_BrushTemplate->BrushTemplate_BoxDefaults(&m_pLevel->BoxTemplate);
+		App->CL_X_BrushTemplate->BrushTemplate_ConeDefaults(&m_pLevel->ConeTemplate);
+		App->CL_X_BrushTemplate->BrushTemplate_CylinderDefaults(&m_pLevel->CylinderTemplate);
+		App->CL_X_BrushTemplate->BrushTemplate_SpheroidDefaults(&m_pLevel->SpheroidTemplate);
+		App->CL_X_BrushTemplate->BrushTemplate_StaircaseDefaults(&m_pLevel->StaircaseTemplate);
 
 		App->CL_Maths->Vector3_Clear(&m_pLevel->TemplatePos);
 

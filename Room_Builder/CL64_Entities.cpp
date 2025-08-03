@@ -101,7 +101,7 @@ void CL64_Entities::Create_Player_Brush()
 	pBoxTemplate->ZSizeBot = 8;
 	pBoxTemplate->ZSizeTop = 8;
 
-	Player_Brush = App->CL_BrushTemplate->BrushTemplate_CreateBox(pBoxTemplate);
+	Player_Brush = App->CL_X_BrushTemplate->BrushTemplate_CreateBox(pBoxTemplate);
 
 	App->CL_Brush->Brush_Bound(Player_Brush);
 
@@ -162,7 +162,7 @@ void CL64_Entities::Create_Entity_Brush(int Object_Index)
 	pBoxTemplate->ZSizeBot = size.z;
 	pBoxTemplate->ZSizeTop = size.z;
 
-	New_Brush = App->CL_BrushTemplate->BrushTemplate_CreateBox(pBoxTemplate);
+	New_Brush = App->CL_X_BrushTemplate->BrushTemplate_CreateBox(pBoxTemplate);
 
 	App->CL_Brush->Brush_Bound(New_Brush);
 
