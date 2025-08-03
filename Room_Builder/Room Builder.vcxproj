@@ -146,14 +146,13 @@
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <OutputFile>$(OutDir)OW3D_Mesh_Builder.exe</OutputFile>
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
-      <AdditionalDependencies>Test_Lib.lib;X_Lib_Maths.lib;comctl32.lib;OgreMain.lib;OgreOverlay.lib;OgreRTShaderSystem.lib;OgreBites.lib;BulletDynamics.lib;BulletCollision.lib;LinearMath.lib;opengl32.lib;glu32.lib;DevIL.lib;ILU.lib;ILUT.lib;irrKlang.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Templates_Lib.lib;X_Lib_Maths.lib;comctl32.lib;OgreMain.lib;OgreOverlay.lib;OgreRTShaderSystem.lib;OgreBites.lib;BulletDynamics.lib;BulletCollision.lib;LinearMath.lib;opengl32.lib;glu32.lib;DevIL.lib;ILU.lib;ILUT.lib;irrKlang.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\Common_64\OW3D;..\Common_64\Ogre3D\libs;..\Common_64\Bullet\lib;..\Common_64\Devil\lib\x64\Release;..\Common_64\irrKlang\Libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>LIBCMT.lib;libcpmt.lib</IgnoreSpecificDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="A_CreateArchDialog.h" />
-    <ClInclude Include="A_CreateBoxDialog.h" />
     <ClInclude Include="A_CreateConeDialog.h" />
     <ClInclude Include="A_CreateCylDialog.h" />
     <ClInclude Include="A_CreateStaircaseDialog.h" />
@@ -238,7 +237,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="A_CreateArchDialog.cpp" />
-    <ClCompile Include="A_CreateBoxDialog.cpp" />
     <ClCompile Include="A_CreateConeDialog.cpp" />
     <ClCompile Include="A_CreateCylDialog.cpp" />
     <ClCompile Include="A_CreateStaircaseDialog.cpp" />

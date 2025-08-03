@@ -92,7 +92,7 @@ CL64_App::CL64_App(void)
 	CL_Editor_Control =			nullptr;
 
 	// Templates Dialogs
-	CL_CreateBoxDialog =		nullptr;
+	CL_X_CreateBoxDialog =		nullptr;
 	CL_CreateCylDialog =		nullptr;
 	CL_CreateConeDialog =		nullptr;
 	CL_CreateStaircaseDialog =	nullptr;
@@ -105,8 +105,6 @@ CL64_App::CL64_App(void)
 	CL_Collision =				nullptr;
 	CL_Gizmos =					nullptr;
 	CL_MeshViewer =				nullptr;
-
-	CLLIB_CreateBoxDialog =		nullptr;
 
 	CUR = 0;
 	Menu_Map = 0;
@@ -239,7 +237,7 @@ void CL64_App::InitApp(void)
 	CL_Editor_Control =			new CL64_Editor_Control();
 	
 	// Templates Dialogs
-	CL_CreateBoxDialog =		new A_CreateBoxDialog();
+	CL_X_CreateBoxDialog =		new CreateBoxDialog();
 	CL_CreateCylDialog =		new A_CreateCylDialog();
 	CL_CreateConeDialog =		new A_CreateConeDialog();
 	CL_CreateStaircaseDialog =	new A_CreateStaircaseDialog();
@@ -253,8 +251,6 @@ void CL64_App::InitApp(void)
 	CL_Gizmos =					new CL64_Gizmos();
 	CL_Dimensions =				new CL64_Dimensions();
 	CL_MeshViewer =				new CL64_MeshViewer();
-
-	CLLIB_CreateBoxDialog =		new CreateBoxDialog();
 
 	Set_Brushes_Fonts();
 

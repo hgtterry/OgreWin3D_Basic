@@ -87,7 +87,7 @@ THE SOFTWARE.
 #include "CL64_Editor_Control.h"
 
 // Templates Dialogs
-#include "A_CreateBoxDialog.h"
+#include "CreateBoxDialog.h"
 #include "A_CreateCylDialog.h"
 #include "A_CreateConeDialog.h"
 #include "A_CreateStaircaseDialog.h"
@@ -103,16 +103,11 @@ THE SOFTWARE.
 #include "CL64_Props_Dialogs.h"
 #include "CL64_MeshViewer.h"
 
-#include "CreateBoxDialog.h"
-
 class CL64_App
 {
 public:
 	CL64_App(void);
 	~CL64_App(void);
-
-	CreateBoxDialog*			CLLIB_CreateBoxDialog;
-
 
 	CL64_Editor_Map*			CL_Editor_Map;
 	//CL64_Maths*					CL_Maths;
@@ -176,8 +171,8 @@ public:
 
 	CL64_Editor_Control*		CL_Editor_Control;
 
-	// Templates Dialogs
-	A_CreateBoxDialog*			CL_CreateBoxDialog;
+	// Templates Dialogs Libraries
+	CreateBoxDialog*			CL_X_CreateBoxDialog;
 	A_CreateCylDialog*			CL_CreateCylDialog;
 	A_CreateConeDialog*			CL_CreateConeDialog;
 	A_CreateStaircaseDialog*	CL_CreateStaircaseDialog;

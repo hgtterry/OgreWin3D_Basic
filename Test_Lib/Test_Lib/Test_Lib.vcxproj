@@ -24,6 +24,7 @@
     <ProjectGuid>{da784f3c-f0f7-499a-902c-a8b0dc20f07e}</ProjectGuid>
     <RootNamespace>TestLib</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.20348.0</WindowsTargetPlatformVersion>
+    <ProjectName>Templates_Lib</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
