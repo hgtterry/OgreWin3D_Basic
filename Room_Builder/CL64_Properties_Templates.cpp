@@ -227,7 +227,7 @@ LRESULT CALLBACK CL64_Properties_Templates::Proc_Templates(HWND hDlg, UINT messa
 		
 		if (LOWORD(wParam) == IDC_BRUSH_ARCH_PRIMITIVE)
 		{
-			App->CL_CreateArchDialog->Start_CreateArch_Dlg();
+			App->CL_X_CreateArchDialog->Start_CreateArch_Dlg();
 			return 1;
 		}
 		

@@ -182,7 +182,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			{ 
                // App->CL_Editor_Control->Set_Map_Editor_Select_Dlg();
 
-                App->CL_X_CreateBoxDialog->Start_CreateBox_Dlg();
+                App->CL_X_CreateArchDialog->Start_CreateArch_Dlg();
 
                 /*if (App->CL_ImGui_Editor->flag_Show_Visuals == true)
                 {

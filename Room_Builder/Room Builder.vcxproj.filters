@@ -171,9 +171,6 @@
     <ClInclude Include="CL64_Camera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="A_CreateArchDialog.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="CL64_Bullet_Debug.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -411,9 +408,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CL64_Camera.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="A_CreateArchDialog.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CL64_Bullet_Debug.cpp">
