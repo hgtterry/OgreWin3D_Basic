@@ -106,7 +106,7 @@ CL64_App::CL64_App(void)
 	CL_Gizmos =					nullptr;
 	CL_MeshViewer =				nullptr;
 
-	CL_Test_Lib =				nullptr;
+	CLLIB_CreateBoxDialog =		nullptr;
 
 	CUR = 0;
 	Menu_Map = 0;
@@ -254,8 +254,8 @@ void CL64_App::InitApp(void)
 	CL_Dimensions =				new CL64_Dimensions();
 	CL_MeshViewer =				new CL64_MeshViewer();
 
-	CL_Test_Lib =				new Test_Lib_X();
-	
+	CLLIB_CreateBoxDialog =		new CreateBoxDialog();
+
 	Set_Brushes_Fonts();
 
 	char Deskdir[MAX_PATH];

@@ -697,7 +697,6 @@ void CL64_ImGui::Player_Data_GUI(void)
 // *************************************************************************
 void CL64_ImGui::Listbox_ImGui(void)
 {
-	//ImGui::SetNextWindowPos(ImVec2(PosX, PosY));
 	ImGui::SetNextWindowSize(ImVec2(910, 360));
 	//ImGui::PushStyleColor(ImGuiCol_WindowBg, IM_COL32(239, 239, 239, 255));
 
@@ -724,11 +723,9 @@ void CL64_ImGui::Listbox_ImGui(void)
 
 			if (CB_Index == 1) // Ogre Data
 			{
-				float x = App->CL_Ogre->camNode->getPosition().x;
-				float y = App->CL_Ogre->camNode->getPosition().y;
-				float z = App->CL_Ogre->camNode->getPosition().z;
+				Ogre::Vector3 Pos = App->CL_Ogre->camNode->getPosition();
 
-				ImGui::Text("Camera Position XYZ  %f %f %f", x, y, z);
+				ImGui::Text("Camera Position XYZ  %f %f %f", Pos.x, Pos.y, Pos.z);
 				//ImGui::Text("Selected Window %i", App->CL_Editor_Map->Selected_Window);
 			}
 
@@ -767,21 +764,6 @@ void CL64_ImGui::Listbox_ImGui(void)
 			App->CL_Editor_Map->Resize_Windows(App->CL_Editor_Map->Main_View_Dlg_Hwnd, App->CL_Editor_Map->nleftWnd_width, App->CL_Editor_Map->nleftWnd_Depth);
 			flag_Show_Listbox = false;
 		}
-
-		/*if (flag_StartPos == false)
-		{
-			ImGui::SetWindowPos("Ogre Data", ImVec2(500, 5));
-			ImGui::SetWindowSize(ImVec2(350, 90));
-			flag_StartPos = true;
-		}
-
-		ImGui::Spacing();
-		ImGui::Text("FPS average %.0f", ImGui::GetIO().Framerate);
-
-		ImVec2 Size = ImGui::GetWindowSize();
-		PosX = ((float)App->CL_Ogre->mWindow->getViewport(0)->getActualWidth() / 2) - (Size.x / 2);
-		PosY = 10;*/
-
 
 		//ImGui::PopStyleColor();
 		ImGui::End();

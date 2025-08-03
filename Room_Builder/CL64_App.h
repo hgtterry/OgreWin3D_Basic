@@ -103,7 +103,7 @@ THE SOFTWARE.
 #include "CL64_Props_Dialogs.h"
 #include "CL64_MeshViewer.h"
 
-#include "Test_Lib_X.h"
+#include "CreateBoxDialog.h"
 
 class CL64_App
 {
@@ -111,7 +111,8 @@ public:
 	CL64_App(void);
 	~CL64_App(void);
 
-	Test_Lib_X*					CL_Test_Lib;
+	CreateBoxDialog*			CLLIB_CreateBoxDialog;
+
 
 	CL64_Editor_Map*			CL_Editor_Map;
 	//CL64_Maths*					CL_Maths;
