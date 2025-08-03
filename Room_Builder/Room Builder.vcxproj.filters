@@ -141,9 +141,6 @@
     <ClInclude Include="CL64_TXL_Editor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="A_CreateConeDialog.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="CL64_OGL_Listener.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -375,9 +372,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CL64_TXL_Editor.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="A_CreateConeDialog.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CL64_OGL_Listener.cpp">

@@ -215,7 +215,7 @@ LRESULT CALLBACK CL64_Properties_Templates::Proc_Templates(HWND hDlg, UINT messa
 		
 		if (LOWORD(wParam) == IDC_BRUSH_CONE_PRIMITIVE)
 		{
-			App->CL_CreateConeDialog->Start_CreateCone_Dlg();
+			App->CL_X_CreateConeDialog->Start_CreateCone_Dlg();
 			return 1;
 		}
 		
