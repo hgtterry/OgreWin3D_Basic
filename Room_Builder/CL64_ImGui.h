@@ -70,6 +70,8 @@ private:
 	ImFont* font3;
 	ImFont* fontDroid;
 
+	int CB_Index;
+
 	float PosX;
 	float PosY;
 

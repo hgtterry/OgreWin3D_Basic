@@ -34,6 +34,8 @@ CL64_ImGui::CL64_ImGui()
 	font3 = NULL;
 	fontDroid = NULL;
 
+	CB_Index = 0;
+
 	flag_Imgui_Initialized = false;
 
 	PosX = 500;
@@ -706,19 +708,63 @@ void CL64_ImGui::Listbox_ImGui(void)
 	}
 	else
 	{
-		if (ImGui::BeginListBox("##listbox2", ImVec2(-FLT_MIN, 5 * ImGui::GetTextLineHeightWithSpacing())))
+		static int item_current_idx = 0; // Here we store our selection data as an index.
+
+		if (ImGui::BeginListBox("##listbox2", ImVec2(-FLT_MIN, 10 * ImGui::GetTextLineHeightWithSpacing())))
 		{
-			//for (int n = 0; n < 30; n++)
+			if (CB_Index == 0) // Views Data
 			{
 				ImGui::Text("Current View %s", App->CL_Editor_Map->Current_View->Name);
 				ImGui::Text("Selected Window %i", App->CL_Editor_Map->Selected_Window);
+				ImGui::Text("Zoom %f", App->CL_Editor_Map->Current_View->ZoomFactor);
+				ImGui::Text("Width %f", App->CL_Editor_Map->Current_View->Width);
+				ImGui::Text("Height %f", App->CL_Editor_Map->Current_View->Height);
+				ImGui::Text("Cam Pos %f %f %f", App->CL_Editor_Map->Current_View->CamPos.x, App->CL_Editor_Map->Current_View->CamPos.y, App->CL_Editor_Map->Current_View->CamPos.z);
+			}
+
+			if (CB_Index == 1) // Ogre Data
+			{
+				float x = App->CL_Ogre->camNode->getPosition().x;
+				float y = App->CL_Ogre->camNode->getPosition().y;
+				float z = App->CL_Ogre->camNode->getPosition().z;
+
+				ImGui::Text("Camera Position XYZ  %f %f %f", x, y, z);
+				//ImGui::Text("Selected Window %i", App->CL_Editor_Map->Selected_Window);
 			}
 
 			ImGui::EndListBox();
 		}
 
+		static ImGuiComboFlags flags = 0;
+
+		const char* items[] = { "Views Data", "Ogre Data", "CCCC", "DDDD", "EEEE", "FFFF", "GGGG", "HHHH", "IIII", "JJJJ", "KKKK", "LLLLLLL", "MMMM", "OOOOOOO" };
+		const char* combo_preview_value = items[item_current_idx];  // Pass in the preview value visible before opening the combo (it could be anything)
+
+		if (ImGui::BeginCombo("Debug Category", combo_preview_value, flags))
+		{
+			for (int n = 0; n < IM_ARRAYSIZE(items); n++)
+			{
+				const bool is_selected = (item_current_idx == n);
+				if (ImGui::Selectable(items[n], is_selected))
+				{
+					item_current_idx = n;
+					CB_Index = item_current_idx;
+				}
+
+				// Set the initial focus when opening the combo (scrolling + keyboard navigation focus)
+				if (is_selected)
+				{
+					ImGui::SetItemDefaultFocus();
+				}
+			}
+
+			ImGui::EndCombo();
+		}
+
 		if (ImGui::Button("Close"))
 		{
+			App->CL_Editor_Map->Set_Splitter_WidthDepth(App->CL_Editor_Map->Copy_Spliter_Width, App->CL_Editor_Map->Copy_Spliter_Depth);
+			App->CL_Editor_Map->Resize_Windows(App->CL_Editor_Map->Main_View_Dlg_Hwnd, App->CL_Editor_Map->nleftWnd_width, App->CL_Editor_Map->nleftWnd_Depth);
 			flag_Show_Listbox = false;
 		}
 

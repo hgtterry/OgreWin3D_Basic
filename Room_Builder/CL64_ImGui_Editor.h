@@ -53,6 +53,5 @@ public:
 private:
 
 	void Selected_Button(bool IsSelected);
-
 };
 

@@ -204,6 +204,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 }
                 else
                 {
+                    App->CL_Editor_Map->Init_Views(Enums::Selected_Map_View_3D);
+                    App->CL_Editor_Map->Resize_Windows(App->CL_Editor_Map->Main_View_Dlg_Hwnd, App->CL_Editor_Map->nleftWnd_width, App->CL_Editor_Map->nleftWnd_Depth);
+
                     App->CL_ImGui->flag_Show_Listbox = true;
                 }
 
