@@ -262,6 +262,18 @@ void CL64_App::InitApp(void)
 
 	Set_Brushes_Fonts();
 
+	char path[MAX_PATH];
+
+	if (SUCCEEDED(SHGetFolderPathA(NULL, CSIDL_APPDATA, NULL, 0, path)))//KF_FLAG_CREATE
+	{
+		//App->Say(path);
+		strcpy(App->CL_Prefs->UserData_Folder, path);
+	}
+	else
+	{
+		App->Say("Can not access user folder");
+	}
+
 	char Deskdir[MAX_PATH];
 	wchar_t* d_path = new wchar_t[128];
 	if (SUCCEEDED(SHGetKnownFolderPath(FOLDERID_Desktop, 0, NULL, &d_path)))//KF_FLAG_CREATE

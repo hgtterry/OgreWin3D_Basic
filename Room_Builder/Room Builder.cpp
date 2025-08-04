@@ -45,7 +45,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     // Initialize application
     App->InitApp();
     App->CL_Prefs->Read_Preferences();
-
+    App->CL_Prefs->Init_History();
 
     UNREFERENCED_PARAMETER(hPrevInstance);
     UNREFERENCED_PARAMETER(lpCmdLine);
@@ -182,7 +182,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			{ 
                // App->CL_Editor_Control->Set_Map_Editor_Select_Dlg();
 
-                App->CL_X_CreateStaircaseDialog->Start_CreateStaircase_Dlg();
+                App->Say_Win(App->CL_Prefs->UserData_Folder);
 
                 /*if (App->CL_ImGui_Editor->flag_Show_Visuals == true)
                 {

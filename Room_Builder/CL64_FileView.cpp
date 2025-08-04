@@ -65,6 +65,7 @@ CL64_FileView::CL64_FileView()
 
 	FV_Players_Folder = nullptr;
 	FV_Areas_Folder = nullptr;
+	FV_Locations_Folder = nullptr;
 
 	flag_FileView_Active = 0;
 
@@ -491,7 +492,16 @@ void CL64_FileView::MoreFolders(void) // last folder level
 	tvinsert.item.iSelectedImage = 1;
 	FV_Lights_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
 
-	//--------------------------------------- Collectables
+	//--------------------------------------- Locations
+	tvinsert.hParent = FV_LevelFolder;
+	tvinsert.hInsertAfter = TVI_LAST;
+	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
+	tvinsert.item.pszText = (LPSTR)"Locations";
+	tvinsert.item.iImage = 0;
+	tvinsert.item.iSelectedImage = 1;
+	FV_Locations_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
+
+	//--------------------------------------- Counters
 	tvinsert.hParent = FV_LevelFolder;
 	tvinsert.hInsertAfter = TVI_LAST;
 	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;

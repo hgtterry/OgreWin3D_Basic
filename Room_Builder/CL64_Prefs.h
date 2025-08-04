@@ -32,15 +32,24 @@ public:
 	void Read_Preferences();
 	bool Write_Preferences();
 
+	void Init_History();
+
 	int Grid_Fine_Spacing;
 	int Grid_Spacing;
 
 	char Wad_File_Name[MAX_PATH];
+	char UserData_Folder[MAX_PATH];
 
 private:
 
 	FILE* WriteData;
 
+	bool Search_For_Folder(char* FolderPath);
+	bool Check_File_Exist(char* Full_Path);
+	void IniFile_SetDefaults();
+	void Save_FileHistory_Files();
 
+	FILE* WriteRecentFiles;
+	FILE* ReadRecentFiles;
 };
 
