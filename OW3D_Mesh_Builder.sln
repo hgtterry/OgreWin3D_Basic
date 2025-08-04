@@ -11,6 +11,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "X_Lib_Maths", "X_Librarys\X
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "X_Lib_Preferences", "X_Lib_Preferences\X_Lib_Preferences.vcxproj", "{21AC25F6-8533-4796-BD33-766FEB74E602}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "X_Lib_Zip", "X_Lib_Zip\X_Lib_Zip.vcxproj", "{7F7E8FBD-6F36-4E06-ABDE-E37EDCA58F0D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Release|x64 = Release|x64
@@ -21,6 +23,8 @@ Global
 		{DA784F3C-F0F7-499A-902C-A8B0DC20F07E}.Release|x64.ActiveCfg = Release|x64
 		{94A993C8-4310-41C3-90DB-56C8E3E38E4C}.Release|x64.ActiveCfg = Release|x64
 		{21AC25F6-8533-4796-BD33-766FEB74E602}.Release|x64.ActiveCfg = Release|x64
+		{7F7E8FBD-6F36-4E06-ABDE-E37EDCA58F0D}.Release|x64.ActiveCfg = Release|x64
+		{7F7E8FBD-6F36-4E06-ABDE-E37EDCA58F0D}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
