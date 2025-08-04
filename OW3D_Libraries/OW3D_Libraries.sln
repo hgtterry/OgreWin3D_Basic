@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36401.2
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Templates_Lib", "..\Test_Lib\Test_Lib\Test_Lib.vcxproj", "{DA784F3C-F0F7-499A-902C-A8B0DC20F07E}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "X_Lib_Preferences", "..\X_Lib_Preferences\X_Lib_Preferences.vcxproj", "{21AC25F6-8533-4796-BD33-766FEB74E602}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "X_Lib_Zip", "..\X_Lib_Zip\X_Lib_Zip.vcxproj", "{7F7E8FBD-6F36-4E06-ABDE-E37EDCA58F0D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DA784F3C-F0F7-499A-902C-A8B0DC20F07E}.Release|x64.ActiveCfg = Release|x64
+		{DA784F3C-F0F7-499A-902C-A8B0DC20F07E}.Release|x64.Build.0 = Release|x64
+		{21AC25F6-8533-4796-BD33-766FEB74E602}.Release|x64.ActiveCfg = Release|x64
+		{21AC25F6-8533-4796-BD33-766FEB74E602}.Release|x64.Build.0 = Release|x64
+		{7F7E8FBD-6F36-4E06-ABDE-E37EDCA58F0D}.Release|x64.ActiveCfg = Release|x64
+		{7F7E8FBD-6F36-4E06-ABDE-E37EDCA58F0D}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {756DE9D8-D932-40A2-950A-6CE09E832B5B}
+	EndGlobalSection
+EndGlobal
