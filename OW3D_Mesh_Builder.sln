@@ -4,14 +4,12 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.12.35527.113
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Room Builder", "Room_Builder\Room Builder.vcxproj", "{5209937E-733E-493A-9FCB-3B06ED60AD03}"
-	ProjectSection(ProjectDependencies) = postProject
-		{94A993C8-4310-41C3-90DB-56C8E3E38E4C} = {94A993C8-4310-41C3-90DB-56C8E3E38E4C}
-		{DA784F3C-F0F7-499A-902C-A8B0DC20F07E} = {DA784F3C-F0F7-499A-902C-A8B0DC20F07E}
-	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Templates_Lib", "Test_Lib\Test_Lib\Test_Lib.vcxproj", "{DA784F3C-F0F7-499A-902C-A8B0DC20F07E}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "X_Lib_Maths", "X_Librarys\X_Lib_Maths\X_Lib_Maths\X_Lib_Maths.vcxproj", "{94A993C8-4310-41C3-90DB-56C8E3E38E4C}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "X_Lib_Preferences", "X_Lib_Preferences\X_Lib_Preferences.vcxproj", "{21AC25F6-8533-4796-BD33-766FEB74E602}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -22,6 +20,8 @@ Global
 		{5209937E-733E-493A-9FCB-3B06ED60AD03}.Release|x64.Build.0 = Release|x64
 		{DA784F3C-F0F7-499A-902C-A8B0DC20F07E}.Release|x64.ActiveCfg = Release|x64
 		{94A993C8-4310-41C3-90DB-56C8E3E38E4C}.Release|x64.ActiveCfg = Release|x64
+		{21AC25F6-8533-4796-BD33-766FEB74E602}.Release|x64.ActiveCfg = Release|x64
+		{21AC25F6-8533-4796-BD33-766FEB74E602}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
