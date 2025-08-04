@@ -45,7 +45,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     // Initialize application
     App->InitApp();
     App->CL_Prefs->Read_Preferences();
-    App->CL_Prefs->Init_History();
+    App->CL_Prefs->Init_Configuration();
 
     UNREFERENCED_PARAMETER(hPrevInstance);
     UNREFERENCED_PARAMETER(lpCmdLine);
@@ -622,6 +622,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 return 1;
             }
 
+            // ----------------------------- Options
+            case ID_OPTIONS_SETTINGS:
+            {
+                App->CL_Prefs->Start_Options_Dlg();
+                return 1;
+            }
+            
             // ----------------------------- Tools
             case ID_TOOLS_RESOURCEVIEWER:
             {

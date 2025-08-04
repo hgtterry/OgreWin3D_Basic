@@ -23,6 +23,7 @@ THE SOFTWARE.
 */
 
 #include "pch.h"
+#include "resource.h"
 #include "CL64_App.h"
 #include "CL64_Prefs.h"
 
@@ -34,6 +35,8 @@ CL64_Prefs::CL64_Prefs(void)
 	Wad_File_Name[0] = 0;
 	UserData_Folder[0] = 0;
 
+	flag_OpenLastFile = false;
+
 	WriteData = nullptr;
 
 	WriteRecentFiles = nullptr;
@@ -42,6 +45,111 @@ CL64_Prefs::CL64_Prefs(void)
 
 CL64_Prefs::~CL64_Prefs(void)
 {
+}
+
+// *************************************************************************
+// *			  Start_Options_Dlg:- Terry and Hazel Flanigan 2025		   *
+// *************************************************************************
+void CL64_Prefs::Start_Options_Dlg()
+{
+	DialogBox(App->hInst, (LPCTSTR)IDD_OPTIONS, App->MainHwnd, (DLGPROC)Proc_Options_Dlg);
+}
+
+// *************************************************************************
+// *			Proc_Options_Dlg:- Terry and Hazel Flanigan 2025		   *
+// *************************************************************************
+LRESULT CALLBACK CL64_Prefs::Proc_Options_Dlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+	switch (message)
+	{
+	case WM_INITDIALOG:
+	{
+		SendDlgItemMessage(hDlg, IDC_CK_LASTFILE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
+		HWND Temp = GetDlgItem(hDlg, IDC_CK_LASTFILE);
+		SendMessage(Temp, BM_SETCHECK, App->CL_Prefs->flag_OpenLastFile, 0);
+
+		return TRUE;
+	}
+	case WM_CTLCOLORSTATIC:
+	{
+		if (GetDlgItem(hDlg, IDC_CK_LASTFILE) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+		return FALSE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->AppBackground;
+	}
+
+	case WM_NOTIFY:
+	{
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		if (some_item->idFrom == IDOK)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDCANCEL)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		return CDRF_DODEFAULT;
+	}
+
+	case WM_COMMAND:
+	{
+		if (LOWORD(wParam) == IDC_CK_LASTFILE)
+		{
+			HWND Temp = GetDlgItem(hDlg, IDC_CK_LASTFILE);
+
+			if (App->CL_Prefs->flag_OpenLastFile == true)
+			{
+				App->CL_Prefs->flag_OpenLastFile = false;
+				SendMessage(Temp, BM_SETCHECK, false, 0);
+			}
+			else
+			{
+				App->CL_Prefs->flag_OpenLastFile = true;
+				SendMessage(Temp, BM_SETCHECK, true, 0);
+			}
+
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDOK)
+		{
+			App->CL_Prefs->Save_Config_File();
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDCANCEL)
+		{
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+	}
+
+	break;
+
+	}
+	return FALSE;
 }
 
 // *************************************************************************
@@ -101,35 +209,30 @@ bool CL64_Prefs::Write_Preferences()
 }
 
 // *************************************************************************
-// *			Init_History:- Terry and Hazel Flanigan 2023			   *
+// *			Init_Configuration:- Terry and Hazel Flanigan 2023		   *
 // *************************************************************************
-void CL64_Prefs::Init_History()
+void CL64_Prefs::Init_Configuration()
 {
 	char DirCheck[MAX_PATH];
 	strcpy(DirCheck, UserData_Folder);
 	strcat(DirCheck, "\\");
 	strcat(DirCheck, "OW3D_Dir");
 
-
 	bool check = 0;
 	check = Search_For_Folder(DirCheck);
 	if (check == 0)
 	{
-		//mPreviousFiles_Files.resize(RECENT_FILES);
-
 		CreateDirectory(DirCheck, NULL);
-		IniFile_SetDefaults();
 
-		Save_FileHistory_Files();
-
-		//LoadHistory_Files();
+		Config_SetDefaults();
+		Save_Config_File();
+		Load_Config_File();
 	}
 	else
 	{
 		char mCheckFile[MAX_PATH];
 		strcpy(mCheckFile, DirCheck);
 		strcat(mCheckFile, "\\OW3D_MeshBuilder.cfg");
-
 
 		bool checkfile = Check_File_Exist(mCheckFile);
 
@@ -139,30 +242,28 @@ void CL64_Prefs::Init_History()
 		}
 		else
 		{
-			//mPreviousFiles_Files.resize(RECENT_FILES);
-
-			IniFile_SetDefaults();
-			Save_FileHistory_Files();
-			//LoadHistory_Files();
+			Config_SetDefaults();
+			Save_Config_File();
+			Load_Config_File();
 		}
 
-		//LoadHistory_Files();
+		Load_Config_File();
 	}
 }
 
 // *************************************************************************
-// *		ResentHistory_Files_Clear:- Terry and Hazel Flanigan 2023	   *
+// *			Config_SetDefaults:- Terry and Hazel Flanigan 2023		   *
 // *************************************************************************
-void CL64_Prefs::IniFile_SetDefaults()
+void CL64_Prefs::Config_SetDefaults()
 {
 
-	Save_FileHistory_Files();
+	Save_Config_File();
 }
 
 // *************************************************************************
-// *		Save_FileHistory_Files:- Terry and Hazel Flanigan 2023		   *
+// *			Save_Config_File:- Terry and Hazel Flanigan 2023		   *
 // *************************************************************************
-void CL64_Prefs::Save_FileHistory_Files()
+void CL64_Prefs::Save_Config_File()
 {
 	WriteRecentFiles = nullptr;
 
@@ -181,16 +282,29 @@ void CL64_Prefs::Save_FileHistory_Files()
 	fprintf(WriteRecentFiles, "%s\n", "[Version_Data]");
 	fprintf(WriteRecentFiles, "%s%s\n", "Version=", "V1.0");
 
-	//// Save out to Vima19.ini
-	//for (unsigned int i = 0; i < RECENT_FILES; ++i)
-	//{
-	//	char szName[MAX_PATH];
-	//	strcpy(szName, mPreviousFiles_Files[i].c_str());
-
-	//	fprintf(WriteRecentFiles, "%s\n", szName);
-	//}
-
+	fprintf(WriteRecentFiles, "%s\n", "[Start_Up]");
+	fprintf(WriteRecentFiles, "%s%i\n", "Open_Last_File=", flag_OpenLastFile);
+	fprintf(WriteRecentFiles, "%s%s\n", "Last_File_Full=", App->CL_Level->MTF_PathAndFile);
+	fprintf(WriteRecentFiles, "%s%s\n", "Last_File_Name=", App->CL_Level->MTF_Just_FileName);
+	
 	std::fclose(WriteRecentFiles);
+
+	return;
+}
+
+// *************************************************************************
+// *		LoadHistory_Files:- Terry and Hazel Flanigan 2023			   *
+// *************************************************************************
+void CL64_Prefs::Load_Config_File()
+{
+	char buf[1024];
+
+	strcpy(buf, UserData_Folder);
+	strcat(buf, "\\OW3D_Dir\\OW3D_MeshBuilder.cfg");
+
+	App->CL_Ini_File->SetPathName(buf);
+
+	flag_OpenLastFile = App->CL_Ini_File->GetInt("Start_Up", "Open_Last_File", 0, 10);
 
 	return;
 }

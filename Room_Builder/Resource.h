@@ -79,6 +79,7 @@
 #define IDD_MESHVIEWER                  192
 #define IDD_MESHVIEWER_3D               193
 #define IDD_POSITION_DLG                195
+#define IDD_OPTIONS                     196
 #define IDC_BANNER                      1000
 #define IDC_STTEXT                      1001
 #define IDC_STMESSAGE                   1002
@@ -444,6 +445,8 @@
 #define IDC_BUTTON2                     1328
 #define IDC_BUTTON1                     1331
 #define IDC_BUT_AT_CAMERA               1331
+#define IDC_CHECK1                      1332
+#define IDC_CK_LASTFILE                 1332
 #define IDC_BUT_AT_WORLDPOS             1333
 #define ID_DEBUG_GENERAL                32771
 #define ID_TEMPLATES_INSERT             32772
@@ -511,6 +514,7 @@
 #define ID_VIEW_3DVIEW                  32835
 #define ID_VIEW_RESTOREVIEWS            32836
 #define ID_DEBUG_DEBUGIMGUI             32837
+#define ID_OPTIONS_SETTINGS             32838
 #define ID_GENERALSELECT                32886
 #define ID_TOOLS_TEMPLATE               32910
 #define IDC_STATIC                      -1
@@ -520,9 +524,9 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
-#define _APS_NEXT_RESOURCE_VALUE        196
-#define _APS_NEXT_COMMAND_VALUE         32838
-#define _APS_NEXT_CONTROL_VALUE         1332
+#define _APS_NEXT_RESOURCE_VALUE        197
+#define _APS_NEXT_COMMAND_VALUE         32839
+#define _APS_NEXT_CONTROL_VALUE         1333
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif
