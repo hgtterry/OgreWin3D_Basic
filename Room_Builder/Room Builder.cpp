@@ -982,12 +982,18 @@ void StartOgre()
 
     App->CL_Ogre->RenderFrame(5);
    
-    if (App->CL_Prefs->flag_OpenLastFile == true)
+    if (App->CL_Prefs->flag_OpenLastFile)
     {
-        strcpy(App->CL_File->PathFileName_3dt, App->CL_Prefs->Prefs_PathAndFile);
-        strcpy(App->CL_File->FileName_3dt, App->CL_Prefs->Prefs_JustFileName);
+        // Compare the last opened file with "New_Room.mtf"
+        if (strcmp(App->CL_Prefs->Prefs_PathAndFile, "New_Room.mtf") != 0)
+        {
+            // Copy the path and filename from preferences to the file structure
+            strcpy(App->CL_File->PathFileName_3dt, App->CL_Prefs->Prefs_PathAndFile);
+            strcpy(App->CL_File->FileName_3dt, App->CL_Prefs->Prefs_JustFileName);
 
-        App->CL_File->Start_Load(false);
+            // Initiate the loading process
+            App->CL_File->Start_Load(false);
+        }
     }
 
     App->CL_Ogre->Ogre_Render_Loop();
