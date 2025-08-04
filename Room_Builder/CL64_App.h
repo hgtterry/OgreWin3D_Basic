@@ -93,8 +93,8 @@ THE SOFTWARE.
 #include "CreateBoxDialog.h"
 #include "CreateArchDialog.h"
 #include "CreateConeDialog.h"
+#include "CreateCylDialog.h"
 
-#include "A_CreateCylDialog.h"
 #include "A_CreateStaircaseDialog.h"
 
 // Project
@@ -182,8 +182,8 @@ public:
 	CreateBoxDialog*			CL_X_CreateBoxDialog;
 	CreateArchDialog*			CL_X_CreateArchDialog;
 	CreateConeDialog*			CL_X_CreateConeDialog;
+	CreateCylDialog*			CL_X_CreateCylDialog;
 
-	A_CreateCylDialog*			CL_CreateCylDialog;
 	A_CreateStaircaseDialog*	CL_CreateStaircaseDialog;
 	
 	// Project

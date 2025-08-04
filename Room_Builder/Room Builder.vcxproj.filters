@@ -126,9 +126,6 @@
     <ClInclude Include="CL64_Export.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="A_CreateCylDialog.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="CL64_File_IO.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -354,9 +351,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CL64_Export.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="A_CreateCylDialog.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CL64_File_IO.cpp">

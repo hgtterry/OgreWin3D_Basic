@@ -150,6 +150,7 @@
     <ClInclude Include="BrushTemplate.h" />
     <ClInclude Include="CreateArchDialog.h" />
     <ClInclude Include="CreateConeDialog.h" />
+    <ClInclude Include="CreateCylDialog.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="CreateBoxDialog.h" />
@@ -158,6 +159,7 @@
     <ClCompile Include="BrushTemplate.cpp" />
     <ClCompile Include="CreateArchDialog.cpp" />
     <ClCompile Include="CreateConeDialog.cpp" />
+    <ClCompile Include="CreateCylDialog.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

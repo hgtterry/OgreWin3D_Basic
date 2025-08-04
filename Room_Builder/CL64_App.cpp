@@ -99,8 +99,8 @@ CL64_App::CL64_App(void)
 	CL_X_CreateBoxDialog =		nullptr;
 	CL_X_CreateArchDialog =		nullptr;
 	CL_X_CreateConeDialog =		nullptr;
+	CL_X_CreateCylDialog =		nullptr;
 
-	CL_CreateCylDialog =		nullptr;
 	CL_CreateStaircaseDialog =	nullptr;
 	
 	// Project
@@ -249,8 +249,8 @@ void CL64_App::InitApp(void)
 	CL_X_CreateBoxDialog =		new CreateBoxDialog();
 	CL_X_CreateArchDialog =		new CreateArchDialog();
 	CL_X_CreateConeDialog =		new CreateConeDialog();
+	CL_X_CreateCylDialog =		new CreateCylDialog();
 
-	CL_CreateCylDialog =		new A_CreateCylDialog();
 	CL_CreateStaircaseDialog =	new A_CreateStaircaseDialog();
 
 	// Project
