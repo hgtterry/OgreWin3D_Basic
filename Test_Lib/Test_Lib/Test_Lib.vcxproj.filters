@@ -36,6 +36,9 @@
     <ClInclude Include="CreateCylDialog.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="CreateStaircaseDialog.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Test_Lib.cpp">
@@ -57,6 +60,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CreateCylDialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CreateStaircaseDialog.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

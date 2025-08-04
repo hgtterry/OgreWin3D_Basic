@@ -1,7 +1,7 @@
 /*
 Copyright (c) 2024 - 2025 Inflanite_HGT W.T.Flanigan H.C.Flanigan
 
-Room Builder
+OW3D_Mesh_Builder
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -23,16 +23,15 @@ THE SOFTWARE.
 */
 
 #pragma once
-
-class A_CreateStaircaseDialog
+class CreateStaircaseDialog
 {
 public:
-	A_CreateStaircaseDialog(void);
-	~A_CreateStaircaseDialog(void);
+	CreateStaircaseDialog(void);
+	~CreateStaircaseDialog(void);
 
 	void Start_CreateStaircase_Dlg();
 
-	BrushTemplate_Staircase *pStaircaseTemplate;
+	BrushTemplate_Staircase* pStaircaseTemplate;
 
 	float	m_Height;
 	float	m_Length;
@@ -45,7 +44,7 @@ public:
 
 	bool flag_Ramp_Flag_Dlg;
 	bool flag_Stairs_Flag_Dlg;
-	
+
 private:
 
 	static LRESULT CALLBACK Proc_CreateStaircase(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
@@ -58,7 +57,8 @@ private:
 	void Set_Defaults(HWND hDlg);
 
 	void CreateStaircase();
-	void CreateNewTemplateBrush(Brush *pBrush);
+	void CreateNewTemplateBrush(Brush* pBrush);
 
 	char StaircaseName[MAX_PATH];
 };
+

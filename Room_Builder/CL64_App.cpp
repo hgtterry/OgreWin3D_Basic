@@ -96,13 +96,12 @@ CL64_App::CL64_App(void)
 	CL_Editor_Control =			nullptr;
 
 	// Templates Dialogs Libraries
-	CL_X_CreateBoxDialog =		nullptr;
-	CL_X_CreateArchDialog =		nullptr;
-	CL_X_CreateConeDialog =		nullptr;
-	CL_X_CreateCylDialog =		nullptr;
+	CL_X_CreateBoxDialog =			nullptr;
+	CL_X_CreateArchDialog =			nullptr;
+	CL_X_CreateConeDialog =			nullptr;
+	CL_X_CreateCylDialog =			nullptr;
+	CL_X_CreateStaircaseDialog =	nullptr;
 
-	CL_CreateStaircaseDialog =	nullptr;
-	
 	// Project
 	CL_Project =				nullptr;
 	CL_Objects_Create =			nullptr;
@@ -246,12 +245,11 @@ void CL64_App::InitApp(void)
 	CL_Editor_Control =			new CL64_Editor_Control();
 	
 	// Templates Dialogs Libraries
-	CL_X_CreateBoxDialog =		new CreateBoxDialog();
-	CL_X_CreateArchDialog =		new CreateArchDialog();
-	CL_X_CreateConeDialog =		new CreateConeDialog();
-	CL_X_CreateCylDialog =		new CreateCylDialog();
-
-	CL_CreateStaircaseDialog =	new A_CreateStaircaseDialog();
+	CL_X_CreateBoxDialog =			new CreateBoxDialog();
+	CL_X_CreateArchDialog =			new CreateArchDialog();
+	CL_X_CreateConeDialog =			new CreateConeDialog();
+	CL_X_CreateCylDialog =			new CreateCylDialog();
+	CL_X_CreateStaircaseDialog =	new CreateStaircaseDialog();
 
 	// Project
 	CL_Project =				new CL64_Project();

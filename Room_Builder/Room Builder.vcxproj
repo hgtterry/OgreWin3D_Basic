@@ -152,7 +152,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="A_CreateStaircaseDialog.h" />
     <ClInclude Include="Base_Brush.h" />
     <ClInclude Include="Base_Group.h" />
     <ClInclude Include="Base_Object.h" />
@@ -232,7 +231,6 @@
     <ClInclude Include="zip.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="A_CreateStaircaseDialog.cpp" />
     <ClCompile Include="Base_Brush.cpp" />
     <ClCompile Include="Base_Group.cpp" />
     <ClCompile Include="Base_Object.cpp" />

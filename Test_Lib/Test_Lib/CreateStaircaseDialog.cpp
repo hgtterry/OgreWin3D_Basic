@@ -1,7 +1,7 @@
 /*
 Copyright (c) 2024 - 2025 Inflanite_HGT W.T.Flanigan H.C.Flanigan
 
-Room Builder
+OW3D_Mesh_Builder
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -25,9 +25,9 @@ THE SOFTWARE.
 #include "pch.h"
 #include "resource.h"
 #include "CL64_App.h"
-#include "A_CreateStaircaseDialog.h"
+#include "CreateStaircaseDialog.h"
 
-A_CreateStaircaseDialog::A_CreateStaircaseDialog(void)
+CreateStaircaseDialog::CreateStaircaseDialog(void)
 {
 	m_Height = 128.0;
 	m_Length = 128.0;
@@ -39,22 +39,22 @@ A_CreateStaircaseDialog::A_CreateStaircaseDialog(void)
 
 	pStaircaseTemplate = NULL;
 
-	strcpy(StaircaseName,"Spheroid");
+	strcpy(StaircaseName, "Spheroid");
 
 	flag_Ramp_Flag_Dlg = 0;
 	flag_Stairs_Flag_Dlg = 1;
 }
 
-A_CreateStaircaseDialog::~A_CreateStaircaseDialog(void)
+CreateStaircaseDialog::~CreateStaircaseDialog(void)
 {
 }
 
 // *************************************************************************
 // *	  	Start_CreateArch_Dlg:- Terry and Hazel Flanigan 2025		   *
 // *************************************************************************
-void A_CreateStaircaseDialog::Start_CreateStaircase_Dlg()
+void CreateStaircaseDialog::Start_CreateStaircase_Dlg()
 {
-	pStaircaseTemplate = App->CL_Level->Level_GetStaircaseTemplate ();
+	pStaircaseTemplate = App->CL_Level->Level_GetStaircaseTemplate();
 
 	App->CL_Properties_Tabs->Enable_Tabs_Dlg(false);
 	DialogBox(App->hInst, (LPCTSTR)IDD_CREATE_STAIRCASE, App->MainHwnd, (DLGPROC)Proc_CreateStaircase);
@@ -63,7 +63,7 @@ void A_CreateStaircaseDialog::Start_CreateStaircase_Dlg()
 // *************************************************************************
 // *        Proc_CreateStaircase:- Terry and Hazel Flanigan 2025		   *
 // *************************************************************************
-LRESULT CALLBACK A_CreateStaircaseDialog::Proc_CreateStaircase(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK CreateStaircaseDialog::Proc_CreateStaircase(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
 
 	switch (message)
@@ -71,7 +71,7 @@ LRESULT CALLBACK A_CreateStaircaseDialog::Proc_CreateStaircase(HWND hDlg, UINT m
 	case WM_INITDIALOG:
 	{
 		SendDlgItemMessage(hDlg, IDC_ST_STAIRS_GENERAL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		
+
 		SendDlgItemMessage(hDlg, IDC_ST_STAIRS_HEIGHT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ST_STAIRS_WIDTH, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ST_STAIRS_LENGTH, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
@@ -88,19 +88,19 @@ LRESULT CALLBACK A_CreateStaircaseDialog::Proc_CreateStaircase(HWND hDlg, UINT m
 
 		SendDlgItemMessage(hDlg, IDC_ST_STAIRS_NAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_STAIRS_EDITNAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		
+
 		SendDlgItemMessage(hDlg, IDC_ST_STAIRS_POSITION, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_CK_STAIRS_WORLDCENTRE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_CK_STAIRS_CAMPOSITION, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		SendDlgItemMessage(hDlg, IDC_BT_STAIRS_DEFAULTS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		
+
 		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
-		App->CL_CreateStaircaseDialog->Set_Members();
+		App->CL_X_CreateStaircaseDialog->Set_Members();
 
-		App->CL_CreateStaircaseDialog->Set_DLG_Members(hDlg);
+		App->CL_X_CreateStaircaseDialog->Set_DLG_Members(hDlg);
 
 		int Count = App->CL_Brush->Get_Brush_Count();
 		char Num[32];
@@ -111,22 +111,22 @@ LRESULT CALLBACK A_CreateStaircaseDialog::Proc_CreateStaircase(HWND hDlg, UINT m
 
 		SetDlgItemText(hDlg, IDC_STAIRS_EDITNAME, (LPCTSTR)Name);
 
-		if (App->CL_CreateStaircaseDialog->m_MakeRamp == 1)
+		if (App->CL_X_CreateStaircaseDialog->m_MakeRamp == 1)
 		{
-			App->CL_CreateStaircaseDialog->flag_Ramp_Flag_Dlg = 1;
-			App->CL_CreateStaircaseDialog->flag_Stairs_Flag_Dlg = 0;
+			App->CL_X_CreateStaircaseDialog->flag_Ramp_Flag_Dlg = 1;
+			App->CL_X_CreateStaircaseDialog->flag_Stairs_Flag_Dlg = 0;
 			return 1;
 		}
 		else
 		{
-			App->CL_CreateStaircaseDialog->flag_Ramp_Flag_Dlg = 0;
-			App->CL_CreateStaircaseDialog->flag_Stairs_Flag_Dlg = 1;
+			App->CL_X_CreateStaircaseDialog->flag_Ramp_Flag_Dlg = 0;
+			App->CL_X_CreateStaircaseDialog->flag_Stairs_Flag_Dlg = 1;
 			return 1;
 		}
 
 		HWND temp = GetDlgItem(hDlg, IDC_CK_STAIRS_WORLDCENTRE);
-		SendMessage(temp,BM_SETCHECK,1,0);
-		App->CL_CreateStaircaseDialog->m_UseCamPos = 0;
+		SendMessage(temp, BM_SETCHECK, 1, 0);
+		App->CL_X_CreateStaircaseDialog->m_UseCamPos = 0;
 
 		return TRUE;
 	}
@@ -229,21 +229,21 @@ LRESULT CALLBACK A_CreateStaircaseDialog::Proc_CreateStaircase(HWND hDlg, UINT m
 		if (some_item->idFrom == IDC_BT_STAIRS_RAMP)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CL_CreateStaircaseDialog->flag_Ramp_Flag_Dlg);
+			App->Custom_Button_Toggle(item, App->CL_X_CreateStaircaseDialog->flag_Ramp_Flag_Dlg);
 			return CDRF_DODEFAULT;
 		}
 
 		if (some_item->idFrom == IDC_BT_STAIRS_STAIRS)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CL_CreateStaircaseDialog->flag_Stairs_Flag_Dlg);
+			App->Custom_Button_Toggle(item, App->CL_X_CreateStaircaseDialog->flag_Stairs_Flag_Dlg);
 			return CDRF_DODEFAULT;
 		}
 
 		if (some_item->idFrom == IDC_BT_STAIRS_CUT)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CL_CreateStaircaseDialog->m_TCut);
+			App->Custom_Button_Toggle(item, App->CL_X_CreateStaircaseDialog->m_TCut);
 			return CDRF_DODEFAULT;
 		}
 
@@ -272,108 +272,108 @@ LRESULT CALLBACK A_CreateStaircaseDialog::Proc_CreateStaircase(HWND hDlg, UINT m
 	}
 
 	case WM_COMMAND:
+	{
+
+		if (LOWORD(wParam) == IDC_CK_STAIRS_WORLDCENTRE)
 		{
+			HWND temp = GetDlgItem(hDlg, IDC_CK_STAIRS_WORLDCENTRE);
+			SendMessage(temp, BM_SETCHECK, 1, 0);
 
-			if (LOWORD(wParam) == IDC_CK_STAIRS_WORLDCENTRE)
-			{
-				HWND temp = GetDlgItem(hDlg, IDC_CK_STAIRS_WORLDCENTRE);
-				SendMessage(temp,BM_SETCHECK,1,0);
+			temp = GetDlgItem(hDlg, IDC_CK_STAIRS_CAMPOSITION);
+			SendMessage(temp, BM_SETCHECK, 0, 0);
 
-				temp = GetDlgItem(hDlg, IDC_CK_STAIRS_CAMPOSITION);
-				SendMessage(temp,BM_SETCHECK,0,0);
-
-				App->CL_CreateStaircaseDialog->m_UseCamPos = 0;
-				return TRUE;
-			}
-
-			if (LOWORD(wParam) == IDC_CK_STAIRS_CAMPOSITION)
-			{
-				HWND temp = GetDlgItem(hDlg, IDC_CK_STAIRS_CAMPOSITION);
-				SendMessage(temp,BM_SETCHECK,1,0);
-
-				temp = GetDlgItem(hDlg, IDC_CK_STAIRS_WORLDCENTRE);
-				SendMessage(temp,BM_SETCHECK,0,0);
-
-				App->CL_CreateStaircaseDialog->m_UseCamPos = 1;
-				return TRUE;
-			}
-
-			if (LOWORD(wParam) == IDC_BT_STAIRS_CUT)
-			{
-				if (App->CL_CreateStaircaseDialog->m_TCut == 1)
-				{
-					App->CL_CreateStaircaseDialog->m_TCut = 0;
-					return 1;
-				}
-				else
-				{
-					App->CL_CreateStaircaseDialog->m_TCut = 1;
-					return 1;
-				}
-
-				return TRUE;
-			}
-
-			if (LOWORD(wParam) == IDC_BT_STAIRS_STAIRS)
-			{
-				HWND Temp = GetDlgItem(hDlg, IDC_ST_PIC);
-				SendMessage(Temp, STM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_Stairs_Bmp);
-
-				App->CL_CreateStaircaseDialog->m_MakeRamp = 0;
-
-				App->CL_CreateStaircaseDialog->flag_Stairs_Flag_Dlg = 1;
-				App->CL_CreateStaircaseDialog->flag_Ramp_Flag_Dlg = 0;
-				
-				RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-				
-				return TRUE;
-			}
-
-			if (LOWORD(wParam) == IDC_BT_STAIRS_RAMP)
-			{
-				HWND Temp = GetDlgItem(hDlg, IDC_ST_PIC);
-				SendMessage(Temp, STM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_Ramp_Bmp);
-
-				App->CL_CreateStaircaseDialog->m_MakeRamp = 1;
-
-				App->CL_CreateStaircaseDialog->flag_Stairs_Flag_Dlg = 0;
-				App->CL_CreateStaircaseDialog->flag_Ramp_Flag_Dlg = 1;
-				
-				RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-
-				return TRUE;
-			}
-		
-			if (LOWORD(wParam) == IDC_BT_STAIRS_DEFAULTS)
-			{
-				App->CL_CreateStaircaseDialog->Set_Defaults(hDlg);
-				return TRUE;
-			}
-
-			// -----------------------------------------------------------------
-			if (LOWORD(wParam) == IDOK)
-			{
-				App->CL_CreateStaircaseDialog->Get_DLG_Members(hDlg);
-				App->CL_CreateStaircaseDialog->Set_StaircaseTemplate(); 
-				App->CL_CreateStaircaseDialog->CreateStaircase();
-
-				App->CL_Properties_Templates->Enable_Insert_Button(true);
-				
-				App->CL_Properties_Tabs->Enable_Tabs_Dlg(true);
-
-				EndDialog(hDlg, LOWORD(wParam));
-				return TRUE;
-			}
-
-			if (LOWORD(wParam) == IDCANCEL)
-			{
-				App->CL_Properties_Tabs->Enable_Tabs_Dlg(true);
-				EndDialog(hDlg, LOWORD(wParam));
-				return TRUE;
-			}
-
-			break;
+			App->CL_X_CreateStaircaseDialog->m_UseCamPos = 0;
+			return TRUE;
 		}
+
+		if (LOWORD(wParam) == IDC_CK_STAIRS_CAMPOSITION)
+		{
+			HWND temp = GetDlgItem(hDlg, IDC_CK_STAIRS_CAMPOSITION);
+			SendMessage(temp, BM_SETCHECK, 1, 0);
+
+			temp = GetDlgItem(hDlg, IDC_CK_STAIRS_WORLDCENTRE);
+			SendMessage(temp, BM_SETCHECK, 0, 0);
+
+			App->CL_X_CreateStaircaseDialog->m_UseCamPos = 1;
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_BT_STAIRS_CUT)
+		{
+			if (App->CL_X_CreateStaircaseDialog->m_TCut == 1)
+			{
+				App->CL_X_CreateStaircaseDialog->m_TCut = 0;
+				return 1;
+			}
+			else
+			{
+				App->CL_X_CreateStaircaseDialog->m_TCut = 1;
+				return 1;
+			}
+
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_BT_STAIRS_STAIRS)
+		{
+			HWND Temp = GetDlgItem(hDlg, IDC_ST_PIC);
+			SendMessage(Temp, STM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_Stairs_Bmp);
+
+			App->CL_X_CreateStaircaseDialog->m_MakeRamp = 0;
+
+			App->CL_X_CreateStaircaseDialog->flag_Stairs_Flag_Dlg = 1;
+			App->CL_X_CreateStaircaseDialog->flag_Ramp_Flag_Dlg = 0;
+
+			RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_BT_STAIRS_RAMP)
+		{
+			HWND Temp = GetDlgItem(hDlg, IDC_ST_PIC);
+			SendMessage(Temp, STM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_Ramp_Bmp);
+
+			App->CL_X_CreateStaircaseDialog->m_MakeRamp = 1;
+
+			App->CL_X_CreateStaircaseDialog->flag_Stairs_Flag_Dlg = 0;
+			App->CL_X_CreateStaircaseDialog->flag_Ramp_Flag_Dlg = 1;
+
+			RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_BT_STAIRS_DEFAULTS)
+		{
+			App->CL_X_CreateStaircaseDialog->Set_Defaults(hDlg);
+			return TRUE;
+		}
+
+		// -----------------------------------------------------------------
+		if (LOWORD(wParam) == IDOK)
+		{
+			App->CL_X_CreateStaircaseDialog->Get_DLG_Members(hDlg);
+			App->CL_X_CreateStaircaseDialog->Set_StaircaseTemplate();
+			App->CL_X_CreateStaircaseDialog->CreateStaircase();
+
+			App->CL_Properties_Templates->Enable_Insert_Button(true);
+
+			App->CL_Properties_Tabs->Enable_Tabs_Dlg(true);
+
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDCANCEL)
+		{
+			App->CL_Properties_Tabs->Enable_Tabs_Dlg(true);
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+
+		break;
+	}
 	}
 	return FALSE;
 }
@@ -381,17 +381,17 @@ LRESULT CALLBACK A_CreateStaircaseDialog::Proc_CreateStaircase(HWND hDlg, UINT m
 // *************************************************************************
 // *		   CreateStaircase:- Terry and Hazel Flanigan 2025			   *
 // *************************************************************************
-void A_CreateStaircaseDialog::CreateStaircase() 
+void CreateStaircaseDialog::CreateStaircase()
 {
 	App->CL_Doc->OnToolsTemplate();
 
-	Brush *pStaircase;
+	Brush* pStaircase;
 
-	pStaircase = App->CL_X_BrushTemplate->BrushTemplate_CreateStaircase (pStaircaseTemplate);
+	pStaircase = App->CL_X_BrushTemplate->BrushTemplate_CreateStaircase(pStaircaseTemplate);
 	if (pStaircase != NULL)
 	{
-		strcpy(App->CL_Doc->LastTemplateTypeName,StaircaseName);
-		CreateNewTemplateBrush (pStaircase);
+		strcpy(App->CL_Doc->LastTemplateTypeName, StaircaseName);
+		CreateNewTemplateBrush(pStaircase);
 	}
 	else
 	{
@@ -402,27 +402,27 @@ void A_CreateStaircaseDialog::CreateStaircase()
 // *************************************************************************
 // *       CreateNewTemplateBrush:- Terry and Hazel Flanigan 2025		   *
 // *************************************************************************
-void A_CreateStaircaseDialog::CreateNewTemplateBrush(Brush *pBrush)
+void CreateStaircaseDialog::CreateNewTemplateBrush(Brush* pBrush)
 {
-	T_Vec3 *pTemplatePos;
+	T_Vec3* pTemplatePos;
 	T_Vec3 MoveVec;
 	T_Vec3 BrushPos;
 
-	assert (pBrush != NULL);
+	assert(pBrush != NULL);
 
 	if (App->CL_Doc->BTemplate != NULL)
 	{
-		App->CL_Brush->Brush_Destroy (&App->CL_Doc->BTemplate);
+		App->CL_Brush->Brush_Destroy(&App->CL_Doc->BTemplate);
 	}
 
 	App->CL_Doc->CurBrush = pBrush;
 
-	App->CL_Doc->TempEnt	= FALSE;
-	App->CL_Doc->SetDefaultBrushTexInfo (App->CL_Doc->CurBrush);
-	App->CL_Brush->Brush_Bound (App->CL_Doc->CurBrush);
-	App->CL_Brush->Brush_Get_Center (App->CL_Doc->CurBrush, &BrushPos);
+	App->CL_Doc->TempEnt = FALSE;
+	App->CL_Doc->SetDefaultBrushTexInfo(App->CL_Doc->CurBrush);
+	App->CL_Brush->Brush_Bound(App->CL_Doc->CurBrush);
+	App->CL_Brush->Brush_Get_Center(App->CL_Doc->CurBrush, &BrushPos);
 
-	pTemplatePos = App->CL_Level->Level_GetTemplatePos (App->CL_Doc->Current_Level);
+	pTemplatePos = App->CL_Level->Level_GetTemplatePos(App->CL_Doc->Current_Level);
 
 	if (m_UseCamPos == 1 && App->flag_OgreStarted == 1)
 	{
@@ -440,10 +440,10 @@ void A_CreateStaircaseDialog::CreateNewTemplateBrush(Brush *pBrush)
 		pTemplatePos->y = 0;
 		pTemplatePos->z = 0;
 	}
-	
-	App->CL_Maths->Vector3_Subtract (pTemplatePos, &BrushPos, &MoveVec);
 
-	App->CL_Brush->Brush_Move (App->CL_Doc->CurBrush, &MoveVec);
+	App->CL_Maths->Vector3_Subtract(pTemplatePos, &BrushPos, &MoveVec);
+
+	App->CL_Brush->Brush_Move(App->CL_Doc->CurBrush, &MoveVec);
 
 	App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
 
@@ -453,7 +453,7 @@ void A_CreateStaircaseDialog::CreateNewTemplateBrush(Brush *pBrush)
 // *************************************************************************
 // *		 Set_Members:- Terry and Hazel Flanigan 2025				   *
 // *************************************************************************
-void A_CreateStaircaseDialog::Set_Members() 
+void CreateStaircaseDialog::Set_Members()
 {
 	m_Height = pStaircaseTemplate->Height;
 	m_Length = pStaircaseTemplate->Length;
@@ -466,7 +466,7 @@ void A_CreateStaircaseDialog::Set_Members()
 // *************************************************************************
 // *		 Set_DLG_Members:- Terry and Hazel Flanigan 2025			   *
 // *************************************************************************
-void A_CreateStaircaseDialog::Set_DLG_Members(HWND hDlg) 
+void CreateStaircaseDialog::Set_DLG_Members(HWND hDlg)
 {
 	char buf[MAX_PATH];
 	sprintf(buf, "%0.0f", m_Height);
@@ -496,34 +496,34 @@ void A_CreateStaircaseDialog::Set_DLG_Members(HWND hDlg)
 // *************************************************************************
 // *		 Get_DLG_Members:- Terry and Hazel Flanigan 2025			   *
 // *************************************************************************
-void A_CreateStaircaseDialog::Get_DLG_Members(HWND hDlg) 
+void CreateStaircaseDialog::Get_DLG_Members(HWND hDlg)
 {
 	char buf[MAX_PATH];
 
-	GetDlgItemText(hDlg, IDC_ED_STAIRS_HEIGHT, (LPTSTR)buf,MAX_PATH);
+	GetDlgItemText(hDlg, IDC_ED_STAIRS_HEIGHT, (LPTSTR)buf, MAX_PATH);
 	m_Height = (float)atof(buf);
 
-	GetDlgItemText(hDlg, IDC_ED_STAIRS_WIDTH, (LPTSTR)buf,MAX_PATH);
+	GetDlgItemText(hDlg, IDC_ED_STAIRS_WIDTH, (LPTSTR)buf, MAX_PATH);
 	m_Width = (int)atoi(buf);
 
-	GetDlgItemText(hDlg, IDC_ED_STAIRS_LENGTH, (LPTSTR)buf,MAX_PATH);
+	GetDlgItemText(hDlg, IDC_ED_STAIRS_LENGTH, (LPTSTR)buf, MAX_PATH);
 	m_Length = (int)atoi(buf);
-	
-	GetDlgItemText(hDlg, IDC_ED_STAIRS_STEPS, (LPTSTR)buf,MAX_PATH);
+
+	GetDlgItemText(hDlg, IDC_ED_STAIRS_STEPS, (LPTSTR)buf, MAX_PATH);
 	m_NumberOfStairs = (int)atoi(buf);
 
-	GetDlgItemText(hDlg, IDC_STAIRS_EDITNAME,(LPTSTR)buf,MAX_PATH);
-	strcpy(StaircaseName,buf);
+	GetDlgItemText(hDlg, IDC_STAIRS_EDITNAME, (LPTSTR)buf, MAX_PATH);
+	strcpy(StaircaseName, buf);
 }
 
 // *************************************************************************
 // *		 Set_StaircaseTemplate:- Terry and Hazel Flanigan 2025		   *
 // *************************************************************************
-void A_CreateStaircaseDialog::Set_StaircaseTemplate() 
+void CreateStaircaseDialog::Set_StaircaseTemplate()
 {
 	pStaircaseTemplate->Height = m_Height;
 	pStaircaseTemplate->Length = m_Length;
-	pStaircaseTemplate->MakeRamp= m_MakeRamp;
+	pStaircaseTemplate->MakeRamp = m_MakeRamp;
 	pStaircaseTemplate->NumberOfStairs = m_NumberOfStairs;
 	pStaircaseTemplate->TCut = m_TCut;
 	pStaircaseTemplate->Width = m_Width;
@@ -532,7 +532,7 @@ void A_CreateStaircaseDialog::Set_StaircaseTemplate()
 // *************************************************************************
 // *	    	Set_Defaults:- Terry and Hazel Flanigan 2025			   *
 // *************************************************************************
-void A_CreateStaircaseDialog::Set_Defaults(HWND hDlg) 
+void CreateStaircaseDialog::Set_Defaults(HWND hDlg)
 {
 	m_Height = 128.0;
 	m_Length = 128.0;
@@ -561,4 +561,3 @@ void A_CreateStaircaseDialog::Set_Defaults(HWND hDlg)
 		SendMessage(temp,BM_SETCHECK,0,0);
 	}*/
 }
-

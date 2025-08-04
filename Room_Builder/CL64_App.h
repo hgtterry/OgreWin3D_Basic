@@ -94,8 +94,7 @@ THE SOFTWARE.
 #include "CreateArchDialog.h"
 #include "CreateConeDialog.h"
 #include "CreateCylDialog.h"
-
-#include "A_CreateStaircaseDialog.h"
+#include "CreateStaircaseDialog.h"
 
 // Project
 #include "CL64_Project.h"
@@ -183,9 +182,8 @@ public:
 	CreateArchDialog*			CL_X_CreateArchDialog;
 	CreateConeDialog*			CL_X_CreateConeDialog;
 	CreateCylDialog*			CL_X_CreateCylDialog;
+	CreateStaircaseDialog*		CL_X_CreateStaircaseDialog;
 
-	A_CreateStaircaseDialog*	CL_CreateStaircaseDialog;
-	
 	// Project
 	CL64_Project*				CL_Project;
 	CL64_Objects_Create*		CL_Objects_Create;
