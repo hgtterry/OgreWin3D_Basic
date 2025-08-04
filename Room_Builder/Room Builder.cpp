@@ -182,7 +182,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			{ 
                // App->CL_Editor_Control->Set_Map_Editor_Select_Dlg();
 
-                App->Say_Win(App->CL_Prefs->UserData_Folder);
+                App->Say_Win(App->CL_Prefs->Prefs_PathAndFile);
 
                 /*if (App->CL_ImGui_Editor->flag_Show_Visuals == true)
                 {
@@ -982,6 +982,14 @@ void StartOgre()
 
     App->CL_Ogre->RenderFrame(5);
    
+    if (App->CL_Prefs->flag_OpenLastFile == true)
+    {
+        strcpy(App->CL_File->PathFileName_3dt, App->CL_Prefs->Prefs_PathAndFile);
+        strcpy(App->CL_File->FileName_3dt, App->CL_Prefs->Prefs_JustFileName);
+
+        App->CL_File->Start_Load(false);
+    }
+
     App->CL_Ogre->Ogre_Render_Loop();
 
     Close_App();

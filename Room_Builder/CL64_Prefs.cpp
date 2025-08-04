@@ -35,6 +35,9 @@ CL64_Prefs::CL64_Prefs(void)
 	Wad_File_Name[0] = 0;
 	UserData_Folder[0] = 0;
 
+	Prefs_PathAndFile[0] = 0;
+	Prefs_JustFileName[0] = 0;
+
 	flag_OpenLastFile = false;
 
 	WriteData = nullptr;
@@ -178,7 +181,7 @@ void CL64_Prefs::Read_Preferences()
 }
 
 // *************************************************************************
-// *		Write_Preferences:- Terry and Hazel Flanigan 2024 			   *
+// *		Write_Preferences:- Terry and Hazel Flanigan 2025 			   *
 // *************************************************************************
 bool CL64_Prefs::Write_Preferences()
 {
@@ -209,7 +212,7 @@ bool CL64_Prefs::Write_Preferences()
 }
 
 // *************************************************************************
-// *			Init_Configuration:- Terry and Hazel Flanigan 2023		   *
+// *			Init_Configuration:- Terry and Hazel Flanigan 2025		   *
 // *************************************************************************
 void CL64_Prefs::Init_Configuration()
 {
@@ -261,7 +264,7 @@ void CL64_Prefs::Config_SetDefaults()
 }
 
 // *************************************************************************
-// *			Save_Config_File:- Terry and Hazel Flanigan 2023		   *
+// *			Save_Config_File:- Terry and Hazel Flanigan 2025		   *
 // *************************************************************************
 void CL64_Prefs::Save_Config_File()
 {
@@ -293,11 +296,11 @@ void CL64_Prefs::Save_Config_File()
 }
 
 // *************************************************************************
-// *		LoadHistory_Files:- Terry and Hazel Flanigan 2023			   *
+// *		LoadHistory_Files:- Terry and Hazel Flanigan 2025			   *
 // *************************************************************************
 void CL64_Prefs::Load_Config_File()
 {
-	char buf[1024];
+	char buf[MAX_PATH];
 
 	strcpy(buf, UserData_Folder);
 	strcat(buf, "\\OW3D_Dir\\OW3D_MeshBuilder.cfg");
@@ -306,11 +309,13 @@ void CL64_Prefs::Load_Config_File()
 
 	flag_OpenLastFile = App->CL_Ini_File->GetInt("Start_Up", "Open_Last_File", 0, 10);
 
+	App->CL_Ini_File->GetString("Start_Up", "Last_File_Full", Prefs_PathAndFile, MAX_PATH);
+	App->CL_Ini_File->GetString("Start_Up", "Last_File_Name", Prefs_JustFileName, MAX_PATH);
 	return;
 }
 
 // *************************************************************************
-// *		Search_For_Folder:- Terry and Hazel Flanigan 2023		 	   *
+// *		Search_For_Folder:- Terry and Hazel Flanigan 2025		 	   *
 // *************************************************************************
 bool CL64_Prefs::Search_For_Folder(char* FolderPath)
 {
@@ -336,11 +341,11 @@ bool CL64_Prefs::Search_For_Folder(char* FolderPath)
 }
 
 // *************************************************************************
-// *		Check_File_Exist:- Terry and Hazel Flanigan 2022		 	   *
+// *		Check_File_Exist:- Terry and Hazel Flanigan 2025		 	   *
 // *************************************************************************
 bool CL64_Prefs::Check_File_Exist(char* Full_Path)
 {
-	char pSearchPath[1024];
+	char pSearchPath[MAX_PATH];
 
 	WIN32_FIND_DATA FindFileData;
 	HANDLE hFind;

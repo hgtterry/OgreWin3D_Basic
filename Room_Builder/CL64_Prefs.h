@@ -43,7 +43,9 @@ public:
 	int Grid_Spacing;
 
 	bool flag_OpenLastFile;
-	
+
+	char Prefs_PathAndFile[MAX_PATH];
+	char Prefs_JustFileName[MAX_PATH];
 
 private:
 	static LRESULT CALLBACK Proc_Options_Dlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
