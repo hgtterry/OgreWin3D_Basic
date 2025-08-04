@@ -45,7 +45,6 @@ CL64_App::CL64_App(void)
 	// Libraries
 	CL_X_BrushTemplate =		nullptr;
 	
-
 	CL_SelBrushList =			nullptr;
 	CL_Array =					nullptr;
 	CL_SelFaceList =			nullptr;
