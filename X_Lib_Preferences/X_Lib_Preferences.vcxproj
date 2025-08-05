@@ -130,6 +130,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>..\Room_Builder;..\X_Librarys\X_Lib_Maths\X_Lib_Maths;..\Test_Lib\Test_Lib;..\Common_64\OW3D\include;..\Common_64\Ogre3D\include\OGRE\RTShaderSystem;..\Common_64\Ogre3D\include\OGRE\Overlay;..\Common_64\Ogre3D\include\OGRE\Bites;..\Common_64\Ogre3D\include\OGRE;..\Common_64\Bullet\Source;..\Common_64\irrKlang\Headers</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>

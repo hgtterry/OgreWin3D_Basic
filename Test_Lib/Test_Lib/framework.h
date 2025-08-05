@@ -27,6 +27,8 @@
 #define GE_TRUE		(1)
 #define	GE_PI		((float)3.14159265358979323846f)
 
+//float Version = 1.0;
+
 namespace Enums
 {
 	enum UpdateViews
