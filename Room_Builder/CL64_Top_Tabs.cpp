@@ -851,3 +851,36 @@ void CL64_Top_Tabs::Show_TopTabs(bool Enable)
 		ShowWindow(Headers_hWnd, 0);
 	}
 }
+
+// *************************************************************************
+// *		Set_View_Buttons:- Terry and Hazel Flanigan 2025			   *
+// *************************************************************************
+void CL64_Top_Tabs::Set_View_Buttons(int Selected_View)
+{
+	flag_View_Top_Left = false;
+	flag_View_Top_Right = false;
+	flag_View_Bottom_Left = false;
+	flag_Full_View_3D = false;
+
+	if (Selected_View == Enums::Selected_Map_View_TL)
+	{
+		flag_View_Top_Left = true;
+	}
+
+	if (Selected_View == Enums::Selected_Map_View_TR)
+	{
+		flag_View_Top_Right = true;
+	}
+	
+	if (Selected_View == Enums::Selected_Map_View_BL)
+	{
+		flag_View_Bottom_Left = true;
+	}
+	
+	if (Selected_View == Enums::Selected_Map_View_3D)
+	{
+		flag_Full_View_3D = true;
+	}
+
+	RedrawWindow(Headers_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+}

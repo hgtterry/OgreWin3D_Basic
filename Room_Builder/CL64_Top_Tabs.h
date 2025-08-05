@@ -46,6 +46,7 @@ public:
 
 	void Set_Brush_Mode(int Mode, int Dlg_Selection);
 	void Show_TopTabs(bool Enable);
+	void Set_View_Buttons(int Selected_View);
 
 	bool flag_Brush_Select;
 	bool flag_Brush_Move;

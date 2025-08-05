@@ -431,6 +431,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             {
                 App->CL_Editor_Map->Init_Views(Enums::Selected_Map_View_TL);
                 App->CL_Editor_Map->Resize_Windows(App->CL_Editor_Map->Main_View_Dlg_Hwnd, App->CL_Editor_Map->nleftWnd_width, App->CL_Editor_Map->nleftWnd_Depth);
+                App->CL_Top_Tabs->Set_View_Buttons(Enums::Selected_Map_View_TL);
                 return true;
             }
 
@@ -438,6 +439,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             {
                 App->CL_Editor_Map->Init_Views(Enums::Selected_Map_View_TR);
                 App->CL_Editor_Map->Resize_Windows(App->CL_Editor_Map->Main_View_Dlg_Hwnd, App->CL_Editor_Map->nleftWnd_width, App->CL_Editor_Map->nleftWnd_Depth);
+                App->CL_Top_Tabs->Set_View_Buttons(Enums::Selected_Map_View_TR);
                 return true;
             }
 
@@ -445,12 +447,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             {
                 App->CL_Editor_Map->Init_Views(Enums::Selected_Map_View_BL);
                 App->CL_Editor_Map->Resize_Windows(App->CL_Editor_Map->Main_View_Dlg_Hwnd, App->CL_Editor_Map->nleftWnd_width, App->CL_Editor_Map->nleftWnd_Depth);
+                App->CL_Top_Tabs->Set_View_Buttons(Enums::Selected_Map_View_BL);
                 return true;
             }
 
             case ID_VIEW_3DVIEW:
             {
                 App->CL_Editor_Map->Set_3D_FullView();
+                App->CL_Top_Tabs->Set_View_Buttons(Enums::Selected_Map_View_3D);
                 return true;
             }
 
@@ -458,6 +462,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             {
                 App->CL_Editor_Map->Set_Splitter_WidthDepth(App->CL_Editor_Map->Copy_Spliter_Width, App->CL_Editor_Map->Copy_Spliter_Depth);
                 App->CL_Editor_Map->Resize_Windows(App->CL_Editor_Map->Main_View_Dlg_Hwnd, App->CL_Editor_Map->nleftWnd_width, App->CL_Editor_Map->nleftWnd_Depth);
+                App->CL_Top_Tabs->Set_View_Buttons(Enums::Selected_Map_View_None);
                 return true;
             }
             case ID_VIEW_PATHS:
