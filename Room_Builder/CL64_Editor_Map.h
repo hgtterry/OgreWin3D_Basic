@@ -70,6 +70,8 @@ public:
 	void Context_Menu(HWND hDlg);
 	void Context_Menu_Ogre(HWND hDlg);
 
+	void Set_3D_FullView();
+
 	HWND Main_View_Dlg_Hwnd; // Background of MDI
 	HWND Top_Left_Window_Hwnd;
 	HWND Top_Right_Window_Hwnd;

@@ -2648,5 +2648,16 @@ int CL64_Editor_Map::GetCursorBoxPos(const POINT* ptMousePos)
 	return (vert * 5) + horiz;
 }
 
+// *************************************************************************
+// *	  		Set_3D_FullView:- Terry and Hazel Flanigan 2025			   *
+// *************************************************************************
+void CL64_Editor_Map::Set_3D_FullView()
+{
+	App->CL_Editor_Map->Init_Views(Enums::Selected_Map_View_3D);
+	App->CL_Editor_Map->Resize_Windows(App->CL_Editor_Map->Main_View_Dlg_Hwnd, 
+		nleftWnd_width, 
+		nleftWnd_Depth);
+}
+
 
 

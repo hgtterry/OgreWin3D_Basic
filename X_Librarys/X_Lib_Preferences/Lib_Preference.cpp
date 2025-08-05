@@ -15,6 +15,8 @@ Lib_Preference::Lib_Preference(void)
 	Prefs_JustFileName[0] = 0;
 
 	flag_OpenLastFile = false;
+	flag_MapEditor = true;
+	flag_SceneEditor = false;
 
 	WriteData = nullptr;
 
@@ -31,7 +33,7 @@ Lib_Preference::~Lib_Preference(void)
 // *************************************************************************
 char* Lib_Preference::GetVersion()
 {
-	return (LPSTR)"Lib_Preference 1.0.0 ";
+	return (LPSTR)"Lib_Preference [ 05-08-25 ] Build 1 ";
 }
 
 // *************************************************************************
@@ -52,12 +54,21 @@ LRESULT CALLBACK Lib_Preference::Proc_Options_Dlg(HWND hDlg, UINT message, WPARA
 	case WM_INITDIALOG:
 	{
 		SendDlgItemMessage(hDlg, IDC_CK_LASTFILE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-
+		SendDlgItemMessage(hDlg, IDC_ST_STARTMODE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_CK_MAPEDITOR, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_CK_SCENEEDITOR, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
 		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		HWND Temp = GetDlgItem(hDlg, IDC_CK_LASTFILE);
 		SendMessage(Temp, BM_SETCHECK, App->CL_X_Preference->flag_OpenLastFile, 0);
+
+		Temp = GetDlgItem(hDlg, IDC_CK_MAPEDITOR);
+		SendMessage(Temp, BM_SETCHECK, App->CL_X_Preference->flag_MapEditor, 0);
+		
+		Temp = GetDlgItem(hDlg, IDC_CK_SCENEEDITOR);
+		SendMessage(Temp, BM_SETCHECK, App->CL_X_Preference->flag_SceneEditor, 0);
 
 		return TRUE;
 	}
@@ -70,6 +81,31 @@ LRESULT CALLBACK Lib_Preference::Proc_Options_Dlg(HWND hDlg, UINT message, WPARA
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->AppBackground;
 		}
+
+		if (GetDlgItem(hDlg, IDC_ST_STARTMODE) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		if (GetDlgItem(hDlg, IDC_CK_MAPEDITOR) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		if (GetDlgItem(hDlg, IDC_CK_SCENEEDITOR) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+		
 		return FALSE;
 	}
 
@@ -119,6 +155,35 @@ LRESULT CALLBACK Lib_Preference::Proc_Options_Dlg(HWND hDlg, UINT message, WPARA
 			return TRUE;
 		}
 
+		if (LOWORD(wParam) == IDC_CK_MAPEDITOR)
+		{
+			HWND Temp = GetDlgItem(hDlg, IDC_CK_MAPEDITOR);
+			SendMessage(Temp, BM_SETCHECK, true, 0);
+
+			Temp = GetDlgItem(hDlg, IDC_CK_SCENEEDITOR);
+			SendMessage(Temp, BM_SETCHECK, false, 0);
+
+			App->CL_X_Preference->flag_MapEditor = true;
+			App->CL_X_Preference->flag_SceneEditor = false;
+
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_CK_SCENEEDITOR)
+		{
+			HWND Temp = GetDlgItem(hDlg, IDC_CK_SCENEEDITOR);
+			SendMessage(Temp, BM_SETCHECK, true, 0);
+
+			Temp = GetDlgItem(hDlg, IDC_CK_MAPEDITOR);
+			SendMessage(Temp, BM_SETCHECK, false, 0);
+
+			App->CL_X_Preference->flag_MapEditor = false;
+			App->CL_X_Preference->flag_SceneEditor = true;
+
+			return TRUE;
+		}
+
+		
 		if (LOWORD(wParam) == IDOK)
 		{
 			App->CL_X_Preference->Save_Config_File();
@@ -243,6 +308,12 @@ void Lib_Preference::Init_Configuration()
 // *************************************************************************
 void Lib_Preference::Config_SetDefaults()
 {
+	strcpy(App->CL_Level->MTF_PathAndFile, "");
+	strcpy(App->CL_Level->MTF_PathAndFile, "");
+
+	flag_OpenLastFile = false;
+	flag_MapEditor = true;
+	flag_SceneEditor = false;
 
 	Save_Config_File();
 }
@@ -274,6 +345,9 @@ void Lib_Preference::Save_Config_File()
 	fprintf(WriteRecentFiles, "%s%s\n", "Last_File_Full=", App->CL_Level->MTF_PathAndFile);
 	fprintf(WriteRecentFiles, "%s%s\n", "Last_File_Name=", App->CL_Level->MTF_Just_FileName);
 
+	fprintf(WriteRecentFiles, "%s%i\n", "Start_Map_Editor=", flag_MapEditor);
+	fprintf(WriteRecentFiles, "%s%i\n", "Start_Scene_Editor=", flag_SceneEditor);
+
 	std::fclose(WriteRecentFiles);
 
 	return;
@@ -295,6 +369,10 @@ void Lib_Preference::Load_Config_File()
 
 	App->CL_Ini_File->GetString("Start_Up", "Last_File_Full", Prefs_PathAndFile, MAX_PATH);
 	App->CL_Ini_File->GetString("Start_Up", "Last_File_Name", Prefs_JustFileName, MAX_PATH);
+	
+	flag_MapEditor = App->CL_Ini_File->GetInt("Start_Up", "Start_Map_Editor", 1, 10);
+	flag_SceneEditor = App->CL_Ini_File->GetInt("Start_Up", "Start_Scene_Editor", 0, 10);
+
 	return;
 }
 

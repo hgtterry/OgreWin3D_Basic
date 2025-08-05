@@ -1599,6 +1599,11 @@ LRESULT CALLBACK CL64_Dialogs::Proc_General_ListBox(HWND hDlg, UINT message, WPA
 			App->CL_Dialogs->List_Used_Textures(List);
 		}
 
+		if (App->CL_Dialogs->m_ListType == Enums::ListBox_Libraries)
+		{
+			App->CL_Dialogs->List_Libraries(List);
+		}
+		
 		return TRUE;
 	}
 
@@ -1703,5 +1708,18 @@ void CL64_Dialogs::List_Used_Textures(HWND List)
 
 		App->CL_Brush->BrushList_Destroy(&SBList);
 	}
+}
+
+// *************************************************************************
+// *		 	List_Libraries:- Terry and Hazel Flanigan 2025			   *
+// *************************************************************************
+void CL64_Dialogs::List_Libraries(HWND List)
+{
+	SendMessage(List, LB_RESETCONTENT, 0, 0);
+	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)" ------------------- Libraries ------------------- ");
+	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)" ");
+
+	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->CL_Maths->GetVersion());
+	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->CL_X_Preference->GetVersion());
 
 }

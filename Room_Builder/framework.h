@@ -103,7 +103,8 @@ namespace Enums
 	enum ListBox_Type
 	{
 		ListBox_None = 0,
-		ListBox_Used_Textures = 1
+		ListBox_Used_Textures = 1,
+		ListBox_Libraries = 2
 	};
 
 	enum Selected_Map_View

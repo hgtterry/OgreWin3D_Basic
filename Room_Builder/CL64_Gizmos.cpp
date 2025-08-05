@@ -344,27 +344,33 @@ void CL64_Gizmos::MarkerBox_Setup(void)
 // *************************************************************************
 void CL64_Gizmos::MarkerBox_Adjust(int index)
 {
-	// Retrieve the object from the scene
-	Base_Object* object = App->CL_Scene->B_Object[index];
+	if (App->CL_Scene->Object_Count > 0)
+	{
+		if (App->CL_Scene->B_Object[index])
+		{
+			// Retrieve the object from the scene
+			Base_Object* object = App->CL_Scene->B_Object[index];
 
-	// Get the position and orientation of the object's node
-	Ogre::Vector3 position = object->Object_Node->getPosition();
-	Ogre::Quaternion rotation = object->Object_Node->getOrientation();
+			// Get the position and orientation of the object's node
+			Ogre::Vector3 position = object->Object_Node->getPosition();
+			Ogre::Quaternion rotation = object->Object_Node->getOrientation();
 
-	// Get the bounding box size of the object's mesh
-	Ogre::Vector3 size = App->CL_Com_Objects->GetMeshBoundingBoxSize(object->Object_Node);
+			// Get the bounding box size of the object's mesh
+			Ogre::Vector3 size = App->CL_Com_Objects->GetMeshBoundingBoxSize(object->Object_Node);
 
-	// Update the marker box dimensions
-	MarkerBox_Update(size.x / 2, size.y / 2, size.z / 2);
+			// Update the marker box dimensions
+			MarkerBox_Update(size.x / 2, size.y / 2, size.z / 2);
 
-	// Calculate the center of the bounding box and convert to world space
-	Ogre::Vector3 center = object->Object_Node->getAttachedObject(0)->getBoundingBox().getCenter();
-	Ogre::Vector3 worldSpacePosition = object->Object_Node->convertLocalToWorldPosition(center);
+			// Calculate the center of the bounding box and convert to world space
+			Ogre::Vector3 center = object->Object_Node->getAttachedObject(0)->getBoundingBox().getCenter();
+			Ogre::Vector3 worldSpacePosition = object->Object_Node->convertLocalToWorldPosition(center);
 
-	// Set the position and orientation of the box node
-	BoxNode->setPosition(worldSpacePosition);
-	BoxNode->setOrientation(rotation);
-	BoxNode->setVisible(true);
+			// Set the position and orientation of the box node
+			BoxNode->setPosition(worldSpacePosition);
+			BoxNode->setOrientation(rotation);
+			BoxNode->setVisible(true);
+		}
+	}
 
 	// App->SBC_Markers->Move_Arrow(worldSpacePosition);
 }

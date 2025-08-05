@@ -20,7 +20,10 @@ public:
 	int Grid_Fine_Spacing;
 	int Grid_Spacing;
 
+	// Options
 	bool flag_OpenLastFile;
+	bool flag_MapEditor;
+	bool flag_SceneEditor;
 
 	char Prefs_PathAndFile[MAX_PATH];
 	char Prefs_JustFileName[MAX_PATH];

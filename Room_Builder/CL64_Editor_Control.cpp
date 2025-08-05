@@ -220,30 +220,16 @@ void CL64_Editor_Control::Start_Editor_Scene()
 	topTabs->flag_View_Top_Right = false;
 	topTabs->flag_View_Bottom_Left = false;
 
-	// Initialize views and resize windows
-	App->CL_Editor_Map->Init_Views(Enums::Selected_Map_View_3D);
-	App->CL_Editor_Map->Resize_Windows(App->CL_Editor_Map->Main_View_Dlg_Hwnd,
-		App->CL_Editor_Map->nleftWnd_width,
-		App->CL_Editor_Map->nleftWnd_Depth);
-
-	// Adjust window position
-	RECT clientRect;
-	GetClientRect(App->CL_Editor_Map->Bottom_Ogre_Right_Hwnd, &clientRect);
-	SetWindowPos(App->ViewGLhWnd, nullptr, 0, 0, clientRect.right, clientRect.bottom, SWP_NOZORDER);
-
-	// Update Ogre window and camera aspect ratio
-	auto& ogre = App->CL_Ogre;
-	ogre->mWindow->windowMovedOrResized();
-	ogre->mCamera->setAspectRatio(static_cast<Ogre::Real>(ogre->mWindow->getWidth()) /
-		static_cast<Ogre::Real>(ogre->mWindow->getHeight()));
-
+	// Set 3D View to Full View
+	App->CL_Editor_Map->Set_3D_FullView();
+	
 	// Hide visuals and tabs
-	ogre->OGL_Listener->Show_Visuals(false);
+	App->CL_Ogre->OGL_Listener->Show_Visuals(false);
 	topTabs->Show_TopTabs(false);
 	App->CL_Properties_Tabs->Show_Tabs_Control_Dlg(false);
 	App->CL_Properties_Tabs->flag_Tabs_Dlg_Active = false;
 	App->CL_Ogre->OGL_Listener->Show_Visuals(false);
-
+	
 	// Show headers and file view
 	App->CL_Editor_Scene->Show_Headers(true);
 	App->CL_FileView->Show_FileView(true);
@@ -251,12 +237,14 @@ void CL64_Editor_Control::Start_Editor_Scene()
 	App->CL_Panels->Resize_FileView();
 	App->CL_Panels->Place_Properties_Dlg();
 	App->CL_Properties_Scene->Show_Properties_Scene(true);
-
+	
 	// Set menu
 	SetMenu(App->MainHwnd, App->Menu_Scene);
-	App->CL_Com_Objects->Show_Entities(true);
 
+	App->CL_Com_Objects->Show_Entities(true);
+	
 	App->CL_Gizmos->MarkerBox_Adjust(App->CL_Properties_Scene->Current_Selected_Object);
+
 	App->CL_ImGui_Editor->flag_Block_GUI = false;
 }
 

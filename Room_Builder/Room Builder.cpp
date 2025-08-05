@@ -196,6 +196,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				return 1;
 			}
 
+            case ID_DEBUG_LIBRARIES:
+            {
+                App->CL_Dialogs->Start_General_ListBox(Enums::ListBox_Libraries);
+
+                return 1;
+            }
+            
             case ID_DEBUG_DEBUGIMGUI:
             {
                 if (App->CL_ImGui->flag_Show_Listbox == true)
@@ -443,8 +450,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
             case ID_VIEW_3DVIEW:
             {
-                App->CL_Editor_Map->Init_Views(Enums::Selected_Map_View_3D);
-                App->CL_Editor_Map->Resize_Windows(App->CL_Editor_Map->Main_View_Dlg_Hwnd, App->CL_Editor_Map->nleftWnd_width, App->CL_Editor_Map->nleftWnd_Depth);
+                App->CL_Editor_Map->Set_3D_FullView();
                 return true;
             }
 
@@ -995,6 +1001,11 @@ void StartOgre()
             App->CL_File->Start_Load(false);
         }
     }
+
+   if (App->CL_X_Preference->flag_SceneEditor == true)
+   {
+       App->CL_Editor_Control->Start_Editor_Scene();
+   }
 
     App->CL_Ogre->Ogre_Render_Loop();
 
