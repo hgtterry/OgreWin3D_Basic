@@ -857,30 +857,32 @@ void CL64_Top_Tabs::Show_TopTabs(bool Enable)
 // *************************************************************************
 void CL64_Top_Tabs::Set_View_Buttons(int Selected_View)
 {
+	// Reset all view flags to false
 	flag_View_Top_Left = false;
 	flag_View_Top_Right = false;
 	flag_View_Bottom_Left = false;
 	flag_Full_View_3D = false;
 
-	if (Selected_View == Enums::Selected_Map_View_TL)
+	// Set the appropriate flag based on the selected view
+	switch (Selected_View)
 	{
+	case Enums::Selected_Map_View_TL:
 		flag_View_Top_Left = true;
-	}
-
-	if (Selected_View == Enums::Selected_Map_View_TR)
-	{
+		break;
+	case Enums::Selected_Map_View_TR:
 		flag_View_Top_Right = true;
-	}
-	
-	if (Selected_View == Enums::Selected_Map_View_BL)
-	{
+		break;
+	case Enums::Selected_Map_View_BL:
 		flag_View_Bottom_Left = true;
-	}
-	
-	if (Selected_View == Enums::Selected_Map_View_3D)
-	{
+		break;
+	case Enums::Selected_Map_View_3D:
 		flag_Full_View_3D = true;
+		break;
+	default:
+		// Handle unexpected view selection if necessary
+		break;
 	}
 
+	// Redraw the window to reflect the changes
 	RedrawWindow(Headers_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 }

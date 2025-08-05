@@ -606,7 +606,11 @@ void CL64_File::Set_Editor()
 
 	// Reset the camera and views
 	App->CL_Ogre->Camera_Reset_Zero();
-	App->CL_Editor_Map->Reset_Views_All();
+
+	if (App->CL_Editor_Control->flag_Scene_Editor_Active == false)
+	{
+		App->CL_Editor_Map->Reset_Views_All();
+	}
 
 	// Set the editor dialog to the first brush
 	App->CL_Doc->Editor_Set_Dlgs(Enums::Editor_Dlgs_First_Brush);
@@ -633,7 +637,11 @@ void CL64_File::Set_Editor()
 	App->CL_Camera->Camera_Textured();
 
 	// Switch back to map editor mode and render the frame
-	App->CL_Editor_Control->Return_To_Map_Editor();
+	if (App->CL_Editor_Control->flag_Scene_Editor_Active == false)
+	{
+		App->CL_Editor_Control->Return_To_Map_Editor();
+	}
+
 	App->CL_Properties_Tabs->Select_Templates_Tab();
 	App->CL_Ogre->RenderFrame(7);
 }
