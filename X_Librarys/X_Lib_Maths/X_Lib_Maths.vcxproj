@@ -133,7 +133,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>..\..\Common_64\Ogre3D\include\OGRE\RTShaderSystem;..\..\Common_64\Ogre3D\include\OGRE\Bites;..\..\Common_64\Ogre3D\include\OGRE\Overlay;..\..\Common_64\Ogre3D\include\OGRE;..\..\Common_64\Bullet\Source;..\..\Common_64\Bullet\Source\LinearMath;..\..\Common_64\irrKlang\Headers;..\..\Test_Lib\Test_Lib;..\..\Room_Builder;..\..\X_Lib_Zip;..\..\X_Lib_Preferences</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\Common_64\Ogre3D\include\OGRE\RTShaderSystem;..\..\Common_64\Ogre3D\include\OGRE\Bites;..\..\Common_64\Ogre3D\include\OGRE\Overlay;..\..\Common_64\Ogre3D\include\OGRE;..\..\Common_64\Bullet\Source;..\..\Common_64\Bullet\Source\LinearMath;..\..\Common_64\irrKlang\Headers;..\..\\Common_64\OW3D\include;..\..\Test_Lib\Test_Lib;..\..\Room_Builder;..\..\X_Lib_Zip;..\..\X_Librarys\X_Lib_Preferences</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>

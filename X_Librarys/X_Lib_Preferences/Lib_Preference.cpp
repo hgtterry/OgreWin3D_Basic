@@ -27,6 +27,14 @@ Lib_Preference::~Lib_Preference(void)
 }
 
 // *************************************************************************
+// *			GetVersion:- Terry and Hazel Flanigan 2025			 	   *
+// *************************************************************************
+char* Lib_Preference::GetVersion()
+{
+	return (LPSTR)"Lib_Preference 1.0.0 ";
+}
+
+// *************************************************************************
 // *			  Start_Options_Dlg:- Terry and Hazel Flanigan 2025		   *
 // *************************************************************************
 void Lib_Preference::Start_Options_Dlg()

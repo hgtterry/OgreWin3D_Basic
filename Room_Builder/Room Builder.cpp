@@ -182,7 +182,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			{ 
                // App->CL_Editor_Control->Set_Map_Editor_Select_Dlg();
 
-                App->Say_Win(App->CL_Maths->GetVersion());
+                App->Say_Win(App->CL_X_Preference->GetVersion());
 
                 /*if (App->CL_ImGui_Editor->flag_Show_Visuals == true)
                 {

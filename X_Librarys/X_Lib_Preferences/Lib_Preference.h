@@ -5,6 +5,8 @@ public:
 	Lib_Preference(void);
 	~Lib_Preference(void);
 
+	char* GetVersion();
+
 	void Start_Options_Dlg();
 	void Read_Preferences();
 	bool Write_Preferences();
