@@ -202,7 +202,6 @@
     <ClInclude Include="CL64_PB.h" />
     <ClInclude Include="CL64_Physics.h" />
     <ClInclude Include="CL64_Picking.h" />
-    <ClInclude Include="CL64_Prefs.h" />
     <ClInclude Include="CL64_Project.h" />
     <ClInclude Include="CL64_Properties_Brushes.h" />
     <ClInclude Include="CL64_Properties_Faces.h" />
@@ -279,7 +278,6 @@
     <ClCompile Include="CL64_PB.cpp" />
     <ClCompile Include="CL64_Physics.cpp" />
     <ClCompile Include="CL64_Picking.cpp" />
-    <ClCompile Include="CL64_Prefs.cpp" />
     <ClCompile Include="CL64_Project.cpp" />
     <ClCompile Include="CL64_Properties_Brushes.cpp" />
     <ClCompile Include="CL64_Properties_Faces.cpp" />

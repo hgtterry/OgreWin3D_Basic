@@ -44,8 +44,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     // Initialize application
     App->InitApp();
-    App->CL_Prefs->Read_Preferences();
-    App->CL_Prefs->Init_Configuration();
+    App->CL_X_Preference->Read_Preferences();
+    App->CL_X_Preference->Init_Configuration();
 
     UNREFERENCED_PARAMETER(hPrevInstance);
     UNREFERENCED_PARAMETER(lpCmdLine);
@@ -182,7 +182,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			{ 
                // App->CL_Editor_Control->Set_Map_Editor_Select_Dlg();
 
-                App->Say_Win(App->CL_Prefs->Prefs_PathAndFile);
+                App->Say_Win(App->CL_X_Preference->Prefs_PathAndFile);
 
                 /*if (App->CL_ImGui_Editor->flag_Show_Visuals == true)
                 {
@@ -625,7 +625,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             // ----------------------------- Options
             case ID_OPTIONS_SETTINGS:
             {
-                App->CL_Prefs->Start_Options_Dlg();
+                App->CL_X_Preference->Start_Options_Dlg();
                 return 1;
             }
             
@@ -982,14 +982,14 @@ void StartOgre()
 
     App->CL_Ogre->RenderFrame(5);
    
-    if (App->CL_Prefs->flag_OpenLastFile)
+    if (App->CL_X_Preference->flag_OpenLastFile)
     {
         // Compare the last opened file with "New_Room.mtf"
-        if (strcmp(App->CL_Prefs->Prefs_PathAndFile, "New_Room.mtf") != 0)
+        if (strcmp(App->CL_X_Preference->Prefs_PathAndFile, "New_Room.mtf") != 0)
         {
             // Copy the path and filename from preferences to the file structure
-            strcpy(App->CL_File->PathFileName_3dt, App->CL_Prefs->Prefs_PathAndFile);
-            strcpy(App->CL_File->FileName_3dt, App->CL_Prefs->Prefs_JustFileName);
+            strcpy(App->CL_File->PathFileName_3dt, App->CL_X_Preference->Prefs_PathAndFile);
+            strcpy(App->CL_File->FileName_3dt, App->CL_X_Preference->Prefs_JustFileName);
 
             // Initiate the loading process
             App->CL_File->Start_Load(false);

@@ -32,8 +32,6 @@ THE SOFTWARE.
 #include "CL64_Level.h"
 
 #include "Lib_Preference.h" // Library
-#include "CL64_Prefs.h"
-
 
 #include "CL64_Ini_File.h"
 #include "CL64_Doc.h"
@@ -125,9 +123,7 @@ public:
 	CL64_Level*					CL_Level;
 
 	Lib_Preference*				CL_X_Preference; // Library
-	CL64_Prefs*					CL_Prefs;
-
-
+	
 	CL64_Ini_File*				CL_Ini_File;
 	CL64_Doc*					CL_Doc;
 	CL64_Utilities*				CL_Utilities;

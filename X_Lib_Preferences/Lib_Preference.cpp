@@ -49,7 +49,7 @@ LRESULT CALLBACK Lib_Preference::Proc_Options_Dlg(HWND hDlg, UINT message, WPARA
 		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		HWND Temp = GetDlgItem(hDlg, IDC_CK_LASTFILE);
-		SendMessage(Temp, BM_SETCHECK, App->CL_Prefs->flag_OpenLastFile, 0);
+		SendMessage(Temp, BM_SETCHECK, App->CL_X_Preference->flag_OpenLastFile, 0);
 
 		return TRUE;
 	}
@@ -97,14 +97,14 @@ LRESULT CALLBACK Lib_Preference::Proc_Options_Dlg(HWND hDlg, UINT message, WPARA
 		{
 			HWND Temp = GetDlgItem(hDlg, IDC_CK_LASTFILE);
 
-			if (App->CL_Prefs->flag_OpenLastFile == true)
+			if (App->CL_X_Preference->flag_OpenLastFile == true)
 			{
-				App->CL_Prefs->flag_OpenLastFile = false;
+				App->CL_X_Preference->flag_OpenLastFile = false;
 				SendMessage(Temp, BM_SETCHECK, false, 0);
 			}
 			else
 			{
-				App->CL_Prefs->flag_OpenLastFile = true;
+				App->CL_X_Preference->flag_OpenLastFile = true;
 				SendMessage(Temp, BM_SETCHECK, true, 0);
 			}
 
@@ -113,7 +113,7 @@ LRESULT CALLBACK Lib_Preference::Proc_Options_Dlg(HWND hDlg, UINT message, WPARA
 
 		if (LOWORD(wParam) == IDOK)
 		{
-			App->CL_Prefs->Save_Config_File();
+			App->CL_X_Preference->Save_Config_File();
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
