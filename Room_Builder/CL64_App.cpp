@@ -34,7 +34,11 @@ CL64_App::CL64_App(void)
 	CL_Box =					nullptr;
 	CL_Render =					nullptr;
 	CL_Level =					nullptr;
+
+	CL_X_Preference =			nullptr; // Library
 	CL_Prefs =					nullptr;
+
+
 	CL_Ini_File =				nullptr;
 	CL_Doc =					nullptr;
 	CL_Utilities =				nullptr;
@@ -180,7 +184,11 @@ void CL64_App::InitApp(void)
 	CL_Box =					new CL64_Box();
 	CL_Render =					new CL64_Render_Map();
 	CL_Level =					new CL64_Level();
+
+	CL_X_Preference =			new Lib_Preference(); // Library
 	CL_Prefs =					new CL64_Prefs();
+
+
 	CL_Ini_File =				new CL64_Ini_File();
 	CL_Doc =					new CL64_Doc();
 	CL_Utilities =				new CL64_Utilities();
