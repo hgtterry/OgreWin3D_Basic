@@ -182,7 +182,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			{ 
                // App->CL_Editor_Control->Set_Map_Editor_Select_Dlg();
 
-                App->Say_Win(App->CL_X_Preference->Prefs_PathAndFile);
+                App->Say_Win(App->CL_Maths->GetVersion());
 
                 /*if (App->CL_ImGui_Editor->flag_Show_Visuals == true)
                 {
@@ -1057,10 +1057,11 @@ INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 
         SendDlgItemMessage(hDlg, IDC_LIST_ABOUT_VERSIONS, LB_ADDSTRING, (WPARAM)0, (LPARAM)" ");
 
-        sprintf(buf, "%s", "Ogre Version:- Version 14.3.2 (Tsathoggua)");
+        sprintf(buf, "%s", "Ogre Version:- Version 14.4.0 (Tsathoggua)");
         SendDlgItemMessage(hDlg, IDC_LIST_ABOUT_VERSIONS, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
-        sprintf(buf, "%s", "Imgui Version:- 1.91.2");
+        ImGui::GetVersion();
+        sprintf(buf, "Imgui Version:- " "%s", ImGui::GetVersion()); //"Imgui Version:- 1.91.2");
         SendDlgItemMessage(hDlg, IDC_LIST_ABOUT_VERSIONS, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
         sprintf(buf, "%s", "Bullet Version:- 2.86.1");

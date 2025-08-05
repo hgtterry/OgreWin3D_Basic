@@ -20,6 +20,8 @@ typedef struct
 		CL64_Lib_Maths();
 		~CL64_Lib_Maths();
 
+		char* GetVersion();
+
 		void Vector3_Set(T_Vec3* V, float X, float Y, float Z);
 		void Vector3_Add(const T_Vec3* V1, const T_Vec3* V2, T_Vec3* V1PlusV2);
 		void Vector3_Subtract(const T_Vec3* V1, const T_Vec3* V2, T_Vec3* V1MinusV2);
