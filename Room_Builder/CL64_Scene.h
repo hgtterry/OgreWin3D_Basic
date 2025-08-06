@@ -61,9 +61,12 @@ public:
 	int Player_Count;		// Total number of players in the scene
 	bool flag_Player_Added; // Flag to indicate if a player has been added
 
-	// Scene
+	// Scene Objects
 	int Object_Count;
 	int UniqueID_Object_Counter;
+
+	// Locations
+	int Location_Count = 0;
 
 	// Ogre
 	int Ogre_Face_Count;

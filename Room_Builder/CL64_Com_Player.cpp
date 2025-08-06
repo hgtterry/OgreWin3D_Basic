@@ -88,26 +88,31 @@ void CL64_Com_Player::Reset_Class(void)
 }
 
 // *************************************************************************
-// *	  	Create_Player_Object:- Terry and Hazel Flanigan 2024		   *
+// *	  	Create_New_Player:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-void CL64_Com_Player::Create_Player_Object(void)
+void CL64_Com_Player::Create_New_Player(const char* Name)
 {
 	int Index = App->CL_Scene->Player_Count;
 
 	App->CL_Scene->B_Player[Index] = new Base_Player();
-	
-	Initialize();
+	Base_Player* NewPlayer = App->CL_Scene->B_Player[Index];
 
-	App->CL_Scene->B_Player[Index]->CameraPitch = App->CL_Ogre->mSceneMgr->createCamera("PlayerPitch");
+	Initialize(NewPlayer);
 
-	App->CL_Scene->B_Player[Index]->CameraPitch_Node = App->CL_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
-	App->CL_Scene->B_Player[Index]->CameraPitch_Node->attachObject(App->CL_Scene->B_Player[Index]->CameraPitch);
-	App->CL_Scene->B_Player[Index]->CameraPitch_Node->setPosition(0, 0, 0);
+	NewPlayer->CameraPitch = App->CL_Ogre->mSceneMgr->createCamera("PlayerPitch");
 
-	strcpy(App->CL_Scene->B_Player[0]->Player_Name, "Player_1");
-	HTREEITEM Temp1 = App->CL_FileView->Add_Item(App->CL_FileView->FV_Players_Folder, (LPSTR)"Player_1", 0, true);
+	NewPlayer->CameraPitch_Node = App->CL_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	NewPlayer->CameraPitch_Node->attachObject(App->CL_Scene->B_Player[Index]->CameraPitch);
+	NewPlayer->CameraPitch_Node->setPosition(0, 0, 0);
+
+	strcpy(NewPlayer->Player_Name, Name);
+
+	// Add to FileView
+	HTREEITEM Temp1 = App->CL_FileView->Add_Item(App->CL_FileView->FV_Players_Folder, (LPSTR)Name, Index, true);
 	App->CL_FileView->Set_FolderActive(App->CL_FileView->FV_Players_Folder);
 	App->CL_FileView->SelectItem(Temp1);
+
+	App->CL_Entities->Create_Player_Brush(Name);
 
 	App->CL_Scene->Player_Count++;
 
@@ -116,27 +121,23 @@ void CL64_Com_Player::Create_Player_Object(void)
 // *************************************************************************
 // *	  			Initialize:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-void CL64_Com_Player::Initialize() const
+void CL64_Com_Player::Initialize(Base_Player* p_Base) const
 {
 	Ogre::Vector3 Pos;
 
-	int Index = App->CL_Scene->Player_Count;
-
-	Base_Player* pBase = App->CL_Scene->B_Player[Index];
+	p_Base->Player_Ent = App->CL_Ogre->mSceneMgr->createEntity("Main_Player", "Sinbad.mesh", App->CL_Ogre->App_Resource_Group);
+	p_Base->Player_Node = App->CL_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	p_Base->Player_Node->attachObject(p_Base->Player_Ent);
 	
-	pBase->Player_Ent = App->CL_Ogre->mSceneMgr->createEntity("Player_1", "Sinbad.mesh", App->CL_Ogre->App_Resource_Group);
-	pBase->Player_Node = App->CL_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
-	pBase->Player_Node->attachObject(pBase->Player_Ent);
-	
-	pBase->Player_Node->setOrientation(Ogre::Quaternion::IDENTITY);
-	pBase->Player_Node->setVisible(false);
-	pBase->Player_Node->scale(3, 3, 3);
+	p_Base->Player_Node->setOrientation(Ogre::Quaternion::IDENTITY);
+	p_Base->Player_Node->setVisible(false);
+	p_Base->Player_Node->scale(3, 3, 3);
 
-	Pos.x = pBase->StartPos.x;
-	Pos.y = pBase->StartPos.y;
-	Pos.z = pBase->StartPos.z;
+	Pos.x = p_Base->StartPos.x;
+	Pos.y = p_Base->StartPos.y;
+	Pos.z = p_Base->StartPos.z;
 
-	pBase->Player_Node->setPosition(Pos.x, Pos.y, Pos.z);
+	p_Base->Player_Node->setPosition(Pos.x, Pos.y, Pos.z);
 	
 	// ------------------------ Bulet
 	btVector3 pos = btVector3(Pos.x, Pos.y, Pos.z);
@@ -145,21 +146,21 @@ void CL64_Com_Player::Initialize() const
 	btQuaternion rot = btQuaternion(0, 0, 0, 1);
 	btDefaultMotionState* state = new btDefaultMotionState(btTransform(rot, pos));
 	
-	pBase->Phys_Shape = new btCapsuleShape(btScalar(pBase->Capsule_Radius), btScalar(pBase->Capsule_Height));
-	pBase->Phys_Body = new btRigidBody(pBase->Capsule_Mass, state, pBase->Phys_Shape, inertia);
+	p_Base->Phys_Shape = new btCapsuleShape(btScalar(p_Base->Capsule_Radius), btScalar(p_Base->Capsule_Height));
+	p_Base->Phys_Body = new btRigidBody(p_Base->Capsule_Mass, state, p_Base->Phys_Shape, inertia);
 	
-	pBase->Phys_Body->setSleepingThresholds(0.0, 0.0);
-	pBase->Phys_Body->setAngularFactor(0.0);
+	p_Base->Phys_Body->setSleepingThresholds(0.0, 0.0);
+	p_Base->Phys_Body->setAngularFactor(0.0);
 
-	pBase->Phys_Body->setUserPointer(pBase->Player_Node);
+	p_Base->Phys_Body->setUserPointer(p_Base->Player_Node);
 
-	pBase->Phys_Body->setUserIndex(Enums::Obj_Usage_Player);
+	p_Base->Phys_Body->setUserIndex(Enums::Obj_Usage_Player);
 
-	int f = pBase->Phys_Body->getCollisionFlags();
+	int f = p_Base->Phys_Body->getCollisionFlags();
 	//pBase->Phys_Body->setCollisionFlags(f | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
 
 	App->CL_Scene->B_Player[0]->Phys_Body->getWorldTransform().setRotation(App->CL_Scene->B_Player[0]->Physics_Rotation);
-	App->CL_Physics->dynamicsWorld->addRigidBody(pBase->Phys_Body);
+	App->CL_Physics->dynamicsWorld->addRigidBody(p_Base->Phys_Body);
 
 	App->CL_Scene->flag_Player_Added = 1;
 	

@@ -44,6 +44,12 @@ CL64_Editor_Control::~CL64_Editor_Control(void)
 // *************************************************************************
 void CL64_Editor_Control::Start_Preview_Mode(void)
 {
+	if (App->CL_Scene->flag_Player_Added == false)
+	{
+		App->Say("No Player Added");
+		return;
+	}
+
     App->CL_ImGui->Close_Dialogs();
 	App->CL_ImGui_Editor->flag_Block_GUI = true;
     // Clear existing trimesh if it has been created

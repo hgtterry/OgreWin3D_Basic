@@ -98,7 +98,10 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     // Initialize dialogs
     App->Init_Dialogs();
-   
+
+
+  //  App->CL_Com_Player->Create_Player_Object();
+
     // Set timer for the main window
     SetTimer(App->MainHwnd, 1, 100, NULL);
 
@@ -385,14 +388,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
             case ID_FILE_CLEAR:
             {
-                App->CL_Dialogs->YesNo("Clear Editor", "Are you sure");
+                /*App->CL_Dialogs->YesNo("Clear Editor", "Are you sure");
 
                 if (App->CL_Dialogs->flag_Dlg_Canceled == true)
                 {
                     return 1;
                 }
 
-                App->CL_Scene->Clear_Level(false);
+                App->CL_Scene->Clear_Level(false);*/
                 return 1;
             }
 

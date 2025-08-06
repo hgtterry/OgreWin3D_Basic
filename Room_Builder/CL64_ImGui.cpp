@@ -726,15 +726,23 @@ void CL64_ImGui::Listbox_ImGui(void)
 				Ogre::Vector3 Pos = App->CL_Ogre->camNode->getPosition();
 
 				ImGui::Text("Camera Position XYZ  %f %f %f", Pos.x, Pos.y, Pos.z);
-				//ImGui::Text("Selected Window %i", App->CL_Editor_Map->Selected_Window);
 			}
+
+			if (CB_Index == 2) // Player Data
+			{
+				ImGui::Text("Player Added  %i", App->CL_Scene->flag_Player_Added);
+				ImGui::Text("Player Count  %i", App->CL_Scene->Player_Count);
+
+				//ImGui::Text("Player Name  %s", App->CL_Scene->Player_Count);
+			}
+		
 
 			ImGui::EndListBox();
 		}
 
 		static ImGuiComboFlags flags = 0;
 
-		const char* items[] = { "Views Data", "Ogre Data", "CCCC", "DDDD", "EEEE", "FFFF", "GGGG", "HHHH", "IIII", "JJJJ", "KKKK", "LLLLLLL", "MMMM", "OOOOOOO" };
+		const char* items[] = { "Views Data", "Ogre Data", "Player", "DDDD", "EEEE", "FFFF", "GGGG", "HHHH", "IIII", "JJJJ", "KKKK", "LLLLLLL", "MMMM", "OOOOOOO" };
 		const char* combo_preview_value = items[item_current_idx];  // Pass in the preview value visible before opening the combo (it could be anything)
 
 		if (ImGui::BeginCombo("Debug Category", combo_preview_value, flags))

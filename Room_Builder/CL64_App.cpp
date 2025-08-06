@@ -301,7 +301,6 @@ void CL64_App::Init_Dialogs(void)
 	CL_Properties_Scene->Start_Properties();
 	CL_Panels->Place_Properties_Dlg();
 	CL_Props_Dialogs->Start_Props_Dialogs();
-	CL_Com_Player->Create_Player_Object();
 }
 
 // *************************************************************************

@@ -78,8 +78,9 @@ int CL64_Entities::GetIndex_By_Name(char* Name)
 // *************************************************************************
 // *		Create_Player_Entity:- Terry and Hazel Flanigan 2025	 	   *
 // *************************************************************************
-void CL64_Entities::Create_Player_Brush()
+void CL64_Entities::Create_Player_Brush(const char* name)
 {
+	// Need to check for duplicate names
 	/*bool test = App->CL_Brush_X->Check_if_Brush_Name_Exist((LPSTR)"Player_Main");
 	if (test == 0)
 	{
@@ -117,7 +118,7 @@ void CL64_Entities::Create_Player_Brush()
 	Scales.LightmapScale = App->CL_Level->Level_GetLightmapScale(App->CL_Doc->Current_Level);
 	App->CL_Brush->Brush_EnumFaces(Player_Brush, &Scales, fdocSetFaceScales);
 
-	strcpy(Player_Brush->Name, "Player_Main");
+	strcpy(Player_Brush->Name, name);
 
 	App->CL_Level->Level_AppendBrush(Player_Brush);
 

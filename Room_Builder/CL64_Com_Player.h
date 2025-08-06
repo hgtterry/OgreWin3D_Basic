@@ -32,9 +32,8 @@ public:
 
 	void Reset_Class(void);
 
-	void Create_Player_Object(void);
-	void Initialize() const;
-
+	void Create_New_Player(const char* Name);
+	
 	void Show_Player_And_Physics(bool Show);
 	void Show_Player_Physics(bool Show);
 	void Adjust_Capsule(void);
@@ -79,5 +78,8 @@ public:
 
 	int Last_Message_Index;
 
+private:
+
+	void Initialize(Base_Player* p_Base) const;
 };
 

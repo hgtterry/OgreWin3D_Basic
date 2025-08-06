@@ -44,9 +44,12 @@ CL64_Scene::CL64_Scene()
 	Player_Count = 0;
 	flag_Player_Added = 0;
 
-	// Scene
+	// Scene Objects
 	Object_Count = 0;
 	UniqueID_Object_Counter = 0;
+
+	// Locations
+	Location_Count = 0;
 
 	// Ogre
 	Ogre_Face_Count = 0;
@@ -118,6 +121,8 @@ void CL64_Scene::Reset_Class()
 
 	Object_Count = 0;
 	UniqueID_Object_Counter = 0;
+
+	Location_Count = 0;
 }
 
 // *************************************************************************

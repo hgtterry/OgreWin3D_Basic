@@ -148,16 +148,15 @@ LRESULT CALLBACK CL64_Properties_Templates::Proc_Templates(HWND hDlg, UINT messa
 					App->CL_Project->flag_Is_New_Project = true;
 					App->CL_Doc->AddBrushToWorld();
 					
-					// Scene
-					App->CL_Entities->Create_Player_Brush();
+					// Create Player
+					App->CL_Com_Player->Create_New_Player("Main_Player");
 					
-					//if (App->CL_Level->Level_Version == 1.0)
-					{
 
-						App->CL_Com_Environments->Create_Test_Environment();
-						//App->CL_Com_Objects->Show_Entities(false);
-						App->CL_Gizmos->Show_MarkerBox(false);
-					}
+					// Create 
+					App->CL_Com_Environments->Create_Test_Environment();
+
+					App->CL_Gizmos->Show_MarkerBox(false);
+					
 					
 					// ----------------
 
