@@ -872,14 +872,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     
     case WM_CLOSE:
     {
-        if (App->CL_Editor_Control->flag_Scene_Editor_Active == 1)
-        {
-            App->CL_Ogre->Ogre3D_Listener->flag_Run_Physics = 0;
-            App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_Free;
-            App->CL_Editor_Control->Return_To_Map_Editor();
-            return 1;
-        }
-
         if (App->CL_Level->flag_Level_is_Modified == true)
         {
             char Text[200];

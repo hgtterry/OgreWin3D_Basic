@@ -534,6 +534,14 @@ void CL64_Properties_Brushes::StartDimensionsDialog()
 		int numberOfBrushes = App->CL_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes);
 		if (numberOfBrushes > 0)
 		{
+			//App->Say_Int(App->CL_Properties_Brushes->Selected_Brush->GroupId);
+
+			if (App->CL_Properties_Brushes->Selected_Brush->GroupId == Enums::Brushs_ID_Players)
+			{
+				App->Say("Player");
+				return;
+			}
+
 			Dimensions_Dlg_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_BRUSH_DIMENSIONS, App->MainHwnd, (DLGPROC)Proc_Dimensions_Dlg);
 			flag_Dimension_Dlg_Active = true;
 		}
@@ -604,6 +612,16 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Dimensions_Dlg(HWND hDlg, UINT me
 		SetDlgItemText(hDlg, IDC_ST_BRUSH_NAME, App->CL_Properties_Brushes->Selected_Brush->Name);
 		
 		// Check if the Brush is an Entity
+
+		if (App->CL_Properties_Brushes->Selected_Brush->GroupId > Enums::Brushs_ID_Area)
+		{
+			int Index = App->CL_Entities->GetIndex_By_Name(App->CL_Properties_Brushes->Selected_Brush->Name);
+
+			App->CL_Properties_Brushes->Rotation.x = App->CL_Scene->B_Object[Index]->Mesh_Rot.x;
+			App->CL_Properties_Brushes->Rotation.y = App->CL_Scene->B_Object[Index]->Mesh_Rot.y;
+			App->CL_Properties_Brushes->Rotation.z = App->CL_Scene->B_Object[Index]->Mesh_Rot.z;
+		}
+
 		if (App->CL_Properties_Brushes->Selected_Brush->GroupId > Enums::Brushs_ID_Area)
 		{
 			int Index = App->CL_Entities->GetIndex_By_Name(App->CL_Properties_Brushes->Selected_Brush->Name);

@@ -1221,7 +1221,7 @@ void CL64_Doc::DoneRotate(void)
 }
 
 // *************************************************************************
-// *			                 DoneMove                           	   *
+// *			   DoneMove:- Terry and Hazel Flanigan 2025                *
 // *************************************************************************
 void CL64_Doc::DoneMove(void)
 {
@@ -1304,7 +1304,6 @@ void CL64_Doc::DoneMove(void)
 	UpdateSelected();
 
 	App->CL_Maths->Vector3_Clear(&FinalPos);
-
 }
 
 // *************************************************************************
