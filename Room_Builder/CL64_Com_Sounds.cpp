@@ -171,7 +171,7 @@ bool CL64_Com_Sounds::Create_Sound_Entity(int Index)
 
 	App->CL_Scene->B_Object[Index]->flag_Physics_Valid = 1;
 
-	App->CL_Physics->Set_Physics_Dimensions(Index);
+	App->CL_Physics->Update_Object_Physics(Index);
 
 	return 1;
 }

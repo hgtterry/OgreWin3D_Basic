@@ -489,9 +489,9 @@ void CL64_Physics::Show_Debug_Objects(bool Show)
 }
 
 // *************************************************************************
-//		Set_Physics_Dimensions:- Terry and Hazel Flanigan 2024			   *
+//		Update_Object_Physics:-		Terry and Hazel Flanigan 2025		   *
 // *************************************************************************
-void CL64_Physics::Set_Physics_Dimensions(int Object_Index)
+void CL64_Physics::Update_Object_Physics(int Object_Index)
 {
 	// Retrieve the object reference
 	auto& object = App->CL_Scene->B_Object[Object_Index];
@@ -502,6 +502,13 @@ void CL64_Physics::Set_Physics_Dimensions(int Object_Index)
 
 	// Set the rotation of the physics body
 	object->Phys_Body->getWorldTransform().setRotation(btQuaternion(quat.x, quat.y, quat.z, quat.w));
+	
+	// Copy new rotation to Object 
+	object->Mesh_Quat.w = object->Phys_Body->getWorldTransform().getRotation().getW();
+	object->Mesh_Quat.x = object->Phys_Body->getWorldTransform().getRotation().getX();
+	object->Mesh_Quat.y = object->Phys_Body->getWorldTransform().getRotation().getY();
+	object->Mesh_Quat.z = object->Phys_Body->getWorldTransform().getRotation().getZ();
+
 
 	// Scale
 	object->Object_Node->setScale(object->Mesh_Scale);

@@ -1175,7 +1175,7 @@ void CL64_Doc::DoneRotate(void)
 
             if (Index > -1)
             {
-                App->CL_Physics->Set_Physics_Dimensions(Index);
+                App->CL_Physics->Update_Object_Physics(Index);
             }
         }
         else
@@ -1290,7 +1290,7 @@ void CL64_Doc::DoneMove(void)
             }
             else
             {
-                App->CL_Physics->Set_Physics_Dimensions(Index);
+                App->CL_Physics->Update_Object_Physics(Index);
             }
         }
 
@@ -1459,7 +1459,7 @@ void CL64_Doc::DoneResize(int sides, int inidx)
 
                 App->CL_Scene->B_Object[Index]->Object_Node->setPosition(CenterOfSelection.x, CenterOfSelection.y, CenterOfSelection.z);
 
-                App->CL_Physics->Set_Physics_Dimensions(Index);
+                App->CL_Physics->Update_Object_Physics(Index);
             }
 
         }

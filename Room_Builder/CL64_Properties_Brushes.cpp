@@ -816,7 +816,7 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Dimensions_Dlg(HWND hDlg, UINT me
 						m_object->Object_Node->setPosition(Old_Pos);
 						m_object->Mesh_Pos = Old_Pos;
 
-						App->CL_Physics->Set_Physics_Dimensions(Index);
+						App->CL_Physics->Update_Object_Physics(Index);
 
 						App->CL_Brush_X->Set_Brush_From_Entity_ByName(m_object->Object_Name, true);
 						App->CL_Gizmos->MarkerBox_Adjust(Index);
@@ -843,7 +843,7 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Dimensions_Dlg(HWND hDlg, UINT me
 
 						m_object->Mesh_Pos = Old_Pos;
 
-						App->CL_Physics->Set_Physics_Dimensions(Index);
+						App->CL_Physics->Update_Object_Physics(Index);
 
 						App->CL_Brush_X->Set_Brush_From_Entity_ByName(m_object->Object_Name, true);
 						App->CL_Gizmos->MarkerBox_Adjust(Index);
@@ -887,7 +887,7 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Dimensions_Dlg(HWND hDlg, UINT me
 
 						m_object->Mesh_Pos = Old_Pos;
 
-						App->CL_Physics->Set_Physics_Dimensions(Index);
+						App->CL_Physics->Update_Object_Physics(Index);
 
 						App->CL_Brush_X->Set_Brush_From_Entity_ByName(m_object->Object_Name, true);
 						App->CL_Gizmos->MarkerBox_Adjust(Index);
@@ -918,7 +918,7 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Dimensions_Dlg(HWND hDlg, UINT me
 
 						m_object->Mesh_Pos = Old_Pos;
 
-						App->CL_Physics->Set_Physics_Dimensions(Index);
+						App->CL_Physics->Update_Object_Physics(Index);
 
 						App->CL_Brush_X->Set_Brush_From_Entity_ByName(m_object->Object_Name, true);
 						App->CL_Gizmos->MarkerBox_Adjust(Index);
@@ -960,7 +960,7 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Dimensions_Dlg(HWND hDlg, UINT me
 
 						m_object->Mesh_Pos = Old_Pos;
 
-						App->CL_Physics->Set_Physics_Dimensions(Index);
+						App->CL_Physics->Update_Object_Physics(Index);
 
 						App->CL_Brush_X->Set_Brush_From_Entity_ByName(m_object->Object_Name, true);
 						App->CL_Gizmos->MarkerBox_Adjust(Index);
@@ -991,7 +991,7 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Dimensions_Dlg(HWND hDlg, UINT me
 
 						m_object->Mesh_Pos = Old_Pos;
 
-						App->CL_Physics->Set_Physics_Dimensions(Index);
+						App->CL_Physics->Update_Object_Physics(Index);
 
 						App->CL_Brush_X->Set_Brush_From_Entity_ByName(m_object->Object_Name, true);
 						App->CL_Gizmos->MarkerBox_Adjust(Index);
@@ -1044,7 +1044,7 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Dimensions_Dlg(HWND hDlg, UINT me
 						m_object->Mesh_Quat.y = m_object->Object_Node->getOrientation().y;
 						m_object->Mesh_Quat.z = m_object->Object_Node->getOrientation().z;
 
-						App->CL_Physics->Set_Physics_Dimensions(Index);
+						App->CL_Physics->Update_Object_Physics(Index);
 
 						App->CL_Gizmos->MarkerBox_Adjust(Index);
 						App->CL_Ogre->RenderFrame(2);
@@ -1088,7 +1088,7 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Dimensions_Dlg(HWND hDlg, UINT me
 						m_object->Mesh_Quat.y = m_object->Object_Node->getOrientation().y;
 						m_object->Mesh_Quat.z = m_object->Object_Node->getOrientation().z;
 
-						App->CL_Physics->Set_Physics_Dimensions(Index);
+						App->CL_Physics->Update_Object_Physics(Index);
 
 						App->CL_Gizmos->MarkerBox_Adjust(Index);
 						App->CL_Ogre->RenderFrame(2);
@@ -1145,7 +1145,7 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Dimensions_Dlg(HWND hDlg, UINT me
 						m_object->Mesh_Quat.y = m_object->Object_Node->getOrientation().y;
 						m_object->Mesh_Quat.z = m_object->Object_Node->getOrientation().z;
 
-						App->CL_Physics->Set_Physics_Dimensions(Index);
+						App->CL_Physics->Update_Object_Physics(Index);
 
 						App->CL_Gizmos->MarkerBox_Adjust(Index);
 						App->CL_Ogre->RenderFrame(2);
@@ -1189,7 +1189,7 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Dimensions_Dlg(HWND hDlg, UINT me
 						m_object->Mesh_Quat.y = m_object->Object_Node->getOrientation().y;
 						m_object->Mesh_Quat.z = m_object->Object_Node->getOrientation().z;
 
-						App->CL_Physics->Set_Physics_Dimensions(Index);
+						App->CL_Physics->Update_Object_Physics(Index);
 
 						App->CL_Gizmos->MarkerBox_Adjust(Index);
 						App->CL_Ogre->RenderFrame(2);
@@ -1246,7 +1246,7 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Dimensions_Dlg(HWND hDlg, UINT me
 						m_object->Mesh_Quat.y = m_object->Object_Node->getOrientation().y;
 						m_object->Mesh_Quat.z = m_object->Object_Node->getOrientation().z;
 
-						App->CL_Physics->Set_Physics_Dimensions(Index);
+						App->CL_Physics->Update_Object_Physics(Index);
 
 						App->CL_Gizmos->MarkerBox_Adjust(Index);
 						App->CL_Ogre->RenderFrame(2);
@@ -1290,7 +1290,7 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Dimensions_Dlg(HWND hDlg, UINT me
 						m_object->Mesh_Quat.y = m_object->Object_Node->getOrientation().y;
 						m_object->Mesh_Quat.z = m_object->Object_Node->getOrientation().z;
 
-						App->CL_Physics->Set_Physics_Dimensions(Index);
+						App->CL_Physics->Update_Object_Physics(Index);
 
 						App->CL_Gizmos->MarkerBox_Adjust(Index);
 						App->CL_Ogre->RenderFrame(2);
@@ -1341,7 +1341,7 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Dimensions_Dlg(HWND hDlg, UINT me
 						m_object->Object_Node->setScale(Old_Scale);
 						m_object->Mesh_Scale = Old_Scale;
 
-						App->CL_Physics->Set_Physics_Dimensions(Index);
+						App->CL_Physics->Update_Object_Physics(Index);
 
 						App->CL_Brush_X->Set_Brush_From_Entity_ByName(m_object->Object_Name, true);
 
@@ -1382,7 +1382,7 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Dimensions_Dlg(HWND hDlg, UINT me
 						m_object->Object_Node->setScale(Old_Scale);
 						m_object->Mesh_Scale = Old_Scale;
 
-						App->CL_Physics->Set_Physics_Dimensions(Index);
+						App->CL_Physics->Update_Object_Physics(Index);
 
 						App->CL_Brush_X->Set_Brush_From_Entity_ByName(m_object->Object_Name, true);
 
@@ -1429,7 +1429,7 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Dimensions_Dlg(HWND hDlg, UINT me
 						m_object->Object_Node->setScale(Old_Scale);
 						m_object->Mesh_Scale = Old_Scale;
 
-						App->CL_Physics->Set_Physics_Dimensions(Index);
+						App->CL_Physics->Update_Object_Physics(Index);
 
 						App->CL_Brush_X->Set_Brush_From_Entity_ByName(m_object->Object_Name, true);
 
@@ -1469,7 +1469,7 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Dimensions_Dlg(HWND hDlg, UINT me
 						m_object->Object_Node->setScale(Old_Scale);
 						m_object->Mesh_Scale = Old_Scale;
 
-						App->CL_Physics->Set_Physics_Dimensions(Index);
+						App->CL_Physics->Update_Object_Physics(Index);
 
 						App->CL_Brush_X->Set_Brush_From_Entity_ByName(m_object->Object_Name, true);
 
@@ -1517,7 +1517,7 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Dimensions_Dlg(HWND hDlg, UINT me
 						m_object->Object_Node->setScale(Old_Scale);
 						m_object->Mesh_Scale = Old_Scale;
 
-						App->CL_Physics->Set_Physics_Dimensions(Index);
+						App->CL_Physics->Update_Object_Physics(Index);
 
 						App->CL_Brush_X->Set_Brush_From_Entity_ByName(m_object->Object_Name, true);
 
@@ -1557,7 +1557,7 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Dimensions_Dlg(HWND hDlg, UINT me
 						m_object->Object_Node->setScale(Old_Scale);
 						m_object->Mesh_Scale = Old_Scale;
 
-						App->CL_Physics->Set_Physics_Dimensions(Index);
+						App->CL_Physics->Update_Object_Physics(Index);
 
 						App->CL_Brush_X->Set_Brush_From_Entity_ByName(m_object->Object_Name, true);
 

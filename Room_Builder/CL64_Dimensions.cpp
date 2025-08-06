@@ -141,7 +141,7 @@ void CL64_Dimensions::Do_Position_New()
 		}
 		else
 		{
-			App->CL_Physics->Set_Physics_Dimensions(Index);
+			App->CL_Physics->Update_Object_Physics(Index);
 		}
 
 		// TODO Test
@@ -197,7 +197,7 @@ void CL64_Dimensions::Do_Scale_New()
 		}
 		else
 		{
-			App->CL_Physics->Set_Physics_Dimensions(Index);
+			App->CL_Physics->Update_Object_Physics(Index);
 		}
 
 		// TODO Test
@@ -264,6 +264,7 @@ void CL64_Dimensions::Do_Rotation_New()
 		m_object->Mesh_Rot.y = App->CL_ImGui_Dialogs->m_Dialog_Float_Vec3.y;
 		m_object->Mesh_Rot.z = App->CL_ImGui_Dialogs->m_Dialog_Float_Vec3.z;
 
+		// 
 		m_object->Mesh_Quat.w = m_object->Object_Node->getOrientation().w;
 		m_object->Mesh_Quat.x = m_object->Object_Node->getOrientation().x;
 		m_object->Mesh_Quat.y = m_object->Object_Node->getOrientation().y;
@@ -278,7 +279,7 @@ void CL64_Dimensions::Do_Rotation_New()
 		}
 		else
 		{
-			App->CL_Physics->Set_Physics_Dimensions(Index);
+			App->CL_Physics->Update_Object_Physics(Index);
 		}
 
 		App->CL_Gizmos->MarkerBox_Adjust(Index);
