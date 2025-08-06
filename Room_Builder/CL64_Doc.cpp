@@ -1225,93 +1225,85 @@ void CL64_Doc::DoneRotate(void)
 // *************************************************************************
 void CL64_Doc::DoneMove(void)
 {
-    int	i;
-   
-    mLastOp = BRUSH_MOVE;
+	mLastOp = BRUSH_MOVE;
 
-    TempDeleteSelected();
+	TempDeleteSelected();
 
-    if (mModeTool == ID_TOOLS_TEMPLATE)
+	if (mModeTool == ID_TOOLS_TEMPLATE)
+	{
+		return;
+	}
+
+	int	i = 0; // Can only select 1 item at the moment
+
+	Brush* pBrush;
+	pBrush = App->CL_SelBrushList->SelBrushList_GetBrush(pSelBrushes, i);
+    if (!pBrush) return; // Exit if no brush is selected
+    
+    App->CL_Brush->Brush_Move(pBrush, &FinalPos);
+    App->CL_SelBrushList->SelBrushList_Center(App->CL_Doc->pSelBrushes, &App->CL_Doc->SelectedGeoCenter);
+    T_Vec3 CenterOfSelection = App->CL_Doc->SelectedGeoCenter;
+
+    // Special Brushes 
+    switch (pBrush->GroupId)
     {
-       /* {
-            App->CL_Brush->Brush_Move(CurBrush, &FinalPos);
-        }*/
-        return;
+    case Enums::Brushs_ID_Players: // Player Brush Selected
+    {
+        App->CL_Scene->B_Player[0]->StartPos.x = CenterOfSelection.x;
+        App->CL_Scene->B_Player[0]->StartPos.y = CenterOfSelection.y;
+        App->CL_Scene->B_Player[0]->StartPos.z = CenterOfSelection.z;
+
+        App->CL_Physics->Reset_Physics();
+
+        break;
     }
-    else
+
+    case Enums::Brushs_ID_Evirons: // Environment Brush Selected
     {
-        int NumSelBrushes = App->CL_SelBrushList->SelBrushList_GetSize(pSelBrushes);
-       
-        for (i = 0; i < NumSelBrushes; i++)
+        char Name[MAX_PATH]{ 0 };
+        strcpy(Name, pBrush->Name);
+
+        int Index = App->CL_Entities->GetIndex_By_Name(Name);
+
+        if (Index > -1)
         {
-            Brush* pBrush;
+            Ogre::Vector3 Ogre_Center = App->CL_Scene->B_Object[Index]->Object_Node->getPosition();
+            Ogre::Vector3 Ogre_BBCenter = App->CL_Scene->B_Object[Index]->Object_Node->_getWorldAABB().getCenter();
 
-            pBrush = App->CL_SelBrushList->SelBrushList_GetBrush(pSelBrushes, i);
+            float True_Center = (App->CL_Scene->B_Object[Index]->Object_Node->_getWorldAABB().getSize().y) / 2;
 
-            if (pBrush->GroupId == Enums::Brushs_ID_Players)
+            // Adjust the center of selection based on the bounding box center
+            if (fabs(Ogre_BBCenter.y - Ogre_Center.y) > 1)
             {
-                App->CL_SelBrushList->SelBrushList_Center(App->CL_Doc->pSelBrushes, &App->CL_Doc->SelectedGeoCenter);
-                T_Vec3 CenterOfSelection = App->CL_Doc->SelectedGeoCenter;
-
-                App->CL_Scene->B_Player[0]->StartPos.x = CenterOfSelection.x;
-                App->CL_Scene->B_Player[0]->StartPos.y = CenterOfSelection.y;
-                App->CL_Scene->B_Player[0]->StartPos.z = CenterOfSelection.z;
-
-                App->CL_Physics->Reset_Physics();
+                CenterOfSelection.y = CenterOfSelection.y - True_Center;
             }
 
-            if (pBrush->GroupId == Enums::Brushs_ID_Evirons)
+            // Update the position of the object in the scene
+            App->CL_Scene->B_Object[Index]->Object_Node->setPosition(CenterOfSelection.x, CenterOfSelection.y, CenterOfSelection.z);
+            App->CL_Scene->B_Object[Index]->Mesh_Pos = { CenterOfSelection.x, CenterOfSelection.y, CenterOfSelection.z };
+
+            App->CL_Brush_X->Set_Brush_From_Entity_ByName(pBrush->Name, true);
+
+            if (App->CL_Scene->B_Object[Index]->Shape == Enums::Shape_TriMesh)
             {
-                App->CL_Brush->Brush_Move(pBrush, &FinalPos);
-
-                char Name[MAX_PATH]{ 0 };
-                strcpy(Name, pBrush->Name);
-
-                int Index = App->CL_Entities->GetIndex_By_Name(Name);
-
-                if (Index > -1)
-                {
-                    App->CL_SelBrushList->SelBrushList_Center(App->CL_Doc->pSelBrushes, &App->CL_Doc->SelectedGeoCenter);
-                    T_Vec3 CenterOfSelection = App->CL_Doc->SelectedGeoCenter;
-
-                    Ogre::Vector3 Ogre_Center = App->CL_Scene->B_Object[Index]->Object_Node->getPosition();
-                    Ogre::Vector3 Ogre_BBCenter = App->CL_Scene->B_Object[Index]->Object_Node->_getWorldAABB().getCenter();
-
-                    float True_Center = (App->CL_Scene->B_Object[Index]->Object_Node->_getWorldAABB().getSize().y) / 2;
-
-                    // Adjust the center of selection based on the bounding box center
-                    if (fabs(Ogre_BBCenter.y - Ogre_Center.y) > 1)
-                    {
-                        CenterOfSelection.y = CenterOfSelection.y - True_Center;
-                    }
-                   
-                    // Update the position of the object in the scene
-                    App->CL_Scene->B_Object[Index]->Object_Node->setPosition(CenterOfSelection.x, CenterOfSelection.y, CenterOfSelection.z);
-                    App->CL_Scene->B_Object[Index]->Mesh_Pos = { CenterOfSelection.x, CenterOfSelection.y, CenterOfSelection.z };
-
-                    App->CL_Brush_X->Set_Brush_From_Entity_ByName(pBrush->Name, true);
-
-                    if (App->CL_Scene->B_Object[Index]->Shape == Enums::Shape_TriMesh)
-                    {
-                        App->CL_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(CenterOfSelection.x, CenterOfSelection.y, CenterOfSelection.z));
-                    }
-                    else
-                    {
-                        App->CL_Physics->Set_Physics_Dimensions(Index);
-                    }
-                }
-
+                App->CL_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(CenterOfSelection.x, CenterOfSelection.y, CenterOfSelection.z));
             }
             else
             {
-                App->CL_Brush->Brush_Move(pBrush, &FinalPos);
+                App->CL_Physics->Set_Physics_Dimensions(Index);
             }
         }
 
-        UpdateSelected();
+        break;
     }
 
-    App->CL_Maths->Vector3_Clear(&FinalPos);
+    default:
+        break;
+    }
+
+	UpdateSelected();
+
+	App->CL_Maths->Vector3_Clear(&FinalPos);
 
 }
 

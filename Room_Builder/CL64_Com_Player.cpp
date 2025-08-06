@@ -90,81 +90,102 @@ void CL64_Com_Player::Reset_Class(void)
 // *************************************************************************
 // *	  	Create_New_Player:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-void CL64_Com_Player::Create_New_Player(const char* Name)
+void CL64_Com_Player::Create_New_Player(const char* Name, bool From_File)
 {
 	int Index = App->CL_Scene->Player_Count;
 
+	// Create a new player instance
 	App->CL_Scene->B_Player[Index] = new Base_Player();
 	Base_Player* NewPlayer = App->CL_Scene->B_Player[Index];
 
+	// Initialize the new player and create Physics
 	Initialize(NewPlayer);
 
+	// Create and set up the camera for the new player
 	NewPlayer->CameraPitch = App->CL_Ogre->mSceneMgr->createCamera("PlayerPitch");
-
 	NewPlayer->CameraPitch_Node = App->CL_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	NewPlayer->CameraPitch_Node->attachObject(App->CL_Scene->B_Player[Index]->CameraPitch);
 	NewPlayer->CameraPitch_Node->setPosition(0, 0, 0);
 
+	// Set the player's name
 	strcpy(NewPlayer->Player_Name, Name);
 
-	// Add to FileView
-	HTREEITEM Temp1 = App->CL_FileView->Add_Item(App->CL_FileView->FV_Players_Folder, (LPSTR)Name, Index, true);
-	App->CL_FileView->Set_FolderActive(App->CL_FileView->FV_Players_Folder);
-	App->CL_FileView->SelectItem(Temp1);
+	// Add the player to the FileView for Scene Mode
+	if (From_File == false) // if loaded from a file the loader will add to the FileView
+	{
+		HTREEITEM Temp1 = App->CL_FileView->Add_Item(App->CL_FileView->FV_Players_Folder, (LPSTR)Name, Index, true);
+		App->CL_FileView->Set_FolderActive(App->CL_FileView->FV_Players_Folder);
+		App->CL_FileView->SelectItem(Temp1);
+	}
 
-	App->CL_Entities->Create_Player_Brush(Name);
+	// Create a player brush for Map Mode
+	if (From_File == false) // if loaded from a file the loader will add to the FileView
+	{
+		App->CL_Entities->Create_Player_Brush(Name);
+	}
 
+	// Increment the player count
 	App->CL_Scene->Player_Count++;
-
 }
 
 // *************************************************************************
 // *	  			Initialize:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-void CL64_Com_Player::Initialize(Base_Player* p_Base) const
+void CL64_Com_Player::Initialize(Base_Player* p_Player) const
 {
-	Ogre::Vector3 Pos;
+	// Create the player entity and node
+	p_Player->Player_Ent = App->CL_Ogre->mSceneMgr->createEntity("Main_Player", "Sinbad.mesh", App->CL_Ogre->App_Resource_Group);
+	p_Player->Player_Node = App->CL_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	p_Player->Player_Node->attachObject(p_Player->Player_Ent);
 
-	p_Base->Player_Ent = App->CL_Ogre->mSceneMgr->createEntity("Main_Player", "Sinbad.mesh", App->CL_Ogre->App_Resource_Group);
-	p_Base->Player_Node = App->CL_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
-	p_Base->Player_Node->attachObject(p_Base->Player_Ent);
-	
-	p_Base->Player_Node->setOrientation(Ogre::Quaternion::IDENTITY);
-	p_Base->Player_Node->setVisible(false);
-	p_Base->Player_Node->scale(3, 3, 3);
+	// Set initial properties for the player node
+	p_Player->Player_Node->setOrientation(Ogre::Quaternion::IDENTITY);
+	p_Player->Player_Node->setVisible(false);
+	p_Player->Player_Node->scale(3, 3, 3);
 
-	Pos.x = p_Base->StartPos.x;
-	Pos.y = p_Base->StartPos.y;
-	Pos.z = p_Base->StartPos.z;
+	// Set player position
+	Ogre::Vector3 Pos = { p_Player->StartPos.x, p_Player->StartPos.y, p_Player->StartPos.z };
+	p_Player->Player_Node->setPosition(Pos);
 
-	p_Base->Player_Node->setPosition(Pos.x, Pos.y, Pos.z);
-	
-	// ------------------------ Bulet
-	btVector3 pos = btVector3(Pos.x, Pos.y, Pos.z);
-	
-	btVector3 inertia = btVector3(0, 0, 0);
-	btQuaternion rot = btQuaternion(0, 0, 0, 1);
-	btDefaultMotionState* state = new btDefaultMotionState(btTransform(rot, pos));
-	
-	p_Base->Phys_Shape = new btCapsuleShape(btScalar(p_Base->Capsule_Radius), btScalar(p_Base->Capsule_Height));
-	p_Base->Phys_Body = new btRigidBody(p_Base->Capsule_Mass, state, p_Base->Phys_Shape, inertia);
-	
-	p_Base->Phys_Body->setSleepingThresholds(0.0, 0.0);
-	p_Base->Phys_Body->setAngularFactor(0.0);
+	// Initialize physics properties
+	InitializePhysics(p_Player, Pos);
 
-	p_Base->Phys_Body->setUserPointer(p_Base->Player_Node);
-
-	p_Base->Phys_Body->setUserIndex(Enums::Obj_Usage_Player);
-
-	int f = p_Base->Phys_Body->getCollisionFlags();
-	//pBase->Phys_Body->setCollisionFlags(f | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
-
-	App->CL_Scene->B_Player[0]->Phys_Body->getWorldTransform().setRotation(App->CL_Scene->B_Player[0]->Physics_Rotation);
-	App->CL_Physics->dynamicsWorld->addRigidBody(p_Base->Phys_Body);
-
+	// Mark player as added to the scene
 	App->CL_Scene->flag_Player_Added = 1;
-	
 }
+
+// *************************************************************************
+// *	  	InitializePhysics:- Terry and Hazel Flanigan 2025			   *
+// *************************************************************************
+void CL64_Com_Player::InitializePhysics(Base_Player* p_Player, const Ogre::Vector3& Pos) const
+{
+	// Create physics position and state
+	btVector3 pos = btVector3(Pos.x, Pos.y, Pos.z);
+	btVector3 inertia(0, 0, 0);
+	btQuaternion rot(0, 0, 0, 1);
+	btDefaultMotionState* state = new btDefaultMotionState(btTransform(rot, pos));
+
+	// Create capsule shape and rigid body
+	p_Player->Phys_Shape = new btCapsuleShape(btScalar(p_Player->Capsule_Radius), btScalar(p_Player->Capsule_Height));
+	p_Player->Phys_Body = new btRigidBody(p_Player->Capsule_Mass, state, p_Player->Phys_Shape, inertia);
+
+	// Set rigid body properties
+	p_Player->Phys_Body->setSleepingThresholds(0.0, 0.0);
+	p_Player->Phys_Body->setAngularFactor(0.0);
+	p_Player->Phys_Body->setUserPointer(p_Player->Player_Node);
+	p_Player->Phys_Body->setUserIndex(Enums::Obj_Usage_Player);
+
+	// Update collision flags
+	//int collisionFlags = p_Player->Phys_Body->getCollisionFlags();
+	//p_Player->Phys_Body->setCollisionFlags(collisionFlags | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
+
+	// Set the initial rotation of the player
+	App->CL_Scene->B_Player[0]->Phys_Body->getWorldTransform().setRotation(App->CL_Scene->B_Player[0]->Physics_Rotation);
+
+	// Add the rigid body to the physics world
+	App->CL_Physics->dynamicsWorld->addRigidBody(p_Player->Phys_Body);
+}
+
 
 // *************************************************************************
 // *		Show_Player_And_Physics:- Terry and Hazel Flanigan 2024		   *

@@ -2025,14 +2025,14 @@ void CL64_Editor_Map::On_Left_Button_Up(POINT CursorPosition)
 
 	if (App->CL_Doc->mModeTool == ID_TOOLS_BRUSH_MOVEROTATEBRUSH)
 	{
-		if (App->CL_Top_Tabs->flag_Brush_Move == 1)
+		if (App->CL_Top_Tabs->flag_Brush_Move == true)
 		{
 			App->CL_Doc->DoneMovingBrushes();
 			App->CL_Doc->UpdateAllViews(Enums::UpdateViews_All);
 			App->CL_Level->flag_Level_is_Modified = true;
 		}
 
-		if (App->CL_Top_Tabs->flag_Brush_Rotate == 1)
+		if (App->CL_Top_Tabs->flag_Brush_Rotate == true)
 		{
 			App->CL_Doc->UpdateSelected();
 

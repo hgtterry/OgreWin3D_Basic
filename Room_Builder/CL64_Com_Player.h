@@ -32,7 +32,7 @@ public:
 
 	void Reset_Class(void);
 
-	void Create_New_Player(const char* Name);
+	void Create_New_Player(const char* Name, bool From_File);
 	
 	void Show_Player_And_Physics(bool Show);
 	void Show_Player_Physics(bool Show);
@@ -80,6 +80,8 @@ public:
 
 private:
 
-	void Initialize(Base_Player* p_Base) const;
+	void Initialize(Base_Player* p_Player) const;
+	void InitializePhysics(Base_Player* p_Player, const Ogre::Vector3& Pos) const;
+
 };
 

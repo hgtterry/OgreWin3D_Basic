@@ -1708,10 +1708,13 @@ bool CL64_Project::Load_Project()
 	//// ------------------------------------- Player
 	if (Options->Has_Player > 0)
 	{
+		if (App->CL_Scene->Player_Count == 0)
+		{
+			App->CL_Com_Player->Create_New_Player("Dummy_Player", true);
+		}
+
 		bool test = Load_Project_Player();
 		App->CL_Com_Player->Reset_Player();
-		//HTREEITEM Temp1 = App->CL_FileView->Add_Item(App->CL_FileView->FV_Players_Folder, (LPSTR)"Player_1", 0, false);
-		//App->CL_FileView->SelectItem(Temp1);
 	}
 
 	// ------------------------------------- Camera

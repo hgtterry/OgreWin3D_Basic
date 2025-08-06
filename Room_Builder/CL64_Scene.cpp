@@ -184,6 +184,8 @@ void CL64_Scene::Clear_Level(bool FromFile)
 	App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_Free;
 	App->CL_Gizmos->Show_MarkerBox(false);
 
+	//App->CL_Com_Player->Reset_Class();
+
 	App->CL_Resources->Delete_Project_Resources_Group();
 	flag_Project_Resources_Created = 0;
 
@@ -210,6 +212,8 @@ void CL64_Scene::Clear_Level(bool FromFile)
 			}
 		}
 	}
+
+	//App->CL_Com_Player->Reset_Class();
 
 	if (FromFile == false) // Not from a file load
 	{
