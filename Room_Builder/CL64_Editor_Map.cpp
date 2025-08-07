@@ -2063,15 +2063,6 @@ void CL64_Editor_Map::On_Left_Button_Up(POINT CursorPosition)
 		App->CL_Doc->UpdateAllViews(Enums::UpdateViews_All);
 	
 		//App->CLSB_Doc->UpdateSelected();
-		//if ((ModeTool == ID_TOOLS_TEMPLATE) ||
-		//	((App->CLSB_Doc->GetSelState() & ANYENTITY) && (!(App->CLSB_Doc->GetSelState() & ANYBRUSH))))
-		//{
-		//	App->CLSB_Doc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
-		//}
-		//else
-		{
-			//App->CL_Doc->UpdateAllViews(Enums::UpdateViews_All);
-		}
 	}
 
 	App->CUR = SetCursor(App->CUR);

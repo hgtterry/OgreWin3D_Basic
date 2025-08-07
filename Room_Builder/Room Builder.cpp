@@ -400,10 +400,16 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             }
 
             // ----------------------------- Edit
+            case ID_EDIT_UNDO:
+            {
+                Debug
+                return 1;
+            }
+
             case ID_EDIT_SELECTALL:
             {
-                App->CL_Doc->SelectAll();
-                App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
+               // App->CL_Doc->SelectAll();
+               // App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
 
                 /*App->CL_TabsGroups_Dlg->Update_Dlg_SelectedBrushesCount();
                 App->CL_TabsGroups_Dlg->Update_Dlg_Controls();
@@ -413,7 +419,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
             case ID_EDIT_DESELECTALL:
             {
-                App->CL_Panels->Deselect_All_Brushes_Update_Dlgs();
+               // App->CL_Panels->Deselect_All_Brushes_Update_Dlgs();
                 return 1;
             }
 

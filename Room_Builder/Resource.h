@@ -449,7 +449,6 @@
 #define IDC_CHECK1                      1332
 #define IDC_CK_LASTFILE                 1332
 #define IDC_BUT_AT_WORLDPOS             1333
-#define IDC_CHECK3                      1333
 #define IDC_CK_SCENEEDITOR              1333
 #define IDC_ST_STARTMODE                1334
 #define ID_DEBUG_GENERAL                32771
@@ -520,6 +519,7 @@
 #define ID_DEBUG_DEBUGIMGUI             32837
 #define ID_OPTIONS_SETTINGS             32838
 #define ID_DEBUG_LIBRARIES              32839
+#define ID_EDIT_UNDO                    32840
 #define ID_GENERALSELECT                32886
 #define ID_TOOLS_TEMPLATE               32910
 #define IDC_STATIC                      -1
@@ -530,7 +530,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        197
-#define _APS_NEXT_COMMAND_VALUE         32840
+#define _APS_NEXT_COMMAND_VALUE         32841
 #define _APS_NEXT_CONTROL_VALUE         1335
 #define _APS_NEXT_SYMED_VALUE           110
 #endif

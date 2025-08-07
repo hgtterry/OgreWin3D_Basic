@@ -213,11 +213,18 @@ bool CL64_Entities::Ogre_To_Mesh_Data(Ogre::SceneNode* Ogre_Node)
 void CL64_Entities::Get_Mesh_Data(Ogre::SceneNode* Ogre_Node)
 {
 	// Retrieve the bounding box size of the mesh
+	//Ogre::Vector3 size = App->CL_Com_Objects->GetMeshBoundingBoxSize(Ogre_Node);
+	//Ogre::Vector3 newSize = size / 2; // Halve the size for new dimensions
+
+	// Retrieve the bounding box size of the mesh
 	Ogre::Vector3 size = App->CL_Com_Objects->GetMeshBoundingBoxSize(Ogre_Node);
 	Ogre::Vector3 newSize = size / 2; // Halve the size for new dimensions
 
 	// Calculate the center of the bounding box and convert to world space
 	Ogre::Vector3 center = Ogre_Node->getAttachedObject(0)->getBoundingBox().getCenter();
+	
+	
+	
 	Ogre::Vector3 position = Ogre_Node->convertLocalToWorldPosition(center);
 
 	const Quaternion& orientation = Ogre_Node->getOrientation();
