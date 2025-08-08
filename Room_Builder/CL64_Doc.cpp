@@ -1392,6 +1392,7 @@ void CL64_Doc::ResizeSelected(float dx, float dy, int sides, int inidx)
 // *************************************************************************
 void CL64_Doc::DoneResize(int sides, int inidx)
 {
+    App->Say_Int(sides);
     mLastOp = BRUSH_SCALE;
 
     TempDeleteSelected();
@@ -1409,11 +1410,10 @@ void CL64_Doc::DoneResize(int sides, int inidx)
     int NumSelBrushes = App->CL_SelBrushList->SelBrushList_GetSize(pSelBrushes);
     for (int i = 0; i < NumSelBrushes; ++i)
     {
-        Brush* pBrush;
-
-        pBrush = App->CL_SelBrushList->SelBrushList_GetBrush(pSelBrushes, i);
-
- 
+        Brush* pBrush = App->CL_SelBrushList->SelBrushList_GetBrush(pSelBrushes, i);;
+        int Index = App->CL_Entities->GetIndex_By_Name(pBrush->Name);
+       
+        // Set Brush Scale Size
         App->CL_Brush->Brush_ResizeFinal(pBrush, sides, inidx, &FinalScale);
         if (App->CL_Brush->Brush_IsMulti(pBrush))
         {
@@ -1423,11 +1423,6 @@ void CL64_Doc::DoneResize(int sides, int inidx)
 
         if (pBrush->GroupId == Enums::Brushs_ID_Evirons)
         {
-            char Name[MAX_PATH]{ 0 };
-            strcpy(Name, pBrush->Name);
-
-            int Index = App->CL_Entities->GetIndex_By_Name(Name);
-
             if (Index > -1)
             {
                 auto& pObject = App->CL_Scene->B_Object[Index];
@@ -1437,6 +1432,7 @@ void CL64_Doc::DoneResize(int sides, int inidx)
 
                 pObject->Object_Node->setVisible(false);
 
+               // pObject->Object_Node->setOrientation(Ogre::Quaternion::IDENTITY);
                 pObject->Object_Node->setScale(1, 1, 1);
                 App->CL_Ogre->RenderFrame(2);
 
@@ -1464,9 +1460,24 @@ void CL64_Doc::DoneResize(int sides, int inidx)
                     Brush_Size.z / Ogre_Size.z
                 };
 
-                // Rescale Ogre Node and record Data
-                pObject->Object_Node->setScale(Ogre_NewScale.x, Ogre_NewScale.y, Ogre_NewScale.z);
-                pObject->Mesh_Scale = { Ogre_NewScale.x, Ogre_NewScale.y , Ogre_NewScale.z };
+                if (sides == 10)
+                {
+                    App->BeepBeep();
+                    T_Vec3 Ogre_NewScale =
+                    {
+                        Brush_Size.x / Ogre_Size.z,
+                        Brush_Size.y / Ogre_Size.y,
+                        Brush_Size.z / Ogre_Size.x
+                    };
+
+                    pObject->Object_Node->setScale(1, 1, Ogre_NewScale.x);
+                    pObject->Mesh_Scale = { 1, 1 , Ogre_NewScale.x };
+                }
+                else
+                {
+                    pObject->Object_Node->setScale(Ogre_NewScale.x, Ogre_NewScale.y, Ogre_NewScale.z);
+                    pObject->Mesh_Scale = { Ogre_NewScale.x, Ogre_NewScale.y , Ogre_NewScale.z };
+                }
                 
                 // Set Position
                 pObject->Object_Node->setPosition(CenterOfSelection.x, CenterOfSelection.y, CenterOfSelection.z);

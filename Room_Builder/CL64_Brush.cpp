@@ -2191,6 +2191,8 @@ int	CL64_Brush::Brush_GetModelId(const Brush* b)
 // *************************************************************************
 void CL64_Brush::Brush_ResizeFinal(Brush* b, int sides, int inidx, T_Vec3* fnscale)
 {
+	//App->Say_Int(sides);
+
 	Brush* pClone;
 	
 	T_Vec3 FixOrg, BrushOrg;

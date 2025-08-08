@@ -314,8 +314,7 @@ int CL64_Brush_X::Get_Brush_Index_By_Name(const char* Name)
 void CL64_Brush_X::Select_Brush_Editor(Brush* b)
 {
 	App->CL_Doc->CurBrush = b;
-	// Entity Selected in OnSelchangeBrushlist
-	// 
+	
 	// Check if there are any brushes available
 	int Bnum = App->CL_Brush->Get_Brush_Count();
 	if (Bnum > 0)
@@ -350,6 +349,15 @@ void CL64_Brush_X::Select_Brush_Editor(Brush* b)
 		App->CL_Properties_Tabs->flag_Tabs_Dlg_Active = 1;
 		App->CL_Properties_Tabs->Select_Brushes_Tab();
 
+		// Check a Real Ogre Object and Select in Scene Editor
+		if (b->GroupId == Enums::Brushs_ID_Evirons)
+		{
+			int Index = App->CL_Entities->GetIndex_By_Name(b->Name);
+			if (Index > -1)
+			{
+				App->CL_FileView->SelectItem(App->CL_Scene->B_Object[Index]->FileViewItem);
+			}
+		}
 	}
 }
 
