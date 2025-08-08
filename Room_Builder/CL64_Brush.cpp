@@ -2047,16 +2047,10 @@ const Box3d* CL64_Brush::Brush_GetBoundingBox(const Brush* b)
 // *************************************************************************
 void CL64_Brush::Brush_Resize(Brush* b, float dx, float dy, int sides, int inidx, T_Vec3* fnscale, int* ScaleNum)
 {
-	//MRB BEGIN
 	Brush* pClone;
-	//MRB END
-
+	
 	int		i;
 	T_Vec3 FixOrg, BrushOrg, ScaleVec;
-
-	assert(b);
-	assert(fnscale);
-	assert(ScaleNum);
 
 	App->CL_Maths->Vector3_Add(&b->BoundingBox.Min, &b->BoundingBox.Max, &BrushOrg);
 	App->CL_Maths->Vector3_Scale(&BrushOrg, 0.5f, &BrushOrg);

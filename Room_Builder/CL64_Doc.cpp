@@ -1392,7 +1392,7 @@ void CL64_Doc::ResizeSelected(float dx, float dy, int sides, int inidx)
 // *************************************************************************
 void CL64_Doc::DoneResize(int sides, int inidx)
 {
-    App->Say_Int(sides);
+   // App->Say_Int(sides);
     mLastOp = BRUSH_SCALE;
 
     TempDeleteSelected();
@@ -1460,7 +1460,7 @@ void CL64_Doc::DoneResize(int sides, int inidx)
                     Brush_Size.z / Ogre_Size.z
                 };
 
-                if (sides == 10)
+               /* if (sides == 10)
                 {
                     App->BeepBeep();
                     T_Vec3 Ogre_NewScale =
@@ -1473,7 +1473,7 @@ void CL64_Doc::DoneResize(int sides, int inidx)
                     pObject->Object_Node->setScale(1, 1, Ogre_NewScale.x);
                     pObject->Mesh_Scale = { 1, 1 , Ogre_NewScale.x };
                 }
-                else
+                else*/
                 {
                     pObject->Object_Node->setScale(Ogre_NewScale.x, Ogre_NewScale.y, Ogre_NewScale.z);
                     pObject->Mesh_Scale = { Ogre_NewScale.x, Ogre_NewScale.y , Ogre_NewScale.z };
