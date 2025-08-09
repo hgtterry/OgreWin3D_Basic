@@ -2610,6 +2610,7 @@ int CL64_Editor_Map::GetCursorBoxPos(const POINT* ptMousePos)
 		ptMin.x = ptMax.x;
 		ptMax.x = temp;
 	}
+
 	if (ptMin.y > ptMax.y)
 	{
 		int temp;

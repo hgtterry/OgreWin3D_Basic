@@ -2023,9 +2023,6 @@ void CL64_Brush::BrushList_Move(BrushList* pList, const T_Vec3* trans)
 {
 	Brush* b;
 
-	assert(pList);
-	assert(trans);
-
 	for (b = pList->First; b; b = b->Next)
 	{
 		Brush_Move(b, trans); // Recursive
@@ -2037,8 +2034,6 @@ void CL64_Brush::BrushList_Move(BrushList* pList, const T_Vec3* trans)
 // *************************************************************************
 const Box3d* CL64_Brush::Brush_GetBoundingBox(const Brush* b)
 {
-	assert(b != NULL);
-
 	return &b->BoundingBox;
 }
 

@@ -60,6 +60,9 @@ CL64_ImGui::CL64_ImGui()
 	flag_Show_Listbox = false;
 
 	guiFunctions.reserve(20);
+
+	Base = nullptr;
+	Win = nullptr;
 }
 
 CL64_ImGui::~CL64_ImGui()
@@ -80,11 +83,13 @@ void CL64_ImGui::Close_Dialogs(void)
 void CL64_ImGui::Init_ImGui(void)
 {
 	bool mOwnsImGuiOverlay = !Ogre::OverlayManager::getSingleton().getByName("ImGuiOverlay");
-
-	OgreBites::ApplicationContextBase* Base = new OgreBites::ApplicationContextBase();
+	
+	Base = new OgreBites::ApplicationContextBase();
 
 	Ogre::ImGuiOverlay* imguiOverlay = Base->initialiseImGui();
+	Ogre::RenderWindow* Win = Base->getRenderWindow();
 
+	//Win->
 	if (imguiOverlay)
 	{
 		Load_Font();

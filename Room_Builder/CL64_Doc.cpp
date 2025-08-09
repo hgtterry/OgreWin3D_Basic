@@ -125,9 +125,10 @@ void CL64_Doc::Load_Wad_File(char* TXL_File)
     strcpy(App->CL_Level->TXL_PathAndFile,TXL_File);
 
     // Extract the file name from the path
+   
     App->CL_Utilities->Get_FileName_FromPath(TXL_File, TXL_File);
     strcpy(App->CL_Level->TXL_Just_File_Name,App->CL_Utilities->JustFileName);
-
+  
     // Load texture resources and scan the texture resource group
     App->CL_Resources->Load_Texture_Resources();
     App->CL_TXL_Editor->Scan_Textures_Resource_Group();

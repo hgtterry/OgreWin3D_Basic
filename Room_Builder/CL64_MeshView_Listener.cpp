@@ -68,6 +68,9 @@ CL64_MeshView_Listener::~CL64_MeshView_Listener()
 // *************************************************************************
 bool CL64_MeshView_Listener::frameStarted(const FrameEvent& evt)
 {
+	Ogre::ImGuiOverlay::NewFrame();
+	App->CL_ImGui->ImGui_Render_Loop();
+
 	return true;
 }
 

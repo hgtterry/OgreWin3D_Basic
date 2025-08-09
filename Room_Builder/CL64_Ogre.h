@@ -74,6 +74,7 @@ public:
 	Ogre::SceneNode* ModelNode;
 
 	Ogre::OverlaySystem* mOverlaySystem;
+	Ogre::Viewport* vp;
 
 	CL64_Ogre3D_Listener*	Ogre3D_Listener;
 	CL64_OGL_Listener*		OGL_Listener;

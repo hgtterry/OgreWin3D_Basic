@@ -34,6 +34,9 @@ public:
 	void Init_ImGui(void);
 	void ImGui_Render_Loop(void);
 
+	void Load_Font(void);
+	void ImGui_Set_Colours(void);
+
 	bool flag_Imgui_Initialized;
 	bool flag_Show_Paths;
 	bool flag_Show_Render_Reports;
@@ -46,10 +49,13 @@ public:
 
 	Ogre::Vector3 Vec_Debug;
 
+	OgreBites::ApplicationContextBase* Base;
+	Ogre::RenderWindow* Win;
+
 private:
 
-	void Load_Font(void);
-	void ImGui_Set_Colours(void);
+	/*void Load_Font(void);
+	void ImGui_Set_Colours(void);*/
 
 	void ImGui_FPS(void);
 	void Paths_GUI(void);

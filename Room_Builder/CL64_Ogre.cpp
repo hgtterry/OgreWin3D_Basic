@@ -35,7 +35,7 @@ CL64_Ogre::CL64_Ogre()
 	mSceneMgr = nullptr;
 	mCamera =	nullptr;
 	camNode =	nullptr;
-
+	vp =		nullptr;
 	manObj =	nullptr;
 	ModelNode = nullptr;
 
@@ -55,7 +55,6 @@ CL64_Ogre::CL64_Ogre()
 	World_Resource_Group = "World_Resource_Group";
 	Export_Resource_Group = "Export_Resource_Group";
 	Texture_Resource_Group = "Texture_Resource_Group";
-
 }
 
 CL64_Ogre::~CL64_Ogre()
@@ -268,7 +267,7 @@ bool CL64_Ogre::Init_CreateCamera(void)
 bool CL64_Ogre::Init_CreateViewports(void)
 {
 	mWindow->removeAllViewports();
-	Ogre::Viewport* vp = mWindow->addViewport(mCamera);
+	vp = mWindow->addViewport(mCamera);
 	mCamera->setAspectRatio(Ogre::Real(vp->getActualWidth()) / Ogre::Real(vp->getActualHeight()));
 
 	Ogre::TextureManager::getSingleton().setDefaultNumMipmaps(0);

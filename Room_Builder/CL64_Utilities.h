@@ -27,20 +27,24 @@ THE SOFTWARE.
 #include "unzip.h"
 #include "zip.h"
 
-class CL64_Utilities
-{
-public:
-	CL64_Utilities(void);
-	~CL64_Utilities(void);
 
-	bool Check_Directory_Exists(char* szPath);
-	bool Check_File_Exist(char* Full_Path);
-	void Get_FileName_FromPath(char* pString, char* FileName);
-	void Delete_Folder_Contents(char* Folder);
+	class CL64_Utilities
+	{
+	public:
+		CL64_Utilities(void);
+		~CL64_Utilities(void);
 
-	void Extract_Textures(bool Extract_All,const char* Exclude_File);
-	bool Zip_Assets(char* SourceFolder, char* DestinationFolder);
+		bool Check_Directory_Exists(char* szPath);
+		bool Check_File_Exist(char* Full_Path);
+		void Get_FileName_FromPath(char* pString, char* FileName);
+		void Delete_Folder_Contents(char* Folder);
 
-	char JustFileName[MAX_PATH];
-};
+		void Extract_Textures(bool Extract_All, const char* Exclude_File);
+		bool Zip_Assets(char* SourceFolder, char* DestinationFolder);
+
+		char JustFileName[MAX_PATH];
+	};
+
+
+
 

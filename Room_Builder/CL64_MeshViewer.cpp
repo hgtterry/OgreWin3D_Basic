@@ -967,12 +967,13 @@ void CL64_MeshViewer::Close_OgreWindow(void)
 	App->CL_Ogre->mRoot->destroySceneManager(Ogre_MV_SceneMgr);
 }
 
+//#include "ImguiManager.h"
+
 // *************************************************************************
 // *			OgreWindow:- Terry and Hazel Flanigan 2024				   *
 // *************************************************************************
 bool CL64_MeshViewer::Set_OgreWindow(void)
 {
-
 	Ogre::NameValuePairList options;
 
 	options["externalWindowHandle"] =
@@ -1001,10 +1002,7 @@ bool CL64_MeshViewer::Set_OgreWindow(void)
 
 	App->CL_Ogre->mRoot->addFrameListener(RenderListener);
 
-	//Reset_Camera();
-
 	// Debug Physics Shape
-
 	MV_btDebug_Manual = Ogre_MV_SceneMgr->createManualObject("MVManual");
 	MV_btDebug_Manual->setRenderQueueGroup(RENDER_QUEUE_MAX);
 	MV_btDebug_Manual->setDynamic(true);
@@ -1020,6 +1018,38 @@ bool CL64_MeshViewer::Set_OgreWindow(void)
 	MV_btDebug_Node->setVisible(true);
 
 	App->CL_MeshViewer->flag_MV_Render_Debug = 1;
+
+	//App->CL_Ogre->RenderHwnd = MeshViewer_3D_hWnd;
+	/*bool mOwnsImGuiOverlay = !Ogre::OverlayManager::getSingleton().getByName("ImGuiOverlay");
+
+	OgreBites::ApplicationContextBase* Base = new OgreBites::ApplicationContextBase();
+
+	Ogre::ImGuiOverlay* imguiOverlay = Base->initialiseImGui();
+	Ogre::RenderWindow* Win = Base->getRenderWindow();
+
+	if (imguiOverlay)
+	{
+		App->CL_ImGui->Load_Font();
+
+		imguiOverlay->setZOrder(300);
+		imguiOverlay->show();
+
+		if (imguiOverlay->isInitialised())
+		{
+			if (mOwnsImGuiOverlay)
+			{
+				App->CL_ImGui->ImGui_Set_Colours();
+				Ogre::ImGuiOverlay::NewFrame();
+			}
+
+			App->CL_ImGui->flag_Imgui_Initialized = true;
+		}
+		else
+		{
+			App->Say("Could Not Initialised Imgui");
+		}
+	}*/
+
 	return 1;
 }
 
