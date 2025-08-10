@@ -365,63 +365,37 @@ void CL64_Ogre3D_Listener::Capture_LeftMouse_Model(void)
 {
 	GetCursorPos(&Mouse_point);
 
-	Pl_MouseX = (int(Mouse_point.x));
-	Pl_MouseY = (int(Mouse_point.y));
+	Pl_MouseX = static_cast<int>(Mouse_point.x);
+	Pl_MouseY = static_cast<int>(Mouse_point.y);
 
-	//// Left Right
-	if (Pl_MouseX < Pl_Cent500X)
-	{
-		long test = Pl_Cent500X - Pl_MouseX; // Positive
-
-		if (test > 2)
+	// Calculate mouse movement delta
+	auto calculateMouseDelta = [&](int mousePos, int centerPos)
 		{
-			Pl_DeltaMouse = float(Pl_Cent500X - Pl_MouseX);
-			App->CL_Gizmos->Grid_Node->yaw(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
-			App->CL_Gizmos->Hair_Node->yaw(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
-			
-			SetCursorPos(App->CursorPosX, App->CursorPosY);
-		}
-	}
-	else if (Pl_MouseX > Pl_Cent500X)
-	{
-		long test = Pl_MouseX - Pl_Cent500X; // Positive
+			return static_cast<float>(mousePos - centerPos);
+		};
 
-		if (test > 2)
-		{
-			Pl_DeltaMouse = float(Pl_MouseX - Pl_Cent500X);
-			App->CL_Gizmos->Grid_Node->yaw(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
-			App->CL_Gizmos->Hair_Node->yaw(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
-			
-			SetCursorPos(App->CursorPosX, App->CursorPosY);
-		}
+	// Handle horizontal movement[Left Right]
+	if (std::abs(Pl_MouseX - Pl_Cent500X) > 2)
+	{
+		Pl_DeltaMouse = calculateMouseDelta(Pl_MouseX, Pl_Cent500X);
+		float yawAmount = Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2;
+
+		App->CL_Gizmos->Grid_Node->yaw(Ogre::Degree(yawAmount), Ogre::Node::TS_LOCAL);
+		App->CL_Gizmos->Hair_Node->yaw(Ogre::Degree(yawAmount), Ogre::Node::TS_LOCAL);
+
+		SetCursorPos(App->CursorPosX, App->CursorPosY);
 	}
 
-	// Up Down
-	if (Pl_MouseY < Pl_Cent500Y)
+	// Handle vertical movement [ Up Down ]
+	if (std::abs(Pl_MouseY - Pl_Cent500Y) > 2)
 	{
-		long test = Pl_Cent500Y - Pl_MouseY; // Positive
+		Pl_DeltaMouse = calculateMouseDelta(Pl_MouseY, Pl_Cent500Y);
+		float pitchAmount = Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2;
 
-		if (test > 2)
-		{
-			Pl_DeltaMouse = float(Pl_Cent500Y - Pl_MouseY);
-			App->CL_Gizmos->Grid_Node->pitch(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
-			App->CL_Gizmos->Hair_Node->pitch(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
-		
-			SetCursorPos(App->CursorPosX, App->CursorPosY);
-		}
-	}
-	else if (Pl_MouseY > Pl_Cent500Y)
-	{
-		long test = Pl_MouseY - Pl_Cent500Y; // Positive
+		App->CL_Gizmos->Grid_Node->pitch(Ogre::Degree(pitchAmount), Ogre::Node::TS_PARENT);
+		App->CL_Gizmos->Hair_Node->pitch(Ogre::Degree(pitchAmount), Ogre::Node::TS_PARENT);
 
-		if (test > 2)
-		{
-			Pl_DeltaMouse = float(Pl_MouseY - Pl_Cent500Y);
-			App->CL_Gizmos->Grid_Node->pitch(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
-			App->CL_Gizmos->Hair_Node->pitch(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
-			
-			SetCursorPos(App->CursorPosX, App->CursorPosY);
-		}
+		SetCursorPos(App->CursorPosX, App->CursorPosY);
 	}
 }
 
@@ -432,73 +406,37 @@ void CL64_Ogre3D_Listener::Capture_RightMouse_Model(void)
 {
 	GetCursorPos(&Mouse_point);
 
-	Pl_MouseX = (int(Mouse_point.x));
-	Pl_MouseY = (int(Mouse_point.y));
+	Pl_MouseX = static_cast<int>(Mouse_point.x);
+	Pl_MouseY = static_cast<int>(Mouse_point.y);
 
-	// Left Right
-	if (Pl_MouseX < Pl_Cent500X)
-	{
-		long test = Pl_Cent500X - Pl_MouseX; // Positive
-
-		if (test > 2)
+	// Calculate mouse movement delta
+	auto calculateMouseDelta = [&](int mousePos, int centerPos)
 		{
-			Pl_DeltaMouse = float(Pl_Cent500X - Pl_MouseX);
-			mTranslateVector.x = Pl_DeltaMouse * (mMoveSensitivityMouse / 1000);
-			SetCursorPos(App->CursorPosX, App->CursorPosY);
-		}
-	}
-	else if (Pl_MouseX > Pl_Cent500X)
-	{
-		long test = Pl_MouseX - Pl_Cent500X; // Positive
+			return static_cast<float>(mousePos - centerPos);
+		};
 
-		if (test > 2)
-		{
-			Pl_DeltaMouse = float(Pl_MouseX - Pl_Cent500X);
-			mTranslateVector.x = -Pl_DeltaMouse * (mMoveSensitivityMouse / 1000);
-			SetCursorPos(App->CursorPosX, App->CursorPosY);
-		}
+	// Handle horizontal movement [ Left Right ]
+	long delta = Pl_MouseX - Pl_Cent500X;
+
+	if (std::abs(delta) > 2) // Check if the movement is significant
+	{
+		Pl_DeltaMouse = static_cast<float>(std::abs(delta));
+		mTranslateVector.x = (delta < 0 ? Pl_DeltaMouse : -Pl_DeltaMouse) * (mMoveSensitivityMouse / 1000);
+		SetCursorPos(App->CursorPosX, App->CursorPosY);
 	}
 
-	// Up Down
-	if (Pl_MouseY < Pl_Cent500Y)
+	// Handle vertical movement [ Up Down ]
+	delta = Pl_Cent500Y - Pl_MouseY;
+
+	if (std::abs(delta) > 2) // Check if the movement is significant
 	{
-		long test = Pl_Cent500Y - Pl_MouseY; // Positive
+		Pl_DeltaMouse = static_cast<float>(std::abs(delta));
+		Ogre::Real rate = Pl_DeltaMouse * (mMoveSensitivityMouse / 1000);
+		Ogre::Vector3 oldPos = mCamNode->getPosition();
 
-		if (test > 2)
-		{
-			Pl_DeltaMouse = float(Pl_Cent500Y - Pl_MouseY);
-
-			Ogre::Real Rate;
-			Rate = Pl_DeltaMouse * (mMoveSensitivityMouse / 1000);
-
-			Ogre::Vector3 OldPos;
-			OldPos = mCamNode->getPosition();
-
-			OldPos.y -= Rate;
-			mCamNode->setPosition(OldPos);
-			SetCursorPos(App->CursorPosX, App->CursorPosY);
-		}
-
-	}
-	else if (Pl_MouseY > Pl_Cent500Y)
-	{
-		long test = Pl_MouseY - Pl_Cent500Y; // Positive
-
-		if (test > 2)
-		{
-			Pl_DeltaMouse = float(Pl_MouseY - Pl_Cent500Y);
-
-			Ogre::Real Rate;
-			Rate = Pl_DeltaMouse * (mMoveSensitivityMouse / 1000);
-
-			Ogre::Vector3 OldPos;
-			OldPos = mCamNode->getPosition();
-
-			OldPos.y += Rate;
-			mCamNode->setPosition(OldPos);
-			SetCursorPos(App->CursorPosX, App->CursorPosY);
-		}
-
+		oldPos.y += (delta < 0 ? rate : -rate); // Adjust camera position based on mouse movement
+		mCamNode->setPosition(oldPos);
+		SetCursorPos(App->CursorPosX, App->CursorPosY);
 	}
 }
 
