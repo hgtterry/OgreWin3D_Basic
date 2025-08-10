@@ -25,7 +25,7 @@ THE SOFTWARE.
 #pragma once
 
 #include "CL64_Editor_Map.h"
-//#include "CL64_Maths.h"
+
 #include "CL64_Lib_Maths.h"
 #include "CL64_Box.h"
 #include "CL64_Render_Map.h"
@@ -40,8 +40,7 @@ THE SOFTWARE.
 #include "CL64_FaceList.h"
 #include "CL64_Face.h"
 
-#include "BrushTemplate.h"
-//#include "CL64_BrushTemplate.h"
+#include "BrushTemplate.h" // Library
 
 #include "CL64_SelBrushList.h"
 #include "CL64_Array.h"

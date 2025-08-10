@@ -148,6 +148,9 @@ void CL64_File::Start_Save(bool useSaveDialog)
 	App->Set_Title(App->CL_Level->MTF_PathAndFile);
 
 	App->CL_Level->flag_File_Been_Saved = 1;
+
+	App->CL_X_Preference->Save_Config_File();
+
 	App->Say("Saved", App->CL_Level->MTF_Just_FileName);
 }
 
