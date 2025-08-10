@@ -707,8 +707,17 @@ void CL64_Top_Tabs::Enable_TopBar_Brush_Buttons(bool Enable, bool Active)
 	EnableWindow(GetDlgItem(Headers_hWnd, IDC_BT_BRUSH_MOVE), Enable);
 	flag_Brush_Move = Active;
 
-	EnableWindow(GetDlgItem(Headers_hWnd, IDC_BT_BRUSH_SCALE), Enable);
-	flag_Brush_Scale = Active;
+	if (App->CL_Doc->CurBrush->GroupId == Enums::Brushs_ID_Evirons)
+	{
+		EnableWindow(GetDlgItem(Headers_hWnd, IDC_BT_BRUSH_SCALE), false);
+		flag_Brush_Scale = false;
+	}
+	else
+	{
+		EnableWindow(GetDlgItem(Headers_hWnd, IDC_BT_BRUSH_SCALE), Enable);
+		flag_Brush_Scale = Active;
+	}
+
 
 	EnableWindow(GetDlgItem(Headers_hWnd, IDC_BT_BRUSH_ROTATE), Enable);
 	flag_Brush_Scale = Active;
