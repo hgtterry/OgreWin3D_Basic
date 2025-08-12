@@ -24,7 +24,7 @@ public:
 	bool Ogre_To_Mesh_Data(Ogre::Entity* Ogre_Entity);
 	void Get_Ogre_Mesh_Data(Ogre::Entity* Ogre_Entity);
 
-	bool Has_Shared_Vertices;
+	bool flag_Has_Shared_Vertices;
 
 private:
 

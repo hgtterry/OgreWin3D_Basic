@@ -451,6 +451,8 @@
 #define IDC_BUT_AT_WORLDPOS             1333
 #define IDC_CK_SCENEEDITOR              1333
 #define IDC_ST_STARTMODE                1334
+#define IDC_COMBO1                      1335
+#define IDC_CB_BRUSH_CAT                1335
 #define ID_DEBUG_GENERAL                32771
 #define ID_TEMPLATES_INSERT             32772
 #define ID_BRUSH_SELECT                 32773
@@ -531,7 +533,7 @@
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        197
 #define _APS_NEXT_COMMAND_VALUE         32841
-#define _APS_NEXT_CONTROL_VALUE         1335
+#define _APS_NEXT_CONTROL_VALUE         1336
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif

@@ -316,42 +316,34 @@ void CL64_Converters::Get_Data(int Index, int FaceIndex)
 // *************************************************************************
 void CL64_Converters::Create_MeshGroups(Ogre::Entity* Ogre_Entity)
 {
-	char GroupName[MAX_PATH];
-	char GroupNum[MAX_PATH];
+	const int SubMeshCount = Ogre_Entity->getNumSubEntities();
 
-	int SubMeshCount = Ogre_Entity->getNumSubEntities();
-
-	int Count = 0;
-	while (Count < SubMeshCount)
+	for (int Count = 0; Count < SubMeshCount; ++Count)
 	{
-
 		App->CL_Scene->Create_Mesh_Group(Count); // Create new Mesh Group
-		App->CL_Scene->Group[Count]->GroupVertCount = 0;
-		App->CL_Scene->Group[Count]->MaterialIndex = -1;
+		auto& meshGroup = App->CL_Scene->Group[Count];
 
-		strcpy(App->CL_Scene->Group[Count]->Text_FileName, "No_Texture");
+		// Initialize mesh group properties
+		meshGroup->GroupVertCount = 0;
+		meshGroup->MaterialIndex = -1;
+		strcpy(meshGroup->Text_FileName, "No_Texture");
 
-		_itoa(Count, GroupNum, 10);
-		strcpy(GroupName, "Group_");
-		strcat(GroupName, GroupNum);
+		// Construct group name
+		snprintf(meshGroup->GroupName, sizeof(meshGroup->GroupName), "Group_%d", Count);
 
-		strcpy(App->CL_Scene->Group[Count]->GroupName, GroupName);
+		// Retrieve subMesh and set material name
+		const Ogre::SubMesh* subMesh = Ogre_Entity->getSubEntity(Count)->getSubMesh();
+		strcpy(meshGroup->MaterialName, subMesh->getMaterialName().c_str());
 
-		///---------------
-		Ogre::SubMesh const* subMesh = Ogre_Entity->getSubEntity(Count)->getSubMesh();
-		strcpy(App->CL_Scene->Group[Count]->MaterialName, subMesh->getMaterialName().c_str());
-
-		if (App->CL_Mesh_Manager->Has_Shared_Vertices == 0)
+		// Set vertex and indices count if shared vertices flag is false
+		if (App->CL_Mesh_Manager->flag_Has_Shared_Vertices == false)
 		{
-			App->CL_Scene->Group[Count]->GroupVertCount = subMesh->vertexData->vertexCount;
-			App->CL_Scene->Group[Count]->IndicesCount = subMesh->vertexData->vertexCount;
+			meshGroup->GroupVertCount = subMesh->vertexData->vertexCount;
+			meshGroup->IndicesCount = subMesh->vertexData->vertexCount;
 		}
-
-		//---------------
-		
-		Count++;
 	}
 
+	// Update texture and group counts
 	App->CL_Scene->TextureCount = SubMeshCount;
 	App->CL_Scene->GroupCount = SubMeshCount;
 }

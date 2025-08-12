@@ -19,7 +19,7 @@ appreciated but is not required.
 
 CL64_Mesh_Manager::CL64_Mesh_Manager(void)
 {
-	Has_Shared_Vertices = 0;
+	flag_Has_Shared_Vertices = 0;
 }
 
 CL64_Mesh_Manager::~CL64_Mesh_Manager(void)
@@ -49,130 +49,89 @@ bool CL64_Mesh_Manager::Ogre_To_Mesh_Data(Ogre::Entity* Ogre_Entity)
 // *************************************************************************
 bool CL64_Mesh_Manager::Convert_To_Mesh_Data(Ogre::Entity* Ogre_Entity)
 {
-	Has_Shared_Vertices = 0;
-
-	int Count = 0;
+	flag_Has_Shared_Vertices = false;
 	int SubMeshCount = Ogre_Entity->getNumSubEntities();
 
-	while (Count < SubMeshCount)
+	// Check for shared vertices across submeshes
+	for (int Count = 0; Count < SubMeshCount; ++Count)
 	{
-		bool Sahred = Ogre_Entity->getSubEntity(Count)->getSubMesh()->useSharedVertices;
-
-		if (Sahred == 1)
+		if (Ogre_Entity->getSubEntity(Count)->getSubMesh()->useSharedVertices)
 		{
-			Has_Shared_Vertices = 1;
+			flag_Has_Shared_Vertices = true;
+			break; // Exit early if shared vertices are found
 		}
-
-		Count++;
 	}
 
 	App->CL_Converters->Create_MeshGroups(Ogre_Entity);
 
-	if (Has_Shared_Vertices == 0)
+	if (!flag_Has_Shared_Vertices)
 	{
-		Has_Shared_Vertices = 0;
-
-		int FaceCount = 0;
-		int FaceNum = 0;
-		int FaceIndexNum = 0;
-		int mFaceIndex = 0;
-		int xx = 0;
 		size_t vertex_count = 0;
-		size_t  index_count = 0;
+		size_t index_count = 0;
 
-		Vector3* vertices = { 0 };
+		Vector3* vertices = nullptr;
+		Vector3* normals = nullptr;
+		unsigned long* indices = nullptr;
+		Ogre::int16* BoneIndices = nullptr; // Bone Index
 
-		Vector3* normals = { 0 };
-		unsigned long* indices = 0;
-
-		Ogre::int16* BoneIndices = 0;	// Bone Index
-
-		int SubMeshCount = Ogre_Entity->getNumSubEntities();
-
-		unsigned int Vertloop = 0;
-		unsigned int Faceloop = 0;
-		int Count = 0;
-
-
-		while (Count < SubMeshCount)
+		for (int Count = 0; Count < SubMeshCount; ++Count)
 		{
 			Get_SubPose_MeshInstance(Ogre_Entity->getMesh(), vertex_count, vertices, index_count, indices, Count, BoneIndices);
-
 			int mUVTest = Get_SubPoseTextureUV(Ogre_Entity->getMesh(), Count);
-
 			Get_SubPoseNormals(Ogre_Entity->getMesh(), vertex_count, normals, Count);
 
-			App->CL_Scene->Group[Count]->vertex_Data.resize(index_count);
-			App->CL_Scene->Group[Count]->Normal_Data.resize(index_count);
-			App->CL_Scene->Group[Count]->MapCord_Data.resize(index_count);
-			App->CL_Scene->Group[Count]->Face_Data.resize(index_count);
-			App->CL_Scene->Group[Count]->FaceIndex_Data.resize(index_count);
+			// Resize data structures for the current submesh
+			auto& group = App->CL_Scene->Group[Count];
+			group->vertex_Data.resize(vertex_count);
+			group->Normal_Data.resize(vertex_count);
+			group->MapCord_Data.resize(vertex_count);
+			group->Face_Data.resize(index_count);
+			group->FaceIndex_Data.resize(index_count);
+			group->BoneIndex_Data.resize(vertex_count);
 
-			App->CL_Scene->Group[Count]->BoneIndex_Data.resize(index_count);
-
-			FaceIndexNum = 0;
-			int Faceit = 0;
-			FaceCount = 0;
-			Vertloop = 0;
-			xx = 0;
-
-			while (Vertloop < vertex_count) // Process Vertices
+			// Process Vertices
+			for (size_t Vertloop = 0; Vertloop < vertex_count; ++Vertloop)
 			{
-				App->CL_Scene->Group[Count]->vertex_Data[Vertloop].x = vertices[Vertloop].x;
-				App->CL_Scene->Group[Count]->vertex_Data[Vertloop].y = vertices[Vertloop].y;
-				App->CL_Scene->Group[Count]->vertex_Data[Vertloop].z = vertices[Vertloop].z;
+				group->vertex_Data[Vertloop].x = vertices[Vertloop].x;
+				group->vertex_Data[Vertloop].y = vertices[Vertloop].y;
+				group->vertex_Data[Vertloop].z = vertices[Vertloop].z;
 
-				App->CL_Scene->Group[Count]->BoneIndex_Data[Vertloop].Index = BoneIndices[Vertloop]; // Bone Index 
+				group->BoneIndex_Data[Vertloop].Index = BoneIndices[Vertloop];
 
 				if (mUVTest)
 				{
-					App->CL_Scene->Group[Count]->MapCord_Data[Vertloop].u = MeshTextureCoords[Vertloop].x;
-					App->CL_Scene->Group[Count]->MapCord_Data[Vertloop].v = 1 - MeshTextureCoords[Vertloop].y;
+					group->MapCord_Data[Vertloop].u = MeshTextureCoords[Vertloop].x;
+					group->MapCord_Data[Vertloop].v = 1 - MeshTextureCoords[Vertloop].y;
 				}
 
-				App->CL_Scene->Group[Count]->Normal_Data[Vertloop].x = normals[Vertloop].x;
-				App->CL_Scene->Group[Count]->Normal_Data[Vertloop].y = normals[Vertloop].y;
-				App->CL_Scene->Group[Count]->Normal_Data[Vertloop].z = normals[Vertloop].z;
-
-				Vertloop++;
+				group->Normal_Data[Vertloop].x = normals[Vertloop].x;
+				group->Normal_Data[Vertloop].y = normals[Vertloop].y;
+				group->Normal_Data[Vertloop].z = normals[Vertloop].z;
 			}
 
-			FaceIndexNum = 0;
-			Faceloop = 0;
-			while (Faceloop < index_count) // Process Faces
+			// Process Faces
+			for (size_t Faceloop = 0, FaceIndexNum = 0; Faceloop < index_count; Faceloop += 3, ++FaceIndexNum)
 			{
-				App->CL_Scene->Group[Count]->Face_Data[FaceIndexNum].a = indices[Faceloop];
-				Faceloop++;
-				App->CL_Scene->Group[Count]->Face_Data[FaceIndexNum].b = indices[Faceloop];
-				Faceloop++;
-				App->CL_Scene->Group[Count]->Face_Data[FaceIndexNum].c = indices[Faceloop];
-				Faceloop++;
-
-				FaceIndexNum++;
-
-				App->CL_Scene->Group[Count]->FaceIndex_Data[xx].Index = mFaceIndex;
-
-				xx++;
-				mFaceIndex++;
+				group->Face_Data[FaceIndexNum].a = indices[Faceloop];
+				group->Face_Data[FaceIndexNum].b = indices[Faceloop + 1];
+				group->Face_Data[FaceIndexNum].c = indices[Faceloop + 2];
+				group->FaceIndex_Data[FaceIndexNum].Index = FaceIndexNum;
 			}
 
-			App->CL_Scene->Group[Count]->GroupFaceCount = FaceIndexNum;
-			App->CL_Scene->Group[Count]->GroupVertCount = Vertloop;
-			App->CL_Scene->Group[Count]->IndicesCount = Vertloop;
+			group->GroupFaceCount = index_count / 3; // Assuming each face consists of 3 indices
+			group->GroupVertCount = vertex_count;
+			group->IndicesCount = vertex_count;
 
-			App->CL_Scene->VerticeCount = App->CL_Scene->VerticeCount + Vertloop;
-			App->CL_Scene->FaceCount = App->CL_Scene->FaceCount + FaceIndexNum;
+			App->CL_Scene->VerticeCount += vertex_count;
+			App->CL_Scene->FaceCount += group->GroupFaceCount;
 
-
-			GetBoneAssignment(Ogre_Entity->getMesh(), Count, 0);
-
-			Count++;
+			//GetBoneAssignment(Ogre_Entity->getMesh(), Count, 0);
 		}
-
 	}
 
-	return 1;
+	return true;
 }
+
 
 // *************************************************************************
 // *	    	Get_Ogre_Mesh_Data:- Terry and Hazel Flanigan 2024		   *
