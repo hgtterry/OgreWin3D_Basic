@@ -1721,4 +1721,5 @@ void CL64_Dialogs::List_Libraries(HWND List)
 
 	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->CL_Maths->GetVersion());
 	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->CL_X_Preference->GetVersion());
+	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->CL_X_Ini_File->GetVersion());
 }

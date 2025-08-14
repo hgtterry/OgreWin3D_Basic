@@ -1665,25 +1665,25 @@ bool CL64_Project::Load_Project()
 	chr_Tag1[0] = 0;
 	chr_Tag2[0] = 0;
 
-	App->CL_Ini_File->SetPathName(m_Ini_Path_File_Name);
+	App->CL_X_Ini_File->SetPathName(m_Ini_Path_File_Name);
 
-	App->CL_Ini_File->GetString("Version_Data", "Version", chr_Tag1, MAX_PATH);
+	App->CL_X_Ini_File->GetString("Version_Data", "Version", chr_Tag1, MAX_PATH);
 	
-	App->CL_Ini_File->GetString("Files", "Level_Name", m_Level_Name, MAX_PATH);
-	App->CL_Ini_File->GetString("Files", "Project_Name", m_Project_Name, MAX_PATH);
+	App->CL_X_Ini_File->GetString("Files", "Level_Name", m_Level_Name, MAX_PATH);
+	App->CL_X_Ini_File->GetString("Files", "Project_Name", m_Project_Name, MAX_PATH);
 	
 	strcpy(m_Level_Name, "First_Level");
 
 	//App->CL_Ini_File->GetString("Files", "Game_Name", App->CL_Build_Game->GameName, MAX_PATH, "YourGameName");
 
 
-	Options->Has_Area = App->CL_Ini_File->GetInt("Options", "Areas_Count", 0, 10);
-	Options->Has_Player = App->CL_Ini_File->GetInt("Options", "Players_Count", 0, 10);
-	Options->Has_Camera = App->CL_Ini_File->GetInt("Options", "Cameras_Count", 0, 10);
-	Options->Has_Objects = App->CL_Ini_File->GetInt("Options", "Objects_Count", 0, 10);
-	Options->Has_Counters = App->CL_Ini_File->GetInt("Options", "Counters_Count", 0, 10);
+	Options->Has_Area = App->CL_X_Ini_File->GetInt("Options", "Areas_Count", 0, 10);
+	Options->Has_Player = App->CL_X_Ini_File->GetInt("Options", "Players_Count", 0, 10);
+	Options->Has_Camera = App->CL_X_Ini_File->GetInt("Options", "Cameras_Count", 0, 10);
+	Options->Has_Objects = App->CL_X_Ini_File->GetInt("Options", "Objects_Count", 0, 10);
+	Options->Has_Counters = App->CL_X_Ini_File->GetInt("Options", "Counters_Count", 0, 10);
 
-	App->CL_Scene->UniqueID_Object_Counter = App->CL_Ini_File->GetInt("Options", "Objects_ID_Count", 0, 10);
+	App->CL_Scene->UniqueID_Object_Counter = App->CL_X_Ini_File->GetInt("Options", "Objects_ID_Count", 0, 10);
 	/*App->CL_Scene->UniqueID_Counters_Count = App->CL_Ini_File->GetInt("Options", "Counters_ID_Count", 0, 10);
 	App->CL_Scene->UniqueID_Area_Count = App->CL_Ini_File->GetInt("Options", "Areas_ID_Count", 0, 10);
 
@@ -1832,9 +1832,9 @@ bool CL64_Project::Load_Project_Counters()
 
 	strcat(Object_Ini_Path, "Counters.edf");
 
-	App->CL_Ini_File->SetPathName(Object_Ini_Path);
+	App->CL_X_Ini_File->SetPathName(Object_Ini_Path);
 
-	Counters_Count = App->CL_Ini_File->GetInt("Counters", "Counters_Count", 0, 10);
+	Counters_Count = App->CL_X_Ini_File->GetInt("Counters", "Counters_Count", 0, 10);
 
 	int Count = 0;
 
@@ -1907,9 +1907,9 @@ bool CL64_Project::Load_Project_Objects()
 
 	strcat(Object_Ini_Path, "Objects.dat");
 
-	App->CL_Ini_File->SetPathName(Object_Ini_Path);
+	App->CL_X_Ini_File->SetPathName(Object_Ini_Path);
 
-	Object_Count = App->CL_Ini_File->GetInt("Counters", "Objects_Count", 0, 10);
+	Object_Count = App->CL_X_Ini_File->GetInt("Counters", "Objects_Count", 0, 10);
 
 	int Count = 0;
 	while (Count < Object_Count)
@@ -1925,34 +1925,34 @@ bool CL64_Project::Load_Project_Objects()
 		App->CL_Scene->B_Object.push_back(new Base_Object());
 		Base_Object* B_Object = App->CL_Scene->B_Object[Count];
 
-		App->CL_Ini_File->GetString(mSection, "Mesh_Name", B_Object->Object_Name, MAX_PATH);
-		App->CL_Ini_File->GetString(mSection, "Mesh_File", B_Object->Mesh_FileName, MAX_PATH);
-		App->CL_Ini_File->GetString(mSection, "Mesh_Resource_Path", B_Object->Mesh_Resource_Path, MAX_PATH);
-		App->CL_Ini_File->GetString(mSection, "Material_File", B_Object->Material_File, MAX_PATH);
+		App->CL_X_Ini_File->GetString(mSection, "Mesh_Name", B_Object->Object_Name, MAX_PATH);
+		App->CL_X_Ini_File->GetString(mSection, "Mesh_File", B_Object->Mesh_FileName, MAX_PATH);
+		App->CL_X_Ini_File->GetString(mSection, "Mesh_Resource_Path", B_Object->Mesh_Resource_Path, MAX_PATH);
+		App->CL_X_Ini_File->GetString(mSection, "Material_File", B_Object->Material_File, MAX_PATH);
 
 		// ------------- Types
-		B_Object->This_Object_UniqueID = App->CL_Ini_File->GetInt(mSection, "Object_ID", 0, 10);
-		B_Object->Type = App->CL_Ini_File->GetInt(mSection, "Object_Type", 0, 10);
-		B_Object->Shape = App->CL_Ini_File->GetInt(mSection, "Object_Shape", 0, 10);
-		B_Object->Usage = App->CL_Ini_File->GetInt(mSection, "Object_Usage", 0, 10);
+		B_Object->This_Object_UniqueID = App->CL_X_Ini_File->GetInt(mSection, "Object_ID", 0, 10);
+		B_Object->Type = App->CL_X_Ini_File->GetInt(mSection, "Object_Type", 0, 10);
+		B_Object->Shape = App->CL_X_Ini_File->GetInt(mSection, "Object_Shape", 0, 10);
+		B_Object->Usage = App->CL_X_Ini_File->GetInt(mSection, "Object_Usage", 0, 10);
 
 		// ------------- Pos
-		App->CL_Ini_File->GetString(mSection, "Mesh_Pos", chr_Tag1, MAX_PATH);
+		App->CL_X_Ini_File->GetString(mSection, "Mesh_Pos", chr_Tag1, MAX_PATH);
 		(void)sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
 		B_Object->Mesh_Pos = Ogre::Vector3(x, y, z);
 
 		// ------------- Scale
-		App->CL_Ini_File->GetString(mSection, "Mesh_Scale", chr_Tag1, MAX_PATH);
+		App->CL_X_Ini_File->GetString(mSection, "Mesh_Scale", chr_Tag1, MAX_PATH);
 		(void)sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
 		B_Object->Mesh_Scale = Ogre::Vector3(x, y, z);
 
 		// ------------- Rotation
-		App->CL_Ini_File->GetString(mSection, "Mesh_Rot", chr_Tag1, MAX_PATH);
+		App->CL_X_Ini_File->GetString(mSection, "Mesh_Rot", chr_Tag1, MAX_PATH);
 		(void)sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
 		B_Object->Mesh_Rot = Ogre::Vector3(x, y, z);
 
 		// ------------- Mesh_Quat
-		App->CL_Ini_File->GetString(mSection, "Mesh_Quat", chr_Tag1, MAX_PATH);
+		App->CL_X_Ini_File->GetString(mSection, "Mesh_Quat", chr_Tag1, MAX_PATH);
 		(void)sscanf(chr_Tag1, "%f,%f,%f,%f", &w, &x, &y, &z);
 
 		B_Object->Mesh_Quat.w = w;
@@ -1961,7 +1961,7 @@ bool CL64_Project::Load_Project_Objects()
 		B_Object->Mesh_Quat.z = z;
 
 		// ------------- Physics_Quat
-		App->CL_Ini_File->GetString(mSection, "Physics_Quat", chr_Tag1, MAX_PATH);
+		App->CL_X_Ini_File->GetString(mSection, "Physics_Quat", chr_Tag1, MAX_PATH);
 		(void)sscanf(chr_Tag1, "%f,%f,%f,%f", &w, &x, &y, &z);
 
 		B_Object->Physics_Quat.w = w;
@@ -1969,7 +1969,7 @@ bool CL64_Project::Load_Project_Objects()
 		B_Object->Physics_Quat.y = y;
 		B_Object->Physics_Quat.z = z;
 
-		B_Object->flag_Dimensions_Locked = App->CL_Ini_File->GetInt(mSection, "Dimensions_Lock", 0,10);
+		B_Object->flag_Dimensions_Locked = App->CL_X_Ini_File->GetInt(mSection, "Dimensions_Lock", 0,10);
 
 		// Deal with Object Sections
 		switch (B_Object->Usage) 
@@ -1978,9 +1978,9 @@ bool CL64_Project::Load_Project_Objects()
 			// Read_Message(count, section);
 			break;
 		case Enums::Obj_Usage_Sound:
-			App->CL_Ini_File->GetString(mSection, "Sound_File", B_Object->Sound_File, MAX_PATH);
+			App->CL_X_Ini_File->GetString(mSection, "Sound_File", B_Object->Sound_File, MAX_PATH);
 
-			App->CL_Ini_File->GetString(mSection, "Sound_Volume", chr_Tag1, MAX_PATH);
+			App->CL_X_Ini_File->GetString(mSection, "Sound_Volume", chr_Tag1, MAX_PATH);
 			(void)sscanf(chr_Tag1, "%f", &x);
 			B_Object->SndVolume = x;
 			break;
@@ -2027,78 +2027,78 @@ bool CL64_Project::Read_EnvironEntity(int Index, char* Section)
 	App->CL_Com_Environments->V_Set_Environ_Defaults(Index);
 
 	// Read Environment Name
-	App->CL_Ini_File->GetString(Section, "Environment_Name", chr_Tag1, MAX_PATH);
+	App->CL_X_Ini_File->GetString(Section, "Environment_Name", chr_Tag1, MAX_PATH);
 	strcpy(B_Object->S_Environ[0]->Environment_Name, chr_Tag1);
 
 	// Read Environment ID
-	Int_Tag = App->CL_Ini_File->GetInt(Section, "Environment_ID", 0, 10);
+	Int_Tag = App->CL_X_Ini_File->GetInt(Section, "Environment_ID", 0, 10);
 	B_Object->S_Environ[0]->Environment_ID = Int_Tag;
 
 	// Read Sound settings
-	App->CL_Ini_File->GetString(Section, "Sound_File", chr_Tag1, MAX_PATH);
+	App->CL_X_Ini_File->GetString(Section, "Sound_File", chr_Tag1, MAX_PATH);
 	strcpy(B_Object->S_Environ[0]->Sound_File, chr_Tag1);
 
-	App->CL_Ini_File->GetString(Section, "Snd_Volume", chr_Tag1, MAX_PATH);
+	App->CL_X_Ini_File->GetString(Section, "Snd_Volume", chr_Tag1, MAX_PATH);
 	(void)sscanf(chr_Tag1, "%f", &V4.x);
 	B_Object->S_Environ[0]->SndVolume = V4.x;
 
-	Int_Tag = App->CL_Ini_File->GetInt(Section, "Sound_Play", 0, 10);
+	Int_Tag = App->CL_X_Ini_File->GetInt(Section, "Sound_Play", 0, 10);
 	B_Object->S_Environ[0]->flag_Play = Int_Tag;
 
-	Int_Tag = App->CL_Ini_File->GetInt(Section, "Sound_Loop", 0, 10);
+	Int_Tag = App->CL_X_Ini_File->GetInt(Section, "Sound_Loop", 0, 10);
 	B_Object->S_Environ[0]->flag_Loop = Int_Tag;
 
 	// Read Light settings
-	App->CL_Ini_File->GetString(Section, "Ambient_Colour", chr_Tag1, MAX_PATH);
+	App->CL_X_Ini_File->GetString(Section, "Ambient_Colour", chr_Tag1, MAX_PATH);
 	(void)sscanf(chr_Tag1, "%f,%f,%f", &V4.x, &V4.y, &V4.z);
 	B_Object->S_Environ[0]->AmbientColour = Ogre::Vector3(V4.x, V4.y, V4.z);
 
-	App->CL_Ini_File->GetString(Section, "Light_Position", chr_Tag1, MAX_PATH);
+	App->CL_X_Ini_File->GetString(Section, "Light_Position", chr_Tag1, MAX_PATH);
 	(void)sscanf(chr_Tag1, "%f,%f,%f", &V4.x, &V4.y, &V4.z);
 	B_Object->S_Environ[0]->Light_Position = Ogre::Vector3(V4.x, V4.y, V4.z);
 
 	// Read Sky settings
-	Int_Tag = App->CL_Ini_File->GetInt(Section, "Sky_Enable", 0, 10);
+	Int_Tag = App->CL_X_Ini_File->GetInt(Section, "Sky_Enable", 0, 10);
 	B_Object->S_Environ[0]->flag_Enabled = Int_Tag;
 
-	Int_Tag = App->CL_Ini_File->GetInt(Section, "Sky_Type", 0, 10);
+	Int_Tag = App->CL_X_Ini_File->GetInt(Section, "Sky_Type", 0, 10);
 	B_Object->S_Environ[0]->type = Int_Tag;
 
-	App->CL_Ini_File->GetString(Section, "Sky_Material", chr_Tag1, MAX_PATH);
+	App->CL_X_Ini_File->GetString(Section, "Sky_Material", chr_Tag1, MAX_PATH);
 	strcpy(B_Object->S_Environ[0]->Material, chr_Tag1);
 
-	App->CL_Ini_File->GetString(Section, "Sky_Curvature", chr_Tag1, MAX_PATH);
+	App->CL_X_Ini_File->GetString(Section, "Sky_Curvature", chr_Tag1, MAX_PATH);
 	(void)sscanf(chr_Tag1, "%f", &V4.x);
 	B_Object->S_Environ[0]->Curvature = V4.x;
 
-	App->CL_Ini_File->GetString(Section, "Sky_Tiling", chr_Tag1, MAX_PATH);
+	App->CL_X_Ini_File->GetString(Section, "Sky_Tiling", chr_Tag1, MAX_PATH);
 	(void)sscanf(chr_Tag1, "%f", &V4.x);
 	B_Object->S_Environ[0]->Tiling = V4.x;
 
-	App->CL_Ini_File->GetString(Section, "Sky_Distance", chr_Tag1, MAX_PATH);
+	App->CL_X_Ini_File->GetString(Section, "Sky_Distance", chr_Tag1, MAX_PATH);
 	(void)sscanf(chr_Tag1, "%f", &V4.x);
 	B_Object->S_Environ[0]->Distance = V4.x;
 
 	// Read Fog settings
-	Int_Tag = App->CL_Ini_File->GetInt(Section, "Fog_On", 0, 10);
+	Int_Tag = App->CL_X_Ini_File->GetInt(Section, "Fog_On", 0, 10);
 	B_Object->S_Environ[0]->Fog_On = Int_Tag;
 
-	Int_Tag = App->CL_Ini_File->GetInt(Section, "Fog_Mode", 0, 10);
+	Int_Tag = App->CL_X_Ini_File->GetInt(Section, "Fog_Mode", 0, 10);
 	B_Object->S_Environ[0]->Fog_Mode = Int_Tag;
 
-	App->CL_Ini_File->GetString(Section, "Fog_Colour", chr_Tag1, MAX_PATH);
+	App->CL_X_Ini_File->GetString(Section, "Fog_Colour", chr_Tag1, MAX_PATH);
 	(void)sscanf(chr_Tag1, "%f,%f,%f", &V4.x, &V4.y, &V4.z);
 	B_Object->S_Environ[0]->Fog_Colour = Ogre::Vector3(V4.x, V4.y, V4.z);
 
-	App->CL_Ini_File->GetString(Section, "Fog_Start", chr_Tag1, MAX_PATH);
+	App->CL_X_Ini_File->GetString(Section, "Fog_Start", chr_Tag1, MAX_PATH);
 	(void)sscanf(chr_Tag1, "%f", &V4.x);
 	B_Object->S_Environ[0]->Fog_Start = V4.x;
 
-	App->CL_Ini_File->GetString(Section, "Fog_End", chr_Tag1, MAX_PATH);
+	App->CL_X_Ini_File->GetString(Section, "Fog_End", chr_Tag1, MAX_PATH);
 	(void)sscanf(chr_Tag1, "%f", &V4.x);
 	B_Object->S_Environ[0]->Fog_End = V4.x;
 
-	App->CL_Ini_File->GetString(Section, "Fog_Density", chr_Tag1, MAX_PATH);
+	App->CL_X_Ini_File->GetString(Section, "Fog_Density", chr_Tag1, MAX_PATH);
 	(void)sscanf(chr_Tag1, "%f", &V4.x);
 	B_Object->S_Environ[0]->Fog_Density = V4.x;
 
@@ -2121,23 +2121,23 @@ bool CL64_Project::Read_Message(int Index, char* Section)
 
 	// --------------------------------
 
-	App->CL_Ini_File->GetString(Section, "Message_Text", B_Object->S_Message[0]->Message_Text, MAX_PATH);
+	App->CL_X_Ini_File->GetString(Section, "Message_Text", B_Object->S_Message[0]->Message_Text, MAX_PATH);
 
-	App->CL_Ini_File->GetString(Section, "Message_Pos", chr_Tag1, MAX_PATH);
+	App->CL_X_Ini_File->GetString(Section, "Message_Pos", chr_Tag1, MAX_PATH);
 	(void)sscanf(chr_Tag1, "%f,%f", &V4.x, &V4.y);
 
 	B_Object->S_Message[0]->Message_PosX = V4.x;
 	B_Object->S_Message[0]->Message_PosY = V4.y;
 
 	// Message Counter
-	B_Object->S_Message[0]->Counter_ID = App->CL_Ini_File->GetInt(Section, "Message_Counter_ID", 0, 10);
-	B_Object->S_Message[0]->Trigger_Value = App->CL_Ini_File->GetInt(Section, "Message_Trigger_Value", 0, 10);
-	B_Object->S_Message[0]->flag_Counter_Disabled = App->CL_Ini_File->GetInt(Section, "Message_Counter_Disabled", 1, 10);
+	B_Object->S_Message[0]->Counter_ID = App->CL_X_Ini_File->GetInt(Section, "Message_Counter_ID", 0, 10);
+	B_Object->S_Message[0]->Trigger_Value = App->CL_X_Ini_File->GetInt(Section, "Message_Trigger_Value", 0, 10);
+	B_Object->S_Message[0]->flag_Counter_Disabled = App->CL_X_Ini_File->GetInt(Section, "Message_Counter_Disabled", 1, 10);
 
-	B_Object->S_Message[0]->flag_PosXCentre_Flag = App->CL_Ini_File->GetInt(Section, "Message_CentreX", 0, 10);
-	B_Object->S_Message[0]->flag_PosYCentre_Flag = App->CL_Ini_File->GetInt(Section, "Message_CentreY", 0, 10);
+	B_Object->S_Message[0]->flag_PosXCentre_Flag = App->CL_X_Ini_File->GetInt(Section, "Message_CentreX", 0, 10);
+	B_Object->S_Message[0]->flag_PosYCentre_Flag = App->CL_X_Ini_File->GetInt(Section, "Message_CentreY", 0, 10);
 
-	int Test = App->CL_Ini_File->GetString(Section, "Message_Text_Colour", chr_Tag1, MAX_PATH);
+	int Test = App->CL_X_Ini_File->GetString(Section, "Message_Text_Colour", chr_Tag1, MAX_PATH);
 	if (Test > 0)
 	{
 		(void)sscanf(chr_Tag1, "%f,%f,%f,%f", &V4.x, &V4.y, &V4.z, &V4.w);
@@ -2149,7 +2149,7 @@ bool CL64_Project::Read_Message(int Index, char* Section)
 		B_Object->S_Message[0]->Text_Colour = Ogre::Vector4(0, 1, 0, 255);
 	}
 
-	Test = App->CL_Ini_File->GetString(Section, "Message_BackGround_Colour", chr_Tag1, MAX_PATH);
+	Test = App->CL_X_Ini_File->GetString(Section, "Message_BackGround_Colour", chr_Tag1, MAX_PATH);
 	if (Test > 0)
 	{
 		(void)sscanf(chr_Tag1, "%f,%f,%f,%f", &V4.x, &V4.y, &V4.z, &V4.w);
@@ -2162,7 +2162,7 @@ bool CL64_Project::Read_Message(int Index, char* Section)
 		B_Object->S_Message[0]->BackGround_Colour = Ogre::Vector4(239, 239, 239, 255);
 	}
 
-	B_Object->S_Message[0]->flag_Show_BackGround = App->CL_Ini_File->GetInt(Section, "Message_Show_BackGround", 1, 10);
+	B_Object->S_Message[0]->flag_Show_BackGround = App->CL_X_Ini_File->GetInt(Section, "Message_Show_BackGround", 1, 10);
 
 	return 1;
 }
@@ -2181,35 +2181,35 @@ bool CL64_Project::Read_MoveEntity(int Index, char* Section)
 	//App->CL_Com_MoveEntity->Set_Move_Defaults(Index); // Check
 
 	//  Distance
-	App->CL_Ini_File->GetString(Section, "Move_Distance", chr_Tag1, MAX_PATH);
+	App->CL_X_Ini_File->GetString(Section, "Move_Distance", chr_Tag1, MAX_PATH);
 	(void)sscanf(chr_Tag1, "%f", &V4.x);
 	B_Object->S_MoveType[0]->Move_Distance = V4.x;
 
-	B_Object->S_MoveType[0]->flag_IsNegative = App->CL_Ini_File->GetInt(Section, "Move_IsNegative", 0, 10);
+	B_Object->S_MoveType[0]->flag_IsNegative = App->CL_X_Ini_File->GetInt(Section, "Move_IsNegative", 0, 10);
 
 	//  Speed
-	App->CL_Ini_File->GetString(Section, "Move_Speed", chr_Tag1, MAX_PATH);
+	App->CL_X_Ini_File->GetString(Section, "Move_Speed", chr_Tag1, MAX_PATH);
 	(void)sscanf(chr_Tag1, "%f", &V4.x);
 	B_Object->S_MoveType[0]->Speed = V4.x;
 
 	//  Name
-	App->CL_Ini_File->GetString(Section, "Move_ObjectName", B_Object->S_MoveType[0]->Object_Name, MAX_PATH);
+	App->CL_X_Ini_File->GetString(Section, "Move_ObjectName", B_Object->S_MoveType[0]->Object_Name, MAX_PATH);
 	
-	B_Object->S_MoveType[0]->Object_To_Move_Index = App->CL_Ini_File->GetInt(Section, "Move_ObjectID", 0, 10);
-	B_Object->S_MoveType[0]->WhatDirection = App->CL_Ini_File->GetInt(Section, "Move_WhatDirection", 0, 10);
+	B_Object->S_MoveType[0]->Object_To_Move_Index = App->CL_X_Ini_File->GetInt(Section, "Move_ObjectID", 0, 10);
+	B_Object->S_MoveType[0]->WhatDirection = App->CL_X_Ini_File->GetInt(Section, "Move_WhatDirection", 0, 10);
 
 	// Move Sound
-	App->CL_Ini_File->GetString(Section, "Move_Sound", B_Object->Sound_File, MAX_PATH);
-	B_Object->flag_Play_Sound = App->CL_Ini_File->GetInt(Section, "Move_Play_Sound", 0, 10);
+	App->CL_X_Ini_File->GetString(Section, "Move_Sound", B_Object->Sound_File, MAX_PATH);
+	B_Object->flag_Play_Sound = App->CL_X_Ini_File->GetInt(Section, "Move_Play_Sound", 0, 10);
 
-	App->CL_Ini_File->GetString(Section, "Move_Volume", chr_Tag1, MAX_PATH);
+	App->CL_X_Ini_File->GetString(Section, "Move_Volume", chr_Tag1, MAX_PATH);
 	(void)sscanf(chr_Tag1, "%f", &V4.x);
 	//B_Object->SndVolume = V4.x;
 
 	// Move Counter
-	B_Object->S_MoveType[0]->Counter_ID = App->CL_Ini_File->GetInt(Section, "Move_Counter_ID", 0, 10);
-	B_Object->S_MoveType[0]->Trigger_Value = App->CL_Ini_File->GetInt(Section, "Move_Trigger_Value", 0, 10);
-	B_Object->S_MoveType[0]->flag_Counter_Disabled = App->CL_Ini_File->GetInt(Section, "Move_Counter_Disabled", 1, 10);
+	B_Object->S_MoveType[0]->Counter_ID = App->CL_X_Ini_File->GetInt(Section, "Move_Counter_ID", 0, 10);
+	B_Object->S_MoveType[0]->Trigger_Value = App->CL_X_Ini_File->GetInt(Section, "Move_Trigger_Value", 0, 10);
+	B_Object->S_MoveType[0]->flag_Counter_Disabled = App->CL_X_Ini_File->GetInt(Section, "Move_Counter_Disabled", 1, 10);
 
 	return 1;
 }
@@ -2227,10 +2227,10 @@ bool CL64_Project::Read_Particle(int Index, char* Section)
 	B_Object->S_Particle[0] = new Particle_type;
 	//App->CL_Com_Particles->Set_Particle_Defaults(Index);
 
-	int Test = App->CL_Ini_File->GetString(Section, "Particle_Script", chr_Tag1, MAX_PATH);
+	int Test = App->CL_X_Ini_File->GetString(Section, "Particle_Script", chr_Tag1, MAX_PATH);
 	strcpy(B_Object->S_Particle[0]->ParticleScript, chr_Tag1);
 
-	App->CL_Ini_File->GetString(Section, "Particle_SpeedFactor", chr_Tag1, MAX_PATH);
+	App->CL_X_Ini_File->GetString(Section, "Particle_SpeedFactor", chr_Tag1, MAX_PATH);
 	(void)sscanf(chr_Tag1, "%f", &V4.x);
 	B_Object->S_Particle[0]->SpeedFactor = V4.x;
 
@@ -2250,22 +2250,22 @@ bool CL64_Project::Read_Collectable(int Index, char* Section)
 	B_Object->S_Collectable[0] = new Collectable_type;
 	//App->CL_Com_Collectables->Set_Collectables_Defaults(Index);
 
-	App->CL_Ini_File->GetString(Section, "Col_Sound_File", chr_Tag1, MAX_PATH);
+	App->CL_X_Ini_File->GetString(Section, "Col_Sound_File", chr_Tag1, MAX_PATH);
 	strcpy(B_Object->S_Collectable[0]->Sound_File, chr_Tag1);
 
-	App->CL_Ini_File->GetString(Section, "Col_Sound_Volume", chr_Tag1, MAX_PATH);
+	App->CL_X_Ini_File->GetString(Section, "Col_Sound_Volume", chr_Tag1, MAX_PATH);
 	(void)sscanf(chr_Tag1, "%f", &V4.x);
 	B_Object->S_Collectable[0]->SndVolume = V4.x;
 
-	B_Object->S_Collectable[0]->flag_Play = App->CL_Ini_File->GetInt(Section, "Col_Play", 0, 10);
+	B_Object->S_Collectable[0]->flag_Play = App->CL_X_Ini_File->GetInt(Section, "Col_Play", 0, 10);
 
-	App->CL_Ini_File->GetString(Section, "Col_Counter_Name", chr_Tag1, MAX_PATH);
+	App->CL_X_Ini_File->GetString(Section, "Col_Counter_Name", chr_Tag1, MAX_PATH);
 	strcpy(B_Object->S_Collectable[0]->Counter_Name, chr_Tag1);
 
-	B_Object->S_Collectable[0]->Counter_ID = App->CL_Ini_File->GetInt(Section, "Col_Counter_ID", 0, 10);
-	B_Object->S_Collectable[0]->Maths = App->CL_Ini_File->GetInt(Section, "Col_Maths", 0, 10);
-	B_Object->S_Collectable[0]->Value = App->CL_Ini_File->GetInt(Section, "Col_Value", 0, 10);
-	B_Object->S_Collectable[0]->flag_Counter_Disabled = App->CL_Ini_File->GetInt(Section, "Col_Disabled", 0, 10);
+	B_Object->S_Collectable[0]->Counter_ID = App->CL_X_Ini_File->GetInt(Section, "Col_Counter_ID", 0, 10);
+	B_Object->S_Collectable[0]->Maths = App->CL_X_Ini_File->GetInt(Section, "Col_Maths", 0, 10);
+	B_Object->S_Collectable[0]->Value = App->CL_X_Ini_File->GetInt(Section, "Col_Value", 0, 10);
+	B_Object->S_Collectable[0]->flag_Counter_Disabled = App->CL_X_Ini_File->GetInt(Section, "Col_Disabled", 0, 10);
 
 	return 1;
 }
@@ -2288,27 +2288,27 @@ bool CL64_Project::Read_Teleport(int Index, char* Section)
 	//App->CL_Com_Environments->V_Set_Environ_Defaults(Index);
 
 
-	App->CL_Ini_File->GetString(Section, "Tele_Goto", chr_Tag1, MAX_PATH);
+	App->CL_X_Ini_File->GetString(Section, "Tele_Goto", chr_Tag1, MAX_PATH);
 	strcpy(B_Object->S_Teleport[0]->Location_Name, chr_Tag1);
 
-	B_Object->S_Teleport[0]->Location_ID = App->CL_Ini_File->GetInt(Section, "Tele_ID", 0, 10);
+	B_Object->S_Teleport[0]->Location_ID = App->CL_X_Ini_File->GetInt(Section, "Tele_ID", 0, 10);
 
 	// Sound
-	App->CL_Ini_File->GetString(Section, "Tele_Sound", B_Object->S_Teleport[0]->Sound_File, MAX_PATH);
+	App->CL_X_Ini_File->GetString(Section, "Tele_Sound", B_Object->S_Teleport[0]->Sound_File, MAX_PATH);
 
-	App->CL_Ini_File->GetString(Section, "Tele_Volume", chr_Tag1, MAX_PATH);
+	App->CL_X_Ini_File->GetString(Section, "Tele_Volume", chr_Tag1, MAX_PATH);
 	(void)sscanf(chr_Tag1, "%f", &V4.x);
 	B_Object->S_Teleport[0]->SndVolume = V4.x;
 
-	B_Object->S_Teleport[0]->flag_Play = App->CL_Ini_File->GetInt(Section, "Tele_Play", 0, 10);
+	B_Object->S_Teleport[0]->flag_Play = App->CL_X_Ini_File->GetInt(Section, "Tele_Play", 0, 10);
 
 	// Mesh_Pos
-	App->CL_Ini_File->GetString(Section, "Tele_Mesh_Position", chr_Tag1, MAX_PATH);
+	App->CL_X_Ini_File->GetString(Section, "Tele_Mesh_Position", chr_Tag1, MAX_PATH);
 	(void)sscanf(chr_Tag1, "%f,%f,%f", &V4.x, &V4.y, &V4.z);
 	B_Object->S_Teleport[0]->Player_Position = Ogre::Vector3(V4.x, V4.y, V4.z);
 
 	//Player_Pos
-	App->CL_Ini_File->GetString(Section, "Tele_Physics_Position", chr_Tag1, MAX_PATH);
+	App->CL_X_Ini_File->GetString(Section, "Tele_Physics_Position", chr_Tag1, MAX_PATH);
 	(void)sscanf(chr_Tag1, "%f,%f,%f", &V4.x, &V4.y, &V4.z);
 
 	B_Object->S_Teleport[0]->Physics_Position.setX(V4.x);
@@ -2316,7 +2316,7 @@ bool CL64_Project::Read_Teleport(int Index, char* Section)
 	B_Object->S_Teleport[0]->Physics_Position.setZ(V4.z);
 
 	//Player_Rotation
-	App->CL_Ini_File->GetString(Section, "Tele_Physics_Rotation", chr_Tag1, MAX_PATH);
+	App->CL_X_Ini_File->GetString(Section, "Tele_Physics_Rotation", chr_Tag1, MAX_PATH);
 	(void)sscanf(chr_Tag1, "%f,%f,%f,%f", &V4.w, &V4.x, &V4.y, &V4.z);
 
 	B_Object->S_Teleport[0]->Physics_Rotation.setW(V4.w);
@@ -2325,85 +2325,85 @@ bool CL64_Project::Read_Teleport(int Index, char* Section)
 	B_Object->S_Teleport[0]->Physics_Rotation.setZ(V4.z);
 
 	// Teleport Counter
-	B_Object->S_Teleport[0]->Counter_ID = App->CL_Ini_File->GetInt(Section, "Tele_Counter_ID", 0, 10);
-	B_Object->S_Teleport[0]->Trigger_Value = App->CL_Ini_File->GetInt(Section, "Tele_Trigger_Value", 0, 10);
-	B_Object->S_Teleport[0]->flag_Counter_Disabled = App->CL_Ini_File->GetInt(Section, "Tele_Counter_Disabled", 1, 10);
+	B_Object->S_Teleport[0]->Counter_ID = App->CL_X_Ini_File->GetInt(Section, "Tele_Counter_ID", 0, 10);
+	B_Object->S_Teleport[0]->Trigger_Value = App->CL_X_Ini_File->GetInt(Section, "Tele_Trigger_Value", 0, 10);
+	B_Object->S_Teleport[0]->flag_Counter_Disabled = App->CL_X_Ini_File->GetInt(Section, "Tele_Counter_Disabled", 1, 10);
 
 	// Environment
-	Int_Tag = App->CL_Ini_File->GetInt(Section, "Environ_Enabled", 0, 10);
+	Int_Tag = App->CL_X_Ini_File->GetInt(Section, "Environ_Enabled", 0, 10);
 	B_Object->S_Environ[0]->flag_Environ_Enabled = Int_Tag;
 
-	App->CL_Ini_File->GetString(Section, "Environment_Name", chr_Tag1, MAX_PATH);
+	App->CL_X_Ini_File->GetString(Section, "Environment_Name", chr_Tag1, MAX_PATH);
 	strcpy(B_Object->S_Environ[0]->Environment_Name, chr_Tag1);
 
-	Int_Tag = App->CL_Ini_File->GetInt(Section, "Environment_ID", 0, 10);
+	Int_Tag = App->CL_X_Ini_File->GetInt(Section, "Environment_ID", 0, 10);
 	B_Object->S_Environ[0]->Environment_ID = Int_Tag;
 
 	//--------------- Sound
-	App->CL_Ini_File->GetString(Section, "Sound_File", chr_Tag1, MAX_PATH);
+	App->CL_X_Ini_File->GetString(Section, "Sound_File", chr_Tag1, MAX_PATH);
 	strcpy(B_Object->S_Environ[0]->Sound_File, chr_Tag1);
 
-	App->CL_Ini_File->GetString(Section, "Snd_Volume", chr_Tag1, MAX_PATH);
+	App->CL_X_Ini_File->GetString(Section, "Snd_Volume", chr_Tag1, MAX_PATH);
 	(void)sscanf(chr_Tag1, "%f", &V4.x);
 	B_Object->S_Environ[0]->SndVolume = V4.x;
 
-	Int_Tag = App->CL_Ini_File->GetInt(Section, "Sound_Play", 0, 10);
+	Int_Tag = App->CL_X_Ini_File->GetInt(Section, "Sound_Play", 0, 10);
 	B_Object->S_Environ[0]->flag_Play = Int_Tag;
 
-	Int_Tag = App->CL_Ini_File->GetInt(Section, "Sound_Loop", 0, 10);
+	Int_Tag = App->CL_X_Ini_File->GetInt(Section, "Sound_Loop", 0, 10);
 	B_Object->S_Environ[0]->flag_Loop = Int_Tag;
 
 	//--------------- Light
-	App->CL_Ini_File->GetString(Section, "Ambient_Colour", chr_Tag1, MAX_PATH);
+	App->CL_X_Ini_File->GetString(Section, "Ambient_Colour", chr_Tag1, MAX_PATH);
 	(void)sscanf(chr_Tag1, "%f,%f,%f", &V4.x, &V4.y, &V4.z);
 	B_Object->S_Environ[0]->AmbientColour = Ogre::Vector3(V4.x, V4.y, V4.z);
 
-	App->CL_Ini_File->GetString(Section, "Light_Position", chr_Tag1, MAX_PATH);
+	App->CL_X_Ini_File->GetString(Section, "Light_Position", chr_Tag1, MAX_PATH);
 	(void)sscanf(chr_Tag1, "%f,%f,%f", &V4.x, &V4.y, &V4.z);
 	B_Object->S_Environ[0]->Light_Position = Ogre::Vector3(V4.x, V4.y, V4.z);
 
 	//--------------- Sky
-	Int_Tag = App->CL_Ini_File->GetInt(Section, "Sky_Enable", 0, 10);
+	Int_Tag = App->CL_X_Ini_File->GetInt(Section, "Sky_Enable", 0, 10);
 	B_Object->S_Environ[0]->flag_Enabled = Int_Tag;
 
-	Int_Tag = App->CL_Ini_File->GetInt(Section, "Sky_Type", 0, 10);
+	Int_Tag = App->CL_X_Ini_File->GetInt(Section, "Sky_Type", 0, 10);
 	B_Object->S_Environ[0]->type = Int_Tag;
 
-	App->CL_Ini_File->GetString(Section, "Sky_Material", chr_Tag1, MAX_PATH);
+	App->CL_X_Ini_File->GetString(Section, "Sky_Material", chr_Tag1, MAX_PATH);
 	strcpy(B_Object->S_Environ[0]->Material, chr_Tag1);
 
-	App->CL_Ini_File->GetString(Section, "Sky_Curvature", chr_Tag1, MAX_PATH);
+	App->CL_X_Ini_File->GetString(Section, "Sky_Curvature", chr_Tag1, MAX_PATH);
 	(void)sscanf(chr_Tag1, "%f", &V4.x);
 	B_Object->S_Environ[0]->Curvature = V4.x;
 
-	App->CL_Ini_File->GetString(Section, "Sky_Tiling", chr_Tag1, MAX_PATH);
+	App->CL_X_Ini_File->GetString(Section, "Sky_Tiling", chr_Tag1, MAX_PATH);
 	(void)sscanf(chr_Tag1, "%f", &V4.x);
 	B_Object->S_Environ[0]->Tiling = V4.x;
 
-	App->CL_Ini_File->GetString(Section, "Sky_Distance", chr_Tag1, MAX_PATH);
+	App->CL_X_Ini_File->GetString(Section, "Sky_Distance", chr_Tag1, MAX_PATH);
 	(void)sscanf(chr_Tag1, "%f", &V4.x);
 	B_Object->S_Environ[0]->Distance = V4.x;
 
 	//--------------- Fog
-	Int_Tag = App->CL_Ini_File->GetInt(Section, "Fog_On", 0, 10);
+	Int_Tag = App->CL_X_Ini_File->GetInt(Section, "Fog_On", 0, 10);
 	B_Object->S_Environ[0]->Fog_On = Int_Tag;
 
-	Int_Tag = App->CL_Ini_File->GetInt(Section, "Fog_Mode", 0, 10);
+	Int_Tag = App->CL_X_Ini_File->GetInt(Section, "Fog_Mode", 0, 10);
 	B_Object->S_Environ[0]->Fog_Mode = Int_Tag;
 
-	App->CL_Ini_File->GetString(Section, "Fog_Colour", chr_Tag1, MAX_PATH);
+	App->CL_X_Ini_File->GetString(Section, "Fog_Colour", chr_Tag1, MAX_PATH);
 	(void)sscanf(chr_Tag1, "%f,%f,%f", &V4.x, &V4.y, &V4.z);
 	B_Object->S_Environ[0]->Fog_Colour = Ogre::Vector3(V4.x, V4.y, V4.z);
 
-	App->CL_Ini_File->GetString(Section, "Fog_Start", chr_Tag1, MAX_PATH);
+	App->CL_X_Ini_File->GetString(Section, "Fog_Start", chr_Tag1, MAX_PATH);
 	(void)sscanf(chr_Tag1, "%f", &V4.x);
 	B_Object->S_Environ[0]->Fog_Start = V4.x;
 
-	App->CL_Ini_File->GetString(Section, "Fog_End", chr_Tag1, MAX_PATH);
+	App->CL_X_Ini_File->GetString(Section, "Fog_End", chr_Tag1, MAX_PATH);
 	(void)sscanf(chr_Tag1, "%f", &V4.x);
 	B_Object->S_Environ[0]->Fog_End = V4.x;
 
-	App->CL_Ini_File->GetString(Section, "Fog_Density", chr_Tag1, MAX_PATH);
+	App->CL_X_Ini_File->GetString(Section, "Fog_Density", chr_Tag1, MAX_PATH);
 	(void)sscanf(chr_Tag1, "%f", &V4.x);
 	B_Object->S_Environ[0]->Fog_Density = V4.x;
 
@@ -2457,9 +2457,9 @@ bool CL64_Project::Load_Project_Aera()
 
 	strcat(Area_Ini_Path, "Areas.aer");
 
-	App->CL_Ini_File->SetPathName(Area_Ini_Path);
+	App->CL_X_Ini_File->SetPathName(Area_Ini_Path);
 
-	Area_Count = App->CL_Ini_File->GetInt("Counters", "Areas_Count", 0,10);
+	Area_Count = App->CL_X_Ini_File->GetInt("Counters", "Areas_Count", 0,10);
 
 	int Count = 0;
 
@@ -2591,9 +2591,9 @@ bool CL64_Project::Load_Project_Player()
 
 	strcat(Player_Ini_Path, "Players.dat");
 
-	App->CL_Ini_File->SetPathName(Player_Ini_Path);
+	App->CL_X_Ini_File->SetPathName(Player_Ini_Path);
 
-	Players_Count = App->CL_Ini_File->GetInt("Counters", "Player_Count", 0,10);
+	Players_Count = App->CL_X_Ini_File->GetInt("Counters", "Player_Count", 0,10);
 
 	int Count = 0;
 	char Cbuff[255];
@@ -2608,15 +2608,15 @@ bool CL64_Project::Load_Project_Player()
 		
 		//App->CL_Com_Player->Create_Player_Object();
 		
-		App->CL_Ini_File->GetString(buff, "Player_Name", Player_Name, MAX_PATH);
+		App->CL_X_Ini_File->GetString(buff, "Player_Name", Player_Name, MAX_PATH);
 		strcpy(App->CL_Scene->B_Player[Count]->Player_Name, Player_Name);
 
 
-		App->CL_Ini_File->GetString(buff, "Start_Position", chr_Tag1, MAX_PATH);
+		App->CL_X_Ini_File->GetString(buff, "Start_Position", chr_Tag1, MAX_PATH);
 		(void)sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
 		App->CL_Scene->B_Player[Count]->StartPos = Ogre::Vector3(x, y, z);
 
-		App->CL_Ini_File->GetString(buff, "Start_Rotation", chr_Tag1, MAX_PATH);
+		App->CL_X_Ini_File->GetString(buff, "Start_Rotation", chr_Tag1, MAX_PATH);
 		(void)sscanf(chr_Tag1, "%f,%f,%f,%f", &w, &x, &y, &z);
 
 		App->CL_Scene->B_Player[Count]->Physics_Rotation.setW(w);
@@ -2624,16 +2624,16 @@ bool CL64_Project::Load_Project_Player()
 		App->CL_Scene->B_Player[Count]->Physics_Rotation.setY(y);
 		App->CL_Scene->B_Player[Count]->Physics_Rotation.setZ(z);
 
-		App->CL_Ini_File->GetString(buff, "Turn_Rate", chr_Tag1, MAX_PATH);
+		App->CL_X_Ini_File->GetString(buff, "Turn_Rate", chr_Tag1, MAX_PATH);
 		(void)sscanf(chr_Tag1, "%f", &x);
 		App->CL_Scene->B_Player[Count]->TurnRate = x;
 
-		App->CL_Ini_File->GetString(buff, "Ground_Speed", chr_Tag1, MAX_PATH);
+		App->CL_X_Ini_File->GetString(buff, "Ground_Speed", chr_Tag1, MAX_PATH);
 		(void)sscanf(chr_Tag1, "%f", &x);
 		App->CL_Scene->B_Player[Count]->Ground_speed = x;
 
 		//------------------ Look Up Limit
-		int Test = App->CL_Ini_File->GetString(buff, "Limit_Look_Up", chr_Tag1, MAX_PATH);
+		int Test = App->CL_X_Ini_File->GetString(buff, "Limit_Look_Up", chr_Tag1, MAX_PATH);
 		if (Test > 0)
 		{
 			(void)sscanf(chr_Tag1, "%f", &x);
@@ -2642,7 +2642,7 @@ bool CL64_Project::Load_Project_Player()
 		else { App->CL_Scene->B_Player[Count]->Limit_Look_Up = 45; }
 
 		//------------------ Look Down Limit
-		Test = App->CL_Ini_File->GetString(buff, "Limit_Look_Down", chr_Tag1, MAX_PATH);
+		Test = App->CL_X_Ini_File->GetString(buff, "Limit_Look_Down", chr_Tag1, MAX_PATH);
 		if (Test > 0)
 		{
 			(void)sscanf(chr_Tag1, "%f", &x);
@@ -2651,7 +2651,7 @@ bool CL64_Project::Load_Project_Player()
 		else { App->CL_Scene->B_Player[Count]->Limit_Look_Down = -45; }
 
 		//------------------ Capsule Radius
-		Test = App->CL_Ini_File->GetString(buff, "Radius", chr_Tag1, MAX_PATH);
+		Test = App->CL_X_Ini_File->GetString(buff, "Radius", chr_Tag1, MAX_PATH);
 		if (Test > 0)
 		{
 			(void)sscanf(chr_Tag1, "%f", &x);
@@ -2660,7 +2660,7 @@ bool CL64_Project::Load_Project_Player()
 		else { App->CL_Scene->B_Player[Count]->Capsule_Radius = 4.4; }
 
 		//------------------ Capsule Height
-		Test = App->CL_Ini_File->GetString(buff, "Height", chr_Tag1, MAX_PATH);
+		Test = App->CL_X_Ini_File->GetString(buff, "Height", chr_Tag1, MAX_PATH);
 		if (Test > 0)
 		{
 			(void)sscanf(chr_Tag1, "%f", &x);
@@ -2669,7 +2669,7 @@ bool CL64_Project::Load_Project_Player()
 		else { App->CL_Scene->B_Player[Count]->Capsule_Height = 17; }
 
 		//------------------ Player Height
-		Test = App->CL_Ini_File->GetString(buff, "Player_Height", chr_Tag1, MAX_PATH);
+		Test = App->CL_X_Ini_File->GetString(buff, "Player_Height", chr_Tag1, MAX_PATH);
 		if (Test > 0)
 		{
 			(void)sscanf(chr_Tag1, "%f", &x);
@@ -2685,7 +2685,7 @@ bool CL64_Project::Load_Project_Player()
 
 	// ------------------------------------------ Locations
 	int Int_Tag = 0;
-	Locations_Count = App->CL_Ini_File->GetInt("Locations", "Locations_Count", 0,10);
+	Locations_Count = App->CL_X_Ini_File->GetInt("Locations", "Locations_Count", 0,10);
 
 	Count = 0;
 	//while (Count < Locations_Count)
@@ -2771,9 +2771,9 @@ bool CL64_Project::Load_Project_Camera()
 
 	strcat(Cameras_Ini_Path, "Cameras.epf");
 
-	App->CL_Ini_File->SetPathName(Cameras_Ini_Path);
+	App->CL_X_Ini_File->SetPathName(Cameras_Ini_Path);
 
-	Camera_Count = App->CL_Ini_File->GetInt("Counters", "Cameras_Count", 0, 10);
+	Camera_Count = App->CL_X_Ini_File->GetInt("Counters", "Cameras_Count", 0, 10);
 
 	int Count = 0;
 

@@ -1,3 +1,27 @@
+/*
+Copyright (c) 2024 - 2025 Inflanite_HGT W.T.Flanigan H.C.Flanigan
+
+OW3D_Mesh_Builder
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+*/
+
 #include "pch.h"
 #include "resource.h"
 #include "CL64_App.h"
@@ -33,7 +57,7 @@ Lib_Preference::~Lib_Preference(void)
 // *************************************************************************
 char* Lib_Preference::GetVersion()
 {
-	return (LPSTR)"Lib_Preference [ 05-08-25 ] Build 1 ";
+	return (LPSTR)" OW3D_Scene_Builder :-- Lib_Preference [ 14-08-25 ] Build 1 ";
 }
 
 // *************************************************************************
@@ -215,16 +239,16 @@ void Lib_Preference::Read_Preferences()
 	strcpy(Preferences_Path, App->RB_Directory_FullPath);
 	strcat(Preferences_Path, "\\Data\\Room_Builder\\Room_Builder.ini");
 
-	App->CL_Ini_File->SetPathName(Preferences_Path);
+	App->CL_X_Ini_File->SetPathName(Preferences_Path);
 
 
-	Grid_Fine_Spacing = App->CL_Ini_File->GetInt("Grid", "Grid_Fine_Spacing", 0, 10);
-	Grid_Spacing = App->CL_Ini_File->GetInt("Grid", "Grid_Spacing", 0, 10);
+	Grid_Fine_Spacing = App->CL_X_Ini_File->GetInt("Grid", "Grid_Fine_Spacing", 0, 10);
+	Grid_Spacing = App->CL_X_Ini_File->GetInt("Grid", "Grid_Spacing", 0, 10);
 
 	App->CL_Editor_Map->GridSize = Grid_Spacing;
 	App->CL_Editor_Map->GridSnapSize = Grid_Fine_Spacing;
 
-	App->CL_Ini_File->GetString("Wad", "Wad_File_Name", chr_Tag1, MAX_PATH);
+	App->CL_X_Ini_File->GetString("Wad", "Wad_File_Name", chr_Tag1, MAX_PATH);
 	strcpy(Wad_File_Name, chr_Tag1);
 
 }
@@ -363,15 +387,15 @@ void Lib_Preference::Load_Config_File()
 	strcpy(buf, UserData_Folder);
 	strcat(buf, "\\OW3D_Dir\\OW3D_MeshBuilder.cfg");
 
-	App->CL_Ini_File->SetPathName(buf);
+	App->CL_X_Ini_File->SetPathName(buf);
 
-	flag_OpenLastFile = App->CL_Ini_File->GetInt("Start_Up", "Open_Last_File", 0, 10);
+	flag_OpenLastFile = App->CL_X_Ini_File->GetInt("Start_Up", "Open_Last_File", 0, 10);
 
-	App->CL_Ini_File->GetString("Start_Up", "Last_File_Full", Prefs_PathAndFile, MAX_PATH);
-	App->CL_Ini_File->GetString("Start_Up", "Last_File_Name", Prefs_JustFileName, MAX_PATH);
+	App->CL_X_Ini_File->GetString("Start_Up", "Last_File_Full", Prefs_PathAndFile, MAX_PATH);
+	App->CL_X_Ini_File->GetString("Start_Up", "Last_File_Name", Prefs_JustFileName, MAX_PATH);
 	
-	flag_MapEditor = App->CL_Ini_File->GetInt("Start_Up", "Start_Map_Editor", 1, 10);
-	flag_SceneEditor = App->CL_Ini_File->GetInt("Start_Up", "Start_Scene_Editor", 0, 10);
+	flag_MapEditor = App->CL_X_Ini_File->GetInt("Start_Up", "Start_Map_Editor", 1, 10);
+	flag_SceneEditor = App->CL_X_Ini_File->GetInt("Start_Up", "Start_Scene_Editor", 0, 10);
 
 	return;
 }
