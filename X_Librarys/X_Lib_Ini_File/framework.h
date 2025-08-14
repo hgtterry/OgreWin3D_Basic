@@ -10,7 +10,6 @@
 #pragma warning(disable : 4996 4715) // Needs Looking At
 
 #include <windows.h>
-//#include "btBulletDynamicsCommon.h"
 
 #include <stdlib.h>
 #include <malloc.h>
@@ -20,6 +19,3 @@
 #include <Commctrl.h>   // includes the Common control header
 #include <string>
 
-
-#include "Ogre.h"
-//#include "irrKlang.h"

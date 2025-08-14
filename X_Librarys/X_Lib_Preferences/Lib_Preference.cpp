@@ -239,16 +239,18 @@ void Lib_Preference::Read_Preferences()
 	strcpy(Preferences_Path, App->RB_Directory_FullPath);
 	strcat(Preferences_Path, "\\Data\\Room_Builder\\Room_Builder.ini");
 
-	App->CL_X_Ini_File->SetPathName(Preferences_Path);
+	auto& Ini_File = App->CL_X_Ini_File; // App->CL_X_Ini_File-> (Pointer)
+
+	Ini_File->SetPathName(Preferences_Path);
 
 
-	Grid_Fine_Spacing = App->CL_X_Ini_File->GetInt("Grid", "Grid_Fine_Spacing", 0, 10);
-	Grid_Spacing = App->CL_X_Ini_File->GetInt("Grid", "Grid_Spacing", 0, 10);
+	Grid_Fine_Spacing = Ini_File->GetInt("Grid", "Grid_Fine_Spacing", 0, 10);
+	Grid_Spacing = Ini_File->GetInt("Grid", "Grid_Spacing", 0, 10);
 
 	App->CL_Editor_Map->GridSize = Grid_Spacing;
 	App->CL_Editor_Map->GridSnapSize = Grid_Fine_Spacing;
 
-	App->CL_X_Ini_File->GetString("Wad", "Wad_File_Name", chr_Tag1, MAX_PATH);
+	Ini_File->GetString("Wad", "Wad_File_Name", chr_Tag1, MAX_PATH);
 	strcpy(Wad_File_Name, chr_Tag1);
 
 }
@@ -387,15 +389,17 @@ void Lib_Preference::Load_Config_File()
 	strcpy(buf, UserData_Folder);
 	strcat(buf, "\\OW3D_Dir\\OW3D_MeshBuilder.cfg");
 
-	App->CL_X_Ini_File->SetPathName(buf);
+	auto& Ini_File = App->CL_X_Ini_File; // App->CL_X_Ini_File-> (Pointer)
 
-	flag_OpenLastFile = App->CL_X_Ini_File->GetInt("Start_Up", "Open_Last_File", 0, 10);
+	Ini_File->SetPathName(buf);
 
-	App->CL_X_Ini_File->GetString("Start_Up", "Last_File_Full", Prefs_PathAndFile, MAX_PATH);
-	App->CL_X_Ini_File->GetString("Start_Up", "Last_File_Name", Prefs_JustFileName, MAX_PATH);
+	flag_OpenLastFile = Ini_File->GetInt("Start_Up", "Open_Last_File", 0, 10);
+
+	Ini_File->GetString("Start_Up", "Last_File_Full", Prefs_PathAndFile, MAX_PATH);
+	Ini_File->GetString("Start_Up", "Last_File_Name", Prefs_JustFileName, MAX_PATH);
 	
-	flag_MapEditor = App->CL_X_Ini_File->GetInt("Start_Up", "Start_Map_Editor", 1, 10);
-	flag_SceneEditor = App->CL_X_Ini_File->GetInt("Start_Up", "Start_Scene_Editor", 0, 10);
+	flag_MapEditor = Ini_File->GetInt("Start_Up", "Start_Map_Editor", 1, 10);
+	flag_SceneEditor = Ini_File->GetInt("Start_Up", "Start_Scene_Editor", 0, 10);
 
 	return;
 }
