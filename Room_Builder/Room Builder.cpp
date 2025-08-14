@@ -202,7 +202,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             case ID_DEBUG_LIBRARIES:
             {
                 App->CL_Dialogs->Start_General_ListBox(Enums::ListBox_Libraries);
-
                 return 1;
             }
             
