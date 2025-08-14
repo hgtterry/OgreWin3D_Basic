@@ -136,6 +136,7 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Brush_Dlg(HWND hDlg, UINT message
 		
 		return TRUE;
 	}
+
 	case WM_CTLCOLORSTATIC:
 	{
 		if (GetDlgItem(hDlg, IDC_ST_GD_GROUPS) == (HWND)lParam)

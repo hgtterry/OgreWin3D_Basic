@@ -314,8 +314,8 @@ void CL64_Properties_Tabs::Enable_Tabs(bool Enable)
 	EnableWindow(GetDlgItem(Tabs_Control_Hwnd, IDC_TBGROUPS), Enable);
 	
 	
-	EnableWindow(GetDlgItem(App->CL_Top_Tabs->Headers_hWnd, IDC_BT_HD_PREVIEW), Enable);
-	EnableWindow(GetDlgItem(App->CL_Top_Tabs->Headers_hWnd, IDC_BT_HD_SCENEEDITOR), Enable);
+	EnableWindow(GetDlgItem(App->CL_Top_Tabs->TopTabs_Dlg_hWnd, IDC_BT_HD_PREVIEW), Enable);
+	EnableWindow(GetDlgItem(App->CL_Top_Tabs->TopTabs_Dlg_hWnd, IDC_BT_HD_SCENEEDITOR), Enable);
 	
 }
 

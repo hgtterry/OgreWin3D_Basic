@@ -76,14 +76,8 @@ void CL64_OGL_Listener::renderQueueEnded(Ogre::uint8 queueGroupId, const Ogre::S
 		return;
 	}
 
-	
-
 	PreRender();
-
-
 	Render_Loop();
-
-
 	PostRender();
 }
 
@@ -351,35 +345,32 @@ void CL64_OGL_Listener::MeshData_Render_Faces(void)
 // *************************************************************************
 void CL64_OGL_Listener::MeshData_Face_Groups(int Count)
 {
-	int FaceCount = 0;
-	int A = 0;
-	int B = 0;
-	int C = 0;
-
+	// Set the polygon mode to draw lines for both front and back faces
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-	while (FaceCount < App->CL_Scene->Group[Count]->GroupFaceCount)
-	{
-		A = App->CL_Scene->Group[Count]->Face_Data[FaceCount].a;
-		B = App->CL_Scene->Group[Count]->Face_Data[FaceCount].b;
-		C = App->CL_Scene->Group[Count]->Face_Data[FaceCount].c;
+	// Retrieve the group and its face count
+	auto& group = App->CL_Scene->Group[Count];
+	int faceCount = group->GroupFaceCount;
 
+	// Iterate through each face in the group
+	for (int i = 0; i < faceCount; ++i)
+	{
+		// Retrieve vertex indices for the current face
+		int A = group->Face_Data[i].a;
+		int B = group->Face_Data[i].b;
+		int C = group->Face_Data[i].c;
+
+		// Begin drawing the polygon
 		glBegin(GL_POLYGON);
 
-		//-----------------------------------------------
-		glVertex3fv(&App->CL_Scene->Group[Count]->vertex_Data[A].x);
+		// Specify the vertices of the polygon
+		glVertex3fv(&group->vertex_Data[A].x);
+		glVertex3fv(&group->vertex_Data[B].x);
+		glVertex3fv(&group->vertex_Data[C].x);
 
-		//-----------------------------------------------
-		glVertex3fv(&App->CL_Scene->Group[Count]->vertex_Data[B].x);
-
-		//-----------------------------------------------
-		glVertex3fv(&App->CL_Scene->Group[Count]->vertex_Data[C].x);
-		FaceCount++;
-		//-----------------------------------------------
-
+		// End drawing the polygon
 		glEnd();
 	}
-
 }
 
 // *************************************************************************

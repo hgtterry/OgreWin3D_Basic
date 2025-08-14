@@ -267,7 +267,7 @@ void CL64_Editor_Control::Set_Map_Editor_Select_Dlg()
 		App->CL_Top_Tabs->Enable_TopBar_Face_Buttons(false);
 		App->CL_Top_Tabs->Enable_Select_Button(true, true);
 
-		RedrawWindow(App->CL_Top_Tabs->Headers_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+		App->CL_Top_Tabs->Redraw_TopTabs_Dlg();
 
 		return;
 	}

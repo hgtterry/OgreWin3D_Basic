@@ -326,7 +326,7 @@ void CL64_Doc::Do_General_Select_Dlg(bool from_Insert)
             App->CL_Top_Tabs->Enable_TopBar_Face_Buttons(false);
             App->CL_Top_Tabs->Enable_Select_Button(true, true);
 
-            RedrawWindow(App->CL_Top_Tabs->Headers_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+            App->CL_Top_Tabs->Redraw_TopTabs_Dlg();
 
             return;
         }
@@ -340,7 +340,7 @@ void CL64_Doc::Do_General_Select_Dlg(bool from_Insert)
         App->CL_Top_Tabs->Enable_TopBar_Face_Buttons(true);
         App->CL_Top_Tabs->Enable_Select_Button(true, true);
 
-        RedrawWindow(App->CL_Top_Tabs->Headers_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+        App->CL_Top_Tabs->Redraw_TopTabs_Dlg();
     }
 }
 

@@ -29,25 +29,25 @@ THE SOFTWARE.
 
 CL64_Top_Tabs::CL64_Top_Tabs(void)
 {
-	Headers_hWnd = nullptr;
+	TopTabs_Dlg_hWnd = nullptr;
 
-	flag_Brush_Select = 1;
+	flag_Brush_Select = true;
 
-	flag_Brush_Move = 0;
-	flag_Brush_Rotate = 0;
+	flag_Brush_Move = false;
+	flag_Brush_Rotate = false;
 
-	flag_Brush_Scale = 0;
+	flag_Brush_Scale = false;
 
-	flag_All_Faces = 0;
-	flag_Next_Face = 0;
-	flag_Prev_Face = 0;
+	flag_All_Faces = false;
+	flag_Next_Face = false;
+	flag_Prev_Face = false;
 
-	flag_Full_View_3D = 0;
-	flag_View_Top_Left = 0;
-	flag_View_Top_Right = 0;
-	flag_View_Bottom_Left = 0;
+	flag_Full_View_3D = false;
+	flag_View_Top_Left = false;
+	flag_View_Top_Right = false;
+	flag_View_Bottom_Left = false;
 
-	flag_TopTabs_Active = 0;
+	flag_TopTabs_Active = false;
 }
 
 CL64_Top_Tabs::~CL64_Top_Tabs(void)
@@ -69,22 +69,22 @@ void CL64_Top_Tabs::Reset_Class()
 
 	App->CL_Panels->Deselect_All_Brushes_Update_Dlgs();
 
-	RedrawWindow(App->CL_Top_Tabs->Headers_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+	App->CL_Top_Tabs->Redraw_TopTabs_Dlg();
 }
 
 // *************************************************************************
-// *	  			Message:- Terry and Hazel Flanigan 2025				   *
+// *	  		Start_Headers:- Terry and Hazel Flanigan 2025			   *
 // *************************************************************************
 void CL64_Top_Tabs::Start_Headers()
 {
-	Headers_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_TOP_TABS_HEADERS, App->MainHwnd, (DLGPROC)Proc_Headers);
+	TopTabs_Dlg_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_TOP_TABS_HEADERS, App->MainHwnd, (DLGPROC)Proc_Headers);
 	Update_Faces_Combo();
 
 	flag_TopTabs_Active = 1;
 }
 
 // *************************************************************************
-// *        	Message_Proc:- Terry and Hazel Flanigan 2025			   *
+// *        	Proc_Headers:- Terry and Hazel Flanigan 2025			   *
 // *************************************************************************
 LRESULT CALLBACK CL64_Top_Tabs::Proc_Headers(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -382,7 +382,7 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Headers(HWND hDlg, UINT message, WPARAM wPa
 				App->CL_Editor_Map->Resize_Windows(App->CL_Editor_Map->Main_View_Dlg_Hwnd, App->CL_Editor_Map->nleftWnd_width, App->CL_Editor_Map->nleftWnd_Depth);
 			}
 			
-			RedrawWindow(App->CL_Top_Tabs->Headers_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			App->CL_Top_Tabs->Redraw_TopTabs_Dlg();
 			
 			return TRUE;
 		}
@@ -412,7 +412,7 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Headers(HWND hDlg, UINT message, WPARAM wPa
 				App->CL_Editor_Map->Set_View();
 			}
 
-			RedrawWindow(App->CL_Top_Tabs->Headers_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			App->CL_Top_Tabs->Redraw_TopTabs_Dlg();
 			
 			return TRUE;
 		}
@@ -443,7 +443,7 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Headers(HWND hDlg, UINT message, WPARAM wPa
 				App->CL_Editor_Map->Set_View();
 			}
 
-			RedrawWindow(App->CL_Top_Tabs->Headers_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			App->CL_Top_Tabs->Redraw_TopTabs_Dlg();
 
 			return TRUE;
 		}
@@ -471,7 +471,7 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Headers(HWND hDlg, UINT message, WPARAM wPa
 				App->CL_Editor_Map->Set_View();
 			}
 
-			RedrawWindow(App->CL_Top_Tabs->Headers_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			App->CL_Top_Tabs->Redraw_TopTabs_Dlg();
 
 			return TRUE;
 		}
@@ -492,7 +492,7 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Headers(HWND hDlg, UINT message, WPARAM wPa
 		{
 			App->CL_Panels->Deselect_All_Brushes_Update_Dlgs();
 
-			RedrawWindow(App->CL_Top_Tabs->Headers_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			App->CL_Top_Tabs->Redraw_TopTabs_Dlg();
 
 			return TRUE;
 		}
@@ -550,7 +550,7 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Headers(HWND hDlg, UINT message, WPARAM wPa
 			App->CL_Top_Tabs->Deselect_Faces_Dlg_Buttons();
 			App->CL_Top_Tabs->flag_All_Faces = 1;
 
-			RedrawWindow(App->CL_Top_Tabs->Headers_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			App->CL_Top_Tabs->Redraw_TopTabs_Dlg();
 
 			App->CL_Doc->SelectAllFacesInBrushes();
 			App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
@@ -612,6 +612,49 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Headers(HWND hDlg, UINT message, WPARAM wPa
 }
 
 // *************************************************************************
+// *		Set_View_Buttons:- Terry and Hazel Flanigan 2025			   *
+// *************************************************************************
+void CL64_Top_Tabs::Set_View_Buttons(int Selected_View)
+{
+	// Reset all view flags to false
+	flag_View_Top_Left = false;
+	flag_View_Top_Right = false;
+	flag_View_Bottom_Left = false;
+	flag_Full_View_3D = false;
+
+	// Set the appropriate flag based on the selected view
+	switch (Selected_View)
+	{
+	case Enums::Selected_Map_View_TL:
+		flag_View_Top_Left = true;
+		break;
+	case Enums::Selected_Map_View_TR:
+		flag_View_Top_Right = true;
+		break;
+	case Enums::Selected_Map_View_BL:
+		flag_View_Bottom_Left = true;
+		break;
+	case Enums::Selected_Map_View_3D:
+		flag_Full_View_3D = true;
+		break;
+	default:
+		// Handle unexpected view selection if necessary
+		break;
+	}
+
+	// Redraw the window to reflect the changes
+	Redraw_TopTabs_Dlg();
+}
+
+// *************************************************************************
+// *	  	Redraw_TopTabs_Dlg:- Terry and Hazel Flanigan 2025			   *
+// *************************************************************************
+void CL64_Top_Tabs::Redraw_TopTabs_Dlg()
+{
+	RedrawWindow(TopTabs_Dlg_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+}
+
+// *************************************************************************
 // *			Set_Brush_Mode:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
 void CL64_Top_Tabs::Set_Brush_Mode(int Mode, int Dlg_Selection)
@@ -640,7 +683,7 @@ void CL64_Top_Tabs::Set_Brush_Mode(int Mode, int Dlg_Selection)
 	
 	Deselect_Faces_Dlg_Buttons();
 
-	RedrawWindow(Headers_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+	App->CL_Top_Tabs->Redraw_TopTabs_Dlg();
 
 	App->CL_Doc->mCurrentTool = CURTOOL_NONE;
 	//App->CL_Doc->mModeTool = ID_TOOLS_BRUSH_SCALEBRUSH;
@@ -695,7 +738,7 @@ void CL64_Top_Tabs::Set_Brush_Mode(int Mode, int Dlg_Selection)
 // *************************************************************************
 void CL64_Top_Tabs::Init_Bmps_Globals(void)
 {
-	HWND Temp = GetDlgItem(Headers_hWnd, IDC_BT_TOP_RIGHT);
+	HWND Temp = GetDlgItem(TopTabs_Dlg_hWnd, IDC_BT_TOP_RIGHT);
 	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_TR_Off_Bmp);
 }
 
@@ -704,22 +747,22 @@ void CL64_Top_Tabs::Init_Bmps_Globals(void)
 // *************************************************************************
 void CL64_Top_Tabs::Enable_TopBar_Brush_Buttons(bool Enable, bool Active)
 {
-	EnableWindow(GetDlgItem(Headers_hWnd, IDC_BT_BRUSH_MOVE), Enable);
+	EnableWindow(GetDlgItem(TopTabs_Dlg_hWnd, IDC_BT_BRUSH_MOVE), Enable);
 	flag_Brush_Move = Active;
 
 	if (App->CL_Doc->CurBrush->GroupId == Enums::Brushs_ID_Evirons)
 	{
-		EnableWindow(GetDlgItem(Headers_hWnd, IDC_BT_BRUSH_SCALE), false);
+		EnableWindow(GetDlgItem(TopTabs_Dlg_hWnd, IDC_BT_BRUSH_SCALE), false);
 		flag_Brush_Scale = false;
 	}
 	else
 	{
-		EnableWindow(GetDlgItem(Headers_hWnd, IDC_BT_BRUSH_SCALE), Enable);
+		EnableWindow(GetDlgItem(TopTabs_Dlg_hWnd, IDC_BT_BRUSH_SCALE), Enable);
 		flag_Brush_Scale = Active;
 	}
 
 
-	EnableWindow(GetDlgItem(Headers_hWnd, IDC_BT_BRUSH_ROTATE), Enable);
+	EnableWindow(GetDlgItem(TopTabs_Dlg_hWnd, IDC_BT_BRUSH_ROTATE), Enable);
 	flag_Brush_Scale = Active;
 }
 
@@ -728,10 +771,10 @@ void CL64_Top_Tabs::Enable_TopBar_Brush_Buttons(bool Enable, bool Active)
 // *************************************************************************
 void CL64_Top_Tabs::Enable_TopBar_Face_Buttons(bool Enable)
 {
-	EnableWindow(GetDlgItem(Headers_hWnd, IDC_BT_ALLFACES), Enable);
-	EnableWindow(GetDlgItem(Headers_hWnd, IDC_BT_NEXTFACE), Enable);
-	EnableWindow(GetDlgItem(Headers_hWnd, IDC_BT_PREVFACE), Enable);
-	EnableWindow(GetDlgItem(Headers_hWnd, IDC_CB_FACELIST), Enable);
+	EnableWindow(GetDlgItem(TopTabs_Dlg_hWnd, IDC_BT_ALLFACES), Enable);
+	EnableWindow(GetDlgItem(TopTabs_Dlg_hWnd, IDC_BT_NEXTFACE), Enable);
+	EnableWindow(GetDlgItem(TopTabs_Dlg_hWnd, IDC_BT_PREVFACE), Enable);
+	EnableWindow(GetDlgItem(TopTabs_Dlg_hWnd, IDC_CB_FACELIST), Enable);
 	
 }
 
@@ -740,7 +783,7 @@ void CL64_Top_Tabs::Enable_TopBar_Face_Buttons(bool Enable)
 // *************************************************************************
 void CL64_Top_Tabs::Enable_Select_Button(bool Enable, bool Active)
 {
-	EnableWindow(GetDlgItem(Headers_hWnd, IDC_BT_BRUSH_SELECT), Enable);
+	EnableWindow(GetDlgItem(TopTabs_Dlg_hWnd, IDC_BT_BRUSH_SELECT), Enable);
 	flag_Brush_Select = Active;
 }
 
@@ -749,7 +792,7 @@ void CL64_Top_Tabs::Enable_Select_Button(bool Enable, bool Active)
 // *************************************************************************
 void CL64_Top_Tabs::Enable_Move_Button(bool Enable, bool Active)
 {
-	EnableWindow(GetDlgItem(Headers_hWnd, IDC_BT_BRUSH_MOVE), Enable);
+	EnableWindow(GetDlgItem(TopTabs_Dlg_hWnd, IDC_BT_BRUSH_MOVE), Enable);
 	flag_Brush_Move = Active;
 }
 
@@ -763,7 +806,7 @@ void CL64_Top_Tabs::Reset_Brush_Buttons()
 	flag_Brush_Rotate = 0;
 	flag_Brush_Scale = 0;
 
-	RedrawWindow(Headers_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+	App->CL_Top_Tabs->Redraw_TopTabs_Dlg();
 }
 
 // *************************************************************************
@@ -775,7 +818,7 @@ void CL64_Top_Tabs::Deselect_Faces_Dlg_Buttons()
 	flag_Next_Face = 0;
 	flag_Prev_Face = 0;
 
-	RedrawWindow(Headers_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+	App->CL_Top_Tabs->Redraw_TopTabs_Dlg();
 }
 
 
@@ -788,7 +831,7 @@ void CL64_Top_Tabs::Select_Face()
 	{
 		App->CL_Top_Tabs->Deselect_Faces_Dlg_Buttons();
 		App->CL_Top_Tabs->flag_Next_Face = 1;
-		RedrawWindow(App->CL_Top_Tabs->Headers_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+		App->CL_Top_Tabs->Redraw_TopTabs_Dlg();
 
 		App->CL_Doc->SelectAllFacesInBrushes();
 		App->CL_Face->Select_Face_From_Index(App->CL_Face->Selected_Face_Index);
@@ -797,7 +840,7 @@ void CL64_Top_Tabs::Select_Face()
 	{
 		App->CL_Top_Tabs->Deselect_Faces_Dlg_Buttons();
 		App->CL_Top_Tabs->flag_Next_Face = 1;
-		RedrawWindow(App->CL_Top_Tabs->Headers_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+		App->CL_Top_Tabs->Redraw_TopTabs_Dlg();
 
 		App->CL_Face->Select_Face_From_Index(App->CL_Face->Selected_Face_Index);
 	}
@@ -807,7 +850,7 @@ void CL64_Top_Tabs::Select_Face()
 	App->CL_Properties_Textures->Enable_FaceProps_Button(true);
 	App->CL_Properties_Tabs->Select_Textures_Tab();
 
-	HWND Temp = GetDlgItem(App->CL_Top_Tabs->Headers_hWnd, IDC_CB_FACELIST);
+	HWND Temp = GetDlgItem(App->CL_Top_Tabs->TopTabs_Dlg_hWnd, IDC_CB_FACELIST);
 	SendMessage(Temp, CB_SETCURSEL, App->CL_Face->Selected_Face_Index, 0);
 }
 
@@ -820,7 +863,7 @@ void CL64_Top_Tabs::Update_Faces_Combo()
 
 	//Do_Timer
 
-	HWND Temp = GetDlgItem(Headers_hWnd, IDC_CB_FACELIST);
+	HWND Temp = GetDlgItem(TopTabs_Dlg_hWnd, IDC_CB_FACELIST);
 	SendMessage(Temp, CB_RESETCONTENT, 0, 0);
 	char buff[MAX_PATH];
 
@@ -852,46 +895,11 @@ void CL64_Top_Tabs::Show_TopTabs(bool Enable)
 	if (Enable == 1)
 	{
 		flag_TopTabs_Active = 1;
-		ShowWindow(Headers_hWnd, 1);
+		ShowWindow(TopTabs_Dlg_hWnd, 1);
 	}
 	else
 	{
 		flag_TopTabs_Active = 0;
-		ShowWindow(Headers_hWnd, 0);
+		ShowWindow(TopTabs_Dlg_hWnd, 0);
 	}
-}
-
-// *************************************************************************
-// *		Set_View_Buttons:- Terry and Hazel Flanigan 2025			   *
-// *************************************************************************
-void CL64_Top_Tabs::Set_View_Buttons(int Selected_View)
-{
-	// Reset all view flags to false
-	flag_View_Top_Left = false;
-	flag_View_Top_Right = false;
-	flag_View_Bottom_Left = false;
-	flag_Full_View_3D = false;
-
-	// Set the appropriate flag based on the selected view
-	switch (Selected_View)
-	{
-	case Enums::Selected_Map_View_TL:
-		flag_View_Top_Left = true;
-		break;
-	case Enums::Selected_Map_View_TR:
-		flag_View_Top_Right = true;
-		break;
-	case Enums::Selected_Map_View_BL:
-		flag_View_Bottom_Left = true;
-		break;
-	case Enums::Selected_Map_View_3D:
-		flag_Full_View_3D = true;
-		break;
-	default:
-		// Handle unexpected view selection if necessary
-		break;
-	}
-
-	// Redraw the window to reflect the changes
-	RedrawWindow(Headers_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 }

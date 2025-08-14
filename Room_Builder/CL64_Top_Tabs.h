@@ -32,6 +32,8 @@ public:
 	void Reset_Class();
 
 	void Start_Headers();
+	void Set_View_Buttons(int Selected_View);
+	void Redraw_TopTabs_Dlg();
 
 	void Enable_TopBar_Brush_Buttons(bool Enable, bool Active);
 	void Enable_TopBar_Face_Buttons(bool Enable);
@@ -46,8 +48,7 @@ public:
 
 	void Set_Brush_Mode(int Mode, int Dlg_Selection);
 	void Show_TopTabs(bool Enable);
-	void Set_View_Buttons(int Selected_View);
-
+	
 	bool flag_Brush_Select;
 	bool flag_Brush_Move;
 	bool flag_Brush_Rotate;
@@ -61,7 +62,7 @@ public:
 
 	bool flag_TopTabs_Active;
 
-	HWND Headers_hWnd;
+	HWND TopTabs_Dlg_hWnd;
 
 private:
 	static LRESULT CALLBACK Proc_Headers(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
