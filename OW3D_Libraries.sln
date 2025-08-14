@@ -11,6 +11,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "X_Lib_Preferences", "X_Libr
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Templates_Lib", "X_Librarys\X_Lib_Templates\X_Lib_Templates.vcxproj", "{DA784F3C-F0F7-499A-902C-A8B0DC20F07E}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "X_Lib_Ini_File", "X_Librarys\X_Lib_Ini_File\X_Lib_Ini_File.vcxproj", "{95BB4FEC-B047-4A0E-B34B-1C5D74132D4B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Release|x64 = Release|x64
@@ -24,6 +26,8 @@ Global
 		{21AC25F6-8533-4796-BD33-766FEB74E602}.Release|x64.Build.0 = Release|x64
 		{DA784F3C-F0F7-499A-902C-A8B0DC20F07E}.Release|x64.ActiveCfg = Release|x64
 		{DA784F3C-F0F7-499A-902C-A8B0DC20F07E}.Release|x64.Build.0 = Release|x64
+		{95BB4FEC-B047-4A0E-B34B-1C5D74132D4B}.Release|x64.ActiveCfg = Release|x64
+		{95BB4FEC-B047-4A0E-B34B-1C5D74132D4B}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
