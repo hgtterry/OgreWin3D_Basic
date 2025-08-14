@@ -38,6 +38,8 @@ CL64_App::CL64_App(void)
 	CL_X_Preference =			nullptr; // Library
 	
 	CL_Ini_File =				nullptr;
+	CL_X_Ini_File =				nullptr;
+
 	CL_Doc =					nullptr;
 	CL_Utilities =				nullptr;
 	CL_Brush =					nullptr;
@@ -186,6 +188,8 @@ void CL64_App::InitApp(void)
 	CL_X_Preference =			new Lib_Preference(); // Library
 	
 	CL_Ini_File =				new CL64_Ini_File();
+	CL_X_Ini_File =				new Lib_Ini_File();
+	
 	CL_Doc =					new CL64_Doc();
 	CL_Utilities =				new CL64_Utilities();
 	CL_Brush =					new CL64_Brush();

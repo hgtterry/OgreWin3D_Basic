@@ -33,7 +33,9 @@ THE SOFTWARE.
 
 #include "Lib_Preference.h" // Library
 
+#include "Lib_Ini_File.h"
 #include "CL64_Ini_File.h"
+
 #include "CL64_Doc.h"
 #include "CL64_Utilities.h"
 #include "CL64_Brush.h"
@@ -124,6 +126,8 @@ public:
 	Lib_Preference*				CL_X_Preference; // Library
 	
 	CL64_Ini_File*				CL_Ini_File;
+	Lib_Ini_File*				CL_X_Ini_File;
+
 	CL64_Doc*					CL_Doc;
 	CL64_Utilities*				CL_Utilities;
 	CL64_Brush*					CL_Brush;
