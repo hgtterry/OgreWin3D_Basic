@@ -36,9 +36,7 @@ CL64_App::CL64_App(void)
 	CL_Level =					nullptr;
 
 	CL_X_Preference =			nullptr; // Library
-	
-//	CL_Ini_File =				nullptr;
-	CL_X_Ini_File =				nullptr;
+	CL_X_Ini_File =				nullptr; // Library
 
 	CL_Doc =					nullptr;
 	CL_Utilities =				nullptr;
@@ -186,9 +184,7 @@ void CL64_App::InitApp(void)
 	CL_Level =					new CL64_Level();
 
 	CL_X_Preference =			new Lib_Preference(); // Library
-	
-//	CL_Ini_File =				new CL64_Ini_File();
-	CL_X_Ini_File =				new Lib_Ini_File();
+	CL_X_Ini_File =				new Lib_Ini_File(); // Library
 	
 	CL_Doc =					new CL64_Doc();
 	CL_Utilities =				new CL64_Utilities();
