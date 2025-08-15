@@ -11,7 +11,7 @@
 #include "targetver.h"
 
 #include <windows.h>
-//#include "btBulletDynamicsCommon.h"
+#include "btBulletDynamicsCommon.h"
 
 #include <stdlib.h>
 #include <malloc.h>
@@ -21,9 +21,9 @@
 #include <Commctrl.h>   // includes the Common control header
 #include <string>
 
-//#include "Ogre.h"
-//#include "OgreConfigFile.h"
-//#include "OgreStringConverter.h"
-//#include "OgreException.h"
-//#include "OgreTextAreaOverlayElement.h"
-//#include "irrKlang.h"
+#include "Ogre.h"
+#include "OgreConfigFile.h"
+#include "OgreStringConverter.h"
+#include "OgreException.h"
+#include "OgreTextAreaOverlayElement.h"
+#include "irrKlang.h"

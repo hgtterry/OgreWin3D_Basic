@@ -1,15 +1,10 @@
 #pragma once
 
-typedef struct
-{
-	float x, y, z;
-} T_Vec3;
-
-struct tag_Box3d
-{
-	T_Vec3 Min;
-	T_Vec3 Max;
-};
+//struct tag_Box3d
+//{
+//	T_Vec3 Min;
+//	T_Vec3 Max;
+//};
 
 typedef struct tag_Box3d Box3d;
 
