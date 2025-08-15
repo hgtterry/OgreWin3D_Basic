@@ -1,4 +1,4 @@
-echo f |xcopy X_Lib_Gen\Box.h ..\Common_64\OW3D\include\Box.h /y
+echo f |xcopy X_Lib_Gen\G_Box.h ..\Common_64\OW3D\include\G_Box.h /y
 echo f |xcopy X_Lib_Ini_File\Lib_Ini_File.h ..\Common_64\OW3D\include\Lib_Ini_File.h /y
 echo f |xcopy X_Lib_Maths\CL64_Lib_Maths.h ..\Common_64\OW3D\include\CL64_Lib_Maths.h /y
 echo f |xcopy X_Lib_Preferences\Lib_Preference.h ..\Common_64\OW3D\include\Lib_Preference.h /y

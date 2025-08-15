@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "CL64_App.h"
-#include "Box.h"
+#include "G_Box.h"
 
 
 #define max(a,b) (((a) > (b)) ? (a) : (b))
