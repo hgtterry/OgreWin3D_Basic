@@ -29,7 +29,7 @@ THE SOFTWARE.
 #include "CL64_Lib_Maths.h"
 
 #include "G_Box.h"
-#include "CL64_Box.h"
+//#include "CL64_Box.h"
 
 #include "CL64_Render_Map.h"
 #include "CL64_Level.h"
@@ -122,7 +122,7 @@ public:
 	CL64_Lib_Maths*				CL_Maths;
 
 	CX_Box*						CL_Box_x; // Library
-	CL64_Box*					CL_Box;
+	//CL64_Box*					CL_Box;
 	CL64_Render_Map*			CL_Render;
 	CL64_Level*					CL_Level;
 

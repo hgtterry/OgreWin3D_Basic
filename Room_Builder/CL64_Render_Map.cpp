@@ -66,7 +66,7 @@ bool CL64_Render_Map::Render_RenderOrthoGridFromSize(ViewVars* cv, int Interval,
 	App->CL_Render->Render_ViewToWorld(cv, Units_Round(-Interval), Units_Round(-Interval), &Delt);
 	App->CL_Render->Render_ViewToWorld(cv, Units_Round(cv->Width + Interval), Units_Round(cv->Height + Interval), &Delt2);
 
-	App->CL_Box->Box3d_Set(&ViewBox, Delt.x, Delt.y, Delt.z, Delt2.x, Delt2.y, Delt2.z);
+	App->CL_Box_x->Box3d_Set(&ViewBox, Delt.x, Delt.y, Delt.z, Delt2.x, Delt2.y, Delt2.z);
 
 	VectorToSUB(ViewBox.Min, inidx) = -FLT_MAX;
 	VectorToSUB(ViewBox.Max, inidx) = FLT_MAX;

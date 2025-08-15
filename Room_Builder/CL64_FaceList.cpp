@@ -103,7 +103,7 @@ void CL64_FaceList::FaceList_GetBounds(const FaceList* pList, Box3d* pBounds)
 			Box3d FaceBounds;
 
 			App->CL_Face->Face_GetBounds(pList->Faces[i], &FaceBounds);
-			App->CL_Box->Box3d_Union(&Bounds, &FaceBounds, &Bounds);
+			App->CL_Box_x->Box3d_Union(&Bounds, &FaceBounds, &Bounds);
 		}
 		
 

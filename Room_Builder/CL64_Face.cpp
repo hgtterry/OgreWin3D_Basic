@@ -118,10 +118,10 @@ void CL64_Face::Face_GetBounds(const Face* f, Box3d* b)
 	assert(f != NULL);
 	assert(b != NULL);
 
-	App->CL_Box->Box3d_SetBogusBounds(b);
+	App->CL_Box_x->Box3d_SetBogusBounds(b);
 	for (i = 0; i < f->NumPoints; i++)
 	{
-		App->CL_Box->Box3d_AddPoint(b, f->Points[i].x, f->Points[i].y, f->Points[i].z);
+		App->CL_Box_x->Box3d_AddPoint(b, f->Points[i].x, f->Points[i].y, f->Points[i].z);
 	}
 }
 

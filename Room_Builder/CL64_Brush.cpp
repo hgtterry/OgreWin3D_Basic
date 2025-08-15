@@ -164,7 +164,7 @@ void CL64_Brush::BrushList_GetBounds(const BrushList* BList, Box3d* pBounds)
 		Brush_Bound(b);
 		BrushBounds = b->BoundingBox;
 
-		App->CL_Box->Box3d_Union(&Bounds, &BrushBounds, &Bounds);
+		App->CL_Box_x->Box3d_Union(&Bounds, &BrushBounds, &Bounds);
 	}
 	*pBounds = Bounds;
 }
@@ -176,7 +176,7 @@ void CL64_Brush::Brush_Bound(Brush* b)
 {
 	assert(b);
 
-	App->CL_Box->Box3d_SetBogusBounds(&b->BoundingBox);
+	App->CL_Box_x->Box3d_SetBogusBounds(&b->BoundingBox);
 	if (b->Type == BRUSH_MULTI)
 	{
 		BrushList_GetBounds(b->BList, &b->BoundingBox);
@@ -871,7 +871,7 @@ void CL64_Brush::Brush_SetFaceListDirty(Brush* b)
 // *************************************************************************
 void CL64_Brush::Brush_Get_Center(const Brush* b, T_Vec3* center)
 {
-	App->CL_Box->Box3d_GetCenter(&b->BoundingBox, center);
+	App->CL_Box_x->Box3d_GetCenter(&b->BoundingBox, center);
 }
 
 // *************************************************************************
@@ -931,7 +931,7 @@ void CL64_Brush::Brush_EnumFaces(Brush* b, void* lParam, Brush_FaceCallback Call
 // *************************************************************************
 signed int	CL64_Brush::Brush_TestBoundsIntersect(const Brush* b, const Box3d* pBox)
 {
-	return App->CL_Box->Box3d_Intersection(&b->BoundingBox, pBox, NULL);
+	return App->CL_Box_x->Box3d_Intersection(&b->BoundingBox, pBox, NULL);
 }
 
 static	Brush* bstack[8192];	//8192 levels of recursion

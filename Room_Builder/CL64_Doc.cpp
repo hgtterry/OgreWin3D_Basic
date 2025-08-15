@@ -1065,8 +1065,8 @@ void CL64_Doc::DoneMovingBrushes()
 
         // do the snap thing...
         pBox = App->CL_Brush->Brush_GetBoundingBox(App->CL_Doc->CurBrush);
-        vMin = App->CL_Box->Box3d_GetMin(pBox);
-        vMax = App->CL_Box->Box3d_GetMax(pBox);
+        vMin = App->CL_Box_x->Box3d_GetMin(pBox);
+        vMax = App->CL_Box_x->Box3d_GetMax(pBox);
         App->CL_Maths->Vector3_Clear(&SnapDelta);
        
         SnapX = (App->CL_Doc->FinalPos.x != 0.0f);

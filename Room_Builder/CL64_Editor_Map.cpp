@@ -2224,11 +2224,11 @@ void CL64_Editor_Map::Draw_Screen(HWND hwnd)
 	T_Vec3 XTemp;
 	Box3d ViewBox;
 	inidx = App->CL_Render->Render_GetInidx(Current_View);
-	App->CL_Box->Box3d_SetBogusBounds(&ViewBox);
+	App->CL_Box_x->Box3d_SetBogusBounds(&ViewBox);
 	App->CL_Render->Render_ViewToWorld(Current_View, 0, 0, &XTemp);
-	App->CL_Box->Box3d_AddPoint(&ViewBox, XTemp.x, XTemp.y, XTemp.z);
+	App->CL_Box_x->Box3d_AddPoint(&ViewBox, XTemp.x, XTemp.y, XTemp.z);
 	App->CL_Render->Render_ViewToWorld(Current_View, App->CL_Render->Render_GetWidth(Current_View), App->CL_Render->Render_GetHeight(Current_View), &XTemp);
-	App->CL_Box->Box3d_AddPoint(&ViewBox, XTemp.x, XTemp.y, XTemp.z);
+	App->CL_Box_x->Box3d_AddPoint(&ViewBox, XTemp.x, XTemp.y, XTemp.z);
 	VectorToSUB(ViewBox.Min, inidx) = -FLT_MAX;
 	VectorToSUB(ViewBox.Max, inidx) = FLT_MAX;
 

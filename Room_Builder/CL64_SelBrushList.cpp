@@ -128,7 +128,7 @@ static signed int SelBrushList_CenterEnum(Brush* b, void* lParam)
 	T_Vec3 newcenter;
 
 	center = (T_Vec3*)lParam;
-	App->CL_Box->Box3d_GetCenter(&b->BoundingBox, &newcenter);
+	App->CL_Box_x->Box3d_GetCenter(&b->BoundingBox, &newcenter);
 	App->CL_Maths->Vector3_Add(center, &newcenter, center);
 
 	return GE_TRUE;
