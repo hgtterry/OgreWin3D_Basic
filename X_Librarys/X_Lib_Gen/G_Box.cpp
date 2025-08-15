@@ -15,6 +15,14 @@ CX_Box::~CX_Box(void)
 {
 }
 
+// *************************************************************************
+// *			GetVersion:- Terry and Hazel Flanigan 2025			 	   *
+// *************************************************************************
+char* CX_Box::GetVersion()
+{
+	return (LPSTR)" OW3D_Scene_Builder :-- CX_Box [ 15-08-25 ] Build 1 ";
+}
+
 void CX_Box::Box3d_Clear(Box3d* b)
 {
 	Box3d_Set(b, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f);

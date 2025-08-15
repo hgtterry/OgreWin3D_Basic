@@ -158,7 +158,6 @@
     <ClInclude Include="Base_Player.h" />
     <ClInclude Include="CL64_App.h" />
     <ClInclude Include="CL64_Array.h" />
-    <ClInclude Include="CL64_Box.h" />
     <ClInclude Include="CL64_Brush.h" />
     <ClInclude Include="CL64_Brush_X.h" />
     <ClInclude Include="CL64_Bullet_Debug.h" />
@@ -233,7 +232,6 @@
     <ClCompile Include="Base_Player.cpp" />
     <ClCompile Include="CL64_App.cpp" />
     <ClCompile Include="CL64_Array.cpp" />
-    <ClCompile Include="CL64_Box.cpp" />
     <ClCompile Include="CL64_Brush.cpp" />
     <ClCompile Include="CL64_Brush_X.cpp" />
     <ClCompile Include="CL64_Bullet_Debug.cpp" />

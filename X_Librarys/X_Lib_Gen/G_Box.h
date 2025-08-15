@@ -14,6 +14,8 @@ public:
 	CX_Box(void);
 	~CX_Box(void);
 
+	char*GetVersion();
+
 	void Box3d_Clear(Box3d* b);
 	void Box3d_SetBogusBounds(Box3d* b);
 	void Box3d_Set(Box3d* b, float x1, float y1, float z1, float x2, float y2, float z2);
