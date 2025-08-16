@@ -68,45 +68,16 @@ void CL64_Camera::Camera_Look_At(Ogre::Vector3 Location)
 
 	//Tan
 	AxisAlignedBox bbox = Object->Object_Node->_getWorldAABB();
-
 	Vector3 offset = bbox.getMaximum() - bbox.getCenter(); // Radius of bounding sphere
 	Vector3 center = bbox.getCenter();
-
 	App->CL_Ogre->camNode->setPosition(center);
+	App->CL_Ogre->camNode->setOrientation(Ogre::Quaternion::IDENTITY);
+
 	float oneOverSine = 1.0f / (float)sin(App->CL_Ogre->mCamera->getFOVy().valueRadians() / 2.0); // 1 / sin = adjacent / opposite
 	float distanceToCenter = offset.length() * oneOverSine; // (adjacent / opposite) * opposite = adjacent
-
-	Vector3 mmm = App->CL_Ogre->camNode->getPosition();
-	Ogre::Vector3 poo(Vector3(1, 1, 1).normalisedCopy() * distanceToCenter);
-
-	mmm += poo;
-	App->CL_Ogre->camNode->setPosition(mmm);// (Vector3(1, 1, 1).normalisedCopy() * distanceToCenter);
-	App->CL_Ogre->camNode->lookAt(center, Ogre::Node::TS_WORLD);
-
-	/*Ogre::Real x = Location.x;
-	Ogre::Real y = Location.y;
-	Ogre::Real z = Location.z;
 	
-	Ogre::Real height_ = 10;
-
-	Ogre::Vector3 OldCamPos = App->CL_Ogre->camNode->getPosition();
-
-	App->CL_Ogre->camNode->_getWorldAABB().getHalfSize();
-	y += height_;
-	z += 10;
-	App->CL_Ogre->camNode->setPosition(Ogre::Vector3(x, y, z));
-	App->CL_Ogre->camNode->lookAt(Ogre::Vector3(x, y, z), Ogre::Node::TS_WORLD);
-	App->CL_Ogre->RenderFrame(8);*/
-
-	//App->CL_Ogre->camNode->setPosition(Ogre::Vector3(OldCamPos));
-	//auto p = target_->getPosition();
-	//z += height_;
-	//App->CL_Ogre->camNode->setPosition(x,y,z);
-
-	//const Ogre::Real sqrt_one_half = 0.7071067811865475244; // Square root of 1/2
-	//App->CL_Ogre->camNode->setOrientation(Ogre::Quaternion(sqrt_one_half, -sqrt_one_half, 0.0, 0.0));
-	
-	//App->CL_Ogre->camNode->lookAt(Vector3(x, y, z), Node::TS_LOCAL);
+	App->CL_Ogre->camNode->setPosition(center.x, center.y + distanceToCenter, center.z+20);// (Vector3(1, 1, 1).normalisedCopy() * distanceToCenter);
+	App->CL_Ogre->camNode->lookAt(Ogre::Vector3(center), Ogre::Node::TS_WORLD);
 
 }
 

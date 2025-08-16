@@ -112,6 +112,7 @@ CL64_App::CL64_App(void)
 	CL_Collision =				nullptr;
 	CL_Gizmos =					nullptr;
 	CL_MeshViewer =				nullptr;
+	CL_Locations =				nullptr;
 
 	CUR = 0;
 	Menu_Map = 0;
@@ -267,6 +268,7 @@ void CL64_App::InitApp(void)
 	CL_Gizmos =					new CL64_Gizmos();
 	CL_Dimensions =				new CL64_Dimensions();
 	CL_MeshViewer =				new CL64_MeshViewer();
+	CL_Locations =				new CL64_Locations();
 
 	Set_Brushes_Fonts();
 

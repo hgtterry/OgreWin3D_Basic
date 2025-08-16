@@ -168,17 +168,17 @@ void CL64_ImGui_Editor::Visuals_GUI(void)
 	{
 		style->Colors[ImGuiCol_Button] = ImVec4(1.0f, 1.0f, 0.5f, 1.00f);
 
-		// -------------- Highlight
-		//Selected_Button(flag_Object_Highlighted);
+		//// -------------- Highlight
+		////Selected_Button(flag_Object_Highlighted);
 
-		if (ImGui::Button("Look At", ImVec2(200, 25)))
-		{
-			int index = App->CL_Properties_Scene->Current_Selected_Object;
+		//if (ImGui::Button("Look At", ImVec2(200, 25)))
+		//{
+		//	int index = App->CL_Properties_Scene->Current_Selected_Object;
 
-			Ogre::Vector3 pos = App->CL_Scene->B_Object[index]->Object_Node->getPosition();
+		//	Ogre::Vector3 pos = App->CL_Scene->B_Object[index]->Object_Node->getPosition();
 
-			App->CL_Camera->Camera_Look_At(pos);
-		}
+		//	App->CL_Camera->Camera_Look_At(pos);
+		//}
 
 		// -------------- Highlight
 		Selected_Button(flag_Object_Highlighted);

@@ -111,6 +111,8 @@ THE SOFTWARE.
 #include "CL64_Props_Dialogs.h"
 #include "CL64_MeshViewer.h"
 
+#include "CL64_Locations.h"
+
 class CL64_App
 {
 public:
@@ -202,6 +204,7 @@ public:
 	CL64_Dimensions*			CL_Dimensions;
 	CL64_Props_Dialogs*			CL_Props_Dialogs;
 	CL64_MeshViewer*			CL_MeshViewer;
+	CL64_Locations*				CL_Locations;
 
 	void InitApp(void);
 	void Init_Dialogs(void);
