@@ -45,7 +45,7 @@ SelBrushList* CL64_SelBrushList::SelBrushList_Create(void)
 	pList = (SelBrushList*)App->CL_Maths->Ram_Allocate(sizeof(SelBrushList));
 	if (pList != NULL)
 	{
-		pList->pItems = App->CL_Array->Array_Create(10, sizeof(Brush*));
+		pList->pItems = App->CL_X_Array->Array_Create(10, sizeof(Brush*));
 		if (pList->pItems != NULL)
 		{
 			pList->FirstFree = 0;
@@ -71,7 +71,7 @@ void CL64_SelBrushList::SelBrushList_Destroy(SelBrushList** ppList)
 
 	if (pList->pItems != NULL)
 	{
-		App->CL_Array->Array_Destroy(&pList->pItems);
+		App->CL_X_Array->Array_Destroy(&pList->pItems);
 	}
 	//geRam_Free(*ppList);
 }
@@ -193,7 +193,7 @@ signed int CL64_SelBrushList::SelBrushList_Add(SelBrushList* pList, Brush* pBrus
 	{
 		int NewSize;
 		// Need to allocate more space
-		NewSize = App->CL_Array->Array_Resize(pList->pItems, 2 * Size);
+		NewSize = App->CL_X_Array->Array_Resize(pList->pItems, 2 * Size);
 		if (NewSize == Size)
 		{
 			App->Say_Win("Can not assign Array");

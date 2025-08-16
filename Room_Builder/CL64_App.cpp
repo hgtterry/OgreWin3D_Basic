@@ -33,7 +33,6 @@ CL64_App::CL64_App(void)
 	CL_Maths =					nullptr;
 
 	CL_Box_x =					nullptr;
-	//CL_Box =					nullptr;
 	CL_Render =					nullptr;
 	CL_Level =					nullptr;
 
@@ -50,7 +49,10 @@ CL64_App::CL64_App(void)
 	CL_X_BrushTemplate =		nullptr;
 	
 	CL_SelBrushList =			nullptr;
-	CL_Array =					nullptr;
+
+	CL_X_Array =				nullptr;
+//	CL_Array =					nullptr;
+
 	CL_SelFaceList =			nullptr;
 	CL_Mesh_Mgr =				nullptr;
 	// ------------------------------
@@ -184,8 +186,6 @@ void CL64_App::InitApp(void)
 	CL_Maths =					new CL64_Lib_Maths();
 	CL_Box_x =					new CX_Box();
 
-	//CL_Box =					new CL64_Box();
-
 	CL_Render =					new CL64_Render_Map();
 	CL_Level =					new CL64_Level();
 
@@ -203,7 +203,10 @@ void CL64_App::InitApp(void)
 	
 
 	CL_SelBrushList =			new CL64_SelBrushList();
-	CL_Array =					new CL64_Array();
+
+	CL_X_Array =				new CX_Array();
+//	CL_Array =					new CL64_Array();
+
 	CL_SelFaceList =			new CL64_SelFaceList();
 	CL_Mesh_Mgr =				new CL64_Mesh_Mgr();
 

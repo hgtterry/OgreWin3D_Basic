@@ -1,5 +1,4 @@
 #include "pch.h"
-#include "CL64_App.h"
 #include "CL64_Array.h"
 
 CL64_Array::CL64_Array(void)
@@ -35,8 +34,6 @@ signed int CL64_Array::Array_Init(Array* pArray, int InitialSize, int ItemSize)
 
 void CL64_Array::Array_Uninit(Array* pArray)
 {
-	assert(pArray != NULL);
-
 	if (pArray->Items != NULL)
 	{
 		free(pArray->Items);
@@ -45,49 +42,42 @@ void CL64_Array::Array_Uninit(Array* pArray)
 	pArray->ItemsAllocated = 0;
 }
 
-
-// Create an array object with given initial size (possibly 0).
-Array* CL64_Array::Array_Create(int InitialSize, int ItemSize)
+// *************************************************************************
+// * Array_Createreate an array object with given initial size (possibly 0)*
+// *************************************************************************
+Array* CL64_Array::Array_Create(int initialSize, int itemSize) 
 {
-	Array* pArray;
+	// Allocate memory for the Array structure
+	Array* pArray = static_cast<Array*>(malloc(sizeof(Array)));
 
-	assert(InitialSize >= 0);
-	assert(ItemSize > 0);
-
-	pArray = (Array*)App->CL_Maths->Ram_Allocate(sizeof(Array));
-
-	if (pArray != NULL)
+	// Check if memory allocation was successful
+	if (pArray != nullptr) 
 	{
-		if (Array_Init(pArray, InitialSize, ItemSize) == false)
+		// Initialize the array and check for success
+		if (!Array_Init(pArray, initialSize, itemSize)) 
 		{
+			// If initialization fails, destroy the array and set pointer to nullptr
 			Array_Destroy(&pArray);
+			pArray = nullptr; // Ensure pArray is null after destruction
 		}
 	}
 
-	return pArray;
+	return pArray; // Return the pointer to the created array or nullptr
 }
 
 // Destroy an array object
 void CL64_Array::Array_Destroy(Array** ppArray)
 {
-	assert(ppArray != NULL);
-	assert(*ppArray != NULL);
-
 	Array_Uninit(*ppArray);
 	free(*ppArray);
 	*ppArray = NULL;
 }
-
-
 
 // Resizes the array to contain NewSize elements.
 // Returns new size.
 int CL64_Array::Array_Resize(Array* pArray, int NewSize)
 {
 	void* NewItems;
-
-	assert(pArray != NULL);
-	assert(NewSize >= 0);
 
 	NewItems = realloc(pArray->Items, (NewSize * pArray->ItemSize));
 
