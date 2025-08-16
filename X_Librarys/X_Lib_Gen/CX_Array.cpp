@@ -9,6 +9,14 @@ CX_Array::~CX_Array(void)
 {
 }
 
+// *************************************************************************
+// *			GetVersion:- Terry and Hazel Flanigan 2025			 	   *
+// *************************************************************************
+char* CX_Array::GetVersion()
+{
+	return (LPSTR)" OW3D_Scene_Builder :-- CX_Array [ 16-08-25 ] Build 1 ";
+}
+
 signed int CX_Array::Array_Init(Array* pArray, int InitialSize, int ItemSize)
 {
 	pArray->ItemSize = ItemSize;

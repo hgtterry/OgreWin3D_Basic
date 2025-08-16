@@ -25,6 +25,8 @@ public:
 	CX_Array(void);
 	~CX_Array(void);
 
+	char* GetVersion();
+
 	signed int Array_Init(Array* pArray, int InitialSize, int ItemSize);
 	void Array_Uninit(Array* pArray);
 	Array* Array_Create(int InitialSize, int ItemSize);

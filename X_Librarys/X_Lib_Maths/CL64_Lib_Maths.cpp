@@ -18,8 +18,7 @@ CL64_Lib_Maths::~CL64_Lib_Maths()
 // *************************************************************************
 char* CL64_Lib_Maths::GetVersion()
 {
-
-	return (LPSTR)"Lib_Maths Version 1.0.0 ";
+	return (LPSTR)" OW3D_Scene_Builder :-- CL64_Lib_Maths [ 16-08-25 ] Build 1 ";
 }
 
 // *************************************************************************
