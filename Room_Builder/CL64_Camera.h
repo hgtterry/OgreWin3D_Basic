@@ -31,6 +31,7 @@ public:
 
 	void Track_Camera(void);
 	void Camera_Reset_Zero(void);
+	void Camera_Look_At(Ogre::Vector3 Location);
 
 	void Camera_Textured(void);
 	void Camera_Wired(void);

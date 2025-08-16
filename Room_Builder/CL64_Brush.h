@@ -23,7 +23,7 @@ THE SOFTWARE.
 */
 
 #pragma once
-#include "CL64_Box.h"
+#include "G_Box.h"
 #include "CL64_Face.h"
 #include "CL64_WadFile.h"
 

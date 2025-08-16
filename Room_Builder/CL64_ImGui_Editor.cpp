@@ -168,6 +168,37 @@ void CL64_ImGui_Editor::Visuals_GUI(void)
 	{
 		style->Colors[ImGuiCol_Button] = ImVec4(1.0f, 1.0f, 0.5f, 1.00f);
 
+		// -------------- Highlight
+		//Selected_Button(flag_Object_Highlighted);
+
+		if (ImGui::Button("Look At", ImVec2(200, 25)))
+		{
+			int index = App->CL_Properties_Scene->Current_Selected_Object;
+
+			Ogre::Vector3 pos = App->CL_Scene->B_Object[index]->Object_Node->getPosition();
+
+			App->CL_Camera->Camera_Look_At(pos);
+		}
+
+		// -------------- Highlight
+		Selected_Button(flag_Object_Highlighted);
+
+		if (ImGui::Button("Highlight", ImVec2(200, 25)))
+		{
+			int index = App->CL_Properties_Scene->Current_Selected_Object;
+
+			if (App->CL_Props_Dialogs->flag_isHighlighted == true)
+			{
+				flag_Object_Highlighted = false;
+				App->CL_Gizmos->unhighlight(App->CL_Scene->B_Object[index]->Object_Ent);
+			}
+			else
+			{
+				flag_Object_Highlighted = true;
+				App->CL_Gizmos->highlight(App->CL_Scene->B_Object[index]->Object_Ent);
+			}
+		}
+
 		// -------------- Show Mesh
 		Selected_Button(flag_Show_Mesh);
 		
@@ -296,25 +327,6 @@ void CL64_ImGui_Editor::Visuals_GUI(void)
 			{
 				App->CL_Com_Objects->flag_Hide_All_Except = 1;
 				App->CL_Com_Objects->Hide_AllObjects_Except(Index, false);
-			}
-		}
-
-		// -------------- Highlight
-		Selected_Button(flag_Object_Highlighted);
-	
-		if (ImGui::Button("Highlight", ImVec2(200, 25)))
-		{
-			int index = App->CL_Properties_Scene->Current_Selected_Object;
-
-			if (App->CL_Props_Dialogs->flag_isHighlighted == true)
-			{
-				flag_Object_Highlighted = false;
-				App->CL_Gizmos->unhighlight(App->CL_Scene->B_Object[index]->Object_Ent);
-			}
-			else
-			{
-				flag_Object_Highlighted = true;
-				App->CL_Gizmos->highlight(App->CL_Scene->B_Object[index]->Object_Ent);
 			}
 		}
 
