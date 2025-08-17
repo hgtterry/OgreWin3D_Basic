@@ -226,7 +226,7 @@ bool CL64_Mesh_Mgr::Brush_Build_Selected(BrushList* BList)
 		while (pBrush != NULL)
 		{
 
-			if (App->CL_SelBrushList->SelBrushList_Find(App->CL_Doc->pSelBrushes, pBrush))
+			if (App->CL_X_SelBrushList->SelBrushList_Find(App->CL_Doc->pSelBrushes, pBrush))
 			{
 				Brush* pClone = App->CL_Brush->Brush_Clone(pBrush);
 				App->CL_Brush->BrushList_Append(SBList, pClone);

@@ -229,7 +229,7 @@ LRESULT CALLBACK CL64_Properties_Textures::Proc_TextureDialog(HWND hDlg, UINT me
 
 		if (LOWORD(wParam) == IDC_BTTDAPPLY)
 		{
-			int NumSelBrushes = App->CL_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes);
+			int NumSelBrushes = App->CL_X_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes);
 
 			if (NumSelBrushes == 0)
 			{
@@ -360,12 +360,12 @@ void CL64_Properties_Textures::Apply_Texture()
 			
 		}
 		
-		int NumSelBrushes = App->CL_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes);
+		int NumSelBrushes = App->CL_X_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes);
 		for (i = 0; i < NumSelBrushes; ++i)
 		{
 			Brush* pBrush;
 
-			pBrush = App->CL_SelBrushList->SelBrushList_GetBrush(App->CL_Doc->pSelBrushes, i);
+			pBrush = App->CL_X_SelBrushList->SelBrushList_GetBrush(App->CL_Doc->pSelBrushes, i);
 			App->CL_Brush->Brush_UpdateChildFaces(pBrush);
 		}
 		break;
@@ -375,10 +375,10 @@ void CL64_Properties_Textures::Apply_Texture()
 	{
 		if (App->CL_Doc->GetSelState() & MULTIBRUSH)
 		{
-			int NumSelBrushes = App->CL_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes);
+			int NumSelBrushes = App->CL_X_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes);
 			for (i = 0; i < NumSelBrushes; ++i)
 			{
-				Brush* pBrush = App->CL_SelBrushList->SelBrushList_GetBrush(App->CL_Doc->pSelBrushes, i);
+				Brush* pBrush = App->CL_X_SelBrushList->SelBrushList_GetBrush(App->CL_Doc->pSelBrushes, i);
 				
 				WadFileEntry* BitmapPtr = App->CL_Doc->GetDibBitmap(m_CurrentTexture);
 				TextureBrush(pBrush, SelectedItem, (LPCSTR)m_CurrentTexture, BitmapPtr);

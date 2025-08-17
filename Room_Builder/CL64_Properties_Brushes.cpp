@@ -263,7 +263,7 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Brush_Dlg(HWND hDlg, UINT message
 	{
 		if (LOWORD(wParam) == IDC_BT_GD_BRUSHPROPERTIES)
 		{
-			int NumSelBrushes = App->CL_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes);
+			int NumSelBrushes = App->CL_X_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes);
 
 			if (NumSelBrushes > 0)
 			{
@@ -280,7 +280,7 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Brush_Dlg(HWND hDlg, UINT message
 
 		if (LOWORD(wParam) == IDC_BT_BRUSH_DIMENSIONS)
 		{
-			int NumSelBrushes = App->CL_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes);
+			int NumSelBrushes = App->CL_X_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes);
 
 			if (NumSelBrushes > 0)
 			{
@@ -334,7 +334,7 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Brush_Dlg(HWND hDlg, UINT message
 				}
 			}
 
-			int NumSelBrushes = App->CL_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes);
+			int NumSelBrushes = App->CL_X_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes);
 
 			if (NumSelBrushes > 0)
 			{
@@ -425,7 +425,7 @@ void CL64_Properties_Brushes::OnSelchangeBrushlist(int index, bool clear)
 		}
 
 		Selected_Brush = App->CL_Brush->Get_Brush_ByIndex(index);
-		App->CL_SelBrushList->SelBrushList_Add(App->CL_Doc->pSelBrushes, Selected_Brush);
+		App->CL_X_SelBrushList->SelBrushList_Add(App->CL_Doc->pSelBrushes, Selected_Brush);
 
 		// Select Object in Scene Editor
 		if (Selected_Brush->GroupId > Enums::Brushs_ID_Players)
@@ -525,7 +525,7 @@ int CL64_Properties_Brushes::Select_in_BrushList_Dlg(const Brush* b)
 void CL64_Properties_Brushes::Update_SelectedBrushesCount_Dlg()
 {
 	char buff[100];
-	int NumSelBrushes = App->CL_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes);
+	int NumSelBrushes = App->CL_X_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes);
 	SetDlgItemText(BrushesDlg_Hwnd, IDC_ST_SELECTED_NUM, _itoa(NumSelBrushes, buff, 10));
 }
 
@@ -536,7 +536,7 @@ void CL64_Properties_Brushes::StartDimensionsDialog()
 {
 	if (!flag_Dimension_Dlg_Active)
 	{
-		int numberOfBrushes = App->CL_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes);
+		int numberOfBrushes = App->CL_X_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes);
 		if (numberOfBrushes > 0)
 		{
 			//App->Say_Int(App->CL_Properties_Brushes->Selected_Brush->GroupId);
@@ -1836,7 +1836,7 @@ void CL64_Properties_Brushes::Update_From_Brush_Dlg(HWND hDlg)
 
 	if (Selected_Brush->GroupId == Enums::Brushs_ID_Area)
 	{
-		App->CL_SelBrushList->SelBrushList_Center(App->CL_Doc->pSelBrushes, &App->CL_Doc->SelectedGeoCenter);
+		App->CL_X_SelBrushList->SelBrushList_Center(App->CL_Doc->pSelBrushes, &App->CL_Doc->SelectedGeoCenter);
 		CenterOfSelection = App->CL_Doc->SelectedGeoCenter;
 
 		UpdateDialogItem(hDlg, IDC_ED_BRUSH_POSX, CenterOfSelection.x, "%.3f");
@@ -1897,11 +1897,11 @@ void CL64_Properties_Brushes::Get_Brush()
 	int NumberOfBrushes;
 	Brush* pBrush = NULL;
 
-	NumberOfBrushes = App->CL_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes);
+	NumberOfBrushes = App->CL_X_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes);
 
 	if (NumberOfBrushes)
 	{
-		pBrush = App->CL_SelBrushList->SelBrushList_GetBrush(App->CL_Doc->pSelBrushes, (NumberOfBrushes - 1));
+		pBrush = App->CL_X_SelBrushList->SelBrushList_GetBrush(App->CL_Doc->pSelBrushes, (NumberOfBrushes - 1));
 	}
 	else
 	{

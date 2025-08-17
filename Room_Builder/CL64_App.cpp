@@ -48,10 +48,10 @@ CL64_App::CL64_App(void)
 	// Libraries
 	CL_X_BrushTemplate =		nullptr;
 	
-	CL_SelBrushList =			nullptr;
+	CL_X_SelBrushList =			nullptr; // Library
+//	CL_SelBrushList =			nullptr;
 
-	CL_X_Array =				nullptr;
-//	CL_Array =					nullptr;
+	CL_X_Array =				nullptr; // Library
 
 	CL_SelFaceList =			nullptr;
 	CL_Mesh_Mgr =				nullptr;
@@ -200,12 +200,11 @@ void CL64_App::InitApp(void)
 
 	// Libraries
 	CL_X_BrushTemplate =		new BrushTemplate();
-	
 
-	CL_SelBrushList =			new CL64_SelBrushList();
+	CL_X_SelBrushList =			new CX_SelBrushList(); // Library
+//	CL_SelBrushList =			new CL64_SelBrushList();
 
-	CL_X_Array =				new CX_Array();
-//	CL_Array =					new CL64_Array();
+	CL_X_Array =				new CX_Array(); // Library
 
 	CL_SelFaceList =			new CL64_SelFaceList();
 	CL_Mesh_Mgr =				new CL64_Mesh_Mgr();

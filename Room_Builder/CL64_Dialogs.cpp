@@ -1666,7 +1666,7 @@ void CL64_Dialogs::List_Used_Textures(HWND List)
 
 	memset(App->CL_Mesh_Mgr->UsedTextures, 0, 500);
 
-	int SB = App->CL_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes);
+	int SB = App->CL_X_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes);
 
 	if (SB > 0)
 	{
@@ -1682,7 +1682,7 @@ void CL64_Dialogs::List_Used_Textures(HWND List)
 
 		while (pBrush != NULL)
 		{
-			if (App->CL_SelBrushList->SelBrushList_Find(App->CL_Doc->pSelBrushes, pBrush))
+			if (App->CL_X_SelBrushList->SelBrushList_Find(App->CL_Doc->pSelBrushes, pBrush))
 			{
 				Brush* pClone = App->CL_Brush->Brush_Clone(pBrush);
 				App->CL_Brush->BrushList_Append(SBList, pClone);

@@ -533,7 +533,7 @@ void CL64_OGL_Listener::Render_Selected_Brush()
 	int Actual_Brush_Index = 0;
 	pBrush = App->CL_Doc->CurBrush;
 
-	if (App->CL_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes) > 0)
+	if (App->CL_X_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes) > 0)
 	{
 		if (!Get_Brush(pBrush))
 		{

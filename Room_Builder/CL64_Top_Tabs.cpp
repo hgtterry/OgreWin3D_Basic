@@ -848,7 +848,7 @@ void CL64_Top_Tabs::Update_Faces_Combo()
 	SendMessage(Temp, CB_RESETCONTENT, 0, 0);
 	char buff[MAX_PATH];
 
-	int SB = App->CL_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes);
+	int SB = App->CL_X_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes);
 	
 	if (SB > 0)
 	{

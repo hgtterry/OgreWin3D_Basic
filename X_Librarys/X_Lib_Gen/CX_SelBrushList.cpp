@@ -1,0 +1,238 @@
+/*
+Copyright (c) 2024 - 2025 Inflanite_HGT W.T.Flanigan H.C.Flanigan
+
+OW3D_Mesh_Builder
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+*/
+
+#include "pch.h"
+#include "CL64_App.h"
+#include "CX_SelBrushList.h"
+#include "Structures.cpp"
+
+CX_SelBrushList::CX_SelBrushList(void)
+{
+}
+
+CX_SelBrushList::~CX_SelBrushList(void)
+{
+}
+
+// *************************************************************************
+// *						SelBrushList_Create						 	   *
+// *************************************************************************
+SelBrushList* CX_SelBrushList::SelBrushList_Create(void)
+{
+	SelBrushList* pList;
+
+	pList = (SelBrushList*)App->CL_Maths->Ram_Allocate(sizeof(SelBrushList));
+	if (pList != NULL)
+	{
+		pList->pItems = App->CL_X_Array->Array_Create(10, sizeof(Brush*));
+		if (pList->pItems != NULL)
+		{
+			pList->FirstFree = 0;
+		}
+		else
+		{
+			SelBrushList_Destroy(&pList);
+		}
+	}
+	return pList;
+}
+
+// *************************************************************************
+// *						SelBrushList_Destroy					 	   *
+// *************************************************************************
+void CX_SelBrushList::SelBrushList_Destroy(SelBrushList** ppList)
+{
+	SelBrushList* pList;
+
+	assert(ppList != NULL);
+	assert(*ppList != NULL);
+	pList = *ppList;
+
+	if (pList->pItems != NULL)
+	{
+		App->CL_X_Array->Array_Destroy(&pList->pItems);
+	}
+	//geRam_Free(*ppList);
+}
+
+// *************************************************************************
+// *							SelBrushList_Find					 	   *
+// *************************************************************************
+signed int CX_SelBrushList::SelBrushList_Find(SelBrushList* pList, const Brush* pBrush)
+{
+	int i;
+
+	// go through list to see if this Brush is already in the list
+	for (i = 0; i < pList->FirstFree; ++i)
+	{
+		Brush* pRet;
+
+		pRet = SelBrushList_GetBrush(pList, i);
+		if (pRet == pBrush)
+		{
+			// Brush already in list
+			return true;
+		}
+	}
+
+	return false;
+}
+
+// *************************************************************************
+// *						SelBrushList_GetBrush					 	   *
+// *************************************************************************
+Brush* CX_SelBrushList::SelBrushList_GetBrush(SelBrushList* pList, int BrushIndex)
+{
+	Brush** ppBrush;
+
+	ppBrush = (Brush**)Array_ItemPtr(pList->pItems, BrushIndex);
+
+	return *ppBrush;
+}
+
+// *************************************************************************
+// *						SelBrushList_GetSize					 	   *
+// *************************************************************************
+int CX_SelBrushList::SelBrushList_GetSize(SelBrushList* pList)
+{
+	return pList->FirstFree;
+}
+
+// *************************************************************************
+// *					SelBrushList_CenterEnum						 	   *
+// *************************************************************************
+static signed int SelBrushList_CenterEnum(Brush* b, void* lParam)
+{
+	T_Vec3* center;
+	T_Vec3 newcenter;
+
+	center = (T_Vec3*)lParam;
+	App->CL_Box_x->Box3d_GetCenter(&b->BoundingBox, &newcenter);
+	App->CL_Maths->Vector3_Add(center, &newcenter, center);
+
+	return true;
+}
+
+// *************************************************************************
+// *						SelBrushList_Center						 	   *
+// *************************************************************************
+void CX_SelBrushList::SelBrushList_Center(SelBrushList* pList, T_Vec3* center)
+{
+	int listcount;
+	T_Vec3 average;
+
+	assert(pList && center);
+
+	listcount = SelBrushList_GetSize(pList);
+	if (!listcount)
+	{
+		App->CL_Maths->Vector3_Clear(center);
+		return;
+	}
+
+	App->CL_Maths->Vector3_Clear(&average);
+
+	SelBrushList_Enum(pList, SelBrushList_CenterEnum, &average);
+
+	App->CL_Maths->Vector3_Scale(&average, (1 / (float)listcount), center);
+}
+
+// *************************************************************************
+// *						SelBrushList_Enum						 	   *
+// *************************************************************************
+void CX_SelBrushList::SelBrushList_Enum(SelBrushList* pList, SelBrushList_Callback Callback, void* lParam)
+{
+	int i;
+
+	for (i = 0; i < pList->FirstFree; ++i)
+	{
+		Brush* pBrush;
+
+		pBrush = SelBrushList_GetBrush(pList, i);
+		Callback(pBrush, lParam);
+	}
+}
+
+// *************************************************************************
+// *						SelBrushList_Add						 	   *
+// *************************************************************************
+signed int CX_SelBrushList::SelBrushList_Add(SelBrushList* pList, Brush* pBrush)
+{
+	int Size = 0;
+
+	if (SelBrushList_Find(pList, pBrush))
+	{
+		return false;
+	}
+
+	Size = Array_GetSize(pList->pItems);
+
+	// Brush isn't already in list.  Put it at the end...
+	if (pList->FirstFree == Size)
+	{
+		int NewSize;
+		// Need to allocate more space
+		NewSize = App->CL_X_Array->Array_Resize(pList->pItems, 2 * Size);
+		if (NewSize == Size)
+		{
+			App->Say_Win("Can not assign Array");
+			return false;
+		}
+	}
+
+	Array_PutAt(pList->pItems, pList->FirstFree, &pBrush, sizeof(pBrush));
+	++(pList->FirstFree);
+	return true;
+}
+
+// *************************************************************************
+// *						SelBrushList_RemoveAll					 	   *
+// *************************************************************************
+void CX_SelBrushList::SelBrushList_RemoveAll(SelBrushList* pList)
+{
+	pList->FirstFree = 0;
+}
+
+// *************************************************************************
+// *						SelBrushList_Remove						 	   *
+// *************************************************************************
+signed int CX_SelBrushList::SelBrushList_Remove(SelBrushList* pList, Brush* pBrush)
+{
+	int i;
+
+	// find the item in the list
+	for (i = 0; i < pList->FirstFree; ++i)
+	{
+		Brush* pRet;
+
+		pRet = SelBrushList_GetBrush(pList, i);
+		if (pRet == pBrush)
+		{
+			Array_DeleteAt(pList->pItems, i);
+			--(pList->FirstFree);
+			return true;
+		}
+	}
+	return false;	// not found
+}

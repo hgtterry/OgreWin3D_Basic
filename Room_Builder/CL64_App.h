@@ -29,7 +29,6 @@ THE SOFTWARE.
 #include "CL64_Lib_Maths.h"
 
 #include "G_Box.h"
-//#include "CL64_Box.h"
 
 #include "CL64_Render_Map.h"
 #include "CL64_Level.h"
@@ -46,10 +45,11 @@ THE SOFTWARE.
 
 #include "BrushTemplate.h" // Library
 
-#include "CL64_SelBrushList.h"
+#include "CX_SelBrushList.h"
+//#include "CL64_SelBrushList.h"
 
-#include "CX_Array.h"
-//#include "CL64_Array.h"
+#include "CX_Array.h" // Library
+
 
 #include "CL64_SelFaceList.h"
 #include "CL64_WadFile.h"
@@ -142,11 +142,10 @@ public:
 	// Libraries
 	BrushTemplate*				CL_X_BrushTemplate;
 	
-	CL64_SelBrushList*			CL_SelBrushList;
+	CX_SelBrushList*			CL_X_SelBrushList; // Library
+//	CL64_SelBrushList*			CL_SelBrushList;
 
-	CX_Array*					CL_X_Array;
-//	CL64_Array*					CL_Array;
-
+	CX_Array*					CL_X_Array; // Library
 
 	CL64_SelFaceList*			CL_SelFaceList;
 	CL64_Mesh_Mgr*				CL_Mesh_Mgr;

@@ -90,8 +90,8 @@ void CL64_Doc::Init_Doc()
    
     Current_Level = App->CL_Level->Level_Create();
   
-	pSelBrushes = App->CL_SelBrushList->SelBrushList_Create();
-	pTempSelBrushes = App->CL_SelBrushList->SelBrushList_Create();
+	pSelBrushes = App->CL_X_SelBrushList->SelBrushList_Create();
+	pTempSelBrushes = App->CL_X_SelBrushList->SelBrushList_Create();
 	pSelFaces = App->CL_SelFaceList->SelFaceList_Create();
 
 	SetLockAxis(0);	// Start with no axis locked
@@ -221,7 +221,7 @@ void CL64_Doc::OnBrushSubtractfromworld()
         App->CL_Brush->BrushList_Remove(BList, App->CL_Doc->CurBrush);
         Brush_SetSubtract(App->CL_Doc->CurBrush, GE_TRUE);
 
-        App->CL_SelBrushList->SelBrushList_RemoveAll(App->CL_Doc->pSelBrushes);
+        App->CL_X_SelBrushList->SelBrushList_RemoveAll(App->CL_Doc->pSelBrushes);
         App->CL_Brush->BrushList_Append(BList, App->CL_Doc->CurBrush);
     }
     else
@@ -595,7 +595,7 @@ void CL64_Doc::ResetAllSelectedFaces(void)
 // *************************************************************************
 void CL64_Doc::ResetAllSelectedBrushes(void)
 {
-    App->CL_SelBrushList->SelBrushList_RemoveAll(pSelBrushes);
+    App->CL_X_SelBrushList->SelBrushList_RemoveAll(pSelBrushes);
 
    // CurBrush = BTemplate; // hgtterry Check
 }
@@ -632,7 +632,7 @@ void CL64_Doc::DoBrushSelection(Brush* pBrush, BrushSel	nSelType) //	brushSelTog
         }
         else
         {
-           App->CL_SelBrushList->SelBrushList_Add(pSelBrushes, pBrush);
+           App->CL_X_SelBrushList->SelBrushList_Add(pSelBrushes, pBrush);
         }
     }
 }
@@ -642,7 +642,7 @@ void CL64_Doc::DoBrushSelection(Brush* pBrush, BrushSel	nSelType) //	brushSelTog
 // *************************************************************************
 signed int CL64_Doc::BrushIsSelected(Brush const* pBrush)
 {
-    return App->CL_SelBrushList->SelBrushList_Find(pSelBrushes, pBrush);
+    return App->CL_X_SelBrushList->SelBrushList_Find(pSelBrushes, pBrush);
 }
 
 // *************************************************************************
@@ -767,19 +767,19 @@ void CL64_Doc::TempCopySelectedBrushes(void)
     int		i;
     int NumSelBrushes;
 
-    NumSelBrushes = App->CL_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes);
+    NumSelBrushes = App->CL_X_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes);
 
-    App->CL_SelBrushList->SelBrushList_RemoveAll(App->CL_Doc->pTempSelBrushes);
+    App->CL_X_SelBrushList->SelBrushList_RemoveAll(App->CL_Doc->pTempSelBrushes);
 
     // make copies of selected brushes
     for (i = 0; i < NumSelBrushes; i++)
     {
         Brush* pBrush, * pClone;
 
-        pBrush = App->CL_SelBrushList->SelBrushList_GetBrush(App->CL_Doc->pSelBrushes, i);
+        pBrush = App->CL_X_SelBrushList->SelBrushList_GetBrush(App->CL_Doc->pSelBrushes, i);
         pClone = App->CL_Brush->Brush_Clone(pBrush);
         App->CL_Level->Level_AppendBrush(pClone);
-        App->CL_SelBrushList->SelBrushList_Add(App->CL_Doc->pTempSelBrushes, pClone);
+        App->CL_X_SelBrushList->SelBrushList_Add(App->CL_Doc->pTempSelBrushes, pClone);
     }
 }
 
@@ -835,12 +835,12 @@ void CL64_Doc::MoveSelectedBrushList(SelBrushList* pList, T_Vec3 const* v)
     App->CL_Maths->Vector3_Add(&SelectedGeoCenter, v, &SelectedGeoCenter);
     App->CL_Maths->Vector3_Add(v, &FinalPos, &FinalPos);
 
-    NumBrushes = App->CL_SelBrushList->SelBrushList_GetSize(pList);
+    NumBrushes = App->CL_X_SelBrushList->SelBrushList_GetSize(pList);
     for (i = 0; i < NumBrushes; i++)
     {
         Brush* pBrush;
 
-        pBrush = App->CL_SelBrushList->SelBrushList_GetBrush(pList, i);
+        pBrush = App->CL_X_SelBrushList->SelBrushList_GetBrush(pList, i);
         App->CL_Brush->Brush_Move(pBrush, v);
 
     }
@@ -862,7 +862,7 @@ void CL64_Doc::RotateSelectedBrushList(const ViewVars* view, SelBrushList* pList
     int i;
     Matrix3d rm;
     T_Vec3 RotationPoint;
-    int NumBrushes = App->CL_SelBrushList->SelBrushList_GetSize(pList);
+    int NumBrushes = App->CL_X_SelBrushList->SelBrushList_GetSize(pList);
 
     GetRotationPoint(&RotationPoint);
     App->CL_Maths->XForm3d_SetIdentity(&rm);
@@ -872,7 +872,7 @@ void CL64_Doc::RotateSelectedBrushList(const ViewVars* view, SelBrushList* pList
 
     for (i = 0; i < NumBrushes; i++)
     {
-        Brush* pBrush = App->CL_SelBrushList->SelBrushList_GetBrush(pList, i);
+        Brush* pBrush = App->CL_X_SelBrushList->SelBrushList_GetBrush(pList, i);
        
 		if (pBrush->GroupId == Enums::Brushs_ID_Evirons)
 		{
@@ -975,13 +975,13 @@ void CL64_Doc::ScaleSelectedBrushes(T_Vec3* ScaleVector)
     else
     {
         int i;
-        int NumSelBrushes = App->CL_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes);
+        int NumSelBrushes = App->CL_X_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes);
 
         for (i = 0; i < NumSelBrushes; ++i)
         {
             Brush* pBrush;
 
-            pBrush = App->CL_SelBrushList->SelBrushList_GetBrush(App->CL_Doc->pSelBrushes, i);
+            pBrush = App->CL_X_SelBrushList->SelBrushList_GetBrush(App->CL_Doc->pSelBrushes, i);
 
             App->CL_Brush->Brush_Move(pBrush, &MoveTo);
             App->CL_Brush->Brush_Scale3d(pBrush, ScaleVector);
@@ -1048,7 +1048,7 @@ void CL64_Doc::DoneMovingBrushes()
  
     App->CL_Level->flag_Level_is_Modified = true;
 
-    if (App->CL_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes) > 0)// || ModeTool == ID_TOOLS_TEMPLATE)
+    if (App->CL_X_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes) > 0)// || ModeTool == ID_TOOLS_TEMPLATE)
     {
         float fSnapSize;
         const T_Vec3* vMin, * vMax;
@@ -1160,13 +1160,13 @@ void CL64_Doc::DoneRotate(void)
         return;
     }
    
-    int NumSelBrushes = App->CL_SelBrushList->SelBrushList_GetSize(pSelBrushes);
+    int NumSelBrushes = App->CL_X_SelBrushList->SelBrushList_GetSize(pSelBrushes);
 
     for (i = 0; i < NumSelBrushes; i++)
     {
         Brush* pBrush;
 
-        pBrush = App->CL_SelBrushList->SelBrushList_GetBrush(pTempSelBrushes, i);
+        pBrush = App->CL_X_SelBrushList->SelBrushList_GetBrush(pTempSelBrushes, i);
        
         //App->Say_Int(pBrush->GroupId);
 
@@ -1202,17 +1202,17 @@ void CL64_Doc::DoneRotate(void)
             // Replace the sel list brushes with the TSelList brushes
             Brush* TempBrush, * OldBrush;
 
-            TempBrush = App->CL_SelBrushList->SelBrushList_GetBrush(pTempSelBrushes, 0);
-            OldBrush = App->CL_SelBrushList->SelBrushList_GetBrush(pSelBrushes, 0);
+            TempBrush = App->CL_X_SelBrushList->SelBrushList_GetBrush(pTempSelBrushes, 0);
+            OldBrush = App->CL_X_SelBrushList->SelBrushList_GetBrush(pSelBrushes, 0);
            
             App->CL_Brush->BrushList_Remove(BList, TempBrush);
             App->CL_Brush->BrushList_InsertAfter(BList, OldBrush, TempBrush);
             App->CL_Brush->BrushList_Remove(BList, OldBrush);
 
-            App->CL_SelBrushList->SelBrushList_Remove(pSelBrushes, OldBrush);
-            App->CL_SelBrushList->SelBrushList_Remove(pTempSelBrushes, TempBrush);
+            App->CL_X_SelBrushList->SelBrushList_Remove(pSelBrushes, OldBrush);
+            App->CL_X_SelBrushList->SelBrushList_Remove(pTempSelBrushes, TempBrush);
 
-            App->CL_SelBrushList->SelBrushList_Add(pSelBrushes, TempBrush);
+            App->CL_X_SelBrushList->SelBrushList_Add(pSelBrushes, TempBrush);
 
             //App->CL_Brush->BrushList_Remove(OldBrush->BList, OldBrush);
         }
@@ -1241,11 +1241,11 @@ void CL64_Doc::DoneMove(void)
 	int	i = 0; // Can only select 1 item at the moment
 
 	Brush* pBrush;
-	pBrush = App->CL_SelBrushList->SelBrushList_GetBrush(pSelBrushes, i);
+	pBrush = App->CL_X_SelBrushList->SelBrushList_GetBrush(pSelBrushes, i);
     if (!pBrush) return; // Exit if no brush is selected
     
     App->CL_Brush->Brush_Move(pBrush, &FinalPos);
-    App->CL_SelBrushList->SelBrushList_Center(App->CL_Doc->pSelBrushes, &App->CL_Doc->SelectedGeoCenter);
+    App->CL_X_SelBrushList->SelBrushList_Center(App->CL_Doc->pSelBrushes, &App->CL_Doc->SelectedGeoCenter);
     T_Vec3 CenterOfSelection = App->CL_Doc->SelectedGeoCenter;
 
     // Special Brushes 
@@ -1317,16 +1317,16 @@ BOOL CL64_Doc::TempDeleteSelected(void)
 {
     BOOL	ret;
     int		i;
-    int		NumTSelBrushes = App->CL_SelBrushList->SelBrushList_GetSize(pTempSelBrushes);
+    int		NumTSelBrushes = App->CL_X_SelBrushList->SelBrushList_GetSize(pTempSelBrushes);
 
     for (ret = FALSE, i = 0; i < NumTSelBrushes; i++)
     {
         Brush* pBrush;
 
-        pBrush = App->CL_SelBrushList->SelBrushList_GetBrush(pTempSelBrushes, 0);
+        pBrush = App->CL_X_SelBrushList->SelBrushList_GetBrush(pTempSelBrushes, 0);
 
         App->CL_Level->Level_RemoveBrush(pBrush);
-        App->CL_SelBrushList->SelBrushList_Remove(pTempSelBrushes, pBrush);
+        App->CL_X_SelBrushList->SelBrushList_Remove(pTempSelBrushes, pBrush);
         App->CL_Brush->Brush_Destroy(&pBrush);
         ret = TRUE;
     }
@@ -1369,13 +1369,13 @@ void CL64_Doc::ResizeSelected(float dx, float dy, int sides, int inidx)
         int i;
         int NumBrushes;
 
-        NumBrushes = App->CL_SelBrushList->SelBrushList_GetSize(pTempSelBrushes);
+        NumBrushes = App->CL_X_SelBrushList->SelBrushList_GetSize(pTempSelBrushes);
 
         for (i = 0; i < NumBrushes; ++i)
         {
             Brush* pBrush;
 
-            pBrush = App->CL_SelBrushList->SelBrushList_GetBrush(pTempSelBrushes, i);
+            pBrush = App->CL_X_SelBrushList->SelBrushList_GetBrush(pTempSelBrushes, i);
 
             App->CL_Brush->Brush_Resize(pBrush, dx, dy, sides, inidx, &FinalScale, &ScaleNum);
             
@@ -1408,10 +1408,10 @@ void CL64_Doc::DoneResize(int sides, int inidx)
         return;
     }
 
-    int NumSelBrushes = App->CL_SelBrushList->SelBrushList_GetSize(pSelBrushes);
+    int NumSelBrushes = App->CL_X_SelBrushList->SelBrushList_GetSize(pSelBrushes);
     for (int i = 0; i < NumSelBrushes; ++i)
     {
-        Brush* pBrush = App->CL_SelBrushList->SelBrushList_GetBrush(pSelBrushes, i);;
+        Brush* pBrush = App->CL_X_SelBrushList->SelBrushList_GetBrush(pSelBrushes, i);;
         int Index = App->CL_Entities->GetIndex_By_Name(pBrush->Name);
        
         // Set Brush Scale Size
@@ -1428,7 +1428,7 @@ void CL64_Doc::DoneResize(int sides, int inidx)
             {
                 auto& pObject = App->CL_Scene->B_Object[Index];
 
-                App->CL_SelBrushList->SelBrushList_Center(App->CL_Doc->pSelBrushes, &App->CL_Doc->SelectedGeoCenter);
+                App->CL_X_SelBrushList->SelBrushList_Center(App->CL_Doc->pSelBrushes, &App->CL_Doc->SelectedGeoCenter);
                 T_Vec3 CenterOfSelection = App->CL_Doc->SelectedGeoCenter;
 
                 pObject->Object_Node->setVisible(false);
@@ -1534,13 +1534,13 @@ void CL64_Doc::SelectAllFacesInBrushes(void)
 
     // Select all faces on all selected brushes
     int iBrush;
-    int NumSelBrushes = App->CL_SelBrushList->SelBrushList_GetSize(pSelBrushes);
+    int NumSelBrushes = App->CL_X_SelBrushList->SelBrushList_GetSize(pSelBrushes);
 
     for (iBrush = 0; iBrush < NumSelBrushes; ++iBrush)
     {
         Brush* pBrush;
 
-        pBrush = App->CL_SelBrushList->SelBrushList_GetBrush(pSelBrushes, iBrush);
+        pBrush = App->CL_X_SelBrushList->SelBrushList_GetBrush(pSelBrushes, iBrush);
         if (App->CL_Brush->Brush_IsMulti(pBrush))
         {
             App->CL_Brush->BrushList_EnumLeafBrushes(App->CL_Brush->Brush_GetBrushList(pBrush), this, SelAllBrushFaces);
@@ -1574,7 +1574,7 @@ void CL64_Doc::Set_Faces_To_Brush_Name_All()
         App->CL_Doc->ResetAllSelections();
         App->CL_Doc->UpdateSelected();
         App->CL_Properties_Brushes->Selected_Brush = App->CL_Brush->Get_Brush_ByIndex(Count);
-        App->CL_SelBrushList->SelBrushList_Add(App->CL_Doc->pSelBrushes, App->CL_Properties_Brushes->Selected_Brush);
+        App->CL_X_SelBrushList->SelBrushList_Add(App->CL_Doc->pSelBrushes, App->CL_Properties_Brushes->Selected_Brush);
         App->CL_Doc->UpdateSelected();
 
         // TODO are these in the right Place;
@@ -1595,7 +1595,7 @@ void CL64_Doc::Set_Faces_To_Brush_Name_All()
 // *************************************************************************
 void CL64_Doc::Set_Faces_To_Brush_Name_Selected()
 {
-    int NumSelBrushes = App->CL_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes);
+    int NumSelBrushes = App->CL_X_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes);
 
     if (NumSelBrushes > 0)
     {
@@ -1609,7 +1609,7 @@ void CL64_Doc::Set_Faces_To_Brush_Name_Selected()
 // *************************************************************************
 static signed int fdocSelectBrush(Brush* pBrush, void* lParam)
 {
-    App->CL_SelBrushList->SelBrushList_Add(App->CL_Doc->pSelBrushes, pBrush);
+    App->CL_X_SelBrushList->SelBrushList_Add(App->CL_Doc->pSelBrushes, pBrush);
 
     return GE_TRUE;
 }
@@ -1625,13 +1625,13 @@ void CL64_Doc::SelectAll(void)
 
     // Select all faces on all selected brushes
     int iBrush;
-    int NumSelBrushes = App->CL_SelBrushList->SelBrushList_GetSize(pSelBrushes);
+    int NumSelBrushes = App->CL_X_SelBrushList->SelBrushList_GetSize(pSelBrushes);
 
     for (iBrush = 0; iBrush < NumSelBrushes; ++iBrush)
     {
         Brush* pBrush;
 
-        pBrush = App->CL_SelBrushList->SelBrushList_GetBrush(pSelBrushes, iBrush);
+        pBrush = App->CL_X_SelBrushList->SelBrushList_GetBrush(pSelBrushes, iBrush);
 
         if (App->CL_Brush->Brush_IsMulti(pBrush))
         {
@@ -1655,7 +1655,7 @@ void CL64_Doc::SelectAll(void)
 void CL64_Doc::UpdateSelected(void)
 {
     int NumSelFaces = App->CL_SelFaceList->SelFaceList_GetSize(pSelFaces);
-    int NumSelBrushes = App->CL_SelBrushList->SelBrushList_GetSize(pSelBrushes);
+    int NumSelBrushes = App->CL_X_SelBrushList->SelBrushList_GetSize(pSelBrushes);
 
     SelState = (NumSelBrushes > 1) ? MULTIBRUSH : NumSelBrushes;
     SelState |= (NumSelFaces > 1) ? MULTIFACE : (NumSelFaces + 1) << 3;
@@ -1667,7 +1667,7 @@ void CL64_Doc::UpdateSelected(void)
         if (GetSelState() & ONEBRUSH)
         if(NumSelBrushes == 1)
         {
-            CurBrush = App->CL_SelBrushList->SelBrushList_GetBrush(pSelBrushes, 0);
+            CurBrush = App->CL_X_SelBrushList->SelBrushList_GetBrush(pSelBrushes, 0);
         }
         else
         {
@@ -1690,7 +1690,7 @@ void CL64_Doc::UpdateSelected(void)
     {
         if (NumSelBrushes)
         {
-            App->CL_SelBrushList->SelBrushList_Center(pSelBrushes, &SelectedGeoCenter);
+            App->CL_X_SelBrushList->SelBrushList_Center(pSelBrushes, &SelectedGeoCenter);
         }
     }
 
@@ -1771,15 +1771,15 @@ bool CL64_Doc::DeleteSelectedBrushes()
     if (GetSelState() & ANYBRUSH)
     {
     
-        int NumSelBrushes = App->CL_SelBrushList->SelBrushList_GetSize(pSelBrushes);
+        int NumSelBrushes = App->CL_X_SelBrushList->SelBrushList_GetSize(pSelBrushes);
         for (int i = 0; i < NumSelBrushes; i++)
         {
             Brush* pBrush;
 
-            pBrush = App->CL_SelBrushList->SelBrushList_GetBrush(pSelBrushes, 0);
+            pBrush = App->CL_X_SelBrushList->SelBrushList_GetBrush(pSelBrushes, 0);
             
             App->CL_Level->Level_RemoveBrush(pBrush);
-            App->CL_SelBrushList->SelBrushList_Remove(pSelBrushes, pBrush);
+            App->CL_X_SelBrushList->SelBrushList_Remove(pSelBrushes, pBrush);
             App->CL_Brush->Brush_Destroy(&pBrush);
 
             bAlteredCurrentGroup = true;
@@ -1878,11 +1878,11 @@ void CL64_Doc::SnapScaleNearest(int sides, int inidx, ViewVars* v)
     else*/
     {
         int i;
-        int NumBrushes = App->CL_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pTempSelBrushes);
+        int NumBrushes = App->CL_X_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pTempSelBrushes);
 
         for (i = 0; i < NumBrushes; ++i)
         {
-            Brush* pBrush = App->CL_SelBrushList->SelBrushList_GetBrush(App->CL_Doc->pTempSelBrushes, i);
+            Brush* pBrush = App->CL_X_SelBrushList->SelBrushList_GetBrush(App->CL_Doc->pTempSelBrushes, i);
             App->CL_Brush->Brush_SnapScaleNearest(pBrush, bsnap, sides, inidx, &App->CL_Doc->FinalScale, &App->CL_Doc->ScaleNum);
         }
     }

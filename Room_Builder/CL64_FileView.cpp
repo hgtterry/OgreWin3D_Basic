@@ -796,7 +796,7 @@ void CL64_FileView::Select_Brush(int index)
 
 		if (pMinBrush)
 		{
-			int NumSelBrushes = App->CL_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes);
+			int NumSelBrushes = App->CL_X_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes);
 			if (NumSelBrushes > 0)
 			{
 				App->CL_Doc->ResetAllSelections();

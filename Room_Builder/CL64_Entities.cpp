@@ -261,7 +261,7 @@ void CL64_Entities::Get_Mesh_Data(Ogre::SceneNode* Ogre_Node)
 // *************************************************************************
 void CL64_Entities::Rename_Brush()
 {
-	int numSelBrushes = App->CL_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes);
+	int numSelBrushes = App->CL_X_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes);
 
 	if (numSelBrushes > 0)
 	{ 

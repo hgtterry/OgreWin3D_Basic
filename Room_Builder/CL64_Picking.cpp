@@ -464,12 +464,12 @@ int CL64_Picking::Get_Local_Face(int SelectedGroup)
 // *************************************************************************
 void CL64_Picking::Get_Face()
 {
-    int NumSelBrushes = App->CL_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes);
+    int NumSelBrushes = App->CL_X_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes);
     if (NumSelBrushes > 0)
     {
         Brush* pBrush;
 
-        pBrush = App->CL_SelBrushList->SelBrushList_GetBrush(App->CL_Doc->pSelBrushes, 0);
+        pBrush = App->CL_X_SelBrushList->SelBrushList_GetBrush(App->CL_Doc->pSelBrushes, 0);
         Get_Brush_Info(pBrush);
 
        // App->Say_Int(Face_Count);

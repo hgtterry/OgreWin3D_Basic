@@ -139,7 +139,7 @@ void CL64_Editor_Control::Start_Editor_MapBrush_Mode(void)
 	App->CL_Properties_Tabs->flag_Tabs_Dlg_Active = 1;
     
 	
-	if (App->CL_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes) > 0)
+	if (App->CL_X_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes) > 0)
 	{
 		App->CL_Ogre->OGL_Listener->Show_Visuals(true);
 	}

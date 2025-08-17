@@ -1724,7 +1724,7 @@ void CL64_Editor_Map::Context_Menu(HWND hDlg)
 
 	// Move Scale Rotate
 	AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
-	if (App->CL_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes))
+	if (App->CL_X_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes))
 	{
 		AppendMenuW(hMenu, MF_STRING, IDM_MOVE, L"&Move Brush");
 		AppendMenuW(hMenu, MF_STRING, IDM_SCALE, L"&Scale Brush");
@@ -2332,14 +2332,14 @@ void CL64_Editor_Map::Draw_Screen(HWND hwnd)
 		{
 			// Draw selected brushes
 			SelectObject(MemoryhDC, PenSelected);
-			int NumSelBrushes = App->CL_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes);
+			int NumSelBrushes = App->CL_X_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes);
 
 			int i = 0;
 			for (i = 0; i < NumSelBrushes; i++)
 			{
 				Brush* pBrush;
 
-				pBrush = App->CL_SelBrushList->SelBrushList_GetBrush(App->CL_Doc->pSelBrushes, i);
+				pBrush = App->CL_X_SelBrushList->SelBrushList_GetBrush(App->CL_Doc->pSelBrushes, i);
 				{
 					if (App->CL_Brush->Brush_IsMulti(pBrush))
 					{

@@ -258,11 +258,11 @@ static signed int SelAllBrushFaces(Brush* pBrush, void* lParam)
 		strcpy(buff, App->CL_Brush->Brush_GetName(App->CL_Doc->CurBrush));
 		App->CL_Face->Face_SetBrushName(pFace, buff);
 		
-		App->CL_Face->Face_SetSelected(pFace, GE_TRUE);
+		App->CL_Face->Face_SetSelected(pFace, true);
 		App->CL_SelFaceList->SelFaceList_Add(App->CL_Doc->pSelFaces, pFace);
 	}
 
-	return GE_TRUE;
+	return true;
 }
 
 // *************************************************************************
@@ -283,7 +283,7 @@ static signed int Set_BrushFaces_Name(Brush* pBrush, void* lParam)
 		App->CL_Face->Face_SetBrushName(pFace, buff);
 	}
 
-	return GE_TRUE;
+	return true;
 }
 
 enum SideFlags
