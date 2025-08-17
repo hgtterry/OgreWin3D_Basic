@@ -103,7 +103,7 @@ void CL64_Doc::Init_Doc()
 
 	BTemplate = App->CL_X_BrushTemplate->BrushTemplate_CreateBox(pBoxTemplate);
     
-	App->CL_Brush->Brush_Bound(BTemplate);
+	App->CL_X_Brush->Brush_Bound(BTemplate);
 	CurBrush = BTemplate;
 
 	mModeTool = ID_TOOLS_TEMPLATE;
@@ -187,7 +187,7 @@ const char* CL64_Doc::FindTextureLibrary(char const* WadName)
 // *************************************************************************
 void CL64_Doc::AddBrushToWorld()
 {
-	if (TempEnt || !App->CL_Brush->Brush_IsSubtract(CurBrush))
+	if (TempEnt || !App->CL_X_Brush->Brush_IsSubtract(CurBrush))
 	{
         Brush_Add_To_world();
 	}
@@ -207,7 +207,7 @@ void CL64_Doc::OnBrushSubtractfromworld()
     Brush* nb;
     BrushList* BList = App->CL_Level->Level_Get_Main_Brushes();
 
-    if ((App->CL_Doc->mModeTool == ID_GENERALSELECT) && (App->CL_Brush->BrushList_Count(BList, BRUSH_COUNT_MULTI | BRUSH_COUNT_LEAF) < 2))
+    if ((App->CL_Doc->mModeTool == ID_GENERALSELECT) && (App->CL_X_Brush->BrushList_Count(BList, BRUSH_COUNT_MULTI | BRUSH_COUNT_LEAF) < 2))
     {
         // cuts shouldn't start the list
         return;
@@ -218,23 +218,23 @@ void CL64_Doc::OnBrushSubtractfromworld()
     if (App->CL_Doc->mModeTool == ID_GENERALSELECT)
     {
         // put the brush at the very end of the list
-        App->CL_Brush->BrushList_Remove(BList, App->CL_Doc->CurBrush);
+        App->CL_X_Brush->BrushList_Remove(BList, App->CL_Doc->CurBrush);
         Brush_SetSubtract(App->CL_Doc->CurBrush, GE_TRUE);
 
         App->CL_X_SelBrushList->SelBrushList_RemoveAll(App->CL_Doc->pSelBrushes);
-        App->CL_Brush->BrushList_Append(BList, App->CL_Doc->CurBrush);
+        App->CL_X_Brush->BrushList_Append(BList, App->CL_Doc->CurBrush);
     }
     else
     {
-        nb = App->CL_Brush->Brush_Clone(App->CL_Doc->CurBrush);
+        nb = App->CL_X_Brush->Brush_Clone(App->CL_Doc->CurBrush);
 
         SetDefaultBrushTexInfo(nb);
-        App->CL_Brush->Brush_Bound(nb);
+        App->CL_X_Brush->Brush_Bound(nb);
 
         // add to current group
         Brush_SetGroupId(nb, App->CL_Doc->mCurrentGroup);
 
-        App->CL_Brush->BrushList_Append(BList, nb);
+        App->CL_X_Brush->BrushList_Append(BList, nb);
 
         App->CL_Doc->CurBrush = nb;
         App->CL_Brush_X->Set_Brush_Faces_Name(App->CL_Doc->CurBrush);
@@ -259,14 +259,14 @@ void CL64_Doc::Brush_Add_To_world()
     T_Vec3* pTemplatePos;
 
     
-	NewBrush = App->CL_Brush->Brush_Clone(App->CL_Doc->CurBrush);
+	NewBrush = App->CL_X_Brush->Brush_Clone(App->CL_Doc->CurBrush);
    
 	SetDefaultBrushTexInfo(NewBrush);
    
-	App->CL_Brush->Brush_Bound(NewBrush);
+	App->CL_X_Brush->Brush_Bound(NewBrush);
 	pTemplatePos = App->CL_Level->Level_GetTemplatePos(Current_Level);
     
-	App->CL_Brush->Brush_Get_Center(NewBrush, pTemplatePos);
+	App->CL_X_Brush->Brush_Get_Center(NewBrush, pTemplatePos);
 
 	// add to current group
 	Brush_SetGroupId(NewBrush, mCurrentGroup);
@@ -275,12 +275,12 @@ void CL64_Doc::Brush_Add_To_world()
    
 	Scales.DrawScale = App->CL_Level->Level_GetDrawScale(Current_Level);
 	Scales.LightmapScale = App->CL_Level->Level_GetLightmapScale(Current_Level);
-	App->CL_Brush->Brush_EnumFaces(NewBrush, &Scales, fdocSetFaceScales);
+	App->CL_X_Brush->Brush_EnumFaces(NewBrush, &Scales, fdocSetFaceScales);
    
 	App->CL_Level->Level_AppendBrush(NewBrush);
    
 
-	if (!App->CL_Brush->Brush_IsHollow(NewBrush) && !App->CL_Brush->Brush_IsMulti(NewBrush))
+	if (!App->CL_X_Brush->Brush_IsHollow(NewBrush) && !App->CL_X_Brush->Brush_IsMulti(NewBrush))
 	{
 		//App->CL_Doc->UpdateAllViews(Enums::UpdateViews_All);
 	}
@@ -318,7 +318,7 @@ void CL64_Doc::Do_General_Select_Dlg(bool from_Insert)
 
     if (from_Insert == true)
     {
-        if (App->CL_Brush->Get_Brush_Count() > 0)
+        if (App->CL_X_Brush->Get_Brush_Count() > 0)
         {
             Set_Tool_GeneralSelect();
 
@@ -332,7 +332,7 @@ void CL64_Doc::Do_General_Select_Dlg(bool from_Insert)
         }
     }
 
-    if (App->CL_Brush->Get_Brush_Count() > 0)
+    if (App->CL_X_Brush->Get_Brush_Count() > 0)
     {
         Set_Tool_GeneralSelect();
 
@@ -362,7 +362,7 @@ void CL64_Doc::UpdateAllViews(int Update_Mode)
 
     if (Update_Mode == Enums::UpdateViews_3D)
     {
-        int BC = App->CL_Brush->Get_Brush_Count();
+        int BC = App->CL_X_Brush->Get_Brush_Count();
         if (BC > 0)
         {
             App->CL_Doc->RebuildTrees();
@@ -383,7 +383,7 @@ void CL64_Doc::UpdateAllViews(int Update_Mode)
         RedrawWindow(App->CL_Editor_Map->Top_Right_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
         RedrawWindow(App->CL_Editor_Map->Bottom_Left_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
-        int BC = App->CL_Brush->Get_Brush_Count();
+        int BC = App->CL_X_Brush->Get_Brush_Count();
         if (BC > 0)
         {
             App->CL_Doc->RebuildTrees();
@@ -412,11 +412,11 @@ void CL64_Doc::SetDefaultBrushTexInfo(Brush* b)
     CallbackData.TexName = TexName;
 
     //	Brush_SetName(b, TexName);
-    App->CL_Brush->Brush_SetName(b, LastTemplateTypeName);
+    App->CL_X_Brush->Brush_SetName(b, LastTemplateTypeName);
 
-    if (App->CL_Brush->Brush_IsMulti(b))
+    if (App->CL_X_Brush->Brush_IsMulti(b))
     {
-        App->CL_Brush->BrushList_EnumLeafBrushes(App->CL_Brush->Brush_GetBrushList(b), &CallbackData, ::BrushTexSetCB);
+        App->CL_X_Brush->BrushList_EnumLeafBrushes(App->CL_X_Brush->Brush_GetBrushList(b), &CallbackData, ::BrushTexSetCB);
     }
     else
     {
@@ -478,10 +478,10 @@ static  signed int FindClosestBrushCB(Brush* pBrush, void* pVoid)
    // if (fci->pDoc->BrushIsVisible(pBrush))
     {
         // for each face...
-        for (int iFace = 0; iFace < App->CL_Brush->Brush_GetNumFaces(pBrush); ++iFace)
+        for (int iFace = 0; iFace < App->CL_X_Brush->Brush_GetNumFaces(pBrush); ++iFace)
         {
             POINT pt1, pt2;
-            Face* pFace = App->CL_Brush->Brush_GetFace(pBrush, iFace);
+            Face* pFace = App->CL_X_Brush->Brush_GetFace(pBrush, iFace);
             const T_Vec3* FacePoints = App->CL_Face->Face_GetPoints(pFace);
             int	NumPoints = App->CL_Face->Face_GetNumPoints(pFace);
 
@@ -512,11 +512,11 @@ static signed int ResetSelectedFacesCB(Brush* b, void* pVoid)
 {
     int	i;
 
-    for (i = 0; i < App->CL_Brush->Brush_GetNumFaces(b); i++)
+    for (i = 0; i < App->CL_X_Brush->Brush_GetNumFaces(b); i++)
     {
         Face* pFace;
 
-        pFace = App->CL_Brush->Brush_GetFace(b, i);
+        pFace = App->CL_X_Brush->Brush_GetFace(b, i);
         App->CL_Face->Face_SetSelected(pFace, false);
     }
     return GE_TRUE;
@@ -586,7 +586,7 @@ void CL64_Doc::ResetAllSelections(void)
 // *************************************************************************
 void CL64_Doc::ResetAllSelectedFaces(void)
 {
-    App->CL_Brush->BrushList_EnumLeafBrushes(App->CL_Level->Level_Get_Main_Brushes(), NULL, ResetSelectedFacesCB);
+    App->CL_X_Brush->BrushList_EnumLeafBrushes(App->CL_Level->Level_Get_Main_Brushes(), NULL, ResetSelectedFacesCB);
     App->CL_SelFaceList->SelFaceList_RemoveAll(pSelFaces);
 }
 
@@ -616,7 +616,7 @@ void CL64_Doc::DoBrushSelection(Brush* pBrush, BrushSel	nSelType) //	brushSelTog
 
     BList = App->CL_Level->Level_Get_Main_Brushes();
 
-   if (App->CL_Brush->Brush_GetParent(BList, pBrush, &pBParent))
+   if (App->CL_X_Brush->Brush_GetParent(BList, pBrush, &pBParent))
     {
         pBrush = pBParent;
     }
@@ -688,7 +688,7 @@ signed int CL64_Doc::FindClosestBrush(POINT const* ptFrom, ViewVars* v, Brush** 
     fci.pMinEdgeDist = pMinEdgeDist;
     fci.ptFrom = ptFrom;
 
-    App->CL_Brush->BrushList_EnumLeafBrushes(App->CL_Level->Level_Get_Main_Brushes(), &fci, ::FindClosestBrushCB);
+    App->CL_X_Brush->BrushList_EnumLeafBrushes(App->CL_Level->Level_Get_Main_Brushes(), &fci, ::FindClosestBrushCB);
 
     return	(*ppFoundBrush) ? GE_TRUE : GE_FALSE;
 }
@@ -753,9 +753,9 @@ void CL64_Doc::RebuildTrees(void)
     BList = App->CL_Level->Level_Get_Main_Brushes();
     //SetModifiedFlag();
 
-    App->CL_Brush->BrushList_ClearAllCSG(BList);
+    App->CL_X_Brush->BrushList_ClearAllCSG(BList);
 
-    App->CL_Brush->BrushList_DoCSG(BList, CurId, ::fdocBrushCSGCallback, this);
+    App->CL_X_Brush->BrushList_DoCSG(BList, CurId, ::fdocBrushCSGCallback, this);
 
 }
 
@@ -777,7 +777,7 @@ void CL64_Doc::TempCopySelectedBrushes(void)
         Brush* pBrush, * pClone;
 
         pBrush = App->CL_X_SelBrushList->SelBrushList_GetBrush(App->CL_Doc->pSelBrushes, i);
-        pClone = App->CL_Brush->Brush_Clone(pBrush);
+        pClone = App->CL_X_Brush->Brush_Clone(pBrush);
         App->CL_Level->Level_AppendBrush(pClone);
         App->CL_X_SelBrushList->SelBrushList_Add(App->CL_Doc->pTempSelBrushes, pClone);
     }
@@ -841,7 +841,7 @@ void CL64_Doc::MoveSelectedBrushList(SelBrushList* pList, T_Vec3 const* v)
         Brush* pBrush;
 
         pBrush = App->CL_X_SelBrushList->SelBrushList_GetBrush(pList, i);
-        App->CL_Brush->Brush_Move(pBrush, v);
+        App->CL_X_Brush->Brush_Move(pBrush, v);
 
     }
 }
@@ -942,7 +942,7 @@ void CL64_Doc::RotateSelectedBrushList(const ViewVars* view, SelBrushList* pList
 		}
         else
         {
-            App->CL_Brush->Brush_Rotate(pBrush, &rm, &RotationPoint);
+            App->CL_X_Brush->Brush_Rotate(pBrush, &rm, &RotationPoint);
         }
       
     }
@@ -983,14 +983,14 @@ void CL64_Doc::ScaleSelectedBrushes(T_Vec3* ScaleVector)
 
             pBrush = App->CL_X_SelBrushList->SelBrushList_GetBrush(App->CL_Doc->pSelBrushes, i);
 
-            App->CL_Brush->Brush_Move(pBrush, &MoveTo);
-            App->CL_Brush->Brush_Scale3d(pBrush, ScaleVector);
-            App->CL_Brush->Brush_Move(pBrush, &MoveBack);
+            App->CL_X_Brush->Brush_Move(pBrush, &MoveTo);
+            App->CL_X_Brush->Brush_Scale3d(pBrush, ScaleVector);
+            App->CL_X_Brush->Brush_Move(pBrush, &MoveBack);
 
-            if (App->CL_Brush->Brush_IsMulti(pBrush))
+            if (App->CL_X_Brush->Brush_IsMulti(pBrush))
             {
-                App->CL_Brush->BrushList_ClearCSGAndHollows((BrushList*)App->CL_Brush->Brush_GetBrushList(pBrush), App->CL_Brush->Brush_GetModelId(pBrush));
-                App->CL_Brush->BrushList_RebuildHollowFaces((BrushList*)App->CL_Brush->Brush_GetBrushList(pBrush), App->CL_Brush->Brush_GetModelId(pBrush), ::fdocBrushCSGCallback, this);
+                App->CL_X_Brush->BrushList_ClearCSGAndHollows((BrushList*)App->CL_X_Brush->Brush_GetBrushList(pBrush), App->CL_X_Brush->Brush_GetModelId(pBrush));
+                App->CL_X_Brush->BrushList_RebuildHollowFaces((BrushList*)App->CL_X_Brush->Brush_GetBrushList(pBrush), App->CL_X_Brush->Brush_GetModelId(pBrush), ::fdocBrushCSGCallback, this);
             }
         }
     }
@@ -1064,7 +1064,7 @@ void CL64_Doc::DoneMovingBrushes()
         }
 
         // do the snap thing...
-        pBox = App->CL_Brush->Brush_GetBoundingBox(App->CL_Doc->CurBrush);
+        pBox = App->CL_X_Brush->Brush_GetBoundingBox(App->CL_Doc->CurBrush);
         vMin = App->CL_Box_x->Box3d_GetMin(pBox);
         vMax = App->CL_Box_x->Box3d_GetMax(pBox);
         App->CL_Maths->Vector3_Clear(&SnapDelta);
@@ -1156,7 +1156,7 @@ void CL64_Doc::DoneRotate(void)
     if (mModeTool == ID_TOOLS_TEMPLATE)
     {
        
-        App->CL_Brush->Brush_Rotate(CurBrush, &rm, &RotationPoint);
+        App->CL_X_Brush->Brush_Rotate(CurBrush, &rm, &RotationPoint);
         return;
     }
    
@@ -1184,7 +1184,7 @@ void CL64_Doc::DoneRotate(void)
         }
         else
         {
-            App->CL_Brush->Brush_Rotate(pBrush, &rm, &RotationPoint);
+            App->CL_X_Brush->Brush_Rotate(pBrush, &rm, &RotationPoint);
         }
 
     }
@@ -1205,9 +1205,9 @@ void CL64_Doc::DoneRotate(void)
             TempBrush = App->CL_X_SelBrushList->SelBrushList_GetBrush(pTempSelBrushes, 0);
             OldBrush = App->CL_X_SelBrushList->SelBrushList_GetBrush(pSelBrushes, 0);
            
-            App->CL_Brush->BrushList_Remove(BList, TempBrush);
-            App->CL_Brush->BrushList_InsertAfter(BList, OldBrush, TempBrush);
-            App->CL_Brush->BrushList_Remove(BList, OldBrush);
+            App->CL_X_Brush->BrushList_Remove(BList, TempBrush);
+            App->CL_X_Brush->BrushList_InsertAfter(BList, OldBrush, TempBrush);
+            App->CL_X_Brush->BrushList_Remove(BList, OldBrush);
 
             App->CL_X_SelBrushList->SelBrushList_Remove(pSelBrushes, OldBrush);
             App->CL_X_SelBrushList->SelBrushList_Remove(pTempSelBrushes, TempBrush);
@@ -1244,7 +1244,7 @@ void CL64_Doc::DoneMove(void)
 	pBrush = App->CL_X_SelBrushList->SelBrushList_GetBrush(pSelBrushes, i);
     if (!pBrush) return; // Exit if no brush is selected
     
-    App->CL_Brush->Brush_Move(pBrush, &FinalPos);
+    App->CL_X_Brush->Brush_Move(pBrush, &FinalPos);
     App->CL_X_SelBrushList->SelBrushList_Center(App->CL_Doc->pSelBrushes, &App->CL_Doc->SelectedGeoCenter);
     T_Vec3 CenterOfSelection = App->CL_Doc->SelectedGeoCenter;
 
@@ -1327,7 +1327,7 @@ BOOL CL64_Doc::TempDeleteSelected(void)
 
         App->CL_Level->Level_RemoveBrush(pBrush);
         App->CL_X_SelBrushList->SelBrushList_Remove(pTempSelBrushes, pBrush);
-        App->CL_Brush->Brush_Destroy(&pBrush);
+        App->CL_X_Brush->Brush_Destroy(&pBrush);
         ret = TRUE;
     }
 
@@ -1377,12 +1377,12 @@ void CL64_Doc::ResizeSelected(float dx, float dy, int sides, int inidx)
 
             pBrush = App->CL_X_SelBrushList->SelBrushList_GetBrush(pTempSelBrushes, i);
 
-            App->CL_Brush->Brush_Resize(pBrush, dx, dy, sides, inidx, &FinalScale, &ScaleNum);
+            App->CL_X_Brush->Brush_Resize(pBrush, dx, dy, sides, inidx, &FinalScale, &ScaleNum);
             
-            if (App->CL_Brush->Brush_IsMulti(pBrush))
+            if (App->CL_X_Brush->Brush_IsMulti(pBrush))
             {
-                App->CL_Brush->BrushList_ClearCSGAndHollows((BrushList*)App->CL_Brush->Brush_GetBrushList(pBrush), App->CL_Brush->Brush_GetModelId(pBrush));
-                App->CL_Brush->BrushList_RebuildHollowFaces((BrushList*)App->CL_Brush->Brush_GetBrushList(pBrush), App->CL_Brush->Brush_GetModelId(pBrush), ::fdocBrushCSGCallback, this);
+                App->CL_X_Brush->BrushList_ClearCSGAndHollows((BrushList*)App->CL_X_Brush->Brush_GetBrushList(pBrush), App->CL_X_Brush->Brush_GetModelId(pBrush));
+                App->CL_X_Brush->BrushList_RebuildHollowFaces((BrushList*)App->CL_X_Brush->Brush_GetBrushList(pBrush), App->CL_X_Brush->Brush_GetModelId(pBrush), ::fdocBrushCSGCallback, this);
             }
         }
     }
@@ -1400,10 +1400,10 @@ void CL64_Doc::DoneResize(int sides, int inidx)
 
     if (mModeTool == ID_TOOLS_TEMPLATE)
     {
-        if (App->CL_Brush->Brush_IsMulti(CurBrush))
+        if (App->CL_X_Brush->Brush_IsMulti(CurBrush))
         {
-            App->CL_Brush->BrushList_ClearCSGAndHollows((BrushList*)App->CL_Brush->Brush_GetBrushList(CurBrush), App->CL_Brush->Brush_GetModelId(CurBrush));
-            App->CL_Brush->BrushList_RebuildHollowFaces((BrushList*)App->CL_Brush->Brush_GetBrushList(CurBrush), App->CL_Brush->Brush_GetModelId(CurBrush), fdocBrushCSGCallback, NULL);
+            App->CL_X_Brush->BrushList_ClearCSGAndHollows((BrushList*)App->CL_X_Brush->Brush_GetBrushList(CurBrush), App->CL_X_Brush->Brush_GetModelId(CurBrush));
+            App->CL_X_Brush->BrushList_RebuildHollowFaces((BrushList*)App->CL_X_Brush->Brush_GetBrushList(CurBrush), App->CL_X_Brush->Brush_GetModelId(CurBrush), fdocBrushCSGCallback, NULL);
         }
         return;
     }
@@ -1415,11 +1415,11 @@ void CL64_Doc::DoneResize(int sides, int inidx)
         int Index = App->CL_Entities->GetIndex_By_Name(pBrush->Name);
        
         // Set Brush Scale Size
-        App->CL_Brush->Brush_ResizeFinal(pBrush, sides, inidx, &FinalScale);
-        if (App->CL_Brush->Brush_IsMulti(pBrush))
+        App->CL_X_Brush->Brush_ResizeFinal(pBrush, sides, inidx, &FinalScale);
+        if (App->CL_X_Brush->Brush_IsMulti(pBrush))
         {
-            App->CL_Brush->BrushList_ClearCSGAndHollows((BrushList*)App->CL_Brush->Brush_GetBrushList(pBrush), App->CL_Brush->Brush_GetModelId(pBrush));
-            App->CL_Brush->BrushList_RebuildHollowFaces((BrushList*)App->CL_Brush->Brush_GetBrushList(pBrush), App->CL_Brush->Brush_GetModelId(pBrush), fdocBrushCSGCallback, NULL);
+            App->CL_X_Brush->BrushList_ClearCSGAndHollows((BrushList*)App->CL_X_Brush->Brush_GetBrushList(pBrush), App->CL_X_Brush->Brush_GetModelId(pBrush));
+            App->CL_X_Brush->BrushList_RebuildHollowFaces((BrushList*)App->CL_X_Brush->Brush_GetBrushList(pBrush), App->CL_X_Brush->Brush_GetModelId(pBrush), fdocBrushCSGCallback, NULL);
         }
 
         if (pBrush->GroupId == Enums::Brushs_ID_Evirons)
@@ -1541,9 +1541,9 @@ void CL64_Doc::SelectAllFacesInBrushes(void)
         Brush* pBrush;
 
         pBrush = App->CL_X_SelBrushList->SelBrushList_GetBrush(pSelBrushes, iBrush);
-        if (App->CL_Brush->Brush_IsMulti(pBrush))
+        if (App->CL_X_Brush->Brush_IsMulti(pBrush))
         {
-            App->CL_Brush->BrushList_EnumLeafBrushes(App->CL_Brush->Brush_GetBrushList(pBrush), this, SelAllBrushFaces);
+            App->CL_X_Brush->BrushList_EnumLeafBrushes(App->CL_X_Brush->Brush_GetBrushList(pBrush), this, SelAllBrushFaces);
         }
         else
         {
@@ -1563,7 +1563,7 @@ void CL64_Doc::Set_Faces_To_Brush_Name_All()
     BrushList* pList = App->CL_Level->Level_Get_Main_Brushes();
 
     int Count = 0;
-    int BC = App->CL_Brush->Get_Brush_Count();
+    int BC = App->CL_X_Brush->Get_Brush_Count();
    
     while (Count < BC)
     {
@@ -1573,7 +1573,7 @@ void CL64_Doc::Set_Faces_To_Brush_Name_All()
 
         App->CL_Doc->ResetAllSelections();
         App->CL_Doc->UpdateSelected();
-        App->CL_Properties_Brushes->Selected_Brush = App->CL_Brush->Get_Brush_ByIndex(Count);
+        App->CL_Properties_Brushes->Selected_Brush = App->CL_X_Brush->Get_Brush_ByIndex(Count);
         App->CL_X_SelBrushList->SelBrushList_Add(App->CL_Doc->pSelBrushes, App->CL_Properties_Brushes->Selected_Brush);
         App->CL_Doc->UpdateSelected();
 
@@ -1633,9 +1633,9 @@ void CL64_Doc::SelectAll(void)
 
         pBrush = App->CL_X_SelBrushList->SelBrushList_GetBrush(pSelBrushes, iBrush);
 
-        if (App->CL_Brush->Brush_IsMulti(pBrush))
+        if (App->CL_X_Brush->Brush_IsMulti(pBrush))
         {
-            App->CL_Brush->BrushList_EnumLeafBrushes(App->CL_Brush->Brush_GetBrushList(pBrush), this, SelAllBrushFaces);
+            App->CL_X_Brush->BrushList_EnumLeafBrushes(App->CL_X_Brush->Brush_GetBrushList(pBrush), this, SelAllBrushFaces);
         }
         else
         {
@@ -1684,7 +1684,7 @@ void CL64_Doc::UpdateSelected(void)
 
     if (mModeTool == ID_TOOLS_TEMPLATE)
     {
-        App->CL_Brush->Brush_Get_Center(CurBrush, &SelectedGeoCenter);
+        App->CL_X_Brush->Brush_Get_Center(CurBrush, &SelectedGeoCenter);
     }
     else if (SelState != NOSELECTIONS)
     {
@@ -1725,7 +1725,7 @@ static signed int fdocUpdateFaceTextures(Face* pFace, void* lParam)
 // *************************************************************************
 static signed int fdocUpdateBrushFaceTextures(Brush* pBrush, void* pVoid)
 {
-    App->CL_Brush->Brush_EnumFaces(pBrush, pVoid, fdocUpdateFaceTextures);
+    App->CL_X_Brush->Brush_EnumFaces(pBrush, pVoid, fdocUpdateFaceTextures);
     return GE_TRUE;
 }
 
@@ -1737,7 +1737,7 @@ void CL64_Doc::UpdateAfterWadChange()
 	//flag_Is_Modified = 1;
 
 	// update all brush faces
-	App->CL_Brush->BrushList_EnumLeafBrushes(App->CL_Level->Level_Get_Main_Brushes(), this, fdocUpdateBrushFaceTextures);
+	App->CL_X_Brush->BrushList_EnumLeafBrushes(App->CL_Level->Level_Get_Main_Brushes(), this, fdocUpdateBrushFaceTextures);
 
 }
 
@@ -1780,7 +1780,7 @@ bool CL64_Doc::DeleteSelectedBrushes()
             
             App->CL_Level->Level_RemoveBrush(pBrush);
             App->CL_X_SelBrushList->SelBrushList_Remove(pSelBrushes, pBrush);
-            App->CL_Brush->Brush_Destroy(&pBrush);
+            App->CL_X_Brush->Brush_Destroy(&pBrush);
 
             bAlteredCurrentGroup = true;
         }
@@ -1883,7 +1883,7 @@ void CL64_Doc::SnapScaleNearest(int sides, int inidx, ViewVars* v)
         for (i = 0; i < NumBrushes; ++i)
         {
             Brush* pBrush = App->CL_X_SelBrushList->SelBrushList_GetBrush(App->CL_Doc->pTempSelBrushes, i);
-            App->CL_Brush->Brush_SnapScaleNearest(pBrush, bsnap, sides, inidx, &App->CL_Doc->FinalScale, &App->CL_Doc->ScaleNum);
+            App->CL_X_Brush->Brush_SnapScaleNearest(pBrush, bsnap, sides, inidx, &App->CL_Doc->FinalScale, &App->CL_Doc->ScaleNum);
         }
     }
 }

@@ -115,7 +115,7 @@ void CL64_Camera::Reset_View_Editor(void)
 // *************************************************************************
 void CL64_Camera::Camera_Textured(void)
 {
-	if (App->CL_Brush->Get_Brush_Count() > 0)
+	if (App->CL_X_Brush->Get_Brush_Count() > 0)
 	{
 		App->CL_Ogre->OGL_Listener->flag_Render_Ogre = 1;
 		App->CL_Ogre->OGL_Listener->flag_Render_Groups = 0;
@@ -139,7 +139,7 @@ void CL64_Camera::Camera_Textured(void)
 // *************************************************************************
 void CL64_Camera::Camera_Wired(void)
 {
-	if (App->CL_Brush->Get_Brush_Count() > 0)
+	if (App->CL_X_Brush->Get_Brush_Count() > 0)
 	{
 		App->CL_Ogre->OGL_Listener->flag_Render_Groups = 1;
 		App->CL_Ogre->OGL_Listener->flag_Render_Brushes = 0;
@@ -163,7 +163,7 @@ void CL64_Camera::Camera_Wired(void)
 // *************************************************************************
 void CL64_Camera::Camera_Brushes(void)
 {
-	if (App->CL_Brush->Get_Brush_Count() > 0)
+	if (App->CL_X_Brush->Get_Brush_Count() > 0)
 	{
 		App->CL_Ogre->OGL_Listener->flag_Render_Brushes = 1;
 		App->CL_Ogre->OGL_Listener->flag_Render_Groups = 0;

@@ -24,7 +24,7 @@ THE SOFTWARE.
 
 #pragma once
 
-#include "CL64_Brush.h"
+#include "CX_Brush.h"
 #include "CX_SelBrushList.h"
 #include "CL64_SelFaceList.h"
 

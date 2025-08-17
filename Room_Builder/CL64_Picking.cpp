@@ -376,7 +376,7 @@ int CL64_Picking::Get_Brush_Index()
                    
     App->CL_Properties_Brushes->OnSelchangeBrushlist(m_Brush_Index, true);
 
-    Brush* Selected_Brush = App->CL_Brush->Get_Brush_ByIndex(m_Brush_Index);
+    Brush* Selected_Brush = App->CL_X_Brush->Get_Brush_ByIndex(m_Brush_Index);
 
     // Select Brush but dont show Brush Panel
     App->CL_Doc->DoBrushSelection(Selected_Brush, brushSelToggle);
@@ -527,7 +527,7 @@ bool CL64_Picking::Get_Brush_ListInfo(BrushList* BList)
     BrushIterator bi;
     int Count;
 
-    Count = App->CL_Brush->BrushList_Count(BList, (BRUSH_COUNT_MULTI | BRUSH_COUNT_LEAF | BRUSH_COUNT_NORECURSE));
+    Count = App->CL_X_Brush->BrushList_Count(BList, (BRUSH_COUNT_MULTI | BRUSH_COUNT_LEAF | BRUSH_COUNT_NORECURSE));
     if (Count < 0)
     {
         return 0;
@@ -536,11 +536,11 @@ bool CL64_Picking::Get_Brush_ListInfo(BrushList* BList)
     {
     }
 
-    pBrush = App->CL_Brush->BrushList_GetFirst(BList, &bi);
+    pBrush = App->CL_X_Brush->BrushList_GetFirst(BList, &bi);
     while (pBrush != NULL)
     {
         Get_Brush_Info(pBrush);
-        pBrush = App->CL_Brush->BrushList_GetNext(&bi);
+        pBrush = App->CL_X_Brush->BrushList_GetNext(&bi);
     }
 
     return 1;

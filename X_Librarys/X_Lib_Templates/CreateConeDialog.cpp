@@ -104,7 +104,7 @@ LRESULT CALLBACK CreateConeDialog::Proc_CreateCone(HWND hDlg, UINT message, WPAR
 		App->CL_X_CreateConeDialog->Set_Members();
 		App->CL_X_CreateConeDialog->Set_DLG_Members(hDlg);
 
-		int Count = App->CL_Brush->Get_Brush_Count();
+		int Count = App->CL_X_Brush->Get_Brush_Count();
 		char Num[32];
 		char Name[32];
 		_itoa(Count, Num, 10);
@@ -428,15 +428,15 @@ void CreateConeDialog::CreateNewTemplateBrush(Brush* pBrush)
 
 	if (App->CL_Doc->BTemplate != NULL)
 	{
-		App->CL_Brush->Brush_Destroy(&App->CL_Doc->BTemplate);
+		App->CL_X_Brush->Brush_Destroy(&App->CL_Doc->BTemplate);
 	}
 
 	App->CL_Doc->CurBrush = pBrush;
 
 	App->CL_Doc->TempEnt = FALSE;
 	App->CL_Doc->SetDefaultBrushTexInfo(App->CL_Doc->CurBrush);
-	App->CL_Brush->Brush_Bound(App->CL_Doc->CurBrush);
-	App->CL_Brush->Brush_Get_Center(App->CL_Doc->CurBrush, &BrushPos);
+	App->CL_X_Brush->Brush_Bound(App->CL_Doc->CurBrush);
+	App->CL_X_Brush->Brush_Get_Center(App->CL_Doc->CurBrush, &BrushPos);
 
 	pTemplatePos = App->CL_Level->Level_GetTemplatePos(App->CL_Doc->Current_Level);
 
@@ -460,7 +460,7 @@ void CreateConeDialog::CreateNewTemplateBrush(Brush* pBrush)
 
 	App->CL_Maths->Vector3_Subtract(pTemplatePos, &BrushPos, &MoveVec);
 
-	App->CL_Brush->Brush_Move(App->CL_Doc->CurBrush, &MoveVec);
+	App->CL_X_Brush->Brush_Move(App->CL_Doc->CurBrush, &MoveVec);
 
 	App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
 

@@ -221,11 +221,11 @@ Brush* BrushTemplate::BrushTemplate_CreateBox(const BrushTemplate_Box* pTemplate
 
 	if (!pTemplate->Solid)
 	{
-		b = App->CL_Brush->Brush_Create(BRUSH_LEAF, fl, 0);
+		b = App->CL_X_Brush->Brush_Create(BRUSH_LEAF, fl, 0);
 		if (b)
 		{
 			Brush_SetSubtract(b, pTemplate->TCut); // TODO hgtterry Problem
-			App->CL_Brush->Brush_SetSheet(b, pTemplate->TSheet);
+			App->CL_X_Brush->Brush_SetSheet(b, pTemplate->TSheet);
 
 		}
 		return	b;
@@ -233,22 +233,22 @@ Brush* BrushTemplate::BrushTemplate_CreateBox(const BrushTemplate_Box* pTemplate
 	else
 	{
 		// hollow brush
-		BrushList* bl = App->CL_Brush->BrushList_Create();
+		BrushList* bl = App->CL_X_Brush->BrushList_Create();
 		Brush* bh, * bm;
 
-		b = App->CL_Brush->Brush_Create(BRUSH_LEAF, fl, 0);
+		b = App->CL_X_Brush->Brush_Create(BRUSH_LEAF, fl, 0);
 		if (b)
 		{
 			Brush_SetHollow(b, true);
 			Brush_SetHullSize(b, (float)pTemplate->Thickness);
-			bh = App->CL_Brush->Brush_CreateHollowFromBrush(b);
+			bh = App->CL_X_Brush->Brush_CreateHollowFromBrush(b);
 			if (bh)
 			{
-				App->CL_Brush->Brush_SetHollowCut(bh, true);
-				App->CL_Brush->BrushList_Append(bl, b);
-				App->CL_Brush->BrushList_Append(bl, bh);
+				App->CL_X_Brush->Brush_SetHollowCut(bh, true);
+				App->CL_X_Brush->BrushList_Append(bl, b);
+				App->CL_X_Brush->BrushList_Append(bl, bh);
 
-				bm = App->CL_Brush->Brush_Create(BRUSH_MULTI, 0, bl);
+				bm = App->CL_X_Brush->Brush_Create(BRUSH_MULTI, 0, bl);
 				if (bm)
 				{
 					Brush_SetHollow(bm, true);
@@ -259,13 +259,13 @@ Brush* BrushTemplate::BrushTemplate_CreateBox(const BrushTemplate_Box* pTemplate
 			}
 			else
 			{
-				App->CL_Brush->Brush_Destroy(&b);
-				App->CL_Brush->BrushList_Destroy(&bl);
+				App->CL_X_Brush->Brush_Destroy(&b);
+				App->CL_X_Brush->BrushList_Destroy(&bl);
 			}
 		}
 		else
 		{
-			App->CL_Brush->BrushList_Destroy(&bl);
+			App->CL_X_Brush->BrushList_Destroy(&bl);
 		}
 	}
 
@@ -423,7 +423,7 @@ Brush* BrushTemplate::BrushTemplate_CreateCylinder(const BrushTemplate_Cylinder*
 
 	if (!pTemplate->Solid)
 	{
-		b = App->CL_Brush->Brush_Create(BRUSH_LEAF, fl, 0);
+		b = App->CL_X_Brush->Brush_Create(BRUSH_LEAF, fl, 0);
 		if (b)
 		{
 			Brush_SetSubtract(b, pTemplate->TCut);
@@ -432,22 +432,22 @@ Brush* BrushTemplate::BrushTemplate_CreateCylinder(const BrushTemplate_Cylinder*
 	}
 	else
 	{
-		BrushList* bl = App->CL_Brush->BrushList_Create();
+		BrushList* bl = App->CL_X_Brush->BrushList_Create();
 		Brush* bh, * bm;
 
-		b = App->CL_Brush->Brush_Create(BRUSH_LEAF, fl, 0);
+		b = App->CL_X_Brush->Brush_Create(BRUSH_LEAF, fl, 0);
 		if (b)
 		{
 			Brush_SetHollow(b, GE_TRUE);
 			Brush_SetHullSize(b, (float)pTemplate->Thickness);
-			bh = App->CL_Brush->Brush_CreateHollowFromBrush(b);
+			bh = App->CL_X_Brush->Brush_CreateHollowFromBrush(b);
 			if (bh)
 			{
-				App->CL_Brush->Brush_SetHollowCut(bh, GE_TRUE);
-				App->CL_Brush->BrushList_Append(bl, b);
-				App->CL_Brush->BrushList_Append(bl, bh);
+				App->CL_X_Brush->Brush_SetHollowCut(bh, GE_TRUE);
+				App->CL_X_Brush->BrushList_Append(bl, b);
+				App->CL_X_Brush->BrushList_Append(bl, bh);
 
-				bm = App->CL_Brush->Brush_Create(BRUSH_MULTI, 0, bl);
+				bm = App->CL_X_Brush->Brush_Create(BRUSH_MULTI, 0, bl);
 				if (bm)
 				{
 					Brush_SetHollow(bm, GE_TRUE);
@@ -458,13 +458,13 @@ Brush* BrushTemplate::BrushTemplate_CreateCylinder(const BrushTemplate_Cylinder*
 			}
 			else
 			{
-				App->CL_Brush->Brush_Destroy(&b);
-				App->CL_Brush->BrushList_Destroy(&bl);
+				App->CL_X_Brush->Brush_Destroy(&b);
+				App->CL_X_Brush->BrushList_Destroy(&bl);
 			}
 		}
 		else
 		{
-			App->CL_Brush->BrushList_Destroy(&bl);
+			App->CL_X_Brush->BrushList_Destroy(&bl);
 		}
 	}
 
@@ -565,7 +565,7 @@ Brush* BrushTemplate::BrushTemplate_CreateCone(const BrushTemplate_Cone* pTempla
 
 	if (!pTemplate->Style)
 	{
-		b = App->CL_Brush->Brush_Create(BRUSH_LEAF, fl, 0);
+		b = App->CL_X_Brush->Brush_Create(BRUSH_LEAF, fl, 0);
 		if (b)
 		{
 			Brush_SetSubtract(b, pTemplate->TCut);
@@ -574,22 +574,22 @@ Brush* BrushTemplate::BrushTemplate_CreateCone(const BrushTemplate_Cone* pTempla
 	}
 	else
 	{
-		BrushList* bl = App->CL_Brush->BrushList_Create();
+		BrushList* bl = App->CL_X_Brush->BrushList_Create();
 		Brush* bh, * bm;
 
-		b = App->CL_Brush->Brush_Create(BRUSH_LEAF, fl, 0);
+		b = App->CL_X_Brush->Brush_Create(BRUSH_LEAF, fl, 0);
 		if (b)
 		{
 			Brush_SetHollow(b, GE_TRUE);
 			Brush_SetHullSize(b, (float)pTemplate->Thickness);
-			bh = App->CL_Brush->Brush_CreateHollowFromBrush(b);
+			bh = App->CL_X_Brush->Brush_CreateHollowFromBrush(b);
 			if (bh)
 			{
-				App->CL_Brush->Brush_SetHollowCut(bh, GE_TRUE);
-				App->CL_Brush->BrushList_Append(bl, b);
-				App->CL_Brush->BrushList_Append(bl, bh);
+				App->CL_X_Brush->Brush_SetHollowCut(bh, GE_TRUE);
+				App->CL_X_Brush->BrushList_Append(bl, b);
+				App->CL_X_Brush->BrushList_Append(bl, bh);
 
-				bm = App->CL_Brush->Brush_Create(BRUSH_MULTI, 0, bl);
+				bm = App->CL_X_Brush->Brush_Create(BRUSH_MULTI, 0, bl);
 				if (bm)
 				{
 					Brush_SetHollow(bm, GE_TRUE);
@@ -600,13 +600,13 @@ Brush* BrushTemplate::BrushTemplate_CreateCone(const BrushTemplate_Cone* pTempla
 			}
 			else
 			{
-				App->CL_Brush->Brush_Destroy(&b);
-				App->CL_Brush->BrushList_Destroy(&bl);
+				App->CL_X_Brush->Brush_Destroy(&b);
+				App->CL_X_Brush->BrushList_Destroy(&bl);
 			}
 		}
 		else
 		{
-			App->CL_Brush->BrushList_Destroy(&bl);
+			App->CL_X_Brush->BrushList_Destroy(&bl);
 		}
 	}
 	return	0;
@@ -622,7 +622,7 @@ Brush* BrushTemplate::BrushTemplate_CreateStaircase(const BrushTemplate_Staircas
 	float		HalfHeight = (float)(pTemplate->Height / 2);
 	float		HalfLength = (float)(pTemplate->Length / 2);
 	Brush* b, * b2;
-	BrushList* MBList = App->CL_Brush->BrushList_Create();
+	BrushList* MBList = App->CL_X_Brush->BrushList_Create();
 	FaceList* fl;
 	Face* f;
 	T_Vec3		v, FaceVerts[4];
@@ -685,7 +685,7 @@ Brush* BrushTemplate::BrushTemplate_CreateStaircase(const BrushTemplate_Staircas
 			App->CL_Face->Face_SetTextureLock(f, true);
 		}
 
-		b = App->CL_Brush->Brush_Create(BRUSH_LEAF, fl, 0);
+		b = App->CL_X_Brush->Brush_Create(BRUSH_LEAF, fl, 0);
 	}
 	else
 	{
@@ -709,10 +709,10 @@ Brush* BrushTemplate::BrushTemplate_CreateStaircase(const BrushTemplate_Staircas
 			b2 = BrushTemplate_CreateBox(&BoxTemplate);
 			ZSize -= DZ;
 			App->CL_Maths->Vector3_Set(&v, 0.0f, i * StairYSize, (i * DZ) / 2);
-			App->CL_Brush->Brush_Move(b2, &v);
-			App->CL_Brush->BrushList_Append(MBList, b2);
+			App->CL_X_Brush->Brush_Move(b2, &v);
+			App->CL_X_Brush->BrushList_Append(MBList, b2);
 		}
-		b = App->CL_Brush->Brush_Create(BRUSH_MULTI, 0, MBList);
+		b = App->CL_X_Brush->Brush_Create(BRUSH_MULTI, 0, MBList);
 	}
 
 	if (b)
@@ -729,7 +729,7 @@ Brush* BrushTemplate::BrushTemplate_CreateStaircase(const BrushTemplate_Staircas
 Brush* BrushTemplate::BrushTemplate_CreateArch(const BrushTemplate_Arch* pTemplate)
 {
 	Brush* b, * b2;
-	BrushList* MBList = App->CL_Brush->BrushList_Create();
+	BrushList* MBList = App->CL_X_Brush->BrushList_Create();
 	FaceList* fl;
 	Face* f;
 	T_Vec3		FaceVerts[4];
@@ -1016,49 +1016,49 @@ Brush* BrushTemplate::BrushTemplate_CreateArch(const BrushTemplate_Arch* pTempla
 
 			if (!pTemplate->Style)
 			{
-				b2 = App->CL_Brush->Brush_Create(BRUSH_LEAF, fl, 0);
+				b2 = App->CL_X_Brush->Brush_Create(BRUSH_LEAF, fl, 0);
 				if (b2)
 				{
 					Brush_SetSubtract(b2, pTemplate->TCut);
 				}
-				App->CL_Brush->BrushList_Append(MBList, b2);
+				App->CL_X_Brush->BrushList_Append(MBList, b2);
 			}
 			else
 			{
-				BrushList* bl = App->CL_Brush->BrushList_Create();
+				BrushList* bl = App->CL_X_Brush->BrushList_Create();
 				Brush* bh, * bm;
 
-				b2 = App->CL_Brush->Brush_Create(BRUSH_LEAF, fl, 0);
+				b2 = App->CL_X_Brush->Brush_Create(BRUSH_LEAF, fl, 0);
 				if (b2)
 				{
 					Brush_SetHollow(b2, GE_TRUE);
 					Brush_SetHullSize(b2, pTemplate->WallSize);
-					bh = App->CL_Brush->Brush_CreateHollowFromBrush(b2);
+					bh = App->CL_X_Brush->Brush_CreateHollowFromBrush(b2);
 					if (bh)
 					{
-						App->CL_Brush->Brush_SetHollowCut(bh, GE_TRUE);
-						App->CL_Brush->BrushList_Append(bl, b2);
-						App->CL_Brush->BrushList_Append(bl, bh);
+						App->CL_X_Brush->Brush_SetHollowCut(bh, GE_TRUE);
+						App->CL_X_Brush->BrushList_Append(bl, b2);
+						App->CL_X_Brush->BrushList_Append(bl, bh);
 
-						bm = App->CL_Brush->Brush_Create(BRUSH_MULTI, 0, bl);
+						bm = App->CL_X_Brush->Brush_Create(BRUSH_MULTI, 0, bl);
 						if (bm)
 						{
 							Brush_SetHollow(bm, GE_TRUE);
 							Brush_SetSubtract(bm, pTemplate->TCut);
 							Brush_SetHullSize(bm, pTemplate->WallSize);
 
-							App->CL_Brush->BrushList_Append(MBList, bm);
+							App->CL_X_Brush->BrushList_Append(MBList, bm);
 						}
 					}
 					else
 					{
-						App->CL_Brush->Brush_Destroy(&b2);
-						App->CL_Brush->BrushList_Destroy(&bl);
+						App->CL_X_Brush->Brush_Destroy(&b2);
+						App->CL_X_Brush->BrushList_Destroy(&bl);
 					}
 				}
 				else
 				{
-					App->CL_Brush->BrushList_Destroy(&bl);
+					App->CL_X_Brush->BrushList_Destroy(&bl);
 				}
 			}
 
@@ -1451,49 +1451,49 @@ Brush* BrushTemplate::BrushTemplate_CreateArch(const BrushTemplate_Arch* pTempla
 
 			if (!pTemplate->Style)
 			{
-				b2 = App->CL_Brush->Brush_Create(BRUSH_LEAF, fl, 0);
+				b2 = App->CL_X_Brush->Brush_Create(BRUSH_LEAF, fl, 0);
 				if (b2)
 				{
 					Brush_SetSubtract(b2, pTemplate->TCut);
 				}
-				App->CL_Brush->BrushList_Append(MBList, b2);
+				App->CL_X_Brush->BrushList_Append(MBList, b2);
 			}
 			else
 			{
-				BrushList* bl = App->CL_Brush->BrushList_Create();
+				BrushList* bl = App->CL_X_Brush->BrushList_Create();
 				Brush* bh, * bm;
 
-				b2 = App->CL_Brush->Brush_Create(BRUSH_LEAF, fl, 0);
+				b2 = App->CL_X_Brush->Brush_Create(BRUSH_LEAF, fl, 0);
 				if (b2)
 				{
 					Brush_SetHollow(b2, GE_TRUE);
 					Brush_SetHullSize(b2, pTemplate->WallSize);
-					bh = App->CL_Brush->Brush_CreateHollowFromBrush(b2);
+					bh = App->CL_X_Brush->Brush_CreateHollowFromBrush(b2);
 					if (bh)
 					{
-						App->CL_Brush->Brush_SetHollowCut(bh, GE_TRUE);
-						App->CL_Brush->BrushList_Append(bl, b2);
-						App->CL_Brush->BrushList_Append(bl, bh);
+						App->CL_X_Brush->Brush_SetHollowCut(bh, GE_TRUE);
+						App->CL_X_Brush->BrushList_Append(bl, b2);
+						App->CL_X_Brush->BrushList_Append(bl, bh);
 
-						bm = App->CL_Brush->Brush_Create(BRUSH_MULTI, 0, bl);
+						bm = App->CL_X_Brush->Brush_Create(BRUSH_MULTI, 0, bl);
 						if (bm)
 						{
 							Brush_SetHollow(bm, GE_TRUE);
 							Brush_SetSubtract(bm, pTemplate->TCut);
 							Brush_SetHullSize(bm, pTemplate->WallSize);
 
-							App->CL_Brush->BrushList_Append(MBList, bm);
+							App->CL_X_Brush->BrushList_Append(MBList, bm);
 						}
 					}
 					else
 					{
-						App->CL_Brush->Brush_Destroy(&b2);
-						App->CL_Brush->BrushList_Destroy(&bl);
+						App->CL_X_Brush->Brush_Destroy(&b2);
+						App->CL_X_Brush->BrushList_Destroy(&bl);
 					}
 				}
 				else
 				{
-					App->CL_Brush->BrushList_Destroy(&bl);
+					App->CL_X_Brush->BrushList_Destroy(&bl);
 				}
 			}
 
@@ -1516,7 +1516,7 @@ Brush* BrushTemplate::BrushTemplate_CreateArch(const BrushTemplate_Arch* pTempla
 			// end change
 		}
 	}
-	b = App->CL_Brush->Brush_Create(BRUSH_MULTI, 0, MBList);
+	b = App->CL_X_Brush->Brush_Create(BRUSH_MULTI, 0, MBList);
 
 	if (b)
 	{

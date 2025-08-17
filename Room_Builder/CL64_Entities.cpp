@@ -104,11 +104,11 @@ void CL64_Entities::Create_Player_Brush(const char* name)
 
 	Player_Brush = App->CL_X_BrushTemplate->BrushTemplate_CreateBox(pBoxTemplate);
 
-	App->CL_Brush->Brush_Bound(Player_Brush);
+	App->CL_X_Brush->Brush_Bound(Player_Brush);
 
 	App->CL_Doc->SetDefaultBrushTexInfo(Player_Brush);
 
-	App->CL_Brush->Brush_Bound(Player_Brush);
+	App->CL_X_Brush->Brush_Bound(Player_Brush);
 
 	Brush_SetGroupId(Player_Brush, Enums::Brushs_ID_Players);
 
@@ -116,7 +116,7 @@ void CL64_Entities::Create_Player_Brush(const char* name)
 
 	Scales.DrawScale = App->CL_Level->Level_GetDrawScale(App->CL_Doc->Current_Level);
 	Scales.LightmapScale = App->CL_Level->Level_GetLightmapScale(App->CL_Doc->Current_Level);
-	App->CL_Brush->Brush_EnumFaces(Player_Brush, &Scales, fdocSetFaceScales);
+	App->CL_X_Brush->Brush_EnumFaces(Player_Brush, &Scales, fdocSetFaceScales);
 
 	strcpy(Player_Brush->Name, name);
 
@@ -125,7 +125,7 @@ void CL64_Entities::Create_Player_Brush(const char* name)
 	App->CL_Doc->CurBrush = Player_Brush;
 	App->CL_Brush_X->Set_Brush_Faces_Name(App->CL_Doc->CurBrush);
 
-	App->CL_Brush->Brush_SetLocked(Player_Brush, true);
+	App->CL_X_Brush->Brush_SetLocked(Player_Brush, true);
 }
 
 // *************************************************************************
@@ -165,11 +165,11 @@ void CL64_Entities::Create_Entity_Brush(int Object_Index)
 
 	New_Brush = App->CL_X_BrushTemplate->BrushTemplate_CreateBox(pBoxTemplate);
 
-	App->CL_Brush->Brush_Bound(New_Brush);
+	App->CL_X_Brush->Brush_Bound(New_Brush);
 
 	App->CL_Doc->SetDefaultBrushTexInfo(New_Brush);
 
-	App->CL_Brush->Brush_Bound(New_Brush);
+	App->CL_X_Brush->Brush_Bound(New_Brush);
 
 	Brush_SetGroupId(New_Brush, Enums::Brushs_ID_Evirons);
 
@@ -177,7 +177,7 @@ void CL64_Entities::Create_Entity_Brush(int Object_Index)
 
 	Scales.DrawScale = App->CL_Level->Level_GetDrawScale(App->CL_Doc->Current_Level);
 	Scales.LightmapScale = App->CL_Level->Level_GetLightmapScale(App->CL_Doc->Current_Level);
-	App->CL_Brush->Brush_EnumFaces(New_Brush, &Scales, fdocSetFaceScales);
+	App->CL_X_Brush->Brush_EnumFaces(New_Brush, &Scales, fdocSetFaceScales);
 
 	strcpy(New_Brush->Name, App->CL_Scene->B_Object[Object_Index]->Object_Name);
 
@@ -186,14 +186,14 @@ void CL64_Entities::Create_Entity_Brush(int Object_Index)
 	Pos.y = App->CL_Scene->B_Object[Object_Index]->Mesh_Pos.y;
 	Pos.z = App->CL_Scene->B_Object[Object_Index]->Mesh_Pos.z;
 
-	App->CL_Brush->Brush_Move(New_Brush, &Pos);
+	App->CL_X_Brush->Brush_Move(New_Brush, &Pos);
 
 	App->CL_Level->Level_AppendBrush(New_Brush);
 
 	App->CL_Doc->CurBrush = New_Brush;
 	App->CL_Brush_X->Set_Brush_Faces_Name(App->CL_Doc->CurBrush);
 
-	App->CL_Brush->Brush_SetLocked(New_Brush, true);
+	App->CL_X_Brush->Brush_SetLocked(New_Brush, true);
 
 	App->CL_Properties_Brushes->Fill_ListBox();
 }
@@ -285,7 +285,7 @@ void CL64_Entities::Rename_Brush()
 			}
 
 			// Brush
-			App->CL_Brush->Brush_SetName(App->CL_Properties_Brushes->Selected_Brush, name);
+			App->CL_X_Brush->Brush_SetName(App->CL_Properties_Brushes->Selected_Brush, name);
 			App->CL_Properties_Brushes->Fill_ListBox();
 			App->CL_Doc->Set_Faces_To_Brush_Name_Selected();
 			App->CL_Level->flag_Level_is_Modified = true;

@@ -48,7 +48,7 @@ CL64_File::~CL64_File(void)
 void CL64_File::Start_Save(bool useSaveDialog)
 {
 	// Check there are brushes to Save
-	int brushCount = App->CL_Brush->Get_Brush_Count();
+	int brushCount = App->CL_X_Brush->Get_Brush_Count();
 	if (brushCount <= 0)
 	{
 		App->Say("No Brushes to Save");
@@ -210,14 +210,14 @@ signed int CL64_File::BrushList_Write(BrushList* BList, FILE* ofile)
 	BrushIterator bi;
 	int Count;
 
-	Count = App->CL_Brush->BrushList_Count(BList, (BRUSH_COUNT_MULTI | BRUSH_COUNT_LEAF | BRUSH_COUNT_NORECURSE));
+	Count = App->CL_X_Brush->BrushList_Count(BList, (BRUSH_COUNT_MULTI | BRUSH_COUNT_LEAF | BRUSH_COUNT_NORECURSE));
 	if (fprintf(ofile, "Brushlist %d\n", Count) < 0) return false;
 
-	pBrush = App->CL_Brush->BrushList_GetFirst(BList, &bi);
+	pBrush = App->CL_X_Brush->BrushList_GetFirst(BList, &bi);
 	while (pBrush != NULL)
 	{
 		if (!Brush_Write(pBrush, ofile)) return false;
-		pBrush = App->CL_Brush->BrushList_GetNext(&bi);
+		pBrush = App->CL_X_Brush->BrushList_GetNext(&bi);
 	}
 
 	return true;
@@ -554,7 +554,7 @@ bool CL64_File::Load_File(const char* FileName)
 		// Clean up existing brushes if they exist
 		if (App->CL_Doc->Current_Level->Brushes != NULL)
 		{
-			App->CL_Brush->BrushList_Destroy(&App->CL_Doc->Current_Level->Brushes);
+			App->CL_X_Brush->BrushList_Destroy(&App->CL_Doc->Current_Level->Brushes);
 			App->CL_Doc->Current_Level->Brushes = NULL;
 		}
 		
@@ -669,11 +669,11 @@ void CL64_File::Set_Player()
 	Brush* Player = App->CL_Brush_X->Get_Brush_By_Name("Player_Main");
 	if (Player)
 	{
-		App->CL_Brush->Brush_SetLocked(Player, true);
+		App->CL_X_Brush->Brush_SetLocked(Player, true);
 	}
 
 	T_Vec3 BrushPos;
-	App->CL_Brush->Brush_Get_Center(Player, &BrushPos);
+	App->CL_X_Brush->Brush_Get_Center(Player, &BrushPos);
 
 	App->CL_Scene->B_Player[0]->StartPos.x = BrushPos.x;
 	App->CL_Scene->B_Player[0]->StartPos.y = BrushPos.y;

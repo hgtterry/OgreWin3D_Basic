@@ -104,7 +104,7 @@ LRESULT CALLBACK CreateBoxDialog::Proc_CreateBox(HWND hDlg, UINT message, WPARAM
 		App->CL_X_CreateBoxDialog->SetDefaults(hDlg);
 
 		// Generate and set the box name
-		int Count = App->CL_Brush->Get_Brush_Count();
+		int Count = App->CL_X_Brush->Get_Brush_Count();
 		char Name[32];
 		snprintf(Name, sizeof(Name), "Box_%d", Count);
 		SetDlgItemText(hDlg, IDC_EDITNAME, Name);
@@ -218,7 +218,7 @@ LRESULT CALLBACK CreateBoxDialog::Proc_CreateBox(HWND hDlg, UINT message, WPARAM
 			App->CL_X_CreateBoxDialog->m_TCut = !App->CL_X_CreateBoxDialog->Cut_Flag;
 			App->CL_X_CreateBoxDialog->Cut_Flag = !App->CL_X_CreateBoxDialog->Cut_Flag;
 
-			int Count = App->CL_Brush->Get_Brush_Count();
+			int Count = App->CL_X_Brush->Get_Brush_Count();
 			char Name[32];
 			snprintf(Name, sizeof(Name), "Box_%d%s", Count, App->CL_X_CreateBoxDialog->Cut_Flag ? "_Cut" : "");
 
@@ -258,7 +258,7 @@ LRESULT CALLBACK CreateBoxDialog::Proc_CreateBox(HWND hDlg, UINT message, WPARAM
 			App->CL_X_CreateBoxDialog->flag_Room = 0;
 			RedrawWindow(hDlg, nullptr, nullptr, RDW_INVALIDATE | RDW_UPDATENOW);
 
-			int brushCount = App->CL_Brush->Get_Brush_Count();
+			int brushCount = App->CL_X_Brush->Get_Brush_Count();
 			std::string name = "Box_" + std::to_string(brushCount);
 
 			SetDlgItemText(hDlg, IDC_EDITNAME, name.c_str());
@@ -273,7 +273,7 @@ LRESULT CALLBACK CreateBoxDialog::Proc_CreateBox(HWND hDlg, UINT message, WPARAM
 			App->CL_X_CreateBoxDialog->flag_Room = 1;
 			RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
-			int brushCount = App->CL_Brush->Get_Brush_Count();
+			int brushCount = App->CL_X_Brush->Get_Brush_Count();
 			std::string boxName = "Box_" + std::to_string(brushCount);
 
 			SetDlgItemText(hDlg, IDC_EDITNAME, boxName.c_str());
@@ -340,16 +340,16 @@ void CreateBoxDialog::CreateNewTemplateBrush(Brush* pBrush)
 {
 	if (App->CL_Doc->BTemplate != nullptr)
 	{
-		App->CL_Brush->Brush_Destroy(&App->CL_Doc->BTemplate);
+		App->CL_X_Brush->Brush_Destroy(&App->CL_Doc->BTemplate);
 	}
 
 	App->CL_Doc->CurBrush = pBrush;
 	App->CL_Doc->TempEnt = false;
 	App->CL_Doc->SetDefaultBrushTexInfo(App->CL_Doc->CurBrush);
-	App->CL_Brush->Brush_Bound(App->CL_Doc->CurBrush);
+	App->CL_X_Brush->Brush_Bound(App->CL_Doc->CurBrush);
 
 	T_Vec3 BrushPos;
-	App->CL_Brush->Brush_Get_Center(App->CL_Doc->CurBrush, &BrushPos);
+	App->CL_X_Brush->Brush_Get_Center(App->CL_Doc->CurBrush, &BrushPos);
 
 	T_Vec3* pTemplatePos = App->CL_Level->Level_GetTemplatePos(App->CL_Doc->Current_Level);
 	Ogre::Vector3 Pos;
@@ -366,7 +366,7 @@ void CreateBoxDialog::CreateNewTemplateBrush(Brush* pBrush)
 
 	T_Vec3 MoveVec;
 	App->CL_Maths->Vector3_Subtract(pTemplatePos, &BrushPos, &MoveVec);
-	App->CL_Brush->Brush_Move(App->CL_Doc->CurBrush, &MoveVec);
+	App->CL_X_Brush->Brush_Move(App->CL_Doc->CurBrush, &MoveVec);
 
 	App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
 	App->CL_Level->flag_Level_is_Modified = true;

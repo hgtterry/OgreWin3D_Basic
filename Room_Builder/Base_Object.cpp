@@ -343,7 +343,7 @@ Brush* Base_Object::BrushTemplate_CreateBox(const BrushTemplate_Box* pTemplate)
 		App->CL_Face->Face_SetTextureLock(f, true);
 	}
 
-	b = App->CL_Brush->Brush_Create(BRUSH_LEAF, fl, 0);
+	b = App->CL_X_Brush->Brush_Create(BRUSH_LEAF, fl, 0);
 
 	if (b)
 	{

@@ -25,7 +25,7 @@ THE SOFTWARE.
 #include "pch.h"
 #include "CL64_App.h"
 #include "CL64_Brush_X.h"
-#include "CL64_Brush.h"
+#include "CX_Brush.h"
 #include "Structures.cpp"
 
 CL64_Brush_X::CL64_Brush_X()
@@ -58,7 +58,7 @@ void CL64_Brush_X::BrushList_GetUsedTextures_X(BrushList* BList, signed int* Use
 // *************************************************************************
 void CL64_Brush_X::Get_BrushData(Brush* b)
 {
-	int Count = App->CL_Brush->Get_Brush_Count();
+	int Count = App->CL_X_Brush->Get_Brush_Count();
 
 	if (Count > 0)
 	{
@@ -107,11 +107,11 @@ bool CL64_Brush_X::Get_Brush_ListInfo(BrushList* BList)
 	BrushIterator bi;
 	
 
-	pBrush = App->CL_Brush->BrushList_GetFirst(BList, &bi);
+	pBrush = App->CL_X_Brush->BrushList_GetFirst(BList, &bi);
 	while (pBrush != NULL)
 	{
 		Get_Brush_Info(pBrush);
-		pBrush = App->CL_Brush->BrushList_GetNext(&bi);
+		pBrush = App->CL_X_Brush->BrushList_GetNext(&bi);
 	}
 
 	return 1;
@@ -156,7 +156,7 @@ bool CL64_Brush_X::Get_Face_Data(int Index, const Face* f)
 static signed int Get_Brush_Face_Count(Brush* pBrush, void* lParam)
 {
 	int nFaces = 0;
-	nFaces = App->CL_Brush->Brush_GetNumFaces(pBrush);
+	nFaces = App->CL_X_Brush->Brush_GetNumFaces(pBrush);
 
 	App->CL_Brush_X->Face_Count = App->CL_Brush_X->Face_Count + nFaces;
 
@@ -175,9 +175,9 @@ int CL64_Brush_X::Get_Brush_All_Faces_Count(void)
 
 	pBrush = App->CL_Doc->CurBrush;// App->CL_SelBrushList->SelBrushList_GetBrush(App->CL_Doc->pSelBrushes, iBrush);
 
-	if (App->CL_Brush->Brush_IsMulti(App->CL_Doc->CurBrush))
+	if (App->CL_X_Brush->Brush_IsMulti(App->CL_Doc->CurBrush))
 	{
-		BrushList_EnumLeafBrushes(App->CL_Brush->Brush_GetBrushList(App->CL_Doc->CurBrush), this, Get_Brush_Face_Count);
+		BrushList_EnumLeafBrushes(App->CL_X_Brush->Brush_GetBrushList(App->CL_Doc->CurBrush), this, Get_Brush_Face_Count);
 	}
 	else
 	{
@@ -192,9 +192,9 @@ int CL64_Brush_X::Get_Brush_All_Faces_Count(void)
 // *************************************************************************
 void CL64_Brush_X::Set_Brush_Faces_Name(Brush* b)
 {
-	if (App->CL_Brush->Brush_IsMulti(b))
+	if (App->CL_X_Brush->Brush_IsMulti(b))
 	{
-		App->CL_Brush->BrushList_EnumLeafBrushes(App->CL_Brush->Brush_GetBrushList(b), this, Set_BrushFaces_Name);
+		App->CL_X_Brush->BrushList_EnumLeafBrushes(App->CL_X_Brush->Brush_GetBrushList(b), this, Set_BrushFaces_Name);
 	}
 	else
 	{
@@ -316,7 +316,7 @@ void CL64_Brush_X::Select_Brush_Editor(Brush* b)
 	App->CL_Doc->CurBrush = b;
 	
 	// Check if there are any brushes available
-	int Bnum = App->CL_Brush->Get_Brush_Count();
+	int Bnum = App->CL_X_Brush->Get_Brush_Count();
 	if (Bnum > 0)
 	{
 		// Perform brush selection and update views
@@ -412,11 +412,11 @@ bool CL64_Brush_X::Set_Sub_Brush_Faces_Indexs(BrushList* BList)
 	Brush* pBrush;
 	BrushIterator bi;
 
-	pBrush = App->CL_Brush->BrushList_GetFirst(BList, &bi);
+	pBrush = App->CL_X_Brush->BrushList_GetFirst(BList, &bi);
 	while (pBrush != NULL)
 	{
 		Decode_Brush(pBrush); // Recursive
-		pBrush = App->CL_Brush->BrushList_GetNext(&bi);
+		pBrush = App->CL_X_Brush->BrushList_GetNext(&bi);
 	}
 
 	return 1;
@@ -470,7 +470,7 @@ void CL64_Brush_X::Move_Player_Brush()
 		Pos.y = App->CL_Scene->B_Player[0]->StartPos.y;
 		Pos.z = App->CL_Scene->B_Player[0]->StartPos.z;
 
-		App->CL_Brush->Brush_Move(b, &Pos);
+		App->CL_X_Brush->Brush_Move(b, &Pos);
 
 	}
 }
@@ -483,7 +483,7 @@ void CL64_Brush_X::Move_Brush_By_Name(char* Brush_Name, int Object_Index)
 	Brush* b = App->CL_Brush_X->Get_Brush_By_Name(Brush_Name);
 	if (!b) return; // No Nrush
 
-	App->CL_Brush->Brush_Get_Center(b, &App->CL_Doc->SelectedGeoCenter);
+	App->CL_X_Brush->Brush_Get_Center(b, &App->CL_Doc->SelectedGeoCenter);
 
 	T_Vec3 Pos;
 	Ogre::Vector3 Centre = App->CL_Scene->B_Object[Object_Index]->Object_Ent->getWorldBoundingBox(true).getCenter();
@@ -494,7 +494,7 @@ void CL64_Brush_X::Move_Brush_By_Name(char* Brush_Name, int Object_Index)
 
 	App->CL_Maths->Vector3_Subtract(&Pos, &App->CL_Doc->SelectedGeoCenter, &Pos);
 
-	App->CL_Brush->Brush_Move(b, &Pos);
+	App->CL_X_Brush->Brush_Move(b, &Pos);
 
 }
 
@@ -526,10 +526,10 @@ void CL64_Brush_X::Scale_Brush_By_Name(const char* Brush_Name, int Object_Index,
 	App->CL_Maths->Vector3_Subtract(&mFinalScale, &mSelectedGeoCenter, &mFinalScale);
 
 	// Move and scale the brush
-	App->CL_Brush->Brush_Move(b, &MoveTo);
-	App->CL_Brush->Brush_Scale3d(b, &mFinalScale);
+	App->CL_X_Brush->Brush_Move(b, &MoveTo);
+	App->CL_X_Brush->Brush_Scale3d(b, &mFinalScale);
 
-	if (App->CL_Brush->Brush_IsMulti(b))
+	if (App->CL_X_Brush->Brush_IsMulti(b))
 	{
 		// App->CL_Brush->BrushList_ClearCSGAndHollows((BrushList*)App->CL_Brush->Brush_GetBrushList(b), App->CL_Brush->Brush_GetModelId(b));
 		// App->CL_Brush->BrushList_RebuildHollowFaces((BrushList*)App->CL_Brush->Brush_GetBrushList(b), App->CL_Brush->Brush_GetModelId(b), ::fdocBrushCSGCallback, this);
@@ -571,13 +571,13 @@ void CL64_Brush_X::Rotate_Reset_Brush_By_Name(const char* Brush_Name, float SX, 
 				break;
 			}
 
-			App->CL_Brush->Brush_Get_Center(b, &RotationPoint);
+			App->CL_X_Brush->Brush_Get_Center(b, &RotationPoint);
 
 			App->CL_Maths->XForm3d_SetIdentity(&rm);
 
 			App->CL_Maths->XForm3d_SetEulerAngles(&rm, &FinalRot);
 
-			App->CL_Brush->Brush_Rotate(b, &rm, &RotationPoint);
+			App->CL_X_Brush->Brush_Rotate(b, &rm, &RotationPoint);
 			App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
 		}
 	}
@@ -600,13 +600,13 @@ void CL64_Brush_X::Rotate_Brush_By_Name(const char* Brush_Name, float SX, float 
 		Matrix3d rm;
 		T_Vec3 RotationPoint;
 
-		App->CL_Brush->Brush_Get_Center(b, &RotationPoint);
+		App->CL_X_Brush->Brush_Get_Center(b, &RotationPoint);
 
 		App->CL_Maths->XForm3d_SetIdentity(&rm);
 
 		App->CL_Maths->XForm3d_SetEulerAngles(&rm, &FinalRot);
 
-		App->CL_Brush->Brush_Rotate(b, &rm, &RotationPoint);
+		App->CL_X_Brush->Brush_Rotate(b, &rm, &RotationPoint);
 
 		App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
 
@@ -637,7 +637,7 @@ void CL64_Brush_X::Set_Brush_Face_Points(Brush* pBrush, bool Update)
 	// Loop through each face and set the points
 	for (int i = 0; i < 6; ++i) 
 	{
-		Face* pFace = App->CL_Brush->Brush_GetFace(pBrush, i);
+		Face* pFace = App->CL_X_Brush->Brush_GetFace(pBrush, i);
 
 		for (int j = 0; j < 4; ++j) 
 		{

@@ -205,7 +205,7 @@ void CL64_OGL_Listener::Render_Loop()
 	// ---------------------- Selected Brush
 	if (flag_Show_Selected_Brush == 1)
 	{
-		int BC = App->CL_Brush->Get_Brush_Count();
+		int BC = App->CL_X_Brush->Get_Brush_Count();
 		if (BC > 0)
 		{
 			glDisable(GL_CULL_FACE);
@@ -598,7 +598,7 @@ bool CL64_OGL_Listener::Brush_Decode_List(BrushList* BList)
 	Brush* pBrush;
 	BrushIterator bi;
 
-	pBrush = App->CL_Brush->BrushList_GetFirst(BList, &bi);
+	pBrush = App->CL_X_Brush->BrushList_GetFirst(BList, &bi);
 
 	while (pBrush != NULL)
 	{
@@ -607,7 +607,7 @@ bool CL64_OGL_Listener::Brush_Decode_List(BrushList* BList)
 			return GE_FALSE;
 		}
 
-		pBrush = App->CL_Brush->BrushList_GetNext(&bi);
+		pBrush = App->CL_X_Brush->BrushList_GetNext(&bi);
 	}
 
 	return GE_TRUE;
@@ -675,12 +675,12 @@ bool CL64_OGL_Listener::Render_Sub_Brushes(BrushList* BList)
 	Brush* pBrush;
 	BrushIterator bi;
 
-	pBrush = App->CL_Brush->BrushList_GetFirst(BList, &bi);
+	pBrush = App->CL_X_Brush->BrushList_GetFirst(BList, &bi);
 	while (pBrush != NULL)
 	{
 		Render_Brush(pBrush);  // Recursive
 
-		pBrush = App->CL_Brush->BrushList_GetNext(&bi);
+		pBrush = App->CL_X_Brush->BrushList_GetNext(&bi);
 	}
 
 	return 1;

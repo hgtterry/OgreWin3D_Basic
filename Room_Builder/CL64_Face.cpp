@@ -1073,7 +1073,7 @@ void CL64_Face::Select_Face_From_Index(int mFace_Index)
 
 		if (Selected_Face_Index == 0)
 		{
-			pFace = App->CL_Brush->Brush_SelectFirstFace(App->CL_Doc->CurBrush);
+			pFace = App->CL_X_Brush->Brush_SelectFirstFace(App->CL_Doc->CurBrush);
 			
 			App->CL_Doc->ResetAllSelectedFaces();
 			Face_SetSelected(pFace, GE_TRUE);

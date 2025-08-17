@@ -152,7 +152,7 @@ bool CL64_Mesh_Mgr::Update_World(int selected)
 {
 	v_Face_Data_Count = 0;
 
-	int brushCount = App->CL_Brush->Get_Brush_Count();
+	int brushCount = App->CL_X_Brush->Get_Brush_Count();
 	if (brushCount > 0)
 	{
 		Brush_Build_List(selected);
@@ -220,19 +220,19 @@ bool CL64_Mesh_Mgr::Brush_Build_Selected(BrushList* BList)
 		Brush* pBrush;
 		BrushIterator bi;
 
-		SBList = App->CL_Brush->BrushList_Create();
-		pBrush = App->CL_Brush->BrushList_GetFirst(BList, &bi);
+		SBList = App->CL_X_Brush->BrushList_Create();
+		pBrush = App->CL_X_Brush->BrushList_GetFirst(BList, &bi);
 
 		while (pBrush != NULL)
 		{
 
 			if (App->CL_X_SelBrushList->SelBrushList_Find(App->CL_Doc->pSelBrushes, pBrush))
 			{
-				Brush* pClone = App->CL_Brush->Brush_Clone(pBrush);
-				App->CL_Brush->BrushList_Append(SBList, pClone);
+				Brush* pClone = App->CL_X_Brush->Brush_Clone(pBrush);
+				App->CL_X_Brush->BrushList_Append(SBList, pClone);
 			}
 
-			pBrush = App->CL_Brush->BrushList_GetNext(&bi);
+			pBrush = App->CL_X_Brush->BrushList_GetNext(&bi);
 		}
 
 		bool Do_CSG = 1;
@@ -240,9 +240,9 @@ bool CL64_Mesh_Mgr::Brush_Build_Selected(BrushList* BList)
 		{
 			int CurId = 0;
 			
-			App->CL_Brush->BrushList_ClearAllCSG(SBList);
+			App->CL_X_Brush->BrushList_ClearAllCSG(SBList);
 
-			App->CL_Brush->BrushList_DoCSG(SBList, CurId, Brush_CSG_Callback, this);
+			App->CL_X_Brush->BrushList_DoCSG(SBList, CurId, Brush_CSG_Callback, this);
 
 		}
 
@@ -252,7 +252,7 @@ bool CL64_Mesh_Mgr::Brush_Build_Selected(BrushList* BList)
 			App->Say("Error exporting group");
 		}
 
-		App->CL_Brush->BrushList_Destroy(&SBList);
+		App->CL_X_Brush->BrushList_Destroy(&SBList);
 	}
 
 	return 1;
@@ -315,7 +315,7 @@ bool CL64_Mesh_Mgr::Brush_Decode_List(BrushList* BList, signed int SubBrush)
 	Brush* pBrush;
 	BrushIterator bi;
 
-	pBrush = App->CL_Brush->BrushList_GetFirst(BList, &bi);
+	pBrush = App->CL_X_Brush->BrushList_GetFirst(BList, &bi);
 
 	while (pBrush != nullptr)
 	{
@@ -347,7 +347,7 @@ bool CL64_Mesh_Mgr::Brush_Decode_List(BrushList* BList, signed int SubBrush)
 		}
 
 		//App->Say_Int(pBrush->Faces->NumFaces);
-		pBrush = App->CL_Brush->BrushList_GetNext(&bi);
+		pBrush = App->CL_X_Brush->BrushList_GetNext(&bi);
 	}
 
 	mSubBrushCount = 0;
@@ -1013,7 +1013,7 @@ int CL64_Mesh_Mgr::Get_Adjusted_Index(int RealIndex)
 // *************************************************************************
 void CL64_Mesh_Mgr::Start_Mesh_Viewer()
 {
-	if (App->CL_Mesh_Mgr->flag_Mesh_Viewer_Active == 0 && App->CL_Brush->Get_Brush_Count() > 0)
+	if (App->CL_Mesh_Mgr->flag_Mesh_Viewer_Active == 0 && App->CL_X_Brush->Get_Brush_Count() > 0)
 	{
 		App->CL_Mesh_Mgr->flag_Mesh_Viewer_Active = 1;
 		Mesh_Viewer_HWND = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_BRUSH_VIEWER, App->MainHwnd, (DLGPROC)Proc_Mesh_Viewer);

@@ -53,7 +53,7 @@ BrushList* CL64_ParseFile::BrushList_CreateFromFile(bool SubBrush)
 
 	if (!Get_Int("Brushlist", &NumBrushes)){ return NULL;};
 
-	blist = App->CL_Brush->BrushList_Create();
+	blist = App->CL_X_Brush->BrushList_Create();
 	if (blist != NULL)
 	{
 		int i;
@@ -70,7 +70,7 @@ BrushList* CL64_ParseFile::BrushList_CreateFromFile(bool SubBrush)
 			}
 			else
 			{
-				App->CL_Brush->BrushList_Append(blist, pBrush);
+				App->CL_X_Brush->BrushList_Append(blist, pBrush);
 			}
 		}
 	}
@@ -166,7 +166,7 @@ Brush* CL64_ParseFile::Brush_CreateFromFile(bool SubBrush)
 	//	tmpFlags &= ~BRUSH_TRANSLUCENT;
 	//}
 
-	b = App->CL_Brush->Brush_Create(tmpType, fl, blist);
+	b = App->CL_X_Brush->Brush_Create(tmpType, fl, blist);
 	if (b == NULL)
 	{
 		if (fl != NULL)
@@ -175,7 +175,7 @@ Brush* CL64_ParseFile::Brush_CreateFromFile(bool SubBrush)
 		}
 		if (blist != NULL)
 		{
-			App->CL_Brush->BrushList_Destroy(&blist);
+			App->CL_X_Brush->BrushList_Destroy(&blist);
 		}
 	}
 	else
@@ -184,7 +184,7 @@ Brush* CL64_ParseFile::Brush_CreateFromFile(bool SubBrush)
 		b->HullSize = tmpHullSize;
 		b->ModelId = tmpModelId;
 		b->GroupId = tmpGroupId;
-		App->CL_Brush->Brush_SetName(b, szTemp);
+		App->CL_X_Brush->Brush_SetName(b, szTemp);
 	}
 
 	return	b;

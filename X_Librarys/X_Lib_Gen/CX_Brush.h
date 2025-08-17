@@ -28,8 +28,8 @@ THE SOFTWARE.
 #include "CL64_Face.h"
 #include "CL64_WadFile.h"
 
-//typedef struct tag_FaceList FaceList;
-//typedef struct tag_BrushList BrushList;
+typedef struct tag_FaceList FaceList;
+typedef struct tag_BrushList BrushList;
 
 #define BRUSH_COUNT_MULTI 1
 #define BRUSH_COUNT_LEAF  2
@@ -37,30 +37,30 @@ THE SOFTWARE.
 #define BRUSH_COUNT_ALL (BRUSH_COUNT_MULTI | BRUSH_COUNT_LEAF | BRUSH_COUNT_CSG)
 #define BRUSH_COUNT_NORECURSE 8
 
-//typedef struct BrushTag
-//{
-//	struct BrushTag* Prev, * Next;
-//	FaceList* Faces;			//null if multibrush
-//	BrushList* BList;			//null if csgbrush
-//	unsigned long	Flags;
-//	int				Type;
-//	int				ModelId;
-//	int				GroupId;
-//	float			HullSize;		//for hollows
-//	Ogre::int32		Color;
-//	char			Name[MAX_PATH];
-//	Box3d			BoundingBox;
-//	bool			Centre_Marker;
-//	bool			Has_Been_Cut;
-//	T_Vec3			Last_Rotation;
-//} Brush;
+typedef struct BrushTag
+{
+	struct BrushTag* Prev, * Next;
+	FaceList* Faces;			//null if multibrush
+	BrushList* BList;			//null if csgbrush
+	unsigned long	Flags;
+	int				Type;
+	int				ModelId;
+	int				GroupId;
+	float			HullSize;		//for hollows
+	Ogre::int32		Color;
+	char			Name[MAX_PATH];
+	Box3d			BoundingBox;
+	bool			Centre_Marker;
+	bool			Has_Been_Cut;
+	T_Vec3			Last_Rotation;
+} Brush;
 
-//enum BrushTypeFlags
-//{
-//	BRUSH_MULTI = 0x0001,
-//	BRUSH_LEAF = 0x0002,
-//	BRUSH_CSG = 0x0004
-//};
+enum BrushTypeFlags
+{
+	BRUSH_MULTI = 0x0001,
+	BRUSH_LEAF = 0x0002,
+	BRUSH_CSG = 0x0004
+};
 
 typedef Brush* BrushIterator;
 typedef signed int (*BrushList_CB)(Brush* pBrush, void* pVoid);

@@ -666,7 +666,7 @@ LRESULT CALLBACK CL64_Dialogs::Proc_Brush_Properties(HWND hDlg, UINT message, WP
 				int Index = SendMessage(temp, CB_GETCURSEL, 0, 0);
 
 				App->CL_Properties_Brushes->Selected_Index = Index;
-				App->CL_Properties_Brushes->Selected_Brush = App->CL_Brush->Get_By_Index(Index);
+				App->CL_Properties_Brushes->Selected_Brush = App->CL_X_Brush->Get_By_Index(Index);
 				App->CL_Dialogs->List_BrushData(hDlg);
 
 				//App->CL_Properties_Brushes->OnSelchangeBrushlist(Index, 1);
@@ -716,7 +716,7 @@ void CL64_Dialogs::Fill_Brush_Combo(HWND hDlg)
 	b = pList->First;
 	while (b != NULL)
 	{
-		SendDlgItemMessage(hDlg, IDC_CB_SELECTED_BRUSH, CB_ADDSTRING, (WPARAM)0, (LPARAM)App->CL_Brush->Brush_GetName(b));
+		SendDlgItemMessage(hDlg, IDC_CB_SELECTED_BRUSH, CB_ADDSTRING, (WPARAM)0, (LPARAM)App->CL_X_Brush->Brush_GetName(b));
 		Count++;
 		b = b->Next;
 	}
@@ -734,7 +734,7 @@ void CL64_Dialogs::List_BrushData(HWND hDlg)
 	Face_Index = 0;
 	
 	char buf[255];
-	int Count = App->CL_Brush->Get_Brush_Count();
+	int Count = App->CL_X_Brush->Get_Brush_Count();
 
 	if (Count > 0)
 	{
@@ -788,7 +788,7 @@ bool CL64_Dialogs::Show_Brush_Info(const Brush* b, HWND hDlg)
 	}
 
 	// Main Brush test locked
-	bool locked = App->CL_Brush->Brush_IsLocked(b);
+	bool locked = App->CL_X_Brush->Brush_IsLocked(b);
 	if (locked == 1)	
 	{
 		sprintf(buf, "%s %s", "Brush Locked ","Yes");
@@ -864,7 +864,7 @@ bool CL64_Dialogs::Show_Brush_ListInfo(BrushList* BList, HWND hDlg)
 	BrushIterator bi;
 	int Count;
 
-	Count = App->CL_Brush->BrushList_Count(BList, (BRUSH_COUNT_MULTI | BRUSH_COUNT_LEAF | BRUSH_COUNT_NORECURSE));
+	Count = App->CL_X_Brush->BrushList_Count(BList, (BRUSH_COUNT_MULTI | BRUSH_COUNT_LEAF | BRUSH_COUNT_NORECURSE));
 	if (Count < 0)
 	{
 		sprintf(buf, "%s%d", " ===== Sub Brushes ", Count);
@@ -877,11 +877,11 @@ bool CL64_Dialogs::Show_Brush_ListInfo(BrushList* BList, HWND hDlg)
 		SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 	}
 
-	pBrush = App->CL_Brush->BrushList_GetFirst(BList, &bi);
+	pBrush = App->CL_X_Brush->BrushList_GetFirst(BList, &bi);
 	while (pBrush != NULL)
 	{
 		Show_Brush_Info(pBrush, hDlg);
-		pBrush = App->CL_Brush->BrushList_GetNext(&bi);
+		pBrush = App->CL_X_Brush->BrushList_GetNext(&bi);
 	}
 
 	return 1;
@@ -1677,18 +1677,18 @@ void CL64_Dialogs::List_Used_Textures(HWND List)
 
 		BList = App->CL_Level->Level_Get_Main_Brushes();
 
-		SBList = App->CL_Brush->BrushList_Create();
-		pBrush = App->CL_Brush->BrushList_GetFirst(BList, &bi);
+		SBList = App->CL_X_Brush->BrushList_Create();
+		pBrush = App->CL_X_Brush->BrushList_GetFirst(BList, &bi);
 
 		while (pBrush != NULL)
 		{
 			if (App->CL_X_SelBrushList->SelBrushList_Find(App->CL_Doc->pSelBrushes, pBrush))
 			{
-				Brush* pClone = App->CL_Brush->Brush_Clone(pBrush);
-				App->CL_Brush->BrushList_Append(SBList, pClone);
+				Brush* pClone = App->CL_X_Brush->Brush_Clone(pBrush);
+				App->CL_X_Brush->BrushList_Append(SBList, pClone);
 			}
 
-			pBrush = App->CL_Brush->BrushList_GetNext(&bi);
+			pBrush = App->CL_X_Brush->BrushList_GetNext(&bi);
 		}
 
 		App->CL_Brush_X->BrushList_GetUsedTextures_X(SBList, App->CL_Mesh_Mgr->UsedTextures);
@@ -1706,7 +1706,7 @@ void CL64_Dialogs::List_Used_Textures(HWND List)
 			Count++;
 		}
 
-		App->CL_Brush->BrushList_Destroy(&SBList);
+		App->CL_X_Brush->BrushList_Destroy(&SBList);
 	}
 }
 

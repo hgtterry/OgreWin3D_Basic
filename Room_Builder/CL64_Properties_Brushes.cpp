@@ -379,7 +379,7 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Brush_Dlg(HWND hDlg, UINT message
 // *************************************************************************
 void CL64_Properties_Brushes::List_Selection_Changed(bool Clear)
 {
-	int Brush_Count = App->CL_Brush->Get_Brush_Count();
+	int Brush_Count = App->CL_X_Brush->Get_Brush_Count();
 
 	//if (Brush_Count > 0)
 	{
@@ -413,7 +413,7 @@ void CL64_Properties_Brushes::Select_From_List(int index)
 // *************************************************************************
 void CL64_Properties_Brushes::OnSelchangeBrushlist(int index, bool clear)
 {
-	int brushCount = App->CL_Brush->Get_Brush_Count();
+	int brushCount = App->CL_X_Brush->Get_Brush_Count();
 	bool hasChanged = false;
 
 	if (brushCount > 0)
@@ -424,7 +424,7 @@ void CL64_Properties_Brushes::OnSelchangeBrushlist(int index, bool clear)
 			App->CL_Doc->UpdateSelected();
 		}
 
-		Selected_Brush = App->CL_Brush->Get_Brush_ByIndex(index);
+		Selected_Brush = App->CL_X_Brush->Get_Brush_ByIndex(index);
 		App->CL_X_SelBrushList->SelBrushList_Add(App->CL_Doc->pSelBrushes, Selected_Brush);
 
 		// Select Object in Scene Editor
@@ -474,7 +474,7 @@ void CL64_Properties_Brushes::Fill_ListBox()
 	for (Brush* b = pList->First; b != nullptr; b = b->Next)
 	{
 		// Add the brush name to the list box
-		SendDlgItemMessage(BrushesDlg_Hwnd, IDC_GD_BRUSHLIST, LB_ADDSTRING, 0, (LPARAM)App->CL_Brush->Brush_GetName(b));
+		SendDlgItemMessage(BrushesDlg_Hwnd, IDC_GD_BRUSHLIST, LB_ADDSTRING, 0, (LPARAM)App->CL_X_Brush->Brush_GetName(b));
 		count++;
 	}
 

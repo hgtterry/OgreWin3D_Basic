@@ -71,7 +71,7 @@ Level* CL64_Level::Level_Create()
 
 	if (m_pLevel != NULL)
 	{
-		m_pLevel->Brushes = App->CL_Brush->BrushList_Create();
+		m_pLevel->Brushes = App->CL_X_Brush->BrushList_Create();
 
 		if (m_pLevel->Brushes == NULL)
 		{
@@ -203,7 +203,7 @@ float CL64_Level::Level_GetLightmapScale(const Level* pLevel)
 // *************************************************************************
 void CL64_Level::Level_AppendBrush(Brush* pBrush)
 {
-	App->CL_Brush->BrushList_Append(App->CL_Doc->Current_Level->Brushes, pBrush);
+	App->CL_X_Brush->BrushList_Append(App->CL_Doc->Current_Level->Brushes, pBrush);
 }
 
 // *************************************************************************
@@ -211,7 +211,7 @@ void CL64_Level::Level_AppendBrush(Brush* pBrush)
 // *************************************************************************
 int CL64_Level::Level_EnumLeafBrushes(void* lParam, BrushList_CB Callback)
 {
-	return App->CL_Brush->BrushList_EnumLeafBrushes(App->CL_Doc->Current_Level->Brushes, lParam, Callback);
+	return App->CL_X_Brush->BrushList_EnumLeafBrushes(App->CL_Doc->Current_Level->Brushes, lParam, Callback);
 }
 
 // *************************************************************************
@@ -354,7 +354,7 @@ Ogre::uint16 CL64_Level::Level_GetDibId(const char* Name)
 // *************************************************************************
 void CL64_Level::Level_RemoveBrush(Brush* pBrush)
 {
-	App->CL_Brush->BrushList_Remove(App->CL_Doc->Current_Level->Brushes, pBrush);
+	App->CL_X_Brush->BrushList_Remove(App->CL_Doc->Current_Level->Brushes, pBrush);
 }
 
 // *************************************************************************
@@ -362,7 +362,7 @@ void CL64_Level::Level_RemoveBrush(Brush* pBrush)
 // *************************************************************************
 int CL64_Level::Level_EnumBrushes(void* lParam, BrushList_CB Callback)
 {
-	return App->CL_Brush->BrushList_Enum(App->CL_Doc->Current_Level->Brushes, lParam, Callback);
+	return App->CL_X_Brush->BrushList_Enum(App->CL_Doc->Current_Level->Brushes, lParam, Callback);
 }
 
 // *************************************************************************

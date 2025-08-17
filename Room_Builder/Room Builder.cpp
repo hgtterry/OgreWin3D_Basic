@@ -357,7 +357,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
            
             case ID_EXPORT_OGRE3D:
             {
-                int BC = App->CL_Brush->Get_Brush_Count();
+                int BC = App->CL_X_Brush->Get_Brush_Count();
                 if (BC > 0)
                 {
                     App->CL_Export->Ogre_Export_Dlg();
@@ -372,7 +372,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
             case ID_EXPORT_OBJECTWAVEFRONT:
             {
-                int BC = App->CL_Brush->Get_Brush_Count();
+                int BC = App->CL_X_Brush->Get_Brush_Count();
                 if (BC > 0)
                 {
                     App->CL_Export->Object_Export_Dlg();
@@ -564,7 +564,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             {
                 if (App->CL_Doc->mModeTool == ID_TOOLS_TEMPLATE)
                 {
-                    if (App->CL_Brush->Get_Brush_Count() == 0)
+                    if (App->CL_X_Brush->Get_Brush_Count() == 0)
                     {
                        App->CL_Doc->AddBrushToWorld();
                        App->CL_Level->flag_Level_is_Modified = true;
@@ -587,7 +587,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             // ----------------------------- Brushes
             case ID_BRUSH_SELECT:
             {
-                int Bnum = App->CL_Brush->Get_Brush_Count();
+                int Bnum = App->CL_X_Brush->Get_Brush_Count();
                 if (Bnum > 0)
                 {
                     App->CL_Doc->Do_General_Select_Dlg(false);

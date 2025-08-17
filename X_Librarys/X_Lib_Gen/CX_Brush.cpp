@@ -975,7 +975,7 @@ static void	Brush_UpdateChildFacesRecurse(Brush* b, Brush* bp)
 				}
 				if (!(cb->Flags & BRUSH_SUBTRACT))
 				{
-					if (App->CL_Brush->Brush_TestBoundsIntersect(b, &cb->BoundingBox))
+					if (App->CL_X_Brush->Brush_TestBoundsIntersect(b, &cb->BoundingBox))
 					{
 						if (cb->BList)
 						{
@@ -1557,7 +1557,7 @@ static void	Brush_CutBrush(Brush* b, Brush* b2)
 		{
 			for (cb = b2->BList->First; cb;)
 			{
-				if (!App->CL_Brush->Brush_TestBoundsIntersect(b, &cb->BoundingBox))
+				if (!App->CL_X_Brush->Brush_TestBoundsIntersect(b, &cb->BoundingBox))
 				{
 					cb = cb->Next;
 					continue;
@@ -1575,18 +1575,18 @@ static void	Brush_CutBrush(Brush* b, Brush* b2)
 					fb = bb = NULL;
 
 					//split b by sf, adding the front brush to the brushlist
-					App->CL_Brush->Brush_SplitByFace(cb, sf, &fb, &bb);
+					App->CL_X_Brush->Brush_SplitByFace(cb, sf, &fb, &bb);
 					if (fb)
 					{	//clear hollow for csg
 						fb->Flags &= ~(BRUSH_HOLLOW | BRUSH_HOLLOWCUT);
-						App->CL_Brush->BrushList_Prepend(b2->BList, fb);
+						App->CL_X_Brush->BrushList_Prepend(b2->BList, fb);
 					}
 					App->CL_Face->Face_Destroy(&sf);
 					if (!i)
 					{
-						App->CL_Brush->BrushList_Remove(b2->BList, cb);
+						App->CL_X_Brush->BrushList_Remove(b2->BList, cb);
 					}
-					App->CL_Brush->Brush_Destroy(&cb);
+					App->CL_X_Brush->Brush_Destroy(&cb);
 
 					//make the back side brush current
 					cb = bb;
@@ -1595,14 +1595,14 @@ static void	Brush_CutBrush(Brush* b, Brush* b2)
 				}
 				if (bb)
 				{
-					App->CL_Brush->Brush_Destroy(&bb);
+					App->CL_X_Brush->Brush_Destroy(&bb);
 				}
 				cb = cb2;
 			}
 		}
 		else
 		{
-			b2->BList = App->CL_Brush->BrushList_Create();
+			b2->BList = App->CL_X_Brush->BrushList_Create();
 			cb = b2;
 			for (i = 0; i < App->CL_FaceList->FaceList_GetNumFaces(b->Faces); i++)
 			{
@@ -1617,16 +1617,16 @@ static void	Brush_CutBrush(Brush* b, Brush* b2)
 				fb = bb = NULL;
 
 				//split b by sf, adding the front brush to the brushlist
-				App->CL_Brush->Brush_SplitByFace(cb, sf, &fb, &bb);
+				App->CL_X_Brush->Brush_SplitByFace(cb, sf, &fb, &bb);
 				if (fb)
 				{	//clear hollow for csg
 					fb->Flags &= ~(BRUSH_HOLLOW | BRUSH_HOLLOWCUT);
-					App->CL_Brush->BrushList_Append(b2->BList, fb);
+					App->CL_X_Brush->BrushList_Append(b2->BList, fb);
 				}
 				App->CL_Face->Face_Destroy(&sf);
 				if (i)
 				{
-					App->CL_Brush->Brush_Destroy(&cb);
+					App->CL_X_Brush->Brush_Destroy(&cb);
 				}
 
 				//make the back side brush current
@@ -1636,7 +1636,7 @@ static void	Brush_CutBrush(Brush* b, Brush* b2)
 			}
 			if (bb)
 			{
-				App->CL_Brush->Brush_Destroy(&bb);
+				App->CL_X_Brush->Brush_Destroy(&bb);
 			}
 		}
 	}
@@ -1644,7 +1644,7 @@ static void	Brush_CutBrush(Brush* b, Brush* b2)
 	{
 		for (cb = b2->BList->First; cb; cb = cb->Next)
 		{
-			if (App->CL_Brush->Brush_TestBoundsIntersect(b, &cb->BoundingBox))
+			if (App->CL_X_Brush->Brush_TestBoundsIntersect(b, &cb->BoundingBox))
 			{
 				if (!(cb->Flags & BRUSH_SUBTRACT))
 				{
@@ -1714,7 +1714,7 @@ static void	BrushList_DoHollowCuts(BrushList* pList, int mid, Brush_CSGCallback 
 							continue;
 						}
 
-						if (App->CL_Brush->Brush_TestBoundsIntersect(cb, &b2->BoundingBox))
+						if (App->CL_X_Brush->Brush_TestBoundsIntersect(cb, &b2->BoundingBox))
 						{
 							assert(b2->Type != BRUSH_CSG);
 							Brush_CutBrush(cb, b2);
@@ -1732,7 +1732,7 @@ static void	BrushList_DoHollowCuts(BrushList* pList, int mid, Brush_CSGCallback 
 						continue;
 					}
 
-					if (App->CL_Brush->Brush_TestBoundsIntersect(b, &b2->BoundingBox))
+					if (App->CL_X_Brush->Brush_TestBoundsIntersect(b, &b2->BoundingBox))
 					{
 						assert(b2->Type != BRUSH_CSG);
 
@@ -1799,7 +1799,7 @@ static void	BrushList_DoCuts(BrushList* pList, int mid, Brush_CSGCallback Callba
 							continue;
 						}
 
-						if (App->CL_Brush->Brush_TestBoundsIntersect(cb, &b2->BoundingBox))
+						if (App->CL_X_Brush->Brush_TestBoundsIntersect(cb, &b2->BoundingBox))
 						{
 							assert(b2->Type != BRUSH_CSG);
 							if (!(cb->Flags & BRUSH_HOLLOWCUT))
@@ -1824,7 +1824,7 @@ static void	BrushList_DoCuts(BrushList* pList, int mid, Brush_CSGCallback Callba
 						continue;
 					}
 
-					if (App->CL_Brush->Brush_TestBoundsIntersect(b, &b2->BoundingBox))
+					if (App->CL_X_Brush->Brush_TestBoundsIntersect(b, &b2->BoundingBox))
 					{
 						assert(b2->Type != BRUSH_CSG);
 
@@ -2447,19 +2447,19 @@ static signed int BrushList_SetNextSelectedFace(BrushList* pList)
 
 	for (b = pList->First; b; b = b->Next)
 	{
-		if (App->CL_Brush->Brush_GetSelectedFace(b))
+		if (App->CL_X_Brush->Brush_GetSelectedFace(b))
 		{
 			break;
 		}
 	}
 	if (!b)	//no faces found selected
 	{
-		App->CL_Brush->Brush_SelectFirstFace(pList->First);	//in case it's also a multi
+		App->CL_X_Brush->Brush_SelectFirstFace(pList->First);	//in case it's also a multi
 		return	true;
 	}
 	for (; b; b = b->Next)
 	{
-		if (App->CL_Brush->Brush_SetNextSelectedFace(b))
+		if (App->CL_X_Brush->Brush_SetNextSelectedFace(b))
 		{
 			return	true;
 		}
@@ -2479,19 +2479,19 @@ static signed int BrushList_SetPrevSelectedFace(BrushList* pList)
 
 	for (b = pList->Last; b; b = b->Prev)
 	{
-		if (App->CL_Brush->Brush_GetSelectedFace(b))
+		if (App->CL_X_Brush->Brush_GetSelectedFace(b))
 		{
 			break;
 		}
 	}
 	if (!b)	//no faces found selected
 	{
-		App->CL_Brush->Brush_SelectLastFace(pList->Last);	//in case it's also a multi
+		App->CL_X_Brush->Brush_SelectLastFace(pList->Last);	//in case it's also a multi
 		return	true;
 	}
 	for (; b; b = b->Prev)
 	{
-		if (App->CL_Brush->Brush_SetPrevSelectedFace(b))
+		if (App->CL_X_Brush->Brush_SetPrevSelectedFace(b))
 		{
 			return	true;
 		}
@@ -2511,7 +2511,7 @@ static Face* BrushList_GetSelectedFace(const BrushList* pList)
 
 	for (f = NULL, b = pList->First; (b && !f); b = b->Next)
 	{
-		f = App->CL_Brush->Brush_GetSelectedFace(b);
+		f = App->CL_X_Brush->Brush_GetSelectedFace(b);
 	}
 	return	f;
 }

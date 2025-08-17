@@ -158,7 +158,6 @@
     <ClInclude Include="Base_Object.h" />
     <ClInclude Include="Base_Player.h" />
     <ClInclude Include="CL64_App.h" />
-    <ClInclude Include="CL64_Brush.h" />
     <ClInclude Include="CL64_Brush_X.h" />
     <ClInclude Include="CL64_Bullet_Debug.h" />
     <ClInclude Include="CL64_Camera.h" />
@@ -232,7 +231,6 @@
     <ClCompile Include="Base_Object.cpp" />
     <ClCompile Include="Base_Player.cpp" />
     <ClCompile Include="CL64_App.cpp" />
-    <ClCompile Include="CL64_Brush.cpp" />
     <ClCompile Include="CL64_Brush_X.cpp" />
     <ClCompile Include="CL64_Bullet_Debug.cpp" />
     <ClCompile Include="CL64_Camera.cpp" />

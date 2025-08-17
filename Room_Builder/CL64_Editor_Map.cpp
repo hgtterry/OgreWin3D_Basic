@@ -1740,7 +1740,7 @@ void CL64_Editor_Map::Context_Menu(HWND hDlg)
 
 	AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
 
-	int BC = App->CL_Brush->Get_Brush_Count();
+	int BC = App->CL_X_Brush->Get_Brush_Count();
 	if (BC > 0 && App->CL_Editor_Control->flag_PreviewMode_Active == 0)
 	{
 		AppendMenuW(hMenu, MF_STRING, IDM_PREVIEW, L"&Preview");
@@ -1817,7 +1817,7 @@ void CL64_Editor_Map::Context_Menu_Ogre(HWND hDlg)
 
 	AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
 
-	int brushCount = App->CL_Brush->Get_Brush_Count();
+	int brushCount = App->CL_X_Brush->Get_Brush_Count();
 	// Append Preview option
 	AppendMenuW(hMenu, MF_STRING | (brushCount > 0 && App->CL_Editor_Control->flag_PreviewMode_Active == 0 ? 0 : MF_GRAYED), IDM_3D_PREVIEW, L"&Preview");
 
@@ -2175,9 +2175,9 @@ void CL64_Editor_Map::Render_RenderBrushSelFacesOrtho(ViewVars* Cam, Brush* b, H
 	if (!b)
 		return;
 
-	for (i = 0; i < App->CL_Brush->Brush_GetNumFaces(b); i++)
+	for (i = 0; i < App->CL_X_Brush->Brush_GetNumFaces(b); i++)
 	{
-		Face* f = App->CL_Brush->Brush_GetFace(b, i);
+		Face* f = App->CL_X_Brush->Brush_GetFace(b, i);
 		const T_Vec3* pnts = App->CL_Face->Face_GetPoints(f);
 
 		if (!App->CL_Face->Face_IsSelected(f))
@@ -2274,10 +2274,10 @@ void CL64_Editor_Map::Draw_Screen(HWND hwnd)
 		{
 			SelectObject(MemoryhDC, PenTemplate);
 
-			if (App->CL_Brush->Brush_IsMulti(App->CL_Doc->CurBrush))
+			if (App->CL_X_Brush->Brush_IsMulti(App->CL_Doc->CurBrush))
 			{
 
-				App->CL_Brush->BrushList_EnumLeafBrushes(App->CL_Brush->Brush_GetBrushList(App->CL_Doc->CurBrush), &brushDrawData, BrushDraw);
+				App->CL_X_Brush->BrushList_EnumLeafBrushes(App->CL_X_Brush->Brush_GetBrushList(App->CL_Doc->CurBrush), &brushDrawData, BrushDraw);
 			}
 			else
 			{
@@ -2287,13 +2287,13 @@ void CL64_Editor_Map::Draw_Screen(HWND hwnd)
 		}
 
 		// Iterate through all brushes
-		int BrushCount = App->CL_Brush->Get_Brush_Count();
+		int BrushCount = App->CL_X_Brush->Get_Brush_Count();
 		int Count = 0;
 		Brush* SB = nullptr;
 
 		while (Count < BrushCount)
 		{
-			SB = App->CL_Brush->Get_By_Index(Count);
+			SB = App->CL_X_Brush->Get_By_Index(Count);
 
 			switch (SB->GroupId) 
 			{
@@ -2309,15 +2309,15 @@ void CL64_Editor_Map::Draw_Screen(HWND hwnd)
 				break;
 			}
 
-			if (App->CL_Brush->Brush_IsSubtract(SB))
+			if (App->CL_X_Brush->Brush_IsSubtract(SB))
 			{
 				SelectObject(MemoryhDC, PenCutBrush);
 			}
 
 
-			if (App->CL_Brush->Brush_IsMulti(SB))
+			if (App->CL_X_Brush->Brush_IsMulti(SB))
 			{
-				App->CL_Brush->BrushList_EnumLeafBrushes(App->CL_Brush->Brush_GetBrushList(SB), &brushDrawData, BrushDraw);
+				App->CL_X_Brush->BrushList_EnumLeafBrushes(App->CL_X_Brush->Brush_GetBrushList(SB), &brushDrawData, BrushDraw);
 			}
 			else
 			{
@@ -2341,9 +2341,9 @@ void CL64_Editor_Map::Draw_Screen(HWND hwnd)
 
 				pBrush = App->CL_X_SelBrushList->SelBrushList_GetBrush(App->CL_Doc->pSelBrushes, i);
 				{
-					if (App->CL_Brush->Brush_IsMulti(pBrush))
+					if (App->CL_X_Brush->Brush_IsMulti(pBrush))
 					{
-						App->CL_Brush->BrushList_EnumLeafBrushes(App->CL_Brush->Brush_GetBrushList(pBrush), &brushDrawData, BrushDraw);
+						App->CL_X_Brush->BrushList_EnumLeafBrushes(App->CL_X_Brush->Brush_GetBrushList(pBrush), &brushDrawData, BrushDraw);
 					}
 					else
 					{
@@ -2356,7 +2356,7 @@ void CL64_Editor_Map::Draw_Screen(HWND hwnd)
 		// Draw selected faces
 		BrushList* BList = App->CL_Level->Level_Get_Main_Brushes();
 		SelectObject(MemoryhDC, PenSelectedFaces);
-		App->CL_Brush->BrushList_EnumLeafBrushes(BList, &brushDrawData, BrushDrawSelFacesOrtho);
+		App->CL_X_Brush->BrushList_EnumLeafBrushes(BList, &brushDrawData, BrushDrawSelFacesOrtho);
 
 
 		// Draw camera if tracking
@@ -2384,9 +2384,9 @@ void CL64_Editor_Map::Render_RenderBrushFacesOrtho(const ViewVars* Cam, Brush* b
 {
 	int	i, j;
 
-	for (i = 0; i < App->CL_Brush->Brush_GetNumFaces(b); i++)
+	for (i = 0; i < App->CL_X_Brush->Brush_GetNumFaces(b); i++)
 	{
-		Face* f = App->CL_Brush->Brush_GetFace(b, i);
+		Face* f = App->CL_X_Brush->Brush_GetFace(b, i);
 		const T_Vec3* pnts = App->CL_Face->Face_GetPoints(f);
 
 		for (j = 0; j < App->CL_Face->Face_GetNumPoints(f); j++)
@@ -2590,7 +2590,7 @@ int CL64_Editor_Map::GetCursorBoxPos(const POINT* ptMousePos)
 
 	//	Box3d BrushBox;
 	//	if (pDoc->mModeTool == ID_TOOLS_TEMPLATE)
-	pBrushBox = App->CL_Brush->Brush_GetBoundingBox(App->CL_Doc->CurBrush);
+	pBrushBox = App->CL_X_Brush->Brush_GetBoundingBox(App->CL_Doc->CurBrush);
 	//	else
 	//	{
 	//		SelBrushList_GetBoundingBox(pDoc->pSelBrushes, &BrushBox);

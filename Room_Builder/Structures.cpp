@@ -217,14 +217,14 @@ static signed int BrushTexSetCB(Brush* b, void* lParam)
 	pData = (BrushTexSetData*)lParam;
 
 	//	Brush_SetName(b, pData->TexName);
-	App->CL_Brush->Brush_SetName(b, pData->pDoc->LastTemplateTypeName);
+	App->CL_X_Brush->Brush_SetName(b, pData->pDoc->LastTemplateTypeName);
 	//	char const * const BrushName = Brush_GetName (b);
-	const int NumFaces = App->CL_Brush->Brush_GetNumFaces(b);
+	const int NumFaces = App->CL_X_Brush->Brush_GetNumFaces(b);
 
 	//copy face TexInfos
 	for (i = 0; i < NumFaces; i++) // hgtterry Debug
 	{
-		Face* f = App->CL_Brush->Brush_GetFace(b, i);
+		Face* f = App->CL_X_Brush->Brush_GetFace(b, i);
 		WadFileEntry* pbmp;
 		// 
 		App->CL_Face->Face_SetTextureName(f, pData->TexName);
@@ -236,7 +236,7 @@ static signed int BrushTexSetCB(Brush* b, void* lParam)
 		}
 	}
 
-	App->CL_Brush->Brush_SetFaceListDirty(b);
+	App->CL_X_Brush->Brush_SetFaceListDirty(b);
 
 	return true;
 }
@@ -249,13 +249,13 @@ static signed int SelAllBrushFaces(Brush* pBrush, void* lParam)
 	int iFace, nFaces;
 	char buff[MAX_PATH];
 
-	nFaces = App->CL_Brush->Brush_GetNumFaces(pBrush);
+	nFaces = App->CL_X_Brush->Brush_GetNumFaces(pBrush);
 	for (iFace = 0; iFace < nFaces; ++iFace)
 	{
 		Face* pFace;
-		pFace = App->CL_Brush->Brush_GetFace(pBrush, iFace);
+		pFace = App->CL_X_Brush->Brush_GetFace(pBrush, iFace);
 
-		strcpy(buff, App->CL_Brush->Brush_GetName(App->CL_Doc->CurBrush));
+		strcpy(buff, App->CL_X_Brush->Brush_GetName(App->CL_Doc->CurBrush));
 		App->CL_Face->Face_SetBrushName(pFace, buff);
 		
 		App->CL_Face->Face_SetSelected(pFace, true);
@@ -273,13 +273,13 @@ static signed int Set_BrushFaces_Name(Brush* pBrush, void* lParam)
 	int iFace, nFaces;
 	char buff[MAX_PATH];
 
-	nFaces = App->CL_Brush->Brush_GetNumFaces(pBrush);
+	nFaces = App->CL_X_Brush->Brush_GetNumFaces(pBrush);
 	for (iFace = 0; iFace < nFaces; ++iFace)
 	{
 		Face* pFace;
-		pFace = App->CL_Brush->Brush_GetFace(pBrush, iFace);
+		pFace = App->CL_X_Brush->Brush_GetFace(pBrush, iFace);
 
-		strcpy(buff, App->CL_Brush->Brush_GetName(App->CL_Doc->CurBrush));
+		strcpy(buff, App->CL_X_Brush->Brush_GetName(App->CL_Doc->CurBrush));
 		App->CL_Face->Face_SetBrushName(pFace, buff);
 	}
 

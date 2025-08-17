@@ -281,17 +281,17 @@ static void TextureBrush(Brush* pBrush, int SelId, char const* Name, WadFileEntr
 {
 	int j;
 
-	if (App->CL_Brush->Brush_IsMulti(pBrush))
+	if (App->CL_X_Brush->Brush_IsMulti(pBrush))
 	{
-		TextureBrushList((BrushList*)App->CL_Brush->Brush_GetBrushList(pBrush), SelId, Name, pbmp);
+		TextureBrushList((BrushList*)App->CL_X_Brush->Brush_GetBrushList(pBrush), SelId, Name, pbmp);
 	}
 	else
 	{
-		for (j = 0; j < App->CL_Brush->Brush_GetNumFaces(pBrush); ++j)
+		for (j = 0; j < App->CL_X_Brush->Brush_GetNumFaces(pBrush); ++j)
 		{
 			Face* pFace;
 
-			pFace = App->CL_Brush->Brush_GetFace(pBrush, j);
+			pFace = App->CL_X_Brush->Brush_GetFace(pBrush, j);
 			TextureFace(pFace, SelId, Name, pbmp); 
 		}
 	}
@@ -305,7 +305,7 @@ static void TextureBrushList(BrushList* pList, int SelId, char const* Name, WadF
 	Brush* b;
 	BrushIterator bi;
 
-	for (b = App->CL_Brush->BrushList_GetFirst(pList, &bi); b; b = App->CL_Brush->BrushList_GetNext(&bi))
+	for (b = App->CL_X_Brush->BrushList_GetFirst(pList, &bi); b; b = App->CL_X_Brush->BrushList_GetNext(&bi))
 	{
 		TextureBrush(b, SelId, Name, pbmp); // changed QD 12/03
 	}
@@ -366,7 +366,7 @@ void CL64_Properties_Textures::Apply_Texture()
 			Brush* pBrush;
 
 			pBrush = App->CL_X_SelBrushList->SelBrushList_GetBrush(App->CL_Doc->pSelBrushes, i);
-			App->CL_Brush->Brush_UpdateChildFaces(pBrush);
+			App->CL_X_Brush->Brush_UpdateChildFaces(pBrush);
 		}
 		break;
 	}
@@ -383,7 +383,7 @@ void CL64_Properties_Textures::Apply_Texture()
 				WadFileEntry* BitmapPtr = App->CL_Doc->GetDibBitmap(m_CurrentTexture);
 				TextureBrush(pBrush, SelectedItem, (LPCSTR)m_CurrentTexture, BitmapPtr);
 				
-				App->CL_Brush->Brush_UpdateChildFaces(pBrush);
+				App->CL_X_Brush->Brush_UpdateChildFaces(pBrush);
 			}
 		}
 		else
@@ -392,7 +392,7 @@ void CL64_Properties_Textures::Apply_Texture()
 			WadFileEntry* BitmapPtr = App->CL_Doc->GetDibBitmap(m_CurrentTexture);
 			TextureBrush(App->CL_Doc->CurBrush, SelectedItem, (LPCSTR)m_CurrentTexture, BitmapPtr);
 			
-			App->CL_Brush->Brush_UpdateChildFaces(App->CL_Doc->CurBrush);
+			App->CL_X_Brush->Brush_UpdateChildFaces(App->CL_Doc->CurBrush);
 		}
 		break;
 	}

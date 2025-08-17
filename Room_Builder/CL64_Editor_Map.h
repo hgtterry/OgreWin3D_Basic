@@ -25,7 +25,7 @@ THE SOFTWARE.
 #pragma once
 
 #include "CL64_Render_Map.h"
-#include "CL64_Brush.h"
+#include "CX_Brush.h"
 
 enum View
 {

@@ -426,7 +426,7 @@ void CL64_ImGui::App_Stats_GUI(void)
 		if (ImGui::TreeNode("Brushes"))
 		{
 			ImGui::Separator();
-			ImGui::Text("Brush Count:= %i", App->CL_Brush->Get_Brush_Count());
+			ImGui::Text("Brush Count:= %i", App->CL_X_Brush->Get_Brush_Count());
 			ImGui::Text("Selected Brushs Count:= %i", App->CL_X_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes));
 			ImGui::Text("Current Brush:= %s", App->CL_Doc->CurBrush->Name);
 			ImGui::Separator();
