@@ -48,6 +48,14 @@ typedef void (*BrushList_FlagCB)(Brush* pBrush, const signed int bState);
 typedef void (*BrushList_IntCB)(Brush* pBrush, const int iVal);
 
 // *************************************************************************
+// *			GetVersion:- Terry and Hazel Flanigan 2025			 	   *
+// *************************************************************************
+char* CX_Brush::GetVersion()
+{
+	return (LPSTR)" OW3D_Scene_Builder :-- CX_Brush [ 17-08-25 ] Build 1 ";
+}
+
+// *************************************************************************
 // *						BrushList_SetFlag							   *
 // *************************************************************************
 static void BrushList_SetFlag(BrushList* bl, const signed int bState, BrushList_FlagCB cbSetFlag)

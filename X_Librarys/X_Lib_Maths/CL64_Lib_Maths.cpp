@@ -1,5 +1,4 @@
 #include "pch.h"
-#include "CL64_App.h"
 #include "CL64_Lib_Maths.h"
 
 #define TRACE_QZERO_TOLERANCE 0.1

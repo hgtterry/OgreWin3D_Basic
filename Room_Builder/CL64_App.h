@@ -26,7 +26,7 @@ THE SOFTWARE.
 
 #include "CL64_Editor_Map.h"
 
-#include "CL64_Lib_Maths.h"
+//#include "CL64_Lib_Maths.h"
 
 #include "G_Box.h"
 
