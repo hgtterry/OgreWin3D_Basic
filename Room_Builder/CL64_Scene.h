@@ -25,7 +25,6 @@ THE SOFTWARE.
 #include "Base_Group.h"
 #include "Base_Player.h"
 #include "Base_Object.h"
-#include "Base_Location.h"
 
 #pragma once
 class CL64_Scene
@@ -67,10 +66,6 @@ public:
 	int Object_Count;
 	int UniqueID_Object_Counter;
 
-	// Locations
-	int Location_Count = 0;
-	int UniqueID_Location_Counter;
-
 	// Ogre
 	int Ogre_Face_Count;
 
@@ -79,6 +74,6 @@ public:
 
 	std::vector<Base_Player*> B_Player; // Vector to hold pointers to Base_Player objects
 	std::vector<Base_Object*> B_Object; // Vector to hold pointers to Base_Object objects
-	std::vector<Base_Location*> B_Location; // Vector to hold pointers to Base_Object objects
+
 };
 

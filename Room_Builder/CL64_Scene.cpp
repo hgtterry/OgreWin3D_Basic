@@ -48,10 +48,6 @@ CL64_Scene::CL64_Scene()
 	Object_Count = 0;
 	UniqueID_Object_Counter = 0;
 
-	// Locations
-	Location_Count = 0;
-	UniqueID_Location_Counter = 0;
-
 	// Ogre
 	Ogre_Face_Count = 0;
 
@@ -77,7 +73,6 @@ CL64_Scene::CL64_Scene()
 
 	B_Player.reserve(20);
 	B_Object.reserve(200);
-	B_Location.reserve(20);
 }
 
 CL64_Scene::~CL64_Scene()
@@ -123,7 +118,6 @@ void CL64_Scene::Reset_Class()
 	Object_Count = 0;
 	UniqueID_Object_Counter = 0;
 
-	Location_Count = 0;
 }
 
 // *************************************************************************
@@ -192,7 +186,8 @@ void CL64_Scene::Clear_Level(bool FromFile)
 	App->CL_Properties_Tabs->Reset_Class();
 	App->CL_Top_Tabs->Reset_Class();
 	App->CL_Mesh_Mgr->Reset_Class();
-	
+	App->CL_Locations->Reset_Class();
+
 	App->CL_Level->flag_Working_Folder_Exists = 0;
 	strcpy(App->CL_Level->Prj_Working_Folder, "None");
 

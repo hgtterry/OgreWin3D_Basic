@@ -23,14 +23,24 @@ THE SOFTWARE.
 */
 
 #pragma once
+
+#include "Base_Location.h"
+
 class CL64_Locations
 {
 public:
 	CL64_Locations(void);
 	~CL64_Locations(void);
 
-	void Add_New_Location(bool isFirstLocation);
-	void Set_Location_Defaults(int index);
+	void Reset_Class();
 
+	void Add_New_Location(bool isFirstLocation);
+	
+	int Location_Count;
+	int UniqueID_Location_Counter;
+
+private:
+	std::vector<Base_Location*> B_Location; // Vector to hold pointers to Base_Location objects
+	void Set_Location_Defaults(int index);
 };
 
