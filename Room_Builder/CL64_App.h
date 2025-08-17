@@ -45,8 +45,7 @@ THE SOFTWARE.
 
 #include "BrushTemplate.h" // Library
 
-#include "CX_SelBrushList.h"
-//#include "CL64_SelBrushList.h"
+#include "CX_SelBrushList.h" // Library
 
 #include "CX_Array.h" // Library
 
@@ -143,8 +142,6 @@ public:
 	BrushTemplate*				CL_X_BrushTemplate;
 	
 	CX_SelBrushList*			CL_X_SelBrushList; // Library
-//	CL64_SelBrushList*			CL_SelBrushList;
-
 	CX_Array*					CL_X_Array; // Library
 
 	CL64_SelFaceList*			CL_SelFaceList;

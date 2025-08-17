@@ -25,7 +25,7 @@ THE SOFTWARE.
 #pragma once
 
 #include "CL64_Brush.h"
-#include "CL64_SelBrushList.h"
+#include "CX_SelBrushList.h"
 #include "CL64_SelFaceList.h"
 
 typedef signed int(*BrushFlagTest)(const Brush* pBrush);

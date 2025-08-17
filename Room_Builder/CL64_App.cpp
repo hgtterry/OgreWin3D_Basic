@@ -49,8 +49,6 @@ CL64_App::CL64_App(void)
 	CL_X_BrushTemplate =		nullptr;
 	
 	CL_X_SelBrushList =			nullptr; // Library
-//	CL_SelBrushList =			nullptr;
-
 	CL_X_Array =				nullptr; // Library
 
 	CL_SelFaceList =			nullptr;
@@ -202,8 +200,6 @@ void CL64_App::InitApp(void)
 	CL_X_BrushTemplate =		new BrushTemplate();
 
 	CL_X_SelBrushList =			new CX_SelBrushList(); // Library
-//	CL_SelBrushList =			new CL64_SelBrushList();
-
 	CL_X_Array =				new CX_Array(); // Library
 
 	CL_SelFaceList =			new CL64_SelFaceList();

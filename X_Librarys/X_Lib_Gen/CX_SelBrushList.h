@@ -24,14 +24,16 @@ THE SOFTWARE.
 
 #pragma once
 
-//typedef struct tag_SelBrushList SelBrushList;
-//typedef signed int(*SelBrushList_Callback)(Brush* pBrush, void* lParam);
+typedef struct tag_SelBrushList SelBrushList;
+typedef signed int(*SelBrushList_Callback)(Brush* pBrush, void* lParam);
 
 class CX_SelBrushList
 {
 public:
 	CX_SelBrushList(void);
 	~CX_SelBrushList(void);
+
+	char* GetVersion();
 
 	SelBrushList* SelBrushList_Create(void);
 	void SelBrushList_Destroy(SelBrushList** ppList);

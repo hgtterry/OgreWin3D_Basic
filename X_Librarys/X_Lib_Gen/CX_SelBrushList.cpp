@@ -36,6 +36,14 @@ CX_SelBrushList::~CX_SelBrushList(void)
 }
 
 // *************************************************************************
+// *			GetVersion:- Terry and Hazel Flanigan 2025			 	   *
+// *************************************************************************
+char* CX_SelBrushList::GetVersion()
+{
+	return (LPSTR)" OW3D_Scene_Builder :-- CX_SelBrushList [ 17-08-25 ] Build 1 ";
+}
+
+// *************************************************************************
 // *						SelBrushList_Create						 	   *
 // *************************************************************************
 SelBrushList* CX_SelBrushList::SelBrushList_Create(void)
