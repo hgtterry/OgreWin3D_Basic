@@ -1746,6 +1746,12 @@ bool CL64_Project::Load_Project()
 	App->CL_FileView->Change_Project_Name();
 
 	App->CL_FileView->Enable_Environment_Button(true);
+
+	delete Options;
+
+	HTREEITEM Temp = App->CL_Scene->B_Player[0]->FileViewItem;
+	App->CL_FileView->SelectItem(Temp);
+
 	return 1;
 	App->CL_FileView->Redraw_FileView();
 
@@ -1767,7 +1773,7 @@ bool CL64_Project::Load_Project()
 	//App->CL_Scene->flag_Scene_Modified = 0;
 	//App->CL_Scene->flag_Scene_Loaded = 1;
 	
-	delete Options;
+	
 
 	//App->Set_Title();
 
@@ -1784,6 +1790,7 @@ bool CL64_Project::Load_Project()
 
 	//EnableMenuItem(App->mMenu, ID_FILE_SAVEPROJECTALL, MF_GRAYED);
 	
+
 	return 1;
 }
 

@@ -41,8 +41,8 @@ void CL64_Com_Environments::Create_Test_Environment()
 {
 	App->CL_Com_Environments->Add_New_Environ_Entity(true);
 
-	int Index = App->CL_Com_Environments->Get_First_Environ();
-	App->CL_Com_Environments->Set_First_Environment(Index);
+	int Index = Get_First_Environ();
+	Set_First_Environment(Index);
 
 	App->CL_Brush_X->Move_Brush_By_Name((LPSTR)"Environ_0", Index);
 

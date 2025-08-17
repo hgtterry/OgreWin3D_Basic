@@ -154,6 +154,7 @@
   <ItemGroup>
     <ClInclude Include="Base_Brush.h" />
     <ClInclude Include="Base_Group.h" />
+    <ClInclude Include="Base_Location.h" />
     <ClInclude Include="Base_Object.h" />
     <ClInclude Include="Base_Player.h" />
     <ClInclude Include="CL64_App.h" />
@@ -228,6 +229,7 @@
   <ItemGroup>
     <ClCompile Include="Base_Brush.cpp" />
     <ClCompile Include="Base_Group.cpp" />
+    <ClCompile Include="Base_Location.cpp" />
     <ClCompile Include="Base_Object.cpp" />
     <ClCompile Include="Base_Player.cpp" />
     <ClCompile Include="CL64_App.cpp" />

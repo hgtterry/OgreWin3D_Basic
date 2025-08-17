@@ -54,7 +54,7 @@ public:
 	HTREEITEM FV_Objects_Folder;
 	HTREEITEM FV_Players_Folder;	// Players Folder FileFView
 	HTREEITEM FV_Sounds_Folder;
-
+	HTREEITEM FV_Locations_Folder;
 
 	HMENU hMenu;
 
@@ -93,8 +93,7 @@ private:
 	HTREEITEM FV_Particles_Folder;
 	HTREEITEM FV_Lights_Folder;
 	HTREEITEM FV_UserObjects_Folder;
-	HTREEITEM FV_Locations_Folder;
-
+	
 	HIMAGELIST hImageList;
 	HBITMAP hBitMap;
 

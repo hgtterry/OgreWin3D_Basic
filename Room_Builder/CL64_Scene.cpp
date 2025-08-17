@@ -50,6 +50,7 @@ CL64_Scene::CL64_Scene()
 
 	// Locations
 	Location_Count = 0;
+	UniqueID_Location_Counter = 0;
 
 	// Ogre
 	Ogre_Face_Count = 0;
@@ -76,7 +77,7 @@ CL64_Scene::CL64_Scene()
 
 	B_Player.reserve(20);
 	B_Object.reserve(200);
-
+	B_Location.reserve(20);
 }
 
 CL64_Scene::~CL64_Scene()
@@ -146,6 +147,20 @@ void CL64_Scene::Create_Brush_XX(int Index)
 // *		Create_Mesh_Group:- Terry and Hazel Flanigan 2023		  	   *
 // *************************************************************************
 void CL64_Scene::Create_Mesh_Group(int Index)
+{
+	if (Group[Index] != nullptr)
+	{
+		delete Group[Index];
+		Group[Index] = nullptr;
+	}
+
+	Group[Index] = new Base_Group();
+}
+
+// *************************************************************************
+// *		Create_Location_Base:- Terry and Hazel Flanigan 2025	  	   *
+// *************************************************************************
+void CL64_Scene::Create_Location_Base(int Index)
 {
 	if (Group[Index] != nullptr)
 	{

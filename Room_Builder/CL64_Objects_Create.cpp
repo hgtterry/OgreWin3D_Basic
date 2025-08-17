@@ -316,7 +316,7 @@ bool CL64_Objects_Create::Add_Objects_From_File() // From File
 			}
 			else
 			{
-				Add_New_Object(count, 0);
+				Add_New_Object(count, false);
 				App->CL_Scene->B_Object[count]->flag_Altered = 0;
 				App->CL_Scene->B_Object[count]->Folder = Enums::Folder_Objects;
 				App->CL_Scene->B_Object[count]->FileViewItem = App->CL_FileView->Add_Item(App->CL_FileView->FV_Objects_Folder, App->CL_Scene->B_Object[count]->Object_Name, count, false);

@@ -29,5 +29,8 @@ public:
 	CL64_Locations(void);
 	~CL64_Locations(void);
 
+	void Add_New_Location(bool isFirstLocation);
+	void Set_Location_Defaults(int index);
+
 };
 

@@ -716,9 +716,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 return 1;
             }
 
+            case ID_INFO_SCENE:
+            {
+                App->CL_Locations->Add_New_Location(true);
+                return 1;
+            }
+
             case ID_ADDITEM_OBJECT:
             {
-               
                 if (App->CL_Scene->flag_Project_Resources_Created == true)
                 {
                     App->CL_Dialogs->YesNo((LPSTR)"Add Object", (LPSTR)"Do you want to add a new Object Entity");

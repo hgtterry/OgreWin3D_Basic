@@ -381,7 +381,10 @@ void CL64_File::Start_Load(bool useOpenDialog)
 		
 		App->CL_X_Preference->Save_Config_File();
 
-		App->Say("File Loaded", App->CL_File->FileName_3dt);
+		if (App->CL_X_Preference->flag_OpenLastFile == false)
+		{
+			App->Say("File Loaded", App->CL_File->FileName_3dt);
+		}
 		
 		App->CL_Level->flag_File_Been_Saved = 1;
 
