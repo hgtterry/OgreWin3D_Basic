@@ -39,6 +39,7 @@ private:
 	static LRESULT CALLBACK Proc_Templates(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	void Set_Icons();
+	void Insert_Template();
 
 	bool flag_Insert_Enabled;
 };

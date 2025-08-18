@@ -72,6 +72,11 @@ void CL64_Locations::Add_New_Location(bool isFirstLocation)
 	{
 		Set_Location_Defaults(index);
 
+		if (isFirstLocation == true)
+		{
+			strcpy(B_Location[index]->Location_Name, "Start_Location");
+		}
+
 		// Add item to the file view
 		HTREEITEM tempItem = App->CL_FileView->Add_Item(App->CL_FileView->FV_Locations_Folder, B_Location[index]->Location_Name, index, true);
 		B_Location[index]->FileViewItem = tempItem;
@@ -89,7 +94,7 @@ void CL64_Locations::Add_New_Location(bool isFirstLocation)
 }
 
 // *************************************************************************
-// *		Add_New_Environ_Entiry:- Terry and Hazel Flanigan 2025		   *
+// *		Set_Location_Defaults:- Terry and Hazel Flanigan 2025		   *
 // *************************************************************************
 void CL64_Locations::Set_Location_Defaults(int index)
 {

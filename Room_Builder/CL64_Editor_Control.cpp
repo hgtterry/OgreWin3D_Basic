@@ -44,6 +44,7 @@ CL64_Editor_Control::~CL64_Editor_Control(void)
 // *************************************************************************
 void CL64_Editor_Control::Start_Preview_Mode(void)
 {
+	// Check for a Player
 	if (App->CL_Scene->flag_Player_Added == false)
 	{
 		App->Say("No Player Added");

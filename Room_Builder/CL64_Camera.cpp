@@ -255,6 +255,13 @@ void CL64_Camera::Camera_Save_Location(void)
 // *************************************************************************
 void CL64_Camera::SetCameraMode_FirstPerson()
 {
+	// Check for a Player
+	if (App->CL_Scene->flag_Player_Added == false)
+	{
+		App->Say("No Player Added");
+		return;
+	}
+
 	// Set the camera mode flags
 	flag_First_Person = true; 
 	flag_Free = false;

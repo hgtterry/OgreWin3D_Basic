@@ -138,67 +138,7 @@ LRESULT CALLBACK CL64_Properties_Templates::Proc_Templates(HWND hDlg, UINT messa
 	{
 		if (LOWORD(wParam) == IDC_BTINSERT)
 		{
-			App->CL_Doc->mModeTool = ID_TOOLS_TEMPLATE;
-
-			if (App->CL_Doc->mModeTool == ID_TOOLS_TEMPLATE)
-			{
-				if (App->CL_X_Brush->Get_Brush_Count() == 0) // New Scene
-				{
-					App->CL_Project->flag_Is_New_Project = true;
-					App->CL_Doc->AddBrushToWorld();
-					
-					// Create Player
-					if (App->CL_Scene->Player_Count == 0)
-					{
-						App->CL_Com_Player->Create_New_Player("Main_Player", false);
-					}
-					
-
-					// Create 
-					App->CL_Com_Environments->Create_Test_Environment();
-
-					App->CL_Gizmos->Show_MarkerBox(false);
-					
-					
-					// ----------------
-
-					App->CL_Ogre->Camera_Reset_Zero();
-					App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_Free;
-					
-					App->CL_Doc->Editor_Set_Dlgs(Enums::Editor_Dlgs_First_Brush);
-					
-					App->Set_Title(App->CL_Level->MTF_PathAndFile);
-					App->CL_Level->flag_Level_is_Modified = true;
-
-					// Set for new level
-					strcpy(App->CL_Project->m_Project_Name, "New_Room");
-					strcpy(App->CL_Project->m_Level_Name, "New_Level");
-
-					App->CL_FileView->Change_Level_Name();
-					App->CL_FileView->Change_Project_Name();
-
-					App->CL_Level->flag_File_Been_Saved = 0;
-				}
-				else
-				{
-					App->CL_Doc->AddBrushToWorld();
-					App->CL_Level->flag_Level_is_Modified = true;
-				}
-			}
-
-			App->CL_Doc->Set_Faces_To_Brush_Name_All();
-
-			App->CL_Doc->Do_General_Select_Dlg(true);
-			
-			App->CL_Doc->mCurrentTool = CURTOOL_NONE;
-			App->CL_Doc->mModeTool = ID_GENERALSELECT;
-			
-			App->CL_Doc->UpdateAllViews(Enums::UpdateViews_All);
-			
-			App->CL_Properties_Brushes->Fill_ListBox();
-
-			App->CL_Properties_Templates->Enable_Insert_Button(false);
-			App->CL_Properties_Brushes->Set_Dlg_Brush_Options_Buttons(false);
+			App->CL_Properties_Templates->Insert_Template();
 			return 1;
 		}
 
@@ -252,6 +192,80 @@ LRESULT CALLBACK CL64_Properties_Templates::Proc_Templates(HWND hDlg, UINT messa
 	}
 
 	return FALSE;
+}
+
+// *************************************************************************
+// *	  	Insert_Template:- Terry and Hazel Flanigan 2025				   *
+// *************************************************************************
+void CL64_Properties_Templates::Insert_Template()
+{
+	App->CL_Doc->mModeTool = ID_TOOLS_TEMPLATE;
+
+	if (App->CL_Doc->mModeTool == ID_TOOLS_TEMPLATE)
+	{
+		// Check if it's a new scene
+		if (App->CL_X_Brush->Get_Brush_Count() == 0) // New Scene
+		{
+			App->CL_Project->flag_Is_New_Project = true;
+			App->CL_Doc->AddBrushToWorld();
+
+			// Create Player if none exists
+			if (App->CL_Scene->Player_Count == 0)
+			{
+				App->CL_Com_Player->Create_New_Player("Main_Player", false);
+			}
+
+			// Create the first location if none exists
+			if (App->CL_Locations->Location_Count == 0)
+			{
+				App->CL_Locations->Add_New_Location(true);
+			}
+
+			// Create first Envoronment
+			App->CL_Com_Environments->Create_Test_Environment();
+
+			App->CL_Gizmos->Show_MarkerBox(false);
+
+			// Reset camera settings
+			App->CL_Ogre->Camera_Reset_Zero();
+			App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_Free;
+
+			App->CL_Doc->Editor_Set_Dlgs(Enums::Editor_Dlgs_First_Brush);
+
+			App->Set_Title(App->CL_Level->MTF_PathAndFile);
+			App->CL_Level->flag_Level_is_Modified = true;
+
+			// Set new level and project names
+			strcpy(App->CL_Project->m_Project_Name, "New_Room");
+			strcpy(App->CL_Project->m_Level_Name, "New_Level");
+
+			// Update file view with new names
+			App->CL_FileView->Change_Level_Name();
+			App->CL_FileView->Change_Project_Name();
+
+			App->CL_Level->flag_File_Been_Saved = false;
+		}
+		else
+		{
+			App->CL_Doc->AddBrushToWorld();
+			App->CL_Level->flag_Level_is_Modified = true;
+		}
+	}
+
+	App->CL_Doc->Set_Faces_To_Brush_Name_All();
+
+	App->CL_Doc->Do_General_Select_Dlg(true);
+
+	App->CL_Doc->mCurrentTool = CURTOOL_NONE;
+	App->CL_Doc->mModeTool = ID_GENERALSELECT;
+
+	App->CL_Doc->UpdateAllViews(Enums::UpdateViews_All);
+
+	App->CL_Properties_Brushes->Fill_ListBox();
+
+	App->CL_Properties_Templates->Enable_Insert_Button(false);
+	App->CL_Properties_Brushes->Set_Dlg_Brush_Options_Buttons(false);
+
 }
 
 // *************************************************************************
