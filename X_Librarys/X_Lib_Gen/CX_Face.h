@@ -24,23 +24,23 @@ THE SOFTWARE.
 
 #pragma once
 
-//#include "CL64_Lib_Maths.h"
-//
-//typedef struct
-//{
-//	T_Vec3 uVec, vVec;
-//	float uOffset, vOffset;
-//} TexInfo_Vectors;
-//
-//typedef struct FaceTag Face;
-//typedef struct TexInfoTag TexInfo;
-//
-//#define	M_PI ((float)3.14159265358979323846f)
-//
-//#define UNITS_DEGREES_TO_RADIANS(d) Units_DegreesToRadians(d)
-//#define UNITS_RADIANS_TO_DEGREES(r) Units_RadiansToDegrees(r)
-//#define Units_DegreesToRadians(d) ((((float)(d)) * M_PI) / 180.0f)
-//#define Units_RadiansToDegrees(r) ((((float)(r)) * 180.0f) / M_PI)
+#include "CL64_Lib_Maths.h"
+
+typedef struct
+{
+	T_Vec3 uVec, vVec;
+	float uOffset, vOffset;
+} TexInfo_Vectors;
+
+typedef struct FaceTag Face;
+typedef struct TexInfoTag TexInfo;
+
+#define	M_PI ((float)3.14159265358979323846f)
+
+#define UNITS_DEGREES_TO_RADIANS(d) Units_DegreesToRadians(d)
+#define UNITS_RADIANS_TO_DEGREES(r) Units_RadiansToDegrees(r)
+#define Units_DegreesToRadians(d) ((((float)(d)) * M_PI) / 180.0f)
+#define Units_RadiansToDegrees(r) ((((float)(r)) * 180.0f) / M_PI)
 
 class CX_Face
 {

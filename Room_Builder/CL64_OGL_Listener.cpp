@@ -506,8 +506,8 @@ void CL64_OGL_Listener::Render_Selected_Face()
 
 			pFace = App->CL_SelFaceList->SelFaceList_GetFace(App->CL_Doc->pSelFaces, Count);
 
-			verts = App->CL_Face->Face_GetPoints(pFace);
-			curnum_verts = App->CL_Face->Face_GetNumPoints(pFace);
+			verts = App->CL_X_Face->Face_GetPoints(pFace);
+			curnum_verts = App->CL_X_Face->Face_GetNumPoints(pFace);
 
 			glColor3f(1.0f, 0.0f, 1.0f);
 			glBegin(GL_POLYGON);
@@ -629,8 +629,8 @@ bool CL64_OGL_Listener::Brush_FaceList_Render(const Brush* b, const FaceList* pL
 	for (i = 0; i < pList->NumFaces; i++)
 	{
 		const T_Vec3* verts;
-		verts = App->CL_Face->Face_GetPoints(pList->Faces[i]);
-		curnum_verts = App->CL_Face->Face_GetNumPoints(pList->Faces[i]);
+		verts = App->CL_X_Face->Face_GetPoints(pList->Faces[i]);
+		curnum_verts = App->CL_X_Face->Face_GetNumPoints(pList->Faces[i]);
 
 		glBegin(GL_POLYGON);
 
@@ -721,8 +721,8 @@ bool CL64_OGL_Listener::Render_Face(const Face* f)
 	glColor3f(0.0f, 1.0f, 1.0f);
 
 	const T_Vec3* verts;
-	verts = App->CL_Face->Face_GetPoints(f);
-	curnum_verts = App->CL_Face->Face_GetNumPoints(f);
+	verts = App->CL_X_Face->Face_GetPoints(f);
+	curnum_verts = App->CL_X_Face->Face_GetNumPoints(f);
 
 	glBegin(GL_POLYGON);
 

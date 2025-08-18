@@ -930,7 +930,7 @@ bool CL64_Dialogs::Show_Face_Data(int Index, const Face* f, HWND hDlg)
 	sprintf(buf, "%s %i", " --------------------- Face ", f->Real_Brush_Face_Index);
 	SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
-	sprintf(buf, "%s %s", "Brush: = ", App->CL_Face->Face_GetBrushName(f));
+	sprintf(buf, "%s %s", "Brush: = ", App->CL_X_Face->Face_GetBrushName(f));
 	SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
 	sprintf(buf, "%s %i", "Face Index", Index + 1);
@@ -962,13 +962,13 @@ bool CL64_Dialogs::Show_Face_Data(int Index, const Face* f, HWND hDlg)
 	sprintf(buf, "Angle %.0f %.0f %.0f", Units_RadiansToDegrees(Angles.x), Units_RadiansToDegrees(Angles.y), Units_RadiansToDegrees(Angles.z));
 	SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 	
-	const TexInfo_Vectors* TVecs = App->CL_Face->Face_GetTextureVecs(f);
+	const TexInfo_Vectors* TVecs = App->CL_X_Face->Face_GetTextureVecs(f);
 	T_Vec3 uVec, vVec;
 	float U, V;
 
 	int txSize, tySize;
 
-	App->CL_Face->Face_GetTextureSize(f, &txSize, &tySize);
+	App->CL_X_Face->Face_GetTextureSize(f, &txSize, &tySize);
 
 	// make sure that the texture size is set correctly (division!)
 	if (txSize == 0)
@@ -979,7 +979,7 @@ bool CL64_Dialogs::Show_Face_Data(int Index, const Face* f, HWND hDlg)
 	App->CL_Maths->Vector3_Scale(&TVecs->uVec, 1.f / (float)txSize, &uVec);
 	App->CL_Maths->Vector3_Scale(&TVecs->vVec, -1.f / (float)tySize, &vVec);
 
-	const T_Vec3* verts = App->CL_Face->Face_GetPoints(f);
+	const T_Vec3* verts = App->CL_X_Face->Face_GetPoints(f);
 
 	int j = 0;
 	for (j = 0; j < f->NumPoints; j++)
@@ -994,11 +994,11 @@ bool CL64_Dialogs::Show_Face_Data(int Index, const Face* f, HWND hDlg)
 	}
 
 	char buf2[MAX_PATH];
-	strcpy(buf, App->CL_Face->Face_GetTextureName(f));
+	strcpy(buf, App->CL_X_Face->Face_GetTextureName(f));
 	sprintf(buf2, "%s%s", "Texture: = ", buf);
 	SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf2);
 
-	bool faceLocked = App->CL_Face->Face_IsTextureLocked(f);
+	bool faceLocked = App->CL_X_Face->Face_IsTextureLocked(f);
 	if (faceLocked == 1)
 	{
 		SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)"Texture Locked Yes");

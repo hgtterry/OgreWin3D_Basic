@@ -385,7 +385,7 @@ int CL64_Picking::Get_Brush_Index()
     App->CL_Properties_Brushes->Update_SelectedBrushesCount_Dlg();
 
     // Select Face Show Face Panel
-    App->CL_Face->Selected_Face_Index = m_Main_Face -1;
+    App->CL_X_Face->Selected_Face_Index = m_Main_Face -1;
     App->CL_Top_Tabs->Select_Face();
 
     // Show Brush Selection and Face Selection Outlines
@@ -555,13 +555,13 @@ bool CL64_Picking::Get_Face_Data(int Index, const Face* f)
 
     int  i = 0;
 
-    const TexInfo_Vectors* TVecs = App->CL_Face->Face_GetTextureVecs(f);
+    const TexInfo_Vectors* TVecs = App->CL_X_Face->Face_GetTextureVecs(f);
     T_Vec3 uVec, vVec;
     float U, V;
 
     int txSize, tySize;
 
-    App->CL_Face->Face_GetTextureSize(f, &txSize, &tySize);
+    App->CL_X_Face->Face_GetTextureSize(f, &txSize, &tySize);
 
     // make sure that the texture size is set correctly (division!)
     if (txSize == 0)
@@ -572,7 +572,7 @@ bool CL64_Picking::Get_Face_Data(int Index, const Face* f)
     App->CL_Maths->Vector3_Scale(&TVecs->uVec, 1.f / (float)txSize, &uVec);
     App->CL_Maths->Vector3_Scale(&TVecs->vVec, -1.f / (float)tySize, &vVec);
 
-    const T_Vec3* verts = App->CL_Face->Face_GetPoints(f);
+    const T_Vec3* verts = App->CL_X_Face->Face_GetPoints(f);
 
     int j = 0;
     for (j = 0; j < f->NumPoints; j++)
@@ -586,7 +586,7 @@ bool CL64_Picking::Get_Face_Data(int Index, const Face* f)
         // SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
     }
 
-    strcpy(buf, App->CL_Face->Face_GetTextureName(f));
+    strcpy(buf, App->CL_X_Face->Face_GetTextureName(f));
 
     return 1;
 }

@@ -146,12 +146,12 @@ Brush* BrushTemplate::BrushTemplate_CreateBox(const BrushTemplate_Box* pTemplate
 	FaceVerts[1] = Verts[2];
 	FaceVerts[0] = Verts[3];
 
-	f = App->CL_Face->Face_Create(4, FaceVerts, 0);
+	f = App->CL_X_Face->Face_Create(4, FaceVerts, 0);
 	if (f)
 	{
 		f->Real_Brush_Face_Index = 1;
 		App->CL_FaceList->FaceList_AddFace(fl, f);
-		App->CL_Face->Face_SetTextureLock(f, true);
+		App->CL_X_Face->Face_SetTextureLock(f, true);
 	}
 
 	FaceVerts[3] = Verts[4];
@@ -159,12 +159,12 @@ Brush* BrushTemplate::BrushTemplate_CreateBox(const BrushTemplate_Box* pTemplate
 	FaceVerts[1] = Verts[6];
 	FaceVerts[0] = Verts[7];
 
-	f = App->CL_Face->Face_Create(4, FaceVerts, 0);
+	f = App->CL_X_Face->Face_Create(4, FaceVerts, 0);
 	if (f)
 	{
 		f->Real_Brush_Face_Index = 2;
 		App->CL_FaceList->FaceList_AddFace(fl, f);
-		App->CL_Face->Face_SetTextureLock(f, true);
+		App->CL_X_Face->Face_SetTextureLock(f, true);
 	}
 
 	FaceVerts[3] = Verts[1];
@@ -172,12 +172,12 @@ Brush* BrushTemplate::BrushTemplate_CreateBox(const BrushTemplate_Box* pTemplate
 	FaceVerts[1] = Verts[6];
 	FaceVerts[0] = Verts[2];
 
-	f = App->CL_Face->Face_Create(4, FaceVerts, 0);
+	f = App->CL_X_Face->Face_Create(4, FaceVerts, 0);
 	if (f)
 	{
 		f->Real_Brush_Face_Index = 3;
 		App->CL_FaceList->FaceList_AddFace(fl, f);
-		App->CL_Face->Face_SetTextureLock(f, true);
+		App->CL_X_Face->Face_SetTextureLock(f, true);
 	}
 
 	FaceVerts[3] = Verts[0];
@@ -185,12 +185,12 @@ Brush* BrushTemplate::BrushTemplate_CreateBox(const BrushTemplate_Box* pTemplate
 	FaceVerts[1] = Verts[5];
 	FaceVerts[0] = Verts[4];
 
-	f = App->CL_Face->Face_Create(4, FaceVerts, 0);
+	f = App->CL_X_Face->Face_Create(4, FaceVerts, 0);
 	if (f)
 	{
 		f->Real_Brush_Face_Index = 4;
 		App->CL_FaceList->FaceList_AddFace(fl, f);
-		App->CL_Face->Face_SetTextureLock(f, true);
+		App->CL_X_Face->Face_SetTextureLock(f, true);
 	}
 
 	FaceVerts[3] = Verts[0];
@@ -198,12 +198,12 @@ Brush* BrushTemplate::BrushTemplate_CreateBox(const BrushTemplate_Box* pTemplate
 	FaceVerts[1] = Verts[7];
 	FaceVerts[0] = Verts[1];
 
-	f = App->CL_Face->Face_Create(4, FaceVerts, 0);
+	f = App->CL_X_Face->Face_Create(4, FaceVerts, 0);
 	if (f)
 	{
 		f->Real_Brush_Face_Index = 5;
 		App->CL_FaceList->FaceList_AddFace(fl, f);
-		App->CL_Face->Face_SetTextureLock(f, true);
+		App->CL_X_Face->Face_SetTextureLock(f, true);
 	}
 
 	FaceVerts[3] = Verts[3];
@@ -211,12 +211,12 @@ Brush* BrushTemplate::BrushTemplate_CreateBox(const BrushTemplate_Box* pTemplate
 	FaceVerts[1] = Verts[6];
 	FaceVerts[0] = Verts[5];
 
-	f = App->CL_Face->Face_Create(4, FaceVerts, 0);
+	f = App->CL_X_Face->Face_Create(4, FaceVerts, 0);
 	if (f)
 	{
 		f->Real_Brush_Face_Index = 6;
 		App->CL_FaceList->FaceList_AddFace(fl, f);
-		App->CL_Face->Face_SetTextureLock(f, true);
+		App->CL_X_Face->Face_SetTextureLock(f, true);
 	}
 
 	if (!pTemplate->Solid)
@@ -371,32 +371,32 @@ Brush* BrushTemplate::BrushTemplate_CreateCylinder(const BrushTemplate_Cylinder*
 	{
 		TopPoints[VBand] = Verts[VBand];
 	}
-	f = App->CL_Face->Face_Create(NumVerticalBands, TopPoints, 0);
+	f = App->CL_X_Face->Face_Create(NumVerticalBands, TopPoints, 0);
 
 	if (f)
 	{
 		if (pTemplate->Solid > 1)
 		{
-			App->CL_Face->Face_SetFixedHull(f, GE_TRUE);
+			App->CL_X_Face->Face_SetFixedHull(f, GE_TRUE);
 		}
 		App->CL_FaceList->FaceList_AddFace(fl, f);
-		App->CL_Face->Face_SetTextureLock(f, true);
+		App->CL_X_Face->Face_SetTextureLock(f, true);
 	}
 
 	for (VBand = NumVerticalBands - 1, HBand = 0; VBand >= 0; VBand--, HBand++)
 	{
 		TopPoints[HBand] = Verts[VBand + NumVerticalBands];
 	}
-	f = App->CL_Face->Face_Create(NumVerticalBands, TopPoints, 0);
+	f = App->CL_X_Face->Face_Create(NumVerticalBands, TopPoints, 0);
 
 	if (f)
 	{
 		if (pTemplate->Solid > 1)
 		{
-			App->CL_Face->Face_SetFixedHull(f, GE_TRUE);
+			App->CL_X_Face->Face_SetFixedHull(f, GE_TRUE);
 		}
 		App->CL_FaceList->FaceList_AddFace(fl, f);
-		App->CL_Face->Face_SetTextureLock(f, true);
+		App->CL_X_Face->Face_SetTextureLock(f, true);
 	}
 
 	// Generate the polygons
@@ -409,12 +409,12 @@ Brush* BrushTemplate::BrushTemplate_CreateCylinder(const BrushTemplate_Cylinder*
 			Points[2] = Verts[(HBand * NumVerticalBands) + ((VBand + 1) % NumVerticalBands)];
 			Points[1] = Verts[((HBand + 1) * NumVerticalBands) + ((VBand + 1) % NumVerticalBands)];
 			Points[0] = Verts[((HBand + 1) * NumVerticalBands) + VBand];
-			f = App->CL_Face->Face_Create(4, Points, 0);
+			f = App->CL_X_Face->Face_Create(4, Points, 0);
 
 			if (f)
 			{
 				App->CL_FaceList->FaceList_AddFace(fl, f);
-				App->CL_Face->Face_SetTextureLock(f, true);
+				App->CL_X_Face->Face_SetTextureLock(f, true);
 			}
 		}
 	}
@@ -515,11 +515,11 @@ Brush* BrushTemplate::BrushTemplate_CreateCone(const BrushTemplate_Cone* pTempla
 		FaceVerts[1] = OldPoint;
 		FaceVerts[0] = CurPoint;
 
-		f = App->CL_Face->Face_Create(3, FaceVerts, 0);
+		f = App->CL_X_Face->Face_Create(3, FaceVerts, 0);
 		if (f)
 		{
 			App->CL_FaceList->FaceList_AddFace(fl, f);
-			App->CL_Face->Face_SetTextureLock(f, true);
+			App->CL_X_Face->Face_SetTextureLock(f, true);
 		}
 
 		OldPoint = CurPoint;
@@ -543,23 +543,23 @@ Brush* BrushTemplate::BrushTemplate_CreateCone(const BrushTemplate_Cone* pTempla
 	FaceVerts[1] = OldPoint;
 	FaceVerts[0] = CurPoint;
 
-	f = App->CL_Face->Face_Create(3, FaceVerts, 0);
+	f = App->CL_X_Face->Face_Create(3, FaceVerts, 0);
 	if (f)
 	{
 		App->CL_FaceList->FaceList_AddFace(fl, f);
-		App->CL_Face->Face_SetTextureLock(f, true);
+		App->CL_X_Face->Face_SetTextureLock(f, true);
 	}
 
-	f = App->CL_Face->Face_Create(pTemplate->VerticalStrips, BottomVerts, 0);
+	f = App->CL_X_Face->Face_Create(pTemplate->VerticalStrips, BottomVerts, 0);
 
 	if (f)
 	{
 		if (pTemplate->Style > 1)	//default to hollow (if they make hollow later)
 		{
-			App->CL_Face->Face_SetFixedHull(f, GE_TRUE);
+			App->CL_X_Face->Face_SetFixedHull(f, GE_TRUE);
 		}
 		App->CL_FaceList->FaceList_AddFace(fl, f);
-		App->CL_Face->Face_SetTextureLock(f, true);
+		App->CL_X_Face->Face_SetTextureLock(f, true);
 	}
 	//	geRam_Free(BottomVerts);
 
@@ -636,53 +636,53 @@ Brush* BrushTemplate::BrushTemplate_CreateStaircase(const BrushTemplate_Staircas
 		App->CL_Maths->Vector3_Set(&(FaceVerts[2]), HalfWidth, -HalfHeight, HalfLength);
 		App->CL_Maths->Vector3_Set(&(FaceVerts[1]), HalfWidth, HalfHeight, HalfLength);
 		App->CL_Maths->Vector3_Set(&(FaceVerts[0]), -HalfWidth, HalfHeight, HalfLength);
-		f = App->CL_Face->Face_Create(4, FaceVerts, 0);
+		f = App->CL_X_Face->Face_Create(4, FaceVerts, 0);
 		if (f)
 		{
 			App->CL_FaceList->FaceList_AddFace(fl, f);
-			App->CL_Face->Face_SetTextureLock(f, true);
+			App->CL_X_Face->Face_SetTextureLock(f, true);
 		}
 
 		App->CL_Maths->Vector3_Set(&(FaceVerts[3]), HalfWidth, -HalfHeight, HalfLength);
 		App->CL_Maths->Vector3_Set(&(FaceVerts[2]), -HalfWidth, -HalfHeight, HalfLength);
 		App->CL_Maths->Vector3_Set(&(FaceVerts[1]), -HalfWidth, -HalfHeight, -HalfLength);
 		App->CL_Maths->Vector3_Set(&(FaceVerts[0]), HalfWidth, -HalfHeight, -HalfLength);
-		f = App->CL_Face->Face_Create(4, FaceVerts, 0);
+		f = App->CL_X_Face->Face_Create(4, FaceVerts, 0);
 		if (f)
 		{
 			App->CL_FaceList->FaceList_AddFace(fl, f);
-			App->CL_Face->Face_SetTextureLock(f, true);
+			App->CL_X_Face->Face_SetTextureLock(f, true);
 		}
 
 		App->CL_Maths->Vector3_Set(&(FaceVerts[3]), -HalfWidth, HalfHeight, HalfLength);
 		App->CL_Maths->Vector3_Set(&(FaceVerts[2]), HalfWidth, HalfHeight, HalfLength);
 		App->CL_Maths->Vector3_Set(&(FaceVerts[1]), HalfWidth, -HalfHeight, -HalfLength);
 		App->CL_Maths->Vector3_Set(&(FaceVerts[0]), -HalfWidth, -HalfHeight, -HalfLength);
-		f = App->CL_Face->Face_Create(4, FaceVerts, 0);
+		f = App->CL_X_Face->Face_Create(4, FaceVerts, 0);
 		if (f)
 		{
 			App->CL_FaceList->FaceList_AddFace(fl, f);
-			App->CL_Face->Face_SetTextureLock(f, true);
+			App->CL_X_Face->Face_SetTextureLock(f, true);
 		}
 
 		App->CL_Maths->Vector3_Set(&(FaceVerts[2]), HalfWidth, HalfHeight, HalfLength);
 		App->CL_Maths->Vector3_Set(&(FaceVerts[1]), HalfWidth, -HalfHeight, HalfLength);
 		App->CL_Maths->Vector3_Set(&(FaceVerts[0]), HalfWidth, -HalfHeight, -HalfLength);
-		f = App->CL_Face->Face_Create(3, FaceVerts, 0);
+		f = App->CL_X_Face->Face_Create(3, FaceVerts, 0);
 		if (f)
 		{
 			App->CL_FaceList->FaceList_AddFace(fl, f);
-			App->CL_Face->Face_SetTextureLock(f, true);
+			App->CL_X_Face->Face_SetTextureLock(f, true);
 		}
 
 		App->CL_Maths->Vector3_Set(&(FaceVerts[0]), -HalfWidth, HalfHeight, HalfLength);
 		App->CL_Maths->Vector3_Set(&(FaceVerts[1]), -HalfWidth, -HalfHeight, HalfLength);
 		App->CL_Maths->Vector3_Set(&(FaceVerts[2]), -HalfWidth, -HalfHeight, -HalfLength);
-		f = App->CL_Face->Face_Create(3, FaceVerts, 0);
+		f = App->CL_X_Face->Face_Create(3, FaceVerts, 0);
 		if (f)
 		{
 			App->CL_FaceList->FaceList_AddFace(fl, f);
-			App->CL_Face->Face_SetTextureLock(f, true);
+			App->CL_X_Face->Face_SetTextureLock(f, true);
 		}
 
 		b = App->CL_X_Brush->Brush_Create(BRUSH_LEAF, fl, 0);
@@ -872,12 +872,12 @@ Brush* BrushTemplate::BrushTemplate_CreateArch(const BrushTemplate_Arch* pTempla
 				FaceVerts[1] = CrossVerts[index + 1];//FinalTopOuterPoint;
 				FaceVerts[2] = OldVerts[index + 1];
 				FaceVerts[3] = OldVerts[index];
-				f = App->CL_Face->Face_Create(4, FaceVerts, 0);
+				f = App->CL_X_Face->Face_Create(4, FaceVerts, 0);
 
 				if (f)
 				{
 					App->CL_FaceList->FaceList_AddFace(fl, f);
-					App->CL_Face->Face_SetTextureLock(f, true);
+					App->CL_X_Face->Face_SetTextureLock(f, true);
 				}
 
 				/*				FaceVerts2[0] = CrossVerts[index];//FinalTopInnerPoint;
@@ -901,12 +901,12 @@ Brush* BrushTemplate::BrushTemplate_CreateArch(const BrushTemplate_Arch* pTempla
 				FaceVerts[1] = CrossVerts[1];
 				FaceVerts[2] = OldVerts[1];
 				FaceVerts[3] = OldVerts[0];
-				f = App->CL_Face->Face_Create(4, FaceVerts, 0);
+				f = App->CL_X_Face->Face_Create(4, FaceVerts, 0);
 
 				if (f)
 				{
 					App->CL_FaceList->FaceList_AddFace(fl, f);
-					App->CL_Face->Face_SetTextureLock(f, true);
+					App->CL_X_Face->Face_SetTextureLock(f, true);
 				}
 
 				/*			FaceVerts2[0] = CrossVerts[0];
@@ -925,12 +925,12 @@ Brush* BrushTemplate::BrushTemplate_CreateArch(const BrushTemplate_Arch* pTempla
 				FaceVerts[1] = CrossVerts[0];
 				FaceVerts[2] = OldVerts[0];
 				FaceVerts[3] = OldVerts[NumSides - 1];
-				f = App->CL_Face->Face_Create(4, FaceVerts, 0);
+				f = App->CL_X_Face->Face_Create(4, FaceVerts, 0);
 
 				if (f)
 				{
 					App->CL_FaceList->FaceList_AddFace(fl, f);
-					App->CL_Face->Face_SetTextureLock(f, true);
+					App->CL_X_Face->Face_SetTextureLock(f, true);
 				}
 
 				/*				FaceVerts2[0] = CrossVerts[NumSides-1];
@@ -951,28 +951,28 @@ Brush* BrushTemplate::BrushTemplate_CreateArch(const BrushTemplate_Arch* pTempla
 				FaceVerts2[0] = CrossVerts[0];
 				FaceVerts2[1] = CrossVerts[1];
 				FaceVerts2[2] = OldVerts[1];
-				f = App->CL_Face->Face_Create(3, FaceVerts2, 0);
+				f = App->CL_X_Face->Face_Create(3, FaceVerts2, 0);
 
 				if (f)
 				{
 					App->CL_FaceList->FaceList_AddFace(fl, f);
-					App->CL_Face->Face_SetTextureLock(f, true);
+					App->CL_X_Face->Face_SetTextureLock(f, true);
 				}
 
 				FaceVerts2[0] = CrossVerts[NumSides - 1];
 				FaceVerts2[1] = CrossVerts[0];
 				FaceVerts2[2] = OldVerts[NumSides - 1];
-				f = App->CL_Face->Face_Create(3, FaceVerts2, 0);
+				f = App->CL_X_Face->Face_Create(3, FaceVerts2, 0);
 
 				if (f)
 				{
 					App->CL_FaceList->FaceList_AddFace(fl, f);
-					App->CL_Face->Face_SetTextureLock(f, true);
+					App->CL_X_Face->Face_SetTextureLock(f, true);
 				}
 			}
 
 			//make the end faces
-			f = App->CL_Face->Face_Create(NumSides, OldVerts, 0);
+			f = App->CL_X_Face->Face_Create(NumSides, OldVerts, 0);
 
 			if (f)
 			{
@@ -980,22 +980,22 @@ Brush* BrushTemplate::BrushTemplate_CreateArch(const BrushTemplate_Arch* pTempla
 				{
 					if (i)
 					{
-						App->CL_Face->Face_SetFixedHull(f, GE_TRUE);
+						App->CL_X_Face->Face_SetFixedHull(f, GE_TRUE);
 					}
 				}
 				else
 				{
-					App->CL_Face->Face_SetFixedHull(f, GE_TRUE);
+					App->CL_X_Face->Face_SetFixedHull(f, GE_TRUE);
 				}
 				App->CL_FaceList->FaceList_AddFace(fl, f);
-				App->CL_Face->Face_SetTextureLock(f, true);
+				App->CL_X_Face->Face_SetTextureLock(f, true);
 			}
 
 			//need reverse order for the other end
 			for (index = 0; index < NumSides; index++)
 				OldVerts[NumSides - index - 1] = CrossVerts[index];
 
-			f = App->CL_Face->Face_Create(NumSides, OldVerts, 0);
+			f = App->CL_X_Face->Face_Create(NumSides, OldVerts, 0);
 
 			if (f)
 			{
@@ -1003,15 +1003,15 @@ Brush* BrushTemplate::BrushTemplate_CreateArch(const BrushTemplate_Arch* pTempla
 				{
 					if (i < (NumCrossSections - 1)) // changed QD
 					{
-						App->CL_Face->Face_SetFixedHull(f, GE_TRUE);
+						App->CL_X_Face->Face_SetFixedHull(f, GE_TRUE);
 					}
 				}
 				else
 				{
-					App->CL_Face->Face_SetFixedHull(f, GE_TRUE);
+					App->CL_X_Face->Face_SetFixedHull(f, GE_TRUE);
 				}
 				App->CL_FaceList->FaceList_AddFace(fl, f);
-				App->CL_Face->Face_SetTextureLock(f, true);
+				App->CL_X_Face->Face_SetTextureLock(f, true);
 			}
 
 			if (!pTemplate->Style)
@@ -1234,21 +1234,21 @@ Brush* BrushTemplate::BrushTemplate_CreateArch(const BrushTemplate_Arch* pTempla
 					FaceVerts[0] = FinalTopInnerPoint;
 					FaceVerts[1] = FinalTopOuterPoint;
 					FaceVerts[2] = OldTopInner;
-					f = App->CL_Face->Face_Create(3, FaceVerts, 0);
+					f = App->CL_X_Face->Face_Create(3, FaceVerts, 0);
 					if (f)
 					{
 						App->CL_FaceList->FaceList_AddFace(fl, f);
-						App->CL_Face->Face_SetTextureLock(f, true);
+						App->CL_X_Face->Face_SetTextureLock(f, true);
 					}
 
 					FaceVerts[0] = FinalTopOuterPoint;
 					FaceVerts[1] = OldTopOuter;
 					FaceVerts[2] = OldTopInner;
-					f = App->CL_Face->Face_Create(3, FaceVerts, 0);
+					f = App->CL_X_Face->Face_Create(3, FaceVerts, 0);
 					if (f)
 					{
 						App->CL_FaceList->FaceList_AddFace(fl, f);
-						App->CL_Face->Face_SetTextureLock(f, true);
+						App->CL_X_Face->Face_SetTextureLock(f, true);
 					}
 				}
 				else
@@ -1256,21 +1256,21 @@ Brush* BrushTemplate::BrushTemplate_CreateArch(const BrushTemplate_Arch* pTempla
 					FaceVerts[0] = FinalTopInnerPoint;
 					FaceVerts[1] = FinalTopOuterPoint;
 					FaceVerts[2] = OldTopOuter;
-					f = App->CL_Face->Face_Create(3, FaceVerts, 0);
+					f = App->CL_X_Face->Face_Create(3, FaceVerts, 0);
 					if (f)
 					{
 						App->CL_FaceList->FaceList_AddFace(fl, f);
-						App->CL_Face->Face_SetTextureLock(f, true);
+						App->CL_X_Face->Face_SetTextureLock(f, true);
 					}
 
 					FaceVerts[0] = FinalTopInnerPoint;
 					FaceVerts[1] = OldTopOuter;
 					FaceVerts[2] = OldTopInner;
-					f = App->CL_Face->Face_Create(3, FaceVerts, 0);
+					f = App->CL_X_Face->Face_Create(3, FaceVerts, 0);
 					if (f)
 					{
 						App->CL_FaceList->FaceList_AddFace(fl, f);
-						App->CL_Face->Face_SetTextureLock(f, true);
+						App->CL_X_Face->Face_SetTextureLock(f, true);
 					}
 				}
 			}
@@ -1282,20 +1282,20 @@ Brush* BrushTemplate::BrushTemplate_CreateArch(const BrushTemplate_Arch* pTempla
 					FaceVerts[1] = FinalTopOuterPoint;
 					FaceVerts[2] = OldTopOuter;
 					FaceVerts[3] = OldTopInner;
-					f = App->CL_Face->Face_Create(4, FaceVerts, 0);
+					f = App->CL_X_Face->Face_Create(4, FaceVerts, 0);
 				}
 				else
 				{
 					FaceVerts[0] = FinalTopInnerPoint;
 					FaceVerts[1] = FinalTopOuterPoint;
 					FaceVerts[2] = OldTopOuter;
-					f = App->CL_Face->Face_Create(3, FaceVerts, 0);
+					f = App->CL_X_Face->Face_Create(3, FaceVerts, 0);
 				}
 
 				if (f)
 				{
 					App->CL_FaceList->FaceList_AddFace(fl, f);
-					App->CL_Face->Face_SetTextureLock(f, true);
+					App->CL_X_Face->Face_SetTextureLock(f, true);
 				}
 			}
 
@@ -1308,21 +1308,21 @@ Brush* BrushTemplate::BrushTemplate_CreateArch(const BrushTemplate_Arch* pTempla
 					FaceVerts[2] = FinalBottomInnerPoint;
 					FaceVerts[1] = FinalBottomOuterPoint;
 					FaceVerts[0] = OldBottomOuter;
-					f = App->CL_Face->Face_Create(3, FaceVerts, 0);
+					f = App->CL_X_Face->Face_Create(3, FaceVerts, 0);
 					if (f)
 					{
 						App->CL_FaceList->FaceList_AddFace(fl, f);
-						App->CL_Face->Face_SetTextureLock(f, true);
+						App->CL_X_Face->Face_SetTextureLock(f, true);
 					}
 
 					FaceVerts[2] = FinalBottomInnerPoint;
 					FaceVerts[1] = OldBottomOuter;
 					FaceVerts[0] = OldBottomInner;
-					f = App->CL_Face->Face_Create(3, FaceVerts, 0);
+					f = App->CL_X_Face->Face_Create(3, FaceVerts, 0);
 					if (f)
 					{
 						App->CL_FaceList->FaceList_AddFace(fl, f);
-						App->CL_Face->Face_SetTextureLock(f, true);
+						App->CL_X_Face->Face_SetTextureLock(f, true);
 					}
 				}
 				else
@@ -1330,21 +1330,21 @@ Brush* BrushTemplate::BrushTemplate_CreateArch(const BrushTemplate_Arch* pTempla
 					FaceVerts[2] = FinalBottomInnerPoint;
 					FaceVerts[1] = FinalBottomOuterPoint;
 					FaceVerts[0] = OldBottomInner;
-					f = App->CL_Face->Face_Create(3, FaceVerts, 0);
+					f = App->CL_X_Face->Face_Create(3, FaceVerts, 0);
 					if (f)
 					{
 						App->CL_FaceList->FaceList_AddFace(fl, f);
-						App->CL_Face->Face_SetTextureLock(f, true);
+						App->CL_X_Face->Face_SetTextureLock(f, true);
 					}
 
 					FaceVerts[2] = FinalBottomOuterPoint;
 					FaceVerts[1] = OldBottomOuter;
 					FaceVerts[0] = OldBottomInner;
-					f = App->CL_Face->Face_Create(3, FaceVerts, 0);
+					f = App->CL_X_Face->Face_Create(3, FaceVerts, 0);
 					if (f)
 					{
 						App->CL_FaceList->FaceList_AddFace(fl, f);
-						App->CL_Face->Face_SetTextureLock(f, true);
+						App->CL_X_Face->Face_SetTextureLock(f, true);
 					}
 				}
 			}
@@ -1356,19 +1356,19 @@ Brush* BrushTemplate::BrushTemplate_CreateArch(const BrushTemplate_Arch* pTempla
 					FaceVerts[2] = FinalBottomOuterPoint;
 					FaceVerts[1] = OldBottomOuter;
 					FaceVerts[0] = OldBottomInner;
-					f = App->CL_Face->Face_Create(4, FaceVerts, 0);
+					f = App->CL_X_Face->Face_Create(4, FaceVerts, 0);
 				}
 				else
 				{
 					FaceVerts[2] = FinalBottomInnerPoint;
 					FaceVerts[1] = FinalBottomOuterPoint;
 					FaceVerts[0] = OldBottomOuter;
-					f = App->CL_Face->Face_Create(3, FaceVerts, 0);
+					f = App->CL_X_Face->Face_Create(3, FaceVerts, 0);
 				}
 				if (f)
 				{
 					App->CL_FaceList->FaceList_AddFace(fl, f);
-					App->CL_Face->Face_SetTextureLock(f, true);
+					App->CL_X_Face->Face_SetTextureLock(f, true);
 				}
 			}
 
@@ -1379,11 +1379,11 @@ Brush* BrushTemplate::BrushTemplate_CreateArch(const BrushTemplate_Arch* pTempla
 				FaceVerts[1] = OldTopInner;
 				FaceVerts[2] = OldBottomInner;
 				FaceVerts[3] = FinalBottomInnerPoint;
-				f = App->CL_Face->Face_Create(4, FaceVerts, 0);
+				f = App->CL_X_Face->Face_Create(4, FaceVerts, 0);
 				if (f)
 				{
 					App->CL_FaceList->FaceList_AddFace(fl, f);
-					App->CL_Face->Face_SetTextureLock(f, true);
+					App->CL_X_Face->Face_SetTextureLock(f, true);
 				}
 			}
 			// end change
@@ -1393,11 +1393,11 @@ Brush* BrushTemplate::BrushTemplate_CreateArch(const BrushTemplate_Arch* pTempla
 			FaceVerts[2] = OldTopOuter;
 			FaceVerts[1] = OldBottomOuter;
 			FaceVerts[0] = FinalBottomOuterPoint;
-			f = App->CL_Face->Face_Create(4, FaceVerts, 0);
+			f = App->CL_X_Face->Face_Create(4, FaceVerts, 0);
 			if (f)
 			{
 				App->CL_FaceList->FaceList_AddFace(fl, f);
-				App->CL_Face->Face_SetTextureLock(f, true);
+				App->CL_X_Face->Face_SetTextureLock(f, true);
 			}
 
 			//make the end faces
@@ -1405,7 +1405,7 @@ Brush* BrushTemplate::BrushTemplate_CreateArch(const BrushTemplate_Arch* pTempla
 			FaceVerts[1] = OldBottomOuter;
 			FaceVerts[2] = OldBottomInner;
 			FaceVerts[3] = OldTopInner;
-			f = App->CL_Face->Face_Create(4, FaceVerts, 0);
+			f = App->CL_X_Face->Face_Create(4, FaceVerts, 0);
 
 			if (f)
 			{
@@ -1413,23 +1413,23 @@ Brush* BrushTemplate::BrushTemplate_CreateArch(const BrushTemplate_Arch* pTempla
 				{
 					if (i)
 					{
-						App->CL_Face->Face_SetFixedHull(f, GE_TRUE);
+						App->CL_X_Face->Face_SetFixedHull(f, GE_TRUE);
 					}
 				}
 				else
 				{
-					App->CL_Face->Face_SetFixedHull(f, GE_TRUE);
+					App->CL_X_Face->Face_SetFixedHull(f, GE_TRUE);
 				}
 
 				App->CL_FaceList->FaceList_AddFace(fl, f);
-				App->CL_Face->Face_SetTextureLock(f, true);
+				App->CL_X_Face->Face_SetTextureLock(f, true);
 			}
 
 			FaceVerts[3] = FinalTopOuterPoint;
 			FaceVerts[2] = FinalBottomOuterPoint;
 			FaceVerts[1] = FinalBottomInnerPoint;
 			FaceVerts[0] = FinalTopInnerPoint;
-			f = App->CL_Face->Face_Create(4, FaceVerts, 0);
+			f = App->CL_X_Face->Face_Create(4, FaceVerts, 0);
 
 			if (f)
 			{
@@ -1437,16 +1437,16 @@ Brush* BrushTemplate::BrushTemplate_CreateArch(const BrushTemplate_Arch* pTempla
 				{
 					if (i < (NumCrossSections - 1)) // changed QD 11/03
 					{
-						App->CL_Face->Face_SetFixedHull(f, GE_TRUE);
+						App->CL_X_Face->Face_SetFixedHull(f, GE_TRUE);
 					}
 				}
 				else
 				{
-					App->CL_Face->Face_SetFixedHull(f, GE_TRUE);
+					App->CL_X_Face->Face_SetFixedHull(f, GE_TRUE);
 				}
 
 				App->CL_FaceList->FaceList_AddFace(fl, f);
-				App->CL_Face->Face_SetTextureLock(f, true);
+				App->CL_X_Face->Face_SetTextureLock(f, true);
 			}
 
 			if (!pTemplate->Style)

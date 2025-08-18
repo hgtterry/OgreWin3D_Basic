@@ -200,8 +200,8 @@ static signed int fdocSetFaceScales(Face* pFace, void* lParam)
 {
 	fdocFaceScales* pScales = (fdocFaceScales*)lParam;
 
-	App->CL_Face->Face_SetTextureScale(pFace, pScales->DrawScale, pScales->DrawScale);
-	App->CL_Face->Face_SetLightScale(pFace, pScales->LightmapScale, pScales->LightmapScale);
+	App->CL_X_Face->Face_SetTextureScale(pFace, pScales->DrawScale, pScales->DrawScale);
+	App->CL_X_Face->Face_SetLightScale(pFace, pScales->LightmapScale, pScales->LightmapScale);
 
 	return false;
 }
@@ -227,12 +227,12 @@ static signed int BrushTexSetCB(Brush* b, void* lParam)
 		Face* f = App->CL_X_Brush->Brush_GetFace(b, i);
 		WadFileEntry* pbmp;
 		// 
-		App->CL_Face->Face_SetTextureName(f, pData->TexName);
-		App->CL_Face->Face_SetTextureDibId(f, App->CL_Level->Level_GetDibId(pData->TexName));
+		App->CL_X_Face->Face_SetTextureName(f, pData->TexName);
+		App->CL_X_Face->Face_SetTextureDibId(f, App->CL_Level->Level_GetDibId(pData->TexName));
 		pbmp = App->CL_Level->Level_GetWadBitmap(pData->TexName);
 		if (pbmp != NULL)
 		{
-			App->CL_Face->Face_SetTextureSize(f, pbmp->Width, pbmp->Height);
+			App->CL_X_Face->Face_SetTextureSize(f, pbmp->Width, pbmp->Height);
 		}
 	}
 
@@ -256,9 +256,9 @@ static signed int SelAllBrushFaces(Brush* pBrush, void* lParam)
 		pFace = App->CL_X_Brush->Brush_GetFace(pBrush, iFace);
 
 		strcpy(buff, App->CL_X_Brush->Brush_GetName(App->CL_Doc->CurBrush));
-		App->CL_Face->Face_SetBrushName(pFace, buff);
+		App->CL_X_Face->Face_SetBrushName(pFace, buff);
 		
-		App->CL_Face->Face_SetSelected(pFace, true);
+		App->CL_X_Face->Face_SetSelected(pFace, true);
 		App->CL_SelFaceList->SelFaceList_Add(App->CL_Doc->pSelFaces, pFace);
 	}
 
@@ -280,7 +280,7 @@ static signed int Set_BrushFaces_Name(Brush* pBrush, void* lParam)
 		pFace = App->CL_X_Brush->Brush_GetFace(pBrush, iFace);
 
 		strcpy(buff, App->CL_X_Brush->Brush_GetName(App->CL_Doc->CurBrush));
-		App->CL_Face->Face_SetBrushName(pFace, buff);
+		App->CL_X_Face->Face_SetBrushName(pFace, buff);
 	}
 
 	return true;

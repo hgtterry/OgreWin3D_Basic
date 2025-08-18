@@ -144,7 +144,7 @@ bool CL64_Brush_X::Get_Brush_Faces_Info(const FaceList* pList)
 // *************************************************************************
 bool CL64_Brush_X::Get_Face_Data(int Index, const Face* f)
 {
-	int Dib = App->CL_Face->Face_GetTextureDibId(f);
+	int Dib = App->CL_X_Face->Face_GetTextureDibId(f);
 	App->CL_Mesh_Mgr->UsedTextures[Dib] = 1;
 	
 	return 1;
@@ -169,7 +169,7 @@ static signed int Get_Brush_Face_Count(Brush* pBrush, void* lParam)
 int CL64_Brush_X::Get_Brush_All_Faces_Count(void)
 {
 	Face_Count = 0;
-	App->CL_Face->Selected_Face_Index = 0;
+	App->CL_X_Face->Selected_Face_Index = 0;
 
 	Brush* pBrush;
 

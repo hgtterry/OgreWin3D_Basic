@@ -72,7 +72,7 @@ signed int CL64_Properties_Faces::ChangeTextureAngle(Face* pFace, void* lParam)
 {
 	float* pAngle = (float*)lParam;
 
-	App->CL_Face->Face_SetTextureRotate(pFace, *pAngle);
+	App->CL_X_Face->Face_SetTextureRotate(pFace, *pAngle);
 	return true;
 }
 
@@ -83,8 +83,8 @@ signed int CL64_Properties_Faces::FlipVertical(Face* pFace, void*)
 {
 	float xScale, yScale;
 
-	App->CL_Face->Face_GetTextureScale(pFace, &xScale, &yScale);
-	App->CL_Face->Face_SetTextureScale(pFace, xScale, -yScale);
+	App->CL_X_Face->Face_GetTextureScale(pFace, &xScale, &yScale);
+	App->CL_X_Face->Face_SetTextureScale(pFace, xScale, -yScale);
 
 	return GE_TRUE;
 }
@@ -96,8 +96,8 @@ signed int CL64_Properties_Faces::FlipHorizontal(Face* pFace, void*)
 {
 	float xScale, yScale;
 
-	App->CL_Face->Face_GetTextureScale(pFace, &xScale, &yScale);
-	App->CL_Face->Face_SetTextureScale(pFace, -xScale, yScale);
+	App->CL_X_Face->Face_GetTextureScale(pFace, &xScale, &yScale);
+	App->CL_X_Face->Face_SetTextureScale(pFace, -xScale, yScale);
 
 	return GE_TRUE;
 }
@@ -110,8 +110,8 @@ signed int CL64_Properties_Faces::ChangeTextureXScale(Face* pFace, void* lParam)
 	float* pXScale = (float*)lParam;
 	float xScale, yScale;
 
-	App->CL_Face->Face_GetTextureScale(pFace, &xScale, &yScale);
-	App->CL_Face->Face_SetTextureScale(pFace, *pXScale, yScale);
+	App->CL_X_Face->Face_GetTextureScale(pFace, &xScale, &yScale);
+	App->CL_X_Face->Face_SetTextureScale(pFace, *pXScale, yScale);
 	return true;
 }
 
@@ -123,8 +123,8 @@ signed int CL64_Properties_Faces::ChangeTextureYScale(Face* pFace, void* lParam)
 	float* pYScale = (float*)lParam;
 	float xScale, yScale;
 
-	App->CL_Face->Face_GetTextureScale(pFace, &xScale, &yScale);
-	App->CL_Face->Face_SetTextureScale(pFace, xScale, *pYScale);
+	App->CL_X_Face->Face_GetTextureScale(pFace, &xScale, &yScale);
+	App->CL_X_Face->Face_SetTextureScale(pFace, xScale, *pYScale);
 	return true;
 }
 
@@ -136,8 +136,8 @@ signed int CL64_Properties_Faces::ChangeXOffset(Face* pFace, void* lParam)
 	int* pXOffset = (int*)(lParam);
 	int xOff, yOff;
 
-	App->CL_Face->Face_GetTextureShift(pFace, &xOff, &yOff);
-	App->CL_Face->Face_SetTextureShift(pFace, *pXOffset, yOff);
+	App->CL_X_Face->Face_GetTextureShift(pFace, &xOff, &yOff);
+	App->CL_X_Face->Face_SetTextureShift(pFace, *pXOffset, yOff);
 	return true;
 }
 
@@ -149,8 +149,8 @@ signed int CL64_Properties_Faces::ChangeYOffset(Face* pFace, void* lParam)
 	int* pYOffset = (int*)(lParam);
 	int xOff, yOff;
 
-	App->CL_Face->Face_GetTextureShift(pFace, &xOff, &yOff);
-	App->CL_Face->Face_SetTextureShift(pFace, xOff, *pYOffset);
+	App->CL_X_Face->Face_GetTextureShift(pFace, &xOff, &yOff);
+	App->CL_X_Face->Face_SetTextureShift(pFace, xOff, *pYOffset);
 	return true;
 }
 
@@ -457,7 +457,7 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 				}
 				else
 				{
-					App->CL_Face->Face_SetTextureRotate(App->CL_Properties_Faces->m_Selected_Face, pAngle);
+					App->CL_X_Face->Face_SetTextureRotate(App->CL_Properties_Faces->m_Selected_Face, pAngle);
 				}
 
 				App->CL_Properties_Faces->Update_Faces();
@@ -478,7 +478,7 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 				}
 				else
 				{
-					App->CL_Face->Face_SetTextureRotate(App->CL_Properties_Faces->m_Selected_Face, pAngle);
+					App->CL_X_Face->Face_SetTextureRotate(App->CL_Properties_Faces->m_Selected_Face, pAngle);
 				}
 
 				App->CL_Properties_Faces->Update_Faces();
@@ -513,8 +513,8 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 				}
 				else
 				{
-					App->CL_Face->Face_GetTextureShift(App->CL_Properties_Faces->m_Selected_Face, &xOff, &yOff);
-					App->CL_Face->Face_SetTextureShift(App->CL_Properties_Faces->m_Selected_Face, pXOffset, yOff);
+					App->CL_X_Face->Face_GetTextureShift(App->CL_Properties_Faces->m_Selected_Face, &xOff, &yOff);
+					App->CL_X_Face->Face_SetTextureShift(App->CL_Properties_Faces->m_Selected_Face, pXOffset, yOff);
 				}
 
 				App->CL_Properties_Faces->Update_Faces();
@@ -540,8 +540,8 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 				}
 				else
 				{
-					App->CL_Face->Face_GetTextureShift(App->CL_Properties_Faces->m_Selected_Face, &xOff, &yOff);
-					App->CL_Face->Face_SetTextureShift(App->CL_Properties_Faces->m_Selected_Face, pXOffset, yOff);
+					App->CL_X_Face->Face_GetTextureShift(App->CL_Properties_Faces->m_Selected_Face, &xOff, &yOff);
+					App->CL_X_Face->Face_SetTextureShift(App->CL_Properties_Faces->m_Selected_Face, pXOffset, yOff);
 				}
 
 				App->CL_Properties_Faces->Update_Faces();
@@ -572,8 +572,8 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 				}
 				else
 				{
-					App->CL_Face->Face_GetTextureShift(App->CL_Properties_Faces->m_Selected_Face, &xOff, &yOff);
-					App->CL_Face->Face_SetTextureShift(App->CL_Properties_Faces->m_Selected_Face, xOff, pYOffset);
+					App->CL_X_Face->Face_GetTextureShift(App->CL_Properties_Faces->m_Selected_Face, &xOff, &yOff);
+					App->CL_X_Face->Face_SetTextureShift(App->CL_Properties_Faces->m_Selected_Face, xOff, pYOffset);
 				}
 
 				App->CL_Properties_Faces->Update_Faces();
@@ -595,8 +595,8 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 				}
 				else
 				{
-					App->CL_Face->Face_GetTextureShift(App->CL_Properties_Faces->m_Selected_Face, &xOff, &yOff);
-					App->CL_Face->Face_SetTextureShift(App->CL_Properties_Faces->m_Selected_Face, xOff, pYOffset);
+					App->CL_X_Face->Face_GetTextureShift(App->CL_Properties_Faces->m_Selected_Face, &xOff, &yOff);
+					App->CL_X_Face->Face_SetTextureShift(App->CL_Properties_Faces->m_Selected_Face, xOff, pYOffset);
 				}
 
 				App->CL_Properties_Faces->Update_Faces();
@@ -627,8 +627,8 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 				}
 				else
 				{
-					App->CL_Face->Face_GetTextureScale(App->CL_Properties_Faces->m_Selected_Face, &xScale, &yScale);
-					App->CL_Face->Face_SetTextureScale(App->CL_Properties_Faces->m_Selected_Face, pXScale, yScale);
+					App->CL_X_Face->Face_GetTextureScale(App->CL_Properties_Faces->m_Selected_Face, &xScale, &yScale);
+					App->CL_X_Face->Face_SetTextureScale(App->CL_Properties_Faces->m_Selected_Face, pXScale, yScale);
 				}
 
 				App->CL_Properties_Faces->Update_Faces();
@@ -654,7 +654,7 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 				}
 				else
 				{
-					App->CL_Face->Face_GetTextureScale(App->CL_Properties_Faces->m_Selected_Face, &xScale, &yScale);
+					App->CL_X_Face->Face_GetTextureScale(App->CL_Properties_Faces->m_Selected_Face, &xScale, &yScale);
 				}
 				
 				if (pXScale > 0)
@@ -665,7 +665,7 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 					}
 					else
 					{
-						App->CL_Face->Face_SetTextureScale(App->CL_Properties_Faces->m_Selected_Face, pXScale, yScale);
+						App->CL_X_Face->Face_SetTextureScale(App->CL_Properties_Faces->m_Selected_Face, pXScale, yScale);
 					}
 				}
 				else
@@ -677,7 +677,7 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 					}
 					else
 					{
-						App->CL_Face->Face_SetTextureScale(App->CL_Properties_Faces->m_Selected_Face, 0.001, yScale);
+						App->CL_X_Face->Face_SetTextureScale(App->CL_Properties_Faces->m_Selected_Face, 0.001, yScale);
 					}
 				}
 	
@@ -709,8 +709,8 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 				}
 				else
 				{
-					App->CL_Face->Face_GetTextureScale(App->CL_Properties_Faces->m_Selected_Face, &xScale, &yScale);
-					App->CL_Face->Face_SetTextureScale(App->CL_Properties_Faces->m_Selected_Face, xScale, pYScale);
+					App->CL_X_Face->Face_GetTextureScale(App->CL_Properties_Faces->m_Selected_Face, &xScale, &yScale);
+					App->CL_X_Face->Face_SetTextureScale(App->CL_Properties_Faces->m_Selected_Face, xScale, pYScale);
 				}
 
 				App->CL_Properties_Faces->Update_Faces();
@@ -736,7 +736,7 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 				}
 				else
 				{
-					App->CL_Face->Face_GetTextureScale(App->CL_Properties_Faces->m_Selected_Face, &xScale, &yScale);
+					App->CL_X_Face->Face_GetTextureScale(App->CL_Properties_Faces->m_Selected_Face, &xScale, &yScale);
 				}
 
 				if (pYScale > 0)
@@ -747,7 +747,7 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 					}
 					else
 					{
-						App->CL_Face->Face_SetTextureScale(App->CL_Properties_Faces->m_Selected_Face, xScale, pYScale);
+						App->CL_X_Face->Face_SetTextureScale(App->CL_Properties_Faces->m_Selected_Face, xScale, pYScale);
 					}
 				}
 				else
@@ -759,7 +759,7 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 					}
 					else
 					{
-						App->CL_Face->Face_SetTextureScale(App->CL_Properties_Faces->m_Selected_Face, xScale, 0.001);
+						App->CL_X_Face->Face_SetTextureScale(App->CL_Properties_Faces->m_Selected_Face, xScale, 0.001);
 					}
 				}
 
@@ -790,7 +790,7 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 				App->CL_Properties_Faces->m_Selected_Face_Index = Index;
 				App->CL_Properties_Faces->m_Selected_Face = App->CL_SelFaceList->SelFaceList_GetFace(App->CL_Doc->pSelFaces, Index);
 				
-				App->CL_Face->Selected_Face_Index = Index;
+				App->CL_X_Face->Selected_Face_Index = Index;
 
 				App->CL_Top_Tabs->Select_Face();
 				App->CL_Properties_Faces->Change_Selection();
@@ -956,8 +956,8 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 			}
 			else
 			{
-				App->CL_Face->Face_GetTextureScale(App->CL_Properties_Faces->m_Selected_Face, &xScale, &yScale);
-				App->CL_Face->Face_SetTextureScale(App->CL_Properties_Faces->m_Selected_Face, xScale, -yScale);
+				App->CL_X_Face->Face_GetTextureScale(App->CL_Properties_Faces->m_Selected_Face, &xScale, &yScale);
+				App->CL_X_Face->Face_SetTextureScale(App->CL_Properties_Faces->m_Selected_Face, xScale, -yScale);
 			}
 
 			App->CL_Properties_Faces->UpdateDialog(hDlg);
@@ -976,8 +976,8 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 			}
 			else
 			{
-				App->CL_Face->Face_GetTextureScale(App->CL_Properties_Faces->m_Selected_Face, &xScale, &yScale);
-				App->CL_Face->Face_SetTextureScale(App->CL_Properties_Faces->m_Selected_Face, -xScale, yScale);
+				App->CL_X_Face->Face_GetTextureScale(App->CL_Properties_Faces->m_Selected_Face, &xScale, &yScale);
+				App->CL_X_Face->Face_SetTextureScale(App->CL_Properties_Faces->m_Selected_Face, -xScale, yScale);
 			}
 
 			App->CL_Properties_Faces->UpdateDialog(hDlg);
@@ -1016,9 +1016,9 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 			App->CL_Properties_Faces->m_TextureXOffset = App->CL_Properties_Faces->m_TextureXOffset_Copy;
 			App->CL_Properties_Faces->m_TextureYOffset = App->CL_Properties_Faces->m_TextureYOffset_Copy;
 			
-			App->CL_Face->Face_SetTextureRotate(App->CL_Properties_Faces->m_Selected_Face, App->CL_Properties_Faces->m_TextureAngle);
-			App->CL_Face->Face_SetTextureShift(App->CL_Properties_Faces->m_Selected_Face, App->CL_Properties_Faces->m_TextureXOffset, App->CL_Properties_Faces->m_TextureYOffset);
-			App->CL_Face->Face_SetTextureScale(App->CL_Properties_Faces->m_Selected_Face, App->CL_Properties_Faces->m_TextureXScale, App->CL_Properties_Faces->m_TextureYScale);
+			App->CL_X_Face->Face_SetTextureRotate(App->CL_Properties_Faces->m_Selected_Face, App->CL_Properties_Faces->m_TextureAngle);
+			App->CL_X_Face->Face_SetTextureShift(App->CL_Properties_Faces->m_Selected_Face, App->CL_Properties_Faces->m_TextureXOffset, App->CL_Properties_Faces->m_TextureYOffset);
+			App->CL_X_Face->Face_SetTextureScale(App->CL_Properties_Faces->m_Selected_Face, App->CL_Properties_Faces->m_TextureXScale, App->CL_Properties_Faces->m_TextureYScale);
 			
 			App->CL_Properties_Faces->UpdateDialog(hDlg);
 			App->CL_Properties_Faces->Update_Faces();
@@ -1063,16 +1063,16 @@ void CL64_Properties_Faces::Update_Face_Info(HWND hDlg)
 	sprintf(buff, "%s %i", "Main Face:", m_Selected_Face->Real_Brush_Face_Index);
 	SendDlgItemMessage(hDlg, IDC_LST_FACE_INFO, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);
 
-	sprintf(buff, "%s %s     %s %i", "Brush Name: ", App->CL_X_Brush->Brush_GetName(pBrush),"Selected Face: ", App->CL_Face->Selected_Face_Index+1);
+	sprintf(buff, "%s %s     %s %i", "Brush Name: ", App->CL_X_Brush->Brush_GetName(pBrush),"Selected Face: ", App->CL_X_Face->Selected_Face_Index+1);
 	SendDlgItemMessage(hDlg, IDC_LST_FACE_INFO, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);
 	
-	sprintf(buff, "%s %s", "Texture: ", App->CL_Face->Face_GetTextureName(m_Selected_Face));
+	sprintf(buff, "%s %s", "Texture: ", App->CL_X_Face->Face_GetTextureName(m_Selected_Face));
 	SendDlgItemMessage(hDlg, IDC_LST_FACE_INFO, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);
 
-	sprintf(buff, "%s %i", "Bitmap ID: ", App->CL_Face->Face_GetTextureDibId(m_Selected_Face));
+	sprintf(buff, "%s %i", "Bitmap ID: ", App->CL_X_Face->Face_GetTextureDibId(m_Selected_Face));
 	SendDlgItemMessage(hDlg, IDC_LST_FACE_INFO, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);
 
-	bool Test_Lock = App->CL_Face->Face_IsTextureLocked(m_Selected_Face);
+	bool Test_Lock = App->CL_X_Face->Face_IsTextureLocked(m_Selected_Face);
 
 	if (Test_Lock)
 	{
@@ -1101,12 +1101,12 @@ void CL64_Properties_Faces::Update_Faces()
 		App->CL_Doc->UpdateAllViews(Enums::UpdateViews_3D);
 		App->CL_SelFaceList->SelFaceList_RemoveAll(App->CL_Doc->pSelFaces);
 		App->CL_Doc->SelectAllFacesInBrushes();
-		App->CL_Face->Select_Face_From_Index(App->CL_Face->Selected_Face_Index);
+		App->CL_X_Face->Select_Face_From_Index(App->CL_X_Face->Selected_Face_Index);
 	}
 
 	App->CL_Ogre->RenderFrame(2);
 
-	App->CL_Properties_Faces->m_Selected_Face = App->CL_SelFaceList->SelFaceList_GetFace(App->CL_Doc->pSelFaces, App->CL_Face->Selected_Face_Index);
+	App->CL_Properties_Faces->m_Selected_Face = App->CL_SelFaceList->SelFaceList_GetFace(App->CL_Doc->pSelFaces, App->CL_X_Face->Selected_Face_Index);
 }
 
 // *************************************************************************
@@ -1183,11 +1183,11 @@ void CL64_Properties_Faces::Update_Face_List(HWND hDlg)
 			Count++;
 		}
 
-		SendDlgItemMessage(hDlg, IDC_LST_FACELIST, LB_SETCURSEL, (WPARAM)App->CL_Face->Selected_Face_Index, (LPARAM)0);
+		SendDlgItemMessage(hDlg, IDC_LST_FACELIST, LB_SETCURSEL, (WPARAM)App->CL_X_Face->Selected_Face_Index, (LPARAM)0);
 	
 	}
 
-	m_Selected_Face = App->CL_SelFaceList->SelFaceList_GetFace(App->CL_Doc->pSelFaces, App->CL_Face->Selected_Face_Index);
+	m_Selected_Face = App->CL_SelFaceList->SelFaceList_GetFace(App->CL_Doc->pSelFaces, App->CL_X_Face->Selected_Face_Index);
 }
 
 // *************************************************************************
@@ -1211,9 +1211,9 @@ void CL64_Properties_Faces::Update_Face_Members()
 	
 	if (NumberOfFaces && m_Selected_Face)
 	{
-		m_TextureAngle = App->CL_Face->Face_GetTextureRotate(m_Selected_Face);
-		App->CL_Face->Face_GetTextureShift(m_Selected_Face, &m_TextureXOffset, &m_TextureYOffset);
-		App->CL_Face->Face_GetTextureScale(m_Selected_Face, &m_TextureXScale, &m_TextureYScale);
+		m_TextureAngle = App->CL_X_Face->Face_GetTextureRotate(m_Selected_Face);
+		App->CL_X_Face->Face_GetTextureShift(m_Selected_Face, &m_TextureXOffset, &m_TextureYOffset);
+		App->CL_X_Face->Face_GetTextureScale(m_Selected_Face, &m_TextureXScale, &m_TextureYScale);
 
 		//		m_TextureLock	=Face_IsTextureLocked (pFace);
 		//		GetDlgItem( IDC_FACELIGHTINTENSITY )->EnableWindow( m_Light && !m_Sky) ;
@@ -1255,7 +1255,7 @@ void CL64_Properties_Faces::Change_Selection()
 	App->CL_Properties_Faces->Update_Face_Members();
 	App->CL_Properties_Faces->UpdateDialog(FaceDlg_Hwnd);
 
-	SendDlgItemMessage(FaceDlg_Hwnd, IDC_LST_FACELIST, LB_SETCURSEL, (WPARAM)App->CL_Face->Selected_Face_Index, (LPARAM)0);
+	SendDlgItemMessage(FaceDlg_Hwnd, IDC_LST_FACELIST, LB_SETCURSEL, (WPARAM)App->CL_X_Face->Selected_Face_Index, (LPARAM)0);
 }
 
 // *************************************************************************

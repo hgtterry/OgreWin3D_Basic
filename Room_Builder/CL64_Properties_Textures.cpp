@@ -269,9 +269,9 @@ static void TextureBrushList(BrushList* pList, int SelId, char const* Name, WadF
 // *************************************************************************
 static void TextureFace(Face* pFace, int SelId, char const* Name, WadFileEntry* pbmp)
 {
-	App->CL_Face->Face_SetTextureDibId(pFace, SelId);
-	App->CL_Face->Face_SetTextureName(pFace, Name);
-	App->CL_Face->Face_SetTextureSize(pFace, pbmp->Width, pbmp->Height);
+	App->CL_X_Face->Face_SetTextureDibId(pFace, SelId);
+	App->CL_X_Face->Face_SetTextureName(pFace, Name);
+	App->CL_X_Face->Face_SetTextureSize(pFace, pbmp->Width, pbmp->Height);
 }
 
 // *************************************************************************
@@ -643,7 +643,7 @@ void CL64_Properties_Textures::Get_Selected_Face()
 	{
 		mSelected_Face = App->CL_SelFaceList->SelFaceList_GetFace(App->CL_Doc->pSelFaces, (NumberOfFaces - 1));
 
-		Select_With_TextureName(App->CL_Face->Face_GetTextureName(mSelected_Face));
+		Select_With_TextureName(App->CL_X_Face->Face_GetTextureName(mSelected_Face));
 	}
 }
 

@@ -2178,12 +2178,12 @@ void CL64_Editor_Map::Render_RenderBrushSelFacesOrtho(ViewVars* Cam, Brush* b, H
 	for (i = 0; i < App->CL_X_Brush->Brush_GetNumFaces(b); i++)
 	{
 		Face* f = App->CL_X_Brush->Brush_GetFace(b, i);
-		const T_Vec3* pnts = App->CL_Face->Face_GetPoints(f);
+		const T_Vec3* pnts = App->CL_X_Face->Face_GetPoints(f);
 
-		if (!App->CL_Face->Face_IsSelected(f))
+		if (!App->CL_X_Face->Face_IsSelected(f))
 			continue;
 
-		for (j = 0; j < App->CL_Face->Face_GetNumPoints(f); j++)
+		for (j = 0; j < App->CL_X_Face->Face_GetNumPoints(f); j++)
 		{
 			plist[j] = App->CL_Render->Render_OrthoWorldToView(Cam, &pnts[j]);
 		}
@@ -2387,9 +2387,9 @@ void CL64_Editor_Map::Render_RenderBrushFacesOrtho(const ViewVars* Cam, Brush* b
 	for (i = 0; i < App->CL_X_Brush->Brush_GetNumFaces(b); i++)
 	{
 		Face* f = App->CL_X_Brush->Brush_GetFace(b, i);
-		const T_Vec3* pnts = App->CL_Face->Face_GetPoints(f);
+		const T_Vec3* pnts = App->CL_X_Face->Face_GetPoints(f);
 
-		for (j = 0; j < App->CL_Face->Face_GetNumPoints(f); j++)
+		for (j = 0; j < App->CL_X_Face->Face_GetNumPoints(f); j++)
 		{
 			plist[j] = App->CL_Render->Render_OrthoWorldToView(Cam, &pnts[j]);
 		}

@@ -42,7 +42,7 @@ void CL64_FaceList::FaceList_SetBrushNames(const FaceList* fl, const char* Name)
 	
 	for (i = 0; i < fl->NumFaces; i++)
 	{
-		App->CL_Face->Face_SetBrushName(fl->Faces[i], Name);
+		App->CL_X_Face->Face_SetBrushName(fl->Faces[i], Name);
 	}
 }
  
@@ -97,12 +97,12 @@ void CL64_FaceList::FaceList_GetBounds(const FaceList* pList, Box3d* pBounds)
 	{
 		Box3d	Bounds;
 
-		App->CL_Face->Face_GetBounds(pList->Faces[0], &Bounds);
+		App->CL_X_Face->Face_GetBounds(pList->Faces[0], &Bounds);
 		for (i = 1; i < pList->NumFaces; i++)
 		{
 			Box3d FaceBounds;
 
-			App->CL_Face->Face_GetBounds(pList->Faces[i], &FaceBounds);
+			App->CL_X_Face->Face_GetBounds(pList->Faces[i], &FaceBounds);
 			App->CL_Box_x->Box3d_Union(&Bounds, &FaceBounds, &Bounds);
 		}
 		
@@ -141,7 +141,7 @@ void CL64_FaceList::FaceList_Destroy(FaceList** ppList)
 	pList = *ppList;
 	for (i = 0; i < pList->NumFaces; i++)
 	{
-		App->CL_Face->Face_Destroy(&pList->Faces[i]);
+		App->CL_X_Face->Face_Destroy(&pList->Faces[i]);
 	}
 	App->CL_Maths->Ram_Free(pList->Faces);
 	App->CL_Maths->Ram_Free(*ppList);
@@ -155,7 +155,7 @@ void CL64_FaceList::FaceList_RemoveFace(FaceList* pList, int WhichFace)
 {
 	int	i;
 
-	App->CL_Face->Face_Destroy(&pList->Faces[WhichFace]);
+	App->CL_X_Face->Face_Destroy(&pList->Faces[WhichFace]);
 
 	for (i = WhichFace; i < pList->NumFaces - 1; i++)
 	{
@@ -185,7 +185,7 @@ FaceList* CL64_FaceList::FaceList_Clone(const FaceList* pList)
 			f = FaceList_GetFace(pList, i);
 			if (f)
 			{
-				cpf = App->CL_Face->Face_Clone(f);
+				cpf = App->CL_X_Face->Face_Clone(f);
 				if (cpf)
 				FaceList_AddFace(cpList, cpf);
 			}
@@ -210,16 +210,16 @@ signed int CL64_FaceList::FaceList_GetUsedTextures(const FaceList* pList, signed
 	int i, index;
 	for (i = 0; i < pList->NumFaces; i++)
 	{
-		index = App->CL_Face->Face_GetTextureDibId(pList->Faces[i]);
+		index = App->CL_X_Face->Face_GetTextureDibId(pList->Faces[i]);
 
 		if (index < WadFile->mBitmapCount)
 			WrittenTex[index] = GE_TRUE;
 		else
 		{
 			WrittenTex[0] = GE_TRUE;
-			App->CL_Face->Face_SetTextureDibId(pList->Faces[i], 0);
-			App->CL_Face->Face_SetTextureName(pList->Faces[i], WadFile->mBitmaps[0].Name);
-			App->CL_Face->Face_SetTextureSize(pList->Faces[i], WadFile->mBitmaps[0].Width, WadFile->mBitmaps[0].Height);
+			App->CL_X_Face->Face_SetTextureDibId(pList->Faces[i], 0);
+			App->CL_X_Face->Face_SetTextureName(pList->Faces[i], WadFile->mBitmaps[0].Name);
+			App->CL_X_Face->Face_SetTextureSize(pList->Faces[i], WadFile->mBitmaps[0].Width, WadFile->mBitmaps[0].Height);
 		}
 	}
 
@@ -243,7 +243,7 @@ void CL64_FaceList::FaceList_CopyFaceInfo(const FaceList* src, FaceList* dst)
 
 	for (i = 0; i < src->NumFaces; i++)
 	{
-		App->CL_Face->Face_CopyFaceInfo(src->Faces[i], dst->Faces[i]);
+		App->CL_X_Face->Face_CopyFaceInfo(src->Faces[i], dst->Faces[i]);
 	}
 	dst->Dirty = GE_TRUE;
 }
@@ -262,12 +262,12 @@ void CL64_FaceList::FaceList_ClipFaceToList(const FaceList* fl, Face** f)
 
 	for (i = 0; i < fl->NumFaces; i++)
 	{
-		p = App->CL_Face->Face_GetPlane(fl->Faces[i]);
+		p = App->CL_X_Face->Face_GetPlane(fl->Faces[i]);
 
-		App->CL_Face->Face_GetSplitInfo(*f, p, dists, sides, cnt);
+		App->CL_X_Face->Face_GetSplitInfo(*f, p, dists, sides, cnt);
 		if (!cnt[SIDE_FRONT] && !cnt[SIDE_BACK])	//coplanar
 		{
-			App->CL_Face->Face_Destroy(f);
+			App->CL_X_Face->Face_Destroy(f);
 			return;
 		}
 		else if (!cnt[SIDE_FRONT])	//back
@@ -276,12 +276,12 @@ void CL64_FaceList::FaceList_ClipFaceToList(const FaceList* fl, Face** f)
 		}
 		else if (!cnt[SIDE_BACK])	//front
 		{
-			App->CL_Face->Face_Destroy(f);
+			App->CL_X_Face->Face_Destroy(f);
 			return;
 		}
 		else	//split
 		{
-			App->CL_Face->Face_Clip(*f, p, dists, sides);
+			App->CL_X_Face->Face_Clip(*f, p, dists, sides);
 		}
 	}
 }
@@ -295,7 +295,7 @@ void CL64_FaceList::FaceList_Move(FaceList* pList, const T_Vec3* trans)
 
 	for (i = 0; i < pList->NumFaces; i++)
 	{
-		App->CL_Face->Face_Move(pList->Faces[i], trans);
+		App->CL_X_Face->Face_Move(pList->Faces[i], trans);
 	}
 	pList->Dirty = GE_TRUE;
 }
@@ -314,7 +314,7 @@ signed int CL64_FaceList::FaceList_Scale(FaceList* pList, const T_Vec3* ScaleVec
 
 	for (i = 0; i < pList->NumFaces; i++)
 	{
-		Success = Success && App->CL_Face->Face_Scale(pList->Faces[i], ScaleVec);
+		Success = Success && App->CL_X_Face->Face_Scale(pList->Faces[i], ScaleVec);
 	}
 	pList->Dirty = GE_TRUE;
 	
@@ -332,7 +332,7 @@ signed int CL64_FaceList::FaceList_SetNextSelectedFace(FaceList* fl)
 
 	for (i = 0; i < fl->NumFaces; i++)
 	{
-		if (App->CL_Face->Face_IsSelected(fl->Faces[i]))
+		if (App->CL_X_Face->Face_IsSelected(fl->Faces[i]))
 		{
 			break;
 		}
@@ -340,20 +340,20 @@ signed int CL64_FaceList::FaceList_SetNextSelectedFace(FaceList* fl)
 
 	if (i < fl->NumFaces - 1)
 	{
-		App->CL_Face->Face_SetSelected(fl->Faces[i], GE_FALSE);
+		App->CL_X_Face->Face_SetSelected(fl->Faces[i], GE_FALSE);
 		i++;
 		i %= fl->NumFaces;
-		App->CL_Face->Face_SetSelected(fl->Faces[i], GE_TRUE);
+		App->CL_X_Face->Face_SetSelected(fl->Faces[i], GE_TRUE);
 		return	GE_TRUE;
 	}
 	else if (i < fl->NumFaces)
 	{
-		App->CL_Face->Face_SetSelected(fl->Faces[i], GE_FALSE);
+		App->CL_X_Face->Face_SetSelected(fl->Faces[i], GE_FALSE);
 		return	GE_FALSE;	//skip to next brush or select first 
 	}
 	else	//if it didn't overflow... there simply wasn't
 	{		//anything selected, select the first face
-		App->CL_Face->Face_SetSelected(fl->Faces[0], GE_TRUE);
+		App->CL_X_Face->Face_SetSelected(fl->Faces[0], GE_TRUE);
 		return	GE_TRUE;
 	}
 }
@@ -369,7 +369,7 @@ signed int CL64_FaceList::FaceList_SetPrevSelectedFace(FaceList* fl)
 
 	for (i = 0; i < fl->NumFaces; i++)
 	{
-		if (App->CL_Face->Face_IsSelected(fl->Faces[i]))
+		if (App->CL_X_Face->Face_IsSelected(fl->Faces[i]))
 		{
 			break;
 		}
@@ -377,19 +377,19 @@ signed int CL64_FaceList::FaceList_SetPrevSelectedFace(FaceList* fl)
 
 	if (i >= fl->NumFaces)	//if it didn't underflow... there simply wasn't
 	{						//anything selected, select the last face
-		App->CL_Face->Face_SetSelected(fl->Faces[fl->NumFaces - 1], GE_TRUE);
+		App->CL_X_Face->Face_SetSelected(fl->Faces[fl->NumFaces - 1], GE_TRUE);
 		return	GE_TRUE;
 	}
 	else if (i == 0)
 	{
-		App->CL_Face->Face_SetSelected(fl->Faces[i], GE_FALSE);
+		App->CL_X_Face->Face_SetSelected(fl->Faces[i], GE_FALSE);
 		return	GE_FALSE;	//skip to prev brush or select last
 	}
 	else
 	{
-		App->CL_Face->Face_SetSelected(fl->Faces[i], GE_FALSE);
+		App->CL_X_Face->Face_SetSelected(fl->Faces[i], GE_FALSE);
 		i--;
-		App->CL_Face->Face_SetSelected(fl->Faces[i], GE_TRUE);
+		App->CL_X_Face->Face_SetSelected(fl->Faces[i], GE_TRUE);
 		return	GE_TRUE;
 	}
 }
@@ -405,7 +405,7 @@ Face* CL64_FaceList::FaceList_GetSelectedFace(const FaceList* fl)
 
 	for (i = 0; i < fl->NumFaces; i++)
 	{
-		if (App->CL_Face->Face_IsSelected(fl->Faces[i]))
+		if (App->CL_X_Face->Face_IsSelected(fl->Faces[i]))
 		{
 			break;
 		}
@@ -456,8 +456,8 @@ void CL64_FaceList::Face_Rotate(Face* f, const Matrix3d* pXfmRotate, const T_Vec
 		App->CL_Maths->Vector3_Add(pPoint, pCenter, pPoint);
 	}
 
-	App->CL_Face->Face_SetPlaneFromFace(f);
-	App->CL_Face->Face_XfmTexture(f, pXfmRotate);
+	App->CL_X_Face->Face_SetPlaneFromFace(f);
+	App->CL_X_Face->Face_XfmTexture(f, pXfmRotate);
 
 	pPoint = &f->Tex.Pos;
 

@@ -274,7 +274,7 @@ Face* CL64_ParseFile::Face_CreateFromFile()
 			if (!Get_Vector3("Vec3d", &tmpPnts[i])) { return NULL; }
 		}
 
-		f = App->CL_Face->Face_Create(NumPnts, tmpPnts, 0);
+		f = App->CL_X_Face->Face_Create(NumPnts, tmpPnts, 0);
 		App->CL_Maths->Ram_Free(tmpPnts);
 		tmpPnts = NULL;
 
@@ -304,13 +304,13 @@ Face* CL64_ParseFile::Face_CreateFromFile()
 
 		if (f)
 		{
-			App->CL_Face->Face_InitTexInfo(&f->Tex, &f->Face_Plane.Normal);
+			App->CL_X_Face->Face_InitTexInfo(&f->Tex, &f->Face_Plane.Normal);
 
-			App->CL_Face->Face_SetTextureName(f, szTemp);
-			App->CL_Face->Face_SetTextureRotate(f, Rotate);
-			App->CL_Face->Face_SetTextureShift(f, xShift, yShift);
-			App->CL_Face->Face_SetTextureScale(f, xScale, yScale);
-			App->CL_Face->Face_SetTexturePos(f);
+			App->CL_X_Face->Face_SetTextureName(f, szTemp);
+			App->CL_X_Face->Face_SetTextureRotate(f, Rotate);
+			App->CL_X_Face->Face_SetTextureShift(f, xShift, yShift);
+			App->CL_X_Face->Face_SetTextureScale(f, xScale, yScale);
+			App->CL_X_Face->Face_SetTexturePos(f);
 
 			f->LightXScale = LightXScale;
 			f->LightYScale = LightYScale;

@@ -309,12 +309,12 @@ signed int CL64_File::Face_Write(const Face* f, FILE* wf)
 		if (fprintf(wf, "\t\t\tVec3d %f %f %f\n", f->Points[i].x, f->Points[i].y, f->Points[i].z) < 0) return GE_FALSE;
 	}
 
-	App->CL_Face->Face_GetTextureShift(f, &xShift, &yShift);
-	App->CL_Face->Face_GetTextureScale(f, &xScale, &yScale);
-	Rotate = App->CL_Face->Face_GetTextureRotate(f);
+	App->CL_X_Face->Face_GetTextureShift(f, &xShift, &yShift);
+	App->CL_X_Face->Face_GetTextureScale(f, &xScale, &yScale);
+	Rotate = App->CL_X_Face->Face_GetTextureRotate(f);
 		
 	fprintf(wf, "\t\t\tTexInfo Rotate %f Shift %d %d Scale %f %f Name %s\n",
-		Rotate, xShift, yShift, xScale, yScale, App->CL_Face->Face_GetTextureName(f));
+		Rotate, xShift, yShift, xScale, yScale, App->CL_X_Face->Face_GetTextureName(f));
 		
 	
 	fprintf(wf, "\t\tLightScale %f %f\n", f->LightXScale, f->LightYScale);
@@ -602,7 +602,7 @@ void CL64_File::Set_Editor()
 	App->CL_Top_Tabs->Deselect_Faces_Dlg_Buttons();
 
 	// Reset the selected face index and all selections in the document
-	App->CL_Face->Selected_Face_Index = 0;
+	App->CL_X_Face->Selected_Face_Index = 0;
 	App->CL_Doc->ResetAllSelections();
 
 	// Disable brush options buttons and select the templates tab

@@ -26,8 +26,6 @@ THE SOFTWARE.
 
 #include "CL64_Editor_Map.h"
 
-//#include "CL64_Lib_Maths.h"
-
 #include "G_Box.h"
 
 #include "CL64_Render_Map.h"
@@ -41,11 +39,11 @@ THE SOFTWARE.
 #include "CL64_Utilities.h"
 
 #include "CX_Brush.h" // Library
-//#include "CL64_Brush.h"
-
 
 #include "CL64_FaceList.h"
-#include "CL64_Face.h"
+
+#include "CX_Face.h"
+//#include "CL64_Face.h"
 
 #include "BrushTemplate.h" // Library
 
@@ -143,7 +141,9 @@ public:
 //	CL64_Brush*					CL_Brush;
 
 	CL64_FaceList*				CL_FaceList;
-	CL64_Face*					CL_Face;
+
+	CX_Face*					CL_X_Face;
+	//CL64_Face*					CL_Face;
 
 	// Libraries
 	BrushTemplate*				CL_X_BrushTemplate;

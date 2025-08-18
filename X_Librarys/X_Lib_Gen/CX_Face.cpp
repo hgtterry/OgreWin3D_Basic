@@ -138,7 +138,7 @@ void CX_Face::Face_SetTexturePos(Face* f)
 // *************************************************************************
 // *						Face_InitTexInfo							   *
 // *************************************************************************
-void CL64_Face::Face_SetTextureDibId(Face* f, const int Dib)
+void CX_Face::Face_SetTextureDibId(Face* f, const int Dib)
 {
 	assert(f != NULL);
 
@@ -482,7 +482,7 @@ const T_Vec3* CX_Face::Face_GetPoints(const Face* f)
 // *************************************************************************
 // *					Face_GetNumPoints							 	   *
 // *************************************************************************
-int	CL64_Face::Face_GetNumPoints(const Face* f)
+int	CX_Face::Face_GetNumPoints(const Face* f)
 {
 	return	f->NumPoints;
 }
@@ -961,7 +961,7 @@ static void Face_UpdateFaceAngle(Face* f, const T_Vec3* OldNormal)
 		App->CL_Maths->Quaternion_ToMatrix(&QRot, &Xfm);
 	}
 
-	App->CL_Face->Face_XfmTexture(f, &Xfm);
+	App->CL_X_Face->Face_XfmTexture(f, &Xfm);
 }
 
 // *************************************************************************
@@ -1113,7 +1113,7 @@ void CX_Face::Face_SetTextureLock(Face* f, const signed int bState)
 // *************************************************************************
 // *						Face_IsTextureLocked			   			   *
 // *************************************************************************
-bool CL64_Face::Face_IsTextureLocked(const Face* f)
+bool CX_Face::Face_IsTextureLocked(const Face* f)
 {
 	return (f->Flags & FACE_TEXTURELOCKED) ? true : false;
 }

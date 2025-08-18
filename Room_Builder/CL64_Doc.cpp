@@ -487,8 +487,8 @@ static  signed int FindClosestBrushCB(Brush* pBrush, void* pVoid)
         {
             POINT pt1, pt2;
             Face* pFace = App->CL_X_Brush->Brush_GetFace(pBrush, iFace);
-            const T_Vec3* FacePoints = App->CL_Face->Face_GetPoints(pFace);
-            int	NumPoints = App->CL_Face->Face_GetNumPoints(pFace);
+            const T_Vec3* FacePoints = App->CL_X_Face->Face_GetPoints(pFace);
+            int	NumPoints = App->CL_X_Face->Face_GetNumPoints(pFace);
 
             // Starting with the edge formed by the last point and the first point,
             // determine distance from mouse cursor pos to the edge.
@@ -522,7 +522,7 @@ static signed int ResetSelectedFacesCB(Brush* b, void* pVoid)
         Face* pFace;
 
         pFace = App->CL_X_Brush->Brush_GetFace(b, i);
-        App->CL_Face->Face_SetSelected(pFace, false);
+        App->CL_X_Face->Face_SetSelected(pFace, false);
     }
     return GE_TRUE;
 }
@@ -1709,20 +1709,20 @@ void CL64_Doc::UpdateSelected(void)
 // *************************************************************************
 static signed int fdocUpdateFaceTextures(Face* pFace, void* lParam)
 {
-    Ogre::uint16 TestDibID = App->CL_Level->Level_GetDibId(App->CL_Face->Face_GetTextureName(pFace));
+    Ogre::uint16 TestDibID = App->CL_Level->Level_GetDibId(App->CL_X_Face->Face_GetTextureName(pFace));
     if (TestDibID == 0xffff)
     {
-        App->CL_Face->Face_SetTextureDibId(pFace, 0);
+        App->CL_X_Face->Face_SetTextureDibId(pFace, 0);
     }
     else
     {
-        App->CL_Face->Face_SetTextureDibId(pFace, App->CL_Level->Level_GetDibId(App->CL_Face->Face_GetTextureName(pFace)));
+        App->CL_X_Face->Face_SetTextureDibId(pFace, App->CL_Level->Level_GetDibId(App->CL_X_Face->Face_GetTextureName(pFace)));
     }
    
-    const WadFileEntry* const pbmp = App->CL_Level->Level_GetWadBitmap(App->CL_Face->Face_GetTextureName(pFace));
+    const WadFileEntry* const pbmp = App->CL_Level->Level_GetWadBitmap(App->CL_X_Face->Face_GetTextureName(pFace));
     if (pbmp)
     {
-        App->CL_Face->Face_SetTextureSize(pFace, pbmp->Width, pbmp->Height);
+        App->CL_X_Face->Face_SetTextureSize(pFace, pbmp->Width, pbmp->Height);
     }
   
     return GE_TRUE;

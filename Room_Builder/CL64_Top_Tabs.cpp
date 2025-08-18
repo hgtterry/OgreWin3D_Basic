@@ -512,7 +512,7 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Headers(HWND hDlg, UINT message, WPARAM wPa
 				}
 				else
 				{
-					App->CL_Face->Selected_Face_Index = Index;
+					App->CL_X_Face->Selected_Face_Index = Index;
 					App->CL_Top_Tabs->Select_Face();
 
 					if (App->CL_Properties_Faces->flag_FaceDlg_Active == 1)
@@ -545,11 +545,11 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Headers(HWND hDlg, UINT message, WPARAM wPa
 		// ----- Next Face
 		if (LOWORD(wParam) == IDC_BT_NEXTFACE)
 		{
-			App->CL_Face->Selected_Face_Index++;
+			App->CL_X_Face->Selected_Face_Index++;
 
-			if (App->CL_Face->Selected_Face_Index == App->CL_Brush_X->Face_Count)
+			if (App->CL_X_Face->Selected_Face_Index == App->CL_Brush_X->Face_Count)
 			{
-				App->CL_Face->Selected_Face_Index = 0;
+				App->CL_X_Face->Selected_Face_Index = 0;
 			}
 
 			App->CL_Top_Tabs->Select_Face();
@@ -564,11 +564,11 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Headers(HWND hDlg, UINT message, WPARAM wPa
 
 		if (LOWORD(wParam) == IDC_BT_PREVFACE)
 		{
-			App->CL_Face->Selected_Face_Index--;
+			App->CL_X_Face->Selected_Face_Index--;
 
-			if (App->CL_Face->Selected_Face_Index < 0)
+			if (App->CL_X_Face->Selected_Face_Index < 0)
 			{
-				App->CL_Face->Selected_Face_Index = App->CL_Brush_X->Face_Count - 1;
+				App->CL_X_Face->Selected_Face_Index = App->CL_Brush_X->Face_Count - 1;
 			}
 
 			App->CL_Top_Tabs->Select_Face();
@@ -815,7 +815,7 @@ void CL64_Top_Tabs::Select_Face()
 		App->CL_Top_Tabs->Redraw_TopTabs_Dlg();
 
 		App->CL_Doc->SelectAllFacesInBrushes();
-		App->CL_Face->Select_Face_From_Index(App->CL_Face->Selected_Face_Index);
+		App->CL_X_Face->Select_Face_From_Index(App->CL_X_Face->Selected_Face_Index);
 	}
 	else
 	{
@@ -823,7 +823,7 @@ void CL64_Top_Tabs::Select_Face()
 		App->CL_Top_Tabs->flag_Next_Face = 1;
 		App->CL_Top_Tabs->Redraw_TopTabs_Dlg();
 
-		App->CL_Face->Select_Face_From_Index(App->CL_Face->Selected_Face_Index);
+		App->CL_X_Face->Select_Face_From_Index(App->CL_X_Face->Selected_Face_Index);
 	}
 
 	App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
@@ -832,7 +832,7 @@ void CL64_Top_Tabs::Select_Face()
 	App->CL_Properties_Tabs->Select_Textures_Tab();
 
 	HWND Temp = GetDlgItem(App->CL_Top_Tabs->TopTabs_Dlg_hWnd, IDC_CB_FACELIST);
-	SendMessage(Temp, CB_SETCURSEL, App->CL_Face->Selected_Face_Index, 0);
+	SendMessage(Temp, CB_SETCURSEL, App->CL_X_Face->Selected_Face_Index, 0);
 }
 
 // *************************************************************************
@@ -862,7 +862,7 @@ void CL64_Top_Tabs::Update_Faces_Combo()
 			Count++;
 		}
 
-		SendMessage(Temp, CB_SETCURSEL, App->CL_Face->Selected_Face_Index, 0);
+		SendMessage(Temp, CB_SETCURSEL, App->CL_X_Face->Selected_Face_Index, 0);
 	}
 
 	//Get_Timer

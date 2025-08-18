@@ -24,7 +24,7 @@ THE SOFTWARE.
 
 #pragma once
 
-#include "CL64_Face.h"
+#include "CX_Face.h"
 
 class CL64_FaceList
 {

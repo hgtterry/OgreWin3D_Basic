@@ -25,7 +25,7 @@ THE SOFTWARE.
 #pragma once
 
 #include "G_Box.h"
-#include "CL64_Face.h"
+#include "CX_Face.h"
 #include "CL64_WadFile.h"
 
 typedef struct tag_FaceList FaceList;

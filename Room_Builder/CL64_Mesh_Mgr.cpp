@@ -447,7 +447,7 @@ bool CL64_Mesh_Mgr::Brush_FaceList_Create(const Brush* b, const FaceList* pList,
 	for (i = 0; i < pList->NumFaces; i++)
 	{
 
-		curnum_verts = App->CL_Face->Face_GetNumPoints(pList->Faces[i]);
+		curnum_verts = App->CL_X_Face->Face_GetNumPoints(pList->Faces[i]);
 		num_faces += (curnum_verts - 2);
 		num_verts += curnum_verts;
 
@@ -458,11 +458,11 @@ bool CL64_Mesh_Mgr::Brush_FaceList_Create(const Brush* b, const FaceList* pList,
 
 			for (j = i + 1; j < pList->NumFaces; j++)
 			{
-				if (strcmp(App->CL_Face->Face_GetTextureName(pList->Faces[i]), App->CL_Face->Face_GetTextureName(pList->Faces[j])) == 0)
+				if (strcmp(App->CL_X_Face->Face_GetTextureName(pList->Faces[i]), App->CL_X_Face->Face_GetTextureName(pList->Faces[j])) == 0)
 					matf[j] = 1;
 			}
 
-			strncpy(matname, App->CL_Face->Face_GetTextureName(pList->Faces[i]), MAX_PATH);
+			strncpy(matname, App->CL_X_Face->Face_GetTextureName(pList->Faces[i]), MAX_PATH);
 		}
 	}
 
@@ -482,8 +482,8 @@ bool CL64_Mesh_Mgr::Brush_FaceList_Create(const Brush* b, const FaceList* pList,
 	{
 		
 		const T_Vec3* verts;
-		verts = App->CL_Face->Face_GetPoints(pList->Faces[i]);
-		curnum_verts = App->CL_Face->Face_GetNumPoints(pList->Faces[i]);
+		verts = App->CL_X_Face->Face_GetPoints(pList->Faces[i]);
+		curnum_verts = App->CL_X_Face->Face_GetNumPoints(pList->Faces[i]);
 		for (j = 0; j < curnum_verts; j++)
 		{
 			App->CL_Scene->B_Brush[App->CL_Scene->BrushCount]->vertex_Data[VertIndex].x = verts[j].x;
@@ -504,14 +504,14 @@ bool CL64_Mesh_Mgr::Brush_FaceList_Create(const Brush* b, const FaceList* pList,
 	App->CL_Scene->B_Brush[App->CL_Scene->BrushCount]->MapCord_Data.resize(num_verts);
 	for (i = 0; i < pList->NumFaces; i++)
 	{
-		const TexInfo_Vectors* TVecs = App->CL_Face->Face_GetTextureVecs(pList->Faces[i]); // hgtterry needs finishing
+		const TexInfo_Vectors* TVecs = App->CL_X_Face->Face_GetTextureVecs(pList->Faces[i]); // hgtterry needs finishing
 		const T_Vec3* verts;
 		T_Vec3 uVec, vVec;
 		float U, V;
 
 		int txSize, tySize;
 
-		App->CL_Face->Face_GetTextureSize(pList->Faces[i], &txSize, &tySize);
+		App->CL_X_Face->Face_GetTextureSize(pList->Faces[i], &txSize, &tySize);
 
 		// make sure that the texture size is set correctly (division!)
 		if (txSize == 0)
@@ -527,8 +527,8 @@ bool CL64_Mesh_Mgr::Brush_FaceList_Create(const Brush* b, const FaceList* pList,
 		App->CL_Maths->Vector3_Scale(&TVecs->uVec, 1.f / (float)txSize, &uVec);
 		App->CL_Maths->Vector3_Scale(&TVecs->vVec, -1.f / (float)tySize, &vVec);
 
-		verts = App->CL_Face->Face_GetPoints(pList->Faces[i]);
-		curnum_verts = App->CL_Face->Face_GetNumPoints(pList->Faces[i]);
+		verts = App->CL_X_Face->Face_GetPoints(pList->Faces[i]);
+		curnum_verts = App->CL_X_Face->Face_GetNumPoints(pList->Faces[i]);
 
 		for (j = 0; j < curnum_verts; j++)
 		{
@@ -552,12 +552,12 @@ bool CL64_Mesh_Mgr::Brush_FaceList_Create(const Brush* b, const FaceList* pList,
 	num_verts = 0;
 	for (i = 0; i < pList->NumFaces; i++)
 	{
-		curnum_verts = App->CL_Face->Face_GetNumPoints(pList->Faces[i]); //4
+		curnum_verts = App->CL_X_Face->Face_GetNumPoints(pList->Faces[i]); //4
 
 		for (j = 0; j < curnum_verts - 2; j++)
 		{
 			Create_V_Face(v_Face_Data_Count);
-			strcpy(v_Face_Data[v_Face_Data_Count]->Brush_Name, App->CL_Face->Face_GetBrushName(pList->Faces[i]));
+			strcpy(v_Face_Data[v_Face_Data_Count]->Brush_Name, App->CL_X_Face->Face_GetBrushName(pList->Faces[i]));
 
 			App->CL_Scene->B_Brush[App->CL_Scene->BrushCount]->Face_Data[FaceIndex].a = num_verts;
 			App->CL_Scene->B_Brush[App->CL_Scene->BrushCount]->Face_Data[FaceIndex].b = num_verts + 2 + j;
@@ -581,32 +581,32 @@ bool CL64_Mesh_Mgr::Brush_FaceList_Create(const Brush* b, const FaceList* pList,
 		{
 			matf[i] = true;
 
-			int curnum_faces = (App->CL_Face->Face_GetNumPoints(pList->Faces[i]) - 2);
+			int curnum_faces = (App->CL_X_Face->Face_GetNumPoints(pList->Faces[i]) - 2);
 
 			for (j = i + 1; j < pList->NumFaces; j++)
 			{
-				if (strcmp(App->CL_Face->Face_GetTextureName(pList->Faces[i]), App->CL_Face->Face_GetTextureName(pList->Faces[j])) == 0)
+				if (strcmp(App->CL_X_Face->Face_GetTextureName(pList->Faces[i]), App->CL_X_Face->Face_GetTextureName(pList->Faces[j])) == 0)
 				{
-					curnum_faces += (App->CL_Face->Face_GetNumPoints(pList->Faces[j]) - 2);
+					curnum_faces += (App->CL_X_Face->Face_GetNumPoints(pList->Faces[j]) - 2);
 				}
 			}
 
-			strncpy(matname, App->CL_Face->Face_GetTextureName(pList->Faces[i]), 11);
+			strncpy(matname, App->CL_X_Face->Face_GetTextureName(pList->Faces[i]), 11);
 
 			// Material Name
-			int DibId = Get_Adjusted_Index(App->CL_Face->Face_GetTextureDibId(pList->Faces[i]));
+			int DibId = Get_Adjusted_Index(App->CL_X_Face->Face_GetTextureDibId(pList->Faces[i]));
 
 			// write face numbers
 			curnum_faces = 0;
 			for (j = 0; j < i; j++)
 			{
-				curnum_faces += (App->CL_Face->Face_GetNumPoints(pList->Faces[j]) - 2);
+				curnum_faces += (App->CL_X_Face->Face_GetNumPoints(pList->Faces[j]) - 2);
 			}
 
-			curnum_verts = App->CL_Face->Face_GetNumPoints(pList->Faces[i]);
+			curnum_verts = App->CL_X_Face->Face_GetNumPoints(pList->Faces[i]);
 			for (j = 0; j < curnum_verts - 2; j++)
 			{
-				TextureId = Get_Adjusted_Index(App->CL_Face->Face_GetTextureDibId(pList->Faces[i]));
+				TextureId = Get_Adjusted_Index(App->CL_X_Face->Face_GetTextureDibId(pList->Faces[i]));
 				App->CL_Scene->B_Brush[App->CL_Scene->BrushCount]->Picking_Data[curnum_faces + j].TextID = TextureId;
 
 			}
@@ -615,13 +615,13 @@ bool CL64_Mesh_Mgr::Brush_FaceList_Create(const Brush* b, const FaceList* pList,
 
 			for (j = i + 1; j < pList->NumFaces; j++)
 			{
-				curnum_verts = App->CL_Face->Face_GetNumPoints(pList->Faces[j]);
-				if (strcmp(App->CL_Face->Face_GetTextureName(pList->Faces[i]), App->CL_Face->Face_GetTextureName(pList->Faces[j])) == 0)
+				curnum_verts = App->CL_X_Face->Face_GetNumPoints(pList->Faces[j]);
+				if (strcmp(App->CL_X_Face->Face_GetTextureName(pList->Faces[i]), App->CL_X_Face->Face_GetTextureName(pList->Faces[j])) == 0)
 				{
 					matf[j] = true;
 					for (k = 0; k < curnum_verts - 2; k++)
 					{
-						TextureId = Get_Adjusted_Index(App->CL_Face->Face_GetTextureDibId(pList->Faces[i]));
+						TextureId = Get_Adjusted_Index(App->CL_X_Face->Face_GetTextureDibId(pList->Faces[i]));
 						App->CL_Scene->B_Brush[App->CL_Scene->BrushCount]->Picking_Data[curnum_faces + k].TextID = TextureId;
 
 					}

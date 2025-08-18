@@ -270,12 +270,12 @@ Brush* Base_Object::BrushTemplate_CreateBox(const BrushTemplate_Box* pTemplate)
 	FaceVerts[1] = Verts[2];
 	FaceVerts[0] = Verts[3];
 
-	f = App->CL_Face->Face_Create(4, FaceVerts, 0);
+	f = App->CL_X_Face->Face_Create(4, FaceVerts, 0);
 	if (f)
 	{
 		f->Real_Brush_Face_Index = 1;
 		App->CL_FaceList->FaceList_AddFace(fl, f);
-		App->CL_Face->Face_SetTextureLock(f, true);
+		App->CL_X_Face->Face_SetTextureLock(f, true);
 	}
 
 	FaceVerts[3] = Verts[4];
@@ -283,12 +283,12 @@ Brush* Base_Object::BrushTemplate_CreateBox(const BrushTemplate_Box* pTemplate)
 	FaceVerts[1] = Verts[6];
 	FaceVerts[0] = Verts[7];
 
-	f = App->CL_Face->Face_Create(4, FaceVerts, 0);
+	f = App->CL_X_Face->Face_Create(4, FaceVerts, 0);
 	if (f)
 	{
 		f->Real_Brush_Face_Index = 2;
 		App->CL_FaceList->FaceList_AddFace(fl, f);
-		App->CL_Face->Face_SetTextureLock(f, true);
+		App->CL_X_Face->Face_SetTextureLock(f, true);
 	}
 
 	FaceVerts[3] = Verts[1];
@@ -296,12 +296,12 @@ Brush* Base_Object::BrushTemplate_CreateBox(const BrushTemplate_Box* pTemplate)
 	FaceVerts[1] = Verts[6];
 	FaceVerts[0] = Verts[2];
 
-	f = App->CL_Face->Face_Create(4, FaceVerts, 0);
+	f = App->CL_X_Face->Face_Create(4, FaceVerts, 0);
 	if (f)
 	{
 		f->Real_Brush_Face_Index = 3;
 		App->CL_FaceList->FaceList_AddFace(fl, f);
-		App->CL_Face->Face_SetTextureLock(f, true);
+		App->CL_X_Face->Face_SetTextureLock(f, true);
 	}
 
 	FaceVerts[3] = Verts[0];
@@ -309,12 +309,12 @@ Brush* Base_Object::BrushTemplate_CreateBox(const BrushTemplate_Box* pTemplate)
 	FaceVerts[1] = Verts[5];
 	FaceVerts[0] = Verts[4];
 
-	f = App->CL_Face->Face_Create(4, FaceVerts, 0);
+	f = App->CL_X_Face->Face_Create(4, FaceVerts, 0);
 	if (f)
 	{
 		f->Real_Brush_Face_Index = 4;
 		App->CL_FaceList->FaceList_AddFace(fl, f);
-		App->CL_Face->Face_SetTextureLock(f, true);
+		App->CL_X_Face->Face_SetTextureLock(f, true);
 	}
 
 	FaceVerts[3] = Verts[0];
@@ -322,12 +322,12 @@ Brush* Base_Object::BrushTemplate_CreateBox(const BrushTemplate_Box* pTemplate)
 	FaceVerts[1] = Verts[7];
 	FaceVerts[0] = Verts[1];
 
-	f = App->CL_Face->Face_Create(4, FaceVerts, 0);
+	f = App->CL_X_Face->Face_Create(4, FaceVerts, 0);
 	if (f)
 	{
 		f->Real_Brush_Face_Index = 5;
 		App->CL_FaceList->FaceList_AddFace(fl, f);
-		App->CL_Face->Face_SetTextureLock(f, true);
+		App->CL_X_Face->Face_SetTextureLock(f, true);
 	}
 
 	FaceVerts[3] = Verts[3];
@@ -335,12 +335,12 @@ Brush* Base_Object::BrushTemplate_CreateBox(const BrushTemplate_Box* pTemplate)
 	FaceVerts[1] = Verts[6];
 	FaceVerts[0] = Verts[5];
 
-	f = App->CL_Face->Face_Create(4, FaceVerts, 0);
+	f = App->CL_X_Face->Face_Create(4, FaceVerts, 0);
 	if (f)
 	{
 		f->Real_Brush_Face_Index = 6;
 		App->CL_FaceList->FaceList_AddFace(fl, f);
-		App->CL_Face->Face_SetTextureLock(f, true);
+		App->CL_X_Face->Face_SetTextureLock(f, true);
 	}
 
 	b = App->CL_X_Brush->Brush_Create(BRUSH_LEAF, fl, 0);

@@ -245,12 +245,12 @@ void CX_Brush::Brush_SetSheet(Brush* b, const signed int bState)
 		b->Flags = (bState) ? b->Flags | BRUSH_SHEET : b->Flags & ~BRUSH_SHEET;
 
 		f = App->CL_FaceList->FaceList_GetFace(b->Faces, 0);
-		App->CL_Face->Face_SetSheet(f, bState);
+		App->CL_X_Face->Face_SetSheet(f, bState);
 
 		for (i = 1; i < App->CL_FaceList->FaceList_GetNumFaces(b->Faces); i++)
 		{
 			f = App->CL_FaceList->FaceList_GetFace(b->Faces, i);
-			App->CL_Face->Face_SetVisible(f, !bState);
+			App->CL_X_Face->Face_SetVisible(f, !bState);
 		}
 	}
 }
@@ -330,9 +330,9 @@ Brush* CX_Brush::Brush_CreateHollowFromBrush(const Brush* b)
 	for (i = 0; i < App->CL_FaceList->FaceList_GetNumFaces(b->Faces); i++)
 	{
 		f = App->CL_FaceList->FaceList_GetFace(b->Faces, i);
-		p = App->CL_Face->Face_GetPlane(f);
+		p = App->CL_X_Face->Face_GetPlane(f);
 
-		if (App->CL_Face->Face_IsFixedHull(f))
+		if (App->CL_X_Face->Face_IsFixedHull(f))
 		{
 			ExpandPlane.Normal = p->Normal;
 			ExpandPlane.Dist = p->Dist;
@@ -346,8 +346,8 @@ Brush* CX_Brush::Brush_CreateHollowFromBrush(const Brush* b)
 			ExpandPlane.Dist = App->CL_Maths->Vector3_DotProduct(&ExpandPlane.Normal, &pnt);
 		}
 		//create a face from the inner plane
-		sf = App->CL_Face->Face_CreateFromPlane(&ExpandPlane, BOGUS_RANGE, 0);
-		App->CL_Face->Face_CopyFaceInfo(f, sf);
+		sf = App->CL_X_Face->Face_CreateFromPlane(&ExpandPlane, BOGUS_RANGE, 0);
+		App->CL_X_Face->Face_CopyFaceInfo(f, sf);
 
 		sf->Real_Brush_Face_Index = i + 7;
 
@@ -389,9 +389,9 @@ void CX_Brush::Brush_SealFaces(Brush** b)
 	for (i = 0; i < App->CL_FaceList->FaceList_GetNumFaces((*b)->Faces); i++)
 	{
 		f = (Face*)App->CL_FaceList->FaceList_GetFace((*b)->Faces, i);
-		p = App->CL_Face->Face_GetPlane(f);
-		f2 = App->CL_Face->Face_CreateFromPlane(p, BOGUS_RANGE, 0);
-		App->CL_Face->Face_CopyFaceInfo(f, f2);
+		p = App->CL_X_Face->Face_GetPlane(f);
+		f2 = App->CL_X_Face->Face_CreateFromPlane(p, BOGUS_RANGE, 0);
+		App->CL_X_Face->Face_CopyFaceInfo(f, f2);
 		App->CL_FaceList->FaceList_AddFace(fl, f2);
 	}
 	for (i = 0; i < App->CL_FaceList->FaceList_GetNumFaces(fl); i++)
@@ -406,9 +406,9 @@ void CX_Brush::Brush_SealFaces(Brush** b)
 				continue;
 			}
 			f2 = App->CL_FaceList->FaceList_GetFace(fl, j);
-			p = App->CL_Face->Face_GetPlane(f2);
+			p = App->CL_X_Face->Face_GetPlane(f2);
 
-			App->CL_Face->Face_GetSplitInfo(f, p, dists, sides, cnt);
+			App->CL_X_Face->Face_GetSplitInfo(f, p, dists, sides, cnt);
 
 			if (!cnt[SIDE_FRONT] && !cnt[SIDE_BACK])	//coplanar
 			{
@@ -428,7 +428,7 @@ void CX_Brush::Brush_SealFaces(Brush** b)
 			}
 			else	//split
 			{
-				App->CL_Face->Face_Clip(f, p, dists, sides);
+				App->CL_X_Face->Face_Clip(f, p, dists, sides);
 			}
 		}
 		if (j < App->CL_FaceList->FaceList_GetNumFaces(fl))
@@ -996,12 +996,12 @@ static void	Brush_UpdateChildFacesRecurse(Brush* b, Brush* bp)
 						for (i = 0; i < App->CL_FaceList->FaceList_GetNumFaces(b->Faces); i++)
 						{
 							f = App->CL_FaceList->FaceList_GetFace(b->Faces, i);
-							p = App->CL_Face->Face_GetPlane(f);
+							p = App->CL_X_Face->Face_GetPlane(f);
 							for (j = 0; j < App->CL_FaceList->FaceList_GetNumFaces(cb->Faces); j++)
 							{
 								T_Vec3	v;
 								f2 = App->CL_FaceList->FaceList_GetFace(cb->Faces, j);
-								p2 = App->CL_Face->Face_GetPlane(f2);
+								p2 = App->CL_X_Face->Face_GetPlane(f2);
 								v = p->Normal;
 
 								App->CL_Maths->Vector3_Inverse(&v);
@@ -1010,7 +1010,7 @@ static void	Brush_UpdateChildFacesRecurse(Brush* b, Brush* bp)
 								{
 									if (fabs(-p->Dist - p2->Dist) < 0.01f)
 									{
-										App->CL_Face->Face_CopyFaceInfo(f, f2);
+										App->CL_X_Face->Face_CopyFaceInfo(f, f2);
 										Update = true;
 									}
 								}
@@ -1028,17 +1028,17 @@ static void	Brush_UpdateChildFacesRecurse(Brush* b, Brush* bp)
 				for (i = 0; i < App->CL_FaceList->FaceList_GetNumFaces(b->Faces); i++)
 				{
 					f = App->CL_FaceList->FaceList_GetFace(b->Faces, i);
-					p = App->CL_Face->Face_GetPlane(f);
+					p = App->CL_X_Face->Face_GetPlane(f);
 					for (j = 0; j < App->CL_FaceList->FaceList_GetNumFaces(cb->Faces); j++)
 					{
 						f2 = App->CL_FaceList->FaceList_GetFace(cb->Faces, j);
-						p2 = App->CL_Face->Face_GetPlane(f2);
+						p2 = App->CL_X_Face->Face_GetPlane(f2);
 
 						if (App->CL_Maths->Vector3_Compare(&p->Normal, &p2->Normal, 0.01f))
 						{
 							if (fabs(p->Dist - p2->Dist) < 0.01f)
 							{
-								App->CL_Face->Face_CopyFaceInfo(f, f2);
+								App->CL_X_Face->Face_CopyFaceInfo(f, f2);
 							}
 						}
 					}
@@ -1375,7 +1375,7 @@ static int	Brush_MostlyOnSide(const Brush* b, const GPlane* p)
 	side = SIDE_FRONT;
 	for (i = 0; i < App->CL_FaceList->FaceList_GetNumFaces(b->Faces); i++)
 	{
-		App->CL_Face->Face_MostlyOnSide(App->CL_FaceList->FaceList_GetFace(b->Faces, i), p, &max, &side);
+		App->CL_X_Face->Face_MostlyOnSide(App->CL_FaceList->FaceList_GetFace(b->Faces, i), p, &max, &side);
 	}
 	return	side;
 }
@@ -1400,14 +1400,14 @@ void CX_Brush::Brush_SplitByFace(Brush* ogb, Face* sf, Brush** fb, Brush** bb)
 	assert(*fb == NULL);
 	assert(*bb == NULL);
 
-	p = App->CL_Face->Face_GetPlane(sf);
+	p = App->CL_X_Face->Face_GetPlane(sf);
 
 	fcnt[0] = fcnt[1] = fcnt[2] = fcnt[3] = 0;
 
 	for (i = 0; i < App->CL_FaceList->FaceList_GetNumFaces(ogb->Faces); i++)
 	{
 		f = App->CL_FaceList->FaceList_GetFace(ogb->Faces, i);
-		App->CL_Face->Face_GetSplitInfo(f, p, dists, sides, cnt);
+		App->CL_X_Face->Face_GetSplitInfo(f, p, dists, sides, cnt);
 		if (!cnt[SIDE_FRONT] && !cnt[SIDE_BACK])	//coplanar
 		{
 			fsides[i] = SIDE_ON;
@@ -1431,11 +1431,11 @@ void CX_Brush::Brush_SplitByFace(Brush* ogb, Face* sf, Brush** fb, Brush** bb)
 	if (fcnt[SIDE_SPLIT])	//at least one face split
 	{
 		//clip the split face
-		midf = App->CL_Face->Face_Clone(sf);
+		midf = App->CL_X_Face->Face_Clone(sf);
 		App->CL_FaceList->FaceList_ClipFaceToList(ogb->Faces, &midf);
 		if (!midf)
 		{
-			if (Brush_MostlyOnSide(ogb, App->CL_Face->Face_GetPlane(sf)) == SIDE_FRONT)
+			if (Brush_MostlyOnSide(ogb, App->CL_X_Face->Face_GetPlane(sf)) == SIDE_FRONT)
 			{
 				*fb = Brush_Clone(ogb);
 			}
@@ -1457,14 +1457,14 @@ void CX_Brush::Brush_SplitByFace(Brush* ogb, Face* sf, Brush** fb, Brush** bb)
 			switch (fsides[i])
 			{
 			case	SIDE_FRONT:
-				cpf = App->CL_Face->Face_Clone(f);
+				cpf = App->CL_X_Face->Face_Clone(f);
 				if (cpf)
 				{
 					App->CL_FaceList->FaceList_AddFace(fl, cpf);
 				}
 				break;
 			case	SIDE_BACK:
-				cpf = App->CL_Face->Face_Clone(f);
+				cpf = App->CL_X_Face->Face_Clone(f);
 				if (cpf)
 				{
 					App->CL_FaceList->FaceList_AddFace(bl, cpf);
@@ -1472,7 +1472,7 @@ void CX_Brush::Brush_SplitByFace(Brush* ogb, Face* sf, Brush** fb, Brush** bb)
 				break;
 			case	SIDE_SPLIT:	//this info should be reused from above!!!
 				ff = bf = NULL;
-				App->CL_Face->Face_GetSplitInfo(f, p, dists, sides, cnt);
+				App->CL_X_Face->Face_GetSplitInfo(f, p, dists, sides, cnt);
 				if (!cnt[SIDE_FRONT] && !cnt[SIDE_BACK])	//coplanar
 				{
 					assert(0);	//shouldn't happen
@@ -1490,7 +1490,7 @@ void CX_Brush::Brush_SplitByFace(Brush* ogb, Face* sf, Brush** fb, Brush** bb)
 				else	//split
 				{
 					WasSplit = true;
-					App->CL_Face->Face_Split(f, p, &ff, &bf, dists, sides);
+					App->CL_X_Face->Face_Split(f, p, &ff, &bf, dists, sides);
 				}
 
 				if (ff)
@@ -1510,7 +1510,7 @@ void CX_Brush::Brush_SplitByFace(Brush* ogb, Face* sf, Brush** fb, Brush** bb)
 			App->CL_FaceList->FaceList_AddFace(bl, midf);
 
 			//flip for front side brush
-			cpf = App->CL_Face->Face_CloneReverse(midf);
+			cpf = App->CL_X_Face->Face_CloneReverse(midf);
 			App->CL_FaceList->FaceList_AddFace(fl, cpf);
 		}
 		*fb = Brush_CreateFromParent(ogb, fl);
@@ -1574,11 +1574,11 @@ static void	Brush_CutBrush(Brush* b, Brush* b2)
 				for (i = 0; i < App->CL_FaceList->FaceList_GetNumFaces(b->Faces); i++)
 				{
 					f = App->CL_FaceList->FaceList_GetFace(b->Faces, i);
-					p = App->CL_Face->Face_GetPlane(f);
+					p = App->CL_X_Face->Face_GetPlane(f);
 
 					//create a new face from the split plane
-					sf = App->CL_Face->Face_CreateFromPlane(p, BOGUS_RANGE, 0);
-					App->CL_Face->Face_CopyFaceInfo(f, sf);
+					sf = App->CL_X_Face->Face_CreateFromPlane(p, BOGUS_RANGE, 0);
+					App->CL_X_Face->Face_CopyFaceInfo(f, sf);
 					f->Cut_Brush_Index = Cut_Brush_Index;
 					fb = bb = NULL;
 
@@ -1589,7 +1589,7 @@ static void	Brush_CutBrush(Brush* b, Brush* b2)
 						fb->Flags &= ~(BRUSH_HOLLOW | BRUSH_HOLLOWCUT);
 						App->CL_X_Brush->BrushList_Prepend(b2->BList, fb);
 					}
-					App->CL_Face->Face_Destroy(&sf);
+					App->CL_X_Face->Face_Destroy(&sf);
 					if (!i)
 					{
 						App->CL_X_Brush->BrushList_Remove(b2->BList, cb);
@@ -1615,11 +1615,11 @@ static void	Brush_CutBrush(Brush* b, Brush* b2)
 			for (i = 0; i < App->CL_FaceList->FaceList_GetNumFaces(b->Faces); i++)
 			{
 				f = App->CL_FaceList->FaceList_GetFace(b->Faces, i);
-				p = App->CL_Face->Face_GetPlane(f);
+				p = App->CL_X_Face->Face_GetPlane(f);
 
 				//create a new face from the split plane
-				sf = App->CL_Face->Face_CreateFromPlane(p, BOGUS_RANGE, 0);
-				App->CL_Face->Face_CopyFaceInfo(f, sf);
+				sf = App->CL_X_Face->Face_CreateFromPlane(p, BOGUS_RANGE, 0);
+				App->CL_X_Face->Face_CopyFaceInfo(f, sf);
 				f->Cut_Brush_Index = Cut_Brush_Index;
 
 				fb = bb = NULL;
@@ -1631,7 +1631,7 @@ static void	Brush_CutBrush(Brush* b, Brush* b2)
 					fb->Flags &= ~(BRUSH_HOLLOW | BRUSH_HOLLOWCUT);
 					App->CL_X_Brush->BrushList_Append(b2->BList, fb);
 				}
-				App->CL_Face->Face_Destroy(&sf);
+				App->CL_X_Face->Face_Destroy(&sf);
 				if (i)
 				{
 					App->CL_X_Brush->Brush_Destroy(&cb);
@@ -2330,7 +2330,7 @@ Face* CX_Brush::Brush_SelectFirstFace(Brush* b)
 	{
 		pFace = App->CL_FaceList->FaceList_GetFace(b->Faces, 0);
 
-		App->CL_Face->Face_SetSelected(pFace, true);
+		App->CL_X_Face->Face_SetSelected(pFace, true);
 		return pFace;
 	}
 }
@@ -2351,7 +2351,7 @@ Face* CX_Brush::Brush_SelectLastFace(Brush* b)
 		Face* pFace;
 
 		pFace = App->CL_FaceList->FaceList_GetFace(b->Faces, 0);
-		App->CL_Face->Face_SetSelected(pFace, true);
+		App->CL_X_Face->Face_SetSelected(pFace, true);
 		return pFace;
 	}
 }
