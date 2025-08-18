@@ -2,6 +2,7 @@ echo f |xcopy X_Lib_Gen\G_Box.h ..\Common_64\OW3D\include\G_Box.h /y
 echo f |xcopy X_Lib_Gen\CX_Array.h ..\Common_64\OW3D\include\CX_Array.h /y
 echo f |xcopy X_Lib_Gen\CX_SelBrushList.h ..\Common_64\OW3D\include\CX_SelBrushList.h /y
 echo f |xcopy X_Lib_Gen\CX_Brush.h ..\Common_64\OW3D\include\CX_Brush.h /y
+echo f |xcopy X_Lib_Gen\CX_Face.h ..\Common_64\OW3D\include\CX_Face.h /y
 
 
 

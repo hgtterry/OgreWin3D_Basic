@@ -72,6 +72,7 @@ void CL64_Locations::Add_New_Location(bool isFirstLocation)
 	{
 		Set_Location_Defaults(index);
 
+		// Set Main Location
 		if (isFirstLocation == true)
 		{
 			strcpy(B_Location[index]->Location_Name, "Start_Location");

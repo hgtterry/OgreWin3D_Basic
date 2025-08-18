@@ -113,36 +113,37 @@ bool CL64_Panels::Place_Properties_Dlg(void)
 // *************************************************************************
 bool CL64_Panels::Resize_FileView(void)
 {
-	RECT rcl;
-
+	RECT clientRect;
 	HDWP hdwp;
 
-	int WidthClient = 0;
-	int HeightClient;
-	int NewWidth = 0;
-	int NewHeight = 0;
+	// Get the dimensions of the client area
+	GetClientRect(App->ListPanel, &clientRect);
 
-	GetClientRect(App->ListPanel, &rcl);
+	// Calculate new dimensions based on the client area
+	int widthClient = clientRect.right - clientRect.left - 1010;
+	int newWidth = 417 + widthClient + 200;
+	int heightClient = clientRect.bottom - clientRect.top;
+	int newHeight = heightClient - 150;
 
-	WidthClient = rcl.right - rcl.left - 1010;
-	NewWidth = 417 + WidthClient + 200;
+	// Retrieve handles for the controls to be resized
+	HWND treeControl = GetDlgItem(App->ListPanel, IDC_TREE1);
+	HWND buttonControl = GetDlgItem(App->ListPanel, IDC_BT_MAINENVIRONMENT);
 
-	HeightClient = rcl.bottom - rcl.top;
-	NewHeight = HeightClient - 150;
+	// Begin the process of deferring window position changes
+	hdwp = BeginDeferWindowPos(2); // Adjusted to 2 since we have two controls
 
-	HWND Temp = GetDlgItem(App->ListPanel, IDC_TREE1);
-	HWND Temp1 = GetDlgItem(App->ListPanel, IDC_BT_MAINENVIRONMENT);
+	// Defer the resizing of the tree control
+	DeferWindowPos(hdwp, treeControl, NULL, 2, 2,
+		newWidth + 388, newHeight + 100, SWP_NOZORDER);
 
-	hdwp = BeginDeferWindowPos(4);
-
-	DeferWindowPos(hdwp, Temp, NULL, 2, 2,
-		NewWidth + 388, NewHeight + 100, SWP_NOZORDER);
-
-	DeferWindowPos(hdwp, Temp1, NULL, 12, NewHeight + 110,
+	// Defer the positioning of the button control
+	DeferWindowPos(hdwp, buttonControl, NULL, 12, newHeight + 110,
 		0, 7, SWP_NOSIZE | SWP_NOZORDER);
 
+	// Apply the deferred window position changes
 	return EndDeferWindowPos(hdwp);
 }
+
 
 // *************************************************************************
 // *	Enable_Scene_Editor_Dialogs:- Terry and Hazel Flanigan 2024		   *

@@ -145,6 +145,7 @@
   <ItemGroup>
     <ClInclude Include="CX_Array.h" />
     <ClInclude Include="CX_Brush.h" />
+    <ClInclude Include="CX_Face.h" />
     <ClInclude Include="CX_SelBrushList.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="G_Box.h" />
@@ -153,6 +154,7 @@
   <ItemGroup>
     <ClCompile Include="CX_Array.cpp" />
     <ClCompile Include="CX_Brush.cpp" />
+    <ClCompile Include="CX_Face.cpp" />
     <ClCompile Include="CX_SelBrushList.cpp" />
     <ClCompile Include="G_Box.cpp" />
     <ClCompile Include="pch.cpp">

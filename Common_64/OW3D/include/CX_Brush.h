@@ -73,6 +73,8 @@ public:
 	CX_Brush(void);
 	~CX_Brush(void);
 
+	char* GetVersion();
+
 	BrushList* BrushList_Create(void);
 	Brush* Brush_Create(int Type, const FaceList* fl, const BrushList* BList);
 	void BrushList_GetBounds(const BrushList* BList, Box3d* pBounds);
