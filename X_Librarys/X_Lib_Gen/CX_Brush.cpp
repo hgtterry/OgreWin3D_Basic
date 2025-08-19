@@ -27,6 +27,8 @@ THE SOFTWARE.
 #include "CX_Brush.h"
 #include "Structures.cpp"
 
+#pragma warning( disable : 4805)
+
 #define	VectorToSUB(a, b)			(*((((float *)(&a))) + (b)))
 static const int		axidx[3][2] = { 2, 1, 0, 2, 0, 1 };
 

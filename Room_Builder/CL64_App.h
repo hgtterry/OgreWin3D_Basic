@@ -31,25 +31,22 @@ THE SOFTWARE.
 #include "CL64_Render_Map.h"
 #include "CL64_Level.h"
 
-#include "Lib_Preference.h" // Library
-#include "Lib_Ini_File.h" // Library
-
+#include "Lib_Preference.h"
+#include "Lib_Ini_File.h"
 
 #include "CL64_Doc.h"
 #include "CL64_Utilities.h"
 
-#include "CX_Brush.h" // Library
+#include "CX_Brush.h"
 
 #include "CL64_FaceList.h"
 
 #include "CX_Face.h"
-//#include "CL64_Face.h"
 
-#include "BrushTemplate.h" // Library
+#include "BrushTemplate.h"
 
-#include "CX_SelBrushList.h" // Library
-
-#include "CX_Array.h" // Library
+#include "CX_SelBrushList.h"
+#include "CX_Array.h"
 
 
 #include "CL64_SelFaceList.h"
@@ -124,32 +121,29 @@ public:
 	~CL64_App(void);
 
 	CL64_Editor_Map*			CL_Editor_Map;
-	CL64_Lib_Maths*				CL_Maths;  // Library
+	CL64_Lib_Maths*				CL_Maths;		// Maths Library
 
-	CX_Box*						CL_Box_x; // Library
+	CX_Box*						CL_Box_x;		// Box Library
 	CL64_Render_Map*			CL_Render;
 	CL64_Level*					CL_Level;
 
-	Lib_Preference*				CL_X_Preference; // Library
+	Lib_Preference*				CL_X_Preference; // Preference Library
 	
-	Lib_Ini_File*				CL_X_Ini_File; // Library
+	Lib_Ini_File*				CL_X_Ini_File;	 // Ini_File Library
 
 	CL64_Doc*					CL_Doc;
 	CL64_Utilities*				CL_Utilities;
 
-	CX_Brush*					CL_X_Brush; // Library
-//	CL64_Brush*					CL_Brush;
+	CX_Brush*					CL_X_Brush;		 // Brush Library
 
 	CL64_FaceList*				CL_FaceList;
 
-	CX_Face*					CL_X_Face;
-	//CL64_Face*					CL_Face;
-
-	// Libraries
-	BrushTemplate*				CL_X_BrushTemplate;
+	CX_Face*					CL_X_Face;		 // Face Library
 	
-	CX_SelBrushList*			CL_X_SelBrushList; // Library
-	CX_Array*					CL_X_Array; // Library
+	// Libraries
+	BrushTemplate*				CL_X_BrushTemplate; // BrushTemplate Library
+	CX_SelBrushList*			CL_X_SelBrushList;	// SelBrushList Library
+	CX_Array*					CL_X_Array;			// Array Library
 
 	CL64_SelFaceList*			CL_SelFaceList;
 	CL64_Mesh_Mgr*				CL_Mesh_Mgr;
