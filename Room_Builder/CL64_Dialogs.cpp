@@ -1728,5 +1728,7 @@ void CL64_Dialogs::List_Libraries(HWND List)
 	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->CL_Box_x->GetVersion());
 	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->CL_X_Array->GetVersion());
 	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->CL_X_SelBrushList->GetVersion());
+	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->CL_X_Brush->GetVersion());
+	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->CL_X_FaceList->GetVersion());
 
 }

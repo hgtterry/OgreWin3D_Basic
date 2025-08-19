@@ -33,9 +33,6 @@
     <ClInclude Include="CL64_App.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CL64_Box.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="CL64_Level.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -43,18 +40,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CL64_Utilities.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CL64_Brush.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CL64_FaceList.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CL64_Face.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CL64_SelBrushList.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CL64_SelFaceList.h">
@@ -94,9 +79,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Base_Brush.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CL64_Array.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CL64_Ogre3D.h">
@@ -234,6 +216,12 @@
     <ClInclude Include="CL64_Render_Map.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Base_Location.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CL64_Locations.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Room Builder.cpp">
@@ -245,9 +233,6 @@
     <ClCompile Include="CL64_App.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CL64_Box.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="CL64_Level.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -255,18 +240,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CL64_Utilities.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CL64_Brush.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CL64_FaceList.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CL64_Face.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CL64_SelBrushList.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CL64_SelFaceList.cpp">
@@ -306,9 +279,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Base_Brush.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CL64_Array.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CL64_Ogre3D.cpp">
@@ -447,6 +417,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CL64_Render_Map.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Base_Location.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CL64_Locations.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

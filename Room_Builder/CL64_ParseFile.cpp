@@ -211,7 +211,6 @@ FaceList* CL64_ParseFile::FaceList_CreateFromFile()
 			pFace = Face_CreateFromFile();
 			if (pFace != NULL)
 			{
-
 				pFace->Real_Brush_Face_Index = 0;
 				App->CL_X_FaceList->FaceList_AddFace(pList, pFace);
 				//App->CL_Face->Face_SetTextureLock(pFace, true);

@@ -35,6 +35,14 @@ CX_FaceList::~CX_FaceList(void)
 {
 }
 
+// *************************************************************************
+// *			GetVersion:- Terry and Hazel Flanigan 2025			 	   *
+// *************************************************************************
+char* CX_FaceList::GetVersion()
+{
+	return (LPSTR)" OW3D_Scene_Builder :-- CX_FaceList [ 19-08-25 ] Build 1 ";
+}
+
 void CX_FaceList::FaceList_SetBrushNames(const FaceList* fl, const char* Name)
 {
 	int			i;

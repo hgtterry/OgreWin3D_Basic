@@ -32,6 +32,8 @@ public:
 	CX_FaceList(void);
 	~CX_FaceList(void);
 
+	char* GetVersion();
+
 	void FaceList_SetBrushNames(const FaceList* fl, const char* Name);
 
 	FaceList* FaceList_Create(int NumFaces);
