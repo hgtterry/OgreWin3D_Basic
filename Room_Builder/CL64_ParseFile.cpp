@@ -171,7 +171,7 @@ Brush* CL64_ParseFile::Brush_CreateFromFile(bool SubBrush)
 	{
 		if (fl != NULL)
 		{
-			App->CL_FaceList->FaceList_Destroy(&fl);
+			App->CL_X_FaceList->FaceList_Destroy(&fl);
 		}
 		if (blist != NULL)
 		{
@@ -200,7 +200,7 @@ FaceList* CL64_ParseFile::FaceList_CreateFromFile()
 
 	if (!Get_Int("BrushFaces", &NumFaces)) { return NULL; };
 	
-	pList = App->CL_FaceList->FaceList_Create(NumFaces);
+	pList = App->CL_X_FaceList->FaceList_Create(NumFaces);
 	if (pList != NULL)
 	{
 		int i;
@@ -213,13 +213,13 @@ FaceList* CL64_ParseFile::FaceList_CreateFromFile()
 			{
 
 				pFace->Real_Brush_Face_Index = 0;
-				App->CL_FaceList->FaceList_AddFace(pList, pFace);
+				App->CL_X_FaceList->FaceList_AddFace(pList, pFace);
 				//App->CL_Face->Face_SetTextureLock(pFace, true);
 			}
 		}
 		if (pList->NumFaces < 4)
 		{
-			App->CL_FaceList->FaceList_Destroy(&pList);
+			App->CL_X_FaceList->FaceList_Destroy(&pList);
 			return NULL;
 		}
 

@@ -39,7 +39,8 @@ THE SOFTWARE.
 
 #include "CX_Brush.h"
 
-#include "CL64_FaceList.h"
+#include "CX_FaceList.h"
+//#include "CL64_FaceList.h"
 
 #include "CX_Face.h"
 
@@ -136,7 +137,8 @@ public:
 
 	CX_Brush*					CL_X_Brush;		 // Brush Library
 
-	CL64_FaceList*				CL_FaceList;
+	CX_FaceList*				CL_X_FaceList;	// FaceList Library
+//	CL64_FaceList*				CL_FaceList;
 
 	CX_Face*					CL_X_Face;		 // Face Library
 	

@@ -43,12 +43,13 @@ CL64_App::CL64_App(void)
 	CL_Utilities =				nullptr;
 
 	CL_X_Brush =				nullptr; // Library
-//	CL_Brush =					nullptr;
 
-	CL_FaceList =				nullptr;
 
-	CL_X_Face =					nullptr;
-//	CL_Face =					nullptr;
+	CL_X_FaceList =				nullptr; // Library
+//	CL_FaceList =				nullptr;
+
+	CL_X_Face =					nullptr; // Library
+
 
 	// Libraries
 	CL_X_BrushTemplate =		nullptr;
@@ -199,12 +200,11 @@ void CL64_App::InitApp(void)
 	CL_Utilities =				new CL64_Utilities();
 
 	CL_X_Brush =				new CX_Brush(); // Library
-//	CL_Brush =					new CL64_Brush();
 
-	CL_FaceList =				new CL64_FaceList();
+	CL_X_FaceList =				new CX_FaceList();
+	//CL_FaceList =				new CL64_FaceList();
 
 	CL_X_Face =					new CX_Face();
-//	CL_Face =					new CL64_Face();
 
 	// Libraries
 	CL_X_BrushTemplate =		new BrushTemplate();

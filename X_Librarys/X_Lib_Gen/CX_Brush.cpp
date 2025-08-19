@@ -142,7 +142,7 @@ Brush* CX_Brush::Brush_Create(int Type, const FaceList* fl, const BrushList* BLi
 			pBrush->Faces = (FaceList*)fl;
 			pBrush->BList = NULL;
 			pBrush->Flags = BRUSH_SOLID;
-			App->CL_FaceList->FaceList_GetBounds(fl, &pBrush->BoundingBox);
+			App->CL_X_FaceList->FaceList_GetBounds(fl, &pBrush->BoundingBox);
 			break;
 
 		default:
@@ -193,7 +193,7 @@ void CX_Brush::Brush_Bound(Brush* b)
 	}
 	else
 	{
-		App->CL_FaceList->FaceList_GetBounds(b->Faces, &b->BoundingBox);
+		App->CL_X_FaceList->FaceList_GetBounds(b->Faces, &b->BoundingBox);
 	}
 }
 
@@ -246,12 +246,12 @@ void CX_Brush::Brush_SetSheet(Brush* b, const signed int bState)
 	{
 		b->Flags = (bState) ? b->Flags | BRUSH_SHEET : b->Flags & ~BRUSH_SHEET;
 
-		f = App->CL_FaceList->FaceList_GetFace(b->Faces, 0);
+		f = App->CL_X_FaceList->FaceList_GetFace(b->Faces, 0);
 		App->CL_X_Face->Face_SetSheet(f, bState);
 
-		for (i = 1; i < App->CL_FaceList->FaceList_GetNumFaces(b->Faces); i++)
+		for (i = 1; i < App->CL_X_FaceList->FaceList_GetNumFaces(b->Faces); i++)
 		{
-			f = App->CL_FaceList->FaceList_GetFace(b->Faces, i);
+			f = App->CL_X_FaceList->FaceList_GetFace(b->Faces, i);
 			App->CL_X_Face->Face_SetVisible(f, !bState);
 		}
 	}
@@ -327,11 +327,11 @@ Brush* CX_Brush::Brush_CreateHollowFromBrush(const Brush* b)
 
 	assert(b);
 
-	fl = App->CL_FaceList->FaceList_Create(App->CL_FaceList->FaceList_GetNumFaces(b->Faces));
+	fl = App->CL_X_FaceList->FaceList_Create(App->CL_X_FaceList->FaceList_GetNumFaces(b->Faces));
 
-	for (i = 0; i < App->CL_FaceList->FaceList_GetNumFaces(b->Faces); i++)
+	for (i = 0; i < App->CL_X_FaceList->FaceList_GetNumFaces(b->Faces); i++)
 	{
-		f = App->CL_FaceList->FaceList_GetFace(b->Faces, i);
+		f = App->CL_X_FaceList->FaceList_GetFace(b->Faces, i);
 		p = App->CL_X_Face->Face_GetPlane(f);
 
 		if (App->CL_X_Face->Face_IsFixedHull(f))
@@ -353,7 +353,7 @@ Brush* CX_Brush::Brush_CreateHollowFromBrush(const Brush* b)
 
 		sf->Real_Brush_Face_Index = i + 7;
 
-		App->CL_FaceList->FaceList_AddFace(fl, sf);
+		App->CL_X_FaceList->FaceList_AddFace(fl, sf);
 	}
 	b2 = Brush_Create(BRUSH_LEAF, fl, NULL);
 	if (b2)
@@ -380,41 +380,41 @@ void CX_Brush::Brush_SealFaces(Brush** b)
 	assert(*b != NULL);
 	assert((*b)->Type != BRUSH_MULTI);
 
-	if (App->CL_FaceList->FaceList_GetNumFaces((*b)->Faces) < 4)
+	if (App->CL_X_FaceList->FaceList_GetNumFaces((*b)->Faces) < 4)
 	{
 		Brush_Destroy(b);
 		return;
 	}
-	fl = App->CL_FaceList->FaceList_Create(App->CL_FaceList->FaceList_GetNumFaces((*b)->Faces));
+	fl = App->CL_X_FaceList->FaceList_Create(App->CL_X_FaceList->FaceList_GetNumFaces((*b)->Faces));
 
 	//expand all faces out to seal cracks
-	for (i = 0; i < App->CL_FaceList->FaceList_GetNumFaces((*b)->Faces); i++)
+	for (i = 0; i < App->CL_X_FaceList->FaceList_GetNumFaces((*b)->Faces); i++)
 	{
-		f = (Face*)App->CL_FaceList->FaceList_GetFace((*b)->Faces, i);
+		f = (Face*)App->CL_X_FaceList->FaceList_GetFace((*b)->Faces, i);
 		p = App->CL_X_Face->Face_GetPlane(f);
 		f2 = App->CL_X_Face->Face_CreateFromPlane(p, BOGUS_RANGE, 0);
 		App->CL_X_Face->Face_CopyFaceInfo(f, f2);
-		App->CL_FaceList->FaceList_AddFace(fl, f2);
+		App->CL_X_FaceList->FaceList_AddFace(fl, f2);
 	}
-	for (i = 0; i < App->CL_FaceList->FaceList_GetNumFaces(fl); i++)
+	for (i = 0; i < App->CL_X_FaceList->FaceList_GetNumFaces(fl); i++)
 	{
 		//const override here
-		f = (Face*)App->CL_FaceList->FaceList_GetFace(fl, i);
+		f = (Face*)App->CL_X_FaceList->FaceList_GetFace(fl, i);
 
-		for (j = 0; j < App->CL_FaceList->FaceList_GetNumFaces(fl); j++)
+		for (j = 0; j < App->CL_X_FaceList->FaceList_GetNumFaces(fl); j++)
 		{
 			if (j == i)
 			{
 				continue;
 			}
-			f2 = App->CL_FaceList->FaceList_GetFace(fl, j);
+			f2 = App->CL_X_FaceList->FaceList_GetFace(fl, j);
 			p = App->CL_X_Face->Face_GetPlane(f2);
 
 			App->CL_X_Face->Face_GetSplitInfo(f, p, dists, sides, cnt);
 
 			if (!cnt[SIDE_FRONT] && !cnt[SIDE_BACK])	//coplanar
 			{
-				App->CL_FaceList->FaceList_RemoveFace(fl, i);
+				App->CL_X_FaceList->FaceList_RemoveFace(fl, i);
 				j--;	//to ensure we restart if this is the last face
 				break;
 			}
@@ -424,7 +424,7 @@ void CX_Brush::Brush_SealFaces(Brush** b)
 			}
 			else if (!cnt[SIDE_BACK])	//front
 			{
-				App->CL_FaceList->FaceList_RemoveFace(fl, i);
+				App->CL_X_FaceList->FaceList_RemoveFace(fl, i);
 				j--;	//to ensure we restart if this is the last face
 				break;
 			}
@@ -433,20 +433,20 @@ void CX_Brush::Brush_SealFaces(Brush** b)
 				App->CL_X_Face->Face_Clip(f, p, dists, sides);
 			}
 		}
-		if (j < App->CL_FaceList->FaceList_GetNumFaces(fl))
+		if (j < App->CL_X_FaceList->FaceList_GetNumFaces(fl))
 		{
 			i = -1;	//restart!
 		}
 	}
-	if (App->CL_FaceList->FaceList_GetNumFaces(fl) < 4)
+	if (App->CL_X_FaceList->FaceList_GetNumFaces(fl) < 4)
 	{
 		//		ConPrintf("Overconstrained brush clipped away...\n");
 		Brush_Destroy(b);
-		App->CL_FaceList->FaceList_Destroy(&fl);
+		App->CL_X_FaceList->FaceList_Destroy(&fl);
 	}
 	else
 	{
-		App->CL_FaceList->FaceList_Destroy(&(*b)->Faces);
+		App->CL_X_FaceList->FaceList_Destroy(&(*b)->Faces);
 		(*b)->Faces = fl;
 		Brush_Bound((*b));
 	}
@@ -468,7 +468,7 @@ void CX_Brush::Brush_Destroy(Brush** b)
 	{
 		if ((*b)->Faces)
 		{
-			App->CL_FaceList->FaceList_Destroy(&((*b)->Faces));
+			App->CL_X_FaceList->FaceList_Destroy(&((*b)->Faces));
 		}
 	}
 
@@ -716,7 +716,7 @@ int	CX_Brush::Brush_GetNumFaces(const Brush* b)
 	assert(b != NULL);
 	assert(b->Faces != NULL);
 
-	return	App->CL_FaceList->FaceList_GetNumFaces(b->Faces);
+	return	App->CL_X_FaceList->FaceList_GetNumFaces(b->Faces);
 }
 
 // *************************************************************************
@@ -727,7 +727,7 @@ Face* CX_Brush::Brush_GetFace(const Brush* b, int i)
 	assert(b != NULL);
 	assert(b->Faces != NULL);
 
-	return	App->CL_FaceList->FaceList_GetFace(b->Faces, i);
+	return	App->CL_X_FaceList->FaceList_GetFace(b->Faces, i);
 }
 
 // *************************************************************************
@@ -803,7 +803,7 @@ Brush* CX_Brush::Brush_Clone(Brush const* from)
 	case	BRUSH_CSG:
 		assert(from->Faces != NULL);
 
-		NewFaces = App->CL_FaceList->FaceList_Clone(from->Faces);
+		NewFaces = App->CL_X_FaceList->FaceList_Clone(from->Faces);
 		if (NewFaces != NULL)
 		{
 			to = Brush_Create(from->Type, NewFaces, NULL);
@@ -873,7 +873,7 @@ void CX_Brush::Brush_SetName(Brush* b, const char* newname)
 // *************************************************************************
 void CX_Brush::Brush_SetFaceListDirty(Brush* b)
 {
-	App->CL_FaceList->FaceList_SetDirty(b->Faces);
+	App->CL_X_FaceList->FaceList_SetDirty(b->Faces);
 }
 
 // *************************************************************************
@@ -995,14 +995,14 @@ static void	Brush_UpdateChildFacesRecurse(Brush* b, Brush* bp)
 						}
 
 						Update = false;
-						for (i = 0; i < App->CL_FaceList->FaceList_GetNumFaces(b->Faces); i++)
+						for (i = 0; i < App->CL_X_FaceList->FaceList_GetNumFaces(b->Faces); i++)
 						{
-							f = App->CL_FaceList->FaceList_GetFace(b->Faces, i);
+							f = App->CL_X_FaceList->FaceList_GetFace(b->Faces, i);
 							p = App->CL_X_Face->Face_GetPlane(f);
-							for (j = 0; j < App->CL_FaceList->FaceList_GetNumFaces(cb->Faces); j++)
+							for (j = 0; j < App->CL_X_FaceList->FaceList_GetNumFaces(cb->Faces); j++)
 							{
 								T_Vec3	v;
-								f2 = App->CL_FaceList->FaceList_GetFace(cb->Faces, j);
+								f2 = App->CL_X_FaceList->FaceList_GetFace(cb->Faces, j);
 								p2 = App->CL_X_Face->Face_GetPlane(f2);
 								v = p->Normal;
 
@@ -1027,13 +1027,13 @@ static void	Brush_UpdateChildFacesRecurse(Brush* b, Brush* bp)
 		{
 			for (cb = b->BList->First; cb; cb = cb->Next)
 			{
-				for (i = 0; i < App->CL_FaceList->FaceList_GetNumFaces(b->Faces); i++)
+				for (i = 0; i < App->CL_X_FaceList->FaceList_GetNumFaces(b->Faces); i++)
 				{
-					f = App->CL_FaceList->FaceList_GetFace(b->Faces, i);
+					f = App->CL_X_FaceList->FaceList_GetFace(b->Faces, i);
 					p = App->CL_X_Face->Face_GetPlane(f);
-					for (j = 0; j < App->CL_FaceList->FaceList_GetNumFaces(cb->Faces); j++)
+					for (j = 0; j < App->CL_X_FaceList->FaceList_GetNumFaces(cb->Faces); j++)
 					{
-						f2 = App->CL_FaceList->FaceList_GetFace(cb->Faces, j);
+						f2 = App->CL_X_FaceList->FaceList_GetFace(cb->Faces, j);
 						p2 = App->CL_X_Face->Face_GetPlane(f2);
 
 						if (App->CL_Maths->Vector3_Compare(&p->Normal, &p2->Normal, 0.01f))
@@ -1156,14 +1156,14 @@ signed int CX_Brush::Brush_GetUsedTextures(const Brush* b, signed int* UsedTex, 
 		{
 			if (!(b->Flags & (BRUSH_HOLLOW | BRUSH_HOLLOWCUT | BRUSH_SUBTRACT)))
 			{
-				return App->CL_FaceList->FaceList_GetUsedTextures(b->Faces, UsedTex, WadFile);
+				return App->CL_X_FaceList->FaceList_GetUsedTextures(b->Faces, UsedTex, WadFile);
 			}
 		}
 		break;
 
 	case	BRUSH_CSG:
 		if (!(b->Flags & (BRUSH_HOLLOW | BRUSH_HOLLOWCUT | BRUSH_SUBTRACT)))
-			return App->CL_FaceList->FaceList_GetUsedTextures(b->Faces, UsedTex, WadFile);
+			return App->CL_X_FaceList->FaceList_GetUsedTextures(b->Faces, UsedTex, WadFile);
 		break;
 	default:
 		assert(0);		// invalid brush type
@@ -1363,7 +1363,7 @@ static Brush* Brush_CreateFromParent(const Brush* ParentBrush, const FaceList* f
 		pBrush->Color = ParentBrush->Color;
 		strcpy(pBrush->Name, ParentBrush->Name);
 		pBrush->Type = BRUSH_CSG;
-		App->CL_FaceList->FaceList_GetBounds(fl, &pBrush->BoundingBox);
+		App->CL_X_FaceList->FaceList_GetBounds(fl, &pBrush->BoundingBox);
 	}
 	return pBrush;
 }
@@ -1375,9 +1375,9 @@ static int	Brush_MostlyOnSide(const Brush* b, const GPlane* p)
 
 	max = 0;
 	side = SIDE_FRONT;
-	for (i = 0; i < App->CL_FaceList->FaceList_GetNumFaces(b->Faces); i++)
+	for (i = 0; i < App->CL_X_FaceList->FaceList_GetNumFaces(b->Faces); i++)
 	{
-		App->CL_X_Face->Face_MostlyOnSide(App->CL_FaceList->FaceList_GetFace(b->Faces, i), p, &max, &side);
+		App->CL_X_Face->Face_MostlyOnSide(App->CL_X_FaceList->FaceList_GetFace(b->Faces, i), p, &max, &side);
 	}
 	return	side;
 }
@@ -1406,9 +1406,9 @@ void CX_Brush::Brush_SplitByFace(Brush* ogb, Face* sf, Brush** fb, Brush** bb)
 
 	fcnt[0] = fcnt[1] = fcnt[2] = fcnt[3] = 0;
 
-	for (i = 0; i < App->CL_FaceList->FaceList_GetNumFaces(ogb->Faces); i++)
+	for (i = 0; i < App->CL_X_FaceList->FaceList_GetNumFaces(ogb->Faces); i++)
 	{
-		f = App->CL_FaceList->FaceList_GetFace(ogb->Faces, i);
+		f = App->CL_X_FaceList->FaceList_GetFace(ogb->Faces, i);
 		App->CL_X_Face->Face_GetSplitInfo(f, p, dists, sides, cnt);
 		if (!cnt[SIDE_FRONT] && !cnt[SIDE_BACK])	//coplanar
 		{
@@ -1434,7 +1434,7 @@ void CX_Brush::Brush_SplitByFace(Brush* ogb, Face* sf, Brush** fb, Brush** bb)
 	{
 		//clip the split face
 		midf = App->CL_X_Face->Face_Clone(sf);
-		App->CL_FaceList->FaceList_ClipFaceToList(ogb->Faces, &midf);
+		App->CL_X_FaceList->FaceList_ClipFaceToList(ogb->Faces, &midf);
 		if (!midf)
 		{
 			if (Brush_MostlyOnSide(ogb, App->CL_X_Face->Face_GetPlane(sf)) == SIDE_FRONT)
@@ -1448,13 +1448,13 @@ void CX_Brush::Brush_SplitByFace(Brush* ogb, Face* sf, Brush** fb, Brush** bb)
 			return;
 		}
 		//alloc face lists for front and back
-		fl = App->CL_FaceList->FaceList_Create(fcnt[SIDE_FRONT] + fcnt[SIDE_SPLIT] + 1);
-		bl = App->CL_FaceList->FaceList_Create(fcnt[SIDE_BACK] + fcnt[SIDE_SPLIT] + 1);
+		fl = App->CL_X_FaceList->FaceList_Create(fcnt[SIDE_FRONT] + fcnt[SIDE_SPLIT] + 1);
+		bl = App->CL_X_FaceList->FaceList_Create(fcnt[SIDE_BACK] + fcnt[SIDE_SPLIT] + 1);
 
 		WasSplit = false;
-		for (i = 0; i < App->CL_FaceList->FaceList_GetNumFaces(ogb->Faces); i++)
+		for (i = 0; i < App->CL_X_FaceList->FaceList_GetNumFaces(ogb->Faces); i++)
 		{
-			f = App->CL_FaceList->FaceList_GetFace(ogb->Faces, i);
+			f = App->CL_X_FaceList->FaceList_GetFace(ogb->Faces, i);
 
 			switch (fsides[i])
 			{
@@ -1462,14 +1462,14 @@ void CX_Brush::Brush_SplitByFace(Brush* ogb, Face* sf, Brush** fb, Brush** bb)
 				cpf = App->CL_X_Face->Face_Clone(f);
 				if (cpf)
 				{
-					App->CL_FaceList->FaceList_AddFace(fl, cpf);
+					App->CL_X_FaceList->FaceList_AddFace(fl, cpf);
 				}
 				break;
 			case	SIDE_BACK:
 				cpf = App->CL_X_Face->Face_Clone(f);
 				if (cpf)
 				{
-					App->CL_FaceList->FaceList_AddFace(bl, cpf);
+					App->CL_X_FaceList->FaceList_AddFace(bl, cpf);
 				}
 				break;
 			case	SIDE_SPLIT:	//this info should be reused from above!!!
@@ -1497,11 +1497,11 @@ void CX_Brush::Brush_SplitByFace(Brush* ogb, Face* sf, Brush** fb, Brush** bb)
 
 				if (ff)
 				{
-					App->CL_FaceList->FaceList_AddFace(fl, ff);
+					App->CL_X_FaceList->FaceList_AddFace(fl, ff);
 				}
 				if (bf)
 				{
-					App->CL_FaceList->FaceList_AddFace(bl, bf);
+					App->CL_X_FaceList->FaceList_AddFace(bl, bf);
 				}
 			}
 		}
@@ -1509,11 +1509,11 @@ void CX_Brush::Brush_SplitByFace(Brush* ogb, Face* sf, Brush** fb, Brush** bb)
 		{
 			//add and clip the split face
 //			FaceList_ClipFaceToList(bl, &cpf);
-			App->CL_FaceList->FaceList_AddFace(bl, midf);
+			App->CL_X_FaceList->FaceList_AddFace(bl, midf);
 
 			//flip for front side brush
 			cpf = App->CL_X_Face->Face_CloneReverse(midf);
-			App->CL_FaceList->FaceList_AddFace(fl, cpf);
+			App->CL_X_FaceList->FaceList_AddFace(fl, cpf);
 		}
 		*fb = Brush_CreateFromParent(ogb, fl);
 		*bb = Brush_CreateFromParent(ogb, bl);
@@ -1573,9 +1573,9 @@ static void	Brush_CutBrush(Brush* b, Brush* b2)
 					continue;
 				}
 				cb2 = cb->Next;
-				for (i = 0; i < App->CL_FaceList->FaceList_GetNumFaces(b->Faces); i++)
+				for (i = 0; i < App->CL_X_FaceList->FaceList_GetNumFaces(b->Faces); i++)
 				{
-					f = App->CL_FaceList->FaceList_GetFace(b->Faces, i);
+					f = App->CL_X_FaceList->FaceList_GetFace(b->Faces, i);
 					p = App->CL_X_Face->Face_GetPlane(f);
 
 					//create a new face from the split plane
@@ -1614,9 +1614,9 @@ static void	Brush_CutBrush(Brush* b, Brush* b2)
 		{
 			b2->BList = App->CL_X_Brush->BrushList_Create();
 			cb = b2;
-			for (i = 0; i < App->CL_FaceList->FaceList_GetNumFaces(b->Faces); i++)
+			for (i = 0; i < App->CL_X_FaceList->FaceList_GetNumFaces(b->Faces); i++)
 			{
-				f = App->CL_FaceList->FaceList_GetFace(b->Faces, i);
+				f = App->CL_X_FaceList->FaceList_GetFace(b->Faces, i);
 				p = App->CL_X_Face->Face_GetPlane(f);
 
 				//create a new face from the split plane
@@ -1756,7 +1756,7 @@ static void	BrushList_DoHollowCuts(BrushList* pList, int mid, Brush_CSGCallback 
 
 static void	Brush_CopyFaceInfo(Brush const* src, Brush* dst)
 {
-	App->CL_FaceList->FaceList_CopyFaceInfo(src->Faces, dst->Faces);
+	App->CL_X_FaceList->FaceList_CopyFaceInfo(src->Faces, dst->Faces);
 }
 
 static void	BrushList_DoCuts(BrushList* pList, int mid, Brush_CSGCallback Callback, void* lParam)
@@ -2020,7 +2020,7 @@ void CX_Brush::Brush_Move(Brush* b, const T_Vec3* trans)
 	}
 	else
 	{
-		App->CL_FaceList->FaceList_Move(b->Faces, trans);
+		App->CL_X_FaceList->FaceList_Move(b->Faces, trans);
 	}
 
 	Brush_Bound(b);
@@ -2149,7 +2149,7 @@ signed int CX_Brush::Brush_Scale3d(Brush* b, const T_Vec3* mag)
 	}
 	else
 	{
-		Success = App->CL_FaceList->FaceList_Scale(b->Faces, mag);
+		Success = App->CL_X_FaceList->FaceList_Scale(b->Faces, mag);
 	}
 
 	Brush_Bound(b);
@@ -2330,7 +2330,7 @@ Face* CX_Brush::Brush_SelectFirstFace(Brush* b)
 	}
 	else
 	{
-		pFace = App->CL_FaceList->FaceList_GetFace(b->Faces, 0);
+		pFace = App->CL_X_FaceList->FaceList_GetFace(b->Faces, 0);
 
 		App->CL_X_Face->Face_SetSelected(pFace, true);
 		return pFace;
@@ -2352,7 +2352,7 @@ Face* CX_Brush::Brush_SelectLastFace(Brush* b)
 	{
 		Face* pFace;
 
-		pFace = App->CL_FaceList->FaceList_GetFace(b->Faces, 0);
+		pFace = App->CL_X_FaceList->FaceList_GetFace(b->Faces, 0);
 		App->CL_X_Face->Face_SetSelected(pFace, true);
 		return pFace;
 	}
@@ -2539,7 +2539,7 @@ Face* CX_Brush::Brush_GetSelectedFace(const Brush* b)
 	}
 	else
 	{
-		return	App->CL_FaceList->FaceList_GetSelectedFace(b->Faces);
+		return	App->CL_X_FaceList->FaceList_GetSelectedFace(b->Faces);
 	}
 }
 
@@ -2556,7 +2556,7 @@ signed int CX_Brush::Brush_SetNextSelectedFace(Brush* b)
 	}
 	else
 	{
-		return	App->CL_FaceList->FaceList_SetNextSelectedFace(b->Faces);
+		return	App->CL_X_FaceList->FaceList_SetNextSelectedFace(b->Faces);
 	}
 }
 
@@ -2573,7 +2573,7 @@ signed int CX_Brush::Brush_SetPrevSelectedFace(Brush* b)
 	}
 	else
 	{
-		return	App->CL_FaceList->FaceList_SetPrevSelectedFace(b->Faces);
+		return	App->CL_X_FaceList->FaceList_SetPrevSelectedFace(b->Faces);
 	}
 }
 
@@ -2589,7 +2589,7 @@ void CX_Brush::Brush_Rotate(Brush* b, const Matrix3d* pXfmRotate, const T_Vec3* 
 	}
 	else
 	{
-		App->CL_FaceList->FaceList_Rotate(b->Faces, pXfmRotate, pCenter);
+		App->CL_X_FaceList->FaceList_Rotate(b->Faces, pXfmRotate, pCenter);
 	}
 
 	Brush_Bound(b);
