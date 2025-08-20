@@ -48,6 +48,8 @@ int	CL64_Render_Map::Render_GetInidx(const ViewVars* v)
 // *************************************************************************
 bool CL64_Render_Map::Render_RenderOrthoGridFromSize(ViewVars* cv, int Interval, HDC hDC, RECT Rect)
 {
+	auto& m_Maths = App->CL_X_Maths; // Maths Library
+
 	cv->Width = Rect.right;
 	cv->Height = Rect.bottom;
 
@@ -78,8 +80,8 @@ bool CL64_Render_Map::Render_RenderOrthoGridFromSize(ViewVars* cv, int Interval,
 		VectorToSUB(ViewBox.Max, i) = (float)((int)(VectorToSUB(ViewBox.Max, i) * gsinv)) * Interval;
 	}
 
-	App->CL_X_Maths->Vector3_Copy(&VecOrigin, &xstep);
-	App->CL_X_Maths->Vector3_Copy(&VecOrigin, &ystep);
+	m_Maths->Vector3_Copy(&VecOrigin, &xstep);
+	m_Maths->Vector3_Copy(&VecOrigin, &ystep);
 	VectorToSUB(ystep, yaxis) = (float)Interval;
 	VectorToSUB(xstep, xaxis) = (float)Interval;
 
@@ -87,8 +89,8 @@ bool CL64_Render_Map::Render_RenderOrthoGridFromSize(ViewVars* cv, int Interval,
 
 	// horizontal lines
 	int Count = 0;
-	App->CL_X_Maths->Vector3_Copy(&ViewBox.Min, &Delt);
-	App->CL_X_Maths->Vector3_Copy(&ViewBox.Min, &Delt2);
+	m_Maths->Vector3_Copy(&ViewBox.Min, &Delt);
+	m_Maths->Vector3_Copy(&ViewBox.Min, &Delt2);
 	VectorToSUB(Delt2, xaxis) = VectorToSUB(ViewBox.Max, xaxis);
 	cnt = Units_Round((VectorToSUB(ViewBox.Max, yaxis) - VectorToSUB(ViewBox.Min, yaxis)) * gsinv);
 
@@ -98,15 +100,15 @@ bool CL64_Render_Map::Render_RenderOrthoGridFromSize(ViewVars* cv, int Interval,
 		MoveToEx(hDC, 0, sp.y, NULL);
 		sp = App->CL_Render->Render_OrthoWorldToView(cv, &Delt2);
 		LineTo(hDC, cv->Width, sp.y);
-		App->CL_X_Maths->Vector3_Add(&Delt, &ystep, &Delt);
-		App->CL_X_Maths->Vector3_Add(&Delt2, &ystep, &Delt2);
+		m_Maths->Vector3_Add(&Delt, &ystep, &Delt);
+		m_Maths->Vector3_Add(&Delt2, &ystep, &Delt2);
 		Count++;
 	}
 
 	// vertical lines
 	Count = 0;
-	App->CL_X_Maths->Vector3_Copy(&ViewBox.Min, &Delt);
-	App->CL_X_Maths->Vector3_Copy(&ViewBox.Min, &Delt2);
+	m_Maths->Vector3_Copy(&ViewBox.Min, &Delt);
+	m_Maths->Vector3_Copy(&ViewBox.Min, &Delt2);
 	VectorToSUB(Delt2, yaxis) = VectorToSUB(ViewBox.Max, yaxis);
 	cnt = Units_Round((VectorToSUB(ViewBox.Max, xaxis) - VectorToSUB(ViewBox.Min, xaxis)) * gsinv);
 
@@ -116,8 +118,8 @@ bool CL64_Render_Map::Render_RenderOrthoGridFromSize(ViewVars* cv, int Interval,
 		MoveToEx(hDC, sp.x, 0, NULL);
 		sp = App->CL_Render->Render_OrthoWorldToView(cv, &Delt2);
 		LineTo(hDC, sp.x, cv->Height);
-		App->CL_X_Maths->Vector3_Add(&Delt, &xstep, &Delt);
-		App->CL_X_Maths->Vector3_Add(&Delt2, &xstep, &Delt2);
+		m_Maths->Vector3_Add(&Delt, &xstep, &Delt);
+		m_Maths->Vector3_Add(&Delt2, &xstep, &Delt2);
 		Count++;
 	}
 
