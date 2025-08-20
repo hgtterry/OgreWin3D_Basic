@@ -545,14 +545,20 @@ bool CL64_Properties_Scene::Update_ListView_Locations()
 	Ogre::Quaternion q = { m_Loc->Physics_Quat.getW(), m_Loc->Physics_Quat.getX(), m_Loc->Physics_Quat.getY(), m_Loc->Physics_Quat.getZ() };
 	//q = { 0.707, 0.0, 0.0, 0.707 };
 	
-	double roll, pitch, yaw;
+	double x, y, z;
+	x = 0;
+	y = 0;
+	z = 0;
 
-	App->CL_Maths->Ogre_QuaternionToEuler(q, roll, pitch, yaw);
+	App->CL_Maths->Ogre_QuaternionToEuler(q, z, y, z);
 
-	std::string str_RotX = std::to_string(roll * 180.0 / M_PI);
-	std::string str_RotY = std::to_string(pitch * 180.0 / M_PI);
-	std::string str_RotZ = std::to_string(yaw * 180.0 / M_PI);
-	
+	std::string str_RotX = std::to_string(x * 180.0 / M_PI);
+
+	char str_RotZ[10];
+	char str_RotY[10];
+	sprintf(str_RotY, "%.02f", y * 180.0 / M_PI);
+	sprintf(str_RotZ, "%.02f", z * 180.0 / M_PI);
+
 	const int NUM_ITEMS = 9;
 	const int NUM_COLS = 2;
 	std::string grid[NUM_COLS][NUM_ITEMS]; // string table

@@ -743,10 +743,12 @@ void CL64_ImGui::Listbox_ImGui(void)
 				
 				Ogre::Quaternion q = { Rotation.getW(), Rotation.getX(), Rotation.getY(), Rotation.getZ() };
 
-				double roll, pitch, yaw;
+				double x, y, z;
+				App->CL_Maths->Ogre_QuaternionToEuler(q, x, y, z);
 
-				App->CL_Maths->Ogre_QuaternionToEuler(q, roll, pitch, yaw);
-				ImGui::Text("Rotation XYZ  %f %f %f", roll * 180.0 / M_PI, pitch * 180.0 / M_PI, yaw * 180.0 / M_PI);
+				char str_RotY[10];
+				sprintf(str_RotY, "%.02f", y * 180.0 / M_PI);
+				ImGui::Text("Rotation Y %s", str_RotY);
 
 			}
 		
