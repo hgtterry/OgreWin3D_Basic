@@ -91,7 +91,7 @@ BrushList* CX_Brush::BrushList_Create(void)
 {
 	BrushList* pList;
 
-	pList = (BrushList*)App->CL_Maths->Ram_Allocate(sizeof(BrushList));
+	pList = (BrushList*)App->CL_X_Maths->Ram_Allocate(sizeof(BrushList));
 	if (pList != NULL)
 	{
 		pList->First = NULL;
@@ -107,7 +107,7 @@ Brush* CX_Brush::Brush_Create(int Type, const FaceList* fl, const BrushList* BLi
 {
 	Brush* pBrush;
 
-	pBrush = (Brush*)App->CL_Maths->Ram_Allocate(sizeof(Brush));
+	pBrush = (Brush*)App->CL_X_Maths->Ram_Allocate(sizeof(Brush));
 	if (pBrush != NULL)
 	{
 		pBrush->Prev = NULL;
@@ -174,7 +174,7 @@ void CX_Brush::BrushList_GetBounds(const BrushList* BList, Box3d* pBounds)
 		Brush_Bound(b);
 		BrushBounds = b->BoundingBox;
 
-		App->CL_Box_x->Box3d_Union(&Bounds, &BrushBounds, &Bounds);
+		App->CL_X_Box->Box3d_Union(&Bounds, &BrushBounds, &Bounds);
 	}
 	*pBounds = Bounds;
 }
@@ -186,7 +186,7 @@ void CX_Brush::Brush_Bound(Brush* b)
 {
 	assert(b);
 
-	App->CL_Box_x->Box3d_SetBogusBounds(&b->BoundingBox);
+	App->CL_X_Box->Box3d_SetBogusBounds(&b->BoundingBox);
 	if (b->Type == BRUSH_MULTI)
 	{
 		BrushList_GetBounds(b->BList, &b->BoundingBox);
@@ -341,11 +341,11 @@ Brush* CX_Brush::Brush_CreateHollowFromBrush(const Brush* b)
 		}
 		else
 		{
-			App->CL_Maths->Vector3_Scale(&p->Normal, -b->HullSize, &pnt);
-			App->CL_Maths->Vector3_MA(&pnt, p->Dist, &p->Normal, &pnt);
+			App->CL_X_Maths->Vector3_Scale(&p->Normal, -b->HullSize, &pnt);
+			App->CL_X_Maths->Vector3_MA(&pnt, p->Dist, &p->Normal, &pnt);
 
 			ExpandPlane.Normal = p->Normal;
-			ExpandPlane.Dist = App->CL_Maths->Vector3_DotProduct(&ExpandPlane.Normal, &pnt);
+			ExpandPlane.Dist = App->CL_X_Maths->Vector3_DotProduct(&ExpandPlane.Normal, &pnt);
 		}
 		//create a face from the inner plane
 		sf = App->CL_X_Face->Face_CreateFromPlane(&ExpandPlane, BOGUS_RANGE, 0);
@@ -474,10 +474,10 @@ void CX_Brush::Brush_Destroy(Brush** b)
 
 	if ((*b)->Name)
 	{
-		App->CL_Maths->Ram_Free((*b)->Name);
+		App->CL_X_Maths->Ram_Free((*b)->Name);
 	}
 
-	App->CL_Maths->Ram_Free(*b);
+	App->CL_X_Maths->Ram_Free(*b);
 
 	*b = NULL;
 }
@@ -492,7 +492,7 @@ void CX_Brush::BrushList_Destroy(BrushList** ppList)
 	pList = *ppList;
 	BrushList_DeleteAll(pList);
 
-	App->CL_Maths->Ram_Free(*ppList);
+	App->CL_X_Maths->Ram_Free(*ppList);
 	*ppList = NULL;
 }
 
@@ -810,7 +810,7 @@ Brush* CX_Brush::Brush_Clone(Brush const* from)
 		}
 		if (to == NULL)
 		{
-			App->CL_Maths->Ram_Free(NewFaces);
+			App->CL_X_Maths->Ram_Free(NewFaces);
 		}
 		break;
 
@@ -862,7 +862,7 @@ void CX_Brush::Brush_SetName(Brush* b, const char* newname)
 {
 	if (b->Name != NULL)
 	{
-		App->CL_Maths->Ram_Free(b->Name);
+		App->CL_X_Maths->Ram_Free(b->Name);
 	}
 
 	strcpy(b->Name, newname);
@@ -881,7 +881,7 @@ void CX_Brush::Brush_SetFaceListDirty(Brush* b)
 // *************************************************************************
 void CX_Brush::Brush_Get_Center(const Brush* b, T_Vec3* center)
 {
-	App->CL_Box_x->Box3d_GetCenter(&b->BoundingBox, center);
+	App->CL_X_Box->Box3d_GetCenter(&b->BoundingBox, center);
 }
 
 // *************************************************************************
@@ -941,7 +941,7 @@ void CX_Brush::Brush_EnumFaces(Brush* b, void* lParam, Brush_FaceCallback Callba
 // *************************************************************************
 signed int	CX_Brush::Brush_TestBoundsIntersect(const Brush* b, const Box3d* pBox)
 {
-	return App->CL_Box_x->Box3d_Intersection(&b->BoundingBox, pBox, NULL);
+	return App->CL_X_Box->Box3d_Intersection(&b->BoundingBox, pBox, NULL);
 }
 
 static	Brush* bstack[8192];	//8192 levels of recursion
@@ -1006,9 +1006,9 @@ static void	Brush_UpdateChildFacesRecurse(Brush* b, Brush* bp)
 								p2 = App->CL_X_Face->Face_GetPlane(f2);
 								v = p->Normal;
 
-								App->CL_Maths->Vector3_Inverse(&v);
+								App->CL_X_Maths->Vector3_Inverse(&v);
 
-								if (App->CL_Maths->Vector3_Compare(&v, &p2->Normal, 0.01f))
+								if (App->CL_X_Maths->Vector3_Compare(&v, &p2->Normal, 0.01f))
 								{
 									if (fabs(-p->Dist - p2->Dist) < 0.01f)
 									{
@@ -1036,7 +1036,7 @@ static void	Brush_UpdateChildFacesRecurse(Brush* b, Brush* bp)
 						f2 = App->CL_X_FaceList->FaceList_GetFace(cb->Faces, j);
 						p2 = App->CL_X_Face->Face_GetPlane(f2);
 
-						if (App->CL_Maths->Vector3_Compare(&p->Normal, &p2->Normal, 0.01f))
+						if (App->CL_X_Maths->Vector3_Compare(&p->Normal, &p2->Normal, 0.01f))
 						{
 							if (fabs(p->Dist - p2->Dist) < 0.01f)
 							{
@@ -1349,7 +1349,7 @@ static Brush* Brush_CreateFromParent(const Brush* ParentBrush, const FaceList* f
 	assert(fl != NULL);
 	assert(ParentBrush->Type != BRUSH_MULTI);
 
-	pBrush = (Brush*)App->CL_Maths->Ram_Allocate(sizeof(Brush));
+	pBrush = (Brush*)App->CL_X_Maths->Ram_Allocate(sizeof(Brush));
 	if (pBrush != NULL)
 	{
 		pBrush->Prev = NULL;
@@ -2057,8 +2057,8 @@ void CX_Brush::Brush_Resize(Brush* b, float dx, float dy, int sides, int inidx, 
 	int		i;
 	T_Vec3 FixOrg, BrushOrg, ScaleVec;
 
-	App->CL_Maths->Vector3_Add(&b->BoundingBox.Min, &b->BoundingBox.Max, &BrushOrg);
-	App->CL_Maths->Vector3_Scale(&BrushOrg, 0.5f, &BrushOrg);
+	App->CL_X_Maths->Vector3_Add(&b->BoundingBox.Min, &b->BoundingBox.Max, &BrushOrg);
+	App->CL_X_Maths->Vector3_Scale(&BrushOrg, 0.5f, &BrushOrg);
 
 	//find the corner of the bounds to keep fixed
 	VectorToSUB(FixOrg, inidx) = 0.0f;
@@ -2103,7 +2103,7 @@ void CX_Brush::Brush_Resize(Brush* b, float dx, float dy, int sides, int inidx, 
 		dy = 0;
 
 	//translate to fixed origin
-	App->CL_Maths->Vector3_Inverse(&FixOrg);
+	App->CL_X_Maths->Vector3_Inverse(&FixOrg);
 	Brush_Move(b, &FixOrg);
 
 	dx *= 0.005f;
@@ -2127,7 +2127,7 @@ void CX_Brush::Brush_Resize(Brush* b, float dx, float dy, int sides, int inidx, 
 	Brush_Destroy(&pClone);
 
 	//translate back
-	App->CL_Maths->Vector3_Inverse(&FixOrg);
+	App->CL_X_Maths->Vector3_Inverse(&FixOrg);
 	Brush_Move(b, &FixOrg);
 
 	Brush_Bound(b);
@@ -2196,8 +2196,8 @@ void CX_Brush::Brush_ResizeFinal(Brush* b, int sides, int inidx, T_Vec3* fnscale
 
 	T_Vec3 FixOrg, BrushOrg;
 
-	App->CL_Maths->Vector3_Add(&b->BoundingBox.Min, &b->BoundingBox.Max, &BrushOrg);
-	App->CL_Maths->Vector3_Scale(&BrushOrg, 0.5f, &BrushOrg);
+	App->CL_X_Maths->Vector3_Add(&b->BoundingBox.Min, &b->BoundingBox.Max, &BrushOrg);
+	App->CL_X_Maths->Vector3_Scale(&BrushOrg, 0.5f, &BrushOrg);
 
 	//find the corner of the bounds to keep fixed
 	VectorToSUB(FixOrg, inidx) = 0.0f;
@@ -2252,7 +2252,7 @@ void CX_Brush::Brush_ResizeFinal(Brush* b, int sides, int inidx, T_Vec3* fnscale
 	}
 
 	//translate to fixed origin
-	App->CL_Maths->Vector3_Inverse(&FixOrg);
+	App->CL_X_Maths->Vector3_Inverse(&FixOrg);
 	Brush_Move(b, &FixOrg);
 
 	VectorToSUB(*fnscale, inidx) = 1.0f;
@@ -2264,7 +2264,7 @@ void CX_Brush::Brush_ResizeFinal(Brush* b, int sides, int inidx, T_Vec3* fnscale
 
 
 	//translate back
-	App->CL_Maths->Vector3_Inverse(&FixOrg);
+	App->CL_X_Maths->Vector3_Inverse(&FixOrg);
 	Brush_Move(b, &FixOrg);
 
 	Brush_Bound(b);
@@ -2637,8 +2637,8 @@ void CX_Brush::Brush_SnapScaleNearest(Brush* b, float gsize, int sides, int inid
 	T_Vec3	dmin, vsnap, sbound;
 	float	const	gsizeinv = 1.0f / (float)gsize;
 
-	App->CL_Maths->Vector3_Add(&b->BoundingBox.Min, &b->BoundingBox.Max, &BrushOrg);
-	App->CL_Maths->Vector3_Scale(&BrushOrg, 0.5f, &BrushOrg);
+	App->CL_X_Maths->Vector3_Add(&b->BoundingBox.Min, &b->BoundingBox.Max, &BrushOrg);
+	App->CL_X_Maths->Vector3_Scale(&BrushOrg, 0.5f, &BrushOrg);
 
 	//find the corner of the bounds to keep fixed
 	VectorToSUB(FixOrg, inidx) = 0.0f;
@@ -2691,17 +2691,17 @@ void CX_Brush::Brush_SnapScaleNearest(Brush* b, float gsize, int sides, int inid
 		}
 	}
 
-	App->CL_Maths->Vector3_Scale(&FixOrg, gsizeinv, &sbound);
+	App->CL_X_Maths->Vector3_Scale(&FixOrg, gsizeinv, &sbound);
 
 	for (i = 0; i < 3; i++)
 	{
 		VectorToSUB(vsnap, i) = (float)Units_Trunc(VectorToSUB(sbound, i));
 	}
 
-	App->CL_Maths->Vector3_Subtract(&sbound, &vsnap, &sbound);
-	App->CL_Maths->Vector3_Scale(&vsnap, gsize, &vsnap);
-	App->CL_Maths->Vector3_Subtract(&FixOrg, &dmin, &FixOrg);
-	App->CL_Maths->Vector3_Subtract(&vsnap, &dmin, &vsnap);
+	App->CL_X_Maths->Vector3_Subtract(&sbound, &vsnap, &sbound);
+	App->CL_X_Maths->Vector3_Scale(&vsnap, gsize, &vsnap);
+	App->CL_X_Maths->Vector3_Subtract(&FixOrg, &dmin, &FixOrg);
+	App->CL_X_Maths->Vector3_Subtract(&vsnap, &dmin, &vsnap);
 
 	for (i = 0; i < 3; i++)
 	{

@@ -30,9 +30,9 @@ THE SOFTWARE.
 CL64_App::CL64_App(void)
 {
 	CL_Editor_Map =				nullptr;
-	CL_Maths =					nullptr;
+	CL_X_Maths =					nullptr;
 
-	CL_Box_x =					nullptr;
+	CL_X_Box =					nullptr;
 	CL_Render =					nullptr;
 	CL_Level =					nullptr;
 
@@ -187,8 +187,8 @@ CL64_App::~CL64_App(void)
 void CL64_App::InitApp(void)
 {
 	CL_Editor_Map =				new CL64_Editor_Map();
-	CL_Maths =					new CL64_Lib_Maths();
-	CL_Box_x =					new CX_Box();
+	CL_X_Maths =					new CL64_Lib_Maths();
+	CL_X_Box =					new CX_Box();
 
 	CL_Render =					new CL64_Render_Map();
 	CL_Level =					new CL64_Level();

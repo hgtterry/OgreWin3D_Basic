@@ -958,7 +958,7 @@ bool CL64_Dialogs::Show_Face_Data(int Index, const Face* f, HWND hDlg)
 	}
 
 	T_Vec3 Angles = { 0,0,0 };
-	App->CL_Maths->XForm3d_GetEulerAngles(&f->Tex.XfmFaceAngle, &Angles);
+	App->CL_X_Maths->XForm3d_GetEulerAngles(&f->Tex.XfmFaceAngle, &Angles);
 	sprintf(buf, "Angle %.0f %.0f %.0f", Units_RadiansToDegrees(Angles.x), Units_RadiansToDegrees(Angles.y), Units_RadiansToDegrees(Angles.z));
 	SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 	
@@ -976,16 +976,16 @@ bool CL64_Dialogs::Show_Face_Data(int Index, const Face* f, HWND hDlg)
 	if (tySize == 0)
 		tySize = 32;
 
-	App->CL_Maths->Vector3_Scale(&TVecs->uVec, 1.f / (float)txSize, &uVec);
-	App->CL_Maths->Vector3_Scale(&TVecs->vVec, -1.f / (float)tySize, &vVec);
+	App->CL_X_Maths->Vector3_Scale(&TVecs->uVec, 1.f / (float)txSize, &uVec);
+	App->CL_X_Maths->Vector3_Scale(&TVecs->vVec, -1.f / (float)tySize, &vVec);
 
 	const T_Vec3* verts = App->CL_X_Face->Face_GetPoints(f);
 
 	int j = 0;
 	for (j = 0; j < f->NumPoints; j++)
 	{
-		U = App->CL_Maths->Vector3_DotProduct(&(verts[j]), &uVec);
-		V = App->CL_Maths->Vector3_DotProduct(&(verts[j]), &vVec);
+		U = App->CL_X_Maths->Vector3_DotProduct(&(verts[j]), &uVec);
+		V = App->CL_X_Maths->Vector3_DotProduct(&(verts[j]), &vVec);
 		U += (TVecs->uOffset / txSize);
 		V -= (TVecs->vOffset / tySize);
 
@@ -1719,13 +1719,13 @@ void CL64_Dialogs::List_Libraries(HWND List)
 	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)" ------------------- Libraries ------------------- ");
 	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)" ");
 
-	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->CL_Maths->GetVersion());
+	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->CL_X_Maths->GetVersion());
 	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->CL_X_Preference->GetVersion());
 	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->CL_X_Ini_File->GetVersion());
 
 	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)" ");
 	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)" ------ Gen  ");
-	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->CL_Box_x->GetVersion());
+	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->CL_X_Box->GetVersion());
 	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->CL_X_Array->GetVersion());
 	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->CL_X_SelBrushList->GetVersion());
 	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->CL_X_Brush->GetVersion());

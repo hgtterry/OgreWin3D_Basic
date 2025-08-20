@@ -365,7 +365,7 @@ void CreateBoxDialog::CreateNewTemplateBrush(Brush* pBrush)
 	}
 
 	T_Vec3 MoveVec;
-	App->CL_Maths->Vector3_Subtract(pTemplatePos, &BrushPos, &MoveVec);
+	App->CL_X_Maths->Vector3_Subtract(pTemplatePos, &BrushPos, &MoveVec);
 	App->CL_X_Brush->Brush_Move(App->CL_Doc->CurBrush, &MoveVec);
 
 	App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);

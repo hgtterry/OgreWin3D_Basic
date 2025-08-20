@@ -51,10 +51,10 @@ CL64_Doc::CL64_Doc(void)
     pSelFaces = NULL;
     Temp_SelFaces = NULL;
 
-    App->CL_Maths->Vector3_Set(&SelectedGeoCenter,0, 0, 0);
-    App->CL_Maths->Vector3_Set(&FinalPos, 0, 0, 0);
-    App->CL_Maths->Vector3_Set(&FinalRot, 0, 0, 0);
-    App->CL_Maths->Vector3_Set(&FinalScale, 0, 0, 0);
+    App->CL_X_Maths->Vector3_Set(&SelectedGeoCenter,0, 0, 0);
+    App->CL_X_Maths->Vector3_Set(&FinalPos, 0, 0, 0);
+    App->CL_X_Maths->Vector3_Set(&FinalRot, 0, 0, 0);
+    App->CL_X_Maths->Vector3_Set(&FinalScale, 0, 0, 0);
    
     mLastOp = 0;
 
@@ -108,7 +108,7 @@ void CL64_Doc::Init_Doc()
 
 	mModeTool = ID_TOOLS_TEMPLATE;
 
-	App->CL_Maths->Vector3_Clear(&SelectedGeoCenter);
+	App->CL_X_Maths->Vector3_Clear(&SelectedGeoCenter);
 
     strcpy(App->CL_Export->mJustName, App->CL_Level->MTF_JustName_NoExt);
 
@@ -837,8 +837,8 @@ void CL64_Doc::MoveSelectedBrushList(SelBrushList* pList, T_Vec3 const* v)
     int NumBrushes;
     mLastOp = BRUSH_MOVE;
 
-    App->CL_Maths->Vector3_Add(&SelectedGeoCenter, v, &SelectedGeoCenter);
-    App->CL_Maths->Vector3_Add(v, &FinalPos, &FinalPos);
+    App->CL_X_Maths->Vector3_Add(&SelectedGeoCenter, v, &SelectedGeoCenter);
+    App->CL_X_Maths->Vector3_Add(v, &FinalPos, &FinalPos);
 
     NumBrushes = App->CL_X_SelBrushList->SelBrushList_GetSize(pList);
     for (i = 0; i < NumBrushes; i++)
@@ -870,10 +870,10 @@ void CL64_Doc::RotateSelectedBrushList(const ViewVars* view, SelBrushList* pList
     int NumBrushes = App->CL_X_SelBrushList->SelBrushList_GetSize(pList);
 
     GetRotationPoint(&RotationPoint);
-    App->CL_Maths->XForm3d_SetIdentity(&rm);
+    App->CL_X_Maths->XForm3d_SetIdentity(&rm);
 
-    App->CL_Maths->Vector3_Add(v, &App->CL_Doc->FinalRot, &App->CL_Doc->FinalRot);
-    App->CL_Maths->XForm3d_SetEulerAngles(&rm, v);
+    App->CL_X_Maths->Vector3_Add(v, &App->CL_Doc->FinalRot, &App->CL_Doc->FinalRot);
+    App->CL_X_Maths->XForm3d_SetEulerAngles(&rm, v);
 
     for (i = 0; i < NumBrushes; i++)
     {
@@ -965,8 +965,8 @@ void CL64_Doc::ScaleSelectedBrushes(T_Vec3* ScaleVector)
     T_Vec3 MoveTo;
     T_Vec3 MoveBack;
 
-    App->CL_Maths->Vector3_Subtract(&VecOrigin, &App->CL_Doc->SelectedGeoCenter, &MoveTo);
-    App->CL_Maths->Vector3_Subtract(&App->CL_Doc->SelectedGeoCenter, &VecOrigin, &MoveBack);
+    App->CL_X_Maths->Vector3_Subtract(&VecOrigin, &App->CL_Doc->SelectedGeoCenter, &MoveTo);
+    App->CL_X_Maths->Vector3_Subtract(&App->CL_Doc->SelectedGeoCenter, &VecOrigin, &MoveBack);
 
     if (App->CL_Doc->mModeTool == ID_TOOLS_TEMPLATE)
     {
@@ -1070,9 +1070,9 @@ void CL64_Doc::DoneMovingBrushes()
 
         // do the snap thing...
         pBox = App->CL_X_Brush->Brush_GetBoundingBox(App->CL_Doc->CurBrush);
-        vMin = App->CL_Box_x->Box3d_GetMin(pBox);
-        vMax = App->CL_Box_x->Box3d_GetMax(pBox);
-        App->CL_Maths->Vector3_Clear(&SnapDelta);
+        vMin = App->CL_X_Box->Box3d_GetMin(pBox);
+        vMax = App->CL_X_Box->Box3d_GetMax(pBox);
+        App->CL_X_Maths->Vector3_Clear(&SnapDelta);
        
         SnapX = (App->CL_Doc->FinalPos.x != 0.0f);
         SnapY = (App->CL_Doc->FinalPos.y != 0.0f);
@@ -1101,7 +1101,7 @@ void CL64_Doc::DoneMovingBrushes()
         }
         else*/
         {
-            App->CL_Maths->Vector3_Add(&App->CL_Doc->FinalPos, &SnapDelta, &App->CL_Doc->FinalPos);
+            App->CL_X_Maths->Vector3_Add(&App->CL_Doc->FinalPos, &SnapDelta, &App->CL_Doc->FinalPos);
         }
     }
 
@@ -1153,10 +1153,10 @@ void CL64_Doc::DoneRotate(void)
     
     if (mModeTool == ID_TOOLS_TEMPLATE)
     {
-        App->CL_Maths->Vector3_Subtract(&FinalRot, &TemplateReversalRot, &FinalRot);
+        App->CL_X_Maths->Vector3_Subtract(&FinalRot, &TemplateReversalRot, &FinalRot);
     }
 
-    App->CL_Maths->XForm3d_SetEulerAngles(&rm, &FinalRot);
+    App->CL_X_Maths->XForm3d_SetEulerAngles(&rm, &FinalRot);
 
     if (mModeTool == ID_TOOLS_TEMPLATE)
     {
@@ -1225,7 +1225,7 @@ void CL64_Doc::DoneRotate(void)
    
     UpdateSelected();
    
-    App->CL_Maths->Vector3_Clear(&FinalRot);
+    App->CL_X_Maths->Vector3_Clear(&FinalRot);
 
 }
 
@@ -1312,7 +1312,7 @@ void CL64_Doc::DoneMove(void)
 
 	UpdateSelected();
 
-	App->CL_Maths->Vector3_Clear(&FinalPos);
+	App->CL_X_Maths->Vector3_Clear(&FinalPos);
 }
 
 // *************************************************************************
@@ -1688,7 +1688,7 @@ void CL64_Doc::UpdateSelected(void)
         //SelBrushList_Center(pSelBrushes, &SelectedGeoCenter);
     }
 
-    App->CL_Maths->Vector3_Clear(&SelectedGeoCenter);
+    App->CL_X_Maths->Vector3_Clear(&SelectedGeoCenter);
 
     if (mModeTool == ID_TOOLS_TEMPLATE)
     {

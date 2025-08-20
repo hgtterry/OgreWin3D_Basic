@@ -68,7 +68,7 @@ signed int CL64_WadFile::Setup()
 
 		if (nFiles > 0)
 		{
-			mBitmaps = (WadFileEntry*)App->CL_Maths->Ram_Allocate(nFiles * sizeof(WadFileEntry));
+			mBitmaps = (WadFileEntry*)App->CL_X_Maths->Ram_Allocate(nFiles * sizeof(WadFileEntry));
 
 			while (Count < nFiles)
 			{
@@ -97,6 +97,6 @@ void CL64_WadFile::DestroyBitmapArray()
 		{
 			WadFileEntry_Free(&mBitmaps[mBitmapCount - 1]);
 		}
-		App->CL_Maths->Ram_Free(mBitmaps);
+		App->CL_X_Maths->Ram_Free(mBitmaps);
 	}
 }

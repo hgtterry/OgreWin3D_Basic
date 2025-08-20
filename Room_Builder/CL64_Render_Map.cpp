@@ -66,7 +66,7 @@ bool CL64_Render_Map::Render_RenderOrthoGridFromSize(ViewVars* cv, int Interval,
 	App->CL_Render->Render_ViewToWorld(cv, Units_Round(-Interval), Units_Round(-Interval), &Delt);
 	App->CL_Render->Render_ViewToWorld(cv, Units_Round(cv->Width + Interval), Units_Round(cv->Height + Interval), &Delt2);
 
-	App->CL_Box_x->Box3d_Set(&ViewBox, Delt.x, Delt.y, Delt.z, Delt2.x, Delt2.y, Delt2.z);
+	App->CL_X_Box->Box3d_Set(&ViewBox, Delt.x, Delt.y, Delt.z, Delt2.x, Delt2.y, Delt2.z);
 
 	VectorToSUB(ViewBox.Min, inidx) = -FLT_MAX;
 	VectorToSUB(ViewBox.Max, inidx) = FLT_MAX;
@@ -78,8 +78,8 @@ bool CL64_Render_Map::Render_RenderOrthoGridFromSize(ViewVars* cv, int Interval,
 		VectorToSUB(ViewBox.Max, i) = (float)((int)(VectorToSUB(ViewBox.Max, i) * gsinv)) * Interval;
 	}
 
-	App->CL_Maths->Vector3_Copy(&VecOrigin, &xstep);
-	App->CL_Maths->Vector3_Copy(&VecOrigin, &ystep);
+	App->CL_X_Maths->Vector3_Copy(&VecOrigin, &xstep);
+	App->CL_X_Maths->Vector3_Copy(&VecOrigin, &ystep);
 	VectorToSUB(ystep, yaxis) = (float)Interval;
 	VectorToSUB(xstep, xaxis) = (float)Interval;
 
@@ -87,8 +87,8 @@ bool CL64_Render_Map::Render_RenderOrthoGridFromSize(ViewVars* cv, int Interval,
 
 	// horizontal lines
 	int Count = 0;
-	App->CL_Maths->Vector3_Copy(&ViewBox.Min, &Delt);
-	App->CL_Maths->Vector3_Copy(&ViewBox.Min, &Delt2);
+	App->CL_X_Maths->Vector3_Copy(&ViewBox.Min, &Delt);
+	App->CL_X_Maths->Vector3_Copy(&ViewBox.Min, &Delt2);
 	VectorToSUB(Delt2, xaxis) = VectorToSUB(ViewBox.Max, xaxis);
 	cnt = Units_Round((VectorToSUB(ViewBox.Max, yaxis) - VectorToSUB(ViewBox.Min, yaxis)) * gsinv);
 
@@ -98,15 +98,15 @@ bool CL64_Render_Map::Render_RenderOrthoGridFromSize(ViewVars* cv, int Interval,
 		MoveToEx(hDC, 0, sp.y, NULL);
 		sp = App->CL_Render->Render_OrthoWorldToView(cv, &Delt2);
 		LineTo(hDC, cv->Width, sp.y);
-		App->CL_Maths->Vector3_Add(&Delt, &ystep, &Delt);
-		App->CL_Maths->Vector3_Add(&Delt2, &ystep, &Delt2);
+		App->CL_X_Maths->Vector3_Add(&Delt, &ystep, &Delt);
+		App->CL_X_Maths->Vector3_Add(&Delt2, &ystep, &Delt2);
 		Count++;
 	}
 
 	// vertical lines
 	Count = 0;
-	App->CL_Maths->Vector3_Copy(&ViewBox.Min, &Delt);
-	App->CL_Maths->Vector3_Copy(&ViewBox.Min, &Delt2);
+	App->CL_X_Maths->Vector3_Copy(&ViewBox.Min, &Delt);
+	App->CL_X_Maths->Vector3_Copy(&ViewBox.Min, &Delt2);
 	VectorToSUB(Delt2, yaxis) = VectorToSUB(ViewBox.Max, yaxis);
 	cnt = Units_Round((VectorToSUB(ViewBox.Max, xaxis) - VectorToSUB(ViewBox.Min, xaxis)) * gsinv);
 
@@ -116,8 +116,8 @@ bool CL64_Render_Map::Render_RenderOrthoGridFromSize(ViewVars* cv, int Interval,
 		MoveToEx(hDC, sp.x, 0, NULL);
 		sp = App->CL_Render->Render_OrthoWorldToView(cv, &Delt2);
 		LineTo(hDC, sp.x, cv->Height);
-		App->CL_Maths->Vector3_Add(&Delt, &xstep, &Delt);
-		App->CL_Maths->Vector3_Add(&Delt2, &xstep, &Delt2);
+		App->CL_X_Maths->Vector3_Add(&Delt, &xstep, &Delt);
+		App->CL_X_Maths->Vector3_Add(&Delt2, &xstep, &Delt2);
 		Count++;
 	}
 
@@ -135,29 +135,29 @@ void CL64_Render_Map::Render_ViewToWorld(const ViewVars* cv, const int x, const 
 	{
 	case VIEWTOP:
 	{
-		App->CL_Maths->Vector3_Set(wp, (x - cv->XCenter), 0.0f, (y - cv->YCenter));
-		App->CL_Maths->Vector3_Scale(wp, ZoomInv, wp);
-		App->CL_Maths->Vector3_Add(wp, &cv->CamPos, wp);
+		App->CL_X_Maths->Vector3_Set(wp, (x - cv->XCenter), 0.0f, (y - cv->YCenter));
+		App->CL_X_Maths->Vector3_Scale(wp, ZoomInv, wp);
+		App->CL_X_Maths->Vector3_Add(wp, &cv->CamPos, wp);
 		break;
 	}
 	case VIEWFRONT:
 	{
 
-		App->CL_Maths->Vector3_Set(wp, (x - cv->XCenter), -(y - cv->YCenter), 0.0f);
-		App->CL_Maths->Vector3_Scale(wp, ZoomInv, wp);
-		App->CL_Maths->Vector3_Add(wp, &cv->CamPos, wp);
+		App->CL_X_Maths->Vector3_Set(wp, (x - cv->XCenter), -(y - cv->YCenter), 0.0f);
+		App->CL_X_Maths->Vector3_Scale(wp, ZoomInv, wp);
+		App->CL_X_Maths->Vector3_Add(wp, &cv->CamPos, wp);
 		break;
 	}
 	case VIEWSIDE:
 	{
-		App->CL_Maths->Vector3_Set(wp, 0.0f, -(y - cv->YCenter), (x - cv->XCenter));
-		App->CL_Maths->Vector3_Scale(wp, ZoomInv, wp);
-		App->CL_Maths->Vector3_Add(wp, &cv->CamPos, wp);
+		App->CL_X_Maths->Vector3_Set(wp, 0.0f, -(y - cv->YCenter), (x - cv->XCenter));
+		App->CL_X_Maths->Vector3_Scale(wp, ZoomInv, wp);
+		App->CL_X_Maths->Vector3_Add(wp, &cv->CamPos, wp);
 		break;
 	}
 	default:
 	{
-		App->CL_Maths->Vector3_Set
+		App->CL_X_Maths->Vector3_Set
 		(
 			wp,
 			-(x - cv->XCenter) * (cv->MaxScreenScaleInv),
@@ -165,7 +165,7 @@ void CL64_Render_Map::Render_ViewToWorld(const ViewVars* cv, const int x, const 
 			1.0f
 		);
 
-		App->CL_Maths->Vector3_Normalize(wp);
+		App->CL_X_Maths->Vector3_Normalize(wp);
 
 		break;
 	}
@@ -184,8 +184,8 @@ POINT CL64_Render_Map::Render_OrthoWorldToView(const ViewVars* cv, T_Vec3 const*
 	{
 	case VIEWTOP:
 	{
-		App->CL_Maths->Vector3_Subtract(wp, &cv->CamPos, &ptView);
-		App->CL_Maths->Vector3_Scale(&ptView, cv->ZoomFactor, &ptView);
+		App->CL_X_Maths->Vector3_Subtract(wp, &cv->CamPos, &ptView);
+		App->CL_X_Maths->Vector3_Scale(&ptView, cv->ZoomFactor, &ptView);
 
 		sc.x = (int)(cv->XCenter + ptView.x);
 		sc.y = (int)(cv->YCenter + ptView.z);
@@ -193,8 +193,8 @@ POINT CL64_Render_Map::Render_OrthoWorldToView(const ViewVars* cv, T_Vec3 const*
 	}
 	case VIEWFRONT:
 	{
-		App->CL_Maths->Vector3_Subtract(wp, &cv->CamPos, &ptView);
-		App->CL_Maths->Vector3_Scale(&ptView, cv->ZoomFactor, &ptView);
+		App->CL_X_Maths->Vector3_Subtract(wp, &cv->CamPos, &ptView);
+		App->CL_X_Maths->Vector3_Scale(&ptView, cv->ZoomFactor, &ptView);
 
 		sc.x = (int)(cv->XCenter + ptView.x);
 		sc.y = (int)(cv->YCenter - ptView.y);
@@ -202,8 +202,8 @@ POINT CL64_Render_Map::Render_OrthoWorldToView(const ViewVars* cv, T_Vec3 const*
 	}
 	case VIEWSIDE:
 	{
-		App->CL_Maths->Vector3_Subtract(wp, &cv->CamPos, &ptView);
-		App->CL_Maths->Vector3_Scale(&ptView, cv->ZoomFactor, &ptView);
+		App->CL_X_Maths->Vector3_Subtract(wp, &cv->CamPos, &ptView);
+		App->CL_X_Maths->Vector3_Scale(&ptView, cv->ZoomFactor, &ptView);
 
 		sc.x = (int)(cv->XCenter + ptView.z);
 		sc.y = (int)(cv->YCenter - ptView.y);
@@ -236,14 +236,14 @@ void CL64_Render_Map::Render_ViewDeltaToRotation(const ViewVars* v,const float d
 	switch (v->ViewType)
 	{
 	case VIEWTOP:	// +dx = negative rotation about Y
-		App->CL_Maths->Vector3_Set(VecRotate, 0.0f, -RotationRads, 0.0f);
+		App->CL_X_Maths->Vector3_Set(VecRotate, 0.0f, -RotationRads, 0.0f);
 		break;
 	case VIEWFRONT:  // +dx = negative rotation about Z
 		//disable roll
-		App->CL_Maths->Vector3_Set(VecRotate, 0.0f, 0.0f, -RotationRads);
+		App->CL_X_Maths->Vector3_Set(VecRotate, 0.0f, 0.0f, -RotationRads);
 		break;
 	case VIEWSIDE:	// +dx = positive rotation about X
-		App->CL_Maths->Vector3_Set(VecRotate, RotationRads, 0.0f, 0.0f);
+		App->CL_X_Maths->Vector3_Set(VecRotate, RotationRads, 0.0f, 0.0f);
 		break;
 	default:
 		assert(0);  // can't happen!
@@ -255,7 +255,7 @@ void CL64_Render_Map::Render_ViewDeltaToRotation(const ViewVars* v,const float d
 // *************************************************************************
 void CL64_Render_Map::Render_MoveCamPosOrtho(ViewVars* v, const T_Vec3* dv)
 {
-	App->CL_Maths->Vector3_Add(&v->CamPos, dv, &v->CamPos);
+	App->CL_X_Maths->Vector3_Add(&v->CamPos, dv, &v->CamPos);
 }
 
 // *************************************************************************
@@ -285,8 +285,8 @@ void CL64_Render_Map::Pan_View(ViewVars* currentView, int startPosX, int startPo
 	Render_ViewToWorld(currentView, realCursorPosition.x, realCursorPosition.y, &worldPoint);
 
 	// Calculate the delta in world space
-	App->CL_Maths->Vector3_Subtract(&worldPoint, &startPoint, &deltaVector);
-	App->CL_Maths->Vector3_Scale(&deltaVector, -1.0f, &cameraVector);
+	App->CL_X_Maths->Vector3_Subtract(&worldPoint, &startPoint, &deltaVector);
+	App->CL_X_Maths->Vector3_Scale(&deltaVector, -1.0f, &cameraVector);
 
 	// Move the camera position
 	Render_MoveCamPosOrtho(currentView, &cameraVector);

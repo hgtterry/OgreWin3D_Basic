@@ -691,7 +691,7 @@ void CL64_Editor_Map::Set_Views_Defaults(int Index, Ogre::int32 View, const char
 	VCam[Index]->Width = 310;
 	VCam[Index]->Height = 174;
 
-	App->CL_Maths->Vector3_Set(&VCam[Index]->CamPos,0,0,0);
+	App->CL_X_Maths->Vector3_Set(&VCam[Index]->CamPos,0,0,0);
 
 	VCam[Index]->MaxScreenScaleInv = 100;
 }
@@ -1547,7 +1547,7 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Ogre_BR(HWND hDlg, UINT message, WPARAM w
 
 				Ogre::Quaternion cameraRotation = App->CL_Ogre->camNode->getOrientation();
 
-				int cameraComparison = App->CL_Maths->Ogre_Quaternion_Compare(&cameraRotation, &App->CL_Camera->Saved_Rotation, 0);
+				int cameraComparison = App->CL_X_Maths->Ogre_Quaternion_Compare(&cameraRotation, &App->CL_Camera->Saved_Rotation, 0);
 
 				// If Mouse has not moved select Brush and Face
 				if (cameraComparison == 1)
@@ -1635,7 +1635,7 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Ogre_BR(HWND hDlg, UINT message, WPARAM w
 					bool isPreviewModeRunning = App->CL_Editor_Control->flag_PreviewMode_Active == 0;
 
 					Ogre::Vector3 cameraPosition = App->CL_Ogre->camNode->getPosition();
-					int cameraComparison = App->CL_Maths->Ogre_Vector3_Compare(&cameraPosition, &App->CL_Camera->Saved_Cam_Pos, 0);
+					int cameraComparison = App->CL_X_Maths->Ogre_Vector3_Compare(&cameraPosition, &App->CL_Camera->Saved_Cam_Pos, 0);
 
 					if (cameraComparison == 1)
 					{
@@ -1967,7 +1967,7 @@ void CL64_Editor_Map::On_Mouse_Move(POINT CursorPosition, HWND hDlg)
 	{
 		App->CL_Render->Render_ViewToWorld(Current_View, mStartPoint.x, mStartPoint.y, &sp);
 		App->CL_Render->Render_ViewToWorld(Current_View, CursorPosition.x, CursorPosition.y, &wp);
-		App->CL_Maths->Vector3_Subtract(&wp, &sp, &dv);
+		App->CL_X_Maths->Vector3_Subtract(&wp, &sp, &dv);
 
 		if (App->CL_Doc->mModeTool == ID_TOOLS_BRUSH_MOVEROTATEBRUSH)
 		{
@@ -2095,7 +2095,7 @@ void CL64_Editor_Map::On_Left_Button_Down(POINT CursorPosition, HWND hDlg)
 			int CursorSide = 0;
 			App->CL_Doc->sides = SideLookup[CursorSide];
 
-			App->CL_Maths->Vector3_Clear(&App->CL_Doc->FinalPos);
+			App->CL_X_Maths->Vector3_Clear(&App->CL_Doc->FinalPos);
 			App->CL_Doc->TempCopySelectedBrushes();
 		}
 
@@ -2104,7 +2104,7 @@ void CL64_Editor_Map::On_Left_Button_Down(POINT CursorPosition, HWND hDlg)
 			int CursorSide = 0;
 			App->CL_Doc->sides = SideLookup[CursorSide];
 
-			App->CL_Maths->Vector3_Clear(&App->CL_Doc->FinalPos);
+			App->CL_X_Maths->Vector3_Clear(&App->CL_Doc->FinalPos);
 			App->CL_Doc->TempCopySelectedBrushes();
 		}
 	}
@@ -2118,7 +2118,7 @@ void CL64_Editor_Map::On_Left_Button_Down(POINT CursorPosition, HWND hDlg)
 
 		App->CL_Doc->ScaleNum = 0;
 
-		App->CL_Maths->Vector3_Set(&App->CL_Doc->FinalScale, 1.0f, 1.0f, 1.0f);
+		App->CL_X_Maths->Vector3_Set(&App->CL_Doc->FinalScale, 1.0f, 1.0f, 1.0f);
 		App->CL_Doc->TempCopySelectedBrushes();
 	}
 }
@@ -2224,11 +2224,11 @@ void CL64_Editor_Map::Draw_Screen(HWND hwnd)
 	T_Vec3 XTemp;
 	Box3d ViewBox;
 	inidx = App->CL_Render->Render_GetInidx(Current_View);
-	App->CL_Box_x->Box3d_SetBogusBounds(&ViewBox);
+	App->CL_X_Box->Box3d_SetBogusBounds(&ViewBox);
 	App->CL_Render->Render_ViewToWorld(Current_View, 0, 0, &XTemp);
-	App->CL_Box_x->Box3d_AddPoint(&ViewBox, XTemp.x, XTemp.y, XTemp.z);
+	App->CL_X_Box->Box3d_AddPoint(&ViewBox, XTemp.x, XTemp.y, XTemp.z);
 	App->CL_Render->Render_ViewToWorld(Current_View, App->CL_Render->Render_GetWidth(Current_View), App->CL_Render->Render_GetHeight(Current_View), &XTemp);
-	App->CL_Box_x->Box3d_AddPoint(&ViewBox, XTemp.x, XTemp.y, XTemp.z);
+	App->CL_X_Box->Box3d_AddPoint(&ViewBox, XTemp.x, XTemp.y, XTemp.z);
 	VectorToSUB(ViewBox.Min, inidx) = -FLT_MAX;
 	VectorToSUB(ViewBox.Max, inidx) = FLT_MAX;
 
@@ -2426,9 +2426,9 @@ void CL64_Editor_Map::Draw_Camera(HDC ViewDC)
 	static const float MSIN45 = static_cast<float>(sin(-M_PI / 4.0f));
 
 	// Compute entity size in view coordinates
-	App->CL_Maths->Vector3_Set(&EntSizeWorld, ENTITY_SIZE, ENTITY_SIZE, ENTITY_SIZE);
+	App->CL_X_Maths->Vector3_Set(&EntSizeWorld, ENTITY_SIZE, ENTITY_SIZE, ENTITY_SIZE);
 	EntSizeView = App->CL_Render->Render_OrthoWorldToView(Current_View, &EntSizeWorld);
-	App->CL_Maths->Vector3_Clear(&VecOrigin);
+	App->CL_X_Maths->Vector3_Clear(&VecOrigin);
 	OriginView = App->CL_Render->Render_OrthoWorldToView(Current_View, &VecOrigin);
 
 	// Calculate width and height of the entity
@@ -2477,14 +2477,14 @@ void CL64_Editor_Map::Draw_Camera(HDC ViewDC)
 	bool bUIAvailable = true;
 
 	// Set camera angles
-	App->CL_Maths->Vector3_Set(&Cam_Angles, Cam_Angles.z, (-Cam_Angles.y - M_PI / 2.0f), Cam_Angles.x);
+	App->CL_X_Maths->Vector3_Set(&Cam_Angles, Cam_Angles.z, (-Cam_Angles.y - M_PI / 2.0f), Cam_Angles.x);
 
 	Matrix3d Xfm{};
 	T_Vec3 VecTarg{};
-	App->CL_Maths->XForm3d_SetEulerAngles(&Xfm, &Cam_Angles);
-	App->CL_Maths->Vector3_Set(&VecTarg, fRadius, 0.0f, 0.0f);
-	App->CL_Maths->XForm3d_Transform(&Xfm, &VecTarg, &VecTarg);
-	App->CL_Maths->Vector3_Add(&OgrePos, &VecTarg, &VecTarg);
+	App->CL_X_Maths->XForm3d_SetEulerAngles(&Xfm, &Cam_Angles);
+	App->CL_X_Maths->Vector3_Set(&VecTarg, fRadius, 0.0f, 0.0f);
+	App->CL_X_Maths->XForm3d_Transform(&Xfm, &VecTarg, &VecTarg);
+	App->CL_X_Maths->Vector3_Add(&OgrePos, &VecTarg, &VecTarg);
 
 	POINT LineEndView = App->CL_Render->Render_OrthoWorldToView(Current_View, &VecTarg);
 

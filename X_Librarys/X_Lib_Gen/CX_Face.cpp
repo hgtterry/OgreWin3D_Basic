@@ -63,7 +63,7 @@ Face* CX_Face::Face_Create(int NumPnts, const T_Vec3* pnts, int DibId)
 {
 	Face* f;
 
-	f = (Face*)App->CL_Maths->Ram_Allocate(sizeof(Face));
+	f = (Face*)App->CL_X_Maths->Ram_Allocate(sizeof(Face));
 	if (f)
 	{
 		memset(f, 0, sizeof(Face));
@@ -81,7 +81,7 @@ Face* CX_Face::Face_Create(int NumPnts, const T_Vec3* pnts, int DibId)
 		strcpy(f->Brush_Name, "No_Brush");
 		Face_SetVisible(f, true);
 
-		f->Points = (T_Vec3*)App->CL_Maths->Ram_Allocate(sizeof(T_Vec3) * NumPnts);
+		f->Points = (T_Vec3*)App->CL_X_Maths->Ram_Allocate(sizeof(T_Vec3) * NumPnts);
 		if (f->Points)
 		{
 			memcpy(f->Points, pnts, sizeof(Ogre::Vector3) * NumPnts);
@@ -94,14 +94,14 @@ Face* CX_Face::Face_Create(int NumPnts, const T_Vec3* pnts, int DibId)
 			}
 			else
 			{
-				App->CL_Maths->Ram_Free(f->Points); //hgtterry Debug
-				App->CL_Maths->Ram_Free(f);
+				App->CL_X_Maths->Ram_Free(f->Points); //hgtterry Debug
+				App->CL_X_Maths->Ram_Free(f);
 				f = NULL;
 			}
 		}
 		else
 		{
-			App->CL_Maths->Ram_Free(f);
+			App->CL_X_Maths->Ram_Free(f);
 			f = NULL;
 		}
 	}
@@ -118,10 +118,10 @@ void CX_Face::Face_GetBounds(const Face* f, Box3d* b)
 	assert(f != NULL);
 	assert(b != NULL);
 
-	App->CL_Box_x->Box3d_SetBogusBounds(b);
+	App->CL_X_Box->Box3d_SetBogusBounds(b);
 	for (i = 0; i < f->NumPoints; i++)
 	{
-		App->CL_Box_x->Box3d_AddPoint(b, f->Points[i].x, f->Points[i].y, f->Points[i].z);
+		App->CL_X_Box->Box3d_AddPoint(b, f->Points[i].x, f->Points[i].y, f->Points[i].z);
 	}
 }
 
@@ -131,7 +131,7 @@ void CX_Face::Face_GetBounds(const Face* f, Box3d* b)
 void CX_Face::Face_SetTexturePos(Face* f)
 {
 	//	Face_GetCenter (f, &f->Tex.Pos);
-	App->CL_Maths->Vector3_Clear(&f->Tex.Pos);
+	App->CL_X_Maths->Vector3_Clear(&f->Tex.Pos);
 	f->Tex.DirtyFlag = true;
 }
 
@@ -161,7 +161,7 @@ void CX_Face::Face_InitTexInfo(TexInfo* t, T_Vec3 const* pNormal)
 	t->txSize = 0;
 	t->tySize = 0;
 
-	App->CL_Maths->Vector3_Clear(&t->Pos);
+	App->CL_X_Maths->Vector3_Clear(&t->Pos);
 	Face_SetTexInfoPlane(t, pNormal);
 	Face_InitFaceAngle(t, pNormal);
 }
@@ -183,12 +183,12 @@ void CX_Face::Face_InitFaceAngle(TexInfo* t, T_Vec3 const* pNormal)
 		if (fabs(pNormal->x) > fabs(pNormal->z))
 		{
 			if (pNormal->x > 0)
-				App->CL_Maths->Vector3_Inverse(&PosNormal);
+				App->CL_X_Maths->Vector3_Inverse(&PosNormal);
 		}
 		else
 		{
 			if (pNormal->z > 0)
-				App->CL_Maths->Vector3_Inverse(&PosNormal);
+				App->CL_X_Maths->Vector3_Inverse(&PosNormal);
 		}
 
 	}
@@ -197,19 +197,19 @@ void CX_Face::Face_InitFaceAngle(TexInfo* t, T_Vec3 const* pNormal)
 		if (fabs(pNormal->y) > fabs(pNormal->z))
 		{
 			if (pNormal->y > 0)
-				App->CL_Maths->Vector3_Inverse(&PosNormal);
+				App->CL_X_Maths->Vector3_Inverse(&PosNormal);
 		}
 		else
 		{
 			if (pNormal->z > 0)
-				App->CL_Maths->Vector3_Inverse(&PosNormal);
+				App->CL_X_Maths->Vector3_Inverse(&PosNormal);
 		}
 	}
 
 	// Create rotation matrix that will put this face into the X,Y plane.
-	App->CL_Maths->Vector3_Set(&VecDest, 0.0f, 0.0f, 1.0f);
-	App->CL_Maths->Vector3_CrossProduct(&VecDest, &PosNormal, &VecAxis);
-	cosv = App->CL_Maths->Vector3_DotProduct(&VecDest, &PosNormal);
+	App->CL_X_Maths->Vector3_Set(&VecDest, 0.0f, 0.0f, 1.0f);
+	App->CL_X_Maths->Vector3_CrossProduct(&VecDest, &PosNormal, &VecAxis);
+	cosv = App->CL_X_Maths->Vector3_DotProduct(&VecDest, &PosNormal);
 	if (cosv > 1.0f)
 	{
 		cosv = 1.0f;
@@ -217,19 +217,19 @@ void CX_Face::Face_InitFaceAngle(TexInfo* t, T_Vec3 const* pNormal)
 
 	Theta = (float)acos(cosv);
 
-	if (App->CL_Maths->Vector3_Normalize(&VecAxis) == 0.0f)
+	if (App->CL_X_Maths->Vector3_Normalize(&VecAxis) == 0.0f)
 	{
 		// If the resulting vector is 0 length, 
 		// then a rotation about X will put us where we need to be.
-		App->CL_Maths->XForm3d_SetIdentity(&t->XfmFaceAngle);
-		App->CL_Maths->XForm3d_RotateX(&t->XfmFaceAngle, -Theta);
+		App->CL_X_Maths->XForm3d_SetIdentity(&t->XfmFaceAngle);
+		App->CL_X_Maths->XForm3d_RotateX(&t->XfmFaceAngle, -Theta);
 	}
 	else
 	{
 		Ogre::Quaternion QRot;
 
-		App->CL_Maths->Quaternion_SetFromAxisAngle(&QRot, &VecAxis, -Theta);
-		App->CL_Maths->Quaternion_ToMatrix(&QRot, &t->XfmFaceAngle);
+		App->CL_X_Maths->Quaternion_SetFromAxisAngle(&QRot, &VecAxis, -Theta);
+		App->CL_X_Maths->Quaternion_ToMatrix(&QRot, &t->XfmFaceAngle);
 	}
 }
 
@@ -247,11 +247,11 @@ signed int CX_Face::Face_SetPlaneFromFace(Face* f)
 	for (i = 0; i < f->NumPoints; i++)
 	{
 		//gen a plane normal from the cross of edge vectors
-		App->CL_Maths->Vector3_Subtract(&f->Points[i], &f->Points[(i + 1) % f->NumPoints], &v1);
-		App->CL_Maths->Vector3_Subtract(&f->Points[(i + 2) % f->NumPoints], &f->Points[(i + 1) % f->NumPoints], &v2);
+		App->CL_X_Maths->Vector3_Subtract(&f->Points[i], &f->Points[(i + 1) % f->NumPoints], &v1);
+		App->CL_X_Maths->Vector3_Subtract(&f->Points[(i + 2) % f->NumPoints], &f->Points[(i + 1) % f->NumPoints], &v2);
 
-		App->CL_Maths->Vector3_CrossProduct(&v1, &v2, &f->Face_Plane.Normal);
-		if (!App->CL_Maths->Vector3_Compare(&f->Face_Plane.Normal, &VecOrigin, VCOMPARE_EPSILON))
+		App->CL_X_Maths->Vector3_CrossProduct(&v1, &v2, &f->Face_Plane.Normal);
+		if (!App->CL_X_Maths->Vector3_Compare(&f->Face_Plane.Normal, &VecOrigin, VCOMPARE_EPSILON))
 		{
 			break;
 		}
@@ -262,8 +262,8 @@ signed int CX_Face::Face_SetPlaneFromFace(Face* f)
 	{
 		return	false;
 	}
-	App->CL_Maths->Vector3_Normalize(&f->Face_Plane.Normal);
-	f->Face_Plane.Dist = App->CL_Maths->Vector3_DotProduct(&f->Points[1], &f->Face_Plane.Normal);
+	App->CL_X_Maths->Vector3_Normalize(&f->Face_Plane.Normal);
+	f->Face_Plane.Dist = App->CL_X_Maths->Vector3_DotProduct(&f->Points[1], &f->Face_Plane.Normal);
 
 	Face_SetTexInfoPlane(&f->Tex, &f->Face_Plane.Normal);
 	return	true;
@@ -316,34 +316,34 @@ Face* CX_Face::Face_CreateFromPlane(const GPlane* p, float Radius, int DibId)
 	assert(p != NULL);
 
 	//find the major axis of p->Normal
-	App->CL_Maths->Vector3_Set(&vup, 0.0f, 0.0f, 1.0f);
+	App->CL_X_Maths->Vector3_Set(&vup, 0.0f, 0.0f, 1.0f);
 	if ((fabs(p->Normal.z) > fabs(p->Normal.x))
 		&& (fabs(p->Normal.z) > fabs(p->Normal.y)))
 	{
-		App->CL_Maths->Vector3_Set(&vup, 1.0f, 0.0f, 0.0f);
+		App->CL_X_Maths->Vector3_Set(&vup, 1.0f, 0.0f, 0.0f);
 	}
 
-	v = App->CL_Maths->Vector3_DotProduct(&vup, &p->Normal);
-	App->CL_Maths->Vector3_AddScaled(&vup, &p->Normal, -v, &vup);
-	App->CL_Maths->Vector3_Normalize(&vup);
+	v = App->CL_X_Maths->Vector3_DotProduct(&vup, &p->Normal);
+	App->CL_X_Maths->Vector3_AddScaled(&vup, &p->Normal, -v, &vup);
+	App->CL_X_Maths->Vector3_Normalize(&vup);
 
-	App->CL_Maths->Vector3_AddScaled(&VecOrigin, &p->Normal, p->Dist, &org);
-	App->CL_Maths->Vector3_CrossProduct(&vup, &p->Normal, &vright);
+	App->CL_X_Maths->Vector3_AddScaled(&VecOrigin, &p->Normal, p->Dist, &org);
+	App->CL_X_Maths->Vector3_CrossProduct(&vup, &p->Normal, &vright);
 
-	App->CL_Maths->Vector3_Scale(&vup, Radius, &vup);
-	App->CL_Maths->Vector3_Scale(&vright, Radius, &vright);
+	App->CL_X_Maths->Vector3_Scale(&vup, Radius, &vup);
+	App->CL_X_Maths->Vector3_Scale(&vright, Radius, &vright);
 
-	App->CL_Maths->Vector3_Subtract(&org, &vright, &pnts[0]);
-	App->CL_Maths->Vector3_Add(&pnts[0], &vup, &pnts[0]);
+	App->CL_X_Maths->Vector3_Subtract(&org, &vright, &pnts[0]);
+	App->CL_X_Maths->Vector3_Add(&pnts[0], &vup, &pnts[0]);
 
-	App->CL_Maths->Vector3_Add(&org, &vright, &pnts[1]);
-	App->CL_Maths->Vector3_Add(&pnts[1], &vup, &pnts[1]);
+	App->CL_X_Maths->Vector3_Add(&org, &vright, &pnts[1]);
+	App->CL_X_Maths->Vector3_Add(&pnts[1], &vup, &pnts[1]);
 
-	App->CL_Maths->Vector3_Add(&org, &vright, &pnts[2]);
-	App->CL_Maths->Vector3_Subtract(&pnts[2], &vup, &pnts[2]);
+	App->CL_X_Maths->Vector3_Add(&org, &vright, &pnts[2]);
+	App->CL_X_Maths->Vector3_Subtract(&pnts[2], &vup, &pnts[2]);
 
-	App->CL_Maths->Vector3_Subtract(&org, &vright, &pnts[3]);
-	App->CL_Maths->Vector3_Subtract(&pnts[3], &vup, &pnts[3]);
+	App->CL_X_Maths->Vector3_Subtract(&org, &vright, &pnts[3]);
+	App->CL_X_Maths->Vector3_Subtract(&pnts[3], &vup, &pnts[3]);
 
 	return	Face_Create(4, pnts, DibId);
 }
@@ -383,7 +383,7 @@ void CX_Face::Face_GetSplitInfo(const Face* f, const GPlane* p, float* dists, Og
 
 	for (i = 0; i < f->NumPoints; i++)
 	{
-		dists[i] = App->CL_Maths->Vector3_DotProduct(&f->Points[i], &p->Normal) - p->Dist;
+		dists[i] = App->CL_X_Maths->Vector3_DotProduct(&f->Points[i], &p->Normal) - p->Dist;
 		if (dists[i] > ON_EPSILON)
 		{
 			sides[i] = SIDE_FRONT;
@@ -409,10 +409,10 @@ void CX_Face::Face_Destroy(Face** f)
 {
 	if ((*f)->Points)
 	{
-		App->CL_Maths->Ram_Free((*f)->Points);
+		App->CL_X_Maths->Ram_Free((*f)->Points);
 	}
 
-	App->CL_Maths->Ram_Free(*f);
+	App->CL_X_Maths->Ram_Free(*f);
 	*f = NULL;
 }
 
@@ -430,13 +430,13 @@ void CX_Face::Face_Clip(Face* f, const GPlane* p, float* dists, Ogre::uint8* sid
 	{
 		if (sides[i] == SIDE_ON)
 		{
-			App->CL_Maths->Vector3_Copy(p1, &spb[nbp]);
+			App->CL_X_Maths->Vector3_Copy(p1, &spb[nbp]);
 			nbp++;
 			continue;
 		}
 		if (sides[i] == SIDE_BACK)
 		{
-			App->CL_Maths->Vector3_Copy(p1, &spb[nbp]);
+			App->CL_X_Maths->Vector3_Copy(p1, &spb[nbp]);
 			nbp++;
 		}
 		if (sides[i + 1] == SIDE_ON || sides[i + 1] == sides[i])
@@ -460,12 +460,12 @@ void CX_Face::Face_Clip(Face* f, const GPlane* p, float* dists, Ogre::uint8* sid
 					dot * (VectorToSUB(*p2, j) - VectorToSUB(*p1, j));
 			}
 		}
-		App->CL_Maths->Vector3_Copy(&mid, &spb[nbp]);
+		App->CL_X_Maths->Vector3_Copy(&mid, &spb[nbp]);
 		nbp++;
 	}
-	App->CL_Maths->Ram_Free(f->Points);
+	App->CL_X_Maths->Ram_Free(f->Points);
 	f->NumPoints = nbp;
-	f->Points = (T_Vec3*)App->CL_Maths->Ram_Allocate(sizeof(T_Vec3) * nbp);
+	f->Points = (T_Vec3*)App->CL_X_Maths->Ram_Allocate(sizeof(T_Vec3) * nbp);
 	memcpy(f->Points, spb, sizeof(T_Vec3) * nbp);
 }
 
@@ -621,7 +621,7 @@ static void Face_UpdateLockedTextureVecs(Face* f)
 		(t->VecNormal.Z != 0.0f));
 
 	// Compute rotation
-	App->CL_Maths->Vector3_Clear(&t->XfmFaceAngle.Translation);
+	App->CL_X_Maths->Vector3_Clear(&t->XfmFaceAngle.Translation);
 
 	WhichAxis = 0;		//	sides
 	if (fabs(t->VecNormal.y) > fabs(t->VecNormal.x))
@@ -643,37 +643,37 @@ static void Face_UpdateLockedTextureVecs(Face* f)
 	switch (WhichAxis)
 	{
 	case 0:			// sides
-		App->CL_Maths->XForm3d_SetZRotation(&XfmTexture, Units_DegreesToRadians(t->Rotate));
-		App->CL_Maths->XForm3d_Multiply(&t->XfmFaceAngle, &XfmTexture, &XfmTexture);
-		App->CL_Maths->Vector3_Set(&t->TVecs.uVec, -XfmTexture.AX, -XfmTexture.BX, -XfmTexture.CX);
-		App->CL_Maths->Vector3_Set(&t->TVecs.vVec, -XfmTexture.AY, -XfmTexture.BY, -XfmTexture.CY);
+		App->CL_X_Maths->XForm3d_SetZRotation(&XfmTexture, Units_DegreesToRadians(t->Rotate));
+		App->CL_X_Maths->XForm3d_Multiply(&t->XfmFaceAngle, &XfmTexture, &XfmTexture);
+		App->CL_X_Maths->Vector3_Set(&t->TVecs.uVec, -XfmTexture.AX, -XfmTexture.BX, -XfmTexture.CX);
+		App->CL_X_Maths->Vector3_Set(&t->TVecs.vVec, -XfmTexture.AY, -XfmTexture.BY, -XfmTexture.CY);
 		break;
 	case 1:			// top / bottom
-		App->CL_Maths->XForm3d_SetZRotation(&XfmTexture, Units_DegreesToRadians(t->Rotate));
-		App->CL_Maths->XForm3d_Multiply(&t->XfmFaceAngle, &XfmTexture, &XfmTexture);
-		App->CL_Maths->Vector3_Set(&t->TVecs.uVec, XfmTexture.AX, XfmTexture.BX, XfmTexture.CX);
-		App->CL_Maths->Vector3_Set(&t->TVecs.vVec, -XfmTexture.AY, -XfmTexture.BY, -XfmTexture.CY);
+		App->CL_X_Maths->XForm3d_SetZRotation(&XfmTexture, Units_DegreesToRadians(t->Rotate));
+		App->CL_X_Maths->XForm3d_Multiply(&t->XfmFaceAngle, &XfmTexture, &XfmTexture);
+		App->CL_X_Maths->Vector3_Set(&t->TVecs.uVec, XfmTexture.AX, XfmTexture.BX, XfmTexture.CX);
+		App->CL_X_Maths->Vector3_Set(&t->TVecs.vVec, -XfmTexture.AY, -XfmTexture.BY, -XfmTexture.CY);
 		break;
 	case 2:			// front / back
-		App->CL_Maths->XForm3d_SetZRotation(&XfmTexture, Units_DegreesToRadians(t->Rotate));
-		App->CL_Maths->XForm3d_Multiply(&t->XfmFaceAngle, &XfmTexture, &XfmTexture);
-		App->CL_Maths->Vector3_Set(&t->TVecs.uVec, XfmTexture.AX, XfmTexture.BX, XfmTexture.CX);
-		App->CL_Maths->Vector3_Set(&t->TVecs.vVec, XfmTexture.AY, XfmTexture.BY, XfmTexture.CY);
+		App->CL_X_Maths->XForm3d_SetZRotation(&XfmTexture, Units_DegreesToRadians(t->Rotate));
+		App->CL_X_Maths->XForm3d_Multiply(&t->XfmFaceAngle, &XfmTexture, &XfmTexture);
+		App->CL_X_Maths->Vector3_Set(&t->TVecs.uVec, XfmTexture.AX, XfmTexture.BX, XfmTexture.CX);
+		App->CL_X_Maths->Vector3_Set(&t->TVecs.vVec, XfmTexture.AY, XfmTexture.BY, XfmTexture.CY);
 		break;
 	}
 	// end change
 
 		// and scale accordingly
-	App->CL_Maths->Vector3_Scale(&t->TVecs.uVec, 1.0f / t->xScale, &t->TVecs.uVec);
-	App->CL_Maths->Vector3_Scale(&t->TVecs.vVec, 1.0f / t->yScale, &t->TVecs.vVec);
+	App->CL_X_Maths->Vector3_Scale(&t->TVecs.uVec, 1.0f / t->xScale, &t->TVecs.uVec);
+	App->CL_X_Maths->Vector3_Scale(&t->TVecs.vVec, 1.0f / t->yScale, &t->TVecs.vVec);
 
 
 	// compute offsets...
 	{
 		float uOffset, vOffset;
 
-		uOffset = App->CL_Maths->Vector3_DotProduct(&t->TVecs.uVec, &f->Tex.Pos);
-		vOffset = App->CL_Maths->Vector3_DotProduct(&t->TVecs.vVec, &f->Tex.Pos);
+		uOffset = App->CL_X_Maths->Vector3_DotProduct(&t->TVecs.uVec, &f->Tex.Pos);
+		vOffset = App->CL_X_Maths->Vector3_DotProduct(&t->TVecs.vVec, &f->Tex.Pos);
 
 		t->TVecs.uOffset = (float)(t->xShift - uOffset);
 		t->TVecs.vOffset = (float)(t->yShift - vOffset);
@@ -720,24 +720,24 @@ static void Face_UpdateWorldTextureVecs(Face* f)
 	switch (WhichAxis)
 	{
 	case 0:
-		App->CL_Maths->Vector3_Set(&uVec, 0.0f, sinv, cosv);
-		App->CL_Maths->Vector3_Set(&vVec, 0.0f, -cosv, sinv);
+		App->CL_X_Maths->Vector3_Set(&uVec, 0.0f, sinv, cosv);
+		App->CL_X_Maths->Vector3_Set(&vVec, 0.0f, -cosv, sinv);
 		break;
 	case 1:
-		App->CL_Maths->Vector3_Set(&uVec, cosv, 0.0f, sinv);
-		App->CL_Maths->Vector3_Set(&vVec, -sinv, 0.0f, cosv);
+		App->CL_X_Maths->Vector3_Set(&uVec, cosv, 0.0f, sinv);
+		App->CL_X_Maths->Vector3_Set(&vVec, -sinv, 0.0f, cosv);
 		break;
 	case 2:
-		App->CL_Maths->Vector3_Set(&uVec, cosv, sinv, 0.0f);
-		App->CL_Maths->Vector3_Set(&vVec, sinv, -cosv, 0.0f);
+		App->CL_X_Maths->Vector3_Set(&uVec, cosv, sinv, 0.0f);
+		App->CL_X_Maths->Vector3_Set(&vVec, sinv, -cosv, 0.0f);
 		break;
 	}
 
 	t->TVecs.uOffset = (float)(t->xShift);
 	t->TVecs.vOffset = (float)(t->yShift);
 
-	App->CL_Maths->Vector3_Scale(&uVec, (1.0f / t->xScale), &t->TVecs.uVec);
-	App->CL_Maths->Vector3_Scale(&vVec, (1.0f / t->yScale), &t->TVecs.vVec);
+	App->CL_X_Maths->Vector3_Scale(&uVec, (1.0f / t->xScale), &t->TVecs.uVec);
+	App->CL_X_Maths->Vector3_Scale(&vVec, (1.0f / t->yScale), &t->TVecs.vVec);
 }
 
 static void Face_UpdateTextureVecs(Face* f)
@@ -793,7 +793,7 @@ Face* CX_Face::Face_CloneReverse(const Face* src)
 	if (dst)
 	{
 		dst->Face_Plane.Dist = -dst->Face_Plane.Dist;
-		App->CL_Maths->Vector3_Inverse(&dst->Face_Plane.Normal);
+		App->CL_X_Maths->Vector3_Inverse(&dst->Face_Plane.Normal);
 
 		for (i = 0; i < dst->NumPoints / 2; i++)
 		{
@@ -820,19 +820,19 @@ void CX_Face::Face_Split(const Face* f, const GPlane* p, Face** ff, Face** bf, f
 	{
 		if (sides[i] == SIDE_ON)
 		{
-			App->CL_Maths->Vector3_Copy(p1, &spf[nfp]);
-			App->CL_Maths->Vector3_Copy(p1, &spb[nbp]);
+			App->CL_X_Maths->Vector3_Copy(p1, &spf[nfp]);
+			App->CL_X_Maths->Vector3_Copy(p1, &spb[nbp]);
 			nfp++;	nbp++;	//Dont ++ in params!
 			continue;
 		}
 		if (sides[i] == SIDE_FRONT)
 		{
-			App->CL_Maths->Vector3_Copy(p1, &spf[nfp]);
+			App->CL_X_Maths->Vector3_Copy(p1, &spf[nfp]);
 			nfp++;
 		}
 		if (sides[i] == SIDE_BACK)
 		{
-			App->CL_Maths->Vector3_Copy(p1, &spb[nbp]);
+			App->CL_X_Maths->Vector3_Copy(p1, &spb[nbp]);
 			nbp++;
 		}
 		if (sides[i + 1] == SIDE_ON || sides[i + 1] == sides[i])
@@ -858,9 +858,9 @@ void CX_Face::Face_Split(const Face* f, const GPlane* p, Face** ff, Face** bf, f
 		}
 
 		//split goes to both sides
-		App->CL_Maths->Vector3_Copy(&mid, &spf[nfp]);
+		App->CL_X_Maths->Vector3_Copy(&mid, &spf[nfp]);
 		nfp++;
-		App->CL_Maths->Vector3_Copy(&mid, &spb[nbp]);
+		App->CL_X_Maths->Vector3_Copy(&mid, &spb[nbp]);
 		nbp++;
 	}
 	*ff = Face_Create(nfp, spf, 0);
@@ -886,7 +886,7 @@ void CX_Face::Face_MostlyOnSide(const Face* f, const GPlane* p, float* max, int*
 
 	for (i = 0; i < f->NumPoints; i++)
 	{
-		d = App->CL_Maths->Vector3_DotProduct(&f->Points[i], &p->Normal) - p->Dist;
+		d = App->CL_X_Maths->Vector3_DotProduct(&f->Points[i], &p->Normal) - p->Dist;
 		if (d > *max)
 		{
 			*max = d;
@@ -909,13 +909,13 @@ void CX_Face::Face_Move(Face* f, const T_Vec3* trans)
 
 	for (i = 0; i < f->NumPoints; i++)
 	{
-		App->CL_Maths->Vector3_Add(&f->Points[i], trans, &f->Points[i]);
+		App->CL_X_Maths->Vector3_Add(&f->Points[i], trans, &f->Points[i]);
 	}
 
 	Face_SetPlaneFromFace(f);
 
 	// Update position...
-	App->CL_Maths->Vector3_Add(&f->Tex.Pos, trans, &f->Tex.Pos);
+	App->CL_X_Maths->Vector3_Add(&f->Tex.Pos, trans, &f->Tex.Pos);
 	f->Tex.DirtyFlag = true;
 }
 
@@ -940,25 +940,25 @@ static void Face_UpdateFaceAngle(Face* f, const T_Vec3* OldNormal)
 
 	// Compute rotation from 
 	VecDest = f->Tex.VecNormal;
-	App->CL_Maths->Vector3_CrossProduct(&VecDest, OldNormal, &VecAxis);
-	cosv = App->CL_Maths->Vector3_DotProduct(&VecDest, OldNormal);
+	App->CL_X_Maths->Vector3_CrossProduct(&VecDest, OldNormal, &VecAxis);
+	cosv = App->CL_X_Maths->Vector3_DotProduct(&VecDest, OldNormal);
 
 	if (cosv > 1.0f)
 	{
 		cosv = 1.0f;
 	}
 	Theta = (float)acos(cosv);
-	if (App->CL_Maths->Vector3_Normalize(&VecAxis) == 0.0f)
+	if (App->CL_X_Maths->Vector3_Normalize(&VecAxis) == 0.0f)
 	{
-		App->CL_Maths->XForm3d_SetIdentity(&Xfm);
-		App->CL_Maths->XForm3d_RotateX(&Xfm, -Theta);
+		App->CL_X_Maths->XForm3d_SetIdentity(&Xfm);
+		App->CL_X_Maths->XForm3d_RotateX(&Xfm, -Theta);
 	}
 	else
 	{
 		Ogre::Quaternion QRot;
 
-		App->CL_Maths->Quaternion_SetFromAxisAngle(&QRot, &VecAxis, -Theta);
-		App->CL_Maths->Quaternion_ToMatrix(&QRot, &Xfm);
+		App->CL_X_Maths->Quaternion_SetFromAxisAngle(&QRot, &VecAxis, -Theta);
+		App->CL_X_Maths->Quaternion_ToMatrix(&QRot, &Xfm);
 	}
 
 	App->CL_X_Face->Face_XfmTexture(f, &Xfm);
@@ -972,7 +972,7 @@ void CX_Face::Face_XfmTexture(Face* f, const Matrix3d* pXfm)
 	assert(f != NULL);
 	assert(pXfm != NULL);
 
-	App->CL_Maths->XForm3d_Multiply(pXfm, &f->Tex.XfmFaceAngle, &f->Tex.XfmFaceAngle);
+	App->CL_X_Maths->XForm3d_Multiply(pXfm, &f->Tex.XfmFaceAngle, &f->Tex.XfmFaceAngle);
 }
 
 // *************************************************************************

@@ -50,7 +50,7 @@ SelBrushList* CX_SelBrushList::SelBrushList_Create(void)
 {
 	SelBrushList* pList;
 
-	pList = (SelBrushList*)App->CL_Maths->Ram_Allocate(sizeof(SelBrushList));
+	pList = (SelBrushList*)App->CL_X_Maths->Ram_Allocate(sizeof(SelBrushList));
 	if (pList != NULL)
 	{
 		pList->pItems = App->CL_X_Array->Array_Create(10, sizeof(Brush*));
@@ -136,8 +136,8 @@ static signed int SelBrushList_CenterEnum(Brush* b, void* lParam)
 	T_Vec3 newcenter;
 
 	center = (T_Vec3*)lParam;
-	App->CL_Box_x->Box3d_GetCenter(&b->BoundingBox, &newcenter);
-	App->CL_Maths->Vector3_Add(center, &newcenter, center);
+	App->CL_X_Box->Box3d_GetCenter(&b->BoundingBox, &newcenter);
+	App->CL_X_Maths->Vector3_Add(center, &newcenter, center);
 
 	return true;
 }
@@ -155,15 +155,15 @@ void CX_SelBrushList::SelBrushList_Center(SelBrushList* pList, T_Vec3* center)
 	listcount = SelBrushList_GetSize(pList);
 	if (!listcount)
 	{
-		App->CL_Maths->Vector3_Clear(center);
+		App->CL_X_Maths->Vector3_Clear(center);
 		return;
 	}
 
-	App->CL_Maths->Vector3_Clear(&average);
+	App->CL_X_Maths->Vector3_Clear(&average);
 
 	SelBrushList_Enum(pList, SelBrushList_CenterEnum, &average);
 
-	App->CL_Maths->Vector3_Scale(&average, (1 / (float)listcount), center);
+	App->CL_X_Maths->Vector3_Scale(&average, (1 / (float)listcount), center);
 }
 
 // *************************************************************************

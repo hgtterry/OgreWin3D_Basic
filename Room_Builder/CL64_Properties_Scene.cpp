@@ -550,7 +550,7 @@ bool CL64_Properties_Scene::Update_ListView_Locations()
 	y = 0;
 	z = 0;
 
-	App->CL_Maths->Ogre_QuaternionToEuler(q, z, y, z);
+	App->CL_X_Maths->Ogre_QuaternionToEuler(q, z, y, z);
 
 	std::string str_RotX = std::to_string(x * 180.0 / M_PI);
 
@@ -575,8 +575,7 @@ bool CL64_Properties_Scene::Update_ListView_Locations()
 	grid[0][6] = "Rot_X";		grid[1][6] = str_RotX;
 	grid[0][7] = "Rot_Y";		grid[1][7] = str_RotY;
 	grid[0][8] = "Rot_Z";		grid[1][8] = str_RotZ;
-	//grid[0][9] = "Rot_W";		grid[1][9] = str_RotW;
-
+	
 	ListView_DeleteAllItems(Properties_hLV);
 
 	for (DWORD row = 0; row < NUM_ITEMS; row++)

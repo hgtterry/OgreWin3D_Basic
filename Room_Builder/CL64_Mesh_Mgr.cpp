@@ -524,16 +524,16 @@ bool CL64_Mesh_Mgr::Brush_FaceList_Create(const Brush* b, const FaceList* pList,
 			tySize = 128;
 		}
 
-		App->CL_Maths->Vector3_Scale(&TVecs->uVec, 1.f / (float)txSize, &uVec);
-		App->CL_Maths->Vector3_Scale(&TVecs->vVec, -1.f / (float)tySize, &vVec);
+		App->CL_X_Maths->Vector3_Scale(&TVecs->uVec, 1.f / (float)txSize, &uVec);
+		App->CL_X_Maths->Vector3_Scale(&TVecs->vVec, -1.f / (float)tySize, &vVec);
 
 		verts = App->CL_X_Face->Face_GetPoints(pList->Faces[i]);
 		curnum_verts = App->CL_X_Face->Face_GetNumPoints(pList->Faces[i]);
 
 		for (j = 0; j < curnum_verts; j++)
 		{
-			U = App->CL_Maths->Vector3_DotProduct(&(verts[j]), &uVec);
-			V = App->CL_Maths->Vector3_DotProduct(&(verts[j]), &vVec);
+			U = App->CL_X_Maths->Vector3_DotProduct(&(verts[j]), &uVec);
+			V = App->CL_X_Maths->Vector3_DotProduct(&(verts[j]), &vVec);
 			U += (TVecs->uOffset / txSize);
 			V -= (TVecs->vOffset / tySize);
 

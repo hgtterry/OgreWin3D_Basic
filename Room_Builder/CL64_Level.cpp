@@ -111,7 +111,7 @@ Level* CL64_Level::Level_Create()
 		App->CL_X_BrushTemplate->BrushTemplate_SpheroidDefaults(&m_pLevel->SpheroidTemplate);
 		App->CL_X_BrushTemplate->BrushTemplate_StaircaseDefaults(&m_pLevel->StaircaseTemplate);
 
-		App->CL_Maths->Vector3_Clear(&m_pLevel->TemplatePos);
+		App->CL_X_Maths->Vector3_Clear(&m_pLevel->TemplatePos);
 
 		m_pLevel->DrawScale = 0.50f;
 		m_pLevel->LightmapScale = 2.0f;
@@ -223,7 +223,7 @@ void CL64_Level::Level_Delete_TXL_Class()
 
 	if (m_pLevel->WadSizeInfos != NULL)
 	{
-		App->CL_Maths->Ram_Free(m_pLevel->WadSizeInfos);
+		App->CL_X_Maths->Ram_Free(m_pLevel->WadSizeInfos);
 		m_pLevel->WadSizeInfos = NULL;
 	}
 
@@ -255,7 +255,7 @@ signed int CL64_Level::Level_Create_TXL_Class()
 
 	if (CL_Wad_Class->Setup())
 	{
-		m_pLevel->WadSizeInfos = (SizeInfo*)App->CL_Maths->Ram_Allocate(sizeof(SizeInfo) * CL_Wad_Class->mBitmapCount);
+		m_pLevel->WadSizeInfos = (SizeInfo*)App->CL_X_Maths->Ram_Allocate(sizeof(SizeInfo) * CL_Wad_Class->mBitmapCount);
 
 		if (m_pLevel->WadSizeInfos != NULL)
 		{

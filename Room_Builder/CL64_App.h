@@ -122,9 +122,9 @@ public:
 	~CL64_App(void);
 
 	CL64_Editor_Map*			CL_Editor_Map;
-	CL64_Lib_Maths*				CL_Maths;		// Maths Library
+	CL64_Lib_Maths*				CL_X_Maths;		// Maths Library
 
-	CX_Box*						CL_Box_x;		// Box Library
+	CX_Box*						CL_X_Box;		// Box Library
 	CL64_Render_Map*			CL_Render;
 	CL64_Level*					CL_Level;
 
@@ -138,7 +138,6 @@ public:
 	CX_Brush*					CL_X_Brush;		 // Brush Library
 
 	CX_FaceList*				CL_X_FaceList;	// FaceList Library
-//	CL64_FaceList*				CL_FaceList;
 
 	CX_Face*					CL_X_Face;		 // Face Library
 	

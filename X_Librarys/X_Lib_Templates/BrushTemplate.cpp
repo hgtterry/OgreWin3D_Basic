@@ -130,16 +130,16 @@ Brush* BrushTemplate::BrushTemplate_CreateBox(const BrushTemplate_Box* pTemplate
 	fl = App->CL_X_FaceList->FaceList_Create(6);
 
 	// Vertices 0 to 3 are the 4 corners of the top face
-	App->CL_Maths->Vector3_Set(&Verts[0], (float)-(pTemplate->XSizeTop / 2), (float)(pTemplate->YSize / 2), (float)-(pTemplate->ZSizeTop / 2));
-	App->CL_Maths->Vector3_Set(&Verts[1], (float)-(pTemplate->XSizeTop / 2), (float)(pTemplate->YSize / 2), (float)(pTemplate->ZSizeTop / 2));
-	App->CL_Maths->Vector3_Set(&Verts[2], (float)(pTemplate->XSizeTop / 2), (float)(pTemplate->YSize / 2), (float)(pTemplate->ZSizeTop / 2));
-	App->CL_Maths->Vector3_Set(&Verts[3], (float)(pTemplate->XSizeTop / 2), (float)(pTemplate->YSize / 2), (float)-(pTemplate->ZSizeTop / 2));
+	App->CL_X_Maths->Vector3_Set(&Verts[0], (float)-(pTemplate->XSizeTop / 2), (float)(pTemplate->YSize / 2), (float)-(pTemplate->ZSizeTop / 2));
+	App->CL_X_Maths->Vector3_Set(&Verts[1], (float)-(pTemplate->XSizeTop / 2), (float)(pTemplate->YSize / 2), (float)(pTemplate->ZSizeTop / 2));
+	App->CL_X_Maths->Vector3_Set(&Verts[2], (float)(pTemplate->XSizeTop / 2), (float)(pTemplate->YSize / 2), (float)(pTemplate->ZSizeTop / 2));
+	App->CL_X_Maths->Vector3_Set(&Verts[3], (float)(pTemplate->XSizeTop / 2), (float)(pTemplate->YSize / 2), (float)-(pTemplate->ZSizeTop / 2));
 
 	// Vertices 4 to 7 are the 4 corners of the bottom face
-	App->CL_Maths->Vector3_Set(&Verts[4], (float)-(pTemplate->XSizeBot / 2), (float)-(pTemplate->YSize / 2), (float)-(pTemplate->ZSizeBot / 2));
-	App->CL_Maths->Vector3_Set(&Verts[5], (float)(pTemplate->XSizeBot / 2), (float)-(pTemplate->YSize / 2), (float)-(pTemplate->ZSizeBot / 2));
-	App->CL_Maths->Vector3_Set(&Verts[6], (float)(pTemplate->XSizeBot / 2), (float)-(pTemplate->YSize / 2), (float)(pTemplate->ZSizeBot / 2));
-	App->CL_Maths->Vector3_Set(&Verts[7], (float)-(pTemplate->XSizeBot / 2), (float)-(pTemplate->YSize / 2), (float)(pTemplate->ZSizeBot / 2));
+	App->CL_X_Maths->Vector3_Set(&Verts[4], (float)-(pTemplate->XSizeBot / 2), (float)-(pTemplate->YSize / 2), (float)-(pTemplate->ZSizeBot / 2));
+	App->CL_X_Maths->Vector3_Set(&Verts[5], (float)(pTemplate->XSizeBot / 2), (float)-(pTemplate->YSize / 2), (float)-(pTemplate->ZSizeBot / 2));
+	App->CL_X_Maths->Vector3_Set(&Verts[6], (float)(pTemplate->XSizeBot / 2), (float)-(pTemplate->YSize / 2), (float)(pTemplate->ZSizeBot / 2));
+	App->CL_X_Maths->Vector3_Set(&Verts[7], (float)-(pTemplate->XSizeBot / 2), (float)-(pTemplate->YSize / 2), (float)(pTemplate->ZSizeBot / 2));
 
 	FaceVerts[3] = Verts[0];
 	FaceVerts[2] = Verts[1];
@@ -299,8 +299,8 @@ Brush* BrushTemplate::BrushTemplate_CreateCylinder(const BrushTemplate_Cylinder*
 	}
 
 
-	Verts = (T_Vec3*)App->CL_Maths->Ram_Allocate(sizeof(T_Vec3) * NumVerticalBands * 2);
-	TopPoints = (T_Vec3*)App->CL_Maths->Ram_Allocate(sizeof(T_Vec3) * NumVerticalBands);
+	Verts = (T_Vec3*)App->CL_X_Maths->Ram_Allocate(sizeof(T_Vec3) * NumVerticalBands * 2);
+	TopPoints = (T_Vec3*)App->CL_X_Maths->Ram_Allocate(sizeof(T_Vec3) * NumVerticalBands);
 	fl = App->CL_X_FaceList->FaceList_Create(NumVerticalBands + 2);
 
 	if (!Verts || !TopPoints || !fl)
@@ -308,8 +308,8 @@ Brush* BrushTemplate::BrushTemplate_CreateCylinder(const BrushTemplate_Cylinder*
 		return	0;
 	}
 
-	App->CL_Maths->XForm3d_SetIdentity(&YRotation);
-	App->CL_Maths->XForm3d_SetYRotation(&YRotation, (M_PI * 2.0f) / (float)NumVerticalBands);
+	App->CL_X_Maths->XForm3d_SetIdentity(&YRotation);
+	App->CL_X_Maths->XForm3d_SetYRotation(&YRotation, (M_PI * 2.0f) / (float)NumVerticalBands);
 
 	// Start with the top of cylinder
 	CurrentXDiameter = pTemplate->TopXSize;
@@ -324,8 +324,8 @@ Brush* BrushTemplate::BrushTemplate_CreateCylinder(const BrushTemplate_Cylinder*
 	DeltaZOffset = (pTemplate->BotZOffset - pTemplate->TopZOffset);
 
 	// Get the band positions and deltas
-	App->CL_Maths->Vector3_Set(&Current, (float)(pTemplate->TopXSize / 2), (float)(pTemplate->YSize / 2), 0.0);
-	App->CL_Maths->Vector3_Set(&Delta, (float)((pTemplate->BotXSize / 2) - Current.x), (float)(-(pTemplate->YSize / 2) - Current.y), 0.0);
+	App->CL_X_Maths->Vector3_Set(&Current, (float)(pTemplate->TopXSize / 2), (float)(pTemplate->YSize / 2), 0.0);
+	App->CL_X_Maths->Vector3_Set(&Delta, (float)((pTemplate->BotXSize / 2) - Current.x), (float)(-(pTemplate->YSize / 2) - Current.y), 0.0);
 
 	for (HBand = 0; HBand <= 1; HBand++)
 	{
@@ -346,7 +346,7 @@ Brush* BrushTemplate::BrushTemplate_CreateCylinder(const BrushTemplate_Cylinder*
 			if (VBand > (NumVerticalBands / 2))
 				EllipseZ = -EllipseZ;
 
-			App->CL_Maths->Vector3_Set
+			App->CL_X_Maths->Vector3_Set
 			(
 				&Verts[VertexCount],
 				(float)(Final.x + CurrentXOffset),
@@ -356,7 +356,7 @@ Brush* BrushTemplate::BrushTemplate_CreateCylinder(const BrushTemplate_Cylinder*
 			VertexCount++;
 
 			// Rotate the point around the Y to get the next vertical band
-			App->CL_Maths->XForm3d_Rotate(&YRotation, &Final, &Final);
+			App->CL_X_Maths->XForm3d_Rotate(&YRotation, &Final, &Final);
 		}
 
 		CurrentXDiameter += DeltaXDiameter;
@@ -364,7 +364,7 @@ Brush* BrushTemplate::BrushTemplate_CreateCylinder(const BrushTemplate_Cylinder*
 		CurrentXOffset += DeltaXOffset;
 		CurrentZOffset += DeltaZOffset;
 
-		App->CL_Maths->Vector3_Add(&Current, &Delta, &Current);
+		App->CL_X_Maths->Vector3_Add(&Current, &Delta, &Current);
 	}
 
 	for (VBand = 0; VBand < NumVerticalBands; VBand++)
@@ -490,11 +490,11 @@ Brush* BrushTemplate::BrushTemplate_CreateCone(const BrushTemplate_Cone* pTempla
 
 	fl = App->CL_X_FaceList->FaceList_Create(pTemplate->VerticalStrips + 1);
 
-	App->CL_Maths->Vector3_Set(&OuterFocus, 0, (float)(pTemplate->Height / 2), 0);
-	App->CL_Maths->Vector3_Set(&StartPoint, (float)(pTemplate->Width / 2), (float)-(pTemplate->Height / 2), 0);
+	App->CL_X_Maths->Vector3_Set(&OuterFocus, 0, (float)(pTemplate->Height / 2), 0);
+	App->CL_X_Maths->Vector3_Set(&StartPoint, (float)(pTemplate->Width / 2), (float)-(pTemplate->Height / 2), 0);
 
 	CurPoint = OldPoint = StartPoint;
-	BottomVerts = (T_Vec3*)App->CL_Maths->Ram_Allocate(sizeof(T_Vec3) * pTemplate->VerticalStrips);
+	BottomVerts = (T_Vec3*)App->CL_X_Maths->Ram_Allocate(sizeof(T_Vec3) * pTemplate->VerticalStrips);
 	BottomVerts[0] = CurPoint;
 
 	CurAngle = BottomCount = 0;
@@ -503,7 +503,7 @@ Brush* BrushTemplate::BrushTemplate_CreateCone(const BrushTemplate_Cone* pTempla
 		//	Rotate around to create our successive points...
 		CurAngle += AngleDelta;
 
-		App->CL_Maths->Vector3_Set
+		App->CL_X_Maths->Vector3_Set
 		(
 			&CurPoint,
 			(float)((StartPoint.x * cos(CurAngle)) + (StartPoint.z * sin(CurAngle))),
@@ -531,7 +531,7 @@ Brush* BrushTemplate::BrushTemplate_CreateCone(const BrushTemplate_Cone* pTempla
 	//	Create the final polygon...
 	CurAngle += AngleDelta;
 
-	App->CL_Maths->Vector3_Set
+	App->CL_X_Maths->Vector3_Set
 	(
 		&CurPoint,
 		(float)((StartPoint.x * cos(CurAngle)) + (StartPoint.z * sin(CurAngle))),
@@ -632,10 +632,10 @@ Brush* BrushTemplate::BrushTemplate_CreateStaircase(const BrushTemplate_Staircas
 	{
 		fl = App->CL_X_FaceList->FaceList_Create(5);
 
-		App->CL_Maths->Vector3_Set(&(FaceVerts[3]), -HalfWidth, -HalfHeight, HalfLength);
-		App->CL_Maths->Vector3_Set(&(FaceVerts[2]), HalfWidth, -HalfHeight, HalfLength);
-		App->CL_Maths->Vector3_Set(&(FaceVerts[1]), HalfWidth, HalfHeight, HalfLength);
-		App->CL_Maths->Vector3_Set(&(FaceVerts[0]), -HalfWidth, HalfHeight, HalfLength);
+		App->CL_X_Maths->Vector3_Set(&(FaceVerts[3]), -HalfWidth, -HalfHeight, HalfLength);
+		App->CL_X_Maths->Vector3_Set(&(FaceVerts[2]), HalfWidth, -HalfHeight, HalfLength);
+		App->CL_X_Maths->Vector3_Set(&(FaceVerts[1]), HalfWidth, HalfHeight, HalfLength);
+		App->CL_X_Maths->Vector3_Set(&(FaceVerts[0]), -HalfWidth, HalfHeight, HalfLength);
 		f = App->CL_X_Face->Face_Create(4, FaceVerts, 0);
 		if (f)
 		{
@@ -643,10 +643,10 @@ Brush* BrushTemplate::BrushTemplate_CreateStaircase(const BrushTemplate_Staircas
 			App->CL_X_Face->Face_SetTextureLock(f, true);
 		}
 
-		App->CL_Maths->Vector3_Set(&(FaceVerts[3]), HalfWidth, -HalfHeight, HalfLength);
-		App->CL_Maths->Vector3_Set(&(FaceVerts[2]), -HalfWidth, -HalfHeight, HalfLength);
-		App->CL_Maths->Vector3_Set(&(FaceVerts[1]), -HalfWidth, -HalfHeight, -HalfLength);
-		App->CL_Maths->Vector3_Set(&(FaceVerts[0]), HalfWidth, -HalfHeight, -HalfLength);
+		App->CL_X_Maths->Vector3_Set(&(FaceVerts[3]), HalfWidth, -HalfHeight, HalfLength);
+		App->CL_X_Maths->Vector3_Set(&(FaceVerts[2]), -HalfWidth, -HalfHeight, HalfLength);
+		App->CL_X_Maths->Vector3_Set(&(FaceVerts[1]), -HalfWidth, -HalfHeight, -HalfLength);
+		App->CL_X_Maths->Vector3_Set(&(FaceVerts[0]), HalfWidth, -HalfHeight, -HalfLength);
 		f = App->CL_X_Face->Face_Create(4, FaceVerts, 0);
 		if (f)
 		{
@@ -654,10 +654,10 @@ Brush* BrushTemplate::BrushTemplate_CreateStaircase(const BrushTemplate_Staircas
 			App->CL_X_Face->Face_SetTextureLock(f, true);
 		}
 
-		App->CL_Maths->Vector3_Set(&(FaceVerts[3]), -HalfWidth, HalfHeight, HalfLength);
-		App->CL_Maths->Vector3_Set(&(FaceVerts[2]), HalfWidth, HalfHeight, HalfLength);
-		App->CL_Maths->Vector3_Set(&(FaceVerts[1]), HalfWidth, -HalfHeight, -HalfLength);
-		App->CL_Maths->Vector3_Set(&(FaceVerts[0]), -HalfWidth, -HalfHeight, -HalfLength);
+		App->CL_X_Maths->Vector3_Set(&(FaceVerts[3]), -HalfWidth, HalfHeight, HalfLength);
+		App->CL_X_Maths->Vector3_Set(&(FaceVerts[2]), HalfWidth, HalfHeight, HalfLength);
+		App->CL_X_Maths->Vector3_Set(&(FaceVerts[1]), HalfWidth, -HalfHeight, -HalfLength);
+		App->CL_X_Maths->Vector3_Set(&(FaceVerts[0]), -HalfWidth, -HalfHeight, -HalfLength);
 		f = App->CL_X_Face->Face_Create(4, FaceVerts, 0);
 		if (f)
 		{
@@ -665,9 +665,9 @@ Brush* BrushTemplate::BrushTemplate_CreateStaircase(const BrushTemplate_Staircas
 			App->CL_X_Face->Face_SetTextureLock(f, true);
 		}
 
-		App->CL_Maths->Vector3_Set(&(FaceVerts[2]), HalfWidth, HalfHeight, HalfLength);
-		App->CL_Maths->Vector3_Set(&(FaceVerts[1]), HalfWidth, -HalfHeight, HalfLength);
-		App->CL_Maths->Vector3_Set(&(FaceVerts[0]), HalfWidth, -HalfHeight, -HalfLength);
+		App->CL_X_Maths->Vector3_Set(&(FaceVerts[2]), HalfWidth, HalfHeight, HalfLength);
+		App->CL_X_Maths->Vector3_Set(&(FaceVerts[1]), HalfWidth, -HalfHeight, HalfLength);
+		App->CL_X_Maths->Vector3_Set(&(FaceVerts[0]), HalfWidth, -HalfHeight, -HalfLength);
 		f = App->CL_X_Face->Face_Create(3, FaceVerts, 0);
 		if (f)
 		{
@@ -675,9 +675,9 @@ Brush* BrushTemplate::BrushTemplate_CreateStaircase(const BrushTemplate_Staircas
 			App->CL_X_Face->Face_SetTextureLock(f, true);
 		}
 
-		App->CL_Maths->Vector3_Set(&(FaceVerts[0]), -HalfWidth, HalfHeight, HalfLength);
-		App->CL_Maths->Vector3_Set(&(FaceVerts[1]), -HalfWidth, -HalfHeight, HalfLength);
-		App->CL_Maths->Vector3_Set(&(FaceVerts[2]), -HalfWidth, -HalfHeight, -HalfLength);
+		App->CL_X_Maths->Vector3_Set(&(FaceVerts[0]), -HalfWidth, HalfHeight, HalfLength);
+		App->CL_X_Maths->Vector3_Set(&(FaceVerts[1]), -HalfWidth, -HalfHeight, HalfLength);
+		App->CL_X_Maths->Vector3_Set(&(FaceVerts[2]), -HalfWidth, -HalfHeight, -HalfLength);
 		f = App->CL_X_Face->Face_Create(3, FaceVerts, 0);
 		if (f)
 		{
@@ -708,7 +708,7 @@ Brush* BrushTemplate::BrushTemplate_CreateStaircase(const BrushTemplate_Staircas
 			BoxTemplate.TSheet = GE_FALSE;	// nasty, nasty, nasty
 			b2 = BrushTemplate_CreateBox(&BoxTemplate);
 			ZSize -= DZ;
-			App->CL_Maths->Vector3_Set(&v, 0.0f, i * StairYSize, (i * DZ) / 2);
+			App->CL_X_Maths->Vector3_Set(&v, 0.0f, i * StairYSize, (i * DZ) / 2);
 			App->CL_X_Brush->Brush_Move(b2, &v);
 			App->CL_X_Brush->BrushList_Append(MBList, b2);
 		}
@@ -801,12 +801,12 @@ Brush* BrushTemplate::BrushTemplate_CreateArch(const BrushTemplate_Arch* pTempla
 		double AngleDelta2Degrees = 360.0f / (float)NumSides;
 		double AngleDelta2 = Units_DegreesToRadians(AngleDelta2Degrees);
 
-		App->CL_Maths->Vector3_Set(&StartPoint, -(float)Radius2, 0.0, 0.0);
+		App->CL_X_Maths->Vector3_Set(&StartPoint, -(float)Radius2, 0.0, 0.0);
 
 		CurPoint = StartPoint;
-		CrossVerts = (T_Vec3*)App->CL_Maths->Ram_Allocate(sizeof(T_Vec3) * NumSides);
-		OldVerts = (T_Vec3*)App->CL_Maths->Ram_Allocate(sizeof(T_Vec3) * NumSides);
-		StartVerts = (T_Vec3*)App->CL_Maths->Ram_Allocate(sizeof(T_Vec3) * NumSides);
+		CrossVerts = (T_Vec3*)App->CL_X_Maths->Ram_Allocate(sizeof(T_Vec3) * NumSides);
+		OldVerts = (T_Vec3*)App->CL_X_Maths->Ram_Allocate(sizeof(T_Vec3) * NumSides);
+		StartVerts = (T_Vec3*)App->CL_X_Maths->Ram_Allocate(sizeof(T_Vec3) * NumSides);
 		StartVerts[0] = CurPoint;
 		StartVerts[0].x += InnerRadius + Radius2;
 		//		if(CW)
@@ -819,7 +819,7 @@ Brush* BrushTemplate::BrushTemplate_CreateArch(const BrushTemplate_Arch* pTempla
 			//	Rotate around to create our successive points...
 			CurAngle2 += AngleDelta2;
 
-			App->CL_Maths->Vector3_Set
+			App->CL_X_Maths->Vector3_Set
 			(
 				&CurPoint,
 				(float)((StartPoint.x * cos(CurAngle2)) + (StartPoint.z * sin(CurAngle2))),
@@ -830,7 +830,7 @@ Brush* BrushTemplate::BrushTemplate_CreateArch(const BrushTemplate_Arch* pTempla
 			CurPoint.x += InnerRadius + Radius2;
 			//	CurPoint.Z+=Height;
 
-			App->CL_Maths->Vector3_Set
+			App->CL_X_Maths->Vector3_Set
 			(
 				&(StartVerts[index]),
 				(float)((CurPoint.x * cos(StartAngle)) - (CurPoint.y * sin(StartAngle))),
@@ -847,7 +847,7 @@ Brush* BrushTemplate::BrushTemplate_CreateArch(const BrushTemplate_Arch* pTempla
 		{
 			for (index = 0; index < NumSides; index++)
 			{
-				App->CL_Maths->Vector3_Set
+				App->CL_X_Maths->Vector3_Set
 				(
 					&(CrossVerts[index]),
 					(float)((StartVerts[index].x * cos(CurAngle)) - (StartVerts[index].y * sin(CurAngle))),
@@ -1078,18 +1078,18 @@ Brush* BrushTemplate::BrushTemplate_CreateArch(const BrushTemplate_Arch* pTempla
 	else
 	{
 		// end change
-		App->CL_Maths->Vector3_Set(&TopInnerPoint, (float)InnerRadius, 0.0, (float)(Width / 2));
-		App->CL_Maths->Vector3_Set(&TopOuterPoint, (float)(InnerRadius + Thickness), 0.0, (float)(Width / 2));
+		App->CL_X_Maths->Vector3_Set(&TopInnerPoint, (float)InnerRadius, 0.0, (float)(Width / 2));
+		App->CL_X_Maths->Vector3_Set(&TopOuterPoint, (float)(InnerRadius + Thickness), 0.0, (float)(Width / 2));
 
 		//	Create first cross section of 4 vertices ( outer face @ start angle)...
-		App->CL_Maths->Vector3_Set
+		App->CL_X_Maths->Vector3_Set
 		(
 			&FinalTopInnerPoint,
 			(float)((TopInnerPoint.x * cos(StartAngle)) - (TopInnerPoint.y * sin(StartAngle))),
 			(float)((TopInnerPoint.x * sin(StartAngle)) + (TopInnerPoint.y * cos(StartAngle))),
 			TopInnerPoint.z
 		);
-		App->CL_Maths->Vector3_Set
+		App->CL_X_Maths->Vector3_Set
 		(
 			&FinalTopOuterPoint,
 			(float)((TopOuterPoint.x * cos(StartAngle)) - (TopInnerPoint.y * sin(StartAngle))),
@@ -1126,14 +1126,14 @@ Brush* BrushTemplate::BrushTemplate_CreateArch(const BrushTemplate_Arch* pTempla
 		//Create the other cross sections and assign verts to polys after each...
 		for (i = 0; i < NumCrossSections; i++) // changed QD 11/03
 		{
-			App->CL_Maths->Vector3_Set
+			App->CL_X_Maths->Vector3_Set
 			(
 				&FinalTopInnerPoint,
 				(float)((TopInnerPoint.x * cos(CurAngle)) - (TopInnerPoint.y * sin(CurAngle))),
 				(float)((TopInnerPoint.x * sin(CurAngle)) + (TopInnerPoint.y * cos(CurAngle))),
 				TopInnerPoint.z
 			);
-			App->CL_Maths->Vector3_Set
+			App->CL_X_Maths->Vector3_Set
 			(
 				&FinalTopOuterPoint,
 				(float)((TopOuterPoint.x * cos(CurAngle)) - (TopInnerPoint.y * sin(CurAngle))),

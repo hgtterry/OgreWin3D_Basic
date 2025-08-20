@@ -738,21 +738,15 @@ void CL64_ImGui::Listbox_ImGui(void)
 				ImGui::Text("Player Added  %i", App->CL_Scene->flag_Player_Added);
 				ImGui::Text("Player Count  %i", App->CL_Scene->Player_Count);
 
-				btQuaternion Rotation;
-				Rotation = App->CL_Scene->B_Player[0]->Phys_Body->getWorldTransform().getRotation();
-				
+				btQuaternion Rotation = App->CL_Scene->B_Player[0]->Phys_Body->getWorldTransform().getRotation();
 				Ogre::Quaternion q = { Rotation.getW(), Rotation.getX(), Rotation.getY(), Rotation.getZ() };
 
 				double x, y, z;
-				App->CL_Maths->Ogre_QuaternionToEuler(q, x, y, z);
+				App->CL_X_Maths->Ogre_QuaternionToEuler(q, x, y, z);
 
-				char str_RotY[10];
-				sprintf(str_RotY, "%.02f", y * 180.0 / M_PI);
-				ImGui::Text("Rotation Y %s", str_RotY);
-
+				ImGui::Text("Rotation Y %.02f", y * 180.0 / M_PI);
 			}
 		
-
 			ImGui::EndListBox();
 		}
 

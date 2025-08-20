@@ -61,13 +61,13 @@ FaceList* CX_FaceList::FaceList_Create(int NumFaces)
 	FaceList* pList;
 
 	// allocate the structure
-	pList = (FaceList*)App->CL_Maths->Ram_Allocate(sizeof(FaceList));
+	pList = (FaceList*)App->CL_X_Maths->Ram_Allocate(sizeof(FaceList));
 	if (pList != NULL)
 	{
 		pList->NumFaces = 0;
 		pList->Limit = NumFaces;
 		// allocate space for NumFaces pointers
-		pList->Faces = (struct FaceTag**)App->CL_Maths->Ram_Allocate(NumFaces * sizeof(Face*));
+		pList->Faces = (struct FaceTag**)App->CL_X_Maths->Ram_Allocate(NumFaces * sizeof(Face*));
 		if (pList->Faces != NULL)
 		{
 			int i;
@@ -110,7 +110,7 @@ void CX_FaceList::FaceList_GetBounds(const FaceList* pList, Box3d* pBounds)
 			Box3d FaceBounds;
 
 			App->CL_X_Face->Face_GetBounds(pList->Faces[i], &FaceBounds);
-			App->CL_Box_x->Box3d_Union(&Bounds, &FaceBounds, &Bounds);
+			App->CL_X_Box->Box3d_Union(&Bounds, &FaceBounds, &Bounds);
 		}
 
 
@@ -150,8 +150,8 @@ void CX_FaceList::FaceList_Destroy(FaceList** ppList)
 	{
 		App->CL_X_Face->Face_Destroy(&pList->Faces[i]);
 	}
-	App->CL_Maths->Ram_Free(pList->Faces);
-	App->CL_Maths->Ram_Free(*ppList);
+	App->CL_X_Maths->Ram_Free(pList->Faces);
+	App->CL_X_Maths->Ram_Free(*ppList);
 	*ppList = NULL;
 }
 
@@ -458,9 +458,9 @@ void CX_FaceList::Face_Rotate(Face* f, const Matrix3d* pXfmRotate, const T_Vec3*
 	for (i = 0; i < f->NumPoints; i++)
 	{
 		pPoint = &f->Points[i];
-		App->CL_Maths->Vector3_Subtract(pPoint, pCenter, pPoint);
-		App->CL_Maths->XForm3d_Rotate(pXfmRotate, pPoint, pPoint);
-		App->CL_Maths->Vector3_Add(pPoint, pCenter, pPoint);
+		App->CL_X_Maths->Vector3_Subtract(pPoint, pCenter, pPoint);
+		App->CL_X_Maths->XForm3d_Rotate(pXfmRotate, pPoint, pPoint);
+		App->CL_X_Maths->Vector3_Add(pPoint, pCenter, pPoint);
 	}
 
 	App->CL_X_Face->Face_SetPlaneFromFace(f);
@@ -468,9 +468,9 @@ void CX_FaceList::Face_Rotate(Face* f, const Matrix3d* pXfmRotate, const T_Vec3*
 
 	pPoint = &f->Tex.Pos;
 
-	App->CL_Maths->Vector3_Subtract(pPoint, pCenter, pPoint);
-	App->CL_Maths->XForm3d_Rotate(pXfmRotate, pPoint, pPoint);
-	App->CL_Maths->Vector3_Add(pPoint, pCenter, pPoint);
+	App->CL_X_Maths->Vector3_Subtract(pPoint, pCenter, pPoint);
+	App->CL_X_Maths->XForm3d_Rotate(pXfmRotate, pPoint, pPoint);
+	App->CL_X_Maths->Vector3_Add(pPoint, pCenter, pPoint);
 
 	f->Tex.DirtyFlag = true;
 }

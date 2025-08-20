@@ -569,16 +569,16 @@ bool CL64_Picking::Get_Face_Data(int Index, const Face* f)
     if (tySize == 0)
         tySize = 32;
 
-    App->CL_Maths->Vector3_Scale(&TVecs->uVec, 1.f / (float)txSize, &uVec);
-    App->CL_Maths->Vector3_Scale(&TVecs->vVec, -1.f / (float)tySize, &vVec);
+    App->CL_X_Maths->Vector3_Scale(&TVecs->uVec, 1.f / (float)txSize, &uVec);
+    App->CL_X_Maths->Vector3_Scale(&TVecs->vVec, -1.f / (float)tySize, &vVec);
 
     const T_Vec3* verts = App->CL_X_Face->Face_GetPoints(f);
 
     int j = 0;
     for (j = 0; j < f->NumPoints; j++)
     {
-        U = App->CL_Maths->Vector3_DotProduct(&(verts[j]), &uVec);
-        V = App->CL_Maths->Vector3_DotProduct(&(verts[j]), &vVec);
+        U = App->CL_X_Maths->Vector3_DotProduct(&(verts[j]), &uVec);
+        V = App->CL_X_Maths->Vector3_DotProduct(&(verts[j]), &vVec);
         U += (TVecs->uOffset / txSize);
         V -= (TVecs->vOffset / tySize);
 

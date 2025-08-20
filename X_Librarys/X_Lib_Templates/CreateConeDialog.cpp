@@ -458,7 +458,7 @@ void CreateConeDialog::CreateNewTemplateBrush(Brush* pBrush)
 	}
 
 
-	App->CL_Maths->Vector3_Subtract(pTemplatePos, &BrushPos, &MoveVec);
+	App->CL_X_Maths->Vector3_Subtract(pTemplatePos, &BrushPos, &MoveVec);
 
 	App->CL_X_Brush->Brush_Move(App->CL_Doc->CurBrush, &MoveVec);
 

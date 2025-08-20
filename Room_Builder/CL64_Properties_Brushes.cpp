@@ -38,11 +38,11 @@ CL64_Properties_Brushes::CL64_Properties_Brushes()
 	flag_Brushes_Dlg_Created = 0;
 	flag_Dimension_Dlg_Active = 0;
 
-	App->CL_Maths->Vector3_Clear(&FinalScale);
-	App->CL_Maths->Vector3_Clear(&FinalRot);
-	App->CL_Maths->Vector3_Clear(&CenterOfSelection);
-	App->CL_Maths->Vector3_Clear(&Rotation);
-	App->CL_Maths->Vector3_Clear(&Size);
+	App->CL_X_Maths->Vector3_Clear(&FinalScale);
+	App->CL_X_Maths->Vector3_Clear(&FinalRot);
+	App->CL_X_Maths->Vector3_Clear(&CenterOfSelection);
+	App->CL_X_Maths->Vector3_Clear(&Rotation);
+	App->CL_X_Maths->Vector3_Clear(&Size);
 
 	PosX_Delta = 1;
 	PosY_Delta = 1;
@@ -1936,7 +1936,7 @@ void CL64_Properties_Brushes::Get_Brush()
 // *************************************************************************
 void CL64_Properties_Brushes::Move_Brush()
 {
-	App->CL_Maths->Vector3_Subtract(&CenterOfSelection, &App->CL_Doc->SelectedGeoCenter, &CenterOfSelection);
+	App->CL_X_Maths->Vector3_Subtract(&CenterOfSelection, &App->CL_Doc->SelectedGeoCenter, &CenterOfSelection);
 
 	App->CL_Doc->MoveSelectedBrushList(App->CL_Doc->pSelBrushes, &CenterOfSelection);
 

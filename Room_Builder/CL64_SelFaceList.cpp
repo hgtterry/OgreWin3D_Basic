@@ -42,7 +42,7 @@ SelFaceList* CL64_SelFaceList::SelFaceList_Create(void)
 {
 	SelFaceList* pList;
 
-	pList = (SelFaceList*)App->CL_Maths->Ram_Allocate(sizeof(SelFaceList));
+	pList = (SelFaceList*)App->CL_X_Maths->Ram_Allocate(sizeof(SelFaceList));
 	if (pList != NULL)
 	{
 		pList->pItems = App->CL_X_Array->Array_Create(10, sizeof(Face*));
@@ -74,7 +74,7 @@ void CL64_SelFaceList::SelFaceList_Destroy(SelFaceList** ppList)
 		App->CL_X_Array->Array_Destroy(&pList->pItems);
 	}
 
-	App->CL_Maths->Ram_Free(*ppList);
+	App->CL_X_Maths->Ram_Free(*ppList);
 }
 
 // *************************************************************************

@@ -492,7 +492,7 @@ void CL64_Brush_X::Move_Brush_By_Name(char* Brush_Name, int Object_Index)
 	Pos.y = Centre.y;
 	Pos.z = Centre.z;
 
-	App->CL_Maths->Vector3_Subtract(&Pos, &App->CL_Doc->SelectedGeoCenter, &Pos);
+	App->CL_X_Maths->Vector3_Subtract(&Pos, &App->CL_Doc->SelectedGeoCenter, &Pos);
 
 	App->CL_X_Brush->Brush_Move(b, &Pos);
 
@@ -521,9 +521,9 @@ void CL64_Brush_X::Scale_Brush_By_Name(const char* Brush_Name, int Object_Index,
 	T_Vec3 MoveTo, MoveBack;
 
 	// Calculate movement vectors
-	App->CL_Maths->Vector3_Subtract(&VecOrigin, &mSelectedGeoCenter, &MoveTo);
-	App->CL_Maths->Vector3_Subtract(&mSelectedGeoCenter, &VecOrigin, &MoveBack);
-	App->CL_Maths->Vector3_Subtract(&mFinalScale, &mSelectedGeoCenter, &mFinalScale);
+	App->CL_X_Maths->Vector3_Subtract(&VecOrigin, &mSelectedGeoCenter, &MoveTo);
+	App->CL_X_Maths->Vector3_Subtract(&mSelectedGeoCenter, &VecOrigin, &MoveBack);
+	App->CL_X_Maths->Vector3_Subtract(&mFinalScale, &mSelectedGeoCenter, &mFinalScale);
 
 	// Move and scale the brush
 	App->CL_X_Brush->Brush_Move(b, &MoveTo);
@@ -573,9 +573,9 @@ void CL64_Brush_X::Rotate_Reset_Brush_By_Name(const char* Brush_Name, float SX, 
 
 			App->CL_X_Brush->Brush_Get_Center(b, &RotationPoint);
 
-			App->CL_Maths->XForm3d_SetIdentity(&rm);
+			App->CL_X_Maths->XForm3d_SetIdentity(&rm);
 
-			App->CL_Maths->XForm3d_SetEulerAngles(&rm, &FinalRot);
+			App->CL_X_Maths->XForm3d_SetEulerAngles(&rm, &FinalRot);
 
 			App->CL_X_Brush->Brush_Rotate(b, &rm, &RotationPoint);
 			App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
@@ -602,9 +602,9 @@ void CL64_Brush_X::Rotate_Brush_By_Name(const char* Brush_Name, float SX, float 
 
 		App->CL_X_Brush->Brush_Get_Center(b, &RotationPoint);
 
-		App->CL_Maths->XForm3d_SetIdentity(&rm);
+		App->CL_X_Maths->XForm3d_SetIdentity(&rm);
 
-		App->CL_Maths->XForm3d_SetEulerAngles(&rm, &FinalRot);
+		App->CL_X_Maths->XForm3d_SetEulerAngles(&rm, &FinalRot);
 
 		App->CL_X_Brush->Brush_Rotate(b, &rm, &RotationPoint);
 
