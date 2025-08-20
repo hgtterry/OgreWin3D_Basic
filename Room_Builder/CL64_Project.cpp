@@ -1657,6 +1657,7 @@ bool CL64_Project::Load_Project()
 	Options->Has_Camera = 0;
 	Options->Has_Objects = 0;
 	Options->Has_Counters = 0;
+	Options->Has_Locations = 0;
 
 	int Int1 = 0;
 	char chr_Tag1[MAX_PATH];
@@ -1684,6 +1685,7 @@ bool CL64_Project::Load_Project()
 	Options->Has_Camera = Ini_File->GetInt("Options", "Cameras_Count", 0, 10);
 	Options->Has_Objects = Ini_File->GetInt("Options", "Objects_Count", 0, 10);
 	Options->Has_Counters = Ini_File->GetInt("Options", "Counters_Count", 0, 10);
+	Options->Has_Locations = Ini_File->GetInt("Options", "Locations_Count", 0, 10);
 
 	App->CL_Scene->UniqueID_Object_Counter = Ini_File->GetInt("Options", "Objects_ID_Count", 0, 10);
 	/*App->CL_Scene->UniqueID_Counters_Count = App->CL_Ini_File->GetInt("Options", "Counters_ID_Count", 0, 10);
@@ -1741,6 +1743,18 @@ bool CL64_Project::Load_Project()
 		Load_Project_Counters();
 		//App->CL_Com_Counters->Add_Counters_From_File();
 	}
+
+	// ------------------------------------- Counters
+	if (Options->Has_Locations > 0)
+	{
+	
+	}
+	else
+	{
+		// Add first location Player start
+		App->CL_Locations->Add_New_Location(true);
+	}
+
 
 	App->CL_FileView->Change_Level_Name();
 	App->CL_FileView->Change_Project_Name();
@@ -2632,9 +2646,6 @@ bool CL64_Project::Load_Project_Player()
 		_itoa(Count, Cbuff, 10);
 		strcat(buff, Cbuff);
 
-		
-		//App->CL_Com_Player->Create_Player_Object();
-		
 		Ini_File->GetString(buff, "Player_Name", Player_Name, MAX_PATH);
 		strcpy(App->CL_Scene->B_Player[Count]->Player_Name, Player_Name);
 
@@ -2771,6 +2782,17 @@ bool CL64_Project::Load_Project_Player()
 
 	return 1;
 }
+
+//// Helper function to retrieve float values from INI file
+//float GetFloatFromIni(const char* buff, const char* key, float defaultValue) {
+//	char chr_Tag1[MAX_PATH];
+//	if (Ini_File->GetString(buff, key, chr_Tag1, MAX_PATH) > 0) {
+//		float value;
+//		sscanf(chr_Tag1, "%f", &value);
+//		return value;
+//	}
+//	return defaultValue;
+//}
 
 // *************************************************************************
 // *	  	Load_Project_Camera:- Terry and Hazel Flanigan 2024			   *

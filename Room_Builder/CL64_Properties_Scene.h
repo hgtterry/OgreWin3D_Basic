@@ -44,7 +44,6 @@ public:
 	void Edit_Object(LPARAM lParam);
 	void Edit_Sounds(LPARAM lParam);
 
-
 	HWND Properties_Dlg_hWnd;
 	HWND Properties_hLV;
 

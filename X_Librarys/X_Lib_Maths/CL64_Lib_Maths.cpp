@@ -2,6 +2,7 @@
 #include "CL64_Lib_Maths.h"
 
 #define TRACE_QZERO_TOLERANCE 0.1
+#define	M_PI ((float)3.14159265358979323846f)
 
 CL64_Lib_Maths::CL64_Lib_Maths()
 {
@@ -17,7 +18,7 @@ CL64_Lib_Maths::~CL64_Lib_Maths()
 // *************************************************************************
 char* CL64_Lib_Maths::GetVersion()
 {
-	return (LPSTR)" OW3D_Scene_Builder :-- CL64_Lib_Maths [ 16-08-25 ] Build 1 ";
+	return (LPSTR)" OW3D_Scene_Builder :-- CL64_Lib_Maths [ 20-08-25 ] Build 1 ";
 }
 
 // *************************************************************************
@@ -714,8 +715,6 @@ void CL64_Lib_Maths::Quaternion_From_Matrix(const Matrix3d* M, Ogre::Quaternion*
 			assert(0);
 		}
 	}
-
-	//geQuaternion_Assert(geQuaternion_IsUnit(Q) == GE_TRUE);
 }
 
 // *************************************************************************
@@ -741,4 +740,27 @@ int CL64_Lib_Maths::Ogre_Quaternion_Compare(Ogre::Quaternion* Q1, Ogre::Quaterni
 	{
 		return false;
 	}
+}
+
+// *************************************************************************
+// *		Ogre_QuaternionToEuler:- Terry and Hazel Flanigan 2025		   *
+// *************************************************************************
+void CL64_Lib_Maths::Ogre_QuaternionToEuler(const Ogre::Quaternion& q, double& roll, double& pitch, double& yaw)
+{
+	// Roll (x-axis rotation)
+	double sinr_cosp = 2 * (q.w * q.x + q.y * q.z);
+	double cosr_cosp = 1 - 2 * (q.x * q.x + q.y * q.y);
+	roll = std::atan2(sinr_cosp, cosr_cosp);
+
+	// Pitch (y-axis rotation)
+	double sinp = 2 * (q.w * q.y - q.z * q.x);
+	if (std::abs(sinp) >= 1)
+		pitch = std::copysign(M_PI / 2, sinp); // Use 90 degrees if out of range
+	else
+		pitch = std::asin(sinp);
+
+	// Yaw (z-axis rotation)
+	double siny_cosp = 2 * (q.w * q.z + q.x * q.y);
+	double cosy_cosp = 1 - 2 * (q.y * q.y + q.z * q.z);
+	yaw = std::atan2(siny_cosp, cosy_cosp);
 }

@@ -38,6 +38,7 @@ typedef struct
 
 		int Ogre_Vector3_Compare(Ogre::Vector3* V1, Ogre::Vector3* V2, float Tolerance);
 		int Ogre_Quaternion_Compare(Ogre::Quaternion* Q1, Ogre::Quaternion* Q2, float Tolerance);
+		void Ogre_QuaternionToEuler(const Ogre::Quaternion& q, double& roll, double& pitch, double& yaw);
 
 		void XForm3d_SetIdentity(Matrix3d* M);
 		void XForm3d_RotateX(Matrix3d* M, float RadianAngle);

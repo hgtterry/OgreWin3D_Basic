@@ -358,28 +358,29 @@ bool CL64_Properties_Scene::Update_ListView_Objects()
 bool CL64_Properties_Scene::Update_ListView_Player() 
 {
 	int index = Current_Selected_Object;
+	auto& m_Player = App->CL_Scene->B_Player[0];
 
 	// Update the properties dialog title
 	std::string title = "Properties ID=0";
 	SetWindowText(Properties_Dlg_hWnd, title.c_str());
-	SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, App->CL_Scene->B_Player[0]->Player_Name);
+	SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, m_Player->Player_Name);
 
 	// Prepare player properties
-	std::string str_Speed = std::to_string(App->CL_Scene->B_Player[0]->Ground_speed / 100.0f);
-	std::string str_TurnRate = std::to_string(App->CL_Scene->B_Player[0]->TurnRate);
-	std::string str_Height = std::to_string(App->CL_Scene->B_Player[0]->PlayerHeight);
-	std::string str_StartPosX = std::to_string(App->CL_Scene->B_Player[0]->StartPos.x);
-	std::string str_StartPosY = std::to_string(App->CL_Scene->B_Player[0]->StartPos.y);
-	std::string str_StartPosZ = std::to_string(App->CL_Scene->B_Player[0]->StartPos.z);
-	std::string str_LookUp_Limit = std::to_string(App->CL_Scene->B_Player[0]->Limit_Look_Up);
-	std::string str_LookDown_Limit = std::to_string(App->CL_Scene->B_Player[0]->Limit_Look_Down);
+	std::string str_Speed = std::to_string(m_Player->Ground_speed / 100.0f);
+	std::string str_TurnRate = std::to_string(m_Player->TurnRate);
+	std::string str_Height = std::to_string(m_Player->PlayerHeight);
+	std::string str_StartPosX = std::to_string(m_Player->StartPos.x);
+	std::string str_StartPosY = std::to_string(m_Player->StartPos.y);
+	std::string str_StartPosZ = std::to_string(m_Player->StartPos.z);
+	std::string str_LookUp_Limit = std::to_string(m_Player->Limit_Look_Up);
+	std::string str_LookDown_Limit = std::to_string(m_Player->Limit_Look_Down);
 
 	const int NUM_ITEMS = 13;
 	const int NUM_COLS = 2;
 	std::string grid[NUM_COLS][NUM_ITEMS]; // string table
 
 	// Populate the grid with player properties
-	grid[0][0] = "Name";			grid[1][0] = App->CL_Scene->B_Player[0]->Player_Name;
+	grid[0][0] = "Name";			grid[1][0] = m_Player->Player_Name;
 	grid[0][1] = "Game Mode";		grid[1][1] = "1st_Person";
 	grid[0][2] = " ";				grid[1][2] = " ";
 	grid[0][3] = "Ground Speed";	grid[1][3] = str_Speed;
@@ -530,19 +531,46 @@ bool CL64_Properties_Scene::Update_ListView_Sounds()
 bool CL64_Properties_Scene::Update_ListView_Locations()
 {
 	int index = Current_Selected_Object;
+	auto& m_Loc = App->CL_Locations->B_Location[index];
 
+	SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)m_Loc->Location_Name);
+
+	// Convert physics position to strings
+	std::string str_StartPosX = std::to_string(m_Loc->Physics_Pos.x);
+	std::string str_StartPosY = std::to_string(m_Loc->Physics_Pos.y);
+	std::string str_StartPosZ = std::to_string(m_Loc->Physics_Pos.z);
+
+	// Convert quaternion to strings needs converting to angles
+
+	Ogre::Quaternion q = { m_Loc->Physics_Quat.getW(), m_Loc->Physics_Quat.getX(), m_Loc->Physics_Quat.getY(), m_Loc->Physics_Quat.getZ() };
+	//q = { 0.707, 0.0, 0.0, 0.707 };
 	
-	SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)App->CL_Locations->B_Location[index]->Location_Name);
+	double roll, pitch, yaw;
 
-	const int NUM_ITEMS = 1;
+	App->CL_Maths->Ogre_QuaternionToEuler(q, roll, pitch, yaw);
+
+	std::string str_RotX = std::to_string(roll * 180.0 / M_PI);
+	std::string str_RotY = std::to_string(pitch * 180.0 / M_PI);
+	std::string str_RotZ = std::to_string(yaw * 180.0 / M_PI);
+	
+	const int NUM_ITEMS = 9;
 	const int NUM_COLS = 2;
 	std::string grid[NUM_COLS][NUM_ITEMS]; // string table
 	LV_ITEM pitem;
 	memset(&pitem, 0, sizeof(LV_ITEM));
 	pitem.mask = LVIF_TEXT;
 
-	grid[0][0] = "Name", grid[1][0] = App->CL_Locations->B_Location[index]->Location_Name;
-	
+	grid[0][0] = "Name",		grid[1][0] = m_Loc->Location_Name;
+	grid[0][1] = " ";			grid[1][1] = " ";
+	grid[0][2] = "Start Pos_X";	grid[1][2] = str_StartPosX;
+	grid[0][3] = "Start Pos_Y";	grid[1][3] = str_StartPosY;
+	grid[0][4] = "Start Pos_Z";	grid[1][4] = str_StartPosZ;
+	grid[0][5] = " ";			grid[1][5] = " ";
+	grid[0][6] = "Rot_X";		grid[1][6] = str_RotX;
+	grid[0][7] = "Rot_Y";		grid[1][7] = str_RotY;
+	grid[0][8] = "Rot_Z";		grid[1][8] = str_RotZ;
+	//grid[0][9] = "Rot_W";		grid[1][9] = str_RotW;
+
 	ListView_DeleteAllItems(Properties_hLV);
 
 	for (DWORD row = 0; row < NUM_ITEMS; row++)
@@ -579,7 +607,6 @@ void CL64_Properties_Scene::Edit_Object(LPARAM lParam)
 	result = strcmp(btext, "Name");
 	if (result == 0)
 	{
-	
 		App->CL_Entities->Rename_Object(Index);
 		Update_ListView_Objects();
 	}
