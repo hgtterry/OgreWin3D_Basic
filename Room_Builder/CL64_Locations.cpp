@@ -76,7 +76,8 @@ void CL64_Locations::Add_New_Location(bool isFirstLocation)
 		if (isFirstLocation == true)
 		{
 			strcpy(B_Location[index]->Location_Name, "Start_Location");
-			//App->CL_Scene->B_Player[0]->
+			B_Location[index]->Physics_Pos = App->CL_Scene->B_Player[0]->StartPos;
+			B_Location[index]->Physics_Quat = App->CL_Scene->B_Player[0]->Physics_Quat;
 		}
 
 		// Add item to the file view

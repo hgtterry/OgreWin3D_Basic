@@ -36,7 +36,7 @@ public:
 	//------------------------------ Physics
 	Ogre::Vector3			Physics_Pos;
 	Ogre::Vector3			Physics_Rot;
-	Ogre::Quaternion		Physics_Quat;
+	btQuaternion			Physics_Quat;
 
 	HTREEITEM FileViewItem;
 };

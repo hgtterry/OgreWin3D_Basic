@@ -47,7 +47,7 @@ Base_Player::Base_Player()
 	StartPos.y = 0;
 	StartPos.z = 0;
 
-	Physics_Rotation = btQuaternion(0, 0, 1, 0);
+	Physics_Quat = btQuaternion(0, 0, 1, 0);  // Rotated 180 in the Y Axis
 
 	Forward_Timer = 0;
 	Ground_speed = 70;

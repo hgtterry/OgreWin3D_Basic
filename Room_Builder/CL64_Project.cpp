@@ -898,10 +898,10 @@ bool CL64_Project::Save_Player_Data()
 		Pos.z = App->CL_Scene->B_Player[Count]->StartPos.z;
 		fprintf(WriteFile, "%s%f,%f,%f\n", "Start_Position=", Pos.x, Pos.y, Pos.z);
 
-		W = App->CL_Scene->B_Player[Count]->Physics_Rotation.getW();
-		X = App->CL_Scene->B_Player[Count]->Physics_Rotation.getX();
-		Y = App->CL_Scene->B_Player[Count]->Physics_Rotation.getY();
-		Z = App->CL_Scene->B_Player[Count]->Physics_Rotation.getZ();
+		W = App->CL_Scene->B_Player[Count]->Physics_Quat.getW();
+		X = App->CL_Scene->B_Player[Count]->Physics_Quat.getX();
+		Y = App->CL_Scene->B_Player[Count]->Physics_Quat.getY();
+		Z = App->CL_Scene->B_Player[Count]->Physics_Quat.getZ();
 
 		fprintf(WriteFile, "%s%f,%f,%f,%f\n", "Start_Rotation=", W, X, Y, Z);
 
@@ -2646,10 +2646,10 @@ bool CL64_Project::Load_Project_Player()
 		Ini_File->GetString(buff, "Start_Rotation", chr_Tag1, MAX_PATH);
 		(void)sscanf(chr_Tag1, "%f,%f,%f,%f", &w, &x, &y, &z);
 
-		App->CL_Scene->B_Player[Count]->Physics_Rotation.setW(w);
-		App->CL_Scene->B_Player[Count]->Physics_Rotation.setX(x);
-		App->CL_Scene->B_Player[Count]->Physics_Rotation.setY(y);
-		App->CL_Scene->B_Player[Count]->Physics_Rotation.setZ(z);
+		App->CL_Scene->B_Player[Count]->Physics_Quat.setW(w);
+		App->CL_Scene->B_Player[Count]->Physics_Quat.setX(x);
+		App->CL_Scene->B_Player[Count]->Physics_Quat.setY(y);
+		App->CL_Scene->B_Player[Count]->Physics_Quat.setZ(z);
 
 		Ini_File->GetString(buff, "Turn_Rate", chr_Tag1, MAX_PATH);
 		(void)sscanf(chr_Tag1, "%f", &x);

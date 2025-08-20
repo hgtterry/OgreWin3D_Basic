@@ -42,10 +42,7 @@ Base_Location::Base_Location(void)
 	Physics_Rot.z = 0;
 
 	// Physics Quat
-	Physics_Quat.w = 1;
-	Physics_Quat.x = 0;
-	Physics_Quat.y = 0;
-	Physics_Quat.z = 0;
+	Physics_Quat = btQuaternion(0, 0, 1, 0); // Rotated 180 in the Y Axis
 
 	strcpy(Location_Name, "Test_Location");
 }

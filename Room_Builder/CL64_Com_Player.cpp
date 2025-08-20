@@ -180,7 +180,7 @@ void CL64_Com_Player::InitializePhysics(Base_Player* p_Player, const Ogre::Vecto
 	//p_Player->Phys_Body->setCollisionFlags(collisionFlags | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
 
 	// Set the initial rotation of the player
-	App->CL_Scene->B_Player[0]->Phys_Body->getWorldTransform().setRotation(App->CL_Scene->B_Player[0]->Physics_Rotation);
+	App->CL_Scene->B_Player[0]->Phys_Body->getWorldTransform().setRotation(App->CL_Scene->B_Player[0]->Physics_Quat);
 
 	// Add the rigid body to the physics world
 	App->CL_Physics->dynamicsWorld->addRigidBody(p_Player->Phys_Body);
@@ -399,7 +399,7 @@ void CL64_Com_Player::Reset_Player()
 		App->CL_Scene->B_Player[0]->Phys_Body->getMotionState()->setWorldTransform(startTransform);
 		App->CL_Scene->B_Player[0]->Phys_Body->activate(true);
 
-		App->CL_Scene->B_Player[0]->Phys_Body->getWorldTransform().setRotation(App->CL_Scene->B_Player[0]->Physics_Rotation);
+		App->CL_Scene->B_Player[0]->Phys_Body->getWorldTransform().setRotation(App->CL_Scene->B_Player[0]->Physics_Quat);
 
 		Adjust_Capsule();
 	}

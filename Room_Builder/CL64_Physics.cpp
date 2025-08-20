@@ -351,7 +351,7 @@ void CL64_Physics::Reset_Player(void)
 		// Set up the transformation for the player's physics body
 		btTransform startTransform;
 		startTransform.setIdentity();
-		startTransform.setRotation(btQuaternion(player->Physics_Rotation));
+		startTransform.setRotation(btQuaternion(player->Physics_Quat));
 		startTransform.setOrigin(initialPosition);
 
 		// Reset the player's physics body
@@ -363,7 +363,7 @@ void CL64_Physics::Reset_Player(void)
 		player->Phys_Body->activate(true);
 	
 		// Set the player's physics rotation and position
-		player->Phys_Body->getWorldTransform().setRotation(player->Physics_Rotation);
+		player->Phys_Body->getWorldTransform().setRotation(player->Physics_Quat);
 		App->CL_Com_Player->Set_Player_Physics_Position(0);
 	}
 }

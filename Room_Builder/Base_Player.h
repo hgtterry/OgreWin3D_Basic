@@ -51,7 +51,7 @@ public:
 	btCollisionShape *Phys_Shape;
 
 	Ogre::Vector3 StartPos;
-	btQuaternion Physics_Rotation;
+	btQuaternion Physics_Quat;
 
 	btVector3 mJumpDir;
 	float mJumpSpeed;
