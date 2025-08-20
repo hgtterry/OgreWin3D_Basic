@@ -525,6 +525,43 @@ bool CL64_Properties_Scene::Update_ListView_Sounds()
 }
 
 // *************************************************************************
+// *	Update_ListView_Locations:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+bool CL64_Properties_Scene::Update_ListView_Locations()
+{
+	int index = Current_Selected_Object;
+
+	
+	SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)App->CL_Locations->B_Location[index]->Location_Name);
+
+	const int NUM_ITEMS = 1;
+	const int NUM_COLS = 2;
+	std::string grid[NUM_COLS][NUM_ITEMS]; // string table
+	LV_ITEM pitem;
+	memset(&pitem, 0, sizeof(LV_ITEM));
+	pitem.mask = LVIF_TEXT;
+
+	grid[0][0] = "Name", grid[1][0] = App->CL_Locations->B_Location[index]->Location_Name;
+	
+	ListView_DeleteAllItems(Properties_hLV);
+
+	for (DWORD row = 0; row < NUM_ITEMS; row++)
+	{
+		pitem.iItem = row;
+		pitem.pszText = const_cast<char*>(grid[0][row].c_str());
+		ListView_InsertItem(Properties_hLV, &pitem);
+
+		for (DWORD col = 1; col < NUM_COLS; col++)
+		{
+			ListView_SetItemText(Properties_hLV, row, col,
+				const_cast<char*>(grid[col][row].c_str()));
+		}
+	}
+
+	return 1;
+}
+
+// *************************************************************************
 // *			Edit_Object:- Terry and Hazel Flanigan 2024				   *
 // *************************************************************************
 void CL64_Properties_Scene::Edit_Object(LPARAM lParam)

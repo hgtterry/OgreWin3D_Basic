@@ -33,6 +33,11 @@ public:
 	
 	bool flag_Altered;
 
+	//------------------------------ Physics
+	Ogre::Vector3			Physics_Pos;
+	Ogre::Vector3			Physics_Rot;
+	Ogre::Quaternion		Physics_Quat;
+
 	HTREEITEM FileViewItem;
 };
 

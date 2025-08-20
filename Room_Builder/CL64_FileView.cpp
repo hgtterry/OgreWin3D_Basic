@@ -783,6 +783,24 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 		return;
 	}
 
+	// ------------------------- Location Entity
+	if (!strcmp(FileView_Folder, "Locations")) // Folder
+	{
+		Context_Selection = Enums::FileView_Locations_Folder;
+		Debug
+		return;
+	}
+
+	if (!strcmp(FileView_File, "Locations"))
+	{
+		Context_Selection = Enums::FileView_Locations_File;
+
+		App->CL_Properties_Scene->Current_Selected_Object = Index;
+		App->CL_Properties_Scene->Edit_Category = Enums::Edit_Locations;
+
+		App->CL_Properties_Scene->Update_ListView_Locations();
+		return;
+	}
 }
 
 // *************************************************************************

@@ -39,8 +39,10 @@ public:
 	int Location_Count;
 	int UniqueID_Location_Counter;
 
-private:
 	std::vector<Base_Location*> B_Location; // Vector to hold pointers to Base_Location objects
+
+private:
+//	std::vector<Base_Location*> B_Location; // Vector to hold pointers to Base_Location objects
 	void Set_Location_Defaults(int index);
 };
 

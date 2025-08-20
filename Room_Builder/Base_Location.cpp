@@ -31,6 +31,22 @@ Base_Location::Base_Location(void)
 
 	flag_Altered = false;
 
+	// Physics Pos
+	Physics_Pos.x = 0;
+	Physics_Pos.y = 0;
+	Physics_Pos.z = 0;
+
+	// Physics Rotation
+	Physics_Rot.x = 0;
+	Physics_Rot.y = 0;
+	Physics_Rot.z = 0;
+
+	// Physics Quat
+	Physics_Quat.w = 1;
+	Physics_Quat.x = 0;
+	Physics_Quat.y = 0;
+	Physics_Quat.z = 0;
+
 	strcpy(Location_Name, "Test_Location");
 }
 

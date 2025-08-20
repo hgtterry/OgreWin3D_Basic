@@ -195,7 +195,8 @@ namespace Enums
 		Edit_Counters = 16,
 		Edit_Environs = 17,
 		Edit_Lights = 18,
-		Edit_UserObjects = 19
+		Edit_UserObjects = 19,
+		Edit_Locations = 20
 	};
 
 	enum FileView_Context
@@ -232,7 +233,9 @@ namespace Enums
 		FileView_Light_Folder = 29,
 		FileView_Light_File = 30,
 		FileView_UserObjects_Folder = 31,
-		FileView_UserObjects_File = 32
+		FileView_UserObjects_File = 32,
+		FileView_Locations_Folder = 33,
+		FileView_Locations_File = 34
 	};
 
 	enum Brushs_ID
