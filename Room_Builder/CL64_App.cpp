@@ -46,7 +46,6 @@ CL64_App::CL64_App(void)
 
 
 	CL_X_FaceList =				nullptr; // Library
-//	CL_FaceList =				nullptr;
 
 	CL_X_Face =					nullptr; // Library
 
@@ -57,7 +56,9 @@ CL64_App::CL64_App(void)
 	CL_X_SelBrushList =			nullptr; // Library
 	CL_X_Array =				nullptr; // Library
 
+	CL_X_SelFaceList =			nullptr; // Library
 	CL_SelFaceList =			nullptr;
+
 	CL_Mesh_Mgr =				nullptr;
 	// ------------------------------
 	CL_Dialogs =				nullptr;
@@ -211,8 +212,10 @@ void CL64_App::InitApp(void)
 
 	CL_X_SelBrushList =			new CX_SelBrushList(); // Library
 	CL_X_Array =				new CX_Array(); // Library
-
+	CL_X_SelFaceList =			new CX_SelFaceList();
+	
 	CL_SelFaceList =			new CL64_SelFaceList();
+
 	CL_Mesh_Mgr =				new CL64_Mesh_Mgr();
 
 	// ------------------------------

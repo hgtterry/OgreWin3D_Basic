@@ -1,7 +1,7 @@
 /*
 Copyright (c) 2024 - 2025 Inflanite_HGT W.T.Flanigan H.C.Flanigan
 
-OW3D_Mesh_Builder
+OW3D Scene Builder
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -40,7 +40,6 @@ THE SOFTWARE.
 #include "CX_Brush.h"
 
 #include "CX_FaceList.h"
-//#include "CL64_FaceList.h"
 
 #include "CX_Face.h"
 
@@ -49,8 +48,9 @@ THE SOFTWARE.
 #include "CX_SelBrushList.h"
 #include "CX_Array.h"
 
-
+#include "CX_SelFaceList.h"
 #include "CL64_SelFaceList.h"
+
 #include "CL64_WadFile.h"
 #include "CL64_Mesh_Mgr.h"
 #include "CL64_Brush_X.h"
@@ -146,7 +146,9 @@ public:
 	CX_SelBrushList*			CL_X_SelBrushList;	// SelBrushList Library
 	CX_Array*					CL_X_Array;			// Array Library
 
+	CX_SelFaceList*				CL_X_SelFaceList;	// SelFaceList Library
 	CL64_SelFaceList*			CL_SelFaceList;
+
 	CL64_Mesh_Mgr*				CL_Mesh_Mgr;
 	CL64_Brush_X*				CL_Brush_X;
 	// ------------------------------

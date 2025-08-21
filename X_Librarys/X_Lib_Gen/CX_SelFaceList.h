@@ -23,10 +23,25 @@ THE SOFTWARE.
 */
 
 #pragma once
+
+//typedef struct tag_SelFaceList SelFaceList;
+//typedef signed int(*SelFaceList_Callback)(Face* pFace, void* lParam);
+
 class CX_SelFaceList
 {
 public:
 	CX_SelFaceList(void);
 	~CX_SelFaceList(void);
+
+	char* GetVersion();
+
+	SelFaceList* SelFaceList_Create(void);
+	void SelFaceList_Destroy(SelFaceList** ppList);
+	int SelFaceList_GetSize(SelFaceList* pList);
+	void SelFaceList_RemoveAll(SelFaceList* pList);
+	Face* SelFaceList_GetFace(SelFaceList* pList, int FaceIndex);
+	signed int SelFaceList_Add(SelFaceList* pList, Face* pFace);
+	void SelFaceList_Enum(SelFaceList* pList, SelFaceList_Callback Callback, void* lParam);
+
 };
 
