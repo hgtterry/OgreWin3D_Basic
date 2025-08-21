@@ -808,7 +808,7 @@ void CL64_Top_Tabs::Deselect_Faces_Dlg_Buttons()
 // *************************************************************************
 void CL64_Top_Tabs::Select_Face()
 {
-	if (App->CL_SelFaceList->SelFaceList_GetSize(App->CL_Doc->pSelFaces) == 0)
+	if (App->CL_X_SelFaceList->SelFaceList_GetSize(App->CL_Doc->pSelFaces) == 0)
 	{
 		App->CL_Top_Tabs->Deselect_Faces_Dlg_Buttons();
 		App->CL_Top_Tabs->flag_Next_Face = 1;

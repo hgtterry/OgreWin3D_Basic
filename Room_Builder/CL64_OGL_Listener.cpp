@@ -493,7 +493,7 @@ void CL64_OGL_Listener::Render_Selected_Face()
 	int curnum_verts = 0;
 
 	int Count = 0;
-	int Face_Count = App->CL_SelFaceList->SelFaceList_GetSize(App->CL_Doc->pSelFaces);
+	int Face_Count = App->CL_X_SelFaceList->SelFaceList_GetSize(App->CL_Doc->pSelFaces);
 	
 	if (Face_Count > 0)
 	{
@@ -504,7 +504,7 @@ void CL64_OGL_Listener::Render_Selected_Face()
 
 			Face* pFace;
 
-			pFace = App->CL_SelFaceList->SelFaceList_GetFace(App->CL_Doc->pSelFaces, Count);
+			pFace = App->CL_X_SelFaceList->SelFaceList_GetFace(App->CL_Doc->pSelFaces, Count);
 
 			verts = App->CL_X_Face->Face_GetPoints(pFace);
 			curnum_verts = App->CL_X_Face->Face_GetNumPoints(pFace);

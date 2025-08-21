@@ -436,7 +436,7 @@ void CL64_ImGui::App_Stats_GUI(void)
 		if (ImGui::TreeNode("Faces"))
 		{
 			ImGui::Separator();
-			ImGui::Text("Selected Faces:= %i", App->CL_SelFaceList->SelFaceList_GetSize(App->CL_Doc->pSelFaces));
+			ImGui::Text("Selected Faces:= %i", App->CL_X_SelFaceList->SelFaceList_GetSize(App->CL_Doc->pSelFaces));
 			ImGui::Separator();
 			ImGui::TreePop();
 		}

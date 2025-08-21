@@ -92,7 +92,7 @@ void CL64_Doc::Init_Doc()
   
 	pSelBrushes = App->CL_X_SelBrushList->SelBrushList_Create();
 	pTempSelBrushes = App->CL_X_SelBrushList->SelBrushList_Create();
-	pSelFaces = App->CL_SelFaceList->SelFaceList_Create();
+	pSelFaces = App->CL_X_SelFaceList->SelFaceList_Create();
 
 	SetLockAxis(0);	// Start with no axis locked
 
@@ -592,7 +592,7 @@ void CL64_Doc::ResetAllSelections(void)
 void CL64_Doc::ResetAllSelectedFaces(void)
 {
     App->CL_X_Brush->BrushList_EnumLeafBrushes(App->CL_Level->Level_Get_Main_Brushes(), NULL, ResetSelectedFacesCB);
-    App->CL_SelFaceList->SelFaceList_RemoveAll(pSelFaces);
+    App->CL_X_SelFaceList->SelFaceList_RemoveAll(pSelFaces);
 }
 
 // *************************************************************************
@@ -1662,7 +1662,7 @@ void CL64_Doc::SelectAll(void)
 // *************************************************************************
 void CL64_Doc::UpdateSelected(void)
 {
-    int NumSelFaces = App->CL_SelFaceList->SelFaceList_GetSize(pSelFaces);
+    int NumSelFaces = App->CL_X_SelFaceList->SelFaceList_GetSize(pSelFaces);
     int NumSelBrushes = App->CL_X_SelBrushList->SelBrushList_GetSize(pSelBrushes);
 
     SelState = (NumSelBrushes > 1) ? MULTIBRUSH : NumSelBrushes;

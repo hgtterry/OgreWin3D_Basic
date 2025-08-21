@@ -259,7 +259,7 @@ static signed int SelAllBrushFaces(Brush* pBrush, void* lParam)
 		App->CL_X_Face->Face_SetBrushName(pFace, buff);
 		
 		App->CL_X_Face->Face_SetSelected(pFace, true);
-		App->CL_SelFaceList->SelFaceList_Add(App->CL_Doc->pSelFaces, pFace);
+		App->CL_X_SelFaceList->SelFaceList_Add(App->CL_Doc->pSelFaces, pFace);
 	}
 
 	return true;

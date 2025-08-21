@@ -191,7 +191,7 @@ LRESULT CALLBACK CL64_Properties_Textures::Proc_TextureDialog(HWND hDlg, UINT me
 	{
 		if (LOWORD(wParam) == IDC_BT_TEXTURE_FACE_PROPS)
 		{
-			int SF = App->CL_SelFaceList->SelFaceList_GetSize(App->CL_Doc->pSelFaces);
+			int SF = App->CL_X_SelFaceList->SelFaceList_GetSize(App->CL_Doc->pSelFaces);
 			if (SF > 0)
 			{
 				App->CL_Properties_Faces->Start_FaceDialog();
@@ -349,11 +349,11 @@ void CL64_Properties_Textures::Apply_Texture()
 	{
 		int Size;
 
-		Size = App->CL_SelFaceList->SelFaceList_GetSize(App->CL_Doc->pSelFaces);
+		Size = App->CL_X_SelFaceList->SelFaceList_GetSize(App->CL_Doc->pSelFaces);
 		for (i = 0; i < Size; ++i)
 		{
 			Face* pFace;
-			pFace = App->CL_SelFaceList->SelFaceList_GetFace(App->CL_Doc->pSelFaces, i);
+			pFace = App->CL_X_SelFaceList->SelFaceList_GetFace(App->CL_Doc->pSelFaces, i);
 
 			WadFileEntry* BitmapPtr = App->CL_Doc->GetDibBitmap(m_CurrentTexture);
 			TextureFace(pFace, SelectedItem, (LPCSTR)m_CurrentTexture, BitmapPtr);
@@ -637,11 +637,11 @@ void CL64_Properties_Textures::Get_Selected_Face()
 {
 	mSelected_Face = NULL;
 
-	int NumberOfFaces = App->CL_SelFaceList->SelFaceList_GetSize(App->CL_Doc->pSelFaces);
+	int NumberOfFaces = App->CL_X_SelFaceList->SelFaceList_GetSize(App->CL_Doc->pSelFaces);
 
 	if (NumberOfFaces > 0)
 	{
-		mSelected_Face = App->CL_SelFaceList->SelFaceList_GetFace(App->CL_Doc->pSelFaces, (NumberOfFaces - 1));
+		mSelected_Face = App->CL_X_SelFaceList->SelFaceList_GetFace(App->CL_Doc->pSelFaces, (NumberOfFaces - 1));
 
 		Select_With_TextureName(App->CL_X_Face->Face_GetTextureName(mSelected_Face));
 	}

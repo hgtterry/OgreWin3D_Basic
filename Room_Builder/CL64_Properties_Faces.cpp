@@ -213,7 +213,7 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		App->CL_Properties_Faces->m_NumberOfFaces = 0;
-		App->CL_Properties_Faces->m_NumberOfFaces = App->CL_SelFaceList->SelFaceList_GetSize(App->CL_Doc->pSelFaces);
+		App->CL_Properties_Faces->m_NumberOfFaces = App->CL_X_SelFaceList->SelFaceList_GetSize(App->CL_Doc->pSelFaces);
 
 		char buf[10];
 		sprintf(buf, "%i", App->CL_Properties_Faces->m_NumberOfFaces);
@@ -453,7 +453,7 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 
 				if (App->CL_Top_Tabs->flag_All_Faces == 1)
 				{
-					App->CL_SelFaceList->SelFaceList_Enum(App->CL_Doc->pSelFaces, ChangeTextureAngle, &pAngle);
+					App->CL_X_SelFaceList->SelFaceList_Enum(App->CL_Doc->pSelFaces, ChangeTextureAngle, &pAngle);
 				}
 				else
 				{
@@ -474,7 +474,7 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 
 				if (App->CL_Top_Tabs->flag_All_Faces == 1)
 				{
-					App->CL_SelFaceList->SelFaceList_Enum(App->CL_Doc->pSelFaces, ChangeTextureAngle, &pAngle);
+					App->CL_X_SelFaceList->SelFaceList_Enum(App->CL_Doc->pSelFaces, ChangeTextureAngle, &pAngle);
 				}
 				else
 				{
@@ -509,7 +509,7 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 
 				if (App->CL_Top_Tabs->flag_All_Faces == 1)
 				{
-					App->CL_SelFaceList->SelFaceList_Enum(App->CL_Doc->pSelFaces, ChangeXOffset, &pXOffset);
+					App->CL_X_SelFaceList->SelFaceList_Enum(App->CL_Doc->pSelFaces, ChangeXOffset, &pXOffset);
 				}
 				else
 				{
@@ -536,7 +536,7 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 
 				if (App->CL_Top_Tabs->flag_All_Faces == 1)
 				{
-					App->CL_SelFaceList->SelFaceList_Enum(App->CL_Doc->pSelFaces, ChangeXOffset, &pXOffset);
+					App->CL_X_SelFaceList->SelFaceList_Enum(App->CL_Doc->pSelFaces, ChangeXOffset, &pXOffset);
 				}
 				else
 				{
@@ -568,7 +568,7 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 
 				if (App->CL_Top_Tabs->flag_All_Faces == 1)
 				{
-					App->CL_SelFaceList->SelFaceList_Enum(App->CL_Doc->pSelFaces, ChangeYOffset, &pYOffset);
+					App->CL_X_SelFaceList->SelFaceList_Enum(App->CL_Doc->pSelFaces, ChangeYOffset, &pYOffset);
 				}
 				else
 				{
@@ -591,7 +591,7 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 
 				if (App->CL_Top_Tabs->flag_All_Faces == 1)
 				{
-					App->CL_SelFaceList->SelFaceList_Enum(App->CL_Doc->pSelFaces, ChangeYOffset, &pYOffset);
+					App->CL_X_SelFaceList->SelFaceList_Enum(App->CL_Doc->pSelFaces, ChangeYOffset, &pYOffset);
 				}
 				else
 				{
@@ -623,7 +623,7 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 
 				if (App->CL_Top_Tabs->flag_All_Faces == 1)
 				{
-					App->CL_SelFaceList->SelFaceList_Enum(App->CL_Doc->pSelFaces, ChangeTextureXScale, &pXScale);
+					App->CL_X_SelFaceList->SelFaceList_Enum(App->CL_Doc->pSelFaces, ChangeTextureXScale, &pXScale);
 				}
 				else
 				{
@@ -661,7 +661,7 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 				{
 					if (App->CL_Top_Tabs->flag_All_Faces == 1)
 					{
-						App->CL_SelFaceList->SelFaceList_Enum(App->CL_Doc->pSelFaces, ChangeTextureXScale, &pXScale);
+						App->CL_X_SelFaceList->SelFaceList_Enum(App->CL_Doc->pSelFaces, ChangeTextureXScale, &pXScale);
 					}
 					else
 					{
@@ -673,7 +673,7 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 					if (App->CL_Top_Tabs->flag_All_Faces == 1)
 					{
 						pXScale = 0.001;
-						App->CL_SelFaceList->SelFaceList_Enum(App->CL_Doc->pSelFaces, ChangeTextureXScale, &pXScale);
+						App->CL_X_SelFaceList->SelFaceList_Enum(App->CL_Doc->pSelFaces, ChangeTextureXScale, &pXScale);
 					}
 					else
 					{
@@ -705,7 +705,7 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 
 				if (App->CL_Top_Tabs->flag_All_Faces == 1)
 				{
-					App->CL_SelFaceList->SelFaceList_Enum(App->CL_Doc->pSelFaces, ChangeTextureYScale, &pYScale);
+					App->CL_X_SelFaceList->SelFaceList_Enum(App->CL_Doc->pSelFaces, ChangeTextureYScale, &pYScale);
 				}
 				else
 				{
@@ -743,7 +743,7 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 				{
 					if (App->CL_Top_Tabs->flag_All_Faces == 1)
 					{
-						App->CL_SelFaceList->SelFaceList_Enum(App->CL_Doc->pSelFaces, ChangeTextureYScale, &pYScale);
+						App->CL_X_SelFaceList->SelFaceList_Enum(App->CL_Doc->pSelFaces, ChangeTextureYScale, &pYScale);
 					}
 					else
 					{
@@ -755,7 +755,7 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 					if (App->CL_Top_Tabs->flag_All_Faces == 1)
 					{
 						pYScale = 0.001;
-						App->CL_SelFaceList->SelFaceList_Enum(App->CL_Doc->pSelFaces, ChangeTextureYScale, &pYScale);
+						App->CL_X_SelFaceList->SelFaceList_Enum(App->CL_Doc->pSelFaces, ChangeTextureYScale, &pYScale);
 					}
 					else
 					{
@@ -788,7 +788,7 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 			else
 			{
 				App->CL_Properties_Faces->m_Selected_Face_Index = Index;
-				App->CL_Properties_Faces->m_Selected_Face = App->CL_SelFaceList->SelFaceList_GetFace(App->CL_Doc->pSelFaces, Index);
+				App->CL_Properties_Faces->m_Selected_Face = App->CL_X_SelFaceList->SelFaceList_GetFace(App->CL_Doc->pSelFaces, Index);
 				
 				App->CL_X_Face->Selected_Face_Index = Index;
 
@@ -952,7 +952,7 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 
 			if (App->CL_Top_Tabs->flag_All_Faces == 1)
 			{
-				App->CL_SelFaceList->SelFaceList_Enum(App->CL_Doc->pSelFaces, FlipHorizontal, NULL);
+				App->CL_X_SelFaceList->SelFaceList_Enum(App->CL_Doc->pSelFaces, FlipHorizontal, NULL);
 			}
 			else
 			{
@@ -972,7 +972,7 @@ LRESULT CALLBACK CL64_Properties_Faces::Proc_FaceDialog(HWND hDlg, UINT message,
 
 			if (App->CL_Top_Tabs->flag_All_Faces == 1)
 			{
-				App->CL_SelFaceList->SelFaceList_Enum(App->CL_Doc->pSelFaces, FlipVertical, NULL);
+				App->CL_X_SelFaceList->SelFaceList_Enum(App->CL_Doc->pSelFaces, FlipVertical, NULL);
 			}
 			else
 			{
@@ -1099,14 +1099,14 @@ void CL64_Properties_Faces::Update_Faces()
 	else
 	{
 		App->CL_Doc->UpdateAllViews(Enums::UpdateViews_3D);
-		App->CL_SelFaceList->SelFaceList_RemoveAll(App->CL_Doc->pSelFaces);
+		App->CL_X_SelFaceList->SelFaceList_RemoveAll(App->CL_Doc->pSelFaces);
 		App->CL_Doc->SelectAllFacesInBrushes();
 		App->CL_X_Face->Select_Face_From_Index(App->CL_X_Face->Selected_Face_Index);
 	}
 
 	App->CL_Ogre->RenderFrame(2);
 
-	App->CL_Properties_Faces->m_Selected_Face = App->CL_SelFaceList->SelFaceList_GetFace(App->CL_Doc->pSelFaces, App->CL_X_Face->Selected_Face_Index);
+	App->CL_Properties_Faces->m_Selected_Face = App->CL_X_SelFaceList->SelFaceList_GetFace(App->CL_Doc->pSelFaces, App->CL_X_Face->Selected_Face_Index);
 }
 
 // *************************************************************************
@@ -1187,7 +1187,7 @@ void CL64_Properties_Faces::Update_Face_List(HWND hDlg)
 	
 	}
 
-	m_Selected_Face = App->CL_SelFaceList->SelFaceList_GetFace(App->CL_Doc->pSelFaces, App->CL_X_Face->Selected_Face_Index);
+	m_Selected_Face = App->CL_X_SelFaceList->SelFaceList_GetFace(App->CL_Doc->pSelFaces, App->CL_X_Face->Selected_Face_Index);
 }
 
 // *************************************************************************
@@ -1198,10 +1198,10 @@ void CL64_Properties_Faces::Update_Face_Members()
 	int NumberOfFaces = 0;
 	m_Selected_Face = NULL;
 
-	NumberOfFaces = App->CL_SelFaceList->SelFaceList_GetSize(App->CL_Doc->pSelFaces);
+	NumberOfFaces = App->CL_X_SelFaceList->SelFaceList_GetSize(App->CL_Doc->pSelFaces);
 	if (NumberOfFaces > 0)
 	{
-		m_Selected_Face = App->CL_SelFaceList->SelFaceList_GetFace(App->CL_Doc->pSelFaces, m_Selected_Face_Index);
+		m_Selected_Face = App->CL_X_SelFaceList->SelFaceList_GetFace(App->CL_Doc->pSelFaces, m_Selected_Face_Index);
 	}
 	else
 	{

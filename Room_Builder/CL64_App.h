@@ -49,7 +49,7 @@ THE SOFTWARE.
 #include "CX_Array.h"
 
 #include "CX_SelFaceList.h"
-#include "CL64_SelFaceList.h"
+//#include "CL64_SelFaceList.h"
 
 #include "CL64_WadFile.h"
 #include "CL64_Mesh_Mgr.h"
@@ -147,7 +147,7 @@ public:
 	CX_Array*					CL_X_Array;			// Array Library
 
 	CX_SelFaceList*				CL_X_SelFaceList;	// SelFaceList Library
-	CL64_SelFaceList*			CL_SelFaceList;
+//	CL64_SelFaceList*			CL_SelFaceList;
 
 	CL64_Mesh_Mgr*				CL_Mesh_Mgr;
 	CL64_Brush_X*				CL_Brush_X;
