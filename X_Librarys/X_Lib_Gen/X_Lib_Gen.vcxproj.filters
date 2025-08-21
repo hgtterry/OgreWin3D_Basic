@@ -39,6 +39,9 @@
     <ClInclude Include="CX_FaceList.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="CX_SelFaceList.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="X_Lib_Gen.cpp">
@@ -63,6 +66,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CX_FaceList.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CX_SelFaceList.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

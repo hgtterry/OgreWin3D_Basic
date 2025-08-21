@@ -148,6 +148,7 @@
     <ClInclude Include="CX_Face.h" />
     <ClInclude Include="CX_FaceList.h" />
     <ClInclude Include="CX_SelBrushList.h" />
+    <ClInclude Include="CX_SelFaceList.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="G_Box.h" />
     <ClInclude Include="pch.h" />
@@ -158,6 +159,7 @@
     <ClCompile Include="CX_Face.cpp" />
     <ClCompile Include="CX_FaceList.cpp" />
     <ClCompile Include="CX_SelBrushList.cpp" />
+    <ClCompile Include="CX_SelFaceList.cpp" />
     <ClCompile Include="G_Box.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>

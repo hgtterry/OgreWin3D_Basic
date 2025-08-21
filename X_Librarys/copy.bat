@@ -4,7 +4,7 @@ echo f |xcopy X_Lib_Gen\CX_SelBrushList.h ..\Common_64\OW3D\include\CX_SelBrushL
 echo f |xcopy X_Lib_Gen\CX_Brush.h ..\Common_64\OW3D\include\CX_Brush.h /y
 echo f |xcopy X_Lib_Gen\CX_Face.h ..\Common_64\OW3D\include\CX_Face.h /y
 echo f |xcopy X_Lib_Gen\CX_FaceList.h ..\Common_64\OW3D\include\CX_FaceList.h /y
-
+echo f |xcopy X_Lib_Gen\CX_SelFaceList.h ..\Common_64\OW3D\include\CX_SelFaceList.h /y
 
 echo f |xcopy X_Lib_Ini_File\Lib_Ini_File.h ..\Common_64\OW3D\include\Lib_Ini_File.h /y
 echo f |xcopy X_Lib_Maths\CL64_Lib_Maths.h ..\Common_64\OW3D\include\CL64_Lib_Maths.h /y
