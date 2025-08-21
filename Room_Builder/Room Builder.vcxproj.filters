@@ -42,9 +42,6 @@
     <ClInclude Include="CL64_Utilities.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CL64_SelFaceList.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="CL64_Dialogs.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -240,9 +237,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CL64_Utilities.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CL64_SelFaceList.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CL64_Dialogs.cpp">

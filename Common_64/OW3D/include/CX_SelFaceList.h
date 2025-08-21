@@ -24,8 +24,8 @@ THE SOFTWARE.
 
 #pragma once
 
-//typedef struct tag_SelFaceList SelFaceList;
-//typedef signed int(*SelFaceList_Callback)(Face* pFace, void* lParam);
+typedef struct tag_SelFaceList SelFaceList;
+typedef signed int(*SelFaceList_Callback)(Face* pFace, void* lParam);
 
 class CX_SelFaceList
 {

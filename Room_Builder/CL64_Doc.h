@@ -26,7 +26,7 @@ THE SOFTWARE.
 
 #include "CX_Brush.h"
 #include "CX_SelBrushList.h"
-#include "CL64_SelFaceList.h"
+#include "CX_SelFaceList.h"
 
 typedef signed int(*BrushFlagTest)(const Brush* pBrush);
 
