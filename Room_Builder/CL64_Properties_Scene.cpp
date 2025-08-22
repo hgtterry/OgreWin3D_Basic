@@ -291,6 +291,10 @@ void CL64_Properties_Scene::ListView_OnClickOptions(LPARAM lParam)
 		}
 		return;
 
+	case Enums::Edit_Locations:
+		Edit_Locations(lParam);
+		return;
+
 	default:
 		return;
 	}
@@ -559,7 +563,7 @@ bool CL64_Properties_Scene::Update_ListView_Locations()
 	sprintf(str_RotY, "%.02f", y * 180.0 / M_PI);
 	sprintf(str_RotZ, "%.02f", z * 180.0 / M_PI);
 
-	const int NUM_ITEMS = 9;
+	const int NUM_ITEMS = 11;
 	const int NUM_COLS = 2;
 	std::string grid[NUM_COLS][NUM_ITEMS]; // string table
 	LV_ITEM pitem;
@@ -575,7 +579,9 @@ bool CL64_Properties_Scene::Update_ListView_Locations()
 	grid[0][6] = "Rot_X";		grid[1][6] = str_RotX;
 	grid[0][7] = "Rot_Y";		grid[1][7] = str_RotY;
 	grid[0][8] = "Rot_Z";		grid[1][8] = str_RotZ;
-	
+	grid[0][9] = " ";			grid[1][9] = " ";
+	grid[0][10] = "Goto";		grid[1][10] = " ";
+
 	ListView_DeleteAllItems(Properties_hLV);
 
 	for (DWORD row = 0; row < NUM_ITEMS; row++)
@@ -1067,4 +1073,34 @@ void CL64_Properties_Scene::Edit_Sounds(LPARAM lParam)
 	}
 
 	return;
+}
+
+// *************************************************************************
+// *			Edit_Locations:- Terry and Hazel Flanigan 2025			   *
+// *************************************************************************
+void CL64_Properties_Scene::Edit_Locations(LPARAM lParam)
+{
+	int Index = Current_Selected_Object;
+	int result = 1;
+	int List_Index;
+
+	Base_Object* Object = App->CL_Scene->B_Object[Index];
+
+	LPNMLISTVIEW List = (LPNMLISTVIEW)lParam;
+	List_Index = List->iItem;
+	ListView_GetItemText(Properties_hLV, List_Index, 0, btext, 20);
+
+	result = strcmp(btext, "Name");
+	if (result == 0)
+	{
+		//App->CL_Entities->Rename_Object(Index);
+		//Update_ListView_Objects();
+	}
+
+	result = strcmp(btext, "Goto");
+	if (result == 0)
+	{
+		Debug
+		//Update_ListView_Objects();
+	}
 }

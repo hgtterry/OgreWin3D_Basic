@@ -43,6 +43,7 @@ public:
 	bool Edit_Environs_OnClick(LPARAM lParam);
 	void Edit_Object(LPARAM lParam);
 	void Edit_Sounds(LPARAM lParam);
+	void Edit_Locations(LPARAM lParam);
 
 	HWND Properties_Dlg_hWnd;
 	HWND Properties_hLV;
