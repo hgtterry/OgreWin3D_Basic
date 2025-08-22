@@ -1080,11 +1080,11 @@ void CL64_Properties_Scene::Edit_Sounds(LPARAM lParam)
 // *************************************************************************
 void CL64_Properties_Scene::Edit_Locations(LPARAM lParam)
 {
-	int Index = Current_Selected_Object;
+	int index = Current_Selected_Object;
 	int result = 1;
 	int List_Index;
 
-	Base_Object* Object = App->CL_Scene->B_Object[Index];
+	Base_Object* Object = App->CL_Scene->B_Object[index];
 
 	LPNMLISTVIEW List = (LPNMLISTVIEW)lParam;
 	List_Index = List->iItem;
@@ -1100,7 +1100,6 @@ void CL64_Properties_Scene::Edit_Locations(LPARAM lParam)
 	result = strcmp(btext, "Goto");
 	if (result == 0)
 	{
-		Debug
-		//Update_ListView_Objects();
+		App->CL_Com_Player->Set_Player_Location(index);
 	}
 }

@@ -42,6 +42,7 @@ public:
 	void Update_Velocity(float dt);
 	void Get_Height(void);
 
+	void Set_Player_Location(int index);
 	void Set_Player_Physics_Position(int Index);
 	void Set_Player_Position(Ogre::Vector3 Position);
 	void Set_Player_Rotation(btQuaternion Rotation);

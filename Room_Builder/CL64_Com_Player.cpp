@@ -242,18 +242,6 @@ void CL64_Com_Player::Show_Player_Physics(bool Show)
 }
 
 // *************************************************************************
-// *	  	Adjust_CapsuleTerry:- Terry and Hazel Flanigan 2024			   *
-// *************************************************************************
-void CL64_Com_Player::Adjust_Capsule(void)
-{
-	App->CL_Scene->B_Player[0]->Phys_Shape = new btCapsuleShape(btScalar(App->CL_Scene->B_Player[0]->Capsule_Radius), btScalar(App->CL_Scene->B_Player[0]->Capsule_Height));
-	App->CL_Scene->B_Player[0]->Phys_Body->setCollisionShape(App->CL_Scene->B_Player[0]->Phys_Shape);
-
-	Ray_End_Gravity = (App->CL_Scene->B_Player[0]->Capsule_Height + 12) / 2;
-	Get_Height();
-}
-
-// *************************************************************************
 // *			Update_Player:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
 void CL64_Com_Player::Update_Player(btCollisionWorld* collisionWorld, btScalar deltaTimeStep)
@@ -372,7 +360,7 @@ void CL64_Com_Player::Set_Player_GroundSpeed(float GroundSpeed)
 }
 
 // *************************************************************************
-// *		Set_Player_GroundSpeed:- Terry and Hazel Flanigan 2024		   *
+// *			Reset_Player:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
 void CL64_Com_Player::Reset_Player()
 {
@@ -406,7 +394,48 @@ void CL64_Com_Player::Reset_Player()
 }
 
 // *************************************************************************
-// *			Rename_Player:- Terry and Hazel Flanigan 2024				   *
+// *		 	Adjust_Capsule:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void CL64_Com_Player::Adjust_Capsule(void)
+{
+	App->CL_Scene->B_Player[0]->Phys_Shape = new btCapsuleShape(btScalar(App->CL_Scene->B_Player[0]->Capsule_Radius), btScalar(App->CL_Scene->B_Player[0]->Capsule_Height));
+	App->CL_Scene->B_Player[0]->Phys_Body->setCollisionShape(App->CL_Scene->B_Player[0]->Phys_Shape);
+
+	Ray_End_Gravity = (App->CL_Scene->B_Player[0]->Capsule_Height + 12) / 2;
+	Get_Height();
+}
+
+// *************************************************************************
+// *		 Set_Player_Location:- Terry and Hazel Flanigan 2025		   *
+// *************************************************************************
+void CL64_Com_Player::Set_Player_Location(int index)
+{
+	// Initialize a zero vector for resetting velocities
+	btVector3 zeroVector(0, 0, 0);
+
+	// Retrieve the player's position from the location array
+	const auto& location = App->CL_Locations->B_Location[index]->Physics_Pos;
+	btVector3 initialPosition(location.x, location.y, location.z);
+
+	// Create and configure the transformation for the player's new position
+	btTransform startTransform;
+	startTransform.setIdentity();
+	startTransform.setRotation(App->CL_Locations->B_Location[index]->Physics_Quat);
+	startTransform.setOrigin(initialPosition);
+
+	// Reset the player's physics body forces and velocities
+	auto& playerBody = App->CL_Scene->B_Player[0]->Phys_Body;
+	playerBody->clearForces();
+	playerBody->setLinearVelocity(zeroVector);
+	playerBody->setAngularVelocity(zeroVector);
+
+	// Update the player's world transform
+	playerBody->setWorldTransform(startTransform);
+	playerBody->getMotionState()->setWorldTransform(startTransform);
+}
+
+// *************************************************************************
+// *			Rename_Player:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
 void CL64_Com_Player::Rename_Player(int Index)
 {
