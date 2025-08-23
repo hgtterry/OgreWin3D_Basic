@@ -79,6 +79,15 @@ void CL64_Locations::Add_New_Location(bool isFirstLocation)
 			B_Location[index]->Physics_Pos = App->CL_Scene->B_Player[0]->StartPos;
 			B_Location[index]->Physics_Quat = App->CL_Scene->B_Player[0]->Physics_Quat;
 		}
+		else
+		{
+			float x = App->CL_Scene->B_Player[0]->Phys_Body->getWorldTransform().getOrigin().getX();
+			float y = App->CL_Scene->B_Player[0]->Phys_Body->getWorldTransform().getOrigin().getY();
+			float z = App->CL_Scene->B_Player[0]->Phys_Body->getWorldTransform().getOrigin().getZ();
+
+			B_Location[index]->Physics_Pos = Ogre::Vector3(x,y,z);
+			B_Location[index]->Physics_Quat = App->CL_Scene->B_Player[0]->Phys_Body->getWorldTransform().getRotation();
+		}
 
 		// Add item to the file view
 		HTREEITEM tempItem = App->CL_FileView->Add_Item(App->CL_FileView->FV_Locations_Folder, B_Location[index]->Location_Name, index, true);

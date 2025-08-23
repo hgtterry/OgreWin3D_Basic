@@ -30,6 +30,7 @@ Base_Location::Base_Location(void)
 	FileViewItem = nullptr;
 
 	flag_Altered = false;
+	flag_Deleted = false;
 
 	// Physics Pos
 	Physics_Pos.x = 0;

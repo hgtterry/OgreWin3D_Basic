@@ -58,6 +58,7 @@ CL64_Project::CL64_Project()
 	m_Cameras_Folder_Path[0] = 0;
 	m_Objects_Folder_Path[0] = 0;
 	m_Display_Folder_Path[0] = 0;
+	m_Locations_Folder_Path[0] = 0;
 
 	flag_Is_New_Project = 0;
 	flag_Silence_SaveAll_Dialogs = 0;
@@ -466,7 +467,7 @@ bool CL64_Project::Save_Project()
 	Save_Cameras_Folder();
 	Save_Objects_Folder();
 	Save_Display_Folder();
-
+	Save_Locations_Folder();
 	/*App->CL_FileView->Change_Level_Name();
 	App->CL_FileView->Change_Project_Name();*/
 
@@ -1535,6 +1536,106 @@ bool CL64_Project::Save_Display_Data()
 
 	fprintf(WriteFile, "%s\n", "[Counters]");
 	fprintf(WriteFile, "%s%i\n", "Counters_Count=", new_Count);
+
+	fclose(WriteFile);
+
+	return 1;
+}
+
+// *************************************************************************
+// *	  	Save_Locations_Folder:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+bool CL64_Project::Save_Locations_Folder()
+{
+	m_Locations_Folder_Path[0] = 0;
+
+	strcpy(m_Locations_Folder_Path, m_Level_Folder_Path);
+	strcat(m_Locations_Folder_Path, "\\Locations");
+	
+	(void)_mkdir(m_Locations_Folder_Path);
+	(void)_chdir(m_Locations_Folder_Path);
+
+	Save_Locations_Data();
+
+	(void)_chdir(m_Level_Folder_Path); // Return to Level Folder
+
+	return 1;
+}
+
+// *************************************************************************
+// *	  	Save_Locations_Data:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+bool CL64_Project::Save_Locations_Data()
+{
+	Ogre::Vector3 Pos;
+	char File[1024];
+
+	strcpy(File, m_Locations_Folder_Path);
+	strcat(File, "\\Locations.dat");
+	
+	WriteFile = nullptr;
+
+	WriteFile = fopen(File, "wt");
+
+	if (!WriteFile)
+	{
+		App->Say("Cant Create File");
+		App->Say_Win(File);
+		return 0;
+	}
+
+	fprintf(WriteFile, "%s\n", "[Version_Data]");
+	fprintf(WriteFile, "%s%s\n", "Version=", "V1.0");
+
+	fprintf(WriteFile, "%s\n", " ");
+
+	fprintf(WriteFile, "%s\n", " ");
+
+	char Cbuff[255];
+	char buff[255];
+
+	float W = 0;
+	float X = 0;
+	float Y = 0;
+	float Z = 0;
+
+	int new_Count = 0;
+
+	int Count = 0;
+	while (Count < App->CL_Locations->Location_Count)
+	{
+		if (App->CL_Locations->B_Location[Count]->flag_Deleted == false)
+		{
+			auto& m_Location = App->CL_Locations->B_Location[Count];
+
+			strcpy(buff, "[Location_");
+			_itoa(new_Count, Cbuff, 10);
+			strcat(buff, Cbuff);
+			strcat(buff, "]");
+
+			fprintf(WriteFile, "%s\n", buff);
+
+			fprintf(WriteFile, "%s%s\n", "Location_Name=", m_Location->Location_Name);
+
+			fprintf(WriteFile, "%s%f,%f,%f\n", "Location_Pos=", m_Location->Physics_Pos.x, m_Location->Physics_Pos.y, m_Location->Physics_Pos.z);
+			
+			W = m_Location->Physics_Quat.getW();
+			X = m_Location->Physics_Quat.getX();
+			Y = m_Location->Physics_Quat.getY();
+			Z = m_Location->Physics_Quat.getZ();
+
+			fprintf(WriteFile, "%s%f,%f,%f,%f\n", "Location_Rotation=", W, X, Y, Z);
+
+			fprintf(WriteFile, "%s\n", " ");
+
+			new_Count++;
+		}
+
+		Count++;
+	}
+
+	fprintf(WriteFile, "%s\n", "[Locations]");
+	fprintf(WriteFile, "%s%i\n", "Locations_Count=", new_Count);
 
 	fclose(WriteFile);
 

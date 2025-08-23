@@ -32,7 +32,7 @@ public:
 	char Location_Name[MAX_PATH];	// Name of Object/Entity Set By User
 	
 	bool flag_Altered;
-
+	bool flag_Deleted;
 	//------------------------------ Physics
 	Ogre::Vector3			Physics_Pos;
 	Ogre::Vector3			Physics_Rot;

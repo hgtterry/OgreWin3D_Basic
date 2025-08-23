@@ -571,33 +571,16 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 	parentFolderItem.mask = TVIF_TEXT;
 	TreeView_GetItem(((LPNMHDR)lParam)->hwndFrom, &parentFolderItem);
 
-	// ---------------------------------------------------- Player
-	if (!strcmp(FileView_Folder, "Player")) // Folder
+	// ------------------------- Player
+	if (strcmp(FileView_Folder, "Player") == 0)
 	{
-		//Context_Selection = Enums::FileView_Player_Folder;
+		// Context_Selection = Enums::FileView_Player_Folder;
 		return;
 	}
-	if (!strcmp(FileView_File, "Player"))
+
+	if (strcmp(FileView_File, "Player") == 0)
 	{
-		//Context_Selection = Enums::FileView_Player_File;
-
-		HideRightPanes();
-		//App->CL_Props_Dialogs->Show_Player_Dlg(true);
-		//----------------------------------------------------------------------------
-
-		//App->SBC_Properties->Reset_Last_Selected_Object(App->SBC_Properties->Last_Selected_Object);
-		//App->SBC_Properties->Last_Selected_Object = Index;
-		//----------------------------------------------------------------------------
-		App->CL_Gizmos->Show_MarkerBox(false);
-
-		App->CL_Properties_Scene->Current_Selected_Object = index;
-
-		App->CL_Properties_Scene->Edit_Category = Enums::Edit_Player;
-		//App->CL_LookUps->Update_Types();
-
-		//ShowWindow(App->CL_Properties_Scene->Properties_Dlg_hWnd, 1);
-		App->CL_Properties_Scene->Update_ListView_Player();
-
+		Handle_Player_Selection(index);
 		return;
 	}
 
@@ -617,60 +600,17 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 	}
 
 	// ------------------------- Eviron_Entities
-	if (!strcmp(FileView_Folder, "Evironments")) // Folder
+	if (strcmp(FileView_Folder, "Evironments") == 0)
 	{
 		Context_Selection = Enums::FileView_EnvironEntity_Folder;
 		return;
 	}
-	if (!strcmp(FileView_File, "Evironments"))
+
+	if (strcmp(FileView_File, "Evironments") == 0)
 	{
 		Context_Selection = Enums::FileView_EnvironEntity_File;
 
-		HideRightPanes();
-		//App->CL_Props_Dialogs->Show_Details_Goto_Dlg(true);
-
-		App->CL_ImGui_Editor->flag_Show_Visuals = true;
-		App->CL_ImGui_Editor->flag_Show_Dimensions = true;
-
-		//---------------------------------------------------------------------------
-		App->CL_Gizmos->unhighlight(App->CL_Scene->B_Object[App->CL_Properties_Scene->Last_Selected_Object]->Object_Ent);
-		App->CL_Properties_Scene->Last_Selected_Object = index;
-		App->CL_Gizmos->Last_Selected_Object = index;		
-		//---------------------------------------------------------------------------
-
-		App->CL_Gizmos->MarkerBox_Adjust(index);
-
-		App->CL_Properties_Scene->Current_Selected_Object = index;
-		App->CL_Properties_Scene->Edit_Category = Enums::Edit_Environs;
-
-		//-----------------------------
-		if (App->CL_File->flag_loading == false)
-		{
-			Brush* pMinBrush = App->CL_Brush_X->Get_Brush_By_Name(App->CL_Scene->B_Object[App->CL_Properties_Scene->Last_Selected_Object]->Object_Name);
-
-			// TODO Check App->CL_Editor_Scene->flag_Environment_Available == true
-			if (pMinBrush)// && App->CL_Editor_Scene->flag_Environment_Available == true)
-			{
-				App->CL_Doc->ResetAllSelections();
-				App->CL_Doc->DoBrushSelection(pMinBrush, brushSelToggle);
-				App->CL_Brush_X->Select_Brush_Editor(pMinBrush);
-
-				App->CL_Properties_Tabs->flag_Tabs_Dlg_Active = 1;
-				App->CL_Properties_Tabs->Select_Brushes_Tab();
-				App->CL_Properties_Tabs->flag_Tabs_Dlg_Active = 0;
-			}
-		}
-		//-----------------------------
-
-		if (App->CL_Editor_Control->flag_Scene_Editor_Active == true)
-		{
-			//ShowWindow(App->CL_Properties_Scene->Properties_Dlg_hWnd, 1);
-		}
-
-		App->CL_Properties_Scene->Update_ListView_Environs();
-
-		App->CL_Gizmos->highlight(App->CL_Scene->B_Object[index]->Object_Ent);
-
+		Handle_Environment_Selection(index);
 		return;
 	}
 
@@ -706,6 +646,19 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 }
 
 // *************************************************************************
+// *		Handle_Player_Selection:- Terry and Hazel Flanigan 2025		   *
+// *************************************************************************
+void CL64_FileView::Handle_Player_Selection(int index)
+{
+	HideRightPanes();
+
+	App->CL_Gizmos->Show_MarkerBox(false);
+	App->CL_Properties_Scene->Current_Selected_Object = index;
+	App->CL_Properties_Scene->Edit_Category = Enums::Edit_Player;
+	App->CL_Properties_Scene->Update_ListView_Player();
+}
+
+// *************************************************************************
 // *		Handle_Object_Selection:- Terry and Hazel Flanigan 2025		   *
 // *************************************************************************
 void CL64_FileView::Handle_Object_Selection(int index)
@@ -731,6 +684,39 @@ void CL64_FileView::Handle_Object_Selection(int index)
 	}
 
 	App->CL_Properties_Scene->Update_ListView_Objects();
+	App->CL_Gizmos->highlight(App->CL_Scene->B_Object[index]->Object_Ent);
+}
+
+// *************************************************************************
+// *	Handle_Environment_Selection:- Terry and Hazel Flanigan 2025	   *
+// *************************************************************************
+void CL64_FileView::Handle_Environment_Selection(int index)
+{
+	HideRightPanes();
+
+	App->CL_ImGui_Editor->flag_Show_Visuals = true;
+	App->CL_ImGui_Editor->flag_Show_Dimensions = true;
+
+	App->CL_Gizmos->unhighlight(App->CL_Scene->B_Object[App->CL_Properties_Scene->Last_Selected_Object]->Object_Ent);
+	App->CL_Properties_Scene->Last_Selected_Object = index;
+	App->CL_Gizmos->Last_Selected_Object = index;
+
+	App->CL_Gizmos->MarkerBox_Adjust(index);
+	App->CL_Properties_Scene->Current_Selected_Object = index;
+	App->CL_Properties_Scene->Edit_Category = Enums::Edit_Environs;
+
+	if (!App->CL_File->flag_loading) {
+		Brush* pMinBrush = App->CL_Brush_X->Get_Brush_By_Name(App->CL_Scene->B_Object[App->CL_Properties_Scene->Last_Selected_Object]->Object_Name);
+		if (pMinBrush) {
+			App->CL_Doc->ResetAllSelections();
+			App->CL_Doc->DoBrushSelection(pMinBrush, brushSelToggle);
+			App->CL_Brush_X->Select_Brush_Editor(pMinBrush);
+			App->CL_Properties_Tabs->flag_Tabs_Dlg_Active = 1;
+			App->CL_Properties_Tabs->Select_Brushes_Tab();
+			App->CL_Properties_Tabs->flag_Tabs_Dlg_Active = 0;
+		}
+	}
+	App->CL_Properties_Scene->Update_ListView_Environs();
 	App->CL_Gizmos->highlight(App->CL_Scene->B_Object[index]->Object_Ent);
 }
 
@@ -1243,7 +1229,13 @@ void CL64_FileView::Context_New(HWND hDlg)
 	// Locations
 	if (App->CL_FileView->Context_Selection == Enums::FileView_Locations_Folder)
 	{
-		Debug
+		App->CL_Dialogs->YesNo((LPSTR)"Add new PLayer Location", (LPSTR)"Do you want to add the Current Player Location");
+
+		if (App->CL_Dialogs->flag_Dlg_Canceled == false)
+		{
+			App->CL_Locations->Add_New_Location(false);
+		}
+
 		return;
 	}
 

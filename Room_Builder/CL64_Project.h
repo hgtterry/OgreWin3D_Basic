@@ -87,6 +87,7 @@ public:
 	char m_Cameras_Folder_Path[MAX_PATH];
 	char m_Objects_Folder_Path[MAX_PATH];
 	char m_Display_Folder_Path[MAX_PATH];
+	char m_Locations_Folder_Path[MAX_PATH];
 
 	bool flag_Silence_SaveAll_Dialogs;
 	bool flag_Is_New_Project;
@@ -99,18 +100,27 @@ private:
 	bool Save_Project();
 	bool Save_Project_Ini();
 	bool Save_Level_Folder();
+
 	bool Save_Main_Asset_Folder();
 	bool Save_Assets_Data();
+
 	bool Save_Area_Folder();
 	bool Save_Areas_Data();
+
 	bool Save_Players_Folder();
 	bool Save_Player_Data();
+
 	bool Save_Cameras_Folder();
 	bool Save_Cameras_Data();
+
 	bool Save_Objects_Folder();
 	bool Save_Objects_Data();
+
 	bool Save_Display_Folder();
 	bool Save_Display_Data();
+
+	bool Save_Locations_Folder();
+	bool Save_Locations_Data();
 
 	void Set_Paths();
 	bool Load_Get_Resource_Path();

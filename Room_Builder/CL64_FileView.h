@@ -73,7 +73,9 @@ private:
 	void Get_Selection(LPNMHDR lParam);
 	void HideRightPanes(void);
 
+	void Handle_Player_Selection(int index);
 	void Handle_Object_Selection(int index);
+	void Handle_Environment_Selection(int index);
 	void Handle_Sound_Selection(int index);
 	void Handle_Location_Selection(int index);
 	
