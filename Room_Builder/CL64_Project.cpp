@@ -1567,21 +1567,17 @@ bool CL64_Project::Save_Locations_Folder()
 // *************************************************************************
 bool CL64_Project::Save_Locations_Data()
 {
-	Ogre::Vector3 Pos;
-	char File[1024];
+	std::string filePath = m_Locations_Folder_Path + std::string("\\Locations.dat");
 
-	strcpy(File, m_Locations_Folder_Path);
-	strcat(File, "\\Locations.dat");
-	
 	WriteFile = nullptr;
 
-	WriteFile = fopen(File, "wt");
+	WriteFile = fopen(filePath.c_str(), "wt");
 
 	if (!WriteFile)
 	{
-		App->Say("Cant Create File");
-		App->Say_Win(File);
-		return 0;
+		App->Say("Cannot create file");
+		App->Say_Win(filePath.c_str());
+		return false;
 	}
 
 	fprintf(WriteFile, "%s\n", "[Version_Data]");
@@ -1639,7 +1635,7 @@ bool CL64_Project::Save_Locations_Data()
 
 	fclose(WriteFile);
 
-	return 1;
+	return true;
 }
 
 // *************************************************************************
