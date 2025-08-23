@@ -546,29 +546,30 @@ void CL64_FileView::Show_FileView(bool Enable)
 // *************************************************************************
 void CL64_FileView::Get_Selection(LPNMHDR lParam)
 {
-	strcpy(FileView_Folder, "");
-	strcpy(FileView_File, "");
+	// Clear previous selections
+	memset(FileView_Folder, 0, sizeof(FileView_Folder));
+	memset(FileView_File, 0, sizeof(FileView_File));
 
-	int Index = 0;
-	HWND Temp = GetDlgItem(App->ListPanel, IDC_TREE1);
-	HTREEITEM i = TreeView_GetSelection(Temp);
+	HWND temp = GetDlgItem(App->ListPanel, IDC_TREE1);
+	HTREEITEM selectedItem = TreeView_GetSelection(temp);
 
-	TVITEM item;
-	item.hItem = i;
-	item.pszText = FileView_Folder;
-	item.cchTextMax = sizeof(FileView_Folder);
-	item.mask = TVIF_TEXT | TVIF_PARAM;
-	TreeView_GetItem(((LPNMHDR)lParam)->hwndFrom, &item);
-	Index = item.lParam;
+	// Retrieve folder name
+	TVITEM folderItem;
+	folderItem.hItem = selectedItem;
+	folderItem.pszText = FileView_Folder;
+	folderItem.cchTextMax = sizeof(FileView_Folder);
+	folderItem.mask = TVIF_TEXT | TVIF_PARAM;
+	TreeView_GetItem(((LPNMHDR)lParam)->hwndFrom, &folderItem);
+	int index = folderItem.lParam;
 
-	HTREEITEM p = TreeView_GetParent(Temp, i);
-
-	TVITEM item1;
-	item1.hItem = p;
-	item1.pszText = FileView_File;
-	item1.cchTextMax = sizeof(FileView_File);
-	item1.mask = TVIF_TEXT;
-	TreeView_GetItem(((LPNMHDR)lParam)->hwndFrom, &item1);
+	// Retrieve parent folder name
+	HTREEITEM parentItem = TreeView_GetParent(temp, selectedItem);
+	TVITEM parentFolderItem;
+	parentFolderItem.hItem = parentItem;
+	parentFolderItem.pszText = FileView_File;
+	parentFolderItem.cchTextMax = sizeof(FileView_File);
+	parentFolderItem.mask = TVIF_TEXT;
+	TreeView_GetItem(((LPNMHDR)lParam)->hwndFrom, &parentFolderItem);
 
 	// ---------------------------------------------------- Player
 	if (!strcmp(FileView_Folder, "Player")) // Folder
@@ -589,7 +590,7 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 		//----------------------------------------------------------------------------
 		App->CL_Gizmos->Show_MarkerBox(false);
 
-		App->CL_Properties_Scene->Current_Selected_Object = Index;
+		App->CL_Properties_Scene->Current_Selected_Object = index;
 
 		App->CL_Properties_Scene->Edit_Category = Enums::Edit_Player;
 		//App->CL_LookUps->Update_Types();
@@ -600,86 +601,18 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 		return;
 	}
 
-	// ---- Areas
-	//if (!strcmp(FileView_Folder, "Area")) // Folder
-	//{
-	//	Context_Selection = Enums::FileView_Areas_Folder;
-
-	//	return;
-	//}
-
-	//if (!strcmp(FileView_File, "Area"))
-	//{
-	//	Context_Selection = Enums::FileView_Areas_File;
-
-	//	HideRightPanes();
-	//	App->CL_Props_Dialogs->Show_Details_Goto_Dlg(true);
-
-	//	App->CL_Props_Dialogs->Hide_Debug_Dlg(1);
-	//	App->CL_Props_Dialogs->Show_Dimensions_Dlg(1);
-	//	//App->SBC_Props_Dialog->Hide_Details_Goto_Dlg(1);
-	//	//App->CL_Props_Dialogs->Show_Materials_Dlg(true);
-
-	//	//----------------------------------------------------------------------------
-	//	//App->SBC_Properties->Reset_Last_Selected_Object(App->SBC_Properties->Last_Selected_Object);
-	//	//App->SBC_Properties->Last_Selected_Object = Index;
-	//	//----------------------------------------------------------------------------
-
-	//	App->CL_Properties->Current_Selected_Object = Index;
-	//	App->CL_Properties->Edit_Category = Enums::Edit_Area;
-	//	App->CL_LookUps->Update_Types();
-
-	//	ShowWindow(App->CL_Properties->Properties_Dlg_hWnd, 1);
-	//	App->CL_Properties->Update_ListView_Area();
-
-
-	//	/*if (App->SBC_Dimensions->Show_Dimensions == 1)
-	//	{
-	//		App->SBC_Dimensions->Prepare_Dimensions();
-	//	}*/
-
-	//	return;
-	//}
-	
 	// ------------------------- Objects
-	if (!strcmp(FileView_Folder, "Objects")) // Clicked Folder
+	if (strcmp(FileView_Folder, "Objects") == 0)
 	{
 		Context_Selection = Enums::FileView_Objects_Folder;
 		return;
 	}
-	if (!strcmp(FileView_File, "Objects")) // Clicked File
+
+	if (strcmp(FileView_File, "Objects") == 0)
 	{
 		Context_Selection = Enums::FileView_Objects_File;
 
-		HideRightPanes();
-		App->CL_Props_Dialogs->Show_Details_Goto_Dlg(true);
-
-		App->CL_ImGui_Editor->flag_Show_Visuals = true;
-		App->CL_ImGui_Editor->flag_Show_Dimensions = true;
-
-		App->CL_Props_Dialogs->Show_Materials_Dlg(true);
-
-		//----------------------------------------------------------------------------
-		App->CL_Gizmos->unhighlight(App->CL_Scene->B_Object[App->CL_Properties_Scene->Last_Selected_Object]->Object_Ent);
-		App->CL_Properties_Scene->Last_Selected_Object = Index;
-		App->CL_Gizmos->Last_Selected_Object = Index;
-		//----------------------------------------------------------------------------
-
-		App->CL_Gizmos->MarkerBox_Adjust(Index);
-		
-		App->CL_Properties_Scene->Current_Selected_Object = Index;
-		App->CL_Properties_Scene->Edit_Category = Enums::Edit_Object;
-
-		Select_Brush(Index);
-				
-		if (App->CL_Editor_Control->flag_Scene_Editor_Active == true)
-		{
-			ShowWindow(App->CL_Properties_Scene->Properties_Dlg_hWnd, true);
-		}
-
-		App->CL_Properties_Scene->Update_ListView_Objects();
-
-		App->CL_Gizmos->highlight(App->CL_Scene->B_Object[Index]->Object_Ent);
+		Handle_Object_Selection(index);
 		return;
 	}
 
@@ -701,13 +634,13 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 
 		//---------------------------------------------------------------------------
 		App->CL_Gizmos->unhighlight(App->CL_Scene->B_Object[App->CL_Properties_Scene->Last_Selected_Object]->Object_Ent);
-		App->CL_Properties_Scene->Last_Selected_Object = Index;
-		App->CL_Gizmos->Last_Selected_Object = Index;		
+		App->CL_Properties_Scene->Last_Selected_Object = index;
+		App->CL_Gizmos->Last_Selected_Object = index;		
 		//---------------------------------------------------------------------------
 
-		App->CL_Gizmos->MarkerBox_Adjust(Index);
+		App->CL_Gizmos->MarkerBox_Adjust(index);
 
-		App->CL_Properties_Scene->Current_Selected_Object = Index;
+		App->CL_Properties_Scene->Current_Selected_Object = index;
 		App->CL_Properties_Scene->Edit_Category = Enums::Edit_Environs;
 
 		//-----------------------------
@@ -736,71 +669,103 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 
 		App->CL_Properties_Scene->Update_ListView_Environs();
 
-		App->CL_Gizmos->highlight(App->CL_Scene->B_Object[Index]->Object_Ent);
+		App->CL_Gizmos->highlight(App->CL_Scene->B_Object[index]->Object_Ent);
 
 		return;
 	}
 
 	// ------------------------- Sound Entity
-	if (!strcmp(FileView_Folder, "Sounds")) // Folder
+	if (strcmp(FileView_Folder, "Sounds") == 0)
 	{
 		Context_Selection = Enums::FileView_Sounds_Folder;
 		return;
 	}
 
-	if (!strcmp(FileView_File, "Sounds"))
+	if (strcmp(FileView_File, "Sounds") == 0)
 	{
 		Context_Selection = Enums::FileView_Sounds_File;
 
-		HideRightPanes();
-		App->CL_Props_Dialogs->Show_Details_Goto_Dlg(true);
-
-		App->CL_ImGui_Editor->flag_Show_Visuals = true;
-		App->CL_ImGui_Editor->flag_Show_Dimensions = true;
-
-		//App->SBC_Properties->Is_Player = 0;*/
-
-		//---------------------------------------------------------------------------
-		App->CL_Gizmos->unhighlight(App->CL_Scene->B_Object[App->CL_Properties_Scene->Last_Selected_Object]->Object_Ent);
-		App->CL_Properties_Scene->Last_Selected_Object = Index;
-		App->CL_Gizmos->Last_Selected_Object = Index;
-		//---------------------------------------------------------------------------
-
-		App->CL_Gizmos->MarkerBox_Adjust(Index);
-
-		App->CL_Properties_Scene->Current_Selected_Object = Index;
-		App->CL_Properties_Scene->Edit_Category = Enums::Edit_Sounds;
-
-		Select_Brush(Index);
-		
-		//App->CL_LookUps->Update_Types();
-
-		//ShowWindow(App->CL_Properties_Scene->Properties_Dlg_hWnd, 1);
-
-		App->CL_Properties_Scene->Update_ListView_Sounds();
-		App->CL_Gizmos->highlight(App->CL_Scene->B_Object[Index]->Object_Ent);
-		
+		Handle_Sound_Selection(index);
 		return;
 	}
 
 	// ------------------------- Location Entity
-	if (!strcmp(FileView_Folder, "Locations")) // Folder
+	if (strcmp(FileView_Folder, "Locations") == 0)
 	{
 		Context_Selection = Enums::FileView_Locations_Folder;
-		Debug
 		return;
 	}
 
-	if (!strcmp(FileView_File, "Locations"))
+	if (strcmp(FileView_File, "Locations") == 0)
 	{
 		Context_Selection = Enums::FileView_Locations_File;
 
-		App->CL_Properties_Scene->Current_Selected_Object = Index;
-		App->CL_Properties_Scene->Edit_Category = Enums::Edit_Locations;
-
-		App->CL_Properties_Scene->Update_ListView_Locations();
+		Handle_Location_Selection(index);
 		return;
 	}
+}
+
+// *************************************************************************
+// *		Handle_Object_Selection:- Terry and Hazel Flanigan 2025		   *
+// *************************************************************************
+void CL64_FileView::Handle_Object_Selection(int index)
+{
+	HideRightPanes();
+
+	App->CL_Props_Dialogs->Show_Details_Goto_Dlg(true);
+	App->CL_ImGui_Editor->flag_Show_Visuals = true;
+	App->CL_ImGui_Editor->flag_Show_Dimensions = true;
+
+	App->CL_Gizmos->unhighlight(App->CL_Scene->B_Object[App->CL_Properties_Scene->Last_Selected_Object]->Object_Ent);
+	App->CL_Properties_Scene->Last_Selected_Object = index;
+	App->CL_Gizmos->Last_Selected_Object = index;
+
+	App->CL_Gizmos->MarkerBox_Adjust(index);
+	App->CL_Properties_Scene->Current_Selected_Object = index;
+	App->CL_Properties_Scene->Edit_Category = Enums::Edit_Object;
+
+	Select_Brush(index);
+	if (App->CL_Editor_Control->flag_Scene_Editor_Active) 
+	{
+		ShowWindow(App->CL_Properties_Scene->Properties_Dlg_hWnd, true);
+	}
+
+	App->CL_Properties_Scene->Update_ListView_Objects();
+	App->CL_Gizmos->highlight(App->CL_Scene->B_Object[index]->Object_Ent);
+}
+
+// *************************************************************************
+// *		Handle_Sound_Selection:- Terry and Hazel Flanigan 2025		   *
+// *************************************************************************
+void CL64_FileView::Handle_Sound_Selection(int index)
+{
+	HideRightPanes();
+
+	App->CL_Props_Dialogs->Show_Details_Goto_Dlg(true);
+	App->CL_ImGui_Editor->flag_Show_Visuals = true;
+	App->CL_ImGui_Editor->flag_Show_Dimensions = true;
+
+	App->CL_Gizmos->unhighlight(App->CL_Scene->B_Object[App->CL_Properties_Scene->Last_Selected_Object]->Object_Ent);
+	App->CL_Properties_Scene->Last_Selected_Object = index;
+	App->CL_Gizmos->Last_Selected_Object = index;
+
+	App->CL_Gizmos->MarkerBox_Adjust(index);
+	App->CL_Properties_Scene->Current_Selected_Object = index;
+	App->CL_Properties_Scene->Edit_Category = Enums::Edit_Sounds;
+
+	Select_Brush(index);
+	App->CL_Properties_Scene->Update_ListView_Sounds();
+	App->CL_Gizmos->highlight(App->CL_Scene->B_Object[index]->Object_Ent);
+}
+
+// *************************************************************************
+// *	Handle_Location_Selection:- Terry and Hazel Flanigan 2025		   *
+// *************************************************************************
+void CL64_FileView::Handle_Location_Selection(int index) 
+{
+	App->CL_Properties_Scene->Current_Selected_Object = index;
+	App->CL_Properties_Scene->Edit_Category = Enums::Edit_Locations;
+	App->CL_Properties_Scene->Update_ListView_Locations();
 }
 
 // *************************************************************************
@@ -1177,6 +1142,31 @@ void CL64_FileView::Context_Menu(HWND hDlg)
 			Context_Selection = Enums::FileView_Particle_File;
 		}
 
+		//------------------------------------- Locations
+		if (!strcmp(FileView_Folder, "Locations")) // Folder
+		{
+			hMenu = CreatePopupMenu();
+			AppendMenuW(hMenu, MF_STRING, IDM_FILE_NEW, L"&New");
+			TrackPopupMenu(hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, App->ListPanel, NULL);
+			DestroyMenu(hMenu);
+			Context_Selection = Enums::FileView_Locations_Folder;
+		}
+
+		/*if (!strcmp(FileView_File, "Objects"))
+		{
+			hMenu = CreatePopupMenu();
+
+			AppendMenuW(hMenu, MF_STRING, IDM_FILE_RENAME, L"&Rename");
+			AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_GOTO, L"&Goto Camera");
+			AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_COPY, L"&Create Copy");
+
+			AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
+			AppendMenuW(hMenu, MF_STRING, IDM_FILE_DELETE, L"&Delete");
+			TrackPopupMenu(hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, App->ListPanel, NULL);
+			DestroyMenu(hMenu);
+			Context_Selection = Enums::FileView_Objects_File;
+		}*/
+
 	}
 }
 
@@ -1247,6 +1237,13 @@ void CL64_FileView::Context_New(HWND hDlg)
 			App->CL_Com_Sounds->Add_New_Sound();
 		}
 
+		return;
+	}
+
+	// Locations
+	if (App->CL_FileView->Context_Selection == Enums::FileView_Locations_Folder)
+	{
+		Debug
 		return;
 	}
 

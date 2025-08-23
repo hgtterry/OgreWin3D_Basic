@@ -73,6 +73,10 @@ private:
 	void Get_Selection(LPNMHDR lParam);
 	void HideRightPanes(void);
 
+	void Handle_Object_Selection(int index);
+	void Handle_Sound_Selection(int index);
+	void Handle_Location_Selection(int index);
+	
 	HTREEITEM Root;
 	HTREEITEM GD_ProjectFolder;
 	HTREEITEM GD_TriggerFolder;
