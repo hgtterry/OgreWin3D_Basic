@@ -35,14 +35,14 @@ public:
 	void Reset_Class();
 
 	void Add_New_Location(bool isFirstLocation);
-	
+	void Set_Location_Defaults(int index);
+
 	int Location_Count;
 	int UniqueID_Location_Counter;
 
 	std::vector<Base_Location*> B_Location; // Vector to hold pointers to Base_Location objects
 
 private:
-//	std::vector<Base_Location*> B_Location; // Vector to hold pointers to Base_Location objects
-	void Set_Location_Defaults(int index);
+
 };
 

@@ -561,6 +561,7 @@ bool CL64_Project::Save_Project_Ini()
 	fprintf(WriteFile, "%s%i\n", "Objects_Count=", App->CL_Scene->Object_Count);
 	fprintf(WriteFile, "%s%i\n", "Objects_ID_Count=", App->CL_Scene->UniqueID_Object_Counter);
 
+	fprintf(WriteFile, "%s%i\n", "Locations_Count=", App->CL_Locations->Location_Count);
 
 	/*int Adjusted_Counters_Count = App->CL_LookUps->Get_Adjusted_Counters_Count();
 
@@ -1543,7 +1544,7 @@ bool CL64_Project::Save_Display_Data()
 }
 
 // *************************************************************************
-// *	  	Save_Locations_Folder:- Terry and Hazel Flanigan 2024		   *
+// *	  	Save_Locations_Folder:- Terry and Hazel Flanigan 2025		   *
 // *************************************************************************
 bool CL64_Project::Save_Locations_Folder()
 {
@@ -1844,7 +1845,7 @@ bool CL64_Project::Load_Project()
 	// ------------------------------------- Counters
 	if (Options->Has_Locations > 0)
 	{
-	
+		Load_Project_Locations();
 	}
 	else
 	{
@@ -1996,6 +1997,84 @@ bool CL64_Project::Load_Project_Counters()
 	//}
 
 	//App->CL_Scene->Counters_Count = Count;
+
+	return 1;
+}
+
+// *************************************************************************
+// *	  	Load_Project_Locations:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+bool CL64_Project::Load_Project_Locations()
+{
+	char Object_Ini_Path[MAX_PATH];
+	char chr_Tag1[MAX_PATH];
+	int Locations_Count = 0;
+
+	float w = 0;
+	float x = 0;
+	float y = 0;
+	float z = 0;
+
+	strcpy(Object_Ini_Path, m_Project_Sub_Folder);
+	strcat(Object_Ini_Path, "\\");
+
+	strcat(Object_Ini_Path, m_Level_Name);
+	strcat(Object_Ini_Path, "\\");
+
+	strcat(Object_Ini_Path, "Locations");
+	strcat(Object_Ini_Path, "\\");
+
+	//---------------------------------------------------
+
+	strcat(Object_Ini_Path, "Locations.dat");
+
+	auto& Ini_File = App->CL_X_Ini_File; // App->CL_X_Ini_File-> (Pointer)
+
+	Ini_File->SetPathName(Object_Ini_Path);
+
+	Locations_Count = Ini_File->GetInt("Locations", "Locations_Count", 0, 10);
+
+	int count = 0;
+
+	while (count < Locations_Count)
+	{
+		App->CL_Locations->B_Location[count] = new Base_Location();
+		auto& m_Location = App->CL_Locations->B_Location[count];
+
+		App->CL_Locations->Set_Location_Defaults(count);
+		
+		char mNumChr[MAX_PATH] = { 0 };
+		char mSection[MAX_PATH] = { 0 };
+
+		strcpy(mSection, "Location_");
+		_itoa(count, mNumChr, 10);
+		strcat(mSection, mNumChr);
+
+		Ini_File->GetString(mSection, "Location_Name", chr_Tag1, MAX_PATH);
+		strcpy(m_Location->Location_Name, chr_Tag1);
+
+		// ------------- Pos
+		Ini_File->GetString(mSection, "Location_Pos", chr_Tag1, MAX_PATH);
+		(void)sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
+		m_Location->Physics_Pos = Ogre::Vector3(x, y, z);
+
+		// ------------- Mesh_Quat
+		Ini_File->GetString(mSection, "Location_Rotation", chr_Tag1, MAX_PATH);
+		(void)sscanf(chr_Tag1, "%f,%f,%f,%f", &w, &x, &y, &z);
+
+		m_Location->Physics_Quat.setW(w);
+		m_Location->Physics_Quat.setX(x);
+		m_Location->Physics_Quat.setY(y);
+		m_Location->Physics_Quat.setZ(z);
+
+		// Add item to the file view
+		HTREEITEM tempItem = App->CL_FileView->Add_Item(App->CL_FileView->FV_Locations_Folder, m_Location->Location_Name, count, true);
+		m_Location->FileViewItem = tempItem;
+
+		count++;
+	}
+
+	App->CL_Locations->Location_Count = count;
 
 	return 1;
 }

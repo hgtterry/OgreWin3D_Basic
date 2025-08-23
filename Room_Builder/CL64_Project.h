@@ -97,6 +97,8 @@ private:
 
 	static LRESULT CALLBACK Save_Project_Dialog_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
+	bool Load_Project_Locations();
+
 	bool Save_Project();
 	bool Save_Project_Ini();
 	bool Save_Level_Folder();
