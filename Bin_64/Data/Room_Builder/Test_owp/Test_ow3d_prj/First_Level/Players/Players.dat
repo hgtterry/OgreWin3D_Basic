@@ -15,8 +15,8 @@ Height=17.000000
 Ground_Speed=70.000000
 Cam_Height=16.000000
 Turn_Rate=0.000005
-Limit_Look_Up=-45.000000
-Limit_Look_Down=45.000000
+Limit_Look_Up=-7.000000
+Limit_Look_Down=30.000000
 Player_Height=16.000000
  
 [Locations]

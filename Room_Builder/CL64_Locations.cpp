@@ -126,24 +126,29 @@ void CL64_Locations::Set_Location_Defaults(int index)
 // *************************************************************************
 void CL64_Locations::Rename_Object(int Index)
 {
+	// Retrieve the location object based on the provided index
 	Base_Location* m_Location = B_Location[Index];
 
+	// Set the dialog text for renaming the object
 	strcpy(App->CL_Dialogs->btext, "Change Object Name");
 	strcpy(App->CL_Dialogs->Chr_Text, m_Location->Location_Name);
 
+	// Display the dialog and check names
 	App->CL_Dialogs->Dialog_Text(Enums::Check_Names_Locations);
 
-	if (App->CL_Dialogs->flag_Dlg_Canceled == 1)
+	// Check if the dialog was canceled
+	if (App->CL_Dialogs->flag_Dlg_Canceled == true)
 	{
 		return;
 	}
 
+	// Update the location name and mark it as altered
 	strcpy(m_Location->Location_Name, App->CL_Dialogs->Chr_Text);
 	m_Location->flag_Altered = 1;
 
-	App->CL_Level->flag_Level_is_Modified = 1;
+	// Mark the level and file view as modified
+	App->CL_Level->flag_Level_is_Modified = true;
 	App->CL_FileView->Mark_Altered(m_Location->FileViewItem);
-
 	App->CL_FileView->Change_Item_Name(m_Location->FileViewItem, m_Location->Location_Name);
 }
 

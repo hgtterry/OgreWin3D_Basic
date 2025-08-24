@@ -1,0 +1,27 @@
+[Version_Data]
+Version=V1.0
+ 
+ 
+[Location_0]
+Location_Name=Start_Location
+Location UniqueID=0
+Camera_Pitch=0.000000
+Location_Pos=-4.000000,-76.500000,188.000000
+Location_Rotation=0.000000,0.000000,0.000000,1.000000
+ 
+[Location_1]
+Location_Name=By Sound Entity
+Location UniqueID=1
+Camera_Pitch=0.000000
+Location_Pos=84.325340,-99.100006,98.266693
+Location_Rotation=0.000000,-0.695202,0.000000,0.718814
+ 
+[Location_2]
+Location_Name=Entrance
+Location UniqueID=2
+Camera_Pitch=0.000000
+Location_Pos=-260.009003,-99.100021,-99.019264
+Location_Rotation=0.000000,-0.051369,0.000000,0.998680
+ 
+[Locations]
+Locations_Count=3
