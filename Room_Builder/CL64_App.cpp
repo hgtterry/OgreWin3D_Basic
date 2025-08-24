@@ -30,9 +30,9 @@ THE SOFTWARE.
 CL64_App::CL64_App(void)
 {
 	CL_Editor_Map =				nullptr;
-	CL_X_Maths =					nullptr;
+	CL_X_Maths =				nullptr; // Library
 
-	CL_X_Box =					nullptr;
+	CL_X_Box =					nullptr; // Library
 	CL_Render =					nullptr;
 	CL_Level =					nullptr;
 
@@ -49,15 +49,12 @@ CL64_App::CL64_App(void)
 
 	CL_X_Face =					nullptr; // Library
 
-
-	// Libraries
-	CL_X_BrushTemplate =		nullptr;
+	CL_X_BrushTemplate =		nullptr; // Library
 	
 	CL_X_SelBrushList =			nullptr; // Library
 	CL_X_Array =				nullptr; // Library
 
 	CL_X_SelFaceList =			nullptr; // Library
-//	CL_SelFaceList =			nullptr;
 
 	CL_Mesh_Mgr =				nullptr;
 	// ------------------------------
@@ -167,9 +164,9 @@ CL64_App::CL64_App(void)
 	ViewGLhWnd = NULL;
 	ListPanel = NULL;
 
-	flag_Debug_App = 1;
-	flag_OgreStarted = 0;
-	flag_Block_Mouse_Buttons = 0;
+	flag_Debug_App = false;
+	flag_OgreStarted = false;
+	flag_Block_Mouse_Buttons = false;
 
 	Development = 1; // Allow New Code to Run for Testing
 
@@ -188,8 +185,8 @@ CL64_App::~CL64_App(void)
 void CL64_App::InitApp(void)
 {
 	CL_Editor_Map =				new CL64_Editor_Map();
-	CL_X_Maths =					new CL64_Lib_Maths();
-	CL_X_Box =					new CX_Box();
+	CL_X_Maths =				new CL64_Lib_Maths(); // Library
+	CL_X_Box =					new CX_Box(); // Library
 
 	CL_Render =					new CL64_Render_Map();
 	CL_Level =					new CL64_Level();
@@ -202,20 +199,14 @@ void CL64_App::InitApp(void)
 
 	CL_X_Brush =				new CX_Brush(); // Library
 
-	CL_X_FaceList =				new CX_FaceList();
-	//CL_FaceList =				new CL64_FaceList();
-
-	CL_X_Face =					new CX_Face();
-
-	// Libraries
-	CL_X_BrushTemplate =		new BrushTemplate();
+	CL_X_FaceList =				new CX_FaceList(); // Library
+	CL_X_Face =					new CX_Face(); // Library
+	CL_X_BrushTemplate =		new BrushTemplate(); // Library
 
 	CL_X_SelBrushList =			new CX_SelBrushList(); // Library
 	CL_X_Array =				new CX_Array(); // Library
 	CL_X_SelFaceList =			new CX_SelFaceList(); // Library
 	
-//	CL_SelFaceList =			new CL64_SelFaceList();
-
 	CL_Mesh_Mgr =				new CL64_Mesh_Mgr();
 
 	// ------------------------------

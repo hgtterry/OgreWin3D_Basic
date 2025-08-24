@@ -141,13 +141,11 @@ public:
 
 	CX_Face*					CL_X_Face;		 // Face Library
 	
-	// Libraries
 	BrushTemplate*				CL_X_BrushTemplate; // BrushTemplate Library
 	CX_SelBrushList*			CL_X_SelBrushList;	// SelBrushList Library
 	CX_Array*					CL_X_Array;			// Array Library
 
 	CX_SelFaceList*				CL_X_SelFaceList;	// SelFaceList Library
-//	CL64_SelFaceList*			CL_SelFaceList;
 
 	CL64_Mesh_Mgr*				CL_Mesh_Mgr;
 	CL64_Brush_X*				CL_Brush_X;
