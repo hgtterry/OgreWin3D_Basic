@@ -38,7 +38,7 @@ public:
 
 	void Update_Game_Logic(float DeltaTime);
 
-	bool Capture_Mouse_FirstPerson(float DeltaTime);
+	void Capture_Mouse_FirstPerson(float DeltaTime);
 
 	void Camera_Mode_Model(float DeltaTime);
 	void Capture_LeftMouse_Model(void);

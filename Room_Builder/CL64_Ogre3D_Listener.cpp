@@ -242,9 +242,9 @@ void CL64_Ogre3D_Listener::Update_Game_Logic(float DeltaTime)
 }
 
 // *************************************************************************
-// *	Capture_Mouse_FirstPerson_World:- Terry and Hazel Flanigan 2024	   *
+// *	Capture_Mouse_FirstPerson_World:- Terry and Hazel Flanigan 2025	   *
 // *************************************************************************
-bool CL64_Ogre3D_Listener::Capture_Mouse_FirstPerson(float DeltaTime)
+void CL64_Ogre3D_Listener::Capture_Mouse_FirstPerson(float DeltaTime)
 {
 	/*if (flag_Block_Mouse == 1)
 	{
@@ -256,7 +256,9 @@ bool CL64_Ogre3D_Listener::Capture_Mouse_FirstPerson(float DeltaTime)
 	Pl_MouseX = (int(Mouse_point.x));
 	Pl_MouseY = (int(Mouse_point.y));
 
-	// Left Right
+	auto& m_Player = App->CL_Scene->B_Player[0];
+
+	// Check Left Right
 	if (Pl_MouseX < Pl_Cent500X)
 	{
 		long test = Pl_Cent500X - Pl_MouseX; // Rotate Left
@@ -265,10 +267,9 @@ bool CL64_Ogre3D_Listener::Capture_Mouse_FirstPerson(float DeltaTime)
 			Pl_DeltaMouse = float(Pl_Cent500X - Pl_MouseX);
 
 			float Delta2 = DeltaTime * 150;
-			float mTurn = (App->CL_Scene->B_Player[0]->TurnRate * Pl_DeltaMouse) * Delta2;
+			float mTurn = (m_Player->TurnRate * Pl_DeltaMouse) * Delta2;
 
-			App->CL_Scene->B_Player[0]->Rotate_FromCam(Ogre::Vector3(0, -1, 0), mTurn, false);
-
+			m_Player->Rotate_FromCam(Ogre::Vector3(0, -1, 0), mTurn, false);
 		}
 	}
 	else if (Pl_MouseX > Pl_Cent500X)
@@ -280,33 +281,34 @@ bool CL64_Ogre3D_Listener::Capture_Mouse_FirstPerson(float DeltaTime)
 			Pl_DeltaMouse = float(Pl_MouseX - Pl_Cent500X);
 
 			float Delta2 = DeltaTime * 150;
-			float mTurn = (App->CL_Scene->B_Player[0]->TurnRate * Pl_DeltaMouse) * Delta2;
+			float mTurn = (m_Player->TurnRate * Pl_DeltaMouse) * Delta2;
 
-			App->CL_Scene->B_Player[0]->Rotate_FromCam(Ogre::Vector3(0, 1, 0), mTurn, false);
+			m_Player->Rotate_FromCam(Ogre::Vector3(0, 1, 0), mTurn, false);
 		}
 	}
 
-	//Up Down
+	// Check Up Down
 	if (Pl_MouseY < Pl_Cent500Y)
 	{
 		long test = Pl_Cent500Y - Pl_MouseY; // Look Up
 
 		if (test > 1)
 		{
-			float Limit = App->CL_Scene->B_Player[0]->CameraPitch_Node->getOrientation().getPitch().valueDegrees();
+			float Limit = m_Player->CameraPitch_Node->getOrientation().getPitch().valueDegrees();
 
-			//if (Limit > App->CL_Scene->B_Player[0]->Limit_Look_Up)
+			if (Limit < m_Player->Limit_Look_Up)
 			{
-
+				m_Player->CameraPitch_Node->setOrientation(Ogre::Quaternion::IDENTITY);
+				Ogre::Radian pi = Degree(m_Player->Limit_Look_Up);
+				m_Player->CameraPitch_Node->pitch(pi);
 			}
-			//else
+			else
 			{
 				Pl_DeltaMouse = float(Pl_Cent500Y - Pl_MouseY);
 				Ogre::Radian pp = Degree(-Pl_DeltaMouse * DeltaTime) * 1;
-				App->CL_Scene->B_Player[0]->CameraPitch_Node->pitch(pp);
+				m_Player->CameraPitch_Node->pitch(pp);
 			}
 		}
-
 	}
 	else if (Pl_MouseY > Pl_Cent500Y)
 	{
@@ -314,21 +316,24 @@ bool CL64_Ogre3D_Listener::Capture_Mouse_FirstPerson(float DeltaTime)
 
 		if (test > 1)
 		{
-			//if (App->CL_Scene->B_Player[0]->CameraPitch_Node->getOrientation().getPitch().valueDegrees() < -App->CL_Scene->B_Player[0]->Limit_Look_Down)
-			{
+			float Limit = m_Player->CameraPitch_Node->getOrientation().getPitch().valueDegrees();
 
+			if (Limit > m_Player->Limit_Look_Down)
+			{
+				m_Player->CameraPitch_Node->setOrientation(Ogre::Quaternion::IDENTITY);
+				Ogre::Radian pi = Degree(m_Player->Limit_Look_Down);
+				m_Player->CameraPitch_Node->pitch(pi);
 			}
-			//else
+			else
 			{
 				Pl_DeltaMouse = float(Pl_MouseY - Pl_Cent500Y);
 				Ogre::Radian pp = Degree(Pl_DeltaMouse * DeltaTime) * 1;
-				App->CL_Scene->B_Player[0]->CameraPitch_Node->pitch(pp);
+				m_Player->CameraPitch_Node->pitch(pp);
 			}
 		}
 	}
-
-	return 1;
 }
+
 // *************************************************************************
 // *		Camera_Mode_Model:- Terry and Hazel Flanigan 2025  			   *
 // *************************************************************************

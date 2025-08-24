@@ -745,6 +745,9 @@ void CL64_ImGui::Debug_Lists_ImGui(void)
 				App->CL_X_Maths->Ogre_QuaternionToEuler(q, x, y, z);
 
 				ImGui::Text("Rotation Y %.02f", y * 180.0 / M_PI);
+
+				float campitch = App->CL_Scene->B_Player[0]->CameraPitch_Node->getOrientation().getPitch().valueDegrees();
+				ImGui::Text("Camera Pitch %.02f", campitch);
 			}
 
 			if (CB_Index == 3) // Locations
