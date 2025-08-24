@@ -562,6 +562,7 @@ bool CL64_Project::Save_Project_Ini()
 	fprintf(WriteFile, "%s%i\n", "Objects_ID_Count=", App->CL_Scene->UniqueID_Object_Counter);
 
 	fprintf(WriteFile, "%s%i\n", "Locations_Count=", App->CL_Locations->Location_Count);
+	fprintf(WriteFile, "%s%i\n", "Locations_ID_Count=", App->CL_Locations->UniqueID_Location_Counter);
 
 	/*int Adjusted_Counters_Count = App->CL_LookUps->Get_Adjusted_Counters_Count();
 
@@ -1613,6 +1614,7 @@ bool CL64_Project::Save_Locations_Data()
 			fprintf(WriteFile, "%s\n", buff);
 
 			fprintf(WriteFile, "%s%s\n", "Location_Name=", m_Location->Location_Name);
+			fprintf(WriteFile, "%s%i\n", "Location UniqueID=", m_Location->Location_UniqueID);
 
 			fprintf(WriteFile, "%s%f,%f,%f\n", "Location_Pos=", m_Location->Physics_Pos.x, m_Location->Physics_Pos.y, m_Location->Physics_Pos.z);
 			
@@ -1786,6 +1788,9 @@ bool CL64_Project::Load_Project()
 	Options->Has_Locations = Ini_File->GetInt("Options", "Locations_Count", 0, 10);
 
 	App->CL_Scene->UniqueID_Object_Counter = Ini_File->GetInt("Options", "Objects_ID_Count", 0, 10);
+	App->CL_Locations->UniqueID_Location_Counter = Ini_File->GetInt("Options", "Locations_ID_Count", 0, 10);
+	
+	
 	/*App->CL_Scene->UniqueID_Counters_Count = App->CL_Ini_File->GetInt("Options", "Counters_ID_Count", 0, 10);
 	App->CL_Scene->UniqueID_Area_Count = App->CL_Ini_File->GetInt("Options", "Areas_ID_Count", 0, 10);
 
@@ -1842,10 +1847,11 @@ bool CL64_Project::Load_Project()
 		//App->CL_Com_Counters->Add_Counters_From_File();
 	}
 
-	// ------------------------------------- Counters
+	// ------------------------------------- Locations
 	if (Options->Has_Locations > 0)
 	{
 		Load_Project_Locations();
+		App->CL_FileView->Set_FolderActive(App->CL_FileView->FV_Locations_Folder);
 	}
 	else
 	{
@@ -1865,7 +1871,8 @@ bool CL64_Project::Load_Project()
 	App->CL_FileView->SelectItem(Temp);
 
 	return 1;
-	App->CL_FileView->Redraw_FileView();
+
+	//App->CL_FileView->Redraw_FileView();
 
 	//int Test = App->CL_Com_Environments->Get_First_Environ();
 	//if (Test == -1)
@@ -2008,26 +2015,19 @@ bool CL64_Project::Load_Project_Locations()
 {
 	char Object_Ini_Path[MAX_PATH];
 	char chr_Tag1[MAX_PATH];
+	char mSection[MAX_PATH];
 	int Locations_Count = 0;
 
-	float w = 0;
-	float x = 0;
-	float y = 0;
-	float z = 0;
-
+	// Initialize position and rotation variables
+	float w = 0, x = 0, y = 0, z = 0;
+	
 	strcpy(Object_Ini_Path, m_Project_Sub_Folder);
 	strcat(Object_Ini_Path, "\\");
 
 	strcat(Object_Ini_Path, m_Level_Name);
-	strcat(Object_Ini_Path, "\\");
-
-	strcat(Object_Ini_Path, "Locations");
-	strcat(Object_Ini_Path, "\\");
-
+	strcat(Object_Ini_Path, "\\Locations\\Locations.dat");
+	
 	//---------------------------------------------------
-
-	strcat(Object_Ini_Path, "Locations.dat");
-
 	auto& Ini_File = App->CL_X_Ini_File; // App->CL_X_Ini_File-> (Pointer)
 
 	Ini_File->SetPathName(Object_Ini_Path);
@@ -2038,45 +2038,45 @@ bool CL64_Project::Load_Project_Locations()
 
 	while (count < Locations_Count)
 	{
+		// Create location and set defaults
 		App->CL_Locations->B_Location[count] = new Base_Location();
+		App->CL_Locations->Set_Location_Defaults(count);
+
 		auto& m_Location = App->CL_Locations->B_Location[count];
 
-		App->CL_Locations->Set_Location_Defaults(count);
-		
-		char mNumChr[MAX_PATH] = { 0 };
-		char mSection[MAX_PATH] = { 0 };
+		snprintf(mSection, sizeof(mSection), "Location_%d", count);
 
-		strcpy(mSection, "Location_");
-		_itoa(count, mNumChr, 10);
-		strcat(mSection, mNumChr);
-
+		// Load location name
 		Ini_File->GetString(mSection, "Location_Name", chr_Tag1, MAX_PATH);
 		strcpy(m_Location->Location_Name, chr_Tag1);
 
-		// ------------- Pos
+		// Load location UniqueID
+		m_Location->Location_UniqueID = Ini_File->GetInt(mSection, "Location UniqueID", 0, 10);
+		
+		// Load position
 		Ini_File->GetString(mSection, "Location_Pos", chr_Tag1, MAX_PATH);
 		(void)sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
 		m_Location->Physics_Pos = Ogre::Vector3(x, y, z);
 
-		// ------------- Mesh_Quat
+		// Load rotation
 		Ini_File->GetString(mSection, "Location_Rotation", chr_Tag1, MAX_PATH);
 		(void)sscanf(chr_Tag1, "%f,%f,%f,%f", &w, &x, &y, &z);
-
 		m_Location->Physics_Quat.setW(w);
 		m_Location->Physics_Quat.setX(x);
 		m_Location->Physics_Quat.setY(y);
 		m_Location->Physics_Quat.setZ(z);
 
 		// Add item to the file view
-		HTREEITEM tempItem = App->CL_FileView->Add_Item(App->CL_FileView->FV_Locations_Folder, m_Location->Location_Name, count, true);
+		HTREEITEM tempItem = App->CL_FileView->Add_Item(App->CL_FileView->FV_Locations_Folder, m_Location->Location_Name, count, false);
 		m_Location->FileViewItem = tempItem;
 
 		count++;
 	}
 
+	// Update the total count of locations
 	App->CL_Locations->Location_Count = count;
 
-	return 1;
+	return true;
 }
 
 // *************************************************************************

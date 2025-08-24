@@ -34,7 +34,7 @@ CL64_ImGui::CL64_ImGui()
 	font3 = NULL;
 	fontDroid = NULL;
 
-	CB_Index = 0;
+	CB_Index = 3;
 
 	flag_Imgui_Initialized = false;
 
@@ -227,7 +227,7 @@ void CL64_ImGui::ImGui_Render_Loop(void)
 
 	if (flag_Show_Listbox == true)
 	{
-		Listbox_ImGui();
+		Debug_Lists_ImGui();
 	}
 
 	App->CL_ImGui_Editor->ImGui_Render_Editor_Loop();
@@ -698,9 +698,9 @@ void CL64_ImGui::Player_Data_GUI(void)
 }
 
 // *************************************************************************
-// *				Listbox_ImGui:- Terry and Hazel Flanigan 2025		   *
+// *			Debug_Lists_ImGui:- Terry and Hazel Flanigan 2025		   *
 // *************************************************************************
-void CL64_ImGui::Listbox_ImGui(void)
+void CL64_ImGui::Debug_Lists_ImGui(void)
 {
 	ImGui::SetNextWindowSize(ImVec2(910, 360));
 	//ImGui::PushStyleColor(ImGuiCol_WindowBg, IM_COL32(239, 239, 239, 255));
@@ -712,7 +712,7 @@ void CL64_ImGui::Listbox_ImGui(void)
 	}
 	else
 	{
-		static int item_current_idx = 0; // Here we store our selection data as an index.
+		static int item_current_idx = CB_Index; // Here we store our selection data as an index.
 
 		if (ImGui::BeginListBox("##listbox2", ImVec2(-FLT_MIN, 10 * ImGui::GetTextLineHeightWithSpacing())))
 		{
@@ -746,13 +746,34 @@ void CL64_ImGui::Listbox_ImGui(void)
 
 				ImGui::Text("Rotation Y %.02f", y * 180.0 / M_PI);
 			}
+
+			if (CB_Index == 3) // Locations
+			{
+				ImGui::Text("Location Count  %i", App->CL_Locations->Location_Count);
+				ImGui::Text(" ");
+
+				int count = 0;
+				while (count < App->CL_Locations->Location_Count)
+				{
+					auto& m_Location = App->CL_Locations->B_Location[count];
+
+					ImGui::Text("Location Name  %s", m_Location->Location_Name);
+					ImGui::Text("Location_UniqueID  %i", m_Location->Location_UniqueID);
+
+					ImGui::Text("Location Position XYZ  %f %f %f", m_Location->Physics_Pos.x, m_Location->Physics_Pos.y, m_Location->Physics_Pos.z);
+					ImGui::Text("Location Rotation WXYZ  %f %f %f %f", m_Location->Physics_Quat.getW(), m_Location->Physics_Quat.getX(), m_Location->Physics_Quat.getY(), m_Location->Physics_Quat.getZ());
+
+					ImGui::Text("-----------------");
+					count++;
+				}
+			}
 		
 			ImGui::EndListBox();
 		}
 
 		static ImGuiComboFlags flags = 0;
 
-		const char* items[] = { "Views Data", "Ogre Data", "Player", "DDDD", "EEEE", "FFFF", "GGGG", "HHHH", "IIII", "JJJJ", "KKKK", "LLLLLLL", "MMMM", "OOOOOOO" };
+		const char* items[] = { "Views Data", "Ogre Data", "Player", "Locations", "EEEE", "FFFF", "GGGG", "HHHH", "IIII", "JJJJ", "KKKK", "LLLLLLL", "MMMM", "OOOOOOO" };
 		const char* combo_preview_value = items[item_current_idx];  // Pass in the preview value visible before opening the combo (it could be anything)
 
 		if (ImGui::BeginCombo("Debug Category", combo_preview_value, flags))

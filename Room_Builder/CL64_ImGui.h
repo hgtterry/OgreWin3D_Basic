@@ -66,7 +66,7 @@ private:
 
 	void App_Stats_GUI(void);
 	void Player_Data_GUI(void);
-	void Listbox_ImGui(void);
+	void Debug_Lists_ImGui(void);
 
 	std::vector<std::pair<bool, std::function<void()>>> guiFunctions;
 

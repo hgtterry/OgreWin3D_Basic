@@ -29,6 +29,8 @@ Base_Location::Base_Location(void)
 {
 	FileViewItem = nullptr;
 
+	Location_UniqueID = 0;
+
 	flag_Altered = false;
 	flag_Deleted = false;
 

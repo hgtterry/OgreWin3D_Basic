@@ -31,6 +31,8 @@ public:
 
 	char Location_Name[MAX_PATH];	// Name of Object/Entity Set By User
 	
+	int Location_UniqueID;  // Unique Number
+
 	bool flag_Altered;
 	bool flag_Deleted;
 	//------------------------------ Physics

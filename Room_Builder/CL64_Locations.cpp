@@ -58,7 +58,7 @@ void CL64_Locations::Reset_Class()
 }
 
 // *************************************************************************
-// *		Add_New_Environ_Entiry:- Terry and Hazel Flanigan 2025		   *
+// *			Add_New_Location:- Terry and Hazel Flanigan 2025		   *
 // *************************************************************************
 void CL64_Locations::Add_New_Location(bool isFirstLocation)
 {
@@ -78,6 +78,7 @@ void CL64_Locations::Add_New_Location(bool isFirstLocation)
 			strcpy(B_Location[index]->Location_Name, "Start_Location");
 			B_Location[index]->Physics_Pos = App->CL_Scene->B_Player[0]->StartPos;
 			B_Location[index]->Physics_Quat = App->CL_Scene->B_Player[0]->Physics_Quat;
+			B_Location[index]->Location_UniqueID = UniqueID_Location_Counter;
 		}
 		else
 		{
@@ -87,6 +88,7 @@ void CL64_Locations::Add_New_Location(bool isFirstLocation)
 
 			B_Location[index]->Physics_Pos = Ogre::Vector3(x,y,z);
 			B_Location[index]->Physics_Quat = App->CL_Scene->B_Player[0]->Phys_Body->getWorldTransform().getRotation();
+			B_Location[index]->Location_UniqueID = UniqueID_Location_Counter;
 		}
 
 		// Add item to the file view
