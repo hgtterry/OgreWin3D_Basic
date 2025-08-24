@@ -1616,6 +1616,8 @@ bool CL64_Project::Save_Locations_Data()
 			fprintf(WriteFile, "%s%s\n", "Location_Name=", m_Location->Location_Name);
 			fprintf(WriteFile, "%s%i\n", "Location UniqueID=", m_Location->Location_UniqueID);
 
+			fprintf(WriteFile, "%s%f\n", "Camera_Pitch=", m_Location->Camera_Pitch);
+
 			fprintf(WriteFile, "%s%f,%f,%f\n", "Location_Pos=", m_Location->Physics_Pos.x, m_Location->Physics_Pos.y, m_Location->Physics_Pos.z);
 			
 			W = m_Location->Physics_Quat.getW();
@@ -2053,6 +2055,11 @@ bool CL64_Project::Load_Project_Locations()
 		// Load location UniqueID
 		m_Location->Location_UniqueID = Ini_File->GetInt(mSection, "Location UniqueID", 0, 10);
 		
+		// Load Camera Pitch
+		Ini_File->GetString(mSection, "Camera_Pitch", chr_Tag1, MAX_PATH);
+		(void)sscanf(chr_Tag1, "%f", &x);
+		m_Location->Camera_Pitch = x;
+
 		// Load position
 		Ini_File->GetString(mSection, "Location_Pos", chr_Tag1, MAX_PATH);
 		(void)sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);

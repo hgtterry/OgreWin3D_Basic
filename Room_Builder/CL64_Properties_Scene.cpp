@@ -642,7 +642,7 @@ bool CL64_Properties_Scene::Edit_Player(LPARAM lParam)
 	test = poo->iItem;
 	ListView_GetItemText(Properties_hLV, test, 0, btext, 20);
 
-	auto& m_Player = App->CL_Scene->B_Player[0];
+	auto& m_Player = App->CL_Scene->B_Player[0]; // Pointer to Current Player
 
 	result = strcmp(btext, "Name");
 	if (result == 0)
@@ -1084,8 +1084,6 @@ void CL64_Properties_Scene::Edit_Locations(LPARAM lParam)
 	int result = 1;
 	int List_Index;
 
-	Base_Object* Object = App->CL_Scene->B_Object[index];
-
 	LPNMLISTVIEW List = (LPNMLISTVIEW)lParam;
 	List_Index = List->iItem;
 	ListView_GetItemText(Properties_hLV, List_Index, 0, btext, 20);
@@ -1093,8 +1091,8 @@ void CL64_Properties_Scene::Edit_Locations(LPARAM lParam)
 	result = strcmp(btext, "Name");
 	if (result == 0)
 	{
-		//App->CL_Entities->Rename_Object(Index);
-		//Update_ListView_Objects();
+		App->CL_Locations->Rename_Object(index);
+		Update_ListView_Locations();
 	}
 
 	result = strcmp(btext, "Goto");

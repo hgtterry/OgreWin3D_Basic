@@ -32,13 +32,14 @@ public:
 	char Location_Name[MAX_PATH];	// Name of Object/Entity Set By User
 	
 	int Location_UniqueID;  // Unique Number
+	float Camera_Pitch; // Camera_Pitch Up/Down
 
 	bool flag_Altered;
 	bool flag_Deleted;
 	//------------------------------ Physics
-	Ogre::Vector3			Physics_Pos;
-	Ogre::Vector3			Physics_Rot;
-	btQuaternion			Physics_Quat;
+	Ogre::Vector3			Physics_Pos; // Player Position
+	Ogre::Vector3			Physics_Rot; // Player Rotation Angles
+	btQuaternion			Physics_Quat; // Player Rotation Quaternion
 
 	HTREEITEM FileViewItem;
 };

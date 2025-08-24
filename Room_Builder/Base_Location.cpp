@@ -34,6 +34,8 @@ Base_Location::Base_Location(void)
 	flag_Altered = false;
 	flag_Deleted = false;
 
+	Camera_Pitch = 0;
+
 	// Physics Pos
 	Physics_Pos.x = 0;
 	Physics_Pos.y = 0;

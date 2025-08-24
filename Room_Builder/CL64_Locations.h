@@ -36,6 +36,8 @@ public:
 
 	void Add_New_Location(bool isFirstLocation);
 	void Set_Location_Defaults(int index);
+	void Rename_Object(int Index);
+	bool Check_Location_Names(const char* name);
 
 	int Location_Count;
 	int UniqueID_Location_Counter;

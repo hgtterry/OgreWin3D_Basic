@@ -112,11 +112,58 @@ void CL64_Locations::Add_New_Location(bool isFirstLocation)
 // *************************************************************************
 void CL64_Locations::Set_Location_Defaults(int index)
 {
-	Base_Location* bObject = B_Location[index];
+	Base_Location* m_Location = B_Location[index];
 
 	// Generate a unique Location name
 	std::string objectName = "Loc_" + std::to_string(index);
-	strcpy(bObject->Location_Name, objectName.c_str());
+	strcpy(m_Location->Location_Name, objectName.c_str());
 
-	bObject->flag_Altered = true;
+	m_Location->flag_Altered = true;
+}
+
+// *************************************************************************
+// *			Rename_Object:- Terry and Hazel Flanigan 2025			   *
+// *************************************************************************
+void CL64_Locations::Rename_Object(int Index)
+{
+	Base_Location* m_Location = B_Location[Index];
+
+	strcpy(App->CL_Dialogs->btext, "Change Object Name");
+	strcpy(App->CL_Dialogs->Chr_Text, m_Location->Location_Name);
+
+	App->CL_Dialogs->Dialog_Text(Enums::Check_Names_Locations);
+
+	if (App->CL_Dialogs->flag_Dlg_Canceled == 1)
+	{
+		return;
+	}
+
+	strcpy(m_Location->Location_Name, App->CL_Dialogs->Chr_Text);
+	m_Location->flag_Altered = 1;
+
+	App->CL_Level->flag_Level_is_Modified = 1;
+	App->CL_FileView->Mark_Altered(m_Location->FileViewItem);
+
+	App->CL_FileView->Change_Item_Name(m_Location->FileViewItem, m_Location->Location_Name);
+}
+
+// *************************************************************************
+// *		 Check_Location_Names:- Terry and Hazel Flanigan 2025		   *
+// *************************************************************************
+bool CL64_Locations::Check_Location_Names(const char* name)
+{
+	for (int count = 0; count < Location_Count; ++count)
+	{
+		// Check if the object is not deleted
+		if (B_Location[count]->flag_Deleted == false)
+		{
+			// Compare the object name with the provided name
+			if (strcmp(B_Location[count]->Location_Name, name) == 0)
+			{
+				return true; // Name found
+			}
+		}
+	}
+
+	return false; // Name not found
 }

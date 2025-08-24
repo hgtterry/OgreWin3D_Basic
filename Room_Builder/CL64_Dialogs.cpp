@@ -406,6 +406,16 @@ LRESULT CALLBACK CL64_Dialogs::Proc_Dialog_Text(HWND hDlg, UINT message, WPARAM 
 				}
 			}
 
+			if (App->CL_Dialogs->Check_What == Enums::Check_Names_Locations)
+			{
+				bool test = App->CL_Locations->Check_Location_Names(buff);
+				if (test == 1)
+				{
+					App->Say("Location Name Exist");
+					return TRUE;
+				}
+			}
+
 			App->CL_Properties_Tabs->Enable_Tabs_Dlg(true);
 			App->CL_Dialogs->flag_Dlg_Canceled = 0;
 			EndDialog(hDlg, LOWORD(wParam));
