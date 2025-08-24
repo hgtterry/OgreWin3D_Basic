@@ -210,6 +210,7 @@
     <ClInclude Include="CL64_Resources.h" />
     <ClInclude Include="CL64_Scene.h" />
     <ClInclude Include="CL64_SoundMgr.h" />
+    <ClInclude Include="CL64_Teleporters.h" />
     <ClInclude Include="CL64_Textures.h" />
     <ClInclude Include="CL64_Top_Tabs.h" />
     <ClInclude Include="CL64_TXL_Editor.h" />
@@ -280,6 +281,7 @@
     <ClCompile Include="CL64_Resources.cpp" />
     <ClCompile Include="CL64_Scene.cpp" />
     <ClCompile Include="CL64_SoundMgr.cpp" />
+    <ClCompile Include="CL64_Teleporters.cpp" />
     <ClCompile Include="CL64_Textures.cpp" />
     <ClCompile Include="CL64_Top_Tabs.cpp" />
     <ClCompile Include="CL64_TXL_Editor.cpp" />
@@ -323,9 +325,6 @@
     <Image Include="res\TR_On.bmp" />
     <Image Include="Room Builder.ico" />
     <Image Include="small.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

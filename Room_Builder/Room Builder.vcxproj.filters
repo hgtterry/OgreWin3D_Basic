@@ -219,6 +219,9 @@
     <ClInclude Include="CL64_Locations.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="CL64_Teleporters.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Room Builder.cpp">
@@ -419,6 +422,9 @@
     <ClCompile Include="CL64_Locations.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="CL64_Teleporters.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Room Builder.rc">
@@ -501,8 +507,5 @@
     <Image Include="res\FileView\Folder_Altered.bmp">
       <Filter>Resource Files</Filter>
     </Image>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>
