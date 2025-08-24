@@ -28,5 +28,10 @@ class CL64_Teleporters
 public:
 	CL64_Teleporters(void);
 	~CL64_Teleporters(void);
+
+	void Set_Teleports_Defaults(int Index);
+	bool Add_New_Teleporter();
+	bool Create_Teleport_Entity(int Index);
+	void Rename_Teleport_Entity(int Index);
 };
 
