@@ -23,6 +23,9 @@ THE SOFTWARE.
 */
 
 #pragma once
+
+#include "Base_Teleporter.h"
+
 class CL64_Teleporters
 {
 public:
@@ -33,5 +36,10 @@ public:
 	bool Add_New_Teleporter();
 	bool Create_Teleport_Entity(int Index);
 	void Rename_Teleport_Entity(int Index);
+
+	int Teleporter_Count;
+	int UniqueID_Teleporter_Counter;
+
+	std::vector<Base_Teleporter*> B_Teleporter; // Vector to hold pointers to Base_Location objects
 };
 

@@ -28,5 +28,22 @@ class Base_Teleporter
 public:
 	Base_Teleporter(void);
 	~Base_Teleporter(void);
+
+
+	// Teleport
+	char Location_Name[MAX_PATH];
+	Ogre::Vector3 Player_Position;
+	btVector3 Physics_Position;
+	btQuaternion Physics_Rotation;
+	int Location_ID;
+	Ogre::Real SndVolume;
+	char Sound_File[MAX_PATH];
+	bool flag_Play;
+	int Trigger_Value;
+	int Counter_ID;
+	char Counter_Name[MAX_PATH];
+	bool flag_Counter_Disabled;
+
+	HTREEITEM FileViewItem;
 };
 

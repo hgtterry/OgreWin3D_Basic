@@ -643,6 +643,20 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 		Handle_Location_Selection(index);
 		return;
 	}
+
+	// ------------------------- Teleporter Entity
+	if (!strcmp(FileView_Folder, "Teleporters")) // Folder
+	{
+		Context_Selection = Enums::FileView_Teleports_Folder;
+		return;
+	}
+	if (!strcmp(FileView_File, "Teleporters"))
+	{
+		Context_Selection = Enums::FileView_Teleports_File;
+
+		//Handle_Teleport_Selection(index);
+		return;
+	}
 }
 
 // *************************************************************************
@@ -748,6 +762,16 @@ void CL64_FileView::Handle_Sound_Selection(int index)
 // *	Handle_Location_Selection:- Terry and Hazel Flanigan 2025		   *
 // *************************************************************************
 void CL64_FileView::Handle_Location_Selection(int index) 
+{
+	App->CL_Properties_Scene->Current_Selected_Object = index;
+	App->CL_Properties_Scene->Edit_Category = Enums::Edit_Locations;
+	App->CL_Properties_Scene->Update_ListView_Locations();
+}
+
+// *************************************************************************
+// *	Handle_Teleport_Selection:- Terry and Hazel Flanigan 2025		   *
+// *************************************************************************
+void CL64_FileView::Handle_Teleport_Selection(int index)
 {
 	App->CL_Properties_Scene->Current_Selected_Object = index;
 	App->CL_Properties_Scene->Edit_Category = Enums::Edit_Locations;
@@ -1234,6 +1258,19 @@ void CL64_FileView::Context_New(HWND hDlg)
 		if (App->CL_Dialogs->flag_Dlg_Canceled == false)
 		{
 			App->CL_Locations->Add_New_Location(false);
+		}
+
+		return;
+	}
+
+	// Teleports
+	if (App->CL_FileView->Context_Selection == Enums::FileView_Teleports_Folder)
+	{
+		App->CL_Dialogs->YesNo((LPSTR)"Add Teleport Entity", (LPSTR)"Do you want to add a new Teleport Entity");
+
+		if (App->CL_Dialogs->flag_Dlg_Canceled == false)
+		{
+			App->CL_Teleporters->Add_New_Teleporter();
 		}
 
 		return;

@@ -79,7 +79,8 @@ private:
 	void Handle_Environment_Selection(int index);
 	void Handle_Sound_Selection(int index);
 	void Handle_Location_Selection(int index);
-	
+	void Handle_Teleport_Selection(int index);
+
 	HTREEITEM Root;
 	HTREEITEM GD_ProjectFolder;
 	HTREEITEM GD_TriggerFolder;

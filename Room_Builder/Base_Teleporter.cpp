@@ -27,6 +27,21 @@ THE SOFTWARE.
 
 Base_Teleporter::Base_Teleporter(void)
 {
+	strcpy(Location_Name, "Start_Location");
+	Player_Position = { 0,0,0 };
+	Physics_Position = { 0,0,0 };
+	Physics_Rotation = { 0,0,0,0};
+	Location_ID = 0;
+	SndVolume = 0.5;
+	strcpy(Sound_File, "None");
+	flag_Play = false;
+	Trigger_Value = 0;
+	Counter_ID = 0;
+
+	strcpy(Counter_Name, "None");
+	flag_Counter_Disabled = true;
+
+	FileViewItem = nullptr;
 }
 
 Base_Teleporter::~Base_Teleporter(void)
