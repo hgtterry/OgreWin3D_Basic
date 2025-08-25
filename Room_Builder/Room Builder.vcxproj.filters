@@ -222,6 +222,9 @@
     <ClInclude Include="CL64_Teleporters.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Base_Teleporter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Room Builder.cpp">
@@ -423,6 +426,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CL64_Teleporters.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Base_Teleporter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
