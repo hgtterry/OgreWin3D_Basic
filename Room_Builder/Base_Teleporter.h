@@ -29,6 +29,38 @@ public:
 	Base_Teleporter(void);
 	~Base_Teleporter(void);
 
+	// object
+	char Object_Name[MAX_PATH];	// Name of Object/Entity Set By User
+	char Mesh_FileName[MAX_PATH]; // Acctual Mesh File name as in .mesh
+	char Material_File[MAX_PATH]; // Acctual Material File name as in .material
+
+	int Type;
+	int Shape;
+	int Usage;
+	/*int UsageEX;
+	int Folder;*/
+	int This_Object_UniqueID;  // Unique Number
+
+	Ogre::SceneNode* Object_Node;
+	Ogre::Entity* Object_Ent;
+	btRigidBody* Phys_Body;
+	btCollisionShape* Phys_Shape;
+
+	//------------------------------ Mesh
+	//Ogre::Vector3			Mesh_Scale;
+	Ogre::Vector3			Mesh_Pos;
+	//Ogre::Vector3			Mesh_Center;
+	//Ogre::Vector3			Mesh_Rot;
+	Ogre::Quaternion		Mesh_Quat;
+	//------------------------------ Physics
+	Ogre::Vector3			Physics_Pos;
+	Ogre::Vector3			Physics_Rot;
+	Ogre::Vector3			Physics_Scale;
+	Ogre::Vector3			Physics_Size; // Box x y z ;- x = Radius y = Height
+	Ogre::Quaternion		Physics_Quat;
+	float					Physics_Mass;
+	float					Physics_Restitution;
+	bool					flag_Physics_Valid;
 
 	// Teleport
 	char Location_Name[MAX_PATH];

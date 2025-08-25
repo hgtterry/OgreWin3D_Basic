@@ -489,7 +489,7 @@ void CL64_Physics::Show_Debug_Objects(bool Show)
 }
 
 // *************************************************************************
-//		Update_Object_Physics:-		Terry and Hazel Flanigan 2025		   *
+//		Update_Object_Physics:- Terry and Hazel Flanigan 2025			   *
 // *************************************************************************
 void CL64_Physics::Update_Object_Physics(int Object_Index)
 {

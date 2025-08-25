@@ -45,11 +45,11 @@ void CL64_Teleporters::Set_Teleports_Defaults(int Index)
 {
 	Ogre::Vector4 V4 = Ogre::Vector4::ZERO;
 
-	auto& m_Teleporter = B_Teleporter[Index];
-	
-	m_Teleporter->Location_ID = 0;
+	Base_Object* B_Object = App->CL_Scene->B_Object[Index];
 
-	strcpy(m_Teleporter->Location_Name, "Start_Location");
+	B_Object->S_Teleport[0]->Location_ID = 0;
+
+	strcpy(B_Object->S_Teleport[0]->Location_Name, "Start_Location");
 
 	/*strcpy(B_Object->S_Teleport[0]->Sound_File, "magicspell.ogg");
 	B_Object->S_Teleport[0]->SndVolume = 0.5;
@@ -59,13 +59,14 @@ void CL64_Teleporters::Set_Teleports_Defaults(int Index)
 	V4.y = App->CL_Scene->B_Player[0]->StartPos.y;
 	V4.z = App->CL_Scene->B_Player[0]->StartPos.z;
 
-	m_Teleporter->Physics_Position = btVector3(V4.x, V4.y, V4.z);
-	//B_Object->S_Teleport[0]->Physics_Rotation = App->CL_Scene->B_Player[0]->Physics_Rotation;
+	B_Object->S_Teleport[0]->Physics_Position = btVector3(V4.x, V4.y, V4.z);
+	B_Object->S_Teleport[0]->Physics_Rotation = App->CL_Scene->B_Player[0]->Physics_Quat;
 
-	m_Teleporter->Trigger_Value = 0;
-	m_Teleporter->Counter_ID = 0;
-	strcpy(m_Teleporter->Counter_Name, "None");
-	m_Teleporter->flag_Counter_Disabled = true;
+	B_Object->S_Teleport[0]->Trigger_Value = 0;
+	B_Object->S_Teleport[0]->Counter_ID = 0;
+	strcpy(B_Object->S_Teleport[0]->Counter_Name, "None");
+	B_Object->S_Teleport[0]->flag_Counter_Disabled = 1;
+
 }
 
 // *************************************************************************
@@ -76,41 +77,43 @@ bool CL64_Teleporters::Add_New_Teleporter()
 	char B_Name[MAX_PATH];
 	char ConNum[MAX_PATH];
 
-	int Index = Teleporter_Count;
+	int Index = App->CL_Scene->Object_Count;
 
-	B_Teleporter[Index] = new Base_Teleporter();
+	App->CL_Scene->B_Object[Index] = new Base_Object();
+
+	App->CL_Scene->B_Object[Index]->S_Teleport[0] = new Teleport_type;
 	Set_Teleports_Defaults(Index);
 
-
 	Debug
-	//App->CL_Scene->B_Object[Index]->S_Environ[0] = new Environ_type;
-	//App->CL_Com_Environments->V_Set_Environ_Defaults(Index);
 
-	//App->CL_Scene->B_Object[Index]->Type = Enums::Bullet_Type_Static;
-	//App->CL_Scene->B_Object[Index]->Shape = Enums::Shape_Box;
-	//App->CL_Scene->B_Object[Index]->This_Object_UniqueID = App->CL_Scene->UniqueID_Object_Counter; // Unique ID
+	App->CL_Scene->B_Object[Index]->S_Environ[0] = new Environ_type;
+	App->CL_Com_Environments->V_Set_Environ_Defaults(Index);
 
-	//strcpy(App->CL_Scene->B_Object[Index]->Mesh_FileName, "TeleportSend.mesh");
+	App->CL_Scene->B_Object[Index]->Type = Enums::Bullet_Type_Static;
+	App->CL_Scene->B_Object[Index]->Shape = Enums::Shape_Box;
+	App->CL_Scene->B_Object[Index]->This_Object_UniqueID = App->CL_Scene->UniqueID_Object_Counter; // Unique ID
 
-	//strcpy_s(B_Name, "Teleport_Ent_");
-	//_itoa(Index, ConNum, 10);
-	//strcat(B_Name, ConNum);
-	//strcpy(App->CL_Scene->B_Object[Index]->Object_Name, B_Name);
+	strcpy(App->CL_Scene->B_Object[Index]->Mesh_FileName, "TeleportSend.mesh");
 
-	//Ogre::Vector3 Pos = App->CL_Com_Objects->GetPlacement(-50);
-	//App->CL_Scene->B_Object[Index]->Mesh_Pos = Pos;
+	strcpy_s(B_Name, "Teleport_Ent_");
+	_itoa(Index, ConNum, 10);
+	strcat(B_Name, ConNum);
+	strcpy(App->CL_Scene->B_Object[Index]->Object_Name, B_Name);
 
-	//Create_Teleport_Entity(Index);
+	Ogre::Vector3 Pos = App->CL_Com_Objects->GetPlacement(-50);
+	App->CL_Scene->B_Object[Index]->Mesh_Pos = Pos;
 
-	//HTREEITEM Temp = App->CL_FileView->Add_Item(App->CL_FileView->FV_Teleporters_Folder, App->CL_Scene->B_Object[Index]->Object_Name, Index, true);
-	//App->CL_Scene->B_Object[Index]->FileViewItem = Temp;
+	Create_Teleport_Entity(Index);
 
-	//App->CL_FileView->SelectItem(App->CL_Scene->B_Object[Index]->FileViewItem);
+	HTREEITEM Temp = App->CL_FileView->Add_Item(App->CL_FileView->FV_Teleporters_Folder, App->CL_Scene->B_Object[Index]->Object_Name, Index, true);
+	App->CL_Scene->B_Object[Index]->FileViewItem = Temp;
 
-	//App->CL_Scene->UniqueID_Object_Counter++;
-	//App->CL_Scene->Object_Count++;
+	App->CL_FileView->SelectItem(App->CL_Scene->B_Object[Index]->FileViewItem);
 
-	//App->CL_FileView->Set_FolderActive(App->CL_FileView->FV_Teleporters_Folder);
+	App->CL_Scene->UniqueID_Object_Counter++;
+	App->CL_Scene->Object_Count++;
+
+	App->CL_FileView->Set_FolderActive(App->CL_FileView->FV_Teleporters_Folder);
 
 	return 1;
 }
@@ -161,17 +164,17 @@ bool CL64_Teleporters::Create_Teleport_Entity(int Index)
 	btVector3 initialPosition(Centre.x, Centre.y, Centre.z);
 	startTransform.setOrigin(initialPosition);
 
-	//Ogre::Vector3 Size = App->CL_Com_Objects->GetMesh_BB_Size(Object->Object_Node);
-	float sx = 0;// Size.x / 2;
-	float sy = 0;// //Size.y / 2;
-	float sz = 0;// Size.z / 2;
+	Ogre::Vector3 Size = App->CL_Com_Objects->GetMeshBoundingBoxSize(Object->Object_Node);
+	float sx = Size.x / 2;
+	float sy = Size.y / 2;
+	float sz = Size.z / 2;
 
 	Object->Physics_Size = Ogre::Vector3(sx, sy, sz);
 
 	btCollisionShape* newRigidShape = new btBoxShape(btVector3(sx, sy, sz));
 	newRigidShape->calculateLocalInertia(mass, localInertia);
 
-	//App->CL_Bullet->collisionShapes.push_back(newRigidShape);
+	App->CL_Physics->collisionShapes.push_back(newRigidShape);
 
 	btDefaultMotionState* myMotionState = new btDefaultMotionState(startTransform);
 
@@ -194,11 +197,11 @@ bool CL64_Teleporters::Create_Teleport_Entity(int Index)
 		| btCollisionObject::CF_NO_CONTACT_RESPONSE);
 
 
-	/*App->CL_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
+	App->CL_Physics->dynamicsWorld->addRigidBody(Object->Phys_Body);
 
 	App->CL_Scene->B_Object[Index]->flag_Physics_Valid = 1;
 
-	App->CL_Physics->Set_Physics_New(Index);*/
+	App->CL_Physics->Update_Object_Physics(Index);
 
 	return 1;
 }

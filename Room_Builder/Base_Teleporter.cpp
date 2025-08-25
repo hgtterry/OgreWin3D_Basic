@@ -27,6 +27,59 @@ THE SOFTWARE.
 
 Base_Teleporter::Base_Teleporter(void)
 {
+	// Object
+	Object_Ent = nullptr;
+	Object_Node = nullptr;
+	Phys_Body = nullptr;
+	Phys_Shape = nullptr;
+
+	strcpy(Mesh_FileName, "None");
+	strcpy(Object_Name, "None");
+	strcpy(Material_File, "Internal");
+
+	Type = 0;
+	Shape = -1;
+	This_Object_UniqueID = 0;
+
+	// Object Pos
+	Mesh_Pos.x = 0;
+	Mesh_Pos.y = 0;
+	Mesh_Pos.z = 0;
+	// Mesh Quat
+	Mesh_Quat.w = 1;
+	Mesh_Quat.x = 0;
+	Mesh_Quat.y = 0;
+	Mesh_Quat.z = 0;
+
+	// Physics Scale ------------------------------------------------------
+	Physics_Scale.x = 1;
+	Physics_Scale.y = 1;
+	Physics_Scale.z = 1;
+
+	// Physics Pos
+	Physics_Pos.x = 0;
+	Physics_Pos.y = 0;
+	Physics_Pos.z = 0;
+
+	// Physics Rotation
+	Physics_Rot.x = 0;
+	Physics_Rot.y = 0;
+	Physics_Rot.z = 0;
+
+	// Physics Size
+	Physics_Size.x = 0;
+	Physics_Size.y = 0;
+	Physics_Size.z = 0;
+
+	// Physics Quat
+	Physics_Quat.w = 1;
+	Physics_Quat.x = 0;
+	Physics_Quat.y = 0;
+	Physics_Quat.z = 0;
+	flag_Physics_Valid = false;
+	Usage = Enums::Usage_None;
+
+	// Teleporter
 	strcpy(Location_Name, "Start_Location");
 	Player_Position = { 0,0,0 };
 	Physics_Position = { 0,0,0 };

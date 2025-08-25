@@ -43,6 +43,13 @@
 
 namespace Enums
 {
+	enum Base
+	{
+		Base_None = 0,
+		Base_Object = 1,
+		Base_Teleporter = 2
+	};
+
 	enum Camera
 	{
 		Cam_Mode_None = 0,
