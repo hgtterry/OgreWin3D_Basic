@@ -2494,7 +2494,6 @@ bool CL64_Project::Read_Collectable(int Index, char* Section)
 // *************************************************************************
 bool CL64_Project::Read_Teleport(int Index, char* Section)
 {
-	Debug
 	int Int_Tag = 0;
 	char chr_Tag1[MAX_PATH] = { 0 };
 	Ogre::Vector4 V4 = Ogre::Vector4::ZERO;

@@ -660,16 +660,16 @@ void CL64_ImGui_Dialogs::Move_Entity_Editor(void)
 // *************************************************************************
 void CL64_ImGui_Dialogs::Start_Dialog_List()
 {
-	//flag_List_Canceled = 1; // set to canceled 
-	//
+	flag_List_Canceled = 1; // set to canceled 
+	
 	//App->CL_Panels->Disable_Panels(true);
 
-	//List_PosX = ((float)App->CL_Ogre->Ogre3D_Listener->View_Width / 2) - (400 / 2);
-	//List_PosY = ((float)App->CL_Ogre->Ogre3D_Listener->View_Height / 2) - (330 / 2);
+	List_PosX = ((float)App->CL_Ogre->mWindow->getViewport(0)->getActualWidth() / 2) - (400 / 2);
+	List_PosY = ((float)App->CL_Ogre->mWindow->getViewport(0)->getActualHeight() / 2) - (330 / 2);
 
-	//flag_List_StartPos = 0;
+	flag_List_StartPos = 0;
 
-	//App->CL_ImGui_Dialogs->flag_Show_Dialog_list = 1;
+	App->CL_ImGui_Dialogs->flag_Show_Dialog_list = 1;
 }
 
 // *************************************************************************
@@ -677,7 +677,7 @@ void CL64_ImGui_Dialogs::Start_Dialog_List()
 // *************************************************************************
 void CL64_ImGui_Dialogs::Dialog_List_Gui(void)
 {
-	/*ImGui::SetNextWindowPos(ImVec2(List_PosX, List_PosY), ImGuiCond_FirstUseEver);
+	ImGui::SetNextWindowPos(ImVec2(List_PosX, List_PosY), ImGuiCond_FirstUseEver);
 	ImGui::SetNextWindowSize(ImVec2(400, 330), ImGuiCond_FirstUseEver);
 
 	ImGui::PushStyleColor(ImGuiCol_WindowBg, IM_COL32(239, 239, 239, 255));
@@ -690,8 +690,8 @@ void CL64_ImGui_Dialogs::Dialog_List_Gui(void)
 	{
 		if (flag_List_StartPos == 0)
 		{
-			List_PosX = ((float)App->CL_Ogre->Ogre3D_Listener->View_Width / 2) - (400 / 2);
-			List_PosY = ((float)App->CL_Ogre->Ogre3D_Listener->View_Height / 2) - (330 / 2);
+			List_PosX = ((float)App->CL_Ogre->mWindow->getViewport(0)->getActualWidth() / 2) - (400 / 2);
+			List_PosY = ((float)App->CL_Ogre->mWindow->getViewport(0)->getActualHeight() / 2) - (330 / 2);
 			ImGui::SetWindowPos(List_Banner, ImVec2(List_PosX, List_PosY));
 
 			flag_List_StartPos = 1;
@@ -753,7 +753,7 @@ void CL64_ImGui_Dialogs::Dialog_List_Gui(void)
 			ImGui::PopStyleColor();
 			ImGui::End();
 		}
-	}*/
+	}
 }
 
 // *************************************************************************

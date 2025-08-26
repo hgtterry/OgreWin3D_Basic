@@ -261,7 +261,7 @@ void CL64_Properties_Scene::ListView_OnClickOptions(LPARAM lParam)
 		return;
 
 	case Enums::Edit_Teleport:
-		// Edit_Teleport_Entity(lParam);
+		 Edit_Teleport_Entity(lParam);
 		return;
 
 	case Enums::Edit_Collectable:
@@ -1250,4 +1250,236 @@ void CL64_Properties_Scene::Edit_Locations(LPARAM lParam)
 			App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_Free;
 		}
 	}
+}
+
+// *************************************************************************
+// *		Edit_Teleport_Entity:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+void CL64_Properties_Scene::Edit_Teleport_Entity(LPARAM lParam)
+{
+	int Index = Current_Selected_Object; // Get Selected Object Index 
+	int result = 1;
+	int test;
+
+	LPNMLISTVIEW poo = (LPNMLISTVIEW)lParam;
+	test = poo->iItem;
+	ListView_GetItemText(Properties_hLV, test, 0, btext, 20);
+
+	result = strcmp(btext, "Name");
+	if (result == 0)
+	{
+		App->CL_Teleporters->Rename_Teleport_Entity(Index);
+		Update_ListView_Teleport();
+	}
+
+	result = strcmp(btext, "Goto");
+	if (result == 0)
+	{
+		strcpy(App->CL_ImGui_Dialogs->List_Banner, "Select Location");
+
+		App->CL_ImGui_Dialogs->List_Strings.resize(App->CL_Locations->Location_Count);
+		App->CL_ImGui_Dialogs->List_Count = App->CL_Locations->Location_Count;
+		App->CL_ImGui_Dialogs->List_Index = App->CL_Scene->B_Object[Index]->S_Teleport[0]->Location_ID;
+
+		int Count = 0;
+		while (Count < App->CL_Locations->Location_Count)
+		{
+			if (App->CL_Locations->B_Location[Count]->flag_Deleted == 0)
+			{
+				App->CL_ImGui_Dialogs->List_Strings[Count] = App->CL_Locations->B_Location[Count]->Location_Name;
+			}
+
+			Count++;
+		}
+
+		App->CL_ImGui_Dialogs->Start_Dialog_List();
+
+		while (App->CL_ImGui_Dialogs->flag_Show_Dialog_list == 1)
+		{
+			App->CL_ImGui_Dialogs->BackGround_Render_Loop();
+
+		}
+
+		App->CL_ImGui_Dialogs->flag_Show_Dialog_list = 0;
+		//App->CL_Panels->Disable_Panels(false);
+
+
+		if (App->CL_ImGui_Dialogs->flag_List_Canceled == 0)
+		{
+			int LocationIndex = App->CL_ImGui_Dialogs->List_Index;
+
+			App->CL_Scene->B_Object[Index]->S_Teleport[0]->Location_ID = LocationIndex;
+
+			strcpy(App->CL_Scene->B_Object[Index]->S_Teleport[0]->Location_Name, App->CL_Locations->B_Location[LocationIndex]->Location_Name);
+
+			//App->CL_Scene->B_Object[Index]->S_Teleport[0]->Player_Position = App->CL_Locations->B_Location[LocationIndex]->Current_Position;
+			App->CL_Scene->B_Object[Index]->S_Teleport[0]->Physics_Position.setX(App->CL_Locations->B_Location[LocationIndex]->Physics_Pos.x);
+			App->CL_Scene->B_Object[Index]->S_Teleport[0]->Physics_Position.setY(App->CL_Locations->B_Location[LocationIndex]->Physics_Pos.y);
+			App->CL_Scene->B_Object[Index]->S_Teleport[0]->Physics_Position.setZ(App->CL_Locations->B_Location[LocationIndex]->Physics_Pos.z);
+			
+			
+			App->CL_Scene->B_Object[Index]->S_Teleport[0]->Physics_Rotation = App->CL_Locations->B_Location[LocationIndex]->Physics_Quat;
+
+			Update_ListView_Teleport();
+		}
+
+	}
+
+	// Sound
+	//result = strcmp(btext, "Sound");
+	//if (result == 0)
+	//{
+	//	App->CL_SoundMgr->flag_Accessed = 1; // For Sound Manager Dlg
+	//	strcpy(App->CL_SoundMgr->Access_File, App->CL_Scene->B_Object[Index]->S_Teleport[0]->Sound_File);
+
+	//	App->CL_SoundMgr->Dialog_SoundFile();
+
+	//	strcpy(App->CL_Scene->B_Object[Index]->S_Teleport[0]->Sound_File, App->CL_SoundMgr->Access_File);
+
+	//	App->CL_Scene->B_Object[Index]->S_Teleport[0]->SndVolume = App->CL_SoundMgr->SndVolume;
+
+	//	Mark_As_Altered(Index);
+
+	//	Update_ListView_Teleport();
+	//	return 1;
+	//}
+
+	// Volume
+	//result = strcmp(btext, "Volume");
+	//if (result == 0)
+	//{
+	//	App->CL_SoundMgr->flag_Accessed = 1; // For Sound Manager Dlg
+	//	strcpy(App->CL_SoundMgr->Access_File, App->CL_Scene->B_Object[Index]->S_Teleport[0]->Sound_File);
+
+	//	App->CL_SoundMgr->Dialog_SoundFile();
+
+	//	strcpy(App->CL_Scene->B_Object[Index]->S_Teleport[0]->Sound_File, App->CL_SoundMgr->Access_File);
+
+	//	App->CL_Scene->B_Object[Index]->S_Teleport[0]->SndVolume = App->CL_SoundMgr->SndVolume;
+
+	//	Mark_As_Altered(Index);
+
+	//	Update_ListView_Teleport();
+	//	return 1;
+	//}
+
+	/*result = strcmp(btext, "Play");
+	if (result == 0)
+	{
+		App->CL_Dialogs->Show_YesNo_Dlg((LPSTR)"Play Sound", App->CL_Scene->B_Object[Index]->S_Teleport[0]->Sound_File, (LPSTR)"");
+
+		if (App->CL_Dialogs->flag_Canceled == 0)
+		{
+			App->CL_Scene->B_Object[Index]->S_Teleport[0]->flag_Play = 1;
+		}
+		else
+		{
+			App->CL_Scene->B_Object[Index]->S_Teleport[0]->flag_Play = 0;
+		}
+
+		Update_ListView_Teleport();
+
+		return 1;
+	}*/
+
+	// Counter
+	/*result = strcmp(btext, "Counter");
+	if (result == 0)
+	{
+		App->CL_Dialogs->Dialog_Counter();
+		if (App->CL_Dialogs->flag_Canceled == 1)
+		{
+			return 1;
+		}
+
+		Mark_As_Altered(Index);
+		Update_ListView_Teleport();
+
+		return 1;
+	}*/
+
+	/*result = strcmp(btext, "Count_Name");
+	if (result == 0)
+	{
+		App->CL_Dialogs->Dialog_Counter();
+		if (App->CL_Dialogs->flag_Canceled == 1)
+		{
+			return 1;
+		}
+
+		Mark_As_Altered(Index);
+		Update_ListView_Teleport();
+
+		return 1;
+	}*/
+
+	/*result = strcmp(btext, "Count_Index");
+	if (result == 0)
+	{
+		App->CL_Dialogs->Dialog_Counter();
+		if (App->CL_Dialogs->flag_Canceled == 1)
+		{
+			return 1;
+		}
+
+		Mark_As_Altered(Index);
+		Update_ListView_Teleport();
+
+		return 1;
+	}*/
+
+	// Environment
+	result = strcmp(btext, "Environment");
+	if (result == 0)
+	{
+		//App->SBC_Gui_Environ->Start_Environment_Editor(Index, 1);
+
+		/*App->SBC_Dialogs->YesNo("Enable Environment","Enable Teleport Environment", true);
+
+		if (App->SBC_Dialogs->Canceled == 0)
+		{
+			App->CL_Scene->B_Object[Index]->S_Environ[0]->Enabled = 1;
+		}
+		else
+		{
+			App->CL_Scene->B_Object[Index]->S_Environ[0]->Enabled = 0;
+		}*/
+
+		//Update_ListView_Teleport();
+
+	}
+
+	result = strcmp(btext, "Main Light");
+	if (result == 0)
+	{
+		//App->Cl_Environment->Start_Environment("Main Light");
+		//Update_ListView_Teleport();
+
+		
+	}
+
+	result = strcmp(btext, "Sound_Env");
+	if (result == 0)
+	{
+		//App->Cl_Environment->Start_Environment("Sound");
+		//Update_ListView_Teleport();
+		
+	}
+
+	result = strcmp(btext, "Fog");
+	if (result == 0)
+	{
+		//App->Cl_Environment->Start_Environment("Fog");
+		//Update_ListView_Teleport();
+		
+	}
+
+	result = strcmp(btext, "Sky");
+	if (result == 0)
+	{
+		//App->Cl_Environment->Start_Environment("Sky");
+		//Update_ListView_Teleport();
+		
+	}
+	
 }

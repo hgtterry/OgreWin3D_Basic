@@ -45,6 +45,7 @@ public:
 	void Edit_Object(LPARAM lParam);
 	void Edit_Sounds(LPARAM lParam);
 	void Edit_Locations(LPARAM lParam);
+	void Edit_Teleport_Entity(LPARAM lParam);
 
 	HWND Properties_Dlg_hWnd;
 	HWND Properties_hLV;

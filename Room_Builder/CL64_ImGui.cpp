@@ -230,6 +230,11 @@ void CL64_ImGui::ImGui_Render_Loop(void)
 		Debug_Lists_ImGui();
 	}
 
+	if (App->CL_ImGui_Dialogs->flag_Show_Dialog_list == 1)
+	{
+		App->CL_ImGui_Dialogs->Dialog_List_Gui();
+	}
+
 	App->CL_ImGui_Editor->ImGui_Render_Editor_Loop();
 	
 	// Iterate through the mapping and call the functions where the flag is true
