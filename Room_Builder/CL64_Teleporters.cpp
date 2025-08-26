@@ -30,8 +30,6 @@ CL64_Teleporters::CL64_Teleporters(void)
 {
 	Teleporter_Count = 0;
 	UniqueID_Teleporter_Counter = 0;
-
-	B_Teleporter.reserve(20);
 }
 
 CL64_Teleporters::~CL64_Teleporters(void)
@@ -83,8 +81,6 @@ bool CL64_Teleporters::Add_New_Teleporter()
 
 	App->CL_Scene->B_Object[Index]->S_Teleport[0] = new Teleport_type;
 	Set_Teleports_Defaults(Index);
-
-	Debug
 
 	App->CL_Scene->B_Object[Index]->S_Environ[0] = new Environ_type;
 	App->CL_Com_Environments->V_Set_Environ_Defaults(Index);

@@ -157,7 +157,6 @@
     <ClInclude Include="Base_Location.h" />
     <ClInclude Include="Base_Object.h" />
     <ClInclude Include="Base_Player.h" />
-    <ClInclude Include="Base_Teleporter.h" />
     <ClInclude Include="CL64_App.h" />
     <ClInclude Include="CL64_Brush_X.h" />
     <ClInclude Include="CL64_Bullet_Debug.h" />
@@ -229,7 +228,6 @@
     <ClCompile Include="Base_Location.cpp" />
     <ClCompile Include="Base_Object.cpp" />
     <ClCompile Include="Base_Player.cpp" />
-    <ClCompile Include="Base_Teleporter.cpp" />
     <ClCompile Include="CL64_App.cpp" />
     <ClCompile Include="CL64_Brush_X.cpp" />
     <ClCompile Include="CL64_Bullet_Debug.cpp" />

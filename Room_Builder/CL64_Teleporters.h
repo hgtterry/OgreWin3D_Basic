@@ -24,8 +24,6 @@ THE SOFTWARE.
 
 #pragma once
 
-#include "Base_Teleporter.h"
-
 class CL64_Teleporters
 {
 public:
@@ -39,7 +37,5 @@ public:
 
 	int Teleporter_Count;
 	int UniqueID_Teleporter_Counter;
-
-	std::vector<Base_Teleporter*> B_Teleporter; // Vector to hold pointers to Base_Location objects
 };
 
