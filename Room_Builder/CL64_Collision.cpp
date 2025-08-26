@@ -52,83 +52,83 @@ CL64_Collision::~CL64_Collision(void)
 // *************************************************************************
 bool CL64_Collision::Do_Teleport(int Index)
 {
-	//if (App->CL_Editor_Com->B_Object[Index]->S_Teleport[0]->flag_Counter_Disabled == 1 || App->CL_Editor_Com->B_Object[Index]->flag_OverRide_Counter == 1)
-	//{
-	//	App->CL_Editor_Com->B_Player[0]->Phys_Body->getWorldTransform().setOrigin(App->CL_Editor_Com->B_Object[Index]->S_Teleport[0]->Physics_Position);
-	//	App->CL_Editor_Com->B_Player[0]->Phys_Body->getWorldTransform().setRotation(App->CL_Editor_Com->B_Object[Index]->S_Teleport[0]->Physics_Rotation);
+	if (App->CL_Scene->B_Object[Index]->S_Teleport[0]->flag_Counter_Disabled == 1 || App->CL_Scene->B_Object[Index]->flag_OverRide_Counter == 1)
+	{
+		App->CL_Scene->B_Player[0]->Phys_Body->getWorldTransform().setOrigin(App->CL_Scene->B_Object[Index]->S_Teleport[0]->Physics_Position);
+		App->CL_Scene->B_Player[0]->Phys_Body->getWorldTransform().setRotation(App->CL_Scene->B_Object[Index]->S_Teleport[0]->Physics_Rotation);
 
-	//	if (App->CL_Editor_Com->B_Object[Index]->S_Teleport[0]->flag_Play == 1)
-	//	{
-	//		char Sound[MAX_PATH];
-	//		strcpy(Sound, App->CL_SoundMgr->Default_Folder);
-	//		strcat(Sound, "\\Media\\Sounds\\");
-	//		strcat(Sound, App->CL_Editor_Com->B_Object[Index]->S_Teleport[0]->Sound_File);
+		if (App->CL_Scene->B_Object[Index]->S_Teleport[0]->flag_Play == true)
+		{
+			char Sound[MAX_PATH];
+			strcpy(Sound, App->CL_SoundMgr->Default_Folder);
+			strcat(Sound, "\\Media\\Sounds\\");
+			strcat(Sound, App->CL_Scene->B_Object[Index]->S_Teleport[0]->Sound_File);
 
-	//		App->CL_Editor_Com->B_Object[Index]->S_Teleport[0]->SndFile = App->CL_SoundMgr->SoundEngine->play2D(Sound, false, true, true);
-	//		App->CL_Editor_Com->B_Object[Index]->S_Teleport[0]->SndFile->setVolume(App->CL_Editor_Com->B_Object[Index]->S_Teleport[0]->SndVolume);
-	//		App->CL_Editor_Com->B_Object[Index]->S_Teleport[0]->SndFile->setIsPaused(false);
+			//App->CL_Scene->B_Object[Index]->S_Teleport[0]-> = App->CL_SoundMgr->SoundEngine->play2D(Sound, false, true, true);
+			//App->CL_Scene->B_Object[Index]->S_Teleport[0]->Sound_File->setVolume(App->CL_Scene->B_Object[Index]->S_Teleport[0]->SndVolume);
+			//App->CL_Scene->B_Object[Index]->S_Teleport[0]->Sound_File->setIsPaused(false);
 
-	//		// Environment
-	//		/*if (App->CL_Editor_Com->flag_GameMode_Running == 1)
-	//		{
-	//			App->CL_Com_Environments->Set_Environment_By_Index(0, Old_Sound_Index);
-	//			App->CL_Com_Environments->Set_Environment_By_Index(1, Index);
+			// Environment
+			/*if (App->CL_Editor_Com->flag_GameMode_Running == 1)
+			{
+				App->CL_Com_Environments->Set_Environment_By_Index(0, Old_Sound_Index);
+				App->CL_Com_Environments->Set_Environment_By_Index(1, Index);
 
-	//			Old_Sound_Index = Index;
-	//		}
-	//		else*/
-	//		{
-	//			App->CL_Com_Environments->Set_Environment_By_Index(0, Index);
+				Old_Sound_Index = Index;
+			}
+			else*/
+			{
+				App->CL_Com_Environments->Set_Environment_By_Index(0, Index);
 
-	//			Old_Sound_Index = Index;
+				Old_Sound_Index = Index;
 
-	//		}
-	//	}
+			}
+		}
 
-	//	return 1;
-	//}
+		return 1;
+	}
 
-	//
-	//int Trigger_Value = App->CL_Editor_Com->B_Object[Index]->S_Teleport[0]->Trigger_Value;
-	//int CounterIndex = App->CL_Editor_Com->B_Object[Index]->S_Teleport[0]->Counter_ID;
+	
+	int Trigger_Value = App->CL_Scene->B_Object[Index]->S_Teleport[0]->Trigger_Value;
+	int CounterIndex = App->CL_Scene->B_Object[Index]->S_Teleport[0]->Counter_ID;
 
-	//if (App->CL_Editor_Com->B_Counter[CounterIndex]->Counter >= Trigger_Value)
-	//{
-	//	App->CL_Editor_Com->B_Player[0]->Phys_Body->getWorldTransform().setOrigin(App->CL_Editor_Com->B_Object[Index]->S_Teleport[0]->Physics_Position);
-	//	App->CL_Editor_Com->B_Player[0]->Phys_Body->getWorldTransform().setRotation(App->CL_Editor_Com->B_Object[Index]->S_Teleport[0]->Physics_Rotation);
+	//if (App->CL_Scene->B_Counter[CounterIndex]->Counter >= Trigger_Value)
+	{
+		App->CL_Scene->B_Player[0]->Phys_Body->getWorldTransform().setOrigin(App->CL_Scene->B_Object[Index]->S_Teleport[0]->Physics_Position);
+		App->CL_Scene->B_Player[0]->Phys_Body->getWorldTransform().setRotation(App->CL_Scene->B_Object[Index]->S_Teleport[0]->Physics_Rotation);
 
-	//	if (App->CL_Editor_Com->B_Object[Index]->S_Teleport[0]->flag_Play == 1)
-	//	{
-	//		char Sound[MAX_PATH];
-	//		strcpy(Sound, App->CL_SoundMgr->Default_Folder);
-	//		strcat(Sound, "\\Media\\Sounds\\");
-	//		strcat(Sound, App->CL_Editor_Com->B_Object[Index]->S_Teleport[0]->Sound_File);
+		if (App->CL_Scene->B_Object[Index]->S_Teleport[0]->flag_Play == true)
+		{
+			char Sound[MAX_PATH];
+			strcpy(Sound, App->CL_SoundMgr->Default_Folder);
+			strcat(Sound, "\\Media\\Sounds\\");
+			strcat(Sound, App->CL_Scene->B_Object[Index]->S_Teleport[0]->Sound_File);
 
-	//		App->CL_Editor_Com->B_Object[Index]->S_Teleport[0]->SndFile = App->CL_SoundMgr->SoundEngine->play2D(Sound, false, true, true);
-	//		App->CL_Editor_Com->B_Object[Index]->S_Teleport[0]->SndFile->setVolume(App->CL_Editor_Com->B_Object[Index]->S_Teleport[0]->SndVolume);
-	//		App->CL_Editor_Com->B_Object[Index]->S_Teleport[0]->SndFile->setIsPaused(false);
-	//	}
+			//App->CL_Scene->B_Object[Index]->S_Teleport[0]->SndFile = App->CL_SoundMgr->SoundEngine->play2D(Sound, false, true, true);
+			//App->CL_Scene->B_Object[Index]->S_Teleport[0]->SndFile->setVolume(App->CL_Editor_Com->B_Object[Index]->S_Teleport[0]->SndVolume);
+			//App->CL_Scene->B_Object[Index]->S_Teleport[0]->SndFile->setIsPaused(false);
+		}
 
-	//	// Environment
-	//	if (App->CL_Editor_Com->flag_GameMode_Running == 1)
-	//	{
-	//		App->CL_Com_Environments->Set_Environment_By_Index(0, Old_Sound_Index);
-	//		App->CL_Com_Environments->Set_Environment_By_Index(1, Index);
+		// Environment
+		/*if (App->CL_Scene->flag_GameMode_Running == 1)
+		{
+			App->CL_Com_Environments->Set_Environment_By_Index(0, Old_Sound_Index);
+			App->CL_Com_Environments->Set_Environment_By_Index(1, Index);
 
-	//		Old_Sound_Index = Index;
+			Old_Sound_Index = Index;
 
-	//	}
-	//	else
-	//	{
-	//		App->CL_Com_Environments->Set_Environment_By_Index(0, Index);
+		}
+		else
+		{
+			App->CL_Com_Environments->Set_Environment_By_Index(0, Index);
 
-	//		Old_Sound_Index = Index;
+			Old_Sound_Index = Index;
 
-	//	}
+		}*/
 
-	//	return 1;
+		return 1;
 
-	//}
+	}
 
 	return 1;
 }
