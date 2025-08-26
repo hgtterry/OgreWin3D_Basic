@@ -600,6 +600,145 @@ bool CL64_Properties_Scene::Update_ListView_Locations()
 	return 1;
 }
 
+// **************************************************************************
+// *		Update_ListView_Teleport():- Terry and Hazel Flanigan 2025		*
+// **************************************************************************
+void CL64_Properties_Scene::Update_ListView_Teleport()
+{
+	int index = Current_Selected_Object;
+
+	char Num[10];
+	char chr_ID[50];
+	_itoa(App->CL_Scene->B_Object[index]->This_Object_UniqueID, Num, 10);
+	strcpy(chr_ID, "Properties ID=");
+	strcat(chr_ID, Num);
+
+	SetWindowText(Properties_Dlg_hWnd, chr_ID);
+	SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)App->CL_Scene->B_Object[index]->Object_Name);
+
+	// new sound
+	char chr_Play[100];
+	if (App->CL_Scene->B_Object[index]->S_Teleport[0]->flag_Play == 1)
+	{
+		strcpy(chr_Play, "True");
+	}
+	else
+	{
+		strcpy(chr_Play, "False");
+	}
+
+
+	char chr_Goto_Location[100];
+	int Goto_ID = App->CL_Scene->B_Object[index]->S_Teleport[0]->Location_ID;
+	strcpy(chr_Goto_Location, App->CL_Locations->B_Location[Goto_ID]->Location_Name);
+
+	char chr_Volume[100];
+	float sum2 = App->CL_Scene->B_Object[index]->S_Teleport[0]->SndVolume;
+	int Percent = int(sum2 * 100);
+	_itoa(Percent, chr_Volume, 10);
+
+
+	char chr_Counter_Disabled[20];
+	if (App->CL_Scene->B_Object[index]->S_Teleport[0]->flag_Counter_Disabled == 1)
+	{
+		strcpy(chr_Counter_Disabled, "Disabled");
+	}
+	else
+	{
+		strcpy(chr_Counter_Disabled, "Enabled");
+	}
+
+
+	// Environ
+	char chr_Environ_Disabled[100];
+	if (App->CL_Scene->B_Object[index]->S_Environ[0]->flag_Environ_Enabled == 1)
+	{
+		strcpy(chr_Environ_Disabled, "Enabled");
+	}
+	else
+	{
+		strcpy(chr_Environ_Disabled, "Disabled");
+	}
+
+	// Environ
+	char Chr_Counter_Index[100];
+	_itoa(App->CL_Scene->B_Object[index]->S_Teleport[0]->Counter_ID, Chr_Counter_Index, 10);
+
+
+	if (App->CL_Scene->B_Object[index]->S_Environ[0]->flag_Environ_Enabled == 1)
+	{
+		const int NUM_ITEMS = 12;
+		const int NUM_COLS = 2;
+		std::string grid[NUM_COLS][NUM_ITEMS]; // string table
+
+		LV_ITEM pitem;
+		memset(&pitem, 0, sizeof(LV_ITEM));
+		pitem.mask = LVIF_TEXT;
+
+		grid[0][0] = "Name", grid[1][0] = App->CL_Scene->B_Object[index]->Object_Name;
+		grid[0][1] = " ", grid[1][1] = " ";
+		grid[0][2] = "Goto", grid[1][2] = chr_Goto_Location;
+		grid[0][3] = "Sound", grid[1][3] = App->CL_Scene->B_Object[index]->S_Teleport[0]->Sound_File;
+		grid[0][4] = "Volume", grid[1][4] = chr_Volume;
+		grid[0][5] = "Play", grid[1][5] = chr_Play;
+		grid[0][6] = " ", grid[1][6] = " ";
+		grid[0][7] = "Counter", grid[1][7] = chr_Counter_Disabled;
+		grid[0][8] = "Count_Name", grid[1][8] = App->CL_Scene->B_Object[index]->S_Teleport[0]->Counter_Name;
+		grid[0][9] = "Count_Index", grid[1][9] = Chr_Counter_Index;
+		grid[0][10] = " ", grid[1][10] = " ";
+		grid[0][11] = "Environment", grid[1][11] = chr_Environ_Disabled;
+
+		ListView_DeleteAllItems(Properties_hLV);
+
+		for (DWORD row = 0; row < NUM_ITEMS; row++)
+		{
+			pitem.iItem = row;
+			pitem.pszText = const_cast<char*>(grid[0][row].c_str());
+			ListView_InsertItem(Properties_hLV, &pitem);
+
+			for (DWORD col = 1; col < NUM_COLS; col++)
+			{
+				ListView_SetItemText(Properties_hLV, row, col,
+					const_cast<char*>(grid[col][row].c_str()));
+			}
+		}
+	}
+	else
+	{
+		const int NUM_ITEMS = 9;
+		const int NUM_COLS = 2;
+		std::string grid[NUM_COLS][NUM_ITEMS]; // string table
+
+		LV_ITEM pitem;
+		memset(&pitem, 0, sizeof(LV_ITEM));
+		pitem.mask = LVIF_TEXT;
+
+		grid[0][0] = "Name", grid[1][0] = App->CL_Scene->B_Object[index]->Object_Name;
+		grid[0][1] = " ", grid[1][1] = " ";
+		grid[0][2] = "Goto", grid[1][2] = chr_Goto_Location;
+		grid[0][3] = "Sound", grid[1][3] = App->CL_Scene->B_Object[index]->S_Teleport[0]->Sound_File;
+		grid[0][4] = "Volume", grid[1][4] = chr_Volume;
+		grid[0][5] = "Play", grid[1][5] = chr_Play;
+		grid[0][6] = " ", grid[1][6] = " ";
+		grid[0][7] = "Counter", grid[1][7] = chr_Counter_Disabled;
+		grid[0][8] = "Environment", grid[1][8] = chr_Environ_Disabled;
+
+		ListView_DeleteAllItems(Properties_hLV);
+
+		for (DWORD row = 0; row < NUM_ITEMS; row++)
+		{
+			pitem.iItem = row;
+			pitem.pszText = const_cast<char*>(grid[0][row].c_str());
+			ListView_InsertItem(Properties_hLV, &pitem);
+			for (DWORD col = 1; col < NUM_COLS; col++)
+			{
+				ListView_SetItemText(Properties_hLV, row, col,
+					const_cast<char*>(grid[col][row].c_str()));
+			}
+		}
+	}
+}
+
 // *************************************************************************
 // *			Edit_Object:- Terry and Hazel Flanigan 2024				   *
 // *************************************************************************

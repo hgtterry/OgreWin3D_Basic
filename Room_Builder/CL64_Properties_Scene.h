@@ -37,6 +37,7 @@ public:
 	bool Update_ListView_Environs();
 	bool Update_ListView_Sounds();
 	bool Update_ListView_Locations();
+	void Update_ListView_Teleport();
 
 	bool Update_ListView_Objects();
 	bool Edit_Player(LPARAM lParam);

@@ -654,7 +654,7 @@ void CL64_FileView::Get_Selection(LPNMHDR lParam)
 	{
 		Context_Selection = Enums::FileView_Teleports_File;
 
-		//Handle_Teleport_Selection(index);
+		Handle_Teleport_Selection(index);
 		return;
 	}
 }
@@ -775,7 +775,7 @@ void CL64_FileView::Handle_Teleport_Selection(int index)
 {
 	App->CL_Properties_Scene->Current_Selected_Object = index;
 	App->CL_Properties_Scene->Edit_Category = Enums::Edit_Locations;
-	App->CL_Properties_Scene->Update_ListView_Locations();
+	App->CL_Properties_Scene->Update_ListView_Teleport();
 }
 
 // *************************************************************************
