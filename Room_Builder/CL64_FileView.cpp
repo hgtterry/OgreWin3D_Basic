@@ -773,8 +773,14 @@ void CL64_FileView::Handle_Location_Selection(int index)
 // *************************************************************************
 void CL64_FileView::Handle_Teleport_Selection(int index)
 {
+	HideRightPanes();
+
+	App->CL_Props_Dialogs->Show_Details_Goto_Dlg(true);
+	App->CL_ImGui_Editor->flag_Show_Visuals = true;
+	App->CL_ImGui_Editor->flag_Show_Dimensions = true;
+
 	App->CL_Properties_Scene->Current_Selected_Object = index;
-	App->CL_Properties_Scene->Edit_Category = Enums::Edit_Locations;
+	App->CL_Properties_Scene->Edit_Category = Enums::Edit_Teleport;
 	App->CL_Properties_Scene->Update_ListView_Teleport();
 }
 

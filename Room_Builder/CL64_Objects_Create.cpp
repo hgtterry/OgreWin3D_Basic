@@ -282,8 +282,8 @@ bool CL64_Objects_Create::Add_Objects_From_File() // From File
 			break;
 
 		case Enums::Obj_Usage_Teleport:
-			// App->CL_Com_Teleporters->Create_Teleport_Entity(count);
-			// AddItemToFileView(App->CL_FileView->FV_Teleporters_Folder, count);
+			App->CL_Teleporters->Create_Teleport_Entity(count);
+			AddItemToFileView(App->CL_FileView->FV_Teleporters_Folder, count);
 			break;
 
 		case Enums::Obj_Usage_Collectable:

@@ -2201,7 +2201,7 @@ bool CL64_Project::Load_Project_Objects()
 			// Read_MoveEntity(count, section);
 			break;
 		case Enums::Obj_Usage_Teleport:
-			// Read_Teleport(count, section);
+			 Read_Teleport(Count, mSection);
 			break;
 		case Enums::Obj_Usage_EnvironEntity:
 			Read_EnvironEntity(Count, mSection);
@@ -2494,6 +2494,7 @@ bool CL64_Project::Read_Collectable(int Index, char* Section)
 // *************************************************************************
 bool CL64_Project::Read_Teleport(int Index, char* Section)
 {
+	Debug
 	int Int_Tag = 0;
 	char chr_Tag1[MAX_PATH] = { 0 };
 	Ogre::Vector4 V4 = Ogre::Vector4::ZERO;
@@ -2501,10 +2502,10 @@ bool CL64_Project::Read_Teleport(int Index, char* Section)
 	Base_Object* B_Object = App->CL_Scene->B_Object[Index];
 
 	B_Object->S_Teleport[0] = new Teleport_type;
-	//App->CL_Com_Teleporters->Set_Teleports_Defaults(Index);
+	App->CL_Teleporters->Set_Teleports_Defaults(Index);
 
 	B_Object->S_Environ[0] = new Environ_type;
-	//App->CL_Com_Environments->V_Set_Environ_Defaults(Index);
+	App->CL_Com_Environments->V_Set_Environ_Defaults(Index);
 
 	auto& Ini_File = App->CL_X_Ini_File; // App->CL_X_Ini_File-> (Pointer)
 

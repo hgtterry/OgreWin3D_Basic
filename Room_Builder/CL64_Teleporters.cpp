@@ -53,11 +53,13 @@ void CL64_Teleporters::Set_Teleports_Defaults(int index)
 	m_Teleport->Physics_Position = btVector3(playerStartPos.x, playerStartPos.y, playerStartPos.z);
 	m_Teleport->Physics_Rotation = App->CL_Scene->B_Player[0]->Physics_Quat;
 
-	// Initialize trigger and counter values
+	// Initialize trigger sound and counter values
 	m_Teleport->Trigger_Value = 0;
 	m_Teleport->Counter_ID = 0;
 	strcpy(m_Teleport->Counter_Name, "None");
+	strcpy(m_Teleport->Sound_File, "None");
 	m_Teleport->flag_Counter_Disabled = true;
+	m_Teleport->SndVolume = 0;
 }
 
 // *************************************************************************
@@ -71,12 +73,14 @@ bool CL64_Teleporters::Add_New_Teleporter()
 	auto* newObject = new Base_Object();
 	App->CL_Scene->B_Object[index] = newObject;
 
-	// Initialize Teleport and Environment types
+	// Initialize Teleport
 	newObject->S_Teleport[0] = new Teleport_type;
 	Set_Teleports_Defaults(index);
-
+	
+	// Initialize Environment
 	newObject->S_Environ[0] = new Environ_type;
 	App->CL_Com_Environments->V_Set_Environ_Defaults(index);
+	newObject->S_Environ[0]->flag_Environ_Enabled = false;
 
 	// Set object type and shape
 	newObject->Type = Enums::Bullet_Type_Static;

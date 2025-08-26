@@ -665,7 +665,7 @@ void CL64_Properties_Scene::Update_ListView_Teleport()
 	_itoa(App->CL_Scene->B_Object[index]->S_Teleport[0]->Counter_ID, Chr_Counter_Index, 10);
 
 
-	if (App->CL_Scene->B_Object[index]->S_Environ[0]->flag_Environ_Enabled == 1)
+	if (App->CL_Scene->B_Object[index]->S_Environ[0]->flag_Environ_Enabled == true)
 	{
 		const int NUM_ITEMS = 12;
 		const int NUM_COLS = 2;
