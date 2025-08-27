@@ -123,9 +123,9 @@ bool Base_Object::Init_Object(void)
 
 	//------------------------------ Sound Entity
 	flag_HasSound = false;
-	strcpy(Sound_File, "Door_Open.wav");
+	strcpy(Sound_File, "None");
 	Sound_Path[0] = 0;
-	flag_Play_Sound = 1;
+	flag_Play_Sound = false;
 	SndVolume = 0.5; // Default Half Volume
 
 	flag_Show_Message_Flag = false;

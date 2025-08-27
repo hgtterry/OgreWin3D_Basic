@@ -37,6 +37,22 @@ CL64_Teleporters::~CL64_Teleporters(void)
 }
 
 // *************************************************************************
+// *		  Set_Objects_Defaults:- Terry and Hazel Flanigan 2025	 	   *
+// *************************************************************************
+void CL64_Teleporters::Set_Objects_Defaults(int index)
+{
+	// Initialize Pointers
+	auto& m_Object = App->CL_Scene->B_Object[index];
+
+	m_Object->flag_HasSound = false;
+	strcpy(m_Object->Sound_File, "None");
+	m_Object->Sound_Path[0] = 0;
+	m_Object->flag_Play_Sound = false;
+	m_Object->SndVolume = 0.5; // Default Half Volume
+	
+}
+
+// *************************************************************************
 // *	  Set_Teleports_Defaults:- Terry and Hazel Flanigan 2025	 	   *
 // *************************************************************************
 void CL64_Teleporters::Set_Teleports_Defaults(int index)
@@ -59,7 +75,7 @@ void CL64_Teleporters::Set_Teleports_Defaults(int index)
 	strcpy(m_Teleport->Counter_Name, "None");
 	strcpy(m_Teleport->Sound_File, "None");
 	m_Teleport->flag_Counter_Disabled = true;
-	m_Teleport->SndVolume = 0;
+	m_Teleport->SndVolume = 0.5;
 }
 
 // *************************************************************************
@@ -72,6 +88,7 @@ bool CL64_Teleporters::Add_New_Teleporter()
 	// Create a new Base_Object and initialize its properties
 	auto* newObject = new Base_Object();
 	App->CL_Scene->B_Object[index] = newObject;
+	Set_Objects_Defaults(index);
 
 	// Initialize Teleport
 	newObject->S_Teleport[0] = new Teleport_type;

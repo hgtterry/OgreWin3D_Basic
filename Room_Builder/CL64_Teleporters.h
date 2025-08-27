@@ -30,6 +30,7 @@ public:
 	CL64_Teleporters(void);
 	~CL64_Teleporters(void);
 
+	void Set_Objects_Defaults(int index);
 	void Set_Teleports_Defaults(int index);
 	bool Add_New_Teleporter();
 	bool Create_Teleport_Entity(int Index);
