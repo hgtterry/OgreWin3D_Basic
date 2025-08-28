@@ -122,6 +122,7 @@ bool Base_Object::Init_Object(void)
 	//strcpy(Message_Text, "This is in the Object");
 
 	//------------------------------ Sound Entity
+	SndFile = nullptr;
 	flag_HasSound = false;
 	strcpy(Sound_File, "None");
 	Sound_Path[0] = 0;

@@ -70,6 +70,7 @@ void CL64_Teleporters::Set_Teleports_Defaults(int index)
 	m_Teleport->Physics_Rotation = App->CL_Scene->B_Player[0]->Physics_Quat;
 
 	// Initialize trigger sound and counter values
+	m_Teleport->SndFile = nullptr;
 	m_Teleport->Trigger_Value = 0;
 	m_Teleport->Counter_ID = 0;
 	strcpy(m_Teleport->Counter_Name, "None");

@@ -779,8 +779,15 @@ void CL64_FileView::Handle_Teleport_Selection(int index)
 	App->CL_ImGui_Editor->flag_Show_Visuals = true;
 	App->CL_ImGui_Editor->flag_Show_Dimensions = true;
 
+	App->CL_Gizmos->unhighlight(App->CL_Scene->B_Object[App->CL_Properties_Scene->Last_Selected_Object]->Object_Ent);
+	App->CL_Properties_Scene->Last_Selected_Object = index;
+	App->CL_Gizmos->Last_Selected_Object = index;
+
+	App->CL_Gizmos->MarkerBox_Adjust(index);
 	App->CL_Properties_Scene->Current_Selected_Object = index;
 	App->CL_Properties_Scene->Edit_Category = Enums::Edit_Teleport;
+
+	App->CL_Gizmos->highlight(App->CL_Scene->B_Object[index]->Object_Ent);
 	App->CL_Properties_Scene->Update_ListView_Teleport();
 }
 

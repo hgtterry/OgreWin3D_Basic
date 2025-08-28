@@ -52,7 +52,7 @@ CL64_Collision::~CL64_Collision(void)
 // *************************************************************************
 bool CL64_Collision::Do_Teleport(int Index)
 {
-	if (App->CL_Scene->B_Object[Index]->S_Teleport[0]->flag_Counter_Disabled == 1 || App->CL_Scene->B_Object[Index]->flag_OverRide_Counter == true)
+	if (App->CL_Scene->B_Object[Index]->S_Teleport[0]->flag_Counter_Disabled == true || App->CL_Scene->B_Object[Index]->flag_OverRide_Counter == true)
 	{
 		App->CL_Scene->B_Player[0]->Phys_Body->getWorldTransform().setOrigin(App->CL_Scene->B_Object[Index]->S_Teleport[0]->Physics_Position);
 		App->CL_Scene->B_Player[0]->Phys_Body->getWorldTransform().setRotation(App->CL_Scene->B_Object[Index]->S_Teleport[0]->Physics_Rotation);
@@ -64,9 +64,9 @@ bool CL64_Collision::Do_Teleport(int Index)
 			strcat(Sound, "\\Media\\Sounds\\");
 			strcat(Sound, App->CL_Scene->B_Object[Index]->S_Teleport[0]->Sound_File);
 
-			//App->CL_Scene->B_Object[Index]->S_Teleport[0]-> = App->CL_SoundMgr->SoundEngine->play2D(Sound, false, true, true);
-			//App->CL_Scene->B_Object[Index]->S_Teleport[0]->Sound_File->setVolume(App->CL_Scene->B_Object[Index]->S_Teleport[0]->SndVolume);
-			//App->CL_Scene->B_Object[Index]->S_Teleport[0]->Sound_File->setIsPaused(false);
+			App->CL_Scene->B_Object[Index]->S_Teleport[0]->SndFile = App->CL_SoundMgr->SoundEngine->play2D(Sound, false, true, true);
+			App->CL_Scene->B_Object[Index]->S_Teleport[0]->SndFile->setVolume(App->CL_Scene->B_Object[Index]->S_Teleport[0]->SndVolume);
+			App->CL_Scene->B_Object[Index]->S_Teleport[0]->SndFile->setIsPaused(false);
 
 			// Environment
 			/*if (App->CL_Editor_Com->flag_GameMode_Running == 1)
@@ -84,7 +84,7 @@ bool CL64_Collision::Do_Teleport(int Index)
 
 			}
 		}
-
+		
 		return true;
 	}
 

@@ -1324,23 +1324,23 @@ void CL64_Properties_Scene::Edit_Teleport_Entity(LPARAM lParam)
 	}
 
 	// Sound
-	//result = strcmp(btext, "Sound");
-	//if (result == 0)
-	//{
-	//	App->CL_SoundMgr->flag_Accessed = 1; // For Sound Manager Dlg
-	//	strcpy(App->CL_SoundMgr->Access_File, App->CL_Scene->B_Object[Index]->S_Teleport[0]->Sound_File);
+	result = strcmp(btext, "Sound");
+	if (result == 0)
+	{
+		App->CL_SoundMgr->flag_Accessed = 1; // For Sound Manager Dlg
+		strcpy(App->CL_SoundMgr->Access_File, App->CL_Scene->B_Object[Index]->S_Teleport[0]->Sound_File);
 
-	//	App->CL_SoundMgr->Dialog_SoundFile();
+		App->CL_SoundMgr->Show_Sound_Player();
 
-	//	strcpy(App->CL_Scene->B_Object[Index]->S_Teleport[0]->Sound_File, App->CL_SoundMgr->Access_File);
+		strcpy(App->CL_Scene->B_Object[Index]->S_Teleport[0]->Sound_File, App->CL_SoundMgr->Access_File);
 
-	//	App->CL_Scene->B_Object[Index]->S_Teleport[0]->SndVolume = App->CL_SoundMgr->SndVolume;
+		App->CL_Scene->B_Object[Index]->S_Teleport[0]->SndVolume = App->CL_SoundMgr->SndVolume;
 
-	//	Mark_As_Altered(Index);
+		//Mark_As_Altered(Index);
 
-	//	Update_ListView_Teleport();
-	//	return 1;
-	//}
+		Update_ListView_Teleport();
+		return;
+	}
 
 	// Volume
 	//result = strcmp(btext, "Volume");
