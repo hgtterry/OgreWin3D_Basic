@@ -785,8 +785,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
                 return 1;
             }
+
+            case  ID_PLAYER_MOVETOCAMERA:
+            {
+                Ogre::Vector3 pos = App->CL_Ogre->camNode->getPosition();
+                App->CL_Com_Player->Set_Player_Position(pos);
+                return 1;
+            }
             
-           
             // ---------------------------------------------
             case IDM_ABOUT:
                 DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);

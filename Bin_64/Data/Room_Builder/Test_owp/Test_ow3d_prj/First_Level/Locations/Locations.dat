@@ -23,5 +23,19 @@ Camera_Pitch=0.000000
 Location_Pos=-260.009003,-99.100021,-99.019264
 Location_Rotation=0.000000,-0.051369,0.000000,0.998680
  
+[Location_3]
+Location_Name=New_Place
+Location UniqueID=3
+Camera_Pitch=0.000000
+Location_Pos=764.230103,-35.100006,147.457413
+Location_Rotation=0.000000,-0.000374,0.000000,1.000000
+ 
+[Location_4]
+Location_Name=Return_From_New_Place
+Location UniqueID=4
+Camera_Pitch=0.000000
+Location_Pos=3.867520,-99.100021,100.425682
+Location_Rotation=0.000000,-0.005536,0.000000,0.999985
+ 
 [Locations]
-Locations_Count=3
+Locations_Count=5

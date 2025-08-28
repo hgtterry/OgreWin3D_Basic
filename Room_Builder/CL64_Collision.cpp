@@ -64,9 +64,9 @@ bool CL64_Collision::Do_Teleport(int Index)
 			strcat(Sound, "\\Media\\Sounds\\");
 			strcat(Sound, App->CL_Scene->B_Object[Index]->S_Teleport[0]->Sound_File);
 
-			App->CL_Scene->B_Object[Index]->S_Teleport[0]->SndFile = App->CL_SoundMgr->SoundEngine->play2D(Sound, false, true, true);
-			App->CL_Scene->B_Object[Index]->S_Teleport[0]->SndFile->setVolume(App->CL_Scene->B_Object[Index]->S_Teleport[0]->SndVolume);
-			App->CL_Scene->B_Object[Index]->S_Teleport[0]->SndFile->setIsPaused(false);
+			App->CL_Scene->B_Object[Index]->S_Teleport[0]->Snd_Engine = App->CL_SoundMgr->SoundEngine->play2D(Sound, false, true, true);
+			App->CL_Scene->B_Object[Index]->S_Teleport[0]->Snd_Engine->setVolume(App->CL_Scene->B_Object[Index]->S_Teleport[0]->SndVolume);
+			App->CL_Scene->B_Object[Index]->S_Teleport[0]->Snd_Engine->setIsPaused(false);
 
 			// Environment
 			/*if (App->CL_Editor_Com->flag_GameMode_Running == 1)

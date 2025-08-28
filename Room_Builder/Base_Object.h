@@ -39,7 +39,7 @@ typedef struct Teleport_type
 	btVector3 Physics_Position;
 	btQuaternion Physics_Rotation;
 	int Location_ID;
-	irrklang::ISound* SndFile;
+	irrklang::ISound* Snd_Engine;
 	Ogre::Real SndVolume;
 	char Sound_File[MAX_PATH];
 	bool flag_Play;
