@@ -35,7 +35,10 @@ public:
 	void Init_FileView(void);
 	void Show_FileView(bool Enable);
 	HTREEITEM Add_Item(HTREEITEM Folder, char* SFileName, int Index, bool NewItem);
+	
 	void DeleteItem();
+	void DeleteItem_By_Index(int index);
+
 	void Set_FolderActive(HTREEITEM Folder);
 	void SelectItem(HTREEITEM TreeItem);
 	void Enable_Environment_Button(bool Enable);

@@ -343,29 +343,48 @@ void CL64_Entities::Delete_Brush()
 }
 
 // **************************************************************************
-// *	  		Delete_Object:- Terry and Hazel Flanigan 2024				*
+// *	  		Delete_Object:- Terry and Hazel Flanigan 2025				*
 // **************************************************************************
-void CL64_Entities::Delete_Object()
+void CL64_Entities::Delete_Object() 
 {
-	App->CL_Doc->DeleteCurrentThing();
-
-	if (App->CL_Properties_Brushes->Selected_Brush->GroupId > Enums::Brushs_ID_Players)
+	// Check if the selected brush belongs to a group that requires object deletion
+	if (App->CL_Properties_Brushes->Selected_Brush->GroupId > Enums::Brushs_ID_Players) 
 	{
-		int MeshIndex = App->CL_Properties_Scene->Current_Selected_Object;
-		btRigidBody* body = App->CL_Scene->B_Object[MeshIndex]->Phys_Body;
+		Brush* pBrush = App->CL_X_SelBrushList->SelBrushList_GetBrush(App->CL_Doc->pSelBrushes, 0);
+		int m_Object = App->CL_Com_Objects->GetIndex_By_Name(pBrush->Name);
 
-		if (body)
+		// If the object does not exist, prompt the user and delete the brush
+		if (m_Object == -1) 
 		{
-			App->CL_Physics->dynamicsWorld->removeCollisionObject(body);
+			App->CL_Dialogs->YesNo((LPSTR)"No Object", (LPSTR)"Just Delete Brush");
+			if (!App->CL_Dialogs->flag_Dlg_Canceled) 
+			{
+				App->CL_Doc->DeleteCurrentThing();
+			}
+
+			return;
 		}
+		else 
+		{
+			// Delete Brush Object and Physics and remove from FileView
+			App->CL_Doc->DeleteCurrentThing();
+			btRigidBody* body = App->CL_Scene->B_Object[m_Object]->Phys_Body;
 
-		App->CL_FileView->DeleteItem();
+			if (body) 
+			{
+				App->CL_Physics->dynamicsWorld->removeCollisionObject(body);
+			}
 
-		App->CL_Scene->B_Object[MeshIndex]->flag_Deleted = 1;
-		App->CL_Scene->B_Object[MeshIndex]->Object_Node->setVisible(false);
+			App->CL_FileView->DeleteItem_By_Index(m_Object);
+			App->CL_Scene->B_Object[m_Object]->flag_Deleted = true;
+			App->CL_Scene->B_Object[m_Object]->Object_Node->setVisible(false);
+		}
 	}
-	else
+	else 
 	{
+		// Delete normal Brush
+		App->CL_Doc->DeleteCurrentThing();
+		
 		int selectedIndex = App->CL_Properties_Brushes->Selected_Index - 1;
 		if (selectedIndex < 0)
 		{
@@ -375,7 +394,8 @@ void CL64_Entities::Delete_Object()
 		App->CL_Properties_Brushes->Select_From_List(selectedIndex);
 	}
 
-	App->CL_Level->flag_Level_is_Modified = 1;
+	// Mark the level as modified
+	App->CL_Level->flag_Level_is_Modified = true;
 }
 
 

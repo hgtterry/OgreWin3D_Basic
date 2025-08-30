@@ -692,6 +692,7 @@ void CL64_FileView::Handle_Object_Selection(int index)
 	App->CL_Properties_Scene->Edit_Category = Enums::Edit_Object;
 
 	Select_Brush(index);
+
 	if (App->CL_Editor_Control->flag_Scene_Editor_Active) 
 	{
 		ShowWindow(App->CL_Properties_Scene->Properties_Dlg_hWnd, true);
@@ -789,6 +790,8 @@ void CL64_FileView::Handle_Teleport_Selection(int index)
 
 	App->CL_Gizmos->highlight(App->CL_Scene->B_Object[index]->Object_Ent);
 	App->CL_Properties_Scene->Update_ListView_Teleport();
+
+	Select_Brush(index);
 }
 
 // *************************************************************************
@@ -1061,7 +1064,7 @@ void CL64_FileView::Context_Menu(HWND hDlg)
 			AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_COPY, L"&Create Copy");
 			//AppendMenuW(App->SBC_FileView->hMenu, MF_STRING | MF_GRAYED, IDM_PASTE, L"&Paste");
 			AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
-			AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_FILE_DELETE, L"&Delete");
+			AppendMenuW(hMenu, MF_STRING , IDM_FILE_DELETE, L"&Delete");
 			TrackPopupMenu(hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, App->ListPanel, NULL);
 			DestroyMenu(hMenu);
 			Context_Selection = Enums::FileView_Teleports_File;
@@ -1564,14 +1567,14 @@ void CL64_FileView::Context_Delete()
 	// ---------------- Teleporters
 	if (App->CL_FileView->Context_Selection == Enums::FileView_Teleports_File)
 	{
-		/*App->CL_Dialogs->Show_YesNo_Dlg((LPSTR)"Remove Teleport Entity", (LPSTR)App->CL_Scene->B_Object[Index]->Object_Name, (LPSTR)"Are you sure");
+		App->CL_Dialogs->YesNo((LPSTR)"Remove Teleport Entity", (LPSTR)App->CL_Scene->B_Object[Index]->Object_Name);
 
-		bool Doit = App->CL_Dialogs->flag_Canceled;
+		bool Doit = App->CL_Dialogs->flag_Dlg_Canceled;
 		if (Doit == 0)
 		{
-			App->CL_Com_Objects->Delete_Object();
+			App->CL_Entities->Delete_Object();
 			App->CL_FileView->Mark_Altered_Folder(App->CL_FileView->FV_Teleporters_Folder);
-		}*/
+		}
 
 		return;
 	}
@@ -1668,6 +1671,16 @@ void CL64_FileView::DeleteItem()
 {
 	HWND Temp = GetDlgItem(App->ListPanel, IDC_TREE1);
 	HTREEITEM i = TreeView_GetSelection(Temp);
+	TreeView_DeleteItem(Temp, i);
+}
+
+// *************************************************************************
+// *		DeleteItem_By_Index:- Terry and Hazel Flanigan 2024 		   *
+// *************************************************************************
+void CL64_FileView::DeleteItem_By_Index(int index)
+{
+	HWND Temp = GetDlgItem(App->ListPanel, IDC_TREE1);
+	HTREEITEM i = App->CL_Scene->B_Object[index]->FileViewItem;
 	TreeView_DeleteItem(Temp, i);
 }
 
