@@ -200,7 +200,7 @@ Dimensions_Lock=0
  
 *************************************************************************************
 [Object_9]
-Mesh_Name=Teleport_Ent_10
+Mesh_Name=Teleport_New_Room
 Mesh_File=TeleportSend.mesh
 Mesh_Resource_Path=
 Material_File=Internal

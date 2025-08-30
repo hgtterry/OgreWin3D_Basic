@@ -356,7 +356,7 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Brush_Dlg(HWND hDlg, UINT message
 
 		if (LOWORD(wParam) == IDC_GD_BRUSHLIST)
 		{
-			if (App->CL_Properties_Brushes->flag_Brushes_Dlg_Created == 1)
+			if (App->CL_Properties_Brushes->flag_Brushes_Dlg_Created == true)
 			{
 				App->CL_Doc->Do_General_Select_Dlg(false);
 
@@ -430,9 +430,16 @@ void CL64_Properties_Brushes::OnSelchangeBrushlist(int index, bool clear)
 		// Select Object in Scene Editor
 		if (Selected_Brush->GroupId > Enums::Brushs_ID_Players)
 		{
-			// TODO 
-			//int entityIndex = App->CL_Entities->GetIndex_By_Name(Selected_Brush->Name);
-			//App->CL_FileView->SelectItem(App->CL_Scene->B_Object[entityIndex]->FileViewItem);
+			int m_Object = App->CL_Com_Objects->GetIndex_By_Name(Selected_Brush->Name);
+
+			if (m_Object == -1)
+			{
+				App->Say("No Object to Select");
+			}
+			else
+			{
+				App->CL_FileView->SelectItem(App->CL_Scene->B_Object[m_Object]->FileViewItem);
+			}
 		}
 
 		if (clear)

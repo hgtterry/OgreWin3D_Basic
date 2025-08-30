@@ -1266,7 +1266,7 @@ void CL64_Properties_Scene::Edit_Teleport_Entity(LPARAM lParam)
 	result = strcmp(btext, "Name");
 	if (result == 0)
 	{
-		App->CL_Teleporters->Rename_Teleport_Entity(Index);
+		App->CL_Entities->Rename_Object(Index);
 		Update_ListView_Teleport();
 	}
 
