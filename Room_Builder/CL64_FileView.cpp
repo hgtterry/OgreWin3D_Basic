@@ -669,6 +669,9 @@ void CL64_FileView::Handle_Player_Selection(int index)
 	App->CL_Gizmos->Show_MarkerBox(false);
 	App->CL_Properties_Scene->Current_Selected_Object = index;
 	App->CL_Properties_Scene->Edit_Category = Enums::Edit_Player;
+
+	Select_Brush(index);
+
 	App->CL_Properties_Scene->Update_ListView_Player();
 }
 
@@ -799,9 +802,24 @@ void CL64_FileView::Handle_Teleport_Selection(int index)
 // *************************************************************************
 void CL64_FileView::Select_Brush(int index)
 {
+	
 	if (App->CL_File->flag_loading == false)
 	{
-		Brush* pMinBrush = App->CL_Brush_X->Get_Brush_By_Name(App->CL_Scene->B_Object[index]->Object_Name);
+		Brush* pMinBrush = NULL;
+
+		if (App->CL_Properties_Scene->Edit_Category == Enums::Edit_Player)
+		{
+			// TODO Player Name
+			//pMinBrush = App->CL_Brush_X->Get_Brush_By_Name(App->CL_Scene->B_Player[0]->Player_Name);
+			pMinBrush = App->CL_Brush_X->Get_Brush_By_Name("Player_Main");
+			//App->Say(App->CL_Scene->B_Player[0]->Player_Name);
+			//App->Say(pMinBrush->Name);
+			//Debug
+		}
+		else
+		{
+			pMinBrush = App->CL_Brush_X->Get_Brush_By_Name(App->CL_Scene->B_Object[index]->Object_Name);
+		}
 
 		if (pMinBrush)
 		{
@@ -818,8 +836,7 @@ void CL64_FileView::Select_Brush(int index)
 
 			App->CL_Properties_Tabs->flag_Tabs_Dlg_Active = 1;
 			App->CL_Properties_Tabs->Select_Brushes_Tab();
-			App->CL_Properties_Tabs->flag_Tabs_Dlg_Active = 0;
-			
+			App->CL_Properties_Tabs->flag_Tabs_Dlg_Active = 0;	
 		}
 	}
 }
