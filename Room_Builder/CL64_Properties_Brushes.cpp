@@ -319,38 +319,7 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Brush_Dlg(HWND hDlg, UINT message
 
 		if (LOWORD(wParam) == IDC_BT_DELETE_SEL_BRUSH)
 		{
-			const char* brushName = App->CL_Doc->CurBrush->Name;
-
-			// Array of non-deletable brush names
-			const char* nonDeletableBrushes[] = { "Player_Main", "Environ_0" };
-
-			// Check if the current brush name is in the non-deletable list
-			for (const char* nonDeletable : nonDeletableBrushes) 
-			{
-				if (strcmp(brushName, nonDeletable) == 0) 
-				{
-					App->Say("This Brush cannot be Deleted");
-					return true;
-				}
-			}
-
-			int NumSelBrushes = App->CL_X_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes);
-
-			if (NumSelBrushes > 0)
-			{
-				App->CL_Dialogs->YesNo("Are you sure", "Do you want to Delete the selected Brushes");
-
-				if (App->CL_Dialogs->flag_Dlg_Canceled == false)
-				{
-					App->CL_Ogre->OGL_Listener->Show_Visuals(false);
-					App->CL_Entities->Delete_Brush();
-				}
-			}
-			else
-			{
-				App->Say("No Brush Selected");
-			}
-
+			App->CL_Properties_Brushes->Delete_Selected_Brush();
 			return TRUE;
 		}
 
@@ -372,6 +341,44 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Brush_Dlg(HWND hDlg, UINT message
 	}
 	}
 	return FALSE;
+}
+
+// *************************************************************************
+// *	  	Delete_Selected_Brush:- Terry and Hazel Flanigan 2025		   *
+// *************************************************************************
+void CL64_Properties_Brushes::Delete_Selected_Brush()
+{
+	const char* brushName = App->CL_Doc->CurBrush->Name;
+
+	// Array of non-deletable brush names
+	const char* nonDeletableBrushes[] = { "Player_Main", "Environ_0" };
+
+	// Check if the current brush name is in the non-deletable list
+	for (const char* nonDeletable : nonDeletableBrushes)
+	{
+		if (strcmp(brushName, nonDeletable) == 0)
+		{
+			App->Say("This Brush cannot be Deleted");
+			return;
+		}
+	}
+
+	int NumSelBrushes = App->CL_X_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes);
+
+	if (NumSelBrushes > 0)
+	{
+		App->CL_Dialogs->YesNo("Are you sure delete", App->CL_Doc->CurBrush->Name);
+
+		if (App->CL_Dialogs->flag_Dlg_Canceled == false)
+		{
+			App->CL_Ogre->OGL_Listener->Show_Visuals(false);
+			App->CL_Entities->Delete_Brush_and_Object();
+		}
+	}
+	else
+	{
+		App->Say("No Brush Selected");
+	}
 }
 
 // *************************************************************************

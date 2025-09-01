@@ -1257,10 +1257,9 @@ void CL64_Properties_Scene::Edit_Teleport_Entity(LPARAM lParam)
 {
 	int Index = Current_Selected_Object; // Get Selected Object Index 
 	int result = 1;
-	int test;
-
-	LPNMLISTVIEW poo = (LPNMLISTVIEW)lParam;
-	test = poo->iItem;
+	
+	LPNMLISTVIEW item = (LPNMLISTVIEW)lParam;
+	int test = item->iItem;
 	ListView_GetItemText(Properties_hLV, test, 0, btext, 20);
 
 	result = strcmp(btext, "Name");

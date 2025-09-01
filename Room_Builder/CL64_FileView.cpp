@@ -1453,7 +1453,7 @@ void CL64_FileView::Context_Delete()
 
 		if (App->CL_Dialogs->flag_Dlg_Canceled == false)
 		{
-			App->CL_Entities->Delete_Object();
+			App->CL_Entities->Delete_Brush_and_Object();
 			App->CL_FileView->Mark_Altered_Folder(FV_Objects_Folder);
 		}
 
@@ -1572,7 +1572,7 @@ void CL64_FileView::Context_Delete()
 		bool Doit = App->CL_Dialogs->flag_Dlg_Canceled;
 		if (Doit == 0)
 		{
-			App->CL_Entities->Delete_Object();
+			App->CL_Entities->Delete_Brush_and_Object();
 			App->CL_FileView->Mark_Altered_Folder(App->CL_FileView->FV_Teleporters_Folder);
 		}
 

@@ -559,13 +559,14 @@ void CL64_Doc::SelectOrtho(POINT point, ViewVars* v)
 				App->CL_Brush_X->Select_Brush_Editor(pMinBrush);
                 App->CL_Ogre->OGL_Listener->Show_Visuals(true);
 
+                EnableMenuItem(App->Menu_Map, ID_EDIT_DELETE, MF_ENABLED);
                 // Entity Selected in OnSelchangeBrushlist
 			}
         } 
     }
     else
     {
-        if (App->CL_Properties_Faces->flag_FaceDlg_Active == 1)
+        if (App->CL_Properties_Faces->flag_FaceDlg_Active == true)
         {
             App->CL_Properties_Faces->Close_Faces_Dialog();
         }
@@ -573,6 +574,7 @@ void CL64_Doc::SelectOrtho(POINT point, ViewVars* v)
         App->CL_Panels->Deselect_All_Brushes_Update_Dlgs();
         App->CL_Top_Tabs->Update_Faces_Combo();
         App->CL_Ogre->OGL_Listener->Show_Visuals(false);
+        EnableMenuItem(App->Menu_Map, ID_EDIT_DELETE, MF_DISABLED | MF_GRAYED);
     }
 
 }

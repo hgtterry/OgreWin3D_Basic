@@ -369,6 +369,7 @@ void CL64_App::LoadProgramResource(void)
 	CheckMenuItem(App->Menu_Map, ID_CAMERA_TEXTURED, MF_BYCOMMAND | MF_CHECKED);
 	CheckMenuItem(App->Menu_Map, ID_SPEED_NORMAL, MF_BYCOMMAND | MF_CHECKED);
 
+	EnableMenuItem(App->Menu_Map, ID_EDIT_DELETE, MF_DISABLED | MF_GRAYED);
 }
 
 // *************************************************************************

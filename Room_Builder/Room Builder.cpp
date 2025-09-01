@@ -405,6 +405,18 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 return 1;
             }
 
+            case ID_EDIT_DELETEFROMSCENE:
+            {
+                App->CL_Properties_Brushes->Delete_Selected_Brush();
+                return 1;
+            }
+
+            case ID_EDIT_DELETE:
+            {
+                App->CL_Properties_Brushes->Delete_Selected_Brush();
+                return 1;
+            }
+            
             case ID_EDIT_SELECTALL:
             {
                // App->CL_Doc->SelectAll();

@@ -335,17 +335,9 @@ void CL64_Entities::Rename_Object(int Index)
 }
 
 // **************************************************************************
-// *	  		Delete_Object:- Terry and Hazel Flanigan 2024				*
-// **************************************************************************
-void CL64_Entities::Delete_Brush()
-{
-	Delete_Object();
-}
-
-// **************************************************************************
 // *	  		Delete_Object:- Terry and Hazel Flanigan 2025				*
 // **************************************************************************
-void CL64_Entities::Delete_Object() 
+void CL64_Entities::Delete_Brush_and_Object() 
 {
 	// Check if the selected brush belongs to a group that requires object deletion
 	if (App->CL_Properties_Brushes->Selected_Brush->GroupId > Enums::Brushs_ID_Players) 

@@ -41,6 +41,7 @@ public:
 	void OnSelchangeBrushlist(int index, bool clear);
 	void Update_SelectedBrushesCount_Dlg();
 	void Move_Brush();
+	void Delete_Selected_Brush();
 
 	void List_Selection_Changed(bool Clear);
 
