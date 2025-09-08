@@ -343,6 +343,8 @@ void CL64_ImGui::Preview_Options_GUI(void)
 			App->flag_Block_Mouse_Buttons = 1;
 			App->CUR = SetCursor(NULL);
 			
+			App->CL_Editor_Control->flag_Scene_Game_Running = true;
+
 			flag_Show_Preview_Options = 0;
 		}
 
@@ -353,6 +355,8 @@ void CL64_ImGui::Preview_Options_GUI(void)
 			App->CL_Ogre->Ogre3D_Listener->flag_LeftMouseDown = 1;
 			App->flag_Block_Mouse_Buttons = 1;
 			App->CUR = SetCursor(NULL);
+
+			App->CL_Editor_Control->flag_Scene_Game_Running = true;
 
 			flag_Show_Preview_Options = 0;
 		}

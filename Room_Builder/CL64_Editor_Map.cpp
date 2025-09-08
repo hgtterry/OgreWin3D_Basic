@@ -1435,6 +1435,18 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Ogre_BR(HWND hDlg, UINT message, WPARAM w
 		break;
 	}
 
+	case WM_SETCURSOR:
+	{
+		if (App->CL_Editor_Control->flag_Scene_Game_Running == true)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
 	case WM_COMMAND:
 	{
 		bool isSceneEditorActive = (App->CL_Editor_Control->flag_Scene_Editor_Active == 1);

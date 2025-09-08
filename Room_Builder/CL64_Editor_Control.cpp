@@ -31,8 +31,9 @@ CL64_Editor_Control::CL64_Editor_Control(void)
 {
 	Parent_hWnd = nullptr;
 
-	flag_PreviewMode_Active = 0;
-	flag_Scene_Editor_Active = 0;
+	flag_PreviewMode_Active = false;
+	flag_Scene_Editor_Active = false;
+	flag_Scene_Game_Running = false;
 }
 
 CL64_Editor_Control::~CL64_Editor_Control(void)
@@ -44,6 +45,11 @@ CL64_Editor_Control::~CL64_Editor_Control(void)
 // *************************************************************************
 void CL64_Editor_Control::Start_Preview_Mode(void)
 {
+	if (flag_PreviewMode_Active == true)
+	{
+		return;
+	}
+
 	// Check for a Player
 	if (App->CL_Scene->flag_Player_Added == false)
 	{

@@ -128,9 +128,10 @@ void CL64_Keyboard::Keyboard_Mode_First(float deltaTime)
 		//------------------------------------------------ Escape 
 		if (GetAsyncKeyState(VK_ESCAPE) < 0 && App->CL_Editor_Control->flag_PreviewMode_Active == 1)
 		{
-			App->CL_ImGui->flag_Show_Preview_Options = 1;
-			App->CL_Ogre->Ogre3D_Listener->flag_LeftMouseDown = 0;
-			App->flag_Block_Mouse_Buttons = 0;
+			App->CL_Editor_Control->flag_Scene_Game_Running = false;
+			App->CL_ImGui->flag_Show_Preview_Options = true;
+			App->CL_Ogre->Ogre3D_Listener->flag_LeftMouseDown = false;
+			App->flag_Block_Mouse_Buttons = false;
 			ReleaseCapture();
 			SetCursor(App->CUR);
 		}
