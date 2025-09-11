@@ -640,7 +640,7 @@ Brush* BrushTemplate::BrushTemplate_CreateStaircase(const BrushTemplate_Staircas
 		if (f)
 		{
 			App->CL_X_FaceList->FaceList_AddFace(fl, f);
-			App->CL_X_Face->Face_SetTextureLock(f, true);
+			App->CL_X_Face->Face_SetTextureLock(f, false);
 		}
 
 		App->CL_X_Maths->Vector3_Set(&(FaceVerts[3]), HalfWidth, -HalfHeight, HalfLength);
@@ -651,7 +651,7 @@ Brush* BrushTemplate::BrushTemplate_CreateStaircase(const BrushTemplate_Staircas
 		if (f)
 		{
 			App->CL_X_FaceList->FaceList_AddFace(fl, f);
-			App->CL_X_Face->Face_SetTextureLock(f, true);
+			App->CL_X_Face->Face_SetTextureLock(f, false);
 		}
 
 		App->CL_X_Maths->Vector3_Set(&(FaceVerts[3]), -HalfWidth, HalfHeight, HalfLength);
@@ -662,7 +662,7 @@ Brush* BrushTemplate::BrushTemplate_CreateStaircase(const BrushTemplate_Staircas
 		if (f)
 		{
 			App->CL_X_FaceList->FaceList_AddFace(fl, f);
-			App->CL_X_Face->Face_SetTextureLock(f, true);
+			App->CL_X_Face->Face_SetTextureLock(f, false);
 		}
 
 		App->CL_X_Maths->Vector3_Set(&(FaceVerts[2]), HalfWidth, HalfHeight, HalfLength);
@@ -672,7 +672,7 @@ Brush* BrushTemplate::BrushTemplate_CreateStaircase(const BrushTemplate_Staircas
 		if (f)
 		{
 			App->CL_X_FaceList->FaceList_AddFace(fl, f);
-			App->CL_X_Face->Face_SetTextureLock(f, true);
+			App->CL_X_Face->Face_SetTextureLock(f, false);
 		}
 
 		App->CL_X_Maths->Vector3_Set(&(FaceVerts[0]), -HalfWidth, HalfHeight, HalfLength);
@@ -682,7 +682,7 @@ Brush* BrushTemplate::BrushTemplate_CreateStaircase(const BrushTemplate_Staircas
 		if (f)
 		{
 			App->CL_X_FaceList->FaceList_AddFace(fl, f);
-			App->CL_X_Face->Face_SetTextureLock(f, true);
+			App->CL_X_Face->Face_SetTextureLock(f, false);
 		}
 
 		b = App->CL_X_Brush->Brush_Create(BRUSH_LEAF, fl, 0);

@@ -466,11 +466,11 @@ bool CL64_File::Open_3dt_File()
 			strcat(pathAndFile, "\\Data\\Room_Builder\\Default.zip");
 		}
 	}
-
+	
 	App->CL_Doc->Load_Wad_File(pathAndFile);
 	App->CL_Doc->UpdateAfterWadChange();
-
-	Set_Player();
+	
+	//Set_Player();
 
 	App->CL_Properties_Brushes->Fill_ListBox();
 	App->CL_Properties_Textures->Fill_ListBox();
@@ -660,12 +660,14 @@ void CL64_File::Set_Player()
 {
 	// TODO Needed at the Moment to test for Player Brush and Set Ogre Player
 
+	return;
 	bool test = App->CL_Brush_X->Check_if_Brush_Name_Exist((LPSTR)"Player_Main");
 	if (test == 0)
 	{
 		App->CL_Entities->Create_Player_Brush("test_Player");
 	}
 
+	Debug
 	Brush* Player = App->CL_Brush_X->Get_Brush_By_Name("Player_Main");
 	if (Player)
 	{
