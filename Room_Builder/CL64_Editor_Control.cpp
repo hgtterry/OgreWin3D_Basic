@@ -279,3 +279,20 @@ void CL64_Editor_Control::Set_Map_Editor_Select_Dlg()
 		return;
 	}
 }
+
+// *************************************************************************
+// *		Set_Map_Editor_Startup:- Terry and Hazel Flanigan 2025		   *
+// *************************************************************************
+void CL64_Editor_Control::Set_Map_Editor_Startup()
+{
+	App->CL_Editor_Map->Current_View = App->CL_Editor_Map->VCam[V_Ogre];
+
+	if (App->CL_Editor_Map->Selected_Window != Enums::Selected_Map_View_3D)
+	{
+		App->CL_Editor_Map->Set_Selected_View(Enums::Selected_Map_View_3D);
+	}
+
+	App->CL_Gizmos->Reset_Grid_And_Hair();
+
+	App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
+}

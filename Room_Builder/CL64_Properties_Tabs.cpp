@@ -64,7 +64,6 @@ void CL64_Properties_Tabs::Show_Tabs_Control_Dlg(bool Show)
 // *************************************************************************
 void CL64_Properties_Tabs::Start_Tabs_Control_Dlg()
 {
-
 	Tabs_Control_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_TABSDIALOG, App->MainHwnd, (DLGPROC)Proc_Tabs_Control);
 
 	flag_Tabs_Dlg_Active = 1;
@@ -77,6 +76,9 @@ void CL64_Properties_Tabs::Start_Tabs_Control_Dlg()
 
 	App->CL_Properties_Templates->Start_TemplatesDialog();
 	App->CL_Properties_Templates->Show_TemplatesDialog(true);
+
+	App->CL_Panels->Position_Tabs_Dlg();
+	ShowWindow(Tabs_Control_Hwnd, true);
 
 	CheckMenuItem(App->Menu_Map, ID_WINDOW_PROPERTIES, MF_BYCOMMAND | MF_CHECKED);
 }

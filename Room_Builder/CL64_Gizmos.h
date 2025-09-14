@@ -36,6 +36,7 @@ public:
 	void Grid_Update(bool Create);
 	void Hair_Update(bool Create);
 	void Enable_Grid_And_Hair(bool Enable);
+	void Reset_Grid_And_Hair();
 
 	// Face
 	void Face_Update(bool Create);

@@ -92,7 +92,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     // Start headers and tabs
     App->CL_Top_Tabs->Start_Headers();
     App->CL_Editor_Scene->Start_Headers_Scene();
+
     App->CL_Properties_Tabs->Start_Tabs_Control_Dlg();
+
     App->CL_FileView->Start_FileView();
     App->CL_FileView->Init_FileView();
 
@@ -1030,17 +1032,19 @@ void StartOgre()
         }
     }
 
-   if (App->CL_X_Preference->flag_SceneEditor == true)
-   {
-       App->CL_Editor_Control->Start_Editor_Scene();
-   }
+	if (App->CL_X_Preference->flag_SceneEditor == true)
+	{
+		App->CL_Editor_Control->Start_Editor_Scene();
+	}
 
-    App->CL_Ogre->Ogre_Render_Loop();
+	App->CL_Editor_Control->Set_Map_Editor_Startup();
 
-    Close_App();
+	App->CL_Ogre->Ogre_Render_Loop();
 
-    SystemParametersInfo(SPI_SETSCREENSAVEACTIVE, TRUE, NULL, TRUE);
-    PostQuitMessage(0);
+	Close_App();
+
+	SystemParametersInfo(SPI_SETSCREENSAVEACTIVE, TRUE, NULL, TRUE);
+	PostQuitMessage(0);
 }
 
 // *************************************************************************

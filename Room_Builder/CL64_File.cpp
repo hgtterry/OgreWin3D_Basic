@@ -649,6 +649,8 @@ void CL64_File::Set_Editor()
 	}
 
 	App->CL_Properties_Tabs->Select_Templates_Tab();
+	App->CL_Editor_Control->Set_Map_Editor_Startup();
+
 	App->CL_Ogre->RenderFrame(7);
 }
 

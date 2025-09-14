@@ -229,6 +229,15 @@ void CL64_Gizmos::Enable_Grid_And_Hair(bool Enable)
 }
 
 // *************************************************************************
+// *	  	Reset_Grid_And_Hair:- Terry and Hazel Flanigan 2025			   *
+// *************************************************************************
+void CL64_Gizmos::Reset_Grid_And_Hair()
+{
+	Grid_Node->setOrientation(Ogre::Quaternion::IDENTITY);
+	Hair_Node->setOrientation(Ogre::Quaternion::IDENTITY);
+}
+
+// *************************************************************************
 // *	  		Face_Update:- Terry and Hazel Flanigan 2025				   *
 // *************************************************************************
 void CL64_Gizmos::Face_Update(bool Create)

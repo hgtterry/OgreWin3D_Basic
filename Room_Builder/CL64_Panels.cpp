@@ -187,3 +187,31 @@ void CL64_Panels::Enable_Scene_Editor_Dialogs(bool Enable)
 
 	}
 }
+
+// *************************************************************************
+// *			Position_Tabs_Dlg:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+bool CL64_Panels::Position_Tabs_Dlg(void)
+{
+	POINT p = { 0 };
+
+	int Diff = MapWindowPoints(App->CL_Editor_Map->Main_View_Dlg_Hwnd, NULL, &p, 1);
+
+	HDWP hdwp;
+
+	RECT rect;
+	GetWindowRect(App->CL_Editor_Map->Main_View_Dlg_Hwnd, &rect);
+
+	int widthX = rect.right - rect.left;
+	int heightY = rect.bottom - rect.top;
+
+	int PosX = p.x;
+	int PosY = p.y;
+
+	hdwp = BeginDeferWindowPos(2);
+
+	DeferWindowPos(hdwp, App->CL_Properties_Tabs->Tabs_Control_Hwnd, NULL, p.x + widthX - 265, PosY + 25,
+		0, 0, SWP_NOSIZE | SWP_NOZORDER);
+
+	return EndDeferWindowPos(hdwp);
+}

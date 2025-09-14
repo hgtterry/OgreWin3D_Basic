@@ -35,6 +35,7 @@ public:
 	void Return_To_Map_Editor(void);
 
 	void Set_Map_Editor_Select_Dlg();
+	void Set_Map_Editor_Startup();
 
 	bool flag_PreviewMode_Active;	// Flag to indicate if preview mode is currently active
 	bool flag_Scene_Editor_Active;
