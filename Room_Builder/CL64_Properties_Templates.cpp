@@ -243,6 +243,8 @@ void CL64_Properties_Templates::Insert_Template()
 			App->CL_FileView->Change_Level_Name();
 			App->CL_FileView->Change_Project_Name();
 
+			App->CL_Editor_Control->Set_Map_Editor_Startup();
+
 			App->CL_Level->flag_File_Been_Saved = false;
 		}
 		else
