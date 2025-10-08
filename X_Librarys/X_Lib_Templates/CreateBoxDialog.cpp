@@ -29,6 +29,8 @@ THE SOFTWARE.
 
 CreateBoxDialog::CreateBoxDialog(void)
 {
+	Main_Dlg_Hwnd = nullptr;
+
 	m_YSize = 128.0f;
 	m_Solid = 0;
 	m_XSizeBot = 128.0f;
@@ -58,16 +60,104 @@ CreateBoxDialog::~CreateBoxDialog(void)
 }
 
 // *************************************************************************
+// *			GetVersion:- Terry and Hazel Flanigan 2025			 	   *
+// *************************************************************************
+char* CreateBoxDialog::GetVersion()
+{
+	return (LPSTR)" TMH_Scene_Builder :-- Create Box [ 05-10-25 ] Build 1 ";
+}
+
+// *************************************************************************
+// *			Init_Bmps_Globals:- Terry Mo and Hazel 2025				   *
+// *************************************************************************
+void CreateBoxDialog::Init_Bmps_Globals(HWND hDlg)
+{
+	/*HWND Temp = GetDlgItem(hDlg, IDC_BT_HELP);
+	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_Help_Bmp);*/
+
+	/*HWND hTooltip_TB_2 = CreateWindowEx(0, TOOLTIPS_CLASS, "", TTS_ALWAYSTIP | TTS_BALLOON | TTS_NOFADE, 0, 0, 0, 0, App->MainHwnd, 0, App->hInst, 0);
+	SendMessage(hTooltip_TB_2, TTM_SETMAXTIPWIDTH, 0, 250);*/
+
+	/*Temp = GetDlgItem(hDlg, IDC_BT_HELP);
+	TOOLINFO ti1 = { 0 };
+	ti1.cbSize = sizeof(ti1);
+	ti1.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti1.uId = (UINT_PTR)Temp;
+	ti1.lpszText = (LPSTR)"Help / Information.";
+	ti1.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti1);*/
+}
+
+LRESULT CALLBACK CreateBoxDialog::OwnerEditProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam, UINT_PTR uIdSubclass, DWORD_PTR dwRefData)
+{
+	switch (uMsg)
+	{
+	case WM_CHAR:
+	{
+		switch (wParam)
+		{
+
+		case VK_RETURN:
+		{
+			App->CL_X_CreateBoxDialog->Update();
+			return 0;
+		}
+
+		}
+	}
+
+	}
+
+	return DefSubclassProc(hWnd, uMsg, wParam, lParam);
+}
+
+// *************************************************************************
+// *		Capture_Edit_Boxes:- Terry and Hazel Flanigan 2025		 	   *
+// *************************************************************************
+void CreateBoxDialog::Capture_Edit_Boxes(HWND hDlg)
+{
+	// Array of control IDs to be processed
+	const int controlIDs[] = { IDC_XSIZETOP, IDC_ZSIZETOP, IDC_XSIZEBOT, IDC_ZSIZEBOT, IDC_YSIZE, IDC_THICKNESS };
+
+	// Loop through each control ID and set the window subclass
+	for (int id : controlIDs) {
+		HWND control = GetDlgItem(hDlg, id); // Retrieve the handle for the control
+		SetWindowSubclass(control, OwnerEditProc, 0, 0); // Set the subclass procedure for the control
+	}
+}
+
+// *************************************************************************
+// *		Remove_Edit_Boxes:- Terry and Hazel Flanigan 2025		 	   *
+// *************************************************************************
+void CreateBoxDialog::Remove_Edit_Boxes(HWND hDlg)
+{
+	// Array of control IDs to remove the subclass from
+	const int controlIDs[] = { IDC_XSIZETOP, IDC_ZSIZETOP, IDC_XSIZEBOT, IDC_ZSIZEBOT };
+
+	// Iterate through each control ID and remove the subclass
+	for (int id : controlIDs)
+	{
+		HWND control = GetDlgItem(hDlg, id);
+		RemoveWindowSubclass(control, OwnerEditProc, 0);
+	}
+}
+
+// *************************************************************************
 // *	  	Start_CreateBox_Dlg:- Terry and Hazel Flanigan 2025			   *
 // *************************************************************************
 void CreateBoxDialog::Start_CreateBox_Dlg()
 {
-
 	pBoxTemplate = App->CL_Level->Level_GetBoxTemplate();
 
 	App->CL_Properties_Tabs->Enable_Tabs_Dlg(false);
 
-	DialogBox(App->hInst, (LPCTSTR)IDD_CREATE_BOX, App->MainHwnd, (DLGPROC)Proc_CreateBox);
+	CreateDialog(App->hInst, (LPCTSTR)IDD_CREATE_BOX, App->MainHwnd, (DLGPROC)Proc_CreateBox);
+
+	Get_Dialog_Members(Main_Dlg_Hwnd);
+	Set_BoxTemplate();
+	CreateCube();
+
+	App->CL_Ogre->OGL_Listener->Show_Visuals(true);
 }
 
 // *************************************************************************
@@ -80,6 +170,8 @@ LRESULT CALLBACK CreateBoxDialog::Proc_CreateBox(HWND hDlg, UINT message, WPARAM
 	{
 	case WM_INITDIALOG:
 	{
+		App->CL_X_CreateBoxDialog->Capture_Edit_Boxes(hDlg);
+
 		// Array of control IDs to set font to Font_CB15
 		const int controlIDs[] =
 		{
@@ -98,6 +190,12 @@ LRESULT CALLBACK CreateBoxDialog::Proc_CreateBox(HWND hDlg, UINT message, WPARAM
 			SendDlgItemMessage(hDlg, id, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		}
 
+		App->CL_X_CreateBoxDialog->Main_Dlg_Hwnd = hDlg;
+
+		App->CL_X_Shapes_3D->Start_Zoom = 400;
+		App->CL_X_Shapes_3D->Render_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_BOX_3D, hDlg, (DLGPROC)App->CL_X_Shapes_3D->Proc_Box_Viewer_3D);
+		App->CL_X_Shapes_3D->Set_OgreWindow();
+
 		// Initialize dialog members
 		App->CL_X_CreateBoxDialog->SetMembers();
 		App->CL_X_CreateBoxDialog->Set_Dialog_Members(hDlg);
@@ -106,13 +204,29 @@ LRESULT CALLBACK CreateBoxDialog::Proc_CreateBox(HWND hDlg, UINT message, WPARAM
 		// Generate and set the box name
 		int Count = App->CL_X_Brush->Get_Brush_Count();
 		char Name[32];
-		snprintf(Name, sizeof(Name), "Box_%d", Count);
+		snprintf(Name, sizeof(Name), "Box_%d", Count+1);
 		SetDlgItemText(hDlg, IDC_EDITNAME, Name);
 
 		// Set checkbox state
 		HWND Temp = GetDlgItem(hDlg, IDC_CKWORLDCENTRE);
 		SendMessage(Temp, BM_SETCHECK, 1, 0);
 		App->CL_X_CreateBoxDialog->m_UseCamPos = 0;
+
+		App->CL_X_CreateBoxDialog->Init_Bmps_Globals(hDlg);
+
+		if (App->CL_X_Brush->Get_Brush_Count() == 0) // New Scene
+		{
+			App->CL_X_CreateBoxDialog->flag_Default = 0;
+			App->CL_X_CreateBoxDialog->flag_Room = 1;
+			RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+			int brushCount = App->CL_X_Brush->Get_Brush_Count();
+			std::string boxName = "Box_" + std::to_string(brushCount);
+
+			SetDlgItemText(hDlg, IDC_EDITNAME, boxName.c_str());
+
+			App->CL_X_CreateBoxDialog->SetRoom(hDlg);
+		}
 
 		return TRUE;
 	}
@@ -183,6 +297,22 @@ LRESULT CALLBACK CreateBoxDialog::Proc_CreateBox(HWND hDlg, UINT message, WPARAM
 		}
 
 		return CDRF_DODEFAULT;
+	}
+
+	case WM_MOUSEWHEEL:
+	{
+		int zDelta = (short)HIWORD(wParam);    // wheel rotation
+
+		if (zDelta > 0)
+		{
+			App->CL_X_Shapes_3D->RenderListener->Wheel_Move = -1;
+		}
+		else if (zDelta < 0)
+		{
+			App->CL_X_Shapes_3D->RenderListener->Wheel_Move = 1;
+		}
+
+		return 1;
 	}
 
 	case WM_COMMAND:
@@ -290,7 +420,15 @@ LRESULT CALLBACK CreateBoxDialog::Proc_CreateBox(HWND hDlg, UINT message, WPARAM
 			App->CL_X_CreateBoxDialog->CreateCube();
 
 			App->CL_Properties_Tabs->Enable_Tabs_Dlg(true);
+
+			App->CL_X_Shapes_3D->Close_OgreWindow();
+
+			App->CL_X_CreateBoxDialog->Remove_Edit_Boxes(hDlg);
+
 			App->CL_Properties_Templates->Enable_Insert_Button(true);
+
+			strcpy(App->CL_Properties_Templates->LastCreated_ShapeName, App->CL_X_CreateBoxDialog->BoxName);
+			App->CL_Properties_Templates->Insert_Template();// Insert_Template();
 
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
@@ -300,6 +438,11 @@ LRESULT CALLBACK CreateBoxDialog::Proc_CreateBox(HWND hDlg, UINT message, WPARAM
 		if (LOWORD(wParam) == IDCANCEL)
 		{
 			App->CL_Properties_Tabs->Enable_Tabs_Dlg(true);
+
+			App->CL_X_Shapes_3D->Close_OgreWindow();
+
+			App->CL_X_CreateBoxDialog->Remove_Edit_Boxes(hDlg);
+
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 
@@ -309,6 +452,16 @@ LRESULT CALLBACK CreateBoxDialog::Proc_CreateBox(HWND hDlg, UINT message, WPARAM
 	}
 	}
 	return FALSE;
+}
+
+// *************************************************************************
+// *			Update:- Terry and Hazel Flanigan 2024					   *
+// *************************************************************************
+void CreateBoxDialog::Update(void)
+{
+	Get_Dialog_Members(Main_Dlg_Hwnd);
+	Set_BoxTemplate();
+	CreateCube();
 }
 
 // *************************************************************************

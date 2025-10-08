@@ -30,12 +30,15 @@ public:
 	CreateBoxDialog(void);
 	~CreateBoxDialog(void);
 
+	char* GetVersion();
+
 	void Start_CreateBox_Dlg();
 	void CreateDefault_TemplateCube();
 
 	void CreateCube();
 
 	void CreateNewTemplateBrush(Brush* pBrush);
+	void Update(void);
 
 	BrushTemplate_Box* pBoxTemplate;
 
@@ -53,6 +56,10 @@ public:
 
 private:
 	static LRESULT CALLBACK Proc_CreateBox(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK OwnerEditProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam, UINT_PTR uIdSubclass, DWORD_PTR dwRefData);
+
+	void Capture_Edit_Boxes(HWND hDlg);
+	void Remove_Edit_Boxes(HWND hDlg);
 
 	void SetMembers();
 	void Get_Dialog_Members(HWND hDlg);
@@ -61,9 +68,13 @@ private:
 	void Set_BoxTemplate();
 
 	void SetDefaults(HWND hDlg);
+	void Init_Bmps_Globals(HWND hDlg);
+
 	void SetRoom(HWND hDlg);
 
 	void Zero_Dlg_Flags(HWND hDlg);
+
+	HWND Main_Dlg_Hwnd;
 
 	bool Solid_Flag;
 	bool Hollow_Flag;

@@ -32,6 +32,9 @@ public:
 	void Enable_Insert_Button(bool Enable);
 	void Start_TemplatesDialog();
 	void Show_TemplatesDialog(bool Show);
+	void Insert_Template();
+
+	char LastCreated_ShapeName[20];
 
 	HWND TemplatesDlg_Hwnd;
 
@@ -39,8 +42,7 @@ private:
 	static LRESULT CALLBACK Proc_Templates(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	void Set_Icons();
-	void Insert_Template();
-
+	
 	bool flag_Insert_Enabled;
 };
 
