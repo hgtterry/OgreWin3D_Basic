@@ -25,7 +25,7 @@ typedef struct ViewVarsTag
 	//Ogre::uint8*		pBits;
 	//Ogre::uint32*		pZBuffer;
 	Ogre::uint32		ViewType;
-	float				ZoomFactor = 1;
+	float				ZoomFactor = 5;
 
 	//T_Vec3 Vpn, Vright, Vup, CamPos;
 	T_Vec3 CamPos;

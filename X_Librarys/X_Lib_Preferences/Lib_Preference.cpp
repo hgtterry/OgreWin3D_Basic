@@ -42,6 +42,8 @@ Lib_Preference::Lib_Preference(void)
 	flag_MapEditor = true;
 	flag_SceneEditor = false;
 
+	Defalut_Zoom = 0.5;
+
 	WriteData = nullptr;
 
 	WriteRecentFiles = nullptr;

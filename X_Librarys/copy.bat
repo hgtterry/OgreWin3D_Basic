@@ -18,9 +18,13 @@ echo f |xcopy X_Lib_Templates\CreateBoxDialog.h ..\Common_64\OW3D\include\Create
 echo f |xcopy X_Lib_Templates\CreateConeDialog.h ..\Common_64\OW3D\include\CreateConeDialog.h /y
 echo f |xcopy X_Lib_Templates\CreateCylDialog.h ..\Common_64\OW3D\include\CreateCylDialog.h /y
 echo f |xcopy X_Lib_Templates\CreateStaircaseDialog.h ..\Common_64\OW3D\include\CreateStaircaseDialog.h /y
+echo f |xcopy X_Lib_Templates\Shapes_Render_Listener.h ..\Common_64\OW3D\include\Shapes_Render_Listener.h /y
+echo f |xcopy X_Lib_Templates\Shapes_3D.h ..\Common_64\OW3D\include\Shapes_3D.h /y
 
-
+echo f |xcopy X_Lib_Templates\OGL_Listener.h ..\Common_64\OW3D\include\OGL_Listener.h /y
 
 echo f |xcopy X_Lib_Zip\zip.h ..\Common_64\OW3D\include\zip.h /y
 echo f |xcopy X_Lib_Zip\unzip.h ..\Common_64\OW3D\include\unzip.h /y
+
+echo "OW3D"
 pause

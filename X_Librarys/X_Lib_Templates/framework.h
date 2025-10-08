@@ -23,6 +23,9 @@
 #include "Ogre.h"
 #include "irrKlang.h"
 
+#include <gl/gl.h>
+#include <gl/glu.h>
+
 #define GE_FALSE	(0)
 #define GE_TRUE		(1)
 #define	GE_PI		((float)3.14159265358979323846f)

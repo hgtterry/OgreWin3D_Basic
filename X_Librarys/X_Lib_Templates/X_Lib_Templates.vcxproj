@@ -153,8 +153,11 @@
     <ClInclude Include="CreateCylDialog.h" />
     <ClInclude Include="CreateStaircaseDialog.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="OGL_Listener.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="CreateBoxDialog.h" />
+    <ClInclude Include="Shapes_3D.h" />
+    <ClInclude Include="Shapes_Render_Listener.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BrushTemplate.cpp" />
@@ -162,12 +165,15 @@
     <ClCompile Include="CreateConeDialog.cpp" />
     <ClCompile Include="CreateCylDialog.cpp" />
     <ClCompile Include="CreateStaircaseDialog.cpp" />
+    <ClCompile Include="OGL_Listener.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Shapes_3D.cpp" />
+    <ClCompile Include="Shapes_Render_Listener.cpp" />
     <ClCompile Include="Test_Lib.cpp" />
     <ClCompile Include="CreateBoxDialog.cpp" />
   </ItemGroup>

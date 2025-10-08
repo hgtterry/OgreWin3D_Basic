@@ -43,7 +43,7 @@ public:
 
 	int Grid_Fine_Spacing;
 	int Grid_Spacing;
-
+	float Defalut_Zoom;
 	// Options
 	bool flag_OpenLastFile;
 	bool flag_MapEditor;

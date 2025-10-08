@@ -120,7 +120,7 @@ CL64_Editor_Map::CL64_Editor_Map()
 
 	Pen_Fine_Grid = CreatePen(PS_SOLID, 0, RGB(0, 0, 0));
 	Pen_Grid = CreatePen(PS_SOLID, 0, RGB(112, 112, 112));
-	PenTemplate = CreatePen(PS_SOLID, 1, RGB(0, 0, 255));
+	PenTemplate = CreatePen(PS_SOLID, 1, RGB(0, 255, 0));
 	PenBrushes = CreatePen(PS_SOLID, 1, RGB(255, 255, 255));
 	PenSelected = CreatePen(PS_SOLID, 1, RGB(0, 255, 255));
 	Pen_Camera = CreatePen(PS_SOLID, 0, RGB(0, 255, 0));
@@ -184,7 +184,7 @@ void CL64_Editor_Map::Reset_Views_All()
 		VCam[Count]->CamPos.y = 0;
 		VCam[Count]->CamPos.z = 0;
 
-		VCam[Count]->ZoomFactor = 0.3;
+		VCam[Count]->ZoomFactor = App->CL_X_Preference->Defalut_Zoom;
 
 		Count++;
 	}
@@ -680,7 +680,7 @@ void CL64_Editor_Map::Set_Views_Defaults(int Index, Ogre::int32 View, const char
 {
 	strcpy(VCam[Index]->Name, Name);
 	VCam[Index]->ViewType = View;
-	VCam[Index]->ZoomFactor = 0.4;
+	VCam[Index]->ZoomFactor = 1.5;
 
 	VCam[Index]->XCenter = 310;
 	VCam[Index]->YCenter = 174;

@@ -49,7 +49,7 @@ THE SOFTWARE.
 #include "CX_Array.h"
 
 #include "CX_SelFaceList.h"
-//#include "CL64_SelFaceList.h"
+#include "Shapes_3D.h"
 
 #include "CL64_WadFile.h"
 #include "CL64_Mesh_Mgr.h"
@@ -198,6 +198,7 @@ public:
 	CreateConeDialog*			CL_X_CreateConeDialog;
 	CreateCylDialog*			CL_X_CreateCylDialog;
 	CreateStaircaseDialog*		CL_X_CreateStaircaseDialog;
+	Shapes_3D*					CL_X_Shapes_3D;
 
 	// Project
 	CL64_Project*				CL_Project;
