@@ -357,9 +357,10 @@ LRESULT CALLBACK CreateStaircaseDialog::Proc_CreateStaircase(HWND hDlg, UINT mes
 			App->CL_X_CreateStaircaseDialog->Set_StaircaseTemplate();
 			App->CL_X_CreateStaircaseDialog->CreateStaircase();
 
-			App->CL_Properties_Templates->Enable_Insert_Button(true);
-
 			App->CL_Properties_Tabs->Enable_Tabs_Dlg(true);
+
+			strcpy(App->CL_Properties_Templates->LastCreated_ShapeName, App->CL_X_CreateStaircaseDialog->StaircaseName);
+			App->CL_Properties_Templates->Insert_Template();
 
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;

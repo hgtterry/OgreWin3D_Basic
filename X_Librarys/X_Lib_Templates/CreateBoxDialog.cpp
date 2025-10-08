@@ -425,10 +425,8 @@ LRESULT CALLBACK CreateBoxDialog::Proc_CreateBox(HWND hDlg, UINT message, WPARAM
 
 			App->CL_X_CreateBoxDialog->Remove_Edit_Boxes(hDlg);
 
-			App->CL_Properties_Templates->Enable_Insert_Button(true);
-
 			strcpy(App->CL_Properties_Templates->LastCreated_ShapeName, App->CL_X_CreateBoxDialog->BoxName);
-			App->CL_Properties_Templates->Insert_Template();// Insert_Template();
+			App->CL_Properties_Templates->Insert_Template();
 
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
@@ -684,8 +682,6 @@ void CreateBoxDialog::CreateDefault_TemplateCube()
 	{
 		strcpy(App->CL_Doc->LastTemplateTypeName, BoxName);
 		CreateNewTemplateBrush(pCube);
-
-		App->CL_Properties_Templates->Enable_Insert_Button(true);
 
 		//Debug
 	}

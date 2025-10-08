@@ -376,7 +376,8 @@ LRESULT CALLBACK CreateConeDialog::Proc_CreateCone(HWND hDlg, UINT message, WPAR
 
 			App->CL_Properties_Tabs->Enable_Tabs_Dlg(true);
 
-			App->CL_Properties_Templates->Enable_Insert_Button(true);
+			strcpy(App->CL_Properties_Templates->LastCreated_ShapeName, App->CL_X_CreateConeDialog->ConeName);
+			App->CL_Properties_Templates->Insert_Template();
 
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;

@@ -39,18 +39,6 @@ CL64_Properties_Templates::~CL64_Properties_Templates()
 }
 
 // *************************************************************************
-// *	  	Enable_Insert_Button:- Terry and Hazel Flanigan 2025		   *
-// *************************************************************************
-void CL64_Properties_Templates::Enable_Insert_Button(bool Enable)
-{
-	EnableWindow(GetDlgItem(TemplatesDlg_Hwnd, IDC_BTINSERT), Enable);
-
-	flag_Insert_Enabled = Enable;
-
-	RedrawWindow(TemplatesDlg_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-}
-
-// *************************************************************************
 // *	  	Show_TemplatesDialog:- Terry and Hazel Flanigan 2025		   *
 // *************************************************************************
 void CL64_Properties_Templates::Show_TemplatesDialog(bool Show)
@@ -66,9 +54,6 @@ void CL64_Properties_Templates::Start_TemplatesDialog()
 
 	TemplatesDlg_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_PROPS_TEMPLATES, App->CL_Properties_Tabs->Tabs_Control_Hwnd, (DLGPROC)Proc_Templates);
 	Set_Icons();
-
-	Enable_Insert_Button(true);
-
 }
 
 // *************************************************************************
@@ -82,8 +67,6 @@ LRESULT CALLBACK CL64_Properties_Templates::Proc_Templates(HWND hDlg, UINT messa
 	case WM_INITDIALOG:
 	{
 		SendDlgItemMessage(hDlg, IDC_ST_TEMPLATES, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_BTINSERT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		
 		return TRUE;
 	}
 
@@ -114,34 +97,11 @@ LRESULT CALLBACK CL64_Properties_Templates::Proc_Templates(HWND hDlg, UINT messa
 	{
 		LPNMHDR some_item = (LPNMHDR)lParam;
 
-		if (some_item->idFrom == IDC_BTINSERT)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-
-			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BTINSERT));
-			if (test == 0)
-			{
-				App->Custom_Button_Greyed(item);
-			}
-			else
-			{
-				App->Custom_Button_Normal(item);
-			}
-
-			return CDRF_DODEFAULT;
-		}
-
 		return CDRF_DODEFAULT;
 	}
 
 	case WM_COMMAND:
 	{
-		if (LOWORD(wParam) == IDC_BTINSERT)
-		{
-			App->CL_Properties_Templates->Insert_Template();
-			return 1;
-		}
-
 		if (LOWORD(wParam) == IDC_BRUSH_CUBE_PRIMITIVE)
 		{
 			App->CL_X_CreateBoxDialog->Start_CreateBox_Dlg();
@@ -265,7 +225,6 @@ void CL64_Properties_Templates::Insert_Template()
 
 	App->CL_Properties_Brushes->Fill_ListBox();
 
-	App->CL_Properties_Templates->Enable_Insert_Button(false);
 	App->CL_Properties_Brushes->Set_Dlg_Brush_Options_Buttons(false);
 
 }

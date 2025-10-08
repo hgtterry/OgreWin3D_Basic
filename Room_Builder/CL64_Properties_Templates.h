@@ -29,7 +29,6 @@ public:
 	CL64_Properties_Templates();
 	~CL64_Properties_Templates();
 
-	void Enable_Insert_Button(bool Enable);
 	void Start_TemplatesDialog();
 	void Show_TemplatesDialog(bool Show);
 	void Insert_Template();

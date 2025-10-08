@@ -237,8 +237,6 @@ void CL64_Scene::Clear_Level(bool FromFile)
 			App->Say_Win("Can not create TXL Class");
 		}
 
-		App->CL_Properties_Templates->Enable_Insert_Button(true);
-
 		if (App->CL_Mesh_Mgr->World_Ent && App->CL_Mesh_Mgr->World_Node)
 		{
 			App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_Model;
