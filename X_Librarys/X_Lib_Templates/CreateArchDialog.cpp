@@ -29,6 +29,8 @@ THE SOFTWARE.
 
 CreateArchDialog::CreateArchDialog(void)
 {
+	Main_Dlg_Hwnd = nullptr;
+
 	m_NumSlits = 3;
 	m_Thickness = 150;
 	m_Width = 100;
@@ -65,6 +67,83 @@ CreateArchDialog::~CreateArchDialog(void)
 }
 
 // *************************************************************************
+// *			Init_Bmps_Globals:- Terry Mo and Hazel 2025				   *
+// *************************************************************************
+void CreateArchDialog::Init_Bmps_Globals(HWND hDlg)
+{
+	/*HWND Temp = GetDlgItem(hDlg, IDC_BT_HELP);
+	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_Help_Bmp);*/
+
+	/*HWND hTooltip_TB_2 = CreateWindowEx(0, TOOLTIPS_CLASS, "", TTS_ALWAYSTIP | TTS_BALLOON | TTS_NOFADE, 0, 0, 0, 0, App->MainHwnd, 0, App->hInst, 0);
+	SendMessage(hTooltip_TB_2, TTM_SETMAXTIPWIDTH, 0, 250);
+
+	Temp = GetDlgItem(hDlg, IDC_BT_HELP);
+	TOOLINFO ti1 = { 0 };
+	ti1.cbSize = sizeof(ti1);
+	ti1.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti1.uId = (UINT_PTR)Temp;
+	ti1.lpszText = (LPSTR)"Help / Information.";
+	ti1.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti1);*/
+}
+
+LRESULT CALLBACK CreateArchDialog::OwnerEditProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam, UINT_PTR uIdSubclass, DWORD_PTR dwRefData)
+{
+	switch (uMsg)
+	{
+	case WM_CHAR:
+	{
+		switch (wParam)
+		{
+
+		case VK_RETURN:
+		{
+			App->CL_X_CreateArchDialog->Update();
+			return 0;
+		}
+
+		}
+	}
+
+	}
+
+	return DefSubclassProc(hWnd, uMsg, wParam, lParam);
+}
+
+// *************************************************************************
+// *		Capture_Edit_Boxes:- Terry and Hazel Flanigan 2025		 	   *
+// *************************************************************************
+void CreateArchDialog::Capture_Edit_Boxes(HWND hDlg)
+{
+	// Array of control IDs to be processed
+	const int controlIDs[] = { IDC_STARTANGLE, IDC_ENDANGLE, IDC_RADIUS, IDC_WALLSIZE ,IDC_NUMSLITS
+		,IDC_THICKNESS ,IDC_WIDTH ,IDC_RADIUS2 ,IDC_SIDES };
+
+	// Loop through each control ID and set the window subclass
+	for (int id : controlIDs) {
+		HWND control = GetDlgItem(hDlg, id); // Retrieve the handle for the control
+		SetWindowSubclass(control, OwnerEditProc, 0, 0); // Set the subclass procedure for the control
+	}
+}
+
+// *************************************************************************
+// *		Remove_Edit_Boxes:- Terry and Hazel Flanigan 2025		 	   *
+// *************************************************************************
+void CreateArchDialog::Remove_Edit_Boxes(HWND hDlg)
+{
+	// Array of control IDs to remove the subclass from
+	const int controlIDs[] = { IDC_STARTANGLE, IDC_ENDANGLE, IDC_RADIUS, IDC_WALLSIZE ,IDC_NUMSLITS
+		,IDC_THICKNESS ,IDC_WIDTH ,IDC_RADIUS2 ,IDC_SIDES };
+
+	// Iterate through each control ID and remove the subclass
+	for (int id : controlIDs)
+	{
+		HWND control = GetDlgItem(hDlg, id);
+		RemoveWindowSubclass(control, OwnerEditProc, 0);
+	}
+}
+
+// *************************************************************************
 // *	  	Start_CreateArch_Dlg:- Terry and Hazel Flanigan 2025		   *
 // *************************************************************************
 void CreateArchDialog::Start_CreateArch_Dlg()
@@ -72,7 +151,14 @@ void CreateArchDialog::Start_CreateArch_Dlg()
 	pArchTemplate = App->CL_Level->Level_GetArchTemplate();
 
 	App->CL_Properties_Tabs->Enable_Tabs_Dlg(false);
-	DialogBox(App->hInst, (LPCTSTR)IDD_CREATE_ARCH, App->MainHwnd, (DLGPROC)CreateArch_Proc);
+
+	CreateDialog(App->hInst, (LPCTSTR)IDD_CREATE_ARCH, App->MainHwnd, (DLGPROC)CreateArch_Proc);
+
+	Get_DLG_Members(Main_Dlg_Hwnd);
+	Set_ArchTemplate();
+	CreateArch();
+
+	App->CL_Ogre->OGL_Listener->Show_Visuals(true);
 }
 
 // *************************************************************************
@@ -85,6 +171,8 @@ LRESULT CALLBACK CreateArchDialog::CreateArch_Proc(HWND hDlg, UINT message, WPAR
 	{
 	case WM_INITDIALOG:
 	{
+		App->CL_X_CreateArchDialog->Capture_Edit_Boxes(hDlg);
+
 		SendDlgItemMessage(hDlg, IDC_STTHICKNESS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_STWIDTH, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_STRADIUS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
@@ -122,6 +210,15 @@ LRESULT CALLBACK CreateArchDialog::CreateArch_Proc(HWND hDlg, UINT message, WPAR
 
 		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		App->CL_X_CreateArchDialog->Main_Dlg_Hwnd = hDlg;
+
+		App->CL_X_Shapes_3D->Start_Zoom = 400;
+		App->CL_X_Shapes_3D->Render_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_BOX_3D, hDlg, (DLGPROC)App->CL_X_Shapes_3D->Proc_Box_Viewer_3D);
+
+		SetWindowPos(App->CL_X_Shapes_3D->Render_hWnd, NULL, 20, 325, 0, 0, SWP_NOSIZE);
+
+		App->CL_X_Shapes_3D->Set_OgreWindow();
 
 		App->CL_X_CreateArchDialog->Set_Members();
 		App->CL_X_CreateArchDialog->Set_DLG_Members(hDlg);
@@ -586,7 +683,9 @@ LRESULT CALLBACK CreateArchDialog::CreateArch_Proc(HWND hDlg, UINT message, WPAR
 			App->CL_X_CreateArchDialog->CreateArch();
 
 			App->CL_Properties_Tabs->Enable_Tabs_Dlg(true);
-	
+			App->CL_X_Shapes_3D->Close_OgreWindow();
+			App->CL_X_CreateArchDialog->Remove_Edit_Boxes(hDlg);
+
 			strcpy(App->CL_Properties_Templates->LastCreated_ShapeName, App->CL_X_CreateArchDialog->ArchName);
 			App->CL_Properties_Templates->Insert_Template();
 
@@ -597,6 +696,9 @@ LRESULT CALLBACK CreateArchDialog::CreateArch_Proc(HWND hDlg, UINT message, WPAR
 		if (LOWORD(wParam) == IDCANCEL)
 		{
 			App->CL_Properties_Tabs->Enable_Tabs_Dlg(true);
+			App->CL_X_Shapes_3D->Close_OgreWindow();
+			App->CL_X_CreateArchDialog->Remove_Edit_Boxes(hDlg);
+
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
@@ -617,6 +719,16 @@ void CreateArchDialog::Zero_Dlg_Flags(HWND hDlg)
 	flag_Ring_Flag = 0;
 
 	RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+}
+
+// *************************************************************************
+// *			Update:- Terry and Hazel Flanigan 2024					   *
+// *************************************************************************
+void CreateArchDialog::Update(void)
+{
+	Get_DLG_Members(Main_Dlg_Hwnd);
+	Set_ArchTemplate();
+	CreateArch();
 }
 
 // *************************************************************************
@@ -859,6 +971,8 @@ void CreateArchDialog::Set_Defaults(HWND hDlg)
 	App->CL_X_CreateArchDialog->m_Shape = 0;
 	App->CL_X_CreateArchDialog->flag_Rectangle_Flag = 1;
 	App->CL_X_CreateArchDialog->flag_Round_Flag = 0;
+
+	App->CL_X_Shapes_3D->Set_Camera(500);
 
 	RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 

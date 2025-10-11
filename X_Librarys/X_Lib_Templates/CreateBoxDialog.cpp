@@ -64,7 +64,7 @@ CreateBoxDialog::~CreateBoxDialog(void)
 // *************************************************************************
 char* CreateBoxDialog::GetVersion()
 {
-	return (LPSTR)" TMH_Scene_Builder :-- Create Box [ 05-10-25 ] Build 1 ";
+	return (LPSTR)" TMH_Scene_Builder :-- Create Box [ 09-10-25 ] Build 1 ";
 }
 
 // *************************************************************************
@@ -326,6 +326,11 @@ LRESULT CALLBACK CreateBoxDialog::Proc_CreateBox(HWND hDlg, UINT message, WPARAM
 			App->CL_X_CreateBoxDialog->m_Solid = 0;
 			App->CL_X_CreateBoxDialog->Solid_Flag = 1;
 
+			HWND temp = GetDlgItem(App->CL_X_CreateBoxDialog->Main_Dlg_Hwnd, IDC_THICKNESS);
+			EnableWindow(temp, false);
+
+			App->CL_X_CreateBoxDialog->Update();
+
 			RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			return TRUE;
 		}
@@ -339,6 +344,11 @@ LRESULT CALLBACK CreateBoxDialog::Proc_CreateBox(HWND hDlg, UINT message, WPARAM
 			App->CL_X_CreateBoxDialog->m_Solid = 1;
 			App->CL_X_CreateBoxDialog->Hollow_Flag = 1;
 
+			HWND temp = GetDlgItem(App->CL_X_CreateBoxDialog->Main_Dlg_Hwnd, IDC_THICKNESS);
+			EnableWindow(temp, true);
+
+			App->CL_X_CreateBoxDialog->Update();
+
 			RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			return TRUE;
 		}
@@ -350,7 +360,9 @@ LRESULT CALLBACK CreateBoxDialog::Proc_CreateBox(HWND hDlg, UINT message, WPARAM
 
 			int Count = App->CL_X_Brush->Get_Brush_Count();
 			char Name[32];
-			snprintf(Name, sizeof(Name), "Box_%d%s", Count, App->CL_X_CreateBoxDialog->Cut_Flag ? "_Cut" : "");
+			snprintf(Name, sizeof(Name), "Box_%d%s", Count+1, App->CL_X_CreateBoxDialog->Cut_Flag ? "_Cut" : "");
+
+			App->CL_X_CreateBoxDialog->Update();
 
 			SetDlgItemText(hDlg, IDC_EDITNAME, (LPTSTR)Name);
 			RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
@@ -389,11 +401,17 @@ LRESULT CALLBACK CreateBoxDialog::Proc_CreateBox(HWND hDlg, UINT message, WPARAM
 			RedrawWindow(hDlg, nullptr, nullptr, RDW_INVALIDATE | RDW_UPDATENOW);
 
 			int brushCount = App->CL_X_Brush->Get_Brush_Count();
-			std::string name = "Box_" + std::to_string(brushCount);
+			std::string name = "Box_" + std::to_string(brushCount+1);
 
 			SetDlgItemText(hDlg, IDC_EDITNAME, name.c_str());
 
 			App->CL_X_CreateBoxDialog->SetDefaults(hDlg);
+
+			App->CL_X_CreateBoxDialog->Update();
+
+			HWND temp = GetDlgItem(App->CL_X_CreateBoxDialog->Main_Dlg_Hwnd, IDC_THICKNESS);
+			EnableWindow(temp, false);
+
 			return TRUE;
 		}
 
@@ -404,11 +422,14 @@ LRESULT CALLBACK CreateBoxDialog::Proc_CreateBox(HWND hDlg, UINT message, WPARAM
 			RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
 			int brushCount = App->CL_X_Brush->Get_Brush_Count();
-			std::string boxName = "Box_" + std::to_string(brushCount);
+			std::string boxName = "Box_" + std::to_string(brushCount+1);
 
 			SetDlgItemText(hDlg, IDC_EDITNAME, boxName.c_str());
 
 			App->CL_X_CreateBoxDialog->SetRoom(hDlg);
+
+			App->CL_X_CreateBoxDialog->Update();
+
 			return TRUE;
 		}
 
@@ -662,6 +683,8 @@ void CreateBoxDialog::SetRoom(HWND hDlg)
 
 	m_TCut = 0;
 	Cut_Flag = 0;
+
+	App->CL_X_Shapes_3D->Set_Camera(800);
 
 	HWND Temp = GetDlgItem(hDlg, IDC_PICTURE);
 	SendMessage(Temp, STM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_HollowBox_Bmp);

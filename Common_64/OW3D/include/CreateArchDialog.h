@@ -56,6 +56,12 @@ public:
 private:
 
 	static LRESULT CALLBACK CreateArch_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK OwnerEditProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam, UINT_PTR uIdSubclass, DWORD_PTR dwRefData);
+
+	void Capture_Edit_Boxes(HWND hDlg);
+	void Remove_Edit_Boxes(HWND hDlg);
+
+	void Init_Bmps_Globals(HWND hDlg);
 
 	void Set_Members();
 	void Set_DLG_Members(HWND hDlg);
@@ -67,6 +73,7 @@ private:
 	void CreateArch();
 	void CreateNewTemplateBrush(Brush* pBrush);
 	void Zero_Dlg_Flags(HWND hDlg);
+	void Update(void);
 
 	bool flag_Solid_Flag;
 	bool flag_Hollow_Flag;
@@ -74,6 +81,8 @@ private:
 	bool flag_Cut_Flag;
 	bool flag_Rectangle_Flag;
 	bool flag_Round_Flag;
+
+	HWND Main_Dlg_Hwnd;
 
 	char ArchName[MAX_PATH];
 };
