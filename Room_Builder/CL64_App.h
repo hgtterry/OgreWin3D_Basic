@@ -97,6 +97,7 @@ THE SOFTWARE.
 #include "CL64_Editor_Control.h"
 
 // Templates Dialogs
+#include "App_Templates.h"
 #include "CreateBoxDialog.h"
 #include "CreateArchDialog.h"
 #include "CreateConeDialog.h"
@@ -193,6 +194,7 @@ public:
 	CL64_Editor_Control*		CL_Editor_Control;
 
 	// Templates Dialogs Libraries
+	App_Templates*				CL_App_Templates;
 	CreateBoxDialog*			CL_X_CreateBoxDialog;
 	CreateArchDialog*			CL_X_CreateArchDialog;
 	CreateConeDialog*			CL_X_CreateConeDialog;
