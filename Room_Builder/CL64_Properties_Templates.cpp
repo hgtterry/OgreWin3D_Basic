@@ -47,13 +47,81 @@ void CL64_Properties_Templates::Show_TemplatesDialog(bool Show)
 }
 
 // *************************************************************************
+// *			Init_Bmps_Globals:- Terry Mo and Hazel 2025				   *
+// *************************************************************************
+void CL64_Properties_Templates::Init_Bmps_Globals(void)
+{
+	/*HWND Temp = GetDlgItem(TemplatesDlg_Hwnd, IDC_BT_HELP);
+	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_Help_Bmp);*/
+
+	HWND hTooltip_TB_2 = CreateWindowEx(0, TOOLTIPS_CLASS, "", TTS_ALWAYSTIP | TTS_BALLOON | TTS_NOFADE, 0, 0, 0, 0, App->MainHwnd, 0, App->hInst, 0);
+	SendMessage(hTooltip_TB_2, TTM_SETMAXTIPWIDTH, 0, 250);
+
+	/*Temp = GetDlgItem(TemplatesDlg_Hwnd, IDC_BT_HELP);
+	TOOLINFO ti1 = { 0 };
+	ti1.cbSize = sizeof(ti1);
+	ti1.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti1.uId = (UINT_PTR)Temp;
+	ti1.lpszText = (LPSTR)"Help / Information.";
+	ti1.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti1);*/
+
+	HWND Temp = GetDlgItem(TemplatesDlg_Hwnd, IDC_BRUSH_CUBE_PRIMITIVE);
+	TOOLINFO ti2 = { 0 };
+	ti2.cbSize = sizeof(ti2);
+	ti2.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti2.uId = (UINT_PTR)Temp;
+	ti2.lpszText = (LPSTR)"Create Room/Cube Shape";
+	ti2.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti2);
+
+	Temp = GetDlgItem(TemplatesDlg_Hwnd, IDC_BRUSH_STAIRCASE_PRIMITIVE);
+	TOOLINFO ti3 = { 0 };
+	ti3.cbSize = sizeof(ti3);
+	ti3.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti3.uId = (UINT_PTR)Temp;
+	ti3.lpszText = (LPSTR)"Create Staircase or Slope Shape";
+	ti3.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti3);
+
+	Temp = GetDlgItem(TemplatesDlg_Hwnd, IDC_BRUSH_CYCLINDER_PRIMITIVE);
+	TOOLINFO ti4 = { 0 };
+	ti4.cbSize = sizeof(ti4);
+	ti4.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti4.uId = (UINT_PTR)Temp;
+	ti4.lpszText = (LPSTR)"Create Cylinder Shape";
+	ti4.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti4);
+
+	Temp = GetDlgItem(TemplatesDlg_Hwnd, IDC_BRUSH_ARCH_PRIMITIVE);
+	TOOLINFO ti5 = { 0 };
+	ti5.cbSize = sizeof(ti5);
+	ti5.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti5.uId = (UINT_PTR)Temp;
+	ti5.lpszText = (LPSTR)"Create Arch Shape";
+	ti5.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti5);
+
+	Temp = GetDlgItem(TemplatesDlg_Hwnd, IDC_BRUSH_CONE_PRIMITIVE);
+	TOOLINFO ti6 = { 0 };
+	ti6.cbSize = sizeof(ti6);
+	ti6.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti6.uId = (UINT_PTR)Temp;
+	ti6.lpszText = (LPSTR)"Create Cone Shape";
+	ti6.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti6);
+
+}
+
+// *************************************************************************
 // *	  	Start_TemplatesDialog:- Terry and Hazel Flanigan 2025		   *
 // *************************************************************************
 void CL64_Properties_Templates::Start_TemplatesDialog()
 {
-
 	TemplatesDlg_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_PROPS_TEMPLATES, App->CL_Properties_Tabs->Tabs_Control_Hwnd, (DLGPROC)Proc_Templates);
+	
 	Set_Icons();
+	Init_Bmps_Globals();
 }
 
 // *************************************************************************

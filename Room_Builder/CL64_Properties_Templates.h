@@ -40,6 +40,7 @@ public:
 private:
 	static LRESULT CALLBACK Proc_Templates(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
+	void Init_Bmps_Globals(void);
 	void Set_Icons();
 	
 	bool flag_Insert_Enabled;

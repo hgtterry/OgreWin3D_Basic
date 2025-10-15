@@ -157,7 +157,7 @@ void CreateBoxDialog::Start_CreateBox_Dlg()
 
 	if (App->CL_App_Templates->Shape_Dlg_hWnd)
 	{
-		//App->CL_App_Templates->Enable_Map_Editor_Dialogs(false);
+		App->CL_App_Templates->Enable_Map_Editor_Dialogs(false);
 	}
 
 	Get_Dialog_Members(App->CL_App_Templates->Shape_Dlg_hWnd);
@@ -527,7 +527,7 @@ LRESULT CALLBACK CreateBoxDialog::Proc_CreateBox(HWND hDlg, UINT message, WPARAM
 			strcpy(App->CL_Properties_Templates->LastCreated_ShapeName, App->CL_X_CreateBoxDialog->BoxName);
 			App->CL_Properties_Templates->Insert_Template();
 
-			//App->CL_App_Templates->Enable_Map_Editor_Dialogs(true);
+			App->CL_App_Templates->Enable_Map_Editor_Dialogs(true);
 
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
@@ -545,7 +545,7 @@ LRESULT CALLBACK CreateBoxDialog::Proc_CreateBox(HWND hDlg, UINT message, WPARAM
 			App->CL_Top_Tabs->Redraw_TopTabs_Dlg();
 			App->CL_Ogre->OGL_Listener->Show_Visuals(false);
 
-			//App->CL_App_Templates->Enable_Map_Editor_Dialogs(true);
+			App->CL_App_Templates->Enable_Map_Editor_Dialogs(true);
 
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
