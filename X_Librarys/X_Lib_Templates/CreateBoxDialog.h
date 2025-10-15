@@ -1,7 +1,7 @@
 /*
-Copyright (c) 2024 - 2025 Inflanite_HGT W.T.Flanigan H.C.Flanigan
+Copyright (c) 2024 - 2025 TMH_Software W.T.Flanigan M.Habib H.C.Flanigan
 
-OW3D_Mesh_Builder
+TMH_SceneBuilder
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -23,10 +23,10 @@ THE SOFTWARE.
 */
 
 #pragma once
+
 class CreateBoxDialog
 {
 public:
-
 	CreateBoxDialog(void);
 	~CreateBoxDialog(void);
 
@@ -42,6 +42,8 @@ public:
 
 	BrushTemplate_Box* pBoxTemplate;
 
+	Brush* Test_Cube;
+	
 	float	m_YSize;
 	int		m_Solid;
 	float	m_XSizeBot;
@@ -61,6 +63,7 @@ private:
 	void Capture_Edit_Boxes(HWND hDlg);
 	void Remove_Edit_Boxes(HWND hDlg);
 
+	void Init_Bmps_Globals(HWND hDlg);
 	void SetMembers();
 	void Get_Dialog_Members(HWND hDlg);
 	void Set_Dialog_Members(HWND hDlg);
@@ -68,13 +71,9 @@ private:
 	void Set_BoxTemplate();
 
 	void SetDefaults(HWND hDlg);
-	void Init_Bmps_Globals(HWND hDlg);
-
 	void SetRoom(HWND hDlg);
 
 	void Zero_Dlg_Flags(HWND hDlg);
-
-	HWND Main_Dlg_Hwnd;
 
 	bool Solid_Flag;
 	bool Hollow_Flag;
@@ -84,5 +83,6 @@ private:
 	bool flag_Room;
 
 	char BoxName[MAX_PATH];
+
 };
 
