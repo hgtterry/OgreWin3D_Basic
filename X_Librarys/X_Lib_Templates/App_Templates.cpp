@@ -18,7 +18,8 @@ void App_Templates::Enable_Map_Editor_Dialogs(bool Enable)
 {
 	if (Enable == true)
 	{
-		EnableWindow(App->CL_Properties_Scene->Properties_Dlg_hWnd, true);
+		EnableWindow(App->CL_Properties_Tabs->Tabs_Control_Hwnd, true);
+		EnableWindow(App->CL_Top_Tabs->TopTabs_Dlg_hWnd, true);
 
 		HMENU Hmenu = GetMenu(App->MainHwnd);
 
@@ -34,7 +35,8 @@ void App_Templates::Enable_Map_Editor_Dialogs(bool Enable)
 	}
 	else
 	{
-		EnableWindow(App->CL_Properties_Scene->Properties_Dlg_hWnd, false);
+		EnableWindow(App->CL_Properties_Tabs->Tabs_Control_Hwnd, false);
+		EnableWindow(App->CL_Top_Tabs->TopTabs_Dlg_hWnd, false);
 
 		EnableMenuItem(GetSystemMenu(App->MainHwnd, FALSE), SC_CLOSE, MF_BYCOMMAND | MF_DISABLED | MF_GRAYED);
 

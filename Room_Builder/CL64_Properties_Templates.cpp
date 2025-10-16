@@ -57,6 +57,8 @@ void CL64_Properties_Templates::Init_Bmps_Globals(void)
 	HWND hTooltip_TB_2 = CreateWindowEx(0, TOOLTIPS_CLASS, "", TTS_ALWAYSTIP | TTS_BALLOON | TTS_NOFADE, 0, 0, 0, 0, App->MainHwnd, 0, App->hInst, 0);
 	SendMessage(hTooltip_TB_2, TTM_SETMAXTIPWIDTH, 0, 250);
 
+	SendMessage(hTooltip_TB_2, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
 	/*Temp = GetDlgItem(TemplatesDlg_Hwnd, IDC_BT_HELP);
 	TOOLINFO ti1 = { 0 };
 	ti1.cbSize = sizeof(ti1);
@@ -111,6 +113,7 @@ void CL64_Properties_Templates::Init_Bmps_Globals(void)
 	ti6.hwnd = App->MainHwnd;
 	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti6);
 
+	SendMessage(hTooltip_TB_2, TTM_SETTITLE, (WPARAM)TTI_INFO, (LPARAM)"Information");
 }
 
 // *************************************************************************

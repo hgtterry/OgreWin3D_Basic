@@ -72,10 +72,10 @@ char* CreateBoxDialog::GetVersion()
 // *************************************************************************
 void CreateBoxDialog::Init_Bmps_Globals(HWND hDlg)
 {
-	//HWND Temp = GetDlgItem(hDlg, IDC_BT_HELP);
-	//SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_Help_Bmp);
+	/*HWND Temp = GetDlgItem(hDlg, IDC_BT_HELP);
+	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_Help_Bmp);
 
-	/*HWND hTooltip_TB_2 = CreateWindowEx(0, TOOLTIPS_CLASS, "", TTS_ALWAYSTIP | TTS_BALLOON | TTS_NOFADE, 0, 0, 0, 0, App->MainHwnd, 0, App->hInst, 0);
+	HWND hTooltip_TB_2 = CreateWindowEx(0, TOOLTIPS_CLASS, "", TTS_ALWAYSTIP | TTS_BALLOON | TTS_NOFADE, 0, 0, 0, 0, App->MainHwnd, 0, App->hInst, 0);
 	SendMessage(hTooltip_TB_2, TTM_SETMAXTIPWIDTH, 0, 250);
 
 	Temp = GetDlgItem(hDlg, IDC_BT_HELP);
@@ -189,7 +189,7 @@ LRESULT CALLBACK CreateBoxDialog::Proc_CreateBox(HWND hDlg, UINT message, WPARAM
 			IDC_STNAME, IDC_EDITNAME,
 			IDC_BOXDEFAULTS, IDC_BT_BOXROOM,
 			IDC_STCAMPOS, IDC_CKWORLDCENTRE, IDC_CKCAMPOSITION,
-			IDOK, IDCANCEL//IDC_BT_UPDATE
+			IDOK, IDCANCEL//,IDC_BT_UPDATE
 		};
 
 		// Set font for each control
@@ -483,24 +483,34 @@ LRESULT CALLBACK CreateBoxDialog::Proc_CreateBox(HWND hDlg, UINT message, WPARAM
 			}
 
 			App->CL_App_Templates->Enable_Shape_Dialog(true);
+			App->CL_App_Templates->Enable_Map_Editor_Dialogs(false);
 
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == IDC_BT_BOXROOM)
 		{
-			App->CL_X_CreateBoxDialog->flag_Default = 0;
-			App->CL_X_CreateBoxDialog->flag_Room = 1;
-			RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			App->CL_App_Templates->Enable_Shape_Dialog(false);
 
-			int brushCount = App->CL_X_Brush->Get_Brush_Count();
-			std::string boxName = "Box_" + std::to_string(brushCount+1);
+			App->CL_Dialogs->YesNo("Reset to Defaults", "All Dimensions will be reset");
+			if (App->CL_Dialogs->flag_Dlg_Canceled == false)
+			{
+				App->CL_X_CreateBoxDialog->flag_Default = 0;
+				App->CL_X_CreateBoxDialog->flag_Room = 1;
+				RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
-			SetDlgItemText(hDlg, IDC_EDITNAME, boxName.c_str());
+				int brushCount = App->CL_X_Brush->Get_Brush_Count();
+				std::string boxName = "Box_" + std::to_string(brushCount + 1);
 
-			App->CL_X_CreateBoxDialog->SetRoom(hDlg);
+				SetDlgItemText(hDlg, IDC_EDITNAME, boxName.c_str());
 
-			App->CL_X_CreateBoxDialog->Update();
+				App->CL_X_CreateBoxDialog->SetRoom(hDlg);
+
+				App->CL_X_CreateBoxDialog->Update();
+			}
+
+			App->CL_App_Templates->Enable_Shape_Dialog(true);
+			App->CL_App_Templates->Enable_Map_Editor_Dialogs(false);
 
 			return TRUE;
 		}
