@@ -2752,3 +2752,65 @@ bool CX_Brush::Brush_IsLocked(const Brush* b)
 {
 	return	(b->Flags & BRUSH_LOCKED) ? true : false;
 }
+
+// *************************************************************************
+// *			Brush_Lock_Textures:- Terry Mo and Hazel  2025			   *
+// *************************************************************************
+bool CX_Brush::Brush_Lock_Textures(const Brush* b, bool State)
+{
+	if (b->Type == BRUSH_MULTI)
+	{
+		return Sub_Brushes_Lock_Textures(b->BList, State); // Recursive
+	}
+	if (b->Type == BRUSH_LEAF)
+	{
+		return Brush_Lock_Textures(b->Faces, State);
+	}
+	if (b->Type == BRUSH_CSG)
+	{
+		//App->Say("BRUSH_CSG");
+	}
+
+	return 1;
+}
+
+// *************************************************************************
+// *	  Sub_Brushes_Lock_Textures:- Terry and Hazel Flanigan 2025		   *
+// *************************************************************************
+bool CX_Brush::Sub_Brushes_Lock_Textures(BrushList* BList, bool State)
+{
+	Brush* pBrush;
+	BrushIterator bi;
+
+	pBrush = App->CL_X_Brush->BrushList_GetFirst(BList, &bi);
+	while (pBrush != NULL)
+	{
+		Brush_Lock_Textures(pBrush, State);  // Recursive
+
+		pBrush = App->CL_X_Brush->BrushList_GetNext(&bi);
+	}
+
+	return 1;
+}
+
+// *************************************************************************
+// *		Brush_Lock_Textures:- Terry and Hazel Flanigan 2025			   *
+// *************************************************************************
+bool CX_Brush::Brush_Lock_Textures(const FaceList* pList, bool State)
+{
+	int i;
+
+	if (pList->NumFaces < 0)
+	{
+	}
+	else
+	{
+		for (i = 0; i < pList->NumFaces; i++)
+		{
+			Face* f = pList->Faces[i];
+			App->CL_X_Face->Face_SetTextureLock(f, State);
+		}
+	}
+
+	return 1;
+}

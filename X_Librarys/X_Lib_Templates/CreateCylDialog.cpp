@@ -1,7 +1,7 @@
 /*
-Copyright (c) 2024 - 2025 Inflanite_HGT W.T.Flanigan H.C.Flanigan
+Copyright (c) 2024 - 2025 TMH_Software W.T.Flanigan M.Habib H.C.Flanigan
 
-OW3D_Mesh_Builder
+TMH_SceneBuilder
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -38,7 +38,7 @@ CreateCylDialog::CreateCylDialog(void)
 	m_TopXSize = 128.0;
 	m_TopZOffset = 0.0;
 	m_TopZSize = 128.0;
-	m_YSize = 512.0;
+	m_YSize = 200.0;
 	m_RingLength = 0.0;
 	m_TCut = false;
 	m_VerticalStripes = 0;
@@ -60,14 +60,107 @@ CreateCylDialog::~CreateCylDialog(void)
 }
 
 // *************************************************************************
+// *			Init_Bmps_Globals:- Terry Mo and Hazel 2025				   *
+// *************************************************************************
+void CreateCylDialog::Init_Bmps_Globals(HWND hDlg)
+{
+	/*HWND Temp = GetDlgItem(hDlg, IDC_BT_HELP);
+	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_Help_Bmp);
+
+	HWND hTooltip_TB_2 = CreateWindowEx(0, TOOLTIPS_CLASS, "", TTS_ALWAYSTIP | TTS_BALLOON | TTS_NOFADE, 0, 0, 0, 0, App->MainHwnd, 0, App->hInst, 0);
+	SendMessage(hTooltip_TB_2, TTM_SETMAXTIPWIDTH, 0, 250);
+
+	Temp = GetDlgItem(hDlg, IDC_BT_HELP);
+	TOOLINFO ti1 = { 0 };
+	ti1.cbSize = sizeof(ti1);
+	ti1.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti1.uId = (UINT_PTR)Temp;
+	ti1.lpszText = (LPSTR)"Help / Information.";
+	ti1.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti1);*/
+}
+
+LRESULT CALLBACK CreateCylDialog::OwnerEditProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam, UINT_PTR uIdSubclass, DWORD_PTR dwRefData)
+{
+	switch (uMsg)
+	{
+	case WM_CHAR:
+	{
+		switch (wParam)
+		{
+
+		case VK_RETURN:
+		{
+			App->CL_X_CreateCylDialog->Update();
+			return 0;
+		}
+
+		}
+	}
+
+	}
+
+	return DefSubclassProc(hWnd, uMsg, wParam, lParam);
+}
+
+// *************************************************************************
+// *		Capture_Edit_Boxes:- Terry and Hazel Flanigan 2025		 	   *
+// *************************************************************************
+void CreateCylDialog::Capture_Edit_Boxes(HWND hDlg)
+{
+	// Array of control IDs to be processed
+	const int controlIDs[] = { IDC_TOPXSIZE, IDC_TOPXOFF, IDC_TOPZSIZE, IDC_TOPZOFF , IDC_BOTXSIZE
+		,IDC_BOTXOFF ,IDC_BOTZSIZE ,IDC_BOTZOFF
+		,IDC_YSIZE ,IDC_VERTSTRIPES, IDC_THICKNESS, IDC_RINGLENGTH };
+
+	// Loop through each control ID and set the window subclass
+	for (int id : controlIDs) {
+		HWND control = GetDlgItem(hDlg, id); // Retrieve the handle for the control
+		SetWindowSubclass(control, OwnerEditProc, 0, 0); // Set the subclass procedure for the control
+	}
+}
+
+// *************************************************************************
+// *		Remove_Edit_Boxes:- Terry and Hazel Flanigan 2025		 	   *
+// *************************************************************************
+void CreateCylDialog::Remove_Edit_Boxes(HWND hDlg)
+{
+	// Array of control IDs to remove the subclass from
+	const int controlIDs[] = { IDC_TOPXSIZE, IDC_TOPXOFF, IDC_TOPZSIZE, IDC_TOPZOFF , IDC_BOTXSIZE
+		,IDC_BOTXOFF ,IDC_BOTZSIZE ,IDC_BOTZOFF
+		,IDC_YSIZE ,IDC_VERTSTRIPES, IDC_THICKNESS, IDC_RINGLENGTH };
+
+	// Iterate through each control ID and remove the subclass
+	for (int id : controlIDs)
+	{
+		HWND control = GetDlgItem(hDlg, id);
+		RemoveWindowSubclass(control, OwnerEditProc, 0);
+	}
+}
+
+// *************************************************************************
 // *	  	Start_CreateCyl_Dlg:- Terry and Hazel Flanigan 2025			   *
 // *************************************************************************
 void CreateCylDialog::Start_CreateCyl_Dlg()
 {
+	App->CL_App_Templates->Shape_Dlg_hWnd = nullptr;
+
 	pCylinderTemplate = App->CL_Level->Level_GetCylinderTemplate();
 
 	App->CL_Properties_Tabs->Enable_Tabs_Dlg(false);
-	DialogBox(App->hInst, (LPCTSTR)IDD_CREATE_CYLINDER, App->MainHwnd, (DLGPROC)Proc_Create_Cylinder);
+
+	CreateDialog(App->hInst, (LPCTSTR)IDD_CREATE_CYLINDER, App->MainHwnd, (DLGPROC)Proc_Create_Cylinder);
+
+	if (App->CL_App_Templates->Shape_Dlg_hWnd)
+	{
+		App->CL_App_Templates->Enable_Map_Editor_Dialogs(false);
+	}
+
+	Get_DLG_Members(App->CL_App_Templates->Shape_Dlg_hWnd);
+	Set_CylinderTemplate();
+	CreateCylinder_New();
+
+	App->CL_Ogre->OGL_Listener->Show_Visuals(true);
 }
 
 // *************************************************************************
@@ -79,6 +172,8 @@ LRESULT CALLBACK CreateCylDialog::Proc_Create_Cylinder(HWND hDlg, UINT message, 
 	{
 	case WM_INITDIALOG:
 	{
+		App->CL_X_CreateCylDialog->Capture_Edit_Boxes(hDlg);
+
 		SendDlgItemMessage(hDlg, IDC_CYL_DEFAULTS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		SendDlgItemMessage(hDlg, IDC_TOPXSIZE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
@@ -125,12 +220,25 @@ LRESULT CALLBACK CreateCylDialog::Proc_Create_Cylinder(HWND hDlg, UINT message, 
 		SendDlgItemMessage(hDlg, IDC_CKWORLDCENTRE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_CKCAMPOSITION, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
+		//SendDlgItemMessage(hDlg, IDC_BT_UPDATE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
 		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
-		App->CL_X_CreateCylDialog->Set_Members();
+		App->CL_App_Templates->Shape_Dlg_hWnd = hDlg;
 
+		App->CL_X_CreateCylDialog->Init_Bmps_Globals(hDlg);
+
+		App->CL_X_Shapes_3D->Start_Zoom = 400;
+		App->CL_X_Shapes_3D->Render_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_BOX_3D, hDlg, (DLGPROC)App->CL_X_Shapes_3D->Proc_Box_Viewer_3D);
+		
+		SetWindowPos(App->CL_X_Shapes_3D->Render_hWnd, NULL, 20, 370, 0, 0, SWP_NOSIZE);
+
+		App->CL_X_Shapes_3D->Set_OgreWindow();
+
+		App->CL_X_CreateCylDialog->Set_Members();
 		App->CL_X_CreateCylDialog->Set_DLG_Members(hDlg);
+		App->CL_X_CreateCylDialog->Set_Defaults(hDlg);
 
 		SetDlgItemText(hDlg, IDC_EDITNAME, (LPCTSTR)"Cylinder");
 
@@ -164,7 +272,7 @@ LRESULT CALLBACK CreateCylDialog::Proc_Create_Cylinder(HWND hDlg, UINT message, 
 		int Count = App->CL_X_Brush->Get_Brush_Count();
 		char Num[32];
 		char Name[32];
-		_itoa(Count, Num, 10);
+		_itoa(Count+1, Num, 10);
 		strcpy(Name, "Cylinder_");
 		strcat(Name, Num);
 
@@ -374,6 +482,13 @@ LRESULT CALLBACK CreateCylDialog::Proc_Create_Cylinder(HWND hDlg, UINT message, 
 			return CDRF_DODEFAULT;
 		}
 
+		/*if (some_item->idFrom == IDC_BT_UPDATE)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}*/
+
 		if (some_item->idFrom == IDOK)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
@@ -391,8 +506,30 @@ LRESULT CALLBACK CreateCylDialog::Proc_Create_Cylinder(HWND hDlg, UINT message, 
 		return CDRF_DODEFAULT;
 	}
 
+	case WM_MOUSEWHEEL:
+	{
+		int zDelta = (short)HIWORD(wParam);    // wheel rotation
+
+		if (zDelta > 0)
+		{
+			App->CL_X_Shapes_3D->RenderListener->Wheel_Move = -1;
+		}
+		else if (zDelta < 0)
+		{
+			App->CL_X_Shapes_3D->RenderListener->Wheel_Move = 1;
+		}
+
+		return 1;
+	}
+
 	case WM_COMMAND:
 	{
+		/*if (LOWORD(wParam) == IDC_BT_UPDATE)
+		{
+			App->CL_X_CreateCylDialog->Update();
+			return TRUE;
+		}*/
+
 		if (LOWORD(wParam) == IDC_CKWORLDCENTRE)
 		{
 			HWND temp = GetDlgItem(hDlg, IDC_CKWORLDCENTRE);
@@ -425,6 +562,11 @@ LRESULT CALLBACK CreateCylDialog::Proc_Create_Cylinder(HWND hDlg, UINT message, 
 			App->CL_X_CreateCylDialog->flag_Hollow_Flag_Dlg = 0;
 			App->CL_X_CreateCylDialog->flag_Ring_Flag_Dlg = 0;
 
+			HWND temp = GetDlgItem(App->CL_App_Templates->Shape_Dlg_hWnd, IDC_THICKNESS);
+			EnableWindow(temp, false);
+
+			App->CL_X_CreateCylDialog->Update();
+
 			RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			return TRUE;
 		}
@@ -437,6 +579,11 @@ LRESULT CALLBACK CreateCylDialog::Proc_Create_Cylinder(HWND hDlg, UINT message, 
 			App->CL_X_CreateCylDialog->flag_Solid_Flag_Dlg = 0;
 			App->CL_X_CreateCylDialog->flag_Ring_Flag_Dlg = 0;
 
+			HWND temp = GetDlgItem(App->CL_App_Templates->Shape_Dlg_hWnd, IDC_THICKNESS);
+			EnableWindow(temp, true);
+
+			App->CL_X_CreateCylDialog->Update();
+
 			RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			return TRUE;
 		}
@@ -448,6 +595,11 @@ LRESULT CALLBACK CreateCylDialog::Proc_Create_Cylinder(HWND hDlg, UINT message, 
 			App->CL_X_CreateCylDialog->flag_Ring_Flag_Dlg = 1;
 			App->CL_X_CreateCylDialog->flag_Hollow_Flag_Dlg = 0;
 			App->CL_X_CreateCylDialog->flag_Solid_Flag_Dlg = 0;
+
+			HWND temp = GetDlgItem(App->CL_App_Templates->Shape_Dlg_hWnd, IDC_THICKNESS);
+			EnableWindow(temp, true);
+
+			App->CL_X_CreateCylDialog->Update();
 
 			RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			return TRUE;
@@ -469,9 +621,30 @@ LRESULT CALLBACK CreateCylDialog::Proc_Create_Cylinder(HWND hDlg, UINT message, 
 
 		if (LOWORD(wParam) == IDC_CYL_DEFAULTS)
 		{
-			App->CL_X_CreateCylDialog->Set_Defaults(hDlg);
+			App->CL_App_Templates->Enable_Shape_Dialog(false);
+
+			App->CL_Dialogs->YesNo("Reset to Defaults", "All Dimensions will be reset");
+			if (App->CL_Dialogs->flag_Dlg_Canceled == false)
+			{
+				App->CL_X_CreateCylDialog->Set_Defaults(hDlg);
+
+				HWND temp = GetDlgItem(App->CL_App_Templates->Shape_Dlg_hWnd, IDC_THICKNESS);
+				EnableWindow(temp, false);
+
+				App->CL_X_CreateCylDialog->Update();
+			}
+
+			App->CL_App_Templates->Enable_Shape_Dialog(true);
+			App->CL_App_Templates->Enable_Map_Editor_Dialogs(false);
+
 			return TRUE;
 		}
+
+		/*if (LOWORD(wParam) == IDC_BT_HELP)
+		{
+			App->Open_HTML((LPSTR)"Help\\Create_Cylinder.html");
+			return TRUE;
+		}*/
 
 		// -----------------------------------------------------------------
 		if (LOWORD(wParam) == IDOK)
@@ -482,8 +655,14 @@ LRESULT CALLBACK CreateCylDialog::Proc_Create_Cylinder(HWND hDlg, UINT message, 
 
 			App->CL_Properties_Tabs->Enable_Tabs_Dlg(true);
 
+			App->CL_X_Shapes_3D->Close_OgreWindow();
+
+			App->CL_X_CreateCylDialog->Remove_Edit_Boxes(hDlg);
+
 			strcpy(App->CL_Properties_Templates->LastCreated_ShapeName, App->CL_X_CreateCylDialog->CylinderName);
 			App->CL_Properties_Templates->Insert_Template();
+
+			App->CL_App_Templates->Enable_Map_Editor_Dialogs(true);
 
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
@@ -492,6 +671,17 @@ LRESULT CALLBACK CreateCylDialog::Proc_Create_Cylinder(HWND hDlg, UINT message, 
 		if (LOWORD(wParam) == IDCANCEL)
 		{
 			App->CL_Properties_Tabs->Enable_Tabs_Dlg(true);
+
+			App->CL_X_Shapes_3D->Close_OgreWindow();
+
+			App->CL_X_CreateCylDialog->Remove_Edit_Boxes(hDlg);
+
+			App->CL_Panels->Deselect_All_Brushes_Update_Dlgs();
+			App->CL_Top_Tabs->Redraw_TopTabs_Dlg();
+			App->CL_Ogre->OGL_Listener->Show_Visuals(false);
+
+			App->CL_App_Templates->Enable_Map_Editor_Dialogs(true);
+
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
@@ -500,6 +690,16 @@ LRESULT CALLBACK CreateCylDialog::Proc_Create_Cylinder(HWND hDlg, UINT message, 
 	}
 	}
 	return FALSE;
+}
+
+// *************************************************************************
+// *			Update:- Terry and Hazel Flanigan 2024					   *
+// *************************************************************************
+void CreateCylDialog::Update(void)
+{
+	Get_DLG_Members(App->CL_App_Templates->Shape_Dlg_hWnd);
+	Set_CylinderTemplate();
+	CreateCylinder_New();
 }
 
 // *************************************************************************
@@ -519,7 +719,7 @@ void CreateCylDialog::CreateCylinder_New()
 	}
 	else
 	{
-		App->Say("No pCylinder");
+		App->Say("Can not create cylinder");
 	}
 }
 
@@ -548,7 +748,7 @@ void CreateCylDialog::CreateNewTemplateBrush(Brush* pBrush)
 
 	pTemplatePos = App->CL_Level->Level_GetTemplatePos(App->CL_Doc->Current_Level);
 
-	if (m_UseCamPos == 1 && App->flag_OgreStarted == 1)
+	/*if (m_UseCamPos == 1 && App->flag_3D_Started == true)
 	{
 		Ogre::Vector3 Pos;
 
@@ -558,7 +758,7 @@ void CreateCylDialog::CreateNewTemplateBrush(Brush* pBrush)
 		pTemplatePos->y = Pos.y;
 		pTemplatePos->z = Pos.z;
 	}
-	else
+	else*/
 	{
 		pTemplatePos->x = 0;
 		pTemplatePos->y = 0;
@@ -736,7 +936,7 @@ void CreateCylDialog::Set_Defaults(HWND hDlg)
 	m_TopXSize = 128.0;
 	m_TopZOffset = 0.0;
 	m_TopZSize = 128.0;
-	m_YSize = 512.0;
+	m_YSize = 200.0;
 	m_RingLength = 0.0;
 	m_TCut = false;
 	m_VerticalStripes = 6;
@@ -747,6 +947,9 @@ void CreateCylDialog::Set_Defaults(HWND hDlg)
 	flag_Solid_Flag_Dlg = 1;
 	flag_Hollow_Flag_Dlg = 0;
 	flag_Ring_Flag_Dlg = 0;
+
+	HWND temp = GetDlgItem(App->CL_App_Templates->Shape_Dlg_hWnd, IDC_THICKNESS);
+	EnableWindow(temp, false);
 
 	RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 }

@@ -230,6 +230,8 @@ LRESULT CALLBACK CL64_Properties_Templates::Proc_Templates(HWND hDlg, UINT messa
 // *************************************************************************
 void CL64_Properties_Templates::Insert_Template()
 {
+	bool FirstRoom = false;
+
 	App->CL_Doc->mModeTool = ID_TOOLS_TEMPLATE;
 
 	if (App->CL_Doc->mModeTool == ID_TOOLS_TEMPLATE)
@@ -277,6 +279,10 @@ void CL64_Properties_Templates::Insert_Template()
 			App->CL_Editor_Control->Set_Map_Editor_Startup();
 
 			App->CL_Level->flag_File_Been_Saved = false;
+
+			Enable_Shape_Buttons(true);
+
+			FirstRoom = true;
 		}
 		else
 		{
@@ -286,17 +292,35 @@ void CL64_Properties_Templates::Insert_Template()
 	}
 
 	App->CL_Doc->Set_Faces_To_Brush_Name_All();
+	App->CL_X_Brush->Brush_Lock_Textures(App->CL_Doc->CurBrush, true);
+
+	if (FirstRoom == true) // New Scene
+	{
+		Brush* Temp = App->CL_Brush_X->Get_Brush_By_Name(LastCreated_ShapeName);
+		App->CL_Doc->CurBrush = Temp;
+	}
+
+	App->CL_Doc->UpdateAllViews(Enums::UpdateViews_3D);
 
 	App->CL_Doc->Do_General_Select_Dlg(true);
 
 	App->CL_Doc->mCurrentTool = CURTOOL_NONE;
 	App->CL_Doc->mModeTool = ID_GENERALSELECT;
 
-	App->CL_Doc->UpdateAllViews(Enums::UpdateViews_All);
-
 	App->CL_Properties_Brushes->Fill_ListBox();
 
 	App->CL_Properties_Brushes->Set_Dlg_Brush_Options_Buttons(false);
+
+	App->CL_Brush_X->Select_Brush_Editor(App->CL_Doc->CurBrush);
+
+	App->CL_Top_Tabs->Select_Face();
+
+	App->CL_Top_Tabs->flag_All_Faces = true;
+	App->CL_Doc->SelectAllFacesInBrushes();
+	App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
+
+	/*HWND temp = GetDlgItem(App->CL_Properties_Textures->Textures_Dlg_Hwnd, IDC_CK_FACESALL);
+	int test = SendMessage(temp, BM_SETCHECK, true, 0);*/
 
 }
 
@@ -323,5 +347,23 @@ void CL64_Properties_Templates::Set_Icons()
 	Temp = GetDlgItem(TemplatesDlg_Hwnd, IDC_BRUSH_ARCH_PRIMITIVE);
 	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_ICON, (LPARAM)(HANDLE)App->Hnd_Arch_Icon);
 
+}
+
+// *************************************************************************
+// *	  	Enable_Shape_Buttons:- Terry Mo and Hazel 2025				   *
+// *************************************************************************
+void CL64_Properties_Templates::Enable_Shape_Buttons(bool Enable)
+{
+	ShowWindow(GetDlgItem(TemplatesDlg_Hwnd, IDC_BRUSH_CYCLINDER_PRIMITIVE), Enable);
+	ShowWindow(GetDlgItem(TemplatesDlg_Hwnd, IDC_BRUSH_CONE_PRIMITIVE), Enable);
+	ShowWindow(GetDlgItem(TemplatesDlg_Hwnd, IDC_BRUSH_SPHEROID_PRIMITIVE), Enable);
+	ShowWindow(GetDlgItem(TemplatesDlg_Hwnd, IDC_BRUSH_STAIRCASE_PRIMITIVE), Enable);
+	ShowWindow(GetDlgItem(TemplatesDlg_Hwnd, IDC_BRUSH_ARCH_PRIMITIVE), Enable);
+
+	EnableWindow(GetDlgItem(TemplatesDlg_Hwnd, IDC_BRUSH_CYCLINDER_PRIMITIVE), Enable);
+	EnableWindow(GetDlgItem(TemplatesDlg_Hwnd, IDC_BRUSH_CONE_PRIMITIVE), Enable);
+	EnableWindow(GetDlgItem(TemplatesDlg_Hwnd, IDC_BRUSH_SPHEROID_PRIMITIVE), Enable);
+	EnableWindow(GetDlgItem(TemplatesDlg_Hwnd, IDC_BRUSH_STAIRCASE_PRIMITIVE), Enable);
+	EnableWindow(GetDlgItem(TemplatesDlg_Hwnd, IDC_BRUSH_ARCH_PRIMITIVE), Enable);
 }
 

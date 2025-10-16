@@ -1,7 +1,7 @@
 /*
-Copyright (c) 2024 - 2025 Inflanite_HGT W.T.Flanigan H.C.Flanigan
+Copyright (c) 2024 - 2025 TMH_Software W.T.Flanigan M.Habib H.C.Flanigan
 
-OW3D_Mesh_Builder
+TMH_SceneBuilder
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -53,6 +53,12 @@ public:
 private:
 
 	static LRESULT CALLBACK Proc_Create_Cylinder(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK OwnerEditProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam, UINT_PTR uIdSubclass, DWORD_PTR dwRefData);
+
+	void Capture_Edit_Boxes(HWND hDlg);
+	void Remove_Edit_Boxes(HWND hDlg);
+
+	void Init_Bmps_Globals(HWND hDlg);
 
 	void Set_Members();
 	void Set_DLG_Members(HWND hDlg);
@@ -63,6 +69,8 @@ private:
 
 	void CreateCylinder_New();
 	void CreateNewTemplateBrush(Brush* pBrush);
+
+	void Update(void);
 
 	char CylinderName[MAX_PATH];
 

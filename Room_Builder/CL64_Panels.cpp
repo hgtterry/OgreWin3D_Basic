@@ -210,7 +210,7 @@ bool CL64_Panels::Position_Tabs_Dlg(void)
 
 	hdwp = BeginDeferWindowPos(2);
 
-	DeferWindowPos(hdwp, App->CL_Properties_Tabs->Tabs_Control_Hwnd, NULL, p.x + widthX - 265, PosY + 25,
+	DeferWindowPos(hdwp, App->CL_Properties_Tabs->Tabs_Control_Hwnd, NULL, p.x + widthX - 290, PosY + 25,
 		0, 0, SWP_NOSIZE | SWP_NOZORDER);
 
 	return EndDeferWindowPos(hdwp);

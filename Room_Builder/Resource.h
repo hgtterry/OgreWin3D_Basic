@@ -80,7 +80,6 @@
 #define IDD_MESHVIEWER_3D               193
 #define IDD_POSITION_DLG                195
 #define IDD_OPTIONS                     196
-#define IDD_DIALOG1                     197
 #define IDD_BOX_3D                      197
 #define IDC_BANNER                      1000
 #define IDC_STTEXT                      1001
@@ -448,6 +447,7 @@
 #define IDC_BUTTON2                     1328
 #define IDC_BUTTON1                     1331
 #define IDC_BUT_AT_CAMERA               1331
+#define IDC_BT_HELP                     1331
 #define IDC_CHECK1                      1332
 #define IDC_CK_LASTFILE                 1332
 #define IDC_BUT_AT_WORLDPOS             1333

@@ -32,6 +32,7 @@ public:
 	void Start_TemplatesDialog();
 	void Show_TemplatesDialog(bool Show);
 	void Insert_Template();
+	void Enable_Shape_Buttons(bool Enable);
 
 	char LastCreated_ShapeName[20];
 

@@ -164,5 +164,9 @@ public:
 
 	void Brush_SetLocked(Brush* b, const bool bState);
 	bool Brush_IsLocked(const Brush* b);
+
+	bool Brush_Lock_Textures(const Brush*, bool State);
+	bool Sub_Brushes_Lock_Textures(BrushList* BList, bool State);
+	bool Brush_Lock_Textures(const FaceList* pList, bool State);
 };
 
