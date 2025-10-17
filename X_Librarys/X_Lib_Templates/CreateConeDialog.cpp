@@ -51,6 +51,60 @@ CreateConeDialog::~CreateConeDialog(void)
 {
 }
 
+LRESULT CALLBACK CreateConeDialog::OwnerEditProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam, UINT_PTR uIdSubclass, DWORD_PTR dwRefData)
+{
+	switch (uMsg)
+	{
+	case WM_CHAR:
+	{
+		switch (wParam)
+		{
+
+		case VK_RETURN:
+		{
+			//App->CL_X_CreateConeDialog->Update();
+			return 0;
+		}
+
+		}
+	}
+
+	}
+
+	return DefSubclassProc(hWnd, uMsg, wParam, lParam);
+}
+
+// *************************************************************************
+// *		Capture_Edit_Boxes:- Terry and Hazel Flanigan 2025		 	   *
+// *************************************************************************
+void CreateConeDialog::Capture_Edit_Boxes(HWND hDlg)
+{
+	// Array of control IDs to be processed
+	const int controlIDs[] = { IDC_XSIZETOP, IDC_ZSIZETOP, IDC_XSIZEBOT, IDC_ZSIZEBOT, IDC_YSIZE, IDC_THICKNESS };
+
+	// Loop through each control ID and set the window subclass
+	for (int id : controlIDs) {
+		HWND control = GetDlgItem(hDlg, id); // Retrieve the handle for the control
+		SetWindowSubclass(control, OwnerEditProc, 0, 0); // Set the subclass procedure for the control
+	}
+}
+
+// *************************************************************************
+// *		Remove_Edit_Boxes:- Terry and Hazel Flanigan 2025		 	   *
+// *************************************************************************
+void CreateConeDialog::Remove_Edit_Boxes(HWND hDlg)
+{
+	// Array of control IDs to remove the subclass from
+	const int controlIDs[] = { IDC_XSIZETOP, IDC_ZSIZETOP, IDC_XSIZEBOT, IDC_ZSIZEBOT };
+
+	// Iterate through each control ID and remove the subclass
+	for (int id : controlIDs)
+	{
+		HWND control = GetDlgItem(hDlg, id);
+		RemoveWindowSubclass(control, OwnerEditProc, 0);
+	}
+}
+
 // *************************************************************************
 // *	  	Start_CreateCone_Dlg:- Terry and Hazel Flanigan 2025		   *
 // *************************************************************************
@@ -60,7 +114,7 @@ void CreateConeDialog::Start_CreateCone_Dlg()
 
 	App->CL_Properties_Tabs->Enable_Tabs_Dlg(false);
 
-	DialogBox(App->hInst, (LPCTSTR)IDD_CREATE_CONE, App->MainHwnd, (DLGPROC)Proc_CreateCone);
+	CreateDialog(App->hInst, (LPCTSTR)IDD_CREATE_CONE, App->MainHwnd, (DLGPROC)Proc_CreateCone);
 }
 
 // *************************************************************************
@@ -73,6 +127,8 @@ LRESULT CALLBACK CreateConeDialog::Proc_CreateCone(HWND hDlg, UINT message, WPAR
 	{
 	case WM_INITDIALOG:
 	{
+		App->CL_X_CreateConeDialog->Capture_Edit_Boxes(hDlg);
+
 		SendDlgItemMessage(hDlg, IDC_STDIAMETER, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_STYSIZE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_STVERTSTRIPS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
@@ -376,6 +432,8 @@ LRESULT CALLBACK CreateConeDialog::Proc_CreateCone(HWND hDlg, UINT message, WPAR
 
 			App->CL_Properties_Tabs->Enable_Tabs_Dlg(true);
 
+			App->CL_X_CreateConeDialog->Remove_Edit_Boxes(hDlg);
+
 			strcpy(App->CL_Properties_Templates->LastCreated_ShapeName, App->CL_X_CreateConeDialog->ConeName);
 			App->CL_Properties_Templates->Insert_Template();
 
@@ -386,6 +444,9 @@ LRESULT CALLBACK CreateConeDialog::Proc_CreateCone(HWND hDlg, UINT message, WPAR
 		if (LOWORD(wParam) == IDCANCEL)
 		{
 			App->CL_Properties_Tabs->Enable_Tabs_Dlg(true);
+
+			App->CL_X_CreateConeDialog->Remove_Edit_Boxes(hDlg);
+
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}

@@ -45,6 +45,10 @@ public:
 private:
 
 	static LRESULT CALLBACK Proc_CreateCone(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK OwnerEditProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam, UINT_PTR uIdSubclass, DWORD_PTR dwRefData);
+
+	void Capture_Edit_Boxes(HWND hDlg);
+	void Remove_Edit_Boxes(HWND hDlg);
 
 	void Set_Members();
 	void Set_DLG_Members(HWND hDlg);
