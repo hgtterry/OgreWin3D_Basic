@@ -114,7 +114,21 @@ void CreateConeDialog::Start_CreateCone_Dlg()
 
 	App->CL_Properties_Tabs->Enable_Tabs_Dlg(false);
 
+	App->CL_Properties_Tabs->Enable_Tabs_Dlg(false);
+
 	CreateDialog(App->hInst, (LPCTSTR)IDD_CREATE_CONE, App->MainHwnd, (DLGPROC)Proc_CreateCone);
+
+	if (App->CL_App_Templates->Shape_Dlg_hWnd)
+	{
+		App->CL_App_Templates->Enable_Map_Editor_Dialogs(false);
+	}
+
+	Get_DLG_Members(App->CL_App_Templates->Shape_Dlg_hWnd);
+	Set_ConeTemplate();
+	CreateCone();
+
+	App->CL_Ogre->OGL_Listener->Show_Visuals(true);
+
 }
 
 // *************************************************************************
@@ -122,7 +136,6 @@ void CreateConeDialog::Start_CreateCone_Dlg()
 // *************************************************************************
 LRESULT CALLBACK CreateConeDialog::Proc_CreateCone(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
-
 	switch (message)
 	{
 	case WM_INITDIALOG:
@@ -156,6 +169,12 @@ LRESULT CALLBACK CreateConeDialog::Proc_CreateCone(HWND hDlg, UINT message, WPAR
 
 		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		App->CL_App_Templates->Shape_Dlg_hWnd = hDlg;
+
+		App->CL_X_Shapes_3D->Start_Zoom = 400;
+		App->CL_X_Shapes_3D->Render_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_BOX_3D, hDlg, (DLGPROC)App->CL_X_Shapes_3D->Proc_Box_Viewer_3D);
+		App->CL_X_Shapes_3D->Set_OgreWindow();
 
 		App->CL_X_CreateConeDialog->Set_Members();
 		App->CL_X_CreateConeDialog->Set_DLG_Members(hDlg);
@@ -431,11 +450,14 @@ LRESULT CALLBACK CreateConeDialog::Proc_CreateCone(HWND hDlg, UINT message, WPAR
 			App->CL_X_CreateConeDialog->CreateCone();
 
 			App->CL_Properties_Tabs->Enable_Tabs_Dlg(true);
+			App->CL_X_Shapes_3D->Close_OgreWindow();
 
 			App->CL_X_CreateConeDialog->Remove_Edit_Boxes(hDlg);
 
 			strcpy(App->CL_Properties_Templates->LastCreated_ShapeName, App->CL_X_CreateConeDialog->ConeName);
 			App->CL_Properties_Templates->Insert_Template();
+
+			App->CL_App_Templates->Enable_Map_Editor_Dialogs(true);
 
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
@@ -444,8 +466,11 @@ LRESULT CALLBACK CreateConeDialog::Proc_CreateCone(HWND hDlg, UINT message, WPAR
 		if (LOWORD(wParam) == IDCANCEL)
 		{
 			App->CL_Properties_Tabs->Enable_Tabs_Dlg(true);
+			App->CL_X_Shapes_3D->Close_OgreWindow();
 
 			App->CL_X_CreateConeDialog->Remove_Edit_Boxes(hDlg);
+
+			App->CL_App_Templates->Enable_Map_Editor_Dialogs(true);
 
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
