@@ -166,6 +166,7 @@ LRESULT CALLBACK CreateConeDialog::Proc_CreateCone(HWND hDlg, UINT message, WPAR
 		SendDlgItemMessage(hDlg, IDC_ED_CONE_NAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		SendDlgItemMessage(hDlg, IDC_BT_CONE_DEFAULTS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_UPDATE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
@@ -340,6 +341,13 @@ LRESULT CALLBACK CreateConeDialog::Proc_CreateCone(HWND hDlg, UINT message, WPAR
 			return CDRF_DODEFAULT;
 		}
 
+		if (some_item->idFrom == IDC_BT_UPDATE)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
 		if (some_item->idFrom == IDOK)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
@@ -375,6 +383,12 @@ LRESULT CALLBACK CreateConeDialog::Proc_CreateCone(HWND hDlg, UINT message, WPAR
 
 	case WM_COMMAND:
 	{
+		if (LOWORD(wParam) == IDC_BT_UPDATE)
+		{
+			App->CL_X_CreateConeDialog->Update();
+			return TRUE;
+		}
+
 		if (LOWORD(wParam) == IDC_CK_CONE_WORLDCENTRE)
 		{
 			HWND temp = GetDlgItem(hDlg, IDC_CK_CONE_WORLDCENTRE);
@@ -460,9 +474,17 @@ LRESULT CALLBACK CreateConeDialog::Proc_CreateCone(HWND hDlg, UINT message, WPAR
 
 		if (LOWORD(wParam) == IDC_BT_CONE_DEFAULTS)
 		{
-			App->CL_X_CreateConeDialog->Set_Defaults(hDlg);
+			App->CL_App_Templates->Enable_Shape_Dialog(false);
 
-			App->CL_X_CreateConeDialog->Update();
+			App->CL_Dialogs->YesNo("Reset to Defaults", "All Dimensions will be reset");
+			if (App->CL_Dialogs->flag_Dlg_Canceled == false)
+			{
+				App->CL_X_CreateConeDialog->Set_Defaults(hDlg);
+				App->CL_X_CreateConeDialog->Update();
+			}
+
+			App->CL_App_Templates->Enable_Shape_Dialog(true);
+			App->CL_App_Templates->Enable_Map_Editor_Dialogs(false);
 
 			return TRUE;
 		}

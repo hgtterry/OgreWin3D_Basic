@@ -455,6 +455,7 @@
 #define IDC_ST_STARTMODE                1334
 #define IDC_COMBO1                      1335
 #define IDC_CB_BRUSH_CAT                1335
+#define IDC_BT_UPDATE                   1336
 #define ID_DEBUG_GENERAL                32771
 #define ID_TEMPLATES_INSERT             32772
 #define ID_BRUSH_SELECT                 32773
@@ -540,7 +541,7 @@
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        198
 #define _APS_NEXT_COMMAND_VALUE         32846
-#define _APS_NEXT_CONTROL_VALUE         1336
+#define _APS_NEXT_CONTROL_VALUE         1337
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif
