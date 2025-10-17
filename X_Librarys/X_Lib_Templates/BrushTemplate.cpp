@@ -519,7 +519,7 @@ Brush* BrushTemplate::BrushTemplate_CreateCone(const BrushTemplate_Cone* pTempla
 		if (f)
 		{
 			App->CL_X_FaceList->FaceList_AddFace(fl, f);
-			App->CL_X_Face->Face_SetTextureLock(f, true);
+			App->CL_X_Face->Face_SetTextureLock(f, false);
 		}
 
 		OldPoint = CurPoint;
@@ -547,7 +547,7 @@ Brush* BrushTemplate::BrushTemplate_CreateCone(const BrushTemplate_Cone* pTempla
 	if (f)
 	{
 		App->CL_X_FaceList->FaceList_AddFace(fl, f);
-		App->CL_X_Face->Face_SetTextureLock(f, true);
+		App->CL_X_Face->Face_SetTextureLock(f, false);
 	}
 
 	f = App->CL_X_Face->Face_Create(pTemplate->VerticalStrips, BottomVerts, 0);
@@ -559,7 +559,7 @@ Brush* BrushTemplate::BrushTemplate_CreateCone(const BrushTemplate_Cone* pTempla
 			App->CL_X_Face->Face_SetFixedHull(f, GE_TRUE);
 		}
 		App->CL_X_FaceList->FaceList_AddFace(fl, f);
-		App->CL_X_Face->Face_SetTextureLock(f, true);
+		App->CL_X_Face->Face_SetTextureLock(f, false);
 	}
 	//	geRam_Free(BottomVerts);
 
