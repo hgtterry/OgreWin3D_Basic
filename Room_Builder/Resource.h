@@ -81,6 +81,8 @@
 #define IDD_POSITION_DLG                195
 #define IDD_OPTIONS                     196
 #define IDD_BOX_3D                      197
+#define IDB_BITMAP2                     198
+#define IDB_HELP                        198
 #define IDC_BANNER                      1000
 #define IDC_STTEXT                      1001
 #define IDC_STMESSAGE                   1002
@@ -539,7 +541,7 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
-#define _APS_NEXT_RESOURCE_VALUE        198
+#define _APS_NEXT_RESOURCE_VALUE        199
 #define _APS_NEXT_COMMAND_VALUE         32846
 #define _APS_NEXT_CONTROL_VALUE         1337
 #define _APS_NEXT_SYMED_VALUE           110

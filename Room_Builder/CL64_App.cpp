@@ -156,6 +156,7 @@ CL64_App::CL64_App(void)
 	Hnd_Ramp_Bmp = NULL;
 	Hnd_TR_Off_Bmp = NULL;
 	Hnd_TR_On_Bmp = NULL;
+	Hnd_Help_Bmp = NULL;
 
 	Hnd_Box_Icon =	NULL;
 	Hnd_Cyl_Icon =	NULL;
@@ -366,6 +367,8 @@ void CL64_App::LoadProgramResource(void)
 
 	Hnd_TR_Off_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_TR_OFF);
 	Hnd_TR_On_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_TR_ON);
+
+	Hnd_Help_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_HELP);
 
 	// Set Defaults for now
 	App->CL_Level->flag_UseGrid = 1;

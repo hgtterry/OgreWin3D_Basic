@@ -267,6 +267,7 @@ public:
 
 	HANDLE Hnd_TR_Off_Bmp;
 	HANDLE Hnd_TR_On_Bmp;
+	HANDLE Hnd_Help_Bmp;
 
 	HANDLE Hnd_Arch_Icon;
 	HANDLE Hnd_Cone_Icon;

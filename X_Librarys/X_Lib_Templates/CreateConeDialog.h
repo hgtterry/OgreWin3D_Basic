@@ -29,6 +29,7 @@ public:
 	CreateConeDialog(void);
 	~CreateConeDialog(void);
 
+	char* GetVersion();
 	void Start_CreateCone_Dlg();
 
 	BrushTemplate_Cone* pConeTemplate;
@@ -49,6 +50,8 @@ private:
 
 	void Capture_Edit_Boxes(HWND hDlg);
 	void Remove_Edit_Boxes(HWND hDlg);
+
+	void Init_Bmps_Globals(HWND hDlg);
 
 	void Set_Members();
 	void Set_DLG_Members(HWND hDlg);

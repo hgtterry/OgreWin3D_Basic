@@ -317,6 +317,7 @@
     <Image Include="res\FileView\Folder.bmp" />
     <Image Include="res\FileView\Folder_Altered.bmp" />
     <Image Include="res\hollowbo.bmp" />
+    <Image Include="res\Info.bmp" />
     <Image Include="res\Ramp.bmp" />
     <Image Include="res\solidbox.bmp" />
     <Image Include="res\sphere.ico" />

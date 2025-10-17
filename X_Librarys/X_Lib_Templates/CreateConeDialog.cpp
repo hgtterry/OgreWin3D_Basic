@@ -51,6 +51,35 @@ CreateConeDialog::~CreateConeDialog(void)
 {
 }
 
+// *************************************************************************
+// *			GetVersion:- Terry and Hazel Flanigan 2025			 	   *
+// *************************************************************************
+char* CreateConeDialog::GetVersion()
+{
+	return (LPSTR)" TMH_Scene_Builder :-- Create Cone [ 07-10-25 ] Build 1 ";
+}
+
+// *************************************************************************
+// *			Init_Bmps_Globals:- Terry Mo and Hazel 2025				   *
+// *************************************************************************
+void CreateConeDialog::Init_Bmps_Globals(HWND hDlg)
+{
+	HWND Temp = GetDlgItem(hDlg, IDC_BT_HELP);
+	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_Help_Bmp);
+
+	HWND hTooltip_TB_2 = CreateWindowEx(0, TOOLTIPS_CLASS, "", TTS_ALWAYSTIP | TTS_BALLOON | TTS_NOFADE, 0, 0, 0, 0, App->MainHwnd, 0, App->hInst, 0);
+	SendMessage(hTooltip_TB_2, TTM_SETMAXTIPWIDTH, 0, 250);
+
+	Temp = GetDlgItem(hDlg, IDC_BT_HELP);
+	TOOLINFO ti1 = { 0 };
+	ti1.cbSize = sizeof(ti1);
+	ti1.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti1.uId = (UINT_PTR)Temp;
+	ti1.lpszText = (LPSTR)"Help / Information.";
+	ti1.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti1);
+}
+
 LRESULT CALLBACK CreateConeDialog::OwnerEditProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam, UINT_PTR uIdSubclass, DWORD_PTR dwRefData)
 {
 	switch (uMsg)
@@ -183,9 +212,11 @@ LRESULT CALLBACK CreateConeDialog::Proc_CreateCone(HWND hDlg, UINT message, WPAR
 		int Count = App->CL_X_Brush->Get_Brush_Count();
 		char Num[32];
 		char Name[32];
-		_itoa(Count, Num, 10);
+		_itoa(Count + 1, Num, 10);
 		strcpy(Name, "Cone_");
 		strcat(Name, Num);
+
+		App->CL_X_CreateConeDialog->Init_Bmps_Globals(hDlg);
 
 		SetDlgItemText(hDlg, IDC_ED_CONE_NAME, (LPCTSTR)Name);
 
