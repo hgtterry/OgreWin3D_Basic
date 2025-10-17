@@ -56,6 +56,7 @@ private:
 	void Set_ConeTemplate();
 
 	void Set_Defaults(HWND hDlg);
+	void Update(void);
 
 	void CreateCone();
 	void CreateNewTemplateBrush(Brush* pBrush);

@@ -199,7 +199,7 @@ LRESULT CALLBACK CreateBoxDialog::Proc_CreateBox(HWND hDlg, UINT message, WPARAM
 
 		App->CL_App_Templates->Shape_Dlg_hWnd = hDlg;
 
-		App->CL_X_Shapes_3D->Start_Zoom = 400;
+		App->CL_X_Shapes_3D->Start_Zoom = 600;
 		App->CL_X_Shapes_3D->Render_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_BOX_3D, hDlg, (DLGPROC)App->CL_X_Shapes_3D->Proc_Box_Viewer_3D);
 		App->CL_X_Shapes_3D->Set_OgreWindow();
 
@@ -529,7 +529,6 @@ LRESULT CALLBACK CreateBoxDialog::Proc_CreateBox(HWND hDlg, UINT message, WPARAM
 			App->CL_X_CreateBoxDialog->CreateCube();
 
 			App->CL_Properties_Tabs->Enable_Tabs_Dlg(true);
-		
 			App->CL_X_Shapes_3D->Close_OgreWindow();
 
 			App->CL_X_CreateBoxDialog->Remove_Edit_Boxes(hDlg);

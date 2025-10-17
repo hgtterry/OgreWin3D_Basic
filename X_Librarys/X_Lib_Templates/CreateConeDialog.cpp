@@ -62,7 +62,7 @@ LRESULT CALLBACK CreateConeDialog::OwnerEditProc(HWND hWnd, UINT uMsg, WPARAM wP
 
 		case VK_RETURN:
 		{
-			//App->CL_X_CreateConeDialog->Update();
+			App->CL_X_CreateConeDialog->Update();
 			return 0;
 		}
 
@@ -80,7 +80,7 @@ LRESULT CALLBACK CreateConeDialog::OwnerEditProc(HWND hWnd, UINT uMsg, WPARAM wP
 void CreateConeDialog::Capture_Edit_Boxes(HWND hDlg)
 {
 	// Array of control IDs to be processed
-	const int controlIDs[] = { IDC_XSIZETOP, IDC_ZSIZETOP, IDC_XSIZEBOT, IDC_ZSIZEBOT, IDC_YSIZE, IDC_THICKNESS };
+	const int controlIDs[] = { IDC_ED_CONE_1, IDC_ED_CONE_2, IDC_ED_CONE_3, IDC_ED_CONE_4 };
 
 	// Loop through each control ID and set the window subclass
 	for (int id : controlIDs) {
@@ -95,7 +95,7 @@ void CreateConeDialog::Capture_Edit_Boxes(HWND hDlg)
 void CreateConeDialog::Remove_Edit_Boxes(HWND hDlg)
 {
 	// Array of control IDs to remove the subclass from
-	const int controlIDs[] = { IDC_XSIZETOP, IDC_ZSIZETOP, IDC_XSIZEBOT, IDC_ZSIZEBOT };
+	const int controlIDs[] = { IDC_ED_CONE_1, IDC_ED_CONE_2, IDC_ED_CONE_3, IDC_ED_CONE_4 };
 
 	// Iterate through each control ID and remove the subclass
 	for (int id : controlIDs)
@@ -172,7 +172,7 @@ LRESULT CALLBACK CreateConeDialog::Proc_CreateCone(HWND hDlg, UINT message, WPAR
 
 		App->CL_App_Templates->Shape_Dlg_hWnd = hDlg;
 
-		App->CL_X_Shapes_3D->Start_Zoom = 400;
+		App->CL_X_Shapes_3D->Start_Zoom = 600;
 		App->CL_X_Shapes_3D->Render_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_BOX_3D, hDlg, (DLGPROC)App->CL_X_Shapes_3D->Proc_Box_Viewer_3D);
 		App->CL_X_Shapes_3D->Set_OgreWindow();
 
@@ -357,6 +357,22 @@ LRESULT CALLBACK CreateConeDialog::Proc_CreateCone(HWND hDlg, UINT message, WPAR
 		return CDRF_DODEFAULT;
 	}
 
+	case WM_MOUSEWHEEL:
+	{
+		int zDelta = (short)HIWORD(wParam);    // wheel rotation
+
+		if (zDelta > 0)
+		{
+			App->CL_X_Shapes_3D->RenderListener->Wheel_Move = -1;
+		}
+		else if (zDelta < 0)
+		{
+			App->CL_X_Shapes_3D->RenderListener->Wheel_Move = 1;
+		}
+
+		return 1;
+	}
+
 	case WM_COMMAND:
 	{
 		if (LOWORD(wParam) == IDC_CK_CONE_WORLDCENTRE)
@@ -391,6 +407,8 @@ LRESULT CALLBACK CreateConeDialog::Proc_CreateCone(HWND hDlg, UINT message, WPAR
 			App->CL_X_CreateConeDialog->flag_Hollow_Flag_Dlg = 0;
 			App->CL_X_CreateConeDialog->flag_Funnel_Flag_Dlg = 0;
 
+			App->CL_X_CreateConeDialog->Update();
+
 			RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
 			return TRUE;
@@ -404,6 +422,8 @@ LRESULT CALLBACK CreateConeDialog::Proc_CreateCone(HWND hDlg, UINT message, WPAR
 			App->CL_X_CreateConeDialog->flag_Hollow_Flag_Dlg = 1;
 			App->CL_X_CreateConeDialog->flag_Funnel_Flag_Dlg = 0;
 
+			App->CL_X_CreateConeDialog->Update();
+
 			RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			return TRUE;
 		}
@@ -415,6 +435,8 @@ LRESULT CALLBACK CreateConeDialog::Proc_CreateCone(HWND hDlg, UINT message, WPAR
 			App->CL_X_CreateConeDialog->flag_Solid_Flag_Dlg = 0;
 			App->CL_X_CreateConeDialog->flag_Hollow_Flag_Dlg = 0;
 			App->CL_X_CreateConeDialog->flag_Funnel_Flag_Dlg = 1;
+
+			App->CL_X_CreateConeDialog->Update();
 
 			RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			return TRUE;
@@ -439,6 +461,9 @@ LRESULT CALLBACK CreateConeDialog::Proc_CreateCone(HWND hDlg, UINT message, WPAR
 		if (LOWORD(wParam) == IDC_BT_CONE_DEFAULTS)
 		{
 			App->CL_X_CreateConeDialog->Set_Defaults(hDlg);
+
+			App->CL_X_CreateConeDialog->Update();
+
 			return TRUE;
 		}
 
@@ -470,6 +495,10 @@ LRESULT CALLBACK CreateConeDialog::Proc_CreateCone(HWND hDlg, UINT message, WPAR
 
 			App->CL_X_CreateConeDialog->Remove_Edit_Boxes(hDlg);
 
+			App->CL_Panels->Deselect_All_Brushes_Update_Dlgs();
+			App->CL_Top_Tabs->Redraw_TopTabs_Dlg();
+			App->CL_Ogre->OGL_Listener->Show_Visuals(false);
+
 			App->CL_App_Templates->Enable_Map_Editor_Dialogs(true);
 
 			EndDialog(hDlg, LOWORD(wParam));
@@ -480,6 +509,16 @@ LRESULT CALLBACK CreateConeDialog::Proc_CreateCone(HWND hDlg, UINT message, WPAR
 	}
 	}
 	return FALSE;
+}
+
+// *************************************************************************
+// *			Update:- Terry and Hazel Flanigan 2024					   *
+// *************************************************************************
+void CreateConeDialog::Update(void)
+{
+	Get_DLG_Members(App->CL_App_Templates->Shape_Dlg_hWnd);
+	Set_ConeTemplate();
+	CreateCone();
 }
 
 // *************************************************************************
