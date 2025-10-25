@@ -194,7 +194,6 @@ public:
 
 	// Templates Dialogs Libraries
 	App_Templates*				CL_App_Templates;
-	CreateArchDialog*			CL_X_CreateArchDialog;
 	CreateConeDialog*			CL_X_CreateConeDialog;
 	CreateCylDialog*			CL_X_CreateCylDialog;
 	CreateStaircaseDialog*		CL_X_CreateStaircaseDialog;

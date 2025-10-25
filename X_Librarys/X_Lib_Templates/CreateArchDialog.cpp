@@ -98,7 +98,7 @@ LRESULT CALLBACK CreateArchDialog::OwnerEditProc(HWND hWnd, UINT uMsg, WPARAM wP
 
 		case VK_RETURN:
 		{
-			App->CL_X_CreateArchDialog->Update();
+			App->CL_App_Templates->CL_CreateArch->Update();
 			return 0;
 		}
 
@@ -166,12 +166,13 @@ void CreateArchDialog::Start_CreateArch_Dlg()
 // *************************************************************************
 LRESULT CALLBACK CreateArchDialog::CreateArch_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
-
+	auto& m_Arch = App->CL_App_Templates->CL_CreateArch; // App->CL_App_Templates->CL_CreateArch
+	
 	switch (message)
 	{
 	case WM_INITDIALOG:
 	{
-		App->CL_X_CreateArchDialog->Capture_Edit_Boxes(hDlg);
+		m_Arch->Capture_Edit_Boxes(hDlg);
 
 		SendDlgItemMessage(hDlg, IDC_STTHICKNESS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_STWIDTH, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
@@ -211,7 +212,7 @@ LRESULT CALLBACK CreateArchDialog::CreateArch_Proc(HWND hDlg, UINT message, WPAR
 		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
-		App->CL_X_CreateArchDialog->Main_Dlg_Hwnd = hDlg;
+		m_Arch->Main_Dlg_Hwnd = hDlg;
 
 		App->CL_X_Shapes_3D->Start_Zoom = 400;
 		App->CL_X_Shapes_3D->Render_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_BOX_3D, hDlg, (DLGPROC)App->CL_X_Shapes_3D->Proc_Box_Viewer_3D);
@@ -220,9 +221,9 @@ LRESULT CALLBACK CreateArchDialog::CreateArch_Proc(HWND hDlg, UINT message, WPAR
 
 		App->CL_X_Shapes_3D->Set_OgreWindow();
 
-		App->CL_X_CreateArchDialog->Set_Members();
-		App->CL_X_CreateArchDialog->Set_DLG_Members(hDlg);
-		App->CL_X_CreateArchDialog->Set_Defaults(hDlg);
+		m_Arch->Set_Members();
+		m_Arch->Set_DLG_Members(hDlg);
+		m_Arch->Set_Defaults(hDlg);
 
 		int Count = App->CL_X_Brush->Get_Brush_Count();
 		char Num[32];
@@ -449,42 +450,42 @@ LRESULT CALLBACK CreateArchDialog::CreateArch_Proc(HWND hDlg, UINT message, WPAR
 		if (some_item->idFrom == IDC_BT_ARCHSOLID)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle_Tabs(item, App->CL_X_CreateArchDialog->flag_Solid_Flag);
+			App->Custom_Button_Toggle_Tabs(item, m_Arch->flag_Solid_Flag);
 			return CDRF_DODEFAULT;
 		}
 
 		if (some_item->idFrom == IDC_BT_ARCHHOLLOW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle_Tabs(item, App->CL_X_CreateArchDialog->flag_Hollow_Flag);
+			App->Custom_Button_Toggle_Tabs(item, m_Arch->flag_Hollow_Flag);
 			return CDRF_DODEFAULT;
 		}
 
 		if (some_item->idFrom == IDC_BT_ARCHRING)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle_Tabs(item, App->CL_X_CreateArchDialog->flag_Ring_Flag);
+			App->Custom_Button_Toggle_Tabs(item, m_Arch->flag_Ring_Flag);
 			return CDRF_DODEFAULT;
 		}
 
 		if (some_item->idFrom == IDC_BT_ARCHCUT)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle_Tabs(item, App->CL_X_CreateArchDialog->flag_Cut_Flag);
+			App->Custom_Button_Toggle_Tabs(item, m_Arch->flag_Cut_Flag);
 			return CDRF_DODEFAULT;
 		}
 
 		if (some_item->idFrom == IDC_BT_ARCHRECTANGLE)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle_Tabs(item, App->CL_X_CreateArchDialog->flag_Rectangle_Flag);
+			App->Custom_Button_Toggle_Tabs(item, m_Arch->flag_Rectangle_Flag);
 			return CDRF_DODEFAULT;
 		}
 
 		if (some_item->idFrom == IDC_BT_ARCHROUND)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle_Tabs(item, App->CL_X_CreateArchDialog->flag_Round_Flag);
+			App->Custom_Button_Toggle_Tabs(item, m_Arch->flag_Round_Flag);
 			return CDRF_DODEFAULT;
 		}
 
@@ -548,9 +549,9 @@ LRESULT CALLBACK CreateArchDialog::CreateArch_Proc(HWND hDlg, UINT message, WPAR
 
 		if (LOWORD(wParam) == IDC_BT_ARCHSOLID)
 		{
-			App->CL_X_CreateArchDialog->Zero_Dlg_Flags(hDlg);
-			App->CL_X_CreateArchDialog->m_Style = 0;
-			App->CL_X_CreateArchDialog->flag_Solid_Flag = 1;
+			m_Arch->Zero_Dlg_Flags(hDlg);
+			m_Arch->m_Style = 0;
+			m_Arch->flag_Solid_Flag = 1;
 
 			RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			return TRUE;
@@ -558,9 +559,9 @@ LRESULT CALLBACK CreateArchDialog::CreateArch_Proc(HWND hDlg, UINT message, WPAR
 
 		if (LOWORD(wParam) == IDC_BT_ARCHHOLLOW)
 		{
-			App->CL_X_CreateArchDialog->Zero_Dlg_Flags(hDlg);
-			App->CL_X_CreateArchDialog->m_Style = 1;
-			App->CL_X_CreateArchDialog->flag_Hollow_Flag = 1;
+			m_Arch->Zero_Dlg_Flags(hDlg);
+			m_Arch->m_Style = 1;
+			m_Arch->flag_Hollow_Flag = 1;
 
 			RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			return TRUE;
@@ -568,9 +569,9 @@ LRESULT CALLBACK CreateArchDialog::CreateArch_Proc(HWND hDlg, UINT message, WPAR
 
 		if (LOWORD(wParam) == IDC_BT_ARCHRING)
 		{
-			App->CL_X_CreateArchDialog->Zero_Dlg_Flags(hDlg);
-			App->CL_X_CreateArchDialog->m_Style = 2;
-			App->CL_X_CreateArchDialog->flag_Ring_Flag = 1;
+			m_Arch->Zero_Dlg_Flags(hDlg);
+			m_Arch->m_Style = 2;
+			m_Arch->flag_Ring_Flag = 1;
 
 			RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			return TRUE;
@@ -578,18 +579,18 @@ LRESULT CALLBACK CreateArchDialog::CreateArch_Proc(HWND hDlg, UINT message, WPAR
 
 		if (LOWORD(wParam) == IDC_BT_ARCHCUT)
 		{
-			if (App->CL_X_CreateArchDialog->flag_Cut_Flag == 0)
+			if (m_Arch->flag_Cut_Flag == 0)
 			{
-				App->CL_X_CreateArchDialog->m_TCut = 1;
-				App->CL_X_CreateArchDialog->flag_Cut_Flag = 1;
+				m_Arch->m_TCut = 1;
+				m_Arch->flag_Cut_Flag = 1;
 
 				RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 				return 1;
 			}
 			else
 			{
-				App->CL_X_CreateArchDialog->m_TCut = 0;
-				App->CL_X_CreateArchDialog->flag_Cut_Flag = 0;
+				m_Arch->m_TCut = 0;
+				m_Arch->flag_Cut_Flag = 0;
 
 				RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 				return 1;
@@ -600,9 +601,9 @@ LRESULT CALLBACK CreateArchDialog::CreateArch_Proc(HWND hDlg, UINT message, WPAR
 
 		if (LOWORD(wParam) == IDC_BT_ARCHRECTANGLE)
 		{
-			App->CL_X_CreateArchDialog->m_Shape = 0;
-			App->CL_X_CreateArchDialog->flag_Rectangle_Flag = 1;
-			App->CL_X_CreateArchDialog->flag_Round_Flag = 0;
+			m_Arch->m_Shape = 0;
+			m_Arch->flag_Rectangle_Flag = 1;
+			m_Arch->flag_Round_Flag = 0;
 
 			RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			return TRUE;
@@ -610,9 +611,9 @@ LRESULT CALLBACK CreateArchDialog::CreateArch_Proc(HWND hDlg, UINT message, WPAR
 
 		if (LOWORD(wParam) == IDC_BT_ARCHROUND)
 		{
-			App->CL_X_CreateArchDialog->m_Shape = 1;
-			App->CL_X_CreateArchDialog->flag_Round_Flag = 1;
-			App->CL_X_CreateArchDialog->flag_Rectangle_Flag = 0;
+			m_Arch->m_Shape = 1;
+			m_Arch->flag_Round_Flag = 1;
+			m_Arch->flag_Rectangle_Flag = 0;
 
 			RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			return TRUE;
@@ -620,13 +621,13 @@ LRESULT CALLBACK CreateArchDialog::CreateArch_Proc(HWND hDlg, UINT message, WPAR
 
 		/*if (LOWORD(wParam) == IDC_CW)
 		{
-			App->CL_X_CreateArchDialog->m_CW = 1;
+			App->m_Arch->m_CW = 1;
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == IDC_CCW)
 		{
-			App->CL_X_CreateArchDialog->m_CW = 0;
+			App->m_Arch->m_CW = 0;
 			return TRUE;
 		}
 
@@ -637,12 +638,12 @@ LRESULT CALLBACK CreateArchDialog::CreateArch_Proc(HWND hDlg, UINT message, WPAR
 			int test = SendMessage(temp, BM_GETCHECK, 0, 0);
 			if (test == BST_CHECKED)
 			{
-				App->CL_X_CreateArchDialog->m_Steps = 1;
+				App->m_Arch->m_Steps = 1;
 				return 1;
 			}
 			else
 			{
-				App->CL_X_CreateArchDialog->m_Steps = 0;
+				App->m_Arch->m_Steps = 0;
 				return 1;
 			}
 
@@ -656,12 +657,12 @@ LRESULT CALLBACK CreateArchDialog::CreateArch_Proc(HWND hDlg, UINT message, WPAR
 			int test = SendMessage(temp, BM_GETCHECK, 0, 0);
 			if (test == BST_CHECKED)
 			{
-				App->CL_X_CreateArchDialog->m_Massive = 1;
+				App->m_Arch->m_Massive = 1;
 				return 1;
 			}
 			else
 			{
-				App->CL_X_CreateArchDialog->m_Massive = 0;
+				App->m_Arch->m_Massive = 0;
 				return 1;
 			}
 
@@ -671,22 +672,22 @@ LRESULT CALLBACK CreateArchDialog::CreateArch_Proc(HWND hDlg, UINT message, WPAR
 
 		if (LOWORD(wParam) == ID_DEFAULTS)
 		{
-			App->CL_X_CreateArchDialog->Set_Defaults(hDlg);
+			App->m_Arch->Set_Defaults(hDlg);
 			return TRUE;
 		}*/
 
 		// -----------------------------------------------------------------
 		if (LOWORD(wParam) == IDOK)
 		{
-			App->CL_X_CreateArchDialog->Get_DLG_Members(hDlg);
-			App->CL_X_CreateArchDialog->Set_ArchTemplate();
-			App->CL_X_CreateArchDialog->CreateArch();
+			m_Arch->Get_DLG_Members(hDlg);
+			m_Arch->Set_ArchTemplate();
+			m_Arch->CreateArch();
 
 			App->CL_Properties_Tabs->Enable_Tabs_Dlg(true);
 			App->CL_X_Shapes_3D->Close_OgreWindow();
-			App->CL_X_CreateArchDialog->Remove_Edit_Boxes(hDlg);
+			m_Arch->Remove_Edit_Boxes(hDlg);
 
-			strcpy(App->CL_Properties_Templates->LastCreated_ShapeName, App->CL_X_CreateArchDialog->ArchName);
+			strcpy(App->CL_Properties_Templates->LastCreated_ShapeName, m_Arch->ArchName);
 			App->CL_Properties_Templates->Insert_Template();
 
 			EndDialog(hDlg, LOWORD(wParam));
@@ -697,7 +698,7 @@ LRESULT CALLBACK CreateArchDialog::CreateArch_Proc(HWND hDlg, UINT message, WPAR
 		{
 			App->CL_Properties_Tabs->Enable_Tabs_Dlg(true);
 			App->CL_X_Shapes_3D->Close_OgreWindow();
-			App->CL_X_CreateArchDialog->Remove_Edit_Boxes(hDlg);
+			m_Arch->Remove_Edit_Boxes(hDlg);
 
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
@@ -964,13 +965,13 @@ void CreateArchDialog::Set_Defaults(HWND hDlg)
 
 	Set_DLG_Members(hDlg);
 
-	App->CL_X_CreateArchDialog->Zero_Dlg_Flags(hDlg);
-	App->CL_X_CreateArchDialog->m_Style = 0;
-	App->CL_X_CreateArchDialog->flag_Solid_Flag = 1;
+	App->CL_App_Templates->CL_CreateArch->Zero_Dlg_Flags(hDlg);
+	App->CL_App_Templates->CL_CreateArch->m_Style = 0;
+	App->CL_App_Templates->CL_CreateArch->flag_Solid_Flag = 1;
 
-	App->CL_X_CreateArchDialog->m_Shape = 0;
-	App->CL_X_CreateArchDialog->flag_Rectangle_Flag = 1;
-	App->CL_X_CreateArchDialog->flag_Round_Flag = 0;
+	App->CL_App_Templates->CL_CreateArch->m_Shape = 0;
+	App->CL_App_Templates->CL_CreateArch->flag_Rectangle_Flag = 1;
+	App->CL_App_Templates->CL_CreateArch->flag_Round_Flag = 0;
 
 	App->CL_X_Shapes_3D->Set_Camera(500);
 
