@@ -12,6 +12,16 @@ App_Templates::~App_Templates(void)
 }
 
 // *************************************************************************
+// *			Init_Templates:- Terry Mo and Hazel 2025				   *
+// *************************************************************************
+void App_Templates::Init_Templates(void)
+{
+	CL_CreateBox = new CreateBoxDialog();
+	CL_CreateCylinder = new CreateCylDialog();
+	CL_CreateArch = new CreateArchDialog();
+}
+
+// *************************************************************************
 // *	Enable_Map_Editor_Dialogs:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
 void App_Templates::Enable_Map_Editor_Dialogs(bool Enable)

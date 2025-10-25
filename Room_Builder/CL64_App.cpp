@@ -104,7 +104,6 @@ CL64_App::CL64_App(void)
 
 	// Templates Dialogs Libraries
 	CL_App_Templates =				nullptr;
-	CL_X_CreateBoxDialog =			nullptr;
 	CL_X_CreateArchDialog =			nullptr;
 	CL_X_CreateConeDialog =			nullptr;
 	CL_X_CreateCylDialog =			nullptr;
@@ -261,7 +260,8 @@ void CL64_App::InitApp(void)
 	
 	// Templates Dialogs Libraries
 	CL_App_Templates =				new App_Templates();
-	CL_X_CreateBoxDialog =			new CreateBoxDialog();
+	CL_App_Templates->Init_Templates();
+
 	CL_X_CreateArchDialog =			new CreateArchDialog();
 	CL_X_CreateConeDialog =			new CreateConeDialog();
 	CL_X_CreateCylDialog =			new CreateCylDialog();

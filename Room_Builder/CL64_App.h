@@ -99,7 +99,6 @@ THE SOFTWARE.
 // Templates Dialogs
 #include "App_Templates.h"
 #include "CreateBoxDialog.h"
-#include "CreateArchDialog.h"
 #include "CreateConeDialog.h"
 #include "CreateCylDialog.h"
 #include "CreateStaircaseDialog.h"
@@ -195,7 +194,6 @@ public:
 
 	// Templates Dialogs Libraries
 	App_Templates*				CL_App_Templates;
-	CreateBoxDialog*			CL_X_CreateBoxDialog;
 	CreateArchDialog*			CL_X_CreateArchDialog;
 	CreateConeDialog*			CL_X_CreateConeDialog;
 	CreateCylDialog*			CL_X_CreateCylDialog;

@@ -99,7 +99,7 @@ LRESULT CALLBACK CreateBoxDialog::OwnerEditProc(HWND hWnd, UINT uMsg, WPARAM wPa
 
 		case VK_RETURN:
 		{
-			App->CL_X_CreateBoxDialog->Update();
+			App->CL_App_Templates->CL_CreateBox->Update();
 			return 0;
 		}
 
@@ -172,12 +172,14 @@ void CreateBoxDialog::Start_CreateBox_Dlg()
 // *************************************************************************
 LRESULT CALLBACK CreateBoxDialog::Proc_CreateBox(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
+	auto& m_Box = App->CL_App_Templates->CL_CreateBox; // App->CL_App_Templates->CL_CreateBox
+	
 	switch (message)
 	{
 
 	case WM_INITDIALOG:
 	{
-		App->CL_X_CreateBoxDialog->Capture_Edit_Boxes(hDlg);
+		m_Box->Capture_Edit_Boxes(hDlg);
 		
 		// Array of control IDs to set font to Font_CB15
 		const int controlIDs[] =
@@ -204,9 +206,9 @@ LRESULT CALLBACK CreateBoxDialog::Proc_CreateBox(HWND hDlg, UINT message, WPARAM
 		App->CL_X_Shapes_3D->Set_OgreWindow();
 
 		// Initialize dialog members
-		App->CL_X_CreateBoxDialog->SetMembers();
-		App->CL_X_CreateBoxDialog->Set_Dialog_Members(hDlg);
-		App->CL_X_CreateBoxDialog->SetDefaults(hDlg);
+		m_Box->SetMembers();
+		m_Box->Set_Dialog_Members(hDlg);
+		m_Box->SetDefaults(hDlg);
 
 		// Generate and set the box name
 		int Count = App->CL_X_Brush->Get_Brush_Count();
@@ -217,14 +219,14 @@ LRESULT CALLBACK CreateBoxDialog::Proc_CreateBox(HWND hDlg, UINT message, WPARAM
 		// Set checkbox state
 		HWND Temp = GetDlgItem(hDlg, IDC_CKWORLDCENTRE);
 		SendMessage(Temp, BM_SETCHECK, 1, 0);
-		App->CL_X_CreateBoxDialog->m_UseCamPos = 0;
+		m_Box->m_UseCamPos = 0;
 
-		App->CL_X_CreateBoxDialog->Init_Bmps_Globals(hDlg);
+		m_Box->Init_Bmps_Globals(hDlg);
 
 		if (App->CL_X_Brush->Get_Brush_Count() == 0) // New Scene
 		{
-			App->CL_X_CreateBoxDialog->flag_Default = 0;
-			App->CL_X_CreateBoxDialog->flag_Room = 1;
+			m_Box->flag_Default = 0;
+			m_Box->flag_Room = 1;
 
 			EnableWindow(GetDlgItem(hDlg, IDC_BOXDEFAULTS), false);
 			EnableWindow(GetDlgItem(hDlg, IDC_BT_BOXCUTBRUSH), false);
@@ -237,7 +239,7 @@ LRESULT CALLBACK CreateBoxDialog::Proc_CreateBox(HWND hDlg, UINT message, WPARAM
 
 			SetDlgItemText(hDlg, IDC_EDITNAME, boxName.c_str());
 
-			App->CL_X_CreateBoxDialog->SetRoom(hDlg);
+			m_Box->SetRoom(hDlg);
 		}
 
 		return TRUE;
@@ -288,13 +290,13 @@ LRESULT CALLBACK CreateBoxDialog::Proc_CreateBox(HWND hDlg, UINT message, WPARAM
 			}
 			else
 			{
-				App->Custom_Button_Toggle_Tabs(item, App->CL_X_CreateBoxDialog->Solid_Flag);
+				App->Custom_Button_Toggle_Tabs(item, m_Box->Solid_Flag);
 			}
 			break;
 		}
 
 		case IDC_BT_BOXHOLLOW:
-			App->Custom_Button_Toggle_Tabs(item, App->CL_X_CreateBoxDialog->Hollow_Flag);
+			App->Custom_Button_Toggle_Tabs(item, m_Box->Hollow_Flag);
 			break;
 
 		case IDC_BT_BOXCUTBRUSH:
@@ -306,7 +308,7 @@ LRESULT CALLBACK CreateBoxDialog::Proc_CreateBox(HWND hDlg, UINT message, WPARAM
 			}
 			else
 			{
-				App->Custom_Button_Toggle_Tabs(item, App->CL_X_CreateBoxDialog->Cut_Flag);
+				App->Custom_Button_Toggle_Tabs(item, m_Box->Cut_Flag);
 			}
 			break;
 		}
@@ -320,13 +322,13 @@ LRESULT CALLBACK CreateBoxDialog::Proc_CreateBox(HWND hDlg, UINT message, WPARAM
 			}
 			else
 			{
-				App->Custom_Button_Toggle_Tabs(item, App->CL_X_CreateBoxDialog->flag_Default);
+				App->Custom_Button_Toggle_Tabs(item, m_Box->flag_Default);
 			}
 			break;
 		}
 
 		case IDC_BT_BOXROOM:
-			App->Custom_Button_Toggle_Tabs(item, App->CL_X_CreateBoxDialog->flag_Room);
+			App->Custom_Button_Toggle_Tabs(item, m_Box->flag_Room);
 			break;
 
 		/*case IDC_BT_UPDATE:
@@ -365,7 +367,7 @@ LRESULT CALLBACK CreateBoxDialog::Proc_CreateBox(HWND hDlg, UINT message, WPARAM
 	{
 		/*if (LOWORD(wParam) == IDC_BT_UPDATE)
 		{
-			App->CL_X_CreateBoxDialog->Update();
+			m_Box->Update();
 			return TRUE;
 		}*/
 		
@@ -374,9 +376,9 @@ LRESULT CALLBACK CreateBoxDialog::Proc_CreateBox(HWND hDlg, UINT message, WPARAM
 			HWND Temp = GetDlgItem(hDlg, IDC_PICTURE);
 			SendMessage(Temp, STM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_SolidBox_Bmp);
 
-			App->CL_X_CreateBoxDialog->Zero_Dlg_Flags(hDlg);
-			App->CL_X_CreateBoxDialog->m_Solid = 0;
-			App->CL_X_CreateBoxDialog->Solid_Flag = 1;
+			m_Box->Zero_Dlg_Flags(hDlg);
+			m_Box->m_Solid = 0;
+			m_Box->Solid_Flag = 1;
 
 			HWND temp = GetDlgItem(App->CL_App_Templates->Shape_Dlg_hWnd, IDC_THICKNESS);
 			EnableWindow(temp, false);
@@ -385,7 +387,7 @@ LRESULT CALLBACK CreateBoxDialog::Proc_CreateBox(HWND hDlg, UINT message, WPARAM
 			char Name[32];
 			snprintf(Name, sizeof(Name), "Box_%d", Count + 1);
 
-			App->CL_X_CreateBoxDialog->Update();
+			m_Box->Update();
 
 			SetDlgItemText(hDlg, IDC_EDITNAME, (LPTSTR)Name);
 
@@ -398,9 +400,9 @@ LRESULT CALLBACK CreateBoxDialog::Proc_CreateBox(HWND hDlg, UINT message, WPARAM
 			HWND Temp = GetDlgItem(hDlg, IDC_PICTURE);
 			SendMessage(Temp, STM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_HollowBox_Bmp);
 
-			App->CL_X_CreateBoxDialog->Zero_Dlg_Flags(hDlg);
-			App->CL_X_CreateBoxDialog->m_Solid = 1;
-			App->CL_X_CreateBoxDialog->Hollow_Flag = 1;
+			m_Box->Zero_Dlg_Flags(hDlg);
+			m_Box->m_Solid = 1;
+			m_Box->Hollow_Flag = 1;
 
 			HWND temp = GetDlgItem(App->CL_App_Templates->Shape_Dlg_hWnd, IDC_THICKNESS);
 			EnableWindow(temp, true);
@@ -409,7 +411,7 @@ LRESULT CALLBACK CreateBoxDialog::Proc_CreateBox(HWND hDlg, UINT message, WPARAM
 			char Name[32];
 			snprintf(Name, sizeof(Name), "Room_%d", Count + 1);
 
-			App->CL_X_CreateBoxDialog->Update();
+			m_Box->Update();
 
 			SetDlgItemText(hDlg, IDC_EDITNAME, (LPTSTR)Name);
 
@@ -419,14 +421,14 @@ LRESULT CALLBACK CreateBoxDialog::Proc_CreateBox(HWND hDlg, UINT message, WPARAM
 
 		if (LOWORD(wParam) == IDC_BT_BOXCUTBRUSH)
 		{
-			App->CL_X_CreateBoxDialog->m_TCut = !App->CL_X_CreateBoxDialog->Cut_Flag;
-			App->CL_X_CreateBoxDialog->Cut_Flag = !App->CL_X_CreateBoxDialog->Cut_Flag;
+			m_Box->m_TCut = !m_Box->Cut_Flag;
+			m_Box->Cut_Flag = !m_Box->Cut_Flag;
 
 			int Count = App->CL_X_Brush->Get_Brush_Count();
 			char Name[32];
-			snprintf(Name, sizeof(Name), "Box_%d%s", Count+1, App->CL_X_CreateBoxDialog->Cut_Flag ? "_Cut" : "");
+			snprintf(Name, sizeof(Name), "Box_%d%s", Count+1, m_Box->Cut_Flag ? "_Cut" : "");
 
-			App->CL_X_CreateBoxDialog->Update();
+			m_Box->Update();
 
 			SetDlgItemText(hDlg, IDC_EDITNAME, (LPTSTR)Name);
 			RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
@@ -442,7 +444,7 @@ LRESULT CALLBACK CreateBoxDialog::Proc_CreateBox(HWND hDlg, UINT message, WPARAM
 			temp = GetDlgItem(hDlg, IDC_CKCAMPOSITION);
 			SendMessage(temp, BM_SETCHECK, 0, 0);
 
-			App->CL_X_CreateBoxDialog->m_UseCamPos = 0;
+			m_Box->m_UseCamPos = 0;
 			return TRUE;
 		}
 
@@ -454,7 +456,7 @@ LRESULT CALLBACK CreateBoxDialog::Proc_CreateBox(HWND hDlg, UINT message, WPARAM
 			temp = GetDlgItem(hDlg, IDC_CKWORLDCENTRE);
 			SendMessage(temp, BM_SETCHECK, 0, 0);
 
-			App->CL_X_CreateBoxDialog->m_UseCamPos = 1;
+			m_Box->m_UseCamPos = 1;
 			return TRUE;
 		}
 
@@ -465,8 +467,8 @@ LRESULT CALLBACK CreateBoxDialog::Proc_CreateBox(HWND hDlg, UINT message, WPARAM
 			App->CL_Dialogs->YesNo("Reset to Defaults", "All Dimensions will be reset");
 			if (App->CL_Dialogs->flag_Dlg_Canceled == false)
 			{
-				App->CL_X_CreateBoxDialog->flag_Default = 1;
-				App->CL_X_CreateBoxDialog->flag_Room = 0;
+				m_Box->flag_Default = 1;
+				m_Box->flag_Room = 0;
 				RedrawWindow(hDlg, nullptr, nullptr, RDW_INVALIDATE | RDW_UPDATENOW);
 
 				int brushCount = App->CL_X_Brush->Get_Brush_Count();
@@ -474,9 +476,9 @@ LRESULT CALLBACK CreateBoxDialog::Proc_CreateBox(HWND hDlg, UINT message, WPARAM
 
 				SetDlgItemText(hDlg, IDC_EDITNAME, name.c_str());
 
-				App->CL_X_CreateBoxDialog->SetDefaults(hDlg);
+				m_Box->SetDefaults(hDlg);
 
-				App->CL_X_CreateBoxDialog->Update();
+				m_Box->Update();
 
 				HWND temp = GetDlgItem(App->CL_App_Templates->Shape_Dlg_hWnd, IDC_THICKNESS);
 				EnableWindow(temp, false);
@@ -495,8 +497,8 @@ LRESULT CALLBACK CreateBoxDialog::Proc_CreateBox(HWND hDlg, UINT message, WPARAM
 			App->CL_Dialogs->YesNo("Reset to Defaults", "All Dimensions will be reset");
 			if (App->CL_Dialogs->flag_Dlg_Canceled == false)
 			{
-				App->CL_X_CreateBoxDialog->flag_Default = 0;
-				App->CL_X_CreateBoxDialog->flag_Room = 1;
+				m_Box->flag_Default = 0;
+				m_Box->flag_Room = 1;
 				RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
 				int brushCount = App->CL_X_Brush->Get_Brush_Count();
@@ -504,9 +506,9 @@ LRESULT CALLBACK CreateBoxDialog::Proc_CreateBox(HWND hDlg, UINT message, WPARAM
 
 				SetDlgItemText(hDlg, IDC_EDITNAME, boxName.c_str());
 
-				App->CL_X_CreateBoxDialog->SetRoom(hDlg);
+				m_Box->SetRoom(hDlg);
 
-				App->CL_X_CreateBoxDialog->Update();
+				m_Box->Update();
 			}
 
 			App->CL_App_Templates->Enable_Shape_Dialog(true);
@@ -524,16 +526,16 @@ LRESULT CALLBACK CreateBoxDialog::Proc_CreateBox(HWND hDlg, UINT message, WPARAM
 		// -----------------------------------------------------------------
 		if (LOWORD(wParam) == IDOK)
 		{
-			App->CL_X_CreateBoxDialog->Get_Dialog_Members(hDlg);
-			App->CL_X_CreateBoxDialog->Set_BoxTemplate();
-			App->CL_X_CreateBoxDialog->CreateCube();
+			m_Box->Get_Dialog_Members(hDlg);
+			m_Box->Set_BoxTemplate();
+			m_Box->CreateCube();
 
 			App->CL_Properties_Tabs->Enable_Tabs_Dlg(true);
 			App->CL_X_Shapes_3D->Close_OgreWindow();
 
-			App->CL_X_CreateBoxDialog->Remove_Edit_Boxes(hDlg);
+			m_Box->Remove_Edit_Boxes(hDlg);
 
-			strcpy(App->CL_Properties_Templates->LastCreated_ShapeName, App->CL_X_CreateBoxDialog->BoxName);
+			strcpy(App->CL_Properties_Templates->LastCreated_ShapeName, m_Box->BoxName);
 			App->CL_Properties_Templates->Insert_Template();
 
 			App->CL_App_Templates->Enable_Map_Editor_Dialogs(true);
@@ -548,7 +550,7 @@ LRESULT CALLBACK CreateBoxDialog::Proc_CreateBox(HWND hDlg, UINT message, WPARAM
 			App->CL_Properties_Tabs->Enable_Tabs_Dlg(true);
 			App->CL_X_Shapes_3D->Close_OgreWindow();
 
-			App->CL_X_CreateBoxDialog->Remove_Edit_Boxes(hDlg);
+			m_Box->Remove_Edit_Boxes(hDlg);
 
 			App->CL_Panels->Deselect_All_Brushes_Update_Dlgs();
 			App->CL_Top_Tabs->Redraw_TopTabs_Dlg();
