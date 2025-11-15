@@ -26,5 +26,7 @@ echo f |xcopy X_Lib_Templates\OGL_Listener.h ..\Common_64\OW3D\include\OGL_Liste
 echo f |xcopy X_Lib_Zip\zip.h ..\Common_64\OW3D\include\zip.h /y
 echo f |xcopy X_Lib_Zip\unzip.h ..\Common_64\OW3D\include\unzip.h /y
 
+echo f |xcopy X_Lib_Face_Editor\Face_Editor.h ..\Common_64\OW3D\include\Face_Editor.h /y
+
 echo "OW3D"
 pause
