@@ -459,8 +459,11 @@
 #define IDC_BT_UPDATE                   1336
 #define IDC_SLDR_SCALE_X                1337
 #define IDC_ST_WSCALE                   1338
-#define IDC_SLIDER2                     1339
 #define IDC_SLDR_OFFSET_X               1339
+#define IDC_SLDR_SCALE_Y                1340
+#define IDC_SLDR_OFFSET_Y               1341
+#define IDC_SLIDER5                     1342
+#define IDC_SLDR_ROTATION               1342
 #define ID_DEBUG_GENERAL                32771
 #define ID_TEMPLATES_INSERT             32772
 #define ID_BRUSH_SELECT                 32773
@@ -546,7 +549,7 @@
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        199
 #define _APS_NEXT_COMMAND_VALUE         32846
-#define _APS_NEXT_CONTROL_VALUE         1340
+#define _APS_NEXT_CONTROL_VALUE         1343
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif

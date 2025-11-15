@@ -221,8 +221,7 @@ void CL64_App::InitApp(void)
 	CL_Properties_Textures =	new CL64_Properties_Textures();
 
 	CL_X_Face_Editor =			new Face_Editor();
-	//CL_Properties_Faces =		new CL64_Properties_Faces();
-	
+
 	CL_Ogre =					new CL64_Ogre();
 	CL_Panels =					new CL64_Panels();
 	CL_Keyboard =				new CL64_Keyboard();

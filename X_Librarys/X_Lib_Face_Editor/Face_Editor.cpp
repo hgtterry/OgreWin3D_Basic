@@ -282,11 +282,11 @@ LRESULT CALLBACK Face_Editor::Proc_FaceDialog(HWND hDlg, UINT message, WPARAM wP
 		SendMessageW(m_FaceEditor->Slider_Scale_X_hWnd, TBM_SETPOS, true, m_FaceEditor->m_TextureXScale * 100);
 
 
-		/*m_FaceEditor->Slider_Scale_Y_hWnd = GetDlgItem(hDlg, IDC_SLDR_SCALE_Y);
+		m_FaceEditor->Slider_Scale_Y_hWnd = GetDlgItem(hDlg, IDC_SLDR_SCALE_Y);
 		SendMessageW(m_FaceEditor->Slider_Scale_Y_hWnd, TBM_SETRANGE, TRUE, MAKELONG(0, 200));
 		SendMessageW(m_FaceEditor->Slider_Scale_Y_hWnd, TBM_SETPAGESIZE, 0, 1);
 		SendMessageW(m_FaceEditor->Slider_Scale_Y_hWnd, TBM_SETTICFREQ, 1, 0);
-		SendMessageW(m_FaceEditor->Slider_Scale_Y_hWnd, TBM_SETPOS, true, m_FaceEditor->m_TextureYScale * 100);*/
+		SendMessageW(m_FaceEditor->Slider_Scale_Y_hWnd, TBM_SETPOS, true, m_FaceEditor->m_TextureYScale * 100);
 
 		m_FaceEditor->Slider_Offset_X_hWnd = GetDlgItem(hDlg, IDC_SLDR_OFFSET_X);
 		SendMessageW(m_FaceEditor->Slider_Offset_X_hWnd, TBM_SETRANGE, TRUE, MAKELONG(0, 2000));
@@ -294,7 +294,7 @@ LRESULT CALLBACK Face_Editor::Proc_FaceDialog(HWND hDlg, UINT message, WPARAM wP
 		SendMessageW(m_FaceEditor->Slider_Offset_X_hWnd, TBM_SETTICFREQ, 1, 0);
 		SendMessageW(m_FaceEditor->Slider_Offset_X_hWnd, TBM_SETPOS, true, m_FaceEditor->m_TextureXOffset);
 
-		/*m_FaceEditor->Slider_Offset_Y_hWnd = GetDlgItem(hDlg, IDC_SLDR_OFFSET_Y);
+		m_FaceEditor->Slider_Offset_Y_hWnd = GetDlgItem(hDlg, IDC_SLDR_OFFSET_Y);
 		SendMessageW(m_FaceEditor->Slider_Offset_Y_hWnd, TBM_SETRANGE, TRUE, MAKELONG(0, 2000));
 		SendMessageW(m_FaceEditor->Slider_Offset_Y_hWnd, TBM_SETPAGESIZE, 0, 1);
 		SendMessageW(m_FaceEditor->Slider_Offset_Y_hWnd, TBM_SETTICFREQ, 1, 0);
@@ -304,7 +304,7 @@ LRESULT CALLBACK Face_Editor::Proc_FaceDialog(HWND hDlg, UINT message, WPARAM wP
 		SendMessageW(m_FaceEditor->Slider_Rotation_hWnd, TBM_SETRANGE, TRUE, MAKELONG(0, 360));
 		SendMessageW(m_FaceEditor->Slider_Rotation_hWnd, TBM_SETPAGESIZE, 0, 1);
 		SendMessageW(m_FaceEditor->Slider_Rotation_hWnd, TBM_SETTICFREQ, 1, 0);
-		SendMessageW(m_FaceEditor->Slider_Rotation_hWnd, TBM_SETPOS, true, m_FaceEditor->m_TextureAngle);*/
+		SendMessageW(m_FaceEditor->Slider_Rotation_hWnd, TBM_SETPOS, true, m_FaceEditor->m_TextureAngle);
 
 		//SetScrollRange(GetDlgItem(hDlg, IDC_SBXSCALE), SB_HORZ, 0, 200, true);
 
@@ -458,13 +458,13 @@ LRESULT CALLBACK Face_Editor::Proc_FaceDialog(HWND hDlg, UINT message, WPARAM wP
 			return (UINT)App->AppBackground;
 		}
 
-		/*if (GetDlgItem(hDlg, IDC_SLDR_SCALE_Y) == (HWND)lParam)
+		if (GetDlgItem(hDlg, IDC_SLDR_SCALE_Y) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 0, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->AppBackground;
-		}*/
+		}
 
 		if (GetDlgItem(hDlg, IDC_SLDR_OFFSET_X) == (HWND)lParam)
 		{
@@ -474,7 +474,7 @@ LRESULT CALLBACK Face_Editor::Proc_FaceDialog(HWND hDlg, UINT message, WPARAM wP
 			return (UINT)App->AppBackground;
 		}
 
-		/*if (GetDlgItem(hDlg, IDC_SLDR_OFFSET_Y) == (HWND)lParam)
+		if (GetDlgItem(hDlg, IDC_SLDR_OFFSET_Y) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 0, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
@@ -488,7 +488,7 @@ LRESULT CALLBACK Face_Editor::Proc_FaceDialog(HWND hDlg, UINT message, WPARAM wP
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->AppBackground;
-		}*/
+		}
 
 		return FALSE;
 	}
@@ -578,7 +578,7 @@ LRESULT CALLBACK Face_Editor::Proc_FaceDialog(HWND hDlg, UINT message, WPARAM wP
 			return 0;
 		}
 
-		/*if (HWND(lParam) == GetDlgItem(hDlg, IDC_SLDR_SCALE_Y))
+		if (HWND(lParam) == GetDlgItem(hDlg, IDC_SLDR_SCALE_Y))
 		{
 			float ScalePosY = 0;
 			ScalePosY = SendMessageW(m_FaceEditor->Slider_Scale_Y_hWnd, TBM_GETPOS, 0, 0);
@@ -597,7 +597,7 @@ LRESULT CALLBACK Face_Editor::Proc_FaceDialog(HWND hDlg, UINT message, WPARAM wP
 			m_FaceEditor->Update_Faces();
 
 			return 0;
-		}*/
+		}
 
 		if (HWND(lParam) == GetDlgItem(hDlg, IDC_SLDR_OFFSET_X))
 		{
@@ -621,7 +621,7 @@ LRESULT CALLBACK Face_Editor::Proc_FaceDialog(HWND hDlg, UINT message, WPARAM wP
 			return 0;
 		}
 
-		/*if (HWND(lParam) == GetDlgItem(hDlg, IDC_SLDR_OFFSET_Y))
+		if (HWND(lParam) == GetDlgItem(hDlg, IDC_SLDR_OFFSET_Y))
 		{
 			int PosY = 0;
 			PosY = SendMessageW(m_FaceEditor->Slider_Offset_Y_hWnd, TBM_GETPOS, 0, 0);
@@ -641,32 +641,32 @@ LRESULT CALLBACK Face_Editor::Proc_FaceDialog(HWND hDlg, UINT message, WPARAM wP
 			m_FaceEditor->Update_Faces();
 
 			return 0;
-		}*/
+		}
 
-		//if (HWND(lParam) == GetDlgItem(hDlg, IDC_SLDR_ROTATION))
-		//{
-		//	auto& TRotation = m_FaceEditor->m_TextureAngle;
+		if (HWND(lParam) == GetDlgItem(hDlg, IDC_SLDR_ROTATION))
+		{
+			auto& TRotation = m_FaceEditor->m_TextureAngle;
 
-		//	float ScalePosX = 0;
-		//	ScalePosX = SendMessageW(m_FaceEditor->Slider_Rotation_hWnd, TBM_GETPOS, 0, 0);
+			float ScalePosX = 0;
+			ScalePosX = SendMessageW(m_FaceEditor->Slider_Rotation_hWnd, TBM_GETPOS, 0, 0);
 
-		//	TRotation = ScalePosX;
+			TRotation = ScalePosX;
 
-		//	char buf[20];
-		//	sprintf(buf, "%.0f", TRotation);
-		//	SetDlgItemText(hDlg, IDC_ST_EDITANGLE, (LPCTSTR)buf);
+			char buf[20];
+			sprintf(buf, "%.0f", TRotation);
+			SetDlgItemText(hDlg, IDC_ST_EDITANGLE, (LPCTSTR)buf);
 
-		//	App->CL_X_Face->Face_SetTextureRotate(m_FaceEditor->m_Selected_Face, TRotation);
+			App->CL_X_Face->Face_SetTextureRotate(m_FaceEditor->m_Selected_Face, TRotation);
 
-		//	/*float xScale, yScale;
+			/*float xScale, yScale;
 
-		//	App->CL_X_Face->Face_GetTextureScale(m_FaceEditor->m_Selected_Face, &xScale, &yScale);*/
-		//	//App->CL_X_Face->Face_SetTextureScale(m_FaceEditor->m_Selected_Face, TScaleX, yScale);
+			App->CL_X_Face->Face_GetTextureScale(m_FaceEditor->m_Selected_Face, &xScale, &yScale);*/
+			//App->CL_X_Face->Face_SetTextureScale(m_FaceEditor->m_Selected_Face, TScaleX, yScale);
 
-		//	m_FaceEditor->Update_Faces();
+			m_FaceEditor->Update_Faces();
 
-		//	return 0;
-		//}
+			return 0;
+		}
 
 		// -------- Angle
 		if (HWND(lParam) == GetDlgItem(hDlg, IDC_SBANGLE))
@@ -1463,6 +1463,21 @@ void Face_Editor::Update_Face_Members()
 		m_TextureAngle = App->CL_X_Face->Face_GetTextureRotate(m_Selected_Face);
 		App->CL_X_Face->Face_GetTextureShift(m_Selected_Face, &m_TextureXOffset, &m_TextureYOffset);
 		App->CL_X_Face->Face_GetTextureScale(m_Selected_Face, &m_TextureXScale, &m_TextureYScale);
+
+		if (m_TextureXOffset < 0)
+		{
+			m_TextureXOffset = -m_TextureXOffset;
+		}
+
+		if (m_TextureYOffset < 0)
+		{
+			m_TextureYOffset = -m_TextureYOffset;
+		}
+
+		if (m_TextureAngle < 0)
+		{
+			m_TextureAngle = -m_TextureAngle;
+		}
 
 		//		m_TextureLock	=Face_IsTextureLocked (pFace);
 		//		GetDlgItem( IDC_FACELIGHTINTENSITY )->EnableWindow( m_Light && !m_Sky) ;
