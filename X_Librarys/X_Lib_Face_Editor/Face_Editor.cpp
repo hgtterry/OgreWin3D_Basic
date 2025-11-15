@@ -186,8 +186,7 @@ LRESULT CALLBACK Face_Editor::Proc_FaceDialog(HWND hDlg, UINT message, WPARAM wP
 	{
 		SendDlgItemMessage(hDlg, IDC_LABEL_NUM_FACES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ST_NUM_FACES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_LST_FACELIST, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-
+		
 		SendDlgItemMessage(hDlg, IDC_STTEXTOFFSET, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_STTEXTSCALE, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ST_ANGLE, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
@@ -202,8 +201,7 @@ LRESULT CALLBACK Face_Editor::Proc_FaceDialog(HWND hDlg, UINT message, WPARAM wP
 		SendDlgItemMessage(hDlg, IDC_FLIPVERTICAL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		SendDlgItemMessage(hDlg, IDC_ST_FACEINFO, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_LST_FACE_INFO, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-
+		
 		SendDlgItemMessage(hDlg, IDC_ST_EDITXOFFSET, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ST_EDITYOFFSET, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ST_EDITXSCALE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
@@ -220,6 +218,8 @@ LRESULT CALLBACK Face_Editor::Proc_FaceDialog(HWND hDlg, UINT message, WPARAM wP
 		SendDlgItemMessage(hDlg, IDC_BT_COPY_TEXTINFO, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_PASTE_TEXTINFO, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_CK_ALLFACES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		SendDlgItemMessage(hDlg, IDC_BT_FACEDATA, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
@@ -262,7 +262,6 @@ LRESULT CALLBACK Face_Editor::Proc_FaceDialog(HWND hDlg, UINT message, WPARAM wP
 		{
 			HWND temp = GetDlgItem(hDlg, IDC_CK_ALLFACES);
 			SendMessage(temp, BM_SETCHECK, 1, 0);
-			EnableWindow(GetDlgItem(hDlg, IDC_LST_FACELIST), false);
 			EnableWindow(GetDlgItem(hDlg, IDC_BT_COPY_TEXTINFO), false);
 			EnableWindow(GetDlgItem(hDlg, IDC_BT_PASTE_TEXTINFO), false);
 		}
@@ -270,7 +269,6 @@ LRESULT CALLBACK Face_Editor::Proc_FaceDialog(HWND hDlg, UINT message, WPARAM wP
 		{
 			HWND temp = GetDlgItem(hDlg, IDC_CK_ALLFACES);
 			SendMessage(temp, BM_SETCHECK, 0, 0);
-			EnableWindow(GetDlgItem(hDlg, IDC_LST_FACELIST), true);
 			EnableWindow(GetDlgItem(hDlg, IDC_BT_COPY_TEXTINFO), true);
 			EnableWindow(GetDlgItem(hDlg, IDC_BT_PASTE_TEXTINFO), true);
 		}
@@ -524,6 +522,13 @@ LRESULT CALLBACK Face_Editor::Proc_FaceDialog(HWND hDlg, UINT message, WPARAM wP
 		}
 
 		if (some_item->idFrom == IDC_BT_PASTE_TEXTINFO)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BT_FACEDATA)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
@@ -1275,6 +1280,12 @@ LRESULT CALLBACK Face_Editor::Proc_FaceDialog(HWND hDlg, UINT message, WPARAM wP
 			return TRUE;
 		}*/
 
+		if (LOWORD(wParam) == IDC_BT_FACEDATA)
+		{
+			App->CL_Dialogs->Start_General_ListBox(3);// Enums::ListBox_Libraries);
+			return TRUE;
+		}
+
 		// -----------------------------------------------------------------
 		if (LOWORD(wParam) == IDOK)
 		{
@@ -1302,37 +1313,44 @@ LRESULT CALLBACK Face_Editor::Proc_FaceDialog(HWND hDlg, UINT message, WPARAM wP
 // *************************************************************************
 void Face_Editor::Update_Face_Info(HWND hDlg)
 {
-	SendDlgItemMessage(hDlg, IDC_LST_FACE_INFO, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
 
+}
+
+// *************************************************************************
+// *		 	List_Face_Data:- Terry and Hazel Flanigan 2025			   *
+// *************************************************************************
+void Face_Editor::List_Face_Data(HWND List) // TODO: proper name
+{
 	char buff[MAX_PATH];
 	Brush* pBrush;
 
 	pBrush = App->CL_X_SelBrushList->SelBrushList_GetBrush(App->CL_Doc->pSelBrushes, 0);
 
 	sprintf(buff, "%s %i", "Main Face:", m_Selected_Face->Real_Brush_Face_Index);
-	SendDlgItemMessage(hDlg, IDC_LST_FACE_INFO, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);
+	SendMessage(List, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);
 
 	sprintf(buff, "%s %s     %s %i", "Brush Name: ", App->CL_X_Brush->Brush_GetName(pBrush), "Selected Face: ", App->CL_X_Face->Selected_Face_Index + 1);
-	SendDlgItemMessage(hDlg, IDC_LST_FACE_INFO, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);
+	SendMessage(List, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);
 
 	sprintf(buff, "%s %s", "Texture: ", App->CL_X_Face->Face_GetTextureName(m_Selected_Face));
-	SendDlgItemMessage(hDlg, IDC_LST_FACE_INFO, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);
+	SendMessage(List, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);
 
 	sprintf(buff, "%s %i", "Bitmap ID: ", App->CL_X_Face->Face_GetTextureDibId(m_Selected_Face));
-	SendDlgItemMessage(hDlg, IDC_LST_FACE_INFO, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);
+	SendMessage(List, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);
 
 	bool Test_Lock = App->CL_X_Face->Face_IsTextureLocked(m_Selected_Face);
 
 	if (Test_Lock)
 	{
 		sprintf(buff, "%s %s", "Locked: ", "Yes");
-		SendDlgItemMessage(hDlg, IDC_LST_FACE_INFO, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);
+		SendMessage(List, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);
 	}
 	else
 	{
 		sprintf(buff, "%s %s", "Locked: ", "No");
-		SendDlgItemMessage(hDlg, IDC_LST_FACE_INFO, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);
+		SendMessage(List, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);
 	}
+
 }
 
 // *************************************************************************

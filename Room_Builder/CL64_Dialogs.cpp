@@ -1613,6 +1613,11 @@ LRESULT CALLBACK CL64_Dialogs::Proc_General_ListBox(HWND hDlg, UINT message, WPA
 		{
 			App->CL_Dialogs->List_Libraries(List);
 		}
+
+		if (App->CL_Dialogs->m_ListType == Enums::ListBox_FaceData)
+		{
+			App->CL_X_Face_Editor->List_Face_Data(List);
+		}
 		
 		return TRUE;
 	}
@@ -1742,3 +1747,4 @@ void CL64_Dialogs::List_Libraries(HWND List)
 	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->CL_X_FaceList->GetVersion());
 
 }
+

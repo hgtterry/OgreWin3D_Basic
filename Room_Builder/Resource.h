@@ -449,6 +449,7 @@
 #define IDC_BUTTON1                     1331
 #define IDC_BUT_AT_CAMERA               1331
 #define IDC_BT_HELP                     1331
+#define IDC_BT_FACEDATA                 1331
 #define IDC_CHECK1                      1332
 #define IDC_CK_LASTFILE                 1332
 #define IDC_BUT_AT_WORLDPOS             1333

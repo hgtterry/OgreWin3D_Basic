@@ -80,7 +80,7 @@ private:
 	bool Show_Face_Data(int Index, const Face* f, HWND hDlg);
 	void List_Used_Textures(HWND List);
 	void List_Libraries(HWND List);
-
+	
 	int Face_Index;
 	int Check_What;
 	int m_ListType;
