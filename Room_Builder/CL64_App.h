@@ -62,7 +62,7 @@ THE SOFTWARE.
 #include "CL64_Properties_Textures.h"
 
 #include "Face_Editor.h"
-#include "CL64_Properties_Faces.h"
+//#include "CL64_Properties_Faces.h"
 
 #include "CL64_Ogre.h"
 #include "CL64_Panels.h"
@@ -161,7 +161,7 @@ public:
 	CL64_Properties_Textures*	CL_Properties_Textures;
 
 	Face_Editor*				CL_X_Face_Editor;
-	CL64_Properties_Faces*		CL_Properties_Faces;
+//	CL64_Properties_Faces*		CL_Properties_Faces;
 
 	CL64_Ogre*					CL_Ogre;
 	CL64_Panels*				CL_Panels;

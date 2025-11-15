@@ -200,7 +200,6 @@
     <ClInclude Include="CL64_Picking.h" />
     <ClInclude Include="CL64_Project.h" />
     <ClInclude Include="CL64_Properties_Brushes.h" />
-    <ClInclude Include="CL64_Properties_Faces.h" />
     <ClInclude Include="CL64_Properties_Scene.h" />
     <ClInclude Include="CL64_Properties_Tabs.h" />
     <ClInclude Include="CL64_Properties_Templates.h" />
@@ -271,7 +270,6 @@
     <ClCompile Include="CL64_Picking.cpp" />
     <ClCompile Include="CL64_Project.cpp" />
     <ClCompile Include="CL64_Properties_Brushes.cpp" />
-    <ClCompile Include="CL64_Properties_Faces.cpp" />
     <ClCompile Include="CL64_Properties_Scene.cpp" />
     <ClCompile Include="CL64_Properties_Tabs.cpp" />
     <ClCompile Include="CL64_Properties_Templates.cpp" />

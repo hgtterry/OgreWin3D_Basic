@@ -515,9 +515,9 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Headers(HWND hDlg, UINT message, WPARAM wPa
 					App->CL_X_Face->Selected_Face_Index = Index;
 					App->CL_Top_Tabs->Select_Face();
 
-					if (App->CL_Properties_Faces->flag_FaceDlg_Active == 1)
+					if (App->CL_X_Face_Editor->flag_FaceDlg_Active == 1)
 					{
-						App->CL_Properties_Faces->Change_Selection();
+						App->CL_X_Face_Editor->Change_Selection();
 					}
 				}
 			}
@@ -554,9 +554,9 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Headers(HWND hDlg, UINT message, WPARAM wPa
 
 			App->CL_Top_Tabs->Select_Face();
 
-			if (App->CL_Properties_Faces->flag_FaceDlg_Active == 1)
+			if (App->CL_X_Face_Editor->flag_FaceDlg_Active == 1)
 			{
-				App->CL_Properties_Faces->Change_Selection();
+				App->CL_X_Face_Editor->Change_Selection();
 			}
 
 			return TRUE;
@@ -573,9 +573,9 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Headers(HWND hDlg, UINT message, WPARAM wPa
 
 			App->CL_Top_Tabs->Select_Face();
 
-			if (App->CL_Properties_Faces->flag_FaceDlg_Active == 1)
+			if (App->CL_X_Face_Editor->flag_FaceDlg_Active == 1)
 			{
-				App->CL_Properties_Faces->Change_Selection();
+				App->CL_X_Face_Editor->Change_Selection();
 			}
 
 			return TRUE;

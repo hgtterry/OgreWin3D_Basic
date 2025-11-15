@@ -81,7 +81,6 @@
 #define IDD_POSITION_DLG                195
 #define IDD_OPTIONS                     196
 #define IDD_BOX_3D                      197
-#define IDB_BITMAP2                     198
 #define IDB_HELP                        198
 #define IDC_BANNER                      1000
 #define IDC_STTEXT                      1001
@@ -458,6 +457,10 @@
 #define IDC_COMBO1                      1335
 #define IDC_CB_BRUSH_CAT                1335
 #define IDC_BT_UPDATE                   1336
+#define IDC_SLDR_SCALE_X                1337
+#define IDC_ST_WSCALE                   1338
+#define IDC_SLIDER2                     1339
+#define IDC_SLDR_OFFSET_X               1339
 #define ID_DEBUG_GENERAL                32771
 #define ID_TEMPLATES_INSERT             32772
 #define ID_BRUSH_SELECT                 32773
@@ -543,7 +546,7 @@
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        199
 #define _APS_NEXT_COMMAND_VALUE         32846
-#define _APS_NEXT_CONTROL_VALUE         1337
+#define _APS_NEXT_CONTROL_VALUE         1340
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif

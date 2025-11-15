@@ -194,7 +194,7 @@ LRESULT CALLBACK CL64_Properties_Textures::Proc_TextureDialog(HWND hDlg, UINT me
 			int SF = App->CL_X_SelFaceList->SelFaceList_GetSize(App->CL_Doc->pSelFaces);
 			if (SF > 0)
 			{
-				App->CL_Properties_Faces->Start_FaceDialog();
+				App->CL_X_Face_Editor->Start_FaceDialog();
 			}
 			else
 			{

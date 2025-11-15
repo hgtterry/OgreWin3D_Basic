@@ -182,134 +182,134 @@ LRESULT CALLBACK Face_Editor::Proc_FaceDialog(HWND hDlg, UINT message, WPARAM wP
 
 	switch (message)
 	{
-	//case WM_INITDIALOG:
-	//{
-	//	SendDlgItemMessage(hDlg, IDC_LABEL_NUM_FACES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-	//	SendDlgItemMessage(hDlg, IDC_ST_NUM_FACES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-	//	SendDlgItemMessage(hDlg, IDC_LST_FACELIST, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+	case WM_INITDIALOG:
+	{
+		SendDlgItemMessage(hDlg, IDC_LABEL_NUM_FACES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_ST_NUM_FACES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_LST_FACELIST, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
-	//	SendDlgItemMessage(hDlg, IDC_STTEXTOFFSET, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
-	//	SendDlgItemMessage(hDlg, IDC_STTEXTSCALE, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
-	//	SendDlgItemMessage(hDlg, IDC_ST_ANGLE, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_STTEXTOFFSET, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_STTEXTSCALE, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_ST_ANGLE, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
 
-	//	SendDlgItemMessage(hDlg, IDC_ST_WSCALE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-	//	SendDlgItemMessage(hDlg, IDC_ST_WPOS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-	//	SendDlgItemMessage(hDlg, IDC_ST_HSCALE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-	//	SendDlgItemMessage(hDlg, IDC_ST_HPOS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-	//	SendDlgItemMessage(hDlg, IDC_ST_RANGLE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_ST_WSCALE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		/*SendDlgItemMessage(hDlg, IDC_ST_WPOS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_ST_HSCALE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_ST_HPOS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_ST_RANGLE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));*/
 
-	//	SendDlgItemMessage(hDlg, IDC_FLIPHORIZONTAL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-	//	SendDlgItemMessage(hDlg, IDC_FLIPVERTICAL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_FLIPHORIZONTAL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_FLIPVERTICAL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
-	//	SendDlgItemMessage(hDlg, IDC_ST_FACEINFO, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-	//	SendDlgItemMessage(hDlg, IDC_LST_FACE_INFO, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_ST_FACEINFO, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_LST_FACE_INFO, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
-	//	SendDlgItemMessage(hDlg, IDC_ST_EDITXOFFSET, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-	//	SendDlgItemMessage(hDlg, IDC_ST_EDITYOFFSET, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-	//	SendDlgItemMessage(hDlg, IDC_ST_EDITXSCALE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-	//	SendDlgItemMessage(hDlg, IDC_ST_EDITYSCALE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-	//	SendDlgItemMessage(hDlg, IDC_ST_EDITANGLE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_ST_EDITXOFFSET, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_ST_EDITYOFFSET, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_ST_EDITXSCALE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_ST_EDITYSCALE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_ST_EDITANGLE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
-	//	SendDlgItemMessage(hDlg, IDC_CBXOFFSET, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-	//	SendDlgItemMessage(hDlg, IDC_CBYOFFSET, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-	//	SendDlgItemMessage(hDlg, IDC_CBXSCALE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-	//	SendDlgItemMessage(hDlg, IDC_CBYSCALE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_CBXOFFSET, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_CBYOFFSET, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_CBXSCALE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_CBYSCALE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
-	//	SendDlgItemMessage(hDlg, IDC_CBANGLE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_CBANGLE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
-	//	SendDlgItemMessage(hDlg, IDC_BT_COPY_TEXTINFO, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-	//	SendDlgItemMessage(hDlg, IDC_BT_PASTE_TEXTINFO, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-	//	SendDlgItemMessage(hDlg, IDC_CK_ALLFACES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_COPY_TEXTINFO, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_PASTE_TEXTINFO, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_CK_ALLFACES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
-	//	SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-	//	SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
-	//	m_FaceEditor->m_NumberOfFaces = 0;
-	//	m_FaceEditor->m_NumberOfFaces = App->CL_X_SelFaceList->SelFaceList_GetSize(App->CL_Doc->pSelFaces);
+		m_FaceEditor->m_NumberOfFaces = 0;
+		m_FaceEditor->m_NumberOfFaces = App->CL_X_SelFaceList->SelFaceList_GetSize(App->CL_Doc->pSelFaces);
 
-	//	char buf[10];
-	//	sprintf(buf, "%i", m_FaceEditor->m_NumberOfFaces);
-	//	SetDlgItemText(hDlg, IDC_ST_NUM_FACES, (LPCTSTR)buf);
+		char buf[10];
+		sprintf(buf, "%i", m_FaceEditor->m_NumberOfFaces);
+		SetDlgItemText(hDlg, IDC_ST_NUM_FACES, (LPCTSTR)buf);
 
-	//	if (App->CL_Top_Tabs->flag_All_Faces == 0)
-	//	{
-	//		m_FaceEditor->Update_Face_List(hDlg);
-	//	}
+		if (App->CL_Top_Tabs->flag_All_Faces == 0)
+		{
+			m_FaceEditor->Update_Face_List(hDlg);
+		}
 
-	//	m_FaceEditor->Update_Face_Members();
-	//	m_FaceEditor->UpdateDialog(hDlg);
+		m_FaceEditor->Update_Face_Members();
+		m_FaceEditor->UpdateDialog(hDlg);
 
-	//	HWND CB_hWnd = GetDlgItem(hDlg, IDC_CBXOFFSET);
-	//	m_FaceEditor->Fill_ComboBox_OffSetValues(CB_hWnd);
+		HWND CB_hWnd = GetDlgItem(hDlg, IDC_CBXOFFSET);
+		m_FaceEditor->Fill_ComboBox_OffSetValues(CB_hWnd);
 
-	//	CB_hWnd = GetDlgItem(hDlg, IDC_CBYOFFSET);
-	//	m_FaceEditor->Fill_ComboBox_OffSetValues(CB_hWnd);
+		CB_hWnd = GetDlgItem(hDlg, IDC_CBYOFFSET);
+		m_FaceEditor->Fill_ComboBox_OffSetValues(CB_hWnd);
 
-	//	CB_hWnd = GetDlgItem(hDlg, IDC_CBXSCALE);
-	//	m_FaceEditor->Fill_ComboBox_ScaleValues(CB_hWnd);
+		CB_hWnd = GetDlgItem(hDlg, IDC_CBXSCALE);
+		m_FaceEditor->Fill_ComboBox_ScaleValues(CB_hWnd);
 
-	//	CB_hWnd = GetDlgItem(hDlg, IDC_CBYSCALE);
-	//	m_FaceEditor->Fill_ComboBox_ScaleValues(CB_hWnd);
+		CB_hWnd = GetDlgItem(hDlg, IDC_CBYSCALE);
+		m_FaceEditor->Fill_ComboBox_ScaleValues(CB_hWnd);
 
-	//	m_FaceEditor->Fill_ComboBox_AngleValues(hDlg);
+		m_FaceEditor->Fill_ComboBox_AngleValues(hDlg);
 
-	//	if (App->CL_Top_Tabs->flag_All_Faces == 0)
-	//	{
-	//		m_FaceEditor->Update_Face_Info(hDlg);
-	//	}
+		if (App->CL_Top_Tabs->flag_All_Faces == 0)
+		{
+			m_FaceEditor->Update_Face_Info(hDlg);
+		}
 
-	//	if (App->CL_Top_Tabs->flag_All_Faces == 1)
-	//	{
-	//		HWND temp = GetDlgItem(hDlg, IDC_CK_ALLFACES);
-	//		SendMessage(temp, BM_SETCHECK, 1, 0);
-	//		EnableWindow(GetDlgItem(hDlg, IDC_LST_FACELIST), false);
-	//		EnableWindow(GetDlgItem(hDlg, IDC_BT_COPY_TEXTINFO), false);
-	//		EnableWindow(GetDlgItem(hDlg, IDC_BT_PASTE_TEXTINFO), false);
-	//	}
-	//	else
-	//	{
-	//		HWND temp = GetDlgItem(hDlg, IDC_CK_ALLFACES);
-	//		SendMessage(temp, BM_SETCHECK, 0, 0);
-	//		EnableWindow(GetDlgItem(hDlg, IDC_LST_FACELIST), true);
-	//		EnableWindow(GetDlgItem(hDlg, IDC_BT_COPY_TEXTINFO), true);
-	//		EnableWindow(GetDlgItem(hDlg, IDC_BT_PASTE_TEXTINFO), true);
-	//	}
+		if (App->CL_Top_Tabs->flag_All_Faces == 1)
+		{
+			HWND temp = GetDlgItem(hDlg, IDC_CK_ALLFACES);
+			SendMessage(temp, BM_SETCHECK, 1, 0);
+			EnableWindow(GetDlgItem(hDlg, IDC_LST_FACELIST), false);
+			EnableWindow(GetDlgItem(hDlg, IDC_BT_COPY_TEXTINFO), false);
+			EnableWindow(GetDlgItem(hDlg, IDC_BT_PASTE_TEXTINFO), false);
+		}
+		else
+		{
+			HWND temp = GetDlgItem(hDlg, IDC_CK_ALLFACES);
+			SendMessage(temp, BM_SETCHECK, 0, 0);
+			EnableWindow(GetDlgItem(hDlg, IDC_LST_FACELIST), true);
+			EnableWindow(GetDlgItem(hDlg, IDC_BT_COPY_TEXTINFO), true);
+			EnableWindow(GetDlgItem(hDlg, IDC_BT_PASTE_TEXTINFO), true);
+		}
 
-	//	m_FaceEditor->Slider_Scale_X_hWnd = GetDlgItem(hDlg, IDC_SLDR_SCALE_X);
-	//	SendMessageW(m_FaceEditor->Slider_Scale_X_hWnd, TBM_SETRANGE, TRUE, MAKELONG(0, 200));
-	//	SendMessageW(m_FaceEditor->Slider_Scale_X_hWnd, TBM_SETPAGESIZE, 0, 1);
-	//	SendMessageW(m_FaceEditor->Slider_Scale_X_hWnd, TBM_SETTICFREQ, 1, 0);
-	//	SendMessageW(m_FaceEditor->Slider_Scale_X_hWnd, TBM_SETPOS, true, m_FaceEditor->m_TextureXScale * 100);
+		m_FaceEditor->Slider_Scale_X_hWnd = GetDlgItem(hDlg, IDC_SLDR_SCALE_X);
+		SendMessageW(m_FaceEditor->Slider_Scale_X_hWnd, TBM_SETRANGE, TRUE, MAKELONG(0, 200));
+		SendMessageW(m_FaceEditor->Slider_Scale_X_hWnd, TBM_SETPAGESIZE, 0, 1);
+		SendMessageW(m_FaceEditor->Slider_Scale_X_hWnd, TBM_SETTICFREQ, 1, 0);
+		SendMessageW(m_FaceEditor->Slider_Scale_X_hWnd, TBM_SETPOS, true, m_FaceEditor->m_TextureXScale * 100);
 
 
-	//	m_FaceEditor->Slider_Scale_Y_hWnd = GetDlgItem(hDlg, IDC_SLDR_SCALE_Y);
-	//	SendMessageW(m_FaceEditor->Slider_Scale_Y_hWnd, TBM_SETRANGE, TRUE, MAKELONG(0, 200));
-	//	SendMessageW(m_FaceEditor->Slider_Scale_Y_hWnd, TBM_SETPAGESIZE, 0, 1);
-	//	SendMessageW(m_FaceEditor->Slider_Scale_Y_hWnd, TBM_SETTICFREQ, 1, 0);
-	//	SendMessageW(m_FaceEditor->Slider_Scale_Y_hWnd, TBM_SETPOS, true, m_FaceEditor->m_TextureYScale * 100);
+		/*m_FaceEditor->Slider_Scale_Y_hWnd = GetDlgItem(hDlg, IDC_SLDR_SCALE_Y);
+		SendMessageW(m_FaceEditor->Slider_Scale_Y_hWnd, TBM_SETRANGE, TRUE, MAKELONG(0, 200));
+		SendMessageW(m_FaceEditor->Slider_Scale_Y_hWnd, TBM_SETPAGESIZE, 0, 1);
+		SendMessageW(m_FaceEditor->Slider_Scale_Y_hWnd, TBM_SETTICFREQ, 1, 0);
+		SendMessageW(m_FaceEditor->Slider_Scale_Y_hWnd, TBM_SETPOS, true, m_FaceEditor->m_TextureYScale * 100);*/
 
-	//	m_FaceEditor->Slider_Offset_X_hWnd = GetDlgItem(hDlg, IDC_SLDR_OFFSET_X);
-	//	SendMessageW(m_FaceEditor->Slider_Offset_X_hWnd, TBM_SETRANGE, TRUE, MAKELONG(0, 2000));
-	//	SendMessageW(m_FaceEditor->Slider_Offset_X_hWnd, TBM_SETPAGESIZE, 0, 1);
-	//	SendMessageW(m_FaceEditor->Slider_Offset_X_hWnd, TBM_SETTICFREQ, 1, 0);
-	//	SendMessageW(m_FaceEditor->Slider_Offset_X_hWnd, TBM_SETPOS, true, m_FaceEditor->m_TextureXOffset);
+		m_FaceEditor->Slider_Offset_X_hWnd = GetDlgItem(hDlg, IDC_SLDR_OFFSET_X);
+		SendMessageW(m_FaceEditor->Slider_Offset_X_hWnd, TBM_SETRANGE, TRUE, MAKELONG(0, 2000));
+		SendMessageW(m_FaceEditor->Slider_Offset_X_hWnd, TBM_SETPAGESIZE, 0, 1);
+		SendMessageW(m_FaceEditor->Slider_Offset_X_hWnd, TBM_SETTICFREQ, 1, 0);
+		SendMessageW(m_FaceEditor->Slider_Offset_X_hWnd, TBM_SETPOS, true, m_FaceEditor->m_TextureXOffset);
 
-	//	m_FaceEditor->Slider_Offset_Y_hWnd = GetDlgItem(hDlg, IDC_SLDR_OFFSET_Y);
-	//	SendMessageW(m_FaceEditor->Slider_Offset_Y_hWnd, TBM_SETRANGE, TRUE, MAKELONG(0, 2000));
-	//	SendMessageW(m_FaceEditor->Slider_Offset_Y_hWnd, TBM_SETPAGESIZE, 0, 1);
-	//	SendMessageW(m_FaceEditor->Slider_Offset_Y_hWnd, TBM_SETTICFREQ, 1, 0);
-	//	SendMessageW(m_FaceEditor->Slider_Offset_Y_hWnd, TBM_SETPOS, true, m_FaceEditor->m_TextureYOffset);
+		/*m_FaceEditor->Slider_Offset_Y_hWnd = GetDlgItem(hDlg, IDC_SLDR_OFFSET_Y);
+		SendMessageW(m_FaceEditor->Slider_Offset_Y_hWnd, TBM_SETRANGE, TRUE, MAKELONG(0, 2000));
+		SendMessageW(m_FaceEditor->Slider_Offset_Y_hWnd, TBM_SETPAGESIZE, 0, 1);
+		SendMessageW(m_FaceEditor->Slider_Offset_Y_hWnd, TBM_SETTICFREQ, 1, 0);
+		SendMessageW(m_FaceEditor->Slider_Offset_Y_hWnd, TBM_SETPOS, true, m_FaceEditor->m_TextureYOffset);
 
-	//	m_FaceEditor->Slider_Rotation_hWnd = GetDlgItem(hDlg, IDC_SLDR_ROTATION);
-	//	SendMessageW(m_FaceEditor->Slider_Rotation_hWnd, TBM_SETRANGE, TRUE, MAKELONG(0, 360));
-	//	SendMessageW(m_FaceEditor->Slider_Rotation_hWnd, TBM_SETPAGESIZE, 0, 1);
-	//	SendMessageW(m_FaceEditor->Slider_Rotation_hWnd, TBM_SETTICFREQ, 1, 0);
-	//	SendMessageW(m_FaceEditor->Slider_Rotation_hWnd, TBM_SETPOS, true, m_FaceEditor->m_TextureAngle);
+		m_FaceEditor->Slider_Rotation_hWnd = GetDlgItem(hDlg, IDC_SLDR_ROTATION);
+		SendMessageW(m_FaceEditor->Slider_Rotation_hWnd, TBM_SETRANGE, TRUE, MAKELONG(0, 360));
+		SendMessageW(m_FaceEditor->Slider_Rotation_hWnd, TBM_SETPAGESIZE, 0, 1);
+		SendMessageW(m_FaceEditor->Slider_Rotation_hWnd, TBM_SETTICFREQ, 1, 0);
+		SendMessageW(m_FaceEditor->Slider_Rotation_hWnd, TBM_SETPOS, true, m_FaceEditor->m_TextureAngle);*/
 
-	//	//SetScrollRange(GetDlgItem(hDlg, IDC_SBXSCALE), SB_HORZ, 0, 200, true);
+		//SetScrollRange(GetDlgItem(hDlg, IDC_SBXSCALE), SB_HORZ, 0, 200, true);
 
-	//	return TRUE;
-	//}
+		return TRUE;
+	}
 
 	case WM_CTLCOLORSTATIC:
 	{
@@ -329,7 +329,7 @@ LRESULT CALLBACK Face_Editor::Proc_FaceDialog(HWND hDlg, UINT message, WPARAM wP
 			return (UINT)App->AppBackground;
 		}
 
-		/*if (GetDlgItem(hDlg, IDC_ST_WSCALE) == (HWND)lParam)
+		if (GetDlgItem(hDlg, IDC_ST_WSCALE) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 0, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
@@ -337,7 +337,7 @@ LRESULT CALLBACK Face_Editor::Proc_FaceDialog(HWND hDlg, UINT message, WPARAM wP
 			return (UINT)App->AppBackground;
 		}
 
-		if (GetDlgItem(hDlg, IDC_ST_WPOS) == (HWND)lParam)
+		/*if (GetDlgItem(hDlg, IDC_ST_WPOS) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 0, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
@@ -449,7 +449,7 @@ LRESULT CALLBACK Face_Editor::Proc_FaceDialog(HWND hDlg, UINT message, WPARAM wP
 			return (UINT)App->AppBackground;
 		}
 
-		/*if (GetDlgItem(hDlg, IDC_SLDR_SCALE_X) == (HWND)lParam)
+		if (GetDlgItem(hDlg, IDC_SLDR_SCALE_X) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(1, 0, 0));
 			SetTextColor((HDC)wParam, RGB(0, 1, 0));
@@ -458,13 +458,13 @@ LRESULT CALLBACK Face_Editor::Proc_FaceDialog(HWND hDlg, UINT message, WPARAM wP
 			return (UINT)App->AppBackground;
 		}
 
-		if (GetDlgItem(hDlg, IDC_SLDR_SCALE_Y) == (HWND)lParam)
+		/*if (GetDlgItem(hDlg, IDC_SLDR_SCALE_Y) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 0, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->AppBackground;
-		}
+		}*/
 
 		if (GetDlgItem(hDlg, IDC_SLDR_OFFSET_X) == (HWND)lParam)
 		{
@@ -474,7 +474,7 @@ LRESULT CALLBACK Face_Editor::Proc_FaceDialog(HWND hDlg, UINT message, WPARAM wP
 			return (UINT)App->AppBackground;
 		}
 
-		if (GetDlgItem(hDlg, IDC_SLDR_OFFSET_Y) == (HWND)lParam)
+		/*if (GetDlgItem(hDlg, IDC_SLDR_OFFSET_Y) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 0, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
@@ -549,7 +549,7 @@ LRESULT CALLBACK Face_Editor::Proc_FaceDialog(HWND hDlg, UINT message, WPARAM wP
 
 	case WM_HSCROLL:
 	{
-		/*if (HWND(lParam) == GetDlgItem(hDlg, IDC_SLDR_SCALE_X))
+		if (HWND(lParam) == GetDlgItem(hDlg, IDC_SLDR_SCALE_X))
 		{
 			auto& TScaleX = m_FaceEditor->m_TextureXScale;
 
@@ -576,7 +576,7 @@ LRESULT CALLBACK Face_Editor::Proc_FaceDialog(HWND hDlg, UINT message, WPARAM wP
 			m_FaceEditor->Update_Faces();
 
 			return 0;
-		}*/
+		}
 
 		/*if (HWND(lParam) == GetDlgItem(hDlg, IDC_SLDR_SCALE_Y))
 		{
@@ -599,7 +599,7 @@ LRESULT CALLBACK Face_Editor::Proc_FaceDialog(HWND hDlg, UINT message, WPARAM wP
 			return 0;
 		}*/
 
-		/*if (HWND(lParam) == GetDlgItem(hDlg, IDC_SLDR_OFFSET_X))
+		if (HWND(lParam) == GetDlgItem(hDlg, IDC_SLDR_OFFSET_X))
 		{
 			int PosX = 0;
 			PosX = SendMessageW(m_FaceEditor->Slider_Offset_X_hWnd, TBM_GETPOS, 0, 0);
@@ -619,7 +619,7 @@ LRESULT CALLBACK Face_Editor::Proc_FaceDialog(HWND hDlg, UINT message, WPARAM wP
 			m_FaceEditor->Update_Faces();
 
 			return 0;
-		}*/
+		}
 
 		/*if (HWND(lParam) == GetDlgItem(hDlg, IDC_SLDR_OFFSET_Y))
 		{
@@ -1339,7 +1339,7 @@ void Face_Editor::Update_Face_Info(HWND hDlg)
 // *			Update_Faces:- Terry Mo and Hazel 2025		               *
 // *************************************************************************
 void Face_Editor::Update_Faces()
-{/*
+{
 	if (App->CL_Top_Tabs->flag_All_Faces == true)
 	{
 		App->CL_Doc->UpdateAllViews(Enums::UpdateViews_3D);
@@ -1355,7 +1355,7 @@ void Face_Editor::Update_Faces()
 
 	App->CL_Ogre->RenderFrame(1);
 
-	App->CL_X_Face_Editor->m_Selected_Face = App->CL_X_SelFaceList->SelFaceList_GetFace(App->CL_Doc->pSelFaces, App->CL_X_Face->Selected_Face_Index);*/
+	App->CL_X_Face_Editor->m_Selected_Face = App->CL_X_SelFaceList->SelFaceList_GetFace(App->CL_Doc->pSelFaces, App->CL_X_Face->Selected_Face_Index);
 }
 
 // *************************************************************************
