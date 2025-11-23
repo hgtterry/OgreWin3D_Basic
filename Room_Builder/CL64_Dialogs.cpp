@@ -1582,11 +1582,11 @@ bool CALLBACK CL64_Dialogs::Proc_ViewerBasePic(HWND hwnd, UINT msg, WPARAM wPara
 // *************************************************************************
 // *	  		Start_Gen_ListBox:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
-void CL64_Dialogs::Start_General_ListBox(int ListType)
+void CL64_Dialogs::Start_General_ListBox(int ListType, HWND Parent_Hwnd)
 {
 	m_ListType = ListType;
 	App->CL_Properties_Tabs->Enable_Tabs_Dlg(false);
-	DialogBox(App->hInst, (LPCTSTR)IDD_LISTDATA, App->MainHwnd, (DLGPROC)Proc_General_ListBox);
+	DialogBox(App->hInst, (LPCTSTR)IDD_LISTDATA, Parent_Hwnd, (DLGPROC)Proc_General_ListBox);
 }
 
 // *************************************************************************
@@ -1745,6 +1745,9 @@ void CL64_Dialogs::List_Libraries(HWND List)
 	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->CL_X_SelBrushList->GetVersion());
 	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->CL_X_Brush->GetVersion());
 	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->CL_X_FaceList->GetVersion());
+
+	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)" ");
+	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->CL_App_Templates->GetVersion());
 
 }
 

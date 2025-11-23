@@ -203,7 +203,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
             case ID_DEBUG_LIBRARIES:
             {
-                App->CL_Dialogs->Start_General_ListBox(Enums::ListBox_Libraries);
+                App->CL_Dialogs->Start_General_ListBox(Enums::ListBox_Libraries, App->MainHwnd);
                 return 1;
             }
             
@@ -651,7 +651,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
             case ID_TEXTURES_USEDTEXTURES:
             {
-                App->CL_Dialogs->Start_General_ListBox(Enums::ListBox_Used_Textures);
+                App->CL_Dialogs->Start_General_ListBox(Enums::ListBox_Used_Textures, App->MainHwnd);
                 return 1;
             }
 

@@ -946,7 +946,7 @@ LRESULT CALLBACK Face_Editor::Proc_FaceDialog(HWND hDlg, UINT message, WPARAM wP
 
 		if (LOWORD(wParam) == IDC_BT_FACEDATA)
 		{
-			App->CL_Dialogs->Start_General_ListBox(3);// Enums::ListBox_Libraries);
+			App->CL_Dialogs->Start_General_ListBox(3, m_FaceEditor->FaceDlg_Hwnd);// TODO: Enums::ListBox_Libraries);
 			return TRUE;
 		}
 

@@ -10,6 +10,8 @@ public:
 	App_Templates(void);
 	~App_Templates(void);
 
+	char* GetVersion();
+
 	void Init_Templates(void);
 
 	void Enable_Map_Editor_Dialogs(bool Enable);

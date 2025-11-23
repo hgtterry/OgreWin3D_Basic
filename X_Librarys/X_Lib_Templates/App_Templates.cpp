@@ -4,11 +4,23 @@
 
 App_Templates::App_Templates(void)
 {
-	Shape_Dlg_hWnd = nullptr;
+	CL_CreateBox =		nullptr;
+	CL_CreateCylinder = nullptr;
+	CL_CreateArch =		nullptr;
+
+	Shape_Dlg_hWnd =	nullptr;
 }
 
 App_Templates::~App_Templates(void)
 {
+}
+
+// *************************************************************************
+// *			GetVersion:- Terry and Hazel Flanigan 2025			 	   *
+// *************************************************************************
+char* App_Templates::GetVersion()
+{
+	return (LPSTR)" TMH_Scene_Builder :-- Templates [ 23-11-25 ] Build 1 ";
 }
 
 // *************************************************************************

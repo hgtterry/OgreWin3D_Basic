@@ -24,6 +24,8 @@ THE SOFTWARE.
 
 #pragma once
 
+#include "CL64_App.h"
+
 class CL64_Dialogs
 {
 public:
@@ -38,7 +40,7 @@ public:
 	void Dialog_Text(int What_Check);
 	void Dialog_SnapOptions();
 	void Start_TextureViewer_Dialog(char* TextureFile, HWND Owner_hDlg);
-	void Start_General_ListBox(int ListType);
+	void Start_General_ListBox(int ListType, HWND Parent_Hwnd);
 
 	char btext[MAX_PATH];
 	char Chr_Text[MAX_PATH];
