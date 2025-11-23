@@ -41,6 +41,8 @@
 #define GE_TRUE		(1)
 #define	GE_PI		((float)3.14159265358979323846f)
 
+#define KEYDOWN(key) (GetAsyncKeyState(key) & 0x8000 ? 1 : 0)
+
 namespace Enums
 {
 	enum Base

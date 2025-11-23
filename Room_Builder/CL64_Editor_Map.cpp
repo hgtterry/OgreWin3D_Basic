@@ -1747,7 +1747,7 @@ void CL64_Editor_Map::Context_Menu(HWND hDlg)
 		AppendMenuW(hMenu, MF_STRING, IDM_MOVE, L"&Move Brush");
 		AppendMenuW(hMenu, MF_STRING, IDM_SCALE, L"&Scale Brush");
 		AppendMenuW(hMenu, MF_STRING, IDM_ROTATE, L"&Rotate Brush");
-		AppendMenuW(hMenu, MF_STRING, IDM_SCENE_DESELECT, L"&Deselect");
+		AppendMenuW(hMenu, MF_STRING, IDM_SCENE_DESELECT, L"&Deselect   Esc Key");
 
 		// Copy Functions
 		AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
@@ -1761,7 +1761,7 @@ void CL64_Editor_Map::Context_Menu(HWND hDlg)
 		AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_MOVE, L"&Move Brush");
 		AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_SCALE, L"&Scale Brush");
 		AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_ROTATE, L"&Rotate Brush");
-		AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_SCENE_DESELECT, L"&Deselect");
+		AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_SCENE_DESELECT, L"&Deselect   Esc Key");
 
 		// Copy Functions
 		AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);

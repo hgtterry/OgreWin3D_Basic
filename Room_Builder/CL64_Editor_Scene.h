@@ -31,7 +31,7 @@ public:
 
 	void Start_Headers_Scene();
 
-	void Return_From_Preview(void);
+	void Return_To_Scene_Editor(void);
 
 	void Context_Menu_Ogre(HWND hDlg);
 	bool Context_Command_Ogre(WPARAM wParam);

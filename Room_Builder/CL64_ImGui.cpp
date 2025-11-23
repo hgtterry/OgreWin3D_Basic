@@ -368,7 +368,7 @@ void CL64_ImGui::Preview_Options_GUI(void)
 
 			if (App->CL_Editor_Control->flag_Scene_Editor_Active == true)
 			{
-				App->CL_Editor_Scene->Return_From_Preview();
+				App->CL_Editor_Scene->Return_To_Scene_Editor();
 			}
 		}
 

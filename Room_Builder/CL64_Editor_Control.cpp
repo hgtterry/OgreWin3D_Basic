@@ -31,6 +31,7 @@ CL64_Editor_Control::CL64_Editor_Control(void)
 {
 	Parent_hWnd = nullptr;
 
+	flag_Map_Editor_Active = false;
 	flag_PreviewMode_Active = false;
 	flag_Scene_Editor_Active = false;
 	flag_Scene_Game_Running = false;
@@ -73,6 +74,7 @@ void CL64_Editor_Control::Start_Preview_Mode(void)
         App->CL_Ogre->Bullet_Debug_Listener->flag_Render_Debug_Flag = true;
 
         flag_PreviewMode_Active = true;
+		flag_Map_Editor_Active = false;
 
         // Get the parent window handle
         Parent_hWnd = GetParent(App->CL_Editor_Map->Bottom_Ogre_Right_Hwnd);
@@ -125,6 +127,7 @@ void CL64_Editor_Control::Start_Editor_MapBrush_Mode(void)
 	App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_Free;
 
 	flag_PreviewMode_Active = false;
+	flag_Map_Editor_Active = true;
 
 	if (App->CL_Physics->flag_TriMesh_Created == 1)
 	{
@@ -173,7 +176,9 @@ void CL64_Editor_Control::Return_To_Map_Editor(void)
 	App->CL_ImGui_Editor->flag_Block_GUI = true;
 
 	// Reset Flags
-	App->CL_Editor_Control->flag_Scene_Editor_Active = false;
+	flag_Scene_Editor_Active = false;
+	flag_Map_Editor_Active = true;
+
 	App->CL_Top_Tabs->flag_Full_View_3D = false;
 
 	// Show top tabs and configure editor map
@@ -211,7 +216,8 @@ void CL64_Editor_Control::Return_To_Map_Editor(void)
 // *************************************************************************
 void CL64_Editor_Control::Start_Editor_Scene()
 {
-	App->CL_Editor_Control->flag_Scene_Editor_Active = true;
+	flag_Scene_Editor_Active = true;
+	flag_Map_Editor_Active = false;
 
 	// Handle physics and trimesh
 	if (App->CL_Physics->flag_TriMesh_Created)
@@ -285,6 +291,8 @@ void CL64_Editor_Control::Set_Map_Editor_Select_Dlg()
 // *************************************************************************
 void CL64_Editor_Control::Set_Map_Editor_Startup()
 {
+	flag_Map_Editor_Active = true;
+
 	App->CL_Editor_Map->Current_View = App->CL_Editor_Map->VCam[V_Ogre];
 
 	if (App->CL_Editor_Map->Selected_Window != Enums::Selected_Map_View_3D)

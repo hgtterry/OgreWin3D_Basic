@@ -187,10 +187,12 @@ void CL64_Editor_Scene::Show_Headers(bool Enable)
 }
 
 // *************************************************************************
-// *			Return_From_Preview:- Terry and Hazel Flanigan 2025	 	   *
+// *		Return_To_Scene_Editor:- Terry and Hazel Flanigan 2025	 	   *
 // *************************************************************************
-void CL64_Editor_Scene::Return_From_Preview(void)
+void CL64_Editor_Scene::Return_To_Scene_Editor(void)
 {
+	App->CL_Editor_Control->flag_Map_Editor_Active = false;
+
 	// Set view flags
 	auto& topTabs = App->CL_Top_Tabs;
 	topTabs->flag_Full_View_3D = true;

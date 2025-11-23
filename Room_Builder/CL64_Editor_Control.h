@@ -39,6 +39,7 @@ public:
 
 	bool flag_PreviewMode_Active;	// Flag to indicate if preview mode is currently active
 	bool flag_Scene_Editor_Active;
+	bool flag_Map_Editor_Active;
 	bool flag_Scene_Game_Running;
 
 	HWND Parent_hWnd;				// Handle to the parent window for the editor

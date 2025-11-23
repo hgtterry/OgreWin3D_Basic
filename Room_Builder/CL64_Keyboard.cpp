@@ -299,13 +299,20 @@ void CL64_Keyboard::Keyboard_Mode_Free(float deltaTime)
 			}
 		}
 
-		//------------------------------------------------ Escape 
-		if (GetAsyncKeyState(VK_ESCAPE) < 0 && App->CL_Editor_Control->flag_PreviewMode_Active == 1)
-		{
-			App->CL_ImGui->flag_Show_Preview_Options = 1;
-			//App->CL_Editor_Preview->Editor_Mode();
-		}
+		////------------------------------------------------ Escape 
+		//if (GetAsyncKeyState(VK_ESCAPE) < 0 && App->CL_Editor_Control->flag_PreviewMode_Active == 1)
+		//{
+		//	App->CL_ImGui->flag_Show_Preview_Options = 1;
+		//	//App->CL_Editor_Preview->Editor_Mode();
+		//}
 
+		// -------------------------- Escape 
+		if (KEYDOWN(VK_ESCAPE) && App->CL_Editor_Control->flag_Map_Editor_Active == true)
+		{
+			App->CL_Panels->Deselect_All_Brushes_Update_Dlgs();
+			App->CL_Top_Tabs->Redraw_TopTabs_Dlg();
+			App->CL_Ogre->OGL_Listener->Show_Visuals(false);
+		}
 		//------------------------------------------------ Space Key - Jump and Selection
 		//if (GetAsyncKeyState(VK_SPACE) < 0 && App->CL_Scene->flag_Player_Added == 1)
 		//{
