@@ -990,16 +990,52 @@ void Face_Editor::List_Face_Data(HWND List) // TODO: proper name
 
 	pBrush = App->CL_X_SelBrushList->SelBrushList_GetBrush(App->CL_Doc->pSelBrushes, 0);
 
-	sprintf(buff, "%s %i", "Main Face:", m_Selected_Face->Real_Brush_Face_Index);
+	sprintf(buff, "%s %s     %s %i", "Brush Name: ", App->CL_X_Brush->Brush_GetName(pBrush), "Selected Face: ", App->CL_X_Face->Selected_Face_Index + 1);
 	SendMessage(List, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);
 
-	sprintf(buff, "%s %s     %s %i", "Brush Name: ", App->CL_X_Brush->Brush_GetName(pBrush), "Selected Face: ", App->CL_X_Face->Selected_Face_Index + 1);
+	sprintf(buff, "%s %d", "NumPoints", m_Selected_Face->NumPoints);
+	SendMessage(List, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);
+
+	sprintf(buff, "%s", "   ");
 	SendMessage(List, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);
 
 	sprintf(buff, "%s %s", "Texture: ", App->CL_X_Face->Face_GetTextureName(m_Selected_Face));
 	SendMessage(List, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);
 
+	int txSize, tySize;
+	App->CL_X_Face->Face_GetTextureSize(m_Selected_Face, &txSize, &tySize);
+	sprintf(buff, "%s %i %i", "Size: ", txSize, tySize);
+	SendMessage(List, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);
+
 	sprintf(buff, "%s %i", "Bitmap ID: ", App->CL_X_Face->Face_GetTextureDibId(m_Selected_Face));
+	SendMessage(List, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);
+
+	sprintf(buff, "%s", "   ");
+	SendMessage(List, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);
+
+	const TexInfo_Vectors* TVecs = App->CL_X_Face->Face_GetTextureVecs(m_Selected_Face);
+	const T_Vec3* verts = App->CL_X_Face->Face_GetPoints(m_Selected_Face);
+
+	T_Vec3 uVec, vVec;
+	float U, V;
+
+	App->CL_X_Maths->Vector3_Scale(&TVecs->uVec, 1.f / (float)txSize, &uVec);
+	App->CL_X_Maths->Vector3_Scale(&TVecs->vVec, -1.f / (float)tySize, &vVec);
+
+	int j = 0;
+	for (j = 0; j < m_Selected_Face->NumPoints; j++)
+	{
+		U = App->CL_X_Maths->Vector3_DotProduct(&(verts[j]), &uVec);
+		V = App->CL_X_Maths->Vector3_DotProduct(&(verts[j]), &vVec);
+		U += (TVecs->uOffset / txSize);
+		V -= (TVecs->vOffset / tySize);
+
+		sprintf(buff, "UV %.3f %.3f", U, V);
+		SendMessage(List, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);
+	}
+
+	
+	sprintf(buff, "%s", "   ");
 	SendMessage(List, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);
 
 	bool Test_Lock = App->CL_X_Face->Face_IsTextureLocked(m_Selected_Face);
@@ -1209,6 +1245,14 @@ void Face_Editor::Change_Selection()
 // *************************************************************************
 void Face_Editor::Close_Faces_Dialog()
 {
-	App->CL_X_Face_Editor->flag_FaceDlg_Active = 0;
+	flag_FaceDlg_Active = false;
 	EndDialog(FaceDlg_Hwnd, 0);
+}
+
+// *************************************************************************
+// *			Is_Faces_Dialog_Active:- Terry Mo and Hazel 2025		   *
+// *************************************************************************
+bool Face_Editor::Is_Faces_Dialog_Active()
+{
+	return flag_FaceDlg_Active;
 }
