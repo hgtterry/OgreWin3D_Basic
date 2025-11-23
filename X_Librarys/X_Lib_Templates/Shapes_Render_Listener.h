@@ -1,4 +1,10 @@
 #pragma once
+#include <Windows.h>
+#include <OgreFrameListener.h>
+#include <OgreMath.h>
+#include <OgrePrerequisites.h>
+#include <OgreSceneNode.h>
+
 class Shapes_Render_Listener : public Ogre::FrameListener
 {
 public:

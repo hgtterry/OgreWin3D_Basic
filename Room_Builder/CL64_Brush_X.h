@@ -52,7 +52,7 @@ public:
 	void Rotate_Brush_By_Name(const char* Brush_Name, float SX, float SY, float SZ);
 
 	void Set_Brush_From_Entity_ByName(char* Name, bool Update);
-
+	void Duplicate_Brush();
 
 	int Face_Count;
 	int Face_Index_Set;

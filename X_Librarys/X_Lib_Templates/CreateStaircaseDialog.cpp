@@ -26,6 +26,15 @@ THE SOFTWARE.
 #include "resource.h"
 #include "CL64_App.h"
 #include "CreateStaircaseDialog.h"
+#include <string.h>
+#include <Windows.h>
+#include <cassert>
+#include <cstdio>
+#include <cstdlib>
+#include <OgrePrerequisites.h>
+#include <CL64_Lib_Maths.h>
+#include <CX_Brush.h>
+#include "framework.h"
 
 CreateStaircaseDialog::CreateStaircaseDialog(void)
 {

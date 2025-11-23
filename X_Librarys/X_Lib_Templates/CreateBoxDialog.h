@@ -23,6 +23,9 @@ THE SOFTWARE.
 */
 
 #pragma once
+#include <Windows.h>
+#include <CX_Brush.h>
+#include "BrushTemplate.h"
 
 class CreateBoxDialog
 {

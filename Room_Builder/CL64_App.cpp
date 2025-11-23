@@ -647,7 +647,7 @@ void CL64_App::Say_Float(float Value)
 }
 
 // *************************************************************************
-// *			Say_Vector3:- Terry and Hazel Flanigan 2024			   *
+// *			Say_Vector3:- Terry and Hazel Flanigan 2024				   *
 // *************************************************************************
 void CL64_App::Say_Vector3(Ogre::Vector3 Vector)
 {

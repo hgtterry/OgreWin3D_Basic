@@ -676,5 +676,49 @@ void CL64_Brush_X::Set_Brush_From_Entity_ByName(char* Name, bool Update)
 
 }
 
+// *************************************************************************
+// *			Duplicate_Brush:- Terry Mo and Hazel  2025				   *
+// *************************************************************************
+void CL64_Brush_X::Duplicate_Brush()
+{
+	int SB = App->CL_X_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes);
+
+	if (SB > 0)
+	{
+		Brush* pBrush = nullptr;
+		Brush* pClone = nullptr;
+
+		pBrush = App->CL_X_SelBrushList->SelBrushList_GetBrush(App->CL_Doc->pSelBrushes, 0);
+		pClone = App->CL_X_Brush->Brush_Clone(pBrush);
+
+		int Count = App->CL_X_Brush->Get_Brush_Count();
+		char Num[32];
+		char Name[32];
+		_itoa(Count + 1, Num, 10);
+		strcpy(Name, pBrush->Name);
+		strcat(Name, "_");
+		strcat(Name, Num);
+
+		if (pClone)
+		{
+			strcpy(pClone->Name, Name);
+
+			App->CL_Level->Level_AppendBrush(pClone);
+			App->CL_X_SelBrushList->SelBrushList_Remove(App->CL_Doc->pSelBrushes, pBrush);
+
+			App->CL_Properties_Brushes->Fill_ListBox();
+
+			App->CL_Doc->CurBrush = pClone;
+			App->CL_Brush_X->Select_Brush_Editor(App->CL_Doc->CurBrush);
+
+			App->CL_Doc->Set_Faces_To_Brush_Name_Selected();
+			App->CL_Level->flag_Level_is_Modified = true;
+			App->Say("Duplicated");
+		}
+	}
+
+	//App->Say(pClone->Name);
+}
+
 
 

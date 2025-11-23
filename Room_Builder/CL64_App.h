@@ -51,7 +51,6 @@ THE SOFTWARE.
 #include "CX_SelFaceList.h"
 #include "Shapes_3D.h"
 
-#include "CL64_WadFile.h"
 #include "CL64_Mesh_Mgr.h"
 #include "CL64_Brush_X.h"
 // ------------------------------
@@ -100,7 +99,6 @@ THE SOFTWARE.
 
 // Templates Dialogs
 #include "App_Templates.h"
-#include "CreateBoxDialog.h"
 #include "CreateConeDialog.h"
 #include "CreateCylDialog.h"
 #include "CreateStaircaseDialog.h"
@@ -117,6 +115,11 @@ THE SOFTWARE.
 
 #include "CL64_Locations.h"
 #include "CL64_Teleporters.h"
+#include <CL64_Lib_Maths.h>
+
+
+#include <Windows.h>
+#include <OgrePrerequisites.h>
 
 class CL64_App
 {

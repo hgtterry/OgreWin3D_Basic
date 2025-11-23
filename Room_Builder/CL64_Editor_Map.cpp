@@ -1955,6 +1955,13 @@ bool CL64_Editor_Map::Context_Command(WPARAM wParam)
 		return TRUE;
 	}
 
+	case IDM_SCENE_DUPLICATE:
+	{
+		App->CL_Brush_X->Duplicate_Brush();
+
+		return TRUE;
+	}
+
 	default:
 		return FALSE;
 	}

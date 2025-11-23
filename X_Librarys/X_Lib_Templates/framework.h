@@ -6,7 +6,7 @@
 
 #pragma warning( disable : 4251 4193 4275 4005 4267 4244)
 #pragma warning( disable : 4305 4311 4302)
-#pragma warning(disable : 4996 4715) // Needs Looking At
+#pragma warning( disable : 4996 4715) // Needs Looking At
 
 #include <windows.h>
 #include "btBulletDynamicsCommon.h"
