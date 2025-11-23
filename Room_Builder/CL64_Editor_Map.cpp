@@ -38,6 +38,11 @@ THE SOFTWARE.
 #define IDM_SCALE 9
 #define IDM_ROTATE 10
 #define IDM_SCENE_EDITOR 11
+#define IDM_SCENE_MAX_VIEW 12
+#define IDM_SCENE_RESTORE_VIEW 13
+#define IDM_SCENE_DESELECT 14
+#define IDM_SCENE_HELP 15
+#define IDM_SCENE_DUPLICATE 16
 
 #define IDM_3D_WIRED 20
 #define IDM_3D_TEXTURED 21
@@ -1738,30 +1743,32 @@ void CL64_Editor_Map::Context_Menu(HWND hDlg)
 	AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
 	if (App->CL_X_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes))
 	{
+		// Enabled
 		AppendMenuW(hMenu, MF_STRING, IDM_MOVE, L"&Move Brush");
 		AppendMenuW(hMenu, MF_STRING, IDM_SCALE, L"&Scale Brush");
 		AppendMenuW(hMenu, MF_STRING, IDM_ROTATE, L"&Rotate Brush");
+		AppendMenuW(hMenu, MF_STRING, IDM_SCENE_DESELECT, L"&Deselect");
+
+		// Copy Functions
+		AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
+		AppendMenuW(hMenu, MF_STRING, IDM_SCENE_DUPLICATE, L"&Duplicate");
+		AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_COPY, L"&Copy");
+		AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_PASTE, L"&Paste");
 	}
 	else
 	{
+		// Greyed
 		AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_MOVE, L"&Move Brush");
 		AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_SCALE, L"&Scale Brush");
 		AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_ROTATE, L"&Rotate Brush");
+		AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_SCENE_DESELECT, L"&Deselect");
+
+		// Copy Functions
+		AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
+		AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_SCENE_DUPLICATE, L"&Duplicate");
+		AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_COPY, L"&Copy");
+		AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_PASTE, L"&Paste");
 		
-	}
-
-	AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
-
-	int BC = App->CL_X_Brush->Get_Brush_Count();
-	if (BC > 0 && App->CL_Editor_Control->flag_PreviewMode_Active == 0)
-	{
-		AppendMenuW(hMenu, MF_STRING, IDM_PREVIEW, L"&Preview");
-		AppendMenuW(hMenu, MF_STRING, IDM_SCENE_EDITOR, L"&Scene Editor");
-	}
-	else
-	{
-		AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_PREVIEW, L"&Preview");
-		AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_SCENE_EDITOR, L"&Scene Editor");
 	}
 
 	AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
@@ -1939,6 +1946,14 @@ bool CL64_Editor_Map::Context_Command(WPARAM wParam)
 	case IDM_SCENE_EDITOR:
 		App->CL_Editor_Control->Start_Editor_Scene();
 		return TRUE;
+
+	case IDM_SCENE_DESELECT:
+	{
+		App->CL_Panels->Deselect_All_Brushes_Update_Dlgs();
+		App->CL_Top_Tabs->Redraw_TopTabs_Dlg();
+		App->CL_Ogre->OGL_Listener->Show_Visuals(false);
+		return TRUE;
+	}
 
 	default:
 		return FALSE;
