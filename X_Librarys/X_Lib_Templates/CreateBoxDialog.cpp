@@ -27,16 +27,6 @@ THE SOFTWARE.
 #include "CL64_App.h"
 #include "CreateBoxDialog.h"
 
-#include <string.h>
-#include <Windows.h>
-#include <cstdio>
-#include <cstdlib>
-#include <string>
-#include <OgrePrerequisites.h>
-#include <CL64_Lib_Maths.h>
-#include <CX_Brush.h>
-#include "framework.h"
-
 CreateBoxDialog::CreateBoxDialog(void)
 {
 	m_YSize = 128.0f;
