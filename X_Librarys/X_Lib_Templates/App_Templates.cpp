@@ -4,12 +4,13 @@
 
 App_Templates::App_Templates(void)
 {
-	CL_CreateBox =		nullptr;
-	CL_CreateCylinder = nullptr;
-	CL_CreateArch =		nullptr;
-	CL_CreateCone =		nullptr;
+	CL_CreateBox =			nullptr;
+	CL_CreateCylinder =		nullptr;
+	CL_CreateArch =			nullptr;
+	CL_CreateCone =			nullptr;
+	CL_CreateStaircase =	nullptr;
 
-	Shape_Dlg_hWnd =	nullptr;
+	Shape_Dlg_hWnd =		nullptr;
 }
 
 App_Templates::~App_Templates(void)
@@ -29,10 +30,11 @@ char* App_Templates::GetVersion()
 // *************************************************************************
 void App_Templates::Init_Templates(void)
 {
-	CL_CreateBox =		new CreateBoxDialog();
-	CL_CreateCylinder = new CreateCylDialog();
-	CL_CreateArch =		new CreateArchDialog();
-	CL_CreateCone =		new CreateConeDialog();
+	CL_CreateBox =			new CreateBoxDialog();
+	CL_CreateCylinder =		new CreateCylDialog();
+	CL_CreateArch =			new CreateArchDialog();
+	CL_CreateCone =			new CreateConeDialog();
+	CL_CreateStaircase =	new CreateStaircaseDialog();
 }
 
 // *************************************************************************

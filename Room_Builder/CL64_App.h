@@ -99,8 +99,7 @@ THE SOFTWARE.
 
 // Templates Dialogs
 #include "App_Templates.h"
-//#include "CreateCylDialog.h"
-#include "CreateStaircaseDialog.h"
+//#include "CreateStaircaseDialog.h"
 
 // Project
 #include "CL64_Project.h"
@@ -200,8 +199,7 @@ public:
 
 	// Templates Dialogs Libraries
 	App_Templates*				CL_App_Templates;
-//	CreateCylDialog*			CL_X_CreateCylDialog;
-	CreateStaircaseDialog*		CL_X_CreateStaircaseDialog;
+//	CreateStaircaseDialog*		CL_X_CreateStaircaseDialog;
 	Shapes_3D*					CL_X_Shapes_3D;
 
 	// Project

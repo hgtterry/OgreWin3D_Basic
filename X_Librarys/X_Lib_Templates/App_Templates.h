@@ -4,6 +4,7 @@
 #include "CreateCylDialog.h"
 #include "CreateArchDialog.h"
 #include "CreateConeDialog.h"
+#include "CreateStaircaseDialog.h"
 
 class App_Templates
 {
@@ -20,9 +21,10 @@ public:
 
 	HWND Shape_Dlg_hWnd;
 
-	CreateBoxDialog* CL_CreateBox;
-	CreateCylDialog* CL_CreateCylinder;
-	CreateArchDialog* CL_CreateArch;
-	CreateConeDialog* CL_CreateCone;
+	CreateBoxDialog*		CL_CreateBox;
+	CreateCylDialog*		CL_CreateCylinder;
+	CreateArchDialog*		CL_CreateArch;
+	CreateConeDialog*		CL_CreateCone;
+	CreateStaircaseDialog*	CL_CreateStaircase;
 };
 
