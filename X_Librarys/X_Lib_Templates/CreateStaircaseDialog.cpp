@@ -400,7 +400,20 @@ LRESULT CALLBACK CreateStaircaseDialog::Proc_CreateStaircase(HWND hDlg, UINT mes
 
 		if (LOWORD(wParam) == IDC_BT_STAIRS_DEFAULTS)
 		{
-			m_Staircase->Set_Defaults(hDlg);
+			/*App->CL_App_Templates->Enable_Shape_Dialog(false);
+
+			App->CL_Dialogs->YesNo("Reset to Defaults", "All Dimensions will be reset");
+			if (App->CL_Dialogs->flag_Dlg_Canceled == false)
+			{*/
+				//m_Staircase->Set_Defaults(hDlg);
+
+				//m_Staircase->Update();
+				/*HWND temp = GetDlgItem(App->CL_App_Templates->Shape_Dlg_hWnd, IDC_ED_STAIRS_STEPS);
+				EnableWindow(temp, true);*/
+			//}
+
+			/*App->CL_App_Templates->Enable_Shape_Dialog(true);
+			App->CL_App_Templates->Enable_Map_Editor_Dialogs(false);*/
 			return TRUE;
 		}
 
@@ -430,6 +443,12 @@ LRESULT CALLBACK CreateStaircaseDialog::Proc_CreateStaircase(HWND hDlg, UINT mes
 		{
 			App->CL_Properties_Tabs->Enable_Tabs_Dlg(true);
 			App->CL_X_Shapes_3D->Close_OgreWindow();
+
+			//App->CL_X_CreateStaircaseDialog->Remove_Edit_Boxes(hDlg);
+
+			App->CL_Panels->Deselect_All_Brushes_Update_Dlgs();
+			App->CL_Top_Tabs->Redraw_TopTabs_Dlg();
+			App->CL_Ogre->OGL_Listener->Show_Visuals(false);
 
 			App->CL_App_Templates->Enable_Map_Editor_Dialogs(true);
 
