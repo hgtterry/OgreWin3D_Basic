@@ -91,7 +91,7 @@ LRESULT CALLBACK CreateCylDialog::OwnerEditProc(HWND hWnd, UINT uMsg, WPARAM wPa
 
 		case VK_RETURN:
 		{
-			App->CL_X_CreateCylDialog->Update();
+			App->CL_App_Templates->CL_CreateCylinder->Update();
 			return 0;
 		}
 
@@ -168,11 +168,13 @@ void CreateCylDialog::Start_CreateCyl_Dlg()
 // *************************************************************************
 LRESULT CALLBACK CreateCylDialog::Proc_Create_Cylinder(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
+	auto& m_Cylinder = App->CL_App_Templates->CL_CreateCylinder; // App->CL_App_Templates->CL_CreateCylinder
+
 	switch (message)
 	{
 	case WM_INITDIALOG:
 	{
-		App->CL_X_CreateCylDialog->Capture_Edit_Boxes(hDlg);
+		m_Cylinder->Capture_Edit_Boxes(hDlg);
 
 		SendDlgItemMessage(hDlg, IDC_CYL_DEFAULTS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
@@ -227,7 +229,7 @@ LRESULT CALLBACK CreateCylDialog::Proc_Create_Cylinder(HWND hDlg, UINT message, 
 
 		App->CL_App_Templates->Shape_Dlg_hWnd = hDlg;
 
-		App->CL_X_CreateCylDialog->Init_Bmps_Globals(hDlg);
+		m_Cylinder->Init_Bmps_Globals(hDlg);
 
 		App->CL_X_Shapes_3D->Start_Zoom = 400;
 		App->CL_X_Shapes_3D->Render_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_BOX_3D, hDlg, (DLGPROC)App->CL_X_Shapes_3D->Proc_Box_Viewer_3D);
@@ -236,38 +238,38 @@ LRESULT CALLBACK CreateCylDialog::Proc_Create_Cylinder(HWND hDlg, UINT message, 
 
 		App->CL_X_Shapes_3D->Set_OgreWindow();
 
-		App->CL_X_CreateCylDialog->Set_Members();
-		App->CL_X_CreateCylDialog->Set_DLG_Members(hDlg);
-		App->CL_X_CreateCylDialog->Set_Defaults(hDlg);
+		m_Cylinder->Set_Members();
+		m_Cylinder->Set_DLG_Members(hDlg);
+		m_Cylinder->Set_Defaults(hDlg);
 
 		SetDlgItemText(hDlg, IDC_EDITNAME, (LPCTSTR)"Cylinder");
 
 		// ----------- Style Solid Hollow Funnel
-		if (App->CL_X_CreateCylDialog->m_Solid == 0)
+		if (m_Cylinder->m_Solid == 0)
 		{
-			App->CL_X_CreateCylDialog->flag_Solid_Flag_Dlg = 1;
-			App->CL_X_CreateCylDialog->flag_Hollow_Flag_Dlg = 0;
-			App->CL_X_CreateCylDialog->flag_Ring_Flag_Dlg = 0;
+			m_Cylinder->flag_Solid_Flag_Dlg = 1;
+			m_Cylinder->flag_Hollow_Flag_Dlg = 0;
+			m_Cylinder->flag_Ring_Flag_Dlg = 0;
 		}
 
-		if (App->CL_X_CreateCylDialog->m_Solid == 1)
+		if (m_Cylinder->m_Solid == 1)
 		{
-			App->CL_X_CreateCylDialog->flag_Hollow_Flag_Dlg = 1;
-			App->CL_X_CreateCylDialog->flag_Solid_Flag_Dlg = 0;
-			App->CL_X_CreateCylDialog->flag_Ring_Flag_Dlg = 0;
+			m_Cylinder->flag_Hollow_Flag_Dlg = 1;
+			m_Cylinder->flag_Solid_Flag_Dlg = 0;
+			m_Cylinder->flag_Ring_Flag_Dlg = 0;
 		}
 
-		if (App->CL_X_CreateCylDialog->m_Solid == 2)
+		if (m_Cylinder->m_Solid == 2)
 		{
-			App->CL_X_CreateCylDialog->flag_Ring_Flag_Dlg = 1;
-			App->CL_X_CreateCylDialog->flag_Hollow_Flag_Dlg = 0;
-			App->CL_X_CreateCylDialog->flag_Solid_Flag_Dlg = 0;
+			m_Cylinder->flag_Ring_Flag_Dlg = 1;
+			m_Cylinder->flag_Hollow_Flag_Dlg = 0;
+			m_Cylinder->flag_Solid_Flag_Dlg = 0;
 		}
 		// ----------------------------------------------
 
 		HWND temp = GetDlgItem(hDlg, IDC_CKWORLDCENTRE);
 		SendMessage(temp, BM_SETCHECK, 1, 0);
-		App->CL_X_CreateCylDialog->m_UseCamPos = 0;
+		m_Cylinder->m_UseCamPos = 0;
 
 		int Count = App->CL_X_Brush->Get_Brush_Count();
 		char Num[32];
@@ -457,28 +459,28 @@ LRESULT CALLBACK CreateCylDialog::Proc_Create_Cylinder(HWND hDlg, UINT message, 
 		if (some_item->idFrom == IDC_BT_CUTBRUSH)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle_Tabs(item, App->CL_X_CreateCylDialog->m_TCut);
+			App->Custom_Button_Toggle_Tabs(item, m_Cylinder->m_TCut);
 			return CDRF_DODEFAULT;
 		}
 
 		if (some_item->idFrom == IDC_BT_CYL_SOLID)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle_Tabs(item, App->CL_X_CreateCylDialog->flag_Solid_Flag_Dlg);
+			App->Custom_Button_Toggle_Tabs(item, m_Cylinder->flag_Solid_Flag_Dlg);
 			return CDRF_DODEFAULT;
 		}
 
 		if (some_item->idFrom == IDC_BT_CYL_HOLLOW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle_Tabs(item, App->CL_X_CreateCylDialog->flag_Hollow_Flag_Dlg);
+			App->Custom_Button_Toggle_Tabs(item, m_Cylinder->flag_Hollow_Flag_Dlg);
 			return CDRF_DODEFAULT;
 		}
 
 		if (some_item->idFrom == IDC_BT_CYL_RING)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle_Tabs(item, App->CL_X_CreateCylDialog->flag_Ring_Flag_Dlg);
+			App->Custom_Button_Toggle_Tabs(item, m_Cylinder->flag_Ring_Flag_Dlg);
 			return CDRF_DODEFAULT;
 		}
 
@@ -538,7 +540,7 @@ LRESULT CALLBACK CreateCylDialog::Proc_Create_Cylinder(HWND hDlg, UINT message, 
 			temp = GetDlgItem(hDlg, IDC_CKCAMPOSITION);
 			SendMessage(temp, BM_SETCHECK, 0, 0);
 
-			App->CL_X_CreateCylDialog->m_UseCamPos = 0;
+			m_Cylinder->m_UseCamPos = 0;
 			return TRUE;
 		}
 
@@ -550,22 +552,22 @@ LRESULT CALLBACK CreateCylDialog::Proc_Create_Cylinder(HWND hDlg, UINT message, 
 			temp = GetDlgItem(hDlg, IDC_CKWORLDCENTRE);
 			SendMessage(temp, BM_SETCHECK, 0, 0);
 
-			App->CL_X_CreateCylDialog->m_UseCamPos = 1;
+			m_Cylinder->m_UseCamPos = 1;
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == IDC_BT_CYL_SOLID)
 		{
-			App->CL_X_CreateCylDialog->m_Solid = 0;
+			m_Cylinder->m_Solid = 0;
 
-			App->CL_X_CreateCylDialog->flag_Solid_Flag_Dlg = 1;
-			App->CL_X_CreateCylDialog->flag_Hollow_Flag_Dlg = 0;
-			App->CL_X_CreateCylDialog->flag_Ring_Flag_Dlg = 0;
+			m_Cylinder->flag_Solid_Flag_Dlg = 1;
+			m_Cylinder->flag_Hollow_Flag_Dlg = 0;
+			m_Cylinder->flag_Ring_Flag_Dlg = 0;
 
 			HWND temp = GetDlgItem(App->CL_App_Templates->Shape_Dlg_hWnd, IDC_THICKNESS);
 			EnableWindow(temp, false);
 
-			App->CL_X_CreateCylDialog->Update();
+			m_Cylinder->Update();
 
 			RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			return TRUE;
@@ -573,16 +575,16 @@ LRESULT CALLBACK CreateCylDialog::Proc_Create_Cylinder(HWND hDlg, UINT message, 
 
 		if (LOWORD(wParam) == IDC_BT_CYL_HOLLOW)
 		{
-			App->CL_X_CreateCylDialog->m_Solid = 1;
+			m_Cylinder->m_Solid = 1;
 
-			App->CL_X_CreateCylDialog->flag_Hollow_Flag_Dlg = 1;
-			App->CL_X_CreateCylDialog->flag_Solid_Flag_Dlg = 0;
-			App->CL_X_CreateCylDialog->flag_Ring_Flag_Dlg = 0;
+			m_Cylinder->flag_Hollow_Flag_Dlg = 1;
+			m_Cylinder->flag_Solid_Flag_Dlg = 0;
+			m_Cylinder->flag_Ring_Flag_Dlg = 0;
 
 			HWND temp = GetDlgItem(App->CL_App_Templates->Shape_Dlg_hWnd, IDC_THICKNESS);
 			EnableWindow(temp, true);
 
-			App->CL_X_CreateCylDialog->Update();
+			m_Cylinder->Update();
 
 			RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			return TRUE;
@@ -590,16 +592,16 @@ LRESULT CALLBACK CreateCylDialog::Proc_Create_Cylinder(HWND hDlg, UINT message, 
 
 		if (LOWORD(wParam) == IDC_BT_CYL_RING)
 		{
-			App->CL_X_CreateCylDialog->m_Solid = 2;
+			m_Cylinder->m_Solid = 2;
 
-			App->CL_X_CreateCylDialog->flag_Ring_Flag_Dlg = 1;
-			App->CL_X_CreateCylDialog->flag_Hollow_Flag_Dlg = 0;
-			App->CL_X_CreateCylDialog->flag_Solid_Flag_Dlg = 0;
+			m_Cylinder->flag_Ring_Flag_Dlg = 1;
+			m_Cylinder->flag_Hollow_Flag_Dlg = 0;
+			m_Cylinder->flag_Solid_Flag_Dlg = 0;
 
 			HWND temp = GetDlgItem(App->CL_App_Templates->Shape_Dlg_hWnd, IDC_THICKNESS);
 			EnableWindow(temp, true);
 
-			App->CL_X_CreateCylDialog->Update();
+			m_Cylinder->Update();
 
 			RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			return TRUE;
@@ -607,13 +609,13 @@ LRESULT CALLBACK CreateCylDialog::Proc_Create_Cylinder(HWND hDlg, UINT message, 
 
 		if (LOWORD(wParam) == IDC_BT_CUTBRUSH)
 		{
-			if (App->CL_X_CreateCylDialog->m_TCut == 1)
+			if (m_Cylinder->m_TCut == 1)
 			{
-				App->CL_X_CreateCylDialog->m_TCut = 0;
+				m_Cylinder->m_TCut = 0;
 			}
 			else
 			{
-				App->CL_X_CreateCylDialog->m_TCut = 1;
+				m_Cylinder->m_TCut = 1;
 			}
 
 			return TRUE;
@@ -626,12 +628,12 @@ LRESULT CALLBACK CreateCylDialog::Proc_Create_Cylinder(HWND hDlg, UINT message, 
 			App->CL_Dialogs->YesNo("Reset to Defaults", "All Dimensions will be reset");
 			if (App->CL_Dialogs->flag_Dlg_Canceled == false)
 			{
-				App->CL_X_CreateCylDialog->Set_Defaults(hDlg);
+				m_Cylinder->Set_Defaults(hDlg);
 
 				HWND temp = GetDlgItem(App->CL_App_Templates->Shape_Dlg_hWnd, IDC_THICKNESS);
 				EnableWindow(temp, false);
 
-				App->CL_X_CreateCylDialog->Update();
+				m_Cylinder->Update();
 			}
 
 			App->CL_App_Templates->Enable_Shape_Dialog(true);
@@ -649,17 +651,17 @@ LRESULT CALLBACK CreateCylDialog::Proc_Create_Cylinder(HWND hDlg, UINT message, 
 		// -----------------------------------------------------------------
 		if (LOWORD(wParam) == IDOK)
 		{
-			App->CL_X_CreateCylDialog->Get_DLG_Members(hDlg);
-			App->CL_X_CreateCylDialog->Set_CylinderTemplate();
-			App->CL_X_CreateCylDialog->CreateCylinder_New();
+			m_Cylinder->Get_DLG_Members(hDlg);
+			m_Cylinder->Set_CylinderTemplate();
+			m_Cylinder->CreateCylinder_New();
 
 			App->CL_Properties_Tabs->Enable_Tabs_Dlg(true);
 
 			App->CL_X_Shapes_3D->Close_OgreWindow();
 
-			App->CL_X_CreateCylDialog->Remove_Edit_Boxes(hDlg);
+			m_Cylinder->Remove_Edit_Boxes(hDlg);
 
-			strcpy(App->CL_Properties_Templates->LastCreated_ShapeName, App->CL_X_CreateCylDialog->CylinderName);
+			strcpy(App->CL_Properties_Templates->LastCreated_ShapeName, m_Cylinder->CylinderName);
 			App->CL_Properties_Templates->Insert_Template();
 
 			App->CL_App_Templates->Enable_Map_Editor_Dialogs(true);
@@ -674,7 +676,7 @@ LRESULT CALLBACK CreateCylDialog::Proc_Create_Cylinder(HWND hDlg, UINT message, 
 
 			App->CL_X_Shapes_3D->Close_OgreWindow();
 
-			App->CL_X_CreateCylDialog->Remove_Edit_Boxes(hDlg);
+			m_Cylinder->Remove_Edit_Boxes(hDlg);
 
 			App->CL_Panels->Deselect_All_Brushes_Update_Dlgs();
 			App->CL_Top_Tabs->Redraw_TopTabs_Dlg();

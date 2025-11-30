@@ -181,7 +181,7 @@ LRESULT CALLBACK CL64_Properties_Templates::Proc_Templates(HWND hDlg, UINT messa
 
 		if (LOWORD(wParam) == IDC_BRUSH_CYCLINDER_PRIMITIVE)
 		{
-			App->CL_X_CreateCylDialog->Start_CreateCyl_Dlg();
+			App->CL_App_Templates->CL_CreateCylinder->Start_CreateCyl_Dlg();
 			return 1;
 		}
 		
