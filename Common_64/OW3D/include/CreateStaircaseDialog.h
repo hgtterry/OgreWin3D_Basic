@@ -56,6 +56,7 @@ private:
 	void Set_StaircaseTemplate();
 
 	void Set_Defaults(HWND hDlg);
+	void Update(void);
 
 	void CreateStaircase();
 	void CreateNewTemplateBrush(Brush* pBrush);

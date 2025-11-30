@@ -299,6 +299,22 @@ LRESULT CALLBACK CreateStaircaseDialog::Proc_CreateStaircase(HWND hDlg, UINT mes
 		return CDRF_DODEFAULT;
 	}
 
+	case WM_MOUSEWHEEL:
+	{
+		int zDelta = (short)HIWORD(wParam);    // wheel rotation
+
+		if (zDelta > 0)
+		{
+			App->CL_X_Shapes_3D->RenderListener->Wheel_Move = -1;
+		}
+		else if (zDelta < 0)
+		{
+			App->CL_X_Shapes_3D->RenderListener->Wheel_Move = 1;
+		}
+
+		return 1;
+	}
+
 	case WM_COMMAND:
 	{
 
@@ -352,6 +368,11 @@ LRESULT CALLBACK CreateStaircaseDialog::Proc_CreateStaircase(HWND hDlg, UINT mes
 			m_Staircase->flag_Stairs_Flag_Dlg = 1;
 			m_Staircase->flag_Ramp_Flag_Dlg = 0;
 
+			m_Staircase->Update();
+
+			HWND temp = GetDlgItem(App->CL_App_Templates->Shape_Dlg_hWnd, IDC_ED_STAIRS_STEPS);
+			EnableWindow(temp, true);
+
 			RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
 			return TRUE;
@@ -366,6 +387,11 @@ LRESULT CALLBACK CreateStaircaseDialog::Proc_CreateStaircase(HWND hDlg, UINT mes
 
 			m_Staircase->flag_Stairs_Flag_Dlg = 0;
 			m_Staircase->flag_Ramp_Flag_Dlg = 1;
+
+			m_Staircase->Update();
+
+			HWND temp = GetDlgItem(App->CL_App_Templates->Shape_Dlg_hWnd, IDC_ED_STAIRS_STEPS);
+			EnableWindow(temp, false);
 
 			RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
@@ -415,6 +441,16 @@ LRESULT CALLBACK CreateStaircaseDialog::Proc_CreateStaircase(HWND hDlg, UINT mes
 	}
 	}
 	return FALSE;
+}
+
+// *************************************************************************
+// *			Update:- Terry and Hazel Flanigan 2024					   *
+// *************************************************************************
+void CreateStaircaseDialog::Update(void)
+{
+	Get_DLG_Members(App->CL_App_Templates->Shape_Dlg_hWnd);
+	Set_StaircaseTemplate();
+	CreateStaircase();
 }
 
 // *************************************************************************
