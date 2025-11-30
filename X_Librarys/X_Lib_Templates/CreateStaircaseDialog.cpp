@@ -66,7 +66,19 @@ void CreateStaircaseDialog::Start_CreateStaircase_Dlg()
 	pStaircaseTemplate = App->CL_Level->Level_GetStaircaseTemplate();
 
 	App->CL_Properties_Tabs->Enable_Tabs_Dlg(false);
-	DialogBox(App->hInst, (LPCTSTR)IDD_CREATE_STAIRCASE, App->MainHwnd, (DLGPROC)Proc_CreateStaircase);
+
+	CreateDialog(App->hInst, (LPCTSTR)IDD_CREATE_STAIRCASE, App->MainHwnd, (DLGPROC)Proc_CreateStaircase);
+
+	if (App->CL_App_Templates->Shape_Dlg_hWnd)
+	{
+		App->CL_App_Templates->Enable_Map_Editor_Dialogs(false);
+	}
+
+	Get_DLG_Members(App->CL_App_Templates->Shape_Dlg_hWnd);
+	Set_StaircaseTemplate();
+	CreateStaircase();
+
+	App->CL_Ogre->OGL_Listener->Show_Visuals(true);
 }
 
 // *************************************************************************
@@ -108,8 +120,14 @@ LRESULT CALLBACK CreateStaircaseDialog::Proc_CreateStaircase(HWND hDlg, UINT mes
 		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
-		m_Staircase->Set_Members();
+		App->CL_App_Templates->Shape_Dlg_hWnd = hDlg;
 
+		App->CL_X_Shapes_3D->Render_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_BOX_3D, hDlg, (DLGPROC)App->CL_X_Shapes_3D->Proc_Box_Viewer_3D);
+		SetWindowPos(App->CL_X_Shapes_3D->Render_hWnd, NULL, 20, 225, 0, 0, SWP_NOSIZE);
+
+		App->CL_X_Shapes_3D->Set_OgreWindow();
+
+		m_Staircase->Set_Members();
 		m_Staircase->Set_DLG_Members(hDlg);
 
 		int Count = App->CL_X_Brush->Get_Brush_Count();
@@ -372,6 +390,12 @@ LRESULT CALLBACK CreateStaircaseDialog::Proc_CreateStaircase(HWND hDlg, UINT mes
 			strcpy(App->CL_Properties_Templates->LastCreated_ShapeName, m_Staircase->StaircaseName);
 			App->CL_Properties_Templates->Insert_Template();
 
+			App->CL_X_Shapes_3D->Close_OgreWindow();
+
+			//App->CL_X_CreateStaircaseDialog->Remove_Edit_Boxes(hDlg);
+
+			App->CL_App_Templates->Enable_Map_Editor_Dialogs(true);
+
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
@@ -379,6 +403,10 @@ LRESULT CALLBACK CreateStaircaseDialog::Proc_CreateStaircase(HWND hDlg, UINT mes
 		if (LOWORD(wParam) == IDCANCEL)
 		{
 			App->CL_Properties_Tabs->Enable_Tabs_Dlg(true);
+			App->CL_X_Shapes_3D->Close_OgreWindow();
+
+			App->CL_App_Templates->Enable_Map_Editor_Dialogs(true);
+
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}

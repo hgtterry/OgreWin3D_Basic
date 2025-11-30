@@ -65,8 +65,7 @@ CL64_App::CL64_App(void)
 	CL_Properties_Textures =	nullptr;
 
 	CL_X_Face_Editor =			nullptr;
-	//CL_Properties_Faces =		nullptr;
-
+	
 	CL_Ogre	=					nullptr;
 	CL_Panels =					nullptr;
 	CL_Keyboard =				nullptr;
@@ -105,9 +104,8 @@ CL64_App::CL64_App(void)
 	CL_Editor_Control =			nullptr;
 
 	// Templates Dialogs Libraries
-	CL_App_Templates =				nullptr;
-//	CL_X_CreateStaircaseDialog =	nullptr;
-	CL_X_Shapes_3D =				nullptr;
+	CL_App_Templates =			nullptr;  // Library
+	CL_X_Shapes_3D =			nullptr;
 
 	// Project
 	CL_Project =				nullptr;
@@ -262,7 +260,6 @@ void CL64_App::InitApp(void)
 	CL_App_Templates =				new App_Templates();
 	CL_App_Templates->Init_Templates();
 
-//	CL_X_CreateStaircaseDialog =	new CreateStaircaseDialog();
 	CL_X_Shapes_3D =				new Shapes_3D();
 
 	// Project
