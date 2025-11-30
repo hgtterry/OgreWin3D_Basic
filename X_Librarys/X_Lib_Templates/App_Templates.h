@@ -3,6 +3,7 @@
 #include "CreateBoxDialog.h"
 #include "CreateCylDialog.h"
 #include "CreateArchDialog.h"
+#include "CreateConeDialog.h"
 
 class App_Templates
 {
@@ -22,5 +23,6 @@ public:
 	CreateBoxDialog* CL_CreateBox;
 	CreateCylDialog* CL_CreateCylinder;
 	CreateArchDialog* CL_CreateArch;
+	CreateConeDialog* CL_CreateCone;
 };
 

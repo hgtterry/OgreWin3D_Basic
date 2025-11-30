@@ -91,7 +91,7 @@ LRESULT CALLBACK CreateConeDialog::OwnerEditProc(HWND hWnd, UINT uMsg, WPARAM wP
 
 		case VK_RETURN:
 		{
-			App->CL_X_CreateConeDialog->Update();
+			App->CL_App_Templates->CL_CreateCone->Update();
 			return 0;
 		}
 
@@ -165,11 +165,13 @@ void CreateConeDialog::Start_CreateCone_Dlg()
 // *************************************************************************
 LRESULT CALLBACK CreateConeDialog::Proc_CreateCone(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
+	auto& m_Cone = App->CL_App_Templates->CL_CreateCone; // App->CL_App_Templates->CL_CreateCone
+
 	switch (message)
 	{
 	case WM_INITDIALOG:
 	{
-		App->CL_X_CreateConeDialog->Capture_Edit_Boxes(hDlg);
+		m_Cone->Capture_Edit_Boxes(hDlg);
 
 		SendDlgItemMessage(hDlg, IDC_STDIAMETER, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_STYSIZE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
@@ -206,8 +208,8 @@ LRESULT CALLBACK CreateConeDialog::Proc_CreateCone(HWND hDlg, UINT message, WPAR
 		App->CL_X_Shapes_3D->Render_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_BOX_3D, hDlg, (DLGPROC)App->CL_X_Shapes_3D->Proc_Box_Viewer_3D);
 		App->CL_X_Shapes_3D->Set_OgreWindow();
 
-		App->CL_X_CreateConeDialog->Set_Members();
-		App->CL_X_CreateConeDialog->Set_DLG_Members(hDlg);
+		m_Cone->Set_Members();
+		m_Cone->Set_DLG_Members(hDlg);
 
 		int Count = App->CL_X_Brush->Get_Brush_Count();
 		char Num[32];
@@ -216,37 +218,37 @@ LRESULT CALLBACK CreateConeDialog::Proc_CreateCone(HWND hDlg, UINT message, WPAR
 		strcpy(Name, "Cone_");
 		strcat(Name, Num);
 
-		App->CL_X_CreateConeDialog->Init_Bmps_Globals(hDlg);
+		m_Cone->Init_Bmps_Globals(hDlg);
 
 		SetDlgItemText(hDlg, IDC_ED_CONE_NAME, (LPCTSTR)Name);
 
 
 		// ----------- Style Solid Hollow Funnel
-		if (App->CL_X_CreateConeDialog->m_Style == 0)
+		if (m_Cone->m_Style == 0)
 		{
-			App->CL_X_CreateConeDialog->flag_Solid_Flag_Dlg = 1;
-			App->CL_X_CreateConeDialog->flag_Hollow_Flag_Dlg = 0;
-			App->CL_X_CreateConeDialog->flag_Funnel_Flag_Dlg = 0;
+			m_Cone->flag_Solid_Flag_Dlg = 1;
+			m_Cone->flag_Hollow_Flag_Dlg = 0;
+			m_Cone->flag_Funnel_Flag_Dlg = 0;
 		}
 
-		if (App->CL_X_CreateConeDialog->m_Style == 1)
+		if (m_Cone->m_Style == 1)
 		{
-			App->CL_X_CreateConeDialog->flag_Solid_Flag_Dlg = 0;
-			App->CL_X_CreateConeDialog->flag_Hollow_Flag_Dlg = 1;
-			App->CL_X_CreateConeDialog->flag_Funnel_Flag_Dlg = 0;
+			m_Cone->flag_Solid_Flag_Dlg = 0;
+			m_Cone->flag_Hollow_Flag_Dlg = 1;
+			m_Cone->flag_Funnel_Flag_Dlg = 0;
 		}
 
-		if (App->CL_X_CreateConeDialog->m_Style == 2)
+		if (m_Cone->m_Style == 2)
 		{
-			App->CL_X_CreateConeDialog->flag_Solid_Flag_Dlg = 0;
-			App->CL_X_CreateConeDialog->flag_Hollow_Flag_Dlg = 0;
-			App->CL_X_CreateConeDialog->flag_Funnel_Flag_Dlg = 1;
+			m_Cone->flag_Solid_Flag_Dlg = 0;
+			m_Cone->flag_Hollow_Flag_Dlg = 0;
+			m_Cone->flag_Funnel_Flag_Dlg = 1;
 		}
 
 		// ----------------------------------------------
 		HWND temp = GetDlgItem(hDlg, IDC_CK_CONE_WORLDCENTRE);
 		SendMessage(temp, BM_SETCHECK, 1, 0);
-		App->CL_X_CreateConeDialog->m_UseCamPos = 0;
+		m_Cone->m_UseCamPos = 0;
 
 		return TRUE;
 	}
@@ -340,28 +342,28 @@ LRESULT CALLBACK CreateConeDialog::Proc_CreateCone(HWND hDlg, UINT message, WPAR
 		if (some_item->idFrom == IDC_BT_CONE_SOLID)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CL_X_CreateConeDialog->flag_Solid_Flag_Dlg);
+			App->Custom_Button_Toggle(item, m_Cone->flag_Solid_Flag_Dlg);
 			return CDRF_DODEFAULT;
 		}
 
 		if (some_item->idFrom == IDC_BT_CONE_HOLLOW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CL_X_CreateConeDialog->flag_Hollow_Flag_Dlg);
+			App->Custom_Button_Toggle(item, m_Cone->flag_Hollow_Flag_Dlg);
 			return CDRF_DODEFAULT;
 		}
 
 		if (some_item->idFrom == IDC_BT_CONE_FUNNEL)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CL_X_CreateConeDialog->flag_Funnel_Flag_Dlg);
+			App->Custom_Button_Toggle(item, m_Cone->flag_Funnel_Flag_Dlg);
 			return CDRF_DODEFAULT;
 		}
 
 		if (some_item->idFrom == IDC_BT_CONE_CUTBRUSH)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CL_X_CreateConeDialog->m_TCut);
+			App->Custom_Button_Toggle(item, m_Cone->m_TCut);
 			return CDRF_DODEFAULT;
 		}
 
@@ -416,7 +418,7 @@ LRESULT CALLBACK CreateConeDialog::Proc_CreateCone(HWND hDlg, UINT message, WPAR
 	{
 		if (LOWORD(wParam) == IDC_BT_UPDATE)
 		{
-			App->CL_X_CreateConeDialog->Update();
+			m_Cone->Update();
 			return TRUE;
 		}
 
@@ -428,7 +430,7 @@ LRESULT CALLBACK CreateConeDialog::Proc_CreateCone(HWND hDlg, UINT message, WPAR
 			temp = GetDlgItem(hDlg, IDC_CK_CONE_CAMPOSITION);
 			SendMessage(temp, BM_SETCHECK, 0, 0);
 
-			App->CL_X_CreateConeDialog->m_UseCamPos = 0;
+			m_Cone->m_UseCamPos = 0;
 			return TRUE;
 		}
 
@@ -440,19 +442,19 @@ LRESULT CALLBACK CreateConeDialog::Proc_CreateCone(HWND hDlg, UINT message, WPAR
 			temp = GetDlgItem(hDlg, IDC_CK_CONE_WORLDCENTRE);
 			SendMessage(temp, BM_SETCHECK, 0, 0);
 
-			App->CL_X_CreateConeDialog->m_UseCamPos = 1;
+			m_Cone->m_UseCamPos = 1;
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == IDC_BT_CONE_SOLID)
 		{
-			App->CL_X_CreateConeDialog->m_Style = 0;
+			m_Cone->m_Style = 0;
 
-			App->CL_X_CreateConeDialog->flag_Solid_Flag_Dlg = 1;
-			App->CL_X_CreateConeDialog->flag_Hollow_Flag_Dlg = 0;
-			App->CL_X_CreateConeDialog->flag_Funnel_Flag_Dlg = 0;
+			m_Cone->flag_Solid_Flag_Dlg = 1;
+			m_Cone->flag_Hollow_Flag_Dlg = 0;
+			m_Cone->flag_Funnel_Flag_Dlg = 0;
 
-			App->CL_X_CreateConeDialog->Update();
+			m_Cone->Update();
 
 			RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
@@ -461,13 +463,13 @@ LRESULT CALLBACK CreateConeDialog::Proc_CreateCone(HWND hDlg, UINT message, WPAR
 
 		if (LOWORD(wParam) == IDC_BT_CONE_HOLLOW)
 		{
-			App->CL_X_CreateConeDialog->m_Style = 1;
+			m_Cone->m_Style = 1;
 
-			App->CL_X_CreateConeDialog->flag_Solid_Flag_Dlg = 0;
-			App->CL_X_CreateConeDialog->flag_Hollow_Flag_Dlg = 1;
-			App->CL_X_CreateConeDialog->flag_Funnel_Flag_Dlg = 0;
+			m_Cone->flag_Solid_Flag_Dlg = 0;
+			m_Cone->flag_Hollow_Flag_Dlg = 1;
+			m_Cone->flag_Funnel_Flag_Dlg = 0;
 
-			App->CL_X_CreateConeDialog->Update();
+			m_Cone->Update();
 
 			RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			return TRUE;
@@ -475,13 +477,13 @@ LRESULT CALLBACK CreateConeDialog::Proc_CreateCone(HWND hDlg, UINT message, WPAR
 
 		if (LOWORD(wParam) == IDC_BT_CONE_FUNNEL)
 		{
-			App->CL_X_CreateConeDialog->m_Style = 2;
+			m_Cone->m_Style = 2;
 
-			App->CL_X_CreateConeDialog->flag_Solid_Flag_Dlg = 0;
-			App->CL_X_CreateConeDialog->flag_Hollow_Flag_Dlg = 0;
-			App->CL_X_CreateConeDialog->flag_Funnel_Flag_Dlg = 1;
+			m_Cone->flag_Solid_Flag_Dlg = 0;
+			m_Cone->flag_Hollow_Flag_Dlg = 0;
+			m_Cone->flag_Funnel_Flag_Dlg = 1;
 
-			App->CL_X_CreateConeDialog->Update();
+			m_Cone->Update();
 
 			RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			return TRUE;
@@ -489,14 +491,14 @@ LRESULT CALLBACK CreateConeDialog::Proc_CreateCone(HWND hDlg, UINT message, WPAR
 
 		if (LOWORD(wParam) == IDC_BT_CONE_CUTBRUSH)
 		{
-			if (App->CL_X_CreateConeDialog->m_TCut == 1)
+			if (m_Cone->m_TCut == 1)
 			{
-				App->CL_X_CreateConeDialog->m_TCut = 0;
+				m_Cone->m_TCut = 0;
 				return 1;
 			}
 			else
 			{
-				App->CL_X_CreateConeDialog->m_TCut = 1;
+				m_Cone->m_TCut = 1;
 				return 1;
 			}
 
@@ -510,8 +512,8 @@ LRESULT CALLBACK CreateConeDialog::Proc_CreateCone(HWND hDlg, UINT message, WPAR
 			App->CL_Dialogs->YesNo("Reset to Defaults", "All Dimensions will be reset");
 			if (App->CL_Dialogs->flag_Dlg_Canceled == false)
 			{
-				App->CL_X_CreateConeDialog->Set_Defaults(hDlg);
-				App->CL_X_CreateConeDialog->Update();
+				m_Cone->Set_Defaults(hDlg);
+				m_Cone->Update();
 			}
 
 			App->CL_App_Templates->Enable_Shape_Dialog(true);
@@ -523,16 +525,16 @@ LRESULT CALLBACK CreateConeDialog::Proc_CreateCone(HWND hDlg, UINT message, WPAR
 		// -----------------------------------------------------------------
 		if (LOWORD(wParam) == IDOK)
 		{
-			App->CL_X_CreateConeDialog->Get_DLG_Members(hDlg);
-			App->CL_X_CreateConeDialog->Set_ConeTemplate();
-			App->CL_X_CreateConeDialog->CreateCone();
+			m_Cone->Get_DLG_Members(hDlg);
+			m_Cone->Set_ConeTemplate();
+			m_Cone->CreateCone();
 
 			App->CL_Properties_Tabs->Enable_Tabs_Dlg(true);
 			App->CL_X_Shapes_3D->Close_OgreWindow();
 
-			App->CL_X_CreateConeDialog->Remove_Edit_Boxes(hDlg);
+			m_Cone->Remove_Edit_Boxes(hDlg);
 
-			strcpy(App->CL_Properties_Templates->LastCreated_ShapeName, App->CL_X_CreateConeDialog->ConeName);
+			strcpy(App->CL_Properties_Templates->LastCreated_ShapeName, m_Cone->ConeName);
 			App->CL_Properties_Templates->Insert_Template();
 
 			App->CL_App_Templates->Enable_Map_Editor_Dialogs(true);
@@ -546,7 +548,7 @@ LRESULT CALLBACK CreateConeDialog::Proc_CreateCone(HWND hDlg, UINT message, WPAR
 			App->CL_Properties_Tabs->Enable_Tabs_Dlg(true);
 			App->CL_X_Shapes_3D->Close_OgreWindow();
 
-			App->CL_X_CreateConeDialog->Remove_Edit_Boxes(hDlg);
+			m_Cone->Remove_Edit_Boxes(hDlg);
 
 			App->CL_Panels->Deselect_All_Brushes_Update_Dlgs();
 			App->CL_Top_Tabs->Redraw_TopTabs_Dlg();
