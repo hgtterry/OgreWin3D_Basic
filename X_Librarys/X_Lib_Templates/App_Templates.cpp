@@ -22,7 +22,7 @@ App_Templates::~App_Templates(void)
 // *************************************************************************
 char* App_Templates::GetVersion()
 {
-	return (LPSTR)" TMH_Scene_Builder :-- Templates [ 30-11-25 ] Build 3 ";
+	return (LPSTR)" TMH_Scene_Builder :-- Templates [ 01-12-25 ] Build 1 ";
 }
 
 // *************************************************************************

@@ -49,6 +49,7 @@ public:
 private:
 
 	static LRESULT CALLBACK Proc_CreateStaircase(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK OwnerEditProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam, UINT_PTR uIdSubclass, DWORD_PTR dwRefData);
 
 	void Set_Members();
 	void Set_DLG_Members(HWND hDlg);
@@ -56,10 +57,13 @@ private:
 	void Set_StaircaseTemplate();
 
 	void Set_Defaults(HWND hDlg);
-	void Update(void);
-
+	
 	void CreateStaircase();
 	void CreateNewTemplateBrush(Brush* pBrush);
+
+	void Update(void);
+	void Capture_Edit_Boxes(HWND hDlg);
+	void Remove_Edit_Boxes(HWND hDlg);
 
 	char StaircaseName[MAX_PATH];
 };

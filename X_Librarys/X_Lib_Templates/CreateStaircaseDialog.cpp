@@ -58,11 +58,93 @@ CreateStaircaseDialog::~CreateStaircaseDialog(void)
 {
 }
 
+LRESULT CALLBACK CreateStaircaseDialog::OwnerEditProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam, UINT_PTR uIdSubclass, DWORD_PTR dwRefData)
+{
+	switch (uMsg)
+	{
+	case WM_CHAR:
+	{
+		switch (wParam)
+		{
+
+		case VK_RETURN:
+		{
+			App->CL_App_Templates->CL_CreateStaircase->Update();
+			return 0;
+		}
+
+		}
+	}
+
+	}
+
+	return DefSubclassProc(hWnd, uMsg, wParam, lParam);
+}
+
+// *************************************************************************
+// *			Init_Bmps_Globals:- Terry Mo and Hazel 2025				   *
+// *************************************************************************
+//void CreateStaircaseDialog::Init_Bmps_Globals(HWND hDlg)
+//{
+//	HWND Temp = GetDlgItem(hDlg, IDC_BT_HELP);
+//	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_Help_Bmp);
+//
+//	HWND hTooltip_TB_2 = CreateWindowEx(0, TOOLTIPS_CLASS, "", TTS_ALWAYSTIP | TTS_BALLOON | TTS_NOFADE, 0, 0, 0, 0, App->MainHwnd, 0, App->hInst, 0);
+//	SendMessage(hTooltip_TB_2, TTM_SETMAXTIPWIDTH, 0, 250);
+//
+//	Temp = GetDlgItem(hDlg, IDC_BT_HELP);
+//	TOOLINFO ti1 = { 0 };
+//	ti1.cbSize = sizeof(ti1);
+//	ti1.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+//	ti1.uId = (UINT_PTR)Temp;
+//	ti1.lpszText = (LPSTR)"Help / Information.";
+//	ti1.hwnd = App->MainHwnd;
+//	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti1);
+//}
+
+// *************************************************************************
+// *		Capture_Edit_Boxes:- Terry and Hazel Flanigan 2025		 	   *
+// *************************************************************************
+void CreateStaircaseDialog::Capture_Edit_Boxes(HWND hDlg)
+{
+	HWND control = GetDlgItem(hDlg, IDC_ED_STAIRS_HEIGHT);
+	SetWindowSubclass(control, OwnerEditProc, 0, 0);
+
+	control = GetDlgItem(hDlg, IDC_ED_STAIRS_WIDTH);
+	SetWindowSubclass(control, OwnerEditProc, 0, 0);
+
+	control = GetDlgItem(hDlg, IDC_ED_STAIRS_LENGTH);
+	SetWindowSubclass(control, OwnerEditProc, 0, 0);
+
+	control = GetDlgItem(hDlg, IDC_ED_STAIRS_STEPS);
+	SetWindowSubclass(control, OwnerEditProc, 0, 0);
+}
+
+// *************************************************************************
+// *		Remove_Edit_Boxes:- Terry and Hazel Flanigan 2025		 	   *
+// *************************************************************************
+void CreateStaircaseDialog::Remove_Edit_Boxes(HWND hDlg)
+{
+	HWND control = GetDlgItem(hDlg, IDC_ED_STAIRS_HEIGHT);
+	RemoveWindowSubclass(control, OwnerEditProc, 0);
+
+	control = GetDlgItem(hDlg, IDC_ED_STAIRS_WIDTH);
+	RemoveWindowSubclass(control, OwnerEditProc, 0);
+
+	control = GetDlgItem(hDlg, IDC_ED_STAIRS_LENGTH);
+	RemoveWindowSubclass(control, OwnerEditProc, 0);
+
+	control = GetDlgItem(hDlg, IDC_ED_STAIRS_STEPS);
+	RemoveWindowSubclass(control, OwnerEditProc, 0);
+}
+
 // *************************************************************************
 // *	  	Start_CreateArch_Dlg:- Terry and Hazel Flanigan 2025		   *
 // *************************************************************************
 void CreateStaircaseDialog::Start_CreateStaircase_Dlg()
 {
+	App->CL_App_Templates->Shape_Dlg_hWnd = nullptr;
+
 	pStaircaseTemplate = App->CL_Level->Level_GetStaircaseTemplate();
 
 	App->CL_Properties_Tabs->Enable_Tabs_Dlg(false);
@@ -92,6 +174,8 @@ LRESULT CALLBACK CreateStaircaseDialog::Proc_CreateStaircase(HWND hDlg, UINT mes
 	{
 	case WM_INITDIALOG:
 	{
+		m_Staircase->Capture_Edit_Boxes(hDlg);
+
 		SendDlgItemMessage(hDlg, IDC_ST_STAIRS_GENERAL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		SendDlgItemMessage(hDlg, IDC_ST_STAIRS_HEIGHT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
