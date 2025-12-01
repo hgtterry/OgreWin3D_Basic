@@ -1751,7 +1751,7 @@ void CL64_Editor_Map::Context_Menu(HWND hDlg)
 
 		// Copy Functions
 		AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
-		AppendMenuW(hMenu, MF_STRING, IDM_SCENE_DUPLICATE, L"&Duplicate");
+		AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_SCENE_DUPLICATE, L"&Duplicate");
 		AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_COPY, L"&Copy");
 		AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_PASTE, L"&Paste");
 	}

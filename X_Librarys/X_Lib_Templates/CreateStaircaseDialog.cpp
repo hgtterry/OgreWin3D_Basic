@@ -201,6 +201,8 @@ LRESULT CALLBACK CreateStaircaseDialog::Proc_CreateStaircase(HWND hDlg, UINT mes
 
 		SendDlgItemMessage(hDlg, IDC_BT_STAIRS_DEFAULTS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
+		SendDlgItemMessage(hDlg, IDC_BT_UPDATE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
 		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
@@ -214,12 +216,11 @@ LRESULT CALLBACK CreateStaircaseDialog::Proc_CreateStaircase(HWND hDlg, UINT mes
 		m_Staircase->Set_Members();
 		m_Staircase->Set_DLG_Members(hDlg);
 
+		// Generate and set the box name
 		int Count = App->CL_X_Brush->Get_Brush_Count();
-		char Num[32];
 		char Name[32];
-		_itoa(Count, Num, 10);
-		strcpy(Name, "Staircase_");
-		strcat(Name, Num);
+		snprintf(Name, sizeof(Name), "Staircase_%d", Count + 1);
+		SetDlgItemText(hDlg, IDC_EDITNAME, Name);
 
 		SetDlgItemText(hDlg, IDC_STAIRS_EDITNAME, (LPCTSTR)Name);
 
@@ -366,6 +367,13 @@ LRESULT CALLBACK CreateStaircaseDialog::Proc_CreateStaircase(HWND hDlg, UINT mes
 			return CDRF_DODEFAULT;
 		}
 
+		if (some_item->idFrom == IDC_BT_UPDATE)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
 		if (some_item->idFrom == IDOK)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
@@ -401,6 +409,11 @@ LRESULT CALLBACK CreateStaircaseDialog::Proc_CreateStaircase(HWND hDlg, UINT mes
 
 	case WM_COMMAND:
 	{
+		if (LOWORD(wParam) == IDC_BT_UPDATE)
+		{
+			m_Staircase->Update();
+			return TRUE;
+		}
 
 		if (LOWORD(wParam) == IDC_CK_STAIRS_WORLDCENTRE)
 		{
@@ -484,20 +497,21 @@ LRESULT CALLBACK CreateStaircaseDialog::Proc_CreateStaircase(HWND hDlg, UINT mes
 
 		if (LOWORD(wParam) == IDC_BT_STAIRS_DEFAULTS)
 		{
-			/*App->CL_App_Templates->Enable_Shape_Dialog(false);
+			App->CL_App_Templates->Enable_Shape_Dialog(false);
 
 			App->CL_Dialogs->YesNo("Reset to Defaults", "All Dimensions will be reset");
 			if (App->CL_Dialogs->flag_Dlg_Canceled == false)
-			{*/
-				//m_Staircase->Set_Defaults(hDlg);
+			{
+				m_Staircase->Set_Defaults(hDlg);
 
-				//m_Staircase->Update();
-				/*HWND temp = GetDlgItem(App->CL_App_Templates->Shape_Dlg_hWnd, IDC_ED_STAIRS_STEPS);
-				EnableWindow(temp, true);*/
-			//}
+				m_Staircase->Update();
+				HWND temp = GetDlgItem(App->CL_App_Templates->Shape_Dlg_hWnd, IDC_ED_STAIRS_STEPS);
+				EnableWindow(temp, true);
+			}
 
-			/*App->CL_App_Templates->Enable_Shape_Dialog(true);
-			App->CL_App_Templates->Enable_Map_Editor_Dialogs(false);*/
+			App->CL_App_Templates->Enable_Shape_Dialog(true);
+			App->CL_App_Templates->Enable_Map_Editor_Dialogs(false);
+
 			return TRUE;
 		}
 
@@ -717,9 +731,14 @@ void CreateStaircaseDialog::Set_Defaults(HWND hDlg)
 	m_Width = 64.0;
 	m_MakeRamp = false;
 	m_TCut = false;
-	m_NumberOfStairs = 0;
+	m_NumberOfStairs = 8;
 
 	Set_DLG_Members(hDlg);
+
+	int brushCount = App->CL_X_Brush->Get_Brush_Count();
+	std::string boxName = "Staircase_" + std::to_string(brushCount + 1);
+	SetDlgItemText(hDlg, IDC_EDITNAME, boxName.c_str());
+
 
 
 	/*if(m_Solid == 0)
