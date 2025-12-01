@@ -529,7 +529,7 @@ LRESULT CALLBACK CreateStaircaseDialog::Proc_CreateStaircase(HWND hDlg, UINT mes
 
 			App->CL_X_Shapes_3D->Close_OgreWindow();
 
-			//App->CL_X_CreateStaircaseDialog->Remove_Edit_Boxes(hDlg);
+			m_Staircase->Remove_Edit_Boxes(hDlg);
 
 			App->CL_App_Templates->Enable_Map_Editor_Dialogs(true);
 
@@ -542,7 +542,7 @@ LRESULT CALLBACK CreateStaircaseDialog::Proc_CreateStaircase(HWND hDlg, UINT mes
 			App->CL_Properties_Tabs->Enable_Tabs_Dlg(true);
 			App->CL_X_Shapes_3D->Close_OgreWindow();
 
-			//App->CL_X_CreateStaircaseDialog->Remove_Edit_Boxes(hDlg);
+			m_Staircase->Remove_Edit_Boxes(hDlg);
 
 			App->CL_Panels->Deselect_All_Brushes_Update_Dlgs();
 			App->CL_Top_Tabs->Redraw_TopTabs_Dlg();
