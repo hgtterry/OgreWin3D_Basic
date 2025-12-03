@@ -1777,5 +1777,30 @@ void CL64_Dialogs::List_BrushInfo(HWND List)
 	SendMessage(List, LB_RESETCONTENT, 0, 0);
 	
 	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->CL_X_Brush->Brush_GetName(App->CL_Doc->CurBrush));
+	
+	char buf[256];
+
+	if (App->CL_Doc->CurBrush->GroupId == Enums::Brushs_ID_Only_Brush)
+	{
+		sprintf(buf, "%s %d", "Model ID ( ID_Area )", App->CL_Doc->CurBrush->GroupId);
+	}
+
+	if (App->CL_Doc->CurBrush->GroupId == Enums::Brushs_ID_Area)
+	{
+		sprintf(buf, "%s %d", "Model ID ( ID_Area )", App->CL_Doc->CurBrush->GroupId);
+	}
+
+	if (App->CL_Doc->CurBrush->GroupId == Enums::Brushs_ID_Players)
+	{
+		sprintf(buf, "%s %d", "Model ID ( ID_Player )", App->CL_Doc->CurBrush->GroupId);
+	}
+
+	if (App->CL_Doc->CurBrush->GroupId == Enums::Brushs_ID_Evirons)
+	{
+		sprintf(buf, "%s %d", "Model ID ( ID_Evirons )", App->CL_Doc->CurBrush->GroupId);
+	}
+
+	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)buf);
 }
+
 
