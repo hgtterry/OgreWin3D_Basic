@@ -43,6 +43,7 @@ THE SOFTWARE.
 #define IDM_SCENE_DESELECT 14
 #define IDM_SCENE_HELP 15
 #define IDM_SCENE_DUPLICATE 16
+#define IDM_SCENE_INFO 17
 
 #define IDM_3D_WIRED 20
 #define IDM_3D_TEXTURED 21
@@ -1780,6 +1781,18 @@ void CL64_Editor_Map::Context_Menu(HWND hDlg)
 	AppendMenuW(hMenu, MF_STRING | MF_GRAYED, NULL, L"&Zoom Ctrl+Right Mouse Button");
 	AppendMenuW(hMenu, MF_STRING | MF_GRAYED, NULL, L"&Pan Ctrl+Left Mouse Button");
 
+	// Info
+	if (App->CL_X_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes))
+	{
+		AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
+		AppendMenuW(hMenu, MF_STRING, IDM_SCENE_INFO, L"Info");
+	}
+	else
+	{
+		AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
+		AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_SCENE_INFO, L"Info");
+	}
+
 	flag_Context_Menu_Active = 1;
 	TrackPopupMenu(hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, hDlg, NULL);
 	flag_Context_Menu_Active = 0;
@@ -1958,11 +1971,15 @@ bool CL64_Editor_Map::Context_Command(WPARAM wParam)
 	case IDM_SCENE_DUPLICATE:
 	{
 		App->CL_Brush_X->Duplicate_Brush();
-
 		return TRUE;
 	}
 
-	default:
+	case IDM_SCENE_INFO:
+	{
+		App->CL_Dialogs->Start_General_ListBox(Enums::ListBox_BrushInfo, App->MainHwnd);
+		return TRUE;
+	}
+	
 		return FALSE;
 	}
 }

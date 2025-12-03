@@ -1619,6 +1619,11 @@ LRESULT CALLBACK CL64_Dialogs::Proc_General_ListBox(HWND hDlg, UINT message, WPA
 			App->CL_X_Face_Editor->List_Face_Data(List);
 		}
 		
+		if (App->CL_Dialogs->m_ListType == Enums::ListBox_BrushInfo)
+		{
+			
+		}
+
 		return TRUE;
 	}
 
