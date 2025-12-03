@@ -1785,12 +1785,12 @@ void CL64_Editor_Map::Context_Menu(HWND hDlg)
 	if (App->CL_X_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes))
 	{
 		AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
-		AppendMenuW(hMenu, MF_STRING, IDM_SCENE_INFO, L"Info");
+		AppendMenuW(hMenu, MF_STRING, IDM_SCENE_INFO, L"Brush Info");
 	}
 	else
 	{
 		AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
-		AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_SCENE_INFO, L"Info");
+		AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_SCENE_INFO, L"Brush Info");
 	}
 
 	flag_Context_Menu_Active = 1;

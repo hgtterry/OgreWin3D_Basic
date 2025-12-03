@@ -1621,7 +1621,7 @@ LRESULT CALLBACK CL64_Dialogs::Proc_General_ListBox(HWND hDlg, UINT message, WPA
 		
 		if (App->CL_Dialogs->m_ListType == Enums::ListBox_BrushInfo)
 		{
-			
+			App->CL_Dialogs->List_BrushInfo(List);
 		}
 
 		return TRUE;
@@ -1767,6 +1767,15 @@ void CL64_Dialogs::List_Libraries(HWND List)
 
 	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)" ");
 	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->CL_App_Templates->GetVersion());
+}
 
+// *************************************************************************
+// *		 	List_BrushInfo:- Terry and Hazel Flanigan 2025			   *
+// *************************************************************************
+void CL64_Dialogs::List_BrushInfo(HWND List)
+{
+	SendMessage(List, LB_RESETCONTENT, 0, 0);
+	
+	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->CL_X_Brush->Brush_GetName(App->CL_Doc->CurBrush));
 }
 

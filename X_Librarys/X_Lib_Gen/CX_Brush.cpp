@@ -1104,10 +1104,10 @@ signed int CX_Brush::Brush_IsHollow(const Brush* b)
 // *************************************************************************
 const char* CX_Brush::Brush_GetName(const Brush* b)
 {
-	if (b == 0)
+	if (b == NULL)
 	{
 		App->Say("Null Brush", (LPSTR)"Brush_GetName");
-		assert(b != NULL);
+		return	"";
 	}
 
 	return	b->Name;
