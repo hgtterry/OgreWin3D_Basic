@@ -1776,10 +1776,12 @@ void CL64_Dialogs::List_BrushInfo(HWND List)
 {
 	SendMessage(List, LB_RESETCONTENT, 0, 0);
 	
-	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->CL_X_Brush->Brush_GetName(App->CL_Doc->CurBrush));
-	
 	char buf[256];
 
+	sprintf(buf, "%s %s", "Brush Name ", App->CL_X_Brush->Brush_GetName(App->CL_Doc->CurBrush));
+
+	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)buf);
+	
 	if (App->CL_Doc->CurBrush->GroupId == Enums::Brushs_ID_Only_Brush)
 	{
 		sprintf(buf, "%s %d", "Model ID ( ID_Area )", App->CL_Doc->CurBrush->GroupId);
@@ -1801,6 +1803,27 @@ void CL64_Dialogs::List_BrushInfo(HWND List)
 	}
 
 	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)buf);
+
+	/*if (App->CL_Doc->CurBrush->Flags == BRUSH_SUBTRACT)
+	{
+		sprintf(buf, "%s%d%s", "Type Flags ", App->CL_Doc->CurBrush->Flags, "  BRUSH_SUBTRACT");
+		SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)buf);
+	}
+	else if (App->CL_Doc->CurBrush->Flags == BRUSH_SOLID)
+	{
+		sprintf(buf, "%s%d%s", "Type Flags ", App->CL_Doc->CurBrush->Flags, "  BRUSH_SOLID");
+		SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)buf);
+	}
+	else if (App->CL_Doc->CurBrush->Flags == BRUSH_HOLLOW)
+	{
+		sprintf(buf, "%s%d%s", "Type Flags ", App->CL_Doc->CurBrush->Flags, "  Hollow Brush");
+		SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)buf);
+	}
+	else
+	{
+		sprintf(buf, "%s%d%s", "Type Flags XX ", App->CL_Doc->CurBrush->Flags, "  Unknown");
+		SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)buf);
+	}*/
 }
 
 
