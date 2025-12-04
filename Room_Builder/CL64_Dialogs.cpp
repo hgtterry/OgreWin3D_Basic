@@ -1770,61 +1770,85 @@ void CL64_Dialogs::List_Libraries(HWND List)
 }
 
 // *************************************************************************
-// *		 	List_BrushInfo:- Terry and Hazel Flanigan 2025			   *
+// *          List_BrushInfo: Terry and Hazel Flanigan 2025              *
 // *************************************************************************
 void CL64_Dialogs::List_BrushInfo(HWND List)
 {
 	SendMessage(List, LB_RESETCONTENT, 0, 0);
-	
+
 	char buf[256];
 
-	sprintf(buf, "%s %s", "Brush Name ", App->CL_X_Brush->Brush_GetName(App->CL_Doc->CurBrush));
-
-	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)buf);
-	
-	if (App->CL_Doc->CurBrush->GroupId == Enums::Brushs_ID_Only_Brush)
-	{
-		sprintf(buf, "%s %d", "Model ID ( ID_Area )", App->CL_Doc->CurBrush->GroupId);
-	}
-
-	if (App->CL_Doc->CurBrush->GroupId == Enums::Brushs_ID_Area)
-	{
-		sprintf(buf, "%s %d", "Model ID ( ID_Area )", App->CL_Doc->CurBrush->GroupId);
-	}
-
-	if (App->CL_Doc->CurBrush->GroupId == Enums::Brushs_ID_Players)
-	{
-		sprintf(buf, "%s %d", "Model ID ( ID_Player )", App->CL_Doc->CurBrush->GroupId);
-	}
-
-	if (App->CL_Doc->CurBrush->GroupId == Enums::Brushs_ID_Evirons)
-	{
-		sprintf(buf, "%s %d", "Model ID ( ID_Evirons )", App->CL_Doc->CurBrush->GroupId);
-	}
-
+	// Display the brush name
+	sprintf(buf, "Brush Name: %s", App->CL_X_Brush->Brush_GetName(App->CL_Doc->CurBrush));
 	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)buf);
 
-	if (App->CL_Doc->CurBrush->Flags == BRUSH_SUBTRACT)
+	// Add a blank line for spacing
+	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)" ");
+
+	// Determine the model ID based on the brush group
+	const int groupId = App->CL_Doc->CurBrush->GroupId;
+	const char* modelIdLabel = "Model ID: ";
+
+	switch (groupId)
 	{
-		sprintf(buf, "%s %s", "Type ", "Cut Brush");
-		SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)buf);
+	case Enums::Brushs_ID_Only_Brush:
+	case Enums::Brushs_ID_Area:
+		sprintf(buf, "%s %d", modelIdLabel, groupId);
+		break;
+	case Enums::Brushs_ID_Players:
+		sprintf(buf, "%s %d (ID_Player)", modelIdLabel, groupId);
+		break;
+	case Enums::Brushs_ID_Evirons:
+		sprintf(buf, "%s %d (ID_Evirons)", modelIdLabel, groupId);
+		break;
+	default:
+		sprintf(buf, "%s Unknown", modelIdLabel);
+		break;
 	}
-	else if (App->CL_Doc->CurBrush->Flags & BRUSH_HOLLOW)
+	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)buf);
+
+	// Determine the brush type
+	const int brushFlags = App->CL_Doc->CurBrush->Flags;
+	const char* brushTypeLabel = "Type: ";
+
+	if (brushFlags == BRUSH_SUBTRACT)
 	{
-		sprintf(buf, "%s %s", "Type ", "Hollow Brush");
-		SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)buf);
-		
+		sprintf(buf, "%s Cut Brush", brushTypeLabel);
 	}
-	else if (App->CL_Doc->CurBrush->Flags & BRUSH_SOLID)
+	else if (brushFlags & BRUSH_HOLLOW)
 	{
-		sprintf(buf, "%s %s", "Type ", "Solid Brush");
-		SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)buf);
+		sprintf(buf, "%s Hollow Brush", brushTypeLabel);
+	}
+	else if (brushFlags & BRUSH_SOLID)
+	{
+		sprintf(buf, "%s Solid Brush", brushTypeLabel);
 	}
 	else
 	{
-		sprintf(buf, "%s %s", "Type ", "Unknown Brush");
-		SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)buf);
+		sprintf(buf, "%s Unknown Brush", brushTypeLabel);
 	}
+	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)buf);
+
+	// Determine the brush type category
+	const int brushType = App->CL_Doc->CurBrush->Type;
+	sprintf(buf, "%s %i - ", brushTypeLabel, brushType);
+
+	switch (brushType)
+	{
+	case BRUSH_MULTI:
+		strcat(buf, "Multi Brush");
+		break;
+	case BRUSH_LEAF:
+		strcat(buf, "Leaf Brush");
+		break;
+	case BRUSH_CSG:
+		strcat(buf, "CSG Brush");
+		break;
+	default:
+		strcat(buf, "Unknown");
+		break;
+	}
+	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)buf);
 }
 
 
