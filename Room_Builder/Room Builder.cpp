@@ -341,9 +341,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             case  ID_OPENEXAMPLES_BIGSCENE:
             {
                 strcpy(App->CL_File->PathFileName_3dt, App->RB_Directory_FullPath);
-                strcat(App->CL_File->PathFileName_3dt, "\\Data\\Room_Builder\\Two_Rooms_owp\\Two_Rooms.mtf");
+                strcat(App->CL_File->PathFileName_3dt, "\\Data\\Room_Builder\\Test\\RF2_Room.mtf");
 
-                strcpy(App->CL_File->FileName_3dt, "Two_Rooms.mtf");
+                strcpy(App->CL_File->FileName_3dt, "RF2_Room.mtf");
 
                 App->CL_File->Start_Load(false);
 
