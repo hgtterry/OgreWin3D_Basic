@@ -702,7 +702,7 @@ void CL64_FileView::Handle_Object_Selection(int index)
 	}
 
 	App->CL_Properties_Scene->Update_ListView_Objects();
-	App->CL_Gizmos->highlight(App->CL_Scene->B_Object[index]->Object_Ent);
+	//App->CL_Gizmos->highlight(App->CL_Scene->B_Object[index]->Object_Ent);
 }
 
 // *************************************************************************

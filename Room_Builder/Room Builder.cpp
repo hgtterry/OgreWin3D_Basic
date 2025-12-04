@@ -338,6 +338,18 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 return 1;
             }
 
+            case  ID_OPENEXAMPLES_BIGSCENE:
+            {
+                strcpy(App->CL_File->PathFileName_3dt, App->RB_Directory_FullPath);
+                strcat(App->CL_File->PathFileName_3dt, "\\Data\\Room_Builder\\Two_Rooms_owp\\Two_Rooms.mtf");
+
+                strcpy(App->CL_File->FileName_3dt, "Two_Rooms.mtf");
+
+                App->CL_File->Start_Load(false);
+
+                return 1;
+            }
+
             case ID_FILE_SAVE:
             {
                 if (App->CL_Level->flag_File_Been_Saved == 0)

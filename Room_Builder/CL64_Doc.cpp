@@ -573,7 +573,7 @@ void CL64_Doc::SelectOrtho(POINT point, ViewVars* v)
 
         App->CL_Panels->Deselect_All_Brushes_Update_Dlgs();
         App->CL_Top_Tabs->Update_Faces_Combo();
-        App->CL_Ogre->OGL_Listener->Show_Visuals(false);
+        //App->CL_Ogre->OGL_Listener->Show_Visuals(false);
         EnableMenuItem(App->Menu_Map, ID_EDIT_DELETE, MF_DISABLED | MF_GRAYED);
     }
 

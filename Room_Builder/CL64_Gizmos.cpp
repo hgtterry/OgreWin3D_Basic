@@ -572,6 +572,7 @@ void CL64_Gizmos::Hide_Axis_Marker()
 // **************************************************************************
 void CL64_Gizmos::highlight(Ogre::Entity* entity)
 {
+	return;
 	unsigned short count = entity->getNumSubEntities();
 
 	const Ogre::String file_name = "rim.dds";
@@ -613,6 +614,8 @@ void CL64_Gizmos::highlight(Ogre::Entity* entity)
 // **************************************************************************
 void CL64_Gizmos::unhighlight(Ogre::Entity* entity)
 {
+	return;
+
 	unsigned short count = entity->getNumSubEntities();
 
 	for (unsigned short i = 0; i < count; ++i)
