@@ -1804,26 +1804,27 @@ void CL64_Dialogs::List_BrushInfo(HWND List)
 
 	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)buf);
 
-	/*if (App->CL_Doc->CurBrush->Flags == BRUSH_SUBTRACT)
+	if (App->CL_Doc->CurBrush->Flags == BRUSH_SUBTRACT)
 	{
-		sprintf(buf, "%s%d%s", "Type Flags ", App->CL_Doc->CurBrush->Flags, "  BRUSH_SUBTRACT");
+		sprintf(buf, "%s %s", "Type ", "Cut Brush");
 		SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)buf);
 	}
-	else if (App->CL_Doc->CurBrush->Flags == BRUSH_SOLID)
+	else if (App->CL_Doc->CurBrush->Flags & BRUSH_HOLLOW)
 	{
-		sprintf(buf, "%s%d%s", "Type Flags ", App->CL_Doc->CurBrush->Flags, "  BRUSH_SOLID");
+		sprintf(buf, "%s %s", "Type ", "Hollow Brush");
 		SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)buf);
+		
 	}
-	else if (App->CL_Doc->CurBrush->Flags == BRUSH_HOLLOW)
+	else if (App->CL_Doc->CurBrush->Flags & BRUSH_SOLID)
 	{
-		sprintf(buf, "%s%d%s", "Type Flags ", App->CL_Doc->CurBrush->Flags, "  Hollow Brush");
+		sprintf(buf, "%s %s", "Type ", "Solid Brush");
 		SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)buf);
 	}
 	else
 	{
-		sprintf(buf, "%s%d%s", "Type Flags XX ", App->CL_Doc->CurBrush->Flags, "  Unknown");
+		sprintf(buf, "%s %s", "Type ", "Unknown Brush");
 		SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)buf);
-	}*/
+	}
 }
 
 
