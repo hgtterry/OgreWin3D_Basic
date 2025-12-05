@@ -1847,14 +1847,14 @@ void CL64_Editor_Map::Context_Menu_Ogre(HWND hDlg)
 		AppendMenuW(hMenu, MF_STRING | MF_CHECKED, IDM_3D_ENVIRONMENT, L"&Environment");
 	}
 
-	AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
+	//AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
 
 	int brushCount = App->CL_X_Brush->Get_Brush_Count();
 	// Append Preview option
-	AppendMenuW(hMenu, MF_STRING | (brushCount > 0 && App->CL_Editor_Control->flag_PreviewMode_Active == 0 ? 0 : MF_GRAYED), IDM_3D_PREVIEW, L"&Preview");
+	//AppendMenuW(hMenu, MF_STRING | (brushCount > 0 && App->CL_Editor_Control->flag_PreviewMode_Active == 0 ? 0 : MF_GRAYED), IDM_3D_PREVIEW, L"&Preview");
 
 	// Append Scene Editor option
-	AppendMenuW(hMenu, MF_STRING | (brushCount > 0 ? 0 : MF_GRAYED), IDM_3D_SCENE_EDITOR, L"&Scene Editor");
+	//AppendMenuW(hMenu, MF_STRING | (brushCount > 0 ? 0 : MF_GRAYED), IDM_3D_SCENE_EDITOR, L"&Scene Editor");
 
 	AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
 	AppendMenuW(hMenu, MF_STRING | MF_GRAYED, NULL, L"&Ctrl+Right Mouse Button Pick Texture ");
