@@ -44,6 +44,7 @@ THE SOFTWARE.
 #define IDM_SCENE_HELP 15
 #define IDM_SCENE_DUPLICATE 16
 #define IDM_SCENE_INFO 17
+#define IDM_GOTO_PLAYER 18
 
 #define IDM_3D_WIRED 20
 #define IDM_3D_TEXTURED 21
@@ -1774,6 +1775,10 @@ void CL64_Editor_Map::Context_Menu(HWND hDlg)
 
 	AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
 
+	AppendMenuW(hMenu, MF_STRING, IDM_GOTO_PLAYER, L"Move Camera to Player");
+
+	AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
+
 	AppendMenuW(hMenu, MF_STRING, IDM_RESET_VIEW, L"&Reset View");
 	AppendMenuW(hMenu, MF_STRING, IDM_CENTRE_ONCAMERA, L"&Centre On Camera");
 	
@@ -1980,6 +1985,18 @@ bool CL64_Editor_Map::Context_Command(WPARAM wParam)
 		return TRUE;
 	}
 	
+	case IDM_GOTO_PLAYER:
+	{
+		auto& m_Player = App->CL_Scene->B_Player[0];
+
+		Ogre::Vector3 Player_Location;
+		Player_Location = m_Player->StartPos;
+
+		App->CL_Camera->Move_Camera(Player_Location);
+		App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
+		return TRUE;
+	}
+
 		return FALSE;
 	}
 }

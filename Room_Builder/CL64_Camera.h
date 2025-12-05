@@ -49,6 +49,8 @@ public:
 	void Reset_View_Editor(void);
 	void Camera_Save_Location(void);
 
+	void Move_Camera(Ogre::Vector3 Location);
+
 	bool flag_First_Person;
 	bool flag_Free;
 
