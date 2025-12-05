@@ -413,6 +413,7 @@ bool CL64_File::Open_3dt_File()
 		return false;
 	}
 	
+	
 	App->CL_Doc->Set_Paths();
 
 	// Check if Working Folder Exsits
@@ -435,6 +436,7 @@ bool CL64_File::Open_3dt_File()
 	}
 	// -------------------------------------------------------
 
+	
 	// Load Scene ini File
 	App->CL_Project->Load_Project();
 	
@@ -466,6 +468,7 @@ bool CL64_File::Open_3dt_File()
 			strcat(pathAndFile, "\\Data\\Room_Builder\\Default.zip");
 		}
 	}
+	
 	
 	App->CL_Doc->Load_Wad_File(pathAndFile);
 	App->CL_Doc->UpdateAfterWadChange();

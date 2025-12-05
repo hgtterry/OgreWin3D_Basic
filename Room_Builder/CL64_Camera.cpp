@@ -296,20 +296,7 @@ void CL64_Camera::SetCameraMode_Free()
 // *************************************************************************
 void CL64_Camera::Move_Camera(Ogre::Vector3 Location)
 {
-	//Base_Object* Object = App->CL_Scene->B_Object[App->CL_Properties_Scene->Current_Selected_Object];
-
-	////Tan
-	//AxisAlignedBox bbox = Object->Object_Node->_getWorldAABB();
-	//Vector3 offset = bbox.getMaximum() - bbox.getCenter(); // Radius of bounding sphere
-	//Vector3 center = bbox.getCenter();
-	//App->CL_Ogre->camNode->setPosition(center);
 	App->CL_Ogre->camNode->setOrientation(Ogre::Quaternion::IDENTITY);
-
-	//float oneOverSine = 1.0f / (float)sin(App->CL_Ogre->mCamera->getFOVy().valueRadians() / 2.0); // 1 / sin = adjacent / opposite
-	//float distanceToCenter = offset.length() * oneOverSine; // (adjacent / opposite) * opposite = adjacent
-
 	App->CL_Ogre->camNode->setPosition(Location.x, Location.y, Location.z);
-	//App->CL_Ogre->camNode->lookAt(Ogre::Vector3(center), Ogre::Node::TS_WORLD);
-
 }
 

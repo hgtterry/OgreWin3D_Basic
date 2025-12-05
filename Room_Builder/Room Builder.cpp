@@ -187,7 +187,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			{ 
                // App->CL_Editor_Control->Set_Map_Editor_Select_Dlg();
 
-                App->Say_Win(App->CL_X_Preference->GetVersion());
+               // App->Say_Win(App->CL_X_Preference->GetVersion());
 
                 /*if (App->CL_ImGui_Editor->flag_Show_Visuals == true)
                 {
@@ -197,6 +197,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 {
                     App->CL_ImGui_Editor->flag_Show_Visuals = true;
                 }*/
+
+                App->CL_File->Start_Load(true);
 
 				return 1;
 			}
@@ -304,6 +306,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
           
             case ID_OPENEXAMPLES_TESTSCENE:
             {
+
+
                 strcpy(App->CL_File->PathFileName_3dt, App->RB_Directory_FullPath);
                 strcat(App->CL_File->PathFileName_3dt, "\\Data\\Room_Builder\\Test_owp\\Test.mtf");
 
