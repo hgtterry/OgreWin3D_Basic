@@ -42,6 +42,8 @@ CL64_Resources::CL64_Resources(void)
 	Resource_File_Path_And_File[0] = 0;
 	Resource_File_FileName[0] = 0;
 
+	ResourcesCfgFile = "None";
+
 	FX_General_hLV =	nullptr;
 	Export_Button =		nullptr;
 	Resource_Dlg_hWnd = nullptr;
