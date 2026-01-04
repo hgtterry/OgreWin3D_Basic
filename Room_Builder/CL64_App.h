@@ -117,6 +117,7 @@ THE SOFTWARE.
 
 #include <Windows.h>
 #include <OgrePrerequisites.h>
+#include "Init_Libs.h"
 
 class CL64_App
 {
@@ -124,6 +125,7 @@ public:
 	CL64_App(void);
 	~CL64_App(void);
 
+	Init_Libs*					CL_Libs;
 	CL64_Editor_Map*			CL_Editor_Map;
 	CL64_Lib_Maths*				CL_X_Maths;		// Maths Library
 

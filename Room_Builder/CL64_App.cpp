@@ -184,6 +184,7 @@ CL64_App::~CL64_App(void)
 // *************************************************************************
 void CL64_App::InitApp(void)
 {
+	CL_Libs =					new Init_Libs();
 	CL_Editor_Map =				new CL64_Editor_Map();
 	CL_X_Maths =				new CL64_Lib_Maths(); // Library
 	CL_X_Box =					new CX_Box(); // Library
