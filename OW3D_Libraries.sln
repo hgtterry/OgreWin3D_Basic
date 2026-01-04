@@ -17,6 +17,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "X_Lib_Gen", "X_Librarys\X_L
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "X_Lib_Face_Editor", "X_Librarys\X_Lib_Face_Editor\X_Lib_Face_Editor.vcxproj", "{B873FF1B-FB41-4206-AEF8-AAE643AD21A6}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "X_Libs", "X_Librarys\X_Libs\X_Libs.vcxproj", "{52FBC29E-3D8A-47D1-BAB6-94E25A705242}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Release|x64 = Release|x64
@@ -35,6 +37,8 @@ Global
 		{5D0335FC-CD6C-4833-905C-B4A594172CA0}.Release|x64.Build.0 = Release|x64
 		{B873FF1B-FB41-4206-AEF8-AAE643AD21A6}.Release|x64.ActiveCfg = Release|x64
 		{B873FF1B-FB41-4206-AEF8-AAE643AD21A6}.Release|x64.Build.0 = Release|x64
+		{52FBC29E-3D8A-47D1-BAB6-94E25A705242}.Release|x64.ActiveCfg = Release|x64
+		{52FBC29E-3D8A-47D1-BAB6-94E25A705242}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
