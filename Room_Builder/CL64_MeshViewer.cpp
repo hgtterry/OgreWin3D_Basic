@@ -1068,7 +1068,7 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_3D(HWND hDlg, UINT message, WP
 
 	case WM_CTLCOLORDLG:
 	{
-		if (App->flag_OgreStarted == 0)
+		if (App->flag_OgreStarted == false)
 		{
 			return (LONG)App->BlackBrush;
 		}
@@ -1084,11 +1084,20 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_3D(HWND hDlg, UINT message, WP
 	// Right Mouse Button
 	case WM_RBUTTONDOWN: // BERNIE_HEAR_FIRE 
 	{
-		if (App->flag_OgreStarted == 1)
+		if (App->flag_OgreStarted == true)
 		{
+			POINT cursorPosition;
+			GetCursorPos(&cursorPosition);
+			App->CursorPosX = cursorPosition.x;
+			App->CursorPosY = cursorPosition.y;
+
+			auto& listener = App->CL_MeshViewer->RenderListener;
+			listener->Pl_Cent500X = cursorPosition.x;
+			listener->Pl_Cent500Y = cursorPosition.y;
+
 			SetCapture(App->CL_MeshViewer->MeshViewer_3D_hWnd);// Bernie
 			SetCursorPos(App->CursorPosX, App->CursorPosY);
-			App->CL_MeshViewer->RenderListener->flag_Pl_RightMouseDown = 1;
+			App->CL_MeshViewer->RenderListener->flag_Pl_RightMouseDown = true;
 			App->CUR = SetCursor(NULL);
 			return 1;
 		}
@@ -1097,10 +1106,10 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_3D(HWND hDlg, UINT message, WP
 	}
 	case WM_RBUTTONUP:
 	{
-		if (App->flag_OgreStarted == 1)
+		if (App->flag_OgreStarted == true)
 		{
 			ReleaseCapture();
-			App->CL_MeshViewer->RenderListener->flag_Pl_RightMouseDown = 0;
+			App->CL_MeshViewer->RenderListener->flag_Pl_RightMouseDown = false;
 			SetCursor(App->CUR);
 			return 1;
 		}
@@ -1110,13 +1119,23 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_3D(HWND hDlg, UINT message, WP
 	// Left Mouse Button
 	case WM_LBUTTONDOWN: // BERNIE_HEAR_FIRE 
 	{
-		if (App->flag_OgreStarted == 1)
+		if (App->flag_OgreStarted == true)
 		{
+
+			POINT p;
+			GetCursorPos(&p);
+
+			App->CursorPosX = p.x;
+			App->CursorPosY = p.y;
+
+			auto& listener = App->CL_MeshViewer->RenderListener;
+			listener->Pl_Cent500X = p.x;
+			listener->Pl_Cent500Y = p.y;
 
 			SetCapture(App->CL_MeshViewer->MeshViewer_3D_hWnd);// Bernie
 			SetCursorPos(App->CursorPosX, App->CursorPosY);
 
-			App->CL_MeshViewer->RenderListener->flag_Pl_LeftMouseDown = 1;
+			App->CL_MeshViewer->RenderListener->flag_Pl_LeftMouseDown = true;
 
 			App->CUR = SetCursor(NULL);
 
@@ -1128,10 +1147,10 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_3D(HWND hDlg, UINT message, WP
 
 	case WM_LBUTTONUP:
 	{
-		if (App->flag_OgreStarted == 1)
+		if (App->flag_OgreStarted == true)
 		{
 			ReleaseCapture();
-			App->CL_MeshViewer->RenderListener->flag_Pl_LeftMouseDown = 0;
+			App->CL_MeshViewer->RenderListener->flag_Pl_LeftMouseDown = false;
 			SetCursor(App->CUR);
 			return 1;
 		}

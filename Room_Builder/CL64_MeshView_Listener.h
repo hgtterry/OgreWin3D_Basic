@@ -49,6 +49,9 @@ public:
 	Ogre::Camera* WE_Cam;
 	Ogre::SceneNode* WE_Cam_Node;
 
+	long		Pl_Cent500X;
+	long		Pl_Cent500Y;
+
 protected:
 
 	void ModelMode(float DeltaTime);
@@ -69,7 +72,5 @@ protected:
 	int			Pl_MouseY;
 
 	POINT		Pl_pt;
-	long		Pl_Cent500X;
-	long		Pl_Cent500Y;
 };
 
