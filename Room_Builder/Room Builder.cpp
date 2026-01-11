@@ -68,6 +68,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     // Load program resources
     App->LoadProgramResource();
 
+    App->CL_Libs->Start_Libraries();
+
     // Initialize document and views
     App->CL_Doc->Init_Doc();
     App->CL_Editor_Map->Init_Map_Views();

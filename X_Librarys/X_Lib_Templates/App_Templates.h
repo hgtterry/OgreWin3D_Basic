@@ -21,7 +21,7 @@ public:
 
 	HWND Shape_Dlg_hWnd;
 
-	CreateBoxDialog*		CL_CreateBox;
+	//CreateBoxDialog*		CL_CreateBox;
 	CreateCylDialog*		CL_CreateCylinder;
 	CreateArchDialog*		CL_CreateArch;
 	CreateConeDialog*		CL_CreateCone;

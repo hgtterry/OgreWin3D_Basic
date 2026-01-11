@@ -29,6 +29,7 @@ THE SOFTWARE.
 
 CL64_App::CL64_App(void)
 {
+	CL_Libs =					nullptr;
 	CL_Editor_Map =				nullptr;
 	CL_X_Maths =				nullptr; // Library
 

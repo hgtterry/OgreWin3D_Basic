@@ -99,7 +99,7 @@ LRESULT CALLBACK CreateBoxDialog::OwnerEditProc(HWND hWnd, UINT uMsg, WPARAM wPa
 
 		case VK_RETURN:
 		{
-			App->CL_App_Templates->CL_CreateBox->Update();
+			App->CL_Libs->CL_CreateBox->Update();
 			return 0;
 		}
 
@@ -165,6 +165,7 @@ void CreateBoxDialog::Start_CreateBox_Dlg()
 	CreateCube();
 
 	App->CL_Ogre->OGL_Listener->Show_Visuals(true);
+
 }
 
 // *************************************************************************
@@ -172,7 +173,7 @@ void CreateBoxDialog::Start_CreateBox_Dlg()
 // *************************************************************************
 LRESULT CALLBACK CreateBoxDialog::Proc_CreateBox(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
-	auto& m_Box = App->CL_App_Templates->CL_CreateBox; // App->CL_App_Templates->CL_CreateBox
+	auto& m_Box = App->CL_Libs->CL_CreateBox; // App->CL_App_Templates->CL_CreateBox
 	
 	switch (message)
 	{
