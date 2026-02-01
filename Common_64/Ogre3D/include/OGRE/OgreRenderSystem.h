@@ -54,7 +54,7 @@ namespace Ogre
     */
 
     typedef std::vector<DepthBuffer*> DepthBufferVec;
-    typedef std::map< uint16, DepthBufferVec > DepthBufferMap;
+    typedef std::map< uint32, DepthBufferVec > DepthBufferMap;
     typedef std::map< String, RenderTarget * > RenderTargetMap;
     typedef std::multimap<uchar, RenderTarget * > RenderTargetPriorityMap;
 
@@ -1212,8 +1212,7 @@ namespace Ogre
         virtual RenderSystemCapabilities* createRenderSystemCapabilities() const = 0;
 
         /** Initialize the render system from the capabilities*/
-        virtual void initialiseFromRenderSystemCapabilities(RenderSystemCapabilities* caps, RenderTarget* primary) = 0;
-
+        virtual void initialiseFromRenderSystemCapabilities(RenderSystemCapabilities* caps, RenderTarget* = NULL) {}
 
         DriverVersion mDriverVersion;
         uint16 mNativeShadingLanguageVersion;

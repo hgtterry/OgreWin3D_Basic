@@ -149,6 +149,10 @@ class _OgreBulletExport KinematicMotionSimple : public btActionInterface
     btManifoldArray mManifoldArray;
     btScalar mMaxPenetrationDepth;
     Node* mNode;
+    bool mIsOnFloor;
+    bool mIsPenetrating;
+    int mManifolds;
+    bool mAllowManualNarrowPhase;
     virtual bool needsCollision(const btCollisionObject* body0, const btCollisionObject* body1);
     void preStep(btCollisionWorld* collisionWorld);
     void playerStep(btCollisionWorld* collisionWorld, btScalar dt);
@@ -160,6 +164,18 @@ public:
     bool recoverFromPenetration(btCollisionWorld* collisionWorld);
     virtual void updateAction(btCollisionWorld* collisionWorld, btScalar deltaTimeStep) override;
     virtual void debugDraw(btIDebugDraw* debugDrawer) override;
+    bool isOnFloor() const { return mIsOnFloor; }
+    bool isPenetrating() const { return mIsPenetrating; }
+    int getManifolds() const { return mManifolds; }
+    /** Enable manual narrow phase
+     * @param enable if enabled
+    */
+    void enableManualNarrowPhase(bool enable)
+    {
+        mAllowManualNarrowPhase = enable;
+    }
+    /** Report manual narrow phase enabled status */
+    bool isManualNarrowPhaseEnabled() const { return mAllowManualNarrowPhase; }
 };
 /// simplified wrapper with automatic memory management
 class _OgreBulletExport DynamicsWorld : public CollisionWorld
@@ -188,14 +204,16 @@ public:
      * @param y y coordinate of the terrain slot
      * @param group the collision group
      * @param mask the collision mask
+     * @param debugDraw allow debug drawing
      */
-    btRigidBody* addTerrainRigidBody(TerrainGroup* terrainGroup, long x, long y, int group = 1, int mask = -1);
+    btRigidBody* addTerrainRigidBody(TerrainGroup* terrainGroup, long x, long y, int group = 1, int mask = -1, bool debugDraw = false);
     /** Add static body for Ogre terrain
      * @param terrain the terrain
      * @param group the collision group
      * @param mask the collision mask
+     * @param debugDraw allow debug drawing
      */
-    btRigidBody* addTerrainRigidBody(Terrain* terrain, int group = 1, int mask = -1);
+    btRigidBody* addTerrainRigidBody(Terrain* terrain, int group = 1, int mask = -1, bool debugDraw = false);
 
     void attachRigidBody(btRigidBody *rigidBody, Entity *ent, CollisionListener* listener = nullptr,
                               int group = 1, int mask = -1);

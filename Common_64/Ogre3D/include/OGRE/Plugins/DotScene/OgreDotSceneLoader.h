@@ -78,14 +78,15 @@ protected:
     Ogre::SceneNode* mAttachNode;
     Ogre::String m_sGroupName;
     Ogre::ColourValue mBackgroundColour;
+    Ogre::String mItemPrefix;
 };
 
 class _OgreDotScenePluginExport DotScenePlugin : public Plugin
 {
     const String& getName() const override;
 
-    void install() override {}
-    void initialise() override;
+    void install() override;
+    void initialise() override {}
     void shutdown() override;
     void uninstall() override {}
 private:

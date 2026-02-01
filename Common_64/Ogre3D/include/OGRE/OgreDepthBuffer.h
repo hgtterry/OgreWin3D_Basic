@@ -28,6 +28,7 @@ THE SOFTWARE.
 #ifndef __DepthBuffer_H__
 #define __DepthBuffer_H__
 
+#include "OgreCommon.h"
 #include "OgrePrerequisites.h"
 #include "OgreHeaderPrefix.h"
 
@@ -64,7 +65,7 @@ namespace Ogre
         some APIs (ie. OpenGL w/ FBO) don't allow using
         the main depth buffer for offscreen RTTs. When this flag is set, the depth buffer can be
         shared between the main window and an RTT.
-        - #RSC_RTT_DEPTHBUFFER_RESOLUTION_LESSEQUAL:
+        - #RSC_RTT_INDEPENDENT_BUFFER_SIZE:
         When this flag isn't set, the depth buffer can only be shared across RTTs who have the EXACT
         same resolution. When it's set, it can be shared with RTTs as long as they have a
         resolution less or equal than the depth buffer's.
@@ -75,19 +76,19 @@ namespace Ogre
     class _OgreExport DepthBuffer : public RenderSysAlloc
     {
     public:
+        /// @deprecated use #RenderBufferPool instead
         enum PoolId
         {
-            POOL_NO_DEPTH       = 0,
-            POOL_MANUAL_USAGE   = 0,
-            POOL_DEFAULT        = 1
+            POOL_NO_DEPTH       = RBP_NONE,
+            POOL_MANUAL_USAGE   = RBP_NONE,
+            POOL_DEFAULT        = RBP_DEFAULT
         };
 
         DepthBuffer(uint16 poolId, uint32 width, uint32 height, uint32 fsaa, bool manual);
         virtual ~DepthBuffer();
 
-        /** Sets the pool id in which this DepthBuffer lives.
-            Note this will detach any render target from this depth buffer */
-        void _setPoolId( uint16 poolId );
+        /// @deprecated do not use
+        OGRE_DEPRECATED void _setPoolId( uint16 poolId );
 
         /// Gets the pool id in which this DepthBuffer lives
         virtual uint16 getPoolId() const;

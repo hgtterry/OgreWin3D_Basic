@@ -39,25 +39,11 @@ namespace Ogre {
 
     /** RenderTexture for GL ES 2 FBO
     */
-    class _OgreGLES2Export GLES2FBORenderTexture: public GLRenderTexture MANAGED_RESOURCE
+    class _OgreGLES2Export GLES2FBORenderTexture: public GLFBORenderTexture MANAGED_RESOURCE
     {
     public:
-        GLES2FBORenderTexture(const String &name, const GLSurfaceDesc &target, bool writeGamma, uint fsaa);
-        
-        void getCustomAttribute(const String& name, void* pData) override;
+        GLES2FBORenderTexture(const String &name, const GLSurfaceDesc &target, bool writeGamma);
 
-        /// Override needed to deal with multisample buffers
-        void swapBuffers() override;
-
-        /// Override so we can attach the depth buffer to the FBO
-        bool attachDepthBuffer( DepthBuffer *depthBuffer ) override;
-        void _detachDepthBuffer() override;
-
-        GLContext* getContext() const override { return mFB.getContext(); }
-        GLFrameBufferObjectCommon* getFBO() override { return &mFB; }
-    protected:
-        GLES2FrameBufferObject mFB;
-        
 #if OGRE_PLATFORM == OGRE_PLATFORM_ANDROID || OGRE_PLATFORM == OGRE_PLATFORM_EMSCRIPTEN
         /** See AndroidResource. */
         void notifyOnContextLost() override;
@@ -74,20 +60,16 @@ namespace Ogre {
     public:
         GLES2FBOManager();
         ~GLES2FBOManager();
-        
-        /** Bind a certain render target if it is a FBO. If it is not a FBO, bind the
-            main frame buffer.
-        */
-        void bind(RenderTarget *target) override;
 
         /** Get best depth and stencil supported for given internalFormat
         */
         void getBestDepthStencil(PixelFormat internalFormat, uint32 *depthFormat, uint32 *stencilFormat) override;
 
         GLES2FBORenderTexture *createRenderTexture(const String &name,
-            const GLSurfaceDesc &target, bool writeGamma, uint fsaa) override;
+            const GLSurfaceDesc &target, bool writeGamma) override;
 
-        GLSurfaceDesc createNewRenderBuffer(unsigned format, uint32 width, uint32 height, uint fsaa) override;
+        GLHardwarePixelBufferCommon* createNewRenderBuffer(unsigned format, uint32 width, uint32 height,
+                                                           uint fsaa) override;
 
         /** Get a FBO without depth/stencil for temporary use, like blitting between textures.
         */

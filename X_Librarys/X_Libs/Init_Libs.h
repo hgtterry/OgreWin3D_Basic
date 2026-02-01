@@ -10,8 +10,8 @@ public:
 	char* GetVersion();
 
 	CreateBoxDialog* CL_CreateBox;
+	CreateCylDialog* CL_CreateCylinder;
 
-	///*CreateCylDialog* CL_CreateCylinder;
 	//CreateArchDialog* CL_CreateArch;
 	//CreateConeDialog* CL_CreateCone;*/
 

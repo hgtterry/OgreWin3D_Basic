@@ -91,7 +91,7 @@ LRESULT CALLBACK CreateCylDialog::OwnerEditProc(HWND hWnd, UINT uMsg, WPARAM wPa
 
 		case VK_RETURN:
 		{
-			App->CL_App_Templates->CL_CreateCylinder->Update();
+			App->CL_Libs->CL_CreateCylinder->Update();
 			return 0;
 		}
 
@@ -168,7 +168,7 @@ void CreateCylDialog::Start_CreateCyl_Dlg()
 // *************************************************************************
 LRESULT CALLBACK CreateCylDialog::Proc_Create_Cylinder(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
-	auto& m_Cylinder = App->CL_App_Templates->CL_CreateCylinder; // App->CL_App_Templates->CL_CreateCylinder
+	auto& m_Cylinder = App->CL_Libs->CL_CreateCylinder; // App->CL_App_Templates->CL_CreateCylinder
 
 	switch (message)
 	{

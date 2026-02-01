@@ -5,7 +5,8 @@
 App_Templates::App_Templates(void)
 {
 	//CL_CreateBox =			nullptr;
-	CL_CreateCylinder =		nullptr;
+	//CL_CreateCylinder =		nullptr;
+
 	CL_CreateArch =			nullptr;
 	CL_CreateCone =			nullptr;
 	CL_CreateStaircase =	nullptr;
@@ -22,7 +23,7 @@ App_Templates::~App_Templates(void)
 // *************************************************************************
 char* App_Templates::GetVersion()
 {
-	return (LPSTR)" TMH_Scene_Builder :-- Templates [ 04-01-26 ] Build 1 ";
+	return (LPSTR)" TMH_Scene_Builder :-- Templates [ 01-02-26 ] Build 1 ";
 }
 
 // *************************************************************************
@@ -31,7 +32,8 @@ char* App_Templates::GetVersion()
 void App_Templates::Init_Templates(void)
 {
 	//CL_CreateBox =			new CreateBoxDialog();
-	CL_CreateCylinder =		new CreateCylDialog();
+	//CL_CreateCylinder =		new CreateCylDialog();
+
 	CL_CreateArch =			new CreateArchDialog();
 	CL_CreateCone =			new CreateConeDialog();
 	CL_CreateStaircase =	new CreateStaircaseDialog();

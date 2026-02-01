@@ -192,6 +192,8 @@ private:
 
     bool setParameter(const String& name, const String& value) override;
 
+    void setParameter(const String& name, const Any& value) override;
+
     // Texture units list.      
     TextureUnitParamsList mTextureUnitParamsList;
     // World matrix parameter.
@@ -212,6 +214,8 @@ private:
     ParameterPtr mPSDiffuse;
     // Pixel shader specular colour.
     ParameterPtr mPSSpecular;
+
+    Vector4 mUVMixingParams;
 
     bool mIsPointSprite;
     bool mLateAddBlend;

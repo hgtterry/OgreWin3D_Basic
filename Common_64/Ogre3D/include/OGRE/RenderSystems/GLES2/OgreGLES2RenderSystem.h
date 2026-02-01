@@ -121,7 +121,7 @@ namespace Ogre {
 
             RenderSystemCapabilities* createRenderSystemCapabilities() const override;
 
-            void initialiseFromRenderSystemCapabilities(RenderSystemCapabilities* caps, RenderTarget* primary) override;
+            void initialiseFromRenderSystemCapabilities(RenderSystemCapabilities* caps, RenderTarget* = NULL) override;
 
             void shutdown(void) override;
 
@@ -135,8 +135,6 @@ namespace Ogre {
             /// @copydoc RenderSystem::createMultiRenderTarget
             MultiRenderTarget * createMultiRenderTarget(const String & name) override;
 
-
-            void destroyRenderWindow(const String& name) override;
 
             // -----------------------------
             // Low-level overridden members
@@ -204,6 +202,8 @@ namespace Ogre {
              */
             void _setRenderTarget(RenderTarget *target) override;
 
+            void bindRenderTarget(RenderTarget* target) override;
+
             GLint convertCompareFunction(CompareFunction func) const;
             GLint convertStencilOp(StencilOperation op, bool invert = false) const;
 
@@ -214,8 +214,6 @@ namespace Ogre {
             /// @copydoc RenderSystem::_setAlphaRejectSettings
             void _setAlphaRejectSettings( CompareFunction func, unsigned char value, bool alphaToCoverage ) override;
 
-            void _destroyDepthBuffer(RenderTarget* pRenderWnd);
-        
             /// @copydoc RenderSystem::beginProfileEvent
             void beginProfileEvent( const String &eventName ) override;
             

@@ -125,7 +125,7 @@ namespace Ogre {
 
         RenderSystemCapabilities* createRenderSystemCapabilities() const override;
 
-        void initialiseFromRenderSystemCapabilities(RenderSystemCapabilities* caps, RenderTarget* primary) override;
+        void initialiseFromRenderSystemCapabilities(RenderSystemCapabilities* caps, RenderTarget* = NULL) override;
 
         void shutdown(void) override;
 
@@ -138,9 +138,6 @@ namespace Ogre {
 
         /// @copydoc RenderSystem::createMultiRenderTarget
         MultiRenderTarget * createMultiRenderTarget(const String & name) override;
-
-
-        void destroyRenderWindow(const String& name) override;
 
         // -----------------------------
         // Low-level overridden members
@@ -215,6 +212,8 @@ namespace Ogre {
          * Set current render target to target, enabling its GL context if needed
          */
         void _setRenderTarget(RenderTarget *target) override;
+
+        void bindRenderTarget(RenderTarget* target) override;
 
         static GLint convertCompareFunction(CompareFunction func);
         static GLint convertStencilOp(StencilOperation op, bool invert = false);

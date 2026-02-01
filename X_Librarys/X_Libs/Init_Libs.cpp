@@ -5,6 +5,7 @@
 Init_Libs::Init_Libs(void)
 {
 	CL_CreateBox = nullptr;
+	CL_CreateCylinder = nullptr;
 }
 
 Init_Libs::~Init_Libs(void)
@@ -17,9 +18,9 @@ Init_Libs::~Init_Libs(void)
 void Init_Libs::Start_Libraries()
 {
 	CL_CreateBox = new CreateBoxDialog();
+	CL_CreateCylinder = new CreateCylDialog();
 
-	/*CL_CreateCylinder = new CreateCylDialog();
-	CL_CreateArch =		new CreateArchDialog();
+	/*CL_CreateArch =		new CreateArchDialog();
 	CL_CreateCone =		new CreateConeDialog();*/
 }
 
@@ -28,6 +29,6 @@ void Init_Libs::Start_Libraries()
 // *************************************************************************
 char* Init_Libs::GetVersion()
 {
-	return (LPSTR)" Cheryl Scene Builder :-- 11-01-26 Build 1 ";
+	return (LPSTR)" Cheryl Scene Builder (Init_Libs) :-- 01-02-26 Build 1 ";
 }
 
