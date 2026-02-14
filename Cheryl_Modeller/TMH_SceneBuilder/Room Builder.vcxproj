@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>17.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{5209937e-733e-493a-9fcb-3b06ed60ad03}</ProjectGuid>
+    <RootNamespace>RoomBuilder</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.26100.0</WindowsTargetPlatformVersion>
+    <ProjectName>TMH_SceneBuilder</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>..\Bin_Release\</OutDir>
+    <TargetName>Cheryl_Modeller</TargetName>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup>
+    <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <LanguageStandard>stdcpp14</LanguageStandard>
+      <AdditionalIncludeDirectories>..\Common_64\OW3D\include;..\Common_64\Ogre3D\include\OGRE\RTShaderSystem;..\Common_64\Ogre3D\include\OGRE\Bites;..\Common_64\Ogre3D\include\OGRE;..\Common_64\Ogre3D\include\OGRE\Overlay;..\Common_64\Bullet\Source;..\Common_64\Bullet\Source\LinearMath;..\Common_64\Devil\include\IL;..\Common_64\irrKlang\Headers;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>
+      </EnableCOMDATFolding>
+      <OptimizeReferences>
+      </OptimizeReferences>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <OutputFile>$(OutDir)Cheryl_Modeller.exe</OutputFile>
+      <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
+      <AdditionalDependencies>X_Libs.lib;X_Lib_Preferences.lib;X_Lib_Zip.lib;X_Lib_Maths.lib;X_Lib_Ini_File.lib;Templates_Lib.lib;X_Lib_Gen.lib;X_Lib_Face_Editor.lib;comctl32.lib;OgreMain.lib;OgreOverlay.lib;OgreRTShaderSystem.lib;OgreBites.lib;BulletDynamics.lib;BulletCollision.lib;LinearMath.lib;opengl32.lib;glu32.lib;DevIL.lib;ILU.lib;ILUT.lib;irrKlang.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\Common_64\OW3D;..\Common_64\Ogre3D\libs;..\Common_64\Bullet\lib;..\Common_64\Devil\lib\x64\Release;..\Common_64\irrKlang\Libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreSpecificDefaultLibraries>LIBCMT.lib;libcpmt.lib</IgnoreSpecificDefaultLibraries>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="Base_Brush.h" />
+    <ClInclude Include="Base_Group.h" />
+    <ClInclude Include="Base_Object.h" />
+    <ClInclude Include="CL64_App.h" />
+    <ClInclude Include="CL64_Brush_X.h" />
+    <ClInclude Include="CL64_Camera.h" />
+    <ClInclude Include="CL64_Dialogs.h" />
+    <ClInclude Include="CL64_Dimensions.h" />
+    <ClInclude Include="CL64_Doc.h" />
+    <ClInclude Include="CL64_Editor_Control.h" />
+    <ClInclude Include="CL64_Editor_Map.h" />
+    <ClInclude Include="CL64_Entities.h" />
+    <ClInclude Include="CL64_Export.h" />
+    <ClInclude Include="CL64_File.h" />
+    <ClInclude Include="CL64_File_IO.h" />
+    <ClInclude Include="CL64_Gizmos.h" />
+    <ClInclude Include="CL64_ImGui.h" />
+    <ClInclude Include="CL64_ImGui_Dialogs.h" />
+    <ClInclude Include="CL64_ImGui_Editor.h" />
+    <ClInclude Include="CL64_Importers.h" />
+    <ClInclude Include="CL64_Keyboard.h" />
+    <ClInclude Include="CL64_Level.h" />
+    <ClInclude Include="CL64_Mesh.h" />
+    <ClInclude Include="CL64_Mesh_Mgr.h" />
+    <ClInclude Include="CL64_Model.h" />
+    <ClInclude Include="CL64_OGL_Listener.h" />
+    <ClInclude Include="CL64_Ogre3D.h" />
+    <ClInclude Include="CL64_Panels.h" />
+    <ClInclude Include="CL64_ParseFile.h" />
+    <ClInclude Include="CL64_PB.h" />
+    <ClInclude Include="CL64_Picking.h" />
+    <ClInclude Include="CL64_Properties_Brushes.h" />
+    <ClInclude Include="CL64_Properties_Materials.h" />
+    <ClInclude Include="CL64_Properties_Tabs.h" />
+    <ClInclude Include="CL64_Properties_Templates.h" />
+    <ClInclude Include="CL64_Properties_Textures.h" />
+    <ClInclude Include="CL64_Props_Dialogs.h" />
+    <ClInclude Include="CL64_Render_Map.h" />
+    <ClInclude Include="CL64_Resources.h" />
+    <ClInclude Include="CL64_Scene.h" />
+    <ClInclude Include="CL64_Textures.h" />
+    <ClInclude Include="CL64_Top_Tabs.h" />
+    <ClInclude Include="CL64_TXL_Editor.h" />
+    <ClInclude Include="CL64_Utilities.h" />
+    <ClInclude Include="CL64_WadFile.h" />
+    <ClInclude Include="CLP_3D_Listener.h" />
+    <ClInclude Include="CLP_3D_Setup.h" />
+    <ClInclude Include="framework.h" />
+    <ClInclude Include="Ogre_Win_Render_Listener.h" />
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="Resource.h" />
+    <ClInclude Include="Room Builder.h" />
+    <ClInclude Include="Sandbox.h" />
+    <ClInclude Include="targetver.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Base_Brush.cpp" />
+    <ClCompile Include="Base_Group.cpp" />
+    <ClCompile Include="Base_Object.cpp" />
+    <ClCompile Include="CL64_App.cpp" />
+    <ClCompile Include="CL64_Brush_X.cpp" />
+    <ClCompile Include="CL64_Camera.cpp" />
+    <ClCompile Include="CL64_Dialogs.cpp" />
+    <ClCompile Include="CL64_Dimensions.cpp" />
+    <ClCompile Include="CL64_Doc.cpp" />
+    <ClCompile Include="CL64_Editor_Control.cpp" />
+    <ClCompile Include="CL64_Editor_Map.cpp" />
+    <ClCompile Include="CL64_Entities.cpp" />
+    <ClCompile Include="CL64_Export.cpp" />
+    <ClCompile Include="CL64_File.cpp" />
+    <ClCompile Include="CL64_File_IO.cpp" />
+    <ClCompile Include="CL64_Gizmos.cpp" />
+    <ClCompile Include="CL64_ImGui.cpp" />
+    <ClCompile Include="CL64_ImGui_Dialogs.cpp" />
+    <ClCompile Include="CL64_ImGui_Editor.cpp" />
+    <ClCompile Include="CL64_Importers.cpp" />
+    <ClCompile Include="CL64_Keyboard.cpp" />
+    <ClCompile Include="CL64_Level.cpp" />
+    <ClCompile Include="CL64_Mesh.cpp" />
+    <ClCompile Include="CL64_Mesh_Mgr.cpp" />
+    <ClCompile Include="CL64_Model.cpp" />
+    <ClCompile Include="CL64_OGL_Listener.cpp" />
+    <ClCompile Include="CL64_Ogre3D.cpp" />
+    <ClCompile Include="CL64_Panels.cpp" />
+    <ClCompile Include="CL64_ParseFile.cpp" />
+    <ClCompile Include="CL64_PB.cpp" />
+    <ClCompile Include="CL64_Picking.cpp" />
+    <ClCompile Include="CL64_Properties_Brushes.cpp" />
+    <ClCompile Include="CL64_Properties_Materials.cpp" />
+    <ClCompile Include="CL64_Properties_Tabs.cpp" />
+    <ClCompile Include="CL64_Properties_Templates.cpp" />
+    <ClCompile Include="CL64_Properties_Textures.cpp" />
+    <ClCompile Include="CL64_Props_Dialogs.cpp" />
+    <ClCompile Include="CL64_Render_Map.cpp" />
+    <ClCompile Include="CL64_Resources.cpp" />
+    <ClCompile Include="CL64_Scene.cpp" />
+    <ClCompile Include="CL64_Textures.cpp" />
+    <ClCompile Include="CL64_Top_Tabs.cpp" />
+    <ClCompile Include="CL64_TXL_Editor.cpp" />
+    <ClCompile Include="CL64_Utilities.cpp" />
+    <ClCompile Include="CL64_WadFile.cpp" />
+    <ClCompile Include="CLP_3D_Listener.cpp" />
+    <ClCompile Include="CLP_3D_Setup.cpp" />
+    <ClCompile Include="Ogre_Win_Render_Listener.cpp" />
+    <ClCompile Include="pch.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="Room Builder.cpp" />
+    <ClCompile Include="Sandbox.cpp" />
+    <ClCompile Include="Structures.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Room Builder.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\arch.ico" />
+    <Image Include="res\bitmap1.bmp" />
+    <Image Include="res\cone.ico" />
+    <Image Include="res\createar.bmp" />
+    <Image Include="res\createco.bmp" />
+    <Image Include="res\createst.bmp" />
+    <Image Include="res\cube.ico" />
+    <Image Include="res\cylinder.bmp" />
+    <Image Include="res\cylinder.ico" />
+    <Image Include="res\FileView\File.bmp" />
+    <Image Include="res\FileView\filechanged.bmp" />
+    <Image Include="res\FileView\fileChange_Selected.bmp" />
+    <Image Include="res\FileView\FileInactive.bmp" />
+    <Image Include="res\FileView\FIleSelected.bmp" />
+    <Image Include="res\FileView\Folder.bmp" />
+    <Image Include="res\FileView\Folder_Altered.bmp" />
+    <Image Include="res\hollowbo.bmp" />
+    <Image Include="res\Info.bmp" />
+    <Image Include="res\MenuBar\bitmap1.bmp" />
+    <Image Include="res\MenuBar\bitmap2.bmp" />
+    <Image Include="res\MenuBar\BondingBoxOff.bmp" />
+    <Image Include="res\MenuBar\BondingBoxOn.bmp" />
+    <Image Include="res\MenuBar\BonesOff.bmp" />
+    <Image Include="res\MenuBar\BonesOn.bmp" />
+    <Image Include="res\MenuBar\CrossHairOff.bmp" />
+    <Image Include="res\MenuBar\CrossHairOn.bmp" />
+    <Image Include="res\MenuBar\GridOff.bmp" />
+    <Image Include="res\MenuBar\GridOn.bmp" />
+    <Image Include="res\MenuBar\MeshPointsOff.bmp" />
+    <Image Include="res\MenuBar\MeshPointsOn.bmp" />
+    <Image Include="res\MenuBar\ShowMeshOff.bmp" />
+    <Image Include="res\MenuBar\ShowMeshOn.bmp" />
+    <Image Include="res\MenuBar\TexturesOff.bmp" />
+    <Image Include="res\MenuBar\TexturesOn.bmp" />
+    <Image Include="res\No_Texture.bmp" />
+    <Image Include="res\Ramp.bmp" />
+    <Image Include="res\solidbox.bmp" />
+    <Image Include="res\sphere.ico" />
+    <Image Include="res\stairs.ico" />
+    <Image Include="res\TR_Off.bmp" />
+    <Image Include="res\TR_On.bmp" />
+    <Image Include="Room Builder.ico" />
+    <Image Include="small.ico" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

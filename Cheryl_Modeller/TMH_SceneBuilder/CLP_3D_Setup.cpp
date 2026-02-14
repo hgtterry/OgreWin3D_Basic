@@ -1,0 +1,464 @@
+/*
+Copyright (c) 2024 - 2025 TMH_Software W.T.Flanigan M.Habib H.C.Flanigan
+
+TMH_SceneBuilder
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+*/
+
+#include "pch.h"
+#include "CL64_App.h"
+#include "CLP_3D_Setup.h"
+
+CLP_3D_Setup::CLP_3D_Setup()
+{
+	RenderHwnd = nullptr;
+
+	mRoot =		nullptr;
+	mWindow =	nullptr;
+	mSceneMgr = nullptr;
+	mCamera =	nullptr;
+	camNode =	nullptr;
+	vp =		nullptr;
+	manObj =	nullptr;
+	ModelNode = nullptr;
+
+	Listener_3D =			nullptr;
+	OGL_Listener =			nullptr;
+
+	mResourcePath = "";
+	Return_Chr[0] = 0;
+
+	FPSLock = 16666; // Default 60 FPS
+	FPStimer.reset();
+	Processes_timer.reset();
+	m_Processes_Time = 0;
+
+	App_Resource_Group = "App_Resource_Group";
+	World_Resource_Group = "World_Resource_Group";
+	Export_Resource_Group = "Export_Resource_Group";
+	Texture_Resource_Group = "Texture_Resource_Group";
+}
+
+CLP_3D_Setup::~CLP_3D_Setup()
+{
+}
+
+// *************************************************************************
+// *				Init_3D:- Terry Mo and Hazel 2025					   *
+// *************************************************************************
+void CLP_3D_Setup::Init_3D(void)
+{
+	// Initialize Ogre components
+	Initialize_3D_Components();
+
+	// Create manual object and attach it to the scene
+	manObj = mSceneMgr->createManualObject("sampleArea");
+	ModelNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	ModelNode->attachObject(manObj);
+	
+	// Init Gizmos
+	App->CL_Gizmos->Init_Gizmos(mSceneMgr);
+	
+	// Initialize ImGui
+	App->CL_ImGui->Init_ImGui();
+}
+
+// *************************************************************************
+// *		Initialize_3D_Components:- Terry Mo and Hazel 2025			   *
+// *************************************************************************
+void CLP_3D_Setup::Initialize_3D_Components()
+{
+	Init_3D_CreateRoot();
+	Init_Load_Resources();
+	Init_Configure();
+	Init_ChooseSceneManager();
+	Init_CreateCamera();
+	Init_CreateViewports();
+	Init_Resources();
+	Init_CreateFrameListener();
+}
+
+// *************************************************************************
+// *			Init_D_CreateRoot:- Terry Mo and Hazel 2025				   *
+// *************************************************************************
+bool CLP_3D_Setup::Init_3D_CreateRoot(void)
+{
+	Ogre::String pluginsPath;
+	pluginsPath = mResourcePath + "plugins.cfg";
+
+	if (App->flag_Debug_App == 1)
+	{
+		mRoot = OGRE_NEW Ogre::Root(pluginsPath, mResourcePath + "Equity_CFG.cfg", mResourcePath + "GD64_Ogre.log");
+		Ogre::LogManager::getSingleton().createLog(mResourcePath + "App.log");
+		Ogre::LogManager::getSingleton().setMinLogLevel(Ogre::LogMessageLevel::LML_NORMAL);
+
+#pragma warning(disable : 4996) // Nightmare why
+		Ogre::LogManager::getSingleton().setLogDetail(Ogre::LoggingLevel::LL_BOREME);
+
+		App->CL_Ogre->Log_Message_To_File((LPSTR)"Initialising");
+	}
+	else
+	{
+		mRoot = OGRE_NEW Ogre::Root(pluginsPath, mResourcePath + "Equity_CFG.cfg", mResourcePath + "");
+	}
+
+	App->CL_Ogre->Log_Message_To_File((LPSTR)" // -------------------------  Init Ogre");
+	App->CL_Ogre->Log_Message_To_File((LPSTR)"Ogre Root Created");
+
+	return 1;
+}
+
+// **************************************************************************
+// *		Init_Load_Resources:- Terry Mo and Hazel 2025					*
+// **************************************************************************
+bool CLP_3D_Setup::Init_Load_Resources()
+{
+	// Prepare resource file path
+	std::string resourceBasePath = App->RB_Directory_FullPath;
+
+	// Convert backslashes to forward slashes for Ogre compatibility
+	ReverseBackSlash((LPSTR)resourceBasePath.c_str());
+
+	// Create the main resource group for the application
+	auto& resourceGroupManager = Ogre::ResourceGroupManager::getSingleton();
+	resourceGroupManager.createResourceGroup(App_Resource_Group);
+
+	// Define resource locations
+	const std::vector<std::pair<std::string, std::string>> resourceLocations = {
+		{"Media/Core_Data/Sinbad.zip", "Zip"},
+		{"Media/Core_Data/SdkTrays.zip", "Zip"},
+		{"Media/Core_Data/GDCore.zip", "Zip"},
+		{"Media/Core_Data/Entitys.zip", "Zip"},
+		{"Media/Core_Data/Files", "FileSystem"},
+		{"Media/Core_Data/Files/New_Particles", "FileSystem"}
+	};
+
+	// Add resource locations
+	for (const auto& location : resourceLocations) {
+		resourceGroupManager.addResourceLocation(location.first, location.second, App_Resource_Group);
+	}
+
+	// Log resource setup for debugging
+	Log_Message_To_File((LPSTR)"SetUpResources");
+
+	return true;
+}
+
+// *************************************************************************
+// *			Init_Resources:- Terry Mo and Hazel 2025				   *
+// *************************************************************************
+bool CLP_3D_Setup::Init_Resources(void)
+{
+	// Initialize, parse scripts etc
+	Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
+	App->CL_Ogre->Log_Message_To_File((LPSTR)"Initialise_Resources");
+
+	return 1;
+}
+
+// *************************************************************************
+// *			Init_Configure:- Terry Mo and Hazel 2025				   *
+// *************************************************************************
+bool CLP_3D_Setup::Init_Configure(void)
+{
+	try
+	{
+		Ogre::RenderSystem* rs = mRoot->getRenderSystemByName("OpenGL Rendering Subsystem");
+		if (!(rs->getName() == "OpenGL Rendering Subsystem"))
+		{
+			App->Say("getRenderSystemByName Error1", (LPSTR)"");
+			return false; //No RenderSystem found
+		}
+
+		mRoot->setRenderSystem(rs);
+	}
+	catch (...)
+	{
+		App->Say("getRenderSystemByName Error2", (LPSTR)"");
+	}
+
+	mWindow = mRoot->initialise(false);
+	Ogre::NameValuePairList options;
+
+	//options["vsync"] = false;
+
+	options["externalWindowHandle"] =
+		Ogre::StringConverter::toString((size_t)RenderHwnd);
+
+	try
+	{
+		mWindow = mRoot->createRenderWindow("Main RenderWindow", 1024, 768, false, &options);
+
+	}
+	catch (...)
+	{
+		App->Say("createRenderWindow Error1",(LPSTR)"");
+	}
+
+	//App->CL_Panels->Width = mWindow->getWidth();
+	//App->CL_Panels->Height = mWindow->getHeight();
+
+	App->CL_Ogre->Log_Message_To_File((LPSTR)"Configure");
+
+	return true;
+}
+
+// *************************************************************************
+// *		Init_ChooseSceneManager:- Terry Mo and Hazel 2025			   *
+// *************************************************************************
+bool CLP_3D_Setup::Init_ChooseSceneManager(void)
+{
+	mSceneMgr = mRoot->createSceneManager("DefaultSceneManager"); // Temp
+
+	mOverlaySystem = new Ogre::OverlaySystem();
+	mSceneMgr->addRenderQueueListener(mOverlaySystem);
+
+	mSceneMgr->setAmbientLight(Ogre::ColourValue(1, 1, 1));
+
+	App->CL_Ogre->Log_Message_To_File((LPSTR)"chooseSceneManager");
+
+	return 1;
+}
+
+// *************************************************************************
+// *		Init_CreateCamera:- Terry Mo and Hazel 2025					   *
+// *************************************************************************
+bool CLP_3D_Setup::Init_CreateCamera(void)
+{
+	camNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
+
+	mCamera = mSceneMgr->createCamera("MainCamera");
+	mCamera->setNearClipDistance(Ogre::Real(0.1));
+	mCamera->setFarClipDistance(Ogre::Real(8000));
+
+	camNode->attachObject(mCamera);
+
+	camNode->setPosition(Ogre::Vector3(0, 5, 15));
+	camNode->lookAt(Ogre::Vector3(0, 0, 0), Ogre::Node::TS_WORLD);
+
+	App->CL_Ogre->Log_Message_To_File((LPSTR)"createCamera");
+
+	return 1;
+}
+
+// *************************************************************************
+// *		Init_CreateViewports:- Terry Mo and Hazel 2025				   *
+// *************************************************************************
+bool CLP_3D_Setup::Init_CreateViewports(void)
+{
+	mWindow->removeAllViewports();
+	vp = mWindow->addViewport(mCamera);
+	mCamera->setAspectRatio(Ogre::Real(vp->getActualWidth()) / Ogre::Real(vp->getActualHeight()));
+
+	Ogre::TextureManager::getSingleton().setDefaultNumMipmaps(0);
+
+	Ogre::ColourValue fadeColour(0.5, 0.5, 0.5);
+	mWindow->getViewport(0)->setBackgroundColour(fadeColour);
+
+	App->CL_Ogre->Log_Message_To_File((LPSTR)"createViewports");
+
+	return 1;
+}
+
+// *************************************************************************
+// *			ReverseBackSlash:- Terry Mo and Hazel 2025				   *
+// *************************************************************************
+bool CLP_3D_Setup::ReverseBackSlash(char* buf)
+{
+	strcpy(Return_Chr, "");
+	char bufnew[256];
+	strcpy(bufnew, "");
+	char seps[] = "\\";
+	char* token;
+	bool tt = 0;
+
+	token = strtok(buf, seps);
+	while (token != NULL)
+	{
+		tt = 1;
+		strcat(bufnew, token);
+		strcat(bufnew, "/");
+		token = strtok(NULL, seps);
+	}
+
+	if (tt == 1)
+	{
+		int len = strlen(bufnew);
+		bufnew[len - 1] = 0;
+		strcpy(Return_Chr, bufnew);
+	}
+	else
+	{
+		tt = 0;
+		strcpy(Return_Chr, buf);
+	}
+	return 1;
+}
+
+// *************************************************************************
+// *	Init_CreateFrameListener:- Terry Mo and Hazel 2025				   *
+// *************************************************************************
+bool CLP_3D_Setup::Init_CreateFrameListener(void)
+{
+
+	Ogre::String RenderSystemName = mSceneMgr->getDestinationRenderSystem()->getName();
+
+	if (RenderSystemName == "OpenGL Rendering Subsystem")
+	{
+		Listener_3D = new CLP_3D_Listener();
+		mRoot->addFrameListener(Listener_3D);
+
+		OGL_Listener = new CL64_OGL_Listener();
+		mSceneMgr->addRenderQueueListener(OGL_Listener);
+	}
+	else
+	{
+		App->Say("OpenGL Rendering Subsystem not allocated ", (LPSTR)"");
+		return FALSE;
+	}
+
+	return TRUE;
+}
+
+// *************************************************************************
+// *			Log_Message_To_File:- Terry Mo and Hazel 2025			   *
+// *************************************************************************
+void CLP_3D_Setup::Log_Message_To_File(char* Message)
+{
+	if (App->flag_Debug_App == 1)
+	{
+		Ogre::LogManager::getSingleton().setDefaultLog(Ogre::LogManager::getSingleton().getLog("App.log"));
+		Ogre::LogManager::getSingleton().logMessage(Message);
+		Ogre::LogManager::getSingleton().setDefaultLog(Ogre::LogManager::getSingleton().getLog("GD64_Ogre.log"));
+	}
+}
+
+// *************************************************************************
+// *			Camera_Reset_Zero:- Terry Mo and Hazel 2025				   *
+// *************************************************************************
+void CLP_3D_Setup::Camera_Reset_Zero()
+{
+	camNode->setPosition(Ogre::Vector3(0, 0, 0));
+	camNode->setOrientation(Ogre::Quaternion::IDENTITY);
+}
+
+// *************************************************************************
+// *			RenderFrame:- Terry Mo and Hazel 2025					   *
+// *************************************************************************
+void CLP_3D_Setup::RenderFrame(int How_Many)
+{
+	int Count = 0;
+	while (Count < How_Many)
+	{
+		Ogre::Root::getSingletonPtr()->renderOneFrame();
+		Count++;
+	}
+}
+
+// *************************************************************************
+// *		Render_Loop_3D:- Terry Mo and Hazel 2025					   *
+// *************************************************************************
+bool CLP_3D_Setup::Render_Loop_3D(void)
+{
+	mRoot->clearEventTimes();
+
+	while (true)
+	{
+	
+		MSG  msg;
+		while (PeekMessage(&msg, NULL, 0U, 0U, PM_REMOVE))
+		{
+			TranslateMessage(&msg);
+			DispatchMessage(&msg);
+		}
+
+		if (mWindow->isClosed()) return false;
+
+		if (FPStimer.getMicroseconds() > FPSLock)
+		{
+			FPStimer.reset();
+
+			//if (flag_Block_Rendering == 0)
+			{
+				
+				if (!mRoot->_fireFrameStarted())
+				{
+					return false;
+				}
+
+				if (!mRoot->_updateAllRenderTargets()) // Swap Buffers
+				{
+					return false;
+				}
+
+				if (!mRoot->_fireFrameEnded())
+				{
+					return false;
+				}
+
+			}
+		}
+	}
+
+	return 1;
+}
+
+// *************************************************************************
+// *		Processes_Start_Time:- Terry Mo and Hazel 2025				   *
+// *************************************************************************
+void CLP_3D_Setup::Processes_Start_Time(void)
+{
+	Processes_timer.reset();
+}
+
+// *************************************************************************
+// *			Processes_Get_Time:- Terry Mo and Hazel 2025			   *
+// *************************************************************************
+void CLP_3D_Setup::Processes_Get_Time(void)
+{
+	m_Processes_Time = Processes_timer.getMicroseconds();
+	Processes_timer.reset();
+	//App->CL_Ogre->RenderFrame(5);
+}
+
+// *************************************************************************
+// *		Get_OpenGL_Version:- Terry Mo and Hazel 2024				   *
+// *************************************************************************
+void CLP_3D_Setup::Get_OpenGL_Version(char* buff)
+{
+	int  major = mRoot->getRenderSystem()->getDriverVersion().major;
+	int  minor = mRoot->getRenderSystem()->getDriverVersion().minor;
+
+	Ogre::String name = mRoot->getRenderSystem()->getName();
+
+	char c_GLVer[256];
+	strcpy(c_GLVer, name.c_str());
+
+	char cMajor[20];
+	char cMinor[20];
+	_itoa(major, cMajor, 10);
+	_itoa(minor, cMinor, 10);
+	strcpy(buff, "");
+	strcat(buff, c_GLVer);
+	strcat(buff, " ");
+	strcat(buff, cMajor);
+	strcat(buff, ".");
+	strcat(buff, cMinor);
+}
