@@ -583,7 +583,7 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Top_Tabs(HWND hDlg, UINT message, WPARAM wP
 		// 3D
 		if (LOWORD(wParam) == IDC_BT_FULL_3D)
 		{
-			if (App->CL_Top_Tabs->flag_Full_View_3D == 1)
+			/*if (App->CL_Top_Tabs->flag_Full_View_3D == 1)
 			{
 				App->CL_Top_Tabs->flag_Full_View_3D = 0;
 				App->CL_Editor_Map->Set_Splitter_WidthDepth(App->CL_Editor_Map->Copy_Spliter_Width, App->CL_Editor_Map->Copy_Spliter_Depth);
@@ -594,7 +594,7 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Top_Tabs(HWND hDlg, UINT message, WPARAM wP
 				App->CL_Top_Tabs->Set_View_Buttons(Enums::Selected_Map_View_3D);
 				App->CL_Editor_Map->Init_Views(Enums::Selected_Map_View_3D);
 				App->CL_Editor_Map->Resize_Windows(App->CL_Editor_Map->Main_View_Dlg_Hwnd, App->CL_Editor_Map->nleftWnd_width, App->CL_Editor_Map->nleftWnd_Depth);
-			}
+			}*/
 			
 			App->CL_Top_Tabs->Redraw_TopTabs_Dlg();
 			
