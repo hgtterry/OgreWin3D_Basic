@@ -445,7 +445,7 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Main_Dlg(HWND hDlg, UINT message, WPARAM 
 		PAINTSTRUCT ps;
 		HDC hdc = BeginPaint(hDlg, &ps);
 
-		FillRect(hdc, &ps.rcPaint, (HBRUSH)App->AppBackground);
+		FillRect(hdc, &ps.rcPaint, (HBRUSH)App->BlackBrush);
 		EndPaint(hDlg, &ps);
 		return 0;
 	}

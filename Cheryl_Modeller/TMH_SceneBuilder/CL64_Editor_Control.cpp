@@ -37,6 +37,8 @@ CL64_Editor_Control::CL64_Editor_Control(void)
 
 	flag_Mode_3DEditor_View = false;
 	flag_Mode_Map_View = false;
+
+	flag_Start_3D_View = true;
 }
 
 CL64_Editor_Control::~CL64_Editor_Control(void)

@@ -74,6 +74,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     App->CL_Editor_Map->Init_Map_Views();
     App->SetMainWinCentre();
 
+    App->CL_Dialogs->PleaseWait();
+
     // Start headers and tabs
     App->CL_Top_Tabs->Start_Top_Tabs();
     App->CL_Top_Tabs->Redraw_TopTabs_Dlg();
@@ -86,6 +88,13 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     App->CL_Editor_Map->Reset_Views_All();
    
     App->CL_Ogre->Init_3D();
+
+    App->CL_Editor_Control->Set_Map_Editor_Startup();
+    App->CL_Editor_Control->Set_3DEditor_View();
+    App->CL_Ogre->mWindow->windowMovedOrResized();
+    App->CL_Ogre->mCamera->setAspectRatio((Ogre::Real)App->CL_Ogre->mWindow->getWidth() / (Ogre::Real)App->CL_Ogre->mWindow->getHeight());
+
+
     App->CL_Picking->Init_Picking();
 
     // Load default WAD  --- file Zipped Texture file
@@ -972,7 +981,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         RECT rcl;
         GetClientRect(App->MainHwnd, &rcl);
 
-        if (App->CL_Editor_Control->flag_Scene_Editor_Active == 0)
+        if (App->CL_Editor_Control->flag_Scene_Editor_Active == false)
         {
             MoveWindow(App->CL_Editor_Map->Main_View_Dlg_Hwnd, 0, 75, rcl.right, rcl.bottom - 75, TRUE);
             App->CL_Editor_Map->Init_Views(Enums::Selected_Map_View_None);
@@ -985,9 +994,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         }
         else
         {
-            GetClientRect(App->CL_Editor_Map->Bottom_Ogre_Right_Hwnd, &rcl);
-
+           // GetClientRect(App->CL_Editor_Map->Bottom_Ogre_Right_Hwnd, &rcl);
             SetWindowPos(App->ViewGLhWnd, NULL, 0, 0, rcl.right, rcl.bottom, SWP_NOZORDER);
+
+            App->CL_Editor_Map->Init_Views(Enums::Selected_Map_View_3D);
+
             App->CL_Ogre->mWindow->windowMovedOrResized();
             App->CL_Ogre->mCamera->setAspectRatio((Ogre::Real)App->CL_Ogre->mWindow->getWidth() / (Ogre::Real)App->CL_Ogre->mWindow->getHeight());
            
@@ -1054,7 +1065,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         {
             if (App->flag_3D_Started == false)
             {
-                App->CL_Dialogs->PleaseWait();
+                //App->CL_Dialogs->PleaseWait();
 
                 if (Block_Call == 0)
                 {
@@ -1148,9 +1159,11 @@ void StartOgre()
 
 	}
 
-	App->CL_Editor_Control->Set_Map_Editor_Startup();
 
-    App->CL_Editor_Control->Set_3DEditor_View();
+    ShowWindow(App->CL_Editor_Map->Bottom_Ogre_Right_Hwnd, SW_SHOWNORMAL);
+    App->CL_Editor_Control->flag_Scene_Editor_Active = true;
+    App->CL_Editor_Control->flag_Map_Editor_Active = false;
+    App->CL_Editor_Map->Selected_Window = Enums::Selected_Map_View_3D;
 
 	App->CL_Ogre->Render_Loop_3D();
 

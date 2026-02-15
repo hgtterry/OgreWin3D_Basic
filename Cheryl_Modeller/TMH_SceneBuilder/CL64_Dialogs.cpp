@@ -544,7 +544,7 @@ LRESULT CALLBACK CL64_Dialogs::Proc_Message(HWND hDlg, UINT message, WPARAM wPar
 // *************************************************************************
 void CL64_Dialogs::PleaseWait()
 {
-	App->ViewPLeaseWait = CreateDialog(App->hInst, (LPCTSTR)IDD_PLEASEWAIT, App->MainHwnd, (DLGPROC)Proc_PleaseWait);
+	App->ViewPLeaseWait = CreateDialog(App->hInst, (LPCTSTR)IDD_PLEASEWAIT, App->CL_Editor_Map->Main_View_Dlg_Hwnd, (DLGPROC)Proc_PleaseWait);
 }
 
 // *************************************************************************
