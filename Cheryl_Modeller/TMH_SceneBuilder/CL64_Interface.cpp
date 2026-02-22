@@ -29,6 +29,7 @@ THE SOFTWARE.
 
 CL64_Interface::CL64_Interface()
 {
+	Materials_Dlg_Active = false;
 }
 
 CL64_Interface::~CL64_Interface()
@@ -192,6 +193,25 @@ bool CL64_Interface::Resize_FileView(void)
 
 	// Apply the deferred window position changes
 	return EndDeferWindowPos(hdwp);
+}
+
+// *************************************************************************
+// *			Show_Materials_Dlg:- Terry and Hazel Flanigan 2026		   *
+// *************************************************************************
+void CL64_Interface::Show_Materials_Dlg(bool show)
+{
+	if (show == true)
+	{
+		App->CL_Properties_Materials->Show_Textures_Dialog_Ogre(true);
+		Materials_Dlg_Active = true;
+		CheckMenuItem(App->Menu_Map, ID_WINDOW_MATERIALS, MF_BYCOMMAND | MF_CHECKED);
+	}
+	else
+	{
+		App->CL_Properties_Materials->Show_Textures_Dialog_Ogre(false);
+		Materials_Dlg_Active = false;
+		CheckMenuItem(App->Menu_Map, ID_WINDOW_MATERIALS, MF_BYCOMMAND | MF_UNCHECKED);
+	}
 }
 
 

@@ -41,5 +41,9 @@ public:
 	bool Resize_FileView(void);
 	void Deselect_All_Brushes_Update_Dlgs(void);
 
+	void Show_Materials_Dlg(bool show);
+
+	bool Materials_Dlg_Active;
+
 };
 

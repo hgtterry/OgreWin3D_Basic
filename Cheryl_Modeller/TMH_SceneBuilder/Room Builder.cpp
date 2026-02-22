@@ -828,6 +828,21 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 return 1;
             }
 
+            case ID_WINDOW_MATERIALS:
+            {
+                if (App->CL_Interface->Materials_Dlg_Active == true)
+                {
+                    App->CL_Interface->Show_Materials_Dlg(false);
+                }
+                else
+                {
+                    App->CL_Interface->Show_Materials_Dlg(true);
+                }
+
+                return 1;
+            }
+
+            // ----------------------------- Add Objects
             case ID_ADDITEM_OBJECT:
             {
                 if (App->CL_Scene->flag_Project_Resources_Created == true)

@@ -117,7 +117,7 @@ void CL64_Properties_Tabs::Start_Tabs_Control_Dlg()
 	App->CL_Properties_Templates->Show_TemplatesDialog(true);
 
 	App->CL_Properties_Materials->Start_TextureDialog_Ogre();
-	App->CL_Properties_Materials->Show_Textures_Dialog_Ogre(true);
+	App->CL_Interface->Show_Materials_Dlg(false);
 
 	App->CL_Interface->Position_Tabs_Dlg();
 	App->CL_Interface->Position_Materials_Dlg();
