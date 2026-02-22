@@ -144,6 +144,9 @@ void CL64_Top_Tabs::Init_Bmps_Globals(void)
 	Temp = GetDlgItem(TopTabs_Dlg_hWnd, IDC_TBBOUNDBOX);
 	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_BBOff_Bmp);
 
+	Temp = GetDlgItem(TopTabs_Dlg_hWnd, IDC_TBINFO);
+	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_ModelInfoOn_Bmp);
+
 	HWND hTooltip_TB_2 = CreateWindowEx(0, TOOLTIPS_CLASS, "", TTS_ALWAYSTIP | TTS_BALLOON | TTS_NOFADE, 0, 0, 0, 0, App->MainHwnd, 0, App->hInst, 0);
 	SendMessage(hTooltip_TB_2, TTM_SETMAXTIPWIDTH, 0, 250);
 
@@ -392,6 +395,13 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Top_Tabs(HWND hDlg, UINT message, WPARAM wP
 		}
 
 		if (some_item->idFrom == IDC_TBBOUNDBOX)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Globals(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_TBINFO)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Globals(item);
@@ -766,6 +776,21 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Top_Tabs(HWND hDlg, UINT message, WPARAM wP
 			return TRUE;
 		}
 		
+		//-------------------------------------------------------- Show Info
+		if (LOWORD(wParam) == IDC_TBINFO)
+		{
+			if (App->CL_ImGui->flag_Show_Model_Data == true)
+			{
+				App->CL_Interface->Show_file_view(false);
+			}
+			else
+			{
+				App->CL_Interface->Show_file_view(true);
+			}
+
+			return TRUE;
+		}
+
 		if (LOWORD(wParam) == IDC_BT_IMPORT)
 		{
 			App->CL_Importers->Load_Ogre_Model(true);

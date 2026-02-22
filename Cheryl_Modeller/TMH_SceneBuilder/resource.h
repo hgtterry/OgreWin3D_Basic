@@ -107,6 +107,8 @@
 #define IDD_TEXTURES_OGRE               217
 #define IDB_NO_TEXTURE                  218
 #define IDD_FILEVIEWER                  219
+#define IDB_TB_MODELDATAOFF             220
+#define IDB_TB_MODELDATAON              221
 #define IDC_BANNER                      1000
 #define IDC_STTEXT                      1001
 #define IDC_STMESSAGE                   1002
@@ -535,6 +537,7 @@
 #define IDC_BUTTON11                    1375
 #define IDC_ST_PT_NUMTEXTUNITS          1375
 #define IDC_BUTTON12                    1376
+#define IDC_TBINFO                      1376
 #define ID_DEBUG_GENERAL                32771
 #define ID_TEMPLATES_INSERT             32772
 #define ID_BRUSH_SELECT                 32773
@@ -639,6 +642,7 @@
 #define ID_FILE_CLEAR32873              32873
 #define ID_FILE_CLEAR32874              32874
 #define ID_WINDOW_MATERIALS             32875
+#define ID_WINDOW_MODELDATA             32876
 #define ID_GENERALSELECT                32886
 #define ID_TOOLS_TEMPLATE               32910
 #define IDC_STATIC                      -1
@@ -648,8 +652,8 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
-#define _APS_NEXT_RESOURCE_VALUE        220
-#define _APS_NEXT_COMMAND_VALUE         32876
+#define _APS_NEXT_RESOURCE_VALUE        222
+#define _APS_NEXT_COMMAND_VALUE         32877
 #define _APS_NEXT_CONTROL_VALUE         1376
 #define _APS_NEXT_SYMED_VALUE           110
 #endif

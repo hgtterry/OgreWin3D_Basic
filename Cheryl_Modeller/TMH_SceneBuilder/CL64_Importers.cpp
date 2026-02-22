@@ -149,6 +149,7 @@ bool CL64_Importers::Load_Ogre_Model(bool Use_File_Dialog)
 
 	App->CL_Interface->Show_Materials_Dlg(true);
 	App->CL_Interface->Menu_Enable_Materials(true);
+	App->CL_Interface->Show_file_view(true);
 
 	//App->Enable_Export_Options(true);
 

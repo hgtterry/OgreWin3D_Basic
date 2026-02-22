@@ -108,6 +108,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     // Initialize dialogs
     App->Init_Dialogs();
 
+    App->CL_Interface->Set_Editor_Startup();
+
    /* if (App->flag_Start_3DEditor_Mode == true)
     {
         App->CL_Editor_Control->Set_3DEditor_View();
@@ -788,6 +790,20 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             }
  
             // ----------------------------- Windows
+            case ID_WINDOW_MODELDATA:
+            {
+                if (App->CL_ImGui->flag_Show_Model_Data == true)
+                {
+                    App->CL_Interface->Show_file_view(false);
+                }
+                else
+                {
+                    App->CL_Interface->Show_file_view(true);
+                }
+
+                return TRUE;
+            }
+
             case ID_WINDOW_PROPERTIES:
             {
                 if (App->CL_Properties_Tabs->flag_Tabs_Dlg_Active == 1)

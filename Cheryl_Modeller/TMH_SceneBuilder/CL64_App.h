@@ -274,6 +274,9 @@ public:
 	HANDLE Hnd_TR_On_Bmp;
 	HANDLE Hnd_Help_Bmp;
 
+	HANDLE Hnd_ModelInfoOn_Bmp;
+	HANDLE Hnd_ModelInfo_Bmp;
+
 	HANDLE Hnd_Arch_Icon;
 	HANDLE Hnd_Cone_Icon;
 	HANDLE Hnd_Cyl_Icon;
@@ -288,6 +291,7 @@ public:
 	HWND ListPanel;
 
 	bool flag_Debug_App;
+	bool flag_Release;
 	bool flag_3D_Started;
 	bool flag_Block_Mouse_Buttons;
 

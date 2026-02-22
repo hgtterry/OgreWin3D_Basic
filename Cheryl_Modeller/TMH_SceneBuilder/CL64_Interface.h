@@ -44,6 +44,12 @@ public:
 	void Show_Materials_Dlg(bool show);
 	void Menu_Enable_Materials(bool option);
 
+	void Enable_Debug_Menu(bool option);
+
+	void Show_file_view(bool show);
+
+	void Set_Editor_Startup();
+
 	bool Materials_Dlg_Active;
 
 };

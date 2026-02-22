@@ -215,7 +215,7 @@ void CL64_Interface::Show_Materials_Dlg(bool show)
 }
 
 // *************************************************************************
-// *			Show_Materials_Dlg:- Terry and Hazel Flanigan 2026		   *
+// *		Menu_Enable_Materials:- Terry and Hazel Flanigan 2026		   *
 // *************************************************************************
 void CL64_Interface::Menu_Enable_Materials(bool option)
 {
@@ -228,5 +228,62 @@ void CL64_Interface::Menu_Enable_Materials(bool option)
 		EnableMenuItem(App->Menu_Map, ID_WINDOW_MATERIALS, MF_BYCOMMAND | MF_GRAYED);
 	}
 }
+
+// **************************************************************************
+// *	  		 Show_file_view:- Terry and Hazel Flanigan 2026				*
+// **************************************************************************
+void CL64_Interface::Show_file_view(bool show)
+{
+	HWND Temp = GetDlgItem(App->CL_Top_Tabs->TopTabs_Dlg_hWnd, IDC_TBINFO);
+
+	if (show == true)
+	{
+		App->CL_ImGui->flag_Show_Model_Data = true;
+
+		SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_ModelInfoOn_Bmp);
+		CheckMenuItem(App->Menu_Map, ID_WINDOW_MODELDATA, MF_BYCOMMAND | MF_CHECKED);
+	}
+	else
+	{
+		App->CL_ImGui->flag_Show_Model_Data = false;
+
+		SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_ModelInfo_Bmp);
+		CheckMenuItem(App->Menu_Map, ID_WINDOW_MODELDATA, MF_BYCOMMAND | MF_UNCHECKED);
+	}
+}
+
+// **************************************************************************
+// *	  		 Show_file_view:- Terry and Hazel Flanigan 2026				*
+// **************************************************************************
+void CL64_Interface::Enable_Debug_Menu(bool option)
+{
+	if (option == true)
+	{
+		EnableMenuItem(App->Menu_Map, 7, MF_BYPOSITION | MF_ENABLED);
+	}
+	else
+	{
+		EnableMenuItem(App->Menu_Map, 7, MF_BYPOSITION | MF_DISABLED | MF_GRAYED);
+	}
+}
+
+// **************************************************************************
+// *	  		 Set_Editor_Startup:- Terry and Hazel Flanigan 2026			*
+// **************************************************************************
+void CL64_Interface::Set_Editor_Startup()
+{
+	Show_file_view(true);
+
+	if (App->flag_Release == true)
+	{
+		Enable_Debug_Menu(false);
+	}
+	else
+	{
+		Enable_Debug_Menu(true);
+	}
+}
+
+
 
 
