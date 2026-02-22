@@ -42,6 +42,7 @@ public:
 	void Deselect_All_Brushes_Update_Dlgs(void);
 
 	void Show_Materials_Dlg(bool show);
+	void Menu_Enable_Materials(bool option);
 
 	bool Materials_Dlg_Active;
 

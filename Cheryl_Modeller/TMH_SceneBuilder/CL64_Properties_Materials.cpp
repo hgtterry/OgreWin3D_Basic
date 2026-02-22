@@ -61,6 +61,9 @@ void CL64_Properties_Materials::Reset_Class()
 	BasePicWidth_Ogre = 0;
 	BasePicHeight_Ogre = 0;
 
+	App->CL_Interface->Show_Materials_Dlg(false);
+	App->CL_Interface->Menu_Enable_Materials(false);
+
 	Fill_Textures_ListBox();
 	Fill_Materials_ListBox();
 
@@ -68,26 +71,26 @@ void CL64_Properties_Materials::Reset_Class()
 }
 
 // *************************************************************************
-// *	  	Show_Textures_Dialog_Ogre:- Terry and Hazel Flanigan 2026	   *
+// *	  	Show_Materials_Dialog_Ogre:- Terry and Hazel Flanigan 2026	   *
 // *************************************************************************
-void CL64_Properties_Materials::Show_Textures_Dialog_Ogre(bool Show)
+void CL64_Properties_Materials::Show_Materials_Dialog_Ogre(bool Show)
 {
 	ShowWindow(Textures_Dlg_Hwnd_Ogre, Show);
 }
 
 // *************************************************************************
-// *	  	Start_TextureDialog_Ogre:- Terry and Hazel Flanigan 2026	   *
+// *	  	Start_Materials_Dialog_Ogre:- Terry and Hazel Flanigan 2026	   *
 // *************************************************************************
-void CL64_Properties_Materials::Start_TextureDialog_Ogre()
+void CL64_Properties_Materials::Start_Materials_Dialog_Ogre()
 {
-	Textures_Dlg_Hwnd_Ogre = CreateDialog(App->hInst, (LPCTSTR)IDD_TEXTURES_OGRE, App->MainHwnd, (DLGPROC)Proc_TextureDialog_Ogre);
-	Show_Textures_Dialog_Ogre(false);
+	Textures_Dlg_Hwnd_Ogre = CreateDialog(App->hInst, (LPCTSTR)IDD_TEXTURES_OGRE, App->MainHwnd, (DLGPROC)Proc_Materials_Dialog_Ogre);
+	Show_Materials_Dialog_Ogre(false);
 }
 
 // *************************************************************************
 // *        Proc_TextureDialog_Ogre:- Terry and Hazel Flanigan 2026		   *
 // *************************************************************************
-LRESULT CALLBACK CL64_Properties_Materials::Proc_TextureDialog_Ogre(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK CL64_Properties_Materials::Proc_Materials_Dialog_Ogre(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	switch (message)
 	{

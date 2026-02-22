@@ -31,8 +31,8 @@ public:
 
 	void Reset_Class();
 
-	void Start_TextureDialog_Ogre();
-	void Show_Textures_Dialog_Ogre(bool Show);
+	void Start_Materials_Dialog_Ogre();
+	void Show_Materials_Dialog_Ogre(bool Show);
 	void Get_First_Texture_Ogre();
 	bool Update_Texture_Ogre_Dlg();
 	bool View_Texture(char* TextureName, char* MaterialName);
@@ -59,7 +59,7 @@ public:
 	HWND Textures_Dlg_Hwnd_Ogre;
 
 private:
-	static LRESULT CALLBACK Proc_TextureDialog_Ogre(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Proc_Materials_Dialog_Ogre(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	static bool CALLBACK ViewerBasePic_Ogre(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 	bool RenderTexture_Blit_Ogre(HDC hDC, HBITMAP Bmp, const RECT* SourceRect, const RECT* DestRect);

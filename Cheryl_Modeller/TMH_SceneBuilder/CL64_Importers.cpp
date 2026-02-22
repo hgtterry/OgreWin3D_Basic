@@ -20,7 +20,7 @@ void CL64_Importers::Set_Editor()
 
 	if (App->CL_Model->Model_Type == Enums::Model_Type_Ogre3D)
 	{
-
+		
 	}
 }
 
@@ -146,6 +146,9 @@ bool CL64_Importers::Load_Ogre_Model(bool Use_File_Dialog)
 
 	App->CL_Model->Model_Type = Enums::Model_Type_Ogre3D;
 	App->CL_Properties_Materials->Fill_Materials_ListBox();
+
+	App->CL_Interface->Show_Materials_Dlg(true);
+	App->CL_Interface->Menu_Enable_Materials(true);
 
 	//App->Enable_Export_Options(true);
 
