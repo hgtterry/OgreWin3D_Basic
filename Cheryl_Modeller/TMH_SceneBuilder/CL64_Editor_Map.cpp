@@ -2172,7 +2172,7 @@ bool CL64_Editor_Map::Context_Command_Ogre(WPARAM wParam)
 
 	case IDM_SCENE_DESELECT:
 	{
-		App->CL_Panels->Deselect_All_Brushes_Update_Dlgs();
+		App->CL_Interface->Deselect_All_Brushes_Update_Dlgs();
 		App->CL_Top_Tabs->Redraw_TopTabs_Dlg();
 		App->CL_Ogre->OGL_Listener->Show_Visuals(false);
 		return TRUE;
@@ -2261,7 +2261,7 @@ bool CL64_Editor_Map::Context_Command(WPARAM wParam)
 
 	case IDM_SCENE_DESELECT:
 	{
-		App->CL_Panels->Deselect_All_Brushes_Update_Dlgs();
+		App->CL_Interface->Deselect_All_Brushes_Update_Dlgs();
 		App->CL_Top_Tabs->Redraw_TopTabs_Dlg();
 		App->CL_Ogre->OGL_Listener->Show_Visuals(false);
 		return TRUE;

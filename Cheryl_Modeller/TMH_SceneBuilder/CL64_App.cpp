@@ -68,7 +68,7 @@ CL64_App::CL64_App(void)
 	CL_X_Face_Editor =			nullptr;
 
 	CL_Ogre	=					nullptr;
-	CL_Panels =					nullptr;
+	CL_Interface =				nullptr;
 	CL_Keyboard =				nullptr;
 	CL_Scene =					nullptr;
 	CL_Ogre3D =					nullptr;
@@ -241,7 +241,7 @@ void CL64_App::InitApp(void)
 	CL_X_Face_Editor =			new Face_Editor();
 
 	CL_Ogre =					new CLP_3D_Setup();
-	CL_Panels =					new CL64_Panels();
+	CL_Interface =				new CL64_Interface();
 	CL_Keyboard =				new CL64_Keyboard();
 	CL_Scene =					new CL64_Scene();
 	CL_Ogre3D =					new CL64_Ogre3D();
@@ -319,7 +319,7 @@ void CL64_App::InitApp(void)
 // *************************************************************************
 void CL64_App::Init_Dialogs(void)
 {
-	CL_Panels->Position_Properties_Dlg();
+	CL_Interface->Position_Properties_Dlg();
 	CL_Props_Dialogs->Start_Props_Dialogs();
 }
 

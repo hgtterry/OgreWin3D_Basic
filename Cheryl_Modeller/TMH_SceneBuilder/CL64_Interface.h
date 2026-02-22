@@ -23,11 +23,11 @@ THE SOFTWARE.
 */
 
 #pragma once
-class CL64_Panels
+class CL64_Interface
 {
 public:
-	CL64_Panels();
-	~CL64_Panels();
+	CL64_Interface();
+	~CL64_Interface();
 
 	void Reset_All_Dialogs(void);
 

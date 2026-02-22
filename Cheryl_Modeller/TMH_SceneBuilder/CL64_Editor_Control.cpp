@@ -140,9 +140,9 @@ void CL64_Editor_Control::Start_Editor_Scene()
 	App->CL_Ogre->OGL_Listener->Show_Visuals(false);
 	
 	// Show headers and file view
-	App->CL_Panels->Move_FileView_Window();
-	App->CL_Panels->Resize_FileView();
-	App->CL_Panels->Position_Properties_Dlg();
+	App->CL_Interface->Move_FileView_Window();
+	App->CL_Interface->Resize_FileView();
+	App->CL_Interface->Position_Properties_Dlg();
 	
 	//App->CL_Com_Objects->Show_Entities(true);
 	

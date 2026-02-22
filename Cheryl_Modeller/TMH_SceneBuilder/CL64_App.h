@@ -64,7 +64,7 @@ THE SOFTWARE.
 #include "Face_Editor.h"
 
 #include "CLP_3D_Setup.h"
-#include "CL64_Panels.h"
+#include "CL64_Interface.h"
 #include "CL64_Keyboard.h"
 #include "CL64_Scene.h"
 #include "CL64_Ogre3D.h"
@@ -148,7 +148,7 @@ public:
 	Face_Editor*				CL_X_Face_Editor;
 	
 	CLP_3D_Setup*				CL_Ogre;
-	CL64_Panels*				CL_Panels;
+	CL64_Interface*				CL_Interface;
 	CL64_Keyboard*				CL_Keyboard;
 	CL64_Scene*					CL_Scene;
 	CL64_Ogre3D*				CL_Ogre3D;

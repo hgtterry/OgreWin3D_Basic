@@ -556,7 +556,7 @@ LRESULT CALLBACK CreateConeDialog::Proc_CreateCone(HWND hDlg, UINT message, WPAR
 
 			m_Cone->Remove_Edit_Boxes(hDlg);
 
-			App->CL_Panels->Deselect_All_Brushes_Update_Dlgs();
+			App->CL_Interface->Deselect_All_Brushes_Update_Dlgs();
 			App->CL_Top_Tabs->Redraw_TopTabs_Dlg();
 			App->CL_Ogre->OGL_Listener->Show_Visuals(false);
 

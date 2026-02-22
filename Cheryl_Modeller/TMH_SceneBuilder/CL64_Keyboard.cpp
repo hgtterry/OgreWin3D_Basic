@@ -209,7 +209,7 @@ void CL64_Keyboard::Keyboard_Mode_Model(float deltaTime)
 	// -------------------------- Escape 
 	if (KEYDOWN(VK_ESCAPE) && App->CL_Editor_Control->flag_Map_Editor_Active == true)
 	{
-		App->CL_Panels->Deselect_All_Brushes_Update_Dlgs();
+		App->CL_Interface->Deselect_All_Brushes_Update_Dlgs();
 		App->CL_Top_Tabs->Redraw_TopTabs_Dlg();
 		App->CL_Ogre->OGL_Listener->Show_Visuals(false);
 	}
@@ -289,7 +289,7 @@ void CL64_Keyboard::Keyboard_Mode_Free(float deltaTime)
 		// -------------------------- Escape 
 		if (KEYDOWN(VK_ESCAPE) && App->CL_Editor_Control->flag_Map_Editor_Active == true)
 		{
-			App->CL_Panels->Deselect_All_Brushes_Update_Dlgs();
+			App->CL_Interface->Deselect_All_Brushes_Update_Dlgs();
 			App->CL_Top_Tabs->Redraw_TopTabs_Dlg();
 			App->CL_Ogre->OGL_Listener->Show_Visuals(false);
 		}

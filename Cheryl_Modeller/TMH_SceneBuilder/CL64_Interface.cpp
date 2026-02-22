@@ -25,20 +25,20 @@ THE SOFTWARE.
 #include "pch.h"
 #include "resource.h"
 #include "CL64_App.h"
-#include "CL64_Panels.h"
+#include "CL64_Interface.h"
 
-CL64_Panels::CL64_Panels()
+CL64_Interface::CL64_Interface()
 {
 }
 
-CL64_Panels::~CL64_Panels()
+CL64_Interface::~CL64_Interface()
 {
 }
 
 // *************************************************************************
 // *			Reset_All_Dialogs:- Terry and Hazel Flanigan 2026		   *
 // *************************************************************************
-void CL64_Panels::Reset_All_Dialogs(void)
+void CL64_Interface::Reset_All_Dialogs(void)
 {
 	ShowWindow(App->CL_Properties_Tabs->Tabs_Control_Hwnd, false);
 
@@ -48,7 +48,7 @@ void CL64_Panels::Reset_All_Dialogs(void)
 // *************************************************************************
 // *  Deselect_All_Brushes_Update_Dlgs:- Terry and Hazel Flanigan 2025     *
 // *************************************************************************
-void CL64_Panels::Deselect_All_Brushes_Update_Dlgs(void)
+void CL64_Interface::Deselect_All_Brushes_Update_Dlgs(void)
 {
 	App->CL_Doc->Set_Tool_GeneralSelect();
 	App->CL_Doc->ResetAllSelections();
@@ -77,7 +77,7 @@ void CL64_Panels::Deselect_All_Brushes_Update_Dlgs(void)
 // *************************************************************************
 // *		Move_FileView_Window:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
-void CL64_Panels::Move_FileView_Window(void)
+void CL64_Interface::Move_FileView_Window(void)
 {
 	POINT p = { 0 };
 
@@ -93,7 +93,7 @@ void CL64_Panels::Move_FileView_Window(void)
 // *************************************************************************
 // *			Position_Properties_Dlg:- Terry and Hazel Flanigan 2024	   *
 // *************************************************************************
-bool CL64_Panels::Position_Properties_Dlg(void)
+bool CL64_Interface::Position_Properties_Dlg(void)
 {
 	/*POINT p = { 0 };
 
@@ -121,7 +121,7 @@ bool CL64_Panels::Position_Properties_Dlg(void)
 // *************************************************************************
 // *			Position_Tabs_Dlg:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
-void CL64_Panels::Position_Tabs_Dlg(void)
+void CL64_Interface::Position_Tabs_Dlg(void)
 {
 	POINT position = { 0 };
 
@@ -142,7 +142,7 @@ void CL64_Panels::Position_Tabs_Dlg(void)
 // *************************************************************************
 // *		Position_Materials_Dlg:- Terry and Hazel Flanigan 2026		   *
 // *************************************************************************
-void CL64_Panels::Position_Materials_Dlg(void)
+void CL64_Interface::Position_Materials_Dlg(void)
 {
 	POINT position = { 0 };
 
@@ -166,7 +166,7 @@ void CL64_Panels::Position_Materials_Dlg(void)
 // *************************************************************************
 // *			Resize_FileView:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-bool CL64_Panels::Resize_FileView(void)
+bool CL64_Interface::Resize_FileView(void)
 {
 	RECT clientRect;
 	HDWP hdwp;
