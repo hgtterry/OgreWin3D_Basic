@@ -208,6 +208,12 @@ LRESULT CALLBACK CL64_Properties_Materials::Proc_Materials_Dialog_Ogre(HWND hDlg
 			return TRUE;
 		}
 
+		if (LOWORD(wParam) == IDCANCEL)
+		{
+			App->CL_Interface->Show_Materials_Dlg(false);
+			return TRUE;
+		}
+
 		break;
 	}
 
