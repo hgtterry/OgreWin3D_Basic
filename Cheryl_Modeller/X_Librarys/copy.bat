@@ -31,5 +31,5 @@ echo f |xcopy X_Lib_Zip\unzip.h ..\Common_64\OW3D\include\unzip.h /y
 echo f |xcopy X_Lib_Face_Editor\Face_Editor.h ..\Common_64\OW3D\include\Face_Editor.h /y
 echo f |xcopy X_Libs\Init_Libs.h ..\Common_64\OW3D\include\Init_Libs.h /y
 
-echo "Cheryl Modeller 22/02/26 Build 2";
+echo "Cheryl Modeller 28/02/26 Build 2";
 pause

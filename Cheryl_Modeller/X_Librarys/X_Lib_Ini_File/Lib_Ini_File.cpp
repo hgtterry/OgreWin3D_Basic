@@ -48,7 +48,7 @@ Lib_Ini_File::~Lib_Ini_File(void)
 // *************************************************************************
 char* Lib_Ini_File::GetVersion()
 {
-	return (LPSTR)" Cheryl 3D Modeller (Lib_Ini_File):-- 22-02-26 Build 2 ";
+	return (LPSTR)" Cheryl 3D Modeller (Lib_Ini_File):-- 28-02-26 Build 2 ";
 }
 
 // *************************************************************************
