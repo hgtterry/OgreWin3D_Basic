@@ -499,11 +499,11 @@ void CL64_ImGui::Show_Ogre_Model_Data_GUI(void)
 						ImGui::Text("Length:  %f", Ogre_Data->m_Motion_Length[Count]);
 						ImGui::Text("Tracks: ( Bones )  %i", Ogre_Data->m_Motion_Num_Of_Tracks[Count]);
 
-						if (ImGui::Button("Play Motion"))
-						{
-							//App->CL_TopDlg->Switch_To_Motions_Dlg();
-							//App->CL_TopDlg->Update_Motions_By_Name(App->CL_Model->S_OgreMeshData[0]->m_Motion_Names[Count].c_str());
-						}
+						//if (ImGui::Button("Play Motion"))
+						//{
+						//	//App->CL_TopDlg->Switch_To_Motions_Dlg();
+						//	//App->CL_TopDlg->Update_Motions_By_Name(App->CL_Model->S_OgreMeshData[0]->m_Motion_Names[Count].c_str());
+						//}
 
 						ImGui::EndMenu();
 					}
