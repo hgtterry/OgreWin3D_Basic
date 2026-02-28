@@ -27,7 +27,7 @@ void CL64_Importers::Set_Editor()
 // *************************************************************************
 // *			Load_Ogre_Model:- Terry and Hazel Flanigan 2024 		   *
 // *************************************************************************
-bool CL64_Importers::Load_Ogre_Model(bool Use_File_Dialog)
+bool CL64_Importers::Load_Ogre_Model(bool Use_File_Dialog, bool Check_Resource_File)
 {
 	if (Use_File_Dialog == true)
 	{
@@ -57,6 +57,20 @@ bool CL64_Importers::Load_Ogre_Model(bool Use_File_Dialog)
 	}
 	
 	App->CL_Model->Clear_Model();
+
+	if (App->CL_Resources->flag_Ogre_CFG_Loaded == true && Check_Resource_File == true)
+	{
+		App->CL_Dialogs->YesNo((LPSTR)"Use Loaded Resources", (LPSTR)"Yes No");
+		if (App->CL_Dialogs->flag_Dlg_Canceled == true) // No
+		{
+			App->CL_Resources->Unload_OgreCFG_Resources();
+		}
+	}
+
+	if (Check_Resource_File == false)
+	{
+		App->CL_Resources->Unload_OgreCFG_Resources();
+	}
 
 	App->CL_Model->Set_Paths();
 
@@ -149,7 +163,7 @@ bool CL64_Importers::Load_Ogre_Model(bool Use_File_Dialog)
 	App->CL_Interface->Menu_Enable_Materials(true);
 	App->CL_Interface->Show_file_view(true);
 
-	if (App->CL_Resources->flag_Ogre_CFG_Loaded == false)
+	if (App->CL_Resources->flag_Ogre_CFG_Loaded == false && Check_Resource_File == true)
 	{
 		App->CL_Dialogs->YesNo((LPSTR)"No Resources Loaded", (LPSTR)"Load Resources");
 		if (App->CL_Dialogs->flag_Dlg_Canceled == false) // Yes
@@ -285,6 +299,8 @@ bool CL64_Importers::Load_Ogre_Resource_CFG(bool Use_File_Dialog)
 // *************************************************************************
 void CL64_Importers::Scan_Material_Files(void)
 {
+	bool All_Correct = true;
+
 	Ogre::String Material;
 
 	for (unsigned int i = 0; i < App->CL_Model->Imported_Ogre_Ent->getNumSubEntities(); ++i)
@@ -294,15 +310,20 @@ void CL64_Importers::Scan_Material_Files(void)
 		Material = subEnt->getMaterialName();
 
 		bool Test = Ogre::MaterialManager::getSingleton().resourceExists(subEnt->getMaterialName(), App->CL_Resources->Ogre_Loader_Resource_Group);
-		if (Test == 1)
+		if (Test == true)
 		{
 
 		}
 		else
 		{
 			subEnt->setMaterialName("No_Material_Loaded", App->CL_Ogre->App_Resource_Group);
+			bool All_Correct = false;
 		}
 	}
 
+	if (All_Correct == true)
+	{
+		//App->CL_Resources->flag_Ogre_CFG_Loaded = true;
+	}
 }
 

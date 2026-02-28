@@ -356,7 +356,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
           
             case ID_OGRE3D_MESH:
             {
-                App->CL_Importers->Load_Ogre_Model(true);
+                App->CL_Importers->Load_Ogre_Model(true, true);
                 return 1;
             }
 
@@ -383,7 +383,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 strcpy(App->CL_Model->Loaded_PathFileName, App->RB_Directory_FullPath);
                 strcat(App->CL_Model->Loaded_PathFileName, "\\Models\\Ogre3D_Models\\Sinbad_No_Config\\Sinbad.mesh");
 
-                bool test = App->CL_Importers->Load_Ogre_Model(false);
+                bool test = App->CL_Importers->Load_Ogre_Model(false, false);
 
                 return 1;
             }

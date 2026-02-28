@@ -53,6 +53,7 @@ CLP_3D_Listener::CLP_3D_Listener()
 
 	flag_StopOgre = false;
 	flag_Run_Physics = false;
+	flag_Animate_Ogre = false;
 }
 
 CLP_3D_Listener::~CLP_3D_Listener()

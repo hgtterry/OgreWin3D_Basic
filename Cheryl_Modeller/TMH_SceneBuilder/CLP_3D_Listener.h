@@ -77,6 +77,7 @@ public:
 
 	bool flag_StopOgre;
 	bool flag_Run_Physics;
+	bool flag_Animate_Ogre;
 
 	Ogre::Vector3	Player_Pos;
 	Ogre::Radian	Player_Pitch;

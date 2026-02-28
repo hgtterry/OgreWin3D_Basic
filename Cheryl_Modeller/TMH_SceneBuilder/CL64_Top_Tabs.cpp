@@ -793,7 +793,7 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Top_Tabs(HWND hDlg, UINT message, WPARAM wP
 
 		if (LOWORD(wParam) == IDC_BT_IMPORT)
 		{
-			App->CL_Importers->Load_Ogre_Model(true);
+			App->CL_Importers->Load_Ogre_Model(true, true);
 			return TRUE;
 		}
 
