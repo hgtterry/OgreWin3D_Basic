@@ -87,6 +87,7 @@ CL64_App::CL64_App(void)
 	CL_Picking =				nullptr;
 	CL_Camera =					nullptr;
 	CL_Entities =				nullptr;
+	CL_Motions =				nullptr;
 
 	CL_PB =						nullptr;
 
@@ -265,7 +266,8 @@ void CL64_App::InitApp(void)
 	CL_Picking =				new CL64_Picking();
 	CL_Camera =					new CL64_Camera();
 	CL_Entities =				new CL64_Entities();
-	
+	CL_Motions =				new CL64_Motioins();
+
 	CL_PB =						new CL64_PB();
 
 	CL_Props_Dialogs =			new CL64_Props_Dialogs();

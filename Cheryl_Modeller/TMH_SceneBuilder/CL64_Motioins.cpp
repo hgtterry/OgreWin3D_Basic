@@ -55,7 +55,7 @@ void CL64_Motioins::Get_Motions(Ogre::Entity* Ogre_Entity)
 		int AnimationCount = skeletonInstance->getNumAnimations();
 		if (AnimationCount == 0)
 		{
-			flag_IsAnimated = 0;
+			flag_IsAnimated = false;
 			App->CL_Model->MotionCount = 0;
 			//App->CL_TopDlg->Update_Motions_Combo();
 		}

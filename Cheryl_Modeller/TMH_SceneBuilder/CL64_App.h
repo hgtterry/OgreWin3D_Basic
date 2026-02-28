@@ -82,6 +82,7 @@ THE SOFTWARE.
 #include "CL64_Picking.h"
 #include "CL64_Camera.h"
 #include "CL64_Entities.h"
+#include "CL64_Motioins.h"
 
 #include "CL64_PB.h"
 
@@ -180,7 +181,8 @@ public:
 	CL64_Gizmos*				CL_Gizmos;
 	CL64_Dimensions*			CL_Dimensions;
 	CL64_Props_Dialogs*			CL_Props_Dialogs;
-	
+	CL64_Motioins*				CL_Motions;
+
 	Sandbox*					CL_Sandbox;
 	CL64_Importers*				CL_Importers;
 	CL64_Model*					CL_Model;

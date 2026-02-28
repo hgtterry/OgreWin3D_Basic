@@ -147,7 +147,7 @@ bool CL64_Importers::Load_Ogre_Model(bool Use_File_Dialog, bool Check_Resource_F
 	
 	////Get_BoneNames();
 
-	//App->CL_Motions->Get_Motions(App->CL_Scene->Imported_Ogre_Ent);
+	App->CL_Motions->Get_Motions(App->CL_Model->Imported_Ogre_Ent);
 
 	//App->Set_Title();
 
