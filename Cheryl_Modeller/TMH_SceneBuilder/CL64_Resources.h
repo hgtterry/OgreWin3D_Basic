@@ -34,7 +34,7 @@ public:
 	void Start_Resources();
 	void Load_Texture_Resources();
 	bool View_Texture(char* FileName, HWND Owner_hDlg);
-	void UnloadUserResources();
+	void Unload_OgreCFG_Resources();
 
 	// Project
 	bool Create_Project_Resources_Group();
@@ -51,7 +51,7 @@ public:
 
 	std::string	ResourcesCfgFile;
 	Ogre::ConfigFile cf;
-	bool Ogre_ExternalResourceLoaded;
+	bool flag_Ogre_CFG_Loaded;
 
 	char Resource_File_Path_And_File[MAX_PATH];
 	char Resource_File_FileName[MAX_PATH];

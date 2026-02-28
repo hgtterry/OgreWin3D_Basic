@@ -74,8 +74,6 @@ bool CL64_Importers::Load_Ogre_Model(bool Use_File_Dialog)
 		App->CL_Model->Imported_Ogre_Node = nullptr;
 	}
 
-	////App->CL_Scene->Reset_Main_Entity();
-
 	// Resource FolderPath
 	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(App->CL_Model->Model_FolderPath,
 		"FileSystem", App->CL_Resources->Ogre_Loader_Resource_Group);
@@ -150,6 +148,15 @@ bool CL64_Importers::Load_Ogre_Model(bool Use_File_Dialog)
 	App->CL_Interface->Show_Materials_Dlg(true);
 	App->CL_Interface->Menu_Enable_Materials(true);
 	App->CL_Interface->Show_file_view(true);
+
+	if (App->CL_Resources->flag_Ogre_CFG_Loaded == false)
+	{
+		App->CL_Dialogs->YesNo((LPSTR)"No Resources Loaded", (LPSTR)"Load Resources");
+		if (App->CL_Dialogs->flag_Dlg_Canceled == false) // Yes
+		{
+			App->CL_Importers->Load_Ogre_Resource_CFG(true);
+		}
+	}
 
 	//App->Enable_Export_Options(true);
 

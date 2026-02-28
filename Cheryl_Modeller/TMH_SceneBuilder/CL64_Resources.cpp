@@ -53,7 +53,7 @@ CL64_Resources::CL64_Resources()
 
 	Ogre_Loader_Resource_Group = "Ogre_Loader_Resource_Group";
 
-	Ogre_ExternalResourceLoaded = false;
+	flag_Ogre_CFG_Loaded = false;
 
 	Resource_File_Path_And_File[0] = 0;
 	Resource_File_FileName[0] = 0;
@@ -74,13 +74,7 @@ CL64_Resources::~CL64_Resources()
 void CL64_Resources::Reset_Class()
 {
 	// Check if the resource group exists and destroy it
-	auto& resourceGroupManager = Ogre::ResourceGroupManager::getSingleton();
-	if (resourceGroupManager.resourceGroupExists(Ogre_Loader_Resource_Group))
-	{
-		resourceGroupManager.destroyResourceGroup(Ogre_Loader_Resource_Group);
-	}
-
-	mSelected_Resource_Group = "App_Resource_Group";
+	Unload_OgreCFG_Resources();
 }
 
 // *************************************************************************
@@ -997,7 +991,7 @@ void CL64_Resources::Load_OgreCFG_Resources(const Ogre::String& file)
 			App->CL_Model->Imported_Ogre_Ent = nullptr;
 			App->CL_Model->Imported_Ogre_Node = nullptr;
 
-			UnloadUserResources();
+			Unload_OgreCFG_Resources();
 
 			App->CL_Importers->Flag_Reload_Ogre_Model = true;
 		}
@@ -1045,23 +1039,30 @@ void CL64_Resources::Load_OgreCFG_Resources(const Ogre::String& file)
 	try
 	{
 		Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
-		Ogre_ExternalResourceLoaded = 1;
+		flag_Ogre_CFG_Loaded = true;
 	}
 	catch (...)
 	{
 
 	}
 
-	Ogre_ExternalResourceLoaded = 1;
+	flag_Ogre_CFG_Loaded = true;
 }
 
 // **************************************************************************
-// *		UnloadUserResources:- Terry and Hazel Flanigan 2024				*
+// *		Unload_OgreCFG_Resources:- Terry and Hazel Flanigan 2026		*
 // **************************************************************************
-void CL64_Resources::UnloadUserResources()
+void CL64_Resources::Unload_OgreCFG_Resources()
 {
-	Ogre::ResourceGroupManager::getSingleton().destroyResourceGroup(App->CL_Resources->Ogre_Loader_Resource_Group);
-	Ogre_ExternalResourceLoaded = 0;
+	auto& resourceGroupManager = Ogre::ResourceGroupManager::getSingleton();
+	if (resourceGroupManager.resourceGroupExists(Ogre_Loader_Resource_Group))
+	{
+		resourceGroupManager.destroyResourceGroup(Ogre_Loader_Resource_Group);
+	}
+
+	flag_Ogre_CFG_Loaded = false;
+
+	mSelected_Resource_Group = "App_Resource_Group";
 }
 
 // *************************************************************************
@@ -1069,7 +1070,6 @@ void CL64_Resources::UnloadUserResources()
 // *************************************************************************
 bool CL64_Resources::View_File(char* FileName, HWND Owner_hDlg)
 {
-
 	Ogre::FileInfoListPtr RFI = ResourceGroupManager::getSingleton().listResourceFileInfo(mSelected_Resource_Group, false);
 	Ogre::FileInfoList::const_iterator i, iend;
 	iend = RFI->end();

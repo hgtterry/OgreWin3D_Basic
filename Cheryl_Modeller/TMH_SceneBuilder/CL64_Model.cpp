@@ -139,7 +139,15 @@ void CL64_Model::Clear_Model()
 		App->CL_Model->Imported_Ogre_Node = nullptr;
 	}
 
-	App->CL_Resources->Reset_Class();
+	if (App->CL_Resources->flag_Ogre_CFG_Loaded == true)
+	{
+		App->CL_Dialogs->YesNo((LPSTR)"Use Loaded Resources", (LPSTR)"Yes No");
+		if (App->CL_Dialogs->flag_Dlg_Canceled == true) // No
+		{
+			App->CL_Resources->Unload_OgreCFG_Resources();
+		}
+	}
+
 
 	// Reset the mesh data filename
 	App->CL_Mesh->S_OgreMeshData[0]->mFileName_Str = "No Model Loaded";
