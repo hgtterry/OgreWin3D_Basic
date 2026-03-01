@@ -238,9 +238,9 @@ void CL64_Motioins::UpdateBones_Orge(bool Reset)
 		{
 			Ogre::Bone* bone = itor.getNext();
 
-			//App->CL_Model->S_Bones[Loop]->TranslationStart.X = bone->_getDerivedPosition().x;
-			//App->CL_Model->S_Bones[Loop]->TranslationStart.Y = bone->_getDerivedPosition().y;
-			//App->CL_Model->S_Bones[Loop]->TranslationStart.Z = bone->_getDerivedPosition().z;
+			App->CL_Mesh->S_Bones[Loop]->TranslationStart.X = bone->_getDerivedPosition().x;
+			App->CL_Mesh->S_Bones[Loop]->TranslationStart.Y = bone->_getDerivedPosition().y;
+			App->CL_Mesh->S_Bones[Loop]->TranslationStart.Z = bone->_getDerivedPosition().z;
 
 			//App->CL_Model_Data->S_Bones[Loop]->TranslationStart.X = bone->_getDerivedOrientation().
 
@@ -383,9 +383,9 @@ void CL64_Motioins::Get_AnimationInstance(Ogre::MeshPtr mesh,
 	int loop = 0;
 	while (loop < vertex_count)
 	{
-		//App->CL_Model->Group[SubMesh]->vertex_Data[loop].x = vertices[loop].x;
-		//App->CL_Model->Group[SubMesh]->vertex_Data[loop].y = vertices[loop].y;
-		//App->CL_Model->Group[SubMesh]->vertex_Data[loop].z = vertices[loop].z;
+		App->CL_Mesh->Group[SubMesh]->vertex_Data[loop].x = vertices[loop].x;
+		App->CL_Mesh->Group[SubMesh]->vertex_Data[loop].y = vertices[loop].y;
+		App->CL_Mesh->Group[SubMesh]->vertex_Data[loop].z = vertices[loop].z;
 
 		loop++;
 	}
