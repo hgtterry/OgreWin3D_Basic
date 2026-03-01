@@ -45,6 +45,8 @@ public:
 
 	Ogre::AnimationState* Animate_State;
 
+	char Selected_Motion_Name[MAX_PATH];
+
 	bool flag_Motion_Playing;
 	bool flag_Motion_Paused;
 	bool flag_IsAnimated;

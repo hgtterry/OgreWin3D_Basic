@@ -26,6 +26,7 @@ CL64_Motioins::CL64_Motioins(void)
 	AnimationScale = 1;
 	Animate_State = nullptr;
 
+	Selected_Motion_Name[0] = 0;
 }
 
 CL64_Motioins::~CL64_Motioins(void)
@@ -154,12 +155,12 @@ void CL64_Motioins::Play_SelectedMotion(void)
 	{
 		if (App->CL_Model->Imported_Ogre_Ent)
 		{
-			//Animate_State = App->CL_Model->Imported_Ogre_Ent->getAnimationState(App->CL_TopDlg->Selected_Motion_Name);
+			Animate_State = App->CL_Model->Imported_Ogre_Ent->getAnimationState(Selected_Motion_Name);
 
 			if (Animate_State)
 			{
 				Animate_State->setEnabled(true);
-				App->CL_Ogre->Listener_3D->flag_Animate_Ogre = 1;
+				App->CL_Ogre->Listener_3D->flag_Animate_Ogre = true;
 
 				flag_Motion_Paused = 0;
 				flag_Motion_Playing = 1;

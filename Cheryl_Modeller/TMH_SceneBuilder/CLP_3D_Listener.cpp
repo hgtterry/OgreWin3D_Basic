@@ -67,6 +67,12 @@ bool CLP_3D_Listener::frameStarted(const FrameEvent& evt)
 {
 	//Update_Game_Logic(evt.timeSinceLastFrame);
 
+	// ------------------------ Animation
+	if (flag_Animate_Ogre == true)
+	{
+		App->CL_Motions->Update_Motion(evt.timeSinceLastFrame);
+	}
+
 	return true;
 }
 

@@ -187,11 +187,11 @@ void CL64_Keyboard::Keyboard_Mode_Model(float deltaTime)
 	// Forward and Backward movement
 	if (GetAsyncKeyState(87) < 0 || m_Listener->Wheel < 0) // W Key or Mouse Wheel Forward
 	{
-		m_Listener->mTranslateVector.z = - m_Listener->mMoveScale * (GetAsyncKeyState(87) < 0 ? 1 : 25);
+		m_Listener->mTranslateVector.z = - m_Listener->mMoveScale * (GetAsyncKeyState(87) < 0 ? 1 : 2);
 	}
 	else if (GetAsyncKeyState(83) < 0 || m_Listener->Wheel > 0) // S Key or Mouse Wheel Back
 	{
-		m_Listener->mTranslateVector.z = m_Listener->mMoveScale * (GetAsyncKeyState(83) < 0 ? 1 : 25);
+		m_Listener->mTranslateVector.z = m_Listener->mMoveScale * (GetAsyncKeyState(83) < 0 ? 1 : 2);
 	}
 
 	// Pan Left A Key
@@ -232,7 +232,7 @@ void CL64_Keyboard::Keyboard_Mode_Free(float deltaTime)
 		}
 		if (m_Listener->Wheel < 0) // Mouse Wheel Forward
 		{
-			m_Listener->mTranslateVector.z = - m_Listener->mMoveScale * 30;
+			m_Listener->mTranslateVector.z = - m_Listener->mMoveScale * 1;
 			flag_Update_Views = true;
 		}
 		
@@ -244,7 +244,7 @@ void CL64_Keyboard::Keyboard_Mode_Free(float deltaTime)
 		}
 		if (m_Listener->Wheel > 0) // Mouse Wheel Back
 		{
-			m_Listener->mTranslateVector.z = m_Listener->mMoveScale * 30;
+			m_Listener->mTranslateVector.z = m_Listener->mMoveScale * 1;
 			flag_Update_Views = true;
 		}
 	
