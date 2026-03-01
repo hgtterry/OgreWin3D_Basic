@@ -64,6 +64,7 @@ CL64_App::CL64_App(void)
 	CL_Properties_Templates =	nullptr;
 	CL_Properties_Brushes =		nullptr;
 	CL_Properties_Textures =	nullptr;
+	CL_Properties_Motions =		nullptr;
 
 	CL_X_Face_Editor =			nullptr;
 
@@ -242,6 +243,7 @@ void CL64_App::InitApp(void)
 	CL_Properties_Templates =	new CL64_Properties_Templates();
 	CL_Properties_Brushes =		new CL64_Properties_Brushes();
 	CL_Properties_Textures =	new CL64_Properties_Textures();
+	CL_Properties_Motions =		new CL64_Properties_Motions();
 
 	CL_X_Face_Editor =			new Face_Editor();
 

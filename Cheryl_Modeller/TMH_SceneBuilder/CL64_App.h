@@ -60,6 +60,7 @@ THE SOFTWARE.
 #include "CL64_Properties_Templates.h"
 #include "CL64_Properties_Brushes.h"
 #include "CL64_Properties_Textures.h"
+#include "CL64_Properties_Motions.h"
 
 #include "Face_Editor.h"
 
@@ -145,6 +146,7 @@ public:
 	CL64_Properties_Templates*	CL_Properties_Templates;
 	CL64_Properties_Brushes*	CL_Properties_Brushes;
 	CL64_Properties_Textures*	CL_Properties_Textures;
+	CL64_Properties_Motions*	CL_Properties_Motions;
 
 	Face_Editor*				CL_X_Face_Editor;
 	

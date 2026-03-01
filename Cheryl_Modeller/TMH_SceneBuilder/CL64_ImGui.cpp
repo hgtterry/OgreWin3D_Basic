@@ -60,6 +60,9 @@ CL64_ImGui::CL64_ImGui()
 	listMaterialItems_Ogre[0] = true;
 	PreviouseMaterial_Ogre = 0;
 
+	listMotionItems_Ogre[0] = true;
+	PreviouseMotion_Ogre = 0;
+
 	guiFunctions.reserve(20);
 
 	Base = nullptr;
@@ -372,6 +375,9 @@ void CL64_ImGui::Show_Ogre_Model_Data_GUI(void)
 				{
 					if (ImGui::Selectable(App->CL_Mesh->Group[Count]->Ogre_ImGui_MatId, listMaterialItems_Ogre[Count]))
 					{
+						listMotionItems_Ogre[PreviouseMotion_Ogre] = 0;
+						PreviouseMotion_Ogre = 0;
+
 						char mMaterial[MAX_PATH];
 						char Texture[MAX_PATH];
 
@@ -392,6 +398,8 @@ void CL64_ImGui::Show_Ogre_Model_Data_GUI(void)
 							App->CL_Properties_Materials->Sel_BaseBitmap_Ogre = App->CL_Mesh->Group[Count]->Base_Bitmap;
 							App->CL_Properties_Materials->Update_Texture_Ogre_Dlg();
 						}
+
+						App->CL_Interface->Show_Materials_Dlg(true);
 
 						listMaterialItems_Ogre[PreviouseMaterial_Ogre] = 0;
 						listMaterialItems_Ogre[Count] = 1;
@@ -491,29 +499,17 @@ void CL64_ImGui::Show_Ogre_Model_Data_GUI(void)
 
 				while (Count < Size)
 				{
-					ImGui::PushID("foo");
-					if (ImGui::BeginMenu(Ogre_Data->m_Motion_Names[Count].c_str()))
+					if (ImGui::Selectable(Ogre_Data->m_Motion_Names[Count].c_str(), listMotionItems_Ogre[Count]))
 					{
+						listMaterialItems_Ogre[PreviouseMaterial_Ogre] = 0;
+						PreviouseMaterial_Ogre = 0;
+					
+						App->CL_Interface->Show_Materials_Dlg(false);
 
-						ImGui::Text("Motion Name:  %s", Ogre_Data->m_Motion_Names[Count].c_str());
-						ImGui::Text("Length:  %f", Ogre_Data->m_Motion_Length[Count]);
-						ImGui::Text("Tracks: ( Bones )  %i", Ogre_Data->m_Motion_Num_Of_Tracks[Count]);
-
-						if (ImGui::Button("Play Motion"))
-						{
-							strcpy(App->CL_Motions->Selected_Motion_Name, App->CL_Mesh->S_OgreMeshData[0]->m_Motion_Names[Count].c_str());
-
-							App->CL_Motions->Stop_SelectedMotion();
-							App->CL_Motions->Play_SelectedMotion();
-
-							//App->CL_TopDlg->Switch_To_Motions_Dlg();
-							//App->CL_TopDlg->Update_Motions_By_Name(App->CL_Model->S_OgreMeshData[0]->m_Motion_Names[Count].c_str());
-						}
-
-						ImGui::EndMenu();
+						listMotionItems_Ogre[PreviouseMotion_Ogre] = 0;
+						listMotionItems_Ogre[Count] = 1;
+						PreviouseMotion_Ogre = Count;
 					}
-
-					ImGui::PopID();
 					Count++;
 				}
 
