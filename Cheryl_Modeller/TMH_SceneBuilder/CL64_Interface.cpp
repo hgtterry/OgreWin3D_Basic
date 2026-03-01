@@ -161,7 +161,29 @@ void CL64_Interface::Position_Materials_Dlg(void)
 	SetWindowPos(App->CL_Properties_Materials->Textures_Dlg_Hwnd_Ogre, NULL,
 		position.x + dialogWidth - 300, position.y + 25,
 		0, 0, SWP_NOSIZE | SWP_NOZORDER);
+}
 
+// *************************************************************************
+// *		Position_Motions_Dlg:- Terry and Hazel Flanigan 2026		   *
+// *************************************************************************
+void CL64_Interface::Position_Motions_Dlg(void)
+{
+	POINT position = { 0 };
+
+	// Map the window points to get the current position
+	int offset = MapWindowPoints(App->CL_Editor_Map->Main_View_Dlg_Hwnd, NULL, &position, 1);
+
+	RECT mainDialogRect;
+	GetWindowRect(App->CL_Editor_Map->Main_View_Dlg_Hwnd, &mainDialogRect);
+
+	// Calculate the width and height of the main dialog
+	int dialogWidth = mainDialogRect.right - mainDialogRect.left;
+	int dialogHeight = mainDialogRect.bottom - mainDialogRect.top;
+
+	// Set the position of the Motions dialog
+	SetWindowPos(App->CL_Properties_Motions->Motions_Dlg_Hwnd, NULL,
+		position.x, dialogHeight,
+		0, 0, SWP_NOSIZE | SWP_NOZORDER);
 }
 
 // *************************************************************************

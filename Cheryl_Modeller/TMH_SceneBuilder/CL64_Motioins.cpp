@@ -166,7 +166,7 @@ void CL64_Motioins::Play_SelectedMotion(void)
 				flag_Motion_Playing = 1;
 			}
 
-			//RedrawWindow(App->CL_TopDlg->Motions_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			RedrawWindow(App->CL_Properties_Motions->Motions_Dlg_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 		}
 	}
 }
@@ -190,7 +190,7 @@ void CL64_Motioins::Stop_SelectedMotion(void)
 
 			flag_Motion_Paused = 0;
 			flag_Motion_Playing = 0;
-			//RedrawWindow(App->CL_TopDlg->Motions_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			RedrawWindow(App->CL_Properties_Motions->Motions_Dlg_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 		}
 	}
 }
@@ -392,4 +392,19 @@ void CL64_Motioins::Get_AnimationInstance(Ogre::MeshPtr mesh,
 
 	delete vertices;
 	delete indices;
+}
+
+// *************************************************************************
+// *		Update_Motions_By_Name:- Terry and Hazel Flanigan 2026		   *
+// *************************************************************************
+void CL64_Motioins::Update_Motions_By_Name(const char* Name)
+{
+	//SendDlgItemMessage(Motions_TB_hWnd, IDC_CB_MOTIONS_MOTIONS, CB_SELECTSTRING, (WPARAM)-1, (LPARAM)Name);
+
+	strcpy(Selected_Motion_Name, Name);
+
+	App->CL_Motions->Stop_SelectedMotion();
+	App->CL_Motions->Play_SelectedMotion();
+
+	RedrawWindow(App->CL_Properties_Motions->Motions_Dlg_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 }

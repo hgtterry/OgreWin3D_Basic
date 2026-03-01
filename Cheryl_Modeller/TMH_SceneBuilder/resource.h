@@ -108,6 +108,7 @@
 #define IDB_NO_TEXTURE                  218
 #define IDD_FILEVIEWER                  219
 #define IDB_TB_MODELDATAOFF             220
+#define IDD_PROPS_MOTIONS               220
 #define IDB_TB_MODELDATAON              221
 #define IDC_BANNER                      1000
 #define IDC_STTEXT                      1001
@@ -475,6 +476,7 @@
 #define IDC_BUTTON2                     1328
 #define IDC_TBSHOWHAIR                  1328
 #define IDC_BT_MATERIAL_FACES           1328
+#define IDC_BT_MOT_STOP                 1328
 #define IDC_TBSHOWGRID                  1329
 #define IDC_BUTTON1                     1331
 #define IDC_BUT_AT_CAMERA               1331
@@ -483,6 +485,7 @@
 #define IDC_BT_DIMENSIONS               1331
 #define IDC_BT_PT_VIEWMAT               1331
 #define IDC_BT_LIBRARIES                1331
+#define IDC_BT_MOT_PLAY                 1331
 #define IDC_CHECK1                      1332
 #define IDC_CK_LASTFILE                 1332
 #define IDC_CK_FACESALL                 1332

@@ -29,6 +29,9 @@ public:
 	CL64_ImGui();
 	~CL64_ImGui();
 
+	void Reset_Class(void);
+	void Reset_Indexs(void);
+
 	void Close_Dialogs(void);
 
 	void Init_ImGui(void);

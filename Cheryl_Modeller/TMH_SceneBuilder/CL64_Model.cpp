@@ -126,6 +126,13 @@ void CL64_Model::Set_BondingBox_Model(bool Create)
 // *************************************************************************
 void CL64_Model::Clear_Model()
 {
+	if (App->CL_Motions->flag_Motion_Playing == true)
+	{
+		App->CL_Motions->Stop_SelectedMotion();
+	}
+
+	App->CL_ImGui->Reset_Class();
+
 	// Check if the imported Ogre entity and node exist
 	if (App->CL_Model->Imported_Ogre_Ent && App->CL_Model->Imported_Ogre_Node)
 	{
@@ -141,6 +148,7 @@ void CL64_Model::Clear_Model()
 
 	// Reset the mesh data filename
 	App->CL_Mesh->S_OgreMeshData[0]->mFileName_Str = "No Model Loaded";
+	App->CL_Mesh->S_OgreMeshData[0]->m_Motion_Names.resize(0);
 
 	// Clear groups
 	for (int Count = 0; Count < GroupCount; ++Count)

@@ -60,8 +60,8 @@ CL64_ImGui::CL64_ImGui()
 	listMaterialItems_Ogre[0] = true;
 	PreviouseMaterial_Ogre = 0;
 
-	listMotionItems_Ogre[0] = true;
-	PreviouseMotion_Ogre = 0;
+	listMotionItems_Ogre[0] = false;
+	PreviouseMotion_Ogre = -1;
 
 	guiFunctions.reserve(20);
 
@@ -74,7 +74,30 @@ CL64_ImGui::~CL64_ImGui()
 }
 
 // *************************************************************************
-// *			Close_Dialogs:- Terry and Hazel Flanigan 2025				   *
+// *			Reset_Class:- Terry and Hazel Flanigan 2024				   *
+// *************************************************************************
+void CL64_ImGui::Reset_Class(void)
+{
+	flag_Show_Model_Data = 1;
+	Reset_Indexs();
+}
+
+// *************************************************************************
+// *			Reset_Material_Index:- Terry and Hazel Flanigan 2024	   *
+// *************************************************************************
+void CL64_ImGui::Reset_Indexs(void)
+{
+	listMaterialItems_Ogre[PreviouseMaterial_Ogre] = 0;
+	listMaterialItems_Ogre[0] = 1;
+	PreviouseMaterial_Ogre = 0;
+
+	listMotionItems_Ogre[PreviouseMotion_Ogre] = 0;
+	listMotionItems_Ogre[0] = false;
+	PreviouseMotion_Ogre = -1;
+}
+
+// *************************************************************************
+// *			Close_Dialogs:- Terry and Hazel Flanigan 2025			   *
 // *************************************************************************
 void CL64_ImGui::Close_Dialogs(void)
 {
@@ -375,9 +398,6 @@ void CL64_ImGui::Show_Ogre_Model_Data_GUI(void)
 				{
 					if (ImGui::Selectable(App->CL_Mesh->Group[Count]->Ogre_ImGui_MatId, listMaterialItems_Ogre[Count]))
 					{
-						listMotionItems_Ogre[PreviouseMotion_Ogre] = 0;
-						PreviouseMotion_Ogre = 0;
-
 						char mMaterial[MAX_PATH];
 						char Texture[MAX_PATH];
 
@@ -398,8 +418,6 @@ void CL64_ImGui::Show_Ogre_Model_Data_GUI(void)
 							App->CL_Properties_Materials->Sel_BaseBitmap_Ogre = App->CL_Mesh->Group[Count]->Base_Bitmap;
 							App->CL_Properties_Materials->Update_Texture_Ogre_Dlg();
 						}
-
-						App->CL_Interface->Show_Materials_Dlg(true);
 
 						listMaterialItems_Ogre[PreviouseMaterial_Ogre] = 0;
 						listMaterialItems_Ogre[Count] = 1;
@@ -501,10 +519,12 @@ void CL64_ImGui::Show_Ogre_Model_Data_GUI(void)
 				{
 					if (ImGui::Selectable(Ogre_Data->m_Motion_Names[Count].c_str(), listMotionItems_Ogre[Count]))
 					{
-						listMaterialItems_Ogre[PreviouseMaterial_Ogre] = 0;
-						PreviouseMaterial_Ogre = 0;
-					
-						App->CL_Interface->Show_Materials_Dlg(false);
+						strcpy(App->CL_Motions->Selected_Motion_Name, App->CL_Mesh->S_OgreMeshData[0]->m_Motion_Names[Count].c_str());
+
+						if (App->CL_Motions->flag_Motion_Playing == true)
+						{
+							App->CL_Motions->Update_Motions_By_Name(App->CL_Mesh->S_OgreMeshData[0]->m_Motion_Names[Count].c_str());
+						}
 
 						listMotionItems_Ogre[PreviouseMotion_Ogre] = 0;
 						listMotionItems_Ogre[Count] = 1;

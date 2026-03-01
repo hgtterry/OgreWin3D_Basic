@@ -37,6 +37,7 @@ public:
 	void Position_Tabs_Dlg(void);
 
 	void Position_Materials_Dlg(void);
+	void Position_Motions_Dlg(void);
 
 	bool Resize_FileView(void);
 	void Deselect_All_Brushes_Update_Dlgs(void);
