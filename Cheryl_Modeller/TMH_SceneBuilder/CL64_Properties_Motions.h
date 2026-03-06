@@ -13,5 +13,7 @@ public:
 private:
 	static LRESULT CALLBACK Proc_Motions_Dialog(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
+	void Update_Speed_Combo(void);
+
 };
 

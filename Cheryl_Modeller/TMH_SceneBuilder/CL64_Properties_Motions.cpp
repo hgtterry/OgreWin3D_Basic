@@ -27,6 +27,8 @@ void CL64_Properties_Motions::Start_Motions_Dialog()
 {
 	Motions_Dlg_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_PROPS_MOTIONS, App->MainHwnd, (DLGPROC)Proc_Motions_Dialog);
 	Show_Motions_Dialog(true);
+
+	Update_Speed_Combo();
 }
 
 // *************************************************************************
@@ -38,8 +40,11 @@ LRESULT CALLBACK CL64_Properties_Motions::Proc_Motions_Dialog(HWND hDlg, UINT me
 	{
 	case WM_INITDIALOG:
 	{
+		SendDlgItemMessage(hDlg, IDC_BT_MOTIONS_PAUSE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_MOT_PLAY, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_MOT_STOP, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		SendDlgItemMessage(hDlg, IDC_CB_MOTIONS_SPEED, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		return TRUE;
 	}
@@ -90,18 +95,36 @@ LRESULT CALLBACK CL64_Properties_Motions::Proc_Motions_Dialog(HWND hDlg, UINT me
 			return CDRF_DODEFAULT;
 		}
 
-		/*if (some_item->idFrom == IDC_BT_MOTIONS_PAUSE)
+		if (some_item->idFrom == IDC_BT_MOTIONS_PAUSE)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Toggle(item, App->CL_Motions->flag_Motion_Paused);
 			return CDRF_DODEFAULT;
-		}*/
+		}
 
 		return CDRF_DODEFAULT;
 	}
 
 	case WM_COMMAND:
 	{
+		if (LOWORD(wParam) == IDC_BT_MOTIONS_PAUSE)
+		{
+			if (App->CL_Motions->flag_Motion_Playing == 1)
+			{
+				if (App->CL_Motions->flag_Motion_Paused == 0)
+				{
+					App->CL_Motions->Pause_SelectedMotion();
+				}
+				else
+				{
+					App->CL_Motions->flag_Motion_Paused = 0;
+					App->CL_Motions->Play_SelectedMotion();
+				}
+			}
+
+			return 1;
+		}
+
 		if (LOWORD(wParam) == IDC_BT_MOT_PLAY)
 		{
 			if (App->CL_ImGui->PreviouseMotion_Ogre > -1)
@@ -118,6 +141,28 @@ LRESULT CALLBACK CL64_Properties_Motions::Proc_Motions_Dialog(HWND hDlg, UINT me
 			return TRUE;
 		}
 
+		if (LOWORD(wParam) == IDC_CB_MOTIONS_SPEED)
+		{
+			switch (HIWORD(wParam)) // Find out what message it was
+			{
+			case CBN_DROPDOWN:
+				break;
+			case CBN_CLOSEUP:
+			{
+				char buff[MAX_PATH]{ 0 };
+
+				HWND temp = GetDlgItem(hDlg, IDC_CB_MOTIONS_SPEED);
+				int Index = SendMessage(temp, CB_GETCURSEL, 0, 0);
+				SendMessage(temp, CB_GETLBTEXT, Index, (LPARAM)buff);
+
+				App->CL_Motions->AnimationScale = atof(buff);
+
+			}
+			}
+
+			return TRUE;
+		}
+
 		if (LOWORD(wParam) == IDCANCEL)
 		{
 			//App->CL_Interface->Show_Materials_Dlg(false);
@@ -129,4 +174,24 @@ LRESULT CALLBACK CL64_Properties_Motions::Proc_Motions_Dialog(HWND hDlg, UINT me
 
 	}
 	return FALSE;
+}
+
+// *************************************************************************
+// *		Update_Speed_Combo:- Terry and Hazel Flanigan 2026			   *
+// *************************************************************************
+void CL64_Properties_Motions::Update_Speed_Combo(void)
+{
+	auto& Dlg_Hwnd = Motions_Dlg_Hwnd;
+
+	SendDlgItemMessage(Dlg_Hwnd, IDC_CB_MOTIONS_SPEED, CB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
+
+	SendDlgItemMessage(Dlg_Hwnd, IDC_CB_MOTIONS_SPEED, CB_ADDSTRING, (WPARAM)0, (LPARAM)"2");
+	SendDlgItemMessage(Dlg_Hwnd, IDC_CB_MOTIONS_SPEED, CB_ADDSTRING, (WPARAM)0, (LPARAM)"1.5");
+	SendDlgItemMessage(Dlg_Hwnd, IDC_CB_MOTIONS_SPEED, CB_ADDSTRING, (WPARAM)0, (LPARAM)"1");
+	SendDlgItemMessage(Dlg_Hwnd, IDC_CB_MOTIONS_SPEED, CB_ADDSTRING, (WPARAM)0, (LPARAM)"0.5");
+	SendDlgItemMessage(Dlg_Hwnd, IDC_CB_MOTIONS_SPEED, CB_ADDSTRING, (WPARAM)0, (LPARAM)"0.2");
+	SendDlgItemMessage(Dlg_Hwnd, IDC_CB_MOTIONS_SPEED, CB_ADDSTRING, (WPARAM)0, (LPARAM)"0.1");
+	SendDlgItemMessage(Dlg_Hwnd, IDC_CB_MOTIONS_SPEED, CB_ADDSTRING, (WPARAM)0, (LPARAM)"0.01");
+
+	SendDlgItemMessage(Dlg_Hwnd, IDC_CB_MOTIONS_SPEED, CB_SETCURSEL, (WPARAM)2, (LPARAM)0);
 }

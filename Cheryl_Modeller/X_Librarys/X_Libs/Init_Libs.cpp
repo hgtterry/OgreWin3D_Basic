@@ -26,9 +26,9 @@ void Init_Libs::Start_Libraries()
 }
 
 // *************************************************************************
-// *			GetVersion:- Terry and Hazel Flanigan 2025			 	   *
+// *			GetVersion:- Terry and Hazel Flanigan 2026			 	   *
 // *************************************************************************
 char* Init_Libs::GetVersion()
 {
-	return (LPSTR)" Cheryl 3D Modeller (Init_Libs):-- 01-03-26 Build 2T ";
+	return (LPSTR)" Cheryl 3D Modeller (Init_Libs):-- 06-03-26 Build 2T ";
 }

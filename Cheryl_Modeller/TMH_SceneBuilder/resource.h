@@ -496,6 +496,7 @@
 #define IDC_ST_STARTMODE                1334
 #define IDC_COMBO1                      1335
 #define IDC_CB_BRUSH_CAT                1335
+#define IDC_CB_MOTIONS_SPEED            1335
 #define IDC_ED_ZOOMDEFAULT              1336
 #define IDC_ST_ZOOM_TEXT                1337
 #define IDC_OPTIONS_TREE                1340
@@ -541,6 +542,7 @@
 #define IDC_ST_PT_NUMTEXTUNITS          1375
 #define IDC_BUTTON12                    1376
 #define IDC_TBINFO                      1376
+#define IDC_BT_MOTIONS_PAUSE            1376
 #define ID_DEBUG_GENERAL                32771
 #define ID_TEMPLATES_INSERT             32772
 #define ID_BRUSH_SELECT                 32773
@@ -657,7 +659,7 @@
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        222
 #define _APS_NEXT_COMMAND_VALUE         32877
-#define _APS_NEXT_CONTROL_VALUE         1376
+#define _APS_NEXT_CONTROL_VALUE         1377
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif
