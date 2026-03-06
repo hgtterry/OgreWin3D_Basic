@@ -8,12 +8,14 @@ public:
 	void Show_Motions_Dialog(bool Show);
 	void Start_Motions_Dialog();
 
+	void Update_Motions_Combo(void);
+
 	HWND Motions_Dlg_Hwnd;
 
 private:
 	static LRESULT CALLBACK Proc_Motions_Dialog(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	void Update_Speed_Combo(void);
-
+	
 };
 

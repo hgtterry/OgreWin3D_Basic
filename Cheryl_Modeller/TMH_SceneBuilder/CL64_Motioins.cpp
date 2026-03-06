@@ -58,7 +58,7 @@ void CL64_Motioins::Get_Motions(Ogre::Entity* Ogre_Entity)
 		{
 			flag_IsAnimated = false;
 			App->CL_Model->MotionCount = 0;
-			//App->CL_TopDlg->Update_Motions_Combo();
+			App->CL_Properties_Motions->Update_Motions_Combo();
 		}
 		else
 		{
@@ -78,14 +78,14 @@ void CL64_Motioins::Get_Motions(Ogre::Entity* Ogre_Entity)
 			}
 
 			App->CL_Model->MotionCount = Count + 1;
-			//App->CL_TopDlg->Update_Motions_Combo();
+			App->CL_Properties_Motions->Update_Motions_Combo();
 		}
 	}
 	else
 	{
 		flag_IsAnimated = false;
 		App->CL_Model->MotionCount = 0;
-		//App->CL_TopDlg->Update_Motions_Combo();
+		App->CL_Properties_Motions->Update_Motions_Combo();
 	}
 }
 

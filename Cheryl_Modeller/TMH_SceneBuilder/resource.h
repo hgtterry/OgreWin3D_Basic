@@ -543,6 +543,8 @@
 #define IDC_BUTTON12                    1376
 #define IDC_TBINFO                      1376
 #define IDC_BT_MOTIONS_PAUSE            1376
+#define IDC_COMBO2                      1377
+#define IDC_CB_MOTIONS_MOTIONS          1377
 #define ID_DEBUG_GENERAL                32771
 #define ID_TEMPLATES_INSERT             32772
 #define ID_BRUSH_SELECT                 32773
@@ -659,7 +661,7 @@
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        222
 #define _APS_NEXT_COMMAND_VALUE         32877
-#define _APS_NEXT_CONTROL_VALUE         1377
+#define _APS_NEXT_CONTROL_VALUE         1378
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif

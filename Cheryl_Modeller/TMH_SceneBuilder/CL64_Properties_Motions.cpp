@@ -28,6 +28,7 @@ void CL64_Properties_Motions::Start_Motions_Dialog()
 	Motions_Dlg_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_PROPS_MOTIONS, App->MainHwnd, (DLGPROC)Proc_Motions_Dialog);
 	Show_Motions_Dialog(true);
 
+	Update_Motions_Combo();
 	Update_Speed_Combo();
 }
 
@@ -44,6 +45,7 @@ LRESULT CALLBACK CL64_Properties_Motions::Proc_Motions_Dialog(HWND hDlg, UINT me
 		SendDlgItemMessage(hDlg, IDC_BT_MOT_PLAY, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_MOT_STOP, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
+		SendDlgItemMessage(hDlg, IDC_CB_MOTIONS_MOTIONS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_CB_MOTIONS_SPEED, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		return TRUE;
@@ -141,6 +143,31 @@ LRESULT CALLBACK CL64_Properties_Motions::Proc_Motions_Dialog(HWND hDlg, UINT me
 			return TRUE;
 		}
 
+		if (LOWORD(wParam) == IDC_CB_MOTIONS_MOTIONS)
+		{
+			switch (HIWORD(wParam)) // Find out what message it was
+			{
+			case CBN_DROPDOWN:
+				break;
+			case CBN_CLOSEUP:
+			{
+				char buff[MAX_PATH]{ 0 };
+
+				HWND temp = GetDlgItem(hDlg, IDC_CB_MOTIONS_MOTIONS);
+				int Index = SendMessage(temp, CB_GETCURSEL, 0, 0);
+				SendMessage(temp, CB_GETLBTEXT, Index, (LPARAM)buff);
+				strcpy(App->CL_Motions->Selected_Motion_Name, buff);
+
+				App->CL_Motions->Stop_SelectedMotion();
+				App->CL_Motions->Play_SelectedMotion();
+
+				RedrawWindow(App->CL_Properties_Motions->Motions_Dlg_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			}
+			}
+
+			return TRUE;
+		}
+
 		if (LOWORD(wParam) == IDC_CB_MOTIONS_SPEED)
 		{
 			switch (HIWORD(wParam)) // Find out what message it was
@@ -174,6 +201,36 @@ LRESULT CALLBACK CL64_Properties_Motions::Proc_Motions_Dialog(HWND hDlg, UINT me
 
 	}
 	return FALSE;
+}
+
+// *************************************************************************
+// *		Update_Motions_Combo:- Terry and Hazel Flanigan 2026		   *
+// *************************************************************************
+void CL64_Properties_Motions::Update_Motions_Combo(void)
+{
+	auto& Dlg_Hwnd = Motions_Dlg_Hwnd;
+
+	SendDlgItemMessage(Dlg_Hwnd, IDC_CB_MOTIONS_MOTIONS, CB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
+
+	if (App->CL_Model->MotionCount > 0)
+	{
+		int Count = 0;
+		int Size = App->CL_Model->MotionCount;
+
+		while (Count < Size)
+		{
+			SendDlgItemMessage(Dlg_Hwnd, IDC_CB_MOTIONS_MOTIONS, CB_ADDSTRING, (WPARAM)0, (LPARAM)App->CL_Mesh->S_OgreMeshData[0]->m_Motion_Names[Count].c_str());
+			Count++;
+		}
+
+		strcpy(App->CL_Motions->Selected_Motion_Name, App->CL_Mesh->S_OgreMeshData[0]->m_Motion_Names[0].c_str());
+	}
+	else
+	{
+		SendDlgItemMessage(Dlg_Hwnd, IDC_CB_MOTIONS_MOTIONS, CB_ADDSTRING, (WPARAM)0, (LPARAM)"None");
+	}
+
+	SendDlgItemMessage(Dlg_Hwnd, IDC_CB_MOTIONS_MOTIONS, CB_SETCURSEL, (WPARAM)0, (LPARAM)0);
 }
 
 // *************************************************************************
