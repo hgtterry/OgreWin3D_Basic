@@ -49,10 +49,13 @@ public:
 
 	void Show_file_view(bool show);
 
+	void Show_Motions_Dlg(bool show);
+
+
 	void Set_Editor_Startup();
 	void Set_Title(bool Clear);
 
 	bool Materials_Dlg_Active;
-
+	bool Motions_Dlg_Active;
 };
 

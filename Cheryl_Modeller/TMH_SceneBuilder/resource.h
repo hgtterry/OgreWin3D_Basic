@@ -547,8 +547,9 @@
 #define IDC_ST_MOT_MOTIONS              1378
 #define IDC_ST_MOT_SPEED                1379
 #define IDC_BT_MOT_BONES                1380
-#define IDC_BUTTON4                     1381
 #define IDC_BT_MOT_MESH                 1381
+#define IDC_BUTTON3                     1382
+#define IDC_BT_MOT_BBOX                 1382
 #define ID_DEBUG_GENERAL                32771
 #define ID_TEMPLATES_INSERT             32772
 #define ID_BRUSH_SELECT                 32773
@@ -654,6 +655,7 @@
 #define ID_FILE_CLEAR32874              32874
 #define ID_WINDOW_MATERIALS             32875
 #define ID_WINDOW_MODELDATA             32876
+#define ID_WINDOW_MOTIONS               32877
 #define ID_GENERALSELECT                32886
 #define ID_TOOLS_TEMPLATE               32910
 #define IDC_STATIC                      -1
@@ -664,8 +666,8 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        222
-#define _APS_NEXT_COMMAND_VALUE         32877
-#define _APS_NEXT_CONTROL_VALUE         1382
+#define _APS_NEXT_COMMAND_VALUE         32878
+#define _APS_NEXT_CONTROL_VALUE         1383
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif

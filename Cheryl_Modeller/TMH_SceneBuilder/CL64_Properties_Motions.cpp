@@ -33,7 +33,10 @@ void CL64_Properties_Motions::Start_Motions_Dialog()
 	Temp = GetDlgItem(Motions_Dlg_Hwnd, IDC_BT_MOT_MESH);
 	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshOff_Bmp);
 
-	Show_Motions_Dialog(true);
+	Temp = GetDlgItem(Motions_Dlg_Hwnd, IDC_BT_MOT_BBOX);
+	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_BBOff_Bmp);
+
+	Show_Motions_Dialog(false);
 
 	Update_Motions_Combo();
 	Update_Speed_Combo();
@@ -234,9 +237,15 @@ LRESULT CALLBACK CL64_Properties_Motions::Proc_Motions_Dialog(HWND hDlg, UINT me
 			return TRUE;
 		}
 
+		if (LOWORD(wParam) == IDC_BT_MOT_BBOX)
+		{
+			App->CL_Mesh->Show_Mesh_BoundBox();
+			return TRUE;
+		}
+
 		if (LOWORD(wParam) == IDCANCEL)
 		{
-			//App->CL_Interface->Show_Materials_Dlg(false);
+			App->CL_Interface->Show_Motions_Dlg(false);
 			return TRUE;
 		}
 

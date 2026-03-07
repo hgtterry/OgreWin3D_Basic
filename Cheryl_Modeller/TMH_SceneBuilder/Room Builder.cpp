@@ -822,6 +822,20 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 return 1;
             }
            
+            case ID_WINDOW_MOTIONS:
+            {
+                if (App->CL_Interface->Motions_Dlg_Active == true)
+                {
+                    App->CL_Interface->Show_Motions_Dlg(false);
+                }
+                else
+                {
+                    App->CL_Interface->Show_Motions_Dlg(true);
+                }
+
+                return TRUE;
+            }
+
             case ID_INFO_PHYSICSOBJECTSDEBUG:
             {
                /* if (App->CL_Editor_Scene->flag_Show_Physics_Objects == 1)
