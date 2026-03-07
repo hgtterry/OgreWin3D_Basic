@@ -1,16 +1,25 @@
 /*
-Copyright (c) OgreWin3D_Basic 2024 W.T.Flanigan H.C.Flanigan Inflanite_HGT
+Copyright (c) 2024 - 2026 HGT_Software W.T.Flanigan H.C.Flanigan
 
-This software is provided 'as-is', without any express or implied
-warranty. In no event will the authors be held liable for any damages
-arising from the use of this software.
+Cheryl 3D Modeller
 
-Permission is granted to anyone to use this software for any purpose,
-including commercial applications, and to alter it and redistribute it
-freely.
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-An acknowledgment in the product documentation would be
-appreciated but is not required.
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
 */
 
 #include "pch.h"
@@ -19,9 +28,9 @@ appreciated but is not required.
 
 CL64_Motioins::CL64_Motioins(void)
 {
-	flag_Motion_Playing = 0;
-	flag_Motion_Paused = 0;
-	flag_IsAnimated = 0;
+	flag_Motion_Playing = false;
+	flag_Motion_Paused = false;
+	flag_IsAnimated = false;
 
 	AnimationScale = 1;
 	Animate_State = nullptr;
@@ -40,7 +49,7 @@ void CL64_Motioins::Reset_Class(void)
 {
 	App->CL_Ogre->Listener_3D->flag_Animate_Ogre = false;
 	Stop_SelectedMotion();
-	flag_Motion_Playing = 0;
+	flag_Motion_Playing = false;
 }
 
 // *************************************************************************
@@ -63,7 +72,7 @@ void CL64_Motioins::Get_Motions(Ogre::Entity* Ogre_Entity)
 		else
 		{
 
-			flag_IsAnimated = 1;
+			flag_IsAnimated = true;
 
 			for (unsigned short i = 0; i < skeletonInstance->getNumAnimations(); ++i)
 			{
@@ -162,8 +171,8 @@ void CL64_Motioins::Play_SelectedMotion(void)
 				Animate_State->setEnabled(true);
 				App->CL_Ogre->Listener_3D->flag_Animate_Ogre = true;
 
-				flag_Motion_Paused = 0;
-				flag_Motion_Playing = 1;
+				flag_Motion_Paused = false;
+				flag_Motion_Playing = true;
 			}
 
 			RedrawWindow(App->CL_Properties_Motions->Motions_Dlg_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
@@ -188,8 +197,8 @@ void CL64_Motioins::Stop_SelectedMotion(void)
 				Motion_Set_Pose();
 			}
 
-			flag_Motion_Paused = 0;
-			flag_Motion_Playing = 0;
+			flag_Motion_Paused = false;
+			flag_Motion_Playing = false;
 			RedrawWindow(App->CL_Properties_Motions->Motions_Dlg_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 		}
 	}
