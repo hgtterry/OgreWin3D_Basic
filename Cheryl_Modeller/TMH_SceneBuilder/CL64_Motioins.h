@@ -40,8 +40,6 @@ public:
 	void Stop_SelectedMotion(void);
 	void Motion_Set_Pose(void);
 
-	void Update_Motions_By_Name(const char* Name);
-
 	void Update_MeshData(void);
 	void UpdateBones_Orge(bool Reset);
 	void AnimationExtract_Mesh(bool DefaultPose);

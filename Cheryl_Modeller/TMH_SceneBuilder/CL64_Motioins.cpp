@@ -87,6 +87,11 @@ void CL64_Motioins::Get_Motions(Ogre::Entity* Ogre_Entity)
 			}
 
 			App->CL_Model->MotionCount = Count + 1;
+
+			App->CL_ImGui->listMotionItems_Ogre[App->CL_ImGui->PreviouseMotion_Ogre] = false;
+			App->CL_ImGui->listMotionItems_Ogre[0] = true;
+			App->CL_ImGui->PreviouseMotion_Ogre = 0;
+
 			App->CL_Properties_Motions->Update_Motions_Combo();
 		}
 	}
@@ -403,17 +408,3 @@ void CL64_Motioins::Get_AnimationInstance(Ogre::MeshPtr mesh,
 	delete indices;
 }
 
-// *************************************************************************
-// *		Update_Motions_By_Name:- Terry and Hazel Flanigan 2026		   *
-// *************************************************************************
-void CL64_Motioins::Update_Motions_By_Name(const char* Name)
-{
-	//SendDlgItemMessage(Motions_TB_hWnd, IDC_CB_MOTIONS_MOTIONS, CB_SELECTSTRING, (WPARAM)-1, (LPARAM)Name);
-
-	strcpy(Selected_Motion_Name, Name);
-
-	App->CL_Motions->Stop_SelectedMotion();
-	App->CL_Motions->Play_SelectedMotion();
-
-	RedrawWindow(App->CL_Properties_Motions->Motions_Dlg_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-}

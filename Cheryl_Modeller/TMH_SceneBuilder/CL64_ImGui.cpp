@@ -523,7 +523,11 @@ void CL64_ImGui::Show_Ogre_Model_Data_GUI(void)
 
 						if (App->CL_Motions->flag_Motion_Playing == true)
 						{
-							App->CL_Motions->Update_Motions_By_Name(App->CL_Mesh->S_OgreMeshData[0]->m_Motion_Names[Count].c_str());
+							App->CL_Properties_Motions->Update_Motions_By_Name(App->CL_Mesh->S_OgreMeshData[0]->m_Motion_Names[Count].c_str(), true);
+						}
+						else
+						{
+							App->CL_Properties_Motions->Update_Motions_By_Name(App->CL_Mesh->S_OgreMeshData[0]->m_Motion_Names[Count].c_str(), false);
 						}
 
 						listMotionItems_Ogre[PreviouseMotion_Ogre] = 0;

@@ -158,6 +158,12 @@ LRESULT CALLBACK CL64_Properties_Motions::Proc_Motions_Dialog(HWND hDlg, UINT me
 				SendMessage(temp, CB_GETLBTEXT, Index, (LPARAM)buff);
 				strcpy(App->CL_Motions->Selected_Motion_Name, buff);
 
+				// Select in Imgui Model Data
+				App->CL_ImGui->listMotionItems_Ogre[App->CL_ImGui->PreviouseMotion_Ogre] = false;
+				App->CL_ImGui->listMotionItems_Ogre[Index] = true;
+				App->CL_ImGui->PreviouseMotion_Ogre = Index;
+
+
 				App->CL_Motions->Stop_SelectedMotion();
 				App->CL_Motions->Play_SelectedMotion();
 
@@ -251,4 +257,22 @@ void CL64_Properties_Motions::Update_Speed_Combo(void)
 	SendDlgItemMessage(Dlg_Hwnd, IDC_CB_MOTIONS_SPEED, CB_ADDSTRING, (WPARAM)0, (LPARAM)"0.01");
 
 	SendDlgItemMessage(Dlg_Hwnd, IDC_CB_MOTIONS_SPEED, CB_SETCURSEL, (WPARAM)2, (LPARAM)0);
+}
+
+// *************************************************************************
+// *		Update_Motions_By_Name:- Terry and Hazel Flanigan 2026		   *
+// *************************************************************************
+void CL64_Properties_Motions::Update_Motions_By_Name(const char* Name, bool Play_Motion)
+{
+	SendDlgItemMessage(App->CL_Properties_Motions->Motions_Dlg_Hwnd, IDC_CB_MOTIONS_MOTIONS, CB_SELECTSTRING, (WPARAM)-1, (LPARAM)Name);
+
+	strcpy(App->CL_Motions->Selected_Motion_Name, Name);
+
+	if (Play_Motion == true)
+	{
+		App->CL_Motions->Stop_SelectedMotion();
+		App->CL_Motions->Play_SelectedMotion();
+	}
+
+	RedrawWindow(App->CL_Properties_Motions->Motions_Dlg_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 }

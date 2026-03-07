@@ -9,6 +9,7 @@ public:
 	void Start_Motions_Dialog();
 
 	void Update_Motions_Combo(void);
+	void Update_Motions_By_Name(const char* Name, bool Play_Motion);
 
 	HWND Motions_Dlg_Hwnd;
 
