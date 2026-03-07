@@ -306,6 +306,18 @@ void CL64_Interface::Set_Editor_Startup()
 	}
 }
 
+// *************************************************************************
+// *				Set_Title:- Terry and Hazel Flanigan 2026			   *
+// *************************************************************************
+void CL64_Interface::Set_Title()
+{
+	char TitleBar[MAX_PATH];
+	strcpy(TitleBar, App->App_Title);
+	strcat(TitleBar, "    ");
+	strcat(TitleBar, App->CL_Model->Loaded_PathFileName);
+	SetWindowText(App->MainHwnd, TitleBar);
+}
+
 
 
 

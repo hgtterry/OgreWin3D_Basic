@@ -50,6 +50,7 @@ public:
 	void Show_file_view(bool show);
 
 	void Set_Editor_Startup();
+	void Set_Title();
 
 	bool Materials_Dlg_Active;
 
