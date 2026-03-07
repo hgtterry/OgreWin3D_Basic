@@ -26,6 +26,13 @@ void CL64_Properties_Motions::Show_Motions_Dialog(bool Show)
 void CL64_Properties_Motions::Start_Motions_Dialog()
 {
 	Motions_Dlg_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_PROPS_MOTIONS, App->MainHwnd, (DLGPROC)Proc_Motions_Dialog);
+	
+	HWND Temp = GetDlgItem(Motions_Dlg_Hwnd, IDC_BT_MOT_BONES);
+	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_BonesOff_Bmp);
+
+	Temp = GetDlgItem(Motions_Dlg_Hwnd, IDC_BT_MOT_MESH);
+	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshOff_Bmp);
+
 	Show_Motions_Dialog(true);
 
 	Update_Motions_Combo();
@@ -48,23 +55,28 @@ LRESULT CALLBACK CL64_Properties_Motions::Proc_Motions_Dialog(HWND hDlg, UINT me
 		SendDlgItemMessage(hDlg, IDC_CB_MOTIONS_MOTIONS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_CB_MOTIONS_SPEED, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
+		SendDlgItemMessage(hDlg, IDC_ST_MOT_MOTIONS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_ST_MOT_SPEED, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		
+
 		return TRUE;
 	}
 	case WM_CTLCOLORSTATIC:
 	{
-		/*if (GetDlgItem(hDlg, IDC_ST_PT_DIMENSIONS) == (HWND)lParam)
+		if (GetDlgItem(hDlg, IDC_ST_MOT_MOTIONS) == (HWND)lParam)
 		{
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->AppBackground;
 		}
 
-		if (GetDlgItem(hDlg, IDC_ST_PT_NUMTEXTUNITS) == (HWND)lParam)
+		if (GetDlgItem(hDlg, IDC_ST_MOT_SPEED) == (HWND)lParam)
 		{
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->AppBackground;
-		}*/
+		}
 
 		return FALSE;
 	}
@@ -101,6 +113,20 @@ LRESULT CALLBACK CL64_Properties_Motions::Proc_Motions_Dialog(HWND hDlg, UINT me
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Toggle(item, App->CL_Motions->flag_Motion_Paused);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BT_MOT_BONES)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Globals(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BT_MOT_MESH)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Globals(item);
 			return CDRF_DODEFAULT;
 		}
 
@@ -193,6 +219,18 @@ LRESULT CALLBACK CL64_Properties_Motions::Proc_Motions_Dialog(HWND hDlg, UINT me
 			}
 			}
 
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_BT_MOT_MESH)
+		{
+			App->CL_Mesh->Show_Mesh_Faces();
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_BT_MOT_BONES)
+		{
+			App->CL_Mesh->Show_Mesh_Bones();
 			return TRUE;
 		}
 

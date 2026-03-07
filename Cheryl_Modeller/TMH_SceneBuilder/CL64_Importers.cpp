@@ -149,7 +149,7 @@ bool CL64_Importers::Load_Ogre_Model(bool Use_File_Dialog, bool Check_Resource_F
 
 	App->CL_Motions->Get_Motions(App->CL_Model->Imported_Ogre_Ent);
 
-	App->CL_Interface->Set_Title();
+	App->CL_Interface->Set_Title(false);
 
 	//App->CL_ImGui->flag_Open_Textures_List = 1;
 

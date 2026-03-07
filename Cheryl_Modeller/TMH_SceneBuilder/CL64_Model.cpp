@@ -190,4 +190,5 @@ void CL64_Model::Clear_Model()
 	App->CL_Editor_Control->Reset_Editor();
 	App->CL_Camera->Reset_View();
 	App->CL_Interface->Reset_All_Dialogs();
+	App->CL_Interface->Set_Title(true);
 }
