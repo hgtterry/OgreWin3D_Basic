@@ -172,6 +172,8 @@ bool CL64_Importers::Load_Ogre_Model(bool Use_File_Dialog, bool Check_Resource_F
 		}
 	}
 
+	App->CL_File_IO->RecentFileHistory_Update();
+
 	//App->Enable_Export_Options(true);
 
 	//App->Say("Mesh Imported", (LPSTR)App->CL_Scene->FileName);
