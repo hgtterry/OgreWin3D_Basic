@@ -29,6 +29,6 @@ void Init_Libs::Start_Libraries()
 // *************************************************************************
 char* Init_Libs::GetVersion()
 {
-	return (LPSTR)" Cheryl Scene Builder (Init_Libs) :-- 01-02-26 Build 1 ";
+	return (LPSTR)" Cheryl Scene Builder (Init_Libs) :-- 08-03-26 Build 1 ";
 }
 
