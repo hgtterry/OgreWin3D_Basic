@@ -26,18 +26,9 @@ void CL64_Properties_Motions::Show_Motions_Dialog(bool Show)
 void CL64_Properties_Motions::Start_Motions_Dialog()
 {
 	Motions_Dlg_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_PROPS_MOTIONS, App->MainHwnd, (DLGPROC)Proc_Motions_Dialog);
-	
-	HWND Temp = GetDlgItem(Motions_Dlg_Hwnd, IDC_BT_MOT_BONES);
-	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_BonesOff_Bmp);
-
-	Temp = GetDlgItem(Motions_Dlg_Hwnd, IDC_BT_MOT_MESH);
-	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshOff_Bmp);
-
-	Temp = GetDlgItem(Motions_Dlg_Hwnd, IDC_BT_MOT_BBOX);
-	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_BBOff_Bmp);
+	Init_Bmps_Globals();
 
 	Show_Motions_Dialog(false);
-
 	Update_Motions_Combo();
 	Update_Speed_Combo();
 }
@@ -254,6 +245,60 @@ LRESULT CALLBACK CL64_Properties_Motions::Proc_Motions_Dialog(HWND hDlg, UINT me
 
 	}
 	return FALSE;
+}
+
+// *************************************************************************
+// *			Init_Bmps_Globals:- Terry Mo and Hazel 2025				   *
+// *************************************************************************
+void CL64_Properties_Motions::Init_Bmps_Globals(void)
+{
+	auto& Mot_Dlg = Motions_Dlg_Hwnd;
+
+	HWND Temp = GetDlgItem(Motions_Dlg_Hwnd, IDC_BT_MOT_BONES);
+	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_BonesOff_Bmp);
+
+	Temp = GetDlgItem(Motions_Dlg_Hwnd, IDC_BT_MOT_MESH);
+	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshOff_Bmp);
+
+	Temp = GetDlgItem(Motions_Dlg_Hwnd, IDC_BT_MOT_BBOX);
+	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_BBOff_Bmp);
+
+	
+	// ----------------------------------
+
+	HWND hTooltip_TB_2 = CreateWindowEx(0, TOOLTIPS_CLASS, "", TTS_ALWAYSTIP | TTS_BALLOON | TTS_NOFADE, 0, 0, 0, 0, App->MainHwnd, 0, App->hInst, 0);
+	SendMessage(hTooltip_TB_2, TTM_SETMAXTIPWIDTH, 0, 250);
+
+	SendMessage(hTooltip_TB_2, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+	Temp = GetDlgItem(Mot_Dlg, IDC_BT_MOT_BONES);
+	TOOLINFO ti1 = { 0 };
+	ti1.cbSize = sizeof(ti1);
+	ti1.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti1.uId = (UINT_PTR)Temp;
+	ti1.lpszText = (LPSTR)"Show Bones/Skeleton.";
+	ti1.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti1);
+
+	Temp = GetDlgItem(Mot_Dlg, IDC_BT_MOT_MESH);
+	TOOLINFO ti2 = { 0 };
+	ti2.cbSize = sizeof(ti2);
+	ti2.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti2.uId = (UINT_PTR)Temp;
+	ti2.lpszText = (LPSTR)"Show Mesh/Faces.";
+	ti2.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti2);
+
+	Temp = GetDlgItem(Mot_Dlg, IDC_BT_MOT_BBOX);
+	TOOLINFO ti3 = { 0 };
+	ti3.cbSize = sizeof(ti3);
+	ti3.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti3.uId = (UINT_PTR)Temp;
+	ti3.lpszText = (LPSTR)"Show Bounding Box.";
+	ti3.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti3);
+
+	SendMessage(hTooltip_TB_2, TTM_SETTITLE, (WPARAM)TTI_INFO, (LPARAM)"");
 }
 
 // *************************************************************************

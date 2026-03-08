@@ -7,6 +7,7 @@ public:
 
 	void Show_Motions_Dialog(bool Show);
 	void Start_Motions_Dialog();
+	void Init_Bmps_Globals(void);
 
 	void Update_Motions_Combo(void);
 	void Update_Motions_By_Name(const char* Name, bool Play_Motion);

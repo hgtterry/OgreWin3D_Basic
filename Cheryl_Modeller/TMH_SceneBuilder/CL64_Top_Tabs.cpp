@@ -179,12 +179,14 @@ void CL64_Top_Tabs::Init_Bmps_Globals(void)
 	ti3.hwnd = App->MainHwnd;
 	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti3);
 
+	// --------------------------------------------------------------------------
+
 	Temp = GetDlgItem(TopTabs_Dlg_hWnd, IDC_TBSHOWHAIR);
 	TOOLINFO ti4 = { 0 };
 	ti4.cbSize = sizeof(ti4);
 	ti4.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
 	ti4.uId = (UINT_PTR)Temp;
-	ti4.lpszText = (LPSTR)"3D View Toggle Main Cross Hair.";
+	ti4.lpszText = (LPSTR)"Show Main Cross Hair.";
 	ti4.hwnd = App->MainHwnd;
 	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti4);
 
@@ -193,7 +195,7 @@ void CL64_Top_Tabs::Init_Bmps_Globals(void)
 	ti5.cbSize = sizeof(ti5);
 	ti5.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
 	ti5.uId = (UINT_PTR)Temp;
-	ti5.lpszText = (LPSTR)"Toggle Mesh/Faces.";
+	ti5.lpszText = (LPSTR)"Show Mesh/Faces.";
 	ti5.hwnd = App->MainHwnd;
 	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti5);
 
@@ -202,7 +204,7 @@ void CL64_Top_Tabs::Init_Bmps_Globals(void)
 	ti6.cbSize = sizeof(ti6);
 	ti6.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
 	ti6.uId = (UINT_PTR)Temp;
-	ti6.lpszText = (LPSTR)"Toggle Bounding Box.";
+	ti6.lpszText = (LPSTR)"Show Bounding Box.";
 	ti6.hwnd = App->MainHwnd;
 	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti6);
 
@@ -211,12 +213,49 @@ void CL64_Top_Tabs::Init_Bmps_Globals(void)
 	ti7.cbSize = sizeof(ti7);
 	ti7.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
 	ti7.uId = (UINT_PTR)Temp;
-	ti7.lpszText = (LPSTR)"Toggle Bones/Skeleton.";
+	ti7.lpszText = (LPSTR)"Show Bones/Skeleton.";
 	ti7.hwnd = App->MainHwnd;
 	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti7);
 
-	SendMessage(hTooltip_TB_2, TTM_SETTITLE, (WPARAM)TTI_INFO, (LPARAM)"Information");
+	Temp = GetDlgItem(TopTabs_Dlg_hWnd, IDC_BTSHOWTEXTURES);
+	TOOLINFO ti8 = { 0 };
+	ti8.cbSize = sizeof(ti8);
+	ti8.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti8.uId = (UINT_PTR)Temp;
+	ti8.lpszText = (LPSTR)"Show Textures.";
+	ti8.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti8);
+
+	Temp = GetDlgItem(TopTabs_Dlg_hWnd, IDC_BTSHOWPOINTS);
+	TOOLINFO ti9 = { 0 };
+	ti9.cbSize = sizeof(ti9);
+	ti9.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti9.uId = (UINT_PTR)Temp;
+	ti9.lpszText = (LPSTR)"Show Points/Vertices.";
+	ti9.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti9);
+
+	Temp = GetDlgItem(TopTabs_Dlg_hWnd, IDC_BTSHOWNORMALS);
+	TOOLINFO ti10 = { 0 };
+	ti10.cbSize = sizeof(ti10);
+	ti10.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti10.uId = (UINT_PTR)Temp;
+	ti10.lpszText = (LPSTR)"Show Normals";
+	ti10.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti10);
+	
+	Temp = GetDlgItem(TopTabs_Dlg_hWnd, IDC_TBINFO);
+	TOOLINFO ti11 = { 0 };
+	ti11.cbSize = sizeof(ti11);
+	ti11.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti11.uId = (UINT_PTR)Temp;
+	ti11.lpszText = (LPSTR)"Show Model Data Window";
+	ti11.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti11);
+	
+	SendMessage(hTooltip_TB_2, TTM_SETTITLE, (WPARAM)TTI_INFO, (LPARAM)"");
 }
+
 
 // *************************************************************************
 // *	  		Start_Top_Tabs:- Terry Mo and Hazel 2025				   *
