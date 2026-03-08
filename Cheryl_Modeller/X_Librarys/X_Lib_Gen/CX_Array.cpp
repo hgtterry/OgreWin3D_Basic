@@ -38,7 +38,7 @@ CX_Array::~CX_Array(void)
 // *************************************************************************
 char* CX_Array::GetVersion()
 {
-	return (LPSTR)" TMH_Scene_Builder :-- CX_Array [ 06-09-25 ] Build 1 ";
+	return (LPSTR)" CX_Array [ 08-03-26 ] Build 1 ";
 }
 
 signed int CX_Array::Array_Init(Array* pArray, int InitialSize, int ItemSize)

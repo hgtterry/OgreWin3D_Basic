@@ -40,7 +40,7 @@ CX_SelBrushList::~CX_SelBrushList(void)
 // *************************************************************************
 char* CX_SelBrushList::GetVersion()
 {
-	return (LPSTR)" TMH_Scene_Builder :-- CX_SelBrushList [ 06-09-25 ] Build 1 ";
+	return (LPSTR)" CX_SelBrushList [ 06-09-25 ] Build 1 ";
 }
 
 // *************************************************************************

@@ -109,6 +109,14 @@ Face* CX_Face::Face_Create(int NumPnts, const T_Vec3* pnts, int DibId)
 }
 
 // *************************************************************************
+// *			GetVersion:- Terry and Hazel Flanigan 2025			 	   *
+// *************************************************************************
+char* CX_Face::GetVersion()
+{
+	return (LPSTR)" CX_Faces [ 08-03-26 ] Build 1 ";
+}
+
+// *************************************************************************
 // *						Face_GetBounds								   *
 // *************************************************************************
 void CX_Face::Face_GetBounds(const Face* f, Box3d* b)

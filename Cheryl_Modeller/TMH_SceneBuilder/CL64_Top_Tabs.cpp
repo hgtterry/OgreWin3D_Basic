@@ -253,6 +253,15 @@ void CL64_Top_Tabs::Init_Bmps_Globals(void)
 	ti11.hwnd = App->MainHwnd;
 	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti11);
 	
+	Temp = GetDlgItem(TopTabs_Dlg_hWnd, IDC_TBSHOWGRID);
+	TOOLINFO ti12 = { 0 };
+	ti12.cbSize = sizeof(ti12);
+	ti12.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti12.uId = (UINT_PTR)Temp;
+	ti12.lpszText = (LPSTR)"Show Main Grid";
+	ti12.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti12);
+	
 	SendMessage(hTooltip_TB_2, TTM_SETTITLE, (WPARAM)TTI_INFO, (LPARAM)"");
 }
 

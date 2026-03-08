@@ -40,7 +40,7 @@ CX_FaceList::~CX_FaceList(void)
 // *************************************************************************
 char* CX_FaceList::GetVersion()
 {
-	return (LPSTR)" TMH_Scene_Builder :-- CX_FaceList [ 06-09-25 ] Build 1 ";
+	return (LPSTR)" CX_FaceList [ 06-09-25 ] Build 1 ";
 }
 
 void CX_FaceList::FaceList_SetBrushNames(const FaceList* fl, const char* Name)

@@ -1952,19 +1952,18 @@ void CL64_Dialogs::List_Libraries(HWND List)
 	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->CL_X_Ini_File->GetVersion());
 	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)" ");
 
-
-
 	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->CL_X_Maths->GetVersion());
 	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->CL_X_Preference->GetVersion());
 	
 
 	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)" ");
-	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)" ------ Gen  ");
+	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)" ------ Gen_X  ");
 	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->CL_X_Box->GetVersion());
 	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->CL_X_Array->GetVersion());
 	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->CL_X_SelBrushList->GetVersion());
 	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->CL_X_Brush->GetVersion());
 	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->CL_X_FaceList->GetVersion());
+	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->CL_X_Face->GetVersion());
 
 	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)" ");
 	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)" ------ Create Shapes  ");

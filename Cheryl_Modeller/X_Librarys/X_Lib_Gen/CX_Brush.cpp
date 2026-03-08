@@ -54,7 +54,7 @@ typedef void (*BrushList_IntCB)(Brush* pBrush, const int iVal);
 // *************************************************************************
 char* CX_Brush::GetVersion()
 {
-	return (LPSTR)" TMH_Scene_Builder :-- CX_Brush [ 06-09-25 ] Build 1 ";
+	return (LPSTR)" CX_Brush [ 08-03-26 ] Build 1 ";
 }
 
 // *************************************************************************

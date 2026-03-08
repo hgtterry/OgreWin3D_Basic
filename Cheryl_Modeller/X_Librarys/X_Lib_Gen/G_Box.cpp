@@ -44,7 +44,7 @@ CX_Box::~CX_Box(void)
 // *************************************************************************
 char* CX_Box::GetVersion()
 {
-	return (LPSTR)" TMH_Scene_Builder :-- CX_Box [ 06-09-25 ] Build 1 ";
+	return (LPSTR)" CX_Box [ 08-03-26 ] Build 1 ";
 }
 
 void CX_Box::Box3d_Clear(Box3d* b)

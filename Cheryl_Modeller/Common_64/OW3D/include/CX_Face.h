@@ -48,6 +48,8 @@ public:
 	CX_Face(void);
 	~CX_Face(void);
 
+	char* GetVersion();
+
 	Face* Face_Create(int NumPnts, const T_Vec3* pnts, int DibId);
 	void Face_SetVisible(Face* f, const signed int bState);
 	signed int Face_SetPlaneFromFace(Face* f);

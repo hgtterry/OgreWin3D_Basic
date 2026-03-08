@@ -40,7 +40,7 @@ CX_SelFaceList::~CX_SelFaceList(void)
 // *************************************************************************
 char* CX_SelFaceList::GetVersion()
 {
-	return (LPSTR)" TMH_Scene_Builder :-- CX_SelFaceList [ 06-09-25 ] Build 1 ";
+	return (LPSTR)" CX_SelFaceList [ 06-09-25 ] Build 1 ";
 }
 
 // *************************************************************************

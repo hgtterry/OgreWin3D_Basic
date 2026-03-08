@@ -1791,7 +1791,7 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Ogre_BR(HWND hDlg, UINT message, WPARAM w
 						App->CL_Editor_Map->Current_View = App->CL_Editor_Map->VCam[V_TR];
 						if (isSceneEditorActive)
 						{
-							//App->CL_Editor_Scene->Context_Menu_Ogre(hDlg);
+							App->CL_Editor_Map->Context_Menu_Ogre(hDlg);
 						}
 						else if (isPreviewModeRunning)
 						{
@@ -1943,7 +1943,7 @@ void CL64_Editor_Map::Context_Menu_Ogre(HWND hDlg)
 	HMENU hMenu = CreatePopupMenu();
 
 	// Render Textured
-	if (App->CL_Ogre->OGL_Listener->flag_Render_Ogre == 0)
+	/*if (App->CL_Ogre->OGL_Listener->flag_Render_Ogre == 0)
 	{
 		AppendMenuW(hMenu, MF_STRING | MF_UNCHECKED, IDM_3D_TEXTURED, L"&Textured");
 	}
@@ -1952,7 +1952,7 @@ void CL64_Editor_Map::Context_Menu_Ogre(HWND hDlg)
 		AppendMenuW(hMenu, MF_STRING | MF_CHECKED, IDM_3D_TEXTURED, L"&Textured");
 	}
 
-	// Render Groups
+	 Render Groups
 	if (App->CL_Ogre->OGL_Listener->flag_ShowFaces == false)
 	{
 		AppendMenuW(hMenu, MF_STRING | MF_UNCHECKED, IDM_3D_WIRED, L"&Faces");
@@ -1962,7 +1962,7 @@ void CL64_Editor_Map::Context_Menu_Ogre(HWND hDlg)
 		AppendMenuW(hMenu, MF_STRING | MF_CHECKED, IDM_3D_WIRED, L"&Faces");
 	}
 
-	// Render Points
+	 Render Points
 	if (App->CL_Ogre->OGL_Listener->flag_ShowPoints == false)
 	{
 		AppendMenuW(hMenu, MF_STRING | MF_UNCHECKED, IDM_3D_POINTS, L"&Vertice Points");
@@ -1972,7 +1972,7 @@ void CL64_Editor_Map::Context_Menu_Ogre(HWND hDlg)
 		AppendMenuW(hMenu, MF_STRING | MF_CHECKED, IDM_3D_POINTS, L"&Vertice Points");
 	}
 
-	// Render Bones Skeleton
+	 Render Bones Skeleton
 	if (App->CL_Ogre->OGL_Listener->flag_ShowBones == false)
 	{
 		AppendMenuW(hMenu, MF_STRING | MF_UNCHECKED, IDM_3D_BONES, L"&Bones Skeleton");
@@ -1982,7 +1982,7 @@ void CL64_Editor_Map::Context_Menu_Ogre(HWND hDlg)
 		AppendMenuW(hMenu, MF_STRING | MF_CHECKED, IDM_3D_BONES, L"&Bones Skeleton");
 	}
 
-	// Bounding Box
+	 Bounding Box
 	if (App->CL_Ogre->OGL_Listener->flag_ShowBoundingBox == false)
 	{
 		AppendMenuW(hMenu, MF_STRING | MF_UNCHECKED, IDM_3D_BOUNDING_BOX, L"&Bounding Box");
@@ -1992,7 +1992,7 @@ void CL64_Editor_Map::Context_Menu_Ogre(HWND hDlg)
 		AppendMenuW(hMenu, MF_STRING | MF_CHECKED, IDM_3D_BOUNDING_BOX, L"&Bounding Box");
 	}
 
-	// Normals
+	 Normals
 	if (App->CL_Ogre->OGL_Listener->flag_ShowNormals == false)
 	{
 		AppendMenuW(hMenu, MF_STRING | MF_UNCHECKED, IDM_3D_NORMALS, L"&Normals");
@@ -2000,20 +2000,20 @@ void CL64_Editor_Map::Context_Menu_Ogre(HWND hDlg)
 	else
 	{
 		AppendMenuW(hMenu, MF_STRING | MF_CHECKED, IDM_3D_NORMALS, L"&Normals");
-	}
+	}*/
 
-	AppendMenuW(hMenu, MF_STRING , IDM_3D_RESET_CAMERA, L"&Reset Camera");
+	AppendMenuW(hMenu, MF_STRING , IDM_3D_RESET_CAMERA, L"&Reset View");
 	
 	AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
 	AppendMenuW(hMenu, MF_STRING, IDM_3D_CAMERASPEED, L"&Camera Speed");
 
 	// Panel View
-	AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
+	/*AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
 	AppendMenuW(hMenu, MF_STRING, IDM_SCENE_MAX_VIEW, L"&Full View");
-	AppendMenuW(hMenu, MF_STRING, IDM_SCENE_RESTORE_VIEW, L"&All Views");
+	AppendMenuW(hMenu, MF_STRING, IDM_SCENE_RESTORE_VIEW, L"&All Views");*/
 
 
-	AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
+	/*AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
 	if (App->CL_X_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes))
 	{
 		AppendMenuW(hMenu, MF_STRING, IDM_SCENE_DESELECT, L"&Deselect");
@@ -2021,10 +2021,10 @@ void CL64_Editor_Map::Context_Menu_Ogre(HWND hDlg)
 	else
 	{
 		AppendMenuW(hMenu, MF_STRING, IDM_SCENE_DESELECT, L"&Deselect");
-	}
+	}*/
 
 	// Environment
-	AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
+	/*AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
 
 	if (flag_Environment_On == false)
 	{
@@ -2033,7 +2033,7 @@ void CL64_Editor_Map::Context_Menu_Ogre(HWND hDlg)
 	else
 	{
 		AppendMenuW(hMenu, MF_STRING | MF_CHECKED, IDM_3D_ENVIRONMENT, L"&Environment");
-	}
+	}*/
 
 	//int brushCount = App->CL_X_Brush->Get_Brush_Count();
 	//// Append Preview option
@@ -2107,12 +2107,13 @@ bool CL64_Editor_Map::Context_Command_Ogre(WPARAM wParam)
 
 	case IDM_3D_RESET_CAMERA:
 	{
-		if (App->CL_X_Brush->Get_Brush_Count() > 0)
+		//if (App->CL_X_Brush->Get_Brush_Count() > 0)
 		{
-			App->CL_Dialogs->YesNo("Reset Camera", "Move Camera to the center of world Pos 0,0,0");
+			App->CL_Dialogs->YesNo("Reset View", "");
 			if (App->CL_Dialogs->flag_Dlg_Canceled == false)
 			{
-				App->CL_Camera->Camera_Reset_Zero();
+				App->CL_Camera->Reset_View();
+				//App->CL_Camera->Camera_Reset_Zero();
 			}
 		}
 		return TRUE;
