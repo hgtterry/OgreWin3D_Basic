@@ -21,6 +21,8 @@ public:
 	CL64_Exp_Obj(void);
 	~CL64_Exp_Obj(void);
 
+	void Object_Export_Dlg();
+
 	bool Create_ObjectFile(void);
 	void Write_ObjectFile(void);
 	void Write_ObjectFile_Commit(void);
@@ -35,8 +37,16 @@ public:
 	char mtl_FileName[MAX_PATH];
 	char Just_mtl_FileName[MAX_PATH];
 
+	char DeskTop_Folder[MAX_PATH];
+	char m_Out_JustName[MAX_PATH];
+	char m_Out_Folder_Path[MAX_PATH];
+
 	FILE* Write_OBJECTFILE;
 	FILE* Write_MTLFile;
+
+private:
+	static LRESULT CALLBACK Proc_Object_Export_Dlg2(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+
 
 };
 

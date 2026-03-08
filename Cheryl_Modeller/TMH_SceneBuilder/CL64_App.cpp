@@ -321,6 +321,7 @@ void CL64_App::InitApp(void)
 		wsprintf(Deskdir, "%ls", d_path);
 		CoTaskMemFree(d_path);
 		strcpy(App->CL_Export->DeskTop_Folder, Deskdir);
+		strcpy(App->CL_Exp_Obj->DeskTop_Folder, Deskdir);
 	}
 	else
 	{

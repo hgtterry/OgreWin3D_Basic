@@ -21,9 +21,11 @@ void CL64_Exporters::Export_Wavefront_Object_Model(void)
 		return;
 	}
 
-	bool test = App->CL_Exp_Obj->Create_ObjectFile();
+	App->CL_Exp_Obj->Object_Export_Dlg();
 
-	if (test == 1)
+	//bool test = App->CL_Exp_Obj->Create_ObjectFile();
+
+	//if (test == 1)
 	{
 		App->Say("Wavefront Object file Created successfully");
 	}

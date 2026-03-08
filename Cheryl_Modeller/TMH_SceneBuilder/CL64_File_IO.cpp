@@ -30,16 +30,14 @@ THE SOFTWARE.
 #include <string>
 #include <shobjidl_core.h>
 
-#include "Shlobj.h"
-#include "io.h"
 
 CL64_File_IO::CL64_File_IO(void)
 {
+	mHistoryMenu = NULL;
+
 	szSelectedDir[0] = 0;
-	BrowserMessage[0] = 0;
-
-
-	flag_Canceled = 1;
+	
+	flag_Canceled = true;
 
 	UserData_Folder[0] = 0;
 
@@ -47,7 +45,7 @@ CL64_File_IO::CL64_File_IO(void)
 	ReadRecentFiles = NULL;
 
 	rgbCurrent = 0;
-
+	mPreviousFiles.resize(0);
 }
 
 CL64_File_IO::~CL64_File_IO(void)
@@ -78,7 +76,7 @@ void CL64_File_IO::Select_Folder()
 		{
 			pfd->SetOptions(dwOptions | FOS_PICKFOLDERS);
 		}
-		if (SUCCEEDED(pfd->Show(NULL)))
+		if (SUCCEEDED(pfd->Show(App->MainHwnd)))
 		{
 			IShellItem* psi;
 			if (SUCCEEDED(pfd->GetResult(&psi)))
@@ -187,7 +185,7 @@ bool CL64_File_IO::Open_File(const LPCWSTR Type, const LPCWSTR Extensions)
 // *************************************************************************
 bool CL64_File_IO::Save_File(const LPCWSTR Type, const LPCWSTR Extensions)
 {
-	flag_Canceled = 1;
+	flag_Canceled = true;
 
 	HRESULT hr = CoInitializeEx(NULL, COINIT_APARTMENTTHREADED |
 		COINIT_DISABLE_OLE1DDE);
@@ -236,7 +234,7 @@ bool CL64_File_IO::Save_File(const LPCWSTR Type, const LPCWSTR Extensions)
 						s_Just_FileName = s_Path_And_File.substr(slash + 1);
 						CoTaskMemFree(pszFilePath);
 
-						flag_Canceled = 0;
+						flag_Canceled = false;
 					}
 					pItem->Release();
 				}
@@ -501,88 +499,3 @@ bool CL64_File_IO::Check_File_Exist(char* Full_Path)
 	return 0;
 }
 
-#pragma warning( disable : 4090)
-// *************************************************************************
-// *				StartBrowser:- Terry and Hazel Flanigan 2024   		   *
-// *************************************************************************
-bool CL64_File_IO::StartBrowser(char* szInitDir)
-{
-	TCHAR dname[MAX_PATH * 2] = { 0 };
-	IMalloc* imalloc;
-	HRESULT Test1 = SHGetMalloc(&imalloc);
-	BROWSEINFO bi; ZeroMemory(&bi, sizeof(bi));
-
-	bi.hwndOwner = App->MainHwnd;
-	bi.pszDisplayName = dname;
-	bi.lpszTitle = BrowserMessage;
-	bi.lParam = (LPARAM)szInitDir;
-	bi.ulFlags = BIF_RETURNONLYFSDIRS | BIF_NONEWFOLDERBUTTON | BIF_USENEWUI;
-	bi.lpfn = BrowseCallbackProc;
-
-	HRESULT Test2 = CoInitialize(NULL);
-	ITEMIDLIST* pidl = SHBrowseForFolder(&bi);
-
-	if (pidl)
-	{
-		imalloc->Free(pidl);
-		imalloc->Release();
-		return 1;
-	}
-
-	imalloc->Free(pidl);
-	imalloc->Release();
-
-	return 0;
-}
-HWND g_hMyEditBox;
-#define BROWSE_WIDTH      380
-#define BROWSE_HEIGHT     530
-// *************************************************************************
-// *			BrowseCallbackProc:- Terry and Hazel Flanigan 2024 		   *
-// *************************************************************************
-int __stdcall CL64_File_IO::BrowseCallbackProc(HWND  hwnd, UINT  uMsg, LPARAM  lParam, LPARAM  lpData)
-{
-	//Initialization callback message
-	if (uMsg == BFFM_INITIALIZED)
-	{
-		HWND tt = FindWindowEx(hwnd, NULL, "Static", NULL);
-		SendMessage(tt, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-
-		HWND hListView = FindWindowEx(hwnd, NULL, "TreeView", NULL);
-		SetWindowPos(hListView, NULL, 2, 2, 100, 100, SWP_NOZORDER);
-
-	}
-
-	if (uMsg == BFFM_SELCHANGED)
-	{
-		TCHAR szDir[MAX_PATH * 2] = { 0 };
-
-		BOOL bRet = SHGetPathFromIDList((LPITEMIDLIST)lParam, szDir);
-		if (bRet)
-		{
-			if (_taccess(szDir, 00) != 0)
-			{
-				bRet = FALSE;
-			}
-			else
-			{
-				SHFILEINFO sfi;
-				::SHGetFileInfo((LPCTSTR)lParam, 0, &sfi, sizeof(sfi),
-					SHGFI_PIDL | SHGFI_ATTRIBUTES);
-
-				if (sfi.dwAttributes & SFGAO_LINK)
-					bRet = FALSE;
-			}
-		}
-
-		if (!bRet)
-		{
-			::EnableWindow(GetDlgItem(hwnd, IDOK), FALSE);
-			strcpy(App->CL_File_IO->szSelectedDir, "");
-		}
-		else
-			strcpy(App->CL_File_IO->szSelectedDir, szDir);
-	}
-
-	return 0;
-}

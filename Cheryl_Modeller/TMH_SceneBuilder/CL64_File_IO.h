@@ -29,8 +29,6 @@ public:
 	CL64_File_IO(void);
 	~CL64_File_IO(void);
 
-	bool StartBrowser(char* szInitDir);
-
 	void Select_Folder();
 	bool Open_File(const LPCWSTR Type, const LPCWSTR Extensions);
 	bool Save_File(const LPCWSTR Type, const LPCWSTR Extensions);
@@ -38,8 +36,7 @@ public:
 	bool Check_File_Exist(char* Full_Path);
 
 	char szSelectedDir[MAX_PATH];
-	char BrowserMessage[MAX_PATH];
-
+	
 	std::string s_Path_And_File;
 	std::string s_Just_FileName;
 
@@ -65,6 +62,6 @@ public:
 	HMENU mHistoryMenu;
 
 private:
-	static int __stdcall BrowseCallbackProc(HWND  hwnd, UINT  uMsg, LPARAM  lParam, LPARAM  lpData);
+	
 };
 
