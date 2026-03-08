@@ -23,16 +23,31 @@ THE SOFTWARE.
 */
 
 #include "pch.h"
+#include "resource.h"
 #include "CL64_App.h"
 #include "CL64_File_IO.h"
 
 #include <string>
 #include <shobjidl_core.h>
 
+#include "Shlobj.h"
+#include "io.h"
+
 CL64_File_IO::CL64_File_IO(void)
 {
 	szSelectedDir[0] = 0;
+	BrowserMessage[0] = 0;
+
+
 	flag_Canceled = 1;
+
+	UserData_Folder[0] = 0;
+
+	WriteRecentFiles = NULL;
+	ReadRecentFiles = NULL;
+
+	rgbCurrent = 0;
+
 }
 
 CL64_File_IO::~CL64_File_IO(void)
@@ -255,4 +270,358 @@ bool CL64_File_IO::Colour_Picker()
 	}
 
 	return 1;
+}
+
+// *************************************************************************
+// *			Init_History:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void  CL64_File_IO::Init_History()
+{
+	char DirCheck[1024];
+	strcpy(DirCheck, UserData_Folder);
+	strcat(DirCheck, "\\");
+	strcat(DirCheck, "Cheryl_3D");
+
+	bool check = 0;
+	check = Check_File_Exist(DirCheck);
+	if (check == 0)
+	{
+		mPreviousFiles.resize(EQUITY_NUM_RECENT_FILES);
+
+		CreateDirectory(DirCheck, NULL);
+
+		char buf[1024];
+		strcpy(buf, UserData_Folder);
+		strcat(buf, "\\Cheryl_3D\\Cheryl_3D.ini");
+		WriteRecentFiles = fopen(buf, "wt");
+		fclose(WriteRecentFiles);
+
+		ResentHistory_Clear(1); // Set all slots to Empty
+		Save_FileHistory();
+		LoadHistory();
+	}
+	else
+	{
+		LoadHistory();
+	}
+}
+// *************************************************************************
+// *			LoadHistory:- Terry and Hazel Flanigan 2024				   *
+// *************************************************************************
+void  CL64_File_IO::LoadHistory()
+{
+	mPreviousFiles.resize(EQUITY_NUM_RECENT_FILES);
+
+	char buffer[MAX_PATH];
+	char buf[MAX_PATH];
+
+	strcpy(buf, UserData_Folder);
+	strcat(buf, "\\Cheryl_3D\\Cheryl_3D.ini");
+
+	ReadRecentFiles = fopen(buf, "rt");
+
+	if (!ReadRecentFiles)
+	{
+		App->Say("Cant Find Recent Files");
+		return;
+	}
+
+	// Read in File Names from RecentFiles.ini
+	for (unsigned int i = 0; i < EQUITY_NUM_RECENT_FILES; ++i)
+	{
+		memset(buffer, 0, MAX_PATH);
+		fgets(buffer, MAX_PATH, ReadRecentFiles);
+
+		char Path[MAX_PATH];
+		strcpy(Path, buffer);
+		int Len = strlen(Path);
+		Path[Len - 1] = 0;
+
+		mPreviousFiles[i] = std::string(Path);
+	}
+
+	fclose(ReadRecentFiles);
+
+	mHistoryMenu = CreateMenu();
+
+	// Check for empty slots and gray out
+	for (int i = EQUITY_NUM_RECENT_FILES - 1; i >= 0; --i)
+	{
+		char szText[MAX_PATH];
+		strcpy(szText, mPreviousFiles[i].c_str());
+
+		UINT iFlags = 0;
+		int Result = 0;
+		Result = strcmp("<empty>", szText);
+		if (Result == 0)
+		{
+			iFlags = MF_GRAYED | MF_DISABLED;
+		}
+
+		AppendMenu(mHistoryMenu, MF_STRING | iFlags, EQUITY_RECENT_FILE_ID(i), szText);
+	}
+
+	ModifyMenu(GetMenu(App->MainHwnd), ID_FILE_RECENTFILES, MF_BYCOMMAND | MF_POPUP,
+		(UINT_PTR)mHistoryMenu, "Recent files");
+
+	return;
+}
+
+// *************************************************************************
+// *		RecentFileHistory_Update:- Terry and Hazel Flanigan 2024	   *
+// *************************************************************************
+void  CL64_File_IO::RecentFileHistory_Update()
+{
+
+	if (!mHistoryMenu)return;
+
+	std::string sz = std::string(App->CL_Model->Loaded_PathFileName);
+	if (mPreviousFiles[EQUITY_NUM_RECENT_FILES - 1] == sz)return;
+
+	// add the new file to the list of recent files
+	for (unsigned int i = 0; i < EQUITY_NUM_RECENT_FILES - 1; ++i)
+	{
+		mPreviousFiles[i] = mPreviousFiles[i + 1];
+	}
+
+	mPreviousFiles[EQUITY_NUM_RECENT_FILES - 1] = sz;
+
+	// Check for empty slots and gray out
+	for (int i = EQUITY_NUM_RECENT_FILES - 1; i >= 0; --i)
+	{
+		char szText[1024];
+		strcpy(szText, mPreviousFiles[i].c_str());
+
+		UINT iFlags = 0;
+		int Result = 0;
+		Result = strcmp("<empty>", szText);
+		if (Result == 0)
+		{
+			iFlags = MF_GRAYED | MF_DISABLED;
+		}
+
+		ModifyMenu(mHistoryMenu, EQUITY_RECENT_FILE_ID(i),
+			MF_STRING | MF_BYCOMMAND | iFlags, EQUITY_RECENT_FILE_ID(i), szText);
+	}
+
+	// Save Changes
+	Save_FileHistory();
+
+	return;
+}
+// *************************************************************************
+// *		ResentHistory_Clear:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void  CL64_File_IO::ResentHistory_Clear(bool FirstTime)
+{
+
+	if (FirstTime == 0)
+	{
+		App->CL_Dialogs->YesNo((LPSTR)"Delete file history.", (LPSTR)"Are you sure all File history will be Deleted Procede.");
+		if (App->CL_Dialogs->flag_Dlg_Canceled == true)
+		{
+			return;
+		}
+	}
+
+	// Set all slots to <empty>
+	for (unsigned int i = 0; i < EQUITY_NUM_RECENT_FILES; ++i)
+	{
+		mPreviousFiles[i] = std::string("<empty>");
+	}
+
+	// Repopulate Menu system
+	for (int i = EQUITY_NUM_RECENT_FILES - 1; i >= 0; --i)
+	{
+		ModifyMenu(mHistoryMenu, EQUITY_RECENT_FILE_ID(i),
+			MF_STRING | MF_BYCOMMAND | MF_GRAYED | MF_DISABLED, EQUITY_RECENT_FILE_ID(i), "<empty>");
+	}
+
+	// Save Changes
+	Save_FileHistory();
+}
+
+// *************************************************************************
+// *			Save_FileHistory:- Terry and Hazel Flanigan 2024		   *
+// *************************************************************************
+void  CL64_File_IO::Save_FileHistory()
+{
+
+	//	WriteRecentFiles = 0;
+
+	char buf[MAX_PATH];
+	strcpy(buf, UserData_Folder);
+	strcat(buf, "\\Cheryl_3D\\Cheryl_3D.ini");
+
+
+	WriteRecentFiles = fopen(buf, "wt");
+
+	if (!WriteRecentFiles)
+	{
+		App->Say("Why Cant Find Recent Files");
+		return;
+	}
+
+	// Save out to RecentFile.ini
+	for (unsigned int i = 0; i < EQUITY_NUM_RECENT_FILES; ++i)
+	{
+		char szName[MAX_PATH];
+		strcpy(szName, mPreviousFiles[i].c_str());
+
+		fprintf(WriteRecentFiles, "%s\n", szName);
+	}
+
+	fclose(WriteRecentFiles);
+	return;
+}
+
+// *************************************************************************
+// *		Check_File_Exist:- Terry and Hazel Flanigan 2024		 	   *
+// *************************************************************************
+bool CL64_File_IO::Check_File_Exist(char* Full_Path)
+{
+	char pSearchPath[MAX_PATH];
+
+	WIN32_FIND_DATA FindFileData;
+	HANDLE hFind;
+
+	strcpy(pSearchPath, Full_Path);
+
+	hFind = FindFirstFile(pSearchPath, &FindFileData);
+	if (hFind == INVALID_HANDLE_VALUE)
+	{
+		return 0;
+	}
+	else
+	{
+		FindClose(hFind);
+		return 1;
+	}
+
+	return 0;
+}
+
+#pragma warning( disable : 4090)
+// *************************************************************************
+// *				StartBrowser:- Terry and Hazel Flanigan 2024   		   *
+// *************************************************************************
+bool CL64_File_IO::StartBrowser(char* szInitDir)
+{
+	TCHAR dname[MAX_PATH * 2] = { 0 };
+	IMalloc* imalloc;
+	HRESULT Test1 = SHGetMalloc(&imalloc);
+	BROWSEINFO bi; ZeroMemory(&bi, sizeof(bi));
+
+	bi.hwndOwner = App->MainHwnd;
+	bi.pszDisplayName = dname;
+	bi.lpszTitle = BrowserMessage;
+	bi.lParam = (LPARAM)szInitDir;
+	bi.ulFlags = BIF_RETURNONLYFSDIRS | BIF_NONEWFOLDERBUTTON | BIF_USENEWUI;
+	bi.lpfn = BrowseCallbackProc;
+
+	HRESULT Test2 = CoInitialize(NULL);
+	ITEMIDLIST* pidl = SHBrowseForFolder(&bi);
+
+	if (pidl)
+	{
+		imalloc->Free(pidl);
+		imalloc->Release();
+		return 1;
+	}
+
+	imalloc->Free(pidl);
+	imalloc->Release();
+
+	return 0;
+}
+HWND g_hMyEditBox;
+#define BROWSE_WIDTH      380
+#define BROWSE_HEIGHT     530
+// *************************************************************************
+// *			BrowseCallbackProc:- Terry and Hazel Flanigan 2024 		   *
+// *************************************************************************
+int __stdcall CL64_File_IO::BrowseCallbackProc(HWND  hwnd, UINT  uMsg, LPARAM  lParam, LPARAM  lpData)
+{
+	//Initialization callback message
+	if (uMsg == BFFM_INITIALIZED)
+	{
+		HWND tt = FindWindowEx(hwnd, NULL, "Static", NULL);
+		SendMessage(tt, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		//RECT rtDialog, rtButton;
+		//RECT DesktopRect;
+		//HWND hDesktop = ::GetDesktopWindow();
+		//::GetWindowRect(hDesktop, &DesktopRect);
+		//::MoveWindow(hwnd, (DesktopRect.right / 2) - (BROWSE_WIDTH / 2), (DesktopRect.bottom / 2) - (BROWSE_HEIGHT / 2), BROWSE_WIDTH, BROWSE_HEIGHT, TRUE);
+		////SendMessage(hwnd, BFFM_SETSELECTION, 1, (LPARAM)lParam);
+		//SetWindowPos(hwnd, NULL, 2, 2,200, 200, SWP_NOZORDER);
+
+		HWND hListView = FindWindowEx(hwnd, NULL, "TreeView", NULL);
+		SetWindowPos(hListView, NULL, 2, 2, 100, 100, SWP_NOZORDER);
+		//MoveWindow(hListView, 20, 20, 200, 200, TRUE);
+		////Find the handles of OK and Cancel buttons
+		//HWND hOKButton = FindWindowEx(hwnd, NULL, "Button", NULL);
+		//HWND hCancelButton = FindWindowEx(hwnd,hOKButton, "Button", NULL);
+
+		////Gets the OK button position
+		//::GetClientRect(hOKButton, &rtButton);
+
+		////Gets the dimensions BrowseForFolder dialog
+		//::GetClientRect(hwnd, &rtDialog);
+
+		////Relocate the SysTreeView32 control
+		//::SetWindowPos(hListView, 0, 10, 43, 360, 300, 0);
+
+		////Relocate the OK button
+		//::SetWindowPos(hOKButton, 0, 230, 460, 60, 30, 0);
+
+		////Relocate the Cancel buttton
+		//::SetWindowPos(hCancelButton, 0, 300, 460, 60, 30, 0);
+
+		////Create a static control
+		//HWND hMyStaticCtrl = CreateWindowEx(0, "STATIC", "My Custom Controls", SS_NOTIFY | WS_CHILD | WS_VISIBLE, 20, 370, 200, 25, hwnd, 0, NULL, NULL);
+
+		////Create a radio button
+		//HWND hMyRaioBtn = CreateWindowEx(0, "BUTTON", "RadioButton", SS_NOTIFY | WS_CHILD | WS_VISIBLE | BS_AUTORADIOBUTTON, 20, 400, 200, 20, hwnd, 0, NULL, NULL);
+
+		////Create an Edit box
+		//g_hMyEditBox = CreateWindowEx(0, "EDIT", "", SS_NOTIFY | WS_CHILD | WS_VISIBLE | WS_BORDER, 20, 430, 340, 20, hwnd, 0, NULL, NULL);
+		//
+		//LPCTSTR path = reinterpret_cast<LPCTSTR>(lpData);
+
+		//SendMessage(hwnd, BFFM_SETSELECTION, TRUE, (LPARAM)path);
+
+	}
+
+	if (uMsg == BFFM_SELCHANGED)
+	{
+		TCHAR szDir[MAX_PATH * 2] = { 0 };
+
+		BOOL bRet = SHGetPathFromIDList((LPITEMIDLIST)lParam, szDir);
+		if (bRet)
+		{
+			if (_taccess(szDir, 00) != 0)
+			{
+				bRet = FALSE;
+			}
+			else
+			{
+				SHFILEINFO sfi;
+				::SHGetFileInfo((LPCTSTR)lParam, 0, &sfi, sizeof(sfi),
+					SHGFI_PIDL | SHGFI_ATTRIBUTES);
+
+				if (sfi.dwAttributes & SFGAO_LINK)
+					bRet = FALSE;
+			}
+		}
+
+		if (!bRet)
+		{
+			::EnableWindow(GetDlgItem(hwnd, IDOK), FALSE);
+			strcpy(App->CL_File_IO->szSelectedDir, "");
+		}
+		else
+			strcpy(App->CL_File_IO->szSelectedDir, szDir);
+	}
+
+	return 0;
 }

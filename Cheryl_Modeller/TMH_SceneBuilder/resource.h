@@ -656,6 +656,12 @@
 #define ID_WINDOW_MATERIALS             32875
 #define ID_WINDOW_MODELDATA             32876
 #define ID_WINDOW_MOTIONS               32877
+#define ID_FILE_RECENTFILES             32878
+#define ID_FILE_EXPORT32879             32879
+#define ID_EXPORT_WAVEFRONT             32880
+#define ID_EXPORT_WAVEFRONTOBJ          32881
+#define ID_FILE_CLEARRECENTFILES        32882
+#define ID_FILE_CLEARRESENTFILES        32883
 #define ID_GENERALSELECT                32886
 #define ID_TOOLS_TEMPLATE               32910
 #define IDC_STATIC                      -1
@@ -666,7 +672,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        222
-#define _APS_NEXT_COMMAND_VALUE         32878
+#define _APS_NEXT_COMMAND_VALUE         32884
 #define _APS_NEXT_CONTROL_VALUE         1383
 #define _APS_NEXT_SYMED_VALUE           110
 #endif

@@ -72,7 +72,11 @@ THE SOFTWARE.
 #include "CL64_Top_Tabs.h"
 #include "CL64_File.h"
 #include "CL64_ParseFile.h"
+
 #include "CL64_Export.h"
+#include "CL64_Exporters.h"
+#include "CL64_Exp_Obj.h"
+
 #include "CL64_File_IO.h"
 #include "CL64_ImGui.h"
 #include "CL64_ImGui_Dialogs.h"
@@ -158,7 +162,11 @@ public:
 	CL64_Top_Tabs*				CL_Top_Tabs;
 	CL64_File*					CL_File;
 	CL64_ParseFile*				CL_ParseFile;
+
 	CL64_Export*				CL_Export;
+	CL64_Exporters*				CL_Exporters;
+	CL64_Exp_Obj*				CL_Exp_Obj;
+
 	CL64_File_IO*				CL_File_IO;
 	CL64_ImGui*					CL_ImGui;
 	CL64_ImGui_Dialogs*			CL_ImGui_Dialogs;

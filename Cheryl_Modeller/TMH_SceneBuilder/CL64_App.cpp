@@ -77,7 +77,11 @@ CL64_App::CL64_App(void)
 	CL_Top_Tabs =				nullptr;
 	CL_File =					nullptr;
 	CL_ParseFile =				nullptr;
+
 	CL_Export =					nullptr;
+	CL_Exporters =				nullptr;
+	CL_Exp_Obj =				nullptr;
+
 	CL_File_IO =				nullptr;
 	CL_ImGui =					nullptr;
 	CL_ImGui_Dialogs =			nullptr;
@@ -257,7 +261,11 @@ void CL64_App::InitApp(void)
 	CL_Brush_X =				new CL64_Brush_X();
 	CL_File =					new CL64_File;
 	CL_ParseFile =				new CL64_ParseFile();
+
 	CL_Export =					new	CL64_Export();
+	CL_Exporters =				new CL64_Exporters();
+	CL_Exp_Obj =				new CL64_Exp_Obj();
+	
 	CL_File_IO =				new CL64_File_IO();
 	CL_ImGui =					new CL64_ImGui();
 	CL_ImGui_Dialogs =			new CL64_ImGui_Dialogs();

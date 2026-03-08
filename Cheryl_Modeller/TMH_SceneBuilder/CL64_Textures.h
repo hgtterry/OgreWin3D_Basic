@@ -42,6 +42,9 @@ public:
 	void Remove_Temp_Texture();
 	void Lock_All_Textures();
 
+	HBITMAP DummyTexture_To_HBITMAP();
+	bool HBITMAP_TO_BmpFile(HBITMAP Bitmap, char* Filename, char* SaveFolder);
+
 	long BasePicWidth;
 	long BasePicHeight;
 	long BasePicDepth;
