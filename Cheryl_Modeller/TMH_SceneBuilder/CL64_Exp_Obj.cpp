@@ -42,6 +42,7 @@ CL64_Exp_Obj::CL64_Exp_Obj(void)
 	DeskTop_Folder[0] = 0;
 
 	flag_First_Run = true;
+	flag_File_Created = false;
 }
 
 CL64_Exp_Obj::~CL64_Exp_Obj(void)
@@ -53,6 +54,8 @@ CL64_Exp_Obj::~CL64_Exp_Obj(void)
 // *************************************************************************
 void CL64_Exp_Obj::Object_Export_Dlg()
 {
+	flag_File_Created = false;
+
 	if (flag_First_Run == true)
 	{
 		strcpy(m_Out_JustName, App->CL_Model->Model_Just_Name);
@@ -284,23 +287,21 @@ LRESULT CALLBACK CL64_Exp_Obj::Proc_Object_Export_Dlg2(HWND hDlg, UINT message, 
 		{
 			// Check Path
 			int result = strcmp(App->CL_Exp_Obj->m_Out_Folder_Path, "");
-			if (result == 0)
+			if (result == false)
 			{
 				App->Say("No Path Selected");
 				return 1;
 			}
 
-			//strcpy(App->CL_Exp_Obj->m_Out_Folder_Path, App->CL_Exp_Obj->m_Out_JustName);
-			//strcat(App->CL_Exp_Obj->m_Out_Folder_Path, "_Object_All");
-
 			App->CL_Exp_Obj->Create_ObjectFile();
-
+			App->CL_Exp_Obj->flag_File_Created = true;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == IDCANCEL)
 		{
+			App->CL_Exp_Obj->flag_File_Created = false;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}

@@ -189,6 +189,9 @@
     <ClInclude Include="CL64_Exporters.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="CL64_Assimp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Room Builder.cpp">
@@ -357,6 +360,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CL64_Exporters.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CL64_Assimp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -136,7 +136,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <LanguageStandard>stdcpp14</LanguageStandard>
-      <AdditionalIncludeDirectories>..\Common_64\OW3D\include;..\Common_64\Ogre3D\include\OGRE\RTShaderSystem;..\Common_64\Ogre3D\include\OGRE\Bites;..\Common_64\Ogre3D\include\OGRE;..\Common_64\Ogre3D\include\OGRE\Overlay;..\Common_64\Bullet\Source;..\Common_64\Bullet\Source\LinearMath;..\Common_64\Devil\include\IL;..\Common_64\irrKlang\Headers;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Common_64\OW3D\include;..\Common_64\Ogre3D\include\OGRE\RTShaderSystem;..\Common_64\Ogre3D\include\OGRE\Bites;..\Common_64\Ogre3D\include\OGRE;..\Common_64\Ogre3D\include\OGRE\Overlay;..\Common_64\Bullet\Source;..\Common_64\Bullet\Source\LinearMath;..\Common_64\Devil\include\IL;..\Common_64\irrKlang\Headers;..\Common_64\Assimp\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -147,8 +147,8 @@
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <OutputFile>$(OutDir)Cheryl_3D_Modeller.exe</OutputFile>
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
-      <AdditionalDependencies>X_Libs.lib;X_Lib_Preferences.lib;X_Lib_Zip.lib;X_Lib_Maths.lib;X_Lib_Ini_File.lib;Templates_Lib.lib;X_Lib_Gen.lib;X_Lib_Face_Editor.lib;comctl32.lib;OgreMain.lib;OgreOverlay.lib;OgreRTShaderSystem.lib;OgreBites.lib;BulletDynamics.lib;BulletCollision.lib;LinearMath.lib;opengl32.lib;glu32.lib;DevIL.lib;ILU.lib;ILUT.lib;irrKlang.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\Common_64\OW3D;..\Common_64\Ogre3D\libs;..\Common_64\Bullet\lib;..\Common_64\Devil\lib\x64\Release;..\Common_64\irrKlang\Libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>X_Libs.lib;X_Lib_Preferences.lib;X_Lib_Zip.lib;X_Lib_Maths.lib;X_Lib_Ini_File.lib;Templates_Lib.lib;X_Lib_Gen.lib;X_Lib_Face_Editor.lib;comctl32.lib;OgreMain.lib;OgreOverlay.lib;OgreRTShaderSystem.lib;OgreBites.lib;BulletDynamics.lib;BulletCollision.lib;LinearMath.lib;opengl32.lib;glu32.lib;DevIL.lib;ILU.lib;ILUT.lib;irrKlang.lib;assimp-vc143-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\Common_64\OW3D;..\Common_64\Ogre3D\libs;..\Common_64\Bullet\lib;..\Common_64\Devil\lib\x64\Release;..\Common_64\irrKlang\Libs;..\Common_64\Assimp\Lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>LIBCMT.lib;libcpmt.lib</IgnoreSpecificDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>
@@ -157,6 +157,7 @@
     <ClInclude Include="Base_Group.h" />
     <ClInclude Include="Base_Object.h" />
     <ClInclude Include="CL64_App.h" />
+    <ClInclude Include="CL64_Assimp.h" />
     <ClInclude Include="CL64_Brush_X.h" />
     <ClInclude Include="CL64_Camera.h" />
     <ClInclude Include="CL64_Dialogs.h" />
@@ -217,6 +218,7 @@
     <ClCompile Include="Base_Group.cpp" />
     <ClCompile Include="Base_Object.cpp" />
     <ClCompile Include="CL64_App.cpp" />
+    <ClCompile Include="CL64_Assimp.cpp" />
     <ClCompile Include="CL64_Brush_X.cpp" />
     <ClCompile Include="CL64_Camera.cpp" />
     <ClCompile Include="CL64_Dialogs.cpp" />

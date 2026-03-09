@@ -47,10 +47,12 @@ void CL64_Exporters::Export_Wavefront_Object_Model(void)
 
 	App->CL_Exp_Obj->Object_Export_Dlg();
 
-	//bool test = App->CL_Exp_Obj->Create_ObjectFile();
-
-	//if (test == 1)
+	if (App->CL_Exp_Obj->flag_File_Created == true)
 	{
-		App->Say("Wavefront Object file Created successfully");
+		char buff[MAX_PATH];
+		strcat(buff, App->CL_Exp_Obj->m_Out_JustName);
+		strcat(buff, ".obj");
+		
+		App->Say("Wavefront Object file Created successfully",buff);
 	}
 }

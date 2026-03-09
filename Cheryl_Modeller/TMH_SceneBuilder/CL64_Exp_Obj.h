@@ -51,6 +51,7 @@ public:
 	char m_Out_Folder_Path[MAX_PATH];
 
 	bool flag_First_Run;
+	bool flag_File_Created;
 
 	FILE* Write_OBJECTFILE;
 	FILE* Write_MTLFile;
