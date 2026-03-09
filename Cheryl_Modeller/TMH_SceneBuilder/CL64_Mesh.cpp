@@ -88,6 +88,7 @@ bool CL64_Mesh::Ogre_Convert_To_Mesh_Data(Ogre::Entity* Ogre_Entity)
 
 			// Resize data structures for the current submesh
 			auto& group = App->CL_Mesh->Group[Count];
+
 			group->vertex_Data.resize(vertex_count);
 			group->Normal_Data.resize(vertex_count);
 			group->MapCord_Data.resize(vertex_count);
@@ -439,7 +440,6 @@ void CL64_Mesh::Get_Ogre_Mesh_Data(Ogre::Entity* Ogre_Entity)
 
 	while (Count < NumSubEnts)
 	{
-
 		// Material
 		char mMaterial[MAX_PATH];
 		Ogre::SubEntity* subEnt = Ogre_Entity->getSubEntity(Count);
@@ -463,14 +463,14 @@ void CL64_Mesh::Get_Ogre_Mesh_Data(Ogre::Entity* Ogre_Entity)
 			if (MatCurent->getNumTechniques() > 0)
 			{
 				int TUSCount = MatCurent->getTechnique(0)->getPass(0)->getNumTextureUnitStates();
+				App->CL_Mesh->Group[Count]->Ogre_NumTextureUnits = TUSCount;
 
 				if (TUSCount > 0)
 				{
-					App->CL_Mesh->Group[Count]->Ogre_NumTextureUnits = TUSCount;
 					strcpy(mTexture, MatCurent->getTechnique(0)->getPass(0)->getTextureUnitState(0)->getTextureName().c_str());
 
 					strcpy(App->CL_Mesh->Group[Count]->Ogre_Texture_FileName, mTexture);
-					App->CL_Mesh->Group[Count]->Ogre_Texture_IsValid = 1;
+					App->CL_Mesh->Group[Count]->Ogre_Texture_IsValid = true;
 					App->CL_Mesh->Group[Count]->Ogre_MipMaps = MatCurent->getTechnique(0)->getPass(0)->getTextureUnitState(0)->getNumMipmaps();
 
 				}
@@ -545,33 +545,10 @@ void CL64_Mesh::Get_Ogre_Mesh_Data(Ogre::Entity* Ogre_Entity)
 }
 
 // *************************************************************************
-// *	    Show_Mesh_Normals:- Terry and Hazel Flanigan 2026			   *
-// *************************************************************************
-void CL64_Mesh::Show_Mesh_Normals()
-{
-	if (App->CL_Model->flag_Model_Loaded == true)
-	{
-		HWND Temp = GetDlgItem(App->CL_Top_Tabs->TopTabs_Dlg_hWnd, IDC_BTSHOWNORMALS);
-
-		if (App->CL_Ogre->OGL_Listener->flag_ShowNormals == true)
-		{
-			App->CL_Ogre->OGL_Listener->flag_ShowNormals = false;
-			SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_NormalsOff_Bmp);
-		}
-		else
-		{
-			App->CL_Ogre->OGL_Listener->flag_ShowNormals = true;
-			SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_NormalsOn_Bmp);
-		}
-	}
-}
-
-// *************************************************************************
 // *		Get_SkeletonInstance:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
 bool CL64_Mesh::Get_SkeletonInstance(Ogre::Entity* Ogre_Entity)
 {
-
 	int Loop = 0;
 	if (!Ogre_Entity)
 	{
@@ -584,30 +561,32 @@ bool CL64_Mesh::Get_SkeletonInstance(Ogre::Entity* Ogre_Entity)
 	{
 		App->CL_Model->BoneCount = skeletonInstance->getNumBones();
 
+		auto& m_Bones = App->CL_Mesh->S_Bones;
+
 		Ogre::Skeleton::BoneIterator itor = skeletonInstance->getBoneIterator();
 		while (itor.hasMoreElements())
 		{
 			Ogre::Bone* bone = itor.getNext();
 
-			App->CL_Mesh->S_Bones[Loop] = new Bone_Type;
+			m_Bones[Loop] = new Bone_Type;
 
 			Ogre::Node* Parent = bone->getParent();
 			if (Parent == NULL)
 			{
-				App->CL_Mesh->S_Bones[Loop]->Parent = -1;
+				m_Bones[Loop]->Parent = -1;
 			}
 			else
 			{
 				Ogre::String ParentName = Parent->getName();
 				Ogre::Bone* Parentbone = skeletonInstance->getBone(ParentName);
-				App->CL_Mesh->S_Bones[Loop]->Parent = Parentbone->getHandle();
+				m_Bones[Loop]->Parent = Parentbone->getHandle();
 			}
 
-			strcpy(App->CL_Mesh->S_Bones[Loop]->BoneName, bone->getName().c_str());
+			strcpy(m_Bones[Loop]->BoneName, bone->getName().c_str());
 
-			App->CL_Mesh->S_Bones[Loop]->TranslationStart.X = bone->_getDerivedPosition().x;
-			App->CL_Mesh->S_Bones[Loop]->TranslationStart.Y = bone->_getDerivedPosition().y;
-			App->CL_Mesh->S_Bones[Loop]->TranslationStart.Z = bone->_getDerivedPosition().z;
+			m_Bones[Loop]->TranslationStart.X = bone->_getDerivedPosition().x;
+			m_Bones[Loop]->TranslationStart.Y = bone->_getDerivedPosition().y;
+			m_Bones[Loop]->TranslationStart.Z = bone->_getDerivedPosition().z;
 
 			Loop++;
 		}
@@ -683,6 +662,30 @@ void CL64_Mesh::Show_Mesh_Faces()
 			m_Show_Faces = true;
 			SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshOn_Bmp);
 			SendMessage(Temp2, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshOn_Bmp);
+		}
+	}
+}
+
+// *************************************************************************
+// *	    Show_Mesh_Normals:- Terry and Hazel Flanigan 2026			   *
+// *************************************************************************
+void CL64_Mesh::Show_Mesh_Normals()
+{
+	if (App->CL_Model->flag_Model_Loaded == true)
+	{
+		HWND Temp = GetDlgItem(App->CL_Top_Tabs->TopTabs_Dlg_hWnd, IDC_BTSHOWNORMALS);
+
+		auto& m_Show_Normals = App->CL_Ogre->OGL_Listener->flag_ShowNormals;
+
+		if (m_Show_Normals == true)
+		{
+			m_Show_Normals = false;
+			SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_NormalsOff_Bmp);
+		}
+		else
+		{
+			m_Show_Normals = true;
+			SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_NormalsOn_Bmp);
 		}
 	}
 }
