@@ -56,6 +56,7 @@ CL64_OGL_Listener::CL64_OGL_Listener(void)
 	flag_Render_Groups = false;
 	flag_Render_Brushes = false;
 
+	flag_ShowTextured = false;
 	flag_Just_Face = false;
 	flag_ShowFaces = false;
 	flag_ShowPoints = false;
@@ -240,6 +241,17 @@ void CL64_OGL_Listener::Render_Loop()
 	//----------------------------------------------------------------------------- 
 	// 
 	
+	//---------------------- Textured
+	if (App->CL_Model->flag_Model_Loaded == true && flag_ShowTextured == true)
+	{
+		glEnable(GL_DEPTH_TEST);
+		glShadeModel(GL_SMOOTH);
+
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
+		MeshData_Render_Textures();
+	}
+
 	// ---------------------- Mesh Material Faces
 	if (App->CL_Model->flag_Model_Loaded && flag_Show_Material_Faces == true)
 	{

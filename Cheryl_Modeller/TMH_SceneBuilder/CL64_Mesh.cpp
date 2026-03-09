@@ -626,14 +626,32 @@ void CL64_Mesh::Show_Mesh_Textures()
 
 		if (App->CL_Model->Model_Type == Enums::Model_Type_Ogre3D)
 		{
+			auto& m_Node = App->CL_Model->Imported_Ogre_Node;
+
 			if (App->CL_Model->Imported_Ogre_Ent->getVisible() == true)
 			{
-				App->CL_Model->Imported_Ogre_Node->setVisible(false);
+				m_Node->setVisible(false);
 				SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_TexturesOff_Bmp);
 			}
 			else
 			{
-				App->CL_Model->Imported_Ogre_Node->setVisible(true);
+				m_Node->setVisible(true);
+				SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_TexturesOn_Bmp);
+			}
+		}
+
+		if (App->CL_Model->Model_Type == Enums::Model_Type_Assimp)
+		{
+			auto& m_Show_Texture = App->CL_Ogre->OGL_Listener->flag_ShowTextured;
+
+			if (m_Show_Texture == true)
+			{
+				m_Show_Texture = false;
+				SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_TexturesOff_Bmp);
+			}
+			else
+			{
+				m_Show_Texture = true;
 				SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_TexturesOn_Bmp);
 			}
 		}
@@ -652,15 +670,17 @@ void CL64_Mesh::Show_Mesh_Faces()
 		HWND Temp = GetDlgItem(App->CL_Top_Tabs->TopTabs_Dlg_hWnd, IDC_TBSHOWFACES);
 		HWND Temp2 = GetDlgItem(App->CL_Properties_Motions->Motions_Dlg_Hwnd, IDC_BT_MOT_MESH);
 
-		if (App->CL_Ogre->OGL_Listener->flag_ShowFaces == true)
+		auto& m_Show_Faces = App->CL_Ogre->OGL_Listener->flag_ShowFaces;
+
+		if (m_Show_Faces == true)
 		{
-			App->CL_Ogre->OGL_Listener->flag_ShowFaces = false;
+			m_Show_Faces = false;
 			SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshOff_Bmp);
 			SendMessage(Temp2, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshOff_Bmp);
 		}
 		else
 		{
-			App->CL_Ogre->OGL_Listener->flag_ShowFaces = true;
+			m_Show_Faces = true;
 			SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshOn_Bmp);
 			SendMessage(Temp2, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshOn_Bmp);
 		}
@@ -676,15 +696,17 @@ void CL64_Mesh::Show_Mesh_Points()
 	{
 		HWND Temp = GetDlgItem(App->CL_Top_Tabs->TopTabs_Dlg_hWnd, IDC_BTSHOWPOINTS);
 
-		if (App->CL_Ogre->OGL_Listener->flag_ShowPoints == true)
+		auto& m_Show_Points = App->CL_Ogre->OGL_Listener->flag_ShowPoints;
+
+		if (m_Show_Points == true)
 		{
-			App->CL_Ogre->OGL_Listener->flag_ShowPoints = false;
+			m_Show_Points = false;
 
 			SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshPointsOff_Bmp);
 		}
 		else
 		{
-			App->CL_Ogre->OGL_Listener->flag_ShowPoints = true;
+			m_Show_Points = true;
 
 			SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshPointsOn_Bmp);
 		}
@@ -701,15 +723,17 @@ void CL64_Mesh::Show_Mesh_BoundBox()
 		HWND Temp = GetDlgItem(App->CL_Top_Tabs->TopTabs_Dlg_hWnd, IDC_TBBOUNDBOX);
 		HWND Temp2 = GetDlgItem(App->CL_Properties_Motions->Motions_Dlg_Hwnd, IDC_BT_MOT_BBOX);
 
-		if (App->CL_Ogre->OGL_Listener->flag_ShowBoundingBox == true)
+		auto& m_Show_BBox = App->CL_Ogre->OGL_Listener->flag_ShowBoundingBox;
+
+		if (m_Show_BBox == true)
 		{
-			App->CL_Ogre->OGL_Listener->flag_ShowBoundingBox = false;
+			m_Show_BBox = false;
 			SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_BBOff_Bmp);
 			SendMessage(Temp2, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_BBOff_Bmp);
 		}
 		else
 		{
-			App->CL_Ogre->OGL_Listener->flag_ShowBoundingBox = true;
+			m_Show_BBox = true;
 			SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_BBOn_Bmp);
 			SendMessage(Temp2, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_BBOn_Bmp);
 		}
@@ -726,16 +750,18 @@ void CL64_Mesh::Show_Mesh_Bones()
 		HWND Temp = GetDlgItem(App->CL_Top_Tabs->TopTabs_Dlg_hWnd, IDC_BTSHOWBONES);
 		HWND Temp2 = GetDlgItem(App->CL_Properties_Motions->Motions_Dlg_Hwnd, IDC_BT_MOT_BONES);
 
-		if (App->CL_Ogre->OGL_Listener->flag_ShowBones == true)
+		auto& m_Show_Bones = App->CL_Ogre->OGL_Listener->flag_ShowBones;
+
+		if (m_Show_Bones == true)
 		{
-			App->CL_Ogre->OGL_Listener->flag_ShowBones = false;
+			m_Show_Bones = false;
 
 			SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_BonesOff_Bmp);
 			SendMessage(Temp2, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_BonesOff_Bmp);
 		}
 		else
 		{
-			App->CL_Ogre->OGL_Listener->flag_ShowBones = true;
+			m_Show_Bones = true;
 
 			SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_BonesOn_Bmp);
 			SendMessage(Temp2, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_BonesOn_Bmp);

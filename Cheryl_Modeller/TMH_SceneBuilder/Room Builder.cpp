@@ -620,7 +620,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             case ID_IMPORT_WAVEFRONTOBJ:
             {
                 App->CL_Assimp->Options.SelectedPreset = 8 + 8388608 + 64 + aiProcess_PreTransformVertices;
-                App->CL_Assimp->Options.Model_Type = Enums::Model_Type_Assimp_OBJ;
+                App->CL_Assimp->Options.Model_Type = Enums::Model_Type_Assimp;
 
                 bool test = App->CL_Importers->Assimp_Loader(true, "Wavefront OBJ   *.obj\0*.obj\0", "Wavefront OBJ");
 

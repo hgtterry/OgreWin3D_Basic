@@ -87,7 +87,7 @@ bool CL64_Importers::Assimp_Loader(bool UseDialog, const char* Extension, const 
 		return 0;
 	}
 
-	App->CL_Model->Model_Type = Enums::Model_Type_Assimp_OBJ;
+	App->CL_Model->Model_Type = Enums::Model_Type_Assimp;
 	App->CL_Model->flag_Model_Loaded = true;
 
 	/*App->CL_Scene->Scene_Mode = Enums::Scene_Mode_Assimp_Model;

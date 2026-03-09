@@ -57,6 +57,7 @@ public:
 
 	bool flag_Just_Face;
 
+	bool flag_ShowTextured;
 	bool flag_ShowFaces;
 	bool flag_ShowPoints;
 	bool flag_ShowNormals;
