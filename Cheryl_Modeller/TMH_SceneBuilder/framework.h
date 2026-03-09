@@ -54,7 +54,8 @@ namespace Enums
 	enum Model_Type
 	{
 		Model_Type_None = 0,
-		Model_Type_Ogre3D = 1
+		Model_Type_Ogre3D = 1,
+		Model_Type_Assimp_OBJ = 2
 	};
 
 	enum Base

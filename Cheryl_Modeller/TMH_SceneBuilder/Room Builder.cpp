@@ -617,6 +617,21 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 return 1;
             }
 
+            case ID_IMPORT_WAVEFRONTOBJ:
+            {
+                App->CL_Assimp->Options.SelectedPreset = 8 + 8388608 + 64 + aiProcess_PreTransformVertices;
+                App->CL_Assimp->Options.Model_Type = Enums::Model_Type_Assimp_OBJ;
+
+                bool test = App->CL_Importers->Assimp_Loader(true, "Wavefront OBJ   *.obj\0*.obj\0", "Wavefront OBJ");
+
+                if (test == 1)
+                {
+                    App->Say("Imported");
+                }
+               
+                return TRUE;
+            }
+
             // ----------------------------------------------------- File Export
             case ID_EXPORT_WAVEFRONTOBJ:
             {
@@ -1497,6 +1512,10 @@ INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
         SendDlgItemMessage(hDlg, IDC_LIST_ABOUT_VERSIONS, LB_ADDSTRING, (WPARAM)0, (LPARAM)" ");
 
         App->CL_Properties_Tabs->Enable_Tabs_Dlg(false);
+
+        sprintf(buf, "Time %s   Date  %s", __TIME__, __DATE__);
+        SendDlgItemMessage(hDlg, IDC_LIST_ABOUT_VERSIONS, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+      
 
         return (INT_PTR)TRUE;
     }

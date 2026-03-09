@@ -103,13 +103,13 @@ void CL64_Assimp::GetBasicInfo(const aiScene * pScene)
 {
 
 	bool test = pScene->HasMeshes();
-	if (test == 1)
+	if (test == true)
 	{
-		App->CL_Scene->GroupCount = pScene->mNumMeshes;
+		App->CL_Model->GroupCount = pScene->mNumMeshes;
 	}
 
 	test = pScene->HasMaterials();
-	if (test == 1)
+	if (test == true)
 	{
 		int Mat = 0;
 
@@ -126,7 +126,7 @@ void CL64_Assimp::GetBasicInfo(const aiScene * pScene)
 	}
 
 	test = pScene->HasAnimations();
-	if (test == 1)
+	if (test == true)
 	{
 		App->CL_Model->MotionCount = pScene->mNumAnimations;
 	}
@@ -143,7 +143,7 @@ void CL64_Assimp::Create_MeshGroups(const aiScene* pScene)
 	char MaterialName[255];
 	char GroupNum[255];
 
-	int mGroupCount = App->CL_Scene->GroupCount;
+	int mGroupCount = App->CL_Model->GroupCount;
 
 	while (Count < mGroupCount)
 	{
@@ -205,7 +205,7 @@ void CL64_Assimp::Get_Group_VertCount(const aiScene* pScene)
 	int mTotalVertices = 0;
 	int mTotalFaces = 0;
 	
-	int mGroupCount = App->CL_Scene->GroupCount;
+	int mGroupCount = App->CL_Model->GroupCount;
 
 	while (Count < mGroupCount)
 	{
@@ -259,7 +259,7 @@ void CL64_Assimp::StoreMeshData(const aiScene* pScene)
 	unsigned int i = 0;
 	int VC = 0;
 
-	int mGroupCount = App->CL_Scene->GroupCount;
+	int mGroupCount = App->CL_Model->GroupCount;
 
 	while (GroupCount < mGroupCount)
 	{

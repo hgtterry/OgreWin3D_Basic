@@ -93,6 +93,7 @@ CL64_App::CL64_App(void)
 	CL_Camera =					nullptr;
 	CL_Entities =				nullptr;
 	CL_Motions =				nullptr;
+	CL_Assimp =					nullptr;
 
 	CL_PB =						nullptr;
 
@@ -277,6 +278,7 @@ void CL64_App::InitApp(void)
 	CL_Camera =					new CL64_Camera();
 	CL_Entities =				new CL64_Entities();
 	CL_Motions =				new CL64_Motioins();
+	CL_Assimp =					new CL64_Assimp();
 
 	CL_PB =						new CL64_PB();
 

@@ -7,6 +7,8 @@ public:
 
 	void Set_Editor();
 
+	bool Assimp_Loader(bool UseDialog, const char* Extension, const char* Extension2);
+
 	bool Load_Ogre_Model(bool Use_File_Dialog, bool Check_Resource_File);
 	void Scan_Material_Files(void);
 	bool Load_Ogre_Resource_CFG(bool Use_File_Dialog);
