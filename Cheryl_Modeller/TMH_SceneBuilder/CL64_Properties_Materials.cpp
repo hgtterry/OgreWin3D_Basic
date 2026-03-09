@@ -589,6 +589,8 @@ void CL64_Properties_Materials::List_Material_Changed()
 			HWND List = GetDlgItem(App->CL_Dialogs->ListBox_Dlg, IDC_LST_GENERAL);
 			App->CL_Dialogs->List_Mesh_Data(List);
 		}
+
+		RedrawWindow(Textures_Dlg_Hwnd_Ogre, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 	}
 
 }

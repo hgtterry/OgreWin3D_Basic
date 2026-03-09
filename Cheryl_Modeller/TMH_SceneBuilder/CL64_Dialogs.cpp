@@ -2031,14 +2031,17 @@ void CL64_Dialogs::List_Mesh_Data(HWND List)
 			SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)buf);
 
 			strcpy(buf, "Material Name :-   ");
-			strcat(buf, App->CL_Mesh->Group[Index]->MaterialName);
+			strcat(buf, App->CL_Mesh->Group[Index]->Ogre_Material);
 			SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)buf);
 
 			sprintf(buf, "%s %i", "Texture Units:-   ", App->CL_Mesh->Group[Index]->Ogre_NumTextureUnits);
 			SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)buf);
 
 			strcpy(buf, "Texture Name :-   ");
-			strcat(buf, App->CL_Mesh->Group[Index]->Ogre_Texture_FileName);
+			strcat(buf, App->CL_Mesh->Group[Index]->Ogre_Material);
+			SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)buf);
+
+			sprintf(buf, "%s %i", "Mip Maps:-   ", App->CL_Mesh->Group[Index]->Ogre_MipMaps);
 			SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)buf);
 
 		}
