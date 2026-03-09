@@ -43,6 +43,8 @@ public:
 	void Read_File(char* mFile, HWND hDlg);
 	void Material_Search(char* ItemString);
 
+	void List_Mesh_Data(HWND List);
+
 	char btext[MAX_PATH];
 	char Chr_Text[MAX_PATH];
 	char mTextureFile[MAX_PATH];
@@ -60,7 +62,7 @@ public:
 	HWND TextureView_Hwnd;
 
 	HWND FileViewer_Hwnd;
-
+	HWND ListBox_Dlg;
 	HBITMAP	Sel_BaseBitmap;
 
 private:
@@ -91,7 +93,6 @@ private:
 	void List_Used_Textures(HWND List);
 	void List_Libraries(HWND List);
 	void List_Directories(HWND List);
-	void List_Mesh_Data(HWND List);
 
 	int Face_Index;
 	int Check_What;

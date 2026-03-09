@@ -101,6 +101,7 @@ LRESULT CALLBACK CL64_Properties_Materials::Proc_Materials_Dialog_Ogre(HWND hDlg
 	
 		SendDlgItemMessage(hDlg, IDC_BT_PT_VIEWMAT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_MATERIAL_FACES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_GROUPDETAILS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
 		SendDlgItemMessage(hDlg, IDC_ST_PT_DIMENSIONS, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ST_PT_NUMTEXTUNITS, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
@@ -152,6 +153,16 @@ LRESULT CALLBACK CL64_Properties_Materials::Proc_Materials_Dialog_Ogre(HWND hDlg
 			}
 		}
 
+		if (some_item->idFrom == IDC_BT_GROUPDETAILS)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+
+			//if (App->flag_OgreStarted == 1)
+			{
+				App->Custom_Button_Normal(item);
+			}
+		}
+
 		if (some_item->idFrom == IDC_BT_MATERIAL_FACES)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
@@ -167,7 +178,13 @@ LRESULT CALLBACK CL64_Properties_Materials::Proc_Materials_Dialog_Ogre(HWND hDlg
 
 	case WM_COMMAND:
 	{
-		if (LOWORD(wParam) == IDC_LIST_MATERIALS)
+		if (LOWORD(wParam) == IDC_BT_GROUPDETAILS)
+		{
+			App->CL_Dialogs->Start_General_ListBox(Enums::ListBox_Mesh_Data);
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_LIST_MATERIALS) // Click inside list box
 		{
 			App->CL_Properties_Materials->List_Material_Changed();
 			return TRUE;
@@ -565,6 +582,12 @@ void CL64_Properties_Materials::List_Material_Changed()
 
 			strcat(Text, App->CL_Mesh->Group[Selected_Group]->Ogre_Material);
 			App->CL_Dialogs->Material_Search((LPSTR)Text);
+		}
+
+		if (App->CL_Dialogs->flag_General_ListBox_Active == true)
+		{
+			HWND List = GetDlgItem(App->CL_Dialogs->ListBox_Dlg, IDC_LST_GENERAL);
+			App->CL_Dialogs->List_Mesh_Data(List);
 		}
 	}
 

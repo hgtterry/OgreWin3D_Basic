@@ -550,6 +550,7 @@
 #define IDC_BT_MOT_MESH                 1381
 #define IDC_BUTTON3                     1382
 #define IDC_BT_MOT_BBOX                 1382
+#define IDC_BT_GROUPDETAILS             1382
 #define ID_DEBUG_GENERAL                32771
 #define ID_TEMPLATES_INSERT             32772
 #define ID_BRUSH_SELECT                 32773
