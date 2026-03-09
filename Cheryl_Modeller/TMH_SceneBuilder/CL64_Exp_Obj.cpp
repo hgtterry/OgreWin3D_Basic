@@ -1,16 +1,25 @@
 /*
-Copyright (c) OgreWin3D_Basic 2024 W.T.Flanigan H.C.Flanigan Inflanite_HGT
+Copyright (c) 2024 - 2026 HGT_Software W.T.Flanigan H.C.Flanigan
 
-This software is provided 'as-is', without any express or implied
-warranty. In no event will the authors be held liable for any damages
-arising from the use of this software.
+Cheryl 3D Modeller
 
-Permission is granted to anyone to use this software for any purpose,
-including commercial applications, and to alter it and redistribute it
-freely.
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-An acknowledgment in the product documentation would be
-appreciated but is not required.
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
 */
 
 #include "pch.h"
@@ -373,7 +382,7 @@ void CL64_Exp_Obj::Write_ObjectFile_Commit(void)
 
 	fprintf(Write_OBJECTFILE, "#\n");
 	fprintf(Write_OBJECTFILE, "# Wavefront OBJ file\n");
-	fprintf(Write_OBJECTFILE, "# Created with OgreWin3D\n");
+	fprintf(Write_OBJECTFILE, "# Created with Cheryl 3D Modeller\n");
 	fprintf(Write_OBJECTFILE, "#\n");
 	fprintf(Write_OBJECTFILE, "mtllib %s\n", Just_mtl_FileName);
 	fprintf(Write_OBJECTFILE, "%s \n", " ");
@@ -505,7 +514,7 @@ void CL64_Exp_Obj::Write_ObjectFile_Commit(void)
 }
 
 // *************************************************************************
-// *				WriteMTLFile:- Terry and Hazel Flanigan 2024       	   *
+// *				WriteMTLFile:- Terry and Hazel Flanigan 2026       	   *
 // *************************************************************************
 bool CL64_Exp_Obj::WriteMTLFile(void)
 {
@@ -522,7 +531,7 @@ bool CL64_Exp_Obj::WriteMTLFile(void)
 
 	fprintf(Write_MTLFile, "#\n");
 	fprintf(Write_MTLFile, "# Wavefront material file\n");
-	fprintf(Write_MTLFile, "# Created with OgreWin3D\n");
+	fprintf(Write_MTLFile, "# Created with Cheryl 3D Modeller\n");
 	fprintf(Write_MTLFile, "#\n");
 	fprintf(Write_MTLFile, "%s \n", " ");
 
