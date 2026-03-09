@@ -31,6 +31,8 @@ CL64_Exp_Obj::CL64_Exp_Obj(void)
 	m_Out_JustName[0] = 0;
 	m_Out_Folder_Path[0] = 0;
 	DeskTop_Folder[0] = 0;
+
+	flag_First_Run = true;
 }
 
 CL64_Exp_Obj::~CL64_Exp_Obj(void)
@@ -42,8 +44,13 @@ CL64_Exp_Obj::~CL64_Exp_Obj(void)
 // *************************************************************************
 void CL64_Exp_Obj::Object_Export_Dlg()
 {
-	strcpy(m_Out_JustName, App->CL_Model->Model_Just_Name);
-	strcpy(m_Out_Folder_Path, DeskTop_Folder);
+	if (flag_First_Run == true)
+	{
+		strcpy(m_Out_JustName, App->CL_Model->Model_Just_Name);
+		strcpy(m_Out_Folder_Path, DeskTop_Folder);
+
+		flag_First_Run = false;
+	}
 
 	DialogBox(App->hInst, (LPCTSTR)IDD_OBJECT_EXPORT, App->MainHwnd, (DLGPROC)Proc_Object_Export_Dlg2);
 
@@ -215,7 +222,7 @@ LRESULT CALLBACK CL64_Exp_Obj::Proc_Object_Export_Dlg2(HWND hDlg, UINT message, 
 		if (LOWORD(wParam) == IDC_BT_OGRE_NAMECHANGE)
 		{
 			strcpy(App->CL_Dialogs->btext, "Change File Name");
-			strcpy(App->CL_Dialogs->Chr_Text, App->CL_Export->mJustName);
+			strcpy(App->CL_Dialogs->Chr_Text, App->CL_Exp_Obj->m_Out_JustName);
 
 			App->CL_Dialogs->Dialog_Text(Enums::Check_Name_None);
 
@@ -275,7 +282,7 @@ LRESULT CALLBACK CL64_Exp_Obj::Proc_Object_Export_Dlg2(HWND hDlg, UINT message, 
 			}
 
 			//strcpy(App->CL_Exp_Obj->m_Out_Folder_Path, App->CL_Exp_Obj->m_Out_JustName);
-			strcat(App->CL_Exp_Obj->m_Out_Folder_Path, "_Object_All");
+			//strcat(App->CL_Exp_Obj->m_Out_Folder_Path, "_Object_All");
 
 			App->CL_Exp_Obj->Create_ObjectFile();
 
@@ -299,13 +306,6 @@ LRESULT CALLBACK CL64_Exp_Obj::Proc_Object_Export_Dlg2(HWND hDlg, UINT message, 
 // *************************************************************************
 bool CL64_Exp_Obj::Create_ObjectFile(void)
 {
-
-	/*App->CL_File_IO->Select_Folder();
-	if (App->CL_File_IO->flag_Canceled == true)
-	{
-		return 0;
-	}*/
-	
 	strcpy(OutputFolder, "");
 
 	char buff[MAX_PATH];
@@ -315,8 +315,8 @@ bool CL64_Exp_Obj::Create_ObjectFile(void)
 	strcat(buff, "_Object");
 	strcat(buff, "\\");
 
-	strcpy(OutputFolder, m_Out_Folder_Path);
-
+	strcpy(OutputFolder, buff);
+	
 	CreateDirectory(OutputFolder, NULL);
 
 	strcpy(Object_FileName, OutputFolder);

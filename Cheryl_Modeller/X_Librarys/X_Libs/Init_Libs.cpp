@@ -30,5 +30,5 @@ void Init_Libs::Start_Libraries()
 // *************************************************************************
 char* Init_Libs::GetVersion()
 {
-	return (LPSTR)" Cheryl 3D Modeller (Init_Libs):-- 07-03-26 Build 2T ";
+	return (LPSTR)" Cheryl 3D Modeller (Init_Libs):-- 09-03-26 Build 2T ";
 }
