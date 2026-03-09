@@ -37,6 +37,11 @@ public:
 	HBITMAP Get_HBITMP(char* TextureFileName, HDC hDC);
 
 	bool Texture_To_Bmp(char* File);
+	void Load_Textures_Assimp();
+	bool Import_OpenGL_Texture(UINT textureArray[], LPSTR strFileName, int textureID);
+	bool Load_OpenGL_Textures(int TextureID);
+	bool Create_DummyTexture(char* Folder);
+
 
 	bool Covert_Texture(const char* File);
 	void Remove_Temp_Texture();
@@ -51,5 +56,8 @@ public:
 
 	char Temp_Texture_File[MAX_PATH];
 	char Temp_Texture_Location[MAX_PATH];
+	char TextureFileName[MAX_PATH];
+
+	UINT  g_Texture[400]; //Texture IDs for loaded textures OpenGL
 };
 

@@ -302,6 +302,86 @@ void CL64_OGL_Listener::Translate(void)
 }
 
 // *************************************************************************
+// *		MeshData_Render_Textures:- Terry and Hazel Flanigan 2024	   *
+// *************************************************************************
+bool CL64_OGL_Listener::MeshData_Render_Textures(void)
+{
+	int Count = 0;
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	glEnable(GL_TEXTURE_2D);
+	glColor3f(1, 1, 1);
+
+	int GroupCount = App->CL_Model->GroupCount;
+
+	Count = 0;
+	while (Count < GroupCount)
+	{
+		MeshData_Textured_Groups(Count);
+		Count++;
+	}
+
+	glDisable(GL_TEXTURE_2D);
+
+	return 1;
+}
+// *************************************************************************
+// *		MeshData_Textured_Groups:- Terry and Hazel Flanigan 2024	   *
+// *************************************************************************
+bool CL64_OGL_Listener::MeshData_Textured_Groups(int Count)
+{
+	int VertCount = 0;
+	int A = 0;
+	int B = 0;
+	int C = 0;
+
+	if (App->CL_Mesh->Group[Count]->MaterialIndex > -1)
+	{
+		glEnable(GL_TEXTURE_2D);
+		glColor3f(1, 1, 1);
+
+		glBindTexture(GL_TEXTURE_2D, App->CL_Textures->g_Texture[App->CL_Mesh->Group[Count]->MaterialIndex]);
+
+	}
+	else
+	{
+		glDisable(GL_TEXTURE_2D);
+	}
+
+	while (VertCount < App->CL_Mesh->Group[Count]->GroupFaceCount)
+	{
+		A = App->CL_Mesh->Group[Count]->Face_Data[VertCount].a;
+		B = App->CL_Mesh->Group[Count]->Face_Data[VertCount].b;
+		C = App->CL_Mesh->Group[Count]->Face_Data[VertCount].c;
+
+		glBegin(GL_POLYGON);
+
+		//-----------------------------------------------
+		glTexCoord2f(App->CL_Mesh->Group[Count]->MapCord_Data[A].u, App->CL_Mesh->Group[Count]->MapCord_Data[A].v);
+		glNormal3fv(&App->CL_Mesh->Group[Count]->Normal_Data[A].x);
+		glVertex3fv(&App->CL_Mesh->Group[Count]->vertex_Data[A].x);
+
+		//-----------------------------------------------
+		glTexCoord2f(App->CL_Mesh->Group[Count]->MapCord_Data[B].u, App->CL_Mesh->Group[Count]->MapCord_Data[B].v);
+		glNormal3fv(&App->CL_Mesh->Group[Count]->Normal_Data[B].x);
+		glVertex3fv(&App->CL_Mesh->Group[Count]->vertex_Data[B].x);
+
+		//-----------------------------------------------
+		glTexCoord2f(App->CL_Mesh->Group[Count]->MapCord_Data[C].u, App->CL_Mesh->Group[Count]->MapCord_Data[C].v);
+		glNormal3fv(&App->CL_Mesh->Group[Count]->Normal_Data[C].x);
+		glVertex3fv(&App->CL_Mesh->Group[Count]->vertex_Data[C].x);
+		VertCount++;
+		//-----------------------------------------------
+
+		glEnd();
+
+	}
+
+	return 1;
+}
+
+// *************************************************************************
 // *	MeshData_Render_Material_Faces:- Terry and Hazel Flanigan 2026	   *
 // *************************************************************************
 void CL64_OGL_Listener::MeshData_Render_Material_Faces(void)

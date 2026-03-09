@@ -87,6 +87,9 @@ private:
 	void Render_Loop();
 	void Translate(void);
 
+	bool MeshData_Render_Textures(void);
+	bool MeshData_Textured_Groups(int Count);
+
 	void MeshData_Render_Material_Faces(void);
 	void MeshData_Render_Faces(void);
 	void MeshData_Face_Groups(int Count);

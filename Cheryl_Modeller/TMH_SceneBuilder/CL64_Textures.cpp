@@ -47,6 +47,7 @@ CL64_Textures::CL64_Textures(void)
 	ilInit();
 
 	Temp_Texture_File[0] = 0;
+	TextureFileName[0] = 0;
 
 	BasePicWidth = 0;
 	BasePicHeight = 0;
@@ -54,6 +55,13 @@ CL64_Textures::CL64_Textures(void)
 
 	strcpy(Temp_Texture_Location, App->RB_Directory_FullPath);
 	strcat(Temp_Texture_Location, "\\Data\\World_Test\\");
+
+	int Count = 0;
+	while (Count < 499)
+	{
+		g_Texture[0] = 0; // Texture IDs
+		Count++;
+	}
 }
 
 CL64_Textures::~CL64_Textures(void)
@@ -171,6 +179,236 @@ bool CL64_Textures::Soil_Load_Texture(UINT textureArray[], LPSTR strFileName, in
 	}
 
 	
+	return 1;
+}
+
+// *************************************************************************
+// *		Load_Textures_Assimp:- Terry and Hazel Flanigan 2024	  	   *
+// *************************************************************************
+void CL64_Textures::Load_Textures_Assimp()
+{
+	int v = 0;
+	int Count = 0;
+	bool DummyCreated = 0;
+	App->CL_Utilities->JustFileName[0] = 0;
+
+	int mGroupCount = App->CL_Model->GroupCount;
+
+	while (Count < mGroupCount)
+	{
+		App->CL_Utilities->Get_FileName_FromPath(App->CL_Mesh->Group[Count]->Text_FileName, App->CL_Mesh->Group[Count]->Text_FileName);
+		strcpy(App->CL_Mesh->Group[Count]->Text_FileName, App->CL_Utilities->JustFileName);
+
+		int Test = strcmp(App->CL_Utilities->JustFileName, "No_Texture");
+		if (Test != 0) // not a match
+		{
+
+			char ImageFullPath[MAX_PATH];
+			strcpy(ImageFullPath, App->CL_Model->Model_FolderPath);
+			strcat(ImageFullPath, App->CL_Mesh->Group[Count]->Text_FileName);
+
+			strcpy(App->CL_Mesh->Group[v]->Texture_PathFileName, ImageFullPath);
+
+			strcpy(TextureFileName, ImageFullPath);
+
+			//Windows_Preview_FullPath(v, ImageFullPath);
+
+			bool test = Load_OpenGL_Textures(App->CL_Mesh->Group[Count]->MaterialIndex);
+			if (test == 0)
+			{
+				//App->Error_ToFile("Loading Dummy Texture Instead");
+				Create_DummyTexture(App->CL_Model->Model_FolderPath);
+
+				char buf[MAX_PATH];
+				strcpy(buf, App->CL_Model->Model_FolderPath);
+				strcat(buf, "TTemp.bmp");
+				UINT* Texture_List = g_Texture;
+				Import_OpenGL_Texture(Texture_List, buf, App->CL_Mesh->Group[Count]->MaterialIndex);
+
+				//App->CL_Loader->LoadError = 1;
+				DummyCreated = 1;
+			}
+			v++;
+		}
+		else
+		{
+			//App->Error_ToFile("No Texture in File");
+			//App->Error_ToFile("Loading Dummy Texture Instead");
+			Create_DummyTexture(App->CL_Model->Model_FolderPath);
+
+			char buf[MAX_PATH];
+			strcpy(buf, App->CL_Model->Model_FolderPath);
+			strcat(buf, "TTemp.bmp");
+			UINT* Texture_List = g_Texture;
+			Import_OpenGL_Texture(Texture_List, buf, App->CL_Mesh->Group[Count]->MaterialIndex);
+
+			//App->CL_Loader->LoadError = 1;
+			DummyCreated = 1;
+
+			v++;
+		}
+
+		Count++;
+	}
+
+	if (DummyCreated == 1)
+	{
+		char buf[MAX_PATH];
+		strcpy(buf, App->CL_Model->Model_FolderPath);
+		strcat(buf, "TTemp.bmp");
+		remove(buf);
+	}
+
+}
+
+// *************************************************************************
+// *		Create_DummyTexture:- Terry and Hazel Flanigan 2024    	 	   *
+// *************************************************************************
+bool CL64_Textures::Create_DummyTexture(char* Folder)
+{
+	HBITMAP hbmpTemp;
+	hbmpTemp = LoadBitmap(App->hInst, MAKEINTRESOURCE(IDB_NO_TEXTURE));
+
+	char OutFile[MAX_PATH];
+	strcpy(OutFile, Folder);
+	strcat(OutFile, "TTemp.bmp");
+
+	HBITMAP_TO_BmpFile(hbmpTemp, OutFile, (LPSTR)"");
+
+	return 1;
+}
+
+// *************************************************************************
+// *		Load_OpenGL_Textures:- Terry and Hazel Flanigan 2024   	  	   *
+// *************************************************************************
+bool CL64_Textures::Load_OpenGL_Textures(int TextureID)
+{
+	int Index = 0;
+	int Dont = 0;
+	int jpg = 0;
+	int DontAdd = 0;
+	int AddDummy = 0;
+
+	char buf[1024];
+	strcpy(buf, App->CL_Model->Model_FolderPath);
+	strcat(buf, "Etemp.bmp");
+
+	UINT* Texture_List = g_Texture;
+
+	// ----------------------------------- Bitmap
+	if (_stricmp(TextureFileName + strlen(TextureFileName) - 4, ".BMP") == 0)
+	{
+		bool test = Import_OpenGL_Texture(Texture_List, TextureFileName, TextureID);
+
+		if (test == 0) { App->Say("Failed to load Bmp"); return 0; }
+		return 1;
+	}
+	// ------------------------------------ JPEG
+	if (_stricmp(TextureFileName + strlen(TextureFileName) - 4, ".JPG") == 0)
+	{
+		bool test = Import_OpenGL_Texture(Texture_List, TextureFileName, TextureID);
+
+		if (test == 0) { App->Say("Failed to load JPG"); return 0; }
+		return 1;
+	}
+	// ------------------------------------ TGA
+	if (_stricmp(TextureFileName + strlen(TextureFileName) - 4, ".TGA") == 0)
+	{
+		bool test = Import_OpenGL_Texture(Texture_List, TextureFileName, TextureID);
+
+		if (test == 0) { App->Say("Failed to load TGA"); return 0; }
+		return 1;
+	}
+	// ------------------------------------ DDS
+	if (_stricmp(TextureFileName + strlen(TextureFileName) - 4, ".DDS") == 0)
+	{
+		bool test = Import_OpenGL_Texture(Texture_List, TextureFileName, TextureID);
+
+		if (test == 0) { App->Say("Failed to load DDS"); return 0; }
+		return 1;
+	}
+	// ------------------------------------ PNG
+	if (_stricmp(TextureFileName + strlen(TextureFileName) - 4, ".PNG") == 0)
+	{
+		bool test = Import_OpenGL_Texture(Texture_List, TextureFileName, TextureID);
+
+		if (test == 0) { App->Say("Failed to load PNG"); return 0; }
+		return 1;
+	}
+
+	Create_DummyTexture(App->CL_Model->Model_FolderPath);
+	Import_OpenGL_Texture(g_Texture, buf, TextureID);
+	remove(buf);
+
+	return 1;
+}
+
+// *************************************************************************
+// *		 Import_OpenGL_Texture:- Terry and Hazel Flanigan 2024	 	   *
+// *************************************************************************
+bool CL64_Textures::Import_OpenGL_Texture(UINT textureArray[], LPSTR strFileName, int textureID)
+{
+	int image_width = 0;
+	int image_height = 0;
+	int channels = 0;
+	int force_channels = 4;
+
+	unsigned char* image_data = stbi_load(strFileName, &image_width, &image_height, &channels, force_channels);
+	if (image_data == NULL)
+	{
+		App->Say("Cant Create Texture");
+		return 0;
+	}
+
+	if ((force_channels >= 1) && (force_channels <= 4))
+	{
+		channels = force_channels;
+	}
+
+	bool INVERT_Y = 1;
+	if (INVERT_Y == 1)
+	{
+		int i, j;
+		for (j = 0; j * 2 < image_height; ++j)
+		{
+			int index1 = j * image_width * channels;
+			int index2 = (image_height - 1 - j) * image_width * channels;
+			for (i = image_width * channels; i > 0; --i)
+			{
+				unsigned char temp = image_data[index1];
+				image_data[index1] = image_data[index2];
+				image_data[index2] = temp;
+				++index1;
+				++index2;
+			}
+		}
+	}
+
+	GLuint image_texture;
+	glGenTextures(1, &image_texture);
+	glBindTexture(GL_TEXTURE_2D, image_texture);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+
+#if defined(GL_UNPACK_ROW_LENGTH) && !defined(__EMSCRIPTEN__)
+	glPixelStorei(GL_UNPACK_ROW_LENGTH, 0);
+#endif
+
+
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image_width, image_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image_data);
+
+	textureArray[textureID] = image_texture;
+
+	stbi_image_free(image_data);
+
+	if (textureArray[textureID] == 0) // Fall back attemp to convert and load or Bail
+	{
+		//Texture_To_Bmp(strFileName);
+		remove("Etemp.bmp");
+	}
+
 	return 1;
 }
 
