@@ -1,0 +1,24 @@
+20:33:38: Creating resource group General
+20:33:38: Creating resource group Internal
+20:33:38: Creating resource group Autodetect
+20:33:38: Registering ResourceManager for type Mesh
+20:33:38: Registering ResourceManager for type Material
+20:33:38: Registering ResourceManager for type Skeleton
+20:33:38: XMLSkeletonSerializer writing  skeleton data to C:\Users\Terry\Desktop\Models\Ogre3D_Models\fish.skeleton.xml...
+20:33:38: Populating DOM...
+20:33:38: Exporting bones..
+20:33:38: There are 5 bones.
+20:33:38:    Exporting Bone number 0
+20:33:38:    Exporting Bone number 1
+20:33:38:    Exporting Bone number 2
+20:33:38:    Exporting Bone number 3
+20:33:38:    Exporting Bone number 4
+20:33:38: Bones exported.
+20:33:38: Exporting animations, count=1
+20:33:38: Exporting animation: swim
+20:33:38: Animation exported.
+20:33:38: DOM populated, writing XML file..
+20:33:38: XMLSkeletonSerializer export successful.
+20:33:38: Unregistering ResourceManager for type Skeleton
+20:33:38: Unregistering ResourceManager for type Material
+20:33:38: Unregistering ResourceManager for type Mesh

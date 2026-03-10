@@ -54,6 +54,8 @@ public:
 
 	char m_ReadFile[MAX_PATH];
 
+	int m_ListType;
+
 	int YesNoCancel_Result;
 	bool flag_Dlg_Canceled;
 	bool flag_FileViewer_Active;
@@ -96,7 +98,6 @@ private:
 
 	int Face_Index;
 	int Check_What;
-	int m_ListType;
 	char Message_Text_Header[MAX_PATH];
 	char Message_Text_Message[MAX_PATH];
 
