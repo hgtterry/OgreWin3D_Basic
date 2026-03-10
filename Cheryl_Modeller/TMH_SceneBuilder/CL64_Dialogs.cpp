@@ -51,6 +51,8 @@ CL64_Dialogs::CL64_Dialogs(void)
 	Face_Index = 0;
 	Check_What = 0;
 
+	ListBox_Dlg_Hwnd = nullptr;
+
 	YesNoCancel_Result = false;
 
 	flag_Dlg_Canceled = false;
@@ -1784,7 +1786,8 @@ void CL64_Dialogs::Start_General_ListBox(int ListType)
 
 	m_ListType = ListType;
 	App->CL_Properties_Tabs->Enable_Tabs_Dlg(false);
-	DialogBox(App->hInst, (LPCTSTR)IDD_LISTDATA, App->MainHwnd, (DLGPROC)Proc_General_ListBox);
+
+	ListBox_Dlg_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_LISTDATA, App->MainHwnd, (DLGPROC)Proc_General_ListBox);
 }
 
 // *************************************************************************
@@ -1800,7 +1803,6 @@ LRESULT CALLBACK CL64_Dialogs::Proc_General_ListBox(HWND hDlg, UINT message, WPA
 		SendDlgItemMessage(hDlg, IDC_LST_GENERAL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
-		App->CL_Dialogs->ListBox_Dlg = hDlg;
 		HWND List = GetDlgItem(hDlg, IDC_LST_GENERAL);
 
 		if (App->CL_Dialogs->m_ListType == Enums::ListBox_Used_Textures)
@@ -2019,26 +2021,25 @@ void CL64_Dialogs::List_Mesh_Data(HWND List)
 		{
 			char buf[MAX_PATH];
 
+			strcpy(buf, "Material Name :-   ");
+			strcat(buf, App->CL_Mesh->Group[Index]->Ogre_Material);
+			SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)buf);
+
+			strcpy(buf, "Group Name :-   ");
+			strcat(buf, App->CL_Mesh->Group[Index]->GroupName);
+			SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)buf);
+
+			SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"");
+
 			sprintf(buf, "%s %i", "Vertice Count:-   ", App->CL_Mesh->Group[Index]->GroupVertCount);
 			SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)buf);
 
 			sprintf(buf, "%s %i", "Face Count:-   ", App->CL_Mesh->Group[Index]->GroupFaceCount);
 			SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)buf);
 
-
-			strcpy(buf,"Group Name :-   " );
-			strcat(buf, App->CL_Mesh->Group[Index]->GroupName);
-			SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)buf);
-
-			strcpy(buf, "Material Name :-   ");
-			strcat(buf, App->CL_Mesh->Group[Index]->Ogre_Material);
-			SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)buf);
+			
 
 			sprintf(buf, "%s %i", "Texture Units:-   ", App->CL_Mesh->Group[Index]->Ogre_NumTextureUnits);
-			SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)buf);
-
-			strcpy(buf, "Texture Name :-   ");
-			strcat(buf, App->CL_Mesh->Group[Index]->Ogre_Material);
 			SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)buf);
 
 			sprintf(buf, "%s %i", "Mip Maps:-   ", App->CL_Mesh->Group[Index]->Ogre_MipMaps);

@@ -39,7 +39,7 @@ public:
 	void Texture_To_HBITMP(char* TextureFileName);
 	bool SelectBitmap();
 	void Fill_Materials_ListBox();
-	void List_Material_Changed();
+	void List_Material_Changed(int Index);
 	void Select_By_Index(int Index);
 	void Fill_Textures_ListBox();
 

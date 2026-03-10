@@ -60,9 +60,9 @@ public:
 	bool flag_General_ListBox_Active;
 
 	HWND TextureView_Hwnd;
-
 	HWND FileViewer_Hwnd;
-	HWND ListBox_Dlg;
+	HWND ListBox_Dlg_Hwnd;
+
 	HBITMAP	Sel_BaseBitmap;
 
 private:

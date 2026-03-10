@@ -412,6 +412,7 @@ void CL64_ImGui::Show_Ogre_Model_Data_GUI(void)
 						{
 							App->CL_Properties_Materials->View_Texture(Texture, mMaterial);
 							App->CL_Properties_Materials->Select_By_Index(Count);
+							App->CL_Properties_Materials->Update_Texture_Ogre_Dlg();
 						}
 						else
 						{

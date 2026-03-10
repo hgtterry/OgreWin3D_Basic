@@ -186,7 +186,17 @@ LRESULT CALLBACK CL64_Properties_Materials::Proc_Materials_Dialog_Ogre(HWND hDlg
 
 		if (LOWORD(wParam) == IDC_LIST_MATERIALS) // Click inside list box
 		{
-			App->CL_Properties_Materials->List_Material_Changed();
+			if (App->CL_Model->flag_Model_Loaded == true && App->CL_Model->Model_Type == Enums::Model_Type_Ogre3D)
+			{
+				int Index = SendDlgItemMessage(hDlg, IDC_LIST_MATERIALS, LB_GETCURSEL, (WPARAM)0, (LPARAM)0);
+				if (Index == LB_ERR)
+				{
+					App->Say("ListBox No Selection Available", (LPSTR)"");
+					return TRUE;
+				}
+
+				App->CL_Properties_Materials->List_Material_Changed(Index);
+			}
 			return TRUE;
 		}
 
@@ -526,42 +536,39 @@ bool CL64_Properties_Materials::Update_Texture_Ogre_Dlg()
 	ShowWindow(GetDlgItem(Textures_Dlg_Hwnd_Ogre, IDC_PROP_BASETEXTURE_OGRE), 0);
 	ShowWindow(GetDlgItem(Textures_Dlg_Hwnd_Ogre, IDC_PROP_BASETEXTURE_OGRE), 1);
 
+	RedrawWindow(Textures_Dlg_Hwnd_Ogre, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
 	return 1;
 }
 
 // *************************************************************************
 // *	  	List_Material_Changed:- Terry and Hazel Flanigan 2023		   *
 // *************************************************************************
-void CL64_Properties_Materials::List_Material_Changed()
+void CL64_Properties_Materials::List_Material_Changed(int Index)
 {
 	if (App->CL_Model->flag_Model_Loaded == true && App->CL_Model->Model_Type == Enums::Model_Type_Ogre3D)
 	{
-		int Index = SendDlgItemMessage(Textures_Dlg_Hwnd_Ogre, IDC_LIST_MATERIALS, LB_GETCURSEL, (WPARAM)0, (LPARAM)0);
-		if (Index == LB_ERR)
+
+		char mMaterial[MAX_PATH];
+		char Texture[MAX_PATH];
+		strcpy(Texture, App->CL_Mesh->Group[Index]->Ogre_Texture_FileName);
+		strcpy(mMaterial, App->CL_Mesh->Group[Index]->Ogre_Material);
+
+		strcpy(m_CurrentTexture_Ogre, Texture);
+
+		App->CL_Properties_Materials->View_Texture(Texture, mMaterial);
+
+		if (App->CL_Mesh->Group[Index]->Ogre_Texture_IsValid == true)
 		{
-			App->Say("ListBox No Selection Available", (LPSTR)"");
+			App->CL_Properties_Materials->View_Texture(Texture, mMaterial);
+			App->CL_Properties_Materials->Update_Texture_Ogre_Dlg();
 		}
 		else
 		{
-			char mMaterial[MAX_PATH];
-			char Texture[MAX_PATH];
-			strcpy(Texture, App->CL_Mesh->Group[Index]->Ogre_Texture_FileName);
-			strcpy(mMaterial, App->CL_Mesh->Group[Index]->Ogre_Material);
-
-			strcpy(m_CurrentTexture_Ogre, Texture);
-
-			App->CL_Properties_Materials->View_Texture(Texture, mMaterial);
-			
-			if (App->CL_Mesh->Group[Index]->Ogre_Texture_IsValid == true)
-			{
-				App->CL_Properties_Materials->View_Texture(Texture, mMaterial);
-			}
-			else
-			{
-				App->CL_Properties_Materials->Sel_BaseBitmap_Ogre = App->CL_Mesh->Group[Index]->Base_Bitmap;
-				App->CL_Properties_Materials->Update_Texture_Ogre_Dlg();
-			}
+			App->CL_Properties_Materials->Sel_BaseBitmap_Ogre = App->CL_Mesh->Group[Index]->Base_Bitmap;
+			App->CL_Properties_Materials->Update_Texture_Ogre_Dlg();
 		}
+
 
 		if (Index < 40)
 		{
@@ -586,10 +593,11 @@ void CL64_Properties_Materials::List_Material_Changed()
 
 		if (App->CL_Dialogs->flag_General_ListBox_Active == true)
 		{
-			HWND List = GetDlgItem(App->CL_Dialogs->ListBox_Dlg, IDC_LST_GENERAL);
+			HWND List = GetDlgItem(App->CL_Dialogs->ListBox_Dlg_Hwnd, IDC_LST_GENERAL);
 			App->CL_Dialogs->List_Mesh_Data(List);
 		}
 
+		App->CL_Properties_Materials->Update_Texture_Ogre_Dlg();
 		RedrawWindow(Textures_Dlg_Hwnd_Ogre, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 	}
 
@@ -600,6 +608,7 @@ void CL64_Properties_Materials::List_Material_Changed()
 void CL64_Properties_Materials::Select_By_Index(int Index)
 {
 	SendDlgItemMessage(Textures_Dlg_Hwnd_Ogre, IDC_LIST_MATERIALS, LB_SETCURSEL, (WPARAM)Index, (LPARAM)0);
+	List_Material_Changed(Index);
 }
 
 // *************************************************************************
