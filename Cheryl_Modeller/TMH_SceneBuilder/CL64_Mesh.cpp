@@ -464,15 +464,19 @@ void CL64_Mesh::Get_Ogre_Mesh_Data(Ogre::Entity* Ogre_Entity)
 			{
 				int TUSCount = MatCurent->getTechnique(0)->getPass(0)->getNumTextureUnitStates();
 				App->CL_Mesh->Group[Count]->Ogre_NumTextureUnits = TUSCount;
+				App->CL_Mesh->Group[Count]->v_Texture_Names.resize(TUSCount);
 
-				if (TUSCount > 0)
+				int Texture_Count = 0;
+
+				while(Texture_Count < TUSCount)
 				{
-					strcpy(mTexture, MatCurent->getTechnique(0)->getPass(0)->getTextureUnitState(0)->getTextureName().c_str());
+					strcpy(mTexture, MatCurent->getTechnique(0)->getPass(0)->getTextureUnitState(Texture_Count)->getTextureName().c_str());
+					
+					App->CL_Mesh->Group[Count]->v_Texture_Names[Texture_Count] = mTexture;
 
-					strcpy(App->CL_Mesh->Group[Count]->Ogre_Texture_FileName, mTexture);
 					App->CL_Mesh->Group[Count]->Ogre_Texture_IsValid = true;
 					App->CL_Mesh->Group[Count]->Ogre_MipMaps = MatCurent->getTechnique(0)->getPass(0)->getTextureUnitState(0)->getNumMipmaps();
-
+					Texture_Count++;
 				}
 
 				strcpy(App->CL_Mesh->Group[Count]->Ogre_Material_File, MatCurent->getOrigin().c_str());

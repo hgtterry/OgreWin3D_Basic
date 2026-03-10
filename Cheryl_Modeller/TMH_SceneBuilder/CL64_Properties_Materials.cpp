@@ -184,7 +184,7 @@ LRESULT CALLBACK CL64_Properties_Materials::Proc_Materials_Dialog_Ogre(HWND hDlg
 			return TRUE;
 		}
 
-		if (LOWORD(wParam) == IDC_LIST_MATERIALS) // Click inside list box
+		if (LOWORD(wParam) == IDC_LIST_MATERIALS) // Click inside Materials list box
 		{
 			if (App->CL_Model->flag_Model_Loaded == true && App->CL_Model->Model_Type == Enums::Model_Type_Ogre3D)
 			{
@@ -196,6 +196,22 @@ LRESULT CALLBACK CL64_Properties_Materials::Proc_Materials_Dialog_Ogre(HWND hDlg
 				}
 
 				App->CL_Properties_Materials->List_Material_Changed(Index);
+			}
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_LIST_TEXTURES) // Click inside Textures list box
+		{
+			if (App->CL_Model->flag_Model_Loaded == true && App->CL_Model->Model_Type == Enums::Model_Type_Ogre3D)
+			{
+				int Index = SendDlgItemMessage(hDlg, IDC_LIST_TEXTURES, LB_GETCURSEL, (WPARAM)0, (LPARAM)0);
+				if (Index == LB_ERR)
+				{
+					App->Say("ListBox No Selection Available", (LPSTR)"");
+					return TRUE;
+				}
+				
+				App->CL_Properties_Materials->List_Texture_Changed(Index);
 			}
 			return TRUE;
 		}
@@ -340,7 +356,7 @@ void CL64_Properties_Materials::Get_First_Texture_Ogre()
 		{
 			if (App->CL_Model->GroupCount > 0)
 			{
-				strcpy(m_CurrentTexture_Ogre, App->CL_Mesh->Group[0]->Ogre_Texture_FileName);
+				strcpy(m_CurrentTexture_Ogre, App->CL_Mesh->Group[0]->v_Texture_Names[0].c_str());
 				strcpy(m_MaterialName_Ogre, App->CL_Mesh->Group[0]->Ogre_Material);
 				//strcpy(App->CL_Resources->mSelected_File, m_CurrentTexture);
 			}
@@ -357,7 +373,7 @@ void CL64_Properties_Materials::Get_First_Texture_Ogre()
 		}
 		else
 		{
-			strcpy(m_CurrentTexture_Ogre, App->CL_Mesh->Group[0]->Ogre_Texture_FileName);
+			strcpy(m_CurrentTexture_Ogre, App->CL_Mesh->Group[0]->v_Texture_Names[0].c_str());
 			strcpy(m_MaterialName_Ogre, App->CL_Mesh->Group[0]->Ogre_Material);
 
 			bool test = strcmp(m_MaterialName_Ogre, "No_Material_Loaded");
@@ -458,49 +474,6 @@ void CL64_Properties_Materials::Texture_To_HBITMP(char* TextureFileName)
 }
 
 // *************************************************************************
-// *			SelectBitmap:- Terry and Hazel Flanigan 2026		  	   *
-// *************************************************************************
-bool CL64_Properties_Materials::SelectBitmap()
-{
-	char mTextureName[MAX_PATH];
-	int TrueIndex = App->CL_TXL_Editor->GetIndex_From_Name(m_CurrentTexture_Ogre);
-	strcpy(mTextureName, App->CL_TXL_Editor->Texture_List[TrueIndex]->FileName);
-	//App->Say(mTextureName);
-
-	Ogre::FileInfoListPtr RFI = ResourceGroupManager::getSingleton().listResourceFileInfo(App->CL_Ogre->Texture_Resource_Group, false);
-	Ogre::FileInfoList::const_iterator i, iend;
-	iend = RFI->end();
-
-	for (i = RFI->begin(); i != iend; ++i)
-	{
-		if (i->filename == mTextureName)
-		{
-			Ogre::DataStreamPtr ff = i->archive->open(i->filename);
-
-			mFileString_Ogre = ff->getAsString();
-
-			char mFileName[MAX_PATH];
-			strcpy(mFileName, App->RB_Directory_FullPath);
-			strcat(mFileName, "\\Data\\");
-			strcat(mFileName, mTextureName);
-
-			std::ofstream outFile;
-			outFile.open(mFileName, std::ios::binary);
-			outFile << mFileString_Ogre;
-			outFile.close();
-
-			mFileString_Ogre.clear();
-
-			Texture_To_HBITMP(mFileName);
-			remove(mFileName);
-			return 1;
-		}
-	}
-
-	return 0;
-}
-
-// *************************************************************************
 // *		Update_Texture_Ogre_Dlg:- Terry and Hazel Flanigan 2026		   *
 // *************************************************************************
 bool CL64_Properties_Materials::Update_Texture_Ogre_Dlg()
@@ -551,7 +524,7 @@ void CL64_Properties_Materials::List_Material_Changed(int Index)
 
 		char mMaterial[MAX_PATH];
 		char Texture[MAX_PATH];
-		strcpy(Texture, App->CL_Mesh->Group[Index]->Ogre_Texture_FileName);
+		strcpy(Texture, App->CL_Mesh->Group[Index]->v_Texture_Names[0].c_str());
 		strcpy(mMaterial, App->CL_Mesh->Group[Index]->Ogre_Material);
 
 		strcpy(m_CurrentTexture_Ogre, Texture);
@@ -602,6 +575,23 @@ void CL64_Properties_Materials::List_Material_Changed(int Index)
 	}
 
 }
+
+// *************************************************************************
+// *	  	List_Texture_Changed:- Terry and Hazel Flanigan 2026		   *
+// *************************************************************************
+void CL64_Properties_Materials::List_Texture_Changed(int Index)
+{
+	if (App->CL_Model->flag_Model_Loaded == true && App->CL_Model->Model_Type == Enums::Model_Type_Ogre3D)
+	{
+		if (App->CL_Model->GroupCount > 0)
+		{
+			strcpy(m_CurrentTexture_Ogre, App->CL_Mesh->Group[Selected_Group]->v_Texture_Names[Index].c_str());
+			strcpy(m_MaterialName_Ogre, App->CL_Mesh->Group[Selected_Group]->Ogre_Material);
+			View_Texture(m_CurrentTexture_Ogre, m_MaterialName_Ogre);
+		}
+	}
+}
+
 // *************************************************************************
 // *			Select_By_Index:- Terry and Hazel Flanigan 2026			   *
 // *************************************************************************
@@ -648,9 +638,15 @@ void CL64_Properties_Materials::Fill_Textures_ListBox()
 	if (App->CL_Model->GroupCount > 0)
 	{
 		char mName[MAX_PATH];
-		strcpy(mName, App->CL_Mesh->Group[Selected_Material_Index]->Ogre_Texture_FileName);
 
-		SendDlgItemMessage(Textures_Dlg_Hwnd_Ogre, IDC_LIST_TEXTURES, LB_ADDSTRING, (WPARAM)0, (LPARAM)mName);
+		int Count = 0;
+		while (Count < App->CL_Mesh->Group[Selected_Material_Index]->Ogre_NumTextureUnits)
+		{
+			strcpy(mName, App->CL_Mesh->Group[Selected_Material_Index]->v_Texture_Names[Count].c_str());
+
+			SendDlgItemMessage(Textures_Dlg_Hwnd_Ogre, IDC_LIST_TEXTURES, LB_ADDSTRING, (WPARAM)0, (LPARAM)mName);
+			Count++;
+		}
 
 		SendDlgItemMessage(Textures_Dlg_Hwnd_Ogre, IDC_LIST_TEXTURES, LB_SETCURSEL, (WPARAM)0, (LPARAM)0);
 	}

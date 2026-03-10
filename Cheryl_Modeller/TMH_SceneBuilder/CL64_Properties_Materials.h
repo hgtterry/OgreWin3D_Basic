@@ -37,11 +37,15 @@ public:
 	bool Update_Texture_Ogre_Dlg();
 	bool View_Texture(char* TextureName, char* MaterialName);
 	void Texture_To_HBITMP(char* TextureFileName);
-	bool SelectBitmap();
+	
 	void Fill_Materials_ListBox();
-	void List_Material_Changed(int Index);
-	void Select_By_Index(int Index);
 	void Fill_Textures_ListBox();
+
+	void List_Material_Changed(int Index);
+	void List_Texture_Changed(int Index);
+
+	void Select_By_Index(int Index);
+	
 
 	char m_CurrentTexture_Ogre[MAX_PATH];
 	char m_MaterialName_Ogre[MAX_PATH];

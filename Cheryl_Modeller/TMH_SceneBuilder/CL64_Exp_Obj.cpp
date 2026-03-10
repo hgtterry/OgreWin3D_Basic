@@ -607,7 +607,7 @@ bool CL64_Exp_Obj::WriteMTLFile_Ogre(void)
 
 		if (App->CL_Mesh->Group[GroupCount]->Ogre_Texture_IsValid == 1)
 		{
-			strcpy(buf, App->CL_Mesh->Group[GroupCount]->Ogre_Texture_FileName);
+			strcpy(buf, App->CL_Mesh->Group[GroupCount]->v_Texture_Names[0].c_str());
 		}
 		else
 		{
@@ -647,7 +647,7 @@ bool CL64_Exp_Obj::Export_Textures_Ogre()
 	{
 		for (i = RFI->begin(); i != iend; ++i)
 		{
-			if (i->filename == App->CL_Mesh->Group[GroupCount]->Ogre_Texture_FileName) // Texture Exsists
+			if (i->filename == App->CL_Mesh->Group[GroupCount]->v_Texture_Names[0].c_str()) // Texture Exsists
 			{
 				Ogre::DataStreamPtr ff = i->archive->open(i->filename);
 
@@ -655,7 +655,7 @@ bool CL64_Exp_Obj::Export_Textures_Ogre()
 
 				Path_and_File[0] = 0;
 				strcpy(Path_and_File, OutputFolder);
-				strcat(Path_and_File, App->CL_Mesh->Group[GroupCount]->Ogre_Texture_FileName);
+				strcat(Path_and_File, App->CL_Mesh->Group[GroupCount]->v_Texture_Names[0].c_str());
 
 				std::ofstream outFile;
 				outFile.open(Path_and_File, std::ios::binary);

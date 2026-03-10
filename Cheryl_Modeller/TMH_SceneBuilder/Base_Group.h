@@ -75,6 +75,7 @@ public:
 	std::vector<int_type> BA_BoneIndex_Data; // Ogre
 	std::vector<int_type> BA_BoneVertexIndex_Data; // Ogre
 	std::vector<float_type> BA_Weight_Data; // Ogre
+
 	int BoneAssignMentCount; // Ogre
 
 	// Bounding Box
@@ -88,7 +89,6 @@ public:
 	HTREEITEM ListView_Item;
 
 	// Ogre Data
-	char Ogre_Texture_FileName[MAX_PATH];
 	char Ogre_Material[MAX_PATH];
 	char Ogre_Material_File[MAX_PATH];
 	char Ogre_ImGui_MatId[MAX_PATH];
@@ -96,5 +96,6 @@ public:
 	int Ogre_NumTextureUnits;
 	bool Ogre_Texture_IsValid;
 
+	std::vector<std::string> v_Texture_Names;
 };
 
