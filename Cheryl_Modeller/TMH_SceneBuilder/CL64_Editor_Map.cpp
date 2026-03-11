@@ -2004,8 +2004,8 @@ void CL64_Editor_Map::Context_Menu_Ogre(HWND hDlg)
 
 	AppendMenuW(hMenu, MF_STRING , IDM_3D_RESET_CAMERA, L"&Reset View");
 	
-	AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
-	AppendMenuW(hMenu, MF_STRING, IDM_3D_CAMERASPEED, L"&Camera Speed");
+	/*AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
+	AppendMenuW(hMenu, MF_STRING, IDM_3D_CAMERASPEED, L"&Camera Speed");*/
 
 	// Panel View
 	/*AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
@@ -2112,7 +2112,7 @@ bool CL64_Editor_Map::Context_Command_Ogre(WPARAM wParam)
 			App->CL_Dialogs->YesNo("Reset View", "");
 			if (App->CL_Dialogs->flag_Dlg_Canceled == false)
 			{
-				App->CL_Camera->Reset_View();
+				App->CL_Camera->Reset_View_and_Zoom();
 				//App->CL_Camera->Camera_Reset_Zero();
 			}
 		}

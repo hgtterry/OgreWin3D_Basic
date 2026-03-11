@@ -16,12 +16,17 @@ CL64_Importers::~CL64_Importers(void)
 // *************************************************************************
 void CL64_Importers::Set_Editor()
 {
-	App->CL_Top_Tabs->Set_Texture_Bmp_On();
-
 	if (App->CL_Model->Model_Type == Enums::Model_Type_Ogre3D)
 	{
 		
 	}
+
+	if (App->CL_Model->Model_Type == Enums::Model_Type_Assimp)
+	{
+		App->CL_Ogre->OGL_Listener->flag_ShowTextured = true;
+	}
+
+	App->CL_Top_Tabs->Set_Texture_Bmp_On();
 }
 
 // *************************************************************************
@@ -91,11 +96,15 @@ bool CL64_Importers::Assimp_Loader(bool UseDialog, const char* Extension, const 
 	App->CL_Model->flag_Model_Loaded = true;
 
 	/*App->CL_Scene->Scene_Mode = Enums::Scene_Mode_Assimp_Model;
-	App->CL_Scene->Set_Scene(App->CL_Scene->Scene_Mode);
+	App->CL_Scene->Set_Scene(App->CL_Scene->Scene_Mode);*/
 
-	App->CL_Camera->Reset_View();*/
+	App->CL_Camera->Reset_View_and_Zoom();
 
 	App->CL_Interface->Set_Title(false);
+	Set_Editor();
+
+	App->CL_File_IO->RecentFileHistory_Update();
+
 	//App->CL_Ogre->RenderFrame(3);
 
 	/*App->CL_ImGui->flag_Open_Textures_List = 1;
@@ -409,6 +418,29 @@ void CL64_Importers::Scan_Material_Files(void)
 	if (All_Correct == true)
 	{
 		//App->CL_Resources->flag_Ogre_CFG_Loaded = true;
+	}
+}
+
+// *************************************************************************
+// *			Load_Recent_File:- Terry and Hazel Flanigan 2026 		   *
+// *************************************************************************
+void CL64_Importers::Load_Recent_File(char* FileAndPath)
+{
+	App->CL_Utilities->Get_FileName_FromPath((LPSTR)FileAndPath, (LPSTR)FileAndPath);
+	strcpy(App->CL_Model->Loaded_FileName, App->CL_Utilities->JustFileName);
+	strcpy(App->CL_Model->Loaded_PathFileName, FileAndPath);
+
+	if (_stricmp(App->CL_Model->Loaded_FileName + strlen(App->CL_Model->Loaded_FileName) - 5, ".mesh") == 0)
+	{
+		bool test = App->CL_Importers->Load_Ogre_Model(false, true);
+	}
+
+	if (_stricmp(App->CL_Model->Loaded_FileName + strlen(App->CL_Model->Loaded_FileName) - 4, ".obj") == 0)
+	{
+		App->CL_Assimp->Options.SelectedPreset = 8 + 8388608 + 64 + aiProcess_PreTransformVertices;
+		App->CL_Assimp->Options.Model_Type = Enums::Model_Type_Assimp;
+
+		bool test = App->CL_Importers->Assimp_Loader(false, "", "");
 	}
 }
 

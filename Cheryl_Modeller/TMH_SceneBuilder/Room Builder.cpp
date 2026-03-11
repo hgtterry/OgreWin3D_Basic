@@ -21,6 +21,7 @@ INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
 LRESULT CALLBACK ViewerMain_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 void StartOgre();
 void Close_App();
+bool Recent_Files(int wmId);
 
 int Block_Call = 0;
 
@@ -356,187 +357,42 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             // ------------------------------------- Recent Files
             case 5000 + 7: // Top Recent Files 1
 			{
-				char mFileName[MAX_PATH];
-				strcpy(mFileName, App->CL_File_IO->mPreviousFiles[7].c_str());
-
-				App->CL_Utilities->Get_FileName_FromPath((LPSTR)mFileName, (LPSTR)mFileName);
-				strcpy(App->CL_Model->Loaded_FileName, App->CL_Utilities->JustFileName);
-
-				strcpy(App->CL_Model->Loaded_PathFileName, mFileName);
-				
-				bool test = App->CL_Importers->Load_Ogre_Model(false, true);
-				if (test == 0)
-				{
-					return 1;
-				}
-				else
-				{
-					//App->CL_Scene->Set_Scene();
-					//App->CL_Ogre->RenderFrame(8);
-				}
-               
+                Recent_Files(wmId);
                 return 1;
             }
-            case 5000 + 6: // 2
+            case 5000 + 6:
             {
-                char mFileName[MAX_PATH];
-                strcpy(mFileName, App->CL_File_IO->mPreviousFiles[6].c_str());
-
-                App->CL_Utilities->Get_FileName_FromPath((LPSTR)mFileName, (LPSTR)mFileName);
-                strcpy(App->CL_Model->Loaded_FileName, App->CL_Utilities->JustFileName);
-
-                strcpy(App->CL_Model->Loaded_PathFileName, mFileName);
-               
-                bool test = App->CL_Importers->Load_Ogre_Model(false, true);
-
-                if (test == 0)
-                {
-                    return 1;
-                }
-                else
-                {
-                  //  App->CL_Scene->Set_Scene();
-                    App->CL_Ogre->RenderFrame(8);
-                }
-                
+                Recent_Files(wmId);
                 return 1;
             }
-            case 5000 + 5: // 3
+            case 5000 + 5:
             {
-                char mFileName[MAX_PATH];
-                strcpy(mFileName, App->CL_File_IO->mPreviousFiles[5].c_str());
-
-                App->CL_Utilities->Get_FileName_FromPath((LPSTR)mFileName, (LPSTR)mFileName);
-                strcpy(App->CL_Model->Loaded_FileName, App->CL_Utilities->JustFileName);
-
-                strcpy(App->CL_Model->Loaded_PathFileName, mFileName);
-               
-                bool test = App->CL_Importers->Load_Ogre_Model(false, true);
-                if (test == 0)
-                {
-                    return 1;
-                }
-                else
-                {
-                   // App->CL_Scene->Set_Scene();
-                    App->CL_Ogre->RenderFrame(8);
-                }
-                
+                Recent_Files(wmId);
                 return 1;
             }
-            case 5000 + 4: // 4
+            case 5000 + 4:
             {
-                char mFileName[MAX_PATH];
-                strcpy(mFileName, App->CL_File_IO->mPreviousFiles[4].c_str());
-
-                App->CL_Utilities->Get_FileName_FromPath((LPSTR)mFileName, (LPSTR)mFileName);
-                strcpy(App->CL_Model->Loaded_FileName, App->CL_Utilities->JustFileName);
-
-                strcpy(App->CL_Model->Loaded_PathFileName, mFileName);
-                
-                bool test = App->CL_Importers->Load_Ogre_Model(false, true);
-                if (test == 0)
-                {
-                    return 1;
-                }
-                else
-                {
-                   // App->CL_Scene->Set_Scene();
-                    App->CL_Ogre->RenderFrame(8);
-                }
-               
+                Recent_Files(wmId);
                 return 1;
             }
-            case 5000 + 3: // 5
+            case 5000 + 3:
             {
-                char mFileName[MAX_PATH];
-                strcpy(mFileName, App->CL_File_IO->mPreviousFiles[3].c_str());
-
-                App->CL_Utilities->Get_FileName_FromPath((LPSTR)mFileName, (LPSTR)mFileName);
-                strcpy(App->CL_Model->Loaded_FileName, App->CL_Utilities->JustFileName);
-
-                strcpy(App->CL_Model->Loaded_PathFileName, mFileName);
-               
-                bool test = App->CL_Importers->Load_Ogre_Model(false, true);
-                if (test == 0)
-                {
-                    return 1;
-                }
-                else
-                {
-                   // App->CL_Scene->Set_Scene();
-                    App->CL_Ogre->RenderFrame(8);
-                }
-               
+                Recent_Files(wmId);
                 return 1;
             }
-            case 5000 + 2: // 6
+            case 5000 + 2:
             {
-                char mFileName[MAX_PATH];
-                strcpy(mFileName, App->CL_File_IO->mPreviousFiles[2].c_str());
-
-                App->CL_Utilities->Get_FileName_FromPath((LPSTR)mFileName, (LPSTR)mFileName);
-                strcpy(App->CL_Model->Loaded_FileName, App->CL_Utilities->JustFileName);
-
-                strcpy(App->CL_Model->Loaded_PathFileName, mFileName);
-               
-                bool test = App->CL_Importers->Load_Ogre_Model(false, true);
-                if (test == 0)
-                {
-                    return 1;
-                }
-                else
-                {
-                    //App->CL_Scene->Set_Scene();
-                    App->CL_Ogre->RenderFrame(8);
-                }
-               
+                Recent_Files(wmId);
                 return 1;
             }
-            case 5000 + 1: // 7
+            case 5000 + 1:
             {
-                char mFileName[MAX_PATH];
-                strcpy(mFileName, App->CL_File_IO->mPreviousFiles[1].c_str());
-
-                App->CL_Utilities->Get_FileName_FromPath((LPSTR)mFileName, (LPSTR)mFileName);
-                strcpy(App->CL_Model->Loaded_FileName, App->CL_Utilities->JustFileName);
-
-                strcpy(App->CL_Model->Loaded_PathFileName, mFileName);
-               
-                bool test = App->CL_Importers->Load_Ogre_Model(false, true);
-                if (test == 0)
-                {
-                    return 1;
-                }
-                else
-                {
-                    //App->CL_Scene->Set_Scene();
-                    App->CL_Ogre->RenderFrame(8);
-                }
-               
+                Recent_Files(wmId);
                 return 1;
             }
-            case 5000 + 0: // 8
+            case 5000 + 0: // Last
             {
-                char mFileName[MAX_PATH];
-                strcpy(mFileName, App->CL_File_IO->mPreviousFiles[0].c_str());
-
-                App->CL_Utilities->Get_FileName_FromPath((LPSTR)mFileName, (LPSTR)mFileName);
-                strcpy(App->CL_Model->Loaded_FileName, App->CL_Utilities->JustFileName);
-
-                strcpy(App->CL_Model->Loaded_PathFileName, mFileName);
-               
-                bool test = App->CL_Importers->Load_Ogre_Model(false, true);
-                if (test == 0)
-                {
-                    return 1;
-                }
-                else
-                {
-                    //App->CL_Scene->Set_Scene();
-                    App->CL_Ogre->RenderFrame(8);
-                }
-                
+                Recent_Files(wmId);
                 return 1;
             }
 
@@ -559,7 +415,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 return 1;
             }
 
-            case  ID_OPENEXAMPLES_TESTROOM:
+            case ID_OPENEXAMPLES_TESTROOM:
             {
                 strcpy(App->CL_File->PathFileName_3dt, App->RB_Directory_FullPath);
                 strcat(App->CL_File->PathFileName_3dt, "\\Data\\Room_Builder\\Just_Room\\Just_Room.mtf");
@@ -569,7 +425,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 return 1;
             }
 
-            case  ID_TESTMODELS_OGRE3DSINBAD:
+            case ID_TESTMODELS_OGRE3DSINBAD:
             {
                 strcpy(App->CL_Model->Loaded_FileName, "Sinbad.mesh");
 
@@ -577,6 +433,21 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 strcat(App->CL_Model->Loaded_PathFileName, "\\Models\\Ogre3D_Models\\Sinbad_No_Config\\Sinbad.mesh");
 
                 bool test = App->CL_Importers->Load_Ogre_Model(false, false);
+
+                return 1;
+            }
+
+            case ID_TESTMODELS_WAVEFRONTCUBE:
+            {
+                strcpy(App->CL_Model->Loaded_FileName, "Cube.obj");
+
+                strcpy(App->CL_Model->Loaded_PathFileName, App->RB_Directory_FullPath);
+                strcat(App->CL_Model->Loaded_PathFileName, "\\Models\\Wavefront_Obj_Models\\Cube.obj");
+
+                App->CL_Assimp->Options.SelectedPreset = 8 + 8388608 + 64 + aiProcess_PreTransformVertices;
+                App->CL_Assimp->Options.Model_Type = Enums::Model_Type_Assimp;
+
+                bool test = App->CL_Importers->Assimp_Loader(false, "","");
 
                 return 1;
             }
@@ -1345,6 +1216,65 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         return DefWindowProc(hWnd, message, wParam, lParam);
     }
     return 0;
+}
+
+// *************************************************************************
+// *				Recent_Files:- Terry Mo and Hazel 2026     		 	   *
+// *************************************************************************
+bool Recent_Files(int wmId)
+{
+    switch (wmId)
+    {
+
+    case 5000 + 7: // Top Recent Files 1
+    {
+        App->CL_Importers->Load_Recent_File((LPSTR)App->CL_File_IO->mPreviousFiles[7].c_str());
+        return 1;
+    }
+
+    case 5000 + 6: // 2
+    {
+        App->CL_Importers->Load_Recent_File((LPSTR)App->CL_File_IO->mPreviousFiles[6].c_str());
+
+        return 1;
+    }
+    case 5000 + 5: // 3
+    {
+        App->CL_Importers->Load_Recent_File((LPSTR)App->CL_File_IO->mPreviousFiles[5].c_str());
+
+        return 1;
+    }
+    case 5000 + 4: // 4
+    {
+        App->CL_Importers->Load_Recent_File((LPSTR)App->CL_File_IO->mPreviousFiles[4].c_str());
+
+        return 1;
+    }
+    case 5000 + 3: // 5
+    {
+        App->CL_Importers->Load_Recent_File((LPSTR)App->CL_File_IO->mPreviousFiles[3].c_str());
+
+        return 1;
+    }
+    case 5000 + 2: // 6
+    {
+        App->CL_Importers->Load_Recent_File((LPSTR)App->CL_File_IO->mPreviousFiles[2].c_str());
+
+        return 1;
+    }
+    case 5000 + 1: // 7
+    {
+        App->CL_Importers->Load_Recent_File((LPSTR)App->CL_File_IO->mPreviousFiles[1].c_str());
+
+        return 1;
+    }
+    case 5000 + 0: // 8
+    {
+        App->CL_Importers->Load_Recent_File((LPSTR)App->CL_File_IO->mPreviousFiles[0].c_str());
+        return 1;
+    }
+    
+    }
 }
 
 // *************************************************************************

@@ -1854,6 +1854,8 @@ LRESULT CALLBACK CL64_Dialogs::Proc_General_ListBox(HWND hDlg, UINT message, WPA
 			App->CL_Properties_Tabs->Enable_Tabs_Dlg(true);
 			App->CL_Dialogs->flag_General_ListBox_Active = false;
 
+			RedrawWindow(App->CL_Properties_Materials->Textures_Dlg_Hwnd_Ogre, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}

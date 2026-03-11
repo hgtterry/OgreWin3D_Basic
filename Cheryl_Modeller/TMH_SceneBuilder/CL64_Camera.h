@@ -50,6 +50,7 @@ public:
 	void Camera_Save_Location(void);
 
 	void Reset_View(void);
+	void Reset_View_and_Zoom(void);
 
 	bool flag_First_Person;
 	bool flag_Free;

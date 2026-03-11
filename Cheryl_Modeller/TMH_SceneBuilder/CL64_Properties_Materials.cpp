@@ -157,7 +157,7 @@ LRESULT CALLBACK CL64_Properties_Materials::Proc_Materials_Dialog_Ogre(HWND hDlg
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 
-			if (App->CL_Dialogs->m_ListType == Enums::ListBox_Mesh_Data)
+			//if (App->CL_Dialogs->m_ListType == Enums::ListBox_Mesh_Data)
 			{
 				App->Custom_Button_Toggle(item,App->CL_Dialogs->flag_General_ListBox_Active);
 			}
@@ -180,7 +180,17 @@ LRESULT CALLBACK CL64_Properties_Materials::Proc_Materials_Dialog_Ogre(HWND hDlg
 	{
 		if (LOWORD(wParam) == IDC_BT_GROUPDETAILS)
 		{
-			App->CL_Dialogs->Start_General_ListBox(Enums::ListBox_Mesh_Data);
+			if (App->CL_Dialogs->flag_General_ListBox_Active == true)
+			{
+				App->CL_Dialogs->flag_General_ListBox_Active = false;
+
+				EndDialog(App->CL_Dialogs->ListBox_Dlg_Hwnd, LOWORD(wParam));
+			}
+			else
+			{
+				App->CL_Dialogs->Start_General_ListBox(Enums::ListBox_Mesh_Data);
+			}
+			
 			return TRUE;
 		}
 
