@@ -62,6 +62,9 @@ public:
 	bool listMotionItems_Ogre[50] = { 0 };
 	int PreviouseMotion_Ogre;
 
+	bool listMaterialItems_Assimp[50] = { 0 };
+	int PreviouseMaterial_Assimp;
+
 	Ogre::Vector3 Vec_Debug;
 
 	OgreBites::ApplicationContextBase* Base;

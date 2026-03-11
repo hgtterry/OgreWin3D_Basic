@@ -63,6 +63,9 @@ CL64_ImGui::CL64_ImGui()
 	listMotionItems_Ogre[0] = false;
 	PreviouseMotion_Ogre = -1;
 
+	listMaterialItems_Assimp[0] = true;
+	PreviouseMaterial_Assimp = 0;
+
 	guiFunctions.reserve(20);
 
 	Base = nullptr;
@@ -574,20 +577,20 @@ void CL64_ImGui::Show_Assimp_Model_Data_GUI(void)
 		if (ImGui::TreeNode("Materials"))
 		{
 			int Count = 0;
-			int Size = App->CL_Scene->GroupCount;
+			int Size = App->CL_Model->GroupCount;
 
 			while (Count < Size)
 			{
-				/*if (ImGui::Selectable(App->CL_Scene->Group[Count]->MaterialName, listMaterialItems_Assimp[Count]))
+				if (ImGui::Selectable(App->CL_Mesh->Group[Count]->MaterialName, listMaterialItems_Assimp[Count]))
 				{
-					App->CL_Props_Textures->Selected_Group = Count;
+					//App->CL_Props_Textures->Selected_Group = Count;
 					App->CL_Ogre->OGL_Listener->Selected_Face_Group = Count;
-					App->CL_Props_Textures->Update_Texture_Assimp();
+					//App->CL_Props_Textures->Update_Texture_Assimp();
 
 					listMaterialItems_Assimp[PreviouseMaterial_Assimp] = 0;
 					listMaterialItems_Assimp[Count] = 1;
 					PreviouseMaterial_Assimp = Count;
-				}*/
+				}
 
 				Count++;
 			}

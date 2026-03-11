@@ -109,6 +109,7 @@ THE SOFTWARE.
 #include "CL64_Mesh.h"
 #include "Init_Libs.h"
 #include "CL64_Properties_Materials.h"
+#include "CL64_Props_Textures_Assimp.h"
 
 class CL64_App
 {
@@ -200,6 +201,7 @@ public:
 	CL64_Model*					CL_Model;
 	CL64_Mesh*					CL_Mesh;
 	CL64_Properties_Materials*	CL_Properties_Materials;
+	CL64_Properties_Textures_Assimp* CL_Properties_Textures_Assimp;
 
 	void InitApp(void);
 	void Init_Dialogs(void);
