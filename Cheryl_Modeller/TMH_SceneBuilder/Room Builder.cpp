@@ -921,6 +921,20 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 return TRUE;
             }
 
+            case ID_WINDOW_TEXTURES:
+            {
+                if (App->CL_Interface->Textures_Dlg_Assimp_Active == true)
+                {
+                    App->CL_Interface->Show_Textures_Assimp_Dlg(false);
+                }
+                else
+                {
+                    App->CL_Interface->Show_Textures_Assimp_Dlg(true);
+                }
+
+                return TRUE;
+            }
+            
             case ID_INFO_PHYSICSOBJECTSDEBUG:
             {
                /* if (App->CL_Editor_Scene->flag_Show_Physics_Objects == 1)

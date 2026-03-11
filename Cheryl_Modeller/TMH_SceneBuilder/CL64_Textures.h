@@ -41,6 +41,8 @@ public:
 	bool Import_OpenGL_Texture(UINT textureArray[], LPSTR strFileName, int textureID);
 	bool Load_OpenGL_Textures(int TextureID);
 	bool Create_DummyTexture(char* Folder);
+	bool Windows_Preview_FullPath(int Index, char* FullPath);
+	bool LoadDummyTexture(int Index);
 
 
 	bool Covert_Texture(const char* File);

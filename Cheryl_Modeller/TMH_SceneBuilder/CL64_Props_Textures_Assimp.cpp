@@ -102,9 +102,9 @@ LRESULT CALLBACK CL64_Properties_Textures_Assimp::Proc_Textures_Dialog(HWND hDlg
 		SendDlgItemMessage(hDlg, IDC_BT_PT_VIEWMAT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
 		SendDlgItemMessage(hDlg, IDC_ST_PT_MATERIALFILE, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_ST_PT_NUMTEXTUNITS, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_ST_PT_NUMTEXTUNITS, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));*/
 		
-		SetWindowLongPtr(GetDlgItem(hDlg, IDC_PROP_BASETEXTURE), GWLP_WNDPROC, (LONG_PTR)ViewerBasePic);*/
+		SetWindowLongPtr(GetDlgItem(hDlg, IDC_AT_BASETEXTURE), GWLP_WNDPROC, (LONG_PTR)ViewerBasePic);
 		
 	}
 
@@ -384,7 +384,7 @@ bool CL64_Properties_Textures_Assimp::Update_Texture_Assimp()
 
 	//CheckMenuItem(App->mMenu, ID_WINDOWS_TEXTURESDIALOG, MF_BYCOMMAND | MF_CHECKED);
 
-	Sel_BaseBitmap = App->CL_Mesh->Group[Index]->Base_Bitmap;;
+	Sel_BaseBitmap = App->CL_Mesh->Group[Index]->Base_Bitmap;
 
 	BITMAP bm;
 	GetObject(Sel_BaseBitmap, sizeof(bm), &bm);
@@ -396,8 +396,8 @@ bool CL64_Properties_Textures_Assimp::Update_Texture_Assimp()
 	sprintf(Dimensions, "%i X %i", BasePicWidth, BasePicHeight);// , bm.bmBitsPixel);
 	SetDlgItemText(Textures_Dlg_Hwnd_Assimp, IDC_ST_PT_DIMENSIONS, Dimensions);
 
-//	ShowWindow(GetDlgItem(Props_Dlg_Hwnd, IDC_PROP_BASETEXTURE), 0);
-//	ShowWindow(GetDlgItem(Props_Dlg_Hwnd, IDC_PROP_BASETEXTURE), 1);
+	ShowWindow(GetDlgItem(Textures_Dlg_Hwnd_Assimp, IDC_AT_BASETEXTURE), 0);
+	ShowWindow(GetDlgItem(Textures_Dlg_Hwnd_Assimp, IDC_AT_BASETEXTURE), 1);
 	
 	return 1;
 }

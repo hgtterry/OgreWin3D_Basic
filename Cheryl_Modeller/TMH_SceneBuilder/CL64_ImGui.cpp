@@ -583,9 +583,9 @@ void CL64_ImGui::Show_Assimp_Model_Data_GUI(void)
 			{
 				if (ImGui::Selectable(App->CL_Mesh->Group[Count]->MaterialName, listMaterialItems_Assimp[Count]))
 				{
-					//App->CL_Props_Textures->Selected_Group = Count;
+					App->CL_Properties_Textures_Assimp->Selected_Group = Count;
 					App->CL_Ogre->OGL_Listener->Selected_Face_Group = Count;
-					//App->CL_Props_Textures->Update_Texture_Assimp();
+					App->CL_Properties_Textures_Assimp->Update_Texture_Assimp();
 
 					listMaterialItems_Assimp[PreviouseMaterial_Assimp] = 0;
 					listMaterialItems_Assimp[Count] = 1;

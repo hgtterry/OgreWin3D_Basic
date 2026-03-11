@@ -211,7 +211,7 @@ void CL64_Textures::Load_Textures_Assimp()
 
 			strcpy(TextureFileName, ImageFullPath);
 
-			//Windows_Preview_FullPath(v, ImageFullPath);
+			Windows_Preview_FullPath(v, ImageFullPath);
 
 			bool test = Load_OpenGL_Textures(App->CL_Mesh->Group[Count]->MaterialIndex);
 			if (test == 0)
@@ -279,6 +279,28 @@ bool CL64_Textures::Create_DummyTexture(char* Folder)
 }
 
 // *************************************************************************
+// *					CreateDummyTexture Terry Bernie   		 	 	   *
+// *************************************************************************
+bool CL64_Textures::LoadDummyTexture(int Index)
+{
+	if (App->CL_Model->GroupCount > 0)
+	{
+		App->CL_Mesh->Group[Index]->Base_Bitmap = LoadBitmap(App->hInst, MAKEINTRESOURCE(IDB_NO_TEXTURE));
+
+		strcpy(App->CL_Mesh->Group[Index]->Texture_PathFileName, "Internal Dummy BMP");
+		strcpy(App->CL_Mesh->Group[Index]->Text_FileName, "Dummy.bmp");
+
+		App->CL_Mesh->Group[Index]->Depth = 8;
+		App->CL_Mesh->Group[Index]->Width = 256;
+		App->CL_Mesh->Group[Index]->Height = 256;
+
+		App->CL_Mesh->Group[Index]->Bitmap_Loaded = -1;
+	}
+
+	return 1;
+}
+
+// *************************************************************************
 // *		Load_OpenGL_Textures:- Terry and Hazel Flanigan 2024   	  	   *
 // *************************************************************************
 bool CL64_Textures::Load_OpenGL_Textures(int TextureID)
@@ -339,6 +361,165 @@ bool CL64_Textures::Load_OpenGL_Textures(int TextureID)
 	Create_DummyTexture(App->CL_Model->Model_FolderPath);
 	Import_OpenGL_Texture(g_Texture, buf, TextureID);
 	remove(buf);
+
+	return 1;
+}
+
+// *************************************************************************
+// *		Windows_Preview_FullPath:- Terry and Hazel Flanigan 2026	   *
+// *************************************************************************
+bool CL64_Textures::Windows_Preview_FullPath(int Index, char* FullPath)
+{
+	if (App->CL_Model->GroupCount > 0)
+	{
+
+		char mFileName[MAX_PATH];
+		strcpy(mFileName, FullPath);
+
+		HWND PreviewWnd = GetDlgItem(App->CL_Properties_Textures_Assimp->Textures_Dlg_Hwnd_Assimp, IDC_AT_BASETEXTURE);
+		HDC	hDC = GetDC(PreviewWnd);
+
+		App->CL_Mesh->Group[Index]->Base_Bitmap = NULL;
+
+		// ----------------------------------- Bitmap
+		if (_stricmp(mFileName + strlen(mFileName) - 4, ".BMP") == 0)
+		{
+
+			App->CL_Mesh->Group[Index]->Base_Bitmap = ilutWinLoadImage(mFileName, hDC);
+			ReleaseDC(PreviewWnd, hDC);
+
+			if (App->CL_Mesh->Group[Index]->Base_Bitmap == NULL)
+			{
+
+				LoadDummyTexture(Index);
+
+				return 1;
+			}
+			else
+			{
+				BITMAPINFO    bmiData;
+				ilutGetBmpInfo(&bmiData);
+
+				App->CL_Mesh->Group[Index]->Depth = bmiData.bmiHeader.biBitCount;
+				App->CL_Mesh->Group[Index]->Width = bmiData.bmiHeader.biWidth;
+				App->CL_Mesh->Group[Index]->Height = bmiData.bmiHeader.biHeight;
+				App->CL_Mesh->Group[Index]->Bitmap_Loaded = 1;
+			}
+
+			return 1;
+		}
+
+		// ------------------------------------ JPEG
+		if (_stricmp(mFileName + strlen(mFileName) - 4, ".JPG") == 0)
+		{
+			App->CL_Mesh->Group[Index]->Base_Bitmap = ilutWinLoadImage(mFileName, hDC);
+			ReleaseDC(PreviewWnd, hDC);
+
+			if (App->CL_Mesh->Group[Index]->Base_Bitmap == NULL)
+			{
+
+				LoadDummyTexture(Index);
+
+				return 1;
+			}
+			else
+			{
+				BITMAPINFO    bmiData;
+				ilutGetBmpInfo(&bmiData);
+
+				App->CL_Mesh->Group[Index]->Depth = bmiData.bmiHeader.biBitCount;
+				App->CL_Mesh->Group[Index]->Width = bmiData.bmiHeader.biWidth;
+				App->CL_Mesh->Group[Index]->Height = bmiData.bmiHeader.biHeight;
+				App->CL_Mesh->Group[Index]->Bitmap_Loaded = 1;
+			}
+
+			return 1;
+		}
+
+		// ------------------------------------ DDS
+		if (_stricmp(mFileName + strlen(mFileName) - 4, ".DDS") == 0)
+		{
+			App->CL_Mesh->Group[Index]->Base_Bitmap = ilutWinLoadImage(mFileName, hDC);
+			ReleaseDC(PreviewWnd, hDC);
+
+			if (App->CL_Mesh->Group[Index]->Base_Bitmap == NULL)
+			{
+
+				LoadDummyTexture(Index);
+
+				return 1;
+			}
+			else
+			{
+				BITMAPINFO    bmiData;
+				ilutGetBmpInfo(&bmiData);
+
+				App->CL_Mesh->Group[Index]->Depth = bmiData.bmiHeader.biBitCount;
+				App->CL_Mesh->Group[Index]->Width = bmiData.bmiHeader.biWidth;
+				App->CL_Mesh->Group[Index]->Height = bmiData.bmiHeader.biHeight;
+				App->CL_Mesh->Group[Index]->Bitmap_Loaded = 1;
+			}
+
+			return 1;
+		}
+
+		// ------------------------------------ TGA
+		if (_stricmp(mFileName + strlen(mFileName) - 4, ".TGA") == 0)
+		{
+			App->CL_Mesh->Group[Index]->Base_Bitmap = ilutWinLoadImage(mFileName, hDC);
+			ReleaseDC(PreviewWnd, hDC);
+
+			if (App->CL_Mesh->Group[Index]->Base_Bitmap == NULL)
+			{
+
+				LoadDummyTexture(Index);
+
+				return 1;
+			}
+			else
+			{
+				BITMAPINFO    bmiData;
+				ilutGetBmpInfo(&bmiData);
+
+				App->CL_Mesh->Group[Index]->Depth = bmiData.bmiHeader.biBitCount;
+				App->CL_Mesh->Group[Index]->Width = bmiData.bmiHeader.biWidth;
+				App->CL_Mesh->Group[Index]->Height = bmiData.bmiHeader.biHeight;
+				App->CL_Mesh->Group[Index]->Bitmap_Loaded = 1;
+			}
+
+			return 1;
+		}
+
+		// ------------------------------------ PNG
+		if (_stricmp(mFileName + strlen(mFileName) - 4, ".PNG") == 0)
+		{
+			App->CL_Mesh->Group[Index]->Base_Bitmap = ilutWinLoadImage(mFileName, hDC);
+			ReleaseDC(PreviewWnd, hDC);
+
+			if (App->CL_Mesh->Group[Index]->Base_Bitmap == NULL)
+			{
+				LoadDummyTexture(Index);
+
+				return 1;
+			}
+			else
+			{
+				BITMAPINFO    bmiData;
+				ilutGetBmpInfo(&bmiData);
+
+				App->CL_Mesh->Group[Index]->Depth = bmiData.bmiHeader.biBitCount;
+				App->CL_Mesh->Group[Index]->Width = bmiData.bmiHeader.biWidth;
+				App->CL_Mesh->Group[Index]->Height = bmiData.bmiHeader.biHeight;
+				App->CL_Mesh->Group[Index]->Bitmap_Loaded = 1;
+			}
+
+			return 1;
+		}
+
+		LoadDummyTexture(Index);
+
+		App->CL_Mesh->Group[Index]->Bitmap_Loaded = -1;
+	}
 
 	return 1;
 }
