@@ -33,6 +33,9 @@ public:
 	void Enable_Export_Button(bool Enable);
 
 	void Get_First_Texture_Ogre();
+	void Fill_Materials_ListBox();
+	void List_Material_Changed(int Index);
+
 
 	char mTextureName[MAX_PATH];
 	char mMaterialName[MAX_PATH];

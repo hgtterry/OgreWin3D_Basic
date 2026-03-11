@@ -94,7 +94,7 @@ bool CL64_Importers::Assimp_Loader(bool UseDialog, const char* Extension, const 
 
 	App->CL_Model->Model_Type = Enums::Model_Type_Assimp;
 	App->CL_Model->flag_Model_Loaded = true;
-
+	App->CL_Properties_Textures_Assimp->Fill_Materials_ListBox();
 	/*App->CL_Scene->Scene_Mode = Enums::Scene_Mode_Assimp_Model;
 	App->CL_Scene->Set_Scene(App->CL_Scene->Scene_Mode);*/
 
@@ -107,11 +107,11 @@ bool CL64_Importers::Assimp_Loader(bool UseDialog, const char* Extension, const 
 
 	//App->CL_Ogre->RenderFrame(3);
 
-	/*App->CL_ImGui->flag_Open_Textures_List = 1;
-	App->CL_Props_Textures->Selected_Group = 0;
-	App->CL_Props_Textures->Update_Texture_Assimp();
+	//App->CL_ImGui->flag_Open_Textures_List = 1;
+	App->CL_Properties_Textures_Assimp->Selected_Group = 0;
+	App->CL_Properties_Textures_Assimp->Update_Texture_Assimp();
 
-	App->Enable_Export_Options(true);*/
+	//App->Enable_Export_Options(true);
 
 	return 1;
 }

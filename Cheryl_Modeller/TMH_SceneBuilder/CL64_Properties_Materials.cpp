@@ -634,7 +634,6 @@ void CL64_Properties_Materials::Fill_Materials_ListBox()
 
 		SendDlgItemMessage(Textures_Dlg_Hwnd_Ogre, IDC_LIST_MATERIALS, LB_SETCURSEL, (WPARAM)0, (LPARAM)0);
 	}
-
 }
 
 // *************************************************************************

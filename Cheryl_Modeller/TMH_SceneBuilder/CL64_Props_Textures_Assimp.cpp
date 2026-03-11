@@ -89,21 +89,9 @@ LRESULT CALLBACK CL64_Properties_Textures_Assimp::Proc_Textures_Dialog(HWND hDlg
 	{
 	case WM_INITDIALOG:
 	{
-		/*SendDlgItemMessage(hDlg, IDC_ST_MATERIAL, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_ST_PT_MATERIAL, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
-		
-		SendDlgItemMessage(hDlg, IDC_ST_TEXURENAME, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_PT_TEXTURENAME, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_LIST_AT_MATERIALS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
-		SendDlgItemMessage(hDlg, IDC_ST_PT_DIMENSIONS, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
-		
-		SendDlgItemMessage(hDlg, IDC_BT_PT_EXPORT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_BT_PT_VIEWMESH, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_BT_PT_VIEWMAT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		
-		SendDlgItemMessage(hDlg, IDC_ST_PT_MATERIALFILE, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_ST_PT_NUMTEXTUNITS, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));*/
-		
+
 		SetWindowLongPtr(GetDlgItem(hDlg, IDC_AT_BASETEXTURE), GWLP_WNDPROC, (LONG_PTR)ViewerBasePic);
 		
 	}
@@ -229,39 +217,24 @@ LRESULT CALLBACK CL64_Properties_Textures_Assimp::Proc_Textures_Dialog(HWND hDlg
 
 	case WM_COMMAND:
 	{
-		/*if (LOWORD(wParam) == IDC_BT_PT_VIEWMAT)
+		if (LOWORD(wParam) == IDC_LIST_AT_MATERIALS) // Click inside Materials list box
 		{
-			strcpy(App->CL_Resources->mSelected_File, App->CL_Scene->Group[App->CL_Props_Textures->Selected_Group]->Ogre_Material_File);
-			App->CL_Resources->View_File(App->CL_Scene->Group[App->CL_Props_Textures->Selected_Group]->Ogre_Material_File, App->Fdlg);
-
-			return TRUE;
-		}
-		
-		if (LOWORD(wParam) == IDC_BT_PT_EXPORT)
-		{
-			App->CL_Resources->Export_File(App->CL_Scene->Group[App->CL_Props_Textures->Selected_Group]->Ogre_Texture_FileName);
-			return TRUE;
-		}
-
-		if (LOWORD(wParam) == IDC_BT_PT_VIEWMESH)
-		{
-			if (App->CL_Scene->GroupCount > 0)
+			if (App->CL_Model->flag_Model_Loaded == true && App->CL_Model->Model_Type == Enums::Model_Type_Assimp)
 			{
-				if (App->CL_Ogre->OGL_Listener->Flag_ShowFaces == 1)
+				int Index = SendDlgItemMessage(hDlg, IDC_LIST_AT_MATERIALS, LB_GETCURSEL, (WPARAM)0, (LPARAM)0);
+				if (Index == LB_ERR)
 				{
-					App->CL_Ogre->OGL_Listener->Flag_ShowFaces = 0;
-					App->CL_Ogre->OGL_Listener->flag_ShowOnlySubFaces = 0;
+					App->Say("ListBox No Selection Available", (LPSTR)"");
+					return TRUE;
 				}
-				else
-				{
-					App->CL_Ogre->OGL_Listener->Flag_ShowFaces = 1;
-					App->CL_Ogre->OGL_Listener->flag_ShowOnlySubFaces = 1;
-					App->CL_Ogre->OGL_Listener->Selected_Face_Group = App->CL_Props_Textures->Selected_Group;
-				}
+
+				App->CL_Properties_Textures_Assimp->List_Material_Changed(Index);
+
 			}
+
 			
 			return TRUE;
-		}*/
+		}
 
 		if (LOWORD(wParam) == IDCANCEL)
 		{
@@ -368,6 +341,32 @@ bool CL64_Properties_Textures_Assimp::RenderTexture_Blit(HDC hDC, HBITMAP Bmp, c
 }
 
 // *************************************************************************
+// *		Fill_Materials_ListBox:- Terry and Hazel Flanigan 2026		   *
+// *************************************************************************
+void CL64_Properties_Textures_Assimp::Fill_Materials_ListBox()
+{
+	SendDlgItemMessage(Textures_Dlg_Hwnd_Assimp, IDC_LIST_AT_MATERIALS, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
+
+	if (App->CL_Model->GroupCount > 0)
+	{
+		int Count = 0;
+		int Size = App->CL_Model->GroupCount;
+		while (Count < Size)
+		{
+			char mName[MAX_PATH];
+
+			strcpy(mName, App->CL_Mesh->Group[Count]->MaterialName);
+
+			SendDlgItemMessage(Textures_Dlg_Hwnd_Assimp, IDC_LIST_AT_MATERIALS, LB_ADDSTRING, (WPARAM)0, (LPARAM)mName);
+
+			Count++;
+		}
+
+		SendDlgItemMessage(Textures_Dlg_Hwnd_Assimp, IDC_LIST_AT_MATERIALS, LB_SETCURSEL, (WPARAM)0, (LPARAM)0);
+	}
+}
+
+// *************************************************************************
 // *			Update_Texture_Assimp:- Terry and Hazel Flanigan 2024      *
 // *************************************************************************
 bool CL64_Properties_Textures_Assimp::Update_Texture_Assimp()
@@ -403,6 +402,26 @@ bool CL64_Properties_Textures_Assimp::Update_Texture_Assimp()
 }
 
 // *************************************************************************
+// *	  	List_Material_Changed:- Terry and Hazel Flanigan 2026		   *
+// *************************************************************************
+void CL64_Properties_Textures_Assimp::List_Material_Changed(int Index)
+{
+	if (App->CL_Model->flag_Model_Loaded == true && App->CL_Model->Model_Type == Enums::Model_Type_Assimp)
+	{
+		Selected_Group = Index;
+		//Update_Texture_Ogre_Dlg();
+
+		// Change Texure in the window
+		Update_Texture_Assimp();
+
+
+
+		RedrawWindow(Textures_Dlg_Hwnd_Assimp, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+	}
+
+}
+
+// *************************************************************************
 // *		Update_Texture_Ogre_Dlg:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
 bool CL64_Properties_Textures_Assimp::Update_Texture_Ogre_Dlg()
@@ -414,9 +433,9 @@ bool CL64_Properties_Textures_Assimp::Update_Texture_Ogre_Dlg()
 
 //	SetDlgItemText(Props_Dlg_Hwnd, IDC_ST_PT_MATERIALFILE, App->CL_Scene->Group[Index]->Ogre_Material_File);
 
-	char NumTextUnits[20];
+	//char NumTextUnits[20];
 
-	SetDlgItemText(Textures_Dlg_Hwnd_Assimp, IDC_ST_PT_NUMTEXTUNITS, _itoa(App->CL_Mesh->Group[Index]->Ogre_NumTextureUnits, NumTextUnits,10));
+	//SetDlgItemText(Textures_Dlg_Hwnd_Assimp, IDC_ST_PT_NUMTEXTUNITS, _itoa(App->CL_Mesh->Group[Index]->Ogre_NumTextureUnits, NumTextUnits,10));
 	
 	//ShowWindow(Textures_Dlg_Hwnd_Assimp, true);
 //	CheckMenuItem(App->mMenu, ID_WINDOWS_TEXTURESDIALOG, MF_BYCOMMAND | MF_CHECKED);
@@ -431,8 +450,8 @@ bool CL64_Properties_Textures_Assimp::Update_Texture_Ogre_Dlg()
 	sprintf(Dimensions, "%i X %i", BasePicWidth, BasePicHeight);// , bm.bmBitsPixel);
 //	SetDlgItemText(Props_Dlg_Hwnd, IDC_ST_PT_DIMENSIONS, Dimensions);
 
-//	ShowWindow(GetDlgItem(Props_Dlg_Hwnd, IDC_PROP_BASETEXTURE), 0);
-//	ShowWindow(GetDlgItem(Props_Dlg_Hwnd, IDC_PROP_BASETEXTURE), 1);
+	ShowWindow(GetDlgItem(Textures_Dlg_Hwnd_Assimp, IDC_AT_BASETEXTURE), 0);
+	ShowWindow(GetDlgItem(Textures_Dlg_Hwnd_Assimp, IDC_AT_BASETEXTURE), 1);
 
 	return 1;
 }
