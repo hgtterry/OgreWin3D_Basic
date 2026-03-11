@@ -110,6 +110,7 @@ bool CL64_Importers::Assimp_Loader(bool UseDialog, const char* Extension, const 
 	//App->CL_ImGui->flag_Open_Textures_List = 1;
 	App->CL_Properties_Textures_Assimp->Selected_Group = 0;
 	App->CL_Properties_Textures_Assimp->Update_Texture_Assimp();
+	App->CL_Properties_Textures_Assimp->Get_First_Texture_Ogre();
 
 	//App->Enable_Export_Options(true);
 

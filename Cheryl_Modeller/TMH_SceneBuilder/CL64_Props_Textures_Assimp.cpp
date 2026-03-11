@@ -90,7 +90,7 @@ LRESULT CALLBACK CL64_Properties_Textures_Assimp::Proc_Textures_Dialog(HWND hDlg
 	case WM_INITDIALOG:
 	{
 		SendDlgItemMessage(hDlg, IDC_LIST_AT_MATERIALS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-
+		SendDlgItemMessage(hDlg, IDC_LIST_AT_TEXTURES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		SetWindowLongPtr(GetDlgItem(hDlg, IDC_AT_BASETEXTURE), GWLP_WNDPROC, (LONG_PTR)ViewerBasePic);
 		
@@ -415,14 +415,16 @@ void CL64_Properties_Textures_Assimp::Select_By_Index(int Index)
 // *************************************************************************
 void CL64_Properties_Textures_Assimp::Fill_Textures_ListBox()
 {
-	SendDlgItemMessage(Textures_Dlg_Hwnd_Assimp, IDC_LIST_TEXTURES, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
+	SendDlgItemMessage(Textures_Dlg_Hwnd_Assimp, IDC_LIST_AT_TEXTURES, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
 
 	if (App->CL_Model->GroupCount > 0)
 	{
 		char mName[MAX_PATH];
 		strcpy(mName, App->CL_Mesh->Group[Selected_Group]->Text_FileName);
-
-		SendDlgItemMessage(Textures_Dlg_Hwnd_Assimp, IDC_LIST_TEXTURES, LB_SETCURSEL, (WPARAM)0, (LPARAM)0);
+		SendDlgItemMessage(Textures_Dlg_Hwnd_Assimp, IDC_LIST_AT_TEXTURES, LB_ADDSTRING, (WPARAM)0, (LPARAM)mName);
+		
+		
+		SendDlgItemMessage(Textures_Dlg_Hwnd_Assimp, IDC_LIST_AT_TEXTURES, LB_SETCURSEL, (WPARAM)0, (LPARAM)0);
 
 	}
 }
@@ -549,48 +551,51 @@ void CL64_Properties_Textures_Assimp::Texture_To_HBITMP(char* TextureFileName)
 void CL64_Properties_Textures_Assimp::Get_First_Texture_Ogre()
 {
 
-	if (App->CL_Scene->GroupCount > 0)
-	{
-		bool test = strcmp(App->CL_Mesh->Group[0]->Ogre_Material, "No_Material_Loaded");
-		if (test == 0) // Match
-		{
-			if (App->CL_Scene->GroupCount > 0)
-			{
-				//strcpy(mTextureName, App->CL_Mesh->Group[0]->Ogre_Texture_FileName);
-				strcpy(mMaterialName, App->CL_Mesh->Group[0]->Ogre_Material);
-				//strcpy(App->CL_Resources->mSelected_Resource_Group, mTextureName);
-			}
+	//if (App->CL_Scene->GroupCount > 0)
+	//{
+	//	bool test = strcmp(App->CL_Mesh->Group[0]->Ogre_Material, "No_Material_Loaded");
+	//	if (test == 0) // Match
+	//	{
+	//		if (App->CL_Scene->GroupCount > 0)
+	//		{
+	//			//strcpy(mTextureName, App->CL_Mesh->Group[0]->Ogre_Texture_FileName);
+	//			strcpy(mMaterialName, App->CL_Mesh->Group[0]->Ogre_Material);
+	//			//strcpy(App->CL_Resources->mSelected_Resource_Group, mTextureName);
+	//		}
 
-			App->CL_Properties_Textures_Assimp->Selected_Group = 0;
-			App->CL_Ogre->OGL_Listener->Selected_Face_Group = 0;
+	//		App->CL_Properties_Textures_Assimp->Selected_Group = 0;
+	//		App->CL_Ogre->OGL_Listener->Selected_Face_Group = 0;
 
-			App->CL_Resources->mSelected_Resource_Group = "App_Resource_Group";
+	//		App->CL_Resources->mSelected_Resource_Group = "App_Resource_Group";
 
-			App->CL_Properties_Textures_Assimp->View_Texture(mTextureName, mMaterialName);
-		}
-		else
-		{
-			//strcpy(mTextureName, App->CL_Mesh->Group[0]->Ogre_Texture_FileName);
-			strcpy(mMaterialName, App->CL_Mesh->Group[0]->Ogre_Material);
+	//		App->CL_Properties_Textures_Assimp->View_Texture(mTextureName, mMaterialName);
+	//	}
+	//	else
+	//	{
+	//		//strcpy(mTextureName, App->CL_Mesh->Group[0]->Ogre_Texture_FileName);
+	//		strcpy(mMaterialName, App->CL_Mesh->Group[0]->Ogre_Material);
 
-			bool test = strcmp(mMaterialName, "No_Material_Loaded");
-			if (test == 0)
-			{
-				App->CL_Resources->mSelected_Resource_Group = "App_Resource_Group";
-			}
+	//		bool test = strcmp(mMaterialName, "No_Material_Loaded");
+	//		if (test == 0)
+	//		{
+	//			App->CL_Resources->mSelected_Resource_Group = "App_Resource_Group";
+	//		}
 
-			if (App->CL_Mesh->Group[0]->Ogre_Texture_IsValid == 1)
-			{
-				App->CL_Properties_Textures_Assimp->View_Texture(mTextureName, mMaterialName);
-			}
-			else
-			{
-				App->CL_Mesh->Group[0]->Base_Bitmap = LoadBitmap(App->hInst, MAKEINTRESOURCE(IDB_NO_TEXTURE));
-				Sel_BaseBitmap = App->CL_Mesh->Group[0]->Base_Bitmap;
-				Update_Texture_Ogre_Dlg();
-			}
+	//		if (App->CL_Mesh->Group[0]->Ogre_Texture_IsValid == 1)
+	//		{
+	//			App->CL_Properties_Textures_Assimp->View_Texture(mTextureName, mMaterialName);
+	//		}
+	//		else
+	//		{
+	//			App->CL_Mesh->Group[0]->Base_Bitmap = LoadBitmap(App->hInst, MAKEINTRESOURCE(IDB_NO_TEXTURE));
+	//			Sel_BaseBitmap = App->CL_Mesh->Group[0]->Base_Bitmap;
+	//			Update_Texture_Ogre_Dlg();
+	//		}
 
-		}
-	}
+	//	}
+
+	Selected_Group = 0;
+	Fill_Textures_ListBox();
+
 }
 

@@ -32,6 +32,8 @@ public:
 	CL64_OGL_Listener(void);
 	~CL64_OGL_Listener(void);
 
+	void Reset_Class(void);
+
 	// Show Selected Brush and Face Outlines
 	void Show_Visuals(bool Show);
 

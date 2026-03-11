@@ -184,6 +184,7 @@ void CL64_Model::Clear_Model()
 	FaceCount = 0;
 	BoneCount = 0;
 
+	App->CL_Ogre->OGL_Listener->Reset_Class();
 	App->CL_Properties_Materials->Reset_Class();
 
 	// Reset editor, camera, and panels

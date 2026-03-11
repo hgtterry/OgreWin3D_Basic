@@ -33,7 +33,7 @@ typedef struct tag_FaceList FaceList;
 
 CL64_OGL_Listener::CL64_OGL_Listener(void)
 {
-	Selected_Face_Group = false;
+	Selected_Face_Group = 0;
 
 	RX = 0;
 	RZ = 0;
@@ -71,6 +71,47 @@ CL64_OGL_Listener::CL64_OGL_Listener(void)
 
 CL64_OGL_Listener::~CL64_OGL_Listener(void)
 {
+}
+
+// *************************************************************************
+// *			Reset_Class:- Terry and Hazel Flanigan 2026				   *
+// *************************************************************************
+void CL64_OGL_Listener::Reset_Class(void)
+{
+	Selected_Face_Group = 0;
+
+	RX = 0;
+	RZ = 0;
+
+	Light_Activated = false;
+
+	Selected_Brush_Index = 0;
+
+	mBrushCount = 0;
+	mSubBrushCount = 0;
+
+	flag_Render_Just_Brush = false;
+
+	flag_Show_Selected_Brush = false;
+	flag_Show_Selected_Face = false;
+
+	flag_Show_Material_Faces = false;
+
+	flag_Render_Ogre = true;
+	flag_Render_Groups = false;
+	flag_Render_Brushes = false;
+
+	flag_ShowTextured = false;
+	flag_Just_Face = false;
+	flag_ShowFaces = false;
+	flag_ShowPoints = false;
+	flag_ShowNormals = false;
+	flag_ShowBoundingBox = false;
+	flag_ShowBones = false;
+
+	Render_Mode = Enums::Render_Nothing;
+
+	memset(g_BrushTexture, 0, 399);
 }
 
 // *************************************************************************
