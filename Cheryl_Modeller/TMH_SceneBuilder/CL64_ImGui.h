@@ -42,6 +42,7 @@ public:
 
 	void Model_Data_GUI(void);
 	void Show_Ogre_Model_Data_GUI(void);
+	void Show_Assimp_Model_Data_GUI(void);
 
 	bool flag_Imgui_Initialized;
 	bool flag_Show_Paths;

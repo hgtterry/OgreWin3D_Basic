@@ -338,13 +338,19 @@ void CL64_ImGui::Model_Data_GUI(void)
 
 		ImGui::Separator();
 
-		//if (App->CL_Model->Model_Type == Enums::Model_Type_None)
+		if (App->CL_Model->Model_Type == Enums::Model_Type_None)
 		{
 			Show_Ogre_Model_Data_GUI();
 		}
-		//else
+		
+		if (App->CL_Model->Model_Type == Enums::Model_Type_Ogre3D)
 		{
-			//Show_Assimp_Model_Data_GUI();
+			Show_Ogre_Model_Data_GUI();
+		}
+		
+		if (App->CL_Model->Model_Type == Enums::Model_Type_Assimp)
+		{
+			Show_Assimp_Model_Data_GUI();
 		}
 
 		ImGui::Separator();
@@ -546,6 +552,162 @@ void CL64_ImGui::Show_Ogre_Model_Data_GUI(void)
 	}
 
 	colors[ImGuiCol_Header] = ImVec4(0.26f, 0.59f, 0.98f, 0.31f);
+}
+
+// *************************************************************************
+// *		Show_Assimp_Model_Data_GUI:- Terry and Hazel Flanigan 2026	   *
+// *************************************************************************
+void CL64_ImGui::Show_Assimp_Model_Data_GUI(void)
+{
+	// Open for now
+	ImGui::SetNextItemOpen(true, ImGuiCond_Always);
+
+	if (ImGui::TreeNode("Assimp Model", "%s", App->CL_Model->Loaded_FileName))
+	{
+		/*if (flag_Open_Textures_List == 1)
+		{
+			ImGui::SetNextItemOpen(true, ImGuiCond_Always);
+			flag_Open_Textures_List = 0;
+		}*/
+
+		// Materials / Textures
+		if (ImGui::TreeNode("Materials"))
+		{
+			int Count = 0;
+			int Size = App->CL_Scene->GroupCount;
+
+			while (Count < Size)
+			{
+				/*if (ImGui::Selectable(App->CL_Scene->Group[Count]->MaterialName, listMaterialItems_Assimp[Count]))
+				{
+					App->CL_Props_Textures->Selected_Group = Count;
+					App->CL_Ogre->OGL_Listener->Selected_Face_Group = Count;
+					App->CL_Props_Textures->Update_Texture_Assimp();
+
+					listMaterialItems_Assimp[PreviouseMaterial_Assimp] = 0;
+					listMaterialItems_Assimp[Count] = 1;
+					PreviouseMaterial_Assimp = Count;
+				}*/
+
+				Count++;
+			}
+
+			ImGui::TreePop();
+		}
+
+		// Geometry
+		if (ImGui::TreeNode("Geometry"))
+		{
+			int Count = 0;
+			int Size = App->CL_Scene->GroupCount;
+
+			/*ImGui::PushID("foo");
+			if (ImGui::BeginMenu("Status"))
+			{
+				ImGui::Text("Edge List:- %s", App->CL_Scene->S_OgreMeshData[0]->mStrEdgeList.c_str());
+				ImGui::Text("Skeleton:- %s", App->CL_Scene->S_OgreMeshData[0]->mStrSkeleton.c_str());
+
+				ImGui::EndMenu();
+			}
+			ImGui::PopID();*/
+
+			Count = 0;
+			while (Count < Size)
+			{
+				ImGui::PushID("foo");
+				if (ImGui::BeginMenu(App->CL_Mesh->Group[Count]->GroupName))
+				{
+					ImGui::Text("Dedicated vertices:  %s", "Yes");
+					ImGui::Text("Material Name: %s", App->CL_Mesh->Group[Count]->MaterialName);
+					ImGui::Text("Vertices Count: %i", App->CL_Mesh->Group[Count]->GroupVertCount);
+					ImGui::Text("Bones Used: %i", 0);// App->CL_Scene->S_OgreMeshData[0]->mSubmeshes[Count].BonesCount);
+
+					ImGui::Separator();
+
+					if (ImGui::Checkbox("Show Mesh", &listSubMeshItems[Count]))
+					{
+						App->CL_Ogre->OGL_Listener->flag_ShowFaces = 1;
+						//App->CL_Ogre->OGL_Listener->flag_ShowOnlySubFaces = 1;
+						App->CL_Ogre->OGL_Listener->Selected_Face_Group = Count;
+
+						listSubMeshItems[PreviouseSubMesh] = 0;
+						PreviouseSubMesh = Count;
+					}
+
+					ImGui::EndMenu();
+				}
+
+				ImGui::PopID();
+
+				Count++;
+			}
+
+			/*if (listSubMeshItems[PreviouseSubMesh] == 0 && App->CL_Ogre->OGL_Listener->flag_ShowOnlySubFaces == 1)
+			{
+				App->CL_Ogre->OGL_Listener->Flag_ShowFaces = 0;
+				App->CL_Ogre->OGL_Listener->flag_ShowOnlySubFaces = 0;
+				PreviouseSubMesh = -1;
+			}*/
+
+			ImGui::TreePop();
+		}
+
+		// Bounds
+		if (ImGui::TreeNode("Bounds"))
+		{
+			ImGui::Text("Width:- %f", App->CL_Model->S_BoundingBox[0]->Size->x);
+			ImGui::Text("Height:- %f", App->CL_Model->S_BoundingBox[0]->Size->y);
+			ImGui::Text("Depth:- %f", App->CL_Model->S_BoundingBox[0]->Size->z);
+
+			ImGui::Text("Min:- %.5f  %.5f  %.5f", App->CL_Model->S_BoundingBox[0]->BB_Min->x, App->CL_Model->S_BoundingBox[0]->BB_Min->y, App->CL_Model->S_BoundingBox[0]->BB_Min->z);
+			ImGui::Text("Max:- %.5f  %.5f  %.5f", App->CL_Model->S_BoundingBox[0]->BB_Max->x, App->CL_Model->S_BoundingBox[0]->BB_Max->y, App->CL_Model->S_BoundingBox[0]->BB_Max->z);
+
+			ImGui::Text("Centre:- %.5f  %.5f  %.5f", App->CL_Model->S_BoundingBox[0]->Centre->x, App->CL_Model->S_BoundingBox[0]->Centre->y, App->CL_Model->S_BoundingBox[0]->Centre->z);
+			ImGui::Text("Radius:- %f", App->CL_Model->S_BoundingBox[0]->radius);
+
+			ImGui::TreePop();
+		}
+
+		// Motions
+		if (ImGui::TreeNode("Motions"))
+		{
+			int Count = 0;
+			int Size = App->CL_Model->MotionCount;
+
+			if (Size == 0)
+			{
+				ImGui::Text("No Motions:");
+			}
+
+			/*while (Count < Size)
+			{
+				ImGui::PushID("foo");
+				if (ImGui::BeginMenu(App->CL_Scene->S_OgreMeshData[0]->m_Motion_Names[Count].c_str()))
+				{
+
+					ImGui::Text("Motion Name:  %s", App->CL_Scene->S_OgreMeshData[0]->m_Motion_Names[Count].c_str());
+					ImGui::Text("Length:  %f", App->CL_Scene->S_OgreMeshData[0]->m_Motion_Length[Count]);
+					ImGui::Text("Tracks: ( Bones )  %i", App->CL_Scene->S_OgreMeshData[0]->m_Motion_Num_Of_Tracks[Count]);
+
+					if (ImGui::Button("Play Motion"))
+					{
+						App->CL_TopDlg->Switch_To_Motions_Dlg();
+						App->CL_TopDlg->Update_Motions_By_Name(App->CL_Scene->S_OgreMeshData[0]->m_Motion_Names[Count].c_str());
+					}
+
+					ImGui::EndMenu();
+				}
+
+				ImGui::PopID();
+				Count++;
+			}*/
+
+			ImGui::TreePop();
+		}
+
+		ImGui::TreePop();
+	}
+
 }
 
 // *************************************************************************
