@@ -553,8 +553,9 @@
 #define IDC_BT_MOT_BBOX                 1382
 #define IDC_BT_GROUPDETAILS             1382
 #define IDC_AT_BASETEXTURE              1383
-#define IDC_LIST1                       1384
 #define IDC_LIST_AT_MATERIALS           1384
+#define IDC_LIST2                       1385
+#define IDC_LIST_AT_TEXTURES            1385
 #define ID_DEBUG_GENERAL                32771
 #define ID_TEMPLATES_INSERT             32772
 #define ID_BRUSH_SELECT                 32773
@@ -681,7 +682,7 @@
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        223
 #define _APS_NEXT_COMMAND_VALUE         32887
-#define _APS_NEXT_CONTROL_VALUE         1385
+#define _APS_NEXT_CONTROL_VALUE         1386
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif

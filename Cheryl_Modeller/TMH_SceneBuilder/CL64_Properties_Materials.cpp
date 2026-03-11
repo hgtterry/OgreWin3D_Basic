@@ -551,13 +551,9 @@ void CL64_Properties_Materials::List_Material_Changed(int Index)
 			App->CL_Properties_Materials->Update_Texture_Ogre_Dlg();
 		}
 
+		// Select Materials/Groups in Imgu
+		App->CL_ImGui->Set_Materials_Index_Imgui(Index);
 
-		if (Index < 40)
-		{
-			App->CL_ImGui->listMaterialItems_Ogre[App->CL_ImGui->PreviouseMaterial_Ogre] = 0;
-			App->CL_ImGui->listMaterialItems_Ogre[Index] = 1;
-			App->CL_ImGui->PreviouseMaterial_Ogre = Index;
-		}
 
 		Selected_Material_Index = Index;
 		Selected_Group = Index;

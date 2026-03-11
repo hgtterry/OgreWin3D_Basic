@@ -562,9 +562,10 @@ void CL64_ImGui::Show_Ogre_Model_Data_GUI(void)
 // *************************************************************************
 void CL64_ImGui::Show_Assimp_Model_Data_GUI(void)
 {
-	// Open for now
-	ImGui::SetNextItemOpen(true, ImGuiCond_Always);
+	ImVec4* colors = ImGui::GetStyle().Colors;
+	colors[ImGuiCol_Header] = ImVec4(0, 1, 0.4, 0.7);
 
+	ImGui::SetNextItemOpen(true, ImGuiCond_Always);
 	if (ImGui::TreeNode("Assimp Model", "%s", App->CL_Model->Loaded_FileName))
 	{
 		/*if (flag_Open_Textures_List == 1)
@@ -574,6 +575,7 @@ void CL64_ImGui::Show_Assimp_Model_Data_GUI(void)
 		}*/
 
 		// Materials / Textures
+		ImGui::SetNextItemOpen(true, ImGuiCond_Once);
 		if (ImGui::TreeNode("Materials"))
 		{
 			int Count = 0;
@@ -586,6 +588,9 @@ void CL64_ImGui::Show_Assimp_Model_Data_GUI(void)
 					App->CL_Properties_Textures_Assimp->Selected_Group = Count;
 					App->CL_Ogre->OGL_Listener->Selected_Face_Group = Count;
 					App->CL_Properties_Textures_Assimp->Update_Texture_Assimp();
+
+					App->CL_Properties_Textures_Assimp->Select_By_Index(Count);
+					App->CL_Properties_Textures_Assimp->Update_Texture_Ogre_Dlg();
 
 					listMaterialItems_Assimp[PreviouseMaterial_Assimp] = 0;
 					listMaterialItems_Assimp[Count] = 1;
@@ -709,6 +714,30 @@ void CL64_ImGui::Show_Assimp_Model_Data_GUI(void)
 		}
 
 		ImGui::TreePop();
+	}
+
+}
+
+// *************************************************************************
+// *				ImGui_FPS:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void CL64_ImGui::Set_Materials_Index_Imgui(int Index)
+{
+	if (Index < 40)
+	{
+		if (App->CL_Model->Model_Type == Enums::Model_Type_Ogre3D)
+		{
+			App->CL_ImGui->listMaterialItems_Ogre[App->CL_ImGui->PreviouseMaterial_Ogre] = 0;
+			App->CL_ImGui->listMaterialItems_Ogre[Index] = 1;
+			App->CL_ImGui->PreviouseMaterial_Ogre = Index;
+		}
+
+		if (App->CL_Model->Model_Type == Enums::Model_Type_Assimp)
+		{
+			App->CL_ImGui->listMaterialItems_Assimp[App->CL_ImGui->PreviouseMaterial_Assimp] = 0;
+			App->CL_ImGui->listMaterialItems_Assimp[Index] = 1;
+			App->CL_ImGui->PreviouseMaterial_Assimp = Index;
+		}
 	}
 
 }

@@ -35,6 +35,8 @@ public:
 	void Get_First_Texture_Ogre();
 	void Fill_Materials_ListBox();
 	void List_Material_Changed(int Index);
+	void Select_By_Index(int Index);
+	void Fill_Textures_ListBox();
 
 
 	char mTextureName[MAX_PATH];

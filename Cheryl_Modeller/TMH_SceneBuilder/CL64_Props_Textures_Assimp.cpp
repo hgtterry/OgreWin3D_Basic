@@ -402,6 +402,31 @@ bool CL64_Properties_Textures_Assimp::Update_Texture_Assimp()
 }
 
 // *************************************************************************
+// *			Select_By_Index:- Terry and Hazel Flanigan 2026			   *
+// *************************************************************************
+void CL64_Properties_Textures_Assimp::Select_By_Index(int Index)
+{
+	SendDlgItemMessage(Textures_Dlg_Hwnd_Assimp, IDC_LIST_AT_MATERIALS, LB_SETCURSEL, (WPARAM)Index, (LPARAM)0);
+	List_Material_Changed(Index);
+}
+
+// *************************************************************************
+// *		Fill_Textures_ListBox:- Terry and Hazel Flanigan 2026		   *
+// *************************************************************************
+void CL64_Properties_Textures_Assimp::Fill_Textures_ListBox()
+{
+	SendDlgItemMessage(Textures_Dlg_Hwnd_Assimp, IDC_LIST_TEXTURES, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
+
+	if (App->CL_Model->GroupCount > 0)
+	{
+		char mName[MAX_PATH];
+		strcpy(mName, App->CL_Mesh->Group[Selected_Group]->Text_FileName);
+
+		SendDlgItemMessage(Textures_Dlg_Hwnd_Assimp, IDC_LIST_TEXTURES, LB_SETCURSEL, (WPARAM)0, (LPARAM)0);
+
+	}
+}
+// *************************************************************************
 // *	  	List_Material_Changed:- Terry and Hazel Flanigan 2026		   *
 // *************************************************************************
 void CL64_Properties_Textures_Assimp::List_Material_Changed(int Index)
@@ -413,8 +438,10 @@ void CL64_Properties_Textures_Assimp::List_Material_Changed(int Index)
 
 		// Change Texure in the window
 		Update_Texture_Assimp();
+		Fill_Textures_ListBox();
 
-
+		// Select Materials/Groups in Imgu
+		App->CL_ImGui->Set_Materials_Index_Imgui(Index);
 
 		RedrawWindow(Textures_Dlg_Hwnd_Assimp, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 	}
