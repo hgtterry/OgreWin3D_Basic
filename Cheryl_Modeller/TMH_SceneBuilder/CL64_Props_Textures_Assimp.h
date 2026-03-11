@@ -40,9 +40,7 @@ public:
 
 	int Selected_Group;
 
-	bool RightGroups_Visable;
-
-	HWND Props_Dlg_Hwnd;
+	HWND Textures_Dlg_Hwnd_Assimp;
 
 	HBITMAP	Sel_BaseBitmap;
 	long BasePicWidth;

@@ -110,6 +110,7 @@
 #define IDB_TB_MODELDATAOFF             220
 #define IDD_PROPS_MOTIONS               220
 #define IDB_TB_MODELDATAON              221
+#define IDD_PROPERTIES_TEXTURES_ASSIMP  222
 #define IDC_BANNER                      1000
 #define IDC_STTEXT                      1001
 #define IDC_STMESSAGE                   1002
@@ -666,6 +667,7 @@
 #define ID_IMPORT_WAVEFRONTOBJ          32884
 #define ID_TESTMODELS_WAVEFRONTCUBE     32885
 #define ID_GENERALSELECT                32886
+#define ID_WINDOW_TEXTURES              32886
 #define ID_TOOLS_TEMPLATE               32910
 #define IDC_STATIC                      -1
 
@@ -674,8 +676,8 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
-#define _APS_NEXT_RESOURCE_VALUE        222
-#define _APS_NEXT_COMMAND_VALUE         32886
+#define _APS_NEXT_RESOURCE_VALUE        223
+#define _APS_NEXT_COMMAND_VALUE         32887
 #define _APS_NEXT_CONTROL_VALUE         1383
 #define _APS_NEXT_SYMED_VALUE           110
 #endif

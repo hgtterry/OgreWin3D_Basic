@@ -39,6 +39,9 @@ public:
 	void Position_Materials_Dlg(void);
 	void Position_Motions_Dlg(void);
 
+	void Position_Textures_Assimp_Dlg(void);
+	void Show_Textures_Assimp_Dlg(bool show);
+
 	bool Resize_FileView(void);
 	void Deselect_All_Brushes_Update_Dlgs(void);
 
@@ -57,5 +60,6 @@ public:
 
 	bool Materials_Dlg_Active;
 	bool Motions_Dlg_Active;
+	bool Textures_Dlg_Assimp_Active;
 };
 

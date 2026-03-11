@@ -104,8 +104,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     strcat(DefaultWad, "\\Data\\Room_Builder\\Default.zip");
     App->CL_Doc->Load_Wad_File(DefaultWad); // Needs Ogre at the Moment
    
-    App->CL_Properties_Tabs->Start_Tabs_Control_Dlg();
-   
     // Initialize dialogs
     App->Init_Dialogs();
     App->CL_File_IO->Init_History();

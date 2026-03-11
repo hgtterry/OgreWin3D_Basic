@@ -31,6 +31,7 @@ CL64_Interface::CL64_Interface()
 {
 	Materials_Dlg_Active = false;
 	Motions_Dlg_Active = false;
+	Textures_Dlg_Assimp_Active = false;
 }
 
 CL64_Interface::~CL64_Interface()
@@ -165,6 +166,29 @@ void CL64_Interface::Position_Materials_Dlg(void)
 }
 
 // *************************************************************************
+// *	Position_Textures_Assimp_Dlg:- Terry and Hazel Flanigan 2026	   *
+// *************************************************************************
+void CL64_Interface::Position_Textures_Assimp_Dlg(void)
+{
+	POINT position = { 0 };
+
+	// Map the window points to get the current position
+	int offset = MapWindowPoints(App->CL_Editor_Map->Main_View_Dlg_Hwnd, NULL, &position, 1);
+
+	RECT mainDialogRect;
+	GetWindowRect(App->CL_Editor_Map->Main_View_Dlg_Hwnd, &mainDialogRect);
+
+	// Calculate the width and height of the main dialog
+	int dialogWidth = mainDialogRect.right - mainDialogRect.left;
+	int dialogHeight = mainDialogRect.bottom - mainDialogRect.top;
+
+	// Set the position of the Textures dialog
+	SetWindowPos(App->CL_Properties_Textures_Assimp->Textures_Dlg_Hwnd_Assimp, NULL,
+		position.x + dialogWidth - 300, position.y + 25,
+		0, 0, SWP_NOSIZE | SWP_NOZORDER);
+}
+
+// *************************************************************************
 // *		Position_Motions_Dlg:- Terry and Hazel Flanigan 2026		   *
 // *************************************************************************
 void CL64_Interface::Position_Motions_Dlg(void)
@@ -234,6 +258,25 @@ void CL64_Interface::Show_Materials_Dlg(bool show)
 		App->CL_Properties_Materials->Show_Materials_Dialog_Ogre(false);
 		Materials_Dlg_Active = false;
 		CheckMenuItem(App->Menu_Map, ID_WINDOW_MATERIALS, MF_BYCOMMAND | MF_UNCHECKED);
+	}
+}
+
+// *************************************************************************
+// *			Show_Materials_Dlg:- Terry and Hazel Flanigan 2026		   *
+// *************************************************************************
+void CL64_Interface::Show_Textures_Assimp_Dlg(bool show)
+{
+	if (show == true)
+	{
+		ShowWindow(App->CL_Properties_Textures_Assimp->Textures_Dlg_Hwnd_Assimp, true);
+		Textures_Dlg_Assimp_Active = true;
+		CheckMenuItem(App->Menu_Map, ID_WINDOW_TEXTURES, MF_BYCOMMAND | MF_CHECKED);
+	}
+	else
+	{
+		ShowWindow(App->CL_Properties_Textures_Assimp->Textures_Dlg_Hwnd_Assimp, false);
+		Textures_Dlg_Assimp_Active = false;
+		CheckMenuItem(App->Menu_Map, ID_WINDOW_TEXTURES, MF_BYCOMMAND | MF_UNCHECKED);
 	}
 }
 

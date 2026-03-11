@@ -24,11 +24,10 @@ appreciated but is not required.
 
 CL64_Properties_Textures_Assimp::CL64_Properties_Textures_Assimp(void)
 {
-	Props_Dlg_Hwnd = NULL;
+	Textures_Dlg_Hwnd_Assimp = NULL;
 
 	Selected_Group = 0;
-	RightGroups_Visable = 0;
-
+	
 	Sel_BaseBitmap = nullptr;
 	BasePicWidth = 0;
 	BasePicHeight = 0;
@@ -69,17 +68,15 @@ void CL64_Properties_Textures_Assimp::Reset_Class(void)
 }
 
 // *************************************************************************
-// *	 Start_Props_Textures_Dialog:- Terry and Hazel Flanigan 2024	   *
+// *	 Start_Props_Textures_Dialog:- Terry and Hazel Flanigan 2026	   *
 // *************************************************************************
 bool CL64_Properties_Textures_Assimp::Start_Props_Textures_Dialog()
 {
-	Props_Dlg_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_PROPS_TEXTURES, App->MainHwnd, (DLGPROC)Proc_Textures_Dialog);
+	Textures_Dlg_Hwnd_Assimp = CreateDialog(App->hInst, (LPCTSTR)IDD_PROPERTIES_TEXTURES_ASSIMP, App->MainHwnd, (DLGPROC)Proc_Textures_Dialog);
 
 	//App->CL_Props_Textures->Enable_Export_Button(false);
-	//ShowWindow(Props_Dlg_Hwnd, 1);
-	RightGroups_Visable = 1;
-	//CheckMenuItem(App->mMenu, ID_WINDOWS_TEXTURESDIALOG, MF_BYCOMMAND | MF_UNCHECKED);
-	
+	App->CL_Interface->Show_Textures_Assimp_Dlg(true);
+
 	return 1;
 }
 
@@ -266,6 +263,11 @@ LRESULT CALLBACK CL64_Properties_Textures_Assimp::Proc_Textures_Dialog(HWND hDlg
 			return TRUE;
 		}*/
 
+		if (LOWORD(wParam) == IDCANCEL)
+		{
+			App->CL_Interface->Show_Textures_Assimp_Dlg(false);
+			return TRUE;
+		}
 	}
 
 	}
@@ -378,8 +380,7 @@ bool CL64_Properties_Textures_Assimp::Update_Texture_Assimp()
 //	SetDlgItemText(Props_Dlg_Hwnd, IDC_ST_PT_MATERIAL, mMaterialName);
 //	SetDlgItemText(Props_Dlg_Hwnd, IDC_PT_TEXTURENAME, mTextureName);
 
-	RightGroups_Visable = 1;
-	ShowWindow(Props_Dlg_Hwnd, 1);
+//	ShowWindow(Textures_Dlg_Hwnd_Assimp, true);
 
 	//CheckMenuItem(App->mMenu, ID_WINDOWS_TEXTURESDIALOG, MF_BYCOMMAND | MF_CHECKED);
 
@@ -393,7 +394,7 @@ bool CL64_Properties_Textures_Assimp::Update_Texture_Assimp()
 
 	char Dimensions[MAX_PATH];
 	sprintf(Dimensions, "%i X %i", BasePicWidth, BasePicHeight);// , bm.bmBitsPixel);
-	SetDlgItemText(Props_Dlg_Hwnd, IDC_ST_PT_DIMENSIONS, Dimensions);
+	SetDlgItemText(Textures_Dlg_Hwnd_Assimp, IDC_ST_PT_DIMENSIONS, Dimensions);
 
 //	ShowWindow(GetDlgItem(Props_Dlg_Hwnd, IDC_PROP_BASETEXTURE), 0);
 //	ShowWindow(GetDlgItem(Props_Dlg_Hwnd, IDC_PROP_BASETEXTURE), 1);
@@ -415,10 +416,9 @@ bool CL64_Properties_Textures_Assimp::Update_Texture_Ogre_Dlg()
 
 	char NumTextUnits[20];
 
-	SetDlgItemText(Props_Dlg_Hwnd, IDC_ST_PT_NUMTEXTUNITS, _itoa(App->CL_Mesh->Group[Index]->Ogre_NumTextureUnits, NumTextUnits,10));
+	SetDlgItemText(Textures_Dlg_Hwnd_Assimp, IDC_ST_PT_NUMTEXTUNITS, _itoa(App->CL_Mesh->Group[Index]->Ogre_NumTextureUnits, NumTextUnits,10));
 	
-	RightGroups_Visable = 1;
-	ShowWindow(Props_Dlg_Hwnd, 1);
+	//ShowWindow(Textures_Dlg_Hwnd_Assimp, true);
 //	CheckMenuItem(App->mMenu, ID_WINDOWS_TEXTURESDIALOG, MF_BYCOMMAND | MF_CHECKED);
 
 	BITMAP bm;
@@ -429,7 +429,7 @@ bool CL64_Properties_Textures_Assimp::Update_Texture_Ogre_Dlg()
 
 	char Dimensions[MAX_PATH];
 	sprintf(Dimensions, "%i X %i", BasePicWidth, BasePicHeight);// , bm.bmBitsPixel);
-	SetDlgItemText(Props_Dlg_Hwnd, IDC_ST_PT_DIMENSIONS, Dimensions);
+//	SetDlgItemText(Props_Dlg_Hwnd, IDC_ST_PT_DIMENSIONS, Dimensions);
 
 //	ShowWindow(GetDlgItem(Props_Dlg_Hwnd, IDC_PROP_BASETEXTURE), 0);
 //	ShowWindow(GetDlgItem(Props_Dlg_Hwnd, IDC_PROP_BASETEXTURE), 1);
