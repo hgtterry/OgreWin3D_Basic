@@ -49,6 +49,7 @@ public:
 	void Menu_Enable_Materials(bool option);
 
 	void Enable_Debug_Menu(bool option);
+	void Menu_Enable_OgreExport(bool option);
 
 	void Show_file_view(bool show);
 

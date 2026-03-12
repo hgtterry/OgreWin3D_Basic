@@ -99,7 +99,7 @@ void CL64_Ogre3D::Set_Export_Paths(void)
 {
 	strcpy(mSelected_Directory, App->CL_Export->mFolder_Path);
 	strcpy(mDirectory_Name, App->CL_Export->mDirectory_Name);
-	strcpy(mExport_Just_Name, App->CL_Export->mJustName);
+	strcpy(mExport_Just_Name, App->CL_Model->Model_Just_Name);
 
 	strcpy(mExport_Path, mSelected_Directory);
 	strcat(mExport_Path, "\\");
@@ -641,7 +641,7 @@ bool CL64_Ogre3D::DecompileTextures_from_Assimp(char* PathAndFile)
 }
 
 // *************************************************************************
-// *			Export_Texture:- Terry and Hazel Flanigan 2025    	 	   *
+// *	Export_Texture_from_Assimp:- Terry and Hazel Flanigan 2025     	   *
 // *************************************************************************
 bool CL64_Ogre3D::Export_Texture_from_Assimp(char* Name, char* Folder)
 {
@@ -662,6 +662,7 @@ bool CL64_Ogre3D::Export_Texture_from_Assimp(char* Name, char* Folder)
 			strcat(PathandFile, App->CL_Mesh->Group[Loop]->Assimp_Text_FileName);
 
 			mFileString.clear();
+			bool image_loaded = false;
 
 			std::ifstream ifs(PathandFile, std::ios::binary | std::ios::in);
 			if (ifs.is_open())
@@ -680,9 +681,11 @@ bool CL64_Ogre3D::Export_Texture_from_Assimp(char* Name, char* Folder)
 				outFile.close();
 
 				mFileString.clear();
-			}
 
-			ifs.close();
+				ifs.close();
+
+				image_loaded = true;
+			}
 
 			Loop++;
 		}

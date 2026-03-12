@@ -62,9 +62,10 @@ void CL64_Model::Set_Paths(void)
 	}
 	else
 	{
-		strcpy(Loaded_FileName, Loaded_FileName);
-		int Len = strlen(Loaded_FileName);
+		strcpy(Model_Just_Name, Loaded_FileName);
+		int Len = strlen(Model_Just_Name);
 		Model_Just_Name[Len - 4] = 0;
+
 	}
 }
 

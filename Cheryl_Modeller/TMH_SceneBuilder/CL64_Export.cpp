@@ -634,11 +634,11 @@ LRESULT CALLBACK CL64_Export::Proc_Ogre_Export_Dlg(HWND hDlg, UINT message, WPAR
 		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
-		SetDlgItemText(hDlg, IDC_ST_OGRE_FILENAME, (LPCTSTR)App->CL_Export->mJustName);
+		SetDlgItemText(hDlg, IDC_ST_OGRE_FILENAME, (LPCTSTR)App->CL_Model->Model_Just_Name);
 		SetDlgItemText(hDlg, IDC_ST_OGRE_PATH, (LPCTSTR)App->CL_Export->mFolder_Path);
 		
 		
-		strcpy(App->CL_Export->mDirectory_Name, App->CL_Export->mJustName);
+		strcpy(App->CL_Export->mDirectory_Name, App->CL_Model->Model_Just_Name);
 		strcat(App->CL_Export->mDirectory_Name, "_Ogre_All");
 
 		SetDlgItemText(hDlg, IDC_ST_OGRE_SUBFOLDER, (LPCTSTR)App->CL_Export->mDirectory_Name);
@@ -824,18 +824,18 @@ LRESULT CALLBACK CL64_Export::Proc_Ogre_Export_Dlg(HWND hDlg, UINT message, WPAR
 		if (LOWORD(wParam) == IDC_BT_OGRE_NAMECHANGE)
 		{
 			strcpy(App->CL_Dialogs->btext, "Change File Name");
-			strcpy(App->CL_Dialogs->Chr_Text, App->CL_Export->mJustName);
+			strcpy(App->CL_Dialogs->Chr_Text, App->CL_Model->Model_Just_Name);
 
 			App->CL_Dialogs->Dialog_Text(Enums::Check_Name_None);
 
 			if (App->CL_Dialogs->flag_Dlg_Canceled == 0)
 			{
-				strcpy(App->CL_Export->mJustName, App->CL_Dialogs->Chr_Text);
+				strcpy(App->CL_Model->Model_Just_Name, App->CL_Dialogs->Chr_Text);
 			}
 
-			SetDlgItemText(hDlg, IDC_ST_OGRE_FILENAME, App->CL_Export->mJustName);
+			SetDlgItemText(hDlg, IDC_ST_OGRE_FILENAME, App->CL_Model->Model_Just_Name);
 			
-			strcpy(App->CL_Export->mDirectory_Name, App->CL_Export->mJustName);
+			strcpy(App->CL_Export->mDirectory_Name, App->CL_Model->Model_Just_Name);
 			strcat(App->CL_Export->mDirectory_Name, "_Ogre_All");
 
 			SetDlgItemText(hDlg, IDC_ST_OGRE_SUBFOLDER, (LPCTSTR)App->CL_Export->mDirectory_Name);
@@ -940,7 +940,7 @@ LRESULT CALLBACK CL64_Export::Proc_Ogre_Export_Dlg(HWND hDlg, UINT message, WPAR
 				return 1;
 			}
 
-			strcpy(App->CL_Export->mDirectory_Name, App->CL_Export->mJustName);
+			strcpy(App->CL_Export->mDirectory_Name, App->CL_Model->Model_Just_Name);
 			strcat(App->CL_Export->mDirectory_Name, "_Ogre_All");
 
 			App->CL_Ogre3D->Export_To_Ogre3D(false);

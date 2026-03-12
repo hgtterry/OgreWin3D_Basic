@@ -314,6 +314,21 @@ void CL64_Interface::Menu_Enable_Materials(bool option)
 	}
 }
 
+// *************************************************************************
+// *		Menu_Enable_OgreExport:- Terry and Hazel Flanigan 2026		   *
+// *************************************************************************
+void CL64_Interface::Menu_Enable_OgreExport(bool option)
+{
+	if (option == true)
+	{
+		EnableMenuItem(App->Menu_Map, ID_EXPORT_OGRE3D, MF_BYCOMMAND | MF_ENABLED);
+	}
+	else
+	{
+		EnableMenuItem(App->Menu_Map, ID_EXPORT_OGRE3D, MF_BYCOMMAND | MF_GRAYED);
+	}
+}
+
 // **************************************************************************
 // *	  		 Show_file_view:- Terry and Hazel Flanigan 2026				*
 // **************************************************************************

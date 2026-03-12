@@ -350,7 +350,7 @@ bool CL64_Exp_Obj::Create_ObjectFile(void)
 	else
 	{
 		WriteMTLFile();
-		//App->CL_Textures->DecompileTextures(OutputFolder);
+		DecompileTextures(OutputFolder);
 	}
 
 	return 1;
@@ -552,10 +552,6 @@ bool CL64_Exp_Obj::WriteMTLFile(void)
 		fprintf(Write_MTLFile, "Ns 0.000000\n");
 
 		strcpy(buf, App->CL_Mesh->Group[GroupCount]->Assimp_Text_FileName);
-		int Len = strlen(buf);
-		buf[Len - 4] = 0;
-		strcat(buf, ".jpg");
-
 		fprintf(Write_MTLFile, "map_Kd %s\n", buf);
 
 		fprintf(Write_MTLFile, "%s \n", " ");
@@ -564,6 +560,60 @@ bool CL64_Exp_Obj::WriteMTLFile(void)
 	}
 
 	fclose(Write_MTLFile);
+
+	return 1;
+}
+
+// *************************************************************************
+// *		DecompileTextures:- Terry and Hazel Flanigan 2026 	   	   	   *
+// *************************************************************************
+bool CL64_Exp_Obj::DecompileTextures(char* Path)
+{
+	if (App->CL_Model->Model_Type == Enums::Model_Type_Assimp)
+	{
+		int MatCount = App->CL_Model->GroupCount;
+		char PathandFile[MAX_PATH];
+		char Texture_Folder_Path[MAX_PATH];
+
+		Ogre::String mFileString;
+
+		int Loop = 0;
+		while (Loop < MatCount)
+		{
+			strcpy(Texture_Folder_Path, App->CL_Mesh->Group[Loop]->Assimp_Texture_FolderPath);
+
+			strcpy(PathandFile, Texture_Folder_Path);
+			strcat(PathandFile, App->CL_Mesh->Group[Loop]->Assimp_Text_FileName);
+
+			mFileString.clear();
+			bool image_loaded = false;
+
+			std::ifstream ifs(PathandFile, std::ios::binary | std::ios::in);
+			if (ifs.is_open())
+			{
+				Ogre::DataStreamPtr data_stream(new Ogre::FileStreamDataStream(PathandFile, &ifs, false));
+
+				mFileString = data_stream->getAsString();
+
+				char mFileName[MAX_PATH];
+				strcpy(mFileName, App->CL_Exp_Obj->OutputFolder);
+				strcat(mFileName, App->CL_Mesh->Group[Loop]->Assimp_Text_FileName);
+
+				std::ofstream outFile;
+				outFile.open(mFileName, std::ios::binary);
+				outFile << mFileString;
+				outFile.close();
+
+				mFileString.clear();
+
+				ifs.close();
+
+				image_loaded = true;
+			}
+
+			Loop++;
+		}
+	}
 
 	return 1;
 }
@@ -682,5 +732,6 @@ bool CL64_Exp_Obj::Export_Textures_Ogre()
 
 	}
 
+	Debug
 	return 1;
 }

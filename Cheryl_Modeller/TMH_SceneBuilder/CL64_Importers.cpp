@@ -20,6 +20,7 @@ void CL64_Importers::Set_Editor()
 	{
 		App->CL_Interface->Show_Materials_Dlg(true);
 		App->CL_Interface->Menu_Enable_Materials(true);
+		App->CL_Interface->Menu_Enable_OgreExport(false);
 		App->CL_Interface->Show_file_view(true);
 	}
 
@@ -27,6 +28,7 @@ void CL64_Importers::Set_Editor()
 	{
 		App->CL_Ogre->OGL_Listener->flag_ShowTextured = true;
 		App->CL_Interface->Show_Textures_Assimp_Dlg(true);
+		App->CL_Interface->Menu_Enable_OgreExport(true);
 	}
 
 	App->CL_Top_Tabs->Set_Texture_Bmp_On();
@@ -243,7 +245,7 @@ bool CL64_Importers::Load_Ogre_Model(bool Use_File_Dialog, bool Check_Resource_F
 
 	App->CL_Mesh->Ogre_To_Mesh_Data(App->CL_Model->Imported_Ogre_Ent);
 
-	//App->CL_Resources->mSelected_Resource_Group = App->CL_Resources->Ogre_Loader_Resource_Group;
+	App->CL_Resources->mSelected_Resource_Group = App->CL_Resources->Ogre_Loader_Resource_Group;
 
 	App->CL_Model->Model_Type = Enums::Model_Type_Ogre3D;
 	App->CL_Model->flag_Model_Loaded = true;

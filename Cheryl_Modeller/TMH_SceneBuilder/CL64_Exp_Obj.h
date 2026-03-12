@@ -40,6 +40,7 @@ public:
 	bool WriteMTLFile_Ogre(void);
 
 	bool Export_Textures_Ogre();
+	bool DecompileTextures(char* Path);
 
 	char OutputFolder[MAX_PATH];
 	char Object_FileName[MAX_PATH];
