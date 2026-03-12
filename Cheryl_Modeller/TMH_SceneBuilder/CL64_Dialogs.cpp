@@ -1854,7 +1854,15 @@ LRESULT CALLBACK CL64_Dialogs::Proc_General_ListBox(HWND hDlg, UINT message, WPA
 			App->CL_Properties_Tabs->Enable_Tabs_Dlg(true);
 			App->CL_Dialogs->flag_General_ListBox_Active = false;
 
-			RedrawWindow(App->CL_Properties_Materials->Textures_Dlg_Hwnd_Ogre, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			if (App->CL_Model->flag_Model_Loaded == true && App->CL_Model->Model_Type == Enums::Model_Type_Ogre3D)
+			{
+				RedrawWindow(App->CL_Properties_Materials->Textures_Dlg_Hwnd_Ogre, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			}
+
+			if (App->CL_Model->flag_Model_Loaded == true && App->CL_Model->Model_Type == Enums::Model_Type_Assimp)
+			{
+				RedrawWindow(App->CL_Properties_Textures_Assimp->Textures_Dlg_Hwnd_Assimp, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			}
 
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
@@ -1951,6 +1959,9 @@ void CL64_Dialogs::List_Libraries(HWND List)
 	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)" ------------------- Cheryl_Software Libraries ------------------- ");
 	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)" ");
 
+	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->CL_Libs->Get_Time_Stamp());
+	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)" ");
+
 	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->CL_Libs->GetVersion());
 	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)" ");
 	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)" ------ Read init style file  ");
@@ -2015,7 +2026,17 @@ void CL64_Dialogs::List_Mesh_Data(HWND List)
 	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)" ------------------- Mesh Data ------------------- ");
 	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)" ");
 
-	int Index = App->CL_Properties_Materials->Selected_Group;
+	int Index = 0;
+
+	if (App->CL_Model->flag_Model_Loaded == true && App->CL_Model->Model_Type == Enums::Model_Type_Ogre3D)
+	{
+		Index = App->CL_Properties_Materials->Selected_Group;
+	}
+
+	if (App->CL_Model->flag_Model_Loaded == true && App->CL_Model->Model_Type == Enums::Model_Type_Assimp)
+	{
+		Index = App->CL_Properties_Textures_Assimp->Selected_Group;
+	}
 
 	if (Index > -1)
 	{

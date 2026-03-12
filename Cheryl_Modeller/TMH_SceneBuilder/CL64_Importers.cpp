@@ -26,6 +26,7 @@ void CL64_Importers::Set_Editor()
 	if (App->CL_Model->Model_Type == Enums::Model_Type_Assimp)
 	{
 		App->CL_Ogre->OGL_Listener->flag_ShowTextured = true;
+		App->CL_Interface->Show_Textures_Assimp_Dlg(true);
 	}
 
 	App->CL_Top_Tabs->Set_Texture_Bmp_On();
@@ -125,7 +126,6 @@ bool CL64_Importers::Assimp_Loader(bool UseDialog, const char* Extension, const 
 	App->CL_Properties_Textures_Assimp->Update_Texture_Assimp();
 	App->CL_Properties_Textures_Assimp->Get_First_Texture_Ogre();
 
-	App->CL_Interface->Show_Textures_Assimp_Dlg(true);
 	//App->Enable_Export_Options(true);
 
 	return 1;

@@ -440,7 +440,17 @@ bool CL64_OGL_Listener::MeshData_Textured_Groups(int Count)
 void CL64_OGL_Listener::MeshData_Render_Material_Faces(void)
 {
 	glColor3f(1, 1, 1);
-	MeshData_Face_Groups(App->CL_Properties_Materials->Selected_Group);
+
+	if (App->CL_Model->Model_Type == Enums::Model_Type_Ogre3D)
+	{
+		MeshData_Face_Groups(App->CL_Properties_Materials->Selected_Group);
+	}
+
+	if (App->CL_Model->Model_Type == Enums::Model_Type_Assimp)
+	{
+		MeshData_Face_Groups(App->CL_Properties_Textures_Assimp->Selected_Group);
+	}
+	
 }
 
 // *************************************************************************

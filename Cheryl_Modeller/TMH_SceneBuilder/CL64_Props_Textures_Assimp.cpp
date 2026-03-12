@@ -84,60 +84,24 @@ LRESULT CALLBACK CL64_Properties_Textures_Assimp::Proc_Textures_Dialog(HWND hDlg
 		SendDlgItemMessage(hDlg, IDC_LIST_AT_MATERIALS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_LIST_AT_TEXTURES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
+		SendDlgItemMessage(hDlg, IDC_BT_AT_MATERIAL_FACES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_AT_GROUPDETAILS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_AT_CHANGETEXTURE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		SendDlgItemMessage(hDlg, IDC_ST_AT_DIMENSIONS, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
+
 		SetWindowLongPtr(GetDlgItem(hDlg, IDC_AT_BASETEXTURE), GWLP_WNDPROC, (LONG_PTR)ViewerBasePic);
 		
 	}
 
 	case WM_CTLCOLORSTATIC:
 	{
-		/*if (GetDlgItem(hDlg, IDC_ST_PT_DIMENSIONS) == (HWND)lParam)
+		if (GetDlgItem(hDlg, IDC_ST_AT_DIMENSIONS) == (HWND)lParam)
 		{
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->AppBackground;
 		}
-
-		if (GetDlgItem(hDlg, IDC_ST_TEXURENAME) == (HWND)lParam)
-		{
-			SetTextColor((HDC)wParam, RGB(0, 0, 255));
-			SetBkMode((HDC)wParam, TRANSPARENT);
-			return (UINT)App->AppBackground;
-		}
-		
-		if (GetDlgItem(hDlg, IDC_PT_TEXTURENAME) == (HWND)lParam)
-		{
-			SetTextColor((HDC)wParam, RGB(0, 0, 0));
-			SetBkMode((HDC)wParam, TRANSPARENT);
-			return (UINT)App->AppBackground;
-		}
-
-		if (GetDlgItem(hDlg, IDC_ST_MATERIAL) == (HWND)lParam)
-		{
-			SetTextColor((HDC)wParam, RGB(0, 0, 255));
-			SetBkMode((HDC)wParam, TRANSPARENT);
-			return (UINT)App->AppBackground;
-		}
-		
-		if (GetDlgItem(hDlg, IDC_ST_PT_MATERIAL) == (HWND)lParam)
-		{
-			SetTextColor((HDC)wParam, RGB(0, 0, 0));
-			SetBkMode((HDC)wParam, TRANSPARENT);
-			return (UINT)App->AppBackground;
-		}
-
-		if (GetDlgItem(hDlg, IDC_ST_PT_MATERIALFILE) == (HWND)lParam)
-		{
-			SetTextColor((HDC)wParam, RGB(0, 0, 0));
-			SetBkMode((HDC)wParam, TRANSPARENT);
-			return (UINT)App->AppBackground;
-		}
-
-		if (GetDlgItem(hDlg, IDC_ST_PT_NUMTEXTUNITS) == (HWND)lParam)
-		{
-			SetTextColor((HDC)wParam, RGB(0, 0, 0));
-			SetBkMode((HDC)wParam, TRANSPARENT);
-			return (UINT)App->AppBackground;
-		}*/
 		
 		return FALSE;
 	}
@@ -160,50 +124,38 @@ LRESULT CALLBACK CL64_Properties_Textures_Assimp::Proc_Textures_Dialog(HWND hDlg
 	{
 		LPNMHDR some_item = (LPNMHDR)lParam;
 
-		/*if (some_item->idFrom == IDC_BT_PT_EXPORT)
+		if (some_item->idFrom == IDC_BT_AT_MATERIAL_FACES)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 
-			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_PT_EXPORT));
+			App->Custom_Button_Toggle(item, App->CL_Ogre->OGL_Listener->flag_Show_Material_Faces);
+		}
+
+		if (some_item->idFrom == IDC_BT_AT_GROUPDETAILS)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+
+			//if (App->CL_Dialogs->m_ListType == Enums::ListBox_Mesh_Data)
+			{
+				App->Custom_Button_Toggle(item, App->CL_Dialogs->flag_General_ListBox_Active);
+			}
+		}
+
+		if (some_item->idFrom == IDC_BT_AT_CHANGETEXTURE)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_AT_CHANGETEXTURE));
 			if (test == 0)
 			{
 				App->Custom_Button_Greyed(item);
 			}
 			else
 			{
-				App->Custom_Button_Normal(item);
+				App->Custom_Button_Toggle(item, App->CL_Ogre->OGL_Listener->flag_Show_Material_Faces);
 			}
 		}
 
-		if (some_item->idFrom == IDC_BT_PT_VIEWMESH)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-
-			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_PT_VIEWMESH));
-			if (test == 0)
-			{
-				App->Custom_Button_Greyed(item);
-			}
-			else
-			{
-				if (App->flag_OgreStarted == 1)
-				{
-					App->Custom_Button_Toggle(item, App->CL_Ogre->OGL_Listener->Flag_ShowFaces);
-				}
-			}
-		}
-
-		if (some_item->idFrom == IDC_BT_PT_VIEWMAT)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-
-			if (App->flag_OgreStarted == 1)
-			{
-				App->Custom_Button_Normal(item);
-			}
-
-		}*/
-		
 		return CDRF_DODEFAULT;
 	}
 
@@ -224,7 +176,39 @@ LRESULT CALLBACK CL64_Properties_Textures_Assimp::Proc_Textures_Dialog(HWND hDlg
 
 			}
 
-			
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_BT_AT_MATERIAL_FACES)
+		{
+			if (App->CL_Model->Model_Type == Enums::Model_Type_Assimp)
+			{
+				if (App->CL_Ogre->OGL_Listener->flag_Show_Material_Faces == true)
+				{
+					App->CL_Ogre->OGL_Listener->flag_Show_Material_Faces = false;
+				}
+				else
+				{
+					App->CL_Ogre->OGL_Listener->flag_Show_Material_Faces = true;
+				}
+			}
+
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_BT_AT_GROUPDETAILS)
+		{
+			if (App->CL_Dialogs->flag_General_ListBox_Active == true)
+			{
+				App->CL_Dialogs->flag_General_ListBox_Active = false;
+
+				EndDialog(App->CL_Dialogs->ListBox_Dlg_Hwnd, LOWORD(wParam));
+			}
+			else
+			{
+				App->CL_Dialogs->Start_General_ListBox(Enums::ListBox_Mesh_Data);
+			}
+
 			return TRUE;
 		}
 
@@ -368,13 +352,6 @@ bool CL64_Properties_Textures_Assimp::Update_Texture_Assimp()
 	strcpy(mMaterialName, App->CL_Mesh->Group[Index]->MaterialName);
 	strcpy(mTextureName, App->CL_Mesh->Group[Index]->Text_FileName);
 
-//	SetDlgItemText(Props_Dlg_Hwnd, IDC_ST_PT_MATERIAL, mMaterialName);
-//	SetDlgItemText(Props_Dlg_Hwnd, IDC_PT_TEXTURENAME, mTextureName);
-
-//	ShowWindow(Textures_Dlg_Hwnd_Assimp, true);
-
-	//CheckMenuItem(App->mMenu, ID_WINDOWS_TEXTURESDIALOG, MF_BYCOMMAND | MF_CHECKED);
-
 	Sel_BaseBitmap = App->CL_Mesh->Group[Index]->Base_Bitmap;
 
 	BITMAP bm;
@@ -385,7 +362,7 @@ bool CL64_Properties_Textures_Assimp::Update_Texture_Assimp()
 
 	char Dimensions[MAX_PATH];
 	sprintf(Dimensions, "%i X %i", BasePicWidth, BasePicHeight);// , bm.bmBitsPixel);
-	SetDlgItemText(Textures_Dlg_Hwnd_Assimp, IDC_ST_PT_DIMENSIONS, Dimensions);
+	SetDlgItemText(Textures_Dlg_Hwnd_Assimp, IDC_ST_AT_DIMENSIONS, Dimensions);
 
 	ShowWindow(GetDlgItem(Textures_Dlg_Hwnd_Assimp, IDC_AT_BASETEXTURE), 0);
 	ShowWindow(GetDlgItem(Textures_Dlg_Hwnd_Assimp, IDC_AT_BASETEXTURE), 1);
@@ -437,6 +414,12 @@ void CL64_Properties_Textures_Assimp::List_Material_Changed(int Index)
 		// Select Materials/Groups in Imgu
 		App->CL_ImGui->Set_Materials_Index_Imgui(Index);
 
+		if (App->CL_Dialogs->flag_General_ListBox_Active == true)
+		{
+			HWND List = GetDlgItem(App->CL_Dialogs->ListBox_Dlg_Hwnd, IDC_LST_GENERAL);
+			App->CL_Dialogs->List_Mesh_Data(List);
+		}
+
 		RedrawWindow(Textures_Dlg_Hwnd_Assimp, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 	}
 
@@ -469,7 +452,7 @@ bool CL64_Properties_Textures_Assimp::Update_Texture_Ogre_Dlg()
 
 	char Dimensions[MAX_PATH];
 	sprintf(Dimensions, "%i X %i", BasePicWidth, BasePicHeight);// , bm.bmBitsPixel);
-//	SetDlgItemText(Props_Dlg_Hwnd, IDC_ST_PT_DIMENSIONS, Dimensions);
+	SetDlgItemText(Textures_Dlg_Hwnd_Assimp, IDC_ST_AT_DIMENSIONS, Dimensions);
 
 	ShowWindow(GetDlgItem(Textures_Dlg_Hwnd_Assimp, IDC_AT_BASETEXTURE), 0);
 	ShowWindow(GetDlgItem(Textures_Dlg_Hwnd_Assimp, IDC_AT_BASETEXTURE), 1);

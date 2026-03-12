@@ -9,6 +9,7 @@ public:
 	void Start_Libraries();
 
 	char* GetVersion();
+	char* Get_Time_Stamp();
 
 	CreateBoxDialog*	CL_CreateBox;
 	CreateCylDialog*	CL_CreateCylinder;

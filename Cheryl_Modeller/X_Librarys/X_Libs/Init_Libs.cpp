@@ -32,3 +32,14 @@ char* Init_Libs::GetVersion()
 {
 	return (LPSTR)" Cheryl 3D Modeller (Init_Libs):-- 12-03-26 Build 2T ";
 }
+
+// *************************************************************************
+// *			Get_Time_Stamp:- Terry and Hazel Flanigan 2026			   *
+// *************************************************************************
+char* Init_Libs::Get_Time_Stamp()
+{
+	char buf[MAX_PATH];
+	sprintf(buf, "Build Time %s   Date  %s", __TIME__, __DATE__);
+
+	return (LPSTR)buf;
+}
