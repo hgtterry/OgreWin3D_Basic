@@ -36,11 +36,11 @@ public:
 	void Write_ObjectFile(void);
 	void Write_ObjectFile_Commit(void);
 
-	bool WriteMTLFile(void);
+	bool WriteMTLFile_Assimp(void);
 	bool WriteMTLFile_Ogre(void);
 
 	bool Export_Textures_Ogre();
-	bool DecompileTextures(char* Path);
+	bool Export_Textures_Assimp(char* Path);
 
 	char OutputFolder[MAX_PATH];
 	char Object_FileName[MAX_PATH];

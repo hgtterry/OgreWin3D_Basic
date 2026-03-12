@@ -349,8 +349,8 @@ bool CL64_Exp_Obj::Create_ObjectFile(void)
 	}
 	else
 	{
-		WriteMTLFile();
-		DecompileTextures(OutputFolder);
+		WriteMTLFile_Assimp();
+		Export_Textures_Assimp(OutputFolder);
 	}
 
 	return 1;
@@ -515,13 +515,13 @@ void CL64_Exp_Obj::Write_ObjectFile_Commit(void)
 }
 
 // *************************************************************************
-// *				WriteMTLFile:- Terry and Hazel Flanigan 2026       	   *
+// *		WriteMTLFile_Assimp:- Terry and Hazel Flanigan 2026       	   *
 // *************************************************************************
-bool CL64_Exp_Obj::WriteMTLFile(void)
+bool CL64_Exp_Obj::WriteMTLFile_Assimp(void)
 {
 	Write_MTLFile = 0;
 
-	char buf[1024];
+	char buf[MAX_PATH];
 
 	Write_MTLFile = fopen(mtl_FileName, "wt");
 
@@ -565,9 +565,9 @@ bool CL64_Exp_Obj::WriteMTLFile(void)
 }
 
 // *************************************************************************
-// *		DecompileTextures:- Terry and Hazel Flanigan 2026 	   	   	   *
+// *		Export_Textures_Assimp:- Terry and Hazel Flanigan 2026 	   	   *
 // *************************************************************************
-bool CL64_Exp_Obj::DecompileTextures(char* Path)
+bool CL64_Exp_Obj::Export_Textures_Assimp(char* Path)
 {
 	if (App->CL_Model->Model_Type == Enums::Model_Type_Assimp)
 	{
@@ -732,6 +732,5 @@ bool CL64_Exp_Obj::Export_Textures_Ogre()
 
 	}
 
-	Debug
 	return 1;
 }

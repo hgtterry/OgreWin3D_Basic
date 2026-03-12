@@ -495,7 +495,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
                 if (test == 1)
                 {
-                    App->Say("Imported");
+                    App->Say("Imported",App->CL_Model->Loaded_FileName);
+                   
                 }
                
                 return TRUE;
