@@ -423,7 +423,7 @@ int CL64_Picking::Get_Group_Index()
 
     while (Count < App->CL_Scene->GroupCount)
     {
-        Result = strcmp(App->CL_Mesh->Group[Count]->Text_FileName, m_Texture_FileName);
+        Result = strcmp(App->CL_Mesh->Group[Count]->Assimp_Text_FileName, m_Texture_FileName);
         if (Result == 0)
         {
             return Count;

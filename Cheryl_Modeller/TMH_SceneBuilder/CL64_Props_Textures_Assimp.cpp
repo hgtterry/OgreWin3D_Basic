@@ -84,11 +84,13 @@ LRESULT CALLBACK CL64_Properties_Textures_Assimp::Proc_Textures_Dialog(HWND hDlg
 		SendDlgItemMessage(hDlg, IDC_LIST_AT_MATERIALS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_LIST_AT_TEXTURES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
+		SendDlgItemMessage(hDlg, IDC_BT_AT_VIEWMAT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_AT_MATERIAL_FACES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_AT_GROUPDETAILS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_AT_CHANGETEXTURE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		SendDlgItemMessage(hDlg, IDC_ST_AT_DIMENSIONS, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_ST_AT_NUMTEXTUNITS, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
 
 		SetWindowLongPtr(GetDlgItem(hDlg, IDC_AT_BASETEXTURE), GWLP_WNDPROC, (LONG_PTR)ViewerBasePic);
 		
@@ -103,6 +105,13 @@ LRESULT CALLBACK CL64_Properties_Textures_Assimp::Proc_Textures_Dialog(HWND hDlg
 			return (UINT)App->AppBackground;
 		}
 		
+		if (GetDlgItem(hDlg, IDC_ST_AT_NUMTEXTUNITS) == (HWND)lParam)
+		{
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
 		return FALSE;
 	}
 
@@ -123,6 +132,13 @@ LRESULT CALLBACK CL64_Properties_Textures_Assimp::Proc_Textures_Dialog(HWND hDlg
 	case WM_NOTIFY:
 	{
 		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		if (some_item->idFrom == IDC_BT_AT_VIEWMAT)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+
+			App->Custom_Button_Normal(item);
+		}
 
 		if (some_item->idFrom == IDC_BT_AT_MATERIAL_FACES)
 		{
@@ -350,7 +366,7 @@ bool CL64_Properties_Textures_Assimp::Update_Texture_Assimp()
 	int Index = Selected_Group;
 
 	strcpy(mMaterialName, App->CL_Mesh->Group[Index]->MaterialName);
-	strcpy(mTextureName, App->CL_Mesh->Group[Index]->Text_FileName);
+	strcpy(mTextureName, App->CL_Mesh->Group[Index]->Assimp_Text_FileName);
 
 	Sel_BaseBitmap = App->CL_Mesh->Group[Index]->Base_Bitmap;
 
@@ -389,7 +405,7 @@ void CL64_Properties_Textures_Assimp::Fill_Textures_ListBox()
 	if (App->CL_Model->GroupCount > 0)
 	{
 		char mName[MAX_PATH];
-		strcpy(mName, App->CL_Mesh->Group[Selected_Group]->Text_FileName);
+		strcpy(mName, App->CL_Mesh->Group[Selected_Group]->Assimp_Text_FileName);
 		SendDlgItemMessage(Textures_Dlg_Hwnd_Assimp, IDC_LIST_AT_TEXTURES, LB_ADDSTRING, (WPARAM)0, (LPARAM)mName);
 		
 		

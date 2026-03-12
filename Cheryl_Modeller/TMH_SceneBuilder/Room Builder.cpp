@@ -530,19 +530,19 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
            
             case ID_EXPORT_OGRE3D:
             {
-                int BC = App->CL_X_Brush->Get_Brush_Count();
+               /* int BC = App->CL_X_Brush->Get_Brush_Count();
                 if (BC > 0)
-                {
+                {*/
                     App->CL_Export->Ogre_Export_Dlg();
-                }
+               /* }
                 else
                 {
                     App->Say("No Geometry to Export");
-                }
+                }*/
 
                 return 1;
             }
-
+           
             case ID_EXPORT_OBJECTWAVEFRONT:
             {
                 int BC = App->CL_X_Brush->Get_Brush_Count();

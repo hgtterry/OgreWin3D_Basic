@@ -686,7 +686,7 @@ bool CL64_Mesh_Mgr::WE_Convert_All_Texture_Groups() {
 				strcpy(group->MaterialName, TextureName2[Group_Count]);
 
 				int trueIndex = App->CL_TXL_Editor->GetIndex_From_Name(TextureName2[Group_Count]);
-				strcpy(group->Text_FileName, App->CL_TXL_Editor->Texture_List[trueIndex]->FileName);
+				strcpy(group->Assimp_Text_FileName, App->CL_TXL_Editor->Texture_List[trueIndex]->FileName);
 
 				group->Has_Alpha = App->CL_TXL_Editor->Texture_List[trueIndex]->Has_Alpha;
 				group->MaterialIndex = Group_Count;
@@ -1418,7 +1418,7 @@ void CL64_Mesh_Mgr::UpdateBrushData(HWND hDlg, int Index)
 		sprintf(buf, "Mat Name %s", App->CL_Mesh->Group[Index]->MaterialName);
 		SendDlgItemMessage(hDlg, IDC_LISTDATA, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
-		sprintf(buf, "Mat File Name %s", App->CL_Mesh->Group[Index]->Text_FileName);
+		sprintf(buf, "Mat File Name %s", App->CL_Mesh->Group[Index]->Assimp_Text_FileName);
 		SendDlgItemMessage(hDlg, IDC_LISTDATA, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
 		sprintf(buf, "Faces %i", App->CL_Mesh->Group[Index]->GroupFaceCount);

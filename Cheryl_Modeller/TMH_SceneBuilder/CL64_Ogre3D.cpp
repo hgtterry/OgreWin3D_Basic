@@ -127,7 +127,6 @@ void CL64_Ogre3D::Export_To_Ogre3D(bool Selected)
 {
 	if (Selected == 1)
 	{
-		Debug
 		App->CL_Mesh_Mgr->Update_World(Selected);
 	}
 
@@ -144,6 +143,7 @@ void CL64_Ogre3D::Export_To_Ogre3D(bool Selected)
 	Ogre::ResourceGroupManager::getSingleton().createResourceGroup(App->CL_Ogre->Export_Resource_Group);
 	Ogre::ResourceGroupManager::getSingleton().initialiseResourceGroup(App->CL_Ogre->Export_Resource_Group);
 
+	
 	Export_MaterialFile(mExport_PathAndFile_Material);
 	DecompileTextures_TXL(mExport_Path);
 
@@ -162,7 +162,7 @@ void CL64_Ogre3D::Export_To_Ogre3D(bool Selected)
 	char MaterialNumber[MAX_PATH];
 	char MatName[MAX_PATH];
 
-	int GroupCountTotal = App->CL_Scene->GroupCount;
+	int GroupCountTotal = App->CL_Model->GroupCount;
 	int Count = 0;
 	int FaceCount = 0;
 	int FaceIndex = 0;
@@ -277,7 +277,7 @@ void CL64_Ogre3D::Export_MaterialFile(char* MatFileName)
 	Ogre::String OFile;
 	Ogre::String OMatName;
 
-	int numMaterials = App->CL_Scene->GroupCount;
+	int numMaterials = App->CL_Model->GroupCount;
 
 	Ogre::MaterialManager& matMgrSgl = Ogre::MaterialManager::getSingleton();
 
@@ -290,7 +290,7 @@ void CL64_Ogre3D::Export_MaterialFile(char* MatFileName)
 		strcat(MatName, "_Material_");
 		strcat(MatName, MaterialNumber);
 
-		strcpy(File, App->CL_Mesh->Group[i]->Text_FileName);
+		strcpy(File, App->CL_Mesh->Group[i]->Assimp_Text_FileName);
 
 		OMatName = MatName;
 		OFile = File;
@@ -544,7 +544,7 @@ void CL64_Ogre3D::CreateMaterialFile()
 		strcat(MatName, "_Material_");
 		strcat(MatName, MaterialNumber);
 
-		strcpy(File, App->CL_Mesh->Group[i]->Text_FileName);
+		strcpy(File, App->CL_Mesh->Group[i]->Assimp_Text_FileName);
 		//App->Say_Win(File);
 
 		OMatName = MatName;
@@ -596,14 +596,22 @@ bool CL64_Ogre3D::DecompileTextures_TXL(char* PathAndFile)
 	char buf[MAX_PATH];
 
 	int GroupCount = 0;
-	int GroupCountTotal = App->CL_Scene->GroupCount;
+	int GroupCountTotal = App->CL_Model->GroupCount;
 
-	while (GroupCount < GroupCountTotal)
+	if (App->CL_Model->Model_Type == Enums::Model_Type_Assimp)
 	{
-		strcpy(buf, App->CL_Mesh->Group[GroupCount]->Text_FileName);
 		Export_Texture(buf, PathAndFile);
+	}
 
-		GroupCount++;
+	if (App->CL_Model->Model_Type == Enums::Model_Type_Ogre3D)
+	{
+		while (GroupCount < GroupCountTotal)
+		{
+			strcpy(buf, App->CL_Mesh->Group[GroupCount]->Assimp_Text_FileName);
+			Export_Texture(buf, PathAndFile);
+
+			GroupCount++;
+		}
 	}
 
 	return 1;
@@ -614,33 +622,80 @@ bool CL64_Ogre3D::DecompileTextures_TXL(char* PathAndFile)
 // *************************************************************************
 bool CL64_Ogre3D::Export_Texture(char* Name, char* Folder)
 {
-	Ogre::String mFileString;
-	
-	Ogre::FileInfoListPtr RFI = ResourceGroupManager::getSingleton().listResourceFileInfo(App->CL_Ogre->Texture_Resource_Group, false);
-	Ogre::FileInfoList::const_iterator i, iend;
-	iend = RFI->end();
-
-	for (i = RFI->begin(); i != iend; ++i)
+	if (App->CL_Model->Model_Type == Enums::Model_Type_Assimp)
 	{
-		if (i->filename == Name)
+		int MatCount = App->CL_Model->GroupCount;
+		char PathandFile[MAX_PATH];
+
+		int Loop = 0;
+		while (Loop < MatCount)
 		{
-			mFileString.clear();
+			strcpy(PathandFile, Folder);
+			strcat(PathandFile, App->CL_Mesh->Group[Loop]->Assimp_Text_FileName);
 
-			Ogre::DataStreamPtr ff = i->archive->open(i->filename);
+			HBITMAP Data;
 
-			mFileString = ff->getAsString();
+			Data = App->CL_Mesh->Group[Loop]->Base_Bitmap;
 
-			char mFileName[MAX_PATH];
-			strcpy(mFileName, Folder);
-			strcat(mFileName, Name);
+			if (_stricmp(PathandFile + strlen(PathandFile) - 4, ".tga") == 0)
+			{
+				int Len = strlen(PathandFile);
+				PathandFile[Len - 4] = 0;
+				strcat(PathandFile, ".jpg");
 
-			std::ofstream outFile;
-			outFile.open(mFileName, std::ios::binary);
-			outFile << mFileString;
-			outFile.close();
+				App->CL_Textures->HBITMAP_TO_BmpFile(Data, PathandFile, (LPSTR)"");
+				App->CL_Textures->Jpg_To_Tga24(PathandFile);
+			}
+			else if (_stricmp(PathandFile + strlen(PathandFile) - 4, ".png") == 0)
+			{
+				int Len = strlen(PathandFile);
+				PathandFile[Len - 4] = 0;
+				strcat(PathandFile, ".jpg");
 
-			mFileString.clear();
-			return 1;
+				App->CL_Textures->HBITMAP_TO_BmpFile(Data, PathandFile, (LPSTR)"");
+				App->CL_Textures->Jpg_To_png24(PathandFile);
+			}
+			else
+			{
+
+				App->CL_Textures->HBITMAP_TO_BmpFile(Data, PathandFile, (LPSTR)"");
+			}
+
+			Loop++;
+		}
+	}
+
+	if (App->CL_Model->Model_Type == Enums::Model_Type_Ogre3D)
+	{
+
+		Ogre::String mFileString;
+
+		Ogre::FileInfoListPtr RFI = ResourceGroupManager::getSingleton().listResourceFileInfo(App->CL_Ogre->Texture_Resource_Group, false);
+		Ogre::FileInfoList::const_iterator i, iend;
+		iend = RFI->end();
+
+		for (i = RFI->begin(); i != iend; ++i)
+		{
+			if (i->filename == Name)
+			{
+				mFileString.clear();
+
+				Ogre::DataStreamPtr ff = i->archive->open(i->filename);
+
+				mFileString = ff->getAsString();
+
+				char mFileName[MAX_PATH];
+				strcpy(mFileName, Folder);
+				strcat(mFileName, Name);
+
+				std::ofstream outFile;
+				outFile.open(mFileName, std::ios::binary);
+				outFile << mFileString;
+				outFile.close();
+
+				mFileString.clear();
+				return 1;
+			}
 		}
 	}
 

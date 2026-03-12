@@ -148,10 +148,7 @@ LRESULT CALLBACK CL64_Properties_Materials::Proc_Materials_Dialog_Ogre(HWND hDlg
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 
-			//if (App->flag_OgreStarted == 1)
-			{
-				App->Custom_Button_Normal(item);
-			}
+			App->Custom_Button_Normal(item);
 		}
 
 		if (some_item->idFrom == IDC_BT_GROUPDETAILS)

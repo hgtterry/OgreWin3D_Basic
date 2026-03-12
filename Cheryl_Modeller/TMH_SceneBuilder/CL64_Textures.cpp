@@ -196,8 +196,8 @@ void CL64_Textures::Load_Textures_Assimp()
 
 	while (Count < mGroupCount)
 	{
-		App->CL_Utilities->Get_FileName_FromPath(App->CL_Mesh->Group[Count]->Text_FileName, App->CL_Mesh->Group[Count]->Text_FileName);
-		strcpy(App->CL_Mesh->Group[Count]->Text_FileName, App->CL_Utilities->JustFileName);
+		App->CL_Utilities->Get_FileName_FromPath(App->CL_Mesh->Group[Count]->Assimp_Text_FileName, App->CL_Mesh->Group[Count]->Assimp_Text_FileName);
+		strcpy(App->CL_Mesh->Group[Count]->Assimp_Text_FileName, App->CL_Utilities->JustFileName);
 
 		int Test = strcmp(App->CL_Utilities->JustFileName, "No_Texture");
 		if (Test != 0) // not a match
@@ -205,9 +205,9 @@ void CL64_Textures::Load_Textures_Assimp()
 
 			char ImageFullPath[MAX_PATH];
 			strcpy(ImageFullPath, App->CL_Model->Model_FolderPath);
-			strcat(ImageFullPath, App->CL_Mesh->Group[Count]->Text_FileName);
+			strcat(ImageFullPath, App->CL_Mesh->Group[Count]->Assimp_Text_FileName);
 
-			strcpy(App->CL_Mesh->Group[v]->Texture_PathFileName, ImageFullPath);
+			strcpy(App->CL_Mesh->Group[v]->Assimp_Texture_PathFileName, ImageFullPath);
 
 			strcpy(TextureFileName, ImageFullPath);
 
@@ -287,8 +287,8 @@ bool CL64_Textures::LoadDummyTexture(int Index)
 	{
 		App->CL_Mesh->Group[Index]->Base_Bitmap = LoadBitmap(App->hInst, MAKEINTRESOURCE(IDB_NO_TEXTURE));
 
-		strcpy(App->CL_Mesh->Group[Index]->Texture_PathFileName, "Internal Dummy BMP");
-		strcpy(App->CL_Mesh->Group[Index]->Text_FileName, "Dummy.bmp");
+		strcpy(App->CL_Mesh->Group[Index]->Assimp_Texture_PathFileName, "Internal Dummy BMP");
+		strcpy(App->CL_Mesh->Group[Index]->Assimp_Text_FileName, "Dummy.bmp");
 
 		App->CL_Mesh->Group[Index]->Depth = 8;
 		App->CL_Mesh->Group[Index]->Width = 256;
@@ -590,6 +590,46 @@ bool CL64_Textures::Import_OpenGL_Texture(UINT textureArray[], LPSTR strFileName
 		remove("Etemp.bmp");
 	}
 
+	return 1;
+}
+
+// *************************************************************************
+// *							Jpg_To_Tga					  		 	   *
+// *************************************************************************
+bool CL64_Textures::Jpg_To_Tga24(char* File)
+{
+	char OldFile[1024];
+	strcpy(OldFile, File);
+
+	ilLoadImage(File);
+
+	int Len = strlen(File);
+	File[Len - 4] = 0;
+	strcat(File, ".tga");
+
+	ilSaveImage(File);
+
+	remove(OldFile);
+	return 1;
+}
+
+// *************************************************************************
+// *							Jpg_To_png24				  		 	   *
+// *************************************************************************
+bool CL64_Textures::Jpg_To_png24(char* File)
+{
+	char OldFile[1024];
+	strcpy(OldFile, File);
+
+	ilLoadImage(File);
+
+	int Len = strlen(File);
+	File[Len - 4] = 0;
+	strcat(File, ".png");
+
+	ilSaveImage(File);
+
+	remove(OldFile);
 	return 1;
 }
 

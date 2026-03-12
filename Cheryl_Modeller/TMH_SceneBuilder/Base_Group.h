@@ -43,12 +43,12 @@ public:
 
 	char GroupName[255];
 	char MaterialName[255];
-	char Text_FileName[255];			// Just Texture File Name ie Texture.bmp
+
+	char Assimp_Text_FileName[MAX_PATH];			// Just Texture File Name ie Texture.bmp
+	char Assimp_Texture_FolderPath[MAX_PATH];
+	char Assimp_Texture_PathFileName[MAX_PATH];
 
 	char Equity_Text_FileName[255];			// Just Texture File Name ie Texture.bmp
-
-	char Texture_FolderPath[MAX_PATH];
-	char Texture_PathFileName[MAX_PATH];
 
 	int GroupVertCount;	// Group Vertice Count
 	int GroupFaceCount;

@@ -43,6 +43,8 @@ public:
 	bool Create_DummyTexture(char* Folder);
 	bool Windows_Preview_FullPath(int Index, char* FullPath);
 	bool LoadDummyTexture(int Index);
+	bool Jpg_To_png24(char* File);
+	bool Jpg_To_Tga24(char* File);
 
 
 	bool Covert_Texture(const char* File);

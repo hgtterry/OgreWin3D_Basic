@@ -551,7 +551,7 @@ bool CL64_Exp_Obj::WriteMTLFile(void)
 		fprintf(Write_MTLFile, "Ke 0.000000 0.000000 0.000000\n");
 		fprintf(Write_MTLFile, "Ns 0.000000\n");
 
-		strcpy(buf, App->CL_Mesh->Group[GroupCount]->Text_FileName);
+		strcpy(buf, App->CL_Mesh->Group[GroupCount]->Assimp_Text_FileName);
 		int Len = strlen(buf);
 		buf[Len - 4] = 0;
 		strcat(buf, ".jpg");

@@ -38,7 +38,7 @@ char* Init_Libs::GetVersion()
 // *************************************************************************
 char* Init_Libs::Get_Time_Stamp()
 {
-	char buf[MAX_PATH];
+	static char buf[MAX_PATH];
 	sprintf(buf, "Build Time %s   Date  %s", __TIME__, __DATE__);
 
 	return (LPSTR)buf;

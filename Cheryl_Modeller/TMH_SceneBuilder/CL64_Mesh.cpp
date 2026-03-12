@@ -154,7 +154,7 @@ void CL64_Mesh::Ogre_Create_MeshGroups(Ogre::Entity* Ogre_Entity)
 		// Initialize mesh group properties
 		meshGroup->GroupVertCount = 0;
 		meshGroup->MaterialIndex = -1;
-		strcpy(meshGroup->Text_FileName, "No_Texture");
+		strcpy(meshGroup->Assimp_Text_FileName, "No_Texture");
 
 		// Construct group name
 		snprintf(meshGroup->GroupName, sizeof(meshGroup->GroupName), "Group_%d", Count);

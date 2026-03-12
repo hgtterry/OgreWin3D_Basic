@@ -493,11 +493,10 @@
 #define IDC_CK_FACESALL                 1332
 #define IDC_CK_BACKGROUND               1332
 #define IDC_CK_LOCKTEXTURES             1332
-#define IDC_BUTTON4                     1332
 #define IDC_BT_AT_GROUPDETAILS          1332
 #define IDC_BUT_AT_WORLDPOS             1333
 #define IDC_CK_SCENEEDITOR              1333
-#define IDC_BUTTON5                     1333
+#define IDC_BT_AT_VIEWMAT               1333
 #define IDC_ST_STARTMODE                1334
 #define IDC_BT_AT_CHANGETEXTURE         1334
 #define IDC_COMBO1                      1335
@@ -562,6 +561,7 @@
 #define IDC_LIST_AT_TEXTURES            1385
 #define IDC_ST_AT_DIMENSIONS            1386
 #define IDC_BT_PT_CHANGETEXTURE         1387
+#define IDC_ST_AT_NUMTEXTUNITS          1388
 #define ID_DEBUG_GENERAL                32771
 #define ID_TEMPLATES_INSERT             32772
 #define ID_BRUSH_SELECT                 32773
@@ -688,7 +688,7 @@
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        223
 #define _APS_NEXT_COMMAND_VALUE         32887
-#define _APS_NEXT_CONTROL_VALUE         1388
+#define _APS_NEXT_CONTROL_VALUE         1389
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif

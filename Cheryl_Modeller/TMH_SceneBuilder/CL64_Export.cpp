@@ -556,7 +556,7 @@ bool CL64_Export::WriteMTLFile(void)
 		fprintf(Write_MTLFile, "Ke 0.000000 0.000000 0.000000\n");
 		fprintf(Write_MTLFile, "Ns 0.000000\n");
 
-		strcpy(buf, App->CL_Mesh->Group[GroupCount]->Text_FileName);
+		strcpy(buf, App->CL_Mesh->Group[GroupCount]->Assimp_Text_FileName);
 
 		fprintf(Write_MTLFile, "map_Kd %s\n", buf);
 
@@ -582,7 +582,7 @@ bool CL64_Export::Export_Object_Textures(void)
 
 	while (GroupCount < GroupCountTotal)
 	{
-		strcpy(buf, App->CL_Mesh->Group[GroupCount]->Text_FileName);
+		strcpy(buf, App->CL_Mesh->Group[GroupCount]->Assimp_Text_FileName);
 		App->CL_Ogre3D->Export_Texture(buf, Object_OutputFolder);
 
 		GroupCount++;
