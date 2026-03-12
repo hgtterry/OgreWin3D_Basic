@@ -145,7 +145,12 @@ void CL64_Ogre3D::Export_To_Ogre3D(bool Selected)
 
 	
 	Export_MaterialFile(mExport_PathAndFile_Material);
-	DecompileTextures_TXL(mExport_Path);
+
+	if (App->CL_Model->Model_Type == Enums::Model_Type_Assimp)
+	{
+		DecompileTextures_from_Assimp(mExport_Path);
+	}
+	
 
 	Export_Manual = App->CL_Ogre->mSceneMgr->createManualObject("OgreManual2");
 	
@@ -611,6 +616,109 @@ bool CL64_Ogre3D::DecompileTextures_TXL(char* PathAndFile)
 			Export_Texture(buf, PathAndFile);
 
 			GroupCount++;
+		}
+	}
+
+	return 1;
+}
+
+// *************************************************************************
+// *	DecompileTextures_from_Assimp:- Terry and Hazel Flanigan 2026  	   *
+// *************************************************************************
+bool CL64_Ogre3D::DecompileTextures_from_Assimp(char* PathAndFile)
+{
+	char buf[MAX_PATH];
+
+	int GroupCount = 0;
+	int GroupCountTotal = App->CL_Model->GroupCount;
+
+	if (App->CL_Model->Model_Type == Enums::Model_Type_Assimp)
+	{
+		Export_Texture_from_Assimp(buf, PathAndFile);
+	}
+
+	return 1;
+}
+
+// *************************************************************************
+// *			Export_Texture:- Terry and Hazel Flanigan 2025    	 	   *
+// *************************************************************************
+bool CL64_Ogre3D::Export_Texture_from_Assimp(char* Name, char* Folder)
+{
+	if (App->CL_Model->Model_Type == Enums::Model_Type_Assimp)
+	{
+		int MatCount = App->CL_Model->GroupCount;
+		char PathandFile[MAX_PATH];
+		char Texture_Folder_Path[MAX_PATH];
+
+		Ogre::String mFileString;
+
+		int Loop = 0;
+		while (Loop < MatCount)
+		{
+			strcpy(Texture_Folder_Path, App->CL_Mesh->Group[Loop]->Assimp_Texture_FolderPath);
+
+			strcpy(PathandFile, Texture_Folder_Path);
+			strcat(PathandFile, App->CL_Mesh->Group[Loop]->Assimp_Text_FileName);
+
+			mFileString.clear();
+
+			std::ifstream ifs(PathandFile, std::ios::binary | std::ios::in);
+			if (ifs.is_open())
+			{
+				Ogre::DataStreamPtr data_stream(new Ogre::FileStreamDataStream(PathandFile, &ifs, false));
+
+				mFileString = data_stream->getAsString();
+
+				char mFileName[MAX_PATH];
+				strcpy(mFileName, Folder);
+				strcat(mFileName, App->CL_Mesh->Group[Loop]->Assimp_Text_FileName);
+
+				std::ofstream outFile;
+				outFile.open(mFileName, std::ios::binary);
+				outFile << mFileString;
+				outFile.close();
+
+				mFileString.clear();
+			}
+
+			ifs.close();
+
+			Loop++;
+		}
+	}
+
+	if (App->CL_Model->Model_Type == Enums::Model_Type_Ogre3D)
+	{
+
+		Ogre::String mFileString;
+
+		Ogre::FileInfoListPtr RFI = ResourceGroupManager::getSingleton().listResourceFileInfo(App->CL_Ogre->Texture_Resource_Group, false);
+		Ogre::FileInfoList::const_iterator i, iend;
+		iend = RFI->end();
+
+		for (i = RFI->begin(); i != iend; ++i)
+		{
+			if (i->filename == Name)
+			{
+				mFileString.clear();
+
+				Ogre::DataStreamPtr ff = i->archive->open(i->filename);
+
+				mFileString = ff->getAsString();
+
+				char mFileName[MAX_PATH];
+				strcpy(mFileName, Folder);
+				strcat(mFileName, Name);
+
+				std::ofstream outFile;
+				outFile.open(mFileName, std::ios::binary);
+				outFile << mFileString;
+				outFile.close();
+
+				mFileString.clear();
+				return 1;
+			}
 		}
 	}
 

@@ -2061,6 +2061,9 @@ void CL64_Dialogs::List_Mesh_Data(HWND List)
 			SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)buf);
 
 			
+			strcpy(buf, "Texture Path :-   ");
+			strcat(buf, App->CL_Mesh->Group[Index]->Assimp_Texture_FolderPath);
+			SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)buf);
 
 			sprintf(buf, "%s %i", "Texture Units:-   ", App->CL_Mesh->Group[Index]->Ogre_NumTextureUnits);
 			SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)buf);

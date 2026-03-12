@@ -654,6 +654,13 @@ HBITMAP CL64_Textures::Get_HBITMP(char* TextureFileName, HDC hDC)
 	HBITMAP hBmp = NULL;
 
 	hBmp = ilutWinLoadImage(TextureFileName, hDC);
+
+	if (hBmp == NULL)
+	{
+		App->Say("Could not load Image");
+
+	}
+
 	BasePicWidth = ilGetInteger(IL_IMAGE_WIDTH);
 	BasePicHeight = ilGetInteger(IL_IMAGE_HEIGHT);
 	//BasePicDepth = ilGetInteger(IL_IMAGE_DEPTH);

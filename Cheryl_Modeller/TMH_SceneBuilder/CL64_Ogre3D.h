@@ -40,9 +40,13 @@ public:
 
 
 	void Get_Data(int Index, int FaceIndex);
+
 	bool DecompileTextures_TXL(char* PathAndFile);
+	bool DecompileTextures_from_Assimp(char* PathAndFile);
+
 	bool Export_Texture(char* Name, char* Folder);
-	
+	bool Export_Texture_from_Assimp(char* Name, char* Folder);
+
 	Ogre::ManualObject* Export_Manual;
 	Ogre::ManualObject* World_Manual;
 

@@ -252,6 +252,8 @@ bool CL64_Importers::Load_Ogre_Model(bool Use_File_Dialog, bool Check_Resource_F
 
 	App->CL_Motions->Get_Motions(App->CL_Model->Imported_Ogre_Ent);
 
+	App->CL_Resources->mSelected_Resource_Group = App->CL_Resources->Ogre_Loader_Resource_Group;
+
 	App->CL_Model->Model_Type = Enums::Model_Type_Ogre3D;
 	App->CL_Properties_Materials->Fill_Materials_ListBox();
 	App->CL_Properties_Materials->Get_First_Texture_Ogre();
@@ -335,8 +337,6 @@ void CL64_Importers::Reload_Ogre_Model(Ogre::Quaternion Rotation)
 		App->CL_Ogre->camNode->setOrientation(Ogre::Quaternion::IDENTITY);
 		App->CL_Ogre->camNode->setPosition(Ogre::Vector3(0, 0, App->CL_Model->Imported_Ogre_Ent->getBoundingRadius() * 2.8f));
 	}*/
-
-
 
 	App->CL_Properties_Materials->Get_First_Texture_Ogre();
 	App->CL_Properties_Materials->Fill_Materials_ListBox();

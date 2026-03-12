@@ -522,7 +522,7 @@ bool CL64_Properties_Materials::Update_Texture_Ogre_Dlg()
 	ShowWindow(GetDlgItem(Textures_Dlg_Hwnd_Ogre, IDC_PROP_BASETEXTURE_OGRE), 1);
 
 	RedrawWindow(Textures_Dlg_Hwnd_Ogre, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-
+	
 	return 1;
 }
 

@@ -64,7 +64,9 @@ bool CL64_Mesh::Ogre_Convert_To_Mesh_Data(Ogre::Entity* Ogre_Entity)
 		if (Ogre_Entity->getSubEntity(Count)->getSubMesh()->useSharedVertices)
 		{
 			flag_Has_Shared_Vertices = true;
-			break; // Exit early if shared vertices are found
+			App->Say("Shared_Vertices");
+
+			return 0;
 		}
 	}
 
