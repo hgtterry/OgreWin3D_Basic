@@ -59,6 +59,8 @@ void CL64_Motioins::Get_Motions(Ogre::Entity* Ogre_Entity)
 {
 	Ogre::SkeletonInstance* skeletonInstance = Ogre_Entity->getSkeleton();
 
+	App->CL_Model->MotionCount = 0;
+
 	int Count = 0;
 	if (skeletonInstance)
 	{
@@ -93,8 +95,6 @@ void CL64_Motioins::Get_Motions(Ogre::Entity* Ogre_Entity)
 			App->CL_ImGui->PreviouseMotion_Ogre = 0;
 
 			App->CL_Properties_Motions->Update_Motions_Combo();
-
-			App->CL_Interface->Show_Motions_Dlg(true);
 		}
 	}
 	else
@@ -102,7 +102,6 @@ void CL64_Motioins::Get_Motions(Ogre::Entity* Ogre_Entity)
 		flag_IsAnimated = false;
 		App->CL_Model->MotionCount = 0;
 		App->CL_Properties_Motions->Update_Motions_Combo();
-		App->CL_Interface->Show_Motions_Dlg(false);
 	}
 }
 

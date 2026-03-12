@@ -46,25 +46,17 @@ CL64_Properties_Textures_Assimp::~CL64_Properties_Textures_Assimp(void)
 // *************************************************************************
 void CL64_Properties_Textures_Assimp::Reset_Class(void)
 {
-	/*Selected_Group = 0;
-	Sel_BaseBitmap = nullptr;
-	BasePicWidth = 0;
-	BasePicHeight = 0;
-
-	ShowWindow(GetDlgItem(Props_Dlg_Hwnd, IDC_PROP_BASETEXTURE), 0);
-	ShowWindow(GetDlgItem(Props_Dlg_Hwnd, IDC_PROP_BASETEXTURE), 1);
-
-	SetDlgItemText(Props_Dlg_Hwnd, IDC_PT_TEXTURENAME, "-----------");
-	SetDlgItemText(Props_Dlg_Hwnd, IDC_ST_PT_MATERIAL, "-----------");
-	SetDlgItemText(Props_Dlg_Hwnd, IDC_ST_PT_MATERIALFILE, "-----------");
+	Selected_Group = 0;
 	
-	SetDlgItemText(Props_Dlg_Hwnd, IDC_ST_PT_DIMENSIONS,"0 x 0");
+	//BasePicWidth_Ogre = 0;
+	//BasePicHeight_Ogre = 0;
 
-	RightGroups_Visable = 0;
-	ShowWindow(Props_Dlg_Hwnd, 0);
-	CheckMenuItem(App->mMenu, ID_WINDOWS_TEXTURESDIALOG, MF_BYCOMMAND | MF_UNCHECKED);
+	App->CL_Interface->Show_Textures_Assimp_Dlg(false);
 
-	Enable_Export_Button(false);*/
+	Fill_Textures_ListBox();
+	Fill_Materials_ListBox();
+
+	Update_Texture_Ogre_Dlg();
 }
 
 // *************************************************************************
@@ -75,7 +67,7 @@ bool CL64_Properties_Textures_Assimp::Start_Props_Textures_Dialog()
 	Textures_Dlg_Hwnd_Assimp = CreateDialog(App->hInst, (LPCTSTR)IDD_PROPERTIES_TEXTURES_ASSIMP, App->MainHwnd, (DLGPROC)Proc_Textures_Dialog);
 
 	//App->CL_Props_Textures->Enable_Export_Button(false);
-	App->CL_Interface->Show_Textures_Assimp_Dlg(true);
+	App->CL_Interface->Show_Textures_Assimp_Dlg(false);
 
 	return 1;
 }
