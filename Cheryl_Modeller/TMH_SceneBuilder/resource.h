@@ -556,6 +556,7 @@
 #define IDC_BUTTON3                     1382
 #define IDC_BT_MOT_BBOX                 1382
 #define IDC_BT_GROUPDETAILS             1382
+#define IDC_BT_TT_OPTIONS               1382
 #define IDC_AT_BASETEXTURE              1383
 #define IDC_LIST_AT_MATERIALS           1384
 #define IDC_LIST_AT_TEXTURES            1385
