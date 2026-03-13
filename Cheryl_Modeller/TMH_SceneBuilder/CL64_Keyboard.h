@@ -39,5 +39,7 @@ public:
 	POINT		Mouse_point;
 	bool flag_Block_Keyboard;
 	bool flag_Update_Views;
+
+	int Mouse_Wheel_Zoom;
 };
 

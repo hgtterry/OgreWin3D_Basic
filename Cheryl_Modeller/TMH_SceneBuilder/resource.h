@@ -111,7 +111,6 @@
 #define IDD_PROPS_MOTIONS               220
 #define IDB_TB_MODELDATAON              221
 #define IDD_PROPERTIES_TEXTURES_ASSIMP  222
-#define IDD_DIALOG1                     223
 #define IDD_PREFS_QUICK                 223
 #define IDC_BANNER                      1000
 #define IDC_STTEXT                      1001
@@ -565,6 +564,8 @@
 #define IDC_ST_AT_DIMENSIONS            1386
 #define IDC_BT_PT_CHANGETEXTURE         1387
 #define IDC_ST_AT_NUMTEXTUNITS          1388
+#define IDC_ED_MOUSEWHEEL               1389
+#define IDC_ST_MOUSEWHEEL               1390
 #define ID_DEBUG_GENERAL                32771
 #define ID_TEMPLATES_INSERT             32772
 #define ID_BRUSH_SELECT                 32773
@@ -691,7 +692,7 @@
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        224
 #define _APS_NEXT_COMMAND_VALUE         32887
-#define _APS_NEXT_CONTROL_VALUE         1389
+#define _APS_NEXT_CONTROL_VALUE         1391
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif

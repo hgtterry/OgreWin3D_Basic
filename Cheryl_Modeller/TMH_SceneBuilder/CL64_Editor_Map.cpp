@@ -2004,8 +2004,8 @@ void CL64_Editor_Map::Context_Menu_Ogre(HWND hDlg)
 
 	AppendMenuW(hMenu, MF_STRING , IDM_3D_RESET_CAMERA, L"&Reset View");
 	
-	/*AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
-	AppendMenuW(hMenu, MF_STRING, IDM_3D_CAMERASPEED, L"&Camera Speed");*/
+	AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
+	AppendMenuW(hMenu, MF_STRING, IDM_3D_CAMERASPEED, L"&Quick Options");
 
 	// Panel View
 	/*AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
@@ -2101,7 +2101,7 @@ bool CL64_Editor_Map::Context_Command_Ogre(WPARAM wParam)
 
 	case IDM_3D_CAMERASPEED:
 	{
-		//App->CL_Dialogs->Start_Speed_Camera_Dlg();
+		App->CL_Libs->CL_Preference->Start_Quick_Options_Dlg();
 		return TRUE;
 	}
 

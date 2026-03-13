@@ -105,7 +105,7 @@ void Lib_Preference::AddRootFolder(void)
 // *************************************************************************
 void Lib_Preference::Start_Options_Dlg()
 {
-	DialogBox(App->hInst, (LPCTSTR)IDD_OPTIONS, App->MainHwnd, (DLGPROC)Proc_Options_Dlg);
+	CreateDialog(App->hInst, (LPCTSTR)IDD_OPTIONS, App->MainHwnd, (DLGPROC)Proc_Options_Dlg);
 }
 
 // *************************************************************************
@@ -307,6 +307,8 @@ LRESULT CALLBACK Lib_Preference::Proc_Options_Dlg(HWND hDlg, UINT message, WPARA
 // *************************************************************************
 void Lib_Preference::Start_Quick_Options_Dlg()
 {
+	//auto& m_Preferences = App->CL_Libs->CL_Preference;
+
 	DialogBox(App->hInst, (LPCTSTR)IDD_PREFS_QUICK, App->MainHwnd, (DLGPROC)Proc_Quick_Options_Dlg);
 }
 
@@ -315,30 +317,39 @@ void Lib_Preference::Start_Quick_Options_Dlg()
 // *************************************************************************
 LRESULT CALLBACK Lib_Preference::Proc_Quick_Options_Dlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
-	auto& m_Preferences = App->CL_Libs->CL_Preference;
+	//auto& m_Preferences = App->CL_Libs->CL_Preference;
 
 	switch (message)
 	{
 
 	case WM_INITDIALOG:
 	{
-		//SendDlgItemMessage(hDlg, IDC_OPTIONS_TREE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_OPTIONS_TREE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_ED_MOUSEWHEEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_ST_MOUSEWHEEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
 		
 		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
+		char Num[MAX_PATH];
+
+		_itoa(App->CL_Keyboard->Mouse_Wheel_Zoom, Num, 10);
+
+		SetDlgItemText(hDlg, IDC_ED_MOUSEWHEEL, (LPCTSTR)Num);
+		
 		return TRUE;
 	}
 	case WM_CTLCOLORSTATIC:
 	{
 
-		/*if (GetDlgItem(hDlg, IDC_GB_STARTUP) == (HWND)lParam)
+		if (GetDlgItem(hDlg, IDC_ST_MOUSEWHEEL) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 255, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->AppBackground;
-		}*/
+		}
 
 		return FALSE;
 	}
@@ -392,6 +403,12 @@ LRESULT CALLBACK Lib_Preference::Proc_Quick_Options_Dlg(HWND hDlg, UINT message,
 		
 		if (LOWORD(wParam) == IDOK)
 		{
+			char buff[255];
+			GetDlgItemText(hDlg, IDC_ED_MOUSEWHEEL, (LPTSTR)buff, 255);
+
+			int New_Num = atoi(buff);
+			App->CL_Keyboard->Mouse_Wheel_Zoom = New_Num;
+
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}

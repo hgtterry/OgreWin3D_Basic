@@ -33,6 +33,7 @@ CL64_Keyboard::CL64_Keyboard(void)
 	flag_Block_Keyboard = false;
 	flag_Update_Views = false;
 	Mouse_point = { 0,0 };
+	Mouse_Wheel_Zoom = 2;
 }
 
 CL64_Keyboard::~CL64_Keyboard(void)
@@ -187,11 +188,11 @@ void CL64_Keyboard::Keyboard_Mode_Model(float deltaTime)
 	// Forward and Backward movement
 	if (GetAsyncKeyState(87) < 0 || m_Listener->Wheel < 0) // W Key or Mouse Wheel Forward
 	{
-		m_Listener->mTranslateVector.z = - m_Listener->mMoveScale * (GetAsyncKeyState(87) < 0 ? 1 : 2);
+		m_Listener->mTranslateVector.z = - m_Listener->mMoveScale * (GetAsyncKeyState(87) < 0 ? 1 : Mouse_Wheel_Zoom);
 	}
 	else if (GetAsyncKeyState(83) < 0 || m_Listener->Wheel > 0) // S Key or Mouse Wheel Back
 	{
-		m_Listener->mTranslateVector.z = m_Listener->mMoveScale * (GetAsyncKeyState(83) < 0 ? 1 : 2);
+		m_Listener->mTranslateVector.z = m_Listener->mMoveScale * (GetAsyncKeyState(83) < 0 ? 1 : Mouse_Wheel_Zoom);
 	}
 
 	// Pan Left A Key

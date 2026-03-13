@@ -51,6 +51,7 @@ public:
 	bool flag_MapEditor;
 	bool flag_SceneEditor;
 
+	
 	char Prefs_PathAndFile[MAX_PATH];
 	char Prefs_JustFileName[MAX_PATH];
 
