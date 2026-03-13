@@ -447,10 +447,15 @@ void CL64_ImGui::Show_Ogre_Model_Data_GUI(void)
 				int Size = Ogre_Data->mSubMeshCount;
 
 				ImGui::PushID("foo");
-				if (ImGui::BeginMenu("Status"))
+				if (ImGui::BeginMenu("Details"))
 				{
 					ImGui::Text("Edge List:- %s", Ogre_Data->mStrEdgeList.c_str());
+					ImGui::Text("Total Vertices:- %i", App->CL_Model->VerticeCount);
+					ImGui::Text("Total Faces:- %i", App->CL_Model->FaceCount);
+					ImGui::Text("Groups:- %i", App->CL_Model->GroupCount);
 					ImGui::Text("Skeleton:- %s", Ogre_Data->mStrSkeleton.c_str());
+					ImGui::Text("Bones/Joints:- %i", App->CL_Model->BoneCount);
+					ImGui::Text("Motions:- %i", App->CL_Model->MotionCount);
 
 					ImGui::EndMenu();
 				}
@@ -469,15 +474,15 @@ void CL64_ImGui::Show_Ogre_Model_Data_GUI(void)
 
 						ImGui::Separator();
 
-						if (ImGui::Checkbox("Show Mesh", &listSubMeshItems[Count]))
-						{
-							App->CL_Ogre->OGL_Listener->flag_ShowFaces = 1;
-							//App->CL_Ogre->OGL_Listener->flag_ShowOnlySubFaces = 1;
-							App->CL_Ogre->OGL_Listener->Selected_Face_Group = Count;
+						//if (ImGui::Checkbox("Show Mesh", &listSubMeshItems[Count]))
+						//{
+						//	App->CL_Ogre->OGL_Listener->flag_ShowFaces = 1;
+						//	//App->CL_Ogre->OGL_Listener->flag_ShowOnlySubFaces = 1;
+						//	App->CL_Ogre->OGL_Listener->Selected_Face_Group = Count;
 
-							listSubMeshItems[PreviouseSubMesh] = 0;
-							PreviouseSubMesh = Count;
-						}
+						//	listSubMeshItems[PreviouseSubMesh] = 0;
+						//	PreviouseSubMesh = Count;
+						//}
 
 						ImGui::EndMenu();
 					}
@@ -607,17 +612,21 @@ void CL64_ImGui::Show_Assimp_Model_Data_GUI(void)
 		if (ImGui::TreeNode("Geometry"))
 		{
 			int Count = 0;
-			int Size = App->CL_Scene->GroupCount;
+			int Size = App->CL_Model->GroupCount;
 
-			/*ImGui::PushID("foo");
-			if (ImGui::BeginMenu("Status"))
+			ImGui::PushID("foo");
+			if (ImGui::BeginMenu("Details"))
 			{
-				ImGui::Text("Edge List:- %s", App->CL_Scene->S_OgreMeshData[0]->mStrEdgeList.c_str());
-				ImGui::Text("Skeleton:- %s", App->CL_Scene->S_OgreMeshData[0]->mStrSkeleton.c_str());
+				ImGui::Text("Total Vertices:- %i", App->CL_Model->VerticeCount);
+				ImGui::Text("Total Faces:- %i", App->CL_Model->FaceCount);
+				ImGui::Text("Groups:- %i", App->CL_Model->GroupCount);
+				//ImGui::Text("Skeleton:- %s", Ogre_Data->mStrSkeleton.c_str());
+				ImGui::Text("Bones/Joints:- %i", App->CL_Model->BoneCount);
+				ImGui::Text("Motions:- %i", App->CL_Model->MotionCount);
 
 				ImGui::EndMenu();
 			}
-			ImGui::PopID();*/
+			ImGui::PopID();
 
 			Count = 0;
 			while (Count < Size)
@@ -632,15 +641,15 @@ void CL64_ImGui::Show_Assimp_Model_Data_GUI(void)
 
 					ImGui::Separator();
 
-					if (ImGui::Checkbox("Show Mesh", &listSubMeshItems[Count]))
-					{
-						App->CL_Ogre->OGL_Listener->flag_ShowFaces = 1;
-						//App->CL_Ogre->OGL_Listener->flag_ShowOnlySubFaces = 1;
-						App->CL_Ogre->OGL_Listener->Selected_Face_Group = Count;
+					//if (ImGui::Checkbox("Show Mesh", &listSubMeshItems[Count]))
+					//{
+					//	App->CL_Ogre->OGL_Listener->flag_ShowFaces = 1;
+					//	//App->CL_Ogre->OGL_Listener->flag_ShowOnlySubFaces = 1;
+					//	App->CL_Ogre->OGL_Listener->Selected_Face_Group = Count;
 
-						listSubMeshItems[PreviouseSubMesh] = 0;
-						PreviouseSubMesh = Count;
-					}
+					//	listSubMeshItems[PreviouseSubMesh] = 0;
+					//	PreviouseSubMesh = Count;
+					//}
 
 					ImGui::EndMenu();
 				}
@@ -650,12 +659,12 @@ void CL64_ImGui::Show_Assimp_Model_Data_GUI(void)
 				Count++;
 			}
 
-			/*if (listSubMeshItems[PreviouseSubMesh] == 0 && App->CL_Ogre->OGL_Listener->flag_ShowOnlySubFaces == 1)
+			//if (listSubMeshItems[PreviouseSubMesh] == 0 && App->CL_Ogre->OGL_Listener->flag_ShowOnlySubFaces == 1)
 			{
-				App->CL_Ogre->OGL_Listener->Flag_ShowFaces = 0;
-				App->CL_Ogre->OGL_Listener->flag_ShowOnlySubFaces = 0;
+				//App->CL_Ogre->OGL_Listener->Flag_ShowFaces = 0;
+				//App->CL_Ogre->OGL_Listener->flag_ShowOnlySubFaces = 0;
 				PreviouseSubMesh = -1;
-			}*/
+			}
 
 			ImGui::TreePop();
 		}
