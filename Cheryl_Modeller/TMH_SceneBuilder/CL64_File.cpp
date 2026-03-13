@@ -146,7 +146,7 @@ void CL64_File::Start_Save(bool useSaveDialog)
 
 	App->CL_Level->flag_File_Been_Saved = 1;
 
-	App->CL_X_Preference->Save_Config_File();
+	App->CL_Libs->CL_Preference->Save_Config_File();
 
 	App->Say("Saved", App->CL_Level->MTF_Just_FileName);
 }
@@ -376,9 +376,9 @@ void CL64_File::Start_Load(bool useOpenDialog)
 
 		Set_Editor();
 		
-		App->CL_X_Preference->Save_Config_File();
+		App->CL_Libs->CL_Preference->Save_Config_File();
 		App->CL_Ogre->OGL_Listener->Show_Visuals(false);
-		if (App->CL_X_Preference->flag_OpenLastFile == false)
+		if (App->CL_Libs->CL_Preference->flag_OpenLastFile == false)
 		{
 			App->Say("File Loaded", App->CL_File->FileName_3dt);
 		}

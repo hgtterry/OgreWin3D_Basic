@@ -32,6 +32,7 @@ THE SOFTWARE.
 #include "CL64_Level.h"
 
 #include "Lib_Preference.h"
+
 #include "Lib_Ini_File.h"
 
 #include "CL64_Doc.h"
@@ -118,6 +119,7 @@ public:
 	~CL64_App(void);
 
 	Init_Libs*					CL_Libs;
+
 	CL64_Editor_Map*			CL_Editor_Map;
 	CL64_Lib_Maths*				CL_X_Maths;		// Maths Library
 
@@ -125,8 +127,6 @@ public:
 	CL64_Render_Map*			CL_Render;
 	CL64_Level*					CL_Level;
 
-	Lib_Preference*				CL_X_Preference; // Preference Library
-	
 	Lib_Ini_File*				CL_X_Ini_File;	 // Ini_File Library
 
 	CL64_Doc*					CL_Doc;

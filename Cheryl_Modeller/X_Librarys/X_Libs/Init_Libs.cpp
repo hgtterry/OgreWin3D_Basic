@@ -8,6 +8,8 @@ Init_Libs::Init_Libs(void)
 	CL_CreateCylinder = nullptr;
 	CL_CreateCone =		nullptr;
 	CL_CreateArch =		nullptr;
+
+	CL_Preference =		nullptr;
 }
 
 Init_Libs::~Init_Libs(void)
@@ -23,6 +25,8 @@ void Init_Libs::Start_Libraries()
 	CL_CreateCylinder = new CreateCylDialog();
 	CL_CreateCone =		new CreateConeDialog();
 	CL_CreateArch =		new CreateArchDialog();
+
+	//CL_Preference =		new Lib_Preference();
 }
 
 // *************************************************************************

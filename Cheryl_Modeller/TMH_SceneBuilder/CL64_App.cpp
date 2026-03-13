@@ -37,7 +37,6 @@ CL64_App::CL64_App(void)
 	CL_Render =					nullptr;
 	CL_Level =					nullptr;
 
-	CL_X_Preference =			nullptr; // Library
 	CL_X_Ini_File =				nullptr; // Library
 
 	CL_Doc =					nullptr;
@@ -218,6 +217,9 @@ CL64_App::~CL64_App(void)
 void CL64_App::InitApp(void)
 {
 	CL_Libs =					new Init_Libs();
+
+	CL_Libs->CL_Preference =	new Lib_Preference();
+
 	CL_Editor_Map =				new CL64_Editor_Map();
 	CL_X_Maths =				new CL64_Lib_Maths(); // Library
 	CL_X_Box =					new CX_Box(); // Library
@@ -225,7 +227,6 @@ void CL64_App::InitApp(void)
 	CL_Render =					new CL64_Render_Map();
 	CL_Level =					new CL64_Level();
 
-	CL_X_Preference =			new Lib_Preference(); // Library
 	CL_X_Ini_File =				new Lib_Ini_File(); // Library
 	
 	CL_Doc =					new CL64_Doc();
@@ -311,7 +312,7 @@ void CL64_App::InitApp(void)
 
 	if (SUCCEEDED(SHGetFolderPathA(NULL, CSIDL_APPDATA, NULL, 0, path)))//KF_FLAG_CREATE
 	{
-		strcpy(App->CL_X_Preference->UserData_Folder, path);
+		strcpy(App->CL_Libs->CL_Preference->UserData_Folder, path);
 	}
 	else
 	{

@@ -42,11 +42,12 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     // Get current working directory
     char* a_cwd = _getcwd(App->RB_Directory_FullPath, MAX_PATH);
-
+   
     // Initialize application
     App->InitApp();
-    App->CL_X_Preference->Read_Preferences();
-    App->CL_X_Preference->Init_Configuration();
+   
+    App->CL_Libs->CL_Preference->Read_Preferences();
+    App->CL_Libs->CL_Preference->Init_Configuration();
 
     UNREFERENCED_PARAMETER(hPrevInstance);
     UNREFERENCED_PARAMETER(lpCmdLine);
@@ -858,7 +859,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             // ----------------------------- Options
             case ID_OPTIONS_SETTINGS:
             {
-                App->CL_X_Preference->Start_Options_Dlg();
+                App->CL_Libs->CL_Preference->Start_Options_Dlg();
                 return 1;
             }
             
@@ -1335,14 +1336,14 @@ void StartOgre()
 
     App->CL_Ogre->RenderFrame(5);
    
-    if (App->CL_X_Preference->flag_OpenLastFile)
+    if (App->CL_Libs->CL_Preference->flag_OpenLastFile)
     {
         // Compare the last opened file with "New_Room.mtf"
-        if (strcmp(App->CL_X_Preference->Prefs_PathAndFile, "New_Room.mtf") != 0)
+        if (strcmp(App->CL_Libs->CL_Preference->Prefs_PathAndFile, "New_Room.mtf") != 0)
         {
             // Copy the path and filename from preferences to the file structure
-            strcpy(App->CL_File->PathFileName_3dt, App->CL_X_Preference->Prefs_PathAndFile);
-            strcpy(App->CL_File->FileName_3dt, App->CL_X_Preference->Prefs_JustFileName);
+            strcpy(App->CL_File->PathFileName_3dt, App->CL_Libs->CL_Preference->Prefs_PathAndFile);
+            strcpy(App->CL_File->FileName_3dt, App->CL_Libs->CL_Preference->Prefs_JustFileName);
 
             // Initiate the loading process
             App->CL_File->Start_Load(false);
@@ -1357,7 +1358,7 @@ void StartOgre()
     }*/
 
 
-	if (App->CL_X_Preference->flag_SceneEditor == true)
+	if (App->CL_Libs->CL_Preference->flag_SceneEditor == true)
 	{
 		App->CL_Editor_Control->Start_Editor_Scene();
 

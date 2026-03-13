@@ -16,5 +16,7 @@ public:
 	CreateConeDialog*	CL_CreateCone;
 	CreateArchDialog*	CL_CreateArch;
 
+	Lib_Preference*		CL_Preference;
+
 };
 

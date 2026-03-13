@@ -199,7 +199,7 @@ void CL64_Editor_Map::Reset_Views_All()
 		VCam[Count]->CamPos.y = 0;
 		VCam[Count]->CamPos.z = 0;
 
-		VCam[Count]->ZoomFactor = App->CL_X_Preference->Defalut_Zoom;
+		VCam[Count]->ZoomFactor = App->CL_Libs->CL_Preference->Defalut_Zoom;
 
 		Count++;
 	}

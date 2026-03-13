@@ -63,7 +63,7 @@ Lib_Preference::~Lib_Preference(void)
 // *************************************************************************
 char* Lib_Preference::GetVersion()
 {
-	return (LPSTR)" TMH_Scene_Builder :-- Lib_Preference Good [ 09-09-25 ] Build X ";
+	return (LPSTR)" Lib_Preference [ 13-03-26 ] Build 1 ";
 }
 
 // *************************************************************************
@@ -113,8 +113,11 @@ void Lib_Preference::Start_Options_Dlg()
 // *************************************************************************
 LRESULT CALLBACK Lib_Preference::Proc_Options_Dlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
+	auto& m_Preferences = App->CL_Libs->CL_Preference;
+
 	switch (message)
 	{
+
 	case WM_INITDIALOG:
 	{
 		SendDlgItemMessage(hDlg, IDC_OPTIONS_TREE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
@@ -131,20 +134,20 @@ LRESULT CALLBACK Lib_Preference::Proc_Options_Dlg(HWND hDlg, UINT message, WPARA
 		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		HWND Temp = GetDlgItem(hDlg, IDC_CK_LASTFILE);
-		SendMessage(Temp, BM_SETCHECK, App->CL_X_Preference->flag_OpenLastFile, 0);
+		SendMessage(Temp, BM_SETCHECK, m_Preferences->flag_OpenLastFile, 0);
 
 		Temp = GetDlgItem(hDlg, IDC_CK_MAPEDITOR);
-		SendMessage(Temp, BM_SETCHECK, App->CL_X_Preference->flag_MapEditor, 0);
+		SendMessage(Temp, BM_SETCHECK, m_Preferences->flag_MapEditor, 0);
 		
 		Temp = GetDlgItem(hDlg, IDC_CK_SCENEEDITOR);
-		SendMessage(Temp, BM_SETCHECK, App->CL_X_Preference->flag_SceneEditor, 0);
+		SendMessage(Temp, BM_SETCHECK, m_Preferences->flag_SceneEditor, 0);
 
 		char buf[MAX_PATH];
-		sprintf(buf, "%f", App->CL_X_Preference->Defalut_Zoom);
+		sprintf(buf, "%f", m_Preferences->Defalut_Zoom);
 		SetDlgItemText(hDlg, IDC_ED_ZOOMDEFAULT, (LPTSTR)buf);
 
-		App->CL_X_Preference->ListPanel = hDlg;
-		App->CL_X_Preference->Init_FileView(App->CL_X_Preference->ListPanel);
+		m_Preferences->ListPanel = hDlg;
+		m_Preferences->Init_FileView(m_Preferences->ListPanel);
 
 		return TRUE;
 	}
@@ -226,14 +229,14 @@ LRESULT CALLBACK Lib_Preference::Proc_Options_Dlg(HWND hDlg, UINT message, WPARA
 		{
 			HWND Temp = GetDlgItem(hDlg, IDC_CK_LASTFILE);
 
-			if (App->CL_X_Preference->flag_OpenLastFile == true)
+			if (m_Preferences->flag_OpenLastFile == true)
 			{
-				App->CL_X_Preference->flag_OpenLastFile = false;
+				m_Preferences->flag_OpenLastFile = false;
 				SendMessage(Temp, BM_SETCHECK, false, 0);
 			}
 			else
 			{
-				App->CL_X_Preference->flag_OpenLastFile = true;
+				m_Preferences->flag_OpenLastFile = true;
 				SendMessage(Temp, BM_SETCHECK, true, 0);
 			}
 
@@ -248,8 +251,8 @@ LRESULT CALLBACK Lib_Preference::Proc_Options_Dlg(HWND hDlg, UINT message, WPARA
 			Temp = GetDlgItem(hDlg, IDC_CK_SCENEEDITOR);
 			SendMessage(Temp, BM_SETCHECK, false, 0);
 
-			App->CL_X_Preference->flag_MapEditor = true;
-			App->CL_X_Preference->flag_SceneEditor = false;
+			m_Preferences->flag_MapEditor = true;
+			m_Preferences->flag_SceneEditor = false;
 
 			return TRUE;
 		}
@@ -262,8 +265,8 @@ LRESULT CALLBACK Lib_Preference::Proc_Options_Dlg(HWND hDlg, UINT message, WPARA
 			Temp = GetDlgItem(hDlg, IDC_CK_MAPEDITOR);
 			SendMessage(Temp, BM_SETCHECK, false, 0);
 
-			App->CL_X_Preference->flag_MapEditor = false;
-			App->CL_X_Preference->flag_SceneEditor = true;
+			m_Preferences->flag_MapEditor = false;
+			m_Preferences->flag_SceneEditor = true;
 
 			return TRUE;
 		}
@@ -276,9 +279,9 @@ LRESULT CALLBACK Lib_Preference::Proc_Options_Dlg(HWND hDlg, UINT message, WPARA
 			
 			float Zoom_Float = atof(buff);
 
-			App->CL_X_Preference->Defalut_Zoom = Zoom_Float;
+			m_Preferences->Defalut_Zoom = Zoom_Float;
 
-			App->CL_X_Preference->Save_Config_File();
+			m_Preferences->Save_Config_File();
 
 			App->CL_Editor_Map->Reset_Views_All();
 
