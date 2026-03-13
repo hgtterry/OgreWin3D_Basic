@@ -1000,7 +1000,7 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Top_Tabs(HWND hDlg, UINT message, WPARAM wP
 		
 		if (LOWORD(wParam) == IDC_BT_TT_OPTIONS)
 		{
-			Debug
+			App->CL_Libs->CL_Preference->Start_Quick_Options_Dlg();
 			return TRUE;
 		}
 

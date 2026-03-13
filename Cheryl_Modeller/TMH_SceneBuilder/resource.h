@@ -111,6 +111,8 @@
 #define IDD_PROPS_MOTIONS               220
 #define IDB_TB_MODELDATAON              221
 #define IDD_PROPERTIES_TEXTURES_ASSIMP  222
+#define IDD_DIALOG1                     223
+#define IDD_PREFS_QUICK                 223
 #define IDC_BANNER                      1000
 #define IDC_STTEXT                      1001
 #define IDC_STMESSAGE                   1002
@@ -687,7 +689,7 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
-#define _APS_NEXT_RESOURCE_VALUE        223
+#define _APS_NEXT_RESOURCE_VALUE        224
 #define _APS_NEXT_COMMAND_VALUE         32887
 #define _APS_NEXT_CONTROL_VALUE         1389
 #define _APS_NEXT_SYMED_VALUE           110

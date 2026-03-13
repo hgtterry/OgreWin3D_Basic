@@ -32,6 +32,8 @@ public:
 	char* GetVersion();
 
 	void Start_Options_Dlg();
+	void Start_Quick_Options_Dlg();
+
 	void Read_Preferences();
 	bool Write_Preferences();
 
@@ -54,6 +56,7 @@ public:
 
 private:
 	static LRESULT CALLBACK Proc_Options_Dlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Proc_Quick_Options_Dlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	FILE* WriteData;
 

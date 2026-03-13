@@ -303,6 +303,113 @@ LRESULT CALLBACK Lib_Preference::Proc_Options_Dlg(HWND hDlg, UINT message, WPARA
 }
 
 // *************************************************************************
+// *			  Start_Options_Dlg:- Terry and Hazel Flanigan 2025		   *
+// *************************************************************************
+void Lib_Preference::Start_Quick_Options_Dlg()
+{
+	DialogBox(App->hInst, (LPCTSTR)IDD_PREFS_QUICK, App->MainHwnd, (DLGPROC)Proc_Quick_Options_Dlg);
+}
+
+// *************************************************************************
+// *		Proc_Quick_Options_Dlg:- Terry and Hazel Flanigan 2026		   *
+// *************************************************************************
+LRESULT CALLBACK Lib_Preference::Proc_Quick_Options_Dlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+	auto& m_Preferences = App->CL_Libs->CL_Preference;
+
+	switch (message)
+	{
+
+	case WM_INITDIALOG:
+	{
+		//SendDlgItemMessage(hDlg, IDC_OPTIONS_TREE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
+		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		return TRUE;
+	}
+	case WM_CTLCOLORSTATIC:
+	{
+
+		/*if (GetDlgItem(hDlg, IDC_GB_STARTUP) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}*/
+
+		return FALSE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->AppBackground;
+	}
+
+	case WM_NOTIFY:
+	{
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		if (some_item->idFrom == IDOK)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDCANCEL)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		return CDRF_DODEFAULT;
+	}
+
+	case WM_COMMAND:
+	{
+		/*if (LOWORD(wParam) == IDC_CK_LASTFILE)
+		{
+			HWND Temp = GetDlgItem(hDlg, IDC_CK_LASTFILE);
+
+			if (m_Preferences->flag_OpenLastFile == true)
+			{
+				m_Preferences->flag_OpenLastFile = false;
+				SendMessage(Temp, BM_SETCHECK, false, 0);
+			}
+			else
+			{
+				m_Preferences->flag_OpenLastFile = true;
+				SendMessage(Temp, BM_SETCHECK, true, 0);
+			}
+
+			return TRUE;
+		}*/
+
+		
+		if (LOWORD(wParam) == IDOK)
+		{
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDCANCEL)
+		{
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+	}
+
+	break;
+
+	}
+	return FALSE;
+}
+
+// *************************************************************************
 // *			Read_Preferences:- Terry and Hazel Flanigan 2024 		   *
 // *************************************************************************
 void Lib_Preference::Read_Preferences()
