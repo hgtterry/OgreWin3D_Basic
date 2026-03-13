@@ -136,8 +136,8 @@ LRESULT CALLBACK CL64_Properties_Textures_Assimp::Proc_Textures_Dialog(HWND hDlg
 		if (some_item->idFrom == IDC_BT_AT_VIEWMAT)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-
-			App->Custom_Button_Normal(item);
+			
+			App->Custom_Button_Toggle(item, App->CL_Dialogs->flag_FileViewer_Active);
 		}
 
 		if (some_item->idFrom == IDC_BT_AT_MATERIAL_FACES)
@@ -151,10 +151,7 @@ LRESULT CALLBACK CL64_Properties_Textures_Assimp::Proc_Textures_Dialog(HWND hDlg
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 
-			//if (App->CL_Dialogs->m_ListType == Enums::ListBox_Mesh_Data)
-			{
-				App->Custom_Button_Toggle(item, App->CL_Dialogs->flag_General_ListBox_Active);
-			}
+			App->Custom_Button_Toggle(item, App->CL_Dialogs->flag_General_ListBox_Active);
 		}
 
 		if (some_item->idFrom == IDC_BT_AT_CHANGETEXTURE)
@@ -218,6 +215,8 @@ LRESULT CALLBACK CL64_Properties_Textures_Assimp::Proc_Textures_Dialog(HWND hDlg
 			{
 				if (App->CL_Dialogs->flag_FileViewer_Active == true)
 				{
+					App->CL_Dialogs->flag_FileViewer_Active = false;
+					EndDialog(App->CL_Dialogs->FileViewer_Dlg_Hwnd, LOWORD(wParam));
 					return TRUE;
 				}
 				else
@@ -385,9 +384,9 @@ void CL64_Properties_Textures_Assimp::Fill_Materials_ListBox()
 }
 
 // *************************************************************************
-// *			Update_Texture_Assimp:- Terry and Hazel Flanigan 2024      *
+// *			Update_Texture_BMP:- Terry and Hazel Flanigan 2026	      *
 // *************************************************************************
-bool CL64_Properties_Textures_Assimp::Update_Texture_Assimp()
+bool CL64_Properties_Textures_Assimp::Update_Texture_BMP()
 {
 	int Index = Selected_Group;
 
@@ -442,29 +441,37 @@ void CL64_Properties_Textures_Assimp::Fill_Textures_ListBox()
 // *************************************************************************
 // *	  	List_Material_Changed:- Terry and Hazel Flanigan 2026		   *
 // *************************************************************************
-void CL64_Properties_Textures_Assimp::List_Material_Changed(int Index)
+void CL64_Properties_Textures_Assimp::List_Material_Changed(int index)
 {
-	if (App->CL_Model->flag_Model_Loaded == true && App->CL_Model->Model_Type == Enums::Model_Type_Assimp)
+	// Check if the model is loaded and is of type Assimp
+	if (App->CL_Model->flag_Model_Loaded && App->CL_Model->Model_Type == Enums::Model_Type_Assimp)
 	{
-		Selected_Group = Index;
-		//Update_Texture_Ogre_Dlg();
+		Selected_Group = index;
 
-		// Change Texure in the window
-		Update_Texture_Assimp();
+		// Update texture and fill the textures list box
+		Update_Texture_BMP();
 		Fill_Textures_ListBox();
 
-		// Select Materials/Groups in Imgu
-		App->CL_ImGui->Set_Materials_Index_Imgui(Index);
+		// Set the selected materials/groups in ImGui
+		App->CL_ImGui->Set_Materials_Index_Imgui(index);
 
-		if (App->CL_Dialogs->flag_General_ListBox_Active == true)
+		// If the file viewer is active, search for the new material
+		if (App->CL_Dialogs->flag_FileViewer_Active)
 		{
-			HWND List = GetDlgItem(App->CL_Dialogs->ListBox_Dlg_Hwnd, IDC_LST_GENERAL);
-			App->CL_Dialogs->List_Mesh_Data(List);
+			std::string materialText = "newmtl " + std::string(App->CL_Mesh->Group[Selected_Group]->MaterialName);
+			App->CL_Dialogs->Material_Search(materialText.c_str());
 		}
 
+		// If the general list box is active, update the mesh data
+		if (App->CL_Dialogs->flag_General_ListBox_Active)
+		{
+			HWND list = GetDlgItem(App->CL_Dialogs->ListBox_Dlg_Hwnd, IDC_LST_GENERAL);
+			App->CL_Dialogs->List_Mesh_Data(list);
+		}
+
+		// Redraw the textures dialog window
 		RedrawWindow(Textures_Dlg_Hwnd_Assimp, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 	}
-
 }
 
 // *************************************************************************

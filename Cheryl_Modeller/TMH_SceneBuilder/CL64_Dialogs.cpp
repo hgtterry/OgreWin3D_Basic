@@ -52,6 +52,7 @@ CL64_Dialogs::CL64_Dialogs(void)
 	Check_What = 0;
 
 	ListBox_Dlg_Hwnd = nullptr;
+	FileViewer_Dlg_Hwnd = nullptr;
 
 	YesNoCancel_Result = false;
 
@@ -1590,7 +1591,7 @@ void CL64_Dialogs::Start_FileViewer_Dialog(char* FFile, HWND Owner_hDlg)
 	flag_FileViewer_Active = true;
 
 	strcpy(m_ReadFile, FFile);
-	DialogBox(App->hInst, (LPCTSTR)IDD_FILEVIEWER, Owner_hDlg, (DLGPROC)Proc_FileViewer);
+	FileViewer_Dlg_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_FILEVIEWER, Owner_hDlg, (DLGPROC)Proc_FileViewer);
 }
 
 // **************************************************************************
@@ -1618,6 +1619,15 @@ LRESULT CALLBACK CL64_Dialogs::Proc_FileViewer(HWND hDlg, UINT message, WPARAM w
 			strcpy(Text, "material ");
 
 			strcat(Text, App->CL_Mesh->Group[App->CL_Properties_Materials->Selected_Group]->Ogre_Material);
+			App->CL_Dialogs->Material_Search((LPSTR)Text);
+		}
+
+		if (App->CL_Model->Model_Type == Enums::Model_Type_Assimp)
+		{
+			char Text[MAX_PATH];
+			strcpy(Text, "newmtl ");
+
+			strcat(Text, App->CL_Mesh->Group[App->CL_Properties_Textures_Assimp->Selected_Group]->MaterialName);
 			App->CL_Dialogs->Material_Search((LPSTR)Text);
 		}
 
@@ -1680,6 +1690,16 @@ LRESULT CALLBACK CL64_Dialogs::Proc_FileViewer(HWND hDlg, UINT message, WPARAM w
 			// Remove Temporary File
 			remove(App->CL_Dialogs->m_ReadFile);
 			
+			if (App->CL_Model->flag_Model_Loaded == true && App->CL_Model->Model_Type == Enums::Model_Type_Ogre3D)
+			{
+				RedrawWindow(App->CL_Properties_Materials->Textures_Dlg_Hwnd_Ogre, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			}
+
+			if (App->CL_Model->flag_Model_Loaded == true && App->CL_Model->Model_Type == Enums::Model_Type_Assimp)
+			{
+				RedrawWindow(App->CL_Properties_Textures_Assimp->Textures_Dlg_Hwnd_Assimp, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			}
+
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
@@ -1691,6 +1711,16 @@ LRESULT CALLBACK CL64_Dialogs::Proc_FileViewer(HWND hDlg, UINT message, WPARAM w
 			// Remove Temporary File
 			remove(App->CL_Dialogs->m_ReadFile);
 			
+			if (App->CL_Model->flag_Model_Loaded == true && App->CL_Model->Model_Type == Enums::Model_Type_Ogre3D)
+			{
+				RedrawWindow(App->CL_Properties_Materials->Textures_Dlg_Hwnd_Ogre, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			}
+
+			if (App->CL_Model->flag_Model_Loaded == true && App->CL_Model->Model_Type == Enums::Model_Type_Assimp)
+			{
+				RedrawWindow(App->CL_Properties_Textures_Assimp->Textures_Dlg_Hwnd_Assimp, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			}
+
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
@@ -1770,7 +1800,7 @@ void CL64_Dialogs::Read_File(char* mFile, HWND hDlg)
 // *************************************************************************
 // *		 	Material_Search:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-void CL64_Dialogs::Material_Search(char* ItemString)
+void CL64_Dialogs::Material_Search(const char* ItemString)
 {
 	int Index = SendDlgItemMessage(FileViewer_Hwnd, IDC_LST_FILE, LB_SELECTSTRING, (WPARAM)-1, (LPARAM)ItemString);
 	SendDlgItemMessage(FileViewer_Hwnd, IDC_LST_FILE, LB_SETTOPINDEX, (WPARAM)Index, (LPARAM)0);

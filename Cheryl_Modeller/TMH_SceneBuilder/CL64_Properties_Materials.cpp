@@ -148,7 +148,7 @@ LRESULT CALLBACK CL64_Properties_Materials::Proc_Materials_Dialog_Ogre(HWND hDlg
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 
-			App->Custom_Button_Normal(item);
+			App->Custom_Button_Toggle(item, App->CL_Dialogs->flag_FileViewer_Active);
 		}
 
 		if (some_item->idFrom == IDC_BT_GROUPDETAILS)
@@ -243,6 +243,8 @@ LRESULT CALLBACK CL64_Properties_Materials::Proc_Materials_Dialog_Ogre(HWND hDlg
 			{
 				if (App->CL_Dialogs->flag_FileViewer_Active == true)
 				{
+					App->CL_Dialogs->flag_FileViewer_Active = false;
+					EndDialog(App->CL_Dialogs->FileViewer_Dlg_Hwnd, LOWORD(wParam));
 					return TRUE;
 				}
 				else
@@ -563,11 +565,8 @@ void CL64_Properties_Materials::List_Material_Changed(int Index)
 
 		if (App->CL_Dialogs->flag_FileViewer_Active == true)
 		{
-			char Text[MAX_PATH];
-			strcpy(Text, "material ");
-
-			strcat(Text, App->CL_Mesh->Group[Selected_Group]->Ogre_Material);
-			App->CL_Dialogs->Material_Search((LPSTR)Text);
+			std::string materialText = "material " + std::string(App->CL_Mesh->Group[Selected_Group]->Ogre_Material);
+			App->CL_Dialogs->Material_Search(materialText.c_str());
 		}
 
 		if (App->CL_Dialogs->flag_General_ListBox_Active == true)

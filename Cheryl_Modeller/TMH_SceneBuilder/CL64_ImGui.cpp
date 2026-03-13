@@ -592,7 +592,7 @@ void CL64_ImGui::Show_Assimp_Model_Data_GUI(void)
 				{
 					App->CL_Properties_Textures_Assimp->Selected_Group = Count;
 					App->CL_Ogre->OGL_Listener->Selected_Face_Group = Count;
-					App->CL_Properties_Textures_Assimp->Update_Texture_Assimp();
+					App->CL_Properties_Textures_Assimp->Update_Texture_BMP();
 
 					App->CL_Properties_Textures_Assimp->Select_By_Index(Count);
 					App->CL_Properties_Textures_Assimp->Update_Texture_Ogre_Dlg();

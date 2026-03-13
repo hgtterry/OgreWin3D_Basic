@@ -47,40 +47,16 @@ void CL64_Importers::Set_Editor()
 // *************************************************************************
 // *			Assimp_Loader:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-bool CL64_Importers::Assimp_Loader(bool UseDialog, const char* Extension, const char* Extension2)
+bool CL64_Importers::Assimp_Loader(bool useDialog, const char* extension, const char* extension2)
 {
-	if (UseDialog == 1)
+	if (useDialog)
 	{
-		/*char Start_Directory[MAX_PATH];
-		strcpy(Start_Directory, "");
+		LPCWSTR fileType = L"Wavefront .obj file";
+		LPCWSTR fileExtensions = L"*.obj";
 
-		if (App->CL_Preferences->Use_Default_Directories == 1)
+		if (!App->CL_File_IO->Open_File(fileType, fileExtensions))
 		{
-			strcpy(Start_Directory, App->GD_Directory_FullPath);
-
-			if (App->CL_Assimp->Options.Model_Type == Enums::Model_Type_Obj)
-			{
-				strcat(Start_Directory, "\\Models\\Wavefront_Obj_Models");
-			}
-
-			if (App->CL_Assimp->Options.Model_Type == Enums::Model_Type_3ds)
-			{
-				strcat(Start_Directory, "\\Models\\3ds_Models");
-			}
-
-			if (App->CL_Assimp->Options.Model_Type == Enums::Model_Type_Milk)
-			{
-				strcat(Start_Directory, "\\Models\\Milkshape_Models");
-			}
-		}*/
-
-		LPCWSTR mType = L"Wavefront .obj file";
-		LPCWSTR mExtensions = L"*.obj";
-
-		bool test = App->CL_File_IO->Open_File((LPCWSTR)mType, (LPCWSTR)mExtensions);
-		if (test == false)
-		{
-			return 0;
+			return false;
 		}
 
 		strcpy(App->CL_Model->Loaded_PathFileName, App->CL_File_IO->s_Path_And_File.c_str());
@@ -89,48 +65,35 @@ bool CL64_Importers::Assimp_Loader(bool UseDialog, const char* Extension, const 
 
 	App->CL_Model->Clear_Model();
 
-	//// Needs Looking At Here Temp 
-	//App->CL_Resources->Destroy_Resources_Group(App->CL_Resources->Ogre_Loader_Resource_Group);
-	//App->CL_Resources->Ogre_ExternalResourceLoaded = 0;
-	App->CL_Resources->mSelected_Resource_Group = "App_Resource_Group";
+	// Temporary resource management commented out for review
+	// App->CL_Resources->Destroy_Resources_Group(App->CL_Resources->Ogre_Loader_Resource_Group);
+	// App->CL_Resources->Ogre_ExternalResourceLoaded = 0;
 
-	//char Model_Path_And_File[MAX_PATH];
-	//strcpy(Model_Path_And_File, App->CL_File_IO->Get_Model_Path_File_Name().c_str());
+	App->CL_Resources->mSelected_Resource_Group = "App_Resource_Group";
 
 	App->CL_Model->Set_Paths();
 
-	bool Test = App->CL_Assimp->LoadFile(App->CL_Model->Loaded_PathFileName);
-	if (Test == 0)
+	if (!App->CL_Assimp->LoadFile(App->CL_Model->Loaded_PathFileName))
 	{
 		App->Say("Failed To Load");
-
-		return 0;
+		return false;
 	}
 
 	App->CL_Model->Model_Type = Enums::Model_Type_Assimp;
 	App->CL_Model->flag_Model_Loaded = true;
 	App->CL_Properties_Textures_Assimp->Fill_Materials_ListBox();
-	/*App->CL_Scene->Scene_Mode = Enums::Scene_Mode_Assimp_Model;
-	App->CL_Scene->Set_Scene(App->CL_Scene->Scene_Mode);*/
 
 	App->CL_Camera->Reset_View_and_Zoom();
-
 	App->CL_Interface->Set_Title(false);
 
 	Set_Editor();
-
 	App->CL_File_IO->RecentFileHistory_Update();
 
-	//App->CL_Ogre->RenderFrame(3);
-
-	//App->CL_ImGui->flag_Open_Textures_List = 1;
 	App->CL_Properties_Textures_Assimp->Selected_Group = 0;
-	App->CL_Properties_Textures_Assimp->Update_Texture_Assimp();
+	App->CL_Properties_Textures_Assimp->Update_Texture_BMP();
 	App->CL_Properties_Textures_Assimp->Get_First_Texture_Ogre();
 
-	//App->Enable_Export_Options(true);
-
-	return 1;
+	return true;
 }
 
 // *************************************************************************

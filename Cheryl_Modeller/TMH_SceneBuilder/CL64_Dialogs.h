@@ -41,7 +41,7 @@ public:
 	void Start_General_ListBox(int ListType);
 	void Start_FileViewer_Dialog(char* FFile, HWND Owner_hDlg);
 	void Read_File(char* mFile, HWND hDlg);
-	void Material_Search(char* ItemString);
+	void Material_Search(const char* ItemString);
 
 	void List_Mesh_Data(HWND List);
 
@@ -64,6 +64,7 @@ public:
 	HWND TextureView_Hwnd;
 	HWND FileViewer_Hwnd;
 	HWND ListBox_Dlg_Hwnd;
+	HWND FileViewer_Dlg_Hwnd;
 
 	HBITMAP	Sel_BaseBitmap;
 
