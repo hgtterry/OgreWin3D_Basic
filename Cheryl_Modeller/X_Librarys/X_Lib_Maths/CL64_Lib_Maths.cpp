@@ -42,7 +42,7 @@ CL64_Lib_Maths::~CL64_Lib_Maths()
 // *************************************************************************
 char* CL64_Lib_Maths::GetVersion()
 {
-	return (LPSTR)" TMH_Scene_Builder :-- CL64_Lib_Maths [ 06-09-25 ] Build 1 ";
+	return (LPSTR)" Lib_Maths [ 13-05-26 ] Build 1 ";
 }
 
 // *************************************************************************

@@ -63,7 +63,7 @@ Lib_Preference::~Lib_Preference(void)
 // *************************************************************************
 char* Lib_Preference::GetVersion()
 {
-	return (LPSTR)" Lib_Preference [ 13-03-26 ] Build 1 ";
+	return (LPSTR)" Lib_Preference [ 13-03-26 ] Build 2 ";
 }
 
 // *************************************************************************
