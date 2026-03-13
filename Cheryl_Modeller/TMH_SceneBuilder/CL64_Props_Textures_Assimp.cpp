@@ -212,6 +212,32 @@ LRESULT CALLBACK CL64_Properties_Textures_Assimp::Proc_Textures_Dialog(HWND hDlg
 			return TRUE;
 		}
 
+		if (LOWORD(wParam) == IDC_BT_AT_VIEWMAT)
+		{
+			if (App->CL_Model->Model_Type == Enums::Model_Type_Assimp)
+			{
+				if (App->CL_Dialogs->flag_FileViewer_Active == true)
+				{
+					return TRUE;
+				}
+				else
+				{
+					char MTL_File_And_Path[MAX_PATH];
+
+					strcpy(MTL_File_And_Path, App->CL_Model->Loaded_PathFileName);
+					int Len = strlen(MTL_File_And_Path);
+					MTL_File_And_Path[Len - 4] = 0;
+
+					strcat(MTL_File_And_Path, ".mtl");
+
+					App->CL_Resources->View_File(MTL_File_And_Path, App->MainHwnd);
+
+				}
+			}
+
+			return TRUE;
+		}
+
 		if (LOWORD(wParam) == IDC_BT_AT_GROUPDETAILS)
 		{
 			if (App->CL_Dialogs->flag_General_ListBox_Active == true)

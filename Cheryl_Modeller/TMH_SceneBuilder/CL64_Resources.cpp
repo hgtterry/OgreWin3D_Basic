@@ -1070,22 +1070,53 @@ void CL64_Resources::Unload_OgreCFG_Resources()
 // *************************************************************************
 bool CL64_Resources::View_File(char* FileName, HWND Owner_hDlg)
 {
-	Ogre::FileInfoListPtr RFI = ResourceGroupManager::getSingleton().listResourceFileInfo(mSelected_Resource_Group, false);
-	Ogre::FileInfoList::const_iterator i, iend;
-	iend = RFI->end();
-
-	for (i = RFI->begin(); i != iend; ++i)
+	if (App->CL_Model->Model_Type == Enums::Model_Type_Ogre3D)
 	{
-		if (i->filename == FileName)
+		Ogre::FileInfoListPtr RFI = ResourceGroupManager::getSingleton().listResourceFileInfo(mSelected_Resource_Group, false);
+		Ogre::FileInfoList::const_iterator i, iend;
+		iend = RFI->end();
+
+		for (i = RFI->begin(); i != iend; ++i)
 		{
-			Ogre::DataStreamPtr ff = i->archive->open(i->filename);
+			if (i->filename == FileName)
+			{
+				Ogre::DataStreamPtr ff = i->archive->open(i->filename);
 
-			mFileString = ff->getAsString();
+				mFileString = ff->getAsString();
 
+				char mFileName[MAX_PATH];
+				strcpy(mFileName, App->RB_Directory_FullPath);
+				strcat(mFileName, "\\Data\\");
+				strcat(mFileName, FileName);
+
+				std::ofstream outFile;
+				outFile.open(mFileName, std::ios::binary);
+				outFile << mFileString;
+				outFile.close();
+
+				mFileString.clear();
+
+				App->CL_Dialogs->Start_FileViewer_Dialog(mFileName, Owner_hDlg);
+
+				return 1;
+			}
+		}
+	}
+
+	if (App->CL_Model->Model_Type == Enums::Model_Type_Assimp)
+	{
+		std::ifstream ifs(FileName, std::ios::binary | std::ios::in);
+		if (ifs.is_open())
+		{
+			Ogre::DataStreamPtr data_stream(new Ogre::FileStreamDataStream(FileName, &ifs, false));
+
+			mFileString = data_stream->getAsString();
+
+			App->CL_Utilities->Get_FileName_FromPath(FileName, FileName);
 			char mFileName[MAX_PATH];
 			strcpy(mFileName, App->RB_Directory_FullPath);
 			strcat(mFileName, "\\Data\\");
-			strcat(mFileName, FileName);
+			strcat(mFileName, App->CL_Utilities->JustFileName);
 
 			std::ofstream outFile;
 			outFile.open(mFileName, std::ios::binary);
@@ -1093,6 +1124,8 @@ bool CL64_Resources::View_File(char* FileName, HWND Owner_hDlg)
 			outFile.close();
 
 			mFileString.clear();
+
+			ifs.close();
 
 			App->CL_Dialogs->Start_FileViewer_Dialog(mFileName, Owner_hDlg);
 

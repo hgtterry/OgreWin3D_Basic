@@ -1603,8 +1603,6 @@ LRESULT CALLBACK CL64_Dialogs::Proc_FileViewer(HWND hDlg, UINT message, WPARAM w
 	case WM_INITDIALOG:
 	{
 		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		//SendDlgItemMessage(hDlg, IDC_ST_DETAILS, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
-		//SendDlgItemMessage(hDlg, IDC_BT_VIEWEXPORT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_LST_FILE, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
 
 		App->CL_Dialogs->FileViewer_Hwnd = hDlg;
@@ -1678,7 +1676,10 @@ LRESULT CALLBACK CL64_Dialogs::Proc_FileViewer(HWND hDlg, UINT message, WPARAM w
 		if (LOWORD(wParam) == IDOK)
 		{
 			App->CL_Dialogs->flag_FileViewer_Active = false;
+
+			// Remove Temporary File
 			remove(App->CL_Dialogs->m_ReadFile);
+			
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
@@ -1686,7 +1687,10 @@ LRESULT CALLBACK CL64_Dialogs::Proc_FileViewer(HWND hDlg, UINT message, WPARAM w
 		if (LOWORD(wParam) == IDCANCEL)
 		{
 			App->CL_Dialogs->flag_FileViewer_Active = false;
+
+			// Remove Temporary File
 			remove(App->CL_Dialogs->m_ReadFile);
+			
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
@@ -2014,7 +2018,13 @@ void CL64_Dialogs::List_Directories(HWND List)
 	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"Ogre Resource File");
 	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->CL_Resources->Resource_File_FileName);
 	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->CL_Resources->Resource_File_Path_And_File);
-	
+
+	if (App->CL_Model->Model_Type == Enums::Model_Type_Assimp)
+	{
+		SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)" ");
+		SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"MTL File Path and Name");
+		SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->CL_Exp_Obj->mtl_FileName);
+	}
 }
 
 // *************************************************************************

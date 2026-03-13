@@ -247,7 +247,6 @@ LRESULT CALLBACK CL64_Properties_Materials::Proc_Materials_Dialog_Ogre(HWND hDlg
 				}
 				else
 				{
-					//strcpy(App->CL_Resources->mSelected_File, App->CL_Mesh->Group[App->CL_Props_Textures->Selected_Group]->Ogre_Material_File);
 					App->CL_Resources->View_File(App->CL_Mesh->Group[App->CL_Properties_Materials->Selected_Group]->Ogre_Material_File, App->MainHwnd);
 				}
 			}
