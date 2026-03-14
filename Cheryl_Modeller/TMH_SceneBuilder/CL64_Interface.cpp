@@ -160,7 +160,7 @@ void CL64_Interface::Position_Materials_Dlg(void)
 	int dialogHeight = mainDialogRect.bottom - mainDialogRect.top;
 
 	// Set the position of the Textures dialog
-	SetWindowPos(App->CL_Properties_Textures_Com->Textures_Dlg_Hwnd_Ogre, NULL,
+	SetWindowPos(App->CL_Properties_Textures_Com->Textures_Dlg_Hwnd_Assimp, NULL,
 		position.x + dialogWidth - 300, position.y + 25,
 		0, 0, SWP_NOSIZE | SWP_NOZORDER);
 }
@@ -249,13 +249,13 @@ void CL64_Interface::Show_Materials_Dlg(bool show)
 {
 	if (show == true)
 	{
-		App->CL_Properties_Materials->Show_Materials_Dialog_Ogre(true);
+		App->CL_Properties_Textures_Com->Show_Materials_Dialog(true);
 		Materials_Dlg_Active = true;
 		CheckMenuItem(App->Menu_Map, ID_WINDOW_MATERIALS, MF_BYCOMMAND | MF_CHECKED);
 	}
 	else
 	{
-		App->CL_Properties_Materials->Show_Materials_Dialog_Ogre(false);
+		App->CL_Properties_Textures_Com->Show_Materials_Dialog(false);
 		Materials_Dlg_Active = false;
 		CheckMenuItem(App->Menu_Map, ID_WINDOW_MATERIALS, MF_BYCOMMAND | MF_UNCHECKED);
 	}

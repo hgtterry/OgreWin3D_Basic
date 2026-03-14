@@ -104,7 +104,6 @@
 #define IDB_BONESOFF                    214
 #define IDB_TEXTURESON                  215
 #define IDB_TEXTURESOFF                 216
-#define IDD_TEXTURES_OGRE               217
 #define IDB_NO_TEXTURE                  218
 #define IDD_FILEVIEWER                  219
 #define IDB_TB_MODELDATAOFF             220
@@ -477,7 +476,6 @@
 #define IDC_BT_SCENE_RESET              1327
 #define IDC_BUTTON2                     1328
 #define IDC_TBSHOWHAIR                  1328
-#define IDC_BT_MATERIAL_FACES           1328
 #define IDC_BT_MOT_STOP                 1328
 #define IDC_TBSHOWGRID                  1329
 #define IDC_BUTTON1                     1331
@@ -485,7 +483,6 @@
 #define IDC_BT_HELP                     1331
 #define IDC_BT_WINCOLOR                 1331
 #define IDC_BT_DIMENSIONS               1331
-#define IDC_BT_PT_VIEWMAT               1331
 #define IDC_BT_LIBRARIES                1331
 #define IDC_BT_MOT_PLAY                 1331
 #define IDC_BT_AT_MATERIAL_FACES        1331
@@ -535,17 +532,12 @@
 #define IDC_BT_MAPVIEW                  1368
 #define IDC_BTSHOWTEXTURES              1369
 #define IDC_TBSHOWFACES                 1370
-#define IDC_PROP_BASETEXTURE_OGRE       1370
 #define IDC_BTSHOWPOINTS                1371
-#define IDC_LIST_MATERIALS              1371
 #define IDC_BTSHOWBONES                 1372
-#define IDC_LIST_TEXTURES               1372
 #define IDC_BTSHOWNORMALS               1373
 #define IDC_LST_FILE                    1373
 #define IDC_TBBOUNDBOX                  1374
-#define IDC_ST_PT_DIMENSIONS            1374
 #define IDC_BUTTON11                    1375
-#define IDC_ST_PT_NUMTEXTUNITS          1375
 #define IDC_BUTTON12                    1376
 #define IDC_TBINFO                      1376
 #define IDC_BT_MOTIONS_PAUSE            1376
@@ -556,13 +548,11 @@
 #define IDC_BT_MOT_MESH                 1381
 #define IDC_BUTTON3                     1382
 #define IDC_BT_MOT_BBOX                 1382
-#define IDC_BT_GROUPDETAILS             1382
 #define IDC_BT_TT_OPTIONS               1382
 #define IDC_AT_BASETEXTURE              1383
 #define IDC_LIST_AT_MATERIALS           1384
 #define IDC_LIST_AT_TEXTURES            1385
 #define IDC_ST_AT_DIMENSIONS            1386
-#define IDC_BT_PT_CHANGETEXTURE         1387
 #define IDC_ST_AT_NUMTEXTUNITS          1388
 #define IDC_ED_MOUSEWHEEL               1389
 #define IDC_ST_MOUSEWHEEL               1390

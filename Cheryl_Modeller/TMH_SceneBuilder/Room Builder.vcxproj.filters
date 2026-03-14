@@ -171,9 +171,6 @@
     <ClInclude Include="CL64_Mesh.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CL64_Properties_Materials.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="CL64_Interface.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -345,9 +342,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CL64_Mesh.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CL64_Properties_Materials.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CL64_Interface.cpp">

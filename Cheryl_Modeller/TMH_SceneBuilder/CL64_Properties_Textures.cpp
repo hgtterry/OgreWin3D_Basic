@@ -619,7 +619,7 @@ bool CL64_Properties_Textures::RenderTexture_Blit(HDC hDC, HBITMAP Bmp, const RE
 // *************************************************************************
 bool CL64_Properties_Textures::SelectBitmap()
 {
-	char mTextureName[MAX_PATH];
+	/*char mTextureName[MAX_PATH];
 	int TrueIndex = App->CL_TXL_Editor->GetIndex_From_Name(m_CurrentTexture);
 	strcpy(mTextureName, App->CL_TXL_Editor->Texture_List[TrueIndex]->FileName);
 	
@@ -651,7 +651,7 @@ bool CL64_Properties_Textures::SelectBitmap()
 			remove(mFileName);
 			return 1;
 		}
-	}
+	}*/
 
 	return 0;
 }

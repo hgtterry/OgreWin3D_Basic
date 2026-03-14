@@ -32,6 +32,8 @@ public:
 
 	void Reset_Class(void);
 
+	void Show_Materials_Dialog(bool Show);
+
 	bool Start_Props_Textures_Dialog();
 
 	bool RenderTexture_Blit(HDC hDC, HBITMAP Bmp, const RECT* SourceRect, const RECT* DestRect);
@@ -61,7 +63,7 @@ public:
 	HBITMAP	Sel_BaseBitmap;
 
 	HWND Textures_Dlg_Hwnd_Assimp;
-	HWND Textures_Dlg_Hwnd_Ogre;
+	//HWND Textures_Dlg_Hwnd_Ogre;
 
 //private:
 	static bool CALLBACK ViewerBasePic(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
