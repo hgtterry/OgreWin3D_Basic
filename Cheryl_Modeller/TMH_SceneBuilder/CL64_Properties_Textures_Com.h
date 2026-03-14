@@ -30,8 +30,17 @@ public:
 	CL64_Properties_Textures_Com(void);
 	~CL64_Properties_Textures_Com(void);
 
+	void Reset_Class(void);
+
 	void Fill_Textures_ListBox();
 	void Fill_Materials_ListBox();
+
+	void Update_Dlg_Bmp_Texture();
+
+	int Selected_Group;
+
+	long BasePicWidth;
+	long BasePicHeight;
 
 };
 

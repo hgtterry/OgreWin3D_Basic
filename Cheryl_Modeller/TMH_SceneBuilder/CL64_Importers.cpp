@@ -89,8 +89,8 @@ bool CL64_Importers::Assimp_Loader(bool useDialog, const char* extension, const 
 	Set_Editor();
 	App->CL_File_IO->RecentFileHistory_Update();
 
-	App->CL_Properties_Textures_Assimp->Selected_Group = 0;
-	App->CL_Properties_Textures_Assimp->Update_Texture_BMP();
+	App->CL_Properties_Textures_Com->Selected_Group = 0;
+	App->CL_Properties_Textures_Com->Update_Dlg_Bmp_Texture();
 	App->CL_Properties_Textures_Assimp->Get_First_Texture_Ogre();
 
 	return true;

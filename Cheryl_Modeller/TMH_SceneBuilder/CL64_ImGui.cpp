@@ -421,12 +421,12 @@ void CL64_ImGui::Show_Ogre_Model_Data_GUI(void)
 						{
 							App->CL_Properties_Materials->View_Texture(Texture, mMaterial);
 							App->CL_Properties_Materials->Select_By_Index(Count);
-							App->CL_Properties_Materials->Update_Texture_Ogre_Dlg();
+							App->CL_Properties_Textures_Com->Update_Dlg_Bmp_Texture();
 						}
 						else
 						{
 							App->CL_Properties_Materials->Sel_BaseBitmap_Ogre = App->CL_Mesh->Group[Count]->Base_Bitmap;
-							App->CL_Properties_Materials->Update_Texture_Ogre_Dlg();
+							App->CL_Properties_Textures_Com->Update_Dlg_Bmp_Texture();
 						}
 
 						listMaterialItems_Ogre[PreviouseMaterial_Ogre] = 0;
@@ -590,9 +590,9 @@ void CL64_ImGui::Show_Assimp_Model_Data_GUI(void)
 			{
 				if (ImGui::Selectable(App->CL_Mesh->Group[Count]->MaterialName, listMaterialItems_Assimp[Count]))
 				{
-					App->CL_Properties_Textures_Assimp->Selected_Group = Count;
+					App->CL_Properties_Textures_Com->Selected_Group = Count;
 					App->CL_Ogre->OGL_Listener->Selected_Face_Group = Count;
-					App->CL_Properties_Textures_Assimp->Update_Texture_BMP();
+					App->CL_Properties_Textures_Com->Update_Dlg_Bmp_Texture();
 
 					App->CL_Properties_Textures_Assimp->Select_By_Index(Count);
 					App->CL_Properties_Textures_Assimp->Update_Texture_Ogre_Dlg();

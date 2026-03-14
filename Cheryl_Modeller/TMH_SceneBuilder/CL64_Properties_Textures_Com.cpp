@@ -29,10 +29,32 @@ THE SOFTWARE.
 
 CL64_Properties_Textures_Com::CL64_Properties_Textures_Com(void)
 {
+	Selected_Group = 0;
+
+	BasePicWidth = 0;
+	BasePicHeight = 0;
 }
 
 CL64_Properties_Textures_Com::~CL64_Properties_Textures_Com(void)
 {
+}
+
+// *************************************************************************
+// *			Reset_Class:- Terry and Hazel Flanigan 2026				   *
+// *************************************************************************
+void CL64_Properties_Textures_Com::Reset_Class(void)
+{
+	Selected_Group = 0;
+
+	BasePicWidth = 0;
+	BasePicHeight = 0;
+
+	//App->CL_Interface->Show_Textures_Assimp_Dlg(false);
+
+	//App->CL_Properties_Textures_Com->Fill_Textures_ListBox();
+	//App->CL_Properties_Textures_Com->Fill_Materials_ListBox();
+
+	//Update_Texture_Ogre_Dlg();
 }
 
 // *************************************************************************
@@ -50,7 +72,7 @@ void CL64_Properties_Textures_Com::Fill_Textures_ListBox()
 		if (App->CL_Model->GroupCount > 0)
 		{
 			char mName[MAX_PATH];
-			strcpy(mName, App->CL_Mesh->Group[App->CL_Properties_Textures_Assimp->Selected_Group]->Assimp_Text_FileName);
+			strcpy(mName, App->CL_Mesh->Group[Selected_Group]->Assimp_Text_FileName);
 			SendDlgItemMessage(m_Textures_Dlg_hWnd, IDC_LIST_AT_TEXTURES, LB_ADDSTRING, (WPARAM)0, (LPARAM)mName);
 
 
@@ -71,9 +93,9 @@ void CL64_Properties_Textures_Com::Fill_Textures_ListBox()
 			char mName[MAX_PATH];
 
 			int Count = 0;
-			while (Count < App->CL_Mesh->Group[App->CL_Properties_Materials->Selected_Material_Index]->Ogre_NumTextureUnits)
+			while (Count < App->CL_Mesh->Group[Selected_Group]->Ogre_NumTextureUnits)
 			{
-				strcpy(mName, App->CL_Mesh->Group[App->CL_Properties_Materials->Selected_Material_Index]->v_Texture_Names[Count].c_str());
+				strcpy(mName, App->CL_Mesh->Group[Selected_Group]->v_Texture_Names[Count].c_str());
 
 				SendDlgItemMessage(m_Textures_Dlg_hWnd, IDC_LIST_TEXTURES, LB_ADDSTRING, (WPARAM)0, (LPARAM)mName);
 				Count++;
@@ -139,6 +161,68 @@ void CL64_Properties_Textures_Com::Fill_Materials_ListBox()
 
 			SendDlgItemMessage(m_Textures_Dlg_hWnd, IDC_LIST_MATERIALS, LB_SETCURSEL, (WPARAM)0, (LPARAM)0);
 		}
+	}
+}
+
+// *************************************************************************
+// *		Update_Dlg_Bmp_Texture:- Terry and Hazel Flanigan 2026	      *
+// *************************************************************************
+void CL64_Properties_Textures_Com::Update_Dlg_Bmp_Texture()
+{
+	// --------------------------------------------------------------------- Assimp
+	if (App->CL_Model->Model_Type == Enums::Model_Type_Assimp)
+	{
+		auto& m_Textures_Class = App->CL_Properties_Textures_Assimp;
+
+		int Index = Selected_Group;
+
+		strcpy(m_Textures_Class->mMaterialName, App->CL_Mesh->Group[Index]->MaterialName);
+		strcpy(m_Textures_Class->mTextureName, App->CL_Mesh->Group[Index]->Assimp_Text_FileName);
+
+		m_Textures_Class->Sel_BaseBitmap = App->CL_Mesh->Group[Index]->Base_Bitmap;
+
+		BITMAP bm;
+		GetObject(m_Textures_Class->Sel_BaseBitmap, sizeof(bm), &bm);
+
+		BasePicWidth = bm.bmWidth;
+		BasePicHeight = bm.bmHeight;
+
+		char Dimensions[MAX_PATH];
+		sprintf(Dimensions, "%i X %i", BasePicWidth, BasePicHeight);// , bm.bmBitsPixel);
+		SetDlgItemText(m_Textures_Class->Textures_Dlg_Hwnd_Assimp, IDC_ST_AT_DIMENSIONS, Dimensions);
+
+		ShowWindow(GetDlgItem(m_Textures_Class->Textures_Dlg_Hwnd_Assimp, IDC_AT_BASETEXTURE), 0);
+		ShowWindow(GetDlgItem(m_Textures_Class->Textures_Dlg_Hwnd_Assimp, IDC_AT_BASETEXTURE), 1);
+	}
+
+	// --------------------------------------------------------------------- Ogre
+	if (App->CL_Model->Model_Type == Enums::Model_Type_Ogre3D)
+	{
+		auto& m_Textures_Class = App->CL_Properties_Materials;
+
+		int Index = Selected_Group;
+
+		if (App->CL_Model->GroupCount > 0)
+		{
+			char NumTextUnits[20];
+			sprintf(NumTextUnits, "%s %i", "Texture Units", App->CL_Mesh->Group[Index]->Ogre_NumTextureUnits);// , bm.bmBitsPixel);
+			SetDlgItemText(m_Textures_Class->Textures_Dlg_Hwnd_Ogre, IDC_ST_PT_NUMTEXTUNITS, NumTextUnits);
+		}
+
+		BITMAP bm;
+		GetObject(m_Textures_Class->Sel_BaseBitmap_Ogre, sizeof(bm), &bm);
+
+		BasePicWidth = bm.bmWidth;
+		BasePicHeight = bm.bmHeight;
+
+		char Dimensions[MAX_PATH];
+		sprintf(Dimensions, "%i X %i", BasePicWidth, BasePicHeight);// , bm.bmBitsPixel);
+		SetDlgItemText(m_Textures_Class->Textures_Dlg_Hwnd_Ogre, IDC_ST_PT_DIMENSIONS, Dimensions);
+
+		ShowWindow(GetDlgItem(m_Textures_Class->Textures_Dlg_Hwnd_Ogre, IDC_PROP_BASETEXTURE_OGRE), 0);
+		ShowWindow(GetDlgItem(m_Textures_Class->Textures_Dlg_Hwnd_Ogre, IDC_PROP_BASETEXTURE_OGRE), 1);
+
+		RedrawWindow(m_Textures_Class->Textures_Dlg_Hwnd_Ogre, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 	}
 }
 

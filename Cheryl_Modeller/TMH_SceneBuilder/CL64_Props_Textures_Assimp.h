@@ -26,7 +26,6 @@ public:
 	bool Start_Props_Textures_Dialog();
 
 	bool Update_Texture_Ogre_Dlg();
-	bool Update_Texture_BMP(); // Needs Looking At Repeated Code for Now
 
 	bool View_Texture(char* TextureName, char* MaterialName);
 	void Texture_To_HBITMP(char* TextureFileName);
@@ -40,14 +39,10 @@ public:
 	char mMaterialName[MAX_PATH];
 	char mExport_PathAndName[MAX_PATH];
 
-	int Selected_Group;
-
 	HWND Textures_Dlg_Hwnd_Assimp;
 
 	HBITMAP	Sel_BaseBitmap;
-	long BasePicWidth;
-	long BasePicHeight;
-
+	
 protected:
 
 	static LRESULT CALLBACK Proc_Textures_Dialog(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);

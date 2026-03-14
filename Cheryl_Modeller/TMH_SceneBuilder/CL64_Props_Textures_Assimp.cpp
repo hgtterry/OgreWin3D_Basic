@@ -26,12 +26,8 @@ CL64_Properties_Textures_Assimp::CL64_Properties_Textures_Assimp(void)
 {
 	Textures_Dlg_Hwnd_Assimp = NULL;
 
-	Selected_Group = 0;
-	
 	Sel_BaseBitmap = nullptr;
-	BasePicWidth = 0;
-	BasePicHeight = 0;
-
+	
 	mExport_PathAndName[0] = 0;
 	strcpy(mTextureName, "Texture Name");
 	strcpy(mMaterialName, "Material Name");
@@ -46,11 +42,7 @@ CL64_Properties_Textures_Assimp::~CL64_Properties_Textures_Assimp(void)
 // *************************************************************************
 void CL64_Properties_Textures_Assimp::Reset_Class(void)
 {
-	Selected_Group = 0;
 	
-	//BasePicWidth_Ogre = 0;
-	//BasePicHeight_Ogre = 0;
-
 	App->CL_Interface->Show_Textures_Assimp_Dlg(false);
 
 	App->CL_Properties_Textures_Com->Fill_Textures_ListBox();
@@ -297,8 +289,8 @@ bool CALLBACK CL64_Properties_Textures_Assimp::ViewerBasePic(HWND hwnd, UINT msg
 
 			Source.left = 0;
 			Source.top = 0;
-			Source.bottom = App->CL_Properties_Textures_Assimp->BasePicHeight;
-			Source.right = App->CL_Properties_Textures_Assimp->BasePicWidth;
+			Source.bottom = App->CL_Properties_Textures_Com->BasePicHeight;
+			Source.right = App->CL_Properties_Textures_Com->BasePicWidth;
 
 			Dest = Rect;
 
@@ -357,33 +349,6 @@ bool CL64_Properties_Textures_Assimp::RenderTexture_Blit(HDC hDC, HBITMAP Bmp, c
 	return TRUE;
 }
 
-// *************************************************************************
-// *			Update_Texture_BMP:- Terry and Hazel Flanigan 2026	      *
-// *************************************************************************
-bool CL64_Properties_Textures_Assimp::Update_Texture_BMP()
-{
-	int Index = Selected_Group;
-
-	strcpy(mMaterialName, App->CL_Mesh->Group[Index]->MaterialName);
-	strcpy(mTextureName, App->CL_Mesh->Group[Index]->Assimp_Text_FileName);
-
-	Sel_BaseBitmap = App->CL_Mesh->Group[Index]->Base_Bitmap;
-
-	BITMAP bm;
-	GetObject(Sel_BaseBitmap, sizeof(bm), &bm);
-
-	BasePicWidth = bm.bmWidth;
-	BasePicHeight = bm.bmHeight;
-
-	char Dimensions[MAX_PATH];
-	sprintf(Dimensions, "%i X %i", BasePicWidth, BasePicHeight);// , bm.bmBitsPixel);
-	SetDlgItemText(Textures_Dlg_Hwnd_Assimp, IDC_ST_AT_DIMENSIONS, Dimensions);
-
-	ShowWindow(GetDlgItem(Textures_Dlg_Hwnd_Assimp, IDC_AT_BASETEXTURE), 0);
-	ShowWindow(GetDlgItem(Textures_Dlg_Hwnd_Assimp, IDC_AT_BASETEXTURE), 1);
-	
-	return 1;
-}
 
 // *************************************************************************
 // *			Select_By_Index:- Terry and Hazel Flanigan 2026			   *
@@ -402,10 +367,10 @@ void CL64_Properties_Textures_Assimp::List_Material_Changed(int index)
 	// Check if the model is loaded and is of type Assimp
 	if (App->CL_Model->flag_Model_Loaded && App->CL_Model->Model_Type == Enums::Model_Type_Assimp)
 	{
-		Selected_Group = index;
+		App->CL_Properties_Textures_Com->Selected_Group = index;
 
 		// Update texture and fill the textures list box
-		Update_Texture_BMP();
+		App->CL_Properties_Textures_Com->Update_Dlg_Bmp_Texture();
 		App->CL_Properties_Textures_Com->Fill_Textures_ListBox();
 
 		// Set the selected materials/groups in ImGui
@@ -414,7 +379,7 @@ void CL64_Properties_Textures_Assimp::List_Material_Changed(int index)
 		// If the file viewer is active, search for the new material
 		if (App->CL_Dialogs->flag_FileViewer_Active)
 		{
-			std::string materialText = "newmtl " + std::string(App->CL_Mesh->Group[Selected_Group]->MaterialName);
+			std::string materialText = "newmtl " + std::string(App->CL_Mesh->Group[App->CL_Properties_Textures_Com->Selected_Group]->MaterialName);
 			App->CL_Dialogs->Material_Search(materialText.c_str());
 		}
 
@@ -435,7 +400,7 @@ void CL64_Properties_Textures_Assimp::List_Material_Changed(int index)
 // *************************************************************************
 bool CL64_Properties_Textures_Assimp::Update_Texture_Ogre_Dlg()
 {
-	int Index = Selected_Group;
+	int Index = App->CL_Properties_Textures_Com->Selected_Group;
 
 //	SetDlgItemText(Props_Dlg_Hwnd, IDC_ST_PT_MATERIAL, mMaterialName);
 //	SetDlgItemText(Props_Dlg_Hwnd, IDC_PT_TEXTURENAME, mTextureName);
@@ -452,11 +417,11 @@ bool CL64_Properties_Textures_Assimp::Update_Texture_Ogre_Dlg()
 	BITMAP bm;
 	GetObject(Sel_BaseBitmap, sizeof(bm), &bm);
 
-	BasePicWidth = bm.bmWidth;
-	BasePicHeight = bm.bmHeight;
+	App->CL_Properties_Textures_Com->BasePicWidth = bm.bmWidth;
+	App->CL_Properties_Textures_Com->BasePicHeight = bm.bmHeight;
 
 	char Dimensions[MAX_PATH];
-	sprintf(Dimensions, "%i X %i", BasePicWidth, BasePicHeight);// , bm.bmBitsPixel);
+	sprintf(Dimensions, "%i X %i", App->CL_Properties_Textures_Com->BasePicWidth, App->CL_Properties_Textures_Com->BasePicHeight);// , bm.bmBitsPixel);
 	SetDlgItemText(Textures_Dlg_Hwnd_Assimp, IDC_ST_AT_DIMENSIONS, Dimensions);
 
 	ShowWindow(GetDlgItem(Textures_Dlg_Hwnd_Assimp, IDC_AT_BASETEXTURE), 0);
@@ -574,7 +539,7 @@ void CL64_Properties_Textures_Assimp::Get_First_Texture_Ogre()
 
 	//	}
 
-	Selected_Group = 0;
+	App->CL_Properties_Textures_Com->Selected_Group = 0;
 	App->CL_Properties_Textures_Com->Fill_Textures_ListBox();
 
 }

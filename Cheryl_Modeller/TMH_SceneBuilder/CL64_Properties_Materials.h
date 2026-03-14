@@ -34,7 +34,6 @@ public:
 	void Start_Materials_Dialog_Ogre();
 	void Show_Materials_Dialog_Ogre(bool Show);
 	void Get_First_Texture_Ogre();
-	bool Update_Texture_Ogre_Dlg();
 	bool View_Texture(char* TextureName, char* MaterialName);
 	void Texture_To_HBITMP(char* TextureFileName);
 	
@@ -48,13 +47,8 @@ public:
 	char m_MaterialName_Ogre[MAX_PATH];
 	char mExport_PathAndName_Ogre[MAX_PATH];
 
-	int Selected_Material_Index;
-	int Selected_Group;
-
 	HBITMAP	Sel_BaseBitmap_Ogre;
-	long BasePicWidth_Ogre;
-	long BasePicHeight_Ogre;
-
+	
 	Ogre::String mFileString_Ogre;
 
 	HWND Textures_Dlg_Hwnd_Ogre;

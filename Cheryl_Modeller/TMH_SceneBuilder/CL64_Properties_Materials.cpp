@@ -33,12 +33,7 @@ CL64_Properties_Materials::CL64_Properties_Materials(void)
 	strcpy(m_MaterialName_Ogre, "Material Name");
 
 	Sel_BaseBitmap_Ogre = NULL;
-	BasePicWidth_Ogre = 0;
-	BasePicHeight_Ogre = 0;
-
-	Selected_Material_Index = 0;
-	Selected_Group = 0;
-
+	
 	mFileString_Ogre.clear();
 
 	Textures_Dlg_Hwnd_Ogre = nullptr;
@@ -54,20 +49,16 @@ CL64_Properties_Materials::~CL64_Properties_Materials(void)
 // *************************************************************************
 void CL64_Properties_Materials::Reset_Class()
 {
-	Selected_Group = 0;
-	Selected_Material_Index = 0;
 	Sel_BaseBitmap_Ogre = NULL;
 	mFileString_Ogre.clear();
-	BasePicWidth_Ogre = 0;
-	BasePicHeight_Ogre = 0;
-
+	
 	App->CL_Interface->Show_Materials_Dlg(false);
 	App->CL_Interface->Menu_Enable_Materials(false);
 
 	App->CL_Properties_Textures_Com->Fill_Textures_ListBox();
 	App->CL_Properties_Textures_Com->Fill_Materials_ListBox();
 
-	Update_Texture_Ogre_Dlg();
+	App->CL_Properties_Textures_Com->Update_Dlg_Bmp_Texture();
 }
 
 // *************************************************************************
@@ -249,7 +240,7 @@ LRESULT CALLBACK CL64_Properties_Materials::Proc_Materials_Dialog_Ogre(HWND hDlg
 				}
 				else
 				{
-					App->CL_Resources->View_File(App->CL_Mesh->Group[App->CL_Properties_Materials->Selected_Group]->Ogre_Material_File, App->MainHwnd);
+					App->CL_Resources->View_File(App->CL_Mesh->Group[App->CL_Properties_Textures_Com->Selected_Group]->Ogre_Material_File, App->MainHwnd);
 				}
 			}
 
@@ -308,7 +299,7 @@ bool CALLBACK CL64_Properties_Materials::ViewerBasePic_Ogre(HWND hwnd, UINT msg,
 		// Check if a base bitmap is selected
 		if (App->CL_Properties_Materials->Sel_BaseBitmap_Ogre != nullptr)
 		{
-			RECT sourceRect = { 0, 0, App->CL_Properties_Materials->BasePicWidth_Ogre, App->CL_Properties_Materials->BasePicHeight_Ogre };
+			RECT sourceRect = { 0, 0, App->CL_Properties_Textures_Com->BasePicWidth, App->CL_Properties_Textures_Com->BasePicHeight };
 			RECT destRect = clientRect;
 
 			// Get the device context and set the stretch mode
@@ -383,15 +374,14 @@ void CL64_Properties_Materials::Get_First_Texture_Ogre()
 				//strcpy(App->CL_Resources->mSelected_File, m_CurrentTexture);
 			}
 
-			App->CL_Properties_Materials->Selected_Material_Index = 0;
-			App->CL_Properties_Materials->Selected_Group = 0;
+			App->CL_Properties_Textures_Com->Selected_Group = 0;
 			App->CL_Ogre->OGL_Listener->Selected_Face_Group = 0;
 
 			App->CL_Resources->mSelected_Resource_Group = "App_Resource_Group";
 
 			View_Texture(m_CurrentTexture_Ogre, m_MaterialName_Ogre);
 			App->CL_Properties_Textures_Com->Fill_Textures_ListBox();
-			Update_Texture_Ogre_Dlg();
+			App->CL_Properties_Textures_Com->Update_Dlg_Bmp_Texture();
 		}
 		else
 		{
@@ -408,13 +398,13 @@ void CL64_Properties_Materials::Get_First_Texture_Ogre()
 			{
 				View_Texture(m_CurrentTexture_Ogre, m_MaterialName_Ogre);
 				App->CL_Properties_Textures_Com->Fill_Textures_ListBox();
-				Update_Texture_Ogre_Dlg();
+				App->CL_Properties_Textures_Com->Update_Dlg_Bmp_Texture();
 			}
 			else
 			{
 				App->CL_Mesh->Group[0]->Base_Bitmap = LoadBitmap(App->hInst, MAKEINTRESOURCE(IDB_NO_TEXTURE));
 				Sel_BaseBitmap_Ogre = App->CL_Mesh->Group[0]->Base_Bitmap;
-				Update_Texture_Ogre_Dlg();
+				App->CL_Properties_Textures_Com->Update_Dlg_Bmp_Texture();
 			}
 
 		}
@@ -457,7 +447,7 @@ bool CL64_Properties_Materials::View_Texture(char* TextureName, char* MaterialNa
 
 			Texture_To_HBITMP(mFileName);
 
-			Update_Texture_Ogre_Dlg();
+			App->CL_Properties_Textures_Com->Update_Dlg_Bmp_Texture();
 
 			//App->CL_Props_Textures->Enable_Export_Button(true);
 
@@ -485,46 +475,14 @@ void CL64_Properties_Materials::Texture_To_HBITMP(char* TextureFileName)
 	Sel_BaseBitmap_Ogre = App->CL_Textures->Get_HBITMP(TextureFileName, hdc);
 
 	// Store the dimensions of the base picture
-	BasePicWidth_Ogre = App->CL_Textures->BasePicWidth;
-	BasePicHeight_Ogre = App->CL_Textures->BasePicHeight;
+	App->CL_Properties_Textures_Com->BasePicWidth = App->CL_Textures->BasePicWidth;
+	App->CL_Properties_Textures_Com->BasePicHeight = App->CL_Textures->BasePicHeight;
 
 	// Release the device context
 	ReleaseDC(previewWnd, hdc);
 
 	// Redraw the preview window to reflect the updated texture
 	RedrawWindow(previewWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-}
-
-// *************************************************************************
-// *		Update_Texture_Ogre_Dlg:- Terry and Hazel Flanigan 2026		   *
-// *************************************************************************
-bool CL64_Properties_Materials::Update_Texture_Ogre_Dlg()
-{
-	int Index = Selected_Group;
-
-	if (App->CL_Model->GroupCount > 0)
-	{
-		char NumTextUnits[20];
-		sprintf(NumTextUnits, "%s %i","Texture Units", App->CL_Mesh->Group[Index]->Ogre_NumTextureUnits);// , bm.bmBitsPixel);
-		SetDlgItemText(Textures_Dlg_Hwnd_Ogre, IDC_ST_PT_NUMTEXTUNITS, NumTextUnits);
-	}
-
-	BITMAP bm;
-	GetObject(Sel_BaseBitmap_Ogre, sizeof(bm), &bm);
-
-	BasePicWidth_Ogre = bm.bmWidth;
-	BasePicHeight_Ogre = bm.bmHeight;
-
-	char Dimensions[MAX_PATH];
-	sprintf(Dimensions, "%i X %i", BasePicWidth_Ogre, BasePicHeight_Ogre);// , bm.bmBitsPixel);
-	SetDlgItemText(Textures_Dlg_Hwnd_Ogre, IDC_ST_PT_DIMENSIONS, Dimensions);
-
-	ShowWindow(GetDlgItem(Textures_Dlg_Hwnd_Ogre, IDC_PROP_BASETEXTURE_OGRE), 0);
-	ShowWindow(GetDlgItem(Textures_Dlg_Hwnd_Ogre, IDC_PROP_BASETEXTURE_OGRE), 1);
-
-	RedrawWindow(Textures_Dlg_Hwnd_Ogre, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-	
-	return 1;
 }
 
 // *************************************************************************
@@ -546,26 +504,24 @@ void CL64_Properties_Materials::List_Material_Changed(int Index)
 		if (App->CL_Mesh->Group[Index]->Ogre_Texture_IsValid == true)
 		{
 			App->CL_Properties_Materials->View_Texture(Texture, mMaterial);
-			App->CL_Properties_Materials->Update_Texture_Ogre_Dlg();
+			App->CL_Properties_Textures_Com->Update_Dlg_Bmp_Texture();
 		}
 		else
 		{
 			App->CL_Properties_Materials->Sel_BaseBitmap_Ogre = App->CL_Mesh->Group[Index]->Base_Bitmap;
-			App->CL_Properties_Materials->Update_Texture_Ogre_Dlg();
+			App->CL_Properties_Textures_Com->Update_Dlg_Bmp_Texture();
 		}
 
 		// Select Materials/Groups in Imgu
 		App->CL_ImGui->Set_Materials_Index_Imgui(Index);
 
-
-		Selected_Material_Index = Index;
-		Selected_Group = Index;
+		App->CL_Properties_Textures_Com->Selected_Group = Index;
 
 		App->CL_Properties_Textures_Com->Fill_Textures_ListBox();
 
 		if (App->CL_Dialogs->flag_FileViewer_Active == true)
 		{
-			std::string materialText = "material " + std::string(App->CL_Mesh->Group[Selected_Group]->Ogre_Material);
+			std::string materialText = "material " + std::string(App->CL_Mesh->Group[App->CL_Properties_Textures_Com->Selected_Group]->Ogre_Material);
 			App->CL_Dialogs->Material_Search(materialText.c_str());
 		}
 
@@ -575,7 +531,7 @@ void CL64_Properties_Materials::List_Material_Changed(int Index)
 			App->CL_Dialogs->List_Mesh_Data(List);
 		}
 
-		App->CL_Properties_Materials->Update_Texture_Ogre_Dlg();
+		App->CL_Properties_Textures_Com->Update_Dlg_Bmp_Texture();
 		RedrawWindow(Textures_Dlg_Hwnd_Ogre, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 	}
 
@@ -590,8 +546,8 @@ void CL64_Properties_Materials::List_Texture_Changed(int Index)
 	{
 		if (App->CL_Model->GroupCount > 0)
 		{
-			strcpy(m_CurrentTexture_Ogre, App->CL_Mesh->Group[Selected_Group]->v_Texture_Names[Index].c_str());
-			strcpy(m_MaterialName_Ogre, App->CL_Mesh->Group[Selected_Group]->Ogre_Material);
+			strcpy(m_CurrentTexture_Ogre, App->CL_Mesh->Group[App->CL_Properties_Textures_Com->Selected_Group]->v_Texture_Names[Index].c_str());
+			strcpy(m_MaterialName_Ogre, App->CL_Mesh->Group[App->CL_Properties_Textures_Com->Selected_Group]->Ogre_Material);
 			View_Texture(m_CurrentTexture_Ogre, m_MaterialName_Ogre);
 		}
 	}
