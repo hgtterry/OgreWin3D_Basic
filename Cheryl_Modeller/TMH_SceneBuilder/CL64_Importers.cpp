@@ -91,7 +91,7 @@ bool CL64_Importers::Assimp_Loader(bool useDialog, const char* extension, const 
 
 	App->CL_Properties_Textures_Com->Selected_Group = 0;
 	App->CL_Properties_Textures_Com->Update_Dlg_Bmp_Texture();
-	App->CL_Properties_Textures_Assimp->Get_First_Texture_Ogre();
+	App->CL_Properties_Textures_Com->Get_First_Texture();
 
 	return true;
 }
@@ -222,7 +222,7 @@ bool CL64_Importers::Load_Ogre_Model(bool Use_File_Dialog, bool Check_Resource_F
 
 	App->CL_Model->Model_Type = Enums::Model_Type_Ogre3D;
 	App->CL_Properties_Textures_Com->Fill_Materials_ListBox();
-	App->CL_Properties_Materials->Get_First_Texture_Ogre();
+	App->CL_Properties_Textures_Com->Get_First_Texture();
 
 	Set_Editor();
 	
@@ -304,7 +304,7 @@ void CL64_Importers::Reload_Ogre_Model(Ogre::Quaternion Rotation)
 		App->CL_Ogre->camNode->setPosition(Ogre::Vector3(0, 0, App->CL_Model->Imported_Ogre_Ent->getBoundingRadius() * 2.8f));
 	}*/
 
-	App->CL_Properties_Materials->Get_First_Texture_Ogre();
+	App->CL_Properties_Textures_Com->Get_First_Texture();
 	App->CL_Properties_Textures_Com->Fill_Materials_ListBox();
 }
 

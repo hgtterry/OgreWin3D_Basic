@@ -33,22 +33,12 @@ public:
 
 	void Start_Materials_Dialog_Ogre();
 	void Show_Materials_Dialog_Ogre(bool Show);
-	void Get_First_Texture_Ogre();
-	bool View_Texture(char* TextureName, char* MaterialName);
-	void Texture_To_HBITMP(char* TextureFileName);
 	
 	void List_Texture_Changed(int Index);
-
-	char m_MaterialName_Ogre[MAX_PATH];
-	char mExport_PathAndName_Ogre[MAX_PATH];
 
 	Ogre::String mFileString_Ogre;
 
 private:
 	static LRESULT CALLBACK Proc_Materials_Dialog_Ogre(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
-
-	static bool CALLBACK ViewerBasePic_Ogre(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
-	bool RenderTexture_Blit_Ogre(HDC hDC, HBITMAP Bmp, const RECT* SourceRect, const RECT* DestRect);
-
 };
 

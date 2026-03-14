@@ -20,24 +20,5 @@ public:
 
 	CL64_Properties_Textures_Assimp(void);
 	~CL64_Properties_Textures_Assimp(void);
-
-	void Reset_Class(void);
-
-	bool Start_Props_Textures_Dialog();
-
-	bool Update_Texture_Ogre_Dlg();
-
-	void Get_First_Texture_Ogre();
-	
-	char mMaterialName[MAX_PATH];
-	char mExport_PathAndName[MAX_PATH];
-
-protected:
-
-	static LRESULT CALLBACK Proc_Textures_Dialog(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
-	static bool CALLBACK ViewerBasePic(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
-
-	bool RenderTexture_Blit(HDC hDC, HBITMAP Bmp, const RECT* SourceRect, const RECT* DestRect);
-
 };
 

@@ -32,6 +32,14 @@ public:
 
 	void Reset_Class(void);
 
+	bool Start_Props_Textures_Dialog();
+
+	bool RenderTexture_Blit(HDC hDC, HBITMAP Bmp, const RECT* SourceRect, const RECT* DestRect);
+
+	void Get_First_Texture();
+	bool View_Texture(char* TextureName, char* MaterialName);
+	void Texture_To_HBITMP(char* TextureFileName);
+
 	void Fill_Textures_ListBox();
 	void Fill_Materials_ListBox();
 
@@ -44,11 +52,19 @@ public:
 	long BasePicHeight;
 
 	char m_Current_TextureName[MAX_PATH];
+	char m_Current_MaterialName[MAX_PATH];
+	char m_Export_PathAndName[MAX_PATH];
 
 	HBITMAP	Sel_BaseBitmap;
 
 	HWND Textures_Dlg_Hwnd_Assimp;
 	HWND Textures_Dlg_Hwnd_Ogre;
+
+//private:
+	static bool CALLBACK ViewerBasePic(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
+private:
+
+	static LRESULT CALLBACK Proc_Textures_Dialog(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 };
 
 
