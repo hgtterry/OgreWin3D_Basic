@@ -64,7 +64,7 @@ void CL64_Properties_Materials::Reset_Class()
 	App->CL_Interface->Show_Materials_Dlg(false);
 	App->CL_Interface->Menu_Enable_Materials(false);
 
-	Fill_Textures_ListBox();
+	App->CL_Properties_Textures_Com->Fill_Textures_ListBox();
 	Fill_Materials_ListBox();
 
 	Update_Texture_Ogre_Dlg();
@@ -390,7 +390,7 @@ void CL64_Properties_Materials::Get_First_Texture_Ogre()
 			App->CL_Resources->mSelected_Resource_Group = "App_Resource_Group";
 
 			View_Texture(m_CurrentTexture_Ogre, m_MaterialName_Ogre);
-			App->CL_Properties_Materials->Fill_Textures_ListBox();
+			App->CL_Properties_Textures_Com->Fill_Textures_ListBox();
 			Update_Texture_Ogre_Dlg();
 		}
 		else
@@ -407,7 +407,7 @@ void CL64_Properties_Materials::Get_First_Texture_Ogre()
 			if (App->CL_Mesh->Group[0]->Ogre_Texture_IsValid == 1)
 			{
 				View_Texture(m_CurrentTexture_Ogre, m_MaterialName_Ogre);
-				App->CL_Properties_Materials->Fill_Textures_ListBox();
+				App->CL_Properties_Textures_Com->Fill_Textures_ListBox();
 				Update_Texture_Ogre_Dlg();
 			}
 			else
@@ -561,7 +561,7 @@ void CL64_Properties_Materials::List_Material_Changed(int Index)
 		Selected_Material_Index = Index;
 		Selected_Group = Index;
 
-		Fill_Textures_ListBox();
+		App->CL_Properties_Textures_Com->Fill_Textures_ListBox();
 
 		if (App->CL_Dialogs->flag_FileViewer_Active == true)
 		{
@@ -632,27 +632,4 @@ void CL64_Properties_Materials::Fill_Materials_ListBox()
 	}
 }
 
-// *************************************************************************
-// *		Fill_Textures_ListBox:- Terry and Hazel Flanigan 2026		   *
-// *************************************************************************
-void CL64_Properties_Materials::Fill_Textures_ListBox()
-{
-	SendDlgItemMessage(Textures_Dlg_Hwnd_Ogre, IDC_LIST_TEXTURES, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
-
-	if (App->CL_Model->GroupCount > 0)
-	{
-		char mName[MAX_PATH];
-
-		int Count = 0;
-		while (Count < App->CL_Mesh->Group[Selected_Material_Index]->Ogre_NumTextureUnits)
-		{
-			strcpy(mName, App->CL_Mesh->Group[Selected_Material_Index]->v_Texture_Names[Count].c_str());
-
-			SendDlgItemMessage(Textures_Dlg_Hwnd_Ogre, IDC_LIST_TEXTURES, LB_ADDSTRING, (WPARAM)0, (LPARAM)mName);
-			Count++;
-		}
-
-		SendDlgItemMessage(Textures_Dlg_Hwnd_Ogre, IDC_LIST_TEXTURES, LB_SETCURSEL, (WPARAM)0, (LPARAM)0);
-	}
-}
 

@@ -34,3 +34,53 @@ CL64_Properties_Textures_Com::CL64_Properties_Textures_Com(void)
 CL64_Properties_Textures_Com::~CL64_Properties_Textures_Com(void)
 {
 }
+
+// *************************************************************************
+// *		Fill_Textures_ListBox:- Terry and Hazel Flanigan 2026		   *
+// *************************************************************************
+void CL64_Properties_Textures_Com::Fill_Textures_ListBox()
+{
+	// --------------------------------------------------------------------- Assimp
+	if (App->CL_Model->Model_Type == Enums::Model_Type_Assimp)
+	{
+		auto& m_Textures_Dlg = App->CL_Properties_Textures_Assimp->Textures_Dlg_Hwnd_Assimp;
+
+		SendDlgItemMessage(m_Textures_Dlg, IDC_LIST_AT_TEXTURES, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
+
+		if (App->CL_Model->GroupCount > 0)
+		{
+			char mName[MAX_PATH];
+			strcpy(mName, App->CL_Mesh->Group[App->CL_Properties_Textures_Assimp->Selected_Group]->Assimp_Text_FileName);
+			SendDlgItemMessage(m_Textures_Dlg, IDC_LIST_AT_TEXTURES, LB_ADDSTRING, (WPARAM)0, (LPARAM)mName);
+
+
+			SendDlgItemMessage(m_Textures_Dlg, IDC_LIST_AT_TEXTURES, LB_SETCURSEL, (WPARAM)0, (LPARAM)0);
+
+		}
+	}
+
+	// --------------------------------------------------------------------- Ogre
+	if (App->CL_Model->Model_Type == Enums::Model_Type_Ogre3D)
+	{
+		auto& m_Textures_Dlg = App->CL_Properties_Materials->Textures_Dlg_Hwnd_Ogre;
+
+		SendDlgItemMessage(m_Textures_Dlg, IDC_LIST_TEXTURES, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
+
+		if (App->CL_Model->GroupCount > 0)
+		{
+			char mName[MAX_PATH];
+
+			int Count = 0;
+			while (Count < App->CL_Mesh->Group[App->CL_Properties_Materials->Selected_Material_Index]->Ogre_NumTextureUnits)
+			{
+				strcpy(mName, App->CL_Mesh->Group[App->CL_Properties_Materials->Selected_Material_Index]->v_Texture_Names[Count].c_str());
+
+				SendDlgItemMessage(m_Textures_Dlg, IDC_LIST_TEXTURES, LB_ADDSTRING, (WPARAM)0, (LPARAM)mName);
+				Count++;
+			}
+
+			SendDlgItemMessage(m_Textures_Dlg, IDC_LIST_TEXTURES, LB_SETCURSEL, (WPARAM)0, (LPARAM)0);
+		}
+	}
+}
+

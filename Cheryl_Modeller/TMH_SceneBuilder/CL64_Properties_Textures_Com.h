@@ -30,5 +30,7 @@ public:
 	CL64_Properties_Textures_Com(void);
 	~CL64_Properties_Textures_Com(void);
 
+	void Fill_Textures_ListBox();
+
 };
 

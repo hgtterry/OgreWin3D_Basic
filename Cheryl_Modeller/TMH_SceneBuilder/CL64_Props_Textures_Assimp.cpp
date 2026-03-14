@@ -53,7 +53,7 @@ void CL64_Properties_Textures_Assimp::Reset_Class(void)
 
 	App->CL_Interface->Show_Textures_Assimp_Dlg(false);
 
-	Fill_Textures_ListBox();
+	App->CL_Properties_Textures_Com->Fill_Textures_ListBox();
 	Fill_Materials_ListBox();
 
 	Update_Texture_Ogre_Dlg();
@@ -421,24 +421,6 @@ void CL64_Properties_Textures_Assimp::Select_By_Index(int Index)
 }
 
 // *************************************************************************
-// *		Fill_Textures_ListBox:- Terry and Hazel Flanigan 2026		   *
-// *************************************************************************
-void CL64_Properties_Textures_Assimp::Fill_Textures_ListBox()
-{
-	SendDlgItemMessage(Textures_Dlg_Hwnd_Assimp, IDC_LIST_AT_TEXTURES, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
-
-	if (App->CL_Model->GroupCount > 0)
-	{
-		char mName[MAX_PATH];
-		strcpy(mName, App->CL_Mesh->Group[Selected_Group]->Assimp_Text_FileName);
-		SendDlgItemMessage(Textures_Dlg_Hwnd_Assimp, IDC_LIST_AT_TEXTURES, LB_ADDSTRING, (WPARAM)0, (LPARAM)mName);
-		
-		
-		SendDlgItemMessage(Textures_Dlg_Hwnd_Assimp, IDC_LIST_AT_TEXTURES, LB_SETCURSEL, (WPARAM)0, (LPARAM)0);
-
-	}
-}
-// *************************************************************************
 // *	  	List_Material_Changed:- Terry and Hazel Flanigan 2026		   *
 // *************************************************************************
 void CL64_Properties_Textures_Assimp::List_Material_Changed(int index)
@@ -450,7 +432,7 @@ void CL64_Properties_Textures_Assimp::List_Material_Changed(int index)
 
 		// Update texture and fill the textures list box
 		Update_Texture_BMP();
-		Fill_Textures_ListBox();
+		App->CL_Properties_Textures_Com->Fill_Textures_ListBox();
 
 		// Set the selected materials/groups in ImGui
 		App->CL_ImGui->Set_Materials_Index_Imgui(index);
@@ -619,7 +601,7 @@ void CL64_Properties_Textures_Assimp::Get_First_Texture_Ogre()
 	//	}
 
 	Selected_Group = 0;
-	Fill_Textures_ListBox();
+	App->CL_Properties_Textures_Com->Fill_Textures_ListBox();
 
 }
 

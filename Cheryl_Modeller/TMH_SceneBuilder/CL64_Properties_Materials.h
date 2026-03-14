@@ -39,8 +39,7 @@ public:
 	void Texture_To_HBITMP(char* TextureFileName);
 	
 	void Fill_Materials_ListBox();
-	void Fill_Textures_ListBox();
-
+	
 	void List_Material_Changed(int Index);
 	void List_Texture_Changed(int Index);
 
