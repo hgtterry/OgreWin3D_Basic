@@ -65,7 +65,7 @@ void CL64_Properties_Materials::Reset_Class()
 	App->CL_Interface->Menu_Enable_Materials(false);
 
 	App->CL_Properties_Textures_Com->Fill_Textures_ListBox();
-	Fill_Materials_ListBox();
+	App->CL_Properties_Textures_Com->Fill_Materials_ListBox();
 
 	Update_Texture_Ogre_Dlg();
 }
@@ -606,30 +606,5 @@ void CL64_Properties_Materials::Select_By_Index(int Index)
 	List_Material_Changed(Index);
 }
 
-// *************************************************************************
-// *		Fill_Materials_ListBox:- Terry and Hazel Flanigan 2026		   *
-// *************************************************************************
-void CL64_Properties_Materials::Fill_Materials_ListBox()
-{
-	SendDlgItemMessage(Textures_Dlg_Hwnd_Ogre, IDC_LIST_MATERIALS, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
-
-	if (App->CL_Model->GroupCount > 0)
-	{
-		int Count = 0;
-		int Size = App->CL_Model->GroupCount;
-		while (Count < Size)
-		{
-			char mName[MAX_PATH];
-
-			strcpy(mName, App->CL_Mesh->Group[Count]->Ogre_Material);
-
-			SendDlgItemMessage(Textures_Dlg_Hwnd_Ogre, IDC_LIST_MATERIALS, LB_ADDSTRING, (WPARAM)0, (LPARAM)mName);
-
-			Count++;
-		}
-
-		SendDlgItemMessage(Textures_Dlg_Hwnd_Ogre, IDC_LIST_MATERIALS, LB_SETCURSEL, (WPARAM)0, (LPARAM)0);
-	}
-}
 
 

@@ -54,7 +54,7 @@ void CL64_Properties_Textures_Assimp::Reset_Class(void)
 	App->CL_Interface->Show_Textures_Assimp_Dlg(false);
 
 	App->CL_Properties_Textures_Com->Fill_Textures_ListBox();
-	Fill_Materials_ListBox();
+	App->CL_Properties_Textures_Com->Fill_Materials_ListBox();
 
 	Update_Texture_Ogre_Dlg();
 }
@@ -355,32 +355,6 @@ bool CL64_Properties_Textures_Assimp::RenderTexture_Blit(HDC hDC, HBITMAP Bmp, c
 	DeleteDC(MemDC);
 
 	return TRUE;
-}
-
-// *************************************************************************
-// *		Fill_Materials_ListBox:- Terry and Hazel Flanigan 2026		   *
-// *************************************************************************
-void CL64_Properties_Textures_Assimp::Fill_Materials_ListBox()
-{
-	SendDlgItemMessage(Textures_Dlg_Hwnd_Assimp, IDC_LIST_AT_MATERIALS, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
-
-	if (App->CL_Model->GroupCount > 0)
-	{
-		int Count = 0;
-		int Size = App->CL_Model->GroupCount;
-		while (Count < Size)
-		{
-			char mName[MAX_PATH];
-
-			strcpy(mName, App->CL_Mesh->Group[Count]->MaterialName);
-
-			SendDlgItemMessage(Textures_Dlg_Hwnd_Assimp, IDC_LIST_AT_MATERIALS, LB_ADDSTRING, (WPARAM)0, (LPARAM)mName);
-
-			Count++;
-		}
-
-		SendDlgItemMessage(Textures_Dlg_Hwnd_Assimp, IDC_LIST_AT_MATERIALS, LB_SETCURSEL, (WPARAM)0, (LPARAM)0);
-	}
 }
 
 // *************************************************************************

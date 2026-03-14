@@ -31,6 +31,7 @@ public:
 	~CL64_Properties_Textures_Com(void);
 
 	void Fill_Textures_ListBox();
+	void Fill_Materials_ListBox();
 
 };
 
