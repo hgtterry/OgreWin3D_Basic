@@ -113,7 +113,6 @@ CL64_App::CL64_App(void)
 	CL_Mesh =					nullptr;
 
 	CL_Properties_Materials =		nullptr;
-	CL_Properties_Textures_Assimp = nullptr;
 	CL_Properties_Textures_Com =	nullptr;
 
 	CUR = 0;
@@ -306,8 +305,7 @@ void CL64_App::InitApp(void)
 	CL_Model =					new CL64_Model();
 	CL_Mesh =					new CL64_Mesh();
 
-	CL_Properties_Materials =		new CL64_Properties_Materials;
-	CL_Properties_Textures_Assimp = new CL64_Properties_Textures_Assimp();
+	CL_Properties_Materials =		new CL64_Properties_Materials();
 	CL_Properties_Textures_Com =	new CL64_Properties_Textures_Com();
 	
 

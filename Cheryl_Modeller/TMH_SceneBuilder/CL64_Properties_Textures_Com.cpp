@@ -202,6 +202,22 @@ LRESULT CALLBACK CL64_Properties_Textures_Com::Proc_Textures_Dialog(HWND hDlg, U
 			return TRUE;
 		}
 
+		if (LOWORD(wParam) == IDC_LIST_AT_TEXTURES) // Click inside Textures list box
+		{
+			if (App->CL_Model->flag_Model_Loaded == true && App->CL_Model->Model_Type == Enums::Model_Type_Ogre3D)
+			{
+				int Index = SendDlgItemMessage(hDlg, IDC_LIST_TEXTURES, LB_GETCURSEL, (WPARAM)0, (LPARAM)0);
+				if (Index == LB_ERR)
+				{
+					App->Say("ListBox No Selection Available", (LPSTR)"");
+					return TRUE;
+				}
+
+				App->CL_Properties_Textures_Com->List_Texture_Changed(Index);
+			}
+			return TRUE;
+		}
+
 		if (LOWORD(wParam) == IDC_BT_AT_MATERIAL_FACES)
 		{
 			if (App->CL_Model->Model_Type == Enums::Model_Type_Assimp)
@@ -611,7 +627,7 @@ void CL64_Properties_Textures_Com::Update_Dlg_Bmp_Texture()
 	// --------------------------------------------------------------------- Assimp
 	if (App->CL_Model->Model_Type == Enums::Model_Type_Assimp)
 	{
-		auto& m_Textures_Class = App->CL_Properties_Textures_Assimp;
+		auto& m_Textures_Class = App->CL_Properties_Textures_Com;
 
 		int Index = Selected_Group;
 
@@ -749,6 +765,22 @@ void CL64_Properties_Textures_Com::List_Material_Changed(int index)
 
 		Update_Dlg_Bmp_Texture();
 		RedrawWindow(Textures_Dlg_Hwnd_Ogre, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+	}
+}
+
+// *************************************************************************
+// *	  	List_Texture_Changed:- Terry and Hazel Flanigan 2026		   *
+// *************************************************************************
+void CL64_Properties_Textures_Com::List_Texture_Changed(int Index)
+{
+	if (App->CL_Model->flag_Model_Loaded == true && App->CL_Model->Model_Type == Enums::Model_Type_Ogre3D)
+	{
+		if (App->CL_Model->GroupCount > 0)
+		{
+			strcpy(m_Current_TextureName, App->CL_Mesh->Group[Selected_Group]->v_Texture_Names[Index].c_str());
+			strcpy(m_Current_MaterialName, App->CL_Mesh->Group[Selected_Group]->Ogre_Material);
+			View_Texture(m_Current_TextureName, m_Current_MaterialName);
+		}
 	}
 }
 

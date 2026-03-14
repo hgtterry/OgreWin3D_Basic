@@ -44,7 +44,10 @@ public:
 	void Fill_Materials_ListBox();
 
 	void Update_Dlg_Bmp_Texture();
+
 	void List_Material_Changed(int index);
+	void List_Texture_Changed(int Index);
+
 
 	int Selected_Group;
 

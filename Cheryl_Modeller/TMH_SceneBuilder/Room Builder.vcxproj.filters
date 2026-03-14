@@ -192,9 +192,6 @@
     <ClInclude Include="CL64_Assimp.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CL64_Props_Textures_Assimp.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="CL64_Properties_Textures_Com.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -369,9 +366,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CL64_Assimp.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CL64_Props_Textures_Assimp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CL64_Properties_Textures_Com.cpp">

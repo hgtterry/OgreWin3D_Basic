@@ -34,8 +34,6 @@ public:
 	void Start_Materials_Dialog_Ogre();
 	void Show_Materials_Dialog_Ogre(bool Show);
 	
-	void List_Texture_Changed(int Index);
-
 	Ogre::String mFileString_Ogre;
 
 private:

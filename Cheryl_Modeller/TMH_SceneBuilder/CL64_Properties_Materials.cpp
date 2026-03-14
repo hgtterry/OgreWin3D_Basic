@@ -214,7 +214,7 @@ LRESULT CALLBACK CL64_Properties_Materials::Proc_Materials_Dialog_Ogre(HWND hDlg
 					return TRUE;
 				}
 				
-				App->CL_Properties_Materials->List_Texture_Changed(Index);
+				App->CL_Properties_Textures_Com->List_Texture_Changed(Index);
 			}
 			return TRUE;
 		}
@@ -268,21 +268,6 @@ LRESULT CALLBACK CL64_Properties_Materials::Proc_Materials_Dialog_Ogre(HWND hDlg
 	return FALSE;
 }
 
-// *************************************************************************
-// *	  	List_Texture_Changed:- Terry and Hazel Flanigan 2026		   *
-// *************************************************************************
-void CL64_Properties_Materials::List_Texture_Changed(int Index)
-{
-	if (App->CL_Model->flag_Model_Loaded == true && App->CL_Model->Model_Type == Enums::Model_Type_Ogre3D)
-	{
-		if (App->CL_Model->GroupCount > 0)
-		{
-			strcpy(App->CL_Properties_Textures_Com->m_Current_TextureName, App->CL_Mesh->Group[App->CL_Properties_Textures_Com->Selected_Group]->v_Texture_Names[Index].c_str());
-			strcpy(App->CL_Properties_Textures_Com->m_Current_MaterialName, App->CL_Mesh->Group[App->CL_Properties_Textures_Com->Selected_Group]->Ogre_Material);
-			App->CL_Properties_Textures_Com->View_Texture(App->CL_Properties_Textures_Com->m_Current_TextureName, App->CL_Properties_Textures_Com->m_Current_MaterialName);
-		}
-	}
-}
 
 
 
