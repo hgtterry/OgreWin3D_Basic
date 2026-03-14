@@ -29,14 +29,9 @@ THE SOFTWARE.
 
 CL64_Properties_Materials::CL64_Properties_Materials(void)
 {
-	strcpy(m_CurrentTexture_Ogre, "stfloor1");
 	strcpy(m_MaterialName_Ogre, "Material Name");
 
-	Sel_BaseBitmap_Ogre = NULL;
-	
 	mFileString_Ogre.clear();
-
-	Textures_Dlg_Hwnd_Ogre = nullptr;
 	mExport_PathAndName_Ogre[0] = 0;
 }
 
@@ -49,8 +44,7 @@ CL64_Properties_Materials::~CL64_Properties_Materials(void)
 // *************************************************************************
 void CL64_Properties_Materials::Reset_Class()
 {
-	Sel_BaseBitmap_Ogre = NULL;
-	mFileString_Ogre.clear();
+	/*mFileString_Ogre.clear();
 	
 	App->CL_Interface->Show_Materials_Dlg(false);
 	App->CL_Interface->Menu_Enable_Materials(false);
@@ -58,7 +52,7 @@ void CL64_Properties_Materials::Reset_Class()
 	App->CL_Properties_Textures_Com->Fill_Textures_ListBox();
 	App->CL_Properties_Textures_Com->Fill_Materials_ListBox();
 
-	App->CL_Properties_Textures_Com->Update_Dlg_Bmp_Texture();
+	App->CL_Properties_Textures_Com->Update_Dlg_Bmp_Texture();*/
 }
 
 // *************************************************************************
@@ -66,7 +60,7 @@ void CL64_Properties_Materials::Reset_Class()
 // *************************************************************************
 void CL64_Properties_Materials::Show_Materials_Dialog_Ogre(bool Show)
 {
-	ShowWindow(Textures_Dlg_Hwnd_Ogre, Show);
+	ShowWindow(App->CL_Properties_Textures_Com->Textures_Dlg_Hwnd_Ogre, Show);
 }
 
 // *************************************************************************
@@ -74,7 +68,7 @@ void CL64_Properties_Materials::Show_Materials_Dialog_Ogre(bool Show)
 // *************************************************************************
 void CL64_Properties_Materials::Start_Materials_Dialog_Ogre()
 {
-	Textures_Dlg_Hwnd_Ogre = CreateDialog(App->hInst, (LPCTSTR)IDD_TEXTURES_OGRE, App->MainHwnd, (DLGPROC)Proc_Materials_Dialog_Ogre);
+	App->CL_Properties_Textures_Com->Textures_Dlg_Hwnd_Ogre = CreateDialog(App->hInst, (LPCTSTR)IDD_TEXTURES_OGRE, App->MainHwnd, (DLGPROC)Proc_Materials_Dialog_Ogre);
 	Show_Materials_Dialog_Ogre(false);
 }
 
@@ -207,7 +201,7 @@ LRESULT CALLBACK CL64_Properties_Materials::Proc_Materials_Dialog_Ogre(HWND hDlg
 					return TRUE;
 				}
 
-				App->CL_Properties_Materials->List_Material_Changed(Index);
+				App->CL_Properties_Textures_Com->List_Material_Changed(Index);
 			}
 			return TRUE;
 		}
@@ -297,7 +291,7 @@ bool CALLBACK CL64_Properties_Materials::ViewerBasePic_Ogre(HWND hwnd, UINT msg,
 		FillRect(hDC, &clientRect, (HBRUSH)(RGB(0, 255, 0)));
 
 		// Check if a base bitmap is selected
-		if (App->CL_Properties_Materials->Sel_BaseBitmap_Ogre != nullptr)
+		if (App->CL_Properties_Textures_Com->Sel_BaseBitmap != nullptr)
 		{
 			RECT sourceRect = { 0, 0, App->CL_Properties_Textures_Com->BasePicWidth, App->CL_Properties_Textures_Com->BasePicHeight };
 			RECT destRect = clientRect;
@@ -307,7 +301,7 @@ bool CALLBACK CL64_Properties_Materials::ViewerBasePic_Ogre(HWND hwnd, UINT msg,
 			SetStretchBltMode(renderDC, HALFTONE);
 
 			// Render the texture
-			App->CL_Properties_Materials->RenderTexture_Blit_Ogre(renderDC, App->CL_Properties_Materials->Sel_BaseBitmap_Ogre, &sourceRect, &destRect);
+			App->CL_Properties_Materials->RenderTexture_Blit_Ogre(renderDC, App->CL_Properties_Textures_Com->Sel_BaseBitmap, &sourceRect, &destRect);
 			ReleaseDC(hwnd, renderDC);
 		}
 
@@ -369,7 +363,7 @@ void CL64_Properties_Materials::Get_First_Texture_Ogre()
 		{
 			if (App->CL_Model->GroupCount > 0)
 			{
-				strcpy(m_CurrentTexture_Ogre, App->CL_Mesh->Group[0]->v_Texture_Names[0].c_str());
+				strcpy(App->CL_Properties_Textures_Com->m_Current_TextureName, App->CL_Mesh->Group[0]->v_Texture_Names[0].c_str());
 				strcpy(m_MaterialName_Ogre, App->CL_Mesh->Group[0]->Ogre_Material);
 				//strcpy(App->CL_Resources->mSelected_File, m_CurrentTexture);
 			}
@@ -379,13 +373,13 @@ void CL64_Properties_Materials::Get_First_Texture_Ogre()
 
 			App->CL_Resources->mSelected_Resource_Group = "App_Resource_Group";
 
-			View_Texture(m_CurrentTexture_Ogre, m_MaterialName_Ogre);
+			View_Texture(App->CL_Properties_Textures_Com->m_Current_TextureName, m_MaterialName_Ogre);
 			App->CL_Properties_Textures_Com->Fill_Textures_ListBox();
 			App->CL_Properties_Textures_Com->Update_Dlg_Bmp_Texture();
 		}
 		else
 		{
-			strcpy(m_CurrentTexture_Ogre, App->CL_Mesh->Group[0]->v_Texture_Names[0].c_str());
+			strcpy(App->CL_Properties_Textures_Com->m_Current_TextureName, App->CL_Mesh->Group[0]->v_Texture_Names[0].c_str());
 			strcpy(m_MaterialName_Ogre, App->CL_Mesh->Group[0]->Ogre_Material);
 
 			bool test = strcmp(m_MaterialName_Ogre, "No_Material_Loaded");
@@ -396,14 +390,14 @@ void CL64_Properties_Materials::Get_First_Texture_Ogre()
 
 			if (App->CL_Mesh->Group[0]->Ogre_Texture_IsValid == 1)
 			{
-				View_Texture(m_CurrentTexture_Ogre, m_MaterialName_Ogre);
+				View_Texture(App->CL_Properties_Textures_Com->m_Current_TextureName, m_MaterialName_Ogre);
 				App->CL_Properties_Textures_Com->Fill_Textures_ListBox();
 				App->CL_Properties_Textures_Com->Update_Dlg_Bmp_Texture();
 			}
 			else
 			{
 				App->CL_Mesh->Group[0]->Base_Bitmap = LoadBitmap(App->hInst, MAKEINTRESOURCE(IDB_NO_TEXTURE));
-				Sel_BaseBitmap_Ogre = App->CL_Mesh->Group[0]->Base_Bitmap;
+				App->CL_Properties_Textures_Com->Sel_BaseBitmap = App->CL_Mesh->Group[0]->Base_Bitmap;
 				App->CL_Properties_Textures_Com->Update_Dlg_Bmp_Texture();
 			}
 
@@ -416,7 +410,7 @@ void CL64_Properties_Materials::Get_First_Texture_Ogre()
 // *************************************************************************
 bool CL64_Properties_Materials::View_Texture(char* TextureName, char* MaterialName)
 {
-	strcpy(m_CurrentTexture_Ogre, TextureName);
+	strcpy(App->CL_Properties_Textures_Com->m_Current_TextureName, TextureName);
 	strcpy(m_MaterialName_Ogre, MaterialName);
 
 	Ogre::FileInfoListPtr RFI = ResourceGroupManager::getSingleton().listResourceFileInfo(App->CL_Resources->mSelected_Resource_Group, false);
@@ -466,13 +460,13 @@ bool CL64_Properties_Materials::View_Texture(char* TextureName, char* MaterialNa
 void CL64_Properties_Materials::Texture_To_HBITMP(char* TextureFileName)
 {
 	// Retrieve the handle for the preview window
-	HWND previewWnd = GetDlgItem(Textures_Dlg_Hwnd_Ogre, IDC_PROP_BASETEXTURE_OGRE);
+	HWND previewWnd = GetDlgItem(App->CL_Properties_Textures_Com->Textures_Dlg_Hwnd_Ogre, IDC_PROP_BASETEXTURE_OGRE);
 
 	// Obtain the device context for the preview window
 	HDC hdc = GetDC(previewWnd);
 
 	// Load the bitmap texture using the application texture manager
-	Sel_BaseBitmap_Ogre = App->CL_Textures->Get_HBITMP(TextureFileName, hdc);
+	App->CL_Properties_Textures_Com->Sel_BaseBitmap = App->CL_Textures->Get_HBITMP(TextureFileName, hdc);
 
 	// Store the dimensions of the base picture
 	App->CL_Properties_Textures_Com->BasePicWidth = App->CL_Textures->BasePicWidth;
@@ -486,58 +480,6 @@ void CL64_Properties_Materials::Texture_To_HBITMP(char* TextureFileName)
 }
 
 // *************************************************************************
-// *	  	List_Material_Changed:- Terry and Hazel Flanigan 2023		   *
-// *************************************************************************
-void CL64_Properties_Materials::List_Material_Changed(int Index)
-{
-	if (App->CL_Model->flag_Model_Loaded == true && App->CL_Model->Model_Type == Enums::Model_Type_Ogre3D)
-	{
-		char mMaterial[MAX_PATH];
-		char Texture[MAX_PATH];
-		strcpy(Texture, App->CL_Mesh->Group[Index]->v_Texture_Names[0].c_str());
-		strcpy(mMaterial, App->CL_Mesh->Group[Index]->Ogre_Material);
-
-		strcpy(m_CurrentTexture_Ogre, Texture);
-
-		App->CL_Properties_Materials->View_Texture(Texture, mMaterial);
-
-		if (App->CL_Mesh->Group[Index]->Ogre_Texture_IsValid == true)
-		{
-			App->CL_Properties_Materials->View_Texture(Texture, mMaterial);
-			App->CL_Properties_Textures_Com->Update_Dlg_Bmp_Texture();
-		}
-		else
-		{
-			App->CL_Properties_Materials->Sel_BaseBitmap_Ogre = App->CL_Mesh->Group[Index]->Base_Bitmap;
-			App->CL_Properties_Textures_Com->Update_Dlg_Bmp_Texture();
-		}
-
-		// Select Materials/Groups in Imgu
-		App->CL_ImGui->Set_Materials_Index_Imgui(Index);
-
-		App->CL_Properties_Textures_Com->Selected_Group = Index;
-
-		App->CL_Properties_Textures_Com->Fill_Textures_ListBox();
-
-		if (App->CL_Dialogs->flag_FileViewer_Active == true)
-		{
-			std::string materialText = "material " + std::string(App->CL_Mesh->Group[App->CL_Properties_Textures_Com->Selected_Group]->Ogre_Material);
-			App->CL_Dialogs->Material_Search(materialText.c_str());
-		}
-
-		if (App->CL_Dialogs->flag_General_ListBox_Active == true)
-		{
-			HWND List = GetDlgItem(App->CL_Dialogs->ListBox_Dlg_Hwnd, IDC_LST_GENERAL);
-			App->CL_Dialogs->List_Mesh_Data(List);
-		}
-
-		App->CL_Properties_Textures_Com->Update_Dlg_Bmp_Texture();
-		RedrawWindow(Textures_Dlg_Hwnd_Ogre, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-	}
-
-}
-
-// *************************************************************************
 // *	  	List_Texture_Changed:- Terry and Hazel Flanigan 2026		   *
 // *************************************************************************
 void CL64_Properties_Materials::List_Texture_Changed(int Index)
@@ -546,21 +488,13 @@ void CL64_Properties_Materials::List_Texture_Changed(int Index)
 	{
 		if (App->CL_Model->GroupCount > 0)
 		{
-			strcpy(m_CurrentTexture_Ogre, App->CL_Mesh->Group[App->CL_Properties_Textures_Com->Selected_Group]->v_Texture_Names[Index].c_str());
+			strcpy(App->CL_Properties_Textures_Com->m_Current_TextureName, App->CL_Mesh->Group[App->CL_Properties_Textures_Com->Selected_Group]->v_Texture_Names[Index].c_str());
 			strcpy(m_MaterialName_Ogre, App->CL_Mesh->Group[App->CL_Properties_Textures_Com->Selected_Group]->Ogre_Material);
-			View_Texture(m_CurrentTexture_Ogre, m_MaterialName_Ogre);
+			View_Texture(App->CL_Properties_Textures_Com->m_Current_TextureName, m_MaterialName_Ogre);
 		}
 	}
 }
 
-// *************************************************************************
-// *			Select_By_Index:- Terry and Hazel Flanigan 2026			   *
-// *************************************************************************
-void CL64_Properties_Materials::Select_By_Index(int Index)
-{
-	SendDlgItemMessage(Textures_Dlg_Hwnd_Ogre, IDC_LIST_MATERIALS, LB_SETCURSEL, (WPARAM)Index, (LPARAM)0);
-	List_Material_Changed(Index);
-}
 
 
 

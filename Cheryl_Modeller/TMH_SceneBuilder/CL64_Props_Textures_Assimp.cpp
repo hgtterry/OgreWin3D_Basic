@@ -24,12 +24,7 @@ appreciated but is not required.
 
 CL64_Properties_Textures_Assimp::CL64_Properties_Textures_Assimp(void)
 {
-	Textures_Dlg_Hwnd_Assimp = NULL;
-
-	Sel_BaseBitmap = nullptr;
-	
 	mExport_PathAndName[0] = 0;
-	strcpy(mTextureName, "Texture Name");
 	strcpy(mMaterialName, "Material Name");
 }
 
@@ -56,7 +51,7 @@ void CL64_Properties_Textures_Assimp::Reset_Class(void)
 // *************************************************************************
 bool CL64_Properties_Textures_Assimp::Start_Props_Textures_Dialog()
 {
-	Textures_Dlg_Hwnd_Assimp = CreateDialog(App->hInst, (LPCTSTR)IDD_PROPERTIES_TEXTURES_ASSIMP, App->MainHwnd, (DLGPROC)Proc_Textures_Dialog);
+	App->CL_Properties_Textures_Com->Textures_Dlg_Hwnd_Assimp = CreateDialog(App->hInst, (LPCTSTR)IDD_PROPERTIES_TEXTURES_ASSIMP, App->MainHwnd, (DLGPROC)Proc_Textures_Dialog);
 
 	//App->CL_Props_Textures->Enable_Export_Button(false);
 	App->CL_Interface->Show_Textures_Assimp_Dlg(false);
@@ -177,7 +172,7 @@ LRESULT CALLBACK CL64_Properties_Textures_Assimp::Proc_Textures_Dialog(HWND hDlg
 					return TRUE;
 				}
 
-				App->CL_Properties_Textures_Assimp->List_Material_Changed(Index);
+				App->CL_Properties_Textures_Com->List_Material_Changed(Index);
 
 			}
 
@@ -257,14 +252,6 @@ LRESULT CALLBACK CL64_Properties_Textures_Assimp::Proc_Textures_Dialog(HWND hDlg
 }
 
 // *************************************************************************
-// *		Enable_Export_Button:- Terry and Hazel Flanigan 2024	  	   *
-// *************************************************************************
-void CL64_Properties_Textures_Assimp::Enable_Export_Button(bool Enable)
-{
-	//EnableWindow(GetDlgItem(Props_Dlg_Hwnd, IDC_BT_PT_EXPORT), Enable);
-}
-
-// *************************************************************************
 // *			ViewerBasePic:- Terry and Hazel Flanigan 2024	  		   *
 // *************************************************************************
 bool CALLBACK CL64_Properties_Textures_Assimp::ViewerBasePic(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
@@ -281,7 +268,7 @@ bool CALLBACK CL64_Properties_Textures_Assimp::ViewerBasePic(HWND hwnd, UINT msg
 		Rect.bottom--;
 		FillRect(hDC, &Rect, (HBRUSH)(RGB(0, 255, 0)));
 
-		if (App->CL_Properties_Textures_Assimp->Sel_BaseBitmap != NULL)
+		if (App->CL_Properties_Textures_Com->Sel_BaseBitmap != NULL)
 		{
 			RECT	Source;
 			RECT	Dest;
@@ -297,7 +284,7 @@ bool CALLBACK CL64_Properties_Textures_Assimp::ViewerBasePic(HWND hwnd, UINT msg
 			hDC = GetDC(hwnd);
 			SetStretchBltMode(hDC, HALFTONE);
 
-			App->CL_Properties_Textures_Assimp->RenderTexture_Blit(hDC, App->CL_Properties_Textures_Assimp->Sel_BaseBitmap, &Source, &Dest);
+			App->CL_Properties_Textures_Assimp->RenderTexture_Blit(hDC, App->CL_Properties_Textures_Com->Sel_BaseBitmap, &Source, &Dest);
 			ReleaseDC(hwnd, hDC);
 		}
 
@@ -349,52 +336,6 @@ bool CL64_Properties_Textures_Assimp::RenderTexture_Blit(HDC hDC, HBITMAP Bmp, c
 	return TRUE;
 }
 
-
-// *************************************************************************
-// *			Select_By_Index:- Terry and Hazel Flanigan 2026			   *
-// *************************************************************************
-void CL64_Properties_Textures_Assimp::Select_By_Index(int Index)
-{
-	SendDlgItemMessage(Textures_Dlg_Hwnd_Assimp, IDC_LIST_AT_MATERIALS, LB_SETCURSEL, (WPARAM)Index, (LPARAM)0);
-	List_Material_Changed(Index);
-}
-
-// *************************************************************************
-// *	  	List_Material_Changed:- Terry and Hazel Flanigan 2026		   *
-// *************************************************************************
-void CL64_Properties_Textures_Assimp::List_Material_Changed(int index)
-{
-	// Check if the model is loaded and is of type Assimp
-	if (App->CL_Model->flag_Model_Loaded && App->CL_Model->Model_Type == Enums::Model_Type_Assimp)
-	{
-		App->CL_Properties_Textures_Com->Selected_Group = index;
-
-		// Update texture and fill the textures list box
-		App->CL_Properties_Textures_Com->Update_Dlg_Bmp_Texture();
-		App->CL_Properties_Textures_Com->Fill_Textures_ListBox();
-
-		// Set the selected materials/groups in ImGui
-		App->CL_ImGui->Set_Materials_Index_Imgui(index);
-
-		// If the file viewer is active, search for the new material
-		if (App->CL_Dialogs->flag_FileViewer_Active)
-		{
-			std::string materialText = "newmtl " + std::string(App->CL_Mesh->Group[App->CL_Properties_Textures_Com->Selected_Group]->MaterialName);
-			App->CL_Dialogs->Material_Search(materialText.c_str());
-		}
-
-		// If the general list box is active, update the mesh data
-		if (App->CL_Dialogs->flag_General_ListBox_Active)
-		{
-			HWND list = GetDlgItem(App->CL_Dialogs->ListBox_Dlg_Hwnd, IDC_LST_GENERAL);
-			App->CL_Dialogs->List_Mesh_Data(list);
-		}
-
-		// Redraw the textures dialog window
-		RedrawWindow(Textures_Dlg_Hwnd_Assimp, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-	}
-}
-
 // *************************************************************************
 // *		Update_Texture_Ogre_Dlg:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
@@ -415,79 +356,19 @@ bool CL64_Properties_Textures_Assimp::Update_Texture_Ogre_Dlg()
 //	CheckMenuItem(App->mMenu, ID_WINDOWS_TEXTURESDIALOG, MF_BYCOMMAND | MF_CHECKED);
 
 	BITMAP bm;
-	GetObject(Sel_BaseBitmap, sizeof(bm), &bm);
+	GetObject(App->CL_Properties_Textures_Com->Sel_BaseBitmap, sizeof(bm), &bm);
 
 	App->CL_Properties_Textures_Com->BasePicWidth = bm.bmWidth;
 	App->CL_Properties_Textures_Com->BasePicHeight = bm.bmHeight;
 
 	char Dimensions[MAX_PATH];
 	sprintf(Dimensions, "%i X %i", App->CL_Properties_Textures_Com->BasePicWidth, App->CL_Properties_Textures_Com->BasePicHeight);// , bm.bmBitsPixel);
-	SetDlgItemText(Textures_Dlg_Hwnd_Assimp, IDC_ST_AT_DIMENSIONS, Dimensions);
+	SetDlgItemText(App->CL_Properties_Textures_Com->Textures_Dlg_Hwnd_Assimp, IDC_ST_AT_DIMENSIONS, Dimensions);
 
-	ShowWindow(GetDlgItem(Textures_Dlg_Hwnd_Assimp, IDC_AT_BASETEXTURE), 0);
-	ShowWindow(GetDlgItem(Textures_Dlg_Hwnd_Assimp, IDC_AT_BASETEXTURE), 1);
+	ShowWindow(GetDlgItem(App->CL_Properties_Textures_Com->Textures_Dlg_Hwnd_Assimp, IDC_AT_BASETEXTURE), 0);
+	ShowWindow(GetDlgItem(App->CL_Properties_Textures_Com->Textures_Dlg_Hwnd_Assimp, IDC_AT_BASETEXTURE), 1);
 
 	return 1;
-}
-
-// *************************************************************************
-// *				View_Texture:- Terry and Hazel Flanigan 2024		   *
-// *************************************************************************
-bool CL64_Properties_Textures_Assimp::View_Texture(char* TextureName, char* MaterialName)
-{
-	strcpy(mTextureName, TextureName);
-	strcpy(mMaterialName, MaterialName);
-
-	Ogre::FileInfoListPtr RFI = ResourceGroupManager::getSingleton().listResourceFileInfo(App->CL_Resources->mSelected_Resource_Group, false);
-	Ogre::FileInfoList::const_iterator i, iend;
-	iend = RFI->end();
-
-	for (i = RFI->begin(); i != iend; ++i)
-	{
-		if (i->filename == TextureName)
-		{
-			Ogre::DataStreamPtr ff = i->archive->open(i->filename);
-
-			App->CL_Resources->mFileString = ff->getAsString();
-
-			char mFileName[MAX_PATH];
-			strcpy(mFileName, App->RB_Directory_FullPath);
-			strcat(mFileName, "\\Data\\");
-			strcat(mFileName, TextureName);
-
-			strcpy(mExport_PathAndName, mFileName);
-
-			std::ofstream outFile;
-			outFile.open(mFileName, std::ios::binary);
-			outFile << App->CL_Resources->mFileString;
-			outFile.close();
-
-			App->CL_Resources->mFileString.clear();
-
-			Texture_To_HBITMP(mFileName);
-
-			Update_Texture_Ogre_Dlg();
-
-			//App->CL_Props_Textures->Enable_Export_Button(true);
-
-			remove(mFileName);
-
-			return 1;
-		}
-	}
-
-	return 0;
-}
-
-// *************************************************************************
-// *			 Texture_To_HBITMP:- Terry and Hazel Flanigan 2024	 	   *
-// *************************************************************************
-void CL64_Properties_Textures_Assimp::Texture_To_HBITMP(char* TextureFileName)
-{
-	//HWND PreviewWnd = GetDlgItem(App->CL_Dialogs->RightGroups_Hwnd, IDC_BASETEXTURE);
-	//HDC	hDC = GetDC(PreviewWnd);
-
-	//Sel_BaseBitmap = ilutWinLoadImage(TextureFileName, hDC);
 }
 
 // *************************************************************************

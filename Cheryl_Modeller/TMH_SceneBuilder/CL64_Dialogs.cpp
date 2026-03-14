@@ -1692,12 +1692,12 @@ LRESULT CALLBACK CL64_Dialogs::Proc_FileViewer(HWND hDlg, UINT message, WPARAM w
 			
 			if (App->CL_Model->flag_Model_Loaded == true && App->CL_Model->Model_Type == Enums::Model_Type_Ogre3D)
 			{
-				RedrawWindow(App->CL_Properties_Materials->Textures_Dlg_Hwnd_Ogre, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+				RedrawWindow(App->CL_Properties_Textures_Com->Textures_Dlg_Hwnd_Ogre, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			}
 
 			if (App->CL_Model->flag_Model_Loaded == true && App->CL_Model->Model_Type == Enums::Model_Type_Assimp)
 			{
-				RedrawWindow(App->CL_Properties_Textures_Assimp->Textures_Dlg_Hwnd_Assimp, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+				RedrawWindow(App->CL_Properties_Textures_Com->Textures_Dlg_Hwnd_Assimp, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			}
 
 			EndDialog(hDlg, LOWORD(wParam));
@@ -1713,12 +1713,12 @@ LRESULT CALLBACK CL64_Dialogs::Proc_FileViewer(HWND hDlg, UINT message, WPARAM w
 			
 			if (App->CL_Model->flag_Model_Loaded == true && App->CL_Model->Model_Type == Enums::Model_Type_Ogre3D)
 			{
-				RedrawWindow(App->CL_Properties_Materials->Textures_Dlg_Hwnd_Ogre, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+				RedrawWindow(App->CL_Properties_Textures_Com->Textures_Dlg_Hwnd_Ogre, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			}
 
 			if (App->CL_Model->flag_Model_Loaded == true && App->CL_Model->Model_Type == Enums::Model_Type_Assimp)
 			{
-				RedrawWindow(App->CL_Properties_Textures_Assimp->Textures_Dlg_Hwnd_Assimp, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+				RedrawWindow(App->CL_Properties_Textures_Com->Textures_Dlg_Hwnd_Assimp, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			}
 
 			EndDialog(hDlg, LOWORD(wParam));
@@ -1890,12 +1890,12 @@ LRESULT CALLBACK CL64_Dialogs::Proc_General_ListBox(HWND hDlg, UINT message, WPA
 
 			if (App->CL_Model->flag_Model_Loaded == true && App->CL_Model->Model_Type == Enums::Model_Type_Ogre3D)
 			{
-				RedrawWindow(App->CL_Properties_Materials->Textures_Dlg_Hwnd_Ogre, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+				RedrawWindow(App->CL_Properties_Textures_Com->Textures_Dlg_Hwnd_Ogre, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			}
 
 			if (App->CL_Model->flag_Model_Loaded == true && App->CL_Model->Model_Type == Enums::Model_Type_Assimp)
 			{
-				RedrawWindow(App->CL_Properties_Textures_Assimp->Textures_Dlg_Hwnd_Assimp, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+				RedrawWindow(App->CL_Properties_Textures_Com->Textures_Dlg_Hwnd_Assimp, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			}
 
 			EndDialog(hDlg, LOWORD(wParam));

@@ -29,10 +29,18 @@ THE SOFTWARE.
 
 CL64_Properties_Textures_Com::CL64_Properties_Textures_Com(void)
 {
+	Textures_Dlg_Hwnd_Assimp =	nullptr;
+	Textures_Dlg_Hwnd_Ogre =	nullptr;
+
 	Selected_Group = 0;
 
 	BasePicWidth = 0;
 	BasePicHeight = 0;
+
+	m_Current_TextureName[0] = 0;
+
+	Sel_BaseBitmap = NULL;
+
 }
 
 CL64_Properties_Textures_Com::~CL64_Properties_Textures_Com(void)
@@ -48,6 +56,8 @@ void CL64_Properties_Textures_Com::Reset_Class(void)
 
 	BasePicWidth = 0;
 	BasePicHeight = 0;
+
+	Sel_BaseBitmap = NULL;
 
 	//App->CL_Interface->Show_Textures_Assimp_Dlg(false);
 
@@ -65,7 +75,7 @@ void CL64_Properties_Textures_Com::Fill_Textures_ListBox()
 	// --------------------------------------------------------------------- Assimp
 	if (App->CL_Model->Model_Type == Enums::Model_Type_Assimp)
 	{
-		auto& m_Textures_Dlg_hWnd = App->CL_Properties_Textures_Assimp->Textures_Dlg_Hwnd_Assimp;
+		auto& m_Textures_Dlg_hWnd = Textures_Dlg_Hwnd_Assimp;
 
 		SendDlgItemMessage(m_Textures_Dlg_hWnd, IDC_LIST_AT_TEXTURES, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
 
@@ -84,7 +94,7 @@ void CL64_Properties_Textures_Com::Fill_Textures_ListBox()
 	// --------------------------------------------------------------------- Ogre
 	if (App->CL_Model->Model_Type == Enums::Model_Type_Ogre3D)
 	{
-		auto& m_Textures_Dlg_hWnd = App->CL_Properties_Materials->Textures_Dlg_Hwnd_Ogre;
+		auto& m_Textures_Dlg_hWnd = Textures_Dlg_Hwnd_Ogre;
 
 		SendDlgItemMessage(m_Textures_Dlg_hWnd, IDC_LIST_TEXTURES, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
 
@@ -114,7 +124,7 @@ void CL64_Properties_Textures_Com::Fill_Materials_ListBox()
 	// --------------------------------------------------------------------- Assimp
 	if (App->CL_Model->Model_Type == Enums::Model_Type_Assimp)
 	{
-		auto& m_Textures_Dlg_hWnd = App->CL_Properties_Textures_Assimp->Textures_Dlg_Hwnd_Assimp;
+		auto& m_Textures_Dlg_hWnd = Textures_Dlg_Hwnd_Assimp;
 
 		SendDlgItemMessage(m_Textures_Dlg_hWnd, IDC_LIST_AT_MATERIALS, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
 
@@ -140,7 +150,7 @@ void CL64_Properties_Textures_Com::Fill_Materials_ListBox()
 	// --------------------------------------------------------------------- Ogre
 	if (App->CL_Model->Model_Type == Enums::Model_Type_Ogre3D)
 	{
-		auto& m_Textures_Dlg_hWnd = App->CL_Properties_Materials->Textures_Dlg_Hwnd_Ogre;
+		auto& m_Textures_Dlg_hWnd = Textures_Dlg_Hwnd_Ogre;
 
 		SendDlgItemMessage(m_Textures_Dlg_hWnd, IDC_LIST_MATERIALS, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
 
@@ -177,22 +187,22 @@ void CL64_Properties_Textures_Com::Update_Dlg_Bmp_Texture()
 		int Index = Selected_Group;
 
 		strcpy(m_Textures_Class->mMaterialName, App->CL_Mesh->Group[Index]->MaterialName);
-		strcpy(m_Textures_Class->mTextureName, App->CL_Mesh->Group[Index]->Assimp_Text_FileName);
+		strcpy(m_Current_TextureName, App->CL_Mesh->Group[Index]->Assimp_Text_FileName);
 
-		m_Textures_Class->Sel_BaseBitmap = App->CL_Mesh->Group[Index]->Base_Bitmap;
+		Sel_BaseBitmap = App->CL_Mesh->Group[Index]->Base_Bitmap;
 
 		BITMAP bm;
-		GetObject(m_Textures_Class->Sel_BaseBitmap, sizeof(bm), &bm);
+		GetObject(Sel_BaseBitmap, sizeof(bm), &bm);
 
 		BasePicWidth = bm.bmWidth;
 		BasePicHeight = bm.bmHeight;
 
 		char Dimensions[MAX_PATH];
 		sprintf(Dimensions, "%i X %i", BasePicWidth, BasePicHeight);// , bm.bmBitsPixel);
-		SetDlgItemText(m_Textures_Class->Textures_Dlg_Hwnd_Assimp, IDC_ST_AT_DIMENSIONS, Dimensions);
+		SetDlgItemText(Textures_Dlg_Hwnd_Assimp, IDC_ST_AT_DIMENSIONS, Dimensions);
 
-		ShowWindow(GetDlgItem(m_Textures_Class->Textures_Dlg_Hwnd_Assimp, IDC_AT_BASETEXTURE), 0);
-		ShowWindow(GetDlgItem(m_Textures_Class->Textures_Dlg_Hwnd_Assimp, IDC_AT_BASETEXTURE), 1);
+		ShowWindow(GetDlgItem(Textures_Dlg_Hwnd_Assimp, IDC_AT_BASETEXTURE), 0);
+		ShowWindow(GetDlgItem(Textures_Dlg_Hwnd_Assimp, IDC_AT_BASETEXTURE), 1);
 	}
 
 	// --------------------------------------------------------------------- Ogre
@@ -206,23 +216,110 @@ void CL64_Properties_Textures_Com::Update_Dlg_Bmp_Texture()
 		{
 			char NumTextUnits[20];
 			sprintf(NumTextUnits, "%s %i", "Texture Units", App->CL_Mesh->Group[Index]->Ogre_NumTextureUnits);// , bm.bmBitsPixel);
-			SetDlgItemText(m_Textures_Class->Textures_Dlg_Hwnd_Ogre, IDC_ST_PT_NUMTEXTUNITS, NumTextUnits);
+			SetDlgItemText(Textures_Dlg_Hwnd_Ogre, IDC_ST_PT_NUMTEXTUNITS, NumTextUnits);
 		}
 
 		BITMAP bm;
-		GetObject(m_Textures_Class->Sel_BaseBitmap_Ogre, sizeof(bm), &bm);
+		GetObject(Sel_BaseBitmap, sizeof(bm), &bm);
 
 		BasePicWidth = bm.bmWidth;
 		BasePicHeight = bm.bmHeight;
 
 		char Dimensions[MAX_PATH];
 		sprintf(Dimensions, "%i X %i", BasePicWidth, BasePicHeight);// , bm.bmBitsPixel);
-		SetDlgItemText(m_Textures_Class->Textures_Dlg_Hwnd_Ogre, IDC_ST_PT_DIMENSIONS, Dimensions);
+		SetDlgItemText(Textures_Dlg_Hwnd_Ogre, IDC_ST_PT_DIMENSIONS, Dimensions);
 
-		ShowWindow(GetDlgItem(m_Textures_Class->Textures_Dlg_Hwnd_Ogre, IDC_PROP_BASETEXTURE_OGRE), 0);
-		ShowWindow(GetDlgItem(m_Textures_Class->Textures_Dlg_Hwnd_Ogre, IDC_PROP_BASETEXTURE_OGRE), 1);
+		ShowWindow(GetDlgItem(Textures_Dlg_Hwnd_Ogre, IDC_PROP_BASETEXTURE_OGRE), 0);
+		ShowWindow(GetDlgItem(Textures_Dlg_Hwnd_Ogre, IDC_PROP_BASETEXTURE_OGRE), 1);
 
-		RedrawWindow(m_Textures_Class->Textures_Dlg_Hwnd_Ogre, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+		RedrawWindow(Textures_Dlg_Hwnd_Ogre, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+	}
+}
+
+// *************************************************************************
+// *	  	List_Material_Changed:- Terry and Hazel Flanigan 2026		   *
+// *************************************************************************
+void CL64_Properties_Textures_Com::List_Material_Changed(int index)
+{
+	// Check if the model is loaded and is of type Assimp
+	if (App->CL_Model->flag_Model_Loaded && App->CL_Model->Model_Type == Enums::Model_Type_Assimp)
+	{
+		Selected_Group = index;
+
+		SendDlgItemMessage(Textures_Dlg_Hwnd_Assimp, IDC_LIST_AT_MATERIALS, LB_SETCURSEL, (WPARAM)index, (LPARAM)0);
+
+		// Update texture and fill the textures list box
+		Update_Dlg_Bmp_Texture();
+		Fill_Textures_ListBox();
+
+		// Set the selected materials/groups in ImGui
+		App->CL_ImGui->Set_Materials_Index_Imgui(index);
+
+		// If the file viewer is active, search for the new material
+		if (App->CL_Dialogs->flag_FileViewer_Active)
+		{
+			std::string materialText = "newmtl " + std::string(App->CL_Mesh->Group[App->CL_Properties_Textures_Com->Selected_Group]->MaterialName);
+			App->CL_Dialogs->Material_Search(materialText.c_str());
+		}
+
+		// If the general list box is active, update the mesh data
+		if (App->CL_Dialogs->flag_General_ListBox_Active)
+		{
+			HWND list = GetDlgItem(App->CL_Dialogs->ListBox_Dlg_Hwnd, IDC_LST_GENERAL);
+			App->CL_Dialogs->List_Mesh_Data(list);
+		}
+
+		// Redraw the textures dialog window
+		RedrawWindow(Textures_Dlg_Hwnd_Assimp, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+	}
+
+	if (App->CL_Model->flag_Model_Loaded == true && App->CL_Model->Model_Type == Enums::Model_Type_Ogre3D)
+	{
+		Selected_Group = index;
+
+		SendDlgItemMessage(Textures_Dlg_Hwnd_Ogre, IDC_LIST_MATERIALS, LB_SETCURSEL, (WPARAM)index, (LPARAM)0);
+
+
+		// For Material Search
+		char mMaterial[MAX_PATH];
+		char Texture[MAX_PATH];
+		strcpy(Texture, App->CL_Mesh->Group[index]->v_Texture_Names[0].c_str());
+		strcpy(mMaterial, App->CL_Mesh->Group[index]->Ogre_Material);
+		strcpy(m_Current_TextureName, Texture);
+		App->CL_Properties_Materials->View_Texture(Texture, mMaterial);
+
+
+
+		if (App->CL_Mesh->Group[index]->Ogre_Texture_IsValid == true)
+		{
+			App->CL_Properties_Materials->View_Texture(Texture, mMaterial);
+			Update_Dlg_Bmp_Texture();
+		}
+		else
+		{
+			Sel_BaseBitmap = App->CL_Mesh->Group[index]->Base_Bitmap;
+			Update_Dlg_Bmp_Texture();
+		}
+
+		// Select Materials/Groups in Imgu
+		App->CL_ImGui->Set_Materials_Index_Imgui(index);
+
+		Fill_Textures_ListBox();
+
+		if (App->CL_Dialogs->flag_FileViewer_Active == true)
+		{
+			std::string materialText = "material " + std::string(App->CL_Mesh->Group[App->CL_Properties_Textures_Com->Selected_Group]->Ogre_Material);
+			App->CL_Dialogs->Material_Search(materialText.c_str());
+		}
+
+		if (App->CL_Dialogs->flag_General_ListBox_Active == true)
+		{
+			HWND List = GetDlgItem(App->CL_Dialogs->ListBox_Dlg_Hwnd, IDC_LST_GENERAL);
+			App->CL_Dialogs->List_Mesh_Data(List);
+		}
+
+		Update_Dlg_Bmp_Texture();
+		RedrawWindow(Textures_Dlg_Hwnd_Ogre, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 	}
 }
 

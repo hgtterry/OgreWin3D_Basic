@@ -160,7 +160,7 @@ void CL64_Interface::Position_Materials_Dlg(void)
 	int dialogHeight = mainDialogRect.bottom - mainDialogRect.top;
 
 	// Set the position of the Textures dialog
-	SetWindowPos(App->CL_Properties_Materials->Textures_Dlg_Hwnd_Ogre, NULL,
+	SetWindowPos(App->CL_Properties_Textures_Com->Textures_Dlg_Hwnd_Ogre, NULL,
 		position.x + dialogWidth - 300, position.y + 25,
 		0, 0, SWP_NOSIZE | SWP_NOZORDER);
 }
@@ -183,7 +183,7 @@ void CL64_Interface::Position_Textures_Assimp_Dlg(void)
 	int dialogHeight = mainDialogRect.bottom - mainDialogRect.top;
 
 	// Set the position of the Textures dialog
-	SetWindowPos(App->CL_Properties_Textures_Assimp->Textures_Dlg_Hwnd_Assimp, NULL,
+	SetWindowPos(App->CL_Properties_Textures_Com->Textures_Dlg_Hwnd_Assimp, NULL,
 		position.x + dialogWidth - 300, position.y + 25,
 		0, 0, SWP_NOSIZE | SWP_NOZORDER);
 }
@@ -268,13 +268,13 @@ void CL64_Interface::Show_Textures_Assimp_Dlg(bool show)
 {
 	if (show == true)
 	{
-		ShowWindow(App->CL_Properties_Textures_Assimp->Textures_Dlg_Hwnd_Assimp, true);
+		ShowWindow(App->CL_Properties_Textures_Com->Textures_Dlg_Hwnd_Assimp, true);
 		Textures_Dlg_Assimp_Active = true;
 		CheckMenuItem(App->Menu_Map, ID_WINDOW_TEXTURES, MF_BYCOMMAND | MF_CHECKED);
 	}
 	else
 	{
-		ShowWindow(App->CL_Properties_Textures_Assimp->Textures_Dlg_Hwnd_Assimp, false);
+		ShowWindow(App->CL_Properties_Textures_Com->Textures_Dlg_Hwnd_Assimp, false);
 		Textures_Dlg_Assimp_Active = false;
 		CheckMenuItem(App->Menu_Map, ID_WINDOW_TEXTURES, MF_BYCOMMAND | MF_UNCHECKED);
 	}

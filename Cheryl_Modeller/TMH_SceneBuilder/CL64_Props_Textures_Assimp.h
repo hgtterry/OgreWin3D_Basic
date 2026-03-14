@@ -27,22 +27,11 @@ public:
 
 	bool Update_Texture_Ogre_Dlg();
 
-	bool View_Texture(char* TextureName, char* MaterialName);
-	void Texture_To_HBITMP(char* TextureFileName);
-	void Enable_Export_Button(bool Enable);
-
 	void Get_First_Texture_Ogre();
-	void List_Material_Changed(int Index);
-	void Select_By_Index(int Index);
 	
-	char mTextureName[MAX_PATH];
 	char mMaterialName[MAX_PATH];
 	char mExport_PathAndName[MAX_PATH];
 
-	HWND Textures_Dlg_Hwnd_Assimp;
-
-	HBITMAP	Sel_BaseBitmap;
-	
 protected:
 
 	static LRESULT CALLBACK Proc_Textures_Dialog(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);

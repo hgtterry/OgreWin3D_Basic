@@ -101,6 +101,7 @@ bool CL64_Importers::Assimp_Loader(bool useDialog, const char* extension, const 
 // *************************************************************************
 bool CL64_Importers::Load_Ogre_Model(bool Use_File_Dialog, bool Check_Resource_File)
 {
+	
 	if (Use_File_Dialog == true)
 	{
 		char Start_Directory[MAX_PATH];
@@ -129,7 +130,7 @@ bool CL64_Importers::Load_Ogre_Model(bool Use_File_Dialog, bool Check_Resource_F
 	}
 	
 	App->CL_Model->Clear_Model();
-
+	
 	if (App->CL_Resources->flag_Ogre_CFG_Loaded == true && Check_Resource_File == true)
 	{
 		App->CL_Dialogs->YesNo((LPSTR)"Use Loaded Resources", (LPSTR)"Yes No");

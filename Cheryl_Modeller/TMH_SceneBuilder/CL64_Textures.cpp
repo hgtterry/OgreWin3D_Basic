@@ -376,7 +376,7 @@ bool CL64_Textures::Windows_Preview_FullPath(int Index, char* FullPath)
 		char mFileName[MAX_PATH];
 		strcpy(mFileName, FullPath);
 
-		HWND PreviewWnd = GetDlgItem(App->CL_Properties_Textures_Assimp->Textures_Dlg_Hwnd_Assimp, IDC_AT_BASETEXTURE);
+		HWND PreviewWnd = GetDlgItem(App->CL_Properties_Textures_Com->Textures_Dlg_Hwnd_Assimp, IDC_AT_BASETEXTURE);
 		HDC	hDC = GetDC(PreviewWnd);
 
 		App->CL_Mesh->Group[Index]->Base_Bitmap = NULL;

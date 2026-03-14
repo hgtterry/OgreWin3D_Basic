@@ -36,11 +36,19 @@ public:
 	void Fill_Materials_ListBox();
 
 	void Update_Dlg_Bmp_Texture();
+	void List_Material_Changed(int index);
 
 	int Selected_Group;
 
 	long BasePicWidth;
 	long BasePicHeight;
 
+	char m_Current_TextureName[MAX_PATH];
+
+	HBITMAP	Sel_BaseBitmap;
+
+	HWND Textures_Dlg_Hwnd_Assimp;
+	HWND Textures_Dlg_Hwnd_Ogre;
 };
+
 

@@ -133,7 +133,7 @@ void CL64_Model::Clear_Model()
 	}
 
 	App->CL_ImGui->Reset_Class();
-
+	
 	// Check if the imported Ogre entity and node exist
 	if (App->CL_Model->Imported_Ogre_Ent && App->CL_Model->Imported_Ogre_Node)
 	{
@@ -146,7 +146,7 @@ void CL64_Model::Clear_Model()
 		App->CL_Model->Imported_Ogre_Ent = nullptr;
 		App->CL_Model->Imported_Ogre_Node = nullptr;
 	}
-
+	
 	// Reset the mesh data filename
 	App->CL_Mesh->S_OgreMeshData[0]->mFileName_Str = "No Model Loaded";
 	App->CL_Mesh->S_OgreMeshData[0]->m_Motion_Names.resize(0);
@@ -186,12 +186,13 @@ void CL64_Model::Clear_Model()
 	BoneCount = 0;
 
 	App->CL_Ogre->OGL_Listener->Reset_Class();
+	
+	
 
-	App->CL_Properties_Textures_Com->Reset_Class();
-
+	
 	App->CL_Properties_Materials->Reset_Class();
 	App->CL_Properties_Textures_Assimp->Reset_Class();
-
+	App->CL_Properties_Textures_Com->Reset_Class();
 	
 
 	App->CL_Interface->Show_Motions_Dlg(false);

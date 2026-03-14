@@ -37,21 +37,12 @@ public:
 	bool View_Texture(char* TextureName, char* MaterialName);
 	void Texture_To_HBITMP(char* TextureFileName);
 	
-	void List_Material_Changed(int Index);
 	void List_Texture_Changed(int Index);
 
-	void Select_By_Index(int Index);
-	
-
-	char m_CurrentTexture_Ogre[MAX_PATH];
 	char m_MaterialName_Ogre[MAX_PATH];
 	char mExport_PathAndName_Ogre[MAX_PATH];
 
-	HBITMAP	Sel_BaseBitmap_Ogre;
-	
 	Ogre::String mFileString_Ogre;
-
-	HWND Textures_Dlg_Hwnd_Ogre;
 
 private:
 	static LRESULT CALLBACK Proc_Materials_Dialog_Ogre(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
