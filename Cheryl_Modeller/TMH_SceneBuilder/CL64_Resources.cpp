@@ -42,14 +42,16 @@ CL64_Resources::CL64_Resources()
 	mSelected_File[0] = 0;
 	mbtext[0] = 0;
 
-	flag_Show_Group_All = 0;
-	flag_Show_App_Res = 0;
-	flag_Show_Demo_Res = 0;
-	flag_Show_All_Materials = 0;
-	flag_Show_All_Meshes = 0;
-	flag_Show_All_Textures = 0;
-	flag_Show_All_Skeleton = 0;
-	flag_Show_All_Overlays = 0;
+	flag_Show_Group_All = false;
+	flag_Show_App_Res = false;
+	flag_Show_Demo_Res = false;
+	flag_Show_All_Materials = false;
+	flag_Show_All_Meshes = false;
+	flag_Show_All_Textures = false;
+	flag_Show_All_Skeleton = false;
+	flag_Show_All_Overlays = false;
+
+	flag_Material_File_Loaded = false;
 
 	Ogre_Loader_Resource_Group = "Ogre_Loader_Resource_Group";
 
@@ -73,6 +75,7 @@ CL64_Resources::~CL64_Resources()
 // *************************************************************************
 void CL64_Resources::Reset_Class()
 {
+	flag_Material_File_Loaded = false;
 	// Check if the resource group exists and destroy it
 	Unload_OgreCFG_Resources();
 }

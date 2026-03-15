@@ -51,7 +51,9 @@ public:
 
 	std::string	ResourcesCfgFile;
 	Ogre::ConfigFile cf;
+
 	bool flag_Ogre_CFG_Loaded;
+	bool flag_Material_File_Loaded;
 
 	char Resource_File_Path_And_File[MAX_PATH];
 	char Resource_File_FileName[MAX_PATH];

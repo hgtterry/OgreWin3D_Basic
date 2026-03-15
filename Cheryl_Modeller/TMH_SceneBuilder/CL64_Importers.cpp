@@ -134,18 +134,25 @@ bool CL64_Importers::Load_Ogre_Model(bool Use_File_Dialog, bool Check_Resource_F
 
 	}
 	
+	bool Res = false;
+
 	App->CL_Model->Clear_Model();
 	
-	if (App->CL_Resources->flag_Ogre_CFG_Loaded == true && Check_Resource_File == true)
-	{
-		App->CL_Dialogs->YesNo((LPSTR)"Use Loaded Resources", (LPSTR)"Yes No");
-		if (App->CL_Dialogs->flag_Dlg_Canceled == true) // No
-		{
-			App->CL_Resources->Unload_OgreCFG_Resources();
-		}
-	}
+	//if (App->CL_Resources->flag_Ogre_CFG_Loaded == true && Check_Resource_File == true)
+	//{
+	//	App->CL_Dialogs->YesNo((LPSTR)"Use Loaded Resources", (LPSTR)"Yes No");
+	//	if (App->CL_Dialogs->flag_Dlg_Canceled == true) // No
+	//	{
+	//		App->CL_Resources->Unload_OgreCFG_Resources();
+	//	}
+	//	else
+	//	{
+	//		App->CL_Resources->flag_Material_File_Loaded = true;
+	//		Res = true;
+	//	}
+	//}
 
-	if (Check_Resource_File == false)
+	//if (Check_Resource_File == false)
 	{
 		App->CL_Resources->Unload_OgreCFG_Resources();
 	}
@@ -212,7 +219,10 @@ bool CL64_Importers::Load_Ogre_Model(bool Use_File_Dialog, bool Check_Resource_F
 		App->CL_Ogre->camNode->setPosition(Ogre::Vector3(0, 0, App->CL_Model->Imported_Ogre_Ent->getBoundingRadius() * 2.8f));
 	}
 
+	
 	App->CL_Mesh->Ogre_To_Mesh_Data(App->CL_Model->Imported_Ogre_Ent);
+
+	
 
 	App->CL_Resources->mSelected_Resource_Group = App->CL_Resources->Ogre_Loader_Resource_Group;
 
@@ -222,9 +232,9 @@ bool CL64_Importers::Load_Ogre_Model(bool Use_File_Dialog, bool Check_Resource_F
 	App->CL_Ogre->OGL_Listener->flag_ShowFaces = false;
 
 	App->CL_Motions->Get_Motions(App->CL_Model->Imported_Ogre_Ent);
-
+	
 	App->CL_Resources->mSelected_Resource_Group = App->CL_Resources->Ogre_Loader_Resource_Group;
-
+	
 	App->CL_Model->Model_Type = Enums::Model_Type_Ogre3D;
 	App->CL_Properties_Textures_Com->Fill_Materials_ListBox();
 	App->CL_Properties_Textures_Com->Get_First_Texture();
@@ -235,13 +245,10 @@ bool CL64_Importers::Load_Ogre_Model(bool Use_File_Dialog, bool Check_Resource_F
 
 	App->CL_Interface->Set_Title(false);
 
-	//App->CL_ImGui->flag_Open_Textures_List = 1;
-
-	//App->CL_Ogre->RenderFrame(3);
-
-	if (App->CL_Resources->flag_Ogre_CFG_Loaded == false && Check_Resource_File == true)
+	
+	if (App->CL_Resources->flag_Material_File_Loaded == false && Res == false)
 	{
-		App->CL_Dialogs->YesNo((LPSTR)"No Resources Loaded", (LPSTR)"Load Resources");
+		App->CL_Dialogs->YesNo((LPSTR)"No Material File", (LPSTR)"Do you want to load a Resource File");
 		if (App->CL_Dialogs->flag_Dlg_Canceled == false) // Yes
 		{
 			App->CL_Importers->Load_Ogre_Resource_CFG(true);
@@ -375,8 +382,9 @@ bool CL64_Importers::Load_Ogre_Resource_CFG(bool Use_File_Dialog)
 // *************************************************************************
 void CL64_Importers::Scan_Material_Files(void)
 {
-	bool All_Correct = true;
+	App->CL_Resources->flag_Material_File_Loaded = true;
 
+	bool All_Correct = true;
 	Ogre::String Material;
 
 	for (unsigned int i = 0; i < App->CL_Model->Imported_Ogre_Ent->getNumSubEntities(); ++i)
@@ -385,21 +393,31 @@ void CL64_Importers::Scan_Material_Files(void)
 
 		Material = subEnt->getMaterialName();
 
-		bool Test = Ogre::MaterialManager::getSingleton().resourceExists(subEnt->getMaterialName(), App->CL_Resources->Ogre_Loader_Resource_Group);
-		if (Test == true)
+		int Result = strcmp(Material.c_str(), "BaseWhite");
+		if (Result == 0)
 		{
-
+			All_Correct = false;
+			subEnt->setMaterialName("No_Material_Loaded", App->CL_Ogre->App_Resource_Group);
 		}
 		else
 		{
-			subEnt->setMaterialName("No_Material_Loaded", App->CL_Ogre->App_Resource_Group);
-			bool All_Correct = false;
+
+			bool Test = Ogre::MaterialManager::getSingleton().resourceExists(subEnt->getMaterialName(), App->CL_Resources->Ogre_Loader_Resource_Group);
+			if (Test == true)
+			{
+
+			}
+			else
+			{
+				subEnt->setMaterialName("No_Material_Loaded", App->CL_Ogre->App_Resource_Group);
+				All_Correct = false;
+			}
 		}
 	}
 
-	if (All_Correct == true)
+	if (All_Correct == false)
 	{
-		//App->CL_Resources->flag_Ogre_CFG_Loaded = true;
+		App->CL_Resources->flag_Material_File_Loaded = false;
 	}
 }
 
