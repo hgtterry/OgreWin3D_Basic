@@ -52,6 +52,7 @@ public:
 	void Show_file_view(bool show);
 
 	void Show_Motions_Dlg(bool show);
+	void Enable_Change_Textures_Button(bool option);
 
 
 	void Set_Editor_Startup();

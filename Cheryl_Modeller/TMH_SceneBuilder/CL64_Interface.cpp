@@ -286,6 +286,21 @@ void CL64_Interface::Menu_Enable_Textures(bool option)
 }
 
 // *************************************************************************
+// *	Enable_Change_Textures_Button:- Terry and Hazel Flanigan 2026	   *
+// *************************************************************************
+void CL64_Interface::Enable_Change_Textures_Button(bool option)
+{
+	if (option == true)
+	{
+		EnableWindow(GetDlgItem(App->CL_Properties_Textures_Com->Textures_Dlg_Hwnd_Assimp, IDC_BT_AT_CHANGETEXTURE), true);
+	}
+	else
+	{
+		EnableWindow(GetDlgItem(App->CL_Properties_Textures_Com->Textures_Dlg_Hwnd_Assimp, IDC_BT_AT_CHANGETEXTURE), false);
+	}
+}
+
+// *************************************************************************
 // *		Menu_Enable_OgreExport:- Terry and Hazel Flanigan 2026		   *
 // *************************************************************************
 void CL64_Interface::Menu_Enable_OgreExport(bool option)

@@ -22,6 +22,8 @@ void CL64_Importers::Set_Editor()
 
 	if(App->CL_Model->Model_Type == Enums::Model_Type_Ogre3D)
 	{
+		App->CL_Interface->Enable_Change_Textures_Button(false);
+		
 		App->CL_Interface->Menu_Enable_Textures(true);
 		App->CL_Interface->Menu_Enable_OgreExport(false);
 		App->CL_Interface->Show_file_view(true);
@@ -29,6 +31,8 @@ void CL64_Importers::Set_Editor()
 
 	if (App->CL_Model->Model_Type == Enums::Model_Type_Assimp)
 	{
+		App->CL_Interface->Enable_Change_Textures_Button(true);
+
 		App->CL_Interface->Menu_Enable_Textures(true);
 		App->CL_Ogre->OGL_Listener->flag_ShowTextured = true;
 		App->CL_Interface->Menu_Enable_OgreExport(true);

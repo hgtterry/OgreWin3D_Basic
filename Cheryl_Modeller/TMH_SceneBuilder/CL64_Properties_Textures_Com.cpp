@@ -302,6 +302,12 @@ LRESULT CALLBACK CL64_Properties_Textures_Com::Proc_Textures_Dialog(HWND hDlg, U
 			return TRUE;
 		}
 
+		if (LOWORD(wParam) == IDC_BT_AT_CHANGETEXTURE)
+		{
+			App->CL_Properties_Textures_Com->Change_Texture();
+			return TRUE;
+		}
+
 		if (LOWORD(wParam) == IDCANCEL)
 		{
 			App->CL_Interface->Show_Textures_Com_Dlg(false);
@@ -802,5 +808,56 @@ void CL64_Properties_Textures_Com::List_Texture_Changed(int Index)
 			View_Texture(m_Current_TextureName, m_Current_MaterialName);
 		}
 	}
+}
+
+// *************************************************************************
+// *			Change_Texture:- Terry and Hazel Flanigan 2026			   *
+// *************************************************************************
+bool CL64_Properties_Textures_Com::Change_Texture(void)
+{
+	int test = 0;
+	// -------------------- OBJ
+	if (App->CL_Model->Model_Type == Enums::Model_Type_Assimp)
+	{
+
+		LPCWSTR mType = L"Textures";
+		LPCWSTR mExtensions = L"*.bmp;*.tga;*.jpg;*.png";;
+
+		bool test = App->CL_File_IO->Open_File((LPCWSTR)mType, (LPCWSTR)mExtensions);
+		if (test == false)
+		{
+			return 0;
+		}
+
+		// Render Texture
+		App->CL_Textures->Soil_Load_Texture(App->CL_Textures->g_Texture, (LPSTR)App->CL_File_IO->s_Path_And_File.c_str(), Selected_Group);//App->S_MeshGroup[mIndex]->Soil_TextureIndex);
+
+		// Preview Texture
+		strcpy(App->CL_Mesh->Group[Selected_Group]->Assimp_Text_FileName, (LPSTR)App->CL_File_IO->s_Just_FileName.c_str());
+		strcpy(App->CL_Mesh->Group[Selected_Group]->Assimp_Texture_PathFileName, (LPSTR)App->CL_File_IO->s_Path_And_File.c_str());
+
+		char Texture_FolderPath[MAX_PATH];
+		strcpy(Texture_FolderPath, App->CL_File_IO->s_Path_And_File.c_str());
+
+		int len1 = strlen(App->CL_File_IO->s_Just_FileName.c_str());
+		int len2 = strlen(App->CL_File_IO->s_Path_And_File.c_str());
+
+		Texture_FolderPath[len2 - len1] = 0;
+		strcpy(App->CL_Mesh->Group[Selected_Group]->Assimp_Texture_FolderPath, Texture_FolderPath);
+
+		App->CL_Textures->Windows_Preview_FullPath(Selected_Group, (LPSTR)App->CL_File_IO->s_Path_And_File.c_str());
+		
+		List_Material_Changed(Selected_Group);
+		Update_Dlg_Bmp_Texture();
+		return 1;
+	}
+
+	if (App->CL_Model->Model_Type == Enums::Model_Type_Assimp)
+	{
+
+		
+	}
+
+	return TRUE;
 }
 

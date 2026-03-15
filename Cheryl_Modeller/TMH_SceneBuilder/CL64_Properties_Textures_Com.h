@@ -50,6 +50,7 @@ public:
 	void List_Material_Changed(int index);
 	void List_Texture_Changed(int Index);
 
+	bool Change_Texture(void);
 
 	int Selected_Group;
 
