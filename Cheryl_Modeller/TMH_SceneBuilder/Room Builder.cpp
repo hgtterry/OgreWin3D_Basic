@@ -927,11 +927,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             {
                 if (App->CL_Interface->Textures_Dlg_Assimp_Active == true)
                 {
-                    App->CL_Interface->Show_Textures_Assimp_Dlg(false);
+                    App->CL_Interface->Show_Textures_Com_Dlg(false);
                 }
                 else
                 {
-                    App->CL_Interface->Show_Textures_Assimp_Dlg(true);
+                    App->CL_Interface->Show_Textures_Com_Dlg(true);
                 }
 
                 return TRUE;
@@ -955,21 +955,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
             case ID_INFO_SCENE:
             {
-               
-                return 1;
-            }
-
-            case ID_WINDOW_MATERIALS:
-            {
-                if (App->CL_Interface->Materials_Dlg_Active == true)
-                {
-                    App->CL_Interface->Show_Materials_Dlg(false);
-                }
-                else
-                {
-                    App->CL_Interface->Show_Materials_Dlg(true);
-                }
-
                 return 1;
             }
 

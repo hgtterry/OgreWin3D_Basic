@@ -143,32 +143,9 @@ void CL64_Interface::Position_Tabs_Dlg(void)
 }
 
 // *************************************************************************
-// *		Position_Materials_Dlg:- Terry and Hazel Flanigan 2026		   *
+// *		Position_Textures_Dlg:- Terry and Hazel Flanigan 2026		   *
 // *************************************************************************
-void CL64_Interface::Position_Materials_Dlg(void)
-{
-	POINT position = { 0 };
-
-	// Map the window points to get the current position
-	int offset = MapWindowPoints(App->CL_Editor_Map->Main_View_Dlg_Hwnd, NULL, &position, 1);
-
-	RECT mainDialogRect;
-	GetWindowRect(App->CL_Editor_Map->Main_View_Dlg_Hwnd, &mainDialogRect);
-
-	// Calculate the width and height of the main dialog
-	int dialogWidth = mainDialogRect.right - mainDialogRect.left;
-	int dialogHeight = mainDialogRect.bottom - mainDialogRect.top;
-
-	// Set the position of the Textures dialog
-	SetWindowPos(App->CL_Properties_Textures_Com->Textures_Dlg_Hwnd_Assimp, NULL,
-		position.x + dialogWidth - 300, position.y + 25,
-		0, 0, SWP_NOSIZE | SWP_NOZORDER);
-}
-
-// *************************************************************************
-// *	Position_Textures_Assimp_Dlg:- Terry and Hazel Flanigan 2026	   *
-// *************************************************************************
-void CL64_Interface::Position_Textures_Assimp_Dlg(void)
+void CL64_Interface::Position_Textures_Dlg(void)
 {
 	POINT position = { 0 };
 
@@ -243,28 +220,9 @@ bool CL64_Interface::Resize_FileView(void)
 }
 
 // *************************************************************************
-// *			Show_Materials_Dlg:- Terry and Hazel Flanigan 2026		   *
+// *		Show_Textures_Assimp_Dlg:- Terry and Hazel Flanigan 2026	   *
 // *************************************************************************
-void CL64_Interface::Show_Materials_Dlg(bool show)
-{
-	if (show == true)
-	{
-		App->CL_Properties_Textures_Com->Show_Materials_Dialog(true);
-		Materials_Dlg_Active = true;
-		CheckMenuItem(App->Menu_Map, ID_WINDOW_MATERIALS, MF_BYCOMMAND | MF_CHECKED);
-	}
-	else
-	{
-		App->CL_Properties_Textures_Com->Show_Materials_Dialog(false);
-		Materials_Dlg_Active = false;
-		CheckMenuItem(App->Menu_Map, ID_WINDOW_MATERIALS, MF_BYCOMMAND | MF_UNCHECKED);
-	}
-}
-
-// *************************************************************************
-// *			Show_Materials_Dlg:- Terry and Hazel Flanigan 2026		   *
-// *************************************************************************
-void CL64_Interface::Show_Textures_Assimp_Dlg(bool show)
+void CL64_Interface::Show_Textures_Com_Dlg(bool show)
 {
 	if (show == true)
 	{
@@ -300,17 +258,17 @@ void CL64_Interface::Show_Motions_Dlg(bool show)
 }
 
 // *************************************************************************
-// *		Menu_Enable_Materials:- Terry and Hazel Flanigan 2026		   *
+// *		Menu_Enable_Textures:- Terry and Hazel Flanigan 2026		   *
 // *************************************************************************
-void CL64_Interface::Menu_Enable_Materials(bool option)
+void CL64_Interface::Menu_Enable_Textures(bool option)
 {
 	if (option == true)
 	{
-		EnableMenuItem(App->Menu_Map, ID_WINDOW_MATERIALS, MF_BYCOMMAND | MF_ENABLED);
+		EnableMenuItem(App->Menu_Map, ID_WINDOW_TEXTURES, MF_BYCOMMAND | MF_ENABLED);
 	}
 	else
 	{
-		EnableMenuItem(App->Menu_Map, ID_WINDOW_MATERIALS, MF_BYCOMMAND | MF_GRAYED);
+		EnableMenuItem(App->Menu_Map, ID_WINDOW_TEXTURES, MF_BYCOMMAND | MF_GRAYED);
 	}
 }
 

@@ -83,7 +83,7 @@ bool CL64_Properties_Textures_Com::Start_Props_Textures_Dialog()
 	Textures_Dlg_Hwnd_Assimp = CreateDialog(App->hInst, (LPCTSTR)IDD_PROPERTIES_TEXTURES_ASSIMP, App->MainHwnd, (DLGPROC)Proc_Textures_Dialog);
 
 	//App->CL_Props_Textures->Enable_Export_Button(false);
-	App->CL_Interface->Show_Textures_Assimp_Dlg(false);
+	App->CL_Interface->Show_Textures_Com_Dlg(false);
 
 	return 1;
 }
@@ -304,7 +304,7 @@ LRESULT CALLBACK CL64_Properties_Textures_Com::Proc_Textures_Dialog(HWND hDlg, U
 
 		if (LOWORD(wParam) == IDCANCEL)
 		{
-			App->CL_Interface->Show_Textures_Assimp_Dlg(false);
+			App->CL_Interface->Show_Textures_Com_Dlg(false);
 			return TRUE;
 		}
 	}
