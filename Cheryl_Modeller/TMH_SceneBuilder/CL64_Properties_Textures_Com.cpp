@@ -61,12 +61,10 @@ void CL64_Properties_Textures_Com::Reset_Class(void)
 
 	Sel_BaseBitmap = NULL;
 
-	//App->CL_Interface->Show_Textures_Assimp_Dlg(false);
-
 	//App->CL_Properties_Textures_Com->Fill_Textures_ListBox();
 	Fill_Materials_ListBox();
-
-	//Update_Texture_Ogre_Dlg();
+	Fill_Textures_ListBox();
+	Update_Dlg_Bmp_Texture();
 }
 
 // *************************************************************************
@@ -653,34 +651,20 @@ void CL64_Properties_Textures_Com::Update_Dlg_Bmp_Texture()
 	// --------------------------------------------------------------------- Assimp
 	if (App->CL_Model->Model_Type == Enums::Model_Type_Assimp)
 	{
-		auto& m_Textures_Class = App->CL_Properties_Textures_Com;
-
 		int Index = Selected_Group;
 
-		strcpy(m_Current_MaterialName, App->CL_Mesh->Group[Index]->MaterialName);
-		strcpy(m_Current_TextureName, App->CL_Mesh->Group[Index]->Assimp_Text_FileName);
+		if (App->CL_Model->GroupCount > 0)
+		{
+			strcpy(m_Current_MaterialName, App->CL_Mesh->Group[Index]->MaterialName);
+			strcpy(m_Current_TextureName, App->CL_Mesh->Group[Index]->Assimp_Text_FileName);
 
-		Sel_BaseBitmap = App->CL_Mesh->Group[Index]->Base_Bitmap;
-
-		BITMAP bm;
-		GetObject(Sel_BaseBitmap, sizeof(bm), &bm);
-
-		BasePicWidth = bm.bmWidth;
-		BasePicHeight = bm.bmHeight;
-
-		char Dimensions[MAX_PATH];
-		sprintf(Dimensions, "%i X %i", BasePicWidth, BasePicHeight);// , bm.bmBitsPixel);
-		SetDlgItemText(Textures_Dlg_Hwnd_Assimp, IDC_ST_AT_DIMENSIONS, Dimensions);
-
-		ShowWindow(GetDlgItem(Textures_Dlg_Hwnd_Assimp, IDC_AT_BASETEXTURE), 0);
-		ShowWindow(GetDlgItem(Textures_Dlg_Hwnd_Assimp, IDC_AT_BASETEXTURE), 1);
+			Sel_BaseBitmap = App->CL_Mesh->Group[Index]->Base_Bitmap;
+		}
 	}
 
 	// --------------------------------------------------------------------- Ogre
 	if (App->CL_Model->Model_Type == Enums::Model_Type_Ogre3D)
 	{
-		//auto& m_Textures_Class = App->CL_Properties_Materials;
-		auto& m_Textures_Class = App->CL_Properties_Textures_Com;
 		int Index = Selected_Group;
 
 		if (App->CL_Model->GroupCount > 0)
@@ -689,22 +673,32 @@ void CL64_Properties_Textures_Com::Update_Dlg_Bmp_Texture()
 			sprintf(NumTextUnits, "%s %i", "Texture Units", App->CL_Mesh->Group[Index]->Ogre_NumTextureUnits);// , bm.bmBitsPixel);
 			SetDlgItemText(Textures_Dlg_Hwnd_Assimp, IDC_ST_AT_NUMTEXTUNITS, NumTextUnits);
 		}
+	}
 
+	if (App->CL_Model->flag_Model_Loaded == true)
+	{
 		BITMAP bm;
 		GetObject(Sel_BaseBitmap, sizeof(bm), &bm);
 
-		BasePicWidth = bm.bmWidth;
-		BasePicHeight = bm.bmHeight;
+		if (Sel_BaseBitmap)
+		{
+			BasePicWidth = bm.bmWidth;
+			BasePicHeight = bm.bmHeight;
+		}
+		else
+		{
+			BasePicWidth = 0;
+			BasePicHeight = 0;
+		}
 
 		char Dimensions[MAX_PATH];
-		sprintf(Dimensions, "%i X %i", BasePicWidth, BasePicHeight);// , bm.bmBitsPixel);
+		sprintf(Dimensions, "%i X %i", BasePicWidth, BasePicHeight);
 		SetDlgItemText(Textures_Dlg_Hwnd_Assimp, IDC_ST_AT_DIMENSIONS, Dimensions);
 
 		ShowWindow(GetDlgItem(Textures_Dlg_Hwnd_Assimp, IDC_AT_BASETEXTURE), 0);
 		ShowWindow(GetDlgItem(Textures_Dlg_Hwnd_Assimp, IDC_AT_BASETEXTURE), 1);
-
-		RedrawWindow(Textures_Dlg_Hwnd_Assimp, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 	}
+
 }
 
 // *************************************************************************
