@@ -596,6 +596,12 @@ bool CL64_Export::Export_Object_Textures(void)
 // *************************************************************************
 void CL64_Export::Ogre_Export_Dlg()
 {
+	if (App->CL_Model->flag_Model_Loaded == false)
+	{
+		App->Say("No Model Loaded to Export");
+		return;
+	}
+
 	DialogBox(App->hInst, (LPCTSTR)IDD_OGRE_EXPORT, App->MainHwnd, (DLGPROC)Proc_Ogre_Export_Dlg);
 }
 

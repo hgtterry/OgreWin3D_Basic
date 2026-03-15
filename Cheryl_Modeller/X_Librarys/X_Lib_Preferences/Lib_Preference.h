@@ -40,6 +40,8 @@ public:
 	void Init_Configuration();
 	void Save_Config_File();
 
+	HWND Quick_Preffs_hWnd;
+
 	char Wad_File_Name[MAX_PATH];
 	char UserData_Folder[MAX_PATH];
 
@@ -50,7 +52,7 @@ public:
 	bool flag_OpenLastFile;
 	bool flag_MapEditor;
 	bool flag_SceneEditor;
-
+	bool flag_Quick_Preffs_Active;
 	
 	char Prefs_PathAndFile[MAX_PATH];
 	char Prefs_JustFileName[MAX_PATH];

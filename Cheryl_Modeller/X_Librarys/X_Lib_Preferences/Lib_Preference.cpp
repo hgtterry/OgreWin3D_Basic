@@ -29,6 +29,8 @@ THE SOFTWARE.
 
 Lib_Preference::Lib_Preference(void)
 {
+	Quick_Preffs_hWnd = nullptr;
+
 	Grid_Fine_Spacing = 8;
 	Grid_Spacing = 128;
 
@@ -41,6 +43,7 @@ Lib_Preference::Lib_Preference(void)
 	flag_OpenLastFile = false;
 	flag_MapEditor = true;
 	flag_SceneEditor = false;
+	flag_Quick_Preffs_Active = false;
 
 	Defalut_Zoom = 0.3;
 
@@ -307,9 +310,15 @@ LRESULT CALLBACK Lib_Preference::Proc_Options_Dlg(HWND hDlg, UINT message, WPARA
 // *************************************************************************
 void Lib_Preference::Start_Quick_Options_Dlg()
 {
-	//auto& m_Preferences = App->CL_Libs->CL_Preference;
+	if (flag_Quick_Preffs_Active == true)
+	{
+		return;
+	}
 
-	DialogBox(App->hInst, (LPCTSTR)IDD_PREFS_QUICK, App->MainHwnd, (DLGPROC)Proc_Quick_Options_Dlg);
+	flag_Quick_Preffs_Active = true;
+
+	Quick_Preffs_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_PREFS_QUICK, App->MainHwnd, (DLGPROC)Proc_Quick_Options_Dlg);
+	ShowWindow(Quick_Preffs_hWnd, true);
 }
 
 // *************************************************************************
@@ -317,8 +326,6 @@ void Lib_Preference::Start_Quick_Options_Dlg()
 // *************************************************************************
 LRESULT CALLBACK Lib_Preference::Proc_Quick_Options_Dlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
-	//auto& m_Preferences = App->CL_Libs->CL_Preference;
-
 	switch (message)
 	{
 
@@ -409,12 +416,14 @@ LRESULT CALLBACK Lib_Preference::Proc_Quick_Options_Dlg(HWND hDlg, UINT message,
 			int New_Num = atoi(buff);
 			App->CL_Keyboard->Mouse_Wheel_Zoom = New_Num;
 
-			EndDialog(hDlg, LOWORD(wParam));
+			App->CL_Libs->CL_Preference->flag_Quick_Preffs_Active = false;
+			//EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == IDCANCEL)
 		{
+			App->CL_Libs->CL_Preference->flag_Quick_Preffs_Active = false;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
