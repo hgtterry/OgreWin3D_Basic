@@ -46,6 +46,19 @@ void CL64_Interface::Reset_All_Dialogs(void)
 	ShowWindow(App->CL_Properties_Tabs->Tabs_Control_Hwnd, false);
 
 	App->CL_Top_Tabs->Reset_Bmps();
+
+	if (App->CL_Dialogs->flag_FileViewer_Active == true)
+	{
+		App->CL_Dialogs->flag_FileViewer_Active = false;
+		EndDialog(App->CL_Dialogs->FileViewer_Dlg_Hwnd, LOWORD(0));
+	}
+
+	if (App->CL_Dialogs->flag_General_ListBox_Active == true)
+	{
+		App->CL_Dialogs->flag_General_ListBox_Active = false;
+		EndDialog(App->CL_Dialogs->ListBox_Dlg_Hwnd, LOWORD(0));
+	}
+
 }
 
 // *************************************************************************

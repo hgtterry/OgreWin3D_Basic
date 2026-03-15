@@ -1690,12 +1690,7 @@ LRESULT CALLBACK CL64_Dialogs::Proc_FileViewer(HWND hDlg, UINT message, WPARAM w
 			// Remove Temporary File
 			remove(App->CL_Dialogs->m_ReadFile);
 			
-			if (App->CL_Model->flag_Model_Loaded == true && App->CL_Model->Model_Type == Enums::Model_Type_Ogre3D)
-			{
-				RedrawWindow(App->CL_Properties_Textures_Com->Textures_Dlg_Hwnd_Assimp, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-			}
-
-			if (App->CL_Model->flag_Model_Loaded == true && App->CL_Model->Model_Type == Enums::Model_Type_Assimp)
+			if (App->CL_Model->flag_Model_Loaded == true)
 			{
 				RedrawWindow(App->CL_Properties_Textures_Com->Textures_Dlg_Hwnd_Assimp, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			}
@@ -1711,12 +1706,7 @@ LRESULT CALLBACK CL64_Dialogs::Proc_FileViewer(HWND hDlg, UINT message, WPARAM w
 			// Remove Temporary File
 			remove(App->CL_Dialogs->m_ReadFile);
 			
-			if (App->CL_Model->flag_Model_Loaded == true && App->CL_Model->Model_Type == Enums::Model_Type_Ogre3D)
-			{
-				RedrawWindow(App->CL_Properties_Textures_Com->Textures_Dlg_Hwnd_Assimp, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-			}
-
-			if (App->CL_Model->flag_Model_Loaded == true && App->CL_Model->Model_Type == Enums::Model_Type_Assimp)
+			if (App->CL_Model->flag_Model_Loaded == true)
 			{
 				RedrawWindow(App->CL_Properties_Textures_Com->Textures_Dlg_Hwnd_Assimp, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			}
