@@ -134,27 +134,11 @@ bool CL64_Importers::Load_Ogre_Model(bool Use_File_Dialog, bool Check_Resource_F
 
 	}
 	
-	bool Res = false;
-
 	App->CL_Model->Clear_Model();
 	
-	//if (App->CL_Resources->flag_Ogre_CFG_Loaded == true && Check_Resource_File == true)
-	//{
-	//	App->CL_Dialogs->YesNo((LPSTR)"Use Loaded Resources", (LPSTR)"Yes No");
-	//	if (App->CL_Dialogs->flag_Dlg_Canceled == true) // No
-	//	{
-	//		App->CL_Resources->Unload_OgreCFG_Resources();
-	//	}
-	//	else
-	//	{
-	//		App->CL_Resources->flag_Material_File_Loaded = true;
-	//		Res = true;
-	//	}
-	//}
-
 	//if (Check_Resource_File == false)
 	{
-		App->CL_Resources->Unload_OgreCFG_Resources();
+		//App->CL_Resources->Unload_OgreCFG_Resources();
 	}
 
 	App->CL_Model->Set_Paths();
@@ -204,7 +188,6 @@ bool CL64_Importers::Load_Ogre_Model(bool Use_File_Dialog, bool Check_Resource_F
 		return false;
 	}
 
-
 	Scan_Material_Files();
 
 	App->CL_Camera->Reset_View();
@@ -219,10 +202,7 @@ bool CL64_Importers::Load_Ogre_Model(bool Use_File_Dialog, bool Check_Resource_F
 		App->CL_Ogre->camNode->setPosition(Ogre::Vector3(0, 0, App->CL_Model->Imported_Ogre_Ent->getBoundingRadius() * 2.8f));
 	}
 
-	
 	App->CL_Mesh->Ogre_To_Mesh_Data(App->CL_Model->Imported_Ogre_Ent);
-
-	
 
 	App->CL_Resources->mSelected_Resource_Group = App->CL_Resources->Ogre_Loader_Resource_Group;
 
@@ -245,8 +225,7 @@ bool CL64_Importers::Load_Ogre_Model(bool Use_File_Dialog, bool Check_Resource_F
 
 	App->CL_Interface->Set_Title(false);
 
-	
-	if (App->CL_Resources->flag_Material_File_Loaded == false && Res == false)
+	if (App->CL_Resources->flag_Material_File_Loaded == false)
 	{
 		App->CL_Dialogs->YesNo((LPSTR)"No Material File", (LPSTR)"Do you want to load a Resource File");
 		if (App->CL_Dialogs->flag_Dlg_Canceled == false) // Yes
