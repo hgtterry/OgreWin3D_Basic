@@ -30,7 +30,7 @@ THE SOFTWARE.
 CL64_Properties_Textures_Com::CL64_Properties_Textures_Com(void)
 {
 	Textures_Dlg_Hwnd_Assimp =	nullptr;
-	//Textures_Dlg_Hwnd_Ogre =	nullptr;
+	Texture_Editor_Dlg_Hwnd =	nullptr;
 
 	Selected_Group = 0;
 
@@ -40,6 +40,8 @@ CL64_Properties_Textures_Com::CL64_Properties_Textures_Com(void)
 	m_Current_TextureName[0] = 0;
 	m_Current_MaterialName[0] = 0;
 	m_Export_PathAndName[0] = 0;
+
+	Textures_Editor_Dlg_Active = false;
 
 	Sel_BaseBitmap = NULL;
 
@@ -304,7 +306,9 @@ LRESULT CALLBACK CL64_Properties_Textures_Com::Proc_Textures_Dialog(HWND hDlg, U
 
 		if (LOWORD(wParam) == IDC_BT_AT_CHANGETEXTURE)
 		{
-			App->CL_Properties_Textures_Com->Change_Texture();
+			//App->CL_Properties_Textures_Com->Change_Texture();
+			App->CL_Properties_Textures_Com->Start_Texture_Editor_Dialog();
+
 			return TRUE;
 		}
 
@@ -402,6 +406,104 @@ bool CL64_Properties_Textures_Com::RenderTexture_Blit(HDC hDC, HBITMAP Bmp, cons
 	DeleteDC(MemDC);
 
 	return TRUE;
+}
+
+// *************************************************************************
+// *	 Start_Texture_Editor_Dialog:- Terry and Hazel Flanigan 2026	   *
+// *************************************************************************
+bool CL64_Properties_Textures_Com::Start_Texture_Editor_Dialog()
+{
+	if (Textures_Editor_Dlg_Active == true)
+	{
+		return 1;
+	}
+
+	Textures_Editor_Dlg_Active = true;
+
+	Texture_Editor_Dlg_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MODEL_TEXTURES_EDITOR, App->MainHwnd, (DLGPROC)Proc_Texture_Editor);
+
+	return 1;
+}
+
+// *************************************************************************
+// *		Proc_Texture_Editor:- Terry and Hazel Flanigan 2026			   *
+// *************************************************************************
+LRESULT CALLBACK CL64_Properties_Textures_Com::Proc_Texture_Editor(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+	switch (message)
+	{
+	case WM_INITDIALOG:
+	{
+		SendDlgItemMessage(hDlg, IDC_BT_MTE_CHANGETEXTURE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+	}
+
+	case WM_CTLCOLORSTATIC:
+	{
+		if (GetDlgItem(hDlg, IDC_ST_AT_DIMENSIONS) == (HWND)lParam)
+		{
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		
+		return FALSE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->AppBackground;
+	}
+
+	case WM_CLOSE:
+	{
+		/*ShowWindow(App->CL_Props_Textures->Props_Dlg_Hwnd, 0);
+		App->CL_Props_Textures->RightGroups_Visable = 0;
+		CheckMenuItem(App->mMenu, ID_WINDOWS_TEXTURESDIALOG, MF_BYCOMMAND | MF_UNCHECKED);*/
+		break;
+	}
+
+
+	case WM_NOTIFY:
+	{
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		if (some_item->idFrom == IDC_BT_MTE_CHANGETEXTURE)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+
+			App->Custom_Button_Toggle(item, App->CL_Dialogs->flag_FileViewer_Active);
+		}
+
+		return CDRF_DODEFAULT;
+	}
+
+	case WM_COMMAND:
+	{
+		if (LOWORD(wParam) == IDC_BT_MTE_CHANGETEXTURE)
+		{
+			App->CL_Properties_Textures_Com->Change_Texture();
+
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDOK)
+		{
+			App->CL_Properties_Textures_Com->Textures_Editor_Dlg_Active = false;
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDCANCEL)
+		{
+			App->CL_Properties_Textures_Com->Textures_Editor_Dlg_Active = false;
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+	}
+
+	}
+	return FALSE;
 }
 
 // *************************************************************************

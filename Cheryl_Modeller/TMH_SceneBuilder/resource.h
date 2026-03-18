@@ -111,6 +111,7 @@
 #define IDB_TB_MODELDATAON              221
 #define IDD_PROPERTIES_TEXTURES_ASSIMP  222
 #define IDD_PREFS_QUICK                 223
+#define IDD_MODEL_TEXTURES_EDITOR       224
 #define IDC_BANNER                      1000
 #define IDC_STTEXT                      1001
 #define IDC_STMESSAGE                   1002
@@ -486,6 +487,7 @@
 #define IDC_BT_LIBRARIES                1331
 #define IDC_BT_MOT_PLAY                 1331
 #define IDC_BT_AT_MATERIAL_FACES        1331
+#define IDC_BT_MTE_CHANGETEXTURE        1331
 #define IDC_CHECK1                      1332
 #define IDC_CK_LASTFILE                 1332
 #define IDC_CK_FACESALL                 1332
@@ -680,7 +682,7 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
-#define _APS_NEXT_RESOURCE_VALUE        224
+#define _APS_NEXT_RESOURCE_VALUE        225
 #define _APS_NEXT_COMMAND_VALUE         32887
 #define _APS_NEXT_CONTROL_VALUE         1391
 #define _APS_NEXT_SYMED_VALUE           110

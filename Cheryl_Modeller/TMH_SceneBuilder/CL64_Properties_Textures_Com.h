@@ -33,6 +33,7 @@ public:
 	void Reset_Class(void);
 
 	void Show_Materials_Dialog(bool Show);
+	bool Start_Texture_Editor_Dialog();
 
 	bool Start_Props_Textures_Dialog();
 
@@ -61,16 +62,21 @@ public:
 	char m_Current_MaterialName[MAX_PATH];
 	char m_Export_PathAndName[MAX_PATH];
 
+	bool Textures_Editor_Dlg_Active;
+
 	HBITMAP	Sel_BaseBitmap;
 
 	HWND Textures_Dlg_Hwnd_Assimp;
-	//HWND Textures_Dlg_Hwnd_Ogre;
+	HWND Texture_Editor_Dlg_Hwnd;
+	
 
 //private:
 	static bool CALLBACK ViewerBasePic(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 private:
 
 	static LRESULT CALLBACK Proc_Textures_Dialog(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Proc_Texture_Editor(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+
 };
 
 
