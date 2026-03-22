@@ -446,11 +446,26 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 App->CL_Assimp->Options.SelectedPreset = 8 + 8388608 + 64 + aiProcess_PreTransformVertices;
                 App->CL_Assimp->Options.Model_Type = Enums::Model_Type_Assimp;
 
-                bool test = App->CL_Importers->Assimp_Loader(false, (LPCWSTR)"", (LPCWSTR)"");
+                bool test = App->CL_Importers->Assimp_Loader(false);
 
                 return 1;
             }
-            
+
+            case ID_MILKSHAPE_CHAPEL:
+            {
+                strcpy(App->CL_Model->Loaded_FileName, "chapel-10-C.ms3d");
+
+                strcpy(App->CL_Model->Loaded_PathFileName, App->RB_Directory_FullPath);
+                strcat(App->CL_Model->Loaded_PathFileName, "\\Models\\Milkshape_Models\\Chaple\\chapel-10-C.ms3d");
+
+                App->CL_Assimp->Options.SelectedPreset = 8 + 8388608 + 64 + aiProcess_PreTransformVertices;
+                App->CL_Assimp->Options.Model_Type = Enums::Model_Type_Assimp;
+
+                bool test = App->CL_Importers->Assimp_Loader(false);
+
+                return 1;
+            }
+
             case ID_OPENEXAMPLES_TESTSCENE:
             {
                 strcpy(App->CL_File->PathFileName_3dt, App->RB_Directory_FullPath);

@@ -1,0 +1,209 @@
+# Equity10
+# Equity10 X
+newmtl floor
+Kd 0.470588 0.470588 0.470588
+Ka 0.470588 0.470588 0.470588
+Ks 0.470588 0.470588 0.470588
+Ke 0 0 0
+d 1
+illum 1
+map_Kd stfloor02.bmp
+
+newmtl frontage
+Kd 0.8 0.8 0.8
+Ka 0.2 0.2 0.2
+Ks 0 0 0
+Ke 0 0 0
+d 1
+illum 1
+map_Kd stone.bmp
+
+newmtl roof
+Kd 0.8 0.8 0.8
+Ka 0.2 0.2 0.2
+Ks 0 0 0
+Ke 0 0 0
+d 1
+illum 1
+map_Kd Roof 3.bmp
+
+newmtl door
+Kd 0.8 0.8 0.8
+Ka 0.2 0.2 0.2
+Ks 0 0 0
+Ke 0 0 0
+d 1
+illum 1
+map_Kd planks1.bmp
+
+newmtl window
+Kd 0.8 0.8 0.8
+Ka 0.2 0.2 0.2
+Ks 0 0 0
+Ke 0 0 0
+d 1
+illum 1
+map_Kd windowend.bmp
+
+newmtl mainwindow
+Kd 0.8 0.8 0.8
+Ka 0.2 0.2 0.2
+Ks 0 0 0
+Ke 0 0 0
+d 1
+illum 1
+map_Kd windowend.bmp
+
+newmtl bell
+Kd 0.8 0.8 0.8
+Ka 0.2 0.2 0.2
+Ks 0 0 0
+Ke 0 0 0
+d 1
+illum 1
+map_Kd metal2.bmp
+
+newmtl W_window
+Kd 0.8 0.8 0.8
+Ka 0.2 0.2 0.2
+Ks 0 0 0
+Ke 0 0 0
+d 1
+illum 1
+map_Kd west_window.bmp
+
+newmtl Sidewindow
+Kd 0.8 0.8 0.8
+Ka 0.2 0.2 0.2
+Ks 0 0 0
+Ke 0 0 0
+d 1
+illum 1
+map_Kd side_window.bmp
+
+newmtl ceiling
+Kd 0.8 0.8 0.8
+Ka 0.2 0.2 0.2
+Ks 0 0 0
+Ke 0 0 0
+d 1
+illum 1
+map_Kd wood01V.bmp
+
+newmtl Porchceiling
+Kd 0.8 0.8 0.8
+Ka 0.2 0.2 0.2
+Ks 0 0 0
+Ke 0 0 0
+d 1
+illum 1
+map_Kd wood01H.bmp
+
+newmtl cloth
+Kd 0.8 0.8 0.8
+Ka 0.2 0.2 0.2
+Ks 0 0 0
+Ke 0 0 0
+d 1
+illum 1
+map_Kd altar1.bmp
+
+newmtl tabernacle
+Kd 0.8 0.8 0.8
+Ka 0.2 0.2 0.2
+Ks 0 0 0
+Ke 0 0 0
+d 1
+illum 1
+map_Kd tabanacle.bmp
+
+newmtl brass
+Kd 0.8 0.8 0.8
+Ka 0.2 0.2 0.2
+Ks 0 0 0
+Ke 0 0 0
+d 1
+illum 1
+map_Kd metal104.bmp
+
+newmtl crystal
+Kd 0.8 0.8 0.8
+Ka 0.2 0.2 0.2
+Ks 0 0 0
+Ke 0 0 0
+d 1
+illum 1
+map_Kd crystal4.bmp
+
+newmtl book
+Kd 0.8 0.8 0.8
+Ka 0.2 0.2 0.2
+Ks 0 0 0
+Ke 0 0 0
+d 1
+illum 1
+map_Kd book1.bmp
+
+newmtl bookspine
+Kd 0.8 0.8 0.8
+Ka 0.2 0.2 0.2
+Ks 0 0 0
+Ke 0 0 0
+d 1
+illum 1
+map_Kd book2.bmp
+
+newmtl cover
+Kd 0.8 0.8 0.8
+Ka 0.2 0.2 0.2
+Ks 0 0 0
+Ke 0 0 0
+d 1
+illum 1
+map_Kd cover.bmp
+
+newmtl Pews
+Kd 0.8 0.8 0.8
+Ka 0.2 0.2 0.2
+Ks 0 0 0
+Ke 0 0 0
+d 1
+illum 1
+map_Kd ROSEWOOD_2.bmp
+
+newmtl beams
+Kd 0.8 0.8 0.8
+Ka 0.2 0.2 0.2
+Ks 0 0 0
+Ke 0 0 0
+d 1
+illum 1
+map_Kd beamH.bmp
+
+newmtl Rails
+Kd 0.8 0.8 0.8
+Ka 0.2 0.2 0.2
+Ks 0 0 0
+Ke 0 0 0
+d 1
+illum 1
+map_Kd Wall 6.bmp
+
+newmtl Curtain
+Kd 0.8 0.8 0.8
+Ka 0.2 0.2 0.2
+Ks 0 0 0
+Ke 0 0 0
+d 1
+illum 1
+map_Kd Curtain_black.bmp
+
+newmtl Carpet
+Kd 0.8 0.8 0.8
+Ka 0.2 0.2 0.2
+Ks 0 0 0
+Ke 0 0 0
+d 1
+illum 1
+map_Kd redcarpet.bmp
+

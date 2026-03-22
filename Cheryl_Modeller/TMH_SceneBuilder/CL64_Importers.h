@@ -7,7 +7,7 @@ public:
 
 	void Set_Editor();
 
-	bool Assimp_Loader(bool UseDialog, const LPCWSTR Filetype, const LPCWSTR Extension);
+	bool Assimp_Loader(bool UseDialog, const LPCWSTR Filetype = NULL, const LPCWSTR Extension = NULL);
 
 	bool Load_Ogre_Model(bool Use_File_Dialog, bool Check_Resource_File);
 	void Scan_Material_Files(void);
