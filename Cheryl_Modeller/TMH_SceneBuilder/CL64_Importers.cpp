@@ -52,14 +52,14 @@ void CL64_Importers::Set_Editor()
 // *************************************************************************
 // *			Assimp_Loader:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-bool CL64_Importers::Assimp_Loader(bool useDialog, const char* extension, const char* extension2)
+bool CL64_Importers::Assimp_Loader(bool UseDialog, const LPCWSTR Filetype, const LPCWSTR Extension)
 {
-	if (useDialog)
+	if (UseDialog)
 	{
 		LPCWSTR fileType = L"Wavefront .obj file";
 		LPCWSTR fileExtensions = L"*.obj";
 
-		if (!App->CL_File_IO->Open_File(fileType, fileExtensions))
+		if (!App->CL_File_IO->Open_File(Filetype, Extension))
 		{
 			return false;
 		}
@@ -419,7 +419,15 @@ void CL64_Importers::Load_Recent_File(char* FileAndPath)
 		App->CL_Assimp->Options.SelectedPreset = 8 + 8388608 + 64 + aiProcess_PreTransformVertices;
 		App->CL_Assimp->Options.Model_Type = Enums::Model_Type_Assimp;
 
-		bool test = App->CL_Importers->Assimp_Loader(false, "", "");
+		bool test = App->CL_Importers->Assimp_Loader(false, NULL, NULL);
+	}
+
+	if (_stricmp(App->CL_Model->Loaded_FileName + strlen(App->CL_Model->Loaded_FileName) - 5, ".ms3d") == 0)
+	{
+		App->CL_Assimp->Options.SelectedPreset = 8 + 8388608 + 64 + aiProcess_PreTransformVertices;
+		App->CL_Assimp->Options.Model_Type = Enums::Model_Type_Assimp;
+
+		bool test = App->CL_Importers->Assimp_Loader(false, NULL, NULL);
 	}
 }
 

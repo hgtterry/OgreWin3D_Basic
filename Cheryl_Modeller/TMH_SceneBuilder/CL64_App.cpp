@@ -551,8 +551,6 @@ bool CL64_App::Custom_Button_Normal(LPNMCUSTOMDRAW item)
 	DeleteObject(pen);
 
 	return CDRF_DODEFAULT;
-
-	return CDRF_DODEFAULT;
 }
 
 // *************************************************************************

@@ -446,7 +446,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 App->CL_Assimp->Options.SelectedPreset = 8 + 8388608 + 64 + aiProcess_PreTransformVertices;
                 App->CL_Assimp->Options.Model_Type = Enums::Model_Type_Assimp;
 
-                bool test = App->CL_Importers->Assimp_Loader(false, "","");
+                bool test = App->CL_Importers->Assimp_Loader(false, (LPCWSTR)"", (LPCWSTR)"");
 
                 return 1;
             }
@@ -492,14 +492,36 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 App->CL_Assimp->Options.SelectedPreset = 8 + 8388608 + 64 + aiProcess_PreTransformVertices;
                 App->CL_Assimp->Options.Model_Type = Enums::Model_Type_Assimp;
 
-                bool test = App->CL_Importers->Assimp_Loader(true, "Wavefront OBJ   *.obj\0*.obj\0", "Wavefront OBJ");
+                LPCWSTR fileType = L"Wavefront .obj file";
+                LPCWSTR fileExtensions = L"*.obj";
 
-                if (test == 1)
+                bool test = App->CL_Importers->Assimp_Loader(true, fileType, fileExtensions);
+
+                if (test == true)
                 {
                     App->Say("Imported",App->CL_Model->Loaded_FileName);
                    
                 }
                
+                return TRUE;
+            }
+
+            case ID_IMPORT_MILKSHAPEMS3D:
+            {
+
+                App->CL_Assimp->Options.SelectedPreset = 8 + 8388608 + 64 + aiProcess_PreTransformVertices;
+                App->CL_Assimp->Options.Model_Type = Enums::Model_Type_Assimp;
+
+                LPCWSTR fileType = L"Milkshape .ms3d file";
+                LPCWSTR fileExtensions = L"*.ms3d";
+
+                bool test = App->CL_Importers->Assimp_Loader(true, fileType, fileExtensions);
+
+                if (test == true)
+                {
+                    App->Say("Imported", App->CL_Model->Loaded_FileName);
+                }
+
                 return TRUE;
             }
 

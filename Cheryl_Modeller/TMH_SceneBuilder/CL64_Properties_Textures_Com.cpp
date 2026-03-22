@@ -117,6 +117,7 @@ LRESULT CALLBACK CL64_Properties_Textures_Com::Proc_Textures_Dialog(HWND hDlg, U
 		
 		SetWindowLongPtr(GetDlgItem(hDlg, IDC_AT_BASETEXTURE), GWLP_WNDPROC, (LONG_PTR)ViewerBasePic);
 
+		EnableWindow(GetDlgItem(hDlg, IDC_BT_MATFACESCOLOUR), false);
 	}
 
 	case WM_CTLCOLORSTATIC:
@@ -192,6 +193,29 @@ LRESULT CALLBACK CL64_Properties_Textures_Com::Proc_Textures_Dialog(HWND hDlg, U
 			}
 		}
 
+		if (some_item->idFrom == IDC_BT_MATFACESCOLOUR)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_MATFACESCOLOUR));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
+			else
+			{
+				/*HGDIOBJ old_brush;
+				old_brush = App->CL_Sandbox->Actual_Colour;
+
+				old_brush = SelectObject(item->hdc, old_brush);
+
+				RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 5, 5);
+
+				SelectObject(item->hdc, old_brush);*/
+				App->Custom_Button_Normal(item);
+			}
+		}
+		
 		return CDRF_DODEFAULT;
 	}
 
@@ -244,10 +268,12 @@ LRESULT CALLBACK CL64_Properties_Textures_Com::Proc_Textures_Dialog(HWND hDlg, U
 				if (App->CL_Ogre->OGL_Listener->flag_Show_Material_Faces == true)
 				{
 					App->CL_Ogre->OGL_Listener->flag_Show_Material_Faces = false;
+					EnableWindow(GetDlgItem(hDlg, IDC_BT_MATFACESCOLOUR), false);
 				}
 				else
 				{
 					App->CL_Ogre->OGL_Listener->flag_Show_Material_Faces = true;
+					EnableWindow(GetDlgItem(hDlg, IDC_BT_MATFACESCOLOUR), true);
 				}
 			}
 

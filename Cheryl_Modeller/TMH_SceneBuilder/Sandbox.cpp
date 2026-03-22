@@ -60,6 +60,7 @@ Sandbox::Sandbox(void)
 	Ogre_MV_Camera = nullptr;
 	Ogre_MV_CamNode = nullptr;
 
+	Colour_Dialog_Active = false;
 }
 
 Sandbox::~Sandbox(void)
@@ -71,7 +72,14 @@ Sandbox::~Sandbox(void)
 // *************************************************************************
 void Sandbox::Start_Colour_Mixer()
 {
-	DialogBox(App->hInst, (LPCTSTR)IDD_COLOUR_MIXER, App->MainHwnd, (DLGPROC)Proc_Colour_Mixer);
+	if (Colour_Dialog_Active == true)
+	{
+		return;
+	}
+
+	Colour_Dialog_Active = true;
+
+	CreateDialog(App->hInst, (LPCTSTR)IDD_COLOUR_MIXER, App->MainHwnd, (DLGPROC)Proc_Colour_Mixer);
 }
 
 // *************************************************************************
@@ -92,7 +100,7 @@ LRESULT Sandbox::Proc_Colour_Mixer(HWND hDlg, UINT message, WPARAM wParam, LPARA
 		SendDlgItemMessage(hDlg, IDC_ST_ACTUAL_GREEN, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ST_ACTUAL_BLUE, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
 		
-		SendDlgItemMessage(hDlg, IDC_CK_BACKGROUND, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_WINCOLOR, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
 		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
@@ -178,14 +186,6 @@ LRESULT Sandbox::Proc_Colour_Mixer(HWND hDlg, UINT message, WPARAM wParam, LPARA
 			return (UINT)App->AppBackground;
 		}
 
-		if (GetDlgItem(hDlg, IDC_CK_BACKGROUND) == (HWND)lParam)
-		{
-			SetBkColor((HDC)wParam, RGB(0, 0, 0));
-			SetTextColor((HDC)wParam, RGB(0, 0, 0));
-			SetBkMode((HDC)wParam, TRANSPARENT);
-			return (UINT)App->AppBackground;
-		}
-
 		/*if (GetDlgItem(hDlg, IDC_STMESSAGE) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 0, 0));
@@ -206,12 +206,20 @@ LRESULT Sandbox::Proc_Colour_Mixer(HWND hDlg, UINT message, WPARAM wParam, LPARA
 	{
 		LPNMHDR some_item = (LPNMHDR)lParam;
 
+		if (some_item->idFrom == IDC_BT_WINCOLOR)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+		
 		if (some_item->idFrom == IDOK)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
 			return CDRF_DODEFAULT;
 		}
+
 		return CDRF_DODEFAULT;
 	}
 
@@ -222,25 +230,6 @@ LRESULT Sandbox::Proc_Colour_Mixer(HWND hDlg, UINT message, WPARAM wParam, LPARA
 	}
 
 	case WM_COMMAND:
-
-		if (LOWORD(wParam) == IDC_CK_BACKGROUND)
-		{
-			HWND temp = GetDlgItem(hDlg, IDC_CK_BACKGROUND);
-			int test = SendMessage(temp, BM_GETCHECK, 0, 0);
-			if (test == BST_CHECKED)
-			{
-				App->CL_Sandbox->Selected_Item = Colour_Background;
-				App->CL_Sandbox->Set_Sliders(hDlg);
-				return TRUE;
-			}
-			else
-			{
-				App->CL_Sandbox->Selected_Item = Colour_None;
-				return TRUE;
-			}
-
-			return TRUE;
-		}
 
 		if (LOWORD(wParam) == IDC_BT_WINCOLOR)
 		{
@@ -263,6 +252,7 @@ LRESULT Sandbox::Proc_Colour_Mixer(HWND hDlg, UINT message, WPARAM wParam, LPARA
 		if (LOWORD(wParam) == IDOK)
 		{
 			DeleteObject(App->CL_Sandbox->Actual_Colour);
+			App->CL_Sandbox->Colour_Dialog_Active = false;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
@@ -270,6 +260,7 @@ LRESULT Sandbox::Proc_Colour_Mixer(HWND hDlg, UINT message, WPARAM wParam, LPARA
 		if (LOWORD(wParam) == IDCANCEL)
 		{
 			DeleteObject(App->CL_Sandbox->Actual_Colour);
+			App->CL_Sandbox->Colour_Dialog_Active = false;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
@@ -356,11 +347,6 @@ void Sandbox::Get_Sliders(HWND hDlg, LPARAM lParam)
 
 		Set_ColourBox();
 		RedrawWindow(Colour_Box_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-
-		//App->AppBackground = CreateSolidBrush(RGB(Colour.R, Colour.G, Colour.B));
-		//UpdateWindow(App->MainHwnd);
-
-		//RedrawWindow(App->CL_Properties_Tabs->Tabs_Control_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 	}
 }
 

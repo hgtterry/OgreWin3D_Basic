@@ -49,6 +49,10 @@ public:
 	Ogre::Camera* Ogre_MV_Camera;
 	Ogre::SceneNode* Ogre_MV_CamNode;
 
+	bool Colour_Dialog_Active;
+
+	HBRUSH Actual_Colour;
+
 
 private:
 	static LRESULT Proc_Colour_Mixer(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
@@ -59,7 +63,7 @@ private:
 	void Get_Sliders(HWND hDlg, LPARAM lParam);
 	void Set_ColourBox();
 
-	HBRUSH Actual_Colour;
+	
 
 	Colour_Int Colour;
 

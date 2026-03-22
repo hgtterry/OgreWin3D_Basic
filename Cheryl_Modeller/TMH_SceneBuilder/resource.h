@@ -680,6 +680,7 @@
 #define ID_TESTMODELS_WAVEFRONTCUBE     32885
 #define ID_GENERALSELECT                32886
 #define ID_WINDOW_TEXTURES              32886
+#define ID_IMPORT_MILKSHAPEMS3D         32887
 #define ID_TOOLS_TEMPLATE               32910
 #define IDC_STATIC                      -1
 
@@ -689,7 +690,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        225
-#define _APS_NEXT_COMMAND_VALUE         32887
+#define _APS_NEXT_COMMAND_VALUE         32888
 #define _APS_NEXT_CONTROL_VALUE         1399
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
