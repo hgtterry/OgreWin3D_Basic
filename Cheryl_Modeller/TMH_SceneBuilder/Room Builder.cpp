@@ -214,9 +214,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                     App->CL_ImGui_Editor->flag_Show_Visuals = true;
                 }*/
 
-               // App->CL_File_IO->Colour_Picker();
+                App->CL_File_IO->Colour_Picker();
 
-                App->CL_Sandbox->Start_Ogre_Window();
+               // App->CL_Sandbox->Start_Ogre_Window();
                
 				return 1;
 			}

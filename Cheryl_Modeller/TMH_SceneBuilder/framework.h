@@ -46,7 +46,7 @@
 
 struct Colour_Int
 {
-	int R = 0, G = 0, B = 0;
+	int R = 255, G = 255, B = 255;
 };
 
 namespace Enums
@@ -129,7 +129,8 @@ namespace Enums
 		ListBox_Used_Textures = 1,
 		ListBox_Libraries = 2,
 		ListBox_Directories = 3,
-		ListBox_Mesh_Data = 4
+		ListBox_Mesh_Data = 4,
+		ListBox_Mesh_Chords = 5
 	};
 
 	enum Selected_Map_View

@@ -45,6 +45,9 @@ CL64_Properties_Textures_Com::CL64_Properties_Textures_Com(void)
 
 	Sel_BaseBitmap = NULL;
 
+	Slider_Index = 50;
+	Slider_Index_Copy = 50;
+
 }
 
 CL64_Properties_Textures_Com::~CL64_Properties_Textures_Com(void)
@@ -110,6 +113,8 @@ LRESULT CALLBACK CL64_Properties_Textures_Com::Proc_Textures_Dialog(HWND hDlg, U
 		SendDlgItemMessage(hDlg, IDC_ST_AT_DIMENSIONS, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ST_AT_NUMTEXTUNITS, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
 
+		SendDlgItemMessage(hDlg, IDC_BT_MATFACESCOLOUR, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
+		
 		SetWindowLongPtr(GetDlgItem(hDlg, IDC_AT_BASETEXTURE), GWLP_WNDPROC, (LONG_PTR)ViewerBasePic);
 
 	}
@@ -192,6 +197,12 @@ LRESULT CALLBACK CL64_Properties_Textures_Com::Proc_Textures_Dialog(HWND hDlg, U
 
 	case WM_COMMAND:
 	{
+		if (LOWORD(wParam) == IDC_BT_MATFACESCOLOUR)
+		{
+			App->CL_Sandbox->Start_Colour_Mixer();
+			return TRUE;
+		}
+		
 		if (LOWORD(wParam) == IDC_LIST_AT_MATERIALS) // Click inside Materials list box
 		{
 			if (App->CL_Model->flag_Model_Loaded == true)
@@ -306,8 +317,8 @@ LRESULT CALLBACK CL64_Properties_Textures_Com::Proc_Textures_Dialog(HWND hDlg, U
 
 		if (LOWORD(wParam) == IDC_BT_AT_CHANGETEXTURE)
 		{
-			//App->CL_Properties_Textures_Com->Change_Texture();
-			App->CL_Properties_Textures_Com->Start_Texture_Editor_Dialog();
+			App->CL_Properties_Textures_Com->Change_Texture();
+			//App->CL_Properties_Textures_Com->Start_Texture_Editor_Dialog();
 
 			return TRUE;
 		}
@@ -430,11 +441,25 @@ bool CL64_Properties_Textures_Com::Start_Texture_Editor_Dialog()
 // *************************************************************************
 LRESULT CALLBACK CL64_Properties_Textures_Com::Proc_Texture_Editor(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
+	auto& m_FaceEditor = App->CL_Properties_Textures_Com; // App->CL_X_Face_Editor
+
+	HWND Slider_Scale_X_hWnd = NULL;
+
 	switch (message)
 	{
 	case WM_INITDIALOG:
 	{
 		SendDlgItemMessage(hDlg, IDC_BT_MTE_CHANGETEXTURE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_MT_FLIPVERTICAL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
+		Slider_Scale_X_hWnd = GetDlgItem(hDlg, IDC_SLDR_MT_POS_X);
+		SendMessageW(Slider_Scale_X_hWnd, TBM_SETRANGE, TRUE, MAKELONG(0, 500));
+		SendMessageW(Slider_Scale_X_hWnd, TBM_SETPAGESIZE, 0, 1);
+		SendMessageW(Slider_Scale_X_hWnd, TBM_SETTICFREQ, 1, 0);
+		SendMessageW(Slider_Scale_X_hWnd, TBM_SETPOS, true, 250);
+
+		App->CL_Properties_Textures_Com->Slider_Index = 500;
+		App->CL_Properties_Textures_Com->Slider_Index_Copy = 500;
 	}
 
 	case WM_CTLCOLORSTATIC:
@@ -446,7 +471,14 @@ LRESULT CALLBACK CL64_Properties_Textures_Com::Proc_Texture_Editor(HWND hDlg, UI
 			return (UINT)App->AppBackground;
 		}
 
-		
+		if (GetDlgItem(hDlg, IDC_SLDR_MT_POS_X) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
 		return FALSE;
 	}
 
@@ -475,7 +507,65 @@ LRESULT CALLBACK CL64_Properties_Textures_Com::Proc_Texture_Editor(HWND hDlg, UI
 			App->Custom_Button_Toggle(item, App->CL_Dialogs->flag_FileViewer_Active);
 		}
 
+		if (some_item->idFrom == IDC_BT_MT_FLIPVERTICAL)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+
+			App->Custom_Button_Normal(item);
+		}
+		
 		return CDRF_DODEFAULT;
+	}
+	
+	case WM_HSCROLL:
+	{
+		auto& m_Textures = App->CL_Properties_Textures_Com;
+
+		if (HWND(lParam) == GetDlgItem(hDlg, IDC_SLDR_MT_POS_X))
+		{
+			float ScalePosX = 0.01;
+
+			m_Textures->Slider_Index = SendMessage(GetDlgItem(hDlg, IDC_SLDR_MT_POS_X), TBM_GETPOS, 0, 0);
+
+			if (m_Textures->Slider_Index_Copy == m_Textures->Slider_Index)
+			{
+				return 0;
+			}
+
+			int Group_Index = m_Textures->Selected_Group;
+
+			int Face_Count = 0;
+
+			while (Face_Count < App->CL_Mesh->Group[Group_Index]->GroupFaceCount)
+			{
+				auto& m_Map_Index = App->CL_Mesh->Group[Group_Index]->Face_Data[Face_Count];
+
+				auto& Cord_A = App->CL_Mesh->Group[Group_Index]->MapCord_Data[m_Map_Index.a].u;
+				auto& Cord_B = App->CL_Mesh->Group[Group_Index]->MapCord_Data[m_Map_Index.b].u;
+				auto& Cord_C = App->CL_Mesh->Group[Group_Index]->MapCord_Data[m_Map_Index.c].u;
+
+				if (m_Textures->Slider_Index > m_Textures->Slider_Index_Copy)
+				{
+					ScalePosX = -0.01;
+				}
+				else
+				{
+					ScalePosX = 0.01;
+				}
+
+				Cord_A = Cord_A + ScalePosX;
+				Cord_B = Cord_B + ScalePosX;
+				Cord_C = Cord_C + ScalePosX;
+
+				Face_Count++;
+			}
+
+			m_Textures->Slider_Index_Copy = m_Textures->Slider_Index;
+
+			return 0;
+		}
+
+		return 0;
 	}
 
 	case WM_COMMAND:
@@ -487,6 +577,145 @@ LRESULT CALLBACK CL64_Properties_Textures_Com::Proc_Texture_Editor(HWND hDlg, UI
 			return TRUE;
 		}
 
+		if (LOWORD(wParam) == IDC_BT_MT_FLIPVERTICAL)
+		{
+			int Index = App->CL_Properties_Textures_Com->Selected_Group;
+
+			int A = 0;
+			int B = 0;
+			int C = 0;
+
+			float UA = 0;
+			float UB = 0;
+			float UC = 0;
+
+			float VA = 0;
+			float VB = 0;
+			float VC = 0;
+
+			int VertCount = 0;
+
+			while (VertCount < App->CL_Mesh->Group[Index]->GroupFaceCount)
+			{
+				A = App->CL_Mesh->Group[Index]->Face_Data[VertCount].a;
+				B = App->CL_Mesh->Group[Index]->Face_Data[VertCount].b;
+				C = App->CL_Mesh->Group[Index]->Face_Data[VertCount].c;
+
+				UA = App->CL_Mesh->Group[Index]->MapCord_Data[A].u;
+				UB = App->CL_Mesh->Group[Index]->MapCord_Data[B].u;
+				UC = App->CL_Mesh->Group[Index]->MapCord_Data[C].u;
+
+				VA = App->CL_Mesh->Group[Index]->MapCord_Data[A].v;
+				VB = App->CL_Mesh->Group[Index]->MapCord_Data[B].v;
+				VC = App->CL_Mesh->Group[Index]->MapCord_Data[C].v;
+
+				//-----------------------------------------------
+				App->CL_Mesh->Group[Index]->MapCord_Data[A].u = 1 - UA;
+				App->CL_Mesh->Group[Index]->MapCord_Data[A].v = VA;
+
+				App->CL_Mesh->Group[Index]->MapCord_Data[B].u = 1 - UB;
+				App->CL_Mesh->Group[Index]->MapCord_Data[B].v = VB;
+
+				App->CL_Mesh->Group[Index]->MapCord_Data[C].u = 1 - UC;
+				App->CL_Mesh->Group[Index]->MapCord_Data[C].v = VC;
+
+				VertCount++;
+
+			}
+
+			return TRUE;
+		}
+		
+		if (LOWORD(wParam) == IDC_BT_TEST_POSITIVE)
+		{
+			//App->CL_Dialogs->Start_General_ListBox(Enums::ListBox_Mesh_Chords);
+
+			int Index = App->CL_Properties_Textures_Com->Selected_Group;
+
+			int A = 0;
+			int B = 0;
+			int C = 0;
+
+			float UA = 0;
+			float UB = 0;
+			float UC = 0;
+
+			float VA = 0;
+			float VB = 0;
+			float VC = 0;
+
+			int VertCount = 0;
+
+			while (VertCount < App->CL_Mesh->Group[Index]->GroupFaceCount)
+			{
+				A = App->CL_Mesh->Group[Index]->Face_Data[VertCount].a;
+				B = App->CL_Mesh->Group[Index]->Face_Data[VertCount].b;
+				C = App->CL_Mesh->Group[Index]->Face_Data[VertCount].c;
+
+				UA = App->CL_Mesh->Group[Index]->MapCord_Data[A].u;
+				UB = App->CL_Mesh->Group[Index]->MapCord_Data[B].u;
+				UC = App->CL_Mesh->Group[Index]->MapCord_Data[C].u;
+
+				VA = App->CL_Mesh->Group[Index]->MapCord_Data[A].v;
+				VB = App->CL_Mesh->Group[Index]->MapCord_Data[B].v;
+				VC = App->CL_Mesh->Group[Index]->MapCord_Data[C].v;
+
+				//-----------------------------------------------
+				App->CL_Mesh->Group[Index]->MapCord_Data[A].u = 1-UA;
+				App->CL_Mesh->Group[Index]->MapCord_Data[A].v = VA;
+				
+				App->CL_Mesh->Group[Index]->MapCord_Data[B].u = 1 - UB;
+				App->CL_Mesh->Group[Index]->MapCord_Data[B].v =VB;
+
+				App->CL_Mesh->Group[Index]->MapCord_Data[C].u = 1 - UC;
+				App->CL_Mesh->Group[Index]->MapCord_Data[C].v =VC;
+
+				VertCount++;
+
+			}
+
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_BT_TEST_MINUS)
+		{
+			int Index = App->CL_Properties_Textures_Com->Selected_Group;
+
+			int A = 0;
+			int B = 0;
+			int C = 0;
+
+			int VertCount = 0;
+
+			while (VertCount < App->CL_Mesh->Group[Index]->GroupFaceCount)
+			{
+				A = App->CL_Mesh->Group[Index]->Face_Data[VertCount].a;
+				B = App->CL_Mesh->Group[Index]->Face_Data[VertCount].b;
+				C = App->CL_Mesh->Group[Index]->Face_Data[VertCount].c;
+
+
+
+				//-----------------------------------------------
+				App->CL_Mesh->Group[Index]->MapCord_Data[A].u = App->CL_Mesh->Group[Index]->MapCord_Data[A].u + 0.1;
+				//App->CL_Mesh->Group[Index]->MapCord_Data[A].v++;
+
+				App->CL_Mesh->Group[Index]->MapCord_Data[B].u = App->CL_Mesh->Group[Index]->MapCord_Data[B].u + 0.1;
+				//App->CL_Mesh->Group[Index]->MapCord_Data[B].v++;
+
+				App->CL_Mesh->Group[Index]->MapCord_Data[C].u = App->CL_Mesh->Group[Index]->MapCord_Data[C].u + 0.1;;
+				//App->CL_Mesh->Group[Index]->MapCord_Data[C].v++;
+
+				VertCount++;
+				//-----------------------------------------------
+
+				glEnd();
+
+			}
+
+			return TRUE;
+		}
+
+		
 		if (LOWORD(wParam) == IDOK)
 		{
 			App->CL_Properties_Textures_Com->Textures_Editor_Dlg_Active = false;

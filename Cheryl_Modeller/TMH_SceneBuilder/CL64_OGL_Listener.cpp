@@ -66,6 +66,8 @@ CL64_OGL_Listener::CL64_OGL_Listener(void)
 
 	Render_Mode = Enums::Render_Nothing;
 
+	Group_Faces_Colour = { 0,255,0 };
+
 	memset(g_BrushTexture,0,399);
 }
 
@@ -439,7 +441,8 @@ bool CL64_OGL_Listener::MeshData_Textured_Groups(int Count)
 // *************************************************************************
 void CL64_OGL_Listener::MeshData_Render_Material_Faces(void)
 {
-	glColor3f(1, 1, 1);
+	glColor3ub(Group_Faces_Colour.R, Group_Faces_Colour.G, Group_Faces_Colour.B);
+	//glColor3f(Group_Faces_Colour.R, Group_Faces_Colour.G, Group_Faces_Colour.B);
 
 	if (App->CL_Model->Model_Type == Enums::Model_Type_Ogre3D)
 	{

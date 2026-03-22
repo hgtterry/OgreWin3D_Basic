@@ -44,7 +44,7 @@ public:
 	void Material_Search(const char* ItemString);
 
 	void List_Mesh_Data(HWND List);
-
+	
 	char btext[MAX_PATH];
 	char Chr_Text[MAX_PATH];
 	char mTextureFile[MAX_PATH];
@@ -96,6 +96,7 @@ private:
 	void List_Used_Textures(HWND List);
 	void List_Libraries(HWND List);
 	void List_Directories(HWND List);
+	void List_Mesh_Chords(HWND List);
 
 	int Face_Index;
 	int Check_What;

@@ -36,7 +36,7 @@ enum Base
 
 Sandbox::Sandbox(void)
 {
-	Actual_Colour = CreateSolidBrush(RGB(213, 0, 0));
+	Actual_Colour = CreateSolidBrush(RGB(255, 255, 255));
 
 	Selected_Item = Colour_Background;
 
@@ -283,15 +283,15 @@ LRESULT Sandbox::Proc_Colour_Mixer(HWND hDlg, UINT message, WPARAM wParam, LPARA
 // *************************************************************************
 void Sandbox::Set_Sliders(HWND hDlg)
 {
-	if (Selected_Item == Colour_Background)
+	//if (Selected_Item == Colour_Background)
 	{
-		R_pos = App->CL_Editor_Map->Background_Colour.R;
-		G_pos = App->CL_Editor_Map->Background_Colour.G;
-		B_pos = App->CL_Editor_Map->Background_Colour.B;
+		R_pos = App->CL_Ogre->OGL_Listener->Group_Faces_Colour.R;
+		G_pos = App->CL_Ogre->OGL_Listener->Group_Faces_Colour.G;
+		B_pos = App->CL_Ogre->OGL_Listener->Group_Faces_Colour.B;
 
-		Colour.R = App->CL_Editor_Map->Background_Colour.R;
-		Colour.G = App->CL_Editor_Map->Background_Colour.G;
-		Colour.B = App->CL_Editor_Map->Background_Colour.B;
+		Colour.R = App->CL_Ogre->OGL_Listener->Group_Faces_Colour.R;
+		Colour.G = App->CL_Ogre->OGL_Listener->Group_Faces_Colour.G;
+		Colour.B = App->CL_Ogre->OGL_Listener->Group_Faces_Colour.B;
 
 		Set_ColourBox();
 	}
@@ -342,15 +342,15 @@ void Sandbox::Get_Sliders(HWND hDlg, LPARAM lParam)
 		SetDlgItemText(hDlg, IDC_ST_ACTUAL_BLUE, Num_Blue);
 	}
 
-	if (Selected_Item == Colour_Background)
+	//if (Selected_Item == Colour_Background)
 	{
 		Colour.R = abs(R_pos);
 		Colour.G = abs(G_pos);
 		Colour.B = abs(B_pos);
 
-		App->CL_Editor_Map->Background_Colour.R = abs(R_pos);
-		App->CL_Editor_Map->Background_Colour.G = abs(G_pos);
-		App->CL_Editor_Map->Background_Colour.B = abs(B_pos);
+		App->CL_Ogre->OGL_Listener->Group_Faces_Colour.R = abs(R_pos);
+		App->CL_Ogre->OGL_Listener->Group_Faces_Colour.G = abs(G_pos);
+		App->CL_Ogre->OGL_Listener->Group_Faces_Colour.B = abs(B_pos);
 
 		App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
 

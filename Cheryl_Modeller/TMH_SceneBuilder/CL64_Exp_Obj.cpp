@@ -588,8 +588,6 @@ bool CL64_Exp_Obj::Export_Textures_Assimp(char* Path)
 			mFileString.clear();
 			bool image_loaded = false;
 
-			App->Say_Win(PathandFile);
-
 			std::ifstream ifs(PathandFile, std::ios::binary | std::ios::in);
 			if (ifs.is_open())
 			{

@@ -1849,6 +1849,11 @@ LRESULT CALLBACK CL64_Dialogs::Proc_General_ListBox(HWND hDlg, UINT message, WPA
 			App->CL_Dialogs->List_Mesh_Data(List);
 		}
 
+		if (App->CL_Dialogs->m_ListType == Enums::ListBox_Mesh_Chords)
+		{
+			App->CL_Dialogs->List_Mesh_Chords(List);
+		}
+
 		return TRUE;
 	}
 
@@ -2102,6 +2107,45 @@ void CL64_Dialogs::List_Mesh_Data(HWND List)
 			SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)buf);
 
 		}
+	}
+}
+
+// *************************************************************************
+// *		  List_Mesh_Cords:- Terry and Hazel Flanigan 2026			   *
+// *************************************************************************
+void CL64_Dialogs::List_Mesh_Chords(HWND List)
+{
+	char buf[MAX_PATH];
+
+	int Index = App->CL_Properties_Textures_Com->Selected_Group;
+
+	int A = 0;
+	int B = 0;
+	int C = 0;
+
+	int VertCount = 0;
+
+	while (VertCount < App->CL_Mesh->Group[Index]->GroupFaceCount)
+	{
+		A = App->CL_Mesh->Group[Index]->Face_Data[VertCount].a;
+		B = App->CL_Mesh->Group[Index]->Face_Data[VertCount].b;
+		C = App->CL_Mesh->Group[Index]->Face_Data[VertCount].c;
+
+		//-----------------------------------------------
+
+		sprintf(buf, "%i   %f %f", VertCount, App->CL_Mesh->Group[Index]->MapCord_Data[A].u, App->CL_Mesh->Group[Index]->MapCord_Data[A].v);
+		SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)buf);
+		
+		sprintf(buf, "%i   %f %f", VertCount, App->CL_Mesh->Group[Index]->MapCord_Data[B].u, App->CL_Mesh->Group[Index]->MapCord_Data[B].v);
+		SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)buf);
+
+		sprintf(buf, "%i   %f %f", VertCount, App->CL_Mesh->Group[Index]->MapCord_Data[C].u, App->CL_Mesh->Group[Index]->MapCord_Data[C].v);
+		SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)buf);
+		
+		SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)" ");
+
+		VertCount++;
 
 	}
+
 }

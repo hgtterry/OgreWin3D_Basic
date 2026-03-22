@@ -478,6 +478,8 @@
 #define IDC_BUTTON2                     1328
 #define IDC_TBSHOWHAIR                  1328
 #define IDC_BT_MOT_STOP                 1328
+#define IDC_BT_TEST_MINUS               1328
+#define IDC_BT_MATFACESCOLOUR           1328
 #define IDC_TBSHOWGRID                  1329
 #define IDC_BUTTON1                     1331
 #define IDC_BUT_AT_CAMERA               1331
@@ -551,6 +553,7 @@
 #define IDC_BUTTON3                     1382
 #define IDC_BT_MOT_BBOX                 1382
 #define IDC_BT_TT_OPTIONS               1382
+#define IDC_BT_TEST_POSITIVE            1382
 #define IDC_AT_BASETEXTURE              1383
 #define IDC_LIST_AT_MATERIALS           1384
 #define IDC_LIST_AT_TEXTURES            1385
@@ -558,6 +561,9 @@
 #define IDC_ST_AT_NUMTEXTUNITS          1388
 #define IDC_ED_MOUSEWHEEL               1389
 #define IDC_ST_MOUSEWHEEL               1390
+#define IDC_SPIN1                       1391
+#define IDC_SLDR_MT_POS_X               1397
+#define IDC_BT_MT_FLIPVERTICAL          1398
 #define ID_DEBUG_GENERAL                32771
 #define ID_TEMPLATES_INSERT             32772
 #define ID_BRUSH_SELECT                 32773
@@ -684,7 +690,7 @@
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        225
 #define _APS_NEXT_COMMAND_VALUE         32887
-#define _APS_NEXT_CONTROL_VALUE         1391
+#define _APS_NEXT_CONTROL_VALUE         1399
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif

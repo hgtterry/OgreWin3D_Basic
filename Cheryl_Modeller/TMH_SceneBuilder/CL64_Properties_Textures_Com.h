@@ -64,6 +64,9 @@ public:
 
 	bool Textures_Editor_Dlg_Active;
 
+	int Slider_Index;
+	int Slider_Index_Copy;
+
 	HBITMAP	Sel_BaseBitmap;
 
 	HWND Textures_Dlg_Hwnd_Assimp;

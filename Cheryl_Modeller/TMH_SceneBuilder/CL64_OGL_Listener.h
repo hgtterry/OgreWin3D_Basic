@@ -75,6 +75,8 @@ public:
 	int	mBrushCount;
 	int	mSubBrushCount;
 
+	Colour_Int Group_Faces_Colour;
+
 	UINT  g_BrushTexture[400];
 
 private:
