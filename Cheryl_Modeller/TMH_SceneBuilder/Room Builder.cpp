@@ -443,7 +443,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 strcpy(App->CL_Model->Loaded_PathFileName, App->RB_Directory_FullPath);
                 strcat(App->CL_Model->Loaded_PathFileName, "\\Models\\Wavefront_Obj_Models\\Cube.obj");
 
-                App->CL_Assimp->Options.SelectedPreset = 8 + 8388608 + 64 + aiProcess_PreTransformVertices;
+                App->CL_Assimp->Options.SelectedPreset = aiProcess_Triangulate | 
+                    aiProcess_FlipUVs | 
+                    aiProcess_GenSmoothNormals|
+                    aiProcess_PreTransformVertices;
+                
                 App->CL_Assimp->Options.Model_Type = Enums::Model_Type_Assimp;
 
                 bool test = App->CL_Importers->Assimp_Loader(false);
@@ -458,7 +462,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 strcpy(App->CL_Model->Loaded_PathFileName, App->RB_Directory_FullPath);
                 strcat(App->CL_Model->Loaded_PathFileName, "\\Models\\Milkshape_Models\\Chaple\\chapel-10-C.ms3d");
 
-                App->CL_Assimp->Options.SelectedPreset = 8 + 8388608 + 64 + aiProcess_PreTransformVertices;
+                App->CL_Assimp->Options.SelectedPreset = aiProcess_Triangulate |
+                    aiProcess_FlipUVs |
+                    aiProcess_GenSmoothNormals |
+                    aiProcess_PreTransformVertices;
+               
                 App->CL_Assimp->Options.Model_Type = Enums::Model_Type_Assimp;
 
                 bool test = App->CL_Importers->Assimp_Loader(false);
