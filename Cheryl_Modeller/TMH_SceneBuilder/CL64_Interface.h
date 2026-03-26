@@ -58,8 +58,11 @@ public:
 	void Set_Editor_Startup();
 	void Set_Title(bool Clear);
 
+	void Show_Grids(bool Show);
+
 	bool Materials_Dlg_Active;
 	bool Motions_Dlg_Active;
 	bool Textures_Dlg_Assimp_Active;
+	bool flag_Grids_Are_Visible;
 };
 

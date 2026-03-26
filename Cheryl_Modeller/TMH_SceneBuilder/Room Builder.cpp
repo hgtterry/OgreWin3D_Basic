@@ -214,7 +214,16 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                     App->CL_ImGui_Editor->flag_Show_Visuals = true;
                 }*/
 
-                App->CL_File_IO->Colour_Picker();
+               // App->CL_File_IO->Colour_Picker();
+
+                if (App->CL_Interface->flag_Grids_Are_Visible == true)
+                {
+                    App->CL_Interface->Show_Grids(false);
+                }
+                else
+                {
+                    App->CL_Interface->Show_Grids(true);
+                }
 
                // App->CL_Sandbox->Start_Ogre_Window();
                

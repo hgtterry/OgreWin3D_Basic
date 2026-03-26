@@ -32,6 +32,8 @@ CL64_Interface::CL64_Interface()
 	Materials_Dlg_Active = false;
 	Motions_Dlg_Active = false;
 	Textures_Dlg_Assimp_Active = false;
+
+	flag_Grids_Are_Visible = false;
 }
 
 CL64_Interface::~CL64_Interface()
@@ -339,7 +341,7 @@ void CL64_Interface::Show_file_view(bool show)
 }
 
 // **************************************************************************
-// *	  		 Show_file_view:- Terry and Hazel Flanigan 2026				*
+// *	  		 Enable_Debug_Menu:- Terry and Hazel Flanigan 2026			*
 // **************************************************************************
 void CL64_Interface::Enable_Debug_Menu(bool option)
 {
@@ -385,6 +387,25 @@ void CL64_Interface::Set_Title(bool Clear)
 	}
 
 	SetWindowText(App->MainHwnd, TitleBar);
+}
+
+// *************************************************************************
+// *				Show_Grids:- Terry and Hazel Flanigan 2026			   *
+// *************************************************************************
+void CL64_Interface::Show_Grids(bool Show)
+{
+	if (Show == true)
+	{
+		ShowWindow(App->CL_Editor_Map->Top_Left_Window_Hwnd, true);
+
+		flag_Grids_Are_Visible = true;
+	}
+	else
+	{
+		ShowWindow(App->CL_Editor_Map->Top_Left_Window_Hwnd, false);
+
+		flag_Grids_Are_Visible = false;
+	}
 }
 
 
