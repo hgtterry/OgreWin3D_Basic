@@ -399,6 +399,8 @@ void CL64_Editor_Map::Init_Map_Views()
 	Create_Bottom_Left_Window();
 	Create_Ogre_Bottom_Right();
 
+	App->CL_Interface->Show_Grids(false);
+
 	RECT rcl;
 	GetClientRect(App->MainHwnd, &rcl);
 	MoveWindow(Main_View_Dlg_Hwnd, 0, 75, rcl.right, rcl.bottom - 75, TRUE);

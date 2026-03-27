@@ -182,6 +182,8 @@ void CL64_Editor_Control::Set_Map_View()
 	flag_Mode_Map_View = true;
 
 	App->CL_Top_Tabs->Redraw_TopTabs_Dlg();
+
+	App->CL_Interface->Show_Grids(true);
 }
 
 // *************************************************************************

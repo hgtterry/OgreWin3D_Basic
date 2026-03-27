@@ -397,12 +397,16 @@ void CL64_Interface::Show_Grids(bool Show)
 	if (Show == true)
 	{
 		ShowWindow(App->CL_Editor_Map->Top_Left_Window_Hwnd, true);
+		ShowWindow(App->CL_Editor_Map->Top_Right_Window_Hwnd, true);
+		ShowWindow(App->CL_Editor_Map->Bottom_Left_Window_Hwnd, true);
 
 		flag_Grids_Are_Visible = true;
 	}
 	else
 	{
 		ShowWindow(App->CL_Editor_Map->Top_Left_Window_Hwnd, false);
+		ShowWindow(App->CL_Editor_Map->Top_Right_Window_Hwnd, false);
+		ShowWindow(App->CL_Editor_Map->Bottom_Left_Window_Hwnd, false);
 
 		flag_Grids_Are_Visible = false;
 	}
