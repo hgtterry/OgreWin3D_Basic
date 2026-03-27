@@ -313,8 +313,16 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Top_Tabs(HWND hDlg, UINT message, WPARAM wP
 		SendDlgItemMessage(hDlg, IDC_BT_PREVFACE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_CB_FACELIST, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
+		SendDlgItemMessage(hDlg, IDC_ST_MOUSESPEED, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
 		SendDlgItemMessage(hDlg, IDC_BT_TT_OPTIONS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
+		HWND Temp = GetDlgItem(hDlg, IDC_SLDR_WHEELSPEED);
+		SendMessageW(Temp, TBM_SETRANGE, TRUE, MAKELONG(1, 100));
+		SendMessageW(Temp, TBM_SETPAGESIZE, 0, 1);
+		SendMessageW(Temp, TBM_SETTICFREQ, 1, 0);
+		SendMessageW(Temp, TBM_SETPOS, true, 10);
+
 		return TRUE;
 	}
 
@@ -329,6 +337,22 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Top_Tabs(HWND hDlg, UINT message, WPARAM wP
 		}
 
 		if (GetDlgItem(hDlg, IDC_ST_HEADER_FACES) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+		
+		if (GetDlgItem(hDlg, IDC_SLDR_WHEELSPEED) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+		
+		if (GetDlgItem(hDlg, IDC_ST_MOUSESPEED) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 0, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
@@ -648,6 +672,60 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Top_Tabs(HWND hDlg, UINT message, WPARAM wP
 		
 
 		return CDRF_DODEFAULT;
+	}
+
+	case WM_HSCROLL:
+	{
+		auto& m_Textures = App->CL_Properties_Textures_Com;
+
+		if (HWND(lParam) == GetDlgItem(hDlg, IDC_SLDR_WHEELSPEED))
+		{
+			
+			//float ScalePosX = 0.01;
+
+			int m_Speed = SendMessage(GetDlgItem(hDlg, IDC_SLDR_WHEELSPEED), TBM_GETPOS, 0, 0);
+
+			float result = (float)m_Speed / 10;
+			App->CL_Keyboard->Mouse_Wheel_Zoom = result;
+			/*if (m_Textures->Slider_Index_Copy == m_Textures->Slider_Index)
+			{
+				return 0;
+			}
+
+			int Group_Index = m_Textures->Selected_Group;
+
+			int Face_Count = 0;
+
+			while (Face_Count < App->CL_Mesh->Group[Group_Index]->GroupFaceCount)
+			{
+				auto& m_Map_Index = App->CL_Mesh->Group[Group_Index]->Face_Data[Face_Count];
+
+				auto& Cord_A = App->CL_Mesh->Group[Group_Index]->MapCord_Data[m_Map_Index.a].u;
+				auto& Cord_B = App->CL_Mesh->Group[Group_Index]->MapCord_Data[m_Map_Index.b].u;
+				auto& Cord_C = App->CL_Mesh->Group[Group_Index]->MapCord_Data[m_Map_Index.c].u;
+
+				if (m_Textures->Slider_Index > m_Textures->Slider_Index_Copy)
+				{
+					ScalePosX = -0.01;
+				}
+				else
+				{
+					ScalePosX = 0.01;
+				}
+
+				Cord_A = Cord_A + ScalePosX;
+				Cord_B = Cord_B + ScalePosX;
+				Cord_C = Cord_C + ScalePosX;
+
+				Face_Count++;
+			}
+
+			m_Textures->Slider_Index_Copy = m_Textures->Slider_Index;*/
+
+			return 0;
+		}
+
+		return 0;
 	}
 
 	case WM_COMMAND:

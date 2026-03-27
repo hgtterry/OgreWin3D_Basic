@@ -216,16 +216,16 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
                // App->CL_File_IO->Colour_Picker();
 
-                if (App->CL_Interface->flag_Grids_Are_Visible == true)
+                /*if (App->CL_Interface->flag_Grids_Are_Visible == true)
                 {
                     App->CL_Interface->Show_Grids(false);
                 }
                 else
                 {
                     App->CL_Interface->Show_Grids(true);
-                }
+                }*/
 
-               // App->CL_Sandbox->Start_Ogre_Window();
+                App->CL_Sandbox->Start_Ogre_Window();
                
 				return 1;
 			}
@@ -682,14 +682,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
             case ID_VIEW_VIEW3DTOP:
             {
-                App->CL_Mesh->Show_Mesh_Textures();
-                App->CL_Mesh->Show_Mesh_Faces();
-
-                App->CL_Camera->Camera_Reset_Zero();
-
-                App->CL_Ogre->camNode->setPosition(Ogre::Vector3(0, 50, 0));
-                App->CL_Ogre->camNode->lookAt(Ogre::Vector3(0, 0, 0), Ogre::Node::TS_WORLD);
-
+                App->CL_3D_View_Top->Set_View_Top();
                 return 1;
             }
            

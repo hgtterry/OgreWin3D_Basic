@@ -28,5 +28,6 @@ bool Ogre_Win_Render_Listener::frameRenderingQueued(const Ogre::FrameEvent& evt)
 	//App->CL_ImGui->ImGui_Render_Loop();
 	//ModelMode(evt.timeSinceLastFrame);
 
+	//App->Flash_Window();
 	return 1;
 }

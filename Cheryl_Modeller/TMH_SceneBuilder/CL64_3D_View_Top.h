@@ -28,5 +28,10 @@ class CL64_3D_View_Top
 public:
 	CL64_3D_View_Top();
 	~CL64_3D_View_Top();
+
+	void Set_View_Top();
+	void Set_OgreWindow();
+
+
 };
 

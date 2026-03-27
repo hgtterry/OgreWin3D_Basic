@@ -621,7 +621,7 @@ void Sandbox::Set_OgreWindow()
 	Ogre::NameValuePairList options;
 
 	options["externalWindowHandle"] =
-		Ogre::StringConverter::toString((size_t)Render_hWnd);
+		Ogre::StringConverter::toString((size_t)App->CL_Editor_Map->Bottom_Left_Window_Hwnd);
 
 	Ogre_MV_Window = App->CL_Ogre->mRoot->createRenderWindow("MeshViewWin", 1024, 768, false, &options);
 

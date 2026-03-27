@@ -40,6 +40,6 @@ public:
 	bool flag_Block_Keyboard;
 	bool flag_Update_Views;
 
-	int Mouse_Wheel_Zoom;
+	float Mouse_Wheel_Zoom;
 };
 
