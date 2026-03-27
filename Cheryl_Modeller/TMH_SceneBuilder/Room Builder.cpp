@@ -679,6 +679,20 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             }
 
             // ----------------------------- View
+
+            case ID_VIEW_VIEW3DTOP:
+            {
+                App->CL_Mesh->Show_Mesh_Textures();
+                App->CL_Mesh->Show_Mesh_Faces();
+
+                App->CL_Camera->Camera_Reset_Zero();
+
+                App->CL_Ogre->camNode->setPosition(Ogre::Vector3(0, 50, 0));
+                App->CL_Ogre->camNode->lookAt(Ogre::Vector3(0, 0, 0), Ogre::Node::TS_WORLD);
+
+                return 1;
+            }
+           
             case ID_VIEW_RESETVIEWS:
             {
                 App->CL_Dialogs->YesNo("Are you Sure", "All Views will be Reset to Default");

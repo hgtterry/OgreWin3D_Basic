@@ -683,6 +683,7 @@
 #define ID_IMPORT_MILKSHAPEMS3D         32887
 #define ID_TESTMODELS_MILKSHAPE         32888
 #define ID_MILKSHAPE_CHAPEL             32889
+#define ID_VIEW_VIEW3DTOP               32890
 #define ID_TOOLS_TEMPLATE               32910
 #define IDC_STATIC                      -1
 
@@ -692,7 +693,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        225
-#define _APS_NEXT_COMMAND_VALUE         32890
+#define _APS_NEXT_COMMAND_VALUE         32891
 #define _APS_NEXT_CONTROL_VALUE         1399
 #define _APS_NEXT_SYMED_VALUE           110
 #endif

@@ -381,6 +381,7 @@ void CLP_3D_Listener::Camera_Mode_Model(float DeltaTime)
 // *************************************************************************
 void CLP_3D_Listener::Capture_LeftMouse_Model(void)
 {
+	
 	GetCursorPos(&Mouse_point);
 
 	Pl_MouseX = static_cast<int>(Mouse_point.x);

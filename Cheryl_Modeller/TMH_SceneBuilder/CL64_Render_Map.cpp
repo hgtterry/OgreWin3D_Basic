@@ -138,9 +138,9 @@ bool CL64_Render_Map::Render_RenderOrthoGridFromSize(ViewVars* cv, int Interval,
 
 	while (Count < cnt)
 	{
-		sp = App->CL_Render->Render_OrthoWorldToView(cv, &Delt);
+		sp = Render_OrthoWorldToView(cv, &Delt);
 		MoveToEx(hDC, sp.x, 0, NULL);
-		sp = App->CL_Render->Render_OrthoWorldToView(cv, &Delt2);
+		sp = Render_OrthoWorldToView(cv, &Delt2);
 		LineTo(hDC, sp.x, cv->Height);
 		m_Maths->Vector3_Add(&Delt, &xstep, &Delt);
 		m_Maths->Vector3_Add(&Delt2, &xstep, &Delt2);

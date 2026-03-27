@@ -112,6 +112,8 @@ THE SOFTWARE.
 
 #include "CL64_Properties_Textures_Com.h"
 
+#include "CL64_3D_View_Top.h"
+
 class CL64_App
 {
 public:
@@ -202,6 +204,8 @@ public:
 	CL64_Mesh*					CL_Mesh;
 
 	CL64_Properties_Textures_Com*		CL_Properties_Textures_Com;
+
+	CL64_3D_View_Top*			CL_3D_View_Top;
 
 	void InitApp(void);
 	void Init_Dialogs(void);
