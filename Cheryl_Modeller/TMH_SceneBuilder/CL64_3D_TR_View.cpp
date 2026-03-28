@@ -34,6 +34,7 @@ CL64_3D_TR_View::CL64_3D_TR_View()
 {
 	Render_hWnd = nullptr;
 	RenderListener = nullptr;
+	OGL_TR_Listener = nullptr;
 
 	Ogre_MV_Window = nullptr;
 	Ogre_MV_SceneMgr = nullptr;
@@ -87,8 +88,8 @@ LRESULT CALLBACK CL64_3D_TR_View::Proc_Ogre_Dialog(HWND hDlg, UINT message, WPAR
 
 	case WM_INITDIALOG:
 	{
-		App->CL_Sandbox->Render_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_OGRE_CANVAS, hDlg, (DLGPROC)Proc_Viewer_3D);
-		App->CL_Sandbox->Set_OgreWindow();
+		App->CL_3D_TR_View->Render_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_OGRE_CANVAS, hDlg, (DLGPROC)Proc_Viewer_3D);
+		App->CL_3D_TR_View->Set_OgreWindow();
 		return TRUE;
 	}
 
@@ -107,35 +108,35 @@ LRESULT CALLBACK CL64_3D_TR_View::Proc_Ogre_Dialog(HWND hDlg, UINT message, WPAR
 		return CDRF_DODEFAULT;
 	}
 
-	//case WM_MOUSEWHEEL:
-	//{
-	//	int zDelta = (short)HIWORD(wParam);    // wheel rotation
+	case WM_MOUSEWHEEL:
+	{
+		int zDelta = (short)HIWORD(wParam);    // wheel rotation
 
-	//	if (zDelta > 0)
-	//	{
-	//		App->CL_X_Shapes_3D->RenderListener->Wheel_Move = -1;
-	//	}
-	//	else if (zDelta < 0)
-	//	{
-	//		App->CL_X_Shapes_3D->RenderListener->Wheel_Move = 1;
-	//	}
+		if (zDelta > 0)
+		{
+			App->CL_3D_TR_View->RenderListener->Wheel_Move = -1;
+		}
+		else if (zDelta < 0)
+		{
+			App->CL_3D_TR_View->RenderListener->Wheel_Move = 1;
+		}
 
-	//	return 1;
-	//}
+		return 1;
+	}
 
 	case WM_COMMAND:
 	{
 		// -----------------------------------------------------------------
 		if (LOWORD(wParam) == IDOK)
 		{
-			App->CL_Sandbox->Close_OgreWindow();
+			App->CL_3D_TR_View->Close_OgreWindow();
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == IDCANCEL)
 		{
-			App->CL_Sandbox->Close_OgreWindow();
+			App->CL_3D_TR_View->Close_OgreWindow();
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
@@ -292,7 +293,18 @@ void CL64_3D_TR_View::Set_OgreWindow()
 	RenderListener = new Ogre_Win_Render_Listener();
 	App->CL_Ogre->mRoot->addFrameListener(RenderListener);
 
-	Ogre::Entity* Ogre_Ent;
+	OGL_TR_Listener = new CL64_3D_TR_OGL_Listener();
+	Ogre_MV_SceneMgr->addRenderQueueListener(OGL_TR_Listener);
+
+
+	Ogre_MV_CamNode->setPosition(Ogre::Vector3(0, 0, 0));
+	Ogre_MV_CamNode->setOrientation(Ogre::Quaternion::IDENTITY);
+
+	float zoom = max(App->CL_Model->S_BoundingBox[0]->Size[0].z, App->CL_Model->S_BoundingBox[0]->Size[0].x);
+
+	Ogre_MV_CamNode->setPosition(Ogre::Vector3(0, zoom * 2, 0));
+	Ogre_MV_CamNode->lookAt(Ogre::Vector3(0, 0, 0), Ogre::Node::TS_WORLD);
+	/*Ogre::Entity* Ogre_Ent;
 	Ogre::SceneNode* Ogre_Node;
 
 	Ogre_Ent = Ogre_MV_SceneMgr->createEntity("Imported_Entity", "Sinbad.mesh", App->CL_Ogre->App_Resource_Group);
@@ -302,7 +314,7 @@ void CL64_3D_TR_View::Set_OgreWindow()
 	Ogre_Node->setVisible(true);
 	Ogre_Node->setOrientation(Ogre::Quaternion::IDENTITY);
 	Ogre_Node->setPosition(0, 0, 0);
-	Ogre_Node->setScale(1, 1, 1);
+	Ogre_Node->setScale(1, 1, 1);*/
 
 }
 
@@ -313,7 +325,7 @@ void CL64_3D_TR_View::Close_OgreWindow(void)
 {
 	//App->CL_MeshViewer->flag_MV_Render_Debug = 0;
 
-	App->CL_Ogre->mRoot->detachRenderTarget("MeshViewWin");
+	App->CL_Ogre->mRoot->detachRenderTarget("MeshViewWin22");
 	Ogre_MV_Window->destroy();
 	App->CL_Ogre->mRoot->destroySceneManager(Ogre_MV_SceneMgr);
 
@@ -322,3 +334,4 @@ void CL64_3D_TR_View::Close_OgreWindow(void)
 	delete RenderListener;
 	RenderListener = nullptr;
 }
+

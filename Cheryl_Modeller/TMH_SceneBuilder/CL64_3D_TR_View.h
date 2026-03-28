@@ -25,6 +25,7 @@ THE SOFTWARE.
 #pragma once
 
 #include "Ogre_Win_Render_Listener.h"
+#include "CL64_3D_TR_OGL_Listener.h"
 
 class CL64_3D_TR_View
 {
@@ -43,6 +44,7 @@ public:
 	Ogre::SceneNode* Ogre_MV_CamNode;
 
 	Ogre_Win_Render_Listener* RenderListener;
+	CL64_3D_TR_OGL_Listener* OGL_TR_Listener;
 
 private:
 	static LRESULT CALLBACK Proc_Ogre_Dialog(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);

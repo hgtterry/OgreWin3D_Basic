@@ -42,6 +42,11 @@ private:
 
 	void PreRender();
 	void PostRender();
+	void Render_Loop();
+
+	void MeshData_Render_Faces(void);
+	void MeshData_Face_Groups(int Count);
+
 
 };
 
