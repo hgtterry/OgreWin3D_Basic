@@ -114,7 +114,7 @@ CL64_App::CL64_App(void)
 
 	CL_Properties_Textures_Com =	nullptr;
 
-	CL_3D_View_Top =			nullptr;
+	CL_3D_TR_View =				nullptr;
 
 
 	CUR = 0;
@@ -309,7 +309,7 @@ void CL64_App::InitApp(void)
 
 	CL_Properties_Textures_Com =	new CL64_Properties_Textures_Com();
 	
-	CL_3D_View_Top =			new CL64_3D_View_Top();
+	CL_3D_TR_View =				new CL64_3D_TR_View();
 
 	Set_Brushes_Fonts();
 
