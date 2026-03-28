@@ -621,17 +621,19 @@ void Sandbox::Set_OgreWindow()
 	Ogre::NameValuePairList options;
 
 	options["externalWindowHandle"] =
-		Ogre::StringConverter::toString((size_t)App->CL_Editor_Map->Bottom_Left_Window_Hwnd);
+		Ogre::StringConverter::toString((size_t)Render_hWnd);
 
-	Ogre_MV_Window = App->CL_Ogre->mRoot->createRenderWindow("MeshViewWin", 1024, 768, false, &options);
+	Ogre_MV_Window = App->CL_Ogre->mRoot->createRenderWindow("MeshViewWin22", 1024, 768, false, &options);
 
-	Ogre_MV_SceneMgr = App->CL_Ogre->mRoot->createSceneManager("DefaultSceneManager", "MeshViewGD");
+	Ogre_MV_SceneMgr = App->CL_Ogre->mRoot->createSceneManager("DefaultSceneManager", "MeshViewGD22");
 
-	Ogre_MV_CamNode = Ogre_MV_SceneMgr->getRootSceneNode()->createChildSceneNode("Camera_Node");
+	Ogre_MV_CamNode = Ogre_MV_SceneMgr->getRootSceneNode()->createChildSceneNode("Camera_Node22");
 
-	Ogre_MV_Camera = Ogre_MV_SceneMgr->createCamera("CameraMV");
+	Ogre_MV_Camera = Ogre_MV_SceneMgr->createCamera("CameraMV22");
 	Ogre_MV_Camera->setNearClipDistance(0.1);
 	Ogre_MV_Camera->setFarClipDistance(8000);
+
+	
 
 	Ogre_MV_CamNode->attachObject(Ogre_MV_Camera);
 	Ogre_MV_CamNode->setPosition(Ogre::Vector3(0, 0, 20));
@@ -642,8 +644,8 @@ void Sandbox::Set_OgreWindow()
 
 	Ogre_MV_SceneMgr->setAmbientLight(ColourValue(0.7, 0.7, 0.7));
 
-	//App->CL_ImGui->Init_ImGui();
-	
+	Ogre_MV_Camera->setRenderQueueGroup(100);
+
 	RenderListener = new Ogre_Win_Render_Listener();
 	App->CL_Ogre->mRoot->addFrameListener(RenderListener);
 
@@ -659,8 +661,6 @@ void Sandbox::Set_OgreWindow()
 	Ogre_Node->setPosition(0, 0, 0);
 	Ogre_Node->setScale(1, 1, 1);
 
-	App->CL_Ogre->mRoot->_setCurrentSceneManager(Ogre_MV_SceneMgr);
-	App->CL_ImGui->Init_ImGui();
 }
 
 // *************************************************************************

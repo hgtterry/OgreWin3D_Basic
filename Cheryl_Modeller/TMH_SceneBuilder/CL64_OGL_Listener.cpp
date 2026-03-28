@@ -145,10 +145,10 @@ void CL64_OGL_Listener::renderQueueStarted(Ogre::uint8 queueGroupId, const Ogre:
 // *************************************************************************
 void CL64_OGL_Listener::renderQueueEnded(Ogre::uint8 queueGroupId, const Ogre::String& invocation, bool& repeatThisInvocation)
 {
-	if (App->CL_Editor_Control->flag_Scene_Game_Running == true)
+	/*if (App->CL_Editor_Control->flag_Scene_Game_Running == true)
 	{
 		return;
-	}
+	}*/
 
 	if (queueGroupId != Ogre::RENDER_QUEUE_MAIN)
 	{
@@ -191,9 +191,10 @@ void CL64_OGL_Listener::PreRender()
 		Ogre::MaterialPtr clearMat = Ogre::MaterialManager::getSingleton().getByName("BaseWhite");
 		clearPass = clearMat->getTechnique(0)->getPass(0);
 	}
+
 	//Set a clear pass to give the renderer a clear renderstate
-	App->CL_Ogre->mSceneMgr->_setPass(clearPass, true);
-	//clearPass->
+	//App->CL_Ogre->mSceneMgr->_setPass(clearPass, true);
+
 	// save attribs
 	glPushAttrib(GL_ALL_ATTRIB_BITS);
 }
