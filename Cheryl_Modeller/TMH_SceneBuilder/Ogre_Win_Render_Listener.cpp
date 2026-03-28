@@ -34,13 +34,13 @@ bool Ogre_Win_Render_Listener::frameRenderingQueued(const Ogre::FrameEvent& evt)
 
 	if (Wheel_Move < 0) // Mouse Wheel Forward
 	{
-		mTranslateVector.z = -mMoveScale * 10;
+		mTranslateVector.z = -mMoveScale * 2;
 	}
 
 	// back
 	if (Wheel_Move > 0) // Mouse Wheel Back
 	{
-		mTranslateVector.z = mMoveScale * 10;
+		mTranslateVector.z = mMoveScale * 2;
 		
 	}
 

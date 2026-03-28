@@ -754,7 +754,8 @@ void CL64_Editor_Map::Create_Top_Left_Window()
 	VCam[V_TL] = new ViewVars;
 	Set_Views_Defaults(V_TL, VIEWTOP, "Top_Left");
 
-	Top_Left_Window_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MAP_TOP_LEFT, Main_View_Dlg_Hwnd,(DLGPROC)Proc_Top_Left_Window);
+	App->CL_3D_TR_View->Create_Top_Left_Window();
+	//Top_Left_Window_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MAP_TOP_LEFT, Main_View_Dlg_Hwnd,(DLGPROC)Proc_Top_Left_Window);
 	
 	VCam[V_TL]->hDlg = Top_Left_Window_Hwnd;
 }
@@ -785,7 +786,7 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Top_Left_Window(HWND hDlg, UINT message, 
 	
 	case WM_CTLCOLORSTATIC:
 	{
-		/*if (App->CL_Editor_Map->Selected_Window == Enums::Selected_Map_View_TL)
+		if (App->CL_Editor_Map->Selected_Window == Enums::Selected_Map_View_TL)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 255, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
@@ -798,7 +799,7 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Top_Left_Window(HWND hDlg, UINT message, 
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->AppBackground;
-		}*/
+		}
 
 		return FALSE;
 	}

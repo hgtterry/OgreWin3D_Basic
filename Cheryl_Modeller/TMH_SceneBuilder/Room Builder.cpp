@@ -230,7 +230,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                     App->CL_Interface->Show_Grids(true);
                 }*/
 
-                App->CL_3D_TR_View->Start_Ogre_Window();
+                //App->CL_3D_TR_View->Start_Ogre_Window();
                
 				return 1;
 			}
@@ -687,7 +687,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
             case ID_VIEW_VIEW3DTOP:
             {
-                App->CL_3D_TR_View->Set_View_Top();
+               // App->CL_3D_TR_View->Set_View_Top();
                 return 1;
             }
            

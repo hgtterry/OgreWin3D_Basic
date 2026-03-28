@@ -33,11 +33,11 @@ public:
 	CL64_3D_TR_View();
 	~CL64_3D_TR_View();
 
-	void Set_View_Top();
-	void Start_Ogre_Window();
+	void Create_Top_Left_Window();
 	void Set_Zoom(void);
 
 	HWND Render_hWnd;
+	HWND RenderWindow_Hwnd;
 
 	Ogre::RenderWindow* Ogre_MV_Window;
 	Ogre::SceneManager* Ogre_MV_SceneMgr;
@@ -49,7 +49,7 @@ public:
 
 	void Set_OgreWindow();
 
-	static LRESULT CALLBACK Proc_Ogre_Dialog(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Proc_Top_Left_Window(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 private:
 	//static LRESULT CALLBACK Proc_Ogre_Dialog(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Proc_Viewer_3D(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);

@@ -33,6 +33,9 @@ THE SOFTWARE.
 CL64_3D_TR_View::CL64_3D_TR_View()
 {
 	Render_hWnd = nullptr;
+	RenderWindow_Hwnd = nullptr;
+
+
 	RenderListener = nullptr;
 	OGL_TR_Listener = nullptr;
 
@@ -46,51 +49,37 @@ CL64_3D_TR_View::~CL64_3D_TR_View()
 {
 }
 
+
 // *************************************************************************
-// *	  		Set_View_Top:- Terry and Hazel Flanigan 2026			   *
+// *			Create_Top_Left_Window:- Terry Mo and Hazel  2026		   *
 // *************************************************************************
-void CL64_3D_TR_View::Set_View_Top()
+void CL64_3D_TR_View::Create_Top_Left_Window()
 {
-    /*if (App->CL_Model->flag_Model_Loaded == true)
-    {
-        App->CL_Mesh->Show_Mesh_Textures();
-        App->CL_Mesh->Show_Mesh_Faces();
+	App->CL_Editor_Map->Top_Left_Window_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MAP_TOP_LEFT, App->CL_Editor_Map->Main_View_Dlg_Hwnd, (DLGPROC)Proc_Top_Left_Window);
 
-        App->CL_Camera->Reset_View_and_Zoom();
-
-        App->CL_Ogre->camNode->setPosition(Ogre::Vector3(0, 0, 0));
-        App->CL_Ogre->camNode->setOrientation(Ogre::Quaternion::IDENTITY);
-
-        float zoom = max(App->CL_Model->S_BoundingBox[0]->Size[0].z, App->CL_Model->S_BoundingBox[0]->Size[0].x);
-
-        App->CL_Ogre->camNode->setPosition(Ogre::Vector3(0, zoom * 2, 0));
-        App->CL_Ogre->camNode->lookAt(Ogre::Vector3(0, 0, 0), Ogre::Node::TS_WORLD);
-
-		Start_Ogre_Window();
-    }*/
 }
 
 // *************************************************************************
-// *			Start_Ogre_Window:- Terry Mo and Hazel  2026			   *
+// *		  Proc_Top_Left_Window:- Terry and Hazel Flanigan 2025		   *
 // *************************************************************************
-void CL64_3D_TR_View::Start_Ogre_Window()
-{
-	CreateDialog(App->hInst, (LPCTSTR)IDD_OGRE_WINDOW, App->MainHwnd, (DLGPROC)Proc_Ogre_Dialog);
-}
-
-// *************************************************************************
-// *		  Proc_Ogre_Dialog:- Terry and Hazel Flanigan 2025			   *
-// *************************************************************************
-LRESULT CALLBACK CL64_3D_TR_View::Proc_Ogre_Dialog(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK CL64_3D_TR_View::Proc_Top_Left_Window(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	switch (message)
 	{
 
 	case WM_INITDIALOG:
 	{
-		App->CL_3D_TR_View->Render_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_OGRE_CANVAS, hDlg, (DLGPROC)Proc_Viewer_3D);
-		App->CL_3D_TR_View->Set_OgreWindow();
+		SendDlgItemMessage(hDlg, IDC_ST_TL_TITLE, WM_SETFONT, (WPARAM)App->Font_CB10, MAKELPARAM(TRUE, 0));
+		App->CL_Editor_Map->Top_Left_Banner_Hwnd = GetDlgItem(hDlg, IDC_ST_TL_TITLE);
+
+		App->CL_3D_TR_View->RenderWindow_Hwnd = GetDlgItem(hDlg, IDC_ST_RENDERTEST);
+		
 		return TRUE;
+	}
+
+	case WM_ERASEBKGND:
+	{
+		return (LRESULT)1;
 	}
 
 	case WM_CTLCOLORSTATIC:
@@ -126,24 +115,34 @@ LRESULT CALLBACK CL64_3D_TR_View::Proc_Ogre_Dialog(HWND hDlg, UINT message, WPAR
 
 	case WM_COMMAND:
 	{
-		// -----------------------------------------------------------------
-		if (LOWORD(wParam) == IDOK)
-		{
-			App->CL_3D_TR_View->Close_OgreWindow();
-			EndDialog(hDlg, LOWORD(wParam));
-			return TRUE;
-		}
+		//// -----------------------------------------------------------------
+		//if (LOWORD(wParam) == IDOK)
+		//{
+		//	App->CL_3D_TR_View->Close_OgreWindow();
+		//	EndDialog(hDlg, LOWORD(wParam));
+		//	return TRUE;
+		//}
 
-		if (LOWORD(wParam) == IDCANCEL)
-		{
-			App->CL_3D_TR_View->Close_OgreWindow();
-			EndDialog(hDlg, LOWORD(wParam));
-			return TRUE;
-		}
+		//if (LOWORD(wParam) == IDCANCEL)
+		//{
+		//	App->CL_3D_TR_View->Close_OgreWindow();
+		//	EndDialog(hDlg, LOWORD(wParam));
+		//	return TRUE;
+		//}
 
 		break;
 	}
+
+	/*case WM_PAINT:
+	{
+		App->CL_Editor_Map->Current_View = App->CL_Editor_Map->VCam[V_TL];
+		App->CL_Editor_Map->Draw_Screen(hDlg);
+
+		return 0;
+	}*/
+
 	}
+
 	return FALSE;
 }
 

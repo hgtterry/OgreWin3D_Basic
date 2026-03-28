@@ -102,6 +102,11 @@ public:
 	bool flag_Wheel_Active;
 	bool flag_Environment_On;
 
+	HWND Top_Left_Banner_Hwnd;
+	HWND Top_Right_Banner_Hwnd;
+	HWND Bottom_Left_Banner_Hwnd;
+	HWND Bottom_Ogre_Banner;
+
 	HCURSOR	hcSizeEW;
 	HCURSOR	hcSizeNS;
 	HCURSOR	hcBoth;
@@ -123,10 +128,7 @@ private:
 	void Create_Bottom_Left_Window();
 	void Create_Ogre_Bottom_Right();
 
-	HWND Top_Left_Banner_Hwnd;
-	HWND Top_Right_Banner_Hwnd;
-	HWND Bottom_Left_Banner_Hwnd;
-	HWND Bottom_Ogre_Banner;
+	
 
 	// Draw Routines
 	static signed int BrushDraw(Brush* pBrush, void* lParam);
