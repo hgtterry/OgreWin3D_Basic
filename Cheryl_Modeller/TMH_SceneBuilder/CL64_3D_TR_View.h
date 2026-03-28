@@ -35,6 +35,7 @@ public:
 
 	void Set_View_Top();
 	void Start_Ogre_Window();
+	void Set_Zoom(void);
 
 	HWND Render_hWnd;
 
@@ -46,11 +47,13 @@ public:
 	Ogre_Win_Render_Listener* RenderListener;
 	CL64_3D_TR_OGL_Listener* OGL_TR_Listener;
 
-private:
+	void Set_OgreWindow();
+
 	static LRESULT CALLBACK Proc_Ogre_Dialog(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+private:
+	//static LRESULT CALLBACK Proc_Ogre_Dialog(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Proc_Viewer_3D(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
-	void Set_OgreWindow();
 	void Close_OgreWindow(void);
 
 };

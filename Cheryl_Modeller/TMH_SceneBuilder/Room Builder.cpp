@@ -91,6 +91,10 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
    
     App->CL_Ogre->Init_3D();
 
+    App->CL_3D_TR_View->Set_OgreWindow();
+
+   // App->CL_Editor_Map->Init_Map_Views();
+
     App->CL_Editor_Control->Set_Map_Editor_Startup();
     App->CL_Editor_Control->Set_3DEditor_View();
     App->CL_Ogre->mWindow->windowMovedOrResized();
@@ -115,6 +119,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         App->CL_Editor_Control->Set_3DEditor_View();
     }*/
 
+    // App->CL_3D_TR_View->Set_OgreWindow();
     // Set timer for the main window
     SetTimer(App->MainHwnd, 1, 100, NULL);
 

@@ -51,7 +51,7 @@ CL64_3D_TR_View::~CL64_3D_TR_View()
 // *************************************************************************
 void CL64_3D_TR_View::Set_View_Top()
 {
-    if (App->CL_Model->flag_Model_Loaded == true)
+    /*if (App->CL_Model->flag_Model_Loaded == true)
     {
         App->CL_Mesh->Show_Mesh_Textures();
         App->CL_Mesh->Show_Mesh_Faces();
@@ -67,7 +67,7 @@ void CL64_3D_TR_View::Set_View_Top()
         App->CL_Ogre->camNode->lookAt(Ogre::Vector3(0, 0, 0), Ogre::Node::TS_WORLD);
 
 		Start_Ogre_Window();
-    }
+    }*/
 }
 
 // *************************************************************************
@@ -267,10 +267,11 @@ void CL64_3D_TR_View::Set_OgreWindow()
 	Ogre::NameValuePairList options;
 
 	options["externalWindowHandle"] =
-		Ogre::StringConverter::toString((size_t)Render_hWnd);
+		Ogre::StringConverter::toString((size_t)App->CL_Editor_Map->Top_Left_Window_Hwnd);// Render_hWnd);
 
 	Ogre_MV_Window = App->CL_Ogre->mRoot->createRenderWindow("MeshViewWin22", 1024, 768, false, &options);
 
+	
 	Ogre_MV_SceneMgr = App->CL_Ogre->mRoot->createSceneManager("DefaultSceneManager", "MeshViewGD22");
 
 	Ogre_MV_CamNode = Ogre_MV_SceneMgr->getRootSceneNode()->createChildSceneNode("Camera_Node22");
@@ -284,9 +285,9 @@ void CL64_3D_TR_View::Set_OgreWindow()
 
 	Ogre::Viewport* vp = Ogre_MV_Window->addViewport(Ogre_MV_Camera);
 	Ogre_MV_Camera->setAspectRatio(Ogre::Real(vp->getActualWidth()) / Ogre::Real(vp->getActualHeight()));
-	vp->setBackgroundColour(ColourValue(0.5, 0.5, 0.5));
+	vp->setBackgroundColour(ColourValue(0.235, 0.235, 0.235));
 
-	Ogre_MV_SceneMgr->setAmbientLight(ColourValue(0.7, 0.7, 0.7));
+	Ogre_MV_SceneMgr->setAmbientLight(ColourValue(1, 1, 1));
 
 	//Ogre_MV_Camera->setRenderQueueGroup(100);
 
@@ -296,14 +297,8 @@ void CL64_3D_TR_View::Set_OgreWindow()
 	OGL_TR_Listener = new CL64_3D_TR_OGL_Listener();
 	Ogre_MV_SceneMgr->addRenderQueueListener(OGL_TR_Listener);
 
+	Set_Zoom();
 
-	Ogre_MV_CamNode->setPosition(Ogre::Vector3(0, 0, 0));
-	Ogre_MV_CamNode->setOrientation(Ogre::Quaternion::IDENTITY);
-
-	float zoom = max(App->CL_Model->S_BoundingBox[0]->Size[0].z, App->CL_Model->S_BoundingBox[0]->Size[0].x);
-
-	Ogre_MV_CamNode->setPosition(Ogre::Vector3(0, zoom * 2, 0));
-	Ogre_MV_CamNode->lookAt(Ogre::Vector3(0, 0, 0), Ogre::Node::TS_WORLD);
 	/*Ogre::Entity* Ogre_Ent;
 	Ogre::SceneNode* Ogre_Node;
 
@@ -333,5 +328,29 @@ void CL64_3D_TR_View::Close_OgreWindow(void)
 
 	delete RenderListener;
 	RenderListener = nullptr;
+}
+
+// *************************************************************************
+// *				Set_Zoom:- Terry and Hazel Flanigan 2026			   *
+// *************************************************************************
+void CL64_3D_TR_View::Set_Zoom(void)
+{
+	Ogre_MV_CamNode->setPosition(Ogre::Vector3(0, 0, 0));
+	Ogre_MV_CamNode->setOrientation(Ogre::Quaternion::IDENTITY);
+
+	float zoom = 0;
+
+	if (App->CL_Model->flag_Model_Loaded == true)
+	{
+		zoom = max(App->CL_Model->S_BoundingBox[0]->Size[0].z, App->CL_Model->S_BoundingBox[0]->Size[0].x);
+	}
+	else
+	{
+		zoom = 20;
+	}
+
+	Ogre_MV_CamNode->setPosition(Ogre::Vector3(0, zoom * 2, 0));
+	Ogre_MV_CamNode->lookAt(Ogre::Vector3(0, 0, 0), Ogre::Node::TS_WORLD);
+
 }
 
