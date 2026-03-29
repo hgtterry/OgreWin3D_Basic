@@ -355,6 +355,7 @@ void CL64_Editor_Map::Resize_Windows(HWND hDlg, int newWidth, int newDepth)
 	RedrawWindow(Main_View_Dlg_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
 	ResizeOgreWindow();
+	App->CL_3D_TR_View->ResizeOgreWindow();
 }
 
 // ************************************************************************

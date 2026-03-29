@@ -35,9 +35,10 @@ public:
 
 	void Create_Top_Left_Window();
 	void Set_Zoom(void);
+	void ResizeOgreWindow();
 
 	HWND Render_hWnd;
-	HWND RenderWindow_Hwnd;
+	HWND ViewGLhWnd_TR;
 
 	Ogre::RenderWindow* Ogre_MV_Window;
 	Ogre::SceneManager* Ogre_MV_SceneMgr;

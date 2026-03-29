@@ -112,6 +112,8 @@
 #define IDD_PROPERTIES_TEXTURES_ASSIMP  222
 #define IDD_PREFS_QUICK                 223
 #define IDD_MODEL_TEXTURES_EDITOR       224
+#define IDD_MAP_RENDER_WINDOW1          225
+#define IDD_MAP_RENDER_WIN_TR           225
 #define IDC_BANNER                      1000
 #define IDC_STTEXT                      1001
 #define IDC_STMESSAGE                   1002

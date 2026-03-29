@@ -33,8 +33,7 @@ THE SOFTWARE.
 CL64_3D_TR_View::CL64_3D_TR_View()
 {
 	Render_hWnd = nullptr;
-	RenderWindow_Hwnd = nullptr;
-
+	ViewGLhWnd_TR = nullptr;
 
 	RenderListener = nullptr;
 	OGL_TR_Listener = nullptr;
@@ -72,8 +71,8 @@ LRESULT CALLBACK CL64_3D_TR_View::Proc_Top_Left_Window(HWND hDlg, UINT message, 
 		SendDlgItemMessage(hDlg, IDC_ST_TL_TITLE, WM_SETFONT, (WPARAM)App->Font_CB10, MAKELPARAM(TRUE, 0));
 		App->CL_Editor_Map->Top_Left_Banner_Hwnd = GetDlgItem(hDlg, IDC_ST_TL_TITLE);
 
-		App->CL_3D_TR_View->RenderWindow_Hwnd = GetDlgItem(hDlg, IDC_ST_RENDERTEST);
-		
+		App->CL_3D_TR_View->ViewGLhWnd_TR = CreateDialog(App->hInst, (LPCTSTR)IDD_MAP_RENDER_WINDOW, hDlg, NULL);// (DLGPROC)Proc_Ogre_BR);
+
 		return TRUE;
 	}
 
@@ -156,6 +155,7 @@ LRESULT CALLBACK CL64_3D_TR_View::Proc_Viewer_3D(HWND hDlg, UINT message, WPARAM
 
 	case WM_INITDIALOG: // Bernie as the dialog is created
 	{
+		
 		return TRUE;
 	}
 
@@ -266,7 +266,7 @@ void CL64_3D_TR_View::Set_OgreWindow()
 	Ogre::NameValuePairList options;
 
 	options["externalWindowHandle"] =
-		Ogre::StringConverter::toString((size_t)App->CL_Editor_Map->Top_Left_Window_Hwnd);// Render_hWnd);
+		Ogre::StringConverter::toString((size_t)ViewGLhWnd_TR);// Render_hWnd);
 
 	Ogre_MV_Window = App->CL_Ogre->mRoot->createRenderWindow("MeshViewWin22", 1024, 768, false, &options);
 
@@ -351,5 +351,35 @@ void CL64_3D_TR_View::Set_Zoom(void)
 	Ogre_MV_CamNode->setPosition(Ogre::Vector3(0, zoom * 2, 0));
 	Ogre_MV_CamNode->lookAt(Ogre::Vector3(0, 0, 0), Ogre::Node::TS_WORLD);
 
+}
+
+// ************************************************************************
+// *			Resize_OgreWin:- Terry Mo and Hazel 2025				  *
+// ************************************************************************
+void CL64_3D_TR_View::ResizeOgreWindow()
+{
+	RECT clientRect;
+	GetClientRect(App->CL_Editor_Map->Top_Left_Window_Hwnd, &clientRect);
+
+	// Set the position and size of the window
+	SetWindowPos(ViewGLhWnd_TR, NULL, 0, 17, clientRect.right, clientRect.bottom - 17, SWP_NOZORDER);
+
+	// Check if the 3D engine has started
+	if (App->flag_3D_Started == true)
+	{
+		// Get the updated client rectangle
+		RECT updatedRect;
+		GetClientRect(App->CL_Editor_Map->Top_Left_Window_Hwnd, &updatedRect);
+
+		// Ensure the height is valid and the camera is initialized
+		if ((updatedRect.bottom - updatedRect.top) != 0 && App->CL_Ogre->mCamera != nullptr)
+		{
+			Ogre_MV_Window->windowMovedOrResized();
+			Ogre_MV_Camera->setAspectRatio(static_cast<Ogre::Real>(Ogre_MV_Window->getWidth()) /
+				static_cast<Ogre::Real>(Ogre_MV_Window->getHeight()));
+
+			//App->CL_Ogre->camNode->yaw(Radian(0));
+		}
+	}
 }
 
