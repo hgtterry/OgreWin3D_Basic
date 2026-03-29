@@ -201,6 +201,9 @@
     <ClInclude Include="CL64_3D_TL_View.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="CL64_3D_TL_OGL_Listener.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Room Builder.cpp">
@@ -381,6 +384,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CL64_3D_TL_View.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CL64_3D_TL_OGL_Listener.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

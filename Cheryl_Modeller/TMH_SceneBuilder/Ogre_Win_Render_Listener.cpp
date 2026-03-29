@@ -4,7 +4,7 @@
 
 Ogre_Win_Render_Listener::Ogre_Win_Render_Listener(void)
 {
-	WE_Cam_Node = App->CL_3D_TR_View->Ogre_MV_CamNode;
+	WE_Cam_Node = App->CL_3D_TL_View->Ogre_TL_CamNode;
 
 	Wheel_Move = 0;
 	mTranslateVector = Ogre::Vector3::ZERO;

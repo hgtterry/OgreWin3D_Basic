@@ -84,8 +84,8 @@ void CL64_3D_TR_OGL_Listener::PreRender()
 
 	renderSystem->_setWorldMatrix(parentNode->_getFullTransform());
 	renderSystem->_setWorldMatrix(parentNode->_getFullTransform());
-	renderSystem->_setViewMatrix(App->CL_3D_TR_View->Ogre_MV_Camera->getViewMatrix());
-	renderSystem->_setProjectionMatrix(App->CL_3D_TR_View->Ogre_MV_Camera->getProjectionMatrixWithRSDepth());
+	renderSystem->_setViewMatrix(App->CL_3D_TL_View->Ogre_TL_Camera->getViewMatrix());
+	renderSystem->_setProjectionMatrix(App->CL_3D_TL_View->Ogre_TL_Camera->getProjectionMatrixWithRSDepth());
 
 	static Ogre::Pass* clearPass = NULL;
 	if (!clearPass)

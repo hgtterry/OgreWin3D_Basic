@@ -172,7 +172,7 @@ bool CL64_Importers::Assimp_Loader(bool UseDialog, const LPCWSTR Filetype, const
 
 	//Debug
 
-	App->CL_3D_TR_View->Set_Zoom();
+	App->CL_3D_TL_View->Set_Zoom();
 
 	return true;
 }
@@ -312,7 +312,7 @@ bool CL64_Importers::Load_Ogre_Model(bool Use_File_Dialog, bool Check_Resource_F
 
 	App->CL_File_IO->RecentFileHistory_Update();
 
-	App->CL_3D_TR_View->Set_Zoom();
+	App->CL_3D_TL_View->Set_Zoom();
 	//App->Enable_Export_Options(true);
 
 	//App->Say("Mesh Imported", (LPSTR)App->CL_Scene->FileName);

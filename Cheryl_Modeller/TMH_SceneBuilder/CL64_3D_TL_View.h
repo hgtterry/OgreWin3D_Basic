@@ -22,11 +22,37 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
+#include "CL64_3D_TL_OGL_Listener.h"
+
 #pragma once
 class CL64_3D_TL_View
 {
 public:
 	CL64_3D_TL_View();
 	~CL64_3D_TL_View();
+
+	void Create_Top_Left_Window();
+	void Set_Zoom(void);
+	void ResizeOgreWindow_TL();
+
+	HWND Render_hWnd;
+	HWND ViewGLhWnd_TL;
+
+	Ogre::RenderWindow* Ogre_TL_Window;
+	Ogre::SceneManager* Ogre_TL_SceneMgr;
+	Ogre::Camera* Ogre_TL_Camera;
+	Ogre::SceneNode* Ogre_TL_CamNode;
+
+	Ogre_Win_Render_Listener* RenderListener;
+	CL64_3D_TL_OGL_Listener* OGL_TL_Listener;
+
+	void Set_OgreWindow_TL();
+
+	static LRESULT CALLBACK Proc_Top_Left_Window(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+
+private:
+	static LRESULT CALLBACK Proc_Ogre_TL(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+
+	void Close_OgreWindow(void);
 };
 

@@ -355,7 +355,7 @@ void CL64_Editor_Map::Resize_Windows(HWND hDlg, int newWidth, int newDepth)
 	RedrawWindow(Main_View_Dlg_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
 	ResizeOgreWindow();
-	App->CL_3D_TR_View->ResizeOgreWindow_TR();
+	App->CL_3D_TL_View->ResizeOgreWindow_TL();
 }
 
 // ************************************************************************
@@ -755,7 +755,7 @@ void CL64_Editor_Map::Create_Top_Left_Window()
 	VCam[V_TL] = new ViewVars;
 	Set_Views_Defaults(V_TL, VIEWTOP, "Top_Left");
 
-	App->CL_3D_TR_View->Create_Top_Left_Window();
+	App->CL_3D_TL_View->Create_Top_Left_Window();
 	//Top_Left_Window_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MAP_TOP_LEFT, Main_View_Dlg_Hwnd,(DLGPROC)Proc_Top_Left_Window);
 	
 	VCam[V_TL]->hDlg = Top_Left_Window_Hwnd;
