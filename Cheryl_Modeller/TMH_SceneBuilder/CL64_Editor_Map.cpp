@@ -355,7 +355,7 @@ void CL64_Editor_Map::Resize_Windows(HWND hDlg, int newWidth, int newDepth)
 	RedrawWindow(Main_View_Dlg_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
 	ResizeOgreWindow();
-	App->CL_3D_TR_View->ResizeOgreWindow();
+	App->CL_3D_TR_View->ResizeOgreWindow_TR();
 }
 
 // ************************************************************************
@@ -1479,7 +1479,7 @@ void CL64_Editor_Map::Create_Ogre_Bottom_Right()
 }
 
 // *************************************************************************
-// *			Proc_ViewerMainc:- Terry Mo and Hazel 2025				   *
+// *			Proc_ViewerMain:- Terry Mo and Hazel 2025				   *
 // *************************************************************************
 LRESULT CALLBACK CL64_Editor_Map::Proc_ViewerMain(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {

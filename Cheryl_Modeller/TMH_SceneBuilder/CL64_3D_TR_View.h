@@ -35,7 +35,7 @@ public:
 
 	void Create_Top_Left_Window();
 	void Set_Zoom(void);
-	void ResizeOgreWindow();
+	void ResizeOgreWindow_TR();
 
 	HWND Render_hWnd;
 	HWND ViewGLhWnd_TR;
@@ -51,9 +51,9 @@ public:
 	void Set_OgreWindow();
 
 	static LRESULT CALLBACK Proc_Top_Left_Window(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+
 private:
-	//static LRESULT CALLBACK Proc_Ogre_Dialog(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
-	static LRESULT CALLBACK Proc_Viewer_3D(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Proc_Ogre_TR(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	void Close_OgreWindow(void);
 

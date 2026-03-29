@@ -71,7 +71,7 @@ LRESULT CALLBACK CL64_3D_TR_View::Proc_Top_Left_Window(HWND hDlg, UINT message, 
 		SendDlgItemMessage(hDlg, IDC_ST_TL_TITLE, WM_SETFONT, (WPARAM)App->Font_CB10, MAKELPARAM(TRUE, 0));
 		App->CL_Editor_Map->Top_Left_Banner_Hwnd = GetDlgItem(hDlg, IDC_ST_TL_TITLE);
 
-		App->CL_3D_TR_View->ViewGLhWnd_TR = CreateDialog(App->hInst, (LPCTSTR)IDD_MAP_RENDER_WINDOW, hDlg, NULL);// (DLGPROC)Proc_Ogre_BR);
+		App->CL_3D_TR_View->ViewGLhWnd_TR = CreateDialog(App->hInst, (LPCTSTR)IDD_MAP_RENDER_WINDOW, hDlg,(DLGPROC)Proc_Ogre_TR);
 
 		return TRUE;
 	}
@@ -83,7 +83,38 @@ LRESULT CALLBACK CL64_3D_TR_View::Proc_Top_Left_Window(HWND hDlg, UINT message, 
 
 	case WM_CTLCOLORSTATIC:
 	{
+		if (GetDlgItem(hDlg, IDC_ST_TL_TITLE) == (HWND)lParam)
+		{
+			if (App->CL_Editor_Map->Selected_Window == Enums::Selected_Map_View_TL)
+			{
+				SetBkColor((HDC)wParam, RGB(0, 255, 0));
+				SetTextColor((HDC)wParam, RGB(0, 0, 0));
+				SetBkMode((HDC)wParam, TRANSPARENT);
+				return (UINT)App->Brush_Green;
+			}
+			else
+			{
+				SetBkColor((HDC)wParam, RGB(0, 255, 0));
+				SetTextColor((HDC)wParam, RGB(0, 0, 0));
+				SetBkMode((HDC)wParam, TRANSPARENT);
+				return (UINT)App->AppBackground;
+			}
+		}
+
 		return FALSE;
+	}
+
+	// Left Mouse Down
+	case WM_LBUTTONDOWN:
+	{
+		App->CL_Editor_Map->Current_View = App->CL_Editor_Map->VCam[V_TL];
+
+		if (App->CL_Editor_Map->Selected_Window != Enums::Selected_Map_View_TL)
+		{
+			App->CL_Editor_Map->Set_Selected_View(Enums::Selected_Map_View_TL);
+		}
+
+		return 1;
 	}
 
 	case WM_CTLCOLORDLG:
@@ -114,31 +145,16 @@ LRESULT CALLBACK CL64_3D_TR_View::Proc_Top_Left_Window(HWND hDlg, UINT message, 
 
 	case WM_COMMAND:
 	{
-		//// -----------------------------------------------------------------
-		//if (LOWORD(wParam) == IDOK)
-		//{
-		//	App->CL_3D_TR_View->Close_OgreWindow();
-		//	EndDialog(hDlg, LOWORD(wParam));
-		//	return TRUE;
-		//}
-
-		//if (LOWORD(wParam) == IDCANCEL)
-		//{
-		//	App->CL_3D_TR_View->Close_OgreWindow();
-		//	EndDialog(hDlg, LOWORD(wParam));
-		//	return TRUE;
-		//}
-
 		break;
 	}
 
-	/*case WM_PAINT:
+	case WM_PAINT:
 	{
-		App->CL_Editor_Map->Current_View = App->CL_Editor_Map->VCam[V_TL];
-		App->CL_Editor_Map->Draw_Screen(hDlg);
+		//App->CL_Editor_Map->Current_View = App->CL_Editor_Map->VCam[V_TL];
+		//App->CL_Editor_Map->Draw_Screen(hDlg);
 
 		return 0;
-	}*/
+	}
 
 	}
 
@@ -146,9 +162,9 @@ LRESULT CALLBACK CL64_3D_TR_View::Proc_Top_Left_Window(HWND hDlg, UINT message, 
 }
 
 // *************************************************************************
-// *		Proc_Viewer_3D:- Terry and Hazel Flanigan 2026 				   *
+// *		Proc_Ogre_TR:- Terry and Hazel Flanigan 2026 				   *
 // *************************************************************************
-LRESULT CALLBACK CL64_3D_TR_View::Proc_Viewer_3D(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK CL64_3D_TR_View::Proc_Ogre_TR(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	switch (message)
 	{
@@ -161,7 +177,7 @@ LRESULT CALLBACK CL64_3D_TR_View::Proc_Viewer_3D(HWND hDlg, UINT message, WPARAM
 
 	case WM_CTLCOLORDLG:
 	{
-		//if (App->flag_3D_Started == false)
+		if (App->flag_3D_Started == false)
 		{
 			return (LONG)App->BlackBrush;
 		}
@@ -213,6 +229,13 @@ LRESULT CALLBACK CL64_3D_TR_View::Proc_Viewer_3D(HWND hDlg, UINT message, WPARAM
 	// Left Mouse Button
 	case WM_LBUTTONDOWN:
 	{
+		App->CL_Editor_Map->Current_View = App->CL_Editor_Map->VCam[V_TL];
+
+		if (App->CL_Editor_Map->Selected_Window != Enums::Selected_Map_View_TL)
+		{
+			App->CL_Editor_Map->Set_Selected_View(Enums::Selected_Map_View_TL);
+		}
+
 		////if (App->flag_3D_Started == true)
 		//{
 		//	POINT p;
@@ -354,9 +377,9 @@ void CL64_3D_TR_View::Set_Zoom(void)
 }
 
 // ************************************************************************
-// *			Resize_OgreWin:- Terry Mo and Hazel 2025				  *
+// *			ResizeOgreWindow_TR:- Terry Mo and Hazel 2026			  *
 // ************************************************************************
-void CL64_3D_TR_View::ResizeOgreWindow()
+void CL64_3D_TR_View::ResizeOgreWindow_TR()
 {
 	RECT clientRect;
 	GetClientRect(App->CL_Editor_Map->Top_Left_Window_Hwnd, &clientRect);
@@ -374,9 +397,9 @@ void CL64_3D_TR_View::ResizeOgreWindow()
 		// Ensure the height is valid and the camera is initialized
 		if ((updatedRect.bottom - updatedRect.top) != 0 && App->CL_Ogre->mCamera != nullptr)
 		{
-			Ogre_MV_Window->windowMovedOrResized();
-			Ogre_MV_Camera->setAspectRatio(static_cast<Ogre::Real>(Ogre_MV_Window->getWidth()) /
-				static_cast<Ogre::Real>(Ogre_MV_Window->getHeight()));
+			//Ogre_MV_Window->windowMovedOrResized();
+			//Ogre_MV_Camera->setAspectRatio(static_cast<Ogre::Real>(Ogre_MV_Window->getWidth()) /
+				//static_cast<Ogre::Real>(Ogre_MV_Window->getHeight()));
 
 			//App->CL_Ogre->camNode->yaw(Radian(0));
 		}
