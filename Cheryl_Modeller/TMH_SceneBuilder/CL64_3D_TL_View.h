@@ -23,6 +23,7 @@ THE SOFTWARE.
 */
 
 #include "CL64_3D_TL_OGL_Listener.h"
+#include "CL64_3D_TL_Listener.h"
 
 #pragma once
 class CL64_3D_TL_View
@@ -43,7 +44,7 @@ public:
 	Ogre::Camera* Ogre_TL_Camera;
 	Ogre::SceneNode* Ogre_TL_CamNode;
 
-	Ogre_Win_Render_Listener* RenderListener;
+	CL64_3D_TL_Listener* TL_RenderListener;
 	CL64_3D_TL_OGL_Listener* OGL_TL_Listener;
 
 	void Set_OgreWindow_TL();

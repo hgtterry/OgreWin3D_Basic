@@ -35,7 +35,7 @@ CL64_3D_TL_View::CL64_3D_TL_View()
 	Render_hWnd = nullptr;
 	ViewGLhWnd_TL = nullptr;
 
-	RenderListener = nullptr;
+	TL_RenderListener = nullptr;
 	OGL_TL_Listener = nullptr;
 
 	Ogre_TL_Window = nullptr;
@@ -132,11 +132,11 @@ LRESULT CALLBACK CL64_3D_TL_View::Proc_Top_Left_Window(HWND hDlg, UINT message, 
 
 		if (zDelta > 0)
 		{
-			App->CL_3D_TL_View->RenderListener->Wheel_Move = -1;
+			App->CL_3D_TL_View->TL_RenderListener->Wheel_Move = -1;
 		}
 		else if (zDelta < 0)
 		{
-			App->CL_3D_TL_View->RenderListener->Wheel_Move = 1;
+			App->CL_3D_TL_View->TL_RenderListener->Wheel_Move = 1;
 		}
 
 		return 1;
@@ -310,8 +310,8 @@ void CL64_3D_TL_View::Set_OgreWindow_TL()
 
 	Ogre_TL_SceneMgr->setAmbientLight(ColourValue(1, 1, 1));
 
-	RenderListener = new Ogre_Win_Render_Listener();
-	App->CL_Ogre->mRoot->addFrameListener(RenderListener);
+	TL_RenderListener = new CL64_3D_TL_Listener();
+	App->CL_Ogre->mRoot->addFrameListener(TL_RenderListener);
 
 	OGL_TL_Listener = new CL64_3D_TL_OGL_Listener();
 	Ogre_TL_SceneMgr->addRenderQueueListener(OGL_TL_Listener);
@@ -331,10 +331,10 @@ void CL64_3D_TL_View::Close_OgreWindow(void)
 	Ogre_TL_Window->destroy();
 	App->CL_Ogre->mRoot->destroySceneManager(Ogre_TL_SceneMgr);
 
-	App->CL_Ogre->mRoot->removeFrameListener(RenderListener);
+	App->CL_Ogre->mRoot->removeFrameListener(TL_RenderListener);
 
-	delete RenderListener;
-	RenderListener = nullptr;
+	delete TL_RenderListener;
+	TL_RenderListener = nullptr;
 }
 
 // *************************************************************************
