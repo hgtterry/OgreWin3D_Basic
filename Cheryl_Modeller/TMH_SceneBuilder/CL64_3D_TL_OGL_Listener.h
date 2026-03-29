@@ -46,5 +46,9 @@ private:
 
 	void MeshData_Render_Faces(void);
 	void MeshData_Face_Groups(int Count);
+
+	bool Render_RenderOrthoGridFromSize(ViewVars* cv, int Interval, HDC hDC, RECT Rect);
+	void Render_Line(float	sp, float ep);
+
 };
 

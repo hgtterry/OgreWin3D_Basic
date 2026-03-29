@@ -42,6 +42,11 @@ CL64_3D_TL_View::CL64_3D_TL_View()
 	Ogre_TL_SceneMgr = nullptr;
 	Ogre_TL_Camera = nullptr;
 	Ogre_TL_CamNode = nullptr;
+
+	vp = nullptr;
+
+	CursorPosX = 0;
+	CursorPosY = 0;
 }
 
 CL64_3D_TL_View::~CL64_3D_TL_View()
@@ -149,8 +154,11 @@ LRESULT CALLBACK CL64_3D_TL_View::Proc_Top_Left_Window(HWND hDlg, UINT message, 
 
 	case WM_PAINT:
 	{
-		//App->CL_Editor_Map->Current_View = App->CL_Editor_Map->VCam[V_TL];
-		//App->CL_Editor_Map->Draw_Screen(hDlg);
+		if (App->flag_3D_Started == true)
+		{
+			App->CL_Editor_Map->Current_View = App->CL_Editor_Map->VCam[V_TL];
+			//App->CL_Editor_Map->Draw_Screen(hDlg);
+		}
 
 		return 0;
 	}
@@ -191,37 +199,37 @@ LRESULT CALLBACK CL64_3D_TL_View::Proc_Ogre_TL(HWND hDlg, UINT message, WPARAM w
 	// Right Mouse Button
 	case WM_RBUTTONDOWN: // BERNIE_HEAR_FIRE 
 	{
-		////if (App->flag_3D_Started == true)
-		//{
-		//	POINT cursorPosition;
-		//	GetCursorPos(&cursorPosition);
-		//	App->CL_X_Shapes_3D->CursorPosX = cursorPosition.x;
-		//	App->CL_X_Shapes_3D->CursorPosY = cursorPosition.y;
+		if (App->flag_3D_Started == true)
+		{
+			POINT cursorPosition;
+			GetCursorPos(&cursorPosition);
+			App->CL_3D_TL_View->CursorPosX = cursorPosition.x;
+			App->CL_3D_TL_View->CursorPosY = cursorPosition.y;
 
-		//	auto& listener = App->CL_X_Shapes_3D->RenderListener;
-		//	listener->Pl_Cent500X = cursorPosition.x;
-		//	listener->Pl_Cent500Y = cursorPosition.y;
+			auto& listener = App->CL_3D_TL_View->TL_RenderListener;
+			listener->Pl_Cent500X = cursorPosition.x;
+			listener->Pl_Cent500Y = cursorPosition.y;
 
-		//	SetCapture(App->CL_X_Shapes_3D->Render_hWnd);
-		//	SetCursorPos(cursorPosition.x, cursorPosition.y);
+			SetCapture(App->CL_3D_TL_View->ViewGLhWnd_TL);
+			SetCursorPos(cursorPosition.x, cursorPosition.y);
 
-		//	App->CL_X_Shapes_3D->RenderListener->flag_Pl_RightMouseDown = true;
-		//	App->CUR = SetCursor(NULL);
+			App->CL_3D_TL_View->TL_RenderListener->flag_RightMouseDown = true;
+			App->CUR = SetCursor(NULL);
 
-		//	return 1;
-		//}
+			return 1;
+		}
 
 		return 1;
 	}
 	case WM_RBUTTONUP:
 	{
-		////if (App->flag_3D_Started == true)
-		//{
-		//	ReleaseCapture();
-		//	App->CL_X_Shapes_3D->RenderListener->flag_Pl_RightMouseDown = 0;
-		//	SetCursor(App->CUR);
-		//	return 1;
-		//}
+		if (App->flag_3D_Started == true)
+		{
+			ReleaseCapture();
+			App->CL_3D_TL_View->TL_RenderListener->flag_RightMouseDown = false;
+			SetCursor(App->CUR);
+			return 1;
+		}
 
 		return 1;
 	}
@@ -235,41 +243,43 @@ LRESULT CALLBACK CL64_3D_TL_View::Proc_Ogre_TL(HWND hDlg, UINT message, WPARAM w
 			App->CL_Editor_Map->Set_Selected_View(Enums::Selected_Map_View_TL);
 		}
 
-		////if (App->flag_3D_Started == true)
-		//{
-		//	POINT p;
-		//	GetCursorPos(&p);
+		if (App->flag_3D_Started == true)
+		{
+			/*POINT p;
+			GetCursorPos(&p);
 
-		//	App->CL_X_Shapes_3D->CursorPosX = p.x;
-		//	App->CL_X_Shapes_3D->CursorPosY = p.y;
+			App->CL_X_Shapes_3D->CursorPosX = p.x;
+			App->CL_X_Shapes_3D->CursorPosY = p.y;
 
-		//	auto& listener = App->CL_X_Shapes_3D->RenderListener;
-		//	listener->Pl_Cent500X = p.x;
-		//	listener->Pl_Cent500Y = p.y;
+			auto& listener = App->CL_X_Shapes_3D->RenderListener;
+			listener->Pl_Cent500X = p.x;
+			listener->Pl_Cent500Y = p.y;
 
-		//	SetCapture(App->CL_X_Shapes_3D->Render_hWnd);
+			SetCapture(App->CL_X_Shapes_3D->Render_hWnd);
 
-		//	SetCursorPos(App->CL_X_Shapes_3D->CursorPosX, App->CL_X_Shapes_3D->CursorPosY);
+			SetCursorPos(App->CL_X_Shapes_3D->CursorPosX, App->CL_X_Shapes_3D->CursorPosY);*/
 
-		//	App->CL_X_Shapes_3D->RenderListener->flag_Pl_LeftMouseDown = 1;
+			//App->CL_3D_TL_View->TL_RenderListener->flag_RightMouseDown = true;
 
-		//	App->CUR = SetCursor(NULL);
+			//App->CUR = SetCursor(NULL);
 
-		//	return 1;
-		//}
+			return 1;
+		}
 
 		return 1;
 	}
 
 	case WM_LBUTTONUP:
 	{
-		////if (App->flag_3D_Started == true)
-		//{
-		//	ReleaseCapture();
-		//	App->CL_X_Shapes_3D->RenderListener->flag_Pl_LeftMouseDown = 0;
-		//	SetCursor(App->CUR);
-		//	return 1;
-		//}
+		if (App->flag_3D_Started == true)
+		{
+			/*ReleaseCapture();
+			App->CL_X_Shapes_3D->RenderListener->flag_Pl_LeftMouseDown = 0;
+			SetCursor(App->CUR);*/
+
+			//App->CL_3D_TL_View->TL_RenderListener->flag_RightMouseDown = false;
+			return 1;
+		}
 
 		return 1;
 	}
@@ -290,21 +300,25 @@ void CL64_3D_TL_View::Set_OgreWindow_TL()
 	options["externalWindowHandle"] =
 		Ogre::StringConverter::toString((size_t)ViewGLhWnd_TL);// Render_hWnd);
 
-	Ogre_TL_Window = App->CL_Ogre->mRoot->createRenderWindow("MeshViewWin22", 1024, 768, false, &options);
+	Ogre_TL_Window = App->CL_Ogre->mRoot->createRenderWindow("TL_ViewWin", 1024, 768, false, &options);
 
 
-	Ogre_TL_SceneMgr = App->CL_Ogre->mRoot->createSceneManager("DefaultSceneManager", "MeshViewGD22");
+	Ogre_TL_SceneMgr = App->CL_Ogre->mRoot->createSceneManager("DefaultSceneManager", "TL_ViewWin");
 
-	Ogre_TL_CamNode = Ogre_TL_SceneMgr->getRootSceneNode()->createChildSceneNode("Camera_Node22");
+	Ogre_TL_CamNode = Ogre_TL_SceneMgr->getRootSceneNode()->createChildSceneNode("TL_Camera_Node");
 
-	Ogre_TL_Camera = Ogre_TL_SceneMgr->createCamera("CameraMV22");
+	Ogre_TL_Camera = Ogre_TL_SceneMgr->createCamera("TL_Camera");
 	Ogre_TL_Camera->setNearClipDistance(0.1);
 	Ogre_TL_Camera->setFarClipDistance(8000);
 
 	Ogre_TL_CamNode->attachObject(Ogre_TL_Camera);
 	Ogre_TL_CamNode->setPosition(Ogre::Vector3(0, 0, 20));
 
-	Ogre::Viewport* vp = Ogre_TL_Window->addViewport(Ogre_TL_Camera);
+	vp = Ogre_TL_Window->addViewport(Ogre_TL_Camera);
+	
+	//Ogre_TL_Camera->setProjectionType(Ogre::ProjectionType::PT_ORTHOGRAPHIC);
+	//Ogre_TL_Camera->setOrthoWindow(vp->getActualWidth(), vp->getActualHeight());
+
 	Ogre_TL_Camera->setAspectRatio(Ogre::Real(vp->getActualWidth()) / Ogre::Real(vp->getActualHeight()));
 	vp->setBackgroundColour(ColourValue(0.235, 0.235, 0.235));
 
@@ -327,7 +341,7 @@ void CL64_3D_TL_View::Close_OgreWindow(void)
 {
 	//App->CL_MeshViewer->flag_MV_Render_Debug = 0;
 
-	App->CL_Ogre->mRoot->detachRenderTarget("MeshViewWin22");
+	App->CL_Ogre->mRoot->detachRenderTarget("TL_ViewWin");
 	Ogre_TL_Window->destroy();
 	App->CL_Ogre->mRoot->destroySceneManager(Ogre_TL_SceneMgr);
 
@@ -382,9 +396,9 @@ void CL64_3D_TL_View::ResizeOgreWindow_TL()
 		// Ensure the height is valid and the camera is initialized
 		if ((updatedRect.bottom - updatedRect.top) != 0 && App->CL_Ogre->mCamera != nullptr)
 		{
-			//Ogre_MV_Window->windowMovedOrResized();
-			//Ogre_MV_Camera->setAspectRatio(static_cast<Ogre::Real>(Ogre_MV_Window->getWidth()) /
-				//static_cast<Ogre::Real>(Ogre_MV_Window->getHeight()));
+			Ogre_TL_Window->windowMovedOrResized();
+			Ogre_TL_Camera->setAspectRatio(static_cast<Ogre::Real>(Ogre_TL_Window->getWidth()) /
+				static_cast<Ogre::Real>(Ogre_TL_Window->getHeight()));
 
 			//App->CL_Ogre->camNode->yaw(Radian(0));
 		}

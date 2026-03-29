@@ -43,9 +43,13 @@ public:
 	Ogre::SceneManager* Ogre_TL_SceneMgr;
 	Ogre::Camera* Ogre_TL_Camera;
 	Ogre::SceneNode* Ogre_TL_CamNode;
+	Ogre::Viewport* vp;
 
 	CL64_3D_TL_Listener* TL_RenderListener;
 	CL64_3D_TL_OGL_Listener* OGL_TL_Listener;
+
+	int CursorPosX;
+	int CursorPosY;
 
 	void Set_OgreWindow_TL();
 

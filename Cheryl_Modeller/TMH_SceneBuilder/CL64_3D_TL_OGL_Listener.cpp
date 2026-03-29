@@ -136,6 +136,15 @@ void CL64_3D_TL_OGL_Listener::Render_Loop()
 		MeshData_Render_Faces();
 	}
 
+	RECT Test;
+	Test.right = 300;
+	Test.bottom = 300;
+
+	HDC     hdc;
+	hdc = GetDC(App->CL_3D_TL_View->ViewGLhWnd_TL);
+
+	//Render_RenderOrthoGridFromSize(App->CL_Editor_Map->Current_View, 1.5, hdc, Test);
+
 	if (depthTestEnabled)
 	{
 		glEnable(GL_DEPTH_TEST);
@@ -211,4 +220,122 @@ void CL64_3D_TL_OGL_Listener::MeshData_Face_Groups(int Count)
 		// End drawing the polygon
 		glEnd();
 	}
+}
+
+static const T_Vec3	VecOrigin = { 0.0f, 0.0f, 0.0f };
+
+#define	VectorToSUB(a, b) (*((((float *)(&a))) + (b)))
+#define Units_FRound(n)	((float)floor((n)+0.5f))
+#define Units_Round(n) ((int)Units_FRound((n)))
+
+// *************************************************************************
+// *	  				Render_RenderOrthoGridFromSize					   *
+// *************************************************************************
+bool CL64_3D_TL_OGL_Listener::Render_RenderOrthoGridFromSize(ViewVars* cv, int Interval, HDC hDC, RECT Rect)
+{
+	auto& m_Maths = App->CL_X_Maths; // Maths Library
+
+	cv->Width = App->CL_3D_TL_View->vp->getActualWidth();
+	cv->Height = App->CL_3D_TL_View->vp->getActualHeight();
+
+	T_Vec3 ystep, xstep, Delt, Delt2;
+	int			i, cnt, xaxis, yaxis, inidx;
+	static int axidx[3][2] = { 2, 1, 0, 2, 0, 1 };
+	float	gsinv;
+	Box3d ViewBox;
+	POINT		sp;
+
+	inidx = (cv->ViewType >> 3) & 0x3;
+
+	xaxis = axidx[inidx][0];
+	yaxis = axidx[inidx][1];
+
+	App->CL_Render->Render_ViewToWorld(cv, Units_Round(-Interval), Units_Round(-Interval), &Delt);
+	App->CL_Render->Render_ViewToWorld(cv, Units_Round(cv->Width + Interval), Units_Round(cv->Height + Interval), &Delt2);
+
+	App->CL_X_Box->Box3d_Set(&ViewBox, Delt.x, Delt.y, Delt.z, Delt2.x, Delt2.y, Delt2.z);
+
+	VectorToSUB(ViewBox.Min, inidx) = -FLT_MAX;
+	VectorToSUB(ViewBox.Max, inidx) = FLT_MAX;
+
+	gsinv = 1.0f / (float)Interval;
+	for (i = 0; i < 3; i++)
+	{
+		VectorToSUB(ViewBox.Min, i) = (float)((int)(VectorToSUB(ViewBox.Min, i) * gsinv)) * Interval;
+		VectorToSUB(ViewBox.Max, i) = (float)((int)(VectorToSUB(ViewBox.Max, i) * gsinv)) * Interval;
+	}
+
+	m_Maths->Vector3_Copy(&VecOrigin, &xstep);
+	m_Maths->Vector3_Copy(&VecOrigin, &ystep);
+	VectorToSUB(ystep, yaxis) = (float)Interval;
+	VectorToSUB(xstep, xaxis) = (float)Interval;
+
+	cnt = Rect.bottom / Interval; // TODO hgtterry Debug Odd
+
+	// horizontal lines
+	int Count = 0;
+	m_Maths->Vector3_Copy(&ViewBox.Min, &Delt);
+	m_Maths->Vector3_Copy(&ViewBox.Min, &Delt2);
+	VectorToSUB(Delt2, xaxis) = VectorToSUB(ViewBox.Max, xaxis);
+	cnt = Units_Round((VectorToSUB(ViewBox.Max, yaxis) - VectorToSUB(ViewBox.Min, yaxis)) * gsinv);
+
+	while (Count < cnt)
+	{
+		sp = App->CL_Render->Render_OrthoWorldToView(cv, &Delt);
+		//MoveToEx(hDC, 0, sp.y, NULL);
+		sp = App->CL_Render->Render_OrthoWorldToView(cv, &Delt2);
+		//LineTo(hDC, cv->Width, sp.y);
+		m_Maths->Vector3_Add(&Delt, &ystep, &Delt);
+		m_Maths->Vector3_Add(&Delt2, &ystep, &Delt2);
+		Count++;
+	}
+
+	// vertical lines
+	Count = 0;
+	m_Maths->Vector3_Copy(&ViewBox.Min, &Delt);
+	m_Maths->Vector3_Copy(&ViewBox.Min, &Delt2);
+	VectorToSUB(Delt2, yaxis) = VectorToSUB(ViewBox.Max, yaxis);
+	cnt = Units_Round((VectorToSUB(ViewBox.Max, xaxis) - VectorToSUB(ViewBox.Min, xaxis)) * gsinv);
+
+	while (Count < cnt)
+	{
+		sp = App->CL_Render->Render_OrthoWorldToView(cv, &Delt);
+		float stp = sp.x;
+
+		//MoveToEx(hDC, sp.x, 0, NULL);
+		sp = App->CL_Render->Render_OrthoWorldToView(cv, &Delt2);
+
+		float epp = sp.x;
+
+		//LineTo(hDC, sp.x, cv->Height);
+		m_Maths->Vector3_Add(&Delt, &xstep, &Delt);
+		m_Maths->Vector3_Add(&Delt2, &xstep, &Delt2);
+
+		//Render_Line(stp, epp);
+		Count++;
+	}
+
+	return 1;
+}
+
+// *************************************************************************
+// *				Render_Line:- Terry and Hazel Flanigan 2026			   *
+// *************************************************************************
+void CL64_3D_TL_OGL_Listener::Render_Line(float	sp, float ep)
+{
+	glColor3f(1, 0, 0);
+
+	// Set the polygon mode to draw lines for both front and back faces
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
+	glBegin(GL_LINES);
+
+	float Top = App->CL_3D_TL_View->Ogre_TL_Window->getHeight();
+	//Top = Top / 2;
+
+	glVertex3f(sp, -Top, 0);
+	glVertex3f(ep, -Top, 1000);
+
+	glEnd();
+
 }
