@@ -75,7 +75,7 @@ LRESULT CALLBACK CL64_3D_TL_View::Proc_Top_Left_Window(HWND hDlg, UINT message, 
 		SendDlgItemMessage(hDlg, IDC_ST_TL_TITLE, WM_SETFONT, (WPARAM)App->Font_CB10, MAKELPARAM(TRUE, 0));
 		App->CL_Editor_Map->Top_Left_Banner_Hwnd = GetDlgItem(hDlg, IDC_ST_TL_TITLE);
 
-		App->CL_3D_TL_View->ViewGLhWnd_TL = CreateDialog(App->hInst, (LPCTSTR)IDD_MAP_RENDER_WINDOW, hDlg, (DLGPROC)Proc_Ogre_TL);
+		//App->CL_3D_TL_View->ViewGLhWnd_TL = CreateDialog(App->hInst, (LPCTSTR)IDD_MAP_RENDER_WINDOW, hDlg, (DLGPROC)Proc_Ogre_TL);
 
 		return TRUE;
 	}
@@ -157,7 +157,7 @@ LRESULT CALLBACK CL64_3D_TL_View::Proc_Top_Left_Window(HWND hDlg, UINT message, 
 		if (App->flag_3D_Started == true)
 		{
 			App->CL_Editor_Map->Current_View = App->CL_Editor_Map->VCam[V_TL];
-			//App->CL_Editor_Map->Draw_Screen(hDlg);
+			App->CL_Editor_Map->Draw_Screen(hDlg);
 		}
 
 		return 0;
@@ -294,7 +294,7 @@ LRESULT CALLBACK CL64_3D_TL_View::Proc_Ogre_TL(HWND hDlg, UINT message, WPARAM w
 // *************************************************************************
 void CL64_3D_TL_View::Set_OgreWindow_TL()
 {
-
+	return;
 	Ogre::NameValuePairList options;
 
 	options["externalWindowHandle"] =
@@ -356,6 +356,7 @@ void CL64_3D_TL_View::Close_OgreWindow(void)
 // *************************************************************************
 void CL64_3D_TL_View::Set_Zoom(void)
 {
+	return;
 	Ogre_TL_CamNode->setPosition(Ogre::Vector3(0, 0, 0));
 	Ogre_TL_CamNode->setOrientation(Ogre::Quaternion::IDENTITY);
 
@@ -380,6 +381,7 @@ void CL64_3D_TL_View::Set_Zoom(void)
 // ************************************************************************
 void CL64_3D_TL_View::ResizeOgreWindow_TL()
 {
+	return;
 	RECT clientRect;
 	GetClientRect(App->CL_Editor_Map->Top_Left_Window_Hwnd, &clientRect);
 

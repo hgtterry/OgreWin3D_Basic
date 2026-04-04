@@ -98,77 +98,77 @@ bool CL64_Importers::Assimp_Loader(bool UseDialog, const LPCWSTR Filetype, const
 	App->CL_Properties_Textures_Com->Update_Dlg_Bmp_Texture();
 	App->CL_Properties_Textures_Com->Get_First_Texture();
 
-	//FaceList* fl;
-	//Face* f;
+	FaceList* fl;
+	Face* f;
 
-	//int i, NumFaces = 0;
-	//
-	//char BoneName[255];
-	////App->CL_X_Maths->geXForm3d Transform;
-	//const char* BName;
+	int i, NumFaces = 0;
+	
+	char BoneName[255];
+	//App->CL_X_Maths->geXForm3d Transform;
+	const char* BName;
 
-	//NumFaces = App->CL_Model->FaceCount;
-	//fl = App->CL_X_FaceList->FaceList_Create(NumFaces);
-	//if (!fl)
-	//{
-	//	App->Say("Can not create Faces");
+	NumFaces = App->CL_Model->FaceCount;
+	fl = App->CL_X_FaceList->FaceList_Create(NumFaces);
+	if (!fl)
+	{
+		App->Say("Can not create Faces");
 
-	//	return true;
-	//}
+		return true;
+	}
 
-	//int GroupCount = App->CL_Model->GroupCount;
-	//int Count = 0;
+	int GroupCount = App->CL_Model->GroupCount;
+	int Count = 0;
 
-	//while (Count < GroupCount)
-	//{
-	//	//MeshData_Face_Groups(Count);
-	//	auto& group = App->CL_Mesh->Group[Count];
-	//	int faceCount = group->GroupFaceCount;
+	while (Count < GroupCount)
+	{
+		//MeshData_Face_Groups(Count);
+		auto& group = App->CL_Mesh->Group[Count];
+		int faceCount = group->GroupFaceCount;
 
-	//	// Iterate through each face in the group
-	//	for (int i = 0; i < faceCount; ++i)
-	//	{
-	//		T_Vec3 FaceVerts[3];
+		// Iterate through each face in the group
+		for (int i = 0; i < faceCount; ++i)
+		{
+			T_Vec3 FaceVerts[3];
 
-	//		// Retrieve vertex indices for the current face
-	//		int A = group->Face_Data[i].a;
-	//		int B = group->Face_Data[i].b;
-	//		int C = group->Face_Data[i].c;
+			// Retrieve vertex indices for the current face
+			int A = group->Face_Data[i].a;
+			int B = group->Face_Data[i].b;
+			int C = group->Face_Data[i].c;
 
-	//		// Specify the vertices of the polygon
-	//		FaceVerts[0].x = group->vertex_Data[A].x;
-	//		FaceVerts[0].y = group->vertex_Data[A].y;
-	//		FaceVerts[0].z = group->vertex_Data[A].z;
+			// Specify the vertices of the polygon
+			FaceVerts[0].x = group->vertex_Data[A].x;
+			FaceVerts[0].y = group->vertex_Data[A].y;
+			FaceVerts[0].z = group->vertex_Data[A].z;
 
-	//		FaceVerts[1].x = group->vertex_Data[B].x;
-	//		FaceVerts[1].y = group->vertex_Data[B].y;
-	//		FaceVerts[1].z = group->vertex_Data[B].z;
+			FaceVerts[1].x = group->vertex_Data[B].x;
+			FaceVerts[1].y = group->vertex_Data[B].y;
+			FaceVerts[1].z = group->vertex_Data[B].z;
 
-	//		FaceVerts[2].x = group->vertex_Data[C].x;
-	//		FaceVerts[2].y = group->vertex_Data[C].y;
-	//		FaceVerts[2].z = group->vertex_Data[C].z;
+			FaceVerts[2].x = group->vertex_Data[C].x;
+			FaceVerts[2].y = group->vertex_Data[C].y;
+			FaceVerts[2].z = group->vertex_Data[C].z;
 
-	//		f = App->CL_X_Face->Face_Create(3, FaceVerts, 0);
+			f = App->CL_X_Face->Face_Create(3, FaceVerts, 0);
 
-	//		if (f)
-	//		{
-	//			App->CL_X_FaceList->FaceList_AddFace(fl, f);
-	//		}
+			if (f)
+			{
+				App->CL_X_FaceList->FaceList_AddFace(fl, f);
+			}
 
-	//	}
+		}
 
-	//	Count++;
-	//}
+		Count++;
+	}
 
-	//Brush* Test = App->CL_X_Brush->Brush_Create(BRUSH_LEAF, fl, NULL);
+	Brush* Test = App->CL_X_Brush->Brush_Create(BRUSH_LEAF, fl, NULL);
 
-	//if (Test)
-	//{
-	//	App->CL_X_Brush->Brush_SetName(Test, "Test_Brush");
-	//	App->CL_Level->Level_AppendBrush(Test);
+	if (Test)
+	{
+		App->CL_X_Brush->Brush_SetName(Test, "Test_Brush");
+		App->CL_Level->Level_AppendBrush(Test);
 
-	//	//App->Say("Brush Created");
-	//}
+		//App->Say("Brush Created");
+	}
 
 	//Debug
 

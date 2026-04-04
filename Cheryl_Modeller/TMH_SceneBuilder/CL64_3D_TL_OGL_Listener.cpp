@@ -46,6 +46,8 @@ void CL64_3D_TL_OGL_Listener::renderQueueStarted(Ogre::uint8 queueGroupId, const
 // *************************************************************************
 void CL64_3D_TL_OGL_Listener::renderQueueEnded(Ogre::uint8 queueGroupId, const Ogre::String& invocation, bool& repeatThisInvocation)
 {
+	return;
+
 	/*if (App->CL_Editor_Control->flag_Scene_Game_Running == true)
 	{
 		return;
@@ -160,6 +162,7 @@ void CL64_3D_TL_OGL_Listener::Render_Loop()
 // *************************************************************************
 void CL64_3D_TL_OGL_Listener::MeshData_Render_Faces(void)
 {
+	return;
 	int Count = 0;
 
 	glColor3f(1, 1, 1);
