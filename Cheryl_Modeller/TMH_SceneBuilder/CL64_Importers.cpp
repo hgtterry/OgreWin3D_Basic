@@ -416,12 +416,6 @@ void CL64_Importers::Create_Brush()
 	Face* f;
 	int NumFaces = 0;
 
-	//int i, NumFaces = 0;
-
-	//char BoneName[255];
-	//App->CL_X_Maths->geXForm3d Transform;
-	//const char* BName;
-
 	NumFaces = App->CL_Model->FaceCount;
 	fl = App->CL_X_FaceList->FaceList_Create(NumFaces);
 	if (!fl)
@@ -469,7 +463,6 @@ void CL64_Importers::Create_Brush()
 			{
 				App->CL_X_FaceList->FaceList_AddFace(fl, f);
 			}
-
 		}
 
 		Count++;

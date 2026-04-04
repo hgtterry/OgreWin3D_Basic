@@ -2307,14 +2307,14 @@ bool CL64_Editor_Map::Context_Command(WPARAM wParam)
 void CL64_Editor_Map::On_Mouse_Move(POINT CursorPosition, HWND hDlg)
 {
 	// Pan
-	if (flag_Left_Button_Down == 1 && KEYDOWN(VK_CONTROL) == true)
+	if (flag_Right_Button_Down == true && KEYDOWN(VK_CONTROL) == true)
 	{
 		App->CL_Render->Pan_View(Current_View, mStartPoint.x, mStartPoint.y);
 		return;
 	}
 
 	// Zoom
-	if (flag_Right_Button_Down == 1 && GetAsyncKeyState(VK_CONTROL) < 0)
+	if (flag_Right_Button_Down == true && GetAsyncKeyState(VK_CONTROL) < 0)
 	{
 		App->CL_Render->Zoom_View(Current_View, mStartPoint.y, mStartPoint.x, CursorPosition.y);
 		return;
@@ -2336,7 +2336,7 @@ void CL64_Editor_Map::On_Mouse_Move(POINT CursorPosition, HWND hDlg)
 		return;
 	}
 
-	if (flag_Left_Button_Down == 1 && KEYDOWN(VK_CONTROL) == false)
+	if (flag_Left_Button_Down == true && KEYDOWN(VK_CONTROL) == false)
 	{
 		App->CL_Render->Render_ViewToWorld(Current_View, mStartPoint.x, mStartPoint.y, &sp);
 		App->CL_Render->Render_ViewToWorld(Current_View, CursorPosition.x, CursorPosition.y, &wp);

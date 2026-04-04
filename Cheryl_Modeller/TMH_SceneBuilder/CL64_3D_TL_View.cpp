@@ -108,6 +108,55 @@ LRESULT CALLBACK CL64_3D_TL_View::Proc_Top_Left_Window(HWND hDlg, UINT message, 
 		return FALSE;
 	}
 
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->AppBackground;
+	}
+
+	case WM_NOTIFY:
+	{
+		return CDRF_DODEFAULT;
+	}
+
+	case WM_SETCURSOR:
+	{
+		if (App->CL_Editor_Map->flag_Context_Menu_Active == 1)
+		{
+			return false;
+		}
+
+		if (App->CL_Editor_Map->flag_Right_Button_Down == 1 || App->CL_Editor_Map->flag_Left_Button_Down == 1)
+		{
+			return true;
+		}
+		else if (App->CL_Doc->mModeTool == ID_TOOLS_BRUSH_MOVEROTATEBRUSH)
+		{
+			SetCursor(App->CL_Editor_Map->hcBoth);
+			return true;
+		}
+		else if (App->CL_Doc->mModeTool == ID_TOOLS_BRUSH_SCALEBRUSH)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+
+		return false;
+	}
+
+	case WM_MOUSEMOVE:
+	{
+		POINT		RealCursorPosition;
+		GetCursorPos(&RealCursorPosition);
+		ScreenToClient(hDlg, &RealCursorPosition);
+
+		App->CL_Editor_Map->On_Mouse_Move(RealCursorPosition,hDlg);
+
+		return 1;
+	}
+
 	// Left Mouse Down
 	case WM_LBUTTONDOWN:
 	{
@@ -121,14 +170,20 @@ LRESULT CALLBACK CL64_3D_TL_View::Proc_Top_Left_Window(HWND hDlg, UINT message, 
 		return 1;
 	}
 
-	case WM_CTLCOLORDLG:
+	case WM_LBUTTONUP:
 	{
-		return (LONG)App->AppBackground;
-	}
+		POINT		RealCursorPosition;
+		GetCursorPos(&RealCursorPosition);
+		ScreenToClient(hDlg, &RealCursorPosition);
 
-	case WM_NOTIFY:
-	{
-		return CDRF_DODEFAULT;
+		App->CL_Editor_Map->Current_View = App->CL_Editor_Map->VCam[V_TL];
+
+		App->CL_Editor_Map->flag_Left_Button_Down = 0;
+		App->CL_Editor_Map->flag_Right_Button_Down = 0;
+
+		App->CL_Editor_Map->On_Left_Button_Up(RealCursorPosition);
+
+		return 1;
 	}
 
 	case WM_MOUSEWHEEL:
@@ -176,6 +231,57 @@ LRESULT CALLBACK CL64_3D_TL_View::Proc_Top_Left_Window(HWND hDlg, UINT message, 
 
 		return 1;
 	}
+
+	// Right Mouse Down
+	case WM_RBUTTONDOWN:
+	{
+		App->CL_Editor_Map->Current_View = App->CL_Editor_Map->VCam[V_TL];
+
+		if (App->CL_Editor_Map->Selected_Window != Enums::Selected_Map_View_TL)
+		{
+			App->CL_Editor_Map->Set_Selected_View(Enums::Selected_Map_View_TL);
+		}
+
+		if (GetAsyncKeyState(VK_CONTROL) < 0)
+		{
+			GetCursorPos(&App->CL_Editor_Map->mStartPoint);
+			ScreenToClient(hDlg, &App->CL_Editor_Map->mStartPoint);
+
+			App->CL_Editor_Map->flag_Right_Button_Down = 1;
+			App->CL_Editor_Map->flag_Left_Button_Down = 0;
+
+			App->CUR = SetCursor(NULL);
+		}
+
+		return 1;
+	}
+
+	// Right Mouse Up
+	case WM_RBUTTONUP:
+	{
+		if (GetAsyncKeyState(VK_CONTROL) < 0)
+		{
+			App->CL_Editor_Map->flag_Right_Button_Down = 0;
+			App->CL_Editor_Map->flag_Left_Button_Down = 0;
+
+			App->CUR = SetCursor(App->CUR);
+		}
+		else
+		{
+			App->CL_Editor_Map->Current_View = App->CL_Editor_Map->VCam[V_TL];
+			App->CL_Editor_Map->Context_Menu(hDlg);
+		}
+
+		return 1;
+	}
+
+	/*case WM_PAINT:
+	{
+		App->CL_Editor_Map->Current_View = App->CL_Editor_Map->VCam[V_TL];
+		App->CL_Editor_Map->Draw_Screen(hDlg);
+
+		return 0;
+	}*/
 
 	case WM_COMMAND:
 	{
