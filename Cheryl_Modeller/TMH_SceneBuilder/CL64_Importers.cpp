@@ -5,6 +5,7 @@
 CL64_Importers::CL64_Importers(void)
 {
 	Flag_Reload_Ogre_Model = false;
+	Model_Brush = NULL;
 }
 
 CL64_Importers::~CL64_Importers(void)
@@ -468,13 +469,13 @@ void CL64_Importers::Create_Brush()
 		Count++;
 	}
 
-	Brush* Test = App->CL_X_Brush->Brush_Create(BRUSH_LEAF, fl, NULL);
+	Model_Brush = NULL;
+	Model_Brush = App->CL_X_Brush->Brush_Create(BRUSH_LEAF, fl, NULL);
 
-	if (Test)
+	if (Model_Brush)
 	{
-		App->CL_X_Brush->Brush_SetName(Test, "Test_Brush");
-		App->CL_Level->Level_AppendBrush(Test);
-
+		App->CL_Level->Level_AppendBrush(Model_Brush);
+		App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
 		//App->Say("Brush Created");
 	}
 }

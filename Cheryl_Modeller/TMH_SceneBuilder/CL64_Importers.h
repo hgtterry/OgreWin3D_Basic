@@ -17,5 +17,7 @@ public:
 	void Create_Brush();
 
 	bool Flag_Reload_Ogre_Model;
+
+	Brush* Model_Brush;
 };
 

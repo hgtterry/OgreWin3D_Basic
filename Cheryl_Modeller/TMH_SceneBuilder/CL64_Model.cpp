@@ -198,4 +198,12 @@ void CL64_Model::Clear_Model()
 	App->CL_Camera->Reset_View();
 	App->CL_Interface->Reset_All_Dialogs();
 	App->CL_Interface->Set_Title(true);
+
+	if (App->CL_Importers->Model_Brush)
+	{
+		App->CL_Level->Level_RemoveBrush(App->CL_Importers->Model_Brush);
+		App->CL_Importers->Model_Brush = NULL;
+
+		App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
+	}
 }
