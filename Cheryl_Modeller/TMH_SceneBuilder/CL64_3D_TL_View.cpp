@@ -133,16 +133,46 @@ LRESULT CALLBACK CL64_3D_TL_View::Proc_Top_Left_Window(HWND hDlg, UINT message, 
 
 	case WM_MOUSEWHEEL:
 	{
+			if (App->CL_Editor_Map->flag_Left_Button_Down == true)
+		{
+			return 1;
+		}
+
+		if (GetAsyncKeyState(VK_CONTROL) < 0 && App->CL_Editor_Map->Selected_Window == Enums::Selected_Map_View_TL)
+		{
+			App->CL_Editor_Map->flag_Wheel_Active = true;
+
+			if (App->CL_Editor_Map->flag_Left_Button_Down == false)
+			{
+				int zDelta = static_cast<short>(HIWORD(wParam)); // wheel rotation
+
+				if (zDelta > 0)
+				{
+					App->CL_Editor_Map->Current_View->ZoomFactor = App->CL_Editor_Map->Current_View->ZoomFactor + 0.1;
+					App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
+				}
+
+				if (zDelta < 0)
+				{
+					App->CL_Editor_Map->Current_View->ZoomFactor = App->CL_Editor_Map->Current_View->ZoomFactor - 0.1;
+					App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
+				}
+			}
+
+			return 1;
+		}
+		
+		App->CL_Editor_Map->flag_Wheel_Active = false;
 		int zDelta = (short)HIWORD(wParam);    // wheel rotation
 
-		if (zDelta > 0)
+		/*if (zDelta > 0)
 		{
 			App->CL_3D_TL_View->TL_RenderListener->Wheel_Move = -1;
 		}
 		else if (zDelta < 0)
 		{
 			App->CL_3D_TL_View->TL_RenderListener->Wheel_Move = 1;
-		}
+		}*/
 
 		return 1;
 	}
