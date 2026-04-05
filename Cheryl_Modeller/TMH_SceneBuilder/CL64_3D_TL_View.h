@@ -30,13 +30,14 @@ public:
 	~CL64_3D_TL_View();
 
 	void Create_Top_Left_Window();
-	
+
+	void Draw_Screen_TL(HWND hwnd);
+
 	HWND Render_hWnd;
 
-	int CursorPosX;
-	int CursorPosY;
+	signed int fdocShowBrush(Brush const* b, Box3d const* ViewBox);
 
 	static LRESULT CALLBACK Proc_Top_Left_Window(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
-
+	static signed int BrushDraw(Brush* pBrush, void* lParam);
 };
 

@@ -77,6 +77,8 @@ public:
 	void On_Left_Button_Up(POINT CursorPosition);
 	void On_Left_Button_Down(POINT CursorPosition, HWND hDlg);
 
+	void Draw_Camera(HDC ViewDC);
+
 	HWND Main_View_Dlg_Hwnd; // Background of MDI
 	HWND Top_Left_Window_Hwnd;
 	HWND Top_Right_Window_Hwnd;
@@ -117,6 +119,20 @@ public:
 
 	HMENU hMenu;
 
+	HBRUSH Stock_Brush;
+	HBRUSH BackGround_Brush;
+
+	HPEN Pen_Fine_Grid;
+	HPEN Pen_Grid;
+	HPEN PenTemplate;
+	HPEN PenBrushes;
+	HPEN PenSelected;
+	HPEN Pen_Camera;
+	HPEN PenSelectedFaces;
+	HPEN PenCutBrush;
+	HPEN PenEntity;
+	HDC	MemoryhDC;
+
 private:
 	static LRESULT CALLBACK Proc_Main_Dlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
@@ -137,8 +153,6 @@ private:
 	// Draw Routines
 	static signed int BrushDraw(Brush* pBrush, void* lParam);
 
-	void Draw_Camera(HDC ViewDC);
-
 	void SetEditCursor(int Tool, const POINT* pMousePos);
 	int GetCursorBoxPos(const POINT* ptMousePos);
 	signed int fdocShowBrush(Brush const* b, Box3d const* ViewBox);
@@ -154,20 +168,5 @@ private:
 	bool Do_Width;
 	bool Do_Depth;
 	bool Do_All;
-
-	HBRUSH Stock_Brush;
-
-	HBRUSH BackGround_Brush;
-
-	HPEN Pen_Fine_Grid;
-	HPEN Pen_Grid;
-	HPEN PenTemplate;
-	HPEN PenBrushes;
-	HPEN PenSelected;
-	HPEN Pen_Camera;
-	HPEN PenSelectedFaces;
-	HPEN PenCutBrush;
-	HPEN PenEntity;
-	HDC	MemoryhDC;
 };
 
