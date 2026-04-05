@@ -1178,7 +1178,7 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Top_Right_Window(HWND hDlg, UINT message,
 			App->CL_Editor_Map->Set_Selected_View(Enums::Selected_Map_View_TR);
 		}
 
-		if (GetAsyncKeyState(VK_CONTROL) < 0)
+		//if (GetAsyncKeyState(VK_CONTROL) < 0)
 		{
 			GetCursorPos(&App->CL_Editor_Map->mStartPoint);
 			ScreenToClient(hDlg, &App->CL_Editor_Map->mStartPoint);
@@ -1196,18 +1196,18 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Top_Right_Window(HWND hDlg, UINT message,
 	case WM_RBUTTONUP:
 	{
 
-		if (GetAsyncKeyState(VK_CONTROL) < 0)
+		//if (GetAsyncKeyState(VK_CONTROL) < 0)
 		{
 			App->CL_Editor_Map->flag_Right_Button_Down = 0;
 			App->CL_Editor_Map->flag_Left_Button_Down = 0;
 
 			App->CUR = SetCursor(App->CUR);
 		}
-		else
+		/*else
 		{
 			App->CL_Editor_Map->Current_View = App->CL_Editor_Map->VCam[V_TR];
 			App->CL_Editor_Map->Context_Menu(hDlg);
-		}
+		}*/
 
 		return 1;
 	}
@@ -1418,7 +1418,7 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Bottom_Left_Window(HWND hDlg, UINT messag
 			App->CL_Editor_Map->Set_Selected_View(Enums::Selected_Map_View_BL);
 		}
 
-		if (GetAsyncKeyState(VK_CONTROL) < 0)
+		//if (GetAsyncKeyState(VK_CONTROL) < 0)
 		{
 			GetCursorPos(&App->CL_Editor_Map->mStartPoint);
 			ScreenToClient(hDlg, &App->CL_Editor_Map->mStartPoint);
@@ -1435,18 +1435,18 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Bottom_Left_Window(HWND hDlg, UINT messag
 	// Right Mouse up
 	case WM_RBUTTONUP:
 	{
-		if (GetAsyncKeyState(VK_CONTROL) < 0)
+		//if (GetAsyncKeyState(VK_CONTROL) < 0)
 		{
 			App->CL_Editor_Map->flag_Left_Button_Down = 0;
 			App->CL_Editor_Map->flag_Right_Button_Down = 0;
 
 		App->CUR = SetCursor(App->CUR);
 		}
-		else
+		/*else
 		{
 			App->CL_Editor_Map->Current_View = App->CL_Editor_Map->VCam[V_BL];
 			App->CL_Editor_Map->Context_Menu(hDlg);
-		}
+		}*/
 
 		return 1;
 	}
@@ -2309,7 +2309,7 @@ bool CL64_Editor_Map::Context_Command(WPARAM wParam)
 void CL64_Editor_Map::On_Mouse_Move(POINT CursorPosition, HWND hDlg)
 {
 	// Pan
-	if (flag_Right_Button_Down == true && KEYDOWN(VK_CONTROL) == true)
+	if (flag_Right_Button_Down == true)
 	{
 		App->CL_Render->Pan_View(Current_View, mStartPoint.x, mStartPoint.y);
 		return;

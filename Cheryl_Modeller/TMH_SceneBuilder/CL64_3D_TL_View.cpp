@@ -222,7 +222,7 @@ LRESULT CALLBACK CL64_3D_TL_View::Proc_Top_Left_Window(HWND hDlg, UINT message, 
 			App->CL_Editor_Map->Set_Selected_View(Enums::Selected_Map_View_TL);
 		}
 
-		if (GetAsyncKeyState(VK_CONTROL) < 0)
+		//if (GetAsyncKeyState(VK_CONTROL) < 0)
 		{
 			GetCursorPos(&App->CL_Editor_Map->mStartPoint);
 			ScreenToClient(hDlg, &App->CL_Editor_Map->mStartPoint);
@@ -239,18 +239,18 @@ LRESULT CALLBACK CL64_3D_TL_View::Proc_Top_Left_Window(HWND hDlg, UINT message, 
 	// Right Mouse Up
 	case WM_RBUTTONUP:
 	{
-		if (GetAsyncKeyState(VK_CONTROL) < 0)
+		//if (GetAsyncKeyState(VK_CONTROL) < 0)
 		{
 			App->CL_Editor_Map->flag_Right_Button_Down = false;
 			App->CL_Editor_Map->flag_Left_Button_Down = false;
 
 			App->CUR = SetCursor(App->CUR);
 		}
-		else
+		/*else
 		{
 			App->CL_Editor_Map->Current_View = App->CL_Editor_Map->VCam[V_TL];
 			App->CL_Editor_Map->Context_Menu(hDlg);
-		}
+		}*/
 
 		return 1;
 	}
