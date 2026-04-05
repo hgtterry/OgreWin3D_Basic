@@ -33,15 +33,6 @@ THE SOFTWARE.
 CL64_3D_TR_View::CL64_3D_TR_View()
 {
 	Render_hWnd = nullptr;
-	ViewGLhWnd_TR = nullptr;
-
-	RenderListener = nullptr;
-	OGL_TR_Listener = nullptr;
-
-	Ogre_MV_Window = nullptr;
-	Ogre_MV_SceneMgr = nullptr;
-	Ogre_MV_Camera = nullptr;
-	Ogre_MV_CamNode = nullptr;
 }
 
 CL64_3D_TR_View::~CL64_3D_TR_View()
@@ -70,8 +61,6 @@ LRESULT CALLBACK CL64_3D_TR_View::Proc_Top_Left_Window(HWND hDlg, UINT message, 
 	{
 		SendDlgItemMessage(hDlg, IDC_ST_TL_TITLE, WM_SETFONT, (WPARAM)App->Font_CB10, MAKELPARAM(TRUE, 0));
 		App->CL_Editor_Map->Top_Left_Banner_Hwnd = GetDlgItem(hDlg, IDC_ST_TL_TITLE);
-
-		App->CL_3D_TR_View->ViewGLhWnd_TR = CreateDialog(App->hInst, (LPCTSTR)IDD_MAP_RENDER_WINDOW, hDlg,(DLGPROC)Proc_Ogre_TR);
 
 		return TRUE;
 	}
@@ -129,16 +118,16 @@ LRESULT CALLBACK CL64_3D_TR_View::Proc_Top_Left_Window(HWND hDlg, UINT message, 
 
 	case WM_MOUSEWHEEL:
 	{
-		int zDelta = (short)HIWORD(wParam);    // wheel rotation
+		//int zDelta = (short)HIWORD(wParam);    // wheel rotation
 
-		if (zDelta > 0)
-		{
-			App->CL_3D_TR_View->RenderListener->Wheel_Move = -1;
-		}
-		else if (zDelta < 0)
-		{
-			App->CL_3D_TR_View->RenderListener->Wheel_Move = 1;
-		}
+		//if (zDelta > 0)
+		//{
+		//	App->CL_3D_TR_View->RenderListener->Wheel_Move = -1;
+		//}
+		//else if (zDelta < 0)
+		//{
+		//	App->CL_3D_TR_View->RenderListener->Wheel_Move = 1;
+		//}
 
 		return 1;
 	}
@@ -161,248 +150,5 @@ LRESULT CALLBACK CL64_3D_TR_View::Proc_Top_Left_Window(HWND hDlg, UINT message, 
 	return FALSE;
 }
 
-// *************************************************************************
-// *		Proc_Ogre_TR:- Terry and Hazel Flanigan 2026 				   *
-// *************************************************************************
-LRESULT CALLBACK CL64_3D_TR_View::Proc_Ogre_TR(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
-{
-	switch (message)
-	{
 
-	case WM_INITDIALOG: // Bernie as the dialog is created
-	{
-		
-		return TRUE;
-	}
-
-	case WM_CTLCOLORDLG:
-	{
-		if (App->flag_3D_Started == false)
-		{
-			return (LONG)App->BlackBrush;
-		}
-	}
-
-	case WM_MOUSEMOVE: // ok up and running and we have a loop for mouse
-	{
-		//SetFocus(App->CL_X_Shapes_3D->Render_hWnd);
-		break;
-	}
-
-	// Right Mouse Button
-	case WM_RBUTTONDOWN: // BERNIE_HEAR_FIRE 
-	{
-		////if (App->flag_3D_Started == true)
-		//{
-		//	POINT cursorPosition;
-		//	GetCursorPos(&cursorPosition);
-		//	App->CL_X_Shapes_3D->CursorPosX = cursorPosition.x;
-		//	App->CL_X_Shapes_3D->CursorPosY = cursorPosition.y;
-
-		//	auto& listener = App->CL_X_Shapes_3D->RenderListener;
-		//	listener->Pl_Cent500X = cursorPosition.x;
-		//	listener->Pl_Cent500Y = cursorPosition.y;
-
-		//	SetCapture(App->CL_X_Shapes_3D->Render_hWnd);
-		//	SetCursorPos(cursorPosition.x, cursorPosition.y);
-
-		//	App->CL_X_Shapes_3D->RenderListener->flag_Pl_RightMouseDown = true;
-		//	App->CUR = SetCursor(NULL);
-
-		//	return 1;
-		//}
-
-		return 1;
-	}
-	case WM_RBUTTONUP:
-	{
-		////if (App->flag_3D_Started == true)
-		//{
-		//	ReleaseCapture();
-		//	App->CL_X_Shapes_3D->RenderListener->flag_Pl_RightMouseDown = 0;
-		//	SetCursor(App->CUR);
-		//	return 1;
-		//}
-
-		return 1;
-	}
-	// Left Mouse Button
-	case WM_LBUTTONDOWN:
-	{
-		App->CL_Editor_Map->Current_View = App->CL_Editor_Map->VCam[V_TL];
-
-		if (App->CL_Editor_Map->Selected_Window != Enums::Selected_Map_View_TL)
-		{
-			App->CL_Editor_Map->Set_Selected_View(Enums::Selected_Map_View_TL);
-		}
-
-		////if (App->flag_3D_Started == true)
-		//{
-		//	POINT p;
-		//	GetCursorPos(&p);
-
-		//	App->CL_X_Shapes_3D->CursorPosX = p.x;
-		//	App->CL_X_Shapes_3D->CursorPosY = p.y;
-
-		//	auto& listener = App->CL_X_Shapes_3D->RenderListener;
-		//	listener->Pl_Cent500X = p.x;
-		//	listener->Pl_Cent500Y = p.y;
-
-		//	SetCapture(App->CL_X_Shapes_3D->Render_hWnd);
-
-		//	SetCursorPos(App->CL_X_Shapes_3D->CursorPosX, App->CL_X_Shapes_3D->CursorPosY);
-
-		//	App->CL_X_Shapes_3D->RenderListener->flag_Pl_LeftMouseDown = 1;
-
-		//	App->CUR = SetCursor(NULL);
-
-		//	return 1;
-		//}
-
-		return 1;
-	}
-
-	case WM_LBUTTONUP:
-	{
-		////if (App->flag_3D_Started == true)
-		//{
-		//	ReleaseCapture();
-		//	App->CL_X_Shapes_3D->RenderListener->flag_Pl_LeftMouseDown = 0;
-		//	SetCursor(App->CUR);
-		//	return 1;
-		//}
-
-		return 1;
-	}
-
-	}
-
-	return FALSE;
-}
-
-// *************************************************************************
-// *			SetOgreWindow:- Terry and Hazel Flanigan 2024			   *
-// *************************************************************************
-void CL64_3D_TR_View::Set_OgreWindow()
-{
-
-	Ogre::NameValuePairList options;
-
-	options["externalWindowHandle"] =
-		Ogre::StringConverter::toString((size_t)ViewGLhWnd_TR);// Render_hWnd);
-
-	Ogre_MV_Window = App->CL_Ogre->mRoot->createRenderWindow("MeshViewWin22", 1024, 768, false, &options);
-
-	
-	Ogre_MV_SceneMgr = App->CL_Ogre->mRoot->createSceneManager("DefaultSceneManager", "MeshViewGD22");
-
-	Ogre_MV_CamNode = Ogre_MV_SceneMgr->getRootSceneNode()->createChildSceneNode("Camera_Node22");
-
-	Ogre_MV_Camera = Ogre_MV_SceneMgr->createCamera("CameraMV22");
-	Ogre_MV_Camera->setNearClipDistance(0.1);
-	Ogre_MV_Camera->setFarClipDistance(8000);
-
-	Ogre_MV_CamNode->attachObject(Ogre_MV_Camera);
-	Ogre_MV_CamNode->setPosition(Ogre::Vector3(0, 0, 20));
-
-	Ogre::Viewport* vp = Ogre_MV_Window->addViewport(Ogre_MV_Camera);
-	Ogre_MV_Camera->setAspectRatio(Ogre::Real(vp->getActualWidth()) / Ogre::Real(vp->getActualHeight()));
-	vp->setBackgroundColour(ColourValue(0.235, 0.235, 0.235));
-
-	Ogre_MV_SceneMgr->setAmbientLight(ColourValue(1, 1, 1));
-
-	//Ogre_MV_Camera->setRenderQueueGroup(100);
-
-	RenderListener = new Ogre_Win_Render_Listener();
-	App->CL_Ogre->mRoot->addFrameListener(RenderListener);
-
-	OGL_TR_Listener = new CL64_3D_TR_OGL_Listener();
-	Ogre_MV_SceneMgr->addRenderQueueListener(OGL_TR_Listener);
-
-	Set_Zoom();
-
-	/*Ogre::Entity* Ogre_Ent;
-	Ogre::SceneNode* Ogre_Node;
-
-	Ogre_Ent = Ogre_MV_SceneMgr->createEntity("Imported_Entity", "Sinbad.mesh", App->CL_Ogre->App_Resource_Group);
-	Ogre_Node = Ogre_MV_SceneMgr->getRootSceneNode()->createChildSceneNode();
-	Ogre_Node->attachObject(Ogre_Ent);
-
-	Ogre_Node->setVisible(true);
-	Ogre_Node->setOrientation(Ogre::Quaternion::IDENTITY);
-	Ogre_Node->setPosition(0, 0, 0);
-	Ogre_Node->setScale(1, 1, 1);*/
-
-}
-
-// *************************************************************************
-// *		Close_MeshWindow:- Terry and Hazel Flanigan 2024			   *
-// *************************************************************************
-void CL64_3D_TR_View::Close_OgreWindow(void)
-{
-	//App->CL_MeshViewer->flag_MV_Render_Debug = 0;
-
-	App->CL_Ogre->mRoot->detachRenderTarget("MeshViewWin22");
-	Ogre_MV_Window->destroy();
-	App->CL_Ogre->mRoot->destroySceneManager(Ogre_MV_SceneMgr);
-
-	App->CL_Ogre->mRoot->removeFrameListener(RenderListener);
-
-	delete RenderListener;
-	RenderListener = nullptr;
-}
-
-// *************************************************************************
-// *				Set_Zoom:- Terry and Hazel Flanigan 2026			   *
-// *************************************************************************
-void CL64_3D_TR_View::Set_Zoom(void)
-{
-	Ogre_MV_CamNode->setPosition(Ogre::Vector3(0, 0, 0));
-	Ogre_MV_CamNode->setOrientation(Ogre::Quaternion::IDENTITY);
-
-	float zoom = 0;
-
-	if (App->CL_Model->flag_Model_Loaded == true)
-	{
-		zoom = max(App->CL_Model->S_BoundingBox[0]->Size[0].z, App->CL_Model->S_BoundingBox[0]->Size[0].x);
-	}
-	else
-	{
-		zoom = 20;
-	}
-
-	Ogre_MV_CamNode->setPosition(Ogre::Vector3(0, zoom * 2, 0));
-	Ogre_MV_CamNode->lookAt(Ogre::Vector3(0, 0, 0), Ogre::Node::TS_WORLD);
-
-}
-
-// ************************************************************************
-// *			ResizeOgreWindow_TR:- Terry Mo and Hazel 2026			  *
-// ************************************************************************
-void CL64_3D_TR_View::ResizeOgreWindow_TR()
-{
-	RECT clientRect;
-	GetClientRect(App->CL_Editor_Map->Top_Left_Window_Hwnd, &clientRect);
-
-	// Set the position and size of the window
-	SetWindowPos(ViewGLhWnd_TR, NULL, 0, 17, clientRect.right, clientRect.bottom - 17, SWP_NOZORDER);
-
-	// Check if the 3D engine has started
-	if (App->flag_3D_Started == true)
-	{
-		// Get the updated client rectangle
-		RECT updatedRect;
-		GetClientRect(App->CL_Editor_Map->Top_Left_Window_Hwnd, &updatedRect);
-
-		// Ensure the height is valid and the camera is initialized
-		if ((updatedRect.bottom - updatedRect.top) != 0 && App->CL_Ogre->mCamera != nullptr)
-		{
-			//Ogre_MV_Window->windowMovedOrResized();
-			//Ogre_MV_Camera->setAspectRatio(static_cast<Ogre::Real>(Ogre_MV_Window->getWidth()) /
-				//static_cast<Ogre::Real>(Ogre_MV_Window->getHeight()));
-
-			//App->CL_Ogre->camNode->yaw(Radian(0));
-		}
-	}
-}
 

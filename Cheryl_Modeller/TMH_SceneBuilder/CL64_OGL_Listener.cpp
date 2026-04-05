@@ -292,23 +292,20 @@ void CL64_OGL_Listener::Render_Loop()
 		glShadeModel(GL_SMOOTH);
 
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-
 		MeshData_Render_Textures();
 	}
 
 	// ---------------------- Mesh Material Faces
-	if (App->CL_Model->flag_Model_Loaded && flag_Show_Material_Faces == true)
+	if (App->CL_Model->flag_Model_Loaded == true && flag_Show_Material_Faces == true)
 	{
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-
 		MeshData_Render_Material_Faces();
 	}
 
 	// ---------------------- Mesh
-	if (App->CL_Model->flag_Model_Loaded && flag_ShowFaces == true)
+	if (App->CL_Model->flag_Model_Loaded == true && flag_ShowFaces == true)
 	{
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-
 		MeshData_Render_Faces();
 	}
 
@@ -468,7 +465,8 @@ void CL64_OGL_Listener::MeshData_Render_Faces(void)
 
 	int GroupCount = App->CL_Model->GroupCount;
 
-
+	glDisable(GL_TEXTURE_2D);
+	
 	//if (flag_ShowOnlySubFaces == 1) // Show Only Selected SubMesh
 	//{
 	//	MeshData_Face_Groups(Selected_Face_Group);
@@ -489,6 +487,7 @@ void CL64_OGL_Listener::MeshData_Render_Faces(void)
 		Count++;
 	}
 
+	glEnable(GL_TEXTURE_2D);
 }
 
 // *************************************************************************
@@ -498,7 +497,7 @@ void CL64_OGL_Listener::MeshData_Face_Groups(int Count)
 {
 	// Set the polygon mode to draw lines for both front and back faces
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-
+	glDisable(GL_TEXTURE_2D);
 	// Retrieve the group and its face count
 	auto& group = App->CL_Mesh->Group[Count];
 	int faceCount = group->GroupFaceCount;
@@ -518,10 +517,12 @@ void CL64_OGL_Listener::MeshData_Face_Groups(int Count)
 		glVertex3fv(&group->vertex_Data[A].x);
 		glVertex3fv(&group->vertex_Data[B].x);
 		glVertex3fv(&group->vertex_Data[C].x);
-
+		
 		// End drawing the polygon
 		glEnd();
 	}
+
+	glEnable(GL_TEXTURE_2D);
 }
 
 // *************************************************************************

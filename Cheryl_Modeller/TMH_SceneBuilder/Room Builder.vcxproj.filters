@@ -192,19 +192,10 @@
     <ClInclude Include="CL64_Properties_Textures_Com.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CL64_3D_TR_OGL_Listener.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="CL64_3D_TR_View.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CL64_3D_TL_View.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CL64_3D_TL_OGL_Listener.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CL64_3D_TL_Listener.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -380,19 +371,10 @@
     <ClCompile Include="CL64_Properties_Textures_Com.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CL64_3D_TR_OGL_Listener.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="CL64_3D_TR_View.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CL64_3D_TL_View.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CL64_3D_TL_OGL_Listener.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CL64_3D_TL_Listener.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

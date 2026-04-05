@@ -24,9 +24,6 @@ THE SOFTWARE.
 
 #pragma once
 
-#include "Ogre_Win_Render_Listener.h"
-#include "CL64_3D_TR_OGL_Listener.h"
-
 class CL64_3D_TR_View
 {
 public:
@@ -34,28 +31,10 @@ public:
 	~CL64_3D_TR_View();
 
 	void Create_Top_Left_Window();
-	void Set_Zoom(void);
-	void ResizeOgreWindow_TR();
-
+	
 	HWND Render_hWnd;
-	HWND ViewGLhWnd_TR;
-
-	Ogre::RenderWindow* Ogre_MV_Window;
-	Ogre::SceneManager* Ogre_MV_SceneMgr;
-	Ogre::Camera* Ogre_MV_Camera;
-	Ogre::SceneNode* Ogre_MV_CamNode;
-
-	Ogre_Win_Render_Listener* RenderListener;
-	CL64_3D_TR_OGL_Listener* OGL_TR_Listener;
-
-	void Set_OgreWindow();
-
+	
 	static LRESULT CALLBACK Proc_Top_Left_Window(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
-
-private:
-	static LRESULT CALLBACK Proc_Ogre_TR(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
-
-	void Close_OgreWindow(void);
 
 };
 

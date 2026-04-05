@@ -91,8 +91,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
    
     App->CL_Ogre->Init_3D();
 
-    App->CL_3D_TL_View->Set_OgreWindow_TL();
-
    // App->CL_Editor_Map->Init_Map_Views();
 
     App->CL_Editor_Control->Set_Map_Editor_Startup();
