@@ -33,6 +33,9 @@ THE SOFTWARE.
 CL64_3D_TL_View::CL64_3D_TL_View()
 {
 	Render_hWnd = nullptr;
+	m_V_TL = 0;
+	m_Pen_Grid = CreatePen(PS_SOLID, 0, RGB(0, 112, 112));
+	m_MemoryhDC = nullptr;
 }
 
 CL64_3D_TL_View::~CL64_3D_TL_View()
@@ -60,6 +63,8 @@ LRESULT CALLBACK CL64_3D_TL_View::Proc_Top_Left_Window(HWND hDlg, UINT message, 
 	{
 		SendDlgItemMessage(hDlg, IDC_ST_TL_TITLE, WM_SETFONT, (WPARAM)App->Font_CB10, MAKELPARAM(TRUE, 0));
 		App->CL_Editor_Map->Top_Left_Banner_Hwnd = GetDlgItem(hDlg, IDC_ST_TL_TITLE);
+
+		App->CL_3D_TL_View->m_Pen_Grid = CreatePen(PS_SOLID, 0, RGB(0, 112, 112));
 
 		return TRUE;
 	}
@@ -177,7 +182,7 @@ LRESULT CALLBACK CL64_3D_TL_View::Proc_Top_Left_Window(HWND hDlg, UINT message, 
 			return 1;
 		}
 
-		if (GetAsyncKeyState(VK_CONTROL) < 0 && App->CL_Editor_Map->Selected_Window == Enums::Selected_Map_View_TL)
+		if (App->CL_Editor_Map->Selected_Window == Enums::Selected_Map_View_TL)
 		{
 			App->CL_Editor_Map->flag_Wheel_Active = true;
 
@@ -260,7 +265,8 @@ LRESULT CALLBACK CL64_3D_TL_View::Proc_Top_Left_Window(HWND hDlg, UINT message, 
 		if (App->flag_3D_Started == true)
 		{
 			App->CL_Editor_Map->Current_View = App->CL_Editor_Map->VCam[V_TL];
-			App->CL_Editor_Map->Draw_Screen(hDlg);
+			//App->CL_Editor_Map->Draw_Screen(hDlg);
+			App->CL_3D_TL_View->Draw_Screen_TL(hDlg);
 		}
 
 		return 0;
@@ -323,14 +329,14 @@ static signed int BrushDrawSelFacesOrtho(Brush* pBrush, void* lParam)
 }
 
 // *************************************************************************
-// *						Draw_Screen Terry Flanigan		  			   *
+// *			Draw_Screen_TL:- Terry and Hazel Flanigan 2026			   *
 // *************************************************************************
 void CL64_3D_TL_View::Draw_Screen_TL(HWND hwnd)
 {
 	// Initialize variables
 	int			inidx = 0;
 	HDC RealhDC = GetDC(hwnd);
-	App->CL_Editor_Map->MemoryhDC = CreateCompatibleDC(RealhDC);
+	m_MemoryhDC = CreateCompatibleDC(RealhDC);
 
 	RECT		Rect;
 	BrushDrawData	brushDrawData;
@@ -339,63 +345,63 @@ void CL64_3D_TL_View::Draw_Screen_TL(HWND hwnd)
 	GetClientRect(hwnd, &Rect);
 	Rect.left--;
 	Rect.bottom--;
-	App->CL_Editor_Map->Current_View->Width = Rect.left;
-	App->CL_Editor_Map->Current_View->Height = Rect.bottom;
-	App->CL_Editor_Map->Current_View->XScreenScale = Rect.left;
-	App->CL_Editor_Map->Current_View->YScreenScale = Rect.bottom;
+	App->CL_Editor_Map->VCam[V_TL]->Width = Rect.left;
+	App->CL_Editor_Map->VCam[V_TL]->Height = Rect.bottom;
+	App->CL_Editor_Map->VCam[V_TL]->XScreenScale = Rect.left;
+	App->CL_Editor_Map->VCam[V_TL]->YScreenScale = Rect.bottom;
 
 	// Set up view box
 	T_Vec3 XTemp;
 	Box3d ViewBox;
-	inidx = App->CL_Render->Render_GetInidx(App->CL_Editor_Map->Current_View);
+	inidx = App->CL_Render->Render_GetInidx(App->CL_Editor_Map->VCam[V_TL]);
 	App->CL_X_Box->Box3d_SetBogusBounds(&ViewBox);
-	App->CL_Render->Render_ViewToWorld(App->CL_Editor_Map->Current_View, 0, 0, &XTemp);
+	App->CL_Render->Render_ViewToWorld(App->CL_Editor_Map->VCam[V_TL], 0, 0, &XTemp);
 	App->CL_X_Box->Box3d_AddPoint(&ViewBox, XTemp.x, XTemp.y, XTemp.z);
-	App->CL_Render->Render_ViewToWorld(App->CL_Editor_Map->Current_View, App->CL_Render->Render_GetWidth(App->CL_Editor_Map->Current_View), App->CL_Render->Render_GetHeight(App->CL_Editor_Map->Current_View), &XTemp);
+	App->CL_Render->Render_ViewToWorld(App->CL_Editor_Map->VCam[V_TL], App->CL_Render->Render_GetWidth(App->CL_Editor_Map->VCam[V_TL]), App->CL_Render->Render_GetHeight(App->CL_Editor_Map->VCam[V_TL]), &XTemp);
 	App->CL_X_Box->Box3d_AddPoint(&ViewBox, XTemp.x, XTemp.y, XTemp.z);
 	VectorToSUB(ViewBox.Min, inidx) = -FLT_MAX;
 	VectorToSUB(ViewBox.Max, inidx) = FLT_MAX;
 
 	// Prepare brush draw data
 	brushDrawData.pViewBox = &ViewBox;
-	brushDrawData.pDC = App->CL_Editor_Map->MemoryhDC;
-	brushDrawData.v = App->CL_Editor_Map->Current_View;
+	brushDrawData.pDC = m_MemoryhDC;
+	brushDrawData.v = App->CL_Editor_Map->VCam[V_TL];
 	brushDrawData.pDoc = App->CL_Doc;
 	brushDrawData.GroupId = 0;
 	brushDrawData.FlagTest = NULL;
 
 	GetClipBox(RealhDC, &Rect);
 
-	SetDCBrushColor(App->CL_Editor_Map->MemoryhDC, (RGB(App->CL_Editor_Map->Background_Colour.R, App->CL_Editor_Map->Background_Colour.G, App->CL_Editor_Map->Background_Colour.B)));
+	SetDCBrushColor(m_MemoryhDC, (RGB(App->CL_Editor_Map->Background_Colour.R, App->CL_Editor_Map->Background_Colour.G, App->CL_Editor_Map->Background_Colour.B)));
 
 	HBITMAP OffScreenBitmap = CreateCompatibleBitmap(RealhDC, Rect.right - Rect.left, Rect.bottom - Rect.top);
-	SelectObject(App->CL_Editor_Map->MemoryhDC, OffScreenBitmap);
-	FillRect(App->CL_Editor_Map->MemoryhDC, &Rect, (HBRUSH)App->CL_Editor_Map->Stock_Brush); // BackGround
+	SelectObject(m_MemoryhDC, OffScreenBitmap);
+	FillRect(m_MemoryhDC, &Rect, (HBRUSH)App->CL_Editor_Map->Stock_Brush); // BackGround
 
 	// ---------------------- Draw Grid Fine
-	if (App->CL_Editor_Map->Current_View->ZoomFactor > 0.1)
+	if (App->CL_Editor_Map->VCam[V_TL]->ZoomFactor > 0.1)
 	{
-		SelectObject(App->CL_Editor_Map->MemoryhDC, App->CL_Editor_Map->Pen_Fine_Grid);
-		App->CL_Render->Render_RenderOrthoGridFromSize(App->CL_Editor_Map->Current_View, int(App->CL_Editor_Map->GridSnapSize), App->CL_Editor_Map->MemoryhDC, Rect);
+		SelectObject(m_MemoryhDC, App->CL_Editor_Map->Pen_Fine_Grid);
+		App->CL_Render->Render_RenderOrthoGridFromSize(App->CL_Editor_Map->VCam[V_TL], int(App->CL_Editor_Map->GridSnapSize), m_MemoryhDC, Rect);
 	}
 
 	// ---------------------- Draw Grid
-	if (App->CL_Editor_Map->Current_View->ZoomFactor < 0.1)
+	if (App->CL_Editor_Map->VCam[V_TL]->ZoomFactor < 0.1)
 	{
-		App->CL_Editor_Map->Current_View->ZoomFactor = 0.1;
+		App->CL_Editor_Map->VCam[V_TL]->ZoomFactor = 0.1;
 	}
 
-	SelectObject(App->CL_Editor_Map->MemoryhDC, App->CL_Editor_Map->Pen_Grid);
-	App->CL_Render->Render_RenderOrthoGridFromSize(App->CL_Editor_Map->Current_View, int(App->CL_Editor_Map->GridSize), App->CL_Editor_Map->MemoryhDC, Rect);
+	SelectObject(m_MemoryhDC, m_Pen_Grid);
+	App->CL_Render->Render_RenderOrthoGridFromSize(App->CL_Editor_Map->VCam[V_TL], int(App->CL_Editor_Map->GridSize), m_MemoryhDC, Rect);
 
 	bool test = 0;
 	if (test == 0)
 	{
 		// ------------------------------------------ Draw Brushes
-		SelectObject(App->CL_Editor_Map->MemoryhDC, App->CL_Editor_Map->PenBrushes);
+		SelectObject(m_MemoryhDC, App->CL_Editor_Map->PenBrushes);
 
 		// Draw Template Brush
-		if (App->CL_Doc->mModeTool == ID_TOOLS_TEMPLATE)
+		/*if (App->CL_Doc->mModeTool == ID_TOOLS_TEMPLATE)
 		{
 			SelectObject(App->CL_Editor_Map->MemoryhDC, App->CL_Editor_Map->PenTemplate);
 
@@ -406,10 +412,10 @@ void CL64_3D_TL_View::Draw_Screen_TL(HWND hwnd)
 			}
 			else
 			{
-				App->CL_Editor_Map->Render_RenderBrushFacesOrtho(App->CL_Editor_Map->Current_View, App->CL_Doc->CurBrush, App->CL_Editor_Map->MemoryhDC);
+				App->CL_Editor_Map->Render_RenderBrushFacesOrtho(App->CL_Editor_Map->VCam[V_TL], App->CL_Doc->CurBrush, App->CL_Editor_Map->MemoryhDC);
 
 			}
-		}
+		}*/
 
 		// Iterate through all brushes
 		int BrushCount = App->CL_X_Brush->Get_Brush_Count();
@@ -423,11 +429,11 @@ void CL64_3D_TL_View::Draw_Screen_TL(HWND hwnd)
 			switch (SB->GroupId)
 			{
 			case Enums::Brushs_ID_Area:
-				SelectObject(App->CL_Editor_Map->MemoryhDC, App->CL_Editor_Map->PenBrushes);
+				SelectObject(m_MemoryhDC, App->CL_Editor_Map->PenBrushes);
 				break;
 
 			case Enums::Brushs_ID_Evirons:
-				SelectObject(App->CL_Editor_Map->MemoryhDC, App->CL_Editor_Map->PenEntity);
+				SelectObject(m_MemoryhDC, App->CL_Editor_Map->PenEntity);
 				break;
 
 			default:
@@ -436,7 +442,7 @@ void CL64_3D_TL_View::Draw_Screen_TL(HWND hwnd)
 
 			if (App->CL_X_Brush->Brush_IsSubtract(SB))
 			{
-				SelectObject(App->CL_Editor_Map->MemoryhDC, App->CL_Editor_Map->PenCutBrush);
+				SelectObject(m_MemoryhDC, App->CL_Editor_Map->PenCutBrush);
 			}
 
 
@@ -446,7 +452,7 @@ void CL64_3D_TL_View::Draw_Screen_TL(HWND hwnd)
 			}
 			else
 			{
-				App->CL_Editor_Map->Render_RenderBrushFacesOrtho(App->CL_Editor_Map->Current_View, SB, App->CL_Editor_Map->MemoryhDC);
+				App->CL_Editor_Map->Render_RenderBrushFacesOrtho(App->CL_Editor_Map->VCam[V_TL], SB, m_MemoryhDC);
 			}
 
 			Count++;
@@ -456,7 +462,7 @@ void CL64_3D_TL_View::Draw_Screen_TL(HWND hwnd)
 		if (Draw_Sel == 0)
 		{
 			// Draw selected brushes
-			SelectObject(App->CL_Editor_Map->MemoryhDC, App->CL_Editor_Map->PenSelected);
+			SelectObject(m_MemoryhDC, App->CL_Editor_Map->PenSelected);
 			int NumSelBrushes = App->CL_X_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes);
 
 			int i = 0;
@@ -472,7 +478,7 @@ void CL64_3D_TL_View::Draw_Screen_TL(HWND hwnd)
 					}
 					else
 					{
-						App->CL_Editor_Map->Render_RenderBrushFacesOrtho(App->CL_Editor_Map->Current_View, App->CL_Doc->CurBrush, App->CL_Editor_Map->MemoryhDC);
+						App->CL_Editor_Map->Render_RenderBrushFacesOrtho(App->CL_Editor_Map->VCam[V_TL], App->CL_Doc->CurBrush, m_MemoryhDC);
 					}
 				}
 			}
@@ -480,27 +486,30 @@ void CL64_3D_TL_View::Draw_Screen_TL(HWND hwnd)
 
 		// Draw selected faces
 		BrushList* BList = App->CL_Level->Level_Get_Main_Brushes();
-		SelectObject(App->CL_Editor_Map->MemoryhDC, App->CL_Editor_Map->PenSelectedFaces);
+		SelectObject(m_MemoryhDC, App->CL_Editor_Map->PenSelectedFaces);
 		App->CL_X_Brush->BrushList_EnumLeafBrushes(BList, &brushDrawData, BrushDrawSelFacesOrtho);
 
 
 		// Draw camera if tracking
 		if (App->CL_Doc->flag_Track_Camera == true)
 		{
-			SelectObject(App->CL_Editor_Map->MemoryhDC, App->CL_Editor_Map->Pen_Camera);
-			App->CL_Editor_Map->Draw_Camera(App->CL_Editor_Map->MemoryhDC);
+			SelectObject(m_MemoryhDC, App->CL_Editor_Map->Pen_Camera);
+			App->CL_Editor_Map->Draw_Camera(m_MemoryhDC);
 		}
 
 	}
 
 	// BitBlt to the real device context
-	BitBlt(RealhDC, Rect.left, Rect.top + 17, Rect.right - Rect.left, Rect.bottom - Rect.top, App->CL_Editor_Map->MemoryhDC, 0, 0, SRCCOPY);
+	BitBlt(RealhDC, Rect.left, Rect.top + 17, Rect.right - Rect.left, Rect.bottom - Rect.top, m_MemoryhDC, 0, 0, SRCCOPY);
 	//memcpy(&RealhDC, &MemoryhDC, sizeof(MemoryhDC));
 	// Clean up
-	SetDCBrushColor(App->CL_Editor_Map->MemoryhDC, (RGB(255, 255, 255)));
+	SetDCBrushColor(m_MemoryhDC, (RGB(255, 255, 255)));
 
 	DeleteObject(OffScreenBitmap);
-	DeleteDC(App->CL_Editor_Map->MemoryhDC);
+	DeleteDC(m_MemoryhDC);
 	ReleaseDC(hwnd, RealhDC);
+
+	//App->Flash_Window();
+
 }
 

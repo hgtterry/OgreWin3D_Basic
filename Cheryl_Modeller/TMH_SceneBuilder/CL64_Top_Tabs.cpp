@@ -912,7 +912,11 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Top_Tabs(HWND hDlg, UINT message, WPARAM wP
 		//-------------------------------------------------------- Show Bones
 		if (LOWORD(wParam) == IDC_BTSHOWBONES)
 		{
-			App->CL_Mesh->Show_Mesh_Bones();
+			if (App->CL_Model->BoneCount > 0)
+			{
+				App->CL_Mesh->Show_Mesh_Bones();
+			}
+
 			return TRUE;
 		}
 		

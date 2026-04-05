@@ -133,7 +133,7 @@ CL64_Editor_Map::CL64_Editor_Map()
 	BackGround_Brush = CreateSolidBrush(RGB(60, 60, 60));
 
 	Pen_Fine_Grid = CreatePen(PS_SOLID, 0, RGB(0, 0, 0));
-	Pen_Grid = CreatePen(PS_SOLID, 0, RGB(112, 112, 112));
+	Pen_Grid = CreatePen(PS_SOLID, 0, RGB(0, 112, 112));
 	PenTemplate = CreatePen(PS_SOLID, 1, RGB(0, 255, 0));
 	PenBrushes = CreatePen(PS_SOLID, 1, RGB(255, 255, 255));
 	PenSelected = CreatePen(PS_SOLID, 1, RGB(0, 255, 255));
@@ -1088,7 +1088,7 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Top_Right_Window(HWND hDlg, UINT message,
 			return 1;
 		}
 
-		if (GetAsyncKeyState(VK_CONTROL) < 0 && App->CL_Editor_Map->Selected_Window == Enums::Selected_Map_View_TR)
+		if (App->CL_Editor_Map->Selected_Window == Enums::Selected_Map_View_TR)
 		{
 			if (App->CL_Editor_Map->flag_Left_Button_Down == false)
 			{
@@ -1328,7 +1328,7 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Bottom_Left_Window(HWND hDlg, UINT messag
 			return 1;
 		}
 
-		if (GetAsyncKeyState(VK_CONTROL) < 0 && App->CL_Editor_Map->Selected_Window == Enums::Selected_Map_View_BL)
+		if (App->CL_Editor_Map->Selected_Window == Enums::Selected_Map_View_BL)
 		{
 			if (App->CL_Editor_Map->flag_Left_Button_Down == false)
 			{
@@ -1857,6 +1857,8 @@ void CL64_Editor_Map::Set_View()
 // *************************************************************************
 void CL64_Editor_Map::Context_Menu(HWND hDlg)
 {
+	return;
+
 	RECT rcTree;
 	TVHITTESTINFO htInfo = { 0 };
 	POINT pt;
@@ -2639,7 +2641,7 @@ void CL64_Editor_Map::Draw_Screen(HWND hwnd)
 		SelectObject(MemoryhDC, PenBrushes);
 
 		// Draw Template Brush
-		if (App->CL_Doc->mModeTool == ID_TOOLS_TEMPLATE)
+		/*if (App->CL_Doc->mModeTool == ID_TOOLS_TEMPLATE)
 		{
 			SelectObject(MemoryhDC, PenTemplate);
 
@@ -2653,7 +2655,7 @@ void CL64_Editor_Map::Draw_Screen(HWND hwnd)
 				Render_RenderBrushFacesOrtho(Current_View, App->CL_Doc->CurBrush, MemoryhDC);
 
 			}
-		}
+		}*/
 
 		// Iterate through all brushes
 		int BrushCount = App->CL_X_Brush->Get_Brush_Count();

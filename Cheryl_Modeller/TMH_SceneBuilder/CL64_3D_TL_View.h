@@ -39,5 +39,9 @@ public:
 
 	static LRESULT CALLBACK Proc_Top_Left_Window(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static signed int BrushDraw(Brush* pBrush, void* lParam);
+
+	int m_V_TL;
+	HPEN m_Pen_Grid;
+	HDC	m_MemoryhDC;
 };
 
