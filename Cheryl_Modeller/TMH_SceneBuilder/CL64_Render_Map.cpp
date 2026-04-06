@@ -323,7 +323,15 @@ void CL64_Render_Map::Pan_View(ViewVars* currentView, int startPosX, int startPo
 	SetCursorPos(screenPoint.x, screenPoint.y);
 
 	// Draw the map
-	App->CL_Editor_Map->Draw_Screen(currentView->hDlg);
+
+	if (currentView->ViewType == VIEWTOP)
+	{
+		App->CL_3D_TL_View->Draw_Screen_TL(currentView->hDlg);
+	}
+	else
+	{
+		App->CL_Editor_Map->Draw_Screen(currentView->hDlg);
+	}
 }
 
 // *************************************************************************

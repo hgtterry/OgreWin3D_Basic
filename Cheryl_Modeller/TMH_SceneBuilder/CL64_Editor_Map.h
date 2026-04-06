@@ -80,7 +80,7 @@ public:
 	void Draw_Camera(HDC ViewDC);
 
 	HWND Main_View_Dlg_Hwnd; // Background of MDI
-	HWND Top_Left_Window_Hwnd;
+
 	HWND Top_Right_Window_Hwnd;
 	HWND Bottom_Left_Window_Hwnd;
 	HWND Bottom_Ogre_Right_Hwnd;

@@ -93,7 +93,6 @@ CL64_Editor_Map::CL64_Editor_Map()
 	GridSize = 128, 
 	GridSnapSize = 8;
 
-	Top_Left_Window_Hwnd =		nullptr;
 	Top_Right_Window_Hwnd =		nullptr;
 	Bottom_Left_Window_Hwnd =	nullptr;
 	Bottom_Ogre_Right_Hwnd =	nullptr;
@@ -185,7 +184,21 @@ void CL64_Editor_Map::Reset_Views_All()
 
 	Save_Splitter_Width_Depth();
 
-	int Count = 0;
+	auto& Cam_TL = App->CL_3D_TL_View->VCam_TL;
+
+	RECT		Rect;
+	GetClientRect(Cam_TL->hDlg, &Rect);
+	
+	Cam_TL->XCenter = (float)Rect.right / 2;
+	Cam_TL->YCenter = (float)Rect.bottom / 2;
+
+	Cam_TL->CamPos.x = 0;
+	Cam_TL->CamPos.y = 0;
+	Cam_TL->CamPos.z = 0;
+
+	Cam_TL->ZoomFactor = App->CL_Libs->CL_Preference->Defalut_Zoom;
+
+	int Count = 1;
 
 	while (Count < 3)
 	{
@@ -316,7 +329,7 @@ void CL64_Editor_Map::Resize_Windows(HWND hDlg, int newWidth, int newDepth)
 	const int bannerHeight = 16;
 
 	// Resize Top Left Window
-	MoveWindow(Top_Left_Window_Hwnd,
+	MoveWindow(App->CL_3D_TL_View->Top_Left_Window_Hwnd,
 		0,
 		0,
 		clientRect.left + (newWidth - WIDTH_ADJUST),
@@ -752,13 +765,13 @@ void CL64_Editor_Map::Save_Splitter_Width_Depth()
 // *************************************************************************
 void CL64_Editor_Map::Create_Top_Left_Window()
 {
-	VCam[V_TL] = new ViewVars;
-	Set_Views_Defaults(V_TL, VIEWTOP, "Top_Left");
+	/*VCam[V_TL] = new ViewVars;
+	Set_Views_Defaults(V_TL, VIEWTOP, "Top_Left");*/
 
 	App->CL_3D_TL_View->Create_Top_Left_Window();
 	//Top_Left_Window_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MAP_TOP_LEFT, Main_View_Dlg_Hwnd,(DLGPROC)Proc_Top_Left_Window);
 	
-	VCam[V_TL]->hDlg = Top_Left_Window_Hwnd;
+	//VCam[V_TL]->hDlg = Top_Left_Window_Hwnd;
 }
 
 // *************************************************************************

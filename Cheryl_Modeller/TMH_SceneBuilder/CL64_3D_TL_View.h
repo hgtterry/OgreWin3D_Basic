@@ -47,8 +47,9 @@ public:
 
 	static int Draw_Brush(Brush* pBrush, void* lParam);
 	void Draw_Brush_Faces_Ortho(const ViewVars* Cam, Brush* b);
+	void Set_VCam_Defaults();
 
-	HWND Render_hWnd;
+	HWND Top_Left_Window_Hwnd;
 
 	signed int fdocShowBrush(Brush const* b, Box3d const* ViewBox);
 
@@ -57,7 +58,14 @@ public:
 	BrushDrawData_TL m_brushDrawData_TL;
 
 	int m_V_TL;
+
+	float m_GridSize, m_GridSnapSize;
+
 	HPEN m_Pen_Grid;
+	HPEN Pen_Camera;
+
 	HDC	m_MemoryhDC;
+
+	ViewVars* VCam_TL;
 };
 
