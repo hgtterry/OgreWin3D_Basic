@@ -23,6 +23,18 @@ THE SOFTWARE.
 */
 
 #pragma once
+
+typedef struct tagBrushDrawData_TL
+{
+	const Box3d* pViewBox;
+	HDC 			pDC;
+	ViewVars* v;
+	int				GroupId;
+	CL64_Doc* pDoc;
+	BrushFlagTest	FlagTest;
+	Ogre::uint32	Color;
+} BrushDrawData_TL;
+
 class CL64_3D_TL_View
 {
 public:
@@ -33,12 +45,16 @@ public:
 
 	void Draw_Screen_TL(HWND hwnd);
 
+	static int Draw_Brush(Brush* pBrush, void* lParam);
+	void Draw_Brush_Faces_Ortho(const ViewVars* Cam, Brush* b);
+
 	HWND Render_hWnd;
 
 	signed int fdocShowBrush(Brush const* b, Box3d const* ViewBox);
 
 	static LRESULT CALLBACK Proc_Top_Left_Window(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
-	static signed int BrushDraw(Brush* pBrush, void* lParam);
+	
+	BrushDrawData_TL m_brushDrawData_TL;
 
 	int m_V_TL;
 	HPEN m_Pen_Grid;

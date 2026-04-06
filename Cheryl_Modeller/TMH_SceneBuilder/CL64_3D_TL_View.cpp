@@ -277,16 +277,6 @@ LRESULT CALLBACK CL64_3D_TL_View::Proc_Top_Left_Window(HWND hDlg, UINT message, 
 	return FALSE;
 }
 
-typedef struct tagBrushDrawData
-{
-	const Box3d* pViewBox;
-	HDC 			pDC;
-	ViewVars* v;
-	int				GroupId;
-	CL64_Doc* pDoc;
-	BrushFlagTest	FlagTest;
-	Ogre::uint32	Color;
-} BrushDrawData;
 
 #define	VectorToSUB(a, b) (*((((float *)(&a))) + (b)))
 
@@ -298,9 +288,9 @@ signed int CL64_3D_TL_View::fdocShowBrush(Brush const* b, Box3d const* ViewBox)
 // *************************************************************************
 // *	  						BrushDraw								   *
 // *************************************************************************
-signed int CL64_3D_TL_View::BrushDraw(Brush* pBrush, void* lParam)
+signed int CL64_3D_TL_View::Draw_Brush(Brush* pBrush, void* lParam)
 {
-	BrushDrawData* pData = (BrushDrawData*)lParam;
+	BrushDrawData_TL* pData = (BrushDrawData_TL*)lParam;
 
 
 	//if (App->CL_Brush->Brush_GetGroupId(pBrush) == pData->GroupId))
@@ -309,7 +299,7 @@ signed int CL64_3D_TL_View::BrushDraw(Brush* pBrush, void* lParam)
 		{
 			if (App->CL_3D_TL_View->fdocShowBrush(pBrush, pData->pViewBox))
 			{
-				App->CL_Editor_Map->Render_RenderBrushFacesOrtho(pData->v, pBrush, App->CL_Editor_Map->MemoryhDC);
+				App->CL_3D_TL_View->Draw_Brush_Faces_Ortho(pData->v, pBrush);
 			}
 		}
 	}
@@ -317,11 +307,36 @@ signed int CL64_3D_TL_View::BrushDraw(Brush* pBrush, void* lParam)
 	return true;
 }
 
+static POINT plist[64];
+
+// *************************************************************************
+// *	  	Draw_Brush_Faces_Ortho:- Terry and Hazel Flanigan 2026		   *
+// *************************************************************************
+void CL64_3D_TL_View::Draw_Brush_Faces_Ortho(const ViewVars* Cam, Brush* b)
+{
+	int	i, j;
+
+	for (i = 0; i < App->CL_X_Brush->Brush_GetNumFaces(b); i++)
+	{
+		Face* f = App->CL_X_Brush->Brush_GetFace(b, i);
+		const T_Vec3* pnts = App->CL_X_Face->Face_GetPoints(f);
+
+		for (j = 0; j < App->CL_X_Face->Face_GetNumPoints(f); j++)
+		{
+			plist[j] = App->CL_Render->Render_OrthoWorldToView(Cam, &pnts[j]);
+		}
+
+		plist[j] = plist[0];
+
+		Polyline(m_MemoryhDC, plist, j + 1);
+	}
+}
+
 static signed int BrushDrawSelFacesOrtho(Brush* pBrush, void* lParam)
 {
-	BrushDrawData* pData;
+	BrushDrawData_TL* pData;
 
-	pData = (BrushDrawData*)lParam;
+	pData = (BrushDrawData_TL*)lParam;
 
 	App->CL_Editor_Map->Render_RenderBrushSelFacesOrtho(pData->v, pBrush, pData->pDC);
 
@@ -339,8 +354,7 @@ void CL64_3D_TL_View::Draw_Screen_TL(HWND hwnd)
 	m_MemoryhDC = CreateCompatibleDC(RealhDC);
 
 	RECT		Rect;
-	BrushDrawData	brushDrawData;
-
+	
 	// Get client rectangle and set current view dimensions
 	GetClientRect(hwnd, &Rect);
 	Rect.left--;
@@ -363,12 +377,12 @@ void CL64_3D_TL_View::Draw_Screen_TL(HWND hwnd)
 	VectorToSUB(ViewBox.Max, inidx) = FLT_MAX;
 
 	// Prepare brush draw data
-	brushDrawData.pViewBox = &ViewBox;
-	brushDrawData.pDC = m_MemoryhDC;
-	brushDrawData.v = App->CL_Editor_Map->VCam[V_TL];
-	brushDrawData.pDoc = App->CL_Doc;
-	brushDrawData.GroupId = 0;
-	brushDrawData.FlagTest = NULL;
+	m_brushDrawData_TL.pViewBox = &ViewBox;
+	m_brushDrawData_TL.pDC = m_MemoryhDC;
+	m_brushDrawData_TL.v = App->CL_Editor_Map->VCam[V_TL];
+	m_brushDrawData_TL.pDoc = App->CL_Doc;
+	m_brushDrawData_TL.GroupId = 0;
+	m_brushDrawData_TL.FlagTest = NULL;
 
 	GetClipBox(RealhDC, &Rect);
 
@@ -426,7 +440,7 @@ void CL64_3D_TL_View::Draw_Screen_TL(HWND hwnd)
 		{
 			SB = App->CL_X_Brush->Get_By_Index(Count);
 
-			switch (SB->GroupId)
+			/*switch (SB->GroupId)
 			{
 			case Enums::Brushs_ID_Area:
 				SelectObject(m_MemoryhDC, App->CL_Editor_Map->PenBrushes);
@@ -443,12 +457,12 @@ void CL64_3D_TL_View::Draw_Screen_TL(HWND hwnd)
 			if (App->CL_X_Brush->Brush_IsSubtract(SB))
 			{
 				SelectObject(m_MemoryhDC, App->CL_Editor_Map->PenCutBrush);
-			}
+			}*/
 
 
 			if (App->CL_X_Brush->Brush_IsMulti(SB))
 			{
-				App->CL_X_Brush->BrushList_EnumLeafBrushes(App->CL_X_Brush->Brush_GetBrushList(SB), &brushDrawData, BrushDraw);
+				App->CL_X_Brush->BrushList_EnumLeafBrushes(App->CL_X_Brush->Brush_GetBrushList(SB), &m_brushDrawData_TL, Draw_Brush);
 			}
 			else
 			{
@@ -474,7 +488,7 @@ void CL64_3D_TL_View::Draw_Screen_TL(HWND hwnd)
 				{
 					if (App->CL_X_Brush->Brush_IsMulti(pBrush))
 					{
-						App->CL_X_Brush->BrushList_EnumLeafBrushes(App->CL_X_Brush->Brush_GetBrushList(pBrush), &brushDrawData, BrushDraw);
+						App->CL_X_Brush->BrushList_EnumLeafBrushes(App->CL_X_Brush->Brush_GetBrushList(pBrush), &m_brushDrawData_TL, Draw_Brush);
 					}
 					else
 					{
@@ -484,10 +498,10 @@ void CL64_3D_TL_View::Draw_Screen_TL(HWND hwnd)
 			}
 		}
 
-		// Draw selected faces
-		BrushList* BList = App->CL_Level->Level_Get_Main_Brushes();
-		SelectObject(m_MemoryhDC, App->CL_Editor_Map->PenSelectedFaces);
-		App->CL_X_Brush->BrushList_EnumLeafBrushes(BList, &brushDrawData, BrushDrawSelFacesOrtho);
+		//// Draw selected faces
+		//BrushList* BList = App->CL_Level->Level_Get_Main_Brushes();
+		//SelectObject(m_MemoryhDC, App->CL_Editor_Map->PenSelectedFaces);
+		//App->CL_X_Brush->BrushList_EnumLeafBrushes(BList, &brushDrawData, BrushDrawSelFacesOrtho);
 
 
 		// Draw camera if tracking
