@@ -44,6 +44,8 @@ CL64_3D_TL_View::CL64_3D_TL_View()
 	m_GridSize = 128;
 	m_GridSnapSize = 8;
 
+	Saved_Cam_Position = { 0 };
+
 	m_MemoryhDC = nullptr;
 }
 
@@ -255,6 +257,7 @@ LRESULT CALLBACK CL64_3D_TL_View::Proc_Top_Left_Window(HWND hDlg, UINT message, 
 	// Right Mouse Down
 	case WM_RBUTTONDOWN:
 	{
+
 		App->CL_Editor_Map->Current_View = App->CL_3D_TL_View->VCam_TL;
 
 		if (App->CL_Editor_Map->Selected_Window != Enums::Selected_Map_View_TL)
@@ -262,17 +265,16 @@ LRESULT CALLBACK CL64_3D_TL_View::Proc_Top_Left_Window(HWND hDlg, UINT message, 
 			App->CL_Editor_Map->Set_Selected_View(Enums::Selected_Map_View_TL);
 		}
 
-		//if (GetAsyncKeyState(VK_CONTROL) < 0)
-		{
-			GetCursorPos(&App->CL_Editor_Map->mStartPoint);
-			ScreenToClient(hDlg, &App->CL_Editor_Map->mStartPoint);
+		GetCursorPos(&App->CL_Editor_Map->mStartPoint);
+		ScreenToClient(hDlg, &App->CL_Editor_Map->mStartPoint);
 
-			App->CL_Editor_Map->flag_Right_Button_Down = 1;
-			App->CL_Editor_Map->flag_Left_Button_Down = 0;
+		App->CL_Editor_Map->flag_Right_Button_Down = 1;
+		App->CL_Editor_Map->flag_Left_Button_Down = 0;
 
-			App->CUR = SetCursor(NULL);
-		}
-
+		App->CUR = SetCursor(NULL);
+		
+		App->CL_3D_TL_View->Saved_Cam_Position = App->CL_3D_TL_View->VCam_TL->CamPos;
+		
 		return 1;
 	}
 
@@ -284,17 +286,28 @@ LRESULT CALLBACK CL64_3D_TL_View::Proc_Top_Left_Window(HWND hDlg, UINT message, 
 
 		App->CUR = SetCursor(App->CUR);
 		
-		/*else
+		App->CL_ImGui_Dialogs->Debug_Float = App->CL_3D_TL_View->VCam_TL->CamPos.x;
+		App->CL_ImGui_Dialogs->Debug_Vec3 = Ogre::Vector3(App->CL_3D_TL_View->VCam_TL->CamPos.x, App->CL_3D_TL_View->VCam_TL->CamPos.y, App->CL_3D_TL_View->VCam_TL->CamPos.z);
+		
+		
+		int cameraComparison = App->CL_X_Maths->Vector3_Compare(&App->CL_3D_TL_View->VCam_TL->CamPos, &App->CL_3D_TL_View->Saved_Cam_Position, 0);
+		
+		if (cameraComparison == 1)
 		{
 			App->CL_Editor_Map->Current_View = App->CL_Editor_Map->VCam[V_TL];
 			App->CL_Editor_Map->Context_Menu(hDlg);
-		}*/
+		}
 
 		return 1;
 	}
 
 	case WM_COMMAND:
 	{
+		if (App->CL_Editor_Map->Context_Command(LOWORD(wParam)))
+		{
+			return TRUE;
+		}
+
 		break;
 	}
 

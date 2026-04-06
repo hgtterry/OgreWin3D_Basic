@@ -50,6 +50,8 @@ public:
 
 	void Physics_Console_Gui(void);
 
+	void Debug_Data(void);
+
 	bool flag_Disable_Panels;
 	// List Dialog
 	float List_PosX;
@@ -120,6 +122,11 @@ public:
 	float Physics_PosX;
 	float Physics_PosY;
 	bool flag_Physics_Console_StartPos;
+
+	bool flag_Show_Debug_Data;
+
+	float Debug_Float;
+	Ogre::Vector3 Debug_Vec3;
 
 private:
 

@@ -83,12 +83,15 @@ CL64_ImGui_Dialogs::CL64_ImGui_Dialogs(void)
 	Move_Ent_item_current_idx = 0;
 
 	// -------------- Physics Console
-	flag_Disable_Physics_Console = 0;
-	flag_Show_Physics_Console = 0;
+	flag_Disable_Physics_Console = false;
+	flag_Show_Physics_Console = false;
 	Physics_PosX = 500;
 	Physics_PosY = 500;
-	flag_Physics_Console_StartPos = 0;
+	flag_Physics_Console_StartPos = false;
 
+	flag_Show_Debug_Data = false;
+	Debug_Float = 0;
+	Debug_Vec3 = Ogre::Vector3::ZERO;
 }
 
 CL64_ImGui_Dialogs::~CL64_ImGui_Dialogs(void)
@@ -905,6 +908,7 @@ void CL64_ImGui_Dialogs::Start_Dialog_Float_Vec3(float Step, int Combo_Step, Ogr
 
 	flag_Show_Dialog_Float_Vec3 = 1;
 }
+
 // *************************************************************************
 // *			Dialog_Float_Vec3:- Terry and Hazel Flanigan 2024  		   *
 // *************************************************************************
@@ -1016,6 +1020,42 @@ void CL64_ImGui_Dialogs::Dialog_Float_Vec3(void)
 			ImGui::PopStyleColor();
 			ImGui::End();
 		}
+	}
+}
+
+// *************************************************************************
+// *			Debug_Data:- Terry and Hazel Flanigan 2026				   *
+// *************************************************************************
+void CL64_ImGui_Dialogs::Debug_Data(void)
+{
+	ImGui::SetNextWindowPos(ImVec2(200, 200));
+
+	ImGui::PushStyleColor(ImGuiCol_WindowBg, IM_COL32(239, 239, 239, 255));
+
+	if (!ImGui::Begin("Ogre Data", &flag_Show_Debug_Data, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize
+		| ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoTitleBar))
+	{
+		ImGui::End();
+	}
+	else
+	{
+		ImGui::Spacing();
+		ImGui::Text("Debug Float %f", Debug_Float);
+		ImGui::Text(" ");
+		ImGui::Text("Debug Vector 3 %f %f %f", Debug_Vec3.x, Debug_Vec3.y, Debug_Vec3.z);
+		
+		/*ImGui::Text("Processes Time %i", App->CL_Ogre->m_Processes_Time);
+		if (App->CL_Scene->flag_Player_Added == true)
+		{
+			ImGui::Text("Cam Pos XYZ %f %f %f", App->CL_Ogre->camNode->getPosition().x, App->CL_Ogre->camNode->getPosition().y, App->CL_Ogre->camNode->getPosition().z);
+		}*/
+
+		/*ImVec2 Size = ImGui::GetWindowSize();
+		PosX = ((float)App->CL_Ogre->mWindow->getViewport(0)->getActualWidth() / 2) - (Size.x / 2);
+		PosY = 10;*/
+
+		ImGui::PopStyleColor();
+		ImGui::End();
 	}
 }
 

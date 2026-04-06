@@ -1871,7 +1871,6 @@ void CL64_Editor_Map::Set_View()
 void CL64_Editor_Map::Context_Menu(HWND hDlg)
 {
 	return;
-
 	RECT rcTree;
 	TVHITTESTINFO htInfo = { 0 };
 	POINT pt;
@@ -1886,61 +1885,63 @@ void CL64_Editor_Map::Context_Menu(HWND hDlg)
 
 	hMenu = CreatePopupMenu();
 
-	if (App->CL_Level->flag_UseGrid == true)
-	{
-		AppendMenuW(hMenu, MF_STRING | MF_CHECKED, IDM_GRID_SNAP, L"&Grid Snap");
-	}
-	else
-	{
-		AppendMenuW(hMenu, MF_STRING | MF_UNCHECKED, IDM_GRID_SNAP, L"&Grid Snap");
-	}
+	//if (App->CL_Level->flag_UseGrid == true)
+	//{
+	//	AppendMenuW(hMenu, MF_STRING | MF_CHECKED, IDM_GRID_SNAP, L"&Grid Snap");
+	//}
+	//else
+	//{
+	//	AppendMenuW(hMenu, MF_STRING | MF_UNCHECKED, IDM_GRID_SNAP, L"&Grid Snap");
+	//}
 
-	// Move Scale Rotate
-	AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
-	if (App->CL_X_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes))
-	{
-		// Enabled
-		AppendMenuW(hMenu, MF_STRING , IDM_MOVE, L"&Move");
-		AppendMenuW(hMenu, MF_STRING , IDM_SCALE, L"&Scale");
-		AppendMenuW(hMenu, MF_STRING , IDM_ROTATE, L"&Rotate");
-		AppendMenuW(hMenu, MF_STRING, IDM_SCENE_DESELECT, L"&Deselect");
+	//// Move Scale Rotate
+	//AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
+	//if (App->CL_X_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes))
+	//{
+	//	// Enabled
+	//	AppendMenuW(hMenu, MF_STRING , IDM_MOVE, L"&Move");
+	//	AppendMenuW(hMenu, MF_STRING , IDM_SCALE, L"&Scale");
+	//	AppendMenuW(hMenu, MF_STRING , IDM_ROTATE, L"&Rotate");
+	//	AppendMenuW(hMenu, MF_STRING, IDM_SCENE_DESELECT, L"&Deselect");
 
-		// Copy Functions
-		AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
-		AppendMenuW(hMenu, MF_STRING, IDM_SCENE_DUPLICATE, L"&Duplicate");
-		AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_COPY, L"&Copy");
-		AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_PASTE, L"&Paste");
-	}
-	else
-	{
-		// Greyed
-		AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_MOVE, L"&Move");
-		AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_SCALE, L"&Scale");
-		AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_ROTATE, L"&Rotate");
-		AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_SCENE_DESELECT, L"&Deselect");
+	//	// Copy Functions
+	//	AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
+	//	AppendMenuW(hMenu, MF_STRING, IDM_SCENE_DUPLICATE, L"&Duplicate");
+	//	AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_COPY, L"&Copy");
+	//	AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_PASTE, L"&Paste");
+	//}
+	//else
+	//{
+	//	// Greyed
+	//	AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_MOVE, L"&Move");
+	//	AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_SCALE, L"&Scale");
+	//	AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_ROTATE, L"&Rotate");
+	//	AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_SCENE_DESELECT, L"&Deselect");
 
-		// Copy Functions
-		AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
-		AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_SCENE_DUPLICATE, L"&Duplicate");
-		AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_COPY, L"&Copy");
-		AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_PASTE, L"&Paste");
-	}
+	//	// Copy Functions
+	//	AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
+	//	AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_SCENE_DUPLICATE, L"&Duplicate");
+	//	AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_COPY, L"&Copy");
+	//	AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_PASTE, L"&Paste");
+	//}
 
 	// Panel View
+	//AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
+	//AppendMenuW(hMenu, MF_STRING, IDM_SCENE_MAX_VIEW, L"&Full View");
+	//AppendMenuW(hMenu, MF_STRING, IDM_SCENE_RESTORE_VIEW, L"&All Views");
+
 	AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
-	AppendMenuW(hMenu, MF_STRING, IDM_SCENE_MAX_VIEW, L"&Full View");
-	AppendMenuW(hMenu, MF_STRING, IDM_SCENE_RESTORE_VIEW, L"&All Views");
+	AppendMenuW(hMenu, MF_STRING, IDM_RESET_VIEW, L"&Reset View");
+	AppendMenuW(hMenu, MF_STRING, IDM_CENTRE_ONCAMERA, L"&Centre On Camera");
+
+
+	//
+	//AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
+	//AppendMenuW(hMenu, MF_STRING | MF_GRAYED, NULL, L"&Zoom Ctrl and Mouse Wheel");
+	//AppendMenuW(hMenu, MF_STRING | MF_GRAYED, NULL, L"&Pan Ctrl+Left Mouse Button");
 
 	//AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
-	//AppendMenuW(hMenu, MF_STRING, IDM_RESET_VIEW, L"&Reset View");
-	//AppendMenuW(hMenu, MF_STRING, IDM_CENTRE_ONCAMERA, L"&Centre On Camera");*/
-	
-	AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
-	AppendMenuW(hMenu, MF_STRING | MF_GRAYED, NULL, L"&Zoom Ctrl and Mouse Wheel");
-	AppendMenuW(hMenu, MF_STRING | MF_GRAYED, NULL, L"&Pan Ctrl+Left Mouse Button");
-
-	AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
-	AppendMenuW(hMenu, MF_STRING, IDM_SCENE_HELP, L"&Help");
+	//AppendMenuW(hMenu, MF_STRING, IDM_SCENE_HELP, L"&Help");
 
 	flag_Context_Menu_Active = 1;
 	TrackPopupMenu(hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, hDlg, NULL);
@@ -2259,12 +2260,29 @@ bool CL64_Editor_Map::Context_Command(WPARAM wParam)
 	}
 		
 	case IDM_RESET_VIEW:
-		Set_View();
+	{
+		App->CL_Editor_Map->Set_Splitter_WidthDepth(App->CL_Editor_Map->Copy_Spliter_Width, App->CL_Editor_Map->Copy_Spliter_Depth);
+		App->CL_Editor_Map->Resize_Windows(App->CL_Editor_Map->Main_View_Dlg_Hwnd, App->CL_Editor_Map->nleftWnd_width, App->CL_Editor_Map->nleftWnd_Depth);
+		App->CL_Top_Tabs->Set_View_Buttons(Enums::Selected_Map_View_None);
 		return TRUE;
+	}
 
 	case IDM_CENTRE_ONCAMERA:
-		Reset_To_Camera();
+	{
+		if (App->CL_Editor_Map->Selected_Window == Enums::Selected_Map_View_TL)
+		{
+			App->CL_3D_TL_View->VCam_TL->CamPos.x = 0;
+			App->CL_3D_TL_View->VCam_TL->CamPos.y = 0;
+			App->CL_3D_TL_View->VCam_TL->CamPos.z = 0;
+
+			//App->CL_Editor_Map->Init_Views(Enums::Selected_Map_View_None);
+			App->CL_Editor_Map->Resize_Windows(App->CL_Editor_Map->Main_View_Dlg_Hwnd, App->CL_Editor_Map->nleftWnd_width, App->CL_Editor_Map->nleftWnd_Depth);
+			//App->CL_3D_TL_View->Draw_Screen_TL(App->CL_3D_TL_View->Top_Left_Window_Hwnd);
+			//RedrawWindow(App->CL_3D_TL_View->Top_Left_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+		}
+
 		return TRUE;
+	}
 
 	//case IDM_PREVIEW:
 	//	//App->CL_Editor_Control->Start_Preview_Mode();

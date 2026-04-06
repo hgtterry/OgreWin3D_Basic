@@ -298,6 +298,11 @@ void CL64_ImGui::ImGui_Render_Loop(void)
 		Debug_Lists_ImGui();
 	}
 
+	if (App->CL_ImGui_Dialogs->flag_Show_Debug_Data == true)
+	{
+		App->CL_ImGui_Dialogs->Debug_Data();
+	}
+	
 	if (App->CL_ImGui_Dialogs->flag_Show_Dialog_list == 1)
 	{
 		App->CL_ImGui_Dialogs->Dialog_List_Gui();

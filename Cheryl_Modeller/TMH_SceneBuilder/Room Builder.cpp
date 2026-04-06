@@ -321,6 +321,22 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 return 1;
             }
             
+            case ID_DEBUG_DEBUGDATA:
+            {
+                
+                if (App->CL_ImGui_Dialogs->flag_Show_Debug_Data == true)
+                {
+                    App->CL_ImGui_Dialogs->flag_Show_Debug_Data = false;
+                }
+                else
+                {
+                    App->CL_ImGui_Dialogs->flag_Show_Debug_Data = true;
+                }
+
+                return true;
+            }
+
+            
             case ID_DEBUG_CLAMPFPS:
             {
                 if (App->CL_Ogre3D->flag_Clamp_FPS == true)
