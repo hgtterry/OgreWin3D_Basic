@@ -43,8 +43,6 @@ public:
 
 	void Create_Top_Left_Window();
 
-	void Draw_Screen_TL(HWND hwnd);
-
 	static int Draw_Brush(Brush* pBrush, void* lParam);
 	void Draw_Brush_Faces_Ortho(const ViewVars* Cam, Brush* b);
 	void Set_VCam_Defaults();
@@ -53,8 +51,6 @@ public:
 
 	signed int fdocShowBrush(Brush const* b, Box3d const* ViewBox);
 
-	static LRESULT CALLBACK Proc_Top_Left_Window(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
-	
 	BrushDrawData_TL m_brushDrawData_TL;
 
 	int m_V_TL;
@@ -68,5 +64,11 @@ public:
 	T_Vec3 Saved_Cam_Position;
 
 	ViewVars* VCam_TL;
+
+private:
+	static LRESULT CALLBACK Proc_Top_Left_Window(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+
+	void Draw_Screen_TL(HWND hwnd);
+
 };
 

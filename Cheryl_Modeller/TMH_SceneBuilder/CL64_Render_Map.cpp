@@ -326,7 +326,7 @@ void CL64_Render_Map::Pan_View(ViewVars* currentView, int startPosX, int startPo
 
 	if (currentView->ViewType == VIEWTOP)
 	{
-		App->CL_3D_TL_View->Draw_Screen_TL(currentView->hDlg);
+		RedrawWindow(App->CL_3D_TL_View->Top_Left_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 	}
 	else
 	{

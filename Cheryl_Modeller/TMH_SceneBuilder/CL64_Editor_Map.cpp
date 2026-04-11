@@ -1870,7 +1870,6 @@ void CL64_Editor_Map::Set_View()
 // *************************************************************************
 void CL64_Editor_Map::Context_Menu(HWND hDlg)
 {
-	return;
 	RECT rcTree;
 	TVHITTESTINFO htInfo = { 0 };
 	POINT pt;
@@ -2269,18 +2268,31 @@ bool CL64_Editor_Map::Context_Command(WPARAM wParam)
 
 	case IDM_CENTRE_ONCAMERA:
 	{
-		if (App->CL_Editor_Map->Selected_Window == Enums::Selected_Map_View_TL)
-		{
-			App->CL_3D_TL_View->VCam_TL->CamPos.x = 0;
-			App->CL_3D_TL_View->VCam_TL->CamPos.y = 0;
-			App->CL_3D_TL_View->VCam_TL->CamPos.z = 0;
+		RECT		Rect;
+		GetClientRect(App->CL_3D_TL_View->VCam_TL->hDlg, &Rect);
 
-			//App->CL_Editor_Map->Init_Views(Enums::Selected_Map_View_None);
-			App->CL_Editor_Map->Resize_Windows(App->CL_Editor_Map->Main_View_Dlg_Hwnd, App->CL_Editor_Map->nleftWnd_width, App->CL_Editor_Map->nleftWnd_Depth);
-			//App->CL_3D_TL_View->Draw_Screen_TL(App->CL_3D_TL_View->Top_Left_Window_Hwnd);
-			//RedrawWindow(App->CL_3D_TL_View->Top_Left_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+		App->CL_3D_TL_View->VCam_TL->XCenter = (float)Rect.right / 2;
+		App->CL_3D_TL_View->VCam_TL->YCenter = (float)Rect.bottom / 2;
+
+		Ogre::Vector3 Pos;
+		if (App->CL_Model->flag_Model_Loaded == true)
+		{
+			Pos = App->CL_Ogre->camNode->getPosition();
+		}
+		else
+		{
+			Pos.x = 0;
+			Pos.y = 0;
+			Pos.z = 0;
 		}
 
+		App->CL_3D_TL_View->VCam_TL->CamPos.x = Pos.x;
+		App->CL_3D_TL_View->VCam_TL->CamPos.y = Pos.y;
+		App->CL_3D_TL_View->VCam_TL->CamPos.z = Pos.z;
+
+		App->CL_3D_TL_View->VCam_TL->ZoomFactor = 0.3;
+		RedrawWindow(App->CL_3D_TL_View->Top_Left_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+		
 		return TRUE;
 	}
 
