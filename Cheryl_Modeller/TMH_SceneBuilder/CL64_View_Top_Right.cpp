@@ -25,34 +25,34 @@ THE SOFTWARE.
 #include "pch.h"
 #include "resource.h"
 #include "CL64_App.h"
-#include "CL64_3D_TR_View.h"
+#include "CL64_View_Top_Right.h"
 
 #define min(a,b)            (((a) < (b)) ? (a) : (b))
 #define max(a,b)            (((a) > (b)) ? (a) : (b))
 
-CL64_3D_TR_View::CL64_3D_TR_View()
+CL64_View_Top_Right::CL64_View_Top_Right()
 {
 	Render_hWnd = nullptr;
 }
 
-CL64_3D_TR_View::~CL64_3D_TR_View()
+CL64_View_Top_Right::~CL64_View_Top_Right()
 {
 }
 
 
 // *************************************************************************
-// *			Create_Top_Left_Window:- Terry Mo and Hazel  2026		   *
+// *			Create_Top_Right_Window:- Terry Mo and Hazel  2026		   *
 // *************************************************************************
-void CL64_3D_TR_View::Create_Top_Left_Window()
+void CL64_View_Top_Right::Create_Top_Right_Window()
 {
 	//App->CL_Editor_Map->Top_Left_Window_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MAP_TOP_LEFT, App->CL_Editor_Map->Main_View_Dlg_Hwnd, (DLGPROC)Proc_Top_Left_Window);
 
 }
 
 // *************************************************************************
-// *		  Proc_Top_Left_Window:- Terry and Hazel Flanigan 2025		   *
+// *		  Proc_Top_Right_Window:- Terry and Hazel Flanigan 2025		   *
 // *************************************************************************
-LRESULT CALLBACK CL64_3D_TR_View::Proc_Top_Left_Window(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK CL64_View_Top_Right::Proc_Top_Right_Window(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	switch (message)
 	{
@@ -60,7 +60,7 @@ LRESULT CALLBACK CL64_3D_TR_View::Proc_Top_Left_Window(HWND hDlg, UINT message, 
 	case WM_INITDIALOG:
 	{
 		SendDlgItemMessage(hDlg, IDC_ST_TL_TITLE, WM_SETFONT, (WPARAM)App->Font_CB10, MAKELPARAM(TRUE, 0));
-		App->CL_Editor_Map->Top_Left_Banner_Hwnd = GetDlgItem(hDlg, IDC_ST_TL_TITLE);
+		//App->CL_Editor_Map->Top_Left_Banner_Hwnd = GetDlgItem(hDlg, IDC_ST_TL_TITLE);
 
 		return TRUE;
 	}

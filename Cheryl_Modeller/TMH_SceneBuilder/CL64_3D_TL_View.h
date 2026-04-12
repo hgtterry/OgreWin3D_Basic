@@ -47,7 +47,7 @@ public:
 
 	static int Draw_Brush(Brush* pBrush, void* lParam);
 	void Draw_Brush_Faces_Ortho(const ViewVars* Cam, Brush* b);
-	void Set_VCam_Defaults();
+	void Set_VCam_TL_Defaults();
 
 	HWND Top_Left_Window_Hwnd;
 

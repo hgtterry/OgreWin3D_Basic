@@ -157,7 +157,6 @@
     <ClInclude Include="Base_Group.h" />
     <ClInclude Include="Base_Object.h" />
     <ClInclude Include="CL64_3D_TL_View.h" />
-    <ClInclude Include="CL64_3D_TR_View.h" />
     <ClInclude Include="CL64_App.h" />
     <ClInclude Include="CL64_Assimp.h" />
     <ClInclude Include="CL64_Brush_X.h" />
@@ -204,6 +203,7 @@
     <ClInclude Include="CL64_Top_Tabs.h" />
     <ClInclude Include="CL64_TXL_Editor.h" />
     <ClInclude Include="CL64_Utilities.h" />
+    <ClInclude Include="CL64_View_Top_Right.h" />
     <ClInclude Include="CL64_WadFile.h" />
     <ClInclude Include="CLP_3D_Listener.h" />
     <ClInclude Include="CLP_3D_Setup.h" />
@@ -220,7 +220,6 @@
     <ClCompile Include="Base_Group.cpp" />
     <ClCompile Include="Base_Object.cpp" />
     <ClCompile Include="CL64_3D_TL_View.cpp" />
-    <ClCompile Include="CL64_3D_TR_View.cpp" />
     <ClCompile Include="CL64_App.cpp" />
     <ClCompile Include="CL64_Assimp.cpp" />
     <ClCompile Include="CL64_Brush_X.cpp" />
@@ -267,6 +266,7 @@
     <ClCompile Include="CL64_Top_Tabs.cpp" />
     <ClCompile Include="CL64_TXL_Editor.cpp" />
     <ClCompile Include="CL64_Utilities.cpp" />
+    <ClCompile Include="CL64_View_Top_Right.cpp" />
     <ClCompile Include="CL64_WadFile.cpp" />
     <ClCompile Include="CLP_3D_Listener.cpp" />
     <ClCompile Include="CLP_3D_Setup.cpp" />

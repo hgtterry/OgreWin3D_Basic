@@ -24,17 +24,17 @@ THE SOFTWARE.
 
 #pragma once
 
-class CL64_3D_TR_View
+class CL64_View_Top_Right
 {
 public:
-	CL64_3D_TR_View();
-	~CL64_3D_TR_View();
+	CL64_View_Top_Right();
+	~CL64_View_Top_Right();
 
-	void Create_Top_Left_Window();
+	void Create_Top_Right_Window();
 	
 	HWND Render_hWnd;
 	
-	static LRESULT CALLBACK Proc_Top_Left_Window(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Proc_Top_Right_Window(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 };
 

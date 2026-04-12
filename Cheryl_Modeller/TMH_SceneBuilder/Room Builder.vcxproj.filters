@@ -192,10 +192,10 @@
     <ClInclude Include="CL64_Properties_Textures_Com.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CL64_3D_TR_View.h">
+    <ClInclude Include="CL64_3D_TL_View.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CL64_3D_TL_View.h">
+    <ClInclude Include="CL64_View_Top_Right.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -371,10 +371,10 @@
     <ClCompile Include="CL64_Properties_Textures_Com.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CL64_3D_TR_View.cpp">
+    <ClCompile Include="CL64_3D_TL_View.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CL64_3D_TL_View.cpp">
+    <ClCompile Include="CL64_View_Top_Right.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

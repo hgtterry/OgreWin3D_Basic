@@ -54,9 +54,9 @@ CL64_3D_TL_View::~CL64_3D_TL_View()
 }
 
 // *************************************************************************
-// *			Set_VCam_Defaults:- Terry and Hazel Flanigan 2026		   *
+// *			Set_VCam_TL_Defaults:- Terry and Hazel Flanigan 2026	   *
 // *************************************************************************
-void CL64_3D_TL_View::Set_VCam_Defaults()
+void CL64_3D_TL_View::Set_VCam_TL_Defaults()
 {
 	strcpy(VCam_TL->Name, "Top_Left");
 	VCam_TL->ViewType = VIEWTOP;
@@ -83,7 +83,7 @@ void CL64_3D_TL_View::Create_Top_Left_Window()
 {
 	VCam_TL = new ViewVars;
 	
-	Set_VCam_Defaults();
+	Set_VCam_TL_Defaults();
 
 	Top_Left_Window_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MAP_TOP_LEFT, App->CL_Editor_Map->Main_View_Dlg_Hwnd, (DLGPROC)Proc_Top_Left_Window);
 
