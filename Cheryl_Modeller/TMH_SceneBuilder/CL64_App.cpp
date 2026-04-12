@@ -114,8 +114,9 @@ CL64_App::CL64_App(void)
 
 	CL_Properties_Textures_Com =	nullptr;
 
-	CL_View_Top_Right =			nullptr;
-	CL_3D_TL_View =				nullptr;
+	CL_3D_TL_View =			nullptr;
+	CL_View_Top_Right =		nullptr;
+	CL_View_Bottom_Left =	nullptr;
 
 	CUR = 0;
 	Menu_Map = 0;
@@ -310,8 +311,9 @@ void CL64_App::InitApp(void)
 	CL_Properties_Textures_Com =	new CL64_Properties_Textures_Com();
 	
 	CL_3D_TL_View =				new CL64_3D_TL_View();
-	CL_View_Top_Right =				new CL64_View_Top_Right();
-
+	CL_View_Top_Right =			new CL64_View_Top_Right();
+	CL_View_Bottom_Left =		new CL64_View_Bottom_Left();
+	
 	Set_Brushes_Fonts();
 
 	char path[MAX_PATH];
