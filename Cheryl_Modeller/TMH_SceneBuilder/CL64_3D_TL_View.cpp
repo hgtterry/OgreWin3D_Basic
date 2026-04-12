@@ -193,15 +193,13 @@ LRESULT CALLBACK CL64_3D_TL_View::Proc_Top_Left_Window(HWND hDlg, UINT message, 
 				if (zDelta > 0)
 				{
 					App->CL_Editor_Map->Current_View->ZoomFactor = App->CL_Editor_Map->Current_View->ZoomFactor + 0.1;
-					RedrawWindow(App->CL_3D_TL_View->Top_Left_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-					//App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
+					App->CL_3D_TL_View->Redraw_Window_TL();
 				}
 
 				if (zDelta < 0)
 				{
 					App->CL_Editor_Map->Current_View->ZoomFactor = App->CL_Editor_Map->Current_View->ZoomFactor - 0.1;
-					RedrawWindow(App->CL_3D_TL_View->Top_Left_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-					//App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
+					App->CL_3D_TL_View->Redraw_Window_TL();
 				}
 			}
 
@@ -286,8 +284,8 @@ LRESULT CALLBACK CL64_3D_TL_View::Proc_Top_Left_Window(HWND hDlg, UINT message, 
 
 		App->CUR = SetCursor(App->CUR);
 		
-		App->CL_ImGui_Dialogs->Debug_Float = App->CL_3D_TL_View->VCam_TL->CamPos.x;
-		App->CL_ImGui_Dialogs->Debug_Vec3 = Ogre::Vector3(App->CL_3D_TL_View->VCam_TL->CamPos.x, App->CL_3D_TL_View->VCam_TL->CamPos.y, App->CL_3D_TL_View->VCam_TL->CamPos.z);
+		/*App->CL_ImGui_Dialogs->Debug_Float = App->CL_3D_TL_View->VCam_TL->CamPos.x;
+		App->CL_ImGui_Dialogs->Debug_Vec3 = Ogre::Vector3(App->CL_3D_TL_View->VCam_TL->CamPos.x, App->CL_3D_TL_View->VCam_TL->CamPos.y, App->CL_3D_TL_View->VCam_TL->CamPos.z);*/
 		
 		
 		int cameraComparison = App->CL_X_Maths->Vector3_Compare(&App->CL_3D_TL_View->VCam_TL->CamPos, &App->CL_3D_TL_View->Saved_Cam_Position, 0);
@@ -328,6 +326,7 @@ LRESULT CALLBACK CL64_3D_TL_View::Proc_Top_Left_Window(HWND hDlg, UINT message, 
 }
 
 
+// ---------------------------------------------------------------------------------- Stuff
 #define	VectorToSUB(a, b) (*((((float *)(&a))) + (b)))
 
 signed int CL64_3D_TL_View::fdocShowBrush(Brush const* b, Box3d const* ViewBox)
@@ -358,6 +357,14 @@ signed int CL64_3D_TL_View::Draw_Brush(Brush* pBrush, void* lParam)
 }
 
 static POINT plist[64];
+
+// *************************************************************************
+// *			Redraw_Window_TL:- Terry and Hazel Flanigan 2026		   *
+// *************************************************************************
+void CL64_3D_TL_View::Redraw_Window_TL()
+{
+	RedrawWindow(Top_Left_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+}
 
 // *************************************************************************
 // *	  	Draw_Brush_Faces_Ortho:- Terry and Hazel Flanigan 2026		   *
@@ -536,5 +543,12 @@ void CL64_3D_TL_View::Draw_Screen_TL(HWND hwnd)
 	DeleteDC(m_MemoryhDC);
 	ReleaseDC(hwnd, RealhDC);
 
+	/*RECT		Rect2;
+	GetClientRect(App->CL_3D_TL_View->VCam_TL->hDlg, &Rect2);
+
+	App->CL_ImGui_Dialogs->Debug_Vec3.x = (float)Rect2.right;
+	App->CL_ImGui_Dialogs->Debug_Vec3.y = (float)Rect2.bottom;
+	App->CL_ImGui_Dialogs->Debug_Vec3.z = App->CL_3D_TL_View->VCam_TL->ZoomFactor;*/
+	
 }
 

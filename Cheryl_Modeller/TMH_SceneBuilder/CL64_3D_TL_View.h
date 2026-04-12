@@ -42,6 +42,8 @@ public:
 	~CL64_3D_TL_View();
 
 	void Create_Top_Left_Window();
+	void Redraw_Window_TL();
+
 
 	static int Draw_Brush(Brush* pBrush, void* lParam);
 	void Draw_Brush_Faces_Ortho(const ViewVars* Cam, Brush* b);

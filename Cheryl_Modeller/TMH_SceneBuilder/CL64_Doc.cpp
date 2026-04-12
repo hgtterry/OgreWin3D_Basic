@@ -390,7 +390,8 @@ void CL64_Doc::UpdateAllViews(int Update_Mode)
     {
         ViewVars* Save_View = App->CL_Editor_Map->Current_View;
 
-        RedrawWindow(App->CL_3D_TL_View->Top_Left_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+        App->CL_3D_TL_View->Redraw_Window_TL();
+       
         RedrawWindow(App->CL_Editor_Map->Top_Right_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
         RedrawWindow(App->CL_Editor_Map->Bottom_Left_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 

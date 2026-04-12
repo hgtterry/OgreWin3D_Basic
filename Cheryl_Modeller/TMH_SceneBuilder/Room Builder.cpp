@@ -810,7 +810,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 return 1;
             }
 
-            case ID_GRID_SNAPOPTOPNS:
+            case ID_GRID_SNAPOPTIONS:
             {
                 App->CL_Dialogs->Dialog_SnapOptions();
                 return 1;

@@ -1866,90 +1866,6 @@ void CL64_Editor_Map::Set_View()
 }
 
 // *************************************************************************
-// *			Context_Menu:- Terry Mo and Hazel 2025				 	   *
-// *************************************************************************
-void CL64_Editor_Map::Context_Menu(HWND hDlg)
-{
-	RECT rcTree;
-	TVHITTESTINFO htInfo = { 0 };
-	POINT pt;
-	GetCursorPos(&pt);
-
-	long xPos = pt.x;   // x position from message, in screen coordinates
-	long yPos = pt.y;   // y position from message, in screen coordinates 
-
-	GetWindowRect(hDlg, &rcTree);        // get its window coordinates
-	htInfo.pt.x = xPos - rcTree.left;    // convert to client coordinates
-	htInfo.pt.y = yPos - rcTree.top;
-
-	hMenu = CreatePopupMenu();
-
-	//if (App->CL_Level->flag_UseGrid == true)
-	//{
-	//	AppendMenuW(hMenu, MF_STRING | MF_CHECKED, IDM_GRID_SNAP, L"&Grid Snap");
-	//}
-	//else
-	//{
-	//	AppendMenuW(hMenu, MF_STRING | MF_UNCHECKED, IDM_GRID_SNAP, L"&Grid Snap");
-	//}
-
-	//// Move Scale Rotate
-	//AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
-	//if (App->CL_X_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes))
-	//{
-	//	// Enabled
-	//	AppendMenuW(hMenu, MF_STRING , IDM_MOVE, L"&Move");
-	//	AppendMenuW(hMenu, MF_STRING , IDM_SCALE, L"&Scale");
-	//	AppendMenuW(hMenu, MF_STRING , IDM_ROTATE, L"&Rotate");
-	//	AppendMenuW(hMenu, MF_STRING, IDM_SCENE_DESELECT, L"&Deselect");
-
-	//	// Copy Functions
-	//	AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
-	//	AppendMenuW(hMenu, MF_STRING, IDM_SCENE_DUPLICATE, L"&Duplicate");
-	//	AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_COPY, L"&Copy");
-	//	AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_PASTE, L"&Paste");
-	//}
-	//else
-	//{
-	//	// Greyed
-	//	AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_MOVE, L"&Move");
-	//	AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_SCALE, L"&Scale");
-	//	AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_ROTATE, L"&Rotate");
-	//	AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_SCENE_DESELECT, L"&Deselect");
-
-	//	// Copy Functions
-	//	AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
-	//	AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_SCENE_DUPLICATE, L"&Duplicate");
-	//	AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_COPY, L"&Copy");
-	//	AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_PASTE, L"&Paste");
-	//}
-
-	// Panel View
-	//AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
-	//AppendMenuW(hMenu, MF_STRING, IDM_SCENE_MAX_VIEW, L"&Full View");
-	//AppendMenuW(hMenu, MF_STRING, IDM_SCENE_RESTORE_VIEW, L"&All Views");
-
-	AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
-	AppendMenuW(hMenu, MF_STRING, IDM_RESET_VIEW, L"&Reset View");
-	AppendMenuW(hMenu, MF_STRING, IDM_CENTRE_ONCAMERA, L"&Centre On Camera");
-
-
-	//
-	//AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
-	//AppendMenuW(hMenu, MF_STRING | MF_GRAYED, NULL, L"&Zoom Ctrl and Mouse Wheel");
-	//AppendMenuW(hMenu, MF_STRING | MF_GRAYED, NULL, L"&Pan Ctrl+Left Mouse Button");
-
-	//AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
-	//AppendMenuW(hMenu, MF_STRING, IDM_SCENE_HELP, L"&Help");
-
-	flag_Context_Menu_Active = 1;
-	TrackPopupMenu(hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, hDlg, NULL);
-	flag_Context_Menu_Active = 0;
-
-	DestroyMenu(hMenu);
-}
-
-// *************************************************************************
 // *			Context_Menu_Ogre:- Terry Mo and Hazel 2025			 	   *
 // *************************************************************************
 void CL64_Editor_Map::Context_Menu_Ogre(HWND hDlg)
@@ -2213,6 +2129,90 @@ bool CL64_Editor_Map::Context_Command_Ogre(WPARAM wParam)
 }
 
 // *************************************************************************
+// *			Context_Menu:- Terry Mo and Hazel 2025				 	   *
+// *************************************************************************
+void CL64_Editor_Map::Context_Menu(HWND hDlg)
+{
+	RECT rcTree;
+	TVHITTESTINFO htInfo = { 0 };
+	POINT pt;
+	GetCursorPos(&pt);
+
+	long xPos = pt.x;   // x position from message, in screen coordinates
+	long yPos = pt.y;   // y position from message, in screen coordinates 
+
+	GetWindowRect(hDlg, &rcTree);        // get its window coordinates
+	htInfo.pt.x = xPos - rcTree.left;    // convert to client coordinates
+	htInfo.pt.y = yPos - rcTree.top;
+
+	hMenu = CreatePopupMenu();
+
+	//if (App->CL_Level->flag_UseGrid == true)
+	//{
+	//	AppendMenuW(hMenu, MF_STRING | MF_CHECKED, IDM_GRID_SNAP, L"&Grid Snap");
+	//}
+	//else
+	//{
+	//	AppendMenuW(hMenu, MF_STRING | MF_UNCHECKED, IDM_GRID_SNAP, L"&Grid Snap");
+	//}
+
+	//// Move Scale Rotate
+	//AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
+	//if (App->CL_X_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes))
+	//{
+	//	// Enabled
+	//	AppendMenuW(hMenu, MF_STRING , IDM_MOVE, L"&Move");
+	//	AppendMenuW(hMenu, MF_STRING , IDM_SCALE, L"&Scale");
+	//	AppendMenuW(hMenu, MF_STRING , IDM_ROTATE, L"&Rotate");
+	//	AppendMenuW(hMenu, MF_STRING, IDM_SCENE_DESELECT, L"&Deselect");
+
+	//	// Copy Functions
+	//	AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
+	//	AppendMenuW(hMenu, MF_STRING, IDM_SCENE_DUPLICATE, L"&Duplicate");
+	//	AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_COPY, L"&Copy");
+	//	AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_PASTE, L"&Paste");
+	//}
+	//else
+	//{
+	//	// Greyed
+	//	AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_MOVE, L"&Move");
+	//	AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_SCALE, L"&Scale");
+	//	AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_ROTATE, L"&Rotate");
+	//	AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_SCENE_DESELECT, L"&Deselect");
+
+	//	// Copy Functions
+	//	AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
+	//	AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_SCENE_DUPLICATE, L"&Duplicate");
+	//	AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_COPY, L"&Copy");
+	//	AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_PASTE, L"&Paste");
+	//}
+
+	// Panel View
+	//AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
+	//AppendMenuW(hMenu, MF_STRING, IDM_SCENE_MAX_VIEW, L"&Full View");
+	//AppendMenuW(hMenu, MF_STRING, IDM_SCENE_RESTORE_VIEW, L"&All Views");
+
+	AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
+	//AppendMenuW(hMenu, MF_STRING, IDM_RESET_VIEW, L"&Reset View");
+	AppendMenuW(hMenu, MF_STRING, IDM_CENTRE_ONCAMERA, L"&Centre On Camera");
+	AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
+
+	//
+	//AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
+	//AppendMenuW(hMenu, MF_STRING | MF_GRAYED, NULL, L"&Zoom Ctrl and Mouse Wheel");
+	//AppendMenuW(hMenu, MF_STRING | MF_GRAYED, NULL, L"&Pan Ctrl+Left Mouse Button");
+
+	//AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
+	//AppendMenuW(hMenu, MF_STRING, IDM_SCENE_HELP, L"&Help");
+
+	flag_Context_Menu_Active = 1;
+	TrackPopupMenu(hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, hDlg, NULL);
+	flag_Context_Menu_Active = 0;
+
+	DestroyMenu(hMenu);
+}
+
+// *************************************************************************
 // *			 Context_Command:- Terry Mo and Hazel 2025				   *
 // *************************************************************************
 bool CL64_Editor_Map::Context_Command(WPARAM wParam)
@@ -2290,9 +2290,9 @@ bool CL64_Editor_Map::Context_Command(WPARAM wParam)
 		App->CL_3D_TL_View->VCam_TL->CamPos.y = Pos.y;
 		App->CL_3D_TL_View->VCam_TL->CamPos.z = Pos.z;
 
-		App->CL_3D_TL_View->VCam_TL->ZoomFactor = 0.3;
-		RedrawWindow(App->CL_3D_TL_View->Top_Left_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-		
+		App->CL_3D_TL_View->VCam_TL->ZoomFactor = 1.5;
+		App->CL_3D_TL_View->Redraw_Window_TL();
+
 		return TRUE;
 	}
 
