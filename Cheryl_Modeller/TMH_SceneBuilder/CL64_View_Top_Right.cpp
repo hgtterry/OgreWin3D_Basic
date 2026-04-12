@@ -32,13 +32,35 @@ THE SOFTWARE.
 
 CL64_View_Top_Right::CL64_View_Top_Right()
 {
-	Render_hWnd = nullptr;
+	
 }
 
 CL64_View_Top_Right::~CL64_View_Top_Right()
 {
 }
 
+// *************************************************************************
+// *			Set_VCam_TL_Defaults:- Terry and Hazel Flanigan 2026	   *
+// *************************************************************************
+void CL64_View_Top_Right::Set_VCam_TR_Defaults()
+{
+	strcpy(VCam_TR->Name, "Top_Left");
+	VCam_TR->ViewType = VIEWTOP;
+	VCam_TR->ZoomFactor = 1.5;
+
+	VCam_TR->XCenter = 310;
+	VCam_TR->YCenter = 174;
+
+	VCam_TR->XScreenScale = 0;
+	VCam_TR->YScreenScale = 0;
+
+	VCam_TR->Width = 310;
+	VCam_TR->Height = 174;
+
+	App->CL_X_Maths->Vector3_Set(&VCam_TR->CamPos, 0, 0, 0);
+
+	VCam_TR->MaxScreenScaleInv = 100;
+}
 
 // *************************************************************************
 // *			Create_Top_Right_Window:- Terry Mo and Hazel  2026		   *
@@ -148,6 +170,225 @@ LRESULT CALLBACK CL64_View_Top_Right::Proc_Top_Right_Window(HWND hDlg, UINT mess
 	}
 
 	return FALSE;
+}
+
+// ---------------------------------------------------------------------------------- Stuff
+#define	VectorToSUB(a, b) (*((((float *)(&a))) + (b)))
+
+signed int CL64_View_Top_Right::fdocShowBrush(Brush const* b, Box3d const* ViewBox)
+{
+	return 1;// (App->CL_Brush->BrushIsVisible(b) && App->CL_Brush->Brush_TestBoundsIntersect(b, ViewBox));
+}
+
+// *************************************************************************
+// *	  						BrushDraw								   *
+// *************************************************************************
+signed int CL64_View_Top_Right::Draw_Brush(Brush* pBrush, void* lParam)
+{
+	BrushDrawData_TL* pData = (BrushDrawData_TL*)lParam;
+
+
+	//if (App->CL_Brush->Brush_GetGroupId(pBrush) == pData->GroupId))
+	{
+		if ((pData->FlagTest == NULL) || pData->FlagTest(pBrush))
+		{
+			if (App->CL_3D_TL_View->fdocShowBrush(pBrush, pData->pViewBox))
+			{
+				App->CL_3D_TL_View->Draw_Brush_Faces_Ortho(pData->v, pBrush);
+			}
+		}
+	}
+
+	return true;
+}
+
+static POINT plist[64];
+
+// *************************************************************************
+// *			Redraw_Window_TR:- Terry and Hazel Flanigan 2026		   *
+// *************************************************************************
+void CL64_View_Top_Right::Redraw_Window_TR()
+{
+	RedrawWindow(Top_Right_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+}
+
+// *************************************************************************
+// *	  	Draw_Brush_Faces_Ortho:- Terry and Hazel Flanigan 2026		   *
+// *************************************************************************
+void CL64_View_Top_Right::Draw_Brush_Faces_Ortho(const ViewVars* Cam, Brush* b)
+{
+	int	i, j;
+
+	for (i = 0; i < App->CL_X_Brush->Brush_GetNumFaces(b); i++)
+	{
+		Face* f = App->CL_X_Brush->Brush_GetFace(b, i);
+		const T_Vec3* pnts = App->CL_X_Face->Face_GetPoints(f);
+
+		for (j = 0; j < App->CL_X_Face->Face_GetNumPoints(f); j++)
+		{
+			plist[j] = App->CL_Render->Render_OrthoWorldToView(Cam, &pnts[j]);
+		}
+
+		plist[j] = plist[0];
+
+		Polyline(m_MemoryhDC_TR, plist, j + 1);
+	}
+}
+
+static signed int BrushDrawSelFacesOrtho(Brush* pBrush, void* lParam)
+{
+	BrushDrawData_TL* pData;
+
+	pData = (BrushDrawData_TL*)lParam;
+
+	App->CL_Editor_Map->Render_RenderBrushSelFacesOrtho(pData->v, pBrush, pData->pDC);
+
+	return	GE_TRUE;
+}
+
+// *************************************************************************
+// *			Draw_Screen_TR:- Terry and Hazel Flanigan 2026			   *
+// *************************************************************************
+void CL64_View_Top_Right::Draw_Screen_TR(HWND hwnd)
+{
+	// Initialize variables
+	int			inidx = 0;
+	HDC RealhDC = GetDC(hwnd);
+	m_MemoryhDC_TR = CreateCompatibleDC(RealhDC);
+
+	RECT		Rect;
+
+	// Get client rectangle and set current view dimensions
+	GetClientRect(hwnd, &Rect);
+	Rect.left--;
+	Rect.bottom--;
+	VCam_TR->Width = Rect.left;
+	VCam_TR->Height = Rect.bottom;
+	VCam_TR->XScreenScale = Rect.left;
+	VCam_TR->YScreenScale = Rect.bottom;
+
+	// Set up view box
+	T_Vec3 XTemp;
+	Box3d ViewBox;
+	inidx = App->CL_Render->Render_GetInidx(VCam_TR);
+	App->CL_X_Box->Box3d_SetBogusBounds(&ViewBox);
+	App->CL_Render->Render_ViewToWorld(VCam_TR, 0, 0, &XTemp);
+	App->CL_X_Box->Box3d_AddPoint(&ViewBox, XTemp.x, XTemp.y, XTemp.z);
+	App->CL_Render->Render_ViewToWorld(VCam_TR, App->CL_Render->Render_GetWidth(VCam_TR), App->CL_Render->Render_GetHeight(VCam_TR), &XTemp);
+	App->CL_X_Box->Box3d_AddPoint(&ViewBox, XTemp.x, XTemp.y, XTemp.z);
+	VectorToSUB(ViewBox.Min, inidx) = -FLT_MAX;
+	VectorToSUB(ViewBox.Max, inidx) = FLT_MAX;
+
+	// Prepare brush draw data
+	m_brushDrawData_TR.pViewBox = &ViewBox;
+	m_brushDrawData_TR.pDC = m_MemoryhDC_TR;
+	m_brushDrawData_TR.v = VCam_TR;
+	m_brushDrawData_TR.pDoc = App->CL_Doc;
+	m_brushDrawData_TR.GroupId = 0;
+	m_brushDrawData_TR.FlagTest = NULL;
+
+	GetClipBox(RealhDC, &Rect);
+
+	SetDCBrushColor(m_MemoryhDC_TR, (RGB(App->CL_Editor_Map->Background_Colour.R, App->CL_Editor_Map->Background_Colour.G, App->CL_Editor_Map->Background_Colour.B)));
+
+	HBITMAP OffScreenBitmap = CreateCompatibleBitmap(RealhDC, Rect.right - Rect.left, Rect.bottom - Rect.top);
+	SelectObject(m_MemoryhDC_TR, OffScreenBitmap);
+	FillRect(m_MemoryhDC_TR, &Rect, (HBRUSH)App->CL_Editor_Map->Stock_Brush); // BackGround
+
+	// ---------------------- Draw Grid Fine
+	if (VCam_TR->ZoomFactor > 0.1)
+	{
+		SelectObject(m_MemoryhDC_TR, App->CL_Editor_Map->Pen_Fine_Grid);
+		App->CL_Render->Render_RenderOrthoGridFromSize(VCam_TR, int(m_GridSnapSize), m_MemoryhDC_TR, Rect);
+	}
+
+	// ---------------------- Draw Grid
+	if (VCam_TR->ZoomFactor < 0.1)
+	{
+		VCam_TR->ZoomFactor = 0.1;
+	}
+
+	SelectObject(m_MemoryhDC_TR, m_Pen_Grid);
+	App->CL_Render->Render_RenderOrthoGridFromSize(VCam_TR, int(m_GridSize), m_MemoryhDC_TR, Rect);
+
+	bool test = 0;
+	if (test == 0)
+	{
+		// ------------------------------------------ Draw Brushes
+		SelectObject(m_MemoryhDC_TR, App->CL_Editor_Map->PenBrushes);
+
+		// Iterate through all brushes
+		int BrushCount = App->CL_X_Brush->Get_Brush_Count();
+		int Count = 0;
+		Brush* SB = nullptr;
+
+		while (Count < BrushCount)
+		{
+			SB = App->CL_X_Brush->Get_By_Index(Count);
+
+			if (App->CL_X_Brush->Brush_IsMulti(SB))
+			{
+				App->CL_X_Brush->BrushList_EnumLeafBrushes(App->CL_X_Brush->Brush_GetBrushList(SB), &m_brushDrawData_TR, Draw_Brush);
+			}
+			else
+			{
+				App->CL_Editor_Map->Render_RenderBrushFacesOrtho(VCam_TR, SB, m_MemoryhDC_TR);
+			}
+
+			Count++;
+		}
+
+		bool Draw_Sel = 0;
+		if (Draw_Sel == 0)
+		{
+			// Draw selected brushes
+			SelectObject(m_MemoryhDC_TR, App->CL_Editor_Map->PenSelected);
+			int NumSelBrushes = App->CL_X_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes);
+
+			int i = 0;
+			for (i = 0; i < NumSelBrushes; i++)
+			{
+				Brush* pBrush;
+
+				pBrush = App->CL_X_SelBrushList->SelBrushList_GetBrush(App->CL_Doc->pSelBrushes, i);
+				{
+					if (App->CL_X_Brush->Brush_IsMulti(pBrush))
+					{
+						App->CL_X_Brush->BrushList_EnumLeafBrushes(App->CL_X_Brush->Brush_GetBrushList(pBrush), &m_brushDrawData_TR, Draw_Brush);
+					}
+					else
+					{
+						App->CL_Editor_Map->Render_RenderBrushFacesOrtho(VCam_TR, App->CL_Doc->CurBrush, m_MemoryhDC_TR);
+					}
+				}
+			}
+		}
+
+		//// Draw selected faces
+		//BrushList* BList = App->CL_Level->Level_Get_Main_Brushes();
+		//SelectObject(m_MemoryhDC, App->CL_Editor_Map->PenSelectedFaces);
+		//App->CL_X_Brush->BrushList_EnumLeafBrushes(BList, &brushDrawData, BrushDrawSelFacesOrtho);
+
+
+		// Draw camera if tracking
+		if (App->CL_Doc->flag_Track_Camera == true)
+		{
+			SelectObject(m_MemoryhDC_TR, Pen_Camera);
+			App->CL_Editor_Map->Draw_Camera(m_MemoryhDC_TR);
+		}
+
+	}
+
+	// BitBlt to the real device context
+	BitBlt(RealhDC, Rect.left, Rect.top + 17, Rect.right - Rect.left, Rect.bottom - Rect.top, m_MemoryhDC_TR, 0, 0, SRCCOPY);
+
+	// Clean up
+	SetDCBrushColor(m_MemoryhDC_TR, (RGB(255, 255, 255)));
+
+	DeleteObject(OffScreenBitmap);
+	DeleteDC(m_MemoryhDC_TR);
+	ReleaseDC(hwnd, RealhDC);
+
 }
 
 

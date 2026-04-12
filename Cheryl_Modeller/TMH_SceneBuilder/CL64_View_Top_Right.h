@@ -24,6 +24,17 @@ THE SOFTWARE.
 
 #pragma once
 
+typedef struct tagBrushDrawData_TR
+{
+	const Box3d* pViewBox;
+	HDC 			pDC;
+	ViewVars* v;
+	int				GroupId;
+	CL64_Doc* pDoc;
+	BrushFlagTest	FlagTest;
+	Ogre::uint32	Color;
+} BrushDrawData_TR;
+
 class CL64_View_Top_Right
 {
 public:
@@ -31,10 +42,30 @@ public:
 	~CL64_View_Top_Right();
 
 	void Create_Top_Right_Window();
-	
-	HWND Render_hWnd;
-	
+	void Redraw_Window_TR();
+
+	static int Draw_Brush(Brush* pBrush, void* lParam);
+	void Draw_Brush_Faces_Ortho(const ViewVars* Cam, Brush* b);
+	void Set_VCam_TR_Defaults();
+
+	HWND Top_Right_Window_Hwnd;
+
+	signed int fdocShowBrush(Brush const* b, Box3d const* ViewBox);
+
+	BrushDrawData_TR m_brushDrawData_TR;
+
+	float m_GridSize, m_GridSnapSize;
+
+	HPEN m_Pen_Grid;
+	HPEN Pen_Camera;
+
+	HDC	m_MemoryhDC_TR;
+	ViewVars* VCam_TR;
+
+private:
 	static LRESULT CALLBACK Proc_Top_Right_Window(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+
+	void Draw_Screen_TR(HWND hwnd);
 
 };
 

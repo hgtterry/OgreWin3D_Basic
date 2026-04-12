@@ -37,7 +37,6 @@ CL64_3D_TL_View::CL64_3D_TL_View()
 
 	Top_Left_Window_Hwnd = nullptr;
 
-	m_V_TL = 0;
 	m_Pen_Grid = CreatePen(PS_SOLID, 0, RGB(0, 112, 112));
 	Pen_Camera = CreatePen(PS_SOLID, 0, RGB(0, 255, 0));
 
@@ -543,12 +542,5 @@ void CL64_3D_TL_View::Draw_Screen_TL(HWND hwnd)
 	DeleteDC(m_MemoryhDC);
 	ReleaseDC(hwnd, RealhDC);
 
-	/*RECT		Rect2;
-	GetClientRect(App->CL_3D_TL_View->VCam_TL->hDlg, &Rect2);
-
-	App->CL_ImGui_Dialogs->Debug_Vec3.x = (float)Rect2.right;
-	App->CL_ImGui_Dialogs->Debug_Vec3.y = (float)Rect2.bottom;
-	App->CL_ImGui_Dialogs->Debug_Vec3.z = App->CL_3D_TL_View->VCam_TL->ZoomFactor;*/
-	
 }
 

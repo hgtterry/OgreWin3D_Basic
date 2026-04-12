@@ -55,8 +55,6 @@ public:
 
 	BrushDrawData_TL m_brushDrawData_TL;
 
-	int m_V_TL;
-
 	float m_GridSize, m_GridSnapSize;
 
 	HPEN m_Pen_Grid;
