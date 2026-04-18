@@ -107,9 +107,6 @@ public:
 	bool flag_Wheel_Active;
 	bool flag_Environment_On;
 
-	HWND Top_Left_Banner_Hwnd;
-	HWND Top_Right_Banner_Hwnd;
-	HWND Bottom_Left_Banner_Hwnd;
 	HWND Bottom_Ogre_Banner;
 
 	HCURSOR	hcSizeEW;
@@ -121,10 +118,7 @@ public:
 	HBRUSH Stock_Brush;
 	HBRUSH BackGround_Brush;
 
-	HPEN Pen_Fine_Grid;
-	HPEN Pen_Grid;
 	HPEN PenTemplate;
-	HPEN PenBrushes;
 	HPEN PenSelected;
 	HPEN Pen_Camera;
 	HPEN PenSelectedFaces;
@@ -142,20 +136,16 @@ private:
 	static LRESULT CALLBACK Proc_ViewerMain(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	void Set_Views_Defaults(int Index,Ogre::int32 View, const char* Name);
-	void Create_Top_Left_Window();
-	void Create_Top_Right_Window();
-	void Create_Bottom_Left_Window();
+
+	void Create_Views();
+
 	void Create_Ogre_Bottom_Right();
 
-	
-
 	// Draw Routines
-	static signed int BrushDraw(Brush* pBrush, void* lParam);
-
+	
 	void SetEditCursor(int Tool, const POINT* pMousePos);
 	int GetCursorBoxPos(const POINT* ptMousePos);
-	signed int fdocShowBrush(Brush const* b, Box3d const* ViewBox);
-
+	
 	int LEFT_WINDOW_WIDTH;
 
 	int LEFT_WINDOW_DEPTH;

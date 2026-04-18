@@ -95,9 +95,6 @@ CL64_Editor_Map::CL64_Editor_Map()
 
 	Bottom_Ogre_Right_Hwnd =	nullptr;
 
-	Top_Left_Banner_Hwnd =		nullptr;
-	Top_Right_Banner_Hwnd =		nullptr;
-	Bottom_Left_Banner_Hwnd =	nullptr;
 	Bottom_Ogre_Banner =		nullptr;
 
 	LEFT_WINDOW_WIDTH = 500;
@@ -129,10 +126,7 @@ CL64_Editor_Map::CL64_Editor_Map()
 	Stock_Brush = (HBRUSH)::GetStockObject(DC_BRUSH);
 	BackGround_Brush = CreateSolidBrush(RGB(60, 60, 60));
 
-	Pen_Fine_Grid = CreatePen(PS_SOLID, 0, RGB(0, 0, 0));
-	Pen_Grid = CreatePen(PS_SOLID, 0, RGB(0, 112, 112));
 	PenTemplate = CreatePen(PS_SOLID, 1, RGB(0, 255, 0));
-	PenBrushes = CreatePen(PS_SOLID, 1, RGB(255, 255, 255));
 	PenSelected = CreatePen(PS_SOLID, 1, RGB(0, 255, 255));
 	Pen_Camera = CreatePen(PS_SOLID, 0, RGB(0, 255, 255));
 	PenSelectedFaces = CreatePen(PS_SOLID, 1, RGB(255, 0, 255));
@@ -334,34 +328,40 @@ void CL64_Editor_Map::Resize_Windows(HWND hDlg, int newWidth, int newDepth)
 	const int adjustedDepth = newDepth - 3;
 	const int bannerHeight = 16;
 
-	// Resize Top Left Window
+	//                                                     Resize Top Left Window
 	MoveWindow(App->CL_3D_TL_View->Top_Left_Window_Hwnd,
 		0,
 		0,
 		clientRect.left + (newWidth - WIDTH_ADJUST),
 		adjustedDepth,
 		FALSE);
-	MoveWindow(Top_Left_Banner_Hwnd, 0, 0, newWidth - WIDTH_ADJUST, bannerHeight, FALSE);
+	MoveWindow(App->CL_3D_TL_View->Top_Left_Banner_Hwnd, 0, 0, newWidth - WIDTH_ADJUST, bannerHeight, FALSE);
 
-	// Resize Top Right Window
+
+
+	//                                                     Resize Top Right Window
 	MoveWindow(App->CL_View_Top_Right->Top_Right_Window_Hwnd,
 		newWidth + WIDTH_ADJUST,
 		0,
 		clientRect.right - (newWidth + WIDTH_ADJUST),
 		adjustedDepth,
 		FALSE);
-	MoveWindow(Top_Right_Banner_Hwnd, 0, 0, clientRect.right - newWidth - WIDTH_ADJUST, bannerHeight, FALSE);
+	MoveWindow(App->CL_View_Top_Right->Top_Right_Banner_Hwnd, 0, 0, clientRect.right - newWidth - WIDTH_ADJUST, bannerHeight, FALSE);
 
-	// Resize Bottom Left Window
+
+
+	//                                                      Resize Bottom Left Window
 	MoveWindow(App->CL_View_Bottom_Left->Bottom_Left_Window_Hwnd,
 		0,
 		newDepth,
 		newWidth - WIDTH_ADJUST,
 		clientRect.bottom - (newDepth + BOTTOM_POS_BOTLEFT),
 		FALSE);
-	MoveWindow(Bottom_Left_Banner_Hwnd, 0, 0, newWidth - WIDTH_ADJUST, bannerHeight, FALSE);
+	MoveWindow(App->CL_View_Bottom_Left->Bottom_Left_Banner_Hwnd, 0, 0, newWidth - WIDTH_ADJUST, bannerHeight, FALSE);
 
-	// Resize Ogre Window
+
+
+	//                                                                     Resize Ogre Window
 	MoveWindow(Bottom_Ogre_Right_Hwnd,
 		newWidth + WIDTH_ADJUST,
 		newDepth,
@@ -414,9 +414,8 @@ void CL64_Editor_Map::Init_Map_Views()
 {
 	Main_View_Dlg_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MAPEDITOR, App->MainHwnd, (DLGPROC)Proc_Main_Dlg);
 
-	Create_Top_Left_Window();
-	Create_Top_Right_Window();
-	Create_Bottom_Left_Window();
+	Create_Views();
+
 	Create_Ogre_Bottom_Right();
 
 	App->CL_Interface->Show_Grids(false);
@@ -767,724 +766,14 @@ void CL64_Editor_Map::Save_Splitter_Width_Depth()
 }
 
 // *************************************************************************
-// *	  	Create_Top_Left_Window:- Terry Mo and Hazel 2025			   *
+// *				Create_Views:- Terry Mo and Hazel 2026				   *
 // *************************************************************************
-void CL64_Editor_Map::Create_Top_Left_Window()
+void CL64_Editor_Map::Create_Views()
 {
-	/*VCam[V_TL] = new ViewVars;
-	Set_Views_Defaults(V_TL, VIEWTOP, "Top_Left");*/
-
 	App->CL_3D_TL_View->Create_Top_Left_Window();
-	//Top_Left_Window_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MAP_TOP_LEFT, Main_View_Dlg_Hwnd,(DLGPROC)Proc_Top_Left_Window);
-	
-	//VCam[V_TL]->hDlg = Top_Left_Window_Hwnd;
-}
-
-// *************************************************************************
-// *		Proc_Top_Left_Window:- Terry Mo and Hazel 2025 				   *
-// *************************************************************************
-//LRESULT CALLBACK CL64_Editor_Map::Proc_Top_Left_Window(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
-//{
-//	switch (message)
-//	{
-//	case WM_INITDIALOG:
-//	{
-//		/*SendDlgItemMessage(hDlg, IDC_ST_TL_TITLE, WM_SETFONT, (WPARAM)App->Font_CB10, MAKELPARAM(TRUE, 0));
-//		App->CL_Editor_Map->Top_Left_Banner_Hwnd = GetDlgItem(hDlg, IDC_ST_TL_TITLE);*/
-//		return TRUE;
-//	}
-//
-//	case WM_COMMAND:
-//	{
-//		/*if (App->CL_Editor_Map->Context_Command(LOWORD(wParam)))
-//		{
-//			return TRUE;
-//		}*/
-//
-//		return TRUE;
-//	}
-//	
-//	case WM_CTLCOLORSTATIC:
-//	{
-//		if (App->CL_Editor_Map->Selected_Window == Enums::Selected_Map_View_TL)
-//		{
-//			SetBkColor((HDC)wParam, RGB(0, 255, 0));
-//			SetTextColor((HDC)wParam, RGB(0, 0, 0));
-//			SetBkMode((HDC)wParam, TRANSPARENT);
-//			return (UINT)App->Brush_Green;
-//		}
-//		else
-//		{
-//			SetBkColor((HDC)wParam, RGB(0, 255, 0));
-//			SetTextColor((HDC)wParam, RGB(0, 0, 0));
-//			SetBkMode((HDC)wParam, TRANSPARENT);
-//			return (UINT)App->AppBackground;
-//		}
-//
-//		return FALSE;
-//	}
-//
-//	case WM_CTLCOLORDLG:
-//	{
-//		//return (LONG)App->CL_Editor_Map->BackGround_Brush;
-//		return (LONG)App->AppBackground;
-//	}
-//
-//	/*case WM_ERASEBKGND:
-//	{
-//		return (LRESULT)1;
-//	}*/
-//
-//	/*case WM_SETCURSOR:
-//	{
-//		if (App->CL_Editor_Map->flag_Context_Menu_Active == 1)
-//		{
-//			return false;
-//		}
-//
-//		if (App->CL_Editor_Map->flag_Right_Button_Down == 1 || App->CL_Editor_Map->flag_Left_Button_Down == 1)
-//		{
-//			return true;
-//		}
-//		else if (App->CL_Doc->mModeTool == ID_TOOLS_BRUSH_MOVEROTATEBRUSH)
-//		{
-//			SetCursor(App->CL_Editor_Map->hcBoth);
-//			return true;
-//		}
-//		else if (App->CL_Doc->mModeTool == ID_TOOLS_BRUSH_SCALEBRUSH)
-//		{
-//			return true;
-//		}
-//		else
-//		{
-//			return false;
-//		}
-//
-//		return false;
-//	}*/
-//
-//	//case WM_MOUSEWHEEL:
-//	//{
-//	//	if (App->CL_Editor_Map->flag_Left_Button_Down == true)
-//	//	{
-//	//		return 1;
-//	//	}
-//
-//	//	if (GetAsyncKeyState(VK_CONTROL) < 0 && App->CL_Editor_Map->Selected_Window == Enums::Selected_Map_View_TL)
-//	//	{
-//	//		App->CL_Editor_Map->flag_Wheel_Active = true;
-//
-//	//		if (App->CL_Editor_Map->flag_Left_Button_Down == false)
-//	//		{
-//	//			int zDelta = static_cast<short>(HIWORD(wParam)); // wheel rotation
-//
-//	//			if (zDelta > 0)
-//	//			{
-//	//				App->CL_Editor_Map->Current_View->ZoomFactor = App->CL_Editor_Map->Current_View->ZoomFactor + 0.1;
-//	//				App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
-//	//			}
-//
-//	//			if (zDelta < 0)
-//	//			{
-//	//				App->CL_Editor_Map->Current_View->ZoomFactor = App->CL_Editor_Map->Current_View->ZoomFactor - 0.1;
-//	//				App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
-//	//			}
-//	//		}
-//
-//	//		return 1;
-//	//	}
-//	//	
-//	//	App->CL_Editor_Map->flag_Wheel_Active = false;
-//	//	return 1;
-//	//}
-//
-//	/*case WM_MOUSEMOVE:
-//	{
-//		POINT		RealCursorPosition;
-//		GetCursorPos(&RealCursorPosition);
-//		ScreenToClient(hDlg, &RealCursorPosition);
-//
-//		App->CL_Editor_Map->On_Mouse_Move(RealCursorPosition,hDlg);
-//		
-//		return 1;
-//	}*/
-//
-//	// Left Mouse Down
-//	/*case WM_LBUTTONDOWN:
-//	{
-//		POINT		RealCursorPosition;
-//		GetCursorPos(&RealCursorPosition);
-//		ScreenToClient(hDlg, &RealCursorPosition);
-//
-//		App->CL_Editor_Map->Current_View = App->CL_Editor_Map->VCam[V_TL];
-//
-//		if (App->CL_Editor_Map->Selected_Window != Enums::Selected_Map_View_TL)
-//		{
-//			App->CL_Editor_Map->Set_Selected_View(Enums::Selected_Map_View_TL);
-//		}
-//
-//		App->CL_Editor_Map->flag_Right_Button_Down = 0;
-//		App->CL_Editor_Map->flag_Left_Button_Down = 1;
-//
-//		App->CL_Editor_Map->On_Left_Button_Down(RealCursorPosition,hDlg);
-//
-//		return 1;
-//	}*/
-//
-//	// Left Mouse Up
-//	/*case WM_LBUTTONUP:
-//	{
-//		POINT		RealCursorPosition;
-//		GetCursorPos(&RealCursorPosition);
-//		ScreenToClient(hDlg, &RealCursorPosition);
-//
-//		App->CL_Editor_Map->Current_View = App->CL_Editor_Map->VCam[V_TL];
-//
-//		App->CL_Editor_Map->flag_Left_Button_Down = 0;
-//		App->CL_Editor_Map->flag_Right_Button_Down = 0;
-//
-//		App->CL_Editor_Map->On_Left_Button_Up(RealCursorPosition);
-//
-//		return 1;
-//	}*/
-//
-//	// Right Mouse Down
-//	/*case WM_RBUTTONDOWN:
-//	{
-//		App->CL_Editor_Map->Current_View = App->CL_Editor_Map->VCam[V_TL];
-//
-//		if (App->CL_Editor_Map->Selected_Window != Enums::Selected_Map_View_TL)
-//		{
-//			App->CL_Editor_Map->Set_Selected_View(Enums::Selected_Map_View_TL);
-//		}
-//
-//		if (GetAsyncKeyState(VK_CONTROL) < 0)
-//		{
-//			GetCursorPos(&App->CL_Editor_Map->mStartPoint);
-//			ScreenToClient(hDlg, &App->CL_Editor_Map->mStartPoint);
-//
-//			App->CL_Editor_Map->flag_Right_Button_Down = 1;
-//			App->CL_Editor_Map->flag_Left_Button_Down = 0;
-//
-//			App->CUR = SetCursor(NULL);
-//		}
-//		
-//		return 1;
-//	}*/
-//
-//	// Right Mouse Up
-//	/*case WM_RBUTTONUP:
-//	{
-//		if (GetAsyncKeyState(VK_CONTROL) < 0)
-//		{
-//			App->CL_Editor_Map->flag_Right_Button_Down = 0;
-//			App->CL_Editor_Map->flag_Left_Button_Down = 0;
-//
-//			App->CUR = SetCursor(App->CUR);
-//		}
-//		else
-//		{
-//			App->CL_Editor_Map->Current_View = App->CL_Editor_Map->VCam[V_TL];
-//			App->CL_Editor_Map->Context_Menu(hDlg);
-//		}
-//
-//		return 1;
-//	}*/
-//
-//	/*case WM_PAINT:
-//	{
-//		App->CL_Editor_Map->Current_View = App->CL_Editor_Map->VCam[V_TL];
-//		App->CL_Editor_Map->Draw_Screen(hDlg);
-//
-//		return 0;
-//	}*/
-//
-//	}
-//
-//	return FALSE;
-//}
-
-// *************************************************************************
-// *	  	Create_Top_Right_Window:- Terry Mo and Hazel 2025			   *
-// *************************************************************************
-void CL64_Editor_Map::Create_Top_Right_Window()
-{
 	App->CL_View_Top_Right->Create_Top_Right_Window();
-
-	/*VCam[V_TR] = new ViewVars;
-	Set_Views_Defaults(V_TR, VIEWSIDE, "Top_Right");
-
-	Top_Right_Window_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MAP_TOP_RIGHT, Main_View_Dlg_Hwnd, (DLGPROC)Proc_Top_Right_Window);
-
-	VCam[V_TR]->hDlg = Top_Right_Window_Hwnd;*/
-}
-
-// *************************************************************************
-// *		Proc_Top_Right_Window:- Terry Mo and Hazel 2025		 		   *
-// *************************************************************************
-//LRESULT CALLBACK CL64_Editor_Map::Proc_Top_Right_Window(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
-//{
-//	switch (message)
-//	{
-//	case WM_INITDIALOG:
-//	{
-//		SendDlgItemMessage(hDlg, IDC_ST_TR_TITLE, WM_SETFONT, (WPARAM)App->Font_CB10, MAKELPARAM(TRUE, 0));
-//		App->CL_Editor_Map->Top_Right_Banner_Hwnd = GetDlgItem(hDlg, IDC_ST_TR_TITLE);
-//		return TRUE;
-//	}
-//
-//	case WM_COMMAND:
-//	{
-//		if (App->CL_Editor_Map->Context_Command(LOWORD(wParam)))
-//		{
-//			return TRUE;
-//		}
-//	}
-//
-//	case WM_CTLCOLORSTATIC:
-//	{
-//		if (GetDlgItem(hDlg, IDC_ST_TR_TITLE) == (HWND)lParam)
-//		{
-//			if (App->CL_Editor_Map->Selected_Window == Enums::Selected_Map_View_TR)
-//			{
-//				SetBkColor((HDC)wParam, RGB(0, 255, 0));
-//				SetTextColor((HDC)wParam, RGB(0, 0, 0));
-//				SetBkMode((HDC)wParam, TRANSPARENT);
-//				return (UINT)App->Brush_Green;
-//			}
-//			else
-//			{
-//				SetBkColor((HDC)wParam, RGB(0, 255, 0));
-//				SetTextColor((HDC)wParam, RGB(0, 0, 0));
-//				SetBkMode((HDC)wParam, TRANSPARENT);
-//				return (UINT)App->AppBackground;
-//			}
-//		}
-//
-//		return FALSE;
-//	}
-//
-//	case WM_CTLCOLORDLG:
-//	{
-//		return (LONG)App->CL_Editor_Map->BackGround_Brush;
-//	}
-//
-//	case WM_ERASEBKGND:
-//	{
-//		return (LRESULT)1;
-//	}
-//
-//	case WM_SETCURSOR:
-//	{
-//		if (App->CL_Editor_Map->flag_Context_Menu_Active == 1)
-//		{
-//			return false;
-//		}
-//
-//		if (App->CL_Editor_Map->flag_Right_Button_Down == 1 || App->CL_Editor_Map->flag_Left_Button_Down == 1)
-//		{
-//			return true;
-//		}
-//		else if (App->CL_Doc->mModeTool == ID_TOOLS_BRUSH_MOVEROTATEBRUSH)
-//		{
-//			SetCursor(App->CL_Editor_Map->hcBoth);
-//			return true;
-//		}
-//		else if (App->CL_Doc->mModeTool == ID_TOOLS_BRUSH_SCALEBRUSH)
-//		{
-//			return true;
-//		}
-//		else
-//		{
-//			return false;
-//		}
-//
-//		return false;
-//	}
-//
-//	case WM_MOUSEWHEEL:
-//	{
-//		if (App->CL_Editor_Map->flag_Left_Button_Down == true)
-//		{
-//			return 1;
-//		}
-//
-//		if (App->CL_Editor_Map->Selected_Window == Enums::Selected_Map_View_TR)
-//		{
-//			if (App->CL_Editor_Map->flag_Left_Button_Down == false)
-//			{
-//				int zDelta = static_cast<short>(HIWORD(wParam)); // wheel rotation
-//
-//				if (zDelta > 0)
-//				{
-//					App->CL_Editor_Map->Current_View->ZoomFactor = App->CL_Editor_Map->Current_View->ZoomFactor + 0.1;
-//					App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
-//				}
-//
-//				if (zDelta < 0)
-//				{
-//					App->CL_Editor_Map->Current_View->ZoomFactor = App->CL_Editor_Map->Current_View->ZoomFactor - 0.1;
-//					App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
-//				}
-//			}
-//
-//			return 1;
-//		}
-//
-//		return 1;
-//	}
-//
-//	case WM_MOUSEMOVE:
-//	{
-//		int			dx, dy;
-//		POINT		RealCursorPosition;
-//
-//		GetCursorPos(&RealCursorPosition);
-//		ScreenToClient(hDlg, &RealCursorPosition);
-//
-//		dx = (RealCursorPosition.x);
-//		dy = (RealCursorPosition.y);
-//
-//		App->CL_Editor_Map->On_Mouse_Move(RealCursorPosition, hDlg);
-//
-//		return 1;
-//	}
-//
-//	// Left Button Down
-//	case WM_LBUTTONDOWN:
-//	{
-//		POINT		RealCursorPosition;
-//		GetCursorPos(&RealCursorPosition);
-//		ScreenToClient(hDlg, &RealCursorPosition);
-//
-//		App->CL_Editor_Map->Current_View = App->CL_Editor_Map->VCam[V_TR];
-//
-//		if (App->CL_Editor_Map->Selected_Window != Enums::Selected_Map_View_TR)
-//		{
-//			App->CL_Editor_Map->Set_Selected_View(Enums::Selected_Map_View_TR);
-//		}
-//
-//		App->CL_Editor_Map->flag_Right_Button_Down = 0;
-//		App->CL_Editor_Map->flag_Left_Button_Down = 1;
-//
-//		App->CL_Editor_Map->On_Left_Button_Down(RealCursorPosition, hDlg);
-//
-//		return 1;
-//	}
-//
-//	// Left Button Up
-//	case WM_LBUTTONUP:
-//	{
-//		POINT		RealCursorPosition;
-//		GetCursorPos(&RealCursorPosition);
-//		ScreenToClient(hDlg, &RealCursorPosition);
-//
-//		App->CL_Editor_Map->flag_Right_Button_Down = 0;
-//		App->CL_Editor_Map->flag_Left_Button_Down = 0;
-//
-//		App->CL_Editor_Map->Current_View = App->CL_Editor_Map->VCam[V_TR];
-//
-//		App->CL_Editor_Map->On_Left_Button_Up(RealCursorPosition);
-//
-//		return 1;
-//	}
-//
-//	// Right Button Down
-//	case WM_RBUTTONDOWN:
-//	{
-//		App->CL_Editor_Map->Current_View = App->CL_Editor_Map->VCam[V_TR];
-//
-//		if (App->CL_Editor_Map->Selected_Window != Enums::Selected_Map_View_TR)
-//		{
-//			App->CL_Editor_Map->Set_Selected_View(Enums::Selected_Map_View_TR);
-//		}
-//
-//		//if (GetAsyncKeyState(VK_CONTROL) < 0)
-//		{
-//			GetCursorPos(&App->CL_Editor_Map->mStartPoint);
-//			ScreenToClient(hDlg, &App->CL_Editor_Map->mStartPoint);
-//
-//			App->CL_Editor_Map->flag_Right_Button_Down = 1;
-//			App->CL_Editor_Map->flag_Left_Button_Down = 0;
-//
-//			App->CUR = SetCursor(NULL);
-//		}
-//	
-//		return 1;
-//	}
-//
-//	// Right Button Up
-//	case WM_RBUTTONUP:
-//	{
-//
-//		//if (GetAsyncKeyState(VK_CONTROL) < 0)
-//		{
-//			App->CL_Editor_Map->flag_Right_Button_Down = 0;
-//			App->CL_Editor_Map->flag_Left_Button_Down = 0;
-//
-//			App->CUR = SetCursor(App->CUR);
-//		}
-//		/*else
-//		{
-//			App->CL_Editor_Map->Current_View = App->CL_Editor_Map->VCam[V_TR];
-//			App->CL_Editor_Map->Context_Menu(hDlg);
-//		}*/
-//
-//		return 1;
-//	}
-//
-//	case WM_PAINT:
-//	{
-//		App->CL_Editor_Map->Current_View = App->CL_Editor_Map->VCam[V_TR];
-//		App->CL_Editor_Map->Draw_Screen(hDlg);
-//
-//		return 0;
-//	}
-//
-//	}
-//
-//	return FALSE;
-//}
-
-// *************************************************************************
-// *	  Create_Bottom_Left_Window:- Terry Mo and Hazel 2025			   *
-// *************************************************************************
-void CL64_Editor_Map::Create_Bottom_Left_Window()
-{
 	App->CL_View_Bottom_Left->Create_Bottom_Left_Window();
-
-	/*VCam[V_BL] = new ViewVars;
-	Set_Views_Defaults(V_BL, VIEWFRONT, "Bottom_Left");
-
-	Bottom_Left_Window_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MAP_BOTTOM_LEFT, Main_View_Dlg_Hwnd, (DLGPROC)Proc_Bottom_Left_Window);
-
-	VCam[V_BL]->hDlg = Bottom_Left_Window_Hwnd;*/
 }
-
-// *************************************************************************
-// *		Proc_Bottom_Left_Window:- Terry Mo and Hazel 2025		 	   *
-// *************************************************************************
-//LRESULT CALLBACK CL64_Editor_Map::Proc_Bottom_Left_Window(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
-//{
-//	switch (message)
-//	{
-//	case WM_INITDIALOG:
-//	{
-//		SendDlgItemMessage(hDlg, IDC_ST_BL_TITLE, WM_SETFONT, (WPARAM)App->Font_CB10, MAKELPARAM(TRUE, 0));
-//		App->CL_Editor_Map->Bottom_Left_Banner_Hwnd = GetDlgItem(hDlg, IDC_ST_BL_TITLE);
-//		return TRUE;
-//	}
-//
-//	case WM_COMMAND:
-//	{
-//		if (App->CL_Editor_Map->Context_Command(LOWORD(wParam)))
-//		{
-//			return TRUE;
-//		}
-//	}
-//
-//	case WM_CTLCOLORSTATIC:
-//	{
-//		if (GetDlgItem(hDlg, IDC_ST_BL_TITLE) == (HWND)lParam)
-//		{
-//			if (App->CL_Editor_Map->Selected_Window == Enums::Selected_Map_View_BL)
-//			{
-//				SetBkColor((HDC)wParam, RGB(0, 255, 0));
-//				SetTextColor((HDC)wParam, RGB(0, 0, 0));
-//				SetBkMode((HDC)wParam, TRANSPARENT);
-//				return (UINT)App->Brush_Green;
-//			}
-//			else
-//			{
-//				SetBkColor((HDC)wParam, RGB(0, 255, 0));
-//				SetTextColor((HDC)wParam, RGB(0, 0, 0));
-//				SetBkMode((HDC)wParam, TRANSPARENT);
-//				return (UINT)App->AppBackground;
-//			}
-//		}
-//
-//		return FALSE;
-//	}
-//
-//	case WM_CTLCOLORDLG:
-//	{
-//		return (LONG)App->CL_Editor_Map->BackGround_Brush;
-//	}
-//
-//	case WM_ERASEBKGND:
-//	{
-//		return (LRESULT)1;
-//	}
-//
-//	case WM_SETCURSOR:
-//	{
-//		if (App->CL_Editor_Map->flag_Context_Menu_Active == 1)
-//		{
-//			return false;
-//		}
-//
-//		if (App->CL_Editor_Map->flag_Right_Button_Down == 1 || App->CL_Editor_Map->flag_Left_Button_Down == 1)
-//		{
-//			return true;
-//		}
-//		else if (App->CL_Doc->mModeTool == ID_TOOLS_BRUSH_MOVEROTATEBRUSH)
-//		{
-//			SetCursor(App->CL_Editor_Map->hcBoth);
-//			return true;
-//		}
-//		else if (App->CL_Doc->mModeTool == ID_TOOLS_BRUSH_SCALEBRUSH)
-//		{
-//			return true;
-//		}
-//		else
-//		{
-//			return false;
-//		}
-//
-//		return false;
-//	}
-//
-//	case WM_MOUSEWHEEL:
-//	{
-//		if (App->CL_Editor_Map->flag_Left_Button_Down == true)
-//		{
-//			return 1;
-//		}
-//
-//		if (App->CL_Editor_Map->Selected_Window == Enums::Selected_Map_View_BL)
-//		{
-//			if (App->CL_Editor_Map->flag_Left_Button_Down == false)
-//			{
-//				int zDelta = static_cast<short>(HIWORD(wParam)); // wheel rotation
-//
-//				if (zDelta > 0)
-//				{
-//					App->CL_Editor_Map->Current_View->ZoomFactor = App->CL_Editor_Map->Current_View->ZoomFactor + 0.1;
-//					App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
-//				}
-//
-//				if (zDelta < 0)
-//				{
-//					App->CL_Editor_Map->Current_View->ZoomFactor = App->CL_Editor_Map->Current_View->ZoomFactor - 0.1;
-//					App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
-//				}
-//			}
-//
-//			return 1;
-//		}
-//
-//		return 1;
-//	}
-//
-//	case WM_MOUSEMOVE:
-//	{
-//		int			dx, dy;
-//		POINT		RealCursorPosition;
-//
-//		GetCursorPos(&RealCursorPosition);
-//		ScreenToClient(hDlg, &RealCursorPosition);
-//
-//		dx = (RealCursorPosition.x);
-//		dy = (RealCursorPosition.y);
-//
-//		App->CL_Editor_Map->On_Mouse_Move(RealCursorPosition, hDlg);
-//
-//		return 1;
-//	}
-//
-//	// Left Mouse Down
-//	case WM_LBUTTONDOWN:
-//	{
-//		POINT		RealCursorPosition;
-//		GetCursorPos(&RealCursorPosition);
-//		ScreenToClient(hDlg, &RealCursorPosition);
-//
-//		App->CL_Editor_Map->Current_View = App->CL_View_Bottom_Left->VCam_BL;
-//
-//		if (App->CL_Editor_Map->Selected_Window != Enums::Selected_Map_View_BL)
-//		{
-//			App->CL_Editor_Map->Set_Selected_View(Enums::Selected_Map_View_BL);
-//		}
-//
-//		App->CL_Editor_Map->flag_Right_Button_Down = 0;
-//		App->CL_Editor_Map->flag_Left_Button_Down = 1;
-//
-//		App->CL_Editor_Map->On_Left_Button_Down(RealCursorPosition, hDlg);
-//
-//		return 1;
-//	}
-//
-//	// Left Mouse Up
-//	case WM_LBUTTONUP:
-//	{
-//		POINT		RealCursorPosition;
-//		GetCursorPos(&RealCursorPosition);
-//		ScreenToClient(hDlg, &RealCursorPosition);
-//
-//		App->CL_Editor_Map->Current_View = App->CL_View_Bottom_Left->VCam_BL;
-//
-//		App->CL_Editor_Map->flag_Left_Button_Down = 0;
-//		App->CL_Editor_Map->flag_Right_Button_Down = 0;
-//
-//		App->CL_Editor_Map->On_Left_Button_Up(RealCursorPosition);
-//
-//		return 1;
-//	}
-//
-//	// Right Mouse Down
-//	case WM_RBUTTONDOWN:
-//	{
-//		App->CL_Editor_Map->Current_View = App->CL_View_Bottom_Left->VCam_BL;
-//
-//		if (App->CL_Editor_Map->Selected_Window != Enums::Selected_Map_View_BL)
-//		{
-//			App->CL_Editor_Map->Set_Selected_View(Enums::Selected_Map_View_BL);
-//		}
-//
-//		//if (GetAsyncKeyState(VK_CONTROL) < 0)
-//		{
-//			GetCursorPos(&App->CL_Editor_Map->mStartPoint);
-//			ScreenToClient(hDlg, &App->CL_Editor_Map->mStartPoint);
-//
-//			App->CL_Editor_Map->flag_Left_Button_Down = 0;
-//			App->CL_Editor_Map->flag_Right_Button_Down = 1;
-//
-//			App->CUR = SetCursor(NULL);
-//		}
-//		
-//		return 1;
-//	}
-//
-//	// Right Mouse up
-//	case WM_RBUTTONUP:
-//	{
-//		//if (GetAsyncKeyState(VK_CONTROL) < 0)
-//		{
-//			App->CL_Editor_Map->flag_Left_Button_Down = 0;
-//			App->CL_Editor_Map->flag_Right_Button_Down = 0;
-//
-//		App->CUR = SetCursor(App->CUR);
-//		}
-//		/*else
-//		{
-//			App->CL_Editor_Map->Current_View = App->CL_Editor_Map->VCam[V_BL];
-//			App->CL_Editor_Map->Context_Menu(hDlg);
-//		}*/
-//
-//		return 1;
-//	}
-//
-//	case WM_PAINT:
-//	{
-//		App->CL_Editor_Map->Current_View = App->CL_View_Bottom_Left->VCam_BL;
-//		App->CL_Editor_Map->Draw_Screen(hDlg);
-//		return 0;
-//	}
-//
-//	}
-//
-//	return FALSE;
-//}
 
 // *************************************************************************
 // *		 Create_Ogre_Bottom_Right:- Terry Mo and Hazel 2025			   *
@@ -1849,9 +1138,10 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Ogre_BR(HWND hDlg, UINT message, WPARAM w
 void CL64_Editor_Map::Set_Selected_View(int Selected_View)
 {
 	Selected_Window = Selected_View;
-	RedrawWindow(Top_Left_Banner_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-	RedrawWindow(Top_Right_Banner_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-	RedrawWindow(Bottom_Left_Banner_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+	RedrawWindow(App->CL_3D_TL_View->Top_Left_Banner_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+	RedrawWindow(App->CL_View_Top_Right->Top_Right_Banner_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+	RedrawWindow(App->CL_View_Bottom_Left->Bottom_Left_Banner_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 	RedrawWindow(Bottom_Ogre_Banner, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 }
 
@@ -2371,7 +1661,7 @@ void CL64_Editor_Map::On_Mouse_Move(POINT CursorPosition, HWND hDlg)
 	// Zoom
 	if (flag_Right_Button_Down == true && GetAsyncKeyState(VK_CONTROL) < 0)
 	{
-		App->CL_Render->Zoom_View(Current_View, mStartPoint.y, mStartPoint.x, CursorPosition.y);
+		//App->CL_Render->Zoom_View(Current_View, mStartPoint.y, mStartPoint.x, CursorPosition.y);
 		return;
 	}
 
@@ -2403,7 +1693,7 @@ void CL64_Editor_Map::On_Mouse_Move(POINT CursorPosition, HWND hDlg)
 			{
 				App->CL_Doc->LockAxis(&dv);
 				App->CL_Doc->MoveSelectedBrushes(&dv);
-				Draw_Screen(hDlg);
+				//Draw_Screen(hDlg);
 			}
 
 			if (App->CL_Top_Tabs->flag_Brush_Rotate == 1)
@@ -2552,33 +1842,6 @@ void CL64_Editor_Map::On_Left_Button_Down(POINT CursorPosition, HWND hDlg)
 	}
 }
 
-signed int CL64_Editor_Map::fdocShowBrush(Brush const* b,Box3d const* ViewBox)
-{
-	return 1;// (App->CL_Brush->BrushIsVisible(b) && App->CL_Brush->Brush_TestBoundsIntersect(b, ViewBox));
-}
-
-// *************************************************************************
-// *	  						BrushDraw								   *
-// *************************************************************************
-signed int CL64_Editor_Map::BrushDraw(Brush* pBrush, void* lParam)
-{
-	BrushDrawData* pData = (BrushDrawData*)lParam;
-	
-
-	//if (App->CL_Brush->Brush_GetGroupId(pBrush) == pData->GroupId))
-	{
-		if ((pData->FlagTest == NULL) || pData->FlagTest(pBrush))
-		{
-			if (App->CL_Editor_Map->fdocShowBrush(pBrush, pData->pViewBox))
-			{
-				App->CL_Editor_Map->Render_RenderBrushFacesOrtho(pData->v, pBrush, App->CL_Editor_Map->MemoryhDC);
-			}
-		}
-	}
-
-	return true;
-}
-
 #define	VectorToSUB(a, b) (*((((float *)(&a))) + (b)))
 
 static signed int BrushDrawSelFacesOrtho(Brush* pBrush, void* lParam)
@@ -2627,181 +1890,6 @@ void CL64_Editor_Map::Render_RenderBrushSelFacesOrtho(ViewVars* Cam, Brush* b, H
 void CL64_Editor_Map::Draw_Screen(HWND hwnd)
 {
 	return;
-	// Initialize variables
-	int			inidx = 0;
-	HDC RealhDC = GetDC(hwnd);
-	MemoryhDC = CreateCompatibleDC(RealhDC);
-
-	RECT		Rect;
-	BrushDrawData	brushDrawData;
-
-	// Get client rectangle and set current view dimensions
-	GetClientRect(hwnd, &Rect);
-	Rect.left--;
-	Rect.bottom--;
-	Current_View->Width = Rect.left;
-	Current_View->Height = Rect.bottom;
-	Current_View->XScreenScale = Rect.left;
-	Current_View->YScreenScale = Rect.bottom;
-
-	// Set up view box
-	T_Vec3 XTemp;
-	Box3d ViewBox;
-	inidx = App->CL_Render->Render_GetInidx(Current_View);
-	App->CL_X_Box->Box3d_SetBogusBounds(&ViewBox);
-	App->CL_Render->Render_ViewToWorld(Current_View, 0, 0, &XTemp);
-	App->CL_X_Box->Box3d_AddPoint(&ViewBox, XTemp.x, XTemp.y, XTemp.z);
-	App->CL_Render->Render_ViewToWorld(Current_View, App->CL_Render->Render_GetWidth(Current_View), App->CL_Render->Render_GetHeight(Current_View), &XTemp);
-	App->CL_X_Box->Box3d_AddPoint(&ViewBox, XTemp.x, XTemp.y, XTemp.z);
-	VectorToSUB(ViewBox.Min, inidx) = -FLT_MAX;
-	VectorToSUB(ViewBox.Max, inidx) = FLT_MAX;
-
-	// Prepare brush draw data
-	brushDrawData.pViewBox = &ViewBox;
-	brushDrawData.pDC = MemoryhDC;
-	brushDrawData.v = Current_View;
-	brushDrawData.pDoc = App->CL_Doc;
-	brushDrawData.GroupId = 0;
-	brushDrawData.FlagTest = NULL;
-
-	GetClipBox(RealhDC, &Rect);
-
-	SetDCBrushColor(MemoryhDC, (RGB(Background_Colour.R, Background_Colour.G, Background_Colour.B)));
-
-	HBITMAP OffScreenBitmap = CreateCompatibleBitmap(RealhDC, Rect.right - Rect.left, Rect.bottom - Rect.top);
-	SelectObject(MemoryhDC, OffScreenBitmap);
-	FillRect(MemoryhDC, &Rect, (HBRUSH)Stock_Brush); // BackGround
-
-	// ---------------------- Draw Grid Fine
-	if (Current_View->ZoomFactor > 0.1)
-	{
-		SelectObject(MemoryhDC, Pen_Fine_Grid);
-		App->CL_Render->Render_RenderOrthoGridFromSize(Current_View, int(GridSnapSize), MemoryhDC, Rect);
-	}
-
-	// ---------------------- Draw Grid
-	if (Current_View->ZoomFactor < 0.1)
-	{
-		Current_View->ZoomFactor = 0.1;
-	}
-
-	SelectObject(MemoryhDC, Pen_Grid);
-	App->CL_Render->Render_RenderOrthoGridFromSize(Current_View, int(GridSize), MemoryhDC, Rect);
-	
-	bool test = 0;
-	if (test == 0)
-	{
-		// ------------------------------------------ Draw Brushes
-		SelectObject(MemoryhDC, PenBrushes);
-
-		// Draw Template Brush
-		/*if (App->CL_Doc->mModeTool == ID_TOOLS_TEMPLATE)
-		{
-			SelectObject(MemoryhDC, PenTemplate);
-
-			if (App->CL_X_Brush->Brush_IsMulti(App->CL_Doc->CurBrush))
-			{
-
-				App->CL_X_Brush->BrushList_EnumLeafBrushes(App->CL_X_Brush->Brush_GetBrushList(App->CL_Doc->CurBrush), &brushDrawData, BrushDraw);
-			}
-			else
-			{
-				Render_RenderBrushFacesOrtho(Current_View, App->CL_Doc->CurBrush, MemoryhDC);
-
-			}
-		}*/
-
-		// Iterate through all brushes
-		int BrushCount = App->CL_X_Brush->Get_Brush_Count();
-		int Count = 0;
-		Brush* SB = nullptr;
-
-		while (Count < BrushCount)
-		{
-			SB = App->CL_X_Brush->Get_By_Index(Count);
-
-			switch (SB->GroupId) 
-			{
-			case Enums::Brushs_ID_Area:
-				SelectObject(MemoryhDC, PenBrushes);
-				break;
-
-				case Enums::Brushs_ID_Evirons:
-				SelectObject(MemoryhDC, PenEntity);
-				break;
-
-			default:
-				break;
-			}
-
-			if (App->CL_X_Brush->Brush_IsSubtract(SB))
-			{
-				SelectObject(MemoryhDC, PenCutBrush);
-			}
-
-
-			if (App->CL_X_Brush->Brush_IsMulti(SB))
-			{
-				App->CL_X_Brush->BrushList_EnumLeafBrushes(App->CL_X_Brush->Brush_GetBrushList(SB), &brushDrawData, BrushDraw);
-			}
-			else
-			{
-				Render_RenderBrushFacesOrtho(Current_View, SB, MemoryhDC);
-			}
-
-			Count++;
-		}
-
-		bool Draw_Sel = 0;
-		if (Draw_Sel == 0)
-		{
-			// Draw selected brushes
-			SelectObject(MemoryhDC, PenSelected);
-			int NumSelBrushes = App->CL_X_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes);
-
-			int i = 0;
-			for (i = 0; i < NumSelBrushes; i++)
-			{
-				Brush* pBrush;
-
-				pBrush = App->CL_X_SelBrushList->SelBrushList_GetBrush(App->CL_Doc->pSelBrushes, i);
-				{
-					if (App->CL_X_Brush->Brush_IsMulti(pBrush))
-					{
-						App->CL_X_Brush->BrushList_EnumLeafBrushes(App->CL_X_Brush->Brush_GetBrushList(pBrush), &brushDrawData, BrushDraw);
-					}
-					else
-					{
-						Render_RenderBrushFacesOrtho(Current_View, App->CL_Doc->CurBrush, MemoryhDC);
-					}
-				}
-			}
-		}
-
-		// Draw selected faces
-		BrushList* BList = App->CL_Level->Level_Get_Main_Brushes();
-		SelectObject(MemoryhDC, PenSelectedFaces);
-		App->CL_X_Brush->BrushList_EnumLeafBrushes(BList, &brushDrawData, BrushDrawSelFacesOrtho);
-
-
-		// Draw camera if tracking
-		if (App->CL_Doc->flag_Track_Camera == true)
-		{
-			SelectObject(MemoryhDC, Pen_Camera);
-			Draw_Camera(MemoryhDC);
-		}
-
-	}
-
-	// BitBlt to the real device context
-	BitBlt(RealhDC, Rect.left, Rect.top+17, Rect.right - Rect.left, Rect.bottom - Rect.top, MemoryhDC, 0, 0, SRCCOPY);
-	//memcpy(&RealhDC, &MemoryhDC, sizeof(MemoryhDC));
-	// Clean up
-	SetDCBrushColor(MemoryhDC, (RGB(255, 255, 255))); 
-
-	DeleteObject(OffScreenBitmap);
-	DeleteDC(MemoryhDC);
-	ReleaseDC(hwnd, RealhDC);
 }
 
 // *************************************************************************

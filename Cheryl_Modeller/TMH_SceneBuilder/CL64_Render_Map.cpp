@@ -347,24 +347,3 @@ void CL64_Render_Map::Pan_View(ViewVars* currentView, int startPosX, int startPo
 	
 }
 
-// *************************************************************************
-// *			Zoom_View:- Terry and Hazel Flanigan 2025				   *
-// *************************************************************************
-void CL64_Render_Map::Zoom_View(ViewVars* currentView, int startPosY, int startPosX, int cursorPositionY)
-{
-	return;
-	// Calculate the change in Y position
-	long deltaY = cursorPositionY - startPosY;
-
-	// Adjust the zoom factor based on the direction of the cursor movement
-	if (deltaY != 0)
-	{
-		currentView->ZoomFactor += (deltaY > 0) ? -0.01 : 0.01;
-		App->CL_Editor_Map->Draw_Screen(currentView->hDlg);
-	}
-
-	// Set Cursor back to Original Position
-	POINT screenPoint = { startPosX, startPosY };
-	ClientToScreen(currentView->hDlg, &screenPoint);
-	SetCursorPos(screenPoint.x, screenPoint.y);
-}

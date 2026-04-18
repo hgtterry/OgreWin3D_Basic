@@ -50,6 +50,7 @@ public:
 	void Set_VCam_TL_Defaults();
 
 	HWND Top_Left_Window_Hwnd;
+	HWND Top_Left_Banner_Hwnd;
 
 	signed int fdocShowBrush(Brush const* b, Box3d const* ViewBox);
 
@@ -57,8 +58,11 @@ public:
 
 	float m_GridSize, m_GridSnapSize;
 
+	HPEN Pen_Fine_Grid;
 	HPEN m_Pen_Grid;
 	HPEN Pen_Camera;
+
+	HPEN PenBrushes;
 
 	HDC	m_MemoryhDC;
 	T_Vec3 Saved_Cam_Position;

@@ -36,9 +36,13 @@ CL64_3D_TL_View::CL64_3D_TL_View()
 	m_brushDrawData_TL = { 0 };
 
 	Top_Left_Window_Hwnd = nullptr;
+	Top_Left_Banner_Hwnd = nullptr;
 
+	Pen_Fine_Grid = CreatePen(PS_SOLID, 0, RGB(0, 0, 0));
 	m_Pen_Grid = CreatePen(PS_SOLID, 0, RGB(0, 112, 112));
 	Pen_Camera = CreatePen(PS_SOLID, 0, RGB(0, 255, 0));
+
+	PenBrushes = CreatePen(PS_SOLID, 1, RGB(255, 255, 255));
 
 	m_GridSize = 128;
 	m_GridSnapSize = 8;
@@ -101,7 +105,7 @@ LRESULT CALLBACK CL64_3D_TL_View::Proc_Top_Left_Window(HWND hDlg, UINT message, 
 	case WM_INITDIALOG:
 	{
 		SendDlgItemMessage(hDlg, IDC_ST_TL_TITLE, WM_SETFONT, (WPARAM)App->Font_CB10, MAKELPARAM(TRUE, 0));
-		App->CL_Editor_Map->Top_Left_Banner_Hwnd = GetDlgItem(hDlg, IDC_ST_TL_TITLE);
+		App->CL_3D_TL_View->Top_Left_Banner_Hwnd = GetDlgItem(hDlg, IDC_ST_TL_TITLE);
 
 		App->CL_3D_TL_View->m_Pen_Grid = CreatePen(PS_SOLID, 0, RGB(0, 112, 112));
 
@@ -451,7 +455,7 @@ void CL64_3D_TL_View::Draw_Screen_TL(HWND hwnd)
 	// ---------------------- Draw Grid Fine
 	if (VCam_TL->ZoomFactor > 0.1)
 	{
-		SelectObject(m_MemoryhDC, App->CL_Editor_Map->Pen_Fine_Grid);
+		SelectObject(m_MemoryhDC, Pen_Fine_Grid);
 		App->CL_Render->Render_RenderOrthoGridFromSize(VCam_TL, int(m_GridSnapSize), m_MemoryhDC, Rect);
 	}
 
@@ -468,7 +472,7 @@ void CL64_3D_TL_View::Draw_Screen_TL(HWND hwnd)
 	if (test == 0)
 	{
 		// ------------------------------------------ Draw Brushes
-		SelectObject(m_MemoryhDC, App->CL_Editor_Map->PenBrushes);
+		SelectObject(m_MemoryhDC, PenBrushes);
 
 		// Iterate through all brushes
 		int BrushCount = App->CL_X_Brush->Get_Brush_Count();
