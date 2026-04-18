@@ -61,6 +61,9 @@ public:
 	bool listMaterialItems_Ogre[50] = { 0 };
 	int PreviouseMaterial_Ogre;
 
+	bool listJointsItems_Ogre[50] = { 0 };
+	int PreviouseJoints_Ogre;
+
 	bool listMotionItems_Ogre[50] = { 0 };
 	int PreviouseMotion_Ogre;
 

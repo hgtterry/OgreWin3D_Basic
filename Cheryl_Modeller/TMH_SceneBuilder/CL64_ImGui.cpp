@@ -63,6 +63,9 @@ CL64_ImGui::CL64_ImGui()
 	listMotionItems_Ogre[0] = false;
 	PreviouseMotion_Ogre = -1;
 
+	listJointsItems_Ogre[0] = false;
+	PreviouseJoints_Ogre = 0;
+
 	listMaterialItems_Assimp[0] = true;
 	PreviouseMaterial_Assimp = 0;
 
@@ -556,6 +559,43 @@ void CL64_ImGui::Show_Ogre_Model_Data_GUI(void)
 						listMotionItems_Ogre[Count] = 1;
 						PreviouseMotion_Ogre = Count;
 					}
+					Count++;
+				}
+
+				ImGui::TreePop();
+			}
+
+			// Joints/Bones
+			if (ImGui::TreeNode("Joints/Bones"))
+			{
+				int Count = 0;
+				int Size = App->CL_Model->BoneCount;
+
+				if (Size == 0)
+				{
+					ImGui::Text("No Joints/Bones:");
+				}
+
+				while (Count < Size)
+				{
+					if (ImGui::Selectable(App->CL_Mesh->S_Bones[Count]->BoneName, listJointsItems_Ogre[Count]))
+					{
+						/*strcpy(App->CL_Motions->Selected_Motion_Name, App->CL_Mesh->S_OgreMeshData[0]->m_Motion_Names[Count].c_str());
+
+						if (App->CL_Motions->flag_Motion_Playing == true)
+						{
+							App->CL_Properties_Motions->Update_Motions_By_Name(App->CL_Mesh->S_OgreMeshData[0]->m_Motion_Names[Count].c_str(), true);
+						}
+						else
+						{
+							App->CL_Properties_Motions->Update_Motions_By_Name(App->CL_Mesh->S_OgreMeshData[0]->m_Motion_Names[Count].c_str(), false);
+						}*/
+
+						listJointsItems_Ogre[PreviouseJoints_Ogre] = 0;
+						listJointsItems_Ogre[Count] = 1;
+						PreviouseJoints_Ogre = Count;
+					}
+
 					Count++;
 				}
 
