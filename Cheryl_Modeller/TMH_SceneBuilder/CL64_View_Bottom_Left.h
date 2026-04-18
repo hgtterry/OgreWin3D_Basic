@@ -28,5 +28,33 @@ class CL64_View_Bottom_Left
 public:
 	CL64_View_Bottom_Left();
 	~CL64_View_Bottom_Left();
+
+	void Create_Bottom_Left_Window();
+	void Redraw_Window_BL();
+
+	static int Draw_Brush(Brush* pBrush, void* lParam);
+	void Draw_Brush_Faces_Ortho(const ViewVars* Cam, Brush* b);
+	void Set_VCam_BL_Defaults();
+
+	HWND Top_Right_Window_Hwnd;
+
+	signed int fdocShowBrush(Brush const* b, Box3d const* ViewBox);
+
+	BrushDrawData_TR m_brushDrawData_TR;
+
+	float m_GridSize, m_GridSnapSize;
+
+	HPEN m_Pen_Grid;
+	HPEN Pen_Camera;
+
+	HDC	m_MemoryhDC_TR;
+	T_Vec3 Saved_Cam_Position;
+
+	ViewVars* VCam_TR;
+
+private:
+	static LRESULT CALLBACK Proc_Bottom_Left_Window(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+
+	void Draw_Screen_BL(HWND hwnd);
 };
 

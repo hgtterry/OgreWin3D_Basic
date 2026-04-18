@@ -148,12 +148,12 @@ LRESULT CALLBACK CL64_3D_TL_View::Proc_Top_Left_Window(HWND hDlg, UINT message, 
 
 	case WM_SETCURSOR:
 	{
-		if (App->CL_Editor_Map->flag_Context_Menu_Active == 1)
+		if (App->CL_Editor_Map->flag_Context_Menu_Active == true)
 		{
 			return false;
 		}
 
-		if (App->CL_Editor_Map->flag_Right_Button_Down == 1 || App->CL_Editor_Map->flag_Left_Button_Down == 1)
+		if (App->CL_Editor_Map->flag_Right_Button_Down == true || App->CL_Editor_Map->flag_Left_Button_Down == true)
 		{
 			return true;
 		}
@@ -243,8 +243,8 @@ LRESULT CALLBACK CL64_3D_TL_View::Proc_Top_Left_Window(HWND hDlg, UINT message, 
 
 		App->CL_Editor_Map->Current_View = App->CL_3D_TL_View->VCam_TL;
 
-		App->CL_Editor_Map->flag_Left_Button_Down = 0;
-		App->CL_Editor_Map->flag_Right_Button_Down = 0;
+		App->CL_Editor_Map->flag_Left_Button_Down = false;
+		App->CL_Editor_Map->flag_Right_Button_Down = false;
 
 		App->CL_Editor_Map->On_Left_Button_Up(RealCursorPosition);
 
@@ -265,8 +265,8 @@ LRESULT CALLBACK CL64_3D_TL_View::Proc_Top_Left_Window(HWND hDlg, UINT message, 
 		GetCursorPos(&App->CL_Editor_Map->mStartPoint);
 		ScreenToClient(hDlg, &App->CL_Editor_Map->mStartPoint);
 
-		App->CL_Editor_Map->flag_Right_Button_Down = 1;
-		App->CL_Editor_Map->flag_Left_Button_Down = 0;
+		App->CL_Editor_Map->flag_Right_Button_Down = true;
+		App->CL_Editor_Map->flag_Left_Button_Down = false;
 
 		App->CUR = SetCursor(NULL);
 		
