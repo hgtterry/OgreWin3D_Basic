@@ -58,7 +58,7 @@ CL64_3D_TL_View::~CL64_3D_TL_View()
 void CL64_3D_TL_View::Set_VCam_TL_Defaults()
 {
 	strcpy(VCam_TL->Name, "Top_Left");
-	VCam_TL->ViewType = VIEWTOP;
+	VCam_TL->ViewType = TOP_LEFT_VIEW;
 	VCam_TL->ZoomFactor = 1.5;
 
 	VCam_TL->XCenter = 310;
@@ -291,7 +291,7 @@ LRESULT CALLBACK CL64_3D_TL_View::Proc_Top_Left_Window(HWND hDlg, UINT message, 
 		
 		if (cameraComparison == 1)
 		{
-			App->CL_Editor_Map->Current_View = App->CL_Editor_Map->VCam[V_TL];
+			App->CL_Editor_Map->Current_View = App->CL_3D_TL_View->VCam_TL;
 			App->CL_Editor_Map->Context_Menu(hDlg);
 		}
 

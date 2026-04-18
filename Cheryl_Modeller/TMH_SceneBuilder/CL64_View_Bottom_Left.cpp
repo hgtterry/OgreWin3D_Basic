@@ -55,7 +55,7 @@ CL64_View_Bottom_Left::~CL64_View_Bottom_Left()
 void CL64_View_Bottom_Left::Set_VCam_BL_Defaults()
 {
 	strcpy(VCam_BL->Name, "Bottom_Left");
-	VCam_BL->ViewType = VIEWFRONT;
+	VCam_BL->ViewType = BOTTOM_LEFT_VIEW;
 	VCam_BL->ZoomFactor = 1.5;
 
 	VCam_BL->XCenter = 310;

@@ -59,7 +59,7 @@ CL64_View_Top_Right::~CL64_View_Top_Right()
 void CL64_View_Top_Right::Set_VCam_TR_Defaults()
 {
 	strcpy(VCam_TR->Name, "Top_Right");
-	VCam_TR->ViewType = VIEWSIDE;
+	VCam_TR->ViewType = TOP_RIGHT_VIEW;
 	VCam_TR->ZoomFactor = 1.5;
 
 	VCam_TR->XCenter = 310;

@@ -900,7 +900,7 @@ void CL64_Doc::RotateSelectedBrushList(const ViewVars* view, SelBrushList* pList
 
                 switch (view->ViewType)
                 {
-                case VIEWTOP:
+                case TOP_LEFT_VIEW:
                 {
                     if (v->y > 0)
                     {
@@ -915,7 +915,7 @@ void CL64_Doc::RotateSelectedBrushList(const ViewVars* view, SelBrushList* pList
                     }
                     break;
                 }
-                case VIEWFRONT:
+                case BOTTOM_LEFT_VIEW:
                 {
                     if (v->z > 0)
                     {
@@ -930,7 +930,7 @@ void CL64_Doc::RotateSelectedBrushList(const ViewVars* view, SelBrushList* pList
                     }
                     break;
                 }
-                case VIEWSIDE:
+                case TOP_RIGHT_VIEW:
                 {
                     if (v->x > 0)
                     {

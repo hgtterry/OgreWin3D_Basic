@@ -754,9 +754,9 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Top_Tabs(HWND hDlg, UINT message, WPARAM wP
 		// Top Left
 		if (LOWORD(wParam) == IDC_BT_TOP_LEFT)
 		{
-			if (App->CL_Top_Tabs->flag_View_Top_Left == 1)
+			if (App->CL_Top_Tabs->flag_View_Top_Left == true)
 			{
-				App->CL_Top_Tabs->flag_View_Top_Left = 0;
+				App->CL_Top_Tabs->flag_View_Top_Left = false;
 				App->CL_Editor_Map->Set_Splitter_WidthDepth(App->CL_Editor_Map->Copy_Spliter_Width, App->CL_Editor_Map->Copy_Spliter_Depth);
 				App->CL_Editor_Map->Resize_Windows(App->CL_Editor_Map->Main_View_Dlg_Hwnd, App->CL_Editor_Map->nleftWnd_width, App->CL_Editor_Map->nleftWnd_Depth);
 

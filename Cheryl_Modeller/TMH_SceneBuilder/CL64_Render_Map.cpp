@@ -159,14 +159,14 @@ void CL64_Render_Map::Render_ViewToWorld(const ViewVars* cv, const int x, const 
 
 	switch (cv->ViewType)
 	{
-	case VIEWTOP:
+	case TOP_LEFT_VIEW:
 	{
 		App->CL_X_Maths->Vector3_Set(wp, (x - cv->XCenter), 0.0f, (y - cv->YCenter));
 		App->CL_X_Maths->Vector3_Scale(wp, ZoomInv, wp);
 		App->CL_X_Maths->Vector3_Add(wp, &cv->CamPos, wp);
 		break;
 	}
-	case VIEWFRONT:
+	case BOTTOM_LEFT_VIEW:
 	{
 
 		App->CL_X_Maths->Vector3_Set(wp, (x - cv->XCenter), -(y - cv->YCenter), 0.0f);
@@ -174,7 +174,7 @@ void CL64_Render_Map::Render_ViewToWorld(const ViewVars* cv, const int x, const 
 		App->CL_X_Maths->Vector3_Add(wp, &cv->CamPos, wp);
 		break;
 	}
-	case VIEWSIDE:
+	case TOP_RIGHT_VIEW:
 	{
 		App->CL_X_Maths->Vector3_Set(wp, 0.0f, -(y - cv->YCenter), (x - cv->XCenter));
 		App->CL_X_Maths->Vector3_Scale(wp, ZoomInv, wp);
@@ -208,7 +208,7 @@ POINT CL64_Render_Map::Render_OrthoWorldToView(const ViewVars* cv, T_Vec3 const*
 	
 	switch (cv->ViewType)
 	{
-	case VIEWTOP:
+	case TOP_LEFT_VIEW:
 	{
 		App->CL_X_Maths->Vector3_Subtract(wp, &cv->CamPos, &ptView);
 		App->CL_X_Maths->Vector3_Scale(&ptView, cv->ZoomFactor, &ptView);
@@ -217,7 +217,7 @@ POINT CL64_Render_Map::Render_OrthoWorldToView(const ViewVars* cv, T_Vec3 const*
 		sc.y = (int)(cv->YCenter + ptView.z);
 		break;
 	}
-	case VIEWFRONT:
+	case BOTTOM_LEFT_VIEW:
 	{
 		App->CL_X_Maths->Vector3_Subtract(wp, &cv->CamPos, &ptView);
 		App->CL_X_Maths->Vector3_Scale(&ptView, cv->ZoomFactor, &ptView);
@@ -226,7 +226,7 @@ POINT CL64_Render_Map::Render_OrthoWorldToView(const ViewVars* cv, T_Vec3 const*
 		sc.y = (int)(cv->YCenter - ptView.y);
 		break;
 	}
-	case VIEWSIDE:
+	case TOP_RIGHT_VIEW:
 	{
 		App->CL_X_Maths->Vector3_Subtract(wp, &cv->CamPos, &ptView);
 		App->CL_X_Maths->Vector3_Scale(&ptView, cv->ZoomFactor, &ptView);
@@ -261,14 +261,14 @@ void CL64_Render_Map::Render_ViewDeltaToRotation(const ViewVars* v,const float d
 	RotationRads = (dx) * 0.002;// (ONE_OVER_2PI / Render_GetXScreenScale(v));
 	switch (v->ViewType)
 	{
-	case VIEWTOP:	// +dx = negative rotation about Y
+	case TOP_LEFT_VIEW:	// +dx = negative rotation about Y
 		App->CL_X_Maths->Vector3_Set(VecRotate, 0.0f, -RotationRads, 0.0f);
 		break;
-	case VIEWFRONT:  // +dx = negative rotation about Z
+	case BOTTOM_LEFT_VIEW:  // +dx = negative rotation about Z
 		//disable roll
 		App->CL_X_Maths->Vector3_Set(VecRotate, 0.0f, 0.0f, -RotationRads);
 		break;
-	case VIEWSIDE:	// +dx = positive rotation about X
+	case TOP_RIGHT_VIEW:	// +dx = positive rotation about X
 		App->CL_X_Maths->Vector3_Set(VecRotate, RotationRads, 0.0f, 0.0f);
 		break;
 	default:
@@ -324,14 +324,27 @@ void CL64_Render_Map::Pan_View(ViewVars* currentView, int startPosX, int startPo
 
 	// Draw the map
 
-	if (currentView->ViewType == VIEWTOP)
+	if (currentView->ViewType == TOP_LEFT_VIEW)
 	{
 		App->CL_3D_TL_View->Redraw_Window_TL();
+		return;
 	}
-	else
+
+	if (currentView->ViewType == TOP_RIGHT_VIEW)
 	{
-		App->CL_Editor_Map->Draw_Screen(currentView->hDlg);
+		App->CL_View_Top_Right->Redraw_Window_TR();
+		return;
 	}
+
+	if (currentView->ViewType == BOTTOM_LEFT_VIEW)
+	{
+		App->CL_View_Bottom_Left->Redraw_Window_BL();
+		return;
+	}
+
+	
+	//App->CL_Editor_Map->Draw_Screen(currentView->hDlg);
+	
 }
 
 // *************************************************************************

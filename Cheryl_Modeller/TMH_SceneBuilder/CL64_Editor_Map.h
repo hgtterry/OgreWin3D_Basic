@@ -81,8 +81,7 @@ public:
 
 	HWND Main_View_Dlg_Hwnd; // Background of MDI
 
-	HWND Top_Right_Window_Hwnd;
-	HWND Bottom_Left_Window_Hwnd;
+
 	HWND Bottom_Ogre_Right_Hwnd;
 	
 	float GridSize, GridSnapSize;
