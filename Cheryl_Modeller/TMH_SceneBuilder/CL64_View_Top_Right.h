@@ -60,6 +60,8 @@ public:
 	HPEN Pen_Camera;
 
 	HDC	m_MemoryhDC_TR;
+	T_Vec3 Saved_Cam_Position;
+
 	ViewVars* VCam_TR;
 
 private:

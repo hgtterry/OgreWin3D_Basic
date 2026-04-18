@@ -32,6 +32,20 @@ THE SOFTWARE.
 
 CL64_View_Top_Right::CL64_View_Top_Right()
 {
+	VCam_TR = { 0 };
+	m_brushDrawData_TR = { 0 };
+
+	Top_Right_Window_Hwnd = nullptr;
+
+	m_Pen_Grid = CreatePen(PS_SOLID, 0, RGB(0, 112, 112));
+	Pen_Camera = CreatePen(PS_SOLID, 0, RGB(0, 255, 0));
+
+	m_GridSize = 128;
+	m_GridSnapSize = 8;
+
+	Saved_Cam_Position = { 0 };
+
+	m_MemoryhDC_TR = nullptr;
 	
 }
 
@@ -44,8 +58,8 @@ CL64_View_Top_Right::~CL64_View_Top_Right()
 // *************************************************************************
 void CL64_View_Top_Right::Set_VCam_TR_Defaults()
 {
-	strcpy(VCam_TR->Name, "Top_Left");
-	VCam_TR->ViewType = VIEWTOP;
+	strcpy(VCam_TR->Name, "Top_Right");
+	VCam_TR->ViewType = VIEWSIDE;
 	VCam_TR->ZoomFactor = 1.5;
 
 	VCam_TR->XCenter = 310;
@@ -67,8 +81,13 @@ void CL64_View_Top_Right::Set_VCam_TR_Defaults()
 // *************************************************************************
 void CL64_View_Top_Right::Create_Top_Right_Window()
 {
-	//App->CL_Editor_Map->Top_Left_Window_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MAP_TOP_LEFT, App->CL_Editor_Map->Main_View_Dlg_Hwnd, (DLGPROC)Proc_Top_Left_Window);
+	
+	VCam_TR = new ViewVars;
 
+	Set_VCam_TR_Defaults();
+
+	Top_Right_Window_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MAP_TOP_RIGHT, App->CL_Editor_Map->Main_View_Dlg_Hwnd, (DLGPROC)Proc_Top_Right_Window);
+	VCam_TR->hDlg = Top_Right_Window_Hwnd;
 }
 
 // *************************************************************************
@@ -81,8 +100,10 @@ LRESULT CALLBACK CL64_View_Top_Right::Proc_Top_Right_Window(HWND hDlg, UINT mess
 
 	case WM_INITDIALOG:
 	{
-		SendDlgItemMessage(hDlg, IDC_ST_TL_TITLE, WM_SETFONT, (WPARAM)App->Font_CB10, MAKELPARAM(TRUE, 0));
-		//App->CL_Editor_Map->Top_Left_Banner_Hwnd = GetDlgItem(hDlg, IDC_ST_TL_TITLE);
+		SendDlgItemMessage(hDlg, IDC_ST_TR_TITLE, WM_SETFONT, (WPARAM)App->Font_CB10, MAKELPARAM(TRUE, 0));
+		App->CL_Editor_Map->Top_Right_Banner_Hwnd = GetDlgItem(hDlg, IDC_ST_TR_TITLE);
+
+		App->CL_View_Top_Right->m_Pen_Grid = CreatePen(PS_SOLID, 0, RGB(0, 112, 112));
 
 		return TRUE;
 	}
@@ -94,9 +115,9 @@ LRESULT CALLBACK CL64_View_Top_Right::Proc_Top_Right_Window(HWND hDlg, UINT mess
 
 	case WM_CTLCOLORSTATIC:
 	{
-		if (GetDlgItem(hDlg, IDC_ST_TL_TITLE) == (HWND)lParam)
+		if (GetDlgItem(hDlg, IDC_ST_TR_TITLE) == (HWND)lParam)
 		{
-			if (App->CL_Editor_Map->Selected_Window == Enums::Selected_Map_View_TL)
+			if (App->CL_Editor_Map->Selected_Window == Enums::Selected_Map_View_TR)
 			{
 				SetBkColor((HDC)wParam, RGB(0, 255, 0));
 				SetTextColor((HDC)wParam, RGB(0, 0, 0));
@@ -118,12 +139,12 @@ LRESULT CALLBACK CL64_View_Top_Right::Proc_Top_Right_Window(HWND hDlg, UINT mess
 	// Left Mouse Down
 	case WM_LBUTTONDOWN:
 	{
-		App->CL_Editor_Map->Current_View = App->CL_Editor_Map->VCam[V_TL];
+		/*App->CL_Editor_Map->Current_View = App->CL_Editor_Map->VCam[V_TR];
 
 		if (App->CL_Editor_Map->Selected_Window != Enums::Selected_Map_View_TL)
 		{
 			App->CL_Editor_Map->Set_Selected_View(Enums::Selected_Map_View_TL);
-		}
+		}*/
 
 		return 1;
 	}
@@ -161,8 +182,11 @@ LRESULT CALLBACK CL64_View_Top_Right::Proc_Top_Right_Window(HWND hDlg, UINT mess
 
 	case WM_PAINT:
 	{
-		//App->CL_Editor_Map->Current_View = App->CL_Editor_Map->VCam[V_TL];
-		//App->CL_Editor_Map->Draw_Screen(hDlg);
+		if (App->flag_3D_Started == true)
+		{
+			App->CL_Editor_Map->Current_View = App->CL_View_Top_Right->VCam_TR;
+			App->CL_View_Top_Right->Draw_Screen_TR(hDlg);
+		}
 
 		return 0;
 	}
@@ -192,9 +216,9 @@ signed int CL64_View_Top_Right::Draw_Brush(Brush* pBrush, void* lParam)
 	{
 		if ((pData->FlagTest == NULL) || pData->FlagTest(pBrush))
 		{
-			if (App->CL_3D_TL_View->fdocShowBrush(pBrush, pData->pViewBox))
+			if (App->CL_View_Top_Right->fdocShowBrush(pBrush, pData->pViewBox))
 			{
-				App->CL_3D_TL_View->Draw_Brush_Faces_Ortho(pData->v, pBrush);
+				App->CL_View_Top_Right->Draw_Brush_Faces_Ortho(pData->v, pBrush);
 			}
 		}
 	}
@@ -237,9 +261,9 @@ void CL64_View_Top_Right::Draw_Brush_Faces_Ortho(const ViewVars* Cam, Brush* b)
 
 static signed int BrushDrawSelFacesOrtho(Brush* pBrush, void* lParam)
 {
-	BrushDrawData_TL* pData;
+	BrushDrawData_TR* pData;
 
-	pData = (BrushDrawData_TL*)lParam;
+	pData = (BrushDrawData_TR*)lParam;
 
 	App->CL_Editor_Map->Render_RenderBrushSelFacesOrtho(pData->v, pBrush, pData->pDC);
 
