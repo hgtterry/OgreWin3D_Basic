@@ -179,7 +179,6 @@ void CL64_Editor_Map::Reset_Class()
 // *************************************************************************
 void CL64_Editor_Map::Reset_Views_All()
 {
-	//return;
 	Init_Views(Enums::Selected_Map_View_None);
 	Resize_Windows(Main_View_Dlg_Hwnd, nleftWnd_width, nleftWnd_Depth);
 
@@ -212,24 +211,19 @@ void CL64_Editor_Map::Reset_Views_All()
 
 	Cam_TR->ZoomFactor = App->CL_Libs->CL_Preference->Defalut_Zoom;
 
-	int Count = 2;
 	
-	while (Count < 3)
-	{
-		RECT		Rect;
-		GetClientRect(VCam[Count]->hDlg, &Rect);
+	auto& Cam_BL = App->CL_View_Bottom_Left->VCam_BL;
 
-		VCam[Count]->XCenter = (float)Rect.right / 2;
-		VCam[Count]->YCenter = (float)Rect.bottom / 2;
+	GetClientRect(Cam_BL->hDlg, &Rect);
 
-		VCam[Count]->CamPos.x = 0;
-		VCam[Count]->CamPos.y = 0;
-		VCam[Count]->CamPos.z = 0;
+	Cam_BL->XCenter = (float)Rect.right / 2;
+	Cam_BL->YCenter = (float)Rect.bottom / 2;
 
-		VCam[Count]->ZoomFactor = App->CL_Libs->CL_Preference->Defalut_Zoom;
+	Cam_BL->CamPos.x = 0;
+	Cam_BL->CamPos.y = 0;
+	Cam_BL->CamPos.z = 0;
 
-		Count++;
-	}
+	Cam_BL->ZoomFactor = App->CL_Libs->CL_Preference->Defalut_Zoom;
 
 	App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
 
@@ -361,7 +355,7 @@ void CL64_Editor_Map::Resize_Windows(HWND hDlg, int newWidth, int newDepth)
 	MoveWindow(Top_Right_Banner_Hwnd, 0, 0, clientRect.right - newWidth - WIDTH_ADJUST, bannerHeight, FALSE);
 
 	// Resize Bottom Left Window
-	MoveWindow(Bottom_Left_Window_Hwnd,
+	MoveWindow(App->CL_View_Bottom_Left->Bottom_Left_Window_Hwnd,
 		0,
 		newDepth,
 		newWidth - WIDTH_ADJUST,
@@ -1259,12 +1253,14 @@ void CL64_Editor_Map::Create_Top_Right_Window()
 // *************************************************************************
 void CL64_Editor_Map::Create_Bottom_Left_Window()
 {
-	VCam[V_BL] = new ViewVars;
+	App->CL_View_Bottom_Left->Create_Bottom_Left_Window();
+
+	/*VCam[V_BL] = new ViewVars;
 	Set_Views_Defaults(V_BL, VIEWFRONT, "Bottom_Left");
 
 	Bottom_Left_Window_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MAP_BOTTOM_LEFT, Main_View_Dlg_Hwnd, (DLGPROC)Proc_Bottom_Left_Window);
 
-	VCam[V_BL]->hDlg = Bottom_Left_Window_Hwnd;
+	VCam[V_BL]->hDlg = Bottom_Left_Window_Hwnd;*/
 }
 
 // *************************************************************************

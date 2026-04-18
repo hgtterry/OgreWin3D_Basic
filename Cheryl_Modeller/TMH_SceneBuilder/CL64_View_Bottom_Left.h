@@ -23,6 +23,18 @@ THE SOFTWARE.
 */
 
 #pragma once
+
+typedef struct tagBrushDrawData_BL
+{
+	const Box3d* pViewBox;
+	HDC 			pDC;
+	ViewVars* v;
+	int				GroupId;
+	CL64_Doc* pDoc;
+	BrushFlagTest	FlagTest;
+	Ogre::uint32	Color;
+} BrushDrawData_BL;
+
 class CL64_View_Bottom_Left
 {
 public:
@@ -36,21 +48,21 @@ public:
 	void Draw_Brush_Faces_Ortho(const ViewVars* Cam, Brush* b);
 	void Set_VCam_BL_Defaults();
 
-	HWND Top_Right_Window_Hwnd;
+	HWND Bottom_Left_Window_Hwnd;
 
 	signed int fdocShowBrush(Brush const* b, Box3d const* ViewBox);
 
-	BrushDrawData_TR m_brushDrawData_TR;
+	BrushDrawData_BL m_brushDrawData_BL;
 
 	float m_GridSize, m_GridSnapSize;
 
 	HPEN m_Pen_Grid;
 	HPEN Pen_Camera;
 
-	HDC	m_MemoryhDC_TR;
+	HDC	m_MemoryhDC_BL;
 	T_Vec3 Saved_Cam_Position;
 
-	ViewVars* VCam_TR;
+	ViewVars* VCam_BL;
 
 private:
 	static LRESULT CALLBACK Proc_Bottom_Left_Window(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
