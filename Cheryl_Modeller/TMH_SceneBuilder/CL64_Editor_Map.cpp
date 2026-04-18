@@ -1885,14 +1885,6 @@ void CL64_Editor_Map::Render_RenderBrushSelFacesOrtho(ViewVars* Cam, Brush* b, H
 }
 
 // *************************************************************************
-// *						Draw_Screen Terry Flanigan		  			   *
-// *************************************************************************
-void CL64_Editor_Map::Draw_Screen(HWND hwnd)
-{
-	return;
-}
-
-// *************************************************************************
 // *	  			Render_RenderBrushFacesOrtho		Genesis			   *
 // *************************************************************************
 void CL64_Editor_Map::Render_RenderBrushFacesOrtho(const ViewVars* Cam, Brush* b, HDC ViewDC)

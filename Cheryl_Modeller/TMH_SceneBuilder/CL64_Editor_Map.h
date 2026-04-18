@@ -49,12 +49,9 @@ public:
 	void Init_Views(int View);
 	void ResizeOgreWindow(void);
 
-
 	void Render_RenderBrushFacesOrtho(const ViewVars* Cam, Brush* b, HDC ViewDC);
 	void Render_RenderBrushSelFacesOrtho(ViewVars* Cam, Brush* b, HDC ViewDC);
 	
-	void Draw_Screen(HWND hwnd);
-
 	bool Context_Command(WPARAM wParam);
 	bool Context_Command_Ogre(WPARAM wParam);
 
