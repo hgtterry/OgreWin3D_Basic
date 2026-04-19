@@ -43,10 +43,6 @@ public:
 
 	void Create_Top_Left_Window();
 	void Redraw_Window_TL();
-
-
-	static int Draw_Brush(Brush* pBrush, void* lParam);
-	void Draw_Brush_Faces_Ortho(const ViewVars* Cam, Brush* b);
 	void Set_VCam_TL_Defaults();
 
 	HWND Top_Left_Window_Hwnd;
@@ -74,5 +70,7 @@ private:
 
 	void Draw_Screen_TL(HWND hwnd);
 
+	static int Draw_Brush_2D(Brush* pBrush, void* lParam);
+	void Draw_Brush_Faces_2D(const ViewVars* Cam, Brush* b);
 };
 

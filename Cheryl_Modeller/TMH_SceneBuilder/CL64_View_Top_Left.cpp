@@ -340,7 +340,7 @@ signed int CL64_View_Top_Left::fdocShowBrush(Brush const* b, Box3d const* ViewBo
 // *************************************************************************
 // *	  						BrushDraw								   *
 // *************************************************************************
-signed int CL64_View_Top_Left::Draw_Brush(Brush* pBrush, void* lParam)
+signed int CL64_View_Top_Left::Draw_Brush_2D(Brush* pBrush, void* lParam)
 {
 	BrushDrawData_TL* pData = (BrushDrawData_TL*)lParam;
 
@@ -351,7 +351,7 @@ signed int CL64_View_Top_Left::Draw_Brush(Brush* pBrush, void* lParam)
 		{
 			if (App->CL_View_Top_Left->fdocShowBrush(pBrush, pData->pViewBox))
 			{
-				App->CL_View_Top_Left->Draw_Brush_Faces_Ortho(pData->v, pBrush);
+				App->CL_View_Top_Left->Draw_Brush_Faces_2D(pData->v, pBrush);
 			}
 		}
 	}
@@ -372,7 +372,7 @@ void CL64_View_Top_Left::Redraw_Window_TL()
 // *************************************************************************
 // *	  	Draw_Brush_Faces_Ortho:- Terry and Hazel Flanigan 2026		   *
 // *************************************************************************
-void CL64_View_Top_Left::Draw_Brush_Faces_Ortho(const ViewVars* Cam, Brush* b)
+void CL64_View_Top_Left::Draw_Brush_Faces_2D(const ViewVars* Cam, Brush* b)
 {
 	int	i, j;
 
@@ -485,7 +485,7 @@ void CL64_View_Top_Left::Draw_Screen_TL(HWND hwnd)
 
 			if (App->CL_X_Brush->Brush_IsMulti(SB))
 			{
-				App->CL_X_Brush->BrushList_EnumLeafBrushes(App->CL_X_Brush->Brush_GetBrushList(SB), &m_brushDrawData_TL, Draw_Brush);
+				App->CL_X_Brush->BrushList_EnumLeafBrushes(App->CL_X_Brush->Brush_GetBrushList(SB), &m_brushDrawData_TL, Draw_Brush_2D);
 			}
 			else
 			{
@@ -511,7 +511,7 @@ void CL64_View_Top_Left::Draw_Screen_TL(HWND hwnd)
 				{
 					if (App->CL_X_Brush->Brush_IsMulti(pBrush))
 					{
-						App->CL_X_Brush->BrushList_EnumLeafBrushes(App->CL_X_Brush->Brush_GetBrushList(pBrush), &m_brushDrawData_TL, Draw_Brush);
+						App->CL_X_Brush->BrushList_EnumLeafBrushes(App->CL_X_Brush->Brush_GetBrushList(pBrush), &m_brushDrawData_TL, Draw_Brush_2D);
 					}
 					else
 					{
