@@ -176,7 +176,7 @@ void CL64_Editor_Map::Reset_Views_All()
 
 	Save_Splitter_Width_Depth();
 	
-	auto& Cam_TL = App->CL_3D_TL_View->VCam_TL;
+	auto& Cam_TL = App->CL_View_Top_Left->VCam_TL;
 
 	RECT		Rect;
 	GetClientRect(Cam_TL->hDlg, &Rect);
@@ -329,13 +329,13 @@ void CL64_Editor_Map::Resize_Windows(HWND hDlg, int newWidth, int newDepth)
 	const int bannerHeight = 16;
 
 	//                                                     Resize Top Left Window
-	MoveWindow(App->CL_3D_TL_View->Top_Left_Window_Hwnd,
+	MoveWindow(App->CL_View_Top_Left->Top_Left_Window_Hwnd,
 		0,
 		0,
 		clientRect.left + (newWidth - WIDTH_ADJUST),
 		adjustedDepth,
 		FALSE);
-	MoveWindow(App->CL_3D_TL_View->Top_Left_Banner_Hwnd, 0, 0, newWidth - WIDTH_ADJUST, bannerHeight, FALSE);
+	MoveWindow(App->CL_View_Top_Left->Top_Left_Banner_Hwnd, 0, 0, newWidth - WIDTH_ADJUST, bannerHeight, FALSE);
 
 
 
@@ -770,7 +770,7 @@ void CL64_Editor_Map::Save_Splitter_Width_Depth()
 // *************************************************************************
 void CL64_Editor_Map::Create_Views()
 {
-	App->CL_3D_TL_View->Create_Top_Left_Window();
+	App->CL_View_Top_Left->Create_Top_Left_Window();
 	App->CL_View_Top_Right->Create_Top_Right_Window();
 	App->CL_View_Bottom_Left->Create_Bottom_Left_Window();
 }
@@ -1139,7 +1139,7 @@ void CL64_Editor_Map::Set_Selected_View(int Selected_View)
 {
 	Selected_Window = Selected_View;
 
-	RedrawWindow(App->CL_3D_TL_View->Top_Left_Banner_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+	RedrawWindow(App->CL_View_Top_Left->Top_Left_Banner_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 	RedrawWindow(App->CL_View_Top_Right->Top_Right_Banner_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 	RedrawWindow(App->CL_View_Bottom_Left->Bottom_Left_Banner_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 	RedrawWindow(Bottom_Ogre_Banner, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
@@ -1569,10 +1569,10 @@ bool CL64_Editor_Map::Context_Command(WPARAM wParam)
 	case IDM_CENTRE_ONCAMERA:
 	{
 		RECT		Rect;
-		GetClientRect(App->CL_3D_TL_View->VCam_TL->hDlg, &Rect);
+		GetClientRect(App->CL_View_Top_Left->VCam_TL->hDlg, &Rect);
 
-		App->CL_3D_TL_View->VCam_TL->XCenter = (float)Rect.right / 2;
-		App->CL_3D_TL_View->VCam_TL->YCenter = (float)Rect.bottom / 2;
+		App->CL_View_Top_Left->VCam_TL->XCenter = (float)Rect.right / 2;
+		App->CL_View_Top_Left->VCam_TL->YCenter = (float)Rect.bottom / 2;
 
 		Ogre::Vector3 Pos;
 		if (App->CL_Model->flag_Model_Loaded == true)
@@ -1586,12 +1586,12 @@ bool CL64_Editor_Map::Context_Command(WPARAM wParam)
 			Pos.z = 0;
 		}
 
-		App->CL_3D_TL_View->VCam_TL->CamPos.x = Pos.x;
-		App->CL_3D_TL_View->VCam_TL->CamPos.y = Pos.y;
-		App->CL_3D_TL_View->VCam_TL->CamPos.z = Pos.z;
+		App->CL_View_Top_Left->VCam_TL->CamPos.x = Pos.x;
+		App->CL_View_Top_Left->VCam_TL->CamPos.y = Pos.y;
+		App->CL_View_Top_Left->VCam_TL->CamPos.z = Pos.z;
 
-		App->CL_3D_TL_View->VCam_TL->ZoomFactor = 1.5;
-		App->CL_3D_TL_View->Redraw_Window_TL();
+		App->CL_View_Top_Left->VCam_TL->ZoomFactor = 1.5;
+		App->CL_View_Top_Left->Redraw_Window_TL();
 
 		return TRUE;
 	}

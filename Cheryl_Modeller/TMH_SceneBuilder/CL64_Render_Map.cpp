@@ -326,7 +326,7 @@ void CL64_Render_Map::Pan_View(ViewVars* currentView, int startPosX, int startPo
 
 	if (currentView->ViewType == TOP_LEFT_VIEW)
 	{
-		App->CL_3D_TL_View->Redraw_Window_TL();
+		App->CL_View_Top_Left->Redraw_Window_TL();
 		return;
 	}
 

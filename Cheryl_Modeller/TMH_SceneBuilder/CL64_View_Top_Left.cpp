@@ -25,12 +25,12 @@ THE SOFTWARE.
 #include "pch.h"
 #include "resource.h"
 #include "CL64_App.h"
-#include "CL64_3D_TL_View.h"
+#include "CL64_View_Top_Left.h"
 
 #define min(a,b)            (((a) < (b)) ? (a) : (b))
 #define max(a,b)            (((a) > (b)) ? (a) : (b))
 
-CL64_3D_TL_View::CL64_3D_TL_View()
+CL64_View_Top_Left::CL64_View_Top_Left()
 {
 	VCam_TL = { 0 };
 	m_brushDrawData_TL = { 0 };
@@ -52,14 +52,14 @@ CL64_3D_TL_View::CL64_3D_TL_View()
 	m_MemoryhDC = nullptr;
 }
 
-CL64_3D_TL_View::~CL64_3D_TL_View()
+CL64_View_Top_Left::~CL64_View_Top_Left()
 {
 }
 
 // *************************************************************************
 // *			Set_VCam_TL_Defaults:- Terry and Hazel Flanigan 2026	   *
 // *************************************************************************
-void CL64_3D_TL_View::Set_VCam_TL_Defaults()
+void CL64_View_Top_Left::Set_VCam_TL_Defaults()
 {
 	strcpy(VCam_TL->Name, "Top_Left");
 	VCam_TL->ViewType = TOP_LEFT_VIEW;
@@ -82,7 +82,7 @@ void CL64_3D_TL_View::Set_VCam_TL_Defaults()
 // *************************************************************************
 // *		Create_Top_Left_Window:- Terry and Hazel Flanigan 2026		   *
 // *************************************************************************
-void CL64_3D_TL_View::Create_Top_Left_Window()
+void CL64_View_Top_Left::Create_Top_Left_Window()
 {
 	VCam_TL = new ViewVars;
 	
@@ -97,7 +97,7 @@ void CL64_3D_TL_View::Create_Top_Left_Window()
 // *************************************************************************
 // *		  Proc_Top_Left_Window:- Terry and Hazel Flanigan 2026		   *
 // *************************************************************************
-LRESULT CALLBACK CL64_3D_TL_View::Proc_Top_Left_Window(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK CL64_View_Top_Left::Proc_Top_Left_Window(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	switch (message)
 	{
@@ -105,9 +105,9 @@ LRESULT CALLBACK CL64_3D_TL_View::Proc_Top_Left_Window(HWND hDlg, UINT message, 
 	case WM_INITDIALOG:
 	{
 		SendDlgItemMessage(hDlg, IDC_ST_TL_TITLE, WM_SETFONT, (WPARAM)App->Font_CB10, MAKELPARAM(TRUE, 0));
-		App->CL_3D_TL_View->Top_Left_Banner_Hwnd = GetDlgItem(hDlg, IDC_ST_TL_TITLE);
+		App->CL_View_Top_Left->Top_Left_Banner_Hwnd = GetDlgItem(hDlg, IDC_ST_TL_TITLE);
 
-		App->CL_3D_TL_View->m_Pen_Grid = CreatePen(PS_SOLID, 0, RGB(0, 112, 112));
+		App->CL_View_Top_Left->m_Pen_Grid = CreatePen(PS_SOLID, 0, RGB(0, 112, 112));
 
 		return TRUE;
 	}
@@ -196,13 +196,13 @@ LRESULT CALLBACK CL64_3D_TL_View::Proc_Top_Left_Window(HWND hDlg, UINT message, 
 				if (zDelta > 0)
 				{
 					App->CL_Editor_Map->Current_View->ZoomFactor = App->CL_Editor_Map->Current_View->ZoomFactor + 0.1;
-					App->CL_3D_TL_View->Redraw_Window_TL();
+					App->CL_View_Top_Left->Redraw_Window_TL();
 				}
 
 				if (zDelta < 0)
 				{
 					App->CL_Editor_Map->Current_View->ZoomFactor = App->CL_Editor_Map->Current_View->ZoomFactor - 0.1;
-					App->CL_3D_TL_View->Redraw_Window_TL();
+					App->CL_View_Top_Left->Redraw_Window_TL();
 				}
 			}
 
@@ -229,7 +229,7 @@ LRESULT CALLBACK CL64_3D_TL_View::Proc_Top_Left_Window(HWND hDlg, UINT message, 
 	// Left Mouse Down
 	case WM_LBUTTONDOWN:
 	{
-		App->CL_Editor_Map->Current_View = App->CL_3D_TL_View->VCam_TL;
+		App->CL_Editor_Map->Current_View = App->CL_View_Top_Left->VCam_TL;
 
 		if (App->CL_Editor_Map->Selected_Window != Enums::Selected_Map_View_TL)
 		{
@@ -245,7 +245,7 @@ LRESULT CALLBACK CL64_3D_TL_View::Proc_Top_Left_Window(HWND hDlg, UINT message, 
 		GetCursorPos(&RealCursorPosition);
 		ScreenToClient(hDlg, &RealCursorPosition);
 
-		App->CL_Editor_Map->Current_View = App->CL_3D_TL_View->VCam_TL;
+		App->CL_Editor_Map->Current_View = App->CL_View_Top_Left->VCam_TL;
 
 		App->CL_Editor_Map->flag_Left_Button_Down = false;
 		App->CL_Editor_Map->flag_Right_Button_Down = false;
@@ -259,7 +259,7 @@ LRESULT CALLBACK CL64_3D_TL_View::Proc_Top_Left_Window(HWND hDlg, UINT message, 
 	case WM_RBUTTONDOWN:
 	{
 
-		App->CL_Editor_Map->Current_View = App->CL_3D_TL_View->VCam_TL;
+		App->CL_Editor_Map->Current_View = App->CL_View_Top_Left->VCam_TL;
 
 		if (App->CL_Editor_Map->Selected_Window != Enums::Selected_Map_View_TL)
 		{
@@ -274,7 +274,7 @@ LRESULT CALLBACK CL64_3D_TL_View::Proc_Top_Left_Window(HWND hDlg, UINT message, 
 
 		App->CUR = SetCursor(NULL);
 		
-		App->CL_3D_TL_View->Saved_Cam_Position = App->CL_3D_TL_View->VCam_TL->CamPos;
+		App->CL_View_Top_Left->Saved_Cam_Position = App->CL_View_Top_Left->VCam_TL->CamPos;
 		
 		return 1;
 	}
@@ -291,11 +291,11 @@ LRESULT CALLBACK CL64_3D_TL_View::Proc_Top_Left_Window(HWND hDlg, UINT message, 
 		App->CL_ImGui_Dialogs->Debug_Vec3 = Ogre::Vector3(App->CL_3D_TL_View->VCam_TL->CamPos.x, App->CL_3D_TL_View->VCam_TL->CamPos.y, App->CL_3D_TL_View->VCam_TL->CamPos.z);*/
 		
 		
-		int cameraComparison = App->CL_X_Maths->Vector3_Compare(&App->CL_3D_TL_View->VCam_TL->CamPos, &App->CL_3D_TL_View->Saved_Cam_Position, 0);
+		int cameraComparison = App->CL_X_Maths->Vector3_Compare(&App->CL_View_Top_Left->VCam_TL->CamPos, &App->CL_View_Top_Left->Saved_Cam_Position, 0);
 		
 		if (cameraComparison == 1)
 		{
-			App->CL_Editor_Map->Current_View = App->CL_3D_TL_View->VCam_TL;
+			App->CL_Editor_Map->Current_View = App->CL_View_Top_Left->VCam_TL;
 			App->CL_Editor_Map->Context_Menu(hDlg);
 		}
 
@@ -316,8 +316,8 @@ LRESULT CALLBACK CL64_3D_TL_View::Proc_Top_Left_Window(HWND hDlg, UINT message, 
 	{
 		if (App->flag_3D_Started == true)
 		{
-			App->CL_Editor_Map->Current_View = App->CL_3D_TL_View->VCam_TL;
-			App->CL_3D_TL_View->Draw_Screen_TL(hDlg);
+			App->CL_Editor_Map->Current_View = App->CL_View_Top_Left->VCam_TL;
+			App->CL_View_Top_Left->Draw_Screen_TL(hDlg);
 		}
 
 		return 0;
@@ -332,7 +332,7 @@ LRESULT CALLBACK CL64_3D_TL_View::Proc_Top_Left_Window(HWND hDlg, UINT message, 
 // ---------------------------------------------------------------------------------- Stuff
 #define	VectorToSUB(a, b) (*((((float *)(&a))) + (b)))
 
-signed int CL64_3D_TL_View::fdocShowBrush(Brush const* b, Box3d const* ViewBox)
+signed int CL64_View_Top_Left::fdocShowBrush(Brush const* b, Box3d const* ViewBox)
 {
 	return 1;// (App->CL_Brush->BrushIsVisible(b) && App->CL_Brush->Brush_TestBoundsIntersect(b, ViewBox));
 }
@@ -340,7 +340,7 @@ signed int CL64_3D_TL_View::fdocShowBrush(Brush const* b, Box3d const* ViewBox)
 // *************************************************************************
 // *	  						BrushDraw								   *
 // *************************************************************************
-signed int CL64_3D_TL_View::Draw_Brush(Brush* pBrush, void* lParam)
+signed int CL64_View_Top_Left::Draw_Brush(Brush* pBrush, void* lParam)
 {
 	BrushDrawData_TL* pData = (BrushDrawData_TL*)lParam;
 
@@ -349,9 +349,9 @@ signed int CL64_3D_TL_View::Draw_Brush(Brush* pBrush, void* lParam)
 	{
 		if ((pData->FlagTest == NULL) || pData->FlagTest(pBrush))
 		{
-			if (App->CL_3D_TL_View->fdocShowBrush(pBrush, pData->pViewBox))
+			if (App->CL_View_Top_Left->fdocShowBrush(pBrush, pData->pViewBox))
 			{
-				App->CL_3D_TL_View->Draw_Brush_Faces_Ortho(pData->v, pBrush);
+				App->CL_View_Top_Left->Draw_Brush_Faces_Ortho(pData->v, pBrush);
 			}
 		}
 	}
@@ -364,7 +364,7 @@ static POINT plist[64];
 // *************************************************************************
 // *			Redraw_Window_TL:- Terry and Hazel Flanigan 2026		   *
 // *************************************************************************
-void CL64_3D_TL_View::Redraw_Window_TL()
+void CL64_View_Top_Left::Redraw_Window_TL()
 {
 	RedrawWindow(Top_Left_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 }
@@ -372,7 +372,7 @@ void CL64_3D_TL_View::Redraw_Window_TL()
 // *************************************************************************
 // *	  	Draw_Brush_Faces_Ortho:- Terry and Hazel Flanigan 2026		   *
 // *************************************************************************
-void CL64_3D_TL_View::Draw_Brush_Faces_Ortho(const ViewVars* Cam, Brush* b)
+void CL64_View_Top_Left::Draw_Brush_Faces_Ortho(const ViewVars* Cam, Brush* b)
 {
 	int	i, j;
 
@@ -406,7 +406,7 @@ static signed int BrushDrawSelFacesOrtho(Brush* pBrush, void* lParam)
 // *************************************************************************
 // *			Draw_Screen_TL:- Terry and Hazel Flanigan 2026			   *
 // *************************************************************************
-void CL64_3D_TL_View::Draw_Screen_TL(HWND hwnd)
+void CL64_View_Top_Left::Draw_Screen_TL(HWND hwnd)
 {
 	// Initialize variables
 	int			inidx = 0;

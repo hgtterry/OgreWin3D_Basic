@@ -112,7 +112,7 @@ THE SOFTWARE.
 
 #include "CL64_Properties_Textures_Com.h"
 
-#include "CL64_3D_TL_View.h"
+#include "CL64_View_Top_Left.h"
 #include "CL64_View_Top_Right.h"
 #include "CL64_View_Bottom_Left.h"
 
@@ -207,7 +207,7 @@ public:
 
 	CL64_Properties_Textures_Com*		CL_Properties_Textures_Com;
 
-	CL64_3D_TL_View*			CL_3D_TL_View;
+	CL64_View_Top_Left*			CL_View_Top_Left;
 	CL64_View_Top_Right*		CL_View_Top_Right;
 	CL64_View_Bottom_Left*		CL_View_Bottom_Left;
 

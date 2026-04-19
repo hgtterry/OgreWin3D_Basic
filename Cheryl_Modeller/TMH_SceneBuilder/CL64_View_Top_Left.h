@@ -35,11 +35,11 @@ typedef struct tagBrushDrawData_TL
 	Ogre::uint32	Color;
 } BrushDrawData_TL;
 
-class CL64_3D_TL_View
+class CL64_View_Top_Left
 {
 public:
-	CL64_3D_TL_View();
-	~CL64_3D_TL_View();
+	CL64_View_Top_Left();
+	~CL64_View_Top_Left();
 
 	void Create_Top_Left_Window();
 	void Redraw_Window_TL();
