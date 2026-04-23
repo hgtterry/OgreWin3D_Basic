@@ -78,9 +78,6 @@ public:
 
 	HWND Main_View_Dlg_Hwnd; // Background of MDI
 
-
-	HWND Bottom_Ogre_Right_Hwnd;
-	
 	float GridSize, GridSnapSize;
 	
 	// TODO hgtterry Make Private
@@ -125,9 +122,6 @@ public:
 
 private:
 	static LRESULT CALLBACK Proc_Main_Dlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
-
-	static LRESULT CALLBACK Proc_Ogre_BR(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
-	static LRESULT CALLBACK Proc_ViewerMain(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	void Set_Views_Defaults(int Index,Ogre::int32 View, const char* Name);
 

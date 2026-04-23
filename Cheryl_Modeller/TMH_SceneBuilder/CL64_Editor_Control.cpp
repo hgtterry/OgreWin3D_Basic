@@ -93,7 +93,7 @@ void CL64_Editor_Control::Start_Editor_MapBrush_Mode(void)
 	App->CL_Gizmos->highlight(App->CL_Scene->B_Object[App->CL_Gizmos->Last_Selected_Object]->Object_Ent);
    // App->CL_Com_Objects->Show_Entities(true);
 
-	SetParent(App->CL_Editor_Map->Bottom_Ogre_Right_Hwnd, Parent_hWnd);
+	SetParent(App->CL_View_3D->Bottom_Right_Window_Hwnd, Parent_hWnd);
 
 	App->CL_Editor_Map->Resize_Windows(App->CL_Editor_Map->Main_View_Dlg_Hwnd, App->CL_Editor_Map->nleftWnd_width, App->CL_Editor_Map->nleftWnd_Depth);
 

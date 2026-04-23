@@ -313,7 +313,6 @@ public:
 	HCURSOR CUR;
 	HMENU Menu_Map;
 	
-	HWND ViewGLhWnd;
 	HWND ListPanel;
 
 	bool flag_Debug_App;

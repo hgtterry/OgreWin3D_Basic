@@ -1215,27 +1215,21 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             MoveWindow(App->CL_Editor_Map->Main_View_Dlg_Hwnd, 0, 75, rcl.right, rcl.bottom - 75, TRUE);
             App->CL_Editor_Map->Init_Views(Enums::Selected_Map_View_None);
             App->CL_Editor_Map->Save_Splitter_Width_Depth();
-
-            if (App->flag_3D_Started == true)
-            {
-                App->CL_Ogre->RenderFrame(2);
-            }
+           
+            App->CL_Ogre->RenderFrame(2);
+          
         }
         else
         {
-           // GetClientRect(App->CL_Editor_Map->Bottom_Ogre_Right_Hwnd, &rcl);
-            SetWindowPos(App->ViewGLhWnd, NULL, 0, 0, rcl.right, rcl.bottom, SWP_NOZORDER);
+            SetWindowPos(App->CL_View_3D->RenderWin3D_hWnd, NULL, 0, 0, rcl.right, rcl.bottom, SWP_NOZORDER);
 
             App->CL_Editor_Map->Init_Views(Enums::Selected_Map_View_3D);
 
             App->CL_Ogre->mWindow->windowMovedOrResized();
             App->CL_Ogre->mCamera->setAspectRatio((Ogre::Real)App->CL_Ogre->mWindow->getWidth() / (Ogre::Real)App->CL_Ogre->mWindow->getHeight());
            
-            if (App->flag_3D_Started == true)
-            {
-                App->CL_Ogre->RenderFrame(2);
-            }
-
+            App->CL_Ogre->RenderFrame(2);
+           
         }
        
         return 0;
@@ -1448,7 +1442,7 @@ void StartOgre()
 	}
 
 
-    ShowWindow(App->CL_Editor_Map->Bottom_Ogre_Right_Hwnd, SW_SHOWNORMAL);
+    ShowWindow(App->CL_View_3D->Bottom_Right_Window_Hwnd, SW_SHOWNORMAL);
     App->CL_Editor_Control->flag_Scene_Editor_Active = true;
     App->CL_Editor_Control->flag_Map_Editor_Active = false;
     App->CL_Editor_Map->Selected_Window = Enums::Selected_Map_View_3D;

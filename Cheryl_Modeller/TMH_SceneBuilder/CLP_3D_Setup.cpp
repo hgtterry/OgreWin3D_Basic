@@ -360,15 +360,18 @@ void CLP_3D_Setup::Camera_Reset_Zero()
 }
 
 // *************************************************************************
-// *			RenderFrame:- Terry Mo and Hazel 2025					   *
+// *			RenderFrame:- Terry Mo and Hazel 2026					   *
 // *************************************************************************
 void CLP_3D_Setup::RenderFrame(int How_Many)
 {
-	int Count = 0;
-	while (Count < How_Many)
+	if (App->flag_3D_Started == true)
 	{
-		Ogre::Root::getSingletonPtr()->renderOneFrame();
-		Count++;
+		int Count = 0;
+		while (Count < How_Many)
+		{
+			Ogre::Root::getSingletonPtr()->renderOneFrame();
+			Count++;
+		}
 	}
 }
 

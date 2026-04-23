@@ -99,7 +99,7 @@ void CL64_Interface::Move_FileView_Window(void)
 {
 	POINT p = { 0 };
 
-	int Diff = MapWindowPoints(App->ViewGLhWnd, NULL, &p, 1);
+	int Diff = MapWindowPoints(App->CL_View_3D->RenderWin3D_hWnd, NULL, &p, 1);
 
 	int PosX = p.x;
 	int PosY = p.y;

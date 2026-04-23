@@ -34,7 +34,7 @@ void Init_Libs::Start_Libraries()
 // *************************************************************************
 char* Init_Libs::GetVersion()
 {
-	return (LPSTR)" Init_Libs [ 22-04-26 ] Build 1T ";
+	return (LPSTR)" Init_Libs [ 23-04-26 ] Build 1T ";
 }
 
 // *************************************************************************
@@ -43,7 +43,7 @@ char* Init_Libs::GetVersion()
 char* Init_Libs::Get_Time_Stamp()
 {
 	static char buf[MAX_PATH];
-	sprintf(buf, "Build Time %s   Date  %s", __TIME__, __DATE__);
+	sprintf(buf, "Build Date  %s Time %s", __DATE__, __TIME__);
 
 	return (LPSTR)buf;
 }

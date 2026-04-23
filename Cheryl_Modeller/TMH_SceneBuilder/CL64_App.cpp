@@ -196,7 +196,6 @@ CL64_App::CL64_App(void)
 	Hnd_Spheriod_Icon = NULL;
 	Hnd_Stairs_Icon = NULL;
 	
-	ViewGLhWnd = NULL;
 	ListPanel = NULL;
 
 	flag_Debug_App = false;

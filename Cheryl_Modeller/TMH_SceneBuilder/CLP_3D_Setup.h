@@ -47,7 +47,7 @@ public:
 	bool Render_Loop_3D(void);
 
 	void Log_Message_To_File(char* Message);
-	void RenderFrame(int How_Many);
+	void RenderFrame(int How_Many = 7);
 
 	void Camera_Reset_Zero();
 
