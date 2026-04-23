@@ -45,6 +45,8 @@ public:
 
 	void Reset_Class();
 
+	void Set_Views_Defaults(int Index, Ogre::int32 View, const char* Name);
+
 	void Init_Map_Views();
 	void Init_Views(int View);
 	void ResizeOgreWindow(void);
@@ -123,11 +125,7 @@ public:
 private:
 	static LRESULT CALLBACK Proc_Main_Dlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
-	void Set_Views_Defaults(int Index,Ogre::int32 View, const char* Name);
-
 	void Create_Views();
-
-	void Create_Ogre_Bottom_Right();
 
 	// Draw Routines
 	

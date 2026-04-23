@@ -406,15 +406,13 @@ void CL64_Editor_Map::ResizeOgreWindow()
 }
 
 // *************************************************************************
-// *			Init_Map_Views:- Terry Mo and Hazel 2025				   *
+// *			Init_Map_Views:- Terry Mo and Hazel 2026				   *
 // *************************************************************************
 void CL64_Editor_Map::Init_Map_Views()
 {
 	Main_View_Dlg_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MAPEDITOR, App->MainHwnd, (DLGPROC)Proc_Main_Dlg);
 
 	Create_Views();
-
-	Create_Ogre_Bottom_Right();
 
 	App->CL_Interface->Show_Grids(false);
 
@@ -771,21 +769,7 @@ void CL64_Editor_Map::Create_Views()
 	App->CL_View_Top_Left->Create_Top_Left_Window();
 	App->CL_View_Top_Right->Create_Top_Right_Window();
 	App->CL_View_Bottom_Left->Create_Bottom_Left_Window();
-}
-
-// *************************************************************************
-// *		 Create_Ogre_Bottom_Right:- Terry Mo and Hazel 2025			   *
-// *************************************************************************
-void CL64_Editor_Map::Create_Ogre_Bottom_Right()
-{
-	VCam[V_Ogre] = new ViewVars;
-	Set_Views_Defaults(V_Ogre, VIEWOGRE, "Ogre_Window");
-
-	App->CL_View_3D->Bottom_Right_Window_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MAP_BOTTOM_RIGHT, Main_View_Dlg_Hwnd, (DLGPROC)App->CL_View_3D->Proc_ViewerMain);
-	
-	VCam[V_Ogre]->hDlg = App->CL_View_3D->Bottom_Right_Window_Hwnd;
-
-	App->CL_Ogre->RenderHwnd = App->CL_View_3D->RenderWin3D_hWnd;
+	App->CL_View_3D->Create_Ogre_Bottom_Right();
 }
 
 // *************************************************************************

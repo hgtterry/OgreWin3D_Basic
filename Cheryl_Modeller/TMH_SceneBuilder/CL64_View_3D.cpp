@@ -38,6 +38,21 @@ CL64_View_3D::~CL64_View_3D()
 }
 
 // *************************************************************************
+// *		 Create_Ogre_Bottom_Right:- Terry Mo and Hazel 2026			   *
+// *************************************************************************
+void CL64_View_3D::Create_Ogre_Bottom_Right()
+{
+	App->CL_Editor_Map->VCam[V_Ogre] = new ViewVars;
+	App->CL_Editor_Map->Set_Views_Defaults(V_Ogre, VIEWOGRE, "Ogre_Window");
+
+	App->CL_View_3D->Bottom_Right_Window_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MAP_BOTTOM_RIGHT, App->CL_Editor_Map->Main_View_Dlg_Hwnd, (DLGPROC)App->CL_View_3D->Proc_ViewerMain);
+
+	App->CL_Editor_Map->VCam[V_Ogre]->hDlg = App->CL_View_3D->Bottom_Right_Window_Hwnd;
+
+	App->CL_Ogre->RenderHwnd = App->CL_View_3D->RenderWin3D_hWnd;
+}
+
+// *************************************************************************
 // *			Proc_ViewerMain:- Terry Mo and Hazel 2026				   *
 // *************************************************************************
 LRESULT CALLBACK CL64_View_3D::Proc_ViewerMain(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)

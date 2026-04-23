@@ -29,6 +29,8 @@ public:
 	CL64_View_3D();
 	~CL64_View_3D();
 
+	void Create_Ogre_Bottom_Right();
+
 	HWND Bottom_Right_Window_Hwnd;
 	HWND RenderWin3D_hWnd;
 
