@@ -90,7 +90,7 @@ void CL64_View_Top_Right::Create_Top_Right_Window()
 
 	Set_VCam_TR_Defaults();
 
-	Top_Right_Window_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MAP_TOP_RIGHT, App->CL_Editor_Map->Main_View_Dlg_Hwnd, (DLGPROC)Proc_Top_Right_Window);
+	Top_Right_Window_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MAP_TOP_RIGHT, App->CL_Views_Com->Main_View_Dlg_Hwnd, (DLGPROC)Proc_Top_Right_Window);
 	VCam_TR->hDlg = Top_Right_Window_Hwnd;
 }
 
@@ -121,7 +121,7 @@ LRESULT CALLBACK CL64_View_Top_Right::Proc_Top_Right_Window(HWND hDlg, UINT mess
 	{
 		if (GetDlgItem(hDlg, IDC_ST_TR_TITLE) == (HWND)lParam)
 		{
-			if (App->CL_Editor_Map->Selected_Window == Enums::Selected_Map_View_TR)
+			if (App->CL_Views_Com->Selected_Window == Enums::Selected_Map_View_TR)
 			{
 				SetBkColor((HDC)wParam, RGB(0, 255, 0));
 				SetTextColor((HDC)wParam, RGB(0, 0, 0));
@@ -152,18 +152,20 @@ LRESULT CALLBACK CL64_View_Top_Right::Proc_Top_Right_Window(HWND hDlg, UINT mess
 
 	case WM_SETCURSOR:
 	{
-		if (App->CL_Editor_Map->flag_Context_Menu_Active == true)
+		auto& Views_Com = App->CL_Views_Com;
+
+		if (Views_Com->flag_Context_Menu_Active == true)
 		{
 			return false;
 		}
 
-		if (App->CL_Editor_Map->flag_Right_Button_Down == true || App->CL_Editor_Map->flag_Left_Button_Down == true)
+		if (Views_Com->flag_Right_Button_Down == true || Views_Com->flag_Left_Button_Down == true)
 		{
 			return true;
 		}
 		else if (App->CL_Doc->mModeTool == ID_TOOLS_BRUSH_MOVEROTATEBRUSH)
 		{
-			SetCursor(App->CL_Editor_Map->hcBoth);
+			SetCursor(Views_Com->hcBoth);
 			return true;
 		}
 		else if (App->CL_Doc->mModeTool == ID_TOOLS_BRUSH_SCALEBRUSH)
@@ -180,28 +182,30 @@ LRESULT CALLBACK CL64_View_Top_Right::Proc_Top_Right_Window(HWND hDlg, UINT mess
 
 	case WM_MOUSEWHEEL:
 	{
-		if (App->CL_Editor_Map->flag_Left_Button_Down == true)
+		auto& Views_Com = App->CL_Views_Com;
+
+		if (Views_Com->flag_Left_Button_Down == true)
 		{
 			return 1;
 		}
 
-		if (App->CL_Editor_Map->Selected_Window == Enums::Selected_Map_View_TR)
+		if (Views_Com->Selected_Window == Enums::Selected_Map_View_TR)
 		{
-			App->CL_Editor_Map->flag_Wheel_Active = true;
+			Views_Com->flag_Wheel_Active = true;
 
-			if (App->CL_Editor_Map->flag_Left_Button_Down == false)
+			if (Views_Com->flag_Left_Button_Down == false)
 			{
 				int zDelta = static_cast<short>(HIWORD(wParam)); // wheel rotation
 
 				if (zDelta > 0)
 				{
-					App->CL_Editor_Map->Current_View->ZoomFactor = App->CL_Editor_Map->Current_View->ZoomFactor + 0.1;
+					Views_Com->Current_View->ZoomFactor = Views_Com->Current_View->ZoomFactor + 0.1;
 					App->CL_View_Top_Right->Redraw_Window_TR();
 				}
 
 				if (zDelta < 0)
 				{
-					App->CL_Editor_Map->Current_View->ZoomFactor = App->CL_Editor_Map->Current_View->ZoomFactor - 0.1;
+					Views_Com->Current_View->ZoomFactor = Views_Com->Current_View->ZoomFactor - 0.1;
 					App->CL_View_Top_Right->Redraw_Window_TR();
 				}
 			}
@@ -209,7 +213,7 @@ LRESULT CALLBACK CL64_View_Top_Right::Proc_Top_Right_Window(HWND hDlg, UINT mess
 			return 1;
 		}
 
-		App->CL_Editor_Map->flag_Wheel_Active = false;
+		Views_Com->flag_Wheel_Active = false;
 		int zDelta = (short)HIWORD(wParam);    // wheel rotation
 
 		return 1;
@@ -221,7 +225,7 @@ LRESULT CALLBACK CL64_View_Top_Right::Proc_Top_Right_Window(HWND hDlg, UINT mess
 		GetCursorPos(&RealCursorPosition);
 		ScreenToClient(hDlg, &RealCursorPosition);
 
-		App->CL_Editor_Map->On_Mouse_Move(RealCursorPosition, hDlg);
+		App->CL_Views_Com->On_Mouse_Move(RealCursorPosition, hDlg);
 
 		return 1;
 	}
@@ -229,11 +233,13 @@ LRESULT CALLBACK CL64_View_Top_Right::Proc_Top_Right_Window(HWND hDlg, UINT mess
 	// Left Mouse Down
 	case WM_LBUTTONDOWN:
 	{
-		App->CL_Editor_Map->Current_View = App->CL_View_Top_Right->VCam_TR;
+		auto& Views_Com = App->CL_Views_Com;
 
-		if (App->CL_Editor_Map->Selected_Window != Enums::Selected_Map_View_TR)
+		Views_Com->Current_View = App->CL_View_Top_Right->VCam_TR;
+
+		if (Views_Com->Selected_Window != Enums::Selected_Map_View_TR)
 		{
-			App->CL_Editor_Map->Set_Selected_View(Enums::Selected_Map_View_TR);
+			Views_Com->Set_Selected_View(Enums::Selected_Map_View_TR);
 		}
 
 		return 1;
@@ -245,12 +251,14 @@ LRESULT CALLBACK CL64_View_Top_Right::Proc_Top_Right_Window(HWND hDlg, UINT mess
 		GetCursorPos(&RealCursorPosition);
 		ScreenToClient(hDlg, &RealCursorPosition);
 
-		App->CL_Editor_Map->Current_View = App->CL_View_Top_Right->VCam_TR;
+		auto& Views_Com = App->CL_Views_Com;
 
-		App->CL_Editor_Map->flag_Left_Button_Down = false;
-		App->CL_Editor_Map->flag_Right_Button_Down = false;
+		Views_Com->Current_View = App->CL_View_Top_Right->VCam_TR;
 
-		App->CL_Editor_Map->On_Left_Button_Up(RealCursorPosition);
+		Views_Com->flag_Left_Button_Down = false;
+		Views_Com->flag_Right_Button_Down = false;
+
+		Views_Com->On_Left_Button_Up(RealCursorPosition);
 
 		return 1;
 	}
@@ -258,18 +266,20 @@ LRESULT CALLBACK CL64_View_Top_Right::Proc_Top_Right_Window(HWND hDlg, UINT mess
 	// Right Mouse Down
 	case WM_RBUTTONDOWN:
 	{
-		App->CL_Editor_Map->Current_View = App->CL_View_Top_Right->VCam_TR;
+		auto& Views_Com = App->CL_Views_Com;
 
-		if (App->CL_Editor_Map->Selected_Window != Enums::Selected_Map_View_TR)
+		Views_Com->Current_View = App->CL_View_Top_Right->VCam_TR;
+
+		if (Views_Com->Selected_Window != Enums::Selected_Map_View_TR)
 		{
-			App->CL_Editor_Map->Set_Selected_View(Enums::Selected_Map_View_TR);
+			Views_Com->Set_Selected_View(Enums::Selected_Map_View_TR);
 		}
 
-		GetCursorPos(&App->CL_Editor_Map->mStartPoint);
-		ScreenToClient(hDlg, &App->CL_Editor_Map->mStartPoint);
+		GetCursorPos(&Views_Com->mStartPoint);
+		ScreenToClient(hDlg, &Views_Com->mStartPoint);
 
-		App->CL_Editor_Map->flag_Right_Button_Down = true;
-		App->CL_Editor_Map->flag_Left_Button_Down = false;
+		Views_Com->flag_Right_Button_Down = true;
+		Views_Com->flag_Left_Button_Down = false;
 
 		App->CUR = SetCursor(NULL);
 
@@ -281,8 +291,10 @@ LRESULT CALLBACK CL64_View_Top_Right::Proc_Top_Right_Window(HWND hDlg, UINT mess
 	// Right Mouse Up
 	case WM_RBUTTONUP:
 	{
-		App->CL_Editor_Map->flag_Right_Button_Down = false;
-		App->CL_Editor_Map->flag_Left_Button_Down = false;
+		auto& Views_Com = App->CL_Views_Com;
+
+		Views_Com->flag_Right_Button_Down = false;
+		Views_Com->flag_Left_Button_Down = false;
 
 		App->CUR = SetCursor(App->CUR);
 
@@ -294,8 +306,8 @@ LRESULT CALLBACK CL64_View_Top_Right::Proc_Top_Right_Window(HWND hDlg, UINT mess
 
 		if (cameraComparison == 1)
 		{
-			App->CL_Editor_Map->Current_View = App->CL_Editor_Map->VCam[V_TL];
-			App->CL_Editor_Map->Context_Menu(hDlg);
+			Views_Com->Current_View = Views_Com->VCam[V_TL];
+			Views_Com->Context_Menu(hDlg);
 		}*/
 
 		return 1;
@@ -310,7 +322,7 @@ LRESULT CALLBACK CL64_View_Top_Right::Proc_Top_Right_Window(HWND hDlg, UINT mess
 	{
 		if (App->flag_3D_Started == true)
 		{
-			App->CL_Editor_Map->Current_View = App->CL_View_Top_Right->VCam_TR;
+			App->CL_Views_Com->Current_View = App->CL_View_Top_Right->VCam_TR;
 			App->CL_View_Top_Right->Draw_Screen_TR(hDlg);
 		}
 
@@ -391,7 +403,7 @@ static signed int BrushDrawSelFacesOrtho(Brush* pBrush, void* lParam)
 
 	pData = (BrushDrawData_TR*)lParam;
 
-	App->CL_Editor_Map->Render_RenderBrushSelFacesOrtho(pData->v, pBrush, pData->pDC);
+	App->CL_Views_Com->Render_RenderBrushSelFacesOrtho(pData->v, pBrush, pData->pDC);
 
 	return	GE_TRUE;
 }
@@ -401,6 +413,8 @@ static signed int BrushDrawSelFacesOrtho(Brush* pBrush, void* lParam)
 // *************************************************************************
 void CL64_View_Top_Right::Draw_Screen_TR(HWND hwnd)
 {
+	auto& Views_Com = App->CL_Views_Com;
+
 	// Initialize variables
 	int			inidx = 0;
 	HDC RealhDC = GetDC(hwnd);
@@ -439,11 +453,11 @@ void CL64_View_Top_Right::Draw_Screen_TR(HWND hwnd)
 
 	GetClipBox(RealhDC, &Rect);
 
-	SetDCBrushColor(m_MemoryhDC_TR, (RGB(App->CL_Editor_Map->Background_Colour.R, App->CL_Editor_Map->Background_Colour.G, App->CL_Editor_Map->Background_Colour.B)));
+	SetDCBrushColor(m_MemoryhDC_TR, (RGB(Views_Com->Background_Colour.R, Views_Com->Background_Colour.G, Views_Com->Background_Colour.B)));
 
 	HBITMAP OffScreenBitmap = CreateCompatibleBitmap(RealhDC, Rect.right - Rect.left, Rect.bottom - Rect.top);
 	SelectObject(m_MemoryhDC_TR, OffScreenBitmap);
-	FillRect(m_MemoryhDC_TR, &Rect, (HBRUSH)App->CL_Editor_Map->Stock_Brush); // BackGround
+	FillRect(m_MemoryhDC_TR, &Rect, (HBRUSH)Views_Com->Stock_Brush); // BackGround
 
 	// ---------------------- Draw Grid Fine
 	if (VCam_TR->ZoomFactor > 0.1)
@@ -482,7 +496,7 @@ void CL64_View_Top_Right::Draw_Screen_TR(HWND hwnd)
 			}
 			else
 			{
-				App->CL_Editor_Map->Render_RenderBrushFacesOrtho(VCam_TR, SB, m_MemoryhDC_TR);
+				Views_Com->Render_RenderBrushFacesOrtho(VCam_TR, SB, m_MemoryhDC_TR);
 			}
 
 			Count++;
@@ -492,7 +506,7 @@ void CL64_View_Top_Right::Draw_Screen_TR(HWND hwnd)
 		if (Draw_Sel == 0)
 		{
 			// Draw selected brushes
-			SelectObject(m_MemoryhDC_TR, App->CL_Editor_Map->PenSelected);
+			SelectObject(m_MemoryhDC_TR, Views_Com->PenSelected);
 			int NumSelBrushes = App->CL_X_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes);
 
 			int i = 0;
@@ -508,7 +522,7 @@ void CL64_View_Top_Right::Draw_Screen_TR(HWND hwnd)
 					}
 					else
 					{
-						App->CL_Editor_Map->Render_RenderBrushFacesOrtho(VCam_TR, App->CL_Doc->CurBrush, m_MemoryhDC_TR);
+						Views_Com->Render_RenderBrushFacesOrtho(VCam_TR, App->CL_Doc->CurBrush, m_MemoryhDC_TR);
 					}
 				}
 			}
@@ -516,7 +530,7 @@ void CL64_View_Top_Right::Draw_Screen_TR(HWND hwnd)
 
 		//// Draw selected faces
 		//BrushList* BList = App->CL_Level->Level_Get_Main_Brushes();
-		//SelectObject(m_MemoryhDC, App->CL_Editor_Map->PenSelectedFaces);
+		//SelectObject(m_MemoryhDC, Views_Com->PenSelectedFaces);
 		//App->CL_X_Brush->BrushList_EnumLeafBrushes(BList, &brushDrawData, BrushDrawSelFacesOrtho);
 
 
@@ -524,7 +538,7 @@ void CL64_View_Top_Right::Draw_Screen_TR(HWND hwnd)
 		if (App->CL_Doc->flag_Track_Camera == true)
 		{
 			SelectObject(m_MemoryhDC_TR, Pen_Camera);
-			App->CL_Editor_Map->Draw_Camera(m_MemoryhDC_TR);
+			Views_Com->Draw_Camera(m_MemoryhDC_TR);
 		}
 
 	}

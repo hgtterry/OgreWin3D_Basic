@@ -117,9 +117,6 @@
     <ClInclude Include="CL64_Entities.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CL64_Editor_Map.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Base_Object.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -202,6 +199,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CL64_View_3D.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CL64_Views_Com.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -302,9 +302,6 @@
     <ClCompile Include="CL64_Entities.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CL64_Editor_Map.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Base_Object.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -387,6 +384,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CL64_View_3D.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CL64_Views_Com.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

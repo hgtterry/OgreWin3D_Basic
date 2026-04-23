@@ -547,7 +547,7 @@ LRESULT CALLBACK CL64_Dialogs::Proc_Message(HWND hDlg, UINT message, WPARAM wPar
 // *************************************************************************
 void CL64_Dialogs::PleaseWait()
 {
-	App->ViewPLeaseWait = CreateDialog(App->hInst, (LPCTSTR)IDD_PLEASEWAIT, App->CL_Editor_Map->Main_View_Dlg_Hwnd, (DLGPROC)Proc_PleaseWait);
+	App->ViewPLeaseWait = CreateDialog(App->hInst, (LPCTSTR)IDD_PLEASEWAIT, App->CL_Views_Com->Main_View_Dlg_Hwnd, (DLGPROC)Proc_PleaseWait);
 }
 
 // *************************************************************************
@@ -1282,7 +1282,7 @@ LRESULT CALLBACK CL64_Dialogs::Proc_SnapOptions(HWND hDlg, UINT message, WPARAM 
 
 		if (LOWORD(wParam) == IDC_RADIO1)
 		{
-			App->CL_Editor_Map->GridSnapSize = 1;
+			App->CL_Views_Com->GridSnapSize = 1;
 			App->CL_Doc->Current_Level->GridSettings.TexelSnapSize = 1;
 			App->CL_View_Top_Left->m_GridSnapSize = 1;
 
@@ -1292,7 +1292,7 @@ LRESULT CALLBACK CL64_Dialogs::Proc_SnapOptions(HWND hDlg, UINT message, WPARAM 
 
 		if (LOWORD(wParam) == IDC_RADIO2)
 		{
-			App->CL_Editor_Map->GridSnapSize = 2;
+			App->CL_Views_Com->GridSnapSize = 2;
 			App->CL_Doc->Current_Level->GridSettings.TexelSnapSize = 2;
 			App->CL_View_Top_Left->m_GridSnapSize = 2;
 
@@ -1302,7 +1302,7 @@ LRESULT CALLBACK CL64_Dialogs::Proc_SnapOptions(HWND hDlg, UINT message, WPARAM 
 
 		if (LOWORD(wParam) == IDC_RADIO4)
 		{
-			App->CL_Editor_Map->GridSnapSize = 4;
+			App->CL_Views_Com->GridSnapSize = 4;
 			App->CL_Doc->Current_Level->GridSettings.TexelSnapSize = 4;
 			App->CL_View_Top_Left->m_GridSnapSize = 4;
 
@@ -1312,7 +1312,7 @@ LRESULT CALLBACK CL64_Dialogs::Proc_SnapOptions(HWND hDlg, UINT message, WPARAM 
 
 		if (LOWORD(wParam) == IDC_RADIO8)
 		{
-			App->CL_Editor_Map->GridSnapSize = 8;
+			App->CL_Views_Com->GridSnapSize = 8;
 			App->CL_Doc->Current_Level->GridSettings.TexelSnapSize = 8;
 			App->CL_View_Top_Left->m_GridSnapSize = 8;
 
@@ -1322,7 +1322,7 @@ LRESULT CALLBACK CL64_Dialogs::Proc_SnapOptions(HWND hDlg, UINT message, WPARAM 
 
 		if (LOWORD(wParam) == IDC_RADIO16)
 		{
-			App->CL_Editor_Map->GridSnapSize = 16;
+			App->CL_Views_Com->GridSnapSize = 16;
 			App->CL_Doc->Current_Level->GridSettings.TexelSnapSize = 16;
 			App->CL_View_Top_Left->m_GridSnapSize = 16;
 
@@ -1332,7 +1332,7 @@ LRESULT CALLBACK CL64_Dialogs::Proc_SnapOptions(HWND hDlg, UINT message, WPARAM 
 
 		if (LOWORD(wParam) == IDC_RADIO32)
 		{
-			App->CL_Editor_Map->GridSnapSize = 32;
+			App->CL_Views_Com->GridSnapSize = 32;
 			App->CL_Doc->Current_Level->GridSettings.TexelSnapSize = 32;
 			App->CL_View_Top_Left->m_GridSnapSize = 32;
 

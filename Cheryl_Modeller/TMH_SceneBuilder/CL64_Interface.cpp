@@ -143,10 +143,10 @@ void CL64_Interface::Position_Tabs_Dlg(void)
 {
 	POINT position = { 0 };
 
-	int Diff = MapWindowPoints(App->CL_Editor_Map->Main_View_Dlg_Hwnd, NULL, &position, 1);
+	int Diff = MapWindowPoints(App->CL_Views_Com->Main_View_Dlg_Hwnd, NULL, &position, 1);
 
 	RECT rect;
-	GetWindowRect(App->CL_Editor_Map->Main_View_Dlg_Hwnd, &rect);
+	GetWindowRect(App->CL_Views_Com->Main_View_Dlg_Hwnd, &rect);
 
 	int widthX = rect.right - rect.left;
 	int heightY = rect.bottom - rect.top;
@@ -165,10 +165,10 @@ void CL64_Interface::Position_Textures_Dlg(void)
 	POINT position = { 0 };
 
 	// Map the window points to get the current position
-	int offset = MapWindowPoints(App->CL_Editor_Map->Main_View_Dlg_Hwnd, NULL, &position, 1);
+	int offset = MapWindowPoints(App->CL_Views_Com->Main_View_Dlg_Hwnd, NULL, &position, 1);
 
 	RECT mainDialogRect;
-	GetWindowRect(App->CL_Editor_Map->Main_View_Dlg_Hwnd, &mainDialogRect);
+	GetWindowRect(App->CL_Views_Com->Main_View_Dlg_Hwnd, &mainDialogRect);
 
 	// Calculate the width and height of the main dialog
 	int dialogWidth = mainDialogRect.right - mainDialogRect.left;
@@ -188,10 +188,10 @@ void CL64_Interface::Position_Motions_Dlg(void)
 	POINT position = { 0 };
 
 	// Map the window points to get the current position
-	int offset = MapWindowPoints(App->CL_Editor_Map->Main_View_Dlg_Hwnd, NULL, &position, 1);
+	int offset = MapWindowPoints(App->CL_Views_Com->Main_View_Dlg_Hwnd, NULL, &position, 1);
 
 	RECT mainDialogRect;
-	GetWindowRect(App->CL_Editor_Map->Main_View_Dlg_Hwnd, &mainDialogRect);
+	GetWindowRect(App->CL_Views_Com->Main_View_Dlg_Hwnd, &mainDialogRect);
 
 	// Calculate the width and height of the main dialog
 	int dialogWidth = mainDialogRect.right - mainDialogRect.left;

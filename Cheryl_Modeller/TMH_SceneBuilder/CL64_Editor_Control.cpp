@@ -95,7 +95,7 @@ void CL64_Editor_Control::Start_Editor_MapBrush_Mode(void)
 
 	SetParent(App->CL_View_3D->Bottom_Right_Window_Hwnd, Parent_hWnd);
 
-	App->CL_Editor_Map->Resize_Windows(App->CL_Editor_Map->Main_View_Dlg_Hwnd, App->CL_Editor_Map->nleftWnd_width, App->CL_Editor_Map->nleftWnd_Depth);
+	App->CL_Views_Com->Resize_Windows(App->CL_Views_Com->Main_View_Dlg_Hwnd, App->CL_Views_Com->nleftWnd_width, App->CL_Views_Com->nleftWnd_Depth);
 
 	App->CL_Properties_Tabs->Enable_Tabs_Dlg(true);
 	App->CL_Properties_Tabs->flag_Tabs_Dlg_Active = 1;
@@ -106,7 +106,7 @@ void CL64_Editor_Control::Start_Editor_MapBrush_Mode(void)
 		App->CL_Ogre->OGL_Listener->Show_Visuals(true);
 	}
 
-	if (App->CL_Editor_Map->flag_Environment_On == false)
+	if (App->CL_Views_Com->flag_Environment_On == false)
 	{
 		//App->CL_Com_Environments->Set_Environment_By_Index(false, -1);
 	}
@@ -130,7 +130,7 @@ void CL64_Editor_Control::Start_Editor_Scene()
 	topTabs->flag_View_Bottom_Left = false;
 
 	// Set 3D View to Full View
-	App->CL_Editor_Map->Set_3D_FullView();
+	App->CL_Views_Com->Set_3D_FullView();
 	
 	// Hide visuals and tabs
 	App->CL_Ogre->OGL_Listener->Show_Visuals(false);
@@ -154,13 +154,15 @@ void CL64_Editor_Control::Start_Editor_Scene()
 // *************************************************************************
 void CL64_Editor_Control::Set_Map_Editor_Startup()
 {
+	auto& Views_Com = App->CL_Views_Com;
+
 	flag_Map_Editor_Active = true;
 
-	App->CL_Editor_Map->Current_View = App->CL_Editor_Map->VCam[V_Ogre];
+	Views_Com->Current_View = Views_Com->VCam[V_Ogre];
 
-	if (App->CL_Editor_Map->Selected_Window != Enums::Selected_Map_View_3D)
+	if (Views_Com->Selected_Window != Enums::Selected_Map_View_3D)
 	{
-		App->CL_Editor_Map->Set_Selected_View(Enums::Selected_Map_View_3D);
+		Views_Com->Set_Selected_View(Enums::Selected_Map_View_3D);
 	}
 
 	App->CL_Gizmos->Reset_Grid_And_Hair();
@@ -173,10 +175,11 @@ void CL64_Editor_Control::Set_Map_Editor_Startup()
 // *************************************************************************
 void CL64_Editor_Control::Set_Map_View()
 {
+	auto& Views_Com = App->CL_Views_Com;
 
 	App->CL_Top_Tabs->flag_Full_View_3D = false;
-	App->CL_Editor_Map->Set_Splitter_WidthDepth(App->CL_Editor_Map->Copy_Spliter_Width, App->CL_Editor_Map->Copy_Spliter_Depth);
-	App->CL_Editor_Map->Resize_Windows(App->CL_Editor_Map->Main_View_Dlg_Hwnd, App->CL_Editor_Map->nleftWnd_width, App->CL_Editor_Map->nleftWnd_Depth);
+	Views_Com->Set_Splitter_WidthDepth(Views_Com->Copy_Spliter_Width, Views_Com->Copy_Spliter_Depth);
+	Views_Com->Resize_Windows(Views_Com->Main_View_Dlg_Hwnd, Views_Com->nleftWnd_width, Views_Com->nleftWnd_Depth);
 
 	flag_Mode_3DEditor_View = false;
 	flag_Mode_Map_View = true;
@@ -191,9 +194,11 @@ void CL64_Editor_Control::Set_Map_View()
 // *************************************************************************
 void CL64_Editor_Control::Set_3DEditor_View()
 {
+	auto& Views_Com = App->CL_Views_Com;
+
 	App->CL_Top_Tabs->Set_View_Buttons(Enums::Selected_Map_View_3D);
-	App->CL_Editor_Map->Init_Views(Enums::Selected_Map_View_3D);
-	App->CL_Editor_Map->Resize_Windows(App->CL_Editor_Map->Main_View_Dlg_Hwnd, App->CL_Editor_Map->nleftWnd_width, App->CL_Editor_Map->nleftWnd_Depth);
+	Views_Com->Init_Views(Enums::Selected_Map_View_3D);
+	Views_Com->Resize_Windows(Views_Com->Main_View_Dlg_Hwnd, Views_Com->nleftWnd_width, Views_Com->nleftWnd_Depth);
 
 	flag_Mode_3DEditor_View = true;
 	flag_Mode_Map_View = false;

@@ -610,7 +610,7 @@ void CL64_File::Set_Editor()
 
 	if (App->CL_Editor_Control->flag_Scene_Editor_Active == false)
 	{
-		App->CL_Editor_Map->Reset_Views_All();
+		App->CL_Views_Com->Reset_Views_All();
 	}
 
 	// Set the editor dialog to the first brush

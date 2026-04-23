@@ -30,7 +30,7 @@ THE SOFTWARE.
 CL64_App::CL64_App(void)
 {
 	CL_Libs =					nullptr;
-	CL_Editor_Map =				nullptr;
+	CL_Views_Com =				nullptr;
 	CL_X_Maths =				nullptr; // Library
 
 	CL_X_Box =					nullptr; // Library
@@ -224,7 +224,7 @@ void CL64_App::InitApp(void)
 
 	CL_Libs->CL_Preference =	new Lib_Preference();
 
-	CL_Editor_Map =				new CL64_Editor_Map();
+	CL_Views_Com =				new CL64_Views_Com();
 	CL_X_Maths =				new CL64_Lib_Maths(); // Library
 	CL_X_Box =					new CX_Box(); // Library
 

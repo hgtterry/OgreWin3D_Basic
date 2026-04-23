@@ -25,7 +25,7 @@ THE SOFTWARE.
 #include "pch.h"
 #include "resource.h"
 #include "CL64_App.h"
-#include "CL64_Editor_Map.h"
+#include "CL64_Views_Com.h"
 
 #define IDM_GRID_SNAP 1
 #define IDM_RESET_VIEW 2
@@ -86,7 +86,7 @@ typedef struct tagBrushDrawData
 	Ogre::uint32	Color;
 } BrushDrawData;
 
-CL64_Editor_Map::CL64_Editor_Map()
+CL64_Views_Com::CL64_Views_Com()
 {
 	Main_View_Dlg_Hwnd = NULL;
 
@@ -152,14 +152,14 @@ CL64_Editor_Map::CL64_Editor_Map()
 	MemoryhDC = nullptr;
 }
 
-CL64_Editor_Map::~CL64_Editor_Map()
+CL64_Views_Com::~CL64_Views_Com()
 {
 }
 
 // *************************************************************************
 // *				Reset_Class:- Terry Mo and Hazel 2025			 	   *
 // *************************************************************************
-void CL64_Editor_Map::Reset_Class()
+void CL64_Views_Com::Reset_Class()
 {
 	Reset_Views_All();
 }
@@ -167,7 +167,7 @@ void CL64_Editor_Map::Reset_Class()
 // *************************************************************************
 // *	  		Reset_Views_All:- Terry Mo and Hazel 2026				   *
 // *************************************************************************
-void CL64_Editor_Map::Reset_Views_All()
+void CL64_Views_Com::Reset_Views_All()
 {
 	Init_Views(Enums::Selected_Map_View_None);
 	Resize_Windows(Main_View_Dlg_Hwnd, nleftWnd_width, nleftWnd_Depth);
@@ -223,7 +223,7 @@ void CL64_Editor_Map::Reset_Views_All()
 // *************************************************************************
 // *			Reset_To_Camera:- Terry Mo and Hazel 2024				   *
 // *************************************************************************
-void CL64_Editor_Map::Reset_To_Camera()
+void CL64_Views_Com::Reset_To_Camera()
 {
 	RECT		Rect;
 	GetClientRect(Current_View->hDlg, &Rect);
@@ -247,7 +247,7 @@ void CL64_Editor_Map::Reset_To_Camera()
 // *************************************************************************
 // *	  			Init_Views:- Terry Mo and Hazel 2025				   *
 // *************************************************************************
-void CL64_Editor_Map::Init_Views(int View)
+void CL64_Views_Com::Init_Views(int View)
 {
 	RECT rect;
 	GetClientRect(Main_View_Dlg_Hwnd, &rect);
@@ -318,7 +318,7 @@ void CL64_Editor_Map::Init_Views(int View)
 // *************************************************************************
 // *			Resize_Windows:- Terry Mo and Hazel 2025				   *
 // *************************************************************************
-void CL64_Editor_Map::Resize_Windows(HWND hDlg, int newWidth, int newDepth)
+void CL64_Views_Com::Resize_Windows(HWND hDlg, int newWidth, int newDepth)
 {
 	RECT clientRect;
 	GetClientRect(hDlg, &clientRect);
@@ -378,7 +378,7 @@ void CL64_Editor_Map::Resize_Windows(HWND hDlg, int newWidth, int newDepth)
 // ************************************************************************
 // *			Resize_OgreWin:- Terry Mo and Hazel 2025				  *
 // ************************************************************************
-void CL64_Editor_Map::ResizeOgreWindow()
+void CL64_Views_Com::ResizeOgreWindow()
 {
 	RECT clientRect;
 	GetClientRect(App->CL_View_3D->Bottom_Right_Window_Hwnd, &clientRect);
@@ -408,7 +408,7 @@ void CL64_Editor_Map::ResizeOgreWindow()
 // *************************************************************************
 // *			Init_Map_Views:- Terry Mo and Hazel 2026				   *
 // *************************************************************************
-void CL64_Editor_Map::Init_Map_Views()
+void CL64_Views_Com::Init_Map_Views()
 {
 	Main_View_Dlg_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MAPEDITOR, App->MainHwnd, (DLGPROC)Proc_Main_Dlg);
 
@@ -428,7 +428,7 @@ void CL64_Editor_Map::Init_Map_Views()
 // *************************************************************************
 // *			Proc_Main_Dlg:- Terry Mo and Hazel 2025		 			   *
 // *************************************************************************
-LRESULT CALLBACK CL64_Editor_Map::Proc_Main_Dlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK CL64_Views_Com::Proc_Main_Dlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	static  BOOL        xSizing;
 	static  BOOL        ySizing;
@@ -442,7 +442,7 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Main_Dlg(HWND hDlg, UINT message, WPARAM 
 
 	case WM_INITDIALOG:
 	{
-		App->CL_Editor_Map->Main_View_Dlg_Hwnd = hDlg;
+		App->CL_Views_Com->Main_View_Dlg_Hwnd = hDlg;
 		
 		return TRUE;
 	}
@@ -474,8 +474,8 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Main_Dlg(HWND hDlg, UINT message, WPARAM 
 
 	case WM_SIZE:
 	{
-		App->CL_Editor_Map->Init_Views(Enums::Selected_Map_View_None);
-		App->CL_Editor_Map->Resize_Windows(hDlg, App->CL_Editor_Map->nleftWnd_width, App->CL_Editor_Map->nleftWnd_Depth);
+		App->CL_Views_Com->Init_Views(Enums::Selected_Map_View_None);
+		App->CL_Views_Com->Resize_Windows(hDlg, App->CL_Views_Com->nleftWnd_width, App->CL_Views_Com->nleftWnd_Depth);
 
 		return 0;
 	}
@@ -501,6 +501,7 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Main_Dlg(HWND hDlg, UINT message, WPARAM 
 
 	case WM_LBUTTONDOWN:
 	{
+		auto& Views_Com = App->CL_Views_Com;
 		//if (App->CL_MapEditor->flag_Right_Button_Down == 0)
 		{
 			int                 xPos;
@@ -511,15 +512,15 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Main_Dlg(HWND hDlg, UINT message, WPARAM 
 			yPos = (int)HIWORD(lParam);
 
 			// Checks whether the mouse is over the splitter window
-			xSizing = (xPos > App->CL_Editor_Map->nleftWnd_width - SPLITTER_BAR_WIDTH && xPos < App->CL_Editor_Map->nleftWnd_width + SPLITTER_BAR_WIDTH);
-			ySizing = (yPos > App->CL_Editor_Map->nleftWnd_Depth - SPLITTER_BAR_WIDTH && yPos < App->CL_Editor_Map->nleftWnd_Depth + SPLITTER_BAR_WIDTH);
+			xSizing = (xPos > Views_Com->nleftWnd_width - SPLITTER_BAR_WIDTH && xPos < Views_Com->nleftWnd_width + SPLITTER_BAR_WIDTH);
+			ySizing = (yPos > Views_Com->nleftWnd_Depth - SPLITTER_BAR_WIDTH && yPos < Views_Com->nleftWnd_Depth + SPLITTER_BAR_WIDTH);
 
 			if (xSizing && ySizing == 0)
 			{
 				SetCapture(hDlg);
 				if (xSizing)
 				{
-					SetCursor(App->CL_Editor_Map->hcSizeEW);
+					SetCursor(Views_Com->hcSizeEW);
 				}
 
 			}
@@ -529,7 +530,7 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Main_Dlg(HWND hDlg, UINT message, WPARAM 
 				SetCapture(hDlg);
 				if (ySizing)
 				{
-					SetCursor(App->CL_Editor_Map->hcSizeNS);
+					SetCursor(Views_Com->hcSizeNS);
 				}
 
 			}
@@ -539,7 +540,7 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Main_Dlg(HWND hDlg, UINT message, WPARAM 
 				SetCapture(hDlg);
 				if (ySizing)
 				{
-					SetCursor(App->CL_Editor_Map->hcBoth);
+					SetCursor(Views_Com->hcBoth);
 				}
 			}
 		}
@@ -549,6 +550,7 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Main_Dlg(HWND hDlg, UINT message, WPARAM 
 
 	case WM_LBUTTONUP:
 	{
+		auto& Views_Com = App->CL_Views_Com;
 		//if (App->CL_Editor_Map->flag_Right_Button_Down == 0)
 		{
 			if (xSizing)
@@ -563,8 +565,8 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Main_Dlg(HWND hDlg, UINT message, WPARAM 
 
 				if (xSizing)
 				{
-					SetRect(&focusrect, App->CL_Editor_Map->nleftWnd_width - (WIDTH_ADJUST * 2), rect.top + TOP_POS,
-						App->CL_Editor_Map->nleftWnd_width + WIDTH_ADJUST,
+					SetRect(&focusrect, Views_Com->nleftWnd_width - (WIDTH_ADJUST * 2), rect.top + TOP_POS,
+						Views_Com->nleftWnd_width + WIDTH_ADJUST,
 						rect.bottom - 80);
 
 					DrawFocusRect(hdc, &focusrect);
@@ -592,8 +594,8 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Main_Dlg(HWND hDlg, UINT message, WPARAM 
 				ReleaseDC(hDlg, hdc);
 			}
 
-			App->CL_Editor_Map->Resize_Windows(hDlg, App->CL_Editor_Map->nleftWnd_width, App->CL_Editor_Map->nleftWnd_Depth);
-			App->CL_Editor_Map->Save_Splitter_Width_Depth();
+			Views_Com->Resize_Windows(hDlg, Views_Com->nleftWnd_width, Views_Com->nleftWnd_Depth);
+			Views_Com->Save_Splitter_Width_Depth();
 			
 		}
 
@@ -602,6 +604,7 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Main_Dlg(HWND hDlg, UINT message, WPARAM 
 
 	case WM_MOUSEMOVE:
 	{
+		auto& Views_Com = App->CL_Views_Com;
 		//if (App->CL_Editor_Map->flag_Right_Button_Down == 0)
 		{
 			int   xPos;
@@ -611,7 +614,7 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Main_Dlg(HWND hDlg, UINT message, WPARAM 
 			xPos = (int)LOWORD(lParam);
 			yPos = (int)HIWORD(lParam);
 
-			if (xPos < App->CL_Editor_Map->LEFT_MINIMUM_SPACE || xPos > App->CL_Editor_Map->RIGHT_MINIMUM_SPACE)
+			if (xPos < Views_Com->LEFT_MINIMUM_SPACE || xPos > Views_Com->RIGHT_MINIMUM_SPACE)
 			{
 				return 0;
 			}
@@ -619,7 +622,7 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Main_Dlg(HWND hDlg, UINT message, WPARAM 
 			// Checks if the left button is pressed during dragging the splitter
 			if (wParam == MK_LBUTTON)
 			{
-				if (xSizing && App->CL_Editor_Map->Do_Width == 1)
+				if (xSizing && Views_Com->Do_Width == 1)
 				{
 					RECT    focusrect;
 					HDC     hdc;
@@ -627,18 +630,18 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Main_Dlg(HWND hDlg, UINT message, WPARAM 
 					hdc = GetDC(hDlg);
 					GetClientRect(hDlg, &rect);
 
-					if (xSizing && App->CL_Editor_Map->Do_Width == 1)
+					if (xSizing && Views_Com->Do_Width == 1)
 					{
-						SetRect(&focusrect, App->CL_Editor_Map->nleftWnd_width - (WIDTH_ADJUST * 2), rect.top + TOP_POS,
-							App->CL_Editor_Map->nleftWnd_width + WIDTH_ADJUST,
+						SetRect(&focusrect, Views_Com->nleftWnd_width - (WIDTH_ADJUST * 2), rect.top + TOP_POS,
+							Views_Com->nleftWnd_width + WIDTH_ADJUST,
 							rect.bottom - 6);
 
 						DrawFocusRect(hdc, &focusrect);
 
-						App->CL_Editor_Map->nleftWnd_width = xPos;
+						Views_Com->nleftWnd_width = xPos;
 
-						SetRect(&focusrect, App->CL_Editor_Map->nleftWnd_width - (WIDTH_ADJUST * 2), rect.top + TOP_POS,
-							App->CL_Editor_Map->nleftWnd_width + WIDTH_ADJUST,
+						SetRect(&focusrect, Views_Com->nleftWnd_width - (WIDTH_ADJUST * 2), rect.top + TOP_POS,
+							Views_Com->nleftWnd_width + WIDTH_ADJUST,
 							rect.bottom - 6);
 
 						DrawFocusRect(hdc, &focusrect);
@@ -647,7 +650,7 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Main_Dlg(HWND hDlg, UINT message, WPARAM 
 					ReleaseDC(hDlg, hdc);
 				}
 
-				if (ySizing && App->CL_Editor_Map->Do_Depth == 1)
+				if (ySizing && Views_Com->Do_Depth == 1)
 				{
 					RECT    focusrect;
 					HDC     hdc;
@@ -655,15 +658,15 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Main_Dlg(HWND hDlg, UINT message, WPARAM 
 					hdc = GetDC(hDlg);
 					GetClientRect(hDlg, &rect);
 
-					if (ySizing && App->CL_Editor_Map->Do_Depth == 1)
+					if (ySizing && Views_Com->Do_Depth == 1)
 					{
-						SetRect(&focusrect, 0, App->CL_Editor_Map->nleftWnd_Depth, rect.right, App->CL_Editor_Map->nleftWnd_Depth + (WIDTH_ADJUST * 2));
+						SetRect(&focusrect, 0, Views_Com->nleftWnd_Depth, rect.right, Views_Com->nleftWnd_Depth + (WIDTH_ADJUST * 2));
 
 						DrawFocusRect(hdc, &focusrect);
 
-						App->CL_Editor_Map->nleftWnd_Depth = yPos;
+						Views_Com->nleftWnd_Depth = yPos;
 
-						SetRect(&focusrect, 0, App->CL_Editor_Map->nleftWnd_Depth, rect.right, App->CL_Editor_Map->nleftWnd_Depth + (WIDTH_ADJUST * 2));
+						SetRect(&focusrect, 0, Views_Com->nleftWnd_Depth, rect.right, Views_Com->nleftWnd_Depth + (WIDTH_ADJUST * 2));
 
 						DrawFocusRect(hdc, &focusrect);
 					}
@@ -672,42 +675,42 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Main_Dlg(HWND hDlg, UINT message, WPARAM 
 				}
 			}
 
-			if ((xPos > App->CL_Editor_Map->nleftWnd_width - SPLITTER_BAR_WIDTH && xPos < App->CL_Editor_Map->nleftWnd_width + SPLITTER_BAR_WIDTH))
+			if ((xPos > Views_Com->nleftWnd_width - SPLITTER_BAR_WIDTH && xPos < Views_Com->nleftWnd_width + SPLITTER_BAR_WIDTH))
 			{
-				if (App->CL_Editor_Map->Do_All == 0)
+				if (Views_Com->Do_All == 0)
 				{
-					SetCursor(App->CL_Editor_Map->hcSizeEW);
+					SetCursor(Views_Com->hcSizeEW);
 				}
 
-				App->CL_Editor_Map->Do_Width = 1;
+				Views_Com->Do_Width = 1;
 			}
 			else
 			{
-				App->CL_Editor_Map->Do_Width = 0;
+				Views_Com->Do_Width = 0;
 			}
 
-			if ((yPos > App->CL_Editor_Map->nleftWnd_Depth - SPLITTER_BAR_WIDTH && yPos < App->CL_Editor_Map->nleftWnd_Depth + SPLITTER_BAR_WIDTH))
+			if ((yPos > Views_Com->nleftWnd_Depth - SPLITTER_BAR_WIDTH && yPos < Views_Com->nleftWnd_Depth + SPLITTER_BAR_WIDTH))
 			{
-				if (App->CL_Editor_Map->Do_All == 0)
+				if (Views_Com->Do_All == 0)
 				{
-					SetCursor(App->CL_Editor_Map->hcSizeNS);
+					SetCursor(Views_Com->hcSizeNS);
 				}
 
-				App->CL_Editor_Map->Do_Depth = 1;
+				Views_Com->Do_Depth = 1;
 			}
 			else
 			{
-				App->CL_Editor_Map->Do_Depth = 0;
+				Views_Com->Do_Depth = 0;
 			}
 
-			if (App->CL_Editor_Map->Do_Width == 1 && App->CL_Editor_Map->Do_Depth == 1)
+			if (Views_Com->Do_Width == 1 && Views_Com->Do_Depth == 1)
 			{
-				SetCursor(App->CL_Editor_Map->hcBoth);
-				App->CL_Editor_Map->Do_All = 1;
+				SetCursor(Views_Com->hcBoth);
+				Views_Com->Do_All = 1;
 			}
 			else
 			{
-				App->CL_Editor_Map->Do_All = 0;
+				Views_Com->Do_All = 0;
 			}
 		}
 
@@ -723,7 +726,7 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Main_Dlg(HWND hDlg, UINT message, WPARAM 
 // *************************************************************************
 // *	  		Set_Views_Defaults:- Terry Mo and Hazel 2025			   *
 // *************************************************************************
-void CL64_Editor_Map::Set_Views_Defaults(int Index, Ogre::int32 View, const char* Name)
+void CL64_Views_Com::Set_Views_Defaults(int Index, Ogre::int32 View, const char* Name)
 {
 	strcpy(VCam[Index]->Name, Name);
 	VCam[Index]->ViewType = View;
@@ -746,7 +749,7 @@ void CL64_Editor_Map::Set_Views_Defaults(int Index, Ogre::int32 View, const char
 // *************************************************************************
 // *	  	Set_Splitter_WidthDepth:- Terry Mo and Hazel 2025			  *
 // *************************************************************************
-void CL64_Editor_Map::Set_Splitter_WidthDepth(int Width, int Depth)
+void CL64_Views_Com::Set_Splitter_WidthDepth(int Width, int Depth)
 {
 	nleftWnd_width = Width;
 	nleftWnd_Depth = Depth;
@@ -755,7 +758,7 @@ void CL64_Editor_Map::Set_Splitter_WidthDepth(int Width, int Depth)
 // *************************************************************************
 // *	  Save_Splitter_Width_Depth:- Terry Mo and Hazel 2025			   *
 // *************************************************************************
-void CL64_Editor_Map::Save_Splitter_Width_Depth()
+void CL64_Views_Com::Save_Splitter_Width_Depth()
 {
 	Copy_Spliter_Depth = nleftWnd_Depth;
 	Copy_Spliter_Width = nleftWnd_width;
@@ -764,7 +767,7 @@ void CL64_Editor_Map::Save_Splitter_Width_Depth()
 // *************************************************************************
 // *				Create_Views:- Terry Mo and Hazel 2026				   *
 // *************************************************************************
-void CL64_Editor_Map::Create_Views()
+void CL64_Views_Com::Create_Views()
 {
 	App->CL_View_Top_Left->Create_Top_Left_Window();
 	App->CL_View_Top_Right->Create_Top_Right_Window();
@@ -775,7 +778,7 @@ void CL64_Editor_Map::Create_Views()
 // *************************************************************************
 // *	  		Set_Selected_View:- Terry Mo and Hazel 2025				   *
 // *************************************************************************
-void CL64_Editor_Map::Set_Selected_View(int Selected_View)
+void CL64_Views_Com::Set_Selected_View(int Selected_View)
 {
 	Selected_Window = Selected_View;
 
@@ -788,7 +791,7 @@ void CL64_Editor_Map::Set_Selected_View(int Selected_View)
 // *************************************************************************
 // *				Set_View:- Terry Mo and Hazel 2025				 	   *
 // *************************************************************************
-void CL64_Editor_Map::Set_View()
+void CL64_Views_Com::Set_View()
 {
 	RECT		Rect;
 	GetClientRect(Current_View->hDlg, &Rect);
@@ -808,7 +811,7 @@ void CL64_Editor_Map::Set_View()
 // *************************************************************************
 // *			Context_Menu_Ogre:- Terry Mo and Hazel 2025			 	   *
 // *************************************************************************
-void CL64_Editor_Map::Context_Menu_Ogre(HWND hDlg)
+void CL64_Views_Com::Context_Menu_Ogre(HWND hDlg)
 {
 	RECT rcTree;
 	POINT pt;
@@ -937,7 +940,7 @@ void CL64_Editor_Map::Context_Menu_Ogre(HWND hDlg)
 // *************************************************************************
 // *		Context_Command_Ogre:- Terry Mo and Hazel 2024		   *
 // *************************************************************************
-bool CL64_Editor_Map::Context_Command_Ogre(WPARAM wParam)
+bool CL64_Views_Com::Context_Command_Ogre(WPARAM wParam)
 {
 	switch (LOWORD(wParam))
 	{
@@ -999,10 +1002,12 @@ bool CL64_Editor_Map::Context_Command_Ogre(WPARAM wParam)
 		
 	case IDM_SCENE_MAX_VIEW:
 	{
-		if (App->CL_Editor_Map->Selected_Window == Enums::Selected_Map_View_3D)
+		auto& Views_Com = App->CL_Views_Com;
+
+		if (Views_Com->Selected_Window == Enums::Selected_Map_View_3D)
 		{
-			App->CL_Editor_Map->Init_Views(Enums::Selected_Map_View_3D);
-			App->CL_Editor_Map->Resize_Windows(App->CL_Editor_Map->Main_View_Dlg_Hwnd, App->CL_Editor_Map->nleftWnd_width, App->CL_Editor_Map->nleftWnd_Depth);
+			Views_Com->Init_Views(Enums::Selected_Map_View_3D);
+			Views_Com->Resize_Windows(Views_Com->Main_View_Dlg_Hwnd, Views_Com->nleftWnd_width, Views_Com->nleftWnd_Depth);
 			App->CL_Top_Tabs->Set_View_Buttons(Enums::Selected_Map_View_3D);
 		}
 
@@ -1011,8 +1016,10 @@ bool CL64_Editor_Map::Context_Command_Ogre(WPARAM wParam)
 
 	case IDM_SCENE_RESTORE_VIEW:
 	{
-		App->CL_Editor_Map->Set_Splitter_WidthDepth(App->CL_Editor_Map->Copy_Spliter_Width, App->CL_Editor_Map->Copy_Spliter_Depth);
-		App->CL_Editor_Map->Resize_Windows(App->CL_Editor_Map->Main_View_Dlg_Hwnd, App->CL_Editor_Map->nleftWnd_width, App->CL_Editor_Map->nleftWnd_Depth);
+		auto& Views_Com = App->CL_Views_Com;
+
+		Views_Com->Set_Splitter_WidthDepth(Views_Com->Copy_Spliter_Width, Views_Com->Copy_Spliter_Depth);
+		Views_Com->Resize_Windows(Views_Com->Main_View_Dlg_Hwnd, Views_Com->nleftWnd_width, Views_Com->nleftWnd_Depth);
 		App->CL_Top_Tabs->Set_View_Buttons(Enums::Selected_Map_View_None);
 		return TRUE;
 	}
@@ -1071,7 +1078,7 @@ bool CL64_Editor_Map::Context_Command_Ogre(WPARAM wParam)
 // *************************************************************************
 // *			Context_Menu:- Terry Mo and Hazel 2025				 	   *
 // *************************************************************************
-void CL64_Editor_Map::Context_Menu(HWND hDlg)
+void CL64_Views_Com::Context_Menu(HWND hDlg)
 {
 	RECT rcTree;
 	TVHITTESTINFO htInfo = { 0 };
@@ -1155,7 +1162,7 @@ void CL64_Editor_Map::Context_Menu(HWND hDlg)
 // *************************************************************************
 // *			 Context_Command:- Terry Mo and Hazel 2025				   *
 // *************************************************************************
-bool CL64_Editor_Map::Context_Command(WPARAM wParam)
+bool CL64_Views_Com::Context_Command(WPARAM wParam)
 {
 	switch (LOWORD(wParam))
 	{
@@ -1167,24 +1174,26 @@ bool CL64_Editor_Map::Context_Command(WPARAM wParam)
 
 	case IDM_SCENE_MAX_VIEW:
 	{
-		if (App->CL_Editor_Map->Selected_Window == Enums::Selected_Map_View_TL)
+		auto& Views_Com = App->CL_Views_Com;
+
+		if (Views_Com->Selected_Window == Enums::Selected_Map_View_TL)
 		{
-			App->CL_Editor_Map->Init_Views(Enums::Selected_Map_View_TL);
-			App->CL_Editor_Map->Resize_Windows(App->CL_Editor_Map->Main_View_Dlg_Hwnd, App->CL_Editor_Map->nleftWnd_width, App->CL_Editor_Map->nleftWnd_Depth);
+			Views_Com->Init_Views(Enums::Selected_Map_View_TL);
+			Views_Com->Resize_Windows(Views_Com->Main_View_Dlg_Hwnd, Views_Com->nleftWnd_width, Views_Com->nleftWnd_Depth);
 			App->CL_Top_Tabs->Set_View_Buttons(Enums::Selected_Map_View_TL);
 		}
 
-		if (App->CL_Editor_Map->Selected_Window == Enums::Selected_Map_View_TR)
+		if (Views_Com->Selected_Window == Enums::Selected_Map_View_TR)
 		{
-			App->CL_Editor_Map->Init_Views(Enums::Selected_Map_View_TR);
-			App->CL_Editor_Map->Resize_Windows(App->CL_Editor_Map->Main_View_Dlg_Hwnd, App->CL_Editor_Map->nleftWnd_width, App->CL_Editor_Map->nleftWnd_Depth);
+			Views_Com->Init_Views(Enums::Selected_Map_View_TR);
+			Views_Com->Resize_Windows(Views_Com->Main_View_Dlg_Hwnd, Views_Com->nleftWnd_width, Views_Com->nleftWnd_Depth);
 			App->CL_Top_Tabs->Set_View_Buttons(Enums::Selected_Map_View_TR);
 		}
 
-		if (App->CL_Editor_Map->Selected_Window == Enums::Selected_Map_View_BL)
+		if (Views_Com->Selected_Window == Enums::Selected_Map_View_BL)
 		{
-			App->CL_Editor_Map->Init_Views(Enums::Selected_Map_View_BL);
-			App->CL_Editor_Map->Resize_Windows(App->CL_Editor_Map->Main_View_Dlg_Hwnd, App->CL_Editor_Map->nleftWnd_width, App->CL_Editor_Map->nleftWnd_Depth);
+			Views_Com->Init_Views(Enums::Selected_Map_View_BL);
+			Views_Com->Resize_Windows(Views_Com->Main_View_Dlg_Hwnd, Views_Com->nleftWnd_width, Views_Com->nleftWnd_Depth);
 			App->CL_Top_Tabs->Set_View_Buttons(Enums::Selected_Map_View_BL);
 		}
 		return TRUE;
@@ -1192,16 +1201,20 @@ bool CL64_Editor_Map::Context_Command(WPARAM wParam)
 
 	case IDM_SCENE_RESTORE_VIEW:
 	{
-		App->CL_Editor_Map->Set_Splitter_WidthDepth(App->CL_Editor_Map->Copy_Spliter_Width, App->CL_Editor_Map->Copy_Spliter_Depth);
-		App->CL_Editor_Map->Resize_Windows(App->CL_Editor_Map->Main_View_Dlg_Hwnd, App->CL_Editor_Map->nleftWnd_width, App->CL_Editor_Map->nleftWnd_Depth);
+		auto& Views_Com = App->CL_Views_Com;
+
+		Views_Com->Set_Splitter_WidthDepth(Views_Com->Copy_Spliter_Width, Views_Com->Copy_Spliter_Depth);
+		Views_Com->Resize_Windows(Views_Com->Main_View_Dlg_Hwnd, Views_Com->nleftWnd_width, Views_Com->nleftWnd_Depth);
 		App->CL_Top_Tabs->Set_View_Buttons(Enums::Selected_Map_View_None);
 		return TRUE;
 	}
 		
 	case IDM_RESET_VIEW:
 	{
-		App->CL_Editor_Map->Set_Splitter_WidthDepth(App->CL_Editor_Map->Copy_Spliter_Width, App->CL_Editor_Map->Copy_Spliter_Depth);
-		App->CL_Editor_Map->Resize_Windows(App->CL_Editor_Map->Main_View_Dlg_Hwnd, App->CL_Editor_Map->nleftWnd_width, App->CL_Editor_Map->nleftWnd_Depth);
+		auto& Views_Com = App->CL_Views_Com;
+
+		Views_Com->Set_Splitter_WidthDepth(Views_Com->Copy_Spliter_Width, Views_Com->Copy_Spliter_Depth);
+		Views_Com->Resize_Windows(Views_Com->Main_View_Dlg_Hwnd, Views_Com->nleftWnd_width, Views_Com->nleftWnd_Depth);
 		App->CL_Top_Tabs->Set_View_Buttons(Enums::Selected_Map_View_None);
 		return TRUE;
 	}
@@ -1289,7 +1302,7 @@ bool CL64_Editor_Map::Context_Command(WPARAM wParam)
 // *************************************************************************
 // *	  			On_Mouse_Move:- Terry Mo and Hazel 2025				   *
 // *************************************************************************
-void CL64_Editor_Map::On_Mouse_Move(POINT CursorPosition, HWND hDlg)
+void CL64_Views_Com::On_Mouse_Move(POINT CursorPosition, HWND hDlg)
 {
 	// Pan
 	if (flag_Right_Button_Down == true)
@@ -1375,7 +1388,7 @@ void CL64_Editor_Map::On_Mouse_Move(POINT CursorPosition, HWND hDlg)
 // *************************************************************************
 // *	  						On_Left_Button_Up						   *
 // *************************************************************************
-void CL64_Editor_Map::On_Left_Button_Up(POINT CursorPosition)
+void CL64_Views_Com::On_Left_Button_Up(POINT CursorPosition)
 {
 	if (App->CL_Doc->mModeTool == ID_GENERALSELECT)
 	{
@@ -1430,7 +1443,7 @@ void CL64_Editor_Map::On_Left_Button_Up(POINT CursorPosition)
 // *************************************************************************
 // *	  						On_Left_Button_Down						   *
 // *************************************************************************
-void CL64_Editor_Map::On_Left_Button_Down(POINT CursorPosition, HWND hDlg)
+void CL64_Views_Com::On_Left_Button_Down(POINT CursorPosition, HWND hDlg)
 {
 	static const int SideLookup[25] =
 	{
@@ -1490,7 +1503,7 @@ static signed int BrushDrawSelFacesOrtho(Brush* pBrush, void* lParam)
 
 	pData = (BrushDrawData*)lParam;
 
-	App->CL_Editor_Map->Render_RenderBrushSelFacesOrtho(pData->v, pBrush, pData->pDC);
+	App->CL_Views_Com->Render_RenderBrushSelFacesOrtho(pData->v, pBrush, pData->pDC);
 
 	return	GE_TRUE;
 }
@@ -1500,7 +1513,7 @@ static POINT plist[64];
 // *************************************************************************
 // *					Render_RenderBrushSelFacesOrtho		  			   *
 // *************************************************************************
-void CL64_Editor_Map::Render_RenderBrushSelFacesOrtho(ViewVars* Cam, Brush* b, HDC ViewDC)
+void CL64_Views_Com::Render_RenderBrushSelFacesOrtho(ViewVars* Cam, Brush* b, HDC ViewDC)
 {
 	int	i, j;
 
@@ -1527,7 +1540,7 @@ void CL64_Editor_Map::Render_RenderBrushSelFacesOrtho(ViewVars* Cam, Brush* b, H
 // *************************************************************************
 // *	  			Render_RenderBrushFacesOrtho		Genesis			   *
 // *************************************************************************
-void CL64_Editor_Map::Render_RenderBrushFacesOrtho(const ViewVars* Cam, Brush* b, HDC ViewDC)
+void CL64_Views_Com::Render_RenderBrushFacesOrtho(const ViewVars* Cam, Brush* b, HDC ViewDC)
 {
 	int	i, j;
 
@@ -1549,7 +1562,7 @@ void CL64_Editor_Map::Render_RenderBrushFacesOrtho(const ViewVars* Cam, Brush* b
 // *************************************************************************
 // *			Draw_Camera:- Terry Mo and Hazel 2024	 		   *
 // *************************************************************************
-void CL64_Editor_Map::Draw_Camera(HDC ViewDC) 
+void CL64_Views_Com::Draw_Camera(HDC ViewDC)
 {
 	constexpr float ENTITY_SIZE = 32.0f;  // 16" across
 
@@ -1666,7 +1679,7 @@ void CL64_Editor_Map::Draw_Camera(HDC ViewDC)
 // *************************************************************************
 // *	  						SetEditCursor							   *
 // *************************************************************************
-void CL64_Editor_Map::SetEditCursor(int Tool, const POINT* pMousePos)
+void CL64_Views_Com::SetEditCursor(int Tool, const POINT* pMousePos)
 {
 	//for sizing stuff
 	static const char* SizeCursors[25] =
@@ -1727,7 +1740,7 @@ void CL64_Editor_Map::SetEditCursor(int Tool, const POINT* pMousePos)
 // *************************************************************************
 // *	  						GetCursorBoxPos							   *
 // *************************************************************************
-int CL64_Editor_Map::GetCursorBoxPos(const POINT* ptMousePos)
+int CL64_Views_Com::GetCursorBoxPos(const POINT* ptMousePos)
 {
 	const Box3d* pBrushBox;
 	POINT ptMin, ptMax;
@@ -1789,12 +1802,14 @@ int CL64_Editor_Map::GetCursorBoxPos(const POINT* ptMousePos)
 }
 
 // *************************************************************************
-// *	  		Set_3D_FullView:- Terry Mo and Hazel 2025			   *
+// *	  		Set_3D_FullView:- Terry Mo and Hazel 2025				   *
 // *************************************************************************
-void CL64_Editor_Map::Set_3D_FullView()
+void CL64_Views_Com::Set_3D_FullView()
 {
-	App->CL_Editor_Map->Init_Views(Enums::Selected_Map_View_3D);
-	App->CL_Editor_Map->Resize_Windows(App->CL_Editor_Map->Main_View_Dlg_Hwnd, 
+	auto& Views_Com = App->CL_Views_Com;
+
+	Views_Com->Init_Views(Enums::Selected_Map_View_3D);
+	Views_Com->Resize_Windows(Views_Com->Main_View_Dlg_Hwnd, 
 		nleftWnd_width, 
 		nleftWnd_Depth);
 }

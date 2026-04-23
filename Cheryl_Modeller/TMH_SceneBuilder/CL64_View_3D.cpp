@@ -31,6 +31,8 @@ CL64_View_3D::CL64_View_3D()
 {
 	Bottom_Right_Window_Hwnd = nullptr;
 	RenderWin3D_hWnd = nullptr;
+
+	VCam_3D = { 0 };
 }
 
 CL64_View_3D::~CL64_View_3D()
@@ -38,16 +40,41 @@ CL64_View_3D::~CL64_View_3D()
 }
 
 // *************************************************************************
+// *	  		Set_VCam_3D_Defaults:- Terry Mo and Hazel 2026			   *
+// *************************************************************************
+void CL64_View_3D::Set_VCam_3D_Defaults()
+{
+	strcpy(VCam_3D->Name, "Ogre_Window");
+	VCam_3D->ViewType = VIEWOGRE;
+	VCam_3D->ZoomFactor = 1.5;
+
+	VCam_3D->XCenter = 310;
+	VCam_3D->YCenter = 174;
+
+	VCam_3D->XScreenScale = 0;
+	VCam_3D->YScreenScale = 0;
+
+	VCam_3D->Width = 310;
+	VCam_3D->Height = 174;
+
+	App->CL_X_Maths->Vector3_Set(&VCam_3D->CamPos, 0, 0, 0);
+
+	VCam_3D->MaxScreenScaleInv = 100;
+}
+
+// *************************************************************************
 // *		 Create_Ogre_Bottom_Right:- Terry Mo and Hazel 2026			   *
 // *************************************************************************
 void CL64_View_3D::Create_Ogre_Bottom_Right()
 {
-	App->CL_Editor_Map->VCam[V_Ogre] = new ViewVars;
-	App->CL_Editor_Map->Set_Views_Defaults(V_Ogre, VIEWOGRE, "Ogre_Window");
+	auto& Views_Com = App->CL_Views_Com;
 
-	App->CL_View_3D->Bottom_Right_Window_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MAP_BOTTOM_RIGHT, App->CL_Editor_Map->Main_View_Dlg_Hwnd, (DLGPROC)App->CL_View_3D->Proc_ViewerMain);
+	Views_Com->VCam[V_Ogre] = new ViewVars;
+	Views_Com->Set_Views_Defaults(V_Ogre, VIEWOGRE, "Ogre_Window");
 
-	App->CL_Editor_Map->VCam[V_Ogre]->hDlg = App->CL_View_3D->Bottom_Right_Window_Hwnd;
+	App->CL_View_3D->Bottom_Right_Window_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MAP_BOTTOM_RIGHT, Views_Com->Main_View_Dlg_Hwnd, (DLGPROC)App->CL_View_3D->Proc_ViewerMain);
+
+	Views_Com->VCam[V_Ogre]->hDlg = App->CL_View_3D->Bottom_Right_Window_Hwnd;
 
 	App->CL_Ogre->RenderHwnd = App->CL_View_3D->RenderWin3D_hWnd;
 }
@@ -63,7 +90,7 @@ LRESULT CALLBACK CL64_View_3D::Proc_ViewerMain(HWND hDlg, UINT message, WPARAM w
 	case WM_INITDIALOG:
 	{
 		SendDlgItemMessage(hDlg, IDC_ST_3D_TITLE, WM_SETFONT, (WPARAM)App->Font_CB10, MAKELPARAM(TRUE, 0));
-		App->CL_Editor_Map->Bottom_Ogre_Banner = GetDlgItem(hDlg, IDC_ST_3D_TITLE);
+		App->CL_Views_Com->Bottom_Ogre_Banner = GetDlgItem(hDlg, IDC_ST_3D_TITLE);
 
 		App->CL_View_3D->RenderWin3D_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MAP_RENDER_WINDOW, hDlg, (DLGPROC)Proc_Ogre_BR);
 		return TRUE;
@@ -73,7 +100,7 @@ LRESULT CALLBACK CL64_View_3D::Proc_ViewerMain(HWND hDlg, UINT message, WPARAM w
 	{
 		if (GetDlgItem(hDlg, IDC_ST_3D_TITLE) == (HWND)lParam)
 		{
-			if (App->CL_Editor_Map->Selected_Window == Enums::Selected_Map_View_3D)
+			if (App->CL_Views_Com->Selected_Window == Enums::Selected_Map_View_3D)
 			{
 				SetBkColor((HDC)wParam, RGB(0, 255, 0));
 				SetTextColor((HDC)wParam, RGB(0, 0, 0));
@@ -95,11 +122,13 @@ LRESULT CALLBACK CL64_View_3D::Proc_ViewerMain(HWND hDlg, UINT message, WPARAM w
 	// Left Mouse Down
 	case WM_LBUTTONDOWN:
 	{
-		App->CL_Editor_Map->Current_View = App->CL_Editor_Map->VCam[V_Ogre];
+		auto& Views_Com = App->CL_Views_Com;
 
-		if (App->CL_Editor_Map->Selected_Window != Enums::Selected_Map_View_3D)
+		Views_Com->Current_View = Views_Com->VCam[V_Ogre];
+
+		if (Views_Com->Selected_Window != Enums::Selected_Map_View_3D)
 		{
-			App->CL_Editor_Map->Set_Selected_View(Enums::Selected_Map_View_3D);
+			Views_Com->Set_Selected_View(Enums::Selected_Map_View_3D);
 		}
 
 		return 1;
@@ -108,11 +137,13 @@ LRESULT CALLBACK CL64_View_3D::Proc_ViewerMain(HWND hDlg, UINT message, WPARAM w
 	// Right Mouse Down
 	case WM_RBUTTONDOWN:
 	{
-		App->CL_Editor_Map->Current_View = App->CL_Editor_Map->VCam[V_Ogre];
+		auto& Views_Com = App->CL_Views_Com;
 
-		if (App->CL_Editor_Map->Selected_Window != Enums::Selected_Map_View_3D)
+		Views_Com->Current_View = Views_Com->VCam[V_Ogre];
+
+		if (Views_Com->Selected_Window != Enums::Selected_Map_View_3D)
 		{
-			App->CL_Editor_Map->Set_Selected_View(Enums::Selected_Map_View_3D);
+			Views_Com->Set_Selected_View(Enums::Selected_Map_View_3D);
 		}
 		return 1;
 	}
@@ -169,7 +200,7 @@ LRESULT CALLBACK CL64_View_3D::Proc_Ogre_BR(HWND hDlg, UINT message, WPARAM wPar
 		bool isSceneEditorActive = (App->CL_Editor_Control->flag_Scene_Editor_Active == 1);
 		bool commandHandled = false;
 
-		commandHandled = App->CL_Editor_Map->Context_Command_Ogre(LOWORD(wParam));
+		commandHandled = App->CL_Views_Com->Context_Command_Ogre(LOWORD(wParam));
 
 		return commandHandled ? TRUE : FALSE;
 	}
@@ -180,7 +211,7 @@ LRESULT CALLBACK CL64_View_3D::Proc_Ogre_BR(HWND hDlg, UINT message, WPARAM wPar
 		/*if (App->CL_Editor_Control->flag_PreviewMode_Active == 1 &&
 			App->CL_Ogre->Listener_3D->flag_LeftMouseDown == 0)*/
 
-		if (App->CL_Editor_Map->Current_View->hDlg == App->CL_View_3D->Bottom_Right_Window_Hwnd)
+		if (App->CL_Views_Com->Current_View->hDlg == App->CL_View_3D->Bottom_Right_Window_Hwnd)
 		{
 			int zDelta = static_cast<short>(HIWORD(wParam)); // wheel rotation
 
@@ -213,11 +244,13 @@ LRESULT CALLBACK CL64_View_3D::Proc_Ogre_BR(HWND hDlg, UINT message, WPARAM wPar
 	// Left Mouse Down
 	case WM_LBUTTONDOWN:
 	{
-		App->CL_Editor_Map->Current_View = App->CL_Editor_Map->VCam[V_Ogre];
+		auto& Views_Com = App->CL_Views_Com;
 
-		if (App->CL_Editor_Map->Selected_Window != Enums::Selected_Map_View_3D)
+		Views_Com->Current_View = Views_Com->VCam[V_Ogre];
+
+		if (Views_Com->Selected_Window != Enums::Selected_Map_View_3D)
 		{
-			App->CL_Editor_Map->Set_Selected_View(Enums::Selected_Map_View_3D);
+			Views_Com->Set_Selected_View(Enums::Selected_Map_View_3D);
 		}
 
 		ImGuiIO& io = ImGui::GetIO();
@@ -231,7 +264,7 @@ LRESULT CALLBACK CL64_View_3D::Proc_Ogre_BR(HWND hDlg, UINT message, WPARAM wPar
 				{
 					POINT p;
 					GetCursorPos(&p);
-					App->CL_Editor_Map->mStartPoint = p;
+					Views_Com->mStartPoint = p;
 
 					GetCursorPos(&p);
 					App->CursorPosX = p.x;
@@ -298,11 +331,13 @@ LRESULT CALLBACK CL64_View_3D::Proc_Ogre_BR(HWND hDlg, UINT message, WPARAM wPar
 	// Right Mouse Down
 	case WM_RBUTTONDOWN:
 	{
-		App->CL_Editor_Map->Current_View = App->CL_Editor_Map->VCam[V_Ogre];
+		auto& Views_Com = App->CL_Views_Com;
 
-		if (App->CL_Editor_Map->Selected_Window != Enums::Selected_Map_View_3D)
+		Views_Com->Current_View = Views_Com->VCam[V_Ogre];
+
+		if (Views_Com->Selected_Window != Enums::Selected_Map_View_3D)
 		{
-			App->CL_Editor_Map->Set_Selected_View(Enums::Selected_Map_View_3D);
+			Views_Com->Set_Selected_View(Enums::Selected_Map_View_3D);
 		}
 
 		if (App->flag_3D_Started == true)
@@ -369,14 +404,16 @@ LRESULT CALLBACK CL64_View_3D::Proc_Ogre_BR(HWND hDlg, UINT message, WPARAM wPar
 
 					if (cameraComparison == 1)
 					{
-						App->CL_Editor_Map->Current_View = App->CL_Editor_Map->VCam[V_TR];
+						auto& Views_Com = App->CL_Views_Com;
+
+						Views_Com->Current_View = Views_Com->VCam[V_TR];
 						if (isSceneEditorActive)
 						{
-							App->CL_Editor_Map->Context_Menu_Ogre(hDlg);
+							Views_Com->Context_Menu_Ogre(hDlg);
 						}
 						else if (isPreviewModeRunning)
 						{
-							App->CL_Editor_Map->Context_Menu_Ogre(hDlg);
+							Views_Com->Context_Menu_Ogre(hDlg);
 						}
 					}
 				}

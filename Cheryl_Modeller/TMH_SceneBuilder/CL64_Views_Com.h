@@ -37,11 +37,11 @@ enum View
 };
 
 
-class CL64_Editor_Map
+class CL64_Views_Com
 {
 public:
-	CL64_Editor_Map();
-	~CL64_Editor_Map();
+	CL64_Views_Com();
+	~CL64_Views_Com();
 
 	void Reset_Class();
 

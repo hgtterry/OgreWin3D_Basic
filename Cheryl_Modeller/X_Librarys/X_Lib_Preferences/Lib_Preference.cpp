@@ -286,7 +286,7 @@ LRESULT CALLBACK Lib_Preference::Proc_Options_Dlg(HWND hDlg, UINT message, WPARA
 
 			m_Preferences->Save_Config_File();
 
-			App->CL_Editor_Map->Reset_Views_All();
+			App->CL_Views_Com->Reset_Views_All();
 
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
@@ -454,8 +454,8 @@ void Lib_Preference::Read_Preferences()
 	Grid_Fine_Spacing = Ini_File->GetInt("Grid", "Grid_Fine_Spacing", 0, 10);
 	Grid_Spacing = Ini_File->GetInt("Grid", "Grid_Spacing", 0, 10);
 
-	App->CL_Editor_Map->GridSize = Grid_Spacing;
-	App->CL_Editor_Map->GridSnapSize = Grid_Fine_Spacing;
+	App->CL_Views_Com->GridSize = Grid_Spacing;
+	App->CL_Views_Com->GridSnapSize = Grid_Fine_Spacing;
 
 	Ini_File->GetString("Wad", "Wad_File_Name", chr_Tag1, MAX_PATH);
 	strcpy(Wad_File_Name, chr_Tag1);

@@ -164,7 +164,6 @@
     <ClInclude Include="CL64_Dimensions.h" />
     <ClInclude Include="CL64_Doc.h" />
     <ClInclude Include="CL64_Editor_Control.h" />
-    <ClInclude Include="CL64_Editor_Map.h" />
     <ClInclude Include="CL64_Entities.h" />
     <ClInclude Include="CL64_Export.h" />
     <ClInclude Include="CL64_Exporters.h" />
@@ -202,6 +201,7 @@
     <ClInclude Include="CL64_Top_Tabs.h" />
     <ClInclude Include="CL64_TXL_Editor.h" />
     <ClInclude Include="CL64_Utilities.h" />
+    <ClInclude Include="CL64_Views_Com.h" />
     <ClInclude Include="CL64_View_3D.h" />
     <ClInclude Include="CL64_View_Bottom_Left.h" />
     <ClInclude Include="CL64_View_Top_Left.h" />
@@ -229,7 +229,6 @@
     <ClCompile Include="CL64_Dimensions.cpp" />
     <ClCompile Include="CL64_Doc.cpp" />
     <ClCompile Include="CL64_Editor_Control.cpp" />
-    <ClCompile Include="CL64_Editor_Map.cpp" />
     <ClCompile Include="CL64_Entities.cpp" />
     <ClCompile Include="CL64_Export.cpp" />
     <ClCompile Include="CL64_Exporters.cpp" />
@@ -267,6 +266,7 @@
     <ClCompile Include="CL64_Top_Tabs.cpp" />
     <ClCompile Include="CL64_TXL_Editor.cpp" />
     <ClCompile Include="CL64_Utilities.cpp" />
+    <ClCompile Include="CL64_Views_Com.cpp" />
     <ClCompile Include="CL64_View_3D.cpp" />
     <ClCompile Include="CL64_View_Bottom_Left.cpp" />
     <ClCompile Include="CL64_View_Top_Left.cpp" />
