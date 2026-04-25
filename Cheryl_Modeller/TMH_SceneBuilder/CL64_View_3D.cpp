@@ -70,18 +70,13 @@ void CL64_View_3D::Create_Ogre_Bottom_Right()
 {
 	VCam_3D = new ViewVars;
 
-	auto& Views_Com = App->CL_Views_Com;
-
-	Views_Com->VCam[V_Ogre] = new ViewVars;
 	Set_VCam_3D_Defaults();
 
-	Views_Com->Set_Views_Defaults(V_Ogre, VIEWOGRE, "Ogre_Window");
+	App->CL_View_3D->Bottom_Right_Window_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MAP_BOTTOM_RIGHT, App->CL_Views_Com->Main_View_Dlg_Hwnd, (DLGPROC)Proc_ViewerMain);
 
-	App->CL_View_3D->Bottom_Right_Window_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MAP_BOTTOM_RIGHT, Views_Com->Main_View_Dlg_Hwnd, (DLGPROC)App->CL_View_3D->Proc_ViewerMain);
+	VCam_3D->hDlg = Bottom_Right_Window_Hwnd;
 
-	Views_Com->VCam[V_Ogre]->hDlg = App->CL_View_3D->Bottom_Right_Window_Hwnd;
-
-	App->CL_Ogre->RenderHwnd = App->CL_View_3D->RenderWin3D_hWnd;
+	App->CL_Ogre->RenderHwnd = RenderWin3D_hWnd;
 }
 
 // *************************************************************************
@@ -129,7 +124,7 @@ LRESULT CALLBACK CL64_View_3D::Proc_ViewerMain(HWND hDlg, UINT message, WPARAM w
 	{
 		auto& Views_Com = App->CL_Views_Com;
 
-		Views_Com->Current_View = Views_Com->VCam[V_Ogre];
+		Views_Com->Current_View = App->CL_View_3D->VCam_3D;
 
 		if (Views_Com->Selected_Window != Enums::Selected_Map_View_3D)
 		{
@@ -144,7 +139,7 @@ LRESULT CALLBACK CL64_View_3D::Proc_ViewerMain(HWND hDlg, UINT message, WPARAM w
 	{
 		auto& Views_Com = App->CL_Views_Com;
 
-		Views_Com->Current_View = Views_Com->VCam[V_Ogre];
+		Views_Com->Current_View = App->CL_View_3D->VCam_3D;
 
 		if (Views_Com->Selected_Window != Enums::Selected_Map_View_3D)
 		{
@@ -251,7 +246,7 @@ LRESULT CALLBACK CL64_View_3D::Proc_Ogre_BR(HWND hDlg, UINT message, WPARAM wPar
 	{
 		auto& Views_Com = App->CL_Views_Com;
 
-		Views_Com->Current_View = Views_Com->VCam[V_Ogre];
+		Views_Com->Current_View = App->CL_View_3D->VCam_3D;
 
 		if (Views_Com->Selected_Window != Enums::Selected_Map_View_3D)
 		{
@@ -338,7 +333,7 @@ LRESULT CALLBACK CL64_View_3D::Proc_Ogre_BR(HWND hDlg, UINT message, WPARAM wPar
 	{
 		auto& Views_Com = App->CL_Views_Com;
 
-		Views_Com->Current_View = Views_Com->VCam[V_Ogre];
+		Views_Com->Current_View = App->CL_View_3D->VCam_3D;
 
 		if (Views_Com->Selected_Window != Enums::Selected_Map_View_3D)
 		{
@@ -411,7 +406,7 @@ LRESULT CALLBACK CL64_View_3D::Proc_Ogre_BR(HWND hDlg, UINT message, WPARAM wPar
 					{
 						auto& Views_Com = App->CL_Views_Com;
 
-						Views_Com->Current_View = Views_Com->VCam[V_TR];
+						Views_Com->Current_View = App->CL_View_3D->VCam_3D;
 						if (isSceneEditorActive)
 						{
 							Views_Com->Context_Menu_Ogre(hDlg);

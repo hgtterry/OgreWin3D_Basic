@@ -45,8 +45,6 @@ public:
 
 	void Reset_Class();
 
-	void Set_Views_Defaults(int Index, Ogre::int32 View, const char* Name);
-
 	void Init_Map_Views();
 	void Init_Views(int View);
 	void ResizeOgreWindow(void);
@@ -92,7 +90,7 @@ public:
 
 	Colour_Int Background_Colour;
 	
-	ViewVars* VCam[4];
+	//ViewVars* VCam[4];
 	ViewVars* Current_View;
 
 	POINT mStartPoint;

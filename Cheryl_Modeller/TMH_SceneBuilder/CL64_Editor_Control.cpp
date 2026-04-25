@@ -158,7 +158,7 @@ void CL64_Editor_Control::Set_Map_Editor_Startup()
 
 	flag_Map_Editor_Active = true;
 
-	Views_Com->Current_View = Views_Com->VCam[V_Ogre];
+	Views_Com->Current_View = App->CL_View_3D->VCam_3D;
 
 	if (Views_Com->Selected_Window != Enums::Selected_Map_View_3D)
 	{

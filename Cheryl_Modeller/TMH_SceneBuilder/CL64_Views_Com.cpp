@@ -140,13 +140,6 @@ CL64_Views_Com::CL64_Views_Com()
 
 	Current_View = nullptr;
 
-	int Count = 0;
-	while (Count < 3)
-	{
-		VCam[Count] = nullptr;
-		Count++;
-	}
-
 	MemoryhDC = nullptr;
 }
 
@@ -719,29 +712,6 @@ LRESULT CALLBACK CL64_Views_Com::Proc_Main_Dlg(HWND hDlg, UINT message, WPARAM w
 
 	}
 	return FALSE;
-}
-
-// *************************************************************************
-// *	  		Set_Views_Defaults:- Terry Mo and Hazel 2025			   *
-// *************************************************************************
-void CL64_Views_Com::Set_Views_Defaults(int Index, Ogre::int32 View, const char* Name)
-{
-	strcpy(VCam[Index]->Name, Name);
-	VCam[Index]->ViewType = View;
-	VCam[Index]->ZoomFactor = 1.5;
-
-	VCam[Index]->XCenter = 310;
-	VCam[Index]->YCenter = 174;
-
-	VCam[Index]->XScreenScale = 0;
-	VCam[Index]->YScreenScale = 0;
-
-	VCam[Index]->Width = 310;
-	VCam[Index]->Height = 174;
-
-	App->CL_X_Maths->Vector3_Set(&VCam[Index]->CamPos,0,0,0);
-
-	VCam[Index]->MaxScreenScaleInv = 100;
 }
 
 // *************************************************************************
