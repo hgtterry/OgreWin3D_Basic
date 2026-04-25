@@ -31,6 +31,7 @@ CL64_View_3D::CL64_View_3D()
 {
 	Bottom_Right_Window_Hwnd = nullptr;
 	RenderWin3D_hWnd = nullptr;
+	Bottom_3D_Banner = nullptr;
 
 	VCam_3D = { 0 };
 }
@@ -67,9 +68,13 @@ void CL64_View_3D::Set_VCam_3D_Defaults()
 // *************************************************************************
 void CL64_View_3D::Create_Ogre_Bottom_Right()
 {
+	VCam_3D = new ViewVars;
+
 	auto& Views_Com = App->CL_Views_Com;
 
 	Views_Com->VCam[V_Ogre] = new ViewVars;
+	Set_VCam_3D_Defaults();
+
 	Views_Com->Set_Views_Defaults(V_Ogre, VIEWOGRE, "Ogre_Window");
 
 	App->CL_View_3D->Bottom_Right_Window_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MAP_BOTTOM_RIGHT, Views_Com->Main_View_Dlg_Hwnd, (DLGPROC)App->CL_View_3D->Proc_ViewerMain);
@@ -90,7 +95,7 @@ LRESULT CALLBACK CL64_View_3D::Proc_ViewerMain(HWND hDlg, UINT message, WPARAM w
 	case WM_INITDIALOG:
 	{
 		SendDlgItemMessage(hDlg, IDC_ST_3D_TITLE, WM_SETFONT, (WPARAM)App->Font_CB10, MAKELPARAM(TRUE, 0));
-		App->CL_Views_Com->Bottom_Ogre_Banner = GetDlgItem(hDlg, IDC_ST_3D_TITLE);
+		App->CL_View_3D->Bottom_3D_Banner = GetDlgItem(hDlg, IDC_ST_3D_TITLE);
 
 		App->CL_View_3D->RenderWin3D_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MAP_RENDER_WINDOW, hDlg, (DLGPROC)Proc_Ogre_BR);
 		return TRUE;

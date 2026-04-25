@@ -93,8 +93,6 @@ CL64_Views_Com::CL64_Views_Com()
 	GridSize = 128, 
 	GridSnapSize = 8;
 
-	Bottom_Ogre_Banner =		nullptr;
-
 	LEFT_WINDOW_WIDTH = 500;
 	nleftWnd_width = 500;
 	
@@ -366,7 +364,7 @@ void CL64_Views_Com::Resize_Windows(HWND hDlg, int newWidth, int newDepth)
 		clientRect.right - (newWidth + WIDTH_ADJUST),
 		clientRect.bottom - (newDepth + BOTTOM_POS_BOTLEFT),
 		FALSE);
-	MoveWindow(Bottom_Ogre_Banner, 0, 0, clientRect.right - newWidth - WIDTH_ADJUST, bannerHeight, FALSE);
+	MoveWindow(App->CL_View_3D->Bottom_3D_Banner, 0, 0, clientRect.right - newWidth - WIDTH_ADJUST, bannerHeight, FALSE);
 
 
 	RedrawWindow(Main_View_Dlg_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
@@ -785,7 +783,7 @@ void CL64_Views_Com::Set_Selected_View(int Selected_View)
 	RedrawWindow(App->CL_View_Top_Left->Top_Left_Banner_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 	RedrawWindow(App->CL_View_Top_Right->Top_Right_Banner_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 	RedrawWindow(App->CL_View_Bottom_Left->Bottom_Left_Banner_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-	RedrawWindow(Bottom_Ogre_Banner, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+	RedrawWindow(App->CL_View_3D->Bottom_3D_Banner, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 }
 
 // *************************************************************************

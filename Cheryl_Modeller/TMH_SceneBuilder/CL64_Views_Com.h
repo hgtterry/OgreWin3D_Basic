@@ -103,8 +103,6 @@ public:
 	bool flag_Wheel_Active;
 	bool flag_Environment_On;
 
-	HWND Bottom_Ogre_Banner;
-
 	HCURSOR	hcSizeEW;
 	HCURSOR	hcSizeNS;
 	HCURSOR	hcBoth;
