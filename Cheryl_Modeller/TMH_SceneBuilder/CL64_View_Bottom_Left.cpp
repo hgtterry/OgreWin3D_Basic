@@ -104,8 +104,6 @@ LRESULT CALLBACK CL64_View_Bottom_Left::Proc_Bottom_Left_Window(HWND hDlg, UINT 
 		SendDlgItemMessage(hDlg, IDC_ST_BL_TITLE, WM_SETFONT, (WPARAM)App->Font_CB10, MAKELPARAM(TRUE, 0));
 		App->CL_View_Bottom_Left->Bottom_Left_Banner_Hwnd = GetDlgItem(hDlg, IDC_ST_BL_TITLE);
 
-		App->CL_View_Bottom_Left->m_Pen_Grid = CreatePen(PS_SOLID, 0, RGB(0, 112, 112));
-
 		return TRUE;
 	}
 
@@ -297,23 +295,24 @@ LRESULT CALLBACK CL64_View_Bottom_Left::Proc_Bottom_Left_Window(HWND hDlg, UINT 
 
 		App->CUR = SetCursor(App->CUR);
 
-		/*App->CL_ImGui_Dialogs->Debug_Float = App->CL_3D_TL_View->VCam_TL->CamPos.x;
-		App->CL_ImGui_Dialogs->Debug_Vec3 = Ogre::Vector3(App->CL_3D_TL_View->VCam_TL->CamPos.x, App->CL_3D_TL_View->VCam_TL->CamPos.y, App->CL_3D_TL_View->VCam_TL->CamPos.z);*/
-
-
-		/*int cameraComparison = App->CL_X_Maths->Vector3_Compare(&App->CL_3D_TL_View->VCam_TL->CamPos, &App->CL_3D_TL_View->Saved_Cam_Position, 0);
+		int cameraComparison = App->CL_X_Maths->Vector3_Compare(&App->CL_View_Bottom_Left->VCam_BL->CamPos, &App->CL_View_Bottom_Left->Saved_Cam_Position, 0);
 
 		if (cameraComparison == 1)
 		{
-			Views_Com->Current_View = Views_Com->VCam[V_TL];
+			Views_Com->Current_View = App->CL_View_Bottom_Left->VCam_BL;
 			Views_Com->Context_Menu(hDlg);
-		}*/
+		}
 
 		return 1;
 	}
 
 	case WM_COMMAND:
 	{
+		if (App->CL_Views_Com->Context_Command(LOWORD(wParam)))
+		{
+			return TRUE;
+		}
+
 		break;
 	}
 

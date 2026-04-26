@@ -108,8 +108,6 @@ LRESULT CALLBACK CL64_View_Top_Left::Proc_Top_Left_Window(HWND hDlg, UINT messag
 		SendDlgItemMessage(hDlg, IDC_ST_TL_TITLE, WM_SETFONT, (WPARAM)App->Font_CB10, MAKELPARAM(TRUE, 0));
 		App->CL_View_Top_Left->Top_Left_Banner_Hwnd = GetDlgItem(hDlg, IDC_ST_TL_TITLE);
 
-		App->CL_View_Top_Left->m_Pen_Grid = CreatePen(PS_SOLID, 0, RGB(0, 112, 112));
-
 		return TRUE;
 	}
 
@@ -303,9 +301,6 @@ LRESULT CALLBACK CL64_View_Top_Left::Proc_Top_Left_Window(HWND hDlg, UINT messag
 
 		App->CUR = SetCursor(App->CUR);
 		
-		/*App->CL_ImGui_Dialogs->Debug_Float = App->CL_3D_TL_View->VCam_TL->CamPos.x;
-		App->CL_ImGui_Dialogs->Debug_Vec3 = Ogre::Vector3(App->CL_3D_TL_View->VCam_TL->CamPos.x, App->CL_3D_TL_View->VCam_TL->CamPos.y, App->CL_3D_TL_View->VCam_TL->CamPos.z);*/
-		
 		
 		int cameraComparison = App->CL_X_Maths->Vector3_Compare(&App->CL_View_Top_Left->VCam_TL->CamPos, &App->CL_View_Top_Left->Saved_Cam_Position, 0);
 		
@@ -386,7 +381,7 @@ void CL64_View_Top_Left::Redraw_Window_TL()
 }
 
 // *************************************************************************
-// *	  	Draw_Brush_Faces_Ortho:- Terry and Hazel Flanigan 2026		   *
+// *	  	Draw_Brush_Faces_2D:- Terry and Hazel Flanigan 2026			   *
 // *************************************************************************
 void CL64_View_Top_Left::Draw_Brush_Faces_2D(const ViewVars* Cam, Brush* b)
 {

@@ -1104,8 +1104,8 @@ void CL64_Views_Com::Context_Menu(HWND hDlg)
 
 	// Panel View
 	//AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
-	//AppendMenuW(hMenu, MF_STRING, IDM_SCENE_MAX_VIEW, L"&Full View");
-	//AppendMenuW(hMenu, MF_STRING, IDM_SCENE_RESTORE_VIEW, L"&All Views");
+	AppendMenuW(hMenu, MF_STRING, IDM_SCENE_MAX_VIEW, L"&Full View");
+	AppendMenuW(hMenu, MF_STRING, IDM_SCENE_RESTORE_VIEW, L"&All Views");
 
 	AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
 	//AppendMenuW(hMenu, MF_STRING, IDM_RESET_VIEW, L"&Reset View");
@@ -1211,7 +1211,7 @@ bool CL64_Views_Com::Context_Command(WPARAM wParam)
 		App->CL_View_Top_Left->VCam_TL->CamPos.y = Pos.y;
 		App->CL_View_Top_Left->VCam_TL->CamPos.z = Pos.z;
 
-		App->CL_View_Top_Left->VCam_TL->ZoomFactor = 1.5;
+		//App->CL_View_Top_Left->VCam_TL->ZoomFactor = 1.5;
 		App->CL_View_Top_Left->Redraw_Window_TL();
 
 		return TRUE;
