@@ -55,7 +55,9 @@ public:
 
 	BrushDrawData_TR m_brushDrawData_TR;
 
-	float m_GridSize, m_GridSnapSize;
+	float m_GridSize;
+	float m_GridSnapSize;
+	float m_Zoom_Amount;
 
 	HPEN Pen_Fine_Grid;
 	HPEN m_Pen_Grid;

@@ -46,6 +46,7 @@ CL64_View_Top_Right::CL64_View_Top_Right()
 
 	m_GridSize = 128;
 	m_GridSnapSize = 8;
+	m_Zoom_Amount = 0.1;
 
 	Saved_Cam_Position = { 0 };
 
@@ -197,25 +198,27 @@ LRESULT CALLBACK CL64_View_Top_Right::Proc_Top_Right_Window(HWND hDlg, UINT mess
 			{
 				int zDelta = static_cast<short>(HIWORD(wParam)); // wheel rotation
 
+				auto& View_Zoom = App->CL_View_Top_Right->VCam_TR->ZoomFactor;
+
 				if (zDelta > 0)
 				{
-					Views_Com->Current_View->ZoomFactor = Views_Com->Current_View->ZoomFactor + 0.1;
+					View_Zoom += +App->CL_View_Top_Right->m_Zoom_Amount;
 					App->CL_View_Top_Right->Redraw_Window_TR();
 				}
 
 				if (zDelta < 0)
 				{
-					Views_Com->Current_View->ZoomFactor = Views_Com->Current_View->ZoomFactor - 0.1;
+					View_Zoom += -App->CL_View_Top_Right->m_Zoom_Amount;
 					App->CL_View_Top_Right->Redraw_Window_TR();
 				}
+
 			}
 
 			return 1;
 		}
 
 		Views_Com->flag_Wheel_Active = false;
-		int zDelta = (short)HIWORD(wParam);    // wheel rotation
-
+	
 		return 1;
 	}
 

@@ -90,7 +90,6 @@ public:
 
 	Colour_Int Background_Colour;
 	
-	//ViewVars* VCam[4];
 	ViewVars* Current_View;
 
 	POINT mStartPoint;
