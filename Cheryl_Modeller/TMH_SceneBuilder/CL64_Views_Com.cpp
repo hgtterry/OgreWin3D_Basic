@@ -1189,30 +1189,64 @@ bool CL64_Views_Com::Context_Command(WPARAM wParam)
 
 	case IDM_CENTRE_ONCAMERA:
 	{
+		auto& Views_Com = App->CL_Views_Com;
+		ViewVars* Temp_VCam = nullptr;
 		RECT		Rect;
-		GetClientRect(App->CL_View_Top_Left->VCam_TL->hDlg, &Rect);
 
-		App->CL_View_Top_Left->VCam_TL->XCenter = (float)Rect.right / 2;
-		App->CL_View_Top_Left->VCam_TL->YCenter = (float)Rect.bottom / 2;
-
-		Ogre::Vector3 Pos;
-		if (App->CL_Model->flag_Model_Loaded == true)
+		// Determine the selected view and assign the corresponding camera
+		switch (Views_Com->Selected_Window)
 		{
-			Pos = App->CL_Ogre->camNode->getPosition();
+		case Enums::Selected_Map_View_TL:
+			Temp_VCam = App->CL_View_Top_Left->VCam_TL;
+			break;
+		case Enums::Selected_Map_View_TR:
+			Temp_VCam = App->CL_View_Top_Right->VCam_TR;
+			break;
+		case Enums::Selected_Map_View_BL:
+			Temp_VCam = App->CL_View_Bottom_Left->VCam_BL;
+			break;
+		default:
+			break;
 		}
-		else
+
+		if (Temp_VCam)
 		{
-			Pos.x = 0;
-			Pos.y = 0;
-			Pos.z = 0;
+			GetClientRect(Temp_VCam->hDlg, &Rect);
+
+			Temp_VCam->XCenter = static_cast<float>(Rect.right) / 2;
+			Temp_VCam->YCenter = static_cast<float>(Rect.bottom) / 2;
+
+			Ogre::Vector3 Pos;
+			if (App->CL_Model->flag_Model_Loaded == true)
+			{
+				Pos = App->CL_Ogre->camNode->getPosition();
+			}
+			else
+			{
+				Pos = Ogre::Vector3( 0, 0, 0 );
+			}
+
+			Temp_VCam->CamPos.x = Pos.x;
+			Temp_VCam->CamPos.y = Pos.y;
+			Temp_VCam->CamPos.z = Pos.z;
+
+			// Redraw the appropriate window based on the selected view
+			switch (Views_Com->Selected_Window)
+			{
+			case Enums::Selected_Map_View_TL:
+				App->CL_View_Top_Left->Redraw_Window_TL();
+				break;
+			case Enums::Selected_Map_View_TR:
+				App->CL_View_Top_Right->Redraw_Window_TR();
+				break;
+			case Enums::Selected_Map_View_BL:
+				App->CL_View_Bottom_Left->Redraw_Window_BL();
+				break;
+			default:
+				break;
+			}
 		}
-
-		App->CL_View_Top_Left->VCam_TL->CamPos.x = Pos.x;
-		App->CL_View_Top_Left->VCam_TL->CamPos.y = Pos.y;
-		App->CL_View_Top_Left->VCam_TL->CamPos.z = Pos.z;
-
-		//App->CL_View_Top_Left->VCam_TL->ZoomFactor = 1.5;
-		App->CL_View_Top_Left->Redraw_Window_TL();
+		
 
 		return TRUE;
 	}
