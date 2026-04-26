@@ -41,7 +41,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     App = new CL64_App();
 
     // Get current working directory
-    char* a_cwd = _getcwd(App->RB_Directory_FullPath, MAX_PATH);
+    char* a_cwd = _getcwd(App->App_Directory_FullPath, MAX_PATH);
    
     // Initialize application
     App->InitApp();
@@ -103,7 +103,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     // Load default WAD  --- file Zipped Texture file
     char DefaultWad[MAX_PATH];
-    strcpy(DefaultWad, App->RB_Directory_FullPath);
+    strcpy(DefaultWad, App->App_Directory_FullPath);
     strcat(DefaultWad, "\\Data\\Room_Builder\\Default.zip");
     App->CL_Doc->Load_Wad_File(DefaultWad); // Needs Ogre at the Moment
    
@@ -254,7 +254,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
            
             case ID_DEBUG_QUICKLOADSCENEEDITOR:
             {
-                strcpy(App->CL_File->PathFileName_3dt, App->RB_Directory_FullPath);
+                strcpy(App->CL_File->PathFileName_3dt, App->App_Directory_FullPath);
                 strcat(App->CL_File->PathFileName_3dt, "\\Data\\Room_Builder\\Test_owp\\Test.mtf");
 
                 strcpy(App->CL_File->FileName_3dt, "Test.mtf");
@@ -448,7 +448,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
             case ID_OPENEXAMPLES_TESTROOM:
             {
-                strcpy(App->CL_File->PathFileName_3dt, App->RB_Directory_FullPath);
+                strcpy(App->CL_File->PathFileName_3dt, App->App_Directory_FullPath);
                 strcat(App->CL_File->PathFileName_3dt, "\\Data\\Room_Builder\\Just_Room\\Just_Room.mtf");
                 strcpy(App->CL_File->FileName_3dt, "Just_Room.mtf");
                 App->CL_File->Start_Load(false);
@@ -460,7 +460,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             {
                 strcpy(App->CL_Model->Loaded_FileName, "Sinbad.mesh");
 
-                strcpy(App->CL_Model->Loaded_PathFileName, App->RB_Directory_FullPath);
+                strcpy(App->CL_Model->Loaded_PathFileName, App->App_Directory_FullPath);
                 strcat(App->CL_Model->Loaded_PathFileName, "\\Models\\Ogre3D_Models\\Sinbad_No_Config\\Sinbad.mesh");
 
                 bool test = App->CL_Importers->Load_Ogre_Model(false, false);
@@ -472,7 +472,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             {
                 strcpy(App->CL_Model->Loaded_FileName, "Cube.obj");
 
-                strcpy(App->CL_Model->Loaded_PathFileName, App->RB_Directory_FullPath);
+                strcpy(App->CL_Model->Loaded_PathFileName, App->App_Directory_FullPath);
                 strcat(App->CL_Model->Loaded_PathFileName, "\\Models\\Wavefront_Obj_Models\\Cube.obj");
 
                 App->CL_Assimp->Options.SelectedPreset = aiProcess_Triangulate | 
@@ -491,7 +491,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             {
                 strcpy(App->CL_Model->Loaded_FileName, "chapel-10-C.ms3d");
 
-                strcpy(App->CL_Model->Loaded_PathFileName, App->RB_Directory_FullPath);
+                strcpy(App->CL_Model->Loaded_PathFileName, App->App_Directory_FullPath);
                 strcat(App->CL_Model->Loaded_PathFileName, "\\Models\\Milkshape_Models\\Chaple\\chapel-10-C.ms3d");
 
                 App->CL_Assimp->Options.SelectedPreset = aiProcess_Triangulate |
@@ -508,7 +508,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
             case ID_OPENEXAMPLES_TESTSCENE:
             {
-                strcpy(App->CL_File->PathFileName_3dt, App->RB_Directory_FullPath);
+                strcpy(App->CL_File->PathFileName_3dt, App->App_Directory_FullPath);
                 strcat(App->CL_File->PathFileName_3dt, "\\Data\\Room_Builder\\Test_owp\\Test.mtf");
 
                 strcpy(App->CL_File->FileName_3dt, "Test.mtf");
@@ -520,7 +520,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
             case ID_OPENEXAMPLES_CUTBRUSHES:
             {
-                strcpy(App->CL_File->PathFileName_3dt, App->RB_Directory_FullPath);
+                strcpy(App->CL_File->PathFileName_3dt, App->App_Directory_FullPath);
                 strcat(App->CL_File->PathFileName_3dt, "\\Data\\Room_Builder\\CutBrushes.owp\\CutBrushs.mtf");
 
                 strcpy(App->CL_File->FileName_3dt, "CutBrushs.mtf");
@@ -532,7 +532,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
             case ID_OPENEXAMPLES_TWOROOMS:
             {
-                strcpy(App->CL_File->PathFileName_3dt, App->RB_Directory_FullPath);
+                strcpy(App->CL_File->PathFileName_3dt, App->App_Directory_FullPath);
                 strcat(App->CL_File->PathFileName_3dt, "\\Data\\Room_Builder\\Two_Rooms_owp\\Two_Rooms.mtf");
 
                 strcpy(App->CL_File->FileName_3dt, "Two_Rooms.mtf");
@@ -1489,7 +1489,7 @@ void Close_App()
 
     // Delete Contents of working folder
     char mWorld_File_PathAndFile[MAX_PATH];
-    strcpy(mWorld_File_PathAndFile, App->RB_Directory_FullPath);
+    strcpy(mWorld_File_PathAndFile, App->App_Directory_FullPath);
     strcat(mWorld_File_PathAndFile, "\\");
     strcat(mWorld_File_PathAndFile, "Data");
     strcat(mWorld_File_PathAndFile, "\\");
@@ -1535,7 +1535,7 @@ INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
         SendDlgItemMessage(hDlg, IDC_LIST_ABOUT_VERSIONS, LB_ADDSTRING, (WPARAM)0, (LPARAM)" ");
 
         sprintf(buf, "%s", "Instalation Path:- ");
-        strcat(buf, App->RB_Directory_FullPath);
+        strcat(buf, App->App_Directory_FullPath);
         SendDlgItemMessage(hDlg, IDC_LIST_ABOUT_VERSIONS, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
         SendDlgItemMessage(hDlg, IDC_LIST_ABOUT_VERSIONS, LB_ADDSTRING, (WPARAM)0, (LPARAM)" ");

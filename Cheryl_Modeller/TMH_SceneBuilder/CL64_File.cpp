@@ -444,7 +444,7 @@ bool CL64_File::Open_3dt_File()
 		if (!App->CL_Utilities->Check_File_Exist(pathAndFile))
 		{
 			// App->Say("Texture Library Does Not Exist", "Loading Default");
-			strcpy(pathAndFile, App->RB_Directory_FullPath);
+			strcpy(pathAndFile, App->App_Directory_FullPath);
 			strcat(pathAndFile, "\\Data\\Room_Builder\\Default.zip");
 		}
 
@@ -458,7 +458,7 @@ bool CL64_File::Open_3dt_File()
 		if (!App->CL_Utilities->Check_File_Exist(pathAndFile))
 		{
 			//App->Say("Texture Library Does Not Exist", "Loading Default");
-			strcpy(pathAndFile, App->RB_Directory_FullPath);
+			strcpy(pathAndFile, App->App_Directory_FullPath);
 			strcat(pathAndFile, "\\Data\\Room_Builder\\Default.zip");
 		}
 	}

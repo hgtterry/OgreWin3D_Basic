@@ -847,7 +847,7 @@ bool CL64_Properties_Textures_Com::View_Texture(char* TextureName, char* Materia
 			App->CL_Resources->mFileString = ff->getAsString();
 
 			char mFileName[MAX_PATH];
-			strcpy(mFileName, App->RB_Directory_FullPath);
+			strcpy(mFileName, App->App_Directory_FullPath);
 			strcat(mFileName, "\\Data\\");
 			strcat(mFileName, TextureName);
 

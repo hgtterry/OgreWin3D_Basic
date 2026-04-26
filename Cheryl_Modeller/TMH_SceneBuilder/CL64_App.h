@@ -328,7 +328,7 @@ public:
 	int CursorPosX;
 	int CursorPosY;
 
-	char RB_Directory_FullPath[MAX_PATH];
+	char App_Directory_FullPath[MAX_PATH];
 	char App_Title[MAX_PATH];
 };
 

@@ -504,8 +504,8 @@ bool CL64_File_IO::Check_File_Exist(char* Full_Path)
 // *************************************************************************
 void CL64_File_IO::Open_HTML(char* HelpTitle)
 {
-	char Path[1024];
-	strcpy(Path, App->RB_Directory_FullPath);
+	char Path[MAX_PATH];
+	strcpy(Path, App->App_Directory_FullPath);
 	strcat(Path, "\\");
 	strcat(Path, HelpTitle);
 

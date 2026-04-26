@@ -173,7 +173,7 @@ void CL64_Utilities::Extract_Textures(bool Extract_All, const char* Exclude_File
 			mFileString = ff->getAsString();
 
 			char mFileName[MAX_PATH];
-			strcpy(mFileName, App->RB_Directory_FullPath);
+			strcpy(mFileName, App->App_Directory_FullPath);
 			strcat(mFileName, "\\Data\\Texture_Test\\");
 			strcat(mFileName, i->filename.c_str());
 

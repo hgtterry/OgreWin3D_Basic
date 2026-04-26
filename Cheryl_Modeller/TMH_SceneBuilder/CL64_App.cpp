@@ -210,7 +210,7 @@ CL64_App::CL64_App(void)
 
 	ViewPLeaseWait = nullptr;
 
-	RB_Directory_FullPath[0] = 0;
+	App_Directory_FullPath[0] = 0;
 }
 
 CL64_App::~CL64_App(void)
@@ -814,7 +814,7 @@ void CL64_App::BeepBeep()
 void CL64_App::Open_HTML(char* HelpTitle)
 {
 	char Path[MAX_PATH];
-	strcpy(Path, App->RB_Directory_FullPath);
+	strcpy(Path, App->App_Directory_FullPath);
 	strcat(Path, "\\");
 	strcat(Path, HelpTitle);
 

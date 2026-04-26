@@ -131,7 +131,7 @@ bool CLP_3D_Setup::Init_3D_CreateRoot(void)
 bool CLP_3D_Setup::Init_Load_Resources()
 {
 	// Prepare resource file path
-	std::string resourceBasePath = App->RB_Directory_FullPath;
+	std::string resourceBasePath = App->App_Directory_FullPath;
 
 	// Convert backslashes to forward slashes for Ogre compatibility
 	ReverseBackSlash((LPSTR)resourceBasePath.c_str());

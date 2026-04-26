@@ -53,7 +53,7 @@ CL64_Textures::CL64_Textures(void)
 	BasePicHeight = 0;
 	BasePicDepth = 0;
 
-	strcpy(Temp_Texture_Location, App->RB_Directory_FullPath);
+	strcpy(Temp_Texture_Location, App->App_Directory_FullPath);
 	strcat(Temp_Texture_Location, "\\Data\\World_Test\\");
 
 	int Count = 0;

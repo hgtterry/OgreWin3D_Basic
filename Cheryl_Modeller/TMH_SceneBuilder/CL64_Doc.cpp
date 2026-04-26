@@ -158,7 +158,7 @@ void CL64_Doc::Editor_Set_Dlgs(int Set_State)
 const char* CL64_Doc::FindTextureLibrary(char const* WadName)
 {
 	static char Path_And_File[MAX_PATH];
-	strcpy(Path_And_File, App->RB_Directory_FullPath);
+	strcpy(Path_And_File, App->App_Directory_FullPath);
 	strcat(Path_And_File, "\\Data\\Room_Builder\\");
 	strcat(Path_And_File, WadName);
 

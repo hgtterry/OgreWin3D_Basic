@@ -490,7 +490,7 @@ bool CL64_TXL_Editor::SelectBitmap()
 				mFileString = ff->getAsString();
 
 				char mFileName[MAX_PATH];
-				strcpy(mFileName, App->RB_Directory_FullPath);
+				strcpy(mFileName, App->App_Directory_FullPath);
 				strcat(mFileName, "\\Data\\");
 				strcat(mFileName, m_Selected_TextureName);
 
@@ -695,7 +695,7 @@ void CL64_TXL_Editor::Delete_File(const char* File)
 	//Do_Timer
 
 	char mFileName[MAX_PATH];
-	strcpy(mFileName, App->RB_Directory_FullPath);
+	strcpy(mFileName, App->App_Directory_FullPath);
 	strcat(mFileName, "\\Data\\Texture_Test\\");
 
 	CreateDirectory(mFileName,NULL);
@@ -705,7 +705,7 @@ void CL64_TXL_Editor::Delete_File(const char* File)
 	App->CL_Utilities->Zip_Assets(mFileName, mFileName);
 
 	char Source[MAX_PATH];
-	strcpy(Source, App->RB_Directory_FullPath);
+	strcpy(Source, App->App_Directory_FullPath);
 	strcat(Source, "\\Data\\Texture_Test\\Assets.zip");
 
 	char Destination[MAX_PATH];
@@ -714,7 +714,7 @@ void CL64_TXL_Editor::Delete_File(const char* File)
 	CopyFile(Source, Destination, false); // Overwrite
 
 	char Empty_Folder[MAX_PATH];
-	strcpy(Empty_Folder, App->RB_Directory_FullPath);
+	strcpy(Empty_Folder, App->App_Directory_FullPath);
 	strcat(Empty_Folder, "\\Data\\Texture_Test");
 	App->CL_Utilities->Delete_Folder_Contents(Empty_Folder);
 
@@ -748,7 +748,7 @@ bool CL64_TXL_Editor::Add_File()
 	}
 
 	char mFileName[MAX_PATH];
-	strcpy(mFileName, App->RB_Directory_FullPath);
+	strcpy(mFileName, App->App_Directory_FullPath);
 	strcat(mFileName, "\\Data\\Texture_Test\\");
 
 	CreateDirectory(mFileName, NULL);
@@ -757,7 +757,7 @@ bool CL64_TXL_Editor::Add_File()
 
 
 	char Dest[MAX_PATH];
-	strcpy(Dest, App->RB_Directory_FullPath);
+	strcpy(Dest, App->App_Directory_FullPath);
 	strcat(Dest, "\\Data\\Texture_Test\\");
 	strcat(Dest, App->CL_File_IO->s_Just_FileName.c_str());
 
@@ -766,7 +766,7 @@ bool CL64_TXL_Editor::Add_File()
 	App->CL_Utilities->Zip_Assets(mFileName, mFileName);
 
 	char Source[MAX_PATH];
-	strcpy(Source, App->RB_Directory_FullPath);
+	strcpy(Source, App->App_Directory_FullPath);
 	strcat(Source, "\\Data\\Texture_Test\\Assets.zip");
 
 	char Destination[MAX_PATH];
@@ -775,7 +775,7 @@ bool CL64_TXL_Editor::Add_File()
 	CopyFile(Source, Destination, false); // Overwrite
 
 	char Empty_Folder[MAX_PATH];
-	strcpy(Empty_Folder, App->RB_Directory_FullPath);
+	strcpy(Empty_Folder, App->App_Directory_FullPath);
 	strcat(Empty_Folder, "\\Data\\Texture_Test");
 	App->CL_Utilities->Delete_Folder_Contents(Empty_Folder);
 

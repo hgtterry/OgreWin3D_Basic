@@ -71,7 +71,7 @@ void CL64_Ogre3D::Set_World_Paths(void)
 	strcpy(mWorld_Mesh_JustName, "World");
 	strcat(mWorld_Mesh_JustName, Num);
 
-	strcpy(mWorld_File_PathAndFile, App->RB_Directory_FullPath);
+	strcpy(mWorld_File_PathAndFile, App->App_Directory_FullPath);
 	strcat(mWorld_File_PathAndFile, "\\");
 	strcat(mWorld_File_PathAndFile, "Data");
 	strcat(mWorld_File_PathAndFile, "\\");

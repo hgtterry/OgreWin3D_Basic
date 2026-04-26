@@ -863,7 +863,7 @@ bool CL64_Resources::View_Texture(char* FileName, HWND Owner_hDlg)
 			mFileString = ff->getAsString();
 
 			char mFileName[MAX_PATH];
-			strcpy(mFileName, App->RB_Directory_FullPath);
+			strcpy(mFileName, App->App_Directory_FullPath);
 			strcat(mFileName, "\\Data\\");
 			strcat(mFileName, FileName);
 
@@ -1088,7 +1088,7 @@ bool CL64_Resources::View_File(char* FileName, HWND Owner_hDlg)
 				mFileString = ff->getAsString();
 
 				char mFileName[MAX_PATH];
-				strcpy(mFileName, App->RB_Directory_FullPath);
+				strcpy(mFileName, App->App_Directory_FullPath);
 				strcat(mFileName, "\\Data\\");
 				strcat(mFileName, FileName);
 
@@ -1117,7 +1117,7 @@ bool CL64_Resources::View_File(char* FileName, HWND Owner_hDlg)
 
 			App->CL_Utilities->Get_FileName_FromPath(FileName, FileName);
 			char mFileName[MAX_PATH];
-			strcpy(mFileName, App->RB_Directory_FullPath);
+			strcpy(mFileName, App->App_Directory_FullPath);
 			strcat(mFileName, "\\Data\\");
 			strcat(mFileName, App->CL_Utilities->JustFileName);
 
