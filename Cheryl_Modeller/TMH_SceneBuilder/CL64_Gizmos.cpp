@@ -654,3 +654,20 @@ void CL64_Gizmos::unhighlight(Ogre::Entity* entity)
 	App->CL_Props_Dialogs->flag_isHighlighted = false;
 	App->CL_ImGui_Editor->flag_Object_Highlighted = false;
 }
+
+// *************************************************************************
+// *					Move_BoneCrosshair Terry Bernie   		 	 	   *
+// *************************************************************************
+void CL64_Gizmos::Move_BoneCrosshair(void)
+{
+	
+	auto& p_Bones = App->CL_Mesh->S_Bones; // Pointer-> App->CL_Mesh->S_Bones
+
+	float x = p_Bones[App->CL_Model->Selected_BoneIndex]->TranslationStart.X;
+	float y = p_Bones[App->CL_Model->Selected_BoneIndex]->TranslationStart.Y;
+	float z = p_Bones[App->CL_Model->Selected_BoneIndex]->TranslationStart.Z;
+
+	App->CL_Ogre->OGL_Listener->Hair_1PosX = x;
+	App->CL_Ogre->OGL_Listener->Hair_1PosY = y;
+	App->CL_Ogre->OGL_Listener->Hair_1PosZ = z;
+}

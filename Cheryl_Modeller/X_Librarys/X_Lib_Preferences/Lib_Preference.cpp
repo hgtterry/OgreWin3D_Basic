@@ -443,7 +443,7 @@ void Lib_Preference::Read_Preferences()
 	char chr_Tag1[MAX_PATH];
 	char Preferences_Path[MAX_PATH];
 
-	strcpy(Preferences_Path, App->RB_Directory_FullPath);
+	strcpy(Preferences_Path, App->App_Directory_FullPath);
 	strcat(Preferences_Path, "\\Data\\Room_Builder\\Room_Builder.ini");
 
 	auto& Ini_File = App->CL_X_Ini_File; // App->CL_X_Ini_File-> (Pointer)
@@ -471,7 +471,7 @@ bool Lib_Preference::Write_Preferences()
 
 	char Preferences_Path[MAX_PATH];
 
-	strcpy(Preferences_Path, App->RB_Directory_FullPath);
+	strcpy(Preferences_Path, App->App_Directory_FullPath);
 	strcat(Preferences_Path, "\\Data\\Room_Builder\\Room_Builder.ini");
 
 	WriteData = fopen(Preferences_Path, "wt");

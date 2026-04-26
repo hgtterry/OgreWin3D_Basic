@@ -580,20 +580,12 @@ void CL64_ImGui::Show_Ogre_Model_Data_GUI(void)
 				{
 					if (ImGui::Selectable(App->CL_Mesh->S_Bones[Count]->BoneName, listJointsItems_Ogre[Count]))
 					{
-						/*strcpy(App->CL_Motions->Selected_Motion_Name, App->CL_Mesh->S_OgreMeshData[0]->m_Motion_Names[Count].c_str());
-
-						if (App->CL_Motions->flag_Motion_Playing == true)
-						{
-							App->CL_Properties_Motions->Update_Motions_By_Name(App->CL_Mesh->S_OgreMeshData[0]->m_Motion_Names[Count].c_str(), true);
-						}
-						else
-						{
-							App->CL_Properties_Motions->Update_Motions_By_Name(App->CL_Mesh->S_OgreMeshData[0]->m_Motion_Names[Count].c_str(), false);
-						}*/
-
+						
 						listJointsItems_Ogre[PreviouseJoints_Ogre] = 0;
 						listJointsItems_Ogre[Count] = 1;
 						PreviouseJoints_Ogre = Count;
+
+						App->CL_Model->Selected_BoneIndex = PreviouseJoints_Ogre;
 					}
 
 					Count++;

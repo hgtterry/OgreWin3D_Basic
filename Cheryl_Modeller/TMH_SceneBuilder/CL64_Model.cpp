@@ -10,7 +10,7 @@ CL64_Model::CL64_Model(void)
 	strcpy(Model_Just_Name, "No Name");
 
 	Model_Type = Enums::Model_Type_None;
-
+	
 	// Internal
 	GroupCount = 0;
 	TextureCount = 0;
@@ -18,6 +18,7 @@ CL64_Model::CL64_Model(void)
 	VerticeCount = 0;
 	FaceCount = 0;
 	BoneCount = 0;
+	Selected_BoneIndex = 0;
 
 	flag_Model_Loaded = false;
 
@@ -70,11 +71,11 @@ void CL64_Model::Set_Paths(void)
 }
 
 // *************************************************************************
-// *		Create_BondingBox_Model:- Terry and Hazel Flanigan 2025		   *
+// *		Create_BondingBox_Model:- Terry and Hazel Flanigan 2026		   *
 // *************************************************************************
 void CL64_Model::Set_BondingBox_Model(bool Create)
 {
-	if (Create == 1)
+	if (Create)
 	{
 		S_BoundingBox[0] = new AABB_Type;
 	}
@@ -83,39 +84,34 @@ void CL64_Model::Set_BondingBox_Model(bool Create)
 
 	if (GroupCount > 0 && App->CL_Model->VerticeCount > 4)
 	{
-		S_BoundingBox[0]->BB_Min[0].x = G[0]->vertex_Data[0].x;
-		S_BoundingBox[0]->BB_Min[0].y = G[0]->vertex_Data[0].y;
-		S_BoundingBox[0]->BB_Min[0].z = G[0]->vertex_Data[0].z;
+		// Initialize bounding box with the first vertex
+		const auto& firstVertex = G[0]->vertex_Data[0];
+		S_BoundingBox[0]->BB_Min[0] = firstVertex;
+		S_BoundingBox[0]->BB_Max[0] = firstVertex;
 
-		S_BoundingBox[0]->BB_Max[0].x = G[0]->vertex_Data[0].x;
-		S_BoundingBox[0]->BB_Max[0].y = G[0]->vertex_Data[0].y;
-		S_BoundingBox[0]->BB_Max[0].z = G[0]->vertex_Data[0].z;
-
-		int Count = 0;
-		int VertCount = 0;
-
-		while (Count < GroupCount)
+		// Iterate through each group and vertex to find the min and max
+		for (int count = 0; count < GroupCount; ++count)
 		{
-			VertCount = 0;
-			while (VertCount < G[Count]->GroupVertCount)
+			for (int vertCount = 0; vertCount < G[count]->GroupVertCount; ++vertCount)
 			{
-				if (G[Count]->vertex_Data[VertCount].x < S_BoundingBox[0]->BB_Min[0].x) S_BoundingBox[0]->BB_Min[0].x = G[Count]->vertex_Data[VertCount].x;
-				if (G[Count]->vertex_Data[VertCount].y < S_BoundingBox[0]->BB_Min[0].y) S_BoundingBox[0]->BB_Min[0].y = G[Count]->vertex_Data[VertCount].y;
-				if (G[Count]->vertex_Data[VertCount].z < S_BoundingBox[0]->BB_Min[0].z) S_BoundingBox[0]->BB_Min[0].z = G[Count]->vertex_Data[VertCount].z;
-				if (G[Count]->vertex_Data[VertCount].x > S_BoundingBox[0]->BB_Max[0].x) S_BoundingBox[0]->BB_Max[0].x = G[Count]->vertex_Data[VertCount].x;
-				if (G[Count]->vertex_Data[VertCount].y > S_BoundingBox[0]->BB_Max[0].y) S_BoundingBox[0]->BB_Max[0].y = G[Count]->vertex_Data[VertCount].y;
-				if (G[Count]->vertex_Data[VertCount].z > S_BoundingBox[0]->BB_Max[0].z) S_BoundingBox[0]->BB_Max[0].z = G[Count]->vertex_Data[VertCount].z;
-				VertCount++;
+				const auto& vertex = G[count]->vertex_Data[vertCount];
+				S_BoundingBox[0]->BB_Min[0].x = std::min(S_BoundingBox[0]->BB_Min[0].x, vertex.x);
+				S_BoundingBox[0]->BB_Min[0].y = std::min(S_BoundingBox[0]->BB_Min[0].y, vertex.y);
+				S_BoundingBox[0]->BB_Min[0].z = std::min(S_BoundingBox[0]->BB_Min[0].z, vertex.z);
+				S_BoundingBox[0]->BB_Max[0].x = std::max(S_BoundingBox[0]->BB_Max[0].x, vertex.x);
+				S_BoundingBox[0]->BB_Max[0].y = std::max(S_BoundingBox[0]->BB_Max[0].y, vertex.y);
+				S_BoundingBox[0]->BB_Max[0].z = std::max(S_BoundingBox[0]->BB_Max[0].z, vertex.z);
 			}
-			Count++;
 		}
 
-		S_BoundingBox[0]->Size[0].x = (fabs(S_BoundingBox[0]->BB_Max[0].x - S_BoundingBox[0]->BB_Min[0].x));
-		S_BoundingBox[0]->Size[0].y = (fabs(S_BoundingBox[0]->BB_Max[0].y - S_BoundingBox[0]->BB_Min[0].y));
-		S_BoundingBox[0]->Size[0].z = (fabs(S_BoundingBox[0]->BB_Max[0].z - S_BoundingBox[0]->BB_Min[0].z));
+		// Calculate size and radius
+		S_BoundingBox[0]->Size[0].x = std::fabs(S_BoundingBox[0]->BB_Max[0].x - S_BoundingBox[0]->BB_Min[0].x);
+		S_BoundingBox[0]->Size[0].y = std::fabs(S_BoundingBox[0]->BB_Max[0].y - S_BoundingBox[0]->BB_Min[0].y);
+		S_BoundingBox[0]->Size[0].z = std::fabs(S_BoundingBox[0]->BB_Max[0].z - S_BoundingBox[0]->BB_Min[0].z);
 
-		S_BoundingBox[0]->radius = (S_BoundingBox[0]->Size[0].x > S_BoundingBox[0]->Size[0].z) ? S_BoundingBox[0]->Size[0].z / 2.0f : S_BoundingBox[0]->Size[0].x / 2.0f;
+		S_BoundingBox[0]->radius = std::min(S_BoundingBox[0]->Size[0].x, S_BoundingBox[0]->Size[0].z) / 2.0f;
 
+		// Calculate center
 		S_BoundingBox[0]->Centre[0].x = (S_BoundingBox[0]->BB_Min[0].x + S_BoundingBox[0]->BB_Max[0].x) / 2.0f;
 		S_BoundingBox[0]->Centre[0].y = (S_BoundingBox[0]->BB_Min[0].y + S_BoundingBox[0]->BB_Max[0].y) / 2.0f;
 		S_BoundingBox[0]->Centre[0].z = (S_BoundingBox[0]->BB_Min[0].z + S_BoundingBox[0]->BB_Max[0].z) / 2.0f;
@@ -207,3 +203,4 @@ void CL64_Model::Clear_Model()
 		App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
 	}
 }
+

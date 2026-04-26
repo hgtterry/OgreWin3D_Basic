@@ -17,6 +17,7 @@ public:
 	void Set_Paths(void);
 	void Set_BondingBox_Model(bool Create);
 	void Clear_Model();
+	int Selected_BoneIndex;
 
 	char Loaded_PathFileName[MAX_PATH];
 	char Loaded_FileName[MAX_PATH];

@@ -121,11 +121,12 @@ void CL64_Motioins::Update_Motion(float deltaTime)
 		}
 	}
 
-	
-	/*if (App->Cl_Ogre->RenderListener->Show_Crosshair == 1)
+	App->CL_Ogre->OGL_Listener->flag_Show_Bone_Crosshair = true;
+
+	if (App->CL_Ogre->OGL_Listener->flag_Show_Bone_Crosshair == true)
 	{
-		App->Cl_Bones->Move_BoneCrosshair();
-	}*/
+		App->CL_Gizmos->Move_BoneCrosshair();
+	}
 
 }
 

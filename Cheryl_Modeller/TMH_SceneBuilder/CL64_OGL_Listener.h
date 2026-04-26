@@ -42,6 +42,15 @@ public:
 	bool Brush_FaceList_Render(const Brush* b, const FaceList* pList);
 
 	void MarkerBox_Update(float Depth, float Height, float Width);
+	void RenderCrossHair(void);
+
+	float Hair_1PosX;
+	float Hair_1PosY;
+	float Hair_1PosZ;
+
+	float Hair_1RotX;
+	float Hair_1RotY;
+	float Hair_1RotZ;
 
 	float RX;
 	float RZ;
@@ -65,6 +74,7 @@ public:
 	bool flag_ShowNormals;
 	bool flag_ShowBoundingBox;
 	bool flag_ShowBones;
+	bool flag_Show_Bone_Crosshair;
 
 	// Brushes
 	bool flag_Render_Just_Brush;

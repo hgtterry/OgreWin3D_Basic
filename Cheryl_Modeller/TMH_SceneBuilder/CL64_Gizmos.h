@@ -69,6 +69,8 @@ public:
 	void highlight(Ogre::Entity* entity);
 	void unhighlight(Ogre::Entity* entity);
 
+	void Move_BoneCrosshair(void);
+
 	int Last_Selected_Object;
 
 	Ogre::SceneManager* mSceneMgr;

@@ -38,6 +38,14 @@ CL64_OGL_Listener::CL64_OGL_Listener(void)
 	RX = 0;
 	RZ = 0;
 
+	Hair_1PosX = 0;
+	Hair_1PosY = 0;
+	Hair_1PosZ = 0;
+
+	Hair_1RotX = 0;
+	Hair_1RotY = 0;
+	Hair_1RotZ = 0;
+
 	Light_Activated = false;
 
 	Selected_Brush_Index = 0;
@@ -63,6 +71,7 @@ CL64_OGL_Listener::CL64_OGL_Listener(void)
 	flag_ShowNormals = false;
 	flag_ShowBoundingBox = false;
 	flag_ShowBones = false;
+	flag_Show_Bone_Crosshair = false;
 
 	Render_Mode = Enums::Render_Nothing;
 
@@ -333,6 +342,12 @@ void CL64_OGL_Listener::Render_Loop()
 		MeshData_RenderBones();
 	}
 
+	// ---------------------- Crosshair
+	if (flag_Show_Bone_Crosshair == true)
+	{
+		RenderCrossHair();
+	}
+
 	if (depthTestEnabled)
 	{
 		glEnable(GL_DEPTH_TEST);
@@ -523,6 +538,62 @@ void CL64_OGL_Listener::MeshData_Face_Groups(int Count)
 	}
 
 	glEnable(GL_TEXTURE_2D);
+}
+
+// **************************************************************************
+// *					RenderCrossHair Terry Bernie						*
+// **************************************************************************
+void CL64_OGL_Listener::RenderCrossHair(void)
+{
+	glDisable(GL_TEXTURE_2D);
+	glDisable(GL_DEPTH_TEST);
+
+	float Length = 5;
+	glLineWidth(3);
+
+	glTranslatef(Hair_1PosX, Hair_1PosY, Hair_1PosZ);
+
+	glRotatef(Hair_1RotX, 1.0, 0.0, 0.0); // Rotations of the object 
+	glRotatef(Hair_1RotY, 0.0, 1.0, 0.0);
+	glRotatef(Hair_1RotZ, 0.0, 0.0, 1.0);
+
+	glScalef(1, 1, 1);
+
+	//-------------------------------------------  x hair] Blue
+	glBegin(GL_LINES);
+	glColor3f(0.0f, 0.0f, 1.0f); // Color
+	glVertex3f(-Length, 0, 0);
+	glVertex3f(0, 0, 0);
+	glEnd();
+
+	glBegin(GL_LINES);
+	glVertex3f(0, 0, 0);
+	glVertex3f(Length, 0, 0);
+	glEnd();
+
+	//-------------------------------------------  z hair Red
+	glBegin(GL_LINES);
+	glColor3f(1.0f, 0.0f, 0.0f); // Color
+	glVertex3f(0, 0, -Length);
+	glVertex3f(0, 0, 0);
+	glEnd();
+
+	glBegin(GL_LINES);
+	glVertex3f(0, 0, 0);
+	glVertex3f(0, 0, Length);
+	glEnd();
+
+	//-------------------------------------------  y hair Green
+	glBegin(GL_LINES);
+	glColor3f(0.0f, 1.0f, 0.0f); // Color
+	glVertex3f(0, -Length, 0);
+	glVertex3f(0, 0, 0);
+	glEnd();
+
+	glBegin(GL_LINES);
+	glVertex3f(0, 0, 0);
+	glVertex3f(0, Length, 0);
+	glEnd();
 }
 
 // *************************************************************************
