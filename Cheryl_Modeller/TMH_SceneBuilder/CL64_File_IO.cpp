@@ -499,3 +499,16 @@ bool CL64_File_IO::Check_File_Exist(char* Full_Path)
 	return 0;
 }
 
+// *************************************************************************
+// *				Open_HTML:- Terry and Hazel Flanigan 2026			   *
+// *************************************************************************
+void CL64_File_IO::Open_HTML(char* HelpTitle)
+{
+	char Path[1024];
+	strcpy(Path, App->RB_Directory_FullPath);
+	strcat(Path, "\\");
+	strcat(Path, HelpTitle);
+
+	ShellExecute(0, "open", Path, 0, 0, SW_SHOW);
+}
+

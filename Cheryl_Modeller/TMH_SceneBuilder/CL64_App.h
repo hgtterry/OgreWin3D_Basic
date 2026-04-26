@@ -257,6 +257,8 @@ public:
 	HBRUSH Brush_Green;
 	HBRUSH Brush_Blue;
 
+	HBRUSH Brush_But_Test;
+
 	HPEN GreenPen;
 	HPEN WhitePen;
 

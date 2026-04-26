@@ -34,6 +34,7 @@ public:
 	bool Save_File(const LPCWSTR Type, const LPCWSTR Extensions);
 	bool Colour_Picker();
 	bool Check_File_Exist(char* Full_Path);
+	void Open_HTML(char* HelpTitle);
 
 	char szSelectedDir[MAX_PATH];
 	

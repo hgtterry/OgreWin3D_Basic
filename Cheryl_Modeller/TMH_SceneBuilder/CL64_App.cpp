@@ -147,6 +147,8 @@ CL64_App::CL64_App(void)
 	Brush_Green = 0;
 	Brush_Blue = 0;
 
+	Brush_But_Test = 0;
+
 	Font_CB10 = 0;
 	Font_CB15 = 0;
 	Font_CB18 = 0;
@@ -381,6 +383,7 @@ void CL64_App::Set_Brushes_Fonts(void)
 	Brush_But_Normal = CreateSolidBrush(RGB(255, 255, 180));
 	Brush_But_Hover = CreateSolidBrush(RGB(255, 255, 230));
 	Brush_But_Pressed = CreateSolidBrush(RGB(240, 240, 190));
+	Brush_But_Test = CreateSolidBrush(RGB(240, 240, 190));
 
 	// Initialize fonts
 	Font_CB10 = CreateFont(-12, 0, 0, 0, FW_NORMAL, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Courier Black");

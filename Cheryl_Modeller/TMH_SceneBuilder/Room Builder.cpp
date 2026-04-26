@@ -713,9 +713,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 return 1;
             }
 
-            case ID_EDIT_DESELECTALL:
+            case ID_MENUKEYS:
             {
-               // App->CL_Panels->Deselect_All_Brushes_Update_Dlgs();
+                App->CL_File_IO->Open_HTML((LPSTR)"Help\\Editor_MouseAndKeys.html");
                 return 1;
             }
 

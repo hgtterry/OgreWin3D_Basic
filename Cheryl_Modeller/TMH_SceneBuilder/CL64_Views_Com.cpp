@@ -453,14 +453,17 @@ LRESULT CALLBACK CL64_Views_Com::Proc_Main_Dlg(HWND hDlg, UINT message, WPARAM w
 		PAINTSTRUCT ps;
 		HDC hdc = BeginPaint(hDlg, &ps);
 
-		FillRect(hdc, &ps.rcPaint, (HBRUSH)App->BlackBrush);
+		if (App->flag_3D_Started == true)
+		{
+			FillRect(hdc, &ps.rcPaint, (HBRUSH)App->AppBackground);
+		}
+		else
+		{
+			FillRect(hdc, &ps.rcPaint, (HBRUSH)App->BlackBrush);
+		}
+
 		EndPaint(hDlg, &ps);
 		return 0;
-	}
-
-	case WM_CTLCOLORDLG:
-	{
-		return (LONG)App->AppBackground;
 	}
 
 	case WM_SIZE:

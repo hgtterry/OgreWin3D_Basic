@@ -132,7 +132,7 @@ LRESULT CALLBACK CL64_View_Top_Right::Proc_Top_Right_Window(HWND hDlg, UINT mess
 				SetBkColor((HDC)wParam, RGB(0, 255, 0));
 				SetTextColor((HDC)wParam, RGB(0, 0, 0));
 				SetBkMode((HDC)wParam, TRANSPARENT);
-				return (UINT)App->AppBackground;
+				return (UINT)App->Brush_But_Test;
 			}
 		}
 
