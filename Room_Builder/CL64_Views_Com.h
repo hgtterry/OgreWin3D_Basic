@@ -73,6 +73,12 @@ public:
 	void Set_3D_FullView();
 	void Set_Selected_View(int Selected_View);
 
+	void Draw_Camera(HDC ViewDC);
+
+	void On_Mouse_Move(POINT CursorPosition, HWND hDlg);
+	void On_Left_Button_Up(POINT CursorPosition);
+	void On_Left_Button_Down(POINT CursorPosition, HWND hDlg);
+
 	HWND Main_View_Dlg_Hwnd; // Background of MDI
 	HWND Top_Left_Window_Hwnd;
 	HWND Top_Right_Window_Hwnd;
@@ -99,6 +105,19 @@ public:
 	bool flag_Context_Menu_Active;
 
 	bool flag_Environment_On;
+
+	HBRUSH BackGround_Brush;
+
+	HPEN Pen_Fine_Grid;
+	HPEN Pen_Grid;
+	HPEN PenTemplate;
+	HPEN PenBrushes;
+	HPEN PenSelected;
+	HPEN Pen_Camera;
+	HPEN PenSelectedFaces;
+	HPEN PenCutBrush;
+	HPEN PenEntity;
+	HDC	MemoryhDC;
 
 	HCURSOR	hcSizeEW;
 	HCURSOR	hcSizeNS;
@@ -129,11 +148,9 @@ private:
 	// Draw Routines
 	static signed int BrushDraw(Brush* pBrush, void* lParam);
 
-	void Draw_Camera(HDC ViewDC);
+	
 
-	void On_Mouse_Move(POINT CursorPosition, HWND hDlg);
-	void On_Left_Button_Up(POINT CursorPosition);
-	void On_Left_Button_Down(POINT CursorPosition, HWND hDlg);
+	
 
 	void SetEditCursor(int Tool, const POINT* pMousePos);
 	int GetCursorBoxPos(const POINT* ptMousePos);
@@ -151,17 +168,6 @@ private:
 	bool Do_Depth;
 	bool Do_All;
 
-	HBRUSH BackGround_Brush;
-
-	HPEN Pen_Fine_Grid;
-	HPEN Pen_Grid;
-	HPEN PenTemplate;
-	HPEN PenBrushes;
-	HPEN PenSelected;
-	HPEN Pen_Camera;
-	HPEN PenSelectedFaces;
-	HPEN PenCutBrush;
-	HPEN PenEntity;
-	HDC	MemoryhDC;
+	
 };
 

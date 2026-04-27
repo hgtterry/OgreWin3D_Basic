@@ -119,6 +119,8 @@ THE SOFTWARE.
 #include <OgrePrerequisites.h>
 #include "Init_Libs.h"
 
+#include "CL64_View_Top_Left.h"
+
 class CL64_App
 {
 public:
@@ -214,6 +216,8 @@ public:
 	CL64_MeshViewer*			CL_MeshViewer;
 	CL64_Locations*				CL_Locations;
 	CL64_Teleporters*			CL_Teleporters;
+
+	CL64_View_Top_Left*			CL_View_Top_Left;
 
 	void InitApp(void);
 	void Init_Dialogs(void);

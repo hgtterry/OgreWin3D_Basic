@@ -118,6 +118,8 @@ CL64_App::CL64_App(void)
 	CL_Locations =				nullptr;
 	CL_Teleporters =			nullptr;
 
+	CL_View_Top_Left = nullptr;
+
 	CUR = 0;
 	Menu_Map = 0;
 	Menu_Scene = 0;
@@ -274,6 +276,8 @@ void CL64_App::InitApp(void)
 	CL_MeshViewer =				new CL64_MeshViewer();
 	CL_Locations =				new CL64_Locations();
 	CL_Teleporters =			new CL64_Teleporters();
+
+	CL_View_Top_Left =			new CL64_View_Top_Left();
 
 	Set_Brushes_Fonts();
 
