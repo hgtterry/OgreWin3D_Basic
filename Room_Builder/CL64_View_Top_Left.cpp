@@ -479,6 +479,8 @@ void CL64_View_Top_Left::Draw_Screen_TL(HWND hwnd)
 
 	HBITMAP OffScreenBitmap = CreateCompatibleBitmap(RealhDC, Rect.right - Rect.left, Rect.bottom - Rect.top);
 	SelectObject(m_MemoryhDC, OffScreenBitmap);
+	FillRect(m_MemoryhDC, &Rect, (HBRUSH)Views_Com->BackGround_Brush); // BackGround
+	
 	//FillRect(m_MemoryhDC, &Rect, (HBRUSH)Views_Com->Stock_Brush); // BackGround
 
 	// ---------------------- Draw Grid Fine
