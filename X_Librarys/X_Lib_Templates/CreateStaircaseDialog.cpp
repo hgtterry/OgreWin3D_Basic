@@ -616,7 +616,7 @@ void CreateStaircaseDialog::CreateNewTemplateBrush(Brush* pBrush)
 
 	pTemplatePos = App->CL_Level->Level_GetTemplatePos(App->CL_Doc->Current_Level);
 
-	if (m_UseCamPos == 1 && App->flag_OgreStarted == 1)
+	if (m_UseCamPos == 1 && App->flag_3D_Started == true)
 	{
 		Ogre::Vector3 Pos;
 

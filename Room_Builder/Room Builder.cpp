@@ -895,7 +895,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             App->CL_Views_Com->Init_Views(Enums::Selected_Map_View_None);
             App->CL_Views_Com->Save_Splitter_Width_Depth();
 
-            if (App->flag_OgreStarted == 1)
+            if (App->flag_3D_Started == 1)
             {
                 App->CL_Ogre->RenderFrame(2);
             }
@@ -908,7 +908,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             App->CL_Ogre->mWindow->windowMovedOrResized();
             App->CL_Ogre->mCamera->setAspectRatio((Ogre::Real)App->CL_Ogre->mWindow->getWidth() / (Ogre::Real)App->CL_Ogre->mWindow->getHeight());
            
-            if (App->flag_OgreStarted == 1)
+            if (App->flag_3D_Started == 1)
             {
                 App->CL_Ogre->RenderFrame(2);
             }
@@ -968,7 +968,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     case WM_TIMER:
         if (wParam == 1)
         {
-            if (App->flag_OgreStarted == 0)
+            if (App->flag_3D_Started == 0)
             {
                 App->CL_Dialogs->PleaseWait();
 
@@ -1032,7 +1032,7 @@ void StartOgre()
 
     EndDialog(App->ViewPLeaseWait, LOWORD(0));
 
-    App->flag_OgreStarted = 1;
+    App->flag_3D_Started = true;
 
     App->CL_Ogre->RenderFrame(5);
    

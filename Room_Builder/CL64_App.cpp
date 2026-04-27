@@ -168,7 +168,7 @@ CL64_App::CL64_App(void)
 	ListPanel = NULL;
 
 	flag_Debug_App = false;
-	flag_OgreStarted = false;
+	flag_3D_Started = false;
 	flag_Block_Mouse_Buttons = false;
 
 	Development = 1; // Allow New Code to Run for Testing

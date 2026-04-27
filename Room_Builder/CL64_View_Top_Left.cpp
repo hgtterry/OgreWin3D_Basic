@@ -27,6 +27,8 @@ THE SOFTWARE.
 #include "CL64_App.h"
 #include "CL64_View_Top_Left.h"
 
+//#include "CL64_Lib_Maths.h"
+
 #define min(a,b)            (((a) < (b)) ? (a) : (b))
 #define max(a,b)            (((a) > (b)) ? (a) : (b))
 
@@ -57,13 +59,24 @@ CL64_View_Top_Left::~CL64_View_Top_Left()
 {
 }
 
+//enum ViewTypes
+//{
+//	VIEWSOLID = 1,
+//	VIEWTEXTURE = 2,
+//	VIEWWIRE = 4,
+//	TOP_LEFT_VIEW = 8,
+//	BOTTOM_LEFT_VIEW = 16,
+//	TOP_RIGHT_VIEW = 32,
+//	VIEWOGRE = 64
+//};
+
 // *************************************************************************
 // *			Set_VCam_TL_Defaults:- Terry and Hazel Flanigan 2026	   *
 // *************************************************************************
 void CL64_View_Top_Left::Set_VCam_TL_Defaults()
 {
 	strcpy(VCam_TL->Name, "Top_Left");
-//	VCam_TL->ViewType = TOP_LEFT_VIEW;
+	VCam_TL->ViewType = 8;
 	VCam_TL->ZoomFactor = 1.5;
 
 	VCam_TL->XCenter = 310;
@@ -325,11 +338,11 @@ LRESULT CALLBACK CL64_View_Top_Left::Proc_Top_Left_Window(HWND hDlg, UINT messag
 
 	case WM_PAINT:
 	{
-		/*if (App->flag_3D_Started == true)
+		if (App->flag_3D_Started == true)
 		{
 			App->CL_Views_Com->Current_View = App->CL_View_Top_Left->VCam_TL;
 			App->CL_View_Top_Left->Draw_Screen_TL(hDlg);
-		}*/
+		}
 
 		return 0;
 	}

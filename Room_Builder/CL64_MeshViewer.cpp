@@ -1068,7 +1068,7 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_3D(HWND hDlg, UINT message, WP
 
 	case WM_CTLCOLORDLG:
 	{
-		if (App->flag_OgreStarted == false)
+		if (App->flag_3D_Started == false)
 		{
 			return (LONG)App->BlackBrush;
 		}
@@ -1084,7 +1084,7 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_3D(HWND hDlg, UINT message, WP
 	// Right Mouse Button
 	case WM_RBUTTONDOWN: // BERNIE_HEAR_FIRE 
 	{
-		if (App->flag_OgreStarted == true)
+		if (App->flag_3D_Started == true)
 		{
 			POINT cursorPosition;
 			GetCursorPos(&cursorPosition);
@@ -1106,7 +1106,7 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_3D(HWND hDlg, UINT message, WP
 	}
 	case WM_RBUTTONUP:
 	{
-		if (App->flag_OgreStarted == true)
+		if (App->flag_3D_Started == true)
 		{
 			ReleaseCapture();
 			App->CL_MeshViewer->RenderListener->flag_Pl_RightMouseDown = false;
@@ -1119,7 +1119,7 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_3D(HWND hDlg, UINT message, WP
 	// Left Mouse Button
 	case WM_LBUTTONDOWN: // BERNIE_HEAR_FIRE 
 	{
-		if (App->flag_OgreStarted == true)
+		if (App->flag_3D_Started == true)
 		{
 
 			POINT p;
@@ -1147,7 +1147,7 @@ LRESULT CALLBACK CL64_MeshViewer::Proc_MeshViewer_3D(HWND hDlg, UINT message, WP
 
 	case WM_LBUTTONUP:
 	{
-		if (App->flag_OgreStarted == true)
+		if (App->flag_3D_Started == true)
 		{
 			ReleaseCapture();
 			App->CL_MeshViewer->RenderListener->flag_Pl_LeftMouseDown = false;

@@ -347,7 +347,7 @@ void CL64_Views_Com::ResizeOgreWindow()
 	SetWindowPos(App->ViewGLhWnd, NULL, 0, 17, clientRect.right, clientRect.bottom - 17, SWP_NOZORDER);
 
 	// Check if the Ogre engine has started
-	if (App->flag_OgreStarted == 1)
+	if (App->flag_3D_Started == 1)
 	{
 		// Get the updated client rectangle
 		RECT updatedRect;
@@ -1435,7 +1435,7 @@ LRESULT CALLBACK CL64_Views_Com::Proc_Ogre_BR(HWND hDlg, UINT message, WPARAM wP
 
 	case WM_CTLCOLORDLG:
 	{
-		if (App->flag_OgreStarted == 0)
+		if (App->flag_3D_Started == 0)
 		{
 			return (LONG)App->BlackBrush;
 		}
@@ -1515,7 +1515,7 @@ LRESULT CALLBACK CL64_Views_Com::Proc_Ogre_BR(HWND hDlg, UINT message, WPARAM wP
 		ImGuiIO& io = ImGui::GetIO();
 		io.MouseDown[0] = true;
 
-		if (App->flag_OgreStarted == 1)
+		if (App->flag_3D_Started == 1)
 		{
 			if (App->flag_Block_Mouse_Buttons == false)
 			{
@@ -1555,7 +1555,7 @@ LRESULT CALLBACK CL64_Views_Com::Proc_Ogre_BR(HWND hDlg, UINT message, WPARAM wP
 		ImGuiIO& io = ImGui::GetIO();
 		io.MouseDown[0] = false;
 
-		if (App->flag_OgreStarted == 1)
+		if (App->flag_3D_Started == 1)
 		{
 			if (App->flag_Block_Mouse_Buttons == 0)
 			{
@@ -1594,7 +1594,7 @@ LRESULT CALLBACK CL64_Views_Com::Proc_Ogre_BR(HWND hDlg, UINT message, WPARAM wP
 			App->CL_Views_Com->Set_Selected_View(Enums::Selected_Map_View_3D);
 		}
 
-		if (App->flag_OgreStarted == 1)
+		if (App->flag_3D_Started == 1)
 		{
 			if (App->flag_Block_Mouse_Buttons == 0)
 			{
@@ -1626,7 +1626,7 @@ LRESULT CALLBACK CL64_Views_Com::Proc_Ogre_BR(HWND hDlg, UINT message, WPARAM wP
 	// Right Mouse Up
 	case WM_RBUTTONUP:
 	{
-		if (App->flag_OgreStarted == 1)
+		if (App->flag_3D_Started == 1)
 		{
 			if (App->flag_Block_Mouse_Buttons == 0)
 			{
@@ -2508,7 +2508,8 @@ void CL64_Views_Com::Draw_Camera(HDC ViewDC)
 	EntSizeView.y -= OriginView.y;
 
 	// Entity's position in the view
-	if (App->flag_OgreStarted == 1) {
+	if (App->flag_3D_Started == 1) 
+	{
 		OgreRot.x = App->CL_Ogre->camNode->getOrientation().getPitch().valueRadians();
 		OgreRot.y = App->CL_Ogre->camNode->getOrientation().getYaw().valueRadians();
 		Cam_Angles = { M_PI - OgreRot.x, -OgreRot.y, 0 };

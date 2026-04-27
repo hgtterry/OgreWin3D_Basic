@@ -185,7 +185,7 @@ void CL64_Ogre3D_Listener::Update_Game_Logic(float DeltaTime)
 
 	//Count = 0;
 
-	if (flag_Run_Physics == 1 && App->flag_OgreStarted == 1)
+	if (flag_Run_Physics == 1 && App->flag_3D_Started == 1)
 	{
 		App->CL_Physics->dynamicsWorld->stepSimulation(DeltaTime * 2);// Bullet_Step);
 

@@ -289,7 +289,7 @@ public:
 	HWND ListPanel;
 
 	bool flag_Debug_App;
-	bool flag_OgreStarted;
+	bool flag_3D_Started;
 	bool flag_Block_Mouse_Buttons;
 
 	bool Development;
