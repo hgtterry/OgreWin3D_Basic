@@ -25,7 +25,7 @@ THE SOFTWARE.
 #include "pch.h"
 #include "resource.h"
 #include "CL64_App.h"
-#include "CL64_Editor_Map.h"
+#include "CL64_Views_Com.h"
 
 #define IDM_GRID_SNAP 1
 #define IDM_RESET_VIEW 2
@@ -81,7 +81,7 @@ typedef struct tagBrushDrawData
 	Ogre::uint32	Color;
 } BrushDrawData;
 
-CL64_Editor_Map::CL64_Editor_Map()
+CL64_Views_Com::CL64_Views_Com()
 {
 	Main_View_Dlg_Hwnd = NULL;
 
@@ -155,14 +155,14 @@ CL64_Editor_Map::CL64_Editor_Map()
 	MemoryhDC = nullptr;
 }
 
-CL64_Editor_Map::~CL64_Editor_Map()
+CL64_Views_Com::~CL64_Views_Com()
 {
 }
 
 // *************************************************************************
 // *			Reset_Class:- Terry and Hazel Flanigan 2024			 	   *
 // *************************************************************************
-void CL64_Editor_Map::Reset_Class()
+void CL64_Views_Com::Reset_Class()
 {
 	Reset_Views_All();
 }
@@ -170,7 +170,7 @@ void CL64_Editor_Map::Reset_Class()
 // *************************************************************************
 // *	  		Reset_Views_All:- Terry and Hazel Flanigan 2024	     *
 // *************************************************************************
-void CL64_Editor_Map::Reset_Views_All()
+void CL64_Views_Com::Reset_Views_All()
 {
 	Init_Views(Enums::Selected_Map_View_None);
 	Resize_Windows(Main_View_Dlg_Hwnd, nleftWnd_width, nleftWnd_Depth);
@@ -202,7 +202,7 @@ void CL64_Editor_Map::Reset_Views_All()
 // *************************************************************************
 // *	  	Reset_To_Camera:- Terry and Hazel Flanigan 2024				   *
 // *************************************************************************
-void CL64_Editor_Map::Reset_To_Camera()
+void CL64_Views_Com::Reset_To_Camera()
 {
 	RECT		Rect;
 	GetClientRect(Current_View->hDlg, &Rect);
@@ -226,7 +226,7 @@ void CL64_Editor_Map::Reset_To_Camera()
 // *************************************************************************
 // *	  			Init_Views:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-void CL64_Editor_Map::Init_Views(int View)
+void CL64_Views_Com::Init_Views(int View)
 {
 	RECT rect;
 	GetClientRect(Main_View_Dlg_Hwnd, &rect);
@@ -285,7 +285,7 @@ void CL64_Editor_Map::Init_Views(int View)
 // *************************************************************************
 // *			Resize_Windows:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-void CL64_Editor_Map::Resize_Windows(HWND hDlg, int newWidth, int newDepth)
+void CL64_Views_Com::Resize_Windows(HWND hDlg, int newWidth, int newDepth)
 {
 	RECT clientRect;
 	GetClientRect(hDlg, &clientRect);
@@ -338,7 +338,7 @@ void CL64_Editor_Map::Resize_Windows(HWND hDlg, int newWidth, int newDepth)
 // ************************************************************************
 // *			Resize_OgreWin:- Terry and Hazel Flanigan 2025			*
 // ************************************************************************
-void CL64_Editor_Map::ResizeOgreWindow()
+void CL64_Views_Com::ResizeOgreWindow()
 {
 	RECT clientRect;
 	GetClientRect(Bottom_Ogre_Right_Hwnd, &clientRect);
@@ -368,7 +368,7 @@ void CL64_Editor_Map::ResizeOgreWindow()
 // *************************************************************************
 // *			Init_Map_Views:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-void CL64_Editor_Map::Init_Map_Views()
+void CL64_Views_Com::Init_Map_Views()
 {
 	Main_View_Dlg_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MAPEDITOR, App->MainHwnd, (DLGPROC)Proc_Main_Dlg);
 
@@ -389,7 +389,7 @@ void CL64_Editor_Map::Init_Map_Views()
 // *************************************************************************
 // *			Proc_Main_Dlg:- Terry and Hazel Flanigan 2024 			   *
 // *************************************************************************
-LRESULT CALLBACK CL64_Editor_Map::Proc_Main_Dlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK CL64_Views_Com::Proc_Main_Dlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	static  BOOL        xSizing;
 	static  BOOL        ySizing;
@@ -402,7 +402,7 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Main_Dlg(HWND hDlg, UINT message, WPARAM 
 	{
 	case WM_INITDIALOG:
 	{
-		App->CL_Editor_Map->Main_View_Dlg_Hwnd = hDlg;
+		App->CL_Views_Com->Main_View_Dlg_Hwnd = hDlg;
 		
 		return TRUE;
 	}
@@ -434,8 +434,8 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Main_Dlg(HWND hDlg, UINT message, WPARAM 
 
 	case WM_SIZE:
 	{
-		App->CL_Editor_Map->Init_Views(Enums::Selected_Map_View_None);
-		App->CL_Editor_Map->Resize_Windows(hDlg, App->CL_Editor_Map->nleftWnd_width, App->CL_Editor_Map->nleftWnd_Depth);
+		App->CL_Views_Com->Init_Views(Enums::Selected_Map_View_None);
+		App->CL_Views_Com->Resize_Windows(hDlg, App->CL_Views_Com->nleftWnd_width, App->CL_Views_Com->nleftWnd_Depth);
 
 		return 0;
 	}
@@ -471,15 +471,15 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Main_Dlg(HWND hDlg, UINT message, WPARAM 
 			yPos = (int)HIWORD(lParam);
 
 			// Checks whether the mouse is over the splitter window
-			xSizing = (xPos > App->CL_Editor_Map->nleftWnd_width - SPLITTER_BAR_WIDTH && xPos < App->CL_Editor_Map->nleftWnd_width + SPLITTER_BAR_WIDTH);
-			ySizing = (yPos > App->CL_Editor_Map->nleftWnd_Depth - SPLITTER_BAR_WIDTH && yPos < App->CL_Editor_Map->nleftWnd_Depth + SPLITTER_BAR_WIDTH);
+			xSizing = (xPos > App->CL_Views_Com->nleftWnd_width - SPLITTER_BAR_WIDTH && xPos < App->CL_Views_Com->nleftWnd_width + SPLITTER_BAR_WIDTH);
+			ySizing = (yPos > App->CL_Views_Com->nleftWnd_Depth - SPLITTER_BAR_WIDTH && yPos < App->CL_Views_Com->nleftWnd_Depth + SPLITTER_BAR_WIDTH);
 
 			if (xSizing && ySizing == 0)
 			{
 				SetCapture(hDlg);
 				if (xSizing)
 				{
-					SetCursor(App->CL_Editor_Map->hcSizeEW);
+					SetCursor(App->CL_Views_Com->hcSizeEW);
 				}
 
 			}
@@ -489,7 +489,7 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Main_Dlg(HWND hDlg, UINT message, WPARAM 
 				SetCapture(hDlg);
 				if (ySizing)
 				{
-					SetCursor(App->CL_Editor_Map->hcSizeNS);
+					SetCursor(App->CL_Views_Com->hcSizeNS);
 				}
 
 			}
@@ -499,7 +499,7 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Main_Dlg(HWND hDlg, UINT message, WPARAM 
 				SetCapture(hDlg);
 				if (ySizing)
 				{
-					SetCursor(App->CL_Editor_Map->hcBoth);
+					SetCursor(App->CL_Views_Com->hcBoth);
 				}
 			}
 		}
@@ -509,7 +509,7 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Main_Dlg(HWND hDlg, UINT message, WPARAM 
 
 	case WM_LBUTTONUP:
 	{
-		//if (App->CL_Editor_Map->flag_Right_Button_Down == 0)
+		//if (App->CL_Views_Com->flag_Right_Button_Down == 0)
 		{
 			if (xSizing)
 			{
@@ -523,8 +523,8 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Main_Dlg(HWND hDlg, UINT message, WPARAM 
 
 				if (xSizing)
 				{
-					SetRect(&focusrect, App->CL_Editor_Map->nleftWnd_width - (WIDTH_ADJUST * 2), rect.top + TOP_POS,
-						App->CL_Editor_Map->nleftWnd_width + WIDTH_ADJUST,
+					SetRect(&focusrect, App->CL_Views_Com->nleftWnd_width - (WIDTH_ADJUST * 2), rect.top + TOP_POS,
+						App->CL_Views_Com->nleftWnd_width + WIDTH_ADJUST,
 						rect.bottom - 80);
 
 					DrawFocusRect(hdc, &focusrect);
@@ -552,8 +552,8 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Main_Dlg(HWND hDlg, UINT message, WPARAM 
 				ReleaseDC(hDlg, hdc);
 			}
 
-			App->CL_Editor_Map->Resize_Windows(hDlg, App->CL_Editor_Map->nleftWnd_width, App->CL_Editor_Map->nleftWnd_Depth);
-			App->CL_Editor_Map->Save_Splitter_Width_Depth();
+			App->CL_Views_Com->Resize_Windows(hDlg, App->CL_Views_Com->nleftWnd_width, App->CL_Views_Com->nleftWnd_Depth);
+			App->CL_Views_Com->Save_Splitter_Width_Depth();
 			
 		}
 
@@ -562,7 +562,7 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Main_Dlg(HWND hDlg, UINT message, WPARAM 
 
 	case WM_MOUSEMOVE:
 	{
-		//if (App->CL_Editor_Map->flag_Right_Button_Down == 0)
+		//if (App->CL_Views_Com->flag_Right_Button_Down == 0)
 		{
 			int   xPos;
 			int   yPos;
@@ -571,7 +571,7 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Main_Dlg(HWND hDlg, UINT message, WPARAM 
 			xPos = (int)LOWORD(lParam);
 			yPos = (int)HIWORD(lParam);
 
-			if (xPos < App->CL_Editor_Map->LEFT_MINIMUM_SPACE || xPos > App->CL_Editor_Map->RIGHT_MINIMUM_SPACE)
+			if (xPos < App->CL_Views_Com->LEFT_MINIMUM_SPACE || xPos > App->CL_Views_Com->RIGHT_MINIMUM_SPACE)
 			{
 				return 0;
 			}
@@ -579,7 +579,7 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Main_Dlg(HWND hDlg, UINT message, WPARAM 
 			// Checks if the left button is pressed during dragging the splitter
 			if (wParam == MK_LBUTTON)
 			{
-				if (xSizing && App->CL_Editor_Map->Do_Width == 1)
+				if (xSizing && App->CL_Views_Com->Do_Width == 1)
 				{
 					RECT    focusrect;
 					HDC     hdc;
@@ -587,18 +587,18 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Main_Dlg(HWND hDlg, UINT message, WPARAM 
 					hdc = GetDC(hDlg);
 					GetClientRect(hDlg, &rect);
 
-					if (xSizing && App->CL_Editor_Map->Do_Width == 1)
+					if (xSizing && App->CL_Views_Com->Do_Width == 1)
 					{
-						SetRect(&focusrect, App->CL_Editor_Map->nleftWnd_width - (WIDTH_ADJUST * 2), rect.top + TOP_POS,
-							App->CL_Editor_Map->nleftWnd_width + WIDTH_ADJUST,
+						SetRect(&focusrect, App->CL_Views_Com->nleftWnd_width - (WIDTH_ADJUST * 2), rect.top + TOP_POS,
+							App->CL_Views_Com->nleftWnd_width + WIDTH_ADJUST,
 							rect.bottom - 6);
 
 						DrawFocusRect(hdc, &focusrect);
 
-						App->CL_Editor_Map->nleftWnd_width = xPos;
+						App->CL_Views_Com->nleftWnd_width = xPos;
 
-						SetRect(&focusrect, App->CL_Editor_Map->nleftWnd_width - (WIDTH_ADJUST * 2), rect.top + TOP_POS,
-							App->CL_Editor_Map->nleftWnd_width + WIDTH_ADJUST,
+						SetRect(&focusrect, App->CL_Views_Com->nleftWnd_width - (WIDTH_ADJUST * 2), rect.top + TOP_POS,
+							App->CL_Views_Com->nleftWnd_width + WIDTH_ADJUST,
 							rect.bottom - 6);
 
 						DrawFocusRect(hdc, &focusrect);
@@ -607,7 +607,7 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Main_Dlg(HWND hDlg, UINT message, WPARAM 
 					ReleaseDC(hDlg, hdc);
 				}
 
-				if (ySizing && App->CL_Editor_Map->Do_Depth == 1)
+				if (ySizing && App->CL_Views_Com->Do_Depth == 1)
 				{
 					RECT    focusrect;
 					HDC     hdc;
@@ -615,15 +615,15 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Main_Dlg(HWND hDlg, UINT message, WPARAM 
 					hdc = GetDC(hDlg);
 					GetClientRect(hDlg, &rect);
 
-					if (ySizing && App->CL_Editor_Map->Do_Depth == 1)
+					if (ySizing && App->CL_Views_Com->Do_Depth == 1)
 					{
-						SetRect(&focusrect, 0, App->CL_Editor_Map->nleftWnd_Depth, rect.right, App->CL_Editor_Map->nleftWnd_Depth + (WIDTH_ADJUST * 2));
+						SetRect(&focusrect, 0, App->CL_Views_Com->nleftWnd_Depth, rect.right, App->CL_Views_Com->nleftWnd_Depth + (WIDTH_ADJUST * 2));
 
 						DrawFocusRect(hdc, &focusrect);
 
-						App->CL_Editor_Map->nleftWnd_Depth = yPos;
+						App->CL_Views_Com->nleftWnd_Depth = yPos;
 
-						SetRect(&focusrect, 0, App->CL_Editor_Map->nleftWnd_Depth, rect.right, App->CL_Editor_Map->nleftWnd_Depth + (WIDTH_ADJUST * 2));
+						SetRect(&focusrect, 0, App->CL_Views_Com->nleftWnd_Depth, rect.right, App->CL_Views_Com->nleftWnd_Depth + (WIDTH_ADJUST * 2));
 
 						DrawFocusRect(hdc, &focusrect);
 					}
@@ -632,42 +632,42 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Main_Dlg(HWND hDlg, UINT message, WPARAM 
 				}
 			}
 
-			if ((xPos > App->CL_Editor_Map->nleftWnd_width - SPLITTER_BAR_WIDTH && xPos < App->CL_Editor_Map->nleftWnd_width + SPLITTER_BAR_WIDTH))
+			if ((xPos > App->CL_Views_Com->nleftWnd_width - SPLITTER_BAR_WIDTH && xPos < App->CL_Views_Com->nleftWnd_width + SPLITTER_BAR_WIDTH))
 			{
-				if (App->CL_Editor_Map->Do_All == 0)
+				if (App->CL_Views_Com->Do_All == 0)
 				{
-					SetCursor(App->CL_Editor_Map->hcSizeEW);
+					SetCursor(App->CL_Views_Com->hcSizeEW);
 				}
 
-				App->CL_Editor_Map->Do_Width = 1;
+				App->CL_Views_Com->Do_Width = 1;
 			}
 			else
 			{
-				App->CL_Editor_Map->Do_Width = 0;
+				App->CL_Views_Com->Do_Width = 0;
 			}
 
-			if ((yPos > App->CL_Editor_Map->nleftWnd_Depth - SPLITTER_BAR_WIDTH && yPos < App->CL_Editor_Map->nleftWnd_Depth + SPLITTER_BAR_WIDTH))
+			if ((yPos > App->CL_Views_Com->nleftWnd_Depth - SPLITTER_BAR_WIDTH && yPos < App->CL_Views_Com->nleftWnd_Depth + SPLITTER_BAR_WIDTH))
 			{
-				if (App->CL_Editor_Map->Do_All == 0)
+				if (App->CL_Views_Com->Do_All == 0)
 				{
-					SetCursor(App->CL_Editor_Map->hcSizeNS);
+					SetCursor(App->CL_Views_Com->hcSizeNS);
 				}
 
-				App->CL_Editor_Map->Do_Depth = 1;
+				App->CL_Views_Com->Do_Depth = 1;
 			}
 			else
 			{
-				App->CL_Editor_Map->Do_Depth = 0;
+				App->CL_Views_Com->Do_Depth = 0;
 			}
 
-			if (App->CL_Editor_Map->Do_Width == 1 && App->CL_Editor_Map->Do_Depth == 1)
+			if (App->CL_Views_Com->Do_Width == 1 && App->CL_Views_Com->Do_Depth == 1)
 			{
-				SetCursor(App->CL_Editor_Map->hcBoth);
-				App->CL_Editor_Map->Do_All = 1;
+				SetCursor(App->CL_Views_Com->hcBoth);
+				App->CL_Views_Com->Do_All = 1;
 			}
 			else
 			{
-				App->CL_Editor_Map->Do_All = 0;
+				App->CL_Views_Com->Do_All = 0;
 			}
 		}
 
@@ -683,7 +683,7 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Main_Dlg(HWND hDlg, UINT message, WPARAM 
 // *************************************************************************
 // *	  		Set_Views_Defaults:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
-void CL64_Editor_Map::Set_Views_Defaults(int Index, Ogre::int32 View, const char* Name)
+void CL64_Views_Com::Set_Views_Defaults(int Index, Ogre::int32 View, const char* Name)
 {
 	strcpy(VCam[Index]->Name, Name);
 	VCam[Index]->ViewType = View;
@@ -706,7 +706,7 @@ void CL64_Editor_Map::Set_Views_Defaults(int Index, Ogre::int32 View, const char
 // *************************************************************************
 // *	  	Set_Splitter_WidthDepth:- Terry and Hazel Flanigan 2024		  *
 // *************************************************************************
-void CL64_Editor_Map::Set_Splitter_WidthDepth(int Width, int Depth)
+void CL64_Views_Com::Set_Splitter_WidthDepth(int Width, int Depth)
 {
 	nleftWnd_width = Width;
 	nleftWnd_Depth = Depth;
@@ -715,7 +715,7 @@ void CL64_Editor_Map::Set_Splitter_WidthDepth(int Width, int Depth)
 // *************************************************************************
 // *	  Save_Splitter_Width_Depth:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
-void CL64_Editor_Map::Save_Splitter_Width_Depth()
+void CL64_Views_Com::Save_Splitter_Width_Depth()
 {
 	Copy_Spliter_Depth = nleftWnd_Depth;
 	Copy_Spliter_Width = nleftWnd_width;
@@ -724,7 +724,7 @@ void CL64_Editor_Map::Save_Splitter_Width_Depth()
 // *************************************************************************
 // *	  	Create_Top_Left_Window:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
-void CL64_Editor_Map::Create_Top_Left_Window()
+void CL64_Views_Com::Create_Top_Left_Window()
 {
 	VCam[V_TL] = new ViewVars;
 	Set_Views_Defaults(V_TL, VIEWTOP, "Top_Left");
@@ -737,20 +737,20 @@ void CL64_Editor_Map::Create_Top_Left_Window()
 // *************************************************************************
 // *		Proc_Top_Left_Window:- Terry and Hazel Flanigan 2024 		   *
 // *************************************************************************
-LRESULT CALLBACK CL64_Editor_Map::Proc_Top_Left_Window(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK CL64_Views_Com::Proc_Top_Left_Window(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	switch (message)
 	{
 	case WM_INITDIALOG:
 	{
 		SendDlgItemMessage(hDlg, IDC_ST_TL_TITLE, WM_SETFONT, (WPARAM)App->Font_CB10, MAKELPARAM(TRUE, 0));
-		App->CL_Editor_Map->Top_Left_Banner_Hwnd = GetDlgItem(hDlg, IDC_ST_TL_TITLE);
+		App->CL_Views_Com->Top_Left_Banner_Hwnd = GetDlgItem(hDlg, IDC_ST_TL_TITLE);
 		return TRUE;
 	}
 
 	case WM_COMMAND:
 	{
-		if (App->CL_Editor_Map->Context_Command(LOWORD(wParam)))
+		if (App->CL_Views_Com->Context_Command(LOWORD(wParam)))
 		{
 			return TRUE;
 		}
@@ -758,7 +758,7 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Top_Left_Window(HWND hDlg, UINT message, 
 	
 	case WM_CTLCOLORSTATIC:
 	{
-		if (App->CL_Editor_Map->Selected_Window == Enums::Selected_Map_View_TL)
+		if (App->CL_Views_Com->Selected_Window == Enums::Selected_Map_View_TL)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 255, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
@@ -778,7 +778,7 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Top_Left_Window(HWND hDlg, UINT message, 
 
 	case WM_CTLCOLORDLG:
 	{
-		return (LONG)App->CL_Editor_Map->BackGround_Brush;
+		return (LONG)App->CL_Views_Com->BackGround_Brush;
 	}
 
 	case WM_ERASEBKGND:
@@ -788,18 +788,18 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Top_Left_Window(HWND hDlg, UINT message, 
 
 	case WM_SETCURSOR:
 	{
-		if (App->CL_Editor_Map->flag_Context_Menu_Active == 1)
+		if (App->CL_Views_Com->flag_Context_Menu_Active == 1)
 		{
 			return false;
 		}
 
-		if (App->CL_Editor_Map->flag_Right_Button_Down == 1 || App->CL_Editor_Map->flag_Left_Button_Down == 1)
+		if (App->CL_Views_Com->flag_Right_Button_Down == 1 || App->CL_Views_Com->flag_Left_Button_Down == 1)
 		{
 			return true;
 		}
 		else if (App->CL_Doc->mModeTool == ID_TOOLS_BRUSH_MOVEROTATEBRUSH)
 		{
-			SetCursor(App->CL_Editor_Map->hcBoth);
+			SetCursor(App->CL_Views_Com->hcBoth);
 		}
 		else if (App->CL_Doc->mModeTool == ID_TOOLS_BRUSH_SCALEBRUSH)
 		{
@@ -822,7 +822,7 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Top_Left_Window(HWND hDlg, UINT message, 
 		dx = (RealCursorPosition.x);
 		dy = (RealCursorPosition.y);
 
-		App->CL_Editor_Map->On_Mouse_Move(RealCursorPosition,hDlg);
+		App->CL_Views_Com->On_Mouse_Move(RealCursorPosition,hDlg);
 		
 		return 1;
 	}
@@ -834,17 +834,17 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Top_Left_Window(HWND hDlg, UINT message, 
 		GetCursorPos(&RealCursorPosition);
 		ScreenToClient(hDlg, &RealCursorPosition);
 
-		App->CL_Editor_Map->Current_View = App->CL_Editor_Map->VCam[V_TL];
+		App->CL_Views_Com->Current_View = App->CL_Views_Com->VCam[V_TL];
 
-		if (App->CL_Editor_Map->Selected_Window != Enums::Selected_Map_View_TL)
+		if (App->CL_Views_Com->Selected_Window != Enums::Selected_Map_View_TL)
 		{
-			App->CL_Editor_Map->Set_Selected_View(Enums::Selected_Map_View_TL);
+			App->CL_Views_Com->Set_Selected_View(Enums::Selected_Map_View_TL);
 		}
 
-		App->CL_Editor_Map->flag_Right_Button_Down = 0;
-		App->CL_Editor_Map->flag_Left_Button_Down = 1;
+		App->CL_Views_Com->flag_Right_Button_Down = 0;
+		App->CL_Views_Com->flag_Left_Button_Down = 1;
 
-		App->CL_Editor_Map->On_Left_Button_Down(RealCursorPosition,hDlg);
+		App->CL_Views_Com->On_Left_Button_Down(RealCursorPosition,hDlg);
 
 		return 1;
 	}
@@ -856,12 +856,12 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Top_Left_Window(HWND hDlg, UINT message, 
 		GetCursorPos(&RealCursorPosition);
 		ScreenToClient(hDlg, &RealCursorPosition);
 
-		App->CL_Editor_Map->Current_View = App->CL_Editor_Map->VCam[V_TL];
+		App->CL_Views_Com->Current_View = App->CL_Views_Com->VCam[V_TL];
 
-		App->CL_Editor_Map->flag_Left_Button_Down = 0;
-		App->CL_Editor_Map->flag_Right_Button_Down = 0;
+		App->CL_Views_Com->flag_Left_Button_Down = 0;
+		App->CL_Views_Com->flag_Right_Button_Down = 0;
 
-		App->CL_Editor_Map->On_Left_Button_Up(RealCursorPosition);
+		App->CL_Views_Com->On_Left_Button_Up(RealCursorPosition);
 
 		return 1;
 	}
@@ -869,20 +869,20 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Top_Left_Window(HWND hDlg, UINT message, 
 	// Right Mouse Down
 	case WM_RBUTTONDOWN:
 	{
-		App->CL_Editor_Map->Current_View = App->CL_Editor_Map->VCam[V_TL];
+		App->CL_Views_Com->Current_View = App->CL_Views_Com->VCam[V_TL];
 
-		if (App->CL_Editor_Map->Selected_Window != Enums::Selected_Map_View_TL)
+		if (App->CL_Views_Com->Selected_Window != Enums::Selected_Map_View_TL)
 		{
-			App->CL_Editor_Map->Set_Selected_View(Enums::Selected_Map_View_TL);
+			App->CL_Views_Com->Set_Selected_View(Enums::Selected_Map_View_TL);
 		}
 
 		if (GetAsyncKeyState(VK_CONTROL) < 0)
 		{
-			GetCursorPos(&App->CL_Editor_Map->mStartPoint);
-			ScreenToClient(hDlg, &App->CL_Editor_Map->mStartPoint);
+			GetCursorPos(&App->CL_Views_Com->mStartPoint);
+			ScreenToClient(hDlg, &App->CL_Views_Com->mStartPoint);
 
-			App->CL_Editor_Map->flag_Right_Button_Down = 1;
-			App->CL_Editor_Map->flag_Left_Button_Down = 0;
+			App->CL_Views_Com->flag_Right_Button_Down = 1;
+			App->CL_Views_Com->flag_Left_Button_Down = 0;
 
 			App->CUR = SetCursor(NULL);
 		}
@@ -895,15 +895,15 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Top_Left_Window(HWND hDlg, UINT message, 
 	{
 		if (GetAsyncKeyState(VK_CONTROL) < 0)
 		{
-			App->CL_Editor_Map->flag_Right_Button_Down = 0;
-			App->CL_Editor_Map->flag_Left_Button_Down = 0;
+			App->CL_Views_Com->flag_Right_Button_Down = 0;
+			App->CL_Views_Com->flag_Left_Button_Down = 0;
 
 			App->CUR = SetCursor(App->CUR);
 		}
 		else
 		{
-			App->CL_Editor_Map->Current_View = App->CL_Editor_Map->VCam[V_TL];
-			App->CL_Editor_Map->Context_Menu(hDlg);
+			App->CL_Views_Com->Current_View = App->CL_Views_Com->VCam[V_TL];
+			App->CL_Views_Com->Context_Menu(hDlg);
 		}
 
 		return 1;
@@ -911,8 +911,8 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Top_Left_Window(HWND hDlg, UINT message, 
 
 	case WM_PAINT:
 	{
-		App->CL_Editor_Map->Current_View = App->CL_Editor_Map->VCam[V_TL];
-		App->CL_Editor_Map->Draw_Screen(hDlg);
+		App->CL_Views_Com->Current_View = App->CL_Views_Com->VCam[V_TL];
+		App->CL_Views_Com->Draw_Screen(hDlg);
 
 		return 0;
 	}
@@ -925,7 +925,7 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Top_Left_Window(HWND hDlg, UINT message, 
 // *************************************************************************
 // *	  	Create_Top_Right_Window:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-void CL64_Editor_Map::Create_Top_Right_Window()
+void CL64_Views_Com::Create_Top_Right_Window()
 {
 	VCam[V_TR] = new ViewVars;
 	Set_Views_Defaults(V_TR, VIEWSIDE, "Top_Right");
@@ -938,20 +938,20 @@ void CL64_Editor_Map::Create_Top_Right_Window()
 // *************************************************************************
 // *		Proc_Top_Right_Window:- Terry and Hazel Flanigan 2024 		   *
 // *************************************************************************
-LRESULT CALLBACK CL64_Editor_Map::Proc_Top_Right_Window(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK CL64_Views_Com::Proc_Top_Right_Window(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	switch (message)
 	{
 	case WM_INITDIALOG:
 	{
 		SendDlgItemMessage(hDlg, IDC_ST_TR_TITLE, WM_SETFONT, (WPARAM)App->Font_CB10, MAKELPARAM(TRUE, 0));
-		App->CL_Editor_Map->Top_Right_Banner_Hwnd = GetDlgItem(hDlg, IDC_ST_TR_TITLE);
+		App->CL_Views_Com->Top_Right_Banner_Hwnd = GetDlgItem(hDlg, IDC_ST_TR_TITLE);
 		return TRUE;
 	}
 
 	case WM_COMMAND:
 	{
-		if (App->CL_Editor_Map->Context_Command(LOWORD(wParam)))
+		if (App->CL_Views_Com->Context_Command(LOWORD(wParam)))
 		{
 			return TRUE;
 		}
@@ -961,7 +961,7 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Top_Right_Window(HWND hDlg, UINT message,
 	{
 		if (GetDlgItem(hDlg, IDC_ST_TR_TITLE) == (HWND)lParam)
 		{
-			if (App->CL_Editor_Map->Selected_Window == Enums::Selected_Map_View_TR)
+			if (App->CL_Views_Com->Selected_Window == Enums::Selected_Map_View_TR)
 			{
 				SetBkColor((HDC)wParam, RGB(0, 255, 0));
 				SetTextColor((HDC)wParam, RGB(0, 0, 0));
@@ -982,7 +982,7 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Top_Right_Window(HWND hDlg, UINT message,
 
 	case WM_CTLCOLORDLG:
 	{
-		return (LONG)App->CL_Editor_Map->BackGround_Brush;
+		return (LONG)App->CL_Views_Com->BackGround_Brush;
 	}
 
 	case WM_ERASEBKGND:
@@ -992,18 +992,18 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Top_Right_Window(HWND hDlg, UINT message,
 
 	case WM_SETCURSOR:
 	{
-		if (App->CL_Editor_Map->flag_Context_Menu_Active == 1)
+		if (App->CL_Views_Com->flag_Context_Menu_Active == 1)
 		{
 			return false;
 		}
 
-		if (App->CL_Editor_Map->flag_Right_Button_Down == 1 || App->CL_Editor_Map->flag_Left_Button_Down == 1)
+		if (App->CL_Views_Com->flag_Right_Button_Down == 1 || App->CL_Views_Com->flag_Left_Button_Down == 1)
 		{
 			return true;
 		}
 		else if (App->CL_Doc->mModeTool == ID_TOOLS_BRUSH_MOVEROTATEBRUSH)
 		{
-			SetCursor(App->CL_Editor_Map->hcBoth);
+			SetCursor(App->CL_Views_Com->hcBoth);
 		}
 		else if (App->CL_Doc->mModeTool == ID_TOOLS_BRUSH_SCALEBRUSH)
 		{
@@ -1026,7 +1026,7 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Top_Right_Window(HWND hDlg, UINT message,
 		dx = (RealCursorPosition.x);
 		dy = (RealCursorPosition.y);
 
-		App->CL_Editor_Map->On_Mouse_Move(RealCursorPosition, hDlg);
+		App->CL_Views_Com->On_Mouse_Move(RealCursorPosition, hDlg);
 
 		return 1;
 	}
@@ -1038,17 +1038,17 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Top_Right_Window(HWND hDlg, UINT message,
 		GetCursorPos(&RealCursorPosition);
 		ScreenToClient(hDlg, &RealCursorPosition);
 
-		App->CL_Editor_Map->Current_View = App->CL_Editor_Map->VCam[V_TR];
+		App->CL_Views_Com->Current_View = App->CL_Views_Com->VCam[V_TR];
 
-		if (App->CL_Editor_Map->Selected_Window != Enums::Selected_Map_View_TR)
+		if (App->CL_Views_Com->Selected_Window != Enums::Selected_Map_View_TR)
 		{
-			App->CL_Editor_Map->Set_Selected_View(Enums::Selected_Map_View_TR);
+			App->CL_Views_Com->Set_Selected_View(Enums::Selected_Map_View_TR);
 		}
 
-		App->CL_Editor_Map->flag_Right_Button_Down = 0;
-		App->CL_Editor_Map->flag_Left_Button_Down = 1;
+		App->CL_Views_Com->flag_Right_Button_Down = 0;
+		App->CL_Views_Com->flag_Left_Button_Down = 1;
 
-		App->CL_Editor_Map->On_Left_Button_Down(RealCursorPosition, hDlg);
+		App->CL_Views_Com->On_Left_Button_Down(RealCursorPosition, hDlg);
 
 		return 1;
 	}
@@ -1060,12 +1060,12 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Top_Right_Window(HWND hDlg, UINT message,
 		GetCursorPos(&RealCursorPosition);
 		ScreenToClient(hDlg, &RealCursorPosition);
 
-		App->CL_Editor_Map->flag_Right_Button_Down = 0;
-		App->CL_Editor_Map->flag_Left_Button_Down = 0;
+		App->CL_Views_Com->flag_Right_Button_Down = 0;
+		App->CL_Views_Com->flag_Left_Button_Down = 0;
 
-		App->CL_Editor_Map->Current_View = App->CL_Editor_Map->VCam[V_TR];
+		App->CL_Views_Com->Current_View = App->CL_Views_Com->VCam[V_TR];
 
-		App->CL_Editor_Map->On_Left_Button_Up(RealCursorPosition);
+		App->CL_Views_Com->On_Left_Button_Up(RealCursorPosition);
 
 		return 1;
 	}
@@ -1073,20 +1073,20 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Top_Right_Window(HWND hDlg, UINT message,
 	// Right Button Down
 	case WM_RBUTTONDOWN:
 	{
-		App->CL_Editor_Map->Current_View = App->CL_Editor_Map->VCam[V_TR];
+		App->CL_Views_Com->Current_View = App->CL_Views_Com->VCam[V_TR];
 
-		if (App->CL_Editor_Map->Selected_Window != Enums::Selected_Map_View_TR)
+		if (App->CL_Views_Com->Selected_Window != Enums::Selected_Map_View_TR)
 		{
-			App->CL_Editor_Map->Set_Selected_View(Enums::Selected_Map_View_TR);
+			App->CL_Views_Com->Set_Selected_View(Enums::Selected_Map_View_TR);
 		}
 
 		if (GetAsyncKeyState(VK_CONTROL) < 0)
 		{
-			GetCursorPos(&App->CL_Editor_Map->mStartPoint);
-			ScreenToClient(hDlg, &App->CL_Editor_Map->mStartPoint);
+			GetCursorPos(&App->CL_Views_Com->mStartPoint);
+			ScreenToClient(hDlg, &App->CL_Views_Com->mStartPoint);
 
-			App->CL_Editor_Map->flag_Right_Button_Down = 1;
-			App->CL_Editor_Map->flag_Left_Button_Down = 0;
+			App->CL_Views_Com->flag_Right_Button_Down = 1;
+			App->CL_Views_Com->flag_Left_Button_Down = 0;
 
 			App->CUR = SetCursor(NULL);
 		}
@@ -1100,15 +1100,15 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Top_Right_Window(HWND hDlg, UINT message,
 
 		if (GetAsyncKeyState(VK_CONTROL) < 0)
 		{
-			App->CL_Editor_Map->flag_Right_Button_Down = 0;
-			App->CL_Editor_Map->flag_Left_Button_Down = 0;
+			App->CL_Views_Com->flag_Right_Button_Down = 0;
+			App->CL_Views_Com->flag_Left_Button_Down = 0;
 
 			App->CUR = SetCursor(App->CUR);
 		}
 		else
 		{
-			App->CL_Editor_Map->Current_View = App->CL_Editor_Map->VCam[V_TR];
-			App->CL_Editor_Map->Context_Menu(hDlg);
+			App->CL_Views_Com->Current_View = App->CL_Views_Com->VCam[V_TR];
+			App->CL_Views_Com->Context_Menu(hDlg);
 		}
 
 		return 1;
@@ -1116,8 +1116,8 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Top_Right_Window(HWND hDlg, UINT message,
 
 	case WM_PAINT:
 	{
-		App->CL_Editor_Map->Current_View = App->CL_Editor_Map->VCam[V_TR];
-		App->CL_Editor_Map->Draw_Screen(hDlg);
+		App->CL_Views_Com->Current_View = App->CL_Views_Com->VCam[V_TR];
+		App->CL_Views_Com->Draw_Screen(hDlg);
 
 		return 0;
 	}
@@ -1130,7 +1130,7 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Top_Right_Window(HWND hDlg, UINT message,
 // *************************************************************************
 // *	  Create_Bottom_Left_Window:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
-void CL64_Editor_Map::Create_Bottom_Left_Window()
+void CL64_Views_Com::Create_Bottom_Left_Window()
 {
 	VCam[V_BL] = new ViewVars;
 	Set_Views_Defaults(V_BL, VIEWFRONT, "Bottom_Left");
@@ -1143,20 +1143,20 @@ void CL64_Editor_Map::Create_Bottom_Left_Window()
 // *************************************************************************
 // *		Proc_Bottom_Left_Window:- Terry and Hazel Flanigan 2024 	   *
 // *************************************************************************
-LRESULT CALLBACK CL64_Editor_Map::Proc_Bottom_Left_Window(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK CL64_Views_Com::Proc_Bottom_Left_Window(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	switch (message)
 	{
 	case WM_INITDIALOG:
 	{
 		SendDlgItemMessage(hDlg, IDC_ST_BL_TITLE, WM_SETFONT, (WPARAM)App->Font_CB10, MAKELPARAM(TRUE, 0));
-		App->CL_Editor_Map->Bottom_Left_Banner_Hwnd = GetDlgItem(hDlg, IDC_ST_BL_TITLE);
+		App->CL_Views_Com->Bottom_Left_Banner_Hwnd = GetDlgItem(hDlg, IDC_ST_BL_TITLE);
 		return TRUE;
 	}
 
 	case WM_COMMAND:
 	{
-		if (App->CL_Editor_Map->Context_Command(LOWORD(wParam)))
+		if (App->CL_Views_Com->Context_Command(LOWORD(wParam)))
 		{
 			return TRUE;
 		}
@@ -1166,7 +1166,7 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Bottom_Left_Window(HWND hDlg, UINT messag
 	{
 		if (GetDlgItem(hDlg, IDC_ST_BL_TITLE) == (HWND)lParam)
 		{
-			if (App->CL_Editor_Map->Selected_Window == Enums::Selected_Map_View_BL)
+			if (App->CL_Views_Com->Selected_Window == Enums::Selected_Map_View_BL)
 			{
 				SetBkColor((HDC)wParam, RGB(0, 255, 0));
 				SetTextColor((HDC)wParam, RGB(0, 0, 0));
@@ -1187,7 +1187,7 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Bottom_Left_Window(HWND hDlg, UINT messag
 
 	case WM_CTLCOLORDLG:
 	{
-		return (LONG)App->CL_Editor_Map->BackGround_Brush;
+		return (LONG)App->CL_Views_Com->BackGround_Brush;
 	}
 
 	case WM_ERASEBKGND:
@@ -1197,18 +1197,18 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Bottom_Left_Window(HWND hDlg, UINT messag
 
 	case WM_SETCURSOR:
 	{
-		if (App->CL_Editor_Map->flag_Context_Menu_Active == 1)
+		if (App->CL_Views_Com->flag_Context_Menu_Active == 1)
 		{
 			return false;
 		}
 
-		if (App->CL_Editor_Map->flag_Right_Button_Down == 1 || App->CL_Editor_Map->flag_Left_Button_Down == 1)
+		if (App->CL_Views_Com->flag_Right_Button_Down == 1 || App->CL_Views_Com->flag_Left_Button_Down == 1)
 		{
 			return true;
 		}
 		else if (App->CL_Doc->mModeTool == ID_TOOLS_BRUSH_MOVEROTATEBRUSH)
 		{
-			SetCursor(App->CL_Editor_Map->hcBoth);
+			SetCursor(App->CL_Views_Com->hcBoth);
 		}
 		else if (App->CL_Doc->mModeTool == ID_TOOLS_BRUSH_SCALEBRUSH)
 		{
@@ -1231,7 +1231,7 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Bottom_Left_Window(HWND hDlg, UINT messag
 		dx = (RealCursorPosition.x);
 		dy = (RealCursorPosition.y);
 
-		App->CL_Editor_Map->On_Mouse_Move(RealCursorPosition, hDlg);
+		App->CL_Views_Com->On_Mouse_Move(RealCursorPosition, hDlg);
 
 		return 1;
 	}
@@ -1243,17 +1243,17 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Bottom_Left_Window(HWND hDlg, UINT messag
 		GetCursorPos(&RealCursorPosition);
 		ScreenToClient(hDlg, &RealCursorPosition);
 
-		App->CL_Editor_Map->Current_View = App->CL_Editor_Map->VCam[V_BL];
+		App->CL_Views_Com->Current_View = App->CL_Views_Com->VCam[V_BL];
 
-		if (App->CL_Editor_Map->Selected_Window != Enums::Selected_Map_View_BL)
+		if (App->CL_Views_Com->Selected_Window != Enums::Selected_Map_View_BL)
 		{
-			App->CL_Editor_Map->Set_Selected_View(Enums::Selected_Map_View_BL);
+			App->CL_Views_Com->Set_Selected_View(Enums::Selected_Map_View_BL);
 		}
 
-		App->CL_Editor_Map->flag_Right_Button_Down = 0;
-		App->CL_Editor_Map->flag_Left_Button_Down = 1;
+		App->CL_Views_Com->flag_Right_Button_Down = 0;
+		App->CL_Views_Com->flag_Left_Button_Down = 1;
 
-		App->CL_Editor_Map->On_Left_Button_Down(RealCursorPosition, hDlg);
+		App->CL_Views_Com->On_Left_Button_Down(RealCursorPosition, hDlg);
 
 		return 1;
 	}
@@ -1265,12 +1265,12 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Bottom_Left_Window(HWND hDlg, UINT messag
 		GetCursorPos(&RealCursorPosition);
 		ScreenToClient(hDlg, &RealCursorPosition);
 
-		App->CL_Editor_Map->Current_View = App->CL_Editor_Map->VCam[V_BL];
+		App->CL_Views_Com->Current_View = App->CL_Views_Com->VCam[V_BL];
 
-		App->CL_Editor_Map->flag_Left_Button_Down = 0;
-		App->CL_Editor_Map->flag_Right_Button_Down = 0;
+		App->CL_Views_Com->flag_Left_Button_Down = 0;
+		App->CL_Views_Com->flag_Right_Button_Down = 0;
 
-		App->CL_Editor_Map->On_Left_Button_Up(RealCursorPosition);
+		App->CL_Views_Com->On_Left_Button_Up(RealCursorPosition);
 
 		return 1;
 	}
@@ -1278,20 +1278,20 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Bottom_Left_Window(HWND hDlg, UINT messag
 	// Right Mouse Down
 	case WM_RBUTTONDOWN:
 	{
-		App->CL_Editor_Map->Current_View = App->CL_Editor_Map->VCam[V_BL];
+		App->CL_Views_Com->Current_View = App->CL_Views_Com->VCam[V_BL];
 
-		if (App->CL_Editor_Map->Selected_Window != Enums::Selected_Map_View_BL)
+		if (App->CL_Views_Com->Selected_Window != Enums::Selected_Map_View_BL)
 		{
-			App->CL_Editor_Map->Set_Selected_View(Enums::Selected_Map_View_BL);
+			App->CL_Views_Com->Set_Selected_View(Enums::Selected_Map_View_BL);
 		}
 
 		if (GetAsyncKeyState(VK_CONTROL) < 0)
 		{
-			GetCursorPos(&App->CL_Editor_Map->mStartPoint);
-			ScreenToClient(hDlg, &App->CL_Editor_Map->mStartPoint);
+			GetCursorPos(&App->CL_Views_Com->mStartPoint);
+			ScreenToClient(hDlg, &App->CL_Views_Com->mStartPoint);
 
-			App->CL_Editor_Map->flag_Left_Button_Down = 0;
-			App->CL_Editor_Map->flag_Right_Button_Down = 1;
+			App->CL_Views_Com->flag_Left_Button_Down = 0;
+			App->CL_Views_Com->flag_Right_Button_Down = 1;
 
 			App->CUR = SetCursor(NULL);
 		}
@@ -1304,15 +1304,15 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Bottom_Left_Window(HWND hDlg, UINT messag
 	{
 		if (GetAsyncKeyState(VK_CONTROL) < 0)
 		{
-			App->CL_Editor_Map->flag_Left_Button_Down = 0;
-			App->CL_Editor_Map->flag_Right_Button_Down = 0;
+			App->CL_Views_Com->flag_Left_Button_Down = 0;
+			App->CL_Views_Com->flag_Right_Button_Down = 0;
 
 		App->CUR = SetCursor(App->CUR);
 		}
 		else
 		{
-			App->CL_Editor_Map->Current_View = App->CL_Editor_Map->VCam[V_BL];
-			App->CL_Editor_Map->Context_Menu(hDlg);
+			App->CL_Views_Com->Current_View = App->CL_Views_Com->VCam[V_BL];
+			App->CL_Views_Com->Context_Menu(hDlg);
 		}
 
 		return 1;
@@ -1320,8 +1320,8 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Bottom_Left_Window(HWND hDlg, UINT messag
 
 	case WM_PAINT:
 	{
-		App->CL_Editor_Map->Current_View = App->CL_Editor_Map->VCam[V_BL];
-		App->CL_Editor_Map->Draw_Screen(hDlg);
+		App->CL_Views_Com->Current_View = App->CL_Views_Com->VCam[V_BL];
+		App->CL_Views_Com->Draw_Screen(hDlg);
 		return 0;
 	}
 
@@ -1333,7 +1333,7 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Bottom_Left_Window(HWND hDlg, UINT messag
 // *************************************************************************
 // *		 Create_Ogre_Bottom_Right:- Terry and Hazel Flanigan 2024	   *
 // *************************************************************************
-void CL64_Editor_Map::Create_Ogre_Bottom_Right()
+void CL64_Views_Com::Create_Ogre_Bottom_Right()
 {
 	VCam[V_Ogre] = new ViewVars;
 	Set_Views_Defaults(V_Ogre, VIEWOGRE, "Ogre_Window");
@@ -1348,7 +1348,7 @@ void CL64_Editor_Map::Create_Ogre_Bottom_Right()
 // *************************************************************************
 // *			ViewerMain_Proc:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
-LRESULT CALLBACK CL64_Editor_Map::ViewerMain_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK CL64_Views_Com::ViewerMain_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	switch (message)
 	{
@@ -1356,7 +1356,7 @@ LRESULT CALLBACK CL64_Editor_Map::ViewerMain_Proc(HWND hDlg, UINT message, WPARA
 	case WM_INITDIALOG:
 	{
 		SendDlgItemMessage(hDlg, IDC_ST_3D_TITLE, WM_SETFONT, (WPARAM)App->Font_CB10, MAKELPARAM(TRUE, 0));
-		App->CL_Editor_Map->Bottom_Ogre_Banner = GetDlgItem(hDlg, IDC_ST_3D_TITLE);
+		App->CL_Views_Com->Bottom_Ogre_Banner = GetDlgItem(hDlg, IDC_ST_3D_TITLE);
 
 		App->ViewGLhWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MAP_RENDER_WINDOW, hDlg, (DLGPROC)Proc_Ogre_BR);
 		return TRUE;
@@ -1366,7 +1366,7 @@ LRESULT CALLBACK CL64_Editor_Map::ViewerMain_Proc(HWND hDlg, UINT message, WPARA
 	{
 		if (GetDlgItem(hDlg, IDC_ST_3D_TITLE) == (HWND)lParam)
 		{
-			if (App->CL_Editor_Map->Selected_Window == Enums::Selected_Map_View_3D)
+			if (App->CL_Views_Com->Selected_Window == Enums::Selected_Map_View_3D)
 			{
 				SetBkColor((HDC)wParam, RGB(0, 255, 0));
 				SetTextColor((HDC)wParam, RGB(0, 0, 0));
@@ -1388,22 +1388,22 @@ LRESULT CALLBACK CL64_Editor_Map::ViewerMain_Proc(HWND hDlg, UINT message, WPARA
 	// Left Mouse Down
 	case WM_LBUTTONDOWN:
 	{
-		App->CL_Editor_Map->Current_View = App->CL_Editor_Map->VCam[V_Ogre];
+		App->CL_Views_Com->Current_View = App->CL_Views_Com->VCam[V_Ogre];
 
-		if (App->CL_Editor_Map->Selected_Window != Enums::Selected_Map_View_3D)
+		if (App->CL_Views_Com->Selected_Window != Enums::Selected_Map_View_3D)
 		{
-			App->CL_Editor_Map->Set_Selected_View(Enums::Selected_Map_View_3D);
+			App->CL_Views_Com->Set_Selected_View(Enums::Selected_Map_View_3D);
 		}
 	}
 
 	// Right Mouse Down
 	case WM_RBUTTONDOWN:
 	{
-		App->CL_Editor_Map->Current_View = App->CL_Editor_Map->VCam[V_Ogre];
+		App->CL_Views_Com->Current_View = App->CL_Views_Com->VCam[V_Ogre];
 
-		if (App->CL_Editor_Map->Selected_Window != Enums::Selected_Map_View_3D)
+		if (App->CL_Views_Com->Selected_Window != Enums::Selected_Map_View_3D)
 		{
-			App->CL_Editor_Map->Set_Selected_View(Enums::Selected_Map_View_3D);
+			App->CL_Views_Com->Set_Selected_View(Enums::Selected_Map_View_3D);
 		}
 		return 1;
 	}
@@ -1424,7 +1424,7 @@ LRESULT CALLBACK CL64_Editor_Map::ViewerMain_Proc(HWND hDlg, UINT message, WPARA
 // *************************************************************************
 // *		Proc_Ogre_BR:- Terry and Hazel Flanigan 2024 				   *
 // *************************************************************************
-LRESULT CALLBACK CL64_Editor_Map::Proc_Ogre_BR(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK CL64_Views_Com::Proc_Ogre_BR(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	switch (message)
 	{
@@ -1465,7 +1465,7 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Ogre_BR(HWND hDlg, UINT message, WPARAM w
 		}
 		else
 		{
-			commandHandled = App->CL_Editor_Map->Context_Command_Ogre(LOWORD(wParam));
+			commandHandled = App->CL_Views_Com->Context_Command_Ogre(LOWORD(wParam));
 		}
 
 		return commandHandled ? TRUE : FALSE;
@@ -1505,11 +1505,11 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Ogre_BR(HWND hDlg, UINT message, WPARAM w
 	// Left Mouse Down
 	case WM_LBUTTONDOWN:
 	{
-		App->CL_Editor_Map->Current_View = App->CL_Editor_Map->VCam[V_Ogre];
+		App->CL_Views_Com->Current_View = App->CL_Views_Com->VCam[V_Ogre];
 
-		if (App->CL_Editor_Map->Selected_Window != Enums::Selected_Map_View_3D)
+		if (App->CL_Views_Com->Selected_Window != Enums::Selected_Map_View_3D)
 		{
-			App->CL_Editor_Map->Set_Selected_View(Enums::Selected_Map_View_3D);
+			App->CL_Views_Com->Set_Selected_View(Enums::Selected_Map_View_3D);
 		}
 
 		ImGuiIO& io = ImGui::GetIO();
@@ -1523,7 +1523,7 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Ogre_BR(HWND hDlg, UINT message, WPARAM w
 				{
 					POINT p;
 					GetCursorPos(&p);
-					App->CL_Editor_Map->mStartPoint = p;
+					App->CL_Views_Com->mStartPoint = p;
 
 					GetCursorPos(&p);
 					App->CursorPosX = p.x;
@@ -1587,11 +1587,11 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Ogre_BR(HWND hDlg, UINT message, WPARAM w
 	// Right Mouse Down
 	case WM_RBUTTONDOWN:
 	{
-		App->CL_Editor_Map->Current_View = App->CL_Editor_Map->VCam[V_Ogre];
+		App->CL_Views_Com->Current_View = App->CL_Views_Com->VCam[V_Ogre];
 
-		if (App->CL_Editor_Map->Selected_Window != Enums::Selected_Map_View_3D)
+		if (App->CL_Views_Com->Selected_Window != Enums::Selected_Map_View_3D)
 		{
-			App->CL_Editor_Map->Set_Selected_View(Enums::Selected_Map_View_3D);
+			App->CL_Views_Com->Set_Selected_View(Enums::Selected_Map_View_3D);
 		}
 
 		if (App->flag_OgreStarted == 1)
@@ -1658,14 +1658,14 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Ogre_BR(HWND hDlg, UINT message, WPARAM w
 
 					if (cameraComparison == 1)
 					{
-						App->CL_Editor_Map->Current_View = App->CL_Editor_Map->VCam[V_TR];
+						App->CL_Views_Com->Current_View = App->CL_Views_Com->VCam[V_TR];
 						if (isSceneEditorActive)
 						{
 							App->CL_Editor_Scene->Context_Menu_Ogre(hDlg);
 						}
 						else if (isPreviewModeRunning)
 						{
-							App->CL_Editor_Map->Context_Menu_Ogre(hDlg);
+							App->CL_Views_Com->Context_Menu_Ogre(hDlg);
 						}
 					}
 				}
@@ -1684,7 +1684,7 @@ LRESULT CALLBACK CL64_Editor_Map::Proc_Ogre_BR(HWND hDlg, UINT message, WPARAM w
 // *************************************************************************
 // *	  		Set_Selected_View:- Terry and Hazel Flanigan 2025		   *
 // *************************************************************************
-void CL64_Editor_Map::Set_Selected_View(int Selected_View)
+void CL64_Views_Com::Set_Selected_View(int Selected_View)
 {
 	Selected_Window = Selected_View;
 	RedrawWindow(Top_Left_Banner_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
@@ -1696,7 +1696,7 @@ void CL64_Editor_Map::Set_Selected_View(int Selected_View)
 // *************************************************************************
 // *				Set_View:- Terry and Hazel Flanigan 2024		 	   *
 // *************************************************************************
-void CL64_Editor_Map::Set_View()
+void CL64_Views_Com::Set_View()
 {
 	RECT		Rect;
 	GetClientRect(Current_View->hDlg, &Rect);
@@ -1716,7 +1716,7 @@ void CL64_Editor_Map::Set_View()
 // *************************************************************************
 // *			Context_Menu:- Terry and Hazel Flanigan 2024		 	   *
 // *************************************************************************
-void CL64_Editor_Map::Context_Menu(HWND hDlg)
+void CL64_Views_Com::Context_Menu(HWND hDlg)
 {
 	RECT rcTree;
 	TVHITTESTINFO htInfo = { 0 };
@@ -1808,7 +1808,7 @@ void CL64_Editor_Map::Context_Menu(HWND hDlg)
 // *************************************************************************
 // *			Context_Menu_Ogre:- Terry and Hazel Flanigan 2024	 	   *
 // *************************************************************************
-void CL64_Editor_Map::Context_Menu_Ogre(HWND hDlg)
+void CL64_Views_Com::Context_Menu_Ogre(HWND hDlg)
 {
 	RECT rcTree;
 	POINT pt;
@@ -1875,7 +1875,7 @@ void CL64_Editor_Map::Context_Menu_Ogre(HWND hDlg)
 // *************************************************************************
 // *		Context_Command_Ogre:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
-bool CL64_Editor_Map::Context_Command_Ogre(WPARAM wParam)
+bool CL64_Views_Com::Context_Command_Ogre(WPARAM wParam)
 {
 	switch (LOWORD(wParam))
 	{
@@ -1927,7 +1927,7 @@ bool CL64_Editor_Map::Context_Command_Ogre(WPARAM wParam)
 // *************************************************************************
 // *			 Context_Command:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
-bool CL64_Editor_Map::Context_Command(WPARAM wParam)
+bool CL64_Views_Com::Context_Command(WPARAM wParam)
 {
 	switch (LOWORD(wParam))
 	{
@@ -2004,7 +2004,7 @@ bool CL64_Editor_Map::Context_Command(WPARAM wParam)
 // *************************************************************************
 // *	  						On_Mouse_Move							   *
 // *************************************************************************
-void CL64_Editor_Map::On_Mouse_Move(POINT CursorPosition, HWND hDlg)
+void CL64_Views_Com::On_Mouse_Move(POINT CursorPosition, HWND hDlg)
 {
 	int	dx, dy;
 	T_Vec3 sp, wp, dv;
@@ -2084,7 +2084,7 @@ void CL64_Editor_Map::On_Mouse_Move(POINT CursorPosition, HWND hDlg)
 // *************************************************************************
 // *	  						On_Left_Button_Up						   *
 // *************************************************************************
-void CL64_Editor_Map::On_Left_Button_Up(POINT CursorPosition)
+void CL64_Views_Com::On_Left_Button_Up(POINT CursorPosition)
 {
 	if (App->CL_Doc->mModeTool == ID_GENERALSELECT)
 	{
@@ -2139,7 +2139,7 @@ void CL64_Editor_Map::On_Left_Button_Up(POINT CursorPosition)
 // *************************************************************************
 // *	  						On_Left_Button_Down						   *
 // *************************************************************************
-void CL64_Editor_Map::On_Left_Button_Down(POINT CursorPosition, HWND hDlg)
+void CL64_Views_Com::On_Left_Button_Down(POINT CursorPosition, HWND hDlg)
 {
 	static const int SideLookup[25] =
 	{
@@ -2191,7 +2191,7 @@ void CL64_Editor_Map::On_Left_Button_Down(POINT CursorPosition, HWND hDlg)
 	}
 }
 
-signed int CL64_Editor_Map::fdocShowBrush(Brush const* b,Box3d const* ViewBox)
+signed int CL64_Views_Com::fdocShowBrush(Brush const* b,Box3d const* ViewBox)
 {
 	return 1;// (App->CL_Brush->BrushIsVisible(b) && App->CL_Brush->Brush_TestBoundsIntersect(b, ViewBox));
 }
@@ -2199,7 +2199,7 @@ signed int CL64_Editor_Map::fdocShowBrush(Brush const* b,Box3d const* ViewBox)
 // *************************************************************************
 // *	  						BrushDraw								   *
 // *************************************************************************
-signed int CL64_Editor_Map::BrushDraw(Brush* pBrush, void* lParam)
+signed int CL64_Views_Com::BrushDraw(Brush* pBrush, void* lParam)
 {
 	BrushDrawData* pData = (BrushDrawData*)lParam;
 	
@@ -2208,9 +2208,9 @@ signed int CL64_Editor_Map::BrushDraw(Brush* pBrush, void* lParam)
 	{
 		if ((pData->FlagTest == NULL) || pData->FlagTest(pBrush))
 		{
-			if (App->CL_Editor_Map->fdocShowBrush(pBrush, pData->pViewBox))
+			if (App->CL_Views_Com->fdocShowBrush(pBrush, pData->pViewBox))
 			{
-				App->CL_Editor_Map->Render_RenderBrushFacesOrtho(pData->v, pBrush, App->CL_Editor_Map->MemoryhDC);
+				App->CL_Views_Com->Render_RenderBrushFacesOrtho(pData->v, pBrush, App->CL_Views_Com->MemoryhDC);
 			}
 		}
 	}
@@ -2226,7 +2226,7 @@ static signed int BrushDrawSelFacesOrtho(Brush* pBrush, void* lParam)
 
 	pData = (BrushDrawData*)lParam;
 
-	App->CL_Editor_Map->Render_RenderBrushSelFacesOrtho(pData->v, pBrush, pData->pDC);
+	App->CL_Views_Com->Render_RenderBrushSelFacesOrtho(pData->v, pBrush, pData->pDC);
 
 	return	GE_TRUE;
 }
@@ -2236,7 +2236,7 @@ static POINT plist[64];
 // *************************************************************************
 // *					Render_RenderBrushSelFacesOrtho		  			   *
 // *************************************************************************
-void CL64_Editor_Map::Render_RenderBrushSelFacesOrtho(ViewVars* Cam, Brush* b, HDC ViewDC)
+void CL64_Views_Com::Render_RenderBrushSelFacesOrtho(ViewVars* Cam, Brush* b, HDC ViewDC)
 {
 	int	i, j;
 
@@ -2263,7 +2263,7 @@ void CL64_Editor_Map::Render_RenderBrushSelFacesOrtho(ViewVars* Cam, Brush* b, H
 // *************************************************************************
 // *						Draw_Screen Terry Flanigan		  			   *
 // *************************************************************************
-void CL64_Editor_Map::Draw_Screen(HWND hwnd)
+void CL64_Views_Com::Draw_Screen(HWND hwnd)
 {
 	// Exit if preview mode is active
 	if (App->CL_Editor_Control->flag_PreviewMode_Active == 1)
@@ -2448,7 +2448,7 @@ void CL64_Editor_Map::Draw_Screen(HWND hwnd)
 // *************************************************************************
 // *	  			Render_RenderBrushFacesOrtho		Genesis			   *
 // *************************************************************************
-void CL64_Editor_Map::Render_RenderBrushFacesOrtho(const ViewVars* Cam, Brush* b, HDC ViewDC)
+void CL64_Views_Com::Render_RenderBrushFacesOrtho(const ViewVars* Cam, Brush* b, HDC ViewDC)
 {
 	int	i, j;
 
@@ -2470,7 +2470,7 @@ void CL64_Editor_Map::Render_RenderBrushFacesOrtho(const ViewVars* Cam, Brush* b
 // *************************************************************************
 // *			Draw_Camera:- Terry and Hazel Flanigan 2024	 		   *
 // *************************************************************************
-void CL64_Editor_Map::Draw_Camera(HDC ViewDC) 
+void CL64_Views_Com::Draw_Camera(HDC ViewDC)
 {
 	constexpr float ENTITY_SIZE = 32.0f;  // 16" across
 
@@ -2586,7 +2586,7 @@ void CL64_Editor_Map::Draw_Camera(HDC ViewDC)
 // *************************************************************************
 // *	  						SetEditCursor							   *
 // *************************************************************************
-void CL64_Editor_Map::SetEditCursor(int Tool, const POINT* pMousePos)
+void CL64_Views_Com::SetEditCursor(int Tool, const POINT* pMousePos)
 {
 	//for sizing stuff
 	static const char* SizeCursors[25] =
@@ -2647,7 +2647,7 @@ void CL64_Editor_Map::SetEditCursor(int Tool, const POINT* pMousePos)
 // *************************************************************************
 // *	  						GetCursorBoxPos							   *
 // *************************************************************************
-int CL64_Editor_Map::GetCursorBoxPos(const POINT* ptMousePos)
+int CL64_Views_Com::GetCursorBoxPos(const POINT* ptMousePos)
 {
 	const Box3d* pBrushBox;
 	POINT ptMin, ptMax;
@@ -2711,10 +2711,10 @@ int CL64_Editor_Map::GetCursorBoxPos(const POINT* ptMousePos)
 // *************************************************************************
 // *	  		Set_3D_FullView:- Terry and Hazel Flanigan 2025			   *
 // *************************************************************************
-void CL64_Editor_Map::Set_3D_FullView()
+void CL64_Views_Com::Set_3D_FullView()
 {
-	App->CL_Editor_Map->Init_Views(Enums::Selected_Map_View_3D);
-	App->CL_Editor_Map->Resize_Windows(App->CL_Editor_Map->Main_View_Dlg_Hwnd, 
+	App->CL_Views_Com->Init_Views(Enums::Selected_Map_View_3D);
+	App->CL_Views_Com->Resize_Windows(App->CL_Views_Com->Main_View_Dlg_Hwnd, 
 		nleftWnd_width, 
 		nleftWnd_Depth);
 }

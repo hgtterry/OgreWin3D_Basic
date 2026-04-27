@@ -299,7 +299,7 @@ void CL64_Render_Map::Pan_View(ViewVars* currentView, int startPosX, int startPo
 	SetCursorPos(screenPoint.x, screenPoint.y);
 
 	// Draw the map
-	App->CL_Editor_Map->Draw_Screen(currentView->hDlg);
+	App->CL_Views_Com->Draw_Screen(currentView->hDlg);
 }
 
 // *************************************************************************
@@ -314,7 +314,7 @@ void CL64_Render_Map::Zoom_View(ViewVars* currentView, int startPosY, int startP
 	if (deltaY != 0)
 	{
 		currentView->ZoomFactor += (deltaY > 0) ? -0.01 : 0.01;
-		App->CL_Editor_Map->Draw_Screen(currentView->hDlg);
+		App->CL_Views_Com->Draw_Screen(currentView->hDlg);
 	}
 
 	// Set Cursor back to Original Position

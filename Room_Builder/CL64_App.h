@@ -24,7 +24,7 @@ THE SOFTWARE.
 
 #pragma once
 
-#include "CL64_Editor_Map.h"
+#include "CL64_Views_Com.h"
 
 #include "G_Box.h"
 
@@ -126,7 +126,8 @@ public:
 	~CL64_App(void);
 
 	Init_Libs*					CL_Libs;
-	CL64_Editor_Map*			CL_Editor_Map;
+
+	CL64_Views_Com*				CL_Views_Com;
 	CL64_Lib_Maths*				CL_X_Maths;		// Maths Library
 
 	CX_Box*						CL_X_Box;		// Box Library

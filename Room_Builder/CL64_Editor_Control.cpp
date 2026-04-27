@@ -77,7 +77,7 @@ void CL64_Editor_Control::Start_Preview_Mode(void)
 		flag_Map_Editor_Active = false;
 
         // Get the parent window handle
-        Parent_hWnd = GetParent(App->CL_Editor_Map->Bottom_Ogre_Right_Hwnd);
+        Parent_hWnd = GetParent(App->CL_Views_Com->Bottom_Ogre_Right_Hwnd);
 
         // Disable property tabs and hide visuals
         App->CL_Properties_Tabs->Enable_Tabs_Dlg(false);
@@ -92,8 +92,8 @@ void CL64_Editor_Control::Start_Preview_Mode(void)
         int cy = GetSystemMetrics(SM_CYSCREEN);
 
         // Set window positions and sizes
-        SetWindowPos(App->CL_Editor_Map->Bottom_Ogre_Right_Hwnd, HWND_TOP, 0, 0, cx, cy, SWP_NOZORDER);
-        SetParent(App->CL_Editor_Map->Bottom_Ogre_Right_Hwnd, NULL);
+        SetWindowPos(App->CL_Views_Com->Bottom_Ogre_Right_Hwnd, HWND_TOP, 0, 0, cx, cy, SWP_NOZORDER);
+        SetParent(App->CL_Views_Com->Bottom_Ogre_Right_Hwnd, NULL);
         SetWindowPos(App->ViewGLhWnd, NULL, 0, 0, cx, cy, SWP_NOZORDER);
 
         // Resize the Ogre window
@@ -141,9 +141,9 @@ void CL64_Editor_Control::Start_Editor_MapBrush_Mode(void)
 	App->CL_Gizmos->highlight(App->CL_Scene->B_Object[App->CL_Gizmos->Last_Selected_Object]->Object_Ent);
     App->CL_Com_Objects->Show_Entities(true);
 
-	SetParent(App->CL_Editor_Map->Bottom_Ogre_Right_Hwnd, Parent_hWnd);
+	SetParent(App->CL_Views_Com->Bottom_Ogre_Right_Hwnd, Parent_hWnd);
 
-	App->CL_Editor_Map->Resize_Windows(App->CL_Editor_Map->Main_View_Dlg_Hwnd, App->CL_Editor_Map->nleftWnd_width, App->CL_Editor_Map->nleftWnd_Depth);
+	App->CL_Views_Com->Resize_Windows(App->CL_Views_Com->Main_View_Dlg_Hwnd, App->CL_Views_Com->nleftWnd_width, App->CL_Views_Com->nleftWnd_Depth);
 
 	App->CL_Properties_Tabs->Enable_Tabs_Dlg(true);
 	App->CL_Properties_Tabs->flag_Tabs_Dlg_Active = 1;
@@ -154,7 +154,7 @@ void CL64_Editor_Control::Start_Editor_MapBrush_Mode(void)
 		App->CL_Ogre->OGL_Listener->Show_Visuals(true);
 	}
 
-	if (App->CL_Editor_Map->flag_Environment_On == false)
+	if (App->CL_Views_Com->flag_Environment_On == false)
 	{
 		App->CL_Com_Environments->Set_Environment_By_Index(false, -1);
 	}
@@ -184,8 +184,8 @@ void CL64_Editor_Control::Return_To_Map_Editor(void)
 	// Show top tabs and configure editor map
 	App->CL_Editor_Scene->Show_Headers(false);
 	App->CL_Top_Tabs->Show_TopTabs(true);
-	App->CL_Editor_Map->Set_Splitter_WidthDepth(App->CL_Editor_Map->Copy_Spliter_Width, App->CL_Editor_Map->Copy_Spliter_Depth);
-	App->CL_Editor_Map->Resize_Windows(App->CL_Editor_Map->Main_View_Dlg_Hwnd, App->CL_Editor_Map->nleftWnd_width, App->CL_Editor_Map->nleftWnd_Depth);
+	App->CL_Views_Com->Set_Splitter_WidthDepth(App->CL_Views_Com->Copy_Spliter_Width, App->CL_Views_Com->Copy_Spliter_Depth);
+	App->CL_Views_Com->Resize_Windows(App->CL_Views_Com->Main_View_Dlg_Hwnd, App->CL_Views_Com->nleftWnd_width, App->CL_Views_Com->nleftWnd_Depth);
 
 	// Show properties tabs
 	App->CL_Properties_Tabs->Show_Tabs_Control_Dlg(true);
@@ -199,7 +199,7 @@ void CL64_Editor_Control::Return_To_Map_Editor(void)
 	App->CL_Ogre->OGL_Listener->Show_Visuals(true);
 
 	// Set environment if not active
-	if (App->CL_Editor_Map->flag_Environment_On == false)
+	if (App->CL_Views_Com->flag_Environment_On == false)
 	{
 		App->CL_Com_Environments->Set_Environment_By_Index(false, -1);
 	}
@@ -240,7 +240,7 @@ void CL64_Editor_Control::Start_Editor_Scene()
 	topTabs->flag_View_Bottom_Left = false;
 
 	// Set 3D View to Full View
-	App->CL_Editor_Map->Set_3D_FullView();
+	App->CL_Views_Com->Set_3D_FullView();
 	
 	// Hide visuals and tabs
 	App->CL_Ogre->OGL_Listener->Show_Visuals(false);
@@ -293,11 +293,11 @@ void CL64_Editor_Control::Set_Map_Editor_Startup()
 {
 	flag_Map_Editor_Active = true;
 
-	App->CL_Editor_Map->Current_View = App->CL_Editor_Map->VCam[V_Ogre];
+	App->CL_Views_Com->Current_View = App->CL_Views_Com->VCam[V_Ogre];
 
-	if (App->CL_Editor_Map->Selected_Window != Enums::Selected_Map_View_3D)
+	if (App->CL_Views_Com->Selected_Window != Enums::Selected_Map_View_3D)
 	{
-		App->CL_Editor_Map->Set_Selected_View(Enums::Selected_Map_View_3D);
+		App->CL_Views_Com->Set_Selected_View(Enums::Selected_Map_View_3D);
 	}
 
 	App->CL_Gizmos->Reset_Grid_And_Hair();

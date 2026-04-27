@@ -200,14 +200,14 @@ void CL64_Editor_Scene::Return_To_Scene_Editor(void)
 	topTabs->flag_View_Top_Right = false;
 	topTabs->flag_View_Bottom_Left = false;
 
-	App->CL_Editor_Map->Init_Views(Enums::Selected_Map_View_3D);
-	App->CL_Editor_Map->Resize_Windows(App->CL_Editor_Map->Main_View_Dlg_Hwnd,
-									   App->CL_Editor_Map->nleftWnd_width, 
-									   App->CL_Editor_Map->nleftWnd_Depth);
+	App->CL_Views_Com->Init_Views(Enums::Selected_Map_View_3D);
+	App->CL_Views_Com->Resize_Windows(App->CL_Views_Com->Main_View_Dlg_Hwnd,
+									   App->CL_Views_Com->nleftWnd_width, 
+									   App->CL_Views_Com->nleftWnd_Depth);
 
 	RECT rcl;
 
-	GetClientRect(App->CL_Editor_Map->Bottom_Ogre_Right_Hwnd, &rcl);
+	GetClientRect(App->CL_Views_Com->Bottom_Ogre_Right_Hwnd, &rcl);
 
 	SetWindowPos(App->ViewGLhWnd, NULL, 0, 0, rcl.right, rcl.bottom, SWP_NOZORDER);
 

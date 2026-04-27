@@ -511,9 +511,9 @@ void CL64_ImGui::App_Stats_GUI(void)
 		{
 			App->CL_Top_Tabs->flag_Full_View_3D = 0;
 
-			App->CL_Editor_Map->Set_Splitter_WidthDepth(App->CL_Editor_Map->Copy_Spliter_Width, App->CL_Editor_Map->Copy_Spliter_Depth);
+			App->CL_Views_Com->Set_Splitter_WidthDepth(App->CL_Views_Com->Copy_Spliter_Width, App->CL_Views_Com->Copy_Spliter_Depth);
 
-			App->CL_Editor_Map->Resize_Windows(App->CL_Editor_Map->Main_View_Dlg_Hwnd, App->CL_Editor_Map->nleftWnd_width, App->CL_Editor_Map->nleftWnd_Depth);
+			App->CL_Views_Com->Resize_Windows(App->CL_Views_Com->Main_View_Dlg_Hwnd, App->CL_Views_Com->nleftWnd_width, App->CL_Views_Com->nleftWnd_Depth);
 
 			flag_Show_App_Stats = 0;
 		}
@@ -727,12 +727,12 @@ void CL64_ImGui::Debug_Lists_ImGui(void)
 		{
 			if (CB_Index == 0) // Views Data
 			{
-				ImGui::Text("Current View %s", App->CL_Editor_Map->Current_View->Name);
-				ImGui::Text("Selected Window %i", App->CL_Editor_Map->Selected_Window);
-				ImGui::Text("Zoom %f", App->CL_Editor_Map->Current_View->ZoomFactor);
-				ImGui::Text("Width %f", App->CL_Editor_Map->Current_View->Width);
-				ImGui::Text("Height %f", App->CL_Editor_Map->Current_View->Height);
-				ImGui::Text("Cam Pos %f %f %f", App->CL_Editor_Map->Current_View->CamPos.x, App->CL_Editor_Map->Current_View->CamPos.y, App->CL_Editor_Map->Current_View->CamPos.z);
+				ImGui::Text("Current View %s", App->CL_Views_Com->Current_View->Name);
+				ImGui::Text("Selected Window %i", App->CL_Views_Com->Selected_Window);
+				ImGui::Text("Zoom %f", App->CL_Views_Com->Current_View->ZoomFactor);
+				ImGui::Text("Width %f", App->CL_Views_Com->Current_View->Width);
+				ImGui::Text("Height %f", App->CL_Views_Com->Current_View->Height);
+				ImGui::Text("Cam Pos %f %f %f", App->CL_Views_Com->Current_View->CamPos.x, App->CL_Views_Com->Current_View->CamPos.y, App->CL_Views_Com->Current_View->CamPos.z);
 			}
 
 			if (CB_Index == 1) // Ogre Data
@@ -811,8 +811,8 @@ void CL64_ImGui::Debug_Lists_ImGui(void)
 
 		if (ImGui::Button("Close"))
 		{
-			App->CL_Editor_Map->Set_Splitter_WidthDepth(App->CL_Editor_Map->Copy_Spliter_Width, App->CL_Editor_Map->Copy_Spliter_Depth);
-			App->CL_Editor_Map->Resize_Windows(App->CL_Editor_Map->Main_View_Dlg_Hwnd, App->CL_Editor_Map->nleftWnd_width, App->CL_Editor_Map->nleftWnd_Depth);
+			App->CL_Views_Com->Set_Splitter_WidthDepth(App->CL_Views_Com->Copy_Spliter_Width, App->CL_Views_Com->Copy_Spliter_Depth);
+			App->CL_Views_Com->Resize_Windows(App->CL_Views_Com->Main_View_Dlg_Hwnd, App->CL_Views_Com->nleftWnd_width, App->CL_Views_Com->nleftWnd_Depth);
 			flag_Show_Listbox = false;
 		}
 

@@ -195,12 +195,12 @@ bool CL64_Panels::Position_Tabs_Dlg(void)
 {
 	POINT p = { 0 };
 
-	int Diff = MapWindowPoints(App->CL_Editor_Map->Main_View_Dlg_Hwnd, NULL, &p, 1);
+	int Diff = MapWindowPoints(App->CL_Views_Com->Main_View_Dlg_Hwnd, NULL, &p, 1);
 
 	HDWP hdwp;
 
 	RECT rect;
-	GetWindowRect(App->CL_Editor_Map->Main_View_Dlg_Hwnd, &rect);
+	GetWindowRect(App->CL_Views_Com->Main_View_Dlg_Hwnd, &rect);
 
 	int widthX = rect.right - rect.left;
 	int heightY = rect.bottom - rect.top;

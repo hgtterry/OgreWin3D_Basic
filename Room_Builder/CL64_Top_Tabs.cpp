@@ -366,14 +366,14 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Headers(HWND hDlg, UINT message, WPARAM wPa
 			if (App->CL_Top_Tabs->flag_Full_View_3D == 1)
 			{
 				App->CL_Top_Tabs->flag_Full_View_3D = 0;
-				App->CL_Editor_Map->Set_Splitter_WidthDepth(App->CL_Editor_Map->Copy_Spliter_Width, App->CL_Editor_Map->Copy_Spliter_Depth);
-				App->CL_Editor_Map->Resize_Windows(App->CL_Editor_Map->Main_View_Dlg_Hwnd, App->CL_Editor_Map->nleftWnd_width, App->CL_Editor_Map->nleftWnd_Depth);
+				App->CL_Views_Com->Set_Splitter_WidthDepth(App->CL_Views_Com->Copy_Spliter_Width, App->CL_Views_Com->Copy_Spliter_Depth);
+				App->CL_Views_Com->Resize_Windows(App->CL_Views_Com->Main_View_Dlg_Hwnd, App->CL_Views_Com->nleftWnd_width, App->CL_Views_Com->nleftWnd_Depth);
 			}
 			else
 			{
 				App->CL_Top_Tabs->Set_View_Buttons(Enums::Selected_Map_View_3D);
-				App->CL_Editor_Map->Init_Views(Enums::Selected_Map_View_3D);
-				App->CL_Editor_Map->Resize_Windows(App->CL_Editor_Map->Main_View_Dlg_Hwnd, App->CL_Editor_Map->nleftWnd_width, App->CL_Editor_Map->nleftWnd_Depth);
+				App->CL_Views_Com->Init_Views(Enums::Selected_Map_View_3D);
+				App->CL_Views_Com->Resize_Windows(App->CL_Views_Com->Main_View_Dlg_Hwnd, App->CL_Views_Com->nleftWnd_width, App->CL_Views_Com->nleftWnd_Depth);
 			}
 			
 			App->CL_Top_Tabs->Redraw_TopTabs_Dlg();
@@ -387,18 +387,18 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Headers(HWND hDlg, UINT message, WPARAM wPa
 			if (App->CL_Top_Tabs->flag_View_Top_Left == 1)
 			{
 				App->CL_Top_Tabs->flag_View_Top_Left = 0;
-				App->CL_Editor_Map->Set_Splitter_WidthDepth(App->CL_Editor_Map->Copy_Spliter_Width, App->CL_Editor_Map->Copy_Spliter_Depth);
-				App->CL_Editor_Map->Resize_Windows(App->CL_Editor_Map->Main_View_Dlg_Hwnd, App->CL_Editor_Map->nleftWnd_width, App->CL_Editor_Map->nleftWnd_Depth);
+				App->CL_Views_Com->Set_Splitter_WidthDepth(App->CL_Views_Com->Copy_Spliter_Width, App->CL_Views_Com->Copy_Spliter_Depth);
+				App->CL_Views_Com->Resize_Windows(App->CL_Views_Com->Main_View_Dlg_Hwnd, App->CL_Views_Com->nleftWnd_width, App->CL_Views_Com->nleftWnd_Depth);
 
-				App->CL_Editor_Map->Current_View = App->CL_Editor_Map->VCam[V_TL];
-				App->CL_Editor_Map->Set_View();
+				App->CL_Views_Com->Current_View = App->CL_Views_Com->VCam[V_TL];
+				App->CL_Views_Com->Set_View();
 			}
 			else
 			{
 				App->CL_Top_Tabs->Set_View_Buttons(Enums::Selected_Map_View_TL);
-				App->CL_Editor_Map->Init_Views(Enums::Selected_Map_View_TL);
-				App->CL_Editor_Map->Resize_Windows(App->CL_Editor_Map->Main_View_Dlg_Hwnd, App->CL_Editor_Map->nleftWnd_width, App->CL_Editor_Map->nleftWnd_Depth);
-				App->CL_Editor_Map->Set_View();
+				App->CL_Views_Com->Init_Views(Enums::Selected_Map_View_TL);
+				App->CL_Views_Com->Resize_Windows(App->CL_Views_Com->Main_View_Dlg_Hwnd, App->CL_Views_Com->nleftWnd_width, App->CL_Views_Com->nleftWnd_Depth);
+				App->CL_Views_Com->Set_View();
 			}
 
 			App->CL_Top_Tabs->Redraw_TopTabs_Dlg();
@@ -414,18 +414,18 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Headers(HWND hDlg, UINT message, WPARAM wPa
 			if (App->CL_Top_Tabs->flag_View_Top_Right == 1)
 			{
 				App->CL_Top_Tabs->flag_View_Top_Right = 0;
-				App->CL_Editor_Map->Set_Splitter_WidthDepth(App->CL_Editor_Map->Copy_Spliter_Width, App->CL_Editor_Map->Copy_Spliter_Depth);
-				App->CL_Editor_Map->Resize_Windows(App->CL_Editor_Map->Main_View_Dlg_Hwnd, App->CL_Editor_Map->nleftWnd_width, App->CL_Editor_Map->nleftWnd_Depth);
+				App->CL_Views_Com->Set_Splitter_WidthDepth(App->CL_Views_Com->Copy_Spliter_Width, App->CL_Views_Com->Copy_Spliter_Depth);
+				App->CL_Views_Com->Resize_Windows(App->CL_Views_Com->Main_View_Dlg_Hwnd, App->CL_Views_Com->nleftWnd_width, App->CL_Views_Com->nleftWnd_Depth);
 
-				App->CL_Editor_Map->Current_View = App->CL_Editor_Map->VCam[V_TR];
-				App->CL_Editor_Map->Set_View();
+				App->CL_Views_Com->Current_View = App->CL_Views_Com->VCam[V_TR];
+				App->CL_Views_Com->Set_View();
 			}
 			else
 			{
 				App->CL_Top_Tabs->Set_View_Buttons(Enums::Selected_Map_View_TR);
-				App->CL_Editor_Map->Init_Views(Enums::Selected_Map_View_TR);
-				App->CL_Editor_Map->Resize_Windows(App->CL_Editor_Map->Main_View_Dlg_Hwnd, App->CL_Editor_Map->nleftWnd_width, App->CL_Editor_Map->nleftWnd_Depth);
-				App->CL_Editor_Map->Set_View();
+				App->CL_Views_Com->Init_Views(Enums::Selected_Map_View_TR);
+				App->CL_Views_Com->Resize_Windows(App->CL_Views_Com->Main_View_Dlg_Hwnd, App->CL_Views_Com->nleftWnd_width, App->CL_Views_Com->nleftWnd_Depth);
+				App->CL_Views_Com->Set_View();
 			}
 
 			App->CL_Top_Tabs->Redraw_TopTabs_Dlg();
@@ -438,18 +438,18 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Headers(HWND hDlg, UINT message, WPARAM wPa
 			if (App->CL_Top_Tabs->flag_View_Bottom_Left == 1)
 			{
 				App->CL_Top_Tabs->flag_View_Bottom_Left = 0;
-				App->CL_Editor_Map->Set_Splitter_WidthDepth(App->CL_Editor_Map->Copy_Spliter_Width, App->CL_Editor_Map->Copy_Spliter_Depth);
-				App->CL_Editor_Map->Resize_Windows(App->CL_Editor_Map->Main_View_Dlg_Hwnd, App->CL_Editor_Map->nleftWnd_width, App->CL_Editor_Map->nleftWnd_Depth);
+				App->CL_Views_Com->Set_Splitter_WidthDepth(App->CL_Views_Com->Copy_Spliter_Width, App->CL_Views_Com->Copy_Spliter_Depth);
+				App->CL_Views_Com->Resize_Windows(App->CL_Views_Com->Main_View_Dlg_Hwnd, App->CL_Views_Com->nleftWnd_width, App->CL_Views_Com->nleftWnd_Depth);
 
-				App->CL_Editor_Map->Current_View = App->CL_Editor_Map->VCam[V_BL];
-				App->CL_Editor_Map->Set_View();
+				App->CL_Views_Com->Current_View = App->CL_Views_Com->VCam[V_BL];
+				App->CL_Views_Com->Set_View();
 			}
 			else
 			{
 				App->CL_Top_Tabs->Set_View_Buttons(Enums::Selected_Map_View_BL);
-				App->CL_Editor_Map->Init_Views(Enums::Selected_Map_View_BL);
-				App->CL_Editor_Map->Resize_Windows(App->CL_Editor_Map->Main_View_Dlg_Hwnd, App->CL_Editor_Map->nleftWnd_width, App->CL_Editor_Map->nleftWnd_Depth);
-				App->CL_Editor_Map->Set_View();
+				App->CL_Views_Com->Init_Views(Enums::Selected_Map_View_BL);
+				App->CL_Views_Com->Resize_Windows(App->CL_Views_Com->Main_View_Dlg_Hwnd, App->CL_Views_Com->nleftWnd_width, App->CL_Views_Com->nleftWnd_Depth);
+				App->CL_Views_Com->Set_View();
 			}
 
 			App->CL_Top_Tabs->Redraw_TopTabs_Dlg();
@@ -640,7 +640,7 @@ void CL64_Top_Tabs::Redraw_TopTabs_Dlg()
 // *************************************************************************
 void CL64_Top_Tabs::Set_Brush_Mode(int Mode, int Dlg_Selection)
 {
-	SetCursor(App->CL_Editor_Map->hcBoth);
+	SetCursor(App->CL_Views_Com->hcBoth);
 
 	App->CL_Doc->ResetAllSelectedFaces();;
 	App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
@@ -676,7 +676,7 @@ void CL64_Top_Tabs::Set_Brush_Mode(int Mode, int Dlg_Selection)
 //// *************************************************************************
 //void CL64_Top_Tabs::Set_Brush_Move(void)
 //{
-//	SetCursor(App->CL_Editor_Map->hcBoth);
+//	SetCursor(App->CL_Views_Com->hcBoth);
 //
 //	App->CL_Doc->ResetAllSelectedFaces();;
 //	App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
@@ -698,7 +698,7 @@ void CL64_Top_Tabs::Set_Brush_Mode(int Mode, int Dlg_Selection)
 //// *************************************************************************
 //void CL64_Top_Tabs::Set_Brush_Scale(void)
 //{
-//	SetCursor(App->CL_Editor_Map->hcBoth);
+//	SetCursor(App->CL_Views_Com->hcBoth);
 //
 //	App->CL_Doc->ResetAllSelectedFaces();;
 //	App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);

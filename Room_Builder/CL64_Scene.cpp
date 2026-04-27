@@ -227,7 +227,7 @@ void CL64_Scene::Clear_Level(bool FromFile)
 
 	if (FromFile == false) // Not from a file load
 	{
-		App->CL_Editor_Map->Reset_Class();
+		App->CL_Views_Com->Reset_Class();
 
 		App->CL_Doc->Init_Doc();
 		App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);

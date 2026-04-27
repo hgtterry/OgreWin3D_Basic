@@ -355,13 +355,13 @@ void CL64_Doc::UpdateAllViews(int Update_Mode)
 {
     if (Update_Mode == Enums::UpdateViews_Grids)
     {
-        ViewVars* Save_View = App->CL_Editor_Map->Current_View;
+        ViewVars* Save_View = App->CL_Views_Com->Current_View;
 
-        RedrawWindow(App->CL_Editor_Map->Top_Left_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-        RedrawWindow(App->CL_Editor_Map->Top_Right_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-        RedrawWindow(App->CL_Editor_Map->Bottom_Left_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+        RedrawWindow(App->CL_Views_Com->Top_Left_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+        RedrawWindow(App->CL_Views_Com->Top_Right_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+        RedrawWindow(App->CL_Views_Com->Bottom_Left_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
-        App->CL_Editor_Map->Current_View = Save_View;
+        App->CL_Views_Com->Current_View = Save_View;
     }
 
     if (Update_Mode == Enums::UpdateViews_3D)
@@ -383,9 +383,9 @@ void CL64_Doc::UpdateAllViews(int Update_Mode)
 
     if (Update_Mode == Enums::UpdateViews_All)
     {
-        RedrawWindow(App->CL_Editor_Map->Top_Left_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-        RedrawWindow(App->CL_Editor_Map->Top_Right_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-        RedrawWindow(App->CL_Editor_Map->Bottom_Left_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+        RedrawWindow(App->CL_Views_Com->Top_Left_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+        RedrawWindow(App->CL_Views_Com->Top_Right_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+        RedrawWindow(App->CL_Views_Com->Bottom_Left_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
         int BC = App->CL_X_Brush->Get_Brush_Count();
         if (BC > 0)
@@ -1347,12 +1347,12 @@ BOOL CL64_Doc::TempDeleteSelected(void)
 void CL64_Doc::ScaleSelected(int dx, int dy)
 {
     //smooth out the zoom scale curve with a scalar
-    float	ZoomInv = App->CL_Editor_Map->Current_View->ZoomFactor;// Render_GetZoom(VCam);
+    float	ZoomInv = App->CL_Views_Com->Current_View->ZoomFactor;// Render_GetZoom(VCam);
 
     ZoomInv = (ZoomInv > .5) ? 0.5f / ZoomInv : 1.0f;
 
     // negated here because Brush_Resize is still thinking weird
-    App->CL_Doc->ResizeSelected(-(((float)dx) * ZoomInv), -(((float)dy) * ZoomInv), sides, App->CL_Render->Render_GetInidx(App->CL_Editor_Map->Current_View));
+    App->CL_Doc->ResizeSelected(-(((float)dx) * ZoomInv), -(((float)dy) * ZoomInv), sides, App->CL_Render->Render_GetInidx(App->CL_Views_Com->Current_View));
 }
 
 // *************************************************************************
