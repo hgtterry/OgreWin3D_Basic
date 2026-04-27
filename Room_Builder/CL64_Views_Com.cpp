@@ -88,11 +88,9 @@ CL64_Views_Com::CL64_Views_Com()
 	GridSize = 128, 
 	GridSnapSize = 8;
 
-	Top_Right_Window_Hwnd =		nullptr;
 	Bottom_Left_Window_Hwnd =	nullptr;
 	Bottom_Ogre_Right_Hwnd =	nullptr;
 
-	Top_Right_Banner_Hwnd =		nullptr;
 	Bottom_Left_Banner_Hwnd =	nullptr;
 	Bottom_Ogre_Banner =		nullptr;
 
@@ -176,6 +174,7 @@ void CL64_Views_Com::Reset_Views_All()
 
 	Save_Splitter_Width_Depth();
 
+	//------------------------ Top Left
 	auto& Cam_TL = App->CL_View_Top_Left->VCam_TL;
 
 	RECT		Rect;
@@ -190,7 +189,21 @@ void CL64_Views_Com::Reset_Views_All()
 
 	Cam_TL->ZoomFactor = App->CL_X_Preference->Defalut_Zoom;
 
-	int Count = 1;
+	//------------------------ Top Right
+	auto& Cam_TR = App->CL_View_Top_Right->VCam_TR;
+
+	GetClientRect(Cam_TR->hDlg, &Rect);
+
+	Cam_TR->XCenter = (float)Rect.right / 2;
+	Cam_TR->YCenter = (float)Rect.bottom / 2;
+
+	Cam_TR->CamPos.x = 0;
+	Cam_TR->CamPos.y = 0;
+	Cam_TR->CamPos.z = 0;
+
+	Cam_TR->ZoomFactor = App->CL_X_Preference->Defalut_Zoom;
+
+	int Count = 2;
 
 	while (Count < 3)
 	{
@@ -316,13 +329,13 @@ void CL64_Views_Com::Resize_Windows(HWND hDlg, int newWidth, int newDepth)
 	MoveWindow(App->CL_View_Top_Left->Top_Left_Banner_Hwnd, 0, 0, newWidth - WIDTH_ADJUST, bannerHeight, FALSE);
 
 	// Resize Top Right Window
-	MoveWindow(Top_Right_Window_Hwnd,
+	MoveWindow(App->CL_View_Top_Right->Top_Right_Window_Hwnd,
 		newWidth + WIDTH_ADJUST,
 		0,
 		clientRect.right - (newWidth + WIDTH_ADJUST),
 		adjustedDepth,
 		FALSE);
-	MoveWindow(Top_Right_Banner_Hwnd, 0, 0, clientRect.right - newWidth - WIDTH_ADJUST, bannerHeight, FALSE);
+	MoveWindow(App->CL_View_Top_Right->Top_Right_Banner_Hwnd, 0, 0, clientRect.right - newWidth - WIDTH_ADJUST, bannerHeight, FALSE);
 
 	// Resize Bottom Left Window
 	MoveWindow(Bottom_Left_Window_Hwnd,
@@ -747,12 +760,14 @@ void CL64_Views_Com::Create_Top_Left_Window()
 // *************************************************************************
 void CL64_Views_Com::Create_Top_Right_Window()
 {
-	VCam[V_TR] = new ViewVars;
+	App->CL_View_Top_Right->Create_Top_Right_Window();
+
+	/*VCam[V_TR] = new ViewVars;
 	Set_Views_Defaults(V_TR, VIEWSIDE, "Top_Right");
 
 	Top_Right_Window_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MAP_TOP_RIGHT, Main_View_Dlg_Hwnd, (DLGPROC)Proc_Top_Right_Window);
 
-	VCam[V_TR]->hDlg = Top_Right_Window_Hwnd;
+	VCam[V_TR]->hDlg = Top_Right_Window_Hwnd;*/
 }
 
 // *************************************************************************
@@ -765,7 +780,7 @@ LRESULT CALLBACK CL64_Views_Com::Proc_Top_Right_Window(HWND hDlg, UINT message, 
 	case WM_INITDIALOG:
 	{
 		SendDlgItemMessage(hDlg, IDC_ST_TR_TITLE, WM_SETFONT, (WPARAM)App->Font_CB10, MAKELPARAM(TRUE, 0));
-		App->CL_Views_Com->Top_Right_Banner_Hwnd = GetDlgItem(hDlg, IDC_ST_TR_TITLE);
+		//App->CL_Views_Com->Top_Right_Banner_Hwnd = GetDlgItem(hDlg, IDC_ST_TR_TITLE);
 		return TRUE;
 	}
 
@@ -953,7 +968,7 @@ LRESULT CALLBACK CL64_Views_Com::Proc_Top_Right_Window(HWND hDlg, UINT message, 
 void CL64_Views_Com::Create_Bottom_Left_Window()
 {
 	VCam[V_BL] = new ViewVars;
-	Set_Views_Defaults(V_BL, VIEWFRONT, "Bottom_Left");
+	Set_Views_Defaults(V_BL, BOTTOM_LEFT_VIEW, "Bottom_Left");
 
 	Bottom_Left_Window_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MAP_BOTTOM_LEFT, Main_View_Dlg_Hwnd, (DLGPROC)Proc_Bottom_Left_Window);
 
@@ -1508,7 +1523,7 @@ void CL64_Views_Com::Set_Selected_View(int Selected_View)
 {
 	Selected_Window = Selected_View;
 	RedrawWindow(App->CL_View_Top_Left->Top_Left_Banner_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-	RedrawWindow(Top_Right_Banner_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+	RedrawWindow(App->CL_View_Top_Right->Top_Right_Banner_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 	RedrawWindow(Bottom_Left_Banner_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 	RedrawWindow(Bottom_Ogre_Banner, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 }
@@ -1869,9 +1884,25 @@ void CL64_Views_Com::On_Mouse_Move(POINT CursorPosition, HWND hDlg)
 			{
 				App->CL_Doc->LockAxis(&dv);
 				App->CL_Doc->MoveSelectedBrushes(&dv);
-				Draw_Screen(hDlg);
+				//Draw_Screen(hDlg);
 
-				App->CL_View_Top_Left->Redraw_Window_TL();
+				auto& Views_Com = App->CL_Views_Com;
+
+				switch (Views_Com->Selected_Window)
+				{
+				case Enums::Selected_Map_View_TL:
+					App->CL_View_Top_Left->Redraw_Window_TL();
+					break;
+				case Enums::Selected_Map_View_TR:
+					App->CL_View_Top_Right->Redraw_Window_TR();
+					break;
+				case Enums::Selected_Map_View_BL:
+					//Temp_VCam = App->CL_View_Bottom_Left->VCam_BL;
+					break;
+				default:
+					break;
+				}
+
 			}
 
 			if (App->CL_Top_Tabs->flag_Brush_Rotate == 1)
@@ -1880,9 +1911,24 @@ void CL64_Views_Com::On_Mouse_Move(POINT CursorPosition, HWND hDlg)
 				App->CL_Render->Render_ViewDeltaToRotation(Current_View, (float)dx, &dv);
 				
 				App->CL_Doc->RotateSelectedBrushes(Current_View, &dv);
-				Draw_Screen(hDlg);
+				
+				auto& Views_Com = App->CL_Views_Com;
 
-				App->CL_View_Top_Left->Redraw_Window_TL();
+				switch (Views_Com->Selected_Window)
+				{
+				case Enums::Selected_Map_View_TL:
+					App->CL_View_Top_Left->Redraw_Window_TL();
+					break;
+				case Enums::Selected_Map_View_TR:
+					App->CL_View_Top_Right->Redraw_Window_TR();
+					break;
+				case Enums::Selected_Map_View_BL:
+					//Temp_VCam = App->CL_View_Bottom_Left->VCam_BL;
+					break;
+				default:
+					break;
+				}
+				
 			}
 		}
 
@@ -1891,7 +1937,22 @@ void CL64_Views_Com::On_Mouse_Move(POINT CursorPosition, HWND hDlg)
 			//LockAxisView (&dx, &dy);
 			App->CL_Doc->ScaleSelected(dx, dy);
 
-			Draw_Screen(hDlg);
+			auto& Views_Com = App->CL_Views_Com;
+
+			switch (Views_Com->Selected_Window)
+			{
+			case Enums::Selected_Map_View_TL:
+				App->CL_View_Top_Left->Redraw_Window_TL();
+				break;
+			case Enums::Selected_Map_View_TR:
+				App->CL_View_Top_Right->Redraw_Window_TR();
+				break;
+			case Enums::Selected_Map_View_BL:
+				//Temp_VCam = App->CL_View_Bottom_Left->VCam_BL;
+				break;
+			default:
+				break;
+			}
 		}
 
 

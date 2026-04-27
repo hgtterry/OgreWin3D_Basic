@@ -59,24 +59,11 @@ CL64_View_Top_Left::~CL64_View_Top_Left()
 {
 }
 
-//enum ViewTypes
-//{
-//	VIEWSOLID = 1,
-//	VIEWTEXTURE = 2,
-//	VIEWWIRE = 4,
-//	TOP_LEFT_VIEW = 8,
-//	BOTTOM_LEFT_VIEW = 16,
-//	TOP_RIGHT_VIEW = 32,
-//	VIEWOGRE = 64
-//};
-
 // *************************************************************************
 // *			Set_VCam_TL_Defaults:- Terry and Hazel Flanigan 2026	   *
 // *************************************************************************
 void CL64_View_Top_Left::Set_VCam_TL_Defaults()
 {
-	int TOP_LEFT_VIEW = 8;
-
 	strcpy(VCam_TL->Name, "Top_Left");
 	VCam_TL->ViewType = TOP_LEFT_VIEW;
 	VCam_TL->ZoomFactor = 1.5;

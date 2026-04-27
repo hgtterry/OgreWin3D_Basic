@@ -118,7 +118,8 @@ CL64_App::CL64_App(void)
 	CL_Locations =				nullptr;
 	CL_Teleporters =			nullptr;
 
-	CL_View_Top_Left = nullptr;
+	CL_View_Top_Left =			nullptr;
+	CL_View_Top_Right =			nullptr;
 
 	CUR = 0;
 	Menu_Map = 0;
@@ -283,6 +284,7 @@ void CL64_App::InitApp(void)
 	CL_Teleporters =			new CL64_Teleporters();
 
 	CL_View_Top_Left =			new CL64_View_Top_Left();
+	CL_View_Top_Right =			new CL64_View_Top_Right();
 
 	Set_Brushes_Fonts();
 

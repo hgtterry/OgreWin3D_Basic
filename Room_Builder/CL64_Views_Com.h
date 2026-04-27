@@ -81,7 +81,6 @@ public:
 
 	HWND Main_View_Dlg_Hwnd; // Background of MDI
 
-	HWND Top_Right_Window_Hwnd;
 	HWND Bottom_Left_Window_Hwnd;
 	HWND Bottom_Ogre_Right_Hwnd;
 	
@@ -139,8 +138,6 @@ private:
 	void Create_Bottom_Left_Window();
 	void Create_Ogre_Bottom_Right();
 
-//	HWND Top_Left_Banner_Hwnd;
-	HWND Top_Right_Banner_Hwnd;
 	HWND Bottom_Left_Banner_Hwnd;
 	HWND Bottom_Ogre_Banner;
 

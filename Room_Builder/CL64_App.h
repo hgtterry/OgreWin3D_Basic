@@ -120,6 +120,7 @@ THE SOFTWARE.
 #include "Init_Libs.h"
 
 #include "CL64_View_Top_Left.h"
+#include "CL64_View_Top_Right.h"
 
 class CL64_App
 {
@@ -218,6 +219,7 @@ public:
 	CL64_Teleporters*			CL_Teleporters;
 
 	CL64_View_Top_Left*			CL_View_Top_Left;
+	CL64_View_Top_Right*		CL_View_Top_Right;
 
 	void InitApp(void);
 	void Init_Dialogs(void);

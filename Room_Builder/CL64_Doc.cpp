@@ -358,7 +358,7 @@ void CL64_Doc::UpdateAllViews(int Update_Mode)
         ViewVars* Save_View = App->CL_Views_Com->Current_View;
 
         RedrawWindow(App->CL_View_Top_Left->Top_Left_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-        RedrawWindow(App->CL_Views_Com->Top_Right_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+        RedrawWindow(App->CL_View_Top_Right->Top_Right_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
         RedrawWindow(App->CL_Views_Com->Bottom_Left_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
         App->CL_Views_Com->Current_View = Save_View;
@@ -384,7 +384,7 @@ void CL64_Doc::UpdateAllViews(int Update_Mode)
     if (Update_Mode == Enums::UpdateViews_All)
     {
         RedrawWindow(App->CL_View_Top_Left->Top_Left_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-        RedrawWindow(App->CL_Views_Com->Top_Right_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+        RedrawWindow(App->CL_View_Top_Right->Top_Right_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
         RedrawWindow(App->CL_Views_Com->Bottom_Left_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
         int BC = App->CL_X_Brush->Get_Brush_Count();
@@ -880,11 +880,11 @@ void CL64_Doc::RotateSelectedBrushList(const ViewVars* view, SelBrushList* pList
     for (i = 0; i < NumBrushes; i++)
     {
         Brush* pBrush = App->CL_X_SelBrushList->SelBrushList_GetBrush(pList, i);
-       
-		if (pBrush->GroupId == Enums::Brushs_ID_Evirons)
-		{
+
+        if (pBrush->GroupId == Enums::Brushs_ID_Evirons)
+        {
             int Delta = 1;
-			int Index = App->CL_Entities->GetIndex_By_Name(pBrush->Name);
+            int Index = App->CL_Entities->GetIndex_By_Name(pBrush->Name);
 
             if (Index > -1)
             {
@@ -892,7 +892,7 @@ void CL64_Doc::RotateSelectedBrushList(const ViewVars* view, SelBrushList* pList
 
                 switch (view->ViewType)
                 {
-                case VIEWTOP:
+                case TOP_LEFT_VIEW:
                 {
                     if (v->y > 0)
                     {
@@ -907,7 +907,7 @@ void CL64_Doc::RotateSelectedBrushList(const ViewVars* view, SelBrushList* pList
                     }
                     break;
                 }
-                case VIEWFRONT:
+                case BOTTOM_LEFT_VIEW:
                 {
                     if (v->z > 0)
                     {
@@ -922,7 +922,7 @@ void CL64_Doc::RotateSelectedBrushList(const ViewVars* view, SelBrushList* pList
                     }
                     break;
                 }
-                case VIEWSIDE:
+                case TOP_RIGHT_VIEW:
                 {
                     if (v->x > 0)
                     {
@@ -946,12 +946,12 @@ void CL64_Doc::RotateSelectedBrushList(const ViewVars* view, SelBrushList* pList
                 // TODO Test
                 App->CL_Brush_X->Set_Brush_From_Entity_ByName(pBrush->Name, false);
             }
-		}
+        }
         else
         {
             App->CL_X_Brush->Brush_Rotate(pBrush, &rm, &RotationPoint);
         }
-      
+
     }
 }
 
