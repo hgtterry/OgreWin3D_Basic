@@ -357,7 +357,7 @@ void CL64_Doc::UpdateAllViews(int Update_Mode)
     {
         ViewVars* Save_View = App->CL_Views_Com->Current_View;
 
-        RedrawWindow(App->CL_Views_Com->Top_Left_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+        RedrawWindow(App->CL_View_Top_Left->Top_Left_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
         RedrawWindow(App->CL_Views_Com->Top_Right_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
         RedrawWindow(App->CL_Views_Com->Bottom_Left_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
@@ -383,7 +383,7 @@ void CL64_Doc::UpdateAllViews(int Update_Mode)
 
     if (Update_Mode == Enums::UpdateViews_All)
     {
-        RedrawWindow(App->CL_Views_Com->Top_Left_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+        RedrawWindow(App->CL_View_Top_Left->Top_Left_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
         RedrawWindow(App->CL_Views_Com->Top_Right_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
         RedrawWindow(App->CL_Views_Com->Bottom_Left_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 

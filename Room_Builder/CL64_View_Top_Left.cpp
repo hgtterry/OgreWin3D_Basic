@@ -251,6 +251,10 @@ LRESULT CALLBACK CL64_View_Top_Left::Proc_Top_Left_Window(HWND hDlg, UINT messag
 	// Left Mouse Down
 	case WM_LBUTTONDOWN:
 	{
+		POINT		RealCursorPosition;
+		GetCursorPos(&RealCursorPosition);
+		ScreenToClient(hDlg, &RealCursorPosition);
+
 		auto& Views_Com = App->CL_Views_Com;
 
 		Views_Com->Current_View = App->CL_View_Top_Left->VCam_TL;
@@ -259,6 +263,11 @@ LRESULT CALLBACK CL64_View_Top_Left::Proc_Top_Left_Window(HWND hDlg, UINT messag
 		{
 			Views_Com->Set_Selected_View(Enums::Selected_Map_View_TL);
 		}
+
+		Views_Com->flag_Right_Button_Down = 0;
+		Views_Com->flag_Left_Button_Down = true;
+
+		Views_Com->On_Left_Button_Down(RealCursorPosition, hDlg);
 
 		return 1;
 	}
@@ -502,6 +511,23 @@ void CL64_View_Top_Left::Draw_Screen_TL(HWND hwnd)
 	bool test = 0;
 	if (test == 0)
 	{
+		// Draw Template Brush
+		if (App->CL_Doc->mModeTool == ID_TOOLS_TEMPLATE)
+		{
+			SelectObject(m_MemoryhDC, App->CL_Views_Com->PenTemplate);
+
+			if (App->CL_X_Brush->Brush_IsMulti(App->CL_Doc->CurBrush))
+			{
+
+				App->CL_X_Brush->BrushList_EnumLeafBrushes(App->CL_X_Brush->Brush_GetBrushList(App->CL_Doc->CurBrush), &m_brushDrawData_TL, Draw_Brush_2D);
+			}
+			else
+			{
+				App->CL_Views_Com->Render_RenderBrushFacesOrtho(App->CL_Views_Com->Current_View, App->CL_Doc->CurBrush, m_MemoryhDC);
+
+			}
+		}
+
 		// ------------------------------------------ Draw Brushes
 		SelectObject(m_MemoryhDC, PenBrushes);
 

@@ -88,12 +88,10 @@ CL64_Views_Com::CL64_Views_Com()
 	GridSize = 128, 
 	GridSnapSize = 8;
 
-	Top_Left_Window_Hwnd =		nullptr;
 	Top_Right_Window_Hwnd =		nullptr;
 	Bottom_Left_Window_Hwnd =	nullptr;
 	Bottom_Ogre_Right_Hwnd =	nullptr;
 
-	Top_Left_Banner_Hwnd =		nullptr;
 	Top_Right_Banner_Hwnd =		nullptr;
 	Bottom_Left_Banner_Hwnd =	nullptr;
 	Bottom_Ogre_Banner =		nullptr;
@@ -178,7 +176,21 @@ void CL64_Views_Com::Reset_Views_All()
 
 	Save_Splitter_Width_Depth();
 
-	int Count = 0;
+	auto& Cam_TL = App->CL_View_Top_Left->VCam_TL;
+
+	RECT		Rect;
+	GetClientRect(Cam_TL->hDlg, &Rect);
+
+	Cam_TL->XCenter = (float)Rect.right / 2;
+	Cam_TL->YCenter = (float)Rect.bottom / 2;
+
+	Cam_TL->CamPos.x = 0;
+	Cam_TL->CamPos.y = 0;
+	Cam_TL->CamPos.z = 0;
+
+	Cam_TL->ZoomFactor = App->CL_X_Preference->Defalut_Zoom;
+
+	int Count = 1;
 
 	while (Count < 3)
 	{
@@ -295,13 +307,13 @@ void CL64_Views_Com::Resize_Windows(HWND hDlg, int newWidth, int newDepth)
 	const int bannerHeight = 16;
 
 	// Resize Top Left Window
-	MoveWindow(Top_Left_Window_Hwnd,
+	MoveWindow(App->CL_View_Top_Left->Top_Left_Window_Hwnd,
 		0,
 		0,
 		clientRect.left + (newWidth - WIDTH_ADJUST),
 		adjustedDepth,
 		FALSE);
-	MoveWindow(Top_Left_Banner_Hwnd, 0, 0, newWidth - WIDTH_ADJUST, bannerHeight, FALSE);
+	MoveWindow(App->CL_View_Top_Left->Top_Left_Banner_Hwnd, 0, 0, newWidth - WIDTH_ADJUST, bannerHeight, FALSE);
 
 	// Resize Top Right Window
 	MoveWindow(Top_Right_Window_Hwnd,
@@ -727,200 +739,7 @@ void CL64_Views_Com::Save_Splitter_Width_Depth()
 // *************************************************************************
 void CL64_Views_Com::Create_Top_Left_Window()
 {
-	VCam[V_TL] = new ViewVars;
-	Set_Views_Defaults(V_TL, VIEWTOP, "Top_Left");
-
-	Top_Left_Window_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MAP_TOP_LEFT, Main_View_Dlg_Hwnd, (DLGPROC)Proc_Top_Left_Window);
-	
-	VCam[V_TL]->hDlg = Top_Left_Window_Hwnd;
-}
-
-// *************************************************************************
-// *		Proc_Top_Left_Window:- Terry and Hazel Flanigan 2024 		   *
-// *************************************************************************
-LRESULT CALLBACK CL64_Views_Com::Proc_Top_Left_Window(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
-{
-	switch (message)
-	{
-	case WM_INITDIALOG:
-	{
-		SendDlgItemMessage(hDlg, IDC_ST_TL_TITLE, WM_SETFONT, (WPARAM)App->Font_CB10, MAKELPARAM(TRUE, 0));
-		App->CL_Views_Com->Top_Left_Banner_Hwnd = GetDlgItem(hDlg, IDC_ST_TL_TITLE);
-		return TRUE;
-	}
-
-	case WM_COMMAND:
-	{
-		if (App->CL_Views_Com->Context_Command(LOWORD(wParam)))
-		{
-			return TRUE;
-		}
-	}
-	
-	case WM_CTLCOLORSTATIC:
-	{
-		if (App->CL_Views_Com->Selected_Window == Enums::Selected_Map_View_TL)
-		{
-			SetBkColor((HDC)wParam, RGB(0, 255, 0));
-			SetTextColor((HDC)wParam, RGB(0, 0, 0));
-			SetBkMode((HDC)wParam, TRANSPARENT);
-			return (UINT)App->Brush_Green;
-		}
-		else
-		{
-			SetBkColor((HDC)wParam, RGB(0, 255, 0));
-			SetTextColor((HDC)wParam, RGB(0, 0, 0));
-			SetBkMode((HDC)wParam, TRANSPARENT);
-			return (UINT)App->AppBackground;
-		}
-
-		return FALSE;
-	}
-
-	case WM_CTLCOLORDLG:
-	{
-		return (LONG)App->CL_Views_Com->BackGround_Brush;
-	}
-
-	case WM_ERASEBKGND:
-	{
-		return (LRESULT)1;
-	}
-
-	case WM_SETCURSOR:
-	{
-		if (App->CL_Views_Com->flag_Context_Menu_Active == 1)
-		{
-			return false;
-		}
-
-		if (App->CL_Views_Com->flag_Right_Button_Down == 1 || App->CL_Views_Com->flag_Left_Button_Down == 1)
-		{
-			return true;
-		}
-		else if (App->CL_Doc->mModeTool == ID_TOOLS_BRUSH_MOVEROTATEBRUSH)
-		{
-			SetCursor(App->CL_Views_Com->hcBoth);
-		}
-		else if (App->CL_Doc->mModeTool == ID_TOOLS_BRUSH_SCALEBRUSH)
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-	}
-
-	case WM_MOUSEMOVE:
-	{
-		int			dx, dy;
-		POINT		RealCursorPosition;
-
-		GetCursorPos(&RealCursorPosition);
-		ScreenToClient(hDlg, &RealCursorPosition);
-
-		dx = (RealCursorPosition.x);
-		dy = (RealCursorPosition.y);
-
-		App->CL_Views_Com->On_Mouse_Move(RealCursorPosition,hDlg);
-		
-		return 1;
-	}
-
-	// Left Mouse Down
-	case WM_LBUTTONDOWN:
-	{
-		POINT		RealCursorPosition;
-		GetCursorPos(&RealCursorPosition);
-		ScreenToClient(hDlg, &RealCursorPosition);
-
-		App->CL_Views_Com->Current_View = App->CL_Views_Com->VCam[V_TL];
-
-		if (App->CL_Views_Com->Selected_Window != Enums::Selected_Map_View_TL)
-		{
-			App->CL_Views_Com->Set_Selected_View(Enums::Selected_Map_View_TL);
-		}
-
-		App->CL_Views_Com->flag_Right_Button_Down = 0;
-		App->CL_Views_Com->flag_Left_Button_Down = 1;
-
-		App->CL_Views_Com->On_Left_Button_Down(RealCursorPosition,hDlg);
-
-		return 1;
-	}
-
-	// Left Mouse Up
-	case WM_LBUTTONUP:
-	{
-		POINT		RealCursorPosition;
-		GetCursorPos(&RealCursorPosition);
-		ScreenToClient(hDlg, &RealCursorPosition);
-
-		App->CL_Views_Com->Current_View = App->CL_Views_Com->VCam[V_TL];
-
-		App->CL_Views_Com->flag_Left_Button_Down = 0;
-		App->CL_Views_Com->flag_Right_Button_Down = 0;
-
-		App->CL_Views_Com->On_Left_Button_Up(RealCursorPosition);
-
-		return 1;
-	}
-
-	// Right Mouse Down
-	case WM_RBUTTONDOWN:
-	{
-		App->CL_Views_Com->Current_View = App->CL_Views_Com->VCam[V_TL];
-
-		if (App->CL_Views_Com->Selected_Window != Enums::Selected_Map_View_TL)
-		{
-			App->CL_Views_Com->Set_Selected_View(Enums::Selected_Map_View_TL);
-		}
-
-		if (GetAsyncKeyState(VK_CONTROL) < 0)
-		{
-			GetCursorPos(&App->CL_Views_Com->mStartPoint);
-			ScreenToClient(hDlg, &App->CL_Views_Com->mStartPoint);
-
-			App->CL_Views_Com->flag_Right_Button_Down = 1;
-			App->CL_Views_Com->flag_Left_Button_Down = 0;
-
-			App->CUR = SetCursor(NULL);
-		}
-		
-		return 1;
-	}
-
-	// Right Mouse Up
-	case WM_RBUTTONUP:
-	{
-		if (GetAsyncKeyState(VK_CONTROL) < 0)
-		{
-			App->CL_Views_Com->flag_Right_Button_Down = 0;
-			App->CL_Views_Com->flag_Left_Button_Down = 0;
-
-			App->CUR = SetCursor(App->CUR);
-		}
-		else
-		{
-			App->CL_Views_Com->Current_View = App->CL_Views_Com->VCam[V_TL];
-			App->CL_Views_Com->Context_Menu(hDlg);
-		}
-
-		return 1;
-	}
-
-	case WM_PAINT:
-	{
-		App->CL_Views_Com->Current_View = App->CL_Views_Com->VCam[V_TL];
-		App->CL_Views_Com->Draw_Screen(hDlg);
-
-		return 0;
-	}
-
-	}
-
-	return FALSE;
+	App->CL_View_Top_Left->Create_Top_Left_Window();
 }
 
 // *************************************************************************
@@ -1688,7 +1507,7 @@ LRESULT CALLBACK CL64_Views_Com::Proc_Ogre_BR(HWND hDlg, UINT message, WPARAM wP
 void CL64_Views_Com::Set_Selected_View(int Selected_View)
 {
 	Selected_Window = Selected_View;
-	RedrawWindow(Top_Left_Banner_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+	RedrawWindow(App->CL_View_Top_Left->Top_Left_Banner_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 	RedrawWindow(Top_Right_Banner_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 	RedrawWindow(Bottom_Left_Banner_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 	RedrawWindow(Bottom_Ogre_Banner, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
@@ -2007,6 +1826,26 @@ bool CL64_Views_Com::Context_Command(WPARAM wParam)
 // *************************************************************************
 void CL64_Views_Com::On_Mouse_Move(POINT CursorPosition, HWND hDlg)
 {
+
+	// Pan
+	if (flag_Right_Button_Down == true)
+	{
+		App->CL_Render->Pan_View(Current_View, mStartPoint.x, mStartPoint.y);
+		return;
+	}
+
+	// Zoom
+	if (flag_Right_Button_Down == true && GetAsyncKeyState(VK_CONTROL) < 0)
+	{
+		//App->CL_Render->Zoom_View(Current_View, mStartPoint.y, mStartPoint.x, CursorPosition.y);
+		return;
+	}
+
+	if (KEYDOWN(VK_CONTROL) == true)
+	{
+		return;
+	}
+
 	int	dx, dy;
 	T_Vec3 sp, wp, dv;
 
@@ -2018,21 +1857,7 @@ void CL64_Views_Com::On_Mouse_Move(POINT CursorPosition, HWND hDlg)
 		return;
 	}
 
-	// Zoom
-	if (flag_Right_Button_Down == 1 && GetAsyncKeyState(VK_CONTROL) < 0)
-	{
-		App->CL_Render->Zoom_View(Current_View, mStartPoint.y, mStartPoint.x, CursorPosition.y);
-		return;
-	}
-
-	// Pan
-	if (flag_Left_Button_Down == 1 && GetAsyncKeyState(VK_CONTROL) < 0)
-	{
-		App->CL_Render->Pan_View(Current_View, mStartPoint.x, mStartPoint.y);
-		return;
-	}
-
-	if (flag_Left_Button_Down == 1)
+	if (flag_Left_Button_Down == true)
 	{
 		App->CL_Render->Render_ViewToWorld(Current_View, mStartPoint.x, mStartPoint.y, &sp);
 		App->CL_Render->Render_ViewToWorld(Current_View, CursorPosition.x, CursorPosition.y, &wp);
@@ -2045,6 +1870,8 @@ void CL64_Views_Com::On_Mouse_Move(POINT CursorPosition, HWND hDlg)
 				App->CL_Doc->LockAxis(&dv);
 				App->CL_Doc->MoveSelectedBrushes(&dv);
 				Draw_Screen(hDlg);
+
+				App->CL_View_Top_Left->Redraw_Window_TL();
 			}
 
 			if (App->CL_Top_Tabs->flag_Brush_Rotate == 1)
@@ -2053,8 +1880,9 @@ void CL64_Views_Com::On_Mouse_Move(POINT CursorPosition, HWND hDlg)
 				App->CL_Render->Render_ViewDeltaToRotation(Current_View, (float)dx, &dv);
 				
 				App->CL_Doc->RotateSelectedBrushes(Current_View, &dv);
-
 				Draw_Screen(hDlg);
+
+				App->CL_View_Top_Left->Redraw_Window_TL();
 			}
 		}
 
