@@ -122,6 +122,7 @@ CL64_Views_Com::CL64_Views_Com()
 	flag_Right_Button_Down = 0;
 	flag_Context_Menu_Active = 0;
 	flag_Environment_On = true;
+	flag_Wheel_Active = false;
 
 	BackGround_Brush = CreateSolidBrush(RGB(60, 60, 60));
 

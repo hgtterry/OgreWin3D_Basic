@@ -103,7 +103,7 @@ public:
 	bool flag_Left_Button_Down;
 	bool flag_Right_Button_Down;
 	bool flag_Context_Menu_Active;
-
+	bool flag_Wheel_Active;
 	bool flag_Environment_On;
 
 	HBRUSH BackGround_Brush;

@@ -138,6 +138,8 @@ CL64_App::CL64_App(void)
 	Brush_Tabs_UnSelected = 0;
 	Brush_Tabs = 0;
 
+	Brush_But_Test = 0;
+
 	BlackBrush = 0;
 	Brush_White = 0;
 	Brush_Green = 0;
@@ -188,14 +190,17 @@ CL64_App::~CL64_App(void)
 void CL64_App::InitApp(void)
 {
 	CL_Libs =					new Init_Libs();
+
+	CL_X_Preference =			new Lib_Preference(); // Library
+
 	CL_Views_Com =				new CL64_Views_Com();
 	CL_X_Maths =				new CL64_Lib_Maths(); // Library
+
 	CL_X_Box =					new CX_Box(); // Library
 
 	CL_Render =					new CL64_Render_Map();
 	CL_Level =					new CL64_Level();
 
-	CL_X_Preference =			new Lib_Preference(); // Library
 	CL_X_Ini_File =				new Lib_Ini_File(); // Library
 	
 	CL_Doc =					new CL64_Doc();
@@ -334,6 +339,7 @@ void CL64_App::Set_Brushes_Fonts(void)
 	Brush_But_Normal = CreateSolidBrush(RGB(255, 255, 180));
 	Brush_But_Hover = CreateSolidBrush(RGB(255, 255, 230));
 	Brush_But_Pressed = CreateSolidBrush(RGB(240, 240, 190));
+	Brush_But_Test = CreateSolidBrush(RGB(240, 240, 190));
 
 	// Initialize fonts
 	Font_CB10 = CreateFont(-12, 0, 0, 0, FW_NORMAL, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Courier Black");

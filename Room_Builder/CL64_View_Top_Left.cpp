@@ -75,8 +75,10 @@ CL64_View_Top_Left::~CL64_View_Top_Left()
 // *************************************************************************
 void CL64_View_Top_Left::Set_VCam_TL_Defaults()
 {
+	int TOP_LEFT_VIEW = 8;
+
 	strcpy(VCam_TL->Name, "Top_Left");
-	VCam_TL->ViewType = 8;
+	VCam_TL->ViewType = TOP_LEFT_VIEW;
 	VCam_TL->ZoomFactor = 1.5;
 
 	VCam_TL->XCenter = 310;
@@ -133,7 +135,7 @@ LRESULT CALLBACK CL64_View_Top_Left::Proc_Top_Left_Window(HWND hDlg, UINT messag
 	{
 		if (GetDlgItem(hDlg, IDC_ST_TL_TITLE) == (HWND)lParam)
 		{
-			/*if (App->CL_Views_Com->Selected_Window == Enums::Selected_Map_View_TL)
+			if (App->CL_Views_Com->Selected_Window == Enums::Selected_Map_View_TL)
 			{
 				SetBkColor((HDC)wParam, RGB(0, 255, 0));
 				SetTextColor((HDC)wParam, RGB(0, 0, 0));
@@ -146,7 +148,7 @@ LRESULT CALLBACK CL64_View_Top_Left::Proc_Top_Left_Window(HWND hDlg, UINT messag
 				SetTextColor((HDC)wParam, RGB(0, 0, 0));
 				SetBkMode((HDC)wParam, TRANSPARENT);
 				return (UINT)App->Brush_But_Test;
-			}*/
+			}
 		}
 
 		return FALSE;
@@ -203,32 +205,32 @@ LRESULT CALLBACK CL64_View_Top_Left::Proc_Top_Left_Window(HWND hDlg, UINT messag
 
 		if (Views_Com->Selected_Window == Enums::Selected_Map_View_TL)
 		{
-			//Views_Com->flag_Wheel_Active = true;
+			Views_Com->flag_Wheel_Active = true;
 
-			//if (Views_Com->flag_Left_Button_Down == false)
-			//{
-			//	int zDelta = static_cast<short>(HIWORD(wParam)); // wheel rotation
+			if (Views_Com->flag_Left_Button_Down == false)
+			{
+				int zDelta = static_cast<short>(HIWORD(wParam)); // wheel rotation
 
-			//	auto& View_Zoom = App->CL_View_Top_Left->VCam_TL->ZoomFactor;
+				auto& View_Zoom = App->CL_View_Top_Left->VCam_TL->ZoomFactor;
 
-			//	if (zDelta > 0)
-			//	{
-			//		View_Zoom += +App->CL_View_Top_Left->m_Zoom_Amount;
-			//		App->CL_View_Top_Left->Redraw_Window_TL();
-			//	}
+				if (zDelta > 0)
+				{
+					View_Zoom += +App->CL_View_Top_Left->m_Zoom_Amount;
+					App->CL_View_Top_Left->Redraw_Window_TL();
+				}
 
-			//	if (zDelta < 0)
-			//	{
-			//		View_Zoom += -App->CL_View_Top_Left->m_Zoom_Amount;
-			//		App->CL_View_Top_Left->Redraw_Window_TL();
-			//	}
+				if (zDelta < 0)
+				{
+					View_Zoom += -App->CL_View_Top_Left->m_Zoom_Amount;
+					App->CL_View_Top_Left->Redraw_Window_TL();
+				}
 
-			//}
+			}
 
 			return 1;
 		}
 
-		//Views_Com->flag_Wheel_Active = false;
+		Views_Com->flag_Wheel_Active = false;
 		
 		return 1;
 	}
@@ -475,8 +477,8 @@ void CL64_View_Top_Left::Draw_Screen_TL(HWND hwnd)
 
 	//SetDCBrushColor(m_MemoryhDC, (RGB(Views_Com->Background_Colour.R, Views_Com->Background_Colour.G, Views_Com->Background_Colour.B)));
 
-	//HBITMAP OffScreenBitmap = CreateCompatibleBitmap(RealhDC, Rect.right - Rect.left, Rect.bottom - Rect.top);
-	//SelectObject(m_MemoryhDC, OffScreenBitmap);
+	HBITMAP OffScreenBitmap = CreateCompatibleBitmap(RealhDC, Rect.right - Rect.left, Rect.bottom - Rect.top);
+	SelectObject(m_MemoryhDC, OffScreenBitmap);
 	//FillRect(m_MemoryhDC, &Rect, (HBRUSH)Views_Com->Stock_Brush); // BackGround
 
 	// ---------------------- Draw Grid Fine
@@ -564,14 +566,14 @@ void CL64_View_Top_Left::Draw_Screen_TL(HWND hwnd)
 	}
 
 	// BitBlt to the real device context
-	//BitBlt(RealhDC, Rect.left, Rect.top + 17, Rect.right - Rect.left, Rect.bottom - Rect.top, m_MemoryhDC, 0, 0, SRCCOPY);
-	//
-	//// Clean up
-	//SetDCBrushColor(m_MemoryhDC, (RGB(255, 255, 255)));
+	BitBlt(RealhDC, Rect.left, Rect.top + 17, Rect.right - Rect.left, Rect.bottom - Rect.top, m_MemoryhDC, 0, 0, SRCCOPY);
+	
+	// Clean up
+	SetDCBrushColor(m_MemoryhDC, (RGB(255, 255, 255)));
 
-	//DeleteObject(OffScreenBitmap);
-	//DeleteDC(m_MemoryhDC);
-	//ReleaseDC(hwnd, RealhDC);
+	DeleteObject(OffScreenBitmap);
+	DeleteDC(m_MemoryhDC);
+	ReleaseDC(hwnd, RealhDC);
 
 }
 

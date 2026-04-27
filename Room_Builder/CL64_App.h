@@ -258,6 +258,8 @@ public:
 	HBRUSH Brush_White;
 	HBRUSH Brush_Green;
 
+	HBRUSH Brush_But_Test;
+
 	HFONT Font_CB10;
 	HFONT Font_CB15;
 	HFONT Font_CB18;
