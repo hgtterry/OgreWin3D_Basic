@@ -48,7 +48,7 @@ Lib_Ini_File::~Lib_Ini_File(void)
 // *************************************************************************
 char* Lib_Ini_File::GetVersion()
 {
-	return (LPSTR)" OW3D_Scene_Builder :-- Lib_Ini_File [ 14-08-25 ] Build 1 ";
+	return (LPSTR)" Lib_Ini_File [ 27-04-26 ] Build 1T ";
 }
 
 // *************************************************************************
