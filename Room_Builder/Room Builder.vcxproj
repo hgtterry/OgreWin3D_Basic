@@ -214,6 +214,7 @@
     <ClInclude Include="CL64_TXL_Editor.h" />
     <ClInclude Include="CL64_Utilities.h" />
     <ClInclude Include="CL64_Views_Com.h" />
+    <ClInclude Include="CL64_View_Bottom_Left.h" />
     <ClInclude Include="CL64_View_Top_Left.h" />
     <ClInclude Include="CL64_View_Top_Right.h" />
     <ClInclude Include="CL64_WadFile.h" />
@@ -286,6 +287,7 @@
     <ClCompile Include="CL64_TXL_Editor.cpp" />
     <ClCompile Include="CL64_Utilities.cpp" />
     <ClCompile Include="CL64_Views_Com.cpp" />
+    <ClCompile Include="CL64_View_Bottom_Left.cpp" />
     <ClCompile Include="CL64_View_Top_Left.cpp" />
     <ClCompile Include="CL64_View_Top_Right.cpp" />
     <ClCompile Include="CL64_WadFile.cpp" />

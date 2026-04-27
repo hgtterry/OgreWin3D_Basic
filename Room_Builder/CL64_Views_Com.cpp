@@ -88,10 +88,7 @@ CL64_Views_Com::CL64_Views_Com()
 	GridSize = 128, 
 	GridSnapSize = 8;
 
-	Bottom_Left_Window_Hwnd =	nullptr;
 	Bottom_Ogre_Right_Hwnd =	nullptr;
-
-	Bottom_Left_Banner_Hwnd =	nullptr;
 	Bottom_Ogre_Banner =		nullptr;
 
 	LEFT_WINDOW_WIDTH = 500;
@@ -203,24 +200,19 @@ void CL64_Views_Com::Reset_Views_All()
 
 	Cam_TR->ZoomFactor = App->CL_X_Preference->Defalut_Zoom;
 
-	int Count = 2;
+	//------------------------ Bottom Left
+	auto& Cam_BL = App->CL_View_Bottom_Left->VCam_BL;
 
-	while (Count < 3)
-	{
-		RECT		Rect;
-		GetClientRect(VCam[Count]->hDlg, &Rect);
+	GetClientRect(Cam_BL->hDlg, &Rect);
 
-		VCam[Count]->XCenter = (float)Rect.right / 2;
-		VCam[Count]->YCenter = (float)Rect.bottom / 2;
+	Cam_BL->XCenter = (float)Rect.right / 2;
+	Cam_BL->YCenter = (float)Rect.bottom / 2;
 
-		VCam[Count]->CamPos.x = 0;
-		VCam[Count]->CamPos.y = 0;
-		VCam[Count]->CamPos.z = 0;
+	Cam_BL->CamPos.x = 0;
+	Cam_BL->CamPos.y = 0;
+	Cam_BL->CamPos.z = 0;
 
-		VCam[Count]->ZoomFactor = App->CL_X_Preference->Defalut_Zoom;
-
-		Count++;
-	}
+	Cam_BL->ZoomFactor = App->CL_X_Preference->Defalut_Zoom;
 
 	App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
 }
@@ -338,13 +330,13 @@ void CL64_Views_Com::Resize_Windows(HWND hDlg, int newWidth, int newDepth)
 	MoveWindow(App->CL_View_Top_Right->Top_Right_Banner_Hwnd, 0, 0, clientRect.right - newWidth - WIDTH_ADJUST, bannerHeight, FALSE);
 
 	// Resize Bottom Left Window
-	MoveWindow(Bottom_Left_Window_Hwnd,
+	MoveWindow(App->CL_View_Bottom_Left->Bottom_Left_Window_Hwnd,
 		0,
 		newDepth,
 		newWidth - WIDTH_ADJUST,
 		clientRect.bottom - (newDepth + BOTTOM_POS_BOTLEFT),
 		FALSE);
-	MoveWindow(Bottom_Left_Banner_Hwnd, 0, 0, newWidth - WIDTH_ADJUST, bannerHeight, FALSE);
+	MoveWindow(App->CL_View_Bottom_Left->Bottom_Left_Banner_Hwnd, 0, 0, newWidth - WIDTH_ADJUST, bannerHeight, FALSE);
 
 	// Resize Ogre Window
 	MoveWindow(Bottom_Ogre_Right_Hwnd,
@@ -967,12 +959,13 @@ LRESULT CALLBACK CL64_Views_Com::Proc_Top_Right_Window(HWND hDlg, UINT message, 
 // *************************************************************************
 void CL64_Views_Com::Create_Bottom_Left_Window()
 {
-	VCam[V_BL] = new ViewVars;
+	App->CL_View_Bottom_Left->Create_Bottom_Left_Window();
+	/*VCam[V_BL] = new ViewVars;
 	Set_Views_Defaults(V_BL, BOTTOM_LEFT_VIEW, "Bottom_Left");
 
 	Bottom_Left_Window_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MAP_BOTTOM_LEFT, Main_View_Dlg_Hwnd, (DLGPROC)Proc_Bottom_Left_Window);
 
-	VCam[V_BL]->hDlg = Bottom_Left_Window_Hwnd;
+	VCam[V_BL]->hDlg = Bottom_Left_Window_Hwnd;*/
 }
 
 // *************************************************************************
@@ -985,7 +978,7 @@ LRESULT CALLBACK CL64_Views_Com::Proc_Bottom_Left_Window(HWND hDlg, UINT message
 	case WM_INITDIALOG:
 	{
 		SendDlgItemMessage(hDlg, IDC_ST_BL_TITLE, WM_SETFONT, (WPARAM)App->Font_CB10, MAKELPARAM(TRUE, 0));
-		App->CL_Views_Com->Bottom_Left_Banner_Hwnd = GetDlgItem(hDlg, IDC_ST_BL_TITLE);
+		//App->CL_Views_Com->Bottom_Left_Banner_Hwnd = GetDlgItem(hDlg, IDC_ST_BL_TITLE);
 		return TRUE;
 	}
 
@@ -1524,7 +1517,7 @@ void CL64_Views_Com::Set_Selected_View(int Selected_View)
 	Selected_Window = Selected_View;
 	RedrawWindow(App->CL_View_Top_Left->Top_Left_Banner_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 	RedrawWindow(App->CL_View_Top_Right->Top_Right_Banner_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-	RedrawWindow(Bottom_Left_Banner_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+	RedrawWindow(App->CL_View_Bottom_Left->Bottom_Left_Banner_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 	RedrawWindow(Bottom_Ogre_Banner, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 }
 
@@ -1897,7 +1890,7 @@ void CL64_Views_Com::On_Mouse_Move(POINT CursorPosition, HWND hDlg)
 					App->CL_View_Top_Right->Redraw_Window_TR();
 					break;
 				case Enums::Selected_Map_View_BL:
-					//Temp_VCam = App->CL_View_Bottom_Left->VCam_BL;
+					App->CL_View_Bottom_Left->Redraw_Window_BL();
 					break;
 				default:
 					break;
@@ -1923,7 +1916,7 @@ void CL64_Views_Com::On_Mouse_Move(POINT CursorPosition, HWND hDlg)
 					App->CL_View_Top_Right->Redraw_Window_TR();
 					break;
 				case Enums::Selected_Map_View_BL:
-					//Temp_VCam = App->CL_View_Bottom_Left->VCam_BL;
+					App->CL_View_Bottom_Left->Redraw_Window_BL();
 					break;
 				default:
 					break;
@@ -1948,7 +1941,7 @@ void CL64_Views_Com::On_Mouse_Move(POINT CursorPosition, HWND hDlg)
 				App->CL_View_Top_Right->Redraw_Window_TR();
 				break;
 			case Enums::Selected_Map_View_BL:
-				//Temp_VCam = App->CL_View_Bottom_Left->VCam_BL;
+				App->CL_View_Bottom_Left->Redraw_Window_BL();
 				break;
 			default:
 				break;

@@ -120,6 +120,7 @@ CL64_App::CL64_App(void)
 
 	CL_View_Top_Left =			nullptr;
 	CL_View_Top_Right =			nullptr;
+	CL_View_Bottom_Left =		nullptr;
 
 	CUR = 0;
 	Menu_Map = 0;
@@ -285,6 +286,7 @@ void CL64_App::InitApp(void)
 
 	CL_View_Top_Left =			new CL64_View_Top_Left();
 	CL_View_Top_Right =			new CL64_View_Top_Right();
+	CL_View_Bottom_Left =		new CL64_View_Bottom_Left();
 
 	Set_Brushes_Fonts();
 

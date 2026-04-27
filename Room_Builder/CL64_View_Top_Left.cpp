@@ -251,7 +251,7 @@ LRESULT CALLBACK CL64_View_Top_Left::Proc_Top_Left_Window(HWND hDlg, UINT messag
 			Views_Com->Set_Selected_View(Enums::Selected_Map_View_TL);
 		}
 
-		Views_Com->flag_Right_Button_Down = 0;
+		Views_Com->flag_Right_Button_Down = false;
 		Views_Com->flag_Left_Button_Down = true;
 
 		Views_Com->On_Left_Button_Down(RealCursorPosition, hDlg);

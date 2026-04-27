@@ -359,7 +359,7 @@ void CL64_Doc::UpdateAllViews(int Update_Mode)
 
         RedrawWindow(App->CL_View_Top_Left->Top_Left_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
         RedrawWindow(App->CL_View_Top_Right->Top_Right_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-        RedrawWindow(App->CL_Views_Com->Bottom_Left_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+        RedrawWindow(App->CL_View_Bottom_Left->Bottom_Left_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
         App->CL_Views_Com->Current_View = Save_View;
     }
@@ -385,7 +385,7 @@ void CL64_Doc::UpdateAllViews(int Update_Mode)
     {
         RedrawWindow(App->CL_View_Top_Left->Top_Left_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
         RedrawWindow(App->CL_View_Top_Right->Top_Right_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-        RedrawWindow(App->CL_Views_Com->Bottom_Left_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+        RedrawWindow(App->CL_View_Bottom_Left->Bottom_Left_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
         int BC = App->CL_X_Brush->Get_Brush_Count();
         if (BC > 0)
