@@ -425,6 +425,12 @@ static signed int BrushDrawSelFacesOrtho(Brush* pBrush, void* lParam)
 // *************************************************************************
 void CL64_View_Top_Right::Draw_Screen_TR(HWND hwnd)
 {
+	// Exit if preview mode is active
+	if (App->CL_Editor_Control->flag_PreviewMode_Active == 1)
+	{
+		return;
+	}
+
 	auto& Views_Com = App->CL_Views_Com;
 
 	// Initialize variables
@@ -493,6 +499,23 @@ void CL64_View_Top_Right::Draw_Screen_TR(HWND hwnd)
 		// ------------------------------------------ Draw Brushes
 		SelectObject(m_MemoryhDC_TR, PenBrushes);
 
+		// Draw Template Brush
+		if (App->CL_Doc->mModeTool == ID_TOOLS_TEMPLATE)
+		{
+			SelectObject(m_MemoryhDC_TR, Views_Com->PenTemplate);
+
+			if (App->CL_X_Brush->Brush_IsMulti(App->CL_Doc->CurBrush))
+			{
+
+				App->CL_X_Brush->BrushList_EnumLeafBrushes(App->CL_X_Brush->Brush_GetBrushList(App->CL_Doc->CurBrush), &m_brushDrawData_TR, Draw_Brush);
+			}
+			else
+			{
+				Views_Com->Render_RenderBrushFacesOrtho(Views_Com->Current_View, App->CL_Doc->CurBrush, m_MemoryhDC_TR);
+
+			}
+		}
+
 		// Iterate through all brushes
 		int BrushCount = App->CL_X_Brush->Get_Brush_Count();
 		int Count = 0;
@@ -501,6 +524,25 @@ void CL64_View_Top_Right::Draw_Screen_TR(HWND hwnd)
 		while (Count < BrushCount)
 		{
 			SB = App->CL_X_Brush->Get_By_Index(Count);
+
+			switch (SB->GroupId)
+			{
+			case Enums::Brushs_ID_Area:
+				SelectObject(m_MemoryhDC_TR, PenBrushes);
+				break;
+
+			case Enums::Brushs_ID_Evirons:
+				SelectObject(m_MemoryhDC_TR, Views_Com->PenEntity);
+				break;
+
+			default:
+				break;
+			}
+
+			if (App->CL_X_Brush->Brush_IsSubtract(SB))
+			{
+				SelectObject(m_MemoryhDC_TR, Views_Com->PenCutBrush);
+			}
 
 			if (App->CL_X_Brush->Brush_IsMulti(SB))
 			{

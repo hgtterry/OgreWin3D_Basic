@@ -352,9 +352,9 @@ signed int CL64_View_Bottom_Left::Draw_Brush(Brush* pBrush, void* lParam)
 	{
 		if ((pData->FlagTest == NULL) || pData->FlagTest(pBrush))
 		{
-			if (App->CL_View_Top_Right->fdocShowBrush(pBrush, pData->pViewBox))
+			if (App->CL_View_Bottom_Left->fdocShowBrush(pBrush, pData->pViewBox))
 			{
-				App->CL_View_Top_Right->Draw_Brush_Faces_Ortho(pData->v, pBrush);
+				App->CL_View_Bottom_Left->Draw_Brush_Faces_Ortho(pData->v, pBrush);
 			}
 		}
 	}

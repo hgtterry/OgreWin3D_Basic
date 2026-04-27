@@ -42,7 +42,7 @@ typedef struct ViewVarsTag
 	long	Width = 310;
 	long 	Height = 174;
 	//long	FacesDone;
-	char	Name[10];
+	char	Name[20];
 
 } ViewVars;
 

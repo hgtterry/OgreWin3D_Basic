@@ -361,9 +361,9 @@ signed int CL64_View_Bottom_Left::Draw_Brush(Brush* pBrush, void* lParam)
 	{
 		if ((pData->FlagTest == NULL) || pData->FlagTest(pBrush))
 		{
-			if (App->CL_View_Top_Right->fdocShowBrush(pBrush, pData->pViewBox))
+			if (App->CL_View_Bottom_Left->fdocShowBrush(pBrush, pData->pViewBox))
 			{
-				App->CL_View_Top_Right->Draw_Brush_Faces_Ortho(pData->v, pBrush);
+				App->CL_View_Bottom_Left->Draw_Brush_Faces_Ortho(pData->v, pBrush);
 			}
 		}
 	}
@@ -420,6 +420,12 @@ static signed int BrushDrawSelFacesOrtho(Brush* pBrush, void* lParam)
 // *************************************************************************
 void CL64_View_Bottom_Left::Draw_Screen_BL(HWND hwnd)
 {
+	// Exit if preview mode is active
+	if (App->CL_Editor_Control->flag_PreviewMode_Active == 1)
+	{
+		return;
+	}
+
 	// Initialize variables
 	int			inidx = 0;
 	HDC RealhDC = GetDC(hwnd);
@@ -491,6 +497,23 @@ void CL64_View_Bottom_Left::Draw_Screen_BL(HWND hwnd)
 		// ------------------------------------------ Draw Brushes
 		SelectObject(m_MemoryhDC_BL, PenBrushes);
 
+		// Draw Template Brush
+		if (App->CL_Doc->mModeTool == ID_TOOLS_TEMPLATE)
+		{
+			SelectObject(m_MemoryhDC_BL, Views_Com->PenTemplate);
+
+			if (App->CL_X_Brush->Brush_IsMulti(App->CL_Doc->CurBrush))
+			{
+
+				App->CL_X_Brush->BrushList_EnumLeafBrushes(App->CL_X_Brush->Brush_GetBrushList(App->CL_Doc->CurBrush), &m_brushDrawData_BL, Draw_Brush);
+			}
+			else
+			{
+				Views_Com->Render_RenderBrushFacesOrtho(Views_Com->Current_View, App->CL_Doc->CurBrush, m_MemoryhDC_BL);
+
+			}
+		}
+
 		// Iterate through all brushes
 		int BrushCount = App->CL_X_Brush->Get_Brush_Count();
 		int Count = 0;
@@ -500,8 +523,28 @@ void CL64_View_Bottom_Left::Draw_Screen_BL(HWND hwnd)
 		{
 			SB = App->CL_X_Brush->Get_By_Index(Count);
 
+			switch (SB->GroupId)
+			{
+			case Enums::Brushs_ID_Area:
+				SelectObject(m_MemoryhDC_BL, PenBrushes);
+				break;
+
+			case Enums::Brushs_ID_Evirons:
+				SelectObject(m_MemoryhDC_BL, Views_Com->PenEntity);
+				break;
+
+			default:
+				break;
+			}
+
+			if (App->CL_X_Brush->Brush_IsSubtract(SB))
+			{
+				SelectObject(m_MemoryhDC_BL, Views_Com->PenCutBrush);
+			}
+
 			if (App->CL_X_Brush->Brush_IsMulti(SB))
 			{
+				SelectObject(m_MemoryhDC_BL, PenBrushes);
 				App->CL_X_Brush->BrushList_EnumLeafBrushes(App->CL_X_Brush->Brush_GetBrushList(SB), &m_brushDrawData_BL, Draw_Brush);
 			}
 			else

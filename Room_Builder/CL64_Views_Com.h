@@ -79,6 +79,8 @@ public:
 	void On_Left_Button_Up(POINT CursorPosition);
 	void On_Left_Button_Down(POINT CursorPosition, HWND hDlg);
 
+	void Create_Views();
+
 	HWND Main_View_Dlg_Hwnd; // Background of MDI
 
 	HWND Bottom_Ogre_Right_Hwnd;
@@ -125,31 +127,19 @@ public:
 
 private:
 	static LRESULT CALLBACK Proc_Main_Dlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
-
-	static LRESULT CALLBACK Proc_Top_Right_Window(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
-	static LRESULT CALLBACK Proc_Bottom_Left_Window(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Proc_Ogre_BR(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK ViewerMain_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	void Set_Views_Defaults(int Index,Ogre::int32 View, const char* Name);
-	void Create_Top_Left_Window();
-	void Create_Top_Right_Window();
-	void Create_Bottom_Left_Window();
 	void Create_Ogre_Bottom_Right();
 
 	HWND Bottom_Ogre_Banner;
 
 	// Draw Routines
-	static signed int BrushDraw(Brush* pBrush, void* lParam);
-
 	
-
-	
-
 	void SetEditCursor(int Tool, const POINT* pMousePos);
 	int GetCursorBoxPos(const POINT* ptMousePos);
-	signed int fdocShowBrush(Brush const* b, Box3d const* ViewBox);
-
+	
 	int LEFT_WINDOW_WIDTH;
 
 	int LEFT_WINDOW_DEPTH;

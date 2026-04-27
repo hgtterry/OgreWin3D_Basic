@@ -200,6 +200,9 @@ POINT CL64_Render_Map::Render_OrthoWorldToView(const ViewVars* cv, T_Vec3 const*
 
 		sc.x = (int)(cv->XCenter + ptView.x);
 		sc.y = (int)(cv->YCenter - ptView.y);
+
+		//App->Flash_Window();
+
 		break;
 	}
 	case TOP_RIGHT_VIEW:
@@ -310,7 +313,11 @@ void CL64_Render_Map::Pan_View(ViewVars* currentView, int startPosX, int startPo
 		return;
 	}
 
-	App->CL_Views_Com->Draw_Screen(currentView->hDlg);
+	if (currentView->ViewType == BOTTOM_LEFT_VIEW)
+	{
+		App->CL_View_Bottom_Left->Redraw_Window_BL();
+		return;
+	}
 }
 
 // *************************************************************************

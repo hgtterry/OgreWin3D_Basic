@@ -165,6 +165,7 @@ void CL64_Views_Com::Reset_Views_All()
 
 	Save_Splitter_Width_Depth();
 	
+	//------------------------ Top Left
 	auto& Cam_TL = App->CL_View_Top_Left->VCam_TL;
 
 	RECT		Rect;
@@ -179,6 +180,7 @@ void CL64_Views_Com::Reset_Views_All()
 
 	Cam_TL->ZoomFactor = App->CL_Libs->CL_Preference->Defalut_Zoom;
 
+	//------------------------ Top Right
 	auto& Cam_TR = App->CL_View_Top_Right->VCam_TR;
 
 	GetClientRect(Cam_TR->hDlg, &Rect);
@@ -192,7 +194,7 @@ void CL64_Views_Com::Reset_Views_All()
 
 	Cam_TR->ZoomFactor = App->CL_Libs->CL_Preference->Defalut_Zoom;
 
-	
+	//------------------------ Bottom Left
 	auto& Cam_BL = App->CL_View_Bottom_Left->VCam_BL;
 
 	GetClientRect(Cam_BL->hDlg, &Rect);

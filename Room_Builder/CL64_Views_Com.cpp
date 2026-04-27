@@ -390,9 +390,8 @@ void CL64_Views_Com::Init_Map_Views()
 {
 	Main_View_Dlg_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MAPEDITOR, App->MainHwnd, (DLGPROC)Proc_Main_Dlg);
 
-	Create_Top_Left_Window();
-	Create_Top_Right_Window();
-	Create_Bottom_Left_Window();
+	Create_Views();
+
 	Create_Ogre_Bottom_Right();
 
 	RECT rcl;
@@ -740,422 +739,14 @@ void CL64_Views_Com::Save_Splitter_Width_Depth()
 }
 
 // *************************************************************************
-// *	  	Create_Top_Left_Window:- Terry and Hazel Flanigan 2024		   *
+// *				Create_Views:- Terry Mo and Hazel 2026				   *
 // *************************************************************************
-void CL64_Views_Com::Create_Top_Left_Window()
+void CL64_Views_Com::Create_Views()
 {
 	App->CL_View_Top_Left->Create_Top_Left_Window();
-}
-
-// *************************************************************************
-// *	  	Create_Top_Right_Window:- Terry and Hazel Flanigan 2024			   *
-// *************************************************************************
-void CL64_Views_Com::Create_Top_Right_Window()
-{
 	App->CL_View_Top_Right->Create_Top_Right_Window();
-
-	/*VCam[V_TR] = new ViewVars;
-	Set_Views_Defaults(V_TR, VIEWSIDE, "Top_Right");
-
-	Top_Right_Window_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MAP_TOP_RIGHT, Main_View_Dlg_Hwnd, (DLGPROC)Proc_Top_Right_Window);
-
-	VCam[V_TR]->hDlg = Top_Right_Window_Hwnd;*/
-}
-
-// *************************************************************************
-// *		Proc_Top_Right_Window:- Terry and Hazel Flanigan 2024 		   *
-// *************************************************************************
-LRESULT CALLBACK CL64_Views_Com::Proc_Top_Right_Window(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
-{
-	switch (message)
-	{
-	case WM_INITDIALOG:
-	{
-		SendDlgItemMessage(hDlg, IDC_ST_TR_TITLE, WM_SETFONT, (WPARAM)App->Font_CB10, MAKELPARAM(TRUE, 0));
-		//App->CL_Views_Com->Top_Right_Banner_Hwnd = GetDlgItem(hDlg, IDC_ST_TR_TITLE);
-		return TRUE;
-	}
-
-	case WM_COMMAND:
-	{
-		if (App->CL_Views_Com->Context_Command(LOWORD(wParam)))
-		{
-			return TRUE;
-		}
-	}
-
-	case WM_CTLCOLORSTATIC:
-	{
-		if (GetDlgItem(hDlg, IDC_ST_TR_TITLE) == (HWND)lParam)
-		{
-			if (App->CL_Views_Com->Selected_Window == Enums::Selected_Map_View_TR)
-			{
-				SetBkColor((HDC)wParam, RGB(0, 255, 0));
-				SetTextColor((HDC)wParam, RGB(0, 0, 0));
-				SetBkMode((HDC)wParam, TRANSPARENT);
-				return (UINT)App->Brush_Green;
-			}
-			else
-			{
-				SetBkColor((HDC)wParam, RGB(0, 255, 0));
-				SetTextColor((HDC)wParam, RGB(0, 0, 0));
-				SetBkMode((HDC)wParam, TRANSPARENT);
-				return (UINT)App->AppBackground;
-			}
-		}
-
-		return FALSE;
-	}
-
-	case WM_CTLCOLORDLG:
-	{
-		return (LONG)App->CL_Views_Com->BackGround_Brush;
-	}
-
-	case WM_ERASEBKGND:
-	{
-		return (LRESULT)1;
-	}
-
-	case WM_SETCURSOR:
-	{
-		if (App->CL_Views_Com->flag_Context_Menu_Active == 1)
-		{
-			return false;
-		}
-
-		if (App->CL_Views_Com->flag_Right_Button_Down == 1 || App->CL_Views_Com->flag_Left_Button_Down == 1)
-		{
-			return true;
-		}
-		else if (App->CL_Doc->mModeTool == ID_TOOLS_BRUSH_MOVEROTATEBRUSH)
-		{
-			SetCursor(App->CL_Views_Com->hcBoth);
-		}
-		else if (App->CL_Doc->mModeTool == ID_TOOLS_BRUSH_SCALEBRUSH)
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-	}
-
-	case WM_MOUSEMOVE:
-	{
-		int			dx, dy;
-		POINT		RealCursorPosition;
-
-		GetCursorPos(&RealCursorPosition);
-		ScreenToClient(hDlg, &RealCursorPosition);
-
-		dx = (RealCursorPosition.x);
-		dy = (RealCursorPosition.y);
-
-		App->CL_Views_Com->On_Mouse_Move(RealCursorPosition, hDlg);
-
-		return 1;
-	}
-
-	// Left Button Down
-	case WM_LBUTTONDOWN:
-	{
-		POINT		RealCursorPosition;
-		GetCursorPos(&RealCursorPosition);
-		ScreenToClient(hDlg, &RealCursorPosition);
-
-		App->CL_Views_Com->Current_View = App->CL_Views_Com->VCam[V_TR];
-
-		if (App->CL_Views_Com->Selected_Window != Enums::Selected_Map_View_TR)
-		{
-			App->CL_Views_Com->Set_Selected_View(Enums::Selected_Map_View_TR);
-		}
-
-		App->CL_Views_Com->flag_Right_Button_Down = 0;
-		App->CL_Views_Com->flag_Left_Button_Down = 1;
-
-		App->CL_Views_Com->On_Left_Button_Down(RealCursorPosition, hDlg);
-
-		return 1;
-	}
-
-	// Left Button Up
-	case WM_LBUTTONUP:
-	{
-		POINT		RealCursorPosition;
-		GetCursorPos(&RealCursorPosition);
-		ScreenToClient(hDlg, &RealCursorPosition);
-
-		App->CL_Views_Com->flag_Right_Button_Down = 0;
-		App->CL_Views_Com->flag_Left_Button_Down = 0;
-
-		App->CL_Views_Com->Current_View = App->CL_Views_Com->VCam[V_TR];
-
-		App->CL_Views_Com->On_Left_Button_Up(RealCursorPosition);
-
-		return 1;
-	}
-
-	// Right Button Down
-	case WM_RBUTTONDOWN:
-	{
-		App->CL_Views_Com->Current_View = App->CL_Views_Com->VCam[V_TR];
-
-		if (App->CL_Views_Com->Selected_Window != Enums::Selected_Map_View_TR)
-		{
-			App->CL_Views_Com->Set_Selected_View(Enums::Selected_Map_View_TR);
-		}
-
-		if (GetAsyncKeyState(VK_CONTROL) < 0)
-		{
-			GetCursorPos(&App->CL_Views_Com->mStartPoint);
-			ScreenToClient(hDlg, &App->CL_Views_Com->mStartPoint);
-
-			App->CL_Views_Com->flag_Right_Button_Down = 1;
-			App->CL_Views_Com->flag_Left_Button_Down = 0;
-
-			App->CUR = SetCursor(NULL);
-		}
-	
-		return 1;
-	}
-
-	// Right Button Up
-	case WM_RBUTTONUP:
-	{
-
-		if (GetAsyncKeyState(VK_CONTROL) < 0)
-		{
-			App->CL_Views_Com->flag_Right_Button_Down = 0;
-			App->CL_Views_Com->flag_Left_Button_Down = 0;
-
-			App->CUR = SetCursor(App->CUR);
-		}
-		else
-		{
-			App->CL_Views_Com->Current_View = App->CL_Views_Com->VCam[V_TR];
-			App->CL_Views_Com->Context_Menu(hDlg);
-		}
-
-		return 1;
-	}
-
-	case WM_PAINT:
-	{
-		App->CL_Views_Com->Current_View = App->CL_Views_Com->VCam[V_TR];
-		App->CL_Views_Com->Draw_Screen(hDlg);
-
-		return 0;
-	}
-
-	}
-
-	return FALSE;
-}
-
-// *************************************************************************
-// *	  Create_Bottom_Left_Window:- Terry and Hazel Flanigan 2024		   *
-// *************************************************************************
-void CL64_Views_Com::Create_Bottom_Left_Window()
-{
 	App->CL_View_Bottom_Left->Create_Bottom_Left_Window();
-	/*VCam[V_BL] = new ViewVars;
-	Set_Views_Defaults(V_BL, BOTTOM_LEFT_VIEW, "Bottom_Left");
-
-	Bottom_Left_Window_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MAP_BOTTOM_LEFT, Main_View_Dlg_Hwnd, (DLGPROC)Proc_Bottom_Left_Window);
-
-	VCam[V_BL]->hDlg = Bottom_Left_Window_Hwnd;*/
-}
-
-// *************************************************************************
-// *		Proc_Bottom_Left_Window:- Terry and Hazel Flanigan 2024 	   *
-// *************************************************************************
-LRESULT CALLBACK CL64_Views_Com::Proc_Bottom_Left_Window(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
-{
-	switch (message)
-	{
-	case WM_INITDIALOG:
-	{
-		SendDlgItemMessage(hDlg, IDC_ST_BL_TITLE, WM_SETFONT, (WPARAM)App->Font_CB10, MAKELPARAM(TRUE, 0));
-		//App->CL_Views_Com->Bottom_Left_Banner_Hwnd = GetDlgItem(hDlg, IDC_ST_BL_TITLE);
-		return TRUE;
-	}
-
-	case WM_COMMAND:
-	{
-		if (App->CL_Views_Com->Context_Command(LOWORD(wParam)))
-		{
-			return TRUE;
-		}
-	}
-
-	case WM_CTLCOLORSTATIC:
-	{
-		if (GetDlgItem(hDlg, IDC_ST_BL_TITLE) == (HWND)lParam)
-		{
-			if (App->CL_Views_Com->Selected_Window == Enums::Selected_Map_View_BL)
-			{
-				SetBkColor((HDC)wParam, RGB(0, 255, 0));
-				SetTextColor((HDC)wParam, RGB(0, 0, 0));
-				SetBkMode((HDC)wParam, TRANSPARENT);
-				return (UINT)App->Brush_Green;
-			}
-			else
-			{
-				SetBkColor((HDC)wParam, RGB(0, 255, 0));
-				SetTextColor((HDC)wParam, RGB(0, 0, 0));
-				SetBkMode((HDC)wParam, TRANSPARENT);
-				return (UINT)App->AppBackground;
-			}
-		}
-
-		return FALSE;
-	}
-
-	case WM_CTLCOLORDLG:
-	{
-		return (LONG)App->CL_Views_Com->BackGround_Brush;
-	}
-
-	case WM_ERASEBKGND:
-	{
-		return (LRESULT)1;
-	}
-
-	case WM_SETCURSOR:
-	{
-		if (App->CL_Views_Com->flag_Context_Menu_Active == 1)
-		{
-			return false;
-		}
-
-		if (App->CL_Views_Com->flag_Right_Button_Down == 1 || App->CL_Views_Com->flag_Left_Button_Down == 1)
-		{
-			return true;
-		}
-		else if (App->CL_Doc->mModeTool == ID_TOOLS_BRUSH_MOVEROTATEBRUSH)
-		{
-			SetCursor(App->CL_Views_Com->hcBoth);
-		}
-		else if (App->CL_Doc->mModeTool == ID_TOOLS_BRUSH_SCALEBRUSH)
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-	}
-
-	case WM_MOUSEMOVE:
-	{
-		int			dx, dy;
-		POINT		RealCursorPosition;
-
-		GetCursorPos(&RealCursorPosition);
-		ScreenToClient(hDlg, &RealCursorPosition);
-
-		dx = (RealCursorPosition.x);
-		dy = (RealCursorPosition.y);
-
-		App->CL_Views_Com->On_Mouse_Move(RealCursorPosition, hDlg);
-
-		return 1;
-	}
-
-	// Left Mouse Down
-	case WM_LBUTTONDOWN:
-	{
-		POINT		RealCursorPosition;
-		GetCursorPos(&RealCursorPosition);
-		ScreenToClient(hDlg, &RealCursorPosition);
-
-		App->CL_Views_Com->Current_View = App->CL_Views_Com->VCam[V_BL];
-
-		if (App->CL_Views_Com->Selected_Window != Enums::Selected_Map_View_BL)
-		{
-			App->CL_Views_Com->Set_Selected_View(Enums::Selected_Map_View_BL);
-		}
-
-		App->CL_Views_Com->flag_Right_Button_Down = 0;
-		App->CL_Views_Com->flag_Left_Button_Down = 1;
-
-		App->CL_Views_Com->On_Left_Button_Down(RealCursorPosition, hDlg);
-
-		return 1;
-	}
-
-	// Left Mouse Up
-	case WM_LBUTTONUP:
-	{
-		POINT		RealCursorPosition;
-		GetCursorPos(&RealCursorPosition);
-		ScreenToClient(hDlg, &RealCursorPosition);
-
-		App->CL_Views_Com->Current_View = App->CL_Views_Com->VCam[V_BL];
-
-		App->CL_Views_Com->flag_Left_Button_Down = 0;
-		App->CL_Views_Com->flag_Right_Button_Down = 0;
-
-		App->CL_Views_Com->On_Left_Button_Up(RealCursorPosition);
-
-		return 1;
-	}
-
-	// Right Mouse Down
-	case WM_RBUTTONDOWN:
-	{
-		App->CL_Views_Com->Current_View = App->CL_Views_Com->VCam[V_BL];
-
-		if (App->CL_Views_Com->Selected_Window != Enums::Selected_Map_View_BL)
-		{
-			App->CL_Views_Com->Set_Selected_View(Enums::Selected_Map_View_BL);
-		}
-
-		if (GetAsyncKeyState(VK_CONTROL) < 0)
-		{
-			GetCursorPos(&App->CL_Views_Com->mStartPoint);
-			ScreenToClient(hDlg, &App->CL_Views_Com->mStartPoint);
-
-			App->CL_Views_Com->flag_Left_Button_Down = 0;
-			App->CL_Views_Com->flag_Right_Button_Down = 1;
-
-			App->CUR = SetCursor(NULL);
-		}
-		
-		return 1;
-	}
-
-	// Right Mouse up
-	case WM_RBUTTONUP:
-	{
-		if (GetAsyncKeyState(VK_CONTROL) < 0)
-		{
-			App->CL_Views_Com->flag_Left_Button_Down = 0;
-			App->CL_Views_Com->flag_Right_Button_Down = 0;
-
-		App->CUR = SetCursor(App->CUR);
-		}
-		else
-		{
-			App->CL_Views_Com->Current_View = App->CL_Views_Com->VCam[V_BL];
-			App->CL_Views_Com->Context_Menu(hDlg);
-		}
-
-		return 1;
-	}
-
-	case WM_PAINT:
-	{
-		App->CL_Views_Com->Current_View = App->CL_Views_Com->VCam[V_BL];
-		App->CL_Views_Com->Draw_Screen(hDlg);
-		return 0;
-	}
-
-	}
-
-	return FALSE;
+	//App->CL_View_3D->Create_Ogre_Bottom_Right();
 }
 
 // *************************************************************************
@@ -2074,33 +1665,6 @@ void CL64_Views_Com::On_Left_Button_Down(POINT CursorPosition, HWND hDlg)
 	}
 }
 
-signed int CL64_Views_Com::fdocShowBrush(Brush const* b,Box3d const* ViewBox)
-{
-	return 1;// (App->CL_Brush->BrushIsVisible(b) && App->CL_Brush->Brush_TestBoundsIntersect(b, ViewBox));
-}
-
-// *************************************************************************
-// *	  						BrushDraw								   *
-// *************************************************************************
-signed int CL64_Views_Com::BrushDraw(Brush* pBrush, void* lParam)
-{
-	BrushDrawData* pData = (BrushDrawData*)lParam;
-	
-
-	//if (App->CL_Brush->Brush_GetGroupId(pBrush) == pData->GroupId))
-	{
-		if ((pData->FlagTest == NULL) || pData->FlagTest(pBrush))
-		{
-			if (App->CL_Views_Com->fdocShowBrush(pBrush, pData->pViewBox))
-			{
-				App->CL_Views_Com->Render_RenderBrushFacesOrtho(pData->v, pBrush, App->CL_Views_Com->MemoryhDC);
-			}
-		}
-	}
-
-	return true;
-}
-
 #define	VectorToSUB(a, b) (*((((float *)(&a))) + (b)))
 
 static signed int BrushDrawSelFacesOrtho(Brush* pBrush, void* lParam)
@@ -2148,184 +1712,185 @@ void CL64_Views_Com::Render_RenderBrushSelFacesOrtho(ViewVars* Cam, Brush* b, HD
 // *************************************************************************
 void CL64_Views_Com::Draw_Screen(HWND hwnd)
 {
-	// Exit if preview mode is active
-	if (App->CL_Editor_Control->flag_PreviewMode_Active == 1)
-	{
-		return;
-	}
+	return;
+	//// Exit if preview mode is active
+	//if (App->CL_Editor_Control->flag_PreviewMode_Active == 1)
+	//{
+	//	return;
+	//}
 
-	// Initialize variables
-	int			inidx = 0;
-	HDC RealhDC = GetDC(hwnd);
-	MemoryhDC = CreateCompatibleDC(RealhDC);
+	//// Initialize variables
+	//int			inidx = 0;
+	//HDC RealhDC = GetDC(hwnd);
+	//MemoryhDC = CreateCompatibleDC(RealhDC);
 
-	RECT		Rect;
-	BrushDrawData	brushDrawData;
+	//RECT		Rect;
+	//BrushDrawData	brushDrawData;
 
-	// Get client rectangle and set current view dimensions
-	GetClientRect(hwnd, &Rect);
-	Rect.left--;
-	Rect.bottom--;
-	Current_View->Width = Rect.left;
-	Current_View->Height = Rect.bottom;
-	Current_View->XScreenScale = Rect.left;
-	Current_View->YScreenScale = Rect.bottom;
+	//// Get client rectangle and set current view dimensions
+	//GetClientRect(hwnd, &Rect);
+	//Rect.left--;
+	//Rect.bottom--;
+	//Current_View->Width = Rect.left;
+	//Current_View->Height = Rect.bottom;
+	//Current_View->XScreenScale = Rect.left;
+	//Current_View->YScreenScale = Rect.bottom;
 
-	// Set up view box
-	T_Vec3 XTemp;
-	Box3d ViewBox;
-	inidx = App->CL_Render->Render_GetInidx(Current_View);
-	App->CL_X_Box->Box3d_SetBogusBounds(&ViewBox);
-	App->CL_Render->Render_ViewToWorld(Current_View, 0, 0, &XTemp);
-	App->CL_X_Box->Box3d_AddPoint(&ViewBox, XTemp.x, XTemp.y, XTemp.z);
-	App->CL_Render->Render_ViewToWorld(Current_View, App->CL_Render->Render_GetWidth(Current_View), App->CL_Render->Render_GetHeight(Current_View), &XTemp);
-	App->CL_X_Box->Box3d_AddPoint(&ViewBox, XTemp.x, XTemp.y, XTemp.z);
-	VectorToSUB(ViewBox.Min, inidx) = -FLT_MAX;
-	VectorToSUB(ViewBox.Max, inidx) = FLT_MAX;
+	//// Set up view box
+	//T_Vec3 XTemp;
+	//Box3d ViewBox;
+	//inidx = App->CL_Render->Render_GetInidx(Current_View);
+	//App->CL_X_Box->Box3d_SetBogusBounds(&ViewBox);
+	//App->CL_Render->Render_ViewToWorld(Current_View, 0, 0, &XTemp);
+	//App->CL_X_Box->Box3d_AddPoint(&ViewBox, XTemp.x, XTemp.y, XTemp.z);
+	//App->CL_Render->Render_ViewToWorld(Current_View, App->CL_Render->Render_GetWidth(Current_View), App->CL_Render->Render_GetHeight(Current_View), &XTemp);
+	//App->CL_X_Box->Box3d_AddPoint(&ViewBox, XTemp.x, XTemp.y, XTemp.z);
+	//VectorToSUB(ViewBox.Min, inidx) = -FLT_MAX;
+	//VectorToSUB(ViewBox.Max, inidx) = FLT_MAX;
 
-	// Prepare brush draw data
-	brushDrawData.pViewBox = &ViewBox;
-	brushDrawData.pDC = MemoryhDC;
-	brushDrawData.v = Current_View;
-	brushDrawData.pDoc = App->CL_Doc;
-	brushDrawData.GroupId = 0;
-	brushDrawData.FlagTest = NULL;
+	//// Prepare brush draw data
+	//brushDrawData.pViewBox = &ViewBox;
+	//brushDrawData.pDC = MemoryhDC;
+	//brushDrawData.v = Current_View;
+	//brushDrawData.pDoc = App->CL_Doc;
+	//brushDrawData.GroupId = 0;
+	//brushDrawData.FlagTest = NULL;
 
-	GetClipBox(RealhDC, &Rect);
+	//GetClipBox(RealhDC, &Rect);
 
-	// Create off-screen bitmap
-	HBITMAP OffScreenBitmap = CreateCompatibleBitmap(RealhDC, Rect.right - Rect.left, Rect.bottom - Rect.top);
-	SelectObject(MemoryhDC, OffScreenBitmap);
-	FillRect(MemoryhDC, &Rect, (HBRUSH)BackGround_Brush); // BackGround
+	//// Create off-screen bitmap
+	//HBITMAP OffScreenBitmap = CreateCompatibleBitmap(RealhDC, Rect.right - Rect.left, Rect.bottom - Rect.top);
+	//SelectObject(MemoryhDC, OffScreenBitmap);
+	//FillRect(MemoryhDC, &Rect, (HBRUSH)BackGround_Brush); // BackGround
 
-	// ---------------------- Draw Grid Fine
-	if (Current_View->ZoomFactor > 0.1)
-	{
-		SelectObject(MemoryhDC, Pen_Fine_Grid);
-		App->CL_Render->Render_RenderOrthoGridFromSize(Current_View, int(GridSnapSize), MemoryhDC, Rect);
-	}
+	//// ---------------------- Draw Grid Fine
+	//if (Current_View->ZoomFactor > 0.1)
+	//{
+	//	SelectObject(MemoryhDC, Pen_Fine_Grid);
+	//	App->CL_Render->Render_RenderOrthoGridFromSize(Current_View, int(GridSnapSize), MemoryhDC, Rect);
+	//}
 
-	// ---------------------- Draw Grid
-	if (Current_View->ZoomFactor < 0.1)
-	{
-		Current_View->ZoomFactor = 0.1;
-	}
+	//// ---------------------- Draw Grid
+	//if (Current_View->ZoomFactor < 0.1)
+	//{
+	//	Current_View->ZoomFactor = 0.1;
+	//}
 
-	SelectObject(MemoryhDC, Pen_Grid);
-	App->CL_Render->Render_RenderOrthoGridFromSize(Current_View, int(GridSize), MemoryhDC, Rect);
-	
-	bool test = 0;
-	if (test == 0)
-	{
-		// ------------------------------------------ Draw Brushes
-		SelectObject(MemoryhDC, PenBrushes);
+	//SelectObject(MemoryhDC, Pen_Grid);
+	//App->CL_Render->Render_RenderOrthoGridFromSize(Current_View, int(GridSize), MemoryhDC, Rect);
+	//
+	//bool test = 0;
+	//if (test == 0)
+	//{
+	//	// ------------------------------------------ Draw Brushes
+	//	SelectObject(MemoryhDC, PenBrushes);
 
-		// Draw Template Brush
-		if (App->CL_Doc->mModeTool == ID_TOOLS_TEMPLATE)
-		{
-			SelectObject(MemoryhDC, PenTemplate);
+	//	// Draw Template Brush
+	//	if (App->CL_Doc->mModeTool == ID_TOOLS_TEMPLATE)
+	//	{
+	//		SelectObject(MemoryhDC, PenTemplate);
 
-			if (App->CL_X_Brush->Brush_IsMulti(App->CL_Doc->CurBrush))
-			{
+	//		if (App->CL_X_Brush->Brush_IsMulti(App->CL_Doc->CurBrush))
+	//		{
 
-				App->CL_X_Brush->BrushList_EnumLeafBrushes(App->CL_X_Brush->Brush_GetBrushList(App->CL_Doc->CurBrush), &brushDrawData, BrushDraw);
-			}
-			else
-			{
-				Render_RenderBrushFacesOrtho(Current_View, App->CL_Doc->CurBrush, MemoryhDC);
+	//			//App->CL_X_Brush->BrushList_EnumLeafBrushes(App->CL_X_Brush->Brush_GetBrushList(App->CL_Doc->CurBrush), &brushDrawData, BrushDraw);
+	//		}
+	//		else
+	//		{
+	//			Render_RenderBrushFacesOrtho(Current_View, App->CL_Doc->CurBrush, MemoryhDC);
 
-			}
-		}
+	//		}
+	//	}
 
-		// Iterate through all brushes
-		int BrushCount = App->CL_X_Brush->Get_Brush_Count();
-		int Count = 0;
-		Brush* SB = nullptr;
+	//	// Iterate through all brushes
+	//	int BrushCount = App->CL_X_Brush->Get_Brush_Count();
+	//	int Count = 0;
+	//	Brush* SB = nullptr;
 
-		while (Count < BrushCount)
-		{
-			SB = App->CL_X_Brush->Get_By_Index(Count);
+	//	while (Count < BrushCount)
+	//	{
+	//		SB = App->CL_X_Brush->Get_By_Index(Count);
 
-			switch (SB->GroupId) 
-			{
-			case Enums::Brushs_ID_Area:
-				SelectObject(MemoryhDC, PenBrushes);
-				break;
+	//		switch (SB->GroupId) 
+	//		{
+	//		case Enums::Brushs_ID_Area:
+	//			SelectObject(MemoryhDC, PenBrushes);
+	//			break;
 
-				case Enums::Brushs_ID_Evirons:
-				SelectObject(MemoryhDC, PenEntity);
-				break;
+	//			case Enums::Brushs_ID_Evirons:
+	//			SelectObject(MemoryhDC, PenEntity);
+	//			break;
 
-			default:
-				break;
-			}
+	//		default:
+	//			break;
+	//		}
 
-			if (App->CL_X_Brush->Brush_IsSubtract(SB))
-			{
-				SelectObject(MemoryhDC, PenCutBrush);
-			}
-
-
-			if (App->CL_X_Brush->Brush_IsMulti(SB))
-			{
-				App->CL_X_Brush->BrushList_EnumLeafBrushes(App->CL_X_Brush->Brush_GetBrushList(SB), &brushDrawData, BrushDraw);
-			}
-			else
-			{
-				Render_RenderBrushFacesOrtho(Current_View, SB, MemoryhDC);
-			}
-
-			Count++;
-		}
-
-		bool Draw_Sel = 0;
-		if (Draw_Sel == 0)
-		{
-			// Draw selected brushes
-			SelectObject(MemoryhDC, PenSelected);
-			int NumSelBrushes = App->CL_X_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes);
-
-			int i = 0;
-			for (i = 0; i < NumSelBrushes; i++)
-			{
-				Brush* pBrush;
-
-				pBrush = App->CL_X_SelBrushList->SelBrushList_GetBrush(App->CL_Doc->pSelBrushes, i);
-				{
-					if (App->CL_X_Brush->Brush_IsMulti(pBrush))
-					{
-						App->CL_X_Brush->BrushList_EnumLeafBrushes(App->CL_X_Brush->Brush_GetBrushList(pBrush), &brushDrawData, BrushDraw);
-					}
-					else
-					{
-						Render_RenderBrushFacesOrtho(Current_View, App->CL_Doc->CurBrush, MemoryhDC);
-					}
-				}
-			}
-		}
-
-		// Draw selected faces
-		BrushList* BList = App->CL_Level->Level_Get_Main_Brushes();
-		SelectObject(MemoryhDC, PenSelectedFaces);
-		App->CL_X_Brush->BrushList_EnumLeafBrushes(BList, &brushDrawData, BrushDrawSelFacesOrtho);
+	//		if (App->CL_X_Brush->Brush_IsSubtract(SB))
+	//		{
+	//			SelectObject(MemoryhDC, PenCutBrush);
+	//		}
 
 
-		// Draw camera if tracking
-		if (App->CL_Doc->flag_Track_Camera == true)
-		{
-			SelectObject(MemoryhDC, Pen_Camera);
-			Draw_Camera(MemoryhDC);
-		}
+	//		if (App->CL_X_Brush->Brush_IsMulti(SB))
+	//		{
+	//			//App->CL_X_Brush->BrushList_EnumLeafBrushes(App->CL_X_Brush->Brush_GetBrushList(SB), &brushDrawData, BrushDraw);
+	//		}
+	//		else
+	//		{
+	//			Render_RenderBrushFacesOrtho(Current_View, SB, MemoryhDC);
+	//		}
 
-	}
+	//		Count++;
+	//	}
 
-	// BitBlt to the real device context
-	BitBlt(RealhDC, Rect.left, Rect.top+17, Rect.right - Rect.left, Rect.bottom - Rect.top, MemoryhDC, 0, 0, SRCCOPY);
+	//	bool Draw_Sel = 0;
+	//	if (Draw_Sel == 0)
+	//	{
+	//		// Draw selected brushes
+	//		SelectObject(MemoryhDC, PenSelected);
+	//		int NumSelBrushes = App->CL_X_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes);
 
-	// Clean up
-	DeleteObject(OffScreenBitmap);
-	DeleteDC(MemoryhDC);
-	ReleaseDC(hwnd, RealhDC);
+	//		int i = 0;
+	//		for (i = 0; i < NumSelBrushes; i++)
+	//		{
+	//			Brush* pBrush;
+
+	//			pBrush = App->CL_X_SelBrushList->SelBrushList_GetBrush(App->CL_Doc->pSelBrushes, i);
+	//			{
+	//				if (App->CL_X_Brush->Brush_IsMulti(pBrush))
+	//				{
+	//					//App->CL_X_Brush->BrushList_EnumLeafBrushes(App->CL_X_Brush->Brush_GetBrushList(pBrush), &brushDrawData, BrushDraw);
+	//				}
+	//				else
+	//				{
+	//					Render_RenderBrushFacesOrtho(Current_View, App->CL_Doc->CurBrush, MemoryhDC);
+	//				}
+	//			}
+	//		}
+	//	}
+
+	//	// Draw selected faces
+	//	BrushList* BList = App->CL_Level->Level_Get_Main_Brushes();
+	//	SelectObject(MemoryhDC, PenSelectedFaces);
+	//	App->CL_X_Brush->BrushList_EnumLeafBrushes(BList, &brushDrawData, BrushDrawSelFacesOrtho);
+
+
+	//	// Draw camera if tracking
+	//	if (App->CL_Doc->flag_Track_Camera == true)
+	//	{
+	//		SelectObject(MemoryhDC, Pen_Camera);
+	//		Draw_Camera(MemoryhDC);
+	//	}
+
+	//}
+
+	//// BitBlt to the real device context
+	//BitBlt(RealhDC, Rect.left, Rect.top+17, Rect.right - Rect.left, Rect.bottom - Rect.top, MemoryhDC, 0, 0, SRCCOPY);
+
+	//// Clean up
+	//DeleteObject(OffScreenBitmap);
+	//DeleteDC(MemoryhDC);
+	//ReleaseDC(hwnd, RealhDC);
 }
 
 // *************************************************************************
