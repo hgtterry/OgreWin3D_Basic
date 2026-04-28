@@ -122,6 +122,7 @@ THE SOFTWARE.
 #include "CL64_View_Top_Left.h"
 #include "CL64_View_Top_Right.h"
 #include "CL64_View_Bottom_Left.h"
+#include "CL64_View_3D.h"
 
 class CL64_App
 {
@@ -222,6 +223,7 @@ public:
 	CL64_View_Top_Left*			CL_View_Top_Left;
 	CL64_View_Top_Right*		CL_View_Top_Right;
 	CL64_View_Bottom_Left*		CL_View_Bottom_Left;
+	CL64_View_3D*				CL_View_3D;
 
 	void InitApp(void);
 	void Init_Dialogs(void);

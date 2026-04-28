@@ -141,9 +141,6 @@
     <ClInclude Include="CL64_Editor_Scene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CL64_Editor_Map.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="CL64_FileView.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -217,6 +214,21 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CL64_Teleporters.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CL64_Views_Com.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CL64_View_Bottom_Left.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CL64_View_Top_Left.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CL64_View_Top_Right.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CL64_View_3D.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -341,9 +353,6 @@
     <ClCompile Include="CL64_Editor_Scene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CL64_Editor_Map.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="CL64_FileView.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -417,6 +426,21 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CL64_Teleporters.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CL64_Views_Com.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CL64_View_Bottom_Left.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CL64_View_Top_Left.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CL64_View_Top_Right.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CL64_View_3D.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -29,5 +29,5 @@ echo f |xcopy X_Lib_Zip\unzip.h ..\Common_64\OW3D\include\unzip.h /y
 echo f |xcopy X_Lib_Face_Editor\Face_Editor.h ..\Common_64\OW3D\include\Face_Editor.h /y
 echo f |xcopy X_Libs\Init_Libs.h ..\Common_64\OW3D\include\Init_Libs.h /y
 
-echo "Cheryl Scene Builder 04-01-26"
+echo "Cheryl Scene Builder 28-04-26"
 pause
