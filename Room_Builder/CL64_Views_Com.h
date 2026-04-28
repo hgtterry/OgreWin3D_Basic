@@ -48,13 +48,11 @@ public:
 	void Init_Map_Views();
 	void Init_Views(int View);
 	void ResizeOgreWindow(void);
-
+	void Show_Grids(bool Show);
 
 	void Render_RenderBrushFacesOrtho(const ViewVars* Cam, Brush* b, HDC ViewDC);
 	void Render_RenderBrushSelFacesOrtho(ViewVars* Cam, Brush* b, HDC ViewDC);
 	
-	void Draw_Screen(HWND hwnd);
-
 	bool Context_Command(WPARAM wParam);
 	bool Context_Command_Ogre(WPARAM wParam);
 
@@ -102,6 +100,7 @@ public:
 	bool flag_Context_Menu_Active;
 	bool flag_Wheel_Active;
 	bool flag_Environment_On;
+	bool flag_Grids_Are_Visible;
 
 	HBRUSH BackGround_Brush;
 

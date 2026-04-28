@@ -79,6 +79,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     ShowWindow(App->MainHwnd, SW_SHOWMAXIMIZED);
     UpdateWindow(App->MainHwnd);
 
+    App->CL_Dialogs->PleaseWait();
+
     // Reset views and initialize components
     App->CL_Views_Com->Reset_Views_All();
     App->CL_Physics->Init_Bullet();
@@ -970,8 +972,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         {
             if (App->flag_3D_Started == 0)
             {
-                App->CL_Dialogs->PleaseWait();
-
                 if (Block_Call == 0)
                 {
                     Block_Call = 1;
@@ -1020,22 +1020,20 @@ LRESULT CALLBACK ViewerMain_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM 
 }
 
 // *************************************************************************
-// *				StartOgre:- Terry and Hazel Flanigan 2025		 	   *
+// *				StartOgre:- Terry and Hazel Flanigan 2026		 	   *
 // *************************************************************************
 void StartOgre()
 {
     KillTimer(App->MainHwnd, 1);
 
-   // App->CL_Ogre->Init_Ogre();
-
     Sleep(500);
-
-    EndDialog(App->ViewPLeaseWait, LOWORD(0));
 
     App->flag_3D_Started = true;
 
     App->CL_Ogre->RenderFrame(5);
    
+    EndDialog(App->ViewPLeaseWait, LOWORD(0));
+
     if (App->CL_X_Preference->flag_OpenLastFile)
     {
         // Compare the last opened file with "New_Room.mtf"
@@ -1056,6 +1054,8 @@ void StartOgre()
 	}
 
 	App->CL_Editor_Control->Set_Map_Editor_Startup();
+
+    App->CL_Views_Com->Show_Grids(true);
 
 	App->CL_Ogre->Ogre_Render_Loop();
 

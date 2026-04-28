@@ -82,7 +82,6 @@ void CL64_View_Bottom_Left::Set_VCam_BL_Defaults()
 // *************************************************************************
 void CL64_View_Bottom_Left::Create_Bottom_Left_Window()
 {
-
 	VCam_BL = new ViewVars;
 
 	Set_VCam_BL_Defaults();
@@ -354,7 +353,7 @@ signed int CL64_View_Bottom_Left::fdocShowBrush(Brush const* b, Box3d const* Vie
 // *************************************************************************
 signed int CL64_View_Bottom_Left::Draw_Brush(Brush* pBrush, void* lParam)
 {
-	BrushDrawData_TL* pData = (BrushDrawData_TL*)lParam;
+	BrushDrawData_BL* pData = (BrushDrawData_BL*)lParam;
 
 
 	//if (App->CL_Brush->Brush_GetGroupId(pBrush) == pData->GroupId))

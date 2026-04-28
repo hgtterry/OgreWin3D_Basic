@@ -113,6 +113,7 @@ CL64_Views_Com::CL64_Views_Com()
 	flag_Context_Menu_Active = 0;
 	flag_Environment_On = true;
 	flag_Wheel_Active = false;
+	flag_Grids_Are_Visible = false;
 
 	BackGround_Brush = CreateSolidBrush(RGB(60, 60, 60));
 
@@ -374,13 +375,14 @@ void CL64_Views_Com::ResizeOgreWindow()
 }
 
 // *************************************************************************
-// *			Init_Map_Views:- Terry and Hazel Flanigan 2024			   *
+// *			Init_Map_Views:- Terry and Hazel Flanigan 2026			   *
 // *************************************************************************
 void CL64_Views_Com::Init_Map_Views()
 {
 	Main_View_Dlg_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MAPEDITOR, App->MainHwnd, (DLGPROC)Proc_Main_Dlg);
 
 	Create_Views();
+	Show_Grids(false);
 
 	RECT rcl;
 	GetClientRect(App->MainHwnd, &rcl);
@@ -1324,191 +1326,191 @@ void CL64_Views_Com::Render_RenderBrushSelFacesOrtho(ViewVars* Cam, Brush* b, HD
 	}
 }
 
-// *************************************************************************
-// *						Draw_Screen Terry Flanigan		  			   *
-// *************************************************************************
-void CL64_Views_Com::Draw_Screen(HWND hwnd)
-{
-	return;
-	//// Exit if preview mode is active
-	//if (App->CL_Editor_Control->flag_PreviewMode_Active == 1)
-	//{
-	//	return;
-	//}
-
-	//// Initialize variables
-	//int			inidx = 0;
-	//HDC RealhDC = GetDC(hwnd);
-	//MemoryhDC = CreateCompatibleDC(RealhDC);
-
-	//RECT		Rect;
-	//BrushDrawData	brushDrawData;
-
-	//// Get client rectangle and set current view dimensions
-	//GetClientRect(hwnd, &Rect);
-	//Rect.left--;
-	//Rect.bottom--;
-	//Current_View->Width = Rect.left;
-	//Current_View->Height = Rect.bottom;
-	//Current_View->XScreenScale = Rect.left;
-	//Current_View->YScreenScale = Rect.bottom;
-
-	//// Set up view box
-	//T_Vec3 XTemp;
-	//Box3d ViewBox;
-	//inidx = App->CL_Render->Render_GetInidx(Current_View);
-	//App->CL_X_Box->Box3d_SetBogusBounds(&ViewBox);
-	//App->CL_Render->Render_ViewToWorld(Current_View, 0, 0, &XTemp);
-	//App->CL_X_Box->Box3d_AddPoint(&ViewBox, XTemp.x, XTemp.y, XTemp.z);
-	//App->CL_Render->Render_ViewToWorld(Current_View, App->CL_Render->Render_GetWidth(Current_View), App->CL_Render->Render_GetHeight(Current_View), &XTemp);
-	//App->CL_X_Box->Box3d_AddPoint(&ViewBox, XTemp.x, XTemp.y, XTemp.z);
-	//VectorToSUB(ViewBox.Min, inidx) = -FLT_MAX;
-	//VectorToSUB(ViewBox.Max, inidx) = FLT_MAX;
-
-	//// Prepare brush draw data
-	//brushDrawData.pViewBox = &ViewBox;
-	//brushDrawData.pDC = MemoryhDC;
-	//brushDrawData.v = Current_View;
-	//brushDrawData.pDoc = App->CL_Doc;
-	//brushDrawData.GroupId = 0;
-	//brushDrawData.FlagTest = NULL;
-
-	//GetClipBox(RealhDC, &Rect);
-
-	//// Create off-screen bitmap
-	//HBITMAP OffScreenBitmap = CreateCompatibleBitmap(RealhDC, Rect.right - Rect.left, Rect.bottom - Rect.top);
-	//SelectObject(MemoryhDC, OffScreenBitmap);
-	//FillRect(MemoryhDC, &Rect, (HBRUSH)BackGround_Brush); // BackGround
-
-	//// ---------------------- Draw Grid Fine
-	//if (Current_View->ZoomFactor > 0.1)
-	//{
-	//	SelectObject(MemoryhDC, Pen_Fine_Grid);
-	//	App->CL_Render->Render_RenderOrthoGridFromSize(Current_View, int(GridSnapSize), MemoryhDC, Rect);
-	//}
-
-	//// ---------------------- Draw Grid
-	//if (Current_View->ZoomFactor < 0.1)
-	//{
-	//	Current_View->ZoomFactor = 0.1;
-	//}
-
-	//SelectObject(MemoryhDC, Pen_Grid);
-	//App->CL_Render->Render_RenderOrthoGridFromSize(Current_View, int(GridSize), MemoryhDC, Rect);
-	//
-	//bool test = 0;
-	//if (test == 0)
-	//{
-	//	// ------------------------------------------ Draw Brushes
-	//	SelectObject(MemoryhDC, PenBrushes);
-
-	//	// Draw Template Brush
-	//	if (App->CL_Doc->mModeTool == ID_TOOLS_TEMPLATE)
-	//	{
-	//		SelectObject(MemoryhDC, PenTemplate);
-
-	//		if (App->CL_X_Brush->Brush_IsMulti(App->CL_Doc->CurBrush))
-	//		{
-
-	//			//App->CL_X_Brush->BrushList_EnumLeafBrushes(App->CL_X_Brush->Brush_GetBrushList(App->CL_Doc->CurBrush), &brushDrawData, BrushDraw);
-	//		}
-	//		else
-	//		{
-	//			Render_RenderBrushFacesOrtho(Current_View, App->CL_Doc->CurBrush, MemoryhDC);
-
-	//		}
-	//	}
-
-	//	// Iterate through all brushes
-	//	int BrushCount = App->CL_X_Brush->Get_Brush_Count();
-	//	int Count = 0;
-	//	Brush* SB = nullptr;
-
-	//	while (Count < BrushCount)
-	//	{
-	//		SB = App->CL_X_Brush->Get_By_Index(Count);
-
-	//		switch (SB->GroupId) 
-	//		{
-	//		case Enums::Brushs_ID_Area:
-	//			SelectObject(MemoryhDC, PenBrushes);
-	//			break;
-
-	//			case Enums::Brushs_ID_Evirons:
-	//			SelectObject(MemoryhDC, PenEntity);
-	//			break;
-
-	//		default:
-	//			break;
-	//		}
-
-	//		if (App->CL_X_Brush->Brush_IsSubtract(SB))
-	//		{
-	//			SelectObject(MemoryhDC, PenCutBrush);
-	//		}
-
-
-	//		if (App->CL_X_Brush->Brush_IsMulti(SB))
-	//		{
-	//			//App->CL_X_Brush->BrushList_EnumLeafBrushes(App->CL_X_Brush->Brush_GetBrushList(SB), &brushDrawData, BrushDraw);
-	//		}
-	//		else
-	//		{
-	//			Render_RenderBrushFacesOrtho(Current_View, SB, MemoryhDC);
-	//		}
-
-	//		Count++;
-	//	}
-
-	//	bool Draw_Sel = 0;
-	//	if (Draw_Sel == 0)
-	//	{
-	//		// Draw selected brushes
-	//		SelectObject(MemoryhDC, PenSelected);
-	//		int NumSelBrushes = App->CL_X_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes);
-
-	//		int i = 0;
-	//		for (i = 0; i < NumSelBrushes; i++)
-	//		{
-	//			Brush* pBrush;
-
-	//			pBrush = App->CL_X_SelBrushList->SelBrushList_GetBrush(App->CL_Doc->pSelBrushes, i);
-	//			{
-	//				if (App->CL_X_Brush->Brush_IsMulti(pBrush))
-	//				{
-	//					//App->CL_X_Brush->BrushList_EnumLeafBrushes(App->CL_X_Brush->Brush_GetBrushList(pBrush), &brushDrawData, BrushDraw);
-	//				}
-	//				else
-	//				{
-	//					Render_RenderBrushFacesOrtho(Current_View, App->CL_Doc->CurBrush, MemoryhDC);
-	//				}
-	//			}
-	//		}
-	//	}
-
-	//	// Draw selected faces
-	//	BrushList* BList = App->CL_Level->Level_Get_Main_Brushes();
-	//	SelectObject(MemoryhDC, PenSelectedFaces);
-	//	App->CL_X_Brush->BrushList_EnumLeafBrushes(BList, &brushDrawData, BrushDrawSelFacesOrtho);
-
-
-	//	// Draw camera if tracking
-	//	if (App->CL_Doc->flag_Track_Camera == true)
-	//	{
-	//		SelectObject(MemoryhDC, Pen_Camera);
-	//		Draw_Camera(MemoryhDC);
-	//	}
-
-	//}
-
-	//// BitBlt to the real device context
-	//BitBlt(RealhDC, Rect.left, Rect.top+17, Rect.right - Rect.left, Rect.bottom - Rect.top, MemoryhDC, 0, 0, SRCCOPY);
-
-	//// Clean up
-	//DeleteObject(OffScreenBitmap);
-	//DeleteDC(MemoryhDC);
-	//ReleaseDC(hwnd, RealhDC);
-}
+//// *************************************************************************
+//// *						Draw_Screen Terry Flanigan		  			   *
+//// *************************************************************************
+//void CL64_Views_Com::Draw_Screen(HWND hwnd)
+//{
+//	return;
+//	//// Exit if preview mode is active
+//	//if (App->CL_Editor_Control->flag_PreviewMode_Active == 1)
+//	//{
+//	//	return;
+//	//}
+//
+//	//// Initialize variables
+//	//int			inidx = 0;
+//	//HDC RealhDC = GetDC(hwnd);
+//	//MemoryhDC = CreateCompatibleDC(RealhDC);
+//
+//	//RECT		Rect;
+//	//BrushDrawData	brushDrawData;
+//
+//	//// Get client rectangle and set current view dimensions
+//	//GetClientRect(hwnd, &Rect);
+//	//Rect.left--;
+//	//Rect.bottom--;
+//	//Current_View->Width = Rect.left;
+//	//Current_View->Height = Rect.bottom;
+//	//Current_View->XScreenScale = Rect.left;
+//	//Current_View->YScreenScale = Rect.bottom;
+//
+//	//// Set up view box
+//	//T_Vec3 XTemp;
+//	//Box3d ViewBox;
+//	//inidx = App->CL_Render->Render_GetInidx(Current_View);
+//	//App->CL_X_Box->Box3d_SetBogusBounds(&ViewBox);
+//	//App->CL_Render->Render_ViewToWorld(Current_View, 0, 0, &XTemp);
+//	//App->CL_X_Box->Box3d_AddPoint(&ViewBox, XTemp.x, XTemp.y, XTemp.z);
+//	//App->CL_Render->Render_ViewToWorld(Current_View, App->CL_Render->Render_GetWidth(Current_View), App->CL_Render->Render_GetHeight(Current_View), &XTemp);
+//	//App->CL_X_Box->Box3d_AddPoint(&ViewBox, XTemp.x, XTemp.y, XTemp.z);
+//	//VectorToSUB(ViewBox.Min, inidx) = -FLT_MAX;
+//	//VectorToSUB(ViewBox.Max, inidx) = FLT_MAX;
+//
+//	//// Prepare brush draw data
+//	//brushDrawData.pViewBox = &ViewBox;
+//	//brushDrawData.pDC = MemoryhDC;
+//	//brushDrawData.v = Current_View;
+//	//brushDrawData.pDoc = App->CL_Doc;
+//	//brushDrawData.GroupId = 0;
+//	//brushDrawData.FlagTest = NULL;
+//
+//	//GetClipBox(RealhDC, &Rect);
+//
+//	//// Create off-screen bitmap
+//	//HBITMAP OffScreenBitmap = CreateCompatibleBitmap(RealhDC, Rect.right - Rect.left, Rect.bottom - Rect.top);
+//	//SelectObject(MemoryhDC, OffScreenBitmap);
+//	//FillRect(MemoryhDC, &Rect, (HBRUSH)BackGround_Brush); // BackGround
+//
+//	//// ---------------------- Draw Grid Fine
+//	//if (Current_View->ZoomFactor > 0.1)
+//	//{
+//	//	SelectObject(MemoryhDC, Pen_Fine_Grid);
+//	//	App->CL_Render->Render_RenderOrthoGridFromSize(Current_View, int(GridSnapSize), MemoryhDC, Rect);
+//	//}
+//
+//	//// ---------------------- Draw Grid
+//	//if (Current_View->ZoomFactor < 0.1)
+//	//{
+//	//	Current_View->ZoomFactor = 0.1;
+//	//}
+//
+//	//SelectObject(MemoryhDC, Pen_Grid);
+//	//App->CL_Render->Render_RenderOrthoGridFromSize(Current_View, int(GridSize), MemoryhDC, Rect);
+//	//
+//	//bool test = 0;
+//	//if (test == 0)
+//	//{
+//	//	// ------------------------------------------ Draw Brushes
+//	//	SelectObject(MemoryhDC, PenBrushes);
+//
+//	//	// Draw Template Brush
+//	//	if (App->CL_Doc->mModeTool == ID_TOOLS_TEMPLATE)
+//	//	{
+//	//		SelectObject(MemoryhDC, PenTemplate);
+//
+//	//		if (App->CL_X_Brush->Brush_IsMulti(App->CL_Doc->CurBrush))
+//	//		{
+//
+//	//			//App->CL_X_Brush->BrushList_EnumLeafBrushes(App->CL_X_Brush->Brush_GetBrushList(App->CL_Doc->CurBrush), &brushDrawData, BrushDraw);
+//	//		}
+//	//		else
+//	//		{
+//	//			Render_RenderBrushFacesOrtho(Current_View, App->CL_Doc->CurBrush, MemoryhDC);
+//
+//	//		}
+//	//	}
+//
+//	//	// Iterate through all brushes
+//	//	int BrushCount = App->CL_X_Brush->Get_Brush_Count();
+//	//	int Count = 0;
+//	//	Brush* SB = nullptr;
+//
+//	//	while (Count < BrushCount)
+//	//	{
+//	//		SB = App->CL_X_Brush->Get_By_Index(Count);
+//
+//	//		switch (SB->GroupId) 
+//	//		{
+//	//		case Enums::Brushs_ID_Area:
+//	//			SelectObject(MemoryhDC, PenBrushes);
+//	//			break;
+//
+//	//			case Enums::Brushs_ID_Evirons:
+//	//			SelectObject(MemoryhDC, PenEntity);
+//	//			break;
+//
+//	//		default:
+//	//			break;
+//	//		}
+//
+//	//		if (App->CL_X_Brush->Brush_IsSubtract(SB))
+//	//		{
+//	//			SelectObject(MemoryhDC, PenCutBrush);
+//	//		}
+//
+//
+//	//		if (App->CL_X_Brush->Brush_IsMulti(SB))
+//	//		{
+//	//			//App->CL_X_Brush->BrushList_EnumLeafBrushes(App->CL_X_Brush->Brush_GetBrushList(SB), &brushDrawData, BrushDraw);
+//	//		}
+//	//		else
+//	//		{
+//	//			Render_RenderBrushFacesOrtho(Current_View, SB, MemoryhDC);
+//	//		}
+//
+//	//		Count++;
+//	//	}
+//
+//	//	bool Draw_Sel = 0;
+//	//	if (Draw_Sel == 0)
+//	//	{
+//	//		// Draw selected brushes
+//	//		SelectObject(MemoryhDC, PenSelected);
+//	//		int NumSelBrushes = App->CL_X_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes);
+//
+//	//		int i = 0;
+//	//		for (i = 0; i < NumSelBrushes; i++)
+//	//		{
+//	//			Brush* pBrush;
+//
+//	//			pBrush = App->CL_X_SelBrushList->SelBrushList_GetBrush(App->CL_Doc->pSelBrushes, i);
+//	//			{
+//	//				if (App->CL_X_Brush->Brush_IsMulti(pBrush))
+//	//				{
+//	//					//App->CL_X_Brush->BrushList_EnumLeafBrushes(App->CL_X_Brush->Brush_GetBrushList(pBrush), &brushDrawData, BrushDraw);
+//	//				}
+//	//				else
+//	//				{
+//	//					Render_RenderBrushFacesOrtho(Current_View, App->CL_Doc->CurBrush, MemoryhDC);
+//	//				}
+//	//			}
+//	//		}
+//	//	}
+//
+//	//	// Draw selected faces
+//	//	BrushList* BList = App->CL_Level->Level_Get_Main_Brushes();
+//	//	SelectObject(MemoryhDC, PenSelectedFaces);
+//	//	App->CL_X_Brush->BrushList_EnumLeafBrushes(BList, &brushDrawData, BrushDrawSelFacesOrtho);
+//
+//
+//	//	// Draw camera if tracking
+//	//	if (App->CL_Doc->flag_Track_Camera == true)
+//	//	{
+//	//		SelectObject(MemoryhDC, Pen_Camera);
+//	//		Draw_Camera(MemoryhDC);
+//	//	}
+//
+//	//}
+//
+//	//// BitBlt to the real device context
+//	//BitBlt(RealhDC, Rect.left, Rect.top+17, Rect.right - Rect.left, Rect.bottom - Rect.top, MemoryhDC, 0, 0, SRCCOPY);
+//
+//	//// Clean up
+//	//DeleteObject(OffScreenBitmap);
+//	//DeleteDC(MemoryhDC);
+//	//ReleaseDC(hwnd, RealhDC);
+//}
 
 // *************************************************************************
 // *	  			Render_RenderBrushFacesOrtho		Genesis			   *
@@ -1783,6 +1785,31 @@ void CL64_Views_Com::Set_3D_FullView()
 	App->CL_Views_Com->Resize_Windows(App->CL_Views_Com->Main_View_Dlg_Hwnd, 
 		nleftWnd_width, 
 		nleftWnd_Depth);
+}
+
+// *************************************************************************
+// *				Show_Grids:- Terry and Hazel Flanigan 2026			   *
+// *************************************************************************
+void CL64_Views_Com::Show_Grids(bool Show)
+{
+	if (Show == true)
+	{
+		ShowWindow(App->CL_View_Top_Left->Top_Left_Window_Hwnd, true);
+		ShowWindow(App->CL_View_Top_Right->Top_Right_Window_Hwnd, true);
+		ShowWindow(App->CL_View_Bottom_Left->Bottom_Left_Window_Hwnd, true);
+		ShowWindow(App->CL_View_3D->Bottom_Right_Window_Hwnd, true);
+
+		flag_Grids_Are_Visible = true;
+	}
+	else
+	{
+		ShowWindow(App->CL_View_Top_Left->Top_Left_Window_Hwnd, false);
+		ShowWindow(App->CL_View_Top_Right->Top_Right_Window_Hwnd, false);
+		ShowWindow(App->CL_View_Bottom_Left->Bottom_Left_Window_Hwnd, false);
+		ShowWindow(App->CL_View_3D->Bottom_Right_Window_Hwnd, false);
+
+		flag_Grids_Are_Visible = false;
+	}
 }
 
 

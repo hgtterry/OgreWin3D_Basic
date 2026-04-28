@@ -87,11 +87,10 @@ public:
 	int Copy_Spliter_Width;
 
 	int Selected_Window;
+	ViewVars* Current_View;
 
 	Colour_Int Background_Colour;
 	
-	ViewVars* Current_View;
-
 	POINT mStartPoint;
 
 	bool flag_Left_Button_Down;
