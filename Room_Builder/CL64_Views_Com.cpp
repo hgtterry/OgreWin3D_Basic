@@ -88,9 +88,6 @@ CL64_Views_Com::CL64_Views_Com()
 	GridSize = 128, 
 	GridSnapSize = 8;
 
-	Bottom_Ogre_Right_Hwnd =	nullptr;
-	Bottom_Ogre_Banner =		nullptr;
-
 	LEFT_WINDOW_WIDTH = 500;
 	nleftWnd_width = 500;
 	
@@ -339,13 +336,13 @@ void CL64_Views_Com::Resize_Windows(HWND hDlg, int newWidth, int newDepth)
 	MoveWindow(App->CL_View_Bottom_Left->Bottom_Left_Banner_Hwnd, 0, 0, newWidth - WIDTH_ADJUST, bannerHeight, FALSE);
 
 	// Resize Ogre Window
-	MoveWindow(Bottom_Ogre_Right_Hwnd,
+	MoveWindow(App->CL_View_3D->Bottom_Right_Window_Hwnd,
 		newWidth + WIDTH_ADJUST,
 		newDepth,
 		clientRect.right - (newWidth + WIDTH_ADJUST),
 		clientRect.bottom - (newDepth + BOTTOM_POS_BOTLEFT),
 		FALSE);
-	MoveWindow(Bottom_Ogre_Banner, 0, 0, clientRect.right - newWidth - WIDTH_ADJUST, bannerHeight, FALSE);
+	MoveWindow(App->CL_View_3D->Bottom_3D_Banner, 0, 0, clientRect.right - newWidth - WIDTH_ADJUST, bannerHeight, FALSE);
 
 
 	RedrawWindow(Main_View_Dlg_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
@@ -359,7 +356,7 @@ void CL64_Views_Com::Resize_Windows(HWND hDlg, int newWidth, int newDepth)
 void CL64_Views_Com::ResizeOgreWindow()
 {
 	RECT clientRect;
-	GetClientRect(Bottom_Ogre_Right_Hwnd, &clientRect);
+	GetClientRect(App->CL_View_3D->Bottom_Right_Window_Hwnd, &clientRect);
 
 	// Set the position and size of the window
 	SetWindowPos(App->ViewGLhWnd, NULL, 0, 17, clientRect.right, clientRect.bottom - 17, SWP_NOZORDER);
@@ -369,7 +366,7 @@ void CL64_Views_Com::ResizeOgreWindow()
 	{
 		// Get the updated client rectangle
 		RECT updatedRect;
-		GetClientRect(Bottom_Ogre_Right_Hwnd, &updatedRect);
+		GetClientRect(App->CL_View_3D->Bottom_Right_Window_Hwnd, &updatedRect);
 
 		// Ensure the height is valid and the camera is initialized
 		if ((updatedRect.bottom - updatedRect.top) != 0 && App->CL_Ogre->mCamera != nullptr)
@@ -391,8 +388,6 @@ void CL64_Views_Com::Init_Map_Views()
 	Main_View_Dlg_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MAPEDITOR, App->MainHwnd, (DLGPROC)Proc_Main_Dlg);
 
 	Create_Views();
-
-	Create_Ogre_Bottom_Right();
 
 	RECT rcl;
 	GetClientRect(App->MainHwnd, &rcl);
@@ -439,14 +434,17 @@ LRESULT CALLBACK CL64_Views_Com::Proc_Main_Dlg(HWND hDlg, UINT message, WPARAM w
 		PAINTSTRUCT ps;
 		HDC hdc = BeginPaint(hDlg, &ps);
 
-		FillRect(hdc, &ps.rcPaint, (HBRUSH)App->AppBackground);
+		if (App->flag_3D_Started == true)
+		{
+			FillRect(hdc, &ps.rcPaint, (HBRUSH)App->AppBackground);
+		}
+		else
+		{
+			FillRect(hdc, &ps.rcPaint, (HBRUSH)App->BlackBrush);
+		}
+
 		EndPaint(hDlg, &ps);
 		return 0;
-	}
-
-	case WM_CTLCOLORDLG:
-	{
-		return (LONG)App->AppBackground;
 	}
 
 	case WM_SIZE:
@@ -746,22 +744,7 @@ void CL64_Views_Com::Create_Views()
 	App->CL_View_Top_Left->Create_Top_Left_Window();
 	App->CL_View_Top_Right->Create_Top_Right_Window();
 	App->CL_View_Bottom_Left->Create_Bottom_Left_Window();
-	//App->CL_View_3D->Create_Ogre_Bottom_Right();
-}
-
-// *************************************************************************
-// *		 Create_Ogre_Bottom_Right:- Terry and Hazel Flanigan 2024	   *
-// *************************************************************************
-void CL64_Views_Com::Create_Ogre_Bottom_Right()
-{
-	VCam[V_Ogre] = new ViewVars;
-	Set_Views_Defaults(V_Ogre, VIEWOGRE, "Ogre_Window");
-
-	Bottom_Ogre_Right_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MAP_BOTTOM_RIGHT, Main_View_Dlg_Hwnd, (DLGPROC)ViewerMain_Proc);
-	
-	VCam[V_Ogre]->hDlg = Bottom_Ogre_Right_Hwnd;
-
-	App->CL_Ogre->RenderHwnd = App->ViewGLhWnd;
+	App->CL_View_3D->Create_Ogre_Bottom_Right();
 }
 
 // *************************************************************************
@@ -775,7 +758,7 @@ LRESULT CALLBACK CL64_Views_Com::ViewerMain_Proc(HWND hDlg, UINT message, WPARAM
 	case WM_INITDIALOG:
 	{
 		SendDlgItemMessage(hDlg, IDC_ST_3D_TITLE, WM_SETFONT, (WPARAM)App->Font_CB10, MAKELPARAM(TRUE, 0));
-		App->CL_Views_Com->Bottom_Ogre_Banner = GetDlgItem(hDlg, IDC_ST_3D_TITLE);
+		//App->CL_Views_Com->Bottom_Ogre_Banner = GetDlgItem(hDlg, IDC_ST_3D_TITLE);
 
 		App->ViewGLhWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MAP_RENDER_WINDOW, hDlg, (DLGPROC)Proc_Ogre_BR);
 		return TRUE;
@@ -1109,7 +1092,7 @@ void CL64_Views_Com::Set_Selected_View(int Selected_View)
 	RedrawWindow(App->CL_View_Top_Left->Top_Left_Banner_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 	RedrawWindow(App->CL_View_Top_Right->Top_Right_Banner_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 	RedrawWindow(App->CL_View_Bottom_Left->Bottom_Left_Banner_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-	RedrawWindow(Bottom_Ogre_Banner, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+	RedrawWindow(App->CL_View_3D->Bottom_3D_Banner, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 }
 
 // *************************************************************************

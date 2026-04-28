@@ -28,5 +28,18 @@ class CL64_View_3D
 public:
 	CL64_View_3D();
 	~CL64_View_3D();
+
+	void Create_Ogre_Bottom_Right();
+
+	HWND Bottom_Right_Window_Hwnd;
+	HWND RenderWin3D_hWnd;
+
+	HWND Bottom_3D_Banner;
+
+	static LRESULT CALLBACK Proc_ViewerMain(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+
+private:
+	//static LRESULT CALLBACK Proc_ViewerMain(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Proc_Ogre_BR(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 };
 

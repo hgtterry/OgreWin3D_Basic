@@ -902,7 +902,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         }
         else
         {
-            GetClientRect(App->CL_Views_Com->Bottom_Ogre_Right_Hwnd, &rcl);
+            GetClientRect(App->CL_View_3D->Bottom_Right_Window_Hwnd, &rcl);
 
             SetWindowPos(App->ViewGLhWnd, NULL, 0, 0, rcl.right, rcl.bottom, SWP_NOZORDER);
             App->CL_Ogre->mWindow->windowMovedOrResized();

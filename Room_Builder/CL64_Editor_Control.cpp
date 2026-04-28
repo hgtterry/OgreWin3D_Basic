@@ -77,7 +77,7 @@ void CL64_Editor_Control::Start_Preview_Mode(void)
 		flag_Map_Editor_Active = false;
 
         // Get the parent window handle
-        Parent_hWnd = GetParent(App->CL_Views_Com->Bottom_Ogre_Right_Hwnd);
+        Parent_hWnd = GetParent(App->CL_View_3D->Bottom_Right_Window_Hwnd);
 
         // Disable property tabs and hide visuals
         App->CL_Properties_Tabs->Enable_Tabs_Dlg(false);
@@ -92,8 +92,8 @@ void CL64_Editor_Control::Start_Preview_Mode(void)
         int cy = GetSystemMetrics(SM_CYSCREEN);
 
         // Set window positions and sizes
-        SetWindowPos(App->CL_Views_Com->Bottom_Ogre_Right_Hwnd, HWND_TOP, 0, 0, cx, cy, SWP_NOZORDER);
-        SetParent(App->CL_Views_Com->Bottom_Ogre_Right_Hwnd, NULL);
+        SetWindowPos(App->CL_View_3D->Bottom_Right_Window_Hwnd, HWND_TOP, 0, 0, cx, cy, SWP_NOZORDER);
+        SetParent(App->CL_View_3D->Bottom_Right_Window_Hwnd, NULL);
         SetWindowPos(App->ViewGLhWnd, NULL, 0, 0, cx, cy, SWP_NOZORDER);
 
         // Resize the Ogre window
@@ -141,7 +141,7 @@ void CL64_Editor_Control::Start_Editor_MapBrush_Mode(void)
 	App->CL_Gizmos->highlight(App->CL_Scene->B_Object[App->CL_Gizmos->Last_Selected_Object]->Object_Ent);
     App->CL_Com_Objects->Show_Entities(true);
 
-	SetParent(App->CL_Views_Com->Bottom_Ogre_Right_Hwnd, Parent_hWnd);
+	SetParent(App->CL_View_3D->Bottom_Right_Window_Hwnd, Parent_hWnd);
 
 	App->CL_Views_Com->Resize_Windows(App->CL_Views_Com->Main_View_Dlg_Hwnd, App->CL_Views_Com->nleftWnd_width, App->CL_Views_Com->nleftWnd_Depth);
 

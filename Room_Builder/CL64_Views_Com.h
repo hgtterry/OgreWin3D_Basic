@@ -80,11 +80,10 @@ public:
 	void On_Left_Button_Down(POINT CursorPosition, HWND hDlg);
 
 	void Create_Views();
+	void Set_Views_Defaults(int Index, Ogre::int32 View, const char* Name);
 
 	HWND Main_View_Dlg_Hwnd; // Background of MDI
 
-	HWND Bottom_Ogre_Right_Hwnd;
-	
 	float GridSize, GridSnapSize;
 	
 	// TODO hgtterry Make Private
@@ -129,11 +128,6 @@ private:
 	static LRESULT CALLBACK Proc_Main_Dlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Proc_Ogre_BR(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK ViewerMain_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
-
-	void Set_Views_Defaults(int Index,Ogre::int32 View, const char* Name);
-	void Create_Ogre_Bottom_Right();
-
-	HWND Bottom_Ogre_Banner;
 
 	// Draw Routines
 	
