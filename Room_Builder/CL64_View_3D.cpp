@@ -32,6 +32,8 @@ CL64_View_3D::CL64_View_3D()
 	Bottom_Right_Window_Hwnd = nullptr;
 	RenderWin3D_hWnd = nullptr;
 	Bottom_3D_Banner = nullptr;
+
+	VCam_3D = { 0 };
 }
 
 CL64_View_3D::~CL64_View_3D()
@@ -39,16 +41,39 @@ CL64_View_3D::~CL64_View_3D()
 }
 
 // *************************************************************************
+// *	  		Set_VCam_3D_Defaults:- Terry Mo and Hazel 2026			   *
+// *************************************************************************
+void CL64_View_3D::Set_VCam_3D_Defaults()
+{
+	strcpy(VCam_3D->Name, "Ogre_Window");
+	VCam_3D->ViewType = VIEWOGRE;
+	VCam_3D->ZoomFactor = 1.5;
+
+	VCam_3D->XCenter = 310;
+	VCam_3D->YCenter = 174;
+
+	VCam_3D->XScreenScale = 0;
+	VCam_3D->YScreenScale = 0;
+
+	VCam_3D->Width = 310;
+	VCam_3D->Height = 174;
+
+	App->CL_X_Maths->Vector3_Set(&VCam_3D->CamPos, 0, 0, 0);
+
+	VCam_3D->MaxScreenScaleInv = 100;
+}
+
+// *************************************************************************
 // *		 Create_Ogre_Bottom_Right:- Terry and Hazel Flanigan 2024	   *
 // *************************************************************************
 void CL64_View_3D::Create_Ogre_Bottom_Right()
 {
-	App->CL_Views_Com->VCam[V_Ogre] = new ViewVars;
-	App->CL_Views_Com->Set_Views_Defaults(V_Ogre, VIEWOGRE, "Ogre_Window");
+	VCam_3D = new ViewVars;
+	Set_VCam_3D_Defaults();
 
 	Bottom_Right_Window_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MAP_BOTTOM_RIGHT, App->CL_Views_Com->Main_View_Dlg_Hwnd, (DLGPROC)Proc_ViewerMain);
 
-	App->CL_Views_Com->VCam[V_Ogre]->hDlg = Bottom_Right_Window_Hwnd;
+	VCam_3D->hDlg = Bottom_Right_Window_Hwnd;
 
 	App->CL_Ogre->RenderHwnd = App->ViewGLhWnd;
 }
@@ -96,7 +121,7 @@ LRESULT CALLBACK CL64_View_3D::Proc_ViewerMain(HWND hDlg, UINT message, WPARAM w
 	// Left Mouse Down
 	case WM_LBUTTONDOWN:
 	{
-		App->CL_Views_Com->Current_View = App->CL_Views_Com->VCam[V_Ogre];
+		App->CL_Views_Com->Current_View = App->CL_View_3D->VCam_3D;
 
 		if (App->CL_Views_Com->Selected_Window != Enums::Selected_Map_View_3D)
 		{
@@ -107,7 +132,7 @@ LRESULT CALLBACK CL64_View_3D::Proc_ViewerMain(HWND hDlg, UINT message, WPARAM w
 	// Right Mouse Down
 	case WM_RBUTTONDOWN:
 	{
-		App->CL_Views_Com->Current_View = App->CL_Views_Com->VCam[V_Ogre];
+		App->CL_Views_Com->Current_View = App->CL_View_3D->VCam_3D;
 
 		if (App->CL_Views_Com->Selected_Window != Enums::Selected_Map_View_3D)
 		{
@@ -213,7 +238,7 @@ LRESULT CALLBACK CL64_View_3D::Proc_Ogre_BR(HWND hDlg, UINT message, WPARAM wPar
 	// Left Mouse Down
 	case WM_LBUTTONDOWN:
 	{
-		App->CL_Views_Com->Current_View = App->CL_Views_Com->VCam[V_Ogre];
+		App->CL_Views_Com->Current_View = App->CL_View_3D->VCam_3D;
 
 		if (App->CL_Views_Com->Selected_Window != Enums::Selected_Map_View_3D)
 		{
@@ -295,7 +320,7 @@ LRESULT CALLBACK CL64_View_3D::Proc_Ogre_BR(HWND hDlg, UINT message, WPARAM wPar
 	// Right Mouse Down
 	case WM_RBUTTONDOWN:
 	{
-		App->CL_Views_Com->Current_View = App->CL_Views_Com->VCam[V_Ogre];
+		App->CL_Views_Com->Current_View = App->CL_View_3D->VCam_3D;
 
 		if (App->CL_Views_Com->Selected_Window != Enums::Selected_Map_View_3D)
 		{
@@ -366,7 +391,7 @@ LRESULT CALLBACK CL64_View_3D::Proc_Ogre_BR(HWND hDlg, UINT message, WPARAM wPar
 
 					if (cameraComparison == 1)
 					{
-						App->CL_Views_Com->Current_View = App->CL_Views_Com->VCam[V_TR];
+						App->CL_Views_Com->Current_View = App->CL_View_3D->VCam_3D;
 						if (isSceneEditorActive)
 						{
 							App->CL_Editor_Scene->Context_Menu_Ogre(hDlg);

@@ -390,7 +390,7 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Headers(HWND hDlg, UINT message, WPARAM wPa
 				App->CL_Views_Com->Set_Splitter_WidthDepth(App->CL_Views_Com->Copy_Spliter_Width, App->CL_Views_Com->Copy_Spliter_Depth);
 				App->CL_Views_Com->Resize_Windows(App->CL_Views_Com->Main_View_Dlg_Hwnd, App->CL_Views_Com->nleftWnd_width, App->CL_Views_Com->nleftWnd_Depth);
 
-				App->CL_Views_Com->Current_View = App->CL_Views_Com->VCam[V_TL];
+				App->CL_Views_Com->Current_View = App->CL_View_Top_Left->VCam_TL;
 				App->CL_Views_Com->Set_View();
 			}
 			else
@@ -417,7 +417,7 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Headers(HWND hDlg, UINT message, WPARAM wPa
 				App->CL_Views_Com->Set_Splitter_WidthDepth(App->CL_Views_Com->Copy_Spliter_Width, App->CL_Views_Com->Copy_Spliter_Depth);
 				App->CL_Views_Com->Resize_Windows(App->CL_Views_Com->Main_View_Dlg_Hwnd, App->CL_Views_Com->nleftWnd_width, App->CL_Views_Com->nleftWnd_Depth);
 
-				App->CL_Views_Com->Current_View = App->CL_Views_Com->VCam[V_TR];
+				App->CL_Views_Com->Current_View = App->CL_View_Top_Right->VCam_TR;
 				App->CL_Views_Com->Set_View();
 			}
 			else
@@ -441,7 +441,7 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Headers(HWND hDlg, UINT message, WPARAM wPa
 				App->CL_Views_Com->Set_Splitter_WidthDepth(App->CL_Views_Com->Copy_Spliter_Width, App->CL_Views_Com->Copy_Spliter_Depth);
 				App->CL_Views_Com->Resize_Windows(App->CL_Views_Com->Main_View_Dlg_Hwnd, App->CL_Views_Com->nleftWnd_width, App->CL_Views_Com->nleftWnd_Depth);
 
-				App->CL_Views_Com->Current_View = App->CL_Views_Com->VCam[V_BL];
+				App->CL_Views_Com->Current_View = App->CL_View_Bottom_Left->VCam_BL;
 				App->CL_Views_Com->Set_View();
 			}
 			else

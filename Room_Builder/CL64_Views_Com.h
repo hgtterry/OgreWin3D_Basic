@@ -80,8 +80,7 @@ public:
 	void On_Left_Button_Down(POINT CursorPosition, HWND hDlg);
 
 	void Create_Views();
-	void Set_Views_Defaults(int Index, Ogre::int32 View, const char* Name);
-
+	
 	HWND Main_View_Dlg_Hwnd; // Background of MDI
 
 	float GridSize, GridSnapSize;
@@ -94,7 +93,6 @@ public:
 
 	int Selected_Window;
 
-	ViewVars* VCam[4];
 	ViewVars* Current_View;
 
 	POINT mStartPoint;
@@ -126,9 +124,7 @@ public:
 
 private:
 	static LRESULT CALLBACK Proc_Main_Dlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
-	static LRESULT CALLBACK Proc_Ogre_BR(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
-	static LRESULT CALLBACK ViewerMain_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
-
+	
 	// Draw Routines
 	
 	void SetEditCursor(int Tool, const POINT* pMousePos);

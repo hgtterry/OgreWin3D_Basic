@@ -29,12 +29,16 @@ public:
 	CL64_View_3D();
 	~CL64_View_3D();
 
+	void Set_VCam_3D_Defaults();
+
 	void Create_Ogre_Bottom_Right();
 
 	HWND Bottom_Right_Window_Hwnd;
 	HWND RenderWin3D_hWnd;
 
 	HWND Bottom_3D_Banner;
+
+	ViewVars* VCam_3D;
 
 	static LRESULT CALLBACK Proc_ViewerMain(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
