@@ -73,6 +73,7 @@ private:
 	void Draw_Screen_TL(HWND hwnd);
 
 	static int Draw_Brush_2D(Brush* pBrush, void* lParam);
-	void Draw_Brush_Faces_2D(const ViewVars* Cam, Brush* b);
+	void Draw_Brush_Faces_TL_2D(Brush* SB);
+
 };
 

@@ -222,7 +222,7 @@ void CL64_Keyboard::Keyboard_Mode_Model(float deltaTime)
 
 	if (Update == true)
 	{
-		App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
+		//App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
 	}
 }
 

@@ -49,7 +49,6 @@ CL64_View_Top_Left::CL64_View_Top_Left()
 	m_Zoom_Amount = 0.1;
 
 	Saved_Cam_Position = { 0 };
-
 	m_MemoryhDC = nullptr;
 }
 
@@ -362,15 +361,13 @@ signed int CL64_View_Top_Left::Draw_Brush_2D(Brush* pBrush, void* lParam)
 		{
 			if (App->CL_View_Top_Left->fdocShowBrush(pBrush, pData->pViewBox))
 			{
-				App->CL_View_Top_Left->Draw_Brush_Faces_2D(pData->v, pBrush);
+				App->CL_View_Top_Left->Draw_Brush_Faces_TL_2D(pBrush);
 			}
 		}
 	}
 
 	return true;
 }
-
-static POINT plist[64];
 
 // *************************************************************************
 // *			Redraw_Window_TL:- Terry and Hazel Flanigan 2026		   *
@@ -383,23 +380,34 @@ void CL64_View_Top_Left::Redraw_Window_TL()
 // *************************************************************************
 // *	  	Draw_Brush_Faces_2D:- Terry and Hazel Flanigan 2026			   *
 // *************************************************************************
-void CL64_View_Top_Left::Draw_Brush_Faces_2D(const ViewVars* Cam, Brush* b)
+void CL64_View_Top_Left::Draw_Brush_Faces_TL_2D(Brush* SB)
 {
-	int	i, j;
+	T_Vec3 ptView;
+	int Num_Faces = App->CL_X_Brush->Brush_GetNumFaces(SB);
 
-	for (i = 0; i < App->CL_X_Brush->Brush_GetNumFaces(b); i++)
+	for (int i = 0; i < Num_Faces; i++)
 	{
-		Face* f = App->CL_X_Brush->Brush_GetFace(b, i);
+		Face* f = App->CL_X_Brush->Brush_GetFace(SB, i);
 		const T_Vec3* pnts = App->CL_X_Face->Face_GetPoints(f);
+		int Num_Points = App->CL_X_Face->Face_GetNumPoints(f);
 
-		for (j = 0; j < App->CL_X_Face->Face_GetNumPoints(f); j++)
+		// Create a temporary array to hold the transformed points
+		std::vector<POINT> transformedPoints(Num_Points);
+
+		for (int j = 0; j < Num_Points; j++)
 		{
-			plist[j] = App->CL_Render->Render_OrthoWorldToView(Cam, &pnts[j]);
+			// Calculate the view position
+			App->CL_X_Maths->Vector3_Subtract(&pnts[j], &VCam_TL->CamPos, &ptView);
+			App->CL_X_Maths->Vector3_Scale(&ptView, VCam_TL->ZoomFactor, &ptView);
+
+			// Store the transformed points in the vector
+			transformedPoints[j].x = static_cast<int>(VCam_TL->XCenter + ptView.x);
+			transformedPoints[j].y = static_cast<int>(VCam_TL->YCenter + ptView.z);
 		}
 
-		plist[j] = plist[0];
-
-		Polyline(m_MemoryhDC, plist, j + 1);
+		// Close the polygon by adding the first point at the end
+		transformedPoints.push_back(transformedPoints[0]);
+		Polyline(m_MemoryhDC, transformedPoints.data(), transformedPoints.size());
 	}
 }
 
@@ -503,7 +511,7 @@ void CL64_View_Top_Left::Draw_Screen_TL(HWND hwnd)
 			}
 			else
 			{
-				Views_Com->Render_RenderBrushFacesOrtho(VCam_TL, SB, m_MemoryhDC);
+				Draw_Brush_Faces_TL_2D(SB);
 			}
 
 			Count++;

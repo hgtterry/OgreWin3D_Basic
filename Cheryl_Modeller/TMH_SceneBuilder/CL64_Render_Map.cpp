@@ -350,7 +350,7 @@ void CL64_Render_Map::Render_Camera(HDC ViewDC)
 {
 	bool All = false;
 
-	constexpr float ENTITY_SIZE = 32.0f;  // 16" across
+	constexpr float ENTITY_SIZE = 16.0f;  // 16" across
 
 	T_Vec3 VecOrigin{};
 	T_Vec3 EntSizeWorld{};
@@ -375,9 +375,9 @@ void CL64_Render_Map::Render_Camera(HDC ViewDC)
 
 	// Compute entity size in view coordinates
 	App->CL_X_Maths->Vector3_Set(&EntSizeWorld, ENTITY_SIZE, ENTITY_SIZE, ENTITY_SIZE);
-	EntSizeView = App->CL_Render->Render_OrthoWorldToView(App->CL_Views_Com->Current_View, &EntSizeWorld);
+	EntSizeView = Render_OrthoWorldToView(App->CL_Views_Com->Current_View, &EntSizeWorld);
 	App->CL_X_Maths->Vector3_Clear(&VecOrigin);
-	OriginView = App->CL_Render->Render_OrthoWorldToView(App->CL_Views_Com->Current_View, &VecOrigin);
+	OriginView = Render_OrthoWorldToView(App->CL_Views_Com->Current_View, &VecOrigin);
 
 	// Calculate width and height of the entity
 	EntWidthHeight.x = std::abs(OriginView.x - EntSizeView.x);
@@ -401,11 +401,11 @@ void CL64_Render_Map::Render_Camera(HDC ViewDC)
 		OgrePos.y = App->CL_Ogre->camNode->getPosition().y;
 		OgrePos.z = App->CL_Ogre->camNode->getPosition().z;
 
-		EntPosView = App->CL_Render->Render_OrthoWorldToView(App->CL_Views_Com->Current_View, &OgrePos);
+		EntPosView = Render_OrthoWorldToView(App->CL_Views_Com->Current_View, &OgrePos);
 	}
 	else
 	{
-		EntPosView = App->CL_Render->Render_OrthoWorldToView(App->CL_Views_Com->Current_View, &DummyPos);
+		EntPosView = Render_OrthoWorldToView(App->CL_Views_Com->Current_View, &DummyPos);
 	}
 
 	// Draw an X at the Camera position
