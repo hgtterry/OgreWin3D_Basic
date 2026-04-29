@@ -354,7 +354,6 @@ signed int CL64_View_Top_Left::Draw_Brush_2D(Brush* pBrush, void* lParam)
 {
 	BrushDrawData_TL* pData = (BrushDrawData_TL*)lParam;
 
-
 	//if (App->CL_Brush->Brush_GetGroupId(pBrush) == pData->GroupId))
 	{
 		if ((pData->FlagTest == NULL) || pData->FlagTest(pBrush))
