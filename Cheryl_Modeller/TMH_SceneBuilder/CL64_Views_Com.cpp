@@ -118,7 +118,7 @@ CL64_Views_Com::CL64_Views_Com()
 	flag_Context_Menu_Active = false;
 	flag_Environment_On = true;
 	flag_Wheel_Active = false;
-
+	
 	Stock_Brush = (HBRUSH)::GetStockObject(DC_BRUSH);
 	BackGround_Brush = CreateSolidBrush(RGB(60, 60, 60));
 
@@ -1564,123 +1564,6 @@ void CL64_Views_Com::Render_RenderBrushFacesOrtho(const ViewVars* Cam, Brush* b,
 		plist[j] = plist[0];
 		Polyline(ViewDC, plist, j + 1);
 	}
-}
-
-// *************************************************************************
-// *			Draw_Camera:- Terry Mo and Hazel 2024	 		   *
-// *************************************************************************
-void CL64_Views_Com::Draw_Camera(HDC ViewDC)
-{
-	constexpr float ENTITY_SIZE = 32.0f;  // 16" across
-
-	T_Vec3 VecOrigin{};
-	T_Vec3 EntSizeWorld{};
-	T_Vec3 DummyPos{ 0, 0, 0 };
-	T_Vec3 OgrePos{};
-	Ogre::Vector3 OgreRot{};
-	T_Vec3 Cam_Angles{};
-
-	POINT EntPosView{};
-	POINT EntSizeView{};
-	POINT EntWidthHeight{};
-	POINT OriginView{};
-
-	POINT TopLeft{}, BottomRight{}, TopRight{}, BottomLeft{};
-
-	static const float COS45 = static_cast<float>(cos(M_PI / 4.0f));
-	static const float SIN45 = static_cast<float>(sin(M_PI / 4.0f));
-	static const float MCOS45 = static_cast<float>(cos(-M_PI / 4.0f));
-	static const float MSIN45 = static_cast<float>(sin(-M_PI / 4.0f));
-
-	// Compute entity size in view coordinates
-	App->CL_X_Maths->Vector3_Set(&EntSizeWorld, ENTITY_SIZE, ENTITY_SIZE, ENTITY_SIZE);
-	EntSizeView = App->CL_Render->Render_OrthoWorldToView(Current_View, &EntSizeWorld);
-	App->CL_X_Maths->Vector3_Clear(&VecOrigin);
-	OriginView = App->CL_Render->Render_OrthoWorldToView(Current_View, &VecOrigin);
-
-	// Calculate width and height of the entity
-	EntWidthHeight.x = std::abs(OriginView.x - EntSizeView.x);
-	EntWidthHeight.y = std::abs(OriginView.y - EntSizeView.y);
-
-	// Adjust entity size view
-	EntSizeView.x -= OriginView.x;
-	EntSizeView.y -= OriginView.y;
-
-	// Entity's position in the view
-	if (App->flag_3D_Started == true)
-	{
-		OgreRot.x = App->CL_Ogre->camNode->getOrientation().getPitch().valueRadians();
-		OgreRot.y = App->CL_Ogre->camNode->getOrientation().getYaw().valueRadians();
-		Cam_Angles = { M_PI - OgreRot.x, -OgreRot.y, 0 };
-
-		OgrePos.x = App->CL_Ogre->camNode->getPosition().x;
-		OgrePos.y = App->CL_Ogre->camNode->getPosition().y;
-		OgrePos.z = App->CL_Ogre->camNode->getPosition().z;
-
-		EntPosView = App->CL_Render->Render_OrthoWorldToView(Current_View, &OgrePos);
-	}
-	else 
-	{
-		EntPosView = App->CL_Render->Render_OrthoWorldToView(Current_View, &DummyPos);
-	}
-
-	// Draw an X at the Camera position
-	TopLeft = { EntPosView.x - EntSizeView.x, EntPosView.y - EntSizeView.y };
-	BottomRight = { EntPosView.x + EntSizeView.x, EntPosView.y + EntSizeView.y };
-	TopRight = { BottomRight.x, TopLeft.y };
-	BottomLeft = { TopLeft.x, BottomRight.y };
-
-	MoveToEx(ViewDC, TopLeft.x, TopLeft.y, NULL);
-	LineTo(ViewDC, BottomRight.x, BottomRight.y);
-	MoveToEx(ViewDC, TopRight.x, TopRight.y, NULL);
-	LineTo(ViewDC, BottomLeft.x, BottomLeft.y);
-
-	// Prepare for drawing the direction line
-	POINT ptDirSlope{};
-	POINT ptRotationPoint{};
-	POINT ptRelRotatePoint{};
-	POINT ptPlus45{}, ptMinus45{};
-
-	float fRadius = 100.0f;
-	bool bUIAvailable = true;
-
-	// Set camera angles
-	App->CL_X_Maths->Vector3_Set(&Cam_Angles, Cam_Angles.z, (-Cam_Angles.y - M_PI / 2.0f), Cam_Angles.x);
-
-	Matrix3d Xfm{};
-	T_Vec3 VecTarg{};
-	App->CL_X_Maths->XForm3d_SetEulerAngles(&Xfm, &Cam_Angles);
-	App->CL_X_Maths->Vector3_Set(&VecTarg, fRadius, 0.0f, 0.0f);
-	App->CL_X_Maths->XForm3d_Transform(&Xfm, &VecTarg, &VecTarg);
-	App->CL_X_Maths->Vector3_Add(&OgrePos, &VecTarg, &VecTarg);
-
-	POINT LineEndView = App->CL_Render->Render_OrthoWorldToView(Current_View, &VecTarg);
-
-	// Draw to the end point
-	MoveToEx(ViewDC, EntPosView.x, EntPosView.y, NULL);
-	LineTo(ViewDC, LineEndView.x, LineEndView.y);
-	//Ellipse(ViewDC, LineEndView.x, LineEndView.x, LineEndView.y+50, LineEndView.y+50);
-	
-	ptDirSlope = { LineEndView.x - EntPosView.x, LineEndView.y - EntPosView.y };
-	float fDirLength = sqrt(ptDirSlope.x * ptDirSlope.x + ptDirSlope.y * ptDirSlope.y);
-	float fEntityLength = sqrt(EntSizeView.x * EntSizeView.x + EntSizeView.y * EntSizeView.y) * 1; // Arrow 2x entity size
-	float fPercentIntoLine = 1.0f - (fEntityLength / fDirLength);
-
-	ptRotationPoint = { static_cast<long>(ptDirSlope.x * fPercentIntoLine + EntPosView.x),
-					   static_cast<long>(ptDirSlope.y * fPercentIntoLine + EntPosView.y) };
-
-	ptRelRotatePoint = { ptRotationPoint.x - LineEndView.x, ptRotationPoint.y - LineEndView.y };
-
-	ptPlus45 = { static_cast<long>(ptRelRotatePoint.x * COS45 - ptRelRotatePoint.y * SIN45 + LineEndView.x),
-				static_cast<long>(ptRelRotatePoint.y * COS45 + ptRelRotatePoint.x * SIN45 + LineEndView.y) };
-
-	ptMinus45 = { static_cast<long>(ptRelRotatePoint.x * MCOS45 - ptRelRotatePoint.y * MSIN45 + LineEndView.x),
-				 static_cast<long>(ptRelRotatePoint.y * MCOS45 + ptRelRotatePoint.x * MSIN45 + LineEndView.y) };
-
-	LineTo(ViewDC, ptPlus45.x, ptPlus45.y);
-	LineTo(ViewDC, ptMinus45.x, ptMinus45.y);
-	LineTo(ViewDC, LineEndView.x, LineEndView.y);
-	
 }
 
 // *************************************************************************

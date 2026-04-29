@@ -100,5 +100,8 @@ public:
 	void Render_ViewDeltaToRotation(const ViewVars* v, const float dx, T_Vec3* VecRotate);
 
 	void Render_MoveCamPosOrtho(ViewVars* v, const T_Vec3* dv);
+
+	void Render_Camera(HDC ViewDC);
+
 };
 

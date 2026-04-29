@@ -590,7 +590,7 @@ void CL64_View_Bottom_Left::Draw_Screen_BL(HWND hwnd)
 		if (App->CL_Doc->flag_Track_Camera == true)
 		{
 			SelectObject(m_MemoryhDC_BL, Pen_Camera);
-			Views_Com->Draw_Camera(m_MemoryhDC_BL);
+			App->CL_Render->Render_Camera(m_MemoryhDC_BL);
 		}
 
 	}

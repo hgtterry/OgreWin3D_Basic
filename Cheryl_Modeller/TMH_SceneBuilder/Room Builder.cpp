@@ -189,18 +189,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     switch (message)
     {
 
-   /* case WM_KEYDOWN:
-    {
-        App->BeepBeep();
-        return TRUE;
-    }*/
-    
     case WM_COMMAND:
         {
             int wmId = LOWORD(wParam);
             // Parse the menu selections:
             switch (wmId)
             {
+
             // ----------------------------- Debug
 			case ID_DEBUG_GENERAL:
 			{ 

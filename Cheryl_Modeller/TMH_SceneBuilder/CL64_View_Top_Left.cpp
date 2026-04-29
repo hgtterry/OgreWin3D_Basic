@@ -545,7 +545,7 @@ void CL64_View_Top_Left::Draw_Screen_TL(HWND hwnd)
 		if (App->CL_Doc->flag_Track_Camera == true)
 		{
 			SelectObject(m_MemoryhDC, Pen_Camera);
-			Views_Com->Draw_Camera(m_MemoryhDC);
+			App->CL_Render->Render_Camera(m_MemoryhDC);
 		}
 
 	}
@@ -561,4 +561,5 @@ void CL64_View_Top_Left::Draw_Screen_TL(HWND hwnd)
 	ReleaseDC(hwnd, RealhDC);
 
 }
+
 

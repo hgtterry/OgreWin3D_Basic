@@ -154,7 +154,7 @@ LRESULT CALLBACK CL64_View_3D::Proc_ViewerMain(HWND hDlg, UINT message, WPARAM w
 	}
 	case WM_COMMAND:
 	{
-
+	
 	}
 	break;
 
@@ -169,6 +169,7 @@ LRESULT CALLBACK CL64_View_3D::Proc_Ogre_BR(HWND hDlg, UINT message, WPARAM wPar
 {
 	switch (message)
 	{
+
 	case WM_INITDIALOG:
 	{
 		return TRUE;
@@ -425,7 +426,6 @@ LRESULT CALLBACK CL64_View_3D::Proc_Ogre_BR(HWND hDlg, UINT message, WPARAM wPar
 
 		return 1;
 	}
-
 	}
 
 	return FALSE;

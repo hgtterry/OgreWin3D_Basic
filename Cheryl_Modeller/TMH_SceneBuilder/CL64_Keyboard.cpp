@@ -164,47 +164,52 @@ void CL64_Keyboard::Keyboard_Mode_First(float deltaTime)
 // *************************************************************************
 void CL64_Keyboard::Keyboard_Mode_Model(float deltaTime)
 {
+	bool Update = false;
+
 	auto& m_Listener = App->CL_Ogre->Listener_3D; // Local Pointer to the 3D Frame Listener
 
 	// Define movement rate based on sensitivity
-	float rate = (m_Listener->mMoveSensitivity / 1000) * 2;
+	float rate = (m_Listener->mMoveSensitivity / 1000) * 4;
 	Ogre::Vector3 oldPos = m_Listener->mCamNode->getPosition();
 
 	// Pan Up E key 
 	if (GetAsyncKeyState(69) < 0)
 	{
-		oldPos.y += rate;
+		m_Listener->mCamNode->setPosition(oldPos.x, oldPos.y += rate, oldPos.z);
+		Update = true;
 	}
 
 	// Pan Down Q Key
 	if (GetAsyncKeyState(81) < 0)
 	{
-		oldPos.y -= rate;
+		m_Listener->mCamNode->setPosition(oldPos.x, oldPos.y -= rate, oldPos.z);
+		Update = true;
 	}
-
-	// Update camera position if panning occurred
-	m_Listener->mCamNode->setPosition(oldPos);
 
 	// Forward and Backward movement
-	if (GetAsyncKeyState(87) < 0 || m_Listener->Wheel < 0) // W Key or Mouse Wheel Forward
+	if (GetAsyncKeyState(87) < 0 ) // W Key Forward
 	{
-		m_Listener->mTranslateVector.z = - m_Listener->mMoveScale * (GetAsyncKeyState(87) < 0 ? 1 : Mouse_Wheel_Zoom);
+		m_Listener->mTranslateVector.z = - m_Listener->mMoveScale * 1;
+		Update = true;
 	}
-	else if (GetAsyncKeyState(83) < 0 || m_Listener->Wheel > 0) // S Key or Mouse Wheel Back
+	else if (GetAsyncKeyState(83) < 0 ) // S Key Back
 	{
-		m_Listener->mTranslateVector.z = m_Listener->mMoveScale * (GetAsyncKeyState(83) < 0 ? 1 : Mouse_Wheel_Zoom);
+		m_Listener->mTranslateVector.z = m_Listener->mMoveScale * 1;
+		Update = true;
 	}
 
 	// Pan Left A Key
 	if (GetAsyncKeyState(65) < 0)
 	{
 		m_Listener->mTranslateVector.x = -m_Listener->mMoveScale;
+		Update = true;
 	}
 
 	// Pan Right  D Key
 	if (GetAsyncKeyState(68) < 0)
 	{
 		m_Listener->mTranslateVector.x = m_Listener->mMoveScale;
+		Update = true;
 	}
 
 	// -------------------------- Escape 
@@ -213,6 +218,11 @@ void CL64_Keyboard::Keyboard_Mode_Model(float deltaTime)
 		App->CL_Interface->Deselect_All_Brushes_Update_Dlgs();
 		App->CL_Top_Tabs->Redraw_TopTabs_Dlg();
 		App->CL_Ogre->OGL_Listener->Show_Visuals(false);
+	}
+
+	if (Update == true)
+	{
+		App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
 	}
 }
 

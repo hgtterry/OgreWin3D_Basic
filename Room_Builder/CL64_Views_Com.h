@@ -71,8 +71,6 @@ public:
 	void Set_3D_FullView();
 	void Set_Selected_View(int Selected_View);
 
-	void Draw_Camera(HDC ViewDC);
-
 	void On_Mouse_Move(POINT CursorPosition, HWND hDlg);
 	void On_Left_Button_Up(POINT CursorPosition);
 	void On_Left_Button_Down(POINT CursorPosition, HWND hDlg);

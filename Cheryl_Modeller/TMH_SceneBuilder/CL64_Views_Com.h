@@ -74,8 +74,6 @@ public:
 	void On_Left_Button_Up(POINT CursorPosition);
 	void On_Left_Button_Down(POINT CursorPosition, HWND hDlg);
 
-	void Draw_Camera(HDC ViewDC);
-
 	HWND Main_View_Dlg_Hwnd; // Background of MDI
 
 	float GridSize, GridSnapSize;
@@ -98,7 +96,7 @@ public:
 	bool flag_Context_Menu_Active;
 	bool flag_Wheel_Active;
 	bool flag_Environment_On;
-
+	
 	HCURSOR	hcSizeEW;
 	HCURSOR	hcSizeNS;
 	HCURSOR	hcBoth;
