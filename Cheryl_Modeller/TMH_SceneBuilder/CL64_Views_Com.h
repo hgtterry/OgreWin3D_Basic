@@ -112,8 +112,7 @@ public:
 	HPEN PenSelectedFaces;
 	HPEN PenCutBrush;
 	HPEN PenEntity;
-	HDC	MemoryhDC;
-
+	
 private:
 	static LRESULT CALLBACK Proc_Main_Dlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 

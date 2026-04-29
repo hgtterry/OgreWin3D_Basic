@@ -360,13 +360,13 @@ void CLP_3D_Listener::Camera_Mode_Model(float DeltaTime)
 	mMoveScale = mMoveSensitivity * DeltaTime;
 
 	// Mouse Wheel Zoom
-	if (Wheel < 0) // W Key or Mouse Wheel Forward
+	if (Wheel < 0) // Mouse Wheel Forward
 	{
-		mTranslateVector.z = -mMoveScale * 10;
+		mTranslateVector.z = -mMoveScale * App->CL_Keyboard->Mouse_Wheel_Zoom;
 	}
-	else if (Wheel > 0) // S Key or Mouse Wheel Back
+	else if (Wheel > 0) // Mouse Wheel Back
 	{
-		mTranslateVector.z = mMoveScale * 10;
+		mTranslateVector.z = mMoveScale * App->CL_Keyboard->Mouse_Wheel_Zoom;
 	}
 
 	App->CL_Keyboard->Keyboard_Mode_Model(DeltaTime);

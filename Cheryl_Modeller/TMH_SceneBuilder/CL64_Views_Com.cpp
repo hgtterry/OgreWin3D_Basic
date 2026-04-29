@@ -56,6 +56,9 @@ THE SOFTWARE.
 #define IDM_3D_CAMERASPEED 29
 #define IDM_3D_POINTS 30
 #define IDM_3D_BONES 31
+#define IDM_Wheel_Speed1 32
+#define IDM_Wheel_Speed2 33
+#define IDM_Wheel_Speed3 34
 
 #define	M_PI		((float)3.14159265358979323846f)
 #define	TOP_POS					8
@@ -139,8 +142,6 @@ CL64_Views_Com::CL64_Views_Com()
 	mStartPoint.y = 0;
 
 	Current_View = nullptr;
-
-	MemoryhDC = nullptr;
 }
 
 CL64_Views_Com::~CL64_Views_Com()
@@ -858,9 +859,15 @@ void CL64_Views_Com::Context_Menu_Ogre(HWND hDlg)
 
 	AppendMenuW(hMenu, MF_STRING , IDM_3D_RESET_CAMERA, L"&Reset View");
 	
-	AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
-	AppendMenuW(hMenu, MF_STRING, IDM_3D_CAMERASPEED, L"&Quick Options");
+	/*AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
+	AppendMenuW(hMenu, MF_STRING, IDM_3D_CAMERASPEED, L"&Quick Options");*/
 
+	HMENU hDisplayMenu = CreatePopupMenu();
+
+	AppendMenu(hMenu, MF_STRING | MF_POPUP, (UINT_PTR)hDisplayMenu, "Mouse Wheel Zoom");
+	AppendMenu(hDisplayMenu, MF_STRING, IDM_Wheel_Speed1, "Times 1");
+	AppendMenu(hDisplayMenu, MF_STRING, IDM_Wheel_Speed2, "Times 2");
+	AppendMenu(hDisplayMenu, MF_STRING, IDM_Wheel_Speed3, "Times 3");
 	// Panel View
 	/*AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
 	AppendMenuW(hMenu, MF_STRING, IDM_SCENE_MAX_VIEW, L"&Full View");
@@ -896,9 +903,9 @@ void CL64_Views_Com::Context_Menu_Ogre(HWND hDlg)
 	//// Append Scene Editor option
 	//AppendMenuW(hMenu, MF_STRING | (brushCount > 0 ? 0 : MF_GRAYED), IDM_3D_SCENE_EDITOR, L"&Scene Editor");
 
-	AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
+	/*AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
 	AppendMenuW(hMenu, MF_STRING | MF_GRAYED, NULL, L"&Ctrl+Right Mouse Button Pick Texture ");
-	AppendMenuW(hMenu, MF_STRING | MF_GRAYED, NULL, L"&Pan Right Mouse Button");
+	AppendMenuW(hMenu, MF_STRING | MF_GRAYED, NULL, L"&Pan Right Mouse Button");*/
 
 	AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
 	AppendMenuW(hMenu, MF_STRING, IDM_3D_HELP, L"&Help");
@@ -917,6 +924,24 @@ bool CL64_Views_Com::Context_Command_Ogre(WPARAM wParam)
 {
 	switch (LOWORD(wParam))
 	{
+	case IDM_Wheel_Speed1:
+	{
+		App->CL_Keyboard->Mouse_Wheel_Zoom = 2;
+		return TRUE;
+	}
+
+	case IDM_Wheel_Speed2:
+	{
+		App->CL_Keyboard->Mouse_Wheel_Zoom = 10;
+		return TRUE;
+	}
+
+	case IDM_Wheel_Speed3:
+	{
+		App->CL_Keyboard->Mouse_Wheel_Zoom = 50;
+		return TRUE;
+	}
+
 	case IDM_3D_TEXTURED:
 	{
 		App->CL_Camera->Camera_Textured();
@@ -1522,7 +1547,7 @@ static POINT plist[64];
 // *************************************************************************
 void CL64_Views_Com::Render_RenderBrushSelFacesOrtho(ViewVars* Cam, Brush* b, HDC ViewDC)
 {
-	int	i, j;
+	/*int	i, j;
 
 	if (!b)
 		return;
@@ -1541,7 +1566,7 @@ void CL64_Views_Com::Render_RenderBrushSelFacesOrtho(ViewVars* Cam, Brush* b, HD
 		}
 		plist[j] = App->CL_Render->Render_OrthoWorldToView(Cam, &pnts[0]);
 		Polyline(MemoryhDC, plist, j + 1);
-	}
+	}*/
 }
 
 // *************************************************************************

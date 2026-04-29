@@ -62,7 +62,7 @@ public:
 
 	HPEN PenBrushes;
 
-	HDC	m_MemoryhDC;
+	HDC	m_MemoryhDC_TL;
 	T_Vec3 Saved_Cam_Position;
 
 	ViewVars* VCam_TL;
@@ -73,7 +73,7 @@ private:
 	void Draw_Screen_TL(HWND hwnd);
 
 	static int Draw_Brush_2D(Brush* pBrush, void* lParam);
-	void Draw_Brush_Faces_TL_2D(Brush* SB);
+	void Draw_Faces_TL(Brush* SB);
 
 };
 
