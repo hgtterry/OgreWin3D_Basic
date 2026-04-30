@@ -801,6 +801,15 @@ void CL64_Views_Com::Context_3D_Menu(HWND hDlg)
 
 	HMENU hMenu = CreatePopupMenu();
 
+	HMENU hDisplayMenu = CreatePopupMenu();
+
+	AppendMenu(hMenu, MF_STRING | MF_POPUP, (UINT_PTR)hDisplayMenu, "Mouse Wheel Zoom");
+	AppendMenu(hDisplayMenu, MF_STRING, IDM_3D_Wheel_Speed1, "Speed 1");
+	AppendMenu(hDisplayMenu, MF_STRING, IDM_3D_Wheel_Speed2, "Speed 2");
+	AppendMenu(hDisplayMenu, MF_STRING, IDM_3D_Wheel_Speed3, "Speed 3");
+
+	AppendMenu(hMenu, MF_SEPARATOR, 0, NULL);
+
 	// Render Textured
 	/*if (App->CL_Ogre->OGL_Listener->flag_Render_Ogre == 0)
 	{
@@ -866,12 +875,6 @@ void CL64_Views_Com::Context_3D_Menu(HWND hDlg)
 	/*AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
 	AppendMenuW(hMenu, MF_STRING, IDM_3D_CAMERASPEED, L"&Quick Options");*/
 
-	HMENU hDisplayMenu = CreatePopupMenu();
-
-	AppendMenu(hMenu, MF_STRING | MF_POPUP, (UINT_PTR)hDisplayMenu, "Mouse Wheel Zoom");
-	AppendMenu(hDisplayMenu, MF_STRING, IDM_3D_Wheel_Speed1, "Speed 1");
-	AppendMenu(hDisplayMenu, MF_STRING, IDM_3D_Wheel_Speed2, "Speed 2");
-	AppendMenu(hDisplayMenu, MF_STRING, IDM_3D_Wheel_Speed3, "Speed 3");
 	// Panel View
 	/*AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
 	AppendMenuW(hMenu, MF_STRING, IDM_SCENE_MAX_VIEW, L"&Full View");
@@ -1103,7 +1106,7 @@ void CL64_Views_Com::Context_Grids_Menu(HWND hDlg)
 	AppendMenu(hDisplayMenu, MF_STRING, IDM_Grid_Wheel_Speed2, "Speed 2");
 	AppendMenu(hDisplayMenu, MF_STRING, IDM_Grid_Wheel_Speed3, "Speed 3");
 
-	AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
+	AppendMenu(hMenu, MF_SEPARATOR, 0, NULL);
 
 	//if (App->CL_Level->flag_UseGrid == true)
 	//{

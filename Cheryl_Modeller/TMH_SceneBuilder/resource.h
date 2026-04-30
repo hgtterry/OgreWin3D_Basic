@@ -569,6 +569,7 @@
 #define IDC_SLDR_WHEELSPEED             1399
 #define IDC_ST_MOUSESPEED               1400
 #define IDC_ST_RENDERTEST               1401
+#define IDC_ST_DATETIME                 1402
 #define ID_DEBUG_GENERAL                32771
 #define ID_TEMPLATES_INSERT             32772
 #define ID_BRUSH_SELECT                 32773
@@ -705,7 +706,7 @@
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        225
 #define _APS_NEXT_COMMAND_VALUE         32897
-#define _APS_NEXT_CONTROL_VALUE         1402
+#define _APS_NEXT_CONTROL_VALUE         1403
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif

@@ -179,43 +179,33 @@ void CL64_Render_Map::Render_ViewToWorld(const ViewVars* cv, const int x, const 
 // *************************************************************************
 POINT CL64_Render_Map::Render_OrthoWorldToView(const ViewVars* cv, T_Vec3 const* wp)
 {
-	POINT	sc = { 0, 0 };
+	POINT sc = { 0, 0 };
 	T_Vec3 ptView;
 
+	// Calculate the view position based on the camera position and zoom factor
+	App->CL_X_Maths->Vector3_Subtract(wp, &cv->CamPos, &ptView);
+	App->CL_X_Maths->Vector3_Scale(&ptView, cv->ZoomFactor, &ptView);
+
+	// Determine screen coordinates based on the view type
 	switch (cv->ViewType)
 	{
 	case TOP_LEFT_VIEW:
-	{
-		App->CL_X_Maths->Vector3_Subtract(wp, &cv->CamPos, &ptView);
-		App->CL_X_Maths->Vector3_Scale(&ptView, cv->ZoomFactor, &ptView);
-
-		sc.x = (int)(cv->XCenter + ptView.x);
-		sc.y = (int)(cv->YCenter + ptView.z);
+		sc.x = static_cast<int>(cv->XCenter + ptView.x);
+		sc.y = static_cast<int>(cv->YCenter + ptView.z);
 		break;
-	}
+
 	case BOTTOM_LEFT_VIEW:
-	{
-		App->CL_X_Maths->Vector3_Subtract(wp, &cv->CamPos, &ptView);
-		App->CL_X_Maths->Vector3_Scale(&ptView, cv->ZoomFactor, &ptView);
-
-		sc.x = (int)(cv->XCenter + ptView.x);
-		sc.y = (int)(cv->YCenter - ptView.y);
-
-		//App->Flash_Window();
-
+		sc.x = static_cast<int>(cv->XCenter + ptView.x);
+		sc.y = static_cast<int>(cv->YCenter - ptView.y);
 		break;
-	}
+
 	case TOP_RIGHT_VIEW:
-	{
-		App->CL_X_Maths->Vector3_Subtract(wp, &cv->CamPos, &ptView);
-		App->CL_X_Maths->Vector3_Scale(&ptView, cv->ZoomFactor, &ptView);
-
-		sc.x = (int)(cv->XCenter + ptView.z);
-		sc.y = (int)(cv->YCenter - ptView.y);
+		sc.x = static_cast<int>(cv->XCenter + ptView.z);
+		sc.y = static_cast<int>(cv->YCenter - ptView.y);
 		break;
-	}
-	default:
 
+	default:
+		// Handle unexpected view types if necessary
 		break;
 	}
 

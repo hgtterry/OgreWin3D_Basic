@@ -353,21 +353,17 @@ void CL64_Doc::Do_General_Select_Dlg(bool from_Insert)
 // *************************************************************************
 void CL64_Doc::UpdateAllViews(int Update_Mode)
 {
+    ViewVars* Save_View = App->CL_Views_Com->Current_View;
+
     if (Update_Mode == Enums::UpdateViews_Grids)
     {
-        ViewVars* Save_View = App->CL_Views_Com->Current_View;
-
         RedrawWindow(App->CL_View_Top_Left->Top_Left_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
         RedrawWindow(App->CL_View_Top_Right->Top_Right_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
         RedrawWindow(App->CL_View_Bottom_Left->Bottom_Left_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-
-        App->CL_Views_Com->Current_View = Save_View;
     }
 
     if (Update_Mode == Enums::UpdateViews_3D)
     {
-        ViewVars* Save_View = App->CL_Views_Com->Current_View;
-
         int BC = App->CL_X_Brush->Get_Brush_Count();
         if (BC > 0)
         {
@@ -381,14 +377,10 @@ void CL64_Doc::UpdateAllViews(int Update_Mode)
                 App->CL_Mesh_Mgr->World_Node->setVisible(false);
             }
         }
-
-        App->CL_Views_Com->Current_View = Save_View;
     }
 
     if (Update_Mode == Enums::UpdateViews_All)
     {
-        ViewVars* Save_View = App->CL_Views_Com->Current_View;
-
         App->CL_View_Top_Left->Redraw_Window_TL();
         App->CL_View_Top_Right->Redraw_Window_TR();
         App->CL_View_Bottom_Left->Redraw_Window_BL();
@@ -406,9 +398,11 @@ void CL64_Doc::UpdateAllViews(int Update_Mode)
                 App->CL_Mesh_Mgr->World_Node->setVisible(false);
             }
         }
-
-        App->CL_Views_Com->Current_View = Save_View;
     }
+
+    App->CL_Views_Com->Current_View = Save_View;
+
+
 }
 
 // *************************************************************************

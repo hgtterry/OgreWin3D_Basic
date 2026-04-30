@@ -1506,19 +1506,23 @@ INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
     {
         SendDlgItemMessage(hDlg, IDC_ST_ABOUT_BANNER, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
         SendDlgItemMessage(hDlg, IDC_ST_ABOUT_VERSION, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+        SendDlgItemMessage(hDlg, IDC_ST_DATETIME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
         SendDlgItemMessage(hDlg, IDC_LIST_ABOUT_VERSIONS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
         SendDlgItemMessage(hDlg, IDC_BT_LIBRARIES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
         SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
         
+       
         char buf[MAX_PATH];
 
-        SetDlgItemText(hDlg, IDC_ST_ABOUT_VERSION, App->App_Title);
-
-  
         strcpy(buf, "");
         strcat(buf, App->App_Title);
         strcat(buf, "  (64bit Build)");
-        SendDlgItemMessage(hDlg, IDC_LIST_ABOUT_VERSIONS, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+        SetDlgItemText(hDlg, IDC_LIST_ABOUT_VERSIONS, buf);
+
+        sprintf(buf, "Build Date  %s Time %s", __DATE__, __TIME__);
+        SetDlgItemText(hDlg, IDC_ST_DATETIME, buf);
+      
 
         SendDlgItemMessage(hDlg, IDC_LIST_ABOUT_VERSIONS, LB_ADDSTRING, (WPARAM)0, (LPARAM)" ");
 
@@ -1527,28 +1531,33 @@ INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 
         SendDlgItemMessage(hDlg, IDC_LIST_ABOUT_VERSIONS, LB_ADDSTRING, (WPARAM)0, (LPARAM)" ");
 
+        sprintf(buf, "%s", "Ogre Version:- Version 14.4.0 (Tsathoggua)");
+        SendDlgItemMessage(hDlg, IDC_LIST_ABOUT_VERSIONS, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+
+        ImGui::GetVersion();
+        sprintf(buf, "Imgui Version:- " "%s", ImGui::GetVersion()); //"Imgui Version:- 1.91.2");
+        SendDlgItemMessage(hDlg, IDC_LIST_ABOUT_VERSIONS, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+
+        sprintf(buf, "%s", "Bullet Version:- 2.86.1");
+        SendDlgItemMessage(hDlg, IDC_LIST_ABOUT_VERSIONS, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+
+
         SendDlgItemMessage(hDlg, IDC_LIST_ABOUT_VERSIONS, LB_ADDSTRING, (WPARAM)0, (LPARAM)" ");
 
         sprintf(buf, "%s", "Instalation Path:- ");
         strcat(buf, App->App_Directory_FullPath);
         SendDlgItemMessage(hDlg, IDC_LIST_ABOUT_VERSIONS, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
-        SendDlgItemMessage(hDlg, IDC_LIST_ABOUT_VERSIONS, LB_ADDSTRING, (WPARAM)0, (LPARAM)" ");
-
         char buff[MAX_PATH];
         App->CL_Ogre->Get_OpenGL_Version(buff);
         SendDlgItemMessage(hDlg, IDC_LIST_ABOUT_VERSIONS, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);
 
-        sprintf(buf, "%s %i X %i", "Max Resolution:- ", GetSystemMetrics(SM_CXSCREEN), GetSystemMetrics(SM_CYSCREEN));
-        SendDlgItemMessage(hDlg, IDC_LIST_ABOUT_VERSIONS, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
-
         SendDlgItemMessage(hDlg, IDC_LIST_ABOUT_VERSIONS, LB_ADDSTRING, (WPARAM)0, (LPARAM)" ");
 
-        App->CL_Properties_Tabs->Enable_Tabs_Dlg(false);
-
-        sprintf(buf, "Time %s   Date  %s", __TIME__, __DATE__);
+        sprintf(buf, "%s", "Terry and Hazel Flanigan (Inflanite_HGT)");
         SendDlgItemMessage(hDlg, IDC_LIST_ABOUT_VERSIONS, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
-      
+
+        App->CL_Properties_Tabs->Enable_Tabs_Dlg(false);
 
         return (INT_PTR)TRUE;
     }
@@ -1564,6 +1573,14 @@ INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
         }
 
         if (GetDlgItem(hDlg, IDC_ST_ABOUT_VERSION) == (HWND)lParam)
+        {
+            SetBkColor((HDC)wParam, RGB(0, 0, 0));
+            SetTextColor((HDC)wParam, RGB(0, 0, 0));
+            SetBkMode((HDC)wParam, TRANSPARENT);
+            return (UINT)App->AppBackground;
+        }
+
+        if (GetDlgItem(hDlg, IDC_ST_DATETIME) == (HWND)lParam)
         {
             SetBkColor((HDC)wParam, RGB(0, 0, 0));
             SetTextColor((HDC)wParam, RGB(0, 0, 0));
