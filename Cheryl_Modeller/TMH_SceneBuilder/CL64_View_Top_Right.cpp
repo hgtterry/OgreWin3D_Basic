@@ -305,7 +305,7 @@ LRESULT CALLBACK CL64_View_Top_Right::Proc_Top_Right_Window(HWND hDlg, UINT mess
 		if (cameraComparison == 1)
 		{
 			Views_Com->Current_View = App->CL_View_Top_Right->VCam_TR;
-			Views_Com->Context_Menu(hDlg);
+			Views_Com->Context_Grids_Menu(hDlg);
 		}
 
 		return 1;
@@ -313,7 +313,7 @@ LRESULT CALLBACK CL64_View_Top_Right::Proc_Top_Right_Window(HWND hDlg, UINT mess
 
 	case WM_COMMAND:
 	{
-		if (App->CL_Views_Com->Context_Command(LOWORD(wParam)))
+		if (App->CL_Views_Com->Context_Grids_Command(LOWORD(wParam)))
 		{
 			return TRUE;
 		}

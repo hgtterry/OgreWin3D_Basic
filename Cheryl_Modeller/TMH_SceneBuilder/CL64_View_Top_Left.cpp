@@ -306,7 +306,7 @@ LRESULT CALLBACK CL64_View_Top_Left::Proc_Top_Left_Window(HWND hDlg, UINT messag
 		if (cameraComparison == 1)
 		{
 			Views_Com->Current_View = App->CL_View_Top_Left->VCam_TL;
-			Views_Com->Context_Menu(hDlg);
+			Views_Com->Context_Grids_Menu(hDlg);
 		}
 
 		return 1;
@@ -314,7 +314,7 @@ LRESULT CALLBACK CL64_View_Top_Left::Proc_Top_Left_Window(HWND hDlg, UINT messag
 
 	case WM_COMMAND:
 	{
-		if (App->CL_Views_Com->Context_Command(LOWORD(wParam)))
+		if (App->CL_Views_Com->Context_Grids_Command(LOWORD(wParam)))
 		{
 			return TRUE;
 		}

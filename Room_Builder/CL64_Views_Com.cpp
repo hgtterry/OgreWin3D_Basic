@@ -1487,28 +1487,6 @@ static POINT plist[64];
 //	//ReleaseDC(hwnd, RealhDC);
 //}
 
-//// *************************************************************************
-//// *	  			Render_RenderBrushFacesOrtho		Genesis			   *
-//// *************************************************************************
-//void CL64_Views_Com::Render_RenderBrushFacesOrtho(const ViewVars* Cam, Brush* b, HDC ViewDC)
-//{
-//	int	i, j;
-//
-//	for (i = 0; i < App->CL_X_Brush->Brush_GetNumFaces(b); i++)
-//	{
-//		Face* f = App->CL_X_Brush->Brush_GetFace(b, i);
-//		const T_Vec3* pnts = App->CL_X_Face->Face_GetPoints(f);
-//
-//		for (j = 0; j < App->CL_X_Face->Face_GetNumPoints(f); j++)
-//		{
-//			plist[j] = App->CL_Render->Render_OrthoWorldToView(Cam, &pnts[j]);
-//		}
-//
-//		plist[j] = plist[0];
-//		Polyline(ViewDC, plist, j + 1);
-//	}
-//}
-
 // *************************************************************************
 // *					Render_RenderBrushSelFacesOrtho		  			   *
 // *************************************************************************

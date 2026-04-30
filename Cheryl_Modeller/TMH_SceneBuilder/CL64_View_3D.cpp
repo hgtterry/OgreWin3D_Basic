@@ -201,7 +201,7 @@ LRESULT CALLBACK CL64_View_3D::Proc_Ogre_BR(HWND hDlg, UINT message, WPARAM wPar
 		bool isSceneEditorActive = (App->CL_Editor_Control->flag_Scene_Editor_Active == 1);
 		bool commandHandled = false;
 
-		commandHandled = App->CL_Views_Com->Context_Command_Ogre(LOWORD(wParam));
+		commandHandled = App->CL_Views_Com->Context_3D_Command(LOWORD(wParam));
 
 		return commandHandled ? TRUE : FALSE;
 	}
@@ -410,11 +410,11 @@ LRESULT CALLBACK CL64_View_3D::Proc_Ogre_BR(HWND hDlg, UINT message, WPARAM wPar
 						Views_Com->Current_View = App->CL_View_3D->VCam_3D;
 						if (isSceneEditorActive)
 						{
-							Views_Com->Context_Menu_Ogre(hDlg);
+							Views_Com->Context_3D_Menu(hDlg);
 						}
 						else if (isPreviewModeRunning)
 						{
-							Views_Com->Context_Menu_Ogre(hDlg);
+							Views_Com->Context_3D_Menu(hDlg);
 						}
 					}
 				}

@@ -43,6 +43,10 @@ THE SOFTWARE.
 #define IDM_SCENE_DESELECT 14
 #define IDM_SCENE_HELP 15
 #define IDM_SCENE_DUPLICATE 16
+#define IDM_Grid_Wheel_Speed1 17
+#define IDM_Grid_Wheel_Speed2 18
+#define IDM_Grid_Wheel_Speed3 19
+
 
 #define IDM_3D_WIRED 20
 #define IDM_3D_TEXTURED 21
@@ -56,9 +60,9 @@ THE SOFTWARE.
 #define IDM_3D_CAMERASPEED 29
 #define IDM_3D_POINTS 30
 #define IDM_3D_BONES 31
-#define IDM_Wheel_Speed1 32
-#define IDM_Wheel_Speed2 33
-#define IDM_Wheel_Speed3 34
+#define IDM_3D_Wheel_Speed1 32
+#define IDM_3D_Wheel_Speed2 33
+#define IDM_3D_Wheel_Speed3 34
 
 #define	M_PI		((float)3.14159265358979323846f)
 #define	TOP_POS					8
@@ -783,9 +787,9 @@ void CL64_Views_Com::Set_View()
 }
 
 // *************************************************************************
-// *			Context_Menu_Ogre:- Terry Mo and Hazel 2025			 	   *
+// *			Context_3D_Menu:- Terry Mo and Hazel 2025			 	   *
 // *************************************************************************
-void CL64_Views_Com::Context_Menu_Ogre(HWND hDlg)
+void CL64_Views_Com::Context_3D_Menu(HWND hDlg)
 {
 	RECT rcTree;
 	POINT pt;
@@ -865,9 +869,9 @@ void CL64_Views_Com::Context_Menu_Ogre(HWND hDlg)
 	HMENU hDisplayMenu = CreatePopupMenu();
 
 	AppendMenu(hMenu, MF_STRING | MF_POPUP, (UINT_PTR)hDisplayMenu, "Mouse Wheel Zoom");
-	AppendMenu(hDisplayMenu, MF_STRING, IDM_Wheel_Speed1, "Times 1");
-	AppendMenu(hDisplayMenu, MF_STRING, IDM_Wheel_Speed2, "Times 2");
-	AppendMenu(hDisplayMenu, MF_STRING, IDM_Wheel_Speed3, "Times 3");
+	AppendMenu(hDisplayMenu, MF_STRING, IDM_3D_Wheel_Speed1, "Speed 1");
+	AppendMenu(hDisplayMenu, MF_STRING, IDM_3D_Wheel_Speed2, "Speed 2");
+	AppendMenu(hDisplayMenu, MF_STRING, IDM_3D_Wheel_Speed3, "Speed 3");
 	// Panel View
 	/*AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
 	AppendMenuW(hMenu, MF_STRING, IDM_SCENE_MAX_VIEW, L"&Full View");
@@ -918,25 +922,25 @@ void CL64_Views_Com::Context_Menu_Ogre(HWND hDlg)
 }
 
 // *************************************************************************
-// *		Context_Command_Ogre:- Terry Mo and Hazel 2024		   *
+// *			Context_3D_Command:- Terry Mo and Hazel 2024			   *
 // *************************************************************************
-bool CL64_Views_Com::Context_Command_Ogre(WPARAM wParam)
+bool CL64_Views_Com::Context_3D_Command(WPARAM wParam)
 {
 	switch (LOWORD(wParam))
 	{
-	case IDM_Wheel_Speed1:
+	case IDM_3D_Wheel_Speed1:
 	{
 		App->CL_Keyboard->Mouse_Wheel_Zoom = 2;
 		return TRUE;
 	}
 
-	case IDM_Wheel_Speed2:
+	case IDM_3D_Wheel_Speed2:
 	{
 		App->CL_Keyboard->Mouse_Wheel_Zoom = 10;
 		return TRUE;
 	}
 
-	case IDM_Wheel_Speed3:
+	case IDM_3D_Wheel_Speed3:
 	{
 		App->CL_Keyboard->Mouse_Wheel_Zoom = 50;
 		return TRUE;
@@ -1074,9 +1078,9 @@ bool CL64_Views_Com::Context_Command_Ogre(WPARAM wParam)
 }
 
 // *************************************************************************
-// *			Context_Menu:- Terry Mo and Hazel 2025				 	   *
+// *			Context_Grids_Menu:- Terry Mo and Hazel 2026		 	   *
 // *************************************************************************
-void CL64_Views_Com::Context_Menu(HWND hDlg)
+void CL64_Views_Com::Context_Grids_Menu(HWND hDlg)
 {
 	RECT rcTree;
 	TVHITTESTINFO htInfo = { 0 };
@@ -1091,6 +1095,15 @@ void CL64_Views_Com::Context_Menu(HWND hDlg)
 	htInfo.pt.y = yPos - rcTree.top;
 
 	hMenu = CreatePopupMenu();
+
+	HMENU hDisplayMenu = CreatePopupMenu();
+
+	AppendMenu(hMenu, MF_STRING | MF_POPUP, (UINT_PTR)hDisplayMenu, "Mouse Wheel Zoom");
+	AppendMenu(hDisplayMenu, MF_STRING, IDM_Grid_Wheel_Speed1, "Speed 1");
+	AppendMenu(hDisplayMenu, MF_STRING, IDM_Grid_Wheel_Speed2, "Speed 2");
+	AppendMenu(hDisplayMenu, MF_STRING, IDM_Grid_Wheel_Speed3, "Speed 3");
+
+	AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
 
 	//if (App->CL_Level->flag_UseGrid == true)
 	//{
@@ -1158,12 +1171,30 @@ void CL64_Views_Com::Context_Menu(HWND hDlg)
 }
 
 // *************************************************************************
-// *			 Context_Command:- Terry Mo and Hazel 2025				   *
+// *			Context_Grids_Command:- Terry Mo and Hazel 2026			   *
 // *************************************************************************
-bool CL64_Views_Com::Context_Command(WPARAM wParam)
+bool CL64_Views_Com::Context_Grids_Command(WPARAM wParam)
 {
 	switch (LOWORD(wParam))
 	{
+	case IDM_Grid_Wheel_Speed1:
+		App->CL_View_Top_Left->m_Zoom_Amount = 0.1;
+		App->CL_View_Top_Right->m_Zoom_Amount = 0.1;
+		App->CL_View_Bottom_Left->m_Zoom_Amount = 0.1;
+		return TRUE;
+
+	case IDM_Grid_Wheel_Speed2:
+		App->CL_View_Top_Left->m_Zoom_Amount = 0.5;
+		App->CL_View_Top_Right->m_Zoom_Amount = 0.5;
+		App->CL_View_Bottom_Left->m_Zoom_Amount = 0.5;
+		return TRUE;
+
+	case IDM_Grid_Wheel_Speed3:
+		App->CL_View_Top_Left->m_Zoom_Amount = 1;
+		App->CL_View_Top_Right->m_Zoom_Amount = 1;
+		App->CL_View_Bottom_Left->m_Zoom_Amount = 1;
+		return TRUE;
+		
 	case IDM_GRID_SNAP:
 		App->CL_Level->flag_UseGrid = !App->CL_Level->flag_UseGrid;
 		CheckMenuItem(App->Menu_Map, ID_GRID_GRIDSNAP,
