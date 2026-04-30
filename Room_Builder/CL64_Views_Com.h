@@ -50,7 +50,7 @@ public:
 	void ResizeOgreWindow(void);
 	void Show_Grids(bool Show);
 
-	void Render_RenderBrushFacesOrtho(const ViewVars* Cam, Brush* b, HDC ViewDC);
+	//void Render_RenderBrushFacesOrtho(const ViewVars* Cam, Brush* b, HDC ViewDC);
 	void Render_RenderBrushSelFacesOrtho(ViewVars* Cam, Brush* b, HDC ViewDC);
 	
 	bool Context_Command(WPARAM wParam);

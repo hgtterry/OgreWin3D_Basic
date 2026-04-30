@@ -45,7 +45,6 @@ public:
 	void Redraw_Window_TR();
 
 	static int Draw_Brush(Brush* pBrush, void* lParam);
-	void Draw_Brush_Faces_Ortho(const ViewVars* Cam, Brush* b);
 	void Set_VCam_TR_Defaults();
 
 	HWND Top_Right_Window_Hwnd;
@@ -74,6 +73,6 @@ private:
 	static LRESULT CALLBACK Proc_Top_Right_Window(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	void Draw_Screen_TR(HWND hwnd);
-
+	void Draw_Faces_TR(Brush* SB);
 };
 

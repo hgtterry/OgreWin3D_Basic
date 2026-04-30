@@ -340,6 +340,14 @@ LRESULT CALLBACK CL64_View_Bottom_Left::Proc_Bottom_Left_Window(HWND hDlg, UINT 
 	return FALSE;
 }
 
+// *************************************************************************
+// *			Redraw_Window_BL:- Terry and Hazel Flanigan 2026		   *
+// *************************************************************************
+void CL64_View_Bottom_Left::Redraw_Window_BL()
+{
+	RedrawWindow(Bottom_Left_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+}
+
 // ---------------------------------------------------------------------------------- Stuff
 #define	VectorToSUB(a, b) (*((((float *)(&a))) + (b)))
 
@@ -362,7 +370,7 @@ signed int CL64_View_Bottom_Left::Draw_Brush(Brush* pBrush, void* lParam)
 		{
 			if (App->CL_View_Bottom_Left->fdocShowBrush(pBrush, pData->pViewBox))
 			{
-				App->CL_View_Bottom_Left->Draw_Brush_Faces_Ortho(pData->v, pBrush);
+				App->CL_View_Bottom_Left->Draw_Faces_BL(pBrush);
 			}
 		}
 	}
@@ -370,36 +378,37 @@ signed int CL64_View_Bottom_Left::Draw_Brush(Brush* pBrush, void* lParam)
 	return true;
 }
 
-static POINT plist[64];
-
 // *************************************************************************
-// *			Redraw_Window_BL:- Terry and Hazel Flanigan 2026		   *
+// *	  	Draw_Faces_BL:- Terry and Hazel Flanigan 2026				   *
 // *************************************************************************
-void CL64_View_Bottom_Left::Redraw_Window_BL()
+void CL64_View_Bottom_Left::Draw_Faces_BL(Brush* SB)
 {
-	RedrawWindow(Bottom_Left_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-}
+	T_Vec3 ptView;
+	int Num_Faces = App->CL_X_Brush->Brush_GetNumFaces(SB);
 
-// *************************************************************************
-// *	  	Draw_Brush_Faces_Ortho:- Terry and Hazel Flanigan 2026		   *
-// *************************************************************************
-void CL64_View_Bottom_Left::Draw_Brush_Faces_Ortho(const ViewVars* Cam, Brush* b)
-{
-	int	i, j;
-
-	for (i = 0; i < App->CL_X_Brush->Brush_GetNumFaces(b); i++)
+	for (int i = 0; i < Num_Faces; i++)
 	{
-		Face* f = App->CL_X_Brush->Brush_GetFace(b, i);
+		Face* f = App->CL_X_Brush->Brush_GetFace(SB, i);
 		const T_Vec3* pnts = App->CL_X_Face->Face_GetPoints(f);
+		int Num_Points = App->CL_X_Face->Face_GetNumPoints(f);
 
-		for (j = 0; j < App->CL_X_Face->Face_GetNumPoints(f); j++)
+		// Create a temporary array to hold the transformed points
+		std::vector<POINT> transformedPoints(Num_Points);
+
+		for (int j = 0; j < Num_Points; j++)
 		{
-			plist[j] = App->CL_Render->Render_OrthoWorldToView(Cam, &pnts[j]);
+			// Calculate the view position
+			App->CL_X_Maths->Vector3_Subtract(&pnts[j], &VCam_BL->CamPos, &ptView);
+			App->CL_X_Maths->Vector3_Scale(&ptView, VCam_BL->ZoomFactor, &ptView);
+
+			// Store the transformed points in the vector
+			transformedPoints[j].x = static_cast<int>(VCam_BL->XCenter + ptView.x);
+			transformedPoints[j].y = static_cast<int>(VCam_BL->YCenter - ptView.y);
 		}
 
-		plist[j] = plist[0];
-
-		Polyline(m_MemoryhDC_BL, plist, j + 1);
+		// Close the polygon by adding the first point at the end
+		transformedPoints.push_back(transformedPoints[0]);
+		Polyline(m_MemoryhDC_BL, transformedPoints.data(), transformedPoints.size());
 	}
 }
 
@@ -508,8 +517,7 @@ void CL64_View_Bottom_Left::Draw_Screen_BL(HWND hwnd)
 			}
 			else
 			{
-				Views_Com->Render_RenderBrushFacesOrtho(Views_Com->Current_View, App->CL_Doc->CurBrush, m_MemoryhDC_BL);
-
+				Draw_Faces_BL(App->CL_Doc->CurBrush);
 			}
 		}
 
@@ -548,7 +556,7 @@ void CL64_View_Bottom_Left::Draw_Screen_BL(HWND hwnd)
 			}
 			else
 			{
-				Views_Com->Render_RenderBrushFacesOrtho(VCam_BL, SB, m_MemoryhDC_BL);
+				Draw_Faces_BL(SB);
 			}
 
 			Count++;
@@ -574,7 +582,7 @@ void CL64_View_Bottom_Left::Draw_Screen_BL(HWND hwnd)
 					}
 					else
 					{
-						Views_Com->Render_RenderBrushFacesOrtho(VCam_BL, App->CL_Doc->CurBrush, m_MemoryhDC_BL);
+						Draw_Faces_BL(pBrush);
 					}
 				}
 			}
