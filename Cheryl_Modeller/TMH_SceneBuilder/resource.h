@@ -696,6 +696,9 @@
 #define ID_GRID_SNAPOPTIONS             32894
 #define ID_                             32895
 #define ID_MENUKEYS                     32896
+#define ID_TESTMODELS_AUTODESK          32897
+#define ID_MILKSHAPE_BED                32898
+#define ID_AUTODESK_BED                 32899
 #define ID_TOOLS_TEMPLATE               32910
 #define IDC_STATIC                      -1
 
@@ -705,7 +708,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        225
-#define _APS_NEXT_COMMAND_VALUE         32897
+#define _APS_NEXT_COMMAND_VALUE         32900
 #define _APS_NEXT_CONTROL_VALUE         1403
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
